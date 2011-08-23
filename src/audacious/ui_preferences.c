@@ -171,20 +171,21 @@ static PreferencesWidget audio_page_widgets[] = {
   .data = {.spin_btn = {-15, 15, 0.1, N_("dB")}}}};
 
 static PreferencesWidget proxy_host_port_elements[] = {
- {WIDGET_ENTRY, N_("Proxy hostname:"), .cfg_type = VALUE_STRING, .cfg = & cfg.proxy_host},
- {WIDGET_ENTRY, N_("Proxy port:"), .cfg_type = VALUE_STRING, .cfg = & cfg.proxy_port}};
+ {WIDGET_ENTRY, N_("Proxy hostname:"), .cfg_type = VALUE_STRING, .cname = "proxy_host"},
+ {WIDGET_ENTRY, N_("Proxy port:"), .cfg_type = VALUE_STRING, .cname = "proxy_port"}};
 
 static PreferencesWidget proxy_auth_elements[] = {
- {WIDGET_ENTRY, N_("Proxy username:"), .cfg_type = VALUE_STRING, .cfg = & cfg.proxy_user},
- {WIDGET_ENTRY, N_("Proxy password:"), .cfg_type = VALUE_STRING, .cfg = & cfg.proxy_user,
+ {WIDGET_ENTRY, N_("Proxy username:"), .cfg_type = VALUE_STRING, .cname = "proxy_user"},
+ {WIDGET_ENTRY, N_("Proxy password:"), .cfg_type = VALUE_STRING, .cname = "proxy_pass",
   .data = {.entry = {.password = TRUE}}}};
 
 static PreferencesWidget connectivity_page_widgets[] = {
     {WIDGET_LABEL, N_("<b>Proxy Configuration</b>"), NULL, NULL, NULL, FALSE},
-    {WIDGET_CHK_BTN, N_("Enable proxy usage"), .cfg_type = VALUE_BOOLEAN, .cfg = & cfg.use_proxy},
+    {WIDGET_CHK_BTN, N_("Enable proxy usage"), .cfg_type = VALUE_BOOLEAN, .cname = "use_proxy"},
     {WIDGET_TABLE, .child = TRUE, .data = {.table = {proxy_host_port_elements,
      G_N_ELEMENTS (proxy_host_port_elements)}}},
-    {WIDGET_CHK_BTN, N_("Use authentication with proxy"), .cfg_type = VALUE_BOOLEAN, .cfg = & cfg.use_proxy_auth},
+    {WIDGET_CHK_BTN, N_("Use authentication with proxy"),
+     .cfg_type = VALUE_BOOLEAN, .cname = "use_proxy_auth"},
     {WIDGET_TABLE, .child = TRUE, .data = {.table = {proxy_auth_elements,
      G_N_ELEMENTS (proxy_auth_elements)}}}
 };
@@ -308,14 +309,112 @@ on_titlestring_cbox_changed(GtkWidget * cbox,
     playlist_reformat_titles ();
 }
 
-static void
-on_font_btn_font_set(GtkFontButton * button, gchar **config)
+static void widget_set_bool (PreferencesWidget * widget, gboolean value)
 {
-    g_free(*config);
-    *config = g_strdup(gtk_font_button_get_font_name(button));
-    AUDDBG("Returned font name: \"%s\"\n", *config);
-    void (*callback) (void) = g_object_get_data(G_OBJECT(button), "callback");
-    if (callback != NULL) callback();
+    g_return_if_fail (widget->cfg_type == VALUE_BOOLEAN);
+
+    if (widget->cfg)
+        * (gboolean *) widget->cfg = value;
+    else if (widget->cname)
+        set_bool (widget->csect, widget->cname, value);
+
+    if (widget->callback)
+        widget->callback ();
+}
+
+static gboolean widget_get_bool (PreferencesWidget * widget)
+{
+    g_return_val_if_fail (widget->cfg_type == VALUE_BOOLEAN, FALSE);
+
+    if (widget->cfg)
+        return * (gboolean *) widget->cfg;
+    else if (widget->cname)
+        return get_bool (widget->csect, widget->cname);
+    else
+        return FALSE;
+}
+
+static void widget_set_int (PreferencesWidget * widget, gint value)
+{
+    g_return_if_fail (widget->cfg_type == VALUE_INT);
+
+    if (widget->cfg)
+        * (gint *) widget->cfg = value;
+    else if (widget->cname)
+        set_int (widget->csect, widget->cname, value);
+
+    if (widget->callback)
+        widget->callback ();
+}
+
+static gint widget_get_int (PreferencesWidget * widget)
+{
+    g_return_val_if_fail (widget->cfg_type == VALUE_INT, 0);
+
+    if (widget->cfg)
+        return * (gint *) widget->cfg;
+    else if (widget->cname)
+        return get_int (widget->csect, widget->cname);
+    else
+        return 0;
+}
+
+static void widget_set_double (PreferencesWidget * widget, gdouble value)
+{
+    g_return_if_fail (widget->cfg_type == VALUE_FLOAT);
+
+    if (widget->cfg)
+        * (gfloat *) widget->cfg = value;
+    else if (widget->cname)
+        set_double (widget->csect, widget->cname, value);
+
+    if (widget->callback)
+        widget->callback ();
+}
+
+static gdouble widget_get_double (PreferencesWidget * widget)
+{
+    g_return_val_if_fail (widget->cfg_type == VALUE_FLOAT, 0);
+
+    if (widget->cfg)
+        return * (gfloat *) widget->cfg;
+    else if (widget->cname)
+        return get_double (widget->csect, widget->cname);
+    else
+        return 0;
+}
+
+static void widget_set_string (PreferencesWidget * widget, const gchar * value)
+{
+    g_return_if_fail (widget->cfg_type == VALUE_STRING);
+
+    if (widget->cfg)
+    {
+        g_free (* (gchar * *) widget->cfg);
+        * (gchar * *) widget->cfg = g_strdup (value);
+    }
+    else if (widget->cname)
+        set_string (widget->csect, widget->cname, value);
+
+    if (widget->callback)
+        widget->callback ();
+}
+
+static gchar * widget_get_string (PreferencesWidget * widget)
+{
+    g_return_val_if_fail (widget->cfg_type == VALUE_STRING, NULL);
+
+    if (widget->cfg)
+        return g_strdup (* (gchar * *) widget->cfg);
+    else if (widget->cname)
+        return get_string (widget->csect, widget->cname);
+    else
+        return NULL;
+}
+
+static void on_font_btn_font_set (GtkFontButton * button, PreferencesWidget * widget)
+{
+    widget_set_string (widget, gtk_font_button_get_font_name (button));
 }
 
 static void
@@ -428,22 +527,12 @@ void plugin_preferences_cleanup (PluginPreferences * p)
 
 static void on_spin_btn_changed_int (GtkSpinButton * button, PreferencesWidget * widget)
 {
-    gint value = gtk_spin_button_get_value_as_int (button);
-
-    if (widget->cfg)
-        * (gint *) widget->cfg = value;
-    else if (widget->cname)
-        set_int (widget->csect, widget->cname, value);
+    widget_set_int (widget, gtk_spin_button_get_value_as_int (button));
 }
 
 static void on_spin_btn_changed_float (GtkSpinButton * button, PreferencesWidget * widget)
 {
-    gdouble value = gtk_spin_button_get_value (button);
-
-    if (widget->cfg)
-        * (gfloat *) widget->cfg = value;
-    else if (widget->cname)
-        set_double (widget->csect, widget->cname, value);
+    widget_set_double (widget, gtk_spin_button_get_value (button));
 }
 
 static void fill_category_list (GtkTreeView * treeview, GtkNotebook * notebook)
@@ -574,14 +663,7 @@ on_filepopup_cancel_clicked(GtkButton *button, gpointer data)
 static void on_toggle_button_toggled (GtkToggleButton * button, PreferencesWidget * widget)
 {
     gboolean active = gtk_toggle_button_get_active (button);
-
-    if (widget->cfg)
-        * (gboolean *) widget->cfg = active;
-    else if (widget->cname)
-        set_bool (widget->csect, widget->cname, active);
-
-    if (widget->callback)
-        widget->callback ();
+    widget_set_bool (widget, active);
 
     GtkWidget * child = g_object_get_data ((GObject *) button, "child");
     if (child)
@@ -593,59 +675,25 @@ static void init_toggle_button (GtkWidget * button, PreferencesWidget * widget)
     if (widget->cfg_type != VALUE_BOOLEAN)
         return;
 
-    gboolean active = FALSE;
-    if (widget->cfg)
-        active = * (gboolean *) widget->cfg;
-    else if (widget->cname)
-        active = get_bool (widget->csect, widget->cname);
-
-    gtk_toggle_button_set_active ((GtkToggleButton *) button, active);
+    gtk_toggle_button_set_active ((GtkToggleButton *) button, widget_get_bool (widget));
     g_signal_connect (button, "toggled", (GCallback) on_toggle_button_toggled, widget);
 }
 
-static void
-on_entry_changed(GtkEntry *entry, gchar **cfg)
+static void on_entry_changed (GtkEntry * entry, PreferencesWidget * widget)
 {
-    void (*callback) (void) = g_object_get_data(G_OBJECT(entry), "callback");
-    const gchar *ret;
-
-    g_return_if_fail(cfg != NULL);
-
-    g_free(*cfg);
-
-    ret = gtk_entry_get_text(entry);
-
-    if (ret == NULL)
-        *cfg = g_strdup("");
-    else
-        *cfg = g_strdup(ret);
-
-    if (callback != NULL) callback();
+    widget_set_string (widget, gtk_entry_get_text (entry));
 }
 
 static void on_cbox_changed_int (GtkComboBox * combobox, PreferencesWidget * widget)
 {
     gint position = gtk_combo_box_get_active (combobox);
-    gint value = GPOINTER_TO_INT (widget->data.combo.elements[position].value);
-
-    if (widget->cfg)
-        * (gint *) widget->cfg = value;
-    else if (widget->cname)
-        set_int (widget->csect, widget->cname, value);
+    widget_set_int (widget, GPOINTER_TO_INT (widget->data.combo.elements[position].value));
 }
 
 static void on_cbox_changed_string (GtkComboBox * combobox, PreferencesWidget * widget)
 {
     gint position = gtk_combo_box_get_active (combobox);
-    const gchar * value = widget->data.combo.elements[position].value;
-
-    if (widget->cfg)
-    {
-        g_free (* (gchar * *) widget->cfg);
-        * (gchar * *) widget->cfg = g_strdup (value);
-    }
-    else if (widget->cname)
-        set_string (widget->csect, widget->cname, value);
+    widget_set_string (widget, widget->data.combo.elements[position].value);
 }
 
 static void fill_cbox (GtkWidget * combobox, PreferencesWidget * widget)
@@ -662,11 +710,7 @@ static void fill_cbox (GtkWidget * combobox, PreferencesWidget * widget)
                 g_signal_connect(combobox, "changed",
                                  G_CALLBACK(on_cbox_changed_int), widget);
 
-                gint ivalue = 0;
-                if (widget->cfg)
-                    ivalue = * (gint *) widget->cfg;
-                else if (widget->cname)
-                    ivalue = get_int (widget->csect, widget->cname);
+                gint ivalue = widget_get_int (widget);
 
                 for(i=0; i<widget->data.combo.n_elements; i++) {
                     if (GPOINTER_TO_INT (widget->data.combo.elements[i].value) == ivalue)
@@ -680,12 +724,7 @@ static void fill_cbox (GtkWidget * combobox, PreferencesWidget * widget)
                 g_signal_connect(combobox, "changed",
                                  G_CALLBACK(on_cbox_changed_string), widget);
 
-                gchar * value = NULL;
-                gchar * owned = NULL;
-                if (widget->cfg)
-                    value = * (gchar * *) widget->cfg;
-                else if (widget->cname)
-                    value = owned = get_string (widget->csect, widget->cname);
+                gchar * value = widget_get_string (widget);
 
                 for(i=0; i<widget->data.combo.n_elements; i++) {
                     if (value && ! strcmp ((gchar *) widget->data.combo.elements[i].value, value))
@@ -695,7 +734,7 @@ static void fill_cbox (GtkWidget * combobox, PreferencesWidget * widget)
                     }
                 }
 
-                g_free (owned);
+                g_free (value);
                 break;
             default:
                 break;
@@ -893,24 +932,12 @@ static void create_spin_button (PreferencesWidget * widget, GtkWidget * *
 
     switch (widget->cfg_type)
     {
-    case VALUE_INT:;
-        gint ivalue = 0;
-        if (widget->cfg)
-            ivalue = * (gint *) widget->cfg;
-        else if (widget->cname)
-            ivalue = get_int (widget->csect, widget->cname);
-
-        gtk_spin_button_set_value ((GtkSpinButton *) * spin_btn, ivalue);
+    case VALUE_INT:
+        gtk_spin_button_set_value ((GtkSpinButton *) * spin_btn, widget_get_int (widget));
         g_signal_connect (* spin_btn, "value_changed", (GCallback) on_spin_btn_changed_int, widget);
         break;
-    case VALUE_FLOAT:;
-        gdouble fvalue = 0;
-        if (widget->cfg)
-            fvalue = * (gfloat *) widget->cfg;
-        else if (widget->cname)
-            fvalue = get_double (widget->csect, widget->cname);
-
-        gtk_spin_button_set_value ((GtkSpinButton *) * spin_btn, fvalue);
+    case VALUE_FLOAT:
+        gtk_spin_button_set_value ((GtkSpinButton *) * spin_btn, widget_get_double (widget));
         g_signal_connect (* spin_btn, "value_changed", (GCallback)
          on_spin_btn_changed_float, widget);
         break;
@@ -937,14 +964,14 @@ void create_font_btn (PreferencesWidget * widget, GtkWidget * * label,
         gtk_font_button_set_title (GTK_FONT_BUTTON (* font_btn),
          dgettext (domain, widget->data.font_btn.title));
 
-    gtk_font_button_set_font_name ((GtkFontButton *) * font_btn, * (gchar * *) widget->cfg);
+    gchar * name = widget_get_string (widget);
+    if (name)
+    {
+        gtk_font_button_set_font_name ((GtkFontButton *) * font_btn, name);
+        g_free (name);
+    }
 
-    g_object_set_data ((GObject *) (* font_btn), "callback", (void *)
-     widget->callback);
-
-    g_signal_connect(G_OBJECT(*font_btn), "font_set",
-                     G_CALLBACK(on_font_btn_font_set),
-                     (gchar**)widget->cfg);
+    g_signal_connect (* font_btn, "font_set", (GCallback) on_font_btn_font_set, widget);
 }
 
 static void create_entry (PreferencesWidget * widget, GtkWidget * * label,
@@ -959,20 +986,16 @@ static void create_entry (PreferencesWidget * widget, GtkWidget * * label,
     if (widget->tooltip)
         gtk_widget_set_tooltip_text (* entry, dgettext (domain, widget->tooltip));
 
-    g_object_set_data ((GObject *) (* entry), "callback", (void *)
-     widget->callback);
-
-    if (widget->cfg)
+    if (widget->cfg_type == VALUE_STRING)
     {
-        if (widget->cfg_type == VALUE_STRING)
+        gchar * value = widget_get_string (widget);
+        if (value)
         {
-            if (* (gchar * *) widget->cfg)
-                gtk_entry_set_text ((GtkEntry *) * entry, * (gchar * *) widget->cfg);
-
-            g_signal_connect (* entry, "changed", (GCallback) on_entry_changed, widget->cfg);
+            gtk_entry_set_text ((GtkEntry *) * entry, value);
+            g_free (value);
         }
-        else
-            printf ("WARNING: Invalid PreferencesWidget config type.\n");
+
+        g_signal_connect (* entry, "changed", (GCallback) on_entry_changed, widget);
     }
 }
 

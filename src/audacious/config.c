@@ -56,6 +56,10 @@ static const gchar * const core_defaults[] = {
  "show_filepopup_for_tuple", "TRUE",
  "use_file_cover", "FALSE",
 
+ /* network */
+ "use_proxy", "FALSE",
+ "use_proxy_auth", "FALSE",
+
  /* output */
  "default_gain", "0",
  "enable_replay_gain", "TRUE",

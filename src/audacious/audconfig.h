@@ -45,12 +45,6 @@ struct _AudConfig {
     gchar *chardet_detector;
     gchar *chardet_fallback;
     gchar **chardet_fallback_s;
-
-    /* proxy stuff */
-    gboolean use_proxy;
-    gchar * proxy_host, * proxy_port;
-    gboolean use_proxy_auth;
-    gchar * proxy_user, * proxy_pass;
 };
 
 typedef struct _AudConfig AudConfig;

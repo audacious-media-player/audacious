@@ -61,8 +61,6 @@ typedef struct aud_cfg_strent_t {
 static aud_cfg_boolent aud_boolents[] = {
     {"show_numbers_in_pl", &cfg.show_numbers_in_pl, TRUE},
     {"leading_zero", & cfg.leading_zero, TRUE},
-    {"use_proxy", & cfg.use_proxy, TRUE},
-    {"use_proxy_auth", & cfg.use_proxy_auth, TRUE},
 };
 
 static gint ncfgbent = G_N_ELEMENTS(aud_boolents);
@@ -79,10 +77,6 @@ static aud_cfg_strent aud_strents[] = {
     {"generic_title_format", &cfg.gentitle_format, TRUE},
     {"chardet_detector", &cfg.chardet_detector, TRUE},
     {"chardet_fallback", &cfg.chardet_fallback, TRUE},
-    {"proxy_host", & cfg.proxy_host, TRUE},
-    {"proxy_port", & cfg.proxy_port, TRUE},
-    {"proxy_user", & cfg.proxy_user, TRUE},
-    {"proxy_pass", & cfg.proxy_pass, TRUE},
 };
 
 static gint ncfgsent = G_N_ELEMENTS(aud_strents);
