@@ -56,6 +56,18 @@ static const gchar * core_defaults[] = {
  "show_filepopup_for_tuple", "TRUE",
  "use_file_cover", "FALSE",
 
+ /* output */
+ "default_gain", "0",
+ "enable_replay_gain", "TRUE",
+ "enable_clipping_prevention", "TRUE",
+ "output_bit_depth", "16",
+ "output_buffer_size", "500",
+ "replay_gain_album", "FALSE",
+ "replay_gain_preamp", "0",
+ "software_volume_control", "FALSE",
+ "sw_volume_left", "100",
+ "sw_volume_right", "100",
+
  /* playback */
  "no_playlist_advance", "FALSE",
  "repeat", "FALSE",

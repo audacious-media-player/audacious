@@ -143,32 +143,31 @@ CategoryQueueEntry *category_queue = NULL;
 static void * create_output_plugin_box (void);
 
 static PreferencesWidget rg_mode_widgets[] = {
- {WIDGET_RADIO_BTN, N_("Single track mode"), .cfg_type = VALUE_BOOLEAN, .cfg = & cfg.replay_gain_track},
- {WIDGET_RADIO_BTN, N_("Album mode"), .cfg_type = VALUE_BOOLEAN, .cfg = & cfg.replay_gain_album}};
+ {WIDGET_CHK_BTN, N_("Album mode"), .cfg_type = VALUE_BOOLEAN, .cname = "replay_gain_album"}};
 
 static PreferencesWidget audio_page_widgets[] = {
  {WIDGET_LABEL, N_("<b>Output Settings</b>")},
  {WIDGET_CUSTOM, .data = {.populate = create_output_plugin_box}},
  {WIDGET_COMBO_BOX, N_("Bit depth:"),
-  .cfg_type = VALUE_INT, .cfg = & cfg.output_bit_depth,
+  .cfg_type = VALUE_INT, .cname = "output_bit_depth",
   .data = {.combo = {bitdepth_elements, G_N_ELEMENTS (bitdepth_elements), TRUE}}},
  {WIDGET_SPIN_BTN, N_("Buffer size:"),
-  .cfg_type = VALUE_INT, .cfg = & cfg.output_buffer_size,
+  .cfg_type = VALUE_INT, .cname = "output_buffer_size",
   .data = {.spin_btn = {100, 10000, 1000, N_("ms")}}},
  {WIDGET_CHK_BTN, N_("Use software volume control (not recommended)"),
-  .cfg_type = VALUE_BOOLEAN, .cfg = & cfg.software_volume_control, .callback = sw_volume_toggled},
+  .cfg_type = VALUE_BOOLEAN, .cname = "software_volume_control", .callback = sw_volume_toggled},
  {WIDGET_LABEL, N_("<b>Replay Gain</b>")},
  {WIDGET_CHK_BTN, N_("Enable Replay Gain"),
-  .cfg_type = VALUE_BOOLEAN, .cfg = & cfg.enable_replay_gain},
+  .cfg_type = VALUE_BOOLEAN, .cname = "enable_replay_gain"},
  {WIDGET_BOX, .child = TRUE, .data = {.box = {rg_mode_widgets, G_N_ELEMENTS (rg_mode_widgets), TRUE}}},
  {WIDGET_CHK_BTN, N_("Prevent clipping (recommended)"), .child = TRUE,
-  .cfg_type = VALUE_BOOLEAN, .cfg = & cfg.enable_clipping_prevention},
+  .cfg_type = VALUE_BOOLEAN, .cname = "enable_clipping_prevention"},
  {WIDGET_LABEL, N_("<b>Adjust Levels</b>"), .child = TRUE},
  {WIDGET_SPIN_BTN, N_("Amplify all files:"), .child = TRUE,
-  .cfg_type = VALUE_FLOAT, .cfg = & cfg.replay_gain_preamp,
+  .cfg_type = VALUE_FLOAT, .cname = "replay_gain_preamp",
   .data = {.spin_btn = {-15, 15, 0.1, N_("dB")}}},
  {WIDGET_SPIN_BTN, N_("Amplify untagged files:"), .child = TRUE,
-  .cfg_type = VALUE_FLOAT, .cfg = & cfg.default_gain,
+  .cfg_type = VALUE_FLOAT, .cname = "default_gain",
   .data = {.spin_btn = {-15, 15, 0.1, N_("dB")}}}};
 
 static PreferencesWidget proxy_host_port_elements[] = {
@@ -427,18 +426,25 @@ void plugin_preferences_cleanup (PluginPreferences * p)
     }
 }
 
-static void
-on_spin_btn_changed_gint(GtkSpinButton *button, gint *cfg)
+static void on_spin_btn_changed_int (GtkSpinButton * button, PreferencesWidget * widget)
 {
-    *cfg = gtk_spin_button_get_value_as_int(button);
+    gint value = gtk_spin_button_get_value_as_int (button);
+
+    if (widget->cfg)
+        * (gint *) widget->cfg = value;
+    else if (widget->cname)
+        set_int (widget->csect, widget->cname, value);
 }
 
-static void
-on_spin_btn_changed_gfloat(GtkSpinButton *button, gfloat *cfg)
+static void on_spin_btn_changed_float (GtkSpinButton * button, PreferencesWidget * widget)
 {
-    *cfg = (gfloat) gtk_spin_button_get_value(button);
-}
+    gdouble value = gtk_spin_button_get_value (button);
 
+    if (widget->cfg)
+        * (gfloat *) widget->cfg = value;
+    else if (widget->cname)
+        set_double (widget->csect, widget->cname, value);
+}
 
 static void fill_category_list (GtkTreeView * treeview, GtkNotebook * notebook)
 {
@@ -617,25 +623,29 @@ on_entry_changed(GtkEntry *entry, gchar **cfg)
     if (callback != NULL) callback();
 }
 
-static void
-on_cbox_changed_int(GtkComboBox * combobox, PreferencesWidget *widget)
+static void on_cbox_changed_int (GtkComboBox * combobox, PreferencesWidget * widget)
 {
-    gint position = 0;
+    gint position = gtk_combo_box_get_active (combobox);
+    gint value = GPOINTER_TO_INT (widget->data.combo.elements[position].value);
 
-    position = gtk_combo_box_get_active(GTK_COMBO_BOX(combobox));
-    *((gint *)widget->cfg) = GPOINTER_TO_INT(widget->data.combo.elements[position].value);
+    if (widget->cfg)
+        * (gint *) widget->cfg = value;
+    else if (widget->cname)
+        set_int (widget->csect, widget->cname, value);
 }
 
-static void
-on_cbox_changed_string(GtkComboBox * combobox, PreferencesWidget *widget)
+static void on_cbox_changed_string (GtkComboBox * combobox, PreferencesWidget * widget)
 {
-    gint position = 0;
+    gint position = gtk_combo_box_get_active (combobox);
+    const gchar * value = widget->data.combo.elements[position].value;
 
-    position = gtk_combo_box_get_active(GTK_COMBO_BOX(combobox));
-
-    g_free(*((gchar **)widget->cfg));
-
-    *((gchar **)widget->cfg) = g_strdup(widget->data.combo.elements[position].value);
+    if (widget->cfg)
+    {
+        g_free (* (gchar * *) widget->cfg);
+        * (gchar * *) widget->cfg = g_strdup (value);
+    }
+    else if (widget->cname)
+        set_string (widget->csect, widget->cname, value);
 }
 
 static void fill_cbox (GtkWidget * combobox, PreferencesWidget * widget)
@@ -651,8 +661,16 @@ static void fill_cbox (GtkWidget * combobox, PreferencesWidget * widget)
             case VALUE_INT:
                 g_signal_connect(combobox, "changed",
                                  G_CALLBACK(on_cbox_changed_int), widget);
+
+                gint ivalue = 0;
+                if (widget->cfg)
+                    ivalue = * (gint *) widget->cfg;
+                else if (widget->cname)
+                    ivalue = get_int (widget->csect, widget->cname);
+
                 for(i=0; i<widget->data.combo.n_elements; i++) {
-                    if (GPOINTER_TO_INT(widget->data.combo.elements[i].value) == *((gint *) widget->cfg)) {
+                    if (GPOINTER_TO_INT (widget->data.combo.elements[i].value) == ivalue)
+                    {
                         index = i;
                         break;
                     }
@@ -661,17 +679,25 @@ static void fill_cbox (GtkWidget * combobox, PreferencesWidget * widget)
             case VALUE_STRING:
                 g_signal_connect(combobox, "changed",
                                  G_CALLBACK(on_cbox_changed_string), widget);
+
+                gchar * value = NULL;
+                gchar * owned = NULL;
+                if (widget->cfg)
+                    value = * (gchar * *) widget->cfg;
+                else if (widget->cname)
+                    value = owned = get_string (widget->csect, widget->cname);
+
                 for(i=0; i<widget->data.combo.n_elements; i++) {
-                    if(!strcmp((gchar *)widget->data.combo.elements[i].value, *((gchar **)widget->cfg))) {
+                    if (value && ! strcmp ((gchar *) widget->data.combo.elements[i].value, value))
+                    {
                         index = i;
                         break;
                     }
                 }
-                break;
-            case VALUE_NULL:
+
+                g_free (owned);
                 break;
             default:
-                g_warning("Unhandled cbox value type");
                 break;
         }
         gtk_combo_box_set_active(GTK_COMBO_BOX(combobox), index);
@@ -865,24 +891,32 @@ static void create_spin_button (PreferencesWidget * widget, GtkWidget * *
           widget->data.spin_btn.right_label));
      }
 
-     switch (widget->cfg_type) {
-         case VALUE_INT:
-             gtk_spin_button_set_value ((GtkSpinButton *) * spin_btn, * (gint *) widget->cfg);
-             g_signal_connect(G_OBJECT(*spin_btn), "value_changed",
-                              G_CALLBACK(on_spin_btn_changed_gint),
-                              widget->cfg);
-             break;
-         case VALUE_FLOAT:
-             gtk_spin_button_set_value ((GtkSpinButton *) * spin_btn, * (gfloat *) widget->cfg);
-             g_signal_connect(G_OBJECT(*spin_btn), "value_changed",
-                              G_CALLBACK(on_spin_btn_changed_gfloat),
-                              widget->cfg);
-             break;
-         case VALUE_NULL:
-             break;
-         default:
-             g_warning("Unsupported value type for spin button");
-     }
+    switch (widget->cfg_type)
+    {
+    case VALUE_INT:;
+        gint ivalue = 0;
+        if (widget->cfg)
+            ivalue = * (gint *) widget->cfg;
+        else if (widget->cname)
+            ivalue = get_int (widget->csect, widget->cname);
+
+        gtk_spin_button_set_value ((GtkSpinButton *) * spin_btn, ivalue);
+        g_signal_connect (* spin_btn, "value_changed", (GCallback) on_spin_btn_changed_int, widget);
+        break;
+    case VALUE_FLOAT:;
+        gdouble fvalue = 0;
+        if (widget->cfg)
+            fvalue = * (gfloat *) widget->cfg;
+        else if (widget->cname)
+            fvalue = get_double (widget->csect, widget->cname);
+
+        gtk_spin_button_set_value ((GtkSpinButton *) * spin_btn, fvalue);
+        g_signal_connect (* spin_btn, "value_changed", (GCallback)
+         on_spin_btn_changed_float, widget);
+        break;
+    default:
+        break;
+    }
 }
 
 void create_font_btn (PreferencesWidget * widget, GtkWidget * * label,
@@ -1835,10 +1869,10 @@ static void sw_volume_toggled (void)
 {
     gint vol[2];
 
-    if (cfg.software_volume_control)
+    if (get_bool (NULL, "software_volume_control"))
     {
-        vol[0] = cfg.sw_volume_left;
-        vol[1] = cfg.sw_volume_right;
+        vol[0] = get_int (NULL, "sw_volume_left");
+        vol[1] = get_int (NULL, "sw_volume_right");
     }
     else
         playback_get_volume (& vol[0], & vol[1]);

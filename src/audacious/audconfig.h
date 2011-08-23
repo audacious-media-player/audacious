@@ -49,18 +49,8 @@ struct _AudConfig {
     gchar *chardet_detector;
     gchar *chardet_fallback;
     gchar **chardet_fallback_s;
-    gint output_buffer_size;
     gboolean close_jtf_dialog;
-    gboolean software_volume_control;
     gboolean remember_jtf_entry;
-    gint output_bit_depth;
-    gboolean enable_replay_gain;
-    gboolean enable_clipping_prevention;
-    gboolean replay_gain_track;
-    gboolean replay_gain_album;
-    gfloat replay_gain_preamp;
-    gfloat default_gain;
-    gint sw_volume_left, sw_volume_right;
 
     /* proxy stuff */
     gboolean use_proxy;

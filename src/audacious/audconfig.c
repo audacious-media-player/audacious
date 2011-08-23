@@ -42,18 +42,8 @@ AudConfig cfg = {
     .chardet_detector = NULL,
     .chardet_fallback = NULL,
     .chardet_fallback_s = NULL,
-    .output_buffer_size = 500,
     .close_jtf_dialog = TRUE,          /* close jtf dialog on jump */
-    .software_volume_control = FALSE,
     .remember_jtf_entry = TRUE,
-    .output_bit_depth = 16,
-    .enable_replay_gain = TRUE,
-    .enable_clipping_prevention = TRUE,
-    .replay_gain_track = TRUE,         /* track mode */
-    .replay_gain_album = FALSE,        /* album mode */
-    .replay_gain_preamp = 0,
-    .default_gain = 0,
-    .sw_volume_left = 100, .sw_volume_right = 100,
 };
 
 typedef struct aud_cfg_boolent_t {
@@ -79,12 +69,7 @@ static aud_cfg_boolent aud_boolents[] = {
     {"leading_zero", & cfg.leading_zero, TRUE},
     {"close_dialog_open", &cfg.close_dialog_open, TRUE},
     {"close_jtf_dialog", &cfg.close_jtf_dialog, TRUE},
-    {"software_volume_control", &cfg.software_volume_control, TRUE},
     {"remember_jtf_entry", &cfg.remember_jtf_entry, TRUE},
-    {"enable_replay_gain", &cfg.enable_replay_gain, TRUE},
-    {"enable_clipping_prevention", &cfg.enable_clipping_prevention, TRUE},
-    {"replay_gain_track", &cfg.replay_gain_track, TRUE},
-    {"replay_gain_album", &cfg.replay_gain_album, TRUE},
     {"use_proxy", & cfg.use_proxy, TRUE},
     {"use_proxy_auth", & cfg.use_proxy_auth, TRUE},
 };
@@ -95,10 +80,6 @@ static aud_cfg_nument aud_numents[] = {
     {"titlestring_preset", &cfg.titlestring_preset, TRUE},
     {"resume_state", & cfg.resume_state, TRUE},
     {"resume_playback_on_startup_time", &cfg.resume_playback_on_startup_time, TRUE},
-    {"output_buffer_size", &cfg.output_buffer_size, TRUE},
-    {"output_bit_depth", &cfg.output_bit_depth, TRUE},
-    {"sw_volume_left", & cfg.sw_volume_left, TRUE},
-    {"sw_volume_right", & cfg.sw_volume_right, TRUE},
 };
 
 static gint ncfgient = G_N_ELEMENTS(aud_numents);
@@ -163,10 +144,6 @@ aud_config_load(void)
         }
     }
 
-    /* RG settings */
-    cfg_db_get_float(db, NULL, "replay_gain_preamp", &cfg.replay_gain_preamp);
-    cfg_db_get_float(db, NULL, "default_gain", &cfg.default_gain);
-
     cfg_db_close(db);
 
     if (!cfg.gentitle_format)
@@ -217,10 +194,6 @@ aud_config_save(void)
                                   aud_strents[i].se_vname,
                                   *aud_strents[i].se_vloc);
     }
-
-    /* RG settings */
-    cfg_db_set_float(db, NULL, "replay_gain_preamp", cfg.replay_gain_preamp);
-    cfg_db_set_float(db, NULL, "default_gain",       cfg.default_gain);
 
     if (cfg.filesel_path)
         cfg_db_set_string(db, NULL, "filesel_path", cfg.filesel_path);

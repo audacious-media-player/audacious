@@ -22,10 +22,10 @@
 #include <math.h>
 #include <libaudcore/audio.h>
 
-#include "audconfig.h"
 #include "debug.h"
 #include "effect.h"
 #include "equalizer.h"
+#include "misc.h"
 #include "output.h"
 #include "playback.h"
 #include "plugins.h"
@@ -37,10 +37,10 @@ static OutputPlugin * cop = NULL;
 
 void output_get_volume (gint * l, gint * r)
 {
-    if (cfg.software_volume_control)
+    if (get_bool (NULL, "software_volume_control"))
     {
-        * l = cfg.sw_volume_left;
-        * r = cfg.sw_volume_right;
+        * l = get_int (NULL, "sw_volume_left");
+        * r = get_int (NULL, "sw_volume_right");
     }
     else if (cop != NULL && cop->get_volume != NULL)
         cop->get_volume (l, r);
@@ -53,10 +53,10 @@ void output_get_volume (gint * l, gint * r)
 
 void output_set_volume (gint l, gint r)
 {
-    if (cfg.software_volume_control)
+    if (get_bool (NULL, "software_volume_control"))
     {
-        cfg.sw_volume_left = l;
-        cfg.sw_volume_right = r;
+        set_int (NULL, "sw_volume_left", l);
+        set_int (NULL, "sw_volume_right", r);
     }
     else if (cop != NULL && cop->set_volume != NULL)
         cop->set_volume (l, r);
@@ -135,9 +135,9 @@ static gboolean open_audio (gint format, gint rate, gint channels)
             real_close ();
         }
 
-        output_format = cfg.output_bit_depth == 32 ? FMT_S32_NE :
-         cfg.output_bit_depth == 24 ? FMT_S24_NE : cfg.output_bit_depth == 16 ?
-         FMT_S16_NE : FMT_FLOAT;
+        gint depth = get_int (NULL, "output_bit_depth");
+        output_format = (depth == 32) ? FMT_S32_NE : (depth == 24) ? FMT_S24_NE
+         : (depth == 16) ? FMT_S16_NE : FMT_FLOAT;
         output_channels = effect_channels;
         output_rate = effect_rate;
 
@@ -192,18 +192,18 @@ static void output_set_replaygain_info (ReplayGainInfo * info)
 
 static void apply_replay_gain (gfloat * data, gint samples)
 {
-    gfloat factor = powf (10, (gfloat) cfg.replay_gain_preamp / 20);
-
-    if (! cfg.enable_replay_gain)
+    if (! get_bool (NULL, "enable_replay_gain"))
         return;
+
+    gfloat factor = powf (10, get_double (NULL, "replay_gain_preamp") / 20);
 
     if (have_replay_gain)
     {
-        if (cfg.replay_gain_album)
+        if (get_bool (NULL, "replay_gain_album"))
         {
             factor *= powf (10, replay_gain_info.album_gain / 20);
 
-            if (cfg.enable_clipping_prevention &&
+            if (get_bool (NULL, "enable_clipping_prevention") &&
              replay_gain_info.album_peak * factor > 1)
                 factor = 1 / replay_gain_info.album_peak;
         }
@@ -211,13 +211,13 @@ static void apply_replay_gain (gfloat * data, gint samples)
         {
             factor *= powf (10, replay_gain_info.track_gain / 20);
 
-            if (cfg.enable_clipping_prevention &&
+            if (get_bool (NULL, "enable_clipping_prevention") &&
              replay_gain_info.track_peak * factor > 1)
                 factor = 1 / replay_gain_info.track_peak;
         }
     }
     else
-        factor *= powf (10, (gfloat) cfg.default_gain / 20);
+        factor *= powf (10, get_double (NULL, "default_gain") / 20);
 
     if (factor < 0.99 || factor > 1.01)
         audio_amplify (data, 1, samples, & factor);
@@ -229,14 +229,16 @@ static void apply_software_volume (gfloat * data, gint channels, gint frames)
     gfloat factors[channels];
     gint channel;
 
-    if (! cfg.software_volume_control || (cfg.sw_volume_left == 100 &&
-     cfg.sw_volume_right == 100))
+    if (! get_bool (NULL, "software_volume_control"))
         return;
 
-    left_factor = (cfg.sw_volume_left == 0) ? 0 : powf (10, (gfloat)
-     SW_VOLUME_RANGE * (cfg.sw_volume_left - 100) / 100 / 20);
-    right_factor = (cfg.sw_volume_right == 0) ? 0 : powf (10, (gfloat)
-     SW_VOLUME_RANGE * (cfg.sw_volume_right - 100) / 100 / 20);
+    gint l = get_int (NULL, "sw_volume_left");
+    gint r = get_int (NULL, "sw_volume_right");
+    if (l == 100 && r == 100)
+        return;
+
+    left_factor = (l == 0) ? 0 : powf (10, (gfloat) SW_VOLUME_RANGE * (l - 100) / 100 / 20);
+    right_factor = (r == 0) ? 0 : powf (10, (gfloat) SW_VOLUME_RANGE * (r - 100) / 100 / 20);
 
     if (channels == 2)
     {
