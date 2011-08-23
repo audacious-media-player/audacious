@@ -13,6 +13,7 @@ SRCS = adder.c \
        equalizer_preset.c						\
        fft.c									\
        general.c \
+       history.c \
        interface.c								\
        main.c									\
        mpris-signals.c \

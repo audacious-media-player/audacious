@@ -30,7 +30,6 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
-#include <audacious/audconfig.h>
 #include <audacious/gtk-compat.h>
 #include <audacious/i18n.h>
 #include <audacious/drct.h>
@@ -39,20 +38,14 @@
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
 
-static void
-urlopener_add_url_callback(GtkWidget * widget,
-                      GtkEntry * entry)
+static void urlopener_add_url_callback (GtkWidget * widget, GtkEntry * entry)
 {
-    const gchar *text;
-
-    text = gtk_entry_get_text(entry);
-    aud_util_add_url_history_entry(text);
+    aud_history_add (gtk_entry_get_text (entry));
 }
 
 GtkWidget * urlopener_add_url_dialog_new (GCallback func, gboolean open)
 {
     GtkWidget * win, * vbox, * bbox, * cancel, * ok, * combo, * entry;
-    GList *url;
 
     win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title ((GtkWindow *) win, open ? _("Open URL") : _("Add URL"));
@@ -71,9 +64,9 @@ GtkWidget * urlopener_add_url_dialog_new (GCallback func, gboolean open)
     gtk_window_set_focus(GTK_WINDOW(win), entry);
     gtk_entry_set_text(GTK_ENTRY(entry), "");
 
-    for (url = aud_cfg->url_history; url; url = g_list_next(url))
-        gtk_combo_box_text_append_text ((GtkComboBoxText *) combo,
-         (const gchar *) url->data);
+    const gchar * path;
+    for (gint i = 0; (path = aud_history_get (i)); i ++)
+        gtk_combo_box_text_append_text ((GtkComboBoxText *) combo, path);
 
     g_signal_connect(entry, "activate",
                      G_CALLBACK(urlopener_add_url_callback),

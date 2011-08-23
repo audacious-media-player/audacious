@@ -187,23 +187,6 @@ gchar * get_path_to_self (void)
     }
 }
 
-#define URL_HISTORY_MAX_SIZE 30
-
-void
-util_add_url_history_entry(const gchar * url)
-{
-    if (g_list_find_custom(cfg.url_history, url, (GCompareFunc) strcasecmp))
-        return;
-
-    cfg.url_history = g_list_prepend(cfg.url_history, g_strdup(url));
-
-    while (g_list_length(cfg.url_history) > URL_HISTORY_MAX_SIZE) {
-        GList *node = g_list_last(cfg.url_history);
-        g_free(node->data);
-        cfg.url_history = g_list_delete_link(cfg.url_history, node);
-    }
-}
-
 /* Strips various common top-level folders from a file name (not URI).  The
  * string passed will not be modified, but the string returned will share the
  * same memory.  Examples:

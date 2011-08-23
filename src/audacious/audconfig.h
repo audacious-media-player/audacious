@@ -38,7 +38,6 @@
 
 struct _AudConfig {
     gboolean show_numbers_in_pl, leading_zero;
-    GList *url_history;
     gint titlestring_preset;
     gchar *gentitle_format;
     gint resume_state;

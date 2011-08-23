@@ -56,6 +56,10 @@ AUD_FUNC2 (gboolean, save_preset_file, EqualizerPreset *, preset, const gchar *,
  filename)
 AUD_FUNC1 (GList *, import_winamp_eqf, VFSFile *, file)
 
+/* history.c */
+AUD_FUNC1 (const gchar *, history_get, gint, entry)
+AUD_FUNC1 (void, history_add, const gchar *, path)
+
 /* main.c */
 AUD_FUNC1 (const gchar *, get_path, gint, path)
 
@@ -93,7 +97,6 @@ AUD_FUNC0 (void, show_prefs_window)
 
 /* util.c */
 AUD_FUNC0 (gchar *, util_get_localdir)
-AUD_FUNC1 (void, util_add_url_history_entry, const gchar *, url)
 AUD_FUNC2 (gchar *, construct_uri, const gchar *, base, const gchar *, reference)
 
 /* vis_runner.c */

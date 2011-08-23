@@ -33,7 +33,6 @@
 AudConfig cfg = {
     .show_numbers_in_pl = TRUE,
     .leading_zero = TRUE,
-    .url_history = NULL,
     .resume_state = 0,
     .resume_playback_on_startup_time = 0,
     .chardet_detector = NULL,
@@ -100,7 +99,7 @@ void
 aud_config_load(void)
 {
     mcs_handle_t *db;
-    gint i, length;
+    gint i;
 
     if (! (db = cfg_db_open ()))
         return;
@@ -123,17 +122,6 @@ aud_config_load(void)
                               aud_strents[i].se_vloc);
     }
 
-    /* History */
-    if (cfg_db_get_int(db, NULL, "url_history_length", &length)) {
-        for (i = 1; i <= length; i++) {
-            gchar str[19], *tmp;
-
-            g_snprintf(str, sizeof(str), "url_history%d", i);
-            if (cfg_db_get_string(db, NULL, str, &tmp))
-                cfg.url_history = g_list_append(cfg.url_history, tmp);
-        }
-    }
-
     cfg_db_close(db);
 
     if (!cfg.gentitle_format)
@@ -151,8 +139,6 @@ aud_config_load(void)
 void
 aud_config_save(void)
 {
-    GList *node;
-    gchar *str;
     gint i;
     mcs_handle_t *db;
 
@@ -183,15 +169,6 @@ aud_config_save(void)
             cfg_db_set_string(db, NULL,
                                   aud_strents[i].se_vname,
                                   *aud_strents[i].se_vloc);
-    }
-
-    cfg_db_set_int(db, NULL, "url_history_length",
-                       g_list_length(cfg.url_history));
-
-    for (node = cfg.url_history, i = 1; node; node = g_list_next(node), i++) {
-        str = g_strdup_printf("url_history%d", i);
-        cfg_db_set_string(db, NULL, str, node->data);
-        g_free(str);
     }
 
     cfg_db_close(db);
