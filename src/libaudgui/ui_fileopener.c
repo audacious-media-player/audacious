@@ -19,10 +19,10 @@
 
 #include <gtk/gtk.h>
 
-#include <audacious/audconfig.h>
 #include <audacious/i18n.h>
 #include <audacious/drct.h>
 #include <audacious/gtk-compat.h>
+#include <audacious/misc.h>
 
 #include "config.h"
 #include "libaudgui.h"
@@ -46,8 +46,9 @@ static void filebrowser_add_files (GtkFileChooser * browser, GSList * files,
 
     g_list_free (list);
 
-    g_free (aud_cfg->filesel_path);
-    aud_cfg->filesel_path = gtk_file_chooser_get_current_folder (browser);
+    gchar * path = gtk_file_chooser_get_current_folder (browser);
+    aud_set_string ("audgui", "filesel_path", path);
+    g_free (path);
 }
 
 static void
@@ -56,11 +57,8 @@ action_button_cb(GtkWidget *widget, gpointer data)
     GtkWidget *window = g_object_get_data(data, "window");
     GtkWidget *chooser = g_object_get_data(data, "chooser");
     GtkWidget *toggle = g_object_get_data(data, "toggle-button");
-    GSList *files;
-    aud_cfg->close_dialog_open =
-        gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(toggle));
 
-    files = gtk_file_chooser_get_uris ((GtkFileChooser *) chooser);
+    GSList * files = gtk_file_chooser_get_uris ((GtkFileChooser *) chooser);
 
     filebrowser_add_files ((GtkFileChooser *) chooser, files, GPOINTER_TO_INT
      (g_object_get_data (data, "play-button")));
@@ -68,8 +66,11 @@ action_button_cb(GtkWidget *widget, gpointer data)
     g_slist_foreach(files, (GFunc) g_free, NULL);
     g_slist_free(files);
 
-    if (aud_cfg->close_dialog_open)
-        gtk_widget_destroy(window);
+    gboolean close_dialog = gtk_toggle_button_get_active ((GtkToggleButton *) toggle);
+    aud_set_bool ("audgui", "close_dialog_open", close_dialog);
+
+    if (close_dialog)
+        gtk_widget_destroy (window);
 }
 
 
@@ -122,17 +123,20 @@ run_filebrowser_gtk2style(gboolean play_button, gboolean show)
 
     chooser = gtk_file_chooser_widget_new(GTK_FILE_CHOOSER_ACTION_OPEN);
     gtk_file_chooser_set_select_multiple(GTK_FILE_CHOOSER(chooser), TRUE);
-    if (aud_cfg->filesel_path)
-        gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(chooser),
-                                            aud_cfg->filesel_path);
+
+    gchar * path = aud_get_string ("audgui", "filesel_path");
+    if (path[0])
+        gtk_file_chooser_set_current_folder ((GtkFileChooser *) chooser, path);
+    g_free (path);
+
     gtk_box_pack_start(GTK_BOX(vbox), chooser, TRUE, TRUE, 3);
 
     hbox = gtk_hbox_new(TRUE, 0);
     gtk_box_pack_end(GTK_BOX(vbox), hbox, FALSE, FALSE, 3);
 
     toggle = gtk_check_button_new_with_label(toggle_text);
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle),
-                                 aud_cfg->close_dialog_open ? TRUE : FALSE);
+    gtk_toggle_button_set_active ((GtkToggleButton *) toggle, aud_get_bool
+     ("audgui", "close_dialog_open"));
     gtk_box_pack_start(GTK_BOX(hbox), toggle, TRUE, TRUE, 3);
 
     bbox = gtk_hbutton_box_new();

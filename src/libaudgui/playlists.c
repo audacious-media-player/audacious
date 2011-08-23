@@ -25,8 +25,8 @@
 
 #include <gtk/gtk.h>
 
-#include <audacious/audconfig.h>
 #include <audacious/i18n.h>
+#include <audacious/misc.h>
 #include <audacious/playlist.h>
 #include <libaudcore/vfs.h>
 
@@ -49,17 +49,18 @@ static gchar * select_file (gboolean save, const gchar * default_filename)
 
     gtk_dialog_set_default_response ((GtkDialog *) dialog, GTK_RESPONSE_ACCEPT);
 
-    if (aud_cfg->playlist_path)
-        gtk_file_chooser_set_current_folder_uri ((GtkFileChooser *) dialog,
-         aud_cfg->playlist_path);
+    gchar * path = aud_get_string ("audgui", "playlist_path");
+    if (path[0])
+        gtk_file_chooser_set_current_folder_uri ((GtkFileChooser *) dialog, path);
+    g_free (path);
 
     gchar * filename = NULL;
     if (gtk_dialog_run ((GtkDialog *) dialog) == GTK_RESPONSE_ACCEPT)
         filename = gtk_file_chooser_get_uri ((GtkFileChooser *) dialog);
 
-    g_free (aud_cfg->playlist_path);
-    aud_cfg->playlist_path = gtk_file_chooser_get_current_folder_uri
-     ((GtkFileChooser *) dialog);
+    path = gtk_file_chooser_get_current_folder_uri ((GtkFileChooser *) dialog);
+    aud_set_string ("audgui", "playlist_path", path);
+    g_free (path);
 
     gtk_widget_destroy (dialog);
     return filename;

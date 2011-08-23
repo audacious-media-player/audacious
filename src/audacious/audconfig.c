@@ -33,17 +33,12 @@
 AudConfig cfg = {
     .show_numbers_in_pl = TRUE,
     .leading_zero = TRUE,
-    .close_dialog_open = TRUE,
-    .filesel_path = NULL,
-    .playlist_path = NULL,
     .url_history = NULL,
     .resume_state = 0,
     .resume_playback_on_startup_time = 0,
     .chardet_detector = NULL,
     .chardet_fallback = NULL,
     .chardet_fallback_s = NULL,
-    .close_jtf_dialog = TRUE,          /* close jtf dialog on jump */
-    .remember_jtf_entry = TRUE,
 };
 
 typedef struct aud_cfg_boolent_t {
@@ -67,9 +62,6 @@ typedef struct aud_cfg_strent_t {
 static aud_cfg_boolent aud_boolents[] = {
     {"show_numbers_in_pl", &cfg.show_numbers_in_pl, TRUE},
     {"leading_zero", & cfg.leading_zero, TRUE},
-    {"close_dialog_open", &cfg.close_dialog_open, TRUE},
-    {"close_jtf_dialog", &cfg.close_jtf_dialog, TRUE},
-    {"remember_jtf_entry", &cfg.remember_jtf_entry, TRUE},
     {"use_proxy", & cfg.use_proxy, TRUE},
     {"use_proxy_auth", & cfg.use_proxy_auth, TRUE},
 };
@@ -85,8 +77,6 @@ static aud_cfg_nument aud_numents[] = {
 static gint ncfgient = G_N_ELEMENTS(aud_numents);
 
 static aud_cfg_strent aud_strents[] = {
-    {"filesel_path", &cfg.filesel_path, FALSE},
-    {"playlist_path", &cfg.playlist_path, FALSE},
     {"generic_title_format", &cfg.gentitle_format, TRUE},
     {"chardet_detector", &cfg.chardet_detector, TRUE},
     {"chardet_fallback", &cfg.chardet_fallback, TRUE},
@@ -194,12 +184,6 @@ aud_config_save(void)
                                   aud_strents[i].se_vname,
                                   *aud_strents[i].se_vloc);
     }
-
-    if (cfg.filesel_path)
-        cfg_db_set_string(db, NULL, "filesel_path", cfg.filesel_path);
-
-    if (cfg.playlist_path)
-        cfg_db_set_string(db, NULL, "playlist_path", cfg.playlist_path);
 
     cfg_db_set_int(db, NULL, "url_history_length",
                        g_list_length(cfg.url_history));

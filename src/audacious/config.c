@@ -30,7 +30,7 @@
 
 #define DEFAULT_SECTION "audacious"
 
-static const gchar * core_defaults[] = {
+static const gchar * const core_defaults[] = {
 
  /* general */
  "advance_on_delete", "FALSE",

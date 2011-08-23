@@ -36,10 +36,10 @@
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
 
-#include <audacious/audconfig.h>
 #include <audacious/drct.h>
 #include <audacious/gtk-compat.h>
 #include <audacious/i18n.h>
+#include <audacious/misc.h>
 #include <audacious/playlist.h>
 #include <libaudcore/hook.h>
 
@@ -100,22 +100,20 @@ ui_jump_to_track_jump(GtkTreeView * treeview)
 
     change_song(pos - 1);
 
-    if(aud_cfg->close_jtf_dialog)
+    if (aud_get_bool ("audgui", "close_jtf_dialog"))
         audgui_jump_to_track_hide();
 }
 
-static void
-ui_jump_to_track_toggle_cb(GtkWidget * toggle)
+static void ui_jump_to_track_toggle_cb (GtkWidget * toggle)
 {
-    aud_cfg->close_jtf_dialog =
-        gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(toggle));
+    aud_set_bool ("audgui", "close_jtf_dialog", gtk_toggle_button_get_active
+     ((GtkToggleButton *) toggle));
 }
 
-static void
-ui_jump_to_track_toggle2_cb(GtkWidget * toggle)
+static void ui_jump_to_track_toggle2_cb (GtkWidget * toggle)
 {
-    aud_cfg->remember_jtf_entry =
-        gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(toggle));
+    aud_set_bool ("audgui", "remember_jtf_entry", gtk_toggle_button_get_active
+     ((GtkToggleButton *) toggle));
 }
 
 static void
@@ -378,7 +376,7 @@ audgui_jump_to_track(void)
     if (jump_to_track_win) {
         gtk_window_present(GTK_WINDOW(jump_to_track_win));
 
-        if(!aud_cfg->remember_jtf_entry)
+        if (! aud_get_bool ("audgui", "remember_jtf_entry"))
             gtk_entry_set_text(GTK_ENTRY(edit), "");
 
         gtk_widget_grab_focus(edit);
@@ -459,8 +457,8 @@ audgui_jump_to_track(void)
 
     /* remember text entry */
     toggle2 = gtk_check_button_new_with_label(_("Remember"));
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle2),
-                                 aud_cfg->remember_jtf_entry ? TRUE : FALSE);
+    gtk_toggle_button_set_active ((GtkToggleButton *) toggle2, aud_get_bool
+     ("audgui", "remember_jtf_entry"));
     gtk_box_pack_start(GTK_BOX(hbox), toggle2, FALSE, FALSE, 0);
     g_signal_connect(toggle2, "clicked",
                      G_CALLBACK(ui_jump_to_track_toggle2_cb),
@@ -502,8 +500,8 @@ audgui_jump_to_track(void)
 
     /* close dialog toggle */
     toggle = gtk_check_button_new_with_label(_("Close on Jump"));
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle),
-                                 aud_cfg->close_jtf_dialog ? TRUE : FALSE);
+    gtk_toggle_button_set_active ((GtkToggleButton *) toggle, aud_get_bool
+     ("audgui", "close_jtf_dialog"));
     gtk_box_pack_start(GTK_BOX(bbox), toggle, FALSE, FALSE, 0);
     g_signal_connect(toggle, "clicked",
                      G_CALLBACK(ui_jump_to_track_toggle_cb),

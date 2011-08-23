@@ -38,9 +38,6 @@
 
 struct _AudConfig {
     gboolean show_numbers_in_pl, leading_zero;
-    gboolean close_dialog_open;
-    gchar *filesel_path;
-    gchar *playlist_path;
     GList *url_history;
     gint titlestring_preset;
     gchar *gentitle_format;
@@ -49,8 +46,6 @@ struct _AudConfig {
     gchar *chardet_detector;
     gchar *chardet_fallback;
     gchar **chardet_fallback_s;
-    gboolean close_jtf_dialog;
-    gboolean remember_jtf_entry;
 
     /* proxy stuff */
     gboolean use_proxy;

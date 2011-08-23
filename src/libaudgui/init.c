@@ -1,6 +1,6 @@
 /*
  * libaudgui/init.c
- * Copyright 2010 John Lindgren
+ * Copyright 2010-2011 John Lindgren
  *
  * This file is part of Audacious.
  *
@@ -19,11 +19,19 @@
  * using our public API to be a derived work.
  */
 
-#include <audacious/plugin.h>
+#include <audacious/misc.h>
+
+static const gchar * const audgui_defaults[] = {
+ "close_dialog_open", "TRUE",
+ "close_jtf_dialog", "TRUE",
+ "playlist_manager_close_on_activate", "FALSE",
+ "remember_jtf_entry", "TRUE",
+ NULL};
 
 AudAPITable * _aud_api_table = NULL;
 
 void audgui_init (AudAPITable * table)
 {
     _aud_api_table = table;
+    aud_config_set_defaults ("audgui", audgui_defaults);
 }
