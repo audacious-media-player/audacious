@@ -28,27 +28,7 @@
 
 #warning audconfig.h is deprecated.  Please use the new aud_set/get API instead.
 
-#include <glib.h>
-#include <audacious/types.h>
-
-#ifndef _AUDACIOUS_CORE
-#include <audacious/api.h>
-#define aud_cfg (_aud_api_table->cfg)
-#endif
-
-struct _AudConfig {
-    gchar *chardet_detector;
-    gchar *chardet_fallback;
-    gchar **chardet_fallback_s;
-};
-
-typedef struct _AudConfig AudConfig;
-
-extern AudConfig cfg;
-
 void aud_config_load(void);
 void aud_config_save(void);
-
-void aud_config_chardet_update(void);
 
 #endif /* AUDACIOUS_AUDCONFIG_H */

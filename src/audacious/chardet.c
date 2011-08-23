@@ -20,10 +20,10 @@
 #include <string.h>
 #include <libaudcore/audstrings.h>
 
-#include "audconfig.h"
 #include "config.h"
-#include "i18n.h"
 #include "debug.h"
+#include "i18n.h"
+#include "misc.h"
 
 #ifdef USE_CHARDET
 #  include <libguess.h>
@@ -97,9 +97,6 @@ static gchar * cd_chardet_to_utf8 (const gchar * str, gssize len,
     if (error)
         * error = NULL;
 
-#ifdef USE_CHARDET
-    gchar *det = NULL, *encoding = NULL;
-#endif
     gchar *ret = NULL;
     gsize *bytes_read, *bytes_write;
     gsize my_bytes_read, my_bytes_write;
@@ -129,30 +126,30 @@ static gchar * cd_chardet_to_utf8 (const gchar * str, gssize len,
 
         return ret;
     }
-#ifdef USE_CHARDET
-    if (cfg.chardet_detector)
-        det = cfg.chardet_detector;
 
-    if (det)
+#ifdef USE_CHARDET
+    gchar * det = get_string (NULL, "chardet_detector");
+
+    if (det[0])
     {
         AUDDBG("guess encoding (%s) %s\n", det, str);
-        encoding = (gchar *) libguess_determine_encoding(str, len, det);
+        const gchar * encoding = libguess_determine_encoding (str, len, det);
         AUDDBG("encoding = %s\n", encoding);
-        if (encoding == NULL)
-            goto fallback;
-
-        ret = g_convert (str, len, "UTF-8", encoding, bytes_read, bytes_write,
-         (error && * error) ? NULL : error);
+        if (encoding)
+            ret = g_convert (str, len, "UTF-8", encoding, bytes_read,
+             bytes_write, (error && * error) ? NULL : error);
     }
 
-fallback:
+    g_free (det);
 #endif
 
     /* If detection failed or was not enabled, try fallbacks (if there are any) */
-    if (ret == NULL && cfg.chardet_fallback_s != NULL)
+    if (! ret)
     {
-        gchar **enc;
-        for (enc = cfg.chardet_fallback_s; *enc != NULL; enc++)
+        gchar * fallbacks = get_string (NULL, "chardet_fallback");
+        gchar * * split = g_strsplit_set (fallbacks, " ,:;|/", -1);
+
+        for (gchar * * enc = split; * enc; enc ++)
         {
             ret = g_convert (str, len, "UTF-8", * enc, bytes_read, bytes_write,
              (error && * error) ? NULL : error);
@@ -163,6 +160,9 @@ fallback:
                 ret = NULL;
             }
         }
+
+        g_strfreev (split);
+        g_free (fallbacks);
     }
 
     /* First fallback: locale (duh!) */

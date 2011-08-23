@@ -37,7 +37,6 @@
 # define SHARED_SUFFIX G_MODULE_SUFFIX
 #endif
 
-#include "audconfig.h"
 #include "debug.h"
 #include "plugin.h"
 #include "ui_preferences.h"
@@ -61,7 +60,6 @@ AudAPITable api_table = {
  .misc_api = & misc_api,
  .playlist_api = & playlist_api,
  .plugins_api = & plugins_api,
- .cfg = & cfg,
  .verbose = & verbose};
 
 typedef struct {

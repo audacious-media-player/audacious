@@ -23,83 +23,17 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#include <glib.h>
 #include <libaudcore/hook.h>
 
 #include "audconfig.h"
-#include "configdb.h"
-#include "playback.h"
-
-AudConfig cfg = {
-    .chardet_detector = NULL,
-    .chardet_fallback = NULL,
-    .chardet_fallback_s = NULL,
-};
-
-typedef struct aud_cfg_strent_t {
-    char const *se_vname;
-    char **se_vloc;
-    gboolean se_wrt;
-} aud_cfg_strent;
-
-static aud_cfg_strent aud_strents[] = {
-    {"chardet_detector", &cfg.chardet_detector, TRUE},
-    {"chardet_fallback", &cfg.chardet_fallback, TRUE},
-};
-
-static gint ncfgsent = G_N_ELEMENTS(aud_strents);
-
-void aud_config_chardet_update(void)
-{
-    if (cfg.chardet_fallback_s != NULL)
-        g_strfreev(cfg.chardet_fallback_s);
-    cfg.chardet_fallback_s = g_strsplit_set(cfg.chardet_fallback, " ,:;|/", 0);
-}
-
 
 void
 aud_config_load(void)
 {
-    mcs_handle_t *db;
-    gint i;
-
-    if (! (db = cfg_db_open ()))
-        return;
-
-    for (i = 0; i < ncfgsent; ++i) {
-        cfg_db_get_string(db, NULL,
-                              aud_strents[i].se_vname,
-                              aud_strents[i].se_vloc);
-    }
-
-    cfg_db_close(db);
-
-    if (!cfg.chardet_detector)
-        cfg.chardet_detector = g_strdup("");
-
-    if (!cfg.chardet_fallback)
-        cfg.chardet_fallback = g_strdup("");
-
-    aud_config_chardet_update();
 }
 
 void
 aud_config_save(void)
 {
-    gint i;
-    mcs_handle_t *db;
-
     hook_call ("config save", NULL);
-
-    if (! (db = cfg_db_open ()))
-        return;
-
-    for (i = 0; i < ncfgsent; ++i) {
-        if (aud_strents[i].se_wrt)
-            cfg_db_set_string(db, NULL,
-                                  aud_strents[i].se_vname,
-                                  *aud_strents[i].se_vloc);
-    }
-
-    cfg_db_close(db);
 }

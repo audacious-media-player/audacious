@@ -28,7 +28,6 @@ typedef const struct {
     const struct MiscAPI * misc_api;
     const struct PlaylistAPI * playlist_api;
     const struct PluginsAPI * plugins_api;
-    struct _AudConfig * cfg;
     char * verbose;
 } AudAPITable;
 

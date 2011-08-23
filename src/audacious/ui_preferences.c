@@ -25,7 +25,6 @@
 
 #include <libaudcore/hook.h>
 
-#include "audconfig.h"
 #include "config.h"
 #include "configdb.h"
 #include "debug.h"
@@ -192,13 +191,12 @@ static PreferencesWidget connectivity_page_widgets[] = {
 static PreferencesWidget chardet_elements[] = {
 #ifdef USE_CHARDET
  {WIDGET_COMBO_BOX, N_("Auto character encoding detector for:"),
-  .cfg_type = VALUE_STRING, .cfg = & cfg.chardet_detector, .child = TRUE,
+  .cfg_type = VALUE_STRING, .cname = "chardet_detector", .child = TRUE,
   .data = {.combo = {chardet_detector_presets,
   G_N_ELEMENTS (chardet_detector_presets), TRUE}}},
 #endif
  {WIDGET_ENTRY, N_("Fallback character encodings:"), .cfg_type = VALUE_STRING,
-  .cfg = & cfg.chardet_fallback, .callback = aud_config_chardet_update,
-  .child = TRUE}};
+  .cname = "chardet_fallback", .child = TRUE}};
 
 static PreferencesWidget playlist_page_widgets[] = {
     {WIDGET_LABEL, N_("<b>Behavior</b>"), NULL, NULL, NULL, FALSE},
