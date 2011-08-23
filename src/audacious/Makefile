@@ -2,7 +2,6 @@ include ../../extra.mk
 
 PROG = audacious${PROG_SUFFIX}
 SRCS = adder.c \
-       audconfig.c \
        chardet.c								\
        config.c \
        configdb.c								\
@@ -50,7 +49,6 @@ INCLUDES = api.h \
            api-alias-end.h \
            api-define-begin.h \
            api-define-end.h \
-           audconfig.h \
            configdb.h			\
            configdb-api.h \
            dbus.h				\

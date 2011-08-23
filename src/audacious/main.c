@@ -43,7 +43,6 @@
 #include "eggsmclient.h"
 #endif
 
-#include "audconfig.h"
 #include "configdb.h"
 #include "debug.h"
 #include "drct.h"
@@ -478,7 +477,6 @@ static void init_one (gint * p_argc, gchar * * * p_argv)
     textdomain (PACKAGE_NAME);
 
     mowgli_init ();
-    chardet_init ();
 
     g_thread_init (NULL);
     gdk_threads_init ();
@@ -499,7 +497,8 @@ static void init_two (void)
     tag_init ();
 
     config_load ();
-    aud_config_load (); /* deprecated, must be after config_load */
+    chardet_init ();
+
     tag_set_verbose (verbose);
     vfs_set_verbose (verbose);
 
@@ -537,7 +536,7 @@ static void shut_down (void)
     mpris_signals_cleanup ();
 
     AUDDBG ("Capturing state.\n");
-    aud_config_save (); /* deprecated, must be before config_save */
+    hook_call ("config save", NULL);
     save_playlists ();
 
     AUDDBG ("Unloading highlevel plugins.\n");
@@ -560,10 +559,10 @@ static void shut_down (void)
     gdk_threads_leave ();
 }
 
-static gboolean autosave_cb (void * unused)
+gboolean do_autosave (void)
 {
     AUDDBG ("Saving configuration.\n");
-    aud_config_save (); /* deprecated, must be before config_save */
+    hook_call ("config save", NULL);
     save_playlists ();
     config_save ();
     return TRUE;
@@ -587,7 +586,7 @@ gint main(gint argc, gchar ** argv)
     init_two ();
 
     AUDDBG ("Startup complete.\n");
-    g_timeout_add_seconds (AUTOSAVE_INTERVAL, autosave_cb, NULL);
+    g_timeout_add_seconds (AUTOSAVE_INTERVAL, (GSourceFunc) do_autosave, NULL);
     hook_associate ("quit", (HookFunction) gtk_main_quit, NULL);
 
     gtk_main ();

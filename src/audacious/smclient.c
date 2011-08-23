@@ -21,12 +21,14 @@
 #include <gdk/gdk.h>
 #include <libaudcore/hook.h>
 
-#include "audconfig.h"
 #include "config.h"
 
 #ifdef USE_EGGSM
 
 #include "eggsmclient.h"
+
+/* main.c */
+gboolean do_autosave (void);
 
 static void
 signal_session_quit_cb(EggSMClient *client, gpointer user_data)
@@ -53,7 +55,7 @@ signal_session_save_cb(EggSMClient *client, GKeyFile *state_file, gpointer user_
     argv[1] = g_strdup_printf ("--display=%s", gdk_display_get_name (gdk_display_get_default()));
     egg_sm_client_set_restart_command (client, 2, argv);
 
-    aud_config_save();
+    do_autosave ();
 }
 #endif
 
