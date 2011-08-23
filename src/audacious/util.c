@@ -80,29 +80,6 @@ gboolean dir_foreach (const gchar * path, DirForeachFunc func, void * user)
     return TRUE;
 }
 
-/**
- * util_get_localdir:
- *
- * Returns a string with the full path of Audacious local datadir (where config files are placed).
- * It's useful in order to put in the right place custom config files for audacious plugins.
- *
- * Return value: a string with full path of Audacious local datadir (should be freed after use)
- **/
-gchar*
-util_get_localdir(void)
-{
-  gchar *datadir;
-  gchar *tmp;
-
-  if ( (tmp = getenv("XDG_CONFIG_HOME")) == NULL )
-    datadir = g_build_filename( g_get_home_dir() , ".config" , "audacious" ,  NULL );
-  else
-    datadir = g_build_filename( tmp , "audacious" , NULL );
-
-  return datadir;
-}
-
-
 gchar * construct_uri (const gchar * string, const gchar * playlist_name)
 {
     gchar *filename = g_strdup(string);

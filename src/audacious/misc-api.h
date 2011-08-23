@@ -95,7 +95,6 @@ AUD_FUNC4 (void, create_widgets_with_domain, /* GtkWidget * */ void *, box,
 AUD_FUNC0 (void, show_prefs_window)
 
 /* util.c */
-AUD_FUNC0 (gchar *, util_get_localdir)
 AUD_FUNC2 (gchar *, construct_uri, const gchar *, base, const gchar *, reference)
 
 /* vis_runner.c */
