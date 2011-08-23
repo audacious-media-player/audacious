@@ -41,6 +41,10 @@
 #include "preferences.h"
 #include "ui_preferences.h"
 
+#ifdef USE_CHARDET
+#include <libguess.h>
+#endif
+
 #define TITLESTRING_UPDATE_TIMEOUT 3
 
 static void sw_volume_toggled (void);
@@ -109,20 +113,18 @@ static TitleFieldTag title_field_tags[] = {
 static const guint n_title_field_tags = G_N_ELEMENTS(title_field_tags);
 
 static ComboBoxElements chardet_detector_presets[] = {
-    { N_("None")     , N_("None") },
-    { N_("Japanese") , N_("Japanese") },
-    { N_("Taiwanese"), N_("Taiwanese") },
-    { N_("Chinese")  , N_("Chinese") },
-    { N_("Korean")   , N_("Korean") },
-    { N_("Russian")  , N_("Russian") },
-    { N_("Greek")    , N_("Greek") },
-    { N_("Hebrew")   , N_("Hebrew") },
-    { N_("Turkish")  , N_("Turkish") },
-    { N_("Arabic")   , N_("Arabic") },
-    { N_("Polish")   , N_("Polish") },
-    { N_("Baltic")   , N_("Baltic") },
-    { N_("Universal"), N_("Universal") }
-};
+ {"", N_("None")},
+ {GUESS_REGION_AR, N_("Arabic")},
+ {GUESS_REGION_BL, N_("Baltic")},
+ {GUESS_REGION_CN, N_("Chinese")},
+ {GUESS_REGION_GR, N_("Greek")},
+ {GUESS_REGION_HW, N_("Hebrew")},
+ {GUESS_REGION_JP, N_("Japanese")},
+ {GUESS_REGION_KR, N_("Korean")},
+ {GUESS_REGION_PL, N_("Polish")},
+ {GUESS_REGION_RU, N_("Russian")},
+ {GUESS_REGION_TW, N_("Taiwanese")},
+ {GUESS_REGION_TR, N_("Turkish")}};
 
 static ComboBoxElements bitdepth_elements[] = {
     { GINT_TO_POINTER(16), "16" },
