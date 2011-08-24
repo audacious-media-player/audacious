@@ -100,7 +100,6 @@ static void make_dirs(void)
 #endif
 
     make_directory(aud_paths[AUD_PATH_USER_DIR], mode755);
-    make_directory(aud_paths[AUD_PATH_USER_PLUGIN_DIR], mode755);
     make_directory(aud_paths[AUD_PATH_PLAYLISTS_DIR], mode755);
 }
 
