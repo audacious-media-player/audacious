@@ -112,6 +112,7 @@ static TitleFieldTag title_field_tags[] = {
 };
 static const guint n_title_field_tags = G_N_ELEMENTS(title_field_tags);
 
+#ifdef USE_CHARDET
 static ComboBoxElements chardet_detector_presets[] = {
  {"", N_("None")},
  {GUESS_REGION_AR, N_("Arabic")},
@@ -125,6 +126,7 @@ static ComboBoxElements chardet_detector_presets[] = {
  {GUESS_REGION_RU, N_("Russian")},
  {GUESS_REGION_TW, N_("Taiwanese")},
  {GUESS_REGION_TR, N_("Turkish")}};
+#endif
 
 static ComboBoxElements bitdepth_elements[] = {
     { GINT_TO_POINTER(16), "16" },
@@ -192,16 +194,15 @@ static PreferencesWidget connectivity_page_widgets[] = {
 };
 
 static PreferencesWidget chardet_elements[] = {
-    {WIDGET_COMBO_BOX, N_("Auto character encoding detector for:"), &cfg.chardet_detector, NULL, NULL, TRUE,
-        {.combo = {chardet_detector_presets, G_N_ELEMENTS(chardet_detector_presets),
-                   #ifdef USE_CHARDET
-                   TRUE
-                   #else
-                   FALSE
-                   #endif
-                   }}, VALUE_STRING},
-    {WIDGET_ENTRY, N_("Fallback character encodings:"), &cfg.chardet_fallback, aud_config_chardet_update, N_("List of character encodings used for fall back conversion of metadata. If automatic character encoding detector failed or has been disabled, encodings in this list would be treated as candidates of the encoding of metadata, and fall back conversion from these encodings to UTF-8 would be attempted."), TRUE, {.entry = {FALSE}}, VALUE_STRING},
-};
+#ifdef USE_CHARDET
+ {WIDGET_COMBO_BOX, N_("Auto character encoding detector for:"),
+  .cfg_type = VALUE_STRING, .cfg = & cfg.chardet_detector, .child = TRUE,
+  .data = {.combo = {chardet_detector_presets,
+  G_N_ELEMENTS (chardet_detector_presets), TRUE}}},
+#endif
+ {WIDGET_ENTRY, N_("Fallback character encodings:"), .cfg_type = VALUE_STRING,
+  .cfg = & cfg.chardet_fallback, .callback = aud_config_chardet_update,
+  .child = TRUE}};
 
 static PreferencesWidget playlist_page_widgets[] = {
     {WIDGET_LABEL, N_("<b>Behavior</b>"), NULL, NULL, NULL, FALSE},
