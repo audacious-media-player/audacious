@@ -109,6 +109,7 @@ static TitleFieldTag title_field_tags[] = {
 };
 static const guint n_title_field_tags = G_N_ELEMENTS(title_field_tags);
 
+#ifdef USE_CHARDET
 static ComboBoxElements chardet_detector_presets[] = {
  {"", N_("None")},
  {GUESS_REGION_AR, N_("Arabic")},
@@ -122,6 +123,7 @@ static ComboBoxElements chardet_detector_presets[] = {
  {GUESS_REGION_RU, N_("Russian")},
  {GUESS_REGION_TW, N_("Taiwanese")},
  {GUESS_REGION_TR, N_("Turkish")}};
+#endif
 
 static ComboBoxElements bitdepth_elements[] = {
     { GINT_TO_POINTER(16), "16" },
