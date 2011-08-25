@@ -387,28 +387,7 @@ static void do_remote (void)
     }
 #endif
 
-    if (headless)
-    {
-        fprintf (stderr, "WARNING: Audacious seems to be already running but "
-         "is not responding.\n");
-        return;
-    }
-
-    GtkWidget * dialog = gtk_message_dialog_new (NULL, 0, GTK_MESSAGE_WARNING,
-     GTK_BUTTONS_OK_CANCEL, _("Audacious seems to be already running but is "
-     "not responding.  You can start another instance of the program, but "
-     "please be warned that this can cause data loss.  If Audacious is not "
-     "running, you can safely ignore this message.  Press OK to start "
-     "Audacious or Cancel to quit."));
-
-    g_signal_connect (dialog, "destroy", (GCallback) gtk_widget_destroyed,
-     & dialog);
-
-    if (gtk_dialog_run ((GtkDialog *) dialog) != GTK_RESPONSE_OK)
-        exit (EXIT_FAILURE);
-
-    if (dialog)
-        gtk_widget_destroy (dialog);
+    fprintf (stderr, "WARNING: Audacious seems to be already running but is not responding.\n");
 }
 
 static void do_commands (void)
