@@ -1,20 +1,6 @@
 "TODO" for 3.1 (maybe)
 ======================
 
- - Make the aud_cfg struct private (to audconfig.c) and add a couple of
-   functions for accessing it.  The new functions should work for both global
-   and plugin-specific config.  Hence they can also replace the configdb stuff,
-   and libmcs stuff can be hidden from plugins.
-
- - With the new config system in place, we can keep track of when the config has
-   been changed so that we can be smarter about when we save it.  (Right now it
-   gets saved every 5 minutes, changed or not, which is bad for SSD's.)  The
-   playlist position and resume state should be moved from the main config file
-   to the playlist state file.
-
- - Maybe hooks like "toggle shuffle" can also be automated with the new system.
-   That is, when option "xxx" is changed, call a hook named "set xxx".
-
  - At least try to get a real headless mode working.  This means not using GTK
    stuff, which may be difficult.
 
