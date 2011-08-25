@@ -464,6 +464,11 @@ static void init_one (void)
     textdomain (PACKAGE_NAME);
 
     mowgli_init ();
+
+#ifdef USE_EGGSM
+    egg_sm_client_set_mode (EGG_SM_CLIENT_MODE_NORMAL);
+    egg_set_desktop_file (aud_paths[AUD_PATH_DESKTOP_FILE]);
+#endif
 }
 
 static void init_two (gint * p_argc, gchar * * * p_argv)
@@ -476,11 +481,6 @@ static void init_two (gint * p_argc, gchar * * * p_argv)
 
         gtk_rc_add_default_file (aud_paths[AUD_PATH_GTKRC_FILE]);
         gtk_init (p_argc, p_argv);
-
-#ifdef USE_EGGSM
-        egg_sm_client_set_mode (EGG_SM_CLIENT_MODE_NORMAL);
-        egg_set_desktop_file (aud_paths[AUD_PATH_DESKTOP_FILE]);
-#endif
     }
 
     hook_init ();
