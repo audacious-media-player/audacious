@@ -1,6 +1,6 @@
 /*
  * plugin-init.c
- * Copyright 2010 John Lindgren
+ * Copyright 2010-2011 John Lindgren
  *
  * This file is part of Audacious.
  *
@@ -28,6 +28,7 @@
 #include "effect.h"
 #include "general.h"
 #include "interface.h"
+#include "main.h"
 #include "output.h"
 #include "plugin.h"
 #include "plugins.h"
@@ -142,6 +143,8 @@ static void start_plugins (gint type)
 {
     if (! table[type].is_managed)
         return;
+    if (headless && type == PLUGIN_TYPE_IFACE)
+        return;
 
     if (table[type].is_single)
         start_single (type);
@@ -185,6 +188,8 @@ static gboolean stop_multi_cb (PluginHandle * p, void * type)
 static void stop_plugins (gint type)
 {
     if (! table[type].is_managed)
+        return;
+    if (headless && type == PLUGIN_TYPE_IFACE)
         return;
 
     if (table[type].is_single)

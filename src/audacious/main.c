@@ -57,6 +57,8 @@
 
 #define AUTOSAVE_INTERVAL 300 /* seconds */
 
+gboolean headless;
+
 static struct {
     gchar **filenames;
     gint session;
@@ -246,6 +248,7 @@ static GOptionEntry cmd_entries[] = {
     {"show-main-window", 'm', 0, G_OPTION_ARG_NONE, &options.mainwin, N_("Display the main window"), NULL},
     {"version", 'v', 0, G_OPTION_ARG_NONE, &options.version, N_("Show version"), NULL},
     {"verbose", 'V', 0, G_OPTION_ARG_NONE, &options.verbose, N_("Print debugging messages"), NULL},
+    {"headless", 'h', 0, G_OPTION_ARG_NONE, & headless, N_("Headless mode (beta)"), NULL},
     {G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_FILENAME_ARRAY, &options.filenames, N_("FILE..."), NULL},
     {NULL},
 };
@@ -384,6 +387,13 @@ static void do_remote (void)
     }
 #endif
 
+    if (headless)
+    {
+        fprintf (stderr, "WARNING: Audacious seems to be already running but "
+         "is not responding.\n");
+        return;
+    }
+
     GtkWidget * dialog = gtk_message_dialog_new (NULL, 0, GTK_MESSAGE_WARNING,
      GTK_BUTTONS_OK_CANCEL, _("Audacious seems to be already running but is "
      "not responding.  You can start another instance of the program, but "
@@ -442,7 +452,7 @@ static void do_commands (void)
         interface_show (TRUE);
 }
 
-static void init_one (gint * p_argc, gchar * * * p_argv)
+static void init_one (void)
 {
     init_paths ();
     make_dirs ();
@@ -454,22 +464,25 @@ static void init_one (gint * p_argc, gchar * * * p_argv)
     textdomain (PACKAGE_NAME);
 
     mowgli_init ();
-
-    g_thread_init (NULL);
-    gdk_threads_init ();
-    gdk_threads_enter ();
-
-    gtk_rc_add_default_file (aud_paths[AUD_PATH_GTKRC_FILE]);
-    gtk_init (p_argc, p_argv);
-
-#ifdef USE_EGGSM
-    egg_sm_client_set_mode (EGG_SM_CLIENT_MODE_NORMAL);
-    egg_set_desktop_file (aud_paths[AUD_PATH_DESKTOP_FILE]);
-#endif
 }
 
-static void init_two (void)
+static void init_two (gint * p_argc, gchar * * * p_argv)
 {
+    if (! headless)
+    {
+        g_thread_init (NULL);
+        gdk_threads_init ();
+        gdk_threads_enter ();
+
+        gtk_rc_add_default_file (aud_paths[AUD_PATH_GTKRC_FILE]);
+        gtk_init (p_argc, p_argv);
+
+#ifdef USE_EGGSM
+        egg_sm_client_set_mode (EGG_SM_CLIENT_MODE_NORMAL);
+        egg_set_desktop_file (aud_paths[AUD_PATH_DESKTOP_FILE]);
+#endif
+    }
+
     hook_init ();
     tag_init ();
 
@@ -547,7 +560,7 @@ gboolean do_autosave (void)
 
 gint main(gint argc, gchar ** argv)
 {
-    init_one (& argc, & argv);
+    init_one ();
     parse_options (& argc, & argv);
 
     if (options.version)
@@ -560,7 +573,7 @@ gint main(gint argc, gchar ** argv)
         do_remote (); /* may exit */
 
     AUDDBG ("No remote session; starting up.\n");
-    init_two ();
+    init_two (& argc, & argv);
 
     AUDDBG ("Startup complete.\n");
     g_timeout_add_seconds (AUTOSAVE_INTERVAL, (GSourceFunc) do_autosave, NULL);

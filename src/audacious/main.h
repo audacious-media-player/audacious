@@ -37,6 +37,7 @@ void config_save (void);
 void config_cleanup (void);
 
 /* main.c */
+extern gboolean headless;
 gboolean do_autosave (void);
 
 /* mpris-signals.c */
