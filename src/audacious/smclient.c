@@ -22,13 +22,10 @@
 #include <libaudcore/hook.h>
 
 #include "config.h"
+#include "main.h"
 
 #ifdef USE_EGGSM
-
 #include "eggsmclient.h"
-
-/* main.c */
-gboolean do_autosave (void);
 
 static void
 signal_session_quit_cb(EggSMClient *client, gpointer user_data)

@@ -26,6 +26,7 @@
 #ifdef USE_DBUS
 
 #include "dbus-service.h"
+#include "main.h"
 
 static void mpris_status_cb (void * hook_data, void * user_data)
 {

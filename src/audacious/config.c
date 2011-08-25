@@ -26,6 +26,7 @@
 #include <libaudcore/eventqueue.h>
 #include <libaudcore/stringpool.h>
 
+#include "main.h"
 #include "misc.h"
 
 #define DEFAULT_SECTION "audacious"

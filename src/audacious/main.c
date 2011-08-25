@@ -48,33 +48,12 @@
 #include "equalizer.h"
 #include "i18n.h"
 #include "interface.h"
+#include "main.h"
 #include "misc.h"
 #include "playback.h"
 #include "playlist.h"
 #include "plugins.h"
 #include "util.h"
-
-/* adder.c */
-void adder_init (void);
-void adder_cleanup (void);
-
-/* chardet.c */
-void chardet_init (void);
-
-/* config.c */
-void config_load (void);
-void config_save (void);
-void config_cleanup (void);
-
-/* mpris-signals.c */
-void mpris_signals_init (void);
-void mpris_signals_cleanup (void);
-
-/* signals.c */
-void signals_init (void);
-
-/* smclient.c */
-void smclient_init (void);
 
 #define AUTOSAVE_INTERVAL 300 /* seconds */
 

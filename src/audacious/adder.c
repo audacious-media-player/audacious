@@ -31,6 +31,7 @@
 #include "playback.h"
 #include "playlist.h"
 #include "plugins.h"
+#include "main.h"
 #include "misc.h"
 
 typedef struct {

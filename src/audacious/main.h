@@ -1,6 +1,6 @@
 /*
- * signals.c
- * Copyright 2009 John Lindgren
+ * main.h
+ * Copyright 2011 John Lindgren
  *
  * This file is part of Audacious.
  *
@@ -19,38 +19,34 @@
  * using our public API to be a derived work.
  */
 
-#include <signal.h>
+#ifndef _AUDACIOUS_MAIN_H
+#define _AUDACIOUS_MAIN_H
+
 #include <glib.h>
-#include <libaudcore/eventqueue.h>
 
-#include "config.h"
-#include "main.h"
+/* adder.c */
+void adder_init (void);
+void adder_cleanup (void);
 
-#ifdef HAVE_SIGWAIT
-static sigset_t signal_set;
+/* chardet.c */
+void chardet_init (void);
 
-static void * signal_thread (void * data)
-{
-    gint signal;
+/* config.c */
+void config_load (void);
+void config_save (void);
+void config_cleanup (void);
 
-    while (! sigwait (& signal_set, & signal))
-        event_queue ("quit", NULL);
+/* main.c */
+gboolean do_autosave (void);
 
-    return NULL;
-}
+/* mpris-signals.c */
+void mpris_signals_init (void);
+void mpris_signals_cleanup (void);
+
+/* signals.c */
+void signals_init (void);
+
+/* smclient.c */
+void smclient_init (void);
+
 #endif
-
-/* Must be called before any threads are created. */
-void signals_init (void)
-{
-#ifdef HAVE_SIGWAIT
-    sigemptyset (& signal_set);
-    sigaddset (& signal_set, SIGHUP);
-    sigaddset (& signal_set, SIGINT);
-    sigaddset (& signal_set, SIGQUIT);
-    sigaddset (& signal_set, SIGTERM);
-
-    sigprocmask (SIG_BLOCK, & signal_set, NULL);
-    g_thread_create (signal_thread, NULL, FALSE, NULL);
-#endif
-}

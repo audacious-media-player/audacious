@@ -23,6 +23,7 @@
 #include "config.h"
 #include "debug.h"
 #include "i18n.h"
+#include "main.h"
 #include "misc.h"
 
 #ifdef USE_CHARDET
