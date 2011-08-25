@@ -1,6 +1,6 @@
 /*
  * playlist-utils.c
- * Copyright 2009-2010 John Lindgren
+ * Copyright 2009-2011 John Lindgren
  *
  * This file is part of Audacious.
  *
@@ -24,6 +24,7 @@
 #include <string.h>
 
 #include <libaudcore/audstrings.h>
+#include <libaudcore/hook.h>
 
 #include "misc.h"
 #include "playlist.h"
@@ -286,7 +287,7 @@ static gchar * make_playlist_path (gint playlist)
      get_path (AUD_PATH_PLAYLISTS_DIR), 1 + playlist);
 }
 
-void load_playlists (void)
+static void load_playlists_real (void)
 {
     gboolean done = FALSE;
     gint count;
@@ -310,11 +311,9 @@ void load_playlists (void)
 
         g_free (path);
     }
-
-    playlist_load_state ();
 }
 
-void save_playlists (void)
+static void save_playlists_real (void)
 {
     gint playlists = playlist_count ();
     gboolean done = FALSE;
@@ -338,6 +337,54 @@ void save_playlists (void)
 
         g_free (path);
     }
+}
 
-    playlist_save_state ();
+static gboolean hooks_added, playlists_changed, state_changed;
+
+static void update_cb (void * data, void * user)
+{
+    if (GPOINTER_TO_INT (data) < PLAYLIST_UPDATE_METADATA)
+        return;
+
+    playlists_changed = TRUE;
+    state_changed = TRUE;
+}
+
+static void state_cb (void * data, void * user)
+{
+    state_changed = TRUE;
+}
+
+void load_playlists (void)
+{
+    load_playlists_real ();
+    playlist_load_state ();
+
+    playlists_changed = FALSE;
+    state_changed = FALSE;
+
+    if (! hooks_added)
+    {
+        hook_associate ("playlist update", update_cb, NULL);
+        hook_associate ("playlist activate", state_cb, NULL);
+        hook_associate ("playlist position", state_cb, NULL);
+
+        hooks_added = TRUE;
+    }
+}
+
+void save_playlists (gboolean exiting)
+{
+    if (playlists_changed)
+    {
+        save_playlists_real ();
+        playlists_changed = FALSE;
+    }
+
+    /* on exit, save resume time if resume feature is enabled */
+    if (state_changed || (exiting && get_bool (NULL, "resume_playback_on_startup")))
+    {
+        playlist_save_state ();
+        state_changed = FALSE;
+    }
 }

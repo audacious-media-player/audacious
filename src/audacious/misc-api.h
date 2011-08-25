@@ -63,9 +63,6 @@ AUD_FUNC1 (void, history_add, const gchar *, path)
 /* main.c */
 AUD_FUNC1 (const gchar *, get_path, gint, path)
 
-/* playlist-utils.c */
-AUD_FUNC0 (void, save_playlists)
-
 /* probe.c */
 AUD_FUNC2 (PluginHandle *, file_find_decoder, const gchar *, filename, gboolean,
  fast)

@@ -535,7 +535,7 @@ static void shut_down (void)
 
     AUDDBG ("Capturing state.\n");
     hook_call ("config save", NULL);
-    save_playlists ();
+    save_playlists (TRUE);
 
     AUDDBG ("Unloading highlevel plugins.\n");
     stop_plugins_two ();
@@ -561,7 +561,7 @@ gboolean do_autosave (void)
 {
     AUDDBG ("Saving configuration.\n");
     hook_call ("config save", NULL);
-    save_playlists ();
+    save_playlists (FALSE);
     config_save ();
     return TRUE;
 }

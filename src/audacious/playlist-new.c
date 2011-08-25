@@ -2196,6 +2196,18 @@ void playlist_load_state (void)
     }
 
     fclose (handle);
+
+    /* clear updates queued during init sequence */
+
+    if (update_source)
+    {
+        g_source_remove (update_source);
+        update_source = 0;
+    }
+
+    memset (& last_update, 0, sizeof last_update);
+    memset (& next_update, 0, sizeof next_update);
+
     LEAVE;
 }
 

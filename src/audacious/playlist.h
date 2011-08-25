@@ -99,8 +99,8 @@ gboolean playlist_prev_song (gint playlist);
 gboolean playlist_next_song (gint playlist, gboolean repeat);
 
 /* playlist-utils.c */
-void save_playlists (void);
 void load_playlists (void);
+void save_playlists (gboolean exiting);
 
 #else
 
