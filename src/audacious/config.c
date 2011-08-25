@@ -220,8 +220,10 @@ void set_string (const gchar * section, const gchar * name, const gchar * value)
     if (! section)
         section = DEFAULT_SECTION;
 
+    const gchar * def = get_default (section, name);
+
     gchar * old = g_key_file_get_value (keyfile, section, name, NULL);
-    if (old && ! strcmp (old, value))
+    if (! strcmp (value, old ? old : def))
     {
         g_free (old);
         g_static_mutex_unlock (& mutex);
@@ -229,7 +231,6 @@ void set_string (const gchar * section, const gchar * name, const gchar * value)
     }
     g_free (old);
 
-    const gchar * def = get_default (section, name);
     if (! strcmp (value, def))
         g_key_file_remove_key (keyfile, section, name, NULL);
     else
