@@ -43,7 +43,6 @@
 #include "util.h"
 
 #define AUD_API_DECLARE
-#include "configdb.h"
 #include "drct.h"
 #include "misc.h"
 #include "playlist.h"
@@ -55,7 +54,6 @@ static const gchar * plugin_dir_list[] = {PLUGINSUBS, NULL};
 gchar verbose = 0;
 
 AudAPITable api_table = {
- .configdb_api = & configdb_api,
  .drct_api = & drct_api,
  .misc_api = & misc_api,
  .playlist_api = & playlist_api,

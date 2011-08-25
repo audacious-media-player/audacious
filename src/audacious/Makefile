@@ -4,7 +4,6 @@ PROG = audacious${PROG_SUFFIX}
 SRCS = adder.c \
        chardet.c								\
        config.c \
-       configdb.c								\
        credits.c							\
        drct.c \
        effect.c									\
@@ -49,8 +48,6 @@ INCLUDES = api.h \
            api-alias-end.h \
            api-define-begin.h \
            api-define-end.h \
-           configdb.h			\
-           configdb-api.h \
            dbus.h				\
            dbus-service.h		\
            debug.h \

@@ -309,19 +309,3 @@ gdouble get_double (const gchar * section, const gchar * name)
     g_free (string);
     return value;
 }
-
-/* configdb compatibility hack -- do not use */
-gboolean xxx_config_is_set (const gchar * section, const gchar * name)
-{
-    g_return_val_if_fail (defaults && keyfile, FALSE);
-    g_return_val_if_fail (name, FALSE);
-    g_static_mutex_lock (& mutex);
-
-    if (! section)
-        section = DEFAULT_SECTION;
-
-    gboolean is_set = g_key_file_has_key (keyfile, section, name, NULL);
-
-    g_static_mutex_unlock (& mutex);
-    return is_set;
-}
