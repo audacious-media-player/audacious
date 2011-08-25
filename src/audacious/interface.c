@@ -27,6 +27,7 @@
 #include "debug.h"
 #include "general.h"
 #include "interface.h"
+#include "main.h"
 #include "plugin.h"
 #include "plugins.h"
 #include "visualization.h"
@@ -83,6 +84,12 @@ gboolean interface_is_focused (void)
 
 void interface_show_error (const gchar * markup)
 {
+    if (headless)
+    {
+        fprintf (stderr, "ERROR: %s\n", markup);
+        return;
+    }
+
     g_return_if_fail (current_interface);
 
     if (PLUGIN_HAS_FUNC (current_interface, show_error))

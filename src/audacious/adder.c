@@ -63,7 +63,7 @@ static GtkWidget * status_window = NULL, * status_path_label,
 
 static gboolean status_cb (void * unused)
 {
-    if (! status_window)
+    if (! headless && ! status_window)
     {
         status_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
         gtk_window_set_type_hint ((GtkWindow *) status_window,
@@ -93,12 +93,20 @@ static gboolean status_cb (void * unused)
 
     g_mutex_lock (mutex);
 
-    gtk_label_set_text ((GtkLabel *) status_path_label, status_path);
-
     gchar scratch[128];
     snprintf (scratch, sizeof scratch, dngettext (PACKAGE, "%d file found",
      "%d files found", status_count), status_count);
-    gtk_label_set_text ((GtkLabel *) status_count_label, scratch);
+
+    if (headless)
+    {
+        printf ("Searching, %s ...\r", scratch);
+        fflush (stdout);
+    }
+    else
+    {
+        gtk_label_set_text ((GtkLabel *) status_path_label, status_path);
+        gtk_label_set_text ((GtkLabel *) status_count_label, scratch);
+    }
 
     g_mutex_unlock (mutex);
     return TRUE;
@@ -125,7 +133,9 @@ static void status_done_locked (void)
         status_source = 0;
     }
 
-    if (status_window)
+    if (headless)
+        printf ("\n");
+    else if (status_window)
         gtk_widget_destroy (status_window);
 }
 
