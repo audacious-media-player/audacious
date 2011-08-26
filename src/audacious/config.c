@@ -222,29 +222,42 @@ void set_string (const gchar * section, const gchar * name, const gchar * value)
         section = DEFAULT_SECTION;
 
     const gchar * def = get_default (section, name);
-
-    gchar * old = g_key_file_get_value (keyfile, section, name, NULL);
-    if (! strcmp (value, old ? old : def))
-    {
-        g_free (old);
-        g_static_mutex_unlock (& mutex);
-        return;
-    }
-    g_free (old);
+    gboolean changed = FALSE;
 
     if (! strcmp (value, def))
-        g_key_file_remove_key (keyfile, section, name, NULL);
-    else
-        g_key_file_set_value (keyfile, section, name, value);
-
-    if (! strcmp (section, DEFAULT_SECTION))
     {
-        gchar * event = g_strdup_printf ("set %s", name);
-        event_queue (event, NULL);
-        g_free (event);
+        if (g_key_file_has_key (keyfile, section, name, NULL))
+        {
+            g_key_file_remove_key (keyfile, section, name, NULL);
+            changed = TRUE;
+        }
+    }
+    else
+    {
+        gchar * old = g_key_file_has_key (keyfile, section, name, NULL) ?
+         g_key_file_get_value (keyfile, section, name, NULL) : NULL;
+
+        if (! old || strcmp (value, old))
+        {
+            g_key_file_set_value (keyfile, section, name, value);
+            changed = TRUE;
+        }
+
+        g_free (old);
     }
 
-    modified = TRUE;
+    if (changed)
+    {
+        modified = TRUE;
+
+        if (! strcmp (section, DEFAULT_SECTION))
+        {
+            gchar * event = g_strdup_printf ("set %s", name);
+            event_queue (event, NULL);
+            g_free (event);
+        }
+    }
+
     g_static_mutex_unlock (& mutex);
 }
 
@@ -257,7 +270,9 @@ gchar * get_string (const gchar * section, const gchar * name)
     if (! section)
         section = DEFAULT_SECTION;
 
-    gchar * value = g_key_file_get_string (keyfile, section, name, NULL);
+    gchar * value = g_key_file_has_key (keyfile, section, name, NULL) ?
+     g_key_file_get_value (keyfile, section, name, NULL) : NULL;
+
     if (! value)
         value = g_strdup (get_default (section, name));
 
