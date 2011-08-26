@@ -156,7 +156,10 @@ gchar * get_path_to_self (void)
 #endif
 
         if (len < size)
+        {
+            buf[len] = 0;
             return buf;
+        }
 
         size += size;
         buf = g_realloc (buf, size);
