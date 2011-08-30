@@ -81,7 +81,7 @@ cover_name_filter(const gchar *name, const gchar *filter, const gboolean ret_on_
 static gboolean is_front_cover_image (const gchar * file)
 {
     gchar * include = get_string (NULL, "cover_name_include");
-    gchar * exclude = get_string (NULL, "cover_name_include");
+    gchar * exclude = get_string (NULL, "cover_name_exclude");
     gboolean accept = cover_name_filter (file, include, TRUE) &&
      ! cover_name_filter (file, exclude, FALSE);
     g_free (include);
