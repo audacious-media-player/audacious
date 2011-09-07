@@ -61,9 +61,9 @@ struct commandhandler handlers[] = {
 	{"playlist-auto-advance-status", playlist_auto_advance_status, "returns the status of playlist auto-advance", 0},
 	{"playlist-auto-advance-toggle", playlist_auto_advance_toggle, "toggles playlist auto-advance", 0},
 	{"playlist-reverse", playlist_reverse, "go to the previous song in the playlist", 0},
-	{"playlist-addurl", playlist_add_url_string, "adds a url to the playlist", 1},
-    {"playlist-insurl", playlist_ins_url_string, "inserts a url at specified position in the playlist", 2},
-	{"playlist-addurl-to-new-playlist", playlist_enqueue_to_temp, "adds a url to the newly created playlist", 1},
+	{"playlist-addurl", playlist_add_url_string, "adds a URL to the playlist", 1},
+    {"playlist-insurl", playlist_ins_url_string, "inserts a URL at specified position in the playlist", 2},
+	{"playlist-addurl-to-new-playlist", playlist_enqueue_to_temp, "adds a URL to the newly created playlist", 1},
 	{"playlist-delete", playlist_delete, "deletes a song from the playlist", 1},
 	{"playlist-length", playlist_length, "returns the total length of the playlist", 0},
 	{"playlist-song", playlist_song, "returns the title of a song in the playlist", 1},
@@ -129,8 +129,8 @@ struct commandhandler handlers[] = {
 	{"about-show", show_about_window, "shows/hides the about window", 1},
 
 	{"always-on-top", toggle_aot, "on/off always on top", 1},
-    {"version", get_version, "shows audaciuos version", 0},
-	{"shutdown", shutdown_audacious_server, "shuts down audacious", 0},
+    {"version", get_version, "shows Audacious version", 0},
+	{"shutdown", shutdown_audacious_server, "shuts down Audacious", 0},
 
 
 	{"<sep>", NULL, "Help system", 0},

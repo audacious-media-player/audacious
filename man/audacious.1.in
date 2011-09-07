@@ -215,14 +215,14 @@ User's set of Audacious-specific GTK+ config settings. Options such as widget
 color and fonts sizes can be set here.
 .TP
 ~/.local/share/audacious/Skins, @datarootdir@/audacious/Skins
-Default location(s) where Audacious should look for skinfiles.
+Default location(s) where Audacious should look for skin files.
 .TP
 ~/.local/share/audacious/Plugins
 Location of user-installed plugins.
 .SH ENVIRONMENT
 .TP 12
 .B SKINSDIR
-Colon separated list of paths where Audacious should look for skinfiles.
+Colon separated list of paths where Audacious should look for skin files.
 .TP
 .B TARCMD
 Tar command supporting GNU tar style decompression.  Used for

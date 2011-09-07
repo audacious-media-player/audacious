@@ -69,10 +69,10 @@ Go to the next song in the playlist.
 Go to the previous song in the playlist.
 .TP
 .I --playlist-addurl <uri>
-Adds a uri to the playlist.
+Adds a URI to the playlist.
 .TP
 .I --playlist-insurl <uri> <position>
-Inserts a url at specified position in the playlist.
+Inserts a URL at specified position in the playlist.
 .TP
 .I --playlist-delete <position>
 Deletes the song at <position> from the playlist.
@@ -131,7 +131,7 @@ Adds the song at <position> in the playlist to the playqueue.
 Removes the song at <position> in the playlist from the playqueue.
 .TP
 .I --playqueue-is-queued <position>
-Returns OK if the song at <postion> in the playtlist is queued.
+Returns OK if the song at <position> in the playlist is queued.
 .TP
 .I --playqueue-get-position <position>
 Returns the playqueue position of the song at <position> in the playlist.
@@ -235,7 +235,7 @@ Shows/hides the about window.
 Enables/disables always on top setting.
 .TP
 .I --version
-Displays version information for the Audacious2 core.
+Displays Audacious version.
 .TP
 .I --shutdown
 Shuts down audacious.
@@ -266,7 +266,7 @@ under the terms of the GNU General Public License, Version 2 or any
 later version published by the Free Software Foundation.
 .PP
 The complete text of the GNU General Public License is available in the
-sourcecode of Audacious, and is typically included with binary packages
+source code of Audacious, and is typically included with binary packages
 as well.
 .PP
 If installed with an operating system, see your Operating System's
