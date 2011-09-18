@@ -497,7 +497,7 @@ static void * scanner (void * data)
 
     while (! scan_quit)
     {
-        if (! entry_find_to_scan (i))
+        if (get_bool (NULL, "metadata_on_play") || ! entry_find_to_scan (i))
         {
             g_cond_wait (cond, mutex);
             continue;

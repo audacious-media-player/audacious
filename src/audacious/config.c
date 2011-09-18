@@ -82,6 +82,7 @@ static const gchar * const core_defaults[] = {
  /* playlist */
  "generic_title_format", "${?artist:${artist} - }${?album:${album} - }${title}",
  "leading_zero", "TRUE",
+ "metadata_on_play", "FALSE",
  "show_numbers_in_pl", "TRUE",
 
  NULL};
