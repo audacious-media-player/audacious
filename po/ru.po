@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious 2.4\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-07-05 22:45+0200\n"
+"POT-Creation-Date: 2011-09-18 14:08-0400\n"
 "PO-Revision-Date: 2010-08-22 22:15+0400\n"
 "Last-Translator: Sergey V. Mironov <sergo@bk.ru>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
@@ -86,145 +86,150 @@ msgstr "Баскский:"
 msgid "Brazilian Portuguese:"
 msgstr "Бразильский португальский:"
 
-#: src/audacious/credits.c:190
+#: src/audacious/credits.c:191
 msgid "Breton:"
 msgstr "Бретонский:"
 
-#: src/audacious/credits.c:193
+#: src/audacious/credits.c:194
 msgid "Bulgarian:"
 msgstr "Болгарский:"
 
-#: src/audacious/credits.c:196
+#: src/audacious/credits.c:197
 msgid "Catalan:"
 msgstr "Каталонский:"
 
-#: src/audacious/credits.c:199
+#: src/audacious/credits.c:200
 msgid "Chinese:"
 msgstr "Китайский:"
 
-#: src/audacious/credits.c:202
+#: src/audacious/credits.c:203
 msgid "Croatian:"
 msgstr "Хорватский:"
 
-#: src/audacious/credits.c:205
+#: src/audacious/credits.c:206
 msgid "Czech:"
 msgstr "Чешский:"
 
-#: src/audacious/credits.c:208
+#: src/audacious/credits.c:209
 msgid "Dutch:"
 msgstr "Голландский:"
 
-#: src/audacious/credits.c:212
+#: src/audacious/credits.c:213
 msgid "Estonian:"
 msgstr "Эстонский:"
 
-#: src/audacious/credits.c:215
+#: src/audacious/credits.c:216
 msgid "Finnish:"
 msgstr "Финский:"
 
-#: src/audacious/credits.c:220
+#: src/audacious/credits.c:221
 msgid "French:"
 msgstr "Французский:"
 
-#: src/audacious/credits.c:226
+#: src/audacious/credits.c:227
 msgid "German:"
 msgstr "Немецкий:"
 
-#: src/audacious/credits.c:233
+#: src/audacious/credits.c:234
 msgid "Georgian:"
 msgstr "Грузинский:"
 
-#: src/audacious/credits.c:236
+#: src/audacious/credits.c:237
 msgid "Greek:"
 msgstr "Греческий:"
 
-#: src/audacious/credits.c:241
+#: src/audacious/credits.c:242
 msgid "Hindi:"
 msgstr "Хинди:"
 
-#: src/audacious/credits.c:244
+#: src/audacious/credits.c:245
 msgid "Hungarian:"
 msgstr "Венгерский:"
 
-#: src/audacious/credits.c:248
+#: src/audacious/credits.c:249
 msgid "Italian:"
 msgstr "Итальянский:"
 
-#: src/audacious/credits.c:252
+#: src/audacious/credits.c:253
 msgid "Japanese:"
 msgstr "Японский:"
 
-#: src/audacious/credits.c:255
+#: src/audacious/credits.c:256
 msgid "Korean:"
 msgstr "Корейский:"
 
-#: src/audacious/credits.c:258
+#: src/audacious/credits.c:259
 #, fuzzy
 msgid "Latvian:"
 msgstr "Хорватский:"
 
-#: src/audacious/credits.c:261
+#: src/audacious/credits.c:262
 msgid "Lithuanian:"
 msgstr "Литовский:"
 
-#: src/audacious/credits.c:265
+#: src/audacious/credits.c:267
 msgid "Macedonian:"
 msgstr "Македонский:"
 
-#: src/audacious/credits.c:268
+#: src/audacious/credits.c:270
 msgid "Polish:"
 msgstr "Польский:"
 
-#: src/audacious/credits.c:274
+#: src/audacious/credits.c:276
 #, fuzzy
 msgid "Portuguese:"
 msgstr "Португальский:"
 
-#: src/audacious/credits.c:277
+#: src/audacious/credits.c:279
 msgid "Romanian:"
 msgstr "Румынский:"
 
-#: src/audacious/credits.c:281
+#: src/audacious/credits.c:283
 msgid "Russian:"
 msgstr "Русский:"
 
-#: src/audacious/credits.c:285
+#: src/audacious/credits.c:287
 msgid "Serbian (Latin):"
 msgstr "Сербский (латиница):"
 
-#: src/audacious/credits.c:288
+#: src/audacious/credits.c:290
 msgid "Serbian (Cyrillic):"
 msgstr "Сербский (кириллица):"
 
-#: src/audacious/credits.c:291
+#: src/audacious/credits.c:293
 msgid "Simplified Chinese:"
 msgstr "Упрощённый китайский:"
 
-#: src/audacious/credits.c:294
+#: src/audacious/credits.c:296
 msgid "Slovak:"
 msgstr "Словацкий:"
 
-#: src/audacious/credits.c:297
+#: src/audacious/credits.c:299
 msgid "Spanish:"
 msgstr "Испанский:"
 
-#: src/audacious/credits.c:304
+#: src/audacious/credits.c:306
 msgid "Swedish:"
 msgstr "Шведский:"
 
-#: src/audacious/credits.c:307
+#: src/audacious/credits.c:309
 msgid "Traditional Chinese:"
 msgstr "Традиционный китайский:"
 
-#: src/audacious/credits.c:312
+#: src/audacious/credits.c:315
 msgid "Turkish:"
 msgstr "Турецкий:"
 
-#: src/audacious/credits.c:316
+#: src/audacious/credits.c:319
 msgid "Ukrainian:"
 msgstr "Украинский:"
 
-#: src/audacious/credits.c:319
+#: src/audacious/credits.c:323
+#, fuzzy
+msgid "Vietnamese:"
+msgstr "Китайский:"
+
+#: src/audacious/credits.c:326
 msgid "Welsh:"
 msgstr "Уэльский:"
 
@@ -327,214 +332,210 @@ msgstr "Буферизация..."
 msgid "Untitled Playlist"
 msgstr "Новый список воспроизведения"
 
-#: src/audacious/ui_preferences.c:87
+#: src/audacious/ui_preferences.c:91
 msgid "Audio"
 msgstr "Звук"
 
-#: src/audacious/ui_preferences.c:88
+#: src/audacious/ui_preferences.c:92
 msgid "Network"
 msgstr "Сеть"
 
-#: src/audacious/ui_preferences.c:89 src/audacious/ui_preferences.c:1556
+#: src/audacious/ui_preferences.c:93 src/audacious/ui_preferences.c:1557
 msgid "Playlist"
 msgstr "Список воспроизведения"
 
-#: src/audacious/ui_preferences.c:90
+#: src/audacious/ui_preferences.c:94
 msgid "Plugins"
 msgstr "Модули"
 
-#: src/audacious/ui_preferences.c:96 src/libaudgui/infopopup.c:204
+#: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:204
 msgid "Artist"
 msgstr "Исполнитель"
 
-#: src/audacious/ui_preferences.c:97 src/libaudgui/infopopup.c:206
+#: src/audacious/ui_preferences.c:101 src/libaudgui/infopopup.c:206
 msgid "Album"
 msgstr "Альбом"
 
-#: src/audacious/ui_preferences.c:98 src/libaudgui/infopopup.c:202
+#: src/audacious/ui_preferences.c:102 src/libaudgui/infopopup.c:202
 #: src/libaudgui/ui_playlist_manager.c:263
 msgid "Title"
 msgstr "Название"
 
-#: src/audacious/ui_preferences.c:99
+#: src/audacious/ui_preferences.c:103
 msgid "Tracknumber"
 msgstr "Номер дорожки"
 
-#: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:208
+#: src/audacious/ui_preferences.c:104 src/libaudgui/infopopup.c:208
 msgid "Genre"
 msgstr "Жанр"
 
-#: src/audacious/ui_preferences.c:101
+#: src/audacious/ui_preferences.c:105
 msgid "Filename"
 msgstr "Имя файла"
 
-#: src/audacious/ui_preferences.c:102
+#: src/audacious/ui_preferences.c:106
 msgid "Filepath"
 msgstr "Путь к файлу"
 
-#: src/audacious/ui_preferences.c:103
+#: src/audacious/ui_preferences.c:107
 msgid "Date"
 msgstr "Дата"
 
-#: src/audacious/ui_preferences.c:104 src/libaudgui/infopopup.c:210
+#: src/audacious/ui_preferences.c:108 src/libaudgui/infopopup.c:210
 msgid "Year"
 msgstr "Год"
 
-#: src/audacious/ui_preferences.c:105
+#: src/audacious/ui_preferences.c:109
 msgid "Comment"
 msgstr "Комментарий"
 
-#: src/audacious/ui_preferences.c:106
+#: src/audacious/ui_preferences.c:110
 msgid "Codec"
 msgstr "Кодек"
 
-#: src/audacious/ui_preferences.c:107
+#: src/audacious/ui_preferences.c:111
 msgid "Quality"
 msgstr "Качество"
 
-#: src/audacious/ui_preferences.c:112
+#: src/audacious/ui_preferences.c:117
 msgid "None"
 msgstr "Нет"
 
-#: src/audacious/ui_preferences.c:113
-msgid "Japanese"
-msgstr "Японский"
-
-#: src/audacious/ui_preferences.c:114
-msgid "Taiwanese"
-msgstr "Тайваньский"
-
-#: src/audacious/ui_preferences.c:115
-msgid "Chinese"
-msgstr "Китайский"
-
-#: src/audacious/ui_preferences.c:116
-msgid "Korean"
-msgstr "Корейский"
-
-#: src/audacious/ui_preferences.c:117
-msgid "Russian"
-msgstr "Русский"
-
 #: src/audacious/ui_preferences.c:118
-msgid "Greek"
-msgstr "Греческий"
-
-#: src/audacious/ui_preferences.c:119
-msgid "Hebrew"
-msgstr "Иврит"
-
-#: src/audacious/ui_preferences.c:120
-msgid "Turkish"
-msgstr "Турецкий"
-
-#: src/audacious/ui_preferences.c:121
 msgid "Arabic"
 msgstr "Арабский"
 
-#: src/audacious/ui_preferences.c:122
-msgid "Polish"
-msgstr "Польский"
-
-#: src/audacious/ui_preferences.c:123
+#: src/audacious/ui_preferences.c:119
 msgid "Baltic"
 msgstr "Балтийские языки"
 
-#: src/audacious/ui_preferences.c:124
-msgid "Universal"
-msgstr "Универсальный режим"
+#: src/audacious/ui_preferences.c:120
+msgid "Chinese"
+msgstr "Китайский"
 
-#: src/audacious/ui_preferences.c:146
+#: src/audacious/ui_preferences.c:121
+msgid "Greek"
+msgstr "Греческий"
+
+#: src/audacious/ui_preferences.c:122
+msgid "Hebrew"
+msgstr "Иврит"
+
+#: src/audacious/ui_preferences.c:123
+msgid "Japanese"
+msgstr "Японский"
+
+#: src/audacious/ui_preferences.c:124
+msgid "Korean"
+msgstr "Корейский"
+
+#: src/audacious/ui_preferences.c:125
+msgid "Polish"
+msgstr "Польский"
+
+#: src/audacious/ui_preferences.c:126
+msgid "Russian"
+msgstr "Русский"
+
+#: src/audacious/ui_preferences.c:127
+msgid "Taiwanese"
+msgstr "Тайваньский"
+
+#: src/audacious/ui_preferences.c:128
+msgid "Turkish"
+msgstr "Турецкий"
+
+#: src/audacious/ui_preferences.c:150
 msgid "Single track mode"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:147
+#: src/audacious/ui_preferences.c:151
 #, fuzzy
 msgid "Album mode"
 msgstr "Альбом"
 
-#: src/audacious/ui_preferences.c:150
+#: src/audacious/ui_preferences.c:154
 msgid "<b>Output Settings</b>"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:152
+#: src/audacious/ui_preferences.c:156
 #, fuzzy
 msgid "Bit depth:"
 msgstr "Разрядность выходного потока:"
 
-#: src/audacious/ui_preferences.c:155
+#: src/audacious/ui_preferences.c:159
 msgid "Buffer size:"
 msgstr "Размер буфера:"
 
-#: src/audacious/ui_preferences.c:157
+#: src/audacious/ui_preferences.c:161
 msgid "ms"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:158
+#: src/audacious/ui_preferences.c:162
 #, fuzzy
 msgid "Use software volume control (not recommended)"
 msgstr "Программная регулировка громкости"
 
-#: src/audacious/ui_preferences.c:160
+#: src/audacious/ui_preferences.c:164
 #, fuzzy
 msgid "<b>Replay Gain</b>"
 msgstr "<b>Режим Replay Gain</b>"
 
-#: src/audacious/ui_preferences.c:161
+#: src/audacious/ui_preferences.c:165
 msgid "Enable Replay Gain"
 msgstr "Включить Replay Gain"
 
-#: src/audacious/ui_preferences.c:164
+#: src/audacious/ui_preferences.c:168
 msgid "Prevent clipping (recommended)"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:166
+#: src/audacious/ui_preferences.c:170
 #, fuzzy
 msgid "<b>Adjust Levels</b>"
 msgstr "<b>Звуковая система</b>"
 
-#: src/audacious/ui_preferences.c:167
+#: src/audacious/ui_preferences.c:171
 msgid "Amplify all files:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:169 src/audacious/ui_preferences.c:172
+#: src/audacious/ui_preferences.c:173 src/audacious/ui_preferences.c:176
 msgid "dB"
 msgstr "дБ"
 
-#: src/audacious/ui_preferences.c:170
+#: src/audacious/ui_preferences.c:174
 #, fuzzy
 msgid "Amplify untagged files:"
 msgstr "- проиграть мультимедийные файлы"
 
-#: src/audacious/ui_preferences.c:175
+#: src/audacious/ui_preferences.c:179
 msgid "Proxy hostname:"
 msgstr "Прокси сервер:"
 
-#: src/audacious/ui_preferences.c:176
+#: src/audacious/ui_preferences.c:180
 msgid "Proxy port:"
 msgstr "Порт прокси:"
 
-#: src/audacious/ui_preferences.c:179
+#: src/audacious/ui_preferences.c:183
 msgid "Proxy username:"
 msgstr "Имя пользователя прокси:"
 
-#: src/audacious/ui_preferences.c:180
+#: src/audacious/ui_preferences.c:184
 msgid "Proxy password:"
 msgstr "Пароль прокси:"
 
-#: src/audacious/ui_preferences.c:184
+#: src/audacious/ui_preferences.c:188
 msgid "<b>Proxy Configuration</b>"
 msgstr "<b>Настройка прокси</b>"
 
-#: src/audacious/ui_preferences.c:185
+#: src/audacious/ui_preferences.c:189
 msgid "Enable proxy usage"
 msgstr "Использовать прокси"
 
-#: src/audacious/ui_preferences.c:187
+#: src/audacious/ui_preferences.c:191
 msgid "Use authentication with proxy"
 msgstr "Использовать авторизацию через прокси"
 
-#: src/audacious/ui_preferences.c:189
+#: src/audacious/ui_preferences.c:193
 msgid ""
 "<span size=\"small\">Changing these settings will require a restart of "
 "Audacious.</span>"
@@ -542,66 +543,54 @@ msgstr ""
 "<span size=\"small\">Изменение этих настроек потребует перезапуска Audacious."
 "</span>"
 
-#: src/audacious/ui_preferences.c:193
+#: src/audacious/ui_preferences.c:198
 msgid "Auto character encoding detector for:"
 msgstr "Язык для автоматического определения кодировки:"
 
-#: src/audacious/ui_preferences.c:201
+#: src/audacious/ui_preferences.c:203
 msgid "Fallback character encodings:"
 msgstr "Кодировка по умолчанию:"
 
-#: src/audacious/ui_preferences.c:201
-msgid ""
-"List of character encodings used for fall back conversion of metadata. If "
-"automatic character encoding detector failed or has been disabled, encodings "
-"in this list would be treated as candidates of the encoding of metadata, and "
-"fall back conversion from these encodings to UTF-8 would be attempted."
-msgstr ""
-"Список кодировок, используемых при отображении метаданных. Если "
-"автоматическое определение кодировки отключено или не сработает, то для "
-"преобразования метаданных в UTF-8 будут использованы кодировки из этого "
-"списка."
-
-#: src/audacious/ui_preferences.c:205
+#: src/audacious/ui_preferences.c:208
 #, fuzzy
 msgid "<b>Behavior</b>"
 msgstr "<b>Разрядность</b>"
 
-#: src/audacious/ui_preferences.c:206
+#: src/audacious/ui_preferences.c:209
 msgid "Continue playback on startup"
 msgstr "Продолжать воспроизведение при запуске"
 
-#: src/audacious/ui_preferences.c:208
+#: src/audacious/ui_preferences.c:211
 msgid "Advance when the current song is deleted"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:210
+#: src/audacious/ui_preferences.c:213
 #, fuzzy
 msgid "Clear the playlist when opening files"
 msgstr "Очистить текущий список воспроизведения при открытии новых файлов "
 
-#: src/audacious/ui_preferences.c:212
+#: src/audacious/ui_preferences.c:215
 #, fuzzy
 msgid "Open files in a temporary playlist"
 msgstr "Добавить файлы во временный список воспроизведения"
 
-#: src/audacious/ui_preferences.c:214
+#: src/audacious/ui_preferences.c:217
 msgid "<b>Metadata</b>"
 msgstr "<b>Мета-информация о дорожке</b>"
 
-#: src/audacious/ui_preferences.c:454
+#: src/audacious/ui_preferences.c:457
 msgid "Category"
 msgstr "Категория"
 
-#: src/audacious/ui_preferences.c:682
+#: src/audacious/ui_preferences.c:683
 msgid "Popup Information Settings"
 msgstr "Настройка всплывающей информации"
 
-#: src/audacious/ui_preferences.c:691
+#: src/audacious/ui_preferences.c:692
 msgid "<b>Cover image retrieve</b>"
 msgstr "<b>Поиск обложки альбома</b>"
 
-#: src/audacious/ui_preferences.c:696
+#: src/audacious/ui_preferences.c:697
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
@@ -610,101 +599,101 @@ msgstr ""
 "При поиске обложки альбома Audacious ищет определенные слова в именах "
 "файлов. Вы можете указать эти слова ниже, разделив их запятыми."
 
-#: src/audacious/ui_preferences.c:713
+#: src/audacious/ui_preferences.c:714
 msgid "Exclude:"
 msgstr "Исключая:"
 
-#: src/audacious/ui_preferences.c:720
+#: src/audacious/ui_preferences.c:721
 msgid "Include:"
 msgstr "Включая:"
 
-#: src/audacious/ui_preferences.c:737
+#: src/audacious/ui_preferences.c:738
 msgid "Recursively search for cover"
 msgstr "Искать обложку во вложенных каталогах"
 
-#: src/audacious/ui_preferences.c:747
+#: src/audacious/ui_preferences.c:748
 msgid "Search depth: "
 msgstr "Глубина поиска: "
 
-#: src/audacious/ui_preferences.c:761
+#: src/audacious/ui_preferences.c:762
 msgid "Use per-file cover"
 msgstr "Искать изображение для каждого файла"
 
-#: src/audacious/ui_preferences.c:764
+#: src/audacious/ui_preferences.c:765
 msgid "<b>Miscellaneous</b>"
 msgstr "<b>Разное</b>"
 
-#: src/audacious/ui_preferences.c:773
+#: src/audacious/ui_preferences.c:774
 msgid "Show Progress bar for the current track"
 msgstr "Показывать полосу завершения для проигрываемой дорожки"
 
-#: src/audacious/ui_preferences.c:783
+#: src/audacious/ui_preferences.c:784
 msgid "Delay until filepopup comes up: "
 msgstr "Задержка появления всплывающей информации: "
 
-#: src/audacious/ui_preferences.c:1283
+#: src/audacious/ui_preferences.c:1284
 msgid "<b>Song Display</b>"
 msgstr "<b>Отображение дорожек</b>"
 
-#: src/audacious/ui_preferences.c:1292
+#: src/audacious/ui_preferences.c:1293
 msgid "Show song numbers"
 msgstr "Показать номер дорожки"
 
-#: src/audacious/ui_preferences.c:1303
+#: src/audacious/ui_preferences.c:1304
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1325
+#: src/audacious/ui_preferences.c:1326
 msgid "Show information about titlestring format"
 msgstr "Показать информацию о формате названия"
 
-#: src/audacious/ui_preferences.c:1339
+#: src/audacious/ui_preferences.c:1340
 msgid "TITLE"
 msgstr "НАЗВАНИЕ"
 
-#: src/audacious/ui_preferences.c:1340
+#: src/audacious/ui_preferences.c:1341
 msgid "ARTIST - TITLE"
 msgstr "ИСПОЛНИТЕЛЬ - НАЗВАНИЕ"
 
-#: src/audacious/ui_preferences.c:1341
+#: src/audacious/ui_preferences.c:1342
 msgid "ARTIST - ALBUM - TITLE"
 msgstr "ИСПОЛНИТЕЛЬ - АЛЬБОМ - НАЗВАНИЕ"
 
-#: src/audacious/ui_preferences.c:1342
+#: src/audacious/ui_preferences.c:1343
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr "ИСПОЛНИТЕЛЬ - АЛЬБОМ - ДОРОЖКА. НАЗВАНИЕ"
 
-#: src/audacious/ui_preferences.c:1343
+#: src/audacious/ui_preferences.c:1344
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr "ИСПОЛНИТЕЛЬ [ АЛЬБОМ ] - ДОРОЖКА. НАЗВАНИЕ"
 
-#: src/audacious/ui_preferences.c:1344
+#: src/audacious/ui_preferences.c:1345
 msgid "ALBUM - TITLE"
 msgstr "АЛЬБОМ - НАЗВАНИЕ"
 
-#: src/audacious/ui_preferences.c:1345
+#: src/audacious/ui_preferences.c:1346
 msgid "Custom"
 msgstr "Собственные установки"
 
-#: src/audacious/ui_preferences.c:1354
+#: src/audacious/ui_preferences.c:1355
 msgid "Custom string:"
 msgstr "Свой формат:"
 
-#: src/audacious/ui_preferences.c:1361
+#: src/audacious/ui_preferences.c:1362
 msgid "Title format:"
 msgstr "Формат названия:"
 
-#: src/audacious/ui_preferences.c:1372
+#: src/audacious/ui_preferences.c:1373
 msgid "<b>Popup Information</b>"
 msgstr "<b>Всплывающее информационное окно</b>"
 
-#: src/audacious/ui_preferences.c:1387
+#: src/audacious/ui_preferences.c:1388
 msgid "Show popup information for playlist entries"
 msgstr ""
 "Показывать всплывающее информационное окно для дорожек в списке "
 "воспроизведения"
 
-#: src/audacious/ui_preferences.c:1388
+#: src/audacious/ui_preferences.c:1389
 msgid ""
 "Toggles popup information window for the pointed entry in the playlist. The "
 "window shows title of song, name of album, genre, year of publish, track "
@@ -714,39 +703,39 @@ msgstr ""
 "воспроизведения. Окно содержит название песни, название альбома, жанр, год, "
 "номер дорожки, длительность песни и обложку альбома."
 
-#: src/audacious/ui_preferences.c:1397
+#: src/audacious/ui_preferences.c:1398
 msgid "Edit settings for popup information"
 msgstr "Изменить настройки всплывающего информационного окна"
 
-#: src/audacious/ui_preferences.c:1497
+#: src/audacious/ui_preferences.c:1498
 #, fuzzy
 msgid "Output plugin:"
 msgstr "Текущий модуль вывода звука:"
 
-#: src/audacious/ui_preferences.c:1556
+#: src/audacious/ui_preferences.c:1557
 #, fuzzy
 msgid "Transport"
 msgstr "Переводчики"
 
-#: src/audacious/ui_preferences.c:1556
+#: src/audacious/ui_preferences.c:1557
 msgid "Input"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1557
+#: src/audacious/ui_preferences.c:1558
 #, fuzzy
 msgid "Effect"
 msgstr "<b>Эффекты</b>"
 
-#: src/audacious/ui_preferences.c:1557
+#: src/audacious/ui_preferences.c:1558
 #, fuzzy
 msgid "Visualization"
 msgstr "<b>Визуализация</b>"
 
-#: src/audacious/ui_preferences.c:1557
+#: src/audacious/ui_preferences.c:1558
 msgid "General"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1597
+#: src/audacious/ui_preferences.c:1598
 msgid "Audacious Preferences"
 msgstr "Параметры Audacious"
 
@@ -1265,6 +1254,21 @@ msgstr "Параметры управления сессиями"
 #, fuzzy
 msgid "Show session management options"
 msgstr "Показать параметры управления сессиями"
+
+#~ msgid "Universal"
+#~ msgstr "Универсальный режим"
+
+#~ msgid ""
+#~ "List of character encodings used for fall back conversion of metadata. If "
+#~ "automatic character encoding detector failed or has been disabled, "
+#~ "encodings in this list would be treated as candidates of the encoding of "
+#~ "metadata, and fall back conversion from these encodings to UTF-8 would be "
+#~ "attempted."
+#~ msgstr ""
+#~ "Список кодировок, используемых при отображении метаданных. Если "
+#~ "автоматическое определение кодировки отключено или не сработает, то для "
+#~ "преобразования метаданных в UTF-8 будут использованы кодировки из этого "
+#~ "списка."
 
 #~ msgid "Replay Gain"
 #~ msgstr "Replay Gain"

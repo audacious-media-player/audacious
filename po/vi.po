@@ -3,41 +3,41 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Lê Trường An <truongan@linuxmail.org>, 2011.
 #
-#________________________@@@@@
-#______________________@@@@@@@________@@@@ @
-#___________________@@@________@@_____@@@@ @@@
-#___________________@@___________@@__@@___ ____@@
-#___________________@@____________@@@_____ ______@@
-#_____________________@@__________________ ________@@
-#_______________@@@@@@______@@@@_________@@ @
-#_____________@@@@@@@@@__@@@@@@__________@
-#_____________@@____________@@@@@@@_______ _@@
-#____________@@____________@@@@@@@@______@ @
-#____________@@____________@@@@@@@@____@@@
-#____________@@@___________@@@@@@@_______@ @
-#_____________@@@@__________@@@@@_________ _@@
-#_______________@@@@@@____________________ ___@@
-#____________________@@___________________ ______@@
-#___________________@@___________@@_______ ____@@
-#___________________@@@________@@@@_______ _@@
-#____________________@@@_____@@@_@@@@@@@@
-#_____________________@@@@@@@_____@@@@@@
-#______________________@@@@@_@
-#_________________________________@
-#__________________________________@
-#___________________________________@
-#___________________________________@
-#___________________________________@___@@ @
-#___________________________@@@@_@__@____@
-#_________________________@_______@@@__@@
-#___________________________@@@__@__@@
-#_________________________________@
+# ________________________@@@@@
+# ______________________@@@@@@@________@@@@ @
+# ___________________@@@________@@_____@@@@ @@@
+# ___________________@@___________@@__@@___ ____@@
+# ___________________@@____________@@@_____ ______@@
+# _____________________@@__________________ ________@@
+# _______________@@@@@@______@@@@_________@@ @
+# _____________@@@@@@@@@__@@@@@@__________@
+# _____________@@____________@@@@@@@_______ _@@
+# ____________@@____________@@@@@@@@______@ @
+# ____________@@____________@@@@@@@@____@@@
+# ____________@@@___________@@@@@@@_______@ @
+# _____________@@@@__________@@@@@_________ _@@
+# _______________@@@@@@____________________ ___@@
+# ____________________@@___________________ ______@@
+# ___________________@@___________@@_______ ____@@
+# ___________________@@@________@@@@_______ _@@
+# ____________________@@@_____@@@_@@@@@@@@
+# _____________________@@@@@@@_____@@@@@@
+# ______________________@@@@@_@
+# _________________________________@
+# __________________________________@
+# ___________________________________@
+# ___________________________________@
+# ___________________________________@___@@ @
+# ___________________________@@@@_@__@____@
+# _________________________@_______@@@__@@
+# ___________________________@@@__@__@@
+# _________________________________@
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious 3.0.1\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-07-15 08:05-0400\n"
+"POT-Creation-Date: 2011-09-18 14:08-0400\n"
 "PO-Revision-Date: 2011-08-12 18:28+0700\n"
 "Last-Translator: Lê Trường An <truongan@linuxmail.org>\n"
 "Language-Team: Dự án MOST <du-an-most@lists.hanoilug.org>\n"
@@ -104,143 +104,148 @@ msgstr "Tiếng Basque:"
 msgid "Brazilian Portuguese:"
 msgstr "Tiếng Bra-xin (Bồ Đào Nha)"
 
-#: src/audacious/credits.c:190
+#: src/audacious/credits.c:191
 msgid "Breton:"
 msgstr "Tiếng Breton:"
 
-#: src/audacious/credits.c:193
+#: src/audacious/credits.c:194
 msgid "Bulgarian:"
 msgstr "Tiếng Bun-ga-ri:"
 
-#: src/audacious/credits.c:196
+#: src/audacious/credits.c:197
 msgid "Catalan:"
 msgstr "Tiếng Catalan:"
 
-#: src/audacious/credits.c:199
+#: src/audacious/credits.c:200
 msgid "Chinese:"
 msgstr "Tiếng Trung Quốc:"
 
-#: src/audacious/credits.c:202
+#: src/audacious/credits.c:203
 msgid "Croatian:"
 msgstr "Tiếng Croatia:"
 
-#: src/audacious/credits.c:205
+#: src/audacious/credits.c:206
 msgid "Czech:"
 msgstr "Tiếng Séc:"
 
-#: src/audacious/credits.c:208
+#: src/audacious/credits.c:209
 msgid "Dutch:"
 msgstr "Tiếng Hà Lan:"
 
-#: src/audacious/credits.c:212
+#: src/audacious/credits.c:213
 msgid "Estonian:"
 msgstr "Tiếng És-tô-ni-a:"
 
-#: src/audacious/credits.c:215
+#: src/audacious/credits.c:216
 msgid "Finnish:"
 msgstr "Tiếng Phần Lan:"
 
-#: src/audacious/credits.c:220
+#: src/audacious/credits.c:221
 msgid "French:"
 msgstr "Tiếng Pháp:"
 
-#: src/audacious/credits.c:226
+#: src/audacious/credits.c:227
 msgid "German:"
 msgstr "Tiếng Đức:"
 
-#: src/audacious/credits.c:233
+#: src/audacious/credits.c:234
 msgid "Georgian:"
 msgstr "Tiếng Georgian:"
 
-#: src/audacious/credits.c:236
+#: src/audacious/credits.c:237
 msgid "Greek:"
 msgstr "Tiếng Hy Lạp:"
 
-#: src/audacious/credits.c:241
+#: src/audacious/credits.c:242
 msgid "Hindi:"
 msgstr "Tiếng Hin-đi:"
 
-#: src/audacious/credits.c:244
+#: src/audacious/credits.c:245
 msgid "Hungarian:"
 msgstr "Tiếng Hun-ga-ri:"
 
-#: src/audacious/credits.c:248
+#: src/audacious/credits.c:249
 msgid "Italian:"
 msgstr "Tiếng Ý:"
 
-#: src/audacious/credits.c:252
+#: src/audacious/credits.c:253
 msgid "Japanese:"
 msgstr "Tiếng Nhật:"
 
-#: src/audacious/credits.c:255
+#: src/audacious/credits.c:256
 msgid "Korean:"
 msgstr "Tiếng Hàn:"
 
-#: src/audacious/credits.c:258
+#: src/audacious/credits.c:259
 msgid "Latvian:"
 msgstr "Tiếng Lat-vi-a:"
 
-#: src/audacious/credits.c:261
+#: src/audacious/credits.c:262
 msgid "Lithuanian:"
 msgstr "Tiếng Lithuania:"
 
-#: src/audacious/credits.c:265
+#: src/audacious/credits.c:267
 msgid "Macedonian:"
 msgstr "Tiếng Macedonia:"
 
-#: src/audacious/credits.c:268
+#: src/audacious/credits.c:270
 msgid "Polish:"
 msgstr "Tiếng Ba Lan:"
 
-#: src/audacious/credits.c:274
+#: src/audacious/credits.c:276
 msgid "Portuguese:"
 msgstr "Tiếng Bồ Đào Nha:"
 
-#: src/audacious/credits.c:277
+#: src/audacious/credits.c:279
 msgid "Romanian:"
 msgstr "Tiếng Rumani:"
 
-#: src/audacious/credits.c:281
+#: src/audacious/credits.c:283
 msgid "Russian:"
 msgstr "Tiếng Nga:"
 
-#: src/audacious/credits.c:285
+#: src/audacious/credits.c:287
 msgid "Serbian (Latin):"
 msgstr "Tiếng Séc-bi-a (Latinh):"
 
-#: src/audacious/credits.c:288
+#: src/audacious/credits.c:290
 msgid "Serbian (Cyrillic):"
 msgstr "Tiếng Séc-bi-a (Kirin):"
 
-#: src/audacious/credits.c:291
+#: src/audacious/credits.c:293
 msgid "Simplified Chinese:"
 msgstr "Tiếng Trung giản thể:"
 
-#: src/audacious/credits.c:294
+#: src/audacious/credits.c:296
 msgid "Slovak:"
 msgstr "Tiếng Slovak:"
 
-#: src/audacious/credits.c:297
+#: src/audacious/credits.c:299
 msgid "Spanish:"
 msgstr "Tiếng Tây Ban Nha:"
 
-#: src/audacious/credits.c:304
+#: src/audacious/credits.c:306
 msgid "Swedish:"
 msgstr "Tiếng Thụy Điển:"
 
-#: src/audacious/credits.c:307
+#: src/audacious/credits.c:309
 msgid "Traditional Chinese:"
 msgstr "Tiếng Trung (phồn thể):"
 
-#: src/audacious/credits.c:312
+#: src/audacious/credits.c:315
 msgid "Turkish:"
 msgstr "Tiếng Thổ Nhĩ Kỳ:"
 
-#: src/audacious/credits.c:316
+#: src/audacious/credits.c:319
 msgid "Ukrainian:"
 msgstr "Tiếng U-crai-na:"
 
-#: src/audacious/credits.c:319
+#: src/audacious/credits.c:323
+#, fuzzy
+msgid "Vietnamese:"
+msgstr "Tiếng Trung Quốc:"
+
+#: src/audacious/credits.c:326
 msgid "Welsh:"
 msgstr "Tiếng xứ Wales:"
 
@@ -319,8 +324,16 @@ msgstr ""
 "Chạy `%s --help' để biết thêm thông tin.\n"
 
 #: src/audacious/main.c:407
-msgid "Audacious seems to be already running but is not responding.  You can start another instance of the program, but please be warned that this can cause data loss.  If Audacious is not running, you can safely ignore this message.  Press OK to start Audacious or Cancel to quit."
-msgstr "Audacious đã chạy nhưng không có phản hồi. Bạn có thể thử bật một cửa sổ Audacious khác, nhưng có thể làm mất dữ liệu. Nếu nó hiện thời không chạy, bạn có thể bỏ qua thông báo này. Nhấn OK để khởi động Audacious hoặc nhấn Thôi để thoát."
+msgid ""
+"Audacious seems to be already running but is not responding.  You can start "
+"another instance of the program, but please be warned that this can cause "
+"data loss.  If Audacious is not running, you can safely ignore this "
+"message.  Press OK to start Audacious or Cancel to quit."
+msgstr ""
+"Audacious đã chạy nhưng không có phản hồi. Bạn có thể thử bật một cửa sổ "
+"Audacious khác, nhưng có thể làm mất dữ liệu. Nếu nó hiện thời không chạy, "
+"bạn có thể bỏ qua thông báo này. Nhấn OK để khởi động Audacious hoặc nhấn "
+"Thôi để thoát."
 
 #: src/audacious/main.c:572
 msgid "Audacious"
@@ -339,395 +352,396 @@ msgstr "Đang tạo bộ đệm ..."
 msgid "Untitled Playlist"
 msgstr "D.sách chưa có tên"
 
-#: src/audacious/ui_preferences.c:87
+#: src/audacious/ui_preferences.c:91
 msgid "Audio"
 msgstr "Âm thanh"
 
-#: src/audacious/ui_preferences.c:88
+#: src/audacious/ui_preferences.c:92
 msgid "Network"
 msgstr "Mạng"
 
-#: src/audacious/ui_preferences.c:89
-#: src/audacious/ui_preferences.c:1556
+#: src/audacious/ui_preferences.c:93 src/audacious/ui_preferences.c:1557
 msgid "Playlist"
 msgstr "Danh sách"
 
-#: src/audacious/ui_preferences.c:90
+#: src/audacious/ui_preferences.c:94
 msgid "Plugins"
 msgstr "Trình cắm"
 
-#: src/audacious/ui_preferences.c:96
-#: src/libaudgui/infopopup.c:204
+#: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:204
 msgid "Artist"
 msgstr "Nghệ sĩ"
 
-#: src/audacious/ui_preferences.c:97
-#: src/libaudgui/infopopup.c:206
+#: src/audacious/ui_preferences.c:101 src/libaudgui/infopopup.c:206
 msgid "Album"
 msgstr "Album"
 
-#: src/audacious/ui_preferences.c:98
-#: src/libaudgui/infopopup.c:202
+#: src/audacious/ui_preferences.c:102 src/libaudgui/infopopup.c:202
 #: src/libaudgui/ui_playlist_manager.c:263
 msgid "Title"
 msgstr "Tựa đề"
 
-#: src/audacious/ui_preferences.c:99
+#: src/audacious/ui_preferences.c:103
 msgid "Tracknumber"
 msgstr "Bài số"
 
-#: src/audacious/ui_preferences.c:100
-#: src/libaudgui/infopopup.c:208
+#: src/audacious/ui_preferences.c:104 src/libaudgui/infopopup.c:208
 msgid "Genre"
 msgstr "Thể loại"
 
-#: src/audacious/ui_preferences.c:101
+#: src/audacious/ui_preferences.c:105
 msgid "Filename"
 msgstr "Tên tập tin"
 
-#: src/audacious/ui_preferences.c:102
+#: src/audacious/ui_preferences.c:106
 msgid "Filepath"
 msgstr "Đường dẫn tập tin"
 
-#: src/audacious/ui_preferences.c:103
+#: src/audacious/ui_preferences.c:107
 msgid "Date"
 msgstr "Ngày"
 
-#: src/audacious/ui_preferences.c:104
-#: src/libaudgui/infopopup.c:210
+#: src/audacious/ui_preferences.c:108 src/libaudgui/infopopup.c:210
 msgid "Year"
 msgstr "Năm"
 
-#: src/audacious/ui_preferences.c:105
+#: src/audacious/ui_preferences.c:109
 msgid "Comment"
 msgstr "Bình luận"
 
-#: src/audacious/ui_preferences.c:106
+#: src/audacious/ui_preferences.c:110
 msgid "Codec"
 msgstr "Bộ giải mã"
 
-#: src/audacious/ui_preferences.c:107
+#: src/audacious/ui_preferences.c:111
 msgid "Quality"
 msgstr "Chất lượng"
 
-#: src/audacious/ui_preferences.c:112
+#: src/audacious/ui_preferences.c:117
 msgid "None"
 msgstr "Không"
 
-#: src/audacious/ui_preferences.c:113
-msgid "Japanese"
-msgstr "Tiếng Nhật"
-
-#: src/audacious/ui_preferences.c:114
-msgid "Taiwanese"
-msgstr "Tiếng Đài Loan"
-
-#: src/audacious/ui_preferences.c:115
-msgid "Chinese"
-msgstr "Tiếng Trung"
-
-#: src/audacious/ui_preferences.c:116
-msgid "Korean"
-msgstr "Tiếng Hàn"
-
-#: src/audacious/ui_preferences.c:117
-msgid "Russian"
-msgstr "Tiếng Nga"
-
 #: src/audacious/ui_preferences.c:118
-msgid "Greek"
-msgstr "Tiếng Hy Lạp"
-
-#: src/audacious/ui_preferences.c:119
-msgid "Hebrew"
-msgstr "Tiếng Do Thái"
-
-#: src/audacious/ui_preferences.c:120
-msgid "Turkish"
-msgstr "Tiếng Thổ Nhĩ Kỳ"
-
-#: src/audacious/ui_preferences.c:121
 msgid "Arabic"
 msgstr "Tiếng Ả Rập"
 
-#: src/audacious/ui_preferences.c:122
-msgid "Polish"
-msgstr "Tiếng Ba Lan"
-
-#: src/audacious/ui_preferences.c:123
+#: src/audacious/ui_preferences.c:119
 msgid "Baltic"
 msgstr "Tiếng Ban-tic"
 
-#: src/audacious/ui_preferences.c:124
-msgid "Universal"
-msgstr "Chung"
+#: src/audacious/ui_preferences.c:120
+msgid "Chinese"
+msgstr "Tiếng Trung"
 
-#: src/audacious/ui_preferences.c:146
+#: src/audacious/ui_preferences.c:121
+msgid "Greek"
+msgstr "Tiếng Hy Lạp"
+
+#: src/audacious/ui_preferences.c:122
+msgid "Hebrew"
+msgstr "Tiếng Do Thái"
+
+#: src/audacious/ui_preferences.c:123
+msgid "Japanese"
+msgstr "Tiếng Nhật"
+
+#: src/audacious/ui_preferences.c:124
+msgid "Korean"
+msgstr "Tiếng Hàn"
+
+#: src/audacious/ui_preferences.c:125
+msgid "Polish"
+msgstr "Tiếng Ba Lan"
+
+#: src/audacious/ui_preferences.c:126
+msgid "Russian"
+msgstr "Tiếng Nga"
+
+#: src/audacious/ui_preferences.c:127
+msgid "Taiwanese"
+msgstr "Tiếng Đài Loan"
+
+#: src/audacious/ui_preferences.c:128
+msgid "Turkish"
+msgstr "Tiếng Thổ Nhĩ Kỳ"
+
+#: src/audacious/ui_preferences.c:150
 msgid "Single track mode"
 msgstr "Chế độ bài đơn lẻ"
 
-#: src/audacious/ui_preferences.c:147
+#: src/audacious/ui_preferences.c:151
 msgid "Album mode"
 msgstr "Chế độ album"
 
-#: src/audacious/ui_preferences.c:150
+#: src/audacious/ui_preferences.c:154
 msgid "<b>Output Settings</b>"
 msgstr "<b>Thiết lập xuất âm thanh</b>"
 
-#: src/audacious/ui_preferences.c:152
+#: src/audacious/ui_preferences.c:156
 msgid "Bit depth:"
 msgstr "Chiều sâu âm thanh:"
 
-#: src/audacious/ui_preferences.c:155
+#: src/audacious/ui_preferences.c:159
 msgid "Buffer size:"
 msgstr "Dung lượng bộ đệm:"
 
-#: src/audacious/ui_preferences.c:157
+#: src/audacious/ui_preferences.c:161
 msgid "ms"
 msgstr "ms"
 
-#: src/audacious/ui_preferences.c:158
+#: src/audacious/ui_preferences.c:162
 msgid "Use software volume control (not recommended)"
 msgstr "Sử dụng kiểm soát âm lượng của phần mềm (không nên)"
 
-#: src/audacious/ui_preferences.c:160
+#: src/audacious/ui_preferences.c:164
 msgid "<b>Replay Gain</b>"
 msgstr "<b>Tăng âm</b>"
 
-#: src/audacious/ui_preferences.c:161
+#: src/audacious/ui_preferences.c:165
 msgid "Enable Replay Gain"
 msgstr "Bật chế độ tăng thêm âm lượng"
 
-#: src/audacious/ui_preferences.c:164
+#: src/audacious/ui_preferences.c:168
 msgid "Prevent clipping (recommended)"
 msgstr "Tránh tổn thất (khuyên dùng)"
 
-#: src/audacious/ui_preferences.c:166
+#: src/audacious/ui_preferences.c:170
 msgid "<b>Adjust Levels</b>"
 msgstr "<b>Các mức điều chỉnh</b>"
 
-#: src/audacious/ui_preferences.c:167
+#: src/audacious/ui_preferences.c:171
 msgid "Amplify all files:"
 msgstr "Khuếch đại mọi tập tin:"
 
-#: src/audacious/ui_preferences.c:169
-#: src/audacious/ui_preferences.c:172
+#: src/audacious/ui_preferences.c:173 src/audacious/ui_preferences.c:176
 msgid "dB"
 msgstr "dB"
 
-#: src/audacious/ui_preferences.c:170
+#: src/audacious/ui_preferences.c:174
 msgid "Amplify untagged files:"
 msgstr "Khuếch đại tập tin chưa gán thẻ:"
 
-#: src/audacious/ui_preferences.c:175
+#: src/audacious/ui_preferences.c:179
 msgid "Proxy hostname:"
 msgstr "Tên máy chủ proxy:"
 
-#: src/audacious/ui_preferences.c:176
+#: src/audacious/ui_preferences.c:180
 msgid "Proxy port:"
 msgstr "Cổng proxy:"
 
-#: src/audacious/ui_preferences.c:179
+#: src/audacious/ui_preferences.c:183
 msgid "Proxy username:"
 msgstr "Tên người dùng proxy:"
 
-#: src/audacious/ui_preferences.c:180
+#: src/audacious/ui_preferences.c:184
 msgid "Proxy password:"
 msgstr "Mật khẩu proxy:"
 
-#: src/audacious/ui_preferences.c:184
+#: src/audacious/ui_preferences.c:188
 msgid "<b>Proxy Configuration</b>"
 msgstr "<b>Cấu hình Proxy</b>"
 
-#: src/audacious/ui_preferences.c:185
+#: src/audacious/ui_preferences.c:189
 msgid "Enable proxy usage"
 msgstr "Cho phép dùng proxy"
 
-#: src/audacious/ui_preferences.c:187
+#: src/audacious/ui_preferences.c:191
 msgid "Use authentication with proxy"
 msgstr "Xác thực với proxy"
 
-#: src/audacious/ui_preferences.c:189
-msgid "<span size=\"small\">Changing these settings will require a restart of Audacious.</span>"
-msgstr "<span size=\"small\">Cần khởi động lại Audacious khi thay đổi các thiết lập này.</span>"
-
 #: src/audacious/ui_preferences.c:193
+msgid ""
+"<span size=\"small\">Changing these settings will require a restart of "
+"Audacious.</span>"
+msgstr ""
+"<span size=\"small\">Cần khởi động lại Audacious khi thay đổi các thiết lập "
+"này.</span>"
+
+#: src/audacious/ui_preferences.c:198
 msgid "Auto character encoding detector for:"
 msgstr "Tự động nhận diện bảng mã kí tự cho:"
 
-#: src/audacious/ui_preferences.c:201
+#: src/audacious/ui_preferences.c:203
 msgid "Fallback character encodings:"
 msgstr "Bảng mã kí tự dự phòng:"
 
-#: src/audacious/ui_preferences.c:201
-msgid "List of character encodings used for fall back conversion of metadata. If automatic character encoding detector failed or has been disabled, encodings in this list would be treated as candidates of the encoding of metadata, and fall back conversion from these encodings to UTF-8 would be attempted."
-msgstr "Danh sách các bảng mã kí tự dùng dự phòng cho việc đọc thông tin bài hát. Nếu bảng mã tự động không làm việc hoặc không thể giải mã, các bảng mã trong danh sách này sẽ được dùng thay, và việc dự phòng sẽ cố dùng thử bảng mã UTF-8."
-
-#: src/audacious/ui_preferences.c:205
+#: src/audacious/ui_preferences.c:208
 msgid "<b>Behavior</b>"
 msgstr "<b>Hành động</b>"
 
-#: src/audacious/ui_preferences.c:206
+#: src/audacious/ui_preferences.c:209
 msgid "Continue playback on startup"
 msgstr "Tiếp tục phát khi khởi động"
 
-#: src/audacious/ui_preferences.c:208
+#: src/audacious/ui_preferences.c:211
 msgid "Advance when the current song is deleted"
 msgstr "Đến bài kế tiếp khi xóa bài hiện tại"
 
-#: src/audacious/ui_preferences.c:210
+#: src/audacious/ui_preferences.c:213
 msgid "Clear the playlist when opening files"
 msgstr "Dọn sạch danh sách khi mở các tập tin"
 
-#: src/audacious/ui_preferences.c:212
+#: src/audacious/ui_preferences.c:215
 msgid "Open files in a temporary playlist"
 msgstr "Mở các tập tin trong một danh sách tạm"
 
-#: src/audacious/ui_preferences.c:214
+#: src/audacious/ui_preferences.c:217
 msgid "<b>Metadata</b>"
 msgstr "<b>Thông tin</b>"
 
-#: src/audacious/ui_preferences.c:454
+#: src/audacious/ui_preferences.c:457
 msgid "Category"
 msgstr "Danh mục"
 
-#: src/audacious/ui_preferences.c:682
+#: src/audacious/ui_preferences.c:683
 msgid "Popup Information Settings"
 msgstr "Thiết lập thông tin cửa sổ bật lên"
 
-#: src/audacious/ui_preferences.c:691
+#: src/audacious/ui_preferences.c:692
 msgid "<b>Cover image retrieve</b>"
 msgstr "<b>Lấy ảnh bìa</b>"
 
-#: src/audacious/ui_preferences.c:696
-msgid "While searching for the album's cover, Audacious looks for certain words in the filename. You can specify those words in the lists below, separated using commas."
-msgstr "Khi tìm ảnh bìa của album, Audacious xem xét một số từ nhất định trong tên tập tin. Bạn có thể chỉ định những từ này trong danh sách bên dưới, dừng dấu phẩy để ngăn cách các từ."
+#: src/audacious/ui_preferences.c:697
+msgid ""
+"While searching for the album's cover, Audacious looks for certain words in "
+"the filename. You can specify those words in the lists below, separated "
+"using commas."
+msgstr ""
+"Khi tìm ảnh bìa của album, Audacious xem xét một số từ nhất định trong tên "
+"tập tin. Bạn có thể chỉ định những từ này trong danh sách bên dưới, dừng dấu "
+"phẩy để ngăn cách các từ."
 
-#: src/audacious/ui_preferences.c:713
+#: src/audacious/ui_preferences.c:714
 msgid "Exclude:"
 msgstr "Loại trừ:"
 
-#: src/audacious/ui_preferences.c:720
+#: src/audacious/ui_preferences.c:721
 msgid "Include:"
 msgstr "Bao gồm:"
 
-#: src/audacious/ui_preferences.c:737
+#: src/audacious/ui_preferences.c:738
 msgid "Recursively search for cover"
 msgstr "Tìm ảnh bìa trong thư mục con"
 
-#: src/audacious/ui_preferences.c:747
+#: src/audacious/ui_preferences.c:748
 msgid "Search depth: "
 msgstr "Độ sâu:"
 
-#: src/audacious/ui_preferences.c:761
+#: src/audacious/ui_preferences.c:762
 msgid "Use per-file cover"
 msgstr "Mỗi tập tin một ảnh bìa riêng"
 
-#: src/audacious/ui_preferences.c:764
+#: src/audacious/ui_preferences.c:765
 msgid "<b>Miscellaneous</b>"
 msgstr "<b>Khác</b>"
 
-#: src/audacious/ui_preferences.c:773
+#: src/audacious/ui_preferences.c:774
 msgid "Show Progress bar for the current track"
 msgstr "Hiện thanh tiến trình cho bài hiện tại"
 
-#: src/audacious/ui_preferences.c:783
+#: src/audacious/ui_preferences.c:784
 msgid "Delay until filepopup comes up: "
 msgstr "Chờ cho đến khi cửa sổ bật lên hiện ra:"
 
-#: src/audacious/ui_preferences.c:1283
+#: src/audacious/ui_preferences.c:1284
 msgid "<b>Song Display</b>"
 msgstr "<b>Hiển thị bài hát</b>"
 
-#: src/audacious/ui_preferences.c:1292
+#: src/audacious/ui_preferences.c:1293
 msgid "Show song numbers"
 msgstr "Hiện số thứ tự trong danh sách của bài hát"
 
-#: src/audacious/ui_preferences.c:1303
+#: src/audacious/ui_preferences.c:1304
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr "Hiện số không ở đầu (02:00 thay vì of 2:00)"
 
-#: src/audacious/ui_preferences.c:1325
+#: src/audacious/ui_preferences.c:1326
 msgid "Show information about titlestring format"
 msgstr "Hiện thông tin về định dạng tựa đề"
 
-#: src/audacious/ui_preferences.c:1339
+#: src/audacious/ui_preferences.c:1340
 msgid "TITLE"
 msgstr "TỰA ĐỀ"
 
-#: src/audacious/ui_preferences.c:1340
+#: src/audacious/ui_preferences.c:1341
 msgid "ARTIST - TITLE"
 msgstr "NGHỆ SĨ - TỰA ĐỀ"
 
-#: src/audacious/ui_preferences.c:1341
+#: src/audacious/ui_preferences.c:1342
 msgid "ARTIST - ALBUM - TITLE"
 msgstr "NGHỆ SĨ - ALBUM - TỰA"
 
-#: src/audacious/ui_preferences.c:1342
+#: src/audacious/ui_preferences.c:1343
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr "NGHỆ SĨ - ALBUM - BÀI. TỰA"
 
-#: src/audacious/ui_preferences.c:1343
+#: src/audacious/ui_preferences.c:1344
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr "NGHỆ SĨ [ALBUM ] - BÀI. TỰA"
 
-#: src/audacious/ui_preferences.c:1344
+#: src/audacious/ui_preferences.c:1345
 msgid "ALBUM - TITLE"
 msgstr "ALBUM - TỰA ĐỀ"
 
-#: src/audacious/ui_preferences.c:1345
+#: src/audacious/ui_preferences.c:1346
 msgid "Custom"
 msgstr "Tùy chọn"
 
-#: src/audacious/ui_preferences.c:1354
+#: src/audacious/ui_preferences.c:1355
 msgid "Custom string:"
 msgstr "Chuỗi tùy chọn:"
 
-#: src/audacious/ui_preferences.c:1361
+#: src/audacious/ui_preferences.c:1362
 msgid "Title format:"
 msgstr "Định dạng tựa đề:"
 
-#: src/audacious/ui_preferences.c:1372
+#: src/audacious/ui_preferences.c:1373
 msgid "<b>Popup Information</b>"
 msgstr "<b>Cửa sổ thông tin bật lên</b>"
 
-#: src/audacious/ui_preferences.c:1387
+#: src/audacious/ui_preferences.c:1388
 msgid "Show popup information for playlist entries"
 msgstr "Hiện cửa sổ thông tin bật lên cho các mục trong danh sách"
 
-#: src/audacious/ui_preferences.c:1388
-msgid "Toggles popup information window for the pointed entry in the playlist. The window shows title of song, name of album, genre, year of publish, track number, track length, and artwork."
-msgstr "Bật/tắt cửa sổ thông tin bật lên cho mục được trỏ vào trong danh sách. Cửa sổ hiện tựa đề bài hát, tên album, thể loại, năm phát hành, số thứ tự của bài, thời lượng, và ảnh bìa."
+#: src/audacious/ui_preferences.c:1389
+msgid ""
+"Toggles popup information window for the pointed entry in the playlist. The "
+"window shows title of song, name of album, genre, year of publish, track "
+"number, track length, and artwork."
+msgstr ""
+"Bật/tắt cửa sổ thông tin bật lên cho mục được trỏ vào trong danh sách. Cửa "
+"sổ hiện tựa đề bài hát, tên album, thể loại, năm phát hành, số thứ tự của "
+"bài, thời lượng, và ảnh bìa."
 
-#: src/audacious/ui_preferences.c:1397
+#: src/audacious/ui_preferences.c:1398
 msgid "Edit settings for popup information"
 msgstr "Chỉnh sửa thiết lập cho cửa sổ thông tin bật lên"
 
-#: src/audacious/ui_preferences.c:1497
+#: src/audacious/ui_preferences.c:1498
 msgid "Output plugin:"
 msgstr "Trình cắm xuất ra:"
 
-#: src/audacious/ui_preferences.c:1556
+#: src/audacious/ui_preferences.c:1557
 msgid "Transport"
 msgstr "Truyền tải"
 
-#: src/audacious/ui_preferences.c:1556
+#: src/audacious/ui_preferences.c:1557
 msgid "Input"
 msgstr "Đầu vào"
 
-#: src/audacious/ui_preferences.c:1557
+#: src/audacious/ui_preferences.c:1558
 msgid "Effect"
 msgstr "Hiệu ứng"
 
-#: src/audacious/ui_preferences.c:1557
+#: src/audacious/ui_preferences.c:1558
 msgid "Visualization"
 msgstr "Hình ảnh ảo"
 
-#: src/audacious/ui_preferences.c:1557
+#: src/audacious/ui_preferences.c:1558
 msgid "General"
 msgstr "Tổng quát"
 
-#: src/audacious/ui_preferences.c:1597
+#: src/audacious/ui_preferences.c:1598
 msgid "Audacious Preferences"
 msgstr "Tùy chỉnh Audacious"
 
@@ -760,8 +774,12 @@ msgstr[0] "%d kênh"
 
 #: src/libaudgui/confirm.c:73
 #, c-format
-msgid "Are you sure you want to close %s?  If you do, any changes made since the playlist was exported will be lost."
-msgstr "Bạn có chắc là muốn đóng %s? Nếu bạn làm vậy, các thay đổi kể từ khi danh sách được xuất ra sẽ bị mất."
+msgid ""
+"Are you sure you want to close %s?  If you do, any changes made since the "
+"playlist was exported will be lost."
+msgstr ""
+"Bạn có chắc là muốn đóng %s? Nếu bạn làm vậy, các thay đổi kể từ khi danh "
+"sách được xuất ra sẽ bị mất."
 
 #: src/libaudgui/confirm.c:86
 msgid "_Don't show this message again"
@@ -991,10 +1009,8 @@ msgstr "Techno"
 msgid "Trip-hop"
 msgstr "Trip-hop"
 
-#: src/libaudgui/infowin.c:175
-#: src/libaudgui/infowin.c:361
-#: src/libaudgui/infowin.c:364
-#: src/libaudgui/infowin.c:367
+#: src/libaudgui/infowin.c:175 src/libaudgui/infowin.c:361
+#: src/libaudgui/infowin.c:364 src/libaudgui/infowin.c:367
 msgid "<span size=\"small\">n/a</span>"
 msgstr "<span size=\"small\">n/a</span>"
 
@@ -1085,8 +1101,7 @@ msgstr "Ghi đè %s?"
 msgid "About Audacious"
 msgstr "Giới thiệu Audacious"
 
-#: src/libaudgui/ui_about.c:93
-#: src/libaudgui/ui_credits.c:122
+#: src/libaudgui/ui_about.c:93 src/libaudgui/ui_credits.c:122
 msgid "Credits"
 msgstr "Đóng góp"
 
@@ -1114,8 +1129,7 @@ msgstr "Đóng hộp thoại khi Thêm"
 msgid "Un_queue"
 msgstr "Bỏ khỏi _hàng đợi"
 
-#: src/libaudgui/ui_jumptotrack.c:135
-#: src/libaudgui/ui_jumptotrack.c:512
+#: src/libaudgui/ui_jumptotrack.c:135 src/libaudgui/ui_jumptotrack.c:512
 msgid "_Queue"
 msgstr "_Hàng đợi"
 
@@ -1234,3 +1248,17 @@ msgstr "Tùy chọn quản lí phiên:"
 msgid "Show session management options"
 msgstr "Hiện các tùy chọn quản lí phiên"
 
+#~ msgid "Universal"
+#~ msgstr "Chung"
+
+#~ msgid ""
+#~ "List of character encodings used for fall back conversion of metadata. If "
+#~ "automatic character encoding detector failed or has been disabled, "
+#~ "encodings in this list would be treated as candidates of the encoding of "
+#~ "metadata, and fall back conversion from these encodings to UTF-8 would be "
+#~ "attempted."
+#~ msgstr ""
+#~ "Danh sách các bảng mã kí tự dùng dự phòng cho việc đọc thông tin bài hát. "
+#~ "Nếu bảng mã tự động không làm việc hoặc không thể giải mã, các bảng mã "
+#~ "trong danh sách này sẽ được dùng thay, và việc dự phòng sẽ cố dùng thử "
+#~ "bảng mã UTF-8."

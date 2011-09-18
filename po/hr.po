@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hr\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-07-05 22:45+0200\n"
+"POT-Creation-Date: 2011-09-18 14:08-0400\n"
 "PO-Revision-Date: 2007-01-28 20:17+0100\n"
 "Last-Translator: \n"
 "Language-Team:  <en@li.org>\n"
@@ -74,149 +74,154 @@ msgstr ""
 msgid "Brazilian Portuguese:"
 msgstr "Brazilsko Portugalski:"
 
-#: src/audacious/credits.c:190
+#: src/audacious/credits.c:191
 msgid "Breton:"
 msgstr "Bretonski:"
 
-#: src/audacious/credits.c:193
+#: src/audacious/credits.c:194
 msgid "Bulgarian:"
 msgstr "Bugarski:"
 
-#: src/audacious/credits.c:196
+#: src/audacious/credits.c:197
 #, fuzzy
 msgid "Catalan:"
 msgstr "Talijanski:"
 
-#: src/audacious/credits.c:199
+#: src/audacious/credits.c:200
 #, fuzzy
 msgid "Chinese:"
 msgstr "Linije"
 
-#: src/audacious/credits.c:202
+#: src/audacious/credits.c:203
 #, fuzzy
 msgid "Croatian:"
 msgstr "Rumunjski:"
 
-#: src/audacious/credits.c:205
+#: src/audacious/credits.c:206
 msgid "Czech:"
 msgstr "Češki:"
 
-#: src/audacious/credits.c:208
+#: src/audacious/credits.c:209
 msgid "Dutch:"
 msgstr "Nizozemski:"
 
-#: src/audacious/credits.c:212
+#: src/audacious/credits.c:213
 #, fuzzy
 msgid "Estonian:"
 msgstr "Rumunjski:"
 
-#: src/audacious/credits.c:215
+#: src/audacious/credits.c:216
 msgid "Finnish:"
 msgstr "Finski:"
 
-#: src/audacious/credits.c:220
+#: src/audacious/credits.c:221
 msgid "French:"
 msgstr "Francuski:"
 
-#: src/audacious/credits.c:226
+#: src/audacious/credits.c:227
 msgid "German:"
 msgstr "Njemački:"
 
-#: src/audacious/credits.c:233
+#: src/audacious/credits.c:234
 msgid "Georgian:"
 msgstr "Armenski:"
 
-#: src/audacious/credits.c:236
+#: src/audacious/credits.c:237
 msgid "Greek:"
 msgstr "Grčki:"
 
-#: src/audacious/credits.c:241
+#: src/audacious/credits.c:242
 msgid "Hindi:"
 msgstr "Indijski:"
 
-#: src/audacious/credits.c:244
+#: src/audacious/credits.c:245
 msgid "Hungarian:"
 msgstr "Mađarski:"
 
-#: src/audacious/credits.c:248
+#: src/audacious/credits.c:249
 msgid "Italian:"
 msgstr "Talijanski:"
 
-#: src/audacious/credits.c:252
+#: src/audacious/credits.c:253
 msgid "Japanese:"
 msgstr "Japanski:"
 
-#: src/audacious/credits.c:255
+#: src/audacious/credits.c:256
 msgid "Korean:"
 msgstr "Koreanski:"
 
-#: src/audacious/credits.c:258
+#: src/audacious/credits.c:259
 #, fuzzy
 msgid "Latvian:"
 msgstr "Rumunjski:"
 
-#: src/audacious/credits.c:261
+#: src/audacious/credits.c:262
 msgid "Lithuanian:"
 msgstr "Litvanski:"
 
-#: src/audacious/credits.c:265
+#: src/audacious/credits.c:267
 msgid "Macedonian:"
 msgstr "Makedonski:"
 
-#: src/audacious/credits.c:268
+#: src/audacious/credits.c:270
 msgid "Polish:"
 msgstr "Poljski:"
 
-#: src/audacious/credits.c:274
+#: src/audacious/credits.c:276
 #, fuzzy
 msgid "Portuguese:"
 msgstr "Brazilsko Portugalski:"
 
-#: src/audacious/credits.c:277
+#: src/audacious/credits.c:279
 msgid "Romanian:"
 msgstr "Rumunjski:"
 
-#: src/audacious/credits.c:281
+#: src/audacious/credits.c:283
 msgid "Russian:"
 msgstr "Ruski:"
 
-#: src/audacious/credits.c:285
+#: src/audacious/credits.c:287
 msgid "Serbian (Latin):"
 msgstr "Srpski (Latinica):"
 
-#: src/audacious/credits.c:288
+#: src/audacious/credits.c:290
 msgid "Serbian (Cyrillic):"
 msgstr "Srpski (Ćirilica):"
 
-#: src/audacious/credits.c:291
+#: src/audacious/credits.c:293
 msgid "Simplified Chinese:"
 msgstr "Pojednostavljeni Kineski:"
 
-#: src/audacious/credits.c:294
+#: src/audacious/credits.c:296
 msgid "Slovak:"
 msgstr "Slovenski:"
 
-#: src/audacious/credits.c:297
+#: src/audacious/credits.c:299
 msgid "Spanish:"
 msgstr "Španski:"
 
-#: src/audacious/credits.c:304
+#: src/audacious/credits.c:306
 msgid "Swedish:"
 msgstr "Švedski:"
 
-#: src/audacious/credits.c:307
+#: src/audacious/credits.c:309
 msgid "Traditional Chinese:"
 msgstr "Tradicionalni Kineski:"
 
-#: src/audacious/credits.c:312
+#: src/audacious/credits.c:315
 msgid "Turkish:"
 msgstr ""
 
-#: src/audacious/credits.c:316
+#: src/audacious/credits.c:319
 msgid "Ukrainian:"
 msgstr "Ukrajinski:"
 
-#: src/audacious/credits.c:319
+#: src/audacious/credits.c:323
+#, fuzzy
+msgid "Vietnamese:"
+msgstr "Ime datoteke:"
+
+#: src/audacious/credits.c:326
 msgid "Welsh:"
 msgstr "Velšanski:"
 
@@ -324,223 +329,219 @@ msgstr ""
 msgid "Untitled Playlist"
 msgstr "Nova lista zvučnih zapisa"
 
-#: src/audacious/ui_preferences.c:87
+#: src/audacious/ui_preferences.c:91
 msgid "Audio"
 msgstr "Audio"
 
-#: src/audacious/ui_preferences.c:88
+#: src/audacious/ui_preferences.c:92
 msgid "Network"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:89 src/audacious/ui_preferences.c:1556
+#: src/audacious/ui_preferences.c:93 src/audacious/ui_preferences.c:1557
 msgid "Playlist"
 msgstr "Lista zvučnih zapisa"
 
-#: src/audacious/ui_preferences.c:90
+#: src/audacious/ui_preferences.c:94
 msgid "Plugins"
 msgstr "Dodaci"
 
-#: src/audacious/ui_preferences.c:96 src/libaudgui/infopopup.c:204
+#: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:204
 msgid "Artist"
 msgstr "Izvođač"
 
-#: src/audacious/ui_preferences.c:97 src/libaudgui/infopopup.c:206
+#: src/audacious/ui_preferences.c:101 src/libaudgui/infopopup.c:206
 msgid "Album"
 msgstr "Album"
 
-#: src/audacious/ui_preferences.c:98 src/libaudgui/infopopup.c:202
+#: src/audacious/ui_preferences.c:102 src/libaudgui/infopopup.c:202
 #: src/libaudgui/ui_playlist_manager.c:263
 msgid "Title"
 msgstr "Naslov"
 
-#: src/audacious/ui_preferences.c:99
+#: src/audacious/ui_preferences.c:103
 msgid "Tracknumber"
 msgstr "Broj zvučnog zapisa"
 
-#: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:208
+#: src/audacious/ui_preferences.c:104 src/libaudgui/infopopup.c:208
 msgid "Genre"
 msgstr "Žanr"
 
-#: src/audacious/ui_preferences.c:101
+#: src/audacious/ui_preferences.c:105
 msgid "Filename"
 msgstr "Ime datoteke"
 
-#: src/audacious/ui_preferences.c:102
+#: src/audacious/ui_preferences.c:106
 msgid "Filepath"
 msgstr "Putanja datoteke"
 
-#: src/audacious/ui_preferences.c:103
+#: src/audacious/ui_preferences.c:107
 msgid "Date"
 msgstr "Datum"
 
-#: src/audacious/ui_preferences.c:104 src/libaudgui/infopopup.c:210
+#: src/audacious/ui_preferences.c:108 src/libaudgui/infopopup.c:210
 msgid "Year"
 msgstr "Godina"
 
-#: src/audacious/ui_preferences.c:105
+#: src/audacious/ui_preferences.c:109
 msgid "Comment"
 msgstr "Komentar"
 
-#: src/audacious/ui_preferences.c:106
+#: src/audacious/ui_preferences.c:110
 msgid "Codec"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:107
+#: src/audacious/ui_preferences.c:111
 #, fuzzy
 msgid "Quality"
 msgstr "_Izađi"
 
-#: src/audacious/ui_preferences.c:112
+#: src/audacious/ui_preferences.c:117
 msgid "None"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:113
-#, fuzzy
-msgid "Japanese"
-msgstr "Japanski:"
+#: src/audacious/ui_preferences.c:118
+msgid "Arabic"
+msgstr ""
 
-#: src/audacious/ui_preferences.c:114
-#, fuzzy
-msgid "Taiwanese"
-msgstr "Japanski:"
+#: src/audacious/ui_preferences.c:119
+msgid "Baltic"
+msgstr ""
 
-#: src/audacious/ui_preferences.c:115
+#: src/audacious/ui_preferences.c:120
 #, fuzzy
 msgid "Chinese"
 msgstr "Linije"
 
-#: src/audacious/ui_preferences.c:116
-#, fuzzy
-msgid "Korean"
-msgstr "Koreanski:"
-
-#: src/audacious/ui_preferences.c:117
-#, fuzzy
-msgid "Russian"
-msgstr "Ruski:"
-
-#: src/audacious/ui_preferences.c:118
+#: src/audacious/ui_preferences.c:121
 #, fuzzy
 msgid "Greek"
 msgstr "Grčki:"
 
-#: src/audacious/ui_preferences.c:119
+#: src/audacious/ui_preferences.c:122
 msgid "Hebrew"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:120
-msgid "Turkish"
-msgstr ""
+#: src/audacious/ui_preferences.c:123
+#, fuzzy
+msgid "Japanese"
+msgstr "Japanski:"
 
-#: src/audacious/ui_preferences.c:121
-msgid "Arabic"
-msgstr ""
+#: src/audacious/ui_preferences.c:124
+#, fuzzy
+msgid "Korean"
+msgstr "Koreanski:"
 
-#: src/audacious/ui_preferences.c:122
+#: src/audacious/ui_preferences.c:125
 #, fuzzy
 msgid "Polish"
 msgstr "Poljski:"
 
-#: src/audacious/ui_preferences.c:123
-msgid "Baltic"
+#: src/audacious/ui_preferences.c:126
+#, fuzzy
+msgid "Russian"
+msgstr "Ruski:"
+
+#: src/audacious/ui_preferences.c:127
+#, fuzzy
+msgid "Taiwanese"
+msgstr "Japanski:"
+
+#: src/audacious/ui_preferences.c:128
+msgid "Turkish"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:124
-msgid "Universal"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:146
+#: src/audacious/ui_preferences.c:150
 #, fuzzy
 msgid "Single track mode"
 msgstr "Prikaži detalje zvučnog zapisa"
 
-#: src/audacious/ui_preferences.c:147
+#: src/audacious/ui_preferences.c:151
 #, fuzzy
 msgid "Album mode"
 msgstr "Ime albuma: "
 
-#: src/audacious/ui_preferences.c:150
+#: src/audacious/ui_preferences.c:154
 #, fuzzy
 msgid "<b>Output Settings</b>"
 msgstr "<b>Prepoznavanje formata</b>"
 
-#: src/audacious/ui_preferences.c:152
+#: src/audacious/ui_preferences.c:156
 #, fuzzy
 msgid "Bit depth:"
 msgstr "<b>Ime datoteke</b>"
 
-#: src/audacious/ui_preferences.c:155
+#: src/audacious/ui_preferences.c:159
 msgid "Buffer size:"
 msgstr "Veličina buffer-a:"
 
-#: src/audacious/ui_preferences.c:157
+#: src/audacious/ui_preferences.c:161
 msgid "ms"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:158
+#: src/audacious/ui_preferences.c:162
 msgid "Use software volume control (not recommended)"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:160
+#: src/audacious/ui_preferences.c:164
 #, fuzzy
 msgid "<b>Replay Gain</b>"
 msgstr "<b>Konfiguracija proxy servera</b>"
 
-#: src/audacious/ui_preferences.c:161
+#: src/audacious/ui_preferences.c:165
 #, fuzzy
 msgid "Enable Replay Gain"
 msgstr "Uključi upotrebu proxy servera"
 
-#: src/audacious/ui_preferences.c:164
+#: src/audacious/ui_preferences.c:168
 msgid "Prevent clipping (recommended)"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:166
+#: src/audacious/ui_preferences.c:170
 #, fuzzy
 msgid "<b>Adjust Levels</b>"
 msgstr "<b>Kotačić miša</b>"
 
-#: src/audacious/ui_preferences.c:167
+#: src/audacious/ui_preferences.c:171
 msgid "Amplify all files:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:169 src/audacious/ui_preferences.c:172
+#: src/audacious/ui_preferences.c:173 src/audacious/ui_preferences.c:176
 msgid "dB"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:170
+#: src/audacious/ui_preferences.c:174
 msgid "Amplify untagged files:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:175
+#: src/audacious/ui_preferences.c:179
 msgid "Proxy hostname:"
 msgstr "Ime proxy servera:"
 
-#: src/audacious/ui_preferences.c:176
+#: src/audacious/ui_preferences.c:180
 msgid "Proxy port:"
 msgstr "Proxy port:"
 
-#: src/audacious/ui_preferences.c:179
+#: src/audacious/ui_preferences.c:183
 msgid "Proxy username:"
 msgstr "Proxy korisničko ime:"
 
-#: src/audacious/ui_preferences.c:180
+#: src/audacious/ui_preferences.c:184
 msgid "Proxy password:"
 msgstr "Proxy lozinka:"
 
-#: src/audacious/ui_preferences.c:184
+#: src/audacious/ui_preferences.c:188
 msgid "<b>Proxy Configuration</b>"
 msgstr "<b>Konfiguracija proxy servera</b>"
 
-#: src/audacious/ui_preferences.c:185
+#: src/audacious/ui_preferences.c:189
 msgid "Enable proxy usage"
 msgstr "Uključi upotrebu proxy servera"
 
-#: src/audacious/ui_preferences.c:187
+#: src/audacious/ui_preferences.c:191
 msgid "Use authentication with proxy"
 msgstr "Koristi autentifikaciju sa proxy-jem."
 
-#: src/audacious/ui_preferences.c:189
+#: src/audacious/ui_preferences.c:193
 msgid ""
 "<span size=\"small\">Changing these settings will require a restart of "
 "Audacious.</span>"
@@ -548,67 +549,55 @@ msgstr ""
 "<span size=\"small\">Mijenjanje ovih podešavanja će zahtevati ponovno "
 "pokretanje Audacious-a.</span>"
 
-#: src/audacious/ui_preferences.c:193
+#: src/audacious/ui_preferences.c:198
 msgid "Auto character encoding detector for:"
 msgstr "Auto-prepozavanje kodiranja znakova za:"
 
-#: src/audacious/ui_preferences.c:201
+#: src/audacious/ui_preferences.c:203
 msgid "Fallback character encodings:"
 msgstr "Rezervna kodna stranica:"
 
-#: src/audacious/ui_preferences.c:201
-msgid ""
-"List of character encodings used for fall back conversion of metadata. If "
-"automatic character encoding detector failed or has been disabled, encodings "
-"in this list would be treated as candidates of the encoding of metadata, and "
-"fall back conversion from these encodings to UTF-8 would be attempted."
-msgstr ""
-"Lista kodiranja karaktera koja se koriste za rezervnu konverziju meta-"
-"podataka. Ako automatsko prepoznavanje kodiranja ne uspije ili je "
-"isključeno, kodiranje u ovoj listi će biti kandidat za kodiranje meta-"
-"podataka, i rezervna konverzija iz ovih kodiranja u UTF-8 će biti pokušana."
-
-#: src/audacious/ui_preferences.c:205
+#: src/audacious/ui_preferences.c:208
 #, fuzzy
 msgid "<b>Behavior</b>"
 msgstr "<b>Ime datoteke</b>"
 
-#: src/audacious/ui_preferences.c:206
+#: src/audacious/ui_preferences.c:209
 msgid "Continue playback on startup"
 msgstr "Nastavi reprodukciju na početku"
 
-#: src/audacious/ui_preferences.c:208
+#: src/audacious/ui_preferences.c:211
 msgid "Advance when the current song is deleted"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:210
+#: src/audacious/ui_preferences.c:213
 #, fuzzy
 msgid "Clear the playlist when opening files"
 msgstr "Napravi novu listu od nađenih stavki"
 
-#: src/audacious/ui_preferences.c:212
+#: src/audacious/ui_preferences.c:215
 #, fuzzy
 msgid "Open files in a temporary playlist"
 msgstr "Dodaje datoteke u listu zvučnih zapisa."
 
-#: src/audacious/ui_preferences.c:214
+#: src/audacious/ui_preferences.c:217
 msgid "<b>Metadata</b>"
 msgstr "<b>Meta-podaci</b>"
 
-#: src/audacious/ui_preferences.c:454
+#: src/audacious/ui_preferences.c:457
 msgid "Category"
 msgstr "Kategorija"
 
-#: src/audacious/ui_preferences.c:682
+#: src/audacious/ui_preferences.c:683
 msgid "Popup Information Settings"
 msgstr "<b>Podešavanja iskačućih informacija</b>"
 
-#: src/audacious/ui_preferences.c:691
+#: src/audacious/ui_preferences.c:692
 #, fuzzy
 msgid "<b>Cover image retrieve</b>"
 msgstr "<b>Prepoznavanje formata</b>"
 
-#: src/audacious/ui_preferences.c:696
+#: src/audacious/ui_preferences.c:697
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
@@ -617,101 +606,101 @@ msgstr ""
 "Dok traži naslovne slike albuma, Audacious traži određene riječi u imenu "
 "datoteke. Možete navesti te riječi dolje u listi, razdvojene zarezima."
 
-#: src/audacious/ui_preferences.c:713
+#: src/audacious/ui_preferences.c:714
 msgid "Exclude:"
 msgstr "Isključi:"
 
-#: src/audacious/ui_preferences.c:720
+#: src/audacious/ui_preferences.c:721
 msgid "Include:"
 msgstr "Uključi:"
 
-#: src/audacious/ui_preferences.c:737
+#: src/audacious/ui_preferences.c:738
 msgid "Recursively search for cover"
 msgstr "Rekurzivno traži naslovnu sliku"
 
-#: src/audacious/ui_preferences.c:747
+#: src/audacious/ui_preferences.c:748
 msgid "Search depth: "
 msgstr "Dubina pretrage: "
 
-#: src/audacious/ui_preferences.c:761
+#: src/audacious/ui_preferences.c:762
 msgid "Use per-file cover"
 msgstr "Koristi jednu naslovnu sliku po datoteci"
 
-#: src/audacious/ui_preferences.c:764
+#: src/audacious/ui_preferences.c:765
 #, fuzzy
 msgid "<b>Miscellaneous</b>"
 msgstr "<b>_Ostalo</b>"
 
-#: src/audacious/ui_preferences.c:773
+#: src/audacious/ui_preferences.c:774
 msgid "Show Progress bar for the current track"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:783
+#: src/audacious/ui_preferences.c:784
 msgid "Delay until filepopup comes up: "
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1283
+#: src/audacious/ui_preferences.c:1284
 msgid "<b>Song Display</b>"
 msgstr "<b>Prikaz pjesme</b>"
 
-#: src/audacious/ui_preferences.c:1292
+#: src/audacious/ui_preferences.c:1293
 msgid "Show song numbers"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1303
+#: src/audacious/ui_preferences.c:1304
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1325
+#: src/audacious/ui_preferences.c:1326
 msgid "Show information about titlestring format"
 msgstr "Prikaži informacije o formatu znakovnog niza naslova"
 
-#: src/audacious/ui_preferences.c:1339
+#: src/audacious/ui_preferences.c:1340
 msgid "TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1340
+#: src/audacious/ui_preferences.c:1341
 msgid "ARTIST - TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1341
+#: src/audacious/ui_preferences.c:1342
 msgid "ARTIST - ALBUM - TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1342
+#: src/audacious/ui_preferences.c:1343
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1343
+#: src/audacious/ui_preferences.c:1344
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1344
+#: src/audacious/ui_preferences.c:1345
 msgid "ALBUM - TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1345
+#: src/audacious/ui_preferences.c:1346
 #, fuzzy
 msgid "Custom"
 msgstr "Vlastiti znakovni niz:"
 
-#: src/audacious/ui_preferences.c:1354
+#: src/audacious/ui_preferences.c:1355
 msgid "Custom string:"
 msgstr "Vlastiti znakovni niz:"
 
-#: src/audacious/ui_preferences.c:1361
+#: src/audacious/ui_preferences.c:1362
 msgid "Title format:"
 msgstr "Format naslova:"
 
-#: src/audacious/ui_preferences.c:1372
+#: src/audacious/ui_preferences.c:1373
 msgid "<b>Popup Information</b>"
 msgstr "<b>Iskačuće informacije</b>"
 
-#: src/audacious/ui_preferences.c:1387
+#: src/audacious/ui_preferences.c:1388
 msgid "Show popup information for playlist entries"
 msgstr "Prikaži iskačuće informacije za stavke u listi zvučnih zapisa"
 
-#: src/audacious/ui_preferences.c:1388
+#: src/audacious/ui_preferences.c:1389
 msgid ""
 "Toggles popup information window for the pointed entry in the playlist. The "
 "window shows title of song, name of album, genre, year of publish, track "
@@ -721,38 +710,38 @@ msgstr ""
 "listi zvučnih zapisa. Prozor prikazuje ime pjesme, ime albuma, žanr, godinu "
 "izdavanja, broj zvučnog zapisa, dužinu zvučnog zapisa i sliku."
 
-#: src/audacious/ui_preferences.c:1397
+#: src/audacious/ui_preferences.c:1398
 msgid "Edit settings for popup information"
 msgstr "Uredi podešavanja za iskačuće prozore"
 
-#: src/audacious/ui_preferences.c:1497
+#: src/audacious/ui_preferences.c:1498
 #, fuzzy
 msgid "Output plugin:"
 msgstr "Ulazni dodatak: %s"
 
-#: src/audacious/ui_preferences.c:1556
+#: src/audacious/ui_preferences.c:1557
 #, fuzzy
 msgid "Transport"
 msgstr "Prevoditelji"
 
-#: src/audacious/ui_preferences.c:1556
+#: src/audacious/ui_preferences.c:1557
 msgid "Input"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1557
+#: src/audacious/ui_preferences.c:1558
 #, fuzzy
 msgid "Effect"
 msgstr "<b>Efekti</b>"
 
-#: src/audacious/ui_preferences.c:1557
+#: src/audacious/ui_preferences.c:1558
 msgid "Visualization"
 msgstr "Vizualizacija"
 
-#: src/audacious/ui_preferences.c:1557
+#: src/audacious/ui_preferences.c:1558
 msgid "General"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1597
+#: src/audacious/ui_preferences.c:1598
 msgid "Audacious Preferences"
 msgstr "Audacious podešavanja"
 
@@ -1278,6 +1267,19 @@ msgstr "Prikaži dekoracije programa za upravljanje prozorima"
 msgid "Show session management options"
 msgstr "Prikaži dekoracije programa za upravljanje prozorima"
 
+#~ msgid ""
+#~ "List of character encodings used for fall back conversion of metadata. If "
+#~ "automatic character encoding detector failed or has been disabled, "
+#~ "encodings in this list would be treated as candidates of the encoding of "
+#~ "metadata, and fall back conversion from these encodings to UTF-8 would be "
+#~ "attempted."
+#~ msgstr ""
+#~ "Lista kodiranja karaktera koja se koriste za rezervnu konverziju meta-"
+#~ "podataka. Ako automatsko prepoznavanje kodiranja ne uspije ili je "
+#~ "isključeno, kodiranje u ovoj listi će biti kandidat za kodiranje meta-"
+#~ "podataka, i rezervna konverzija iz ovih kodiranja u UTF-8 će biti "
+#~ "pokušana."
+
 #, fuzzy
 #~ msgid "<b>Volume Control</b>"
 #~ msgstr "<b>Kotačić miša</b>"
@@ -1512,9 +1514,6 @@ msgstr "Prikaži dekoracije programa za upravljanje prozorima"
 
 #~ msgid "audacious: %s"
 #~ msgstr "audacious: %s"
-
-#~ msgid "Filename:"
-#~ msgstr "Ime datoteke:"
 
 #~ msgid "No input plugin recognized this file"
 #~ msgstr "Nijedan ulazni dodatak nije prepoznao ovu datoteku"

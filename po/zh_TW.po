@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious 3.0\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-07-15 08:05-0400\n"
+"POT-Creation-Date: 2011-09-18 14:08-0400\n"
 "PO-Revision-Date: 2011-07-27 10:05+0800\n"
 "Last-Translator: Ruei-Yuan Lu <RueiYuan.Lu@gmail.com>\n"
 "Language-Team: Chinese (traditional)\n"
@@ -21,9 +21,11 @@ msgid "Searching ..."
 msgstr "搜尋中 ..."
 
 #: src/audacious/adder.c:99
-#, c-format
+#, fuzzy, c-format
 msgid "%d file found"
-msgstr "找到 %d 個檔案"
+msgid_plural "%d files found"
+msgstr[0] "找到 %d 個檔案"
+msgstr[1] "找到 %d 個檔案"
 
 #: src/audacious/chardet.c:37
 msgid "  (invalid UTF-8)"
@@ -69,143 +71,148 @@ msgstr "巴斯克語:"
 msgid "Brazilian Portuguese:"
 msgstr "巴西葡萄牙語:"
 
-#: src/audacious/credits.c:190
+#: src/audacious/credits.c:191
 msgid "Breton:"
 msgstr "布列塔尼語:"
 
-#: src/audacious/credits.c:193
+#: src/audacious/credits.c:194
 msgid "Bulgarian:"
 msgstr "保加利亞語:"
 
-#: src/audacious/credits.c:196
+#: src/audacious/credits.c:197
 msgid "Catalan:"
 msgstr "加泰羅尼亞語:"
 
-#: src/audacious/credits.c:199
+#: src/audacious/credits.c:200
 msgid "Chinese:"
 msgstr "中文:"
 
-#: src/audacious/credits.c:202
+#: src/audacious/credits.c:203
 msgid "Croatian:"
 msgstr "克羅埃西亞語:"
 
-#: src/audacious/credits.c:205
+#: src/audacious/credits.c:206
 msgid "Czech:"
 msgstr "捷克語:"
 
-#: src/audacious/credits.c:208
+#: src/audacious/credits.c:209
 msgid "Dutch:"
 msgstr "荷蘭語:"
 
-#: src/audacious/credits.c:212
+#: src/audacious/credits.c:213
 msgid "Estonian:"
 msgstr "愛沙尼亞語:"
 
-#: src/audacious/credits.c:215
+#: src/audacious/credits.c:216
 msgid "Finnish:"
 msgstr "芬蘭語:"
 
-#: src/audacious/credits.c:220
+#: src/audacious/credits.c:221
 msgid "French:"
 msgstr "法語:"
 
-#: src/audacious/credits.c:226
+#: src/audacious/credits.c:227
 msgid "German:"
 msgstr "德語:"
 
-#: src/audacious/credits.c:233
+#: src/audacious/credits.c:234
 msgid "Georgian:"
 msgstr "喬治亞語:"
 
-#: src/audacious/credits.c:236
+#: src/audacious/credits.c:237
 msgid "Greek:"
 msgstr "希臘語:"
 
-#: src/audacious/credits.c:241
+#: src/audacious/credits.c:242
 msgid "Hindi:"
 msgstr "印地語:"
 
-#: src/audacious/credits.c:244
+#: src/audacious/credits.c:245
 msgid "Hungarian:"
 msgstr "匈牙利語:"
 
-#: src/audacious/credits.c:248
+#: src/audacious/credits.c:249
 msgid "Italian:"
 msgstr "義大利語:"
 
-#: src/audacious/credits.c:252
+#: src/audacious/credits.c:253
 msgid "Japanese:"
 msgstr "日本語:"
 
-#: src/audacious/credits.c:255
+#: src/audacious/credits.c:256
 msgid "Korean:"
 msgstr "韓語:"
 
-#: src/audacious/credits.c:258
+#: src/audacious/credits.c:259
 msgid "Latvian:"
 msgstr "拉脫維亞語:"
 
-#: src/audacious/credits.c:261
+#: src/audacious/credits.c:262
 msgid "Lithuanian:"
 msgstr "立陶宛語:"
 
-#: src/audacious/credits.c:265
+#: src/audacious/credits.c:267
 msgid "Macedonian:"
 msgstr "馬其頓語:"
 
-#: src/audacious/credits.c:268
+#: src/audacious/credits.c:270
 msgid "Polish:"
 msgstr "波蘭語:"
 
-#: src/audacious/credits.c:274
+#: src/audacious/credits.c:276
 msgid "Portuguese:"
 msgstr "葡萄牙文:"
 
-#: src/audacious/credits.c:277
+#: src/audacious/credits.c:279
 msgid "Romanian:"
 msgstr "羅馬尼亞語:"
 
-#: src/audacious/credits.c:281
+#: src/audacious/credits.c:283
 msgid "Russian:"
 msgstr "俄語:"
 
-#: src/audacious/credits.c:285
+#: src/audacious/credits.c:287
 msgid "Serbian (Latin):"
 msgstr "塞爾維亞語 (拉丁):"
 
-#: src/audacious/credits.c:288
+#: src/audacious/credits.c:290
 msgid "Serbian (Cyrillic):"
 msgstr "塞爾維亞語 (西里爾):"
 
-#: src/audacious/credits.c:291
+#: src/audacious/credits.c:293
 msgid "Simplified Chinese:"
 msgstr "簡體中文:"
 
-#: src/audacious/credits.c:294
+#: src/audacious/credits.c:296
 msgid "Slovak:"
 msgstr "斯洛伐克語:"
 
-#: src/audacious/credits.c:297
+#: src/audacious/credits.c:299
 msgid "Spanish:"
 msgstr "西班牙語:"
 
-#: src/audacious/credits.c:304
+#: src/audacious/credits.c:306
 msgid "Swedish:"
 msgstr "瑞典語:"
 
-#: src/audacious/credits.c:307
+#: src/audacious/credits.c:309
 msgid "Traditional Chinese:"
 msgstr "正體中文:"
 
-#: src/audacious/credits.c:312
+#: src/audacious/credits.c:315
 msgid "Turkish:"
 msgstr "土耳其語:"
 
-#: src/audacious/credits.c:316
+#: src/audacious/credits.c:319
 msgid "Ukrainian:"
 msgstr "烏克蘭語:"
 
-#: src/audacious/credits.c:319
+#: src/audacious/credits.c:323
+#, fuzzy
+msgid "Vietnamese:"
+msgstr "中文:"
+
+#: src/audacious/credits.c:326
 msgid "Welsh:"
 msgstr "威爾士語:"
 
@@ -283,7 +290,6 @@ msgstr ""
 "%s: %s\n"
 "請嘗試用 `%s --help' 取得更多資訊。\n"
 
-
 #: src/audacious/main.c:407
 msgid ""
 "Audacious seems to be already running but is not responding.  You can start "
@@ -292,9 +298,8 @@ msgid ""
 "message.  Press OK to start Audacious or Cancel to quit."
 msgstr ""
 "Audacious 似乎已經執行但卻沒有回應。你可以另外再開一個程式實體，但請注意這有"
-"可能會造成資料遺失。如果沒有執行 Audacious，你可以略過本訊息。按確認以啟動"
-" Audacious 或者按取消離開。"
-
+"可能會造成資料遺失。如果沒有執行 Audacious，你可以略過本訊息。按確認以啟動 "
+"Audacious 或者按取消離開。"
 
 #: src/audacious/main.c:572
 msgid "Audacious"
@@ -313,270 +318,255 @@ msgstr "緩衝中 ..."
 msgid "Untitled Playlist"
 msgstr "未命名的播放清單"
 
-#: src/audacious/ui_preferences.c:87
+#: src/audacious/ui_preferences.c:91
 msgid "Audio"
 msgstr "音訊"
 
-#: src/audacious/ui_preferences.c:88
+#: src/audacious/ui_preferences.c:92
 msgid "Network"
 msgstr "網路"
 
-#: src/audacious/ui_preferences.c:89 src/audacious/ui_preferences.c:1556
+#: src/audacious/ui_preferences.c:93 src/audacious/ui_preferences.c:1557
 msgid "Playlist"
 msgstr "播放清單"
 
-#: src/audacious/ui_preferences.c:90
+#: src/audacious/ui_preferences.c:94
 msgid "Plugins"
 msgstr "外掛"
 
-#: src/audacious/ui_preferences.c:96 src/libaudgui/infopopup.c:204
+#: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:204
 msgid "Artist"
 msgstr "藝人"
 
-#: src/audacious/ui_preferences.c:97 src/libaudgui/infopopup.c:206
+#: src/audacious/ui_preferences.c:101 src/libaudgui/infopopup.c:206
 msgid "Album"
 msgstr "專輯"
 
-#: src/audacious/ui_preferences.c:98 src/libaudgui/infopopup.c:202
+#: src/audacious/ui_preferences.c:102 src/libaudgui/infopopup.c:202
 #: src/libaudgui/ui_playlist_manager.c:263
 msgid "Title"
 msgstr "標題"
 
-#: src/audacious/ui_preferences.c:99
+#: src/audacious/ui_preferences.c:103
 msgid "Tracknumber"
 msgstr "音軌編號"
 
-#: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:208
+#: src/audacious/ui_preferences.c:104 src/libaudgui/infopopup.c:208
 msgid "Genre"
 msgstr "類型"
 
-#: src/audacious/ui_preferences.c:101
+#: src/audacious/ui_preferences.c:105
 msgid "Filename"
 msgstr "檔案名稱"
 
-#: src/audacious/ui_preferences.c:102
+#: src/audacious/ui_preferences.c:106
 msgid "Filepath"
 msgstr "檔案路徑"
 
-#: src/audacious/ui_preferences.c:103
+#: src/audacious/ui_preferences.c:107
 msgid "Date"
 msgstr "日期"
 
-#: src/audacious/ui_preferences.c:104 src/libaudgui/infopopup.c:210
+#: src/audacious/ui_preferences.c:108 src/libaudgui/infopopup.c:210
 msgid "Year"
 msgstr "年份"
 
-#: src/audacious/ui_preferences.c:105
+#: src/audacious/ui_preferences.c:109
 msgid "Comment"
 msgstr "備註"
 
-#: src/audacious/ui_preferences.c:106
+#: src/audacious/ui_preferences.c:110
 msgid "Codec"
 msgstr "編解碼器"
 
-#: src/audacious/ui_preferences.c:107
+#: src/audacious/ui_preferences.c:111
 msgid "Quality"
 msgstr "品質"
 
-#: src/audacious/ui_preferences.c:112
+#: src/audacious/ui_preferences.c:117
 msgid "None"
 msgstr "無"
 
-#: src/audacious/ui_preferences.c:113
-msgid "Japanese"
-msgstr "日本語"
-
-#: src/audacious/ui_preferences.c:114
-msgid "Taiwanese"
-msgstr "正體中文"
-
-#: src/audacious/ui_preferences.c:115
-msgid "Chinese"
-msgstr "中文"
-
-#: src/audacious/ui_preferences.c:116
-msgid "Korean"
-msgstr "韓文"
-
-#: src/audacious/ui_preferences.c:117
-msgid "Russian"
-msgstr "俄語"
-
 #: src/audacious/ui_preferences.c:118
-msgid "Greek"
-msgstr "希臘語"
-
-#: src/audacious/ui_preferences.c:119
-msgid "Hebrew"
-msgstr "希伯來語"
-
-#: src/audacious/ui_preferences.c:120
-msgid "Turkish"
-msgstr "土耳其語"
-
-#: src/audacious/ui_preferences.c:121
 msgid "Arabic"
 msgstr "阿拉伯語"
 
-#: src/audacious/ui_preferences.c:122
-msgid "Polish"
-msgstr "波蘭語"
-
-#: src/audacious/ui_preferences.c:123
+#: src/audacious/ui_preferences.c:119
 msgid "Baltic"
 msgstr "波羅的海"
 
-#: src/audacious/ui_preferences.c:124
-msgid "Universal"
-msgstr ""
+#: src/audacious/ui_preferences.c:120
+msgid "Chinese"
+msgstr "中文"
 
-#: src/audacious/ui_preferences.c:146
+#: src/audacious/ui_preferences.c:121
+msgid "Greek"
+msgstr "希臘語"
+
+#: src/audacious/ui_preferences.c:122
+msgid "Hebrew"
+msgstr "希伯來語"
+
+#: src/audacious/ui_preferences.c:123
+msgid "Japanese"
+msgstr "日本語"
+
+#: src/audacious/ui_preferences.c:124
+msgid "Korean"
+msgstr "韓文"
+
+#: src/audacious/ui_preferences.c:125
+msgid "Polish"
+msgstr "波蘭語"
+
+#: src/audacious/ui_preferences.c:126
+msgid "Russian"
+msgstr "俄語"
+
+#: src/audacious/ui_preferences.c:127
+msgid "Taiwanese"
+msgstr "正體中文"
+
+#: src/audacious/ui_preferences.c:128
+msgid "Turkish"
+msgstr "土耳其語"
+
+#: src/audacious/ui_preferences.c:150
 msgid "Single track mode"
 msgstr "單音軌模式"
 
-#: src/audacious/ui_preferences.c:147
+#: src/audacious/ui_preferences.c:151
 msgid "Album mode"
 msgstr "專輯模式"
 
-#: src/audacious/ui_preferences.c:150
+#: src/audacious/ui_preferences.c:154
 msgid "<b>Output Settings</b>"
 msgstr "<b>輸出設定</b>"
 
-#: src/audacious/ui_preferences.c:152
+#: src/audacious/ui_preferences.c:156
 msgid "Bit depth:"
 msgstr "取樣格式:"
 
-#: src/audacious/ui_preferences.c:155
+#: src/audacious/ui_preferences.c:159
 msgid "Buffer size:"
 msgstr "緩衝區大小:"
 
-#: src/audacious/ui_preferences.c:157
+#: src/audacious/ui_preferences.c:161
 msgid "ms"
 msgstr "毫秒"
 
-#: src/audacious/ui_preferences.c:158
+#: src/audacious/ui_preferences.c:162
 msgid "Use software volume control (not recommended)"
 msgstr "使用軟體音量控制 (不建議開啟)"
 
-#: src/audacious/ui_preferences.c:160
+#: src/audacious/ui_preferences.c:164
 msgid "<b>Replay Gain</b>"
 msgstr "<b>播放增益</b>"
 
-#: src/audacious/ui_preferences.c:161
+#: src/audacious/ui_preferences.c:165
 msgid "Enable Replay Gain"
 msgstr "啟用播放增益"
 
-#: src/audacious/ui_preferences.c:164
+#: src/audacious/ui_preferences.c:168
 msgid "Prevent clipping (recommended)"
 msgstr "防止訊號裁剪 (建議開啟)"
 
-#: src/audacious/ui_preferences.c:166
+#: src/audacious/ui_preferences.c:170
 msgid "<b>Adjust Levels</b>"
 msgstr "<b>調整音量</b>"
 
-#: src/audacious/ui_preferences.c:167
+#: src/audacious/ui_preferences.c:171
 msgid "Amplify all files:"
 msgstr "放大所有檔案的音量:"
 
-#: src/audacious/ui_preferences.c:169 src/audacious/ui_preferences.c:172
+#: src/audacious/ui_preferences.c:173 src/audacious/ui_preferences.c:176
 msgid "dB"
 msgstr "分貝"
 
-#: src/audacious/ui_preferences.c:170
+#: src/audacious/ui_preferences.c:174
 msgid "Amplify untagged files:"
 msgstr "放大無標籤檔案的音量:"
 
-#: src/audacious/ui_preferences.c:175
+#: src/audacious/ui_preferences.c:179
 msgid "Proxy hostname:"
 msgstr "代理伺服器名稱:"
 
-#: src/audacious/ui_preferences.c:176
+#: src/audacious/ui_preferences.c:180
 msgid "Proxy port:"
 msgstr "代理伺服器連接埠:"
 
-#: src/audacious/ui_preferences.c:179
+#: src/audacious/ui_preferences.c:183
 msgid "Proxy username:"
 msgstr "代理伺服器使用者名稱:"
 
-#: src/audacious/ui_preferences.c:180
+#: src/audacious/ui_preferences.c:184
 msgid "Proxy password:"
 msgstr "代理伺服器密碼:"
 
-#: src/audacious/ui_preferences.c:184
+#: src/audacious/ui_preferences.c:188
 msgid "<b>Proxy Configuration</b>"
 msgstr "<b>代理伺服器設定</b>"
 
-#: src/audacious/ui_preferences.c:185
+#: src/audacious/ui_preferences.c:189
 msgid "Enable proxy usage"
 msgstr "啟用代理伺服器"
 
-#: src/audacious/ui_preferences.c:187
+#: src/audacious/ui_preferences.c:191
 msgid "Use authentication with proxy"
 msgstr "需要認證"
 
-#: src/audacious/ui_preferences.c:189
+#: src/audacious/ui_preferences.c:193
 msgid ""
 "<span size=\"small\">Changing these settings will require a restart of "
 "Audacious.</span>"
 msgstr ""
-"<span size=\"small\">變更這些設定需要重新啟動 Audacious 才能生效"
-"</span>"
+"<span size=\"small\">變更這些設定需要重新啟動 Audacious 才能生效</span>"
 
-#: src/audacious/ui_preferences.c:193
+#: src/audacious/ui_preferences.c:198
 msgid "Auto character encoding detector for:"
 msgstr "自動偵測字元編碼:"
 
-#: src/audacious/ui_preferences.c:201
+#: src/audacious/ui_preferences.c:203
 msgid "Fallback character encodings:"
 msgstr "備用字元編碼:"
 
-#: src/audacious/ui_preferences.c:201
-msgid ""
-"List of character encodings used for fall back conversion of metadata. If "
-"automatic character encoding detector failed or has been disabled, encodings "
-"in this list would be treated as candidates of the encoding of metadata, and "
-"fall back conversion from these encodings to UTF-8 would be attempted."
-msgstr ""
-"清單中所列的是詮釋資料的備用字元編碼。若自動字元編碼偵測失敗或者被關閉"
-"，這些編碼便會成為詮釋資料的編碼候選。系統會嘗試將這些編碼轉為 UTF-8。"
-
-#: src/audacious/ui_preferences.c:205
+#: src/audacious/ui_preferences.c:208
 msgid "<b>Behavior</b>"
 msgstr "<b>行為</b>"
 
-#: src/audacious/ui_preferences.c:206
+#: src/audacious/ui_preferences.c:209
 msgid "Continue playback on startup"
 msgstr "啟動後繼續之前的播放"
 
-#: src/audacious/ui_preferences.c:208
+#: src/audacious/ui_preferences.c:211
 msgid "Advance when the current song is deleted"
 msgstr "目前的歌曲被刪除時移到下一個"
 
-#: src/audacious/ui_preferences.c:210
+#: src/audacious/ui_preferences.c:213
 msgid "Clear the playlist when opening files"
 msgstr "開啟檔案後清除播放清單"
 
-#: src/audacious/ui_preferences.c:212
+#: src/audacious/ui_preferences.c:215
 msgid "Open files in a temporary playlist"
 msgstr "在暫存播放清單中開啟檔案"
 
-#: src/audacious/ui_preferences.c:214
+#: src/audacious/ui_preferences.c:217
 msgid "<b>Metadata</b>"
 msgstr "<b>詮釋資料</b>"
 
-#: src/audacious/ui_preferences.c:454
+#: src/audacious/ui_preferences.c:457
 msgid "Category"
 msgstr "目錄"
 
-#: src/audacious/ui_preferences.c:682
+#: src/audacious/ui_preferences.c:683
 msgid "Popup Information Settings"
 msgstr "彈出式資訊視窗設定"
 
-#: src/audacious/ui_preferences.c:691
+#: src/audacious/ui_preferences.c:692
 msgid "<b>Cover image retrieve</b>"
 msgstr "<b>擷取封面圖片</b>"
 
-#: src/audacious/ui_preferences.c:696
+#: src/audacious/ui_preferences.c:697
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
@@ -585,136 +575,136 @@ msgstr ""
 "搜尋專輯封面時，Audacious 會從檔名中尋找特定單字。你可以在底下清單中指定這些"
 "單字，各單字之間用逗點隔開。"
 
-#: src/audacious/ui_preferences.c:713
+#: src/audacious/ui_preferences.c:714
 msgid "Exclude:"
 msgstr "排除:"
 
-#: src/audacious/ui_preferences.c:720
+#: src/audacious/ui_preferences.c:721
 msgid "Include:"
 msgstr "包含:"
 
-#: src/audacious/ui_preferences.c:737
+#: src/audacious/ui_preferences.c:738
 msgid "Recursively search for cover"
 msgstr "遞迴地搜尋封面"
 
-#: src/audacious/ui_preferences.c:747
+#: src/audacious/ui_preferences.c:748
 msgid "Search depth: "
 msgstr "搜尋深度:"
 
-#: src/audacious/ui_preferences.c:761
+#: src/audacious/ui_preferences.c:762
 msgid "Use per-file cover"
 msgstr "各檔案使用獨立的封面"
 
-#: src/audacious/ui_preferences.c:764
+#: src/audacious/ui_preferences.c:765
 msgid "<b>Miscellaneous</b>"
 msgstr "<b>雜項</b>"
 
-#: src/audacious/ui_preferences.c:773
+#: src/audacious/ui_preferences.c:774
 msgid "Show Progress bar for the current track"
 msgstr "顯示目前歌曲的進度條"
 
-#: src/audacious/ui_preferences.c:783
+#: src/audacious/ui_preferences.c:784
 msgid "Delay until filepopup comes up: "
 msgstr "顯示彈出式視窗的延遲時間:"
 
-#: src/audacious/ui_preferences.c:1283
+#: src/audacious/ui_preferences.c:1284
 msgid "<b>Song Display</b>"
 msgstr "<b>顯示歌曲</b>"
 
-#: src/audacious/ui_preferences.c:1292
+#: src/audacious/ui_preferences.c:1293
 msgid "Show song numbers"
 msgstr "顯示歌曲編號"
 
-#: src/audacious/ui_preferences.c:1303
+#: src/audacious/ui_preferences.c:1304
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr "顯示開頭的數字零 (例：02:00 而不是 2:00)"
 
-#: src/audacious/ui_preferences.c:1325
+#: src/audacious/ui_preferences.c:1326
 msgid "Show information about titlestring format"
 msgstr "顯示關於標題字串格式的資訊"
 
-#: src/audacious/ui_preferences.c:1339
+#: src/audacious/ui_preferences.c:1340
 msgid "TITLE"
 msgstr "標題"
 
-#: src/audacious/ui_preferences.c:1340
+#: src/audacious/ui_preferences.c:1341
 msgid "ARTIST - TITLE"
 msgstr "藝人 - 標題"
 
-#: src/audacious/ui_preferences.c:1341
+#: src/audacious/ui_preferences.c:1342
 msgid "ARTIST - ALBUM - TITLE"
 msgstr "藝人 - 專輯 - 標題"
 
-#: src/audacious/ui_preferences.c:1342
+#: src/audacious/ui_preferences.c:1343
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr "藝人 - 專輯 - 音軌. 標題"
 
-#: src/audacious/ui_preferences.c:1343
+#: src/audacious/ui_preferences.c:1344
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr "藝人 [ 專輯 ] - 音軌. 標題"
 
-#: src/audacious/ui_preferences.c:1344
+#: src/audacious/ui_preferences.c:1345
 msgid "ALBUM - TITLE"
 msgstr "專輯 - 標題"
 
-#: src/audacious/ui_preferences.c:1345
+#: src/audacious/ui_preferences.c:1346
 msgid "Custom"
 msgstr "自訂"
 
-#: src/audacious/ui_preferences.c:1354
+#: src/audacious/ui_preferences.c:1355
 msgid "Custom string:"
 msgstr "自訂字串:"
 
-#: src/audacious/ui_preferences.c:1361
+#: src/audacious/ui_preferences.c:1362
 msgid "Title format:"
 msgstr "標題格式:"
 
-#: src/audacious/ui_preferences.c:1372
+#: src/audacious/ui_preferences.c:1373
 msgid "<b>Popup Information</b>"
 msgstr "<b>彈出式資訊視窗</b>"
 
-#: src/audacious/ui_preferences.c:1387
+#: src/audacious/ui_preferences.c:1388
 msgid "Show popup information for playlist entries"
 msgstr "顯示播放清單項目的彈出式資訊視窗"
 
-#: src/audacious/ui_preferences.c:1388
+#: src/audacious/ui_preferences.c:1389
 msgid ""
 "Toggles popup information window for the pointed entry in the playlist. The "
 "window shows title of song, name of album, genre, year of publish, track "
 "number, track length, and artwork."
 msgstr ""
-"切換是否顯示彈出式資訊視窗。視窗將會顯示標題、專輯、類型、發行年份、音軌編號、長度和美工等資訊。"
+"切換是否顯示彈出式資訊視窗。視窗將會顯示標題、專輯、類型、發行年份、音軌編"
+"號、長度和美工等資訊。"
 
-
-#: src/audacious/ui_preferences.c:1397
+#: src/audacious/ui_preferences.c:1398
 msgid "Edit settings for popup information"
 msgstr "編輯彈出式資訊視窗的設定值"
 
-#: src/audacious/ui_preferences.c:1497
+#: src/audacious/ui_preferences.c:1498
 msgid "Output plugin:"
 msgstr "輸出外掛:"
 
-#: src/audacious/ui_preferences.c:1556
+#: src/audacious/ui_preferences.c:1557
 msgid "Transport"
 msgstr "傳輸"
 
-#: src/audacious/ui_preferences.c:1556
+#: src/audacious/ui_preferences.c:1557
 msgid "Input"
 msgstr "輸入"
 
-#: src/audacious/ui_preferences.c:1557
+#: src/audacious/ui_preferences.c:1558
 msgid "Effect"
 msgstr "特效"
 
-#: src/audacious/ui_preferences.c:1557
+#: src/audacious/ui_preferences.c:1558
 msgid "Visualization"
 msgstr "視覺化"
 
-#: src/audacious/ui_preferences.c:1557
+#: src/audacious/ui_preferences.c:1558
 msgid "General"
 msgstr "一般"
 
-#: src/audacious/ui_preferences.c:1597
+#: src/audacious/ui_preferences.c:1598
 msgid "Audacious Preferences"
 msgstr "Audacious 偏好設定"
 
@@ -740,14 +730,15 @@ msgid "Stereo"
 msgstr "立體聲"
 
 #: src/libaudcore/tuple.c:689
-#, c-format
+#, fuzzy, c-format
 msgid "%d channel"
-msgstr "%d 聲道"
+msgid_plural "%d channels"
+msgstr[0] "%d 聲道"
+msgstr[1] "%d 聲道"
 
-#msgid_plural "%d channels"
-#msgstr[0] ""
-#msgstr[1] ""
-
+# msgid_plural "%d channels"
+# msgstr[0] ""
+# msgstr[1] ""
 #: src/libaudgui/confirm.c:73
 #, c-format
 msgid ""
@@ -1219,3 +1210,13 @@ msgstr "工作階段選項:"
 #: src/libeggsmclient/eggsmclient.c:254
 msgid "Show session management options"
 msgstr "顯示工作階段選項"
+
+#~ msgid ""
+#~ "List of character encodings used for fall back conversion of metadata. If "
+#~ "automatic character encoding detector failed or has been disabled, "
+#~ "encodings in this list would be treated as candidates of the encoding of "
+#~ "metadata, and fall back conversion from these encodings to UTF-8 would be "
+#~ "attempted."
+#~ msgstr ""
+#~ "清單中所列的是詮釋資料的備用字元編碼。若自動字元編碼偵測失敗或者被關閉，這"
+#~ "些編碼便會成為詮釋資料的編碼候選。系統會嘗試將這些編碼轉為 UTF-8。"
