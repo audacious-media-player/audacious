@@ -108,12 +108,12 @@ MO_FILES = ${LOCALES:.po=.mo}
 all:
 	${MAKE} ${MFLAGS} subdirs
 	${MAKE} ${MFLAGS} depend
-	${MAKE} ${STATIC_LIB} ${STATIC_LIB_NOINST} ${STATIC_PIC_LIB} ${STATIC_PIC_LIB_NOINST} ${SHARED_LIB} ${SHARED_LIB_NOINST} ${PLUGIN} ${PLUGIN_NOINST} ${PROG} ${PROG_NOINST} ${JARFILE} locales
+	${MAKE} ${STATIC_LIB} ${STATIC_LIB_NOINST} ${STATIC_PIC_LIB} ${STATIC_PIC_LIB_NOINST} ${LIB} ${LIB_NOINST} ${PLUGIN} ${PLUGIN_NOINST} ${PROG} ${PROG_NOINST} ${JARFILE} locales
 
 subdirs:
 	for i in ${SUBDIRS}; do \
 		${DIR_ENTER}; \
-		${MAKE} ${MFLAGS} || exit $$?; \
+		${MAKE} ${MFLAGS} || exit 1; \
 		${DIR_LEAVE}; \
 	done
 
@@ -172,7 +172,7 @@ ${JARFILE}: ${EXT_DEPS} ${JAR_MANIFEST} ${OBJS}
 		fi \
 	fi
 
-${SHARED_LIB} ${SHARED_LIB_NOINST}: ${EXT_DEPS} ${LIB_OBJS}
+${LIB} ${LIB_NOINST}: ${EXT_DEPS} ${LIB_OBJS}
 	${LINK_STATUS}; \
 	if ${LD} -o $@ ${LIB_OBJS} ${LIB_LDFLAGS} ${LDFLAGS} ${LIBS}; then \
 		${LINK_OK}; \
@@ -227,7 +227,6 @@ ${STATIC_LIB} ${STATIC_LIB_NOINST}: ${EXT_DEPS} ${OBJS}
 
 ${STATIC_PIC_LIB} ${STATIC_PIC_LIB_NOINST}: ${EXT_DEPS} ${LIB_OBJS}
 	${LINK_STATUS}
-	rm -f $@
 	if ${AR} cr $@ ${LIB_OBJS} && ${RANLIB} $@; then \
 		${LINK_OK}; \
 	else \
@@ -425,14 +424,14 @@ locales: ${MO_FILES}
 		${COMPILE_PLUGIN_FAILED}; \
 	fi
 
-install: ${SHARED_LIB} ${STATIC_LIB} ${STATIC_PIC_LIB} ${PLUGIN} ${PROG} install-extra
+install: ${LIB} ${STATIC_LIB} ${STATIC_PIC_LIB} ${PLUGIN} ${PROG} install-extra
 	for i in ${SUBDIRS}; do \
 		${DIR_ENTER}; \
-		${MAKE} ${MFLAGS} install || exit $$?; \
+		${MAKE} ${MFLAGS} install || exit 1; \
 		${DIR_LEAVE}; \
 	done
 
-	for i in ${SHARED_LIB}; do \
+	for i in ${LIB}; do \
 		${INSTALL_STATUS}; \
 		if ${MKDIR_P} ${DESTDIR}${libdir} ${INSTALL_LIB}; then \
 			${INSTALL_OK}; \
@@ -510,11 +509,11 @@ install-extra:
 uninstall: uninstall-extra
 	for i in ${SUBDIRS}; do \
 		${DIR_ENTER}; \
-		${MAKE} ${MFLAGS} uninstall || exit $$?; \
+		${MAKE} ${MFLAGS} uninstall || exit 1; \
 		${DIR_LEAVE}; \
 	done
 
-	for i in ${SHARED_LIB}; do \
+	for i in ${LIB}; do \
 		if test -f ${DESTDIR}${libdir}/$$i; then \
 			if : ${UNINSTALL_LIB}; then \
 				${DELETE_OK}; \
@@ -603,11 +602,11 @@ uninstall-extra:
 clean:
 	for i in ${SUBDIRS}; do \
 		${DIR_ENTER}; \
-		${MAKE} ${MFLAGS} clean || exit $$?; \
+		${MAKE} ${MFLAGS} clean || exit 1; \
 		${DIR_LEAVE}; \
 	done
 
-	for i in ${DEPS} ${OBJS} ${LIB_OBJS} ${PLUGIN_OBJS} ${PROG} ${PROG_NOINST} ${SHARED_LIB} ${SHARED_LIB_NOINST} ${STATIC_LIB} ${STATIC_LIB_NOINST} ${STATIC_PIC_LIB} ${STATIC_PIC_LIB_NOINST} ${PLUGIN} ${PLUGIN_NOINST} ${CLEAN_LIB} ${MO_FILES} ${CLEAN}; do \
+	for i in ${DEPS} ${OBJS} ${LIB_OBJS} ${PLUGIN_OBJS} ${PROG} ${PROG_NOINST} ${LIB} ${LIB_NOINST} ${STATIC_LIB} ${STATIC_LIB_NOINST} ${STATIC_PIC_LIB} ${STATIC_PIC_LIB_NOINST} ${PLUGIN} ${PLUGIN_NOINST} ${CLEAN_LIB} ${MO_FILES} ${CLEAN}; do \
 		if test -f $$i -o -d $$i; then \
 			if rm -fr $$i; then \
 				${DELETE_OK}; \
@@ -620,7 +619,7 @@ clean:
 distclean: clean
 	for i in ${SUBDIRS}; do \
 		${DIR_ENTER}; \
-		${MAKE} ${MFLAGS} distclean || exit $$?; \
+		${MAKE} ${MFLAGS} distclean || exit 1; \
 		${DIR_LEAVE}; \
 	done
 
@@ -634,27 +633,27 @@ distclean: clean
 		fi \
 	done
 
-DIR_ENTER = printf "@TERM_EL@@TERM_SETAF6@Entering directory @TERM_BOLD@$$i@TERM_SGR0@@TERM_SETAF6@.@TERM_SGR0@\n"; cd $$i || exit $$?
-DIR_LEAVE = printf "@TERM_EL@@TERM_SETAF6@Leaving directory @TERM_BOLD@$$i@TERM_SGR0@@TERM_SETAF6@.@TERM_SGR0@\n"; cd .. || exit $$?
+DIR_ENTER = printf "@TERM_EL@@TERM_SETAF6@Entering directory @TERM_BOLD@$$i@TERM_SGR0@@TERM_SETAF6@.@TERM_SGR0@\n"; cd $$i || exit 1
+DIR_LEAVE = printf "@TERM_EL@@TERM_SETAF6@Leaving directory @TERM_BOLD@$$i@TERM_SGR0@@TERM_SETAF6@.@TERM_SGR0@\n"; cd .. || exit 1
 DEPEND_STATUS = printf "@TERM_EL@@TERM_SETAF3@Generating dependencies...@TERM_SGR0@\r"
 DEPEND_OK = printf "@TERM_EL@@TERM_SETAF2@Successfully generated dependencies.@TERM_SGR0@\n"
-DEPEND_FAILED = err=$$?; printf "@TERM_EL@@TERM_SETAF1@Failed to generate dependencies!@TERM_SGR0@\n"; exit $$err
+DEPEND_FAILED = printf "@TERM_EL@@TERM_SETAF1@Failed to generate dependencies!@TERM_SGR0@\n"; exit 1
 COMPILE_STATUS = printf "@TERM_EL@@TERM_SETAF3@Compiling @TERM_BOLD@$<@TERM_SGR0@@TERM_SETAF3@...@TERM_SGR0@\r"
 COMPILE_OK = printf "@TERM_EL@@TERM_SETAF2@Successfully compiled @TERM_BOLD@$<@TERM_SGR0@@TERM_SETAF2@.@TERM_SGR0@\n"
-COMPILE_FAILED = err=$$?; printf "@TERM_EL@@TERM_SETAF1@Failed to compile @TERM_BOLD@$<@TERM_SGR0@@TERM_SETAF1@!@TERM_SGR0@\n"; exit $$err
+COMPILE_FAILED = printf "@TERM_EL@@TERM_SETAF1@Failed to compile @TERM_BOLD@$<@TERM_SGR0@@TERM_SETAF1@!@TERM_SGR0@\n"; exit 1
 COMPILE_LIB_STATUS = printf "@TERM_EL@@TERM_SETAF3@Compiling @TERM_BOLD@$<@TERM_SGR0@@TERM_SETAF3@ (lib)...@TERM_SGR0@\r"
 COMPILE_LIB_OK = printf "@TERM_EL@@TERM_SETAF2@Successfully compiled @TERM_BOLD@$<@TERM_SGR0@@TERM_SETAF2@ (lib).@TERM_SGR0@\n"
-COMPILE_LIB_FAILED = err=$$?; printf "@TERM_EL@@TERM_SETAF1@Failed to compile @TERM_BOLD@$<@TERM_SGR0@@TERM_SETAF1@ (lib)!@TERM_SGR0@\n"; exit $$err
+COMPILE_LIB_FAILED = printf "@TERM_EL@@TERM_SETAF1@Failed to compile @TERM_BOLD@$<@TERM_SGR0@@TERM_SETAF1@ (lib)!@TERM_SGR0@\n"; exit 1
 COMPILE_PLUGIN_STATUS = printf "@TERM_EL@@TERM_SETAF3@Compiling @TERM_BOLD@$<@TERM_SGR0@@TERM_SETAF3@ (plugin)...@TERM_SGR0@\r"
 COMPILE_PLUGIN_OK = printf "@TERM_EL@@TERM_SETAF2@Successfully compiled @TERM_BOLD@$<@TERM_SGR0@@TERM_SETAF2@ (plugin).@TERM_SGR0@\n"
-COMPILE_PLUGIN_FAILED = err=$$?; printf "@TERM_EL@@TERM_SETAF1@Failed to compile @TERM_BOLD@$<@TERM_SGR0@@TERM_SETAF1@ (plugin)!@TERM_SGR0@\n"; exit $$err
+COMPILE_PLUGIN_FAILED = printf "@TERM_EL@@TERM_SETAF1@Failed to compile @TERM_BOLD@$<@TERM_SGR0@@TERM_SETAF1@ (plugin)!@TERM_SGR0@\n"; exit 1
 LINK_STATUS = printf "@TERM_EL@@TERM_SETAF3@Linking @TERM_BOLD@$@@TERM_SGR0@@TERM_SETAF3@...@TERM_SGR0@\r"
 LINK_OK = printf "@TERM_EL@@TERM_SETAF2@Successfully linked @TERM_BOLD@$@@TERM_SGR0@@TERM_SETAF2@.@TERM_SGR0@\n"
-LINK_FAILED = err=$$?; printf "@TERM_EL@@TERM_SETAF1@Failed to link @TERM_BOLD@$@@TERM_SGR0@@TERM_SETAF1@!@TERM_SGR0@\n"; exit $$err
+LINK_FAILED = printf "@TERM_EL@@TERM_SETAF1@Failed to link @TERM_BOLD@$@@TERM_SGR0@@TERM_SETAF1@!@TERM_SGR0@\n"; exit 1
 INSTALL_STATUS = printf "@TERM_EL@@TERM_SETAF3@Installing @TERM_BOLD@$$i@TERM_SGR0@@TERM_SETAF3@...@TERM_SGR0@\r"
 INSTALL_OK = printf "@TERM_EL@@TERM_SETAF2@Successfully installed @TERM_BOLD@$$i@TERM_SGR0@@TERM_SETAF2@.@TERM_SGR0@\n"
-INSTALL_FAILED = err=$$?; printf "@TERM_EL@@TERM_SETAF1@Failed to install @TERM_BOLD@$$i@TERM_SGR0@@TERM_SETAF1@!@TERM_SGR0@\n"; exit $$err
+INSTALL_FAILED = printf "@TERM_EL@@TERM_SETAF1@Failed to install @TERM_BOLD@$$i@TERM_SGR0@@TERM_SETAF1@!@TERM_SGR0@\n"; exit 1
 DELETE_OK = printf "@TERM_EL@@TERM_SETAF4@Deleted @TERM_BOLD@$$i@TERM_SGR0@@TERM_SETAF4@.@TERM_SGR0@\n"
-DELETE_FAILED = err=$$?; printf "@TERM_EL@@TERM_SETAF1@Failed to delete @TERM_BOLD@$$i@TERM_SGR0@@TERM_SETAF1@!@TERM_SGR0@\n"; exit $$err
+DELETE_FAILED = printf "@TERM_EL@@TERM_SETAF1@Failed to delete @TERM_BOLD@$$i@TERM_SGR0@@TERM_SETAF1@!@TERM_SGR0@\n"; exit 1
 
 include .deps
