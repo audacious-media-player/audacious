@@ -176,10 +176,11 @@ static void entry_set_tuple_real (Entry * entry, Tuple * tuple)
     stringpool_unref (entry->artist);
     stringpool_unref (entry->album);
 
+    describe_song (entry->filename, tuple, & entry->title, & entry->artist, & entry->album);
+
     if (! tuple)
     {
         entry->formatted = NULL;
-        entry->title = entry->artist = entry->album = NULL;
         entry->length = 0;
         entry->segmented = FALSE;
         entry->start = entry->end = -1;
@@ -187,8 +188,6 @@ static void entry_set_tuple_real (Entry * entry, Tuple * tuple)
     else
     {
         entry->formatted = title_from_tuple (tuple);
-        describe_song (entry->filename, tuple, & entry->title, & entry->artist,
-         & entry->album);
         entry->length = tuple_get_int (tuple, FIELD_LENGTH, NULL);
         if (entry->length < 0)
             entry->length = 0;
@@ -1081,14 +1080,9 @@ void playlist_entry_describe (gint playlist_num, gint entry_num,
     if (! fast)
         check_scanned (playlist, entry);
 
-    if (entry->title)
-    {
-        * title = g_strdup (entry->title);
-        * artist = g_strdup (entry->artist);
-        * album = g_strdup (entry->album);
-    }
-    else
-        * title = g_strdup (entry->filename);
+    * title = entry->title ? g_strdup (entry->title) : NULL;
+    * artist = entry->artist ? g_strdup (entry->artist) : NULL;
+    * album = entry->album ? g_strdup (entry->album) : NULL;
 
     LEAVE;
 }

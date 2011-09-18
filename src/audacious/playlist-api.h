@@ -144,8 +144,8 @@ AUD_FUNC3 (gchar *, playlist_entry_get_title, gint, playlist, gint, entry,
 
 /* Returns three strings (title, artist, and album) describing an entry.  The
  * strings should be freed when no longer needed.  If <fast> is nonzero, returns
- * the entry's filename for <title> and NULL for <artist> and <album> if
- * metadata for the entry has not yet been read. */
+ * a "best guess" based on the entry's filename if metadata for the entry has
+ * not yet been read.  May return NULL for any and all values. */
 AUD_FUNC6 (void, playlist_entry_describe, gint, playlist, gint, entry,
  gchar * *, title, gchar * *, artist, gchar * *, album, gboolean, fast)
 

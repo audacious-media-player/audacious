@@ -276,7 +276,7 @@ static gchar * stream_name (gchar * name)
 }
 
 /* Derives best guesses of title, artist, and album from a file name (URI) and
- * tuple.  The returned strings are stringpooled or NULL. */
+ * tuple (which may be NULL).  The returned strings are stringpooled or NULL. */
 
 void describe_song (const gchar * name, const Tuple * tuple, gchar * * _title,
  gchar * * _artist, gchar * * _album)
@@ -284,9 +284,9 @@ void describe_song (const gchar * name, const Tuple * tuple, gchar * * _title,
     /* Common folder names to skip */
     static const gchar * const skip[] = {"music"};
 
-    const gchar * title = tuple_get_string (tuple, FIELD_TITLE, NULL);
-    const gchar * artist = tuple_get_string (tuple, FIELD_ARTIST, NULL);
-    const gchar * album = tuple_get_string (tuple, FIELD_ALBUM, NULL);
+    const gchar * title = tuple ? tuple_get_string (tuple, FIELD_TITLE, NULL) : NULL;
+    const gchar * artist = tuple ? tuple_get_string (tuple, FIELD_ARTIST, NULL) : NULL;
+    const gchar * album = tuple ? tuple_get_string (tuple, FIELD_ALBUM, NULL) : NULL;
 
     if (title && ! title[0])
         title = NULL;
