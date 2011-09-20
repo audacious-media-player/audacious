@@ -1,8 +1,9 @@
 # Polish translation for audacious
 # Copyright (C) 2006, Wojciech Myrda <vojcek@tlen.pl>
 # Copyright (C) 2006, Michał Kiedrowicz <esqualante@o2.pl>
-# Copyright (C) 2010-2011, Szymon Weihs <sz.weihs@gmail.com>
 # Copyright (C) 2011, Wojciech Myrda <vojcek@tlen.pl>
+# Copyright (C) 2011, Artur R, Czechowski <arturcz@hell.pl>
+# Copyright (C) 2010-2011, Szymon Weihs <sz.weihs@gmail.com>
 # This file is distributed under the same license as the audacious package.
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 #
@@ -18,15 +19,14 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
 "POT-Creation-Date: 2011-07-05 22:45+0200\n"
-"PO-Revision-Date: 2011-05-23 22:07+0100\n"
-"Last-Translator: Artur R, Czechowski <arturcz@hell.pl>\n"
+"PO-Revision-Date: 2011-09-20 00:54+0200\n"
+"Last-Translator: Szymon Weihs <sz.weihs@gmail.com>\n"
 "Language-Team: \n"
-"Language: \n"
+"Language: Polish/Polski\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
-"|| n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: src/audacious/adder.c:71
 msgid "Searching ..."
@@ -454,14 +454,12 @@ msgid "Album mode"
 msgstr "Album"
 
 #: src/audacious/ui_preferences.c:150
-#, fuzzy
 msgid "<b>Output Settings</b>"
-msgstr "<b>Inne opcje</b>"
+msgstr "<b>Opcje wyjściowe dźwięku</b>"
 
 #: src/audacious/ui_preferences.c:152
-#, fuzzy
 msgid "Bit depth:"
-msgstr "Wyjście:"
+msgstr "Głębia:"
 
 #: src/audacious/ui_preferences.c:155
 msgid "Buffer size:"
@@ -469,12 +467,11 @@ msgstr "Rozmiar bufora:"
 
 #: src/audacious/ui_preferences.c:157
 msgid "ms"
-msgstr ""
+msgstr "ms"
 
 #: src/audacious/ui_preferences.c:158
-#, fuzzy
 msgid "Use software volume control (not recommended)"
-msgstr "Użyj programowej zmiany głośności:"
+msgstr "Użyj programowej regulacji głośności (niezalecane)"
 
 #: src/audacious/ui_preferences.c:160
 msgid "<b>Replay Gain</b>"
@@ -486,7 +483,7 @@ msgstr "Włącz Replay Gain"
 
 #: src/audacious/ui_preferences.c:164
 msgid "Prevent clipping (recommended)"
-msgstr ""
+msgstr "Zapobiegaj zakłóceniom (zalecane)"
 
 #: src/audacious/ui_preferences.c:166
 msgid "<b>Adjust Levels</b>"
@@ -714,9 +711,8 @@ msgid "Edit settings for popup information"
 msgstr "Edytuj wpisy dla informacji o dymkach"
 
 #: src/audacious/ui_preferences.c:1497
-#, fuzzy
 msgid "Output plugin:"
-msgstr "Wtyczka wyjściowa OSS"
+msgstr "Wtyczka:"
 
 #: src/audacious/ui_preferences.c:1556
 msgid "Transport"
@@ -1081,22 +1077,20 @@ msgstr "Skok do czasu"
 
 #: src/libaudgui/jump-to-time.c:90
 msgid "mm:ss"
-msgstr ""
+msgstr "mm:ss"
 
 #: src/libaudgui/playlists.c:39
-#, fuzzy
 msgid "Export Playlist"
-msgstr "Tymczasowe"
+msgstr "Eksportuj listę odtwarzania"
 
 #: src/libaudgui/playlists.c:39
-#, fuzzy
 msgid "Import Playlist"
-msgstr "Tymczasowe"
+msgstr "Importuj listę odtwarzania"
 
 #: src/libaudgui/playlists.c:71
 #, c-format
 msgid "Overwrite %s?"
-msgstr ""
+msgstr "Nadpisać %s?"
 
 #: src/libaudgui/ui_about.c:71
 msgid "About Audacious"
@@ -1187,6 +1181,8 @@ msgid ""
 "\n"
 "(Further messages have been hidden.)"
 msgstr ""
+"\n"
+"(Dalsze informacje zostały ukryte.)"
 
 #: src/libeggsmclient/eggdesktopfile.c:165
 msgid "File is not a valid .desktop file"
