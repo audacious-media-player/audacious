@@ -19,6 +19,7 @@ src/libaudgui/infopopup.c
 src/libaudgui/infowin.c
 src/libaudgui/jump-to-time.c
 src/libaudgui/playlists.c
+src/libaudgui/queue-manager.c
 src/libaudgui/ui_about.c
 src/libaudgui/ui_credits.c
 src/libaudgui/ui_fileopener.c
