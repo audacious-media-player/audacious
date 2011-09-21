@@ -134,6 +134,7 @@ void interface_add_plugin_widget (PluginHandle * plugin, GtkWidget * widget)
     {
         GtkWidget * window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
         gtk_window_set_title ((GtkWindow *) window, plugin_get_name (plugin));
+        gtk_window_set_default_size ((GtkWindow *) window, 300, 200);
         gtk_container_add ((GtkContainer *) window, widget);
         g_signal_connect (window, "delete-event", (GCallback) delete_cb, plugin);
         gtk_widget_show_all (window);
