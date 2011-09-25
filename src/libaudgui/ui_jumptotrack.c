@@ -375,7 +375,9 @@ audgui_jump_to_track(void)
         watching = TRUE;
     }
 
-    if (jump_to_track_win) {
+    if (jump_to_track_win)
+    {
+        watchdog (GINT_TO_POINTER (PLAYLIST_UPDATE_STRUCTURE), NULL);
         gtk_window_present(GTK_WINDOW(jump_to_track_win));
 
         if(!aud_cfg->remember_jtf_entry)
