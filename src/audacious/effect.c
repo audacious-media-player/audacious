@@ -92,7 +92,6 @@ static void effect_process_cb (RunningEffect * effect, EffectProcessState *
     if (effect->remove_flag)
     {
         effect->header->finish (state->data, state->samples);
-        effect->header->finish (state->data, state->samples);
 
         running_effects = g_list_remove (running_effects, effect);
         g_free (effect);
