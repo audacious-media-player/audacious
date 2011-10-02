@@ -195,15 +195,20 @@ FALLBACK:;
     return fallback;
 }
 
-
-static void clear_cached_pixbuf (void * list, GdkPixbuf * * pixbuf)
+static void pixbuf_clear_cb (void * unused, GdkPixbuf * * pixbuf)
 {
-    if (GPOINTER_TO_INT (list) != aud_playlist_get_playing () || ! * pixbuf)
-        return;
+    if (* pixbuf)
+    {
+        AUDDBG ("Clearing cached pixbuf.\n");
+        g_object_unref ((GObject *) * pixbuf);
+        * pixbuf = NULL;
+    }
+}
 
-    AUDDBG ("Clearing cached pixbuf.\n");
-    g_object_unref ((GObject *) * pixbuf);
-    * pixbuf = NULL;
+static void pixbuf_position_cb (void * list, GdkPixbuf * * pixbuf)
+{
+    if (GPOINTER_TO_INT (list) == aud_playlist_get_playing ())
+        pixbuf_clear_cb (NULL, pixbuf);
 }
 
 GdkPixbuf * audgui_pixbuf_for_current (void)
@@ -213,8 +218,8 @@ GdkPixbuf * audgui_pixbuf_for_current (void)
 
     if (! hooked)
     {
-        hook_associate ("playlist position", (HookFunction) clear_cached_pixbuf,
-         & pixbuf);
+        hook_associate ("playlist set playing", (HookFunction) pixbuf_clear_cb, & pixbuf);
+        hook_associate ("playlist position", (HookFunction) pixbuf_position_cb, & pixbuf);
         hooked = TRUE;
     }
 

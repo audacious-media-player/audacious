@@ -855,6 +855,8 @@ void playlist_set_playing (gint playlist_num)
     playing_playlist = playlist;
 
     LEAVE;
+
+    hook_call ("playlist set playing", NULL);
 }
 
 gint playlist_get_playing (void)
