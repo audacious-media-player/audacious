@@ -852,6 +852,9 @@ void playlist_set_playing (gint playlist_num)
     playing_playlist = playlist;
 
     LEAVE;
+
+    /* hack to fix wrong album art shown; real fix in 3.1 */
+    hook_call ("playlist position", GINT_TO_POINTER (playlist_num));
 }
 
 gint playlist_get_playing (void)
