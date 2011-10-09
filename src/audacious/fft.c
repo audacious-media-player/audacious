@@ -22,8 +22,6 @@
 #include <complex.h>
 #include <math.h>
 
-#include <glib.h>
-
 #include "fft.h"
 
 #define N 512                         /* size of the DFT */
@@ -97,26 +95,22 @@ static void do_fft (float complex a[N])
 /* Input is N=512 PCM samples.
  * Output is intensity of frequencies from 1 to N/2=256. */
 
-void calc_freq (gint16 freq[N / 2], const gint16 data[N])
+void calc_freq (const float data[N], float freq[N / 2])
 {
     generate_tables ();
 
     /* input values are in bit-reversed order */
     float complex a[N];
-    for (gint i = 0; i < N; i ++)
-        a[i] = data[reversed[i]];
+    for (int n = 0; n < N; n ++)
+        a[n] = data[reversed[n]];
 
     do_fft (a);
 
     /* output values are divided by N */
     /* frequencies from 1 to N/2-1 are doubled */
-    for (gint i = 0; i < N / 2 - 1; i ++)
-    {
-        float x = 2 * cabsf (a[1 + i]) / N;
-        freq[i] = CLAMP (x, -32767, 32767);
-    }
+    for (int n = 0; n < N / 2 - 1; n ++)
+        freq[n] = 2 * cabsf (a[1 + n]) / N;
 
     /* frequency N/2 is not doubled */
-    float x = cabsf (a[N / 2]) / N;
-    freq[N / 2 - 1] = CLAMP (x, -32767, 32767);
+    freq[N / 2 - 1] = cabsf (a[N / 2]) / N;
 }

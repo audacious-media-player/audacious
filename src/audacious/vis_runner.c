@@ -1,6 +1,6 @@
 /*
  * vis_runner.c
- * Copyright 2009-2010 John Lindgren
+ * Copyright 2009-2011 John Lindgren
  *
  * This file is part of Audacious.
  *
@@ -20,25 +20,32 @@
  */
 
 #include <glib.h>
-#include <libaudcore/hook.h>
 
-#include "misc.h"
 #include "output.h"
 #include "vis_runner.h"
+#include "visualization.h"
 
 #define INTERVAL 30 /* milliseconds */
 
 typedef struct {
-    VisHookFunc func;
-    void * user;
-} VisHookItem;
+    gint time;
+    gfloat * data;
+    gint channels;
+} VisNode;
 
 G_LOCK_DEFINE_STATIC (mutex);
+static gboolean enabled = FALSE;
 static gboolean playing = FALSE, paused = FALSE, active = FALSE;
-static GList * hooks = NULL;
 static VisNode * current_node = NULL;
+static gint current_frames;
 static GQueue vis_list = G_QUEUE_INIT;
 static gint send_source = 0, clear_source = 0;
+
+static void vis_node_free (VisNode * node)
+{
+    g_free (node->data);
+    g_free (node);
+}
 
 static gboolean send_audio (void * unused)
 {
@@ -64,7 +71,9 @@ static gboolean send_audio (void * unused)
         if (next->time > outputted + (vis_node ? 0 : INTERVAL))
             break;
 
-        g_free (vis_node);
+        if (vis_node)
+            vis_node_free (vis_node);
+
         vis_node = g_queue_pop_head (& vis_list);
     }
 
@@ -73,13 +82,9 @@ static gboolean send_audio (void * unused)
     if (! vis_node)
         return TRUE;
 
-    for (GList * node = hooks; node; node = node->next)
-    {
-        VisHookItem * item = node->data;
-        item->func (vis_node, item->user);
-    }
+    vis_send_audio (vis_node->data, vis_node->channels);
 
-    g_free (vis_node);
+    vis_node_free (vis_node);
     return TRUE;
 }
 
@@ -89,7 +94,8 @@ static gboolean send_clear (void * unused)
     clear_source = 0;
     G_UNLOCK (mutex);
 
-    hook_call ("visualization clear", NULL);
+    vis_send_clear ();
+
     return FALSE;
 }
 
@@ -114,19 +120,24 @@ gboolean vis_runner_locked (void)
 
 void vis_runner_flush (void)
 {
-    g_free (current_node);
-    current_node = NULL;
-    g_queue_foreach (& vis_list, (GFunc) g_free, NULL);
+    if (current_node)
+    {
+        vis_node_free (current_node);
+        current_node = NULL;
+    }
+
+    g_queue_foreach (& vis_list, (GFunc) vis_node_free, NULL);
     g_queue_clear (& vis_list);
 
-    clear_source = g_timeout_add (0, send_clear, NULL);
+    if (! clear_source)
+        clear_source = g_timeout_add (0, send_clear, NULL);
 }
 
 void vis_runner_start_stop (gboolean new_playing, gboolean new_paused)
 {
     playing = new_playing;
     paused = new_paused;
-    active = playing && hooks;
+    active = playing && enabled;
 
     if (send_source)
     {
@@ -152,9 +163,13 @@ void vis_runner_pass_audio (gint time, gfloat * data, gint samples, gint
     if (! active)
         return;
 
-    if (current_node && current_node->nch != MIN (channels, 2))
+    /* We can build a single node from multiple calls; we can also build
+     * multiple nodes from the same call.  If current_node is present, it was
+     * partly built in the last call and needs to be finished. */
+
+    if (current_node && current_node->channels != channels)
     {
-        g_free (current_node);
+        vis_node_free (current_node);
         current_node = NULL;
     }
 
@@ -166,6 +181,13 @@ void vis_runner_pass_audio (gint time, gfloat * data, gint samples, gint
         {
             gint node_time = time;
             VisNode * last;
+
+            /* There is no partly-built node, so start a new one.  Normally
+             * there will be nodes in the queue already; if so, we want to copy
+             * audio data from the signal starting at 30 milliseconds after the
+             * beginning of the most recent node.  If there are no nodes in the
+             * queue, we are at the beginning of the song or had an underrun,
+             * and we want to copy the earliest audio data we have. */
 
             if ((last = g_queue_peek_tail (& vis_list)))
                 node_time = last->time + INTERVAL;
@@ -179,29 +201,21 @@ void vis_runner_pass_audio (gint time, gfloat * data, gint samples, gint
 
             current_node = g_malloc (sizeof (VisNode));
             current_node->time = node_time;
-            current_node->nch = MIN (channels, 2);
-            current_node->length = 0;
+            current_node->data = g_malloc (sizeof (gfloat) * channels * 512);
+            current_node->channels = channels;
+            current_frames = 0;
         }
 
-        gint copy = MIN (samples - at, channels * (512 - current_node->length));
+        /* Copy as much data as we can, limited by how much we have and how much
+         * space is left in the node.  If we cannot fill the node, we return and
+         * wait for more data to be passed in the next call.  If we do fill the
+         * node, we loop and start building a new one. */
 
-        for (gint channel = 0; channel < current_node->nch; channel ++)
-        {
-            gfloat * from = data + at + channel;
-            gfloat * end = from + copy;
-            gint16 * to = current_node->data[channel] + current_node->length;
+        gint copy = MIN (samples - at, channels * (512 - current_frames));
+        memcpy (current_node->data + channels * current_frames, data + at, sizeof (gfloat) * copy);
+        current_frames += copy / channels;
 
-            while (from < end)
-            {
-                register gfloat temp = * from;
-                * to ++ = CLAMP (temp, -1, 1) * 32767;
-                from += channels;
-            }
-        }
-
-        current_node->length += copy / channels;
-
-        if (current_node->length < 512)
+        if (current_frames < 512)
             break;
 
         g_queue_push_tail (& vis_list, current_node);
@@ -222,33 +236,10 @@ void vis_runner_time_offset (gint offset)
     g_queue_foreach (& vis_list, (GFunc) time_offset_cb, GINT_TO_POINTER (offset));
 }
 
-void vis_runner_add_hook (VisHookFunc func, void * user)
+void vis_runner_enable (gboolean enable)
 {
     G_LOCK (mutex);
-
-    VisHookItem * item = g_malloc (sizeof (VisHookItem));
-    item->func = func;
-    item->user = user;
-    hooks = g_list_prepend (hooks, item);
-
-    vis_runner_start_stop (playing, paused);
-    G_UNLOCK (mutex);
-}
-
-void vis_runner_remove_hook (VisHookFunc func)
-{
-    G_LOCK (mutex);
-
-    for (GList * node = hooks; node; node = node->next)
-    {
-        if (((VisHookItem *) node->data)->func == func)
-        {
-            g_free (node->data);
-            hooks = g_list_delete_link (hooks, node);
-            break;
-        }
-    }
-
+    enabled = enable;
     vis_runner_start_stop (playing, paused);
     G_UNLOCK (mutex);
 }

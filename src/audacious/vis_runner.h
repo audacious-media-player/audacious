@@ -22,6 +22,8 @@
 #ifndef AUD_VIS_RUNNER_H
 #define AUD_VIS_RUNNER_H
 
+#include <glib.h>
+
 /* When the decoder thread wants to send data to the vis runner, it must block
  * the vis timeout before blocking output functions; otherwise, the vis timeout
  * will hang up waiting for those output functions to be unblocked while the
@@ -35,5 +37,7 @@ void vis_runner_pass_audio (gint time, gfloat * data, gint samples, gint
  channels, gint rate);
 void vis_runner_time_offset (gint offset);
 void vis_runner_flush (void);
+
+void vis_runner_enable (gboolean enable);
 
 #endif

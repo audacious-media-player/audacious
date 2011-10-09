@@ -48,8 +48,8 @@
  * the API tables), increment _AUD_PLUGIN_VERSION *and* set
  * _AUD_PLUGIN_VERSION_MIN to the same value. */
 
-#define _AUD_PLUGIN_VERSION_MIN 31 /* 3.0-alpha2 */
-#define _AUD_PLUGIN_VERSION     32
+#define _AUD_PLUGIN_VERSION_MIN 33 /* 3.1-beta1 */
+#define _AUD_PLUGIN_VERSION     33
 
 /* A NOTE ON THREADS
  *
@@ -429,20 +429,17 @@ struct _VisPlugin
 {
     PLUGIN_COMMON_FIELDS
 
-    gint num_pcm_chs_wanted;
-    gint num_freq_chs_wanted;
+    /* reset internal state and clear display */
+    void (* clear) (void);
 
-    void (*playback_start) (void);
-    void (*playback_stop) (void);
-    void (*render_pcm) (gint16 pcm_data[2][512]);
+    /* 512 frames of a single-channel PCM signal */
+    void (* render_mono_pcm) (const gfloat * pcm);
 
-    /* The range of intensities is 0 - 32767 (though theoretically it is
-     * possible for the FFT to result in bigger values, making the final
-     * intensity negative due to overflowing the 16bit signed integer.)
-     *
-     * If output is mono, only freq_data[0] is filled.
-     */
-    void (*render_freq) (gint16 freq_data[2][256]);
+    /* 512 frames of an interleaved multi-channel PCM signal */
+    void (* render_multi_pcm) (const gfloat * pcm, gint channels);
+
+    /* intensity of frequencies 1/512, 2/512, ..., 256/512 of sample rate */
+    void (* render_freq) (const gfloat * freq);
 
     /* GtkWidget * (* get_widget) (void); */
     void * (* get_widget) (void);

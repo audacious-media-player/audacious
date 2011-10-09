@@ -60,16 +60,15 @@ enum {
 
 typedef void (* MenuFunc) (void);
 
-typedef gint16 VisFreqData[2][256];
-typedef gint16 VisPCMData[2][512];
+enum {
+ AUD_VIS_TYPE_CLEAR,        /* like VisPlugin::clear() */
+ AUD_VIS_TYPE_MONO_PCM,     /* like VisPlugin::render_mono_pcm() */
+ AUD_VIS_TYPE_MULTI_PCM,    /* like VisPlugin::render_multi_pcm() */
+ AUD_VIS_TYPE_FREQ,         /* like VisPlugin::render_freq() */
+ AUD_VIS_TYPES};
 
-typedef struct {
-    gint time, nch;
-    gint length; /* obsolete, always 512 */
-    VisPCMData data;
-} VisNode;
-
-typedef void (* VisHookFunc) (const VisNode * node, void * user);
+/* generic type; does not correspond to actual function types */
+typedef void (* VisFunc) (void);
 
 #define AUD_API_NAME MiscAPI
 #define AUD_API_SYMBOL misc_api

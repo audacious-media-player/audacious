@@ -60,6 +60,10 @@ AUD_FUNC1 (GList *, import_winamp_eqf, VFSFile *, file)
 AUD_FUNC1 (const gchar *, history_get, gint, entry)
 AUD_FUNC1 (void, history_add, const gchar *, path)
 
+/* interface.c */
+AUD_FUNC1 (void, interface_install_toolbar, void *, button)
+AUD_FUNC1 (void, interface_uninstall_toolbar, void *, button)
+
 /* main.c */
 AUD_FUNC1 (const gchar *, get_path, gint, path)
 
@@ -94,18 +98,6 @@ AUD_FUNC0 (void, show_prefs_window)
 /* util.c */
 AUD_FUNC2 (gchar *, construct_uri, const gchar *, base, const gchar *, reference)
 
-/* vis_runner.c */
-AUD_FUNC2 (void, vis_runner_add_hook, VisHookFunc, func, void *, user)
-AUD_FUNC1 (void, vis_runner_remove_hook, VisHookFunc, func)
-
 /* visualization.c */
-AUD_FUNC3 (void, calc_mono_freq, VisFreqData, buffer, const VisPCMData, data,
- gint, channels)
-AUD_FUNC3 (void, calc_mono_pcm, VisPCMData, buffer, const VisPCMData, data,
- gint, channels)
-AUD_FUNC3 (void, calc_stereo_pcm, VisPCMData, buffer, const VisPCMData, data,
- gint, channels)
-
-/* New in 2.5-alpha2 */
-AUD_FUNC1 (void, interface_install_toolbar, void *, button)
-AUD_FUNC1 (void, interface_uninstall_toolbar, void *, button)
+AUD_FUNC2 (void, vis_func_add, gint, type, VisFunc, func)
+AUD_FUNC1 (void, vis_func_remove, VisFunc, func)

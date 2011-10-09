@@ -1,6 +1,6 @@
 /*
  * visualization.h
- * Copyright 2010 John Lindgren
+ * Copyright 2010-2011 John Lindgren
  *
  * This file is part of Audacious.
  *
@@ -25,6 +25,9 @@
 #include <glib.h>
 
 #include "plugins.h"
+
+void vis_send_clear (void);
+void vis_send_audio (const gfloat * data, gint channels);
 
 void vis_init (void);
 void vis_cleanup (void);

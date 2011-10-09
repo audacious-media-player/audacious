@@ -1,185 +1,123 @@
-/*  Audacious - Cross-platform multimedia player
- *  Copyright (C) 2005-2011  Audacious development team
+/*
+ * visualization.c
+ * Copyright 2010-2011 John Lindgren
  *
- *  Based on BMP:
- *  Copyright (C) 2003-2004  BMP development team
+ * This file is part of Audacious.
  *
- *  Based on XMMS:
- *  Copyright (C) 1998-2003  XMMS development team
+ * Audacious is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, version 2 or version 3 of the License.
  *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; under version 3 of the License.
+ * Audacious is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License along with
+ * Audacious. If not, see <http://www.gnu.org/licenses/>.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses>.
- *
- *  The Audacious team does not consider modular code linking to
- *  Audacious or using our public API to be a derived work.
+ * The Audacious team does not consider modular code linking to Audacious or
+ * using our public API to be a derived work.
  */
 
 #include <glib.h>
 #include <gtk/gtk.h>
-#include <math.h>
 #include <string.h>
-
-#include <libaudcore/hook.h>
 
 #include "debug.h"
 #include "fft.h"
 #include "interface.h"
 #include "misc.h"
-#include "playback.h"
 #include "plugin.h"
 #include "plugins.h"
 #include "ui_preferences.h"
 #include "visualization.h"
+#include "vis_runner.h"
+
+static GList * vis_funcs[AUD_VIS_TYPES];
 
 typedef struct {
     PluginHandle * plugin;
     VisPlugin * header;
     GtkWidget * widget;
-    gboolean started;
 } LoadedVis;
 
 static gint running = FALSE;
 static GList * loaded_vis_plugins = NULL;
 
-void calc_stereo_pcm (VisPCMData dest, const VisPCMData src, gint nch)
+void vis_func_add (gint type, GCallback func)
 {
-    memcpy(dest[0], src[0], 512 * sizeof(gint16));
-    if (nch == 1)
-        memcpy(dest[1], src[0], 512 * sizeof(gint16));
-    else
-        memcpy(dest[1], src[1], 512 * sizeof(gint16));
+    g_return_if_fail (type >= 0 && type < AUD_VIS_TYPES);
+    vis_funcs[type] = g_list_prepend (vis_funcs[type], func);
+
+    vis_runner_enable (TRUE);
 }
 
-void calc_mono_pcm (VisPCMData dest, const VisPCMData src, gint nch)
+void vis_func_remove (GCallback func)
 {
-    gint i;
-    gint16 *d;
-    const gint16 *sl, *sr;
+    gboolean disable = TRUE;
 
-    if (nch == 1)
-        memcpy(dest[0], src[0], 512 * sizeof(gint16));
-    else {
-        d = dest[0];
-        sl = src[0];
-        sr = src[1];
-        for (i = 0; i < 512; i++) {
-            *(d++) = (*(sl++) + *(sr++)) >> 1;
-        }
-    }
-}
-
-void calc_mono_freq (VisFreqData dest, const VisPCMData src, gint nch)
-{
-    gint i;
-    gint16 *d, tmp[512];
-    const gint16 *sl, *sr;
-
-    if (nch == 1)
-        calc_freq(dest[0], src[0]);
-    else {
-        d = tmp;
-        sl = src[0];
-        sr = src[1];
-        for (i = 0; i < 512; i++) {
-            *(d++) = (*(sl++) + *(sr++)) >> 1;
-        }
-        calc_freq(dest[0], tmp);
-    }
-}
-
-void calc_stereo_freq (VisFreqData dest, const VisPCMData src, gint nch)
-{
-    calc_freq(dest[0], src[0]);
-
-    if (nch == 2)
-        calc_freq(dest[1], src[1]);
-    else
-        memcpy(dest[1], dest[0], 256 * sizeof(gint16));
-}
-
-static void send_audio (const VisNode * vis_node)
-{
-    gint16 mono_freq[2][256], stereo_freq[2][256];
-    gboolean mono_freq_calced = FALSE, stereo_freq_calced = FALSE;
-    gint16 mono_pcm[2][512], stereo_pcm[2][512];
-    gboolean mono_pcm_calced = FALSE, stereo_pcm_calced = FALSE;
-
-    for (GList * node = loaded_vis_plugins; node != NULL; node = node->next)
+    for (gint i = 0; i < AUD_VIS_TYPES; i ++)
     {
-        VisPlugin * vp = ((LoadedVis *) node->data)->header;
+        vis_funcs[i] = g_list_remove_all (vis_funcs[i], func);
+        if (vis_funcs[i])
+            disable = FALSE;
+    }
 
-        if (vp->num_pcm_chs_wanted > 0 && vp->render_pcm) {
-            if (vp->num_pcm_chs_wanted == 1) {
-                if (!mono_pcm_calced) {
-                    calc_mono_pcm(mono_pcm, vis_node->data, vis_node->nch);
-                    mono_pcm_calced = TRUE;
-                }
-                vp->render_pcm(mono_pcm);
-            }
-            else {
-                if (!stereo_pcm_calced) {
-                    calc_stereo_pcm(stereo_pcm, vis_node->data, vis_node->nch);
-                    stereo_pcm_calced = TRUE;
-                }
-                vp->render_pcm(stereo_pcm);
-            }
-        }
-        if (vp->num_freq_chs_wanted > 0 && vp->render_freq) {
-            if (vp->num_freq_chs_wanted == 1) {
-                if (!mono_freq_calced) {
-                    calc_mono_freq(mono_freq, vis_node->data, vis_node->nch);
-                    mono_freq_calced = TRUE;
-                }
-                vp->render_freq(mono_freq);
-            }
-            else {
-                if (!stereo_freq_calced) {
-                    calc_stereo_freq(stereo_freq, vis_node->data, vis_node->nch);
-                    stereo_freq_calced = TRUE;
-                }
-                vp->render_freq(stereo_freq);
-            }
+    if (disable)
+        vis_runner_enable (FALSE);
+}
+
+void vis_send_clear (void)
+{
+    for (GList * node = vis_funcs[AUD_VIS_TYPE_CLEAR]; node; node = node->next)
+    {
+        void (* func) (void) = (void (*) (void)) node->data;
+        func ();
+    }
+}
+
+static void pcm_to_mono (const gfloat * data, gfloat * mono, gint channels)
+{
+    if (channels == 1)
+        memcpy (mono, data, sizeof (gfloat) * 512);
+    else
+    {
+        gfloat * set = mono;
+        while (set < & mono[512])
+        {
+            * set ++ = (data[0] + data[1]) / 2;
+            data += channels;
         }
     }
 }
 
-static void vis_start (LoadedVis * vis)
+void vis_send_audio (const gfloat * data, gint channels)
 {
-    if (vis->started)
-        return;
-    AUDDBG ("Starting %s.\n", plugin_get_name (vis->plugin));
-    if (vis->header->playback_start != NULL)
-        vis->header->playback_start ();
-    vis->started = TRUE;
-}
+    gfloat mono[512];
+    gfloat freq[256];
 
-static void vis_start_all (void)
-{
-    g_list_foreach (loaded_vis_plugins, (GFunc) vis_start, NULL);
-}
+    if (vis_funcs[AUD_VIS_TYPE_MONO_PCM] || vis_funcs[AUD_VIS_TYPE_FREQ])
+        pcm_to_mono (data, mono, channels);
+    if (vis_funcs[AUD_VIS_TYPE_FREQ])
+        calc_freq (mono, freq);
 
-static void vis_stop (LoadedVis * vis)
-{
-    if (! vis->started)
-        return;
-    AUDDBG ("Stopping %s.\n", plugin_get_name (vis->plugin));
-    if (vis->header->playback_stop != NULL)
-        vis->header->playback_stop ();
-    vis->started = FALSE;
-}
+    for (GList * node = vis_funcs[AUD_VIS_TYPE_MONO_PCM]; node; node = node->next)
+    {
+        void (* func) (const gfloat *) = (void (*) (const gfloat *)) node->data;
+        func (mono);
+    }
 
-static void vis_stop_all (void)
-{
-    g_list_foreach (loaded_vis_plugins, (GFunc) vis_stop, NULL);
+    for (GList * node = vis_funcs[AUD_VIS_TYPE_MULTI_PCM]; node; node = node->next)
+    {
+        void (* func) (const gfloat *, gint) = (void (*) (const gfloat *, gint)) node->data;
+        func (data, channels);
+    }
+
+    for (GList * node = vis_funcs[AUD_VIS_TYPE_FREQ]; node; node = node->next)
+    {
+        void (* func) (const gfloat *) = (void (*) (const gfloat *)) node->data;
+        func (freq);
+    }
 }
 
 static gint vis_find_cb (LoadedVis * vis, PluginHandle * plugin)
@@ -202,7 +140,6 @@ static void vis_load (PluginHandle * plugin)
     vis->plugin = plugin;
     vis->header = header;
     vis->widget = NULL;
-    vis->started = FALSE;
 
     if (header->get_widget != NULL)
         vis->widget = header->get_widget ();
@@ -215,13 +152,14 @@ static void vis_load (PluginHandle * plugin)
         interface_add_plugin_widget (plugin, vis->widget);
     }
 
-    if (playback_get_playing ())
-        vis_start (vis);
-
-    if (loaded_vis_plugins == NULL)
-        vis_runner_add_hook ((VisHookFunc) send_audio, NULL);
-
-    loaded_vis_plugins = g_list_prepend (loaded_vis_plugins, vis);
+    if (PLUGIN_HAS_FUNC (header, clear))
+        vis_func_add (AUD_VIS_TYPE_CLEAR, (GCallback) header->clear);
+    if (PLUGIN_HAS_FUNC (header, render_mono_pcm))
+        vis_func_add (AUD_VIS_TYPE_MONO_PCM, (GCallback) header->render_mono_pcm);
+    if (PLUGIN_HAS_FUNC (header, render_multi_pcm))
+        vis_func_add (AUD_VIS_TYPE_MULTI_PCM, (GCallback) header->render_multi_pcm);
+    if (PLUGIN_HAS_FUNC (header, render_freq))
+        vis_func_add (AUD_VIS_TYPE_FREQ, (GCallback) header->render_freq);
 }
 
 static void vis_unload (PluginHandle * plugin)
@@ -235,8 +173,15 @@ static void vis_unload (PluginHandle * plugin)
     LoadedVis * vis = node->data;
     loaded_vis_plugins = g_list_delete_link (loaded_vis_plugins, node);
 
-    if (loaded_vis_plugins == NULL)
-        vis_runner_remove_hook ((VisHookFunc) send_audio);
+    VisPlugin * header = vis->header;
+    if (PLUGIN_HAS_FUNC (header, clear))
+        vis_func_remove ((GCallback) header->clear);
+    if (PLUGIN_HAS_FUNC (header, render_mono_pcm))
+        vis_func_remove ((GCallback) header->render_mono_pcm);
+    if (PLUGIN_HAS_FUNC (header, render_multi_pcm))
+        vis_func_remove ((GCallback) header->render_multi_pcm);
+    if (PLUGIN_HAS_FUNC (header, render_freq))
+        vis_func_remove ((GCallback) header->render_freq);
 
     if (vis->widget != NULL)
     {
@@ -260,9 +205,6 @@ void vis_init (void)
     running = TRUE;
 
     plugin_for_enabled (PLUGIN_TYPE_VIS, (PluginForEachFunc) vis_init_cb, NULL);
-
-    hook_associate ("playback begin", (HookFunction) vis_start_all, NULL);
-    hook_associate ("playback stop", (HookFunction) vis_stop_all, NULL);
 }
 
 static void vis_cleanup_cb (LoadedVis * vis)
@@ -274,9 +216,6 @@ void vis_cleanup (void)
 {
     g_return_if_fail (running);
     running = FALSE;
-
-    hook_dissociate ("playback begin", (HookFunction) vis_start_all);
-    hook_dissociate ("playback stop", (HookFunction) vis_stop_all);
 
     g_list_foreach (loaded_vis_plugins, (GFunc) vis_cleanup_cb, NULL);
 }

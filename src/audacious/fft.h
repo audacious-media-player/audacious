@@ -22,8 +22,6 @@
 #ifndef AUDACIOUS_FFT_H
 #define AUDACIOUS_FFT_H
 
-#include <glib.h>
-
-void calc_freq (gint16 freq[256], const gint16 data[512]);
+void calc_freq (const float data[512], float freq[256]);
 
 #endif
