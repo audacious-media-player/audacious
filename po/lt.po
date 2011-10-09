@@ -728,6 +728,7 @@ msgid "%d channel"
 msgid_plural "%d channels"
 msgstr[0] "%d kanalas"
 msgstr[1] "%d kanalai"
+msgstr[2] "%d kanalai"
 
 #: src/libaudgui/confirm.c:78
 #, c-format
