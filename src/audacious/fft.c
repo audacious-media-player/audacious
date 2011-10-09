@@ -1,270 +1,122 @@
-/* Audacious - Cross-platform multimedia player
- * Copyright (C) 2005-2007  Audacious development team
- *
- * Copyright (C) 1999 Richard Boulton <richard@tartarus.org>
- * Convolution stuff by Ralph Loader <suckfish@ihug.co.nz>
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; under version 3 of the License.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses>.
- *
- *  The Audacious team does not consider modular code linking to
- *  Audacious or using our public API to be a derived work.
- */
-
-/* fft.c: iterative implementation of a FFT */
-
 /*
- * TODO
- * Remove compiling in of FFT_BUFFER_SIZE?  (Might slow things down, but would
- * be nice to be able to change size at runtime.)
- * Finish making / checking thread-safety.
- * More optimisations.
+ * fft.c
+ * Copyright 2011 John Lindgren
+ *
+ * This file is part of Audacious.
+ *
+ * Audacious is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, version 2 or version 3 of the License.
+ *
+ * Audacious is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * Audacious. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * The Audacious team does not consider modular code linking to Audacious or
+ * using our public API to be a derived work.
  */
 
-#ifdef HAVE_CONFIG_H
-#  include "config.h"
-#endif
+#include <complex.h>
+#include <math.h>
+
+#include <glib.h>
 
 #include "fft.h"
 
-#include <glib.h>
-#include <stdlib.h>
-#include <math.h>
-#ifndef PI
-#ifdef M_PI
-#define PI M_PI
-#else
-#define PI            3.14159265358979323846    /* pi */
-#endif
-#endif
+#define N 512                         /* size of the DFT */
+#define LOGN 9                        /* log N (base 2) */
 
-/* ########### */
-/* # Structs # */
-/* ########### */
+static int reversed[N];               /* bit-reversal table */
+static float complex roots[N / 2];    /* N-th roots of unity */
+static char generated = 0;            /* set if tables have been generated */
 
-struct _struct_fft_state {
-    /* Temporary data stores to perform FFT in. */
-    float real[FFT_BUFFER_SIZE];
-    float imag[FFT_BUFFER_SIZE];
-};
+/* Reverse the order of the lowest LOGN bits in an integer. */
 
-/* ############################# */
-/* # Local function prototypes # */
-/* ############################# */
-
-static void fft_prepare(const sound_sample * input, float *re, float *im);
-static void fft_calculate(float *re, float *im);
-static void fft_output(const float *re, const float *im, float *output);
-static int reverseBits(unsigned int initial);
-
-/* #################### */
-/* # Global variables # */
-/* #################### */
-
-/* Table to speed up bit reverse copy */
-static unsigned int bitReverse[FFT_BUFFER_SIZE];
-
-/* The next two tables could be made to use less space in memory, since they
- * overlap hugely, but hey. */
-static float sintable[FFT_BUFFER_SIZE / 2];
-static float costable[FFT_BUFFER_SIZE / 2];
-
-/* ############################## */
-/* # Externally called routines # */
-/* ############################## */
-
-/* --------- */
-/* FFT stuff */
-/* --------- */
-
-/*
- * Initialisation routine - sets up tables and space to work in.
- * Returns a pointer to internal state, to be used when performing calls.
- * On error, returns NULL.
- * The pointer should be freed when it is finished with, by fft_close().
- */
-fft_state *
-fft_init(void)
+static int bit_reverse (int x)
 {
-    fft_state *state;
-    unsigned int i;
+    int y = 0;
 
-    state = (fft_state *) g_malloc(sizeof(fft_state));
-    if (!state)
-        return NULL;
-
-    for (i = 0; i < FFT_BUFFER_SIZE; i++) {
-        bitReverse[i] = reverseBits(i);
-    }
-    for (i = 0; i < FFT_BUFFER_SIZE / 2; i++) {
-        float j = 2 * PI * i / FFT_BUFFER_SIZE;
-        costable[i] = cos(j);
-        sintable[i] = sin(j);
+    for (int n = LOGN; n --; )
+    {
+        y = (y << 1) | (x & 1);
+        x >>= 1;
     }
 
-    return state;
+    return y;
 }
 
-/*
- * Do all the steps of the FFT, taking as input sound data (as described in
- * sound.h) and returning the intensities of each frequency as floats in the
- * range 0 to ((FFT_BUFFER_SIZE / 2) * 32768) ^ 2
- *
- * FIXME - the above range assumes no frequencies present have an amplitude
- * larger than that of the sample variation.  But this is false: we could have
- * a wave such that its maximums are always between samples, and it's just
- * inside the representable range at the places samples get taken.
- * Question: what _is_ the maximum value possible.  Twice that value?  Root
- * two times that value?  Hmmm.  Think it depends on the frequency, too.
- *
- * The input array is assumed to have FFT_BUFFER_SIZE elements,
- * and the output array is assumed to have (FFT_BUFFER_SIZE / 2 + 1) elements.
- * state is a (non-NULL) pointer returned by fft_init.
- */
-void
-fft_perform(const sound_sample * input, float *output, fft_state * state)
+/* Generate lookup tables. */
+
+static void generate_tables (void)
 {
-    /* Convert data from sound format to be ready for FFT */
-    fft_prepare(input, state->real, state->imag);
+    if (generated)
+        return;
 
-    /* Do the actual FFT */
-    fft_calculate(state->real, state->imag);
+    for (int n = 0; n < N; n ++)
+        reversed[n] = bit_reverse (n);
+    for (int n = 0; n < N / 2; n ++)
+        roots[n] = cexpf (2 * M_PI * I * n / N);
 
-    /* Convert the FFT output into intensities */
-    fft_output(state->real, state->imag, output);
+    generated = 1;
 }
 
-/*
- * Free the state.
- */
-void
-fft_close(fft_state * state)
+/* Perform the DFT using the Cooley-Tukey algorithm.  At each step s, where
+ * s=1..log N (base 2), there are N/(2^s) groups of intertwined butterfly
+ * operations.  Each group contains (2^s)/2 butterflies, and each butterfly has
+ * a span of (2^s)/2.  The twiddle factors are nth roots of unity where n = 2^s. */
+
+static void do_fft (float complex a[N])
 {
-    if (state)
-        free(state);
-}
+    int half = 1;       /* (2^s)/2 */
+    int inv = N / 2;    /* N/(2^s) */
 
-/* ########################### */
-/* # Locally called routines # */
-/* ########################### */
-
-/*
- * Prepare data to perform an FFT on
- */
-static void
-fft_prepare(const sound_sample * input, float *re, float *im)
-{
-    unsigned int i;
-    float *realptr = re;
-    float *imagptr = im;
-
-    /* Get input, in reverse bit order */
-    for (i = 0; i < FFT_BUFFER_SIZE; i++) {
-        *realptr++ = input[bitReverse[i]];
-        *imagptr++ = 0;
-    }
-}
-
-/*
- * Take result of an FFT and calculate the intensities of each frequency
- * Note: only produces half as many data points as the input had.
- * This is roughly a consequence of the Nyquist sampling theorm thingy.
- * (FIXME - make this comment better, and helpful.)
- * 
- * The two divisions by 4 are also a consequence of this: the contributions
- * returned for each frequency are split into two parts, one at i in the
- * table, and the other at FFT_BUFFER_SIZE - i, except for i = 0 and
- * FFT_BUFFER_SIZE which would otherwise get float (and then 4* when squared)
- * the contributions.
- */
-static void
-fft_output(const float *re, const float *im, float *output)
-{
-    float *outputptr = output;
-    const float *realptr = re;
-    const float *imagptr = im;
-    float *endptr = output + FFT_BUFFER_SIZE / 2;
-
-    while (outputptr <= endptr) {
-        *outputptr = (*realptr * *realptr) + (*imagptr * *imagptr);
-        outputptr++;
-        realptr++;
-        imagptr++;
-    }
-    /* Do divisions to keep the constant and highest frequency terms in scale
-     * with the other terms. */
-    *output /= 4;
-    *endptr /= 4;
-}
-
-/*
- * Actually perform the FFT
- */
-static void
-fft_calculate(float *re, float *im)
-{
-    unsigned int i, j, k;
-    unsigned int exchanges;
-    float fact_real, fact_imag;
-    float tmp_real, tmp_imag;
-    unsigned int factfact;
-
-    /* Set up some variables to reduce calculation in the loops */
-    exchanges = 1;
-    factfact = FFT_BUFFER_SIZE / 2;
-
-    /* Loop through the divide and conquer steps */
-    for (i = FFT_BUFFER_SIZE_LOG; i != 0; i--) {
-        /* In this step, we have 2 ^ (i - 1) exchange groups, each with
-         * 2 ^ (FFT_BUFFER_SIZE_LOG - i) exchanges
-         */
-        /* Loop through the exchanges in a group */
-        for (j = 0; j != exchanges; j++) {
-            /* Work out factor for this exchange
-             * factor ^ (exchanges) = -1
-             * So, real = cos(j * PI / exchanges),
-             *     imag = sin(j * PI / exchanges)
-             */
-            fact_real = costable[j * factfact];
-            fact_imag = sintable[j * factfact];
-
-            /* Loop through all the exchange groups */
-            for (k = j; k < FFT_BUFFER_SIZE; k += exchanges << 1) {
-                int k1 = k + exchanges;
-                /* newval[k]  := val[k] + factor * val[k1]
-                 * newval[k1] := val[k] - factor * val[k1]
-                 **/
-                /* FIXME - potential scope for more optimization here? */
-                tmp_real = fact_real * re[k1] - fact_imag * im[k1];
-                tmp_imag = fact_real * im[k1] + fact_imag * re[k1];
-                re[k1] = re[k] - tmp_real;
-                im[k1] = im[k] - tmp_imag;
-                re[k] += tmp_real;
-                im[k] += tmp_imag;
+    /* loop through steps */
+    while (inv)
+    {
+        /* loop through groups */
+        for (int g = 0; g < N; g += half << 1)
+        {
+            /* loop through butterflies */
+            for (int b = 0, r = 0; b < half; b ++, r += inv)
+            {
+                float complex even = a[g + b];
+                float complex odd = roots[r] * a[g + half + b];
+                a[g + b] = even + odd;
+                a[g + half + b] = even - odd;
             }
         }
-        exchanges <<= 1;
-        factfact >>= 1;
+
+        half <<= 1;
+        inv >>= 1;
     }
 }
 
-static int
-reverseBits(unsigned int initial)
+/* Input is N=512 PCM samples.
+ * Output is intensity of frequencies from 1 to N/2=256. */
+
+void calc_freq (gint16 freq[N / 2], const gint16 data[N])
 {
-    unsigned int reversed = 0, loop;
-    for (loop = 0; loop < FFT_BUFFER_SIZE_LOG; loop++) {
-        reversed <<= 1;
-        reversed += (initial & 1);
-        initial >>= 1;
+    generate_tables ();
+
+    /* input values are in bit-reversed order */
+    float complex a[N];
+    for (gint i = 0; i < N; i ++)
+        a[i] = data[reversed[i]];
+
+    do_fft (a);
+
+    /* output values are divided by N */
+    /* frequencies from 1 to N/2-1 are doubled */
+    for (gint i = 0; i < N / 2 - 1; i ++)
+    {
+        float x = 2 * cabsf (a[1 + i]) / N;
+        freq[i] = CLAMP (x, -32767, 32767);
     }
-    return reversed;
+
+    /* frequency N/2 is not doubled */
+    float x = cabsf (a[N / 2]) / N;
+    freq[N / 2 - 1] = CLAMP (x, -32767, 32767);
 }

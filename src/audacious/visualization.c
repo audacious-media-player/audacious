@@ -1,5 +1,5 @@
 /*  Audacious - Cross-platform multimedia player
- *  Copyright (C) 2005-2010  Audacious development team
+ *  Copyright (C) 2005-2011  Audacious development team
  *
  *  Based on BMP:
  *  Copyright (C) 2003-2004  BMP development team
@@ -75,21 +75,6 @@ void calc_mono_pcm (VisPCMData dest, const VisPCMData src, gint nch)
             *(d++) = (*(sl++) + *(sr++)) >> 1;
         }
     }
-}
-
-static void calc_freq (gint16 * dest, const gint16 * src)
-{
-    static fft_state *state = NULL;
-    gfloat tmp_out[257];
-    gint i;
-
-    if (!state)
-        state = fft_init();
-
-    fft_perform(src, tmp_out, state);
-
-    for (i = 0; i < 256; i++)
-        dest[i] = ((gint) sqrt(tmp_out[i + 1])) >> 8;
 }
 
 void calc_mono_freq (VisFreqData dest, const VisPCMData src, gint nch)
@@ -334,6 +319,6 @@ PluginHandle * vis_plugin_by_widget (/* GtkWidget * */ void * widget)
         if (vis->widget == widget)
             return vis->plugin;
     }
-    
+
     return NULL;
 }

@@ -113,6 +113,9 @@ CPPFLAGS += -std=gnu99 \
 		${LIBGUESS_CFLAGS}		\
 		-I.. -I../..
 
+# Essential for efficient FFTs. --jlindgren
+CFLAGS += -ffast-math
+
 LIBS += ${LDADD}						\
         -lm \
 		-L../libaudcore -laudcore	\
