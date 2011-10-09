@@ -20,6 +20,7 @@
  */
 
 #include "debug.h"
+#include "misc.h"
 #include "playlist.h"
 #include "plugin.h"
 #include "plugins.h"
@@ -129,6 +130,8 @@ gboolean playlist_save (gint list, const gchar * filename)
     PlaylistPlugin * pp = get_plugin (filename);
     g_return_val_if_fail (pp && PLUGIN_HAS_FUNC (pp, save), FALSE);
 
+    gboolean fast = get_bool (NULL, "metadata_on_play");
+
     VFSFile * file = vfs_fopen (filename, "w");
     if (! file)
         return FALSE;
@@ -144,7 +147,7 @@ gboolean playlist_save (gint list, const gchar * filename)
     for (gint i = 0; i < entries; i ++)
     {
         index_append (filenames, (void *) playlist_entry_get_filename (list, i));
-        index_append (tuples, (void *) playlist_entry_get_tuple (list, i, FALSE));
+        index_append (tuples, (void *) playlist_entry_get_tuple (list, i, fast));
     }
 
     gboolean success = pp->save (filename, file, title, filenames, tuples);
@@ -155,7 +158,9 @@ gboolean playlist_save (gint list, const gchar * filename)
     for (gint i = 0; i < entries; i ++)
     {
         g_free (index_get (filenames, i));
-        tuple_free (index_get (tuples, i));
+        Tuple * tuple = index_get (tuples, i);
+        if (tuple)
+            tuple_free (tuple);
     }
 
     index_free (filenames);
