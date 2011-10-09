@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-09-20 08:26-0400\n"
+"POT-Creation-Date: 2011-10-09 12:18-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1072,35 +1072,36 @@ msgstr ""
 msgid "Close dialog on Add"
 msgstr ""
 
-#: src/libaudgui/ui_jumptotrack.c:131
-msgid "Un_queue"
-msgstr ""
-
-#: src/libaudgui/ui_jumptotrack.c:133 src/libaudgui/ui_jumptotrack.c:510
+#: src/libaudgui/ui_jumptotrack.c:103 src/libaudgui/ui_jumptotrack.c:111
+#: src/libaudgui/ui_jumptotrack.c:322
 msgid "_Queue"
 msgstr ""
 
-#: src/libaudgui/ui_jumptotrack.c:397
+#: src/libaudgui/ui_jumptotrack.c:109
+msgid "Un_queue"
+msgstr ""
+
+#: src/libaudgui/ui_jumptotrack.c:239
 msgid "Jump to Track"
 msgstr ""
 
-#: src/libaudgui/ui_jumptotrack.c:440
+#: src/libaudgui/ui_jumptotrack.c:277
 msgid "Filter: "
 msgstr ""
 
-#: src/libaudgui/ui_jumptotrack.c:441
+#: src/libaudgui/ui_jumptotrack.c:278
 msgid "_Filter:"
 msgstr ""
 
-#: src/libaudgui/ui_jumptotrack.c:459
+#: src/libaudgui/ui_jumptotrack.c:288
 msgid "Remember"
 msgstr ""
 
-#: src/libaudgui/ui_jumptotrack.c:468
+#: src/libaudgui/ui_jumptotrack.c:295
 msgid "Clea_r"
 msgstr ""
 
-#: src/libaudgui/ui_jumptotrack.c:502
+#: src/libaudgui/ui_jumptotrack.c:315
 msgid "Close on Jump"
 msgstr ""
 
