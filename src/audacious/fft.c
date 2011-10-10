@@ -27,6 +27,7 @@
 #define N 512                         /* size of the DFT */
 #define LOGN 9                        /* log N (base 2) */
 
+static float hamming[N];              /* hamming window */
 static int reversed[N];               /* bit-reversal table */
 static float complex roots[N / 2];    /* N-th roots of unity */
 static char generated = 0;            /* set if tables have been generated */
@@ -53,6 +54,8 @@ static void generate_tables (void)
     if (generated)
         return;
 
+    for (int n = 0; n < N; n ++)
+        hamming[n] = 0.54 - 0.46 * cosf (2 * M_PI * n / N);
     for (int n = 0; n < N; n ++)
         reversed[n] = bit_reverse (n);
     for (int n = 0; n < N / 2; n ++)
@@ -99,10 +102,11 @@ void calc_freq (const float data[N], float freq[N / 2])
 {
     generate_tables ();
 
+    /* input is filtered by a Hamming window */
     /* input values are in bit-reversed order */
     float complex a[N];
     for (int n = 0; n < N; n ++)
-        a[n] = data[reversed[n]];
+        a[reversed[n]] = data[n] * hamming[n];
 
     do_fft (a);
 
