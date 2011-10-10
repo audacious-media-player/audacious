@@ -160,6 +160,8 @@ static void vis_load (PluginHandle * plugin)
         vis_func_add (AUD_VIS_TYPE_MULTI_PCM, (GCallback) header->render_multi_pcm);
     if (PLUGIN_HAS_FUNC (header, render_freq))
         vis_func_add (AUD_VIS_TYPE_FREQ, (GCallback) header->render_freq);
+
+    loaded_vis_plugins = g_list_prepend (loaded_vis_plugins, vis);
 }
 
 static void vis_unload (PluginHandle * plugin)
