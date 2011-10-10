@@ -24,17 +24,17 @@
 #include "audio.h"
 
 #define FROM_INT_LOOP(NAME, TYPE, SWAP, OFFSET, RANGE) \
-static void NAME (TYPE * in, gfloat * out, gint samples) \
+static void NAME (const TYPE * in, gfloat * out, gint samples) \
 { \
-    TYPE * end = in + samples; \
+    const TYPE * end = in + samples; \
     while (in < end) \
         * out ++ = (TYPE) (SWAP (* in ++) - OFFSET) / (gdouble) RANGE; \
 }
 
 #define TO_INT_LOOP(NAME, TYPE, SWAP, OFFSET, RANGE) \
-static void NAME (gfloat * in, TYPE * out, gint samples) \
+static void NAME (const gfloat * in, TYPE * out, gint samples) \
 { \
-    gfloat * end = in + samples; \
+    const gfloat * end = in + samples; \
     while (in < end) \
     { \
         gdouble f = * in ++; \
@@ -81,8 +81,8 @@ TO_INT_LOOP (to_u24_swap, gint32, swap32, 0x800000, 0x7fffff)
 TO_INT_LOOP (to_s32_swap, gint32, swap32, 0x00000000, 0x7fffffff)
 TO_INT_LOOP (to_u32_swap, gint32, swap32, 0x80000000, 0x7fffffff)
 
-typedef void (* FromFunc) (void * in, gfloat * out, gint samples);
-typedef void (* ToFunc) (gfloat * in, void * out, gint samples);
+typedef void (* FromFunc) (const void * in, gfloat * out, gint samples);
+typedef void (* ToFunc) (const gfloat * in, void * out, gint samples);
 
 struct
 {
@@ -126,7 +126,7 @@ convert_table [] =
 #endif
 };
 
-void audio_from_int (void * in, gint format, gfloat * out, gint samples)
+void audio_from_int (const void * in, gint format, gfloat * out, gint samples)
 {
     gint entry;
 
@@ -140,7 +140,7 @@ void audio_from_int (void * in, gint format, gfloat * out, gint samples)
     }
 }
 
-void audio_to_int (gfloat * in, void * out, gint format, gint samples)
+void audio_to_int (const gfloat * in, void * out, gint format, gint samples)
 {
     gint entry;
 

@@ -51,8 +51,8 @@ enum {
 #define FMT_SIZEOF(f) \
  (f == FMT_FLOAT ? sizeof (gfloat) : f <= FMT_U8 ? 1 : f <= FMT_U16_BE ? 2 : 4)
 
-void audio_from_int (void * in, gint format, gfloat * out, gint samples);
-void audio_to_int (gfloat * in, void * out, gint format, gint samples);
+void audio_from_int (const void * in, gint format, gfloat * out, gint samples);
+void audio_to_int (const gfloat * in, void * out, gint format, gint samples);
 void audio_amplify (gfloat * data, gint channels, gint frames, gfloat * factors);
 
 #endif
