@@ -41,12 +41,6 @@
 
 #include <errno.h>
 
-#ifdef HAVE_FTS_H
-#  include <sys/types.h>
-#  include <sys/stat.h>
-#  include <fts.h>
-#endif
-
 #include <libaudcore/audstrings.h>
 #include <libaudcore/stringpool.h>
 

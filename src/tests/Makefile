@@ -5,7 +5,6 @@ OBJECTIVE_LIBS_NOINST = tuple_formatter_test \
 	tuple_formatter_functor_test \
 	tag_wma_test
 
-LDFLAGS += $(AUDLDFLAGS)
 LDADD = \
 	$(DBUS_LIBS) \
 	$(GTK_LIBS)      \
@@ -15,7 +14,6 @@ CFLAGS += \
 	$(GTK_CFLAGS)      \
 	$(DBUS_CFLAGS)     \
 	$(AUDACIOUS_DEFINES)    \
-	$(ARCH_DEFINES)    \
 	$(MOWGLI_CFLAGS)   \
 	-I.. -I../..   \
 	-I../intl -I../audacious

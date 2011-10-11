@@ -36,5 +36,4 @@ includesubdir = libaudgui
 
 CPPFLAGS += -DHAVE_CONFIG_H -I.. -I../.. ${GLIB_CFLASG} ${GTK_CFLAGS} ${DBUS_CFLAGS} ${MOWGLI_CFLAGS} ${AUDACIOUS_DEFINES} ${REGEX_CFLAGS}
 CFLAGS += -std=gnu99 ${LIB_CFLAGS}
-LDFLAGS += $(AUDLDFLAGS)
 LIBS += -lm ${GLIB_LIBS} ${MOWGLI_LIBS} ${GTK_LIBS} ${REGEX_LIBS} -L../libaudcore -laudcore

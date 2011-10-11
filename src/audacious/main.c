@@ -262,7 +262,7 @@ static void parse_options (gint * argc, gchar *** argv)
     options.session = -1;
 
     context = g_option_context_new(_("- play multimedia files"));
-    g_option_context_add_main_entries(context, cmd_entries, PACKAGE_NAME);
+    g_option_context_add_main_entries(context, cmd_entries, PACKAGE);
     g_option_context_add_group(context, gtk_get_option_group(FALSE));
 #ifdef USE_EGGSM
     g_option_context_add_group(context, egg_sm_client_get_option_group());
@@ -436,11 +436,11 @@ static void init_one (void)
     init_paths ();
     make_dirs ();
 
-    bindtextdomain (PACKAGE_NAME, aud_paths[AUD_PATH_LOCALE_DIR]);
-    bind_textdomain_codeset (PACKAGE_NAME, "UTF-8");
-    bindtextdomain (PACKAGE_NAME "-plugins", aud_paths[AUD_PATH_LOCALE_DIR]);
-    bind_textdomain_codeset (PACKAGE_NAME "-plugins", "UTF-8");
-    textdomain (PACKAGE_NAME);
+    bindtextdomain (PACKAGE, aud_paths[AUD_PATH_LOCALE_DIR]);
+    bind_textdomain_codeset (PACKAGE, "UTF-8");
+    bindtextdomain (PACKAGE "-plugins", aud_paths[AUD_PATH_LOCALE_DIR]);
+    bind_textdomain_codeset (PACKAGE "-plugins", "UTF-8");
+    textdomain (PACKAGE);
 
     mowgli_init ();
 

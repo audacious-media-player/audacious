@@ -512,7 +512,7 @@ tuple_formatter_expression_exists(Tuple *tuple, const gchar *expression)
 static gchar *
 tuple_formatter_function_version(Tuple *tuple, gchar **args)
 {
-    return g_strdup(PACKAGE_NAME " " PACKAGE_VERSION);
+    return g_strdup(PACKAGE " " VERSION);
 }
 
 /*

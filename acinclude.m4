@@ -167,21 +167,34 @@ AC_DEFUN([AUD_COMMON_PROGS], [
 
 dnl Check for C and C++ compilers
 dnl =============================
-AUD_CHECK_GNU_MAKE
-AC_PROG_CC
-AC_PROG_CXX
-AM_PROG_AS
-AC_ISC_POSIX
-AC_C_BIGENDIAN
+AC_REQUIRE([AC_PROG_CC])
+AC_REQUIRE([AC_PROG_CXX])
+AC_REQUIRE([AM_PROG_AS])
+AC_REQUIRE([AC_C_BIGENDIAN])
+AC_REQUIRE([AC_SYS_LARGEFILE])
 
 if test "x$GCC" = "xyes"; then
     CFLAGS="$CFLAGS -Wall -pipe"
-    CXXFLAGS="$CXXFLAGS -pipe -Wall"
+    CXXFLAGS="$CXXFLAGS -Wall -pipe"
     AUD_CHECK_CFLAGS(-Wtype-limits)
 fi
 
+dnl Enable "-z defs" only on Linux
+dnl ==============================
+AC_MSG_CHECKING([for Linux])
+case "$target" in
+    *linux*)
+        AC_MSG_RESULT([yes])
+        LDFLAGS="$LDFLAGS -z defs"
+        ;;
+    *)
+        AC_MSG_RESULT([no])
+        ;;
+esac
+
 dnl Checks for various programs
 dnl ===========================
+AUD_CHECK_GNU_MAKE
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
 AC_PATH_PROG([RM], [rm])
@@ -199,64 +212,10 @@ AUD_CHECK_MODULE([GTHREAD], [gthread-2.0], [>= 2.16], [GThread])
 AUD_CHECK_MODULE([PANGO], [pango], [>= 1.20], [Pango])
 AUD_CHECK_MODULE([CAIRO], [cairo], [>= 1.6], [Cairo])
 
-
 dnl Check for libmowgli
 dnl ===================
 AUD_CHECK_MODULE([MOWGLI], [libmowgli], [>= 0.9], [libmowgli],
     [http://www.atheme.org/projects/mowgli.shtml])
-
-
-dnl SSE2 support
-dnl ============
-AUD_ARG_ENABLE([sse2], [yes], [SSE2 support],
-[
-    AC_MSG_CHECKING([SSE2 support])
-    aud_my_save_CFLAGS="$CFLAGS"
-    CFLAGS="-msse2"
-    AC_TRY_RUN([
-#include <emmintrin.h>
-int main()
-{
-  _mm_setzero_pd();
-  asm volatile("xorpd %xmm0,%xmm0\n\t");
-  return 0;
-}
-    ],[
-        AC_MSG_RESULT([yes])
-        AC_DEFINE([HAVE_SSE2], 1, [Define to 1 if your system has SSE2 support])
-        SIMD_CFLAGS="-msse2"
-    ],[
-        AC_MSG_RESULT([no])
-        enable_sse2="no"
-    ])
-    AC_SUBST([SIMD_CFLAGS])
-    CFLAGS="$aud_my_save_CFLAGS"
-])
-
-dnl AltiVec support
-dnl ===============
-AUD_ARG_ENABLE([altivec], [yes], [AltiVec support],
-[
-    AC_CHECK_HEADERS([altivec.h],
-    [
-        AC_DEFINE([HAVE_ALTIVEC], 1, [Define to 1 if your system has AltiVec.])
-        AC_DEFINE([HAVE_ALTIVEC_H], 1, [Define to 1 if your system has an altivec.h file.])
-        AC_DEFINE([ARCH_POWERPC], 1, [Define to 1 if your system is a PowerPC.])
-        case $target in
-             *-apple-*)
-             SIMD_CFLAGS="-mpim-altivec"
-             ;;
-             *)
-             SIMD_CFLAGS="-maltivec"
-             ;;
-        esac
-        AC_SUBST([SIMD_CFLAGS])
-    ],[
-        enable_altivec="no"
-    ])
-])
-
-AC_CHECK_FUNC([getrlimit])
 
 ])
 

@@ -103,11 +103,9 @@ CPPFLAGS += -std=gnu99 \
 		${GTHREAD_CFLAGS} \
 		${GTK_CFLAGS}			\
 		${AUDACIOUS_DEFINES}	\
-		${ARCH_DEFINES}			\
 		${DBUS_CFLAGS}			\
 		${REGEX_CFLAGS}			\
 		${PTHREAD_CFLAGS}		\
-		${SIMD_CFLAGS}			\
 		-D_AUDACIOUS_CORE		\
 		${EGGSM_CFLAGS}			\
 		${LIBGUESS_CFLAGS}		\
@@ -132,8 +130,6 @@ LIBS += ${LDADD}						\
 		${PTHREAD_LIBS}					\
 		${LIBGUESS_LIBS}
 
-LDFLAGS += ${PROG_IMPLIB_LDFLAGS} ${AUDLDFLAGS}
-
 DBUS_BINDINGS_SOURCES = objects.xml			\
 			mpris_root.xml			\
 			mpris_tracklist.xml		\
@@ -150,30 +146,3 @@ dbus-server-bindings.h: ${DBUS_BINDINGS_SOURCES}
 
 dbus-client-bindings.h: ${DBUS_BINDINGS_SOURCES}
 	${DBUS_BINDING_TOOL} --mode=glib-client --prefix=audacious_rc objects.xml > $@
-
-install-extra:
-	if test x"${PROG_IMPLIB_NEEDED}" = x"yes"; then \
-		for i in ${PROG}; do \
-			i="lib$$i.a"; \
-			${INSTALL_STATUS}; \
-			if ${MKDIR_P} "${DESTDIR}${libdir}" && ${INSTALL} -m 644 "$$i" "${DESTDIR}${libdir}/$$i"; then \
-				${INSTALL_OK}; \
-			else \
-				${INSTALL_FAILED}; \
-			fi \
-		done \
-	fi
-
-uninstall-extra:
-	if test x"${PROG_IMPLIB_NEEDED}" = x"yes"; then \
-		for i in ${PROG}; do \
-			i="lib$$i.a"; \
-			if test -f "${DESTDIR}${libdir}/$$i"; then \
-				if ${RM} -f "${DESTDIR}${libdir}/$$i"; then \
-					${DELETE_OK}; \
-				else \
-					${DELETE_FAILED}; \
-				fi \
-			fi \
-		done \
-	fi

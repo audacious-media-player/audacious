@@ -1748,8 +1748,7 @@ void * * create_prefs_window (void)
     /* audacious version label */
 
     aud_version_string = g_strdup_printf
-     ("<span size='small'>%s (%s)</span>", "Audacious " PACKAGE_VERSION,
-     BUILDSTAMP);
+     ("<span size='small'>%s (%s)</span>", "Audacious " VERSION, BUILDSTAMP);
 
     gtk_label_set_markup( GTK_LABEL(audversionlabel) , aud_version_string );
     g_free(aud_version_string);

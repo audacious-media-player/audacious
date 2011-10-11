@@ -1,8 +1,8 @@
 prefix=@prefix@
 exec_prefix=@exec_prefix@
-data_dir=@datadir@/@PACKAGE_NAME@
+data_dir=@datadir@/@PACKAGE@
 
-version=@PACKAGE_VERSION@
+version=@VERSION@
 include_dir=@includedir@
 audacious_include_dir=@includedir@
 lib_dir=@libdir@
@@ -19,7 +19,7 @@ discovery_plugin_dir=@plugindir@/@DISCOVERY_PLUGIN_DIR@
 
 Name: Audacious
 Description: Audacious is a versatile and handy multi platform media player
-Version: @PACKAGE_VERSION@
+Version: @VERSION@
 Requires: @PC_REQUIRES@
 Libs: -L${lib_dir} -laudcore -laudgui
 Cflags: -I${audacious_include_dir}
