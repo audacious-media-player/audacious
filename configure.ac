@@ -27,6 +27,14 @@ dnl ===============================
 AC_CHECK_HEADERS([execinfo.h regex.h rxposix.h rx/rxposix.h])
 AC_CHECK_FUNCS([sigwait backtrace])
 
+AC_MSG_CHECKING([for cexpf])
+AC_LINK_IFELSE([AC_LANG_PROGRAM([#include <complex.h>
+                                 #include <stdio.h>],
+                                [printf ("%f", crealf (cexpf (1)))])],
+               [AC_MSG_RESULT(yes)
+                AC_DEFINE([HAVE_CEXPF], [1], [Define if cexpf is present])],
+               [AC_MSG_RESULT(no)])
+
 dnl gettext
 dnl =======
 AM_GNU_GETTEXT([external])

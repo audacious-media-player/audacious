@@ -22,7 +22,14 @@
 #include <complex.h>
 #include <math.h>
 
+#include "config.h"
 #include "fft.h"
+
+#ifndef HAVE_CEXPF
+/* e^(a+bi) = (e^a)(cos(b)+sin(b)i) */
+#define cexpf(x) (expf(crealf(x))*(cosf(cimagf(x))+sinf(cimagf(x))*I))
+#warning Your C library does not have cexpf(). Please update it.
+#endif
 
 #define N 512                         /* size of the DFT */
 #define LOGN 9                        /* log N (base 2) */
