@@ -28,12 +28,15 @@ AC_CHECK_HEADERS([execinfo.h regex.h rxposix.h rx/rxposix.h])
 AC_CHECK_FUNCS([sigwait backtrace])
 
 AC_MSG_CHECKING([for cexpf])
+OLD_LIBS="$LIBS"
+LIBS="$LIBS -lm"
 AC_LINK_IFELSE([AC_LANG_PROGRAM([#include <complex.h>
                                  #include <stdio.h>],
                                 [printf ("%f", crealf (cexpf (1)))])],
                [AC_MSG_RESULT(yes)
                 AC_DEFINE([HAVE_CEXPF], [1], [Define if cexpf is present])],
                [AC_MSG_RESULT(no)])
+LIBS="$OLD_LIBS"
 
 AC_MSG_CHECKING([for /proc/self/exe])
 if test -e "/proc/self/exe" ; then
