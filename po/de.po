@@ -1,17 +1,22 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+#   <thomas-lange2@gmx.de>, 2011.
 msgid ""
 msgstr ""
-"Project-Id-Version: de\n"
-"Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-09-06 20:53+0200\n"
-"PO-Revision-Date: 2011-09-06 21:12+0100\n"
-"Last-Translator: Thomas Lange\n"
-"Language-Team: German\n"
-"Language: de\n"
+"Project-Id-Version: Audacious\n"
+"Report-Msgid-Bugs-To: http://jira.atheme.org/browse/AUD\n"
+"POT-Creation-Date: 2011-10-09 12:18-0400\n"
+"PO-Revision-Date: 2011-10-15 16:53+0000\n"
+"Last-Translator: Radioactiveman <thomas-lange2@gmx.de>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"plural-Forms: nplurals=2; plural=(n!=1);\n"
-"X-Poedit-Language: German\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 #: src/audacious/adder.c:71
 msgid "Searching ..."
@@ -221,32 +226,26 @@ msgstr "Temporäre Wiedergabeliste"
 msgid "Error importing Winamp EQF file '%s'"
 msgstr "Fehler beim Import der Winamp-EQF-Datei '%s'"
 
-#  -r, --rew switch
 #: src/audacious/main.c:239
 msgid "Skip backwards in playlist"
 msgstr "In der Wiedergabeliste zurückspringen"
 
-#  -p, --play switch
 #: src/audacious/main.c:240
 msgid "Start playing current playlist"
 msgstr "Abspielen der aktuellen Wiedergabeliste beginnen"
 
-#  -u, --pause switch
 #: src/audacious/main.c:241
 msgid "Pause current song"
 msgstr "Aktuellen Song unterbrechen"
 
-#  -s, --stop switch
 #: src/audacious/main.c:242
 msgid "Stop current song"
 msgstr "Aktuellen Song stoppen"
 
-#  -t, --play-pause switch
 #: src/audacious/main.c:243
 msgid "Pause if playing, play otherwise"
 msgstr "Pause falls beim Abspielen, andernfalls Wiedergabe starten"
 
-#  -f, --fwd switch
 #: src/audacious/main.c:244
 msgid "Skip forward in playlist"
 msgstr "In der Wiedergabeliste vorspringen"
@@ -255,18 +254,14 @@ msgstr "In der Wiedergabeliste vorspringen"
 msgid "Display Jump to File dialog"
 msgstr "«Springe zu Datei»-Fenster anzeigen"
 
-#  -e, --enqueue switch
 #: src/audacious/main.c:246
 msgid "Add files to the playlist"
 msgstr "Dateien zur Wiedergabeliste hinzufügen"
 
-#  -e, --enqueue switch
 #: src/audacious/main.c:247
 msgid "Add new files to a temporary playlist"
 msgstr "Dateien zu temporärer Wiedergabeliste hinzufügen"
 
-#  -m, --show-main-window switch
-#  -m, --show-main-window switch
 #: src/audacious/main.c:248
 msgid "Display the main window"
 msgstr "Hauptfenster anzeigen"
@@ -313,7 +308,7 @@ msgstr "Kein Decoder gefunden für %s."
 msgid "Buffering ..."
 msgstr "Puffere ..."
 
-#: src/audacious/playlist-new.c:307
+#: src/audacious/playlist-new.c:306
 msgid "Untitled Playlist"
 msgstr "Unbenannte Wiedergabeliste"
 
@@ -325,7 +320,7 @@ msgstr "Audio"
 msgid "Network"
 msgstr "Netzwerk"
 
-#: src/audacious/ui_preferences.c:90 src/audacious/ui_preferences.c:1631
+#: src/audacious/ui_preferences.c:90 src/audacious/ui_preferences.c:1633
 msgid "Playlist"
 msgstr ""
 "Wiedergabe-\n"
@@ -536,7 +531,6 @@ msgstr "Fortschreiten falls aktueller Titel gelöscht wird"
 msgid "Clear the playlist when opening files"
 msgstr "Wiedergabeliste beim Öffnen neuer Dateien leeren"
 
-#  -e, --enqueue switch
 #: src/audacious/ui_preferences.c:212
 msgid "Open files in a temporary playlist"
 msgstr "Dateien in temporärer Wiedergabeliste öffnen"
@@ -545,121 +539,125 @@ msgstr "Dateien in temporärer Wiedergabeliste öffnen"
 msgid "<b>Metadata</b>"
 msgstr "<b>Metadaten</b>"
 
-#: src/audacious/ui_preferences.c:230
+#: src/audacious/ui_preferences.c:215
+msgid "Do not load metadata for songs until played"
+msgstr "Metadaten erst laden, wenn Titel gespielt wird"
+
+#: src/audacious/ui_preferences.c:232
 msgid "TITLE"
 msgstr "TITEL"
 
-#: src/audacious/ui_preferences.c:231
+#: src/audacious/ui_preferences.c:233
 msgid "ARTIST - TITLE"
 msgstr "KÜNSTLER - TITEL"
 
-#: src/audacious/ui_preferences.c:232
+#: src/audacious/ui_preferences.c:234
 msgid "ARTIST - ALBUM - TITLE"
 msgstr "KÜNSTLER - ALBUM - TITEL"
 
-#: src/audacious/ui_preferences.c:233
+#: src/audacious/ui_preferences.c:235
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr "KÜNSTLER - ALBUM - TITELNUMMER. TITEL"
 
-#: src/audacious/ui_preferences.c:234
+#: src/audacious/ui_preferences.c:236
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr "KÜNSTLER [ ALBUM ] - TITELNUMMER. TITEL"
 
-#: src/audacious/ui_preferences.c:235
+#: src/audacious/ui_preferences.c:237
 msgid "ALBUM - TITLE"
 msgstr "ALBUM - TITEL"
 
-#: src/audacious/ui_preferences.c:574
+#: src/audacious/ui_preferences.c:576
 msgid "Category"
 msgstr "Kategorie"
 
-#: src/audacious/ui_preferences.c:798
+#: src/audacious/ui_preferences.c:800
 msgid "Popup Information Settings"
 msgstr "Popup-Informations-Einstellungen"
 
-#: src/audacious/ui_preferences.c:807
+#: src/audacious/ui_preferences.c:809
 msgid "<b>Cover image retrieve</b>"
 msgstr "<b>Cover-Bild finden</b>"
 
-#: src/audacious/ui_preferences.c:812
+#: src/audacious/ui_preferences.c:814
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
 "using commas."
 msgstr ""
 "Wenn Audacious das Titelbild sucht, sucht es nach bestimmten Worten im "
-"Dateinamen. Diese können nachfolgend eingegeben werden, jeweils durch Kommas "
-"getrennt."
+"Dateinamen. Diese können nachfolgend eingegeben werden, jeweils durch Kommas"
+" getrennt."
 
-#: src/audacious/ui_preferences.c:829
+#: src/audacious/ui_preferences.c:831
 msgid "Exclude:"
 msgstr "Ausschließen:"
 
-#: src/audacious/ui_preferences.c:836
+#: src/audacious/ui_preferences.c:838
 msgid "Include:"
 msgstr "Einschließen:"
 
-#: src/audacious/ui_preferences.c:853
+#: src/audacious/ui_preferences.c:855
 msgid "Recursively search for cover"
 msgstr "Rekursiv nach dem Titelbild suchen"
 
-#: src/audacious/ui_preferences.c:863
+#: src/audacious/ui_preferences.c:865
 msgid "Search depth: "
 msgstr "Suchtiefe: "
 
-#: src/audacious/ui_preferences.c:877
+#: src/audacious/ui_preferences.c:879
 msgid "Use per-file cover"
 msgstr "Pro-Datei-Titelbild benutzen"
 
-#: src/audacious/ui_preferences.c:880
+#: src/audacious/ui_preferences.c:882
 msgid "<b>Miscellaneous</b>"
 msgstr "<b>Verschiedenes</b>"
 
-#: src/audacious/ui_preferences.c:889
+#: src/audacious/ui_preferences.c:891
 msgid "Show Progress bar for the current track"
 msgstr "Zeige Fortschrittsbalken für den aktuellen Titel"
 
-#: src/audacious/ui_preferences.c:899
+#: src/audacious/ui_preferences.c:901
 msgid "Delay until filepopup comes up: "
 msgstr "Verzögerung bis zum Erscheinen des Popups: "
 
-#: src/audacious/ui_preferences.c:1337
+#: src/audacious/ui_preferences.c:1339
 msgid "Custom"
 msgstr "Eigene Zeichenkette"
 
-#: src/audacious/ui_preferences.c:1380
+#: src/audacious/ui_preferences.c:1382
 msgid "<b>Song Display</b>"
 msgstr "<b>Titelanzeige</b>"
 
-#: src/audacious/ui_preferences.c:1389
+#: src/audacious/ui_preferences.c:1391
 msgid "Show song numbers"
 msgstr "Zeige Titelnummern"
 
-#: src/audacious/ui_preferences.c:1400
+#: src/audacious/ui_preferences.c:1402
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr "Führende Nullen anzeigen (02:00 anstatt 2:00)"
 
-#: src/audacious/ui_preferences.c:1422
+#: src/audacious/ui_preferences.c:1424
 msgid "Show information about titlestring format"
 msgstr "Informationen über das Format der Titelzeile anzeigen"
 
-#: src/audacious/ui_preferences.c:1438
+#: src/audacious/ui_preferences.c:1440
 msgid "Custom string:"
 msgstr "Eigene Zeichenkette:"
 
-#: src/audacious/ui_preferences.c:1445
+#: src/audacious/ui_preferences.c:1447
 msgid "Title format:"
 msgstr "Titelformat:"
 
-#: src/audacious/ui_preferences.c:1456
+#: src/audacious/ui_preferences.c:1458
 msgid "<b>Popup Information</b>"
 msgstr "<b>Popup-Information</b>"
 
-#: src/audacious/ui_preferences.c:1471
+#: src/audacious/ui_preferences.c:1473
 msgid "Show popup information for playlist entries"
 msgstr "Popup-Informationen für Widergabelisteneinträge anzeigen"
 
-#: src/audacious/ui_preferences.c:1472
+#: src/audacious/ui_preferences.c:1474
 msgid ""
 "Toggles popup information window for the pointed entry in the playlist. The "
 "window shows title of song, name of album, genre, year of publish, track "
@@ -670,35 +668,35 @@ msgstr ""
 "werden Titel, Album, Genre, Publikationsjahr, Titelnummer, Titellänge und "
 "Cover-Bild."
 
-#: src/audacious/ui_preferences.c:1483
+#: src/audacious/ui_preferences.c:1485
 msgid "Edit settings for popup information"
 msgstr "Einstellungen für Popup-Informationen bearbeiten"
 
-#: src/audacious/ui_preferences.c:1572
+#: src/audacious/ui_preferences.c:1574
 msgid "Output plugin:"
 msgstr "Ausgabe-Plugin:"
 
-#: src/audacious/ui_preferences.c:1631
+#: src/audacious/ui_preferences.c:1633
 msgid "Transport"
 msgstr "Transport"
 
-#: src/audacious/ui_preferences.c:1631
+#: src/audacious/ui_preferences.c:1633
 msgid "Input"
 msgstr "Eingabe"
 
-#: src/audacious/ui_preferences.c:1632
+#: src/audacious/ui_preferences.c:1634
 msgid "Effect"
 msgstr "Effekte"
 
-#: src/audacious/ui_preferences.c:1632
+#: src/audacious/ui_preferences.c:1634
 msgid "Visualization"
 msgstr "Visualisierung"
 
-#: src/audacious/ui_preferences.c:1632
+#: src/audacious/ui_preferences.c:1634
 msgid "General"
 msgstr "Allgemein"
 
-#: src/audacious/ui_preferences.c:1672
+#: src/audacious/ui_preferences.c:1674
 msgid "Audacious Preferences"
 msgstr "Audacious-Einstellungen"
 
@@ -739,8 +737,6 @@ msgstr ""
 "Wollen Sie wirklich '%s' löschen?  Alle seit der letzten Speicherung "
 "geänderten Einträge gehen dadurch verloren."
 
-#  -m, --show-main-window switch
-#  -m, --show-main-window switch
 #: src/libaudgui/confirm.c:91
 msgid "_Don't show this message again"
 msgstr "_Diese Warnung nicht mehr anzeigen"
@@ -1057,6 +1053,10 @@ msgstr "Wiedergabeliste importieren"
 msgid "Overwrite %s?"
 msgstr "'%s' überschreiben?"
 
+#: src/libaudgui/queue-manager.c:185
+msgid "Queue Manager"
+msgstr "Warteschlangen-Manager"
+
 #: src/libaudgui/ui_about.c:69
 msgid "About Audacious"
 msgstr "Über Audacious"
@@ -1085,35 +1085,36 @@ msgstr "Dialog beim Öffnen schließen"
 msgid "Close dialog on Add"
 msgstr "Dialog beim Hinzufügen schließen"
 
-#: src/libaudgui/ui_jumptotrack.c:131
-msgid "Un_queue"
-msgstr "Aus _Warteschlange"
-
-#: src/libaudgui/ui_jumptotrack.c:133 src/libaudgui/ui_jumptotrack.c:510
+#: src/libaudgui/ui_jumptotrack.c:103 src/libaudgui/ui_jumptotrack.c:111
+#: src/libaudgui/ui_jumptotrack.c:322
 msgid "_Queue"
 msgstr "In _Warteschlange"
 
-#: src/libaudgui/ui_jumptotrack.c:397
+#: src/libaudgui/ui_jumptotrack.c:109
+msgid "Un_queue"
+msgstr "Aus _Warteschlange"
+
+#: src/libaudgui/ui_jumptotrack.c:239
 msgid "Jump to Track"
 msgstr "Zu Titel springen"
 
-#: src/libaudgui/ui_jumptotrack.c:440
+#: src/libaudgui/ui_jumptotrack.c:277
 msgid "Filter: "
 msgstr "Filter: "
 
-#: src/libaudgui/ui_jumptotrack.c:441
+#: src/libaudgui/ui_jumptotrack.c:278
 msgid "_Filter:"
 msgstr "_Filter:"
 
-#: src/libaudgui/ui_jumptotrack.c:459
+#: src/libaudgui/ui_jumptotrack.c:288
 msgid "Remember"
 msgstr "Merken"
 
-#: src/libaudgui/ui_jumptotrack.c:468
+#: src/libaudgui/ui_jumptotrack.c:295
 msgid "Clea_r"
 msgstr "A-B löschen"
 
-#: src/libaudgui/ui_jumptotrack.c:502
+#: src/libaudgui/ui_jumptotrack.c:315
 msgid "Close on Jump"
 msgstr "Nach Öffnen schließen"
 
@@ -1174,7 +1175,8 @@ msgstr "Unbekannte Start-Option: %d"
 
 #: src/libeggsmclient/eggdesktopfile.c:1375
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-msgstr "Kann keine Dokument-URIs an einen 'Type=Link'-Desktopeintrag übergeben"
+msgstr ""
+"Kann keine Dokument-URIs an einen 'Type=Link'-Desktopeintrag übergeben"
 
 #: src/libeggsmclient/eggdesktopfile.c:1396
 msgid "Not a launchable item"
@@ -1207,3 +1209,5 @@ msgstr "Session-Management-Optionen:"
 #: src/libeggsmclient/eggsmclient.c:254
 msgid "Show session management options"
 msgstr "Zeige Session-Management-Optionen"
+
+
