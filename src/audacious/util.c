@@ -126,6 +126,7 @@ make_directory(const gchar * path, mode_t mode)
 
 gchar * get_path_to_self (void)
 {
+#if defined _WIN32 || defined HAVE_PROC_SELF_EXE
     gint size = 256;
     gchar * buf = g_malloc (size);
 
@@ -158,6 +159,9 @@ gchar * get_path_to_self (void)
         size += size;
         buf = g_realloc (buf, size);
     }
+#else
+    return NULL;
+#endif
 }
 
 /* Strips various common top-level folders from a file name (not URI).  The

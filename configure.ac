@@ -35,6 +35,14 @@ AC_LINK_IFELSE([AC_LANG_PROGRAM([#include <complex.h>
                 AC_DEFINE([HAVE_CEXPF], [1], [Define if cexpf is present])],
                [AC_MSG_RESULT(no)])
 
+AC_MSG_CHECKING([for /proc/self/exe])
+if test -e "/proc/self/exe" ; then
+    AC_MSG_RESULT(yes)
+    AC_DEFINE([HAVE_PROC_SELF_EXE], [1], [Define if the /proc/self/exe symlink is supported])
+else
+    AC_MSG_RESULT(no)
+fi
+
 dnl gettext
 dnl =======
 AM_GNU_GETTEXT([external])
