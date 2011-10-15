@@ -1,24 +1,24 @@
-# Lithuanian translation of BMP.
-# Copyright (C) 2004 Rimas Kudelis <rq@akl.lt>
-# This file is distributed under the same license as the BMP package.
-# Rimas Kudelis <rq@akl.lt>, 2004.
-# Gymka <gymka@mail.ru>, 2011.
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
 # Algimantas Margevičius <gymka@mail.ru>, 2011.
-#
+# Gymka <gymka@mail.ru>, 2011.
+# Rimas Kudelis <rq@akl.lt>, 2004.
 msgid ""
 msgstr ""
-"Project-Id-Version: Audacious 3.0\n"
-"Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-10-09 12:19-0400\n"
-"PO-Revision-Date: 2011-10-09 18:15+0300\n"
-"Last-Translator: Algimantas Margevičius <gymka@mail.ru>\n"
-"Language-Team: Lietuvių <>\n"
-"Language: lt\n"
+"Project-Id-Version: Audacious\n"
+"Report-Msgid-Bugs-To: http://jira.atheme.org/browse/AUD\n"
+"POT-Creation-Date: 2011-10-09 12:18-0400\n"
+"PO-Revision-Date: 2011-10-11 05:42+0000\n"
+"Last-Translator: gymka_ltu <gymka@mail.ru>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bits\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
-"%100<10 || n%100>=20) ? 1 : 2)\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: lt\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
 
 #: src/audacious/adder.c:71
 msgid "Searching ..."
@@ -227,7 +227,7 @@ msgstr "Laikinas grojaraštis"
 #: src/audacious/equalizer_preset.c:186
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
-msgstr "Klaida įkelinat Winamp EQF failą '%s'"
+msgstr "Klaida įkeliant Winamp EQF failą '%s'"
 
 #: src/audacious/main.c:239
 msgid "Skip backwards in playlist"
@@ -352,8 +352,6 @@ msgstr "Takelio numeris"
 msgid "Genre"
 msgstr "Žanras"
 
-# msgstr[0] "Įtrauktas %d elementas."
-# msgstr[1] "Įtraukti %d elementai."
 #: src/audacious/ui_preferences.c:102
 msgid "Filename"
 msgstr "Bylos vardas"
@@ -452,7 +450,7 @@ msgstr "ms"
 
 #: src/audacious/ui_preferences.c:158
 msgid "Use software volume control (not recommended)"
-msgstr "Naudoti programinį garso valdymą"
+msgstr "Naudoti programinį garso valdymą (nerekomenduojama)"
 
 #: src/audacious/ui_preferences.c:160
 msgid "<b>Replay Gain</b>"
@@ -464,7 +462,7 @@ msgstr "Įjungt Replay Gain"
 
 #: src/audacious/ui_preferences.c:164
 msgid "Prevent clipping (recommended)"
-msgstr "Uždrausti apkarpymą"
+msgstr "Uždrausti apkarpymą (rekomenduojama)"
 
 #: src/audacious/ui_preferences.c:166
 msgid "<b>Adjust Levels</b>"
@@ -492,7 +490,7 @@ msgstr "Tarpinio serverio prievadas:"
 
 #: src/audacious/ui_preferences.c:179
 msgid "Proxy username:"
-msgstr "Vartotojas:"
+msgstr "Naudotojas:"
 
 #: src/audacious/ui_preferences.c:180
 msgid "Proxy password:"
@@ -508,7 +506,7 @@ msgstr "Leisti naudoti tarpinį serverį"
 
 #: src/audacious/ui_preferences.c:188
 msgid "Use authentication with proxy"
-msgstr "Autentifikuotis"
+msgstr "Su tarpiniu serveriu naudoti tapatybės nustatymą"
 
 #: src/audacious/ui_preferences.c:196
 msgid "Auto character encoding detector for:"
@@ -540,7 +538,7 @@ msgstr "Atidaryti failus laikiname grojaraštyje"
 
 #: src/audacious/ui_preferences.c:214
 msgid "<b>Metadata</b>"
-msgstr "<b>Metaduomenys</b>"
+msgstr "<b>Meta duomenys</b>"
 
 #: src/audacious/ui_preferences.c:215
 msgid "Do not load metadata for songs until played"
@@ -588,8 +586,8 @@ msgid ""
 "the filename. You can specify those words in the lists below, separated "
 "using commas."
 msgstr ""
-"Kai ieškoma albumo viršelio, Audacious ieško tam tikrų žodžių failo varde.Tu "
-"gali įrašyt paieškos žodžius langelyje apačioj, atskiriant kableliais."
+"Kai ieškoma albumo viršelio, Audacious ieško tam tikrų žodžių failo varde.Tu"
+" gali įrašyt paieškos žodžius langelyje apačioj, atskiriant kableliais."
 
 #: src/audacious/ui_preferences.c:831
 msgid "Exclude:"
@@ -625,7 +623,7 @@ msgstr "Palaukti kol pasirodys failo iššokantis langas: "
 
 #: src/audacious/ui_preferences.c:1339
 msgid "Custom"
-msgstr "Derinta eilutė:"
+msgstr "Derinta eilutė"
 
 #: src/audacious/ui_preferences.c:1382
 msgid "<b>Song Display</b>"
@@ -665,9 +663,9 @@ msgid ""
 "window shows title of song, name of album, genre, year of publish, track "
 "number, track length, and artwork."
 msgstr ""
-"Toggles popup information window for the pointed entry in the playlist. The "
-"window shows title of song, name of album, genre, year of publish, track "
-"number, track length, and artwork."
+"Nurodytam grojaraščio elementui įjungia iššokančio lango informacinį langą. "
+"Lange rodomas dainos pavadinimas, albumo pavadinimas. žanras, išleidimo "
+"data, takelio numeris, takelio trukmė bei dizainas."
 
 #: src/audacious/ui_preferences.c:1485
 msgid "Edit settings for popup information"
@@ -691,7 +689,7 @@ msgstr "Efektai"
 
 #: src/audacious/ui_preferences.c:1634
 msgid "Visualization"
-msgstr "Vizualizacijos tipas"
+msgstr "Vizualizacija"
 
 #: src/audacious/ui_preferences.c:1634
 msgid "General"
@@ -708,11 +706,11 @@ msgstr "Nepavyko sukurti aplanko (%s): %s\n"
 
 #: src/audtool/handlers_playlist.c:274
 msgid "Position not found."
-msgstr "Vieta nerasta"
+msgstr "Vieta nerasta."
 
 #: src/audtool/handlers_vitals.c:64
 msgid "No song playing."
-msgstr "Negroja jokio daina."
+msgstr "Negroja jokia daina."
 
 #: src/libaudcore/tuple.c:685
 msgid "Mono"
@@ -728,7 +726,7 @@ msgid "%d channel"
 msgid_plural "%d channels"
 msgstr[0] "%d kanalas"
 msgstr[1] "%d kanalai"
-msgstr[2] "%d kanalai"
+msgstr[2] "%d kanalų"
 
 #: src/libaudgui/confirm.c:78
 #, c-format
@@ -736,7 +734,7 @@ msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
 msgstr ""
-"Ar tu tikrai nori uždaryti <b>%s</b>?  Jei taip, visi pakeitimai padaryti po "
+"Ar tu tikrai nori uždaryti %s?  Jei taip, visi pakeitimai padaryti po "
 "grojaraščio eksportavimo bus prarasti."
 
 #: src/libaudgui/confirm.c:91
@@ -749,7 +747,7 @@ msgstr "Pervadinti grojaraštį"
 
 #: src/libaudgui/effects-menu.c:76
 msgid "settings ..."
-msgstr "nustatymai..."
+msgstr "nustatymai ..."
 
 #: src/libaudgui/equalizer.c:52
 msgid "_Enable"
@@ -974,11 +972,11 @@ msgstr "<span size=\"small\">n/a</span>"
 
 #: src/libaudgui/infowin.c:265
 msgid "Metadata updated successfully"
-msgstr "Metaduomenys atnaujintas sėkmingai"
+msgstr "Meta duomenys atnaujinti sėkmingai"
 
 #: src/libaudgui/infowin.c:270
 msgid "Metadata updating failed"
-msgstr "Metaduomenų atnaujinti nepavyko"
+msgstr "Meta duomenų atnaujinti nepavyko"
 
 #: src/libaudgui/infowin.c:318
 msgid "Track Information"
@@ -1090,11 +1088,11 @@ msgstr "Pridėjus, užverti dialogą"
 #: src/libaudgui/ui_jumptotrack.c:103 src/libaudgui/ui_jumptotrack.c:111
 #: src/libaudgui/ui_jumptotrack.c:322
 msgid "_Queue"
-msgstr "Eilė"
+msgstr "_Į eilę"
 
 #: src/libaudgui/ui_jumptotrack.c:109
 msgid "Un_queue"
-msgstr "Eilė"
+msgstr "Iš _eilės"
 
 #: src/libaudgui/ui_jumptotrack.c:239
 msgid "Jump to Track"
@@ -1114,11 +1112,11 @@ msgstr "Prisiminti"
 
 #: src/libaudgui/ui_jumptotrack.c:295
 msgid "Clea_r"
-msgstr "Išvalyti eilę"
+msgstr "Išvalyt_i"
 
 #: src/libaudgui/ui_jumptotrack.c:315
 msgid "Close on Jump"
-msgstr "Atvėrus, užverti dialogą"
+msgstr "Užverti peršokant"
 
 #: src/libaudgui/ui_playlist_manager.c:250
 msgid "Playlist Manager"
@@ -1128,15 +1126,13 @@ msgstr "Grojaraščio redaktorius"
 msgid "Entries"
 msgstr "Elementai"
 
-# msgstr[0] "Įtrauktas %d elementas."
-# msgstr[1] "Įtraukti %d elementai."
 #: src/libaudgui/ui_playlist_manager.c:298
 msgid "_Rename"
 msgstr "_Pervadinti"
 
 #: src/libaudgui/ui_playlist_manager.c:322
 msgid "_Close dialog on activating playlist"
-msgstr "Atvėrus, užverti dialogą"
+msgstr "_Įjungiant grojaraštį užverti dialogą"
 
 #: src/libaudgui/ui_urlopener.c:51
 msgid "Open URL"
@@ -1156,7 +1152,7 @@ msgstr ""
 
 #: src/libeggsmclient/eggdesktopfile.c:165
 msgid "File is not a valid .desktop file"
-msgstr "Failas nėra geras .desktop failas"
+msgstr "Failas nėra teisingas .desktop failas"
 
 #: src/libeggsmclient/eggdesktopfile.c:188
 #, c-format
@@ -1170,7 +1166,7 @@ msgstr "Pradedama %s"
 
 #: src/libeggsmclient/eggdesktopfile.c:1108
 msgid "Application does not accept documents on command line"
-msgstr "Programa nepriema dokumentų iš komandinės eilutės"
+msgstr "Programa nepriima dokumentų iš komandinės eilutės"
 
 #: src/libeggsmclient/eggdesktopfile.c:1176
 #, c-format
@@ -1179,7 +1175,7 @@ msgstr "Neatpažinta paleisties pasirinktis: %d"
 
 #: src/libeggsmclient/eggdesktopfile.c:1375
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-msgstr "Negaliu susidorot su 'Type=Link' elementu"
+msgstr "Negaliu perduot dokumento URI į darbastalio įrašą 'Type=Link'"
 
 #: src/libeggsmclient/eggdesktopfile.c:1396
 msgid "Not a launchable item"
@@ -1211,4 +1207,6 @@ msgstr "Sesijos valdymo pasirinktys:"
 
 #: src/libeggsmclient/eggsmclient.c:254
 msgid "Show session management options"
-msgstr "Rodyti sesijos valdymo pasirinktis"
+msgstr "Rodyti sesijos valdymo pasirinktys"
+
+
