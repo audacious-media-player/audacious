@@ -24,6 +24,7 @@
 #include <glib.h>
 
 #include <libaudcore/audstrings.h>
+#include <libaudcore/eventqueue.h>
 #include <libaudcore/hook.h>
 #include <libaudcore/stringpool.h>
 #include <libaudcore/tuple_formatter.h>
@@ -571,24 +572,6 @@ static void check_scanned (Playlist * playlist, Entry * entry)
         entry_set_failed (playlist, entry);
 
     queue_update (PLAYLIST_UPDATE_METADATA, playlist->number, entry->number, 1);
-}
-
-static void check_selected_scanned (Playlist * playlist)
-{
-    gint entries = index_count (playlist->entries);
-    for (gint count = 0; count < entries; count ++)
-    {
-        Entry * entry = index_get (playlist->entries, count);
-        if (entry->selected)
-            check_scanned (playlist, entry);
-    }
-}
-
-static void check_all_scanned (Playlist * playlist)
-{
-    gint entries = index_count (playlist->entries);
-    for (gint count = 0; count < entries; count ++)
-        check_scanned (playlist, index_get (playlist->entries, count));
 }
 
 void playlist_init (void)
@@ -1526,6 +1509,27 @@ static void sort_selected (Playlist * playlist, gint (* compare) (const void *
     PLAYLIST_HAS_CHANGED (playlist->number, 0, entries);
 }
 
+static gboolean entries_are_scanned (Playlist * playlist, gboolean selected)
+{
+    gint entries = index_count (playlist->entries);
+    for (gint count = 0; count < entries; count ++)
+    {
+        Entry * entry = index_get (playlist->entries, count);
+        if (selected && ! entry->selected)
+            continue;
+
+        if (! entry->tuple)
+        {
+            event_queue ("interface show error", _("The playlist cannot be "
+             "sorted because metadata scanning is still in progress (or has "
+             "been disabled)."));
+            return FALSE;
+        }
+    }
+
+    return TRUE;
+}
+
 void playlist_sort_by_filename (gint playlist_num, gint (* compare)
  (const gchar * a, const gchar * b))
 {
@@ -1545,8 +1549,8 @@ void playlist_sort_by_tuple (gint playlist_num, gint (* compare)
     DECLARE_PLAYLIST;
     LOOKUP_PLAYLIST;
 
-    check_all_scanned (playlist);
-    sort (playlist, tuple_compare, compare);
+    if (entries_are_scanned (playlist, FALSE))
+        sort (playlist, tuple_compare, compare);
 
     LEAVE;
 }
@@ -1558,8 +1562,8 @@ void playlist_sort_by_title (gint playlist_num, gint (* compare) (const gchar *
     DECLARE_PLAYLIST;
     LOOKUP_PLAYLIST;
 
-    check_all_scanned (playlist);
-    sort (playlist, title_compare, compare);
+    if (entries_are_scanned (playlist, FALSE))
+        sort (playlist, title_compare, compare);
 
     LEAVE;
 }
@@ -1583,8 +1587,8 @@ void playlist_sort_selected_by_tuple (gint playlist_num, gint (* compare)
     DECLARE_PLAYLIST;
     LOOKUP_PLAYLIST;
 
-    check_selected_scanned (playlist);
-    sort_selected (playlist, tuple_compare, compare);
+    if (entries_are_scanned (playlist, TRUE))
+        sort_selected (playlist, tuple_compare, compare);
 
     LEAVE;
 }
@@ -1596,8 +1600,8 @@ void playlist_sort_selected_by_title (gint playlist_num, gint (* compare)
     DECLARE_PLAYLIST;
     LOOKUP_PLAYLIST;
 
-    check_selected_scanned (playlist);
-    sort (playlist, title_compare, compare);
+    if (entries_are_scanned (playlist, TRUE))
+        sort (playlist, title_compare, compare);
 
     LEAVE;
 }
@@ -1690,28 +1694,22 @@ void playlist_rescan_file (const gchar * filename)
     LEAVE;
 }
 
-gint64 playlist_get_total_length (gint playlist_num, gboolean fast)
+gint64 playlist_get_total_length (gint playlist_num)
 {
     ENTER;
     DECLARE_PLAYLIST;
     LOOKUP_PLAYLIST_RET (0);
-
-    if (! fast)
-        check_all_scanned (playlist);
 
     gint64 length = playlist->total_length;
 
     LEAVE_RET (length);
 }
 
-gint64 playlist_get_selected_length (gint playlist_num, gboolean fast)
+gint64 playlist_get_selected_length (gint playlist_num)
 {
     ENTER;
     DECLARE_PLAYLIST;
     LOOKUP_PLAYLIST_RET (0);
-
-    if (! fast)
-        check_selected_scanned (playlist);
 
     gint64 length = playlist->selected_length;
 

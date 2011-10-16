@@ -196,11 +196,13 @@ AUD_FUNC1 (void, playlist_delete_selected, gint, playlist)
 AUD_FUNC2 (void, playlist_sort_by_filename, gint, playlist,
  PlaylistStringCompareFunc, compare)
 
-/* Sorts the entries in a playlist based on tuple. */
+/* Sorts the entries in a playlist based on tuple.  May fail if metadata
+ * scanning is still in progress (or has been disabled). */
 AUD_FUNC2 (void, playlist_sort_by_tuple, gint, playlist,
  PlaylistTupleCompareFunc, compare)
 
-/* Sorts the entries in a playlist based on formatted title string. */
+/* Sorts the entries in a playlist based on formatted title string.  May fail if
+ * metadata scanning is still in progress (or has been disabled). */
 AUD_FUNC2 (void, playlist_sort_by_title, gint, playlist,
  PlaylistStringCompareFunc, compare)
 
@@ -208,11 +210,14 @@ AUD_FUNC2 (void, playlist_sort_by_title, gint, playlist,
 AUD_FUNC2 (void, playlist_sort_selected_by_filename, gint, playlist,
  PlaylistStringCompareFunc, compare)
 
-/* Sorts only the selected entries in a playlist based on tuple. */
+/* Sorts only the selected entries in a playlist based on tuple.  May fail if
+ * metadata scanning is still in progress (or has been disabled). */
 AUD_FUNC2 (void, playlist_sort_selected_by_tuple, gint, playlist,
  PlaylistTupleCompareFunc, compare)
 
-/* Sorts only the selected entries in a playlist based on formatted title string. */
+/* Sorts only the selected entries in a playlist based on formatted title
+ * string.  May fail if metadata scanning is still in progress (or has been
+ * disabled). */
 AUD_FUNC2 (void, playlist_sort_selected_by_title, gint, playlist,
  PlaylistStringCompareFunc, compare)
 
@@ -235,12 +240,13 @@ AUD_FUNC1 (void, playlist_rescan_selected, gint, playlist)
 AUD_FUNC1 (void, playlist_rescan_file, const gchar *, filename)
 
 /* Calculates the total length in milliseconds of all the entries in a playlist.
- * <fast> is as in playlist_entry_get_tuple(). */
-AUD_FUNC2 (gint64, playlist_get_total_length, gint, playlist, gboolean, fast)
+ * Only takes into account entries for which metadata has already been read. */
+AUD_FUNC1 (gint64, playlist_get_total_length, gint, playlist)
 
 /* Calculates the total length in milliseconds of only the selected entries in a
- * playlist.  <fast> is as in playlist_entry_get_tuple(). */
-AUD_FUNC2 (gint64, playlist_get_selected_length, gint, playlist, gboolean, fast)
+ * playlist.  Only takes into account entries for which metadata has already
+ * been read. */
+AUD_FUNC1 (gint64, playlist_get_selected_length, gint, playlist)
 
 /* Returns the number of entries in a playlist queue.  The entries are numbered
  * starting from zero, lower numbers being played first. */
