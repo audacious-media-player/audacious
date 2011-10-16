@@ -90,14 +90,17 @@ void playlist_trigger_scan (void);
 
 void playlist_entry_insert_batch_raw (gint playlist, gint at,
  struct index * filenames, struct index * tuples, struct index * decoders);
-void playlist_entry_set_tuple (gint playlist, gint entry, Tuple * tuple);
-
-gboolean playlist_entry_is_segmented (gint playlist, gint entry);
-gint playlist_entry_get_start_time (gint playlist, gint entry);
-gint playlist_entry_get_end_time (gint playlist, gint entry);
 
 gboolean playlist_prev_song (gint playlist);
 gboolean playlist_next_song (gint playlist, gboolean repeat);
+
+PluginHandle * playback_entry_get_decoder (void);
+Tuple * playback_entry_get_tuple (void);
+void playback_entry_set_tuple (Tuple * tuple);
+
+gboolean playback_entry_is_segmented (void);
+gint playback_entry_get_start_time (void);
+gint playback_entry_get_end_time (void);
 
 /* playlist-utils.c */
 void load_playlists (void);

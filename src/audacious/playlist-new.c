@@ -1050,19 +1050,6 @@ PluginHandle * playlist_entry_get_decoder (gint playlist_num, gint entry_num, gb
     LEAVE_RET (decoder);
 }
 
-void playlist_entry_set_tuple (gint playlist_num, gint entry_num, Tuple * tuple)
-{
-    ENTER;
-    DECLARE_PLAYLIST_ENTRY;
-    LOOKUP_PLAYLIST_ENTRY;
-
-    entry_cancel_scan (entry);
-    entry_set_tuple (playlist, entry, tuple);
-
-    METADATA_HAS_CHANGED (playlist->number, entry_num, 1);
-    LEAVE;
-}
-
 Tuple * playlist_entry_get_tuple (gint playlist_num, gint entry_num, gboolean fast)
 {
     ENTER;
@@ -1107,39 +1094,6 @@ gint playlist_entry_get_length (gint playlist_num, gint entry_num, gboolean fast
     gint length = entry ? entry->length : 0;
 
     LEAVE_RET (length);
-}
-
-gboolean playlist_entry_is_segmented (gint playlist_num, gint entry_num)
-{
-    ENTER;
-    DECLARE_PLAYLIST_ENTRY;
-    LOOKUP_PLAYLIST_ENTRY_RET (FALSE);
-
-    gboolean segmented = entry->segmented;
-
-    LEAVE_RET (segmented);
-}
-
-gint playlist_entry_get_start_time (gint playlist_num, gint entry_num)
-{
-    ENTER;
-    DECLARE_PLAYLIST_ENTRY;
-    LOOKUP_PLAYLIST_ENTRY_RET (-1);
-
-    gint start = entry->start;
-
-    LEAVE_RET (start);
-}
-
-gint playlist_entry_get_end_time (gint playlist_num, gint entry_num)
-{
-    ENTER;
-    DECLARE_PLAYLIST_ENTRY;
-    LOOKUP_PLAYLIST_ENTRY_RET (-1);
-
-    gint end = entry->end;
-
-    LEAVE_RET (end);
 }
 
 void playlist_set_position (gint playlist_num, gint entry_num)
@@ -2072,6 +2026,97 @@ gboolean playlist_next_song (gint playlist_num, gboolean repeat)
 
     hook_call ("playlist position", GINT_TO_POINTER (playlist_num));
     return TRUE;
+}
+
+PluginHandle * playback_entry_get_decoder (void)
+{
+    ENTER;
+
+    while (1)
+    {
+        if (! playing_playlist || ! playing_playlist->position)
+            LEAVE_RET (NULL);
+
+        Entry * entry = playing_playlist->position;
+        if (! entry->decoder && ! entry->failed)
+        {
+            entry_queue_scan (playing_playlist, entry);
+            g_cond_wait (cond, mutex);
+            continue;
+        }
+
+        PluginHandle * decoder = entry->decoder;
+        LEAVE_RET (decoder);
+    }
+}
+
+Tuple * playback_entry_get_tuple (void)
+{
+    ENTER;
+
+    while (1)
+    {
+        if (! playing_playlist || ! playing_playlist->position)
+            LEAVE_RET (NULL);
+
+        Entry * entry = playing_playlist->position;
+        if (! entry->tuple && ! entry->failed)
+        {
+            entry_queue_scan (playing_playlist, entry);
+            g_cond_wait (cond, mutex);
+            continue;
+        }
+
+        Tuple * tuple = entry->tuple;
+        if (tuple)
+            mowgli_object_ref (tuple);
+
+        LEAVE_RET (tuple);
+    }
+}
+
+void playback_entry_set_tuple (Tuple * tuple)
+{
+    ENTER;
+    if (! playing_playlist || ! playing_playlist->position)
+        LEAVE_RET_VOID;
+
+    Entry * entry = playing_playlist->position;
+    entry_cancel_scan (entry);
+    entry_set_tuple (playing_playlist, entry, tuple);
+
+    METADATA_HAS_CHANGED (playing_playlist->number, entry->number, 1);
+    LEAVE;
+}
+
+gboolean playback_entry_is_segmented (void)
+{
+    ENTER;
+    if (! playing_playlist || ! playing_playlist->position)
+        LEAVE_RET (FALSE);
+
+    gboolean segmented = playing_playlist->position->segmented;
+    LEAVE_RET (segmented);
+}
+
+gint playback_entry_get_start_time (void)
+{
+    ENTER;
+    if (! playing_playlist || ! playing_playlist->position)
+        LEAVE_RET (0);
+
+    gint start = playing_playlist->position->start;
+    LEAVE_RET (start);
+}
+
+gint playback_entry_get_end_time (void)
+{
+    ENTER;
+    if (! playing_playlist || ! playing_playlist->position)
+        LEAVE_RET (0);
+
+    gint end = playing_playlist->position->end;
+    LEAVE_RET (end);
 }
 
 void playlist_save_state (void)
