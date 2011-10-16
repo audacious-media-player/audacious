@@ -1652,6 +1652,13 @@ void playlist_reformat_titles (void)
     LEAVE;
 }
 
+void playlist_trigger_scan (void)
+{
+    ENTER;
+    scan_trigger ();
+    LEAVE;
+}
+
 static void playlist_rescan_real (gint playlist_num, gboolean selected)
 {
     ENTER;

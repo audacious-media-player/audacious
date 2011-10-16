@@ -86,6 +86,7 @@ void playlist_save_state (void);
 void playlist_resume (void);
 
 void playlist_reformat_titles (void);
+void playlist_trigger_scan (void);
 
 void playlist_entry_insert_batch_raw (gint playlist, gint at,
  struct index * filenames, struct index * tuples, struct index * decoders);
