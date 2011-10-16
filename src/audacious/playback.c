@@ -174,9 +174,7 @@ static void update_cb (void * hook_data, void * user_data)
 gint playback_get_time (void)
 {
     g_return_val_if_fail (playing, 0);
-
-    if (! playback_get_ready ())
-        return 0;
+    wait_until_ready ();
 
     gint time = -1;
 
@@ -465,9 +463,7 @@ static InputPlayback playback_api = {
 gchar * playback_get_title (void)
 {
     g_return_val_if_fail (playing, NULL);
-
-    if (! playback_get_ready ())
-        return g_strdup (_("Buffering ..."));
+    wait_until_ready ();
 
     gchar s[32];
 
@@ -495,12 +491,16 @@ gchar * playback_get_title (void)
 gint playback_get_length (void)
 {
     g_return_val_if_fail (playing, 0);
+    wait_until_ready ();
+
     return current_length;
 }
 
 void playback_get_info (gint * bitrate, gint * samplerate, gint * channels)
 {
     g_return_if_fail (playing);
+    wait_until_ready ();
+
     * bitrate = current_bitrate;
     * samplerate = current_samplerate;
     * channels = current_channels;
