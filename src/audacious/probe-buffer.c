@@ -19,10 +19,10 @@
  * using our public API to be a derived work.
  */
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+#include "debug.h"
 #include "probe-buffer.h"
 
 typedef struct
@@ -50,8 +50,8 @@ static void increase_buffer (ProbeBuffer * p, gint64 size)
     {
         if (p->read_warned != p->decoder)
         {
-            fprintf (stderr, "%s tried to read past end of buffer while "
-             "probing %s.\n", p->decoder, p->filename);
+            AUDDBG ("%s tried to read past end of buffer while probing %s.\n",
+             p->decoder, p->filename);
             p->read_warned = p->decoder;
         }
 
@@ -97,8 +97,8 @@ static gint probe_buffer_fseek (VFSFile * file, gint64 offset, gint whence)
     {
         if (p->seek_warned != p->decoder)
         {
-            fprintf (stderr, "%s tried to seek to end of file while probing "
-             "%s.\n", p->decoder, p->filename);
+            AUDDBG ("%s tried to seek to end of file while probing %s.\n",
+             p->decoder, p->filename);
             p->seek_warned = p->decoder;
         }
 
