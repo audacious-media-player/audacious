@@ -94,6 +94,7 @@ void playlist_entry_insert_batch_raw (gint playlist, gint at,
 gboolean playlist_prev_song (gint playlist);
 gboolean playlist_next_song (gint playlist, gboolean repeat);
 
+gint playback_entry_get_position (void);
 PluginHandle * playback_entry_get_decoder (void);
 Tuple * playback_entry_get_tuple (void);
 gchar * playback_entry_get_title (void);
@@ -101,7 +102,6 @@ gint playback_entry_get_length (void);
 
 void playback_entry_set_tuple (Tuple * tuple);
 
-gboolean playback_entry_is_segmented (void);
 gint playback_entry_get_start_time (void);
 gint playback_entry_get_end_time (void);
 

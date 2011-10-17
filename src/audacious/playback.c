@@ -42,13 +42,15 @@ static gboolean playing = FALSE;
 static gboolean playback_error;
 static gint failed_entries;
 
-static gint current_entry;
 static gchar * current_filename;
+
+static gint current_entry;
+static gchar * current_title;
+static gint current_length;
+
 static InputPlugin * current_decoder;
 static void * current_data;
 static gint current_bitrate, current_samplerate, current_channels;
-static gchar * current_title;
-static gint current_length;
 
 static ReplayGainInfo gain_from_playlist;
 
@@ -90,6 +92,25 @@ static void read_gain_from_tuple (const Tuple * tuple)
     }
 }
 
+static gboolean update_from_playlist (void)
+{
+    gint entry = playback_entry_get_position ();
+    gchar * title = playback_entry_get_title ();
+    gint length = playback_entry_get_length ();
+
+    if (entry == current_entry && ! g_strcmp0 (title, current_title) && length == current_length)
+    {
+        g_free (title);
+        return FALSE;
+    }
+
+    current_entry = entry;
+    g_free (current_title);
+    current_title = title;
+    current_length = length;
+    return TRUE;
+}
+
 gboolean playback_get_ready (void)
 {
     g_return_val_if_fail (playing, FALSE);
@@ -102,13 +123,11 @@ gboolean playback_get_ready (void)
 static void set_pb_ready (InputPlayback * p)
 {
     g_return_if_fail (playing);
-
-    g_free (current_title);
-    current_title = playback_entry_get_title ();
-    current_length = playback_entry_get_length ();
-
     pthread_mutex_lock (& ready_mutex);
+
+    update_from_playlist ();
     ready_flag = TRUE;
+
     pthread_cond_signal (& ready_cond);
     pthread_mutex_unlock (& ready_mutex);
 
@@ -133,22 +152,8 @@ static void update_cb (void * hook_data, void * user_data)
     if (GPOINTER_TO_INT (hook_data) < PLAYLIST_UPDATE_METADATA || ! playback_get_ready ())
         return;
 
-    gint entry = playlist_get_position (playlist_get_playing ());
-    gchar * title = playback_entry_get_title ();
-    gint length = playback_entry_get_length ();
-
-    if (entry == current_entry && ! g_strcmp0 (title, current_title) && length == current_length)
-    {
-        g_free (title);
-        return;
-    }
-
-    current_entry = entry;
-    g_free (current_title);
-    current_title = title;
-    current_length = length;
-
-    hook_call ("title change", NULL);
+    if (update_from_playlist ())
+        hook_call ("title change", NULL);
 }
 
 gint playback_get_time (void)
@@ -306,8 +311,6 @@ static void * playback_thread (void * unused)
     current_bitrate = 0;
     current_samplerate = 0;
     current_channels = 0;
-    current_title = NULL;
-    current_length = 0;
 
     Tuple * tuple = playback_entry_get_tuple ();
     read_gain_from_tuple (tuple);
@@ -318,21 +321,9 @@ static void * playback_thread (void * unused)
     VFSFile * file = vfs_fopen (real, "r");
     g_free (real);
 
-    gint stop_time;
-
-    if (playback_entry_is_segmented ())
-    {
-        time_offset = playback_entry_get_start_time ();
-        stop_time = playback_entry_get_end_time ();
-    }
-    else
-    {
-        time_offset = 0;
-        stop_time = -1;
-    }
-
+    time_offset = playback_entry_get_start_time ();
     playback_error = ! current_decoder->play (& playback_api, current_filename,
-     file, time_offset + initial_seek, stop_time, paused);
+     file, time_offset + initial_seek, playback_entry_get_end_time (), paused);
 
     if (file)
         vfs_fclose (file);
@@ -349,7 +340,6 @@ static void playback_start (gint playlist, gint entry, gint seek_time, gboolean 
 {
     g_return_if_fail (! playing);
 
-    current_entry = entry;
     current_filename = playlist_entry_get_filename (playlist, entry);
     g_return_if_fail (current_filename);
 
@@ -357,12 +347,16 @@ static void playback_start (gint playlist, gint entry, gint seek_time, gboolean 
     playback_error = FALSE;
     ready_flag = FALSE;
 
+    current_entry = -1;
+    current_title = NULL;
+    current_length = 0;
+
     initial_seek = seek_time;
     paused = pause;
 
+    hook_associate ("playlist update", update_cb, NULL);
     pthread_create (& playback_thread_handle, NULL, playback_thread, NULL);
 
-    hook_associate ("playlist update", update_cb, NULL);
     hook_call ("playback begin", NULL);
 }
 

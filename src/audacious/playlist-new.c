@@ -283,7 +283,8 @@ static Entry * entry_new (gchar * filename, Tuple * tuple,
     entry->shuffle_num = 0;
     entry->queued = FALSE;
     entry->segmented = FALSE;
-    entry->start = entry->end = -1;
+    entry->start = 0;
+    entry->end = -1;
 
     entry_set_tuple_real (entry, tuple);
     return entry;
@@ -2023,6 +2024,16 @@ gboolean playlist_next_song (gint playlist_num, gboolean repeat)
     return TRUE;
 }
 
+gint playback_entry_get_position (void)
+{
+    ENTER;
+
+    Entry * entry = get_playback_entry (FALSE, FALSE);
+    gint entry_num = entry ? entry->number : -1;
+
+    LEAVE_RET (entry_num);
+}
+
 PluginHandle * playback_entry_get_decoder (void)
 {
     ENTER;
@@ -2078,16 +2089,6 @@ void playback_entry_set_tuple (Tuple * tuple)
 
     METADATA_HAS_CHANGED (playing_playlist->number, entry->number, 1);
     LEAVE;
-}
-
-gboolean playback_entry_is_segmented (void)
-{
-    ENTER;
-    if (! playing_playlist || ! playing_playlist->position)
-        LEAVE_RET (FALSE);
-
-    gboolean segmented = playing_playlist->position->segmented;
-    LEAVE_RET (segmented);
 }
 
 gint playback_entry_get_start_time (void)
