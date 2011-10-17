@@ -1,87 +1,98 @@
 /*
- * Audacious
- * Copyright (c) 2006-2007 Audacious development team.
+ * eventqueue.c
+ * Copyright 2011 John Lindgren
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; under version 3 of the License.
+ * This file is part of Audacious.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * Audacious is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, version 2 or version 3 of the License.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses>.
+ * Audacious is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * The Audacious team does not consider modular code linking to
- * Audacious or using our public API to be a derived work.
+ * You should have received a copy of the GNU General Public License along with
+ * Audacious. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * The Audacious team does not consider modular code linking to Audacious or
+ * using our public API to be a derived work.
  */
 
-#include <stdio.h>
+#include <pthread.h>
+#include <string.h>
 
 #include "eventqueue.h"
+#include "hook.h"
 
-static gboolean eventqueue_handle(gpointer udata)
+typedef struct {
+    gchar * name;
+    void * data;
+    gboolean free_data;
+    gint source;
+} Event;
+
+static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+static GList * events;
+
+static gboolean event_execute (Event * event)
 {
-    HookCallQueue *hq = (HookCallQueue *) udata;
+    pthread_mutex_lock (& mutex);
 
-    hook_call(hq->name, hq->user_data);
+    g_source_remove (event->source);
+    events = g_list_remove (events, event);
 
-    g_free(hq->name);
-    if (hq->free_data && hq->user_data)
-        g_free(hq->user_data);
+    pthread_mutex_unlock (& mutex);
 
-    g_slice_free(HookCallQueue, hq);
+    hook_call (event->name, event->data);
 
+    g_free (event->name);
+    if (event->free_data)
+        g_free (event->data);
+
+    g_slice_free (Event, event);
     return FALSE;
 }
 
-void event_queue(const gchar *name, gpointer user_data)
+void event_queue_full (gint time, const gchar * name, void * data, gboolean free_data)
 {
-    HookCallQueue *hq;
+    Event * event = g_slice_new (Event);
+    event->name = g_strdup (name);
+    event->data = data;
+    event->free_data = free_data;
 
-    hq = g_slice_new0(HookCallQueue);
-    hq->name = g_strdup(name);
-    hq->user_data = user_data;
-    hq->free_data = FALSE;
+    pthread_mutex_lock (& mutex);
 
-    g_idle_add_full(G_PRIORITY_HIGH_IDLE, eventqueue_handle, hq, NULL);
+    event->source = g_timeout_add (time, (GSourceFunc) event_execute, event);
+    events = g_list_prepend (events, event);
+
+    pthread_mutex_unlock (& mutex);
 }
 
-void event_queue_timed(gint time, const gchar *name, gpointer user_data)
+void event_queue_cancel (const gchar * name, void * data)
 {
-    HookCallQueue *hq;
+    pthread_mutex_lock (& mutex);
 
-    /* event_queue() with a pointer may be unsafe: the data might
-     * get freed or moved before the event is processed. -jlindgren
-     */
-    if (user_data)
+    GList * node = events;
+    while (node)
     {
-        g_warning("Unsafe event_queue of \"%s\" with "
-            "pointer. (Use event_queue_with_data_free instead.)\n", name);
-        return;
+        Event * event = node->data;
+        GList * next = node->next;
+
+        if (! strcmp (event->name, name) && (! data || event->data == data))
+        {
+            g_source_remove (event->source);
+            events = g_list_delete_link (events, node);
+
+            g_free (event->name);
+            if (event->free_data)
+                g_free (event->data);
+
+            g_slice_free (Event, event);
+        }
+
+        node = next;
     }
 
-    hq = g_slice_new0(HookCallQueue);
-    hq->name = g_strdup(name);
-    hq->user_data = user_data;
-    hq->free_data = FALSE;
-
-    g_timeout_add(time, eventqueue_handle, hq);
-}
-
-void event_queue_with_data_free(const gchar *name, gpointer user_data)
-{
-    HookCallQueue *hq;
-
-    g_return_if_fail(name != NULL);
-    g_return_if_fail(user_data != NULL);
-
-    hq = g_slice_new0(HookCallQueue);
-    hq->name = g_strdup(name);
-    hq->user_data = user_data;
-    hq->free_data = TRUE;
-
-    g_idle_add_full(G_PRIORITY_HIGH_IDLE, eventqueue_handle, hq, NULL);
+    pthread_mutex_unlock (& mutex);
 }

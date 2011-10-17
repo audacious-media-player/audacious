@@ -189,7 +189,8 @@ static void entry_set_tuple_real (Entry * entry, Tuple * tuple)
         entry->formatted = NULL;
         entry->length = 0;
         entry->segmented = FALSE;
-        entry->start = entry->end = -1;
+        entry->start = 0;
+        entry->end = -1;
     }
     else
     {
@@ -264,31 +265,6 @@ static void entry_cancel_scan (Entry * entry)
     }
 }
 
-static void playlist_cancel_scan (Playlist * playlist)
-{
-    GList * next;
-    for (GList * node = scan_queue.head; node; node = next)
-    {
-        ScanItem * item = node->data;
-        next = node->next;
-
-        if (item->playlist == playlist)
-        {
-            g_queue_delete_link (& scan_queue, node);
-            g_slice_free (ScanItem, item);
-        }
-    }
-
-    for (gint i = 0; i < SCAN_THREADS; i ++)
-    {
-        if (scan_items[i] && scan_items[i]->playlist == playlist)
-        {
-            g_slice_free (ScanItem, scan_items[i]);
-            scan_items[i] = NULL;
-        }
-    }
-}
-
 static Entry * entry_new (gchar * filename, Tuple * tuple,
  PluginHandle * decoder)
 {
@@ -349,8 +325,6 @@ static Playlist * playlist_new (void)
 
 static void playlist_free (Playlist * playlist)
 {
-    playlist_cancel_scan (playlist);
-
     g_free (playlist->filename);
     g_free (playlist->title);
 
@@ -2130,7 +2104,7 @@ gint playback_entry_get_end_time (void)
 {
     ENTER;
     if (! playing_playlist || ! playing_playlist->position)
-        LEAVE_RET (0);
+        LEAVE_RET (-1);
 
     gint end = playing_playlist->position->end;
     LEAVE_RET (end);

@@ -32,6 +32,7 @@
 
 #include <math.h>
 #include <libaudcore/eventqueue.h>
+#include <libaudcore/hook.h>
 
 #include "debug.h"
 #include "drct.h"

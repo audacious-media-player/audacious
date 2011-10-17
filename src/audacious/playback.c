@@ -61,7 +61,6 @@ static gint end_source = 0;
 static pthread_mutex_t ready_mutex = PTHREAD_MUTEX_INITIALIZER;
 static pthread_cond_t ready_cond = PTHREAD_COND_INITIALIZER;
 static gboolean ready_flag;
-static gint ready_source = 0;
 
 /* clears gain info if tuple == NULL */
 static void read_gain_from_tuple (const Tuple * tuple)
@@ -218,16 +217,19 @@ static void playback_cleanup (void)
     pthread_join (playback_thread_handle, NULL);
     playing = FALSE;
 
+    event_queue_cancel ("playback ready", NULL);
+    event_queue_cancel ("info change", NULL);
+
+    if (end_source)
+    {
+        g_source_remove (end_source);
+        end_source = 0;
+    }
+
     g_free (current_filename);
     current_filename = NULL;
     g_free (current_title);
     current_title = NULL;
-
-    if (ready_source)
-    {
-        g_source_remove (ready_source);
-        ready_source = 0;
-    }
 
     hook_dissociate ("playlist update", update_cb);
 }
@@ -247,12 +249,6 @@ void playback_stop (void)
     current_decoder->stop (& playback_api);
     playback_cleanup ();
     complete_stop ();
-
-    if (end_source)
-    {
-        g_source_remove (end_source);
-        end_source = 0;
-    }
 }
 
 static gboolean end_cb (void * unused)
@@ -280,8 +276,6 @@ static gboolean end_cb (void * unused)
 
     if (get_bool (NULL, "stop_after_current_song"))
         play = FALSE;
-
-    end_source = 0; /* must be before playback_start() */
 
     if (play)
         playback_start (playlist, playlist_get_position (playlist), 0, FALSE);
@@ -357,6 +351,7 @@ static void playback_start (gint playlist, gint entry, gint seek_time, gboolean 
 
     current_entry = entry;
     current_filename = playlist_entry_get_filename (playlist, entry);
+    g_return_if_fail (current_filename);
 
     playing = TRUE;
     playback_error = FALSE;
