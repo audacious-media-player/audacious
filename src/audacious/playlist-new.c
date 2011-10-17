@@ -619,15 +619,36 @@ static Entry * get_entry (gint playlist_num, gint entry_num,
 {
     while (1)
     {
-        DECLARE_PLAYLIST_ENTRY;
-        LOOKUP_PLAYLIST_ENTRY_RET (NULL);
+        Playlist * playlist = lookup_playlist (playlist_num);
+        Entry * entry = playlist ? lookup_entry (playlist, entry_num) : NULL;
 
-        if (entry->failed)
+        if (! entry || entry->failed)
             return entry;
 
         if ((need_decoder && ! entry->decoder) || (need_tuple && ! entry->tuple))
         {
             entry_queue_scan (playlist, entry);
+            g_cond_wait (cond, mutex);
+            continue;
+        }
+
+        return entry;
+    }
+}
+
+/* mutex may be unlocked during the call */
+static Entry * get_playback_entry (gboolean need_decoder, gboolean need_tuple)
+{
+    while (1)
+    {
+        Entry * entry = playing_playlist ? playing_playlist->position : NULL;
+
+        if (! entry || entry->failed)
+            return entry;
+
+        if ((need_decoder && ! entry->decoder) || (need_tuple && ! entry->tuple))
+        {
+            entry_queue_scan (playing_playlist, entry);
             g_cond_wait (cond, mutex);
             continue;
         }
@@ -2032,47 +2053,43 @@ PluginHandle * playback_entry_get_decoder (void)
 {
     ENTER;
 
-    while (1)
-    {
-        if (! playing_playlist || ! playing_playlist->position)
-            LEAVE_RET (NULL);
+    Entry * entry = get_playback_entry (TRUE, FALSE);
+    PluginHandle * decoder = entry ? entry->decoder : NULL;
 
-        Entry * entry = playing_playlist->position;
-        if (! entry->decoder && ! entry->failed)
-        {
-            entry_queue_scan (playing_playlist, entry);
-            g_cond_wait (cond, mutex);
-            continue;
-        }
-
-        PluginHandle * decoder = entry->decoder;
-        LEAVE_RET (decoder);
-    }
+    LEAVE_RET (decoder);
 }
 
 Tuple * playback_entry_get_tuple (void)
 {
     ENTER;
 
-    while (1)
-    {
-        if (! playing_playlist || ! playing_playlist->position)
-            LEAVE_RET (NULL);
+    Entry * entry = get_playback_entry (FALSE, TRUE);
+    Tuple * tuple = entry ? entry->tuple : NULL;
 
-        Entry * entry = playing_playlist->position;
-        if (! entry->tuple && ! entry->failed)
-        {
-            entry_queue_scan (playing_playlist, entry);
-            g_cond_wait (cond, mutex);
-            continue;
-        }
+    if (tuple)
+        mowgli_object_ref (tuple);
 
-        Tuple * tuple = entry->tuple;
-        if (tuple)
-            mowgli_object_ref (tuple);
+    LEAVE_RET (tuple);
+}
 
-        LEAVE_RET (tuple);
-    }
+gchar * playback_entry_get_title (void)
+{
+    ENTER;
+
+    Entry * entry = get_playback_entry (FALSE, TRUE);
+    gchar * title = entry ? g_strdup (entry->formatted ? entry->formatted : entry->filename) : NULL;
+
+    LEAVE_RET (title);
+}
+
+gint playback_entry_get_length (void)
+{
+    ENTER;
+
+    Entry * entry = get_playback_entry (FALSE, TRUE);
+    gint length = entry->length;
+
+    LEAVE_RET (length);
 }
 
 void playback_entry_set_tuple (Tuple * tuple)

@@ -35,7 +35,6 @@
 #include "playlist.h"
 
 static void playback_start (gint playlist, gint entry, gint seek_time, gboolean pause);
-static void update_from_playlist (void);
 
 static InputPlayback playback_api;
 
@@ -92,17 +91,6 @@ static void read_gain_from_tuple (const Tuple * tuple)
     }
 }
 
-static gboolean ready_cb (void * unused)
-{
-    g_return_val_if_fail (playing, FALSE);
-
-    update_from_playlist ();
-
-    hook_call ("playback ready", NULL);
-    ready_source = 0;
-    return FALSE;
-}
-
 gboolean playback_get_ready (void)
 {
     g_return_val_if_fail (playing, FALSE);
@@ -116,12 +104,16 @@ static void set_pb_ready (InputPlayback * p)
 {
     g_return_if_fail (playing);
 
+    g_free (current_title);
+    current_title = playback_entry_get_title ();
+    current_length = playback_entry_get_length ();
+
     pthread_mutex_lock (& ready_mutex);
     ready_flag = TRUE;
     pthread_cond_signal (& ready_cond);
     pthread_mutex_unlock (& ready_mutex);
 
-    ready_source = g_timeout_add (0, ready_cb, NULL);
+    event_queue ("playback ready", NULL);
 }
 
 static void wait_until_ready (void)
@@ -135,19 +127,18 @@ static void wait_until_ready (void)
     pthread_mutex_unlock (& ready_mutex);
 }
 
-static void update_from_playlist (void)
+static void update_cb (void * hook_data, void * user_data)
 {
-    gint playlist = playlist_get_playing ();
-    gint entry = playlist_get_position (playlist);
+    g_return_if_fail (playing);
 
-    gchar * title = playlist_entry_get_title (playlist, entry, FALSE);
-    if (! title)
-        title = playlist_entry_get_filename (playlist, entry);
+    if (GPOINTER_TO_INT (hook_data) < PLAYLIST_UPDATE_METADATA || ! playback_get_ready ())
+        return;
 
-    gint length = playlist_entry_get_length (playlist, entry, FALSE);
+    gint entry = playlist_get_position (playlist_get_playing ());
+    gchar * title = playback_entry_get_title ();
+    gint length = playback_entry_get_length ();
 
-    if (entry == current_entry && current_title &&
-     ! strcmp (title, current_title) && length == current_length)
+    if (entry == current_entry && ! g_strcmp0 (title, current_title) && length == current_length)
     {
         g_free (title);
         return;
@@ -159,16 +150,6 @@ static void update_from_playlist (void)
     current_length = length;
 
     hook_call ("title change", NULL);
-}
-
-static void update_cb (void * hook_data, void * user_data)
-{
-    g_return_if_fail (playing);
-
-    if (GPOINTER_TO_INT (hook_data) < PLAYLIST_UPDATE_METADATA || ! playback_get_ready ())
-        return;
-
-    update_from_playlist ();
 }
 
 gint playback_get_time (void)
@@ -331,6 +312,8 @@ static void * playback_thread (void * unused)
     current_bitrate = 0;
     current_samplerate = 0;
     current_channels = 0;
+    current_title = NULL;
+    current_length = 0;
 
     Tuple * tuple = playback_entry_get_tuple ();
     read_gain_from_tuple (tuple);

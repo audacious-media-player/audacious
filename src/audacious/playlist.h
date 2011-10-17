@@ -96,6 +96,9 @@ gboolean playlist_next_song (gint playlist, gboolean repeat);
 
 PluginHandle * playback_entry_get_decoder (void);
 Tuple * playback_entry_get_tuple (void);
+gchar * playback_entry_get_title (void);
+gint playback_entry_get_length (void);
+
 void playback_entry_set_tuple (Tuple * tuple);
 
 gboolean playback_entry_is_segmented (void);
