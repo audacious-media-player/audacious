@@ -417,7 +417,8 @@ static void set_params (InputPlayback * p, gint bitrate, gint samplerate,
     current_samplerate = samplerate;
     current_channels = channels;
 
-    event_queue ("info change", NULL);
+    if (playback_get_ready ())
+        event_queue ("info change", NULL);
 }
 
 static void set_tuple (InputPlayback * p, Tuple * tuple)
