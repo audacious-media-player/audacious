@@ -27,10 +27,5 @@ Long-term "TODO"
 
 - document the different APIs via Doxygen
 
-- {core,plugins}/configure.ac need some cleanup loving.
-  * build system cleanups .. extra.mk.in? wtf? (done in core, progressing
-  for plugins)
-  --- this is in progress, worked on by ccr
-
 - plugin rewrites:
   * modplug (in progress by ccr)
