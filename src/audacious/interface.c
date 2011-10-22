@@ -187,7 +187,10 @@ void interface_hook_handler (void * hook_data, void * user_data)
         interface_show (GPOINTER_TO_INT (hook_data));
         break;
     case HOOK_SHOW_TOGGLE:
-        interface_show (! (interface_is_shown () && interface_is_focused ()));
+        /* interface_is_focused() is unreliable, at least when global hotkeys
+         * are involved; see http://jira.atheme.org/browse/AUD-369. */
+        /* interface_show (! (interface_is_shown () && interface_is_focused ())); */
+        interface_show (! interface_is_shown ());
         break;
     case HOOK_SHOW_ERROR:
         interface_show_error (hook_data);
