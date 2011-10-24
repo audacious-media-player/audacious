@@ -38,6 +38,7 @@ LOCALES = ast.po \
 	  ro.po \
 	  ru.po \
 	  sk.po \
+	  sl.po \
 	  sr@Latn.po \
 	  sr.po \
 	  sv.po \
