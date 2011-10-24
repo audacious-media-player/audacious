@@ -1,19 +1,18 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# 
+# Lithuanian translation for Audacious
+# Copyright (C) Audacious Translators
+# This file is distributed under the same license as the Audacious package.
+#
 # Translators:
 # Algimantas Margevičius <gymka@mail.ru>, 2011.
-# Gymka <gymka@mail.ru>, 2011.
 # Rimas Kudelis <rq@akl.lt>, 2004.
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/browse/AUD\n"
-"POT-Creation-Date: 2011-10-09 12:18-0400\n"
-"PO-Revision-Date: 2011-10-11 05:42+0000\n"
-"Last-Translator: gymka_ltu <gymka@mail.ru>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2011-10-19 21:32-0400\n"
+"PO-Revision-Date: 2011-10-21 10:08+0000\n"
+"Last-Translator: Algimantas Margevičius <gymka@mail.ru>\n"
+"Language-Team: Lithuanian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -302,18 +301,22 @@ msgstr ""
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/playback.c:376
+#: src/audacious/playback.c:303
 #, c-format
 msgid "No decoder found for %s."
 msgstr "Nerastas dekoderis failui %s."
 
-#: src/audacious/playback.c:526
-msgid "Buffering ..."
-msgstr "Buferiavimas"
-
-#: src/audacious/playlist-new.c:306
+#: src/audacious/playlist-new.c:315
 msgid "Untitled Playlist"
 msgstr "Nepavadintas grojaraštis"
+
+#: src/audacious/playlist-new.c:1496
+msgid ""
+"The playlist cannot be sorted because metadata scanning is still in progress"
+" (or has been disabled)."
+msgstr ""
+"Surikiuoti grojaraštį neįmanoma, nes vis dar vyksta(arba išjungta) meta "
+"duomenų skaitymas."
 
 #: src/audacious/ui_preferences.c:88
 msgid "Audio"
@@ -323,7 +326,7 @@ msgstr "Garsas"
 msgid "Network"
 msgstr "Tinklas"
 
-#: src/audacious/ui_preferences.c:90 src/audacious/ui_preferences.c:1633
+#: src/audacious/ui_preferences.c:90 src/audacious/ui_preferences.c:1634
 msgid "Playlist"
 msgstr "Grojaraštis"
 
@@ -544,43 +547,43 @@ msgstr "<b>Meta duomenys</b>"
 msgid "Do not load metadata for songs until played"
 msgstr "Neįkrauti dainom meta duomenų kol negrojama "
 
-#: src/audacious/ui_preferences.c:232
+#: src/audacious/ui_preferences.c:233
 msgid "TITLE"
 msgstr "PAVADINIMAS"
 
-#: src/audacious/ui_preferences.c:233
+#: src/audacious/ui_preferences.c:234
 msgid "ARTIST - TITLE"
 msgstr "ATLIKĖJAS - PAVADINIMAS"
 
-#: src/audacious/ui_preferences.c:234
+#: src/audacious/ui_preferences.c:235
 msgid "ARTIST - ALBUM - TITLE"
 msgstr "ATLIKĖJAS - ALBUMAS - PAVADINIMAS"
 
-#: src/audacious/ui_preferences.c:235
+#: src/audacious/ui_preferences.c:236
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr "ATLIKĖJAS - ALBUMAS - TAKELIS. PAVADINIMAS"
 
-#: src/audacious/ui_preferences.c:236
+#: src/audacious/ui_preferences.c:237
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr "ATLIKĖJAS [ ALBUMAS ] - TAKELIS. PAVADINIMAS"
 
-#: src/audacious/ui_preferences.c:237
+#: src/audacious/ui_preferences.c:238
 msgid "ALBUM - TITLE"
 msgstr "ALBUMAS - PAVADINIMAS"
 
-#: src/audacious/ui_preferences.c:576
+#: src/audacious/ui_preferences.c:577
 msgid "Category"
 msgstr "Kategorija"
 
-#: src/audacious/ui_preferences.c:800
+#: src/audacious/ui_preferences.c:801
 msgid "Popup Information Settings"
 msgstr "Iššokančio lango nustatymai"
 
-#: src/audacious/ui_preferences.c:809
+#: src/audacious/ui_preferences.c:810
 msgid "<b>Cover image retrieve</b>"
 msgstr "<b>Albumo viršelio gavimas</b>"
 
-#: src/audacious/ui_preferences.c:814
+#: src/audacious/ui_preferences.c:815
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
@@ -589,75 +592,75 @@ msgstr ""
 "Kai ieškoma albumo viršelio, Audacious ieško tam tikrų žodžių failo varde.Tu"
 " gali įrašyt paieškos žodžius langelyje apačioj, atskiriant kableliais."
 
-#: src/audacious/ui_preferences.c:831
+#: src/audacious/ui_preferences.c:832
 msgid "Exclude:"
 msgstr "Išimtis:"
 
-#: src/audacious/ui_preferences.c:838
+#: src/audacious/ui_preferences.c:839
 msgid "Include:"
 msgstr "Įterpti:"
 
-#: src/audacious/ui_preferences.c:855
+#: src/audacious/ui_preferences.c:856
 msgid "Recursively search for cover"
 msgstr "Rekursyviai ieškoti viršelio"
 
-#: src/audacious/ui_preferences.c:865
+#: src/audacious/ui_preferences.c:866
 msgid "Search depth: "
 msgstr "Paieškos gylis:"
 
-#: src/audacious/ui_preferences.c:879
+#: src/audacious/ui_preferences.c:880
 msgid "Use per-file cover"
 msgstr "Kiekvienam failui atskiras viršelis"
 
-#: src/audacious/ui_preferences.c:882
+#: src/audacious/ui_preferences.c:883
 msgid "<b>Miscellaneous</b>"
 msgstr "<b>Kita</b>"
 
-#: src/audacious/ui_preferences.c:891
+#: src/audacious/ui_preferences.c:892
 msgid "Show Progress bar for the current track"
 msgstr "Rodyti pažangos juostą esamam takeliui"
 
-#: src/audacious/ui_preferences.c:901
+#: src/audacious/ui_preferences.c:902
 msgid "Delay until filepopup comes up: "
 msgstr "Palaukti kol pasirodys failo iššokantis langas: "
 
-#: src/audacious/ui_preferences.c:1339
+#: src/audacious/ui_preferences.c:1340
 msgid "Custom"
 msgstr "Derinta eilutė"
 
-#: src/audacious/ui_preferences.c:1382
+#: src/audacious/ui_preferences.c:1383
 msgid "<b>Song Display</b>"
 msgstr "<b>Kūrinio pavadinimo vaizdavimas</b>"
 
-#: src/audacious/ui_preferences.c:1391
+#: src/audacious/ui_preferences.c:1392
 msgid "Show song numbers"
 msgstr "Rodyti dainos numerį"
 
-#: src/audacious/ui_preferences.c:1402
+#: src/audacious/ui_preferences.c:1403
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr "Rodyti nulius priekyje (02:00 vietoj 2:00)"
 
-#: src/audacious/ui_preferences.c:1424
+#: src/audacious/ui_preferences.c:1425
 msgid "Show information about titlestring format"
 msgstr "Parodyti informaciją apie pavadinimo formatą"
 
-#: src/audacious/ui_preferences.c:1440
+#: src/audacious/ui_preferences.c:1441
 msgid "Custom string:"
 msgstr "Derinta eilutė:"
 
-#: src/audacious/ui_preferences.c:1447
+#: src/audacious/ui_preferences.c:1448
 msgid "Title format:"
 msgstr "Pavadinimo formatas:"
 
-#: src/audacious/ui_preferences.c:1458
+#: src/audacious/ui_preferences.c:1459
 msgid "<b>Popup Information</b>"
 msgstr "<b>Iššokančio lango informacija</b>"
 
-#: src/audacious/ui_preferences.c:1473
+#: src/audacious/ui_preferences.c:1474
 msgid "Show popup information for playlist entries"
 msgstr "Rodyti iššokantį langą grojaraščio elementam"
 
-#: src/audacious/ui_preferences.c:1474
+#: src/audacious/ui_preferences.c:1475
 msgid ""
 "Toggles popup information window for the pointed entry in the playlist. The "
 "window shows title of song, name of album, genre, year of publish, track "
@@ -667,39 +670,39 @@ msgstr ""
 "Lange rodomas dainos pavadinimas, albumo pavadinimas. žanras, išleidimo "
 "data, takelio numeris, takelio trukmė bei dizainas."
 
-#: src/audacious/ui_preferences.c:1485
+#: src/audacious/ui_preferences.c:1486
 msgid "Edit settings for popup information"
 msgstr "Keisti iššokančio lango nustatymus"
 
-#: src/audacious/ui_preferences.c:1574
+#: src/audacious/ui_preferences.c:1575
 msgid "Output plugin:"
 msgstr "Išvesties įskiepis:"
 
-#: src/audacious/ui_preferences.c:1633
+#: src/audacious/ui_preferences.c:1634
 msgid "Transport"
 msgstr "Transportas"
 
-#: src/audacious/ui_preferences.c:1633
+#: src/audacious/ui_preferences.c:1634
 msgid "Input"
 msgstr "Įvestis"
 
-#: src/audacious/ui_preferences.c:1634
+#: src/audacious/ui_preferences.c:1635
 msgid "Effect"
 msgstr "Efektai"
 
-#: src/audacious/ui_preferences.c:1634
+#: src/audacious/ui_preferences.c:1635
 msgid "Visualization"
 msgstr "Vizualizacija"
 
-#: src/audacious/ui_preferences.c:1634
+#: src/audacious/ui_preferences.c:1635
 msgid "General"
 msgstr "Pagrindiniai"
 
-#: src/audacious/ui_preferences.c:1674
+#: src/audacious/ui_preferences.c:1675
 msgid "Audacious Preferences"
 msgstr "Audacious nustatymai"
 
-#: src/audacious/util.c:129
+#: src/audacious/util.c:123
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Nepavyko sukurti aplanko (%s): %s\n"
