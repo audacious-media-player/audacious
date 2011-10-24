@@ -1,5 +1,5 @@
 # French translation for Audacious
-# Copyright (C) 2011 Audacious Translators
+# Copyright (C) Audacious Translators
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/browse/AUD\n"
 "POT-Creation-Date: 2011-10-19 21:32-0400\n"
-"PO-Revision-Date: 2011-10-20 01:35+0000\n"
+"PO-Revision-Date: 2011-10-22 19:22+0000\n"
 "Last-Translator: Jean-Alexandre Anglès d'Auriac <jagw40k@free.fr>\n"
 "Language-Team: French\n"
 "MIME-Version: 1.0\n"
@@ -314,6 +314,8 @@ msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress"
 " (or has been disabled)."
 msgstr ""
+"La liste de lecture ne peut pas être triée car la lecture des métadonnées "
+"n'est pas encore terminée (ou bien elle a été désactivée)."
 
 #: src/audacious/ui_preferences.c:88
 msgid "Audio"
