@@ -631,7 +631,7 @@ msgstr "显示歌曲序号"
 
 #: src/audacious/ui_preferences.c:1402
 msgid "Show leading zeroes (02:00 instead of 2:00)"
-msgstr "显示时间前的0（如:显示2:00为02:00）"
+msgstr "显示时间前的0（如：显示2:00为02:00）"
 
 #: src/audacious/ui_preferences.c:1424
 msgid "Show information about titlestring format"
@@ -697,7 +697,7 @@ msgstr "Audacious首选项"
 #: src/audacious/util.c:129
 #, c-format
 msgid "Could not create directory (%s): %s\n"
-msgstr "无法创建目录(%s): %s\n"
+msgstr "无法创建目录(%s)：%s\n"
 
 #: src/audtool/handlers_playlist.c:274
 msgid "Position not found."
@@ -1042,7 +1042,7 @@ msgstr "导入播放列表"
 #: src/libaudgui/playlists.c:72
 #, c-format
 msgid "Overwrite %s?"
-msgstr ""
+msgstr "是否覆盖 %s？"
 
 #: src/libaudgui/queue-manager.c:185
 msgid "Queue Manager"
@@ -1138,6 +1138,8 @@ msgid ""
 "\n"
 "(Further messages have been hidden.)"
 msgstr ""
+"\n"
+"（详细信息已隐藏。）"
 
 #: src/libeggsmclient/eggdesktopfile.c:165
 msgid "File is not a valid .desktop file"
