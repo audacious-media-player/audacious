@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
-"Report-Msgid-Bugs-To: http://jira.atheme.org/browse/AUD\n"
-"POT-Creation-Date: 2011-10-09 12:18-0400\n"
-"PO-Revision-Date: 2011-10-15 16:53+0000\n"
+"Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
+"POT-Creation-Date: 2011-10-27 13:54+0200\n"
+"PO-Revision-Date: 2011-10-27 13:55+0000\n"
 "Last-Translator: Thomas Lange\n"
 "Language-Team: German\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 #: src/audacious/adder.c:71
@@ -293,18 +293,21 @@ msgstr ""
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/playback.c:376
+#: src/audacious/playback.c:303
 #, c-format
 msgid "No decoder found for %s."
 msgstr "Kein Decoder gefunden für %s."
 
-#: src/audacious/playback.c:526
-msgid "Buffering ..."
-msgstr "Puffere ..."
-
-#: src/audacious/playlist-new.c:306
+#: src/audacious/playlist-new.c:315
 msgid "Untitled Playlist"
 msgstr "Unbenannte Wiedergabeliste"
+
+#: src/audacious/playlist-new.c:1496
+msgid ""
+"The playlist cannot be sorted because metadata scanning is still in progress "
+"(or has been disabled)."
+msgstr "Die Wiedergabeliste kann nicht sortiert werden, weil das Scannen der "
+"Metadaten noch aktiv ist (oder deaktiviert wurde)."
 
 #: src/audacious/ui_preferences.c:88
 msgid "Audio"
@@ -314,7 +317,7 @@ msgstr "Audio"
 msgid "Network"
 msgstr "Netzwerk"
 
-#: src/audacious/ui_preferences.c:90 src/audacious/ui_preferences.c:1633
+#: src/audacious/ui_preferences.c:90 src/audacious/ui_preferences.c:1634
 msgid "Playlist"
 msgstr ""
 "Wiedergabe-\n"
@@ -537,121 +540,121 @@ msgstr "<b>Metadaten</b>"
 msgid "Do not load metadata for songs until played"
 msgstr "Metadaten erst laden, wenn Titel gespielt wird"
 
-#: src/audacious/ui_preferences.c:232
+#: src/audacious/ui_preferences.c:233
 msgid "TITLE"
 msgstr "TITEL"
 
-#: src/audacious/ui_preferences.c:233
+#: src/audacious/ui_preferences.c:234
 msgid "ARTIST - TITLE"
 msgstr "KÜNSTLER - TITEL"
 
-#: src/audacious/ui_preferences.c:234
+#: src/audacious/ui_preferences.c:235
 msgid "ARTIST - ALBUM - TITLE"
 msgstr "KÜNSTLER - ALBUM - TITEL"
 
-#: src/audacious/ui_preferences.c:235
+#: src/audacious/ui_preferences.c:236
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr "KÜNSTLER - ALBUM - TITELNUMMER. TITEL"
 
-#: src/audacious/ui_preferences.c:236
+#: src/audacious/ui_preferences.c:237
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr "KÜNSTLER [ ALBUM ] - TITELNUMMER. TITEL"
 
-#: src/audacious/ui_preferences.c:237
+#: src/audacious/ui_preferences.c:238
 msgid "ALBUM - TITLE"
 msgstr "ALBUM - TITEL"
 
-#: src/audacious/ui_preferences.c:576
+#: src/audacious/ui_preferences.c:577
 msgid "Category"
 msgstr "Kategorie"
 
-#: src/audacious/ui_preferences.c:800
+#: src/audacious/ui_preferences.c:801
 msgid "Popup Information Settings"
 msgstr "Popup-Informations-Einstellungen"
 
-#: src/audacious/ui_preferences.c:809
+#: src/audacious/ui_preferences.c:810
 msgid "<b>Cover image retrieve</b>"
 msgstr "<b>Cover-Bild finden</b>"
 
-#: src/audacious/ui_preferences.c:814
+#: src/audacious/ui_preferences.c:815
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
 "using commas."
 msgstr ""
 "Wenn Audacious das Titelbild sucht, sucht es nach bestimmten Worten im "
-"Dateinamen. Diese können nachfolgend eingegeben werden, jeweils durch Kommas"
-" getrennt."
+"Dateinamen. Diese können nachfolgend eingegeben werden, jeweils durch Kommas "
+"getrennt."
 
-#: src/audacious/ui_preferences.c:831
+#: src/audacious/ui_preferences.c:832
 msgid "Exclude:"
 msgstr "Ausschließen:"
 
-#: src/audacious/ui_preferences.c:838
+#: src/audacious/ui_preferences.c:839
 msgid "Include:"
 msgstr "Einschließen:"
 
-#: src/audacious/ui_preferences.c:855
+#: src/audacious/ui_preferences.c:856
 msgid "Recursively search for cover"
 msgstr "Rekursiv nach dem Titelbild suchen"
 
-#: src/audacious/ui_preferences.c:865
+#: src/audacious/ui_preferences.c:866
 msgid "Search depth: "
 msgstr "Suchtiefe: "
 
-#: src/audacious/ui_preferences.c:879
+#: src/audacious/ui_preferences.c:880
 msgid "Use per-file cover"
 msgstr "Pro-Datei-Titelbild benutzen"
 
-#: src/audacious/ui_preferences.c:882
+#: src/audacious/ui_preferences.c:883
 msgid "<b>Miscellaneous</b>"
 msgstr "<b>Verschiedenes</b>"
 
-#: src/audacious/ui_preferences.c:891
+#: src/audacious/ui_preferences.c:892
 msgid "Show Progress bar for the current track"
 msgstr "Zeige Fortschrittsbalken für den aktuellen Titel"
 
-#: src/audacious/ui_preferences.c:901
+#: src/audacious/ui_preferences.c:902
 msgid "Delay until filepopup comes up: "
 msgstr "Verzögerung bis zum Erscheinen des Popups: "
 
-#: src/audacious/ui_preferences.c:1339
+#: src/audacious/ui_preferences.c:1340
 msgid "Custom"
 msgstr "Eigene Zeichenkette"
 
-#: src/audacious/ui_preferences.c:1382
+#: src/audacious/ui_preferences.c:1383
 msgid "<b>Song Display</b>"
 msgstr "<b>Titelanzeige</b>"
 
-#: src/audacious/ui_preferences.c:1391
+#: src/audacious/ui_preferences.c:1392
 msgid "Show song numbers"
 msgstr "Zeige Titelnummern"
 
-#: src/audacious/ui_preferences.c:1402
+#: src/audacious/ui_preferences.c:1403
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr "Führende Nullen anzeigen (02:00 anstatt 2:00)"
 
-#: src/audacious/ui_preferences.c:1424
+#: src/audacious/ui_preferences.c:1425
 msgid "Show information about titlestring format"
 msgstr "Informationen über das Format der Titelzeile anzeigen"
 
-#: src/audacious/ui_preferences.c:1440
+#: src/audacious/ui_preferences.c:1441
 msgid "Custom string:"
 msgstr "Eigene Zeichenkette:"
 
-#: src/audacious/ui_preferences.c:1447
+#: src/audacious/ui_preferences.c:1448
 msgid "Title format:"
 msgstr "Titelformat:"
 
-#: src/audacious/ui_preferences.c:1458
+#: src/audacious/ui_preferences.c:1459
 msgid "<b>Popup Information</b>"
 msgstr "<b>Popup-Information</b>"
 
-#: src/audacious/ui_preferences.c:1473
+#: src/audacious/ui_preferences.c:1474
 msgid "Show popup information for playlist entries"
 msgstr "Popup-Informationen für Widergabelisteneinträge anzeigen"
 
-#: src/audacious/ui_preferences.c:1474
+#: src/audacious/ui_preferences.c:1475
 msgid ""
 "Toggles popup information window for the pointed entry in the playlist. The "
 "window shows title of song, name of album, genre, year of publish, track "
@@ -662,39 +665,39 @@ msgstr ""
 "werden Titel, Album, Genre, Publikationsjahr, Titelnummer, Titellänge und "
 "Cover-Bild."
 
-#: src/audacious/ui_preferences.c:1485
+#: src/audacious/ui_preferences.c:1486
 msgid "Edit settings for popup information"
 msgstr "Einstellungen für Popup-Informationen bearbeiten"
 
-#: src/audacious/ui_preferences.c:1574
+#: src/audacious/ui_preferences.c:1575
 msgid "Output plugin:"
 msgstr "Ausgabe-Plugin:"
 
-#: src/audacious/ui_preferences.c:1633
+#: src/audacious/ui_preferences.c:1634
 msgid "Transport"
 msgstr "Transport"
 
-#: src/audacious/ui_preferences.c:1633
+#: src/audacious/ui_preferences.c:1634
 msgid "Input"
 msgstr "Eingabe"
 
-#: src/audacious/ui_preferences.c:1634
+#: src/audacious/ui_preferences.c:1635
 msgid "Effect"
 msgstr "Effekte"
 
-#: src/audacious/ui_preferences.c:1634
+#: src/audacious/ui_preferences.c:1635
 msgid "Visualization"
 msgstr "Visualisierung"
 
-#: src/audacious/ui_preferences.c:1634
+#: src/audacious/ui_preferences.c:1635
 msgid "General"
 msgstr "Allgemein"
 
-#: src/audacious/ui_preferences.c:1674
+#: src/audacious/ui_preferences.c:1675
 msgid "Audacious Preferences"
 msgstr "Audacious-Einstellungen"
 
-#: src/audacious/util.c:129
+#: src/audacious/util.c:123
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Konnte Verzeichnis (%s) nicht erstellen: %s\n"
@@ -1169,8 +1172,7 @@ msgstr "Unbekannte Start-Option: %d"
 
 #: src/libeggsmclient/eggdesktopfile.c:1375
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-msgstr ""
-"Kann keine Dokument-URIs an einen 'Type=Link'-Desktopeintrag übergeben"
+msgstr "Kann keine Dokument-URIs an einen 'Type=Link'-Desktopeintrag übergeben"
 
 #: src/libeggsmclient/eggdesktopfile.c:1396
 msgid "Not a launchable item"
