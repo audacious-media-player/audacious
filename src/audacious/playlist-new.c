@@ -717,8 +717,8 @@ void playlist_insert (gint at)
 void playlist_reorder (gint from, gint to, gint count)
 {
     ENTER;
-    if (from < 0 || from + count >= index_count (playlists) || to < 0 || to +
-     count >= index_count (playlists) || count < 0)
+    if (from < 0 || from + count > index_count (playlists) || to < 0 || to +
+     count > index_count (playlists) || count < 0)
         LEAVE_RET_VOID;
 
     struct index * displaced = index_new ();
