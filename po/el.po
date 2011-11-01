@@ -1,43 +1,42 @@
-# Greek translations for audacious package.
-# Copyright (C) 2003 Kouzinopoulos Haris (ironhell3) <haris@mpa.gr>
-# Kouzinopoulos Haris <haris@mpa.gr>, 2003 - 2004.
-# Stavros Giannouris <stavrosg2002@freemail.gr>, 2005 - 2006.
-# Stathis Kamperis <ekamperi@auth.gr>, 2006
+# Greek translation for Audacious
+# Copyright (C) Audacious translators
+# This file is distributed under the same license as the Audacious package.
 #
+# Translators:
+# Stathis Kamperis <ekamperi@auth.gr>, 2006.
+# Γιάννης  <yannanth@gmail.com>, 2011.
 msgid ""
 msgstr ""
-"Project-Id-Version: audacious 1.1.0\n"
-"Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-07-05 22:45+0200\n"
-"PO-Revision-Date: 2006-07-18 20:56+0200\n"
-"Last-Translator: Stavros Giannouris <stavrosg2002@freemail.gr>\n"
-"Language-Team: Greek <nls@tux.hellug.gr>\n"
-"Language: el\n"
+"Project-Id-Version: Audacious\n"
+"Report-Msgid-Bugs-To: http://jira.atheme.org/browse/AUD\n"
+"POT-Creation-Date: 2011-10-19 21:32-0400\n"
+"PO-Revision-Date: 2011-10-30 19:23+0000\n"
+"Last-Translator: Evropi <yannanth@gmail.com>\n"
+"Language-Team: Greek\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n>1;\n"
-"X-Poedit-Bookmarks: -1,-1,-1,-1,-1,-1,-1,-1,1,-1\n"
+"Language: el\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 #: src/audacious/adder.c:71
 msgid "Searching ..."
-msgstr ""
+msgstr "Αναζήτηση..."
 
-#: src/audacious/adder.c:99
+#: src/audacious/adder.c:97
 #, c-format
 msgid "%d file found"
 msgid_plural "%d files found"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/audacious/chardet.c:37
+#: src/audacious/chardet.c:38
 msgid "  (invalid UTF-8)"
 msgstr "  (μη έγκυρο UTF-8)"
 
 #: src/audacious/credits.c:35
-#, fuzzy
 msgid "Core developers:"
-msgstr "Δημιουργοί για το 0.1.x:"
+msgstr ""
 
 #: src/audacious/credits.c:49
 msgid "Graphics:"
@@ -56,428 +55,388 @@ msgid "Patch authors:"
 msgstr ""
 
 #: src/audacious/credits.c:126
-#, fuzzy
 msgid "1.x developers:"
-msgstr "Δημιουργοί για το 0.1.x:"
+msgstr ""
 
 #: src/audacious/credits.c:148
 msgid "BMP Developers:"
 msgstr "Δημιουργοί BMP:"
 
 #: src/audacious/credits.c:180
-#, fuzzy
 msgid "Belarusian:"
-msgstr "Ουγγρική:"
+msgstr "Λευκορωσικά:"
 
 #: src/audacious/credits.c:183
 msgid "Basque:"
-msgstr ""
+msgstr "Βασκικά:"
 
 #: src/audacious/credits.c:186
 msgid "Brazilian Portuguese:"
 msgstr "Πορτογαλικά Βραζιλίας:"
 
-#: src/audacious/credits.c:190
+#: src/audacious/credits.c:191
 msgid "Breton:"
-msgstr "Breton:"
+msgstr "Βρετόνικα:"
 
-#: src/audacious/credits.c:193
-#, fuzzy
+#: src/audacious/credits.c:194
 msgid "Bulgarian:"
-msgstr "Ουγγρική:"
+msgstr "Βουλγαρικά:"
 
-#: src/audacious/credits.c:196
-#, fuzzy
+#: src/audacious/credits.c:197
 msgid "Catalan:"
-msgstr "Ιταλικά:"
+msgstr "Καταλανικά:"
 
-#: src/audacious/credits.c:199
-#, fuzzy
+#: src/audacious/credits.c:200
 msgid "Chinese:"
 msgstr "Κινέζικα:"
 
-#: src/audacious/credits.c:202
-#, fuzzy
+#: src/audacious/credits.c:203
 msgid "Croatian:"
-msgstr "Τοποθεσία:"
+msgstr "Κροατικά:"
 
-#: src/audacious/credits.c:205
+#: src/audacious/credits.c:206
 msgid "Czech:"
 msgstr "Τσέχικα:"
 
-#: src/audacious/credits.c:208
+#: src/audacious/credits.c:209
 msgid "Dutch:"
-msgstr "Ολλανδική:"
+msgstr "Ολλανδικά:"
 
-#: src/audacious/credits.c:212
-#, fuzzy
+#: src/audacious/credits.c:213
 msgid "Estonian:"
-msgstr "Ρουμανικά:"
+msgstr "Εστονικά:"
 
-#: src/audacious/credits.c:215
+#: src/audacious/credits.c:216
 msgid "Finnish:"
-msgstr "Φινλανδικά:"
+msgstr "Φιλανδικά:"
 
-#: src/audacious/credits.c:220
+#: src/audacious/credits.c:221
 msgid "French:"
 msgstr "Γαλλικά:"
 
-#: src/audacious/credits.c:226
+#: src/audacious/credits.c:227
 msgid "German:"
 msgstr "Γερμανικά:"
 
-#: src/audacious/credits.c:233
-#, fuzzy
+#: src/audacious/credits.c:234
 msgid "Georgian:"
 msgstr "Γεωργιανά:"
 
-#: src/audacious/credits.c:236
+#: src/audacious/credits.c:237
 msgid "Greek:"
 msgstr "Ελληνικά:"
 
-#: src/audacious/credits.c:241
+#: src/audacious/credits.c:242
 msgid "Hindi:"
-msgstr "Hindi:"
+msgstr "Ινδικά:"
 
-#: src/audacious/credits.c:244
+#: src/audacious/credits.c:245
 msgid "Hungarian:"
-msgstr "Ουγγρική:"
+msgstr "Ουγγρικά:"
 
-#: src/audacious/credits.c:248
+#: src/audacious/credits.c:249
 msgid "Italian:"
 msgstr "Ιταλικά:"
 
-#: src/audacious/credits.c:252
+#: src/audacious/credits.c:253
 msgid "Japanese:"
 msgstr "Ιαπωνικά:"
 
-#: src/audacious/credits.c:255
+#: src/audacious/credits.c:256
 msgid "Korean:"
 msgstr "Κορεάτικα:"
 
-#: src/audacious/credits.c:258
-#, fuzzy
+#: src/audacious/credits.c:259
 msgid "Latvian:"
-msgstr "Τοποθεσία:"
+msgstr "Λετωνικά:"
 
-#: src/audacious/credits.c:261
+#: src/audacious/credits.c:262
 msgid "Lithuanian:"
 msgstr "Λιθουανικά:"
 
-#: src/audacious/credits.c:265
+#: src/audacious/credits.c:267
 msgid "Macedonian:"
-msgstr "Σλαβομακεδονική:"
+msgstr "Σλαβομακεδονικά:"
 
-#: src/audacious/credits.c:268
+#: src/audacious/credits.c:270
 msgid "Polish:"
-msgstr "Πολωνική:"
+msgstr "Πολωνικά:"
 
-#: src/audacious/credits.c:274
-#, fuzzy
+#: src/audacious/credits.c:276
 msgid "Portuguese:"
-msgstr "Port:"
+msgstr "Πορτωγαλικά:"
 
-#: src/audacious/credits.c:277
+#: src/audacious/credits.c:279
 msgid "Romanian:"
 msgstr "Ρουμανικά:"
 
-#: src/audacious/credits.c:281
+#: src/audacious/credits.c:283
 msgid "Russian:"
 msgstr "Ρώσικα:"
 
-#: src/audacious/credits.c:285
-#, fuzzy
+#: src/audacious/credits.c:287
 msgid "Serbian (Latin):"
-msgstr "Κυριλλική (MacCyrillic)"
+msgstr "Σερβικά (λατινικό):"
 
-#: src/audacious/credits.c:288
-#, fuzzy
+#: src/audacious/credits.c:290
 msgid "Serbian (Cyrillic):"
-msgstr "Κυριλλική (MacCyrillic)"
+msgstr "Σερβικά (κυριλλικό):"
 
-#: src/audacious/credits.c:291
+#: src/audacious/credits.c:293
 msgid "Simplified Chinese:"
-msgstr ""
+msgstr "Κινέζικα (απλοποιημένη):"
 
-#: src/audacious/credits.c:294
+#: src/audacious/credits.c:296
 msgid "Slovak:"
-msgstr "Σλοβακική:"
+msgstr "Σλοβακικά:"
 
-#: src/audacious/credits.c:297
+#: src/audacious/credits.c:299
 msgid "Spanish:"
 msgstr "Ισπανικά:"
 
-#: src/audacious/credits.c:304
+#: src/audacious/credits.c:306
 msgid "Swedish:"
 msgstr "Σουηδικά:"
 
-#: src/audacious/credits.c:307
+#: src/audacious/credits.c:309
 msgid "Traditional Chinese:"
-msgstr ""
+msgstr "Κινέζικα (παραδοσιακή):"
 
-#: src/audacious/credits.c:312
+#: src/audacious/credits.c:315
 msgid "Turkish:"
-msgstr ""
+msgstr "Τουρκικά:"
 
-#: src/audacious/credits.c:316
+#: src/audacious/credits.c:319
 msgid "Ukrainian:"
 msgstr "Ουκρανικά:"
 
-#: src/audacious/credits.c:319
-msgid "Welsh:"
-msgstr "Ουαλλική:"
+#: src/audacious/credits.c:323
+msgid "Vietnamese:"
+msgstr "Βιετναμεζικά:"
 
-#: src/audacious/drct.c:256
-#, fuzzy
+#: src/audacious/credits.c:326
+msgid "Welsh:"
+msgstr "Ουαλλικά:"
+
+#: src/audacious/drct.c:234
 msgid "Temporary Playlist"
-msgstr "Φόρτωση λίστας αναπαραγωγής"
+msgstr ""
 
 #: src/audacious/equalizer_preset.c:186
-#, fuzzy, c-format
+#, c-format
 msgid "Error importing Winamp EQF file '%s'"
-msgstr "Σφάλμα κατά τη φόρτωση της εικόνας: %s"
+msgstr ""
 
-#: src/audacious/main.c:256
+#: src/audacious/main.c:239
 msgid "Skip backwards in playlist"
 msgstr "Μετάβαση πίσω στη λίστα τραγουδιών"
 
-#: src/audacious/main.c:257
+#: src/audacious/main.c:240
 msgid "Start playing current playlist"
 msgstr "Έναρξη αναπαραγωγής της τρέχουσας λίστας"
 
-#: src/audacious/main.c:258
+#: src/audacious/main.c:241
 msgid "Pause current song"
 msgstr "Παύση τρέχοντος κομματιού"
 
-#: src/audacious/main.c:259
+#: src/audacious/main.c:242
 msgid "Stop current song"
 msgstr "Σταμάτημα τρέχοντος κομματιού"
 
-#: src/audacious/main.c:260
+#: src/audacious/main.c:243
 msgid "Pause if playing, play otherwise"
 msgstr "Παύση αν παίζει, αλλιώς αναπαραγωγή"
 
-#: src/audacious/main.c:261
+#: src/audacious/main.c:244
 msgid "Skip forward in playlist"
 msgstr "Μετάβαση μπροστά στη λίστα τραγουδιών"
 
-#: src/audacious/main.c:262
-#, fuzzy
+#: src/audacious/main.c:245
 msgid "Display Jump to File dialog"
-msgstr "/Μετάβαση σε αρχείο"
+msgstr ""
 
-#: src/audacious/main.c:263
-#, fuzzy
+#: src/audacious/main.c:246
 msgid "Add files to the playlist"
-msgstr "Ακύρωση καθαρισμού λίστας αναπαραγωγής"
+msgstr "Προσθήκη αρχείων στη λίστα τραγουδιών"
 
-#: src/audacious/main.c:264
-#, fuzzy
+#: src/audacious/main.c:247
 msgid "Add new files to a temporary playlist"
-msgstr "Ακύρωση καθαρισμού λίστας αναπαραγωγής"
+msgstr ""
 
-#: src/audacious/main.c:265
-#, fuzzy
+#: src/audacious/main.c:248
 msgid "Display the main window"
-msgstr "Εμφάνιση του κυρίως παραθύρου"
+msgstr ""
 
-#: src/audacious/main.c:266
-#, fuzzy
+#: src/audacious/main.c:249
 msgid "Show version"
-msgstr "/Εμφάνιση λίστας αναπαραγωγής"
+msgstr "Εμφάνιση έκδοσης"
 
-#: src/audacious/main.c:267
+#: src/audacious/main.c:250
 msgid "Print debugging messages"
 msgstr ""
 
-#: src/audacious/main.c:268
+#: src/audacious/main.c:251
+msgid "Headless mode (beta)"
+msgstr ""
+
+#: src/audacious/main.c:252
 msgid "FILE..."
 msgstr ""
 
-#: src/audacious/main.c:280
+#: src/audacious/main.c:264
 msgid "- play multimedia files"
 msgstr ""
 
-#: src/audacious/main.c:290
+#: src/audacious/main.c:274
 #, c-format
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
 msgstr ""
 
-#: src/audacious/main.c:407
-msgid ""
-"Audacious seems to be already running but is not responding.  You can start "
-"another instance of the program, but please be warned that this can cause "
-"data loss.  If Audacious is not running, you can safely ignore this "
-"message.  Press OK to start Audacious or Cancel to quit."
-msgstr ""
-
-#: src/audacious/main.c:572
+#: src/audacious/main.c:547
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/playback.c:381
+#: src/audacious/playback.c:303
 #, c-format
 msgid "No decoder found for %s."
 msgstr ""
 
-#: src/audacious/playback.c:531
-#, fuzzy
-msgid "Buffering ..."
-msgstr "Φόρτωση"
-
-#: src/audacious/playlist-new.c:303
-#, fuzzy
+#: src/audacious/playlist-new.c:315
 msgid "Untitled Playlist"
-msgstr "Αποθήκευση λίστας αναπαραγωγής"
+msgstr ""
 
-#: src/audacious/ui_preferences.c:87
+#: src/audacious/playlist-new.c:1496
+msgid ""
+"The playlist cannot be sorted because metadata scanning is still in progress"
+" (or has been disabled)."
+msgstr ""
+
+#: src/audacious/ui_preferences.c:88
 msgid "Audio"
 msgstr "Ήχος"
 
-#: src/audacious/ui_preferences.c:88
+#: src/audacious/ui_preferences.c:89
 msgid "Network"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:89 src/audacious/ui_preferences.c:1556
+#: src/audacious/ui_preferences.c:90 src/audacious/ui_preferences.c:1634
 msgid "Playlist"
 msgstr "Λίστα αναπαραγωγής"
 
-#: src/audacious/ui_preferences.c:90
+#: src/audacious/ui_preferences.c:91
 msgid "Plugins"
 msgstr "Πρόσθετα"
 
-#: src/audacious/ui_preferences.c:96 src/libaudgui/infopopup.c:204
+#: src/audacious/ui_preferences.c:97 src/libaudgui/infopopup.c:203
 msgid "Artist"
 msgstr "Καλλιτέχνης"
 
-#: src/audacious/ui_preferences.c:97 src/libaudgui/infopopup.c:206
+#: src/audacious/ui_preferences.c:98 src/libaudgui/infopopup.c:205
 msgid "Album"
 msgstr "Άλμπουμ"
 
-#: src/audacious/ui_preferences.c:98 src/libaudgui/infopopup.c:202
-#: src/libaudgui/ui_playlist_manager.c:263
+#: src/audacious/ui_preferences.c:99 src/libaudgui/infopopup.c:201
+#: src/libaudgui/ui_playlist_manager.c:276
 msgid "Title"
 msgstr "Τίτλος"
 
-#: src/audacious/ui_preferences.c:99
+#: src/audacious/ui_preferences.c:100
 msgid "Tracknumber"
 msgstr "Νούμερο κομματιού"
 
-#: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:208
+#: src/audacious/ui_preferences.c:101 src/libaudgui/infopopup.c:207
 msgid "Genre"
 msgstr "Γένος"
 
-#: src/audacious/ui_preferences.c:101
+#: src/audacious/ui_preferences.c:102
 msgid "Filename"
 msgstr "Όνομα αρχείου"
 
-#: src/audacious/ui_preferences.c:102
+#: src/audacious/ui_preferences.c:103
 msgid "Filepath"
 msgstr "Διαδρομή αρχείου"
 
-#: src/audacious/ui_preferences.c:103
+#: src/audacious/ui_preferences.c:104
 msgid "Date"
 msgstr "Ημερομηνία"
 
-#: src/audacious/ui_preferences.c:104 src/libaudgui/infopopup.c:210
+#: src/audacious/ui_preferences.c:105 src/libaudgui/infopopup.c:209
 msgid "Year"
 msgstr "Έτος"
 
-#: src/audacious/ui_preferences.c:105
+#: src/audacious/ui_preferences.c:106
 msgid "Comment"
 msgstr "Σχόλιο"
 
-#: src/audacious/ui_preferences.c:106
-#, fuzzy
-msgid "Codec"
-msgstr "Κλείσιμο"
-
 #: src/audacious/ui_preferences.c:107
+msgid "Codec"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:108
 msgid "Quality"
 msgstr "Ποιότητα"
 
-#: src/audacious/ui_preferences.c:112
+#: src/audacious/ui_preferences.c:114
 msgid "None"
 msgstr "Κανένα"
 
-#: src/audacious/ui_preferences.c:113
-#, fuzzy
-msgid "Japanese"
-msgstr "Ιαπωνικά:"
-
-#: src/audacious/ui_preferences.c:114
-#, fuzzy
-msgid "Taiwanese"
-msgstr "Ιαπωνικά:"
-
 #: src/audacious/ui_preferences.c:115
-#, fuzzy
-msgid "Chinese"
-msgstr "Κινέζικα:"
+msgid "Arabic"
+msgstr "Αραβικά"
 
 #: src/audacious/ui_preferences.c:116
-#, fuzzy
-msgid "Korean"
-msgstr "Κορεάτικα:"
+msgid "Baltic"
+msgstr "Βαλτικά"
 
 #: src/audacious/ui_preferences.c:117
-#, fuzzy
-msgid "Russian"
-msgstr "Ρώσικα:"
+msgid "Chinese"
+msgstr "Κινέζικα"
 
 #: src/audacious/ui_preferences.c:118
-#, fuzzy
 msgid "Greek"
-msgstr "Ελληνικά:"
+msgstr "Ελληνικά"
 
 #: src/audacious/ui_preferences.c:119
 msgid "Hebrew"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:120
-msgid "Turkish"
+msgid "Japanese"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:121
-msgid "Arabic"
+msgid "Korean"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:122
-#, fuzzy
 msgid "Polish"
-msgstr "Πολωνική:"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:123
-#, fuzzy
-msgid "Baltic"
-msgstr "Celte"
+msgid "Russian"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:124
-#, fuzzy
-msgid "Universal"
-msgstr "Γενικά"
+msgid "Taiwanese"
+msgstr ""
 
-#: src/audacious/ui_preferences.c:146
-#, fuzzy
-msgid "Single track mode"
-msgstr "/Εμφάνιση πληροφοριών αρχείου"
+#: src/audacious/ui_preferences.c:125
+msgid "Turkish"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:147
-#, fuzzy
 msgid "Album mode"
-msgstr "Κατάσταση άλμπουμ"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:150
-#, fuzzy
 msgid "<b>Output Settings</b>"
-msgstr "<b>Αναγνώριση μορφής</b>"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:152
-#, fuzzy
 msgid "Bit depth:"
-msgstr "Bit rate:"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:155
 msgid "Buffer size:"
@@ -488,37 +447,32 @@ msgid "ms"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:158
-#, fuzzy
 msgid "Use software volume control (not recommended)"
-msgstr "Χρήση ελεγκτή ήχου λογισμικού"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:160
-#, fuzzy
 msgid "<b>Replay Gain</b>"
-msgstr "<b>Διάρκεια:</b>"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:161
-#, fuzzy
 msgid "Enable Replay Gain"
-msgstr "Ενεργοποίηση ReplayGain"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:164
 msgid "Prevent clipping (recommended)"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:166
-#, fuzzy
 msgid "<b>Adjust Levels</b>"
-msgstr "<b>Ροδάκι ποντικιού</b>"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:167
 msgid "Amplify all files:"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:169 src/audacious/ui_preferences.c:172
-#, fuzzy
 msgid "dB"
-msgstr "0 dB"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:170
 msgid "Amplify untagged files:"
@@ -548,19 +502,11 @@ msgstr "<b>Ρύθμιση διαμεσολαβητή</b>"
 msgid "Enable proxy usage"
 msgstr "Χρήση διαμεσολαβητή"
 
-#: src/audacious/ui_preferences.c:187
+#: src/audacious/ui_preferences.c:188
 msgid "Use authentication with proxy"
 msgstr "Χρήση πιστοποίησης με το διαμεσολαβητή"
 
-#: src/audacious/ui_preferences.c:189
-msgid ""
-"<span size=\"small\">Changing these settings will require a restart of "
-"Audacious.</span>"
-msgstr ""
-"<span size=\"small\">Η αλλαγή αυτών των ρυθμίσεων απαιτεί επανεκκίνηση του "
-"Audacious.</span>"
-
-#: src/audacious/ui_preferences.c:193
+#: src/audacious/ui_preferences.c:196
 msgid "Auto character encoding detector for:"
 msgstr "Αυτόματη αναγνώριση κωδικοσελίδας για:"
 
@@ -568,18 +514,9 @@ msgstr "Αυτόματη αναγνώριση κωδικοσελίδας για:
 msgid "Fallback character encodings:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:201
-msgid ""
-"List of character encodings used for fall back conversion of metadata. If "
-"automatic character encoding detector failed or has been disabled, encodings "
-"in this list would be treated as candidates of the encoding of metadata, and "
-"fall back conversion from these encodings to UTF-8 would be attempted."
-msgstr ""
-
 #: src/audacious/ui_preferences.c:205
-#, fuzzy
 msgid "<b>Behavior</b>"
-msgstr "<b>Bitrate:</b>"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:206
 msgid "Continue playback on startup"
@@ -590,33 +527,58 @@ msgid "Advance when the current song is deleted"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:210
-#, fuzzy
 msgid "Clear the playlist when opening files"
-msgstr "/Ταξινόμηση λίστας/Κατά καλλιτέχνη"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:212
-#, fuzzy
 msgid "Open files in a temporary playlist"
-msgstr "Ακύρωση καθαρισμού λίστας αναπαραγωγής"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:214
 msgid "<b>Metadata</b>"
 msgstr "<b>Μεταπληροφορίες</b>"
 
-#: src/audacious/ui_preferences.c:454
+#: src/audacious/ui_preferences.c:215
+msgid "Do not load metadata for songs until played"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:233
+msgid "TITLE"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:234
+msgid "ARTIST - TITLE"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:235
+msgid "ARTIST - ALBUM - TITLE"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:236
+msgid "ARTIST - ALBUM - TRACK. TITLE"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:237
+msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:238
+msgid "ALBUM - TITLE"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:577
 msgid "Category"
 msgstr "Κατηγορία"
 
-#: src/audacious/ui_preferences.c:682
+#: src/audacious/ui_preferences.c:801
 msgid "Popup Information Settings"
 msgstr "Ρυθμίσεις αναδυόμενων πληροφοριών"
 
-#: src/audacious/ui_preferences.c:691
-#, fuzzy
+#: src/audacious/ui_preferences.c:810
 msgid "<b>Cover image retrieve</b>"
-msgstr "<b>Αναγνώριση μορφής</b>"
+msgstr ""
 
-#: src/audacious/ui_preferences.c:696
+#: src/audacious/ui_preferences.c:815
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
@@ -626,101 +588,75 @@ msgstr ""
 "συγκεκριμένες λέξεις στο όνομα του αρχείου. Μπορείτε να εισάγετε τις λέξεις "
 "αυτές στις λίστες παρακάτω, χωρισμένες με κόμματα."
 
-#: src/audacious/ui_preferences.c:713
+#: src/audacious/ui_preferences.c:832
 msgid "Exclude:"
 msgstr "Αποκλεισμός:"
 
-#: src/audacious/ui_preferences.c:720
+#: src/audacious/ui_preferences.c:839
 msgid "Include:"
 msgstr "Περίληψη:"
 
-#: src/audacious/ui_preferences.c:737
+#: src/audacious/ui_preferences.c:856
 msgid "Recursively search for cover"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:747
+#: src/audacious/ui_preferences.c:866
 msgid "Search depth: "
 msgstr ""
 
-#: src/audacious/ui_preferences.c:761
+#: src/audacious/ui_preferences.c:880
 msgid "Use per-file cover"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:764
-#, fuzzy
+#: src/audacious/ui_preferences.c:883
 msgid "<b>Miscellaneous</b>"
-msgstr "<b>_Διάφορα</b>"
+msgstr ""
 
-#: src/audacious/ui_preferences.c:773
+#: src/audacious/ui_preferences.c:892
 msgid "Show Progress bar for the current track"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:783
+#: src/audacious/ui_preferences.c:902
 msgid "Delay until filepopup comes up: "
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1283
+#: src/audacious/ui_preferences.c:1340
+msgid "Custom"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:1383
 msgid "<b>Song Display</b>"
 msgstr "<b>Προβολή τραγουδιού</b>"
 
-#: src/audacious/ui_preferences.c:1292
+#: src/audacious/ui_preferences.c:1392
 msgid "Show song numbers"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1303
+#: src/audacious/ui_preferences.c:1403
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1325
+#: src/audacious/ui_preferences.c:1425
 msgid "Show information about titlestring format"
 msgstr "Εμφάνιση πληροφοριών για τη μορφή του τίτλου"
 
-#: src/audacious/ui_preferences.c:1339
-msgid "TITLE"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:1340
-msgid "ARTIST - TITLE"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:1341
-msgid "ARTIST - ALBUM - TITLE"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:1342
-msgid "ARTIST - ALBUM - TRACK. TITLE"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:1343
-msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:1344
-msgid "ALBUM - TITLE"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:1345
-#, fuzzy
-msgid "Custom"
-msgstr "Προσαρμοσμένο αλφαριθμητικό:"
-
-#: src/audacious/ui_preferences.c:1354
+#: src/audacious/ui_preferences.c:1441
 msgid "Custom string:"
 msgstr "Προσαρμοσμένο αλφαριθμητικό:"
 
-#: src/audacious/ui_preferences.c:1361
+#: src/audacious/ui_preferences.c:1448
 msgid "Title format:"
 msgstr "Μορφή τίτλου:"
 
-#: src/audacious/ui_preferences.c:1372
+#: src/audacious/ui_preferences.c:1459
 msgid "<b>Popup Information</b>"
 msgstr "<b>Αναδυόμενες πληροφορίες</b>"
 
-#: src/audacious/ui_preferences.c:1387
+#: src/audacious/ui_preferences.c:1474
 msgid "Show popup information for playlist entries"
 msgstr "Εμφάνιση αναδυόμενων πληροφοριών στη λίστα αναπαραγωγής"
 
-#: src/audacious/ui_preferences.c:1388
+#: src/audacious/ui_preferences.c:1475
 msgid ""
 "Toggles popup information window for the pointed entry in the playlist. The "
 "window shows title of song, name of album, genre, year of publish, track "
@@ -731,48 +667,44 @@ msgstr ""
 "του δίσκου, το είδος, το έτος κυκλοφορίας, τον αριθμό, το μήκος του "
 "τραγουδιού και το εξώφυλλο."
 
-#: src/audacious/ui_preferences.c:1397
+#: src/audacious/ui_preferences.c:1486
 msgid "Edit settings for popup information"
 msgstr "Επεξεργασία ρυθμίσεων για τις αναδυόμενες πληροφορίες"
 
-#: src/audacious/ui_preferences.c:1497
-#, fuzzy
+#: src/audacious/ui_preferences.c:1575
 msgid "Output plugin:"
-msgstr "Άρθρωμα εισόδου: %s"
+msgstr ""
 
-#: src/audacious/ui_preferences.c:1556
-#, fuzzy
+#: src/audacious/ui_preferences.c:1634
 msgid "Transport"
-msgstr "Μεταφραστές"
+msgstr ""
 
-#: src/audacious/ui_preferences.c:1556
+#: src/audacious/ui_preferences.c:1634
 msgid "Input"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1557
-#, fuzzy
+#: src/audacious/ui_preferences.c:1635
 msgid "Effect"
-msgstr "Εφέ"
+msgstr ""
 
-#: src/audacious/ui_preferences.c:1557
-#, fuzzy
+#: src/audacious/ui_preferences.c:1635
 msgid "Visualization"
-msgstr "/Οπτικοποίηση"
+msgstr ""
 
-#: src/audacious/ui_preferences.c:1557
+#: src/audacious/ui_preferences.c:1635
 msgid "General"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1597
+#: src/audacious/ui_preferences.c:1675
 msgid "Audacious Preferences"
 msgstr "Προτιμήσεις του Audacious"
 
-#: src/audacious/util.c:155
-#, fuzzy, c-format
+#: src/audacious/util.c:123
+#, c-format
 msgid "Could not create directory (%s): %s\n"
-msgstr "Δεν ήταν δυνατή η δημιουργία του καταλόγου (%s): %s"
+msgstr ""
 
-#: src/audtool/handlers_playlist.c:264
+#: src/audtool/handlers_playlist.c:274
 msgid "Position not found."
 msgstr ""
 
@@ -785,136 +717,118 @@ msgid "Mono"
 msgstr "Mono"
 
 #: src/libaudcore/tuple.c:687
-#, fuzzy
 msgid "Stereo"
-msgstr "στερεοφωνικό"
+msgstr ""
 
 #: src/libaudcore/tuple.c:689
-#, fuzzy, c-format
+#, c-format
 msgid "%d channel"
 msgid_plural "%d channels"
-msgstr[0] "Κανάλια"
-msgstr[1] "Κανάλια"
+msgstr[0] ""
+msgstr[1] ""
 
-#: src/libaudgui/confirm.c:73
+#: src/libaudgui/confirm.c:78
 #, c-format
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
 msgstr ""
 
-#: src/libaudgui/confirm.c:86
-#, fuzzy
+#: src/libaudgui/confirm.c:91
 msgid "_Don't show this message again"
-msgstr "Να μην ξαναεμφανιστεί αυτή η προειδοποίηση"
+msgstr ""
 
-#: src/libaudgui/confirm.c:124
-#, fuzzy
+#: src/libaudgui/confirm.c:128
 msgid "Rename Playlist"
-msgstr "Αποθήκευση λίστας αναπαραγωγής"
+msgstr ""
 
 #: src/libaudgui/effects-menu.c:76
-#, fuzzy
 msgid "settings ..."
-msgstr "Ρυθμίσεις μείκτη"
+msgstr ""
 
-#: src/libaudgui/equalizer.c:68
-#, fuzzy
+#: src/libaudgui/equalizer.c:52
 msgid "_Enable"
-msgstr "Ενεργοποίηση"
+msgstr ""
 
-#: src/libaudgui/equalizer.c:140
+#: src/libaudgui/equalizer.c:124
 msgid "31 Hz"
 msgstr ""
 
-#: src/libaudgui/equalizer.c:140
+#: src/libaudgui/equalizer.c:124
 msgid "63 Hz"
 msgstr ""
 
-#: src/libaudgui/equalizer.c:141
+#: src/libaudgui/equalizer.c:125
 msgid "125 Hz"
 msgstr ""
 
-#: src/libaudgui/equalizer.c:141
-#, fuzzy
+#: src/libaudgui/equalizer.c:125
 msgid "250 Hz"
-msgstr "11000 Hz"
+msgstr ""
 
-#: src/libaudgui/equalizer.c:141
-#, fuzzy
+#: src/libaudgui/equalizer.c:125
 msgid "500 Hz"
-msgstr "11000 Hz"
+msgstr ""
 
-#: src/libaudgui/equalizer.c:141
-#, fuzzy
+#: src/libaudgui/equalizer.c:125
 msgid "1 kHz"
-msgstr "11 kHz"
+msgstr ""
 
-#: src/libaudgui/equalizer.c:141
-#, fuzzy
+#: src/libaudgui/equalizer.c:125
 msgid "2 kHz"
-msgstr "22 kHz"
+msgstr ""
 
-#: src/libaudgui/equalizer.c:142
-#, fuzzy
+#: src/libaudgui/equalizer.c:126
 msgid "4 kHz"
-msgstr "44 kHz"
+msgstr ""
 
-#: src/libaudgui/equalizer.c:142
-#, fuzzy
+#: src/libaudgui/equalizer.c:126
 msgid "8 kHz"
-msgstr "11 kHz"
+msgstr ""
 
-#: src/libaudgui/equalizer.c:142
-#, fuzzy
+#: src/libaudgui/equalizer.c:126
 msgid "16 kHz"
-msgstr "11 kHz"
+msgstr ""
 
-#: src/libaudgui/equalizer.c:147
+#: src/libaudgui/equalizer.c:131
 msgid "Equalizer"
 msgstr "Ισοσταθμιστής"
 
-#: src/libaudgui/equalizer.c:163
-#, fuzzy
+#: src/libaudgui/equalizer.c:147
 msgid "Preamp"
-msgstr "Προενίσχυση"
+msgstr ""
 
-#: src/libaudgui/infopopup.c:212
-#, fuzzy
+#: src/libaudgui/infopopup.c:211
 msgid "Track Number"
-msgstr "Νούμερο κομματιού"
+msgstr ""
 
-#: src/libaudgui/infopopup.c:214
-#, fuzzy
+#: src/libaudgui/infopopup.c:213
 msgid "Track Length"
-msgstr "Διάρκεια κομματιού:"
+msgstr ""
 
 #: src/libaudgui/infowin.c:77
 msgid "Acid Jazz"
 msgstr "Acid Jazz"
 
 #: src/libaudgui/infowin.c:78
-#, fuzzy
 msgid "Acid Rock"
-msgstr "Hard Rock"
+msgstr ""
 
 #: src/libaudgui/infowin.c:79
 msgid "Ambient"
 msgstr "Ambient"
 
 #: src/libaudgui/infowin.c:80
-#, fuzzy
 msgid "Bebop"
-msgstr "Bebob"
+msgstr ""
 
 #: src/libaudgui/infowin.c:81
 msgid "Bluegrass"
 msgstr "Bluegrass"
 
 #: src/libaudgui/infowin.c:82
-#, fuzzy
 msgid "Blues"
-msgstr "Blues"
+msgstr ""
 
 #: src/libaudgui/infowin.c:83
 msgid "Chamber Music"
@@ -969,9 +883,8 @@ msgid "Heavy Metal"
 msgstr "Heavy Metal"
 
 #: src/libaudgui/infowin.c:96
-#, fuzzy
 msgid "Hip-hop"
-msgstr "Hip-Hop"
+msgstr ""
 
 #: src/libaudgui/infowin.c:97
 msgid "House"
@@ -1022,9 +935,8 @@ msgid "Rock"
 msgstr "Ροκ"
 
 #: src/libaudgui/infowin.c:109
-#, fuzzy
 msgid "Rock and Roll"
-msgstr "Rock & Roll"
+msgstr ""
 
 #: src/libaudgui/infowin.c:110
 msgid "Rhythm and Blues"
@@ -1047,15 +959,13 @@ msgid "Techno"
 msgstr "Techno"
 
 #: src/libaudgui/infowin.c:115
-#, fuzzy
 msgid "Trip-hop"
-msgstr "Trip-Hop"
+msgstr ""
 
 #: src/libaudgui/infowin.c:175 src/libaudgui/infowin.c:361
 #: src/libaudgui/infowin.c:364 src/libaudgui/infowin.c:367
-#, fuzzy
 msgid "<span size=\"small\">n/a</span>"
-msgstr "<span size=\"medium\"><b>Μέσα</b></span>"
+msgstr ""
 
 #: src/libaudgui/infowin.c:265
 msgid "Metadata updated successfully"
@@ -1066,64 +976,53 @@ msgid "Metadata updating failed"
 msgstr ""
 
 #: src/libaudgui/infowin.c:318
-#, fuzzy
 msgid "Track Information"
-msgstr "Ρύθμιση Flac"
+msgstr ""
 
 #: src/libaudgui/infowin.c:350
-#, fuzzy
 msgid "<span size=\"small\">Format:</span>"
-msgstr "<span size=\"medium\"><b>Γενικά</b></span>"
+msgstr ""
 
 #: src/libaudgui/infowin.c:354
-#, fuzzy
 msgid "<span size=\"small\">Quality:</span>"
-msgstr "<span size=\"medium\"><b>Μέσα</b></span>"
+msgstr ""
 
 #: src/libaudgui/infowin.c:357
-#, fuzzy
 msgid "<span size=\"small\">Bitrate:</span>"
-msgstr "<span size=\"medium\"><b>Γενικά</b></span>"
+msgstr ""
 
 #: src/libaudgui/infowin.c:387
-#, fuzzy
 msgid "<span size=\"small\">Title</span>"
-msgstr "<span size=\"medium\"><b>Μέσα</b></span>"
+msgstr ""
 
 #: src/libaudgui/infowin.c:399
-#, fuzzy
 msgid "<span size=\"small\">Artist</span>"
-msgstr "<span size=\"medium\"><b>Έξοδος</b></span>"
+msgstr ""
 
 #: src/libaudgui/infowin.c:411
-#, fuzzy
 msgid "<span size=\"small\">Album</span>"
-msgstr "<span size=\"medium\"><b>Έξοδος</b></span>"
+msgstr ""
 
 #: src/libaudgui/infowin.c:423
-#, fuzzy
 msgid "<span size=\"small\">Comment</span>"
-msgstr "<span size=\"medium\"><b>Γενικά</b></span>"
+msgstr ""
 
 #: src/libaudgui/infowin.c:435
-#, fuzzy
 msgid "<span size=\"small\">Genre</span>"
-msgstr "<span size=\"medium\"><b>Γενικά</b></span>"
+msgstr ""
 
 #: src/libaudgui/infowin.c:456
-#, fuzzy
 msgid "<span size=\"small\">Year</span>"
-msgstr "<span size=\"medium\"><b>Μέσα</b></span>"
+msgstr ""
 
 #: src/libaudgui/infowin.c:467
-#, fuzzy
 msgid "<span size=\"small\">Track Number</span>"
-msgstr "<span size=\"medium\"><b>Γενικά</b></span>"
+msgstr ""
 
 #: src/libaudgui/infowin.c:549
-#, fuzzy, c-format
+#, c-format
 msgid "%d kb/s"
-msgstr "%d Kb/s"
+msgstr ""
 
 #: src/libaudgui/infowin.c:579
 #, c-format
@@ -1139,25 +1038,27 @@ msgid "mm:ss"
 msgstr ""
 
 #: src/libaudgui/playlists.c:39
-#, fuzzy
 msgid "Export Playlist"
-msgstr "Φόρτωση λίστας αναπαραγωγής"
+msgstr ""
 
 #: src/libaudgui/playlists.c:39
-#, fuzzy
 msgid "Import Playlist"
-msgstr "Φόρτωση λίστας αναπαραγωγής"
+msgstr ""
 
-#: src/libaudgui/playlists.c:71
+#: src/libaudgui/playlists.c:72
 #, c-format
 msgid "Overwrite %s?"
 msgstr ""
 
-#: src/libaudgui/ui_about.c:71
+#: src/libaudgui/queue-manager.c:185
+msgid "Queue Manager"
+msgstr ""
+
+#: src/libaudgui/ui_about.c:69
 msgid "About Audacious"
 msgstr "Περί Audacious"
 
-#: src/libaudgui/ui_about.c:93 src/libaudgui/ui_credits.c:122
+#: src/libaudgui/ui_about.c:90 src/libaudgui/ui_credits.c:122
 msgid "Credits"
 msgstr "Μνεία"
 
@@ -1165,82 +1066,76 @@ msgstr "Μνεία"
 msgid "Translators"
 msgstr "Μεταφραστές"
 
-#: src/libaudgui/ui_fileopener.c:108
+#: src/libaudgui/ui_fileopener.c:109
 msgid "Open Files"
 msgstr "Άνοιγμα αρχείων"
 
-#: src/libaudgui/ui_fileopener.c:108
+#: src/libaudgui/ui_fileopener.c:109
 msgid "Add Files"
 msgstr "Προσθήκη αρχείων"
 
-#: src/libaudgui/ui_fileopener.c:110
+#: src/libaudgui/ui_fileopener.c:111
 msgid "Close dialog on Open"
 msgstr "Κλείσιμο παραθύρου διαλόγου κατά το άνοιγμα"
 
-#: src/libaudgui/ui_fileopener.c:110
+#: src/libaudgui/ui_fileopener.c:111
 msgid "Close dialog on Add"
 msgstr "Κλείσιμο του διαλόγου κατά την προσθήκη"
 
-#: src/libaudgui/ui_jumptotrack.c:133
-#, fuzzy
-msgid "Un_queue"
-msgstr "Στην _ουρά"
-
-#: src/libaudgui/ui_jumptotrack.c:135 src/libaudgui/ui_jumptotrack.c:512
+#: src/libaudgui/ui_jumptotrack.c:103 src/libaudgui/ui_jumptotrack.c:111
+#: src/libaudgui/ui_jumptotrack.c:322
 msgid "_Queue"
 msgstr "Στην _ουρά"
 
-#: src/libaudgui/ui_jumptotrack.c:399
+#: src/libaudgui/ui_jumptotrack.c:109
+msgid "Un_queue"
+msgstr ""
+
+#: src/libaudgui/ui_jumptotrack.c:239
 msgid "Jump to Track"
 msgstr "Μεταπήδηση στο κομμάτι"
 
-#: src/libaudgui/ui_jumptotrack.c:442
+#: src/libaudgui/ui_jumptotrack.c:277
 msgid "Filter: "
 msgstr "Φίλτρο:"
 
-#: src/libaudgui/ui_jumptotrack.c:443
-#, fuzzy
+#: src/libaudgui/ui_jumptotrack.c:278
 msgid "_Filter:"
-msgstr "Φίλτρο:"
+msgstr ""
 
-#: src/libaudgui/ui_jumptotrack.c:461
+#: src/libaudgui/ui_jumptotrack.c:288
 msgid "Remember"
 msgstr ""
 
-#: src/libaudgui/ui_jumptotrack.c:470
-#, fuzzy
+#: src/libaudgui/ui_jumptotrack.c:295
 msgid "Clea_r"
-msgstr "/Καθαρισμός ουράς"
+msgstr ""
 
-#: src/libaudgui/ui_jumptotrack.c:504
-#, fuzzy
+#: src/libaudgui/ui_jumptotrack.c:315
 msgid "Close on Jump"
-msgstr "Κλείσιμο παραθύρου διαλόγου κατά το άνοιγμα"
+msgstr ""
 
-#: src/libaudgui/ui_playlist_manager.c:240
-#, fuzzy
+#: src/libaudgui/ui_playlist_manager.c:250
 msgid "Playlist Manager"
-msgstr "Μη αυτόματη μετάβαση μπροστά στη λίστα τραγουδιών"
+msgstr ""
 
-#: src/libaudgui/ui_playlist_manager.c:264
+#: src/libaudgui/ui_playlist_manager.c:277
 msgid "Entries"
 msgstr ""
 
-#: src/libaudgui/ui_playlist_manager.c:285
-#, fuzzy
+#: src/libaudgui/ui_playlist_manager.c:298
 msgid "_Rename"
-msgstr "Όνομα αρχείου"
+msgstr ""
 
-#: src/libaudgui/ui_playlist_manager.c:309
-#, fuzzy
+#: src/libaudgui/ui_playlist_manager.c:322
 msgid "_Close dialog on activating playlist"
-msgstr "Κλείσιμο παραθύρου διαλόγου κατά το άνοιγμα"
+msgstr ""
 
-#: src/libaudgui/ui_urlopener.c:58
+#: src/libaudgui/ui_urlopener.c:51
 msgid "Open URL"
 msgstr ""
 
-#: src/libaudgui/ui_urlopener.c:58
+#: src/libaudgui/ui_urlopener.c:51
 msgid "Add URL"
 msgstr ""
 
@@ -1255,23 +1150,23 @@ msgid "File is not a valid .desktop file"
 msgstr ""
 
 #: src/libeggsmclient/eggdesktopfile.c:188
-#, fuzzy, c-format
+#, c-format
 msgid "Unrecognized desktop file Version '%s'"
-msgstr "%s: δεν αναγνωρίζεται η επιλογή `--%s'\n"
+msgstr ""
 
 #: src/libeggsmclient/eggdesktopfile.c:967
-#, fuzzy, c-format
+#, c-format
 msgid "Starting %s"
-msgstr "Ιταλικά:"
+msgstr ""
 
 #: src/libeggsmclient/eggdesktopfile.c:1108
 msgid "Application does not accept documents on command line"
 msgstr ""
 
 #: src/libeggsmclient/eggdesktopfile.c:1176
-#, fuzzy, c-format
+#, c-format
 msgid "Unrecognized launch option: %d"
-msgstr "%s: δεν αναγνωρίζεται η επιλογή `--%s'\n"
+msgstr ""
 
 #: src/libeggsmclient/eggdesktopfile.c:1375
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
@@ -1309,3821 +1204,4 @@ msgstr ""
 msgid "Show session management options"
 msgstr ""
 
-#, fuzzy
-#~ msgid "Replay Gain"
-#~ msgstr "ReplayGain"
 
-#, fuzzy
-#~ msgid "<b>Bit Depth</b>"
-#~ msgstr "<b>Bitrate:</b>"
-
-#, fuzzy
-#~ msgid "<b>Volume Control</b>"
-#~ msgstr "Έλεγχος έντασης:"
-
-#, fuzzy
-#~ msgid "<b>Mode</b>"
-#~ msgstr "<b>Μεταπληροφορίες</b>"
-
-#, fuzzy
-#~ msgid "<b>Clipping Prevention</b>"
-#~ msgstr "<b>Αναδυόμενες πληροφορίες</b>"
-
-#, fuzzy
-#~ msgid "Enable clipping prevention"
-#~ msgstr "Ενεργοποίηση πρόληψης σκρατσαρίσματος"
-
-#~ msgid "<b>Audio System</b>"
-#~ msgstr "<b>Σύστημα ήχου</b>"
-
-#~ msgid "Current output plugin:"
-#~ msgstr "Τρέχον πρόσθετο εξόδου:"
-
-#, fuzzy
-#~ msgid "%s: Unable to open display, exiting.\n"
-#~ msgstr "audacious: Αδύνατο το άνοιγμα της οθόνης, έξοδος.\n"
-
-#, fuzzy
-#~ msgid "Preamp:"
-#~ msgstr "Προενίσχυση"
-
-#, fuzzy
-#~ msgid "Default gain:"
-#~ msgstr "Προκαθορισμένο skin:"
-
-#, fuzzy
-#~ msgid "<b>Replay Gain configuration</b>"
-#~ msgstr "<b>Ρύθμιση διαμεσολαβητή</b>"
-
-#, fuzzy
-#~ msgid "Track gain/peak"
-#~ msgstr "Όνομα κομματιού"
-
-#~ msgid "Classic Rock"
-#~ msgstr "Κλασικό Ροκ"
-
-#~ msgid "Dance"
-#~ msgstr "Dance"
-
-#~ msgid "Oldies"
-#~ msgstr "Oldies"
-
-#~ msgid "Other"
-#~ msgstr "Άλλο"
-
-#~ msgid "R&B"
-#~ msgstr "R&B"
-
-#~ msgid "Industrial"
-#~ msgstr "Industrial"
-
-#~ msgid "Alternative"
-#~ msgstr "Εναλλακτική"
-
-#, fuzzy
-#~ msgid "Pranks"
-#~ msgstr "Pranks"
-
-#~ msgid "Soundtrack"
-#~ msgstr "Soundtrack"
-
-#~ msgid "Euro-Techno"
-#~ msgstr "Euro-Techno"
-
-#~ msgid "Vocal"
-#~ msgstr "Vocal"
-
-#~ msgid "Jazz+Funk"
-#~ msgstr "Jazz+Funk"
-
-#~ msgid "Fusion"
-#~ msgstr "Fusion"
-
-#~ msgid "Trance"
-#~ msgstr "Trance"
-
-#~ msgid "Instrumental"
-#~ msgstr "Ορχηστρική"
-
-#~ msgid "Acid"
-#~ msgstr "Acid"
-
-#~ msgid "Game"
-#~ msgstr "Game"
-
-#~ msgid "Sound Clip"
-#~ msgstr "Sound Clip"
-
-#~ msgid "AlternRock"
-#~ msgstr "Εναλλακτικό Ροκ"
-
-#, fuzzy
-#~ msgid "Bass"
-#~ msgstr "Bass"
-
-#~ msgid "Punk"
-#~ msgstr "Punk"
-
-#~ msgid "Space"
-#~ msgstr "Space"
-
-#~ msgid "Meditative"
-#~ msgstr "Musique Méditative"
-
-#~ msgid "Instrumental Pop"
-#~ msgstr "Pop Instrumentale"
-
-#~ msgid "Instrumental Rock"
-#~ msgstr "Rock Instrumental"
-
-#~ msgid "Ethnic"
-#~ msgstr "Ethnic"
-
-#~ msgid "Gothic"
-#~ msgstr "Gothic"
-
-#~ msgid "Darkwave"
-#~ msgstr "Darkwave"
-
-#~ msgid "Techno-Industrial"
-#~ msgstr "Techno-Industrial"
-
-#~ msgid "Electronic"
-#~ msgstr "Ηλεκτρονική μουσική"
-
-#~ msgid "Pop-Folk"
-#~ msgstr "Pop-Folk"
-
-#~ msgid "Eurodance"
-#~ msgstr "Eurodance"
-
-#~ msgid "Dream"
-#~ msgstr "Dream"
-
-#~ msgid "Southern Rock"
-#~ msgstr "Southern Rock"
-
-#~ msgid "Comedy"
-#~ msgstr "Comedy"
-
-#~ msgid "Cult"
-#~ msgstr "Cult"
-
-#~ msgid "Top 40"
-#~ msgstr "Top 40"
-
-#~ msgid "Christian Rap"
-#~ msgstr "Christian Rap"
-
-#~ msgid "Pop/Funk"
-#~ msgstr "Pop/Funk"
-
-#~ msgid "Native American"
-#~ msgstr "Native American"
-
-#~ msgid "Cabaret"
-#~ msgstr "Cabaret"
-
-#~ msgid "Psychedelic"
-#~ msgstr "Psychedelic"
-
-#~ msgid "Rave"
-#~ msgstr "Rave"
-
-#, fuzzy
-#~ msgid "Showtunes"
-#~ msgstr "Showtunes"
-
-#~ msgid "Trailer"
-#~ msgstr "Trailer"
-
-#~ msgid "Lo-Fi"
-#~ msgstr "Lo-Fi"
-
-#~ msgid "Tribal"
-#~ msgstr "Tribal"
-
-#~ msgid "Acid Punk"
-#~ msgstr "Acid Punk"
-
-#~ msgid "Polka"
-#~ msgstr "Polka"
-
-#, fuzzy
-#~ msgid "Retro"
-#~ msgstr "Retro"
-
-#~ msgid "Musical"
-#~ msgstr "Musical"
-
-#~ msgid "Folk/Rock"
-#~ msgstr "Folk/Rock"
-
-#~ msgid "National Folk"
-#~ msgstr "National Folk"
-
-#~ msgid "Fast-Fusion"
-#~ msgstr "Fast-Fusion"
-
-#~ msgid "Latin"
-#~ msgstr "Latin"
-
-#~ msgid "Revival"
-#~ msgstr "Revival"
-
-#~ msgid "Celtic"
-#~ msgstr "Celte"
-
-#~ msgid "Avantgarde"
-#~ msgstr "Avantgarde"
-
-#~ msgid "Gothic Rock"
-#~ msgstr "Gothic Rock"
-
-#~ msgid "Progressive Rock"
-#~ msgstr "Progressive Rock"
-
-#~ msgid "Psychedelic Rock"
-#~ msgstr "Psychedelic Rock"
-
-#~ msgid "Symphonic Rock"
-#~ msgstr "Symphonic Rock"
-
-#~ msgid "Slow Rock"
-#~ msgstr "Slow Rock"
-
-#~ msgid "Big Band"
-#~ msgstr "Big Band"
-
-#~ msgid "Chorus"
-#~ msgstr "Chorus"
-
-#~ msgid "Acoustic"
-#~ msgstr "Acoustic"
-
-#~ msgid "Humour"
-#~ msgstr "Humour"
-
-#~ msgid "Speech"
-#~ msgstr "Discours"
-
-#~ msgid "Chanson"
-#~ msgstr "Chanson"
-
-#~ msgid "Opera"
-#~ msgstr "Opera"
-
-#~ msgid "Sonata"
-#~ msgstr "Sonata"
-
-#~ msgid "Symphony"
-#~ msgstr "Symphony"
-
-#~ msgid "Booty Bass"
-#~ msgstr "Booty Bass"
-
-#~ msgid "Primus"
-#~ msgstr "Primus"
-
-#~ msgid "Porn Groove"
-#~ msgstr "Porn Groove"
-
-#, fuzzy
-#~ msgid "Satire"
-#~ msgstr "Stereo"
-
-#~ msgid "Slow Jam"
-#~ msgstr "Slow Jam"
-
-#~ msgid "Club"
-#~ msgstr "Club"
-
-#~ msgid "Tango"
-#~ msgstr "Tango"
-
-#~ msgid "Samba"
-#~ msgstr "Samba"
-
-#~ msgid "Folklore"
-#~ msgstr "Folklore"
-
-#~ msgid "Ballad"
-#~ msgstr "Ballad"
-
-#~ msgid "Power Ballad"
-#~ msgstr "Power Ballad"
-
-#~ msgid "Rhythmic Soul"
-#~ msgstr "Rythmic Soul"
-
-#~ msgid "Freestyle"
-#~ msgstr "Freestyle"
-
-#~ msgid "Duet"
-#~ msgstr "Duo"
-
-#~ msgid "Drum Solo"
-#~ msgstr "Drum Solo"
-
-#~ msgid "A Cappella"
-#~ msgstr "A Cappella"
-
-#~ msgid "Euro-House"
-#~ msgstr "Euro-House"
-
-#~ msgid "Dance Hall"
-#~ msgstr "Dance Hall"
-
-#~ msgid "Goa"
-#~ msgstr "Goa"
-
-#~ msgid "Drum & Bass"
-#~ msgstr "Drum & Bass"
-
-#~ msgid "Club-House"
-#~ msgstr "Club-House"
-
-#~ msgid "Hardcore"
-#~ msgstr "Hardcore"
-
-#~ msgid "Terror"
-#~ msgstr "Terror"
-
-#~ msgid "Indie"
-#~ msgstr "Indie"
-
-#~ msgid "BritPop"
-#~ msgstr "BritPop"
-
-#~ msgid "Negerpunk"
-#~ msgstr "Negerpunk"
-
-#~ msgid "Polsk Punk"
-#~ msgstr "Polsk Punk"
-
-#~ msgid "Beat"
-#~ msgstr "Beat"
-
-#~ msgid "Christian Gangsta Rap"
-#~ msgstr "Christian Gangsta Rap"
-
-#~ msgid "Black Metal"
-#~ msgstr "Black Metal"
-
-#~ msgid "Crossover"
-#~ msgstr "Crossover"
-
-#~ msgid "Contemporary Christian"
-#~ msgstr "Contemporary Christian"
-
-#~ msgid "Christian Rock"
-#~ msgstr "Christian Rock"
-
-#~ msgid "Merengue"
-#~ msgstr "Merengue"
-
-#~ msgid "Salsa"
-#~ msgstr "Salsa"
-
-#~ msgid "Thrash Metal"
-#~ msgstr "Thrash Metal"
-
-#~ msgid "Anime"
-#~ msgstr "Anime"
-
-#~ msgid "JPop"
-#~ msgstr "JPop"
-
-#~ msgid "Synthpop"
-#~ msgstr "SynthPop"
-
-#, fuzzy
-#~ msgid ""
-#~ "<big><b>Audacious %s</b></big>\n"
-#~ "An audio player for many platforms.\n"
-#~ "Copyright (C) 2005-2011 Audacious Development Team"
-#~ msgstr ""
-#~ "<big><b>Audacious %s</b></big>\n"
-#~ "Αναπαράγοντας πολυμέσα στο UNIX.\n"
-#~ "\n"
-#~ "Copyright (C) 2005 Η ομάδα ανάπτυξης του Audacious\n"
-
-#~ msgid "Unable to create log file (%s)!\n"
-#~ msgstr "Δεν είναι δυνατή η δημιουργία του αρχείου καταγραφής (%s)!\n"
-
-#, fuzzy
-#~ msgid "Playback"
-#~ msgstr "/Αναπαραγωγή"
-
-#~ msgid "<b>Playback</b>"
-#~ msgstr "<b>Αναπαραγωγή</b>"
-
-#~ msgid ""
-#~ "When Audacious starts, automatically begin playing from the point where "
-#~ "we stopped before."
-#~ msgstr ""
-#~ "Αυτόματη έναρξη της αναπαραγωγής από το σημείο που σταμάτησε πριν όταν "
-#~ "ξεκινά το Audacious."
-
-#~ msgid "Don't advance in the playlist"
-#~ msgstr "Μη αυτόματη μετάβαση μπροστά στη λίστα τραγουδιών"
-
-#~ msgid ""
-#~ "When finished playing a song, don't automatically advance to the next."
-#~ msgstr ""
-#~ "Μετά την ολοκλήρωση ενός τραγουδιού, μη μεταβείς αυτόματα στο επόμενο."
-
-#~ msgid "Enabled"
-#~ msgstr "Ενεργοποιημένο"
-
-#~ msgid "Description"
-#~ msgstr "Περιγραφή"
-
-#, fuzzy
-#~ msgid "Output Plugin Preferences"
-#~ msgstr "Άρθρωμα εξόδου OSS"
-
-#, fuzzy
-#~ msgid "Output Plugin Information"
-#~ msgstr "Ρυθμίσεις αρθρώματος εξόδου ESD"
-
-#~ msgid "_Decoder list:"
-#~ msgstr "Λίστα αποκωδικοποιητών:"
-
-#~ msgid "<span size=\"medium\"><b>Decoders</b></span>"
-#~ msgstr "<span size=\"medium\"><b>Αποκωδικοποιητές</b></span>"
-
-#~ msgid "_General plugin list:"
-#~ msgstr "Λίστα _γενικών αρθρωμάτων:"
-
-#~ msgid "<span size=\"medium\"><b>General</b></span>"
-#~ msgstr "<span size=\"medium\"><b>Γενικά</b></span>"
-
-#~ msgid "_Visualization plugin list:"
-#~ msgstr "Λίστα αρθρωμάτων _οπτικοποίησης:"
-
-#~ msgid "<b>Visualization</b>"
-#~ msgstr "<b>Οπτικοποίηση</b>"
-
-#, fuzzy
-#~ msgid "Effect plugins:"
-#~ msgstr "Λίστα αρθρωμάτων _εφφέ:"
-
-#~ msgid "<b>Effects</b>"
-#~ msgstr "<b>Εφέ</b>"
-
-#, fuzzy
-#~ msgid "<span size=\"small\">General</span>"
-#~ msgstr "<span size=\"medium\"><b>Γενικά</b></span>"
-
-#, fuzzy
-#~ msgid "<span size=\"small\">Location</span>"
-#~ msgstr "<span size=\"medium\"><b>Αποκωδικοποιητές</b></span>"
-
-#, fuzzy
-#~ msgid "<span size=\"small\">Raw Metadata</span>"
-#~ msgstr "<span size=\"medium\"><b>Μέσα</b></span>"
-
-#, fuzzy
-#~ msgid "Value"
-#~ msgstr "Blues"
-
-#, fuzzy
-#~ msgid "170 Hz"
-#~ msgstr "11000 Hz"
-
-#, fuzzy
-#~ msgid "310 Hz"
-#~ msgstr "11000 Hz"
-
-#, fuzzy
-#~ msgid "3 kHz"
-#~ msgstr "48 kHz"
-
-#, fuzzy
-#~ msgid "6 kHz"
-#~ msgstr "48 kHz"
-
-#, fuzzy
-#~ msgid ""
-#~ "Available interfaces:\n"
-#~ "\n"
-#~ msgstr "Διαθέσιμες _ρυθμίσεις:"
-
-#, fuzzy
-#~ msgid "Available Plugin Preferences:\n"
-#~ msgstr "Διαθέσιμες _ρυθμίσεις:"
-
-#, fuzzy
-#~ msgid "Add/Open URL Dialog"
-#~ msgstr "Παράθυρο διαλόγου προσθήκης/ανοίγματος αρχείων"
-
-#~ msgid "Enter location to play:"
-#~ msgstr "Εισάγετε τοποθεσία για αναπαραγωγή:"
-
-#~ msgid "Don't clear the playlist"
-#~ msgstr "Ακύρωση καθαρισμού λίστας αναπαραγωγής"
-
-#~ msgid "audacious: %s"
-#~ msgstr "audacious: %s"
-
-#~ msgid "Filename:"
-#~ msgstr "Όνομα αρχείου:"
-
-#~ msgid "No input plugin recognized this file"
-#~ msgstr "Αυτό το αρχείο δεν αναγνωρίστηκε από κανένα πρόσθετο εισαγωγής ήχου"
-
-#~ msgid ""
-#~ "<b><big>No output plugin selected.</big></b>\n"
-#~ "You have not selected an output plugin."
-#~ msgstr ""
-#~ "<b><big>Δεν επιλέχτηκε πρόσθετο εξόδου.</big></b>\n"
-#~ "Δεν έχετε επιλέξει κάποιο πρόσθετο εξόδου."
-
-#~ msgid "Connectivity"
-#~ msgstr "Συνδεσιμότητα"
-
-#, fuzzy
-#~ msgid "Sampling Rate [Hz]:"
-#~ msgstr "Ρυθμός δειγματοληψίας"
-
-#, fuzzy
-#~ msgid "Detect file formats by extension."
-#~ msgstr "Να μη γίνεται απόκρυψη της επέκτασης"
-
-#, fuzzy
-#~ msgid ""
-#~ "When checked, Audacious will detect file formats based by extension. Only "
-#~ "files with extensions of supported formats will be loaded."
-#~ msgstr ""
-#~ "Αν επιλεγεί, το Audacious θα αναγνωρίζει τη μορφή των τραγουδιών όταν "
-#~ "χρειαστεί. Αυτό μπορεί να οδηγήσει σε πιο χάλια λίστα αναπαραγωγής αλλά "
-#~ "οδηγεί σε ουσιαστικό κέρδος σε ταχύτητα."
-
-#, fuzzy
-#~ msgid "<b>Sampling Rate Converter</b>"
-#~ msgstr "<b>Ρυθμός δειγματοληψίας:</b>"
-
-#, fuzzy
-#~ msgid "Enable Sampling Rate Converter"
-#~ msgstr "Ρυθμός δειγματοληψίας"
-
-#, fuzzy
-#~ msgid "<b>Advanced</b>"
-#~ msgstr "<b>Όνομα:</b>"
-
-#, fuzzy
-#~ msgid ""
-#~ "<big><b>Audacious %s</b></big>\n"
-#~ "\n"
-#~ "Copyright (C) 2005-2009 Audacious Development Team"
-#~ msgstr ""
-#~ "<big><b>Audacious %s</b></big>\n"
-#~ "Αναπαράγοντας πολυμέσα στο UNIX.\n"
-#~ "\n"
-#~ "Copyright (C) 2005 Η ομάδα ανάπτυξης του Audacious\n"
-
-#~ msgid "Detect file formats on demand, instead of immediately."
-#~ msgstr "Εντοπισμός μορφής αρχείων όταν χρειαστεί, αντί αμέσως."
-
-#, fuzzy
-#~ msgid ""
-#~ "When checked, Audacious will detect file formats on demand. This can "
-#~ "result in a messier playlist, but delivers a major speed benefit."
-#~ msgstr ""
-#~ "Αν επιλεγεί, το Audacious θα αναγνωρίζει τη μορφή των τραγουδιών όταν "
-#~ "χρειαστεί. Αυτό μπορεί να οδηγήσει σε πιο χάλια λίστα αναπαραγωγής αλλά "
-#~ "οδηγεί σε ουσιαστικό κέρδος σε ταχύτητα."
-
-#~ msgid "Load metadata from playlists and files"
-#~ msgstr "Φόρτωση μεταδεδομένων από τις λίστες αναπαραγωγής και τα αρχεία"
-
-#~ msgid "Load metadata (tag information) from music files."
-#~ msgstr "Φόρτωση μεταδεδομένων (πληροφορίες ετικετών) από τα μουσικά αρχεία."
-
-#~ msgid "minutes:seconds"
-#~ msgstr "λεπτά:δευτερόλεπτα"
-
-#~ msgid "Track length:"
-#~ msgstr "Διάρκεια κομματιού:"
-
-#, fuzzy
-#~ msgid "Save as Static Playlist"
-#~ msgstr "Αποθήκευση λίστας αναπαραγωγής"
-
-#~ msgid "Error writing playlist \"%s\": %s"
-#~ msgstr "Σφάλμα εγγραφής της λίστας αναπαραγωγής \"%s\": %s"
-
-#~ msgid "%s already exist. Continue?"
-#~ msgstr "%s υπάρχει ήδη. Συνέχεια ;"
-
-#~ msgid ""
-#~ "<b><big>Unable to save playlist.</big></b>\n"
-#~ "\n"
-#~ "Unknown file type for '%s'.\n"
-#~ msgstr ""
-#~ "<b><big>Αδύνατη η αποθήκευση της λίστας αναπαραγωγής.</big></b>\n"
-#~ "\n"
-#~ "Άγνωστος τύπος αρχείου '%s'.\n"
-
-#~ msgid "Presets"
-#~ msgstr "Προκαθορισμένα"
-
-#~ msgid "Mouse"
-#~ msgstr "Ποντίκι"
-
-#~ msgid "Pause between songs"
-#~ msgstr "Παύση μεταξύ των τραγουδιών"
-
-#~ msgid "Pause for"
-#~ msgstr "Παύση για"
-
-#~ msgid "seconds"
-#~ msgstr "δευτερόλεπτα"
-
-#~ msgid "<b>Filename</b>"
-#~ msgstr "<b>Όνομα αρχείου</b>"
-
-#~ msgid "Convert underscores to blanks"
-#~ msgstr "Μετατροπή κάτω παύλας σε κενό"
-
-#~ msgid "Convert %20 to blanks"
-#~ msgstr "Μετατροπή %20 σε κενό"
-
-#~ msgid "<b>File Dialog</b>"
-#~ msgstr "<b>Διάλογος αρχείου</b>"
-
-#~ msgid "Always refresh directory when opening file dialog"
-#~ msgstr "Πάντα ανανέωση των καταλόγων κατά το άνοιγμα του διαλόγου αρχείων"
-
-#~ msgid ""
-#~ "Always refresh the file dialog (this will slow opening the dialog on "
-#~ "large directories, and Gnome VFS should handle automatically)."
-#~ msgstr ""
-#~ "Να γίνεται πάντα ανανέωση του διαλόγου αρχείων (αυτό μπορεί να "
-#~ "καθυστερήσει το άνοιγμα του διαλόγου σε μεγάλους καταλόγους, και το Gnome "
-#~ "VFS θα πρέπει να το χειριστεί αυτόματα)."
-
-#~ msgid "Changes volume by"
-#~ msgstr "Αλλάζει την ένταση κατά"
-
-#~ msgid "percent"
-#~ msgstr "ποσοστό"
-
-#~ msgid "Scrolls playlist by"
-#~ msgstr "Προχωρά τη λίστα τραγουδιών κατά"
-
-#~ msgid "lines"
-#~ msgstr "γραμμές"
-
-#, fuzzy
-#~ msgid "Stop after Current Song"
-#~ msgstr "/Διακοπή μετά το τρέχον τραγούδι"
-
-#, fuzzy
-#~ msgid "Peaks"
-#~ msgstr "Pranks"
-
-#, fuzzy
-#~ msgid "Repeat"
-#~ msgstr "/Επανάληψη"
-
-#, fuzzy
-#~ msgid "Shuffle"
-#~ msgstr "/Τυχαία αναπαραγωγή"
-
-#, fuzzy
-#~ msgid "No Playlist Advance"
-#~ msgstr "Μη αυτόματη μετάβαση μπροστά στη λίστα τραγουδιών"
-
-#, fuzzy
-#~ msgid "Play"
-#~ msgstr "/Αναπαραγωγή"
-
-#, fuzzy
-#~ msgid "Pause"
-#~ msgstr "/Παύση"
-
-#, fuzzy
-#~ msgid "Stop"
-#~ msgstr "/Σταμάτημα"
-
-#, fuzzy
-#~ msgid "Previous"
-#~ msgstr "/Προηγούμενο"
-
-#, fuzzy
-#~ msgid "Next"
-#~ msgstr "/Επόμενο"
-
-#, fuzzy
-#~ msgid "Visualization Mode"
-#~ msgstr "/Οπτικοποίηση"
-
-#, fuzzy
-#~ msgid "Analyzer Mode"
-#~ msgstr "/Αναλυτής/Φωτιά"
-
-#, fuzzy
-#~ msgid "Scope Mode"
-#~ msgstr "/Φάσμα"
-
-#, fuzzy
-#~ msgid "Voiceprint Mode"
-#~ msgstr "/Αναλυτής/Φωτιά"
-
-#, fuzzy
-#~ msgid "WindowShade VU Mode"
-#~ msgstr "<b>Λειτουργία Εναλλαγής κουμπιού:</b>"
-
-#, fuzzy
-#~ msgid "Refresh Rate"
-#~ msgstr "/Ρυθμός ανανέωσης"
-
-#, fuzzy
-#~ msgid "Analyzer Falloff"
-#~ msgstr "/Πτώση αναλυτή"
-
-#, fuzzy
-#~ msgid "Peaks Falloff"
-#~ msgstr "/Πτώση κορυφών"
-
-#, fuzzy
-#~ msgid "New Playlist"
-#~ msgstr "Αποθήκευση λίστας αναπαραγωγής"
-
-#, fuzzy
-#~ msgid "Select Next Playlist"
-#~ msgstr "Γραμματοσειρά για τη λίστα τραγουδιών:"
-
-#, fuzzy
-#~ msgid "Select Previous Playlist"
-#~ msgstr "/Ταξινόμηση επιλογής/Κατά καλλιτέχνη"
-
-#, fuzzy
-#~ msgid "Delete Playlist"
-#~ msgstr "Γραμματοσειρά για τη λίστα τραγουδιών:"
-
-#, fuzzy
-#~ msgid "Load List"
-#~ msgstr "/Φόρτωση λίστας αναπαραγωγής"
-
-#, fuzzy
-#~ msgid "Loads a playlist file into the selected playlist."
-#~ msgstr ""
-#~ "Φόρτωση μεταπληροφοριών δυναμικά κατά την εμφάνιση του αρχείου στη λίστα "
-#~ "τραγουδιών"
-
-#, fuzzy
-#~ msgid "Save List"
-#~ msgstr "/Αποθήκευση λίστας αναπαραγωγής"
-
-#, fuzzy
-#~ msgid "Saves the selected playlist."
-#~ msgstr "Γραμματοσειρά για τη λίστα τραγουδιών:"
-
-#, fuzzy
-#~ msgid "Save Default List"
-#~ msgstr "/Αποθήκευση προεπιλεγμένης λίστας"
-
-#, fuzzy
-#~ msgid "Saves the selected playlist to the default location."
-#~ msgstr "Γραμματοσειρά για τη λίστα τραγουδιών:"
-
-#, fuzzy
-#~ msgid "Refresh List"
-#~ msgstr "Ανανέωση λίστας skin"
-
-#, fuzzy
-#~ msgid "List Manager"
-#~ msgstr "Μη αυτόματη μετάβαση μπροστά στη λίστα τραγουδιών"
-
-#, fuzzy
-#~ msgid "Opens the playlist manager."
-#~ msgstr "Ακύρωση καθαρισμού λίστας αναπαραγωγής"
-
-#, fuzzy
-#~ msgid "View"
-#~ msgstr "/_Προβολή"
-
-#, fuzzy
-#~ msgid "Add Internet Address..."
-#~ msgstr "/Προσθήκη διεύθυνσης internet"
-
-#, fuzzy
-#~ msgid "Adds a remote track to the playlist."
-#~ msgstr "Ακύρωση καθαρισμού λίστας αναπαραγωγής"
-
-#, fuzzy
-#~ msgid "Add Files..."
-#~ msgstr "/Προσθήκη αρχείων..."
-
-#, fuzzy
-#~ msgid "Search and Select"
-#~ msgstr "/Ταξινόμηση επιλογής"
-
-#, fuzzy
-#~ msgid "Invert Selection"
-#~ msgstr "/Αντιστροφή επιλογής"
-
-#, fuzzy
-#~ msgid "Inverts the selected and unselected entries."
-#~ msgstr "Γραμματοσειρά για τη λίστα τραγουδιών:"
-
-#~ msgid "Select All"
-#~ msgstr "Επιλογή 'όλων"
-
-#, fuzzy
-#~ msgid "Select None"
-#~ msgstr "/Κανένα επιλεγμένο"
-
-#, fuzzy
-#~ msgid "Deselects all of the playlist entries."
-#~ msgstr "Ακύρωση καθαρισμού λίστας αναπαραγωγής"
-
-#, fuzzy
-#~ msgid "Remove All"
-#~ msgstr "/Αφαίρεση όλων"
-
-#, fuzzy
-#~ msgid "Removes all entries from the playlist."
-#~ msgstr "/Αφαίρεση μη διαθέσιμων αρχείων"
-
-#, fuzzy
-#~ msgid "Clear Queue"
-#~ msgstr "/Καθαρισμός ουράς"
-
-#, fuzzy
-#~ msgid "Clears the queue associated with this playlist."
-#~ msgstr "Γραμματοσειρά για τη λίστα τραγουδιών:"
-
-#, fuzzy
-#~ msgid "Remove Unavailable Files"
-#~ msgstr "/Αφαίρεση μη διαθέσιμων αρχείων"
-
-#, fuzzy
-#~ msgid "Removes unavailable files from the playlist."
-#~ msgstr "/Αφαίρεση μη διαθέσιμων αρχείων"
-
-#, fuzzy
-#~ msgid "Remove Duplicates"
-#~ msgstr "/Αφαίρεση διπλών"
-
-#, fuzzy
-#~ msgid "By Title"
-#~ msgstr "Τίτλος"
-
-#, fuzzy
-#~ msgid "Removes duplicate entries from the playlist by title."
-#~ msgstr "/Αφαίρεση διπλών/Κατά διαδρομή + όνομα αρχείου"
-
-#, fuzzy
-#~ msgid "By Filename"
-#~ msgstr "Όνομα αρχείου"
-
-#, fuzzy
-#~ msgid "Removes duplicate entries from the playlist by filename."
-#~ msgstr "/Αφαίρεση διπλών/Κατά διαδρομή + όνομα αρχείου"
-
-#, fuzzy
-#~ msgid "By Path + Filename"
-#~ msgstr "/Ταξινόμηση λίστας/Κατά διαδρομή + όνομα αρχείου"
-
-#, fuzzy
-#~ msgid "Removes duplicate entries from the playlist by their full path."
-#~ msgstr "/Αφαίρεση διπλών/Κατά διαδρομή + όνομα αρχείου"
-
-#, fuzzy
-#~ msgid "Remove Unselected"
-#~ msgstr "/Αφαίρεση μη-επιλεγμένων"
-
-#, fuzzy
-#~ msgid "Remove unselected entries from the playlist."
-#~ msgstr "/Αφαίρεση διπλών/Κατά διαδρομή + όνομα αρχείου"
-
-#, fuzzy
-#~ msgid "Remove Selected"
-#~ msgstr "/Αφαίρεση επιλεγμένων"
-
-#, fuzzy
-#~ msgid "Remove selected entries from the playlist."
-#~ msgstr "/Αφαίρεση διπλών/Κατά διαδρομή + όνομα αρχείου"
-
-#, fuzzy
-#~ msgid "Randomize List"
-#~ msgstr "/Τυχαιοποίηση λίστας"
-
-#, fuzzy
-#~ msgid "Randomizes the playlist."
-#~ msgstr "/Τυχαιοποίηση λίστας"
-
-#, fuzzy
-#~ msgid "Reverse List"
-#~ msgstr "/Αντιστροφή της σειράς της λίστας"
-
-#, fuzzy
-#~ msgid "Reverses the playlist."
-#~ msgstr "Ακύρωση καθαρισμού λίστας αναπαραγωγής"
-
-#, fuzzy
-#~ msgid "Sort List"
-#~ msgstr "/Ταξινόμηση λίστας"
-
-#, fuzzy
-#~ msgid "Sorts the list by title."
-#~ msgstr "Ταξινόμηση λίστας/Κατά όνομα"
-
-#, fuzzy
-#~ msgid "By Album"
-#~ msgstr "Άλμπουμ"
-
-#, fuzzy
-#~ msgid "Sorts the list by album."
-#~ msgstr "Ταξινόμηση λίστας/Κατά όνομα"
-
-#, fuzzy
-#~ msgid "By Artist"
-#~ msgstr "Καλλιτέχνης"
-
-#, fuzzy
-#~ msgid "Sorts the list by artist."
-#~ msgstr "/Ταξινόμηση λίστας/Κατά καλλιτέχνη"
-
-#, fuzzy
-#~ msgid "Sorts the list by filename."
-#~ msgstr "Ταξινόμηση λίστας/Κατά όνομα αρχείου"
-
-#, fuzzy
-#~ msgid "Sorts the list by full pathname."
-#~ msgstr "Ταξινόμηση λίστας/Κατά όνομα αρχείου"
-
-#, fuzzy
-#~ msgid "By Date"
-#~ msgstr "Ημερομηνία"
-
-#, fuzzy
-#~ msgid "Sorts the list by modification time."
-#~ msgstr "Ταξινόμηση λίστας/Κατά όνομα"
-
-#, fuzzy
-#~ msgid "By Track Number"
-#~ msgstr "Νούμερο κομματιού"
-
-#, fuzzy
-#~ msgid "Sorts the list by track number."
-#~ msgstr "/Ταξινόμηση λίστας/Κατά χρονολογία"
-
-#, fuzzy
-#~ msgid "By Playlist Entry"
-#~ msgstr "/Ταξινόμηση λίστας/Κατά καλλιτέχνη"
-
-#, fuzzy
-#~ msgid "Sorts the list by playlist entry."
-#~ msgstr "/Ταξινόμηση λίστας/Κατά καλλιτέχνη"
-
-#, fuzzy
-#~ msgid "Sort Selected"
-#~ msgstr "/Ταξινόμηση επιλογής"
-
-#, fuzzy
-#~ msgid "File"
-#~ msgstr "Satire"
-
-#, fuzzy
-#~ msgid "Components"
-#~ msgstr "Σχόλιο"
-
-#, fuzzy
-#~ msgid "View Track Details"
-#~ msgstr "/Εμφάνιση πληροφοριών αρχείου"
-
-#, fuzzy
-#~ msgid "Play File"
-#~ msgstr "/Αναπαραγωγή αρχείου"
-
-#, fuzzy
-#~ msgid "Load and play a file"
-#~ msgstr "Φόρτωση μεταδεδομένων από τις λίστες αναπαραγωγής και τα αρχεία"
-
-#, fuzzy
-#~ msgid "Play Location"
-#~ msgstr "/Αναπαραγωγή τοποθεσίας"
-
-#, fuzzy
-#~ msgid "Plugin services"
-#~ msgstr "Πρόσθετα"
-
-#, fuzzy
-#~ msgid "Preferences"
-#~ msgstr "/Προτιμήσεις"
-
-#, fuzzy
-#~ msgid "Open preferences window"
-#~ msgstr "Παράθυρο προτιμήσεων "
-
-#, fuzzy
-#~ msgid "_Quit"
-#~ msgstr "/_Έξοδος"
-
-#, fuzzy
-#~ msgid "Quit Audacious"
-#~ msgstr "Περί Audacious"
-
-#, fuzzy
-#~ msgid "Set A-B"
-#~ msgstr "/Επιλογή όλων"
-
-#, fuzzy
-#~ msgid "Clear A-B"
-#~ msgstr "/Καθαρισμός ουράς"
-
-#, fuzzy
-#~ msgid "Jump to Playlist Start"
-#~ msgstr "/Μετάβαση στην αρχή της λίστας τραγουδιών"
-
-#, fuzzy
-#~ msgid "Jump to File"
-#~ msgstr "/Μετάβαση σε αρχείο"
-
-#, fuzzy
-#~ msgid "Queue Toggle"
-#~ msgstr "/Εναλλαγή ουράς"
-
-#, fuzzy
-#~ msgid "Load"
-#~ msgstr "/Φόρτωση"
-
-#, fuzzy
-#~ msgid "Import"
-#~ msgstr "/Εισαγωγή"
-
-#~ msgid "Save"
-#~ msgstr "Αποθήκευση"
-
-#, fuzzy
-#~ msgid "Delete"
-#~ msgstr "/Διαγραφή"
-
-#~ msgid "Preset"
-#~ msgstr "Προκαθορισμένο"
-
-#~ msgid "Load preset"
-#~ msgstr "Φόρτωση προκαθορισμένου"
-
-#, fuzzy
-#~ msgid "Auto-load preset"
-#~ msgstr "/Φόρτωση/Αυτόματο φόρτωμα προκαθορισμένου"
-
-#, fuzzy
-#~ msgid "Load auto-load preset"
-#~ msgstr "/Φόρτωση/Αυτόματο φόρτωμα προκαθορισμένου"
-
-#~ msgid "Default"
-#~ msgstr "Προκαθορισμένο"
-
-#, fuzzy
-#~ msgid "Load default preset into equalizer"
-#~ msgstr "Αποθήκευση αυτόματου προκαθορισμένου"
-
-#, fuzzy
-#~ msgid "Zero"
-#~ msgstr "Retro"
-
-#, fuzzy
-#~ msgid "Set equalizer preset levels to zero"
-#~ msgstr "Αποθήκευση προκαθορισμένου ισοσταθμιστή"
-
-#, fuzzy
-#~ msgid "From file"
-#~ msgstr "/Φόρτωση/Από αρχείο"
-
-#, fuzzy
-#~ msgid "Load preset from file"
-#~ msgstr "Φόρτωση προκαθορισμένου"
-
-#, fuzzy
-#~ msgid "From WinAMP EQF file"
-#~ msgstr "/Φόρτωση/Από αρχείο EQF του WinAMP"
-
-#, fuzzy
-#~ msgid "Load preset from WinAMP EQF file"
-#~ msgstr "/Φόρτωση/Από αρχείο EQF του WinAMP"
-
-#, fuzzy
-#~ msgid "WinAMP Presets"
-#~ msgstr "/Εισαγωγή/Presets του WinAMP"
-
-#, fuzzy
-#~ msgid "Import WinAMP presets"
-#~ msgstr "/Εισαγωγή/Presets του WinAMP"
-
-#~ msgid "Save preset"
-#~ msgstr "Αποθήκευση προκαθορισμένου"
-
-#, fuzzy
-#~ msgid "Save auto-load preset"
-#~ msgstr "/Αποθήκευση/Αυτόματο φόρτωμα του preset"
-
-#, fuzzy
-#~ msgid "Save default preset"
-#~ msgstr "Αποθήκευση αυτόματου προκαθορισμένου"
-
-#, fuzzy
-#~ msgid "To file"
-#~ msgstr "/Φόρτωση/Από αρχείο"
-
-#, fuzzy
-#~ msgid "Save preset to file"
-#~ msgstr "Αποθήκευση προκαθορισμένου"
-
-#, fuzzy
-#~ msgid "To WinAMP EQF file"
-#~ msgstr "/Αποθήκευση/Σε αρχείο EQF του WinAMP"
-
-#, fuzzy
-#~ msgid "Save preset to WinAMP EQF file"
-#~ msgstr "/Αποθήκευση/Σε αρχείο EQF του WinAMP"
-
-#~ msgid "Delete preset"
-#~ msgstr "/Διαγραφή προκαθορισμένου"
-
-#, fuzzy
-#~ msgid "Delete auto-load preset"
-#~ msgstr "/Διαγραφή/Προκαθορισμένο που φορτώνεται αυτόματα"
-
-#~ msgid ""
-#~ "<b><big>Unable to load skin.</big></b>\n"
-#~ "\n"
-#~ "Check that skin at '%s' is usable and default skin is properly installed "
-#~ "at '%s'\n"
-#~ msgstr ""
-#~ "<b><big>Δεν ήταν δυνατό το φόρτωμα του skin.</big></b>\n"
-#~ "\n"
-#~ "Ελέγξτε ότι το skin στο '%s' είναι έγκυρο και ότι το προκαθορισμένο skin "
-#~ "είναι σωστά εγκατεστημένο στο '%s'\n"
-
-#, fuzzy
-#~ msgid "Headless operation enabled\n"
-#~ msgstr "Η λειτουργία δεν υποστηρίζεται"
-
-#~ msgid "Audacious core developers:"
-#~ msgstr "Βασικοί συντελεστές του Audacious:"
-
-#~ msgid "Audacious Equalizer"
-#~ msgstr "Ισοσταθμιστής Audacious"
-
-#, fuzzy
-#~ msgid "Play files"
-#~ msgstr "/Αναπαραγωγή αρχείου"
-
-#, fuzzy
-#~ msgid "Load files"
-#~ msgstr "/Φόρτωση/Από αρχείο"
-
-#~ msgid "%s - Audacious"
-#~ msgstr "%s - Audacious"
-
-#~ msgid "VBR"
-#~ msgstr "VBR"
-
-#~ msgid "mono"
-#~ msgstr "μονοφωνικό"
-
-#, fuzzy
-#~ msgid "Show main player window"
-#~ msgstr "Γραμματοσειρά κυρίου παραθύρου:"
-
-#, fuzzy
-#~ msgid "Ignore"
-#~ msgstr "κανένα"
-
-#, fuzzy
-#~ msgid "Seek to: %d:%-2.2d/%d:%-2.2d (%d%%)"
-#~ msgstr "ΜΕΤΑΒΑΣΗ: %d:%-2.2d/%d:%-2.2d (%d%%)"
-
-#, fuzzy
-#~ msgid "Volume: %d%%"
-#~ msgstr "Ένταση"
-
-#, fuzzy
-#~ msgid "Options Menu"
-#~ msgstr "Επιλογές:"
-
-#, fuzzy
-#~ msgid "Disable 'Always On Top'"
-#~ msgstr "/Πάντα στην κορυφή"
-
-#, fuzzy
-#~ msgid "Enable 'Always On Top'"
-#~ msgstr "/Πάντα στην κορυφή"
-
-#, fuzzy
-#~ msgid "File Info Box"
-#~ msgstr "Πληροφορίες αρχείου - %s"
-
-#, fuzzy
-#~ msgid "Disable 'GUI Scaling'"
-#~ msgstr "Απενεργοποίηση ετικετών ID3V2"
-
-#, fuzzy
-#~ msgid "Visualization Menu"
-#~ msgstr "/Οπτικοποίηση"
-
-#~ msgid ""
-#~ "<b><big>Couldn't open audio.</big></b>\n"
-#~ "\n"
-#~ "Please check that:\n"
-#~ "1. You have the correct output plugin selected.\n"
-#~ "2. No other programs is blocking the soundcard.\n"
-#~ "3. Your soundcard is configured properly.\n"
-#~ msgstr ""
-#~ "<b><big>Δεν ήνταν δυνατό το άνοιγμα του ήχου.</big></b>\n"
-#~ "\n"
-#~ "Παρακαλώ ελέγξτε ότι:\n"
-#~ "1. Έχετε επιλέξει το σωστό πρόσθετο εξόδου.\n"
-#~ "2. Κανένα άλλο πρόγραμμα δε μπλοκάρει την κάρτα ήχου.\n"
-#~ "3. Η κάρτα ήχου σας είναι σωστά ρυθμισμένη.\n"
-
-#, fuzzy
-#~ msgid "Autoscroll Songname"
-#~ msgstr "/Αυτόματη κύλιση τίτλου"
-
-#, fuzzy
-#~ msgid "Show Player"
-#~ msgstr "/Εμφάνιση λίστας αναπαραγωγής"
-
-#, fuzzy
-#~ msgid "Show Playlist Editor"
-#~ msgstr "/Εμφάνιση λίστας αναπαραγωγής"
-
-#, fuzzy
-#~ msgid "Show Equalizer"
-#~ msgstr "/Εμφάνιση ισοσταθμιστή"
-
-#, fuzzy
-#~ msgid "Always on Top"
-#~ msgstr "/Πάντα στην κορυφή"
-
-#, fuzzy
-#~ msgid "Put on All Workspaces"
-#~ msgstr "/Τοποθέτηση σε όλους τους χώρους εργασίας"
-
-#, fuzzy
-#~ msgid "Roll up Player"
-#~ msgstr "/Τύλιγμα του αναπαραγωγέα"
-
-#, fuzzy
-#~ msgid "Roll up Playlist Editor"
-#~ msgstr "/Τύλιγμα του επεξεργαστή λίστας"
-
-#, fuzzy
-#~ msgid "Roll up Equalizer"
-#~ msgstr "/Τύλιγμα του ισοσταθμιστή"
-
-#, fuzzy
-#~ msgid "Scale"
-#~ msgstr "Αποθήκευση"
-
-#, fuzzy
-#~ msgid "Analyzer"
-#~ msgstr "/Αναλυτής"
-
-#, fuzzy
-#~ msgid "Scope"
-#~ msgstr "/Φάσμα"
-
-#, fuzzy
-#~ msgid "Voiceprint"
-#~ msgstr "/Αναλυτής/Φωτιά"
-
-#, fuzzy
-#~ msgid "Normal"
-#~ msgstr "Μορφή:"
-
-#, fuzzy
-#~ msgid "Fire"
-#~ msgstr "Satire"
-
-#, fuzzy
-#~ msgid "Vertical Lines"
-#~ msgstr "/Αναλυτής/Κάθετες γραμμές"
-
-#, fuzzy
-#~ msgid "Lines"
-#~ msgstr "γραμμές"
-
-#, fuzzy
-#~ msgid "Bars"
-#~ msgstr "Bass"
-
-#, fuzzy
-#~ msgid "Dot Scope"
-#~ msgstr "Όχι επανάληψη"
-
-#, fuzzy
-#~ msgid "Line Scope"
-#~ msgstr "/Φάσμα/Γραμμές"
-
-#, fuzzy
-#~ msgid "Solid Scope"
-#~ msgstr "/Φάσμα/Συμπαγές"
-
-#, fuzzy
-#~ msgid "Smooth"
-#~ msgstr "μονοφωνικό"
-
-#, fuzzy
-#~ msgid "Full (~50 fps)"
-#~ msgstr "/Ρυθμός ανανέωσης/Πλήρης (~50fps)"
-
-#, fuzzy
-#~ msgid "Half (~25 fps)"
-#~ msgstr "/Ρυθμός ανανέωσης/Μισός (~25fps)"
-
-#, fuzzy
-#~ msgid "Quarter (~13 fps)"
-#~ msgstr "/Ρυθμός ανανέωσης/Τέταρτο (~13fps)"
-
-#, fuzzy
-#~ msgid "Eighth (~6 fps)"
-#~ msgstr "/Ρυθμός ανανέωσης/Όγδοο (~6 fps)"
-
-#, fuzzy
-#~ msgid "Slowest"
-#~ msgstr "Showtunes"
-
-#, fuzzy
-#~ msgid "Slow"
-#~ msgstr "χαμηλό"
-
-#, fuzzy
-#~ msgid "Medium"
-#~ msgstr "μεσαίο"
-
-#, fuzzy
-#~ msgid "Time Elapsed"
-#~ msgstr "/Χρόνος που πέρασε"
-
-#, fuzzy
-#~ msgid "Time Remaining"
-#~ msgstr "/Υπολειπόμενος χρόνος"
-
-#, fuzzy
-#~ msgid "Plugin Services"
-#~ msgstr "Πρόσθετα"
-
-#, fuzzy
-#~ msgid "Search entries in active playlist"
-#~ msgstr "Εμφάνιση διαχωριστικών στη λίστα αναπαραγωγής"
-
-#, fuzzy
-#~ msgid "Title: "
-#~ msgstr "Τίτλος:"
-
-#, fuzzy
-#~ msgid "Album: "
-#~ msgstr "Άλμπουμ:"
-
-#, fuzzy
-#~ msgid "Artist: "
-#~ msgstr "Καλλιτέχνης:"
-
-#, fuzzy
-#~ msgid "Filename: "
-#~ msgstr "Όνομα αρχείου:"
-
-#~ msgid "Audacious Playlist Editor"
-#~ msgstr "Επεξεργαστής λίστας αναπαραγωγής"
-
-#~ msgid "Appearance"
-#~ msgstr "Εμφάνιση"
-
-#~ msgid "<b>_Fonts</b>"
-#~ msgstr "<b>_Γραμματοσειρές</b>"
-
-#~ msgid "_Player:"
-#~ msgstr "_Αναπαραγωγέας:"
-
-#~ msgid "Select main player window font:"
-#~ msgstr "Γραμματοσειρά κυρίου παραθύρου:"
-
-#~ msgid "_Playlist:"
-#~ msgstr "_Λίστα τραγουδιών:"
-
-#, fuzzy
-#~ msgid "Select playlist font:"
-#~ msgstr "Γραμματοσειρά κυρίου παραθύρου:"
-
-#~ msgid "Use Bitmap fonts if available"
-#~ msgstr "Χρήση γραμματοσειρών Bitmap αν είναι διαθέσιμες"
-
-#~ msgid "<b>_Miscellaneous</b>"
-#~ msgstr "<b>_Διάφορα</b>"
-
-#~ msgid "Show track numbers in playlist"
-#~ msgstr "Εμφάνιση Α/Α κομματιού στη λίστα αναπαραγωγής"
-
-#~ msgid "Show separators in playlist"
-#~ msgstr "Εμφάνιση διαχωριστικών στη λίστα αναπαραγωγής"
-
-#~ msgid "On load"
-#~ msgstr "Κατά το άνοιγμα"
-
-#~ msgid "Load metadata when adding the file to the playlist or opening it"
-#~ msgstr ""
-#~ "Φόρτωση μεταδεδομένων κατά την προσθήκη του αρχείου στη λίστα "
-#~ "αναπαραγωγής ή κατά το άνοιγμά του"
-
-#~ msgid "On display"
-#~ msgstr "Κατά την προβολή"
-
-#, fuzzy
-#~ msgid ""
-#~ "Load metadata on demand when displaying the file in the playlist. You may "
-#~ "need to set \"Detect file formats on demand\" in Audio page for full "
-#~ "benefit."
-#~ msgstr ""
-#~ "Φόρτωση μεταδεδομένων κατά την προσθήκη του αρχείου στη λίστα "
-#~ "αναπαραγωγής ή κατά το άνοιγμά του"
-
-#, fuzzy
-#~ msgid "Blue"
-#~ msgstr "Blues"
-
-#, fuzzy
-#~ msgid "Green"
-#~ msgstr "Ελληνικά:"
-
-#~ msgid "<b>_Skin</b>"
-#~ msgstr "<b>_Skin</b>"
-
-#, fuzzy
-#~ msgid "Refresh skin list"
-#~ msgstr "Ανανέωση λίστας skin"
-
-#~ msgid "PREAMP"
-#~ msgstr "PREAMP"
-
-#~ msgid "60HZ"
-#~ msgstr "60HZ"
-
-#~ msgid "170HZ"
-#~ msgstr "170HZ"
-
-#~ msgid "310HZ"
-#~ msgstr "310HZ"
-
-#~ msgid "600HZ"
-#~ msgstr "600HZ"
-
-#~ msgid "1KHZ"
-#~ msgstr "1KHZ"
-
-#~ msgid "3KHZ"
-#~ msgstr "3KHZ"
-
-#~ msgid "6KHZ"
-#~ msgstr "6KHZ"
-
-#~ msgid "12KHZ"
-#~ msgstr "12KHZ"
-
-#~ msgid "14KHZ"
-#~ msgstr "14KHZ"
-
-#~ msgid "16KHZ"
-#~ msgstr "16KHZ"
-
-#~ msgid "Archived Winamp 2.x skin"
-#~ msgstr "Συμπιεσμένο Winamp 2.x skin"
-
-#~ msgid "Unarchived Winamp 2.x skin"
-#~ msgstr "Ασυμπίεστο Winamp 2.x skin"
-
-#~ msgid "Use custom cursors"
-#~ msgstr "Χρήση προσαρμοσμένων δεικτών ποντικιού"
-
-#, fuzzy
-#~ msgid "Reload Plugins"
-#~ msgstr "Πρόσθετα"
-
-#~ msgid ""
-#~ "Sorry, threads isn't supported on your platform.\n"
-#~ "\n"
-#~ "If you're on a libc5 based linux system and installed Glib & GTK+ before "
-#~ "you\n"
-#~ "installed LinuxThreads you need to recompile Glib & GTK+.\n"
-#~ msgstr ""
-#~ "Sorry, threads isn't supported on your platform.\n"
-#~ "\n"
-#~ "If you're on a libc5 based linux system and installed Glib & GTK+ before "
-#~ "you\n"
-#~ "installed LinuxThreads you need to recompile Glib & GTK+.\n"
-
-#, fuzzy
-#~ msgid "Error in Audacious."
-#~ msgstr "%s - Audacious"
-
-#, fuzzy
-#~ msgid "Enable 6 dB hard limiter"
-#~ msgstr "Ορισμός παραμέτρων σκληρού δίσκου"
-
-#, fuzzy
-#~ msgid "Select which Audacious session ID to use"
-#~ msgstr "Επιλογή συνεδρίας Audacious/BMP/XMMS (Προκαθορισμένη: 0)"
-
-#~ msgid "<b>Presets</b>"
-#~ msgstr "<b>Προκαθορισμένα</b>"
-
-#~ msgid "File preset extension:"
-#~ msgstr "Επέκταση αρχείου ρυθμίσεων:"
-
-#~ msgid "Directory preset file:"
-#~ msgstr "Αρχείο καταλόγου ρυθμίσεων:"
-
-#~ msgid ""
-#~ "<b><big>Unable to create %s.</big></b>\n"
-#~ "\n"
-#~ "Could not open glade file (%s). Please check your installation.\n"
-#~ msgstr ""
-#~ "<b><big>Δεν ήταν δυνατή η δημιουργία του %s.</big></b>\n"
-#~ "\n"
-#~ "Δεν ήταν δυνατό το άνοιγμα του αρχείου glade (%s). Παρακαλούμε ελέγξτε "
-#~ "την εγκατάστασή σας.\n"
-
-#~ msgid ""
-#~ "TITLE\n"
-#~ "ARTIST - TITLE\n"
-#~ "ARTIST - ALBUM - TITLE\n"
-#~ "ARTIST - ALBUM - TRACK. TITLE\n"
-#~ "ARTIST [ ALBUM ] - TRACK. TITLE\n"
-#~ "ALBUM - TITLE\n"
-#~ "Custom"
-#~ msgstr ""
-#~ "ΤΙΤΛΟΣ\n"
-#~ "ΚΑΛΛΙΤΕΧΝΗΣ - ΤΙΤΛΟΣ\n"
-#~ "ΚΑΛΛΙΤΕΧΝΗΣ - ΑΛΜΠΟΥΜ - ΤΙΤΛΟΣ\n"
-#~ "ΚΑΛΛΙΤΕΧΝΗΣ [ ΑΛΜΠΟΥΜ ] - ΤΙΤΛΟΣ\n"
-#~ "ΑΛΜΠΟΥΜ - ΤΙΤΛΟΣ\n"
-#~ "Προσαρμοσμένο"
-
-#, fuzzy
-#~ msgid "Track Information Window"
-#~ msgstr "Ρυθμίσεις αναδυόμενων πληροφοριών"
-
-#~ msgid "Preferences Window"
-#~ msgstr "Παράθυρο προτιμήσεων "
-
-#, fuzzy
-#~ msgid "Close"
-#~ msgstr "/Κλείσιμο"
-
-#, fuzzy
-#~ msgid "<b>Artist:</b> %s"
-#~ msgstr "Καλλιτέχνης"
-
-#, fuzzy
-#~ msgid "<b>Title:</b> %s"
-#~ msgstr "<b>Τίτλος:</b>"
-
-#, fuzzy
-#~ msgid "<b>Album:</b> %s"
-#~ msgstr "<b>Άλμπουμ:</b>"
-
-#, fuzzy
-#~ msgid "Audacious last.fm radio tuner"
-#~ msgstr "Επεξεργαστής λίστας αναπαραγωγής"
-
-#, fuzzy
-#~ msgid "<b>Artist:</b>"
-#~ msgstr "Καλλιτέχνης"
-
-#, fuzzy
-#~ msgid "<b>Title:</b>"
-#~ msgstr "<b>Τίτλος:</b>"
-
-#, fuzzy
-#~ msgid "<b>Album:</b>"
-#~ msgstr "<b>Άλμπουμ:</b>"
-
-#~ msgid "VOLUME: %d%%"
-#~ msgstr "ΕΝΤΑΣΗ: %d%%"
-
-#~ msgid "BALANCE: %d%% LEFT"
-#~ msgstr "BALANCE: %d%% ΑΡΙΣΤΕΡΑ"
-
-#~ msgid "BALANCE: CENTER"
-#~ msgstr "BALANCE: ΚΕΝΤΡΟ"
-
-#~ msgid "BALANCE: %d%% RIGHT"
-#~ msgstr "BALANCE: %d%% ΔΕΞΙΑ"
-
-#, fuzzy
-#~ msgid "Last.fm radio"
-#~ msgstr "/Αναπαραγωγή τοποθεσίας"
-
-#, fuzzy
-#~ msgid "Play Last.fm radio"
-#~ msgstr "/Αναπαραγωγή τοποθεσίας"
-
-#, fuzzy
-#~ msgid "Converter Type:"
-#~ msgstr "Μετατροπή συνόλου χαρακτήρων"
-
-#~ msgid ""
-#~ "<b><big>No playable CD found.</big></b>\n"
-#~ "\n"
-#~ "No CD inserted, or inserted CD is not an audio CD.\n"
-#~ msgstr ""
-#~ "<b><big>Δε βρέθηκε αναπαραγώγιμο CD.</big></b>\n"
-#~ "\n"
-#~ "Δεν τοποθετήσατε CD ή αυτό που τοποθετήσατε δεν είναι CD ήχου.\n"
-
-#, fuzzy
-#~ msgid "Add CD..."
-#~ msgstr "/Προσθήκη CD..."
-
-#, fuzzy
-#~ msgid "Play CD"
-#~ msgstr "/Αναπαραγωγή CD"
-
-#~ msgid "Performer/Artist"
-#~ msgstr "Καλλιτέχνης"
-
-#~ msgid "File name"
-#~ msgstr "Όνομα αρχείου"
-
-#~ msgid "File path"
-#~ msgstr "Διαδρομή αρχείου"
-
-#~ msgid "File extension"
-#~ msgstr "Επέκταση αρχείου"
-
-#~ msgid "Track number"
-#~ msgstr "Νούμερο κομματιού"
-
-#~ msgid "%{n:...%}: Display \"...\" only if element %n is present"
-#~ msgstr "%{n:...%}: Απεικόνιση \"...\" μόνο εάν το στοιχείο %n υπάρχει"
-
-#~ msgid ""
-#~ "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
-#~ "Please use GTK+ %s or newer.\n"
-#~ msgstr ""
-#~ "Η έκδοση του GTK+ που έχετε (%d.%d.%d) δεν είναι συμβατή με το "
-#~ "Audacious.\n"
-#~ "Παρακαλώ χρησιμοποιείστε το GTK+ %s ή νεότερο.\n"
-
-#~ msgid "OPTIONS MENU"
-#~ msgstr "ΕΠΙΛΟΓΕΣ"
-
-#~ msgid "DISABLE ALWAYS ON TOP"
-#~ msgstr "ΑΠΕΝΕΡΓΟΠΟΙΗΣΗ του ΠΑΝΤΑ ΣΕ ΠΡΩΤΟ ΠΛΑΝΟ"
-
-#~ msgid "ENABLE ALWAYS ON TOP"
-#~ msgstr "ΕΝΕΡΓΟΠΟΙΗΣΗ του ΠΑΝΤΑ ΣΤΟ ΠΡΟΣΚΗΝΙΟ"
-
-#~ msgid "FILE INFO BOX"
-#~ msgstr "ΠΛΗΡΟΦΟΡΙΕΣ ΑΡΧΕΙΟΥ"
-
-#~ msgid "VISUALIZATION MENU"
-#~ msgstr "ΜΕΝΟΥ ΟΠΤΙΚΟΠΟΙΗΣΗΣ"
-
-#, fuzzy
-#~ msgid "Track name: "
-#~ msgstr "Ονόματα αρχείων:"
-
-#~ msgid ""
-#~ "<b><big>Unable to play files.</big></b>\n"
-#~ "\n"
-#~ "The following files could not be played. Please check that:\n"
-#~ "1. they are accessible.\n"
-#~ "2. you have enabled the media plugins required."
-#~ msgstr ""
-#~ "<b><big>Δεν ήταν δυνατή η αναπαραγωγή αρχείων.</big></b>\n"
-#~ "\n"
-#~ "Τα ακόλουθα αρχεία δεν ήταν δυνατόν να αναπαραγχθούν. Παρακαλούμε ελέγξτε "
-#~ "ότι:\n"
-#~ "1. είναι προσβάσιμα.\n"
-#~ "2. έχετε ενεργοποιήσει τα πρόσθετα που απαιτούνται."
-
-#~ msgid "Show more _details"
-#~ msgstr "Προβολή περισσότερων _λεπτομερειών"
-
-#, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "Received SIGSEGV\n"
-#~ "\n"
-#~ "This could be a bug in Audacious. If you don't know why this happened, "
-#~ "file a bug at http://bugs-meta.atheme.org/\n"
-#~ "\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Ελήφθη SIGSEGV\n"
-#~ "\n"
-#~ "Αυτό μπορεί να είναι σφάλμα στο Audacious. Εάν δεν γνωρίζετε γιατί "
-#~ "συνέβη,\n"
-#~ "συμπληρώστε μια αναφορά σφάλματος στο http://bugs.nenolod.net/\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "Enables playlist transparency. This is not recommended for slower "
-#~ "machines as it requires some CPU time to create and cache the pixmaps "
-#~ "used for the transparency."
-#~ msgstr ""
-#~ "Ενεργοποιεί διαφάνεια για τη λίστα αναπαραγωγής. Αυτό δεν συνιστάται σε "
-#~ "πιο αργά μηχανήματα γιατί απαιτεί χρόνο από τον κεντρικό επεξεργαστή για "
-#~ "τη δημιουργία και αποθήκευση των εικόνων που χρησιμοποιούνται στη "
-#~ "διαφάνεια."
-
-#~ msgid "Enable playlist transparency"
-#~ msgstr "Ενεργοποίηση διαφάνειας λίστας αναπαραγωγής"
-
-#~ msgid "%s: option `%s' is ambiguous\n"
-#~ msgstr "%s: η επιλογή `%s' είναι ασαφής\n"
-
-#~ msgid "%s: option `--%s' doesn't allow an argument\n"
-#~ msgstr "%s: η επιλογή `--%s' δεν επιτρέπει ορίσματα\n"
-
-#~ msgid "%s: option `%c%s' doesn't allow an argument\n"
-#~ msgstr "%s: η επιλογή `%c%s' δεν επιτρέπει ορίσματα\n"
-
-#~ msgid "%s: option `%s' requires an argument\n"
-#~ msgstr "%s: η επιλογή `%s' απαιτεί ένα όρισμα\n"
-
-#~ msgid "%s: unrecognized option `%c%s'\n"
-#~ msgstr "%s: δεν αναγνωρίζεται η επιλογή `%c%s'\n"
-
-#~ msgid "%s: illegal option -- %c\n"
-#~ msgstr "%s: άκυρη επιλογή -- %c\n"
-
-#~ msgid "%s: invalid option -- %c\n"
-#~ msgstr "%s: λανθασμένη επιλογή -- %c\n"
-
-#~ msgid "%s: option requires an argument -- %c\n"
-#~ msgstr "%s: η επιλογή απαιτεί ένα όρισμα -- %c\n"
-
-#~ msgid "%s: option `-W %s' is ambiguous\n"
-#~ msgstr "%s: η επιλογή `-W %s' είναι ασαφής\n"
-
-#~ msgid "%s: option `-W %s' doesn't allow an argument\n"
-#~ msgstr "%s: η επιλογή `-W \"%s` δεν επιτρέπει ορίσματα\n"
-
-#~ msgid ""
-#~ "Usage: audacious [options] [files] ...\n"
-#~ "\n"
-#~ "Options:\n"
-#~ "--------\n"
-#~ msgstr ""
-#~ "Χρήση: audacious [επιλογές] [αρχεία] ...\n"
-#~ "\n"
-#~ "Επιλογές:\n"
-#~ "--------\n"
-
-#~ msgid "Display this text and exit"
-#~ msgstr "Εμφάνιση αυτού του κειμένου και έξοδος"
-
-#~ msgid "Activate Audacious"
-#~ msgstr "Ενεργοποίηση Audacious"
-
-#~ msgid "Previous session ID"
-#~ msgstr "ID προηγούμενης συνεδρίας"
-
-#~ msgid "Disable error/warning interception (logging)"
-#~ msgstr "Απενεργοποίηση καταγραφής σφαλμάτων"
-
-#~ msgid "Print version number and exit\n"
-#~ msgstr "Εμφάνιση του αριθμού έκδοσης και έξοδος\n"
-
-#~ msgid "Add/Open Files dialog"
-#~ msgstr "Παράθυρο διαλόγου προσθήκης/ανοίγματος αρχείων"
-
-#~ msgid "Close Dialog on Add"
-#~ msgstr "Κλείσιμο του διαλόγου κατά την προσθήκη"
-
-#~ msgid "Deselect All"
-#~ msgstr "Αποεπιλογή όλων"
-
-#, fuzzy
-#~ msgid "Artist Popup"
-#~ msgstr "Καλλιτέχνης"
-
-#, fuzzy
-#~ msgid "<i>Genre</i>"
-#~ msgstr "<b>Γένος:</b>"
-
-#, fuzzy
-#~ msgid "<i>Year</i>"
-#~ msgstr "<b>Έτος:</b>"
-
-#, fuzzy
-#~ msgid "<i>Track Number</i>"
-#~ msgstr "Νούμερο κομματιού"
-
-#, fuzzy
-#~ msgid "<i>Track Length</i>"
-#~ msgstr "Διάρκεια κομματιού:"
-
-#~ msgid "label65"
-#~ msgstr "label65"
-
-#~ msgid "label76"
-#~ msgstr "label76"
-
-#~ msgid "/View Track Details"
-#~ msgstr "/Εμφάνιση πληροφοριών αρχείου"
-
-#~ msgid "/Visualization Mode/Analyzer"
-#~ msgstr "/Οπτικοποίηση/Αναλυτής"
-
-#~ msgid "/Visualization Mode/Scope"
-#~ msgstr "/Οπτικοποίηση/Φάσμα"
-
-#, fuzzy
-#~ msgid "/Visualization Mode/Voiceprint"
-#~ msgstr "/Οπτικοποίηση/Φάσμα"
-
-#~ msgid "/Visualization Mode/Off"
-#~ msgstr "/Οπτικοποίηση/Κλειστή"
-
-#~ msgid "/Analyzer Mode/Normal"
-#~ msgstr "/Αναλυτής/Κανονικός"
-
-#~ msgid "/Analyzer Mode/Lines"
-#~ msgstr "/Αναλυτής/Γραμμές"
-
-#~ msgid "/Analyzer Mode/Bars"
-#~ msgstr "/Αναλυτής/Μπάρες"
-
-#~ msgid "/Analyzer Mode/Peaks"
-#~ msgstr "/Αναλυτής/Κορυφές"
-
-#~ msgid "/Scope Mode/Dot Scope"
-#~ msgstr "/Φάσμα/Τελείες"
-
-#, fuzzy
-#~ msgid "/Voiceprint mode/Normal"
-#~ msgstr "/Αναλυτής/Κανονικός"
-
-#, fuzzy
-#~ msgid "/WindowShade VU Mode/Normal"
-#~ msgstr "Χρήση Κανονικής λειτουργίας επισήμανσης"
-
-#~ msgid "/Analyzer Falloff/Slowest"
-#~ msgstr "/Πτώση αναλυτή/Αργή"
-
-#~ msgid "/Analyzer Falloff/Slow"
-#~ msgstr "/Πτώση αναλυτή/Αργή"
-
-#~ msgid "/Analyzer Falloff/Medium"
-#~ msgstr "/Πτώση αναλυτή/Μέση"
-
-#~ msgid "/Analyzer Falloff/Fast"
-#~ msgstr "/Πτώση αναλυτή/Γρήγορη"
-
-#~ msgid "/Analyzer Falloff/Fastest"
-#~ msgstr "/Πτώση αναλυτή/Γρηγορότερη"
-
-#~ msgid "/Peaks Falloff/Slowest"
-#~ msgstr "/Πτώση κορυφών/Αργή"
-
-#~ msgid "/Peaks Falloff/Slow"
-#~ msgstr "/Πτώση κορυφών/Αργή"
-
-#~ msgid "/Peaks Falloff/Medium"
-#~ msgstr "/Πτώση κορυφών/Μέση"
-
-#~ msgid "/Peaks Falloff/Fast"
-#~ msgstr "/Πτώση κορυφών/Γρήγορη"
-
-#~ msgid "/Peaks Falloff/Fastest"
-#~ msgstr "/Πτώση κορυφών/Γρηγορότερη"
-
-#~ msgid "/-"
-#~ msgstr "/-"
-
-#~ msgid "/Jump to Time"
-#~ msgstr "/Μετάβαση σε χρόνο"
-
-#~ msgid "/About Audacious"
-#~ msgstr "/Περί Audacious"
-
-#~ msgid "/Files..."
-#~ msgstr "/Αρχεία..."
-
-#~ msgid "/Internet location..."
-#~ msgstr "/Τοποθεσία Ιnternet..."
-
-#, fuzzy
-#~ msgid "New List"
-#~ msgstr "/Νέα λίστα"
-
-#, fuzzy
-#~ msgid "Creates a new playlist."
-#~ msgstr "Εμφάνιση διαχωριστικών στη λίστα αναπαραγωγής"
-
-#, fuzzy
-#~ msgid "Displays track information."
-#~ msgstr "Ρύθμιση Flac"
-
-#~ msgid "/Load/Preset"
-#~ msgstr "/Φόρτωση/Προκαθορισμένο"
-
-#~ msgid "/Load/Default"
-#~ msgstr "/Φόρτωση/Προεπιλεγμένο"
-
-#~ msgid "/Load/Zero"
-#~ msgstr "/Φόρτωση/Μηδενικό"
-
-#~ msgid "/Save"
-#~ msgstr "/Αποθήκευση"
-
-#~ msgid "/Save/Preset"
-#~ msgstr "/Αποθήκευση/Preset"
-
-#~ msgid "/Save/Default"
-#~ msgstr "/Αποθήκευση/Προκαθορισμένο"
-
-#~ msgid "/Save/To file"
-#~ msgstr "/Αποθήκευση/Σε αρχείο"
-
-#~ msgid "/Delete/Preset"
-#~ msgstr "/Διαγραφή/Προκαθορισμένο"
-
-#~ msgid "Load auto-preset"
-#~ msgstr "Φόρτωση αυτόματου προκαθορισμένου"
-
-#~ msgid "Load equalizer preset"
-#~ msgstr "Φόρτωση προκαθορισμένου ισοσταθμιστή"
-
-#~ msgid "Delete auto-preset"
-#~ msgstr "Διαγραφή προκαθορισμένου που φορτώνεται αυτόματα"
-
-#~ msgid "/Show Popup Info"
-#~ msgstr "/Εμφάνιση αναδυόμενων πληροφοριών"
-
-#~ msgid "/Remove Duplicates/By Title"
-#~ msgstr "/Αφαίρεση διπλών/Κατά όνομα"
-
-#~ msgid "/Remove Duplicates/By Filename"
-#~ msgstr "/Αφαίρεση διπλών/Κατά όνομα αρχείου"
-
-#~ msgid "/Update View"
-#~ msgstr "/Ανανέωση προβολής"
-
-#~ msgid "/Select All"
-#~ msgstr "/Επιλογή όλων"
-
-#~ msgid "/Sort List/By Date"
-#~ msgstr "/Ταξινόμηση λίστας/Κατά χρονολογία"
-
-#~ msgid "/Sort Selection/By Title"
-#~ msgstr "/Ταξινόμηση επιλογής/Κατά όνομα"
-
-#~ msgid "/Sort Selection/By Artist"
-#~ msgstr "/Ταξινόμηση επιλογής/Κατά καλλιτέχνη"
-
-#~ msgid "/Sort Selection/By Filename"
-#~ msgstr "/Ταξινόμηση επιλογής/Κατά όνομα αρχείου"
-
-#~ msgid "/Sort Selection/By Path + Filename"
-#~ msgstr "/Ταξινόμηση λίστας/Κατά διαδρομή + όνομα αρχείου"
-
-#~ msgid "/Sort Selection/By Date"
-#~ msgstr "/Ταξινόμηση επιλογής/Κατά χρονολογία"
-
-#, fuzzy
-#~ msgid "/Sort Selection/By Track Number"
-#~ msgstr "/Ταξινόμηση επιλογής/Κατά χρονολογία"
-
-#, fuzzy
-#~ msgid "/Sort Selection/By Playlist Entry"
-#~ msgstr "/Ταξινόμηση επιλογής/Κατά καλλιτέχνη"
-
-#, fuzzy
-#~ msgid "<b>_Miscillaneous UI Features</b>"
-#~ msgstr "<b>_Διάφορα</b>"
-
-#~ msgid "AudioCompress "
-#~ msgstr "AudioCompress "
-
-#~ msgid "About AudioCompress"
-#~ msgstr "Περί AudioCompress"
-
-#~ msgid "Ok"
-#~ msgstr "Εντάξει"
-
-#~ msgid "About Extra Stereo Plugin"
-#~ msgstr "Περί του αρθρώματος LIRC για το Audacious"
-
-#~ msgid "Configure Extra Stereo"
-#~ msgstr "Ρύθμιση πρόσθετου στέρεο"
-
-#~ msgid "Effect intensity:"
-#~ msgstr "Ένταση εφέ:"
-
-#~ msgid "Cancel"
-#~ msgstr "Άκυρο"
-
-#~ msgid "Apply"
-#~ msgstr "Εφαρμογή"
-
-#~ msgid "About LIRC Audacious Plugin"
-#~ msgstr "Περί του αρθρώματος LIRC για το Audacious"
-
-#~ msgid "LIRC Plugin "
-#~ msgstr "Πρόσθετο LIRC"
-
-#~ msgid ""
-#~ "\n"
-#~ "A simple plugin that lets you control\n"
-#~ "Audacious using the LIRC remote control daemon\n"
-#~ "\n"
-#~ "Adapted for Audacious usage by Tony Vroon <chainsaw@gentoo.org>\n"
-#~ "from the XMMS LIRC plugin by:\n"
-#~ "Carl van Schaik <carl@leg.uct.ac.za>\n"
-#~ "Christoph Bartelmus <xmms@bartelmus.de>\n"
-#~ "You can get LIRC information at:\n"
-#~ "http://fsinfo.cs.uni-sb.de/~columbus/lirc/index.html"
-#~ msgstr ""
-#~ "\n"
-#~ "Ένα απλό πρόσθετο που σας επιτρέπει να ελέγχετε\n"
-#~ "το Audacious, χρησιμοποιώντας το δαίμονα απομακρυσμένης διαχείρισης του "
-#~ "LIRC\n"
-#~ "\n"
-#~ "Προσαρμοσμένο για χρήση με το Audacious από τον Tony Vroon "
-#~ "<chainsaw@gentoo.org>\n"
-#~ "βασισμένο στο πρόσθετο LIRC του XMMS από τους:\n"
-#~ "arl van Schaik <carl@leg.uct.ac.za>\n"
-#~ "Christoph Bartelmus <xmms@bartelmus.de>\n"
-#~ "Μπορείτε να βρείτε πληροφορίες σχετικές με το LIRC στο:\n"
-#~ "http://fsinfo.cs.uni-sb.de/~columbus/lirc/index.html"
-
-#~ msgid "LIRC Plugin"
-#~ msgstr "Πρόσθετο LIRC"
-
-#~ msgid "%s: could not init LIRC support\n"
-#~ msgstr "%s: δεν ήταν δυνατή η αρχικοποίηση της υποστήριξης LIRC\n"
-
-#~ msgid ""
-#~ "%s: could not read LIRC config file\n"
-#~ "%s: please read the documentation of LIRC\n"
-#~ "%s: how to create a proper config file\n"
-#~ msgstr ""
-#~ "%s: δεν ήταν δυνατή η ανάγνωση του αρχείου ρυθμίσεων LIRC\n"
-#~ "%s: παρακαλούμε ανατρέξτε στην τεκμηρίωση του LIRC\n"
-#~ "%s: για το πως να δημιουργήσετε ένα έγκυρο αρχείο ρυθμίσεων\n"
-
-#~ msgid "%s: unknown command \"%s\"\n"
-#~ msgstr "%s: άγνωστη εντολή \"%s\"\n"
-
-#~ msgid "%s: disconnected from LIRC\n"
-#~ msgstr "%s: αποσυνδέθηκε από το LIRC\n"
-
-#~ msgid "Username:"
-#~ msgstr "Όνομα χρήστη:"
-
-#~ msgid "Password:"
-#~ msgstr "Κωδικός πρόσβασης:"
-
-#, fuzzy
-#~ msgid "About Scrobbler Plugin"
-#~ msgstr "Περί του Αρθρώματος ESounD"
-
-#, fuzzy
-#~ msgid "Scrobbler Plugin"
-#~ msgstr "Διαχειριστής πρόσθετων λειτουργιών"
-
-#~ msgid "Song Change %s"
-#~ msgstr "Αλλαγή τραγουδιού %s"
-
-#~ msgid "Commands"
-#~ msgstr "Εντολές"
-
-#~ msgid "Command to run when Audacious starts a new song."
-#~ msgstr "Εντολή προς εκτέλεση όταν το Audacious ξεκινά ένα νέο τραγούδι."
-
-#~ msgid "Command:"
-#~ msgstr "Εντολή:"
-
-#~ msgid "Command to run toward the end of a song."
-#~ msgstr "Εντολή προς εκτέλεση κατά το τέλος ενός τραγουδιού."
-
-#~ msgid "Command to run when Audacious reaches the end of the playlist."
-#~ msgstr ""
-#~ "Εντολή προς εκτέλεση όταν το Audacious φτάσει στο τέλος της λίστας "
-#~ "αναπαραγωγής."
-
-#~ msgid ""
-#~ "You can use the following format strings which\n"
-#~ "will be substituted before calling the command\n"
-#~ "(not all are useful for the end-of-playlist command).\n"
-#~ "\n"
-#~ "%%F: Frequency (in hertz)\n"
-#~ "%%c: Number of channels\n"
-#~ "%%f: filename (full path)\n"
-#~ "%%l: length (in milliseconds)\n"
-#~ "%%n or %%s: Song name\n"
-#~ "%%r: Rate (in bits per second)\n"
-#~ "%%t: Playlist position (%%02d)\n"
-#~ "%%p: Currently playing (1 or 0)"
-#~ msgstr ""
-#~ "Μπορείτε να χρησιμοποιήσετε τα ακόλουθα στοιχεία\n"
-#~ "μορφοποίησης που θα αντικατασταθούν κατά την\n"
-#~ "εκτέλεση της εντολής (δεν είναι όλα χρήσιμα για μια\n"
-#~ "εντολή τέλους λίστας αναπαραγωγής).\n"
-#~ "\n"
-#~ "%%F: Συχνότητα (σε hertz)\n"
-#~ "%%c: Αριθμός καναλιών\n"
-#~ "%%f: όνομα αρχείου (πλήρης διαδρομή)\n"
-#~ "%%l: μήκος (σε milliseconds)\n"
-#~ "%%n ή %%s: Τίτλος τραγουδιού\n"
-#~ "%%r: Ρυθμός διεγματοληψίας (bps)\n"
-#~ "%%t: Θέση λίστας αναπαραγωγής (%%02d)\n"
-#~ "%%p: Αν γίνεται αναπαραγωγή (1 or 0)"
-
-#~ msgid "About "
-#~ msgstr "Περί"
-
-#~ msgid "AMIDI-Plug - warning"
-#~ msgstr "AMIDI-Plug - προειδοποίηση"
-
-#~ msgid "AMIDI-Plug - select file"
-#~ msgstr "AMIDI-Plug - επιλογή αρχείου"
-
-#~ msgid "AMIDI-Plug - configuration"
-#~ msgstr "AMIDI-Plug - ρύθμιση"
-
-#~ msgid "AMIDI-Plug message"
-#~ msgstr "Μήνυμα AMIDI-Plug"
-
-#~ msgid "Please stop the player before changing AMIDI-Plug settings."
-#~ msgstr ""
-#~ "Παρακαλώ σταματήστε την αναπαραγωγή πριν αλλάξετε τις ρυθμίσεις του AMIDI-"
-#~ "Plug."
-
-#~ msgid "Name:"
-#~ msgstr "Όνομα:"
-
-#~ msgid " MIDI Info "
-#~ msgstr "Πληροφορίες MIDI"
-
-#~ msgid "Length (msec):"
-#~ msgstr "Διάρκεια (msec):"
-
-#~ msgid "Num of Tracks:"
-#~ msgstr "Αριθμός κομματιών:"
-
-#~ msgid "variable"
-#~ msgstr "μεταβλητό"
-
-#~ msgid "BPM:"
-#~ msgstr "BPM:"
-
-#~ msgid "BPM (wavg):"
-#~ msgstr "BPM (wavg):"
-
-#, fuzzy
-#~ msgid "Time Div:"
-#~ msgstr "DIV container"
-
-#~ msgid "CD Audio Plugin"
-#~ msgstr "Πρόσθετο CD ήχου"
-
-#~ msgid "CD Audio Track %02u"
-#~ msgstr "Κομμάτι CD ήχου%02u"
-
-#~ msgid "(unknown)"
-#~ msgstr "(άγνωστο)"
-
-#~ msgid "Drive %d"
-#~ msgstr "Συσκευή %d"
-
-#~ msgid ""
-#~ "Failed to open device %s\n"
-#~ "Error: %s\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Δεν ήταν δυνατό το άνοιγμα της συσκευής %s\n"
-#~ "Σφάλμα: %s\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "Failed to read \"Table of Contents\"\n"
-#~ "Maybe no disc in the drive?\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Δεν ήταν δυνατή η ανάγνωση του \"Πίνακα Περιεχομένων\"\n"
-#~ "Μήπως δεν υπάρχει δίσκος στη συσκευή;\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "Device %s OK.\n"
-#~ "Disc has %d tracks"
-#~ msgstr ""
-#~ "Συσκευή %s OK.\n"
-#~ "Ο δίσκος έχει %d κομμάτια"
-
-#~ msgid " (%d data tracks)"
-#~ msgstr " (%d κομμάτια δεδομένων)"
-
-#~ msgid ""
-#~ "\n"
-#~ "Total length: %d:%d\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Συνολική διάρκεια: %d:%d\n"
-
-#~ msgid ""
-#~ "Digital audio extraction not tested as the disc has no audio tracks\n"
-#~ msgstr ""
-#~ "Η ψηφιακή εξαγωγή ήχου δε δοκιμάστηκε, καθώς ο δίσκος δεν έχει κομμάτια "
-#~ "ήχου\n"
-
-#~ msgid ""
-#~ "Digital audio extraction test: OK\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Δοκιμή ψηφιακής εξαγωγής ήχου: εντάξει\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "Digital audio extraction test failed: %s\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Δοκιμή ψηφιακής εξαγωγής ήχου απέτυχε: %s\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "Failed to check directory %s\n"
-#~ "Error: %s"
-#~ msgstr ""
-#~ "Δεν ήταν δυνατός ο έλεγχος του καταλόγου %s\n"
-#~ "Σφάλμα: %s"
-
-#~ msgid "Error: %s exist, but is not a directory"
-#~ msgstr "Σφάλμα: Το %s υπάρχει αλλά δεν είναι κατάλογος"
-
-#~ msgid "Directory %s OK."
-#~ msgstr "Κατάλογος %s εντάξει"
-
-#~ msgid "Device:"
-#~ msgstr "Συσκευή:"
-
-#~ msgid "_Device:"
-#~ msgstr "_Συσκευή:"
-
-#~ msgid "Dir_ectory:"
-#~ msgstr "Κατ_άλογος:"
-
-#~ msgid "Play mode:"
-#~ msgstr "Μέθοδος αναπαραγωγής:"
-
-#~ msgid "Analog"
-#~ msgstr "Αναλογικός"
-
-#~ msgid "Digital audio extraction"
-#~ msgstr "Ψηφιακή αναπαραγωγή ήχου"
-
-#~ msgid "No mixer"
-#~ msgstr "Δεν υπάρχει μείκτης"
-
-#~ msgid "CDROM drive"
-#~ msgstr "Συσκευή CDROM"
-
-#~ msgid "OSS mixer"
-#~ msgstr "Mείκτης OSS"
-
-#~ msgid "Check drive..."
-#~ msgstr "Έλεγχος συσκευής..."
-
-#~ msgid "Remove drive"
-#~ msgstr "Αφαίρεση συσκευής"
-
-#~ msgid "CD Audio Player Configuration"
-#~ msgstr "Παραμετροποίηση αναπαραγωγέα CD ήχου"
-
-#~ msgid "Add drive"
-#~ msgstr "Προσθήκη συσκευής"
-
-#~ msgid "Device"
-#~ msgstr "Συσκευή"
-
-#~ msgid "CDDB:"
-#~ msgstr "CDDB:"
-
-#~ msgid "Use CDDB"
-#~ msgstr "Χρήση CDDB"
-
-#~ msgid "Get server list"
-#~ msgstr "Ανάκτηση λίστας διακομιστών"
-
-#~ msgid "Show network window"
-#~ msgstr "Εμφάνιση παραθύρου δικτύου"
-
-#~ msgid "CDDB server:"
-#~ msgstr "Διακομιστής CDDB:"
-
-#~ msgid "CD Index:"
-#~ msgstr "CD Index:"
-
-#~ msgid "Use CD Index"
-#~ msgstr "Χρήση CD Index"
-
-#~ msgid "CD Index server:"
-#~ msgstr "Διακομιστής CD Index:"
-
-#~ msgid "Override generic titles"
-#~ msgstr "Παράκαμψη γενικών τίτλων"
-
-#~ msgid "Name format:"
-#~ msgstr "Μορφή ονόματος αρχείου:"
-
-#~ msgid "CD Info"
-#~ msgstr "Πληροφορίες CD"
-
-#~ msgid "About the Console Music Decoder"
-#~ msgstr "Περί της κονσόλας αποκωδικοποίησης ήχου"
-
-#~ msgid ""
-#~ "Console music decoder engine based on Game_Music_Emu 0.3.0.\n"
-#~ "Audacious implementation by: William Pitcock <nenolod@nenolod.net>, \n"
-#~ "        Shay Green <hotpop.com@blargg>"
-#~ msgstr ""
-#~ "Κονσόλα αποκωδικοποίησης του ήχου βασισμένη στο Game_Music_Emu 0.3.0.\n"
-#~ "Υλοποίηση για το Audacious από τον: William Pitcock <nenolod@nenolod."
-#~ "net>, \n"
-#~ "        Shay Green <hotpop.com@blargg>"
-
-#~ msgid "SPC, VGM, NSF/NSFE, GBS, and GYM module decoder"
-#~ msgstr "Αποκωδικοποιητής SPC, VGM, NSF/NSFE, GBS, και GYM"
-
-#~ msgid "Arabic (IBM-864)"
-#~ msgstr "Αραβική (IBM-864)"
-
-#~ msgid "Arabic (ISO-8859-6)"
-#~ msgstr "Αραβική (ISO-_8859-6)"
-
-#~ msgid "Arabic (Windows-1256)"
-#~ msgstr "Αραβική (Windows-1256)"
-
-#~ msgid "Baltic (ISO-8859-13)"
-#~ msgstr "Βαλτικής (ISO-8859-13)"
-
-#~ msgid "Baltic (ISO-8859-4)"
-#~ msgstr "Βαλτικής (ISO-8859-4)"
-
-#~ msgid "Baltic (Windows-1257)"
-#~ msgstr "Βαλτικής (Windows-1257)"
-
-#~ msgid "Celtic (ISO-8859-14)"
-#~ msgstr "Κελτική (ISO-8859-14)"
-
-#~ msgid "Central European (IBM-852)"
-#~ msgstr "Κεντρικής Ευρώπης (IBM-852)"
-
-#~ msgid "Central European (ISO-8859-2)"
-#~ msgstr "Κεντρικής Ευρώπης (ISO-8859-2)"
-
-#~ msgid "Central European (Windows-1250)"
-#~ msgstr "Κεντρικής Ευρώπης (Windows-1250)"
-
-#~ msgid "Chinese Simplified (GB18030)"
-#~ msgstr "Απλοποιημένη Κινέζικη (GB18030)"
-
-#~ msgid "Chinese Simplified (GB2312)"
-#~ msgstr "Απλοποιημένη Κινέζικη (GB2312)"
-
-#~ msgid "Chinese Traditional (Big5)"
-#~ msgstr "Παραδοσιακή Κινέζικη (Big5)"
-
-#~ msgid "Chinese Traditional (Big5-HKSCS)"
-#~ msgstr "Παραδοσιακή Κινέζικη (Big5-HKSCS)"
-
-#~ msgid "Cyrillic (IBM-855)"
-#~ msgstr "Κυριλλική (IBM-855)"
-
-#~ msgid "Cyrillic (ISO-8859-5)"
-#~ msgstr "Κυριλλική (ISO-8859-5)"
-
-#~ msgid "Cyrillic (ISO-IR-111)"
-#~ msgstr "Κυριλλική (ISO-IR-111)"
-
-#~ msgid "Cyrillic (KOI8-R)"
-#~ msgstr "Κυριλλική (KOI8-R)"
-
-#~ msgid "Cyrillic (Windows-1251)"
-#~ msgstr "Κυριλλική (Windows-1251)"
-
-#~ msgid "Cyrillic/Russian (CP-866)"
-#~ msgstr "Κυριλλική/Ρώσικη (CP-866)"
-
-#~ msgid "Cyrillic/Ukrainian (KOI8-U)"
-#~ msgstr "Κυριλλική/Ουκρανική (KOI8-U)"
-
-#~ msgid "English (US-ASCII)"
-#~ msgstr "Αγγλική (US-ASCII)"
-
-#~ msgid "Greek (ISO-8859-7)"
-#~ msgstr "Ελληνική (ISO-8859-7)"
-
-#~ msgid "Greek (Windows-1253)"
-#~ msgstr "Ελληνική (Windows-1253)"
-
-#~ msgid "Hebrew (IBM-862)"
-#~ msgstr "Εβραϊκή (IBM-862)"
-
-#~ msgid "Hebrew (Windows-1255)"
-#~ msgstr "Εβραϊκή (Windows-1255)"
-
-#~ msgid "Japanese (EUC-JP)"
-#~ msgstr "Ιαπωνέζικη (EUC-JP)"
-
-#~ msgid "Japanese (ISO-2022-JP)"
-#~ msgstr "Ιαπωνέζικη (ISO-2022-JP)"
-
-#~ msgid "Japanese (Shift_JIS)"
-#~ msgstr "Ιαπωνέζικη (Shift-JIS)"
-
-#~ msgid "Korean (EUC-KR)"
-#~ msgstr "Κορεάτικη (EUC-KR)"
-
-#~ msgid "Nordic (ISO-8859-10)"
-#~ msgstr "Σκανδιναβική (ISO-8859-10)"
-
-#~ msgid "South European (ISO-8859-3)"
-#~ msgstr "Νότιας Ευρώπης (ISO-8859-3)"
-
-#~ msgid "Thai (TIS-620)"
-#~ msgstr "Ταϊλανδέζικη (TIS-_620)"
-
-#~ msgid "Turkish (IBM-857)"
-#~ msgstr "Τουρκική (IBM-857)"
-
-#~ msgid "Turkish (ISO-8859-9)"
-#~ msgstr "Τούρκικη (ISO-8859-9)"
-
-#~ msgid "Turkish (Windows-1254)"
-#~ msgstr "Τουρκική (Windows-1254)"
-
-#~ msgid "Unicode (UTF-7)"
-#~ msgstr "Unicode (UTF-7)"
-
-#~ msgid "Unicode (UTF-8)"
-#~ msgstr "Unicode (UTF-8)"
-
-#~ msgid "Unicode (UTF-16BE)"
-#~ msgstr "Unicode (UTF-16BE)"
-
-#~ msgid "Unicode (UTF-16LE)"
-#~ msgstr "Unicode (UTF-16LE)"
-
-#~ msgid "Unicode (UTF-32BE)"
-#~ msgstr "Unicode (UTF-32BE)"
-
-#~ msgid "Unicode (UTF-32LE)"
-#~ msgstr "Unicode (UTF-32bE)"
-
-#~ msgid "Vietnamese (VISCII)"
-#~ msgstr "Βιετναμέζικη (VISCII)"
-
-#~ msgid "Vietnamese (Windows-1258)"
-#~ msgstr "Βιετναμέζικη (Windows-1258)"
-
-#~ msgid "Visual Hebrew (ISO-8859-8)"
-#~ msgstr "Οπτική Εβραϊκή (ISO-8859-8)"
-
-#~ msgid "Western (IBM-850)"
-#~ msgstr "Δυτικής Ευρώπης (IBM-850)"
-
-#~ msgid "Western (ISO-8859-1)"
-#~ msgstr "Δυτικής Ευρώπης (ISO-8859-1)"
-
-#~ msgid "Western (ISO-8859-15)"
-#~ msgstr "Δυτικής Ευρώπης (ISO-8859-15)"
-
-#~ msgid "Western (Windows-1252)"
-#~ msgstr "Δυτικής Ευρώπης (Windows-1252)"
-
-#~ msgid "Arabic (IBM-864-I)"
-#~ msgstr "Αραβική (IBM-864-I)"
-
-#~ msgid "Arabic (ISO-8859-6-E)"
-#~ msgstr "Αραβική (ISO-8859-6-E)"
-
-#~ msgid "Arabic (ISO-8859-6-I)"
-#~ msgstr "Αραβική (ISO-_8859-6-I)"
-
-#~ msgid "Arabic (MacArabic)"
-#~ msgstr "Αραβική (MacArabic)"
-
-#~ msgid "Armenian (ARMSCII-8)"
-#~ msgstr "Αρμενική (ARMSCII-8)"
-
-#~ msgid "Central European (MacCE)"
-#~ msgstr "Κεντρικής Ευρώπης (MacCE)"
-
-#~ msgid "Chinese Simplified (GBK)"
-#~ msgstr "Απλοποιημένη Κινέζικη (GBK)"
-
-#~ msgid "Chinese Simplified (HZ)"
-#~ msgstr "Απλοποιημένη Κινέζικη (HZ)"
-
-#~ msgid "Chinese Traditional (EUC-TW)"
-#~ msgstr "Παραδοσιακή Κινέζικη (EUC-TW)"
-
-#~ msgid "Croatian (MacCroatian)"
-#~ msgstr "Κροατική (MacCroatian)"
-
-#~ msgid "Cyrillic/Ukrainian (MacUkrainian)"
-#~ msgstr "Κυριλλική/Ουκρανική (MacUcrainian)"
-
-#~ msgid "Farsi (MacFarsi)"
-#~ msgstr "Περσική (MacFarsi)"
-
-#~ msgid "Greek (MacGreek)"
-#~ msgstr "Ελληνική (MacGreek)"
-
-#~ msgid "Gujarati (MacGujarati)"
-#~ msgstr "Gujarati (MacGujarati)"
-
-#~ msgid "Gurmukhi (MacGurmukhi)"
-#~ msgstr "Gurmukhi (MacGurmukhi)"
-
-#~ msgid "Hebrew (ISO-8859-8-E)"
-#~ msgstr "Εβραϊκή (ISO-8859-8-E)"
-
-#~ msgid "Hebrew (ISO-8859-8-I)"
-#~ msgstr "Εβραϊκή (ISO-8859-8-I)"
-
-#~ msgid "Hebrew (MacHebrew)"
-#~ msgstr "Εβραϊκή (MacHebrew)"
-
-#~ msgid "Hindi (MacDevanagari)"
-#~ msgstr "Ινδική (MacDevanagari)"
-
-#~ msgid "Icelandic (MacIcelandic)"
-#~ msgstr "Ισλανδική (MacIcelandic)"
-
-#~ msgid "Korean (JOHAB)"
-#~ msgstr "Κορεάτικη (JOHAB)"
-
-#~ msgid "Korean (UHC)"
-#~ msgstr "Κορεάτικη (UHC)"
-
-#~ msgid "Romanian (MacRomanian)"
-#~ msgstr "Ρουμάνικη (MacRomanian)"
-
-#~ msgid "Turkish (MacTurkish)"
-#~ msgstr "Τουρκική (MacTurkish)"
-
-#~ msgid "User Defined"
-#~ msgstr "Καθορισμένη από το Χρήστη"
-
-#~ msgid "Vietnamese (TCVN)"
-#~ msgstr "Βιετναμέζικη (TCVN)"
-
-#~ msgid "Vietnamese (VPS)"
-#~ msgstr "Βιετναμέζικη (VPS)"
-
-#~ msgid "Western (MacRoman)"
-#~ msgstr "Δυτικής Ευρώπης (MacRoman)"
-
-#~ msgid "Select the directory where you want to store the MPEG streams:"
-#~ msgstr "Επιλέξτε τον κατάλογο που θέλετε να αποθηκευτούν τα MPEG streams:"
-
-#~ msgid "Tag Handling"
-#~ msgstr "Χειρισμός ετικετών"
-
-#~ msgid "Convert character set from :"
-#~ msgstr "Μετατροπή συνόλου χαρακτήρων από :"
-
-#~ msgid "to :"
-#~ msgstr "προς :"
-
-#~ msgid "Enable ReplayGain processing"
-#~ msgstr "Ενεργοποίηση επεξεργασίας ReplayGain"
-
-#~ msgid "Resolution"
-#~ msgstr "Ανάλυση"
-
-#~ msgid "Without ReplayGain"
-#~ msgstr "Χωρίς ReplayGain"
-
-#~ msgid "With ReplayGain"
-#~ msgstr "Με ReplayGain"
-
-#, fuzzy
-#~ msgid "Enable dithering"
-#~ msgstr "Ενεργοποίηση Java"
-
-#~ msgid "Noise shaping"
-#~ msgstr "Διαμόρφωση θορύβου"
-
-#~ msgid "high"
-#~ msgstr "υψηλό"
-
-#, fuzzy
-#~ msgid "Dither to"
-#~ msgstr "Προς/Από"
-
-#~ msgid "16 bps"
-#~ msgstr "16 bps"
-
-#~ msgid "24 bps"
-#~ msgstr "24 bps"
-
-#~ msgid "Output"
-#~ msgstr "Έξοδος"
-
-#~ msgid "Buffering:"
-#~ msgstr "Φόρτωμα:"
-
-#~ msgid "Buffer size (kb):"
-#~ msgstr "Μέγεθος buffer (kb):"
-
-#~ msgid "Pre-buffer (percent):"
-#~ msgstr "Προ-φόρτωμα (ποσοστό):"
-
-#~ msgid "Save stream to disk:"
-#~ msgstr "Αποθήκευση του stream στο δίσκο:"
-
-#~ msgid "Save stream to disk"
-#~ msgstr "Αποθήκευση του stream στο δίσκο"
-
-#~ msgid "Path:"
-#~ msgstr "Διαδρομή:"
-
-#~ msgid "Browse"
-#~ msgstr "Περιήγηση"
-
-#~ msgid "SHOUT/Icecast:"
-#~ msgstr "SHOUT/Icecast:"
-
-#~ msgid "Streaming"
-#~ msgstr "Streaming"
-
-#~ msgid "About Flac Plugin"
-#~ msgstr "Περί του αρθρώματος Flac"
-
-#~ msgid ""
-#~ "Flac Plugin by Josh Coalson\n"
-#~ "contributions by\n"
-#~ "......\n"
-#~ "......\n"
-#~ "and\n"
-#~ "Daisuke Shimamura\n"
-#~ "Visit http://flac.sourceforge.net/"
-#~ msgstr ""
-#~ "Πρόσθετο Flac από τον Josh Coalson\n"
-#~ "συνεισφορές από\n"
-#~ "......\n"
-#~ "......\n"
-#~ "και\n"
-#~ "Daisuke Shimamura\n"
-#~ "Επισκεφτείτε το http://flac.sourceforge.net/"
-
-#~ msgid "Alt"
-#~ msgstr "Alt"
-
-#~ msgid "Samplerate: %d Hz"
-#~ msgstr "Ρυθμός δειγματοληψίας: %d Hz"
-
-#~ msgid "Channels: %d"
-#~ msgstr "Κανάλια: %d"
-
-#~ msgid "Bits/Sample: %d"
-#~ msgstr "Bits/Δείγμα: %d"
-
-#~ msgid "Blocksize: %d"
-#~ msgstr "Μέγεθος μπλοκ: %d"
-
-#~ msgid ""
-#~ "Samples: %llu\n"
-#~ "Length: %d:%.2d"
-#~ msgstr ""
-#~ "Δείγματα: %llu\n"
-#~ "Διάρκεια: %d:%.2d"
-
-#~ msgid "Filesize: %ld B"
-#~ msgstr "Μέγεθος αρχείου: %ld B"
-
-#~ msgid ""
-#~ "Avg. bitrate: %.1f kb/s\n"
-#~ "Compression ratio: %.1f%%"
-#~ msgstr ""
-#~ "Μέσο bitrate: %.1f kb/s\n"
-#~ "Βαθμός συμπίεσης: %.1f%%"
-
-#~ msgid "Tag:"
-#~ msgstr "Ετικέτα:"
-
-#~ msgid "Comment:"
-#~ msgstr "Σχόλιο:"
-
-#~ msgid "Date:"
-#~ msgstr "Ημερομηνία:"
-
-#~ msgid "Track number:"
-#~ msgstr "Αριθμός κομματιού:"
-
-#~ msgid "Genre:"
-#~ msgstr "Είδος:"
-
-#~ msgid "Remove Tag"
-#~ msgstr "Διαγραφή ετικέτας"
-
-#~ msgid "FLAC Info:"
-#~ msgstr "Πληροφορίες FLAC:"
-
-#~ msgid "Error"
-#~ msgstr "Σφάλμα"
-
-#~ msgid "LOOKING UP %s"
-#~ msgstr "ΑΝΑΖΗΤΗΣΗ %s"
-
-#~ msgid "Couldn't look up host %s"
-#~ msgstr "Δεν ήταν δυνατή η εύρεση του %s"
-
-#~ msgid "CONNECTING TO %s:%d"
-#~ msgstr "ΣΥΝΔΕΣΗ ΣΤΟ %s:%d"
-
-#~ msgid "Couldn't connect to host %s"
-#~ msgstr "Δεν ήταν δυνατή η σύνδεση στο %s"
-
-#~ msgid "CONNECTED: WAITING FOR REPLY"
-#~ msgstr "ΣΥΝΔΕΘΗΚΕ: ΑΝΑΜΟΝΗ ΓΙΑ ΑΠΑΝΤΗΣΗ"
-
-#~ msgid ""
-#~ "Couldn't connect to host %s\n"
-#~ "Server reported: %s"
-#~ msgstr ""
-#~ "Δεν ήταν δυνατή η σύνδεση στο %s\n"
-#~ "Ο διακομιστής ανέφερε: %s"
-
-#~ msgid "PRE-BUFFERING: %dKB/%dKB"
-#~ msgstr "ΠΡΟ-ΦΟΡΤΩΜΑ: %dKB/%dKB"
-
-#~ msgid "FLAC Audio Plugin"
-#~ msgstr "Πρόσθετο ήχου FLAC"
-
-#~ msgid "ModPlug Configuration"
-#~ msgstr "Ρύθμιση ModPlug"
-
-#~ msgid "16 bit"
-#~ msgstr "16 bit"
-
-#~ msgid "8 bit"
-#~ msgstr "8 bit"
-
-#~ msgid "Mono (downmix)"
-#~ msgstr "Μονοφωνικό (σύνθεση)"
-
-#~ msgid "Resampling"
-#~ msgstr "Επαναδειγματοληψία "
-
-#~ msgid "Nearest (fastest)"
-#~ msgstr "Κοντινότερο (γρηγορότερο)"
-
-#~ msgid "Linear (fast)"
-#~ msgstr "Γραμμικό (γρήγορο)"
-
-#~ msgid "Spline (good quality)"
-#~ msgstr "Spline (καλή ποιότητα)"
-
-#~ msgid "8-tap Fir (extremely high quality)"
-#~ msgstr "8-tap Fir (εξαιρετικά υψηλή ποιότητα)"
-
-#~ msgid "Use Filename as Song Title"
-#~ msgstr "Χρήση ονόματος αρχείου για τίτλο τραγουδιού"
-
-#~ msgid "Fast Playlist Info"
-#~ msgstr "Γρήγορες πληροφορίες λίστας αναπαραγωγής"
-
-#~ msgid "Noise Reduction"
-#~ msgstr "Μείωση θορύβου"
-
-#~ msgid "Play Amiga MOD"
-#~ msgstr "Αναπαραγωγή Amiga MOD"
-
-#~ msgid "Depth"
-#~ msgstr "Βάθος"
-
-#~ msgid "Delay"
-#~ msgstr "Καθυστέρηση"
-
-#~ msgid "Bass Boost"
-#~ msgstr "Ώθηση μπάσων"
-
-#~ msgid "Amount"
-#~ msgstr "Ποσότητα"
-
-#~ msgid "Range"
-#~ msgstr "Εύρος"
-
-#~ msgid ""
-#~ "Note:  Setting the preamp too high may cause\n"
-#~ "clipping / distortion!"
-#~ msgstr ""
-#~ "Σημείωση: Ορίζοντας την προενίσχυση πολύ ψηλά μπορεί\n"
-#~ "να προκληθεί παραμόρφωση / σκρατσαρίσματα!"
-
-#~ msgid "Looping"
-#~ msgstr "Επανάληψη"
-
-#~ msgid "Loop"
-#~ msgstr "Επανάληψη"
-
-#~ msgid "time(s)"
-#~ msgstr "φορά(ές)"
-
-#~ msgid "Loop forever"
-#~ msgstr "Ατέρμων βρόγχος"
-
-#~ msgid "OK"
-#~ msgstr "Εντάξει"
-
-#~ msgid "MOD Info"
-#~ msgstr "Πληροφορίες MOD"
-
-#~ msgid ""
-#~ "Filename:\n"
-#~ "Title:\n"
-#~ "Type:\n"
-#~ "Length:\n"
-#~ "Speed:\n"
-#~ "Tempo:\n"
-#~ "Samples:\n"
-#~ "Instruments:\n"
-#~ "Patterns:\n"
-#~ "Channels:"
-#~ msgstr ""
-#~ "Όνομα αρχείου:\n"
-#~ "Τίτλος:\n"
-#~ "Τύπος:\n"
-#~ "Διάρκεια:\n"
-#~ "Ταχύτητα:\n"
-#~ "Τέμπο:\n"
-#~ "Δείγματα:\n"
-#~ "Όργανα:\n"
-#~ "Μοτίβα:\n"
-#~ "Κανάλια:"
-
-#~ msgid "Samples"
-#~ msgstr "Δείγματα"
-
-#~ msgid "Instruments"
-#~ msgstr "Όργανα"
-
-#~ msgid "Message"
-#~ msgstr "Μήνυμα"
-
-#~ msgid "Modplug Input Plugin for Audacious ver"
-#~ msgstr "Πρόσθετο εισαγωγής modplug για το Audacious εκδοση"
-
-#~ msgid ""
-#~ "\n"
-#~ "Modplug sound engine written by Olivier Lapicque.\n"
-#~ "XMMS interface for Modplug by Kenton Varda.\n"
-#~ "(c)2000 Olivier Lapicque and Kenton Varda.\n"
-#~ "Updates and Maintainance by Konstanty Bialkowski.\n"
-#~ "Ported to BMP by Theofilos Intzoglou."
-#~ msgstr ""
-#~ "\n"
-#~ "Μηχανή ήχου modplug από τον Olivier Lapicque.\n"
-#~ "Διεπαφή modplug για το XMMS από τον Kenton Varda.\n"
-#~ "(c)2000 Olivier Lapicque και Kenton Varda.\n"
-#~ "Ενημερώσεις και συντήρηση από τον Konstanty Bialkowski.\n"
-#~ "Μεταφέρθηκε στο BMP από τον Θεόφιλο Ιντζόγλου."
-
-#~ msgid "About Modplug"
-#~ msgstr "Περί του αρθρώματος ModPlug"
-
-#~ msgid "Couldn't find pixmap file: %s"
-#~ msgstr "Το αρχείο εικόνας δε βρέθηκε : %s"
-
-#~ msgid "MPEG Audio Plugin Configuration"
-#~ msgstr "Παραμετροποίηση προσθέτου MPEG ήχου"
-
-#~ msgid "Resolution:"
-#~ msgstr "Ανάλυση:"
-
-#~ msgid "Channels:"
-#~ msgstr "Κανάλια:"
-
-#~ msgid "Stereo (if available)"
-#~ msgstr "Stereo (αν είναι διαθέσιμο)"
-
-#~ msgid "Down sample:"
-#~ msgstr "Μείωση δειγματοληψίας:"
-
-#~ msgid "1:1 (44 kHz)"
-#~ msgstr "1:1 (44 kHz)"
-
-#~ msgid "1:2 (22 kHz)"
-#~ msgstr "1:2 (22 kHz)"
-
-#~ msgid "1:4 (11 kHz)"
-#~ msgstr "1:4 (11 kHz)"
-
-#~ msgid "Decoder"
-#~ msgstr "Αποκωδικοποιητής"
-
-#~ msgid "ID3 Tags:"
-#~ msgstr "Ετικέτες ID3:"
-
-#~ msgid "ID3 format:"
-#~ msgstr "Μορφή ID3:"
-
-#~ msgid "Joint stereo"
-#~ msgstr "Joint stereo"
-
-#~ msgid "Dual channel"
-#~ msgstr "Διπλό κανάλι"
-
-#~ msgid "Single channel"
-#~ msgstr "Μονό κανάλι"
-
-#~ msgid "%d KBit/s"
-#~ msgstr "%d KBit/s"
-
-#~ msgid "%ld Hz"
-#~ msgstr "%ld Hz"
-
-#~ msgid "50/15 ms"
-#~ msgstr "50/15 ms"
-
-#~ msgid "CCIT J.17"
-#~ msgstr "CCIT J.17"
-
-#~ msgid "No"
-#~ msgstr "Όχι"
-
-#~ msgid "Yes"
-#~ msgstr "Ναι"
-
-#~ msgid " MPEG Info "
-#~ msgstr "Πληροφορίες MPEG "
-
-#~ msgid "MPEG Level:"
-#~ msgstr "Τύπος MPEG:"
-
-#~ msgid "Sample rate:"
-#~ msgstr "Ρυθμός δειγματοληψίας:"
-
-#~ msgid "File size:"
-#~ msgstr "Μέγεθος αρχείου:"
-
-#~ msgid "Mode:"
-#~ msgstr "Κατάσταση: "
-
-#~ msgid "Error Protection:"
-#~ msgstr "Προστασία σφαλμάτων:"
-
-#~ msgid "Copyright:"
-#~ msgstr "Copyright:"
-
-#~ msgid "Original:"
-#~ msgstr "Αυθεντικό:"
-
-#~ msgid "Emphasis:"
-#~ msgstr "Έμφαση:"
-
-#~ msgid " ID3 Tag "
-#~ msgstr "Ετικέτα ID3"
-
-#~ msgid "Year:"
-#~ msgstr "Έτος:"
-
-#~ msgid "N/A"
-#~ msgstr "N/A"
-
-#~ msgid "%s"
-#~ msgstr "%s"
-
-#~ msgid "%lu Bytes"
-#~ msgstr "%lu Bytes"
-
-#~ msgid "Couldn't connect to host %s:%d"
-#~ msgstr "Δεν ήταν δυνατή η σύνδεση στον υπολογιστή %s:%d"
-
-#~ msgid "PRE-BUFFERING: %zuKB/%zuKB"
-#~ msgstr "ΠΡΟ-ΦΟΡΤΩΜΑ: %zuKB/%zuKB"
-
-#~ msgid "About MPEG Audio Plugin"
-#~ msgstr "Περί του πρόσθετου ήχου MPEG"
-
-#~ msgid ""
-#~ "Audacious decoding engine by William Pitcock <nenolod@nenolod.net>, "
-#~ "derived from:\n"
-#~ "mpg123 decoding engine by Michael Hipp <mh@mpg123.de>\n"
-#~ "Derived partially from mpg123 0.59s.mc3 as well.\n"
-#~ "Based on the original XMMS plugin."
-#~ msgstr ""
-#~ "Μηχανή αποκωδικοποίησης Audacious του William Pitcock <nenolod@nenolod."
-#~ "net>, που προέκυψε από:\n"
-#~ "τη μηχανή αποκωδικοποίησης mpg123 του Michael Hipp <mh@mpg123.de>\n"
-#~ "Προέκυψε μερικώς από το mpg123 0.59s.mc3 επίσης.\n"
-#~ "Βασισμένο στο αρχικό πρόσθετο του XMMS."
-
-#~ msgid "MPEG Audio Plugin"
-#~ msgstr "Πρόσθετο ήχου MPEG"
-
-#~ msgid "TiMidity Configuration"
-#~ msgstr "Ρύθμιση TiMidity"
-
-#~ msgid "22000 Hz"
-#~ msgstr "22000 Hz"
-
-#~ msgid "44100 Hz"
-#~ msgstr "44100 Hz"
-
-#~ msgid "Sample Width"
-#~ msgstr "Εύρος δείγματος"
-
-#~ msgid "TiMidity Configuration File"
-#~ msgstr "Αρχείο ρυθμίσεων TiMidity"
-
-#~ msgid "TiMidity Player %s"
-#~ msgstr "Αναπαραγωγέας TiMidity %s"
-
-#~ msgid ""
-#~ "TiMidity Plugin\n"
-#~ "http://libtimidity.sourceforge.net\n"
-#~ "by Konstantin Korikov"
-#~ msgstr ""
-#~ "ΠρόσθετοTiMidity\n"
-#~ "http://libtimidity.sourceforge.net\n"
-#~ "από τον Konstantin Korikov"
-
-#~ msgid "TiMidity Plugin %s"
-#~ msgstr "Πρόσθετο TiMidity %s"
-
-#~ msgid "Couldn't load MIDI file"
-#~ msgstr "Δεν ήταν δυνατή η φόρτωση του αρχείου MIDI"
-
-#~ msgid "About Tone Generator"
-#~ msgstr "Περί της γεννήτριας τόνων"
-
-#~ msgid "Tone Generator: "
-#~ msgstr "Γεννήτρια τόνων: "
-
-#~ msgid "Tone Generator %s"
-#~ msgstr "Γεννήτρια τόνων %s"
-
-#~ msgid "Select the directory where you want to store the Ogg Vorbis streams:"
-#~ msgstr ""
-#~ "Επιλέξτε τον κατάλογο που θέλετε να αποθηκεύετε τα Ogg Vorbis streams:"
-
-#~ msgid "Ogg Vorbis Audio Plugin Configuration"
-#~ msgstr "Παραμετροποίηση πρόσθετου ήχου Ogg Vorbis"
-
-#~ msgid "Ogg Vorbis Tags:"
-#~ msgstr "Ετικέτες Ogg Vorbis:"
-
-#~ msgid "ReplayGain Settings:"
-#~ msgstr "Ρυθμίσεις ReplayGain:"
-
-#~ msgid "ReplayGain Type:"
-#~ msgstr "Τύπος ReplayGain:"
-
-#~ msgid ""
-#~ "An error occured:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Προέκυψε σφάλμα:\n"
-#~ "%s"
-
-#~ msgid "Error!"
-#~ msgstr "Σφάλμα!"
-
-#~ msgid "Failed to modify tag (open)"
-#~ msgstr "Αποτυχία τροποποίησης ετικέτας (άνοιγμα)"
-
-#~ msgid "Failed to modify tag (close)"
-#~ msgstr "Αποτυχία τροποποίησης ετικέτας (κλείσιμο)"
-
-#~ msgid "Failed to modify tag"
-#~ msgstr "Αποτυχία τροποποίησης ετικέτας"
-
-#~ msgid " Ogg Vorbis Tag "
-#~ msgstr " Ετικέτα Ogg Vorbis "
-
-#~ msgid "Description:"
-#~ msgstr "Περιγραφή:"
-
-#~ msgid "Version:"
-#~ msgstr "Έκδοση:"
-
-#~ msgid "ISRC number:"
-#~ msgstr "Νούμερο ISRC:"
-
-#~ msgid "Organization:"
-#~ msgstr "Οργανισμός:"
-
-#~ msgid " Ogg Vorbis ReplayGain "
-#~ msgstr "Ogg Vorbis ReplayGain "
-
-#~ msgid " Ogg Vorbis Info "
-#~ msgstr "Πληροφορίες Ogg Vorbis "
-
-#~ msgid "Length:"
-#~ msgstr "Διάρκεια:"
-
-#~ msgid "%d KBit/s (nominal)"
-#~ msgstr "%d KBit/s (nominal)"
-
-#~ msgid "%d Hz"
-#~ msgstr "%d Hz"
-
-#~ msgid "%d"
-#~ msgstr "%d"
-
-#~ msgid "%d:%.2d"
-#~ msgstr "%d:%.2d"
-
-#~ msgid "%d Bytes"
-#~ msgstr "%d Bytes"
-
-#~ msgid "Ogg Vorbis Audio Plugin"
-#~ msgstr "Πρόσθετο ήχου Ogg Vorbis"
-
-#~ msgid "About Ogg Vorbis Audio Plugin"
-#~ msgstr "Περί του πρόσθετου ήχου Ogg Vorbis"
-
-#~ msgid ""
-#~ "Ogg Vorbis Plugin by the Xiph.org Foundation\n"
-#~ "\n"
-#~ "Original code by\n"
-#~ "Tony Arcieri <bascule@inferno.tusculum.edu>\n"
-#~ "Contributions from\n"
-#~ "Chris Montgomery <monty@xiph.org>\n"
-#~ "Peter Alm <peter@xmms.org>\n"
-#~ "Michael Smith <msmith@labyrinth.edu.au>\n"
-#~ "Jack Moffitt <jack@icecast.org>\n"
-#~ "Jorn Baayen <jorn@nl.linux.org>\n"
-#~ "Haavard Kvaalen <havardk@xmms.org>\n"
-#~ "Gian-Carlo Pascutto <gcp@sjeng.org>\n"
-#~ "\n"
-#~ "Visit the Xiph.org Foundation at http://www.xiph.org/\n"
-#~ msgstr ""
-#~ "Πρόσθετο Ogg Vorbis από το Xiph.org Foundation\n"
-#~ "\n"
-#~ "Αρχικός κώδικας από\n"
-#~ "Tony Arcieri <bascule@inferno.tusculum.edu>\n"
-#~ "Προσθήκες από\n"
-#~ "Chris Montgomery <monty@xiph.org>\n"
-#~ "Peter Alm <peter@xmms.org>\n"
-#~ "Michael Smith <msmith@labyrinth.edu.au>\n"
-#~ "Jack Moffitt <jack@icecast.org>\n"
-#~ "Jorn Baayen <jorn@nl.linux.org>\n"
-#~ "Haavard Kvaalen <havardk@xmms.org>\n"
-#~ "Gian-Carlo Pascutto <gcp@sjeng.org>\n"
-#~ "\n"
-#~ "Επισκεφτείτε το Xiph.org Foundation στο http://www.xiph.org/\n"
-
-#~ msgid "About sndfile WAV support"
-#~ msgstr "Περί υποστήριξης αρχείων WAV"
-
-#, fuzzy
-#~ msgid ""
-#~ "Adapted for Audacious usage by Tony Vroon <chainsaw@gentoo.org>\n"
-#~ "from the xmms_sndfile plugin which is:\n"
-#~ "Copyright (C) 2000, 2002 Erik de Castro Lopo\n"
-#~ "\n"
-#~ "This program is free software ; you can redistribute it and/or modify \n"
-#~ "it under the terms of the GNU General Public License as published by \n"
-#~ "the Free Software Foundation ; either version 2 of the License, or \n"
-#~ "(at your option) any later version. \n"
-#~ " \n"
-#~ "This program is distributed in the hope that it will be useful, \n"
-#~ "but WITHOUT ANY WARRANTY ; without even the implied warranty of \n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  \n"
-#~ "See the GNU General Public License for more details. \n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public \n"
-#~ "License along with this program ; if not, write to \n"
-#~ "the Free Software Foundation, Inc., \n"
-#~ "51 Franklin Street, Fifth Floor, \n"
-#~ "Boston, MA  02110-1301  USA"
-#~ msgstr ""
-#~ "Προσαρμόστηκε για χρήση με το  Audacious από τον Tony Vroon\n"
-#~ "<chainsaw@gentoo.org> από το πρόσθετο xmms_sndfileπου είναι:\n"
-#~ "Copyright (C) 2000, 2002 Erik de Castro Lopo\n"
-#~ "\n"
-#~ "This program is free software ; you can redistribute it and/or modify \n"
-#~ "it under the terms of the GNU General Public License as published by \n"
-#~ "the Free Software Foundation ; either version 2 of the License, or \n"
-#~ "(at your option) any later version. \n"
-#~ " \n"
-#~ "This program is distributed in the hope that it will be useful, \n"
-#~ "but WITHOUT ANY WARRANTY ; without even the implied warranty of \n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  \n"
-#~ "See the GNU General Public License for more details. \n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public \n"
-#~ "License along with this program ; if not, write to \n"
-#~ "the Free Software Foundation, Inc., \n"
-#~ "59 Temple Place, Suite 330, \n"
-#~ "Boston, MA  02111-1307  USA"
-
-#~ msgid "sndfile WAV plugin"
-#~ msgstr "Πρόσθετο αρχείων WAV"
-
-#~ msgid "WAV Audio Plugin"
-#~ msgstr "Πρόσθετο ήχου Wav"
-
-#~ msgid "WMA Player %s"
-#~ msgstr "Αναπαραγωγέας WMA %s"
-
-#~ msgid "About %s"
-#~ msgstr "Περί %s"
-
-#~ msgid " Close "
-#~ msgstr "Κλείσιμο"
-
-#~ msgid "About OSS Driver"
-#~ msgstr "Περί του οδηγού OSS"
-
-#, fuzzy
-#~ msgid ""
-#~ "Audacious OSS Driver\n"
-#~ "\n"
-#~ " This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA "
-#~ "02110-1301,\n"
-#~ "USA."
-#~ msgstr ""
-#~ "Οδηγός OSS για το Audacious\n"
-#~ "\n"
-#~ " This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-#~ "USA."
-
-#~ msgid "Default (%s)"
-#~ msgstr "Προκαθορισμένο (%s)"
-
-#~ msgid "OSS Driver configuration"
-#~ msgstr "Ρύθμιση οδηγού OSS"
-
-#~ msgid "Audio device:"
-#~ msgstr "Συσκευή ήχου:"
-
-#~ msgid "Use alternate device:"
-#~ msgstr "Χρήση εναλλακτικής συσκευής:"
-
-#~ msgid "Mixer device:"
-#~ msgstr "Συσκευή μείκτη:"
-
-#~ msgid "Devices"
-#~ msgstr "Συσκευές"
-
-#~ msgid "Buffer size (ms):"
-#~ msgstr "Μέγεθος προσωρινής μνήμης (ms):"
-
-#~ msgid "Mixer Settings:"
-#~ msgstr "Παράμετροι μείκτη:"
-
-#~ msgid "Volume controls Master not PCM"
-#~ msgstr "Ο έλεγχος έντασης ελέγχει το κύριο κανάλι, όχι το PCM"
-
-#~ msgid "Mixer"
-#~ msgstr "Μείκτης"
-
-#~ msgid "About ALSA Driver"
-#~ msgstr "Περί του οδηγού ALSA"
-
-#, fuzzy
-#~ msgid ""
-#~ "Audacious ALSA Driver\n"
-#~ "\n"
-#~ " This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA "
-#~ "02110-1301,\n"
-#~ "USA.\n"
-#~ "Author: Matthieu Sozeau (mattam@altern.org)"
-#~ msgstr ""
-#~ "Οδηγός ALSA για το Audacious\n"
-#~ "\n"
-#~ " This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-#~ "USA.\n"
-#~ "Author: Matthieu Sozeau (mattam@altern.org)"
-
-#~ msgid "ALSA %s output plugin"
-#~ msgstr "ALSA %s άρθρωμα εξόδου"
-
-#~ msgid "Unknown soundcard"
-#~ msgstr "Άγνωστη κάρτα ήχου"
-
-#~ msgid "Default PCM device (%s)"
-#~ msgstr "Προεπιλεγμένη συσκευή PCM (%s)"
-
-#~ msgid "ALSA Driver configuration"
-#~ msgstr "Ρύθμιση οδηγού ALSA"
-
-#~ msgid "Mixer:"
-#~ msgstr "Μείκτης:"
-
-#~ msgid "Mixer card:"
-#~ msgstr "Κάρτα μείκτη:"
-
-#~ msgid "Device settings"
-#~ msgstr "Ρυθμίσεις συσκευής"
-
-#~ msgid "Soundcard:"
-#~ msgstr "Κάρτα ήχου:"
-
-#~ msgid "Buffer time (ms):"
-#~ msgstr "Διάρκεια buffer (ms):"
-
-#~ msgid "Period time (ms):"
-#~ msgstr "Περίοδος (ms):"
-
-#~ msgid "Advanced settings"
-#~ msgstr "Προχωρημένες ρυθμίσεις"
-
-#~ msgid "aRts Driver configuration"
-#~ msgstr "Ρύθμιση οδηγού aRts"
-
-#~ msgid "Disk Writer Plugin %s"
-#~ msgstr "Πρόσθετο εγγραφής στο δίσκο %s"
-
-#~ msgid "Select the directory where you want to store the output files:"
-#~ msgstr "Επιλέξτε τον κατάλογο που θέλετε να αποθηκεύετε τα αρχεία εξόδου:"
-
-#~ msgid "Disk Writer Configuration"
-#~ msgstr "Ρύθμιση πρόσθετου εγγραφής στο δίσκο"
-
-#~ msgid "About ESounD Plugin"
-#~ msgstr "Περί του αρθρώματος ESounD"
-
-#, fuzzy
-#~ msgid ""
-#~ "Audacious ESounD Plugin\n"
-#~ "\n"
-#~ " This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA "
-#~ "02110-1301,\n"
-#~ "USA."
-#~ msgstr ""
-#~ "Πρόσθετο ESounD του Audacious\n"
-#~ "\n"
-#~ " This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-#~ "USA."
-
-#~ msgid "Host:"
-#~ msgstr "Διακομιστής:"
-
-#~ msgid "Use remote host"
-#~ msgstr "Χρήση απομακρυσμένου διακομιστή"
-
-#~ msgid "Server"
-#~ msgstr "Διακομιστής"
-
-#~ msgid "eSound Output Plugin"
-#~ msgstr "Άρθρωμα εξόδου eSound"
-
-#~ msgid "About JACK Output Plugin 0.15"
-#~ msgstr "Άρθρωμα εξόδου JACK 0.15"
-
-#~ msgid ""
-#~ "XMMS jack Driver 0.15\n"
-#~ "\n"
-#~ "xmms-jack.sf.net\n"
-#~ "Chris Morgan<cmorgan@alum.wpi.edu>\n"
-#~ "\n"
-#~ "Audacious port by\n"
-#~ "Giacomo Lozito from develia.org"
-#~ msgstr ""
-#~ "Οδηγός XMMS jack 0.15\n"
-#~ "\n"
-#~ "xmms-jack.sf.net\n"
-#~ "Chris Morgan<cmorgan@alum.wpi.edu>\n"
-#~ "\n"
-#~ "Audacious port by\n"
-#~ "Giacomo Lozito από develia.org"
-
-#~ msgid "About the Sun Driver"
-#~ msgstr "Περί του οδηγού της Sun"
-
-#~ msgid ""
-#~ "XMMS BSD Sun Driver\n"
-#~ "\n"
-#~ "Copyright (c) 2001 CubeSoft Communications, Inc.\n"
-#~ "Maintainer: <vedge at csoft.org>.\n"
-#~ msgstr ""
-#~ "XMMS BSD Sun Driver\n"
-#~ "\n"
-#~ "Copyright (c) 2001 CubeSoft Communications, Inc.\n"
-#~ "Συντηρητής: <vedge at csoft.org>.\n"
-
-#~ msgid "Audio control device:"
-#~ msgstr "Συσκευή ελέγχου ήχου:"
-
-#~ msgid "Volume controls device:"
-#~ msgstr "Συσκευή ελέγχου έντασης:"
-
-#~ msgid "XMMS uses mixer exclusively."
-#~ msgstr "Το XMMS χρησιμοποιεί αποκλειστικά μείκτη."
-
-#~ msgid "Status"
-#~ msgstr "Κατάσταση"
-
-#~ msgid "Sun driver configuration"
-#~ msgstr "Ρύθμιση οδηγού Sun"
-
-#~ msgid "BSD Sun Driver %s"
-#~ msgstr "Οδηγός BSD Sun %s"
-
-#~ msgid "/Toggle Decorations"
-#~ msgstr "/Εναλλαγή διακοσμήσεων"
-
-#~ msgid "Blur scope"
-#~ msgstr "Blur scope"
-
-#, fuzzy
-#~ msgid "Blur Scope: Color selection"
-#~ msgstr "Ο τίτλος του διαλόγου επιλογής χρώματος"
-
-#~ msgid "** DOUBLESIZE HAS BEEN REMOVED **"
-#~ msgstr "** ΑΦΑΙΡΕΘΗΚΑΝ ΤΑ ΔΙΠΛΟΜΕΓΕΘΗ **"
-
-#~ msgid "<b>_Transparency</b>"
-#~ msgstr "<b>_Διαφάνεια</b>"
-
-#~ msgid "Warning"
-#~ msgstr "Προειδοποίηση"
-
-#~ msgid ""
-#~ "Filename and song title tags should be inside double quotes (\").  Not "
-#~ "doing so might be a security risk.  Continue anyway?"
-#~ msgstr ""
-#~ "Οι ετικέτες για το όνομα αρχείου και τον τίτλο του τραγουδιού πρέπει να "
-#~ "βρίσκονται μεταξύ διπλών εισαγωγικών(\").  Διαφορετικά μπορεί να είναι "
-#~ "επικίνδυνο.  Να συνεχίσω;"
-
-#~ msgid "Song Change Configuration"
-#~ msgstr "Ρύθμιση αλλαγής τραγουδιού"
-
-#~ msgid "Song Metadata"
-#~ msgstr "Πληροφορίες τραγουδιού"
-
-#~ msgid "Port"
-#~ msgstr "Θύρα"
-
-#~ msgid "Client name"
-#~ msgstr "Όνομα πελάτη"
-
-#~ msgid "Port name"
-#~ msgstr "Όνομα θύρας"
-
-#~ msgid "ALSA output ports"
-#~ msgstr "θύρες εξόδου ALSA"
-
-#~ msgid "pre-calculate length of MIDI files in playlist"
-#~ msgstr "προϋπολογισμός μήκους αρχείων MIDI στη λίστα αναπαραγωγής"
-
-#~ msgid "Use proxy"
-#~ msgstr "Χρήση διακομιστή"
-
-#~ msgid ""
-#~ "---\n"
-#~ "---\n"
-#~ "---\n"
-#~ "---\n"
-#~ "---\n"
-#~ "---\n"
-#~ "---\n"
-#~ "---\n"
-#~ "---\n"
-#~ "---"
-#~ msgstr ""
-#~ "---\n"
-#~ "---\n"
-#~ "---\n"
-#~ "---\n"
-#~ "---\n"
-#~ "---\n"
-#~ "---\n"
-#~ "---\n"
-#~ "---\n"
-#~ "---"
-
-#~ msgid "Convert non-UTF8 ID3 tags to UTF8"
-#~ msgstr "Μετατροπή μη-UTF8 ID3 ετικετών σε UTF8"
-
-#~ msgid "ID3 encoding:"
-#~ msgstr "Κωδικοποίηση ID3:"
-
-#, fuzzy
-#~ msgid "Frames:"
-#~ msgstr "Όνομα:"
-
-#~ msgid "Convert non-UTF8 Vorbis tags to UTF8"
-#~ msgstr "Μετατροπή μη-UTF8 ID3 ετικετών Vorbis σε UTF8"
-
-#~ msgid "Vorbis encoding:"
-#~ msgstr "Κωδικοποίηση Vorbis:"
-
-#~ msgid "Info dialog is already opened!\n"
-#~ msgstr "Ο διάλογος πληροφοριών είναι ήδη ανοιχτός!\n"
-
-#~ msgid "%02d:%02d:%02d"
-#~ msgstr "%02d:%02d:%02d"
-
-#~ msgid "<b>WMA Version:</b>"
-#~ msgstr "<b>Έκδοση WMA:</b>"
-
-#~ msgid "<b>Channels:</b>"
-#~ msgstr "<b>Κανάλια:</b>"
-
-#~ msgid "<b>Filesize:</b>"
-#~ msgstr "<b>Μέγεθος αρχείου:</b>"
-
-#~ msgid "WMA Info"
-#~ msgstr "Πληροφορίες WMA"
-
-#~ msgid "<b>Comments:</b>"
-#~ msgstr "<b>Σχόλια:</b>"
-
-#~ msgid "Tags"
-#~ msgstr "Ετικέτες"
-
-#~ msgid "Audacious:"
-#~ msgstr "Audacious:"
-
-#~ msgid "George Averill"
-#~ msgstr "George Averill"
-
-#~ msgid "Giacomo Lozito"
-#~ msgstr "Giacomo Lozito"
-
-#~ msgid "William Pitcock"
-#~ msgstr "William Pitcock"
-
-#~ msgid "Derek Pomery"
-#~ msgstr "Derek Pomery"
-
-#~ msgid "Tony Vroon"
-#~ msgstr "Tony Vroon"
-
-#~ msgid "Stephan Sokolow"
-#~ msgstr "Stephan Sokolow"
-
-#~ msgid "Kiyoshi Aman"
-#~ msgstr "Kiyoshi Aman"
-
-#~ msgid "Shay Green"
-#~ msgstr "Shay Green"
-
-#~ msgid "Mohammed Sameer"
-#~ msgstr "Mohammed Sameer"
-
-#~ msgid "Artem Baguinski"
-#~ msgstr "Artem Baguinski"
-
-#~ msgid "Edward Brocklesby"
-#~ msgstr "Edward Brocklesby"
-
-#~ msgid "Chong Kai Xiong"
-#~ msgstr "Chong Kai Xiong"
-
-#~ msgid "Milosz Derezynski"
-#~ msgstr "Milosz Derezynski"
-
-#~ msgid "David Lau"
-#~ msgstr "David Lau"
-
-#~ msgid "Ole Andre Vadla Ravnaas"
-#~ msgstr "Ole Andre Vadla Ravnaas"
-
-#~ msgid "Michiel Sikkes"
-#~ msgstr "Michiel Sikkes"
-
-#~ msgid "Andrei Badea"
-#~ msgstr "Andrei Badea"
-
-#~ msgid "Peter Behroozi"
-#~ msgstr "Peter Behroozi"
-
-#~ msgid "Bernard Blackham"
-#~ msgstr "Bernard Blackham"
-
-#~ msgid "Oliver Blin"
-#~ msgstr "Oliver Blin"
-
-#~ msgid "Tomas Bzatek"
-#~ msgstr "Tomas Bzatek"
-
-#~ msgid "Liviu Danicel"
-#~ msgstr "Liviu Danicel"
-
-#~ msgid "Jon Dowland"
-#~ msgstr "Jon Dowland"
-
-#~ msgid "Artur Frysiak"
-#~ msgstr "Artur Frysiak"
-
-#~ msgid "Sebastian Kapfer"
-#~ msgstr "Sebastien Kapfer"
-
-#~ msgid "Lukas Koberstein"
-#~ msgstr "Lukas Koberstein"
-
-#~ msgid "Dan Korostelev"
-#~ msgstr "Dan Korostelev"
-
-#~ msgid "Jolan Luff"
-#~ msgstr "Jolan Luff"
-
-#~ msgid "Michael Marineau"
-#~ msgstr "Michael Marineau"
-
-#~ msgid "Tim-Philipp Muller"
-#~ msgstr "Tim-Philipp Muller"
-
-#~ msgid "Julien Portalier"
-#~ msgstr "Julien Portalier"
-
-#~ msgid "Andrew Ruder"
-#~ msgstr "Andrew Ruder"
-
-#~ msgid "Olivier Samyn"
-#~ msgstr "Olivier Samyn"
-
-#~ msgid "Martijn Vernooij"
-#~ msgstr "Martijn Vernooij"
-
-#~ msgid "Philipi Pinto"
-#~ msgstr "Philipi Pinto"
-
-#~ msgid "Thierry Vignaud"
-#~ msgstr "Thierry Vignaud"
-
-#~ msgid "Chao-Hsiung Liao"
-#~ msgstr "Chao-Hsiung Liao"
-
-#~ msgid "Jan Narovec"
-#~ msgstr "Jan Narovec"
-
-#~ msgid "Laurens Buhler"
-#~ msgstr "Laurens Buhler"
-
-#~ msgid "Pauli Virtanen"
-#~ msgstr "Pauli Virtanen"
-
-#~ msgid "David Le Brun"
-#~ msgstr "David Le Brun"
-
-#~ msgid "Matthias Debus"
-#~ msgstr "Matthias Debus"
-
-#~ msgid "George Machitidze"
-#~ msgstr "George Machitidze"
-
-#~ msgid "Kouzinopoulos Haris"
-#~ msgstr "Χάρης Κουζινόπουλος"
-
-#~ msgid "Stavros Giannouris"
-#~ msgstr "Σταύρος Γιαννούρης"
-
-#~ msgid "Dhananjaya Sharma"
-#~ msgstr "Dhananjaya Sharma"
-
-#~ msgid "Laszlo Dvornik"
-#~ msgstr "Laszlo Dvornik"
-
-#~ msgid "Alessio D'Ascanio"
-#~ msgstr "Alessio D'Ascanio"
-
-#~ msgid "Dai"
-#~ msgstr "Dai"
-
-#~ msgid "DongCheon Park"
-#~ msgstr "DongCheon Park"
-
-#~ msgid "Rimas Kudelis"
-#~ msgstr "Rimas Kudelis"
-
-#~ msgid "Arangel Angov"
-#~ msgstr "Arangel Angov"
-
-#~ msgid "Jacek Wolszczak"
-#~ msgstr "Jacek Wolszczak"
-
-#~ msgid "Pavlo Bohmat"
-#~ msgstr "Pavlo Bohmat"
-
-#~ msgid "Vitaly Lipatov"
-#~ msgstr "Vitaly Lipatov"
-
-#~ msgid "Pavel Kanzelsberger"
-#~ msgstr "Pavel Kanzelsberger"
-
-#~ msgid "Francisco Javier F. Serrador"
-#~ msgstr "Francisco Javier F. Serrador"
-
-#~ msgid "Martin Persenius"
-#~ msgstr "Martin Persenius"
-
-#~ msgid "Mykola Lynnyk"
-#~ msgstr "Mykola Lynnyk"
-
-#~ msgid "<span size=\"xx-large\"><b>Plugins</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>Πρόσθετα</b></span>"
-
-#~ msgid "_Media plugin list:"
-#~ msgstr "Λίστα αρθρωμάτων _μέσων:"
-
-#~ msgid ""
-#~ "The change is now effective in Audacious' configuration database, but "
-#~ "won't take effect for playback until the next song!\n"
-#~ "\n"
-#~ "Optionally, you can stop and restart playback for the change to take "
-#~ "effect."
-#~ msgstr ""
-#~ "Η αλλαγή καταχωρήθηκε στη βάση ρυθμίσεων του Audacious, αλλά δε θα "
-#~ "ενεργοποιηθεί στην αναπαραγωγή μέχρι το επόμενο τραγούδι!\n"
-#~ "\n"
-#~ "Αν θέλετε, μπορείτε να σταματήσετε και να επανεκκινήσετε την αναπαραγωγή, "
-#~ "ώστε να ενεργοποιηθεί η αλλαγή."
-
-#~ msgid "<span size=\"xx-large\"><b>Appearance</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>Εμφάνιση</b></span>"
-
-#~ msgid "<span size=\"xx-large\"><b>Mouse</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>Ποντίκι</b></span>"
-
-#~ msgid "<span size=\"xx-large\"><b>Playlist</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>Λίστα αναπαραγωγής</b></span>"
-
-#~ msgid "<span size=\"xx-large\"><b>Equalizer</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>Ισοσταθμιστής</b></span>"
