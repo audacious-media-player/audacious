@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/browse/AUD\n"
 "POT-Creation-Date: 2011-10-19 21:32-0400\n"
-"PO-Revision-Date: 2011-11-01 07:49+0000\n"
+"PO-Revision-Date: 2011-11-01 17:33+0000\n"
 "Last-Translator: Polesz <polesz@nedudu.hu>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -28,8 +28,8 @@ msgstr "Keresés ..."
 #, c-format
 msgid "%d file found"
 msgid_plural "%d files found"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d fájl található"
+msgstr[1] "%d fájl található"
 
 #: src/audacious/chardet.c:38
 msgid "  (invalid UTF-8)"
@@ -315,6 +315,8 @@ msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress"
 " (or has been disabled)."
 msgstr ""
+"A lejátszási listát nem lehet rendezni, mert a metaadatok keresése még "
+"folyamatban van (vagy le van tiltva)."
 
 #: src/audacious/ui_preferences.c:88
 msgid "Audio"
@@ -463,11 +465,11 @@ msgstr "Lejátszási erősítés engedélyezése"
 
 #: src/audacious/ui_preferences.c:164
 msgid "Prevent clipping (recommended)"
-msgstr ""
+msgstr "Vágás megakadályozása (ajánlott)"
 
 #: src/audacious/ui_preferences.c:166
 msgid "<b>Adjust Levels</b>"
-msgstr ""
+msgstr "<b>Szintek állítása</b>"
 
 #: src/audacious/ui_preferences.c:167
 msgid "Amplify all files:"
@@ -479,7 +481,7 @@ msgstr "dB"
 
 #: src/audacious/ui_preferences.c:170
 msgid "Amplify untagged files:"
-msgstr ""
+msgstr "Címkézetlen fájlok kiegészítése:"
 
 #: src/audacious/ui_preferences.c:175
 msgid "Proxy hostname:"
@@ -527,7 +529,7 @@ msgstr "Lejátszás folytatása induláskor"
 
 #: src/audacious/ui_preferences.c:208
 msgid "Advance when the current song is deleted"
-msgstr ""
+msgstr "Ajánlott amikor a jelenlegi zeneszám törlésre kerül"
 
 #: src/audacious/ui_preferences.c:210
 msgid "Clear the playlist when opening files"
@@ -680,7 +682,7 @@ msgstr "Kimeneti bővítmény:"
 
 #: src/audacious/ui_preferences.c:1634
 msgid "Transport"
-msgstr ""
+msgstr "Átvitel"
 
 #: src/audacious/ui_preferences.c:1634
 msgid "Input"
@@ -1205,10 +1207,10 @@ msgstr "ID"
 
 #: src/libeggsmclient/eggsmclient.c:253
 msgid "Session management options:"
-msgstr ""
+msgstr "Munkamenet kezelési lehetőségek:"
 
 #: src/libeggsmclient/eggsmclient.c:254
 msgid "Show session management options"
-msgstr ""
+msgstr "Munkamenet kezelési lehetőségek mutatása"
 
 
