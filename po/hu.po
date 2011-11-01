@@ -1,34 +1,37 @@
-# Hungarian translation of audacious.
-# Copyright (C) 2006 Free Software Foundation, Inc.
-# This file is distributed under the same license as the audacious package.
+# Hungarian translation for Audacious
+# Copyright (C) Audacious translators
+# This file is distributed under the same license as the Audacious package.
+#
+# Translators:
 # Laszlo Dvornik <dvornik@gnome.hu>, 2006.
 # Peter Polonkai <polesz@nedudu.hu>, 2010.
-#
+# Péter Polonkai <polesz@nedudu.hu>, 2011.
 msgid ""
 msgstr ""
-"Project-Id-Version: audacious 1.2.1\n"
-"Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-07-05 22:45+0200\n"
-"PO-Revision-Date: 2010-08-21 11:09+0100\n"
-"Last-Translator: Peter Polonkai <polesz@nedudu.hu>\n"
-"Language-Team: Hungarian <dvornik@gnome.hu>\n"
-"Language: hu\n"
+"Project-Id-Version: Audacious\n"
+"Report-Msgid-Bugs-To: http://jira.atheme.org/browse/AUD\n"
+"POT-Creation-Date: 2011-10-19 21:32-0400\n"
+"PO-Revision-Date: 2011-11-01 07:49+0000\n"
+"Last-Translator: Polesz <polesz@nedudu.hu>\n"
+"Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: hu\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 #: src/audacious/adder.c:71
 msgid "Searching ..."
 msgstr "Keresés ..."
 
-#: src/audacious/adder.c:99
-#, fuzzy, c-format
+#: src/audacious/adder.c:97
+#, c-format
 msgid "%d file found"
 msgid_plural "%d files found"
-msgstr[0] "%d fájlt találtam"
-msgstr[1] "%d fájlt találtam"
+msgstr[0] ""
+msgstr[1] ""
 
-#: src/audacious/chardet.c:37
+#: src/audacious/chardet.c:38
 msgid "  (invalid UTF-8)"
 msgstr "  (érvénytelen UTF-8)"
 
@@ -62,7 +65,7 @@ msgstr "BMP-fejlesztők:"
 
 #: src/audacious/credits.c:180
 msgid "Belarusian:"
-msgstr "Belarusz"
+msgstr "Belorusz"
 
 #: src/audacious/credits.c:183
 msgid "Basque:"
@@ -72,214 +75,220 @@ msgstr "Baszk:"
 msgid "Brazilian Portuguese:"
 msgstr "Brazil portugál:"
 
-#: src/audacious/credits.c:190
+#: src/audacious/credits.c:191
 msgid "Breton:"
 msgstr "Breton:"
 
-#: src/audacious/credits.c:193
+#: src/audacious/credits.c:194
 msgid "Bulgarian:"
-msgstr "Bulgár"
+msgstr "Bolgár"
 
-#: src/audacious/credits.c:196
+#: src/audacious/credits.c:197
 msgid "Catalan:"
 msgstr "Katalán"
 
-#: src/audacious/credits.c:199
+#: src/audacious/credits.c:200
 msgid "Chinese:"
 msgstr "Kínai:"
 
-#: src/audacious/credits.c:202
+#: src/audacious/credits.c:203
 msgid "Croatian:"
 msgstr "Horvát"
 
-#: src/audacious/credits.c:205
+#: src/audacious/credits.c:206
 msgid "Czech:"
 msgstr "Cseh:"
 
-#: src/audacious/credits.c:208
+#: src/audacious/credits.c:209
 msgid "Dutch:"
 msgstr "Holland:"
 
-#: src/audacious/credits.c:212
+#: src/audacious/credits.c:213
 msgid "Estonian:"
 msgstr "Észt"
 
-#: src/audacious/credits.c:215
+#: src/audacious/credits.c:216
 msgid "Finnish:"
 msgstr "Finn:"
 
-#: src/audacious/credits.c:220
+#: src/audacious/credits.c:221
 msgid "French:"
 msgstr "Francia:"
 
-#: src/audacious/credits.c:226
+#: src/audacious/credits.c:227
 msgid "German:"
 msgstr "Német:"
 
-#: src/audacious/credits.c:233
+#: src/audacious/credits.c:234
 msgid "Georgian:"
 msgstr "Grúz"
 
-#: src/audacious/credits.c:236
+#: src/audacious/credits.c:237
 msgid "Greek:"
 msgstr "Görög:"
 
-#: src/audacious/credits.c:241
+#: src/audacious/credits.c:242
 msgid "Hindi:"
 msgstr "Hindi:"
 
-#: src/audacious/credits.c:244
+#: src/audacious/credits.c:245
 msgid "Hungarian:"
 msgstr "Magyar:"
 
-#: src/audacious/credits.c:248
+#: src/audacious/credits.c:249
 msgid "Italian:"
 msgstr "Olasz:"
 
-#: src/audacious/credits.c:252
+#: src/audacious/credits.c:253
 msgid "Japanese:"
 msgstr "Japán:"
 
-#: src/audacious/credits.c:255
+#: src/audacious/credits.c:256
 msgid "Korean:"
 msgstr "Koreai:"
 
-#: src/audacious/credits.c:258
-#, fuzzy
+#: src/audacious/credits.c:259
 msgid "Latvian:"
-msgstr "Horvát"
+msgstr "Lett:"
 
-#: src/audacious/credits.c:261
+#: src/audacious/credits.c:262
 msgid "Lithuanian:"
 msgstr "Litván:"
 
-#: src/audacious/credits.c:265
+#: src/audacious/credits.c:267
 msgid "Macedonian:"
 msgstr "Macedón:"
 
-#: src/audacious/credits.c:268
+#: src/audacious/credits.c:270
 msgid "Polish:"
 msgstr "Lengyel:"
 
-#: src/audacious/credits.c:274
-#, fuzzy
+#: src/audacious/credits.c:276
 msgid "Portuguese:"
-msgstr "Portugál"
+msgstr "Portugál:"
 
-#: src/audacious/credits.c:277
+#: src/audacious/credits.c:279
 msgid "Romanian:"
 msgstr "Román:"
 
-#: src/audacious/credits.c:281
+#: src/audacious/credits.c:283
 msgid "Russian:"
 msgstr "Orosz:"
 
-#: src/audacious/credits.c:285
+#: src/audacious/credits.c:287
 msgid "Serbian (Latin):"
 msgstr "Szerb (Latin):"
 
-#: src/audacious/credits.c:288
+#: src/audacious/credits.c:290
 msgid "Serbian (Cyrillic):"
 msgstr "Szerb (Cirill):"
 
-#: src/audacious/credits.c:291
+#: src/audacious/credits.c:293
 msgid "Simplified Chinese:"
 msgstr "Egyszerűsített kínai:"
 
-#: src/audacious/credits.c:294
+#: src/audacious/credits.c:296
 msgid "Slovak:"
 msgstr "Szlovák:"
 
-#: src/audacious/credits.c:297
+#: src/audacious/credits.c:299
 msgid "Spanish:"
 msgstr "Spanyol:"
 
-#: src/audacious/credits.c:304
+#: src/audacious/credits.c:306
 msgid "Swedish:"
 msgstr "Svéd:"
 
-#: src/audacious/credits.c:307
+#: src/audacious/credits.c:309
 msgid "Traditional Chinese:"
 msgstr "Hagyományos kínai:"
 
-#: src/audacious/credits.c:312
+#: src/audacious/credits.c:315
 msgid "Turkish:"
 msgstr "Török:"
 
-#: src/audacious/credits.c:316
+#: src/audacious/credits.c:319
 msgid "Ukrainian:"
 msgstr "Ukrán:"
 
-#: src/audacious/credits.c:319
+#: src/audacious/credits.c:323
+msgid "Vietnamese:"
+msgstr "Vietnami:"
+
+#: src/audacious/credits.c:326
 msgid "Welsh:"
 msgstr "Walesi:"
 
-#: src/audacious/drct.c:256
+#: src/audacious/drct.c:234
 msgid "Temporary Playlist"
-msgstr "Ideglenes lejátszólista"
+msgstr "Ideiglenes lejátszólista"
 
 #: src/audacious/equalizer_preset.c:186
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
 msgstr "Hiba a Winamp EQF fájl '%s' importálásakor"
 
-#: src/audacious/main.c:256
+#: src/audacious/main.c:239
 msgid "Skip backwards in playlist"
 msgstr "Visszalépés a lejátszólistában"
 
-#: src/audacious/main.c:257
+#: src/audacious/main.c:240
 msgid "Start playing current playlist"
 msgstr "Jelenlegi lejátszólista lejátszásának elkezdése"
 
-#: src/audacious/main.c:258
+#: src/audacious/main.c:241
 msgid "Pause current song"
 msgstr "Jelenlegi szám szüneteltetése"
 
-#: src/audacious/main.c:259
+#: src/audacious/main.c:242
 msgid "Stop current song"
 msgstr "Jelenlegi szám leállítása"
 
-#: src/audacious/main.c:260
+#: src/audacious/main.c:243
 msgid "Pause if playing, play otherwise"
 msgstr "Lejátszás esetén szüneteltetés, különben lejátszás"
 
-#: src/audacious/main.c:261
+#: src/audacious/main.c:244
 msgid "Skip forward in playlist"
 msgstr "Előrelépés a lejátszólistában"
 
-#: src/audacious/main.c:262
+#: src/audacious/main.c:245
 msgid "Display Jump to File dialog"
 msgstr "Ugrás fájlra párbeszédablak megjelenítése"
 
-#: src/audacious/main.c:263
+#: src/audacious/main.c:246
 msgid "Add files to the playlist"
 msgstr "Fájlok hozzáadása a lejátszó listához"
 
-#: src/audacious/main.c:264
+#: src/audacious/main.c:247
 msgid "Add new files to a temporary playlist"
 msgstr "Új fájlok hozzáadása az ideiglenes lejátszólistához"
 
-#: src/audacious/main.c:265
+#: src/audacious/main.c:248
 msgid "Display the main window"
 msgstr "Főablak megjelenítése"
 
-#: src/audacious/main.c:266
+#: src/audacious/main.c:249
 msgid "Show version"
 msgstr "Verzió mutatása"
 
-#: src/audacious/main.c:267
+#: src/audacious/main.c:250
 msgid "Print debugging messages"
-msgstr ""
+msgstr "Hibakereső üzenetek kiírása"
 
-#: src/audacious/main.c:268
+#: src/audacious/main.c:251
+msgid "Headless mode (beta)"
+msgstr "Headless mód (béta)"
+
+#: src/audacious/main.c:252
 msgid "FILE..."
 msgstr "Fájl..."
 
-#: src/audacious/main.c:280
+#: src/audacious/main.c:264
 msgid "- play multimedia files"
 msgstr "- multimédia fájlok lejátszása"
 
-#: src/audacious/main.c:290
+#: src/audacious/main.c:274
 #, c-format
 msgid ""
 "%s: %s\n"
@@ -288,119 +297,105 @@ msgstr ""
 "%s: %s\n"
 "Próbája a `%s --help' további információkért.\n"
 
-#: src/audacious/main.c:407
-msgid ""
-"Audacious seems to be already running but is not responding.  You can start "
-"another instance of the program, but please be warned that this can cause "
-"data loss.  If Audacious is not running, you can safely ignore this "
-"message.  Press OK to start Audacious or Cancel to quit."
-msgstr ""
-
-#: src/audacious/main.c:572
+#: src/audacious/main.c:547
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/playback.c:381
+#: src/audacious/playback.c:303
 #, c-format
 msgid "No decoder found for %s."
 msgstr "Dekóder nem található ehhez %s."
 
-#: src/audacious/playback.c:531
-msgid "Buffering ..."
-msgstr "Pufferelés ..."
-
-#: src/audacious/playlist-new.c:303
+#: src/audacious/playlist-new.c:315
 msgid "Untitled Playlist"
 msgstr "Névtelen lejátszólista"
 
-#: src/audacious/ui_preferences.c:87
+#: src/audacious/playlist-new.c:1496
+msgid ""
+"The playlist cannot be sorted because metadata scanning is still in progress"
+" (or has been disabled)."
+msgstr ""
+
+#: src/audacious/ui_preferences.c:88
 msgid "Audio"
 msgstr "Hang"
 
-#: src/audacious/ui_preferences.c:88
+#: src/audacious/ui_preferences.c:89
 msgid "Network"
 msgstr "Hálózat"
 
-#: src/audacious/ui_preferences.c:89 src/audacious/ui_preferences.c:1556
+#: src/audacious/ui_preferences.c:90 src/audacious/ui_preferences.c:1634
 msgid "Playlist"
 msgstr "Lejátszólista"
 
-#: src/audacious/ui_preferences.c:90
+#: src/audacious/ui_preferences.c:91
 msgid "Plugins"
 msgstr "Bővítmények"
 
-#: src/audacious/ui_preferences.c:96 src/libaudgui/infopopup.c:204
+#: src/audacious/ui_preferences.c:97 src/libaudgui/infopopup.c:203
 msgid "Artist"
 msgstr "Előadó"
 
-#: src/audacious/ui_preferences.c:97 src/libaudgui/infopopup.c:206
+#: src/audacious/ui_preferences.c:98 src/libaudgui/infopopup.c:205
 msgid "Album"
 msgstr "Album"
 
-#: src/audacious/ui_preferences.c:98 src/libaudgui/infopopup.c:202
-#: src/libaudgui/ui_playlist_manager.c:263
+#: src/audacious/ui_preferences.c:99 src/libaudgui/infopopup.c:201
+#: src/libaudgui/ui_playlist_manager.c:276
 msgid "Title"
 msgstr "Cím"
 
-#: src/audacious/ui_preferences.c:99
+#: src/audacious/ui_preferences.c:100
 msgid "Tracknumber"
 msgstr "Szám sorszáma"
 
-#: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:208
+#: src/audacious/ui_preferences.c:101 src/libaudgui/infopopup.c:207
 msgid "Genre"
 msgstr "Műfaj"
 
-#: src/audacious/ui_preferences.c:101
+#: src/audacious/ui_preferences.c:102
 msgid "Filename"
 msgstr "Fájlnév"
 
-#: src/audacious/ui_preferences.c:102
+#: src/audacious/ui_preferences.c:103
 msgid "Filepath"
 msgstr "Fájlútvonal"
 
-#: src/audacious/ui_preferences.c:103
+#: src/audacious/ui_preferences.c:104
 msgid "Date"
 msgstr "Dátum"
 
-#: src/audacious/ui_preferences.c:104 src/libaudgui/infopopup.c:210
+#: src/audacious/ui_preferences.c:105 src/libaudgui/infopopup.c:209
 msgid "Year"
 msgstr "Év"
 
-#: src/audacious/ui_preferences.c:105
+#: src/audacious/ui_preferences.c:106
 msgid "Comment"
 msgstr "Megjegyzés"
 
-#: src/audacious/ui_preferences.c:106
+#: src/audacious/ui_preferences.c:107
 msgid "Codec"
 msgstr "Kodek"
 
-#: src/audacious/ui_preferences.c:107
+#: src/audacious/ui_preferences.c:108
 msgid "Quality"
 msgstr "Minőség"
 
-#: src/audacious/ui_preferences.c:112
+#: src/audacious/ui_preferences.c:114
 msgid "None"
 msgstr "Nincs"
 
-#: src/audacious/ui_preferences.c:113
-msgid "Japanese"
-msgstr "Japán"
-
-#: src/audacious/ui_preferences.c:114
-msgid "Taiwanese"
-msgstr "Tajvani"
-
 #: src/audacious/ui_preferences.c:115
-msgid "Chinese"
-msgstr "Kínai"
+msgid "Arabic"
+msgstr "Arab"
 
 #: src/audacious/ui_preferences.c:116
-msgid "Korean"
-msgstr "Koreai"
+msgid "Baltic"
+msgstr "Balti"
 
 #: src/audacious/ui_preferences.c:117
-msgid "Russian"
-msgstr "Orosz"
+msgid "Chinese"
+msgstr "Kínai"
 
 #: src/audacious/ui_preferences.c:118
 msgid "Greek"
@@ -411,44 +406,40 @@ msgid "Hebrew"
 msgstr "Héber"
 
 #: src/audacious/ui_preferences.c:120
-msgid "Turkish"
-msgstr "Török"
+msgid "Japanese"
+msgstr "Japán"
 
 #: src/audacious/ui_preferences.c:121
-msgid "Arabic"
-msgstr "Arab"
+msgid "Korean"
+msgstr "Koreai"
 
 #: src/audacious/ui_preferences.c:122
 msgid "Polish"
 msgstr "Lengyel"
 
 #: src/audacious/ui_preferences.c:123
-msgid "Baltic"
-msgstr "Balti"
+msgid "Russian"
+msgstr "Orosz"
 
 #: src/audacious/ui_preferences.c:124
-msgid "Universal"
-msgstr "Univerzális"
+msgid "Taiwanese"
+msgstr "Tajvani"
 
-#: src/audacious/ui_preferences.c:146
-#, fuzzy
-msgid "Single track mode"
-msgstr "/Szám részleteinek megtekintése"
+#: src/audacious/ui_preferences.c:125
+msgid "Turkish"
+msgstr "Török"
 
 #: src/audacious/ui_preferences.c:147
-#, fuzzy
 msgid "Album mode"
-msgstr "Album"
+msgstr "Album mód"
 
 #: src/audacious/ui_preferences.c:150
-#, fuzzy
 msgid "<b>Output Settings</b>"
-msgstr "<b>Formátum-felismerés</b>"
+msgstr "<b>Kimeneti beállítások</b>"
 
 #: src/audacious/ui_preferences.c:152
-#, fuzzy
 msgid "Bit depth:"
-msgstr "Kimeneti bit mélység:"
+msgstr "Bit mélység:"
 
 #: src/audacious/ui_preferences.c:155
 msgid "Buffer size:"
@@ -456,17 +447,15 @@ msgstr "Pufferméret:"
 
 #: src/audacious/ui_preferences.c:157
 msgid "ms"
-msgstr ""
+msgstr "ms"
 
 #: src/audacious/ui_preferences.c:158
-#, fuzzy
 msgid "Use software volume control (not recommended)"
-msgstr "Szoftveres hangerőszabályzó használata"
+msgstr "Szoftveres hangerő-szabályozás használata (nem ajánlott)"
 
 #: src/audacious/ui_preferences.c:160
-#, fuzzy
 msgid "<b>Replay Gain</b>"
-msgstr "<b>Lejátszási erősítési mód</b>"
+msgstr "<b>Replay Gain</b>"
 
 #: src/audacious/ui_preferences.c:161
 msgid "Enable Replay Gain"
@@ -477,22 +466,20 @@ msgid "Prevent clipping (recommended)"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:166
-#, fuzzy
 msgid "<b>Adjust Levels</b>"
-msgstr "<b>Egérgörgő</b>"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:167
 msgid "Amplify all files:"
-msgstr ""
+msgstr "Amplify all files:"
 
 #: src/audacious/ui_preferences.c:169 src/audacious/ui_preferences.c:172
 msgid "dB"
 msgstr "dB"
 
 #: src/audacious/ui_preferences.c:170
-#, fuzzy
 msgid "Amplify untagged files:"
-msgstr "- multimédia fájlok lejátszása"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:175
 msgid "Proxy hostname:"
@@ -518,19 +505,11 @@ msgstr "<b>Proxy beállítása</b>"
 msgid "Enable proxy usage"
 msgstr "Proxyhasználat bekapcsolása"
 
-#: src/audacious/ui_preferences.c:187
+#: src/audacious/ui_preferences.c:188
 msgid "Use authentication with proxy"
 msgstr "Hitelesítés használata proxyval"
 
-#: src/audacious/ui_preferences.c:189
-msgid ""
-"<span size=\"small\">Changing these settings will require a restart of "
-"Audacious.</span>"
-msgstr ""
-"<span size=\"small\">Ezen beállítások megváltoztatásához újra kell indítani "
-"az Audacioust.</span>"
-
-#: src/audacious/ui_preferences.c:193
+#: src/audacious/ui_preferences.c:196
 msgid "Auto character encoding detector for:"
 msgstr "Automatikus karakterkódolás felismerés ennél:"
 
@@ -538,23 +517,9 @@ msgstr "Automatikus karakterkódolás felismerés ennél:"
 msgid "Fallback character encodings:"
 msgstr "Tartalék karakterkódolások:"
 
-#: src/audacious/ui_preferences.c:201
-msgid ""
-"List of character encodings used for fall back conversion of metadata. If "
-"automatic character encoding detector failed or has been disabled, encodings "
-"in this list would be treated as candidates of the encoding of metadata, and "
-"fall back conversion from these encodings to UTF-8 would be attempted."
-msgstr ""
-"A metaadat tartalék átalakításához használt karakterkódolások listája. Ha az "
-"automatikus karakterkódolás felismerés sikertelen vagy ki lett kapcsolva, az "
-"ezen listán szereplő kódolások kerülnek feldolgozásra a metaadat kódolásának "
-"jelöltjeiként, és a tartalék átalakítás UTF-8-ba ezekből a kódolásokból lesz "
-"megkísérelve."
-
 #: src/audacious/ui_preferences.c:205
-#, fuzzy
 msgid "<b>Behavior</b>"
-msgstr "<b>Bit mélység</b>"
+msgstr "<b>Viselkedés</b>"
 
 #: src/audacious/ui_preferences.c:206
 msgid "Continue playback on startup"
@@ -565,32 +530,58 @@ msgid "Advance when the current song is deleted"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:210
-#, fuzzy
 msgid "Clear the playlist when opening files"
-msgstr "Az aktuális lejátszólista törlése új fájlok megnyitásakor"
+msgstr "Lejátszólista törlése fájlok megnyitásakor"
 
 #: src/audacious/ui_preferences.c:212
-#, fuzzy
 msgid "Open files in a temporary playlist"
-msgstr "Új fájlok hozzáadása az ideiglenes lejátszólistához"
+msgstr "Fájlok megnyitása az ideiglenes lejátszólistában"
 
 #: src/audacious/ui_preferences.c:214
 msgid "<b>Metadata</b>"
 msgstr "<b>Metaadat</b>"
 
-#: src/audacious/ui_preferences.c:454
+#: src/audacious/ui_preferences.c:215
+msgid "Do not load metadata for songs until played"
+msgstr "Ne töltse be a metaadatokat amíg játssza a dalt"
+
+#: src/audacious/ui_preferences.c:233
+msgid "TITLE"
+msgstr "CÍM"
+
+#: src/audacious/ui_preferences.c:234
+msgid "ARTIST - TITLE"
+msgstr "ELŐADÓ - CÍM"
+
+#: src/audacious/ui_preferences.c:235
+msgid "ARTIST - ALBUM - TITLE"
+msgstr "ELŐADÓ - ALBUM - CÍM"
+
+#: src/audacious/ui_preferences.c:236
+msgid "ARTIST - ALBUM - TRACK. TITLE"
+msgstr "ELŐADÓ - ALBUM - SÁV. CÍM"
+
+#: src/audacious/ui_preferences.c:237
+msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
+msgstr "ELŐADÓ [ ALBUM] - SÁV. CÍM"
+
+#: src/audacious/ui_preferences.c:238
+msgid "ALBUM - TITLE"
+msgstr "ALBUM - CÍM"
+
+#: src/audacious/ui_preferences.c:577
 msgid "Category"
 msgstr "Kategória"
 
-#: src/audacious/ui_preferences.c:682
+#: src/audacious/ui_preferences.c:801
 msgid "Popup Information Settings"
 msgstr "Felbukkanó információ beállításai"
 
-#: src/audacious/ui_preferences.c:691
+#: src/audacious/ui_preferences.c:810
 msgid "<b>Cover image retrieve</b>"
 msgstr "<b>Borítókép letöltése</b>"
 
-#: src/audacious/ui_preferences.c:696
+#: src/audacious/ui_preferences.c:815
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
@@ -600,99 +591,75 @@ msgstr ""
 "fájlnévben. Megadhatja ezeket a szavakat az alábbi listában, vesszővel "
 "elválasztva."
 
-#: src/audacious/ui_preferences.c:713
+#: src/audacious/ui_preferences.c:832
 msgid "Exclude:"
 msgstr "Kihagyja:"
 
-#: src/audacious/ui_preferences.c:720
+#: src/audacious/ui_preferences.c:839
 msgid "Include:"
 msgstr "Beletartozzon:"
 
-#: src/audacious/ui_preferences.c:737
+#: src/audacious/ui_preferences.c:856
 msgid "Recursively search for cover"
 msgstr "Borító keresése rekurzívan"
 
-#: src/audacious/ui_preferences.c:747
+#: src/audacious/ui_preferences.c:866
 msgid "Search depth: "
 msgstr "Keresési mélység: "
 
-#: src/audacious/ui_preferences.c:761
+#: src/audacious/ui_preferences.c:880
 msgid "Use per-file cover"
 msgstr "Fájlonkénti borító használata"
 
-#: src/audacious/ui_preferences.c:764
+#: src/audacious/ui_preferences.c:883
 msgid "<b>Miscellaneous</b>"
 msgstr "<b>Egyéb</b>"
 
-#: src/audacious/ui_preferences.c:773
+#: src/audacious/ui_preferences.c:892
 msgid "Show Progress bar for the current track"
 msgstr "Folyamatjelző mutatása az aktuális számhoz"
 
-#: src/audacious/ui_preferences.c:783
+#: src/audacious/ui_preferences.c:902
 msgid "Delay until filepopup comes up: "
 msgstr "Késleltetés a file popup ablak megnyitásakor:"
 
-#: src/audacious/ui_preferences.c:1283
-msgid "<b>Song Display</b>"
-msgstr "<b>Szám megjelenítése</b>"
-
-#: src/audacious/ui_preferences.c:1292
-msgid "Show song numbers"
-msgstr "A dalok számának mutatása"
-
-#: src/audacious/ui_preferences.c:1303
-msgid "Show leading zeroes (02:00 instead of 2:00)"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:1325
-msgid "Show information about titlestring format"
-msgstr "Információ megjelenítése a cím-karakterlánc formátumáról"
-
-#: src/audacious/ui_preferences.c:1339
-msgid "TITLE"
-msgstr "CÍM"
-
 #: src/audacious/ui_preferences.c:1340
-msgid "ARTIST - TITLE"
-msgstr "ELŐADÓ - CÍM"
-
-#: src/audacious/ui_preferences.c:1341
-msgid "ARTIST - ALBUM - TITLE"
-msgstr "ELŐADÓ - ALBUM - CÍM"
-
-#: src/audacious/ui_preferences.c:1342
-msgid "ARTIST - ALBUM - TRACK. TITLE"
-msgstr "ELŐADÓ - ALBUM - SÁV. CÍM"
-
-#: src/audacious/ui_preferences.c:1343
-msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
-msgstr "ELŐADÓ [ ALBUM] - SÁV. CÍM"
-
-#: src/audacious/ui_preferences.c:1344
-msgid "ALBUM - TITLE"
-msgstr "ALBUM - CÍM"
-
-#: src/audacious/ui_preferences.c:1345
 msgid "Custom"
 msgstr "Egyéni"
 
-#: src/audacious/ui_preferences.c:1354
+#: src/audacious/ui_preferences.c:1383
+msgid "<b>Song Display</b>"
+msgstr "<b>Szám megjelenítése</b>"
+
+#: src/audacious/ui_preferences.c:1392
+msgid "Show song numbers"
+msgstr "A dalok számának mutatása"
+
+#: src/audacious/ui_preferences.c:1403
+msgid "Show leading zeroes (02:00 instead of 2:00)"
+msgstr "Vezető nullák mutatása (2:00 helyett 02:00)"
+
+#: src/audacious/ui_preferences.c:1425
+msgid "Show information about titlestring format"
+msgstr "Információ megjelenítése a cím-karakterlánc formátumáról"
+
+#: src/audacious/ui_preferences.c:1441
 msgid "Custom string:"
 msgstr "Egyéni karakterlánc:"
 
-#: src/audacious/ui_preferences.c:1361
+#: src/audacious/ui_preferences.c:1448
 msgid "Title format:"
 msgstr "Címformátum:"
 
-#: src/audacious/ui_preferences.c:1372
+#: src/audacious/ui_preferences.c:1459
 msgid "<b>Popup Information</b>"
 msgstr "<b>Felbukkanó információ</b>"
 
-#: src/audacious/ui_preferences.c:1387
+#: src/audacious/ui_preferences.c:1474
 msgid "Show popup information for playlist entries"
 msgstr "Felbukkanó információ megjelenítése a lejátszólista bejegyzéseknél"
 
-#: src/audacious/ui_preferences.c:1388
+#: src/audacious/ui_preferences.c:1475
 msgid ""
 "Toggles popup information window for the pointed entry in the playlist. The "
 "window shows title of song, name of album, genre, year of publish, track "
@@ -703,48 +670,44 @@ msgstr ""
 "műfaját, a megjelenés évét, a szám sorszámát, a szám hosszát és az "
 "albumborítót."
 
-#: src/audacious/ui_preferences.c:1397
+#: src/audacious/ui_preferences.c:1486
 msgid "Edit settings for popup information"
 msgstr "Felbukkanó információ beállításainak szerkesztése"
 
-#: src/audacious/ui_preferences.c:1497
-#, fuzzy
+#: src/audacious/ui_preferences.c:1575
 msgid "Output plugin:"
-msgstr "Bemeneti bővítmény: %s"
+msgstr "Kimeneti bővítmény:"
 
-#: src/audacious/ui_preferences.c:1556
-#, fuzzy
+#: src/audacious/ui_preferences.c:1634
 msgid "Transport"
-msgstr "Fordítók"
+msgstr ""
 
-#: src/audacious/ui_preferences.c:1556
+#: src/audacious/ui_preferences.c:1634
 msgid "Input"
-msgstr ""
+msgstr "Bemenet"
 
-#: src/audacious/ui_preferences.c:1557
-#, fuzzy
+#: src/audacious/ui_preferences.c:1635
 msgid "Effect"
-msgstr "<b>Effektusok</b>"
+msgstr "Effekt"
 
-#: src/audacious/ui_preferences.c:1557
-#, fuzzy
+#: src/audacious/ui_preferences.c:1635
 msgid "Visualization"
-msgstr "/K_ijelzési mód"
+msgstr "Megjelenítés"
 
-#: src/audacious/ui_preferences.c:1557
+#: src/audacious/ui_preferences.c:1635
 msgid "General"
-msgstr ""
+msgstr "Általános"
 
-#: src/audacious/ui_preferences.c:1597
+#: src/audacious/ui_preferences.c:1675
 msgid "Audacious Preferences"
 msgstr "Audacious beállításai"
 
-#: src/audacious/util.c:155
+#: src/audacious/util.c:123
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Nem lehet létrehozni a könyvtárat (%s): %s\n"
 
-#: src/audtool/handlers_playlist.c:264
+#: src/audtool/handlers_playlist.c:274
 msgid "Position not found."
 msgstr "Pozíció nem található."
 
@@ -754,21 +717,20 @@ msgstr "Nincs lejátszott dal."
 
 #: src/libaudcore/tuple.c:685
 msgid "Mono"
-msgstr ""
+msgstr "Monó"
 
 #: src/libaudcore/tuple.c:687
-#, fuzzy
 msgid "Stereo"
-msgstr "sztereó"
+msgstr "Sztereó"
 
 #: src/libaudcore/tuple.c:689
 #, c-format
 msgid "%d channel"
 msgid_plural "%d channels"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d csatorna"
+msgstr[1] "%d csatorna"
 
-#: src/libaudgui/confirm.c:73
+#: src/libaudgui/confirm.c:78
 #, c-format
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
@@ -777,76 +739,75 @@ msgstr ""
 "Valóban be akarja zárni ezt a fájlt %s? Ha igen, akkor bármilyen változás "
 "történt a lejátszólistán az el fog veszni."
 
-#: src/libaudgui/confirm.c:86
+#: src/libaudgui/confirm.c:91
 msgid "_Don't show this message again"
 msgstr "_Ne mutassa többé ezt a figyelmeztetést"
 
-#: src/libaudgui/confirm.c:124
-#, fuzzy
+#: src/libaudgui/confirm.c:128
 msgid "Rename Playlist"
-msgstr "Lejátszólista mentése"
+msgstr "Lejátszólista átnevezése"
 
 #: src/libaudgui/effects-menu.c:76
 msgid "settings ..."
 msgstr "beállítások ..."
 
-#: src/libaudgui/equalizer.c:68
+#: src/libaudgui/equalizer.c:52
 msgid "_Enable"
 msgstr "_Engedélyezve"
 
-#: src/libaudgui/equalizer.c:140
+#: src/libaudgui/equalizer.c:124
 msgid "31 Hz"
 msgstr "31 Hz"
 
-#: src/libaudgui/equalizer.c:140
+#: src/libaudgui/equalizer.c:124
 msgid "63 Hz"
 msgstr "63 Hz"
 
-#: src/libaudgui/equalizer.c:141
+#: src/libaudgui/equalizer.c:125
 msgid "125 Hz"
 msgstr "125 Hz"
 
-#: src/libaudgui/equalizer.c:141
+#: src/libaudgui/equalizer.c:125
 msgid "250 Hz"
 msgstr "250 Hz"
 
-#: src/libaudgui/equalizer.c:141
+#: src/libaudgui/equalizer.c:125
 msgid "500 Hz"
 msgstr "500 Hz"
 
-#: src/libaudgui/equalizer.c:141
+#: src/libaudgui/equalizer.c:125
 msgid "1 kHz"
 msgstr "1 kHz"
 
-#: src/libaudgui/equalizer.c:141
+#: src/libaudgui/equalizer.c:125
 msgid "2 kHz"
 msgstr "2 kHz"
 
-#: src/libaudgui/equalizer.c:142
+#: src/libaudgui/equalizer.c:126
 msgid "4 kHz"
 msgstr "4 kHz"
 
-#: src/libaudgui/equalizer.c:142
+#: src/libaudgui/equalizer.c:126
 msgid "8 kHz"
 msgstr "8 kHz"
 
-#: src/libaudgui/equalizer.c:142
+#: src/libaudgui/equalizer.c:126
 msgid "16 kHz"
 msgstr "16 kHz"
 
-#: src/libaudgui/equalizer.c:147
+#: src/libaudgui/equalizer.c:131
 msgid "Equalizer"
 msgstr "Equalizer"
 
-#: src/libaudgui/equalizer.c:163
+#: src/libaudgui/equalizer.c:147
 msgid "Preamp"
 msgstr "Preamp"
 
-#: src/libaudgui/infopopup.c:212
+#: src/libaudgui/infopopup.c:211
 msgid "Track Number"
 msgstr "Szám sorszáma"
 
-#: src/libaudgui/infopopup.c:214
+#: src/libaudgui/infopopup.c:213
 msgid "Track Length"
 msgstr "Szám hossza"
 
@@ -855,18 +816,16 @@ msgid "Acid Jazz"
 msgstr "Acid Jazz"
 
 #: src/libaudgui/infowin.c:78
-#, fuzzy
 msgid "Acid Rock"
-msgstr "Kemény Rock"
+msgstr "Acid rock"
 
 #: src/libaudgui/infowin.c:79
 msgid "Ambient"
 msgstr "Ambient"
 
 #: src/libaudgui/infowin.c:80
-#, fuzzy
 msgid "Bebop"
-msgstr "Bebob"
+msgstr "Bebop"
 
 #: src/libaudgui/infowin.c:81
 msgid "Bluegrass"
@@ -929,9 +888,8 @@ msgid "Heavy Metal"
 msgstr "Heavy Metal"
 
 #: src/libaudgui/infowin.c:96
-#, fuzzy
 msgid "Hip-hop"
-msgstr "Hip-Hop"
+msgstr "Hip-hop"
 
 #: src/libaudgui/infowin.c:97
 msgid "House"
@@ -982,13 +940,12 @@ msgid "Rock"
 msgstr "Rock"
 
 #: src/libaudgui/infowin.c:109
-#, fuzzy
 msgid "Rock and Roll"
-msgstr "Rock & Roll"
+msgstr "Rock and Roll"
 
 #: src/libaudgui/infowin.c:110
 msgid "Rhythm and Blues"
-msgstr ""
+msgstr "Rhythm and Blues"
 
 #: src/libaudgui/infowin.c:111
 msgid "Ska"
@@ -1007,9 +964,8 @@ msgid "Techno"
 msgstr "Techno"
 
 #: src/libaudgui/infowin.c:115
-#, fuzzy
 msgid "Trip-hop"
-msgstr "Trip-Hop"
+msgstr "Trip-hop"
 
 #: src/libaudgui/infowin.c:175 src/libaudgui/infowin.c:361
 #: src/libaudgui/infowin.c:364 src/libaudgui/infowin.c:367
@@ -1084,28 +1040,30 @@ msgstr "Ugrás időpontra"
 
 #: src/libaudgui/jump-to-time.c:90
 msgid "mm:ss"
-msgstr ""
+msgstr "mm:ss"
 
 #: src/libaudgui/playlists.c:39
-#, fuzzy
 msgid "Export Playlist"
-msgstr "Ideglenes lejátszólista"
+msgstr "Lejátszólista exportálása"
 
 #: src/libaudgui/playlists.c:39
-#, fuzzy
 msgid "Import Playlist"
-msgstr "Ideglenes lejátszólista"
+msgstr "Lejátszólista importálása"
 
-#: src/libaudgui/playlists.c:71
+#: src/libaudgui/playlists.c:72
 #, c-format
 msgid "Overwrite %s?"
-msgstr ""
+msgstr "Felülírja %s?"
 
-#: src/libaudgui/ui_about.c:71
+#: src/libaudgui/queue-manager.c:185
+msgid "Queue Manager"
+msgstr "Várakozási sor menedzser"
+
+#: src/libaudgui/ui_about.c:69
 msgid "About Audacious"
 msgstr "Audacious névjegye"
 
-#: src/libaudgui/ui_about.c:93 src/libaudgui/ui_credits.c:122
+#: src/libaudgui/ui_about.c:90 src/libaudgui/ui_credits.c:122
 msgid "Credits"
 msgstr "Köszönet"
 
@@ -1113,75 +1071,76 @@ msgstr "Köszönet"
 msgid "Translators"
 msgstr "Fordítók"
 
-#: src/libaudgui/ui_fileopener.c:108
+#: src/libaudgui/ui_fileopener.c:109
 msgid "Open Files"
 msgstr "Fájlok megnyitása"
 
-#: src/libaudgui/ui_fileopener.c:108
+#: src/libaudgui/ui_fileopener.c:109
 msgid "Add Files"
 msgstr "Fájlok hozzáadása"
 
-#: src/libaudgui/ui_fileopener.c:110
+#: src/libaudgui/ui_fileopener.c:111
 msgid "Close dialog on Open"
 msgstr "Párbeszédablak bezárása megnyitás után"
 
-#: src/libaudgui/ui_fileopener.c:110
+#: src/libaudgui/ui_fileopener.c:111
 msgid "Close dialog on Add"
 msgstr "Párbeszédablak bezárása hozzáadás után"
 
-#: src/libaudgui/ui_jumptotrack.c:133
-msgid "Un_queue"
-msgstr "_Kiszedés a sorból"
-
-#: src/libaudgui/ui_jumptotrack.c:135 src/libaudgui/ui_jumptotrack.c:512
+#: src/libaudgui/ui_jumptotrack.c:103 src/libaudgui/ui_jumptotrack.c:111
+#: src/libaudgui/ui_jumptotrack.c:322
 msgid "_Queue"
 msgstr "_Sorba állítás"
 
-#: src/libaudgui/ui_jumptotrack.c:399
+#: src/libaudgui/ui_jumptotrack.c:109
+msgid "Un_queue"
+msgstr "_Kiszedés a sorból"
+
+#: src/libaudgui/ui_jumptotrack.c:239
 msgid "Jump to Track"
 msgstr "Ugrás számra"
 
-#: src/libaudgui/ui_jumptotrack.c:442
+#: src/libaudgui/ui_jumptotrack.c:277
 msgid "Filter: "
 msgstr "Szűrő: "
 
-#: src/libaudgui/ui_jumptotrack.c:443
+#: src/libaudgui/ui_jumptotrack.c:278
 msgid "_Filter:"
 msgstr "_Szűrő: "
 
-#: src/libaudgui/ui_jumptotrack.c:461
+#: src/libaudgui/ui_jumptotrack.c:288
 msgid "Remember"
 msgstr "Megjegyzés"
 
-#: src/libaudgui/ui_jumptotrack.c:470
+#: src/libaudgui/ui_jumptotrack.c:295
 msgid "Clea_r"
 msgstr "Tö_rlés"
 
-#: src/libaudgui/ui_jumptotrack.c:504
+#: src/libaudgui/ui_jumptotrack.c:315
 msgid "Close on Jump"
 msgstr "Bezárás ugrás után"
 
-#: src/libaudgui/ui_playlist_manager.c:240
+#: src/libaudgui/ui_playlist_manager.c:250
 msgid "Playlist Manager"
 msgstr "Lejátszólista kezelő"
 
-#: src/libaudgui/ui_playlist_manager.c:264
+#: src/libaudgui/ui_playlist_manager.c:277
 msgid "Entries"
 msgstr "Elemek"
 
-#: src/libaudgui/ui_playlist_manager.c:285
+#: src/libaudgui/ui_playlist_manager.c:298
 msgid "_Rename"
 msgstr "Át_nevezés"
 
-#: src/libaudgui/ui_playlist_manager.c:309
+#: src/libaudgui/ui_playlist_manager.c:322
 msgid "_Close dialog on activating playlist"
 msgstr "_Párbeszédablak bezárása a lejátszólista aktíválása után"
 
-#: src/libaudgui/ui_urlopener.c:58
+#: src/libaudgui/ui_urlopener.c:51
 msgid "Open URL"
 msgstr "URL megnyitása"
 
-#: src/libaudgui/ui_urlopener.c:58
+#: src/libaudgui/ui_urlopener.c:51
 msgid "Add URL"
 msgstr "URL hozzáadása"
 
@@ -1190,6 +1149,8 @@ msgid ""
 "\n"
 "(Further messages have been hidden.)"
 msgstr ""
+"\n"
+"(További üzenetek el vannak rejtve.)"
 
 #: src/libeggsmclient/eggdesktopfile.c:165
 msgid "File is not a valid .desktop file"
@@ -1243,2024 +1204,11 @@ msgid "ID"
 msgstr "ID"
 
 #: src/libeggsmclient/eggsmclient.c:253
-#, fuzzy
 msgid "Session management options:"
-msgstr "Munkamenet-kezelő opciók"
+msgstr ""
 
 #: src/libeggsmclient/eggsmclient.c:254
-#, fuzzy
 msgid "Show session management options"
-msgstr "Munkamenet-kezelő opciók mutatása"
+msgstr ""
 
-#~ msgid "Replay Gain"
-#~ msgstr "Lejátszási erősítés"
 
-#~ msgid "<b>Bit Depth</b>"
-#~ msgstr "<b>Bit mélység</b>"
-
-#~ msgid ""
-#~ "All streams will be converted to this bit depth.\n"
-#~ "This should be the max supported bit depth of\n"
-#~ "the sound card or output plugin."
-#~ msgstr ""
-#~ "Minden folyam erre a bit mélységre lesz konvertálva.\n"
-#~ "A maximálisan támogatott bit mélység függ a\n"
-#~ "hangkártyától és a kimeneti bővítménytől."
-
-#~ msgid "<b>Volume Control</b>"
-#~ msgstr "<b>Hangerő szabályzó</b>"
-
-#~ msgid ""
-#~ "Use software volume control. This may be useful for situations where your "
-#~ "audio system does not support controlling the playback volume."
-#~ msgstr ""
-#~ "Szoftveres hangerő-szabályozás használata. Ez hasznos lehet olyan "
-#~ "helyzetekben, ahol az audio-rendszer nem támogatja a lejátszás "
-#~ "hangerejének a szabályozását."
-
-#, fuzzy
-#~ msgid "<b>Mode</b>"
-#~ msgstr "<b>Metaadat</b>"
-
-#, fuzzy
-#~ msgid "<b>Clipping Prevention</b>"
-#~ msgstr "<b>Felbukkanó információ</b>"
-
-#, fuzzy
-#~ msgid "Enable clipping prevention"
-#~ msgstr "Engedélyezi a csúcs információ túllépés megelőzését"
-
-#~ msgid "<b>Audio System</b>"
-#~ msgstr "<b>Hangrendszer</b>"
-
-#~ msgid "Current output plugin:"
-#~ msgstr "Jelenlegi kimeneti bővítmény:"
-
-#~ msgid "Display all open Audacious windows"
-#~ msgstr "Minden Audacious ablak megnyitása"
-
-#~ msgid "%s: Unable to open display, exiting.\n"
-#~ msgstr "%s Képernyő megnyitása sikertelen, kilépés.\n"
-
-#~ msgid "Preamp:"
-#~ msgstr "Preamp:"
-
-#~ msgid "Default gain:"
-#~ msgstr "Alapértelmezett nyereség:"
-
-#~ msgid "This gain will be used if file doesn't contain Replay Gain metadata."
-#~ msgstr ""
-#~ "Ez az erősítési érték lesz használva ha a fájl nem tartalmaz lejátszási "
-#~ "erősítési metaadatot."
-
-#~ msgid ""
-#~ "<span size=\"small\">Please remember that the most efficient way to "
-#~ "prevent signal clipping is not to use positive values above.</span>"
-#~ msgstr ""
-#~ "<span size=\"small\">Kérjük vegy figyelembe hogy a leghatékonyabb módja a "
-#~ "jel vágásának ha nem ad meg pozitív értékeket.</span>"
-
-#~ msgid "<b>Replay Gain configuration</b>"
-#~ msgstr "<b>Lejátszási erősítés beállítása</b>"
-
-#~ msgid "Track gain/peak"
-#~ msgstr "Szám erősítés/csúcsérték"
-
-#~ msgid "Album gain/peak"
-#~ msgstr "Album erősítés/csúcsérték"
-
-#~ msgid "Use peak value from Replay Gain info for clipping prevention"
-#~ msgstr ""
-#~ "Használja a csúcs értéket a lejátszási csúcs információ túllépésének "
-#~ "megelőzéséhez"
-
-#~ msgid "Classic Rock"
-#~ msgstr "Klasszikus Rock"
-
-#~ msgid "Dance"
-#~ msgstr "Dance"
-
-#~ msgid "Oldies"
-#~ msgstr "Oldies"
-
-#~ msgid "Other"
-#~ msgstr "Egyéb"
-
-#~ msgid "R&B"
-#~ msgstr "R&B"
-
-#~ msgid "Industrial"
-#~ msgstr "Ipari"
-
-#~ msgid "Alternative"
-#~ msgstr "Alternatív"
-
-#~ msgid "Pranks"
-#~ msgstr "Pranks"
-
-#~ msgid "Soundtrack"
-#~ msgstr "Filmzene"
-
-#~ msgid "Euro-Techno"
-#~ msgstr "Euro-Techno"
-
-#~ msgid "Vocal"
-#~ msgstr "Ének"
-
-#~ msgid "Jazz+Funk"
-#~ msgstr "Jazz+Funk"
-
-#~ msgid "Fusion"
-#~ msgstr "Fusion"
-
-#~ msgid "Trance"
-#~ msgstr "Trance"
-
-#~ msgid "Instrumental"
-#~ msgstr "Instrumentális"
-
-#~ msgid "Acid"
-#~ msgstr "Acid"
-
-#~ msgid "Game"
-#~ msgstr "Játék"
-
-#~ msgid "Sound Clip"
-#~ msgstr "Zenei klip"
-
-#~ msgid "AlternRock"
-#~ msgstr "AlternRock"
-
-#~ msgid "Bass"
-#~ msgstr "Bass"
-
-#~ msgid "Punk"
-#~ msgstr "Punk"
-
-#~ msgid "Space"
-#~ msgstr "Space"
-
-#~ msgid "Meditative"
-#~ msgstr "Meditatív"
-
-#~ msgid "Instrumental Pop"
-#~ msgstr "Instrumentális Pop"
-
-#~ msgid "Instrumental Rock"
-#~ msgstr "Instrumentális Rock"
-
-#~ msgid "Ethnic"
-#~ msgstr "Etnikai"
-
-#~ msgid "Gothic"
-#~ msgstr "Gótikus"
-
-#~ msgid "Darkwave"
-#~ msgstr "Darkwave"
-
-#~ msgid "Techno-Industrial"
-#~ msgstr "Techno-Ipari"
-
-#~ msgid "Electronic"
-#~ msgstr "Elektronikus"
-
-#~ msgid "Pop-Folk"
-#~ msgstr "Pop-Folk"
-
-#~ msgid "Eurodance"
-#~ msgstr "Eurodance"
-
-#~ msgid "Dream"
-#~ msgstr "Dream"
-
-#~ msgid "Southern Rock"
-#~ msgstr "Déli Rock"
-
-#~ msgid "Comedy"
-#~ msgstr "Komédia"
-
-#~ msgid "Cult"
-#~ msgstr "Kultusz"
-
-#~ msgid "Top 40"
-#~ msgstr "Top 40"
-
-#~ msgid "Christian Rap"
-#~ msgstr "Keresztény Rap"
-
-#~ msgid "Pop/Funk"
-#~ msgstr "Pop/Funk"
-
-#~ msgid "Native American"
-#~ msgstr "Natív Amerikai"
-
-#~ msgid "Cabaret"
-#~ msgstr "Kabaré"
-
-#~ msgid "Psychedelic"
-#~ msgstr "Pszihedelikus"
-
-#~ msgid "Rave"
-#~ msgstr "Rév"
-
-#~ msgid "Showtunes"
-#~ msgstr "Showtunes"
-
-#~ msgid "Trailer"
-#~ msgstr "Előzetes"
-
-#~ msgid "Lo-Fi"
-#~ msgstr "Lo-Fi"
-
-#~ msgid "Tribal"
-#~ msgstr "Törzsi"
-
-#~ msgid "Acid Punk"
-#~ msgstr "Acid Punk"
-
-#~ msgid "Polka"
-#~ msgstr "Polka"
-
-#~ msgid "Retro"
-#~ msgstr "Retro"
-
-#~ msgid "Musical"
-#~ msgstr "Musical"
-
-#~ msgid "Folk/Rock"
-#~ msgstr "Folk/Rock"
-
-#~ msgid "National Folk"
-#~ msgstr "Nemzeti Folk"
-
-#~ msgid "Fast-Fusion"
-#~ msgstr "Fast-Fusion"
-
-#~ msgid "Latin"
-#~ msgstr "Latin"
-
-#~ msgid "Revival"
-#~ msgstr "Revival"
-
-#~ msgid "Celtic"
-#~ msgstr "Kelta"
-
-#~ msgid "Avantgarde"
-#~ msgstr "Avantgárd"
-
-#~ msgid "Gothic Rock"
-#~ msgstr "Gótikus Rock"
-
-#~ msgid "Progressive Rock"
-#~ msgstr "Progresszív Rock"
-
-#~ msgid "Psychedelic Rock"
-#~ msgstr "Pszihedelikus Rock"
-
-#~ msgid "Symphonic Rock"
-#~ msgstr "Szimfónikus Rock"
-
-#~ msgid "Slow Rock"
-#~ msgstr "Lassú Rock"
-
-#~ msgid "Big Band"
-#~ msgstr "Big Band"
-
-#~ msgid "Chorus"
-#~ msgstr "Kórus"
-
-#~ msgid "Acoustic"
-#~ msgstr "Akusztikus"
-
-#~ msgid "Humour"
-#~ msgstr "Humor"
-
-#~ msgid "Speech"
-#~ msgstr "Szöveg"
-
-#~ msgid "Chanson"
-#~ msgstr "Sanzon"
-
-#~ msgid "Opera"
-#~ msgstr "Opera"
-
-#~ msgid "Sonata"
-#~ msgstr "Szonáta"
-
-#~ msgid "Symphony"
-#~ msgstr "Szimfónikus"
-
-#~ msgid "Booty Bass"
-#~ msgstr "Booty Bass"
-
-#~ msgid "Primus"
-#~ msgstr "Primus"
-
-#~ msgid "Porn Groove"
-#~ msgstr "Porn Groove"
-
-#~ msgid "Satire"
-#~ msgstr "Szatíra"
-
-#~ msgid "Slow Jam"
-#~ msgstr "Slow Jam"
-
-#~ msgid "Club"
-#~ msgstr "Klub"
-
-#~ msgid "Tango"
-#~ msgstr "Tango"
-
-#~ msgid "Samba"
-#~ msgstr "Szamba"
-
-#~ msgid "Folklore"
-#~ msgstr "Folklór"
-
-#~ msgid "Ballad"
-#~ msgstr "Ballad"
-
-#~ msgid "Power Ballad"
-#~ msgstr "Power Ballad"
-
-#~ msgid "Rhythmic Soul"
-#~ msgstr "Ritmikus Soul"
-
-#~ msgid "Freestyle"
-#~ msgstr "Szabadstílus"
-
-#~ msgid "Duet"
-#~ msgstr "Duett"
-
-#~ msgid "Drum Solo"
-#~ msgstr "Dobszóló"
-
-#~ msgid "A Cappella"
-#~ msgstr "A Cappella"
-
-#~ msgid "Euro-House"
-#~ msgstr "Euro-House"
-
-#~ msgid "Dance Hall"
-#~ msgstr "Dance Hall"
-
-#~ msgid "Goa"
-#~ msgstr "Goa"
-
-#~ msgid "Drum & Bass"
-#~ msgstr "Drum & Bass"
-
-#~ msgid "Club-House"
-#~ msgstr "Club-House"
-
-#~ msgid "Hardcore"
-#~ msgstr "Hardcore"
-
-#~ msgid "Terror"
-#~ msgstr "Terror"
-
-#~ msgid "Indie"
-#~ msgstr "Indie"
-
-#~ msgid "BritPop"
-#~ msgstr "BritPop"
-
-#~ msgid "Negerpunk"
-#~ msgstr "Negerpunk"
-
-#~ msgid "Polsk Punk"
-#~ msgstr "Lengyel Punk"
-
-#~ msgid "Beat"
-#~ msgstr "Beat"
-
-#~ msgid "Christian Gangsta Rap"
-#~ msgstr "Keresztény gengszter Rap"
-
-#~ msgid "Black Metal"
-#~ msgstr "Black Metal"
-
-#~ msgid "Crossover"
-#~ msgstr "Crossover"
-
-#~ msgid "Contemporary Christian"
-#~ msgstr "Kortárs keresztény"
-
-#~ msgid "Christian Rock"
-#~ msgstr "Keresztény Rock"
-
-#~ msgid "Merengue"
-#~ msgstr "Merengue"
-
-#~ msgid "Salsa"
-#~ msgstr "Salsa"
-
-#~ msgid "Thrash Metal"
-#~ msgstr "Trash Metal"
-
-#~ msgid "Anime"
-#~ msgstr "Anime"
-
-#~ msgid "JPop"
-#~ msgstr "JPop"
-
-#~ msgid "Synthpop"
-#~ msgstr "Synthpop"
-
-#, fuzzy
-#~ msgid ""
-#~ "<big><b>Audacious %s</b></big>\n"
-#~ "An audio player for many platforms.\n"
-#~ "Copyright (C) 2005-2011 Audacious Development Team"
-#~ msgstr ""
-#~ "<big><b>Audacious %s</b></big>\n"
-#~ "Egy audio lejátszó sokféle platformon.\n"
-#~ "Copyright (C) 2005-2010 Audacious-fejlesztőcsapat"
-
-#~ msgid "Unable to create log file (%s)!\n"
-#~ msgstr "Nem lehet létrehozni a naplófájlt (%s)!\n"
-
-#~ msgid "Print all errors and warnings to stdout"
-#~ msgstr ""
-#~ "Minden hiba és figyelmeztetés megjelenítése a kimeneti eszközön (stdout)"
-
-#~ msgid "Used in macpacking"
-#~ msgstr "Csomagolóban használt"
-
-#~ msgid "Sorry, threads aren't supported on your platform.\n"
-#~ msgstr "Sajnálom, a szálak kezelése nem támogatott az ön platformján.\n"
-
-#~ msgid "Module loading not supported! Plugins will not be loaded.\n"
-#~ msgstr ""
-#~ "Bővítmény betöltés nem támogatott! A bővítmények nem lettek betöltve.\n"
-
-#~ msgid "Audacious - Unsupported Version Warning"
-#~ msgstr "Audacious - Nem támogatott verzió figyelmeztetés"
-
-#~ msgid "<big><b>Audacious2 is not ready yet!</b></big>"
-#~ msgstr "<big><b>Audacious2 még nincs kész!</b></big>"
-
-#~ msgid ""
-#~ "<b>Please don't file bugs at this point unless they represent major "
-#~ "problems.</b>"
-#~ msgstr ""
-#~ "<b>Kérem ne küldjön hibás fájlokat, ha nem jelentős problémába ütközött.</"
-#~ "b>"
-
-#~ msgid ""
-#~ "This is an <i>alpha</i> build of Audacious2. It is still fairly "
-#~ "incomplete and unpolished.\n"
-#~ "We suspect that most minor bugs reported during this time will be "
-#~ "resolved once more things\n"
-#~ "stablize. However, if there is a major bug, such as a crash on playing a "
-#~ "specific file, we\n"
-#~ "need to know about it.\n"
-#~ "\n"
-#~ "However, we ask you to be aware that dealing with trivial bugs is "
-#~ "distracting at this point,\n"
-#~ "and to please refrain from doing so. Thanks in advance!"
-#~ msgstr ""
-#~ "Ez az Audacious2 egy <i>alpha</i> kiadása. Ez még mindig meglehetősen "
-#~ "hiányos és csiszolatlan.\n"
-#~ "Úgy gondoljuk hogy a legtöbb kisebb hibát amit jelentettek hamarosan "
-#~ "megoldjuk és tovább stabilizáljuk.\n"
-#~ "Azonban, ha egy jelentős hibát tapasztal, mint például a program leállása "
-#~ "egy adott fájl lejátszásakor,\n"
-#~ "akkor nekünk tudnunk kell erről.\n"
-#~ "\n"
-#~ "Megkérjük, hogy legyen elnéző a viszonylag jelentéktelen hibákkal szemben "
-#~ "ezen a ponton,\n"
-#~ "és nem fontos hogy jelentse nekünk. Előre is köszönjük!"
-
-#~ msgid "<b>Blogging about bugs in it is also not helpful.</b>"
-#~ msgstr ""
-#~ "<b>Megjegyzéseket írni (bloggolni) a megtalálható hibákról szintén nem "
-#~ "szerencsés.</b>"
-
-#~ msgid ""
-#~ "Likewise, we're developers. We don't read blogs on a regular basis. If "
-#~ "there is a major bug,\n"
-#~ "we ask you to bring it to our attention via our bugtracking instance at "
-#~ "http://jira.atheme.org/,\n"
-#~ "or via the forums that are on the website.\n"
-#~ "\n"
-#~ "This will help us find out more information about your concerns, which we "
-#~ "would likely\n"
-#~ "not know about otherwise."
-#~ msgstr ""
-#~ "Ugyanígy vagyunk mi a fejlesztők is. Nem olvasunk blogokat rendszeresen. "
-#~ "Ha van egy nagyobb hiba,\n"
-#~ "kérjük, hogy azt a jelezze a mi hibakövető rendszerünkben például a "
-#~ "http://jira.atheme.org/,\n"
-#~ "vagy azon a fórumokon, amelyek a honlapon megtalálhatóak.\n"
-#~ "\n"
-#~ "Ez segít nekünk megtalálni a további információkat a problémára, amit "
-#~ "valószínűleg\n"
-#~ "nem tudnánk meg másképpen."
-
-#~ msgid "Playback"
-#~ msgstr "Lejátszás"
-
-#~ msgid "<b>Playback</b>"
-#~ msgstr "<b>Lejátszás</b>"
-
-#~ msgid ""
-#~ "When Audacious starts, automatically begin playing from the point where "
-#~ "we stopped before."
-#~ msgstr ""
-#~ "Az Audacious indulásakor automatikusan arról a pontról folytatja a "
-#~ "lejátszást, ahol korábban meg lett állítva."
-
-#~ msgid "Don't advance in the playlist"
-#~ msgstr "Ne legyen léptetés a lejátszólistában"
-
-#~ msgid ""
-#~ "When finished playing a song, don't automatically advance to the next."
-#~ msgstr ""
-#~ "Egy szám lejátszásának befejezése után automatikusan ne lépjen a "
-#~ "következőre."
-
-#~ msgid "Enabled"
-#~ msgstr "Engedélyezve"
-
-#~ msgid "Description"
-#~ msgstr "Leírás"
-
-#~ msgid "Output Plugin Preferences"
-#~ msgstr "Kimeneti bővítmény beállításai"
-
-#~ msgid "Output Plugin Information"
-#~ msgstr "Kimeneti bővítmény információja"
-
-#~ msgid "_Decoder list:"
-#~ msgstr "_Dekódolólista:"
-
-#~ msgid "<span size=\"medium\"><b>Decoders</b></span>"
-#~ msgstr "<span size=\"medium\"><b>Dekódolók</b></span>"
-
-#~ msgid "_General plugin list:"
-#~ msgstr "Á_ltalános bővítmények listája:"
-
-#~ msgid "<span size=\"medium\"><b>General</b></span>"
-#~ msgstr "<span size=\"medium\"><b>Általános</b></span>"
-
-#~ msgid "_Visualization plugin list:"
-#~ msgstr "_Kijelzési bővítmények listája:"
-
-#~ msgid "<b>Visualization</b>"
-#~ msgstr "<b>Kijelzési mód</b>"
-
-#~ msgid "Effect plugins:"
-#~ msgstr "_Effektus bővítmények listája:"
-
-#~ msgid "<span size=\"small\">General</span>"
-#~ msgstr "<span size=\"small\">Általános</span>"
-
-#~ msgid "<span size=\"small\">Location</span>"
-#~ msgstr "<span size=\"small\">Hely</span>"
-
-#~ msgid "<span size=\"small\">Raw Metadata</span>"
-#~ msgstr "<span size=\"small\">Nyers metaadat</span>"
-
-#~ msgid "Key"
-#~ msgstr "Kulcs"
-
-#~ msgid "Value"
-#~ msgstr "Érték"
-
-#~ msgid "170 Hz"
-#~ msgstr "170 Hz"
-
-#~ msgid "310 Hz"
-#~ msgstr "310 Hz"
-
-#~ msgid "3 kHz"
-#~ msgstr "3 kHz"
-
-#~ msgid "6 kHz"
-#~ msgstr "6 kHz"
-
-#, fuzzy
-#~ msgid ""
-#~ "Available interfaces:\n"
-#~ "\n"
-#~ msgstr "Elérhető _beállítások:"
-
-#, fuzzy
-#~ msgid "Available Plugin Preferences:\n"
-#~ msgstr "Elérhető _beállítások:"
-
-#, fuzzy
-#~ msgid "Add/Open URL Dialog"
-#~ msgstr "Fájlok hozzáadása/megnyitása párbeszédablak"
-
-#~ msgid "Enter location to play:"
-#~ msgstr "Adja meg a lejátszani kívánt helyet:"
-
-#~ msgid "Don't clear the playlist"
-#~ msgstr "Ne törölje a lejátszólistát"
-
-#~ msgid "audacious: %s"
-#~ msgstr "audacious: %s"
-
-#~ msgid "Filename:"
-#~ msgstr "Fájlnév:"
-
-#~ msgid "No input plugin recognized this file"
-#~ msgstr "Egyik bemeneti bővítmény sem ismerte fel a fájlt"
-
-#~ msgid ""
-#~ "<b><big>No output plugin selected.</big></b>\n"
-#~ "You have not selected an output plugin."
-#~ msgstr ""
-#~ "<b><big>Nem lett kiválasztva kimeneti bővítmény.</big></b>\n"
-#~ "Nem választott ki kimeneti bővítményt."
-
-#~ msgid "Connectivity"
-#~ msgstr "Kapcsolódás"
-
-#, fuzzy
-#~ msgid ""
-#~ "When checked, Audacious will detect file formats based by extension. Only "
-#~ "files with extensions of supported formats will be loaded."
-#~ msgstr ""
-#~ "Ha be van kapcsolva az Audacious a fájlformátumokat kérés esetén ismeri "
-#~ "fel. Ez rendetlenebb lejátszólistát eredményezhet, viszont "
-#~ "sebességnövekedést érhet el vele."
-
-#, fuzzy
-#~ msgid "<b>Advanced</b>"
-#~ msgstr "<b>Lejátszás</b>"
-
-#, fuzzy
-#~ msgid ""
-#~ "<big><b>Audacious %s</b></big>\n"
-#~ "\n"
-#~ "Copyright (C) 2005-2009 Audacious Development Team"
-#~ msgstr ""
-#~ "<big><b>Audacious %s</b></big>\n"
-#~ "A UNIX-os multimédia jövője.\n"
-#~ "\n"
-#~ "Copyright (C) 2005-2006 Audacious-fejlesztőcsapat\n"
-
-#~ msgid "Detect file formats on demand, instead of immediately."
-#~ msgstr "Fájlformátumok felismerése kérés esetén, azonnali mód helyett."
-
-#, fuzzy
-#~ msgid ""
-#~ "When checked, Audacious will detect file formats on demand. This can "
-#~ "result in a messier playlist, but delivers a major speed benefit."
-#~ msgstr ""
-#~ "Ha be van kapcsolva az Audacious a fájlformátumokat kérés esetén ismeri "
-#~ "fel. Ez rendetlenebb lejátszólistát eredményezhet, viszont "
-#~ "sebességnövekedést érhet el vele."
-
-#~ msgid "Load metadata from playlists and files"
-#~ msgstr "Metaadat betöltése lejátszólistákból és fájlokból"
-
-#~ msgid "Load metadata (tag information) from music files."
-#~ msgstr "Metaadat (tag információ) betöltése a zenefájlokból."
-
-#~ msgid "minutes:seconds"
-#~ msgstr "perc:másodperc"
-
-#~ msgid "Track length:"
-#~ msgstr "Szám hossza:"
-
-#, fuzzy
-#~ msgid "Save as Static Playlist"
-#~ msgstr "Lejátszólista mentése"
-
-#~ msgid "Error writing playlist \"%s\": %s"
-#~ msgstr "Hiba a(z) \"%s\" lejátszólista írása közben: %s"
-
-#~ msgid "%s already exist. Continue?"
-#~ msgstr "A(z) %s már létezik. Folytatja?"
-
-#~ msgid ""
-#~ "<b><big>Unable to save playlist.</big></b>\n"
-#~ "\n"
-#~ "Unknown file type for '%s'.\n"
-#~ msgstr ""
-#~ "<b><big>Nem lehet menteni a lejátszólistát.</big></b>\n"
-#~ "\n"
-#~ "Ismeretlen fájltípus: '%s'.\n"
-
-#~ msgid "Presets"
-#~ msgstr "Beállítások"
-
-#~ msgid "Mouse"
-#~ msgstr "Egér"
-
-#~ msgid "Pause between songs"
-#~ msgstr "Szünet a számok között"
-
-#~ msgid "Pause for"
-#~ msgstr "Szünet"
-
-#~ msgid "seconds"
-#~ msgstr "másodpercre"
-
-#~ msgid "<b>Filename</b>"
-#~ msgstr "<b>Fájlnév</b>"
-
-#~ msgid "Convert underscores to blanks"
-#~ msgstr "Aláhúzás karakterek konvertálása szóközre"
-
-#~ msgid "Convert %20 to blanks"
-#~ msgstr "%20 konvertálása szóközre"
-
-#~ msgid "<b>File Dialog</b>"
-#~ msgstr "<b>Fájl párbeszédablak</b>"
-
-#~ msgid "Always refresh directory when opening file dialog"
-#~ msgstr "Mindig frissítse a könyvtárat a fájl párbeszédablak megnyitásakor"
-
-#~ msgid ""
-#~ "Always refresh the file dialog (this will slow opening the dialog on "
-#~ "large directories, and Gnome VFS should handle automatically)."
-#~ msgstr ""
-#~ "Mindig frissítse a fájl párbeszédablakot (ez lassítja a párbeszédablak "
-#~ "megnyitását nagy könyvtáraknál, és a Gnome VFS automatikusan kezeli ezt)."
-
-#~ msgid "Changes volume by"
-#~ msgstr "Megváltoztatja a hangerőt"
-
-#~ msgid "percent"
-#~ msgstr "százalékkal"
-
-#~ msgid "Scrolls playlist by"
-#~ msgstr "Ennyit görget a lejátszólistában:"
-
-#~ msgid "lines"
-#~ msgstr "sor"
-
-#, fuzzy
-#~ msgid "Stop after Current Song"
-#~ msgstr "/Leállítás a jelenlegi szám után"
-
-#, fuzzy
-#~ msgid "Peaks"
-#~ msgstr "/Szünet"
-
-#, fuzzy
-#~ msgid "Repeat"
-#~ msgstr "/Ismétlés"
-
-#, fuzzy
-#~ msgid "Shuffle"
-#~ msgstr "/Véletlenszerű sorrend"
-
-#, fuzzy
-#~ msgid "No Playlist Advance"
-#~ msgstr "/A lejátszólista ne legyen léptetve"
-
-#, fuzzy
-#~ msgid "Play"
-#~ msgstr "/Lejátszás"
-
-#, fuzzy
-#~ msgid "Pause"
-#~ msgstr "/Szünet"
-
-#, fuzzy
-#~ msgid "Stop"
-#~ msgstr "/Leállítás"
-
-#, fuzzy
-#~ msgid "Previous"
-#~ msgstr "/Előző"
-
-#, fuzzy
-#~ msgid "Next"
-#~ msgstr "/Következő"
-
-#, fuzzy
-#~ msgid "Visualization Mode"
-#~ msgstr "/Kijelzési mód"
-
-#, fuzzy
-#~ msgid "Analyzer Mode"
-#~ msgstr "/Analizátor-üzemmód/Tűz"
-
-#, fuzzy
-#~ msgid "Scope Mode"
-#~ msgstr "/Szkóp-üzemmód"
-
-#, fuzzy
-#~ msgid "Voiceprint Mode"
-#~ msgstr "/Analizátor-üzemmód/Tűz"
-
-#, fuzzy
-#~ msgid "WindowShade VU Mode"
-#~ msgstr "/Roló-üzemmód"
-
-#, fuzzy
-#~ msgid "Refresh Rate"
-#~ msgstr "/Frissítési sebesség"
-
-#, fuzzy
-#~ msgid "Analyzer Falloff"
-#~ msgstr "/Analizátor esése"
-
-#, fuzzy
-#~ msgid "Peaks Falloff"
-#~ msgstr "/Csúcsértékek esése"
-
-#, fuzzy
-#~ msgid "New Playlist"
-#~ msgstr "Lejátszólista mentése"
-
-#, fuzzy
-#~ msgid "Select Next Playlist"
-#~ msgstr "Válassza ki a lejátszólista betűkészletét:"
-
-#, fuzzy
-#~ msgid "Select Previous Playlist"
-#~ msgstr "/Kijelölés rendezése/Lejátszólista-bejegyzés alapján"
-
-#, fuzzy
-#~ msgid "Delete Playlist"
-#~ msgstr "Válassza ki a lejátszólista betűkészletét:"
-
-#, fuzzy
-#~ msgid "Load List"
-#~ msgstr "/Lista betöltése"
-
-#, fuzzy
-#~ msgid "Loads a playlist file into the selected playlist."
-#~ msgstr ""
-#~ "Igény szerint betölti a metaadatot, amikor megjeleníti a fájlt a "
-#~ "lejátszólistában"
-
-#, fuzzy
-#~ msgid "Save List"
-#~ msgstr "/Lista mentése"
-
-#, fuzzy
-#~ msgid "Saves the selected playlist."
-#~ msgstr "Válassza ki a lejátszólista betűkészletét:"
-
-#, fuzzy
-#~ msgid "Save Default List"
-#~ msgstr "/Alapértelmezett lista mentése"
-
-#, fuzzy
-#~ msgid "Saves the selected playlist to the default location."
-#~ msgstr "Válassza ki a lejátszólista betűkészletét:"
-
-#, fuzzy
-#~ msgid "Refresh List"
-#~ msgstr "Bőrlista frissítése"
-
-#, fuzzy
-#~ msgid "List Manager"
-#~ msgstr "/A lejátszólista ne legyen léptetve"
-
-#, fuzzy
-#~ msgid "Opens the playlist manager."
-#~ msgstr "Ne törölje a lejátszólistát"
-
-#, fuzzy
-#~ msgid "View"
-#~ msgstr "/_Nézet"
-
-#, fuzzy
-#~ msgid "Add Internet Address..."
-#~ msgstr "/Internetcím hozzáadása..."
-
-#, fuzzy
-#~ msgid "Adds a remote track to the playlist."
-#~ msgstr "Ne törölje a lejátszólistát"
-
-#, fuzzy
-#~ msgid "Add Files..."
-#~ msgstr "/Fájlok hozzáadása..."
-
-#, fuzzy
-#~ msgid "Search and Select"
-#~ msgstr "Keresési mélység: "
-
-#, fuzzy
-#~ msgid "Invert Selection"
-#~ msgstr "/Kijelölés megfordítása"
-
-#, fuzzy
-#~ msgid "Inverts the selected and unselected entries."
-#~ msgstr "Válassza ki a lejátszólista betűkészletét:"
-
-#~ msgid "Select All"
-#~ msgstr "Mindent kijelöl"
-
-#, fuzzy
-#~ msgid "Selects all of the playlist entries."
-#~ msgstr "/Lista rendezése/Lejátszólista-bejegyzés alapján"
-
-#, fuzzy
-#~ msgid "Select None"
-#~ msgstr "/Kijelölés megszüntetése"
-
-#, fuzzy
-#~ msgid "Deselects all of the playlist entries."
-#~ msgstr "Ne törölje a lejátszólistát"
-
-#, fuzzy
-#~ msgid "Remove All"
-#~ msgstr "/Összes eltávolítása"
-
-#, fuzzy
-#~ msgid "Removes all entries from the playlist."
-#~ msgstr "/Nem elérhető fájlok eltávolítása"
-
-#, fuzzy
-#~ msgid "Clear Queue"
-#~ msgstr "/Sor törlése"
-
-#, fuzzy
-#~ msgid "Clears the queue associated with this playlist."
-#~ msgstr "Válassza ki a lejátszólista betűkészletét:"
-
-#, fuzzy
-#~ msgid "Remove Unavailable Files"
-#~ msgstr "/Nem elérhető fájlok eltávolítása"
-
-#, fuzzy
-#~ msgid "Removes unavailable files from the playlist."
-#~ msgstr "/Nem elérhető fájlok eltávolítása"
-
-#, fuzzy
-#~ msgid "Remove Duplicates"
-#~ msgstr "/Duplikátumok eltávolítása"
-
-#, fuzzy
-#~ msgid "By Title"
-#~ msgstr "Cím"
-
-#, fuzzy
-#~ msgid "Removes duplicate entries from the playlist by title."
-#~ msgstr "/Duplikátumok eltávolítása/Útvonal + fájlnév alapján"
-
-#, fuzzy
-#~ msgid "By Filename"
-#~ msgstr "Fájlnév"
-
-#, fuzzy
-#~ msgid "Removes duplicate entries from the playlist by filename."
-#~ msgstr "/Duplikátumok eltávolítása/Útvonal + fájlnév alapján"
-
-#, fuzzy
-#~ msgid "By Path + Filename"
-#~ msgstr "/Lista rendezése/Útvonal + fájlnév alapján"
-
-#, fuzzy
-#~ msgid "Removes duplicate entries from the playlist by their full path."
-#~ msgstr "/Duplikátumok eltávolítása/Útvonal + fájlnév alapján"
-
-#, fuzzy
-#~ msgid "Remove Unselected"
-#~ msgstr "/Kijelöletlenek eltávolítása"
-
-#, fuzzy
-#~ msgid "Remove unselected entries from the playlist."
-#~ msgstr "/Duplikátumok eltávolítása/Útvonal + fájlnév alapján"
-
-#, fuzzy
-#~ msgid "Remove Selected"
-#~ msgstr "/Kijelöltek eltávolítása"
-
-#, fuzzy
-#~ msgid "Remove selected entries from the playlist."
-#~ msgstr "/Duplikátumok eltávolítása/Útvonal + fájlnév alapján"
-
-#, fuzzy
-#~ msgid "Randomize List"
-#~ msgstr "/Véletlenszerű listasorrend"
-
-#, fuzzy
-#~ msgid "Randomizes the playlist."
-#~ msgstr "/Véletlenszerű listasorrend"
-
-#, fuzzy
-#~ msgid "Reverse List"
-#~ msgstr "/Lista megfordítása"
-
-#, fuzzy
-#~ msgid "Reverses the playlist."
-#~ msgstr "Ne törölje a lejátszólistát"
-
-#, fuzzy
-#~ msgid "Sort List"
-#~ msgstr "/Lista rendezése"
-
-#, fuzzy
-#~ msgid "Sorts the list by title."
-#~ msgstr "/Lista rendezése/Cím alapján"
-
-#, fuzzy
-#~ msgid "By Album"
-#~ msgstr "Album"
-
-#, fuzzy
-#~ msgid "Sorts the list by album."
-#~ msgstr "/Lista rendezése/Cím alapján"
-
-#, fuzzy
-#~ msgid "By Artist"
-#~ msgstr "Előadó"
-
-#, fuzzy
-#~ msgid "Sorts the list by artist."
-#~ msgstr "/Lista rendezése/Előadó alapján"
-
-#, fuzzy
-#~ msgid "Sorts the list by filename."
-#~ msgstr "/Lista rendezése/Fájlnév alapján"
-
-#, fuzzy
-#~ msgid "Sorts the list by full pathname."
-#~ msgstr "/Lista rendezése/Fájlnév alapján"
-
-#, fuzzy
-#~ msgid "By Date"
-#~ msgstr "Dátum"
-
-#, fuzzy
-#~ msgid "Sorts the list by modification time."
-#~ msgstr "/Lista rendezése/Cím alapján"
-
-#, fuzzy
-#~ msgid "By Track Number"
-#~ msgstr "Szám sorszáma"
-
-#, fuzzy
-#~ msgid "Sorts the list by track number."
-#~ msgstr "/Lista rendezése/Szám sorszáma alapján"
-
-#, fuzzy
-#~ msgid "By Playlist Entry"
-#~ msgstr "/Lista rendezése/Lejátszólista-bejegyzés alapján"
-
-#, fuzzy
-#~ msgid "Sorts the list by playlist entry."
-#~ msgstr "/Lista rendezése/Lejátszólista-bejegyzés alapján"
-
-#, fuzzy
-#~ msgid "Sort Selected"
-#~ msgstr "/Kijelölés rendezése"
-
-#, fuzzy
-#~ msgid "File"
-#~ msgstr "Cím"
-
-#, fuzzy
-#~ msgid "Components"
-#~ msgstr "Megjegyzés"
-
-#, fuzzy
-#~ msgid "View Track Details"
-#~ msgstr "/Szám részleteinek megtekintése"
-
-#, fuzzy
-#~ msgid "Play File"
-#~ msgstr "/Fájl lejátszása"
-
-#, fuzzy
-#~ msgid "Load and play a file"
-#~ msgstr "Metaadat betöltése lejátszólistákból és fájlokból"
-
-#, fuzzy
-#~ msgid "Play Location"
-#~ msgstr "/Hely lejátszása"
-
-#, fuzzy
-#~ msgid "Plugin services"
-#~ msgstr "Bővítmények"
-
-#, fuzzy
-#~ msgid "Preferences"
-#~ msgstr "/Beállítások"
-
-#, fuzzy
-#~ msgid "Open preferences window"
-#~ msgstr "Beállítások ablak"
-
-#, fuzzy
-#~ msgid "_Quit"
-#~ msgstr "/_Kilépés"
-
-#, fuzzy
-#~ msgid "Quit Audacious"
-#~ msgstr "Audacious névjegye"
-
-#, fuzzy
-#~ msgid "Set A-B"
-#~ msgstr "/A-B beállítása"
-
-#, fuzzy
-#~ msgid "Clear A-B"
-#~ msgstr "/A-B törlése"
-
-#, fuzzy
-#~ msgid "Jump to Playlist Start"
-#~ msgstr "/Ugrás a lejátszólista elejére"
-
-#, fuzzy
-#~ msgid "Jump to File"
-#~ msgstr "/Ugrás fájlra"
-
-#, fuzzy
-#~ msgid "Queue Toggle"
-#~ msgstr "/Betevés a sorba"
-
-#, fuzzy
-#~ msgid "Load"
-#~ msgstr "/Betöltés"
-
-#, fuzzy
-#~ msgid "Import"
-#~ msgstr "/Importálás"
-
-#, fuzzy
-#~ msgid "Save"
-#~ msgstr "/Mentés"
-
-#, fuzzy
-#~ msgid "Delete"
-#~ msgstr "/Törlés"
-
-#~ msgid "Preset"
-#~ msgstr "Beállítás"
-
-#~ msgid "Load preset"
-#~ msgstr "Beállítás betöltése"
-
-#, fuzzy
-#~ msgid "Auto-load preset"
-#~ msgstr "/Betöltés/Automatikusan betöltődő beállítás"
-
-#, fuzzy
-#~ msgid "Load auto-load preset"
-#~ msgstr "/Betöltés/Automatikusan betöltődő beállítás"
-
-#, fuzzy
-#~ msgid "Default"
-#~ msgstr "Alapértelmezett bőr:"
-
-#, fuzzy
-#~ msgid "Load default preset into equalizer"
-#~ msgstr "Automatikusan betöltődő beállítás mentése"
-
-#, fuzzy
-#~ msgid "Zero"
-#~ msgstr "sztereó"
-
-#, fuzzy
-#~ msgid "Set equalizer preset levels to zero"
-#~ msgstr "Equalizer-beállítás mentése"
-
-#, fuzzy
-#~ msgid "From file"
-#~ msgstr "/Betöltés/Fájlból"
-
-#, fuzzy
-#~ msgid "Load preset from file"
-#~ msgstr "Beállítás betöltése"
-
-#, fuzzy
-#~ msgid "From WinAMP EQF file"
-#~ msgstr "/Betöltés/Winamp EQF fájlból"
-
-#, fuzzy
-#~ msgid "Load preset from WinAMP EQF file"
-#~ msgstr "/Betöltés/Winamp EQF fájlból"
-
-#, fuzzy
-#~ msgid "WinAMP Presets"
-#~ msgstr "/Importálás/Winamp-beállítások"
-
-#, fuzzy
-#~ msgid "Import WinAMP presets"
-#~ msgstr "/Importálás/Winamp-beállítások"
-
-#~ msgid "Save preset"
-#~ msgstr "Beállítás mentése"
-
-#, fuzzy
-#~ msgid "Save auto-load preset"
-#~ msgstr "/Mentés/Automatikusan betöltődő beállítás"
-
-#, fuzzy
-#~ msgid "Save default preset"
-#~ msgstr "Automatikusan betöltődő beállítás mentése"
-
-#, fuzzy
-#~ msgid "To file"
-#~ msgstr "/Betöltés/Fájlból"
-
-#, fuzzy
-#~ msgid "Save preset to file"
-#~ msgstr "Beállítás mentése"
-
-#, fuzzy
-#~ msgid "To WinAMP EQF file"
-#~ msgstr "/Mentés/Winamp EQF fájlba"
-
-#, fuzzy
-#~ msgid "Save preset to WinAMP EQF file"
-#~ msgstr "/Mentés/Winamp EQF fájlba"
-
-#~ msgid "Delete preset"
-#~ msgstr "Beállítás törlése"
-
-#, fuzzy
-#~ msgid "Delete auto-load preset"
-#~ msgstr "/Törlés/Automatikusan betöltődő beállítás"
-
-#, fuzzy
-#~ msgid ""
-#~ "<span size=\"small\">This is the amount of time to prebuffer audio "
-#~ "streams by, in milliseconds.\n"
-#~ "Increase this value if you are experiencing audio skipping.\n"
-#~ "Please note however, that high values will result in Audacious performing "
-#~ "poorly.</span>"
-#~ msgstr ""
-#~ "<span size=\"small\">Időtartam ezredmásodpercben, amennyivel a hangfolyam "
-#~ "előpufferelve lesz.\n"
-#~ "Növelje ezt az értéket, ha hangkihagyást tapasztal. \n"
-#~ "Figyeljen arra, hogy a magas értékek az Audacious "
-#~ "teljesítménycsökkenéséhez vezethetnek.</span>"
-
-#~ msgid ""
-#~ "<b><big>Unable to load skin.</big></b>\n"
-#~ "\n"
-#~ "Check that skin at '%s' is usable and default skin is properly installed "
-#~ "at '%s'\n"
-#~ msgstr ""
-#~ "<b><big>Nem lehet betölteni a bőrt.</big></b>\n"
-#~ "\n"
-#~ "Ellenőrizze, hogy a(z) '%s' helyen található bőr használható-e és az "
-#~ "alapértelmezett bőr megfelelően telepítve van-e itt: '%s'\n"
-
-#, fuzzy
-#~ msgid "Headless operation enabled\n"
-#~ msgstr "Szöveges üzemmód [kísérleti]"
-
-#~ msgid "Audacious core developers:"
-#~ msgstr "Audacious fő fejlesztői:"
-
-#~ msgid "Audacious Equalizer"
-#~ msgstr "Audacious Equalizer"
-
-#, fuzzy
-#~ msgid "Play files"
-#~ msgstr "/Fájl lejátszása"
-
-#, fuzzy
-#~ msgid "Load files"
-#~ msgstr "/Betöltés/Fájlból"
-
-#~ msgid "%s - Audacious"
-#~ msgstr "%s - Audacious"
-
-#~ msgid "VBR"
-#~ msgstr "VBR"
-
-#~ msgid "mono"
-#~ msgstr "monó"
-
-#, fuzzy
-#~ msgid "Show main player window"
-#~ msgstr "Válassza ki a fő lejátszóablak betűkészletét:"
-
-#, fuzzy
-#~ msgid "Seek to: %d:%-2.2d/%d:%-2.2d (%d%%)"
-#~ msgstr "POZICIONÁLÁS IDE: %d:%-2.2d/%d:%-2.2d (%d%%)"
-
-#, fuzzy
-#~ msgid "Disable 'Always On Top'"
-#~ msgstr "/Mindig legfelül"
-
-#, fuzzy
-#~ msgid "Enable 'Always On Top'"
-#~ msgstr "/Mindig legfelül"
-
-#, fuzzy
-#~ msgid "Visualization Menu"
-#~ msgstr "/Kijelzési mód"
-
-#~ msgid ""
-#~ "<b><big>Couldn't open audio.</big></b>\n"
-#~ "\n"
-#~ "Please check that:\n"
-#~ "1. You have the correct output plugin selected.\n"
-#~ "2. No other programs is blocking the soundcard.\n"
-#~ "3. Your soundcard is configured properly.\n"
-#~ msgstr ""
-#~ "<b><big>Nem lehet megnyitni a hangot.</big></b>\n"
-#~ "\n"
-#~ "Ellenőrizze a következőket:\n"
-#~ "1. A megfelelő kimeneti bővítmény van kiválasztva.\n"
-#~ "2. Semmilyen más program nem foglalja le a hangkártyát.\n"
-#~ "3. A hangkártya megfelelően van beállítva.\n"
-
-#, fuzzy
-#~ msgid "Autoscroll Songname"
-#~ msgstr "/Számnév automatikus görgetése"
-
-#, fuzzy
-#~ msgid "Show Player"
-#~ msgstr "/Lejátszó megjelenítése"
-
-#, fuzzy
-#~ msgid "Show Playlist Editor"
-#~ msgstr "/Lejátszólista-szerkesztő megjelenítése"
-
-#, fuzzy
-#~ msgid "Show Equalizer"
-#~ msgstr "/Equalizer megjelenítése"
-
-#, fuzzy
-#~ msgid "Always on Top"
-#~ msgstr "/Mindig legfelül"
-
-#, fuzzy
-#~ msgid "Put on All Workspaces"
-#~ msgstr "/Megjelenítés minden munkaterületen"
-
-#, fuzzy
-#~ msgid "Roll up Player"
-#~ msgstr "/Lejátszó felgördítése"
-
-#, fuzzy
-#~ msgid "Roll up Playlist Editor"
-#~ msgstr "/Lejátszólista-szerkesztő felgördítése"
-
-#, fuzzy
-#~ msgid "Roll up Equalizer"
-#~ msgstr "/Equalizer felgördítése"
-
-#, fuzzy
-#~ msgid "Scale"
-#~ msgstr "/Mentés"
-
-#, fuzzy
-#~ msgid "Analyzer"
-#~ msgstr "/Analizátor-üzemmód"
-
-#, fuzzy
-#~ msgid "Scope"
-#~ msgstr "/Szkóp-üzemmód"
-
-#, fuzzy
-#~ msgid "Voiceprint"
-#~ msgstr "/Analizátor-üzemmód/Tűz"
-
-#, fuzzy
-#~ msgid "Vertical Lines"
-#~ msgstr "/Analizátor-üzemmód/Függőleges vonalak"
-
-#, fuzzy
-#~ msgid "Lines"
-#~ msgstr "sor"
-
-#, fuzzy
-#~ msgid "Dot Scope"
-#~ msgstr "/Szkóp-üzemmód/Pontok"
-
-#, fuzzy
-#~ msgid "Line Scope"
-#~ msgstr "/Szkóp-üzemmód/Vonalak"
-
-#, fuzzy
-#~ msgid "Solid Scope"
-#~ msgstr "/Szkóp-üzemmód/Tömör"
-
-#, fuzzy
-#~ msgid "Smooth"
-#~ msgstr "monó"
-
-#, fuzzy
-#~ msgid "Full (~50 fps)"
-#~ msgstr "/Frissítési sebesség/Teljes (~50 fps)"
-
-#, fuzzy
-#~ msgid "Half (~25 fps)"
-#~ msgstr "/Frissítési sebesség/Fél (~25 fps)"
-
-#, fuzzy
-#~ msgid "Quarter (~13 fps)"
-#~ msgstr "/Frissítési sebesség/Negyed (~13 fps)"
-
-#, fuzzy
-#~ msgid "Eighth (~6 fps)"
-#~ msgstr "/Frissítési sebesség/Nyolcad (~6 fps)"
-
-#, fuzzy
-#~ msgid "Time Elapsed"
-#~ msgstr "/Eltelt idő"
-
-#, fuzzy
-#~ msgid "Time Remaining"
-#~ msgstr "/Hátralévő idő"
-
-#, fuzzy
-#~ msgid "Plugin Services"
-#~ msgstr "Bővítmények"
-
-#, fuzzy
-#~ msgid "Search entries in active playlist"
-#~ msgstr "Elválasztók megjelenítése a lejátszólistában"
-
-#, fuzzy
-#~ msgid "Title: "
-#~ msgstr "Cím"
-
-#, fuzzy
-#~ msgid "Artist: "
-#~ msgstr "Előadó"
-
-#, fuzzy
-#~ msgid "Filename: "
-#~ msgstr "Fájlnév:"
-
-#~ msgid "Audacious Playlist Editor"
-#~ msgstr "Audacious lejátszólista-szerkesztő"
-
-#~ msgid "Appearance"
-#~ msgstr "Megjelenés"
-
-#~ msgid "<b>_Fonts</b>"
-#~ msgstr "<b>_Betűkészletek</b>"
-
-#~ msgid "_Player:"
-#~ msgstr "_Lejátszó:"
-
-#~ msgid "Select main player window font:"
-#~ msgstr "Válassza ki a fő lejátszóablak betűkészletét:"
-
-#~ msgid "_Playlist:"
-#~ msgstr "L_ejátszólista:"
-
-#, fuzzy
-#~ msgid "Select playlist font:"
-#~ msgstr "Válassza ki a fő lejátszóablak betűkészletét:"
-
-#~ msgid "Use Bitmap fonts if available"
-#~ msgstr "Bitmap betűkészletek használata, ha elérhetőek"
-
-#~ msgid ""
-#~ "Use bitmap fonts if they are available. Bitmap fonts do not support "
-#~ "Unicode strings."
-#~ msgstr ""
-#~ "Bitmap betűkészletek használata, ha elérhetőek. A bitmap betűkészletek "
-#~ "nem támogatják a Unicode karakterláncokat."
-
-#~ msgid "<b>_Miscellaneous</b>"
-#~ msgstr "<b>_Egyebek</b>"
-
-#~ msgid "Show track numbers in playlist"
-#~ msgstr "Számok sorszámának megjelenítése a lejátszólistában"
-
-#~ msgid "Show separators in playlist"
-#~ msgstr "Elválasztók megjelenítése a lejátszólistában"
-
-#~ msgid "On load"
-#~ msgstr "Betöltéskor"
-
-#~ msgid "Load metadata when adding the file to the playlist or opening it"
-#~ msgstr "Metaadat betöltése fájl lejátszólistához adásakor vagy megnyitáskor"
-
-#~ msgid "On display"
-#~ msgstr "Megjelenítéskor"
-
-#, fuzzy
-#~ msgid ""
-#~ "Load metadata on demand when displaying the file in the playlist. You may "
-#~ "need to set \"Detect file formats on demand\" in Audio page for full "
-#~ "benefit."
-#~ msgstr "Metaadat betöltése fájl lejátszólistához adásakor vagy megnyitáskor"
-
-#, fuzzy
-#~ msgid "Green"
-#~ msgstr "Görög:"
-
-#~ msgid "<b>_Skin</b>"
-#~ msgstr "<b>_Bőr</b>"
-
-#, fuzzy
-#~ msgid "Refresh skin list"
-#~ msgstr "Bőrlista frissítése"
-
-#~ msgid "PREAMP"
-#~ msgstr "ELŐERŐSÍTŐ"
-
-#~ msgid "60HZ"
-#~ msgstr "60 HZ"
-
-#~ msgid "170HZ"
-#~ msgstr "170 HZ"
-
-#~ msgid "310HZ"
-#~ msgstr "310 HZ"
-
-#~ msgid "600HZ"
-#~ msgstr "600 HZ"
-
-#~ msgid "1KHZ"
-#~ msgstr "1 KHZ"
-
-#~ msgid "3KHZ"
-#~ msgstr "3 KHZ"
-
-#~ msgid "6KHZ"
-#~ msgstr "6 KHZ"
-
-#~ msgid "12KHZ"
-#~ msgstr "12 KHZ"
-
-#~ msgid "14KHZ"
-#~ msgstr "14 KHZ"
-
-#~ msgid "16KHZ"
-#~ msgstr "16 KHZ"
-
-#~ msgid "Archived Winamp 2.x skin"
-#~ msgstr "Tömörített Winamp 2.x bőr"
-
-#~ msgid "Unarchived Winamp 2.x skin"
-#~ msgstr "Tömörítetlen Winamp 2.x bőr"
-
-#~ msgid "Use custom cursors"
-#~ msgstr "Egyéni kurzorok használata"
-
-#, fuzzy
-#~ msgid "Reload Plugins"
-#~ msgstr "Bővítmények"
-
-#~ msgid ""
-#~ "Sorry, threads isn't supported on your platform.\n"
-#~ "\n"
-#~ "If you're on a libc5 based linux system and installed Glib & GTK+ before "
-#~ "you\n"
-#~ "installed LinuxThreads you need to recompile Glib & GTK+.\n"
-#~ msgstr ""
-#~ "Sajnos az Ön platformján a szálak nincsenek támogatva.\n"
-#~ "\n"
-#~ "Ha libc5-alapú Linux-rendszere van, és a Glib-et és a GTK+-t a "
-#~ "LinuxThreads\n"
-#~ "előtt telepítette, akkor újra kell fordítania a Glib-et és a GTK+-t.\n"
-
-#, fuzzy
-#~ msgid "Error in Audacious."
-#~ msgstr "%s - Audacious"
-
-#, fuzzy
-#~ msgid "Select which Audacious session ID to use"
-#~ msgstr "Audacious/BMP/XMMS-munkamenet kiválasztása (Alapértelmezés: 0)"
-
-#~ msgid "<b>Presets</b>"
-#~ msgstr "<b>Beállítások</b>"
-
-#~ msgid "File preset extension:"
-#~ msgstr "Fájlbeállítás kiterjesztése:"
-
-#~ msgid "Directory preset file:"
-#~ msgstr "Könyvtár-beállítás fájlja:"
-
-#~ msgid "localhost"
-#~ msgstr "localhost"
-
-#~ msgid ""
-#~ "<b><big>Unable to create %s.</big></b>\n"
-#~ "\n"
-#~ "Could not open glade file (%s). Please check your installation.\n"
-#~ msgstr ""
-#~ "<b><big>Nem lehet létrehozni a(z) %s-t.</big></b>\n"
-#~ "\n"
-#~ "Nem lehet megnyitni a glade fájlt (%s). Ellenőrizze a telepítését.\n"
-
-#~ msgid ""
-#~ "TITLE\n"
-#~ "ARTIST - TITLE\n"
-#~ "ARTIST - ALBUM - TITLE\n"
-#~ "ARTIST - ALBUM - TRACK. TITLE\n"
-#~ "ARTIST [ ALBUM ] - TRACK. TITLE\n"
-#~ "ALBUM - TITLE\n"
-#~ "Custom"
-#~ msgstr ""
-#~ "CÍM\n"
-#~ "ELŐADÓ - CÍM\n"
-#~ "ELŐADÓ - ALBUM - CÍM\n"
-#~ "ELŐADÓ - ALBUM - SZÁM. CÍM\n"
-#~ "ELŐADÓ [ ALBUM ] - SZÁM. CÍM\n"
-#~ "ALBUM - CÍM\n"
-#~ "Egyéni"
-
-#~ msgid "Track Information Window"
-#~ msgstr "Száminformáció ablak"
-
-#~ msgid "Preferences Window"
-#~ msgstr "Beállítások ablak"
-
-#, fuzzy
-#~ msgid "<b>Artist:</b> %s"
-#~ msgstr "<i>Előadó</i>"
-
-#, fuzzy
-#~ msgid "<b>Title:</b> %s"
-#~ msgstr "<i>Cím</i>"
-
-#, fuzzy
-#~ msgid "<b>Album:</b> %s"
-#~ msgstr "<i>Album</i>"
-
-#, fuzzy
-#~ msgid "Audacious last.fm radio tuner"
-#~ msgstr "Audacious lejátszólista-szerkesztő"
-
-#, fuzzy
-#~ msgid "<b>Artist:</b>"
-#~ msgstr "<i>Előadó</i>"
-
-#, fuzzy
-#~ msgid "<b>Album:</b>"
-#~ msgstr "<i>Album</i>"
-
-#~ msgid "VOLUME: %d%%"
-#~ msgstr "HANGERŐ: %d%%"
-
-#~ msgid "BALANCE: %d%% LEFT"
-#~ msgstr "BALANSZ: %d%% BAL"
-
-#~ msgid "BALANCE: CENTER"
-#~ msgstr "BALANSZ: KÖZÉP"
-
-#~ msgid "BALANCE: %d%% RIGHT"
-#~ msgstr "BALANSZ: %d%% JOBB"
-
-#, fuzzy
-#~ msgid "Last.fm radio"
-#~ msgstr "/Hely lejátszása"
-
-#, fuzzy
-#~ msgid "Play Last.fm radio"
-#~ msgstr "/Hely lejátszása"
-
-#~ msgid ""
-#~ "<b><big>No playable CD found.</big></b>\n"
-#~ "\n"
-#~ "No CD inserted, or inserted CD is not an audio CD.\n"
-#~ msgstr ""
-#~ "<b><big>Nem található lejátszható CD.</big></b>\n"
-#~ "\n"
-#~ "Nincs behelyezve CD, vagy a behelyezett CD nem audio CD.\n"
-
-#, fuzzy
-#~ msgid "Add CD..."
-#~ msgstr "/CD hozzáadása..."
-
-#, fuzzy
-#~ msgid "Play CD"
-#~ msgstr "/CD lejátszása"
-
-#~ msgid "Performer/Artist"
-#~ msgstr "Előadó/szerző"
-
-#~ msgid "File name"
-#~ msgstr "Fájlnév"
-
-#~ msgid "File path"
-#~ msgstr "Fájlútvonal"
-
-#~ msgid "File extension"
-#~ msgstr "Fájlkiterjesztés"
-
-#~ msgid "Track number"
-#~ msgstr "Szám sorszáma"
-
-#~ msgid "%{n:...%}: Display \"...\" only if element %n is present"
-#~ msgstr "%{n:...%}: \"...\" csak akkor legyen megjelenítve, ha van %n elem"
-
-#~ msgid ""
-#~ "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
-#~ "Please use GTK+ %s or newer.\n"
-#~ msgstr ""
-#~ "Sajnos az Ön GTK+ verziója (%d.%d.%d) nem működik az Audacious-szel.\n"
-#~ "Használjon GTK+ %s verziót vagy újabbat.\n"
-
-#~ msgid "OPTIONS MENU"
-#~ msgstr "BEÁLLÍTÁSOK MENÜ"
-
-#~ msgid "DISABLE ALWAYS ON TOP"
-#~ msgstr "MINDIG LEGFELÜL KIKAPCSOLÁSA"
-
-#~ msgid "ENABLE ALWAYS ON TOP"
-#~ msgstr "MINDIG LEGFELÜL BEKAPCSOLÁSA"
-
-#~ msgid "FILE INFO BOX"
-#~ msgstr "FÁJLINFÓ ABLAK"
-
-#~ msgid "VISUALIZATION MENU"
-#~ msgstr "KIJELZÉS MENÜ"
-
-#, fuzzy
-#~ msgid "Track name: "
-#~ msgstr "Szám neve"
-
-#~ msgid ""
-#~ "<b><big>Unable to play files.</big></b>\n"
-#~ "\n"
-#~ "The following files could not be played. Please check that:\n"
-#~ "1. they are accessible.\n"
-#~ "2. you have enabled the media plugins required."
-#~ msgstr ""
-#~ "<b><big>Nem lehet fájlokat lejátszani.</big></b>\n"
-#~ "\n"
-#~ "A következő fájlok nem játszhatóak le. Ellenőrizze a következőket:\n"
-#~ "1. A fájlok hozzáférhetőek.\n"
-#~ "2. A szükséges médiabővítmények be vannak kapcsolva."
-
-#~ msgid "Show more _details"
-#~ msgstr "Több _részlet megjelenítése"
-
-#, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "Received SIGSEGV\n"
-#~ "\n"
-#~ "This could be a bug in Audacious. If you don't know why this happened, "
-#~ "file a bug at http://bugs-meta.atheme.org/\n"
-#~ "\n"
-#~ msgstr ""
-#~ "\n"
-#~ "SIGSEGV érkezett\n"
-#~ "\n"
-#~ "Ez egy hiba lehet az Audacious-ban. Ha nem tudja, hogy miért történt, "
-#~ "jelentse be a hibát a http://bugs.nenolod.net/ oldalon.\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "Enables playlist transparency. This is not recommended for slower "
-#~ "machines as it requires some CPU time to create and cache the pixmaps "
-#~ "used for the transparency."
-#~ msgstr ""
-#~ "Lejátszólista átlátszóságának bekapcsolása. Nem ajánlott lassabb "
-#~ "számítógépeknél, mivel több CPU időt igényel az átlátszósághoz használt "
-#~ "képek létrehozása és gyorsítótárazása."
-
-#~ msgid "Enable playlist transparency"
-#~ msgstr "Lejátszólista átlátszóságának bekapcsolása"
-
-#~ msgid "%s: option `%s' is ambiguous\n"
-#~ msgstr "%s: a(z) `%s' opció nem egyértelmű\n"
-
-#~ msgid "%s: option `--%s' doesn't allow an argument\n"
-#~ msgstr "%s: a(z) `--%s' opció nem enged meg argumentumot\n"
-
-#~ msgid "%s: option `%c%s' doesn't allow an argument\n"
-#~ msgstr "%s: a(z) `%c%s' opció nem enged meg argumentumot\n"
-
-#~ msgid "%s: option `%s' requires an argument\n"
-#~ msgstr "%s: a(z) `%s' opcióhoz meg kell adni argumentumot\n"
-
-#~ msgid "%s: unrecognized option `%c%s'\n"
-#~ msgstr "%s: ismeretlen opció: `%c%s'\n"
-
-#~ msgid "%s: illegal option -- %c\n"
-#~ msgstr "%s: helytelen opció -- %c\n"
-
-#~ msgid "%s: invalid option -- %c\n"
-#~ msgstr "%s: érvénytelen opció -- %c\n"
-
-#~ msgid "%s: option requires an argument -- %c\n"
-#~ msgstr "%s: az opcióhoz meg kell adni argumentumot -- %c\n"
-
-#~ msgid "%s: option `-W %s' is ambiguous\n"
-#~ msgstr "%s: a `-W %s' opció nem egyértelmű\n"
-
-#~ msgid "%s: option `-W %s' doesn't allow an argument\n"
-#~ msgstr "%s: a `-W %s' opció nem enged meg argumentumot\n"
-
-#~ msgid ""
-#~ "Usage: audacious [options] [files] ...\n"
-#~ "\n"
-#~ "Options:\n"
-#~ "--------\n"
-#~ msgstr ""
-#~ "Használat: audacious [opciók] [fájlok] ...\n"
-#~ "\n"
-#~ "Opciók:\n"
-#~ "-------\n"
-
-#~ msgid "Display this text and exit"
-#~ msgstr "Ezen szöveg megjelenítése és kilépés"
-
-#~ msgid "Activate Audacious"
-#~ msgstr "Audacious aktiválása"
-
-#~ msgid "Previous session ID"
-#~ msgstr "Előző munkamenet-azonosító"
-
-#~ msgid "Disable error/warning interception (logging)"
-#~ msgstr "Hiba/figyelmeztetés elfogásának kikapcsolása (naplózás)"
-
-#~ msgid "Print version number and exit\n"
-#~ msgstr "Verziószám megjelenítése és kilépés\n"
-
-#~ msgid "Add/Open Files dialog"
-#~ msgstr "Fájlok hozzáadása/megnyitása párbeszédablak"
-
-#~ msgid "Close Dialog on Add"
-#~ msgstr "Párbeszédablak bezárása hozzáadás után"
-
-#~ msgid "Deselect All"
-#~ msgstr "Kijelölés megszüntetése"
-
-#~ msgid "Track Information Popup"
-#~ msgstr "Felbukkanó száminformáció"
-
-#~ msgid "<i>Genre</i>"
-#~ msgstr "<i>Műfaj</i>"
-
-#~ msgid "<i>Year</i>"
-#~ msgstr "<i>Év</i>"
-
-#~ msgid "<i>Track Number</i>"
-#~ msgstr "<i>Szám sorszáma</i>"
-
-#~ msgid "<i>Track Length</i>"
-#~ msgstr "<i>Szám hossza</i>"
-
-#~ msgid "/View Track Details"
-#~ msgstr "/Szám részleteinek megtekintése"
-
-#~ msgid "/Visualization Mode/Analyzer"
-#~ msgstr "/Kijelzési mód/Analizátor"
-
-#~ msgid "/Visualization Mode/Scope"
-#~ msgstr "/Kijelzési mód/Szkóp"
-
-#, fuzzy
-#~ msgid "/Visualization Mode/Voiceprint"
-#~ msgstr "/Kijelzési mód/Szkóp"
-
-#~ msgid "/Visualization Mode/Off"
-#~ msgstr "/Kijelzési mód/Kikapcsolva"
-
-#~ msgid "/Analyzer Mode/Normal"
-#~ msgstr "/Analizátor-üzemmód/Normál"
-
-#~ msgid "/Analyzer Mode/Lines"
-#~ msgstr "/Analizátor-üzemmód/Vonalak"
-
-#~ msgid "/Analyzer Mode/Bars"
-#~ msgstr "/Analizátor-üzemmód/Oszlopok"
-
-#~ msgid "/Analyzer Mode/Peaks"
-#~ msgstr "/Analizátor-üzemmód/Csúcsértékek"
-
-#, fuzzy
-#~ msgid "/Voiceprint mode/Normal"
-#~ msgstr "/Analizátor-üzemmód/Normál"
-
-#~ msgid "/WindowShade VU Mode/Normal"
-#~ msgstr "/Roló-üzemmód/Normál"
-
-#~ msgid "/WindowShade VU Mode/Smooth"
-#~ msgstr "/Roló-üzemmód/Finom"
-
-#~ msgid "/Analyzer Falloff/Slowest"
-#~ msgstr "/Analizátor esése/Leglassabb"
-
-#~ msgid "/Analyzer Falloff/Slow"
-#~ msgstr "/Analizátor esése/Lassú"
-
-#~ msgid "/Analyzer Falloff/Medium"
-#~ msgstr "/Analizátor esése/Közepes"
-
-#~ msgid "/Analyzer Falloff/Fast"
-#~ msgstr "/Analizátor esése/Gyors"
-
-#~ msgid "/Analyzer Falloff/Fastest"
-#~ msgstr "/Analizátor esése/Leggyorsabb"
-
-#~ msgid "/Peaks Falloff/Slowest"
-#~ msgstr "/Csúcsértékek esése/Leglassabb"
-
-#~ msgid "/Peaks Falloff/Slow"
-#~ msgstr "/Csúcsértékek esése/Lassú"
-
-#~ msgid "/Peaks Falloff/Medium"
-#~ msgstr "/Csúcsértékek esése/Közepes"
-
-#~ msgid "/Peaks Falloff/Fast"
-#~ msgstr "/Csúcsértékek esése/Gyors"
-
-#~ msgid "/Peaks Falloff/Fastest"
-#~ msgstr "/Csúcsértékek esése/Leggyorsabb"
-
-#~ msgid "/-"
-#~ msgstr "/-"
-
-#~ msgid "/Jump to Time"
-#~ msgstr "/Ugrás időpontra"
-
-#~ msgid "/About Audacious"
-#~ msgstr "/Audacious névjegye"
-
-#~ msgid "/Files..."
-#~ msgstr "/Fájlok..."
-
-#~ msgid "/Internet location..."
-#~ msgstr "/Internethely..."
-
-#, fuzzy
-#~ msgid "New List"
-#~ msgstr "/Új lista"
-
-#, fuzzy
-#~ msgid "Creates a new playlist."
-#~ msgstr "Elválasztók megjelenítése a lejátszólistában"
-
-#, fuzzy
-#~ msgid "Displays track information."
-#~ msgstr "Száminformáció"
-
-#~ msgid "/Load/Preset"
-#~ msgstr "/Betöltés/Beállítás"
-
-#~ msgid "/Load/Default"
-#~ msgstr "/Betöltés/Alapértelmezett beállítás"
-
-#~ msgid "/Load/Zero"
-#~ msgstr "/Betöltés/Nulla"
-
-#~ msgid "/Save/Preset"
-#~ msgstr "/Mentés/Beállítás"
-
-#~ msgid "/Save/Default"
-#~ msgstr "/Mentés/Alapértelmezett beállítás"
-
-#~ msgid "/Save/To file"
-#~ msgstr "/Mentés/Fájlba"
-
-#~ msgid "/Delete/Preset"
-#~ msgstr "/Törlés/Beállítás"
-
-#~ msgid "Load auto-preset"
-#~ msgstr "Automatikusan betöltődő beállítás betöltése"
-
-#~ msgid "Load equalizer preset"
-#~ msgstr "Equalizer-beállítás betöltése"
-
-#~ msgid "Delete auto-preset"
-#~ msgstr "Automatikusan betöltődő beállítás törlése"
-
-#~ msgid "/Show Popup Info"
-#~ msgstr "/Felbukkanó infó megjelenítése"
-
-#~ msgid "/Remove Duplicates/By Title"
-#~ msgstr "/Duplikátumok eltávolítása/Cím alapján"
-
-#~ msgid "/Remove Duplicates/By Filename"
-#~ msgstr "/Duplikátumok eltávolítása/Fájlnév alapján"
-
-#~ msgid "/Update View"
-#~ msgstr "/Nézet frissítése"
-
-#~ msgid "/Select All"
-#~ msgstr "/Mindent kijelöl"
-
-#~ msgid "/Sort List/By Date"
-#~ msgstr "/Lista rendezése/Dátum alapján"
-
-#~ msgid "/Sort Selection/By Title"
-#~ msgstr "/Kijelölés rendezése/Cím alapján"
-
-#~ msgid "/Sort Selection/By Artist"
-#~ msgstr "/Kijelölés rendezése/Előadó alapján"
-
-#~ msgid "/Sort Selection/By Filename"
-#~ msgstr "/Kijelölés rendezése/Fájlnév alapján"
-
-#~ msgid "/Sort Selection/By Path + Filename"
-#~ msgstr "/Kijelölés rendezése/Útvonal + fájlnév alapján"
-
-#~ msgid "/Sort Selection/By Date"
-#~ msgstr "/Kijelölés rendezése/Dátum alapján"
-
-#~ msgid "/Sort Selection/By Track Number"
-#~ msgstr "/Kijelölés rendezése/Szám sorszáma alapján"
-
-#~ msgid "/Sort Selection/By Playlist Entry"
-#~ msgstr "/Kijelölés rendezése/Lejátszólista-bejegyzés alapján"
-
-#, fuzzy
-#~ msgid "<b>_Miscillaneous UI Features</b>"
-#~ msgstr "<b>_Egyebek</b>"
-
-#~ msgid "** DOUBLESIZE HAS BEEN REMOVED **"
-#~ msgstr "** A DUPLA MÉRET EL LETT TÁVOLÍTVA **"
-
-#~ msgid "<b>_Transparency</b>"
-#~ msgstr "<b>Á_tlátszóság</b>"
