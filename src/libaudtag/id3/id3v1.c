@@ -29,29 +29,14 @@
 #include <inttypes.h>
 #include "../tag_module.h"
 
-static gboolean has_id3v1_ext;
-
 gboolean id3v1_can_handle_file(VFSFile *f)
 {
-    gchar *tag;
-
-    if (vfs_fseek(f, -355, SEEK_END))
-        return FALSE;
-
-    tag = read_char_data(f, 4);
-
-    if (!strncmp(tag, "TAG+", 4))
-        has_id3v1_ext = TRUE;
-    else
-        has_id3v1_ext = FALSE;
-    g_free(tag);
-
     if (vfs_fseek(f, -128, SEEK_END))
         return FALSE;
 
-    tag = read_char_data(f, 3);
+    gchar *tag = read_char_data(f, 3);
 
-    if (!strncmp(tag, "TAG", 3))
+    if (tag && !strncmp(tag, "TAG", 3))
     {
         g_free(tag);
         return TRUE;
@@ -63,6 +48,9 @@ gboolean id3v1_can_handle_file(VFSFile *f)
 
 static gchar *convert_to_utf8(gchar *str)
 {
+    if (!str)
+        return NULL;
+
     gchar *tmp = str;
     str = str_to_utf8(str);
     g_free(tmp);
@@ -85,7 +73,7 @@ gboolean id3v1_read_tag (Tuple * tuple, VFSFile * f)
     gchar *genre = read_char_data(f, 1);
     gchar track = 0;
 
-    if (comment[28] == 0 && comment[29] != 0)
+    if (comment && comment[28] == 0 && comment[29] != 0)
         track = comment[29];
 
     title = convert_to_utf8(title);
@@ -93,17 +81,19 @@ gboolean id3v1_read_tag (Tuple * tuple, VFSFile * f)
     album = convert_to_utf8(album);
     comment = convert_to_utf8(comment);
 
-    if (has_id3v1_ext)
-    {
-        if (vfs_fseek (f, -351, SEEK_END))
-            goto ERR;
+    if (vfs_fseek(f, -355, SEEK_END))
+        return FALSE;
 
+    gchar *tag = read_char_data(f, 4);
+
+    if (tag && ! strncmp (tag, "TAG+", 4))
+    {
         gchar *ext_title = convert_to_utf8(read_char_data(f, 60));
         gchar *ext_artist = convert_to_utf8(read_char_data(f, 60));
         gchar *ext_album = convert_to_utf8(read_char_data(f, 60));
-        gchar *tmp_title = g_strconcat(title, ext_title, NULL);
-        gchar *tmp_artist = g_strconcat(artist, ext_artist, NULL);
-        gchar *tmp_album = g_strconcat(album, ext_album, NULL);
+        gchar *tmp_title = title ? g_strconcat(title, ext_title, NULL) : NULL;
+        gchar *tmp_artist = artist ? g_strconcat(artist, ext_artist, NULL) : NULL;
+        gchar *tmp_album = album ? g_strconcat(album, ext_album, NULL) : NULL;
         g_free(title);
         g_free(artist);
         g_free(album);
@@ -119,7 +109,7 @@ gboolean id3v1_read_tag (Tuple * tuple, VFSFile * f)
 
         gchar *ext_genre = convert_to_utf8(read_char_data(f, 30));
 
-        if (ext_genre != NULL)
+        if (ext_genre)
         {
             tuple_associate_string(tuple, FIELD_GENRE, NULL, ext_genre);
             genre_set = TRUE;
@@ -127,14 +117,20 @@ gboolean id3v1_read_tag (Tuple * tuple, VFSFile * f)
         }
     }
 
-    tuple_associate_string(tuple, FIELD_TITLE, NULL, title);
-    tuple_associate_string(tuple, FIELD_ARTIST, NULL, artist);
-    tuple_associate_string(tuple, FIELD_ALBUM, NULL, album);
-    tuple_associate_int(tuple, FIELD_YEAR, NULL, atoi(year));
-    tuple_associate_string(tuple, FIELD_COMMENT, NULL, comment);
-    tuple_associate_int(tuple, FIELD_TRACK_NUMBER, NULL, track);
+    if (title)
+        tuple_associate_string(tuple, FIELD_TITLE, NULL, title);
+    if (artist)
+        tuple_associate_string(tuple, FIELD_ARTIST, NULL, artist);
+    if (album)
+        tuple_associate_string(tuple, FIELD_ALBUM, NULL, album);
+    if (year)
+        tuple_associate_int(tuple, FIELD_YEAR, NULL, atoi(year));
+    if (comment)
+        tuple_associate_string(tuple, FIELD_COMMENT, NULL, comment);
+    if (track)
+        tuple_associate_int(tuple, FIELD_TRACK_NUMBER, NULL, track);
 
-    if (!genre_set)
+    if (genre && !genre_set)
         tuple_associate_string(tuple, FIELD_GENRE, NULL, convert_numericgenre_to_text(*genre));
 
     g_free(title);
@@ -168,4 +164,3 @@ tag_module_t id3v1 = {
     .read_tag = id3v1_read_tag,
     .write_tag = id3v1_write_tag,
 };
-
