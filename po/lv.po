@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: audacious2_25062009\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
 "POT-Creation-Date: 2011-07-05 22:45+0200\n"
-"PO-Revision-Date: 2011-06-26 21:07+0300\n"
+"PO-Revision-Date: 2011-10-30 16:21+0200\n"
 "Last-Translator: Einars Sprugis <einars8@gmail.com>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
 "Language: lv\n"
@@ -443,14 +443,12 @@ msgid "Album mode"
 msgstr "Albuma režīms"
 
 #: src/audacious/ui_preferences.c:150
-#, fuzzy
 msgid "<b>Output Settings</b>"
-msgstr "<b>Formāta noteikšana</b>"
+msgstr "<b>Izvades iestatījumi</b>"
 
 #: src/audacious/ui_preferences.c:152
-#, fuzzy
 msgid "Bit depth:"
-msgstr "Izvades bitu dziļums:"
+msgstr "Bitu dziļums:"
 
 #: src/audacious/ui_preferences.c:155
 msgid "Buffer size:"
@@ -458,12 +456,11 @@ msgstr "Bufera izmērs:"
 
 #: src/audacious/ui_preferences.c:157
 msgid "ms"
-msgstr ""
+msgstr "ms"
 
 #: src/audacious/ui_preferences.c:158
-#, fuzzy
 msgid "Use software volume control (not recommended)"
-msgstr "Lietot programmatūras skaļuma kontroli"
+msgstr "Lietot programmatūras skaļuma kontroli (nav ieteicams)"
 
 #: src/audacious/ui_preferences.c:160
 msgid "<b>Replay Gain</b>"
@@ -475,7 +472,7 @@ msgstr "Ieslēgt normalizēšanu"
 
 #: src/audacious/ui_preferences.c:164
 msgid "Prevent clipping (recommended)"
-msgstr ""
+msgstr "Novērst apgriešanu (ieteicams)"
 
 #: src/audacious/ui_preferences.c:166
 msgid "<b>Adjust Levels</b>"
@@ -702,9 +699,8 @@ msgid "Edit settings for popup information"
 msgstr "Rediģēt iestatījumus uzlecošajai informācijai"
 
 #: src/audacious/ui_preferences.c:1497
-#, fuzzy
 msgid "Output plugin:"
-msgstr "Ievades spraudnis: %s"
+msgstr "Izvades spraudnis:"
 
 #: src/audacious/ui_preferences.c:1556
 msgid "Transport"
