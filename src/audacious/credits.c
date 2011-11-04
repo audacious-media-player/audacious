@@ -288,6 +288,7 @@ static const gchar *translators_text[] = {
     "Strahinja Kustudić",
     NULL,
     N_("Serbian (Cyrillic):"),
+    "Мирослав Николић",
     "Strahinja Kustudić",
     NULL,
     N_("Simplified Chinese:"),
