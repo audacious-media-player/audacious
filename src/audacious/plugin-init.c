@@ -160,7 +160,7 @@ static VFSConstructor * lookup_transport (const gchar * scheme)
         return NULL;
 
     TransportPlugin * tp = plugin_get_header (plugin);
-    return tp->vtable;
+    return tp ? tp->vtable : NULL;
 }
 
 void start_plugins_one (void)
