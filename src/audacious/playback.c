@@ -163,7 +163,7 @@ gint playback_get_time (void)
 
     gint time = -1;
 
-    if (current_decoder->get_time)
+    if (current_decoder && current_decoder->get_time)
         time = current_decoder->get_time (& playback_api);
 
     if (time < 0)
@@ -204,9 +204,10 @@ void playback_pause (void)
     g_return_if_fail (playing);
     wait_until_ready ();
 
-    paused = ! paused;
+    if (! current_decoder || ! current_decoder->pause)
+        return;
 
-    g_return_if_fail (current_decoder->pause != NULL);
+    paused = ! paused;
     current_decoder->pause (& playback_api, paused);
 
     if (paused)
@@ -251,7 +252,9 @@ void playback_stop (void)
     g_return_if_fail (playing);
     wait_until_ready ();
 
-    current_decoder->stop (& playback_api);
+    if (current_decoder)
+        current_decoder->stop (& playback_api);
+
     playback_cleanup ();
     complete_stop ();
 }
@@ -376,7 +379,7 @@ void playback_seek (gint time)
     g_return_if_fail (playing);
     wait_until_ready ();
 
-    if (! current_decoder->mseek || current_length < 1)
+    if (! current_decoder || ! current_decoder->mseek || current_length < 1)
         return;
 
     current_decoder->mseek (& playback_api, time_offset + CLAMP (time, 0,
@@ -481,21 +484,21 @@ void playback_get_info (gint * bitrate, gint * samplerate, gint * channels)
 
 void playback_get_volume (gint * l, gint * r)
 {
-    if (playing && playback_get_ready () && current_decoder->get_volume &&
-     current_decoder->get_volume (l, r))
+    if (playing && playback_get_ready () && current_decoder &&
+     current_decoder->get_volume && current_decoder->get_volume (l, r))
         return;
 
     output_get_volume (l, r);
 }
 
-void playback_set_volume(gint l, gint r)
+void playback_set_volume (gint l, gint r)
 {
     gint h_vol[2] = {l, r};
 
     hook_call ("volume set", h_vol);
 
-    if (playing && playback_get_ready () && current_decoder->set_volume &&
-     current_decoder->set_volume (l, r))
+    if (playing && playback_get_ready () && current_decoder &&
+     current_decoder->set_volume && current_decoder->set_volume (l, r))
         return;
 
     output_set_volume (l, r);
