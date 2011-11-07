@@ -118,8 +118,13 @@ void mpris_player_class_init(MprisPlayerClass * klass)
     signals[TRACK_CHANGE_SIG] =
         g_signal_new("track_change",
                      G_OBJECT_CLASS_TYPE(klass), G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED, 0, NULL, NULL, g_cclosure_marshal_VOID__BOXED, G_TYPE_NONE, 1, DBUS_TYPE_G_STRING_VALUE_HASHTABLE);
+
+    GType status_type = dbus_g_type_get_struct ("GValueArray", G_TYPE_INT,
+     G_TYPE_INT, G_TYPE_INT, G_TYPE_INT, G_TYPE_INVALID);
     signals[STATUS_CHANGE_SIG] =
-        g_signal_new("status_change", G_OBJECT_CLASS_TYPE(klass), G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED, 0, NULL, NULL, g_cclosure_marshal_VOID__INT, G_TYPE_NONE, 1, G_TYPE_VALUE_ARRAY);
+     g_signal_new ("status_change", G_OBJECT_CLASS_TYPE (klass),
+     G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED, 0, NULL, NULL,
+     g_cclosure_marshal_VOID__BOXED, G_TYPE_NONE, 1, status_type);
 }
 
 void mpris_tracklist_class_init(MprisTrackListClass * klass)
