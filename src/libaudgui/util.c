@@ -127,12 +127,16 @@ GdkPixbuf * audgui_pixbuf_from_data (void * data, gint size)
     GdkPixbufLoader * loader = gdk_pixbuf_loader_new ();
     GError * error = NULL;
 
-    if (gdk_pixbuf_loader_write (loader, data, size, &error))
-        pixbuf = gdk_pixbuf_loader_get_pixbuf (loader);
+    if (gdk_pixbuf_loader_write (loader, data, size, & error) &&
+     gdk_pixbuf_loader_close (loader, & error))
+    {
+        if ((pixbuf = gdk_pixbuf_loader_get_pixbuf (loader)))
+            g_object_ref (pixbuf);
+    }
     else
         AUDDBG("error while loading pixbuf: %s\n", error->message);
 
-    gdk_pixbuf_loader_close (loader, NULL);
+    g_object_unref (loader);
     return pixbuf;
 }
 
