@@ -2,9 +2,9 @@
 +++ sdl-config	2011-04-02 00:42:07 -0500
 @@ -1,6 +1,6 @@
  #!/bin/sh
- 
+
 -prefix=/usr/local
-+prefix=/C/SDL
++prefix=/C/libs
  exec_prefix=${prefix}
  exec_prefix_set=no
  libdir=${exec_prefix}/lib

@@ -2,9 +2,9 @@
 +++ xml2-config	2011-04-01 23:29:23 -0500
 @@ -1,6 +1,6 @@
  #! /bin/sh
- 
+
 -prefix=/usr
-+prefix=/C/aud
++prefix=/C/libs
  exec_prefix=${prefix}
  includedir=${prefix}/include
  libdir=${exec_prefix}/lib
