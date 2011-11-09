@@ -4,14 +4,16 @@
 #
 # Translators:
 # Algimantas Margevičius <gymka@mail.ru>, 2011.
+# Algimantas Margevičius <margevicius.algimantas@gmail.com>, 2011.
+# Gymka <gymka@mail.ru>, 2011.
 # Rimas Kudelis <rq@akl.lt>, 2004.
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://jira.atheme.org/browse/AUD\n"
 "POT-Creation-Date: 2011-10-19 21:32-0400\n"
-"PO-Revision-Date: 2011-10-21 10:08+0000\n"
-"Last-Translator: Algimantas Margevičius <gymka@mail.ru>\n"
+"PO-Revision-Date: 2011-11-08 08:53+0000\n"
+"Last-Translator: gymka_ltu <margevicius.algimantas@gmail.com>\n"
 "Language-Team: Lithuanian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -226,7 +228,7 @@ msgstr "Laikinas grojaraštis"
 #: src/audacious/equalizer_preset.c:186
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
-msgstr "Klaida įkeliant Winamp EQF failą '%s'"
+msgstr "Klaida įkeliant Winamp EQF failą „%s“"
 
 #: src/audacious/main.c:239
 msgid "Skip backwards in playlist"
@@ -234,7 +236,7 @@ msgstr "Šoktelti atgal grojaraštyje"
 
 #: src/audacious/main.c:240
 msgid "Start playing current playlist"
-msgstr "Pradėti groti esamą grojaraštį"
+msgstr "Pradėti groti dabartinį grojaraštį"
 
 #: src/audacious/main.c:241
 msgid "Pause current song"
@@ -295,7 +297,7 @@ msgid ""
 "Try `%s --help' for more information.\n"
 msgstr ""
 "%s: %s\n"
-"Bandyk `%s --help' išsamesniai informacijai.\n"
+"Bandykite `%s --help' išsamesniai informacijai.\n"
 
 #: src/audacious/main.c:547
 msgid "Audacious"
@@ -304,7 +306,7 @@ msgstr "Audacious"
 #: src/audacious/playback.c:303
 #, c-format
 msgid "No decoder found for %s."
-msgstr "Nerastas dekoderis failui %s."
+msgstr "Failui %s dekoderis nerastas."
 
 #: src/audacious/playlist-new.c:315
 msgid "Untitled Playlist"
@@ -315,8 +317,8 @@ msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress"
 " (or has been disabled)."
 msgstr ""
-"Surikiuoti grojaraštį neįmanoma, nes vis dar vyksta(arba išjungta) meta "
-"duomenų skaitymas."
+"Vis dar vyksta(arba išjungta) meta duomenų skaitymas, todėl neįmanoma "
+"surikiuoti grojaraščio."
 
 #: src/audacious/ui_preferences.c:88
 msgid "Audio"
@@ -457,11 +459,11 @@ msgstr "Naudoti programinį garso valdymą (nerekomenduojama)"
 
 #: src/audacious/ui_preferences.c:160
 msgid "<b>Replay Gain</b>"
-msgstr "<b>Replay Gain</b>"
+msgstr "<b>Garso lygio sulyginimas</b>"
 
 #: src/audacious/ui_preferences.c:161
 msgid "Enable Replay Gain"
-msgstr "Įjungt Replay Gain"
+msgstr "Įjungt garso lygio sulyginimą"
 
 #: src/audacious/ui_preferences.c:164
 msgid "Prevent clipping (recommended)"
@@ -525,15 +527,15 @@ msgstr "<b>Elgsena</b>"
 
 #: src/audacious/ui_preferences.c:206
 msgid "Continue playback on startup"
-msgstr "Pradėti groti paleidžiant"
+msgstr "Paleidžiant tęsti atkūrimą"
 
 #: src/audacious/ui_preferences.c:208
 msgid "Advance when the current song is deleted"
-msgstr "Žengti į priekį kai pasirinkta daina ištrinama"
+msgstr "Kai pasirinkta daina ištrinama, žengti į priekį"
 
 #: src/audacious/ui_preferences.c:210
 msgid "Clear the playlist when opening files"
-msgstr "Išvalyti grojaraštį kai atidaromas failas"
+msgstr "Kai atidaromas failas, išvalyti grojaraštį"
 
 #: src/audacious/ui_preferences.c:212
 msgid "Open files in a temporary playlist"
@@ -545,7 +547,7 @@ msgstr "<b>Meta duomenys</b>"
 
 #: src/audacious/ui_preferences.c:215
 msgid "Do not load metadata for songs until played"
-msgstr "Neįkrauti dainom meta duomenų kol negrojama "
+msgstr "Kol negrojama, dainom neįkrauti meta duomenų"
 
 #: src/audacious/ui_preferences.c:233
 msgid "TITLE"
@@ -577,7 +579,7 @@ msgstr "Kategorija"
 
 #: src/audacious/ui_preferences.c:801
 msgid "Popup Information Settings"
-msgstr "Iššokančio lango nustatymai"
+msgstr "Iššokančio informacijos lango nustatymai"
 
 #: src/audacious/ui_preferences.c:810
 msgid "<b>Cover image retrieve</b>"
@@ -589,8 +591,9 @@ msgid ""
 "the filename. You can specify those words in the lists below, separated "
 "using commas."
 msgstr ""
-"Kai ieškoma albumo viršelio, Audacious ieško tam tikrų žodžių failo varde.Tu"
-" gali įrašyt paieškos žodžius langelyje apačioj, atskiriant kableliais."
+"Kai ieškoma albumo viršelio, Audacious ieško tam tikrų žodžių failo varde. "
+"Tu gali įrašyt paieškos žodžius apačioj esančiame langelyje, atskiriant "
+"kableliais."
 
 #: src/audacious/ui_preferences.c:832
 msgid "Exclude:"
@@ -618,7 +621,7 @@ msgstr "<b>Kita</b>"
 
 #: src/audacious/ui_preferences.c:892
 msgid "Show Progress bar for the current track"
-msgstr "Rodyti pažangos juostą esamam takeliui"
+msgstr "Esamam takeliui, rodyti pažangos juostą"
 
 #: src/audacious/ui_preferences.c:902
 msgid "Delay until filepopup comes up: "
@@ -626,7 +629,7 @@ msgstr "Palaukti kol pasirodys failo iššokantis langas: "
 
 #: src/audacious/ui_preferences.c:1340
 msgid "Custom"
-msgstr "Derinta eilutė"
+msgstr "Pasirinkta eilutė"
 
 #: src/audacious/ui_preferences.c:1383
 msgid "<b>Song Display</b>"
@@ -646,7 +649,7 @@ msgstr "Parodyti informaciją apie pavadinimo formatą"
 
 #: src/audacious/ui_preferences.c:1441
 msgid "Custom string:"
-msgstr "Derinta eilutė:"
+msgstr "Pasirinkta eilutė:"
 
 #: src/audacious/ui_preferences.c:1448
 msgid "Title format:"
@@ -658,7 +661,7 @@ msgstr "<b>Iššokančio lango informacija</b>"
 
 #: src/audacious/ui_preferences.c:1474
 msgid "Show popup information for playlist entries"
-msgstr "Rodyti iššokantį langą grojaraščio elementam"
+msgstr "Grojaraščio elementams, rodyti iššokantį langą"
 
 #: src/audacious/ui_preferences.c:1475
 msgid ""
@@ -666,8 +669,8 @@ msgid ""
 "window shows title of song, name of album, genre, year of publish, track "
 "number, track length, and artwork."
 msgstr ""
-"Nurodytam grojaraščio elementui įjungia iššokančio lango informacinį langą. "
-"Lange rodomas dainos pavadinimas, albumo pavadinimas. žanras, išleidimo "
+"Nurodytam grojaraščio elementui, įjungia iššokančio lango informacinį langą."
+" Lange rodomas dainos pavadinimas, albumo pavadinimas, žanras, išleidimo "
 "data, takelio numeris, takelio trukmė bei dizainas."
 
 #: src/audacious/ui_preferences.c:1486
@@ -709,7 +712,7 @@ msgstr "Nepavyko sukurti aplanko (%s): %s\n"
 
 #: src/audtool/handlers_playlist.c:274
 msgid "Position not found."
-msgstr "Vieta nerasta."
+msgstr "Pozicija nerasta."
 
 #: src/audtool/handlers_vitals.c:64
 msgid "No song playing."
@@ -1054,7 +1057,7 @@ msgstr "Įkrauti grojaraštį"
 #: src/libaudgui/playlists.c:72
 #, c-format
 msgid "Overwrite %s?"
-msgstr "Perrašyt %s?"
+msgstr "Perrašyti %s?"
 
 #: src/libaudgui/queue-manager.c:185
 msgid "Queue Manager"
@@ -1135,7 +1138,7 @@ msgstr "_Pervadinti"
 
 #: src/libaudgui/ui_playlist_manager.c:322
 msgid "_Close dialog on activating playlist"
-msgstr "_Įjungiant grojaraštį užverti dialogą"
+msgstr "_Įjungiant grojaraštį, užverti dialogą"
 
 #: src/libaudgui/ui_urlopener.c:51
 msgid "Open URL"
@@ -1155,12 +1158,12 @@ msgstr ""
 
 #: src/libeggsmclient/eggdesktopfile.c:165
 msgid "File is not a valid .desktop file"
-msgstr "Failas nėra teisingas .desktop failas"
+msgstr "Šis failas nėra tinkamas .desktop failas"
 
 #: src/libeggsmclient/eggdesktopfile.c:188
 #, c-format
 msgid "Unrecognized desktop file Version '%s'"
-msgstr "Neatpažinta desktop failo versija '%s'"
+msgstr "Neatpažinta „desktop“ failo versija „%s“"
 
 #: src/libeggsmclient/eggdesktopfile.c:967
 #, c-format
@@ -1178,7 +1181,7 @@ msgstr "Neatpažinta paleisties pasirinktis: %d"
 
 #: src/libeggsmclient/eggdesktopfile.c:1375
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-msgstr "Negaliu perduot dokumento URI į darbastalio įrašą 'Type=Link'"
+msgstr "Negaliu perduot dokumento URI į darbastalio įrašą „Type=Link“"
 
 #: src/libeggsmclient/eggdesktopfile.c:1396
 msgid "Not a launchable item"
@@ -1190,7 +1193,7 @@ msgstr "Uždrausti prisijungimą prie sesijos valdymo"
 
 #: src/libeggsmclient/eggsmclient.c:229
 msgid "Specify file containing saved configuration"
-msgstr "Nurodyk failą kuriame išsaugoti nustatymai"
+msgstr "Nurodykite failą kuriame išsaugoti nustatymai"
 
 #: src/libeggsmclient/eggsmclient.c:229
 msgid "FILE"
@@ -1210,6 +1213,6 @@ msgstr "Sesijos valdymo pasirinktys:"
 
 #: src/libeggsmclient/eggsmclient.c:254
 msgid "Show session management options"
-msgstr "Rodyti sesijos valdymo pasirinktys"
+msgstr "Rodyti sesijos valdymo pasirinktis"
 
 
