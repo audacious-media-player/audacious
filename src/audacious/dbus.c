@@ -757,6 +757,10 @@ gboolean mpris_player_get_metadata(MprisPlayer * obj, GHashTable * *metadata, GE
 
     get_mpris_metadata(&request);
     *metadata = request.metadata;
+
+    if (! * metadata)
+        * metadata = g_hash_table_new (g_str_hash, g_str_equal);
+
     return TRUE;
 }
 
