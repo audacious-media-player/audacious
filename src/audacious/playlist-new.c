@@ -170,8 +170,12 @@ static void entry_set_tuple_real (Entry * entry, Tuple * tuple)
 {
     /* Hack: We cannot refresh segmented entries (since their info is read from
      * the cue sheet when it is first loaded), so leave them alone. -jlindgren */
-    if (entry->segmented && ! tuple)
+    if (entry->segmented && entry->tuple)
+    {
+        if (tuple)
+            tuple_free (tuple);
         return;
+    }
 
     if (entry->tuple)
         tuple_free (entry->tuple);
