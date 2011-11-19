@@ -398,6 +398,7 @@ static void flush (gint time)
     if (! frames_written)
     {
         g_return_if_fail (cop->set_written_time != NULL);
+        vis_runner_time_offset (time - cop->written_time ());
         cop->set_written_time (time);
     }
     else
