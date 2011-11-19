@@ -318,6 +318,7 @@ static void add_playlist (gchar * filename, AddResult * result)
         add_file (index_get (filenames, i), tuples ? index_get (tuples, i) :
          NULL, NULL, result, FALSE);
 
+    g_free (filename);
     g_free (title);
     index_free (filenames);
     if (tuples)
