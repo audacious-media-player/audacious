@@ -430,6 +430,24 @@ PluginHandle * plugin_lookup (const gchar * path)
     return node ? node->data : NULL;
 }
 
+static gint plugin_lookup_basename_cb (PluginHandle * plugin, const gchar * basename)
+{
+    gchar * test = g_path_get_basename (plugin->path);
+    string_cut_extension (test);
+    gint ret = strcmp (test, basename);
+    g_free (test);
+    return ret;
+}
+
+/* Note: If there are multiple plugins with the same basename, this returns only
+ * one of them. So give different plugins different basenames. --jlindgren */
+PluginHandle * plugin_lookup_basename (const gchar * basename)
+{
+    GList * node = g_list_find_custom (plugin_list, basename, (GCompareFunc)
+     plugin_lookup_basename_cb);
+    return node ? node->data : NULL;
+}
+
 void plugin_register (const gchar * path)
 {
     PluginHandle * plugin = plugin_lookup (path);

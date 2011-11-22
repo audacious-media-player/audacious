@@ -34,6 +34,7 @@ AUD_FUNC4 (gint, plugin_send_message, PluginHandle *, plugin,
 AUD_FUNC1 (gint, plugin_get_type, PluginHandle *, plugin)
 AUD_FUNC1 (const gchar *, plugin_get_filename, PluginHandle *, plugin)
 AUD_FUNC1 (PluginHandle *, plugin_lookup, const gchar *, filename)
+AUD_FUNC1 (PluginHandle *, plugin_lookup_basename, const gchar *, basename)
 
 AUD_FUNC1 (const void *, plugin_get_header, PluginHandle *, plugin)
 AUD_FUNC1 (PluginHandle *, plugin_by_header, const void *, header)
