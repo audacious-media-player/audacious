@@ -48,8 +48,8 @@
  * the API tables), increment _AUD_PLUGIN_VERSION *and* set
  * _AUD_PLUGIN_VERSION_MIN to the same value. */
 
-#define _AUD_PLUGIN_VERSION_MIN 34 /* 3.1-beta3 */
-#define _AUD_PLUGIN_VERSION     34
+#define _AUD_PLUGIN_VERSION_MIN 37 /* 3.2-devel */
+#define _AUD_PLUGIN_VERSION     37
 
 /* A NOTE ON THREADS
  *
@@ -76,6 +76,27 @@
  * Single-thread plugins: visualization, general, and interface.  Functions
  * provided by these plugins will only be called from the main thread. */
 
+/* CROSS-PLUGIN MESSAGES
+ *
+ * Since 3.2, Audacious implements a basic messaging system between plugins.
+ * Messages are sent using aud_plugin_send_message() and received through the
+ * take_message() method specified in the header of the receiving plugin.
+ * Plugins that do not need to receive messages can set take_message() to NULL.
+ *
+ * Each message includes a code indicating the type of message, a pointer to
+ * some data, and a value indicating the size of that data. What the message
+ * data contains is entirely up to the two plugins involved. For this reason, it
+ * is crucial that both plugins agree on the meaning of the message codes used.
+ *
+ * Once the message is sent, an integer error code is returned. If the receiving
+ * plugin does not provide the take_message() method, ENOSYS is returned. If
+ * take_message() does not recognize the message code, it should ignore the
+ * message and return EINVAL. An error code of zero represents success. Other
+ * error codes may be used with more specific meanings.
+ *
+ * For the time being, aud_plugin_send_message() should only be called from the
+ * program's main thread. */
+
 #define PLUGIN_COMMON_FIELDS \
     gint magic; /* checked against _AUD_PLUGIN_MAGIC */ \
     gint version; /* checked against _AUD_PLUGIN_VERSION */ \
@@ -84,6 +105,7 @@
     const gchar * name; \
     gboolean (* init) (void); \
     void (* cleanup) (void); \
+    gint (* take_message) (const gchar * code, const void * data, gint size); \
     void (* about) (void); \
     void (* configure) (void); \
     PluginPreferences * settings;

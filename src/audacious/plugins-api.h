@@ -27,6 +27,8 @@
 AUD_FUNC1 (PluginHandle *, plugin_get_current, gint, type)
 AUD_FUNC2 (gboolean, plugin_enable, PluginHandle *, plugin, gboolean, enable)
 AUD_FUNC1 (PluginHandle *, plugin_by_widget, void /* GtkWidget */ *, widget)
+AUD_FUNC4 (gint, plugin_send_message, PluginHandle *, plugin,
+ const gchar *, code, const void *, data, gint, size)
 
 /* plugin-registry.c */
 AUD_FUNC1 (gint, plugin_get_type, PluginHandle *, plugin)

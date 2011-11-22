@@ -290,7 +290,8 @@ gboolean plugin_enable (PluginHandle * plugin, gboolean enable)
     return enable_multi (type, plugin, enable);
 }
 
-/* This doesn't really belong here, but it's a bit of an oddball. */
+/* Miscellaneous plugin-related functions ... */
+
 PluginHandle * plugin_by_widget (/* GtkWidget * */ void * widget)
 {
     PluginHandle * p;
@@ -299,4 +300,16 @@ PluginHandle * plugin_by_widget (/* GtkWidget * */ void * widget)
     if ((p = general_plugin_by_widget (widget)))
         return p;
     return NULL;
+}
+
+gint plugin_send_message (PluginHandle * plugin, const gchar * code, const void * data, gint size)
+{
+    if (! plugin_get_enabled (plugin))
+        return ENOSYS;
+
+    Plugin * header = plugin_get_header (plugin);
+    if (! header || ! PLUGIN_HAS_FUNC (header, take_message))
+        return ENOSYS;
+
+    return header->take_message (code, data, size);
 }
