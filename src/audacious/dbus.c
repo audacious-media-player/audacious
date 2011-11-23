@@ -525,20 +525,8 @@ static gboolean jump_cb(void *data)
 static gboolean add_cb(void *data)
 {
     struct AddRequest *request = data;
-    gint playlist = playlist_get_active();
-
-    if (request->position < 0)
-        request->position = playlist_entry_count (playlist);
-
-    drct_pl_add (request->filename, request->position);
-
-    if (request->play)
-    {
-        playlist_set_playing(playlist);
-        playlist_set_position(playlist, request->position);
-        playback_play (0, FALSE);
-    }
-
+    playlist_entry_insert (playlist_get_active (), request->position,
+     request->filename, NULL, request->play);
     g_free(request);
     return FALSE;
 }
