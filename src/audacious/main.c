@@ -513,7 +513,11 @@ static void shut_down (void)
 
     AUDDBG ("Stopping playback.\n");
     if (playback_get_playing ())
+    {
+        gboolean stop_after_song = get_bool (NULL, "stop_after_current_song");
         playback_stop ();
+        set_bool (NULL, "stop_after_current_song", stop_after_song);
+    }
 
     adder_cleanup ();
     playlist_end ();
