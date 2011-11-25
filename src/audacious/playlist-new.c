@@ -548,13 +548,14 @@ static void * scanner (void * data)
         Entry * entry = scan_items[i]->entry;
         gchar * filename = g_strdup (entry->filename);
         PluginHandle * decoder = entry->decoder;
+        gboolean need_tuple = entry->tuple ? FALSE : TRUE;
 
         LEAVE;
 
         if (! decoder)
             decoder = file_find_decoder (filename, FALSE);
 
-        Tuple * tuple = decoder ? file_read_tuple (filename, decoder) : NULL;
+        Tuple * tuple = (need_tuple && decoder) ? file_read_tuple (filename, decoder) : NULL;
 
         ENTER;
 
@@ -570,11 +571,12 @@ static void * scanner (void * data)
         entry->decoder = decoder;
 
         if (tuple)
+        {
             entry_set_tuple (playlist, entry, tuple);
-        else
+            queue_update (PLAYLIST_UPDATE_METADATA, playlist->number, entry->number, 1);
+        }
+        else if (need_tuple)
             entry_set_failed (playlist, entry);
-
-        queue_update (PLAYLIST_UPDATE_METADATA, playlist->number, entry->number, 1);
 
         g_slice_free (ScanItem, scan_items[i]);
         scan_items[i] = NULL;
