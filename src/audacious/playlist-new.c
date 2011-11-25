@@ -119,6 +119,7 @@ typedef struct {
 typedef struct {
     gint number, unique_id;
     gchar * filename, * title;
+    gboolean modified;
     struct index * entries;
     Entry * position;
     gint selected_count;
@@ -332,6 +333,7 @@ static Playlist * playlist_new (gint id)
     playlist->unique_id = new_unique_id (id);
     playlist->filename = NULL;
     playlist->title = g_strdup(_("Untitled Playlist"));
+    playlist->modified = TRUE;
     playlist->entries = index_new();
     playlist->position = NULL;
     playlist->selected_count = 0;
@@ -424,6 +426,9 @@ static void queue_update (gint level, gint list, gint at, gint count)
 
     if (p)
     {
+        if (level >= PLAYLIST_UPDATE_METADATA)
+            p->modified = TRUE;
+
         if (p->next_update.level)
         {
             p->next_update.level = MAX (p->next_update.level, level);
@@ -827,6 +832,7 @@ void playlist_set_filename (gint playlist_num, const gchar * filename)
 
     g_free (playlist->filename);
     playlist->filename = g_strdup (filename);
+    playlist->modified = TRUE;
 
     METADATA_HAS_CHANGED (-1, 0, 0);
     LEAVE;
@@ -851,6 +857,7 @@ void playlist_set_title (gint playlist_num, const gchar * title)
 
     g_free (playlist->title);
     playlist->title = g_strdup (title);
+    playlist->modified = TRUE;
 
     METADATA_HAS_CHANGED (-1, 0, 0);
     LEAVE;
@@ -865,6 +872,28 @@ gchar * playlist_get_title (gint playlist_num)
     gchar * title = g_strdup (playlist->title);
 
     LEAVE_RET (title);
+}
+
+void playlist_set_modified (gint playlist_num, gboolean modified)
+{
+    ENTER;
+    DECLARE_PLAYLIST;
+    LOOKUP_PLAYLIST;
+
+    playlist->modified = modified;
+
+    LEAVE;
+}
+
+gboolean playlist_get_modified (gint playlist_num)
+{
+    ENTER;
+    DECLARE_PLAYLIST;
+    LOOKUP_PLAYLIST_RET (FALSE);
+
+    gboolean modified = playlist->modified;
+
+    LEAVE_RET (modified);
 }
 
 void playlist_set_active (gint playlist_num)

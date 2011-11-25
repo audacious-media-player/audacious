@@ -80,7 +80,11 @@ gboolean playlist_insert_playlist_raw (gint list, gint at,
 /* playlist-new.c */
 void playlist_init (void);
 void playlist_end (void);
+
 void playlist_insert_with_id (gint at, gint id);
+void playlist_set_modified (gint playlist, gboolean modified);
+gboolean playlist_get_modified (gint playlist);
+
 void playlist_load_state (void);
 void playlist_save_state (void);
 void playlist_resume (void);

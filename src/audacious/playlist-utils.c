@@ -308,6 +308,7 @@ static void load_playlists_real (void)
 
         playlist_insert (count);
         playlist_insert_playlist_raw (count, 0, uri);
+        playlist_set_modified (count, TRUE);
 
         g_free (path);
         g_free (uri);
@@ -333,6 +334,7 @@ static void load_playlists_real (void)
 
         playlist_insert_with_id (count + i, atoi (order[i]));
         playlist_insert_playlist_raw (count + i, 0, uri);
+        playlist_set_modified (count + i, FALSE);
 
         g_free (path);
         g_free (uri);
@@ -361,11 +363,17 @@ static void save_playlists_real (void)
         gint id = playlist_get_unique_id (i);
         order[i] = g_strdup_printf ("%d", id);
 
-        gchar * path = g_strdup_printf ("%s/%d.xspf", folder, id);
-        gchar * uri = filename_to_uri (path);
-        playlist_save (i, uri);
-        g_free (path);
-        g_free (uri);
+        if (playlist_get_modified (i))
+        {
+            gchar * path = g_strdup_printf ("%s/%d.xspf", folder, id);
+            gchar * uri = filename_to_uri (path);
+
+            playlist_save (i, uri);
+            playlist_set_modified (i, FALSE);
+
+            g_free (path);
+            g_free (uri);
+        }
 
         g_hash_table_insert (saved, g_strdup_printf ("%d.xspf", id), NULL);
     }
@@ -377,14 +385,21 @@ static void save_playlists_real (void)
     GError * error = NULL;
     gchar * order_path = g_strdup_printf ("%s/order", get_path (AUD_PATH_PLAYLISTS_DIR));
 
-    if (! g_file_set_contents (order_path, order_string, -1, & error))
+    gchar * old_order_string;
+    g_file_get_contents (order_path, & old_order_string, NULL, NULL);
+
+    if (! old_order_string || strcmp (old_order_string, order_string))
     {
-        fprintf (stderr, "Cannot write to %s: %s\n", order_path, error->message);
-        g_error_free (error);
+        if (! g_file_set_contents (order_path, order_string, -1, & error))
+        {
+            fprintf (stderr, "Cannot write to %s: %s\n", order_path, error->message);
+            g_error_free (error);
+        }
     }
 
     g_free (order_string);
     g_free (order_path);
+    g_free (old_order_string);
 
     /* clean up deleted playlists and files from old naming scheme */
 
@@ -414,14 +429,13 @@ DONE:
     g_hash_table_destroy (saved);
 }
 
-static gboolean hooks_added, playlists_changed, state_changed;
+static gboolean hooks_added, state_changed;
 
 static void update_cb (void * data, void * user)
 {
     if (GPOINTER_TO_INT (data) < PLAYLIST_UPDATE_METADATA)
         return;
 
-    playlists_changed = TRUE;
     state_changed = TRUE;
 }
 
@@ -435,7 +449,6 @@ void load_playlists (void)
     load_playlists_real ();
     playlist_load_state ();
 
-    playlists_changed = FALSE;
     state_changed = FALSE;
 
     if (! hooks_added)
@@ -450,11 +463,7 @@ void load_playlists (void)
 
 void save_playlists (gboolean exiting)
 {
-    if (playlists_changed)
-    {
-        save_playlists_real ();
-        playlists_changed = FALSE;
-    }
+    save_playlists_real ();
 
     /* on exit, save resume time if resume feature is enabled */
     if (state_changed || (exiting && get_bool (NULL, "resume_playback_on_startup")))
