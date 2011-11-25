@@ -58,7 +58,7 @@ enum {
  PLAYLIST_SORT_FORMATTED_TITLE,
  PLAYLIST_SORT_SCHEMES};
 
-#define PlaylistFilenameCompareFunc PlaylistStringCompareFunc /* deprecated */
+typedef gboolean (* PlaylistFilterFunc) (const gchar * filename, void * user);
 typedef gint (* PlaylistStringCompareFunc) (const gchar * a, const gchar * b);
 typedef gint (* PlaylistTupleCompareFunc) (const Tuple * a, const Tuple * b);
 

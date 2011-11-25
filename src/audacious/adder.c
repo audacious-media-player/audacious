@@ -38,6 +38,8 @@ typedef struct {
     gint playlist_id, at;
     gboolean play;
     struct index * filenames, * tuples;
+    PlaylistFilterFunc filter;
+    void * user;
 } AddTask;
 
 typedef struct {
@@ -166,7 +168,8 @@ static void index_free_tuples (struct index * tuples)
 }
 
 static AddTask * add_task_new (gint playlist_id, gint at, gboolean play,
- struct index * filenames, struct index * tuples)
+ struct index * filenames, struct index * tuples, PlaylistFilterFunc filter,
+ void * user)
 {
     AddTask * task = g_malloc (sizeof (AddTask));
     task->playlist_id = playlist_id;
@@ -174,6 +177,8 @@ static AddTask * add_task_new (gint playlist_id, gint at, gboolean play,
     task->play = play;
     task->filenames = filenames;
     task->tuples = tuples;
+    task->filter = filter;
+    task->user = user;
     return task;
 }
 
@@ -212,15 +217,18 @@ static void add_result_free (AddResult * result)
 }
 
 static void add_file (gchar * filename, Tuple * tuple, PluginHandle * decoder,
- AddResult * result, gboolean filter)
+ PlaylistFilterFunc filter, void * user, AddResult * result, gboolean validate)
 {
     g_return_if_fail (filename);
+    if (filter && ! filter (filename, user))
+        return;
+
     status_update (filename, index_count (result->filenames));
 
     if (! tuple && ! decoder)
     {
         decoder = file_find_decoder (filename, TRUE);
-        if (filter && ! decoder)
+        if (validate && ! decoder)
         {
             g_free (filename);
             return;
@@ -237,7 +245,7 @@ static void add_file (gchar * filename, Tuple * tuple, PluginHandle * decoder,
         {
             gchar * subname = g_strdup_printf ("%s?%d", filename, tuple->subtunes ?
              tuple->subtunes[sub] : 1 + sub);
-            add_file (subname, NULL, decoder, result, FALSE);
+            add_file (subname, NULL, decoder, filter, user, result, FALSE);
         }
 
         g_free (filename);
@@ -250,9 +258,13 @@ static void add_file (gchar * filename, Tuple * tuple, PluginHandle * decoder,
     index_append (result->decoders, decoder);
 }
 
-static void add_folder (gchar * filename, AddResult * result)
+static void add_folder (gchar * filename, PlaylistFilterFunc filter,
+ void * user, AddResult * result)
 {
     g_return_if_fail (filename);
+    if (filter && ! filter (filename, user))
+        return;
+
     status_update (filename, index_count (result->filenames));
 
     gchar * unix_name = uri_to_filename (filename);
@@ -285,12 +297,12 @@ static void add_folder (gchar * filename, AddResult * result)
         if (S_ISREG (info.st_mode))
         {
             gchar * item_name = filename_to_uri (files->data);
-            add_file (item_name, NULL, NULL, result, TRUE);
+            add_file (item_name, NULL, NULL, filter, user, result, TRUE);
         }
         else if (S_ISDIR (info.st_mode))
         {
             gchar * item_name = filename_to_uri (files->data);
-            add_folder (item_name, result);
+            add_folder (item_name, filter, user, result);
         }
 
     NEXT:
@@ -303,9 +315,13 @@ FREE:
     g_free (unix_name);
 }
 
-static void add_playlist (gchar * filename, AddResult * result)
+static void add_playlist (gchar * filename, PlaylistFilterFunc filter,
+ void * user, AddResult * result)
 {
     g_return_if_fail (filename);
+    if (filter && ! filter (filename, user))
+        return;
+
     status_update (filename, index_count (result->filenames));
 
     gchar * title = NULL;
@@ -316,7 +332,7 @@ static void add_playlist (gchar * filename, AddResult * result)
     gint count = index_count (filenames);
     for (gint i = 0; i < count; i ++)
         add_file (index_get (filenames, i), tuples ? index_get (tuples, i) :
-         NULL, NULL, result, FALSE);
+         NULL, NULL, filter, user, result, FALSE);
 
     g_free (filename);
     g_free (title);
@@ -325,19 +341,19 @@ static void add_playlist (gchar * filename, AddResult * result)
         index_free (tuples);
 }
 
-static void add_generic (gchar * filename, Tuple * tuple, AddResult * result,
- gboolean filter)
+static void add_generic (gchar * filename, Tuple * tuple,
+ PlaylistFilterFunc filter, void * user, AddResult * result)
 {
     g_return_if_fail (filename);
 
     if (tuple)
-        add_file (filename, tuple, NULL, result, filter);
+        add_file (filename, tuple, NULL, filter, user, result, FALSE);
     else if (vfs_file_test (filename, G_FILE_TEST_IS_DIR))
-        add_folder (filename, result);
+        add_folder (filename, filter, user, result);
     else if (filename_is_playlist (filename))
-        add_playlist (filename, result);
+        add_playlist (filename, filter, user, result);
     else
-        add_file (filename, NULL, NULL, result, filter);
+        add_file (filename, NULL, NULL, filter, user, result, FALSE);
 }
 
 static gboolean add_finish (void * unused)
@@ -417,7 +433,9 @@ static void * add_worker (void * unused)
         for (gint i = 0; i < count; i ++)
         {
             add_generic (index_get (task->filenames, i), task->tuples ?
-             index_get (task->tuples, i) : NULL, result, FALSE);
+             index_get (task->tuples, i) : NULL, task->filter, task->user,
+             result);
+
             index_set (task->filenames, i, NULL);
             if (task->tuples)
                 index_set (task->tuples, i, NULL);
@@ -481,10 +499,17 @@ void playlist_entry_insert (gint playlist, gint at, gchar * filename,
 void playlist_entry_insert_batch (gint playlist, gint at,
  struct index * filenames, struct index * tuples, gboolean play)
 {
+    playlist_entry_insert_filtered (playlist, at, filenames, tuples, NULL, NULL, play);
+}
+
+void playlist_entry_insert_filtered (gint playlist, gint at,
+ struct index * filenames, struct index * tuples, PlaylistFilterFunc filter,
+ void * user, gboolean play)
+{
     gint playlist_id = playlist_get_unique_id (playlist);
     g_return_if_fail (playlist_id >= 0);
 
-    AddTask * task = add_task_new (playlist_id, at, play, filenames, tuples);
+    AddTask * task = add_task_new (playlist_id, at, play, filenames, tuples, filter, user);
 
     g_mutex_lock (mutex);
     add_tasks = g_list_append (add_tasks, task);

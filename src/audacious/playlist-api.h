@@ -112,6 +112,14 @@ AUD_FUNC5 (void, playlist_entry_insert, gint, playlist, gint, at, gchar *,
 AUD_FUNC5 (void, playlist_entry_insert_batch, gint, playlist, gint, at,
  struct index *, filenames, struct index *, tuples, gboolean, play)
 
+/* Similar to playlist_entry_insert_batch, but allows the caller to prevent some
+ * items from being added by returning false from the <filter> callback.  Useful
+ * for searching a folder and adding only new files to the playlist.  <user> is
+ * an untyped pointer passed to the <filter> callback. */
+AUD_FUNC7 (void, playlist_entry_insert_filtered, gint, playlist, gint, at,
+ struct index *, filenames, struct index *, tuples, PlaylistFilterFunc, filter,
+ void *, user, gboolean, play)
+
 /* Removes a contiguous block of <number> entries starting from the one numbered
  * <at> from a playlist.  If the last song played is in this block, playback is
  * stopped.  In this case, calls to playlist_get_position() will return -1, and
