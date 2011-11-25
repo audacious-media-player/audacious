@@ -19,8 +19,11 @@
  * using our public API to be a derived work.
  */
 
+#include <dirent.h>
 #include <glib.h>
 #include <regex.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include <libaudcore/audstrings.h>
@@ -277,11 +280,10 @@ void playlist_select_by_patterns (gint playlist, const Tuple * patterns)
     }
 }
 
-/* The algorithm is a bit quirky for historical reasons. -jlindgren */
 static gchar * make_playlist_path (gint playlist)
 {
     if (! playlist)
-        return g_strdup (get_path (AUD_PATH_PLAYLIST_FILE));
+        return g_strdup_printf ("%s/playlist.xspf", get_path (AUD_PATH_USER_DIR));
 
     return g_strdup_printf ("%s/playlist_%02d.xspf",
      get_path (AUD_PATH_PLAYLISTS_DIR), 1 + playlist);
@@ -289,54 +291,127 @@ static gchar * make_playlist_path (gint playlist)
 
 static void load_playlists_real (void)
 {
-    gboolean done = FALSE;
-    gint count;
+    /* old (v3.1 and earlier) naming scheme */
 
-    for (count = 0; ! done; count ++)
+    gint count;
+    for (count = 0; ; count ++)
     {
         gchar * path = make_playlist_path (count);
 
-        if (g_file_test (path, G_FILE_TEST_EXISTS))
+        if (! g_file_test (path, G_FILE_TEST_EXISTS))
         {
-            gchar * uri = filename_to_uri (path);
-
-            if (count)
-                playlist_insert (count);
-
-            playlist_insert_playlist_raw (count, 0, uri);
-            g_free (uri);
+            g_free (path);
+            break;
         }
-        else
-            done = TRUE;
+
+        gchar * uri = filename_to_uri (path);
+
+        playlist_insert (count);
+        playlist_insert_playlist_raw (count, 0, uri);
 
         g_free (path);
+        g_free (uri);
     }
+
+    /* unique ID-based naming scheme */
+
+    gchar * order_path = g_strdup_printf ("%s/order", get_path (AUD_PATH_PLAYLISTS_DIR));
+    gchar * order_string;
+    g_file_get_contents (order_path, & order_string, NULL, NULL);
+    g_free (order_path);
+
+    if (! order_string)
+        return;
+
+    gchar * * order = g_strsplit (order_string, " ", -1);
+    g_free (order_string);
+
+    for (gint i = 0; order[i]; i ++)
+    {
+        gchar * path = g_strdup_printf ("%s/%s.xspf", get_path (AUD_PATH_PLAYLISTS_DIR), order[i]);
+        gchar * uri = filename_to_uri (path);
+
+        playlist_insert_with_id (count + i, atoi (order[i]));
+        playlist_insert_playlist_raw (count + i, 0, uri);
+
+        g_free (path);
+        g_free (uri);
+    }
+
+    g_strfreev (order);
+
+    /* one blank playlist on first run */
+
+    if (! playlist_count ())
+        playlist_insert (0);
 }
 
 static void save_playlists_real (void)
 {
-    gint playlists = playlist_count ();
-    gboolean done = FALSE;
-    gint count;
+    gint lists = playlist_count ();
+    const gchar * folder = get_path (AUD_PATH_PLAYLISTS_DIR);
 
-    for (count = 0; ! done; count ++)
+    /* save playlists */
+
+    gchar * * order = g_malloc (sizeof (gchar *) * (lists + 1));
+    GHashTable * saved = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
+
+    for (gint i = 0; i < lists; i ++)
     {
-        gchar * path = make_playlist_path (count);
+        gint id = playlist_get_unique_id (i);
+        order[i] = g_strdup_printf ("%d", id);
 
-        if (count < playlists)
-        {
-            gchar * uri = filename_to_uri (path);
-
-            playlist_save (count, uri);
-            g_free (uri);
-        }
-        else if (g_file_test (path, G_FILE_TEST_EXISTS))
-            remove (path);
-        else
-            done = TRUE;
-
+        gchar * path = g_strdup_printf ("%s/%d.xspf", folder, id);
+        gchar * uri = filename_to_uri (path);
+        playlist_save (i, uri);
         g_free (path);
+        g_free (uri);
+
+        g_hash_table_insert (saved, g_strdup_printf ("%d.xspf", id), NULL);
     }
+
+    order[lists] = NULL;
+    gchar * order_string = g_strjoinv (" ", order);
+    g_strfreev (order);
+
+    GError * error = NULL;
+    gchar * order_path = g_strdup_printf ("%s/order", get_path (AUD_PATH_PLAYLISTS_DIR));
+
+    if (! g_file_set_contents (order_path, order_string, -1, & error))
+    {
+        fprintf (stderr, "Cannot write to %s: %s\n", order_path, error->message);
+        g_error_free (error);
+    }
+
+    g_free (order_string);
+    g_free (order_path);
+
+    /* clean up deleted playlists and files from old naming scheme */
+
+    gchar * path = make_playlist_path (0);
+    remove (path);
+    g_free (path);
+
+    DIR * dir = opendir (folder);
+    if (! dir)
+        goto DONE;
+
+    struct dirent * entry;
+    while ((entry = readdir (dir)))
+    {
+        if (! g_str_has_suffix (entry->d_name, ".xspf"))
+            continue;
+
+        if (! g_hash_table_lookup_extended (saved, entry->d_name, NULL, NULL))
+        {
+            gchar * path = g_strdup_printf ("%s/%s", folder, entry->d_name);
+            remove (path);
+            g_free (path);
+        }
+    }
+
+DONE:
+    g_hash_table_destroy (saved);
 }
 
 static gboolean hooks_added, playlists_changed, state_changed;

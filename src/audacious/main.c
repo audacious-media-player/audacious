@@ -222,7 +222,6 @@ static void init_paths (void)
     aud_paths[AUD_PATH_USER_DIR] = g_build_filename(xdg_config_home, "audacious", NULL);
     aud_paths[AUD_PATH_USER_PLUGIN_DIR] = g_build_filename(xdg_data_home, "audacious", "Plugins", NULL);
     aud_paths[AUD_PATH_PLAYLISTS_DIR] = g_build_filename(aud_paths[AUD_PATH_USER_DIR], "playlists", NULL);
-    aud_paths[AUD_PATH_PLAYLIST_FILE] = g_build_filename(aud_paths[AUD_PATH_USER_DIR], "playlist.xspf", NULL);
     aud_paths[AUD_PATH_GTKRC_FILE] = g_build_filename(aud_paths[AUD_PATH_USER_DIR], "gtkrc", NULL);
 
     for (gint i = 0; i < AUD_PATH_COUNT; i ++)

@@ -311,8 +311,12 @@ static void entry_free (Entry * entry)
     g_free (entry);
 }
 
-static gint new_unique_id (void)
+static gint new_unique_id (gint preferred)
 {
+    if (preferred >= 0 && ! g_hash_table_lookup_extended (unique_id_table,
+     GINT_TO_POINTER (preferred), NULL, NULL))
+        return preferred;
+
     while (g_hash_table_lookup_extended (unique_id_table,
      GINT_TO_POINTER (next_unique_id), NULL, NULL))
         next_unique_id ++;
@@ -320,12 +324,12 @@ static gint new_unique_id (void)
     return next_unique_id ++;
 }
 
-static Playlist * playlist_new (void)
+static Playlist * playlist_new (gint id)
 {
     Playlist * playlist = g_malloc (sizeof (Playlist));
 
     playlist->number = -1;
-    playlist->unique_id = new_unique_id ();
+    playlist->unique_id = new_unique_id (id);
     playlist->filename = NULL;
     playlist->title = g_strdup(_("Untitled Playlist"));
     playlist->entries = index_new();
@@ -524,12 +528,12 @@ static ScanItem * entry_find_to_scan (void)
         else
         {
             /* scan the active playlist first, then all the others */
-            if (scan_playlist == active_playlist->number)
+            if (active_playlist && scan_playlist == active_playlist->number)
                 scan_playlist = 0;
             else
                 scan_playlist ++;
 
-            if (scan_playlist == active_playlist->number)
+            if (active_playlist && scan_playlist == active_playlist->number)
                 scan_playlist ++;
 
             scan_row = 0;
@@ -599,7 +603,7 @@ static void * scanner (void * data)
 
 static void scan_trigger (void)
 {
-    scan_playlist = active_playlist->number;
+    scan_playlist = active_playlist ? active_playlist->number : 0;
     scan_row = 0;
     g_cond_broadcast (cond);
 }
@@ -658,12 +662,7 @@ void playlist_init (void)
     ENTER;
 
     unique_id_table = g_hash_table_new (g_direct_hash, g_direct_equal);
-
     playlists = index_new ();
-    Playlist * playlist = playlist_new ();
-    index_append (playlists, playlist);
-    playlist->number = 0;
-    active_playlist = playlist;
 
     update_level = 0;
 
@@ -720,18 +719,23 @@ gint playlist_count (void)
     LEAVE_RET (count);
 }
 
-void playlist_insert (gint at)
+void playlist_insert_with_id (gint at, gint id)
 {
     ENTER;
 
     if (at < 0 || at > index_count (playlists))
         at = index_count (playlists);
 
-    index_insert (playlists, at, playlist_new ());
+    index_insert (playlists, at, playlist_new (id));
     number_playlists (at, index_count (playlists) - at);
 
     PLAYLIST_HAS_CHANGED (-1, 0, 0);
     LEAVE;
+}
+
+void playlist_insert (gint at)
+{
+    playlist_insert_with_id (at, -1);
 }
 
 void playlist_reorder (gint from, gint to, gint count)
@@ -780,7 +784,7 @@ void playlist_delete (gint playlist_num)
     playlist_free (playlist);
 
     if (! index_count (playlists))
-        index_insert (playlists, 0, playlist_new ());
+        index_insert (playlists, 0, playlist_new (-1));
 
     number_playlists (playlist_num, index_count (playlists) - playlist_num);
 
@@ -886,7 +890,7 @@ void playlist_set_active (gint playlist_num)
 gint playlist_get_active (void)
 {
     ENTER;
-    gint list = active_playlist->number;
+    gint list = active_playlist ? active_playlist->number : -1;
     LEAVE_RET (list);
 }
 
@@ -2146,9 +2150,8 @@ void playlist_save_state (void)
     fprintf (handle, "resume-state %d\n", resume_state);
     fprintf (handle, "resume-time %d\n", resume_time);
 
-    fprintf (handle, "active %d\n", active_playlist->number);
-    fprintf (handle, "playing %d\n", playing_playlist ? playing_playlist->number
-     : -1);
+    fprintf (handle, "active %d\n", active_playlist ? active_playlist->number : -1);
+    fprintf (handle, "playing %d\n", playing_playlist ? playing_playlist->number : -1);
 
     for (gint playlist_num = 0; playlist_num < index_count (playlists);
      playlist_num ++)
