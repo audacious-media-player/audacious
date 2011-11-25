@@ -131,6 +131,9 @@ typedef struct {
 static GMutex * mutex;
 static GCond * cond;
 
+/* The unique ID table contains pointers to Playlist for ID's in use and NULL
+ * for "dead" (previously used and therefore unavailable) ID's. */
+static GHashTable * unique_id_table = NULL;
 static gint next_unique_id = 1000;
 
 static struct index * playlists = NULL;
@@ -308,12 +311,21 @@ static void entry_free (Entry * entry)
     g_free (entry);
 }
 
+static gint new_unique_id (void)
+{
+    while (g_hash_table_lookup_extended (unique_id_table,
+     GINT_TO_POINTER (next_unique_id), NULL, NULL))
+        next_unique_id ++;
+
+    return next_unique_id ++;
+}
+
 static Playlist * playlist_new (void)
 {
     Playlist * playlist = g_malloc (sizeof (Playlist));
 
     playlist->number = -1;
-    playlist->unique_id = next_unique_id ++;
+    playlist->unique_id = new_unique_id ();
     playlist->filename = NULL;
     playlist->title = g_strdup(_("Untitled Playlist"));
     playlist->entries = index_new();
@@ -327,11 +339,14 @@ static Playlist * playlist_new (void)
     memset (& playlist->last_update, 0, sizeof (Update));
     memset (& playlist->next_update, 0, sizeof (Update));
 
+    g_hash_table_insert (unique_id_table, GINT_TO_POINTER (playlist->unique_id), playlist);
     return playlist;
 }
 
 static void playlist_free (Playlist * playlist)
 {
+    g_hash_table_insert (unique_id_table, GINT_TO_POINTER (playlist->unique_id), NULL);
+
     g_free (playlist->filename);
     g_free (playlist->title);
 
@@ -642,6 +657,8 @@ void playlist_init (void)
 
     ENTER;
 
+    unique_id_table = g_hash_table_new (g_direct_hash, g_direct_equal);
+
     playlists = index_new ();
     Playlist * playlist = playlist_new ();
     index_append (playlists, playlist);
@@ -686,6 +703,9 @@ void playlist_end (void)
 
     index_free (playlists);
     playlists = NULL;
+
+    g_hash_table_destroy (unique_id_table);
+    unique_id_table = NULL;
 
     LEAVE;
 
@@ -789,14 +809,10 @@ gint playlist_by_unique_id (gint id)
 {
     ENTER;
 
-    for (gint i = 0; i < index_count (playlists); i ++)
-    {
-        Playlist * p = index_get (playlists, i);
-        if (p->unique_id == id)
-            LEAVE_RET (p->number);
-    }
+    Playlist * p = g_hash_table_lookup (unique_id_table, GINT_TO_POINTER (id));
+    gint num = p ? p->number : -1;
 
-    LEAVE_RET (-1);
+    LEAVE_RET (num);
 }
 
 void playlist_set_filename (gint playlist_num, const gchar * filename)
