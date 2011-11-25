@@ -280,7 +280,7 @@ void audgui_playlist_manager (void)
      search_cb, NULL, NULL);
     hook_associate ("playlist update", update_hook, playman_pl_lv);
     hook_associate ("playlist activate", activate_hook, playman_pl_lv);
-    hook_associate ("playlist position", position_hook, playman_pl_lv);
+    hook_associate ("playlist set playing", position_hook, playman_pl_lv);
 
     playman_pl_lv_sw = gtk_scrolled_window_new( NULL , NULL );
     gtk_scrolled_window_set_shadow_type ((GtkScrolledWindow *) playman_pl_lv_sw,
