@@ -32,5 +32,7 @@
 #define AUD_FUNC4(t,n,t1,n1,t2,n2,t3,n3,t4,n4) t (* n) (t1 n1, t2 n2, t3 n3, t4 n4);
 #define AUD_FUNC5(t,n,t1,n1,t2,n2,t3,n3,t4,n4,t5,n5) t (* n) (t1 n1, t2 n2, t3 n3, t4 n4, t5 n5);
 #define AUD_FUNC6(t,n,t1,n1,t2,n2,t3,n3,t4,n4,t5,n5,t6,n6) t (* n) (t1 n1, t2 n2, t3 n3, t4 n4, t5 n5, t6 n6);
+#define AUD_FUNC7(t,n,t1,n1,t2,n2,t3,n3,t4,n4,t5,n5,t6,n6,t7,n7) t (* n) (t1 n1, t2 n2, t3 n3, t4 n4, t5 n5, t6 n6, t7 n7);
+#define AUD_FUNC8(t,n,t1,n1,t2,n2,t3,n3,t4,n4,t5,n5,t6,n6,t7,n7,t8,n8) t (* n) (t1 n1, t2 n2, t3 n3, t4 n4, t5 n5, t6 n6, t7 n7, t8 n8);
 
 struct AUD_API_NAME {

@@ -33,3 +33,5 @@
 #undef AUD_FUNC4
 #undef AUD_FUNC5
 #undef AUD_FUNC6
+#undef AUD_FUNC7
+#undef AUD_FUNC8
