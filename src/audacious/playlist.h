@@ -37,10 +37,9 @@
  * change not listed under the other types, and implies both
  * PLAYLIST_UPDATE_SELECTION and PLAYLIST_UPDATE_METADATA. */
 enum {
- PLAYLIST_UPDATE_SELECTION,
+ PLAYLIST_UPDATE_SELECTION = 1,
  PLAYLIST_UPDATE_METADATA,
- PLAYLIST_UPDATE_STRUCTURE,
- PLAYLIST_UPDATE_TYPES};
+ PLAYLIST_UPDATE_STRUCTURE};
 
 /* The values which can be passed to playlist_sort_by_scheme(),
  * playlist_sort_selected_by_scheme(), and

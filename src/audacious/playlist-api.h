@@ -277,19 +277,17 @@ AUD_FUNC3 (void, playlist_queue_delete, gint, playlist, gint, at, gint, number)
 /* Removes the selected entries in a playlist from the queue, if they are in it. */
 AUD_FUNC1 (void, playlist_queue_delete_selected, gint, playlist)
 
-/* Returns nonzero if any playlist has been changed since the last call of the
- * "playlist update" hook.  If called from within the hook, returns nonzero. */
+/* Returns nonzero if a "playlist update" hook call is pending.  If called from
+ * within the hook, the current hook call is not considered pending. */
 AUD_FUNC0 (gboolean, playlist_update_pending)
 
-/* May be called within the "playlist update" hook to determine what range of
- * entries must be updated.  If all entries in all playlists must be updated,
- * returns zero.  If a limited range in a single playlist must be updated,
- * returns nonzero.  In this case, stores the number of that playlist at
- * <playlist>, the number of the first entry to be updated at <at>, and the
- * number of contiguous entries to be updated at <count>.  Note that entries may
- * have been added or removed within this range. */
-AUD_FUNC3 (gboolean, playlist_update_range, gint *, playlist, gint *, at,
- gint *, count)
+/* May be called within the "playlist update" hook to determine the update level
+ * and number of entries changed in a playlist.  Returns the update level for
+ * the playlist, storing the number of the first entry changed in <at> and the
+ * number of contiguous entries to be updated in <count>.  Note that entries may
+ * have been added or removed within this range.  If no entries in the playlist
+ * have changed, returns zero. */
+AUD_FUNC3 (gint, playlist_updated_range, gint, playlist, gint *, at, gint *, count)
 
 /* --- PLAYLIST UTILITY API --- */
 

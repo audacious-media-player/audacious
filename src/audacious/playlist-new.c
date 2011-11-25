@@ -98,6 +98,10 @@ enum {RESUME_STOP, RESUME_PLAY, RESUME_PAUSE};
 } while (0)
 
 typedef struct {
+    gint level, before, after;
+} Update;
+
+typedef struct {
     gint number;
     gchar * filename;
     PluginHandle * decoder;
@@ -121,6 +125,7 @@ typedef struct {
     gint last_shuffle_num;
     GList * queued;
     gint64 total_length, selected_length;
+    Update next_update, last_update;
 } Playlist;
 
 static GMutex * mutex;
@@ -132,13 +137,7 @@ static struct index * playlists = NULL;
 static Playlist * active_playlist = NULL;
 static Playlist * playing_playlist = NULL;
 
-static gint update_source = 0;
-
-struct {
-    gboolean pending;
-    gint level, playlist, before, after;
-} next_update, last_update;
-
+static gint update_source = 0, update_level;
 static gint resume_state, resume_time;
 
 typedef struct {
@@ -325,6 +324,9 @@ static Playlist * playlist_new (void)
     playlist->total_length = 0;
     playlist->selected_length = 0;
 
+    memset (& playlist->last_update, 0, sizeof (Update));
+    memset (& playlist->next_update, 0, sizeof (Update));
+
     return playlist;
 }
 
@@ -375,80 +377,75 @@ static gboolean update (void * unused)
 {
     ENTER;
 
+    for (gint i = 0; i < index_count (playlists); i ++)
+    {
+        Playlist * p = index_get (playlists, i);
+        memcpy (& p->last_update, & p->next_update, sizeof (Update));
+        memset (& p->next_update, 0, sizeof (Update));
+    }
+
+    gint level = update_level;
+    update_level = 0;
+
     if (update_source)
     {
         g_source_remove (update_source);
         update_source = 0;
     }
 
-    memcpy (& last_update, & next_update, sizeof last_update);
-    memset (& next_update, 0, sizeof next_update);
-
     LEAVE;
 
-    hook_call ("playlist update", GINT_TO_POINTER (last_update.level));
+    hook_call ("playlist update", GINT_TO_POINTER (level));
     return FALSE;
 }
 
 static void queue_update (gint level, gint list, gint at, gint count)
 {
-    Playlist * playlist = lookup_playlist (list);
+    Playlist * p = lookup_playlist (list);
 
-    if (next_update.pending)
+    if (p)
     {
-        next_update.level = MAX (next_update.level, level);
-
-        if (playlist && list == next_update.playlist)
+        if (p->next_update.level)
         {
-            next_update.before = MIN (next_update.before, at);
-            next_update.after = MIN (next_update.after, index_count
-             (playlist->entries) - at - count);
+            p->next_update.level = MAX (p->next_update.level, level);
+            p->next_update.before = MIN (p->next_update.before, at);
+            p->next_update.after = MIN (p->next_update.after,
+             index_count (p->entries) - at - count);
         }
         else
         {
-            next_update.playlist = -1;
-            next_update.before = 0;
-            next_update.after = 0;
+            p->next_update.level = level;
+            p->next_update.before = at;
+            p->next_update.after = index_count (p->entries) - at - count;
         }
     }
-    else
-    {
-        next_update.pending = TRUE;
-        next_update.level = level;
-        next_update.playlist = list;
-        next_update.before = playlist ? at : 0;
-        next_update.after = playlist ? index_count (playlist->entries)
-         - at - count: 0;
-    }
+
+    update_level = MAX (update_level, level);
 
     if (! update_source)
-        update_source = g_idle_add_full (G_PRIORITY_HIGH_IDLE, update, NULL,
-         NULL);
+        update_source = g_idle_add_full (G_PRIORITY_HIGH_IDLE, update, NULL, NULL);
 }
 
 gboolean playlist_update_pending (void)
 {
     ENTER;
-    gboolean pending = next_update.pending;
+    gboolean pending = update_level ? TRUE : FALSE;
     LEAVE_RET (pending);
 }
 
-gboolean playlist_update_range (gint * playlist_num, gint * at, gint * count)
+gint playlist_updated_range (gint playlist_num, gint * at, gint * count)
 {
     ENTER;
+    DECLARE_PLAYLIST;
+    LOOKUP_PLAYLIST_RET (0);
 
-    if (! last_update.pending)
-        LEAVE_RET (FALSE);
+    Update * u = & playlist->last_update;
 
-    Playlist * playlist = lookup_playlist (last_update.playlist);
-    if (! playlist)
-        LEAVE_RET (FALSE);
+    gint level = u->level;
+    * at = u->before;
+    * count = index_count (playlist->entries) - u->before - u->after;
 
-    * playlist_num = last_update.playlist;
-    * at = last_update.before;
-    * count = index_count (playlist->entries) - last_update.before -
-     last_update.after;
-    LEAVE_RET (TRUE);
+    LEAVE_RET (level);
 }
 
 static gboolean entry_scan_is_queued (Entry * entry)
@@ -651,8 +648,7 @@ void playlist_init (void)
     playlist->number = 0;
     active_playlist = playlist;
 
-    memset (& last_update, 0, sizeof last_update);
-    memset (& next_update, 0, sizeof next_update);
+    update_level = 0;
 
     scan_quit = FALSE;
     scan_playlist = scan_row = 0;
@@ -812,7 +808,7 @@ void playlist_set_filename (gint playlist_num, const gchar * filename)
     g_free (playlist->filename);
     playlist->filename = g_strdup (filename);
 
-    METADATA_HAS_CHANGED (playlist_num, 0, 0);
+    METADATA_HAS_CHANGED (-1, 0, 0);
     LEAVE;
 }
 
@@ -836,7 +832,7 @@ void playlist_set_title (gint playlist_num, const gchar * title)
     g_free (playlist->title);
     playlist->title = g_strdup (title);
 
-    METADATA_HAS_CHANGED (playlist_num, 0, 0);
+    METADATA_HAS_CHANGED (-1, 0, 0);
     LEAVE;
 }
 
@@ -1600,9 +1596,10 @@ void playlist_reformat_titles (void)
             entry->formatted = entry->tuple ? title_from_tuple (entry->tuple) :
              NULL;
         }
+
+        METADATA_HAS_CHANGED (playlist_num, 0, entries);
     }
 
-    METADATA_HAS_CHANGED (-1, 0, 0);
     LEAVE;
 }
 
@@ -1668,13 +1665,14 @@ void playlist_rescan_file (const gchar * filename)
             {
                 entry_set_tuple (playlist, entry, NULL);
                 entry->failed = FALSE;
+
+                METADATA_HAS_CHANGED (playlist_num, entry_num, 1);
             }
         }
     }
 
     g_free (copy);
 
-    METADATA_HAS_CHANGED (-1, 0, 0);
     LEAVE;
 }
 
@@ -2264,14 +2262,20 @@ void playlist_load_state (void)
 
     /* clear updates queued during init sequence */
 
+    for (gint i = 0; i < index_count (playlists); i ++)
+    {
+        Playlist * p = index_get (playlists, i);
+        memset (& p->last_update, 0, sizeof (Update));
+        memset (& p->next_update, 0, sizeof (Update));
+    }
+
+    update_level = 0;
+
     if (update_source)
     {
         g_source_remove (update_source);
         update_source = 0;
     }
-
-    memset (& last_update, 0, sizeof last_update);
-    memset (& next_update, 0, sizeof next_update);
 
     LEAVE;
 }

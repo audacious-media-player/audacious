@@ -6,7 +6,7 @@
   playlist_update_range() function should be changed so it can be called for a
   specific playlist.  Then GTKUI can use unique playlist IDs along with
   playlist_update_range() to figure out which treeviews need to be added, moved,
-  or updated.
+  or updated.  (DONE)
 
 - Thinking along the same lines, we currently save every playlist whenever even
   one playlist is modified.  This needs to change.  I think we should save
