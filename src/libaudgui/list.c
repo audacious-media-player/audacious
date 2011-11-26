@@ -639,7 +639,8 @@ void audgui_list_insert_rows (GtkWidget * list, gint at, gint rows)
 
     gtk_tree_path_free (path);
 
-    update_selection (list, model, at, rows);
+    if (model->cbs->get_selected)
+        update_selection (list, model, at, rows);
 }
 
 void audgui_list_update_rows (GtkWidget * list, gint at, gint rows)
