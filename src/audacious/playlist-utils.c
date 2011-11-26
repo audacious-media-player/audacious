@@ -426,6 +426,8 @@ static void save_playlists_real (void)
         }
     }
 
+    closedir (dir);
+
 DONE:
     g_hash_table_destroy (saved);
 }
