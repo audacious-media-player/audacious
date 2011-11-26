@@ -50,6 +50,7 @@ typedef struct {
 
 static GList * add_tasks = NULL;
 static GList * add_results = NULL;
+static gint current_playlist_id = -1;
 
 static GMutex * mutex;
 static GCond * cond;
@@ -421,6 +422,7 @@ static void * add_worker (void * unused)
         AddTask * task = add_tasks->data;
         add_tasks = g_list_delete_link (add_tasks, add_tasks);
 
+        current_playlist_id = task->playlist_id;
         g_mutex_unlock (mutex);
 
         AddResult * result = add_result_new (task->playlist_id, task->at,
@@ -444,6 +446,7 @@ static void * add_worker (void * unused)
         add_task_free (task);
 
         g_mutex_lock (mutex);
+        current_playlist_id = -1;
 
         add_results = g_list_append (add_results, result);
 
@@ -515,4 +518,34 @@ void playlist_entry_insert_filtered (gint playlist, gint at,
     add_tasks = g_list_append (add_tasks, task);
     g_cond_broadcast (cond);
     g_mutex_unlock (mutex);
+}
+
+gboolean playlist_add_in_progress (gint playlist)
+{
+    gint playlist_id = playlist_get_unique_id (playlist);
+    g_return_val_if_fail (playlist_id >= 0, FALSE);
+
+    g_mutex_lock (mutex);
+
+    for (GList * node = add_tasks; node; node = node->next)
+    {
+        if (((AddTask *) node->data)->playlist_id == playlist_id)
+            goto YES;
+    }
+
+    if (current_playlist_id == playlist_id)
+        goto YES;
+
+    for (GList * node = add_results; node; node = node->next)
+    {
+        if (((AddResult *) node->data)->playlist_id == playlist_id)
+            goto YES;
+    }
+
+    g_mutex_unlock (mutex);
+    return FALSE;
+
+YES:
+    g_mutex_unlock (mutex);
+    return TRUE;
 }

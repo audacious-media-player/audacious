@@ -304,6 +304,9 @@ AUD_FUNC0 (gboolean, playlist_update_pending)
  * have changed, returns zero. */
 AUD_FUNC3 (gint, playlist_updated_range, gint, playlist, gint *, at, gint *, count)
 
+/* Returns nonzero if entries are being added to a playlist in the background. */
+AUD_FUNC1 (gboolean, playlist_add_in_progress, gint, playlist)
+
 /* --- PLAYLIST UTILITY API --- */
 
 /* Sorts the entries in a playlist according to one of the schemes listed in
