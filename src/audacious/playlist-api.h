@@ -86,6 +86,13 @@ AUD_FUNC1 (void, playlist_set_playing, gint, playlist)
  * marked active. */
 AUD_FUNC0 (gint, playlist_get_playing)
 
+/* Returns the number of the "temporary" playlist (which is no different from
+ * any other playlist except in name).  If the playlist does not exist, it is
+ * created.  As a special case, if the temporary playlist does not exist and the
+ * active playlist is blank (that is, has no entries and still has the default
+ * title), the active playlist is renamed and becomes the temporary playlist. */
+AUD_FUNC0 (gint, playlist_get_temporary)
+
 /* Returns the number of entries in a playlist.  The entries are numbered
  * starting from zero. */
 AUD_FUNC1 (gint, playlist_entry_count, gint, playlist)

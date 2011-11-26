@@ -228,37 +228,10 @@ gint drct_pl_get_time (gint pos)
     return playlist_entry_get_length (playlist_get_active (), pos, FALSE);
 }
 
-static void activate_temp (void)
-{
-    gint playlists = playlist_count ();
-    const gchar * title = _("Temporary Playlist");
-
-    for (gint playlist = 0; playlist < playlists; playlist ++)
-    {
-        gchar * title2 = playlist_get_title (playlist);
-        if (! strcmp (title2, title))
-        {
-            playlist_set_active (playlist);
-            g_free (title2);
-            return;
-        }
-        g_free (title2);
-    }
-
-    if (! playlist_entry_count (playlist_get_active ()))
-        playlist_set_title (playlist_get_active (), title);
-    else
-    {
-        playlist_insert (playlists);
-        playlist_set_title (playlists, title);
-        playlist_set_active (playlists);
-    }
-}
-
 static void add_list (GList * list, gint at, gboolean to_temp, gboolean play)
 {
     if (to_temp)
-        activate_temp ();
+        playlist_set_active (playlist_get_temporary ());
 
     gint playlist = playlist_get_active ();
 

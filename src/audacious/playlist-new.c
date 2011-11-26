@@ -129,6 +129,9 @@ typedef struct {
     Update next_update, last_update;
 } Playlist;
 
+static const gchar default_title[] = N_("Untitled Playlist");
+static const gchar temp_title[] = N_("Temporary Playlist");
+
 static GMutex * mutex;
 static GCond * cond;
 
@@ -332,7 +335,7 @@ static Playlist * playlist_new (gint id)
     playlist->number = -1;
     playlist->unique_id = new_unique_id (id);
     playlist->filename = NULL;
-    playlist->title = g_strdup(_("Untitled Playlist"));
+    playlist->title = g_strdup(_(default_title));
     playlist->modified = TRUE;
     playlist->entries = index_new();
     playlist->position = NULL;
@@ -950,6 +953,43 @@ gint playlist_get_playing (void)
     ENTER;
     gint list = playing_playlist ? playing_playlist->number: -1;
     LEAVE_RET (list);
+}
+
+gint playlist_get_temporary (void)
+{
+    gint temp = -1;
+    gboolean need_rename = TRUE;
+
+    ENTER;
+
+    for (gint i = 0; i < index_count (playlists); i ++)
+    {
+        Playlist * p = index_get (playlists, i);
+
+        if (! strcmp (p->title, _(temp_title)))
+        {
+            temp = p->number;
+            need_rename = FALSE;
+            break;
+        }
+    }
+
+    if (temp < 0 && active_playlist && ! strcmp (active_playlist->title,
+     _(default_title)) && index_count (active_playlist->entries) == 0)
+        temp = active_playlist->number;
+
+    LEAVE;
+
+    if (temp < 0)
+    {
+        temp = playlist_count ();
+        playlist_insert (temp);
+    }
+
+    if (need_rename)
+        playlist_set_title (temp, _(temp_title));
+
+    return temp;
 }
 
 /* If we are already at the song or it is already at the top of the shuffle
