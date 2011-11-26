@@ -129,8 +129,8 @@ typedef struct {
     Update next_update, last_update;
 } Playlist;
 
-static const gchar default_title[] = N_("Untitled Playlist");
-static const gchar temp_title[] = N_("Temporary Playlist");
+static const gchar default_title[] = N_("New Playlist");
+static const gchar temp_title[] = N_("Now Playing");
 
 static GMutex * mutex;
 static GCond * cond;
