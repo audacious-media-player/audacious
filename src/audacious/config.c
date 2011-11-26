@@ -36,7 +36,7 @@ static const gchar * const core_defaults[] = {
  /* general */
  "advance_on_delete", "FALSE",
  "clear_playlist", "TRUE",
- "open_to_temporary", "FALSE",
+ "open_to_temporary", "TRUE",
  "resume_playback_on_startup", "FALSE",
 
  /* equalizer */
