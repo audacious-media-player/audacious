@@ -322,7 +322,7 @@ static void load_playlists_real (void)
     g_free (order_path);
 
     if (! order_string)
-        return;
+        goto DONE;
 
     gchar * * order = g_strsplit (order_string, " ", -1);
     g_free (order_string);
@@ -342,10 +342,11 @@ static void load_playlists_real (void)
 
     g_strfreev (order);
 
-    /* one blank playlist on first run */
-
+DONE:
     if (! playlist_count ())
         playlist_insert (0);
+
+    playlist_set_active (0);
 }
 
 static void save_playlists_real (void)
