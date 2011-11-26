@@ -75,7 +75,7 @@ static const gchar *credit_text[] = {
     "William Pitcock",
     "Derek Pomery",
     "Jonathan Schleifer",
-    "Andrew O. Shadoura",
+    "Andrew Shadura",
     "Tony Vroon",
     "Yoshiki Yazawa",
     NULL,
