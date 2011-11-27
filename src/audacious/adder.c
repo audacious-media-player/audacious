@@ -25,6 +25,7 @@
 #include <gtk/gtk.h>
 
 #include <libaudcore/audstrings.h>
+#include <libaudcore/hook.h>
 
 #include "config.h"
 #include "i18n.h"
@@ -403,6 +404,8 @@ static gboolean add_finish (void * unused)
         status_done_locked ();
 
     g_mutex_unlock (mutex);
+
+    hook_call ("playlist add complete", NULL);
     return FALSE;
 }
 
