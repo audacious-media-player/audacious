@@ -403,6 +403,7 @@ static gboolean add_finish (void * unused)
     if (! add_tasks)
         status_done_locked ();
 
+    event_queue_cancel ("playlist add complete", NULL);
     event_queue ("playlist add complete", NULL);
 
     g_mutex_unlock (mutex);
