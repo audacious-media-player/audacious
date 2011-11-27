@@ -482,6 +482,17 @@ gint playlist_updated_range (gint playlist_num, gint * at, gint * count)
     LEAVE_RET (level);
 }
 
+gboolean playlist_scan_in_progress (gint playlist_num)
+{
+    ENTER;
+    DECLARE_PLAYLIST;
+    LOOKUP_PLAYLIST_RET (FALSE);
+
+    gboolean scanning = playlist->scanning;
+
+    LEAVE_RET (scanning);
+}
+
 static gboolean entry_scan_is_queued (Entry * entry)
 {
     for (GList * node = scan_queue.head; node; node = node->next)
