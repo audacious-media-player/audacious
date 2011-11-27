@@ -282,6 +282,15 @@ static gboolean button_release_cb (GtkWidget * widget, GdkEventButton * event,
     return FALSE;
 }
 
+static gboolean key_press_cb (GtkWidget * widget, GdkEventKey * event, ListModel * model)
+{
+    /* GTK thinks the spacebar should activate a row; I (jlindgren) disagree */
+    if (event->keyval == ' ' && ! (event->state & GDK_CONTROL_MASK))
+        return TRUE;
+
+    return FALSE;
+}
+
 /* ==== DRAG AND DROP ==== */
 
 static void drag_begin (GtkWidget * widget, GdkDragContext * context,
@@ -540,10 +549,9 @@ GtkWidget * audgui_list_new (const AudguiListCallbacks * cbs, void * user,
     if (cbs->activate_row)
         g_signal_connect (list, "row-activated", (GCallback) activate_cb, model);
 
-    g_signal_connect (list, "button-press-event", (GCallback) button_press_cb,
-     model);
-    g_signal_connect (list, "button-release-event", (GCallback)
-     button_release_cb, model);
+    g_signal_connect (list, "button-press-event", (GCallback) button_press_cb, model);
+    g_signal_connect (list, "button-release-event", (GCallback) button_release_cb, model);
+    g_signal_connect (list, "key-press-event", (GCallback) key_press_cb, model);
 
     if (cbs->data_type)
     {
