@@ -122,7 +122,7 @@ typedef struct {
     gint last_shuffle_num;
     GList * queued;
     gint64 total_length, selected_length;
-    gboolean scanning;
+    gboolean scanning, scan_ending;
     Update next_update, last_update;
 } Playlist;
 
@@ -343,6 +343,7 @@ static Playlist * playlist_new (gint id)
     playlist->total_length = 0;
     playlist->selected_length = 0;
     playlist->scanning = FALSE;
+    playlist->scan_ending = FALSE;
 
     memset (& playlist->last_update, 0, sizeof (Update));
     memset (& playlist->next_update, 0, sizeof (Update));
@@ -435,6 +436,7 @@ static void queue_update (gint level, gint list, gint at, gint count)
             if (! get_bool (NULL, "metadata_on_play"))
             {
                 p->scanning = TRUE;
+                p->scan_ending = FALSE;
                 scan_trigger ();
             }
         }
@@ -488,7 +490,7 @@ gboolean playlist_scan_in_progress (gint playlist_num)
     DECLARE_PLAYLIST;
     LOOKUP_PLAYLIST_RET (FALSE);
 
-    gboolean scanning = playlist->scanning;
+    gboolean scanning = playlist->scanning || playlist->scan_ending;
 
     LEAVE_RET (scanning);
 }
@@ -524,6 +526,30 @@ static void entry_queue_scan (Playlist * playlist, Entry * entry)
     g_cond_broadcast (cond);
 }
 
+static void check_scan_complete (Playlist * p)
+{
+    if (! p->scan_ending)
+        return;
+
+    for (GList * node = scan_queue.head; node; node = node->next)
+    {
+        ScanItem * item = node->data;
+        if (item->playlist == p)
+            return;
+    }
+
+    for (gint i = 0; i < SCAN_THREADS; i ++)
+    {
+        if (scan_items[i] && scan_items[i]->playlist == p)
+            return;
+    }
+
+    p->scan_ending = FALSE;
+
+    event_queue_cancel ("playlist scan complete", NULL);
+    event_queue ("playlist scan complete", NULL);
+}
+
 static ScanItem * entry_find_to_scan (void)
 {
     ScanItem * item = g_queue_pop_head (& scan_queue);
@@ -552,9 +578,8 @@ static ScanItem * entry_find_to_scan (void)
             }
 
             playlist->scanning = FALSE;
-
-            event_queue_cancel ("playlist scan complete", NULL);
-            event_queue ("playlist scan complete", NULL);
+            playlist->scan_ending = TRUE;
+            check_scan_complete (playlist);
         }
 
         scan_playlist ++;
@@ -619,6 +644,7 @@ static void * scanner (void * data)
         scan_items[i] = NULL;
 
         g_cond_broadcast (cond);
+        check_scan_complete (playlist);
     }
 
     LEAVE_RET (NULL);
