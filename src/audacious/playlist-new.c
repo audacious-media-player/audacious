@@ -552,6 +552,7 @@ static ScanItem * entry_find_to_scan (void)
             }
 
             playlist->scanning = FALSE;
+            event_queue ("playlist scan complete", NULL);
         }
 
         scan_playlist ++;

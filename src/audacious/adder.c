@@ -25,6 +25,7 @@
 #include <gtk/gtk.h>
 
 #include <libaudcore/audstrings.h>
+#include <libaudcore/eventqueue.h>
 
 #include "config.h"
 #include "i18n.h"
@@ -401,6 +402,8 @@ static gboolean add_finish (void * unused)
 
     if (! add_tasks)
         status_done_locked ();
+
+    event_queue ("playlist add complete", NULL);
 
     g_mutex_unlock (mutex);
     return FALSE;
