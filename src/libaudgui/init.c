@@ -22,6 +22,7 @@
 #include <audacious/misc.h>
 
 static const gchar * const audgui_defaults[] = {
+ "close_dialog_add", "FALSE",
  "close_dialog_open", "TRUE",
  "close_jtf_dialog", "TRUE",
  "playlist_manager_close_on_activate", "FALSE",

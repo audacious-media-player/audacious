@@ -60,14 +60,14 @@ action_button_cb(GtkWidget *widget, gpointer data)
 
     GSList * files = gtk_file_chooser_get_uris ((GtkFileChooser *) chooser);
 
-    filebrowser_add_files ((GtkFileChooser *) chooser, files, GPOINTER_TO_INT
-     (g_object_get_data (data, "play-button")));
+    gboolean play = GPOINTER_TO_INT (g_object_get_data (data, "play-button"));
+    filebrowser_add_files ((GtkFileChooser *) chooser, files, play);
 
     g_slist_foreach(files, (GFunc) g_free, NULL);
     g_slist_free(files);
 
     gboolean close_dialog = gtk_toggle_button_get_active ((GtkToggleButton *) toggle);
-    aud_set_bool ("audgui", "close_dialog_open", close_dialog);
+    aud_set_bool ("audgui", play ? "close_dialog_open" : "close_dialog_add", close_dialog);
 
     if (close_dialog)
         gtk_widget_destroy (window);
@@ -136,7 +136,7 @@ run_filebrowser_gtk2style(gboolean play_button, gboolean show)
 
     toggle = gtk_check_button_new_with_label(toggle_text);
     gtk_toggle_button_set_active ((GtkToggleButton *) toggle, aud_get_bool
-     ("audgui", "close_dialog_open"));
+     ("audgui", play_button ? "close_dialog_open" : "close_dialog_add"));
     gtk_box_pack_start(GTK_BOX(hbox), toggle, TRUE, TRUE, 3);
 
     bbox = gtk_hbutton_box_new();
