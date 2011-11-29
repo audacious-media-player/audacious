@@ -42,7 +42,7 @@
 #include <errno.h>
 
 #include <libaudcore/audstrings.h>
-#include <libaudcore/stringpool.h>
+#include <libaudcore/strpool.h>
 
 #include "debug.h"
 #include "i18n.h"
@@ -341,9 +341,9 @@ void describe_song (const gchar * name, const Tuple * tuple, gchar * * _title,
     }
 
 DONE:
-    * _title = title ? stringpool_get ((gchar *) title, FALSE) : NULL;
-    * _artist = artist ? stringpool_get ((gchar *) artist, FALSE) : NULL;
-    * _album = album ? stringpool_get ((gchar *) album, FALSE) : NULL;
+    * _title = str_get (title);
+    * _artist = str_get (artist);
+    * _album = str_get (album);
 
     g_free (copy);
 }

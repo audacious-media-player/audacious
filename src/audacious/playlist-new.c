@@ -26,7 +26,7 @@
 #include <libaudcore/audstrings.h>
 #include <libaudcore/eventqueue.h>
 #include <libaudcore/hook.h>
-#include <libaudcore/stringpool.h>
+#include <libaudcore/strpool.h>
 #include <libaudcore/tuple_formatter.h>
 
 #include "config.h"
@@ -186,9 +186,9 @@ static void entry_set_tuple_real (Entry * entry, Tuple * tuple)
     entry->tuple = tuple;
 
     g_free (entry->formatted);
-    stringpool_unref (entry->title);
-    stringpool_unref (entry->artist);
-    stringpool_unref (entry->album);
+    str_unref (entry->title);
+    str_unref (entry->artist);
+    str_unref (entry->album);
 
     describe_song (entry->filename, tuple, & entry->title, & entry->artist, & entry->album);
 
@@ -307,9 +307,9 @@ static void entry_free (Entry * entry)
         tuple_free (entry->tuple);
 
     g_free (entry->formatted);
-    stringpool_unref (entry->title);
-    stringpool_unref (entry->artist);
-    stringpool_unref (entry->album);
+    str_unref (entry->title);
+    str_unref (entry->artist);
+    str_unref (entry->album);
     g_free (entry);
 }
 

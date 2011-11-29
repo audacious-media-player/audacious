@@ -30,7 +30,7 @@
 #include "config.h"
 #include "tuple.h"
 #include "audstrings.h"
-#include "stringpool.h"
+#include "strpool.h"
 
 static gboolean set_string (Tuple * tuple, const gint nfield,
  const gchar * field, gchar * string, gboolean take);
@@ -105,9 +105,8 @@ static GStaticMutex tuple_mutex = G_STATIC_MUTEX_INIT;
 static void tuple_value_destroy (TupleValue * value)
 {
     if (value->type == TUPLE_STRING)
-        stringpool_unref (value->value.string);
+        value->value.string = str_unref (value->value.string);
 
-    memset (value, 0, sizeof (TupleValue));
     mowgli_heap_free (tuple_value_heap, value);
 }
 
@@ -246,7 +245,7 @@ tuple_copy_value(TupleValue *src)
 
     switch (src->type) {
     case TUPLE_STRING:
-        res->value.string = stringpool_get (src->value.string, FALSE);
+        res->value.string = str_get (src->value.string);
         break;
     case TUPLE_INT:
         res->value.integer = src->value.integer;
@@ -382,10 +381,8 @@ tuple_associate_data(Tuple *tuple, const gint cnfield, const gchar *field, Tuple
 
     if (value != NULL) {
         /* Value exists, just delete old associated data */
-        if (value->type == TUPLE_STRING) {
-            stringpool_unref(value->value.string);
-            value->value.string = NULL;
-        }
+        if (value->type == TUPLE_STRING)
+            value->value.string = str_unref (value->value.string);
     } else {
         /* Allocate a new value */
         value = mowgli_heap_alloc(tuple_value_heap);
@@ -420,7 +417,9 @@ static gboolean set_string (Tuple * tuple, const gint nfield,
         return FALSE;
     }
 
-    value->value.string = stringpool_get (string, take);
+    value->value.string = str_get (string);
+    if (take)
+        g_free (string);
 
     TUPLE_UNLOCK_WRITE ();
     return TRUE;

@@ -7,7 +7,7 @@ SRCS = audio.c \
        eventqueue.c \
        hook.c \
        index.c \
-       stringpool.c \
+       strpool.c \
        tuple.c \
        tuple_compiler.c \
        tuple_formatter.c \
@@ -23,7 +23,7 @@ INCLUDES = audio.h \
            eventqueue.h \
            hook.h \
            index.h \
-           stringpool.h \
+           strpool.h \
            tuple.h \
            tuple_compiler.h \
            tuple_formatter.h \

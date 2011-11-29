@@ -24,7 +24,7 @@
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/eventqueue.h>
-#include <libaudcore/stringpool.h>
+#include <libaudcore/strpool.h>
 
 #include "main.h"
 #include "misc.h"
@@ -188,8 +188,7 @@ void config_set_defaults (const gchar * section, const gchar * const * entries)
     GHashTable * table = g_hash_table_lookup (defaults, section);
     if (! table)
     {
-        table = g_hash_table_new_full (g_str_hash, g_str_equal, g_free,
-         (GDestroyNotify) stringpool_unref);
+        table = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, (GDestroyNotify) str_unref);
         g_hash_table_replace (defaults, g_strdup (section), table);
     }
 
@@ -200,7 +199,7 @@ void config_set_defaults (const gchar * section, const gchar * const * entries)
         if (! name || ! value)
             break;
 
-        g_hash_table_replace (table, g_strdup (name), stringpool_get ((gchar *) value, FALSE));
+        g_hash_table_replace (table, g_strdup (name), str_get (value));
     }
 
     g_static_mutex_unlock (& mutex);

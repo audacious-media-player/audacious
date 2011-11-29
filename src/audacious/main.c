@@ -29,6 +29,7 @@
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
+#include <libaudcore/strpool.h>
 #include <libaudtag/audtag.h>
 
 #include "config.h"
@@ -527,6 +528,8 @@ static void shut_down (void)
     AUDDBG ("Saving configuration.\n");
     config_save ();
     config_cleanup ();
+
+    strpool_shutdown ();
 
     gdk_threads_leave ();
 }
