@@ -177,12 +177,12 @@ static void entry_set_tuple_real (Entry * entry, Tuple * tuple)
     if (entry->segmented && entry->tuple)
     {
         if (tuple)
-            tuple_free (tuple);
+            tuple_unref (tuple);
         return;
     }
 
     if (entry->tuple)
-        tuple_free (entry->tuple);
+        tuple_unref (entry->tuple);
     entry->tuple = tuple;
 
     g_free (entry->formatted);
@@ -304,7 +304,7 @@ static void entry_free (Entry * entry)
 
     g_free (entry->filename);
     if (entry->tuple)
-        tuple_free (entry->tuple);
+        tuple_unref (entry->tuple);
 
     g_free (entry->formatted);
     str_unref (entry->title);
@@ -626,7 +626,7 @@ static void * scanner (void * data)
         if (! scan_items[i]) /* scan canceled */
         {
             if (tuple)
-                tuple_free (tuple);
+                tuple_unref (tuple);
             continue;
         }
 

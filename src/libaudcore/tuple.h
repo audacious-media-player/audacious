@@ -117,7 +117,7 @@ typedef struct {
  * metadata. This is not the same as a playlist entry, though.
  */
 struct _Tuple {
-    mowgli_object_t parent;
+    gint refcount;
     mowgli_patricia_t *dict;        /**< Mowgli dictionary for holding other than basic values. */
     TupleValue *values[FIELD_LAST]; /**< Basic #Tuple values, entry is NULL if not set. */
     gint nsubtunes;                 /**< Number of subtunes, if any. Values greater than 0
@@ -132,8 +132,12 @@ struct _Tuple {
 
 typedef struct _Tuple Tuple;
 
-Tuple *tuple_new(void);
+Tuple * tuple_new (void);
+Tuple * tuple_ref (Tuple * tuple);
+void tuple_unref (Tuple * tuple);
+
 Tuple *tuple_copy(const Tuple *);
+
 void tuple_set_filename(Tuple *tuple, const gchar *filename);
 Tuple *tuple_new_from_filename(const gchar *filename);
 gboolean tuple_associate_string_rel(Tuple *tuple, const gint nfield, const gchar *field, gchar *string);
@@ -145,7 +149,6 @@ TupleValueType tuple_get_value_type (const Tuple * tuple, gint nfield,
 const gchar * tuple_get_string (const Tuple * tuple, gint nfield, const gchar *
  field);
 gint tuple_get_int (const Tuple * tuple, gint nfield, const gchar * field);
-#define tuple_free(x) mowgli_object_unref(x);
 
 /* Fills in format-related fields (specifically FIELD_CODEC, FIELD_QUALITY, and
  * FIELD_BITRATE.  Plugins should use this function instead of setting these
@@ -159,6 +162,14 @@ void tuple_set_format (Tuple * tuple, const gchar * format, gint channels, gint
 void tuple_set_subtunes (Tuple * tuple, gint n_subtunes, const gint * subtunes);
 gint tuple_get_n_subtunes (Tuple * tuple);
 gint tuple_get_nth_subtune (Tuple * tuple, gint n);
+
+#ifdef __GNUC__
+#define DEPRECATED __attribute__ ((deprecated))
+#else
+#define DEPRECATED
+#endif
+
+void tuple_free (Tuple * tuple) DEPRECATED;
 
 G_END_DECLS
 

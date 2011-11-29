@@ -447,7 +447,7 @@ static gboolean get_field_cb(void *data)
     Tuple * tuple = playlist_entry_get_tuple (request->playlist, request->entry, FALSE);
     request->value = (tuple == NULL) ? NULL : tuple_value_to_gvalue(tuple, request->field);
     if (tuple)
-        tuple_free (tuple)
+        tuple_unref (tuple);
 
     g_cond_signal(info_cond);
     g_mutex_unlock(info_mutex);
@@ -641,7 +641,7 @@ static gboolean get_mpris_metadata_cb(void *data)
 
     g_free (filename);
     if (tuple)
-        tuple_free (tuple);
+        tuple_unref (tuple);
 
     g_cond_signal(info_cond);
     g_mutex_unlock(info_mutex);
@@ -813,7 +813,7 @@ gboolean mpris_emit_track_change(MprisPlayer * obj)
 
     g_free (filename);
     if (tuple)
-        tuple_free (tuple);
+        tuple_unref (tuple);
 
     return (filename && tuple);
 }

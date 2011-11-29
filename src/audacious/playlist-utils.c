@@ -194,12 +194,12 @@ void playlist_remove_duplicates_by_scheme (gint playlist, gint scheme)
                 playlist_entry_set_selected (playlist, count, TRUE);
 
             if (last)
-                tuple_free (last);
+                tuple_unref (last);
             last = current;
         }
 
         if (last)
-            tuple_free (last);
+            tuple_unref (last);
     }
 
     playlist_delete_selected (playlist);
@@ -266,14 +266,14 @@ void playlist_select_by_patterns (gint playlist, const Tuple * patterns)
 
             if (regexec (& regex, string, 0, NULL, 0) == 0)
             {
-                tuple_free (tuple);
+                tuple_unref (tuple);
                 continue;
             }
 
         NO_MATCH:
             playlist_entry_set_selected (playlist, entry, FALSE);
             if (tuple)
-                tuple_free (tuple);
+                tuple_unref (tuple);
         }
 
         regfree (& regex);

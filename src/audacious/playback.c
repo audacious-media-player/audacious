@@ -318,7 +318,7 @@ static void * playback_thread (void * unused)
     Tuple * tuple = playback_entry_get_tuple ();
     read_gain_from_tuple (tuple);
     if (tuple)
-        tuple_free (tuple);
+        tuple_unref (tuple);
 
     gchar * real = filename_split_subtune (current_filename, NULL);
     VFSFile * file = vfs_fopen (real, "r");

@@ -269,7 +269,7 @@ static void infowin_update_tuple (void * unused)
     else
         ministatus_display_message (_("Metadata updating failed"));
 
-    mowgli_object_unref (tuple);
+    tuple_unref (tuple);
 }
 
 gboolean genre_fill (GtkWidget * combo)
@@ -585,7 +585,7 @@ void audgui_infowin_show (gint playlist, gint entry)
 
     infowin_show (playlist, entry, filename, tuple, decoder,
      aud_file_can_write_tuple (filename, decoder));
-    tuple_free (tuple);
+    tuple_unref (tuple);
 
 FREE:
     g_free (filename);

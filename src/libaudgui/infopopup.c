@@ -353,7 +353,7 @@ void audgui_infopopup_show (gint playlist, gint entry)
     g_free (filename);
     g_free (title);
     if (tuple)
-        tuple_free (tuple);
+        tuple_unref (tuple);
 }
 
 void audgui_infopopup_show_current (void)

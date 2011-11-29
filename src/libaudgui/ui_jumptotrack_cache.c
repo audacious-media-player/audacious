@@ -300,7 +300,7 @@ static void ui_jump_to_track_cache_init (JumpToTrackCache * cache)
         gchar * path = normalize_search_string (tuple ? tuple_get_string (tuple, FIELD_FILE_PATH, NULL) : NULL);
         gchar * filename = normalize_search_string (tuple ? tuple_get_string (tuple, FIELD_FILE_NAME, NULL) : NULL);
         if (tuple)
-            tuple_free (tuple);
+            tuple_unref (tuple);
 
         g_array_append_val (k->entries, entry);
         g_array_append_val (k->titles, title);

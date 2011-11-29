@@ -163,7 +163,7 @@ static void index_free_tuples (struct index * tuples)
     {
         Tuple * tuple = index_get (tuples, i);
         if (tuple)
-            tuple_free (tuple);
+            tuple_unref (tuple);
     }
 
     index_free (tuples);
@@ -253,7 +253,7 @@ static void add_file (gchar * filename, Tuple * tuple, PluginHandle * decoder,
         }
 
         g_free (filename);
-        tuple_free (tuple);
+        tuple_unref (tuple);
         return;
     }
 

@@ -160,7 +160,7 @@ gboolean playlist_save (gint list, const gchar * filename)
         g_free (index_get (filenames, i));
         Tuple * tuple = index_get (tuples, i);
         if (tuple)
-            tuple_free (tuple);
+            tuple_unref (tuple);
     }
 
     index_free (filenames);

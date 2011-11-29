@@ -82,14 +82,6 @@ const TupleBasicType tuple_fields[FIELD_LAST] = {
     { "composer",       TUPLE_STRING },
 };
 
-
-/** A mowgli heap containing all the allocated tuples. */
-static mowgli_heap_t *tuple_heap = NULL;
-
-/** A mowgli heap containing values contained by tuples. */
-static mowgli_heap_t *tuple_value_heap = NULL;
-static mowgli_object_class_t tuple_klass;
-
 /** Global lock to preserve data consistency of heaps */
 static GStaticMutex tuple_mutex = G_STATIC_MUTEX_INIT;
 
@@ -109,7 +101,7 @@ static void tuple_value_destroy (TupleValue * value)
     if (value->type == TUPLE_STRING)
         value->value.string = str_unref (value->value.string);
 
-    mowgli_heap_free (tuple_value_heap, value);
+    g_slice_free (TupleValue, value);
 }
 
 /* iterative destructor of tuple values. */
@@ -118,13 +110,10 @@ static void tuple_value_destroy_cb (const gchar * key, void * data, void * priv)
     tuple_value_destroy (data);
 }
 
-static void
-tuple_destroy(gpointer data)
+static void tuple_destroy_unlocked (Tuple * tuple)
 {
-    Tuple *tuple = (Tuple *) data;
     gint i;
 
-    TUPLE_LOCK_WRITE();
     mowgli_patricia_destroy(tuple->dict, tuple_value_destroy_cb, NULL);
 
     for (i = 0; i < FIELD_LAST; i++)
@@ -136,27 +125,13 @@ tuple_destroy(gpointer data)
     g_free(tuple->subtunes);
 
     memset (tuple, 0, sizeof (Tuple));
-    mowgli_heap_free(tuple_heap, tuple);
-    TUPLE_UNLOCK_WRITE();
+    g_slice_free (Tuple, tuple);
 }
 
-static Tuple *
-tuple_new_unlocked(void)
+static Tuple * tuple_new_unlocked (void)
 {
-    Tuple *tuple;
-
-    if (tuple_heap == NULL)
-    {
-        tuple_heap = mowgli_heap_create(sizeof(Tuple), 512, BH_NOW);
-        tuple_value_heap = mowgli_heap_create(sizeof(TupleValue), 1024, BH_NOW);
-        mowgli_object_class_init(&tuple_klass, "audacious.tuple", tuple_destroy, FALSE);
-    }
-
-    /* FIXME: use mowgli_object_bless_from_class() in mowgli 0.4
-       when it is released --nenolod */
-    tuple = mowgli_heap_alloc(tuple_heap);
-    memset(tuple, 0, sizeof(Tuple));
-    mowgli_object_init(mowgli_object(tuple), NULL, &tuple_klass, NULL);
+    Tuple * tuple = g_slice_new0 (Tuple);
+    tuple->refcount = 1;
 
     tuple->dict = mowgli_patricia_create(string_canonize_case);
 
@@ -179,6 +154,26 @@ tuple_new(void)
 
     TUPLE_UNLOCK_WRITE();
     return tuple;
+}
+
+Tuple * tuple_ref (Tuple * tuple)
+{
+    TUPLE_LOCK_WRITE ();
+
+    tuple->refcount ++;
+
+    TUPLE_UNLOCK_WRITE ();
+    return tuple;
+}
+
+void tuple_unref (Tuple * tuple)
+{
+    TUPLE_LOCK_WRITE ();
+
+    if (! -- tuple->refcount)
+        tuple_destroy_unlocked (tuple);
+
+    TUPLE_UNLOCK_WRITE ();
 }
 
 static TupleValue *
@@ -241,7 +236,7 @@ tuple_copy_value(TupleValue *src)
 
     if (src == NULL) return NULL;
 
-    res = mowgli_heap_alloc(tuple_value_heap);
+    res = g_slice_new0 (TupleValue);
     g_strlcpy(res->name, src->name, TUPLE_NAME_MAX);
     res->type = src->type;
 
@@ -253,7 +248,7 @@ tuple_copy_value(TupleValue *src)
         res->value.integer = src->value.integer;
         break;
     default:
-        mowgli_heap_free (tuple_value_heap, res);
+        g_slice_free (TupleValue, res);
         return NULL;
     }
     return res;
@@ -373,7 +368,6 @@ tuple_associate_data(Tuple *tuple, const gint cnfield, const gchar *field, Tuple
         if (ftype != tuple_fields[nfield].type) {
             g_warning("Invalid type for [%s](%d->%d), %d != %d\n",
                 tfield, cnfield, nfield, ftype, tuple_fields[nfield].type);
-            //mowgli_throw_exception_val(audacious.tuple.invalid_type_request, 0);
             TUPLE_UNLOCK_WRITE();
             return NULL;
         }
@@ -387,7 +381,7 @@ tuple_associate_data(Tuple *tuple, const gint cnfield, const gchar *field, Tuple
             value->value.string = str_unref (value->value.string);
     } else {
         /* Allocate a new value */
-        value = mowgli_heap_alloc(tuple_value_heap);
+        value = g_slice_new0 (TupleValue);
         value->type = ftype;
 
         if (nfield >= 0)
@@ -616,11 +610,9 @@ const gchar * tuple_get_string (const Tuple * tuple, gint cnfield, const gchar *
         value = tuple->values[nfield];
 
     if (value) {
-        if (value->type != TUPLE_STRING)
-            mowgli_throw_exception_val(audacious.tuple.invalid_type_request, NULL);
-
+        gchar * str = (value->type == TUPLE_STRING) ? value->value.string : NULL;
         TUPLE_UNLOCK_READ();
-        return value->value.string;
+        return str;
     } else {
         TUPLE_UNLOCK_READ();
         return NULL;
@@ -657,11 +649,9 @@ gint tuple_get_int (const Tuple * tuple, gint cnfield, const gchar * field)
         value = tuple->values[nfield];
 
     if (value) {
-        if (value->type != TUPLE_INT)
-            mowgli_throw_exception_val(audacious.tuple.invalid_type_request, 0);
-
+        gint i = (value->type == TUPLE_INT) ? value->value.integer : 0;
         TUPLE_UNLOCK_READ();
-        return value->value.integer;
+        return i;
     } else {
         TUPLE_UNLOCK_READ();
         return 0;
@@ -738,4 +728,10 @@ gint tuple_get_nth_subtune (Tuple * tuple, gint n)
 
     TUPLE_UNLOCK_READ ();
     return subtune;
+}
+
+/* deprecated */
+void tuple_free (Tuple * tuple)
+{
+    tuple_unref (tuple);
 }
