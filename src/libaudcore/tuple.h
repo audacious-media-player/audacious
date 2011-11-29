@@ -1,6 +1,6 @@
 /*
  * Audacious
- * Copyright (c) 2006-2007 Audacious team
+ * Copyright (c) 2006-2011 Audacious team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -92,6 +92,8 @@ typedef enum {
     TUPLE_UNKNOWN
 } TupleValueType;
 
+#ifdef TUPLE_INTERNALS
+
 typedef struct {
     gchar *name;
     TupleValueType type;
@@ -114,7 +116,7 @@ typedef struct {
  * Structure for holding and passing around miscellaneous track
  * metadata. This is not the same as a playlist entry, though.
  */
-typedef struct _Tuple {
+struct _Tuple {
     mowgli_object_t parent;
     mowgli_patricia_t *dict;        /**< Mowgli dictionary for holding other than basic values. */
     TupleValue *values[FIELD_LAST]; /**< Basic #Tuple values, entry is NULL if not set. */
@@ -124,8 +126,11 @@ typedef struct _Tuple {
     gint *subtunes;                 /**< Array of gint containing subtune index numbers.
                                          Can be NULL if indexing is linear or if
                                          there are no subtunes. */
-} Tuple;
+};
 
+#endif /* TUPLE_INTERNALS */
+
+typedef struct _Tuple Tuple;
 
 Tuple *tuple_new(void);
 Tuple *tuple_copy(const Tuple *);
@@ -135,7 +140,6 @@ gboolean tuple_associate_string_rel(Tuple *tuple, const gint nfield, const gchar
 gboolean tuple_associate_string(Tuple *tuple, const gint nfield, const gchar *field, const gchar *string);
 gboolean tuple_associate_int(Tuple *tuple, const gint nfield, const gchar *field, gint integer);
 void tuple_disassociate(Tuple *tuple, const gint nfield, const gchar *field);
-void tuple_disassociate_now(TupleValue *value);
 TupleValueType tuple_get_value_type (const Tuple * tuple, gint nfield,
  const gchar * field);
 const gchar * tuple_get_string (const Tuple * tuple, gint nfield, const gchar *
@@ -151,6 +155,10 @@ gint tuple_get_int (const Tuple * tuple, gint nfield, const gchar * field);
  * bits per second. */
 void tuple_set_format (Tuple * tuple, const gchar * format, gint channels, gint
  samplerate, gint bitrate);
+
+void tuple_set_subtunes (Tuple * tuple, gint n_subtunes, const gint * subtunes);
+gint tuple_get_n_subtunes (Tuple * tuple);
+gint tuple_get_nth_subtune (Tuple * tuple, gint n);
 
 G_END_DECLS
 

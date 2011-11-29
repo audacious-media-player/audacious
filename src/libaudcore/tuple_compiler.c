@@ -34,6 +34,9 @@
 #include "config.h"
 #include <assert.h>
 #include <stdarg.h>
+
+#define TUPLE_INTERNALS
+
 #include "tuple_compiler.h"
 
 #define MAX_STR		(256)

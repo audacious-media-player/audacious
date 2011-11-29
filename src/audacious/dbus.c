@@ -34,6 +34,8 @@
 #include <libaudcore/eventqueue.h>
 #include <libaudcore/hook.h>
 
+#define TUPLE_INTERNALS
+
 #include "debug.h"
 #include "drct.h"
 #include "playback.h"

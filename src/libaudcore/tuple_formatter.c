@@ -21,6 +21,8 @@
 #include <glib.h>
 #include <mowgli.h>
 
+#define TUPLE_INTERNALS
+
 #include "config.h"
 #include "tuple.h"
 #include "tuple_formatter.h"

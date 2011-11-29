@@ -241,12 +241,14 @@ static void add_file (gchar * filename, Tuple * tuple, PluginHandle * decoder,
      (filename, '?'))
         tuple = file_read_tuple (filename, decoder);
 
-    if (tuple && tuple->nsubtunes > 0)
+    gint n_subtunes = tuple ? tuple_get_n_subtunes (tuple) : 0;
+
+    if (n_subtunes)
     {
-        for (gint sub = 0; sub < tuple->nsubtunes; sub ++)
+        for (gint sub = 0; sub < n_subtunes; sub ++)
         {
-            gchar * subname = g_strdup_printf ("%s?%d", filename, tuple->subtunes ?
-             tuple->subtunes[sub] : 1 + sub);
+            gchar * subname = g_strdup_printf ("%s?%d", filename,
+             tuple_get_nth_subtune (tuple, sub));
             add_file (subname, NULL, decoder, filter, user, result, FALSE);
         }
 

@@ -27,6 +27,8 @@
 
 #include <audacious/i18n.h>
 
+#define TUPLE_INTERNALS
+
 #include "config.h"
 #include "tuple.h"
 #include "audstrings.h"
@@ -700,4 +702,40 @@ void tuple_set_format (Tuple * t, const gchar * format, gint chans, gint rate,
 
     if (brate > 0)
         tuple_associate_int (t, FIELD_BITRATE, NULL, brate);
+}
+
+void tuple_set_subtunes (Tuple * tuple, gint n_subtunes, const gint * subtunes)
+{
+    TUPLE_LOCK_WRITE ();
+
+    g_free (tuple->subtunes);
+    tuple->subtunes = NULL;
+
+    tuple->nsubtunes = n_subtunes;
+    if (subtunes)
+        tuple->subtunes = g_memdup (subtunes, sizeof (gint) * n_subtunes);
+
+    TUPLE_UNLOCK_WRITE ();
+}
+
+gint tuple_get_n_subtunes (Tuple * tuple)
+{
+    TUPLE_LOCK_READ ();
+
+    gint n_subtunes = tuple->nsubtunes;
+
+    TUPLE_UNLOCK_READ ();
+    return n_subtunes;
+}
+
+gint tuple_get_nth_subtune (Tuple * tuple, gint n)
+{
+    TUPLE_LOCK_READ ();
+
+    gint subtune = -1;
+    if (n >= 0 && n < tuple->nsubtunes)
+        subtune = tuple->subtunes ? tuple->subtunes[n] : 1 + n;
+
+    TUPLE_UNLOCK_READ ();
+    return subtune;
 }
