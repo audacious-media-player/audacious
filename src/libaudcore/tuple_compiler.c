@@ -46,7 +46,52 @@
 #define MAX_STR		(256)
 #define MIN_ALLOC_NODES (8)
 #define MIN_ALLOC_BUF	(64)
+#define TUPLEZ_MAX_VARS (4)
 
+enum {
+    OP_RAW = 0,		/* plain text */
+    OP_FIELD,		/* a field/variable */
+    OP_EXISTS,
+    OP_DEF_STRING,
+    OP_DEF_INT,
+    OP_EQUALS,
+    OP_NOT_EQUALS,
+    OP_GT,
+    OP_GTEQ,
+    OP_LT,
+    OP_LTEQ,
+    OP_IS_EMPTY,
+
+    OP_FUNCTION,
+    OP_EXPRESSION	/* additional registered expressions */
+};
+
+enum {
+    TUPLE_VAR_FIELD = 0,
+    TUPLE_VAR_CONST,
+    TUPLE_VAR_DEF
+};
+
+struct _TupleEvalNode {
+    gint opcode;		/* operator, see OP_ enums */
+    gint var[TUPLEZ_MAX_VARS];	/* tuple / global variable references */
+    gboolean global[TUPLEZ_MAX_VARS];
+    gchar *text;		/* raw text, if any (OP_RAW) */
+    gint function, expression;	/* for OP_FUNCTION and OP_EXPRESSION */
+    struct _TupleEvalNode *children, *next, *prev; /* children of this struct, and pointer to next node. */
+};
+
+struct _TupleEvalVar {
+    gchar *name;
+    gboolean istemp;		/* Scope of variable - TRUE = temporary */
+    gint type;			/* Type of variable, see VAR_* */
+    gchar *defvals;		/* Defined value ${=foo,bar} */
+    gint defvali;
+    TupleValueType ctype;	/* Type of constant/def value */
+
+    gint fieldidx;		/* if >= 0: Index # of "pre-defined" Tuple fields */
+    TupleValue *fieldref;	/* Cached tuple field ref */
+};
 
 void tuple_error(TupleEvalContext *ctx, const gchar *fmt, ...)
 {
