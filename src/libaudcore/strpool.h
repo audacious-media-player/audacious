@@ -46,6 +46,9 @@ char * str_ref (char * str);
  * simply returns NULL with no side effects. */
 char * str_unref (char * str);
 
+/* Calls sprintf internally, then pools the produced string with str_get(). */
+char * str_printf (const char * format, ...);
+
 /* Used by STR_CHECK; should not be called directly. */
 void strpool_abort (void);
 

@@ -20,6 +20,7 @@
  */
 
 #include <pthread.h>
+#include <stdarg.h>
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -103,6 +104,23 @@ char * str_unref (char * str)
 
     pthread_mutex_unlock (& mutex);
     return NULL;
+}
+
+char * str_printf (const char * format, ...)
+{
+    va_list args;
+
+    va_start (args, format);
+    int len = vsnprintf (NULL, 0, format, args);
+    va_end (args);
+
+    char buf[len + 1];
+
+    va_start (args, format);
+    vsnprintf (buf, sizeof buf, format, args);
+    va_end (args);
+
+    return str_get (buf);
 }
 
 void strpool_abort (void)
