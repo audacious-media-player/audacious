@@ -14,10 +14,8 @@ include ../../extra.mk
 CPPFLAGS += -I.. -I../.. \
             ${AUDACIOUS_DEFINES} \
             ${DBUS_CFLAGS} \
-            ${GTK_CFLAGS} \
-            ${MOWGLI_CFLAGS}
+            ${GTK_CFLAGS}
 
 LIBS += ${DBUS_LIBS}				\
 	-L../libaudclient -laudclient	\
-	${GTK_LIBS}						\
-	${MOWGLI_LIBS}
+	${GTK_LIBS}

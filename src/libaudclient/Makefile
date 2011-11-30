@@ -15,7 +15,6 @@ pre-depend:
 CPPFLAGS = ${CFLAGS} -D_AUDACIOUS_CORE -I.. -I../..
 CFLAGS += ${LIB_CFLAGS}		\
 	  ${GLIB_CFLAGS}	\
-	  ${MOWGLI_CFLAGS}	\
 	  ${DBUS_CFLAGS}
 LIBS += ${GLIB_LIBS}	\
 	${DBUS_LIBS}

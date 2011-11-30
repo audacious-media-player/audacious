@@ -30,7 +30,6 @@
 #include <unistd.h>
 
 #include <gtk/gtk.h>
-#include <mowgli.h>
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
@@ -446,8 +445,6 @@ static void init_one (void)
     bindtextdomain (PACKAGE "-plugins", aud_paths[AUD_PATH_LOCALE_DIR]);
     bind_textdomain_codeset (PACKAGE "-plugins", "UTF-8");
     textdomain (PACKAGE);
-
-    mowgli_init ();
 
 #ifdef USE_EGGSM
     egg_sm_client_set_mode (EGG_SM_CLIENT_MODE_NORMAL);
