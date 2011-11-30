@@ -37,8 +37,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#define TUPLE_INTERNALS
-
 #include "tuple_compiler.h"
 
 #define MAX_STR		(256)
@@ -80,7 +78,8 @@ typedef struct {
     TupleValueType ctype;	/* Type of constant/def value */
 
     gint fieldidx;		/* if >= 0: Index # of "pre-defined" Tuple fields */
-    TupleValue *fieldref;	/* Cached tuple field ref */
+    gboolean fieldread, fieldvalid;
+    const gchar * fieldstr;
 } TupleEvalVar;
 
 struct _TupleEvalContext {
@@ -112,7 +111,9 @@ void tuple_evalctx_reset(TupleEvalContext *ctx)
 
   for (i = 0; i < ctx->nvariables; i++)
     if (ctx->variables[i]) {
-      ctx->variables[i]->fieldref = NULL;
+      ctx->variables[i]->fieldread = FALSE;
+      ctx->variables[i]->fieldvalid = FALSE;
+      ctx->variables[i]->fieldstr = NULL;
     }
 }
 
@@ -138,21 +139,19 @@ void tuple_evalctx_free(TupleEvalContext *ctx)
 static gint tuple_evalctx_add_var (TupleEvalContext * ctx, const gchar * name,
  const gint type, const TupleValueType ctype)
 {
-  gint i, ref = -1;
+  gint i;
   TupleEvalVar *tmp = g_new0(TupleEvalVar, 1);
 
   tmp->name = g_strdup(name);
   tmp->type = type;
-  tmp->fieldidx = ref;
+  tmp->fieldidx = -1;
   tmp->ctype = ctype;
 
   /* Find fieldidx, if any */
   switch (type) {
     case TUPLE_VAR_FIELD:
-      for (i = 0; i < FIELD_LAST && ref < 0; i++)
-        if (strcmp(tuple_fields[i].name, name) == 0) ref = i;
-
-      tmp->fieldidx = ref;
+      tmp->fieldidx = tuple_field_by_name (name);
+      tmp->ctype = tuple_field_get_type (tmp->fieldidx);
       break;
 
     case TUPLE_VAR_CONST:
@@ -550,19 +549,29 @@ TupleEvalNode *tuple_formatter_compile(TupleEvalContext *ctx, gchar *expr)
 }
 
 
-/* Fetch a reference to a tuple field for given variable by fieldidx or dict.
- * Return pointer to field, NULL if not available.
- */
-static TupleValue * tf_get_fieldref (TupleEvalVar * var, const Tuple * tuple)
+/* Fetch a tuple field value.  Return TRUE if found. */
+static gboolean tf_get_fieldval (TupleEvalVar * var, const Tuple * tuple)
 {
-  if (var->type == TUPLE_VAR_FIELD && var->fieldref == NULL) {
-    if (var->fieldidx < 0)
-      var->fieldref = NULL;
-    else
-      var->fieldref = tuple->values[var->fieldidx];
+  if (var->type != TUPLE_VAR_FIELD || var->fieldidx < 0)
+    return FALSE;
+
+  if (var->fieldread)
+    return var->fieldvalid;
+
+  if (tuple_get_value_type (tuple, var->fieldidx, NULL) != var->ctype) {
+    var->fieldread = TRUE;
+    var->fieldvalid = FALSE;
+    return FALSE;
   }
 
-  return var->fieldref;
+  if (var->ctype == TUPLE_INT)
+    var->defvali = tuple_get_int (tuple, var->fieldidx, NULL);
+  else if (var->ctype == TUPLE_STRING)
+    var->fieldstr = tuple_get_string (tuple, var->fieldidx, NULL);
+
+  var->fieldread = TRUE;
+  var->fieldvalid = TRUE;
+  return TRUE;
 }
 
 
@@ -587,12 +596,12 @@ static TupleValueType tf_get_var (gchar * * tmps, gint * tmpi, TupleEvalVar *
       break;
 
     case TUPLE_VAR_FIELD:
-      if (tf_get_fieldref(var, tuple)) {
-        if (var->fieldref->type == TUPLE_STRING)
-          *tmps = var->fieldref->value.string;
-        else
-          *tmpi = var->fieldref->value.integer;
-        type = var->fieldref->type;
+      if (tf_get_fieldval (var, tuple)) {
+        type = var->ctype;
+        if (type == TUPLE_INT)
+          * tmpi = var->defvali;
+        else if (type == TUPLE_STRING)
+          * tmps = (gchar *) var->fieldstr;
       }
       break;
   }
@@ -630,14 +639,14 @@ static gboolean tuple_formatter_eval_do (TupleEvalContext * ctx, TupleEvalNode *
 
         switch (var0->type) {
           case TUPLE_VAR_FIELD:
-            if (tf_get_fieldref(var0, tuple)) {
-              switch (var0->fieldref->type) {
+            if (tf_get_fieldval (var0, tuple)) {
+              switch (var0->ctype) {
                 case TUPLE_STRING:
-                  str = var0->fieldref->value.string;
+                  str = var0->fieldstr;
                   break;
 
                 case TUPLE_INT:
-                  g_snprintf(tmps, sizeof(tmps), "%d", var0->fieldref->value.integer);
+                  g_snprintf (tmps, sizeof (tmps), "%d", var0->defvali);
                   str = tmps;
                   break;
 
@@ -689,7 +698,7 @@ static gboolean tuple_formatter_eval_do (TupleEvalContext * ctx, TupleEvalNode *
         break;
 
       case OP_EXISTS:
-        if (tf_get_fieldref(ctx->variables[curr->var[0]], tuple)) {
+        if (tf_get_fieldval (ctx->variables[curr->var[0]], tuple)) {
           if (!tuple_formatter_eval_do(ctx, curr->children, tuple, res, resmax, reslen))
             return FALSE;
         }
@@ -698,16 +707,15 @@ static gboolean tuple_formatter_eval_do (TupleEvalContext * ctx, TupleEvalNode *
       case OP_IS_EMPTY:
         var0 = ctx->variables[curr->var[0]];
 
-        if (tf_get_fieldref(var0, tuple)) {
-
-          switch (var0->fieldref->type) {
+        if (tf_get_fieldval (var0, tuple)) {
+          switch (var0->ctype) {
           case TUPLE_INT:
-            result = (var0->fieldref->value.integer == 0);
+            result = (var0->defvali == 0);
             break;
 
           case TUPLE_STRING:
             result = TRUE;
-            tmps2 = var0->fieldref->value.string;
+            tmps2 = (gchar *) var0->fieldstr;
 
             while (result && tmps2 && *tmps2 != '\0') {
               gunichar uc = g_utf8_get_char(tmps2);
