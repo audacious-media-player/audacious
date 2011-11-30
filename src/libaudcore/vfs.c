@@ -163,9 +163,9 @@ gint64 vfs_fread (void * ptr, gint64 size, gint64 nmemb, VFSFile * file)
 
     gint64 readed = file->base->vfs_fread_impl (ptr, size, nmemb, file);
 
-    if (verbose)
+/*    if (verbose)
         logger ("VFS: <%p> read %"PRId64" elements of size %"PRId64" = "
-         "%"PRId64"\n", file, nmemb, size, readed);
+         "%"PRId64"\n", file, nmemb, size, readed); */
 
     return readed;
 }
