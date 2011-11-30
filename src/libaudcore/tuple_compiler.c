@@ -69,15 +69,6 @@ static void tuple_evalctx_free_var(TupleEvalVar *var)
 }
 
 
-static void tuple_evalctx_free_function(TupleEvalFunc *func)
-{
-  assert(func != NULL);
-
-  g_free(func->name);
-  g_free(func);
-}
-
-
 /* Initialize an evaluation context
  */
 TupleEvalContext * tuple_evalctx_new(void)
@@ -118,13 +109,6 @@ void tuple_evalctx_free(TupleEvalContext *ctx)
       tuple_evalctx_free_var(ctx->variables[i]);
 
   g_free(ctx->variables);
-
-  /* Deallocate functions */
-  for (i = 0; i < ctx->nfunctions; i++)
-    if (ctx->functions[i])
-      tuple_evalctx_free_function(ctx->functions[i]);
-
-  g_free(ctx->functions);
   g_free(ctx);
 }
 
@@ -170,15 +154,6 @@ gint tuple_evalctx_add_var(TupleEvalContext *ctx, const gchar *name, const gbool
   ctx->variables[i] = tmp;
 
   return i;
-}
-
-
-gint tuple_evalctx_add_function(TupleEvalContext *ctx, gchar *name)
-{
-  assert(ctx != NULL);
-  assert(name != NULL);
-
-  return -1;
 }
 
 

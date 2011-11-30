@@ -71,13 +71,6 @@ typedef struct {
 } TupleEvalVar;
 
 
-typedef struct {
-    gchar *name;
-    gboolean isdeterministic;
-    gchar *(*func)(Tuple *tuple, TupleEvalVar **argument);
-} TupleEvalFunc;
-
-
 typedef struct _TupleEvalNode {
     gint opcode;		/* operator, see OP_ enums */
     gint var[TUPLEZ_MAX_VARS];	/* tuple / global variable references */
@@ -91,7 +84,6 @@ typedef struct _TupleEvalNode {
 typedef struct {
     gint nvariables, nfunctions, nexpressions;
     TupleEvalVar **variables;
-    TupleEvalFunc **functions;
 
     /* Error context */
     gboolean iserror;
