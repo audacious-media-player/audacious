@@ -27,6 +27,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <libaudcore/strpool.h>
 #include <libaudcore/vfs.h>
 
 #include "ape.h"
@@ -301,9 +302,9 @@ static void set_gain_info (Tuple * tuple, gint field, gint unit_field,
     if (tuple_get_value_type (tuple, unit_field, NULL) == TUPLE_INT)
         value = value * (gint64) tuple_get_int (tuple, unit_field, NULL) / unit;
     else
-        tuple_associate_int (tuple, unit_field, NULL, unit);
+        tuple_set_int (tuple, unit_field, NULL, unit);
 
-    tuple_associate_int (tuple, field, NULL, value);
+    tuple_set_int (tuple, field, NULL, value);
 }
 
 static gboolean ape_read_tag (Tuple * tuple, VFSFile * handle)
@@ -316,19 +317,19 @@ static gboolean ape_read_tag (Tuple * tuple, VFSFile * handle)
         gchar * value = ((ValuePair *) node->data)->value;
 
         if (! strcmp (key, "Artist"))
-            tuple_associate_string (tuple, FIELD_ARTIST, NULL, value);
+            tuple_copy_str (tuple, FIELD_ARTIST, NULL, value);
         else if (! strcmp (key, "Title"))
-            tuple_associate_string (tuple, FIELD_TITLE, NULL, value);
+            tuple_copy_str (tuple, FIELD_TITLE, NULL, value);
         else if (! strcmp (key, "Album"))
-            tuple_associate_string (tuple, FIELD_ALBUM, NULL, value);
+            tuple_copy_str (tuple, FIELD_ALBUM, NULL, value);
         else if (! strcmp (key, "Comment"))
-            tuple_associate_string (tuple, FIELD_COMMENT, NULL, value);
+            tuple_copy_str (tuple, FIELD_COMMENT, NULL, value);
         else if (! strcmp (key, "Genre"))
-            tuple_associate_string (tuple, FIELD_GENRE, NULL, value);
+            tuple_copy_str (tuple, FIELD_GENRE, NULL, value);
         else if (! strcmp (key, "Track"))
-            tuple_associate_int (tuple, FIELD_TRACK_NUMBER, NULL, atoi (value));
+            tuple_set_int (tuple, FIELD_TRACK_NUMBER, NULL, atoi (value));
         else if (! strcmp (key, "Year"))
-            tuple_associate_int (tuple, FIELD_YEAR, NULL, atoi (value));
+            tuple_set_int (tuple, FIELD_YEAR, NULL, atoi (value));
         else if (! strcasecmp (key, "REPLAYGAIN_TRACK_GAIN"))
             set_gain_info (tuple, FIELD_GAIN_TRACK_GAIN, FIELD_GAIN_GAIN_UNIT,
              value);
@@ -375,16 +376,18 @@ static gboolean ape_write_item (VFSFile * handle, const gchar * key,
 static gboolean write_string_item (const Tuple * tuple, int field, VFSFile *
  handle, const gchar * key, int * written_length, int * written_items)
 {
-    const gchar * value = tuple_get_string (tuple, field, NULL);
+    gchar * value = tuple_get_str (tuple, field, NULL);
 
     if (value == NULL)
         return TRUE;
 
-    if (! ape_write_item (handle, key, value, written_length))
-        return FALSE;
+    gboolean success = ape_write_item (handle, key, value, written_length);
 
-    (* written_items) ++;
-    return TRUE;
+    if (success)
+        (* written_items) ++;
+
+    str_unref (value);
+    return success;
 }
 
 static gboolean write_integer_item (const Tuple * tuple, int field, VFSFile *

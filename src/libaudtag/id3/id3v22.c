@@ -234,7 +234,7 @@ static void associate_string (Tuple * tuple, gint field, const gchar *
     else
         TAGDBG ("Field %i = %s.\n", field, text);
 
-    tuple_associate_string (tuple, field, customfield, text);
+    tuple_copy_str (tuple, field, customfield, text);
     g_free (text);
 }
 
@@ -254,7 +254,7 @@ static void associate_int (Tuple * tuple, gint field, const gchar *
     else
         TAGDBG ("Field %i = %s.\n", field, text);
 
-    tuple_associate_int (tuple, field, customfield, atoi (text));
+    tuple_set_int (tuple, field, customfield, atoi (text));
     g_free (text);
 }
 
@@ -268,7 +268,7 @@ static void decode_comment (Tuple * tuple, const guchar * data, gint size)
     TAGDBG ("Comment: lang = %s, type = %s, value = %s.\n", lang, type, value);
 
     if (! type[0]) /* blank type == actual comment */
-        tuple_associate_string (tuple, FIELD_COMMENT, NULL, value);
+        tuple_copy_str (tuple, FIELD_COMMENT, NULL, value);
 
     g_free (lang);
     g_free (type);
@@ -289,7 +289,7 @@ static void decode_txx (Tuple * tuple, const guchar * data, gint size)
 
     gchar * value = separator + 1;
     TAGDBG ("TXX: %s = %s.\n", text, value);
-    tuple_associate_string (tuple, -1, text, value);
+    tuple_copy_str (tuple, -1, text, value);
 
     g_free (text);
 }
@@ -376,7 +376,7 @@ static void decode_rva (Tuple * tuple, const guchar * data, gint size)
             adjustment = adjustment * (gint64) tuple_get_int (tuple,
              FIELD_GAIN_GAIN_UNIT, NULL) / adjustment_unit;
         else
-            tuple_associate_int (tuple, FIELD_GAIN_GAIN_UNIT, NULL,
+            tuple_set_int (tuple, FIELD_GAIN_GAIN_UNIT, NULL,
              adjustment_unit);
 
         if (peak_unit)
@@ -386,23 +386,23 @@ static void decode_rva (Tuple * tuple, const guchar * data, gint size)
                 peak = peak * (gint64) tuple_get_int (tuple,
                  FIELD_GAIN_PEAK_UNIT, NULL) / peak_unit;
             else
-                tuple_associate_int (tuple, FIELD_GAIN_PEAK_UNIT, NULL,
+                tuple_set_int (tuple, FIELD_GAIN_PEAK_UNIT, NULL,
                  peak_unit);
         }
 
         if (! strcasecmp (domain, "album"))
         {
-            tuple_associate_int (tuple, FIELD_GAIN_ALBUM_GAIN, NULL, adjustment);
+            tuple_set_int (tuple, FIELD_GAIN_ALBUM_GAIN, NULL, adjustment);
 
             if (peak_unit)
-                tuple_associate_int (tuple, FIELD_GAIN_ALBUM_PEAK, NULL, peak);
+                tuple_set_int (tuple, FIELD_GAIN_ALBUM_PEAK, NULL, peak);
         }
         else if (! strcasecmp (domain, "track"))
         {
-            tuple_associate_int (tuple, FIELD_GAIN_TRACK_GAIN, NULL, adjustment);
+            tuple_set_int (tuple, FIELD_GAIN_TRACK_GAIN, NULL, adjustment);
 
             if (peak_unit)
-                tuple_associate_int (tuple, FIELD_GAIN_TRACK_PEAK, NULL, peak);
+                tuple_set_int (tuple, FIELD_GAIN_TRACK_PEAK, NULL, peak);
         }
     }
 }
@@ -422,10 +422,10 @@ static void decode_genre (Tuple * tuple, const guchar * data, gint size)
 
     if (numericgenre > 0)
     {
-        tuple_associate_string(tuple, FIELD_GENRE, NULL, convert_numericgenre_to_text(numericgenre));
+        tuple_copy_str(tuple, FIELD_GENRE, NULL, convert_numericgenre_to_text(numericgenre));
         return;
     }
-    tuple_associate_string(tuple, FIELD_GENRE, NULL, text);
+    tuple_copy_str(tuple, FIELD_GENRE, NULL, text);
     g_free (text);
     return;
 }

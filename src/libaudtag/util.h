@@ -165,15 +165,7 @@ time_t unix_time(guint64 win_time);
 
 guint16 get_year(guint64 win_time);
 
-void print_tuple(Tuple *tuple);
-
-//Tuple *makeTuple(Tuple *tuple, const gchar* title, const gchar* artist,
-//        const gchar* comment, const gchar* album,
-//        const gchar * genre, const gchar* year,
-//        const gchar* filePath, int tracnr);
-
 gchar *utf8(gunichar2* s);
-const gchar* get_complete_filepath(Tuple *tuple);
 
 gchar *read_char_data(VFSFile *fd, int size);
 gboolean write_char_data(VFSFile *f, gchar *data, size_t i);

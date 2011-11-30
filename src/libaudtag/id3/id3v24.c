@@ -508,7 +508,7 @@ static void associate_string (Tuple * tuple, gint field, const gchar *
     else
         TAGDBG ("Field %i = %s.\n", field, text);
 
-    tuple_associate_string (tuple, field, customfield, text);
+    tuple_copy_str (tuple, field, customfield, text);
     g_free (text);
 }
 
@@ -528,7 +528,7 @@ static void associate_int (Tuple * tuple, gint field, const gchar *
     else
         TAGDBG ("Field %i = %s.\n", field, text);
 
-    tuple_associate_int (tuple, field, customfield, atoi (text));
+    tuple_set_int (tuple, field, customfield, atoi (text));
     g_free (text);
 }
 
@@ -546,23 +546,23 @@ static void decode_private_info (Tuple * tuple, const guchar * data, gint size)
         if (!strncmp(text, "WM/MediaClassPrimaryID", 22))
         {
             if (!memcmp(value, PRIMARY_CLASS_MUSIC, 16))
-                tuple_associate_string (tuple, -1, "media-class", "Music");
+                tuple_copy_str (tuple, -1, "media-class", "Music");
             if (!memcmp(value, PRIMARY_CLASS_AUDIO, 16))
-                tuple_associate_string (tuple, -1, "media-class", "Audio (non-music)");
+                tuple_copy_str (tuple, -1, "media-class", "Audio (non-music)");
         } else if (!strncmp(text, "WM/MediaClassSecondaryID", 24))
         {
             if (!memcmp(value, SECONDARY_CLASS_AUDIOBOOK, 16))
-                tuple_associate_string (tuple, -1, "media-class", "Audio Book");
+                tuple_copy_str (tuple, -1, "media-class", "Audio Book");
             if (!memcmp(value, SECONDARY_CLASS_SPOKENWORD, 16))
-                tuple_associate_string (tuple, -1, "media-class", "Spoken Word");
+                tuple_copy_str (tuple, -1, "media-class", "Spoken Word");
             if (!memcmp(value, SECONDARY_CLASS_NEWS, 16))
-                tuple_associate_string (tuple, -1, "media-class", "News");
+                tuple_copy_str (tuple, -1, "media-class", "News");
             if (!memcmp(value, SECONDARY_CLASS_TALKSHOW, 16))
-                tuple_associate_string (tuple, -1, "media-class", "Talk Show");
+                tuple_copy_str (tuple, -1, "media-class", "Talk Show");
             if (!memcmp(value, SECONDARY_CLASS_GAMES_CLIP, 16))
-                tuple_associate_string (tuple, -1, "media-class", "Game Audio (clip)");
+                tuple_copy_str (tuple, -1, "media-class", "Game Audio (clip)");
             if (!memcmp(value, SECONDARY_CLASS_GAMES_SONG, 16))
-                tuple_associate_string (tuple, -1, "media-class", "Game Soundtrack");
+                tuple_copy_str (tuple, -1, "media-class", "Game Soundtrack");
         } else {
             TAGDBG("Unrecognised tag %s (Windows Media) ignored\n", text);
         }
@@ -584,7 +584,7 @@ static void decode_comment (Tuple * tuple, const guchar * data, gint size)
     TAGDBG ("Comment: lang = %s, type = %s, value = %s.\n", lang, type, value);
 
     if (! type[0]) /* blank type == actual comment */
-        tuple_associate_string (tuple, FIELD_COMMENT, NULL, value);
+        tuple_copy_str (tuple, FIELD_COMMENT, NULL, value);
 
     g_free (lang);
     g_free (type);
@@ -673,7 +673,7 @@ static void decode_rva2 (Tuple * tuple, const guchar * data, gint size)
             adjustment = adjustment * (gint64) tuple_get_int (tuple,
              FIELD_GAIN_GAIN_UNIT, NULL) / adjustment_unit;
         else
-            tuple_associate_int (tuple, FIELD_GAIN_GAIN_UNIT, NULL,
+            tuple_set_int (tuple, FIELD_GAIN_GAIN_UNIT, NULL,
              adjustment_unit);
 
         if (peak_unit)
@@ -683,23 +683,23 @@ static void decode_rva2 (Tuple * tuple, const guchar * data, gint size)
                 peak = peak * (gint64) tuple_get_int (tuple,
                  FIELD_GAIN_PEAK_UNIT, NULL) / peak_unit;
             else
-                tuple_associate_int (tuple, FIELD_GAIN_PEAK_UNIT, NULL,
+                tuple_set_int (tuple, FIELD_GAIN_PEAK_UNIT, NULL,
                  peak_unit);
         }
 
         if (! strcasecmp (domain, "album"))
         {
-            tuple_associate_int (tuple, FIELD_GAIN_ALBUM_GAIN, NULL, adjustment);
+            tuple_set_int (tuple, FIELD_GAIN_ALBUM_GAIN, NULL, adjustment);
 
             if (peak_unit)
-                tuple_associate_int (tuple, FIELD_GAIN_ALBUM_PEAK, NULL, peak);
+                tuple_set_int (tuple, FIELD_GAIN_ALBUM_PEAK, NULL, peak);
         }
         else if (! strcasecmp (domain, "track"))
         {
-            tuple_associate_int (tuple, FIELD_GAIN_TRACK_GAIN, NULL, adjustment);
+            tuple_set_int (tuple, FIELD_GAIN_TRACK_GAIN, NULL, adjustment);
 
             if (peak_unit)
-                tuple_associate_int (tuple, FIELD_GAIN_TRACK_PEAK, NULL, peak);
+                tuple_set_int (tuple, FIELD_GAIN_TRACK_PEAK, NULL, peak);
         }
     }
 }
@@ -718,10 +718,10 @@ static void decode_genre (Tuple * tuple, const guchar * data, gint size)
         numericgenre = atoi (text);
 
     if (numericgenre > 0)
-        tuple_associate_string (tuple, FIELD_GENRE, NULL,
+        tuple_copy_str (tuple, FIELD_GENRE, NULL,
          convert_numericgenre_to_text (numericgenre));
     else
-        tuple_associate_string (tuple, FIELD_GENRE, NULL, text);
+        tuple_copy_str (tuple, FIELD_GENRE, NULL, text);
 
     g_free (text);
     return;
@@ -784,7 +784,9 @@ static void add_comment_frame (const gchar * text, GHashTable * dict)
 static void add_frameFromTupleStr (const Tuple * tuple, gint field, gint
  id3_field, GHashTable * dict)
 {
-    add_text_frame (id3_field, tuple_get_string (tuple, field, NULL), dict);
+    gchar * str = tuple_get_str (tuple, field, NULL);
+    add_text_frame (id3_field, str, dict);
+    str_unref (str);
 }
 
 static void add_frameFromTupleInt (const Tuple * tuple, gint field, gint
@@ -986,7 +988,10 @@ static gboolean id3v24_write_tag (const Tuple * tuple, VFSFile * f)
     add_frameFromTupleInt (tuple, FIELD_YEAR, ID3_YEAR, dict);
     add_frameFromTupleInt (tuple, FIELD_TRACK_NUMBER, ID3_TRACKNR, dict);
     add_frameFromTupleStr (tuple, FIELD_GENRE, ID3_GENRE, dict);
-    add_comment_frame (tuple_get_string (tuple, FIELD_COMMENT, NULL), dict);
+
+    gchar * comment = tuple_get_str (tuple, FIELD_COMMENT, NULL);
+    add_comment_frame (comment, dict);
+    str_unref (comment);
 
     if (! offset)
     {

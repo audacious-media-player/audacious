@@ -112,27 +112,27 @@ gboolean id3v1_read_tag (Tuple * tuple, VFSFile * f)
 
         if (ext_genre)
         {
-            tuple_associate_string(tuple, FIELD_GENRE, NULL, ext_genre);
+            tuple_copy_str(tuple, FIELD_GENRE, NULL, ext_genre);
             genre_set = TRUE;
             g_free(ext_genre);
         }
     }
 
     if (title)
-        tuple_associate_string(tuple, FIELD_TITLE, NULL, title);
+        tuple_copy_str(tuple, FIELD_TITLE, NULL, title);
     if (artist)
-        tuple_associate_string(tuple, FIELD_ARTIST, NULL, artist);
+        tuple_copy_str(tuple, FIELD_ARTIST, NULL, artist);
     if (album)
-        tuple_associate_string(tuple, FIELD_ALBUM, NULL, album);
+        tuple_copy_str(tuple, FIELD_ALBUM, NULL, album);
     if (year)
-        tuple_associate_int(tuple, FIELD_YEAR, NULL, atoi(year));
+        tuple_set_int(tuple, FIELD_YEAR, NULL, atoi(year));
     if (comment)
-        tuple_associate_string(tuple, FIELD_COMMENT, NULL, comment);
+        tuple_copy_str(tuple, FIELD_COMMENT, NULL, comment);
     if (track)
-        tuple_associate_int(tuple, FIELD_TRACK_NUMBER, NULL, track);
+        tuple_set_int(tuple, FIELD_TRACK_NUMBER, NULL, track);
 
     if (genre && !genre_set)
-        tuple_associate_string(tuple, FIELD_GENRE, NULL, convert_numericgenre_to_text(*genre));
+        tuple_copy_str(tuple, FIELD_GENRE, NULL, convert_numericgenre_to_text(*genre));
 
     g_free(title);
     g_free(artist);
