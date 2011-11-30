@@ -16,6 +16,6 @@ INCLUDES = audtag.h
 include ../../buildsys.mk
 include ../../extra.mk
 
-CPPFLAGS += ${GLIB_CFLAGS} -D_AUDACIOUS_CORE -I.. -I../..
+CPPFLAGS += ${GLIB_CFLAGS} -D_AUDACIOUS_CORE -I.. -I../.. -std=gnu99
 CFLAGS += ${LIB_CFLAGS}
 LIBS += ${GLIB_LIBS} -L../libaudcore -laudcore

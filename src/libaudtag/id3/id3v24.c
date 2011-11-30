@@ -366,10 +366,18 @@ static gboolean decode_comment_frame (const guchar * _data, gint size, gchar * *
     return TRUE;
 }
 
-static void free_generic_frame (GenericFrame * frame)
+static void free_frame (GenericFrame * frame)
 {
     g_free (frame->data);
     g_free (frame);
+}
+
+static void free_frame_list (GList * list)
+{
+    for (GList * node = list; node; node = node->next)
+        free_frame (node->data);
+
+    g_list_free (list);
 }
 
 static void read_all_frames (VFSFile * handle, gint version, gboolean syncsafe,
@@ -390,19 +398,20 @@ static void read_all_frames (VFSFile * handle, gint version, gboolean syncsafe,
 
         pos += frame_size;
 
-        if (g_hash_table_lookup (dict, key) != NULL)
-        {
-            TAGDBG ("Discarding duplicate frame %s.\n", key);
-            g_free (data);
-            continue;
-        }
-
         frame = g_malloc (sizeof (GenericFrame));
         strcpy (frame->key, key);
         frame->data = data;
         frame->size = size;
 
-        g_hash_table_insert (dict, str_get (key), frame);
+        void * key2, * list = NULL;
+
+        if (g_hash_table_lookup_extended (dict, key, & key2, & list))
+            g_hash_table_steal (dict, key);
+        else
+            key2 = str_get (key);
+
+        list = g_list_append (list, frame);
+        g_hash_table_insert (dict, key2, list);
     }
 }
 
@@ -434,19 +443,22 @@ typedef struct {
     gint written_size;
 } WriteState;
 
-static void write_frame_cb (void * key, void * data, void * user)
+static void write_frame_list (void * key, void * list, void * user)
 {
     WriteState * state = user;
-    gint size;
-    if (! write_frame (state->file, data, & size))
-        return;
-    state->written_size += size;
+
+    for (GList * node = list; node; node = node->next)
+    {
+        gint size;
+        if (write_frame (state->file, node->data, & size))
+            state->written_size += size;
+    }
 }
 
-static gint writeAllFramesToFile (VFSFile * fd, GHashTable * dict)
+static gint write_all_frames (VFSFile * handle, GHashTable * dict)
 {
-    WriteState state = {fd, 0};
-    g_hash_table_foreach (dict, write_frame_cb, & state);
+    WriteState state = {handle, 0};
+    g_hash_table_foreach (dict, write_frame_list, & state);
 
     TAGDBG ("Total frame bytes written = %d.\n", state.written_size);
     return state.written_size;
@@ -718,19 +730,15 @@ static void decode_genre (Tuple * tuple, const guchar * data, gint size)
 static GenericFrame * add_generic_frame (gint id, gint size,
  GHashTable * dict)
 {
-    GenericFrame * frame = g_hash_table_lookup (dict, id3_frames[id]);
+    GenericFrame * frame = g_malloc (sizeof (GenericFrame));
 
-    if (frame == NULL)
-    {
-        frame = g_malloc (sizeof (GenericFrame));
-        strcpy (frame->key, id3_frames[id]);
-        g_hash_table_insert (dict, str_get (id3_frames[id]), frame);
-    }
-    else
-        g_free (frame->data);
-
+    strcpy (frame->key, id3_frames[id]);
     frame->data = g_malloc (size);
     frame->size = size;
+
+    GList * list = g_list_append (NULL, frame);
+    g_hash_table_insert (dict, str_get (id3_frames[id]), list);
+
     return frame;
 }
 
@@ -968,7 +976,7 @@ static gboolean id3v24_write_tag (const Tuple * tuple, VFSFile * f)
 
     //read all frames into generic frames;
     GHashTable * dict = g_hash_table_new_full (g_str_hash, g_str_equal,
-     (GDestroyNotify) str_unref, (GDestroyNotify) free_generic_frame);
+     (GDestroyNotify) str_unref, (GDestroyNotify) free_frame_list);
     read_all_frames (f, version, syncsafe, data_size, dict);
 
     //make the new frames from tuple and replace in the dictionary the old frames with the new ones
@@ -999,7 +1007,7 @@ static gboolean id3v24_write_tag (const Tuple * tuple, VFSFile * f)
      FALSE))
         goto ERR;
 
-    data_size = writeAllFramesToFile (f, dict);
+    data_size = write_all_frames (f, dict);
 
     if (! write_header (f, data_size, TRUE) || vfs_fseek (f, offset, SEEK_SET)
      || ! write_header (f, data_size, FALSE))
