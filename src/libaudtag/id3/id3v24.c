@@ -373,7 +373,7 @@ static void free_generic_frame (GenericFrame * frame)
 }
 
 static void read_all_frames (VFSFile * handle, gint version, gboolean syncsafe,
- gint data_size, mowgli_patricia_t * dict)
+ gint data_size, GHashTable * dict)
 {
     gint pos;
 
@@ -390,7 +390,7 @@ static void read_all_frames (VFSFile * handle, gint version, gboolean syncsafe,
 
         pos += frame_size;
 
-        if (mowgli_patricia_retrieve (dict, key) != NULL)
+        if (g_hash_table_lookup (dict, key) != NULL)
         {
             TAGDBG ("Discarding duplicate frame %s.\n", key);
             g_free (data);
@@ -402,7 +402,7 @@ static void read_all_frames (VFSFile * handle, gint version, gboolean syncsafe,
         frame->data = data;
         frame->size = size;
 
-        mowgli_patricia_add (dict, key, frame);
+        g_hash_table_insert (dict, key, frame);
     }
 }
 
@@ -434,20 +434,19 @@ typedef struct {
     gint written_size;
 } WriteState;
 
-static gint write_frame_cb (const gchar * key, void * data, void * user)
+static void write_frame_cb (void * key, void * data, void * user)
 {
     WriteState * state = user;
     gint size;
     if (! write_frame (state->file, data, & size))
-        return -1;
+        return;
     state->written_size += size;
-    return 0;
 }
 
-static gint writeAllFramesToFile (VFSFile * fd, mowgli_patricia_t * dict)
+static gint writeAllFramesToFile (VFSFile * fd, GHashTable * dict)
 {
     WriteState state = {fd, 0};
-    mowgli_patricia_foreach (dict, write_frame_cb, & state);
+    g_hash_table_foreach (dict, write_frame_cb, & state);
 
     TAGDBG ("Total frame bytes written = %d.\n", state.written_size);
     return state.written_size;
@@ -736,15 +735,15 @@ static void decode_genre (Tuple * tuple, const guchar * data, gint size)
 }
 
 static GenericFrame * add_generic_frame (gint id, gint size,
- mowgli_patricia_t * dict)
+ GHashTable * dict)
 {
-    GenericFrame * frame = mowgli_patricia_retrieve (dict, id3_frames[id]);
+    GenericFrame * frame = g_hash_table_lookup (dict, id3_frames[id]);
 
     if (frame == NULL)
     {
         frame = g_malloc (sizeof (GenericFrame));
         strcpy (frame->key, id3_frames[id]);
-        mowgli_patricia_add (dict, frame->key, frame);
+        g_hash_table_insert (dict, frame->key, frame);
     }
     else
         g_free (frame->data);
@@ -754,19 +753,18 @@ static GenericFrame * add_generic_frame (gint id, gint size,
     return frame;
 }
 
-static void remove_frame (gint id, mowgli_patricia_t * dict)
+static void remove_frame (gint id, GHashTable * dict)
 {
-    GenericFrame * frame = mowgli_patricia_retrieve (dict, id3_frames[id]);
+    GenericFrame * frame = g_hash_table_lookup (dict, id3_frames[id]);
     if (frame == NULL)
         return;
 
     TAGDBG ("Deleting frame %s.\n", id3_frames[id]);
-    mowgli_patricia_delete (dict, id3_frames[id]);
+    g_hash_table_remove (dict, id3_frames[id]);
     free_generic_frame (frame);
 }
 
-static void add_text_frame (gint id, const gchar * text, mowgli_patricia_t *
- dict)
+static void add_text_frame (gint id, const gchar * text, GHashTable * dict)
 {
     if (text == NULL)
     {
@@ -782,7 +780,7 @@ static void add_text_frame (gint id, const gchar * text, mowgli_patricia_t *
     memcpy (frame->data + 1, text, length);
 }
 
-static void add_comment_frame (const gchar * text, mowgli_patricia_t * dict)
+static void add_comment_frame (const gchar * text, GHashTable * dict)
 {
     if (text == NULL)
     {
@@ -800,13 +798,13 @@ static void add_comment_frame (const gchar * text, mowgli_patricia_t * dict)
 }
 
 static void add_frameFromTupleStr (const Tuple * tuple, gint field, gint
- id3_field, mowgli_patricia_t * dict)
+ id3_field, GHashTable * dict)
 {
     add_text_frame (id3_field, tuple_get_string (tuple, field, NULL), dict);
 }
 
 static void add_frameFromTupleInt (const Tuple * tuple, gint field, gint
- id3_field, mowgli_patricia_t * dict)
+ id3_field, GHashTable * dict)
 {
     if (tuple_get_value_type (tuple, field, NULL) != TUPLE_INT)
     {
@@ -985,7 +983,7 @@ static gboolean id3v24_read_image (VFSFile * handle, void * * image_data, gint *
     return found;
 }
 
-static void free_frame_cb (const gchar * key, void * data, void * unused)
+static void free_frame_cb (void * key, void * data, void * unused)
 {
     free_generic_frame (data);
 }
@@ -1001,7 +999,7 @@ static gboolean id3v24_write_tag (const Tuple * tuple, VFSFile * f)
         return FALSE;
 
     //read all frames into generic frames;
-    mowgli_patricia_t * dict = mowgli_patricia_create (NULL);
+    GHashTable * dict = g_hash_table_new(g_str_hash, g_str_equal);
     read_all_frames (f, version, syncsafe, data_size, dict);
 
     //make the new frames from tuple and replace in the dictionary the old frames with the new ones
@@ -1038,11 +1036,13 @@ static gboolean id3v24_write_tag (const Tuple * tuple, VFSFile * f)
      || ! write_header (f, data_size, FALSE))
         goto ERR;
 
-    mowgli_patricia_destroy (dict, free_frame_cb, NULL);
+    g_hash_table_foreach (dict, free_frame_cb, NULL);
+    g_hash_table_destroy (dict);
     return TRUE;
 
 ERR:
-    mowgli_patricia_destroy (dict, free_frame_cb, NULL);
+    g_hash_table_foreach (dict, free_frame_cb, NULL);
+    g_hash_table_destroy (dict);
     return FALSE;
 }
 
