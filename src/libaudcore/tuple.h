@@ -81,8 +81,7 @@ enum {
 
     FIELD_COMPOSER,     /**< Composer of song, if different than artist. */
 
-    /* Special field, must always be last */
-    FIELD_LAST
+    TUPLE_FIELDS
 };
 
 typedef enum {
@@ -91,7 +90,12 @@ typedef enum {
     TUPLE_UNKNOWN
 } TupleValueType;
 
+gint tuple_field_by_name (const gchar * name);
+const gchar * tuple_field_get_name (gint field);
+TupleValueType tuple_field_get_type (gint field);
+
 #ifdef TUPLE_INTERNALS
+#define FIELD_LAST TUPLE_FIELDS
 
 typedef struct {
     gchar *name;

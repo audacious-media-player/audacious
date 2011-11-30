@@ -98,6 +98,37 @@ static GStaticMutex tuple_mutex = G_STATIC_MUTEX_INIT;
 #define TUPLE_UNLOCK_READ(X)    g_static_mutex_unlock (& tuple_mutex)
 //@}
 
+gint tuple_field_by_name (const gchar * name)
+{
+    if (! name)
+        return -1;
+
+    for (gint i = 0; i < TUPLE_FIELDS; i ++)
+    {
+        if (! strcmp (tuple_fields[i].name, name))
+            return i;
+    }
+
+    fprintf (stderr, "Unknown tuple field name \"%s\".\n", name);
+    return -1;
+}
+
+const gchar * tuple_field_get_name (gint field)
+{
+    if (field < 0 || field >= TUPLE_FIELDS)
+        return NULL;
+
+    return tuple_fields[field].name;
+}
+
+TupleValueType tuple_field_get_type (gint field)
+{
+    if (field < 0 || field >= TUPLE_FIELDS)
+        return TUPLE_UNKNOWN;
+
+    return tuple_fields[field].type;
+}
+
 static void tuple_value_destroy (TupleValue * value)
 {
     if (value->type == TUPLE_STRING)
@@ -317,11 +348,13 @@ static TupleValue *
 tuple_associate_data(Tuple *tuple, const gint cnfield, const gchar *field, TupleValueType ftype)
 {
     const gchar *tfield = field;
-    gint nfield = cnfield;
     TupleValue *value = NULL;
 
     g_return_val_if_fail(tuple != NULL, NULL);
-    g_return_val_if_fail(cnfield >= 0 && cnfield < FIELD_LAST, NULL);
+
+    gint nfield = (cnfield >= 0) ? cnfield : tuple_field_by_name (field);
+    if (nfield < 0 || nfield >= TUPLE_FIELDS)
+        return NULL;
 
     /* Check if field was known */
     if (nfield >= 0) {
@@ -478,10 +511,12 @@ void
 tuple_disassociate(Tuple *tuple, const gint cnfield, const gchar *field)
 {
     TupleValue *value;
-    gint nfield = cnfield;
 
     g_return_if_fail(tuple != NULL);
-    g_return_if_fail(nfield >= 0 && nfield < FIELD_LAST);
+
+    gint nfield = (cnfield >= 0) ? cnfield : tuple_field_by_name (field);
+    if (nfield < 0 || nfield >= TUPLE_FIELDS)
+        return;
 
     TUPLE_LOCK_WRITE();
 
@@ -508,10 +543,12 @@ TupleValueType tuple_get_value_type (const Tuple * tuple, gint cnfield,
  const gchar * field)
 {
     TupleValueType type = TUPLE_UNKNOWN;
-    gint nfield = cnfield;
 
     g_return_val_if_fail(tuple != NULL, TUPLE_UNKNOWN);
-    g_return_val_if_fail(nfield >= 0 && nfield < FIELD_LAST, TUPLE_UNKNOWN);
+
+    gint nfield = (cnfield >= 0) ? cnfield : tuple_field_by_name (field);
+    if (nfield < 0 || nfield >= TUPLE_FIELDS)
+        return TUPLE_UNKNOWN;
 
     TUPLE_LOCK_READ();
 
@@ -537,10 +574,12 @@ const gchar * tuple_get_string (const Tuple * tuple, gint cnfield, const gchar *
  field)
 {
     TupleValue *value;
-    gint nfield = cnfield;
 
     g_return_val_if_fail(tuple != NULL, NULL);
-    g_return_val_if_fail(nfield >= 0 && nfield < FIELD_LAST, NULL);
+
+    gint nfield = (cnfield >= 0) ? cnfield : tuple_field_by_name (field);
+    if (nfield < 0 || nfield >= TUPLE_FIELDS)
+        return NULL;
 
     TUPLE_LOCK_READ();
 
@@ -571,10 +610,12 @@ const gchar * tuple_get_string (const Tuple * tuple, gint cnfield, const gchar *
 gint tuple_get_int (const Tuple * tuple, gint cnfield, const gchar * field)
 {
     TupleValue *value;
-    gint nfield = cnfield;
 
     g_return_val_if_fail(tuple != NULL, 0);
-    g_return_val_if_fail(nfield >= 0 && nfield < FIELD_LAST, 0);
+
+    gint nfield = (cnfield >= 0) ? cnfield : tuple_field_by_name (field);
+    if (nfield < 0 || nfield >= TUPLE_FIELDS)
+        return 0;
 
     TUPLE_LOCK_READ();
 
