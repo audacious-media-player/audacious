@@ -29,6 +29,7 @@
 #include <audacious/i18n.h>
 #include <audacious/misc.h>
 #include <audacious/playlist.h>
+#include <libaudcore/strpool.h>
 
 #include "config.h"
 #include "libaudgui.h"
@@ -229,12 +230,15 @@ static void infopopup_create (void)
     gtk_widget_show_all (infopopup_hbox);
 }
 
-static void infopopup_update_data (const gchar * text, const gchar * label_data,
+/* calls str_unref() on <text> */
+static void infopopup_update_data (gchar * text, const gchar * label_data,
  const gchar * header_data)
 {
-    if (text != NULL)
+    if (text)
     {
         infopopup_entry_set_text (label_data, text);
+        str_unref (text);
+
         gtk_widget_show ((GtkWidget *) g_object_get_data ((GObject *) infopopup,
          header_data));
         gtk_widget_show ((GtkWidget *) g_object_get_data ((GObject *) infopopup,
@@ -270,7 +274,6 @@ static void infopopup_show (gint playlist, gint entry, const gchar * filename,
     gint x, y, h, w;
     gint length, value;
     gchar * tmp;
-    const gchar * title2;
 
     if (infopopup == NULL)
         infopopup_create ();
@@ -281,34 +284,28 @@ static void infopopup_show (gint playlist, gint entry, const gchar * filename,
     g_object_set_data ((GObject *) infopopup, "file", g_strdup (filename));
 
     /* use title from tuple if possible */
-    if ((title2 = tuple_get_string (tuple, FIELD_TITLE, NULL)))
-        title = title2;
+    gchar * title2 = tuple_get_str (tuple, FIELD_TITLE, NULL);
+    if (! title2)
+        title2 = str_get (title);
 
-    infopopup_update_data (title, "label_title", "header_title");
-    infopopup_update_data (tuple_get_string (tuple, FIELD_ARTIST, NULL),
-     "label_artist", "header_artist");
-    infopopup_update_data (tuple_get_string (tuple, FIELD_ALBUM, NULL),
-     "label_album", "header_album");
-    infopopup_update_data (tuple_get_string (tuple, FIELD_GENRE, NULL),
-     "label_genre", "header_genre");
+    infopopup_update_data (title2, "label_title", "header_title");
+    infopopup_update_data (tuple_get_str (tuple, FIELD_ARTIST, NULL), "label_artist", "header_artist");
+    infopopup_update_data (tuple_get_str (tuple, FIELD_ALBUM, NULL), "label_album", "header_album");
+    infopopup_update_data (tuple_get_str (tuple, FIELD_GENRE, NULL), "label_genre", "header_genre");
 
     length = tuple_get_int (tuple, FIELD_LENGTH, NULL);
-    tmp = (length > 0) ? g_strdup_printf ("%d:%02d", length / 60000, length /
-     1000 % 60) : NULL;
+    tmp = (length > 0) ? str_printf ("%d:%02d", length / 60000, length / 1000 % 60) : NULL;
     infopopup_update_data (tmp, "label_tracklen", "header_tracklen");
-    g_free (tmp);
 
     g_object_set_data ((GObject *) infopopup, "length" , GINT_TO_POINTER (length));
 
     value = tuple_get_int (tuple, FIELD_YEAR, NULL);
-    tmp = (value > 0) ? g_strdup_printf ("%d", value) : NULL;
+    tmp = (value > 0) ? str_printf ("%d", value) : NULL;
     infopopup_update_data (tmp, "label_year", "header_year");
-    g_free (tmp);
 
     value = tuple_get_int (tuple, FIELD_TRACK_NUMBER, NULL);
-    tmp = (value > 0) ? g_strdup_printf ("%d", value) : NULL;
+    tmp = (value > 0) ? str_printf ("%d", value) : NULL;
     infopopup_update_data (tmp, "label_tracknum", "header_tracknum");
-    g_free (tmp);
 
     infopopup_entry_set_image (playlist, entry);
 
