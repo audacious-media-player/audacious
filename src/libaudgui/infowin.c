@@ -31,6 +31,7 @@
 #include <audacious/playlist.h>
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
+#include <libaudcore/strpool.h>
 
 #include "config.h"
 #include "libaudgui.h"
@@ -117,10 +118,12 @@ static const gchar * genre_table[] = {
 static void set_entry_str_from_field (GtkWidget * widget, const Tuple * tuple,
  gint fieldn, gboolean editable)
 {
-    const gchar * text = tuple_get_string (tuple, fieldn, NULL);
+    gchar * text = tuple_get_str (tuple, fieldn, NULL);
 
     gtk_entry_set_text ((GtkEntry *) widget, text != NULL ? text : "");
     gtk_editable_set_editable ((GtkEditable *) widget, editable);
+
+    str_unref (text);
 }
 
 static void set_entry_int_from_field (GtkWidget * widget, const Tuple * tuple,
@@ -144,9 +147,9 @@ static void set_field_str_from_entry (Tuple * tuple, gint fieldn, GtkWidget *
     const gchar * text = gtk_entry_get_text ((GtkEntry *) widget);
 
     if (text[0])
-        tuple_associate_string (tuple, fieldn, NULL, text);
+        tuple_copy_str (tuple, fieldn, NULL, text);
     else
-        tuple_disassociate (tuple, fieldn, NULL);
+        tuple_unset (tuple, fieldn, NULL);
 }
 
 static void set_field_int_from_entry (Tuple * tuple, gint fieldn, GtkWidget *
@@ -155,20 +158,22 @@ static void set_field_int_from_entry (Tuple * tuple, gint fieldn, GtkWidget *
     const gchar * text = gtk_entry_get_text ((GtkEntry *) widget);
 
     if (text[0])
-        tuple_associate_int (tuple, fieldn, NULL, atoi (text));
+        tuple_set_int (tuple, fieldn, NULL, atoi (text));
     else
-        tuple_disassociate (tuple, fieldn, NULL);
+        tuple_unset (tuple, fieldn, NULL);
 }
 
-static void infowin_label_set_text (GtkWidget * widget, const gchar * text)
+/* call str_unref() on <text> */
+static void infowin_label_set_text (GtkWidget * widget, gchar * text)
 {
     gchar * tmp;
 
-    if (text != NULL)
+    if (text)
     {
         tmp = g_strdup_printf("<span size=\"small\">%s</span>", text);
         gtk_label_set_text ((GtkLabel *) widget, tmp);
         g_free (tmp);
+        str_unref (text);
     }
     else
         gtk_label_set_text ((GtkLabel *) widget,
@@ -539,18 +544,12 @@ static void infowin_show (gint list, gint entry, const gchar * filename,
     set_entry_int_from_field (entry_track, tuple, FIELD_TRACK_NUMBER,
      updating_enabled);
 
-    infowin_label_set_text (label_format_name, tuple_get_string (tuple,
-     FIELD_CODEC, NULL));
-    infowin_label_set_text (label_quality, tuple_get_string (tuple,
-     FIELD_QUALITY, NULL));
+    infowin_label_set_text (label_format_name, tuple_get_str (tuple, FIELD_CODEC, NULL));
+    infowin_label_set_text (label_quality, tuple_get_str (tuple, FIELD_QUALITY, NULL));
 
     if (tuple_get_value_type (tuple, FIELD_BITRATE, NULL) == TUPLE_INT)
-    {
-        tmp = g_strdup_printf (_("%d kb/s"), tuple_get_int (tuple,
-         FIELD_BITRATE, NULL));
-        infowin_label_set_text (label_bitrate, tmp);
-        g_free (tmp);
-    }
+        infowin_label_set_text (label_bitrate, str_printf (_("%d kb/s"),
+         tuple_get_int (tuple, FIELD_BITRATE, NULL)));
     else
         infowin_label_set_text (label_bitrate, NULL);
 
