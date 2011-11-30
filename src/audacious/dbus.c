@@ -36,8 +36,6 @@
 #include <libaudcore/eventqueue.h>
 #include <libaudcore/hook.h>
 
-#define TUPLE_INTERNALS
-
 #include "debug.h"
 #include "drct.h"
 #include "playback.h"
@@ -945,14 +943,12 @@ gboolean audacious_rc_show_main_win (RemoteObject * obj, gboolean show,
 
 gboolean audacious_rc_get_tuple_fields(RemoteObject * obj, gchar *** fields, GError ** error)
 {
-    gchar **res = g_new0(gchar *, FIELD_LAST + 1);
-    gint i;
-    for (i = 0; i < FIELD_LAST; i++)
-    {
-        res[i] = g_strdup(tuple_fields[i].name);
-    }
-    *fields = res;
+    * fields = g_new (gchar *, TUPLE_FIELDS);
 
+    for (gint i = 0; i < TUPLE_FIELDS; i ++)
+        (* fields)[i] = g_strdup (tuple_field_get_name (i));
+
+    (* fields)[TUPLE_FIELDS] = NULL;
     return TRUE;
 }
 
