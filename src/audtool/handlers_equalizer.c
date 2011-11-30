@@ -29,10 +29,10 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <glib.h>
-#include <mowgli.h>
 #include <locale.h>
 #include "libaudclient/audctrl.h"
 #include "audtool.h"
@@ -79,9 +79,9 @@ void equalizer_get_eq_band(gint argc, gchar **argv)
         audtool_whine("band number out of range\n");
         exit(1);
     }
-    
+
     audtool_report("band %d = %.2f", band, audacious_remote_get_eq_band(dbus_proxy, band));
-    
+
 }
 
 void equalizer_set_eq(gint argc, gchar **argv)
@@ -97,12 +97,12 @@ void equalizer_set_eq(gint argc, gchar **argv)
     }
 
     preamp = atof(argv[1]);
-    
+
     for(i=0; i<10; i++){
         gdouble val = atof(argv[i+2]);
         g_array_append_val(bands, val);
     }
-    
+
     audacious_remote_set_eq(dbus_proxy, preamp, bands);
 }
 

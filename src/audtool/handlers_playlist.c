@@ -33,7 +33,6 @@
 #include <string.h>
 #include <glib.h>
 #include <glib/gi18n.h>
-#include <mowgli.h>
 #include <locale.h>
 #include "libaudclient/audctrl.h"
 #include "audtool.h"

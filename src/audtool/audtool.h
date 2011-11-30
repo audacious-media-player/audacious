@@ -32,10 +32,8 @@
 #ifndef AUDTOOL_H
 #define AUDTOOL_H
 
-#include <mowgli.h>
 #include <audacious/dbus.h>
 
-extern mowgli_error_context_t *e;
 extern DBusGProxy *dbus_proxy;
 
 struct commandhandler {

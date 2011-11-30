@@ -32,7 +32,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <glib.h>
-#include <mowgli.h>
 #include <locale.h>
 #include "libaudclient/audctrl.h"
 #include "audtool.h"
@@ -95,7 +94,7 @@ void playqueue_display(gint argc, gchar **argv)
 	gchar *songname;
 	gchar *fmt = NULL, *p;
 	gint column;
-	
+
 	i = audacious_remote_get_playqueue_length(dbus_proxy);
 
 	audtool_report("%d queued tracks.", i);

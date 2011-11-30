@@ -32,7 +32,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <glib.h>
-#include <mowgli.h>
 #include <locale.h>
 #include "libaudclient/audctrl.h"
 #include "audtool.h"
@@ -82,11 +81,11 @@ void audtool_whine_tuple_fields(void)
     gint nfields, i;
     gchar **fields = audacious_remote_get_tuple_fields(dbus_proxy),
           **tmp = fields;
-    
+
     audtool_whine("Field names include, but are not limited to:\n");
-    
+
     for (nfields = 0; tmp && *tmp; nfields++, tmp++);
-    
+
     tmp = fields;
     i = 0;
     g_printerr("         ");
@@ -99,13 +98,13 @@ void audtool_whine_tuple_fields(void)
         g_printerr("%s", *tmp);
         if (--nfields > 0)
             g_printerr(", ");
-        
+
         g_free(*tmp);
         tmp++;
     }
-    
+
     g_printerr("\n");
-    
+
     g_free(fields);
 }
 

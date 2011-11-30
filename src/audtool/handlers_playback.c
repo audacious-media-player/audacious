@@ -32,7 +32,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <glib.h>
-#include <mowgli.h>
 #include <locale.h>
 #include "libaudclient/audctrl.h"
 #include "audtool.h"

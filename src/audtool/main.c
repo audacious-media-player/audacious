@@ -29,10 +29,10 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <glib.h>
-#include <mowgli.h>
 #include <locale.h>
 #include "libaudclient/audctrl.h"
 #include "audtool.h"
@@ -143,7 +143,6 @@ struct commandhandler handlers[] = {
 	{NULL, NULL, NULL, 0}
 };
 
-mowgli_error_context_t *e = NULL;
 DBusGProxy *dbus_proxy = NULL;
 static DBusGConnection *connection = NULL;
 
@@ -152,13 +151,13 @@ audtool_connect(void)
 {
 	GError *error = NULL;
 
-	mowgli_error_context_push(e, "While attempting to connect to the D-Bus session bus");
 	connection = dbus_g_bus_get(DBUS_BUS_SESSION, &error);
 
 	if (connection == NULL)
-		mowgli_error_context_display_with_error(e, ":\n  * ", g_strdup_printf("D-Bus Error: %s", error->message));
-
-	mowgli_error_context_pop(e);
+	{
+		fprintf (stderr, "D-Bus Error: %s\n", error->message);
+		exit (EXIT_FAILURE);
+	}
 
 	dbus_proxy = dbus_g_proxy_new_for_name(connection, AUDACIOUS_DBUS_SERVICE,
                                            AUDACIOUS_DBUS_PATH,
@@ -179,18 +178,14 @@ main(gint argc, gchar **argv)
 
 	setlocale(LC_CTYPE, "");
 	g_type_init();
-	mowgli_init();
-
-	e = mowgli_error_context_create();
-	mowgli_error_context_push(e, "In program %s", argv[0]);
 
 	audtool_connect();
 
-	mowgli_error_context_push(e, "While processing the commandline");
-
 	if (argc < 2)
-		mowgli_error_context_display_with_error (e, ":\n  * ", "not enough "
-         "parameters, use \'audtool help\' for more information.");
+	{
+		fprintf (stderr, "Not enough parameters.  Try \"audtool help\".\n");
+		exit (EXIT_FAILURE);
+	}
 
 	for (j = 1; j < argc; j++)
 	{
@@ -211,9 +206,10 @@ main(gint argc, gchar **argv)
 	}
 
 	if (k == 0)
-		mowgli_error_context_display_with_error (e, ":\n  * ", g_strdup_printf
-         ("Unknown command '%s' encountered, use \'audtool help\' for a "
-         "command list.", argv[1]));
+	{
+		fprintf (stderr, "Unknown command \"%s\".  Try \"audtool help\".\n", argv[1]);
+		exit (EXIT_FAILURE);
+	}
 
 	audtool_disconnect();
 
