@@ -579,25 +579,6 @@ static void decode_comment (Tuple * tuple, const guchar * data, gint size)
     g_free (value);
 }
 
-static void decode_txxx (Tuple * tuple, const guchar * data, gint size)
-{
-    gchar * text = decode_text_frame (data, size);
-
-    if (text == NULL)
-        return;
-
-    gchar *separator = strchr(text, 0);
-
-    if (separator == NULL)
-        return;
-
-    gchar * value = separator + 1;
-    TAGDBG ("TXXX: %s = %s.\n", text, value);
-    tuple_associate_string (tuple, -1, text, value);
-
-    g_free (text);
-}
-
 static gboolean decode_rva2_block (const guchar * * _data, gint * _size, gint *
  channel, gint * adjustment, gint * adjustment_unit, gint * peak, gint *
  peak_unit)
@@ -889,9 +870,6 @@ static gboolean id3v24_read_tag (Tuple * tuple, VFSFile * handle)
             break;
           case ID3_ENCODER:
             associate_string (tuple, -1, "encoder", data, size);
-            break;
-          case ID3_TXXX:
-            decode_txxx (tuple, data, size);
             break;
           case ID3_RVA2:
             decode_rva2 (tuple, data, size);
