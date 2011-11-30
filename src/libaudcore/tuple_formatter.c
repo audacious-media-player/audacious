@@ -568,14 +568,6 @@ gchar * tuple_formatter_process_string (const Tuple * tuple, const gchar * strin
         }
     }
 
-#ifdef TUPLE_COMPILER_DEBUG
-    {
-        gint level = 0;
-
-        tuple_formatter_print(stderr, &level, last_ctx, last_ev);
-    }
-#endif
-
     tuple_evalctx_reset(last_ctx);
 
     result = tuple_formatter_eval(last_ctx, last_ev, tuple);

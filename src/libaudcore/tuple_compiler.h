@@ -17,15 +17,13 @@
  * The Audacious team does not consider modular code linking to
  * Audacious or using our public API to be a derived work.
  */
+
 #ifndef AUDACIOUS_TUPLE_COMPILER_H
 #define AUDACIOUS_TUPLE_COMPILER_H
 
-#include <stdio.h>
 #include <glib.h>
 
 #include "tuple.h"
-
-G_BEGIN_DECLS
 
 struct _TupleEvalNode;
 typedef struct _TupleEvalNode TupleEvalNode;
@@ -36,16 +34,11 @@ typedef struct _TupleEvalContext TupleEvalContext;
 TupleEvalContext * tuple_evalctx_new(void);
 void tuple_evalctx_reset(TupleEvalContext *ctx);
 void tuple_evalctx_free(TupleEvalContext *ctx);
-gint tuple_evalctx_add_var(TupleEvalContext *ctx, const gchar *name, const gboolean istemp, const gint type, const TupleValueType ctype);
 
 void tuple_evalnode_free(TupleEvalNode *expr);
 
-gint tuple_formatter_print(FILE *f, gint *level, TupleEvalContext *ctx, TupleEvalNode *expr);
 TupleEvalNode *tuple_formatter_compile(TupleEvalContext *ctx, gchar *expr);
 gchar * tuple_formatter_eval (TupleEvalContext * ctx, TupleEvalNode * expr,
  const Tuple * tuple);
-
-
-G_END_DECLS
 
 #endif /* AUDACIOUS_TUPLE_COMPILER_H */

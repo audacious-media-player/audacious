@@ -32,12 +32,10 @@
  */
 
 #include <ctype.h>
-#include <stdlib.h>
-#include <string.h>
-
-#include "config.h"
-#include <assert.h>
 #include <stdarg.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 
 #define TUPLE_INTERNALS
 
@@ -48,44 +46,36 @@
 #define MIN_ALLOC_BUF	(64)
 #define TUPLEZ_MAX_VARS (4)
 
+#define tuple_error(ctx, ...) fprintf (stderr, "Tuple compiler: " __VA_ARGS__)
+
 enum {
     OP_RAW = 0,		/* plain text */
     OP_FIELD,		/* a field/variable */
     OP_EXISTS,
-    OP_DEF_STRING,
-    OP_DEF_INT,
     OP_EQUALS,
     OP_NOT_EQUALS,
     OP_GT,
     OP_GTEQ,
     OP_LT,
     OP_LTEQ,
-    OP_IS_EMPTY,
-
-    OP_FUNCTION,
-    OP_EXPRESSION	/* additional registered expressions */
+    OP_IS_EMPTY
 };
 
 enum {
     TUPLE_VAR_FIELD = 0,
-    TUPLE_VAR_CONST,
-    TUPLE_VAR_DEF
+    TUPLE_VAR_CONST
 };
 
 struct _TupleEvalNode {
     gint opcode;		/* operator, see OP_ enums */
-    gint var[TUPLEZ_MAX_VARS];	/* tuple / global variable references */
-    gboolean global[TUPLEZ_MAX_VARS];
+    gint var[TUPLEZ_MAX_VARS];	/* tuple variable references */
     gchar *text;		/* raw text, if any (OP_RAW) */
-    gint function, expression;	/* for OP_FUNCTION and OP_EXPRESSION */
     struct _TupleEvalNode *children, *next, *prev; /* children of this struct, and pointer to next node. */
 };
 
 typedef struct {
     gchar *name;
-    gboolean istemp;		/* Scope of variable - TRUE = temporary */
     gint type;			/* Type of variable, see VAR_* */
-    gchar *defvals;		/* Defined value ${=foo,bar} */
     gint defvali;
     TupleValueType ctype;	/* Type of constant/def value */
 
@@ -94,30 +84,13 @@ typedef struct {
 } TupleEvalVar;
 
 struct _TupleEvalContext {
-    gint nvariables, nfunctions, nexpressions;
+    gint nvariables;
     TupleEvalVar **variables;
-
-    /* Error context */
-    gboolean iserror;
-    gchar *errmsg;
 };
-
-void tuple_error(TupleEvalContext *ctx, const gchar *fmt, ...)
-{
-  va_list ap;
-  g_free(ctx->errmsg);
-  va_start(ap, fmt);
-  ctx->errmsg = g_strdup_vprintf(fmt, ap);
-  va_end(ap);
-  ctx->iserror = TRUE;
-}
 
 
 static void tuple_evalctx_free_var(TupleEvalVar *var)
 {
-  assert(var != NULL);
-  var->fieldidx = -1;
-  g_free(var->defvals);
   g_free(var->name);
   g_free(var);
 }
@@ -131,7 +104,7 @@ TupleEvalContext * tuple_evalctx_new(void)
 }
 
 
-/* "Reset" the evaluation context, clean up temporary variables.
+/* "Reset" the evaluation context
  */
 void tuple_evalctx_reset(TupleEvalContext *ctx)
 {
@@ -140,12 +113,7 @@ void tuple_evalctx_reset(TupleEvalContext *ctx)
   for (i = 0; i < ctx->nvariables; i++)
     if (ctx->variables[i]) {
       ctx->variables[i]->fieldref = NULL;
-
-      if (ctx->variables[i]->istemp)
-        tuple_evalctx_free_var(ctx->variables[i]);
     }
-
-  ctx->iserror = FALSE;
 }
 
 
@@ -167,14 +135,13 @@ void tuple_evalctx_free(TupleEvalContext *ctx)
 }
 
 
-gint tuple_evalctx_add_var(TupleEvalContext *ctx, const gchar *name, const gboolean istemp, const gint type, const TupleValueType ctype)
+static gint tuple_evalctx_add_var (TupleEvalContext * ctx, const gchar * name,
+ const gint type, const TupleValueType ctype)
 {
   gint i, ref = -1;
   TupleEvalVar *tmp = g_new0(TupleEvalVar, 1);
-  assert(tmp != NULL);
 
   tmp->name = g_strdup(name);
-  tmp->istemp = istemp;
   tmp->type = type;
   tmp->fieldidx = ref;
   tmp->ctype = ctype;
@@ -185,7 +152,7 @@ gint tuple_evalctx_add_var(TupleEvalContext *ctx, const gchar *name, const gbool
       for (i = 0; i < FIELD_LAST && ref < 0; i++)
         if (strcmp(tuple_fields[i].name, name) == 0) ref = i;
 
-        tmp->fieldidx = ref;
+      tmp->fieldidx = ref;
       break;
 
     case TUPLE_VAR_CONST:
@@ -213,9 +180,6 @@ gint tuple_evalctx_add_var(TupleEvalContext *ctx, const gchar *name, const gbool
 
 static void tuple_evalnode_insert(TupleEvalNode **nodes, TupleEvalNode *node)
 {
-  assert(nodes != NULL);
-  assert(node != NULL);
-
   if (*nodes) {
     node->prev = (*nodes)->prev;
     (*nodes)->prev->next = node;
@@ -263,8 +227,6 @@ static gboolean tc_get_item(TupleEvalContext *ctx,
 {
   gssize i = 0;
   gchar *s = *str, tmpendch;
-  assert(str != NULL);
-  assert(buf != NULL);
 
   if (*s == '"') {
     if (*literal == FALSE) {
@@ -337,7 +299,7 @@ static gint tc_get_variable(TupleEvalContext *ctx, gchar *name, gint type)
         return i;
   }
 
-  return tuple_evalctx_add_var(ctx, name, FALSE, type, ctype);
+  return tuple_evalctx_add_var(ctx, name, type, ctype);
 }
 
 
@@ -384,8 +346,6 @@ static TupleEvalNode *tuple_compiler_pass1(gint *level, TupleEvalContext *ctx, g
   TupleEvalNode *res = NULL, *tmp = NULL;
   gchar *c = *expression, *item, tmps1[MAX_STR];
   gboolean literal, end = FALSE;
-  assert(ctx != NULL);
-  assert(expression != NULL);
 
   (*level)++;
 
@@ -572,22 +532,11 @@ ret_error:
 }
 
 
-static TupleEvalNode *tuple_compiler_pass2(gboolean *changed, TupleEvalContext *ctx, TupleEvalNode *expr)
-{
-  /* TupleEvalNode *curr = expr; */
-  TupleEvalNode *res = NULL;
-  assert(ctx != NULL);
-
-  return res;
-}
-
-
 TupleEvalNode *tuple_formatter_compile(TupleEvalContext *ctx, gchar *expr)
 {
   gint level = 0;
-  gboolean changed = FALSE;
   gchar *tmpexpr = expr;
-  TupleEvalNode *res1, *res2;
+  TupleEvalNode *res1;
 
   res1 = tuple_compiler_pass1(&level, ctx, &tmpexpr);
 
@@ -597,15 +546,7 @@ TupleEvalNode *tuple_formatter_compile(TupleEvalContext *ctx, gchar *expr)
     return NULL;
   }
 
-  res2 = tuple_compiler_pass2(&changed, ctx, res1);
-
-  if (changed) {
-    tuple_evalnode_free(res1);
-    return res2;
-  } else {
-    tuple_evalnode_free(res2);
-    return res1;
-  }
+  return res1;
 }
 
 
@@ -636,15 +577,6 @@ static TupleValueType tf_get_var (gchar * * tmps, gint * tmpi, TupleEvalVar *
   *tmpi = 0;
 
   switch (var->type) {
-    case TUPLE_VAR_DEF:
-      switch (var->ctype) {
-        case TUPLE_STRING: *tmps = var->defvals; break;
-        case TUPLE_INT: *tmpi = var->defvali; break;
-        default: /* Possible, but should be prevented elsewhere */ break;
-      }
-      type = var->ctype;
-      break;
-
     case TUPLE_VAR_CONST:
       switch (var->ctype) {
         case TUPLE_STRING: *tmps = var->name; break;
@@ -697,22 +629,6 @@ static gboolean tuple_formatter_eval_do (TupleEvalContext * ctx, TupleEvalNode *
         var0 = ctx->variables[curr->var[0]];
 
         switch (var0->type) {
-          case TUPLE_VAR_DEF:
-            switch (var0->ctype) {
-              case TUPLE_STRING:
-                str = var0->defvals;
-                break;
-
-              case TUPLE_INT:
-                g_snprintf(tmps, sizeof(tmps), "%d", var0->defvali);
-                str = tmps;
-                break;
-
-              default:
-                break;
-            }
-            break;
-
           case TUPLE_VAR_FIELD:
             if (tf_get_fieldref(var0, tuple)) {
               switch (var0->fieldref->type) {
@@ -773,13 +689,11 @@ static gboolean tuple_formatter_eval_do (TupleEvalContext * ctx, TupleEvalNode *
         break;
 
       case OP_EXISTS:
-#ifdef NO_EXISTS_HACK
         if (tf_get_fieldref(ctx->variables[curr->var[0]], tuple)) {
           if (!tuple_formatter_eval_do(ctx, curr->children, tuple, res, resmax, reslen))
             return FALSE;
         }
         break;
-#endif
 
       case OP_IS_EMPTY:
         var0 = ctx->variables[curr->var[0]];
@@ -810,15 +724,8 @@ static gboolean tuple_formatter_eval_do (TupleEvalContext * ctx, TupleEvalNode *
         } else
           result = TRUE;
 
-#ifdef NO_EXISTS_HACK
         if (result && !tuple_formatter_eval_do(ctx, curr->children, tuple, res, resmax, reslen))
           return FALSE;
-#else
-        if ((curr->opcode == OP_EXISTS && !result) || (curr->opcode == OP_IS_EMPTY && result)) {
-          if (!tuple_formatter_eval_do(ctx, curr->children, tuple, res, resmax, reslen))
-            return FALSE;
-        }
-#endif
         break;
 
       default:
@@ -857,114 +764,10 @@ gchar * tuple_formatter_eval (TupleEvalContext * ctx, TupleEvalNode * expr,
 {
   gchar *res = NULL;
   gssize resmax = 0, reslen = 0;
-  assert(ctx != NULL);
-  assert(tuple != NULL);
 
   if (!expr) return res;
 
   tuple_formatter_eval_do(ctx, expr, tuple, &res, &resmax, &reslen);
 
   return res;
-}
-
-
-static void print_vars(FILE *f, TupleEvalContext *ctx, TupleEvalNode *node, gint start, gint end)
-{
-  gint i;
-
-  for (i = start; i <= end; i++) {
-    TupleEvalVar *v = NULL;
-    gchar *s = NULL;
-    gint n = node->var[i];
-
-    if (n >= 0) {
-      v = ctx->variables[n];
-      if (v) {
-        s = v->name;
-
-        if (v->type == TUPLE_VAR_CONST)
-          fprintf(f, "(const)");
-        else if (v->type == TUPLE_VAR_DEF)
-          fprintf(f, "(def)");
-      }
-    }
-
-    fprintf(f, "var[%d]=(%d),\"%s\" ", i, n, s);
-  }
-}
-
-
-gint tuple_formatter_print(FILE *f, gint *level, TupleEvalContext *ctx, TupleEvalNode *expr)
-{
-  TupleEvalNode *curr = expr;
-
-  if (!expr) return -1;
-
-  (*level)++;
-
-  while (curr) {
-    gint i;
-    for (i = 0; i < *level; i++)
-      fprintf(f, "  ");
-
-    switch (curr->opcode) {
-      case OP_RAW:
-        fprintf(f, "OP_RAW text=\"%s\"\n", curr->text);
-        break;
-
-      case OP_FIELD:
-        fprintf(f, "OP_FIELD ");
-        print_vars(f, ctx, curr, 0, 0);
-        fprintf(f, "\n");
-        break;
-
-      case OP_EXISTS:
-        fprintf(f, "OP_EXISTS ");
-        print_vars(f, ctx, curr, 0, 0);
-        fprintf(f, "\n");
-        tuple_formatter_print(f, level, ctx, curr->children);
-        break;
-
-      case OP_DEF_STRING:
-        fprintf(f, "OP_DEF_STRING ");
-        fprintf(f, "\n");
-        break;
-
-      case OP_DEF_INT:
-        fprintf(f, "OP_DEF_INT ");
-        fprintf(f, "\n");
-        break;
-
-      case OP_EQUALS:
-        fprintf(f, "OP_EQUALS ");
-        print_vars(f, ctx, curr, 0, 1);
-        fprintf(f, "\n");
-        tuple_formatter_print(f, level, ctx, curr->children);
-        break;
-
-      case OP_NOT_EQUALS:
-        fprintf(f, "OP_NOT_EQUALS ");
-        print_vars(f, ctx, curr, 0, 1);
-        fprintf(f, "\n");
-        tuple_formatter_print(f, level, ctx, curr->children);
-        break;
-
-      case OP_IS_EMPTY:
-        fprintf(f, "OP_IS_EMPTY ");
-        print_vars(f, ctx, curr, 0, 0);
-        fprintf(f, "\n");
-        tuple_formatter_print(f, level, ctx, curr->children);
-        break;
-
-      default:
-        fprintf(f, "Unimplemented opcode %d!\n", curr->opcode);
-        break;
-    }
-
-    curr = curr->next;
-  }
-
-  (*level)--;
-
-  return 0;
 }
