@@ -1,6 +1,7 @@
 /*
  * Audacious - Tuplez compiler
  * Copyright (c) 2007 Matti 'ccr' Hämäläinen
+ * Copyright (c) 2011 John Lindgren
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,6 +38,7 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "strpool.h"
 #include "tuple_compiler.h"
 
 #define MAX_STR		(256)
@@ -79,7 +81,7 @@ typedef struct {
 
     gint fieldidx;		/* if >= 0: Index # of "pre-defined" Tuple fields */
     gboolean fieldread, fieldvalid;
-    const gchar * fieldstr;
+    gchar * fieldstr;
 } TupleEvalVar;
 
 struct _TupleEvalContext {
@@ -91,6 +93,7 @@ struct _TupleEvalContext {
 static void tuple_evalctx_free_var(TupleEvalVar *var)
 {
   g_free(var->name);
+  str_unref (var->fieldstr);
   g_free(var);
 }
 
@@ -113,6 +116,7 @@ void tuple_evalctx_reset(TupleEvalContext *ctx)
     if (ctx->variables[i]) {
       ctx->variables[i]->fieldread = FALSE;
       ctx->variables[i]->fieldvalid = FALSE;
+      str_unref (ctx->variables[i]->fieldstr);
       ctx->variables[i]->fieldstr = NULL;
     }
 }
@@ -567,7 +571,7 @@ static gboolean tf_get_fieldval (TupleEvalVar * var, const Tuple * tuple)
   if (var->ctype == TUPLE_INT)
     var->defvali = tuple_get_int (tuple, var->fieldidx, NULL);
   else if (var->ctype == TUPLE_STRING)
-    var->fieldstr = tuple_get_string (tuple, var->fieldidx, NULL);
+    var->fieldstr = tuple_get_str (tuple, var->fieldidx, NULL);
 
   var->fieldread = TRUE;
   var->fieldvalid = TRUE;
@@ -601,7 +605,7 @@ static TupleValueType tf_get_var (gchar * * tmps, gint * tmpi, TupleEvalVar *
         if (type == TUPLE_INT)
           * tmpi = var->defvali;
         else if (type == TUPLE_STRING)
-          * tmps = (gchar *) var->fieldstr;
+          * tmps = var->fieldstr;
       }
       break;
   }
@@ -715,7 +719,7 @@ static gboolean tuple_formatter_eval_do (TupleEvalContext * ctx, TupleEvalNode *
 
           case TUPLE_STRING:
             result = TRUE;
-            tmps2 = (gchar *) var0->fieldstr;
+            tmps2 = var0->fieldstr;
 
             while (result && tmps2 && *tmps2 != '\0') {
               gunichar uc = g_utf8_get_char(tmps2);

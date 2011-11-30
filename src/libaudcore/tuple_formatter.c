@@ -22,12 +22,13 @@
 
 #include <glib.h>
 
-#include "config.h"
-#include "tuple.h"
-#include "tuple_formatter.h"
 #include "audstrings.h"
+#include "config.h"
+#include "strpool.h"
+#include "tuple.h"
+#include "tuple_compiler.h"
+#include "tuple_formatter.h"
 
-# include "tuple_compiler.h"
 static GStaticMutex tuplec_mutex = G_STATIC_MUTEX_INIT;
 
 #ifdef _DEBUG
@@ -97,9 +98,8 @@ static gchar * tuple_formatter_process_string (const Tuple * tuple, const gchar 
         }
     }
 
-    tuple_evalctx_reset(last_ctx);
-
     result = tuple_formatter_eval(last_ctx, last_ev, tuple);
+    tuple_evalctx_reset(last_ctx);
 
     g_static_mutex_unlock (& tuplec_mutex);
 
@@ -113,11 +113,13 @@ gchar * tuple_formatter_make_title_string (const Tuple * tuple, const gchar *
 
     if (title == NULL || !title[0])
     {
-        const char *filename = tuple_get_string(tuple, FIELD_FILE_NAME, NULL);
+        gchar * filename = tuple_get_str (tuple, FIELD_FILE_NAME, NULL);
 
         g_free(title);
         title = g_strdup((filename != NULL) ? filename : "");
         string_cut_extension(title);
+
+        str_unref (filename);
     }
 
     return title;
