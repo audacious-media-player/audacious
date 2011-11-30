@@ -94,44 +94,6 @@ gint tuple_field_by_name (const gchar * name);
 const gchar * tuple_field_get_name (gint field);
 TupleValueType tuple_field_get_type (gint field);
 
-#ifdef TUPLE_INTERNALS
-#define FIELD_LAST TUPLE_FIELDS
-
-typedef struct {
-    gchar *name;
-    TupleValueType type;
-} TupleBasicType;
-
-extern const TupleBasicType tuple_fields[FIELD_LAST];
-
-#define TUPLE_NAME_MAX 20
-
-typedef struct {
-    gchar name[TUPLE_NAME_MAX]; /* for standard fields, the empty string */
-    TupleValueType type;
-    union {
-        gchar *string;
-        gint integer;
-    } value;
-} TupleValue;
-
-/**
- * Structure for holding and passing around miscellaneous track
- * metadata. This is not the same as a playlist entry, though.
- */
-struct _Tuple {
-    gint refcount;
-    TupleValue *values[FIELD_LAST]; /**< Basic #Tuple values, entry is NULL if not set. */
-    gint nsubtunes;                 /**< Number of subtunes, if any. Values greater than 0
-                                         mean that there are subtunes and #subtunes array
-                                         may be set. */
-    gint *subtunes;                 /**< Array of gint containing subtune index numbers.
-                                         Can be NULL if indexing is linear or if
-                                         there are no subtunes. */
-};
-
-#endif /* TUPLE_INTERNALS */
-
 typedef struct _Tuple Tuple;
 
 Tuple * tuple_new (void);

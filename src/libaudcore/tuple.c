@@ -29,19 +29,48 @@
 
 #include <audacious/i18n.h>
 
-#define TUPLE_INTERNALS
-
 #include "config.h"
 #include "tuple.h"
 #include "audstrings.h"
 #include "strpool.h"
+
+typedef struct {
+    gchar *name;
+    TupleValueType type;
+} TupleBasicType;
+
+#define TUPLE_NAME_MAX 20
+
+typedef struct {
+    gchar name[TUPLE_NAME_MAX]; /* for standard fields, the empty string */
+    TupleValueType type;
+    union {
+        gchar *string;
+        gint integer;
+    } value;
+} TupleValue;
+
+/**
+ * Structure for holding and passing around miscellaneous track
+ * metadata. This is not the same as a playlist entry, though.
+ */
+struct _Tuple {
+    gint refcount;
+    TupleValue *values[TUPLE_FIELDS]; /**< Basic #Tuple values, entry is NULL if not set. */
+    gint nsubtunes;                 /**< Number of subtunes, if any. Values greater than 0
+                                         mean that there are subtunes and #subtunes array
+                                         may be set. */
+    gint *subtunes;                 /**< Array of gint containing subtune index numbers.
+                                         Can be NULL if indexing is linear or if
+                                         there are no subtunes. */
+};
 
 static gboolean set_string (Tuple * tuple, const gint nfield,
  const gchar * field, gchar * string, gboolean take);
 
 /** Ordered table of basic #Tuple field names and their #TupleValueType.
  */
-const TupleBasicType tuple_fields[FIELD_LAST] = {
+static const TupleBasicType tuple_fields[TUPLE_FIELDS] = {
     { "artist",         TUPLE_STRING },
     { "title",          TUPLE_STRING },
     { "album",          TUPLE_STRING },
@@ -141,7 +170,7 @@ static void tuple_destroy_unlocked (Tuple * tuple)
 {
     gint i;
 
-    for (i = 0; i < FIELD_LAST; i++)
+    for (i = 0; i < TUPLE_FIELDS; i++)
     {
         if (tuple->values[i])
             tuple_value_destroy (tuple->values[i]);
@@ -295,7 +324,7 @@ tuple_copy(const Tuple *src)
     dst = tuple_new_unlocked();
 
     /* Copy basic fields */
-    for (i = 0; i < FIELD_LAST; i++)
+    for (i = 0; i < TUPLE_FIELDS; i++)
         dst->values[i] = tuple_copy_value(src->values[i]);
 
     /* Copy subtune number information */
