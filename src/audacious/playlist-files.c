@@ -19,6 +19,8 @@
  * using our public API to be a derived work.
  */
 
+#include <string.h>
+
 #include "debug.h"
 #include "misc.h"
 #include "playlist.h"

@@ -20,6 +20,7 @@
  */
 
 #include <glib.h>
+#include <string.h>
 
 #include "output.h"
 #include "vis_runner.h"

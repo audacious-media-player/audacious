@@ -26,7 +26,6 @@
 #define AUDACIOUS_TUPLE_H
 
 #include <glib.h>
-#include <mowgli.h>
 
 G_BEGIN_DECLS
 
@@ -118,7 +117,6 @@ typedef struct {
  */
 struct _Tuple {
     gint refcount;
-    mowgli_patricia_t *dict;        /**< Mowgli dictionary for holding other than basic values. */
     TupleValue *values[FIELD_LAST]; /**< Basic #Tuple values, entry is NULL if not set. */
     gint nsubtunes;                 /**< Number of subtunes, if any. Values greater than 0
                                          mean that there are subtunes and #subtunes array

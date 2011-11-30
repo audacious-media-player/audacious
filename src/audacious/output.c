@@ -20,6 +20,8 @@
  */
 
 #include <math.h>
+#include <string.h>
+
 #include <libaudcore/audio.h>
 
 #include "debug.h"

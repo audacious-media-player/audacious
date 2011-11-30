@@ -22,6 +22,8 @@
 #endif
 
 #include <glib.h>
+
+#include <stdlib.h>
 #include <string.h>
 #include <assert.h>
 #ifdef HAVE_SYS_TYPES_H

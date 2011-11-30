@@ -24,6 +24,7 @@
  */
 
 #include <dirent.h>
+#include <sys/stat.h>
 #include <unistd.h>
 
 #ifdef _WIN32

@@ -22,7 +22,6 @@
 #define AUDACIOUS_TUPLE_FORMATTER_H
 
 #include <glib.h>
-#include <mowgli.h>
 
 #include "tuple.h"
 

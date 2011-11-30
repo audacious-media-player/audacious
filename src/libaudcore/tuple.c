@@ -22,8 +22,10 @@
  * @brief Basic Tuple handling API.
  */
 
+#include <stdio.h>
+#include <string.h>
+
 #include <glib.h>
-#include <mowgli.h>
 
 #include <audacious/i18n.h>
 
@@ -104,17 +106,9 @@ static void tuple_value_destroy (TupleValue * value)
     g_slice_free (TupleValue, value);
 }
 
-/* iterative destructor of tuple values. */
-static void tuple_value_destroy_cb (const gchar * key, void * data, void * priv)
-{
-    tuple_value_destroy (data);
-}
-
 static void tuple_destroy_unlocked (Tuple * tuple)
 {
     gint i;
-
-    mowgli_patricia_destroy(tuple->dict, tuple_value_destroy_cb, NULL);
 
     for (i = 0; i < FIELD_LAST; i++)
     {
@@ -132,9 +126,6 @@ static Tuple * tuple_new_unlocked (void)
 {
     Tuple * tuple = g_slice_new0 (Tuple);
     tuple->refcount = 1;
-
-    tuple->dict = mowgli_patricia_create(string_canonize_case);
-
     return tuple;
 }
 
@@ -264,8 +255,6 @@ Tuple *
 tuple_copy(const Tuple *src)
 {
     Tuple *dst;
-    TupleValue * tv, * copied;
-    mowgli_patricia_iteration_state_t state;
     gint i;
 
     g_return_val_if_fail(src != NULL, NULL);
@@ -277,13 +266,6 @@ tuple_copy(const Tuple *src)
     /* Copy basic fields */
     for (i = 0; i < FIELD_LAST; i++)
         dst->values[i] = tuple_copy_value(src->values[i]);
-
-    /* Copy dictionary contents */
-    MOWGLI_PATRICIA_FOREACH (tv, & state, src->dict)
-    {
-        if ((copied = tuple_copy_value (tv)) != NULL)
-            mowgli_patricia_add (dst->dict, copied->name, copied);
-    }
 
     /* Copy subtune number information */
     if (src->subtunes && src->nsubtunes > 0)
@@ -313,18 +295,6 @@ tuple_new_from_filename(const gchar *filename)
     return tuple;
 }
 
-
-static gint
-tuple_get_nfield(const gchar *field)
-{
-    gint i;
-    for (i = 0; i < FIELD_LAST; i++)
-        if (!strcmp(field, tuple_fields[i].name))
-            return i;
-    return -1;
-}
-
-
 /**
  * (Re)associates data into given #Tuple field.
  * If specified field already exists in the #Tuple, any data from it
@@ -351,14 +321,7 @@ tuple_associate_data(Tuple *tuple, const gint cnfield, const gchar *field, Tuple
     TupleValue *value = NULL;
 
     g_return_val_if_fail(tuple != NULL, NULL);
-    g_return_val_if_fail(cnfield < FIELD_LAST, NULL);
-
-    /* Check for known fields */
-    if (nfield < 0) {
-        nfield = tuple_get_nfield(field);
-        if (nfield >= 0)
-            g_warning("Tuple FIELD_* not used for '%s'!\n", field);
-    }
+    g_return_val_if_fail(cnfield >= 0 && cnfield < FIELD_LAST, NULL);
 
     /* Check if field was known */
     if (nfield >= 0) {
@@ -371,8 +334,6 @@ tuple_associate_data(Tuple *tuple, const gint cnfield, const gchar *field, Tuple
             TUPLE_UNLOCK_WRITE();
             return NULL;
         }
-    } else {
-        value = mowgli_patricia_retrieve(tuple->dict, tfield);
     }
 
     if (value != NULL) {
@@ -383,17 +344,8 @@ tuple_associate_data(Tuple *tuple, const gint cnfield, const gchar *field, Tuple
         /* Allocate a new value */
         value = g_slice_new0 (TupleValue);
         value->type = ftype;
-
-        if (nfield >= 0)
-        {
-            value->name[0] = 0;
-            tuple->values[nfield] = value;
-        }
-        else
-        {
-            g_strlcpy (value->name, tfield, TUPLE_NAME_MAX);
-            mowgli_patricia_add(tuple->dict, tfield, value);
-        }
+        value->name[0] = 0;
+        tuple->values[nfield] = value;
     }
 
     return value;
@@ -524,19 +476,12 @@ tuple_disassociate(Tuple *tuple, const gint cnfield, const gchar *field)
     gint nfield = cnfield;
 
     g_return_if_fail(tuple != NULL);
-    g_return_if_fail(nfield < FIELD_LAST);
-
-    if (nfield < 0)
-        nfield = tuple_get_nfield(field);
+    g_return_if_fail(nfield >= 0 && nfield < FIELD_LAST);
 
     TUPLE_LOCK_WRITE();
-    if (nfield < 0)
-        /* why _delete()? because _delete() returns the dictnode's data on success */
-        value = mowgli_patricia_delete(tuple->dict, field);
-    else {
-        value = tuple->values[nfield];
-        tuple->values[nfield] = NULL;
-    }
+
+    value = tuple->values[nfield];
+    tuple->values[nfield] = NULL;
 
     if (value)
         tuple_value_destroy (value);
@@ -561,20 +506,12 @@ TupleValueType tuple_get_value_type (const Tuple * tuple, gint cnfield,
     gint nfield = cnfield;
 
     g_return_val_if_fail(tuple != NULL, TUPLE_UNKNOWN);
-    g_return_val_if_fail(nfield < FIELD_LAST, TUPLE_UNKNOWN);
-
-    if (nfield < 0)
-        nfield = tuple_get_nfield(field);
+    g_return_val_if_fail(nfield >= 0 && nfield < FIELD_LAST, TUPLE_UNKNOWN);
 
     TUPLE_LOCK_READ();
-    if (nfield < 0) {
-        TupleValue *value;
-        if ((value = mowgli_patricia_retrieve(tuple->dict, field)) != NULL)
-            type = value->type;
-    } else {
-        if (tuple->values[nfield])
-            type = tuple->values[nfield]->type;
-    }
+
+    if (tuple->values[nfield])
+        type = tuple->values[nfield]->type;
 
     TUPLE_UNLOCK_READ();
     return type;
@@ -598,16 +535,11 @@ const gchar * tuple_get_string (const Tuple * tuple, gint cnfield, const gchar *
     gint nfield = cnfield;
 
     g_return_val_if_fail(tuple != NULL, NULL);
-    g_return_val_if_fail(nfield < FIELD_LAST, NULL);
-
-    if (nfield < 0)
-        nfield = tuple_get_nfield(field);
+    g_return_val_if_fail(nfield >= 0 && nfield < FIELD_LAST, NULL);
 
     TUPLE_LOCK_READ();
-    if (nfield < 0)
-        value = mowgli_patricia_retrieve(tuple->dict, field);
-    else
-        value = tuple->values[nfield];
+
+    value = tuple->values[nfield];
 
     if (value) {
         gchar * str = (value->type == TUPLE_STRING) ? value->value.string : NULL;
@@ -637,16 +569,11 @@ gint tuple_get_int (const Tuple * tuple, gint cnfield, const gchar * field)
     gint nfield = cnfield;
 
     g_return_val_if_fail(tuple != NULL, 0);
-    g_return_val_if_fail(nfield < FIELD_LAST, 0);
-
-    if (nfield < 0)
-        nfield = tuple_get_nfield(field);
+    g_return_val_if_fail(nfield >= 0 && nfield < FIELD_LAST, 0);
 
     TUPLE_LOCK_READ();
-    if (nfield < 0)
-        value = mowgli_patricia_retrieve(tuple->dict, field);
-    else
-        value = tuple->values[nfield];
+
+    value = tuple->values[nfield];
 
     if (value) {
         gint i = (value->type == TUPLE_INT) ? value->value.integer : 0;

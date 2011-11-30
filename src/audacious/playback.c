@@ -21,6 +21,7 @@
 
 #include <glib.h>
 #include <pthread.h>
+#include <string.h>
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/eventqueue.h>

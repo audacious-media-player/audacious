@@ -21,6 +21,7 @@
 
 #include <glib.h>
 #include <stdio.h>
+#include <string.h>
 
 #include <audacious/misc.h>
 #include <libaudcore/hook.h>

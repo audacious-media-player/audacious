@@ -31,6 +31,10 @@
  *   currently there is just a single context, is a "global" context needed?
  */
 
+#include <ctype.h>
+#include <stdlib.h>
+#include <string.h>
+
 #include "config.h"
 #include <assert.h>
 #include <stdarg.h>
@@ -583,7 +587,7 @@ static TupleValue * tf_get_fieldref (TupleEvalVar * var, const Tuple * tuple)
 {
   if (var->type == TUPLE_VAR_FIELD && var->fieldref == NULL) {
     if (var->fieldidx < 0)
-      var->fieldref = mowgli_patricia_retrieve(tuple->dict, var->name);
+      var->fieldref = NULL;
     else
       var->fieldref = tuple->values[var->fieldidx];
   }

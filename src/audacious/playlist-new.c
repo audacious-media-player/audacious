@@ -19,6 +19,7 @@
  * using our public API to be a derived work.
  */
 
+#include <string.h>
 #include <time.h>
 
 #include <glib.h>
@@ -1184,7 +1185,7 @@ Tuple * playlist_entry_get_tuple (gint playlist_num, gint entry_num, gboolean fa
     Tuple * tuple = entry ? entry->tuple : NULL;
 
     if (tuple)
-        mowgli_object_ref (tuple);
+        tuple_ref (tuple);
 
     LEAVE_RET (tuple);
 }
@@ -2192,7 +2193,7 @@ Tuple * playback_entry_get_tuple (void)
     Tuple * tuple = entry ? entry->tuple : NULL;
 
     if (tuple)
-        mowgli_object_ref (tuple);
+        tuple_ref (tuple);
 
     LEAVE_RET (tuple);
 }

@@ -19,6 +19,7 @@
  * using our public API to be a derived work.
  */
 
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 

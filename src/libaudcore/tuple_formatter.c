@@ -18,8 +18,9 @@
  * Audacious or using our public API to be a derived work.
  */
 
+#include <string.h>
+
 #include <glib.h>
-#include <mowgli.h>
 
 #define TUPLE_INTERNALS
 

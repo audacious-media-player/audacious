@@ -20,8 +20,9 @@
 #ifndef AUDACIOUS_TUPLE_COMPILER_H
 #define AUDACIOUS_TUPLE_COMPILER_H
 
+#include <stdio.h>
 #include <glib.h>
-#include <mowgli.h>
+
 #include "tuple.h"
 
 G_BEGIN_DECLS
