@@ -26,12 +26,9 @@
 G_BEGIN_DECLS
 
 #include <glib.h>
-#include <mowgli.h>
 #include "libaudcore/tuple.h"
 #include "libaudcore/vfs.h"
 
-mowgli_list_t tag_modules;
-int number_of_modules;
 typedef Tuple* pTuple;
 
 typedef struct _module {
@@ -41,12 +38,7 @@ typedef struct _module {
     gboolean (* read_tag) (Tuple * tuple, VFSFile * handle);
     gboolean (* read_image) (VFSFile * handle, void * * data, gint * size);
     gboolean (* write_tag) (const Tuple * tuple, VFSFile * handle);
-
-    mowgli_node_t node;
 } tag_module_t;
-
-/* this function must be modified when including new modules */
-void init_tag_modules(void);
 
 tag_module_t * find_tag_module (VFSFile * handle, gint new_type);
 

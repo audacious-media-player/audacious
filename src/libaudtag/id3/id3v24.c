@@ -20,6 +20,8 @@
  */
 
 #include <glib.h>
+#include <mowgli.h>
+#include <string.h>
 
 #include <libaudcore/audstrings.h>
 

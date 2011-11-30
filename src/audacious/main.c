@@ -24,8 +24,13 @@
  */
 
 #include <errno.h>
+#include <fcntl.h>
+#include <string.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 #include <gtk/gtk.h>
+#include <mowgli.h>
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
@@ -463,7 +468,6 @@ static void init_two (gint * p_argc, gchar * * * p_argv)
     }
 
     hook_init ();
-    tag_init ();
 
     config_load ();
     chardet_init ();

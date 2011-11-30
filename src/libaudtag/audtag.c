@@ -25,11 +25,6 @@
 
 gboolean tag_verbose = FALSE;
 
-void tag_init(void)
-{
-    init_tag_modules();
-}
-
 void tag_set_verbose (gboolean verbose)
 {
     tag_verbose = verbose;

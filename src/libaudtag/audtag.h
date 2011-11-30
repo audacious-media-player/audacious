@@ -26,7 +26,6 @@
 G_BEGIN_DECLS
 
 #include <glib.h>
-#include <mowgli.h>
 #include <libaudcore/tuple.h>
 #include <libaudcore/vfs.h>
 
@@ -36,7 +35,6 @@ enum
     TAG_TYPE_APE,
 };
 
-void tag_init (void);
 void tag_set_verbose (gboolean verbose);
 
 gboolean tag_tuple_read (Tuple * tuple, VFSFile *fd);
