@@ -161,10 +161,6 @@ static void scan_trigger (void);
 
 static gchar * title_from_tuple (Tuple * tuple)
 {
-    const gchar * custom = tuple_get_string (tuple, FIELD_FORMATTER, NULL);
-    if (custom)
-        return tuple_formatter_make_title_string (tuple, custom);
-
     gchar * generic = get_string (NULL, "generic_title_format");
     gchar * title = tuple_formatter_make_title_string (tuple, generic);
     g_free (generic);
