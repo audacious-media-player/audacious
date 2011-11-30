@@ -331,7 +331,6 @@ tuple_associate_data(Tuple *tuple, const gint cnfield, const gchar *field, Tuple
         if (ftype != tuple_fields[nfield].type) {
             g_warning("Invalid type for [%s](%d->%d), %d != %d\n",
                 tfield, cnfield, nfield, ftype, tuple_fields[nfield].type);
-            TUPLE_UNLOCK_WRITE();
             return NULL;
         }
     }
@@ -362,6 +361,8 @@ static gboolean set_string (Tuple * tuple, const gint nfield,
     {
         if (take)
             g_free (string);
+
+        TUPLE_UNLOCK_WRITE ();
         return FALSE;
     }
 
@@ -451,8 +452,12 @@ tuple_associate_int(Tuple *tuple, const gint nfield, const gchar *field, gint in
     TupleValue *value;
 
     TUPLE_LOCK_WRITE();
+
     if ((value = tuple_associate_data(tuple, nfield, field, TUPLE_INT)) == NULL)
+    {
+        TUPLE_UNLOCK_WRITE ();
         return FALSE;
+    }
 
     value->value.integer = integer;
 
