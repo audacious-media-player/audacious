@@ -24,6 +24,7 @@
 #include <string.h>
 
 #include <libaudcore/audstrings.h>
+#include <libaudcore/strpool.h>
 
 #include "id3-common.h"
 #include "id3v24.h"
@@ -402,7 +403,7 @@ static void read_all_frames (VFSFile * handle, gint version, gboolean syncsafe,
         frame->data = data;
         frame->size = size;
 
-        g_hash_table_insert (dict, key, frame);
+        g_hash_table_insert (dict, str_get (key), frame);
     }
 }
 
@@ -743,7 +744,7 @@ static GenericFrame * add_generic_frame (gint id, gint size,
     {
         frame = g_malloc (sizeof (GenericFrame));
         strcpy (frame->key, id3_frames[id]);
-        g_hash_table_insert (dict, frame->key, frame);
+        g_hash_table_insert (dict, str_get (id3_frames[id]), frame);
     }
     else
         g_free (frame->data);
@@ -755,13 +756,8 @@ static GenericFrame * add_generic_frame (gint id, gint size,
 
 static void remove_frame (gint id, GHashTable * dict)
 {
-    GenericFrame * frame = g_hash_table_lookup (dict, id3_frames[id]);
-    if (frame == NULL)
-        return;
-
     TAGDBG ("Deleting frame %s.\n", id3_frames[id]);
     g_hash_table_remove (dict, id3_frames[id]);
-    free_generic_frame (frame);
 }
 
 static void add_text_frame (gint id, const gchar * text, GHashTable * dict)
@@ -983,11 +979,6 @@ static gboolean id3v24_read_image (VFSFile * handle, void * * image_data, gint *
     return found;
 }
 
-static void free_frame_cb (void * key, void * data, void * unused)
-{
-    free_generic_frame (data);
-}
-
 static gboolean id3v24_write_tag (const Tuple * tuple, VFSFile * f)
 {
     gint version, header_size, data_size, footer_size;
@@ -999,7 +990,8 @@ static gboolean id3v24_write_tag (const Tuple * tuple, VFSFile * f)
         return FALSE;
 
     //read all frames into generic frames;
-    GHashTable * dict = g_hash_table_new(g_str_hash, g_str_equal);
+    GHashTable * dict = g_hash_table_new_full (g_str_hash, g_str_equal,
+     (GDestroyNotify) str_unref, (GDestroyNotify) free_generic_frame);
     read_all_frames (f, version, syncsafe, data_size, dict);
 
     //make the new frames from tuple and replace in the dictionary the old frames with the new ones
@@ -1036,12 +1028,10 @@ static gboolean id3v24_write_tag (const Tuple * tuple, VFSFile * f)
      || ! write_header (f, data_size, FALSE))
         goto ERR;
 
-    g_hash_table_foreach (dict, free_frame_cb, NULL);
     g_hash_table_destroy (dict);
     return TRUE;
 
 ERR:
-    g_hash_table_foreach (dict, free_frame_cb, NULL);
     g_hash_table_destroy (dict);
     return FALSE;
 }
