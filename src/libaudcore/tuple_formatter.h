@@ -25,22 +25,7 @@
 
 #include "tuple.h"
 
-G_BEGIN_DECLS
-
-gchar * tuple_formatter_process_string (const Tuple * tuple, const gchar *
- string);
 gchar * tuple_formatter_make_title_string (const Tuple * tuple, const gchar *
  string);
-void tuple_formatter_register_expression(const gchar *keyword,
-        gboolean (*func)(Tuple *tuple, const gchar *argument));
-void tuple_formatter_register_function(const gchar *keyword,
-        gchar *(*func)(Tuple *tuple, gchar **argument));
-gchar *tuple_formatter_process_expr(Tuple *tuple, const gchar *expression,
-    const gchar *argument);
-gchar *tuple_formatter_process_function(Tuple *tuple, const gchar *expression,
-    const gchar *argument);
-gchar *tuple_formatter_process_construct(Tuple *tuple, const gchar *string);
-
-G_END_DECLS
 
 #endif /* AUDACIOUS_TUPLE_FORMATTER_H */
