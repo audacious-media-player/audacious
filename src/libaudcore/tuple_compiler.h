@@ -30,18 +30,8 @@ G_BEGIN_DECLS
 struct _TupleEvalNode;
 typedef struct _TupleEvalNode TupleEvalNode;
 
-struct _TupleEvalVar;
-typedef struct _TupleEvalVar TupleEvalVar;
-
-typedef struct {
-    gint nvariables, nfunctions, nexpressions;
-    TupleEvalVar **variables;
-
-    /* Error context */
-    gboolean iserror;
-    gchar *errmsg;
-} TupleEvalContext;
-
+struct _TupleEvalContext;
+typedef struct _TupleEvalContext TupleEvalContext;
 
 TupleEvalContext * tuple_evalctx_new(void);
 void tuple_evalctx_reset(TupleEvalContext *ctx);

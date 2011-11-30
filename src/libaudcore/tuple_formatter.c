@@ -563,9 +563,6 @@ gchar * tuple_formatter_process_string (const Tuple * tuple, const gchar * strin
         last_ctx = tuple_evalctx_new();
         last_string = g_strdup(string);
         last_ev = tuple_formatter_compile(last_ctx, last_string);
-        if (last_ctx->iserror) {
-            g_warning("[TuplezCC]: %s", last_ctx->errmsg);
-        }
         if (!last_ev) {
             g_warning("[TuplezCC]: Compilation failed!\n");
         }
@@ -582,9 +579,6 @@ gchar * tuple_formatter_process_string (const Tuple * tuple, const gchar * strin
     tuple_evalctx_reset(last_ctx);
 
     result = tuple_formatter_eval(last_ctx, last_ev, tuple);
-    if (last_ctx->iserror) {
-        g_warning("[TuplezEV]: %s", last_ctx->errmsg);
-    }
 
     g_static_mutex_unlock (& tuplec_mutex);
 

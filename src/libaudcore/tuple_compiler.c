@@ -81,7 +81,7 @@ struct _TupleEvalNode {
     struct _TupleEvalNode *children, *next, *prev; /* children of this struct, and pointer to next node. */
 };
 
-struct _TupleEvalVar {
+typedef struct {
     gchar *name;
     gboolean istemp;		/* Scope of variable - TRUE = temporary */
     gint type;			/* Type of variable, see VAR_* */
@@ -91,6 +91,15 @@ struct _TupleEvalVar {
 
     gint fieldidx;		/* if >= 0: Index # of "pre-defined" Tuple fields */
     TupleValue *fieldref;	/* Cached tuple field ref */
+} TupleEvalVar;
+
+struct _TupleEvalContext {
+    gint nvariables, nfunctions, nexpressions;
+    TupleEvalVar **variables;
+
+    /* Error context */
+    gboolean iserror;
+    gchar *errmsg;
 };
 
 void tuple_error(TupleEvalContext *ctx, const gchar *fmt, ...)
