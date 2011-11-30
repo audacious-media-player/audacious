@@ -32,6 +32,7 @@
 
 #include <audacious/debug.h>
 #include <audacious/playlist.h>
+#include <libaudcore/strpool.h>
 
 #include "ui_jumptotrack_cache.h"
 #include "ui_regex.h"
@@ -211,8 +212,9 @@ ui_jump_to_track_cache_match_keyword(JumpToTrackCache* cache,
  *
  * String returned by this function should be freed manually.
  */
-static gchar *
-normalize_search_string(const gchar* string)
+
+/* calls str_unref() on <string> */
+static gchar * normalize_search_string (gchar * string)
 {
     if (! string)
         return NULL;
@@ -220,6 +222,8 @@ normalize_search_string(const gchar* string)
     gchar* normalized_string = g_utf8_normalize(string, -1, G_NORMALIZE_NFKD);
     gchar* folded_string = g_utf8_casefold(normalized_string, -1);
     g_free(normalized_string);
+    str_unref (string);
+
     return folded_string;
 }
 
@@ -296,11 +300,11 @@ static void ui_jump_to_track_cache_init (JumpToTrackCache * cache)
     for (gint entry = 0; entry < entries; entry ++)
     {
         Tuple * tuple = aud_playlist_entry_get_tuple (playlist, entry, TRUE);
-        gchar * title = normalize_search_string (tuple ? tuple_get_string (tuple, FIELD_TITLE, NULL) : NULL);
-        gchar * artist = normalize_search_string (tuple ? tuple_get_string (tuple, FIELD_ARTIST, NULL) : NULL);
-        gchar * album = normalize_search_string (tuple ? tuple_get_string (tuple, FIELD_ALBUM, NULL) : NULL);
-        gchar * path = normalize_search_string (tuple ? tuple_get_string (tuple, FIELD_FILE_PATH, NULL) : NULL);
-        gchar * filename = normalize_search_string (tuple ? tuple_get_string (tuple, FIELD_FILE_NAME, NULL) : NULL);
+        gchar * title = normalize_search_string (tuple ? tuple_get_str (tuple, FIELD_TITLE, NULL) : NULL);
+        gchar * artist = normalize_search_string (tuple ? tuple_get_str (tuple, FIELD_ARTIST, NULL) : NULL);
+        gchar * album = normalize_search_string (tuple ? tuple_get_str (tuple, FIELD_ALBUM, NULL) : NULL);
+        gchar * path = normalize_search_string (tuple ? tuple_get_str (tuple, FIELD_FILE_PATH, NULL) : NULL);
+        gchar * filename = normalize_search_string (tuple ? tuple_get_str (tuple, FIELD_FILE_NAME, NULL) : NULL);
         if (tuple)
             tuple_unref (tuple);
 
@@ -372,7 +376,7 @@ static void ui_jump_to_track_cache_init (JumpToTrackCache * cache)
 const GArray * ui_jump_to_track_cache_search (JumpToTrackCache * cache, const
  gchar * keyword)
 {
-    gchar* normalized_keyword = normalize_search_string(keyword);
+    gchar * normalized_keyword = normalize_search_string (str_get (keyword));
     GString* keyword_string = g_string_new(normalized_keyword);
     GString* match_string = g_string_new(normalized_keyword);
     gint match_string_length = keyword_string->len;
