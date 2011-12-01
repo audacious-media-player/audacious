@@ -40,9 +40,9 @@ void vfs_set_lookup_func (VFSConstructor * (* func) (const char * scheme))
     lookup_func = func;
 }
 
-static gboolean verbose = FALSE;
+static bool verbose = FALSE;
 
-void vfs_set_verbose (gboolean set)
+void vfs_set_verbose (bool set)
 {
     verbose = set;
 }
@@ -296,12 +296,12 @@ vfs_ftell(VFSFile * file)
  * @param file #VFSFile object that represents the VFS stream.
  * @return On success, whether or not the VFS stream is at EOF. Otherwise, FALSE.
  */
-gboolean
+bool
 vfs_feof(VFSFile * file)
 {
     g_return_val_if_fail (file && file->sig == VFS_SIG, TRUE);
 
-    gboolean eof = file->base->vfs_feof_impl (file);
+    bool eof = file->base->vfs_feof_impl (file);
 
     if (verbose)
         logger ("VFS: <%p> eof = %s\n", file, eof ? "yes" : "no");
@@ -369,7 +369,7 @@ vfs_get_metadata(VFSFile * file, const char * field)
  * @param test A GFileTest to run.
  * @return The result of g_file_test().
  */
-gboolean
+bool
 vfs_file_test(const char * path, GFileTest test)
 {
     if (strncmp (path, "file://", 7))
@@ -380,7 +380,7 @@ vfs_file_test(const char * path, GFileTest test)
     if (path2 == NULL)
         path2 = g_strdup(path);
 
-    gboolean ret = g_file_test (path2, test);
+    bool ret = g_file_test (path2, test);
 
     g_free(path2);
 
@@ -393,7 +393,7 @@ vfs_file_test(const char * path, GFileTest test)
  * @param path A path to test.
  * @return TRUE if the file is writeable, otherwise FALSE.
  */
-gboolean
+bool
 vfs_is_writeable(const char * path)
 {
     struct stat info;
@@ -432,7 +432,7 @@ vfs_dup(VFSFile *in)
  * @param path A path to test.
  * @return TRUE if the file is remote, otherwise FALSE.
  */
-gboolean
+bool
 vfs_is_remote(const char * path)
 {
     return strncasecmp (path, "file://", 7) ? TRUE : FALSE;
@@ -444,7 +444,7 @@ vfs_is_remote(const char * path)
  * @param file A #VFSFile object to test.
  * @return TRUE if the file is streaming, otherwise FALSE.
  */
-gboolean
+bool
 vfs_is_streaming(VFSFile *file)
 {
     off_t size = 0;

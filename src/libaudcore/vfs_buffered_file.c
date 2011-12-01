@@ -168,7 +168,7 @@ buffered_file_vfs_ftell_impl(VFSFile * file)
     return vfs_ftell(handle->which == TRUE ? handle->fd : handle->buffer);
 }
 
-gboolean
+bool
 buffered_file_vfs_feof_impl(VFSFile * file)
 {
     VFSBufferedFile *handle = (VFSBufferedFile *) file->handle;

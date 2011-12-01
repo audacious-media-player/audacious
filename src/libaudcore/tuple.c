@@ -495,14 +495,14 @@ void tuple_free (Tuple * tuple)
 }
 
 /* deprecated */
-gboolean tuple_associate_string (Tuple * tuple, const int nfield,
+bool tuple_associate_string (Tuple * tuple, const int nfield,
  const char * field, const char * str)
 {
     tuple_copy_str (tuple, nfield, field, str);
     return TRUE;
 }
 
-gboolean tuple_associate_string_rel (Tuple * tuple, int nfield,
+bool tuple_associate_string_rel (Tuple * tuple, int nfield,
  const char * field, char * str)
 {
     tuple_copy_str (tuple, nfield, field, str);
@@ -510,7 +510,7 @@ gboolean tuple_associate_string_rel (Tuple * tuple, int nfield,
     return TRUE;
 }
 
-gboolean tuple_associate_int (Tuple * tuple, int nfield, const char * field, int x)
+bool tuple_associate_int (Tuple * tuple, int nfield, const char * field, int x)
 {
     tuple_set_int (tuple, nfield, field, x);
     return TRUE;

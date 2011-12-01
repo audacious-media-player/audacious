@@ -29,15 +29,17 @@
 #include <stdlib.h>
 #include <glib.h>
 
+#include <libaudcore/types.h>
+
 G_BEGIN_DECLS
 
 char *str_append(char * str, const char * add_str);
 char *str_replace(char * str, char * new_str);
 void str_replace_in(char ** str, char * new_str);
 
-gboolean str_has_prefix_nocase(const char * str, const char * prefix);
-gboolean str_has_suffix_nocase(const char * str, const char * suffix);
-gboolean str_has_suffixes_nocase(const char * str, char * const *suffixes);
+bool str_has_prefix_nocase(const char * str, const char * prefix);
+bool str_has_suffix_nocase(const char * str, const char * suffix);
+bool str_has_suffixes_nocase(const char * str, char * const *suffixes);
 
 char *str_assert_utf8(const char *str);
 
@@ -56,11 +58,11 @@ char *filename_split_subtune(const char * filename, int * track);
 
 void string_replace_char (char * string, char old_str, char new_str);
 void string_decode_percent (char * string);
-char * string_encode_percent (const char * string, gboolean is_filename);
+char * string_encode_percent (const char * string, bool is_filename);
 
-gboolean uri_is_utf8 (const char * uri, gboolean warn);
+bool uri_is_utf8 (const char * uri, bool warn);
 char * uri_to_utf8 (const char * uri);
-void uri_check_utf8 (char * * uri, gboolean warn);
+void uri_check_utf8 (char * * uri, bool warn);
 char * filename_to_uri (const char * filename);
 char * uri_to_filename (const char * uri);
 char * uri_to_display (const char * uri);
@@ -78,12 +80,12 @@ char *str_replace_fragment(char *s, int size, const char *old_str, const char *n
 
 void string_canonize_case(char *string);
 
-gboolean string_to_int (const char * string, int * addr);
-gboolean string_to_double (const char * string, double * addr);
+bool string_to_int (const char * string, int * addr);
+bool string_to_double (const char * string, double * addr);
 char * int_to_string (int val);
 char * double_to_string (double val);
 
-gboolean string_to_double_array (const char * string, double * array, int count);
+bool string_to_double_array (const char * string, double * array, int count);
 char * double_array_to_string (const double * array, int count);
 
 G_END_DECLS

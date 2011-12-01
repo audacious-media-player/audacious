@@ -28,14 +28,14 @@
 typedef struct {
     char * name;
     void * data;
-    gboolean free_data;
+    bool free_data;
     int source;
 } Event;
 
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 static GList * events;
 
-static gboolean event_execute (Event * event)
+static bool event_execute (Event * event)
 {
     pthread_mutex_lock (& mutex);
 
@@ -54,7 +54,7 @@ static gboolean event_execute (Event * event)
     return FALSE;
 }
 
-void event_queue_full (int time, const char * name, void * data, gboolean free_data)
+void event_queue_full (int time, const char * name, void * data, bool free_data)
 {
     Event * event = g_slice_new (Event);
     event->name = g_strdup (name);

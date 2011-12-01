@@ -27,6 +27,7 @@ INCLUDES = audio.h \
            tuple.h \
            tuple_compiler.h \
            tuple_formatter.h \
+           types.h \
            vfs.h \
            vfs_async.h \
            vfs_buffer.h \

@@ -30,7 +30,7 @@ typedef struct {
     VFSConsumer cons_f;
 } VFSAsyncTrampoline;
 
-gboolean
+bool
 vfs_async_file_get_contents_trampoline(void * data)
 {
     VFSAsyncTrampoline *tr = data;

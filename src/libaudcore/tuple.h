@@ -26,6 +26,7 @@
 #define AUDACIOUS_TUPLE_H
 
 #include <glib.h>
+#include <libaudcore/types.h>
 
 /** Ordered enum for basic #Tuple fields.
  * @sa TupleBasicType
@@ -183,11 +184,11 @@ int tuple_get_nth_subtune (Tuple * tuple, int n);
 
 void tuple_free (Tuple * tuple) DEPRECATED;
 
-gboolean tuple_associate_string (Tuple * tuple, int nfield,
+bool tuple_associate_string (Tuple * tuple, int nfield,
  const char * field, const char * str) DEPRECATED;
-gboolean tuple_associate_string_rel (Tuple * tuple, int nfield,
+bool tuple_associate_string_rel (Tuple * tuple, int nfield,
  const char * field, char * str) DEPRECATED;
-gboolean tuple_associate_int (Tuple * tuple, int nfield, const char * field, int x) DEPRECATED;
+bool tuple_associate_int (Tuple * tuple, int nfield, const char * field, int x) DEPRECATED;
 void tuple_disassociate (Tuple * tuple, const int nfield, const char * field) DEPRECATED;
 
 const char * tuple_get_string (const Tuple * tuple, int nfield, const char * field) DEPRECATED;

@@ -80,20 +80,20 @@ str_replace_in(char ** str, char * new_str)
     *str = str_replace(*str, new_str);
 }
 
-gboolean
+bool
 str_has_prefix_nocase(const char * str, const char * prefix)
 {
     /* strncasecmp causes segfaults when str is NULL*/
     return (str != NULL && (strncasecmp(str, prefix, strlen(prefix)) == 0));
 }
 
-gboolean str_has_suffix_nocase (const char * str, const char * suffix)
+bool str_has_suffix_nocase (const char * str, const char * suffix)
 {
     return (str && strlen (str) >= strlen (suffix) && ! strcasecmp (str + strlen
      (str) - strlen (suffix), suffix));
 }
 
-gboolean
+bool
 str_has_suffixes_nocase(const char * str, char * const *suffixes)
 {
     char *const *suffix;
@@ -317,7 +317,7 @@ void string_decode_percent (char * s)
 /* We encode any character except the "unreserved" characters of RFC 3986 and
  * (optionally) the forward slash.  On Windows, we also (optionally) do not
  * encode the colon. */
-static gboolean is_legal_char (char c, gboolean is_filename)
+static bool is_legal_char (char c, bool is_filename)
 {
     return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || (c >= '0' && c <=
      '9') || (strchr ("-_.~", c) != NULL) ||
@@ -338,7 +338,7 @@ static char make_hex_digit (int i)
 
 /* is_filename specifies whether the forward slash should be left intact */
 /* returns string allocated with g_malloc */
-char * string_encode_percent (const char * string, gboolean is_filename)
+char * string_encode_percent (const char * string, bool is_filename)
 {
     int length = 0;
     const char * get;
@@ -375,7 +375,7 @@ char * string_encode_percent (const char * string, gboolean is_filename)
 /* Determines whether a URI is valid UTF-8.  If not and <warn> is nonzero,
  * prints a warning to stderr. */
 
-gboolean uri_is_utf8 (const char * uri, gboolean warn)
+bool uri_is_utf8 (const char * uri, bool warn)
 {
     char buf[strlen (uri) + 1];
     string_decode_percent_2 (uri, buf);
@@ -427,7 +427,7 @@ char * uri_to_utf8 (const char * uri)
  * <warn> is nonzero, frees the old URI with g_free, and sets <uri> to the
  * converted URI, which must be freed with g_free when no longer needed. */
 
-void uri_check_utf8 (char * * uri, gboolean warn)
+void uri_check_utf8 (char * * uri, bool warn)
 {
     if (uri_is_utf8 (* uri, warn))
         return;
@@ -709,9 +709,9 @@ string_canonize_case(char *str)
  * have an accuracy of 6 decimal places.
  */
 
-gboolean string_to_int (const char * string, int * addr)
+bool string_to_int (const char * string, int * addr)
 {
-    gboolean neg = (string[0] == '-');
+    bool neg = (string[0] == '-');
     if (neg)
         string ++;
 
@@ -736,9 +736,9 @@ ERR:
     return FALSE;
 }
 
-gboolean string_to_double (const char * string, double * addr)
+bool string_to_double (const char * string, double * addr)
 {
-    gboolean neg = (string[0] == '-');
+    bool neg = (string[0] == '-');
     if (neg)
         string ++;
 
@@ -800,7 +800,7 @@ char * double_to_string (double val)
 {
     g_return_val_if_fail (val >= -1000000000 && val <= 1000000000, NULL);
 
-    gboolean neg = (val < 0);
+    bool neg = (val < 0);
     if (neg)
         val = -val;
 
@@ -825,7 +825,7 @@ char * double_to_string (double val)
     return s;
 }
 
-gboolean string_to_double_array (const char * string, double * array, int count)
+bool string_to_double_array (const char * string, double * array, int count)
 {
     char * * split = g_strsplit (string, ",", -1);
     if (g_strv_length (split) != count)

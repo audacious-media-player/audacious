@@ -194,7 +194,7 @@ close_handle:
  * @param stream A #VFSFile object representing the stream.
  * @return TRUE if read was succesful, FALSE if there was an error.
  */
-gboolean vfs_fget_le16(uint16_t *value, VFSFile *stream)
+bool vfs_fget_le16(uint16_t *value, VFSFile *stream)
 {
     uint16_t tmp;
     if (vfs_fread(&tmp, sizeof(tmp), 1, stream) != 1)
@@ -210,7 +210,7 @@ gboolean vfs_fget_le16(uint16_t *value, VFSFile *stream)
  * @param stream A #VFSFile object representing the stream.
  * @return TRUE if read was succesful, FALSE if there was an error.
  */
-gboolean vfs_fget_le32(uint32_t *value, VFSFile *stream)
+bool vfs_fget_le32(uint32_t *value, VFSFile *stream)
 {
     uint32_t tmp;
     if (vfs_fread(&tmp, sizeof(tmp), 1, stream) != 1)
@@ -226,7 +226,7 @@ gboolean vfs_fget_le32(uint32_t *value, VFSFile *stream)
  * @param stream A #VFSFile object representing the stream.
  * @return TRUE if read was succesful, FALSE if there was an error.
  */
-gboolean vfs_fget_le64(uint64_t *value, VFSFile *stream)
+bool vfs_fget_le64(uint64_t *value, VFSFile *stream)
 {
     uint64_t tmp;
     if (vfs_fread(&tmp, sizeof(tmp), 1, stream) != 1)
@@ -243,7 +243,7 @@ gboolean vfs_fget_le64(uint64_t *value, VFSFile *stream)
  * @param stream A #VFSFile object representing the stream.
  * @return TRUE if read was succesful, FALSE if there was an error.
  */
-gboolean vfs_fget_be16(uint16_t *value, VFSFile *stream)
+bool vfs_fget_be16(uint16_t *value, VFSFile *stream)
 {
     uint16_t tmp;
     if (vfs_fread(&tmp, sizeof(tmp), 1, stream) != 1)
@@ -259,7 +259,7 @@ gboolean vfs_fget_be16(uint16_t *value, VFSFile *stream)
  * @param stream A #VFSFile object representing the stream.
  * @return TRUE if read was succesful, FALSE if there was an error.
  */
-gboolean vfs_fget_be32(uint32_t *value, VFSFile *stream)
+bool vfs_fget_be32(uint32_t *value, VFSFile *stream)
 {
     uint32_t tmp;
     if (vfs_fread(&tmp, sizeof(tmp), 1, stream) != 1)
@@ -275,7 +275,7 @@ gboolean vfs_fget_be32(uint32_t *value, VFSFile *stream)
  * @param stream A #VFSFile object representing the stream.
  * @return TRUE if read was succesful, FALSE if there was an error.
  */
-gboolean vfs_fget_be64(uint64_t *value, VFSFile *stream)
+bool vfs_fget_be64(uint64_t *value, VFSFile *stream)
 {
     uint64_t tmp;
     if (vfs_fread(&tmp, sizeof(tmp), 1, stream) != 1)
@@ -292,7 +292,7 @@ gboolean vfs_fget_be64(uint64_t *value, VFSFile *stream)
  * @param stream A #VFSFile object representing the stream.
  * @return TRUE if read was succesful, FALSE if there was an error.
  */
-gboolean vfs_fput_le16(uint16_t value, VFSFile *stream)
+bool vfs_fput_le16(uint16_t value, VFSFile *stream)
 {
     uint16_t tmp = GUINT16_TO_LE(value);
     return vfs_fwrite(&tmp, sizeof(tmp), 1, stream) == 1;
@@ -306,7 +306,7 @@ gboolean vfs_fput_le16(uint16_t value, VFSFile *stream)
  * @param stream A #VFSFile object representing the stream.
  * @return TRUE if read was succesful, FALSE if there was an error.
  */
-gboolean vfs_fput_le32(uint32_t value, VFSFile *stream)
+bool vfs_fput_le32(uint32_t value, VFSFile *stream)
 {
     uint32_t tmp = GUINT32_TO_LE(value);
     return vfs_fwrite(&tmp, sizeof(tmp), 1, stream) == 1;
@@ -320,7 +320,7 @@ gboolean vfs_fput_le32(uint32_t value, VFSFile *stream)
  * @param stream A #VFSFile object representing the stream.
  * @return TRUE if read was succesful, FALSE if there was an error.
  */
-gboolean vfs_fput_le64(uint64_t value, VFSFile *stream)
+bool vfs_fput_le64(uint64_t value, VFSFile *stream)
 {
     uint64_t tmp = GUINT64_TO_LE(value);
     return vfs_fwrite(&tmp, sizeof(tmp), 1, stream) == 1;
@@ -334,7 +334,7 @@ gboolean vfs_fput_le64(uint64_t value, VFSFile *stream)
  * @param stream A #VFSFile object representing the stream.
  * @return TRUE if read was succesful, FALSE if there was an error.
  */
-gboolean vfs_fput_be16(uint16_t value, VFSFile *stream)
+bool vfs_fput_be16(uint16_t value, VFSFile *stream)
 {
     uint16_t tmp = GUINT16_TO_BE(value);
     return vfs_fwrite(&tmp, sizeof(tmp), 1, stream) == 1;
@@ -348,7 +348,7 @@ gboolean vfs_fput_be16(uint16_t value, VFSFile *stream)
  * @param stream A #VFSFile object representing the stream.
  * @return TRUE if read was succesful, FALSE if there was an error.
  */
-gboolean vfs_fput_be32(uint32_t value, VFSFile *stream)
+bool vfs_fput_be32(uint32_t value, VFSFile *stream)
 {
     uint32_t tmp = GUINT32_TO_BE(value);
     return vfs_fwrite(&tmp, sizeof(tmp), 1, stream) == 1;
@@ -362,7 +362,7 @@ gboolean vfs_fput_be32(uint32_t value, VFSFile *stream)
  * @param stream A #VFSFile object representing the stream.
  * @return TRUE if read was succesful, FALSE if there was an error.
  */
-gboolean vfs_fput_be64(uint64_t value, VFSFile *stream)
+bool vfs_fput_be64(uint64_t value, VFSFile *stream)
 {
     uint64_t tmp = GUINT64_TO_BE(value);
     return vfs_fwrite(&tmp, sizeof(tmp), 1, stream) == 1;
