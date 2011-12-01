@@ -33,7 +33,7 @@
 #include "dbus-server-bindings.h"
 
 #include <math.h>
-#include <libaudcore/eventqueue.h>
+
 #include <libaudcore/hook.h>
 #include <libaudcore/strpool.h>
 

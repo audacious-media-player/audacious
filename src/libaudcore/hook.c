@@ -17,19 +17,22 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#include <stdio.h>
+#include <glib.h>
 #include <string.h>
 
-#include <glib.h>
 #include "hook.h"
 
-static GThread * hook_thread;
-static GSList *hook_list;
+typedef struct {
+    HookFunction func;
+    void * user_data;
+} HookItem;
 
-void hook_init (void)
-{
-    hook_thread = g_thread_self ();
-}
+typedef struct {
+    const char *name;
+    GSList *items;
+} Hook;
+
+static GSList *hook_list;
 
 static Hook *
 hook_find(const char *name)
@@ -40,15 +43,14 @@ hook_find(const char *name)
     {
         Hook *hook = (Hook *) list->data;
 
-        if (!g_ascii_strcasecmp(hook->name, name))
+        if (! strcmp (hook->name, name))
             return hook;
     }
 
     return NULL;
 }
 
-void
-hook_register(const char *name)
+static void hook_register (const char * name)
 {
     Hook *hook;
 
@@ -155,16 +157,6 @@ hook_call(const char *name, void * hook_data)
 {
     Hook *hook;
     GSList *iter;
-
-    // Some plugins (skins, cdaudio-ng, maybe others) set up hooks that are not
-    // thread safe. We can disagree about whether that's the way it should be;
-    // but that's the way it is, so live with it. -jlindgren
-    if (g_thread_self () != hook_thread)
-    {
-        fprintf (stderr, "Warning: Unsafe hook_call of \"%s\" from secondary "
-         "thread. (Use event_queue instead.)\n", name);
-        return;
-    }
 
     hook = hook_find(name);
 

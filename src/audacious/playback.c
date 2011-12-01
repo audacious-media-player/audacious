@@ -24,7 +24,6 @@
 #include <string.h>
 
 #include <libaudcore/audstrings.h>
-#include <libaudcore/eventqueue.h>
 #include <libaudcore/hook.h>
 
 #include "config.h"
@@ -306,7 +305,7 @@ static void * playback_thread (void * unused)
     {
         gchar * error = g_strdup_printf (_("No decoder found for %s."),
          current_filename);
-        event_queue_with_data_free ("interface show error", error);
+        event_queue_full (0, "interface show error", error, g_free);
         playback_error = TRUE;
         goto DONE;
     }

@@ -465,8 +465,6 @@ static void init_two (gint * p_argc, gchar * * * p_argv)
         gtk_init (p_argc, p_argv);
     }
 
-    hook_init ();
-
     config_load ();
     chardet_init ();
 

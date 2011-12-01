@@ -21,7 +21,8 @@
 
 #include <signal.h>
 #include <glib.h>
-#include <libaudcore/eventqueue.h>
+
+#include <libaudcore/hook.h>
 
 #include "config.h"
 #include "main.h"

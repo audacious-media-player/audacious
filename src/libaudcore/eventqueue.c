@@ -19,16 +19,17 @@
  * using our public API to be a derived work.
  */
 
+#include <glib.h>
 #include <pthread.h>
 #include <string.h>
 
-#include "eventqueue.h"
 #include "hook.h"
+#include "types.h"
 
 typedef struct {
     char * name;
     void * data;
-    boolean free_data;
+    void (* destroy) (void *);
     int source;
 } Event;
 
@@ -47,19 +48,19 @@ static boolean event_execute (Event * event)
     hook_call (event->name, event->data);
 
     g_free (event->name);
-    if (event->free_data)
-        g_free (event->data);
+    if (event->destroy)
+        event->destroy (event->data);
 
     g_slice_free (Event, event);
     return FALSE;
 }
 
-void event_queue_full (int time, const char * name, void * data, boolean free_data)
+void event_queue_full (int time, const char * name, void * data, void (* destroy) (void *))
 {
     Event * event = g_slice_new (Event);
     event->name = g_strdup (name);
     event->data = data;
-    event->free_data = free_data;
+    event->destroy = destroy;
 
     pthread_mutex_lock (& mutex);
 
@@ -85,8 +86,8 @@ void event_queue_cancel (const char * name, void * data)
             events = g_list_delete_link (events, node);
 
             g_free (event->name);
-            if (event->free_data)
-                g_free (event->data);
+            if (event->destroy)
+                event->destroy (event->data);
 
             g_slice_free (Event, event);
         }

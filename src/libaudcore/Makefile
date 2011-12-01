@@ -20,7 +20,6 @@ SRCS = audio.c \
 
 INCLUDES = audio.h \
            audstrings.h \
-           eventqueue.h \
            hook.h \
            index.h \
            strpool.h \

@@ -24,7 +24,7 @@
 #include <string.h>
 
 #include <libaudcore/audstrings.h>
-#include <libaudcore/eventqueue.h>
+#include <libaudcore/hook.h>
 #include <libaudcore/strpool.h>
 
 #include "main.h"
