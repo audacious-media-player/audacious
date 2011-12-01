@@ -42,10 +42,10 @@
  * @param str String to be manipulated.
  * @return Pointer to the string if succesful, NULL if failed or if input was NULL.
  */
-static gchar *
-str_replace_drive_letter(gchar * str)
+static char *
+str_replace_drive_letter(char * str)
 {
-    gchar *match, *match_end;
+    char *match, *match_end;
 
     g_return_val_if_fail(str != NULL, NULL);
 
@@ -61,42 +61,42 @@ str_replace_drive_letter(gchar * str)
     return str;
 }
 
-gchar *
-str_append(gchar * str, const gchar * add_str)
+char *
+str_append(char * str, const char * add_str)
 {
     return str_replace(str, g_strconcat(str, add_str, NULL));
 }
 
-gchar *
-str_replace(gchar * str, gchar * new_str)
+char *
+str_replace(char * str, char * new_str)
 {
     g_free(str);
     return new_str;
 }
 
 void
-str_replace_in(gchar ** str, gchar * new_str)
+str_replace_in(char ** str, char * new_str)
 {
     *str = str_replace(*str, new_str);
 }
 
 gboolean
-str_has_prefix_nocase(const gchar * str, const gchar * prefix)
+str_has_prefix_nocase(const char * str, const char * prefix)
 {
     /* strncasecmp causes segfaults when str is NULL*/
     return (str != NULL && (strncasecmp(str, prefix, strlen(prefix)) == 0));
 }
 
-gboolean str_has_suffix_nocase (const gchar * str, const gchar * suffix)
+gboolean str_has_suffix_nocase (const char * str, const char * suffix)
 {
     return (str && strlen (str) >= strlen (suffix) && ! strcasecmp (str + strlen
      (str) - strlen (suffix), suffix));
 }
 
 gboolean
-str_has_suffixes_nocase(const gchar * str, gchar * const *suffixes)
+str_has_suffixes_nocase(const char * str, char * const *suffixes)
 {
-    gchar *const *suffix;
+    char *const *suffix;
 
     g_return_val_if_fail(str != NULL, FALSE);
     g_return_val_if_fail(suffixes != NULL, FALSE);
@@ -108,12 +108,12 @@ str_has_suffixes_nocase(const gchar * str, gchar * const *suffixes)
     return FALSE;
 }
 
-static gchar * (* str_to_utf8_impl) (const gchar *) = NULL;
-static gchar * (* str_to_utf8_full_impl) (const gchar *, gssize, gsize *,
+static char * (* str_to_utf8_impl) (const char *) = NULL;
+static char * (* str_to_utf8_full_impl) (const char *, gssize, gsize *,
  gsize *, GError * *) = NULL;
 
-void str_set_utf8_impl (gchar * (* stu_impl) (const gchar *),
- gchar * (* stuf_impl) (const gchar *, gssize, gsize *, gsize *, GError * *))
+void str_set_utf8_impl (char * (* stu_impl) (const char *),
+ char * (* stuf_impl) (const char *, gssize, gsize *, gsize *, GError * *))
 {
     str_to_utf8_impl = stu_impl;
     str_to_utf8_full_impl = stuf_impl;
@@ -126,13 +126,13 @@ void str_set_utf8_impl (gchar * (* stu_impl) (const gchar *),
  * @return String in UTF-8 encoding. Must be freed with g_free().
  */
 
-gchar * str_to_utf8 (const gchar * str)
+char * str_to_utf8 (const char * str)
 {
     g_return_val_if_fail (str_to_utf8_impl, NULL);
     return str_to_utf8_impl (str);
 }
 
-gchar * str_to_utf8_full (const gchar * str, gssize len, gsize * bytes_read,
+char * str_to_utf8_full (const char * str, gssize len, gsize * bytes_read,
  gsize * bytes_written, GError * * err)
 {
     g_return_val_if_fail (str_to_utf8_full_impl, NULL);
@@ -157,8 +157,8 @@ gchar * str_to_utf8_full (const gchar * str, gssize len, gsize * bytes_read,
  * @param str String to be tested and converted to UTF-8 encoding.
  * @return String in UTF-8 encoding, or NULL if conversion failed or input was NULL.
  */
-gchar *
-str_assert_utf8(const gchar * str)
+char *
+str_assert_utf8(const char * str)
 {
     /* NULL in NULL out */
     if (str == NULL)
@@ -167,10 +167,10 @@ str_assert_utf8(const gchar * str)
     /* already UTF-8? */
     if (!g_utf8_validate(str, -1, NULL)) {
 #if defined(HAVE_EXECINFO_H) && defined(HAVE_BACKTRACE)
-        gint i, nsymbols;
-        const gint nsymmax = 50;
+        int i, nsymbols;
+        const int nsymmax = 50;
         void *addrbuf[nsymmax];
-        gchar **symbols;
+        char **symbols;
         nsymbols = backtrace(addrbuf, nsymmax);
         symbols = backtrace_symbols(addrbuf, nsymbols);
 
@@ -189,16 +189,16 @@ str_assert_utf8(const gchar * str)
 }
 
 
-const gchar *
-str_skip_chars(const gchar * str, const gchar * chars)
+const char *
+str_skip_chars(const char * str, const char * chars)
 {
     while (strchr(chars, *str) != NULL)
         str++;
     return str;
 }
 
-gchar *
-convert_dos_path(gchar * path)
+char *
+convert_dos_path(char * path)
 {
     g_return_val_if_fail(path != NULL, NULL);
 
@@ -223,14 +223,14 @@ convert_dos_path(gchar * path)
  * or NULL if none found. Notice that this value should NOT be modified,
  * even though it is not declared const for technical reasons.
  */
-gchar *
-filename_get_subtune(const gchar * filename, gint * track)
+char *
+filename_get_subtune(const char * filename, int * track)
 {
-    gchar *pos;
+    char *pos;
 
     if ((pos = strrchr(filename, '?')) != NULL)
     {
-        const gchar *s = pos + 1;
+        const char *s = pos + 1;
         while (*s != '\0' && g_ascii_isdigit(*s)) s++;
         if (*s == '\0') {
             if (track != NULL)
@@ -254,11 +254,11 @@ filename_get_subtune(const gchar * filename, gint * track)
  * This string must be freed with g_free(). NULL will be returned if
  * there was any failure.
  */
-gchar *
-filename_split_subtune(const gchar * filename, gint * track)
+char *
+filename_split_subtune(const char * filename, int * track)
 {
-    gchar *result;
-    gchar *pos;
+    char *result;
+    char *pos;
 
     g_return_val_if_fail(filename != NULL, NULL);
 
@@ -271,15 +271,15 @@ filename_split_subtune(const gchar * filename, gint * track)
     return result;
 }
 
-void string_replace_char (gchar * string, gchar old_str, gchar new_str)
+void string_replace_char (char * string, char old_str, char new_str)
 {
     while ((string = strchr (string, old_str)) != NULL)
         * string = new_str;
 }
 
-static inline gchar get_hex_digit (const gchar * * get)
+static inline char get_hex_digit (const char * * get)
 {
-    gchar c = * * get;
+    char c = * * get;
 
     if (! c)
         return 0;
@@ -297,9 +297,9 @@ static inline gchar get_hex_digit (const gchar * * get)
 /* Requires that the destination be large enough to hold the decoded string.
  * The source and destination may be the same string.  USE EXTREME CAUTION. */
 
-static void string_decode_percent_2 (const gchar * from, gchar * to)
+static void string_decode_percent_2 (const char * from, char * to)
 {
-    gchar c;
+    char c;
     while ((c = * from ++))
         * to ++ = (c != '%') ? c : ((get_hex_digit (& from) << 4) | get_hex_digit
          (& from));
@@ -309,7 +309,7 @@ static void string_decode_percent_2 (const gchar * from, gchar * to)
 
 /* Decodes a percent-encoded string in-place. */
 
-void string_decode_percent (gchar * s)
+void string_decode_percent (char * s)
 {
     string_decode_percent_2 (s, s);
 }
@@ -317,7 +317,7 @@ void string_decode_percent (gchar * s)
 /* We encode any character except the "unreserved" characters of RFC 3986 and
  * (optionally) the forward slash.  On Windows, we also (optionally) do not
  * encode the colon. */
-static gboolean is_legal_char (gchar c, gboolean is_filename)
+static gboolean is_legal_char (char c, gboolean is_filename)
 {
     return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || (c >= '0' && c <=
      '9') || (strchr ("-_.~", c) != NULL) ||
@@ -328,7 +328,7 @@ static gboolean is_legal_char (gchar c, gboolean is_filename)
 #endif
 }
 
-static gchar make_hex_digit (gint i)
+static char make_hex_digit (int i)
 {
     if (i < 10)
         return '0' + i;
@@ -338,12 +338,12 @@ static gchar make_hex_digit (gint i)
 
 /* is_filename specifies whether the forward slash should be left intact */
 /* returns string allocated with g_malloc */
-gchar * string_encode_percent (const gchar * string, gboolean is_filename)
+char * string_encode_percent (const char * string, gboolean is_filename)
 {
-    gint length = 0;
-    const gchar * get;
-    gchar c;
-    gchar * new, * set;
+    int length = 0;
+    const char * get;
+    char c;
+    char * new, * set;
 
     for (get = string; (c = * get); get ++)
     {
@@ -363,7 +363,7 @@ gchar * string_encode_percent (const gchar * string, gboolean is_filename)
         else
         {
             * set ++ = '%';
-            * set ++ = make_hex_digit (((guchar) c) >> 4);
+            * set ++ = make_hex_digit (((unsigned char) c) >> 4);
             * set ++ = make_hex_digit (c & 0xF);
         }
     }
@@ -375,9 +375,9 @@ gchar * string_encode_percent (const gchar * string, gboolean is_filename)
 /* Determines whether a URI is valid UTF-8.  If not and <warn> is nonzero,
  * prints a warning to stderr. */
 
-gboolean uri_is_utf8 (const gchar * uri, gboolean warn)
+gboolean uri_is_utf8 (const char * uri, gboolean warn)
 {
-    gchar buf[strlen (uri) + 1];
+    char buf[strlen (uri) + 1];
     string_decode_percent_2 (uri, buf);
 
     if (g_utf8_validate (buf, -1, NULL))
@@ -410,13 +410,13 @@ gboolean uri_is_utf8 (const gchar * uri, gboolean warn)
  *    to convert it to UTF-8 because we do not know whether the remote system
  *    can handle UTF-8 requests. */
 
-gchar * uri_to_utf8 (const gchar * uri)
+char * uri_to_utf8 (const char * uri)
 {
     if (strncmp (uri, "file://", 7))
         return g_strdup (uri);
 
     /* recover the raw filename */
-    gchar buf[strlen (uri + 7) + 1];
+    char buf[strlen (uri + 7) + 1];
     string_decode_percent_2 (uri + 7, buf);
 
     /* convert it to a URI again, in UTF-8 if possible */
@@ -427,12 +427,12 @@ gchar * uri_to_utf8 (const gchar * uri)
  * <warn> is nonzero, frees the old URI with g_free, and sets <uri> to the
  * converted URI, which must be freed with g_free when no longer needed. */
 
-void uri_check_utf8 (gchar * * uri, gboolean warn)
+void uri_check_utf8 (char * * uri, gboolean warn)
 {
     if (uri_is_utf8 (* uri, warn))
         return;
 
-    gchar * copy = uri_to_utf8 (* uri);
+    char * copy = uri_to_utf8 (* uri);
     g_free (* uri);
     * uri = copy;
 }
@@ -441,18 +441,18 @@ void uri_check_utf8 (gchar * * uri, gboolean warn)
  * UTF-8 before percent-encoding.  On Windows, replaces '\' with '/' and adds a
  * leading '/'. */
 
-gchar * filename_to_uri (const gchar * name)
+char * filename_to_uri (const char * name)
 {
-    gchar * utf8 = g_locale_to_utf8 (name, -1, NULL, NULL, NULL);
+    char * utf8 = g_locale_to_utf8 (name, -1, NULL, NULL, NULL);
 #ifdef _WIN32
     string_replace_char (utf8, '\\', '/');
 #endif
-    gchar * enc = string_encode_percent (utf8 ? utf8 : name, TRUE);
+    char * enc = string_encode_percent (utf8 ? utf8 : name, TRUE);
     g_free (utf8);
 #ifdef _WIN32
-    gchar * uri = g_strdup_printf ("file:///%s", enc);
+    char * uri = g_strdup_printf ("file:///%s", enc);
 #else
-    gchar * uri = g_strdup_printf ("file://%s", enc);
+    char * uri = g_strdup_printf ("file://%s", enc);
 #endif
     g_free (enc);
     return uri;
@@ -462,21 +462,21 @@ gchar * filename_to_uri (const gchar * name)
  * locale after percent-decoding.  On Windows, strips the leading '/' and
  * replaces '/' with '\'. */
 
-gchar * uri_to_filename (const gchar * uri)
+char * uri_to_filename (const char * uri)
 {
 #ifdef _WIN32
     g_return_val_if_fail (! strncmp (uri, "file:///", 8), NULL);
-    gchar buf[strlen (uri + 8) + 1];
+    char buf[strlen (uri + 8) + 1];
     string_decode_percent_2 (uri + 8, buf);
 #else
     g_return_val_if_fail (! strncmp (uri, "file://", 7), NULL);
-    gchar buf[strlen (uri + 7) + 1];
+    char buf[strlen (uri + 7) + 1];
     string_decode_percent_2 (uri + 7, buf);
 #endif
 #ifdef _WIN32
     string_replace_char (buf, '/', '\\');
 #endif
-    gchar * name = g_locale_from_utf8 (buf, -1, NULL, NULL, NULL);
+    char * name = g_locale_from_utf8 (buf, -1, NULL, NULL, NULL);
     return name ? name : g_strdup (buf);
 }
 
@@ -484,9 +484,9 @@ gchar * uri_to_filename (const gchar * uri)
  * UTF-8 (more aggressively than uri_to_utf8).  For file:// URI's, converts to
  * filename format (but in UTF-8). */
 
-gchar * uri_to_display (const gchar * uri)
+char * uri_to_display (const char * uri)
 {
-    gchar buf[strlen (uri) + 1];
+    char buf[strlen (uri) + 1];
 
 #ifdef _WIN32
     if (! strncmp (uri, "file:///", 8))
@@ -504,28 +504,28 @@ gchar * uri_to_display (const gchar * uri)
     return str_to_utf8 (buf);
 }
 
-gchar * uri_get_extension (const gchar * uri)
+char * uri_get_extension (const char * uri)
 {
-    const gchar * slash = strrchr (uri, '/');
+    const char * slash = strrchr (uri, '/');
     if (! slash)
         return NULL;
 
-    gchar * lower = g_ascii_strdown (slash + 1, -1);
+    char * lower = g_ascii_strdown (slash + 1, -1);
 
-    gchar * qmark = strchr (lower, '?');
+    char * qmark = strchr (lower, '?');
     if (qmark)
         * qmark = 0;
 
-    gchar * dot = strrchr (lower, '.');
-    gchar * ext = dot ? g_strdup (dot + 1) : NULL;
+    char * dot = strrchr (lower, '.');
+    char * ext = dot ? g_strdup (dot + 1) : NULL;
 
     g_free (lower);
     return ext;
 }
 
-void string_cut_extension(gchar *string)
+void string_cut_extension(char *string)
 {
-    gchar *period = strrchr(string, '.');
+    char *period = strrchr(string, '.');
 
     if (period != NULL)
         *period = 0;
@@ -535,14 +535,14 @@ void string_cut_extension(gchar *string)
 /* Non-ASCII characters are treated exactly as is. */
 /* Handles NULL gracefully. */
 
-gint string_compare (const gchar * ap, const gchar * bp)
+int string_compare (const char * ap, const char * bp)
 {
     if (ap == NULL)
         return (bp == NULL) ? 0 : -1;
     if (bp == NULL)
         return 1;
 
-    guchar a = * ap ++, b = * bp ++;
+    unsigned char a = * ap ++, b = * bp ++;
     for (; a || b; a = * ap ++, b = * bp ++)
     {
         if (a > '9' || b > '9' || a < '0' || b < '0')
@@ -559,11 +559,11 @@ gint string_compare (const gchar * ap, const gchar * bp)
         }
         else
         {
-            gint x = a - '0';
+            int x = a - '0';
             for (; (a = * ap) <= '9' && a >= '0'; ap ++)
                 x = 10 * x + (a - '0');
 
-            gint y = b - '0';
+            int y = b - '0';
             for (; (b = * bp) >= '0' && b <= '9'; bp ++)
                 y = 10 * y + (b - '0');
 
@@ -579,14 +579,14 @@ gint string_compare (const gchar * ap, const gchar * bp)
 
 /* Decodes percent-encoded strings, then compares then with string_compare. */
 
-gint string_compare_encoded (const gchar * ap, const gchar * bp)
+int string_compare_encoded (const char * ap, const char * bp)
 {
     if (ap == NULL)
         return (bp == NULL) ? 0 : -1;
     if (bp == NULL)
         return 1;
 
-    guchar a = * ap ++, b = * bp ++;
+    unsigned char a = * ap ++, b = * bp ++;
     for (; a || b; a = * ap ++, b = * bp ++)
     {
         if (a == '%')
@@ -608,11 +608,11 @@ gint string_compare_encoded (const gchar * ap, const gchar * bp)
         }
         else
         {
-            gint x = a - '0';
+            int x = a - '0';
             for (; (a = * ap) <= '9' && a >= '0'; ap ++)
                 x = 10 * x + (a - '0');
 
-            gint y = b - '0';
+            int y = b - '0';
             for (; (b = * bp) >= '0' && b <= '9'; bp ++)
                 y = 10 * y + (b - '0');
 
@@ -626,7 +626,7 @@ gint string_compare_encoded (const gchar * ap, const gchar * bp)
     return 0;
 }
 
-const void * memfind (const void * mem, gint size, const void * token, gint
+const void * memfind (const void * mem, int size, const void * token, int
  length)
 {
     if (! length)
@@ -636,7 +636,7 @@ const void * memfind (const void * mem, gint size, const void * token, gint
 
     while (size > 0)
     {
-        const void * maybe = memchr (mem, * (guchar *) token, size);
+        const void * maybe = memchr (mem, * (unsigned char *) token, size);
 
         if (maybe == NULL)
             return NULL;
@@ -644,22 +644,22 @@ const void * memfind (const void * mem, gint size, const void * token, gint
         if (! memcmp (maybe, token, length))
             return maybe;
 
-        size -= (guchar *) maybe + 1 - (guchar *) mem;
-        mem = (guchar *) maybe + 1;
+        size -= (unsigned char *) maybe + 1 - (unsigned char *) mem;
+        mem = (unsigned char *) maybe + 1;
     }
 
     return NULL;
 }
 
-gchar *
-str_replace_fragment(gchar *s, gint size, const gchar *old, const gchar *new)
+char *
+str_replace_fragment(char *s, int size, const char *old, const char *new)
 {
-    gchar *ptr = s;
-    gint left = strlen(s);
-    gint avail = size - (left + 1);
-    gint oldlen = strlen(old);
-    gint newlen = strlen(new);
-    gint diff = newlen - oldlen;
+    char *ptr = s;
+    int left = strlen(s);
+    int avail = size - (left + 1);
+    int oldlen = strlen(old);
+    int newlen = strlen(new);
+    int diff = newlen - oldlen;
 
     while (left >= oldlen)
     {
@@ -685,7 +685,7 @@ str_replace_fragment(gchar *s, gint size, const gchar *old, const gchar *new)
 }
 
 void
-string_canonize_case(gchar *str)
+string_canonize_case(char *str)
 {
     while (*str)
     {
@@ -709,14 +709,14 @@ string_canonize_case(gchar *str)
  * have an accuracy of 6 decimal places.
  */
 
-gboolean string_to_int (const gchar * string, gint * addr)
+gboolean string_to_int (const char * string, int * addr)
 {
     gboolean neg = (string[0] == '-');
     if (neg)
         string ++;
 
-    gint val = 0;
-    gchar c;
+    int val = 0;
+    char c;
 
     while ((c = * string ++))
     {
@@ -736,19 +736,19 @@ ERR:
     return FALSE;
 }
 
-gboolean string_to_double (const gchar * string, gdouble * addr)
+gboolean string_to_double (const char * string, double * addr)
 {
     gboolean neg = (string[0] == '-');
     if (neg)
         string ++;
 
-    const gchar * p = strchr (string, '.');
-    gint i, f;
+    const char * p = strchr (string, '.');
+    int i, f;
 
     if (p)
     {
-        gchar buf[11];
-        gint len;
+        char buf[11];
+        int len;
 
         len = p - string;
         if (len > 10)
@@ -779,7 +779,7 @@ gboolean string_to_double (const gchar * string, gdouble * addr)
         f = 0;
     }
 
-    gdouble val = i + (gdouble) f / 1000000;
+    double val = i + (double) f / 1000000;
     if (val > 1000000000)
         goto ERR;
 
@@ -790,13 +790,13 @@ ERR:
     return FALSE;
 }
 
-gchar * int_to_string (gint val)
+char * int_to_string (int val)
 {
     g_return_val_if_fail (val >= -1000000000 && val <= 1000000000, NULL);
     return g_strdup_printf ("%d", val);
 }
 
-gchar * double_to_string (gdouble val)
+char * double_to_string (double val)
 {
     g_return_val_if_fail (val >= -1000000000 && val <= 1000000000, NULL);
 
@@ -804,8 +804,8 @@ gchar * double_to_string (gdouble val)
     if (neg)
         val = -val;
 
-    gint i = floor (val);
-    gint f = round ((val - i) * 1000000);
+    int i = floor (val);
+    int f = round ((val - i) * 1000000);
 
     if (f == 1000000)
     {
@@ -813,9 +813,9 @@ gchar * double_to_string (gdouble val)
         f = 0;
     }
 
-    gchar * s = neg ? g_strdup_printf ("-%d.%06d", i, f) : g_strdup_printf ("%d.%06d", i, f);
+    char * s = neg ? g_strdup_printf ("-%d.%06d", i, f) : g_strdup_printf ("%d.%06d", i, f);
 
-    gchar * c = s + strlen (s);
+    char * c = s + strlen (s);
     while (* (c - 1) == '0')
         c --;
     if (* (c - 1) == '.')
@@ -825,13 +825,13 @@ gchar * double_to_string (gdouble val)
     return s;
 }
 
-gboolean string_to_double_array (const gchar * string, gdouble * array, gint count)
+gboolean string_to_double_array (const char * string, double * array, int count)
 {
-    gchar * * split = g_strsplit (string, ",", -1);
+    char * * split = g_strsplit (string, ",", -1);
     if (g_strv_length (split) != count)
         goto ERR;
 
-    for (gint i = 0; i < count; i ++)
+    for (int i = 0; i < count; i ++)
     {
         if (! string_to_double (split[i], & array[i]))
             goto ERR;
@@ -845,18 +845,18 @@ ERR:
     return FALSE;
 }
 
-gchar * double_array_to_string (const gdouble * array, gint count)
+char * double_array_to_string (const double * array, int count)
 {
-    gchar * * split = g_malloc0 (sizeof (gchar *) * (count + 1));
+    char * * split = g_malloc0 (sizeof (char *) * (count + 1));
 
-    for (gint i = 0; i < count; i ++)
+    for (int i = 0; i < count; i ++)
     {
         split[i] = double_to_string (array[i]);
         if (! split[i])
             goto ERR;
     }
 
-    gchar * string = g_strjoinv (",", split);
+    char * string = g_strjoinv (",", split);
     g_strfreev (split);
     return string;
 

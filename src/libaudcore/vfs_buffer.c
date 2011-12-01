@@ -24,13 +24,13 @@
 
 
 static VFSFile *
-buffer_vfs_fopen_impl(const gchar * path,
-          const gchar * mode)
+buffer_vfs_fopen_impl(const char * path,
+          const char * mode)
 {
     return NULL;
 }
 
-static gint
+static int
 buffer_vfs_fclose_impl(VFSFile * file)
 {
     g_return_val_if_fail(file != NULL, -1);
@@ -40,13 +40,13 @@ buffer_vfs_fclose_impl(VFSFile * file)
     return 0;
 }
 
-static gint64 buffer_vfs_fread_impl (void * i_ptr, gint64 size, gint64 nmemb,
+static int64_t buffer_vfs_fread_impl (void * i_ptr, int64_t size, int64_t nmemb,
  VFSFile * file)
 {
     VFSBuffer *handle;
-    guchar *i;
+    unsigned char *i;
     gsize read = 0;
-    guchar *ptr = (guchar *) i_ptr;
+    unsigned char *ptr = (unsigned char *) i_ptr;
 
     if (file == NULL)
         return 0;
@@ -64,13 +64,13 @@ static gint64 buffer_vfs_fread_impl (void * i_ptr, gint64 size, gint64 nmemb,
     return (read / size);
 }
 
-static gint64 buffer_vfs_fwrite_impl (const void * i_ptr, gint64 size, gint64
+static int64_t buffer_vfs_fwrite_impl (const void * i_ptr, int64_t size, int64_t
  nmemb, VFSFile * file)
 {
     VFSBuffer *handle;
-    const guchar *i;
+    const unsigned char *i;
     gsize written = 0;
-    const guchar *ptr = (const guchar *) i_ptr;
+    const unsigned char *ptr = (const unsigned char *) i_ptr;
 
     if (file == NULL)
         return 0;
@@ -88,11 +88,11 @@ static gint64 buffer_vfs_fwrite_impl (const void * i_ptr, gint64 size, gint64
     return (written / size);
 }
 
-static gint
+static int
 buffer_vfs_getc_impl(VFSFile *stream)
 {
     VFSBuffer *handle = (VFSBuffer *) stream->handle;
-    gint c;
+    int c;
 
     c = *handle->iter;
     handle->iter++;
@@ -100,16 +100,16 @@ buffer_vfs_getc_impl(VFSFile *stream)
     return c;
 }
 
-static gint
-buffer_vfs_ungetc_impl(gint c, VFSFile *stream)
+static int
+buffer_vfs_ungetc_impl(int c, VFSFile *stream)
 {
     return -1;
 }
 
-static gint
+static int
 buffer_vfs_fseek_impl(VFSFile * file,
-          gint64 offset,
-          gint whence)
+          int64_t offset,
+          int whence)
 {
     VFSBuffer *handle;
 
@@ -148,7 +148,7 @@ buffer_vfs_rewind_impl(VFSFile * file)
     handle->iter = handle->data;
 }
 
-static gint64
+static int64_t
 buffer_vfs_ftell_impl(VFSFile * file)
 {
     VFSBuffer *handle;
@@ -174,13 +174,13 @@ buffer_vfs_feof_impl(VFSFile * file)
     return (gboolean) (handle->iter == handle->end);
 }
 
-static gint
-buffer_vfs_truncate_impl (VFSFile * file, gint64 size)
+static int
+buffer_vfs_truncate_impl (VFSFile * file, int64_t size)
 {
     return 0;
 }
 
-static gint64
+static int64_t
 buffer_vfs_fsize_impl(VFSFile * file)
 {
     VFSBuffer *handle;
@@ -210,7 +210,7 @@ static VFSConstructor buffer_const = {
 };
 
 VFSFile *
-vfs_buffer_new(gpointer data, gsize size)
+vfs_buffer_new(void * data, gsize size)
 {
     VFSFile *handle;
     VFSBuffer *buffer;
@@ -229,7 +229,7 @@ vfs_buffer_new(gpointer data, gsize size)
 
     buffer->data = data;
     buffer->iter = data;
-    buffer->end = (guchar *) data + size;
+    buffer->end = (unsigned char *) data + size;
     buffer->size = size;
 
     handle->handle = buffer;
@@ -241,7 +241,7 @@ vfs_buffer_new(gpointer data, gsize size)
 }
 
 VFSFile *
-vfs_buffer_new_from_string(gchar *str)
+vfs_buffer_new_from_string(char *str)
 {
     g_return_val_if_fail(str != NULL, NULL);
 

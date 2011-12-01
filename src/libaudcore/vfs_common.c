@@ -32,9 +32,9 @@
  * @param stream A #VFSFile object representing the stream.
  * @return The character on success, or EOF.
  */
-gint vfs_fputc(gint c, VFSFile *stream)
+int vfs_fputc(int c, VFSFile *stream)
 {
-    guchar uc = (guchar) c;
+    unsigned char uc = (unsigned char) c;
 
     if (!vfs_fwrite(&uc, 1, 1, stream)) {
         return EOF;
@@ -51,10 +51,10 @@ gint vfs_fputc(gint c, VFSFile *stream)
  * @param stream A #VFSFile object representing the stream.
  * @return The string on success, or NULL.
  */
-gchar *vfs_fgets(gchar *s, gint n, VFSFile *stream)
+char *vfs_fgets(char *s, int n, VFSFile *stream)
 {
-    gint c;
-    register gchar *p;
+    int c;
+    register char *p;
 
     if (n <= 0) return NULL;
 
@@ -83,7 +83,7 @@ gchar *vfs_fgets(gchar *s, gint n, VFSFile *stream)
  * @param stream A #VFSFile object representing the stream.
  * @return The amount of bytes written.
  */
-gint vfs_fputs(const gchar *s, VFSFile *stream)
+int vfs_fputs(const char *s, VFSFile *stream)
 {
     gsize n = strlen(s);
 
@@ -98,10 +98,10 @@ gint vfs_fputs(const gchar *s, VFSFile *stream)
  * @param args A va_list of args to use.
  * @return value The amount of bytes written.
  */
-gint vfs_vfprintf(VFSFile *stream, gchar const *format, va_list args)
+int vfs_vfprintf(VFSFile *stream, char const *format, va_list args)
 {
-    gchar *string;
-    gint rv = g_vasprintf(&string, format, args);
+    char *string;
+    int rv = g_vasprintf(&string, format, args);
     if (rv < 0) return rv;
     rv = vfs_fputs(string, stream);
     g_free(string);
@@ -116,10 +116,10 @@ gint vfs_vfprintf(VFSFile *stream, gchar const *format, va_list args)
  * @param ... Optional list of arguments.
  * @return The amount of bytes written.
  */
-gint vfs_fprintf(VFSFile *stream, gchar const *format, ...)
+int vfs_fprintf(VFSFile *stream, char const *format, ...)
 {
     va_list arg;
-    gint rv;
+    int rv;
 
     va_start(arg, format);
     rv = vfs_vfprintf(stream, format, arg);
@@ -137,14 +137,14 @@ gint vfs_fprintf(VFSFile *stream, gchar const *format, ...)
  * @param size Pointer to gsize variable that will hold the amount of
  * read data e.g. filesize.
  */
-void vfs_file_get_contents (const gchar * filename, void * * buf, gint64 * size)
+void vfs_file_get_contents (const char * filename, void * * buf, int64_t * size)
 {
     * buf = NULL;
     * size = 0;
 
     VFSFile *fd;
     gsize filled_size = 0, buf_size = 4096;
-    guchar * ptr;
+    unsigned char * ptr;
 
     if ((fd = vfs_fopen(filename, "rb")) == NULL)
         return;
@@ -194,9 +194,9 @@ close_handle:
  * @param stream A #VFSFile object representing the stream.
  * @return TRUE if read was succesful, FALSE if there was an error.
  */
-gboolean vfs_fget_le16(guint16 *value, VFSFile *stream)
+gboolean vfs_fget_le16(uint16_t *value, VFSFile *stream)
 {
-    guint16 tmp;
+    uint16_t tmp;
     if (vfs_fread(&tmp, sizeof(tmp), 1, stream) != 1)
         return FALSE;
     *value = GUINT16_FROM_LE(tmp);
@@ -210,9 +210,9 @@ gboolean vfs_fget_le16(guint16 *value, VFSFile *stream)
  * @param stream A #VFSFile object representing the stream.
  * @return TRUE if read was succesful, FALSE if there was an error.
  */
-gboolean vfs_fget_le32(guint32 *value, VFSFile *stream)
+gboolean vfs_fget_le32(uint32_t *value, VFSFile *stream)
 {
-    guint32 tmp;
+    uint32_t tmp;
     if (vfs_fread(&tmp, sizeof(tmp), 1, stream) != 1)
         return FALSE;
     *value = GUINT32_FROM_LE(tmp);
@@ -226,9 +226,9 @@ gboolean vfs_fget_le32(guint32 *value, VFSFile *stream)
  * @param stream A #VFSFile object representing the stream.
  * @return TRUE if read was succesful, FALSE if there was an error.
  */
-gboolean vfs_fget_le64(guint64 *value, VFSFile *stream)
+gboolean vfs_fget_le64(uint64_t *value, VFSFile *stream)
 {
-    guint64 tmp;
+    uint64_t tmp;
     if (vfs_fread(&tmp, sizeof(tmp), 1, stream) != 1)
         return FALSE;
     *value = GUINT64_FROM_LE(tmp);
@@ -243,9 +243,9 @@ gboolean vfs_fget_le64(guint64 *value, VFSFile *stream)
  * @param stream A #VFSFile object representing the stream.
  * @return TRUE if read was succesful, FALSE if there was an error.
  */
-gboolean vfs_fget_be16(guint16 *value, VFSFile *stream)
+gboolean vfs_fget_be16(uint16_t *value, VFSFile *stream)
 {
-    guint16 tmp;
+    uint16_t tmp;
     if (vfs_fread(&tmp, sizeof(tmp), 1, stream) != 1)
         return FALSE;
     *value = GUINT16_FROM_BE(tmp);
@@ -259,9 +259,9 @@ gboolean vfs_fget_be16(guint16 *value, VFSFile *stream)
  * @param stream A #VFSFile object representing the stream.
  * @return TRUE if read was succesful, FALSE if there was an error.
  */
-gboolean vfs_fget_be32(guint32 *value, VFSFile *stream)
+gboolean vfs_fget_be32(uint32_t *value, VFSFile *stream)
 {
-    guint32 tmp;
+    uint32_t tmp;
     if (vfs_fread(&tmp, sizeof(tmp), 1, stream) != 1)
         return FALSE;
     *value = GUINT32_FROM_BE(tmp);
@@ -275,9 +275,9 @@ gboolean vfs_fget_be32(guint32 *value, VFSFile *stream)
  * @param stream A #VFSFile object representing the stream.
  * @return TRUE if read was succesful, FALSE if there was an error.
  */
-gboolean vfs_fget_be64(guint64 *value, VFSFile *stream)
+gboolean vfs_fget_be64(uint64_t *value, VFSFile *stream)
 {
-    guint64 tmp;
+    uint64_t tmp;
     if (vfs_fread(&tmp, sizeof(tmp), 1, stream) != 1)
         return FALSE;
     *value = GUINT64_FROM_BE(tmp);
@@ -292,9 +292,9 @@ gboolean vfs_fget_be64(guint64 *value, VFSFile *stream)
  * @param stream A #VFSFile object representing the stream.
  * @return TRUE if read was succesful, FALSE if there was an error.
  */
-gboolean vfs_fput_le16(guint16 value, VFSFile *stream)
+gboolean vfs_fput_le16(uint16_t value, VFSFile *stream)
 {
-    guint16 tmp = GUINT16_TO_LE(value);
+    uint16_t tmp = GUINT16_TO_LE(value);
     return vfs_fwrite(&tmp, sizeof(tmp), 1, stream) == 1;
 }
 
@@ -306,9 +306,9 @@ gboolean vfs_fput_le16(guint16 value, VFSFile *stream)
  * @param stream A #VFSFile object representing the stream.
  * @return TRUE if read was succesful, FALSE if there was an error.
  */
-gboolean vfs_fput_le32(guint32 value, VFSFile *stream)
+gboolean vfs_fput_le32(uint32_t value, VFSFile *stream)
 {
-    guint32 tmp = GUINT32_TO_LE(value);
+    uint32_t tmp = GUINT32_TO_LE(value);
     return vfs_fwrite(&tmp, sizeof(tmp), 1, stream) == 1;
 }
 
@@ -320,9 +320,9 @@ gboolean vfs_fput_le32(guint32 value, VFSFile *stream)
  * @param stream A #VFSFile object representing the stream.
  * @return TRUE if read was succesful, FALSE if there was an error.
  */
-gboolean vfs_fput_le64(guint64 value, VFSFile *stream)
+gboolean vfs_fput_le64(uint64_t value, VFSFile *stream)
 {
-    guint64 tmp = GUINT64_TO_LE(value);
+    uint64_t tmp = GUINT64_TO_LE(value);
     return vfs_fwrite(&tmp, sizeof(tmp), 1, stream) == 1;
 }
 
@@ -334,9 +334,9 @@ gboolean vfs_fput_le64(guint64 value, VFSFile *stream)
  * @param stream A #VFSFile object representing the stream.
  * @return TRUE if read was succesful, FALSE if there was an error.
  */
-gboolean vfs_fput_be16(guint16 value, VFSFile *stream)
+gboolean vfs_fput_be16(uint16_t value, VFSFile *stream)
 {
-    guint16 tmp = GUINT16_TO_BE(value);
+    uint16_t tmp = GUINT16_TO_BE(value);
     return vfs_fwrite(&tmp, sizeof(tmp), 1, stream) == 1;
 }
 
@@ -348,9 +348,9 @@ gboolean vfs_fput_be16(guint16 value, VFSFile *stream)
  * @param stream A #VFSFile object representing the stream.
  * @return TRUE if read was succesful, FALSE if there was an error.
  */
-gboolean vfs_fput_be32(guint32 value, VFSFile *stream)
+gboolean vfs_fput_be32(uint32_t value, VFSFile *stream)
 {
-    guint32 tmp = GUINT32_TO_BE(value);
+    uint32_t tmp = GUINT32_TO_BE(value);
     return vfs_fwrite(&tmp, sizeof(tmp), 1, stream) == 1;
 }
 
@@ -362,8 +362,8 @@ gboolean vfs_fput_be32(guint32 value, VFSFile *stream)
  * @param stream A #VFSFile object representing the stream.
  * @return TRUE if read was succesful, FALSE if there was an error.
  */
-gboolean vfs_fput_be64(guint64 value, VFSFile *stream)
+gboolean vfs_fput_be64(uint64_t value, VFSFile *stream)
 {
-    guint64 tmp = GUINT64_TO_BE(value);
+    uint64_t tmp = GUINT64_TO_BE(value);
     return vfs_fwrite(&tmp, sizeof(tmp), 1, stream) == 1;
 }

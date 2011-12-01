@@ -26,10 +26,10 @@
 #include "hook.h"
 
 typedef struct {
-    gchar * name;
+    char * name;
     void * data;
     gboolean free_data;
-    gint source;
+    int source;
 } Event;
 
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -54,7 +54,7 @@ static gboolean event_execute (Event * event)
     return FALSE;
 }
 
-void event_queue_full (gint time, const gchar * name, void * data, gboolean free_data)
+void event_queue_full (int time, const char * name, void * data, gboolean free_data)
 {
     Event * event = g_slice_new (Event);
     event->name = g_strdup (name);
@@ -69,7 +69,7 @@ void event_queue_full (gint time, const gchar * name, void * data, gboolean free
     pthread_mutex_unlock (& mutex);
 }
 
-void event_queue_cancel (const gchar * name, void * data)
+void event_queue_cancel (const char * name, void * data)
 {
     pthread_mutex_lock (& mutex);
 

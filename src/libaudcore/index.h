@@ -26,25 +26,25 @@ struct index;
 
 struct index * index_new (void);
 void index_free (struct index * index);
-gint index_count (struct index * index);
-void index_allocate (struct index * index, gint size);
-void index_set (struct index * index, gint at, void * value);
-void * index_get (struct index * index, gint at);
-void index_insert (struct index * index, gint at, void * value);
+int index_count (struct index * index);
+void index_allocate (struct index * index, int size);
+void index_set (struct index * index, int at, void * value);
+void * index_get (struct index * index, int at);
+void index_insert (struct index * index, int at, void * value);
 void index_append (struct index * index, void * value);
-void index_copy_set (struct index * source, gint from, struct index * target,
- gint to, gint count);
-void index_copy_insert (struct index * source, gint from, struct index * target,
- gint to, gint count);
-void index_copy_append (struct index * source, gint from, struct index * target,
- gint count);
-void index_merge_insert (struct index * first, gint at, struct index * second);
+void index_copy_set (struct index * source, int from, struct index * target,
+ int to, int count);
+void index_copy_insert (struct index * source, int from, struct index * target,
+ int to, int count);
+void index_copy_append (struct index * source, int from, struct index * target,
+ int count);
+void index_merge_insert (struct index * first, int at, struct index * second);
 void index_merge_append (struct index * first, struct index * second);
-void index_move (struct index * index, gint from, gint to, gint count);
-void index_delete (struct index * index, gint at, gint count);
-void index_sort (struct index * index, gint (* compare) (const void * a,
+void index_move (struct index * index, int from, int to, int count);
+void index_delete (struct index * index, int at, int count);
+void index_sort (struct index * index, int (* compare) (const void * a,
  const void * b));
-void index_sort_with_data (struct index * index, gint (* compare)
+void index_sort_with_data (struct index * index, int (* compare)
  (const void * a, const void * b, void * data), void * data);
 
 #endif

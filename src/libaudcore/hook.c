@@ -32,7 +32,7 @@ void hook_init (void)
 }
 
 static Hook *
-hook_find(const gchar *name)
+hook_find(const char *name)
 {
     GSList *list;
 
@@ -48,7 +48,7 @@ hook_find(const gchar *name)
 }
 
 void
-hook_register(const gchar *name)
+hook_register(const char *name)
 {
     Hook *hook;
 
@@ -64,8 +64,8 @@ hook_register(const gchar *name)
     hook_list = g_slist_append(hook_list, hook);
 }
 
-gint
-hook_associate(const gchar *name, HookFunction func, gpointer user_data)
+int
+hook_associate(const char *name, HookFunction func, void * user_data)
 {
     Hook *hook;
     HookItem *hookitem;
@@ -92,8 +92,8 @@ hook_associate(const gchar *name, HookFunction func, gpointer user_data)
     return 0;
 }
 
-gint
-hook_dissociate(const gchar *name, HookFunction func)
+int
+hook_dissociate(const char *name, HookFunction func)
 {
     Hook *hook;
     GSList *iter;
@@ -121,8 +121,8 @@ hook_dissociate(const gchar *name, HookFunction func)
     return -1;
 }
 
-gint
-hook_dissociate_full(const gchar *name, HookFunction func, gpointer user_data)
+int
+hook_dissociate_full(const char *name, HookFunction func, void * user_data)
 {
     Hook *hook;
     GSList *iter;
@@ -151,7 +151,7 @@ hook_dissociate_full(const gchar *name, HookFunction func, gpointer user_data)
 }
 
 void
-hook_call(const gchar *name, gpointer hook_data)
+hook_call(const char *name, void * hook_data)
 {
     Hook *hook;
     GSList *iter;

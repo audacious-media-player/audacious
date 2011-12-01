@@ -33,9 +33,9 @@
  * vfs_prepare must be called from the main thread to look up any needed
  * transports beforehand. */
 
-static VFSConstructor * (* lookup_func) (const gchar * scheme) = NULL;
+static VFSConstructor * (* lookup_func) (const char * scheme) = NULL;
 
-void vfs_set_lookup_func (VFSConstructor * (* func) (const gchar * scheme))
+void vfs_set_lookup_func (VFSConstructor * (* func) (const char * scheme))
 {
     lookup_func = func;
 }
@@ -47,12 +47,12 @@ void vfs_set_verbose (gboolean set)
     verbose = set;
 }
 
-static void logger (const gchar * format, ...)
+static void logger (const char * format, ...)
 {
-    static gchar last[256] = "";
-    static gint repeated = 0;
+    static char last[256] = "";
+    static int repeated = 0;
 
-    gchar buf[256];
+    char buf[256];
 
     va_list args;
     va_start (args, format);
@@ -83,8 +83,8 @@ static void logger (const gchar * format, ...)
  * @return On success, a #VFSFile object representing the stream.
  */
 VFSFile *
-vfs_fopen(const gchar * path,
-          const gchar * mode)
+vfs_fopen(const char * path,
+          const char * mode)
 {
     g_return_val_if_fail (path && mode, NULL);
     g_return_val_if_fail (lookup_func, NULL);
@@ -92,9 +92,9 @@ vfs_fopen(const gchar * path,
     VFSFile *file;
     VFSConstructor *vtable = NULL;
 
-    const gchar * s = strstr (path, "://");
+    const char * s = strstr (path, "://");
     g_return_val_if_fail (s, NULL);
-    gchar scheme[s - path + 1];
+    char scheme[s - path + 1];
     strncpy (scheme, path, s - path);
     scheme[s - path] = 0;
 
@@ -124,7 +124,7 @@ vfs_fopen(const gchar * path,
  * @param file A #VFSFile object to destroy.
  * @return -1 on failure, 0 on success.
  */
-gint
+int
 vfs_fclose(VFSFile * file)
 {
     g_return_val_if_fail (file && file->sig == VFS_SIG, -1);
@@ -132,7 +132,7 @@ vfs_fclose(VFSFile * file)
     if (verbose)
         printf ("VFS: <%p> close\n", file);
 
-    gint ret = 0;
+    int ret = 0;
 
     if (--file->ref > 0)
         return -1;
@@ -157,11 +157,11 @@ vfs_fclose(VFSFile * file)
  * @param file #VFSFile object that represents the VFS stream.
  * @return The number of elements succesfully read.
  */
-gint64 vfs_fread (void * ptr, gint64 size, gint64 nmemb, VFSFile * file)
+int64_t vfs_fread (void * ptr, int64_t size, int64_t nmemb, VFSFile * file)
 {
     g_return_val_if_fail (file && file->sig == VFS_SIG, 0);
 
-    gint64 readed = file->base->vfs_fread_impl (ptr, size, nmemb, file);
+    int64_t readed = file->base->vfs_fread_impl (ptr, size, nmemb, file);
 
 /*    if (verbose)
         logger ("VFS: <%p> read %"PRId64" elements of size %"PRId64" = "
@@ -179,11 +179,11 @@ gint64 vfs_fread (void * ptr, gint64 size, gint64 nmemb, VFSFile * file)
  * @param file #VFSFile object that represents the VFS stream.
  * @return The number of elements succesfully written.
  */
-gint64 vfs_fwrite (const void * ptr, gint64 size, gint64 nmemb, VFSFile * file)
+int64_t vfs_fwrite (const void * ptr, int64_t size, int64_t nmemb, VFSFile * file)
 {
     g_return_val_if_fail (file && file->sig == VFS_SIG, 0);
 
-    gint64 written = file->base->vfs_fwrite_impl (ptr, size, nmemb, file);
+    int64_t written = file->base->vfs_fwrite_impl (ptr, size, nmemb, file);
 
     if (verbose)
         logger ("VFS: <%p> write %"PRId64" elements of size %"PRId64" = "
@@ -198,7 +198,7 @@ gint64 vfs_fwrite (const void * ptr, gint64 size, gint64 nmemb, VFSFile * file)
  * @param file #VFSFile object that represents the VFS stream.
  * @return On success, a character. Otherwise, EOF.
  */
-gint
+int
 vfs_getc(VFSFile *file)
 {
     g_return_val_if_fail (file && file->sig == VFS_SIG, EOF);
@@ -216,8 +216,8 @@ vfs_getc(VFSFile *file)
  * @param file #VFSFile object that represents the VFS stream.
  * @return On success, 0. Otherwise, EOF.
  */
-gint
-vfs_ungetc(gint c, VFSFile *file)
+int
+vfs_ungetc(int c, VFSFile *file)
 {
     g_return_val_if_fail (file && file->sig == VFS_SIG, EOF);
 
@@ -240,10 +240,10 @@ vfs_ungetc(gint c, VFSFile *file)
  * @param whence Type of the seek: SEEK_CUR, SEEK_SET or SEEK_END.
  * @return On success, 0. Otherwise, -1.
  */
-gint
+int
 vfs_fseek(VFSFile * file,
-          gint64 offset,
-          gint whence)
+          int64_t offset,
+          int whence)
 {
     g_return_val_if_fail (file && file->sig == VFS_SIG, -1);
 
@@ -277,12 +277,12 @@ vfs_rewind(VFSFile * file)
  * @param file #VFSFile object that represents the VFS stream.
  * @return On success, the current position. Otherwise, -1.
  */
-gint64
+int64_t
 vfs_ftell(VFSFile * file)
 {
     g_return_val_if_fail (file && file->sig == VFS_SIG, -1);
 
-    gint64 told = file->base->vfs_ftell_impl (file);
+    int64_t told = file->base->vfs_ftell_impl (file);
 
     if (verbose)
         logger ("VFS: <%p> tell = %"PRId64"\n", file, told);
@@ -316,7 +316,7 @@ vfs_feof(VFSFile * file)
  * @param length The length to truncate at.
  * @return On success, 0. Otherwise, -1.
  */
-gint vfs_ftruncate (VFSFile * file, gint64 length)
+int vfs_ftruncate (VFSFile * file, int64_t length)
 {
     g_return_val_if_fail (file && file->sig == VFS_SIG, -1);
 
@@ -332,11 +332,11 @@ gint vfs_ftruncate (VFSFile * file, gint64 length)
  * @param file #VFSFile object that represents the VFS stream.
  * @return On success, the size of the file in bytes. Otherwise, -1.
  */
-gint64 vfs_fsize (VFSFile * file)
+int64_t vfs_fsize (VFSFile * file)
 {
     g_return_val_if_fail (file && file->sig == VFS_SIG, -1);
 
-    gint64 size = file->base->vfs_fsize_impl (file);
+    int64_t size = file->base->vfs_fsize_impl (file);
 
     if (verbose)
         logger ("VFS: <%p> size = %"PRId64"\n", file, size);
@@ -351,8 +351,8 @@ gint64 vfs_fsize (VFSFile * file)
  * @param field The string constant field name to get.
  * @return On success, a copy of the value of the field. Otherwise, NULL.
  */
-gchar *
-vfs_get_metadata(VFSFile * file, const gchar * field)
+char *
+vfs_get_metadata(VFSFile * file, const char * field)
 {
     if (file == NULL)
         return NULL;
@@ -370,12 +370,12 @@ vfs_get_metadata(VFSFile * file, const gchar * field)
  * @return The result of g_file_test().
  */
 gboolean
-vfs_file_test(const gchar * path, GFileTest test)
+vfs_file_test(const char * path, GFileTest test)
 {
     if (strncmp (path, "file://", 7))
         return FALSE; /* only local files are handled */
 
-    gchar * path2 = uri_to_filename (path);
+    char * path2 = uri_to_filename (path);
 
     if (path2 == NULL)
         path2 = g_strdup(path);
@@ -394,10 +394,10 @@ vfs_file_test(const gchar * path, GFileTest test)
  * @return TRUE if the file is writeable, otherwise FALSE.
  */
 gboolean
-vfs_is_writeable(const gchar * path)
+vfs_is_writeable(const char * path)
 {
     struct stat info;
-    gchar * realfn = uri_to_filename (path);
+    char * realfn = uri_to_filename (path);
 
     if (stat(realfn, &info) == -1)
         return FALSE;
@@ -433,7 +433,7 @@ vfs_dup(VFSFile *in)
  * @return TRUE if the file is remote, otherwise FALSE.
  */
 gboolean
-vfs_is_remote(const gchar * path)
+vfs_is_remote(const char * path)
 {
     return strncasecmp (path, "file://", 7) ? TRUE : FALSE;
 }

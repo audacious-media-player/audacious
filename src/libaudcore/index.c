@@ -29,8 +29,8 @@
 struct index
 {
     void * * data;
-    gint count, size;
-    gint (* compare) (const void * a, const void * b, void * data);
+    int count, size;
+    int (* compare) (const void * a, const void * b, void * data);
     void * compare_data;
 };
 
@@ -53,12 +53,12 @@ void index_free (struct index * index)
     g_slice_free (struct index, index);
 }
 
-gint index_count (struct index * index)
+int index_count (struct index * index)
 {
     return index->count;
 }
 
-void index_allocate (struct index * index, gint size)
+void index_allocate (struct index * index, int size)
 {
     if (size <= index->size)
         return;
@@ -72,17 +72,17 @@ void index_allocate (struct index * index, gint size)
     index->data = g_realloc (index->data, sizeof (void *) * index->size);
 }
 
-void index_set (struct index * index, gint at, void * value)
+void index_set (struct index * index, int at, void * value)
 {
     index->data[at] = value;
 }
 
-void * index_get (struct index * index, gint at)
+void * index_get (struct index * index, int at)
 {
     return index->data[at];
 }
 
-static void make_room (struct index * index, gint at, gint count)
+static void make_room (struct index * index, int at, int count)
 {
     index_allocate (index, index->count + count);
 
@@ -93,7 +93,7 @@ static void make_room (struct index * index, gint at, gint count)
     index->count += count;
 }
 
-void index_insert (struct index * index, gint at, void * value)
+void index_insert (struct index * index, int at, void * value)
 {
     make_room (index, at, 1);
     index->data[at] = value;
@@ -104,26 +104,26 @@ void index_append (struct index * index, void * value)
     index_insert (index, index->count, value);
 }
 
-void index_copy_set (struct index * source, gint from, struct index * target,
- gint to, gint count)
+void index_copy_set (struct index * source, int from, struct index * target,
+ int to, int count)
 {
     memcpy (target->data + to, source->data + from, sizeof (void *) * count);
 }
 
-void index_copy_insert (struct index * source, gint from, struct index * target,
- gint to, gint count)
+void index_copy_insert (struct index * source, int from, struct index * target,
+ int to, int count)
 {
     make_room (target, to, count);
     memcpy (target->data + to, source->data + from, sizeof (void *) * count);
 }
 
-void index_copy_append (struct index * source, gint from, struct index * target,
- gint count)
+void index_copy_append (struct index * source, int from, struct index * target,
+ int count)
 {
     index_copy_insert (source, from, target, target->count, count);
 }
 
-void index_merge_insert (struct index * first, gint at, struct index * second)
+void index_merge_insert (struct index * first, int at, struct index * second)
 {
     index_copy_insert (second, 0, first, at, second->count);
 }
@@ -133,33 +133,33 @@ void index_merge_append (struct index * first, struct index * second)
     index_copy_insert (second, 0, first, first->count, second->count);
 }
 
-void index_move (struct index * index, gint from, gint to, gint count)
+void index_move (struct index * index, int from, int to, int count)
 {
     memmove (index->data + to, index->data + from, sizeof (void *) * count);
 }
 
-void index_delete (struct index * index, gint at, gint count)
+void index_delete (struct index * index, int at, int count)
 {
     index->count -= count;
     memmove (index->data + at, index->data + at + count, sizeof (void *) *
      (index->count - at));
 }
 
-static gint index_compare (const void * a, const void * b, void * _compare)
+static int index_compare (const void * a, const void * b, void * _compare)
 {
-    gint (* compare) (const void *, const void *) = _compare;
+    int (* compare) (const void *, const void *) = _compare;
 
     return compare (* (const void * *) a, * (const void * *) b);
 }
 
-void index_sort (struct index * index, gint (* compare) (const void *, const
+void index_sort (struct index * index, int (* compare) (const void *, const
  void *))
 {
     g_qsort_with_data (index->data, index->count, sizeof (void *),
      index_compare, compare);
 }
 
-static gint index_compare_with_data (const void * a, const void * b, void *
+static int index_compare_with_data (const void * a, const void * b, void *
  _index)
 {
     struct index * index = _index;
@@ -168,7 +168,7 @@ static gint index_compare_with_data (const void * a, const void * b, void *
      index->compare_data);
 }
 
-void index_sort_with_data (struct index * index, gint (* compare)
+void index_sort_with_data (struct index * index, int (* compare)
  (const void * a, const void * b, void * data), void * data)
 {
     index->compare = compare;

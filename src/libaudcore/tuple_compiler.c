@@ -67,25 +67,25 @@ enum {
 };
 
 struct _TupleEvalNode {
-    gint opcode;		/* operator, see OP_ enums */
-    gint var[TUPLEZ_MAX_VARS];	/* tuple variable references */
-    gchar *text;		/* raw text, if any (OP_RAW) */
+    int opcode;		/* operator, see OP_ enums */
+    int var[TUPLEZ_MAX_VARS];	/* tuple variable references */
+    char *text;		/* raw text, if any (OP_RAW) */
     struct _TupleEvalNode *children, *next, *prev; /* children of this struct, and pointer to next node. */
 };
 
 typedef struct {
-    gchar *name;
-    gint type;			/* Type of variable, see VAR_* */
-    gint defvali;
+    char *name;
+    int type;			/* Type of variable, see VAR_* */
+    int defvali;
     TupleValueType ctype;	/* Type of constant/def value */
 
-    gint fieldidx;		/* if >= 0: Index # of "pre-defined" Tuple fields */
+    int fieldidx;		/* if >= 0: Index # of "pre-defined" Tuple fields */
     gboolean fieldread, fieldvalid;
-    gchar * fieldstr;
+    char * fieldstr;
 } TupleEvalVar;
 
 struct _TupleEvalContext {
-    gint nvariables;
+    int nvariables;
     TupleEvalVar **variables;
 };
 
@@ -110,7 +110,7 @@ TupleEvalContext * tuple_evalctx_new(void)
  */
 void tuple_evalctx_reset(TupleEvalContext *ctx)
 {
-  gint i;
+  int i;
 
   for (i = 0; i < ctx->nvariables; i++)
     if (ctx->variables[i]) {
@@ -126,7 +126,7 @@ void tuple_evalctx_reset(TupleEvalContext *ctx)
  */
 void tuple_evalctx_free(TupleEvalContext *ctx)
 {
-  gint i;
+  int i;
 
   if (!ctx) return;
 
@@ -140,10 +140,10 @@ void tuple_evalctx_free(TupleEvalContext *ctx)
 }
 
 
-static gint tuple_evalctx_add_var (TupleEvalContext * ctx, const gchar * name,
- const gint type, const TupleValueType ctype)
+static int tuple_evalctx_add_var (TupleEvalContext * ctx, const char * name,
+ const int type, const TupleValueType ctype)
 {
-  gint i;
+  int i;
   TupleEvalVar *tmp = g_new0(TupleEvalVar, 1);
 
   tmp->name = g_strdup(name);
@@ -221,15 +221,15 @@ void tuple_evalnode_free(TupleEvalNode *expr)
 }
 
 
-static TupleEvalNode *tuple_compiler_pass1(gint *level, TupleEvalContext *ctx, gchar **expression);
+static TupleEvalNode *tuple_compiler_pass1(int *level, TupleEvalContext *ctx, char **expression);
 
 
 static gboolean tc_get_item(TupleEvalContext *ctx,
-    gchar **str, gchar *buf, gssize max,
-    gchar endch, gboolean *literal, gchar *errstr, gchar *item)
+    char **str, char *buf, gssize max,
+    char endch, gboolean *literal, char *errstr, char *item)
 {
   gssize i = 0;
-  gchar *s = *str, tmpendch;
+  char *s = *str, tmpendch;
 
   if (*s == '"') {
     if (*literal == FALSE) {
@@ -283,9 +283,9 @@ static gboolean tc_get_item(TupleEvalContext *ctx,
 }
 
 
-static gint tc_get_variable(TupleEvalContext *ctx, gchar *name, gint type)
+static int tc_get_variable(TupleEvalContext *ctx, char *name, int type)
 {
-  gint i;
+  int i;
   TupleValueType ctype = TUPLE_UNKNOWN;
 
   if (name == '\0') return -1;
@@ -306,9 +306,9 @@ static gint tc_get_variable(TupleEvalContext *ctx, gchar *name, gint type)
 }
 
 
-static gboolean tc_parse_construct(TupleEvalContext *ctx, TupleEvalNode **res, gchar *item, gchar **c, gint *level, gint opcode)
+static gboolean tc_parse_construct(TupleEvalContext *ctx, TupleEvalNode **res, char *item, char **c, int *level, int opcode)
 {
-  gchar tmps1[MAX_STR], tmps2[MAX_STR];
+  char tmps1[MAX_STR], tmps2[MAX_STR];
   gboolean literal1 = TRUE, literal2 = TRUE;
 
   (*c)++;
@@ -344,10 +344,10 @@ static gboolean tc_parse_construct(TupleEvalContext *ctx, TupleEvalNode **res, g
  * A "simple" straight compilation is sufficient in first pass, later
  * passes can perform subexpression removal and other optimizations.
  */
-static TupleEvalNode *tuple_compiler_pass1(gint *level, TupleEvalContext *ctx, gchar **expression)
+static TupleEvalNode *tuple_compiler_pass1(int *level, TupleEvalContext *ctx, char **expression)
 {
   TupleEvalNode *res = NULL, *tmp = NULL;
-  gchar *c = *expression, *item, tmps1[MAX_STR];
+  char *c = *expression, *item, tmps1[MAX_STR];
   gboolean literal, end = FALSE;
 
   (*level)++;
@@ -362,8 +362,8 @@ static TupleEvalNode *tuple_compiler_pass1(gint *level, TupleEvalContext *ctx, g
       /* Expression? */
       item = c++;
       if (*c == '{') {
-        gint opcode;
-        gchar *expr = ++c;
+        int opcode;
+        char *expr = ++c;
 
         switch (*c) {
           case '?': c++;
@@ -535,10 +535,10 @@ ret_error:
 }
 
 
-TupleEvalNode *tuple_formatter_compile(TupleEvalContext *ctx, gchar *expr)
+TupleEvalNode *tuple_formatter_compile(TupleEvalContext *ctx, char *expr)
 {
-  gint level = 0;
-  gchar *tmpexpr = expr;
+  int level = 0;
+  char *tmpexpr = expr;
   TupleEvalNode *res1;
 
   res1 = tuple_compiler_pass1(&level, ctx, &tmpexpr);
@@ -582,7 +582,7 @@ static gboolean tf_get_fieldval (TupleEvalVar * var, const Tuple * tuple)
 /* Fetch string or int value of given variable, whatever type it might be.
  * Return VAR_* type for the variable.
  */
-static TupleValueType tf_get_var (gchar * * tmps, gint * tmpi, TupleEvalVar *
+static TupleValueType tf_get_var (char * * tmps, int * tmpi, TupleEvalVar *
  var, const Tuple * tuple)
 {
   TupleValueType type = TUPLE_UNKNOWN;
@@ -618,20 +618,20 @@ static TupleValueType tf_get_var (gchar * * tmps, gint * tmpi, TupleEvalVar *
  * context and return resulting string.
  */
 static gboolean tuple_formatter_eval_do (TupleEvalContext * ctx, TupleEvalNode *
- expr, const Tuple * tuple, gchar * * res, gssize * resmax, gssize * reslen)
+ expr, const Tuple * tuple, char * * res, gssize * resmax, gssize * reslen)
 {
   TupleEvalNode *curr = expr;
   TupleEvalVar *var0, *var1;
   TupleValueType type0, type1;
-  gint tmpi0, tmpi1;
-  gchar tmps[MAX_STR], *tmps0, *tmps1, *tmps2;
+  int tmpi0, tmpi1;
+  char tmps[MAX_STR], *tmps0, *tmps1, *tmps2;
   gboolean result;
-  gint resulti;
+  int resulti;
 
   if (!expr) return FALSE;
 
   while (curr) {
-    const gchar *str = NULL;
+    const char *str = NULL;
 
     switch (curr->opcode) {
       case OP_RAW:
@@ -771,10 +771,10 @@ static gboolean tuple_formatter_eval_do (TupleEvalContext * ctx, TupleEvalNode *
 }
 
 
-gchar * tuple_formatter_eval (TupleEvalContext * ctx, TupleEvalNode * expr,
+char * tuple_formatter_eval (TupleEvalContext * ctx, TupleEvalNode * expr,
  const Tuple * tuple)
 {
-  gchar *res = NULL;
+  char *res = NULL;
   gssize resmax = 0, reslen = 0;
 
   if (!expr) return res;

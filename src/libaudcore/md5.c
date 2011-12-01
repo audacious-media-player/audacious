@@ -15,13 +15,13 @@
 #  define aud_md5_bytereverse(buf, len) do { } while (0)
 #else
 #  if G_BYTE_ORDER == G_BIG_ENDIAN
-static void aud_md5_bytereverse(guint8 *buf, guint l)
+static void aud_md5_bytereverse(uint8_t *buf, unsigned int l)
 {
-    guint32 t;
+    uint32_t t;
     do {
-        t = (guint32) ((guint) buf[3] << 8 | buf[2]) << 16 | ((guint) buf[1] << 8 | buf[0]);
-        *(guint32 *) buf = t;
-        buf += sizeof(guint32);
+        t = (uint32_t) ((unsigned int) buf[3] << 8 | buf[2]) << 16 | ((unsigned int) buf[1] << 8 | buf[0]);
+        *(uint32_t *) buf = t;
+        buf += sizeof(uint32_t);
     } while (--l);
 }
 #  else
@@ -59,9 +59,9 @@ void aud_md5_init(aud_md5state_t *ctx)
 #define MD5STEP(f, w, x, y, z, data, s) \
     ( w += f(x, y, z) + data,  w = w<<s | w>>(32-s),  w += x )
 
-static void aud_md5_transform(guint32 buf[4], guint32 const in[16])
+static void aud_md5_transform(uint32_t buf[4], uint32_t const in[16])
 {
-    register guint32 a, b, c, d;
+    register uint32_t a, b, c, d;
 
     a = buf[0];
     b = buf[1];
@@ -151,13 +151,13 @@ static void aud_md5_transform(guint32 buf[4], guint32 const in[16])
  * @param buf Pointer to buffer of data.
  * @param len Length/size of the data in buffer.
  */
-void aud_md5_append(aud_md5state_t *ctx, const guint8 *buf, guint len)
+void aud_md5_append(aud_md5state_t *ctx, const uint8_t *buf, unsigned int len)
 {
-    guint32 t;
+    uint32_t t;
 
     /* Update bitcount */
     t = ctx->bits[0];
-    if ((ctx->bits[0] = t + ((guint32) len << 3)) < t)
+    if ((ctx->bits[0] = t + ((uint32_t) len << 3)) < t)
         ctx->bits[1]++;    /* Carry from low to high */
     ctx->bits[1] += len >> 29;
 
@@ -165,7 +165,7 @@ void aud_md5_append(aud_md5state_t *ctx, const guint8 *buf, guint len)
 
     /* Handle any leading odd-sized chunks */
     if (t) {
-        guint8 *p = (guint8 *) ctx->in + t;
+        uint8_t *p = (uint8_t *) ctx->in + t;
 
         t = 64 - t;
         if (len < t) {
@@ -174,7 +174,7 @@ void aud_md5_append(aud_md5state_t *ctx, const guint8 *buf, guint len)
         }
         memcpy(p, buf, t);
         aud_md5_bytereverse(ctx->in, 16);
-        aud_md5_transform(ctx->buf, (guint32 *) ctx->in);
+        aud_md5_transform(ctx->buf, (uint32_t *) ctx->in);
         buf += t;
         len -= t;
     }
@@ -183,7 +183,7 @@ void aud_md5_append(aud_md5state_t *ctx, const guint8 *buf, guint len)
     while (len >= 64) {
         memcpy(ctx->in, buf, 64);
         aud_md5_bytereverse(ctx->in, 16);
-        aud_md5_transform(ctx->buf, (guint32 *) ctx->in);
+        aud_md5_transform(ctx->buf, (uint32_t *) ctx->in);
         buf += 64;
         len -= 64;
     }
@@ -200,8 +200,8 @@ void aud_md5_append(aud_md5state_t *ctx, const guint8 *buf, guint len)
  */
 void aud_md5_finish(aud_md5state_t *ctx, aud_md5hash_t digest)
 {
-    guint count;
-    guint8 *p;
+    unsigned int count;
+    uint8_t *p;
 
     /* Compute number of bytes mod 64 */
     count = (ctx->bits[0] >> 3) & 0x3F;
@@ -219,7 +219,7 @@ void aud_md5_finish(aud_md5state_t *ctx, aud_md5hash_t digest)
         /* Two lots of padding:  Pad the first block to 64 bytes */
         memset(p, 0, count);
         aud_md5_bytereverse(ctx->in, 16);
-        aud_md5_transform(ctx->buf, (guint32 *) ctx->in);
+        aud_md5_transform(ctx->buf, (uint32_t *) ctx->in);
 
         /* Now fill the next block with 56 bytes */
         memset(ctx->in, 0, 56);
@@ -230,11 +230,11 @@ void aud_md5_finish(aud_md5state_t *ctx, aud_md5hash_t digest)
     aud_md5_bytereverse(ctx->in, 14);
 
     /* Append length in bits and transform */
-    ((guint32 *) ctx->in)[14] = ctx->bits[0];
-    ((guint32 *) ctx->in)[15] = ctx->bits[1];
+    ((uint32_t *) ctx->in)[14] = ctx->bits[0];
+    ((uint32_t *) ctx->in)[15] = ctx->bits[1];
 
-    aud_md5_transform(ctx->buf, (guint32 *) ctx->in);
-    aud_md5_bytereverse((guint8 *) ctx->buf, 4);
+    aud_md5_transform(ctx->buf, (uint32_t *) ctx->in);
+    aud_md5_bytereverse((uint8_t *) ctx->buf, 4);
     memcpy(digest, ctx->buf, 16);
     memset(ctx, 0, sizeof(ctx));    /* In case it's sensitive */
 }

@@ -25,7 +25,7 @@
 
 #include "tuple.h"
 
-gchar * tuple_formatter_make_title_string (const Tuple * tuple, const gchar *
+char * tuple_formatter_make_title_string (const Tuple * tuple, const char *
  string);
 
 #endif /* AUDACIOUS_TUPLE_FORMATTER_H */

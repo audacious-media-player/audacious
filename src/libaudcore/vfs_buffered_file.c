@@ -24,13 +24,13 @@
 #include "vfs_buffered_file.h"
 
 VFSFile *
-buffered_file_vfs_fopen_impl(const gchar * path,
-          const gchar * mode)
+buffered_file_vfs_fopen_impl(const char * path,
+          const char * mode)
 {
     return NULL;
 }
 
-gint
+int
 buffered_file_vfs_fclose_impl(VFSFile * file)
 {
     g_return_val_if_fail(file != NULL, -1);
@@ -50,7 +50,7 @@ buffered_file_vfs_fclose_impl(VFSFile * file)
     return 0;
 }
 
-gint64 buffered_file_vfs_fread_impl (void * i_ptr, gint64 size, gint64 nmemb,
+int64_t buffered_file_vfs_fread_impl (void * i_ptr, int64_t size, int64_t nmemb,
  VFSFile * file)
 {
     VFSBufferedFile *handle = (VFSBufferedFile *) file->handle;
@@ -70,7 +70,7 @@ gint64 buffered_file_vfs_fread_impl (void * i_ptr, gint64 size, gint64 nmemb,
     return vfs_fread(i_ptr, size, nmemb, handle->which == TRUE ? handle->fd : handle->buffer);
 }
 
-gint64 buffered_file_vfs_fwrite_impl (const void * i_ptr, gint64 size, gint64
+int64_t buffered_file_vfs_fwrite_impl (const void * i_ptr, int64_t size, int64_t
  nmemb, VFSFile * file)
 {
     VFSBufferedFile *handle = (VFSBufferedFile *) file->handle;
@@ -78,7 +78,7 @@ gint64 buffered_file_vfs_fwrite_impl (const void * i_ptr, gint64 size, gint64
     return vfs_fwrite(i_ptr, size, nmemb, handle->fd);
 }
 
-gint
+int
 buffered_file_vfs_getc_impl(VFSFile *stream)
 {
     VFSBufferedFile *handle = (VFSBufferedFile *) stream->handle;
@@ -97,16 +97,16 @@ buffered_file_vfs_getc_impl(VFSFile *stream)
     return vfs_getc(handle->which == TRUE ? handle->fd : handle->buffer);
 }
 
-gint
-buffered_file_vfs_ungetc_impl(gint c, VFSFile *stream)
+int
+buffered_file_vfs_ungetc_impl(int c, VFSFile *stream)
 {
     return -1;
 }
 
-gint
+int
 buffered_file_vfs_fseek_impl(VFSFile * file,
-          gint64 offset,
-          gint whence)
+          int64_t offset,
+          int whence)
 {
     VFSBufferedFile *handle = (VFSBufferedFile *) file->handle;
 
@@ -126,7 +126,7 @@ buffered_file_vfs_fseek_impl(VFSFile * file,
             }
             else
             {
-                gint64 noff;
+                int64_t noff;
 
                 handle->which = FALSE;
                 noff = ((VFSBuffer *) handle->buffer->handle)->size - (vfs_ftell(handle->buffer) + offset);
@@ -160,7 +160,7 @@ buffered_file_vfs_rewind_impl(VFSFile * file)
     handle->which = FALSE;
 }
 
-gint64
+int64_t
 buffered_file_vfs_ftell_impl(VFSFile * file)
 {
     VFSBufferedFile *handle = (VFSBufferedFile *) file->handle;
@@ -176,13 +176,13 @@ buffered_file_vfs_feof_impl(VFSFile * file)
     return vfs_feof(handle->which == TRUE ? handle->fd : handle->buffer);
 }
 
-gint
-buffered_file_vfs_truncate_impl (VFSFile * file, gint64 size)
+int
+buffered_file_vfs_truncate_impl (VFSFile * file, int64_t size)
 {
     return 0;
 }
 
-gint64
+int64_t
 buffered_file_vfs_fsize_impl(VFSFile * file)
 {
     VFSBufferedFile *handle = (VFSBufferedFile *) file->handle;
@@ -190,8 +190,8 @@ buffered_file_vfs_fsize_impl(VFSFile * file)
     return vfs_fsize(handle->fd);
 }
 
-gchar *
-buffered_file_vfs_metadata_impl(VFSFile * file, const gchar * field)
+char *
+buffered_file_vfs_metadata_impl(VFSFile * file, const char * field)
 {
     VFSBufferedFile *handle = (VFSBufferedFile *) file->handle;
 
@@ -221,7 +221,7 @@ VFSConstructor buffered_file_const = {
  * @return A VFSFile handle for the VFSBufferedFile.
  **/
 VFSFile *
-vfs_buffered_file_new_from_uri(const gchar *uri)
+vfs_buffered_file_new_from_uri(const char *uri)
 {
     VFSFile *handle;
     VFSBufferedFile *fd;

@@ -22,23 +22,23 @@
 
 #include <glib.h>
 
-typedef void (*HookFunction)(gpointer hook_data, gpointer user_data);
+typedef void (*HookFunction)(void * hook_data, void * user_data);
 
 typedef struct {
     HookFunction func;
-    gpointer user_data;
+    void * user_data;
 } HookItem;
 
 typedef struct {
-    const gchar *name;
+    const char *name;
     GSList *items;
 } Hook;
 
 void hook_init (void);
-void hook_register(const gchar *name);
-gint hook_associate(const gchar *name, HookFunction func, gpointer user_data);
-gint hook_dissociate(const gchar *name, HookFunction func);
-gint hook_dissociate_full(const gchar *name, HookFunction func, gpointer user_data);
-void hook_call(const gchar *name, gpointer hook_data);
+void hook_register(const char *name);
+int hook_associate(const char *name, HookFunction func, void * user_data);
+int hook_dissociate(const char *name, HookFunction func);
+int hook_dissociate_full(const char *name, HookFunction func, void * user_data);
+void hook_call(const char *name, void * hook_data);
 
 #endif /* AUDACIOUS_HOOK_H */

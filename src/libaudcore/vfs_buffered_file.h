@@ -34,11 +34,11 @@ G_BEGIN_DECLS
 typedef struct {
 	VFSFile    *fd;     /**< VFS handle for the active FD. */
 	VFSFile    *buffer; /**< First 32kb read from the FD. */
-	gchar      *mem;    /**< The memory for the buffer. */
+	char      *mem;    /**< The memory for the buffer. */
 	gboolean    which;  /**< Whether to use the live FD or the buffer. */
 } VFSBufferedFile;
 
-VFSFile *vfs_buffered_file_new_from_uri(const gchar *uri);
+VFSFile *vfs_buffered_file_new_from_uri(const char *uri);
 VFSFile *vfs_buffered_file_release_live_fd(VFSFile *fd);
 
 G_END_DECLS

@@ -27,9 +27,9 @@ G_BEGIN_DECLS
 
 /** Private data for the VFS memorybuffer class. */
 typedef struct {
-	guchar *data;   /**< The data inside the VFSBuffer. */
-	guchar *iter;   /**< The current position of the VFS buffer iterator. */
-	guchar *end;    /**< The end of the memory segment that the VFS buffer uses. */
+	unsigned char *data;   /**< The data inside the VFSBuffer. */
+	unsigned char *iter;   /**< The current position of the VFS buffer iterator. */
+	unsigned char *end;    /**< The end of the memory segment that the VFS buffer uses. */
 	gsize   size;   /**< The size of the memory segment. */
 } VFSBuffer;
 
@@ -40,7 +40,7 @@ typedef struct {
  * @param size Size of data to use.
  * @return A VFSFile handle for the memory segment's stream representation.
  */
-VFSFile *vfs_buffer_new(gpointer data, gsize size);
+VFSFile *vfs_buffer_new(void * data, gsize size);
 
 /**
  * Creates a VFS buffer for reading/writing to a string.
@@ -48,7 +48,7 @@ VFSFile *vfs_buffer_new(gpointer data, gsize size);
  * @param str String to use.
  * @return A VFSFile handle for the memory segment's stream representation.
  */
-VFSFile *vfs_buffer_new_from_string(gchar *str);
+VFSFile *vfs_buffer_new_from_string(char *str);
 
 G_END_DECLS
 

@@ -31,60 +31,60 @@
 
 G_BEGIN_DECLS
 
-gchar *str_append(gchar * str, const gchar * add_str);
-gchar *str_replace(gchar * str, gchar * new_str);
-void str_replace_in(gchar ** str, gchar * new_str);
+char *str_append(char * str, const char * add_str);
+char *str_replace(char * str, char * new_str);
+void str_replace_in(char ** str, char * new_str);
 
-gboolean str_has_prefix_nocase(const gchar * str, const gchar * prefix);
-gboolean str_has_suffix_nocase(const gchar * str, const gchar * suffix);
-gboolean str_has_suffixes_nocase(const gchar * str, gchar * const *suffixes);
+gboolean str_has_prefix_nocase(const char * str, const char * prefix);
+gboolean str_has_suffix_nocase(const char * str, const char * suffix);
+gboolean str_has_suffixes_nocase(const char * str, char * const *suffixes);
 
-gchar *str_assert_utf8(const gchar *str);
+char *str_assert_utf8(const char *str);
 
-void str_set_utf8_impl (gchar * (* stu_impl) (const gchar *),
- gchar * (* stuf_impl) (const gchar *, gssize, gsize *, gsize *, GError * *));
-gchar * str_to_utf8 (const gchar * str);
-gchar * str_to_utf8_full (const gchar * str, gssize len, gsize * bytes_read,
+void str_set_utf8_impl (char * (* stu_impl) (const char *),
+ char * (* stuf_impl) (const char *, gssize, gsize *, gsize *, GError * *));
+char * str_to_utf8 (const char * str);
+char * str_to_utf8_full (const char * str, gssize len, gsize * bytes_read,
  gsize * bytes_written, GError * * err);
 
-const gchar *str_skip_chars(const gchar * str, const gchar * chars);
+const char *str_skip_chars(const char * str, const char * chars);
 
-gchar *convert_dos_path(gchar * text);
+char *convert_dos_path(char * text);
 
-gchar *filename_get_subtune(const gchar * filename, gint * track);
-gchar *filename_split_subtune(const gchar * filename, gint * track);
+char *filename_get_subtune(const char * filename, int * track);
+char *filename_split_subtune(const char * filename, int * track);
 
-void string_replace_char (gchar * string, gchar old_str, gchar new_str);
-void string_decode_percent (gchar * string);
-gchar * string_encode_percent (const gchar * string, gboolean is_filename);
+void string_replace_char (char * string, char old_str, char new_str);
+void string_decode_percent (char * string);
+char * string_encode_percent (const char * string, gboolean is_filename);
 
-gboolean uri_is_utf8 (const gchar * uri, gboolean warn);
-gchar * uri_to_utf8 (const gchar * uri);
-void uri_check_utf8 (gchar * * uri, gboolean warn);
-gchar * filename_to_uri (const gchar * filename);
-gchar * uri_to_filename (const gchar * uri);
-gchar * uri_to_display (const gchar * uri);
+gboolean uri_is_utf8 (const char * uri, gboolean warn);
+char * uri_to_utf8 (const char * uri);
+void uri_check_utf8 (char * * uri, gboolean warn);
+char * filename_to_uri (const char * filename);
+char * uri_to_filename (const char * uri);
+char * uri_to_display (const char * uri);
 
-gchar * uri_get_extension (const gchar * uri);
+char * uri_get_extension (const char * uri);
 
-void string_cut_extension(gchar *string);
-gint string_compare (const gchar * a, const gchar * b);
-gint string_compare_encoded (const gchar * a, const gchar * b);
+void string_cut_extension(char *string);
+int string_compare (const char * a, const char * b);
+int string_compare_encoded (const char * a, const char * b);
 
-const void * memfind (const void * mem, gint size, const void * token, gint
+const void * memfind (const void * mem, int size, const void * token, int
  length);
 
-gchar *str_replace_fragment(gchar *s, gint size, const gchar *old_str, const gchar *new_str);
+char *str_replace_fragment(char *s, int size, const char *old_str, const char *new_str);
 
-void string_canonize_case(gchar *string);
+void string_canonize_case(char *string);
 
-gboolean string_to_int (const gchar * string, gint * addr);
-gboolean string_to_double (const gchar * string, gdouble * addr);
-gchar * int_to_string (gint val);
-gchar * double_to_string (gdouble val);
+gboolean string_to_int (const char * string, int * addr);
+gboolean string_to_double (const char * string, double * addr);
+char * int_to_string (int val);
+char * double_to_string (double val);
 
-gboolean string_to_double_array (const gchar * string, gdouble * array, gint count);
-gchar * double_array_to_string (const gdouble * array, gint count);
+gboolean string_to_double_array (const char * string, double * array, int count);
+char * double_array_to_string (const double * array, int count);
 
 G_END_DECLS
 

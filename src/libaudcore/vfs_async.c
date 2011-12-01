@@ -21,17 +21,17 @@
 #include <libaudcore/vfs_async.h>
 
 typedef struct {
-    gchar *filename;
+    char *filename;
     void *buf;
-    gint64 size;
+    int64_t size;
     GThread *thread;
-    gpointer userdata;
+    void * userdata;
 
     VFSConsumer cons_f;
 } VFSAsyncTrampoline;
 
 gboolean
-vfs_async_file_get_contents_trampoline(gpointer data)
+vfs_async_file_get_contents_trampoline(void * data)
 {
     VFSAsyncTrampoline *tr = data;
 
@@ -41,8 +41,8 @@ vfs_async_file_get_contents_trampoline(gpointer data)
     return FALSE;
 }
 
-gpointer
-vfs_async_file_get_contents_worker(gpointer data)
+void *
+vfs_async_file_get_contents_worker(void * data)
 {
     VFSAsyncTrampoline *tr = data;
 
@@ -54,7 +54,7 @@ vfs_async_file_get_contents_worker(gpointer data)
 }
 
 void
-vfs_async_file_get_contents(const gchar *filename, VFSConsumer cons_f, gpointer userdata)
+vfs_async_file_get_contents(const char *filename, VFSConsumer cons_f, void * userdata)
 {
     VFSAsyncTrampoline *tr;
 

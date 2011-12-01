@@ -84,9 +84,9 @@ typedef enum {
     TUPLE_UNKNOWN
 } TupleValueType;
 
-gint tuple_field_by_name (const gchar * name);
-const gchar * tuple_field_get_name (gint field);
-TupleValueType tuple_field_get_type (gint field);
+int tuple_field_by_name (const char * name);
+const char * tuple_field_get_name (int field);
+TupleValueType tuple_field_get_type (int field);
 
 typedef struct _Tuple Tuple;
 
@@ -107,14 +107,14 @@ Tuple *tuple_copy(const Tuple *);
 
 /* Parses the URI <filename> and sets FIELD_FILE_NAME, FIELD_FILE_PATH,
  * FIELD_FILE_EXT, and FIELD_SUBSONG_ID accordingly. */
-void tuple_set_filename(Tuple *tuple, const gchar *filename);
+void tuple_set_filename(Tuple *tuple, const char *filename);
 
 /* Convenience function, equivalent to calling tuple_new() and then
  * tuple_set_filename(). */
-Tuple *tuple_new_from_filename(const gchar *filename);
+Tuple *tuple_new_from_filename(const char *filename);
 
 /* Sets a field to the integer value <x>. */
-void tuple_set_int (Tuple * tuple, gint nfield, const gchar * field, gint x);
+void tuple_set_int (Tuple * tuple, int nfield, const char * field, int x);
 
 /* Sets the field specified by <nfield> (one of the FIELD_* constants) or
  * <field> (one of the names returned by tuple_field_get_name() to the string
@@ -122,29 +122,29 @@ void tuple_set_int (Tuple * tuple, gint nfield, const gchar * field, gint x);
  * set, <field> must be NULL; if <field> is set, <nfield> must be -1.  <str>
  * must be a pooled string returned by str_get(); the caller gives up one
  * reference to <str>. */
-void tuple_set_str (Tuple * tuple, gint nfield, const gchar * field, gchar * str);
+void tuple_set_str (Tuple * tuple, int nfield, const char * field, char * str);
 
 /* Convenience function, equivalent to calling tuple_set_str (strget (str)). */
-void tuple_copy_str (Tuple * tuple, gint nfield, const gchar * field, const gchar * str);
+void tuple_copy_str (Tuple * tuple, int nfield, const char * field, const char * str);
 
 /* Clears any value that a field is currently set to. */
-void tuple_unset (Tuple * tuple, gint nfield, const gchar * field);
+void tuple_unset (Tuple * tuple, int nfield, const char * field);
 
 /* Returns the value type of a field, or TUPLE_UNKNOWN if the field has not been
  * set to any value. */
-TupleValueType tuple_get_value_type (const Tuple * tuple, gint nfield,
- const gchar * field);
+TupleValueType tuple_get_value_type (const Tuple * tuple, int nfield,
+ const char * field);
 
 /* Returns the string value of a field.  The returned string is pooled and must
  * be released with str_unref() when no longer needed.  If the field has not
  * been set to any value, returns NULL. */
-gchar * tuple_get_str (const Tuple * tuple, gint nfield, const gchar * field);
+char * tuple_get_str (const Tuple * tuple, int nfield, const char * field);
 
 /* Returns the integer value of a field.  If the field has not been set to any
  * value, returns 0.  (In hindsight, it would have been better to return -1 in
  * this case.  If you need to distinguish between a value of 0 and a field not
  * set to any value, use tuple_get_value_type().) */
-gint tuple_get_int (const Tuple * tuple, gint nfield, const gchar * field);
+int tuple_get_int (const Tuple * tuple, int nfield, const char * field);
 
 /* Fills in format-related fields (specifically FIELD_CODEC, FIELD_QUALITY, and
  * FIELD_BITRATE).  Plugins should use this function instead of setting these
@@ -152,22 +152,22 @@ gint tuple_get_int (const Tuple * tuple, gint nfield, const gchar * field);
  * <format> should be a brief description such as "Microsoft WAV", "MPEG-1 layer
  * 3", "Audio CD", and so on.  <samplerate> is in Hertz.  <bitrate> is in 1000
  * bits per second. */
-void tuple_set_format (Tuple * tuple, const gchar * format, gint channels, gint
- samplerate, gint bitrate);
+void tuple_set_format (Tuple * tuple, const char * format, int channels, int
+ samplerate, int bitrate);
 
 /* In addition to the normal fields, tuples contain an integer array of subtune
  * ID numbers.  This function sets that array.  It also sets FIELD_SUBSONG_NUM
  * to the value <n_subtunes>. */
-void tuple_set_subtunes (Tuple * tuple, gint n_subtunes, const gint * subtunes);
+void tuple_set_subtunes (Tuple * tuple, int n_subtunes, const int * subtunes);
 
 /* Returns the length of the subtune array.  If the array has not been set,
  * returns zero.  Note that if FIELD_SUBSONG_NUM is changed after
  * tuple_set_subtunes() is called, this function returns the value <n_subtunes>
  * passed to tuple_set_subtunes(), not the value of FIELD_SUBSONG_NUM. */
-gint tuple_get_n_subtunes (Tuple * tuple);
+int tuple_get_n_subtunes (Tuple * tuple);
 
 /* Returns the <n>th member of the subtune array. */
-gint tuple_get_nth_subtune (Tuple * tuple, gint n);
+int tuple_get_nth_subtune (Tuple * tuple, int n);
 
 /* ------
  * The following functions are deprecated, but will be kept around for a while
@@ -183,13 +183,13 @@ gint tuple_get_nth_subtune (Tuple * tuple, gint n);
 
 void tuple_free (Tuple * tuple) DEPRECATED;
 
-gboolean tuple_associate_string (Tuple * tuple, gint nfield,
- const gchar * field, const gchar * str) DEPRECATED;
-gboolean tuple_associate_string_rel (Tuple * tuple, gint nfield,
- const gchar * field, gchar * str) DEPRECATED;
-gboolean tuple_associate_int (Tuple * tuple, gint nfield, const gchar * field, gint x) DEPRECATED;
-void tuple_disassociate (Tuple * tuple, const gint nfield, const gchar * field) DEPRECATED;
+gboolean tuple_associate_string (Tuple * tuple, int nfield,
+ const char * field, const char * str) DEPRECATED;
+gboolean tuple_associate_string_rel (Tuple * tuple, int nfield,
+ const char * field, char * str) DEPRECATED;
+gboolean tuple_associate_int (Tuple * tuple, int nfield, const char * field, int x) DEPRECATED;
+void tuple_disassociate (Tuple * tuple, const int nfield, const char * field) DEPRECATED;
 
-const gchar * tuple_get_string (const Tuple * tuple, gint nfield, const gchar * field) DEPRECATED;
+const char * tuple_get_string (const Tuple * tuple, int nfield, const char * field) DEPRECATED;
 
 #endif /* AUDACIOUS_TUPLE_H */

@@ -27,7 +27,7 @@
 /* Schedules a call of the hook <name> from the program's main loop, to be
  * executed in <time> milliseconds.  If <free_data> is nonzero, <data> will be
  * freed with g_free() after the hook is called. */
-void event_queue_full (gint time, const gchar * name, void * data, gboolean free_data);
+void event_queue_full (int time, const char * name, void * data, gboolean free_data);
 
 /* convenience macro */
 #define event_queue(n,d) event_queue_full (0, n, d, FALSE)
@@ -38,6 +38,6 @@ void event_queue_full (gint time, const gchar * name, void * data, gboolean free
 
 /* Cancels pending hook calls matching <name> and <data>.  If <data> is null,
  * all hook calls matching <name> are canceled. */
-void event_queue_cancel (const gchar * name, void * data);
+void event_queue_cancel (const char * name, void * data);
 
 #endif
