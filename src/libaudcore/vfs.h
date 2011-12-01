@@ -32,7 +32,7 @@
 #include <stdint.h>
 #include <sys/types.h>
 
-#include <libaudcore/types.h>
+#include <libaudcore/core.h>
 
 G_BEGIN_DECLS
 

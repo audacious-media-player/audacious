@@ -28,7 +28,7 @@
 
 #include <glib.h>
 
-#include "strpool.h"
+#include "core.h"
 
 /* Each string in the pool is allocated with five leading bytes: a 32-bit
  * reference count and a one-byte signature, the '@' character. */

@@ -28,7 +28,6 @@
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
-#include <libaudcore/strpool.h>
 
 #include "misc.h"
 #include "playlist.h"

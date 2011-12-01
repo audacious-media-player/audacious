@@ -25,7 +25,6 @@
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
-#include <libaudcore/strpool.h>
 
 #include "main.h"
 #include "misc.h"

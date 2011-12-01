@@ -43,7 +43,6 @@
 #include <errno.h>
 
 #include <libaudcore/audstrings.h>
-#include <libaudcore/strpool.h>
 
 #include "debug.h"
 #include "i18n.h"

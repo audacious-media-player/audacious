@@ -23,8 +23,6 @@
 #ifndef AUDTAG_H
 #define AUDTAG_H
 
-G_BEGIN_DECLS
-
 #include <glib.h>
 #include <libaudcore/tuple.h>
 #include <libaudcore/vfs.h>
@@ -47,5 +45,4 @@ gboolean tag_tuple_write (const Tuple * tuple, VFSFile * handle, gint new_type);
 /* deprecated, use tag_tuple_write */
 gboolean tag_tuple_write_to_file (Tuple * tuple, VFSFile * handle);
 
-G_END_DECLS
 #endif /* AUDTAG_H */

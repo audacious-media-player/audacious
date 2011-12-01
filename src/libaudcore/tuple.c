@@ -32,7 +32,6 @@
 
 #include "audstrings.h"
 #include "config.h"
-#include "strpool.h"
 #include "tuple.h"
 
 typedef struct {

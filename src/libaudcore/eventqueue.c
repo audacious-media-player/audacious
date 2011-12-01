@@ -23,8 +23,8 @@
 #include <pthread.h>
 #include <string.h>
 
+#include "core.h"
 #include "hook.h"
-#include "types.h"
 
 typedef struct {
     char * name;

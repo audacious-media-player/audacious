@@ -27,7 +27,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <libaudcore/strpool.h>
 #include <libaudcore/vfs.h>
 
 #include "ape.h"

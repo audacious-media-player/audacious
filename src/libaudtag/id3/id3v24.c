@@ -24,7 +24,6 @@
 #include <string.h>
 
 #include <libaudcore/audstrings.h>
-#include <libaudcore/strpool.h>
 
 #include "id3-common.h"
 #include "id3v24.h"

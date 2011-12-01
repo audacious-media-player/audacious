@@ -32,7 +32,6 @@
 
 #include <audacious/debug.h>
 #include <audacious/playlist.h>
-#include <libaudcore/strpool.h>
 
 #include "ui_jumptotrack_cache.h"
 #include "ui_regex.h"

@@ -24,7 +24,6 @@
 
 #include "audstrings.h"
 #include "config.h"
-#include "strpool.h"
 #include "tuple.h"
 #include "tuple_compiler.h"
 #include "tuple_formatter.h"

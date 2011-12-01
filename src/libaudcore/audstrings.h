@@ -26,7 +26,7 @@
 #ifndef LIBAUDCORE_STRINGS_H
 #define LIBAUDCORE_STRINGS_H
 
-#include <libaudcore/types.h>
+#include <libaudcore/core.h>
 
 boolean str_has_prefix_nocase(const char * str, const char * prefix);
 boolean str_has_suffix_nocase(const char * str, const char * suffix);

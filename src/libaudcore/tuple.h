@@ -22,11 +22,10 @@
  * @brief Basic Tuple handling API.
  */
 
-#ifndef AUDACIOUS_TUPLE_H
-#define AUDACIOUS_TUPLE_H
+#ifndef LIBAUDCORE_TUPLE_H
+#define LIBAUDCORE_TUPLE_H
 
-#include <glib.h>
-#include <libaudcore/types.h>
+#include <libaudcore/core.h>
 
 /** Ordered enum for basic #Tuple fields.
  * @sa TupleBasicType
@@ -193,4 +192,4 @@ void tuple_disassociate (Tuple * tuple, const int nfield, const char * field) DE
 
 const char * tuple_get_string (const Tuple * tuple, int nfield, const char * field) DEPRECATED;
 
-#endif /* AUDACIOUS_TUPLE_H */
+#endif /* LIBAUDCORE_TUPLE_H */

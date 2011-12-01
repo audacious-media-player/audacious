@@ -29,7 +29,6 @@
 #include <audacious/i18n.h>
 #include <audacious/misc.h>
 #include <audacious/playlist.h>
-#include <libaudcore/strpool.h>
 
 #include "config.h"
 #include "libaudgui.h"

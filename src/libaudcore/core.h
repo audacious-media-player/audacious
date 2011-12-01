@@ -1,5 +1,5 @@
 /*
- * strpool.h
+ * core.h
  * Copyright 2011 John Lindgren
  *
  * This file is part of Audacious.
@@ -19,8 +19,12 @@
  * using our public API to be a derived work.
  */
 
-#ifndef AUDACIOUS_STRPOOL_H
-#define AUDACIOUS_STRPOOL_H
+#ifndef LIBAUDCORE_CORE_H
+#define LIBAUDCORE_CORE_H
+
+/* "boolean" means "int" for compatibility with GLib */
+#undef boolean
+#define boolean int
 
 /* Simple sanity check to catch (1) strings that are still in use after their
  * reference count has dropped to zero and (2) strings that should have been
@@ -56,4 +60,4 @@ void strpool_abort (void);
  * a warning may be printed to stderr in order to reveal memory leaks. */
 void strpool_shutdown (void);
 
-#endif
+#endif /* LIBAUDCORE_CORE_H */

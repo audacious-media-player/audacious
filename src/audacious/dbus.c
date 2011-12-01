@@ -35,7 +35,6 @@
 #include <math.h>
 
 #include <libaudcore/hook.h>
-#include <libaudcore/strpool.h>
 
 #include "debug.h"
 #include "drct.h"

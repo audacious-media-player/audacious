@@ -34,7 +34,6 @@
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
-#include <libaudcore/strpool.h>
 #include <libaudtag/audtag.h>
 
 #include "config.h"

@@ -20,13 +20,12 @@ SRCS = audio.c \
 
 INCLUDES = audio.h \
            audstrings.h \
+           core.h \
            hook.h \
            index.h \
-           strpool.h \
            tuple.h \
            tuple_compiler.h \
            tuple_formatter.h \
-           types.h \
            vfs.h \
            vfs_async.h \
            vfs_buffer.h \

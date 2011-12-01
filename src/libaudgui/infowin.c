@@ -32,7 +32,6 @@
 #include <audacious/playlist.h>
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
-#include <libaudcore/strpool.h>
 
 #include "config.h"
 #include "libaudgui.h"

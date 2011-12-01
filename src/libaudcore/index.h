@@ -19,8 +19,8 @@
  * using our public API to be a derived work.
  */
 
-#ifndef AUDACIOUS_INDEX_H
-#define AUDACIOUS_INDEX_H
+#ifndef LIBAUDCORE_INDEX_H
+#define LIBAUDCORE_INDEX_H
 
 struct index;
 
@@ -47,4 +47,4 @@ void index_sort (struct index * index, int (* compare) (const void * a,
 void index_sort_with_data (struct index * index, int (* compare)
  (const void * a, const void * b, void * data), void * data);
 
-#endif
+#endif /* LIBAUDCORE_INDEX_H */
