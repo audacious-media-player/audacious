@@ -35,6 +35,7 @@
 #include <math.h>
 #include <libaudcore/eventqueue.h>
 #include <libaudcore/hook.h>
+#include <libaudcore/strpool.h>
 
 #include "debug.h"
 #include "drct.h"
@@ -252,20 +253,23 @@ void init_dbus()
 static GValue *tuple_value_to_gvalue(const Tuple * tuple, const gchar * key)
 {
     GValue *val;
-    TupleValueType type = tuple_get_value_type((Tuple *) tuple, -1, key);
+    TupleValueType type = tuple_get_value_type (tuple, -1, key);
 
     if (type == TUPLE_STRING)
     {
         val = g_new0(GValue, 1);
         g_value_init(val, G_TYPE_STRING);
-        g_value_take_string(val, g_strdup(tuple_get_string((Tuple *) tuple, -1, key)));
+        gchar * str = tuple_get_str (tuple, -1, key);
+        g_value_set_string (val, str);
+        str_unref (str);
         return val;
     }
     else if (type == TUPLE_INT)
     {
         val = g_new0(GValue, 1);
         g_value_init(val, G_TYPE_INT);
-        g_value_set_int(val, tuple_get_int((Tuple *) tuple, -1, key));
+        gint x = tuple_get_int (tuple, -1, key);
+        g_value_set_int (val, x);
         return val;
     }
     return NULL;

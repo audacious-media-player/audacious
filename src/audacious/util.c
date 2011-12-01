@@ -274,6 +274,19 @@ static gchar * stream_name (gchar * name)
     return name;
 }
 
+static gchar * get_nonblank_field (const Tuple * tuple, gint field)
+{
+    gchar * str = tuple ? tuple_get_str (tuple, field, NULL) : NULL;
+
+    if (str && ! str[0])
+    {
+        str_unref (str);
+        str = NULL;
+    }
+
+    return str;
+}
+
 /* Derives best guesses of title, artist, and album from a file name (URI) and
  * tuple (which may be NULL).  The returned strings are stringpooled or NULL. */
 
@@ -283,16 +296,9 @@ void describe_song (const gchar * name, const Tuple * tuple, gchar * * _title,
     /* Common folder names to skip */
     static const gchar * const skip[] = {"music"};
 
-    const gchar * title = tuple ? tuple_get_string (tuple, FIELD_TITLE, NULL) : NULL;
-    const gchar * artist = tuple ? tuple_get_string (tuple, FIELD_ARTIST, NULL) : NULL;
-    const gchar * album = tuple ? tuple_get_string (tuple, FIELD_ALBUM, NULL) : NULL;
-
-    if (title && ! title[0])
-        title = NULL;
-    if (artist && ! artist[0])
-        artist = NULL;
-    if (album && ! album[0])
-        album = NULL;
+    gchar * title = get_nonblank_field (tuple, FIELD_TITLE);
+    gchar * artist = get_nonblank_field (tuple, FIELD_ARTIST);
+    gchar * album = get_nonblank_field (tuple, FIELD_ALBUM);
 
     gchar * copy = NULL;
 
@@ -304,11 +310,10 @@ void describe_song (const gchar * name, const Tuple * tuple, gchar * * _title,
     if (! strncmp (name, "file://", 7))
     {
         gchar * base, * first, * second;
-        split_filename (skip_top_folders (copy), & base, & first,
-         & second);
+        split_filename (skip_top_folders (copy), & base, & first, & second);
 
         if (! title)
-            title = base;
+            title = str_get (base);
 
         for (gint i = 0; i < G_N_ELEMENTS (skip); i ++)
         {
@@ -322,29 +327,29 @@ void describe_song (const gchar * name, const Tuple * tuple, gchar * * _title,
         {
             if (second && ! artist && ! album)
             {
-                artist = second;
-                album = first;
+                artist = str_get (second);
+                album = str_get (first);
             }
             else if (! artist)
-                artist = first;
+                artist = str_get (first);
             else if (! album)
-                album = first;
+                album = str_get (first);
         }
     }
     else
     {
         if (! title)
-            title = stream_name (copy);
+            title = str_get (stream_name (copy));
         else if (! artist)
-            artist = stream_name (copy);
+            artist = str_get (stream_name (copy));
         else if (! album)
-            album = stream_name (copy);
+            album = str_get (stream_name (copy));
     }
 
 DONE:
-    * _title = str_get (title);
-    * _artist = str_get (artist);
-    * _album = str_get (album);
+    * _title = title;
+    * _artist = artist;
+    * _album = album;
 
     g_free (copy);
 }

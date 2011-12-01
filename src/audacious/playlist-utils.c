@@ -28,6 +28,7 @@
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
+#include <libaudcore/strpool.h>
 
 #include "misc.h"
 #include "playlist.h"
@@ -46,15 +47,20 @@ static gint filename_compare_basename (const gchar * a, const gchar * b)
 
 static gint tuple_compare_string (const Tuple * a, const Tuple * b, gint field)
 {
-    const gchar * string_a = tuple_get_string (a, field, NULL);
-    const gchar * string_b = tuple_get_string (b, field, NULL);
+    gchar * string_a = tuple_get_str (a, field, NULL);
+    gchar * string_b = tuple_get_str (b, field, NULL);
+    gint ret;
 
     if (string_a == NULL)
-        return (string_b == NULL) ? 0 : -1;
-    if (string_b == NULL)
-        return 1;
+        ret = (string_b == NULL) ? 0 : -1;
+    else if (string_b == NULL)
+        ret = 1;
+    else
+        ret = string_compare (string_a, string_b);
 
-    return string_compare (string_a, string_b);
+    str_unref (string_a);
+    str_unref (string_b);
+    return ret;
 }
 
 static gint tuple_compare_int (const Tuple * a, const Tuple * b, gint field)
@@ -239,44 +245,33 @@ void playlist_select_by_patterns (gint playlist, const Tuple * patterns)
 
     for (field = 0; field < G_N_ELEMENTS (fields); field ++)
     {
-        const gchar * pattern = tuple_get_string ((Tuple *) patterns,
-         fields[field], NULL);
+        gchar * pattern = tuple_get_str (patterns, fields[field], NULL);
         regex_t regex;
 
-        if (pattern == NULL || pattern[0] == 0)
+        if (! pattern || ! pattern[0] || regcomp (& regex, pattern, REG_ICASE))
+        {
+            str_unref (pattern);
             continue;
-
-        if (regcomp (& regex, pattern, REG_ICASE) != 0)
-            continue;
+        }
 
         for (entry = 0; entry < entries; entry ++)
         {
-            const gchar * string;
-
             if (! playlist_entry_get_selected (playlist, entry))
                 continue;
 
             Tuple * tuple = playlist_entry_get_tuple (playlist, entry, FALSE);
-            if (! tuple)
-                goto NO_MATCH;
+            gchar * string = tuple ? tuple_get_str (tuple, fields[field], NULL) : NULL;
 
-            string = tuple_get_string (tuple, fields[field], NULL);
-            if (! string)
-                goto NO_MATCH;
+            if (! string || regexec (& regex, string, 0, NULL, 0))
+                playlist_entry_set_selected (playlist, entry, FALSE);
 
-            if (regexec (& regex, string, 0, NULL, 0) == 0)
-            {
-                tuple_unref (tuple);
-                continue;
-            }
-
-        NO_MATCH:
-            playlist_entry_set_selected (playlist, entry, FALSE);
+            str_unref (string);
             if (tuple)
                 tuple_unref (tuple);
         }
 
         regfree (& regex);
+        str_unref (pattern);
     }
 }
 
