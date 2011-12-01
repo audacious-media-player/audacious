@@ -1,5 +1,5 @@
 /*  Audacious
- *  Copyright (C) 2005-2007  Audacious development team.
+ *  Copyright (C) 2005-2011  Audacious development team.
  *
  *  BMP - Cross-platform multimedia player
  *  Copyright (C) 2003-2004  BMP development team.
@@ -28,24 +28,13 @@
 
 #include <libaudcore/types.h>
 
-char *str_append(char * str, const char * add_str);
-char *str_replace(char * str, char * new_str);
-void str_replace_in(char ** str, char * new_str);
-
 boolean str_has_prefix_nocase(const char * str, const char * prefix);
 boolean str_has_suffix_nocase(const char * str, const char * suffix);
-boolean str_has_suffixes_nocase(const char * str, char * const *suffixes);
-
-char *str_assert_utf8(const char *str);
 
 void str_set_utf8_impl (char * (* stu_impl) (const char *),
  char * (* stuf_impl) (const char *, int, int *, int *));
 char * str_to_utf8 (const char * str);
 char * str_to_utf8_full (const char * str, int len, int * bytes_read, int * bytes_written);
-
-const char *str_skip_chars(const char * str, const char * chars);
-
-char *convert_dos_path(char * text);
 
 char *filename_get_subtune(const char * filename, int * track);
 char *filename_split_subtune(const char * filename, int * track);
@@ -67,12 +56,7 @@ void string_cut_extension(char *string);
 int string_compare (const char * a, const char * b);
 int string_compare_encoded (const char * a, const char * b);
 
-const void * memfind (const void * mem, int size, const void * token, int
- length);
-
 char *str_replace_fragment(char *s, int size, const char *old_str, const char *new_str);
-
-void string_canonize_case(char *string);
 
 boolean string_to_int (const char * string, int * addr);
 boolean string_to_double (const char * string, double * addr);

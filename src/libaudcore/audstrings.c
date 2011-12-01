@@ -1,5 +1,5 @@
 /*  Audacious
- *  Copyright (C) 2005-2009  Audacious development team.
+ *  Copyright (C) 2005-2011  Audacious development team.
  *
  *  BMP - Cross-platform multimedia player
  *  Copyright (C) 2003-2004  BMP development team.
@@ -23,68 +23,18 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifdef HAVE_CONFIG_H
-#  include "config.h"
-#endif
-
 #include "audstrings.h"
 
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <glib.h>
-#include <audacious/i18n.h>
 #include <string.h>
 #include <ctype.h>
-
-/**
- * Performs in place replacement of Windows-style drive letter with '/' (slash).
- *
- * @param str String to be manipulated.
- * @return Pointer to the string if succesful, NULL if failed or if input was NULL.
- */
-static char *
-str_replace_drive_letter(char * str)
-{
-    char *match, *match_end;
-
-    g_return_val_if_fail(str != NULL, NULL);
-
-    while ((match = strstr(str, ":\\")) != NULL) {
-        match--;
-        match_end = match + 3;
-        *match++ = '/';
-        while (*match_end)
-            *match++ = *match_end++;
-        *match = 0; /* the end of line */
-    }
-
-    return str;
-}
-
-char *
-str_append(char * str, const char * add_str)
-{
-    return str_replace(str, g_strconcat(str, add_str, NULL));
-}
-
-char *
-str_replace(char * str, char * new_str)
-{
-    g_free(str);
-    return new_str;
-}
-
-void
-str_replace_in(char ** str, char * new_str)
-{
-    *str = str_replace(*str, new_str);
-}
 
 boolean
 str_has_prefix_nocase(const char * str, const char * prefix)
 {
-    /* strncasecmp causes segfaults when str is NULL*/
     return (str != NULL && (strncasecmp(str, prefix, strlen(prefix)) == 0));
 }
 
@@ -92,21 +42,6 @@ boolean str_has_suffix_nocase (const char * str, const char * suffix)
 {
     return (str && strlen (str) >= strlen (suffix) && ! strcasecmp (str + strlen
      (str) - strlen (suffix), suffix));
-}
-
-boolean
-str_has_suffixes_nocase(const char * str, char * const *suffixes)
-{
-    char *const *suffix;
-
-    g_return_val_if_fail(str != NULL, FALSE);
-    g_return_val_if_fail(suffixes != NULL, FALSE);
-
-    for (suffix = suffixes; *suffix; suffix++)
-        if (str_has_suffix_nocase(str, *suffix))
-            return TRUE;
-
-    return FALSE;
 }
 
 static char * (* str_to_utf8_impl) (const char *) = NULL;
@@ -136,78 +71,6 @@ char * str_to_utf8_full (const char * str, int len, int * bytes_read, int * byte
 {
     g_return_val_if_fail (str_to_utf8_full_impl, NULL);
     return str_to_utf8_full_impl (str, len, bytes_read, bytes_written);
-}
-
-#ifdef HAVE_EXECINFO_H
-# include <execinfo.h>
-#endif
-
-/**
- * This function can be used to assert that a given string is valid UTF-8.
- * If it is, a copy of the string is returned. However, if the string is NOT
- * valid UTF-8, a warning and a callstack backtrace is printed in order to
- * see where the problem occured.
- *
- * This is a temporary measure for removing useless str_to_utf8 etc. calls
- * and will be eventually removed. This function should be used in place of
- * #str_to_utf8() calls when it can be reasonably assumed that the input
- * should already be in unicode encoding.
- *
- * @param str String to be tested and converted to UTF-8 encoding.
- * @return String in UTF-8 encoding, or NULL if conversion failed or input was NULL.
- */
-char *
-str_assert_utf8(const char * str)
-{
-    /* NULL in NULL out */
-    if (str == NULL)
-        return NULL;
-
-    /* already UTF-8? */
-    if (!g_utf8_validate(str, -1, NULL)) {
-#if defined(HAVE_EXECINFO_H) && defined(HAVE_BACKTRACE)
-        int i, nsymbols;
-        const int nsymmax = 50;
-        void *addrbuf[nsymmax];
-        char **symbols;
-        nsymbols = backtrace(addrbuf, nsymmax);
-        symbols = backtrace_symbols(addrbuf, nsymbols);
-
-        fprintf(stderr, "String '%s' was not UTF-8! Backtrace (%d):\n", str, nsymbols);
-
-        for (i = 0; i < nsymbols; i++)
-            fprintf(stderr, "  #%d: %s\n", i, symbols[i]);
-
-        free(symbols);
-#else
-        g_warning("String '%s' was not UTF-8!", str);
-#endif
-        return str_to_utf8(str);
-    } else
-        return g_strdup(str);
-}
-
-
-const char *
-str_skip_chars(const char * str, const char * chars)
-{
-    while (strchr(chars, *str) != NULL)
-        str++;
-    return str;
-}
-
-char *
-convert_dos_path(char * path)
-{
-    g_return_val_if_fail(path != NULL, NULL);
-
-    /* replace drive letter with '/' */
-    str_replace_drive_letter(path);
-
-    /* replace '\' with '/' */
-    string_replace_char (path, '\\', '/');
-
-    return path;
 }
 
 /**
@@ -625,31 +488,6 @@ int string_compare_encoded (const char * ap, const char * bp)
     return 0;
 }
 
-const void * memfind (const void * mem, int size, const void * token, int
- length)
-{
-    if (! length)
-        return mem;
-
-    size -= length - 1;
-
-    while (size > 0)
-    {
-        const void * maybe = memchr (mem, * (unsigned char *) token, size);
-
-        if (maybe == NULL)
-            return NULL;
-
-        if (! memcmp (maybe, token, length))
-            return maybe;
-
-        size -= (unsigned char *) maybe + 1 - (unsigned char *) mem;
-        mem = (unsigned char *) maybe + 1;
-    }
-
-    return NULL;
-}
-
 char *
 str_replace_fragment(char *s, int size, const char *old, const char *new)
 {
@@ -681,16 +519,6 @@ str_replace_fragment(char *s, int size, const char *old, const char *new)
     }
 
     return s;
-}
-
-void
-string_canonize_case(char *str)
-{
-    while (*str)
-    {
-        *str = g_ascii_toupper(*str);
-        str++;
-    }
 }
 
 /*

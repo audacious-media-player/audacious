@@ -80,9 +80,6 @@ gchar * construct_uri (const gchar * string, const gchar * playlist_name)
     gchar *filename = g_strdup(string);
     gchar *uri = NULL;
 
-    /* try to translate dos path */
-    convert_dos_path(filename); /* in place replacement */
-
     // make full path uri here
     // case 1: filename is raw full path or uri
     if (filename[0] == '/' || strstr(filename, "://")) {

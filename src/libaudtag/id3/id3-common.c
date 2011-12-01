@@ -1,6 +1,6 @@
 /*
  * id3-common.c
- * Copyright 2010 John Lindgren
+ * Copyright 2010-2011 John Lindgren
  *
  * This file is part of Audacious.
  *
@@ -28,6 +28,20 @@
 #include "../util.h"
 #include "id3-common.h"
 
+static void * memchr16 (const void * mem, gint16 chr, gint len)
+{
+    while (len >= 2)
+    {
+        if (* (gint16 *) mem == chr)
+            return (void *) mem;
+
+        mem += 2;
+        len -= 2;
+    }
+
+    return NULL;
+}
+
 gchar * convert_text (const gchar * text, gint length, gint encoding, gboolean
  nulled, gint * _converted, const gchar * * after)
 {
@@ -39,7 +53,6 @@ gchar * convert_text (const gchar * text, gint length, gint encoding, gboolean
 
     if (nulled)
     {
-        const guchar null16[] = {0, 0};
         const gchar * null;
 
         switch (encoding)
@@ -58,7 +71,7 @@ gchar * convert_text (const gchar * text, gint length, gint encoding, gboolean
             break;
           case 1:
           case 2:
-            if ((null = memfind (text, length, null16, 2)) == NULL)
+            if ((null = memchr16 (text, 0, length)) == NULL)
                 return NULL;
 
             length = null - text;
