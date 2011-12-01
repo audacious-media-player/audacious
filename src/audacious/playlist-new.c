@@ -19,6 +19,7 @@
  * using our public API to be a derived work.
  */
 
+#include <stdlib.h>
 #include <string.h>
 #include <time.h>
 

@@ -23,15 +23,10 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef AUDACIOUS_STRINGS_H
-#define AUDACIOUS_STRINGS_H
-
-#include <stdlib.h>
-#include <glib.h>
+#ifndef LIBAUDCORE_STRINGS_H
+#define LIBAUDCORE_STRINGS_H
 
 #include <libaudcore/types.h>
-
-G_BEGIN_DECLS
 
 char *str_append(char * str, const char * add_str);
 char *str_replace(char * str, char * new_str);
@@ -44,10 +39,9 @@ boolean str_has_suffixes_nocase(const char * str, char * const *suffixes);
 char *str_assert_utf8(const char *str);
 
 void str_set_utf8_impl (char * (* stu_impl) (const char *),
- char * (* stuf_impl) (const char *, gssize, gsize *, gsize *, GError * *));
+ char * (* stuf_impl) (const char *, int, int *, int *));
 char * str_to_utf8 (const char * str);
-char * str_to_utf8_full (const char * str, gssize len, gsize * bytes_read,
- gsize * bytes_written, GError * * err);
+char * str_to_utf8_full (const char * str, int len, int * bytes_read, int * bytes_written);
 
 const char *str_skip_chars(const char * str, const char * chars);
 
@@ -88,6 +82,4 @@ char * double_to_string (double val);
 boolean string_to_double_array (const char * string, double * array, int count);
 char * double_array_to_string (const double * array, int count);
 
-G_END_DECLS
-
-#endif /* AUDACIOUS_STRINGS_H */
+#endif /* LIBAUDCORE_STRINGS_H */

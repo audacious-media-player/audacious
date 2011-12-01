@@ -31,6 +31,7 @@
 
 #include <math.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <glib.h>
 #include <audacious/i18n.h>
 #include <string.h>
@@ -109,11 +110,10 @@ str_has_suffixes_nocase(const char * str, char * const *suffixes)
 }
 
 static char * (* str_to_utf8_impl) (const char *) = NULL;
-static char * (* str_to_utf8_full_impl) (const char *, gssize, gsize *,
- gsize *, GError * *) = NULL;
+static char * (* str_to_utf8_full_impl) (const char *, int, int *, int *) = NULL;
 
 void str_set_utf8_impl (char * (* stu_impl) (const char *),
- char * (* stuf_impl) (const char *, gssize, gsize *, gsize *, GError * *))
+ char * (* stuf_impl) (const char *, int, int *, int *))
 {
     str_to_utf8_impl = stu_impl;
     str_to_utf8_full_impl = stuf_impl;
@@ -132,11 +132,10 @@ char * str_to_utf8 (const char * str)
     return str_to_utf8_impl (str);
 }
 
-char * str_to_utf8_full (const char * str, gssize len, gsize * bytes_read,
- gsize * bytes_written, GError * * err)
+char * str_to_utf8_full (const char * str, int len, int * bytes_read, int * bytes_written)
 {
     g_return_val_if_fail (str_to_utf8_full_impl, NULL);
-    return str_to_utf8_full_impl (str, len, bytes_read, bytes_written, err);
+    return str_to_utf8_full_impl (str, len, bytes_read, bytes_written);
 }
 
 #ifdef HAVE_EXECINFO_H

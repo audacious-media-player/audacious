@@ -25,6 +25,7 @@
 #include <glib.h>
 #include <pthread.h>
 #include <stdio.h>
+#include <stdint.h>
 #include <string.h>
 
 #include <audacious/i18n.h>

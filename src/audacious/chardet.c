@@ -30,8 +30,8 @@
 #  include <libguess.h>
 #endif
 
-static gchar * cd_chardet_to_utf8 (const gchar * str, gssize len,
- gsize * arg_bytes_read, gsize * arg_bytes_write, GError ** error);
+static char * cd_chardet_to_utf8 (const char * str, int len,
+ int * arg_bytes_read, int * arg_bytes_written);
 
 static gchar * str_to_utf8_fallback (const gchar * str)
 {
@@ -85,22 +85,19 @@ static gchar * cd_str_to_utf8 (const gchar * str)
 #endif
 
     /* chardet encoding detector */
-    if ((out_str = cd_chardet_to_utf8(str, strlen(str), NULL, NULL, NULL)) != NULL)
+    if ((out_str = cd_chardet_to_utf8 (str, strlen (str), NULL, NULL)))
         return out_str;
 
     /* all else fails, we mask off character codes >= 128, replace with '?' */
     return str_to_utf8_fallback(str);
 }
 
-static gchar * cd_chardet_to_utf8 (const gchar * str, gssize len,
- gsize * arg_bytes_read, gsize * arg_bytes_write, GError ** error)
+static char * cd_chardet_to_utf8 (const char * str, int len,
+ int * arg_bytes_read, int * arg_bytes_write)
 {
-    if (error)
-        * error = NULL;
-
     gchar *ret = NULL;
-    gsize *bytes_read, *bytes_write;
-    gsize my_bytes_read, my_bytes_write;
+    int * bytes_read, * bytes_write;
+    int my_bytes_read, my_bytes_write;
 
     bytes_read = arg_bytes_read != NULL ? arg_bytes_read : &my_bytes_read;
     bytes_write = arg_bytes_write != NULL ? arg_bytes_write : &my_bytes_write;
@@ -137,8 +134,12 @@ static gchar * cd_chardet_to_utf8 (const gchar * str, gssize len,
         const gchar * encoding = libguess_determine_encoding (str, len, det);
         AUDDBG("encoding = %s\n", encoding);
         if (encoding)
-            ret = g_convert (str, len, "UTF-8", encoding, bytes_read,
-             bytes_write, (error && * error) ? NULL : error);
+        {
+            gsize read_gsize = 0, written_gsize = 0;
+            ret = g_convert (str, len, "UTF-8", encoding, & read_gsize, & written_gsize, NULL);
+            * bytes_read = read_gsize;
+            * bytes_write = written_gsize;
+        }
     }
 
     g_free (det);
@@ -152,8 +153,11 @@ static gchar * cd_chardet_to_utf8 (const gchar * str, gssize len,
 
         for (gchar * * enc = split; * enc; enc ++)
         {
-            ret = g_convert (str, len, "UTF-8", * enc, bytes_read, bytes_write,
-             (error && * error) ? NULL : error);
+            gsize read_gsize = 0, written_gsize = 0;
+            ret = g_convert (str, len, "UTF-8", * enc, & read_gsize, & written_gsize, NULL);
+            * bytes_read = read_gsize;
+            * bytes_write = written_gsize;
+
             if (len == *bytes_read)
                 break;
             else {
@@ -168,13 +172,21 @@ static gchar * cd_chardet_to_utf8 (const gchar * str, gssize len,
 
     /* First fallback: locale (duh!) */
     if (ret == NULL)
-        ret = g_locale_to_utf8 (str, len, bytes_read, bytes_write,
-         (error && * error) ? NULL : error);
+    {
+        gsize read_gsize = 0, written_gsize = 0;
+        ret = g_locale_to_utf8 (str, len, & read_gsize, & written_gsize, NULL);
+        * bytes_read = read_gsize;
+        * bytes_write = written_gsize;
+    }
 
     /* The final fallback is ISO-8859-1, if no other is specified or conversions fail */
     if (ret == NULL)
-        ret = g_convert (str, len, "UTF-8", "ISO-8859-1", bytes_read,
-         bytes_write, (error && * error) ? NULL : error);
+    {
+        gsize read_gsize = 0, written_gsize = 0;
+        ret = g_convert (str, len, "UTF-8", "ISO-8859-1", & read_gsize, & written_gsize, NULL);
+        * bytes_read = read_gsize;
+        * bytes_write = written_gsize;
+    }
 
     if (ret != NULL)
     {

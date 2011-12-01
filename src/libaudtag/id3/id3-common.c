@@ -74,8 +74,10 @@ gchar * convert_text (const gchar * text, gint length, gint encoding, gboolean
     switch (encoding)
     {
       case 0:
-      case 3:
-        buffer = str_to_utf8_full (text, length, NULL, & converted, NULL);
+      case 3:;
+        gint converted_int = 0;
+        buffer = str_to_utf8_full (text, length, NULL, & converted_int);
+        converted = converted_int;
         break;
       case 1:
         if (text[0] == (gchar) 0xff)

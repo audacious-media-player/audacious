@@ -19,8 +19,8 @@
  * using our public API to be a derived work.
  */
 
-#ifndef AUDACIOUS_AUDIO_H
-#define AUDACIOUS_AUDIO_H
+#ifndef LIBAUDCORE_AUDIO_H
+#define LIBAUDCORE_AUDIO_H
 
 #include <glib.h>
 
@@ -55,4 +55,4 @@ void audio_from_int (const void * in, int format, float * out, int samples);
 void audio_to_int (const float * in, void * out, int format, int samples);
 void audio_amplify (float * data, int channels, int frames, float * factors);
 
-#endif
+#endif /* LIBAUDCORE_AUDIO_H */

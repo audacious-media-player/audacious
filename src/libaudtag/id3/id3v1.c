@@ -21,6 +21,7 @@
 
 #include <glib.h>
 #include <glib/gstdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include <libaudcore/audstrings.h>
