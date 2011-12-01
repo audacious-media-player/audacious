@@ -161,7 +161,7 @@ buffer_vfs_ftell_impl(VFSFile * file)
     return handle->iter - handle->data;
 }
 
-static bool
+static boolean
 buffer_vfs_feof_impl(VFSFile * file)
 {
     VFSBuffer *handle;
@@ -171,7 +171,7 @@ buffer_vfs_feof_impl(VFSFile * file)
 
     handle = (VFSBuffer *) file->handle;
 
-    return (bool) (handle->iter == handle->end);
+    return (boolean) (handle->iter == handle->end);
 }
 
 static int

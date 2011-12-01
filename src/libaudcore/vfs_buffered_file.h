@@ -35,7 +35,7 @@ typedef struct {
 	VFSFile    *fd;     /**< VFS handle for the active FD. */
 	VFSFile    *buffer; /**< First 32kb read from the FD. */
 	char      *mem;    /**< The memory for the buffer. */
-	bool    which;  /**< Whether to use the live FD or the buffer. */
+	boolean    which;  /**< Whether to use the live FD or the buffer. */
 } VFSBufferedFile;
 
 VFSFile *vfs_buffered_file_new_from_uri(const char *uri);

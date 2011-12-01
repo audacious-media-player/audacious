@@ -87,7 +87,7 @@ struct _VFSConstructor {
     /** A function pointer which points to a ftell implementation. */
     int64_t (* vfs_ftell_impl) (VFSFile * file);
     /** A function pointer which points to a feof implementation. */
-    bool (* vfs_feof_impl) (VFSFile * file);
+    boolean (* vfs_feof_impl) (VFSFile * file);
     /** A function pointer which points to a ftruncate implementation. */
     int (* vfs_ftruncate_impl) (VFSFile * file, int64_t length);
     /** A function pointer which points to a fsize implementation. */
@@ -115,7 +115,7 @@ int64_t vfs_fwrite (const void * ptr, int64_t size, int64_t nmemb, VFSFile * fil
 int vfs_getc (VFSFile * stream) WARN_RETURN;
 int vfs_ungetc (int c, VFSFile * stream) WARN_RETURN;
 char * vfs_fgets (char * s, int n, VFSFile * stream) WARN_RETURN;
-bool vfs_feof (VFSFile * file) WARN_RETURN;
+boolean vfs_feof (VFSFile * file) WARN_RETURN;
 int vfs_fprintf (VFSFile * stream, char const * format, ...) __attribute__
  ((__format__ (__printf__, 2, 3)));
 
@@ -125,32 +125,32 @@ int64_t vfs_ftell (VFSFile * file) WARN_RETURN;
 int64_t vfs_fsize (VFSFile * file) WARN_RETURN;
 int vfs_ftruncate (VFSFile * file, int64_t length) WARN_RETURN;
 
-bool vfs_fget_le16 (uint16_t * value, VFSFile * stream) WARN_RETURN;
-bool vfs_fget_le32 (uint32_t * value, VFSFile * stream) WARN_RETURN;
-bool vfs_fget_le64 (uint64_t * value, VFSFile * stream) WARN_RETURN;
-bool vfs_fget_be16 (uint16_t * value, VFSFile * stream) WARN_RETURN;
-bool vfs_fget_be32 (uint32_t * value, VFSFile * stream) WARN_RETURN;
-bool vfs_fget_be64 (uint64_t * value, VFSFile * stream) WARN_RETURN;
+boolean vfs_fget_le16 (uint16_t * value, VFSFile * stream) WARN_RETURN;
+boolean vfs_fget_le32 (uint32_t * value, VFSFile * stream) WARN_RETURN;
+boolean vfs_fget_le64 (uint64_t * value, VFSFile * stream) WARN_RETURN;
+boolean vfs_fget_be16 (uint16_t * value, VFSFile * stream) WARN_RETURN;
+boolean vfs_fget_be32 (uint32_t * value, VFSFile * stream) WARN_RETURN;
+boolean vfs_fget_be64 (uint64_t * value, VFSFile * stream) WARN_RETURN;
 
-bool vfs_fput_le16 (uint16_t value, VFSFile * stream) WARN_RETURN;
-bool vfs_fput_le32 (uint32_t value, VFSFile * stream) WARN_RETURN;
-bool vfs_fput_le64 (uint64_t value, VFSFile * stream) WARN_RETURN;
-bool vfs_fput_be16 (uint16_t value, VFSFile * stream) WARN_RETURN;
-bool vfs_fput_be32 (uint32_t value, VFSFile * stream) WARN_RETURN;
-bool vfs_fput_be64 (uint64_t value, VFSFile * stream) WARN_RETURN;
+boolean vfs_fput_le16 (uint16_t value, VFSFile * stream) WARN_RETURN;
+boolean vfs_fput_le32 (uint32_t value, VFSFile * stream) WARN_RETURN;
+boolean vfs_fput_le64 (uint64_t value, VFSFile * stream) WARN_RETURN;
+boolean vfs_fput_be16 (uint16_t value, VFSFile * stream) WARN_RETURN;
+boolean vfs_fput_be32 (uint32_t value, VFSFile * stream) WARN_RETURN;
+boolean vfs_fput_be64 (uint64_t value, VFSFile * stream) WARN_RETURN;
 
-bool vfs_is_streaming (VFSFile * file) WARN_RETURN;
+boolean vfs_is_streaming (VFSFile * file) WARN_RETURN;
 char * vfs_get_metadata (VFSFile * file, const char * field) WARN_RETURN;
 
-bool vfs_file_test (const char * path, GFileTest test) WARN_RETURN;
-bool vfs_is_writeable (const char * path) WARN_RETURN;
-bool vfs_is_remote (const char * path) WARN_RETURN;
+boolean vfs_file_test (const char * path, GFileTest test) WARN_RETURN;
+boolean vfs_is_writeable (const char * path) WARN_RETURN;
+boolean vfs_is_remote (const char * path) WARN_RETURN;
 
 void vfs_file_get_contents (const char * filename, void * * buf, int64_t *
  size);
 
 void vfs_set_lookup_func (VFSConstructor * (* func) (const char * scheme));
-void vfs_set_verbose (bool verbose);
+void vfs_set_verbose (boolean verbose);
 
 #undef WARN_RETURN
 

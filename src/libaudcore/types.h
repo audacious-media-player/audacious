@@ -22,9 +22,8 @@
 #ifndef LIBAUDCORE_TYPES_H
 #define LIBAUDCORE_TYPES_H
 
-/* "bool" means "int" for compatibility with GLib.  Note that this is not
- * compatible with C99's stdbool.h. */
-#undef bool
-#define bool int
+/* "boolean" means "int" for compatibility with GLib */
+#undef boolean
+#define boolean int
 
 #endif /* LIBAUDCORE_TYPES_H */

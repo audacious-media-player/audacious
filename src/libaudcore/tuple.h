@@ -184,11 +184,11 @@ int tuple_get_nth_subtune (Tuple * tuple, int n);
 
 void tuple_free (Tuple * tuple) DEPRECATED;
 
-bool tuple_associate_string (Tuple * tuple, int nfield,
+boolean tuple_associate_string (Tuple * tuple, int nfield,
  const char * field, const char * str) DEPRECATED;
-bool tuple_associate_string_rel (Tuple * tuple, int nfield,
+boolean tuple_associate_string_rel (Tuple * tuple, int nfield,
  const char * field, char * str) DEPRECATED;
-bool tuple_associate_int (Tuple * tuple, int nfield, const char * field, int x) DEPRECATED;
+boolean tuple_associate_int (Tuple * tuple, int nfield, const char * field, int x) DEPRECATED;
 void tuple_disassociate (Tuple * tuple, const int nfield, const char * field) DEPRECATED;
 
 const char * tuple_get_string (const Tuple * tuple, int nfield, const char * field) DEPRECATED;
