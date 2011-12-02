@@ -121,7 +121,8 @@ void tuple_set_int (Tuple * tuple, int nfield, const char * field, int x);
  * value <str>.  Only one of <nfield> or <field> may be set.  If <nfield> is
  * set, <field> must be NULL; if <field> is set, <nfield> must be -1.  <str>
  * must be a pooled string returned by str_get(); the caller gives up one
- * reference to <str>. */
+ * reference to <str>.  As a special case, if <str> is NULL, the result is
+ * equivalent to calling tuple_unset(). */
 void tuple_set_str (Tuple * tuple, int nfield, const char * field, char * str);
 
 /* Convenience function, equivalent to calling tuple_set_str (strget (str)). */
