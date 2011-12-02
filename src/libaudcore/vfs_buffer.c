@@ -55,7 +55,7 @@ static int64_t buffer_vfs_fread_impl (void * i_ptr, int64_t size, int64_t nmemb,
 
     handle = (VFSBuffer *) file->handle;
 
-    for (i = ptr; i - ptr < nmemb * size && i - ptr <= handle->size; i++, handle->iter++)
+    for (i = ptr; i - ptr < nmemb * size && i - ptr < handle->size; i++, handle->iter++)
     {
        *i = *handle->iter;
        read++;
@@ -77,7 +77,7 @@ static int64_t buffer_vfs_fwrite_impl (const void * i_ptr, int64_t size, int64_t
 
     handle = (VFSBuffer *) file->handle;
 
-    for (i = ptr; i - ptr < nmemb * size && i - ptr <= handle->size; i++, handle->iter++)
+    for (i = ptr; i - ptr < nmemb * size && i - ptr < handle->size; i++, handle->iter++)
     {
        *handle->iter = *i;
        written++;
