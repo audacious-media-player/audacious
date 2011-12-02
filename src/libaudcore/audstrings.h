@@ -37,12 +37,10 @@ char * str_to_utf8 (const char * str);
 char * str_to_utf8_full (const char * str, int len, int * bytes_read, int * bytes_written);
 
 void string_replace_char (char * string, char old_str, char new_str);
-void string_decode_percent (char * string);
-char * string_encode_percent (const char * string, boolean is_filename);
 
-boolean uri_is_utf8 (const char * uri, boolean warn);
-char * uri_to_utf8 (const char * uri);
-void uri_check_utf8 (char * * uri, boolean warn);
+void str_decode_percent (const char * str, int len, char * out);
+void str_encode_percent (const char * str, int len, char * out);
+
 char * filename_to_uri (const char * filename);
 char * uri_to_filename (const char * uri);
 char * uri_to_display (const char * uri);

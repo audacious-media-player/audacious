@@ -1078,7 +1078,6 @@ void playlist_entry_insert_batch_raw (gint playlist_num, gint at,
     for (gint i = 0; i < number; i ++)
     {
         gchar * filename = index_get (filenames, i);
-        uri_check_utf8 (& filename, TRUE);
         Tuple * tuple = tuples ? index_get (tuples, i) : NULL;
         PluginHandle * decoder = decoders ? index_get (decoders, i) : NULL;
         index_append (add, entry_new (filename, tuple, decoder));
@@ -1783,10 +1782,6 @@ void playlist_rescan_file (const gchar * filename)
 
     gint num_playlists = index_count (playlists);
 
-    gchar * copy = NULL;
-    if (! uri_is_utf8 (filename, TRUE))
-        filename = copy = uri_to_utf8 (filename);
-
     for (gint playlist_num = 0; playlist_num < num_playlists; playlist_num ++)
     {
         Playlist * playlist = index_get (playlists, playlist_num);
@@ -1805,8 +1800,6 @@ void playlist_rescan_file (const gchar * filename)
             }
         }
     }
-
-    g_free (copy);
 
     LEAVE;
 }
