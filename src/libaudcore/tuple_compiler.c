@@ -38,6 +38,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#include <glib.h>
+
 #include "tuple_compiler.h"
 
 #define MAX_STR		(256)

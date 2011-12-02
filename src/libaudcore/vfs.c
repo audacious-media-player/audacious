@@ -17,6 +17,7 @@
  *  Audacious or using our public API to be a derived work.
  */
 
+#include <glib.h>
 #include <inttypes.h>
 
 #include "vfs.h"
@@ -370,7 +371,7 @@ vfs_get_metadata(VFSFile * file, const char * field)
  * @return The result of g_file_test().
  */
 boolean
-vfs_file_test(const char * path, GFileTest test)
+vfs_file_test(const char * path, int test)
 {
     if (strncmp (path, "file://", 7))
         return FALSE; /* only local files are handled */

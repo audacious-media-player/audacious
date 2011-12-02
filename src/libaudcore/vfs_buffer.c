@@ -18,7 +18,9 @@
  */
 
 #include <glib.h>
+#include <stdio.h>
 #include <string.h>
+
 #include "vfs.h"
 #include "vfs_buffer.h"
 
@@ -45,7 +47,7 @@ static int64_t buffer_vfs_fread_impl (void * i_ptr, int64_t size, int64_t nmemb,
 {
     VFSBuffer *handle;
     unsigned char *i;
-    gsize read = 0;
+    int read = 0;
     unsigned char *ptr = (unsigned char *) i_ptr;
 
     if (file == NULL)
@@ -53,9 +55,7 @@ static int64_t buffer_vfs_fread_impl (void * i_ptr, int64_t size, int64_t nmemb,
 
     handle = (VFSBuffer *) file->handle;
 
-    for (i = ptr; (gsize) (i - ptr) < nmemb * size &&
-	 (gsize) (i - ptr) <= handle->size;
-	 i++, handle->iter++)
+    for (i = ptr; i - ptr < nmemb * size && i - ptr <= handle->size; i++, handle->iter++)
     {
        *i = *handle->iter;
        read++;
@@ -69,7 +69,7 @@ static int64_t buffer_vfs_fwrite_impl (const void * i_ptr, int64_t size, int64_t
 {
     VFSBuffer *handle;
     const unsigned char *i;
-    gsize written = 0;
+    int written = 0;
     const unsigned char *ptr = (const unsigned char *) i_ptr;
 
     if (file == NULL)
@@ -77,9 +77,7 @@ static int64_t buffer_vfs_fwrite_impl (const void * i_ptr, int64_t size, int64_t
 
     handle = (VFSBuffer *) file->handle;
 
-    for (i = ptr; (gsize) (i - ptr) < nmemb * size &&
-	 (gsize) (i - ptr) <= handle->size;
-	 i++, handle->iter++)
+    for (i = ptr; i - ptr < nmemb * size && i - ptr <= handle->size; i++, handle->iter++)
     {
        *handle->iter = *i;
        written++;
@@ -210,7 +208,7 @@ static VFSConstructor buffer_const = {
 };
 
 VFSFile *
-vfs_buffer_new(void * data, gsize size)
+vfs_buffer_new(void * data, int size)
 {
     VFSFile *handle;
     VFSBuffer *buffer;

@@ -17,20 +17,17 @@
  *  Audacious or using our public API to be a derived work.
  */
 
-#ifndef AUDACIOUS_VFS_BUFFER_H
-#define AUDACIOUS_VFS_BUFFER_H
+#ifndef LIBAUDCORE_VFS_BUFFER_H
+#define LIBAUDCORE_VFS_BUFFER_H
 
-#include <glib.h>
-#include "vfs.h"
-
-G_BEGIN_DECLS
+#include <libaudcore/vfs.h>
 
 /** Private data for the VFS memorybuffer class. */
 typedef struct {
 	unsigned char *data;   /**< The data inside the VFSBuffer. */
 	unsigned char *iter;   /**< The current position of the VFS buffer iterator. */
 	unsigned char *end;    /**< The end of the memory segment that the VFS buffer uses. */
-	gsize   size;   /**< The size of the memory segment. */
+	int size;   /**< The size of the memory segment. */
 } VFSBuffer;
 
 /**
@@ -40,7 +37,7 @@ typedef struct {
  * @param size Size of data to use.
  * @return A VFSFile handle for the memory segment's stream representation.
  */
-VFSFile *vfs_buffer_new(void * data, gsize size);
+VFSFile *vfs_buffer_new(void * data, int size);
 
 /**
  * Creates a VFS buffer for reading/writing to a string.
@@ -50,6 +47,4 @@ VFSFile *vfs_buffer_new(void * data, gsize size);
  */
 VFSFile *vfs_buffer_new_from_string(char *str);
 
-G_END_DECLS
-
-#endif /* AUDACIOUS_VFS_BUFFER_H */
+#endif /* LIBAUDCORE_VFS_BUFFER_H */

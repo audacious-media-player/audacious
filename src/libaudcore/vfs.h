@@ -24,17 +24,12 @@
  * file access.
  */
 
-#ifndef AUDACIOUS_VFS_H
-#define AUDACIOUS_VFS_H
+#ifndef LIBAUDCORE_VFS_H
+#define LIBAUDCORE_VFS_H
 
-#include <glib.h>
-#include <stdio.h>
 #include <stdint.h>
-#include <sys/types.h>
 
 #include <libaudcore/core.h>
-
-G_BEGIN_DECLS
 
 /** @struct VFSFile */
 typedef struct _VFSFile VFSFile;
@@ -142,7 +137,7 @@ boolean vfs_fput_be64 (uint64_t value, VFSFile * stream) WARN_RETURN;
 boolean vfs_is_streaming (VFSFile * file) WARN_RETURN;
 char * vfs_get_metadata (VFSFile * file, const char * field) WARN_RETURN;
 
-boolean vfs_file_test (const char * path, GFileTest test) WARN_RETURN;
+boolean vfs_file_test (const char * path, int test) WARN_RETURN;
 boolean vfs_is_writeable (const char * path) WARN_RETURN;
 boolean vfs_is_remote (const char * path) WARN_RETURN;
 
@@ -154,6 +149,4 @@ void vfs_set_verbose (boolean verbose);
 
 #undef WARN_RETURN
 
-G_END_DECLS
-
-#endif /* AUDACIOUS_VFS_H */
+#endif /* LIBAUDCORE_VFS_H */

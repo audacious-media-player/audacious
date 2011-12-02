@@ -18,12 +18,10 @@
  * Audacious or using our public API to be a derived work.
  */
 
-#ifndef AUDACIOUS_TUPLE_COMPILER_H
-#define AUDACIOUS_TUPLE_COMPILER_H
+#ifndef LIBAUDCORE_TUPLE_COMPILER_H
+#define LIBAUDCORE_TUPLE_COMPILER_H
 
-#include <glib.h>
-
-#include "tuple.h"
+#include <libaudcore/tuple.h>
 
 struct _TupleEvalNode;
 typedef struct _TupleEvalNode TupleEvalNode;
@@ -41,4 +39,4 @@ TupleEvalNode *tuple_formatter_compile(TupleEvalContext *ctx, char *expr);
 char * tuple_formatter_eval (TupleEvalContext * ctx, TupleEvalNode * expr,
  const Tuple * tuple);
 
-#endif /* AUDACIOUS_TUPLE_COMPILER_H */
+#endif /* LIBAUDCORE_TUPLE_COMPILER_H */

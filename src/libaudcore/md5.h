@@ -2,13 +2,10 @@
  * @file md5.h
  * Functions for computing MD5 hashes of given data.
  */
-#ifndef AUDACIOUS_MD5_H
-#define AUDACIOUS_MD5_H
+#ifndef LIBAUDCORE_MD5_H
+#define LIBAUDCORE_MD5_H
 
-#include <glib.h>
 #include <stdint.h>
-
-G_BEGIN_DECLS
 
 /** State context structure for MD5 hash calculation */
 typedef struct {
@@ -31,7 +28,4 @@ void aud_md5_init(aud_md5state_t *ctx);
 void aud_md5_append(aud_md5state_t *ctx, const uint8_t *buf, unsigned int len);
 void aud_md5_finish(aud_md5state_t *ctx, aud_md5hash_t digest);
 
-
-G_END_DECLS
-
-#endif /* AUDACIOUS_MD5_H */
+#endif /* LIBAUDCORE_MD5_H */

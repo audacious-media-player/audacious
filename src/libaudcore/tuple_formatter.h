@@ -18,14 +18,12 @@
  * Audacious or using our public API to be a derived work.
  */
 
-#ifndef AUDACIOUS_TUPLE_FORMATTER_H
-#define AUDACIOUS_TUPLE_FORMATTER_H
+#ifndef LIBAUDCORE_TUPLE_FORMATTER_H
+#define LIBAUDCORE_TUPLE_FORMATTER_H
 
-#include <glib.h>
-
-#include "tuple.h"
+#include <libaudcore/tuple.h>
 
 char * tuple_formatter_make_title_string (const Tuple * tuple, const char *
  string);
 
-#endif /* AUDACIOUS_TUPLE_FORMATTER_H */
+#endif /* LIBAUDCORE_TUPLE_FORMATTER_H */

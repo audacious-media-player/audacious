@@ -21,14 +21,10 @@
  * Functions and structures for buffered file access over VFS.
  */
 
-#ifndef AUDACIOUS_VFS_BUFFERED_FILE_H
-#define AUDACIOUS_VFS_BUFFERED_FILE_H
+#ifndef LIBAUDCORE_VFS_BUFFERED_FILE_H
+#define LIBAUDCORE_VFS_BUFFERED_FILE_H
 
-#include <glib.h>
-#include "vfs.h"
-#include "vfs_buffer.h"
-
-G_BEGIN_DECLS
+#include <libaudcore/vfs.h>
 
 /** Private data for the VFS memorybuffer class. */
 typedef struct {
@@ -40,7 +36,5 @@ typedef struct {
 
 VFSFile *vfs_buffered_file_new_from_uri(const char *uri);
 VFSFile *vfs_buffered_file_release_live_fd(VFSFile *fd);
-
-G_END_DECLS
 
 #endif /* AUDACIOUS_VFS_BUFFERED_FILE_H */
