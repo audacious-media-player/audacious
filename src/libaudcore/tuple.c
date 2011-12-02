@@ -33,6 +33,7 @@
 #include "audstrings.h"
 #include "config.h"
 #include "tuple.h"
+#include "tuple_formatter.h"
 
 typedef struct {
     char *name;
@@ -489,6 +490,29 @@ int tuple_get_nth_subtune (Tuple * tuple, int n)
 
     pthread_mutex_unlock (& mutex);
     return subtune;
+}
+
+char * tuple_format_title (Tuple * tuple, const char * format)
+{
+    static const gint fallbacks[] = {FIELD_TITLE, FIELD_FILE_NAME, FIELD_FILE_PATH};
+    char * title = NULL, * temp;
+
+    if ((temp = tuple_formatter_process_string (tuple, format)))
+    {
+        title = str_get (temp);
+        g_free (temp);
+    }
+
+    for (int i = 0; i < G_N_ELEMENTS (fallbacks); i ++)
+    {
+        if (title && title[0])
+            break;
+
+        str_unref (title);
+        title = tuple_get_str (tuple, fallbacks[i], NULL);
+    }
+
+    return title ? title : str_get ("");
 }
 
 /* deprecated */

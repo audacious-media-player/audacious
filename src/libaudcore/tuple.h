@@ -170,6 +170,12 @@ int tuple_get_n_subtunes (Tuple * tuple);
 /* Returns the <n>th member of the subtune array. */
 int tuple_get_nth_subtune (Tuple * tuple, int n);
 
+/* Generates a formatted title string for <tuple> according to <format>.  The
+ * syntax of <format> is documented in tuple_formatter.c.  The returned string
+ * is pooled and must be released with str_unref() when no longer need.  The
+ * returned string is never NULL, though it may be the empty string. */
+char * tuple_format_title (Tuple * tuple, const char * format);
+
 /* ------
  * The following functions are deprecated, but will be kept around for a while
  * (at least for the 3.2 release).  Please note that the use of

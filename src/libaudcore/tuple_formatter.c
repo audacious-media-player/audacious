@@ -69,7 +69,7 @@ static GStaticMutex tuplec_mutex = G_STATIC_MUTEX_INIT;
  *
  * TODO/1.5: Implement a more efficient use of the compiler.
  */
-static char * tuple_formatter_process_string (const Tuple * tuple, const char * string)
+char * tuple_formatter_process_string (const Tuple * tuple, const char * string)
 {
     static char *last_string = NULL;
     static TupleEvalContext *last_ctx = NULL;
@@ -103,23 +103,4 @@ static char * tuple_formatter_process_string (const Tuple * tuple, const char * 
     g_static_mutex_unlock (& tuplec_mutex);
 
     return result;
-}
-
-char * tuple_formatter_make_title_string (const Tuple * tuple, const char *
- string)
-{
-    char *title = tuple_formatter_process_string(tuple, string);
-
-    if (title == NULL || !title[0])
-    {
-        char * filename = tuple_get_str (tuple, FIELD_FILE_NAME, NULL);
-
-        g_free(title);
-        title = g_strdup((filename != NULL) ? filename : "");
-        string_cut_extension(title);
-
-        str_unref (filename);
-    }
-
-    return title;
 }

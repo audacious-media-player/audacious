@@ -28,7 +28,7 @@
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
-#include <libaudcore/tuple_formatter.h>
+#include <libaudcore/tuple.h>
 
 #include "config.h"
 #include "i18n.h"
@@ -162,7 +162,7 @@ static void scan_trigger (void);
 static gchar * title_from_tuple (Tuple * tuple)
 {
     gchar * generic = get_string (NULL, "generic_title_format");
-    gchar * title = tuple_formatter_make_title_string (tuple, generic);
+    gchar * title = tuple_format_title (tuple, generic);
     g_free (generic);
     return title;
 }
@@ -182,7 +182,7 @@ static void entry_set_tuple_real (Entry * entry, Tuple * tuple)
         tuple_unref (entry->tuple);
     entry->tuple = tuple;
 
-    g_free (entry->formatted);
+    str_unref (entry->formatted);
     str_unref (entry->title);
     str_unref (entry->artist);
     str_unref (entry->album);
@@ -303,7 +303,7 @@ static void entry_free (Entry * entry)
     if (entry->tuple)
         tuple_unref (entry->tuple);
 
-    g_free (entry->formatted);
+    str_unref (entry->formatted);
     str_unref (entry->title);
     str_unref (entry->artist);
     str_unref (entry->album);
