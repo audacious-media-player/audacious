@@ -1718,9 +1718,8 @@ void playlist_reformat_titles (void)
         for (gint count = 0; count < entries; count++)
         {
             Entry * entry = index_get (playlist->entries, count);
-            g_free (entry->formatted);
-            entry->formatted = entry->tuple ? title_from_tuple (entry->tuple) :
-             NULL;
+            str_unref (entry->formatted);
+            entry->formatted = entry->tuple ? title_from_tuple (entry->tuple) : NULL;
         }
 
         METADATA_HAS_CHANGED (playlist_num, 0, entries);
