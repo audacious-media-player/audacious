@@ -42,8 +42,6 @@
 #include <libguess.h>
 #endif
 
-#define TITLESTRING_UPDATE_TIMEOUT 3
-
 static void sw_volume_toggled (void);
 
 enum CategoryViewCols {
@@ -82,7 +80,6 @@ GtkWidget *filepopup_delay;
 /* prefswin widgets */
 GtkWidget *titlestring_entry;
 GtkWidget *filepopup_settings_button;
-static gint titlestring_timeout_counter = 0;
 
 static Category categories[] = {
  {"audio.png", N_("Audio")},
@@ -290,20 +287,6 @@ on_titlestring_help_button_clicked(GtkButton * button,
     gtk_menu_popup (menu, NULL, NULL, NULL, NULL, 0, GDK_CURRENT_TIME);
 }
 
-static gboolean
-titlestring_timeout_proc (gpointer data)
-{
-    titlestring_timeout_counter--;
-
-    if(titlestring_timeout_counter <= 0) {
-        titlestring_timeout_counter = 0;
-        playlist_reformat_titles ();
-        return FALSE;
-    } else {
-        return TRUE;
-    }
-}
-
 static void update_titlestring_cbox (GtkComboBox * cbox, const gchar * format)
 {
     gint preset;
@@ -322,11 +305,7 @@ static void on_titlestring_entry_changed (GtkEntry * entry, GtkComboBox * cbox)
     const gchar * format = gtk_entry_get_text (entry);
     set_string (NULL, "generic_title_format", format);
     update_titlestring_cbox (cbox, format);
-
-    if (titlestring_timeout_counter == 0)
-        g_timeout_add_seconds (1, (GSourceFunc) titlestring_timeout_proc, NULL);
-
-    titlestring_timeout_counter = TITLESTRING_UPDATE_TIMEOUT;
+    playlist_reformat_titles ();
 }
 
 static void on_titlestring_cbox_changed (GtkComboBox * cbox, GtkEntry * entry)
