@@ -36,9 +36,6 @@ void str_set_utf8_impl (char * (* stu_impl) (const char *),
 char * str_to_utf8 (const char * str);
 char * str_to_utf8_full (const char * str, int len, int * bytes_read, int * bytes_written);
 
-char *filename_get_subtune(const char * filename, int * track);
-char *filename_split_subtune(const char * filename, int * track);
-
 void string_replace_char (char * string, char old_str, char new_str);
 void string_decode_percent (char * string);
 char * string_encode_percent (const char * string, boolean is_filename);
@@ -50,9 +47,9 @@ char * filename_to_uri (const char * filename);
 char * uri_to_filename (const char * uri);
 char * uri_to_display (const char * uri);
 
-char * uri_get_extension (const char * uri);
+void uri_parse (const char * uri, const char * * base_p, const char * * ext_p,
+ const char * * sub_p, int * isub_p);
 
-void string_cut_extension(char *string);
 int string_compare (const char * a, const char * b);
 int string_compare_encoded (const char * a, const char * b);
 
@@ -65,5 +62,20 @@ char * double_to_string (double val);
 
 boolean string_to_double_array (const char * string, double * array, int count);
 char * double_array_to_string (const double * array, int count);
+
+/* ------
+ * The following functions are deprecated, but will be kept around for a while
+ * (at least for the 3.2 release). */
+
+#ifdef __GNUC__
+#define DEPRECATED __attribute__ ((deprecated))
+#else
+#define DEPRECATED
+#endif
+
+const char * filename_get_subtune (const char * filename, int * track) DEPRECATED;
+char * filename_split_subtune (const char * filename, int * track) DEPRECATED;
+char * uri_get_extension (const char * uri) DEPRECATED;
+void string_cut_extension (char * string) DEPRECATED;
 
 #endif /* LIBAUDCORE_STRINGS_H */

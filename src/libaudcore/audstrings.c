@@ -73,66 +73,6 @@ char * str_to_utf8_full (const char * str, int len, int * bytes_read, int * byte
     return str_to_utf8_full_impl (str, len, bytes_read, bytes_written);
 }
 
-/**
- * Checks if given URI contains a subtune indicator/number.
- * If it does, track is set to to it, and position of subtune
- * separator in the URI string is returned.
- *
- * @param filename Filename/URI to split.
- * @param track Pointer to variable where subtune number should be
- * assigned or NULL if it is not needed.
- * @return Position of subtune separator character in filename
- * or NULL if none found. Notice that this value should NOT be modified,
- * even though it is not declared const for technical reasons.
- */
-char *
-filename_get_subtune(const char * filename, int * track)
-{
-    char *pos;
-
-    if ((pos = strrchr(filename, '?')) != NULL)
-    {
-        const char *s = pos + 1;
-        while (*s != '\0' && g_ascii_isdigit(*s)) s++;
-        if (*s == '\0') {
-            if (track != NULL)
-                *track = atoi(pos + 1);
-            return pos;
-        }
-    }
-
-    return NULL;
-}
-
-/**
- * Given file path/URI contains ending indicating subtune number
- * "?<number>", splits the string into filename without subtune value.
- * If given track pointer is non-NULL, subtune number is assigned into it.
- *
- * @param filename Filename/URI to split.
- * @param track Pointer to variable where subtune number should be
- * assigned or NULL if it is not needed.
- * @return Newly allocated splitted filename without the subtune indicator.
- * This string must be freed with g_free(). NULL will be returned if
- * there was any failure.
- */
-char *
-filename_split_subtune(const char * filename, int * track)
-{
-    char *result;
-    char *pos;
-
-    g_return_val_if_fail(filename != NULL, NULL);
-
-    result = g_strdup(filename);
-    g_return_val_if_fail(result != NULL, NULL);
-
-    if ((pos = filename_get_subtune(result, track)) != NULL)
-        *pos = '\0';
-
-    return result;
-}
-
 void string_replace_char (char * string, char old_str, char new_str)
 {
     while ((string = strchr (string, old_str)) != NULL)
@@ -366,31 +306,41 @@ char * uri_to_display (const char * uri)
     return str_to_utf8 (buf);
 }
 
-char * uri_get_extension (const char * uri)
+void uri_parse (const char * uri, const char * * base_p, const char * * ext_p,
+ const char * * sub_p, int * isub_p)
 {
-    const char * slash = strrchr (uri, '/');
-    if (! slash)
-        return NULL;
+    const char * end = uri + strlen (uri);
+    const char * base, * ext, * sub, * c;
+    int isub = 0;
+    char junk;
 
-    char * lower = g_ascii_strdown (slash + 1, -1);
+    if ((c = strrchr (uri, '/')))
+        base = c + 1;
+    else
+        base = end;
 
-    char * qmark = strchr (lower, '?');
-    if (qmark)
-        * qmark = 0;
+    if ((c = strrchr (base, '?')) && sscanf (c + 1, "%d%c", & isub, & junk) == 1)
+        sub = c;
+    else
+        sub = end;
 
-    char * dot = strrchr (lower, '.');
-    char * ext = dot ? g_strdup (dot + 1) : NULL;
+    char buf[sub - base + 1];
+    memcpy (buf, base, sub - base);
+    buf[sub - base] = 0;
 
-    g_free (lower);
-    return ext;
-}
+    if ((c = strrchr (buf, '.')))
+        ext = base + (c - buf);
+    else
+        ext = sub;
 
-void string_cut_extension(char *string)
-{
-    char *period = strrchr(string, '.');
-
-    if (period != NULL)
-        *period = 0;
+    if (base_p)
+        * base_p = base;
+    if (ext_p)
+        * ext_p = ext;
+    if (sub_p)
+        * sub_p = sub;
+    if (isub_p)
+        * isub_p = isub;
 }
 
 /* Like strcasecmp, but orders numbers correctly (2 before 10). */
@@ -690,4 +640,36 @@ char * double_array_to_string (const double * array, int count)
 ERR:
     g_strfreev (split);
     return NULL;
+}
+
+/* deprecated */
+const char * filename_get_subtune (const char * filename, int * track)
+{
+    const char * sub;
+    uri_parse (filename, NULL, NULL, & sub, track);
+    return sub[0] ? sub : NULL;
+}
+
+/* deprecated */
+char * filename_split_subtune (const char * filename, int * track)
+{
+    const char * sub;
+    uri_parse (filename, NULL, NULL, & sub, track);
+    return g_strndup (filename, sub - filename);
+}
+
+/* deprecated */
+char * uri_get_extension (const char * uri)
+{
+    const char * ext, * sub;
+    uri_parse (uri, NULL, & ext, & sub, NULL);
+    return (sub - ext >= 1) ? g_ascii_strdown (ext + 1, sub - ext - 1) : NULL;
+}
+
+/* deprecated */
+void string_cut_extension (char * string)
+{
+    const char * ext;
+    uri_parse (string, NULL, & ext, NULL, NULL);
+    * (char *) ext = 0;
 }
