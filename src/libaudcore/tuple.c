@@ -192,46 +192,30 @@ void tuple_unref (Tuple * tuple)
  * @param[in] filename Filename URI.
  * @param[in,out] tuple Tuple structure to manipulate.
  */
-void tuple_set_filename (Tuple * tuple, const char * name)
+void tuple_set_filename (Tuple * tuple, const char * filename)
 {
-    const char * slash;
-    char * temp, * c;
+    const char * base, * ext, * sub;
+    int isub;
 
-    if ((slash = strrchr (name, '/')))
+    uri_parse (filename, & base, & ext, & sub, & isub);
+
+    char path[base - filename + 1];
+    str_decode_percent (filename, base - filename, path);
+    tuple_set_str (tuple, FIELD_FILE_PATH, NULL, str_get (path));
+
+    char name[ext - base + 1];
+    str_decode_percent (base, ext - base, name);
+    tuple_set_str (tuple, FIELD_FILE_NAME, NULL, str_get (name));
+
+    if (ext < sub)
     {
-        char path[slash - name + 2];
-        memcpy (path, name, slash - name + 1);
-        path[slash - name + 1] = 0;
-
-        temp = uri_to_display (path);
-        tuple_copy_str (tuple, FIELD_FILE_PATH, NULL, temp);
-        g_free (temp);
-
-        name = slash + 1;
+        char extbuf[sub - ext];
+        str_decode_percent (ext + 1, sub - ext - 1, extbuf);
+        tuple_set_str (tuple, FIELD_FILE_EXT, NULL, str_get (extbuf));
     }
 
-    char buf[strlen (name) + 1];
-    strcpy (buf, name);
-
-    if ((c = strrchr (buf, '?')))
-    {
-        int sub;
-        char junk;
-
-        if (sscanf (c + 1, "%d%c", & sub, & junk) == 1)
-        {
-            tuple_set_int (tuple, FIELD_SUBSONG_ID, NULL, sub);
-            * c = 0;
-        }
-    }
-
-    temp = uri_to_display (buf);
-
-    if ((c = strrchr (temp, '.')))
-        tuple_copy_str (tuple, FIELD_FILE_EXT, NULL, c + 1);
-
-    tuple_copy_str (tuple, FIELD_FILE_NAME, NULL, temp);
-    g_free (temp);
+    if (sub[0])
+        tuple_set_int (tuple, FIELD_SUBSONG_ID, NULL, isub);
 }
 
 /**
