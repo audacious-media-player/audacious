@@ -19,6 +19,8 @@
  */
 
 #include <glib.h>
+#include <stdio.h>
+
 #include "util.h"
 #include <inttypes.h>
 

@@ -19,6 +19,7 @@
  * using our public API to be a derived work.
  */
 
+#include <stdio.h>
 #include <string.h>
 
 #include <glib.h>

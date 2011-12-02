@@ -19,6 +19,8 @@
  */
 
 #include <glib.h>
+#include <stdio.h>
+
 #include <libaudcore/tuple.h>
 #include <libaudcore/vfs.h>
 
