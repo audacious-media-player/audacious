@@ -50,7 +50,11 @@ char * str_ref (char * str);
  * simply returns NULL with no side effects. */
 char * str_unref (char * str);
 
-/* Calls sprintf internally, then pools the produced string with str_get(). */
+/* Calls str_get() on the first <len> characters of <str>.  If <str> has less
+ * than or equal to <len> characters, equivalent to str_get(). */
+char * str_nget (const char * str, int len);
+
+/* Calls sprintf() internally, then pools the produced string with str_get(). */
 char * str_printf (const char * format, ...);
 
 /* Used by STR_CHECK; should not be called directly. */

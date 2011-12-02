@@ -106,6 +106,18 @@ char * str_unref (char * str)
     return NULL;
 }
 
+char * str_nget (const char * str, int len)
+{
+    if (strlen (str) <= len)
+        return str_get (str);
+
+    char buf[len + 1];
+    memcpy (buf, str, len);
+    buf[len] = 0;
+
+    return str_get (buf);
+}
+
 char * str_printf (const char * format, ...)
 {
     va_list args;
