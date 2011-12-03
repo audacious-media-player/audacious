@@ -285,7 +285,10 @@ void tuple_set_int (Tuple * tuple, int nfield, const char * field, int x)
 void tuple_set_str (Tuple * tuple, int nfield, const char * field, char * str)
 {
     if (! str)
-        return tuple_unset (tuple, nfield, field);
+    {
+        tuple_unset (tuple, nfield, field);
+        return;
+    }
 
     if (nfield < 0)
         nfield = tuple_field_by_name (field);
