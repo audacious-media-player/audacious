@@ -36,3 +36,13 @@
 #undef AUD_FUNC6
 #undef AUD_FUNC7
 #undef AUD_FUNC8
+
+#undef AUD_VFUNC0
+#undef AUD_VFUNC1
+#undef AUD_VFUNC2
+#undef AUD_VFUNC3
+#undef AUD_VFUNC4
+#undef AUD_VFUNC5
+#undef AUD_VFUNC6
+#undef AUD_VFUNC7
+#undef AUD_VFUNC8

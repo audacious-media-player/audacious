@@ -40,18 +40,18 @@ AUD_FUNC1 (const void *, plugin_get_header, PluginHandle *, plugin)
 AUD_FUNC1 (PluginHandle *, plugin_by_header, const void *, header)
 
 AUD_FUNC2 (gint, plugin_compare, PluginHandle *, a, PluginHandle *, b)
-AUD_FUNC3 (void, plugin_for_each, gint, type, PluginForEachFunc, func, void *,
+AUD_VFUNC3 (plugin_for_each, gint, type, PluginForEachFunc, func, void *,
  data)
 
 AUD_FUNC1 (gboolean, plugin_get_enabled, PluginHandle *, plugin)
-AUD_FUNC3 (void, plugin_for_enabled, gint, type, PluginForEachFunc, func,
+AUD_VFUNC3 (plugin_for_enabled, gint, type, PluginForEachFunc, func,
  void *, data)
 
 AUD_FUNC1 (const gchar *, plugin_get_name, PluginHandle *, plugin)
 AUD_FUNC1 (gboolean, plugin_has_about, PluginHandle *, plugin)
 AUD_FUNC1 (gboolean, plugin_has_configure, PluginHandle *, plugin)
 
-AUD_FUNC3 (void, plugin_add_watch, PluginHandle *, plugin, PluginForEachFunc,
+AUD_VFUNC3 (plugin_add_watch, PluginHandle *, plugin, PluginForEachFunc,
  func, void *, data)
-AUD_FUNC3 (void, plugin_remove_watch, PluginHandle *, plugin, PluginForEachFunc,
+AUD_VFUNC3 (plugin_remove_watch, PluginHandle *, plugin, PluginForEachFunc,
  func, void *, data)

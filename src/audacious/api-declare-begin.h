@@ -35,4 +35,14 @@
 #define AUD_FUNC7(t,n,t1,n1,t2,n2,t3,n3,t4,n4,t5,n5,t6,n6,t7,n7) .n = n,
 #define AUD_FUNC8(t,n,t1,n1,t2,n2,t3,n3,t4,n4,t5,n5,t6,n6,t7,n7,t8,n8) .n = n,
 
+#define AUD_VFUNC0(n) .n = n,
+#define AUD_VFUNC1(n,t1,n1) .n = n,
+#define AUD_VFUNC2(n,t1,n1,t2,n2) .n = n,
+#define AUD_VFUNC3(n,t1,n1,t2,n2,t3,n3) .n = n,
+#define AUD_VFUNC4(n,t1,n1,t2,n2,t3,n3,t4,n4) .n = n,
+#define AUD_VFUNC5(n,t1,n1,t2,n2,t3,n3,t4,n4,t5,n5) .n = n,
+#define AUD_VFUNC6(n,t1,n1,t2,n2,t3,n3,t4,n4,t5,n5,t6,n6) .n = n,
+#define AUD_VFUNC7(n,t1,n1,t2,n2,t3,n3,t4,n4,t5,n5,t6,n6,t7,n7) .n = n,
+#define AUD_VFUNC8(n,t1,n1,t2,n2,t3,n3,t4,n4,t5,n5,t6,n6,t7,n7,t8,n8) .n = n,
+
 const struct AUD_API_NAME AUD_API_SYMBOL = {

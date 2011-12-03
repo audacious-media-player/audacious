@@ -34,3 +34,13 @@
 #define AUD_FUNC6(t,n,t1,n1,t2,n2,t3,n3,t4,n4,t5,n5,t6,n6) t n (t1 n1, t2 n2, t3 n3, t4 n4, t5 n5, t6 n6);
 #define AUD_FUNC7(t,n,t1,n1,t2,n2,t3,n3,t4,n4,t5,n5,t6,n6,t7,n7) t n (t1 n1, t2 n2, t3 n3, t4 n4, t5 n5, t6 n6, t7 n7);
 #define AUD_FUNC8(t,n,t1,n1,t2,n2,t3,n3,t4,n4,t5,n5,t6,n6,t7,n7,t8,n8) t n (t1 n1, t2 n2, t3 n3, t4 n4, t5 n5, t6 n6, t7 n7, t8 n8);
+
+#define AUD_VFUNC0(n) void n (void);
+#define AUD_VFUNC1(n,t1,n1) void n (t1 n1);
+#define AUD_VFUNC2(n,t1,n1,t2,n2) void n (t1 n1, t2 n2);
+#define AUD_VFUNC3(n,t1,n1,t2,n2,t3,n3) void n (t1 n1, t2 n2, t3 n3);
+#define AUD_VFUNC4(n,t1,n1,t2,n2,t3,n3,t4,n4) void n (t1 n1, t2 n2, t3 n3, t4 n4);
+#define AUD_VFUNC5(n,t1,n1,t2,n2,t3,n3,t4,n4,t5,n5) void n (t1 n1, t2 n2, t3 n3, t4 n4, t5 n5);
+#define AUD_VFUNC6(n,t1,n1,t2,n2,t3,n3,t4,n4,t5,n5,t6,n6) void n (t1 n1, t2 n2, t3 n3, t4 n4, t5 n5, t6 n6);
+#define AUD_VFUNC7(n,t1,n1,t2,n2,t3,n3,t4,n4,t5,n5,t6,n6,t7,n7) void n (t1 n1, t2 n2, t3 n3, t4 n4, t5 n5, t6 n6, t7 n7);
+#define AUD_VFUNC8(n,t1,n1,t2,n2,t3,n3,t4,n4,t5,n5,t6,n6,t7,n7,t8,n8) void n (t1 n1, t2 n2, t3 n3, t4 n4, t5 n5, t6 n6, t7 n7, t8 n8);
