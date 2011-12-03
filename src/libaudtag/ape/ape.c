@@ -329,16 +329,16 @@ static gboolean ape_read_tag (Tuple * tuple, VFSFile * handle)
             tuple_set_int (tuple, FIELD_TRACK_NUMBER, NULL, atoi (value));
         else if (! strcmp (key, "Year"))
             tuple_set_int (tuple, FIELD_YEAR, NULL, atoi (value));
-        else if (! strcasecmp (key, "REPLAYGAIN_TRACK_GAIN"))
+        else if (! g_ascii_strcasecmp (key, "REPLAYGAIN_TRACK_GAIN"))
             set_gain_info (tuple, FIELD_GAIN_TRACK_GAIN, FIELD_GAIN_GAIN_UNIT,
              value);
-        else if (! strcasecmp (key, "REPLAYGAIN_TRACK_PEAK"))
+        else if (! g_ascii_strcasecmp (key, "REPLAYGAIN_TRACK_PEAK"))
             set_gain_info (tuple, FIELD_GAIN_TRACK_PEAK, FIELD_GAIN_PEAK_UNIT,
              value);
-        else if (! strcasecmp (key, "REPLAYGAIN_ALBUM_GAIN"))
+        else if (! g_ascii_strcasecmp (key, "REPLAYGAIN_ALBUM_GAIN"))
             set_gain_info (tuple, FIELD_GAIN_ALBUM_GAIN, FIELD_GAIN_GAIN_UNIT,
              value);
-        else if (! strcasecmp (key, "REPLAYGAIN_ALBUM_PEAK"))
+        else if (! g_ascii_strcasecmp (key, "REPLAYGAIN_ALBUM_PEAK"))
             set_gain_info (tuple, FIELD_GAIN_ALBUM_PEAK, FIELD_GAIN_PEAK_UNIT,
              value);
     }

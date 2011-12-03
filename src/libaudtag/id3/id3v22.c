@@ -392,14 +392,14 @@ static void decode_rva (Tuple * tuple, const guchar * data, gint size)
                  peak_unit);
         }
 
-        if (! strcasecmp (domain, "album"))
+        if (! g_ascii_strcasecmp (domain, "album"))
         {
             tuple_set_int (tuple, FIELD_GAIN_ALBUM_GAIN, NULL, adjustment);
 
             if (peak_unit)
                 tuple_set_int (tuple, FIELD_GAIN_ALBUM_PEAK, NULL, peak);
         }
-        else if (! strcasecmp (domain, "track"))
+        else if (! g_ascii_strcasecmp (domain, "track"))
         {
             tuple_set_int (tuple, FIELD_GAIN_TRACK_GAIN, NULL, adjustment);
 

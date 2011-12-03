@@ -36,7 +36,7 @@ static void * memchr16 (const void * mem, gint16 chr, gint len)
         if (* (gint16 *) mem == chr)
             return (void *) mem;
 
-        mem += 2;
+        mem = (char *) mem + 2;
         len -= 2;
     }
 

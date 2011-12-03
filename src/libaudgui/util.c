@@ -57,13 +57,13 @@ static gboolean escape_cb (GtkWidget * widget, GdkEventKey * event, void
 void audgui_hide_on_escape (GtkWidget * widget)
 {
     g_signal_connect (widget, "key-press-event", (GCallback) escape_cb,
-     gtk_widget_hide);
+     (void *) gtk_widget_hide);
 }
 
 void audgui_destroy_on_escape (GtkWidget * widget)
 {
     g_signal_connect (widget, "key-press-event", (GCallback) escape_cb,
-     gtk_widget_destroy);
+     (void *) gtk_widget_destroy);
 }
 
 static void toggle_cb (GtkToggleButton * toggle, gboolean * setting)

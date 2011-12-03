@@ -78,9 +78,9 @@ static void slider_update (void * unused, GtkRange * slider)
     else
         value = round (aud_eq_get_band (band));
 
-    g_signal_handlers_block_by_func (slider, (GCallback) slider_moved, NULL);
+    g_signal_handlers_block_by_func (slider, (void *) slider_moved, NULL);
     gtk_range_set_value (slider, -value);
-    g_signal_handlers_unblock_by_func (slider, (GCallback) slider_moved, NULL);
+    g_signal_handlers_unblock_by_func (slider, (void *) slider_moved, NULL);
 }
 
 static gchar * format_value (GtkScale * slider, gdouble value, void * unused)
