@@ -33,7 +33,7 @@
 
 typedef struct
 {
-    gchar * filename;
+    const gchar * filename;
     VFSFile * handle;
     gboolean buffered;
     PluginHandle * plugin;
@@ -116,35 +116,33 @@ static gboolean probe_func_fast (PluginHandle * plugin, ProbeState * state)
 
 static void probe_by_scheme (ProbeState * state)
 {
-    gchar * s = strstr (state->filename, "://");
+    const gchar * s = strstr (state->filename, "://");
 
     if (s == NULL)
         return;
 
     AUDDBG ("Probing by scheme.\n");
-    * s = 0;
-    input_plugin_for_key (INPUT_KEY_SCHEME, state->filename, (PluginForEachFunc)
-     probe_func_fast, state);
-    * s = ':';
+    gchar buf[s - state->filename + 1];
+    memcpy (buf, state->filename, s - state->filename);
+    buf[s - state->filename] = 0;
+
+    input_plugin_for_key (INPUT_KEY_SCHEME, buf, (PluginForEachFunc) probe_func_fast, state);
 }
 
 static void probe_by_extension (ProbeState * state)
 {
-    gchar * s = strrchr (state->filename, '.');
+    const gchar * ext, * sub;
+    uri_parse (state->filename, NULL, & ext, & sub, NULL);
 
-    if (s == NULL)
+    if (ext == sub)
         return;
 
     AUDDBG ("Probing by extension.\n");
-    s = g_ascii_strdown (s + 1, -1);
+    gchar buf[sub - ext];
+    memcpy (buf, ext + 1, sub - ext - 1);
+    buf[sub - ext - 1] = 0;
 
-    gchar * q = strrchr (s, '?');
-    if (q != NULL)
-        * q = 0;
-
-    input_plugin_for_key (INPUT_KEY_EXTENSION, s, (PluginForEachFunc)
-     probe_func_fast, state);
-    g_free (s);
+    input_plugin_for_key (INPUT_KEY_EXTENSION, buf, (PluginForEachFunc) probe_func_fast, state);
 }
 
 static void probe_by_mime (ProbeState * state)
@@ -175,7 +173,7 @@ PluginHandle * file_find_decoder (const gchar * filename, gboolean fast)
 
     AUDDBG ("Probing %s.\n", filename);
     state.plugin = NULL;
-    state.filename = filename_split_subtune (filename, NULL);
+    state.filename = filename;
     state.handle = NULL;
 
     probe_by_scheme (& state);
@@ -196,8 +194,6 @@ PluginHandle * file_find_decoder (const gchar * filename, gboolean fast)
     probe_by_content (& state);
 
 DONE:
-    g_free (state.filename);
-
     if (state.handle != NULL)
         vfs_fclose (state.handle);
 
@@ -210,10 +206,7 @@ Tuple * file_read_tuple (const gchar * filename, PluginHandle * decoder)
     g_return_val_if_fail (ip, NULL);
     g_return_val_if_fail (ip->probe_for_tuple, NULL);
 
-    gchar * real = filename_split_subtune (filename, NULL);
-    VFSFile * handle = vfs_fopen (real, "r");
-    g_free (real);
-
+    VFSFile * handle = vfs_fopen (filename, "r");
     Tuple * tuple = ip->probe_for_tuple (filename, handle);
 
     if (handle)
@@ -232,10 +225,7 @@ gboolean file_read_image (const gchar * filename, PluginHandle * decoder,
     g_return_val_if_fail (ip, FALSE);
     g_return_val_if_fail (ip->get_song_image, FALSE);
 
-    gchar * real = filename_split_subtune (filename, NULL);
-    VFSFile * handle = vfs_fopen (real, "r");
-    g_free (real);
-
+    VFSFile * handle = vfs_fopen (filename, "r");
     gboolean success = ip->get_song_image (filename, handle, data, size);
 
     if (handle)
@@ -256,9 +246,7 @@ gboolean file_write_tuple (const gchar * filename, PluginHandle * decoder,
     g_return_val_if_fail (ip, FALSE);
     g_return_val_if_fail (ip->update_song_tuple, FALSE);
 
-    gchar * real = filename_split_subtune (filename, NULL);
-    VFSFile * handle = vfs_fopen (real, "r+");
-    g_free (real);
+    VFSFile * handle = vfs_fopen (filename, "r+");
 
     if (! handle)
         return FALSE;

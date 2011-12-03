@@ -433,8 +433,13 @@ PluginHandle * plugin_lookup (const gchar * path)
 static gint plugin_lookup_basename_cb (PluginHandle * plugin, const gchar * basename)
 {
     gchar * test = g_path_get_basename (plugin->path);
-    string_cut_extension (test);
+
+    gchar * dot = strrchr (test, '.');
+    if (dot)
+        * dot = 0;
+
     gint ret = strcmp (test, basename);
+
     g_free (test);
     return ret;
 }
