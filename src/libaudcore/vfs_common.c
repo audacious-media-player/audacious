@@ -175,7 +175,7 @@ void vfs_file_get_contents (const char * filename, void * * buf, int64_t * size)
             if (*buf == NULL)
                 goto close_handle;
 
-            ptr = *buf + filled_size;
+            ptr = (unsigned char *) (* buf) + filled_size;
         }
     }
 
