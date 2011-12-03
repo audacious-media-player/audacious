@@ -138,7 +138,7 @@ vfs_fclose(VFSFile * file)
     g_return_val_if_fail (file && file->sig == VFS_SIG, -1);
 
     if (verbose)
-        printf ("VFS: <%p> close\n", file);
+        logger ("VFS: <%p> close\n", file);
 
     int ret = 0;
 
