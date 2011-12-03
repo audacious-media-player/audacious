@@ -262,7 +262,7 @@ vfs_buffered_file_new_from_uri(const char *uri)
 
     handle->handle = fd;
     handle->base = &buffered_file_const;
-    handle->uri = g_strdup(uri);
+    handle->uri = str_get (uri);
     handle->ref = 1;
     handle->sig = VFS_SIG;
 

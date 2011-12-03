@@ -191,7 +191,7 @@ VFSFile * probe_buffer_new (const gchar * filename)
     VFSFile * file2 = g_malloc (sizeof (VFSFile));
     file2->base = & probe_buffer_table;
     file2->handle = p;
-    file2->uri = g_strdup (filename);
+    file2->uri = str_get (filename);
     file2->ref = 1;
     file2->sig = VFS_SIG;
 
