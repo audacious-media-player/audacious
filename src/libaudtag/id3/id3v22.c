@@ -453,7 +453,8 @@ gboolean id3v22_read_tag (Tuple * tuple, VFSFile * handle)
      & data_size))
         return FALSE;
 
-    TAGDBG("Reading tags from %i bytes of ID3 data in %s\n", data_size, handle->uri);
+    TAGDBG ("Reading tags from %i bytes of ID3 data in %s\n", data_size,
+     vfs_get_filename (handle));
 
     for (pos = 0; pos < data_size; )
     {
