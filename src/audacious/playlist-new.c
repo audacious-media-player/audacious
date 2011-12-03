@@ -159,12 +159,14 @@ static ScanItem * scan_items[SCAN_THREADS];
 static void * scanner (void * unused);
 static void scan_trigger (void);
 
+static gchar * title_format;
+
 static gchar * title_from_tuple (Tuple * tuple)
 {
-    gchar * generic = get_string (NULL, "generic_title_format");
-    gchar * title = tuple_format_title (tuple, generic);
-    g_free (generic);
-    return title;
+    if (! title_format)
+        title_format = get_string (NULL, "generic_title_format");
+
+    return tuple_format_title (tuple, title_format);
 }
 
 static void entry_set_tuple_real (Entry * entry, Tuple * tuple)
@@ -751,6 +753,9 @@ void playlist_end (void)
 
     g_hash_table_destroy (unique_id_table);
     unique_id_table = NULL;
+
+    g_free (title_format);
+    title_format = NULL;
 
     LEAVE;
 
@@ -1711,6 +1716,9 @@ void playlist_sort_selected_by_title (gint playlist_num, gint (* compare)
 void playlist_reformat_titles (void)
 {
     ENTER;
+
+    g_free (title_format);
+    title_format = NULL;
 
     for (gint playlist_num = 0; playlist_num < index_count (playlists);
      playlist_num ++)
