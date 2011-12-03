@@ -434,10 +434,9 @@ vfs_dup(VFSFile *in)
  * @param path A path to test.
  * @return TRUE if the file is remote, otherwise FALSE.
  */
-gboolean
-vfs_is_remote(const gchar * path)
+gboolean vfs_is_remote (const char * path)
 {
-    return strncasecmp (path, "file://", 7) ? TRUE : FALSE;
+    return ! strncmp (path, "file://", 7);
 }
 
 /**
