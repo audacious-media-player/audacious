@@ -103,15 +103,22 @@ vfs_fopen(const char * path,
     if (! vtable)
         return NULL;
 
+    const gchar * sub;
+    uri_parse (path, NULL, NULL, & sub, NULL);
+    gchar * real_path = str_nget (path, sub - path);
+
     file = vtable->vfs_fopen_impl(path, mode);
 
     if (verbose)
         logger ("VFS: <%p> open (mode %s) %s\n", file, mode, path);
 
     if (file == NULL)
+    {
+        str_unref (real_path);
         return NULL;
+    }
 
-    file->uri = g_strdup(path);
+    file->uri = real_path;
     file->base = vtable;
     file->ref = 1;
     file->sig = VFS_SIG;
@@ -141,7 +148,7 @@ vfs_fclose(VFSFile * file)
     if (file->base->vfs_fclose_impl(file) != 0)
         ret = -1;
 
-    g_free(file->uri);
+    str_unref (file->uri);
 
     memset (file, 0, sizeof (VFSFile));
     g_free (file);

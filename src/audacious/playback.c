@@ -320,9 +320,7 @@ static void * playback_thread (void * unused)
     if (tuple)
         tuple_unref (tuple);
 
-    gchar * real = filename_split_subtune (current_filename, NULL);
-    VFSFile * file = vfs_fopen (real, "r");
-    g_free (real);
+    VFSFile * file = vfs_fopen (current_filename, "r");
 
     time_offset = playback_entry_get_start_time ();
     playback_error = ! current_decoder->play (& playback_api, current_filename,
