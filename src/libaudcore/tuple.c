@@ -475,13 +475,8 @@ int tuple_get_nth_subtune (Tuple * tuple, int n)
 char * tuple_format_title (Tuple * tuple, const char * format)
 {
     static const gint fallbacks[] = {FIELD_TITLE, FIELD_FILE_NAME, FIELD_FILE_PATH};
-    char * title = NULL, * temp;
 
-    if ((temp = tuple_formatter_process_string (tuple, format)))
-    {
-        title = str_get (temp);
-        g_free (temp);
-    }
+    char * title = tuple_formatter_process_string (tuple, format);
 
     for (int i = 0; i < G_N_ELEMENTS (fallbacks); i ++)
     {

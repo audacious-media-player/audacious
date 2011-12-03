@@ -18,23 +18,12 @@
  * Audacious or using our public API to be a derived work.
  */
 
+#include <glib.h>
+#include <pthread.h>
 #include <string.h>
 
-#include <glib.h>
-
-#include "audstrings.h"
-#include "config.h"
-#include "tuple.h"
 #include "tuple_compiler.h"
 #include "tuple_formatter.h"
-
-static GStaticMutex tuplec_mutex = G_STATIC_MUTEX_INIT;
-
-#ifdef _DEBUG
-# define _TRACE(fmt, ...) g_print("[tuple-fmt] %s(%d) " fmt "\n", __FILE__, __LINE__, __VA_ARGS__);
-#else
-# define _TRACE(fmt, ...)
-#endif
 
 /*
  * the tuple formatter:
@@ -66,20 +55,18 @@ static GStaticMutex tuplec_mutex = G_STATIC_MUTEX_INIT;
  * Compile a tuplez string and cache the result.
  * This caches the result for the last string, so that
  * successive calls are sped up.
- *
- * TODO/1.5: Implement a more efficient use of the compiler.
  */
+
 char * tuple_formatter_process_string (const Tuple * tuple, const char * string)
 {
+    static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+    pthread_mutex_lock (& mutex);
+
     static char *last_string = NULL;
     static TupleEvalContext *last_ctx = NULL;
     static TupleEvalNode *last_ev = NULL;
-    char *result = NULL;
 
-    g_static_mutex_lock (& tuplec_mutex);
-
-    if (last_string == NULL ||
-        (last_string != NULL && strcmp(last_string, string)))
+    if (! last_string || strcmp (string, last_string))
     {
         g_free(last_string);
 
@@ -92,15 +79,17 @@ char * tuple_formatter_process_string (const Tuple * tuple, const char * string)
         last_ctx = tuple_evalctx_new();
         last_string = g_strdup(string);
         last_ev = tuple_formatter_compile(last_ctx, last_string);
-        if (!last_ev) {
-            g_warning("[TuplezCC]: Compilation failed!\n");
-        }
     }
 
-    result = tuple_formatter_eval(last_ctx, last_ev, tuple);
-    tuple_evalctx_reset(last_ctx);
+    static GString * buf;
+    if (! buf)
+        buf = g_string_sized_new (255);
 
-    g_static_mutex_unlock (& tuplec_mutex);
+    tuple_formatter_eval (last_ctx, last_ev, tuple, buf);
+    tuple_evalctx_reset (last_ctx);
 
+    char * result = str_get (buf->str);
+
+    pthread_mutex_unlock (& mutex);
     return result;
 }

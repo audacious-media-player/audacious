@@ -23,6 +23,7 @@
 
 #include <libaudcore/tuple.h>
 
+/* returned string be released with str_unref() */
 char * tuple_formatter_process_string (const Tuple * tuple, const char * string);
 
 #endif /* LIBAUDCORE_TUPLE_FORMATTER_H */

@@ -21,6 +21,7 @@
 #ifndef LIBAUDCORE_TUPLE_COMPILER_H
 #define LIBAUDCORE_TUPLE_COMPILER_H
 
+#include <glib.h>
 #include <libaudcore/tuple.h>
 
 struct _TupleEvalNode;
@@ -36,7 +37,7 @@ void tuple_evalctx_free(TupleEvalContext *ctx);
 void tuple_evalnode_free(TupleEvalNode *expr);
 
 TupleEvalNode *tuple_formatter_compile(TupleEvalContext *ctx, char *expr);
-char * tuple_formatter_eval (TupleEvalContext * ctx, TupleEvalNode * expr,
- const Tuple * tuple);
+void tuple_formatter_eval (TupleEvalContext * ctx, TupleEvalNode * expr,
+ const Tuple * tuple, GString * out);
 
 #endif /* LIBAUDCORE_TUPLE_COMPILER_H */

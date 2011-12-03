@@ -619,7 +619,7 @@ static TupleValueType tf_get_var (char * * tmps, int * tmpi, TupleEvalVar *
  * context and return resulting string.
  */
 static boolean tuple_formatter_eval_do (TupleEvalContext * ctx, TupleEvalNode *
- expr, const Tuple * tuple, char * * res, gssize * resmax, gssize * reslen)
+ expr, const Tuple * tuple, GString * out)
 {
   TupleEvalNode *curr = expr;
   TupleEvalVar *var0, *var1;
@@ -698,13 +698,13 @@ static boolean tuple_formatter_eval_do (TupleEvalContext * ctx, TupleEvalNode *
           }
         }
 
-        if (result && !tuple_formatter_eval_do(ctx, curr->children, tuple, res, resmax, reslen))
+        if (result && ! tuple_formatter_eval_do (ctx, curr->children, tuple, out))
           return FALSE;
         break;
 
       case OP_EXISTS:
         if (tf_get_fieldval (ctx->variables[curr->var[0]], tuple)) {
-          if (!tuple_formatter_eval_do(ctx, curr->children, tuple, res, resmax, reslen))
+          if (! tuple_formatter_eval_do (ctx, curr->children, tuple, out))
             return FALSE;
         }
         break;
@@ -737,7 +737,7 @@ static boolean tuple_formatter_eval_do (TupleEvalContext * ctx, TupleEvalNode *
         } else
           result = TRUE;
 
-        if (result && !tuple_formatter_eval_do(ctx, curr->children, tuple, res, resmax, reslen))
+        if (result && ! tuple_formatter_eval_do (ctx, curr->children, tuple, out))
           return FALSE;
         break;
 
@@ -747,23 +747,8 @@ static boolean tuple_formatter_eval_do (TupleEvalContext * ctx, TupleEvalNode *
         break;
     }
 
-    if (str) {
-      /* (Re)allocate res for more space, if needed. */
-      *reslen += strlen(str);
-      if (*res) {
-        if (*reslen >= *resmax) {
-          *resmax += *reslen + MIN_ALLOC_BUF;
-          *res = g_realloc(*res, *resmax);
-        }
-
-        strcat(*res, str);
-      } else {
-        *resmax = *reslen + MIN_ALLOC_BUF;
-        *res = g_malloc(*resmax);
-
-        g_strlcpy(*res, str, *resmax);
-      }
-    }
+    if (str)
+      g_string_append (out, str);
 
     curr = curr->next;
   }
@@ -771,16 +756,9 @@ static boolean tuple_formatter_eval_do (TupleEvalContext * ctx, TupleEvalNode *
   return TRUE;
 }
 
-
-char * tuple_formatter_eval (TupleEvalContext * ctx, TupleEvalNode * expr,
- const Tuple * tuple)
+void tuple_formatter_eval (TupleEvalContext * ctx, TupleEvalNode * expr,
+ const Tuple * tuple, GString * out)
 {
-  char *res = NULL;
-  gssize resmax = 0, reslen = 0;
-
-  if (!expr) return res;
-
-  tuple_formatter_eval_do(ctx, expr, tuple, &res, &resmax, &reslen);
-
-  return res;
+    g_string_truncate (out, 0);
+    tuple_formatter_eval_do (ctx, expr, tuple, out);
 }
