@@ -35,7 +35,7 @@ include ../../extra.mk
 
 includesubdir = libaudcore
 
-CPPFLAGS += -std=gnu99 -DHAVE_CONFIG_H ${PTHREAD_CFLAGS} ${GLIB_CFLAGS} -I.. -I../..
+CPPFLAGS += -DHAVE_CONFIG_H ${PTHREAD_CFLAGS} ${GLIB_CFLAGS} -I.. -I../..
 CFLAGS += ${LIB_CFLAGS}
 
 LIBS += ${PTHREAD_LIBS} ${GLIB_LIBS} -lm

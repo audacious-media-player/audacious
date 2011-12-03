@@ -96,7 +96,7 @@ endif
 
 pre-depend: ${DBUS_BINDINGS}
 
-CPPFLAGS += -std=gnu99 \
+CPPFLAGS += \
             -DHAVE_CONFIG_H \
 		${GLIB_CFLAGS}			\
 		${GTHREAD_CFLAGS} \
