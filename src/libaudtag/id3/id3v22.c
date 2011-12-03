@@ -236,7 +236,7 @@ static void associate_string (Tuple * tuple, gint field, const gchar *
     else
         TAGDBG ("Field %i = %s.\n", field, text);
 
-    tuple_copy_str (tuple, field, customfield, text);
+    tuple_set_str (tuple, field, customfield, text);
     g_free (text);
 }
 
@@ -270,7 +270,7 @@ static void decode_comment (Tuple * tuple, const guchar * data, gint size)
     TAGDBG ("Comment: lang = %s, type = %s, value = %s.\n", lang, type, value);
 
     if (! type[0]) /* blank type == actual comment */
-        tuple_copy_str (tuple, FIELD_COMMENT, NULL, value);
+        tuple_set_str (tuple, FIELD_COMMENT, NULL, value);
 
     g_free (lang);
     g_free (type);
@@ -291,7 +291,7 @@ static void decode_txx (Tuple * tuple, const guchar * data, gint size)
 
     gchar * value = separator + 1;
     TAGDBG ("TXX: %s = %s.\n", text, value);
-    tuple_copy_str (tuple, -1, text, value);
+    tuple_set_str (tuple, -1, text, value);
 
     g_free (text);
 }
@@ -424,10 +424,10 @@ static void decode_genre (Tuple * tuple, const guchar * data, gint size)
 
     if (numericgenre > 0)
     {
-        tuple_copy_str(tuple, FIELD_GENRE, NULL, convert_numericgenre_to_text(numericgenre));
+        tuple_set_str(tuple, FIELD_GENRE, NULL, convert_numericgenre_to_text(numericgenre));
         return;
     }
-    tuple_copy_str(tuple, FIELD_GENRE, NULL, text);
+    tuple_set_str(tuple, FIELD_GENRE, NULL, text);
     g_free (text);
     return;
 }

@@ -201,17 +201,17 @@ void tuple_set_filename (Tuple * tuple, const char * filename)
 
     char path[base - filename + 1];
     str_decode_percent (filename, base - filename, path);
-    tuple_set_str (tuple, FIELD_FILE_PATH, NULL, str_get (path));
+    tuple_set_str (tuple, FIELD_FILE_PATH, NULL, path);
 
     char name[ext - base + 1];
     str_decode_percent (base, ext - base, name);
-    tuple_set_str (tuple, FIELD_FILE_NAME, NULL, str_get (name));
+    tuple_set_str (tuple, FIELD_FILE_NAME, NULL, name);
 
     if (ext < sub)
     {
         char extbuf[sub - ext];
         str_decode_percent (ext + 1, sub - ext - 1, extbuf);
-        tuple_set_str (tuple, FIELD_FILE_EXT, NULL, str_get (extbuf));
+        tuple_set_str (tuple, FIELD_FILE_EXT, NULL, extbuf);
     }
 
     if (sub[0])
@@ -282,7 +282,7 @@ void tuple_set_int (Tuple * tuple, int nfield, const char * field, int x)
     pthread_mutex_unlock (& mutex);
 }
 
-void tuple_set_str (Tuple * tuple, int nfield, const char * field, char * str)
+void tuple_set_str (Tuple * tuple, int nfield, const char * field, const char * str)
 {
     if (! str)
     {
@@ -293,12 +293,7 @@ void tuple_set_str (Tuple * tuple, int nfield, const char * field, char * str)
     if (nfield < 0)
         nfield = tuple_field_by_name (field);
     if (nfield < 0 || nfield >= TUPLE_FIELDS || tuple_fields[nfield].type != TUPLE_STRING)
-    {
-        str_unref (str);
         return;
-    }
-
-    STR_CHECK (str);
 
     pthread_mutex_lock (& mutex);
 
@@ -306,14 +301,9 @@ void tuple_set_str (Tuple * tuple, int nfield, const char * field, char * str)
         str_unref (tuple->vals[nfield].s);
 
     tuple->setmask |= BIT (nfield);
-    tuple->vals[nfield].s = str;
+    tuple->vals[nfield].s = str_get (str);
 
     pthread_mutex_unlock (& mutex);
-}
-
-void tuple_copy_str (Tuple * tuple, int nfield, const char * field, const char * str)
-{
-    tuple_set_str (tuple, nfield, field, str_get (str));
 }
 
 void tuple_unset (Tuple * tuple, int nfield, const char * field)
@@ -417,7 +407,7 @@ void tuple_set_format (Tuple * t, const char * format, int chans, int rate,
  int brate)
 {
     if (format)
-        tuple_copy_str (t, FIELD_CODEC, NULL, format);
+        tuple_set_str (t, FIELD_CODEC, NULL, format);
 
     char buf[32];
     buf[0] = 0;
@@ -440,7 +430,7 @@ void tuple_set_format (Tuple * t, const char * format, int chans, int rate,
         APPEND (buf, "%d kHz", rate / 1000);
 
     if (buf[0])
-        tuple_copy_str (t, FIELD_QUALITY, NULL, buf);
+        tuple_set_str (t, FIELD_QUALITY, NULL, buf);
 
     if (brate > 0)
         tuple_set_int (t, FIELD_BITRATE, NULL, brate);
@@ -515,14 +505,14 @@ void tuple_free (Tuple * tuple)
 boolean tuple_associate_string (Tuple * tuple, const int nfield,
  const char * field, const char * str)
 {
-    tuple_copy_str (tuple, nfield, field, str);
+    tuple_set_str (tuple, nfield, field, str);
     return TRUE;
 }
 
 boolean tuple_associate_string_rel (Tuple * tuple, int nfield,
  const char * field, char * str)
 {
-    tuple_copy_str (tuple, nfield, field, str);
+    tuple_set_str (tuple, nfield, field, str);
     g_free (str);
     return TRUE;
 }

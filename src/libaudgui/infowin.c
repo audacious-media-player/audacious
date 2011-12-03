@@ -147,7 +147,7 @@ static void set_field_str_from_entry (Tuple * tuple, gint fieldn, GtkWidget *
     const gchar * text = gtk_entry_get_text ((GtkEntry *) widget);
 
     if (text[0])
-        tuple_copy_str (tuple, fieldn, NULL, text);
+        tuple_set_str (tuple, fieldn, NULL, text);
     else
         tuple_unset (tuple, fieldn, NULL);
 }

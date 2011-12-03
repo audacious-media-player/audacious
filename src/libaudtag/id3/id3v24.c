@@ -509,7 +509,7 @@ static void associate_string (Tuple * tuple, gint field, const gchar *
     else
         TAGDBG ("Field %i = %s.\n", field, text);
 
-    tuple_copy_str (tuple, field, customfield, text);
+    tuple_set_str (tuple, field, customfield, text);
     g_free (text);
 }
 
@@ -547,23 +547,23 @@ static void decode_private_info (Tuple * tuple, const guchar * data, gint size)
         if (!strncmp(text, "WM/MediaClassPrimaryID", 22))
         {
             if (!memcmp(value, PRIMARY_CLASS_MUSIC, 16))
-                tuple_copy_str (tuple, -1, "media-class", "Music");
+                tuple_set_str (tuple, -1, "media-class", "Music");
             if (!memcmp(value, PRIMARY_CLASS_AUDIO, 16))
-                tuple_copy_str (tuple, -1, "media-class", "Audio (non-music)");
+                tuple_set_str (tuple, -1, "media-class", "Audio (non-music)");
         } else if (!strncmp(text, "WM/MediaClassSecondaryID", 24))
         {
             if (!memcmp(value, SECONDARY_CLASS_AUDIOBOOK, 16))
-                tuple_copy_str (tuple, -1, "media-class", "Audio Book");
+                tuple_set_str (tuple, -1, "media-class", "Audio Book");
             if (!memcmp(value, SECONDARY_CLASS_SPOKENWORD, 16))
-                tuple_copy_str (tuple, -1, "media-class", "Spoken Word");
+                tuple_set_str (tuple, -1, "media-class", "Spoken Word");
             if (!memcmp(value, SECONDARY_CLASS_NEWS, 16))
-                tuple_copy_str (tuple, -1, "media-class", "News");
+                tuple_set_str (tuple, -1, "media-class", "News");
             if (!memcmp(value, SECONDARY_CLASS_TALKSHOW, 16))
-                tuple_copy_str (tuple, -1, "media-class", "Talk Show");
+                tuple_set_str (tuple, -1, "media-class", "Talk Show");
             if (!memcmp(value, SECONDARY_CLASS_GAMES_CLIP, 16))
-                tuple_copy_str (tuple, -1, "media-class", "Game Audio (clip)");
+                tuple_set_str (tuple, -1, "media-class", "Game Audio (clip)");
             if (!memcmp(value, SECONDARY_CLASS_GAMES_SONG, 16))
-                tuple_copy_str (tuple, -1, "media-class", "Game Soundtrack");
+                tuple_set_str (tuple, -1, "media-class", "Game Soundtrack");
         } else {
             TAGDBG("Unrecognised tag %s (Windows Media) ignored\n", text);
         }
@@ -585,7 +585,7 @@ static void decode_comment (Tuple * tuple, const guchar * data, gint size)
     TAGDBG ("Comment: lang = %s, type = %s, value = %s.\n", lang, type, value);
 
     if (! type[0]) /* blank type == actual comment */
-        tuple_copy_str (tuple, FIELD_COMMENT, NULL, value);
+        tuple_set_str (tuple, FIELD_COMMENT, NULL, value);
 
     g_free (lang);
     g_free (type);
@@ -719,10 +719,10 @@ static void decode_genre (Tuple * tuple, const guchar * data, gint size)
         numericgenre = atoi (text);
 
     if (numericgenre > 0)
-        tuple_copy_str (tuple, FIELD_GENRE, NULL,
+        tuple_set_str (tuple, FIELD_GENRE, NULL,
          convert_numericgenre_to_text (numericgenre));
     else
-        tuple_copy_str (tuple, FIELD_GENRE, NULL, text);
+        tuple_set_str (tuple, FIELD_GENRE, NULL, text);
 
     g_free (text);
     return;

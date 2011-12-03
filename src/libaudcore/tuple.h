@@ -119,14 +119,10 @@ void tuple_set_int (Tuple * tuple, int nfield, const char * field, int x);
 /* Sets the field specified by <nfield> (one of the FIELD_* constants) or
  * <field> (one of the names returned by tuple_field_get_name() to the string
  * value <str>.  Only one of <nfield> or <field> may be set.  If <nfield> is
- * set, <field> must be NULL; if <field> is set, <nfield> must be -1.  <str>
- * must be a pooled string returned by str_get(); the caller gives up one
- * reference to <str>.  As a special case, if <str> is NULL, the result is
- * equivalent to calling tuple_unset(). */
-void tuple_set_str (Tuple * tuple, int nfield, const char * field, char * str);
-
-/* Convenience function, equivalent to calling tuple_set_str (strget (str)). */
-void tuple_copy_str (Tuple * tuple, int nfield, const char * field, const char * str);
+ * set, <field> must be NULL; if <field> is set, <nfield> must be -1.  As a
+ * special case, if <str> is NULL, the result is equivalent to calling
+ * tuple_unset(). */
+void tuple_set_str (Tuple * tuple, int nfield, const char * field, const char * str);
 
 /* Clears any value that a field is currently set to. */
 void tuple_unset (Tuple * tuple, int nfield, const char * field);

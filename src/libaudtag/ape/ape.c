@@ -316,15 +316,15 @@ static gboolean ape_read_tag (Tuple * tuple, VFSFile * handle)
         gchar * value = ((ValuePair *) node->data)->value;
 
         if (! strcmp (key, "Artist"))
-            tuple_copy_str (tuple, FIELD_ARTIST, NULL, value);
+            tuple_set_str (tuple, FIELD_ARTIST, NULL, value);
         else if (! strcmp (key, "Title"))
-            tuple_copy_str (tuple, FIELD_TITLE, NULL, value);
+            tuple_set_str (tuple, FIELD_TITLE, NULL, value);
         else if (! strcmp (key, "Album"))
-            tuple_copy_str (tuple, FIELD_ALBUM, NULL, value);
+            tuple_set_str (tuple, FIELD_ALBUM, NULL, value);
         else if (! strcmp (key, "Comment"))
-            tuple_copy_str (tuple, FIELD_COMMENT, NULL, value);
+            tuple_set_str (tuple, FIELD_COMMENT, NULL, value);
         else if (! strcmp (key, "Genre"))
-            tuple_copy_str (tuple, FIELD_GENRE, NULL, value);
+            tuple_set_str (tuple, FIELD_GENRE, NULL, value);
         else if (! strcmp (key, "Track"))
             tuple_set_int (tuple, FIELD_TRACK_NUMBER, NULL, atoi (value));
         else if (! strcmp (key, "Year"))
