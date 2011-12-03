@@ -161,40 +161,40 @@ gchar * get_path_to_self (void)
 #endif
 }
 
-/* Strips various common top-level folders from a file name (not URI).  The
- * string passed will not be modified, but the string returned will share the
- * same memory.  Examples:
- *     "/home/john/folder/file.mp3"    -> "folder/file.mp3"
- *     "/folder/file.mp3"              -> "folder/file.mp3"
- *     "C:\Users\John\folder\file.mp3" -> "folder\file.mp3"
- *     "E:\folder\file.mp3"            -> "folder\file.mp3" */
+/* Strips various common top-level folders from a URI.  The string passed will
+ * not be modified, but the string returned will share the same memory.
+ * Examples:
+ *     "file:///home/john/folder/file.mp3" -> "folder/file.mp3"
+ *     "file:///folder/file.mp3"           -> "folder/file.mp3" */
 
 static gchar * skip_top_folders (gchar * name)
 {
-    const gchar * home = getenv ("HOME");
-    if (! home)
-        goto NO_HOME;
+    static gchar * home;
+    static gint len;
 
-    gint len = strlen (home);
-    if (len > 0 && home[len - 1] == G_DIR_SEPARATOR)
-        len --;
+    if (! home)
+    {
+        home = filename_to_uri (g_get_home_dir ());
+        len = strlen (home);
+
+        if (len > 0 && home[len - 1] == '/')
+            len --;
+    }
 
 #ifdef _WIN32
-    if (! strncasecmp (name, home, len) && name[len] == '\\')
+    if (! g_ascii_strncasecmp (name, home, len) && name[len] == '/')
 #else
     if (! strncmp (name, home, len) && name[len] == '/')
 #endif
         return name + len + 1;
 
-NO_HOME:
-#ifdef _WIN32
-    return (name[0] && name[1] == ':' && name[2] == '\\') ? name + 3 : name;
-#else
-    return (name[0] == '/') ? name + 1 : name;
-#endif
+    if (! strncmp (name, "file:///", 8))
+        return name + 8;
+
+    return name;
 }
 
-/* Divides a file name (not URI) into the base name, the lowest folder, and the
+/* Divides a URI into the base name, the lowest folder, and the
  * second lowest folder.  The string passed will be modified, and the strings
  * returned will use the same memory.  May return NULL for <first> and <second>.
  * Examples:
@@ -209,7 +209,7 @@ static void split_filename (gchar * name, gchar * * base, gchar * * first,
 
     gchar * c;
 
-    if ((c = strrchr (name, G_DIR_SEPARATOR)))
+    if ((c = strrchr (name, '/')))
     {
         * base = c + 1;
         * c = 0;
@@ -220,7 +220,7 @@ static void split_filename (gchar * name, gchar * * base, gchar * * first,
         goto DONE;
     }
 
-    if ((c = strrchr (name, G_DIR_SEPARATOR)))
+    if ((c = strrchr (name, '/')))
     {
         * first = c + 1;
         * c = 0;
@@ -231,7 +231,7 @@ static void split_filename (gchar * name, gchar * * base, gchar * * first,
         goto DONE;
     }
 
-    if ((c = strrchr (name, G_DIR_SEPARATOR)))
+    if ((c = strrchr (name, '/')))
         * second = c + 1;
     else
         * second = name;
@@ -283,6 +283,12 @@ static gchar * get_nonblank_field (const Tuple * tuple, gint field)
     return str;
 }
 
+static gchar * str_get_decoded (gchar * str)
+{
+    str_decode_percent (str, -1, str);
+    return str_get (str);
+}
+
 /* Derives best guesses of title, artist, and album from a file name (URI) and
  * tuple (which may be NULL).  The returned strings are stringpooled or NULL. */
 
@@ -296,20 +302,25 @@ void describe_song (const gchar * name, const Tuple * tuple, gchar * * _title,
     gchar * artist = get_nonblank_field (tuple, FIELD_ARTIST);
     gchar * album = get_nonblank_field (tuple, FIELD_ALBUM);
 
-    gchar * copy = NULL;
-
     if (title && artist && album)
-        goto DONE;
+    {
+DONE:
+        * _title = title;
+        * _artist = artist;
+        * _album = album;
+        return;
+    }
 
-    copy = uri_to_display (name);
+    gchar buf[strlen (name) + 1];
+    memcpy (buf, name, sizeof buf);
 
-    if (! strncmp (name, "file://", 7))
+    if (! strncmp (buf, "file:///", 8))
     {
         gchar * base, * first, * second;
-        split_filename (skip_top_folders (copy), & base, & first, & second);
+        split_filename (skip_top_folders (buf), & base, & first, & second);
 
         if (! title)
-            title = str_get (base);
+            title = str_get_decoded (base);
 
         for (gint i = 0; i < G_N_ELEMENTS (skip); i ++)
         {
@@ -323,29 +334,24 @@ void describe_song (const gchar * name, const Tuple * tuple, gchar * * _title,
         {
             if (second && ! artist && ! album)
             {
-                artist = str_get (second);
-                album = str_get (first);
+                artist = str_get_decoded (second);
+                album = str_get_decoded (first);
             }
             else if (! artist)
-                artist = str_get (first);
+                artist = str_get_decoded (first);
             else if (! album)
-                album = str_get (first);
+                album = str_get_decoded (first);
         }
     }
     else
     {
         if (! title)
-            title = str_get (stream_name (copy));
+            title = str_get_decoded (stream_name (buf));
         else if (! artist)
-            artist = str_get (stream_name (copy));
+            artist = str_get_decoded (stream_name (buf));
         else if (! album)
-            album = str_get (stream_name (copy));
+            album = str_get_decoded (stream_name (buf));
     }
 
-DONE:
-    * _title = title;
-    * _artist = artist;
-    * _album = album;
-
-    g_free (copy);
+    goto DONE;
 }
