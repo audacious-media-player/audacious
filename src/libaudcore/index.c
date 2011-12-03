@@ -145,18 +145,17 @@ void index_delete (struct index * index, int at, int count)
      (index->count - at));
 }
 
-static int index_compare (const void * a, const void * b, void * _compare)
+static int index_compare (const void * a, const void * b, void * compare)
 {
-    int (* compare) (const void *, const void *) = _compare;
-
-    return compare (* (const void * *) a, * (const void * *) b);
+    return ((int (*) (const void *, const void *)) compare)
+     (* (const void * *) a, * (const void * *) b);
 }
 
 void index_sort (struct index * index, int (* compare) (const void *, const
  void *))
 {
     g_qsort_with_data (index->data, index->count, sizeof (void *),
-     index_compare, compare);
+     index_compare, (void *) compare);
 }
 
 static int index_compare_with_data (const void * a, const void * b, void *
