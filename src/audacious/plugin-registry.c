@@ -726,8 +726,8 @@ typedef struct {
 static gboolean transport_plugin_for_scheme_cb (PluginHandle * plugin,
  TransportPluginForSchemeState * state)
 {
-    if (! g_list_find_custom (plugin->u.t.schemes, state->scheme, (GCompareFunc)
-     strcasecmp))
+    if (! g_list_find_custom (plugin->u.t.schemes, state->scheme,
+     (GCompareFunc) g_ascii_strcasecmp))
         return TRUE;
 
     state->plugin = plugin;
@@ -750,8 +750,8 @@ typedef struct {
 static gboolean playlist_plugin_for_ext_cb (PluginHandle * plugin,
  PlaylistPluginForExtState * state)
 {
-    if (! g_list_find_custom (plugin->u.p.exts, state->ext, (GCompareFunc)
-     strcasecmp))
+    if (! g_list_find_custom (plugin->u.p.exts, state->ext,
+     (GCompareFunc) g_ascii_strcasecmp))
         return TRUE;
 
     state->plugin = plugin;
@@ -777,7 +777,7 @@ static gboolean input_plugin_for_key_cb (PluginHandle * plugin,
  InputPluginForKeyState * state)
 {
     if (! g_list_find_custom (plugin->u.i.keys[state->key], state->value,
-     (GCompareFunc) strcasecmp))
+     (GCompareFunc) g_ascii_strcasecmp))
         return TRUE;
 
     return state->func (plugin, state->data);

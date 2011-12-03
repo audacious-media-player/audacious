@@ -313,9 +313,9 @@ void describe_song (const gchar * name, const Tuple * tuple, gchar * * _title,
 
         for (gint i = 0; i < G_N_ELEMENTS (skip); i ++)
         {
-            if (first && ! strcasecmp (first, skip[i]))
+            if (first && ! g_ascii_strcasecmp (first, skip[i]))
                 first = NULL;
-            if (second && ! strcasecmp (second, skip[i]))
+            if (second && ! g_ascii_strcasecmp (second, skip[i]))
                 second = NULL;
         }
 

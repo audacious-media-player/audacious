@@ -47,7 +47,7 @@ static GList * loaded_vis_plugins = NULL;
 void vis_func_add (gint type, GCallback func)
 {
     g_return_if_fail (type >= 0 && type < AUD_VIS_TYPES);
-    vis_funcs[type] = g_list_prepend (vis_funcs[type], func);
+    vis_funcs[type] = g_list_prepend (vis_funcs[type], (void *) func);
 
     vis_runner_enable (TRUE);
 }
@@ -58,7 +58,7 @@ void vis_func_remove (GCallback func)
 
     for (gint i = 0; i < AUD_VIS_TYPES; i ++)
     {
-        vis_funcs[i] = g_list_remove_all (vis_funcs[i], func);
+        vis_funcs[i] = g_list_remove_all (vis_funcs[i], (void *) func);
         if (vis_funcs[i])
             disable = FALSE;
     }

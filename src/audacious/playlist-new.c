@@ -127,8 +127,8 @@ typedef struct {
     Update next_update, last_update;
 } Playlist;
 
-static const gchar default_title[] = N_("New Playlist");
-static const gchar temp_title[] = N_("Now Playing");
+static const gchar * const default_title = N_("New Playlist");
+static const gchar * const temp_title = N_("Now Playing");
 
 static GMutex * mutex;
 static GCond * cond;
@@ -1523,12 +1523,13 @@ void playlist_randomize (gint playlist_num)
     LEAVE;
 }
 
-static gint filename_compare (const void * _a, const void * _b, void * _compare)
+static gint filename_compare (const void * _a, const void * _b, void * compare)
 {
     const Entry * a = _a, * b = _b;
-    gint (* compare) (const gchar * a, const gchar * b) = _compare;
 
-    gint diff = compare (a->filename, b->filename);
+    gint diff = ((gint (*) (const gchar * a, const gchar * b)) compare)
+     (a->filename, b->filename);
+
     if (diff)
         return diff;
 
@@ -1536,17 +1537,18 @@ static gint filename_compare (const void * _a, const void * _b, void * _compare)
     return a->number - b->number;
 }
 
-static gint tuple_compare (const void * _a, const void * _b, void * _compare)
+static gint tuple_compare (const void * _a, const void * _b, void * compare)
 {
     const Entry * a = _a, * b = _b;
-    gint (* compare) (const Tuple * a, const Tuple * b) = _compare;
 
     if (! a->tuple)
         return b->tuple ? -1 : 0;
     if (! b->tuple)
         return 1;
 
-    gint diff = compare (a->tuple, b->tuple);
+    gint diff = ((gint (*) (const Tuple * a, const Tuple * b)) compare)
+     (a->tuple, b->tuple);
+
     if (diff)
         return diff;
 
@@ -1554,13 +1556,14 @@ static gint tuple_compare (const void * _a, const void * _b, void * _compare)
     return a->number - b->number;
 }
 
-static gint title_compare (const void * _a, const void * _b, void * _compare)
+static gint title_compare (const void * _a, const void * _b, void * compare)
 {
     const Entry * a = _a, * b = _b;
-    gint (* compare) (const gchar * a, const gchar * b) = _compare;
 
-    gint diff = compare (a->formatted ? a->formatted : a->filename, b->formatted
-     ? b->formatted : b->filename);
+    gint diff = ((gint (*) (const gchar * a, const gchar * b)) compare)
+     (a->formatted ? a->formatted : a->filename,
+      b->formatted ? b->formatted : b->filename);
+
     if (diff)
         return diff;
 
@@ -1636,7 +1639,7 @@ void playlist_sort_by_filename (gint playlist_num, gint (* compare)
     DECLARE_PLAYLIST;
     LOOKUP_PLAYLIST;
 
-    sort (playlist, filename_compare, compare);
+    sort (playlist, filename_compare, (void *) compare);
 
     LEAVE;
 }
@@ -1649,7 +1652,7 @@ void playlist_sort_by_tuple (gint playlist_num, gint (* compare)
     LOOKUP_PLAYLIST;
 
     if (entries_are_scanned (playlist, FALSE))
-        sort (playlist, tuple_compare, compare);
+        sort (playlist, tuple_compare, (void *) compare);
 
     LEAVE;
 }
@@ -1662,7 +1665,7 @@ void playlist_sort_by_title (gint playlist_num, gint (* compare) (const gchar *
     LOOKUP_PLAYLIST;
 
     if (entries_are_scanned (playlist, FALSE))
-        sort (playlist, title_compare, compare);
+        sort (playlist, title_compare, (void *) compare);
 
     LEAVE;
 }
@@ -1674,7 +1677,7 @@ void playlist_sort_selected_by_filename (gint playlist_num, gint (* compare)
     DECLARE_PLAYLIST;
     LOOKUP_PLAYLIST;
 
-    sort_selected (playlist, filename_compare, compare);
+    sort_selected (playlist, filename_compare, (void *) compare);
 
     LEAVE;
 }
@@ -1687,7 +1690,7 @@ void playlist_sort_selected_by_tuple (gint playlist_num, gint (* compare)
     LOOKUP_PLAYLIST;
 
     if (entries_are_scanned (playlist, TRUE))
-        sort_selected (playlist, tuple_compare, compare);
+        sort_selected (playlist, tuple_compare, (void *) compare);
 
     LEAVE;
 }
@@ -1700,7 +1703,7 @@ void playlist_sort_selected_by_title (gint playlist_num, gint (* compare)
     LOOKUP_PLAYLIST;
 
     if (entries_are_scanned (playlist, TRUE))
-        sort (playlist, title_compare, compare);
+        sort (playlist, title_compare, (void *) compare);
 
     LEAVE;
 }

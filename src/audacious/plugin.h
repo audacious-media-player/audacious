@@ -520,6 +520,6 @@ G_MODULE_EXPORT stype * get_plugin_info (AudAPITable * table) { \
 #define AUD_IFACE_PLUGIN(...) AUD_PLUGIN (IfacePlugin, PLUGIN_TYPE_IFACE, __VA_ARGS__)
 
 #define PLUGIN_HAS_FUNC(p, func) \
- ((p)->size > (void *) & (p)->func - (void *) (p) && (p)->func)
+ ((p)->size > (char *) & (p)->func - (char *) (p) && (p)->func)
 
 #endif /* AUDACIOUS_PLUGIN_H */

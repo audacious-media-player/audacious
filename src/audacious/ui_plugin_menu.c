@@ -36,7 +36,7 @@ static GtkWidget * menus[AUD_MENU_COUNT];
 static void add_to_menu (GtkWidget * menu, struct Item * item)
 {
     GtkWidget * widget = gtk_image_menu_item_new_with_mnemonic (item->name);
-    g_object_set_data ((GObject *) widget, "func", item->func);
+    g_object_set_data ((GObject *) widget, "func", (void *) item->func);
     g_signal_connect (widget, "activate", item->func, NULL);
 
     if (item->icon)
@@ -79,7 +79,7 @@ void plugin_menu_add (gint id, MenuFunc func, const gchar * name,
 
 static void remove_cb (GtkWidget * widget, MenuFunc func)
 {
-    if (g_object_get_data ((GObject *) widget, "func") == func)
+    if ((MenuFunc) g_object_get_data ((GObject *) widget, "func") == func)
         gtk_widget_destroy (widget);
 }
 
@@ -87,7 +87,7 @@ void plugin_menu_remove (gint id, MenuFunc func)
 {
     if (menus[id])
         gtk_container_foreach ((GtkContainer *) menus[id], (GtkCallback)
-         remove_cb, func);
+         remove_cb, (void *) func);
 
     GList * next;
     for (GList * node = items[id]; node; node = next)

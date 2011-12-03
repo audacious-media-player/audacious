@@ -178,7 +178,8 @@ static gboolean about_watcher (PluginHandle * p, GtkWidget * about)
 
 static void button_update (GtkTreeView * tree, GtkWidget * b)
 {
-    PluginForEachFunc watcher = g_object_get_data ((GObject *) b, "watcher");
+    PluginForEachFunc watcher = (PluginForEachFunc) g_object_get_data
+     ((GObject *) b, "watcher");
     g_return_if_fail (watcher != NULL);
 
     PluginHandle * p = g_object_steal_data ((GObject *) b, "plugin");
@@ -218,7 +219,8 @@ static void do_about (GtkTreeView * tree)
 
 static void button_destroy (GtkWidget * b)
 {
-    PluginForEachFunc watcher = g_object_get_data ((GObject *) b, "watcher");
+    PluginForEachFunc watcher = (PluginForEachFunc) g_object_get_data
+     ((GObject *) b, "watcher");
     g_return_if_fail (watcher != NULL);
 
     PluginHandle * p = g_object_steal_data ((GObject *) b, "plugin");
@@ -251,7 +253,7 @@ GtkWidget * plugin_view_new (gint type)
     GtkWidget * config = gtk_button_new_from_stock (GTK_STOCK_PREFERENCES);
     gtk_box_pack_start ((GtkBox *) hbox, config, FALSE, FALSE, 0);
     gtk_widget_set_sensitive (config, FALSE);
-    g_object_set_data ((GObject *) config, "watcher", config_watcher);
+    g_object_set_data ((GObject *) config, "watcher", (void *) config_watcher);
     g_signal_connect (tree, "cursor-changed", (GCallback) button_update, config);
     g_signal_connect_swapped (config, "clicked", (GCallback)
      do_config, tree);
@@ -260,7 +262,7 @@ GtkWidget * plugin_view_new (gint type)
     GtkWidget * about = gtk_button_new_from_stock (GTK_STOCK_ABOUT);
     gtk_box_pack_start ((GtkBox *) hbox, about, FALSE, FALSE, 0);
     gtk_widget_set_sensitive (about, FALSE);
-    g_object_set_data ((GObject *) about, "watcher", about_watcher);
+    g_object_set_data ((GObject *) about, "watcher", (void *) about_watcher);
     g_signal_connect (tree, "cursor-changed", (GCallback) button_update, about);
     g_signal_connect_swapped (about, "clicked", (GCallback) do_about, tree);
     g_signal_connect (about, "destroy", (GCallback) button_destroy, NULL);
