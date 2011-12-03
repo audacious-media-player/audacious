@@ -38,16 +38,20 @@
 #define IS_LEGAL(c) (((c) >= 'A' && (c) <= 'Z') || ((c) >= 'a' && (c) <= 'z') \
                   || ((c) >= '0' && (c) <= '9') || (strchr ("-_.~/", (c))))
 
-boolean
-str_has_prefix_nocase(const char * str, const char * prefix)
+boolean str_has_prefix_nocase (const char * str, const char * prefix)
 {
-    return (str != NULL && (strncasecmp(str, prefix, strlen(prefix)) == 0));
+    return ! g_ascii_strncasecmp (str, prefix, strlen (prefix));
 }
 
 boolean str_has_suffix_nocase (const char * str, const char * suffix)
 {
-    return (str && strlen (str) >= strlen (suffix) && ! strcasecmp (str + strlen
-     (str) - strlen (suffix), suffix));
+    int len1 = strlen (str);
+    int len2 = strlen (suffix);
+
+    if (len2 > len1)
+        return FALSE;
+
+    return ! g_ascii_strcasecmp (str + len1 - len2, suffix);
 }
 
 static char * (* str_to_utf8_impl) (const char *) = NULL;
