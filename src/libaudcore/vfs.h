@@ -36,21 +36,6 @@ typedef struct _VFSFile VFSFile;
 /** @struct VFSConstructor */
 typedef const struct _VFSConstructor VFSConstructor;
 
-#define VFS_SIG ('V' | ('F' << 8) | ('S' << 16))
-
-/**
- * @struct _VFSFile
- * #VFSFile objects describe an opened VFS stream, basically being
- * similar in purpose as stdio FILE
- */
-struct _VFSFile {
-    char *uri;             /**< The URI of the stream */
-    void * handle;        /**< Opaque data used by the transport plugins */
-    VFSConstructor *base;   /**< The base vtable used for VFS functions */
-    int ref;               /**< The amount of references that the VFSFile object has */
-    int sig;               /**< Used to detect invalid or twice-closed objects */
-};
-
 /**
  * @struct _VFSConstructor
  * #VFSConstructor objects contain the base vtables used for extrapolating
@@ -59,7 +44,7 @@ struct _VFSFile {
  */
 struct _VFSConstructor {
     /** A function pointer which points to a fopen implementation. */
-    VFSFile * (* vfs_fopen_impl) (const char * filename, const char * mode);
+    void * (* vfs_fopen_impl) (const char * filename, const char * mode);
     /** A function pointer which points to a fclose implementation. */
     int (* vfs_fclose_impl) (VFSFile * file);
 
@@ -98,8 +83,11 @@ struct _VFSConstructor {
 #define WARN_RETURN
 #endif
 
+VFSFile * vfs_new (const char * path, VFSConstructor * vtable, void * handle) WARN_RETURN;
+const char * vfs_get_filename (VFSFile * file) WARN_RETURN;
+void * vfs_get_handle (VFSFile * file) WARN_RETURN;
+
 VFSFile * vfs_fopen (const char * path, const char * mode) WARN_RETURN;
-VFSFile * vfs_dup (VFSFile * in) WARN_RETURN;
 int vfs_fclose (VFSFile * file);
 
 int64_t vfs_fread (void * ptr, int64_t size, int64_t nmemb, VFSFile * file)

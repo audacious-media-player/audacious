@@ -28,6 +28,20 @@
 #include <sys/types.h>
 #include <string.h>
 
+#define VFS_SIG ('V' | ('F' << 8) | ('S' << 16))
+
+/**
+ * @struct _VFSFile
+ * #VFSFile objects describe an opened VFS stream, basically being
+ * similar in purpose as stdio FILE
+ */
+struct _VFSFile {
+    char * uri;               /**< The URI of the stream */
+    VFSConstructor * base;    /**< The base vtable used for VFS functions */
+    void * handle;            /**< Opaque data used by the transport plugins */
+    int sig;                  /**< Used to detect invalid or twice-closed objects */
+};
+
 /* Audacious core provides us with a function that looks up a VFS transport for
  * a given URI scheme.  Since this function will load plugins as needed, it can
  * only be called from the main thread.  When VFS is used from parallel threads,
@@ -75,6 +89,26 @@ static void logger (const char * format, ...)
     }
 }
 
+VFSFile * vfs_new (const char * path, VFSConstructor * vtable, void * handle)
+{
+    VFSFile * file = g_slice_new (VFSFile);
+    file->uri = str_get (path);
+    file->base = vtable;
+    file->handle = handle;
+    file->sig = VFS_SIG;
+    return file;
+}
+
+const char * vfs_get_filename (VFSFile * file)
+{
+    return file->uri;
+}
+
+void * vfs_get_handle (VFSFile * file)
+{
+    return file->handle;
+}
+
 /**
  * Opens a stream from a VFS transport using one of the registered
  * #VFSConstructor handlers.
@@ -90,38 +124,31 @@ vfs_fopen(const char * path,
     g_return_val_if_fail (path && mode, NULL);
     g_return_val_if_fail (lookup_func, NULL);
 
-    VFSFile *file;
-    VFSConstructor *vtable = NULL;
-
     const char * s = strstr (path, "://");
     g_return_val_if_fail (s, NULL);
     char scheme[s - path + 1];
     strncpy (scheme, path, s - path);
     scheme[s - path] = 0;
 
-    vtable = lookup_func (scheme);
+    VFSConstructor * vtable = lookup_func (scheme);
     if (! vtable)
         return NULL;
 
     const gchar * sub;
     uri_parse (path, NULL, NULL, & sub, NULL);
-    gchar * real_path = str_nget (path, sub - path);
 
-    file = vtable->vfs_fopen_impl(path, mode);
+    gchar buf[sub - path + 1];
+    memcpy (buf, path, sub - path);
+    buf[sub - path] = 0;
+
+    void * handle = vtable->vfs_fopen_impl (buf, mode);
+    if (! handle)
+        return NULL;
+
+    VFSFile * file = vfs_new (path, vtable, handle);
 
     if (verbose)
         logger ("VFS: <%p> open (mode %s) %s\n", file, mode, path);
-
-    if (file == NULL)
-    {
-        str_unref (real_path);
-        return NULL;
-    }
-
-    file->uri = real_path;
-    file->base = vtable;
-    file->ref = 1;
-    file->sig = VFS_SIG;
 
     return file;
 }
@@ -142,16 +169,13 @@ vfs_fclose(VFSFile * file)
 
     int ret = 0;
 
-    if (--file->ref > 0)
-        return -1;
-
     if (file->base->vfs_fclose_impl(file) != 0)
         ret = -1;
 
     str_unref (file->uri);
 
     memset (file, 0, sizeof (VFSFile));
-    g_free (file);
+    g_slice_free (VFSFile, file);
 
     return ret;
 }
@@ -413,25 +437,6 @@ vfs_is_writeable(const char * path)
     g_free(realfn);
 
     return (info.st_mode & S_IWUSR);
-}
-
-/**
- * Increments the amount of references that are using this FD.
- * References are removed by calling vfs_fclose on the handle returned
- * from this function. If the amount of references reaches zero, then
- * the file will be closed.
- *
- * @param in The VFSFile handle to mark as duplicated.
- * @return VFSFile handle, which is same as given input.
- */
-VFSFile *
-vfs_dup(VFSFile *in)
-{
-    g_return_val_if_fail(in != NULL, NULL);
-
-    in->ref++;
-
-    return in;
 }
 
 /**

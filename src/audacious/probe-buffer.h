@@ -26,6 +26,5 @@
 #include <libaudcore/vfs.h>
 
 VFSFile * probe_buffer_new (const gchar * filename);
-void probe_buffer_set_decoder (VFSFile * file, const gchar * decoder);
 
 #endif

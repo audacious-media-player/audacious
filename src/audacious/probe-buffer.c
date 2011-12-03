@@ -1,6 +1,6 @@
 /*
  * probe-buffer.c
- * Copyright 2010 John Lindgren
+ * Copyright 2010-2011 John Lindgren
  *
  * This file is part of Audacious.
  *
@@ -27,18 +27,18 @@
 
 typedef struct
 {
-    const gchar * filename, * decoder;
     VFSFile * file;
     guchar buffer[16384];
     gint filled, at;
-    const gchar * read_warned, * seek_warned;
 }
 ProbeBuffer;
 
 static gint probe_buffer_fclose (VFSFile * file)
 {
-    gint ret = vfs_fclose (((ProbeBuffer *) file->handle)->file);
-    g_free (file->handle);
+    ProbeBuffer * p = vfs_get_handle (file);
+
+    gint ret = vfs_fclose (p->file);
+    g_slice_free (ProbeBuffer, p);
     return ret;
 }
 
@@ -47,16 +47,7 @@ static void increase_buffer (ProbeBuffer * p, gint64 size)
     size = (size + 0xFF) & ~0xFF;
 
     if (size > sizeof p->buffer)
-    {
-        if (p->read_warned != p->decoder)
-        {
-            AUDDBG ("%s tried to read past end of buffer while probing %s.\n",
-             p->decoder, p->filename);
-            p->read_warned = p->decoder;
-        }
-
         size = sizeof p->buffer;
-    }
 
     if (p->filled < size)
         p->filled += vfs_fread (p->buffer + p->filled, 1, size - p->filled,
@@ -66,7 +57,7 @@ static void increase_buffer (ProbeBuffer * p, gint64 size)
 static gint64 probe_buffer_fread (void * buffer, gint64 size, gint64 count,
  VFSFile * file)
 {
-    ProbeBuffer * p = file->handle;
+    ProbeBuffer * p = vfs_get_handle (file);
 
     increase_buffer (p, p->at + size * count);
     gint readed = (size > 0) ? MIN (count, (p->filled - p->at) / size) : 0;
@@ -91,19 +82,10 @@ static gint probe_buffer_getc (VFSFile * file)
 
 static gint probe_buffer_fseek (VFSFile * file, gint64 offset, gint whence)
 {
-    ProbeBuffer * p = file->handle;
+    ProbeBuffer * p = vfs_get_handle (file);
 
     if (whence == SEEK_END)
-    {
-        if (p->seek_warned != p->decoder)
-        {
-            AUDDBG ("%s tried to seek to end of file while probing %s.\n",
-             p->decoder, p->filename);
-            p->seek_warned = p->decoder;
-        }
-
         return -1;
-    }
 
     if (whence == SEEK_CUR)
         offset += p->at;
@@ -130,12 +112,12 @@ static void probe_buffer_rewind (VFSFile * file)
 
 static gint64 probe_buffer_ftell (VFSFile * file)
 {
-    return ((ProbeBuffer *) file->handle)->at;
+    return ((ProbeBuffer *) vfs_get_handle (file))->at;
 }
 
 static gboolean probe_buffer_feof (VFSFile * file)
 {
-    ProbeBuffer * p = file->handle;
+    ProbeBuffer * p = vfs_get_handle (file);
     return (p->at < p->filled) ? FALSE : vfs_feof (p->file);
 }
 
@@ -147,12 +129,12 @@ static gint probe_buffer_ftruncate (VFSFile * file, gint64 size)
 
 static gint64 probe_buffer_fsize (VFSFile * file)
 {
-    return vfs_fsize (((ProbeBuffer *) file->handle)->file);
+    return vfs_fsize (((ProbeBuffer *) vfs_get_handle (file))->file);
 }
 
 static gchar * probe_buffer_get_metadata (VFSFile * file, const gchar * field)
 {
-    return vfs_get_metadata (((ProbeBuffer *) file->handle)->file, field);
+    return vfs_get_metadata (((ProbeBuffer *) vfs_get_handle (file))->file, field);
 }
 
 static VFSConstructor probe_buffer_table =
@@ -179,27 +161,10 @@ VFSFile * probe_buffer_new (const gchar * filename)
     if (! file)
         return NULL;
 
-    ProbeBuffer * p = g_malloc (sizeof (ProbeBuffer));
-    p->decoder = NULL;
-    p->filename = filename;
+    ProbeBuffer * p = g_slice_new (ProbeBuffer);
     p->file = file;
     p->filled = 0;
     p->at = 0;
-    p->read_warned = NULL;
-    p->seek_warned = NULL;
 
-    VFSFile * file2 = g_malloc (sizeof (VFSFile));
-    file2->base = & probe_buffer_table;
-    file2->handle = p;
-    file2->uri = str_get (filename);
-    file2->ref = 1;
-    file2->sig = VFS_SIG;
-
-    return file2;
-}
-
-void probe_buffer_set_decoder (VFSFile * file, const gchar * decoder)
-{
-    ProbeBuffer * p = file->handle;
-    p->decoder = decoder;
+    return vfs_new (filename, & probe_buffer_table, p);
 }

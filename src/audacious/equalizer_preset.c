@@ -185,7 +185,7 @@ import_winamp_eqf(VFSFile * file)
 
 error:
     markup = g_strdup_printf (_("Error importing Winamp EQF file '%s'"),
-     file->uri);
+     vfs_get_filename (file));
     interface_show_error(markup);
 
     g_free(markup);

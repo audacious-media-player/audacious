@@ -70,9 +70,6 @@ static gboolean probe_func (PluginHandle * plugin, ProbeState * state)
         if (! check_opened (state))
             return FALSE;
 
-        if (state->buffered)
-            probe_buffer_set_decoder (state->handle, plugin_get_name (plugin));
-
         if (decoder->is_our_file_from_vfs (state->filename, state->handle))
         {
             state->plugin = plugin;
