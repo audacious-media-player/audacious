@@ -7,9 +7,11 @@
  * written by Colin Plumb in 1993, no copyright is claimed.
  * This code is in the public domain; do with it what you wish.
  */
-#include "md5.h"
+
+#include <glib.h>
 #include <string.h>
 
+#include "md5.h"
 
 #if G_BYTE_ORDER == G_LITTLE_ENDIAN
 #  define aud_md5_bytereverse(buf, len) do { } while (0)
