@@ -60,6 +60,17 @@ AC_ARG_WITH([buildstamp],
  AC_DEFINE_UNQUOTED([BUILDSTAMP], "$withval", [Build stamp]),
  AC_DEFINE_UNQUOTED([BUILDSTAMP], "unknown build", [Build stamp]))
 
+dnl String pool
+dnl ===========
+
+AC_ARG_ENABLE([stringpool], AS_HELP_STRING([--disable-stringpool],
+ [Increases performance at the cost of greater memory usage]),
+ [use_stringpool=$enableval],[use_stringpool=yes])
+
+if test $use_stringpool = yes ; then
+    AC_DEFINE([USE_STRINGPOOL],[1],[Whether to use string pooling])
+fi
+
 dnl Activation of text console (MS-Windows ONLY)
 dnl ============================================
 AC_ARG_ENABLE([text-console],
@@ -339,6 +350,7 @@ fi
 echo "  Allow user plugin dir:                  $enable_user_plugin_dir"
 echo ""
 echo "  Automatic character code detection:     $enable_chardet"
+echo "  String pool:                            $use_stringpool"
 echo "  D-Bus support:                          $enable_dbus"
 echo "  Session management (eggsm)              $enable_sm"
 echo ""

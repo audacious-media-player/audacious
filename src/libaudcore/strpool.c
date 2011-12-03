@@ -26,15 +26,21 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <glib.h>
-
+#include "config.h"
 #include "core.h"
+
+#ifdef USE_STRINGPOOL
+#include <glib.h>
+#endif
 
 /* Each string in the pool is allocated with five leading bytes: a 32-bit
  * reference count and a one-byte signature, the '@' character. */
 
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+
+#ifdef USE_STRINGPOOL
 static GHashTable * table;
+#endif
 
 static void str_destroy (void * str)
 {
@@ -47,20 +53,21 @@ char * str_get (const char * str)
     if (! str)
         return NULL;
 
+    char * copy;
     pthread_mutex_lock (& mutex);
 
+#ifdef USE_STRINGPOOL
     if (! table)
         table = g_hash_table_new_full (g_str_hash, g_str_equal, NULL, str_destroy);
 
-    char * copy = g_hash_table_lookup (table, str);
-
-    if (copy)
+    if ((copy = g_hash_table_lookup (table, str)))
     {
         void * mem = copy - 5;
         (* (int32_t *) mem) ++;
     }
     else
     {
+#endif
         void * mem = malloc (6 + strlen (str));
         (* (int32_t *) mem) = 1;
 
@@ -68,8 +75,10 @@ char * str_get (const char * str)
         copy[-1] = '@';
         strcpy (copy, str);
 
+#ifdef USE_STRINGPOOL
         g_hash_table_insert (table, copy, copy);
     }
+#endif
 
     pthread_mutex_unlock (& mutex);
     return copy;
@@ -100,7 +109,11 @@ char * str_unref (char * str)
 
     void * mem = str - 5;
     if (! -- (* (int32_t *) mem))
+#ifdef USE_STRINGPOOL
         g_hash_table_remove (table, str);
+#else
+        str_destroy (str);
+#endif
 
     pthread_mutex_unlock (& mutex);
     return NULL;
@@ -141,14 +154,18 @@ void strpool_abort (void)
     abort ();
 }
 
+#ifdef USE_STRINGPOOL
 static void str_leaked (void * key, void * str, void * unused)
 {
     fprintf (stderr, "String not freed: %s\n", (char *) str);
 }
+#endif
 
 void strpool_shutdown (void)
 {
+#ifdef USE_STRINGPOOL
     g_hash_table_foreach (table, str_leaked, NULL);
     g_hash_table_destroy (table);
     table = NULL;
+#endif
 }
