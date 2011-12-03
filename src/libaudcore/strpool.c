@@ -38,8 +38,8 @@ static GHashTable * table;
 
 static void str_destroy (void * str)
 {
-    * (char *) (str - 1) = 0;
-    free (str - 5);
+    * ((char *) str - 1) = 0;
+    free ((char *) str - 5);
 }
 
 char * str_get (const char * str)
@@ -64,7 +64,7 @@ char * str_get (const char * str)
         void * mem = malloc (6 + strlen (str));
         (* (int32_t *) mem) = 1;
 
-        copy = mem + 5;
+        copy = (char *) mem + 5;
         copy[-1] = '@';
         strcpy (copy, str);
 
