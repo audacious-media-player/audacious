@@ -13,6 +13,7 @@
 
 #include <glib.h>
 #include <math.h>
+#include <pthread.h>
 #include <string.h>
 
 #include <libaudcore/audstrings.h>
@@ -35,7 +36,7 @@
 static const gfloat CF[EQ_BANDS] = {31.25, 62.5, 125, 250, 500, 1000, 2000,
  4000, 8000, 16000};
 
-static GStaticMutex mutex = G_STATIC_MUTEX_INIT;
+static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 static gboolean active;
 static gint channels, rate;
 static gfloat a[EQ_BANDS][2]; /* A weights */
@@ -60,7 +61,7 @@ void eq_set_format (gint new_channels, gint new_rate)
 {
     gint k;
 
-    g_static_mutex_lock (& mutex);
+    pthread_mutex_lock (& mutex);
 
     channels = new_channels;
     rate = new_rate;
@@ -78,7 +79,7 @@ void eq_set_format (gint new_channels, gint new_rate)
     /* Reset state */
     memset (wqv[0][0], 0, sizeof wqv);
 
-    g_static_mutex_unlock (& mutex);
+    pthread_mutex_unlock (& mutex);
 }
 
 static void eq_set_bands_real (gdouble preamp, gdouble * values)
@@ -96,11 +97,11 @@ void eq_filter (gfloat * data, gint samples)
 {
     gint channel;
 
-    g_static_mutex_lock (& mutex);
+    pthread_mutex_lock (& mutex);
 
     if (! active)
     {
-        g_static_mutex_unlock (& mutex);
+        pthread_mutex_unlock (& mutex);
         return;
     }
 
@@ -135,12 +136,12 @@ void eq_filter (gfloat * data, gint samples)
         }
     }
 
-    g_static_mutex_unlock (& mutex);
+    pthread_mutex_unlock (& mutex);
 }
 
 static void eq_update (void * data, void * user)
 {
-    g_static_mutex_lock (& mutex);
+    pthread_mutex_lock (& mutex);
 
     active = get_bool (NULL, "equalizer_active");
 
@@ -148,7 +149,7 @@ static void eq_update (void * data, void * user)
     eq_get_bands (values);
     eq_set_bands_real (get_double (NULL, "equalizer_preamp"), values);
 
-    g_static_mutex_unlock (& mutex);
+    pthread_mutex_unlock (& mutex);
 }
 
 void eq_init (void)

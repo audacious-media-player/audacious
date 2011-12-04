@@ -20,6 +20,7 @@
  */
 
 #include <glib.h>
+#include <pthread.h>
 #include <string.h>
 
 #include "output.h"
@@ -34,7 +35,7 @@ typedef struct {
     gint channels;
 } VisNode;
 
-G_LOCK_DEFINE_STATIC (mutex);
+static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 static gboolean enabled = FALSE;
 static gboolean playing = FALSE, paused = FALSE, active = FALSE;
 static VisNode * current_node = NULL;
@@ -50,11 +51,11 @@ static void vis_node_free (VisNode * node)
 
 static gboolean send_audio (void * unused)
 {
-    G_LOCK (mutex);
+    pthread_mutex_lock (& mutex);
 
     if (! send_source)
     {
-        G_UNLOCK (mutex);
+        pthread_mutex_unlock (& mutex);
         return FALSE;
     }
 
@@ -78,7 +79,7 @@ static gboolean send_audio (void * unused)
         vis_node = g_queue_pop_head (& vis_list);
     }
 
-    G_UNLOCK (mutex);
+    pthread_mutex_unlock (& mutex);
 
     if (! vis_node)
         return TRUE;
@@ -91,9 +92,9 @@ static gboolean send_audio (void * unused)
 
 static gboolean send_clear (void * unused)
 {
-    G_LOCK (mutex);
+    pthread_mutex_lock (& mutex);
     clear_source = 0;
-    G_UNLOCK (mutex);
+    pthread_mutex_unlock (& mutex);
 
     vis_send_clear ();
 
@@ -104,14 +105,14 @@ static gboolean locked = FALSE;
 
 void vis_runner_lock (void)
 {
-    G_LOCK (mutex);
+    pthread_mutex_lock (& mutex);
     locked = TRUE;
 }
 
 void vis_runner_unlock (void)
 {
     locked = FALSE;
-    G_UNLOCK (mutex);
+    pthread_mutex_unlock (& mutex);
 }
 
 gboolean vis_runner_locked (void)
@@ -239,8 +240,8 @@ void vis_runner_time_offset (gint offset)
 
 void vis_runner_enable (gboolean enable)
 {
-    G_LOCK (mutex);
+    pthread_mutex_lock (& mutex);
     enabled = enable;
     vis_runner_start_stop (playing, paused);
-    G_UNLOCK (mutex);
+    pthread_mutex_unlock (& mutex);
 }

@@ -27,6 +27,7 @@
  * loaded and while loading it. */
 
 #include <glib.h>
+#include <pthread.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -94,7 +95,7 @@ static const gchar * input_key_names[] = {
 
 static GList * plugin_list = NULL;
 static gboolean registry_locked = TRUE;
-static GStaticMutex mutex = G_STATIC_MUTEX_INIT;
+static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
 static PluginHandle * plugin_new (gchar * path, gboolean confirmed, gboolean
  loaded, gint timestamp, gint type, Plugin * header)
@@ -594,7 +595,7 @@ const gchar * plugin_get_filename (PluginHandle * plugin)
 
 const void * plugin_get_header (PluginHandle * plugin)
 {
-    g_static_mutex_lock (& mutex);
+    pthread_mutex_lock (& mutex);
 
     if (! plugin->loaded)
     {
@@ -602,7 +603,7 @@ const void * plugin_get_header (PluginHandle * plugin)
         plugin->loaded = TRUE;
     }
 
-    g_static_mutex_unlock (& mutex);
+    pthread_mutex_unlock (& mutex);
     return plugin->header;
 }
 

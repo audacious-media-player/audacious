@@ -20,6 +20,7 @@
  */
 
 #include <glib.h>
+#include <pthread.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -87,7 +88,7 @@ static const gchar * const core_defaults[] = {
 
  NULL};
 
-static GStaticMutex mutex = G_STATIC_MUTEX_INIT;
+static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 static GHashTable * defaults;
 static GKeyFile * keyfile;
 static gboolean modified;
@@ -95,7 +96,7 @@ static gboolean modified;
 void config_load (void)
 {
     g_return_if_fail (! defaults && ! keyfile);
-    g_static_mutex_lock (& mutex);
+    pthread_mutex_lock (& mutex);
 
     defaults = g_hash_table_new_full (g_str_hash, g_str_equal, g_free,
      (GDestroyNotify) g_hash_table_destroy);
@@ -114,7 +115,7 @@ void config_load (void)
     g_free (path);
 
     modified = FALSE;
-    g_static_mutex_unlock (& mutex);
+    pthread_mutex_unlock (& mutex);
 
     config_set_defaults (NULL, core_defaults);
 }
@@ -122,11 +123,11 @@ void config_load (void)
 void config_save (void)
 {
     g_return_if_fail (defaults && keyfile);
-    g_static_mutex_lock (& mutex);
+    pthread_mutex_lock (& mutex);
 
     if (! modified)
     {
-        g_static_mutex_unlock (& mutex);
+        pthread_mutex_unlock (& mutex);
         return;
     }
 
@@ -144,26 +145,26 @@ void config_save (void)
     g_free (path);
 
     modified = FALSE;
-    g_static_mutex_unlock (& mutex);
+    pthread_mutex_unlock (& mutex);
 }
 
 void config_cleanup (void)
 {
     g_return_if_fail (defaults && keyfile);
-    g_static_mutex_lock (& mutex);
+    pthread_mutex_lock (& mutex);
 
     g_key_file_free (keyfile);
     keyfile = NULL;
     g_hash_table_destroy (defaults);
     defaults = NULL;
 
-    g_static_mutex_unlock (& mutex);
+    pthread_mutex_unlock (& mutex);
 }
 
 void config_clear_section (const gchar * section)
 {
     g_return_if_fail (defaults && keyfile);
-    g_static_mutex_lock (& mutex);
+    pthread_mutex_lock (& mutex);
 
     if (! section)
         section = DEFAULT_SECTION;
@@ -174,13 +175,13 @@ void config_clear_section (const gchar * section)
         modified = TRUE;
     }
 
-    g_static_mutex_unlock (& mutex);
+    pthread_mutex_unlock (& mutex);
 }
 
 void config_set_defaults (const gchar * section, const gchar * const * entries)
 {
     g_return_if_fail (defaults && keyfile);
-    g_static_mutex_lock (& mutex);
+    pthread_mutex_lock (& mutex);
 
     if (! section)
         section = DEFAULT_SECTION;
@@ -202,7 +203,7 @@ void config_set_defaults (const gchar * section, const gchar * const * entries)
         g_hash_table_replace (table, g_strdup (name), str_get (value));
     }
 
-    g_static_mutex_unlock (& mutex);
+    pthread_mutex_unlock (& mutex);
 }
 
 static const gchar * get_default (const gchar * section, const gchar * name)
@@ -216,7 +217,7 @@ void set_string (const gchar * section, const gchar * name, const gchar * value)
 {
     g_return_if_fail (defaults && keyfile);
     g_return_if_fail (name && value);
-    g_static_mutex_lock (& mutex);
+    pthread_mutex_lock (& mutex);
 
     if (! section)
         section = DEFAULT_SECTION;
@@ -258,14 +259,14 @@ void set_string (const gchar * section, const gchar * name, const gchar * value)
         }
     }
 
-    g_static_mutex_unlock (& mutex);
+    pthread_mutex_unlock (& mutex);
 }
 
 gchar * get_string (const gchar * section, const gchar * name)
 {
     g_return_val_if_fail (defaults && keyfile, g_strdup (""));
     g_return_val_if_fail (name, g_strdup (""));
-    g_static_mutex_lock (& mutex);
+    pthread_mutex_lock (& mutex);
 
     if (! section)
         section = DEFAULT_SECTION;
@@ -276,7 +277,7 @@ gchar * get_string (const gchar * section, const gchar * name)
     if (! value)
         value = g_strdup (get_default (section, name));
 
-    g_static_mutex_unlock (& mutex);
+    pthread_mutex_unlock (& mutex);
     return value;
 }
 

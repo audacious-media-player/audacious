@@ -44,16 +44,16 @@ enum {RESUME_STOP, RESUME_PLAY, RESUME_PAUSE};
 #define SCAN_THREADS 4
 #define STATE_FILE "playlist-state"
 
-#define ENTER g_mutex_lock (mutex)
-#define LEAVE g_mutex_unlock (mutex)
+#define ENTER pthread_mutex_lock (& mutex)
+#define LEAVE pthread_mutex_unlock (& mutex)
 
 #define LEAVE_RET_VOID do { \
-    g_mutex_unlock (mutex); \
+    pthread_mutex_unlock (& mutex); \
     return; \
 } while (0)
 
 #define LEAVE_RET(ret) do { \
-    g_mutex_unlock (mutex); \
+    pthread_mutex_unlock (& mutex); \
     return ret; \
 } while (0)
 
@@ -131,8 +131,8 @@ typedef struct {
 static const gchar * const default_title = N_("New Playlist");
 static const gchar * const temp_title = N_("Now Playing");
 
-static GMutex * mutex;
-static GCond * cond;
+static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+static pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
 
 /* The unique ID table contains pointers to Playlist for ID's in use and NULL
  * for "dead" (previously used and therefore unavailable) ID's. */
@@ -523,7 +523,7 @@ static void entry_queue_scan (Playlist * playlist, Entry * entry)
     item->entry = entry;
     g_queue_push_tail (& scan_queue, item);
 
-    g_cond_broadcast (cond);
+    pthread_cond_broadcast (& cond);
 }
 
 static void check_scan_complete (Playlist * p)
@@ -602,7 +602,7 @@ static void * scanner (void * data)
 
         if (! scan_items[i])
         {
-            g_cond_wait (cond, mutex);
+            pthread_cond_wait (& cond, & mutex);
             continue;
         }
 
@@ -643,7 +643,7 @@ static void * scanner (void * data)
         g_slice_free (ScanItem, scan_items[i]);
         scan_items[i] = NULL;
 
-        g_cond_broadcast (cond);
+        pthread_cond_broadcast (& cond);
         check_scan_complete (playlist);
     }
 
@@ -654,7 +654,7 @@ static void scan_trigger (void)
 {
     scan_playlist = 0;
     scan_row = 0;
-    g_cond_broadcast (cond);
+    pthread_cond_broadcast (& cond);
 }
 
 /* mutex may be unlocked during the call */
@@ -672,7 +672,7 @@ static Entry * get_entry (gint playlist_num, gint entry_num,
         if ((need_decoder && ! entry->decoder) || (need_tuple && ! entry->tuple))
         {
             entry_queue_scan (playlist, entry);
-            g_cond_wait (cond, mutex);
+            pthread_cond_wait (& cond, & mutex);
             continue;
         }
 
@@ -693,7 +693,7 @@ static Entry * get_playback_entry (gboolean need_decoder, gboolean need_tuple)
         if ((need_decoder && ! entry->decoder) || (need_tuple && ! entry->tuple))
         {
             entry_queue_scan (playing_playlist, entry);
-            g_cond_wait (cond, mutex);
+            pthread_cond_wait (& cond, & mutex);
             continue;
         }
 
@@ -704,9 +704,6 @@ static Entry * get_playback_entry (gboolean need_decoder, gboolean need_tuple)
 void playlist_init (void)
 {
     srand (time (NULL));
-
-    mutex = g_mutex_new ();
-    cond = g_cond_new ();
 
     ENTER;
 
@@ -729,7 +726,7 @@ void playlist_end (void)
     ENTER;
 
     scan_quit = TRUE;
-    g_cond_broadcast (cond);
+    pthread_cond_broadcast (& cond);
 
     LEAVE;
 
@@ -759,9 +756,6 @@ void playlist_end (void)
     title_format = NULL;
 
     LEAVE;
-
-    g_mutex_free (mutex);
-    g_cond_free (cond);
 }
 
 gint playlist_count (void)

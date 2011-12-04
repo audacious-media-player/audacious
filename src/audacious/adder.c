@@ -55,8 +55,8 @@ static GList * add_tasks = NULL;
 static GList * add_results = NULL;
 static gint current_playlist_id = -1;
 
-static GMutex * mutex;
-static GCond * cond;
+static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+static pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
 static gboolean add_quit;
 static pthread_t add_thread;
 static gint add_source = 0;
@@ -97,7 +97,7 @@ static gboolean status_cb (void * unused)
          gtk_widget_destroyed, & status_window);
     }
 
-    g_mutex_lock (mutex);
+    pthread_mutex_lock (& mutex);
 
     gchar scratch[128];
     snprintf (scratch, sizeof scratch, dngettext (PACKAGE, "%d file found",
@@ -114,13 +114,13 @@ static gboolean status_cb (void * unused)
         gtk_label_set_text ((GtkLabel *) status_count_label, scratch);
     }
 
-    g_mutex_unlock (mutex);
+    pthread_mutex_unlock (& mutex);
     return TRUE;
 }
 
 static void status_update (const gchar * filename, gint found)
 {
-    g_mutex_lock (mutex);
+    pthread_mutex_lock (& mutex);
 
     snprintf (status_path, sizeof status_path, "%s", filename);
     status_count = found;
@@ -128,7 +128,7 @@ static void status_update (const gchar * filename, gint found)
     if (! status_source)
         status_source = g_timeout_add (250, status_cb, NULL);
 
-    g_mutex_unlock (mutex);
+    pthread_mutex_unlock (& mutex);
 }
 
 static void status_done_locked (void)
@@ -374,7 +374,7 @@ static void add_generic (gchar * filename, Tuple * tuple,
 
 static gboolean add_finish (void * unused)
 {
-    g_mutex_lock (mutex);
+    pthread_mutex_lock (& mutex);
 
     while (add_results)
     {
@@ -417,7 +417,7 @@ static gboolean add_finish (void * unused)
     if (! add_tasks)
         status_done_locked ();
 
-    g_mutex_unlock (mutex);
+    pthread_mutex_unlock (& mutex);
 
     hook_call ("playlist add complete", NULL);
     return FALSE;
@@ -425,14 +425,13 @@ static gboolean add_finish (void * unused)
 
 static void * add_worker (void * unused)
 {
-    g_mutex_lock (mutex);
-    g_cond_broadcast (cond);
+    pthread_mutex_lock (& mutex);
 
     while (! add_quit)
     {
         if (! add_tasks)
         {
-            g_cond_wait (cond, mutex);
+            pthread_cond_wait (& cond, & mutex);
             continue;
         }
 
@@ -440,7 +439,7 @@ static void * add_worker (void * unused)
         add_tasks = g_list_delete_link (add_tasks, add_tasks);
 
         current_playlist_id = task->playlist_id;
-        g_mutex_unlock (mutex);
+        pthread_mutex_unlock (& mutex);
 
         AddResult * result = add_result_new (task->playlist_id, task->at,
          task->play);
@@ -462,7 +461,7 @@ static void * add_worker (void * unused)
 
         add_task_free (task);
 
-        g_mutex_lock (mutex);
+        pthread_mutex_lock (& mutex);
         current_playlist_id = -1;
 
         add_results = g_list_append (add_results, result);
@@ -471,30 +470,25 @@ static void * add_worker (void * unused)
             add_source = g_timeout_add (0, add_finish, NULL);
     }
 
-    g_mutex_unlock (mutex);
+    pthread_mutex_unlock (& mutex);
     return NULL;
 }
 
 void adder_init (void)
 {
-    mutex = g_mutex_new ();
-    cond = g_cond_new ();
-    g_mutex_lock (mutex);
+    pthread_mutex_lock (& mutex);
     add_quit = FALSE;
     pthread_create (& add_thread, NULL, add_worker, NULL);
-    g_cond_wait (cond, mutex);
-    g_mutex_unlock (mutex);
+    pthread_mutex_unlock (& mutex);
 }
 
 void adder_cleanup (void)
 {
-    g_mutex_lock (mutex);
+    pthread_mutex_lock (& mutex);
     add_quit = TRUE;
-    g_cond_broadcast (cond);
-    g_mutex_unlock (mutex);
+    pthread_cond_broadcast (& cond);
+    pthread_mutex_unlock (& mutex);
     pthread_join (add_thread, NULL);
-    g_mutex_free (mutex);
-    g_cond_free (cond);
 
     if (add_source)
     {
@@ -531,10 +525,10 @@ void playlist_entry_insert_filtered (gint playlist, gint at,
 
     AddTask * task = add_task_new (playlist_id, at, play, filenames, tuples, filter, user);
 
-    g_mutex_lock (mutex);
+    pthread_mutex_lock (& mutex);
     add_tasks = g_list_append (add_tasks, task);
-    g_cond_broadcast (cond);
-    g_mutex_unlock (mutex);
+    pthread_cond_broadcast (& cond);
+    pthread_mutex_unlock (& mutex);
 }
 
 gboolean playlist_add_in_progress (gint playlist)
@@ -542,7 +536,7 @@ gboolean playlist_add_in_progress (gint playlist)
     gint playlist_id = playlist_get_unique_id (playlist);
     g_return_val_if_fail (playlist_id >= 0, FALSE);
 
-    g_mutex_lock (mutex);
+    pthread_mutex_lock (& mutex);
 
     for (GList * node = add_tasks; node; node = node->next)
     {
@@ -559,10 +553,10 @@ gboolean playlist_add_in_progress (gint playlist)
             goto YES;
     }
 
-    g_mutex_unlock (mutex);
+    pthread_mutex_unlock (& mutex);
     return FALSE;
 
 YES:
-    g_mutex_unlock (mutex);
+    pthread_mutex_unlock (& mutex);
     return TRUE;
 }

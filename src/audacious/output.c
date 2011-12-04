@@ -20,6 +20,7 @@
  */
 
 #include <math.h>
+#include <pthread.h>
 #include <string.h>
 
 #include <libaudcore/audio.h>
@@ -64,11 +65,11 @@ void output_set_volume (gint l, gint r)
         cop->set_volume (l, r);
 }
 
-static GStaticMutex mutex = G_STATIC_MUTEX_INIT;
+static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 static gboolean locked = FALSE;
 
-#define LOCK do {g_static_mutex_lock (& mutex); locked = TRUE;} while (0)
-#define UNLOCK do {locked = FALSE; g_static_mutex_unlock (& mutex);} while (0)
+#define LOCK do {pthread_mutex_lock (& mutex); locked = TRUE;} while (0)
+#define UNLOCK do {locked = FALSE; pthread_mutex_unlock (& mutex);} while (0)
 #define LOCKED g_return_if_fail (locked)
 #define LOCKED_RET(a) g_return_val_if_fail (locked, a)
 #define LOCK_VIS do {vis_runner_lock (); LOCK;} while (0)

@@ -24,9 +24,9 @@
  */
 
 #include <assert.h>
-
 #include <glib.h>
 #include <gmodule.h>
+#include <pthread.h>
 
 #include <libaudcore/audstrings.h>
 #include <libaudgui/init.h>
@@ -66,7 +66,7 @@ typedef struct {
 } LoadedModule;
 
 static GList * loaded_modules = NULL;
-static GStaticMutex mutex = G_STATIC_MUTEX_INIT;
+static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
 static void plugin2_process (Plugin * header, GModule * module, const gchar * filename)
 {
@@ -99,12 +99,12 @@ static void plugin2_process (Plugin * header, GModule * module, const gchar * fi
         break;
     }
 
-    g_static_mutex_lock (& mutex);
+    pthread_mutex_lock (& mutex);
     LoadedModule * loaded = g_slice_new (LoadedModule);
     loaded->header = header;
     loaded->module = module;
     loaded_modules = g_list_prepend (loaded_modules, loaded);
-    g_static_mutex_unlock (& mutex);
+    pthread_mutex_unlock (& mutex);
 
     plugin_register_loaded (filename, header);
 }
@@ -126,10 +126,10 @@ static void plugin2_unload (LoadedModule * loaded)
         break;
     }
 
-    g_static_mutex_lock (& mutex);
+    pthread_mutex_lock (& mutex);
     g_module_close (loaded->module);
     g_slice_free (LoadedModule, loaded);
-    g_static_mutex_unlock (& mutex);
+    pthread_mutex_unlock (& mutex);
 }
 
 /******************************************************************/

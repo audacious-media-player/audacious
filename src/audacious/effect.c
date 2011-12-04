@@ -20,6 +20,7 @@
  */
 
 #include <glib.h>
+#include <pthread.h>
 
 #include "debug.h"
 #include "effect.h"
@@ -34,7 +35,7 @@ typedef struct {
     gboolean remove_flag;
 } RunningEffect;
 
-static GStaticMutex mutex = G_STATIC_MUTEX_INIT;
+static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 static GList * running_effects = NULL; /* (RunningEffect *) */
 static gint input_channels, input_rate;
 
@@ -63,7 +64,7 @@ static gboolean effect_start_cb (PluginHandle * plugin, EffectStartState * state
 
 void effect_start (gint * channels, gint * rate)
 {
-    g_static_mutex_lock (& mutex);
+    pthread_mutex_lock (& mutex);
 
     AUDDBG ("Starting effects.\n");
     g_list_foreach (running_effects, (GFunc) g_free, NULL);
@@ -78,7 +79,7 @@ void effect_start (gint * channels, gint * rate)
      & state);
     running_effects = g_list_reverse (running_effects);
 
-    g_static_mutex_unlock (& mutex);
+    pthread_mutex_unlock (& mutex);
 }
 
 typedef struct {
@@ -102,37 +103,37 @@ static void effect_process_cb (RunningEffect * effect, EffectProcessState *
 
 void effect_process (gfloat * * data, gint * samples)
 {
-    g_static_mutex_lock (& mutex);
+    pthread_mutex_lock (& mutex);
 
     EffectProcessState state = {data, samples};
     g_list_foreach (running_effects, (GFunc) effect_process_cb, & state);
 
-    g_static_mutex_unlock (& mutex);
+    pthread_mutex_unlock (& mutex);
 }
 
 void effect_flush (void)
 {
-    g_static_mutex_lock (& mutex);
+    pthread_mutex_lock (& mutex);
 
     for (GList * node = running_effects; node != NULL; node = node->next)
         ((RunningEffect *) node->data)->header->flush ();
 
-    g_static_mutex_unlock (& mutex);
+    pthread_mutex_unlock (& mutex);
 }
 
 void effect_finish (gfloat * * data, gint * samples)
 {
-    g_static_mutex_lock (& mutex);
+    pthread_mutex_lock (& mutex);
 
     for (GList * node = running_effects; node != NULL; node = node->next)
         ((RunningEffect *) node->data)->header->finish (data, samples);
 
-    g_static_mutex_unlock (& mutex);
+    pthread_mutex_unlock (& mutex);
 }
 
 gint effect_decoder_to_output_time (gint time)
 {
-    g_static_mutex_lock (& mutex);
+    pthread_mutex_lock (& mutex);
 
     for (GList * node = running_effects; node != NULL; node = node->next)
     {
@@ -140,13 +141,13 @@ gint effect_decoder_to_output_time (gint time)
             time = ((RunningEffect *) node->data)->header->decoder_to_output_time (time);
     }
 
-    g_static_mutex_unlock (& mutex);
+    pthread_mutex_unlock (& mutex);
     return time;
 }
 
 gint effect_output_to_decoder_time (gint time)
 {
-    g_static_mutex_lock (& mutex);
+    pthread_mutex_lock (& mutex);
 
     for (GList * node = g_list_last (running_effects); node != NULL; node = node->prev)
     {
@@ -154,7 +155,7 @@ gint effect_output_to_decoder_time (gint time)
             time = ((RunningEffect *) node->data)->header->output_to_decoder_time (time);
     }
 
-    g_static_mutex_unlock (& mutex);
+    pthread_mutex_unlock (& mutex);
     return time;
 }
 
@@ -223,14 +224,14 @@ static void effect_enable (PluginHandle * plugin, EffectPlugin * ep, gboolean
 {
     if (ep->preserves_format)
     {
-        g_static_mutex_lock (& mutex);
+        pthread_mutex_lock (& mutex);
 
         if (enable)
             effect_insert (plugin, ep);
         else
             effect_remove (plugin);
 
-        g_static_mutex_unlock (& mutex);
+        pthread_mutex_unlock (& mutex);
     }
     else
     {
