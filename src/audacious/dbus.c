@@ -93,10 +93,6 @@ static guint tracklist_signals[LAST_TRACKLIST_SIG] = { 0 };
 
 MprisPlayer * mpris = NULL;
 
-static GThread *main_thread;
-static GMutex *info_mutex;
-static GCond *info_cond;
-
 G_DEFINE_TYPE (RemoteObject, audacious_rc, G_TYPE_OBJECT)
 G_DEFINE_TYPE (MprisRoot, mpris_root, G_TYPE_OBJECT)
 G_DEFINE_TYPE (MprisPlayer, mpris_player, G_TYPE_OBJECT)
@@ -226,10 +222,6 @@ void init_dbus()
     GError *error = NULL;
     DBusConnection *local_conn;
 
-    main_thread = g_thread_self();
-    info_mutex = g_mutex_new();
-    info_cond = g_cond_new();
-
     AUDDBG ("Trying to initialize D-Bus.\n");
     dbus_conn = dbus_g_bus_get(DBUS_BUS_SESSION, &error);
     if (dbus_conn == NULL)
@@ -343,12 +335,8 @@ static void real_position(gint * playlist, gint * entry)
         *entry = playlist_get_position(*playlist);
 }
 
-static gboolean get_status_cb(void *data)
+static void get_status (struct StatusRequest * request)
 {
-    struct StatusRequest *request = data;
-
-    g_mutex_lock(info_mutex);
-
     memset (request, 0, sizeof (* request));
     request->playing = playback_get_playing();
 
@@ -360,59 +348,17 @@ static gboolean get_status_cb(void *data)
         playback_get_info (& request->bitrate, & request->samplerate,
          & request->channels);
     }
-
-    g_cond_signal(info_cond);
-    g_mutex_unlock(info_mutex);
-    return FALSE;
 }
 
-static void get_status(struct StatusRequest *request)
+static void get_position (struct PositionRequest * request)
 {
-    if (g_thread_self() == main_thread)
-        get_status_cb(request);
-    else
-    {
-        g_mutex_lock(info_mutex);
-        g_timeout_add(0, get_status_cb, request);
-        g_cond_wait(info_cond, info_mutex);
-        g_mutex_unlock(info_mutex);
-    }
-}
-
-static gboolean get_position_cb(void *data)
-{
-    struct PositionRequest *request = data;
-
-    g_mutex_lock(info_mutex);
-
     real_position(&request->playlist, &request->entry);
     request->entry_count = playlist_entry_count(request->playlist);
     request->queue_count = playlist_queue_count(request->playlist);
-
-    g_cond_signal(info_cond);
-    g_mutex_unlock(info_mutex);
-    return FALSE;
 }
 
-static void get_position(struct PositionRequest *request)
+static void get_info (struct InfoRequest * request)
 {
-    if (g_thread_self() == main_thread)
-        get_position_cb(request);
-    else
-    {
-        g_mutex_lock(info_mutex);
-        g_timeout_add(0, get_position_cb, request);
-        g_cond_wait(info_cond, info_mutex);
-        g_mutex_unlock(info_mutex);
-    }
-}
-
-static gboolean get_info_cb(void *data)
-{
-    struct InfoRequest *request = data;
-
-    g_mutex_lock(info_mutex);
-
     real_position(&request->playlist, &request->entry);
     request->filename = playlist_entry_get_filename (request->playlist,
      request->entry);
@@ -421,53 +367,15 @@ static gboolean get_info_cb(void *data)
     request->length = playlist_entry_get_length (request->playlist,
      request->entry, FALSE);
     request->pltitle = playlist_get_title (request->playlist);
-
-    g_cond_signal(info_cond);
-    g_mutex_unlock(info_mutex);
-    return FALSE;
 }
 
-static void get_info(struct InfoRequest *request)
+static void get_field (struct FieldRequest * request)
 {
-    if (g_thread_self() == main_thread)
-        get_info_cb(request);
-    else
-    {
-        g_mutex_lock(info_mutex);
-        g_timeout_add(0, get_info_cb, request);
-        g_cond_wait(info_cond, info_mutex);
-        g_mutex_unlock(info_mutex);
-    }
-}
-
-static gboolean get_field_cb(void *data)
-{
-    struct FieldRequest *request = data;
-
-    g_mutex_lock(info_mutex);
-
     real_position(&request->playlist, &request->entry);
     Tuple * tuple = playlist_entry_get_tuple (request->playlist, request->entry, FALSE);
     request->value = (tuple == NULL) ? NULL : tuple_value_to_gvalue(tuple, request->field);
     if (tuple)
         tuple_unref (tuple);
-
-    g_cond_signal(info_cond);
-    g_mutex_unlock(info_mutex);
-    return FALSE;
-}
-
-static void get_field(struct FieldRequest *request)
-{
-    if (g_thread_self() == main_thread)
-        get_field_cb(request);
-    else
-    {
-        g_mutex_lock(info_mutex);
-        g_timeout_add(0, get_field_cb, request);
-        g_cond_wait(info_cond, info_mutex);
-        g_mutex_unlock(info_mutex);
-    }
 }
 
 static gboolean play_cb(void *unused)
@@ -567,58 +475,6 @@ static gboolean clear_queue_cb(void *unused)
     return FALSE;
 }
 
-static gboolean queue_get_entry_cb(void *data)
-{
-    g_mutex_lock(info_mutex);
-
-    * (gint *) data = drct_pq_get_entry (* (gint *) data);
-
-    g_cond_signal(info_cond);
-    g_mutex_unlock(info_mutex);
-    return FALSE;
-}
-
-static gint queue_get_entry(gint position)
-{
-    if (g_thread_self() == main_thread)
-        queue_get_entry_cb(&position);
-    else
-    {
-        g_mutex_lock(info_mutex);
-        g_timeout_add(0, queue_get_entry_cb, &position);
-        g_cond_wait(info_cond, info_mutex);
-        g_mutex_unlock(info_mutex);
-    }
-
-    return position;
-}
-
-static gboolean queue_find_entry_cb(void *data)
-{
-    g_mutex_lock(info_mutex);
-
-    *(gint *) data = drct_pq_get_queue_position(*(gint *) data);
-
-    g_cond_signal(info_cond);
-    g_mutex_unlock(info_mutex);
-    return FALSE;
-}
-
-static gint queue_find_entry(gint position)
-{
-    if (g_thread_self() == main_thread)
-        queue_find_entry_cb(&position);
-    else
-    {
-        g_mutex_lock(info_mutex);
-        g_timeout_add(0, queue_find_entry_cb, &position);
-        g_cond_wait(info_cond, info_mutex);
-        g_mutex_unlock(info_mutex);
-    }
-
-    return position;
-}
-
 gboolean add_to_new_playlist_cb(void *data)
 {
     drct_pl_open_temp (data);
@@ -626,12 +482,8 @@ gboolean add_to_new_playlist_cb(void *data)
     return FALSE;
 }
 
-static gboolean get_mpris_metadata_cb(void *data)
+static void get_mpris_metadata (struct MprisMetadataRequest * request)
 {
-    struct MprisMetadataRequest *request = data;
-
-    g_mutex_lock(info_mutex);
-
     real_position(&request->playlist, &request->entry);
     gchar * filename = playlist_entry_get_filename (request->playlist,
      request->entry);
@@ -646,23 +498,6 @@ static gboolean get_mpris_metadata_cb(void *data)
     str_unref (filename);
     if (tuple)
         tuple_unref (tuple);
-
-    g_cond_signal(info_cond);
-    g_mutex_unlock(info_mutex);
-    return FALSE;
-}
-
-static void get_mpris_metadata(struct MprisMetadataRequest *request)
-{
-    if (g_thread_self() == main_thread)
-        get_mpris_metadata_cb(request);
-    else
-    {
-        g_mutex_lock(info_mutex);
-        g_timeout_add(0, get_mpris_metadata_cb, request);
-        g_cond_wait(info_cond, info_mutex);
-        g_mutex_unlock(info_mutex);
-    }
 }
 
 /* MPRIS API */
@@ -1348,19 +1183,19 @@ gboolean audacious_rc_get_playqueue_length(RemoteObject * obj, gint * length, GE
 
 gboolean audacious_rc_queue_get_list_pos(RemoteObject * obj, gint qpos, gint * pos, GError * *error)
 {
-    *pos = queue_get_entry(qpos);
+    * pos = drct_pq_get_entry (qpos);
     return TRUE;
 }
 
 gboolean audacious_rc_queue_get_queue_pos(RemoteObject * obj, gint pos, gint * qpos, GError * *error)
 {
-    *qpos = queue_find_entry(pos);
+    * qpos = drct_pq_get_queue_position (pos);
     return TRUE;
 }
 
 gboolean audacious_rc_playqueue_is_queued(RemoteObject * obj, gint pos, gboolean * is_queued, GError * *error)
 {
-    *is_queued = (queue_find_entry(pos) != -1);
+    * is_queued = (drct_pq_get_queue_position (pos) >= 0);
     return TRUE;
 }
 
