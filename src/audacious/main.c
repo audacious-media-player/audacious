@@ -62,20 +62,20 @@
 
 #define AUTOSAVE_INTERVAL 300 /* seconds */
 
-gboolean headless;
+boolean headless;
 
 static struct {
-    gchar **filenames;
-    gint session;
-    gboolean play, stop, pause, fwd, rew, play_pause, show_jump_box;
-    gboolean enqueue, mainwin, remote;
-    gboolean enqueue_to_temp;
-    gboolean version;
-    gboolean verbose;
-    gchar *previous_session_id;
+    char **filenames;
+    int session;
+    boolean play, stop, pause, fwd, rew, play_pause, show_jump_box;
+    boolean enqueue, mainwin, remote;
+    boolean enqueue_to_temp;
+    boolean version;
+    boolean verbose;
+    char *previous_session_id;
 } options;
 
-static gchar * aud_paths[AUD_PATH_COUNT];
+static char * aud_paths[AUD_PATH_COUNT];
 
 static void make_dirs(void)
 {
@@ -89,12 +89,12 @@ static void make_dirs(void)
     make_directory(aud_paths[AUD_PATH_PLAYLISTS_DIR], mode755);
 }
 
-static void normalize_path (gchar * path)
+static void normalize_path (char * path)
 {
 #ifdef _WIN32
     string_replace_char (path, '/', '\\');
 #endif
-    gint len = strlen (path);
+    int len = strlen (path);
 #ifdef _WIN32
     if (len > 3 && path[len - 1] == '\\') /* leave "C:\" */
 #else
@@ -103,13 +103,13 @@ static void normalize_path (gchar * path)
         path[len - 1] = 0;
 }
 
-static gchar * last_path_element (gchar * path)
+static char * last_path_element (char * path)
 {
-    gchar * slash = strrchr (path, G_DIR_SEPARATOR);
+    char * slash = strrchr (path, G_DIR_SEPARATOR);
     return (slash && slash[1]) ? slash + 1 : NULL;
 }
 
-static void strip_path_element (gchar * path, gchar * elem)
+static void strip_path_element (char * path, char * elem)
 {
 #ifdef _WIN32
     if (elem > path + 3)
@@ -121,11 +121,11 @@ static void strip_path_element (gchar * path, gchar * elem)
         elem[0] = 0; /* leave [drive letter and] leading slash */
 }
 
-static void relocate_path (gchar * * pathp, const gchar * old, const gchar * new)
+static void relocate_path (char * * pathp, const char * old, const char * new)
 {
-    gchar * path = * pathp;
-    gint oldlen = strlen (old);
-    gint newlen = strlen (new);
+    char * path = * pathp;
+    int oldlen = strlen (old);
+    int newlen = strlen (new);
 
     if (oldlen && old[oldlen - 1] == G_DIR_SEPARATOR)
         oldlen --;
@@ -165,8 +165,8 @@ static void relocate_paths (void)
 
     /* Compare the compile-time path to the executable and the actual path to
      * see if we have been moved. */
-    gchar * old = g_strdup (aud_paths[AUD_PATH_BIN_DIR]);
-    gchar * new = get_path_to_self ();
+    char * old = g_strdup (aud_paths[AUD_PATH_BIN_DIR]);
+    char * new = get_path_to_self ();
     if (! new)
     {
 ERR:
@@ -177,14 +177,14 @@ ERR:
     normalize_path (new);
 
     /* Strip the name of the executable file, leaving the path. */
-    gchar * base = last_path_element (new);
+    char * base = last_path_element (new);
     if (! base)
         goto ERR;
     strip_path_element (new, base);
 
     /* Strip innermost folder names from both paths as long as they match.  This
      * leaves a compile-time prefix and a run-time one to replace it with. */
-    gchar * a, * b;
+    char * a, * b;
     while ((a = last_path_element (old)) && (b = last_path_element (new)) &&
 #ifdef _WIN32
      ! strcasecmp (a, b))
@@ -212,8 +212,8 @@ static void init_paths (void)
 {
     relocate_paths ();
 
-    const gchar * xdg_config_home = g_get_user_config_dir ();
-    const gchar * xdg_data_home = g_get_user_data_dir ();
+    const char * xdg_config_home = g_get_user_config_dir ();
+    const char * xdg_data_home = g_get_user_data_dir ();
 
 #ifdef _WIN32
     /* Some libraries (libmcs) and plugins (filewriter) use these variables,
@@ -229,11 +229,11 @@ static void init_paths (void)
     aud_paths[AUD_PATH_PLAYLISTS_DIR] = g_build_filename(aud_paths[AUD_PATH_USER_DIR], "playlists", NULL);
     aud_paths[AUD_PATH_GTKRC_FILE] = g_build_filename(aud_paths[AUD_PATH_USER_DIR], "gtkrc", NULL);
 
-    for (gint i = 0; i < AUD_PATH_COUNT; i ++)
+    for (int i = 0; i < AUD_PATH_COUNT; i ++)
         AUDDBG ("Data path: %s\n", aud_paths[i]);
 }
 
-const gchar * get_path (gint id)
+const char * get_path (int id)
 {
     g_return_val_if_fail (id >= 0 && id < AUD_PATH_COUNT, NULL);
     return aud_paths[id];
@@ -257,7 +257,7 @@ static GOptionEntry cmd_entries[] = {
     {NULL},
 };
 
-static void parse_options (gint * argc, gchar *** argv)
+static void parse_options (int * argc, char *** argv)
 {
     GOptionContext *context;
     GError *error = NULL;
@@ -285,9 +285,9 @@ static void parse_options (gint * argc, gchar *** argv)
     verbose = options.verbose;
 }
 
-static gboolean get_lock (void)
+static boolean get_lock (void)
 {
-    gchar * path = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "lock", aud_paths[AUD_PATH_USER_DIR]);
+    char * path = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "lock", aud_paths[AUD_PATH_USER_DIR]);
     int handle = open (path, O_RDWR | O_CREAT | O_EXCL, S_IRUSR | S_IWUSR);
 
     if (handle < 0)
@@ -306,7 +306,7 @@ static gboolean get_lock (void)
 
 static void release_lock (void)
 {
-    gchar * path = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "lock", aud_paths[AUD_PATH_USER_DIR]);
+    char * path = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "lock", aud_paths[AUD_PATH_USER_DIR]);
     unlink (path);
     g_free (path);
 }
@@ -316,13 +316,13 @@ static GList * convert_filenames (void)
     if (! options.filenames)
         return NULL;
 
-    gchar * * f = options.filenames;
+    char * * f = options.filenames;
     GList * list = NULL;
-    gchar * cur = g_get_current_dir ();
+    char * cur = g_get_current_dir ();
 
-    for (gint i = 0; f[i]; i ++)
+    for (int i = 0; f[i]; i ++)
     {
-        gchar * uri;
+        char * uri;
 
         if (strstr (f[i], "://"))
             uri = g_strdup (f[i]);
@@ -330,7 +330,7 @@ static GList * convert_filenames (void)
             uri = filename_to_uri (f[i]);
         else
         {
-            gchar * tmp = g_build_filename (cur, f[i], NULL);
+            char * tmp = g_build_filename (cur, f[i], NULL);
             uri = filename_to_uri (tmp);
             g_free (tmp);
         }
@@ -396,7 +396,7 @@ static void do_remote (void)
 
 static void do_commands (void)
 {
-    gboolean resume = get_bool (NULL, "resume_playback_on_startup");
+    boolean resume = get_bool (NULL, "resume_playback_on_startup");
 
     GList * list = convert_filenames ();
     if (list)
@@ -452,7 +452,7 @@ static void init_one (void)
 #endif
 }
 
-static void init_two (gint * p_argc, gchar * * * p_argv)
+static void init_two (int * p_argc, char * * * p_argv)
 {
     if (! headless)
     {
@@ -513,7 +513,7 @@ static void shut_down (void)
     AUDDBG ("Stopping playback.\n");
     if (playback_get_playing ())
     {
-        gboolean stop_after_song = get_bool (NULL, "stop_after_current_song");
+        boolean stop_after_song = get_bool (NULL, "stop_after_current_song");
         playback_stop ();
         set_bool (NULL, "stop_after_current_song", stop_after_song);
     }
@@ -533,7 +533,7 @@ static void shut_down (void)
     gdk_threads_leave ();
 }
 
-gboolean do_autosave (void)
+boolean do_autosave (void)
 {
     AUDDBG ("Saving configuration.\n");
     hook_call ("config save", NULL);
@@ -542,7 +542,7 @@ gboolean do_autosave (void)
     return TRUE;
 }
 
-gint main(gint argc, gchar ** argv)
+int main(int argc, char ** argv)
 {
     init_one ();
     parse_options (& argc, & argv);

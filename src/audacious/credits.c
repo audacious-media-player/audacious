@@ -27,11 +27,11 @@
 #include "i18n.h"
 #include "misc.h"
 
-static const gchar *audacious_brief =
+static const char *audacious_brief =
  "<big><b>Audacious %s</b></big>\n"
  "Copyright (C) 2005-2011 Audacious Team";
 
-static const gchar *credit_text[] = {
+static const char *credit_text[] = {
     N_("Core developers:"),
     "Christian Birchinger",
     "Michael Färber",
@@ -177,7 +177,7 @@ static const gchar *credit_text[] = {
     NULL
 };
 
-static const gchar *translators_text[] = {
+static const char *translators_text[] = {
     N_("Belarusian:"),
     "Darafei Praliaskouski",
     NULL,
@@ -334,7 +334,7 @@ static const gchar *translators_text[] = {
 };
 
 void
-get_audacious_credits(const gchar ** brief, const gchar *** credits, const gchar ***translators)
+get_audacious_credits(const char ** brief, const char *** credits, const char ***translators)
 {
     if (brief != NULL)
         *brief = audacious_brief;

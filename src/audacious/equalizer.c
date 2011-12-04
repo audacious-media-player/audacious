@@ -21,6 +21,7 @@
 
 #include "equalizer.h"
 #include "misc.h"
+#include "types.h"
 
 #define EQ_BANDS AUD_EQUALIZER_NBANDS
 #define MAX_CHANNELS 10
@@ -33,23 +34,23 @@
 /* These are not the historical WinAmp frequencies, because the IIR filters used
  * here are designed for each frequency to be twice the previous.  Using WinAmp
  * frequencies leads to too much gain in some bands and too little in others. */
-static const gfloat CF[EQ_BANDS] = {31.25, 62.5, 125, 250, 500, 1000, 2000,
+static const float CF[EQ_BANDS] = {31.25, 62.5, 125, 250, 500, 1000, 2000,
  4000, 8000, 16000};
 
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-static gboolean active;
-static gint channels, rate;
-static gfloat a[EQ_BANDS][2]; /* A weights */
-static gfloat b[EQ_BANDS][2]; /* B weights */
-static gfloat wqv[MAX_CHANNELS][EQ_BANDS][2]; /* Circular buffer for W data */
-static gfloat gv[MAX_CHANNELS][EQ_BANDS]; /* Gain factor for each channel and band */
-static gint K; /* Number of used eq bands */
+static boolean active;
+static int channels, rate;
+static float a[EQ_BANDS][2]; /* A weights */
+static float b[EQ_BANDS][2]; /* B weights */
+static float wqv[MAX_CHANNELS][EQ_BANDS][2]; /* Circular buffer for W data */
+static float gv[MAX_CHANNELS][EQ_BANDS]; /* Gain factor for each channel and band */
+static int K; /* Number of used eq bands */
 
 /* 2nd order band-pass filter design */
-static void bp2 (gfloat * a, gfloat * b, gfloat fc, gfloat q)
+static void bp2 (float * a, float * b, float fc, float q)
 {
-    gfloat th = 2 * M_PI * fc;
-    gfloat C = (1 - tanf (th * q / 2)) / (1 + tanf (th * q / 2));
+    float th = 2 * M_PI * fc;
+    float C = (1 - tanf (th * q / 2)) / (1 + tanf (th * q / 2));
 
     a[0] = (1 + C) * cosf (th);
     a[1] = -C;
@@ -57,9 +58,9 @@ static void bp2 (gfloat * a, gfloat * b, gfloat fc, gfloat q)
     b[1] = -1.005;
 }
 
-void eq_set_format (gint new_channels, gint new_rate)
+void eq_set_format (int new_channels, int new_rate)
 {
-    gint k;
+    int k;
 
     pthread_mutex_lock (& mutex);
 
@@ -69,12 +70,12 @@ void eq_set_format (gint new_channels, gint new_rate)
     /* Calculate number of active filters */
     K = EQ_BANDS;
 
-    while (CF[K - 1] > (gfloat) rate / 2.2)
+    while (CF[K - 1] > (float) rate / 2.2)
         K --;
 
     /* Generate filter taps */
     for (k = 0; k < K; k ++)
-        bp2 (a[k], b[k], CF[k] / (gfloat) rate, Q);
+        bp2 (a[k], b[k], CF[k] / (float) rate, Q);
 
     /* Reset state */
     memset (wqv[0][0], 0, sizeof wqv);
@@ -82,20 +83,20 @@ void eq_set_format (gint new_channels, gint new_rate)
     pthread_mutex_unlock (& mutex);
 }
 
-static void eq_set_bands_real (gdouble preamp, gdouble * values)
+static void eq_set_bands_real (double preamp, double * values)
 {
-    gfloat adj[EQ_BANDS];
-    for (gint i = 0; i < EQ_BANDS; i ++)
+    float adj[EQ_BANDS];
+    for (int i = 0; i < EQ_BANDS; i ++)
         adj[i] = preamp + values[i];
 
-    for (gint c = 0; c < MAX_CHANNELS; c ++)
-    for (gint i = 0; i < EQ_BANDS; i ++)
+    for (int c = 0; c < MAX_CHANNELS; c ++)
+    for (int i = 0; i < EQ_BANDS; i ++)
         gv[c][i] = pow (10, adj[i] / 20) - 1;
 }
 
-void eq_filter (gfloat * data, gint samples)
+void eq_filter (float * data, int samples)
 {
-    gint channel;
+    int channel;
 
     pthread_mutex_lock (& mutex);
 
@@ -107,21 +108,21 @@ void eq_filter (gfloat * data, gint samples)
 
     for (channel = 0; channel < channels; channel ++)
     {
-        gfloat * g = gv[channel]; /* Gain factor */
-        gfloat * end = data + samples;
-        gfloat * f;
+        float * g = gv[channel]; /* Gain factor */
+        float * end = data + samples;
+        float * f;
 
         for (f = data + channel; f < end; f += channels)
         {
-            gint k; /* Frequency band index */
-            gfloat yt = * f; /* Current input sample */
+            int k; /* Frequency band index */
+            float yt = * f; /* Current input sample */
 
             for (k = 0; k < K; k ++)
             {
                 /* Pointer to circular buffer wq */
-                gfloat * wq = wqv[channel][k];
+                float * wq = wqv[channel][k];
                 /* Calculate output from AR part of current filter */
-                gfloat w = yt * b[k][0] + wq[0] * a[k][0] + wq[1] * a[k][1];
+                float w = yt * b[k][0] + wq[0] * a[k][0] + wq[1] * a[k][1];
 
                 /* Calculate output from MA part of current filter */
                 yt += (w + wq[1] * b[k][1]) * g[k];
@@ -145,7 +146,7 @@ static void eq_update (void * data, void * user)
 
     active = get_bool (NULL, "equalizer_active");
 
-    gdouble values[EQ_BANDS];
+    double values[EQ_BANDS];
     eq_get_bands (values);
     eq_set_bands_real (get_double (NULL, "equalizer_preamp"), values);
 
@@ -160,35 +161,35 @@ void eq_init (void)
     hook_associate ("set equalizer_bands", eq_update, NULL);
 }
 
-void eq_set_bands (const gdouble * values)
+void eq_set_bands (const double * values)
 {
-    gchar * string = double_array_to_string (values, EQ_BANDS);
+    char * string = double_array_to_string (values, EQ_BANDS);
     g_return_if_fail (string);
     set_string (NULL, "equalizer_bands", string);
     g_free (string);
 }
 
-void eq_get_bands (gdouble * values)
+void eq_get_bands (double * values)
 {
-    memset (values, 0, sizeof (gdouble) * EQ_BANDS);
-    gchar * string = get_string (NULL, "equalizer_bands");
+    memset (values, 0, sizeof (double) * EQ_BANDS);
+    char * string = get_string (NULL, "equalizer_bands");
     string_to_double_array (string, values, EQ_BANDS);
     g_free (string);
 }
 
-void eq_set_band (gint band, gdouble value)
+void eq_set_band (int band, double value)
 {
     g_return_if_fail (band >= 0 && band < EQ_BANDS);
-    gdouble values[EQ_BANDS];
+    double values[EQ_BANDS];
     eq_get_bands (values);
     values[band] = value;
     eq_set_bands (values);
 }
 
-gdouble eq_get_band (gint band)
+double eq_get_band (int band)
 {
     g_return_val_if_fail (band >= 0 && band < EQ_BANDS, 0);
-    gdouble values[EQ_BANDS];
+    double values[EQ_BANDS];
     eq_get_bands (values);
     return values[band];
 }

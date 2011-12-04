@@ -34,7 +34,7 @@
 
 static IfacePlugin *current_interface = NULL;
 
-gboolean interface_load (PluginHandle * plugin)
+boolean interface_load (PluginHandle * plugin)
 {
     IfacePlugin * i = plugin_get_header (plugin);
     g_return_val_if_fail (i, FALSE);
@@ -56,7 +56,7 @@ void interface_unload (void)
     current_interface = NULL;
 }
 
-void interface_show (gboolean show)
+void interface_show (boolean show)
 {
     g_return_if_fail (current_interface);
 
@@ -64,7 +64,7 @@ void interface_show (gboolean show)
         current_interface->show (show);
 }
 
-gboolean interface_is_shown (void)
+boolean interface_is_shown (void)
 {
     g_return_val_if_fail (current_interface, FALSE);
 
@@ -73,7 +73,7 @@ gboolean interface_is_shown (void)
     return TRUE;
 }
 
-gboolean interface_is_focused (void)
+boolean interface_is_focused (void)
 {
     g_return_val_if_fail (current_interface, FALSE);
 
@@ -82,7 +82,7 @@ gboolean interface_is_focused (void)
     return TRUE;
 }
 
-void interface_show_error (const gchar * markup)
+void interface_show_error (const char * markup)
 {
     if (headless)
     {
@@ -97,11 +97,11 @@ void interface_show_error (const gchar * markup)
 }
 
 /*
- * gboolean play_button
+ * boolean play_button
  *       TRUE  - open files
  *       FALSE - add files
  */
-void interface_show_filebrowser (gboolean play_button)
+void interface_show_filebrowser (boolean play_button)
 {
     g_return_if_fail (current_interface);
 
@@ -117,7 +117,7 @@ void interface_show_jump_to_track (void)
         current_interface->show_jump_to_track ();
 }
 
-static gboolean delete_cb (GtkWidget * window, GdkEvent * event, PluginHandle *
+static boolean delete_cb (GtkWidget * window, GdkEvent * event, PluginHandle *
  plugin)
 {
     plugin_enable (plugin, FALSE);
@@ -205,7 +205,7 @@ void interface_hook_handler (void * hook_data, void * user_data)
 }
 
 typedef struct {
-    const gchar *name;
+    const char *name;
     IfaceHookID id;
 } IfaceHooks;
 
@@ -220,7 +220,7 @@ static IfaceHooks hooks[] = {
 void
 register_interface_hooks(void)
 {
-    gint i;
+    int i;
     for (i=0; i<G_N_ELEMENTS(hooks); i++)
         hook_associate(hooks[i].name,
                        (HookFunction) interface_hook_handler,
@@ -228,7 +228,7 @@ register_interface_hooks(void)
 
 }
 
-static gboolean probe_cb (PluginHandle * p, PluginHandle * * pp)
+static boolean probe_cb (PluginHandle * p, PluginHandle * * pp)
 {
     * pp = p;
     return FALSE;
@@ -248,7 +248,7 @@ PluginHandle * iface_plugin_get_current (void)
     return current_plugin;
 }
 
-gboolean iface_plugin_set_current (PluginHandle * plugin)
+boolean iface_plugin_set_current (PluginHandle * plugin)
 {
     hook_call ("config save", NULL); /* tell interface to save layout */
 

@@ -21,7 +21,7 @@
 
 /* Do not include this file directly; use playlist.h instead. */
 
-/* Any functions in this API with a return type of (gchar *) return pooled
+/* Any functions in this API with a return type of (char *) return pooled
  * strings that must not be modified and must be released with str_unref() when
  * no longer needed. */
 
@@ -29,15 +29,15 @@
 
 /* Returns the number of playlists currently open.  There will always be at
  * least one playlist open.  The playlists are numbered starting from zero. */
-AUD_FUNC0 (gint, playlist_count)
+AUD_FUNC0 (int, playlist_count)
 
 /* Adds a new playlist before the one numbered <at>.  If <at> is negative or
  * equal to the number of playlists, adds a new playlist after the last one. */
-AUD_VFUNC1 (playlist_insert, gint, at)
+AUD_VFUNC1 (playlist_insert, int, at)
 
 /* Moves a contiguous block of <count> playlists starting with the one numbered
  * <from> such that that playlist ends up at the position <to>. */
-AUD_VFUNC3 (playlist_reorder, gint, from, gint, to, gint, count)
+AUD_VFUNC3 (playlist_reorder, int, from, int, to, int, count)
 
 /* Closes a playlist.  CAUTION: The playlist is not saved, and no confirmation
  * is presented to the user.  If <playlist> is the only playlist, a new playlist
@@ -45,59 +45,59 @@ AUD_VFUNC3 (playlist_reorder, gint, from, gint, to, gint, count)
  * active.  If <playlist> is the one from which the last song played was taken,
  * playback is stopped.  In this case, calls to playlist_get_playing() will
  * return -1, and the behavior of drct_play() is unspecified. */
-AUD_VFUNC1 (playlist_delete, gint, playlist)
+AUD_VFUNC1 (playlist_delete, int, playlist)
 
 /* Returns a unique non-negative integer which can be used to identify a given
  * playlist even if its numbering changes (as when playlists are reordered).
  * On error, returns -1. */
-AUD_FUNC1 (gint, playlist_get_unique_id, gint, playlist)
+AUD_FUNC1 (int, playlist_get_unique_id, int, playlist)
 
 /* Returns the number of the playlist identified by a given integer ID as
  * returned by playlist_get_unique_id().  If the playlist no longer exists,
  * returns -1. */
-AUD_FUNC1 (gint, playlist_by_unique_id, gint, id)
+AUD_FUNC1 (int, playlist_by_unique_id, int, id)
 
 /* Sets the filename associated with a playlist.  (Audacious currently makes no
  * use of the filename.) */
-AUD_VFUNC2 (playlist_set_filename, gint, playlist, const gchar *, filename)
+AUD_VFUNC2 (playlist_set_filename, int, playlist, const char *, filename)
 
 /* Returns the filename associated with a playlist. */
-AUD_FUNC1 (gchar *, playlist_get_filename, gint, playlist)
+AUD_FUNC1 (char *, playlist_get_filename, int, playlist)
 
 /* Sets the title associated with a playlist. */
-AUD_VFUNC2 (playlist_set_title, gint, playlist, const gchar *, title)
+AUD_VFUNC2 (playlist_set_title, int, playlist, const char *, title)
 
 /* Returns the title associated with a playlist. */
-AUD_FUNC1 (gchar *, playlist_get_title, gint, playlist)
+AUD_FUNC1 (char *, playlist_get_title, int, playlist)
 
 /* Marks a playlist as active.  This is the playlist which the user will see and
  * on which most DRCT functions will take effect. */
-AUD_VFUNC1 (playlist_set_active, gint, playlist)
+AUD_VFUNC1 (playlist_set_active, int, playlist)
 
 /* Returns the number of the playlist marked active. */
-AUD_FUNC0 (gint, playlist_get_active)
+AUD_FUNC0 (int, playlist_get_active)
 
 /* Sets the playlist in which playback will begin when drct_play() is called.
  * This does not mark the playlist as active.  If a song is already playing, it
  * will be stopped.  If <playlist> is negative, calls to playlist_get_playing()
  * will return -1, and the behavior of drct_play() is unspecified. */
-AUD_VFUNC1 (playlist_set_playing, gint, playlist)
+AUD_VFUNC1 (playlist_set_playing, int, playlist)
 
 /* Returns the number of the playlist from which the last song played was taken,
  * or -1 if that cannot be determined.  Note that this playlist may not be
  * marked active. */
-AUD_FUNC0 (gint, playlist_get_playing)
+AUD_FUNC0 (int, playlist_get_playing)
 
 /* Returns the number of the "temporary" playlist (which is no different from
  * any other playlist except in name).  If the playlist does not exist, it is
  * created.  As a special case, if the temporary playlist does not exist and the
  * active playlist is blank (that is, has no entries and still has the default
  * title), the active playlist is renamed and becomes the temporary playlist. */
-AUD_FUNC0 (gint, playlist_get_temporary)
+AUD_FUNC0 (int, playlist_get_temporary)
 
 /* Returns the number of entries in a playlist.  The entries are numbered
  * starting from zero. */
-AUD_FUNC1 (gint, playlist_entry_count, gint, playlist)
+AUD_FUNC1 (int, playlist_entry_count, int, playlist)
 
 /* Adds a song file, playlist file, or folder to a playlist before the entry
  * numbered <at>.  If <at> is negative or equal to the number of entries, the
@@ -109,194 +109,194 @@ AUD_FUNC1 (gint, playlist_entry_count, gint, playlist)
  * Because adding items to the playlist can be a slow process, this function may
  * return before the process is complete.  Hence, the caller must not assume
  * that there will be new entries in the playlist immediately. */
-AUD_VFUNC5 (playlist_entry_insert, gint, playlist, gint, at, const gchar *,
- filename, Tuple *, tuple, gboolean, play)
+AUD_VFUNC5 (playlist_entry_insert, int, playlist, int, at, const char *,
+ filename, Tuple *, tuple, boolean, play)
 
 /* Similar to playlist_entry_insert, adds multiple song files, playlist files,
- * or folders to a playlist.  The filenames, stored as (gchar *) in an index
+ * or folders to a playlist.  The filenames, stored as (char *) in an index
  * (see libaudcore/index.h), must be pooled with str_get(); the caller gives up
  * one reference count to each filename.  Tuples are likewise stored as
  * (Tuple *) in an index of the same length; the caller gives up one reference
  * count to each tuple.  <tuples> may be NULL, or individual pointers within it
  * may be NULL.  Finally, the caller also gives up ownership of the indexes
  * themselves and should not access them after the call.   */
-AUD_VFUNC5 (playlist_entry_insert_batch, gint, playlist, gint, at,
- struct index *, filenames, struct index *, tuples, gboolean, play)
+AUD_VFUNC5 (playlist_entry_insert_batch, int, playlist, int, at,
+ struct index *, filenames, struct index *, tuples, boolean, play)
 
 /* Similar to playlist_entry_insert_batch, but allows the caller to prevent some
  * items from being added by returning false from the <filter> callback.  Useful
  * for searching a folder and adding only new files to the playlist.  <user> is
  * an untyped pointer passed to the <filter> callback. */
-AUD_VFUNC7 (playlist_entry_insert_filtered, gint, playlist, gint, at,
+AUD_VFUNC7 (playlist_entry_insert_filtered, int, playlist, int, at,
  struct index *, filenames, struct index *, tuples, PlaylistFilterFunc, filter,
- void *, user, gboolean, play)
+ void *, user, boolean, play)
 
 /* Removes a contiguous block of <number> entries starting from the one numbered
  * <at> from a playlist.  If the last song played is in this block, playback is
  * stopped.  In this case, calls to playlist_get_position() will return -1, and
  * the behavior of drct_play() is unspecified. */
-AUD_VFUNC3 (playlist_entry_delete, gint, playlist, gint, at, gint, number)
+AUD_VFUNC3 (playlist_entry_delete, int, playlist, int, at, int, number)
 
 /* Returns the filename of an entry. */
-AUD_FUNC2 (gchar *, playlist_entry_get_filename, gint, playlist, gint, entry)
+AUD_FUNC2 (char *, playlist_entry_get_filename, int, playlist, int, entry)
 
 /* Returns a handle to the decoder plugin associated with an entry, or NULL if
  * none can be found.  If <fast> is nonzero, returns NULL if no decoder plugin
  * has yet been found. */
-AUD_FUNC3 (PluginHandle *, playlist_entry_get_decoder, gint, playlist, gint,
- entry, gboolean, fast)
+AUD_FUNC3 (PluginHandle *, playlist_entry_get_decoder, int, playlist, int,
+ entry, boolean, fast)
 
 /* Returns the tuple associated with an entry, or NULL if one is not available.
  * The reference count of the tuple is incremented.  If <fast> is nonzero,
  * returns NULL if metadata for the entry has not yet been read from the song
  * file. */
-AUD_FUNC3 (Tuple *, playlist_entry_get_tuple, gint, playlist, gint, entry,
- gboolean, fast)
+AUD_FUNC3 (Tuple *, playlist_entry_get_tuple, int, playlist, int, entry,
+ boolean, fast)
 
 /* Returns a formatted title string for an entry.  This may include information
  * such as the filename, song title, and/or artist.  If <fast> is nonzero,
  * returns the entry's filename if metadata for the entry has not yet been read. */
-AUD_FUNC3 (gchar *, playlist_entry_get_title, gint, playlist, gint, entry,
- gboolean, fast)
+AUD_FUNC3 (char *, playlist_entry_get_title, int, playlist, int, entry,
+ boolean, fast)
 
 /* Returns three strings (title, artist, and album) describing an entry.  The
  * strings are pooled, and the usual cautions apply.  If <fast> is nonzero,
  * returns a "best guess" based on the entry's filename if metadata for the
  * entry has not yet been read.  May return NULL for any and all values. */
-AUD_VFUNC6 (playlist_entry_describe, gint, playlist, gint, entry,
- gchar * *, title, gchar * *, artist, gchar * *, album, gboolean, fast)
+AUD_VFUNC6 (playlist_entry_describe, int, playlist, int, entry,
+ char * *, title, char * *, artist, char * *, album, boolean, fast)
 
 /* Returns the length in milliseconds of an entry, or -1 if the length is not
  * known.  <fast> is as in playlist_entry_get_tuple(). */
-AUD_FUNC3 (gint, playlist_entry_get_length, gint, playlist, gint, entry,
- gboolean, fast)
+AUD_FUNC3 (int, playlist_entry_get_length, int, playlist, int, entry,
+ boolean, fast)
 
 /* Sets the entry which will be played (if this playlist is selected with
  * playlist_set_playing()) when drct_play() is called.  If a song from this
  * playlist is already playing, it will be stopped.  If <position> is negative,
  * calls to playlist_get_position() will return -1, and the behavior of
  * drct_play() is unspecified. */
-AUD_VFUNC2 (playlist_set_position, gint, playlist, gint, position)
+AUD_VFUNC2 (playlist_set_position, int, playlist, int, position)
 
 /* Returns the number of the entry which was last played from this playlist, or
  * -1 if that cannot be determined. */
-AUD_FUNC1 (gint, playlist_get_position, gint, playlist)
+AUD_FUNC1 (int, playlist_get_position, int, playlist)
 
 /* Sets whether an entry is selected. */
-AUD_VFUNC3 (playlist_entry_set_selected, gint, playlist, gint, entry,
- gboolean, selected)
+AUD_VFUNC3 (playlist_entry_set_selected, int, playlist, int, entry,
+ boolean, selected)
 
 /* Returns whether an entry is selected. */
-AUD_FUNC2 (gboolean, playlist_entry_get_selected, gint, playlist, gint, entry)
+AUD_FUNC2 (boolean, playlist_entry_get_selected, int, playlist, int, entry)
 
 /* Returns the number of selected entries in a playlist. */
-AUD_FUNC1 (gint, playlist_selected_count, gint, playlist)
+AUD_FUNC1 (int, playlist_selected_count, int, playlist)
 
 /* Selects all (or none) of the entries in a playlist. */
-AUD_VFUNC2 (playlist_select_all, gint, playlist, gboolean, selected)
+AUD_VFUNC2 (playlist_select_all, int, playlist, boolean, selected)
 
 /* Moves a selected entry within a playlist by an offset of <distance> entries.
  * Other selected entries are gathered around it.  Returns the offset by which
  * the entry was actually moved, which may be less in absolute value than the
  * requested offset. */
-AUD_FUNC3 (gint, playlist_shift, gint, playlist, gint, position, gint, distance)
+AUD_FUNC3 (int, playlist_shift, int, playlist, int, position, int, distance)
 
 /* Removes the selected entries from a playlist.  If the last song played is one
  * of these entries, playback is stopped.  In this case, calls to
  * playlist_get_position() will return -1, and the behavior of drct_play() is
  * unspecified. */
-AUD_VFUNC1 (playlist_delete_selected, gint, playlist)
+AUD_VFUNC1 (playlist_delete_selected, int, playlist)
 
 /* Sorts the entries in a playlist based on filename.  The callback function
  * should return negative if the first filename comes before the second,
  * positive if it comes after, or zero if the two are indistinguishable. */
-AUD_VFUNC2 (playlist_sort_by_filename, gint, playlist,
+AUD_VFUNC2 (playlist_sort_by_filename, int, playlist,
  PlaylistStringCompareFunc, compare)
 
 /* Sorts the entries in a playlist based on tuple.  May fail if metadata
  * scanning is still in progress (or has been disabled). */
-AUD_VFUNC2 (playlist_sort_by_tuple, gint, playlist,
+AUD_VFUNC2 (playlist_sort_by_tuple, int, playlist,
  PlaylistTupleCompareFunc, compare)
 
 /* Sorts the entries in a playlist based on formatted title string.  May fail if
  * metadata scanning is still in progress (or has been disabled). */
-AUD_VFUNC2 (playlist_sort_by_title, gint, playlist,
+AUD_VFUNC2 (playlist_sort_by_title, int, playlist,
  PlaylistStringCompareFunc, compare)
 
 /* Sorts only the selected entries in a playlist based on filename. */
-AUD_VFUNC2 (playlist_sort_selected_by_filename, gint, playlist,
+AUD_VFUNC2 (playlist_sort_selected_by_filename, int, playlist,
  PlaylistStringCompareFunc, compare)
 
 /* Sorts only the selected entries in a playlist based on tuple.  May fail if
  * metadata scanning is still in progress (or has been disabled). */
-AUD_VFUNC2 (playlist_sort_selected_by_tuple, gint, playlist,
+AUD_VFUNC2 (playlist_sort_selected_by_tuple, int, playlist,
  PlaylistTupleCompareFunc, compare)
 
 /* Sorts only the selected entries in a playlist based on formatted title
  * string.  May fail if metadata scanning is still in progress (or has been
  * disabled). */
-AUD_VFUNC2 (playlist_sort_selected_by_title, gint, playlist,
+AUD_VFUNC2 (playlist_sort_selected_by_title, int, playlist,
  PlaylistStringCompareFunc, compare)
 
 /* Reverses the order of the entries in a playlist. */
-AUD_VFUNC1 (playlist_reverse, gint, playlist)
+AUD_VFUNC1 (playlist_reverse, int, playlist)
 
 /* Reorders the entries in a playlist randomly. */
-AUD_VFUNC1 (playlist_randomize, gint, playlist)
+AUD_VFUNC1 (playlist_randomize, int, playlist)
 
 /* Discards the metadata stored for all the entries in a playlist and starts
  * reading it afresh from the song files in the background. */
-AUD_VFUNC1 (playlist_rescan, gint, playlist)
+AUD_VFUNC1 (playlist_rescan, int, playlist)
 
 /* Like playlist_rescan, but applies only to the selected entries in a playlist. */
-AUD_VFUNC1 (playlist_rescan_selected, gint, playlist)
+AUD_VFUNC1 (playlist_rescan_selected, int, playlist)
 
 /* Discards the metadata stored for all the entries that refer to a particular
  * song file, in whatever playlist they appear, and starts reading it afresh
  * from that file in the background. */
-AUD_VFUNC1 (playlist_rescan_file, const gchar *, filename)
+AUD_VFUNC1 (playlist_rescan_file, const char *, filename)
 
 /* Calculates the total length in milliseconds of all the entries in a playlist.
  * Only takes into account entries for which metadata has already been read. */
-AUD_FUNC1 (gint64, playlist_get_total_length, gint, playlist)
+AUD_FUNC1 (int64_t, playlist_get_total_length, int, playlist)
 
 /* Calculates the total length in milliseconds of only the selected entries in a
  * playlist.  Only takes into account entries for which metadata has already
  * been read. */
-AUD_FUNC1 (gint64, playlist_get_selected_length, gint, playlist)
+AUD_FUNC1 (int64_t, playlist_get_selected_length, int, playlist)
 
 /* Returns the number of entries in a playlist queue.  The entries are numbered
  * starting from zero, lower numbers being played first. */
-AUD_FUNC1 (gint, playlist_queue_count, gint, playlist)
+AUD_FUNC1 (int, playlist_queue_count, int, playlist)
 
 /* Adds an entry to a playlist's queue before the entry numbered <at> in the
  * queue.  If <at> is negative or equal to the number of entries in the queue,
  * adds the entry after the last one in the queue.  The same entry cannot be
  * added to the queue more than once. */
-AUD_VFUNC3 (playlist_queue_insert, gint, playlist, gint, at, gint, entry)
+AUD_VFUNC3 (playlist_queue_insert, int, playlist, int, at, int, entry)
 
 /* Adds the selected entries in a playlist to the queue, if they are not already
  * in it. */
-AUD_VFUNC2 (playlist_queue_insert_selected, gint, playlist, gint, at)
+AUD_VFUNC2 (playlist_queue_insert_selected, int, playlist, int, at)
 
 /* Returns the position in the playlist of the entry at a given position in the
  * queue. */
-AUD_FUNC2 (gint, playlist_queue_get_entry, gint, playlist, gint, at)
+AUD_FUNC2 (int, playlist_queue_get_entry, int, playlist, int, at)
 
 /* Returns the position in the queue of the entry at a given position in the
  * playlist.  If it is not in the queue, returns -1. */
-AUD_FUNC2 (gint, playlist_queue_find_entry, gint, playlist, gint, entry)
+AUD_FUNC2 (int, playlist_queue_find_entry, int, playlist, int, entry)
 
 /* Removes a contiguous block of <number> entries starting with the one numbered
  * <at> from the queue. */
-AUD_VFUNC3 (playlist_queue_delete, gint, playlist, gint, at, gint, number)
+AUD_VFUNC3 (playlist_queue_delete, int, playlist, int, at, int, number)
 
 /* Removes the selected entries in a playlist from the queue, if they are in it. */
-AUD_VFUNC1 (playlist_queue_delete_selected, gint, playlist)
+AUD_VFUNC1 (playlist_queue_delete_selected, int, playlist)
 
 /* Returns nonzero if a "playlist update" hook call is pending.  If called from
  * within the hook, the current hook call is not considered pending. */
-AUD_FUNC0 (gboolean, playlist_update_pending)
+AUD_FUNC0 (boolean, playlist_update_pending)
 
 /* May be called within the "playlist update" hook to determine the update level
  * and number of entries changed in a playlist.  Returns the update level for
@@ -304,45 +304,45 @@ AUD_FUNC0 (gboolean, playlist_update_pending)
  * number of contiguous entries to be updated in <count>.  Note that entries may
  * have been added or removed within this range.  If no entries in the playlist
  * have changed, returns zero. */
-AUD_FUNC3 (gint, playlist_updated_range, gint, playlist, gint *, at, gint *, count)
+AUD_FUNC3 (int, playlist_updated_range, int, playlist, int *, at, int *, count)
 
 /* Returns nonzero if entries are being added to a playlist in the background. */
-AUD_FUNC1 (gboolean, playlist_add_in_progress, gint, playlist)
+AUD_FUNC1 (boolean, playlist_add_in_progress, int, playlist)
 
 /* Returns nonzero if entries in a playlist are being scanned for metadata in
  * the background. */
-AUD_FUNC1 (gboolean, playlist_scan_in_progress, gint, playlist)
+AUD_FUNC1 (boolean, playlist_scan_in_progress, int, playlist)
 
 /* --- PLAYLIST UTILITY API --- */
 
 /* Sorts the entries in a playlist according to one of the schemes listed in
  * playlist.h. */
-AUD_VFUNC2 (playlist_sort_by_scheme, gint, playlist, gint, scheme)
+AUD_VFUNC2 (playlist_sort_by_scheme, int, playlist, int, scheme)
 
 /* Sorts only the selected entries in a playlist according to one of those
  * schemes. */
-AUD_VFUNC2 (playlist_sort_selected_by_scheme, gint, playlist, gint, scheme)
+AUD_VFUNC2 (playlist_sort_selected_by_scheme, int, playlist, int, scheme)
 
 /* Removes duplicate entries in a playlist according to one of those schemes.
  * As currently implemented, first sorts the playlist. */
-AUD_VFUNC2 (playlist_remove_duplicates_by_scheme, gint, playlist, gint,
+AUD_VFUNC2 (playlist_remove_duplicates_by_scheme, int, playlist, int,
  scheme)
 
 /* Removes all entries referring to unavailable files in a playlist.  ("Remove
  * failed" is something of a misnomer for the current behavior.)  As currently
  * implemented, only works for file:// URIs. */
-AUD_VFUNC1 (playlist_remove_failed, gint, playlist)
+AUD_VFUNC1 (playlist_remove_failed, int, playlist)
 
 /* Selects all the entries in a playlist that match regular expressions stored
  * in the fields of a tuple.  Does not free the memory used by the tuple.
  * Example: To select all the songs whose title starts with the letter "A",
  * create a blank tuple and set its title field to "^A". */
-AUD_VFUNC2 (playlist_select_by_patterns, gint, playlist, const Tuple *,
+AUD_VFUNC2 (playlist_select_by_patterns, int, playlist, const Tuple *,
  patterns)
 
 /* Returns nonzero if <filename> refers to a playlist file. */
-AUD_FUNC1 (gboolean, filename_is_playlist, const gchar *, filename)
+AUD_FUNC1 (boolean, filename_is_playlist, const char *, filename)
 
 /* Saves the entries in a playlist to a playlist file.  The format of the file
  * is determined from the file extension.  Returns nonzero on success. */
-AUD_FUNC2 (gboolean, playlist_save, gint, playlist, const gchar *, filename)
+AUD_FUNC2 (boolean, playlist_save, int, playlist, const char *, filename)

@@ -50,7 +50,7 @@
 #include "plugins.h"
 #include "util.h"
 
-gboolean dir_foreach (const gchar * path, DirForeachFunc func, void * user)
+boolean dir_foreach (const char * path, DirForeachFunc func, void * user)
 {
     DIR * dir = opendir (path);
     if (! dir)
@@ -62,8 +62,8 @@ gboolean dir_foreach (const gchar * path, DirForeachFunc func, void * user)
         if (entry->d_name[0] == '.')
             continue;
 
-        gchar * full = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "%s", path, entry->d_name);
-        gboolean stop = func (full, entry->d_name, user);
+        char * full = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "%s", path, entry->d_name);
+        boolean stop = func (full, entry->d_name, user);
         g_free (full);
 
         if (stop)
@@ -74,10 +74,10 @@ gboolean dir_foreach (const gchar * path, DirForeachFunc func, void * user)
     return TRUE;
 }
 
-gchar * construct_uri (const gchar * string, const gchar * playlist_name)
+char * construct_uri (const char * string, const char * playlist_name)
 {
-    gchar *filename = g_strdup(string);
-    gchar *uri = NULL;
+    char *filename = g_strdup(string);
+    char *uri = NULL;
 
     // make full path uri here
     // case 1: filename is raw full path or uri
@@ -90,9 +90,9 @@ gchar * construct_uri (const gchar * string, const gchar * playlist_name)
     // make full path by replacing last part of playlist path with filename.
     else
     {
-        const gchar * slash = strrchr (playlist_name, '/');
+        const char * slash = strrchr (playlist_name, '/');
         if (slash)
-            uri = g_strdup_printf ("%.*s/%s", (gint) (slash - playlist_name),
+            uri = g_strdup_printf ("%.*s/%s", (int) (slash - playlist_name),
              playlist_name, filename);
     }
 
@@ -101,7 +101,7 @@ gchar * construct_uri (const gchar * string, const gchar * playlist_name)
 }
 
 /* local files -- not URI's */
-gint file_get_mtime (const gchar * filename)
+int file_get_mtime (const char * filename)
 {
     struct stat info;
 
@@ -112,7 +112,7 @@ gint file_get_mtime (const gchar * filename)
 }
 
 void
-make_directory(const gchar * path, mode_t mode)
+make_directory(const char * path, mode_t mode)
 {
     if (g_mkdir_with_parents(path, mode) == 0)
         return;
@@ -121,15 +121,15 @@ make_directory(const gchar * path, mode_t mode)
                g_strerror(errno));
 }
 
-gchar * get_path_to_self (void)
+char * get_path_to_self (void)
 {
 #if defined _WIN32 || defined HAVE_PROC_SELF_EXE
-    gint size = 256;
-    gchar * buf = g_malloc (size);
+    int size = 256;
+    char * buf = g_malloc (size);
 
     while (1)
     {
-        gint len;
+        int len;
 
 #ifdef _WIN32
         if (! (len = GetModuleFileName (NULL, buf, size)))
@@ -167,10 +167,10 @@ gchar * get_path_to_self (void)
  *     "file:///home/john/folder/file.mp3" -> "folder/file.mp3"
  *     "file:///folder/file.mp3"           -> "folder/file.mp3" */
 
-static gchar * skip_top_folders (gchar * name)
+static char * skip_top_folders (char * name)
 {
-    static gchar * home;
-    static gint len;
+    static char * home;
+    static int len;
 
     if (! home)
     {
@@ -202,12 +202,12 @@ static gchar * skip_top_folders (gchar * name)
  *     "d/e.mp3"       -> "e", "d",  NULL
  *     "e.mp3"         -> "e", NULL, NULL */
 
-static void split_filename (gchar * name, gchar * * base, gchar * * first,
- gchar * * second)
+static void split_filename (char * name, char * * base, char * * first,
+ char * * second)
 {
     * first = * second = NULL;
 
-    gchar * c;
+    char * c;
 
     if ((c = strrchr (name, '/')))
     {
@@ -247,7 +247,7 @@ DONE:
  *     "http://some.domain.org/folder/file.mp3" -> "some.domain.org"
  *     "http://some.stream.fm:8000"             -> "some.stream.fm" */
 
-static gchar * stream_name (gchar * name)
+static char * stream_name (char * name)
 {
     if (! strncmp (name, "http://", 7))
         name += 7;
@@ -258,7 +258,7 @@ static gchar * stream_name (gchar * name)
     else
         return NULL;
 
-    gchar * c;
+    char * c;
 
     if ((c = strchr (name, '/')))
         * c = 0;
@@ -270,9 +270,9 @@ static gchar * stream_name (gchar * name)
     return name;
 }
 
-static gchar * get_nonblank_field (const Tuple * tuple, gint field)
+static char * get_nonblank_field (const Tuple * tuple, int field)
 {
-    gchar * str = tuple ? tuple_get_str (tuple, field, NULL) : NULL;
+    char * str = tuple ? tuple_get_str (tuple, field, NULL) : NULL;
 
     if (str && ! str[0])
     {
@@ -283,7 +283,7 @@ static gchar * get_nonblank_field (const Tuple * tuple, gint field)
     return str;
 }
 
-static gchar * str_get_decoded (gchar * str)
+static char * str_get_decoded (char * str)
 {
     str_decode_percent (str, -1, str);
     return str_get (str);
@@ -292,15 +292,15 @@ static gchar * str_get_decoded (gchar * str)
 /* Derives best guesses of title, artist, and album from a file name (URI) and
  * tuple (which may be NULL).  The returned strings are stringpooled or NULL. */
 
-void describe_song (const gchar * name, const Tuple * tuple, gchar * * _title,
- gchar * * _artist, gchar * * _album)
+void describe_song (const char * name, const Tuple * tuple, char * * _title,
+ char * * _artist, char * * _album)
 {
     /* Common folder names to skip */
-    static const gchar * const skip[] = {"music"};
+    static const char * const skip[] = {"music"};
 
-    gchar * title = get_nonblank_field (tuple, FIELD_TITLE);
-    gchar * artist = get_nonblank_field (tuple, FIELD_ARTIST);
-    gchar * album = get_nonblank_field (tuple, FIELD_ALBUM);
+    char * title = get_nonblank_field (tuple, FIELD_TITLE);
+    char * artist = get_nonblank_field (tuple, FIELD_ARTIST);
+    char * album = get_nonblank_field (tuple, FIELD_ALBUM);
 
     if (title && artist && album)
     {
@@ -311,18 +311,18 @@ DONE:
         return;
     }
 
-    gchar buf[strlen (name) + 1];
+    char buf[strlen (name) + 1];
     memcpy (buf, name, sizeof buf);
 
     if (! strncmp (buf, "file:///", 8))
     {
-        gchar * base, * first, * second;
+        char * base, * first, * second;
         split_filename (skip_top_folders (buf), & base, & first, & second);
 
         if (! title)
             title = str_get_decoded (base);
 
-        for (gint i = 0; i < G_N_ELEMENTS (skip); i ++)
+        for (int i = 0; i < G_N_ELEMENTS (skip); i ++)
         {
             if (first && ! g_ascii_strcasecmp (first, skip[i]))
                 first = NULL;

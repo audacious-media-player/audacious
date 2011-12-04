@@ -49,9 +49,9 @@
 #include "plugins.h"
 #undef AUD_API_DECLARE
 
-static const gchar * plugin_dir_list[] = {PLUGINSUBS, NULL};
+static const char * plugin_dir_list[] = {PLUGINSUBS, NULL};
 
-gchar verbose = 0;
+char verbose = 0;
 
 AudAPITable api_table = {
  .drct_api = & drct_api,
@@ -68,7 +68,7 @@ typedef struct {
 static GList * loaded_modules = NULL;
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
-static void plugin2_process (Plugin * header, GModule * module, const gchar * filename)
+static void plugin2_process (Plugin * header, GModule * module, const char * filename)
 {
     if (header->magic != _AUD_PLUGIN_MAGIC)
     {
@@ -134,7 +134,7 @@ static void plugin2_unload (LoadedModule * loaded)
 
 /******************************************************************/
 
-void plugin_load (const gchar * filename)
+void plugin_load (const char * filename)
 {
     GModule *module;
     Plugin * (* func) (AudAPITable * table);
@@ -160,7 +160,7 @@ void plugin_load (const gchar * filename)
     g_module_close(module);
 }
 
-static gboolean scan_plugin_func(const gchar * path, const gchar * basename, gpointer data)
+static boolean scan_plugin_func(const char * path, const char * basename, gpointer data)
 {
     if (!str_has_suffix_nocase(basename, SHARED_SUFFIX))
         return FALSE;
@@ -173,7 +173,7 @@ static gboolean scan_plugin_func(const gchar * path, const gchar * basename, gpo
     return FALSE;
 }
 
-static void scan_plugins(const gchar * path)
+static void scan_plugins(const char * path)
 {
     dir_foreach (path, scan_plugin_func, NULL);
 }
@@ -182,8 +182,8 @@ void plugin_system_init(void)
 {
     assert (g_module_supported ());
 
-    gchar *dir;
-    gint dirsel = 0;
+    char *dir;
+    int dirsel = 0;
 
     audgui_init (& api_table);
 

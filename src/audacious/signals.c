@@ -32,7 +32,7 @@ static sigset_t signal_set;
 
 static void * signal_thread (void * data)
 {
-    gint signal;
+    int signal;
 
     while (! sigwait (& signal_set, & signal))
         event_queue ("quit", NULL);

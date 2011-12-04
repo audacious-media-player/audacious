@@ -27,8 +27,9 @@
 
 #include <math.h>
 
-#include <audacious/misc.h>
 #include <audacious/i18n.h>
+#include <audacious/misc.h>
+#include <audacious/types.h>
 #include <libaudcore/hook.h>
 
 #include "config.h"
@@ -60,7 +61,7 @@ static GtkWidget * create_on_off (void)
 static void slider_moved (GtkRange * slider, void * unused)
 {
     int band = GPOINTER_TO_INT (g_object_get_data ((GObject *) slider, "band"));
-    gdouble value = round (-gtk_range_get_value (slider));
+    double value = round (-gtk_range_get_value (slider));
 
     if (band == -1)
         aud_set_double (NULL, "equalizer_preamp", value);
@@ -71,7 +72,7 @@ static void slider_moved (GtkRange * slider, void * unused)
 static void slider_update (void * unused, GtkRange * slider)
 {
     int band = GPOINTER_TO_INT (g_object_get_data ((GObject *) slider, "band"));
-    gdouble value;
+    double value;
 
     if (band == -1)
         value = round (aud_get_double (NULL, "equalizer_preamp"));
@@ -83,7 +84,7 @@ static void slider_update (void * unused, GtkRange * slider)
     g_signal_handlers_unblock_by_func (slider, (void *) slider_moved, NULL);
 }
 
-static char * format_value (GtkScale * slider, gdouble value, void * unused)
+static char * format_value (GtkScale * slider, double value, void * unused)
 {
     return g_strdup_printf ("%d", (int) -value);
 }

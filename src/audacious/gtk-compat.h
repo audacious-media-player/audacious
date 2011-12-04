@@ -22,7 +22,7 @@
 
 #if ! GTK_CHECK_VERSION (2, 18, 0)
 
-static inline void gtk_widget_set_can_default (GtkWidget * w, gboolean b)
+static inline void gtk_widget_set_can_default (GtkWidget * w, boolean b)
 {
     if (b)
 	GTK_WIDGET_SET_FLAGS (w, GTK_CAN_DEFAULT);
@@ -30,7 +30,7 @@ static inline void gtk_widget_set_can_default (GtkWidget * w, gboolean b)
 	GTK_WIDGET_UNSET_FLAGS (w, GTK_CAN_DEFAULT);
 }
 
-static inline void gtk_widget_set_can_focus (GtkWidget * w, gboolean b)
+static inline void gtk_widget_set_can_focus (GtkWidget * w, boolean b)
 {
     if (b)
 	GTK_WIDGET_SET_FLAGS (w, GTK_CAN_FOCUS);
@@ -50,8 +50,8 @@ static inline void gtk_widget_set_can_focus (GtkWidget * w, gboolean b)
 
 #if ! GTK_CHECK_VERSION (3, 0, 0)
 
-static inline void gdk_window_get_geometry_compat (GdkWindow * win, gint * x,
- gint * y, gint * w, gint * h)
+static inline void gdk_window_get_geometry_compat (GdkWindow * win, int * x,
+ int * y, int * w, int * h)
 {
     gdk_window_get_geometry (win, x, y, w, h, NULL);
 }

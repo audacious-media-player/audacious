@@ -618,7 +618,7 @@ void audgui_list_add_column (GtkWidget * list, const char * title,
     {
         gtk_tree_view_column_set_sizing (tree_column,
          GTK_TREE_VIEW_COLUMN_GROW_ONLY);
-        g_object_set ((GObject *) renderer, "xalign", (gfloat) 1, NULL);
+        g_object_set ((GObject *) renderer, "xalign", (float) 1, NULL);
     }
 
     gtk_tree_view_append_column ((GtkTreeView *) list, tree_column);

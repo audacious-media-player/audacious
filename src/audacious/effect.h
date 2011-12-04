@@ -23,18 +23,18 @@
 #ifndef AUDACIOUS_EFFECT_H
 #define AUDACIOUS_EFFECT_H
 
-#include <glib.h>
+#include <libaudcore/core.h>
 
 #include "types.h"
 
-void effect_start (gint * channels, gint * rate);
-void effect_process (gfloat * * data, gint * samples);
+void effect_start (int * channels, int * rate);
+void effect_process (float * * data, int * samples);
 void effect_flush (void);
-void effect_finish (gfloat * * data, gint * samples);
-gint effect_decoder_to_output_time (gint time);
-gint effect_output_to_decoder_time (gint time);
+void effect_finish (float * * data, int * samples);
+int effect_decoder_to_output_time (int time);
+int effect_output_to_decoder_time (int time);
 
-gboolean effect_plugin_start (PluginHandle * plugin);
+boolean effect_plugin_start (PluginHandle * plugin);
 void effect_plugin_stop (PluginHandle * plugin);
 
 #endif

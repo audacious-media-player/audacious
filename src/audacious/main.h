@@ -22,7 +22,7 @@
 #ifndef _AUDACIOUS_MAIN_H
 #define _AUDACIOUS_MAIN_H
 
-#include <glib.h>
+#include <libaudcore/core.h>
 
 /* adder.c */
 void adder_init (void);
@@ -37,8 +37,8 @@ void config_save (void);
 void config_cleanup (void);
 
 /* main.c */
-extern gboolean headless;
-gboolean do_autosave (void);
+extern boolean headless;
+boolean do_autosave (void);
 
 /* mpris-signals.c */
 void mpris_signals_init (void);

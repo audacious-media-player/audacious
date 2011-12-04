@@ -52,13 +52,13 @@ enum CategoryViewCols {
 };
 
 typedef struct {
-    const gchar *icon_path;
-    const gchar *name;
+    const char *icon_path;
+    const char *name;
 } Category;
 
 typedef struct {
-    const gchar *name;
-    const gchar *tag;
+    const char *name;
+    const char *tag;
 } TitleFieldTag;
 
 static /* GtkWidget * */ void * prefswin = NULL;
@@ -88,7 +88,7 @@ static Category categories[] = {
  {"plugins.png", N_("Plugins")},
 };
 
-static gint n_categories = G_N_ELEMENTS(categories);
+static int n_categories = G_N_ELEMENTS(categories);
 
 static TitleFieldTag title_field_tags[] = {
     { N_("Artist")     , "${artist}" },
@@ -104,7 +104,7 @@ static TitleFieldTag title_field_tags[] = {
     { N_("Codec")      , "${codec}" },
     { N_("Quality")    , "${quality}" },
 };
-static const guint n_title_field_tags = G_N_ELEMENTS(title_field_tags);
+static const unsigned int n_title_field_tags = G_N_ELEMENTS(title_field_tags);
 
 #ifdef USE_CHARDET
 static ComboBoxElements chardet_detector_presets[] = {
@@ -132,8 +132,8 @@ static ComboBoxElements bitdepth_elements[] = {
 typedef struct {
     void *next;
     GtkWidget *container;
-    const gchar * pg_name;
-    const gchar * img_url;
+    const char * pg_name;
+    const char * img_url;
 } CategoryQueueEntry;
 
 CategoryQueueEntry *category_queue = NULL;
@@ -218,7 +218,7 @@ static PreferencesWidget playlist_page_widgets[] = {
 
 #define TITLESTRING_NPRESETS 6
 
-static const gchar * const titlestring_presets[TITLESTRING_NPRESETS] = {
+static const char * const titlestring_presets[TITLESTRING_NPRESETS] = {
  "${title}",
  "${?artist:${artist} - }${title}",
  "${?artist:${artist} - }${?album:${album} - }${title}",
@@ -226,7 +226,7 @@ static const gchar * const titlestring_presets[TITLESTRING_NPRESETS] = {
  "${?artist:${artist} }${?album:[ ${album} ] }${?artist:- }${?track-number:${track-number}. }${title}",
  "${?album:${album} - }${title}"};
 
-static const gchar * const titlestring_preset_names[TITLESTRING_NPRESETS] = {
+static const char * const titlestring_preset_names[TITLESTRING_NPRESETS] = {
  N_("TITLE"),
  N_("ARTIST - TITLE"),
  N_("ARTIST - ALBUM - TITLE"),
@@ -242,7 +242,7 @@ change_category(GtkNotebook * notebook,
 {
     GtkTreeModel *model;
     GtkTreeIter iter;
-    gint index;
+    int index;
 
     if (!gtk_tree_selection_get_selected(selection, &model, &iter))
         return;
@@ -253,8 +253,8 @@ change_category(GtkNotebook * notebook,
 
 static void
 editable_insert_text(GtkEditable * editable,
-                     const gchar * text,
-                     gint * pos)
+                     const char * text,
+                     int * pos)
 {
     gtk_editable_insert_text(editable, text, strlen(text), pos);
 }
@@ -263,9 +263,9 @@ static void
 titlestring_tag_menu_callback(GtkMenuItem * menuitem,
                               gpointer data)
 {
-    const gchar *separator = " - ";
-    gint item = GPOINTER_TO_INT(data);
-    gint pos;
+    const char *separator = " - ";
+    int item = GPOINTER_TO_INT(data);
+    int pos;
 
     pos = gtk_editable_get_position(GTK_EDITABLE(titlestring_entry));
 
@@ -287,9 +287,9 @@ on_titlestring_help_button_clicked(GtkButton * button,
     gtk_menu_popup (menu, NULL, NULL, NULL, NULL, 0, GDK_CURRENT_TIME);
 }
 
-static void update_titlestring_cbox (GtkComboBox * cbox, const gchar * format)
+static void update_titlestring_cbox (GtkComboBox * cbox, const char * format)
 {
-    gint preset;
+    int preset;
     for (preset = 0; preset < TITLESTRING_NPRESETS; preset ++)
     {
         if (! strcmp (titlestring_presets[preset], format))
@@ -302,7 +302,7 @@ static void update_titlestring_cbox (GtkComboBox * cbox, const gchar * format)
 
 static void on_titlestring_entry_changed (GtkEntry * entry, GtkComboBox * cbox)
 {
-    const gchar * format = gtk_entry_get_text (entry);
+    const char * format = gtk_entry_get_text (entry);
     set_string (NULL, "generic_title_format", format);
     update_titlestring_cbox (cbox, format);
     playlist_reformat_titles ();
@@ -310,17 +310,17 @@ static void on_titlestring_entry_changed (GtkEntry * entry, GtkComboBox * cbox)
 
 static void on_titlestring_cbox_changed (GtkComboBox * cbox, GtkEntry * entry)
 {
-    gint preset = gtk_combo_box_get_active (cbox);
+    int preset = gtk_combo_box_get_active (cbox);
     if (preset < TITLESTRING_NPRESETS)
         gtk_entry_set_text (entry, titlestring_presets[preset]);
 }
 
-static void widget_set_bool (PreferencesWidget * widget, gboolean value)
+static void widget_set_bool (PreferencesWidget * widget, boolean value)
 {
     g_return_if_fail (widget->cfg_type == VALUE_BOOLEAN);
 
     if (widget->cfg)
-        * (gboolean *) widget->cfg = value;
+        * (boolean *) widget->cfg = value;
     else if (widget->cname)
         set_bool (widget->csect, widget->cname, value);
 
@@ -328,24 +328,24 @@ static void widget_set_bool (PreferencesWidget * widget, gboolean value)
         widget->callback ();
 }
 
-static gboolean widget_get_bool (PreferencesWidget * widget)
+static boolean widget_get_bool (PreferencesWidget * widget)
 {
     g_return_val_if_fail (widget->cfg_type == VALUE_BOOLEAN, FALSE);
 
     if (widget->cfg)
-        return * (gboolean *) widget->cfg;
+        return * (boolean *) widget->cfg;
     else if (widget->cname)
         return get_bool (widget->csect, widget->cname);
     else
         return FALSE;
 }
 
-static void widget_set_int (PreferencesWidget * widget, gint value)
+static void widget_set_int (PreferencesWidget * widget, int value)
 {
     g_return_if_fail (widget->cfg_type == VALUE_INT);
 
     if (widget->cfg)
-        * (gint *) widget->cfg = value;
+        * (int *) widget->cfg = value;
     else if (widget->cname)
         set_int (widget->csect, widget->cname, value);
 
@@ -353,24 +353,24 @@ static void widget_set_int (PreferencesWidget * widget, gint value)
         widget->callback ();
 }
 
-static gint widget_get_int (PreferencesWidget * widget)
+static int widget_get_int (PreferencesWidget * widget)
 {
     g_return_val_if_fail (widget->cfg_type == VALUE_INT, 0);
 
     if (widget->cfg)
-        return * (gint *) widget->cfg;
+        return * (int *) widget->cfg;
     else if (widget->cname)
         return get_int (widget->csect, widget->cname);
     else
         return 0;
 }
 
-static void widget_set_double (PreferencesWidget * widget, gdouble value)
+static void widget_set_double (PreferencesWidget * widget, double value)
 {
     g_return_if_fail (widget->cfg_type == VALUE_FLOAT);
 
     if (widget->cfg)
-        * (gfloat *) widget->cfg = value;
+        * (float *) widget->cfg = value;
     else if (widget->cname)
         set_double (widget->csect, widget->cname, value);
 
@@ -378,26 +378,26 @@ static void widget_set_double (PreferencesWidget * widget, gdouble value)
         widget->callback ();
 }
 
-static gdouble widget_get_double (PreferencesWidget * widget)
+static double widget_get_double (PreferencesWidget * widget)
 {
     g_return_val_if_fail (widget->cfg_type == VALUE_FLOAT, 0);
 
     if (widget->cfg)
-        return * (gfloat *) widget->cfg;
+        return * (float *) widget->cfg;
     else if (widget->cname)
         return get_double (widget->csect, widget->cname);
     else
         return 0;
 }
 
-static void widget_set_string (PreferencesWidget * widget, const gchar * value)
+static void widget_set_string (PreferencesWidget * widget, const char * value)
 {
     g_return_if_fail (widget->cfg_type == VALUE_STRING);
 
     if (widget->cfg)
     {
-        g_free (* (gchar * *) widget->cfg);
-        * (gchar * *) widget->cfg = g_strdup (value);
+        g_free (* (char * *) widget->cfg);
+        * (char * *) widget->cfg = g_strdup (value);
     }
     else if (widget->cname)
         set_string (widget->csect, widget->cname, value);
@@ -406,12 +406,12 @@ static void widget_set_string (PreferencesWidget * widget, const gchar * value)
         widget->callback ();
 }
 
-static gchar * widget_get_string (PreferencesWidget * widget)
+static char * widget_get_string (PreferencesWidget * widget)
 {
     g_return_val_if_fail (widget->cfg_type == VALUE_STRING, NULL);
 
     if (widget->cfg)
-        return g_strdup (* (gchar * *) widget->cfg);
+        return g_strdup (* (char * *) widget->cfg);
     else if (widget->cname)
         return get_string (widget->csect, widget->cname);
     else
@@ -471,7 +471,7 @@ void plugin_preferences_show (PluginPreferences * settings)
     if (settings->init)
         settings->init();
 
-    const gchar * d = settings->domain;
+    const char * d = settings->domain;
     if (! d)
     {
         printf ("WARNING: PluginPreferences window with title \"%s\" did not "
@@ -550,7 +550,7 @@ static void fill_category_list (GtkTreeView * treeview, GtkNotebook * notebook)
     GtkTreeIter iter;
     GdkPixbuf *img;
     CategoryQueueEntry *qlist;
-    gint i;
+    int i;
 
     column = gtk_tree_view_column_new();
     gtk_tree_view_column_set_title(column, _("Category"));
@@ -574,7 +574,7 @@ static void fill_category_list (GtkTreeView * treeview, GtkNotebook * notebook)
 
     for (i = 0; i < n_categories; i ++)
     {
-        gchar * path = g_strdup_printf ("%s/images/%s",
+        char * path = g_strdup_printf ("%s/images/%s",
          get_path (AUD_PATH_DATA_DIR), categories[i].icon_path);
         img = gdk_pixbuf_new_from_file (path, NULL);
         g_free (path);
@@ -608,14 +608,14 @@ static void fill_category_list (GtkTreeView * treeview, GtkNotebook * notebook)
 
 static void on_show_filepopup_toggled (GtkToggleButton * button)
 {
-    gboolean active = gtk_toggle_button_get_active (button);
+    boolean active = gtk_toggle_button_get_active (button);
     set_bool (NULL, "show_filepopup_for_tuple", active);
     gtk_widget_set_sensitive (filepopup_settings_button, active);
 }
 
 static void on_filepopup_settings_clicked (void)
 {
-    gchar * string = get_string (NULL, "cover_name_include");
+    char * string = get_string (NULL, "cover_name_include");
     gtk_entry_set_text ((GtkEntry *) filepopup_cover_name_include, string);
     g_free (string);
 
@@ -668,7 +668,7 @@ on_filepopup_cancel_clicked(GtkButton *button, gpointer data)
 
 static void on_toggle_button_toggled (GtkToggleButton * button, PreferencesWidget * widget)
 {
-    gboolean active = gtk_toggle_button_get_active (button);
+    boolean active = gtk_toggle_button_get_active (button);
     widget_set_bool (widget, active);
 
     GtkWidget * child = g_object_get_data ((GObject *) button, "child");
@@ -692,19 +692,19 @@ static void on_entry_changed (GtkEntry * entry, PreferencesWidget * widget)
 
 static void on_cbox_changed_int (GtkComboBox * combobox, PreferencesWidget * widget)
 {
-    gint position = gtk_combo_box_get_active (combobox);
+    int position = gtk_combo_box_get_active (combobox);
     widget_set_int (widget, GPOINTER_TO_INT (widget->data.combo.elements[position].value));
 }
 
 static void on_cbox_changed_string (GtkComboBox * combobox, PreferencesWidget * widget)
 {
-    gint position = gtk_combo_box_get_active (combobox);
+    int position = gtk_combo_box_get_active (combobox);
     widget_set_string (widget, widget->data.combo.elements[position].value);
 }
 
 static void fill_cbox (GtkWidget * combobox, PreferencesWidget * widget)
 {
-    guint i=0,index=0;
+    unsigned int i=0,index=0;
 
     for (i = 0; i < widget->data.combo.n_elements; i ++)
         gtk_combo_box_text_append_text ((GtkComboBoxText *) combobox,
@@ -716,7 +716,7 @@ static void fill_cbox (GtkWidget * combobox, PreferencesWidget * widget)
                 g_signal_connect(combobox, "changed",
                                  G_CALLBACK(on_cbox_changed_int), widget);
 
-                gint ivalue = widget_get_int (widget);
+                int ivalue = widget_get_int (widget);
 
                 for(i=0; i<widget->data.combo.n_elements; i++) {
                     if (GPOINTER_TO_INT (widget->data.combo.elements[i].value) == ivalue)
@@ -730,10 +730,10 @@ static void fill_cbox (GtkWidget * combobox, PreferencesWidget * widget)
                 g_signal_connect(combobox, "changed",
                                  G_CALLBACK(on_cbox_changed_string), widget);
 
-                gchar * value = widget_get_string (widget);
+                char * value = widget_get_string (widget);
 
                 for(i=0; i<widget->data.combo.n_elements; i++) {
-                    if (value && ! strcmp ((gchar *) widget->data.combo.elements[i].value, value))
+                    if (value && ! strcmp ((char *) widget->data.combo.elements[i].value, value))
                     {
                         index = i;
                         break;
@@ -915,7 +915,7 @@ create_filepopup_settings(void)
 }
 
 static void create_spin_button (PreferencesWidget * widget, GtkWidget * *
- label_pre, GtkWidget * * spin_btn, GtkWidget * * label_past, const gchar *
+ label_pre, GtkWidget * * spin_btn, GtkWidget * * label_past, const char *
  domain)
 {
      g_return_if_fail(widget->type == WIDGET_SPIN_BTN);
@@ -953,7 +953,7 @@ static void create_spin_button (PreferencesWidget * widget, GtkWidget * *
 }
 
 void create_font_btn (PreferencesWidget * widget, GtkWidget * * label,
- GtkWidget * * font_btn, const gchar * domain)
+ GtkWidget * * font_btn, const char * domain)
 {
     *font_btn = gtk_font_button_new();
     gtk_font_button_set_use_font(GTK_FONT_BUTTON(*font_btn), TRUE);
@@ -970,7 +970,7 @@ void create_font_btn (PreferencesWidget * widget, GtkWidget * * label,
         gtk_font_button_set_title (GTK_FONT_BUTTON (* font_btn),
          dgettext (domain, widget->data.font_btn.title));
 
-    gchar * name = widget_get_string (widget);
+    char * name = widget_get_string (widget);
     if (name)
     {
         gtk_font_button_set_font_name ((GtkFontButton *) * font_btn, name);
@@ -981,7 +981,7 @@ void create_font_btn (PreferencesWidget * widget, GtkWidget * * label,
 }
 
 static void create_entry (PreferencesWidget * widget, GtkWidget * * label,
- GtkWidget * * entry, const gchar * domain)
+ GtkWidget * * entry, const char * domain)
 {
     *entry = gtk_entry_new();
     gtk_entry_set_visibility(GTK_ENTRY(*entry), !widget->data.entry.password);
@@ -994,7 +994,7 @@ static void create_entry (PreferencesWidget * widget, GtkWidget * * label,
 
     if (widget->cfg_type == VALUE_STRING)
     {
-        gchar * value = widget_get_string (widget);
+        char * value = widget_get_string (widget);
         if (value)
         {
             gtk_entry_set_text ((GtkEntry *) * entry, value);
@@ -1006,7 +1006,7 @@ static void create_entry (PreferencesWidget * widget, GtkWidget * * label,
 }
 
 static void create_label (PreferencesWidget * widget, GtkWidget * * label,
- GtkWidget * * icon, const gchar * domain)
+ GtkWidget * * icon, const char * domain)
 {
     if (widget->data.label.stock_id)
         *icon = gtk_image_new_from_stock(widget->data.label.stock_id, GTK_ICON_SIZE_BUTTON);
@@ -1021,7 +1021,7 @@ static void create_label (PreferencesWidget * widget, GtkWidget * * label,
 }
 
 static void create_cbox (PreferencesWidget * widget, GtkWidget * * label,
- GtkWidget * * combobox, const gchar * domain)
+ GtkWidget * * combobox, const char * domain)
 {
     * combobox = gtk_combo_box_text_new ();
 
@@ -1032,10 +1032,10 @@ static void create_cbox (PreferencesWidget * widget, GtkWidget * * label,
     fill_cbox (* combobox, widget);
 }
 
-static void fill_table (GtkWidget * table, PreferencesWidget * elements, gint
- amt, const gchar * domain)
+static void fill_table (GtkWidget * table, PreferencesWidget * elements, int
+ amt, const char * domain)
 {
-    gint x;
+    int x;
     GtkWidget *widget_left, *widget_middle, *widget_right;
     GtkAttachOptions middle_policy = (GtkAttachOptions) (0);
 
@@ -1089,11 +1089,11 @@ static void fill_table (GtkWidget * table, PreferencesWidget * elements, gint
 }
 
 /* void create_widgets_with_domain (GtkBox * box, PreferencesWidget * widgets,
- gint amt, const gchar * domain) */
-void create_widgets_with_domain (void * box, PreferencesWidget * widgets, gint
- amt, const gchar * domain)
+ int amt, const char * domain) */
+void create_widgets_with_domain (void * box, PreferencesWidget * widgets, int
+ amt, const char * domain)
 {
-    gint x;
+    int x;
     GtkWidget *alignment = NULL, *widget = NULL;
     GtkWidget *child_box = NULL;
     GSList *radio_btn_group = NULL;
@@ -1233,7 +1233,7 @@ void create_widgets_with_domain (void * box, PreferencesWidget * widgets, gint
 
                 widget = gtk_notebook_new();
 
-                gint i;
+                int i;
                 for (i = 0; i<widgets[x].data.notebook.n_tabs; i++) {
                     GtkWidget *vbox;
                     vbox = gtk_vbox_new(FALSE, 5);
@@ -1272,7 +1272,7 @@ static GtkWidget *
 create_titlestring_tag_menu(void)
 {
     GtkWidget *titlestring_tag_menu, *menu_item;
-    guint i;
+    unsigned int i;
 
     titlestring_tag_menu = gtk_menu_new();
     for(i = 0; i < n_title_field_tags; i++) {
@@ -1304,13 +1304,13 @@ static void leading_zero_cb (GtkToggleButton * leading)
 static void create_titlestring_widgets (GtkWidget * * cbox, GtkWidget * * entry)
 {
     * cbox = gtk_combo_box_text_new ();
-    for (gint i = 0; i < TITLESTRING_NPRESETS; i ++)
+    for (int i = 0; i < TITLESTRING_NPRESETS; i ++)
         gtk_combo_box_text_append_text ((GtkComboBoxText *) * cbox, _(titlestring_preset_names[i]));
     gtk_combo_box_text_append_text ((GtkComboBoxText *) * cbox, _("Custom"));
 
     * entry = gtk_entry_new ();
 
-    gchar * format = get_string (NULL, "generic_title_format");
+    char * format = get_string (NULL, "generic_title_format");
     update_titlestring_cbox ((GtkComboBox *) * cbox, format);
     gtk_entry_set_text ((GtkEntry *) * entry, format);
     g_free (format);
@@ -1477,7 +1477,7 @@ create_playlist_category(void)
 
 static GtkWidget * output_config_button, * output_about_button;
 
-static gboolean output_enum_cb (PluginHandle * plugin, GList * * list)
+static boolean output_enum_cb (PluginHandle * plugin, GList * * list)
 {
     * list = g_list_prepend (* list, plugin);
     return TRUE;
@@ -1598,17 +1598,17 @@ static void create_plugin_category (void)
     GtkWidget * notebook = gtk_notebook_new ();
     gtk_container_add ((GtkContainer *) category_notebook, notebook);
 
-    gint types[] = {PLUGIN_TYPE_TRANSPORT, PLUGIN_TYPE_PLAYLIST,
+    int types[] = {PLUGIN_TYPE_TRANSPORT, PLUGIN_TYPE_PLAYLIST,
      PLUGIN_TYPE_INPUT, PLUGIN_TYPE_EFFECT, PLUGIN_TYPE_VIS, PLUGIN_TYPE_GENERAL};
-    const gchar * names[] = {N_("Transport"), N_("Playlist"), N_("Input"),
+    const char * names[] = {N_("Transport"), N_("Playlist"), N_("Input"),
      N_("Effect"), N_("Visualization"), N_("General")};
 
-    for (gint i = 0; i < G_N_ELEMENTS (types); i ++)
+    for (int i = 0; i < G_N_ELEMENTS (types); i ++)
         gtk_notebook_append_page ((GtkNotebook *) notebook, plugin_view_new
          (types[i]), gtk_label_new (_(names[i])));
 }
 
-static gboolean
+static boolean
 prefswin_destroy(GtkWidget *window, GdkEvent *event, gpointer data)
 {
     prefswin = NULL;
@@ -1622,7 +1622,7 @@ prefswin_destroy(GtkWidget *window, GdkEvent *event, gpointer data)
 /* GtkWidget * * create_prefs_window (void) */
 void * * create_prefs_window (void)
 {
-    gchar *aud_version_string;
+    char *aud_version_string;
 
     GtkWidget *vbox;
     GtkWidget *hbox1;
@@ -1748,8 +1748,8 @@ hide_prefs_window(void)
     gtk_widget_hide(GTK_WIDGET(prefswin));
 }
 
-static void prefswin_page_queue_new (GtkWidget * container, const gchar * name,
- const gchar * imgurl)
+static void prefswin_page_queue_new (GtkWidget * container, const char * name,
+ const char * imgurl)
 {
     CategoryQueueEntry *ent = g_new0(CategoryQueueEntry, 1);
 
@@ -1781,16 +1781,16 @@ prefswin_page_queue_destroy(CategoryQueueEntry *ent)
  *
  *    - nenolod
  */
-/* gint prefswin_page_new (GtkWidget * container, const gchar * name,
- const gchar * imgurl) */
-gint prefswin_page_new (void * container, const gchar * name, const gchar *
+/* int prefswin_page_new (GtkWidget * container, const char * name,
+ const char * imgurl) */
+int prefswin_page_new (void * container, const char * name, const char *
  imgurl)
 {
     GtkTreeModel *model;
     GtkTreeIter iter;
     GdkPixbuf *img = NULL;
     GtkTreeView *treeview = GTK_TREE_VIEW(category_treeview);
-    gint id;
+    int id;
 
     if (treeview == NULL || category_notebook == NULL)
     {
@@ -1834,9 +1834,9 @@ prefswin_page_destroy(GtkWidget *container)
     GtkTreeModel *model;
     GtkTreeIter iter;
     GtkTreeView *treeview = GTK_TREE_VIEW(category_treeview);
-    gboolean ret;
-    gint id;
-    gint index = -1;
+    boolean ret;
+    int id;
+    int index = -1;
 
     if (category_notebook == NULL || treeview == NULL || container == NULL)
         return;
@@ -1878,7 +1878,7 @@ prefswin_page_destroy(GtkWidget *container)
 
 static void sw_volume_toggled (void)
 {
-    gint vol[2];
+    int vol[2];
 
     if (get_bool (NULL, "software_volume_control"))
     {

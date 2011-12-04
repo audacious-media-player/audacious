@@ -23,22 +23,22 @@
 #ifndef AUDACIOUS_PLAYBACK_H
 #define AUDACIOUS_PLAYBACK_H
 
-#include <glib.h>
+#include <libaudcore/core.h>
 
-void playback_play (gint seek_time, gboolean pause);
-gint playback_get_time(void);
+void playback_play (int seek_time, boolean pause);
+int playback_get_time(void);
 void playback_pause(void);
 void playback_stop(void);
-gboolean playback_get_playing(void);
-gboolean playback_get_ready (void);
-gboolean playback_get_paused(void);
-void playback_seek(gint time);
+boolean playback_get_playing(void);
+boolean playback_get_ready (void);
+boolean playback_get_paused(void);
+void playback_seek(int time);
 
-gchar * playback_get_title (void);
-gint playback_get_length (void);
-void playback_get_info (gint * bitrate, gint * samplerate, gint * channels);
+char * playback_get_title (void);
+int playback_get_length (void);
+void playback_get_info (int * bitrate, int * samplerate, int * channels);
 
-void playback_get_volume (gint * l, gint * r);
-void playback_set_volume (gint l, gint r);
+void playback_get_volume (int * l, int * r);
+void playback_set_volume (int l, int r);
 
 #endif /* AUDACIOUS_PLAYBACK_H */

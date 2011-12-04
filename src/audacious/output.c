@@ -23,8 +23,6 @@
 #include <pthread.h>
 #include <string.h>
 
-#include <libaudcore/audio.h>
-
 #include "debug.h"
 #include "effect.h"
 #include "equalizer.h"
@@ -38,7 +36,7 @@
 
 static OutputPlugin * cop = NULL;
 
-void output_get_volume (gint * l, gint * r)
+void output_get_volume (int * l, int * r)
 {
     if (get_bool (NULL, "software_volume_control"))
     {
@@ -54,7 +52,7 @@ void output_get_volume (gint * l, gint * r)
     }
 }
 
-void output_set_volume (gint l, gint r)
+void output_set_volume (int l, int r)
 {
     if (get_bool (NULL, "software_volume_control"))
     {
@@ -66,7 +64,7 @@ void output_set_volume (gint l, gint r)
 }
 
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-static gboolean locked = FALSE;
+static boolean locked = FALSE;
 
 #define LOCK do {pthread_mutex_lock (& mutex); locked = TRUE;} while (0)
 #define UNLOCK do {locked = FALSE; pthread_mutex_unlock (& mutex);} while (0)
@@ -77,14 +75,14 @@ static gboolean locked = FALSE;
 #define LOCKED_VIS g_return_if_fail (locked && vis_runner_locked ())
 #define LOCKED_VIS_RET(a) g_return_val_if_fail (locked && vis_runner_locked (), a)
 
-static gboolean opened = FALSE;
-static gboolean leave_open = FALSE;
+static boolean opened = FALSE;
+static boolean leave_open = FALSE;
 
-static gboolean waiting, aborted, paused;
-static gint decoder_format, decoder_channels, decoder_rate, effect_channels,
+static boolean waiting, aborted, paused;
+static int decoder_format, decoder_channels, decoder_rate, effect_channels,
  effect_rate, output_format, output_channels, output_rate;
-static gint64 frames_written;
-static gboolean have_replay_gain;
+static int64_t frames_written;
+static boolean have_replay_gain;
 static ReplayGainInfo replay_gain_info;
 
 static void reset_time (void)
@@ -111,7 +109,7 @@ static void real_close (void)
     leave_open = FALSE;
 }
 
-static gboolean open_audio (gint format, gint rate, gint channels)
+static boolean open_audio (int format, int rate, int channels)
 {
     LOCKED_VIS_RET (FALSE);
     g_return_val_if_fail (! opened, FALSE);
@@ -138,7 +136,7 @@ static gboolean open_audio (gint format, gint rate, gint channels)
             real_close ();
         }
 
-        gint depth = get_int (NULL, "output_bit_depth");
+        int depth = get_int (NULL, "output_bit_depth");
         output_format = (depth == 32) ? FMT_S32_NE : (depth == 24) ? FMT_S24_NE
          : (depth == 16) ? FMT_S16_NE : FMT_FLOAT;
         output_channels = effect_channels;
@@ -161,11 +159,11 @@ static gboolean open_audio (gint format, gint rate, gint channels)
     return opened;
 }
 
-static gboolean output_open_audio (gint format, gint rate, gint channels)
+static boolean output_open_audio (int format, int rate, int channels)
 {
     g_return_val_if_fail (cop != NULL, FALSE);
     LOCK_VIS;
-    gboolean success = open_audio (format, rate, channels);
+    boolean success = open_audio (format, rate, channels);
     UNLOCK_VIS;
     return success;
 }
@@ -193,12 +191,12 @@ static void output_set_replaygain_info (ReplayGainInfo * info)
     UNLOCK;
 }
 
-static void apply_replay_gain (gfloat * data, gint samples)
+static void apply_replay_gain (float * data, int samples)
 {
     if (! get_bool (NULL, "enable_replay_gain"))
         return;
 
-    gfloat factor = powf (10, get_double (NULL, "replay_gain_preamp") / 20);
+    float factor = powf (10, get_double (NULL, "replay_gain_preamp") / 20);
 
     if (have_replay_gain)
     {
@@ -226,22 +224,22 @@ static void apply_replay_gain (gfloat * data, gint samples)
         audio_amplify (data, 1, samples, & factor);
 }
 
-static void apply_software_volume (gfloat * data, gint channels, gint frames)
+static void apply_software_volume (float * data, int channels, int frames)
 {
-    gfloat left_factor, right_factor;
-    gfloat factors[channels];
-    gint channel;
+    float left_factor, right_factor;
+    float factors[channels];
+    int channel;
 
     if (! get_bool (NULL, "software_volume_control"))
         return;
 
-    gint l = get_int (NULL, "sw_volume_left");
-    gint r = get_int (NULL, "sw_volume_right");
+    int l = get_int (NULL, "sw_volume_left");
+    int r = get_int (NULL, "sw_volume_right");
     if (l == 100 && r == 100)
         return;
 
-    left_factor = (l == 0) ? 0 : powf (10, (gfloat) SW_VOLUME_RANGE * (l - 100) / 100 / 20);
-    right_factor = (r == 0) ? 0 : powf (10, (gfloat) SW_VOLUME_RANGE * (r - 100) / 100 / 20);
+    left_factor = (l == 0) ? 0 : powf (10, (float) SW_VOLUME_RANGE * (l - 100) / 100 / 20);
+    right_factor = (r == 0) ? 0 : powf (10, (float) SW_VOLUME_RANGE * (r - 100) / 100 / 20);
 
     if (channels == 2)
     {
@@ -257,7 +255,7 @@ static void apply_software_volume (gfloat * data, gint channels, gint frames)
     audio_amplify (data, channels, frames, factors);
 }
 
-static void write_processed (void * data, gint samples)
+static void write_processed (void * data, int samples)
 {
     LOCKED_VIS;
 
@@ -282,7 +280,7 @@ static void write_processed (void * data, gint samples)
 
     while (! aborted)
     {
-        gint ready = (cop->buffer_free != NULL) ? cop->buffer_free () /
+        int ready = (cop->buffer_free != NULL) ? cop->buffer_free () /
          FMT_SIZEOF (output_format) : output_channels * (output_rate / 50);
         ready = MIN (ready, samples);
         cop->write_audio (data, FMT_SIZEOF (output_format) * ready);
@@ -307,19 +305,19 @@ static void write_processed (void * data, gint samples)
     g_free (allocated);
 }
 
-static void write_audio (void * data, gint size)
+static void write_audio (void * data, int size)
 {
     LOCKED;
     g_return_if_fail (opened && ! waiting);
 
-    gint samples = size / FMT_SIZEOF (decoder_format);
+    int samples = size / FMT_SIZEOF (decoder_format);
     frames_written += samples / decoder_channels;
 
     void * allocated = NULL;
 
     if (decoder_format != FMT_FLOAT)
     {
-        gfloat * new = g_malloc (sizeof (gfloat) * samples);
+        float * new = g_malloc (sizeof (float) * samples);
         audio_from_int (data, decoder_format, new, samples);
         data = new;
         g_free (allocated);
@@ -327,7 +325,7 @@ static void write_audio (void * data, gint size)
     }
 
     apply_replay_gain (data, samples);
-    gfloat * fdata = data;
+    float * fdata = data;
     effect_process (& fdata, & samples);
     data = fdata;
 
@@ -341,7 +339,7 @@ static void write_audio (void * data, gint size)
     g_free (allocated);
 }
 
-static void output_write_audio (void * data, gint size)
+static void output_write_audio (void * data, int size)
 {
     g_return_if_fail (cop != NULL);
     LOCK_VIS;
@@ -370,7 +368,7 @@ static void output_close_audio (void)
     UNLOCK_VIS;
 }
 
-static void do_pause (gboolean p)
+static void do_pause (boolean p)
 {
     LOCKED_VIS;
     g_return_if_fail (opened);
@@ -379,7 +377,7 @@ static void do_pause (gboolean p)
     paused = p;
 }
 
-static void output_pause (gboolean p)
+static void output_pause (boolean p)
 {
     g_return_if_fail (cop != NULL);
     LOCK_VIS;
@@ -387,7 +385,7 @@ static void output_pause (gboolean p)
     UNLOCK_VIS;
 }
 
-static void flush (gint time)
+static void flush (int time)
 {
     LOCKED_VIS;
     g_return_if_fail (opened);
@@ -411,10 +409,10 @@ static void flush (gint time)
         cop->flush (effect_decoder_to_output_time (time));
     }
 
-    frames_written = time * (gint64) decoder_rate / 1000;
+    frames_written = time * (int64_t) decoder_rate / 1000;
 }
 
-static void output_flush (gint time)
+static void output_flush (int time)
 {
     g_return_if_fail (cop != NULL);
     LOCK_VIS;
@@ -422,18 +420,18 @@ static void output_flush (gint time)
     UNLOCK_VIS;
 }
 
-static gint written_time (void)
+static int written_time (void)
 {
     LOCKED_RET (0);
     g_return_val_if_fail (opened && ! waiting, 0);
-    return frames_written * (gint64) 1000 / decoder_rate;
+    return frames_written * (int64_t) 1000 / decoder_rate;
 }
 
-static gint output_written_time (void)
+static int output_written_time (void)
 {
     g_return_val_if_fail (cop != NULL, 0);
     LOCK;
-    gint time = written_time ();
+    int time = written_time ();
     UNLOCK;
     return time;
 }
@@ -441,8 +439,8 @@ static gint output_written_time (void)
 static void write_buffers (void)
 {
     LOCKED;
-    gfloat * data = NULL;
-    gint samples = 0;
+    float * data = NULL;
+    int samples = 0;
     effect_finish (& data, & samples);
     write_processed (data, samples);
 }
@@ -459,7 +457,7 @@ static void set_leave_open (void)
     }
 }
 
-static gboolean output_buffer_playing (void)
+static boolean output_buffer_playing (void)
 {
     g_return_val_if_fail (cop != NULL, FALSE);
     LOCK_VIS;
@@ -498,19 +496,19 @@ const struct OutputAPI output_api =
     .abort_write = output_abort_write,
 };
 
-static gint output_time (void)
+static int output_time (void)
 {
     LOCKED_RET (0);
     g_return_val_if_fail (opened || leave_open, 0);
     return cop->output_time ();
 }
 
-gint get_output_time (void)
+int get_output_time (void)
 {
     g_return_val_if_fail (cop != NULL, 0);
     LOCK;
 
-    gint time = 0;
+    int time = 0;
     if (opened)
     {
         time = effect_output_to_decoder_time (output_time ());
@@ -521,11 +519,11 @@ gint get_output_time (void)
     return time;
 }
 
-gint get_raw_output_time (void)
+int get_raw_output_time (void)
 {
     g_return_val_if_fail (cop != NULL, 0);
     LOCK;
-    gint time = output_time ();
+    int time = output_time ();
     UNLOCK;
     return time;
 }
@@ -545,7 +543,7 @@ void output_drain (void)
     UNLOCK_VIS;
 }
 
-static gboolean probe_cb (PluginHandle * p, PluginHandle * * pp)
+static boolean probe_cb (PluginHandle * p, PluginHandle * * pp)
 {
     OutputPlugin * op = plugin_get_header (p);
     g_return_val_if_fail (op != NULL && op->init != NULL, TRUE);
@@ -572,7 +570,7 @@ PluginHandle * output_plugin_get_current (void)
     return (cop != NULL) ? plugin_by_header (cop) : NULL;
 }
 
-gboolean output_plugin_set_current (PluginHandle * plugin)
+boolean output_plugin_set_current (PluginHandle * plugin)
 {
     if (cop != NULL)
     {

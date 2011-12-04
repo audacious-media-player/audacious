@@ -67,70 +67,70 @@ void drct_stop (void)
         playback_stop ();
 }
 
-gboolean drct_get_playing (void)
+boolean drct_get_playing (void)
 {
     return playback_get_playing ();
 }
 
-gboolean drct_get_ready (void)
+boolean drct_get_ready (void)
 {
     return playback_get_ready ();
 }
 
-gboolean drct_get_paused (void)
+boolean drct_get_paused (void)
 {
     return playback_get_paused ();
 }
 
-gchar * drct_get_title (void)
+char * drct_get_title (void)
 {
     return playback_get_title ();
 }
 
-void drct_get_info (gint * bitrate, gint * samplerate, gint * channels)
+void drct_get_info (int * bitrate, int * samplerate, int * channels)
 {
     playback_get_info (bitrate, samplerate, channels);
 }
 
-gint drct_get_time (void)
+int drct_get_time (void)
 {
     return playback_get_time ();
 }
 
-gint drct_get_length (void)
+int drct_get_length (void)
 {
     return playback_get_length ();
 }
 
-void drct_seek (gint time)
+void drct_seek (int time)
 {
     playback_seek (time);
 }
 
 /* --- VOLUME CONTROL --- */
 
-void drct_get_volume (gint * left, gint * right)
+void drct_get_volume (int * left, int * right)
 {
     playback_get_volume (left, right);
     * left = CLAMP (* left, 0, 100);
     * right = CLAMP (* right, 0, 100);
 }
 
-void drct_set_volume (gint left, gint right)
+void drct_set_volume (int left, int right)
 {
     playback_set_volume (CLAMP (left, 0, 100), CLAMP (right, 0, 100));
 }
 
-void drct_get_volume_main (gint * volume)
+void drct_get_volume_main (int * volume)
 {
-    gint left, right;
+    int left, right;
     drct_get_volume (& left, & right);
     * volume = MAX (left, right);
 }
 
-void drct_set_volume_main (gint volume)
+void drct_set_volume_main (int volume)
 {
-    gint left, right, current;
+    int left, right, current;
     drct_get_volume (& left, & right);
     current = MAX (left, right);
 
@@ -140,9 +140,9 @@ void drct_set_volume_main (gint volume)
         drct_set_volume (volume, volume);
 }
 
-void drct_get_volume_balance (gint * balance)
+void drct_get_volume_balance (int * balance)
 {
-    gint left, right;
+    int left, right;
     drct_get_volume (& left, & right);
 
     if (left == right)
@@ -153,9 +153,9 @@ void drct_get_volume_balance (gint * balance)
         * balance = 100 - left * 100 / right;
 }
 
-void drct_set_volume_balance (gint balance)
+void drct_set_volume_balance (int balance)
 {
-    gint left, right;
+    int left, right;
     drct_get_volume_main (& left);
 
     if (balance < 0)
@@ -171,14 +171,14 @@ void drct_set_volume_balance (gint balance)
 
 /* --- PLAYLIST CONTROL --- */
 
-gint drct_pl_get_length (void)
+int drct_pl_get_length (void)
 {
     return playlist_entry_count (playlist_get_active ());
 }
 
 void drct_pl_next (void)
 {
-    gboolean play = playback_get_playing ();
+    boolean play = playback_get_playing ();
     if (playlist_get_playing () < 0)
         playlist_set_playing (playlist_get_active ());
     if (playlist_next_song (playlist_get_playing (), get_bool (NULL, "repeat")) && play)
@@ -187,22 +187,22 @@ void drct_pl_next (void)
 
 void drct_pl_prev (void)
 {
-    gboolean play = playback_get_playing ();
+    boolean play = playback_get_playing ();
     if (playlist_get_playing () < 0)
         playlist_set_playing (playlist_get_active ());
     if (playlist_prev_song (playlist_get_playing ()) && play)
         playback_play (0, FALSE);
 }
 
-gint drct_pl_get_pos (void)
+int drct_pl_get_pos (void)
 {
     return playlist_get_position (playlist_get_active ());
 }
 
-void drct_pl_set_pos (gint pos)
+void drct_pl_set_pos (int pos)
 {
-    gint playlist = playlist_get_active ();
-    gboolean play = playback_get_playing ();
+    int playlist = playlist_get_active ();
+    boolean play = playback_get_playing ();
 
     playlist_set_position (playlist, pos);
 
@@ -213,33 +213,33 @@ void drct_pl_set_pos (gint pos)
     }
 }
 
-gchar * drct_pl_get_file (gint entry)
+char * drct_pl_get_file (int entry)
 {
-    gchar * filename = playlist_entry_get_filename (playlist_get_active (), entry);
-    gchar * copy = g_strdup (filename);
+    char * filename = playlist_entry_get_filename (playlist_get_active (), entry);
+    char * copy = g_strdup (filename);
     str_unref (filename);
     return copy;
 }
 
-gchar * drct_pl_get_title (gint entry)
+char * drct_pl_get_title (int entry)
 {
-    gchar * title = playlist_entry_get_title (playlist_get_active (), entry, FALSE);
-    gchar * copy = g_strdup (title);
+    char * title = playlist_entry_get_title (playlist_get_active (), entry, FALSE);
+    char * copy = g_strdup (title);
     str_unref (title);
     return copy;
 }
 
-gint drct_pl_get_time (gint pos)
+int drct_pl_get_time (int pos)
 {
     return playlist_entry_get_length (playlist_get_active (), pos, FALSE);
 }
 
-static void add_list (GList * list, gint at, gboolean to_temp, gboolean play)
+static void add_list (GList * list, int at, boolean to_temp, boolean play)
 {
     if (to_temp)
         playlist_set_active (playlist_get_temporary ());
 
-    gint playlist = playlist_get_active ();
+    int playlist = playlist_get_active ();
 
     if (play)
     {
@@ -256,19 +256,19 @@ static void add_list (GList * list, gint at, gboolean to_temp, gboolean play)
     playlist_entry_insert_batch (playlist, at, filenames, NULL, play);
 }
 
-void drct_pl_add (const gchar * filename, gint at)
+void drct_pl_add (const char * filename, int at)
 {
     GList * list = g_list_prepend (NULL, (void *) filename);
     add_list (list, at, FALSE, FALSE);
     g_list_free (list);
 }
 
-void drct_pl_add_list (GList * list, gint at)
+void drct_pl_add_list (GList * list, int at)
 {
     add_list (list, at, FALSE, FALSE);
 }
 
-void drct_pl_open (const gchar * filename)
+void drct_pl_open (const char * filename)
 {
     GList * list = g_list_prepend (NULL, (void *) filename);
     add_list (list, -1, get_bool (NULL, "open_to_temporary"), TRUE);
@@ -280,7 +280,7 @@ void drct_pl_open_list (GList * list)
     add_list (list, -1, get_bool (NULL, "open_to_temporary"), TRUE);
 }
 
-void drct_pl_open_temp (const gchar * filename)
+void drct_pl_open_temp (const char * filename)
 {
     GList * list = g_list_prepend (NULL, (void *) filename);
     add_list (list, -1, TRUE, TRUE);
@@ -292,7 +292,7 @@ void drct_pl_open_temp_list (GList * list)
     add_list (list, -1, TRUE, TRUE);
 }
 
-void drct_pl_delete (gint entry)
+void drct_pl_delete (int entry)
 {
     playlist_entry_delete (playlist_get_active (), entry, 1);
 }
@@ -304,8 +304,8 @@ void drct_pl_delete (gint entry)
 
 void drct_pl_delete_selected (void)
 {
-    gint list = playlist_get_active ();
-    gint pos = playlist_get_position (list);
+    int list = playlist_get_active ();
+    int pos = playlist_get_position (list);
 
     if (get_bool (NULL, "advance_on_delete")
      && ! get_bool (NULL, "no_playlist_advance")
@@ -328,46 +328,46 @@ void drct_pl_delete_selected (void)
 
 void drct_pl_clear (void)
 {
-    gint playlist = playlist_get_active ();
+    int playlist = playlist_get_active ();
     playlist_entry_delete (playlist, 0, playlist_entry_count (playlist));
 }
 
 /* --- PLAYLIST QUEUE CONTROL --- */
 
-gint drct_pq_get_length (void)
+int drct_pq_get_length (void)
 {
     return playlist_queue_count (playlist_get_active ());
 }
 
-gint drct_pq_get_entry (gint queue_position)
+int drct_pq_get_entry (int queue_position)
 {
     return playlist_queue_get_entry (playlist_get_active (), queue_position);
 }
 
-gboolean drct_pq_is_queued (gint entry)
+boolean drct_pq_is_queued (int entry)
 {
     return (drct_pq_get_queue_position (entry) >= 0);
 }
 
-gint drct_pq_get_queue_position (gint entry)
+int drct_pq_get_queue_position (int entry)
 {
     return playlist_queue_find_entry (playlist_get_active (), entry);
 }
 
-void drct_pq_add (gint entry)
+void drct_pq_add (int entry)
 {
     playlist_queue_insert (playlist_get_active (), -1, entry);
 }
 
-void drct_pq_remove (gint entry)
+void drct_pq_remove (int entry)
 {
-    gint playlist = playlist_get_active ();
+    int playlist = playlist_get_active ();
     playlist_queue_delete (playlist, playlist_queue_find_entry (playlist,
      entry), 1);
 }
 
 void drct_pq_clear (void)
 {
-    gint playlist = playlist_get_active ();
+    int playlist = playlist_get_active ();
     playlist_queue_delete (playlist, 0, playlist_queue_count (playlist));
 }

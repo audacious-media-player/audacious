@@ -26,21 +26,19 @@
 #ifndef AUDACIOUS_OUTPUT_H
 #define AUDACIOUS_OUTPUT_H
 
-#include <glib.h>
-
 #include "plugin.h"
 
 extern const struct OutputAPI output_api;
 
-void output_get_volume(gint * l, gint * r);
-void output_set_volume(gint l, gint r);
+void output_get_volume(int * l, int * r);
+void output_set_volume(int l, int r);
 
-gint get_output_time (void);
-gint get_raw_output_time (void);
+int get_output_time (void);
+int get_raw_output_time (void);
 void output_drain (void);
 
 PluginHandle * output_plugin_probe (void);
 PluginHandle * output_plugin_get_current (void);
-gboolean output_plugin_set_current (PluginHandle * plugin);
+boolean output_plugin_set_current (PluginHandle * plugin);
 
 #endif /* AUDACIOUS_OUTPUT_H */

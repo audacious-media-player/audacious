@@ -38,36 +38,36 @@
 #include "misc.h"
 
 typedef struct {
-    gint playlist_id, at;
-    gboolean play;
+    int playlist_id, at;
+    boolean play;
     struct index * filenames, * tuples;
     PlaylistFilterFunc filter;
     void * user;
 } AddTask;
 
 typedef struct {
-    gint playlist_id, at;
-    gboolean play;
+    int playlist_id, at;
+    boolean play;
     struct index * filenames, * tuples, * decoders;
 } AddResult;
 
 static GList * add_tasks = NULL;
 static GList * add_results = NULL;
-static gint current_playlist_id = -1;
+static int current_playlist_id = -1;
 
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 static pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
-static gboolean add_quit;
+static boolean add_quit;
 static pthread_t add_thread;
-static gint add_source = 0;
+static int add_source = 0;
 
-static gint status_source = 0;
-static gchar status_path[512];
-static gint status_count;
+static int status_source = 0;
+static char status_path[512];
+static int status_count;
 static GtkWidget * status_window = NULL, * status_path_label,
  * status_count_label;
 
-static gboolean status_cb (void * unused)
+static boolean status_cb (void * unused)
 {
     if (! headless && ! status_window)
     {
@@ -99,7 +99,7 @@ static gboolean status_cb (void * unused)
 
     pthread_mutex_lock (& mutex);
 
-    gchar scratch[128];
+    char scratch[128];
     snprintf (scratch, sizeof scratch, dngettext (PACKAGE, "%d file found",
      "%d files found", status_count), status_count);
 
@@ -118,7 +118,7 @@ static gboolean status_cb (void * unused)
     return TRUE;
 }
 
-static void status_update (const gchar * filename, gint found)
+static void status_update (const char * filename, int found)
 {
     pthread_mutex_lock (& mutex);
 
@@ -147,8 +147,8 @@ static void status_done_locked (void)
 
 static void index_free_filenames (struct index * filenames)
 {
-    gint count = index_count (filenames);
-    for (gint i = 0; i < count; i ++)
+    int count = index_count (filenames);
+    for (int i = 0; i < count; i ++)
         str_unref (index_get (filenames, i));
 
     index_free (filenames);
@@ -156,8 +156,8 @@ static void index_free_filenames (struct index * filenames)
 
 static void index_free_tuples (struct index * tuples)
 {
-    gint count = index_count (tuples);
-    for (gint i = 0; i < count; i ++)
+    int count = index_count (tuples);
+    for (int i = 0; i < count; i ++)
     {
         Tuple * tuple = index_get (tuples, i);
         if (tuple)
@@ -167,7 +167,7 @@ static void index_free_tuples (struct index * tuples)
     index_free (tuples);
 }
 
-static AddTask * add_task_new (gint playlist_id, gint at, gboolean play,
+static AddTask * add_task_new (int playlist_id, int at, boolean play,
  struct index * filenames, struct index * tuples, PlaylistFilterFunc filter,
  void * user)
 {
@@ -192,7 +192,7 @@ static void add_task_free (AddTask * task)
     g_slice_free (AddTask, task);
 }
 
-static AddResult * add_result_new (gint playlist_id, gint at, gboolean play)
+static AddResult * add_result_new (int playlist_id, int at, boolean play)
 {
     AddResult * result = g_slice_new (AddResult);
     result->playlist_id = playlist_id;
@@ -216,8 +216,8 @@ static void add_result_free (AddResult * result)
     g_slice_free (AddResult, result);
 }
 
-static void add_file (gchar * filename, Tuple * tuple, PluginHandle * decoder,
- PlaylistFilterFunc filter, void * user, AddResult * result, gboolean validate)
+static void add_file (char * filename, Tuple * tuple, PluginHandle * decoder,
+ PlaylistFilterFunc filter, void * user, AddResult * result, boolean validate)
 {
     g_return_if_fail (filename);
     if (filter && ! filter (filename, user))
@@ -242,13 +242,13 @@ static void add_file (gchar * filename, Tuple * tuple, PluginHandle * decoder,
      (filename, '?'))
         tuple = file_read_tuple (filename, decoder);
 
-    gint n_subtunes = tuple ? tuple_get_n_subtunes (tuple) : 0;
+    int n_subtunes = tuple ? tuple_get_n_subtunes (tuple) : 0;
 
     if (n_subtunes)
     {
-        for (gint sub = 0; sub < n_subtunes; sub ++)
+        for (int sub = 0; sub < n_subtunes; sub ++)
         {
-            gchar * subname = str_printf ("%s?%d", filename,
+            char * subname = str_printf ("%s?%d", filename,
              tuple_get_nth_subtune (tuple, sub));
             add_file (subname, NULL, decoder, filter, user, result, FALSE);
         }
@@ -263,7 +263,7 @@ static void add_file (gchar * filename, Tuple * tuple, PluginHandle * decoder,
     index_append (result->decoders, decoder);
 }
 
-static void add_folder (gchar * filename, PlaylistFilterFunc filter,
+static void add_folder (char * filename, PlaylistFilterFunc filter,
  void * user, AddResult * result)
 {
     g_return_if_fail (filename);
@@ -275,7 +275,7 @@ static void add_folder (gchar * filename, PlaylistFilterFunc filter,
 
     status_update (filename, index_count (result->filenames));
 
-    gchar * unix_name = uri_to_filename (filename);
+    char * unix_name = uri_to_filename (filename);
     g_return_if_fail (unix_name);
     if (unix_name[strlen (unix_name) - 1] == '/')
         unix_name[strlen (unix_name) - 1] = 0;
@@ -304,13 +304,13 @@ static void add_folder (gchar * filename, PlaylistFilterFunc filter,
 
         if (S_ISREG (info.st_mode))
         {
-            gchar * item_name = filename_to_uri (files->data);
+            char * item_name = filename_to_uri (files->data);
             add_file (str_get (item_name), NULL, NULL, filter, user, result, TRUE);
             g_free (item_name);
         }
         else if (S_ISDIR (info.st_mode))
         {
-            gchar * item_name = filename_to_uri (files->data);
+            char * item_name = filename_to_uri (files->data);
             add_folder (str_get (item_name), filter, user, result);
             g_free (item_name);
         }
@@ -325,7 +325,7 @@ FREE:
     g_free (unix_name);
 }
 
-static void add_playlist (gchar * filename, PlaylistFilterFunc filter,
+static void add_playlist (char * filename, PlaylistFilterFunc filter,
  void * user, AddResult * result)
 {
     g_return_if_fail (filename);
@@ -337,7 +337,7 @@ static void add_playlist (gchar * filename, PlaylistFilterFunc filter,
 
     status_update (filename, index_count (result->filenames));
 
-    gchar * title = NULL;
+    char * title = NULL;
     struct index * filenames, * tuples;
     if (! playlist_load (filename, & title, & filenames, & tuples))
     {
@@ -345,8 +345,8 @@ static void add_playlist (gchar * filename, PlaylistFilterFunc filter,
         return;
     }
 
-    gint count = index_count (filenames);
-    for (gint i = 0; i < count; i ++)
+    int count = index_count (filenames);
+    for (int i = 0; i < count; i ++)
         add_file (index_get (filenames, i), tuples ? index_get (tuples, i) :
          NULL, NULL, filter, user, result, FALSE);
 
@@ -357,7 +357,7 @@ static void add_playlist (gchar * filename, PlaylistFilterFunc filter,
         index_free (tuples);
 }
 
-static void add_generic (gchar * filename, Tuple * tuple,
+static void add_generic (char * filename, Tuple * tuple,
  PlaylistFilterFunc filter, void * user, AddResult * result)
 {
     g_return_if_fail (filename);
@@ -372,7 +372,7 @@ static void add_generic (gchar * filename, Tuple * tuple,
         add_file (filename, NULL, NULL, filter, user, result, FALSE);
 }
 
-static gboolean add_finish (void * unused)
+static boolean add_finish (void * unused)
 {
     pthread_mutex_lock (& mutex);
 
@@ -381,11 +381,11 @@ static gboolean add_finish (void * unused)
         AddResult * result = add_results->data;
         add_results = g_list_delete_link (add_results, add_results);
 
-        gint playlist = playlist_by_unique_id (result->playlist_id);
+        int playlist = playlist_by_unique_id (result->playlist_id);
         if (playlist < 0) /* playlist deleted */
             goto FREE;
 
-        gint count = playlist_entry_count (playlist);
+        int count = playlist_entry_count (playlist);
         if (result->at < 0 || result->at > count)
             result->at = count;
 
@@ -444,11 +444,11 @@ static void * add_worker (void * unused)
         AddResult * result = add_result_new (task->playlist_id, task->at,
          task->play);
 
-        gint count = index_count (task->filenames);
+        int count = index_count (task->filenames);
         if (task->tuples)
             count = MIN (count, index_count (task->tuples));
 
-        for (gint i = 0; i < count; i ++)
+        for (int i = 0; i < count; i ++)
         {
             add_generic (index_get (task->filenames, i), task->tuples ?
              index_get (task->tuples, i) : NULL, task->filter, task->user,
@@ -499,8 +499,8 @@ void adder_cleanup (void)
     status_done_locked ();
 }
 
-void playlist_entry_insert (gint playlist, gint at, const gchar * filename,
- Tuple * tuple, gboolean play)
+void playlist_entry_insert (int playlist, int at, const char * filename,
+ Tuple * tuple, boolean play)
 {
     struct index * filenames = index_new ();
     struct index * tuples = index_new ();
@@ -510,17 +510,17 @@ void playlist_entry_insert (gint playlist, gint at, const gchar * filename,
     playlist_entry_insert_batch (playlist, at, filenames, tuples, play);
 }
 
-void playlist_entry_insert_batch (gint playlist, gint at,
- struct index * filenames, struct index * tuples, gboolean play)
+void playlist_entry_insert_batch (int playlist, int at,
+ struct index * filenames, struct index * tuples, boolean play)
 {
     playlist_entry_insert_filtered (playlist, at, filenames, tuples, NULL, NULL, play);
 }
 
-void playlist_entry_insert_filtered (gint playlist, gint at,
+void playlist_entry_insert_filtered (int playlist, int at,
  struct index * filenames, struct index * tuples, PlaylistFilterFunc filter,
- void * user, gboolean play)
+ void * user, boolean play)
 {
-    gint playlist_id = playlist_get_unique_id (playlist);
+    int playlist_id = playlist_get_unique_id (playlist);
     g_return_if_fail (playlist_id >= 0);
 
     AddTask * task = add_task_new (playlist_id, at, play, filenames, tuples, filter, user);
@@ -531,9 +531,9 @@ void playlist_entry_insert_filtered (gint playlist, gint at,
     pthread_mutex_unlock (& mutex);
 }
 
-gboolean playlist_add_in_progress (gint playlist)
+boolean playlist_add_in_progress (int playlist)
 {
-    gint playlist_id = playlist_get_unique_id (playlist);
+    int playlist_id = playlist_get_unique_id (playlist);
     g_return_val_if_fail (playlist_id >= 0, FALSE);
 
     pthread_mutex_lock (& mutex);

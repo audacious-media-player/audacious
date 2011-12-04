@@ -22,9 +22,8 @@
 #ifndef AUDACIOUS_PROBE_BUFFER_H
 #define AUDACIOUS_PROBE_BUFFER_H
 
-#include <glib.h>
 #include <libaudcore/vfs.h>
 
-VFSFile * probe_buffer_new (const gchar * filename);
+VFSFile * probe_buffer_new (const char * filename);
 
 #endif

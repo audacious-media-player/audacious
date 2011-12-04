@@ -33,11 +33,11 @@
 static char * cd_chardet_to_utf8 (const char * str, int len,
  int * arg_bytes_read, int * arg_bytes_written);
 
-static gchar * str_to_utf8_fallback (const gchar * str)
+static char * str_to_utf8_fallback (const char * str)
 {
-    gchar * out = g_strconcat (str, _("  (invalid UTF-8)"), NULL);
+    char * out = g_strconcat (str, _("  (invalid UTF-8)"), NULL);
 
-    for (gchar * c = out; * c; c ++)
+    for (char * c = out; * c; c ++)
     {
         if (* c & 0x80)
             * c = '?';
@@ -46,9 +46,9 @@ static gchar * str_to_utf8_fallback (const gchar * str)
     return out;
 }
 
-static gchar * cd_str_to_utf8 (const gchar * str)
+static char * cd_str_to_utf8 (const char * str)
 {
-    gchar *out_str;
+    char *out_str;
 
     if (str == NULL)
         return NULL;
@@ -95,7 +95,7 @@ static gchar * cd_str_to_utf8 (const gchar * str)
 static char * cd_chardet_to_utf8 (const char * str, int len,
  int * arg_bytes_read, int * arg_bytes_write)
 {
-    gchar *ret = NULL;
+    char *ret = NULL;
     int * bytes_read, * bytes_write;
     int my_bytes_read, my_bytes_write;
 
@@ -126,12 +126,12 @@ static char * cd_chardet_to_utf8 (const char * str, int len,
     }
 
 #ifdef USE_CHARDET
-    gchar * det = get_string (NULL, "chardet_detector");
+    char * det = get_string (NULL, "chardet_detector");
 
     if (det[0])
     {
         AUDDBG("guess encoding (%s) %s\n", det, str);
-        const gchar * encoding = libguess_determine_encoding (str, len, det);
+        const char * encoding = libguess_determine_encoding (str, len, det);
         AUDDBG("encoding = %s\n", encoding);
         if (encoding)
         {
@@ -148,10 +148,10 @@ static char * cd_chardet_to_utf8 (const char * str, int len,
     /* If detection failed or was not enabled, try fallbacks (if there are any) */
     if (! ret)
     {
-        gchar * fallbacks = get_string (NULL, "chardet_fallback");
-        gchar * * split = g_strsplit_set (fallbacks, " ,:;|/", -1);
+        char * fallbacks = get_string (NULL, "chardet_fallback");
+        char * * split = g_strsplit_set (fallbacks, " ,:;|/", -1);
 
-        for (gchar * * enc = split; * enc; enc ++)
+        for (char * * enc = split; * enc; enc ++)
         {
             gsize read_gsize = 0, written_gsize = 0;
             ret = g_convert (str, len, "UTF-8", * enc, & read_gsize, & written_gsize, NULL);

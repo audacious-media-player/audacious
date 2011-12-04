@@ -28,8 +28,8 @@
 #include "i18n.h"
 #include "misc.h"
 
-static gboolean
-has_front_cover_extension(const gchar *name)
+static boolean
+has_front_cover_extension(const char *name)
 {
     char *ext;
 
@@ -44,14 +44,14 @@ has_front_cover_extension(const gchar *name)
            g_strcasecmp(ext, ".png") == 0;
 }
 
-static gboolean
-cover_name_filter(const gchar *name, const gchar *filter, const gboolean ret_on_empty)
+static boolean
+cover_name_filter(const char *name, const char *filter, const boolean ret_on_empty)
 {
-    gboolean result = FALSE;
-    gchar **splitted;
-    gchar *current;
-    gchar *lname;
-    gint i;
+    boolean result = FALSE;
+    char **splitted;
+    char *current;
+    char *lname;
+    int i;
 
     if (!filter || strlen(filter) == 0) {
         return ret_on_empty;
@@ -63,7 +63,7 @@ cover_name_filter(const gchar *name, const gchar *filter, const gboolean ret_on_
     g_strdown(lname);
 
     for (i = 0; !result && (current = splitted[i]); i++) {
-        gchar *stripped = g_strstrip(g_strdup(current));
+        char *stripped = g_strstrip(g_strdup(current));
         g_strdown(stripped);
 
         result = result || strstr(lname, stripped);
@@ -78,19 +78,19 @@ cover_name_filter(const gchar *name, const gchar *filter, const gboolean ret_on_
 }
 
 /* Check wether it's an image we want */
-static gboolean is_front_cover_image (const gchar * file)
+static boolean is_front_cover_image (const char * file)
 {
-    gchar * include = get_string (NULL, "cover_name_include");
-    gchar * exclude = get_string (NULL, "cover_name_exclude");
-    gboolean accept = cover_name_filter (file, include, TRUE) &&
+    char * include = get_string (NULL, "cover_name_include");
+    char * exclude = get_string (NULL, "cover_name_exclude");
+    boolean accept = cover_name_filter (file, include, TRUE) &&
      ! cover_name_filter (file, exclude, FALSE);
     g_free (include);
     g_free (exclude);
     return accept;
 }
 
-static gboolean
-is_file_image(const gchar *imgfile, const gchar *file_name)
+static boolean
+is_file_image(const char *imgfile, const char *file_name)
 {
     char *imgfile_ext, *file_name_ext;
     size_t imgfile_len, file_name_len;
@@ -117,8 +117,8 @@ is_file_image(const gchar *imgfile, const gchar *file_name)
     }
 }
 
-static gchar * fileinfo_recursive_get_image (const gchar * path, const gchar *
- file_name, gint depth)
+static char * fileinfo_recursive_get_image (const char * path, const char *
+ file_name, int depth)
 {
     GDir *d;
 
@@ -128,13 +128,13 @@ static gchar * fileinfo_recursive_get_image (const gchar * path, const gchar *
     d = g_dir_open(path, 0, NULL);
 
     if (d) {
-        const gchar *f;
+        const char *f;
 
         if (get_bool (NULL, "use_file_cover") && file_name)
         {
             /* Look for images matching file name */
             while((f = g_dir_read_name(d))) {
-                gchar *newpath = g_strconcat(path, "/", f, NULL);
+                char *newpath = g_strconcat(path, "/", f, NULL);
 
                 if (!g_file_test(newpath, G_FILE_TEST_IS_DIR) &&
                     has_front_cover_extension(f) &&
@@ -150,7 +150,7 @@ static gchar * fileinfo_recursive_get_image (const gchar * path, const gchar *
 
         /* Search for files using filter */
         while ((f = g_dir_read_name(d))) {
-            gchar *newpath = g_strconcat(path, "/", f, NULL);
+            char *newpath = g_strconcat(path, "/", f, NULL);
 
             if (!g_file_test(newpath, G_FILE_TEST_IS_DIR) &&
                 has_front_cover_extension(f) &&
@@ -172,10 +172,10 @@ static gchar * fileinfo_recursive_get_image (const gchar * path, const gchar *
 
         /* Descend into directories recursively. */
         while ((f = g_dir_read_name(d))) {
-            gchar *newpath = g_strconcat(path, "/", f, NULL);
+            char *newpath = g_strconcat(path, "/", f, NULL);
 
             if(g_file_test(newpath, G_FILE_TEST_IS_DIR)) {
-                gchar *tmp = fileinfo_recursive_get_image(newpath,
+                char *tmp = fileinfo_recursive_get_image(newpath,
                     NULL, depth + 1);
                 if(tmp) {
                     g_free(newpath);
@@ -193,18 +193,18 @@ static gchar * fileinfo_recursive_get_image (const gchar * path, const gchar *
     return NULL;
 }
 
-gchar * get_associated_image_file (const gchar * filename)
+char * get_associated_image_file (const char * filename)
 {
     if (strncmp (filename, "file://", 7))
         return NULL;
 
-    gchar * unesc = uri_to_filename (filename);
+    char * unesc = uri_to_filename (filename);
     if (! unesc)
         return NULL;
 
-    gchar * path = g_path_get_dirname (unesc);
-    gchar * base = g_path_get_basename (unesc);
-    gchar * image_file = fileinfo_recursive_get_image (path, base, 0);
+    char * path = g_path_get_dirname (unesc);
+    char * base = g_path_get_basename (unesc);
+    char * image_file = fileinfo_recursive_get_image (path, base, 0);
 
     g_free (unesc);
     g_free (path);

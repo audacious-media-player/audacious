@@ -34,35 +34,35 @@
 #include "playback.h"
 #include "playlist.h"
 
-static void playback_start (gint playlist, gint entry, gint seek_time, gboolean pause);
+static void playback_start (int playlist, int entry, int seek_time, boolean pause);
 
 static InputPlayback playback_api;
 
-static gboolean playing = FALSE;
-static gboolean playback_error;
-static gint failed_entries;
+static boolean playing = FALSE;
+static boolean playback_error;
+static int failed_entries;
 
-static gchar * current_filename; /* pooled */
+static char * current_filename; /* pooled */
 
-static gint current_entry;
-static gchar * current_title; /* pooled */
-static gint current_length;
+static int current_entry;
+static char * current_title; /* pooled */
+static int current_length;
 
 static InputPlugin * current_decoder;
 static void * current_data;
-static gint current_bitrate, current_samplerate, current_channels;
+static int current_bitrate, current_samplerate, current_channels;
 
 static ReplayGainInfo gain_from_playlist;
 
-static gint time_offset, initial_seek;
-static gboolean paused;
+static int time_offset, initial_seek;
+static boolean paused;
 
 static pthread_t playback_thread_handle;
-static gint end_source = 0;
+static int end_source = 0;
 
 static pthread_mutex_t ready_mutex = PTHREAD_MUTEX_INITIALIZER;
 static pthread_cond_t ready_cond = PTHREAD_COND_INITIALIZER;
-static gboolean ready_flag;
+static boolean ready_flag;
 
 /* clears gain info if tuple == NULL */
 static void read_gain_from_tuple (const Tuple * tuple)
@@ -72,31 +72,31 @@ static void read_gain_from_tuple (const Tuple * tuple)
     if (tuple == NULL)
         return;
 
-    gint album_gain = tuple_get_int (tuple, FIELD_GAIN_ALBUM_GAIN, NULL);
-    gint album_peak = tuple_get_int (tuple, FIELD_GAIN_ALBUM_PEAK, NULL);
-    gint track_gain = tuple_get_int (tuple, FIELD_GAIN_TRACK_GAIN, NULL);
-    gint track_peak = tuple_get_int (tuple, FIELD_GAIN_TRACK_PEAK, NULL);
-    gint gain_unit = tuple_get_int (tuple, FIELD_GAIN_GAIN_UNIT, NULL);
-    gint peak_unit = tuple_get_int (tuple, FIELD_GAIN_PEAK_UNIT, NULL);
+    int album_gain = tuple_get_int (tuple, FIELD_GAIN_ALBUM_GAIN, NULL);
+    int album_peak = tuple_get_int (tuple, FIELD_GAIN_ALBUM_PEAK, NULL);
+    int track_gain = tuple_get_int (tuple, FIELD_GAIN_TRACK_GAIN, NULL);
+    int track_peak = tuple_get_int (tuple, FIELD_GAIN_TRACK_PEAK, NULL);
+    int gain_unit = tuple_get_int (tuple, FIELD_GAIN_GAIN_UNIT, NULL);
+    int peak_unit = tuple_get_int (tuple, FIELD_GAIN_PEAK_UNIT, NULL);
 
     if (gain_unit)
     {
-        gain_from_playlist.album_gain = album_gain / (gfloat) gain_unit;
-        gain_from_playlist.track_gain = track_gain / (gfloat) gain_unit;
+        gain_from_playlist.album_gain = album_gain / (float) gain_unit;
+        gain_from_playlist.track_gain = track_gain / (float) gain_unit;
     }
 
     if (peak_unit)
     {
-        gain_from_playlist.album_peak = album_peak / (gfloat) peak_unit;
-        gain_from_playlist.track_peak = track_peak / (gfloat) peak_unit;
+        gain_from_playlist.album_peak = album_peak / (float) peak_unit;
+        gain_from_playlist.track_peak = track_peak / (float) peak_unit;
     }
 }
 
-static gboolean update_from_playlist (void)
+static boolean update_from_playlist (void)
 {
-    gint entry = playback_entry_get_position ();
-    gchar * title = playback_entry_get_title ();
-    gint length = playback_entry_get_length ();
+    int entry = playback_entry_get_position ();
+    char * title = playback_entry_get_title ();
+    int length = playback_entry_get_length ();
 
     if (entry == current_entry && ! g_strcmp0 (title, current_title) && length == current_length)
     {
@@ -111,11 +111,11 @@ static gboolean update_from_playlist (void)
     return TRUE;
 }
 
-gboolean playback_get_ready (void)
+boolean playback_get_ready (void)
 {
     g_return_val_if_fail (playing, FALSE);
     pthread_mutex_lock (& ready_mutex);
-    gboolean ready = ready_flag;
+    boolean ready = ready_flag;
     pthread_mutex_unlock (& ready_mutex);
     return ready;
 }
@@ -156,12 +156,12 @@ static void update_cb (void * hook_data, void * user_data)
         hook_call ("title change", NULL);
 }
 
-gint playback_get_time (void)
+int playback_get_time (void)
 {
     g_return_val_if_fail (playing, 0);
     wait_until_ready ();
 
-    gint time = -1;
+    int time = -1;
 
     if (current_decoder && current_decoder->get_time)
         time = current_decoder->get_time (& playback_api);
@@ -172,11 +172,11 @@ gint playback_get_time (void)
     return time - time_offset;
 }
 
-void playback_play (gint seek_time, gboolean pause)
+void playback_play (int seek_time, boolean pause)
 {
     g_return_if_fail (! playing);
 
-    gint playlist = playlist_get_playing ();
+    int playlist = playlist_get_playing ();
 
     if (playlist == -1)
     {
@@ -184,7 +184,7 @@ void playback_play (gint seek_time, gboolean pause)
         playlist_set_playing (playlist);
     }
 
-    gint entry = playlist_get_position (playlist);
+    int entry = playlist_get_position (playlist);
 
     if (entry == -1)
     {
@@ -259,7 +259,7 @@ void playback_stop (void)
     complete_stop ();
 }
 
-static gboolean end_cb (void * unused)
+static boolean end_cb (void * unused)
 {
     g_return_val_if_fail (playing, FALSE);
 
@@ -272,8 +272,8 @@ static gboolean end_cb (void * unused)
 
     playback_cleanup ();
 
-    gint playlist = playlist_get_playing ();
-    gboolean play;
+    int playlist = playlist_get_playing ();
+    boolean play;
 
     if (get_bool (NULL, "no_playlist_advance"))
         play = get_bool (NULL, "repeat") && ! failed_entries;
@@ -303,7 +303,7 @@ static void * playback_thread (void * unused)
 
     if (! current_decoder)
     {
-        gchar * error = g_strdup_printf (_("No decoder found for %s."),
+        char * error = g_strdup_printf (_("No decoder found for %s."),
          current_filename);
         event_queue_full (0, "interface show error", error, g_free);
         playback_error = TRUE;
@@ -337,7 +337,7 @@ DONE:
     return NULL;
 }
 
-static void playback_start (gint playlist, gint entry, gint seek_time, gboolean pause)
+static void playback_start (int playlist, int entry, int seek_time, boolean pause)
 {
     g_return_if_fail (! playing);
 
@@ -361,18 +361,18 @@ static void playback_start (gint playlist, gint entry, gint seek_time, gboolean 
     hook_call ("playback begin", NULL);
 }
 
-gboolean playback_get_playing (void)
+boolean playback_get_playing (void)
 {
     return playing;
 }
 
-gboolean playback_get_paused (void)
+boolean playback_get_paused (void)
 {
     g_return_val_if_fail (playing, FALSE);
     return paused;
 }
 
-void playback_seek (gint time)
+void playback_seek (int time)
 {
     g_return_if_fail (playing);
     wait_until_ready ();
@@ -398,8 +398,8 @@ static void * get_data (InputPlayback * p)
     return current_data;
 }
 
-static void set_params (InputPlayback * p, gint bitrate, gint samplerate,
- gint channels)
+static void set_params (InputPlayback * p, int bitrate, int samplerate,
+ int channels)
 {
     g_return_if_fail (playing);
 
@@ -434,16 +434,16 @@ static InputPlayback playback_api = {
     .set_gain_from_playlist = set_gain_from_playlist,
 };
 
-gchar * playback_get_title (void)
+char * playback_get_title (void)
 {
     g_return_val_if_fail (playing, NULL);
     wait_until_ready ();
 
-    gchar s[32];
+    char s[32];
 
     if (current_length)
     {
-        gint len = current_length / 1000;
+        int len = current_length / 1000;
 
         if (len < 3600)
             snprintf (s, sizeof s, get_bool (NULL, "leading_zero") ?
@@ -462,7 +462,7 @@ gchar * playback_get_title (void)
     return g_strdup_printf ("%s%s", current_title, s);
 }
 
-gint playback_get_length (void)
+int playback_get_length (void)
 {
     g_return_val_if_fail (playing, 0);
     wait_until_ready ();
@@ -470,7 +470,7 @@ gint playback_get_length (void)
     return current_length;
 }
 
-void playback_get_info (gint * bitrate, gint * samplerate, gint * channels)
+void playback_get_info (int * bitrate, int * samplerate, int * channels)
 {
     g_return_if_fail (playing);
     wait_until_ready ();
@@ -480,7 +480,7 @@ void playback_get_info (gint * bitrate, gint * samplerate, gint * channels)
     * channels = current_channels;
 }
 
-void playback_get_volume (gint * l, gint * r)
+void playback_get_volume (int * l, int * r)
 {
     if (playing && playback_get_ready () && current_decoder &&
      current_decoder->get_volume && current_decoder->get_volume (l, r))
@@ -489,9 +489,9 @@ void playback_get_volume (gint * l, gint * r)
     output_get_volume (l, r);
 }
 
-void playback_set_volume (gint l, gint r)
+void playback_set_volume (int l, int r)
 {
-    gint h_vol[2] = {l, r};
+    int h_vol[2] = {l, r};
 
     hook_call ("volume set", h_vol);
 

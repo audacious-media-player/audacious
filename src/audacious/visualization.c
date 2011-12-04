@@ -41,10 +41,10 @@ typedef struct {
     GtkWidget * widget;
 } LoadedVis;
 
-static gint running = FALSE;
+static int running = FALSE;
 static GList * loaded_vis_plugins = NULL;
 
-void vis_func_add (gint type, GCallback func)
+void vis_func_add (int type, GCallback func)
 {
     g_return_if_fail (type >= 0 && type < AUD_VIS_TYPES);
     vis_funcs[type] = g_list_prepend (vis_funcs[type], (void *) func);
@@ -54,9 +54,9 @@ void vis_func_add (gint type, GCallback func)
 
 void vis_func_remove (GCallback func)
 {
-    gboolean disable = TRUE;
+    boolean disable = TRUE;
 
-    for (gint i = 0; i < AUD_VIS_TYPES; i ++)
+    for (int i = 0; i < AUD_VIS_TYPES; i ++)
     {
         vis_funcs[i] = g_list_remove_all (vis_funcs[i], (void *) func);
         if (vis_funcs[i])
@@ -76,13 +76,13 @@ void vis_send_clear (void)
     }
 }
 
-static void pcm_to_mono (const gfloat * data, gfloat * mono, gint channels)
+static void pcm_to_mono (const float * data, float * mono, int channels)
 {
     if (channels == 1)
-        memcpy (mono, data, sizeof (gfloat) * 512);
+        memcpy (mono, data, sizeof (float) * 512);
     else
     {
-        gfloat * set = mono;
+        float * set = mono;
         while (set < & mono[512])
         {
             * set ++ = (data[0] + data[1]) / 2;
@@ -91,10 +91,10 @@ static void pcm_to_mono (const gfloat * data, gfloat * mono, gint channels)
     }
 }
 
-void vis_send_audio (const gfloat * data, gint channels)
+void vis_send_audio (const float * data, int channels)
 {
-    gfloat mono[512];
-    gfloat freq[256];
+    float mono[512];
+    float freq[256];
 
     if (vis_funcs[AUD_VIS_TYPE_MONO_PCM] || vis_funcs[AUD_VIS_TYPE_FREQ])
         pcm_to_mono (data, mono, channels);
@@ -103,24 +103,24 @@ void vis_send_audio (const gfloat * data, gint channels)
 
     for (GList * node = vis_funcs[AUD_VIS_TYPE_MONO_PCM]; node; node = node->next)
     {
-        void (* func) (const gfloat *) = (void (*) (const gfloat *)) node->data;
+        void (* func) (const float *) = (void (*) (const float *)) node->data;
         func (mono);
     }
 
     for (GList * node = vis_funcs[AUD_VIS_TYPE_MULTI_PCM]; node; node = node->next)
     {
-        void (* func) (const gfloat *, gint) = (void (*) (const gfloat *, gint)) node->data;
+        void (* func) (const float *, int) = (void (*) (const float *, int)) node->data;
         func (data, channels);
     }
 
     for (GList * node = vis_funcs[AUD_VIS_TYPE_FREQ]; node; node = node->next)
     {
-        void (* func) (const gfloat *) = (void (*) (const gfloat *)) node->data;
+        void (* func) (const float *) = (void (*) (const float *)) node->data;
         func (freq);
     }
 }
 
-static gint vis_find_cb (LoadedVis * vis, PluginHandle * plugin)
+static int vis_find_cb (LoadedVis * vis, PluginHandle * plugin)
 {
     return (vis->plugin == plugin) ? 0 : -1;
 }
@@ -195,7 +195,7 @@ static void vis_unload (PluginHandle * plugin)
     g_slice_free (LoadedVis, vis);
 }
 
-static gboolean vis_init_cb (PluginHandle * plugin)
+static boolean vis_init_cb (PluginHandle * plugin)
 {
     vis_load (plugin);
     return TRUE;
@@ -222,7 +222,7 @@ void vis_cleanup (void)
     g_list_foreach (loaded_vis_plugins, (GFunc) vis_cleanup_cb, NULL);
 }
 
-gboolean vis_plugin_start (PluginHandle * plugin)
+boolean vis_plugin_start (PluginHandle * plugin)
 {
     VisPlugin * vp = plugin_get_header (plugin);
     g_return_val_if_fail (vp != NULL, FALSE);

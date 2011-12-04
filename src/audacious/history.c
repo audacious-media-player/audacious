@@ -29,7 +29,7 @@
 #define MAX_ENTRIES 30
 
 static GQueue history = G_QUEUE_INIT;
-static gboolean loaded, modified;
+static boolean loaded, modified;
 
 static void history_save (void)
 {
@@ -39,12 +39,12 @@ static void history_save (void)
     config_clear_section ("history");
 
     GList * node = history.head;
-    for (gint i = 0; i < MAX_ENTRIES; i ++)
+    for (int i = 0; i < MAX_ENTRIES; i ++)
     {
         if (! node)
             break;
 
-        gchar name[32];
+        char name[32];
         snprintf (name, sizeof name, "entry%d", i);
         set_string ("history", name, node->data);
 
@@ -59,11 +59,11 @@ static void history_load (void)
     if (loaded)
         return;
 
-    for (gint i = 0; ; i ++)
+    for (int i = 0; ; i ++)
     {
-        gchar name[32];
+        char name[32];
         snprintf (name, sizeof name, "entry%d", i);
-        gchar * path = get_string ("history", name);
+        char * path = get_string ("history", name);
 
         if (! path[0])
         {
@@ -78,13 +78,13 @@ static void history_load (void)
     hook_associate ("config save", (HookFunction) history_save, NULL);
 }
 
-const gchar * history_get (gint entry)
+const char * history_get (int entry)
 {
     history_load ();
     return g_queue_peek_nth (& history, entry);
 }
 
-void history_add (const gchar * path)
+void history_add (const char * path)
 {
     history_load ();
 

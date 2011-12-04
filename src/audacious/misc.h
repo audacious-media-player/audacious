@@ -23,6 +23,7 @@
 #define AUDACIOUS_MISC_H
 
 #include <glib.h>
+
 #include <audacious/api.h>
 #include <audacious/types.h>
 #include <libaudcore/vfs.h>
@@ -43,8 +44,8 @@ enum {
 };
 
 typedef struct {
-    gchar * name;
-    gfloat preamp, bands[10];
+    char * name;
+    float preamp, bands[10];
 } EqualizerPreset;
 
 enum {

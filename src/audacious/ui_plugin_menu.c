@@ -26,8 +26,8 @@
 
 struct Item {
     MenuFunc func;
-    const gchar * name;
-    const gchar * icon;
+    const char * name;
+    const char * icon;
 };
 
 static GList * items[AUD_MENU_COUNT];
@@ -47,8 +47,8 @@ static void add_to_menu (GtkWidget * menu, struct Item * item)
     gtk_menu_shell_append ((GtkMenuShell *) menu, widget);
 }
 
-/* GtkWidget * get_plugin_menu (gint id) */
-void * get_plugin_menu (gint id)
+/* GtkWidget * get_plugin_menu (int id) */
+void * get_plugin_menu (int id)
 {
     if (! menus[id])
     {
@@ -63,8 +63,8 @@ void * get_plugin_menu (gint id)
     return menus[id];
 }
 
-void plugin_menu_add (gint id, MenuFunc func, const gchar * name,
- const gchar * icon)
+void plugin_menu_add (int id, MenuFunc func, const char * name,
+ const char * icon)
 {
     struct Item * item = g_slice_new (struct Item);
     item->name = name;
@@ -83,7 +83,7 @@ static void remove_cb (GtkWidget * widget, MenuFunc func)
         gtk_widget_destroy (widget);
 }
 
-void plugin_menu_remove (gint id, MenuFunc func)
+void plugin_menu_remove (int id, MenuFunc func)
 {
     if (menus[id])
         gtk_container_foreach ((GtkContainer *) menus[id], (GtkCallback)

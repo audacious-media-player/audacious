@@ -25,79 +25,79 @@
 
 /* config.c */
 
-AUD_VFUNC1 (config_clear_section, const gchar *, section)
-AUD_VFUNC2 (config_set_defaults, const gchar *, section, const gchar * const *, entries)
+AUD_VFUNC1 (config_clear_section, const char *, section)
+AUD_VFUNC2 (config_set_defaults, const char *, section, const char * const *, entries)
 
-AUD_VFUNC3 (set_string, const gchar *, section, const gchar *, name, const gchar *, value)
-AUD_FUNC2 (gchar *, get_string, const gchar *, section, const gchar *, name)
-AUD_VFUNC3 (set_bool, const gchar *, section, const gchar *, name, gboolean, value)
-AUD_FUNC2 (gboolean, get_bool, const gchar *, section, const gchar *, name)
-AUD_VFUNC3 (set_int, const gchar *, section, const gchar *, name, gint, value)
-AUD_FUNC2 (gint, get_int, const gchar *, section, const gchar *, name)
-AUD_VFUNC3 (set_double, const gchar *, section, const gchar *, name, gdouble, value)
-AUD_FUNC2 (gdouble, get_double, const gchar *, section, const gchar *, name)
+AUD_VFUNC3 (set_string, const char *, section, const char *, name, const char *, value)
+AUD_FUNC2 (char *, get_string, const char *, section, const char *, name)
+AUD_VFUNC3 (set_bool, const char *, section, const char *, name, boolean, value)
+AUD_FUNC2 (boolean, get_bool, const char *, section, const char *, name)
+AUD_VFUNC3 (set_int, const char *, section, const char *, name, int, value)
+AUD_FUNC2 (int, get_int, const char *, section, const char *, name)
+AUD_VFUNC3 (set_double, const char *, section, const char *, name, double, value)
+AUD_FUNC2 (double, get_double, const char *, section, const char *, name)
 
 /* credits.c */
-AUD_VFUNC3 (get_audacious_credits, const gchar * *, brief,
- const gchar * * *, credits, const gchar * * *, translators)
+AUD_VFUNC3 (get_audacious_credits, const char * *, brief,
+ const char * * *, credits, const char * * *, translators)
 
 /* equalizer.c */
-AUD_VFUNC1 (eq_set_bands, const gdouble *, values)
-AUD_VFUNC1 (eq_get_bands, gdouble *, values)
-AUD_VFUNC2 (eq_set_band, gint, band, gdouble, value)
-AUD_FUNC1 (gdouble, eq_get_band, gint, band)
+AUD_VFUNC1 (eq_set_bands, const double *, values)
+AUD_VFUNC1 (eq_get_bands, double *, values)
+AUD_VFUNC2 (eq_set_band, int, band, double, value)
+AUD_FUNC1 (double, eq_get_band, int, band)
 
 /* equalizer_preset.c */
-AUD_FUNC1 (GList *, equalizer_read_presets, const gchar *, basename)
-AUD_FUNC2 (gboolean, equalizer_write_preset_file, GList *, list, const gchar *,
+AUD_FUNC1 (GList *, equalizer_read_presets, const char *, basename)
+AUD_FUNC2 (boolean, equalizer_write_preset_file, GList *, list, const char *,
  basename)
-AUD_FUNC1 (EqualizerPreset *, load_preset_file, const gchar *, filename)
-AUD_FUNC2 (gboolean, save_preset_file, EqualizerPreset *, preset, const gchar *,
+AUD_FUNC1 (EqualizerPreset *, load_preset_file, const char *, filename)
+AUD_FUNC2 (boolean, save_preset_file, EqualizerPreset *, preset, const char *,
  filename)
 AUD_FUNC1 (GList *, import_winamp_eqf, VFSFile *, file)
 
 /* history.c */
-AUD_FUNC1 (const gchar *, history_get, gint, entry)
-AUD_VFUNC1 (history_add, const gchar *, path)
+AUD_FUNC1 (const char *, history_get, int, entry)
+AUD_VFUNC1 (history_add, const char *, path)
 
 /* interface.c */
 AUD_VFUNC1 (interface_install_toolbar, void *, button)
 AUD_VFUNC1 (interface_uninstall_toolbar, void *, button)
 
 /* main.c */
-AUD_FUNC1 (const gchar *, get_path, gint, path)
+AUD_FUNC1 (const char *, get_path, int, path)
 
 /* probe.c */
-AUD_FUNC2 (PluginHandle *, file_find_decoder, const gchar *, filename, gboolean,
+AUD_FUNC2 (PluginHandle *, file_find_decoder, const char *, filename, boolean,
  fast)
-AUD_FUNC2 (Tuple *, file_read_tuple, const gchar *, filename, PluginHandle *,
+AUD_FUNC2 (Tuple *, file_read_tuple, const char *, filename, PluginHandle *,
  decoder)
-AUD_FUNC4 (gboolean, file_read_image, const gchar *, filename, PluginHandle *,
- decoder, void * *, data, gint *, size)
-AUD_FUNC2 (gboolean, file_can_write_tuple, const gchar *, filename,
+AUD_FUNC4 (boolean, file_read_image, const char *, filename, PluginHandle *,
+ decoder, void * *, data, int *, size)
+AUD_FUNC2 (boolean, file_can_write_tuple, const char *, filename,
  PluginHandle *, decoder)
-AUD_FUNC3 (gboolean, file_write_tuple, const gchar *, filename, PluginHandle *,
+AUD_FUNC3 (boolean, file_write_tuple, const char *, filename, PluginHandle *,
  decoder, const Tuple *, tuple)
-AUD_FUNC2 (gboolean, custom_infowin, const gchar *, filename, PluginHandle *,
+AUD_FUNC2 (boolean, custom_infowin, const char *, filename, PluginHandle *,
  decoder)
 
 /* ui_albumart.c */
-AUD_FUNC1 (gchar *, get_associated_image_file, const gchar *, filename)
+AUD_FUNC1 (char *, get_associated_image_file, const char *, filename)
 
 /* ui_plugin_menu.c */
-AUD_FUNC1 (/* GtkWidget * */ void *, get_plugin_menu, gint, id)
-AUD_VFUNC4 (plugin_menu_add, gint, id, MenuFunc, func, const gchar *, name,
- const gchar *, icon)
-AUD_VFUNC2 (plugin_menu_remove, gint, id, MenuFunc, func)
+AUD_FUNC1 (/* GtkWidget * */ void *, get_plugin_menu, int, id)
+AUD_VFUNC4 (plugin_menu_add, int, id, MenuFunc, func, const char *, name,
+ const char *, icon)
+AUD_VFUNC2 (plugin_menu_remove, int, id, MenuFunc, func)
 
 /* ui_preferences.c */
 AUD_VFUNC4 (create_widgets_with_domain, /* GtkWidget * */ void *, box,
- PreferencesWidget *, widgets, gint, count, const gchar *, domain)
+ PreferencesWidget *, widgets, int, count, const char *, domain)
 AUD_VFUNC0 (show_prefs_window)
 
 /* util.c */
-AUD_FUNC2 (gchar *, construct_uri, const gchar *, base, const gchar *, reference)
+AUD_FUNC2 (char *, construct_uri, const char *, base, const char *, reference)
 
 /* visualization.c */
-AUD_VFUNC2 (vis_func_add, gint, type, VisFunc, func)
+AUD_VFUNC2 (vis_func_add, int, type, VisFunc, func)
 AUD_VFUNC1 (vis_func_remove, VisFunc, func)

@@ -22,7 +22,8 @@
 #ifndef AUDACIOUS_PLAYLIST_H
 #define AUDACIOUS_PLAYLIST_H
 
-#include <glib.h>
+#include <stdint.h>
+
 #include <audacious/api.h>
 #include <audacious/types.h>
 #include <libaudcore/index.h>
@@ -58,9 +59,9 @@ enum {
  PLAYLIST_SORT_FORMATTED_TITLE,
  PLAYLIST_SORT_SCHEMES};
 
-typedef gboolean (* PlaylistFilterFunc) (const gchar * filename, void * user);
-typedef gint (* PlaylistStringCompareFunc) (const gchar * a, const gchar * b);
-typedef gint (* PlaylistTupleCompareFunc) (const Tuple * a, const Tuple * b);
+typedef boolean (* PlaylistFilterFunc) (const char * filename, void * user);
+typedef int (* PlaylistStringCompareFunc) (const char * a, const char * b);
+typedef int (* PlaylistTupleCompareFunc) (const Tuple * a, const Tuple * b);
 
 #define AUD_API_NAME PlaylistAPI
 #define AUD_API_SYMBOL playlist_api
@@ -72,18 +73,18 @@ typedef gint (* PlaylistTupleCompareFunc) (const Tuple * a, const Tuple * b);
 #include "api-local-end.h"
 
 /* playlist-files.c */
-gboolean playlist_load (const gchar * filename, gchar * * title,
+boolean playlist_load (const char * filename, char * * title,
  struct index * * filenames, struct index * * tuples);
-gboolean playlist_insert_playlist_raw (gint list, gint at,
- const gchar * filename);
+boolean playlist_insert_playlist_raw (int list, int at,
+ const char * filename);
 
 /* playlist-new.c */
 void playlist_init (void);
 void playlist_end (void);
 
-void playlist_insert_with_id (gint at, gint id);
-void playlist_set_modified (gint playlist, gboolean modified);
-gboolean playlist_get_modified (gint playlist);
+void playlist_insert_with_id (int at, int id);
+void playlist_set_modified (int playlist, boolean modified);
+boolean playlist_get_modified (int playlist);
 
 void playlist_load_state (void);
 void playlist_save_state (void);
@@ -92,26 +93,26 @@ void playlist_resume (void);
 void playlist_reformat_titles (void);
 void playlist_trigger_scan (void);
 
-void playlist_entry_insert_batch_raw (gint playlist, gint at,
+void playlist_entry_insert_batch_raw (int playlist, int at,
  struct index * filenames, struct index * tuples, struct index * decoders);
 
-gboolean playlist_prev_song (gint playlist);
-gboolean playlist_next_song (gint playlist, gboolean repeat);
+boolean playlist_prev_song (int playlist);
+boolean playlist_next_song (int playlist, boolean repeat);
 
-gint playback_entry_get_position (void);
+int playback_entry_get_position (void);
 PluginHandle * playback_entry_get_decoder (void);
 Tuple * playback_entry_get_tuple (void);
-gchar * playback_entry_get_title (void);
-gint playback_entry_get_length (void);
+char * playback_entry_get_title (void);
+int playback_entry_get_length (void);
 
 void playback_entry_set_tuple (Tuple * tuple);
 
-gint playback_entry_get_start_time (void);
-gint playback_entry_get_end_time (void);
+int playback_entry_get_start_time (void);
+int playback_entry_get_end_time (void);
 
 /* playlist-utils.c */
 void load_playlists (void);
-void save_playlists (gboolean exiting);
+void save_playlists (boolean exiting);
 
 #else
 

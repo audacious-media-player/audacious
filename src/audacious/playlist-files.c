@@ -27,13 +27,13 @@
 #include "plugin.h"
 #include "plugins.h"
 
-static const gchar * get_extension (const gchar * filename, gboolean quiet)
+static const char * get_extension (const char * filename, boolean quiet)
 {
-    const gchar * s = strrchr (filename, '/');
+    const char * s = strrchr (filename, '/');
     if (! s)
         goto FAIL;
 
-    const gchar * p = strrchr (s + 1, '.');
+    const char * p = strrchr (s + 1, '.');
     if (! p)
         goto FAIL;
 
@@ -45,18 +45,18 @@ FAIL:
     return NULL;
 }
 
-gboolean filename_is_playlist (const gchar * filename)
+boolean filename_is_playlist (const char * filename)
 {
-    const gchar * ext = get_extension (filename, TRUE);
+    const char * ext = get_extension (filename, TRUE);
     if (! ext)
         return FALSE;
 
     return playlist_plugin_for_extension (ext) ? TRUE : FALSE;
 }
 
-static PlaylistPlugin * get_plugin (const gchar * filename)
+static PlaylistPlugin * get_plugin (const char * filename)
 {
-    const gchar * ext = get_extension (filename, FALSE);
+    const char * ext = get_extension (filename, FALSE);
     if (! ext)
         return NULL;
 
@@ -70,7 +70,7 @@ static PlaylistPlugin * get_plugin (const gchar * filename)
     return plugin_get_header (plugin);
 }
 
-gboolean playlist_load (const gchar * filename, gchar * * title,
+boolean playlist_load (const char * filename, char * * title,
  struct index * * filenames_p, struct index * * tuples_p)
 {
     AUDDBG ("Loading playlist %s.\n", filename);
@@ -83,7 +83,7 @@ gboolean playlist_load (const gchar * filename, gchar * * title,
 
     struct index * filenames = index_new ();
     struct index * tuples = index_new ();
-    gboolean success = pp->load (filename, file, title, filenames, tuples);
+    boolean success = pp->load (filename, file, title, filenames, tuples);
 
     vfs_fclose (file);
 
@@ -108,10 +108,10 @@ gboolean playlist_load (const gchar * filename, gchar * * title,
     return TRUE;
 }
 
-gboolean playlist_insert_playlist_raw (gint list, gint at,
- const gchar * filename)
+boolean playlist_insert_playlist_raw (int list, int at,
+ const char * filename)
 {
-    gchar * title = NULL;
+    char * title = NULL;
     struct index * filenames, * tuples;
 
     if (! playlist_load (filename, & title, & filenames, & tuples))
@@ -126,38 +126,38 @@ gboolean playlist_insert_playlist_raw (gint list, gint at,
     return TRUE;
 }
 
-gboolean playlist_save (gint list, const gchar * filename)
+boolean playlist_save (int list, const char * filename)
 {
     AUDDBG ("Saving playlist %s.\n", filename);
     PlaylistPlugin * pp = get_plugin (filename);
     g_return_val_if_fail (pp && PLUGIN_HAS_FUNC (pp, save), FALSE);
 
-    gboolean fast = get_bool (NULL, "metadata_on_play");
+    boolean fast = get_bool (NULL, "metadata_on_play");
 
     VFSFile * file = vfs_fopen (filename, "w");
     if (! file)
         return FALSE;
 
-    gchar * title = playlist_get_title (list);
+    char * title = playlist_get_title (list);
 
-    gint entries = playlist_entry_count (list);
+    int entries = playlist_entry_count (list);
     struct index * filenames = index_new ();
     index_allocate (filenames, entries);
     struct index * tuples = index_new ();
     index_allocate (tuples, entries);
 
-    for (gint i = 0; i < entries; i ++)
+    for (int i = 0; i < entries; i ++)
     {
         index_append (filenames, playlist_entry_get_filename (list, i));
         index_append (tuples, playlist_entry_get_tuple (list, i, fast));
     }
 
-    gboolean success = pp->save (filename, file, title, filenames, tuples);
+    boolean success = pp->save (filename, file, title, filenames, tuples);
 
     vfs_fclose (file);
     str_unref (title);
 
-    for (gint i = 0; i < entries; i ++)
+    for (int i = 0; i < entries; i ++)
     {
         str_unref (index_get (filenames, i));
         Tuple * tuple = index_get (tuples, i);

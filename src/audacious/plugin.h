@@ -22,7 +22,6 @@
 #ifndef AUDACIOUS_PLUGIN_H
 #define AUDACIOUS_PLUGIN_H
 
-#include <glib.h>
 #include <gmodule.h>
 
 #include <audacious/api.h>
@@ -98,14 +97,14 @@
  * program's main thread. */
 
 #define PLUGIN_COMMON_FIELDS \
-    gint magic; /* checked against _AUD_PLUGIN_MAGIC */ \
-    gint version; /* checked against _AUD_PLUGIN_VERSION */ \
-    gint type; /* PLUGIN_TYPE_XXX */ \
-    gint size; /* size in bytes of the struct */ \
-    const gchar * name; \
-    gboolean (* init) (void); \
+    int magic; /* checked against _AUD_PLUGIN_MAGIC */ \
+    int version; /* checked against _AUD_PLUGIN_VERSION */ \
+    int type; /* PLUGIN_TYPE_XXX */ \
+    int size; /* size in bytes of the struct */ \
+    const char * name; \
+    boolean (* init) (void); \
     void (* cleanup) (void); \
-    gint (* take_message) (const gchar * code, const void * data, gint size); \
+    int (* take_message) (const char * code, const void * data, int size); \
     void (* about) (void); \
     void (* configure) (void); \
     PluginPreferences * settings;
@@ -118,20 +117,20 @@ struct _Plugin
 struct _TransportPlugin
 {
     PLUGIN_COMMON_FIELDS
-    const gchar * const * schemes; /* array ending with NULL */
+    const char * const * schemes; /* array ending with NULL */
     const VFSConstructor * vtable;
 };
 
 struct _PlaylistPlugin
 {
     PLUGIN_COMMON_FIELDS
-	const gchar * const * extensions; /* array ending with NULL */
-	gboolean (* load) (const gchar * path, VFSFile * file,
-     gchar * * title, /* pooled */
-     struct index * filenames, /* of (gchar *), pooled */
+	const char * const * extensions; /* array ending with NULL */
+	boolean (* load) (const char * path, VFSFile * file,
+     char * * title, /* pooled */
+     struct index * filenames, /* of (char *), pooled */
      struct index * tuples); /* of (Tuple *) */
-	gboolean (* save) (const gchar * path, VFSFile * file, const gchar * title,
-     struct index * filenames, /* of (gchar *) */
+	boolean (* save) (const char * path, VFSFile * file, const char * title,
+     struct index * filenames, /* of (char *) */
      struct index * tuples); /* of (Tuple *) */
 };
 
@@ -140,25 +139,25 @@ struct _OutputPlugin
     PLUGIN_COMMON_FIELDS
 
     /* During probing, plugins with higher priority (10 to 0) are tried first. */
-    gint probe_priority;
+    int probe_priority;
 
     /* Returns current volume for left and right channels (0 to 100). */
-    void (* get_volume) (gint * l, gint * r);
+    void (* get_volume) (int * l, int * r);
 
     /* Changes volume for left and right channels (0 to 100). */
-    void (* set_volume) (gint l, gint r);
+    void (* set_volume) (int l, int r);
 
     /* Begins playback of a PCM stream.  <format> is one of the FMT_*
      * enumeration values defined in libaudcore/audio.h.  Returns nonzero on
      * success. */
-    gboolean (* open_audio) (gint format, gint rate, gint chans);
+    boolean (* open_audio) (int format, int rate, int chans);
 
     /* Ends playback.  Any buffered audio data is discarded. */
     void (* close_audio) (void);
 
     /* Returns how many bytes of data may be passed to a following write_audio()
      * call.  NULL if the plugin supports only blocking writes (not recommended). */
-    gint (* buffer_free) (void);
+    int (* buffer_free) (void);
 
     /* Waits until buffer_free() will return a size greater than zero.
      * output_time(), pause(), and flush() may be called meanwhile; if flush()
@@ -167,31 +166,31 @@ struct _OutputPlugin
     void (* period_wait) (void);
 
     /* Buffers <size> bytes of data, in the format given to open_audio(). */
-    void (* write_audio) (void * data, gint size);
+    void (* write_audio) (void * data, int size);
 
     /* Waits until all buffered data has been heard by the user. */
     void (* drain) (void);
 
     /* Returns time count (in milliseconds) of how much data has been written. */
-    gint (* written_time) (void);
+    int (* written_time) (void);
 
     /* Returns time count (in milliseconds) of how much data has been heard by
      * the user. */
-    gint (* output_time) (void);
+    int (* output_time) (void);
 
     /* Pauses the stream if <p> is nonzero; otherwise unpauses it.
      * write_audio() will not be called while the stream is paused. */
-    void (* pause) (gboolean p);
+    void (* pause) (boolean p);
 
     /* Discards any buffered audio data and sets the time counter (in
      * milliseconds) of data written. */
-    void (* flush) (gint time);
+    void (* flush) (int time);
 
     /* Sets the time counter (in milliseconds) of data written without
      * discarding any buffered audio data.  If <time> is less than the amount of
      * buffered data, following calls to output_time() will return negative
      * values. */
-    void (* set_written_time) (gint time);
+    void (* set_written_time) (int time);
 };
 
 struct _EffectPlugin
@@ -201,14 +200,14 @@ struct _EffectPlugin
     /* All processing is done in floating point.  If the effect plugin wants to
      * change the channel count or sample rate, it can change the parameters
      * passed to start().  They cannot be changed in the middle of a song. */
-    void (* start) (gint * channels, gint * rate);
+    void (* start) (int * channels, int * rate);
 
     /* process() has two options: modify the samples in place and leave the data
      * pointer unchanged or copy them into a buffer of its own.  If it sets the
      * pointer to dynamically allocated memory, it is the plugin's job to free
      * that memory.  process() may return different lengths of audio than it is
      * passed, even a zero length. */
-    void (* process) (gfloat * * data, gint * samples);
+    void (* process) (float * * data, int * samples);
 
     /* A seek is taking place; any buffers should be discarded. */
     void (* flush) (void);
@@ -216,19 +215,19 @@ struct _EffectPlugin
     /* Exactly like process() except that any buffers should be drained (i.e.
      * the data processed and returned).  finish() will be called a second time
      * at the end of the last song in the playlist. */
-    void (* finish) (gfloat * * data, gint * samples);
+    void (* finish) (float * * data, int * samples);
 
     /* Optional.  For effects that change the length of the song, these
      * functions allow the correct time to be displayed. */
-    gint (* decoder_to_output_time) (gint time);
-    gint (* output_to_decoder_time) (gint time);
+    int (* decoder_to_output_time) (int time);
+    int (* output_to_decoder_time) (int time);
 
     /* Effects with lowest order (0 to 9) are applied first. */
-    gint order;
+    int order;
 
     /* If the effect does not change the number of channels or the sampling
      * rate, it can be enabled and disabled more smoothly. */
-    gboolean preserves_format;
+    boolean preserves_format;
 };
 
 struct OutputAPI
@@ -239,7 +238,7 @@ struct OutputAPI
     /* Prepare the output system for playback in the specified format.  Returns
      * nonzero on success.  If the call fails, no other output functions may be
      * called. */
-    gint (* open_audio) (gint format, gint rate, gint channels);
+    int (* open_audio) (int format, int rate, int channels);
 
     /* Informs the output system of replay gain values for the current song so
      * that volume levels can be adjusted accordingly, if the user so desires.
@@ -252,7 +251,7 @@ struct OutputAPI
      * been written (though it may not yet be heard by the user); if the output
      * system is paused; this may be indefinitely.  See abort_write for a way to
      * interrupt a blocked call. */
-    void (* write_audio) (void * data, gint length);
+    void (* write_audio) (void * data, int length);
 
     /* End playback.  Any audio data currently buffered by the output system
      * will be discarded.  After the call, no other output functions, except
@@ -262,12 +261,12 @@ struct OutputAPI
     /* Pause or unpause playback.  This function may be called during a call to
      * write_audio, in which write_audio will block until playback is unpaused
      * (but see abort_write to prevent the call from blocking). */
-    void (* pause) (gboolean pause);
+    void (* pause) (boolean pause);
 
     /* Discard any audio data currently buffered by the output system, and set
      * the time counter to a new value.  This function is intended to be used
      * for seeking. */
-    void (* flush) (gint time);
+    void (* flush) (int time);
 
     /* Returns the time counter.  Note that this represents the amount of audio
      * data passed to the output system, not the amount actually heard by the
@@ -275,7 +274,7 @@ struct OutputAPI
      * First, save the time counter using this function.  Second, call
      * close_audio and then open_audio with the new format (note that the call
      * may fail).  Finally, restore the time counter using flush. */
-    gint (* written_time) (void);
+    int (* written_time) (void);
 
     /* Returns TRUE if there is data remaining in the output buffer; FALSE if
      * all data written to the output system has been heard by the user.  This
@@ -283,7 +282,7 @@ struct OutputAPI
      * calls) at the end of a song before calling close_audio.  Once it returns
      * FALSE, close_audio can be called without cutting off any of the end of
      * the song. */
-    gboolean (* buffer_playing) (void);
+    boolean (* buffer_playing) (void);
 
     /* Interrupt a call to write_audio so that it returns immediately.  This
      * works even when the call is blocked by pause.  Buffered audio data is
@@ -317,8 +316,8 @@ struct _InputPlayback
 
     /* Updates attributes of the stream.  "bitrate" is in bits per second.
      * "samplerate" is in hertz. */
-    void (* set_params) (InputPlayback * p, gint bitrate, gint samplerate,
-     gint channels);
+    void (* set_params) (InputPlayback * p, int bitrate, int samplerate,
+     int channels);
 
     /* Updates metadata for the stream.  Caller gives up ownership of one
      * reference to the tuple. */
@@ -352,44 +351,44 @@ struct _InputPlugin
      * 3. When one of the songs is played, Audacious opens the file and calls
      * play() with a file name modified in this way.
      */
-    gboolean have_subtune;
+    boolean have_subtune;
 
     /* Pointer to an array (terminated with NULL) of file extensions associated
      * with file types the plugin can handle. */
-    const gchar * const * extensions;
+    const char * const * extensions;
     /* Pointer to an array (terminated with NULL) of MIME types the plugin can
      * handle. */
-    const gchar * const * mimes;
+    const char * const * mimes;
     /* Pointer to an array (terminated with NULL) of custom URI schemes the
      * plugin can handle. */
-    const gchar * const * schemes;
+    const char * const * schemes;
 
     /* How quickly the plugin should be tried in searching for a plugin to
      * handle a file which could not be identified from its extension.  Plugins
      * with priority 0 are tried first, 10 last. */
-    gint priority;
+    int priority;
 
     /* Must return nonzero if the plugin can handle this file.  If the file
      * could not be opened, "file" will be NULL.  (This is normal in the case of
      * special URI schemes like cdda:// that do not represent actual files.) */
-    gboolean (* is_our_file_from_vfs) (const gchar * filename, VFSFile * file);
+    boolean (* is_our_file_from_vfs) (const char * filename, VFSFile * file);
 
     /* Must return a tuple containing metadata for this file, or NULL if no
      * metadata could be read.  If the file could not be opened, "file" will be
      * NULL.  Audacious takes over one reference to the tuple returned. */
-    Tuple * (* probe_for_tuple) (const gchar * filename, VFSFile * file);
+    Tuple * (* probe_for_tuple) (const char * filename, VFSFile * file);
 
     /* Optional.  Must write metadata from a tuple to this file.  Must return
      * nonzero on success or zero on failure.  "file" will never be NULL. */
     /* Bug: This function does not support special URI schemes like cdda://,
      * since no file name is passed. */
-    gboolean (* update_song_tuple) (const Tuple * tuple, VFSFile * file);
+    boolean (* update_song_tuple) (const Tuple * tuple, VFSFile * file);
 
     /* Optional, and not recommended.  Must show a window with information about
      * this file.  If this function is provided, update_song_tuple should not be. */
     /* Bug: Implementing this function duplicates user interface code and code
      * to open the file in each and every plugin. */
-    void (* file_info_box) (const gchar * filename);
+    void (* file_info_box) (const char * filename);
 
     /* Optional.  Must try to read an "album art" image embedded in this file.
      * Must return nonzero on success or zero on failure.  If the file could not
@@ -397,8 +396,8 @@ struct _InputPlugin
      * pointer to a block of data allocated with g_malloc and "size" with the
      * size in bytes of that block.  The data may be in any format supported by
      * GTK.  Audacious will free the data when it is no longer needed. */
-    gboolean (* get_song_image) (const gchar * filename, VFSFile * file,
-     void * * data, gint * size);
+    boolean (* get_song_image) (const char * filename, VFSFile * file,
+     void * * data, int * size);
 
     /* Must try to play this file.  "playback" is a structure containing output-
      * related functions which the plugin may make use of.  It also contains a
@@ -411,19 +410,19 @@ struct _InputPlugin
      * file.  "paused" specifies whether playback should immediately be paused.
      * Must return nonzero if some of the file was successfully played or zero
      * on failure. */
-    gboolean (* play) (InputPlayback * playback, const gchar * filename,
-     VFSFile * file, gint start_time, gint stop_time, gboolean pause);
+    boolean (* play) (InputPlayback * playback, const char * filename,
+     VFSFile * file, int start_time, int stop_time, boolean pause);
 
     /* Must pause or unpause a file currently being played.  This function will
      * be called from a different thread than play, but it will not be called
      * before the plugin calls set_pb_ready or after stop is called. */
-    void (* pause) (InputPlayback * playback, gboolean paused);
+    void (* pause) (InputPlayback * playback, boolean paused);
 
     /* Optional.  Must seek to the given position in milliseconds within a file
      * currently being played.  This function will be called from a different
      * thread than play, but it will not be called before the plugin calls
      * set_pb_ready or after stop is called. */
-    void (* mseek) (InputPlayback * playback, gint time);
+    void (* mseek) (InputPlayback * playback, int time);
 
     /* Must signal a currently playing song to stop and cause play to return.
      * This function will be called from a different thread than play.  It will
@@ -433,16 +432,16 @@ struct _InputPlugin
 
     /* Advanced, for plugins that do not use Audacious's output system.  Use at
      * your own risk. */
-    gint (* get_time) (InputPlayback * playback);
-    gint (* get_volume) (gint * l, gint * r);
-    gint (* set_volume) (gint l, gint r);
+    int (* get_time) (InputPlayback * playback);
+    int (* get_volume) (int * l, int * r);
+    int (* set_volume) (int l, int r);
 };
 
 struct _GeneralPlugin
 {
     PLUGIN_COMMON_FIELDS
 
-    gboolean enabled_by_default;
+    boolean enabled_by_default;
 
     /* GtkWidget * (* get_widget) (void); */
     void * (* get_widget) (void);
@@ -456,13 +455,13 @@ struct _VisPlugin
     void (* clear) (void);
 
     /* 512 frames of a single-channel PCM signal */
-    void (* render_mono_pcm) (const gfloat * pcm);
+    void (* render_mono_pcm) (const float * pcm);
 
     /* 512 frames of an interleaved multi-channel PCM signal */
-    void (* render_multi_pcm) (const gfloat * pcm, gint channels);
+    void (* render_multi_pcm) (const float * pcm, int channels);
 
     /* intensity of frequencies 1/512, 2/512, ..., 256/512 of sample rate */
-    void (* render_freq) (const gfloat * freq);
+    void (* render_freq) (const float * freq);
 
     /* GtkWidget * (* get_widget) (void); */
     void * (* get_widget) (void);
@@ -478,22 +477,22 @@ struct _IfacePlugin
      * in X11, this should be determined by whether the interface has the
      * toplevel focus.  show() should show and raise the interface, so that both
      * is_shown() and is_focused() will return nonzero. */
-    void (* show) (gboolean show);
-    gboolean (* is_shown) (void);
+    void (* show) (boolean show);
+    boolean (* is_shown) (void);
 
-    void (* show_error) (const gchar * markup);
-    void (* show_filebrowser) (gboolean play_button);
+    void (* show_error) (const char * markup);
+    void (* show_filebrowser) (boolean play_button);
     void (* show_jump_to_track) (void);
 
     void /* GtkWidget */ * (* run_gtk_plugin) (void /* GtkWidget */ * widget,
-     const gchar * name);
+     const char * name);
     void * (* stop_gtk_plugin) (void /* GtkWidget */ * widget);
 
     void (* install_toolbar) (void /* GtkWidget */ * button);
     void (* uninstall_toolbar) (void /* GtkWidget */ * button);
 
     /* added after 3.0-alpha1 */
-    gboolean (* is_focused) (void);
+    boolean (* is_focused) (void);
 };
 
 #undef PLUGIN_COMMON_FIELDS

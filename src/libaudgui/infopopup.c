@@ -98,7 +98,7 @@ static boolean infopopup_progress_cb (void * unused)
 
     time = aud_drct_get_time ();
     gtk_progress_bar_set_fraction ((GtkProgressBar *) progressbar, time /
-     (gfloat) length);
+     (float) length);
     progress_time = g_strdup_printf ("%d:%02d", time / 60000, (time / 1000) % 60);
     gtk_progress_bar_set_text ((GtkProgressBar *) progressbar, progress_time);
     g_free (progress_time);

@@ -19,6 +19,7 @@
  * using our public API to be a derived work.
  */
 
+#include <glib.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -28,21 +29,21 @@
 typedef struct
 {
     VFSFile * file;
-    guchar buffer[16384];
-    gint filled, at;
+    unsigned char buffer[16384];
+    int filled, at;
 }
 ProbeBuffer;
 
-static gint probe_buffer_fclose (VFSFile * file)
+static int probe_buffer_fclose (VFSFile * file)
 {
     ProbeBuffer * p = vfs_get_handle (file);
 
-    gint ret = vfs_fclose (p->file);
+    int ret = vfs_fclose (p->file);
     g_slice_free (ProbeBuffer, p);
     return ret;
 }
 
-static void increase_buffer (ProbeBuffer * p, gint64 size)
+static void increase_buffer (ProbeBuffer * p, int64_t size)
 {
     size = (size + 0xFF) & ~0xFF;
 
@@ -54,33 +55,33 @@ static void increase_buffer (ProbeBuffer * p, gint64 size)
          p->file);
 }
 
-static gint64 probe_buffer_fread (void * buffer, gint64 size, gint64 count,
+static int64_t probe_buffer_fread (void * buffer, int64_t size, int64_t count,
  VFSFile * file)
 {
     ProbeBuffer * p = vfs_get_handle (file);
 
     increase_buffer (p, p->at + size * count);
-    gint readed = (size > 0) ? MIN (count, (p->filled - p->at) / size) : 0;
+    int readed = (size > 0) ? MIN (count, (p->filled - p->at) / size) : 0;
     memcpy (buffer, p->buffer + p->at, size * readed);
 
     p->at += size * readed;
     return readed;
 }
 
-static gint64 probe_buffer_fwrite (const void * data, gint64 size, gint64 count,
+static int64_t probe_buffer_fwrite (const void * data, int64_t size, int64_t count,
  VFSFile * file)
 {
     /* not implemented */
     return 0;
 }
 
-static gint probe_buffer_getc (VFSFile * file)
+static int probe_buffer_getc (VFSFile * file)
 {
-    guchar c;
+    unsigned char c;
     return (probe_buffer_fread (& c, 1, 1, file) == 1) ? c : EOF;
 }
 
-static gint probe_buffer_fseek (VFSFile * file, gint64 offset, gint whence)
+static int probe_buffer_fseek (VFSFile * file, int64_t offset, int whence)
 {
     ProbeBuffer * p = vfs_get_handle (file);
 
@@ -100,7 +101,7 @@ static gint probe_buffer_fseek (VFSFile * file, gint64 offset, gint whence)
     return 0;
 }
 
-static gint probe_buffer_ungetc (gint c, VFSFile * file)
+static int probe_buffer_ungetc (int c, VFSFile * file)
 {
     return (! probe_buffer_fseek (file, -1, SEEK_CUR)) ? c : EOF;
 }
@@ -110,29 +111,29 @@ static void probe_buffer_rewind (VFSFile * file)
     probe_buffer_fseek (file, 0, SEEK_SET);
 }
 
-static gint64 probe_buffer_ftell (VFSFile * file)
+static int64_t probe_buffer_ftell (VFSFile * file)
 {
     return ((ProbeBuffer *) vfs_get_handle (file))->at;
 }
 
-static gboolean probe_buffer_feof (VFSFile * file)
+static boolean probe_buffer_feof (VFSFile * file)
 {
     ProbeBuffer * p = vfs_get_handle (file);
     return (p->at < p->filled) ? FALSE : vfs_feof (p->file);
 }
 
-static gint probe_buffer_ftruncate (VFSFile * file, gint64 size)
+static int probe_buffer_ftruncate (VFSFile * file, int64_t size)
 {
     /* not implemented */
     return -1;
 }
 
-static gint64 probe_buffer_fsize (VFSFile * file)
+static int64_t probe_buffer_fsize (VFSFile * file)
 {
     return vfs_fsize (((ProbeBuffer *) vfs_get_handle (file))->file);
 }
 
-static gchar * probe_buffer_get_metadata (VFSFile * file, const gchar * field)
+static char * probe_buffer_get_metadata (VFSFile * file, const char * field)
 {
     return vfs_get_metadata (((ProbeBuffer *) vfs_get_handle (file))->file, field);
 }
@@ -154,7 +155,7 @@ static VFSConstructor probe_buffer_table =
 	.vfs_get_metadata_impl = probe_buffer_get_metadata,
 };
 
-VFSFile * probe_buffer_new (const gchar * filename)
+VFSFile * probe_buffer_new (const char * filename)
 {
     VFSFile * file = vfs_fopen (filename, "r");
 

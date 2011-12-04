@@ -27,20 +27,20 @@
 #define AUDACIOUS_UTIL_H
 
 #include <sys/types.h>
-#include <glib.h>
+#include <libaudcore/core.h>
 
-typedef gboolean(*DirForeachFunc) (const gchar * path,
-                                   const gchar * basename,
+typedef boolean(*DirForeachFunc) (const char * path,
+                                   const char * basename,
                                    gpointer user_data);
 
-gboolean dir_foreach (const gchar * path, DirForeachFunc func, void * user_data);
+boolean dir_foreach (const char * path, DirForeachFunc func, void * user_data);
 
-gint file_get_mtime (const gchar * filename);
-void make_directory(const gchar * path, mode_t mode);
+int file_get_mtime (const char * filename);
+void make_directory(const char * path, mode_t mode);
 
-gchar * get_path_to_self (void);
+char * get_path_to_self (void);
 
-void describe_song (const gchar * filename, const Tuple * tuple,
- gchar * * title, gchar * * artist, gchar * * album);
+void describe_song (const char * filename, const Tuple * tuple,
+ char * * title, char * * artist, char * * album);
 
 #endif /* AUDACIOUS_UTIL_H */

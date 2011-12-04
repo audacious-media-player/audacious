@@ -22,14 +22,12 @@
 #ifndef AUDACIOUS_GENERAL_H
 #define AUDACIOUS_GENERAL_H
 
-#include <glib.h>
-
 #include "plugins.h"
 
 void general_init (void);
 void general_cleanup (void);
 
-gboolean general_plugin_start (PluginHandle * plugin);
+boolean general_plugin_start (PluginHandle * plugin);
 void general_plugin_stop (PluginHandle * plugin);
 
 PluginHandle * general_plugin_by_widget (/* GtkWidget * */ void * widget);

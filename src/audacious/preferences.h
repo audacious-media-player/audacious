@@ -20,9 +20,6 @@
 #ifndef AUDACIOUS_PREFERENCES_H
 #define AUDACIOUS_PREFERENCES_H
 
-#include <glib.h>
-#include <audacious/types.h>
-
 typedef enum {
     WIDGET_NONE,
     WIDGET_CHK_BTN,
@@ -49,7 +46,7 @@ typedef enum {
 
 typedef struct {
     gpointer value;
-    const gchar *label;
+    const char *label;
 } ComboBoxElements;
 
 struct _NotebookTab;
@@ -60,25 +57,25 @@ struct _PreferencesWidget {
     gpointer cfg;            /* connected config value */
     void (*callback) (void); /* this func will be called after value change, can be NULL */
     char *tooltip;           /* widget tooltip, can be NULL */
-    gboolean child;
+    boolean child;
     ValueType cfg_type;      /* connected value type */
-    const gchar * csect;     /* config file section */
-    const gchar * cname;     /* config file key name */
+    const char * csect;     /* config file section */
+    const char * cname;     /* config file key name */
 
     union {
         struct {
-            gdouble min, max, step;
+            double min, max, step;
             char *right_label;      /* text right to widget */
         } spin_btn;
 
         struct {
             struct _PreferencesWidget *elem;
-            gint rows;
+            int rows;
         } table;
 
         struct {
             char *stock_id;
-            gboolean single_line; /* FALSE to enable line wrap */
+            boolean single_line; /* FALSE to enable line wrap */
         } label;
 
         struct {
@@ -86,30 +83,30 @@ struct _PreferencesWidget {
         } font_btn;
 
         struct {
-            gboolean password;
+            boolean password;
         } entry;
 
         struct {
             ComboBoxElements *elements;
-            gint n_elements;
-            gboolean enabled;
+            int n_elements;
+            boolean enabled;
         } combo;
 
         struct {
             struct _PreferencesWidget *elem;
-            gint n_elem;
+            int n_elem;
 
-            gboolean horizontal;  /* FALSE gives vertical, TRUE gives horizontal aligment of child widgets */
-            gboolean frame;       /* whether to draw frame around box */
+            boolean horizontal;  /* FALSE gives vertical, TRUE gives horizontal aligment of child widgets */
+            boolean frame;       /* whether to draw frame around box */
         } box;
 
         struct {
             struct _NotebookTab *tabs;
-            gint n_tabs;
+            int n_tabs;
         } notebook;
 
         struct {
-            gboolean horizontal; /* FALSE gives vertical, TRUE gives horizontal separator */
+            boolean horizontal; /* FALSE gives vertical, TRUE gives horizontal separator */
         } separator;
 
         /* for WIDGET_CUSTOM --nenolod */
@@ -119,9 +116,9 @@ struct _PreferencesWidget {
 };
 
 typedef struct _NotebookTab {
-    gchar *name;
+    char *name;
     PreferencesWidget *settings;
-    gint n_settings;
+    int n_settings;
 } NotebookTab;
 
 typedef enum {
@@ -129,12 +126,12 @@ typedef enum {
 } PreferencesType;
 
 struct _PluginPreferences {
-    const gchar * domain;
-    const gchar * title;
-    const gchar * imgurl;
+    const char * domain;
+    const char * title;
+    const char * imgurl;
 
     PreferencesWidget *prefs;
-    gint n_prefs;
+    int n_prefs;
 
     PreferencesType type;
 

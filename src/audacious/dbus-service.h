@@ -22,6 +22,7 @@
 #define AUDACIOUS_DBUS_SERVICE_H
 
 #include <glib.h>
+#include <libaudcore/core.h>
 
 #define DBUS_API_SUBJECT_TO_CHANGE
 #include <dbus/dbus-glib.h>
@@ -63,28 +64,28 @@ typedef enum {
 extern MprisPlayer * mpris;
 
 // MPRIS /
-gboolean mpris_root_identity(MprisRoot *obj, gchar **identity,
+boolean mpris_root_identity(MprisRoot *obj, char **identity,
                              GError **error);
-gboolean mpris_root_quit(MprisPlayer *obj, GError **error);
+boolean mpris_root_quit(MprisPlayer *obj, GError **error);
 
 // MPRIS /Player
-gboolean mpris_player_next(MprisPlayer *obj, GError **error);
-gboolean mpris_player_prev(MprisPlayer *obj, GError **error);
-gboolean mpris_player_pause(MprisPlayer *obj, GError **error);
-gboolean mpris_player_stop(MprisPlayer *obj, GError **error);
-gboolean mpris_player_play(MprisPlayer *obj, GError **error);
-gboolean mpris_player_repeat(MprisPlayer *obj, gboolean rpt, GError **error);
-gboolean mpris_player_get_status(MprisPlayer *obj, GValueArray **status,
+boolean mpris_player_next(MprisPlayer *obj, GError **error);
+boolean mpris_player_prev(MprisPlayer *obj, GError **error);
+boolean mpris_player_pause(MprisPlayer *obj, GError **error);
+boolean mpris_player_stop(MprisPlayer *obj, GError **error);
+boolean mpris_player_play(MprisPlayer *obj, GError **error);
+boolean mpris_player_repeat(MprisPlayer *obj, boolean rpt, GError **error);
+boolean mpris_player_get_status(MprisPlayer *obj, GValueArray **status,
                                  GError **error);
-gboolean mpris_player_get_metadata(MprisPlayer *obj, GHashTable **metadata,
+boolean mpris_player_get_metadata(MprisPlayer *obj, GHashTable **metadata,
                                    GError **error);
-gboolean mpris_player_get_caps(MprisPlayer *obj, gint *capabilities,
+boolean mpris_player_get_caps(MprisPlayer *obj, int *capabilities,
                                  GError **error);
-gboolean mpris_player_volume_set(MprisPlayer *obj, gint vol, GError **error);
-gboolean mpris_player_volume_get(MprisPlayer *obj, gint *vol,
+boolean mpris_player_volume_set(MprisPlayer *obj, int vol, GError **error);
+boolean mpris_player_volume_get(MprisPlayer *obj, int *vol,
                                  GError **error);
-gboolean mpris_player_position_set(MprisPlayer *obj, gint pos, GError **error);
-gboolean mpris_player_position_get(MprisPlayer *obj, gint *pos,
+boolean mpris_player_position_set(MprisPlayer *obj, int pos, GError **error);
+boolean mpris_player_position_get(MprisPlayer *obj, int *pos,
                                    GError **error);
 enum {
     TRACK_CHANGE_SIG,
@@ -98,143 +99,143 @@ enum {
     LAST_TRACKLIST_SIG
 };
 
-gboolean mpris_emit_track_change(MprisPlayer *obj);
-gboolean mpris_emit_status_change(MprisPlayer *obj, PlaybackStatus status);
-gboolean mpris_emit_caps_change(MprisPlayer *obj);
-gboolean mpris_emit_tracklist_change(MprisTrackList *obj, gint playlist);
+boolean mpris_emit_track_change(MprisPlayer *obj);
+boolean mpris_emit_status_change(MprisPlayer *obj, PlaybackStatus status);
+boolean mpris_emit_caps_change(MprisPlayer *obj);
+boolean mpris_emit_tracklist_change(MprisTrackList *obj, int playlist);
 
 // MPRIS /TrackList
-gboolean mpris_tracklist_get_metadata(MprisTrackList *obj, gint pos,
+boolean mpris_tracklist_get_metadata(MprisTrackList *obj, int pos,
                                       GHashTable **metadata, GError **error);
-gboolean mpris_tracklist_get_current_track(MprisTrackList *obj, gint *pos,
+boolean mpris_tracklist_get_current_track(MprisTrackList *obj, int *pos,
                                            GError **error);
-gboolean mpris_tracklist_get_length(MprisTrackList *obj, gint *length,
+boolean mpris_tracklist_get_length(MprisTrackList *obj, int *length,
                                     GError **error);
-gboolean mpris_tracklist_add_track(MprisTrackList *obj, gchar *uri,
-                                   gboolean play, GError **error);
-gboolean mpris_tracklist_del_track(MprisTrackList *obj, gint pos,
+boolean mpris_tracklist_add_track(MprisTrackList *obj, char *uri,
+                                   boolean play, GError **error);
+boolean mpris_tracklist_del_track(MprisTrackList *obj, int pos,
                                    GError **error);
-gboolean mpris_tracklist_loop(MprisTrackList *obj, gboolean loop,
+boolean mpris_tracklist_loop(MprisTrackList *obj, boolean loop,
                               GError **error);
-gboolean mpris_tracklist_random(MprisTrackList *obj, gboolean random,
+boolean mpris_tracklist_random(MprisTrackList *obj, boolean random,
                                 GError **error);
 
 /* Legacy API */
 // Audacious General Information
-gboolean audacious_rc_version(RemoteObject *obj, gchar **version, GError **error);
-gboolean audacious_rc_quit(RemoteObject *obj, GError **error);
-gboolean audacious_rc_eject(RemoteObject *obj, GError **error);
-gboolean audacious_rc_main_win_visible(RemoteObject *obj,
-                                       gboolean *is_main_win, GError **error);
-gboolean audacious_rc_show_main_win(RemoteObject *obj, gboolean show,
+boolean audacious_rc_version(RemoteObject *obj, char **version, GError **error);
+boolean audacious_rc_quit(RemoteObject *obj, GError **error);
+boolean audacious_rc_eject(RemoteObject *obj, GError **error);
+boolean audacious_rc_main_win_visible(RemoteObject *obj,
+                                       boolean *is_main_win, GError **error);
+boolean audacious_rc_show_main_win(RemoteObject *obj, boolean show,
                                     GError **error);
-gboolean audacious_rc_equalizer_visible(RemoteObject *obj, gboolean *is_eq_win,
+boolean audacious_rc_equalizer_visible(RemoteObject *obj, boolean *is_eq_win,
                                         GError **error);
-gboolean audacious_rc_show_equalizer(RemoteObject *obj, gboolean show,
+boolean audacious_rc_show_equalizer(RemoteObject *obj, boolean show,
                                      GError **error);
-gboolean audacious_rc_playlist_visible(RemoteObject *obj,
-                                       gboolean *is_pl_win,
+boolean audacious_rc_playlist_visible(RemoteObject *obj,
+                                       boolean *is_pl_win,
                                        GError **error);
-gboolean audacious_rc_show_playlist(RemoteObject *obj, gboolean show,
+boolean audacious_rc_show_playlist(RemoteObject *obj, boolean show,
                                     GError **error);
-gboolean audacious_rc_get_tuple_fields(RemoteObject *obj, gchar ***fields,
+boolean audacious_rc_get_tuple_fields(RemoteObject *obj, char ***fields,
                                     GError **error);
 
 // Playback Information/Manipulation
-gboolean audacious_rc_play(RemoteObject *obj, GError **error);
-gboolean audacious_rc_pause(RemoteObject *obj, GError **error);
-gboolean audacious_rc_stop(RemoteObject *obj, GError **error);
-gboolean audacious_rc_playing(RemoteObject *obj, gboolean *is_playing,
+boolean audacious_rc_play(RemoteObject *obj, GError **error);
+boolean audacious_rc_pause(RemoteObject *obj, GError **error);
+boolean audacious_rc_stop(RemoteObject *obj, GError **error);
+boolean audacious_rc_playing(RemoteObject *obj, boolean *is_playing,
                               GError **error);
-gboolean audacious_rc_paused(RemoteObject *obj, gboolean *is_paused,
+boolean audacious_rc_paused(RemoteObject *obj, boolean *is_paused,
                              GError **error);
-gboolean audacious_rc_stopped(RemoteObject *obj, gboolean *is_stopped,
+boolean audacious_rc_stopped(RemoteObject *obj, boolean *is_stopped,
                               GError **error);
-gboolean audacious_rc_status(RemoteObject *obj, gchar **status,
+boolean audacious_rc_status(RemoteObject *obj, char **status,
                              GError **error);
-gboolean audacious_rc_info(RemoteObject *obj, gint *rate, gint *freq,
-                           gint *nch, GError **error);
-gboolean audacious_rc_time(RemoteObject *obj, gint *time, GError **error);
-gboolean audacious_rc_seek(RemoteObject *obj, guint pos, GError **error);
-gboolean audacious_rc_volume(RemoteObject *obj, gint *vl, gint *vr,
+boolean audacious_rc_info(RemoteObject *obj, int *rate, int *freq,
+                           int *nch, GError **error);
+boolean audacious_rc_time(RemoteObject *obj, int *time, GError **error);
+boolean audacious_rc_seek(RemoteObject *obj, unsigned int pos, GError **error);
+boolean audacious_rc_volume(RemoteObject *obj, int *vl, int *vr,
                              GError **error);
-gboolean audacious_rc_set_volume(RemoteObject *obj, gint vl, gint vr,
+boolean audacious_rc_set_volume(RemoteObject *obj, int vl, int vr,
                                  GError **error);
-gboolean audacious_rc_balance(RemoteObject *obj, gint *balance,
+boolean audacious_rc_balance(RemoteObject *obj, int *balance,
                               GError **error);
 
 // Playlist Information/Manipulation
-gboolean audacious_rc_position(RemoteObject *obj, int *pos, GError **error);
-gboolean audacious_rc_advance(RemoteObject *obj, GError **error);
-gboolean audacious_rc_reverse(RemoteObject *obj, GError **error);
-gboolean audacious_rc_length(RemoteObject *obj, int *length,
+boolean audacious_rc_position(RemoteObject *obj, int *pos, GError **error);
+boolean audacious_rc_advance(RemoteObject *obj, GError **error);
+boolean audacious_rc_reverse(RemoteObject *obj, GError **error);
+boolean audacious_rc_length(RemoteObject *obj, int *length,
                              GError **error);
-gboolean audacious_rc_song_title(RemoteObject *obj, guint pos,
-                                 gchar **title, GError **error);
-gboolean audacious_rc_song_filename(RemoteObject *obj, guint pos,
-                                    gchar **filename, GError **error);
-gboolean audacious_rc_song_length(RemoteObject *obj, guint pos, int *length,
+boolean audacious_rc_song_title(RemoteObject *obj, unsigned int pos,
+                                 char **title, GError **error);
+boolean audacious_rc_song_filename(RemoteObject *obj, unsigned int pos,
+                                    char **filename, GError **error);
+boolean audacious_rc_song_length(RemoteObject *obj, unsigned int pos, int *length,
                                   GError **error);
-gboolean audacious_rc_song_frames(RemoteObject *obj, guint pos, int *length,
+boolean audacious_rc_song_frames(RemoteObject *obj, unsigned int pos, int *length,
                                   GError **error);
-gboolean audacious_rc_song_tuple(RemoteObject *obj, guint pos, gchar *tuple,
+boolean audacious_rc_song_tuple(RemoteObject *obj, unsigned int pos, char *tuple,
                                  GValue *value, GError **error);
-gboolean audacious_rc_jump(RemoteObject *obj, guint pos, GError **error);
-gboolean audacious_rc_add(RemoteObject *obj, gchar *file, GError **error);
-gboolean audacious_rc_add_url(RemoteObject *obj, gchar *url,
+boolean audacious_rc_jump(RemoteObject *obj, unsigned int pos, GError **error);
+boolean audacious_rc_add(RemoteObject *obj, char *file, GError **error);
+boolean audacious_rc_add_url(RemoteObject *obj, char *url,
                               GError **error);
-gboolean audacious_rc_add_list (RemoteObject * obj, gchar * * filenames,
+boolean audacious_rc_add_list (RemoteObject * obj, char * * filenames,
  GError * * error);
-gboolean audacious_rc_open_list (RemoteObject * obj, gchar * * filenames,
+boolean audacious_rc_open_list (RemoteObject * obj, char * * filenames,
  GError * * error);
-gboolean audacious_rc_open_list_to_temp (RemoteObject * obj, gchar * *
+boolean audacious_rc_open_list_to_temp (RemoteObject * obj, char * *
  filenames, GError * * error);
-gboolean audacious_rc_delete(RemoteObject *obj, guint pos, GError **error);
-gboolean audacious_rc_clear(RemoteObject *obj, GError **error);
-gboolean audacious_rc_auto_advance(RemoteObject *obj, gboolean *is_advance,
+boolean audacious_rc_delete(RemoteObject *obj, unsigned int pos, GError **error);
+boolean audacious_rc_clear(RemoteObject *obj, GError **error);
+boolean audacious_rc_auto_advance(RemoteObject *obj, boolean *is_advance,
                                    GError **error);
-gboolean audacious_rc_toggle_auto_advance(RemoteObject *obj, GError **error);
-gboolean audacious_rc_repeat(RemoteObject *obj, gboolean *is_repeat,
+boolean audacious_rc_toggle_auto_advance(RemoteObject *obj, GError **error);
+boolean audacious_rc_repeat(RemoteObject *obj, boolean *is_repeat,
                              GError **error);
-gboolean audacious_rc_toggle_repeat(RemoteObject *obj, GError **error);
-gboolean audacious_rc_shuffle(RemoteObject *obj, gboolean *is_shuffle,
+boolean audacious_rc_toggle_repeat(RemoteObject *obj, GError **error);
+boolean audacious_rc_shuffle(RemoteObject *obj, boolean *is_shuffle,
                               GError **error);
-gboolean audacious_rc_toggle_shuffle(RemoteObject *obj, GError **error);
+boolean audacious_rc_toggle_shuffle(RemoteObject *obj, GError **error);
 
 /* new */
-gboolean audacious_rc_show_prefs_box(RemoteObject *obj, gboolean show, GError **error);
-gboolean audacious_rc_show_about_box(RemoteObject *obj, gboolean show, GError **error);
-gboolean audacious_rc_show_jtf_box(RemoteObject *obj, gboolean show, GError **error);
-gboolean audacious_rc_show_filebrowser(RemoteObject *obj, gboolean show, GError **error); //new Nov 8
-gboolean audacious_rc_play_pause(RemoteObject *obj, GError **error);
-gboolean audacious_rc_activate(RemoteObject *obj, GError **error);
-gboolean audacious_rc_queue_get_list_pos(RemoteObject *obj, gint qpos, gint *pos, GError **error);
-gboolean audacious_rc_queue_get_queue_pos(RemoteObject *obj, gint pos, gint *qpos, GError **error);
-gboolean audacious_rc_get_info(RemoteObject *obj, gint *rate, gint *freq, gint *nch, GError **error);
-gboolean audacious_rc_toggle_aot(RemoteObject *obj, gboolean ontop, GError **error);
-gboolean audacious_rc_get_playqueue_length(RemoteObject *obj, gint *length, GError **error);
-gboolean audacious_rc_playqueue_add(RemoteObject *obj, gint pos, GError **error);
-gboolean audacious_rc_playqueue_remove(RemoteObject *obj, gint pos, GError **error);
-gboolean audacious_rc_playqueue_clear(RemoteObject *obj, GError **error);
-gboolean audacious_rc_playqueue_is_queued(RemoteObject *obj, gint pos, gboolean *is_queued, GError **error);
-gboolean audacious_rc_playlist_ins_url_string(RemoteObject *obj, gchar *url, gint pos, GError **error);
-gboolean audacious_rc_playlist_enqueue_to_temp(RemoteObject *obj, gchar *url, GError **error);
-gboolean audacious_rc_playlist_add(RemoteObject *obj, gpointer list, GError **error);
+boolean audacious_rc_show_prefs_box(RemoteObject *obj, boolean show, GError **error);
+boolean audacious_rc_show_about_box(RemoteObject *obj, boolean show, GError **error);
+boolean audacious_rc_show_jtf_box(RemoteObject *obj, boolean show, GError **error);
+boolean audacious_rc_show_filebrowser(RemoteObject *obj, boolean show, GError **error); //new Nov 8
+boolean audacious_rc_play_pause(RemoteObject *obj, GError **error);
+boolean audacious_rc_activate(RemoteObject *obj, GError **error);
+boolean audacious_rc_queue_get_list_pos(RemoteObject *obj, int qpos, int *pos, GError **error);
+boolean audacious_rc_queue_get_queue_pos(RemoteObject *obj, int pos, int *qpos, GError **error);
+boolean audacious_rc_get_info(RemoteObject *obj, int *rate, int *freq, int *nch, GError **error);
+boolean audacious_rc_toggle_aot(RemoteObject *obj, boolean ontop, GError **error);
+boolean audacious_rc_get_playqueue_length(RemoteObject *obj, int *length, GError **error);
+boolean audacious_rc_playqueue_add(RemoteObject *obj, int pos, GError **error);
+boolean audacious_rc_playqueue_remove(RemoteObject *obj, int pos, GError **error);
+boolean audacious_rc_playqueue_clear(RemoteObject *obj, GError **error);
+boolean audacious_rc_playqueue_is_queued(RemoteObject *obj, int pos, boolean *is_queued, GError **error);
+boolean audacious_rc_playlist_ins_url_string(RemoteObject *obj, char *url, int pos, GError **error);
+boolean audacious_rc_playlist_enqueue_to_temp(RemoteObject *obj, char *url, GError **error);
+boolean audacious_rc_playlist_add(RemoteObject *obj, gpointer list, GError **error);
 
 /* new on nov 7 */
-gboolean audacious_rc_get_eq(RemoteObject *obj, gdouble *preamp, GArray **bands, GError **error);
-gboolean audacious_rc_get_eq_preamp(RemoteObject *obj, gdouble *preamp, GError **error);
-gboolean audacious_rc_get_eq_band(RemoteObject *obj, gint band, gdouble *value, GError **error);
-gboolean audacious_rc_set_eq(RemoteObject *obj, gdouble preamp, GArray *bands, GError **error);
-gboolean audacious_rc_set_eq_preamp(RemoteObject *obj, gdouble preamp, GError **error);
-gboolean audacious_rc_set_eq_band(RemoteObject *obj, gint band, gdouble value, GError **error);
-gboolean audacious_rc_equalizer_activate(RemoteObject *obj, gboolean active, GError **error);
+boolean audacious_rc_get_eq(RemoteObject *obj, double *preamp, GArray **bands, GError **error);
+boolean audacious_rc_get_eq_preamp(RemoteObject *obj, double *preamp, GError **error);
+boolean audacious_rc_get_eq_band(RemoteObject *obj, int band, double *value, GError **error);
+boolean audacious_rc_set_eq(RemoteObject *obj, double preamp, GArray *bands, GError **error);
+boolean audacious_rc_set_eq_preamp(RemoteObject *obj, double preamp, GError **error);
+boolean audacious_rc_set_eq_band(RemoteObject *obj, int band, double value, GError **error);
+boolean audacious_rc_equalizer_activate(RemoteObject *obj, boolean active, GError **error);
 
 /* new in 2.4 */
-gboolean audacious_rc_get_active_playlist_name(RemoteObject *obj, gchar **title, GError **error);
+boolean audacious_rc_get_active_playlist_name(RemoteObject *obj, char **title, GError **error);
 
 /* new in 3.1 */
-gboolean audacious_rc_stop_after (RemoteObject * obj, gboolean * is_stopping, GError * * error);
-gboolean audacious_rc_toggle_stop_after (RemoteObject * obj, GError * * error);
+boolean audacious_rc_stop_after (RemoteObject * obj, boolean * is_stopping, GError * * error);
+boolean audacious_rc_toggle_stop_after (RemoteObject * obj, GError * * error);
 
 #endif /* AUDACIOUS_DBUS_SERVICE_H */

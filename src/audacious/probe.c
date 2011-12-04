@@ -33,14 +33,14 @@
 
 typedef struct
 {
-    const gchar * filename;
+    const char * filename;
     VFSFile * handle;
-    gboolean buffered;
+    boolean buffered;
     PluginHandle * plugin;
 }
 ProbeState;
 
-static gboolean check_opened (ProbeState * state)
+static boolean check_opened (ProbeState * state)
 {
     if (state->handle != NULL)
         return TRUE;
@@ -58,7 +58,7 @@ static gboolean check_opened (ProbeState * state)
     return FALSE;
 }
 
-static gboolean probe_func (PluginHandle * plugin, ProbeState * state)
+static boolean probe_func (PluginHandle * plugin, ProbeState * state)
 {
     AUDDBG ("Trying %s.\n", plugin_get_name (plugin));
     InputPlugin * decoder = plugin_get_header (plugin);
@@ -95,7 +95,7 @@ static gboolean probe_func (PluginHandle * plugin, ProbeState * state)
  *    similarly that the plugin passed in this call is the last one.
  */
 
-static gboolean probe_func_fast (PluginHandle * plugin, ProbeState * state)
+static boolean probe_func_fast (PluginHandle * plugin, ProbeState * state)
 {
     if (state->plugin != NULL)
     {
@@ -113,13 +113,13 @@ static gboolean probe_func_fast (PluginHandle * plugin, ProbeState * state)
 
 static void probe_by_scheme (ProbeState * state)
 {
-    const gchar * s = strstr (state->filename, "://");
+    const char * s = strstr (state->filename, "://");
 
     if (s == NULL)
         return;
 
     AUDDBG ("Probing by scheme.\n");
-    gchar buf[s - state->filename + 1];
+    char buf[s - state->filename + 1];
     memcpy (buf, state->filename, s - state->filename);
     buf[s - state->filename] = 0;
 
@@ -128,14 +128,14 @@ static void probe_by_scheme (ProbeState * state)
 
 static void probe_by_extension (ProbeState * state)
 {
-    const gchar * ext, * sub;
+    const char * ext, * sub;
     uri_parse (state->filename, NULL, & ext, & sub, NULL);
 
     if (ext == sub)
         return;
 
     AUDDBG ("Probing by extension.\n");
-    gchar buf[sub - ext];
+    char buf[sub - ext];
     memcpy (buf, ext + 1, sub - ext - 1);
     buf[sub - ext - 1] = 0;
 
@@ -144,7 +144,7 @@ static void probe_by_extension (ProbeState * state)
 
 static void probe_by_mime (ProbeState * state)
 {
-    gchar * mime;
+    char * mime;
 
     if (! check_opened (state))
         return;
@@ -164,7 +164,7 @@ static void probe_by_content (ProbeState * state)
     plugin_for_enabled (PLUGIN_TYPE_INPUT, (PluginForEachFunc) probe_func, state);
 }
 
-PluginHandle * file_find_decoder (const gchar * filename, gboolean fast)
+PluginHandle * file_find_decoder (const char * filename, boolean fast)
 {
     ProbeState state;
 
@@ -197,7 +197,7 @@ DONE:
     return state.plugin;
 }
 
-Tuple * file_read_tuple (const gchar * filename, PluginHandle * decoder)
+Tuple * file_read_tuple (const char * filename, PluginHandle * decoder)
 {
     InputPlugin * ip = plugin_get_header (decoder);
     g_return_val_if_fail (ip, NULL);
@@ -212,8 +212,8 @@ Tuple * file_read_tuple (const gchar * filename, PluginHandle * decoder)
     return tuple;
 }
 
-gboolean file_read_image (const gchar * filename, PluginHandle * decoder,
- void * * data, gint * size)
+boolean file_read_image (const char * filename, PluginHandle * decoder,
+ void * * data, int * size)
 {
     if (! input_plugin_has_images (decoder))
         return FALSE;
@@ -223,7 +223,7 @@ gboolean file_read_image (const gchar * filename, PluginHandle * decoder,
     g_return_val_if_fail (ip->get_song_image, FALSE);
 
     VFSFile * handle = vfs_fopen (filename, "r");
-    gboolean success = ip->get_song_image (filename, handle, data, size);
+    boolean success = ip->get_song_image (filename, handle, data, size);
 
     if (handle)
         vfs_fclose (handle);
@@ -231,12 +231,12 @@ gboolean file_read_image (const gchar * filename, PluginHandle * decoder,
     return success;
 }
 
-gboolean file_can_write_tuple (const gchar * filename, PluginHandle * decoder)
+boolean file_can_write_tuple (const char * filename, PluginHandle * decoder)
 {
     return input_plugin_can_write_tuple (decoder);
 }
 
-gboolean file_write_tuple (const gchar * filename, PluginHandle * decoder,
+boolean file_write_tuple (const char * filename, PluginHandle * decoder,
  const Tuple * tuple)
 {
     InputPlugin * ip = plugin_get_header (decoder);
@@ -248,7 +248,7 @@ gboolean file_write_tuple (const gchar * filename, PluginHandle * decoder,
     if (! handle)
         return FALSE;
 
-    gboolean success = ip->update_song_tuple (tuple, handle);
+    boolean success = ip->update_song_tuple (tuple, handle);
 
     if (handle)
         vfs_fclose (handle);
@@ -259,7 +259,7 @@ gboolean file_write_tuple (const gchar * filename, PluginHandle * decoder,
     return success;
 }
 
-gboolean custom_infowin (const gchar * filename, PluginHandle * decoder)
+boolean custom_infowin (const char * filename, PluginHandle * decoder)
 {
     if (! input_plugin_has_infowin (decoder))
         return FALSE;

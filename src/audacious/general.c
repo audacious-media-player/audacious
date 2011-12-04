@@ -34,10 +34,10 @@ typedef struct {
     GtkWidget * widget;
 } LoadedGeneral;
 
-static gint running = FALSE;
+static int running = FALSE;
 static GList * loaded_general_plugins = NULL;
 
-static gint general_find_cb (LoadedGeneral * general, PluginHandle * plugin)
+static int general_find_cb (LoadedGeneral * general, PluginHandle * plugin)
 {
     return (general->plugin == plugin) ? 0 : -1;
 }
@@ -93,7 +93,7 @@ static void general_unload (PluginHandle * plugin)
     g_slice_free (LoadedGeneral, general);
 }
 
-static gboolean general_init_cb (PluginHandle * plugin)
+static boolean general_init_cb (PluginHandle * plugin)
 {
     general_load (plugin);
     return TRUE;
@@ -121,7 +121,7 @@ void general_cleanup (void)
     g_list_foreach (loaded_general_plugins, (GFunc) general_cleanup_cb, NULL);
 }
 
-gboolean general_plugin_start (PluginHandle * plugin)
+boolean general_plugin_start (PluginHandle * plugin)
 {
     GeneralPlugin * gp = plugin_get_header (plugin);
     g_return_val_if_fail (gp != NULL, FALSE);
@@ -159,6 +159,6 @@ PluginHandle * general_plugin_by_widget (/* GtkWidget * */ void * widget)
         if (general->widget == widget)
             return general->plugin;
     }
-    
+
     return NULL;
 }
