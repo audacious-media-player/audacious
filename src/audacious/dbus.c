@@ -532,6 +532,7 @@ static gboolean add_cb(void *data)
     struct AddRequest *request = data;
     playlist_entry_insert (playlist_get_active (), request->position,
      request->filename, NULL, request->play);
+    g_free (request->filename);
     g_free(request);
     return FALSE;
 }
@@ -642,7 +643,7 @@ static gboolean get_mpris_metadata_cb(void *data)
     else
         request->metadata = NULL;
 
-    g_free (filename);
+    str_unref (filename);
     if (tuple)
         tuple_unref (tuple);
 
@@ -814,7 +815,7 @@ gboolean mpris_emit_track_change(MprisPlayer * obj)
         g_hash_table_destroy (metadata);
     }
 
-    g_free (filename);
+    str_unref (filename);
     if (tuple)
         tuple_unref (tuple);
 
@@ -1093,9 +1094,10 @@ gboolean audacious_rc_song_title(RemoteObject * obj, guint pos, gchar * *title, 
     struct InfoRequest request = {.playlist = -1,.entry = pos };
 
     get_info(&request);
-    g_free(request.filename);
-    g_free(request.pltitle);
-    *title = request.title;
+    * title = g_strdup (request.title);
+    str_unref (request.filename);
+    str_unref (request.pltitle);
+    str_unref (request.title);
     return TRUE;
 }
 
@@ -1104,9 +1106,10 @@ gboolean audacious_rc_song_filename(RemoteObject * obj, guint pos, gchar * *file
     struct InfoRequest request = {.playlist = -1,.entry = pos };
 
     get_info(&request);
-    *filename = request.filename;
-    g_free(request.title);
-    g_free(request.pltitle);
+    * filename = g_strdup (request.filename);
+    str_unref (request.filename);
+    str_unref (request.pltitle);
+    str_unref (request.title);
     return TRUE;
 }
 
@@ -1122,10 +1125,10 @@ gboolean audacious_rc_song_frames(RemoteObject * obj, guint pos, gint * length, 
     struct InfoRequest request = {.playlist = -1,.entry = pos };
 
     get_info(&request);
-    g_free(request.filename);
-    g_free(request.title);
-    g_free(request.pltitle);
     *length = request.length;
+    str_unref (request.filename);
+    str_unref (request.pltitle);
+    str_unref (request.title);
     return TRUE;
 }
 
@@ -1437,9 +1440,10 @@ gboolean audacious_rc_get_active_playlist_name(RemoteObject * obj, gchar * *titl
     struct InfoRequest request = {.playlist = -2 };
 
     get_info(&request);
-    g_free(request.title);
-    g_free(request.filename);
-    *title = request.pltitle;
+    * title = g_strdup (request.pltitle);
+    str_unref (request.filename);
+    str_unref (request.pltitle);
+    str_unref (request.title);
     return TRUE;
 }
 

@@ -148,11 +148,7 @@ static void index_free_filenames (struct index * filenames)
 {
     gint count = index_count (filenames);
     for (gint i = 0; i < count; i ++)
-    {
-        gchar * filename = index_get (filenames, i);
-        if (filename)
-            g_free (filename);
-    }
+        str_unref (index_get (filenames, i));
 
     index_free (filenames);
 }
@@ -174,7 +170,7 @@ static AddTask * add_task_new (gint playlist_id, gint at, gboolean play,
  struct index * filenames, struct index * tuples, PlaylistFilterFunc filter,
  void * user)
 {
-    AddTask * task = g_malloc (sizeof (AddTask));
+    AddTask * task = g_slice_new (AddTask);
     task->playlist_id = playlist_id;
     task->at = at;
     task->play = play;
@@ -192,12 +188,12 @@ static void add_task_free (AddTask * task)
     if (task->tuples)
         index_free_tuples (task->tuples);
 
-    g_free (task);
+    g_slice_free (AddTask, task);
 }
 
 static AddResult * add_result_new (gint playlist_id, gint at, gboolean play)
 {
-    AddResult * result = g_malloc (sizeof (AddResult));
+    AddResult * result = g_slice_new (AddResult);
     result->playlist_id = playlist_id;
     result->at = at;
     result->play = play;
@@ -216,7 +212,7 @@ static void add_result_free (AddResult * result)
     if (result->decoders)
         index_free (result->decoders);
 
-    g_free (result);
+    g_slice_free (AddResult, result);
 }
 
 static void add_file (gchar * filename, Tuple * tuple, PluginHandle * decoder,
@@ -224,7 +220,10 @@ static void add_file (gchar * filename, Tuple * tuple, PluginHandle * decoder,
 {
     g_return_if_fail (filename);
     if (filter && ! filter (filename, user))
+    {
+        str_unref (filename);
         return;
+    }
 
     status_update (filename, index_count (result->filenames));
 
@@ -233,7 +232,7 @@ static void add_file (gchar * filename, Tuple * tuple, PluginHandle * decoder,
         decoder = file_find_decoder (filename, TRUE);
         if (validate && ! decoder)
         {
-            g_free (filename);
+            str_unref (filename);
             return;
         }
     }
@@ -248,12 +247,12 @@ static void add_file (gchar * filename, Tuple * tuple, PluginHandle * decoder,
     {
         for (gint sub = 0; sub < n_subtunes; sub ++)
         {
-            gchar * subname = g_strdup_printf ("%s?%d", filename,
+            gchar * subname = str_printf ("%s?%d", filename,
              tuple_get_nth_subtune (tuple, sub));
             add_file (subname, NULL, decoder, filter, user, result, FALSE);
         }
 
-        g_free (filename);
+        str_unref (filename);
         tuple_unref (tuple);
         return;
     }
@@ -268,7 +267,10 @@ static void add_folder (gchar * filename, PlaylistFilterFunc filter,
 {
     g_return_if_fail (filename);
     if (filter && ! filter (filename, user))
+    {
+        str_unref (filename);
         return;
+    }
 
     status_update (filename, index_count (result->filenames));
 
@@ -302,12 +304,14 @@ static void add_folder (gchar * filename, PlaylistFilterFunc filter,
         if (S_ISREG (info.st_mode))
         {
             gchar * item_name = filename_to_uri (files->data);
-            add_file (item_name, NULL, NULL, filter, user, result, TRUE);
+            add_file (str_get (item_name), NULL, NULL, filter, user, result, TRUE);
+            g_free (item_name);
         }
         else if (S_ISDIR (info.st_mode))
         {
             gchar * item_name = filename_to_uri (files->data);
-            add_folder (item_name, filter, user, result);
+            add_folder (str_get (item_name), filter, user, result);
+            g_free (item_name);
         }
 
     NEXT:
@@ -316,7 +320,7 @@ static void add_folder (gchar * filename, PlaylistFilterFunc filter,
     }
 
 FREE:
-    g_free (filename);
+    str_unref (filename);
     g_free (unix_name);
 }
 
@@ -325,22 +329,28 @@ static void add_playlist (gchar * filename, PlaylistFilterFunc filter,
 {
     g_return_if_fail (filename);
     if (filter && ! filter (filename, user))
+    {
+        str_unref (filename);
         return;
+    }
 
     status_update (filename, index_count (result->filenames));
 
     gchar * title = NULL;
     struct index * filenames, * tuples;
     if (! playlist_load (filename, & title, & filenames, & tuples))
+    {
+        str_unref (filename);
         return;
+    }
 
     gint count = index_count (filenames);
     for (gint i = 0; i < count; i ++)
         add_file (index_get (filenames, i), tuples ? index_get (tuples, i) :
          NULL, NULL, filter, user, result, FALSE);
 
-    g_free (filename);
-    g_free (title);
+    str_unref (filename);
+    str_unref (title);
     index_free (filenames);
     if (tuples)
         index_free (tuples);
@@ -494,12 +504,12 @@ void adder_cleanup (void)
     status_done_locked ();
 }
 
-void playlist_entry_insert (gint playlist, gint at, gchar * filename,
+void playlist_entry_insert (gint playlist, gint at, const gchar * filename,
  Tuple * tuple, gboolean play)
 {
     struct index * filenames = index_new ();
     struct index * tuples = index_new ();
-    index_append (filenames, filename);
+    index_append (filenames, str_get (filename));
     index_append (tuples, tuple);
 
     playlist_entry_insert_batch (playlist, at, filenames, tuples, play);

@@ -177,11 +177,11 @@ void playlist_remove_duplicates_by_scheme (gint playlist, gint scheme)
             if (compare (last, current) == 0)
                 playlist_entry_set_selected (playlist, count, TRUE);
 
-            g_free (last);
+            str_unref (last);
             last = current;
         }
 
-        g_free (last);
+        str_unref (last);
     }
     else if (tuple_comparisons[scheme] != NULL)
     {
@@ -226,7 +226,7 @@ void playlist_remove_failed (gint playlist)
          G_FILE_TEST_EXISTS))
             playlist_entry_set_selected (playlist, count, TRUE);
 
-        g_free (filename);
+        str_unref (filename);
     }
 
     playlist_delete_selected (playlist);

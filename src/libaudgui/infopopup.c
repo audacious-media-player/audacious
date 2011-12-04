@@ -91,10 +91,10 @@ static gboolean infopopup_progress_cb (void * unused)
     gchar * filename = aud_playlist_entry_get_filename (playlist, entry);
     if (strcmp (filename, tooltip_file))
     {
-        g_free (filename);
+        str_unref (filename);
         goto HIDE;
     }
-    g_free (filename);
+    str_unref (filename);
 
     time = aud_drct_get_time ();
     gtk_progress_bar_set_fraction ((GtkProgressBar *) progressbar, time /
@@ -346,8 +346,8 @@ void audgui_infopopup_show (gint playlist, gint entry)
     if (filename && title && tuple)
         infopopup_show (playlist, entry, filename, tuple, title);
 
-    g_free (filename);
-    g_free (title);
+    str_unref (filename);
+    str_unref (title);
     if (tuple)
         tuple_unref (tuple);
 }

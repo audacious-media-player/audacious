@@ -21,6 +21,10 @@
 
 /* Do not include this file directly; use playlist.h instead. */
 
+/* Any functions in this API with a return type of (gchar *) return pooled
+ * strings that must not be modified and must be released with str_unref() when
+ * no longer needed. */
+
 /* --- PLAYLIST CORE API --- */
 
 /* Returns the number of playlists currently open.  There will always be at
@@ -57,15 +61,13 @@ AUD_FUNC1 (gint, playlist_by_unique_id, gint, id)
  * use of the filename.) */
 AUD_VFUNC2 (playlist_set_filename, gint, playlist, const gchar *, filename)
 
-/* Returns the filename associated with a playlist.  The filename should be
- * freed when no longer needed. */
+/* Returns the filename associated with a playlist. */
 AUD_FUNC1 (gchar *, playlist_get_filename, gint, playlist)
 
 /* Sets the title associated with a playlist. */
 AUD_VFUNC2 (playlist_set_title, gint, playlist, const gchar *, title)
 
-/* Returns the title associated with a playlist.  The title should be freed when
- * no longer needed. */
+/* Returns the title associated with a playlist. */
 AUD_FUNC1 (gchar *, playlist_get_title, gint, playlist)
 
 /* Marks a playlist as active.  This is the playlist which the user will see and
@@ -100,22 +102,24 @@ AUD_FUNC1 (gint, playlist_entry_count, gint, playlist)
 /* Adds a song file, playlist file, or folder to a playlist before the entry
  * numbered <at>.  If <at> is negative or equal to the number of entries, the
  * item is added after the last entry.  <tuple> may be NULL, in which case
- * Audacious will attempt to read metadata from the song file.  Audacious will
- * free the memory used by the filename and the tuple when they are no longer
- * needed.  Adding items to the playlist can be a slow process, and this
- * function may return before the process is complete.  Hence, the caller must
- * not assume that there will be new entries in the playlist immediately after
- * this function is called.  If <play> is nonzero, Audacious will begin playback
- * of the items once they have been added. */
-AUD_VFUNC5 (playlist_entry_insert, gint, playlist, gint, at, gchar *,
+ * Audacious will attempt to read metadata from the song file.  The caller gives
+ * up one reference count to <tuple>.  If <play> is nonzero, Audacious will
+ * begin playback of the items once they have been added.
+ *
+ * Because adding items to the playlist can be a slow process, this function may
+ * return before the process is complete.  Hence, the caller must not assume
+ * that there will be new entries in the playlist immediately. */
+AUD_VFUNC5 (playlist_entry_insert, gint, playlist, gint, at, const gchar *,
  filename, Tuple *, tuple, gboolean, play)
 
 /* Similar to playlist_entry_insert, adds multiple song files, playlist files,
- * or folders to a playlist.  The filenames are stored as (gchar *) in an index
- * (see libaudcore/index.h).  Tuples are likewise stored as (Tuple *) in an
- * index of the same length.  <tuples> may be NULL, or individual pointers
- * within it may be NULL.  Audacious will free both indexes, the filenames, and
- * the tuples when they are no longer needed. */
+ * or folders to a playlist.  The filenames, stored as (gchar *) in an index
+ * (see libaudcore/index.h), must be pooled with str_get(); the caller gives up
+ * one reference count to each filename.  Tuples are likewise stored as
+ * (Tuple *) in an index of the same length; the caller gives up one reference
+ * count to each tuple.  <tuples> may be NULL, or individual pointers within it
+ * may be NULL.  Finally, the caller also gives up ownership of the indexes
+ * themselves and should not access them after the call.   */
 AUD_VFUNC5 (playlist_entry_insert_batch, gint, playlist, gint, at,
  struct index *, filenames, struct index *, tuples, gboolean, play)
 
@@ -133,8 +137,7 @@ AUD_VFUNC7 (playlist_entry_insert_filtered, gint, playlist, gint, at,
  * the behavior of drct_play() is unspecified. */
 AUD_VFUNC3 (playlist_entry_delete, gint, playlist, gint, at, gint, number)
 
-/* Returns the filename of an entry.  The filename should be freed when no
- * longer needed. */
+/* Returns the filename of an entry. */
 AUD_FUNC2 (gchar *, playlist_entry_get_filename, gint, playlist, gint, entry)
 
 /* Returns a handle to the decoder plugin associated with an entry, or NULL if
@@ -151,16 +154,15 @@ AUD_FUNC3 (Tuple *, playlist_entry_get_tuple, gint, playlist, gint, entry,
  gboolean, fast)
 
 /* Returns a formatted title string for an entry.  This may include information
- * such as the filename, song title, and/or artist.  The string should be freed
- * when no longer needed.  If <fast> is nonzero, returns the entry's filename if
- * metadata for the entry has not yet been read. */
+ * such as the filename, song title, and/or artist.  If <fast> is nonzero,
+ * returns the entry's filename if metadata for the entry has not yet been read. */
 AUD_FUNC3 (gchar *, playlist_entry_get_title, gint, playlist, gint, entry,
  gboolean, fast)
 
 /* Returns three strings (title, artist, and album) describing an entry.  The
- * strings should be freed when no longer needed.  If <fast> is nonzero, returns
- * a "best guess" based on the entry's filename if metadata for the entry has
- * not yet been read.  May return NULL for any and all values. */
+ * strings are pooled, and the usual cautions apply.  If <fast> is nonzero,
+ * returns a "best guess" based on the entry's filename if metadata for the
+ * entry has not yet been read.  May return NULL for any and all values. */
 AUD_VFUNC6 (playlist_entry_describe, gint, playlist, gint, entry,
  gchar * *, title, gchar * *, artist, gchar * *, album, gboolean, fast)
 

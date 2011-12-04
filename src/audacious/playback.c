@@ -42,10 +42,10 @@ static gboolean playing = FALSE;
 static gboolean playback_error;
 static gint failed_entries;
 
-static gchar * current_filename;
+static gchar * current_filename; /* pooled */
 
 static gint current_entry;
-static gchar * current_title;
+static gchar * current_title; /* pooled */
 static gint current_length;
 
 static InputPlugin * current_decoder;
@@ -100,12 +100,12 @@ static gboolean update_from_playlist (void)
 
     if (entry == current_entry && ! g_strcmp0 (title, current_title) && length == current_length)
     {
-        g_free (title);
+        str_unref (title);
         return FALSE;
     }
 
     current_entry = entry;
-    g_free (current_title);
+    str_unref (current_title);
     current_title = title;
     current_length = length;
     return TRUE;
@@ -232,9 +232,9 @@ static void playback_cleanup (void)
         end_source = 0;
     }
 
-    g_free (current_filename);
+    str_unref (current_filename);
     current_filename = NULL;
-    g_free (current_title);
+    str_unref (current_title);
     current_title = NULL;
 
     hook_dissociate ("playlist update", update_cb);

@@ -164,7 +164,7 @@ GdkPixbuf * audgui_pixbuf_for_entry (gint list, gint entry)
         g_free (data);
         if (p)
         {
-            g_free (name);
+            str_unref (name);
             return p;
         }
     }
@@ -177,12 +177,12 @@ GdkPixbuf * audgui_pixbuf_for_entry (gint list, gint entry)
         g_free (assoc);
         if (p)
         {
-            g_free (name);
+            str_unref (name);
             return p;
         }
     }
 
-    g_free (name);
+    str_unref (name);
 
 FALLBACK:;
     AUDDBG ("Using fallback pixbuf.\n");

@@ -122,7 +122,7 @@ gboolean playlist_insert_playlist_raw (gint list, gint at,
 
     playlist_entry_insert_batch_raw (list, at, filenames, tuples, NULL);
 
-    g_free (title);
+    str_unref (title);
     return TRUE;
 }
 
@@ -148,18 +148,18 @@ gboolean playlist_save (gint list, const gchar * filename)
 
     for (gint i = 0; i < entries; i ++)
     {
-        index_append (filenames, (void *) playlist_entry_get_filename (list, i));
-        index_append (tuples, (void *) playlist_entry_get_tuple (list, i, fast));
+        index_append (filenames, playlist_entry_get_filename (list, i));
+        index_append (tuples, playlist_entry_get_tuple (list, i, fast));
     }
 
     gboolean success = pp->save (filename, file, title, filenames, tuples);
 
     vfs_fclose (file);
-    g_free (title);
+    str_unref (title);
 
     for (gint i = 0; i < entries; i ++)
     {
-        g_free (index_get (filenames, i));
+        str_unref (index_get (filenames, i));
         Tuple * tuple = index_get (tuples, i);
         if (tuple)
             tuple_unref (tuple);

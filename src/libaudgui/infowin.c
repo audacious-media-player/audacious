@@ -587,7 +587,7 @@ void audgui_infowin_show (gint playlist, gint entry)
     tuple_unref (tuple);
 
 FREE:
-    g_free (filename);
+    str_unref (filename);
 }
 
 void audgui_infowin_show_current (void)

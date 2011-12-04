@@ -91,6 +91,7 @@ void audgui_import_playlist (void)
     aud_playlist_entry_delete (list, 0, aud_playlist_entry_count (list));
     aud_playlist_entry_insert (list, 0, filename, NULL, FALSE);
     aud_playlist_set_filename (list, filename);
+    g_free (filename);
 }
 
 void audgui_export_playlist (void)
@@ -100,7 +101,7 @@ void audgui_export_playlist (void)
 
     gchar * def = aud_playlist_get_filename (list);
     gchar * filename = select_file (TRUE, def);
-    g_free (def);
+    str_unref (def);
 
     if (! filename || (vfs_file_test (filename, G_FILE_TEST_EXISTS) &&
      ! confirm_overwrite (filename)))

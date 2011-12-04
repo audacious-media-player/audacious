@@ -77,8 +77,10 @@ static void get_value (void * user, gint row, gint column, GValue * value)
 {
     switch (column)
     {
-    case 0:
-        g_value_take_string (value, aud_playlist_get_title (row));
+    case 0:;
+        gchar * title = aud_playlist_get_title (row);
+        g_value_set_string (value, title);
+        str_unref (title);
         break;
     case 1:
         g_value_set_int (value, aud_playlist_entry_count (row));
@@ -140,7 +142,7 @@ static gboolean search_cb (GtkTreeModel * model, gint column, const gchar * key,
     gchar * temp = aud_playlist_get_title (row);
     g_return_val_if_fail (temp, TRUE);
     gchar * title = g_utf8_strdown (temp, -1);
-    g_free (temp);
+    str_unref (temp);
 
     temp = g_utf8_strdown (key, -1);
     gchar * * keys = g_strsplit (temp, " ", 0);

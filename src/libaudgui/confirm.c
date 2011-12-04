@@ -78,7 +78,7 @@ void audgui_confirm_playlist_delete (gint playlist)
     message = g_strdup_printf (_("Are you sure you want to close %s?  If you "
      "do, any changes made since the playlist was exported will be lost."),
      title);
-    g_free (title);
+    str_unref (title);
     label = gtk_label_new (message);
     g_free (message);
     gtk_label_set_line_wrap ((GtkLabel *) label, TRUE);
@@ -133,7 +133,7 @@ void audgui_show_playlist_rename (gint playlist)
     GtkWidget * entry = gtk_entry_new ();
     gchar * title = aud_playlist_get_title (playlist);
     gtk_entry_set_text ((GtkEntry *) entry, title);
-    g_free (title);
+    str_unref (title);
     gtk_entry_set_activates_default ((GtkEntry *) entry, TRUE);
     gtk_box_pack_start ((GtkBox *) gtk_dialog_get_content_area ((GtkDialog *)
      dialog), entry, FALSE, FALSE, 0);

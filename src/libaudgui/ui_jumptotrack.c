@@ -170,7 +170,7 @@ static void fill_list (void)
 
         gtk_list_store_append(store, &iter);
         gtk_list_store_set (store, & iter, 0, 1 + entry, 1, title, -1);
-        g_free (title);
+        str_unref (title);
     }
 
     if (gtk_tree_model_get_iter_first ((GtkTreeModel *) store, & iter))

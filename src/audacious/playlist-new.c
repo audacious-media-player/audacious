@@ -275,7 +275,7 @@ static void entry_cancel_scan (Entry * entry)
 static Entry * entry_new (gchar * filename, Tuple * tuple,
  PluginHandle * decoder)
 {
-    Entry * entry = g_malloc (sizeof (Entry));
+    Entry * entry = g_slice_new (Entry);
 
     entry->filename = filename;
     entry->decoder = decoder;
@@ -301,7 +301,7 @@ static void entry_free (Entry * entry)
 {
     entry_cancel_scan (entry);
 
-    g_free (entry->filename);
+    str_unref (entry->filename);
     if (entry->tuple)
         tuple_unref (entry->tuple);
 
@@ -309,7 +309,7 @@ static void entry_free (Entry * entry)
     str_unref (entry->title);
     str_unref (entry->artist);
     str_unref (entry->album);
-    g_free (entry);
+    g_slice_free (Entry, entry);
 }
 
 static gint new_unique_id (gint preferred)
@@ -327,12 +327,12 @@ static gint new_unique_id (gint preferred)
 
 static Playlist * playlist_new (gint id)
 {
-    Playlist * playlist = g_malloc (sizeof (Playlist));
+    Playlist * playlist = g_slice_new (Playlist);
 
     playlist->number = -1;
     playlist->unique_id = new_unique_id (id);
     playlist->filename = NULL;
-    playlist->title = g_strdup(_(default_title));
+    playlist->title = str_get (_(default_title));
     playlist->modified = TRUE;
     playlist->entries = index_new();
     playlist->position = NULL;
@@ -355,15 +355,15 @@ static void playlist_free (Playlist * playlist)
 {
     g_hash_table_insert (unique_id_table, GINT_TO_POINTER (playlist->unique_id), NULL);
 
-    g_free (playlist->filename);
-    g_free (playlist->title);
+    str_unref (playlist->filename);
+    str_unref (playlist->title);
 
     for (gint count = 0; count < index_count (playlist->entries); count ++)
         entry_free (index_get (playlist->entries, count));
 
     index_free (playlist->entries);
     g_list_free (playlist->queued);
-    g_free (playlist);
+    g_slice_free (Playlist, playlist);
 }
 
 static void number_playlists (gint at, gint length)
@@ -607,7 +607,7 @@ static void * scanner (void * data)
 
         Playlist * playlist = scan_items[i]->playlist;
         Entry * entry = scan_items[i]->entry;
-        gchar * filename = g_strdup (entry->filename);
+        gchar * filename = str_ref (entry->filename);
         PluginHandle * decoder = entry->decoder;
         gboolean need_tuple = entry->tuple ? FALSE : TRUE;
 
@@ -620,7 +620,7 @@ static void * scanner (void * data)
 
         ENTER;
 
-        g_free (filename);
+        str_unref (filename);
 
         if (! scan_items[i]) /* scan canceled */
         {
@@ -876,8 +876,8 @@ void playlist_set_filename (gint playlist_num, const gchar * filename)
     DECLARE_PLAYLIST;
     LOOKUP_PLAYLIST;
 
-    g_free (playlist->filename);
-    playlist->filename = g_strdup (filename);
+    str_unref (playlist->filename);
+    playlist->filename = str_get (filename);
     playlist->modified = TRUE;
 
     METADATA_HAS_CHANGED (-1, 0, 0);
@@ -890,7 +890,7 @@ gchar * playlist_get_filename (gint playlist_num)
     DECLARE_PLAYLIST;
     LOOKUP_PLAYLIST_RET (NULL);
 
-    gchar * filename = g_strdup (playlist->filename);
+    gchar * filename = str_ref (playlist->filename);
 
     LEAVE_RET (filename);
 }
@@ -901,8 +901,8 @@ void playlist_set_title (gint playlist_num, const gchar * title)
     DECLARE_PLAYLIST;
     LOOKUP_PLAYLIST;
 
-    g_free (playlist->title);
-    playlist->title = g_strdup (title);
+    str_unref (playlist->title);
+    playlist->title = str_get (title);
     playlist->modified = TRUE;
 
     METADATA_HAS_CHANGED (-1, 0, 0);
@@ -915,7 +915,7 @@ gchar * playlist_get_title (gint playlist_num)
     DECLARE_PLAYLIST;
     LOOKUP_PLAYLIST_RET (NULL);
 
-    gchar * title = g_strdup (playlist->title);
+    gchar * title = str_ref (playlist->title);
 
     LEAVE_RET (title);
 }
@@ -1162,7 +1162,7 @@ gchar * playlist_entry_get_filename (gint playlist_num, gint entry_num)
     DECLARE_PLAYLIST_ENTRY;
     LOOKUP_PLAYLIST_ENTRY_RET (NULL);
 
-    gchar * filename = g_strdup (entry->filename);
+    gchar * filename = str_ref (entry->filename);
 
     LEAVE_RET (filename);
 }
@@ -1195,7 +1195,7 @@ gchar * playlist_entry_get_title (gint playlist_num, gint entry_num, gboolean fa
     ENTER;
 
     Entry * entry = get_entry (playlist_num, entry_num, FALSE, ! fast);
-    gchar * title = entry ? g_strdup (entry->formatted ? entry->formatted : entry->filename) : NULL;
+    gchar * title = entry ? str_ref (entry->formatted ? entry->formatted : entry->filename) : NULL;
 
     LEAVE_RET (title);
 }
@@ -1206,9 +1206,9 @@ void playlist_entry_describe (gint playlist_num, gint entry_num,
     ENTER;
 
     Entry * entry = get_entry (playlist_num, entry_num, FALSE, ! fast);
-    * title = (entry && entry->title) ? g_strdup (entry->title) : NULL;
-    * artist = (entry && entry->artist) ? g_strdup (entry->artist) : NULL;
-    * album = (entry && entry->album) ? g_strdup (entry->album) : NULL;
+    * title = (entry && entry->title) ? str_ref (entry->title) : NULL;
+    * artist = (entry && entry->artist) ? str_ref (entry->artist) : NULL;
+    * album = (entry && entry->album) ? str_ref (entry->album) : NULL;
 
     LEAVE;
 }
@@ -2202,7 +2202,8 @@ gchar * playback_entry_get_title (void)
     ENTER;
 
     Entry * entry = get_playback_entry (FALSE, TRUE);
-    gchar * title = entry ? g_strdup (entry->formatted ? entry->formatted : entry->filename) : NULL;
+    gchar * title = entry ? str_ref (entry->formatted ? entry->formatted :
+     entry->filename) : NULL;
 
     LEAVE_RET (title);
 }

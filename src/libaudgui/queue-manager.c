@@ -52,7 +52,8 @@ static void get_value (void * user, gint row, gint column, GValue * value)
         break;
     case COLUMN_TITLE:;
         gchar * title = aud_playlist_entry_get_title (list, entry, TRUE);
-        g_value_take_string (value, title);
+        g_value_set_string (value, title);
+        str_unref (title);
         break;
     }
 }

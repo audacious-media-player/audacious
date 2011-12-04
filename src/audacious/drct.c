@@ -215,12 +215,18 @@ void drct_pl_set_pos (gint pos)
 
 gchar * drct_pl_get_file (gint entry)
 {
-    return playlist_entry_get_filename (playlist_get_active (), entry);
+    gchar * filename = playlist_entry_get_filename (playlist_get_active (), entry);
+    gchar * copy = g_strdup (filename);
+    str_unref (filename);
+    return copy;
 }
 
 gchar * drct_pl_get_title (gint entry)
 {
-    return playlist_entry_get_title (playlist_get_active (), entry, FALSE);
+    gchar * title = playlist_entry_get_title (playlist_get_active (), entry, FALSE);
+    gchar * copy = g_strdup (title);
+    str_unref (title);
+    return copy;
 }
 
 gint drct_pl_get_time (gint pos)
@@ -245,7 +251,7 @@ static void add_list (GList * list, gint at, gboolean to_temp, gboolean play)
 
     struct index * filenames = index_new ();
     for (; list != NULL; list = list->next)
-        index_append (filenames, g_strdup (list->data));
+        index_append (filenames, str_get (list->data));
 
     playlist_entry_insert_batch (playlist, at, filenames, NULL, play);
 }

@@ -87,7 +87,8 @@ void audgui_urilist_open (const gchar * list)
 
 static void add_full (gchar * name, AddState * state)
 {
-    index_append (state->index, name);
+    index_append (state->index, str_get (name));
+    g_free (name);
 }
 
 void audgui_urilist_insert (gint playlist, gint at, const gchar * list)
@@ -115,7 +116,7 @@ gchar * audgui_urilist_create_from_selected (gint playlist)
         name = aud_playlist_entry_get_filename (playlist, count);
         g_return_val_if_fail (name != NULL, NULL);
         space += strlen (name) + 1;
-        g_free (name);
+        str_unref (name);
     }
 
     if (! space)
@@ -137,7 +138,7 @@ gchar * audgui_urilist_create_from_selected (gint playlist)
         set += length;
         * set ++ = '\n';
         space -= length + 1;
-        g_free (name);
+        str_unref (name);
     }
 
     * -- set = 0; /* last newline replaced with null */

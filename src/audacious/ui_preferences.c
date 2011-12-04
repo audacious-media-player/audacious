@@ -1292,11 +1292,6 @@ static void show_numbers_cb (GtkToggleButton * numbers, void * unused)
     set_bool (NULL, "show_numbers_in_pl", gtk_toggle_button_get_active (numbers));
 
     hook_call ("title change", NULL);
-
-    /* trigger playlist update */
-    gchar * t = playlist_get_title (playlist_get_active ());
-    playlist_set_title (playlist_get_active (), t);
-    g_free (t);
 }
 
 static void leading_zero_cb (GtkToggleButton * leading)
@@ -1304,11 +1299,6 @@ static void leading_zero_cb (GtkToggleButton * leading)
     set_bool (NULL, "leading_zero", gtk_toggle_button_get_active (leading));
 
     hook_call ("title change", NULL);
-
-    /* trigger playlist update */
-    gchar * t = playlist_get_title (playlist_get_active ());
-    playlist_set_title (playlist_get_active (), t);
-    g_free (t);
 }
 
 static void create_titlestring_widgets (GtkWidget * * cbox, GtkWidget * * entry)
