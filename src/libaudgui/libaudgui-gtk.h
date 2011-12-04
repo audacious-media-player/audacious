@@ -23,6 +23,7 @@
 #define LIBAUDGUI_GTK_H
 
 #include <gtk/gtk.h>
+#include <libaudcore/core.h>
 
 /* effects-menu.c */
 GtkWidget * audgui_create_effects_menu (void);
@@ -35,12 +36,12 @@ void audgui_hide_on_delete (GtkWidget * widget);
 void audgui_hide_on_escape (GtkWidget * widget);
 void audgui_destroy_on_escape (GtkWidget * widget);
 void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
- const gchar * title, const gchar * text);
-void audgui_connect_check_box (GtkWidget * box, gboolean * setting);
+ const char * title, const char * text);
+void audgui_connect_check_box (GtkWidget * box, boolean * setting);
 
-GdkPixbuf * audgui_pixbuf_from_data (void * data, gint size);
-GdkPixbuf * audgui_pixbuf_for_entry (gint playlist, gint entry);
+GdkPixbuf * audgui_pixbuf_from_data (void * data, int size);
+GdkPixbuf * audgui_pixbuf_for_entry (int playlist, int entry);
 GdkPixbuf * audgui_pixbuf_for_current (void);
-void audgui_pixbuf_scale_within (GdkPixbuf * * pixbuf, gint size);
+void audgui_pixbuf_scale_within (GdkPixbuf * * pixbuf, int size);
 
 #endif

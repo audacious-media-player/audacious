@@ -27,9 +27,9 @@
 
 #include "libaudgui-gtk.h"
 
-static gboolean watch_cb (PluginHandle * plugin, GtkCheckMenuItem * item)
+static boolean watch_cb (PluginHandle * plugin, GtkCheckMenuItem * item)
 {
-    gboolean enabled = aud_plugin_get_enabled (plugin);
+    boolean enabled = aud_plugin_get_enabled (plugin);
     gtk_check_menu_item_set_active (item, enabled);
 
     GtkWidget * settings = g_object_get_data ((GObject *) item, "settings");
@@ -59,7 +59,7 @@ static void settings_cb (GtkMenuItem * settings, PluginHandle * plugin)
     header->configure ();
 }
 
-static gboolean add_item_cb (PluginHandle * plugin, GtkWidget * menu)
+static boolean add_item_cb (PluginHandle * plugin, GtkWidget * menu)
 {
     GtkWidget * item = gtk_check_menu_item_new_with_label (aud_plugin_get_name
      (plugin));

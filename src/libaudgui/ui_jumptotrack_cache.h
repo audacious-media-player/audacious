@@ -31,7 +31,7 @@ struct _JumpToTrackCache
 
 extern JumpToTrackCache* ui_jump_to_track_cache_new(void);
 extern const GArray * ui_jump_to_track_cache_search (JumpToTrackCache * cache,
- const gchar * keyword);
+ const char * keyword);
 extern void ui_jump_to_track_cache_free(JumpToTrackCache* cache);
 
 #endif /* AUDACIOUS_UI_JUMPTOTRACK_CACHE_H */

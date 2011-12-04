@@ -33,7 +33,7 @@
 #include "config.h"
 #include "libaudgui.h"
 
-static gchar * select_file (gboolean save, const gchar * default_filename)
+static char * select_file (boolean save, const char * default_filename)
 {
     GtkWidget * dialog = gtk_file_chooser_dialog_new (save ?
      _("Export Playlist") : _("Import Playlist"), NULL, save ?
@@ -49,12 +49,12 @@ static gchar * select_file (gboolean save, const gchar * default_filename)
 
     gtk_dialog_set_default_response ((GtkDialog *) dialog, GTK_RESPONSE_ACCEPT);
 
-    gchar * path = aud_get_string ("audgui", "playlist_path");
+    char * path = aud_get_string ("audgui", "playlist_path");
     if (path[0])
         gtk_file_chooser_set_current_folder_uri ((GtkFileChooser *) dialog, path);
     g_free (path);
 
-    gchar * filename = NULL;
+    char * filename = NULL;
     if (gtk_dialog_run ((GtkDialog *) dialog) == GTK_RESPONSE_ACCEPT)
         filename = gtk_file_chooser_get_uri ((GtkFileChooser *) dialog);
 
@@ -66,22 +66,22 @@ static gchar * select_file (gboolean save, const gchar * default_filename)
     return filename;
 }
 
-static gboolean confirm_overwrite (const gchar * filename)
+static boolean confirm_overwrite (const char * filename)
 {
     GtkWidget * dialog = gtk_message_dialog_new (NULL, 0, GTK_MESSAGE_QUESTION,
      GTK_BUTTONS_YES_NO, _("Overwrite %s?"), filename);
 
-    gint result = gtk_dialog_run ((GtkDialog *) dialog);
+    int result = gtk_dialog_run ((GtkDialog *) dialog);
     gtk_widget_destroy (dialog);
     return (result == GTK_RESPONSE_YES);
 }
 
 void audgui_import_playlist (void)
 {
-    gint list = aud_playlist_get_active ();
-    gint id = aud_playlist_get_unique_id (list);
+    int list = aud_playlist_get_active ();
+    int id = aud_playlist_get_unique_id (list);
 
-    gchar * filename = select_file (FALSE, NULL);
+    char * filename = select_file (FALSE, NULL);
     if (! filename)
         return;
 
@@ -96,11 +96,11 @@ void audgui_import_playlist (void)
 
 void audgui_export_playlist (void)
 {
-    gint list = aud_playlist_get_active ();
-    gint id = aud_playlist_get_unique_id (list);
+    int list = aud_playlist_get_active ();
+    int id = aud_playlist_get_unique_id (list);
 
-    gchar * def = aud_playlist_get_filename (list);
-    gchar * filename = select_file (TRUE, def);
+    char * def = aud_playlist_get_filename (list);
+    char * filename = select_file (TRUE, def);
     str_unref (def);
 
     if (! filename || (vfs_file_test (filename, G_FILE_TEST_EXISTS) &&

@@ -36,7 +36,7 @@ typedef struct {
     GSList * group;
 } IfaceMenuAddState;
 
-static gboolean add_item_cb (PluginHandle * plugin, IfaceMenuAddState * state)
+static boolean add_item_cb (PluginHandle * plugin, IfaceMenuAddState * state)
 {
     GtkWidget * item = gtk_radio_menu_item_new_with_label (state->group,
      aud_plugin_get_name (plugin));

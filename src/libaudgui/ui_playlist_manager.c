@@ -34,7 +34,7 @@ static GtkWidget * playman_win = NULL;
 
 static void save_position (GtkWidget * window)
 {
-    gint x, y, w, h;
+    int x, y, w, h;
     gtk_window_get_position ((GtkWindow *) window, & x, & y);
     gtk_window_get_size ((GtkWindow *) window, & w, & h);
 
@@ -44,7 +44,7 @@ static void save_position (GtkWidget * window)
     aud_set_int ("audgui", "playlist_manager_h", h);
 }
 
-static gboolean hide_cb (GtkWidget * window)
+static boolean hide_cb (GtkWidget * window)
 {
     save_position (window);
     gtk_widget_hide (window);
@@ -73,12 +73,12 @@ static void save_config_cb (void * hook_data, void * user_data)
         save_position ((GtkWidget *) user_data);
 }
 
-static void get_value (void * user, gint row, gint column, GValue * value)
+static void get_value (void * user, int row, int column, GValue * value)
 {
     switch (column)
     {
     case 0:;
-        gchar * title = aud_playlist_get_title (row);
+        char * title = aud_playlist_get_title (row);
         g_value_set_string (value, title);
         str_unref (title);
         break;
@@ -88,22 +88,22 @@ static void get_value (void * user, gint row, gint column, GValue * value)
     }
 }
 
-static gboolean get_selected (void * user, gint row)
+static boolean get_selected (void * user, int row)
 {
     return (row == aud_playlist_get_active ());
 }
 
-static void set_selected (void * user, gint row, gboolean selected)
+static void set_selected (void * user, int row, boolean selected)
 {
     if (selected)
         aud_playlist_set_active (row);
 }
 
-static void select_all (void * user, gboolean selected)
+static void select_all (void * user, boolean selected)
 {
 }
 
-static void activate_row (void * user, gint row)
+static void activate_row (void * user, int row)
 {
     aud_playlist_set_active (row);
 
@@ -111,7 +111,7 @@ static void activate_row (void * user, gint row)
         hide_cb (playman_win);
 }
 
-static void shift_rows (void * user, gint row, gint before)
+static void shift_rows (void * user, int row, int before)
 {
     if (before < row)
         aud_playlist_reorder (row, before, 1);
@@ -131,26 +131,26 @@ static const AudguiListCallbacks callbacks = {
  .get_data = NULL,
  .receive_data = NULL};
 
-static gboolean search_cb (GtkTreeModel * model, gint column, const gchar * key,
+static boolean search_cb (GtkTreeModel * model, int column, const char * key,
  GtkTreeIter * iter, void * user)
 {
     GtkTreePath * path = gtk_tree_model_get_path (model, iter);
     g_return_val_if_fail (path, TRUE);
-    gint row = gtk_tree_path_get_indices (path)[0];
+    int row = gtk_tree_path_get_indices (path)[0];
     gtk_tree_path_free (path);
 
-    gchar * temp = aud_playlist_get_title (row);
+    char * temp = aud_playlist_get_title (row);
     g_return_val_if_fail (temp, TRUE);
-    gchar * title = g_utf8_strdown (temp, -1);
+    char * title = g_utf8_strdown (temp, -1);
     str_unref (temp);
 
     temp = g_utf8_strdown (key, -1);
-    gchar * * keys = g_strsplit (temp, " ", 0);
+    char * * keys = g_strsplit (temp, " ", 0);
     g_free (temp);
 
-    gboolean match = FALSE;
+    boolean match = FALSE;
 
-    for (gint i = 0; keys[i]; i ++)
+    for (int i = 0; keys[i]; i ++)
     {
         if (! keys[i][0])
             continue;
@@ -170,16 +170,16 @@ static gboolean search_cb (GtkTreeModel * model, gint column, const gchar * key,
     return ! match; /* TRUE == not matched, FALSE == matched */
 }
 
-static gboolean position_changed = FALSE;
-static gboolean playlist_activated = FALSE;
+static boolean position_changed = FALSE;
+static boolean playlist_activated = FALSE;
 
 static void update_hook (void * data, void * list)
 {
-    gint rows = aud_playlist_count ();
+    int rows = aud_playlist_count ();
 
     if (GPOINTER_TO_INT (data) == PLAYLIST_UPDATE_STRUCTURE)
     {
-        gint old_rows = audgui_list_row_count (list);
+        int old_rows = audgui_list_row_count (list);
 
         if (rows < old_rows)
             audgui_list_delete_rows (list, rows, old_rows - rows);
@@ -256,10 +256,10 @@ void audgui_playlist_manager (void)
     gtk_window_set_geometry_hints( GTK_WINDOW(playman_win) , GTK_WIDGET(playman_win) ,
                                    &playman_win_hints , GDK_HINT_MIN_SIZE );
 
-    gint x = aud_get_int ("audgui", "playlist_manager_x");
-    gint y = aud_get_int ("audgui", "playlist_manager_y");
-    gint w = aud_get_int ("audgui", "playlist_manager_w");
-    gint h = aud_get_int ("audgui", "playlist_manager_h");
+    int x = aud_get_int ("audgui", "playlist_manager_x");
+    int y = aud_get_int ("audgui", "playlist_manager_y");
+    int w = aud_get_int ("audgui", "playlist_manager_w");
+    int h = aud_get_int ("audgui", "playlist_manager_h");
 
     if (w && h)
     {

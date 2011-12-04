@@ -36,7 +36,7 @@
 
 static GtkWidget * infopopup = NULL;
 
-static void infopopup_entry_set_text (const gchar * entry_name, const gchar *
+static void infopopup_entry_set_text (const char * entry_name, const char *
  text)
 {
     GtkWidget * widget = g_object_get_data ((GObject *) infopopup, entry_name);
@@ -45,7 +45,7 @@ static void infopopup_entry_set_text (const gchar * entry_name, const gchar *
     gtk_label_set_text ((GtkLabel *) widget, text);
 }
 
-static void infopopup_entry_set_image (gint playlist, gint entry)
+static void infopopup_entry_set_image (int playlist, int entry)
 {
     GtkWidget * widget = g_object_get_data ((GObject *) infopopup, "image");
     g_return_if_fail (widget);
@@ -62,15 +62,15 @@ static void infopopup_entry_set_image (gint playlist, gint entry)
         gtk_image_clear ((GtkImage *) widget);
 }
 
-static gboolean infopopup_progress_cb (void * unused)
+static boolean infopopup_progress_cb (void * unused)
 {
     GtkWidget * progressbar = g_object_get_data ((GObject *) infopopup,
      "progressbar");
-    gchar * tooltip_file = g_object_get_data ((GObject *) infopopup, "file");
-    gint length = GPOINTER_TO_INT (g_object_get_data ((GObject *) infopopup,
+    char * tooltip_file = g_object_get_data ((GObject *) infopopup, "file");
+    int length = GPOINTER_TO_INT (g_object_get_data ((GObject *) infopopup,
      "length"));
-    gint playlist, entry, time;
-    gchar * progress_time;
+    int playlist, entry, time;
+    char * progress_time;
 
     g_return_val_if_fail (tooltip_file != NULL, FALSE);
     g_return_val_if_fail (length > 0, FALSE);
@@ -88,7 +88,7 @@ static gboolean infopopup_progress_cb (void * unused)
     if (entry == -1)
         goto HIDE;
 
-    gchar * filename = aud_playlist_entry_get_filename (playlist, entry);
+    char * filename = aud_playlist_entry_get_filename (playlist, entry);
     if (strcmp (filename, tooltip_file))
     {
         str_unref (filename);
@@ -120,7 +120,7 @@ static void infopopup_progress_init (void)
 
 static void infopopup_progress_start (void)
 {
-    gint sid = g_timeout_add (500, (GSourceFunc) infopopup_progress_cb, NULL);
+    int sid = g_timeout_add (500, (GSourceFunc) infopopup_progress_cb, NULL);
 
     g_object_set_data ((GObject *) infopopup, "progress_sid", GINT_TO_POINTER
      (sid));
@@ -128,7 +128,7 @@ static void infopopup_progress_start (void)
 
 static void infopopup_progress_stop (void)
 {
-    gint sid = GPOINTER_TO_INT (g_object_get_data ((GObject *) infopopup,
+    int sid = GPOINTER_TO_INT (g_object_get_data ((GObject *) infopopup,
      "progress_sid"));
 
     if (! sid)
@@ -140,12 +140,12 @@ static void infopopup_progress_stop (void)
 }
 
 static void infopopup_add_category (GtkWidget * infopopup_data_table,
- const gchar * category, const gchar * header_data, const gchar * label_data,
- gint position)
+ const char * category, const char * header_data, const char * label_data,
+ int position)
 {
     GtkWidget * infopopup_data_info_header = gtk_label_new ("");
     GtkWidget * infopopup_data_info_label = gtk_label_new ("");
-    gchar * markup;
+    char * markup;
 
     gtk_misc_set_alignment ((GtkMisc *) infopopup_data_info_header, 0, 0.5);
     gtk_misc_set_alignment ((GtkMisc *) infopopup_data_info_label, 0, 0.5);
@@ -230,8 +230,8 @@ static void infopopup_create (void)
 }
 
 /* calls str_unref() on <text> */
-static void infopopup_update_data (gchar * text, const gchar * label_data,
- const gchar * header_data)
+static void infopopup_update_data (char * text, const char * label_data,
+ const char * header_data)
 {
     if (text)
     {
@@ -267,12 +267,12 @@ static void infopopup_clear (void)
     gtk_window_resize ((GtkWindow *) infopopup, 1, 1);
 }
 
-static void infopopup_show (gint playlist, gint entry, const gchar * filename,
- const Tuple * tuple, const gchar * title)
+static void infopopup_show (int playlist, int entry, const char * filename,
+ const Tuple * tuple, const char * title)
 {
-    gint x, y, h, w;
-    gint length, value;
-    gchar * tmp;
+    int x, y, h, w;
+    int length, value;
+    char * tmp;
 
     if (infopopup == NULL)
         infopopup_create ();
@@ -283,7 +283,7 @@ static void infopopup_show (gint playlist, gint entry, const gchar * filename,
     g_object_set_data ((GObject *) infopopup, "file", g_strdup (filename));
 
     /* use title from tuple if possible */
-    gchar * title2 = tuple_get_str (tuple, FIELD_TITLE, NULL);
+    char * title2 = tuple_get_str (tuple, FIELD_TITLE, NULL);
     if (! title2)
         title2 = str_get (title);
 
@@ -337,10 +337,10 @@ static void infopopup_show (gint playlist, gint entry, const gchar * filename,
     gtk_widget_show (infopopup);
 }
 
-void audgui_infopopup_show (gint playlist, gint entry)
+void audgui_infopopup_show (int playlist, int entry)
 {
-    gchar * filename = aud_playlist_entry_get_filename (playlist, entry);
-    gchar * title = aud_playlist_entry_get_title (playlist, entry, FALSE);
+    char * filename = aud_playlist_entry_get_filename (playlist, entry);
+    char * title = aud_playlist_entry_get_title (playlist, entry, FALSE);
     Tuple * tuple = aud_playlist_entry_get_tuple (playlist, entry, FALSE);
 
     if (filename && title && tuple)
@@ -354,8 +354,8 @@ void audgui_infopopup_show (gint playlist, gint entry)
 
 void audgui_infopopup_show_current (void)
 {
-    gint playlist = aud_playlist_get_playing ();
-    gint position;
+    int playlist = aud_playlist_get_playing ();
+    int position;
 
     if (playlist == -1)
         playlist = aud_playlist_get_active ();

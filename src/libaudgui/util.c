@@ -42,7 +42,7 @@ void audgui_hide_on_delete (GtkWidget * widget)
      gtk_widget_hide_on_delete, NULL);
 }
 
-static gboolean escape_cb (GtkWidget * widget, GdkEventKey * event, void
+static boolean escape_cb (GtkWidget * widget, GdkEventKey * event, void
  (* action) (GtkWidget * widget))
 {
     if (event->keyval == GDK_Escape)
@@ -66,29 +66,29 @@ void audgui_destroy_on_escape (GtkWidget * widget)
      (void *) gtk_widget_destroy);
 }
 
-static void toggle_cb (GtkToggleButton * toggle, gboolean * setting)
+static void toggle_cb (GtkToggleButton * toggle, boolean * setting)
 {
     * setting = gtk_toggle_button_get_active (toggle);
 }
 
-void audgui_connect_check_box (GtkWidget * box, gboolean * setting)
+void audgui_connect_check_box (GtkWidget * box, boolean * setting)
 {
     gtk_toggle_button_set_active ((GtkToggleButton *) box, * setting);
     g_signal_connect ((GObject *) box, "toggled", (GCallback) toggle_cb, setting);
 }
 
 void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
- const gchar * title, const gchar * text)
+ const char * title, const char * text)
 {
     AUDDBG ("%s\n", text);
 
     if (* widget != NULL)
     {
-        const gchar * old = NULL;
+        const char * old = NULL;
         g_object_get ((GObject *) * widget, "text", & old, NULL);
         g_return_if_fail (old);
 
-        gint messages = GPOINTER_TO_INT (g_object_get_data ((GObject *)
+        int messages = GPOINTER_TO_INT (g_object_get_data ((GObject *)
          * widget, "messages"));
 
         if (messages > 10)
@@ -97,7 +97,7 @@ void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
         if (strstr (old, text))
             goto CREATED;
 
-        gchar both[strlen (old) + strlen (text) + 2];
+        char both[strlen (old) + strlen (text) + 2];
         snprintf (both, sizeof both, "%s\n%s", old, text);
         g_object_set ((GObject *) * widget, "text", both, NULL);
 
@@ -121,7 +121,7 @@ CREATED:
     gtk_window_present ((GtkWindow *) * widget);
 }
 
-GdkPixbuf * audgui_pixbuf_from_data (void * data, gint size)
+GdkPixbuf * audgui_pixbuf_from_data (void * data, int size)
 {
     GdkPixbuf * pixbuf = NULL;
     GdkPixbufLoader * loader = gdk_pixbuf_loader_new ();
@@ -140,9 +140,9 @@ GdkPixbuf * audgui_pixbuf_from_data (void * data, gint size)
     return pixbuf;
 }
 
-GdkPixbuf * audgui_pixbuf_for_entry (gint list, gint entry)
+GdkPixbuf * audgui_pixbuf_for_entry (int list, int entry)
 {
-    gchar * name = aud_playlist_entry_get_filename (list, entry);
+    char * name = aud_playlist_entry_get_filename (list, entry);
     g_return_val_if_fail (name, NULL);
 
     /* Don't get album art for network files -- too slow. */
@@ -156,7 +156,7 @@ GdkPixbuf * audgui_pixbuf_for_entry (gint list, gint entry)
         goto FALLBACK;
 
     void * data;
-    gint size;
+    int size;
 
     if (aud_file_read_image (name, decoder, & data, & size))
     {
@@ -169,7 +169,7 @@ GdkPixbuf * audgui_pixbuf_for_entry (gint list, gint entry)
         }
     }
 
-    gchar * assoc = aud_get_associated_image_file (name);
+    char * assoc = aud_get_associated_image_file (name);
 
     if (assoc)
     {
@@ -189,7 +189,7 @@ FALLBACK:;
     static GdkPixbuf * fallback = NULL;
     if (! fallback)
     {
-        gchar * path = g_strdup_printf ("%s/images/album.png",
+        char * path = g_strdup_printf ("%s/images/album.png",
          aud_get_path (AUD_PATH_DATA_DIR));
         fallback = gdk_pixbuf_new_from_file (path, NULL);
         g_free (path);
@@ -218,7 +218,7 @@ static void pixbuf_position_cb (void * list, GdkPixbuf * * pixbuf)
 GdkPixbuf * audgui_pixbuf_for_current (void)
 {
     static GdkPixbuf * pixbuf = NULL;
-    static gboolean hooked = FALSE;
+    static boolean hooked = FALSE;
 
     if (! hooked)
     {
@@ -229,7 +229,7 @@ GdkPixbuf * audgui_pixbuf_for_current (void)
 
     if (! pixbuf)
     {
-        gint list = aud_playlist_get_playing ();
+        int list = aud_playlist_get_playing ();
         pixbuf = audgui_pixbuf_for_entry (list, aud_playlist_get_position (list));
     }
 
@@ -238,10 +238,10 @@ GdkPixbuf * audgui_pixbuf_for_current (void)
     return pixbuf;
 }
 
-void audgui_pixbuf_scale_within (GdkPixbuf * * pixbuf, gint size)
+void audgui_pixbuf_scale_within (GdkPixbuf * * pixbuf, int size)
 {
-    gint width = gdk_pixbuf_get_width (* pixbuf);
-    gint height = gdk_pixbuf_get_height (* pixbuf);
+    int width = gdk_pixbuf_get_width (* pixbuf);
+    int height = gdk_pixbuf_get_height (* pixbuf);
     GdkPixbuf * pixbuf2;
 
     if (width > height)

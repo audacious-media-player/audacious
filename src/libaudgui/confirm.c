@@ -36,7 +36,7 @@ static void no_confirm_cb (GtkToggleButton * toggle)
 
 static void confirm_delete_cb (GtkButton * button, void * data)
 {
-    gint list = aud_playlist_by_unique_id (GPOINTER_TO_INT (data));
+    int list = aud_playlist_by_unique_id (GPOINTER_TO_INT (data));
     if (list < 0)
         return;
 
@@ -45,10 +45,10 @@ static void confirm_delete_cb (GtkButton * button, void * data)
         aud_playlist_set_active (list - 1);
 }
 
-void audgui_confirm_playlist_delete (gint playlist)
+void audgui_confirm_playlist_delete (int playlist)
 {
     GtkWidget * window, * vbox, * hbox, * label, * button;
-    gchar * message;
+    char * message;
 
     if (aud_get_bool ("audgui", "no_confirm_playlist_delete"))
     {
@@ -74,7 +74,7 @@ void audgui_confirm_playlist_delete (gint playlist)
     gtk_box_pack_start ((GtkBox *) hbox, gtk_image_new_from_stock
      (GTK_STOCK_DIALOG_QUESTION, GTK_ICON_SIZE_DIALOG), FALSE, FALSE, 0);
 
-    gchar * title = aud_playlist_get_title (playlist);
+    char * title = aud_playlist_get_title (playlist);
     message = g_strdup_printf (_("Are you sure you want to close %s?  If you "
      "do, any changes made since the playlist was exported will be lost."),
      title);
@@ -113,7 +113,7 @@ void audgui_confirm_playlist_delete (gint playlist)
     gtk_widget_show_all (window);
 }
 
-static void rename_cb (GtkDialog * dialog, gint resp, void * list)
+static void rename_cb (GtkDialog * dialog, int resp, void * list)
 {
     if (resp == GTK_RESPONSE_ACCEPT && GPOINTER_TO_INT (list) <
      aud_playlist_count ())
@@ -123,7 +123,7 @@ static void rename_cb (GtkDialog * dialog, gint resp, void * list)
     gtk_widget_destroy ((GtkWidget *) dialog);
 }
 
-void audgui_show_playlist_rename (gint playlist)
+void audgui_show_playlist_rename (int playlist)
 {
     GtkWidget * dialog = gtk_dialog_new_with_buttons (_("Rename Playlist"),
      NULL, 0, GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, GTK_STOCK_CANCEL,
@@ -131,7 +131,7 @@ void audgui_show_playlist_rename (gint playlist)
     gtk_dialog_set_default_response ((GtkDialog *) dialog, GTK_RESPONSE_ACCEPT);
 
     GtkWidget * entry = gtk_entry_new ();
-    gchar * title = aud_playlist_get_title (playlist);
+    char * title = aud_playlist_get_title (playlist);
     gtk_entry_set_text ((GtkEntry *) entry, title);
     str_unref (title);
     gtk_entry_set_activates_default ((GtkEntry *) entry, TRUE);

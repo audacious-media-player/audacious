@@ -66,15 +66,15 @@ enum
     RAWDATA_N_COLS
 };
 
-static gchar * current_file = NULL;
+static char * current_file = NULL;
 static PluginHandle * current_decoder = NULL;
-static gboolean can_write = FALSE, something_changed = FALSE;
+static boolean can_write = FALSE, something_changed = FALSE;
 
 /* This is by no means intended to be a complete list.  If it is not short, it
  * is useless: scrolling through ten pages of dropdown list is more work than
  * typing out the genre. */
 
-static const gchar * genre_table[] = {
+static const char * genre_table[] = {
  N_("Acid Jazz"),
  N_("Acid Rock"),
  N_("Ambient"),
@@ -116,9 +116,9 @@ static const gchar * genre_table[] = {
  N_("Trip-hop")};
 
 static void set_entry_str_from_field (GtkWidget * widget, const Tuple * tuple,
- gint fieldn, gboolean editable)
+ int fieldn, boolean editable)
 {
-    gchar * text = tuple_get_str (tuple, fieldn, NULL);
+    char * text = tuple_get_str (tuple, fieldn, NULL);
 
     gtk_entry_set_text ((GtkEntry *) widget, text != NULL ? text : "");
     gtk_editable_set_editable ((GtkEditable *) widget, editable);
@@ -127,9 +127,9 @@ static void set_entry_str_from_field (GtkWidget * widget, const Tuple * tuple,
 }
 
 static void set_entry_int_from_field (GtkWidget * widget, const Tuple * tuple,
- gint fieldn, gboolean editable)
+ int fieldn, boolean editable)
 {
-    gchar scratch[32];
+    char scratch[32];
 
     if (tuple_get_value_type (tuple, fieldn, NULL) == TUPLE_INT)
         snprintf (scratch, sizeof scratch, "%d", tuple_get_int (tuple, fieldn,
@@ -141,10 +141,10 @@ static void set_entry_int_from_field (GtkWidget * widget, const Tuple * tuple,
     gtk_editable_set_editable ((GtkEditable *) widget, editable);
 }
 
-static void set_field_str_from_entry (Tuple * tuple, gint fieldn, GtkWidget *
+static void set_field_str_from_entry (Tuple * tuple, int fieldn, GtkWidget *
  widget)
 {
-    const gchar * text = gtk_entry_get_text ((GtkEntry *) widget);
+    const char * text = gtk_entry_get_text ((GtkEntry *) widget);
 
     if (text[0])
         tuple_set_str (tuple, fieldn, NULL, text);
@@ -152,10 +152,10 @@ static void set_field_str_from_entry (Tuple * tuple, gint fieldn, GtkWidget *
         tuple_unset (tuple, fieldn, NULL);
 }
 
-static void set_field_int_from_entry (Tuple * tuple, gint fieldn, GtkWidget *
+static void set_field_int_from_entry (Tuple * tuple, int fieldn, GtkWidget *
  widget)
 {
-    const gchar * text = gtk_entry_get_text ((GtkEntry *) widget);
+    const char * text = gtk_entry_get_text ((GtkEntry *) widget);
 
     if (text[0])
         tuple_set_int (tuple, fieldn, NULL, atoi (text));
@@ -164,9 +164,9 @@ static void set_field_int_from_entry (Tuple * tuple, gint fieldn, GtkWidget *
 }
 
 /* call str_unref() on <text> */
-static void infowin_label_set_text (GtkWidget * widget, gchar * text)
+static void infowin_label_set_text (GtkWidget * widget, char * text)
 {
-    gchar * tmp;
+    char * tmp;
 
     if (text)
     {
@@ -182,7 +182,7 @@ static void infowin_label_set_text (GtkWidget * widget, gchar * text)
     gtk_label_set_use_markup ((GtkLabel *) widget, TRUE);
 }
 
-static void infowin_entry_set_image (GtkWidget * widget, gint list, gint entry)
+static void infowin_entry_set_image (GtkWidget * widget, int list, int entry)
 {
     GdkPixbuf * p = audgui_pixbuf_for_entry (list, entry);
     g_return_if_fail (p);
@@ -230,7 +230,7 @@ static void entry_changed (GtkEditable * editable, void * unused)
     }
 }
 
-static gboolean ministatus_timeout_proc (void * data)
+static boolean ministatus_timeout_proc (void * data)
 {
     GtkLabel * status = data;
 
@@ -240,9 +240,9 @@ static gboolean ministatus_timeout_proc (void * data)
     return FALSE;
 }
 
-static void ministatus_display_message (const gchar * text)
+static void ministatus_display_message (const char * text)
 {
-    gchar * tmp = g_strdup_printf ("<span size=\"small\">%s</span>", text);
+    char * tmp = g_strdup_printf ("<span size=\"small\">%s</span>", text);
 
     gtk_label_set_text ((GtkLabel *) label_mini_status, tmp);
     gtk_label_set_use_markup ((GtkLabel *) label_mini_status, TRUE);
@@ -277,11 +277,11 @@ static void infowin_update_tuple (void * unused)
     tuple_unref (tuple);
 }
 
-gboolean genre_fill (GtkWidget * combo)
+boolean genre_fill (GtkWidget * combo)
 {
     GList * list = NULL;
     GList * node;
-    gint i;
+    int i;
 
     for (i = 0; i < G_N_ELEMENTS (genre_table); i ++)
         list = g_list_prepend (list, _(genre_table[i]));
@@ -513,10 +513,10 @@ void create_infowin (void)
     gtk_widget_grab_focus (entry_title);
 }
 
-static void infowin_show (gint list, gint entry, const gchar * filename,
- const Tuple * tuple, PluginHandle * decoder, gboolean updating_enabled)
+static void infowin_show (int list, int entry, const char * filename,
+ const Tuple * tuple, PluginHandle * decoder, boolean updating_enabled)
 {
-    gchar * tmp;
+    char * tmp;
 
     if (infowin == NULL)
         create_infowin ();
@@ -558,9 +558,9 @@ static void infowin_show (gint list, gint entry, const gchar * filename,
     gtk_window_present ((GtkWindow *) infowin);
 }
 
-void audgui_infowin_show (gint playlist, gint entry)
+void audgui_infowin_show (int playlist, int entry)
 {
-    gchar * filename = aud_playlist_entry_get_filename (playlist, entry);
+    char * filename = aud_playlist_entry_get_filename (playlist, entry);
     g_return_if_fail (filename != NULL);
 
     PluginHandle * decoder = aud_playlist_entry_get_decoder (playlist, entry,
@@ -575,7 +575,7 @@ void audgui_infowin_show (gint playlist, gint entry)
 
     if (tuple == NULL)
     {
-        gchar * message = g_strdup_printf (_("No info available for %s.\n"),
+        char * message = g_strdup_printf (_("No info available for %s.\n"),
          filename);
         hook_call ("interface show error", message);
         g_free (message);
@@ -592,8 +592,8 @@ FREE:
 
 void audgui_infowin_show_current (void)
 {
-    gint playlist = aud_playlist_get_playing ();
-    gint position;
+    int playlist = aud_playlist_get_playing ();
+    int position;
 
     if (playlist == -1)
         playlist = aud_playlist_get_active ();

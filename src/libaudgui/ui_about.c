@@ -49,8 +49,8 @@ void
 audgui_show_about_window(void)
 {
     GtkWidget *brief_label;
-    gchar *text;
-    static const gchar *audacious_brief;
+    char *text;
+    static const char *audacious_brief;
 
     if (about_window != NULL)
     {
@@ -73,7 +73,7 @@ audgui_show_about_window(void)
     GtkWidget * vbox = gtk_vbox_new (FALSE, 6);
     gtk_container_add ((GtkContainer *) about_window, vbox);
 
-    gchar * name = g_strdup_printf ("%s/images/about-logo.png", aud_get_path (AUD_PATH_DATA_DIR));
+    char * name = g_strdup_printf ("%s/images/about-logo.png", aud_get_path (AUD_PATH_DATA_DIR));
     GtkWidget * image = gtk_image_new_from_file (name);
     gtk_box_pack_start ((GtkBox *) vbox, image, FALSE, FALSE, 0);
     g_free (name);

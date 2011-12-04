@@ -41,7 +41,7 @@ enum {
 };
 
 static GtkWidget *
-generate_credit_list(const gchar * text[], gboolean sec_space)
+generate_credit_list(const char * text[], boolean sec_space)
 {
     GtkWidget *scrollwin;
     GtkWidget *treeview;
@@ -49,7 +49,7 @@ generate_credit_list(const gchar * text[], gboolean sec_space)
     GtkTreeIter iter;
     GtkTreeViewColumn *column;
     GtkCellRenderer *renderer;
-    const gchar *const *item;
+    const char *const *item;
 
     list_store = gtk_list_store_new(N_COLS, G_TYPE_STRING, G_TYPE_STRING);
 
@@ -109,8 +109,8 @@ GtkWidget * audgui_get_credits_widget (void)
 {
     GtkWidget *about_notebook;
     GtkWidget *list;
-    const gchar **credit_text;
-    const gchar **translators;
+    const char **credit_text;
+    const char **translators;
 
     aud_get_audacious_credits (NULL, &credit_text, &translators);
 

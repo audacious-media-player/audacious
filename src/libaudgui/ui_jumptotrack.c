@@ -42,7 +42,7 @@ static void watchdog (void * hook_data, void * user_data);
 static GtkWidget *jump_to_track_win = NULL;
 static JumpToTrackCache* cache = NULL;
 static GtkWidget * treeview, * filter_entry, * queue_button;
-static gboolean watching = FALSE;
+static boolean watching = FALSE;
 
 void
 audgui_jump_to_track_hide(void)
@@ -63,14 +63,14 @@ audgui_jump_to_track_hide(void)
     }
 }
 
-static gint get_selected_entry (void)
+static int get_selected_entry (void)
 {
     g_return_val_if_fail (treeview, -1);
 
     GtkTreeModel * model = gtk_tree_view_get_model ((GtkTreeView *) treeview);
     GtkTreeSelection * selection = gtk_tree_view_get_selection ((GtkTreeView *) treeview);
     GtkTreeIter iter;
-    gint entry;
+    int entry;
 
     if (! gtk_tree_selection_get_selected (selection, NULL, & iter))
         return -1;
@@ -81,11 +81,11 @@ static gint get_selected_entry (void)
 
 static void do_jump (void)
 {
-    gint entry = get_selected_entry ();
+    int entry = get_selected_entry ();
     if (entry < 0)
         return;
 
-    gint playlist = aud_playlist_get_active ();
+    int playlist = aud_playlist_get_active ();
     aud_playlist_set_playing (playlist);
     aud_playlist_set_position (playlist, entry);
     aud_drct_play ();
@@ -94,7 +94,7 @@ static void do_jump (void)
         audgui_jump_to_track_hide();
 }
 
-static void update_queue_button (gint entry)
+static void update_queue_button (int entry)
 {
     g_return_if_fail (queue_button);
 
@@ -116,7 +116,7 @@ static void update_queue_button (gint entry)
 
 static void do_queue (void)
 {
-    gint entry = get_selected_entry ();
+    int entry = get_selected_entry ();
     if (entry < 0)
         return;
 
@@ -133,7 +133,7 @@ static void selection_changed (void)
     update_queue_button (get_selected_entry ());
 }
 
-static gboolean keypress_cb (GtkWidget * widget, GdkEventKey * event)
+static boolean keypress_cb (GtkWidget * widget, GdkEventKey * event)
 {
     if (event->keyval == GDK_Escape)
     {
@@ -159,12 +159,12 @@ static void fill_list (void)
     const GArray * search_matches = ui_jump_to_track_cache_search (cache,
      gtk_entry_get_text ((GtkEntry *) filter_entry));
 
-    gint playlist = aud_playlist_get_active ();
+    int playlist = aud_playlist_get_active ();
 
-    for (gint i = 0; i < search_matches->len; i ++)
+    for (int i = 0; i < search_matches->len; i ++)
     {
-        gint entry = g_array_index (search_matches, gint, i);
-        gchar * title = aud_playlist_entry_get_title (playlist, entry, TRUE);
+        int entry = g_array_index (search_matches, int, i);
+        char * title = aud_playlist_entry_get_title (playlist, entry, TRUE);
         if (! title)
             continue;
 
@@ -219,12 +219,12 @@ static void watchdog (void * hook_data, void * user_data)
     }
 }
 
-static void toggle_button_cb (GtkToggleButton * toggle, const gchar * setting)
+static void toggle_button_cb (GtkToggleButton * toggle, const char * setting)
 {
     aud_set_bool ("audgui", setting, gtk_toggle_button_get_active (toggle));
 }
 
-static gboolean delete_cb (void)
+static boolean delete_cb (void)
 {
     audgui_jump_to_track_hide ();
     return TRUE;
@@ -345,7 +345,7 @@ static void create_window (void)
 
 void audgui_jump_to_track (void)
 {
-    gboolean create = (! jump_to_track_win);
+    boolean create = (! jump_to_track_win);
     if (create)
         create_window ();
 

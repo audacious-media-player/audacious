@@ -40,10 +40,10 @@ enum {
 static GtkWidget * qm_win;
 static GtkWidget * qm_list;
 
-static void get_value (void * user, gint row, gint column, GValue * value)
+static void get_value (void * user, int row, int column, GValue * value)
 {
-    gint list = aud_playlist_get_active ();
-    gint entry = aud_playlist_queue_get_entry (list, row);
+    int list = aud_playlist_get_active ();
+    int entry = aud_playlist_queue_get_entry (list, row);
 
     switch (column)
     {
@@ -51,43 +51,43 @@ static void get_value (void * user, gint row, gint column, GValue * value)
         g_value_set_int (value, 1 + entry);
         break;
     case COLUMN_TITLE:;
-        gchar * title = aud_playlist_entry_get_title (list, entry, TRUE);
+        char * title = aud_playlist_entry_get_title (list, entry, TRUE);
         g_value_set_string (value, title);
         str_unref (title);
         break;
     }
 }
 
-static gboolean get_selected (void * user, gint row)
+static boolean get_selected (void * user, int row)
 {
-    gint list = aud_playlist_get_active ();
+    int list = aud_playlist_get_active ();
     return aud_playlist_entry_get_selected (list, aud_playlist_queue_get_entry (list, row));
 }
 
-static void set_selected (void * user, gint row, gboolean selected)
+static void set_selected (void * user, int row, boolean selected)
 {
-    gint list = aud_playlist_get_active ();
+    int list = aud_playlist_get_active ();
     aud_playlist_entry_set_selected (list, aud_playlist_queue_get_entry (list, row), selected);
 }
 
-static void select_all (void * user, gboolean selected)
+static void select_all (void * user, boolean selected)
 {
-    gint list = aud_playlist_get_active ();
-    gint count = aud_playlist_queue_count (list);
+    int list = aud_playlist_get_active ();
+    int count = aud_playlist_queue_count (list);
 
-    for (gint i = 0; i < count; i ++)
+    for (int i = 0; i < count; i ++)
         aud_playlist_entry_set_selected (list, aud_playlist_queue_get_entry (list, i), selected);
 }
 
-static void shift_rows (void * user, gint row, gint before)
+static void shift_rows (void * user, int row, int before)
 {
-    GArray * shift = g_array_new (FALSE, FALSE, sizeof (gint));
-    gint list = aud_playlist_get_active ();
-    gint count = aud_playlist_queue_count (list);
+    GArray * shift = g_array_new (FALSE, FALSE, sizeof (int));
+    int list = aud_playlist_get_active ();
+    int count = aud_playlist_queue_count (list);
 
-    for (gint i = 0; i < count; i ++)
+    for (int i = 0; i < count; i ++)
     {
-        gint entry = aud_playlist_queue_get_entry (list, i);
+        int entry = aud_playlist_queue_get_entry (list, i);
 
         if (aud_playlist_entry_get_selected (list, entry))
         {
@@ -100,8 +100,8 @@ static void shift_rows (void * user, gint row, gint before)
 
     aud_playlist_queue_delete_selected (list);
 
-    for (gint i = 0; i < shift->len; i ++)
-        aud_playlist_queue_insert (list, before + i, g_array_index (shift, gint, i));
+    for (int i = 0; i < shift->len; i ++)
+        aud_playlist_queue_insert (list, before + i, g_array_index (shift, int, i));
 
     g_array_free (shift, TRUE);
 }
@@ -115,12 +115,12 @@ static const AudguiListCallbacks callbacks = {
 
 static void remove_selected (void)
 {
-    gint list = aud_playlist_get_active ();
-    gint count = aud_playlist_queue_count (list);
+    int list = aud_playlist_get_active ();
+    int count = aud_playlist_queue_count (list);
 
-    for (gint i = 0; i < count; )
+    for (int i = 0; i < count; )
     {
-        gint entry = aud_playlist_queue_get_entry (list, i);
+        int entry = aud_playlist_queue_get_entry (list, i);
 
         if (aud_playlist_entry_get_selected (list, entry))
         {
@@ -148,7 +148,7 @@ static void destroy_cb (void)
     qm_list = NULL;
 }
 
-static gboolean keypress_cb (GtkWidget * widget, GdkEventKey * event)
+static boolean keypress_cb (GtkWidget * widget, GdkEventKey * event)
 {
     if (event->keyval == GDK_A && (event->state && GDK_CONTROL_MASK))
         select_all (NULL, TRUE);
@@ -162,7 +162,7 @@ static gboolean keypress_cb (GtkWidget * widget, GdkEventKey * event)
     return TRUE;
 }
 
-static void response_cb (GtkDialog * dialog, gint response)
+static void response_cb (GtkDialog * dialog, int response)
 {
     switch (response)
     {
@@ -193,7 +193,7 @@ void audgui_queue_manager_show (void)
     GtkWidget * scrolled = gtk_scrolled_window_new (NULL, NULL);
     gtk_box_pack_start ((GtkBox *) vbox, scrolled, TRUE, TRUE, 0);
 
-    gint count = aud_playlist_queue_count (aud_playlist_get_active ());
+    int count = aud_playlist_queue_count (aud_playlist_get_active ());
     qm_list = audgui_list_new (& callbacks, NULL, count);
     gtk_tree_view_set_headers_visible ((GtkTreeView *) qm_list, FALSE);
     audgui_list_add_column (qm_list, NULL, 0, G_TYPE_INT, FALSE);

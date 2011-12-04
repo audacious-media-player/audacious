@@ -29,18 +29,18 @@
 
 #include "libaudgui.h"
 
-typedef void (* ForEachFunc) (gchar *, void *);
+typedef void (* ForEachFunc) (char *, void *);
 
 typedef struct
 {
-    gint playlist, at;
+    int playlist, at;
     struct index * index;
 }
 AddState;
 
-static gchar * check_uri (gchar * name)
+static char * check_uri (char * name)
 {
-    gchar * new;
+    char * new;
 
     if (strstr (name, "://") || ! (new = filename_to_uri (name)))
         return name;
@@ -49,9 +49,9 @@ static gchar * check_uri (gchar * name)
     return new;
 }
 
-static void urilist_for_each (const gchar * list, ForEachFunc func, void * user)
+static void urilist_for_each (const char * list, ForEachFunc func, void * user)
 {
-    const gchar * end, * next;
+    const char * end, * next;
 
     while (list[0])
     {
@@ -67,12 +67,12 @@ static void urilist_for_each (const gchar * list, ForEachFunc func, void * user)
     }
 }
 
-static void add_to_glist (gchar * name, GList * * listp)
+static void add_to_glist (char * name, GList * * listp)
 {
     * listp = g_list_prepend (* listp, name);
 }
 
-void audgui_urilist_open (const gchar * list)
+void audgui_urilist_open (const char * list)
 {
     GList * glist = NULL;
 
@@ -85,13 +85,13 @@ void audgui_urilist_open (const gchar * list)
     g_list_free (glist);
 }
 
-static void add_full (gchar * name, AddState * state)
+static void add_full (char * name, AddState * state)
 {
     index_append (state->index, str_get (name));
     g_free (name);
 }
 
-void audgui_urilist_insert (gint playlist, gint at, const gchar * list)
+void audgui_urilist_insert (int playlist, int at, const char * list)
 {
     AddState state = {playlist, at, index_new ()};
 
@@ -100,13 +100,13 @@ void audgui_urilist_insert (gint playlist, gint at, const gchar * list)
      FALSE);
 }
 
-gchar * audgui_urilist_create_from_selected (gint playlist)
+char * audgui_urilist_create_from_selected (int playlist)
 {
-    gint entries = aud_playlist_entry_count (playlist);
-    gint space = 0;
-    gint count, length;
-    gchar * name;
-    gchar * buffer, * set;
+    int entries = aud_playlist_entry_count (playlist);
+    int space = 0;
+    int count, length;
+    char * name;
+    char * buffer, * set;
 
     for (count = 0; count < entries; count ++)
     {

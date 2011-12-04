@@ -59,7 +59,7 @@ static GtkWidget * create_on_off (void)
 
 static void slider_moved (GtkRange * slider, void * unused)
 {
-    gint band = GPOINTER_TO_INT (g_object_get_data ((GObject *) slider, "band"));
+    int band = GPOINTER_TO_INT (g_object_get_data ((GObject *) slider, "band"));
     gdouble value = round (-gtk_range_get_value (slider));
 
     if (band == -1)
@@ -70,7 +70,7 @@ static void slider_moved (GtkRange * slider, void * unused)
 
 static void slider_update (void * unused, GtkRange * slider)
 {
-    gint band = GPOINTER_TO_INT (g_object_get_data ((GObject *) slider, "band"));
+    int band = GPOINTER_TO_INT (g_object_get_data ((GObject *) slider, "band"));
     gdouble value;
 
     if (band == -1)
@@ -83,12 +83,12 @@ static void slider_update (void * unused, GtkRange * slider)
     g_signal_handlers_unblock_by_func (slider, (void *) slider_moved, NULL);
 }
 
-static gchar * format_value (GtkScale * slider, gdouble value, void * unused)
+static char * format_value (GtkScale * slider, gdouble value, void * unused)
 {
-    return g_strdup_printf ("%d", (gint) -value);
+    return g_strdup_printf ("%d", (int) -value);
 }
 
-static GtkWidget * create_slider (const gchar * name, gint band)
+static GtkWidget * create_slider (const char * name, int band)
 {
     GtkWidget * vbox, * slider, * label;
 
@@ -121,11 +121,11 @@ static GtkWidget * create_slider (const gchar * name, gint band)
 
 static GtkWidget * create_window (void)
 {
-    const gchar * const names[AUD_EQUALIZER_NBANDS] = {N_("31 Hz"), N_("63 Hz"),
+    const char * const names[AUD_EQUALIZER_NBANDS] = {N_("31 Hz"), N_("63 Hz"),
      N_("125 Hz"), N_("250 Hz"), N_("500 Hz"), N_("1 kHz"), N_("2 kHz"),
      N_("4 kHz"), N_("8 kHz"), N_("16 kHz")};
     GtkWidget * window, * vbox, * hbox;
-    gint i;
+    int i;
 
     window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title ((GtkWindow *) window, _("Equalizer"));

@@ -38,11 +38,11 @@ static GtkWidget * window = NULL;
 
 static void jump_to_time_cb (GtkWidget * widget, GtkWidget * entry)
 {
-    guint min = 0, sec = 0;
-    gint params = sscanf (gtk_entry_get_text ((GtkEntry *) entry), "%u:%u", & min,
+    unsigned int min = 0, sec = 0;
+    int params = sscanf (gtk_entry_get_text ((GtkEntry *) entry), "%u:%u", & min,
      & sec);
 
-    gint time;
+    int time;
     if (params == 2)
         time = 60 * min + sec;
     else if (params == 1)
@@ -105,8 +105,8 @@ void audgui_jump_to_time (void)
     gtk_container_add ((GtkContainer *) bbox, jump);
     g_signal_connect (jump, "clicked", (GCallback) jump_to_time_cb, time_entry);
 
-    guint tindex = aud_drct_get_time () / 1000;
-    gchar time_str[10];
+    unsigned int tindex = aud_drct_get_time () / 1000;
+    char time_str[10];
     snprintf (time_str, sizeof time_str, "%u:%2.2u", tindex / 60, tindex % 60);
     gtk_entry_set_text ((GtkEntry *) time_entry, time_str);
     gtk_editable_select_region ((GtkEditable *) time_entry, 0, -1);

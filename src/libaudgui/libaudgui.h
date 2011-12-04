@@ -20,7 +20,7 @@
 #ifndef LIBAUDGUI_H
 #define LIBAUDGUI_H
 
-#include <glib.h>
+#include <libaudcore/core.h>
 
 /* macro defines for Audacious stock icons */
 #define AUD_STOCK_PLAYLIST    "aud-playlist"
@@ -30,34 +30,34 @@
 
 void audgui_register_stock_icons(void);
 
-void audgui_show_add_url_window(gboolean open);
+void audgui_show_add_url_window(boolean open);
 
 void audgui_jump_to_track(void);
 void audgui_jump_to_track_hide(void);
 
 void audgui_set_default_icon(void);
 
-void audgui_run_filebrowser(gboolean clear_pl_on_ok);
+void audgui_run_filebrowser(boolean clear_pl_on_ok);
 void audgui_hide_filebrowser(void);
 
 void audgui_show_about_window(void);
 void audgui_hide_about_window(void);
 
 /* confirm.c */
-void audgui_confirm_playlist_delete (gint playlist);
-void audgui_show_playlist_rename (gint playlist);
+void audgui_confirm_playlist_delete (int playlist);
+void audgui_show_playlist_rename (int playlist);
 
 /* equalizer.c */
 void audgui_show_equalizer_window (void);
 void audgui_hide_equalizer_window (void);
 
 /* infopopup.c */
-void audgui_infopopup_show (gint playlist, gint entry);
+void audgui_infopopup_show (int playlist, int entry);
 void audgui_infopopup_show_current (void);
 void audgui_infopopup_hide (void);
 
 /* infowin.c */
-void audgui_infowin_show (gint playlist, gint entry);
+void audgui_infowin_show (int playlist, int entry);
 void audgui_infowin_show_current (void);
 
 /* jump-to-time.c */
@@ -74,8 +74,8 @@ void audgui_queue_manager_show (void);
 void audgui_playlist_manager (void);
 
 /* urilist.c */
-void audgui_urilist_open (const gchar * list);
-void audgui_urilist_insert (gint playlist, gint position, const gchar * list);
-gchar * audgui_urilist_create_from_selected (gint playlist);
+void audgui_urilist_open (const char * list);
+void audgui_urilist_insert (int playlist, int position, const char * list);
+char * audgui_urilist_create_from_selected (int playlist);
 
 #endif /* LIBAUDGUI_H */

@@ -43,7 +43,7 @@ static void urlopener_add_url_callback (GtkWidget * widget, GtkEntry * entry)
     aud_history_add (gtk_entry_get_text (entry));
 }
 
-GtkWidget * urlopener_add_url_dialog_new (GCallback func, gboolean open)
+GtkWidget * urlopener_add_url_dialog_new (GCallback func, boolean open)
 {
     GtkWidget * win, * vbox, * bbox, * cancel, * ok, * combo, * entry;
 
@@ -64,8 +64,8 @@ GtkWidget * urlopener_add_url_dialog_new (GCallback func, gboolean open)
     gtk_window_set_focus(GTK_WINDOW(win), entry);
     gtk_entry_set_text(GTK_ENTRY(entry), "");
 
-    const gchar * path;
-    for (gint i = 0; (path = aud_history_get (i)); i ++)
+    const char * path;
+    for (int i = 0; (path = aud_history_get (i)); i ++)
         gtk_combo_box_text_append_text ((GtkComboBoxText *) combo, path);
 
     g_signal_connect(entry, "activate",
@@ -107,7 +107,7 @@ static void
 on_add_url_add_clicked(GtkWidget * widget,
                        GtkWidget * entry)
 {
-    const gchar *text = gtk_entry_get_text(GTK_ENTRY(entry));
+    const char *text = gtk_entry_get_text(GTK_ENTRY(entry));
 
     if (text != NULL && * text)
         aud_drct_pl_add (text, -1);
@@ -117,13 +117,13 @@ static void
 on_add_url_ok_clicked(GtkWidget * widget,
                       GtkWidget * entry)
 {
-    const gchar *text = gtk_entry_get_text(GTK_ENTRY(entry));
+    const char *text = gtk_entry_get_text(GTK_ENTRY(entry));
 
     if (text != NULL && * text)
         aud_drct_pl_open (text);
 }
 
-void audgui_show_add_url_window (gboolean open)
+void audgui_show_add_url_window (boolean open)
 {
     static GtkWidget *url_window = NULL;
 
