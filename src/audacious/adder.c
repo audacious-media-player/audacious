@@ -20,6 +20,7 @@
  */
 
 #include <dirent.h>
+#include <pthread.h>
 #include <string.h>
 #include <sys/stat.h>
 
@@ -57,7 +58,7 @@ static gint current_playlist_id = -1;
 static GMutex * mutex;
 static GCond * cond;
 static gboolean add_quit;
-static GThread * add_thread;
+static pthread_t add_thread;
 static gint add_source = 0;
 
 static gint status_source = 0;
@@ -480,7 +481,7 @@ void adder_init (void)
     cond = g_cond_new ();
     g_mutex_lock (mutex);
     add_quit = FALSE;
-    add_thread = g_thread_create (add_worker, NULL, TRUE, NULL);
+    pthread_create (& add_thread, NULL, add_worker, NULL);
     g_cond_wait (cond, mutex);
     g_mutex_unlock (mutex);
 }
@@ -491,7 +492,7 @@ void adder_cleanup (void)
     add_quit = TRUE;
     g_cond_broadcast (cond);
     g_mutex_unlock (mutex);
-    g_thread_join (add_thread);
+    pthread_join (add_thread, NULL);
     g_mutex_free (mutex);
     g_cond_free (cond);
 

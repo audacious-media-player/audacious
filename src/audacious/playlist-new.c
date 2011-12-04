@@ -19,6 +19,7 @@
  * using our public API to be a derived work.
  */
 
+#include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -150,7 +151,7 @@ typedef struct {
     Entry * entry;
 } ScanItem;
 
-static GThread * scan_threads[SCAN_THREADS];
+static pthread_t scan_threads[SCAN_THREADS];
 static gboolean scan_quit;
 static gint scan_playlist, scan_row;
 static GQueue scan_queue = G_QUEUE_INIT;
@@ -718,7 +719,7 @@ void playlist_init (void)
     scan_playlist = scan_row = 0;
 
     for (gint i = 0; i < SCAN_THREADS; i ++)
-        scan_threads[i] = g_thread_create (scanner, GINT_TO_POINTER (i), TRUE, NULL);
+        pthread_create (& scan_threads[i], NULL, scanner, NULL);
 
     LEAVE;
 }
@@ -733,7 +734,7 @@ void playlist_end (void)
     LEAVE;
 
     for (gint i = 0; i < SCAN_THREADS; i ++)
-        g_thread_join (scan_threads[i]);
+        pthread_join (scan_threads[i], NULL);
 
     ENTER;
 
