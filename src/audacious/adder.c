@@ -311,7 +311,10 @@ static void add_playlist (gchar * filename, AddResult * result)
     gchar * title = NULL;
     struct index * filenames, * tuples;
     if (! playlist_load (filename, & title, & filenames, & tuples))
+    {
+        g_free (filename);
         return;
+    }
 
     gint count = index_count (filenames);
     for (gint i = 0; i < count; i ++)
