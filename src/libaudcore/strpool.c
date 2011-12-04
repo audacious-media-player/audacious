@@ -99,15 +99,15 @@ char * str_ref (char * str)
     return str;
 }
 
-char * str_unref (char * str)
+void str_unref (void * str)
 {
     if (! str)
-        return NULL;
+        return;
 
     pthread_mutex_lock (& mutex);
-    STR_CHECK (str);
+    STR_CHECK ((char *) str);
 
-    void * mem = str - 5;
+    void * mem = (char *) str - 5;
     if (! -- (* (int32_t *) mem))
 #ifdef USE_STRINGPOOL
         g_hash_table_remove (table, str);
@@ -116,7 +116,6 @@ char * str_unref (char * str)
 #endif
 
     pthread_mutex_unlock (& mutex);
-    return NULL;
 }
 
 char * str_nget (const char * str, int len)

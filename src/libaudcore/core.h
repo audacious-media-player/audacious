@@ -46,9 +46,10 @@ char * str_ref (char * str);
 
 /* Decrements the reference count of <str>, where <str> is the address of a
  * string in the pool.  If the reference count drops to zero, releases the
- * memory used by <str>.  Returns NULL for convenience.  If <str> is NULL,
- * simply returns NULL with no side effects. */
-char * str_unref (char * str);
+ * memory used by <str>.   If <str> is NULL, simply returns NULL with no side
+ * effects.  <str> is a (void *) so that str_unref() has the same type as
+ * free(). */
+void str_unref (void * str);
 
 /* Calls str_get() on the first <len> characters of <str>.  If <str> has less
  * than or equal to <len> characters, equivalent to str_get(). */
