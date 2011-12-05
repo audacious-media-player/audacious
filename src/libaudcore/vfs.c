@@ -447,7 +447,7 @@ vfs_is_writeable(const char * path)
  */
 boolean vfs_is_remote (const char * path)
 {
-    return ! strncmp (path, "file://", 7);
+    return strncmp (path, "file://", 7) ? TRUE : FALSE;
 }
 
 /**
