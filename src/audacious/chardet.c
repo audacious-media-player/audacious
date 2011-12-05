@@ -205,5 +205,8 @@ static char * cd_chardet_to_utf8 (const char * str, int len,
 
 void chardet_init (void)
 {
+#ifdef USE_CHARDET
+    libguess_determine_encoding(NULL, -1, "");
+#endif
     str_set_utf8_impl (cd_str_to_utf8, cd_chardet_to_utf8);
 }
