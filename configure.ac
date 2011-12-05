@@ -22,6 +22,13 @@ AUD_COMMON_PROGS
 BUILDSYS_INIT
 BUILDSYS_SHARED_LIB
 
+dnl Byte order
+dnl ==========
+AC_C_BIGENDIAN([BIGENDIAN=1], [BIGENDIAN=0],
+ [AC_MSG_ERROR([Unknown machine byte order])],
+ [AC_MSG_ERROR([Universal builds are not supported, sorry])])
+AC_SUBST([BIGENDIAN])
+
 dnl Headers and functions
 dnl ===============================
 AC_CHECK_HEADERS([execinfo.h regex.h rxposix.h rx/rxposix.h])
@@ -330,6 +337,7 @@ AC_CONFIG_FILES([
     extra.mk
     man/audtool.1
     man/audacious.1
+    src/libaudcore/audio.h
 ])
 
 BUILDSYS_TOUCH_DEPS
