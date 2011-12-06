@@ -234,6 +234,8 @@ tuple_copy_value(TupleValue *src)
     if (src == NULL) return NULL;
 
     res = mowgli_heap_alloc(tuple_value_heap);
+    res->type = src->type;
+
     switch (src->type) {
     case TUPLE_STRING:
         res->value.string = stringpool_get(src->value.string);
