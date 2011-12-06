@@ -244,6 +244,7 @@ tuple_copy_value(TupleValue *src)
         res->value.integer = src->value.integer;
         break;
     default:
+        mowgli_heap_free (tuple_value_heap, res);
         return NULL;
     }
     return res;
@@ -259,8 +260,8 @@ Tuple *
 tuple_copy(const Tuple *src)
 {
     Tuple *dst;
+    TupleValue * tv, * copied;
     mowgli_dictionary_iteration_state_t state;
-    mowgli_dictionary_elem_t *elem;
     gint i;
 
     TUPLE_LOCK_WRITE();
@@ -272,11 +273,10 @@ tuple_copy(const Tuple *src)
         dst->values[i] = tuple_copy_value(src->values[i]);
 
     /* Copy dictionary contents */
-    MOWGLI_DICTIONARY_FOREACH(elem, &state, src->dict)
+    MOWGLI_DICTIONARY_FOREACH (tv, & state, src->dict)
     {
-        TupleValue *value = tuple_copy_value(elem->data);
-        if (value != NULL && elem->key != NULL)
-            mowgli_dictionary_add(dst->dict, elem->key, value);
+        if ((copied = tuple_copy_value (tv)) != NULL)
+            mowgli_dictionary_add (dst->dict, state.cur->key, copied);
     }
 
     /* Copy subtune number information */
