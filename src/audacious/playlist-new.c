@@ -41,7 +41,7 @@
 
 enum {RESUME_STOP, RESUME_PLAY, RESUME_PAUSE};
 
-#define SCAN_THREADS 4
+#define SCAN_THREADS 2
 #define STATE_FILE "playlist-state"
 
 #define ENTER pthread_mutex_lock (& mutex)
