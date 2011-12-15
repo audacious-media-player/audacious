@@ -2323,8 +2323,7 @@ static boolean parse_integer (const char * key, int * value)
 
 static char * parse_string (const char * key)
 {
-    return (parse_value && ! strcmp (parse_key, key)) ? g_strdup (parse_value) :
-     NULL;
+    return (parse_value && ! strcmp (parse_key, key)) ? str_get (parse_value) : NULL;
 }
 
 void playlist_load_state (void)
@@ -2369,7 +2368,7 @@ void playlist_load_state (void)
 
         if ((s = parse_string ("filename")))
         {
-            g_free (playlist->filename);
+            str_unref (playlist->filename);
             playlist->filename = s;
             parse_next (handle);
         }
