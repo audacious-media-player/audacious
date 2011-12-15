@@ -15,6 +15,7 @@ src/audacious/audacious
 src/audacious/dbus-client-bindings.h
 src/audacious/dbus-server-bindings.h
 src/audtool/audtool
+src/libaudcore/audio.h
 .deps
 *.a
 *.mo
