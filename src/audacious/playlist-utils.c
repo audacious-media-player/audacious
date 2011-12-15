@@ -323,12 +323,22 @@ static void load_playlists_real (void)
 
     for (int i = 0; order[i]; i ++)
     {
-        char * path = g_strdup_printf ("%s/%s.xspf", get_path (AUD_PATH_PLAYLISTS_DIR), order[i]);
+        char * path = g_strdup_printf ("%s/%s.audpl", get_path (AUD_PATH_PLAYLISTS_DIR), order[i]);
+        
+        if (! g_file_test (path, G_FILE_TEST_EXISTS))
+        {
+            g_free (path);
+            path = g_strdup_printf ("%s/%s.xspf", get_path (AUD_PATH_PLAYLISTS_DIR), order[i]);
+        }
+        
         char * uri = filename_to_uri (path);
 
         playlist_insert_with_id (count + i, atoi (order[i]));
         playlist_insert_playlist_raw (count + i, 0, uri);
         playlist_set_modified (count + i, FALSE);
+        
+        if (g_str_has_suffix (path, ".xspf"))
+            playlist_set_modified (count + i, TRUE);
 
         g_free (path);
         g_free (uri);
@@ -360,7 +370,7 @@ static void save_playlists_real (void)
 
         if (playlist_get_modified (i))
         {
-            char * path = g_strdup_printf ("%s/%d.xspf", folder, id);
+            char * path = g_strdup_printf ("%s/%d.audpl", folder, id);
             char * uri = filename_to_uri (path);
 
             playlist_save (i, uri);
@@ -370,7 +380,7 @@ static void save_playlists_real (void)
             g_free (uri);
         }
 
-        g_hash_table_insert (saved, g_strdup_printf ("%d.xspf", id), NULL);
+        g_hash_table_insert (saved, g_strdup_printf ("%d.audpl", id), NULL);
     }
 
     order[lists] = NULL;
@@ -409,7 +419,8 @@ static void save_playlists_real (void)
     struct dirent * entry;
     while ((entry = readdir (dir)))
     {
-        if (! g_str_has_suffix (entry->d_name, ".xspf"))
+        if (! g_str_has_suffix (entry->d_name, ".audpl")
+         && ! g_str_has_suffix (entry->d_name, ".xspf"))
             continue;
 
         if (! g_hash_table_lookup_extended (saved, entry->d_name, NULL, NULL))
