@@ -26,6 +26,7 @@
 #include <pthread.h>
 #include <stdio.h>
 #include <stdint.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include <audacious/i18n.h>
@@ -104,19 +105,60 @@ static const TupleBasicType tuple_fields[TUPLE_FIELDS] = {
     { "gain-peak-unit", TUPLE_INT },
 };
 
+typedef struct {
+    const char * name;
+    int field;
+} FieldDictEntry;
+
+/* used for binary search, MUST be in alphabetical order */
+static const FieldDictEntry field_dict[TUPLE_FIELDS] = {
+ {"album", FIELD_ALBUM},
+ {"artist", FIELD_ARTIST},
+ {"bitrate", FIELD_BITRATE},
+ {"codec", FIELD_CODEC},
+ {"comment", FIELD_COMMENT},
+ {"composer", FIELD_COMPOSER},
+ {"copyright", FIELD_COPYRIGHT},
+ {"date", FIELD_DATE},
+ {"file-ext", FIELD_FILE_EXT},
+ {"file-name", FIELD_FILE_NAME},
+ {"file-path", FIELD_FILE_PATH},
+ {"gain-album-gain", FIELD_GAIN_ALBUM_GAIN},
+ {"gain-album-peak", FIELD_GAIN_ALBUM_PEAK},
+ {"gain-gain-unit", FIELD_GAIN_GAIN_UNIT},
+ {"gain-peak-unit", FIELD_GAIN_PEAK_UNIT},
+ {"gain-track-gain", FIELD_GAIN_TRACK_GAIN},
+ {"gain-track-peak", FIELD_GAIN_TRACK_PEAK},
+ {"genre", FIELD_GENRE},
+ {"length", FIELD_LENGTH},
+ {"mime-type", FIELD_MIMETYPE},
+ {"performer", FIELD_PERFORMER},
+ {"quality", FIELD_QUALITY},
+ {"segment-end", FIELD_SEGMENT_END},
+ {"segment-start", FIELD_SEGMENT_START},
+ {"song-artist", FIELD_SONG_ARTIST},
+ {"subsong-id", FIELD_SUBSONG_ID},
+ {"subsong-num", FIELD_SUBSONG_NUM},
+ {"title", FIELD_TITLE},
+ {"track-number", FIELD_TRACK_NUMBER},
+ {"year", FIELD_YEAR}};
+
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
 
+static int field_dict_compare (const void * a, const void * b)
+{
+    return strcmp (((FieldDictEntry *) a)->name, ((FieldDictEntry *) b)->name);
+}
+
 int tuple_field_by_name (const char * name)
 {
-    if (! name)
-        return -1;
+    FieldDictEntry find = {name, -1};
+    FieldDictEntry * found = bsearch (& find, field_dict, TUPLE_FIELDS,
+     sizeof (FieldDictEntry), field_dict_compare);
 
-    for (int i = 0; i < TUPLE_FIELDS; i ++)
-    {
-        if (! strcmp (tuple_fields[i].name, name))
-            return i;
-    }
+    if (found)
+        return found->field;
 
     fprintf (stderr, "Unknown tuple field name \"%s\".\n", name);
     return -1;
