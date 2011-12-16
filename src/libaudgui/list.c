@@ -23,7 +23,7 @@
 
 #include <audacious/gtk-compat.h>
 
-#define CHAR_WIDTH 10
+#define CHAR_WIDTH 12
 #define SPACING 4
 
 enum {HIGHLIGHT_COLUMN, RESERVED_COLUMNS};
