@@ -48,7 +48,7 @@ GtkWidget * audgui_list_new (const AudguiListCallbacks * cbs, void * user,
  int rows);
 void * audgui_list_get_user (GtkWidget * list);
 void audgui_list_add_column (GtkWidget * list, const char * title,
- int column, GType type, boolean expand);
+ int column, GType type, int width);
 
 int audgui_list_row_count (GtkWidget * list);
 void audgui_list_insert_rows (GtkWidget * list, int at, int rows);

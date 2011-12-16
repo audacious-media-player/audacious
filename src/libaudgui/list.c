@@ -533,6 +533,7 @@ GtkWidget * audgui_list_new (const AudguiListCallbacks * cbs, void * user,
     model->scroll_speed = 0;
 
     GtkWidget * list = gtk_tree_view_new_with_model ((GtkTreeModel *) model);
+    gtk_tree_view_set_fixed_height_mode ((GtkTreeView *) list, TRUE);
     g_signal_connect_swapped (list, "destroy", (GCallback) destroy_cb, model);
 
     if (cbs->get_selected)
@@ -592,7 +593,7 @@ void * audgui_list_get_user (GtkWidget * list)
 }
 
 void audgui_list_add_column (GtkWidget * list, const char * title,
- int column, GType type, boolean expand)
+ int column, GType type, int width)
 {
     ListModel * model = (ListModel *) gtk_tree_view_get_model
      ((GtkTreeView *) list);
@@ -606,18 +607,18 @@ void audgui_list_add_column (GtkWidget * list, const char * title,
     GtkTreeViewColumn * tree_column = gtk_tree_view_column_new_with_attributes
      (title, renderer, "text", RESERVED_COLUMNS + column, "weight",
      HIGHLIGHT_COLUMN, NULL);
+    gtk_tree_view_column_set_sizing (tree_column, GTK_TREE_VIEW_COLUMN_FIXED);
 
-    if (expand)
+    if (width < 1)
     {
-        gtk_tree_view_column_set_resizable (tree_column, TRUE);
+        gtk_tree_view_column_set_fixed_width (tree_column, 80);
         gtk_tree_view_column_set_expand (tree_column, TRUE);
         g_object_set ((GObject *) renderer, "ellipsize-set", TRUE, "ellipsize",
          PANGO_ELLIPSIZE_END, NULL);
     }
     else
     {
-        gtk_tree_view_column_set_sizing (tree_column,
-         GTK_TREE_VIEW_COLUMN_GROW_ONLY);
+        gtk_tree_view_column_set_fixed_width (tree_column, width);
         g_object_set ((GObject *) renderer, "xalign", (float) 1, NULL);
     }
 

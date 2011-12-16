@@ -275,8 +275,8 @@ void audgui_playlist_manager (void)
     gtk_container_add( GTK_CONTAINER(playman_win) , playman_vbox );
 
     playman_pl_lv = audgui_list_new (& callbacks, NULL, aud_playlist_count ());
-    audgui_list_add_column (playman_pl_lv, _("Title"), 0, G_TYPE_STRING, TRUE);
-    audgui_list_add_column (playman_pl_lv, _("Entries"), 1, G_TYPE_INT, FALSE);
+    audgui_list_add_column (playman_pl_lv, _("Title"), 0, G_TYPE_STRING, -1);
+    audgui_list_add_column (playman_pl_lv, _("Entries"), 1, G_TYPE_INT, 64);
     audgui_list_set_highlight (playman_pl_lv, aud_playlist_get_playing ());
     gtk_tree_view_set_search_equal_func ((GtkTreeView *) playman_pl_lv,
      search_cb, NULL, NULL);
