@@ -23,6 +23,9 @@
 
 #include <audacious/gtk-compat.h>
 
+#define CHAR_WIDTH 10
+#define SPACING 4
+
 enum {HIGHLIGHT_COLUMN, RESERVED_COLUMNS};
 
 #define PATH_IS_SELECTED(w, p) (gtk_tree_selection_path_is_selected \
@@ -611,14 +614,14 @@ void audgui_list_add_column (GtkWidget * list, const char * title,
 
     if (width < 1)
     {
-        gtk_tree_view_column_set_fixed_width (tree_column, 80);
+        gtk_tree_view_column_set_fixed_width (tree_column, 6 * CHAR_WIDTH + SPACING);
         gtk_tree_view_column_set_expand (tree_column, TRUE);
         g_object_set ((GObject *) renderer, "ellipsize-set", TRUE, "ellipsize",
          PANGO_ELLIPSIZE_END, NULL);
     }
     else
     {
-        gtk_tree_view_column_set_fixed_width (tree_column, width);
+        gtk_tree_view_column_set_fixed_width (tree_column, width * CHAR_WIDTH + SPACING);
         g_object_set ((GObject *) renderer, "xalign", (float) 1, NULL);
     }
 

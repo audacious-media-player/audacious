@@ -196,7 +196,7 @@ void audgui_queue_manager_show (void)
     int count = aud_playlist_queue_count (aud_playlist_get_active ());
     qm_list = audgui_list_new (& callbacks, NULL, count);
     gtk_tree_view_set_headers_visible ((GtkTreeView *) qm_list, FALSE);
-    audgui_list_add_column (qm_list, NULL, 0, G_TYPE_INT, 24);
+    audgui_list_add_column (qm_list, NULL, 0, G_TYPE_INT, 2);
     audgui_list_add_column (qm_list, NULL, 1, G_TYPE_STRING, -1);
     gtk_container_add ((GtkContainer *) scrolled, qm_list);
 
