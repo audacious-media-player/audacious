@@ -1,6 +1,7 @@
 /*
- * Audacious
- * Copyright (c) 2006-2011 Audacious team
+ * tuple.c
+ * Copyright 2007-2011 William Pitcock, Christian Birchinger, Matti Hämäläinen,
+ *                     Giacomo Lozito, Eugene Zagidullin, and John Lindgren
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +18,7 @@
  * The Audacious team does not consider modular code linking to
  * Audacious or using our public API to be a derived work.
  */
+
 /**
  * @file tuple.c
  * @brief Basic Tuple handling API.
