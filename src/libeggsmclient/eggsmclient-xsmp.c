@@ -193,6 +193,11 @@ egg_sm_client_xsmp_class_init (EggSMClientXSMPClass *klass)
 EggSMClient *
 egg_sm_client_xsmp_new (void)
 {
+#if GTK_CHECK_VERSION(3,0,0)
+  if (!GDK_IS_X11_DISPLAY_MANAGER (gdk_display_manager_get ()))
+    return NULL;
+#endif
+
   if (!g_getenv ("SESSION_MANAGER"))
     return NULL;
 
@@ -227,7 +232,7 @@ sm_client_xsmp_set_initial_properties (gpointer user_data)
 
       if (xsmp->restart_style == SmRestartIfRunning)
 	{
-	  if (egg_desktop_file_get_boolean (desktop_file,
+	  if (egg_desktop_file_get_boolean (desktop_file, 
 					    "X-GNOME-AutoRestart", NULL))
 	    xsmp->restart_style = SmRestartImmediately;
 	}
@@ -367,11 +372,13 @@ sm_client_xsmp_startup (EggSMClient *client,
       xsmp->client_id = g_strdup (ret_client_id);
       free (ret_client_id);
 
-#if !GTK_CHECK_VERSION(2,91,7) && !GTK_CHECK_VERSION(3,0,0)
+      gdk_threads_enter ();
+#if !GTK_CHECK_VERSION(2,23,3) && !GTK_CHECK_VERSION(3,0,0)
       gdk_set_sm_client_id (xsmp->client_id);
 #else
       gdk_x11_set_sm_client_id (xsmp->client_id);
 #endif
+      gdk_threads_leave ();
 
       g_debug ("Got client ID \"%s\"", xsmp->client_id);
     }
@@ -539,6 +546,8 @@ idle_do_pending_events (gpointer data)
   EggSMClientXSMP *xsmp = data;
   EggSMClient *client = data;
 
+  gdk_threads_enter ();
+
   xsmp->idle = 0;
 
   if (xsmp->waiting_to_emit_quit)
@@ -562,6 +571,7 @@ idle_do_pending_events (gpointer data)
     }
 
  out:
+  gdk_threads_leave ();
   return FALSE;
 }
 
@@ -1131,7 +1141,7 @@ delete_properties (EggSMClientXSMP *xsmp, ...)
  * until you're done with the SmProp.
  */
 static SmProp *
-array_prop (const char *name, ...)
+array_prop (const char *name, ...) 
 {
   SmProp *prop;
   SmPropValue pv;
@@ -1282,7 +1292,9 @@ process_ice_messages (IceConn ice_conn)
 {
   IceProcessMessagesStatus status;
 
+  gdk_threads_enter ();
   status = IceProcessMessages (ice_conn, NULL, NULL);
+  gdk_threads_leave ();
 
   switch (status)
     {
@@ -1347,13 +1359,13 @@ ice_error_handler (IceConn       ice_conn,
 		   IcePointer    values)
 {
   /* Do nothing */
-}
+} 
 
 static void
 ice_io_error_handler (IceConn ice_conn)
 {
   /* Do nothing */
-}
+} 
 
 static void
 smc_error_handler (SmcConn       smc_conn,

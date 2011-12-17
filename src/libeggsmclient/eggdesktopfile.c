@@ -185,6 +185,9 @@ egg_desktop_file_new_from_key_file (GKeyFile    *key_file,
 	{
 	  g_set_error (error, EGG_DESKTOP_FILE_ERROR,
 		       EGG_DESKTOP_FILE_ERROR_INVALID,
+		       /* translators: 'Version' is from a desktop file, and
+			* should not be translated. '%s' would probably be a
+			* version number. */
 		       _("Unrecognized desktop file Version '%s'"), version);
 	  g_free (version);
 	  g_key_file_free (key_file);
@@ -201,8 +204,11 @@ egg_desktop_file_new_from_key_file (GKeyFile    *key_file,
   else
     desktop_file->source = g_strdup (source);
 
-  desktop_file->name = g_key_file_get_string (key_file, EGG_DESKTOP_FILE_GROUP,
-					      EGG_DESKTOP_FILE_KEY_NAME, error);
+  desktop_file->name = g_key_file_get_locale_string (key_file,
+						     EGG_DESKTOP_FILE_GROUP,
+						     EGG_DESKTOP_FILE_KEY_NAME,
+						     NULL,
+						     error);
   if (!desktop_file->name)
     {
       egg_desktop_file_free (desktop_file);
@@ -919,6 +925,7 @@ parse_link (EggDesktopFile  *desktop_file,
   return TRUE;
 }
 
+#if GTK_CHECK_VERSION (2, 12, 0)
 static char *
 start_startup_notification (GdkDisplay     *display,
 			    EggDesktopFile *desktop_file,
@@ -1029,6 +1036,7 @@ set_startup_notification_timeout (GdkDisplay *display,
   g_timeout_add_seconds (EGG_DESKTOP_FILE_SN_TIMEOUT_LENGTH,
 			 startup_notification_timeout, sn_data);
 }
+#endif /* GTK 2.12 */
 
 static GPtrArray *
 array_putenv (GPtrArray *env, char *variable)
@@ -1215,6 +1223,7 @@ egg_desktop_file_launchv (EggDesktopFile *desktop_file,
 	}
       g_free (command);
 
+#if GTK_CHECK_VERSION (2, 12, 0)
       startup_id = start_startup_notification (display, desktop_file,
 					       argv[0], screen_num,
 					       workspace, launch_time);
@@ -1225,6 +1234,9 @@ egg_desktop_file_launchv (EggDesktopFile *desktop_file,
 	  env = array_putenv (env, startup_id_env);
 	  g_free (startup_id_env);
 	}
+#else
+      startup_id = NULL;
+#endif /* GTK 2.12 */
 
       if (env != NULL)
 	g_ptr_array_add (env, NULL);
@@ -1242,6 +1254,7 @@ egg_desktop_file_launchv (EggDesktopFile *desktop_file,
 
       if (startup_id)
 	{
+#if GTK_CHECK_VERSION (2, 12, 0)
 	  if (current_success)
 	    {
 	      set_startup_notification_timeout (display, startup_id);
@@ -1252,6 +1265,7 @@ egg_desktop_file_launchv (EggDesktopFile *desktop_file,
 		g_free (startup_id);
 	    }
 	  else
+#endif /* GTK 2.12 */
 	    g_free (startup_id);
 	}
       else if (ret_startup_id)
@@ -1372,9 +1386,11 @@ egg_desktop_file_launch (EggDesktopFile *desktop_file,
 	{
 	  g_set_error (error, EGG_DESKTOP_FILE_ERROR,
 		       EGG_DESKTOP_FILE_ERROR_NOT_LAUNCHABLE,
+		       /* translators: The 'Type=Link' string is found in a
+			* desktop file, and should not be translated. */
 		       _("Can't pass document URIs to a 'Type=Link' desktop entry"));
 	  return FALSE;
-	}
+	}	  
 
       if (!parse_link (desktop_file, &app_desktop_file, &documents, error))
 	return FALSE;
@@ -1493,10 +1509,10 @@ egg_set_desktop_file_without_defaults (const char *desktop_file_path)
 
 /**
  * egg_get_desktop_file:
- *
+ * 
  * Gets the application's #EggDesktopFile, as set by
  * egg_set_desktop_file().
- *
+ * 
  * Return value: the #EggDesktopFile, or %NULL if it hasn't been set.
  **/
 EggDesktopFile *
