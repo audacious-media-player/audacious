@@ -1,4 +1,16 @@
-Audacious (C) GPL 2005-2009
+Audacious
+=========
+
+This file is quite out of date and in the process of being updated.
+
+Session management support (src/libeggsmclient):
+ * Copyright (C) 1999-2000 Red Hat, Inc.
+ * Copyright (C) 2001 George Lebl
+ * Copyright (C) 2007 Novell, Inc.
+
+
+Old AUTHORS file
+================
 
 Authors listed alphabetically, by last name:
 --------------------------------------------
