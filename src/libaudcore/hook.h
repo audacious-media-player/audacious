@@ -1,32 +1,40 @@
-/*  Audacious
- *  Copyright (c) 2006-2007 William Pitcock
- *  Copyright (c) 2011 John Lindgren
+/*
+ * hook.h
+ * Copyright 2011 John Lindgren
  *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; under version 3 of the License.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions, and the following disclaimer.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses>.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions, and the following disclaimer in the documentation
+ *    provided with the distribution.
  *
- *  The Audacious team does not consider modular code linking to
- *  Audacious or using our public API to be a derived work.
+ * This software is provided "as is" and without any warranty, express or
+ * implied. In no event shall the authors be liable for any damages arising from
+ * the use of this software.
  */
 
 #ifndef LIBAUDCORE_HOOK_H
 #define LIBAUDCORE_HOOK_H
 
-typedef void (*HookFunction)(void * hook_data, void * user_data);
+typedef void (* HookFunction) (void * data, void * user);
 
-int hook_associate(const char *name, HookFunction func, void * user_data);
-int hook_dissociate(const char *name, HookFunction func);
-int hook_dissociate_full(const char *name, HookFunction func, void * user_data);
-void hook_call(const char *name, void * hook_data);
+/* Adds <func> to the list of functions to be called when the hook <name> is
+ * triggered. */
+void hook_associate (const char * name, HookFunction func, void * user);
+
+/* Removes all instances matching <func> and <user> from the list of functions
+ * to be called when the hook <name> is triggered.  If <user> is NULL, all
+ * instances matching <func> are removed. */
+void hook_dissociate_full (const char * name, HookFunction func, void * user);
+
+#define hook_dissociate(n, f) hook_dissociate_full (n, f, NULL)
+
+/* Triggers the hook <name>. */
+void hook_call (const char * name, void * data);
 
 /* Schedules a call of the hook <name> from the program's main loop, to be
  * executed in <time> milliseconds.  If <destroy> is not NULL, it will be called
@@ -35,7 +43,7 @@ void event_queue_full (int time, const char * name, void * data, void (* destroy
 
 #define event_queue(n, d) event_queue_full (0, n, d, NULL)
 
-/* Cancels pending hook calls matching <name> and <data>.  If <data> is null,
+/* Cancels pending hook calls matching <name> and <data>.  If <data> is NULL,
  * all hook calls matching <name> are canceled. */
 void event_queue_cancel (const char * name, void * data);
 
