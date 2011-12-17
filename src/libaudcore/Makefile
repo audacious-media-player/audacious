@@ -13,8 +13,7 @@ SRCS = audio.c \
        tuple_formatter.c \
        vfs.c \
        vfs_async.c \
-       vfs_common.c \
-       md5.c
+       vfs_common.c
 
 INCLUDES = audio.h \
            audstrings.h \
@@ -23,8 +22,7 @@ INCLUDES = audio.h \
            index.h \
            tuple.h \
            vfs.h \
-           vfs_async.h \
-           md5.h
+           vfs_async.h
 
 include ../../buildsys.mk
 include ../../extra.mk
