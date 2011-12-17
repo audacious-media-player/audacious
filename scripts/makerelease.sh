@@ -68,36 +68,3 @@ echo "Building $RELEASENAME.tar.bz2 from $RELEASENAME/"
 tar jcf $RELEASENAME.tar.bz2 $RELEASENAME/
 
 rm $RELEASENAME-working.tar.gz
-
-PUBLISH="yes"
-
-ok="0"
-if [ "x$AUTOMATIC" != "xyes" ]; then
-	echo
-	echo "Would you like to publish these releases now?"
-	while [ $ok -eq 0 ]; do
-		echo -n "[$PUBLISH] "
-
-		read INPUT
-		case $INPUT in
-			[Yy]*)
-				PUBLISH="yes"
-				ok=1
-				;;
-			[Nn]*)
-				PUBLISH="no"
-				ok=1
-				;;
-		esac
-	done
-fi
-
-if [ "x$PUBLISH" = "xyes" ]; then
-	scp $RELEASENAME.tar.gz distfiles.atheme.org:/var/www/distfiles.atheme.org/
-fi
-
-echo
-echo "Done. If you have any bugs to report, report them against"
-echo "the distfiles.atheme.org component at http://jira.atheme.org"
-echo "Thanks!"
-echo
