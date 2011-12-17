@@ -226,4 +226,6 @@ void plugin_system_cleanup(void)
 
     g_list_free (loaded_modules);
     loaded_modules = NULL;
+
+    audgui_cleanup ();
 }

@@ -1,6 +1,6 @@
 /*
  * libaudgui/init.h
- * Copyright 2010 John Lindgren
+ * Copyright 2010-2011 John Lindgren
  *
  * This file is part of Audacious.
  *
@@ -21,4 +21,9 @@
 
 #include <audacious/plugin.h>
 
+/* init.c */
 void audgui_init (AudAPITable * table);
+void audgui_cleanup (void);
+
+/* util.c */
+void audgui_pixbuf_uncache (void);

@@ -20,6 +20,11 @@
  */
 
 #include <audacious/misc.h>
+#include <audacious/playlist.h>
+#include <libaudcore/hook.h>
+
+#include "init.h"
+#include "libaudgui-gtk.h"
 
 static const char * const audgui_defaults[] = {
  "close_dialog_add", "FALSE",
@@ -31,8 +36,32 @@ static const char * const audgui_defaults[] = {
 
 AudAPITable * _aud_api_table = NULL;
 
+static void playlist_set_playing_cb (void * unused, void * unused2)
+{
+    audgui_pixbuf_uncache ();
+}
+
+static void playlist_position_cb (void * list, void * unused)
+{
+    if (GPOINTER_TO_INT (list) == aud_playlist_get_playing ())
+        audgui_pixbuf_uncache ();
+}
+
 void audgui_init (AudAPITable * table)
 {
     _aud_api_table = table;
     aud_config_set_defaults ("audgui", audgui_defaults);
+
+    hook_associate ("playlist set playing", playlist_set_playing_cb, NULL);
+    hook_associate ("playlist position", playlist_position_cb, NULL);
+}
+
+void audgui_cleanup (void)
+{
+    hook_dissociate ("playlist set playing", playlist_set_playing_cb);
+    hook_dissociate ("playlist position", playlist_position_cb);
+
+    audgui_pixbuf_uncache ();
+
+    _aud_api_table = NULL;
 }

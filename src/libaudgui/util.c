@@ -1,6 +1,6 @@
 /*
  * libaudgui/util.c
- * Copyright 2010 John Lindgren
+ * Copyright 2010-2011 John Lindgren
  *
  * This file is part of Audacious.
  *
@@ -33,8 +33,11 @@
 #include <libaudcore/hook.h>
 
 #include "config.h"
+#include "init.h"
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
+
+static GdkPixbuf * current_pixbuf;
 
 void audgui_hide_on_delete (GtkWidget * widget)
 {
@@ -199,43 +202,27 @@ FALLBACK:;
     return fallback;
 }
 
-static void pixbuf_clear_cb (void * unused, GdkPixbuf * * pixbuf)
+void audgui_pixbuf_uncache (void)
 {
-    if (* pixbuf)
+    if (current_pixbuf)
     {
-        AUDDBG ("Clearing cached pixbuf.\n");
-        g_object_unref ((GObject *) * pixbuf);
-        * pixbuf = NULL;
+        g_object_unref ((GObject *) current_pixbuf);
+        current_pixbuf = NULL;
     }
-}
-
-static void pixbuf_position_cb (void * list, GdkPixbuf * * pixbuf)
-{
-    if (GPOINTER_TO_INT (list) == aud_playlist_get_playing ())
-        pixbuf_clear_cb (NULL, pixbuf);
 }
 
 GdkPixbuf * audgui_pixbuf_for_current (void)
 {
-    static GdkPixbuf * pixbuf = NULL;
-    static boolean hooked = FALSE;
-
-    if (! hooked)
-    {
-        hook_associate ("playlist set playing", (HookFunction) pixbuf_clear_cb, & pixbuf);
-        hook_associate ("playlist position", (HookFunction) pixbuf_position_cb, & pixbuf);
-        hooked = TRUE;
-    }
-
-    if (! pixbuf)
+    if (! current_pixbuf)
     {
         int list = aud_playlist_get_playing ();
-        pixbuf = audgui_pixbuf_for_entry (list, aud_playlist_get_position (list));
+        current_pixbuf = audgui_pixbuf_for_entry (list, aud_playlist_get_position (list));
     }
 
-    if (pixbuf)
-        g_object_ref ((GObject *) pixbuf);
-    return pixbuf;
+    if (current_pixbuf)
+        g_object_ref ((GObject *) current_pixbuf);
+
+    return current_pixbuf;
 }
 
 void audgui_pixbuf_scale_within (GdkPixbuf * * pixbuf, int size)
