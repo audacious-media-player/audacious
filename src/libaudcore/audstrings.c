@@ -1,26 +1,21 @@
-/*  Audacious
- *  Copyright (C) 2005-2011  Audacious development team.
+/*
+ * audstrings.c
+ * Copyright 2009-2011 John Lindgren
+ * Copyright 2010 William Pitcock
  *
- *  BMP - Cross-platform multimedia player
- *  Copyright (C) 2003-2004  BMP development team.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
  *
- *  Based on XMMS:
- *  Copyright (C) 1998-2003  XMMS development team.
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions, and the following disclaimer.
  *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; under version 3 of the License.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions, and the following disclaimer in the documentation
+ *    provided with the distribution.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses>.
- *
- *  The Audacious team does not consider modular code linking to
- *  Audacious or using our public API to be a derived work.
+ * This software is provided "as is" and without any warranty, express or
+ * implied. In no event shall the authors be liable for any damages arising from
+ * the use of this software.
  */
 
 #include "audstrings.h"
@@ -63,13 +58,6 @@ void str_set_utf8_impl (char * (* stu_impl) (const char *),
     str_to_utf8_impl = stu_impl;
     str_to_utf8_full_impl = stuf_impl;
 }
-
-/**
- * Convert given string from nearly any encoding to UTF-8 encoding.
- *
- * @param str Local filename/path to convert.
- * @return String in UTF-8 encoding. Must be freed with g_free().
- */
 
 char * str_to_utf8 (const char * str)
 {
@@ -557,36 +545,4 @@ char * double_array_to_string (const double * array, int count)
 ERR:
     g_strfreev (split);
     return NULL;
-}
-
-/* deprecated */
-const char * filename_get_subtune (const char * filename, int * track)
-{
-    const char * sub;
-    uri_parse (filename, NULL, NULL, & sub, track);
-    return sub[0] ? sub : NULL;
-}
-
-/* deprecated */
-char * filename_split_subtune (const char * filename, int * track)
-{
-    const char * sub;
-    uri_parse (filename, NULL, NULL, & sub, track);
-    return g_strndup (filename, sub - filename);
-}
-
-/* deprecated */
-char * uri_get_extension (const char * uri)
-{
-    const char * ext, * sub;
-    uri_parse (uri, NULL, & ext, & sub, NULL);
-    return (sub - ext >= 1) ? g_ascii_strdown (ext + 1, sub - ext - 1) : NULL;
-}
-
-/* deprecated */
-void string_cut_extension (char * string)
-{
-    const char * ext;
-    uri_parse (string, NULL, & ext, NULL, NULL);
-    * (char *) ext = 0;
 }
