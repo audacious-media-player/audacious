@@ -2271,7 +2271,6 @@ void playlist_save_state (void)
      playlist_num ++)
     {
         Playlist * playlist = index_get (playlists, playlist_num);
-        int entries = index_count (playlist->entries);
 
         fprintf (handle, "playlist %d\n", playlist_num);
 
@@ -2280,13 +2279,6 @@ void playlist_save_state (void)
 
         fprintf (handle, "position %d\n", playlist->position ?
          playlist->position->number : -1);
-        fprintf (handle, "last-shuffled %d\n", playlist->last_shuffle_num);
-
-        for (int count = 0; count < entries; count ++)
-        {
-            Entry * entry = index_get (playlist->entries, count);
-            fprintf (handle, "S %d\n", entry->shuffle_num);
-        }
     }
 
     fclose (handle);
@@ -2361,7 +2353,7 @@ void playlist_load_state (void)
      playlist_num < index_count (playlists))
     {
         Playlist * playlist = index_get (playlists, playlist_num);
-        int entries = index_count (playlist->entries), position, count;
+        int entries = index_count (playlist->entries), position;
         char * s;
 
         parse_next (handle);
@@ -2378,16 +2370,6 @@ void playlist_load_state (void)
 
         if (position >= 0 && position < entries)
             playlist->position = index_get (playlist->entries, position);
-
-        if (parse_integer ("last-shuffled", & playlist->last_shuffle_num))
-            parse_next (handle);
-
-        for (count = 0; count < entries; count ++)
-        {
-            Entry * entry = index_get (playlist->entries, count);
-            if (parse_integer ("S", & entry->shuffle_num))
-                parse_next (handle);
-        }
     }
 
     fclose (handle);
