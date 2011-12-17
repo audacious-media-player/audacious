@@ -324,19 +324,19 @@ static void load_playlists_real (void)
     for (int i = 0; order[i]; i ++)
     {
         char * path = g_strdup_printf ("%s/%s.audpl", get_path (AUD_PATH_PLAYLISTS_DIR), order[i]);
-        
+
         if (! g_file_test (path, G_FILE_TEST_EXISTS))
         {
             g_free (path);
             path = g_strdup_printf ("%s/%s.xspf", get_path (AUD_PATH_PLAYLISTS_DIR), order[i]);
         }
-        
+
         char * uri = filename_to_uri (path);
 
         playlist_insert_with_id (count + i, atoi (order[i]));
         playlist_insert_playlist_raw (count + i, 0, uri);
         playlist_set_modified (count + i, FALSE);
-        
+
         if (g_str_has_suffix (path, ".xspf"))
             playlist_set_modified (count + i, TRUE);
 
@@ -478,5 +478,14 @@ void save_playlists (boolean exiting)
     {
         playlist_save_state ();
         state_changed = FALSE;
+    }
+
+    if (exiting && hooks_added)
+    {
+        hook_dissociate ("playlist update", update_cb);
+        hook_dissociate ("playlist activate", state_cb);
+        hook_dissociate ("playlist position", state_cb);
+
+        hooks_added = FALSE;
     }
 }
