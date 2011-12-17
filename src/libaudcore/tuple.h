@@ -172,27 +172,4 @@ int tuple_get_nth_subtune (Tuple * tuple, int n);
  * returned string is never NULL, though it may be the empty string. */
 char * tuple_format_title (Tuple * tuple, const char * format);
 
-/* ------
- * The following functions are deprecated, but will be kept around for a while
- * (at least for the 3.2 release).  Please note that the use of
- * tuple_get_string() is dangerous: the returned string points to internal
- * storage, and there is no guarantee of how long it will remain valid. */
-
-#ifdef __GNUC__
-#define DEPRECATED __attribute__ ((deprecated))
-#else
-#define DEPRECATED
-#endif
-
-void tuple_free (Tuple * tuple) DEPRECATED;
-
-boolean tuple_associate_string (Tuple * tuple, int nfield,
- const char * field, const char * str) DEPRECATED;
-boolean tuple_associate_string_rel (Tuple * tuple, int nfield,
- const char * field, char * str) DEPRECATED;
-boolean tuple_associate_int (Tuple * tuple, int nfield, const char * field, int x) DEPRECATED;
-void tuple_disassociate (Tuple * tuple, const int nfield, const char * field) DEPRECATED;
-
-const char * tuple_get_string (const Tuple * tuple, int nfield, const char * field) DEPRECATED;
-
 #endif /* LIBAUDCORE_TUPLE_H */
