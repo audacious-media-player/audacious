@@ -18,10 +18,15 @@
  *  The Audacious team does not consider modular code linking to
  *  Audacious or using our public API to be a derived work.
  */
-#include "vfs.h"
-#include <string.h>
-#include <stdlib.h>
+
+#include <glib.h>
 #include <glib/gprintf.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "vfs.h"
+
 /**
  * @file vfs_common.c
  * Common code for various VFS-stream related operations.

@@ -22,7 +22,7 @@
 
 #if ! GTK_CHECK_VERSION (2, 18, 0)
 
-static inline void gtk_widget_set_can_default (GtkWidget * w, boolean b)
+static inline void gtk_widget_set_can_default (GtkWidget * w, gboolean b)
 {
     if (b)
 	GTK_WIDGET_SET_FLAGS (w, GTK_CAN_DEFAULT);
@@ -30,7 +30,7 @@ static inline void gtk_widget_set_can_default (GtkWidget * w, boolean b)
 	GTK_WIDGET_UNSET_FLAGS (w, GTK_CAN_DEFAULT);
 }
 
-static inline void gtk_widget_set_can_focus (GtkWidget * w, boolean b)
+static inline void gtk_widget_set_can_focus (GtkWidget * w, gboolean b)
 {
     if (b)
 	GTK_WIDGET_SET_FLAGS (w, GTK_CAN_FOCUS);
