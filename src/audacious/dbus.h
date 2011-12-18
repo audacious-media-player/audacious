@@ -21,6 +21,8 @@
 #ifndef AUDACIOUS_DBUS_H
 #define AUDACIOUS_DBUS_H
 
+#include <dbus/dbus-glib.h>
+
 #define AUDACIOUS_DBUS_SERVICE      "org.atheme.audacious"
 #define AUDACIOUS_DBUS_PATH         "/org/atheme/audacious"
 #define AUDACIOUS_DBUS_INTERFACE    "org.atheme.audacious"
@@ -40,5 +42,8 @@
 #define CAN_PROVIDE_METADATA  = 1 << 6
 #define PROVIDES_TIMING       = 1 << 7
 
+void init_dbus (void);
+void cleanup_dbus (void);
+DBusGProxy * audacious_get_dbus_proxy (void);
 
 #endif /* AUDACIOUS_DBUS_H */

@@ -23,6 +23,7 @@
 #define AUDACIOUS_EQUALIZER_H
 
 void eq_init (void);
+void eq_cleanup (void);
 void eq_set_format (int new_channels, int new_rate);
 void eq_filter (float * data, int samples);
 

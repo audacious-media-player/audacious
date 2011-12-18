@@ -40,7 +40,7 @@
 
 #ifdef USE_DBUS
 #include "audctrl.h"
-#include "dbus-service.h"
+#include "dbus.h"
 #endif
 
 #ifdef USE_EGGSM
@@ -517,6 +517,10 @@ static void shut_down (void)
         set_bool (NULL, "stop_after_current_song", stop_after_song);
     }
 
+#ifdef USE_DBUS
+    cleanup_dbus ();
+#endif
+
     adder_cleanup ();
     playlist_end ();
 
@@ -526,6 +530,8 @@ static void shut_down (void)
     AUDDBG ("Saving configuration.\n");
     config_save ();
     config_cleanup ();
+
+    eq_cleanup ();
 
     strpool_shutdown ();
 
@@ -560,9 +566,10 @@ int main(int argc, char ** argv)
 
     AUDDBG ("Startup complete.\n");
     g_timeout_add_seconds (AUTOSAVE_INTERVAL, (GSourceFunc) do_autosave, NULL);
-    hook_associate ("quit", (HookFunction) gtk_main_quit, NULL);
 
+    hook_associate ("quit", (HookFunction) gtk_main_quit, NULL);
     gtk_main ();
+    hook_dissociate ("quit", (HookFunction) gtk_main_quit);
 
     shut_down ();
     release_lock ();

@@ -161,6 +161,13 @@ void eq_init (void)
     hook_associate ("set equalizer_bands", eq_update, NULL);
 }
 
+void eq_cleanup (void)
+{
+    hook_dissociate ("set equalizer_active", eq_update);
+    hook_dissociate ("set equalizer_preamp", eq_update);
+    hook_dissociate ("set equalizer_bands", eq_update);
+}
+
 void eq_set_bands (const double * values)
 {
     char * string = double_array_to_string (values, EQ_BANDS);

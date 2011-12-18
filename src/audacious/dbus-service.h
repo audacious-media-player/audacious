@@ -36,10 +36,6 @@ typedef struct {
     GObjectClass parent_class;
 } RemoteObjectClass, MprisRootClass, MprisPlayerClass, MprisTrackListClass;
 
-void init_dbus();
-void free_dbus();
-DBusGProxy *audacious_get_dbus_proxy();
-
 /* MPRIS API */
 // Capabilities
 enum {

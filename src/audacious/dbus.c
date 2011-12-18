@@ -92,6 +92,7 @@ static unsigned int signals[LAST_SIG] = { 0 };
 static unsigned int tracklist_signals[LAST_TRACKLIST_SIG] = { 0 };
 
 MprisPlayer * mpris = NULL;
+MprisTrackList * mpris_tracklist = NULL;
 
 G_DEFINE_TYPE (RemoteObject, audacious_rc, G_TYPE_OBJECT)
 G_DEFINE_TYPE (MprisRoot, mpris_root, G_TYPE_OBJECT)
@@ -213,8 +214,6 @@ void mpris_tracklist_init(MprisTrackList * object)
         /* XXX / FIXME: Why does this happen? -- ccr */
         AUDDBG ("object->proxy == NULL, not adding some signals.\n");
     }
-
-    hook_associate("playlist update", (HookFunction) mpris_playlist_update_hook, object);
 }
 
 void init_dbus()
@@ -235,10 +234,18 @@ void init_dbus()
     g_object_new(audacious_rc_get_type(), NULL);
     g_object_new(mpris_root_get_type(), NULL);
     mpris = g_object_new(mpris_player_get_type(), NULL);
-    g_object_new(mpris_tracklist_get_type(), NULL);
+    mpris_tracklist = g_object_new(mpris_tracklist_get_type(), NULL);
 
     local_conn = dbus_g_connection_get_connection(dbus_conn);
     dbus_connection_set_exit_on_disconnect(local_conn, FALSE);
+
+    hook_associate ("playlist update",
+     (HookFunction) mpris_playlist_update_hook, mpris_tracklist);
+}
+
+void cleanup_dbus (void)
+{
+    hook_dissociate ("playlist update", (HookFunction) mpris_playlist_update_hook);
 }
 
 static GValue *tuple_value_to_gvalue(const Tuple * tuple, const char * key)
