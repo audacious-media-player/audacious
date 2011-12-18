@@ -29,21 +29,8 @@
 boolean interface_load (PluginHandle * plugin);
 void interface_unload (void);
 
-/* These functions have to be called from main thread
-   Use event_queue if you need to call those from other threads */
-
-void interface_show (boolean show);
-boolean interface_is_shown (void);
-boolean interface_is_focused (void);
-
-void interface_show_error (const char * markup);
-void interface_show_filebrowser (boolean play_button);
-void interface_show_jump_to_track (void);
-
 void interface_add_plugin_widget (PluginHandle * plugin, GtkWidget * widget);
 void interface_remove_plugin_widget (PluginHandle * plugin, GtkWidget * widget);
-
-void register_interface_hooks (void);
 
 PluginHandle * iface_plugin_probe (void);
 PluginHandle * iface_plugin_get_current (void);

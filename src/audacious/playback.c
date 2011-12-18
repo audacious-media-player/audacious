@@ -305,7 +305,8 @@ static void * playback_thread (void * unused)
     {
         char * error = g_strdup_printf (_("No decoder found for %s."),
          current_filename);
-        event_queue_full (0, "interface show error", error, g_free);
+        interface_show_error (error);
+        g_free (error);
         playback_error = TRUE;
         goto DONE;
     }

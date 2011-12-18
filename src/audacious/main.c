@@ -471,7 +471,6 @@ static void init_two (int * p_argc, char * * * p_argv)
     vfs_set_verbose (verbose);
 
     eq_init ();
-    register_interface_hooks ();
 
 #ifdef HAVE_SIGWAIT
     signals_init ();

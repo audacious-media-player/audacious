@@ -1622,9 +1622,8 @@ static boolean entries_are_scanned (Playlist * playlist, boolean selected)
 
         if (! entry->tuple)
         {
-            event_queue ("interface show error", _("The playlist cannot be "
-             "sorted because metadata scanning is still in progress (or has "
-             "been disabled)."));
+            interface_show_error (_("The playlist cannot be sorted because "
+             "metadata scanning is still in progress (or has been disabled)."));
             return FALSE;
         }
     }

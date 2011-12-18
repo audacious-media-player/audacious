@@ -577,7 +577,7 @@ void audgui_infowin_show (int playlist, int entry)
     {
         char * message = g_strdup_printf (_("No info available for %s.\n"),
          filename);
-        hook_call ("interface show error", message);
+        aud_interface_show_error (message);
         g_free (message);
         goto FREE;
     }

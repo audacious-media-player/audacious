@@ -1116,18 +1116,16 @@ boolean audacious_rc_show_about_box(RemoteObject * obj, boolean show, GError ** 
 boolean audacious_rc_show_jtf_box(RemoteObject * obj, boolean show, GError ** error)
 {
     if (show)
-        event_queue("interface show jump to track", NULL);
-    else
-        event_queue("interface hide jump to track", NULL);
+        interface_show_jump_to_track ();
+
     return TRUE;
 }
 
 boolean audacious_rc_show_filebrowser(RemoteObject * obj, boolean show, GError ** error)
 {
     if (show)
-        event_queue("filebrowser show", GINT_TO_POINTER(FALSE));
-    else
-        event_queue("filebrowser hide", NULL);
+        interface_show_filebrowser (FALSE);
+
     return TRUE;
 }
 

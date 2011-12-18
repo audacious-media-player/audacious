@@ -21,6 +21,7 @@
  */
 
 #include <gtk/gtk.h>
+#include <pthread.h>
 
 #include <libaudcore/hook.h>
 
@@ -28,11 +29,16 @@
 #include "general.h"
 #include "interface.h"
 #include "main.h"
+#include "misc.h"
 #include "plugin.h"
 #include "plugins.h"
 #include "visualization.h"
 
 static IfacePlugin *current_interface = NULL;
+
+static pthread_mutex_t error_mutex = PTHREAD_MUTEX_INITIALIZER;
+static GQueue error_queue = G_QUEUE_INIT;
+static int error_source;
 
 boolean interface_load (PluginHandle * plugin)
 {
@@ -82,18 +88,41 @@ boolean interface_is_focused (void)
     return TRUE;
 }
 
-void interface_show_error (const char * markup)
+static boolean error_idle_func (void * unused)
 {
-    if (headless)
+    pthread_mutex_lock (& error_mutex);
+
+    char * message;
+    while ((message = g_queue_pop_head (& error_queue)))
     {
-        fprintf (stderr, "ERROR: %s\n", markup);
-        return;
+        pthread_mutex_unlock (& error_mutex);
+
+        if (current_interface && PLUGIN_HAS_FUNC (current_interface, show_error))
+            current_interface->show_error (message);
+        else
+            fprintf (stderr, "ERROR: %s\n", message);
+
+        g_free (message);
+
+        pthread_mutex_lock (& error_mutex);
     }
 
-    g_return_if_fail (current_interface);
+    error_source = 0;
 
-    if (PLUGIN_HAS_FUNC (current_interface, show_error))
-        current_interface->show_error (markup);
+    pthread_mutex_unlock (& error_mutex);
+    return FALSE;
+}
+
+void interface_show_error (const char * message)
+{
+    pthread_mutex_lock (& error_mutex);
+
+    g_queue_push_tail (& error_queue, g_strdup (message));
+
+    if (! error_source)
+        error_source = g_idle_add (error_idle_func, NULL);
+
+    pthread_mutex_unlock (& error_mutex);
 }
 
 /*
@@ -169,63 +198,6 @@ void interface_uninstall_toolbar (void * widget)
         current_interface->uninstall_toolbar (widget);
     else
         g_object_unref (widget);
-}
-
-typedef enum {
-    HOOK_SHOW,
-    HOOK_SHOW_TOGGLE,
-    HOOK_SHOW_ERROR,
-    HOOK_SHOW_JUMPTOTRACK,
-    HOOK_SHOW_FILEBROWSER,
-} IfaceHookID;
-
-void interface_hook_handler (void * hook_data, void * user_data)
-{
-    switch (GPOINTER_TO_INT (user_data))
-    {
-    case HOOK_SHOW:
-        interface_show (GPOINTER_TO_INT (hook_data));
-        break;
-    case HOOK_SHOW_TOGGLE:
-        /* interface_is_focused() is unreliable, at least when global hotkeys
-         * are involved; see http://jira.atheme.org/browse/AUD-369. */
-        /* interface_show (! (interface_is_shown () && interface_is_focused ())); */
-        interface_show (! interface_is_shown ());
-        break;
-    case HOOK_SHOW_ERROR:
-        interface_show_error (hook_data);
-        break;
-    case HOOK_SHOW_FILEBROWSER:
-        interface_show_filebrowser (GPOINTER_TO_INT (hook_data));
-        break;
-    case HOOK_SHOW_JUMPTOTRACK:
-        interface_show_jump_to_track ();
-        break;
-    }
-}
-
-typedef struct {
-    const char *name;
-    IfaceHookID id;
-} IfaceHooks;
-
-static IfaceHooks hooks[] = {
-    {"interface show", HOOK_SHOW},
-    {"interface toggle visibility", HOOK_SHOW_TOGGLE},
-    {"interface show error", HOOK_SHOW_ERROR},
-    {"interface show filebrowser", HOOK_SHOW_FILEBROWSER},
-    {"interface show jump to track", HOOK_SHOW_JUMPTOTRACK},
-};
-
-void
-register_interface_hooks(void)
-{
-    int i;
-    for (i=0; i<G_N_ELEMENTS(hooks); i++)
-        hook_associate(hooks[i].name,
-                       (HookFunction) interface_hook_handler,
-                       GINT_TO_POINTER(hooks[i].id));
-
 }
 
 static boolean probe_cb (PluginHandle * p, PluginHandle * * pp)
