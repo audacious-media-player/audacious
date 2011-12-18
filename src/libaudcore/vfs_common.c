@@ -1,4 +1,9 @@
-/*  This program is free software; you can redistribute it and/or modify
+/*
+ *  vfs_common.c
+ *  Copyright 2006-2010 Tony Vroon, William Pitcock, Maciej Grela,
+ *                      Matti Hämäläinen, and John Lindgren
+ *
+ *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; under version 3 of the License.
  *

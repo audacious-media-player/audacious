@@ -1,6 +1,7 @@
 /*
- * Audacious
- * Copyright (c) 2006-2010 Audacious team
+ * vfs.h
+ * Copyright 2006-2011 William Pitcock, Daniel Barkalow, Ralf Ertzinger,
+ *                     Yoshiki Yazawa, Matti Hämäläinen, and John Lindgren
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
