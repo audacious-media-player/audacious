@@ -3,6 +3,20 @@ Audacious
 
 This file is quite out of date and in the process of being updated.
 
+Audacious core shared library (src/libaudcore):
+ * Copyright (C) 2006-2011:
+  Daniel Barkalow
+  Christian Birchinger
+  Ralf Ertzinger
+  Maciej Grela
+  Matti Hämäläinen
+  John Lindgren
+  Giacomo Lozito
+  William Pitcock
+  Tony Vroon
+  Yoshiki Yazawa
+  Eugene Zagidullin
+
 Session management support (src/libeggsmclient):
  * Copyright (C) 1999-2000 Red Hat, Inc.
  * Copyright (C) 2001 George Lebl
