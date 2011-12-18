@@ -153,7 +153,7 @@ static void update_cb (void * hook_data, void * user_data)
         return;
 
     if (update_from_playlist ())
-        hook_call ("title change", NULL);
+        event_queue ("title change", NULL);
 }
 
 int playback_get_time (void)
@@ -225,6 +225,7 @@ static void playback_cleanup (void)
 
     event_queue_cancel ("playback ready", NULL);
     event_queue_cancel ("info change", NULL);
+    event_queue_cancel ("title change", NULL);
 
     if (end_source)
     {
