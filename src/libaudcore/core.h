@@ -20,9 +20,9 @@
 #ifndef LIBAUDCORE_CORE_H
 #define LIBAUDCORE_CORE_H
 
-/* "boolean" means "int" for compatibility with GLib */
-#undef boolean
-#define boolean int
+/* "bool_t" means "int" for compatibility with GLib */
+#undef bool_t
+#define bool_t int
 
 /* Simple sanity check to catch (1) strings that are still in use after their
  * reference count has dropped to zero and (2) strings that should have been

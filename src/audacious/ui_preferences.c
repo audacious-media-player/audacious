@@ -315,12 +315,12 @@ static void on_titlestring_cbox_changed (GtkComboBox * cbox, GtkEntry * entry)
         gtk_entry_set_text (entry, titlestring_presets[preset]);
 }
 
-static void widget_set_bool (PreferencesWidget * widget, boolean value)
+static void widget_set_bool (PreferencesWidget * widget, bool_t value)
 {
     g_return_if_fail (widget->cfg_type == VALUE_BOOLEAN);
 
     if (widget->cfg)
-        * (boolean *) widget->cfg = value;
+        * (bool_t *) widget->cfg = value;
     else if (widget->cname)
         set_bool (widget->csect, widget->cname, value);
 
@@ -328,12 +328,12 @@ static void widget_set_bool (PreferencesWidget * widget, boolean value)
         widget->callback ();
 }
 
-static boolean widget_get_bool (PreferencesWidget * widget)
+static bool_t widget_get_bool (PreferencesWidget * widget)
 {
     g_return_val_if_fail (widget->cfg_type == VALUE_BOOLEAN, FALSE);
 
     if (widget->cfg)
-        return * (boolean *) widget->cfg;
+        return * (bool_t *) widget->cfg;
     else if (widget->cname)
         return get_bool (widget->csect, widget->cname);
     else
@@ -608,7 +608,7 @@ static void fill_category_list (GtkTreeView * treeview, GtkNotebook * notebook)
 
 static void on_show_filepopup_toggled (GtkToggleButton * button)
 {
-    boolean active = gtk_toggle_button_get_active (button);
+    bool_t active = gtk_toggle_button_get_active (button);
     set_bool (NULL, "show_filepopup_for_tuple", active);
     gtk_widget_set_sensitive (filepopup_settings_button, active);
 }
@@ -668,7 +668,7 @@ on_filepopup_cancel_clicked(GtkButton *button, gpointer data)
 
 static void on_toggle_button_toggled (GtkToggleButton * button, PreferencesWidget * widget)
 {
-    boolean active = gtk_toggle_button_get_active (button);
+    bool_t active = gtk_toggle_button_get_active (button);
     widget_set_bool (widget, active);
 
     GtkWidget * child = g_object_get_data ((GObject *) button, "child");
@@ -1477,7 +1477,7 @@ create_playlist_category(void)
 
 static GtkWidget * output_config_button, * output_about_button;
 
-static boolean output_enum_cb (PluginHandle * plugin, GList * * list)
+static bool_t output_enum_cb (PluginHandle * plugin, GList * * list)
 {
     * list = g_list_prepend (* list, plugin);
     return TRUE;
@@ -1608,7 +1608,7 @@ static void create_plugin_category (void)
          (types[i]), gtk_label_new (_(names[i])));
 }
 
-static boolean
+static bool_t
 prefswin_destroy(GtkWidget *window, GdkEvent *event, gpointer data)
 {
     prefswin = NULL;
@@ -1834,7 +1834,7 @@ prefswin_page_destroy(GtkWidget *container)
     GtkTreeModel *model;
     GtkTreeIter iter;
     GtkTreeView *treeview = GTK_TREE_VIEW(category_treeview);
-    boolean ret;
+    bool_t ret;
     int id;
     int index = -1;
 

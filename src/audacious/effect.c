@@ -32,7 +32,7 @@ typedef struct {
     PluginHandle * plugin;
     EffectPlugin * header;
     int channels_returned, rate_returned;
-    boolean remove_flag;
+    bool_t remove_flag;
 } RunningEffect;
 
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -43,7 +43,7 @@ typedef struct {
     int * channels, * rate;
 } EffectStartState;
 
-static boolean effect_start_cb (PluginHandle * plugin, EffectStartState * state)
+static bool_t effect_start_cb (PluginHandle * plugin, EffectStartState * state)
 {
     AUDDBG ("Starting %s at %d channels, %d Hz.\n", plugin_get_name (plugin),
      * state->channels, * state->rate);
@@ -219,7 +219,7 @@ static void effect_remove (PluginHandle * plugin)
     ((RunningEffect *) node->data)->remove_flag = TRUE;
 }
 
-static void effect_enable (PluginHandle * plugin, EffectPlugin * ep, boolean
+static void effect_enable (PluginHandle * plugin, EffectPlugin * ep, bool_t
  enable)
 {
     if (ep->preserves_format)
@@ -237,13 +237,13 @@ static void effect_enable (PluginHandle * plugin, EffectPlugin * ep, boolean
     {
         AUDDBG ("Reset to add/remove %s.\n", plugin_get_name (plugin));
         int time = playback_get_time ();
-        boolean paused = playback_get_paused ();
+        bool_t paused = playback_get_paused ();
         playback_stop ();
         playback_play (time, paused);
     }
 }
 
-boolean effect_plugin_start (PluginHandle * plugin)
+bool_t effect_plugin_start (PluginHandle * plugin)
 {
     if (playback_get_playing ())
     {

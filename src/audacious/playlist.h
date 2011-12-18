@@ -59,7 +59,7 @@ enum {
  PLAYLIST_SORT_FORMATTED_TITLE,
  PLAYLIST_SORT_SCHEMES};
 
-typedef boolean (* PlaylistFilterFunc) (const char * filename, void * user);
+typedef bool_t (* PlaylistFilterFunc) (const char * filename, void * user);
 typedef int (* PlaylistStringCompareFunc) (const char * a, const char * b);
 typedef int (* PlaylistTupleCompareFunc) (const Tuple * a, const Tuple * b);
 
@@ -73,9 +73,9 @@ typedef int (* PlaylistTupleCompareFunc) (const Tuple * a, const Tuple * b);
 #include "api-local-end.h"
 
 /* playlist-files.c */
-boolean playlist_load (const char * filename, char * * title,
+bool_t playlist_load (const char * filename, char * * title,
  struct index * * filenames, struct index * * tuples);
-boolean playlist_insert_playlist_raw (int list, int at,
+bool_t playlist_insert_playlist_raw (int list, int at,
  const char * filename);
 
 /* playlist-new.c */
@@ -83,8 +83,8 @@ void playlist_init (void);
 void playlist_end (void);
 
 void playlist_insert_with_id (int at, int id);
-void playlist_set_modified (int playlist, boolean modified);
-boolean playlist_get_modified (int playlist);
+void playlist_set_modified (int playlist, bool_t modified);
+bool_t playlist_get_modified (int playlist);
 
 void playlist_load_state (void);
 void playlist_save_state (void);
@@ -96,8 +96,8 @@ void playlist_trigger_scan (void);
 void playlist_entry_insert_batch_raw (int playlist, int at,
  struct index * filenames, struct index * tuples, struct index * decoders);
 
-boolean playlist_prev_song (int playlist);
-boolean playlist_next_song (int playlist, boolean repeat);
+bool_t playlist_prev_song (int playlist);
+bool_t playlist_next_song (int playlist, bool_t repeat);
 
 int playback_entry_get_position (void);
 PluginHandle * playback_entry_get_decoder (void);
@@ -112,7 +112,7 @@ int playback_entry_get_end_time (void);
 
 /* playlist-utils.c */
 void load_playlists (void);
-void save_playlists (boolean exiting);
+void save_playlists (bool_t exiting);
 
 #else
 

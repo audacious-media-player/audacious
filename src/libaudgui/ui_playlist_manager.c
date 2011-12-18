@@ -44,7 +44,7 @@ static void save_position (GtkWidget * window)
     aud_set_int ("audgui", "playlist_manager_h", h);
 }
 
-static boolean hide_cb (GtkWidget * window)
+static bool_t hide_cb (GtkWidget * window)
 {
     save_position (window);
     gtk_widget_hide (window);
@@ -88,18 +88,18 @@ static void get_value (void * user, int row, int column, GValue * value)
     }
 }
 
-static boolean get_selected (void * user, int row)
+static bool_t get_selected (void * user, int row)
 {
     return (row == aud_playlist_get_active ());
 }
 
-static void set_selected (void * user, int row, boolean selected)
+static void set_selected (void * user, int row, bool_t selected)
 {
     if (selected)
         aud_playlist_set_active (row);
 }
 
-static void select_all (void * user, boolean selected)
+static void select_all (void * user, bool_t selected)
 {
 }
 
@@ -131,7 +131,7 @@ static const AudguiListCallbacks callbacks = {
  .get_data = NULL,
  .receive_data = NULL};
 
-static boolean search_cb (GtkTreeModel * model, int column, const char * key,
+static bool_t search_cb (GtkTreeModel * model, int column, const char * key,
  GtkTreeIter * iter, void * user)
 {
     GtkTreePath * path = gtk_tree_model_get_path (model, iter);
@@ -148,7 +148,7 @@ static boolean search_cb (GtkTreeModel * model, int column, const char * key,
     char * * keys = g_strsplit (temp, " ", 0);
     g_free (temp);
 
-    boolean match = FALSE;
+    bool_t match = FALSE;
 
     for (int i = 0; keys[i]; i ++)
     {
@@ -170,8 +170,8 @@ static boolean search_cb (GtkTreeModel * model, int column, const char * key,
     return ! match; /* TRUE == not matched, FALSE == matched */
 }
 
-static boolean position_changed = FALSE;
-static boolean playlist_activated = FALSE;
+static bool_t position_changed = FALSE;
+static bool_t playlist_activated = FALSE;
 
 static void update_hook (void * data, void * list)
 {

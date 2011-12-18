@@ -437,7 +437,7 @@ DONE:
     g_hash_table_destroy (saved);
 }
 
-static boolean hooks_added, state_changed;
+static bool_t hooks_added, state_changed;
 
 static void update_cb (void * data, void * user)
 {
@@ -469,7 +469,7 @@ void load_playlists (void)
     }
 }
 
-void save_playlists (boolean exiting)
+void save_playlists (bool_t exiting)
 {
     save_playlists_real ();
 

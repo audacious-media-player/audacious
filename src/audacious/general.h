@@ -27,7 +27,7 @@
 void general_init (void);
 void general_cleanup (void);
 
-boolean general_plugin_start (PluginHandle * plugin);
+bool_t general_plugin_start (PluginHandle * plugin);
 void general_plugin_stop (PluginHandle * plugin);
 
 PluginHandle * general_plugin_by_widget (/* GtkWidget * */ void * widget);

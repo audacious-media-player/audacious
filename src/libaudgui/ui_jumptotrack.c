@@ -42,7 +42,7 @@ static void watchdog (void * hook_data, void * user_data);
 static GtkWidget *jump_to_track_win = NULL;
 static JumpToTrackCache* cache = NULL;
 static GtkWidget * treeview, * filter_entry, * queue_button;
-static boolean watching = FALSE;
+static bool_t watching = FALSE;
 
 void
 audgui_jump_to_track_hide(void)
@@ -133,7 +133,7 @@ static void selection_changed (void)
     update_queue_button (get_selected_entry ());
 }
 
-static boolean keypress_cb (GtkWidget * widget, GdkEventKey * event)
+static bool_t keypress_cb (GtkWidget * widget, GdkEventKey * event)
 {
     if (event->keyval == GDK_Escape)
     {
@@ -224,7 +224,7 @@ static void toggle_button_cb (GtkToggleButton * toggle, const char * setting)
     aud_set_bool ("audgui", setting, gtk_toggle_button_get_active (toggle));
 }
 
-static boolean delete_cb (void)
+static bool_t delete_cb (void)
 {
     audgui_jump_to_track_hide ();
     return TRUE;
@@ -345,7 +345,7 @@ static void create_window (void)
 
 void audgui_jump_to_track (void)
 {
-    boolean create = (! jump_to_track_win);
+    bool_t create = (! jump_to_track_win);
     if (create)
         create_window ();
 

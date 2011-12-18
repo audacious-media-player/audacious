@@ -36,7 +36,7 @@
 #include "ui_preferences.h"
 #include "visualization.h"
 
-static boolean dummy_plugin_start (PluginHandle * p)
+static bool_t dummy_plugin_start (PluginHandle * p)
 {
     return TRUE;
 }
@@ -47,18 +47,18 @@ static void dummy_plugin_stop (PluginHandle * p)
 
 static const struct {
     const char * name;
-    boolean is_managed, is_single;
+    bool_t is_managed, is_single;
 
     union {
         struct {
-            boolean (* start) (PluginHandle * plugin);
+            bool_t (* start) (PluginHandle * plugin);
             void (* stop) (PluginHandle * plugin);
         } m;
 
         struct {
             PluginHandle * (* probe) (void);
             PluginHandle * (* get_current) (void);
-            boolean (* set_current) (PluginHandle * plugin);
+            bool_t (* set_current) (PluginHandle * plugin);
         } s;
     } u;
 } table[PLUGIN_TYPES] = {
@@ -79,7 +79,7 @@ static const struct {
  [PLUGIN_TYPE_IFACE] = {"interface", TRUE, TRUE, .u.s = {iface_plugin_probe,
   iface_plugin_get_current, iface_plugin_set_current}}};
 
-static boolean find_enabled_cb (PluginHandle * p, PluginHandle * * pp)
+static bool_t find_enabled_cb (PluginHandle * p, PluginHandle * * pp)
 {
     * pp = p;
     return FALSE;
@@ -127,7 +127,7 @@ static void start_single (int type)
     }
 }
 
-static boolean start_multi_cb (PluginHandle * p, void * type)
+static bool_t start_multi_cb (PluginHandle * p, void * type)
 {
     AUDDBG ("Starting %s.\n", plugin_get_name (p));
 
@@ -179,7 +179,7 @@ void start_plugins_two (void)
         start_plugins (i);
 }
 
-static boolean stop_multi_cb (PluginHandle * p, void * type)
+static bool_t stop_multi_cb (PluginHandle * p, void * type)
 {
     AUDDBG ("Shutting down %s.\n", plugin_get_name (p));
     table[GPOINTER_TO_INT (type)].u.m.stop (p);
@@ -225,7 +225,7 @@ PluginHandle * plugin_get_current (int type)
     return table[type].u.s.get_current ();
 }
 
-static boolean enable_single (int type, PluginHandle * p)
+static bool_t enable_single (int type, PluginHandle * p)
 {
     PluginHandle * old = table[type].u.s.get_current ();
 
@@ -250,7 +250,7 @@ static boolean enable_single (int type, PluginHandle * p)
     exit (EXIT_FAILURE);
 }
 
-static boolean enable_multi (int type, PluginHandle * p, boolean enable)
+static bool_t enable_multi (int type, PluginHandle * p, bool_t enable)
 {
     AUDDBG ("%sabling %s.\n", enable ? "En" : "Dis", plugin_get_name (p));
     plugin_set_enabled (p, enable);
@@ -270,7 +270,7 @@ static boolean enable_multi (int type, PluginHandle * p, boolean enable)
     return TRUE;
 }
 
-boolean plugin_enable (PluginHandle * plugin, boolean enable)
+bool_t plugin_enable (PluginHandle * plugin, bool_t enable)
 {
     if (! enable == ! plugin_get_enabled (plugin))
     {

@@ -68,7 +68,7 @@ enum
 
 static char * current_file = NULL;
 static PluginHandle * current_decoder = NULL;
-static boolean can_write = FALSE, something_changed = FALSE;
+static bool_t can_write = FALSE, something_changed = FALSE;
 
 /* This is by no means intended to be a complete list.  If it is not short, it
  * is useless: scrolling through ten pages of dropdown list is more work than
@@ -116,7 +116,7 @@ static const char * genre_table[] = {
  N_("Trip-hop")};
 
 static void set_entry_str_from_field (GtkWidget * widget, const Tuple * tuple,
- int fieldn, boolean editable)
+ int fieldn, bool_t editable)
 {
     char * text = tuple_get_str (tuple, fieldn, NULL);
 
@@ -127,7 +127,7 @@ static void set_entry_str_from_field (GtkWidget * widget, const Tuple * tuple,
 }
 
 static void set_entry_int_from_field (GtkWidget * widget, const Tuple * tuple,
- int fieldn, boolean editable)
+ int fieldn, bool_t editable)
 {
     char scratch[32];
 
@@ -230,7 +230,7 @@ static void entry_changed (GtkEditable * editable, void * unused)
     }
 }
 
-static boolean ministatus_timeout_proc (void * data)
+static bool_t ministatus_timeout_proc (void * data)
 {
     GtkLabel * status = data;
 
@@ -277,7 +277,7 @@ static void infowin_update_tuple (void * unused)
     tuple_unref (tuple);
 }
 
-boolean genre_fill (GtkWidget * combo)
+bool_t genre_fill (GtkWidget * combo)
 {
     GList * list = NULL;
     GList * node;
@@ -514,7 +514,7 @@ void create_infowin (void)
 }
 
 static void infowin_show (int list, int entry, const char * filename,
- const Tuple * tuple, PluginHandle * decoder, boolean updating_enabled)
+ const Tuple * tuple, PluginHandle * decoder, bool_t updating_enabled)
 {
     char * tmp;
 

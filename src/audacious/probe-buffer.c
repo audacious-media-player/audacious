@@ -116,7 +116,7 @@ static int64_t probe_buffer_ftell (VFSFile * file)
     return ((ProbeBuffer *) vfs_get_handle (file))->at;
 }
 
-static boolean probe_buffer_feof (VFSFile * file)
+static bool_t probe_buffer_feof (VFSFile * file)
 {
     ProbeBuffer * p = vfs_get_handle (file);
     return (p->at < p->filled) ? FALSE : vfs_feof (p->file);

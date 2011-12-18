@@ -34,7 +34,7 @@ typedef struct {
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 static GList * events;
 
-static boolean event_execute (Event * event)
+static bool_t event_execute (Event * event)
 {
     pthread_mutex_lock (& mutex);
 

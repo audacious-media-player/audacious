@@ -41,7 +41,7 @@ enum {
 };
 
 static GtkWidget *
-generate_credit_list(const char * text[], boolean sec_space)
+generate_credit_list(const char * text[], bool_t sec_space)
 {
     GtkWidget *scrollwin;
     GtkWidget *treeview;

@@ -29,7 +29,7 @@
 #define MAX_ENTRIES 30
 
 static GQueue history = G_QUEUE_INIT;
-static boolean loaded, modified;
+static bool_t loaded, modified;
 
 static void history_save (void)
 {

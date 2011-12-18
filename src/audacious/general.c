@@ -93,7 +93,7 @@ static void general_unload (PluginHandle * plugin)
     g_slice_free (LoadedGeneral, general);
 }
 
-static boolean general_init_cb (PluginHandle * plugin)
+static bool_t general_init_cb (PluginHandle * plugin)
 {
     general_load (plugin);
     return TRUE;
@@ -121,7 +121,7 @@ void general_cleanup (void)
     g_list_foreach (loaded_general_plugins, (GFunc) general_cleanup_cb, NULL);
 }
 
-boolean general_plugin_start (PluginHandle * plugin)
+bool_t general_plugin_start (PluginHandle * plugin)
 {
     GeneralPlugin * gp = plugin_get_header (plugin);
     g_return_val_if_fail (gp != NULL, FALSE);

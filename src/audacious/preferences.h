@@ -57,7 +57,7 @@ struct _PreferencesWidget {
     gpointer cfg;            /* connected config value */
     void (*callback) (void); /* this func will be called after value change, can be NULL */
     char *tooltip;           /* widget tooltip, can be NULL */
-    boolean child;
+    bool_t child;
     ValueType cfg_type;      /* connected value type */
     const char * csect;     /* config file section */
     const char * cname;     /* config file key name */
@@ -75,7 +75,7 @@ struct _PreferencesWidget {
 
         struct {
             char *stock_id;
-            boolean single_line; /* FALSE to enable line wrap */
+            bool_t single_line; /* FALSE to enable line wrap */
         } label;
 
         struct {
@@ -83,21 +83,21 @@ struct _PreferencesWidget {
         } font_btn;
 
         struct {
-            boolean password;
+            bool_t password;
         } entry;
 
         struct {
             ComboBoxElements *elements;
             int n_elements;
-            boolean enabled;
+            bool_t enabled;
         } combo;
 
         struct {
             struct _PreferencesWidget *elem;
             int n_elem;
 
-            boolean horizontal;  /* FALSE gives vertical, TRUE gives horizontal aligment of child widgets */
-            boolean frame;       /* whether to draw frame around box */
+            bool_t horizontal;  /* FALSE gives vertical, TRUE gives horizontal aligment of child widgets */
+            bool_t frame;       /* whether to draw frame around box */
         } box;
 
         struct {
@@ -106,7 +106,7 @@ struct _PreferencesWidget {
         } notebook;
 
         struct {
-            boolean horizontal; /* FALSE gives vertical, TRUE gives horizontal separator */
+            bool_t horizontal; /* FALSE gives vertical, TRUE gives horizontal separator */
         } separator;
 
         /* for WIDGET_CUSTOM --nenolod */

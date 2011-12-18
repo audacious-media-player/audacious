@@ -22,7 +22,7 @@
 
 #include <libaudcore/vfs.h>
 
-typedef boolean (*VFSConsumer)(void * buf, int64_t size, void * userdata);
+typedef bool_t (*VFSConsumer)(void * buf, int64_t size, void * userdata);
 
 void vfs_async_file_get_contents(const char *filename, VFSConsumer cons_f, void * userdata);
 

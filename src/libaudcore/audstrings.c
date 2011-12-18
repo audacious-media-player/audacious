@@ -33,12 +33,12 @@
 #define IS_LEGAL(c) (((c) >= 'A' && (c) <= 'Z') || ((c) >= 'a' && (c) <= 'z') \
                   || ((c) >= '0' && (c) <= '9') || (strchr ("-_.~/", (c))))
 
-boolean str_has_prefix_nocase (const char * str, const char * prefix)
+bool_t str_has_prefix_nocase (const char * str, const char * prefix)
 {
     return ! g_ascii_strncasecmp (str, prefix, strlen (prefix));
 }
 
-boolean str_has_suffix_nocase (const char * str, const char * suffix)
+bool_t str_has_suffix_nocase (const char * str, const char * suffix)
 {
     int len1 = strlen (str);
     int len2 = strlen (suffix);
@@ -391,9 +391,9 @@ str_replace_fragment(char *s, int size, const char *old, const char *new)
  * have an accuracy of 6 decimal places.
  */
 
-boolean string_to_int (const char * string, int * addr)
+bool_t string_to_int (const char * string, int * addr)
 {
-    boolean neg = (string[0] == '-');
+    bool_t neg = (string[0] == '-');
     if (neg)
         string ++;
 
@@ -418,9 +418,9 @@ ERR:
     return FALSE;
 }
 
-boolean string_to_double (const char * string, double * addr)
+bool_t string_to_double (const char * string, double * addr)
 {
-    boolean neg = (string[0] == '-');
+    bool_t neg = (string[0] == '-');
     if (neg)
         string ++;
 
@@ -482,7 +482,7 @@ char * double_to_string (double val)
 {
     g_return_val_if_fail (val >= -1000000000 && val <= 1000000000, NULL);
 
-    boolean neg = (val < 0);
+    bool_t neg = (val < 0);
     if (neg)
         val = -val;
 
@@ -507,7 +507,7 @@ char * double_to_string (double val)
     return s;
 }
 
-boolean string_to_double_array (const char * string, double * array, int count)
+bool_t string_to_double_array (const char * string, double * array, int count)
 {
     char * * split = g_strsplit (string, ",", -1);
     if (g_strv_length (split) != count)

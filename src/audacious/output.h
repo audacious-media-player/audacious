@@ -39,6 +39,6 @@ void output_drain (void);
 
 PluginHandle * output_plugin_probe (void);
 PluginHandle * output_plugin_get_current (void);
-boolean output_plugin_set_current (PluginHandle * plugin);
+bool_t output_plugin_set_current (PluginHandle * plugin);
 
 #endif /* AUDACIOUS_OUTPUT_H */

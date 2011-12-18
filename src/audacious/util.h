@@ -29,11 +29,11 @@
 #include <sys/types.h>
 #include <libaudcore/core.h>
 
-typedef boolean(*DirForeachFunc) (const char * path,
+typedef bool_t(*DirForeachFunc) (const char * path,
                                    const char * basename,
                                    gpointer user_data);
 
-boolean dir_foreach (const char * path, DirForeachFunc func, void * user_data);
+bool_t dir_foreach (const char * path, DirForeachFunc func, void * user_data);
 
 int file_get_mtime (const char * filename);
 void make_directory(const char * path, mode_t mode);

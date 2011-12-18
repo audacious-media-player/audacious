@@ -62,16 +62,16 @@
 
 #define AUTOSAVE_INTERVAL 300 /* seconds */
 
-boolean headless;
+bool_t headless;
 
 static struct {
     char **filenames;
     int session;
-    boolean play, stop, pause, fwd, rew, play_pause, show_jump_box;
-    boolean enqueue, mainwin, remote;
-    boolean enqueue_to_temp;
-    boolean version;
-    boolean verbose;
+    bool_t play, stop, pause, fwd, rew, play_pause, show_jump_box;
+    bool_t enqueue, mainwin, remote;
+    bool_t enqueue_to_temp;
+    bool_t version;
+    bool_t verbose;
     char *previous_session_id;
 } options;
 
@@ -285,7 +285,7 @@ static void parse_options (int * argc, char *** argv)
     verbose = options.verbose;
 }
 
-static boolean get_lock (void)
+static bool_t get_lock (void)
 {
     char * path = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "lock", aud_paths[AUD_PATH_USER_DIR]);
     int handle = open (path, O_RDWR | O_CREAT | O_EXCL, S_IRUSR | S_IWUSR);
@@ -396,7 +396,7 @@ static void do_remote (void)
 
 static void do_commands (void)
 {
-    boolean resume = get_bool (NULL, "resume_playback_on_startup");
+    bool_t resume = get_bool (NULL, "resume_playback_on_startup");
 
     GList * list = convert_filenames ();
     if (list)
@@ -512,7 +512,7 @@ static void shut_down (void)
     AUDDBG ("Stopping playback.\n");
     if (playback_get_playing ())
     {
-        boolean stop_after_song = get_bool (NULL, "stop_after_current_song");
+        bool_t stop_after_song = get_bool (NULL, "stop_after_current_song");
         playback_stop ();
         set_bool (NULL, "stop_after_current_song", stop_after_song);
     }
@@ -538,7 +538,7 @@ static void shut_down (void)
     gdk_threads_leave ();
 }
 
-boolean do_autosave (void)
+bool_t do_autosave (void)
 {
     AUDDBG ("Saving configuration.\n");
     hook_call ("config save", NULL);

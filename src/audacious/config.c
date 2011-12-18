@@ -91,7 +91,7 @@ static const char * const core_defaults[] = {
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 static GHashTable * defaults;
 static GKeyFile * keyfile;
-static boolean modified;
+static bool_t modified;
 
 void config_load (void)
 {
@@ -223,7 +223,7 @@ void set_string (const char * section, const char * name, const char * value)
         section = DEFAULT_SECTION;
 
     const char * def = get_default (section, name);
-    boolean changed = FALSE;
+    bool_t changed = FALSE;
 
     if (! strcmp (value, def))
     {
@@ -281,15 +281,15 @@ char * get_string (const char * section, const char * name)
     return value;
 }
 
-void set_bool (const char * section, const char * name, boolean value)
+void set_bool (const char * section, const char * name, bool_t value)
 {
     set_string (section, name, value ? "TRUE" : "FALSE");
 }
 
-boolean get_bool (const char * section, const char * name)
+bool_t get_bool (const char * section, const char * name)
 {
     char * string = get_string (section, name);
-    boolean value = ! strcmp (string, "TRUE");
+    bool_t value = ! strcmp (string, "TRUE");
     g_free (string);
     return value;
 }

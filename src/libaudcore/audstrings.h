@@ -23,8 +23,8 @@
 
 #include <libaudcore/core.h>
 
-boolean str_has_prefix_nocase(const char * str, const char * prefix);
-boolean str_has_suffix_nocase(const char * str, const char * suffix);
+bool_t str_has_prefix_nocase(const char * str, const char * prefix);
+bool_t str_has_suffix_nocase(const char * str, const char * suffix);
 
 void str_set_utf8_impl (char * (* stu_impl) (const char *),
  char * (* stuf_impl) (const char *, int, int *, int *));
@@ -48,12 +48,12 @@ int string_compare_encoded (const char * a, const char * b);
 
 char *str_replace_fragment(char *s, int size, const char *old_str, const char *new_str);
 
-boolean string_to_int (const char * string, int * addr);
-boolean string_to_double (const char * string, double * addr);
+bool_t string_to_int (const char * string, int * addr);
+bool_t string_to_double (const char * string, double * addr);
 char * int_to_string (int val);
 char * double_to_string (double val);
 
-boolean string_to_double_array (const char * string, double * array, int count);
+bool_t string_to_double_array (const char * string, double * array, int count);
 char * double_array_to_string (const double * array, int count);
 
 #endif /* LIBAUDCORE_STRINGS_H */

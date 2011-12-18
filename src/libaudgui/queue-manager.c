@@ -58,19 +58,19 @@ static void get_value (void * user, int row, int column, GValue * value)
     }
 }
 
-static boolean get_selected (void * user, int row)
+static bool_t get_selected (void * user, int row)
 {
     int list = aud_playlist_get_active ();
     return aud_playlist_entry_get_selected (list, aud_playlist_queue_get_entry (list, row));
 }
 
-static void set_selected (void * user, int row, boolean selected)
+static void set_selected (void * user, int row, bool_t selected)
 {
     int list = aud_playlist_get_active ();
     aud_playlist_entry_set_selected (list, aud_playlist_queue_get_entry (list, row), selected);
 }
 
-static void select_all (void * user, boolean selected)
+static void select_all (void * user, bool_t selected)
 {
     int list = aud_playlist_get_active ();
     int count = aud_playlist_queue_count (list);
@@ -148,7 +148,7 @@ static void destroy_cb (void)
     qm_list = NULL;
 }
 
-static boolean keypress_cb (GtkWidget * widget, GdkEventKey * event)
+static bool_t keypress_cb (GtkWidget * widget, GdkEventKey * event)
 {
     if (event->keyval == GDK_A && (event->state && GDK_CONTROL_MASK))
         select_all (NULL, TRUE);

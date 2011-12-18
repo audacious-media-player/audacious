@@ -99,7 +99,7 @@ equalizer_read_presets(const char *basename)
     return list;
 }
 
-boolean equalizer_write_preset_file (GList * list, const char * basename)
+bool_t equalizer_write_preset_file (GList * list, const char * basename)
 {
     char *filename, *tmp;
     int i, p;
@@ -135,7 +135,7 @@ boolean equalizer_write_preset_file (GList * list, const char * basename)
     filename = g_build_filename (get_path (AUD_PATH_USER_DIR), basename, NULL);
 
     data = g_key_file_to_data(rcfile, &len, &error);
-    boolean success = g_file_set_contents (filename, data, len, & error);
+    bool_t success = g_file_set_contents (filename, data, len, & error);
     g_free(data);
 
     g_key_file_free(rcfile);
@@ -192,7 +192,7 @@ error:
     return NULL;
 }
 
-boolean save_preset_file (EqualizerPreset * preset, const char * filename)
+bool_t save_preset_file (EqualizerPreset * preset, const char * filename)
 {
     GKeyFile *rcfile;
     int i;
@@ -212,7 +212,7 @@ boolean save_preset_file (EqualizerPreset * preset, const char * filename)
 
     data = g_key_file_to_data(rcfile, &len, &error);
 
-    boolean success = FALSE;
+    bool_t success = FALSE;
 
     VFSFile * file = vfs_fopen (filename, "w");
     if (file == NULL)

@@ -30,8 +30,8 @@ AUD_VFUNC2 (config_set_defaults, const char *, section, const char * const *, en
 
 AUD_VFUNC3 (set_string, const char *, section, const char *, name, const char *, value)
 AUD_FUNC2 (char *, get_string, const char *, section, const char *, name)
-AUD_VFUNC3 (set_bool, const char *, section, const char *, name, boolean, value)
-AUD_FUNC2 (boolean, get_bool, const char *, section, const char *, name)
+AUD_VFUNC3 (set_bool, const char *, section, const char *, name, bool_t, value)
+AUD_FUNC2 (bool_t, get_bool, const char *, section, const char *, name)
 AUD_VFUNC3 (set_int, const char *, section, const char *, name, int, value)
 AUD_FUNC2 (int, get_int, const char *, section, const char *, name)
 AUD_VFUNC3 (set_double, const char *, section, const char *, name, double, value)
@@ -49,10 +49,10 @@ AUD_FUNC1 (double, eq_get_band, int, band)
 
 /* equalizer_preset.c */
 AUD_FUNC1 (GList *, equalizer_read_presets, const char *, basename)
-AUD_FUNC2 (boolean, equalizer_write_preset_file, GList *, list, const char *,
+AUD_FUNC2 (bool_t, equalizer_write_preset_file, GList *, list, const char *,
  basename)
 AUD_FUNC1 (EqualizerPreset *, load_preset_file, const char *, filename)
-AUD_FUNC2 (boolean, save_preset_file, EqualizerPreset *, preset, const char *,
+AUD_FUNC2 (bool_t, save_preset_file, EqualizerPreset *, preset, const char *,
  filename)
 AUD_FUNC1 (GList *, import_winamp_eqf, VFSFile *, file)
 
@@ -61,14 +61,14 @@ AUD_FUNC1 (const char *, history_get, int, entry)
 AUD_VFUNC1 (history_add, const char *, path)
 
 /* interface.c */
-AUD_VFUNC1 (interface_show, boolean, show)
-AUD_FUNC0 (boolean, interface_is_shown)
-AUD_FUNC0 (boolean, interface_is_focused)
+AUD_VFUNC1 (interface_show, bool_t, show)
+AUD_FUNC0 (bool_t, interface_is_shown)
+AUD_FUNC0 (bool_t, interface_is_focused)
 
 /* interface_show_error() is safe to call from any thread */
 AUD_VFUNC1 (interface_show_error, const char *, message)
 
-AUD_VFUNC1 (interface_show_filebrowser, boolean, play)
+AUD_VFUNC1 (interface_show_filebrowser, bool_t, play)
 AUD_VFUNC0 (interface_show_jump_to_track)
 
 AUD_VFUNC1 (interface_install_toolbar, void *, button)
@@ -78,17 +78,17 @@ AUD_VFUNC1 (interface_uninstall_toolbar, void *, button)
 AUD_FUNC1 (const char *, get_path, int, path)
 
 /* probe.c */
-AUD_FUNC2 (PluginHandle *, file_find_decoder, const char *, filename, boolean,
+AUD_FUNC2 (PluginHandle *, file_find_decoder, const char *, filename, bool_t,
  fast)
 AUD_FUNC2 (Tuple *, file_read_tuple, const char *, filename, PluginHandle *,
  decoder)
-AUD_FUNC4 (boolean, file_read_image, const char *, filename, PluginHandle *,
+AUD_FUNC4 (bool_t, file_read_image, const char *, filename, PluginHandle *,
  decoder, void * *, data, int *, size)
-AUD_FUNC2 (boolean, file_can_write_tuple, const char *, filename,
+AUD_FUNC2 (bool_t, file_can_write_tuple, const char *, filename,
  PluginHandle *, decoder)
-AUD_FUNC3 (boolean, file_write_tuple, const char *, filename, PluginHandle *,
+AUD_FUNC3 (bool_t, file_write_tuple, const char *, filename, PluginHandle *,
  decoder, const Tuple *, tuple)
-AUD_FUNC2 (boolean, custom_infowin, const char *, filename, PluginHandle *,
+AUD_FUNC2 (bool_t, custom_infowin, const char *, filename, PluginHandle *,
  decoder)
 
 /* ui_albumart.c */

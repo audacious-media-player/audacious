@@ -25,7 +25,7 @@
 
 /* plugin-init.c */
 AUD_FUNC1 (PluginHandle *, plugin_get_current, int, type)
-AUD_FUNC2 (boolean, plugin_enable, PluginHandle *, plugin, boolean, enable)
+AUD_FUNC2 (bool_t, plugin_enable, PluginHandle *, plugin, bool_t, enable)
 AUD_FUNC1 (PluginHandle *, plugin_by_widget, void /* GtkWidget */ *, widget)
 AUD_FUNC4 (int, plugin_send_message, PluginHandle *, plugin,
  const char *, code, const void *, data, int, size)
@@ -43,13 +43,13 @@ AUD_FUNC2 (int, plugin_compare, PluginHandle *, a, PluginHandle *, b)
 AUD_VFUNC3 (plugin_for_each, int, type, PluginForEachFunc, func, void *,
  data)
 
-AUD_FUNC1 (boolean, plugin_get_enabled, PluginHandle *, plugin)
+AUD_FUNC1 (bool_t, plugin_get_enabled, PluginHandle *, plugin)
 AUD_VFUNC3 (plugin_for_enabled, int, type, PluginForEachFunc, func,
  void *, data)
 
 AUD_FUNC1 (const char *, plugin_get_name, PluginHandle *, plugin)
-AUD_FUNC1 (boolean, plugin_has_about, PluginHandle *, plugin)
-AUD_FUNC1 (boolean, plugin_has_configure, PluginHandle *, plugin)
+AUD_FUNC1 (bool_t, plugin_has_about, PluginHandle *, plugin)
+AUD_FUNC1 (bool_t, plugin_has_configure, PluginHandle *, plugin)
 
 AUD_VFUNC3 (plugin_add_watch, PluginHandle *, plugin, PluginForEachFunc,
  func, void *, data)

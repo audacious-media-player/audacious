@@ -35,12 +35,12 @@ typedef struct
 {
     const char * filename;
     VFSFile * handle;
-    boolean buffered;
+    bool_t buffered;
     PluginHandle * plugin;
 }
 ProbeState;
 
-static boolean check_opened (ProbeState * state)
+static bool_t check_opened (ProbeState * state)
 {
     if (state->handle != NULL)
         return TRUE;
@@ -58,7 +58,7 @@ static boolean check_opened (ProbeState * state)
     return FALSE;
 }
 
-static boolean probe_func (PluginHandle * plugin, ProbeState * state)
+static bool_t probe_func (PluginHandle * plugin, ProbeState * state)
 {
     AUDDBG ("Trying %s.\n", plugin_get_name (plugin));
     InputPlugin * decoder = plugin_get_header (plugin);
@@ -95,7 +95,7 @@ static boolean probe_func (PluginHandle * plugin, ProbeState * state)
  *    similarly that the plugin passed in this call is the last one.
  */
 
-static boolean probe_func_fast (PluginHandle * plugin, ProbeState * state)
+static bool_t probe_func_fast (PluginHandle * plugin, ProbeState * state)
 {
     if (state->plugin != NULL)
     {
@@ -164,7 +164,7 @@ static void probe_by_content (ProbeState * state)
     plugin_for_enabled (PLUGIN_TYPE_INPUT, (PluginForEachFunc) probe_func, state);
 }
 
-PluginHandle * file_find_decoder (const char * filename, boolean fast)
+PluginHandle * file_find_decoder (const char * filename, bool_t fast)
 {
     ProbeState state;
 
@@ -212,7 +212,7 @@ Tuple * file_read_tuple (const char * filename, PluginHandle * decoder)
     return tuple;
 }
 
-boolean file_read_image (const char * filename, PluginHandle * decoder,
+bool_t file_read_image (const char * filename, PluginHandle * decoder,
  void * * data, int * size)
 {
     if (! input_plugin_has_images (decoder))
@@ -223,7 +223,7 @@ boolean file_read_image (const char * filename, PluginHandle * decoder,
     g_return_val_if_fail (ip->get_song_image, FALSE);
 
     VFSFile * handle = vfs_fopen (filename, "r");
-    boolean success = ip->get_song_image (filename, handle, data, size);
+    bool_t success = ip->get_song_image (filename, handle, data, size);
 
     if (handle)
         vfs_fclose (handle);
@@ -231,12 +231,12 @@ boolean file_read_image (const char * filename, PluginHandle * decoder,
     return success;
 }
 
-boolean file_can_write_tuple (const char * filename, PluginHandle * decoder)
+bool_t file_can_write_tuple (const char * filename, PluginHandle * decoder)
 {
     return input_plugin_can_write_tuple (decoder);
 }
 
-boolean file_write_tuple (const char * filename, PluginHandle * decoder,
+bool_t file_write_tuple (const char * filename, PluginHandle * decoder,
  const Tuple * tuple)
 {
     InputPlugin * ip = plugin_get_header (decoder);
@@ -248,7 +248,7 @@ boolean file_write_tuple (const char * filename, PluginHandle * decoder,
     if (! handle)
         return FALSE;
 
-    boolean success = ip->update_song_tuple (tuple, handle);
+    bool_t success = ip->update_song_tuple (tuple, handle);
 
     if (handle)
         vfs_fclose (handle);
@@ -259,7 +259,7 @@ boolean file_write_tuple (const char * filename, PluginHandle * decoder,
     return success;
 }
 
-boolean custom_infowin (const char * filename, PluginHandle * decoder)
+bool_t custom_infowin (const char * filename, PluginHandle * decoder)
 {
     if (! input_plugin_has_infowin (decoder))
         return FALSE;

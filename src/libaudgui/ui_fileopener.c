@@ -29,7 +29,7 @@
 #include "libaudgui-gtk.h"
 
 static void filebrowser_add_files (GtkFileChooser * browser, GSList * files,
- boolean play)
+ bool_t play)
 {
     GSList * node;
     GList * list = NULL;
@@ -60,13 +60,13 @@ action_button_cb(GtkWidget *widget, gpointer data)
 
     GSList * files = gtk_file_chooser_get_uris ((GtkFileChooser *) chooser);
 
-    boolean play = GPOINTER_TO_INT (g_object_get_data (data, "play-button"));
+    bool_t play = GPOINTER_TO_INT (g_object_get_data (data, "play-button"));
     filebrowser_add_files ((GtkFileChooser *) chooser, files, play);
 
     g_slist_foreach(files, (GFunc) g_free, NULL);
     g_slist_free(files);
 
-    boolean close_dialog = gtk_toggle_button_get_active ((GtkToggleButton *) toggle);
+    bool_t close_dialog = gtk_toggle_button_get_active ((GtkToggleButton *) toggle);
     aud_set_bool ("audgui", play ? "close_dialog_open" : "close_dialog_add", close_dialog);
 
     if (close_dialog)
@@ -81,7 +81,7 @@ close_button_cb(GtkWidget *widget, gpointer data)
 }
 
 static void
-run_filebrowser_gtk2style(boolean play_button, boolean show)
+run_filebrowser_gtk2style(bool_t play_button, bool_t show)
 {
     static GtkWidget *window = NULL;
     GtkWidget *vbox, *hbox, *bbox;
@@ -175,10 +175,10 @@ run_filebrowser_gtk2style(boolean play_button, boolean show)
 }
 
 /*
- * run_filebrowser(boolean play_button)
+ * run_filebrowser(bool_t play_button)
  *
  * Inputs:
- *     - boolean play_button
+ *     - bool_t play_button
  *       TRUE  - open files
  *       FALSE - add files
  *
@@ -186,7 +186,7 @@ run_filebrowser_gtk2style(boolean play_button, boolean show)
  *     - none
  */
 void
-audgui_run_filebrowser(boolean play_button)
+audgui_run_filebrowser(bool_t play_button)
 {
     run_filebrowser_gtk2style(play_button, TRUE);
 }

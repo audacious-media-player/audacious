@@ -30,14 +30,14 @@
  * decoder thread hangs up waiting for the vis timeout to finish. */
 void vis_runner_lock (void);
 void vis_runner_unlock (void);
-boolean vis_runner_locked (void);
+bool_t vis_runner_locked (void);
 
-void vis_runner_start_stop (boolean playing, boolean paused);
+void vis_runner_start_stop (bool_t playing, bool_t paused);
 void vis_runner_pass_audio (int time, float * data, int samples, int
  channels, int rate);
 void vis_runner_time_offset (int offset);
 void vis_runner_flush (void);
 
-void vis_runner_enable (boolean enable);
+void vis_runner_enable (bool_t enable);
 
 #endif

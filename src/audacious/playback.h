@@ -25,13 +25,13 @@
 
 #include <libaudcore/core.h>
 
-void playback_play (int seek_time, boolean pause);
+void playback_play (int seek_time, bool_t pause);
 int playback_get_time(void);
 void playback_pause(void);
 void playback_stop(void);
-boolean playback_get_playing(void);
-boolean playback_get_ready (void);
-boolean playback_get_paused(void);
+bool_t playback_get_playing(void);
+bool_t playback_get_ready (void);
+bool_t playback_get_paused(void);
 void playback_seek(int time);
 
 char * playback_get_title (void);

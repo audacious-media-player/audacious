@@ -34,12 +34,12 @@
 #include "playback.h"
 #include "playlist.h"
 
-static void playback_start (int playlist, int entry, int seek_time, boolean pause);
+static void playback_start (int playlist, int entry, int seek_time, bool_t pause);
 
 static InputPlayback playback_api;
 
-static boolean playing = FALSE;
-static boolean playback_error;
+static bool_t playing = FALSE;
+static bool_t playback_error;
 static int failed_entries;
 
 static char * current_filename; /* pooled */
@@ -55,14 +55,14 @@ static int current_bitrate, current_samplerate, current_channels;
 static ReplayGainInfo gain_from_playlist;
 
 static int time_offset, initial_seek;
-static boolean paused;
+static bool_t paused;
 
 static pthread_t playback_thread_handle;
 static int end_source = 0;
 
 static pthread_mutex_t ready_mutex = PTHREAD_MUTEX_INITIALIZER;
 static pthread_cond_t ready_cond = PTHREAD_COND_INITIALIZER;
-static boolean ready_flag;
+static bool_t ready_flag;
 
 /* clears gain info if tuple == NULL */
 static void read_gain_from_tuple (const Tuple * tuple)
@@ -92,7 +92,7 @@ static void read_gain_from_tuple (const Tuple * tuple)
     }
 }
 
-static boolean update_from_playlist (void)
+static bool_t update_from_playlist (void)
 {
     int entry = playback_entry_get_position ();
     char * title = playback_entry_get_title ();
@@ -111,11 +111,11 @@ static boolean update_from_playlist (void)
     return TRUE;
 }
 
-boolean playback_get_ready (void)
+bool_t playback_get_ready (void)
 {
     g_return_val_if_fail (playing, FALSE);
     pthread_mutex_lock (& ready_mutex);
-    boolean ready = ready_flag;
+    bool_t ready = ready_flag;
     pthread_mutex_unlock (& ready_mutex);
     return ready;
 }
@@ -172,7 +172,7 @@ int playback_get_time (void)
     return time - time_offset;
 }
 
-void playback_play (int seek_time, boolean pause)
+void playback_play (int seek_time, bool_t pause)
 {
     g_return_if_fail (! playing);
 
@@ -260,7 +260,7 @@ void playback_stop (void)
     complete_stop ();
 }
 
-static boolean end_cb (void * unused)
+static bool_t end_cb (void * unused)
 {
     g_return_val_if_fail (playing, FALSE);
 
@@ -274,7 +274,7 @@ static boolean end_cb (void * unused)
     playback_cleanup ();
 
     int playlist = playlist_get_playing ();
-    boolean play;
+    bool_t play;
 
     if (get_bool (NULL, "no_playlist_advance"))
         play = get_bool (NULL, "repeat") && ! failed_entries;
@@ -339,7 +339,7 @@ DONE:
     return NULL;
 }
 
-static void playback_start (int playlist, int entry, int seek_time, boolean pause)
+static void playback_start (int playlist, int entry, int seek_time, bool_t pause)
 {
     g_return_if_fail (! playing);
 
@@ -363,12 +363,12 @@ static void playback_start (int playlist, int entry, int seek_time, boolean paus
     hook_call ("playback begin", NULL);
 }
 
-boolean playback_get_playing (void)
+bool_t playback_get_playing (void)
 {
     return playing;
 }
 
-boolean playback_get_paused (void)
+bool_t playback_get_paused (void)
 {
     g_return_val_if_fail (playing, FALSE);
     return paused;

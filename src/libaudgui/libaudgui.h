@@ -30,14 +30,14 @@
 
 void audgui_register_stock_icons(void);
 
-void audgui_show_add_url_window(boolean open);
+void audgui_show_add_url_window(bool_t open);
 
 void audgui_jump_to_track(void);
 void audgui_jump_to_track_hide(void);
 
 void audgui_set_default_icon(void);
 
-void audgui_run_filebrowser(boolean clear_pl_on_ok);
+void audgui_run_filebrowser(bool_t clear_pl_on_ok);
 void audgui_hide_filebrowser(void);
 
 void audgui_show_about_window(void);

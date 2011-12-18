@@ -81,7 +81,7 @@ typedef struct {
     TupleValueType ctype;	/* Type of constant/def value */
 
     int fieldidx;		/* if >= 0: Index # of "pre-defined" Tuple fields */
-    boolean fieldread, fieldvalid;
+    bool_t fieldread, fieldvalid;
     char * fieldstr;
 } TupleEvalVar;
 
@@ -225,9 +225,9 @@ void tuple_evalnode_free(TupleEvalNode *expr)
 static TupleEvalNode *tuple_compiler_pass1(int *level, TupleEvalContext *ctx, char **expression);
 
 
-static boolean tc_get_item(TupleEvalContext *ctx,
+static bool_t tc_get_item(TupleEvalContext *ctx,
     char **str, char *buf, gssize max,
-    char endch, boolean *literal, char *errstr, char *item)
+    char endch, bool_t *literal, char *errstr, char *item)
 {
   gssize i = 0;
   char *s = *str, tmpendch;
@@ -307,10 +307,10 @@ static int tc_get_variable(TupleEvalContext *ctx, char *name, int type)
 }
 
 
-static boolean tc_parse_construct(TupleEvalContext *ctx, TupleEvalNode **res, char *item, char **c, int *level, int opcode)
+static bool_t tc_parse_construct(TupleEvalContext *ctx, TupleEvalNode **res, char *item, char **c, int *level, int opcode)
 {
   char tmps1[MAX_STR], tmps2[MAX_STR];
-  boolean literal1 = TRUE, literal2 = TRUE;
+  bool_t literal1 = TRUE, literal2 = TRUE;
 
   (*c)++;
   if (tc_get_item(ctx, c, tmps1, MAX_STR, ',', &literal1, "tag1", item)) {
@@ -349,7 +349,7 @@ static TupleEvalNode *tuple_compiler_pass1(int *level, TupleEvalContext *ctx, ch
 {
   TupleEvalNode *res = NULL, *tmp = NULL;
   char *c = *expression, *item, tmps1[MAX_STR];
-  boolean literal, end = FALSE;
+  bool_t literal, end = FALSE;
 
   (*level)++;
 
@@ -555,7 +555,7 @@ TupleEvalNode *tuple_formatter_compile(TupleEvalContext *ctx, char *expr)
 
 
 /* Fetch a tuple field value.  Return TRUE if found. */
-static boolean tf_get_fieldval (TupleEvalVar * var, const Tuple * tuple)
+static bool_t tf_get_fieldval (TupleEvalVar * var, const Tuple * tuple)
 {
   if (var->type != TUPLE_VAR_FIELD || var->fieldidx < 0)
     return FALSE;
@@ -618,7 +618,7 @@ static TupleValueType tf_get_var (char * * tmps, int * tmpi, TupleEvalVar *
 /* Evaluate tuple in given TupleEval expression in given
  * context and return resulting string.
  */
-static boolean tuple_formatter_eval_do (TupleEvalContext * ctx, TupleEvalNode *
+static bool_t tuple_formatter_eval_do (TupleEvalContext * ctx, TupleEvalNode *
  expr, const Tuple * tuple, GString * out)
 {
   TupleEvalNode *curr = expr;
@@ -626,7 +626,7 @@ static boolean tuple_formatter_eval_do (TupleEvalContext * ctx, TupleEvalNode *
   TupleValueType type0, type1;
   int tmpi0, tmpi1;
   char tmps[MAX_STR], *tmps0, *tmps1, *tmps2;
-  boolean result;
+  bool_t result;
   int resulti;
 
   if (!expr) return FALSE;

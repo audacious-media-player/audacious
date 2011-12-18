@@ -37,7 +37,7 @@ void audgui_hide_on_escape (GtkWidget * widget);
 void audgui_destroy_on_escape (GtkWidget * widget);
 void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
  const char * title, const char * text);
-void audgui_connect_check_box (GtkWidget * box, boolean * setting);
+void audgui_connect_check_box (GtkWidget * box, bool_t * setting);
 
 GdkPixbuf * audgui_pixbuf_from_data (void * data, int size);
 GdkPixbuf * audgui_pixbuf_for_entry (int playlist, int entry);

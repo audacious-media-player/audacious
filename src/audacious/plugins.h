@@ -26,7 +26,7 @@
 #include <audacious/types.h>
 #include <libaudcore/core.h>
 
-typedef boolean (* PluginForEachFunc) (PluginHandle * plugin, void * data);
+typedef bool_t (* PluginForEachFunc) (PluginHandle * plugin, void * data);
 
 #define AUD_API_NAME PluginsAPI
 #define AUD_API_SYMBOL plugins_api
@@ -57,16 +57,16 @@ void plugin_registry_save (void);
 void plugin_register (const char * path);
 void plugin_register_loaded (const char * path, Plugin * header);
 
-void plugin_set_enabled (PluginHandle * plugin, boolean enabled);
+void plugin_set_enabled (PluginHandle * plugin, bool_t enabled);
 
 PluginHandle * transport_plugin_for_scheme (const char * scheme);
 PluginHandle * playlist_plugin_for_extension (const char * extension);
 void input_plugin_for_key (int key, const char * value, PluginForEachFunc
  func, void * data);
-boolean input_plugin_has_images (PluginHandle * plugin);
-boolean input_plugin_has_subtunes (PluginHandle * plugin);
-boolean input_plugin_can_write_tuple (PluginHandle * plugin);
-boolean input_plugin_has_infowin (PluginHandle * plugin);
+bool_t input_plugin_has_images (PluginHandle * plugin);
+bool_t input_plugin_has_subtunes (PluginHandle * plugin);
+bool_t input_plugin_can_write_tuple (PluginHandle * plugin);
+bool_t input_plugin_has_infowin (PluginHandle * plugin);
 
 /* pluginenum.c */
 void plugin_system_init (void);

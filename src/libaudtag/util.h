@@ -158,7 +158,7 @@ enum {
     GENRE_EURO_HOUSE
 };
 
-extern boolean tag_verbose;
+extern bool_t tag_verbose;
 
 #define TAGDBG(...) do {if (tag_verbose) {printf ("%s:%d [%s]: ", __FILE__, __LINE__, __FUNCTION__); printf (__VA_ARGS__);}} while (0)
 
@@ -167,7 +167,7 @@ time_t unix_time(uint64_t win_time);
 uint16_t get_year(uint64_t win_time);
 
 char *read_char_data(VFSFile *fd, int size);
-boolean write_char_data(VFSFile *f, char *data, size_t i);
+bool_t write_char_data(VFSFile *f, char *data, size_t i);
 
 uint8_t read_uint8(VFSFile *fd);
 uint16_t read_LEuint16(VFSFile *fd);
@@ -178,16 +178,16 @@ uint64_t read_LEuint64(VFSFile *fd);
 uint64_t read_BEuint64(VFSFile *fd);
 
 
-boolean write_uint8(VFSFile *fd, uint8_t val);
-boolean write_BEuint16(VFSFile *fd, uint16_t val);
-boolean write_LEuint16(VFSFile *fd, uint16_t val);
-boolean write_BEuint32(VFSFile *fd, uint32_t val);
-boolean write_LEuint32(VFSFile *fd, uint32_t val);
-boolean write_BEuint64(VFSFile *fd, uint64_t val);
-boolean write_LEuint64(VFSFile *fd, uint64_t val);
+bool_t write_uint8(VFSFile *fd, uint8_t val);
+bool_t write_BEuint16(VFSFile *fd, uint16_t val);
+bool_t write_LEuint16(VFSFile *fd, uint16_t val);
+bool_t write_BEuint32(VFSFile *fd, uint32_t val);
+bool_t write_LEuint32(VFSFile *fd, uint32_t val);
+bool_t write_BEuint64(VFSFile *fd, uint64_t val);
+bool_t write_LEuint64(VFSFile *fd, uint64_t val);
 
 uint64_t read_LEint64(VFSFile *fd);
-boolean cut_beginning_tag (VFSFile * handle, int64_t tag_size);
+bool_t cut_beginning_tag (VFSFile * handle, int64_t tag_size);
 
 char *convert_numericgenre_to_text(gint numericgenre);
 

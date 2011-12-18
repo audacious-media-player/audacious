@@ -50,7 +50,7 @@
 #include "plugins.h"
 #include "util.h"
 
-boolean dir_foreach (const char * path, DirForeachFunc func, void * user)
+bool_t dir_foreach (const char * path, DirForeachFunc func, void * user)
 {
     DIR * dir = opendir (path);
     if (! dir)
@@ -63,7 +63,7 @@ boolean dir_foreach (const char * path, DirForeachFunc func, void * user)
             continue;
 
         char * full = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "%s", path, entry->d_name);
-        boolean stop = func (full, entry->d_name, user);
+        bool_t stop = func (full, entry->d_name, user);
         g_free (full);
 
         if (stop)

@@ -133,7 +133,7 @@ ui_jump_to_track_cache_regex_list_free(GSList* regex_list)
 /**
  * Checks if 'song' matches all regular expressions in 'regex_list'.
  */
-static boolean
+static bool_t
 ui_jump_to_track_match(const char * song, GSList *regex_list)
 {
     if ( song == NULL )
@@ -175,7 +175,7 @@ ui_jump_to_track_cache_match_keyword(JumpToTrackCache* cache,
         char * album = g_array_index (search_space->albums, char *, i);
         char * path = g_array_index (search_space->paths, char *, i);
         char * filename = g_array_index (search_space->filenames, char *, i);
-        boolean match;
+        bool_t match;
 
         if (regex_list != NULL)
             match = ui_jump_to_track_match (title, regex_list)

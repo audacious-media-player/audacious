@@ -45,7 +45,7 @@ void audgui_hide_on_delete (GtkWidget * widget)
      gtk_widget_hide_on_delete, NULL);
 }
 
-static boolean escape_cb (GtkWidget * widget, GdkEventKey * event, void
+static bool_t escape_cb (GtkWidget * widget, GdkEventKey * event, void
  (* action) (GtkWidget * widget))
 {
     if (event->keyval == GDK_Escape)
@@ -69,12 +69,12 @@ void audgui_destroy_on_escape (GtkWidget * widget)
      (void *) gtk_widget_destroy);
 }
 
-static void toggle_cb (GtkToggleButton * toggle, boolean * setting)
+static void toggle_cb (GtkToggleButton * toggle, bool_t * setting)
 {
     * setting = gtk_toggle_button_get_active (toggle);
 }
 
-void audgui_connect_check_box (GtkWidget * box, boolean * setting)
+void audgui_connect_check_box (GtkWidget * box, bool_t * setting)
 {
     gtk_toggle_button_set_active ((GtkToggleButton *) box, * setting);
     g_signal_connect ((GObject *) box, "toggled", (GCallback) toggle_cb, setting);

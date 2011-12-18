@@ -62,7 +62,7 @@ static void infopopup_entry_set_image (int playlist, int entry)
         gtk_image_clear ((GtkImage *) widget);
 }
 
-static boolean infopopup_progress_cb (void * unused)
+static bool_t infopopup_progress_cb (void * unused)
 {
     GtkWidget * progressbar = g_object_get_data ((GObject *) infopopup,
      "progressbar");

@@ -36,8 +36,8 @@ typedef struct {
 } VisNode;
 
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-static boolean enabled = FALSE;
-static boolean playing = FALSE, paused = FALSE, active = FALSE;
+static bool_t enabled = FALSE;
+static bool_t playing = FALSE, paused = FALSE, active = FALSE;
 static VisNode * current_node = NULL;
 static int current_frames;
 static GQueue vis_list = G_QUEUE_INIT;
@@ -49,7 +49,7 @@ static void vis_node_free (VisNode * node)
     g_free (node);
 }
 
-static boolean send_audio (void * unused)
+static bool_t send_audio (void * unused)
 {
     pthread_mutex_lock (& mutex);
 
@@ -90,7 +90,7 @@ static boolean send_audio (void * unused)
     return TRUE;
 }
 
-static boolean send_clear (void * unused)
+static bool_t send_clear (void * unused)
 {
     pthread_mutex_lock (& mutex);
     clear_source = 0;
@@ -101,7 +101,7 @@ static boolean send_clear (void * unused)
     return FALSE;
 }
 
-static boolean locked = FALSE;
+static bool_t locked = FALSE;
 
 void vis_runner_lock (void)
 {
@@ -115,7 +115,7 @@ void vis_runner_unlock (void)
     pthread_mutex_unlock (& mutex);
 }
 
-boolean vis_runner_locked (void)
+bool_t vis_runner_locked (void)
 {
     return locked;
 }
@@ -135,7 +135,7 @@ void vis_runner_flush (void)
         clear_source = g_timeout_add (0, send_clear, NULL);
 }
 
-void vis_runner_start_stop (boolean new_playing, boolean new_paused)
+void vis_runner_start_stop (bool_t new_playing, bool_t new_paused)
 {
     playing = new_playing;
     paused = new_paused;
@@ -238,7 +238,7 @@ void vis_runner_time_offset (int offset)
     g_queue_foreach (& vis_list, (GFunc) time_offset_cb, GINT_TO_POINTER (offset));
 }
 
-void vis_runner_enable (boolean enable)
+void vis_runner_enable (bool_t enable)
 {
     pthread_mutex_lock (& mutex);
     enabled = enable;

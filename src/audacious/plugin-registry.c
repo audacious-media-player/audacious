@@ -53,17 +53,17 @@ typedef struct {
 
 typedef struct {
     GList * keys[INPUT_KEYS];
-    boolean has_images, has_subtunes, can_write_tuple, has_infowin;
+    bool_t has_images, has_subtunes, can_write_tuple, has_infowin;
 } InputPluginData;
 
 struct PluginHandle {
     char * path;
-    boolean confirmed, loaded;
+    bool_t confirmed, loaded;
     int timestamp, type;
     Plugin * header;
     char * name;
     int priority;
-    boolean has_about, has_configure, enabled;
+    bool_t has_about, has_configure, enabled;
     GList * watches;
 
     union {
@@ -94,10 +94,10 @@ static const char * input_key_names[] = {
  [INPUT_KEY_MIME] = "mime"};
 
 static GList * plugin_list = NULL;
-static boolean registry_locked = TRUE;
+static bool_t registry_locked = TRUE;
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
-static PluginHandle * plugin_new (char * path, boolean confirmed, boolean
+static PluginHandle * plugin_new (char * path, bool_t confirmed, bool_t
  loaded, int timestamp, int type, Plugin * header)
 {
     PluginHandle * plugin = g_malloc (sizeof (PluginHandle));
@@ -259,7 +259,7 @@ static void parse_next (FILE * handle)
         * newline = 0;
 }
 
-static boolean parse_integer (const char * key, int * value)
+static bool_t parse_integer (const char * key, int * value)
 {
     return (parse_value && ! strcmp (parse_key, key) && sscanf (parse_value,
      "%d", value) == 1);
@@ -314,7 +314,7 @@ static void input_plugin_parse (PluginHandle * plugin, FILE * handle)
         parse_next (handle);
 }
 
-static boolean plugin_parse (FILE * handle)
+static bool_t plugin_parse (FILE * handle)
 {
     char * path = NULL;
 
@@ -482,7 +482,7 @@ void plugin_register_loaded (const char * path, Plugin * header)
 {
     AUDDBG ("Loaded plugin: %s\n", path);
     PluginHandle * plugin = plugin_lookup (path);
-    boolean new = FALSE;
+    bool_t new = FALSE;
 
     if (plugin)
     {
@@ -635,17 +635,17 @@ const char * plugin_get_name (PluginHandle * plugin)
     return plugin->name;
 }
 
-boolean plugin_has_about (PluginHandle * plugin)
+bool_t plugin_has_about (PluginHandle * plugin)
 {
     return plugin->has_about;
 }
 
-boolean plugin_has_configure (PluginHandle * plugin)
+bool_t plugin_has_configure (PluginHandle * plugin)
 {
     return plugin->has_configure;
 }
 
-boolean plugin_get_enabled (PluginHandle * plugin)
+bool_t plugin_get_enabled (PluginHandle * plugin)
 {
     return plugin->enabled;
 }
@@ -667,7 +667,7 @@ static void plugin_call_watches (PluginHandle * plugin)
     }
 }
 
-void plugin_set_enabled (PluginHandle * plugin, boolean enabled)
+void plugin_set_enabled (PluginHandle * plugin, bool_t enabled)
 {
     plugin->enabled = enabled;
     plugin_call_watches (plugin);
@@ -678,7 +678,7 @@ typedef struct {
     void * data;
 } PluginForEnabledState;
 
-static boolean plugin_for_enabled_cb (PluginHandle * plugin,
+static bool_t plugin_for_enabled_cb (PluginHandle * plugin,
  PluginForEnabledState * state)
 {
     if (! plugin->enabled)
@@ -724,7 +724,7 @@ typedef struct {
     PluginHandle * plugin;
 } TransportPluginForSchemeState;
 
-static boolean transport_plugin_for_scheme_cb (PluginHandle * plugin,
+static bool_t transport_plugin_for_scheme_cb (PluginHandle * plugin,
  TransportPluginForSchemeState * state)
 {
     if (! g_list_find_custom (plugin->u.t.schemes, state->scheme,
@@ -748,7 +748,7 @@ typedef struct {
     PluginHandle * plugin;
 } PlaylistPluginForExtState;
 
-static boolean playlist_plugin_for_ext_cb (PluginHandle * plugin,
+static bool_t playlist_plugin_for_ext_cb (PluginHandle * plugin,
  PlaylistPluginForExtState * state)
 {
     if (! g_list_find_custom (plugin->u.p.exts, state->ext,
@@ -774,7 +774,7 @@ typedef struct {
     void * data;
 } InputPluginForKeyState;
 
-static boolean input_plugin_for_key_cb (PluginHandle * plugin,
+static bool_t input_plugin_for_key_cb (PluginHandle * plugin,
  InputPluginForKeyState * state)
 {
     if (! g_list_find_custom (plugin->u.i.keys[state->key], state->value,
@@ -792,25 +792,25 @@ void input_plugin_for_key (int key, const char * value, PluginForEachFunc
      input_plugin_for_key_cb, & state);
 }
 
-boolean input_plugin_has_images (PluginHandle * plugin)
+bool_t input_plugin_has_images (PluginHandle * plugin)
 {
     g_return_val_if_fail (plugin->type == PLUGIN_TYPE_INPUT, FALSE);
     return plugin->u.i.has_images;
 }
 
-boolean input_plugin_has_subtunes (PluginHandle * plugin)
+bool_t input_plugin_has_subtunes (PluginHandle * plugin)
 {
     g_return_val_if_fail (plugin->type == PLUGIN_TYPE_INPUT, FALSE);
     return plugin->u.i.has_subtunes;
 }
 
-boolean input_plugin_can_write_tuple (PluginHandle * plugin)
+bool_t input_plugin_can_write_tuple (PluginHandle * plugin)
 {
     g_return_val_if_fail (plugin->type == PLUGIN_TYPE_INPUT, FALSE);
     return plugin->u.i.can_write_tuple;
 }
 
-boolean input_plugin_has_infowin (PluginHandle * plugin)
+bool_t input_plugin_has_infowin (PluginHandle * plugin)
 {
     g_return_val_if_fail (plugin->type == PLUGIN_TYPE_INPUT, FALSE);
     return plugin->u.i.has_infowin;

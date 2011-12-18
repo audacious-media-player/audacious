@@ -57,9 +57,9 @@ void vfs_set_lookup_func (VFSConstructor * (* func) (const char * scheme))
     lookup_func = func;
 }
 
-static boolean verbose = FALSE;
+static bool_t verbose = FALSE;
 
-void vfs_set_verbose (boolean set)
+void vfs_set_verbose (bool_t set)
 {
     verbose = set;
 }
@@ -330,12 +330,12 @@ vfs_ftell(VFSFile * file)
  * @param file #VFSFile object that represents the VFS stream.
  * @return On success, whether or not the VFS stream is at EOF. Otherwise, FALSE.
  */
-boolean
+bool_t
 vfs_feof(VFSFile * file)
 {
     g_return_val_if_fail (file && file->sig == VFS_SIG, TRUE);
 
-    boolean eof = file->base->vfs_feof_impl (file);
+    bool_t eof = file->base->vfs_feof_impl (file);
 
     if (verbose)
         logger ("VFS: <%p> eof = %s\n", file, eof ? "yes" : "no");
@@ -403,7 +403,7 @@ vfs_get_metadata(VFSFile * file, const char * field)
  * @param test A GFileTest to run.
  * @return The result of g_file_test().
  */
-boolean
+bool_t
 vfs_file_test(const char * path, int test)
 {
     if (strncmp (path, "file://", 7))
@@ -414,7 +414,7 @@ vfs_file_test(const char * path, int test)
     if (path2 == NULL)
         path2 = g_strdup(path);
 
-    boolean ret = g_file_test (path2, test);
+    bool_t ret = g_file_test (path2, test);
 
     g_free(path2);
 
@@ -427,7 +427,7 @@ vfs_file_test(const char * path, int test)
  * @param path A path to test.
  * @return TRUE if the file is writeable, otherwise FALSE.
  */
-boolean
+bool_t
 vfs_is_writeable(const char * path)
 {
     struct stat info;
@@ -447,7 +447,7 @@ vfs_is_writeable(const char * path)
  * @param path A path to test.
  * @return TRUE if the file is remote, otherwise FALSE.
  */
-boolean vfs_is_remote (const char * path)
+bool_t vfs_is_remote (const char * path)
 {
     return strncmp (path, "file://", 7) ? TRUE : FALSE;
 }
@@ -458,7 +458,7 @@ boolean vfs_is_remote (const char * path)
  * @param file A #VFSFile object to test.
  * @return TRUE if the file is streaming, otherwise FALSE.
  */
-boolean
+bool_t
 vfs_is_streaming(VFSFile *file)
 {
     off_t size = 0;

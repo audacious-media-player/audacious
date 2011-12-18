@@ -54,7 +54,7 @@ void vis_func_add (int type, GCallback func)
 
 void vis_func_remove (GCallback func)
 {
-    boolean disable = TRUE;
+    bool_t disable = TRUE;
 
     for (int i = 0; i < AUD_VIS_TYPES; i ++)
     {
@@ -195,7 +195,7 @@ static void vis_unload (PluginHandle * plugin)
     g_slice_free (LoadedVis, vis);
 }
 
-static boolean vis_init_cb (PluginHandle * plugin)
+static bool_t vis_init_cb (PluginHandle * plugin)
 {
     vis_load (plugin);
     return TRUE;
@@ -222,7 +222,7 @@ void vis_cleanup (void)
     g_list_foreach (loaded_vis_plugins, (GFunc) vis_cleanup_cb, NULL);
 }
 
-boolean vis_plugin_start (PluginHandle * plugin)
+bool_t vis_plugin_start (PluginHandle * plugin)
 {
     VisPlugin * vp = plugin_get_header (plugin);
     g_return_val_if_fail (vp != NULL, FALSE);

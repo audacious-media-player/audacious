@@ -28,7 +28,7 @@
 #include "i18n.h"
 #include "misc.h"
 
-static boolean
+static bool_t
 has_front_cover_extension(const char *name)
 {
     char *ext;
@@ -44,10 +44,10 @@ has_front_cover_extension(const char *name)
            g_strcasecmp(ext, ".png") == 0;
 }
 
-static boolean
-cover_name_filter(const char *name, const char *filter, const boolean ret_on_empty)
+static bool_t
+cover_name_filter(const char *name, const char *filter, const bool_t ret_on_empty)
 {
-    boolean result = FALSE;
+    bool_t result = FALSE;
     char **splitted;
     char *current;
     char *lname;
@@ -78,18 +78,18 @@ cover_name_filter(const char *name, const char *filter, const boolean ret_on_emp
 }
 
 /* Check wether it's an image we want */
-static boolean is_front_cover_image (const char * file)
+static bool_t is_front_cover_image (const char * file)
 {
     char * include = get_string (NULL, "cover_name_include");
     char * exclude = get_string (NULL, "cover_name_exclude");
-    boolean accept = cover_name_filter (file, include, TRUE) &&
+    bool_t accept = cover_name_filter (file, include, TRUE) &&
      ! cover_name_filter (file, exclude, FALSE);
     g_free (include);
     g_free (exclude);
     return accept;
 }
 
-static boolean
+static bool_t
 is_file_image(const char *imgfile, const char *file_name)
 {
     char *imgfile_ext, *file_name_ext;

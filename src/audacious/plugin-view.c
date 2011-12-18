@@ -69,7 +69,7 @@ static void do_enable (GtkCellRendererToggle * cell, const char * path_str,
     gtk_tree_path_free (path);
 
     Node * n = NULL;
-    boolean enabled;
+    bool_t enabled;
     gtk_tree_model_get (model, & iter, PVIEW_COL_NODE, & n,
      PVIEW_COL_ENABLED, & enabled, -1);
     g_return_if_fail (n != NULL);
@@ -77,7 +77,7 @@ static void do_enable (GtkCellRendererToggle * cell, const char * path_str,
     plugin_enable (n->p, ! enabled);
 }
 
-static boolean list_watcher (PluginHandle * p, Node * n)
+static bool_t list_watcher (PluginHandle * p, Node * n)
 {
     GtkTreeIter iter;
     gtk_tree_model_get_iter (n->model, & iter, n->path);
@@ -86,7 +86,7 @@ static boolean list_watcher (PluginHandle * p, Node * n)
     return TRUE;
 }
 
-static boolean fill_cb (PluginHandle * p, GtkTreeModel * model)
+static bool_t fill_cb (PluginHandle * p, GtkTreeModel * model)
 {
     Node * n = g_slice_new (Node);
 
@@ -162,14 +162,14 @@ static void list_destroy (GtkTreeView * tree)
     g_object_unref ((GObject *) model);
 }
 
-static boolean config_watcher (PluginHandle * p, GtkWidget * config)
+static bool_t config_watcher (PluginHandle * p, GtkWidget * config)
 {
     gtk_widget_set_sensitive (config, plugin_has_configure (p) &&
      plugin_get_enabled (p));
     return TRUE;
 }
 
-static boolean about_watcher (PluginHandle * p, GtkWidget * about)
+static bool_t about_watcher (PluginHandle * p, GtkWidget * about)
 {
     gtk_widget_set_sensitive (about, plugin_has_about (p) && plugin_get_enabled
      (p));

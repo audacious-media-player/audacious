@@ -110,7 +110,7 @@ AUD_FUNC1 (int, playlist_entry_count, int, playlist)
  * return before the process is complete.  Hence, the caller must not assume
  * that there will be new entries in the playlist immediately. */
 AUD_VFUNC5 (playlist_entry_insert, int, playlist, int, at, const char *,
- filename, Tuple *, tuple, boolean, play)
+ filename, Tuple *, tuple, bool_t, play)
 
 /* Similar to playlist_entry_insert, adds multiple song files, playlist files,
  * or folders to a playlist.  The filenames, stored as (char *) in an index
@@ -121,7 +121,7 @@ AUD_VFUNC5 (playlist_entry_insert, int, playlist, int, at, const char *,
  * may be NULL.  Finally, the caller also gives up ownership of the indexes
  * themselves and should not access them after the call.   */
 AUD_VFUNC5 (playlist_entry_insert_batch, int, playlist, int, at,
- struct index *, filenames, struct index *, tuples, boolean, play)
+ struct index *, filenames, struct index *, tuples, bool_t, play)
 
 /* Similar to playlist_entry_insert_batch, but allows the caller to prevent some
  * items from being added by returning false from the <filter> callback.  Useful
@@ -129,7 +129,7 @@ AUD_VFUNC5 (playlist_entry_insert_batch, int, playlist, int, at,
  * an untyped pointer passed to the <filter> callback. */
 AUD_VFUNC7 (playlist_entry_insert_filtered, int, playlist, int, at,
  struct index *, filenames, struct index *, tuples, PlaylistFilterFunc, filter,
- void *, user, boolean, play)
+ void *, user, bool_t, play)
 
 /* Removes a contiguous block of <number> entries starting from the one numbered
  * <at> from a playlist.  If the last song played is in this block, playback is
@@ -144,32 +144,32 @@ AUD_FUNC2 (char *, playlist_entry_get_filename, int, playlist, int, entry)
  * none can be found.  If <fast> is nonzero, returns NULL if no decoder plugin
  * has yet been found. */
 AUD_FUNC3 (PluginHandle *, playlist_entry_get_decoder, int, playlist, int,
- entry, boolean, fast)
+ entry, bool_t, fast)
 
 /* Returns the tuple associated with an entry, or NULL if one is not available.
  * The reference count of the tuple is incremented.  If <fast> is nonzero,
  * returns NULL if metadata for the entry has not yet been read from the song
  * file. */
 AUD_FUNC3 (Tuple *, playlist_entry_get_tuple, int, playlist, int, entry,
- boolean, fast)
+ bool_t, fast)
 
 /* Returns a formatted title string for an entry.  This may include information
  * such as the filename, song title, and/or artist.  If <fast> is nonzero,
  * returns the entry's filename if metadata for the entry has not yet been read. */
 AUD_FUNC3 (char *, playlist_entry_get_title, int, playlist, int, entry,
- boolean, fast)
+ bool_t, fast)
 
 /* Returns three strings (title, artist, and album) describing an entry.  The
  * strings are pooled, and the usual cautions apply.  If <fast> is nonzero,
  * returns a "best guess" based on the entry's filename if metadata for the
  * entry has not yet been read.  May return NULL for any and all values. */
 AUD_VFUNC6 (playlist_entry_describe, int, playlist, int, entry,
- char * *, title, char * *, artist, char * *, album, boolean, fast)
+ char * *, title, char * *, artist, char * *, album, bool_t, fast)
 
 /* Returns the length in milliseconds of an entry, or -1 if the length is not
  * known.  <fast> is as in playlist_entry_get_tuple(). */
 AUD_FUNC3 (int, playlist_entry_get_length, int, playlist, int, entry,
- boolean, fast)
+ bool_t, fast)
 
 /* Sets the entry which will be played (if this playlist is selected with
  * playlist_set_playing()) when drct_play() is called.  If a song from this
@@ -184,16 +184,16 @@ AUD_FUNC1 (int, playlist_get_position, int, playlist)
 
 /* Sets whether an entry is selected. */
 AUD_VFUNC3 (playlist_entry_set_selected, int, playlist, int, entry,
- boolean, selected)
+ bool_t, selected)
 
 /* Returns whether an entry is selected. */
-AUD_FUNC2 (boolean, playlist_entry_get_selected, int, playlist, int, entry)
+AUD_FUNC2 (bool_t, playlist_entry_get_selected, int, playlist, int, entry)
 
 /* Returns the number of selected entries in a playlist. */
 AUD_FUNC1 (int, playlist_selected_count, int, playlist)
 
 /* Selects all (or none) of the entries in a playlist. */
-AUD_VFUNC2 (playlist_select_all, int, playlist, boolean, selected)
+AUD_VFUNC2 (playlist_select_all, int, playlist, bool_t, selected)
 
 /* Moves a selected entry within a playlist by an offset of <distance> entries.
  * Other selected entries are gathered around it.  Returns the offset by which
@@ -296,7 +296,7 @@ AUD_VFUNC1 (playlist_queue_delete_selected, int, playlist)
 
 /* Returns nonzero if a "playlist update" hook call is pending.  If called from
  * within the hook, the current hook call is not considered pending. */
-AUD_FUNC0 (boolean, playlist_update_pending)
+AUD_FUNC0 (bool_t, playlist_update_pending)
 
 /* May be called within the "playlist update" hook to determine the update level
  * and number of entries changed in a playlist.  Returns the update level for
@@ -307,11 +307,11 @@ AUD_FUNC0 (boolean, playlist_update_pending)
 AUD_FUNC3 (int, playlist_updated_range, int, playlist, int *, at, int *, count)
 
 /* Returns nonzero if entries are being added to a playlist in the background. */
-AUD_FUNC1 (boolean, playlist_add_in_progress, int, playlist)
+AUD_FUNC1 (bool_t, playlist_add_in_progress, int, playlist)
 
 /* Returns nonzero if entries in a playlist are being scanned for metadata in
  * the background. */
-AUD_FUNC1 (boolean, playlist_scan_in_progress, int, playlist)
+AUD_FUNC1 (bool_t, playlist_scan_in_progress, int, playlist)
 
 /* --- PLAYLIST UTILITY API --- */
 
@@ -341,8 +341,8 @@ AUD_VFUNC2 (playlist_select_by_patterns, int, playlist, const Tuple *,
  patterns)
 
 /* Returns nonzero if <filename> refers to a playlist file. */
-AUD_FUNC1 (boolean, filename_is_playlist, const char *, filename)
+AUD_FUNC1 (bool_t, filename_is_playlist, const char *, filename)
 
 /* Saves the entries in a playlist to a playlist file.  The format of the file
  * is determined from the file extension.  Returns nonzero on success. */
-AUD_FUNC2 (boolean, playlist_save, int, playlist, const char *, filename)
+AUD_FUNC2 (bool_t, playlist_save, int, playlist, const char *, filename)

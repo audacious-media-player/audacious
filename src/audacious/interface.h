@@ -26,7 +26,7 @@
 #include <gtk/gtk.h>
 #include <audacious/plugins.h>
 
-boolean interface_load (PluginHandle * plugin);
+bool_t interface_load (PluginHandle * plugin);
 void interface_unload (void);
 
 void interface_add_plugin_widget (PluginHandle * plugin, GtkWidget * widget);
@@ -34,6 +34,6 @@ void interface_remove_plugin_widget (PluginHandle * plugin, GtkWidget * widget);
 
 PluginHandle * iface_plugin_probe (void);
 PluginHandle * iface_plugin_get_current (void);
-boolean iface_plugin_set_current (PluginHandle * plugin);
+bool_t iface_plugin_set_current (PluginHandle * plugin);
 
 #endif

@@ -38,9 +38,9 @@ typedef struct {
     int rows, highlight;
     int columns;
     GList * column_types;
-    boolean frozen, blocked;
-    boolean dragging;
-    boolean clicked_row, receive_row;
+    bool_t frozen, blocked;
+    bool_t dragging;
+    bool_t clicked_row, receive_row;
     int scroll_source, scroll_speed;
 } ListModel;
 
@@ -68,7 +68,7 @@ static GType list_model_get_column_type (GtkTreeModel * _model, int column)
      RESERVED_COLUMNS));
 }
 
-static boolean list_model_get_iter (GtkTreeModel * model, GtkTreeIter * iter,
+static bool_t list_model_get_iter (GtkTreeModel * model, GtkTreeIter * iter,
  GtkTreePath * path)
 {
     int row = gtk_tree_path_get_indices (path)[0];
@@ -107,7 +107,7 @@ static void list_model_get_value (GtkTreeModel * _model, GtkTreeIter * iter,
     model->cbs->get_value (model->user, row, column - RESERVED_COLUMNS, value);
 }
 
-static boolean list_model_iter_next (GtkTreeModel * _model, GtkTreeIter * iter)
+static bool_t list_model_iter_next (GtkTreeModel * _model, GtkTreeIter * iter)
 {
     ListModel * model = (ListModel *) _model;
     int row = GPOINTER_TO_INT (iter->user_data);
@@ -118,7 +118,7 @@ static boolean list_model_iter_next (GtkTreeModel * _model, GtkTreeIter * iter)
     return TRUE;
 }
 
-static boolean list_model_iter_children (GtkTreeModel * model,
+static bool_t list_model_iter_children (GtkTreeModel * model,
  GtkTreeIter * iter, GtkTreeIter * parent)
 {
     if (parent || ((ListModel *) model)->rows < 1)
@@ -127,7 +127,7 @@ static boolean list_model_iter_children (GtkTreeModel * model,
     return TRUE;
 }
 
-static boolean list_model_iter_has_child (GtkTreeModel * model,
+static bool_t list_model_iter_has_child (GtkTreeModel * model,
  GtkTreeIter * iter)
 {
     return FALSE;
@@ -138,7 +138,7 @@ static int list_model_iter_n_children (GtkTreeModel * model, GtkTreeIter * iter)
     return iter ? 0 : ((ListModel *) model)->rows;
 }
 
-static boolean list_model_iter_nth_child (GtkTreeModel * model,
+static bool_t list_model_iter_nth_child (GtkTreeModel * model,
  GtkTreeIter * iter, GtkTreeIter * parent, int n)
 {
     if (parent || n < 0 || n >= ((ListModel *) model)->rows)
@@ -147,7 +147,7 @@ static boolean list_model_iter_nth_child (GtkTreeModel * model,
     return TRUE;
 }
 
-static boolean list_model_iter_parent (GtkTreeModel * model,
+static bool_t list_model_iter_parent (GtkTreeModel * model,
  GtkTreeIter * iter, GtkTreeIter * child)
 {
     return FALSE;
@@ -190,8 +190,8 @@ static GType list_model_get_type (void)
 
 /* ==== CALLBACKS ==== */
 
-static boolean select_allow_cb (GtkTreeSelection * sel, GtkTreeModel * model,
- GtkTreePath * path, boolean was, void * user)
+static bool_t select_allow_cb (GtkTreeSelection * sel, GtkTreeModel * model,
+ GtkTreePath * path, bool_t was, void * user)
 {
     return ! ((ListModel *) model)->frozen;
 }
@@ -221,7 +221,7 @@ static void activate_cb (GtkTreeView * tree, GtkTreePath * path,
     model->cbs->activate_row (model->user, row);
 }
 
-static boolean button_press_cb (GtkWidget * widget, GdkEventButton * event,
+static bool_t button_press_cb (GtkWidget * widget, GdkEventButton * event,
  ListModel * model)
 {
     GtkTreePath * path = NULL;
@@ -267,7 +267,7 @@ static boolean button_press_cb (GtkWidget * widget, GdkEventButton * event,
     return FALSE;
 }
 
-static boolean button_release_cb (GtkWidget * widget, GdkEventButton * event,
+static bool_t button_release_cb (GtkWidget * widget, GdkEventButton * event,
  ListModel * model)
 {
     /* If button_press_cb set "frozen", and we were not dragging, we need to
@@ -285,7 +285,7 @@ static boolean button_release_cb (GtkWidget * widget, GdkEventButton * event,
     return FALSE;
 }
 
-static boolean key_press_cb (GtkWidget * widget, GdkEventKey * event, ListModel * model)
+static bool_t key_press_cb (GtkWidget * widget, GdkEventKey * event, ListModel * model)
 {
     /* GTK thinks the spacebar should activate a row; I (jlindgren) disagree */
     if (event->keyval == ' ' && ! (event->state & GDK_CONTROL_MASK))
@@ -344,7 +344,7 @@ static void stop_autoscroll (ListModel * model)
     model->scroll_speed = 0;
 }
 
-static boolean autoscroll (GtkWidget * widget)
+static bool_t autoscroll (GtkWidget * widget)
 {
     ListModel * model = (ListModel *) gtk_tree_view_get_model
      ((GtkTreeView *) widget);
@@ -378,7 +378,7 @@ static void start_autoscroll (ListModel * model, GtkWidget * widget, int speed)
     model->scroll_speed = speed;
 }
 
-static boolean drag_motion (GtkWidget * widget, GdkDragContext * context,
+static bool_t drag_motion (GtkWidget * widget, GdkDragContext * context,
  int x, int y, unsigned int time, ListModel * model)
 {
     g_signal_stop_emission_by_name (widget, "drag-motion");
@@ -438,12 +438,12 @@ static void drag_leave (GtkWidget * widget, GdkDragContext * context,
     stop_autoscroll (model);
 }
 
-static boolean drag_drop (GtkWidget * widget, GdkDragContext * context, int x,
+static bool_t drag_drop (GtkWidget * widget, GdkDragContext * context, int x,
  int y, unsigned int time, ListModel * model)
 {
     g_signal_stop_emission_by_name (widget, "drag-drop");
 
-    boolean success = TRUE;
+    bool_t success = TRUE;
     int row = calc_drop_row (model, widget, x, y);
 
     if (model->dragging && model->cbs->shift_rows) /* dragging within same list */

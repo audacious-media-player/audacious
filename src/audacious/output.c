@@ -64,7 +64,7 @@ void output_set_volume (int l, int r)
 }
 
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-static boolean locked = FALSE;
+static bool_t locked = FALSE;
 
 #define LOCK do {pthread_mutex_lock (& mutex); locked = TRUE;} while (0)
 #define UNLOCK do {locked = FALSE; pthread_mutex_unlock (& mutex);} while (0)
@@ -75,14 +75,14 @@ static boolean locked = FALSE;
 #define LOCKED_VIS g_return_if_fail (locked && vis_runner_locked ())
 #define LOCKED_VIS_RET(a) g_return_val_if_fail (locked && vis_runner_locked (), a)
 
-static boolean opened = FALSE;
-static boolean leave_open = FALSE;
+static bool_t opened = FALSE;
+static bool_t leave_open = FALSE;
 
-static boolean waiting, aborted, paused;
+static bool_t waiting, aborted, paused;
 static int decoder_format, decoder_channels, decoder_rate, effect_channels,
  effect_rate, output_format, output_channels, output_rate;
 static int64_t frames_written;
-static boolean have_replay_gain;
+static bool_t have_replay_gain;
 static ReplayGainInfo replay_gain_info;
 
 static void reset_time (void)
@@ -109,7 +109,7 @@ static void real_close (void)
     leave_open = FALSE;
 }
 
-static boolean open_audio (int format, int rate, int channels)
+static bool_t open_audio (int format, int rate, int channels)
 {
     LOCKED_VIS_RET (FALSE);
     g_return_val_if_fail (! opened, FALSE);
@@ -159,11 +159,11 @@ static boolean open_audio (int format, int rate, int channels)
     return opened;
 }
 
-static boolean output_open_audio (int format, int rate, int channels)
+static bool_t output_open_audio (int format, int rate, int channels)
 {
     g_return_val_if_fail (cop != NULL, FALSE);
     LOCK_VIS;
-    boolean success = open_audio (format, rate, channels);
+    bool_t success = open_audio (format, rate, channels);
     UNLOCK_VIS;
     return success;
 }
@@ -368,7 +368,7 @@ static void output_close_audio (void)
     UNLOCK_VIS;
 }
 
-static void do_pause (boolean p)
+static void do_pause (bool_t p)
 {
     LOCKED_VIS;
     g_return_if_fail (opened);
@@ -377,7 +377,7 @@ static void do_pause (boolean p)
     paused = p;
 }
 
-static void output_pause (boolean p)
+static void output_pause (bool_t p)
 {
     g_return_if_fail (cop != NULL);
     LOCK_VIS;
@@ -457,7 +457,7 @@ static void set_leave_open (void)
     }
 }
 
-static boolean output_buffer_playing (void)
+static bool_t output_buffer_playing (void)
 {
     g_return_val_if_fail (cop != NULL, FALSE);
     LOCK_VIS;
@@ -543,7 +543,7 @@ void output_drain (void)
     UNLOCK_VIS;
 }
 
-static boolean probe_cb (PluginHandle * p, PluginHandle * * pp)
+static bool_t probe_cb (PluginHandle * p, PluginHandle * * pp)
 {
     OutputPlugin * op = plugin_get_header (p);
     g_return_val_if_fail (op != NULL && op->init != NULL, TRUE);
@@ -570,7 +570,7 @@ PluginHandle * output_plugin_get_current (void)
     return (cop != NULL) ? plugin_by_header (cop) : NULL;
 }
 
-boolean output_plugin_set_current (PluginHandle * plugin)
+bool_t output_plugin_set_current (PluginHandle * plugin)
 {
     if (cop != NULL)
     {

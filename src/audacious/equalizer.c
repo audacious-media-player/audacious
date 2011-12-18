@@ -38,7 +38,7 @@ static const float CF[EQ_BANDS] = {31.25, 62.5, 125, 250, 500, 1000, 2000,
  4000, 8000, 16000};
 
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-static boolean active;
+static bool_t active;
 static int channels, rate;
 static float a[EQ_BANDS][2]; /* A weights */
 static float b[EQ_BANDS][2]; /* B weights */

@@ -33,7 +33,7 @@
 #include "config.h"
 #include "libaudgui.h"
 
-static char * select_file (boolean save, const char * default_filename)
+static char * select_file (bool_t save, const char * default_filename)
 {
     GtkWidget * dialog = gtk_file_chooser_dialog_new (save ?
      _("Export Playlist") : _("Import Playlist"), NULL, save ?
@@ -66,7 +66,7 @@ static char * select_file (boolean save, const char * default_filename)
     return filename;
 }
 
-static boolean confirm_overwrite (const char * filename)
+static bool_t confirm_overwrite (const char * filename)
 {
     GtkWidget * dialog = gtk_message_dialog_new (NULL, 0, GTK_MESSAGE_QUESTION,
      GTK_BUTTONS_YES_NO, _("Overwrite %s?"), filename);

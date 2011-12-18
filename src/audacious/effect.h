@@ -34,7 +34,7 @@ void effect_finish (float * * data, int * samples);
 int effect_decoder_to_output_time (int time);
 int effect_output_to_decoder_time (int time);
 
-boolean effect_plugin_start (PluginHandle * plugin);
+bool_t effect_plugin_start (PluginHandle * plugin);
 void effect_plugin_stop (PluginHandle * plugin);
 
 #endif

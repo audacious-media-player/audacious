@@ -29,9 +29,9 @@ typedef struct {
     void (* get_value) (void * user, int row, int column, GValue * value);
 
     /* selection (optional) */
-    boolean (* get_selected) (void * user, int row);
-    void (* set_selected) (void * user, int row, boolean selected);
-    void (* select_all) (void * user, boolean selected);
+    bool_t (* get_selected) (void * user, int row);
+    void (* set_selected) (void * user, int row, bool_t selected);
+    void (* select_all) (void * user, bool_t selected);
 
     void (* activate_row) (void * user, int row); /* optional */
     void (* right_click) (void * user, GdkEventButton * event); /* optional */

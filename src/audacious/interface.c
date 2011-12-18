@@ -40,7 +40,7 @@ static pthread_mutex_t error_mutex = PTHREAD_MUTEX_INITIALIZER;
 static GQueue error_queue = G_QUEUE_INIT;
 static int error_source;
 
-boolean interface_load (PluginHandle * plugin)
+bool_t interface_load (PluginHandle * plugin)
 {
     IfacePlugin * i = plugin_get_header (plugin);
     g_return_val_if_fail (i, FALSE);
@@ -62,7 +62,7 @@ void interface_unload (void)
     current_interface = NULL;
 }
 
-void interface_show (boolean show)
+void interface_show (bool_t show)
 {
     g_return_if_fail (current_interface);
 
@@ -70,7 +70,7 @@ void interface_show (boolean show)
         current_interface->show (show);
 }
 
-boolean interface_is_shown (void)
+bool_t interface_is_shown (void)
 {
     g_return_val_if_fail (current_interface, FALSE);
 
@@ -79,7 +79,7 @@ boolean interface_is_shown (void)
     return TRUE;
 }
 
-boolean interface_is_focused (void)
+bool_t interface_is_focused (void)
 {
     g_return_val_if_fail (current_interface, FALSE);
 
@@ -88,7 +88,7 @@ boolean interface_is_focused (void)
     return TRUE;
 }
 
-static boolean error_idle_func (void * unused)
+static bool_t error_idle_func (void * unused)
 {
     pthread_mutex_lock (& error_mutex);
 
@@ -126,11 +126,11 @@ void interface_show_error (const char * message)
 }
 
 /*
- * boolean play_button
+ * bool_t play_button
  *       TRUE  - open files
  *       FALSE - add files
  */
-void interface_show_filebrowser (boolean play_button)
+void interface_show_filebrowser (bool_t play_button)
 {
     g_return_if_fail (current_interface);
 
@@ -146,7 +146,7 @@ void interface_show_jump_to_track (void)
         current_interface->show_jump_to_track ();
 }
 
-static boolean delete_cb (GtkWidget * window, GdkEvent * event, PluginHandle *
+static bool_t delete_cb (GtkWidget * window, GdkEvent * event, PluginHandle *
  plugin)
 {
     plugin_enable (plugin, FALSE);
@@ -200,7 +200,7 @@ void interface_uninstall_toolbar (void * widget)
         g_object_unref (widget);
 }
 
-static boolean probe_cb (PluginHandle * p, PluginHandle * * pp)
+static bool_t probe_cb (PluginHandle * p, PluginHandle * * pp)
 {
     * pp = p;
     return FALSE;
@@ -220,7 +220,7 @@ PluginHandle * iface_plugin_get_current (void)
     return current_plugin;
 }
 
-boolean iface_plugin_set_current (PluginHandle * plugin)
+bool_t iface_plugin_set_current (PluginHandle * plugin)
 {
     hook_call ("config save", NULL); /* tell interface to save layout */
 

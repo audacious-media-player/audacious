@@ -27,7 +27,7 @@
 #include "plugin.h"
 #include "plugins.h"
 
-static const char * get_extension (const char * filename, boolean quiet)
+static const char * get_extension (const char * filename, bool_t quiet)
 {
     const char * s = strrchr (filename, '/');
     if (! s)
@@ -45,7 +45,7 @@ FAIL:
     return NULL;
 }
 
-boolean filename_is_playlist (const char * filename)
+bool_t filename_is_playlist (const char * filename)
 {
     const char * ext = get_extension (filename, TRUE);
     if (! ext)
@@ -70,7 +70,7 @@ static PlaylistPlugin * get_plugin (const char * filename)
     return plugin_get_header (plugin);
 }
 
-boolean playlist_load (const char * filename, char * * title,
+bool_t playlist_load (const char * filename, char * * title,
  struct index * * filenames_p, struct index * * tuples_p)
 {
     AUDDBG ("Loading playlist %s.\n", filename);
@@ -83,7 +83,7 @@ boolean playlist_load (const char * filename, char * * title,
 
     struct index * filenames = index_new ();
     struct index * tuples = index_new ();
-    boolean success = pp->load (filename, file, title, filenames, tuples);
+    bool_t success = pp->load (filename, file, title, filenames, tuples);
 
     vfs_fclose (file);
 
@@ -108,7 +108,7 @@ boolean playlist_load (const char * filename, char * * title,
     return TRUE;
 }
 
-boolean playlist_insert_playlist_raw (int list, int at,
+bool_t playlist_insert_playlist_raw (int list, int at,
  const char * filename)
 {
     char * title = NULL;
@@ -126,13 +126,13 @@ boolean playlist_insert_playlist_raw (int list, int at,
     return TRUE;
 }
 
-boolean playlist_save (int list, const char * filename)
+bool_t playlist_save (int list, const char * filename)
 {
     AUDDBG ("Saving playlist %s.\n", filename);
     PlaylistPlugin * pp = get_plugin (filename);
     g_return_val_if_fail (pp && PLUGIN_HAS_FUNC (pp, save), FALSE);
 
-    boolean fast = get_bool (NULL, "metadata_on_play");
+    bool_t fast = get_bool (NULL, "metadata_on_play");
 
     VFSFile * file = vfs_fopen (filename, "w");
     if (! file)
@@ -152,7 +152,7 @@ boolean playlist_save (int list, const char * filename)
         index_append (tuples, playlist_entry_get_tuple (list, i, fast));
     }
 
-    boolean success = pp->save (filename, file, title, filenames, tuples);
+    bool_t success = pp->save (filename, file, title, filenames, tuples);
 
     vfs_fclose (file);
     str_unref (title);

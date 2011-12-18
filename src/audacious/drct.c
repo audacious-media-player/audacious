@@ -67,17 +67,17 @@ void drct_stop (void)
         playback_stop ();
 }
 
-boolean drct_get_playing (void)
+bool_t drct_get_playing (void)
 {
     return playback_get_playing ();
 }
 
-boolean drct_get_ready (void)
+bool_t drct_get_ready (void)
 {
     return playback_get_ready ();
 }
 
-boolean drct_get_paused (void)
+bool_t drct_get_paused (void)
 {
     return playback_get_paused ();
 }
@@ -178,7 +178,7 @@ int drct_pl_get_length (void)
 
 void drct_pl_next (void)
 {
-    boolean play = playback_get_playing ();
+    bool_t play = playback_get_playing ();
     if (playlist_get_playing () < 0)
         playlist_set_playing (playlist_get_active ());
     if (playlist_next_song (playlist_get_playing (), get_bool (NULL, "repeat")) && play)
@@ -187,7 +187,7 @@ void drct_pl_next (void)
 
 void drct_pl_prev (void)
 {
-    boolean play = playback_get_playing ();
+    bool_t play = playback_get_playing ();
     if (playlist_get_playing () < 0)
         playlist_set_playing (playlist_get_active ());
     if (playlist_prev_song (playlist_get_playing ()) && play)
@@ -202,7 +202,7 @@ int drct_pl_get_pos (void)
 void drct_pl_set_pos (int pos)
 {
     int playlist = playlist_get_active ();
-    boolean play = playback_get_playing ();
+    bool_t play = playback_get_playing ();
 
     playlist_set_position (playlist, pos);
 
@@ -234,7 +234,7 @@ int drct_pl_get_time (int pos)
     return playlist_entry_get_length (playlist_get_active (), pos, FALSE);
 }
 
-static void add_list (GList * list, int at, boolean to_temp, boolean play)
+static void add_list (GList * list, int at, bool_t to_temp, bool_t play)
 {
     if (to_temp)
         playlist_set_active (playlist_get_temporary ());
@@ -344,7 +344,7 @@ int drct_pq_get_entry (int queue_position)
     return playlist_queue_get_entry (playlist_get_active (), queue_position);
 }
 
-boolean drct_pq_is_queued (int entry)
+bool_t drct_pq_is_queued (int entry)
 {
     return (drct_pq_get_queue_position (entry) >= 0);
 }
