@@ -18,8 +18,6 @@
  * the use of this software.
  */
 
-#include "audstrings.h"
-
 #include <limits.h>
 #include <math.h>
 #include <stdio.h>
@@ -27,6 +25,8 @@
 #include <glib.h>
 #include <string.h>
 #include <ctype.h>
+
+#include "audstrings.h"
 
 #define FROM_HEX(c) ((c) < 'A' ? (c) - '0' : (c) < 'a' ? 10 + (c) - 'A' : 10 + (c) - 'a')
 #define TO_HEX(i) ((i) < 10 ? '0' + (i) : 'A' + (i) - 10)

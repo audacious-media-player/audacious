@@ -23,24 +23,20 @@
 #ifndef TAG_MODULE_H
 #define TAG_MODULE_H
 
-G_BEGIN_DECLS
-
-#include <glib.h>
 #include "libaudcore/tuple.h"
 #include "libaudcore/vfs.h"
 
 typedef Tuple* pTuple;
 
 typedef struct _module {
-    gchar *name;
-    gint type; /* set to TAG_TYPE_NONE if the module cannot create new tags */
-    gboolean(*can_handle_file) (VFSFile *fd);
-    gboolean (* read_tag) (Tuple * tuple, VFSFile * handle);
-    gboolean (* read_image) (VFSFile * handle, void * * data, gint * size);
-    gboolean (* write_tag) (const Tuple * tuple, VFSFile * handle);
+    char *name;
+    int type; /* set to TAG_TYPE_NONE if the module cannot create new tags */
+    boolean(*can_handle_file) (VFSFile *fd);
+    boolean (* read_tag) (Tuple * tuple, VFSFile * handle);
+    boolean (* read_image) (VFSFile * handle, void * * data, int * size);
+    boolean (* write_tag) (const Tuple * tuple, VFSFile * handle);
 } tag_module_t;
 
-tag_module_t * find_tag_module (VFSFile * handle, gint new_type);
+tag_module_t * find_tag_module (VFSFile * handle, int new_type);
 
-G_END_DECLS
 #endif /* TAG_MODULE_H */

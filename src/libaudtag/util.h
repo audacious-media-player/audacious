@@ -22,7 +22,8 @@
 
 #define TAGUTIL_H
 
-#include <glib.h>
+#include <stdint.h>
+#include <time.h>
 
 #include "libaudcore/tuple.h"
 #include "libaudcore/vfs.h"
@@ -157,45 +158,40 @@ enum {
     GENRE_EURO_HOUSE
 };
 
-extern gboolean tag_verbose;
+extern boolean tag_verbose;
 
 #define TAGDBG(...) do {if (tag_verbose) {printf ("%s:%d [%s]: ", __FILE__, __LINE__, __FUNCTION__); printf (__VA_ARGS__);}} while (0)
 
-time_t unix_time(guint64 win_time);
+time_t unix_time(uint64_t win_time);
 
-guint16 get_year(guint64 win_time);
+uint16_t get_year(uint64_t win_time);
 
-gchar *utf8(gunichar2* s);
+char *read_char_data(VFSFile *fd, int size);
+boolean write_char_data(VFSFile *f, char *data, size_t i);
 
-gchar *read_char_data(VFSFile *fd, int size);
-gboolean write_char_data(VFSFile *f, gchar *data, size_t i);
-
-gunichar2 *fread_utf16(VFSFile* f, guint64 size);
-gboolean write_utf16(VFSFile *f, gunichar2 *data, size_t i);
-
-guint8 read_uint8(VFSFile *fd);
-guint16 read_LEuint16(VFSFile *fd);
-guint16 read_BEuint16(VFSFile *fd);
-guint32 read_LEuint32(VFSFile *fd);
-guint32 read_BEuint32(VFSFile *fd);
-guint64 read_LEuint64(VFSFile *fd);
-guint64 read_BEuint64(VFSFile *fd);
+uint8_t read_uint8(VFSFile *fd);
+uint16_t read_LEuint16(VFSFile *fd);
+uint16_t read_BEuint16(VFSFile *fd);
+uint32_t read_LEuint32(VFSFile *fd);
+uint32_t read_BEuint32(VFSFile *fd);
+uint64_t read_LEuint64(VFSFile *fd);
+uint64_t read_BEuint64(VFSFile *fd);
 
 
-gboolean write_uint8(VFSFile *fd, guint8 val);
-gboolean write_BEuint16(VFSFile *fd, guint16 val);
-gboolean write_LEuint16(VFSFile *fd, guint16 val);
-gboolean write_BEuint32(VFSFile *fd, guint32 val);
-gboolean write_LEuint32(VFSFile *fd, guint32 val);
-gboolean write_BEuint64(VFSFile *fd, guint64 val);
-gboolean write_LEuint64(VFSFile *fd, guint64 val);
+boolean write_uint8(VFSFile *fd, uint8_t val);
+boolean write_BEuint16(VFSFile *fd, uint16_t val);
+boolean write_LEuint16(VFSFile *fd, uint16_t val);
+boolean write_BEuint32(VFSFile *fd, uint32_t val);
+boolean write_LEuint32(VFSFile *fd, uint32_t val);
+boolean write_BEuint64(VFSFile *fd, uint64_t val);
+boolean write_LEuint64(VFSFile *fd, uint64_t val);
 
-guint64 read_LEint64(VFSFile *fd);
-gboolean cut_beginning_tag (VFSFile * handle, gsize tag_size);
+uint64_t read_LEint64(VFSFile *fd);
+boolean cut_beginning_tag (VFSFile * handle, int64_t tag_size);
 
-gchar *convert_numericgenre_to_text(gint numericgenre);
+char *convert_numericgenre_to_text(gint numericgenre);
 
-guint32 unsyncsafe32 (guint32 x);
-guint32 syncsafe32 (guint32 x);
+uint32_t unsyncsafe32 (uint32_t x);
+uint32_t syncsafe32 (uint32_t x);
 
 #endif

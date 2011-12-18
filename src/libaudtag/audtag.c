@@ -18,6 +18,8 @@
  * using our public API to be a derived work.
  */
 
+#include <glib.h>
+
 #include "libaudcore/tuple.h"
 #include "audtag.h"
 #include "tag_module.h"

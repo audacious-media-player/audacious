@@ -57,31 +57,6 @@ gboolean write_char_data(VFSFile * f, gchar * data, size_t i)
     return (vfs_fwrite(data, i, 1, f) == i);
 }
 
-gchar *utf8(gunichar2 * s)
-{
-    g_return_val_if_fail(s != NULL, NULL);
-    return g_utf16_to_utf8(s, -1, NULL, NULL, NULL);
-}
-
-gunichar2 *fread_utf16(VFSFile * f, guint64 size)
-{
-    gunichar2 *p = (gunichar2 *) g_malloc0(size);
-    if (vfs_fread(p, 1, size, f) != size)
-    {
-        g_free(p);
-        p = NULL;
-    }
-    gchar *s = utf8(p);
-    TAGDBG("Converted to UTF8: '%s'\n", s);
-    g_free(s);
-    return p;
-}
-
-gboolean write_utf16(VFSFile * f, gunichar2 * data, size_t i)
-{
-    return (vfs_fwrite(data, i, 1, f) == i);
-}
-
 guint8 read_uint8(VFSFile * fd)
 {
     guint16 i;
@@ -175,7 +150,7 @@ gboolean write_LEuint64(VFSFile * fd, guint64 val)
     return (vfs_fwrite(&le_val, 8, 1, fd) == 8);
 }
 
-gboolean cut_beginning_tag (VFSFile * handle, gsize tag_size)
+gboolean cut_beginning_tag (VFSFile * handle, gint64 tag_size)
 {
     guchar buffer[16384];
     gsize offset = 0, readed;

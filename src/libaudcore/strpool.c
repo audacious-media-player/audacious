@@ -17,6 +17,7 @@
  * the use of this software.
  */
 
+#include <glib.h>
 #include <pthread.h>
 #include <stdarg.h>
 #include <stdio.h>
@@ -26,10 +27,6 @@
 
 #include "config.h"
 #include "core.h"
-
-#ifdef USE_STRINGPOOL
-#include <glib.h>
-#endif
 
 /* Each string in the pool is allocated with five leading bytes: a 32-bit
  * reference count and a one-byte signature, the '@' character. */
