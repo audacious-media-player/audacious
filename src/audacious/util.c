@@ -285,6 +285,9 @@ static char * get_nonblank_field (const Tuple * tuple, int field)
 
 static char * str_get_decoded (char * str)
 {
+    if (! str)
+        return NULL;
+
     str_decode_percent (str, -1, str);
     return str_get (str);
 }
