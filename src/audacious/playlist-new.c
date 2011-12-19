@@ -2368,7 +2368,7 @@ void playlist_load_state (void)
             parse_next (handle);
 
         if (position >= 0 && position < entries)
-            playlist->position = index_get (playlist->entries, position);
+            set_position (playlist, index_get (playlist->entries, position));
     }
 
     fclose (handle);
