@@ -50,7 +50,7 @@ cd $WRKDIR || exit 1
 tar -xzvf $RELEASENAME-working.tar.gz || exit 1
 cd $RELEASENAME || exit 1
 rm -rf .gitignore
-rm -rf .indent.pro scripts src/libaudacious++ src/tests
+rm -rf scripts
 sh autogen.sh
 rm -rf autogen.sh autom4te.cache
 
