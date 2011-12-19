@@ -1,6 +1,6 @@
 /*
  * effects-menu.c
- * Copyright 2010 John Lindgren
+ * Copyright 2010-2011 John Lindgren
  *
  * This file is part of Audacious.
  *
@@ -54,7 +54,7 @@ static void settings_cb (GtkMenuItem * settings, PluginHandle * plugin)
     if (! aud_plugin_get_enabled (plugin))
         return;
 
-    EffectPlugin * header = aud_plugin_get_header (plugin);
+    Plugin * header = aud_plugin_get_header (plugin);
     g_return_if_fail (header != NULL);
     header->configure ();
 }
@@ -89,5 +89,12 @@ GtkWidget * audgui_create_effects_menu (void)
     GtkWidget * menu = gtk_menu_new ();
     aud_plugin_for_each (PLUGIN_TYPE_EFFECT, (PluginForEachFunc) add_item_cb,
      menu);
+    return menu;
+}
+
+GtkWidget * audgui_create_vis_menu (void)
+{
+    GtkWidget * menu = gtk_menu_new ();
+    aud_plugin_for_each (PLUGIN_TYPE_VIS, (PluginForEachFunc) add_item_cb, menu);
     return menu;
 }

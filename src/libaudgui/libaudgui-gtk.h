@@ -1,6 +1,6 @@
 /*
  * libaudgui-gtk.h
- * Copyright 2010 Audacious Development Team
+ * Copyright 2010-2011 Audacious Development Team
  *
  * This file is part of Audacious.
  *
@@ -27,6 +27,7 @@
 
 /* effects-menu.c */
 GtkWidget * audgui_create_effects_menu (void);
+GtkWidget * audgui_create_vis_menu (void);
 
 /* iface-menu.c */
 GtkWidget * audgui_create_iface_menu (void);
