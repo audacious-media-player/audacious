@@ -349,7 +349,12 @@ DONE:
     else
     {
         if (! title)
+        {
             title = str_get_decoded (stream_name (buf));
+
+            if (! title)
+                title = str_get_decoded (buf);
+        }
         else if (! artist)
             artist = str_get_decoded (stream_name (buf));
         else if (! album)
