@@ -38,10 +38,25 @@
 #include "tuple.h"
 #include "tuple_formatter.h"
 
+#define BLOCK_VALS 4
+
 typedef struct {
     char *name;
     TupleValueType type;
 } TupleBasicType;
+
+typedef union {
+    char * str;
+    int x;
+} TupleVal;
+
+typedef struct _TupleBlock TupleBlock;
+
+struct _TupleBlock {
+    TupleBlock * next;
+    char fields[BLOCK_VALS];
+    TupleVal vals[BLOCK_VALS];
+};
 
 /**
  * Structure for holding and passing around miscellaneous track
@@ -50,11 +65,7 @@ typedef struct {
 struct _Tuple {
     int refcount;
     int64_t setmask;
-
-    union {
-        int x;
-        char * s;
-    } vals[TUPLE_FIELDS];
+    TupleBlock * blocks;
 
     int nsubtunes;                 /**< Number of subtunes, if any. Values greater than 0
                                          mean that there are subtunes and #subtunes array
@@ -182,17 +193,71 @@ TupleValueType tuple_field_get_type (int field)
     return tuple_fields[field].type;
 }
 
+static TupleVal * lookup_val (Tuple * tuple, int field, bool_t add, bool_t remove)
+{
+    if ((tuple->setmask & BIT (field)))
+    {
+        for (TupleBlock * block = tuple->blocks; block; block = block->next)
+        {
+            for (int i = 0; i < BLOCK_VALS; i ++)
+            {
+                if (block->fields[i] == field)
+                {
+                    if (remove)
+                    {
+                        tuple->setmask &= ~BIT (field);
+                        block->fields[i] = -1;
+                    }
+
+                    return & block->vals[i];
+                }
+            }
+        }
+    }
+
+    if (! add)
+        return NULL;
+
+    tuple->setmask |= BIT (field);
+
+    for (TupleBlock * block = tuple->blocks; block; block = block->next)
+    {
+        for (int i = 0; i < BLOCK_VALS; i ++)
+        {
+            if (block->fields[i] < 0)
+            {
+                block->fields[i] = field;
+                return & block->vals[i];
+            }
+        }
+    }
+
+    TupleBlock * block = g_slice_new0 (TupleBlock);
+    memset (block->fields, -1, BLOCK_VALS);
+
+    block->next = tuple->blocks;
+    tuple->blocks = block;
+
+    block->fields[0] = field;
+    return & block->vals[0];
+}
+
 static void tuple_destroy_unlocked (Tuple * tuple)
 {
-    int i;
-    int64_t bit = 1;
-
-    for (i = 0; i < TUPLE_FIELDS; i++)
+    TupleBlock * next;
+    for (TupleBlock * block = tuple->blocks; block; block = next)
     {
-        if ((tuple->setmask & bit) && tuple_fields[i].type == TUPLE_STRING)
-            str_unref (tuple->vals[i].s);
+        next = block->next;
 
-        bit <<= 1;
+        for (int i = 0; i < BLOCK_VALS; i ++)
+        {
+            int field = block->fields[i];
+            if (field >= 0 && tuple_fields[field].type == TUPLE_STRING)
+                str_unref (block->vals[i].str);
+        }
+
+        memset (block, 0, sizeof (TupleBlock));
+        g_slice_free (TupleBlock, block);
     }
 
     g_free(tuple->subtunes);
@@ -268,31 +333,32 @@ void tuple_set_filename (Tuple * tuple, const char * filename)
  * @param[in] src Tuple structure to be made a copy of.
  * @return Pointer to newly allocated Tuple.
  */
-Tuple *
-tuple_copy(const Tuple *src)
+Tuple * tuple_copy (const Tuple * old)
 {
-    Tuple *dst;
-    int i;
-
     pthread_mutex_lock (& mutex);
 
-    dst = g_memdup (src, sizeof (Tuple));
+    Tuple * new = tuple_new ();
 
-    int64_t bit = 1;
-
-    for (i = 0; i < TUPLE_FIELDS; i++)
+    for (int f = 0; f < TUPLE_FIELDS; f ++)
     {
-        if ((dst->setmask & bit) && tuple_fields[i].type == TUPLE_STRING)
-            str_ref (dst->vals[i].s);
-
-        bit <<= 1;
+        TupleVal * oldval = lookup_val ((Tuple *) old, f, FALSE, FALSE);
+        if (oldval)
+        {
+            TupleVal * newval = lookup_val (new, f, TRUE, FALSE);
+            if (tuple_fields[f].type == TUPLE_STRING)
+                newval->str = str_ref (oldval->str);
+            else
+                newval->x = oldval->x;
+        }
     }
 
-    if (dst->subtunes)
-        dst->subtunes = g_memdup (dst->subtunes, sizeof (int) * dst->nsubtunes);
+    new->nsubtunes = old->nsubtunes;
+
+    if (old->subtunes)
+        new->subtunes = g_memdup (old->subtunes, sizeof (int) * old->nsubtunes);
 
     pthread_mutex_unlock (& mutex);
-    return dst;
+    return new;
 }
 
 /**
@@ -320,8 +386,8 @@ void tuple_set_int (Tuple * tuple, int nfield, const char * field, int x)
 
     pthread_mutex_lock (& mutex);
 
-    tuple->setmask |= BIT (nfield);
-    tuple->vals[nfield].x = x;
+    TupleVal * val = lookup_val (tuple, nfield, TRUE, FALSE);
+    val->x = x;
 
     pthread_mutex_unlock (& mutex);
 }
@@ -341,11 +407,10 @@ void tuple_set_str (Tuple * tuple, int nfield, const char * field, const char * 
 
     pthread_mutex_lock (& mutex);
 
-    if ((tuple->setmask & BIT (nfield)))
-        str_unref (tuple->vals[nfield].s);
-
-    tuple->setmask |= BIT (nfield);
-    tuple->vals[nfield].s = str_get (str);
+    TupleVal * val = lookup_val (tuple, nfield, TRUE, FALSE);
+    if (val->str)
+        str_unref (val->str);
+    val->str = str_get (str);
 
     pthread_mutex_unlock (& mutex);
 }
@@ -354,22 +419,21 @@ void tuple_unset (Tuple * tuple, int nfield, const char * field)
 {
     if (nfield < 0)
         nfield = tuple_field_by_name (field);
-    if (nfield < 0 || nfield >= TUPLE_FIELDS || tuple_fields[nfield].type != TUPLE_STRING)
+    if (nfield < 0 || nfield >= TUPLE_FIELDS)
         return;
 
     pthread_mutex_lock (& mutex);
 
-    if ((tuple->setmask & BIT (nfield)))
+    TupleVal * val = lookup_val (tuple, nfield, FALSE, TRUE);
+    if (val)
     {
-        tuple->setmask &= ~BIT (nfield);
-
         if (tuple_fields[nfield].type == TUPLE_STRING)
         {
-            str_unref (tuple->vals[nfield].s);
-            tuple->vals[nfield].s = NULL;
+            str_unref (val->str);
+            val->str = NULL;
         }
-        else /* TUPLE_INT */
-            tuple->vals[nfield].x = 0;
+        else
+            val->x = 0;
     }
 
     pthread_mutex_unlock (& mutex);
@@ -395,7 +459,9 @@ TupleValueType tuple_get_value_type (const Tuple * tuple, int nfield, const char
     pthread_mutex_lock (& mutex);
 
     TupleValueType type = TUPLE_UNKNOWN;
-    if ((tuple->setmask & BIT (nfield)))
+
+    TupleVal * val = lookup_val ((Tuple *) tuple, nfield, FALSE, FALSE);
+    if (val)
         type = tuple_fields[nfield].type;
 
     pthread_mutex_unlock (& mutex);
@@ -411,7 +477,11 @@ char * tuple_get_str (const Tuple * tuple, int nfield, const char * field)
 
     pthread_mutex_lock (& mutex);
 
-    char * str = str_ref (tuple->vals[nfield].s);
+    char * str = NULL;
+
+    TupleVal * val = lookup_val ((Tuple *) tuple, nfield, FALSE, FALSE);
+    if (val)
+        str = str_ref (val->str);
 
     pthread_mutex_unlock (& mutex);
     return str;
@@ -438,7 +508,11 @@ int tuple_get_int (const Tuple * tuple, int nfield, const char * field)
 
     pthread_mutex_lock (& mutex);
 
-    int x = tuple->vals[nfield].x;
+    int x = 0;
+
+    TupleVal * val = lookup_val ((Tuple *) tuple, nfield, FALSE, FALSE);
+    if (val)
+        x = val->x;
 
     pthread_mutex_unlock (& mutex);
     return x;
