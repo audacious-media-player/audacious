@@ -24,6 +24,7 @@
 #include <libaudcore/hook.h>
 
 #include "init.h"
+#include "libaudgui.h"
 #include "libaudgui-gtk.h"
 
 static const char * const audgui_defaults[] = {
@@ -61,6 +62,7 @@ void audgui_cleanup (void)
     hook_dissociate ("playlist set playing", playlist_set_playing_cb);
     hook_dissociate ("playlist position", playlist_position_cb);
 
+    audgui_jump_to_track_hide ();
     audgui_pixbuf_uncache ();
 
     _aud_api_table = NULL;
