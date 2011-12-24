@@ -522,6 +522,7 @@ static void shut_down (void)
 #endif
 
     adder_cleanup ();
+    history_cleanup ();
     playlist_end ();
 
     AUDDBG ("Unloading lowlevel plugins.\n");

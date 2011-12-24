@@ -23,8 +23,10 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <audacious/misc.h>
 #include <libaudcore/hook.h>
+
+#include "main.h"
+#include "misc.h"
 
 #define MAX_ENTRIES 30
 
@@ -76,6 +78,20 @@ static void history_load (void)
 
     loaded = TRUE;
     hook_associate ("config save", (HookFunction) history_save, NULL);
+}
+
+void history_cleanup (void)
+{
+    if (! loaded)
+        return;
+
+    hook_dissociate ("config save", (HookFunction) history_save);
+
+    g_queue_foreach (& history, (GFunc) g_free, NULL);
+    g_queue_clear (& history);
+
+    loaded = FALSE;
+    modified = FALSE;
 }
 
 const char * history_get (int entry)

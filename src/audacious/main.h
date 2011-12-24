@@ -36,6 +36,9 @@ void config_load (void);
 void config_save (void);
 void config_cleanup (void);
 
+/* history.c */
+void history_cleanup (void);
+
 /* main.c */
 extern bool_t headless;
 bool_t do_autosave (void);
