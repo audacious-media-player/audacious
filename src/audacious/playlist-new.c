@@ -459,7 +459,7 @@ static void queue_update (int level, int list, int at, int count)
     update_level = MAX (update_level, level);
 
     if (! update_source)
-        update_source = g_idle_add_full (G_PRIORITY_HIGH_IDLE, update, NULL, NULL);
+        update_source = g_idle_add_full (G_PRIORITY_HIGH, update, NULL, NULL);
 }
 
 bool_t playlist_update_pending (void)
