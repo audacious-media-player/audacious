@@ -37,7 +37,8 @@
 #include "icons-stock.h"
 #include "ui_jumptotrack_cache.h"
 
-static void watchdog (void * hook_data, void * user_data);
+static void update_cb (void * data, void * user);
+static void activate_cb (void * data, void * user);
 
 static GtkWidget *jump_to_track_win = NULL;
 static JumpToTrackCache* cache = NULL;
@@ -49,7 +50,8 @@ audgui_jump_to_track_hide(void)
 {
     if (watching)
     {
-        hook_dissociate ("playlist update", watchdog);
+        hook_dissociate ("playlist update", update_cb);
+        hook_dissociate ("playlist activate", activate_cb);
         watching = FALSE;
     }
 
@@ -185,7 +187,7 @@ static void clear_cb (GtkWidget * widget)
     gtk_widget_grab_focus (filter_entry);
 }
 
-static void watchdog (void * hook_data, void * user_data)
+static void update_cb (void * data, void * user)
 {
     g_return_if_fail (treeview);
 
@@ -193,7 +195,7 @@ static void watchdog (void * hook_data, void * user_data)
     GtkTreeIter iter;
     GtkTreePath * path = NULL;
 
-    if (GPOINTER_TO_INT (hook_data) <= PLAYLIST_UPDATE_SELECTION)
+    if (GPOINTER_TO_INT (data) <= PLAYLIST_UPDATE_SELECTION)
         return;
 
     if (cache != NULL)
@@ -203,7 +205,7 @@ static void watchdog (void * hook_data, void * user_data)
     }
 
     /* If it's only a metadata update, save and restore the cursor position. */
-    if (GPOINTER_TO_INT (hook_data) <= PLAYLIST_UPDATE_METADATA &&
+    if (GPOINTER_TO_INT (data) <= PLAYLIST_UPDATE_METADATA &&
      gtk_tree_selection_get_selected (gtk_tree_view_get_selection
      ((GtkTreeView *) treeview), & model, & iter))
         path = gtk_tree_model_get_path (model, & iter);
@@ -217,6 +219,11 @@ static void watchdog (void * hook_data, void * user_data)
         gtk_tree_view_scroll_to_cell ((GtkTreeView *) treeview, path, NULL, TRUE, 0.5, 0);
         gtk_tree_path_free (path);
     }
+}
+
+static void activate_cb (void * data, void * user)
+{
+    update_cb (GINT_TO_POINTER (PLAYLIST_UPDATE_STRUCTURE), NULL);
 }
 
 static void toggle_button_cb (GtkToggleButton * toggle, const char * setting)
@@ -359,7 +366,8 @@ void audgui_jump_to_track (void)
     if (! watching)
     {
         fill_list ();
-        hook_associate ("playlist update", watchdog, NULL);
+        hook_associate ("playlist update", update_cb, NULL);
+        hook_associate ("playlist activate", activate_cb, NULL);
         watching = TRUE;
     }
 
