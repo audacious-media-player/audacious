@@ -32,12 +32,18 @@ typedef struct {
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 static GHashTable * hooks;
 
+/* str_unref() may be a macro */
+static void str_unref_cb (void * str)
+{
+    str_unref (str);
+}
+
 void hook_associate (const char * name, HookFunction func, void * user)
 {
     pthread_mutex_lock (& mutex);
 
     if (! hooks)
-        hooks = g_hash_table_new_full (g_str_hash, g_str_equal, str_unref, NULL);
+        hooks = g_hash_table_new_full (g_str_hash, g_str_equal, str_unref_cb, NULL);
 
     HookItem * item = g_slice_new (HookItem);
     item->func = func;

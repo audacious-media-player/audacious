@@ -20,6 +20,8 @@
 #ifndef LIBAUDCORE_CORE_H
 #define LIBAUDCORE_CORE_H
 
+/* #define STRPOOL_DEBUG */
+
 /* "bool_t" means "int" for compatibility with GLib */
 #undef bool_t
 #define bool_t int
@@ -27,27 +29,41 @@
 /* Simple sanity check to catch (1) strings that are still in use after their
  * reference count has dropped to zero and (2) strings that should have been
  * pooled but never were.  If the check fails, the program is aborted. */
-#define STR_CHECK(str) do {if ((str) && (str)[-1] != '@') strpool_abort ();} while (0)
+#define STR_CHECK(str) do {if ((str) && (str)[-1] != '@') strpool_abort (str);} while (0)
 
 /* If the pool contains a copy of <str>, increments its reference count.
  * Otherwise, adds a copy of <str> to the pool with a reference count of one.
  * In either case, returns the copy.  Because this copy may be shared by other
  * parts of the code, it should not be modified.  If <str> is NULL, simply
  * returns NULL with no side effects. */
+#ifdef STRPOOL_DEBUG
+char * str_get_debug (const char * str, const char * file, int line);
+#define str_get(str) str_get_debug (str, __FILE__, __LINE__)
+#else
 char * str_get (const char * str);
+#endif
 
 /* Increments the reference count of <str>, where <str> is the address of a
  * string already in the pool.  Faster than calling str_get() a second time.
  * Returns <str> for convenience.  If <str> is NULL, simply returns NULL with no
  * side effects. */
+#ifdef STRPOOL_DEBUG
+char * str_ref_debug (char * str, const char * file, int line);
+#define str_ref(str) str_ref_debug (str, __FILE__, __LINE__)
+#else
 char * str_ref (char * str);
+#endif
 
 /* Decrements the reference count of <str>, where <str> is the address of a
  * string in the pool.  If the reference count drops to zero, releases the
  * memory used by <str>.   If <str> is NULL, simply returns NULL with no side
- * effects.  <str> is a (void *) so that str_unref() has the same type as
- * free(). */
-void str_unref (void * str);
+ * effects. */
+#ifdef STRPOOL_DEBUG
+void str_unref_debug (char * str, const char * file, int line);
+#define str_unref(str) str_unref_debug (str, __FILE__, __LINE__)
+#else
+void str_unref (char * str);
+#endif
 
 /* Calls str_get() on the first <len> characters of <str>.  If <str> has less
  * than or equal to <len> characters, equivalent to str_get(). */
@@ -57,7 +73,7 @@ char * str_nget (const char * str, int len);
 char * str_printf (const char * format, ...);
 
 /* Used by STR_CHECK; should not be called directly. */
-void strpool_abort (void);
+void strpool_abort (char * str);
 
 /* Releases all memory used by the string pool.  If strings remain in the pool,
  * a warning may be printed to stderr in order to reveal memory leaks. */

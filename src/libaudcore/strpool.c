@@ -32,9 +32,29 @@
  * reference count and a one-byte signature, the '@' character. */
 
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-
-#ifdef USE_STRINGPOOL
 static GHashTable * table;
+
+#ifdef STRPOOL_DEBUG
+static GHashTable * logged;
+
+static void str_log (const char * str, const char * op, const char * file, int line)
+{
+    if (! logged)
+        logged = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
+
+    GList * list = g_hash_table_lookup (logged, str);
+    list = g_list_prepend (list, g_strdup_printf ("%s by %s:%d", op, file, line));
+    g_hash_table_insert (logged, g_strdup (str), list);
+}
+
+static void str_log_dump (const char * str)
+{
+    if (! logged)
+        return;
+
+    for (GList * node = g_hash_table_lookup (logged, str); node; node = node->next)
+        printf (" - %s\n", (char *) node->data);
+}
 #endif
 
 static void str_destroy (void * str)
@@ -43,7 +63,11 @@ static void str_destroy (void * str)
     free ((char *) str - 5);
 }
 
+#ifdef STRPOOL_DEBUG
+char * str_get_debug (const char * str, const char * file, int line)
+#else
 char * str_get (const char * str)
+#endif
 {
     if (! str)
         return NULL;
@@ -51,7 +75,10 @@ char * str_get (const char * str)
     char * copy;
     pthread_mutex_lock (& mutex);
 
-#ifdef USE_STRINGPOOL
+#ifdef STRPOOL_DEBUG
+    str_log (str, "get", file, line);
+#endif
+
     if (! table)
         table = g_hash_table_new_full (g_str_hash, g_str_equal, NULL, str_destroy);
 
@@ -62,7 +89,6 @@ char * str_get (const char * str)
     }
     else
     {
-#endif
         void * mem = malloc (6 + strlen (str));
         (* (int32_t *) mem) = 1;
 
@@ -70,22 +96,28 @@ char * str_get (const char * str)
         copy[-1] = '@';
         strcpy (copy, str);
 
-#ifdef USE_STRINGPOOL
         g_hash_table_insert (table, copy, copy);
     }
-#endif
 
     pthread_mutex_unlock (& mutex);
     return copy;
 }
 
+#ifdef STRPOOL_DEBUG
+char * str_ref_debug (char * str, const char * file, int line)
+#else
 char * str_ref (char * str)
+#endif
 {
     if (! str)
         return NULL;
 
     pthread_mutex_lock (& mutex);
     STR_CHECK (str);
+
+#ifdef STRPOOL_DEBUG
+    str_log (str, "ref", file, line);
+#endif
 
     void * mem = str - 5;
     (* (int32_t *) mem) ++;
@@ -94,21 +126,25 @@ char * str_ref (char * str)
     return str;
 }
 
-void str_unref (void * str)
+#ifdef STRPOOL_DEBUG
+void str_unref_debug (char * str, const char * file, int line)
+#else
+void str_unref (char * str)
+#endif
 {
     if (! str)
         return;
 
     pthread_mutex_lock (& mutex);
-    STR_CHECK ((char *) str);
+    STR_CHECK (str);
 
-    void * mem = (char *) str - 5;
-    if (! -- (* (int32_t *) mem))
-#ifdef USE_STRINGPOOL
-        g_hash_table_remove (table, str);
-#else
-        str_destroy (str);
+#ifdef STRPOOL_DEBUG
+    str_log (str, "unref", file, line);
 #endif
+
+    void * mem = str - 5;
+    if (! -- (* (int32_t *) mem))
+        g_hash_table_remove (table, str);
 
     pthread_mutex_unlock (& mutex);
 }
@@ -142,24 +178,29 @@ char * str_printf (const char * format, ...)
     return str_get (buf);
 }
 
-void strpool_abort (void)
+void strpool_abort (char * str)
 {
-    fprintf (stderr, "String pool consistency check failed, aborting ...\n");
+    fprintf (stderr, "String not in pool: %s\n", str);
+#ifdef STRPOOL_DEBUG
+    str_log_dump (str);
+#endif
     abort ();
 }
 
-#ifdef USE_STRINGPOOL
 static void str_leaked (void * key, void * str, void * unused)
 {
     fprintf (stderr, "String not freed: %s\n", (char *) str);
-}
+#ifdef STRPOOL_DEBUG
+    str_log_dump (str);
 #endif
+}
 
 void strpool_shutdown (void)
 {
-#ifdef USE_STRINGPOOL
+    if (! table)
+        return;
+
     g_hash_table_foreach (table, str_leaked, NULL);
     g_hash_table_destroy (table);
     table = NULL;
-#endif
 }
