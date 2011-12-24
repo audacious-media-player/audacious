@@ -422,8 +422,7 @@ static void queue_update (gint level, gint list, gint at, gint count)
     }
 
     if (! update_source)
-        update_source = g_idle_add_full (G_PRIORITY_HIGH_IDLE, update, NULL,
-         NULL);
+        update_source = g_idle_add_full (G_PRIORITY_HIGH, update, NULL, NULL);
 }
 
 gboolean playlist_update_pending (void)
