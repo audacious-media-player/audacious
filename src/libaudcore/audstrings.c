@@ -26,7 +26,10 @@
 #include <string.h>
 #include <ctype.h>
 
+#include <audacious/i18n.h>
+
 #include "audstrings.h"
+#include "config.h"
 
 #define FROM_HEX(c) ((c) < 'A' ? (c) - '0' : (c) < 'a' ? 10 + (c) - 'A' : 10 + (c) - 'a')
 #define TO_HEX(i) ((i) < 10 ? '0' + (i) : 'A' + (i) - 10)
@@ -187,6 +190,9 @@ char * uri_to_filename (const char * uri)
 
 char * uri_to_display (const char * uri)
 {
+    if (! strncmp (uri, "cdda://?", 8))
+        return g_strdup_printf (_("Audio CD, track %s"), uri + 8);
+
     char buf[strlen (uri) + 1];
 
 #ifdef _WIN32
