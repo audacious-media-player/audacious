@@ -144,7 +144,7 @@ run_filebrowser_gtk2style(bool_t play_button, bool_t show)
     gtk_box_set_spacing(GTK_BOX(bbox), 6);
     gtk_box_pack_end(GTK_BOX(hbox), bbox, TRUE, TRUE, 3);
 
-    close_button = gtk_button_new_from_stock(GTK_STOCK_CANCEL);
+    close_button = gtk_button_new_from_stock(GTK_STOCK_CLOSE);
     action_button = gtk_button_new_from_stock(action_stock);
     gtk_container_add(GTK_CONTAINER(bbox), close_button);
     gtk_container_add(GTK_CONTAINER(bbox), action_button);
