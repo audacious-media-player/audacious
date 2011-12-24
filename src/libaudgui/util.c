@@ -151,7 +151,10 @@ GdkPixbuf * audgui_pixbuf_for_entry (int list, int entry)
     /* Don't get album art for network files -- too slow. */
     if (! strncmp (name, "http://", 7) || ! strncmp (name, "https://", 8) ||
      ! strncmp (name, "mms://", 6))
+    {
+        str_unref (name);
         goto FALLBACK;
+    }
 
     AUDDBG ("Trying to load pixbuf for %s.\n", name);
     PluginHandle * decoder = aud_playlist_entry_get_decoder (list, entry, FALSE);
