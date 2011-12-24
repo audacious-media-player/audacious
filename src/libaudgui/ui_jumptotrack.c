@@ -243,7 +243,7 @@ static void create_window (void)
     gtk_window_set_type_hint(GTK_WINDOW(jump_to_track_win),
                              GDK_WINDOW_TYPE_HINT_DIALOG);
 
-    gtk_window_set_title(GTK_WINDOW(jump_to_track_win), _("Jump to Track"));
+    gtk_window_set_title(GTK_WINDOW(jump_to_track_win), _("Jump to Song"));
 
     g_signal_connect (jump_to_track_win, "key_press_event", (GCallback) keypress_cb, NULL);
     g_signal_connect (jump_to_track_win, "delete-event", (GCallback) delete_cb, NULL);
