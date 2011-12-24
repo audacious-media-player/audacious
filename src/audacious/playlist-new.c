@@ -716,7 +716,7 @@ void playlist_init (void)
     scan_playlist = scan_row = 0;
 
     for (int i = 0; i < SCAN_THREADS; i ++)
-        pthread_create (& scan_threads[i], NULL, scanner, NULL);
+        pthread_create (& scan_threads[i], NULL, scanner, GINT_TO_POINTER (i));
 
     LEAVE;
 }
