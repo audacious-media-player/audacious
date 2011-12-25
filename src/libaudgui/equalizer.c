@@ -167,6 +167,13 @@ void audgui_show_equalizer_window (void)
 
 void audgui_hide_equalizer_window (void)
 {
-    if (equalizer_window != NULL)
-        gtk_widget_hide (equalizer_window);
+    if (! equalizer_window)
+        return;
+
+    hook_dissociate ("set equalizer_active", (HookFunction) on_off_update);
+    hook_dissociate ("set equalizer_bands", (HookFunction) slider_update);
+    hook_dissociate ("set equalizer_preamp", (HookFunction) slider_update);
+
+    gtk_widget_destroy (equalizer_window);
+    equalizer_window = NULL;
 }
