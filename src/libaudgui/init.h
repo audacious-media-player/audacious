@@ -25,6 +25,9 @@
 void audgui_init (AudAPITable * table);
 void audgui_cleanup (void);
 
+/* queue-manager.c */
+void audgui_queue_manager_cleanup (void);
+
 /* ui_playlist_manager.c */
 void audgui_playlist_manager_cleanup (void);
 

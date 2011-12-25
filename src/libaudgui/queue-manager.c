@@ -28,6 +28,7 @@
 #include <libaudcore/hook.h>
 
 #include "config.h"
+#include "init.h"
 #include "libaudgui.h"
 #include "list.h"
 
@@ -174,7 +175,6 @@ static void response_cb (GtkDialog * dialog, int response)
         break;
     }
 }
-
 void audgui_queue_manager_show (void)
 {
     if (qm_win)
@@ -208,4 +208,10 @@ void audgui_queue_manager_show (void)
     g_signal_connect (qm_win, "response", (GCallback) response_cb, NULL);
 
     gtk_widget_show_all (qm_win);
+}
+
+void audgui_queue_manager_cleanup (void)
+{
+    if (qm_win)
+        gtk_widget_destroy (qm_win);
 }
