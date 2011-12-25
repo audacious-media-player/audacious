@@ -148,7 +148,8 @@ static void update_hook (void * data, void * user)
     if (newrows < oldrows)
         audgui_list_delete_rows (qm_list, newrows, oldrows - newrows);
 
-    audgui_list_set_focus (qm_list, MIN (focus, newrows - 1));
+    if (focus > newrows - 1)
+        audgui_list_set_focus (qm_list, newrows - 1);
 }
 
 static void destroy_cb (void)
