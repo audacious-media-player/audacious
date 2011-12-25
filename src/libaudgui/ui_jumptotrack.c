@@ -35,6 +35,7 @@
 
 #include "config.h"
 #include "icons-stock.h"
+#include "list.h"
 #include "ui_jumptotrack_cache.h"
 
 static void update_cb (void * data, void * user);
@@ -42,6 +43,7 @@ static void activate_cb (void * data, void * user);
 
 static GtkWidget *jump_to_track_win = NULL;
 static JumpToTrackCache* cache = NULL;
+static const GArray * search_matches;
 static GtkWidget * treeview, * filter_entry, * queue_button;
 static bool_t watching = FALSE;
 
@@ -63,6 +65,8 @@ audgui_jump_to_track_hide(void)
         ui_jump_to_track_cache_free (cache);
         cache = NULL;
     }
+
+    search_matches = NULL;
 }
 
 static int get_selected_entry (void)
@@ -153,31 +157,11 @@ static void fill_list (void)
     if (! cache)
         cache = ui_jump_to_track_cache_new();
 
-    GtkListStore * store = (GtkListStore *) gtk_tree_view_get_model ((GtkTreeView *) treeview);
-    GtkTreeIter iter;
+    search_matches = ui_jump_to_track_cache_search (cache, gtk_entry_get_text
+     ((GtkEntry *) filter_entry));
 
-    gtk_list_store_clear(store);
-
-    const GArray * search_matches = ui_jump_to_track_cache_search (cache,
-     gtk_entry_get_text ((GtkEntry *) filter_entry));
-
-    int playlist = aud_playlist_get_active ();
-
-    for (int i = 0; i < search_matches->len; i ++)
-    {
-        int entry = g_array_index (search_matches, int, i);
-        char * title = aud_playlist_entry_get_title (playlist, entry, TRUE);
-        if (! title)
-            continue;
-
-        gtk_list_store_append(store, &iter);
-        gtk_list_store_set (store, & iter, 0, 1 + entry, 1, title, -1);
-        str_unref (title);
-    }
-
-    if (gtk_tree_model_get_iter_first ((GtkTreeModel *) store, & iter))
-        gtk_tree_selection_select_iter (gtk_tree_view_get_selection
-         ((GtkTreeView *) treeview), & iter);
+    audgui_list_delete_rows (treeview, 0, audgui_list_row_count (treeview));
+    audgui_list_insert_rows (treeview, 0, search_matches->len);
 }
 
 static void clear_cb (GtkWidget * widget)
@@ -237,6 +221,32 @@ static bool_t delete_cb (void)
     return TRUE;
 }
 
+static void list_get_value (void * user, int row, int column, GValue * value)
+{
+    g_return_if_fail (search_matches);
+    g_return_if_fail (column >= 0 && column < 2);
+    g_return_if_fail (row >= 0 && row < search_matches->len);
+
+    int playlist = aud_playlist_get_active ();
+    int entry = g_array_index (search_matches, int, row);
+
+    switch (column)
+    {
+    case 0:
+        g_value_set_int (value, 1 + entry);
+        break;
+    case 1:;
+        char * title = aud_playlist_entry_get_title (playlist, entry, TRUE);
+        g_return_if_fail (title);
+        g_value_set_string (value, title);
+        str_unref (title);
+        break;
+    }
+}
+
+static const AudguiListCallbacks callbacks = {
+ .get_value = list_get_value};
+
 static void create_window (void)
 {
     jump_to_track_win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
@@ -254,24 +264,9 @@ static void create_window (void)
     GtkWidget * vbox = gtk_vbox_new (FALSE, 5);
     gtk_container_add(GTK_CONTAINER(jump_to_track_win), vbox);
 
-    GtkListStore * jtf_store = gtk_list_store_new (2, G_TYPE_INT, G_TYPE_STRING);
-    treeview = gtk_tree_view_new_with_model(GTK_TREE_MODEL(jtf_store));
-    g_object_unref(jtf_store);
-
-    GtkTreeViewColumn * column = gtk_tree_view_column_new ();
-    gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(treeview), FALSE);
-    gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
-
-    GtkCellRenderer * renderer = gtk_cell_renderer_text_new ();
-    gtk_tree_view_column_pack_start(column, renderer, FALSE);
-    gtk_tree_view_column_set_attributes(column, renderer, "text", 0, NULL);
-
-    renderer = gtk_cell_renderer_text_new();
-    gtk_tree_view_column_pack_start(column, renderer, FALSE);
-    gtk_tree_view_column_set_attributes(column, renderer, "text", 1, NULL);
-    gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);
-
-    gtk_tree_view_set_search_column(GTK_TREE_VIEW(treeview), 1);
+    treeview = audgui_list_new (& callbacks, NULL, 0);
+    audgui_list_add_column (treeview, NULL, 0, G_TYPE_INT, 7);
+    audgui_list_add_column (treeview, NULL, 1, G_TYPE_STRING, -1);
 
     g_signal_connect (gtk_tree_view_get_selection ((GtkTreeView *) treeview),
      "changed", (GCallback) selection_changed, NULL);
