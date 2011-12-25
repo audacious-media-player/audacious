@@ -64,6 +64,7 @@ void audgui_cleanup (void)
 
     audgui_jump_to_track_hide ();
     audgui_pixbuf_uncache ();
+    audgui_playlist_manager_cleanup ();
 
     _aud_api_table = NULL;
 }

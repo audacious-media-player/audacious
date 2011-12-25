@@ -26,6 +26,7 @@
 #include <libaudcore/hook.h>
 
 #include "config.h"
+#include "init.h"
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
 #include "list.h"
@@ -330,4 +331,18 @@ void audgui_playlist_manager (void)
     gtk_widget_show_all( playman_win );
 
     hook_associate ("config save", save_config_cb, playman_win);
+}
+
+void audgui_playlist_manager_cleanup (void)
+{
+    if (! playman_win)
+        return;
+
+    hook_dissociate ("playlist update", update_hook);
+    hook_dissociate ("playlist activate", activate_hook);
+    hook_dissociate ("playlist set playing", position_hook);
+    hook_dissociate ("config save", save_config_cb);
+
+    gtk_widget_destroy (playman_win);
+    playman_win = NULL;
 }

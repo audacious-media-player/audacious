@@ -25,5 +25,8 @@
 void audgui_init (AudAPITable * table);
 void audgui_cleanup (void);
 
+/* ui_playlist_manager.c */
+void audgui_playlist_manager_cleanup (void);
+
 /* util.c */
 void audgui_pixbuf_uncache (void);
