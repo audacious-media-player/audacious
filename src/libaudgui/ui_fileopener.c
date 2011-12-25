@@ -66,13 +66,14 @@ action_button_cb(GtkWidget *widget, gpointer data)
     g_slist_foreach(files, (GFunc) g_free, NULL);
     g_slist_free(files);
 
-    gboolean close_dialog = gtk_toggle_button_get_active ((GtkToggleButton *) toggle);
-    aud_set_bool ("audgui", "close_dialog_open", close_dialog);
-
-    if (close_dialog)
+    if (gtk_toggle_button_get_active ((GtkToggleButton *) toggle))
         gtk_widget_destroy (window);
 }
 
+static void toggled_cb (GtkToggleButton * toggle, void * unused)
+{
+    aud_set_bool ("audgui", "close_dialog_open", gtk_toggle_button_get_active (toggle));
+}
 
 static void
 close_button_cb(GtkWidget *widget, gpointer data)
@@ -137,6 +138,7 @@ run_filebrowser_gtk2style(gboolean play_button, gboolean show)
     toggle = gtk_check_button_new_with_label(toggle_text);
     gtk_toggle_button_set_active ((GtkToggleButton *) toggle, aud_get_bool
      ("audgui", "close_dialog_open"));
+    g_signal_connect (toggle, "toggled", (GCallback) toggled_cb, NULL);
     gtk_box_pack_start(GTK_BOX(hbox), toggle, TRUE, TRUE, 3);
 
     bbox = gtk_hbutton_box_new();
