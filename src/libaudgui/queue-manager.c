@@ -134,8 +134,19 @@ static void remove_selected (void)
 
 static void update_hook (void * data, void * user)
 {
-    audgui_list_delete_rows (qm_list, 0, audgui_list_row_count (qm_list));
-    audgui_list_insert_rows (qm_list, 0, aud_playlist_queue_count (aud_playlist_get_active ()));
+    int oldrows = audgui_list_row_count (qm_list);
+    int newrows = aud_playlist_queue_count (aud_playlist_get_active ());
+    int focus = audgui_list_get_focus (qm_list);
+
+    audgui_list_update_rows (qm_list, 0, MIN (oldrows, newrows));
+    audgui_list_update_selection (qm_list, 0, MIN (oldrows, newrows));
+
+    if (newrows > oldrows)
+        audgui_list_insert_rows (qm_list, oldrows, newrows - oldrows);
+    if (newrows < oldrows)
+        audgui_list_delete_rows (qm_list, newrows, oldrows - newrows);
+
+    audgui_list_set_focus (qm_list, MIN (focus, newrows - 1));
 }
 
 static void destroy_cb (void)
