@@ -197,17 +197,18 @@ void audgui_queue_manager_show (void)
     qm_win = gtk_dialog_new_with_buttons (_("Queue Manager"), NULL, 0,
      GTK_STOCK_REMOVE, RESPONSE_REMOVE, GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
      NULL);
-    gtk_window_set_default_size ((GtkWindow *) qm_win, 250, 250);
+    gtk_window_set_default_size ((GtkWindow *) qm_win, 400, 250);
 
     GtkWidget * vbox = gtk_dialog_get_content_area ((GtkDialog *) qm_win);
 
     GtkWidget * scrolled = gtk_scrolled_window_new (NULL, NULL);
+    gtk_scrolled_window_set_shadow_type ((GtkScrolledWindow *) scrolled, GTK_SHADOW_IN);
     gtk_box_pack_start ((GtkBox *) vbox, scrolled, TRUE, TRUE, 0);
 
     int count = aud_playlist_queue_count (aud_playlist_get_active ());
     qm_list = audgui_list_new (& callbacks, NULL, count);
     gtk_tree_view_set_headers_visible ((GtkTreeView *) qm_list, FALSE);
-    audgui_list_add_column (qm_list, NULL, 0, G_TYPE_INT, 2);
+    audgui_list_add_column (qm_list, NULL, 0, G_TYPE_INT, 7);
     audgui_list_add_column (qm_list, NULL, 1, G_TYPE_STRING, -1);
     gtk_container_add ((GtkContainer *) scrolled, qm_list);
 
