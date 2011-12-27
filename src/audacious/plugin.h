@@ -47,8 +47,8 @@
  * the API tables), increment _AUD_PLUGIN_VERSION *and* set
  * _AUD_PLUGIN_VERSION_MIN to the same value. */
 
-#define _AUD_PLUGIN_VERSION_MIN 37 /* 3.2-devel */
-#define _AUD_PLUGIN_VERSION     37
+#define _AUD_PLUGIN_VERSION_MIN 38 /* 3.2-alpha2 */
+#define _AUD_PLUGIN_VERSION     38
 
 /* A NOTE ON THREADS
  *
@@ -397,7 +397,7 @@ struct _InputPlugin
      * size in bytes of that block.  The data may be in any format supported by
      * GTK.  Audacious will free the data when it is no longer needed. */
     bool_t (* get_song_image) (const char * filename, VFSFile * file,
-     void * * data, int * size);
+     void * * data, int64_t * size);
 
     /* Must try to play this file.  "playback" is a structure containing output-
      * related functions which the plugin may make use of.  It also contains a

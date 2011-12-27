@@ -121,6 +121,43 @@ make_directory(const char * path, mode_t mode)
                g_strerror(errno));
 }
 
+char * write_temp_file (void * data, int64_t len)
+{
+    char * name = g_strdup_printf ("%s/audacious-temp-XXXXXX", g_get_tmp_dir ());
+
+    int handle = mkstemp (name);
+    if (handle < 0)
+    {
+        fprintf (stderr, "Error creating temporary file: %s\n", strerror (errno));
+        g_free (name);
+        return NULL;
+    }
+
+    while (len)
+    {
+        int64_t written = write (handle, data, len);
+        if (written < 0)
+        {
+            fprintf (stderr, "Error writing %s: %s\n", name, strerror (errno));
+            close (handle);
+            g_free (name);
+            return NULL;
+        }
+
+        data += written;
+        len -= written;
+    }
+
+    if (close (handle) < 0)
+    {
+        fprintf (stderr, "Error closing %s: %s\n", name, strerror (errno));
+        g_free (name);
+        return NULL;
+    }
+
+    return name;
+}
+
 char * get_path_to_self (void)
 {
 #if defined _WIN32 || defined HAVE_PROC_SELF_EXE

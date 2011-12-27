@@ -19,6 +19,8 @@
  * using our public API to be a derived work.
  */
 
+/* Header for all those files that have just one or two public identifiers. */
+
 #ifndef _AUDACIOUS_MAIN_H
 #define _AUDACIOUS_MAIN_H
 
@@ -27,6 +29,10 @@
 /* adder.c */
 void adder_init (void);
 void adder_cleanup (void);
+
+/* art.c */
+void art_init (void);
+void art_cleanup (void);
 
 /* chardet.c */
 void chardet_init (void);
@@ -52,5 +58,8 @@ void signals_init (void);
 
 /* smclient.c */
 void smclient_init (void);
+
+/* ui_albumart.c */
+char * get_associated_image_file (const char * filename);
 
 #endif

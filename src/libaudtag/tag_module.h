@@ -33,7 +33,7 @@ typedef struct _module {
     int type; /* set to TAG_TYPE_NONE if the module cannot create new tags */
     bool_t(*can_handle_file) (VFSFile *fd);
     bool_t (* read_tag) (Tuple * tuple, VFSFile * handle);
-    bool_t (* read_image) (VFSFile * handle, void * * data, int * size);
+    bool_t (* read_image) (VFSFile * handle, void * * data, int64_t * size);
     bool_t (* write_tag) (const Tuple * tuple, VFSFile * handle);
 } tag_module_t;
 

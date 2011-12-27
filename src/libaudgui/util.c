@@ -27,7 +27,6 @@
 #include <audacious/gtk-compat.h>
 #include <audacious/i18n.h>
 #include <audacious/playlist.h>
-#include <audacious/plugin.h>
 #include <audacious/misc.h>
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
@@ -124,7 +123,7 @@ CREATED:
     gtk_window_present ((GtkWindow *) * widget);
 }
 
-GdkPixbuf * audgui_pixbuf_from_data (void * data, int size)
+GdkPixbuf * audgui_pixbuf_from_data (const void * data, int64_t size)
 {
     GdkPixbuf * pixbuf = NULL;
     GdkPixbufLoader * loader = gdk_pixbuf_loader_new ();
@@ -148,39 +147,16 @@ GdkPixbuf * audgui_pixbuf_for_entry (int list, int entry)
     char * name = aud_playlist_entry_get_filename (list, entry);
     g_return_val_if_fail (name, NULL);
 
-    /* Don't get album art for network files -- too slow. */
-    if (! strncmp (name, "http://", 7) || ! strncmp (name, "https://", 8) ||
-     ! strncmp (name, "mms://", 6))
-    {
-        str_unref (name);
-        goto FALLBACK;
-    }
+    const void * data;
+    int64_t size;
 
-    AUDDBG ("Trying to load pixbuf for %s.\n", name);
-    PluginHandle * decoder = aud_playlist_entry_get_decoder (list, entry, FALSE);
-    if (! decoder)
-        goto FALLBACK;
+    aud_art_get_data (name, & data, & size);
 
-    void * data;
-    int size;
-
-    if (aud_file_read_image (name, decoder, & data, & size))
+    if (data)
     {
         GdkPixbuf * p = audgui_pixbuf_from_data (data, size);
-        g_free (data);
-        if (p)
-        {
-            str_unref (name);
-            return p;
-        }
-    }
+        aud_art_unref (name);
 
-    char * assoc = aud_get_associated_image_file (name);
-
-    if (assoc)
-    {
-        GdkPixbuf * p = gdk_pixbuf_new_from_file (assoc, NULL);
-        g_free (assoc);
         if (p)
         {
             str_unref (name);
@@ -190,7 +166,6 @@ GdkPixbuf * audgui_pixbuf_for_entry (int list, int entry)
 
     str_unref (name);
 
-FALLBACK:;
     AUDDBG ("Using fallback pixbuf.\n");
     static GdkPixbuf * fallback = NULL;
     if (! fallback)

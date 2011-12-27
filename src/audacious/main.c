@@ -484,6 +484,7 @@ static void init_two (int * p_argc, char * * * p_argv)
 
     playlist_init ();
     adder_init ();
+    art_init ();
     load_playlists ();
 
 #ifdef USE_DBUS
@@ -522,6 +523,7 @@ static void shut_down (void)
 #endif
 
     adder_cleanup ();
+    art_cleanup ();
     history_cleanup ();
     playlist_end ();
 

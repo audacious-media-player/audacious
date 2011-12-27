@@ -926,10 +926,10 @@ static gboolean parse_apic (const guchar * _data, gint size, gchar * * mime,
     return TRUE;
 }
 
-static gboolean id3v24_read_image (VFSFile * handle, void * * image_data, gint *
- image_size)
+static gboolean id3v24_read_image (VFSFile * handle, void * * image_data,
+ gint64 * image_size64)
 {
-    gint version, header_size, data_size, footer_size, parsed;
+    gint version, header_size, data_size, footer_size, parsed, image_size;
     gboolean syncsafe;
     gint64 offset;
     gboolean found = FALSE;
@@ -950,7 +950,7 @@ static gboolean id3v24_read_image (VFSFile * handle, void * * image_data, gint *
             break;
 
         if (! strcmp (key, "APIC") && parse_apic (data, size, & mime, & type,
-         & desc, image_data, image_size))
+         & desc, image_data, & image_size))
         {
             g_free (mime);
             g_free (desc);
@@ -969,6 +969,9 @@ static gboolean id3v24_read_image (VFSFile * handle, void * * image_data, gint *
         g_free (data);
         parsed += frame_size;
     }
+
+    if (found)
+        * image_size64 = image_size;
 
     return found;
 }

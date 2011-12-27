@@ -213,7 +213,7 @@ Tuple * file_read_tuple (const char * filename, PluginHandle * decoder)
 }
 
 bool_t file_read_image (const char * filename, PluginHandle * decoder,
- void * * data, int * size)
+ void * * data, int64_t * size)
 {
     if (! input_plugin_has_images (decoder))
         return FALSE;
@@ -227,6 +227,12 @@ bool_t file_read_image (const char * filename, PluginHandle * decoder,
 
     if (handle)
         vfs_fclose (handle);
+
+    if (! success)
+    {
+        * data = NULL;
+        * size = 0;
+    }
 
     return success;
 }

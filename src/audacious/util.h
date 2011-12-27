@@ -37,6 +37,7 @@ bool_t dir_foreach (const char * path, DirForeachFunc func, void * user_data);
 
 int file_get_mtime (const char * filename);
 void make_directory(const char * path, mode_t mode);
+char * write_temp_file (void * data, int64_t len);
 
 char * get_path_to_self (void);
 

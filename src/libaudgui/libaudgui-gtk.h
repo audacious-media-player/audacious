@@ -40,7 +40,7 @@ void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
  const char * title, const char * text);
 void audgui_connect_check_box (GtkWidget * box, bool_t * setting);
 
-GdkPixbuf * audgui_pixbuf_from_data (void * data, int size);
+GdkPixbuf * audgui_pixbuf_from_data (const void * data, int64_t size);
 GdkPixbuf * audgui_pixbuf_for_entry (int playlist, int entry);
 GdkPixbuf * audgui_pixbuf_for_current (void);
 void audgui_pixbuf_scale_within (GdkPixbuf * * pixbuf, int size);

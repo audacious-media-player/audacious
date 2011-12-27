@@ -44,7 +44,7 @@ gboolean tag_tuple_read (Tuple * tuple, VFSFile * handle)
     return module->read_tag (tuple, handle);
 }
 
-gboolean tag_image_read (VFSFile * handle, void * * data, gint * size)
+gboolean tag_image_read (VFSFile * handle, void * * data, gint64 * size)
 {
     tag_module_t * module = find_tag_module (handle, TAG_TYPE_NONE);
 

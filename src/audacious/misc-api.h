@@ -23,6 +23,28 @@
 
 /* CAUTION: Many of these functions are not thread safe. */
 
+/* art.c */
+
+/* Fetches album art for <file> (the URI of a song file) as JPEG or PNG data.
+ * The data may be embedded in the song file, or it may be loaded from a
+ * separate file.  When the data is no longer needed, art_unref() should be
+ * called.  If an error occurs, <data> is set to NULL and art_unref() need not
+ * be called. */
+AUD_VFUNC3 (art_get_data, const char *, file, const void * *, data, int64_t *, len)
+
+/* Returns the URI of an image file containing album art for <file>.  If the
+ * song file contains embedded album art, the data is saved to a temporary file
+ * and the URI of the temporary file is returned.  When the image file is no
+ * longer needed, art_unref() should be called.  If a temporary file was
+ * created, art_unref() deletes it.  If an error occurs, returns NULL and
+ * art_unref() need not be called. */
+AUD_FUNC1 (const char *, art_get_file, const char *, file)
+
+/* Signals that the data or file returned by art_get_data() or art_get_file() is
+ * no longer needed.  <file> must be the same URI passed to art_get_data() or
+ * art_get_file(). */
+AUD_VFUNC1 (art_unref, const char *, file)
+
 /* config.c */
 
 AUD_VFUNC1 (config_clear_section, const char *, section)
@@ -83,16 +105,13 @@ AUD_FUNC2 (PluginHandle *, file_find_decoder, const char *, filename, bool_t,
 AUD_FUNC2 (Tuple *, file_read_tuple, const char *, filename, PluginHandle *,
  decoder)
 AUD_FUNC4 (bool_t, file_read_image, const char *, filename, PluginHandle *,
- decoder, void * *, data, int *, size)
+ decoder, void * *, data, int64_t *, size)
 AUD_FUNC2 (bool_t, file_can_write_tuple, const char *, filename,
  PluginHandle *, decoder)
 AUD_FUNC3 (bool_t, file_write_tuple, const char *, filename, PluginHandle *,
  decoder, const Tuple *, tuple)
 AUD_FUNC2 (bool_t, custom_infowin, const char *, filename, PluginHandle *,
  decoder)
-
-/* ui_albumart.c */
-AUD_FUNC1 (char *, get_associated_image_file, const char *, filename)
 
 /* ui_plugin_menu.c */
 AUD_FUNC1 (/* GtkWidget * */ void *, get_plugin_menu, int, id)
