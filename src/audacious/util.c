@@ -76,28 +76,28 @@ bool_t dir_foreach (const char * path, DirForeachFunc func, void * user)
 
 char * construct_uri (const char * string, const char * playlist_name)
 {
-    char *filename = g_strdup(string);
-    char *uri = NULL;
+    /* URI */
+    if (strstr (string, "://"))
+        return strdup (string);
 
-    // make full path uri here
-    // case 1: filename is raw full path or uri
-    if (filename[0] == '/' || strstr(filename, "://")) {
-        uri = g_filename_to_uri(filename, NULL, NULL);
-        if(!uri)
-            uri = g_strdup(filename);
-    }
-    // case 2: filename is not raw full path nor uri
-    // make full path by replacing last part of playlist path with filename.
-    else
-    {
-        const char * slash = strrchr (playlist_name, '/');
-        if (slash)
-            uri = g_strdup_printf ("%.*s/%s", (int) (slash - playlist_name),
-             playlist_name, filename);
-    }
+    /* absolute filename (assumed UTF-8) */
+#ifdef _WIN32
+    if (string[0] && string[1] == ':' && string[2] == '\\')
+#else
+    if (string[0] == '/')
+#endif
+        return filename_to_uri (string);
 
-    g_free (filename);
-    return uri;
+    /* relative filename (assumed UTF-8) */
+    const char * slash = strrchr (playlist_name, '/');
+    if (! slash)
+        return NULL;
+
+    int pathlen = slash + 1 - playlist_name;
+    char buf[pathlen + 3 * strlen (string) + 1];
+    memcpy (buf, playlist_name, pathlen);
+    str_encode_percent (string, -1, buf + pathlen);
+    return strdup (buf);
 }
 
 /* local files -- not URI's */
