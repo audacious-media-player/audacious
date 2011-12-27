@@ -458,18 +458,7 @@ bool_t vfs_is_remote (const char * path)
  * @param file A #VFSFile object to test.
  * @return TRUE if the file is streaming, otherwise FALSE.
  */
-bool_t
-vfs_is_streaming(VFSFile *file)
+bool_t vfs_is_streaming (VFSFile * file)
 {
-    off_t size = 0;
-
-    if (file == NULL)
-        return FALSE;
-
-    size = file->base->vfs_fsize_impl(file);
-
-    if (size == -1)
-        return TRUE;
-    else
-        return FALSE;
+    return (vfs_fsize (file) < 0);
 }
