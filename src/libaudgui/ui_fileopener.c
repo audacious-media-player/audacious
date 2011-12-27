@@ -47,8 +47,11 @@ static void filebrowser_add_files (GtkFileChooser * browser, GSList * files,
     g_list_free (list);
 
     char * path = gtk_file_chooser_get_current_folder (browser);
-    aud_set_string ("audgui", "filesel_path", path);
-    g_free (path);
+    if (path)
+    {
+        aud_set_string ("audgui", "filesel_path", path);
+        g_free (path);
+    }
 }
 
 static void
