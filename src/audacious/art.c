@@ -160,11 +160,13 @@ static void position_hook (void * data, void * user)
 void art_init (void)
 {
     hook_associate ("playlist position", position_hook, NULL);
+    hook_associate ("playlist set playing", position_hook, NULL);
 }
 
 void art_cleanup (void)
 {
     hook_dissociate ("playlist position", position_hook);
+    hook_dissociate ("playlist set playing", position_hook);
 
     release_current ();
     str_unref (current_file);
