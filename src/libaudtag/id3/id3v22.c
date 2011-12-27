@@ -548,10 +548,10 @@ static gboolean parse_pic (const guchar * data, gint size, gchar * * mime,
     return TRUE;
 }
 
-static gboolean id3v22_read_image (VFSFile * handle, void * * image_data, gint *
- image_size)
+static gboolean id3v22_read_image (VFSFile * handle, void * * image_data,
+ gint64 * image_size64)
 {
-    gint version, header_size, data_size, parsed;
+    gint version, header_size, data_size, parsed, image_size;
     gboolean syncsafe;
     gsize offset;
     gboolean found = FALSE;
@@ -575,7 +575,7 @@ static gboolean id3v22_read_image (VFSFile * handle, void * * image_data, gint *
         frame_length = size;
 
         if (! strcmp (key, "PIC") && parse_pic (data, frame_length, & mime, & type,
-         image_data, image_size))
+         image_data, & image_size))
         {
             g_free (mime);
 
@@ -593,6 +593,9 @@ static gboolean id3v22_read_image (VFSFile * handle, void * * image_data, gint *
         g_free (data);
         parsed += frame_size;
     }
+
+    if (found)
+        * image_size64 = image_size;
 
     return found;
 }
