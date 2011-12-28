@@ -31,13 +31,6 @@
 
 typedef void (* ForEachFunc) (char *, void *);
 
-typedef struct
-{
-    int playlist, at;
-    struct index * index;
-}
-AddState;
-
 static char * check_uri (char * name)
 {
     char * new;
@@ -67,37 +60,24 @@ static void urilist_for_each (const char * list, ForEachFunc func, void * user)
     }
 }
 
-static void add_to_glist (char * name, GList * * listp)
+static void add_to_index (char * name, struct index * index)
 {
-    * listp = g_list_prepend (* listp, name);
+    index_append (index, str_get (name));
+    g_free (name);
 }
 
 void audgui_urilist_open (const char * list)
 {
-    GList * glist = NULL;
-
-    urilist_for_each (list, (ForEachFunc) add_to_glist, & glist);
-    glist = g_list_reverse (glist);
-
-    aud_drct_pl_open_list (glist);
-
-    g_list_foreach (glist, (GFunc) g_free, NULL);
-    g_list_free (glist);
-}
-
-static void add_full (char * name, AddState * state)
-{
-    index_append (state->index, str_get (name));
-    g_free (name);
+    struct index * filenames = index_new ();
+    urilist_for_each (list, (ForEachFunc) add_to_index, & index);
+    aud_drct_pl_open_list (filenames);
 }
 
 void audgui_urilist_insert (int playlist, int at, const char * list)
 {
-    AddState state = {playlist, at, index_new ()};
-
-    urilist_for_each (list, (ForEachFunc) add_full, & state);
-    aud_playlist_entry_insert_batch (playlist, state.at, state.index, NULL,
-     FALSE);
+    struct index * filenames = index_new ();
+    urilist_for_each (list, (ForEachFunc) add_to_index, & index);
+    aud_playlist_entry_insert_batch (playlist, at, filenames, NULL, FALSE);
 }
 
 char * audgui_urilist_create_from_selected (int playlist)

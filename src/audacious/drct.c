@@ -82,6 +82,11 @@ bool_t drct_get_paused (void)
     return playback_get_paused ();
 }
 
+char * drct_get_filename (void)
+{
+    return playback_get_filename ();
+}
+
 char * drct_get_title (void)
 {
     return playback_get_title ();
@@ -171,11 +176,6 @@ void drct_set_volume_balance (int balance)
 
 /* --- PLAYLIST CONTROL --- */
 
-int drct_pl_get_length (void)
-{
-    return playlist_entry_count (playlist_get_active ());
-}
-
 void drct_pl_next (void)
 {
     bool_t play = playback_get_playing ();
@@ -194,47 +194,7 @@ void drct_pl_prev (void)
         playback_play (0, FALSE);
 }
 
-int drct_pl_get_pos (void)
-{
-    return playlist_get_position (playlist_get_active ());
-}
-
-void drct_pl_set_pos (int pos)
-{
-    int playlist = playlist_get_active ();
-    bool_t play = playback_get_playing ();
-
-    playlist_set_position (playlist, pos);
-
-    if (play)
-    {
-        playlist_set_playing (playlist);
-        playback_play (0, FALSE);
-    }
-}
-
-char * drct_pl_get_file (int entry)
-{
-    char * filename = playlist_entry_get_filename (playlist_get_active (), entry);
-    char * copy = g_strdup (filename);
-    str_unref (filename);
-    return copy;
-}
-
-char * drct_pl_get_title (int entry)
-{
-    char * title = playlist_entry_get_title (playlist_get_active (), entry, FALSE);
-    char * copy = g_strdup (title);
-    str_unref (title);
-    return copy;
-}
-
-int drct_pl_get_time (int pos)
-{
-    return playlist_entry_get_length (playlist_get_active (), pos, FALSE);
-}
-
-static void add_list (GList * list, int at, bool_t to_temp, bool_t play)
+static void add_list (struct index * filenames, int at, bool_t to_temp, bool_t play)
 {
     if (to_temp)
         playlist_set_active (playlist_get_temporary ());
@@ -249,52 +209,43 @@ static void add_list (GList * list, int at, bool_t to_temp, bool_t play)
             playlist_queue_delete (playlist, 0, playlist_queue_count (playlist));
     }
 
-    struct index * filenames = index_new ();
-    for (; list != NULL; list = list->next)
-        index_append (filenames, str_get (list->data));
-
     playlist_entry_insert_batch (playlist, at, filenames, NULL, play);
 }
 
 void drct_pl_add (const char * filename, int at)
 {
-    GList * list = g_list_prepend (NULL, (void *) filename);
-    add_list (list, at, FALSE, FALSE);
-    g_list_free (list);
+    struct index * filenames = index_new ();
+    index_append (filenames, str_get (filename));
+    add_list (filenames, at, FALSE, FALSE);
 }
 
-void drct_pl_add_list (GList * list, int at)
+void drct_pl_add_list (struct index * filenames, int at)
 {
-    add_list (list, at, FALSE, FALSE);
+    add_list (filenames, at, FALSE, FALSE);
 }
 
 void drct_pl_open (const char * filename)
 {
-    GList * list = g_list_prepend (NULL, (void *) filename);
-    add_list (list, -1, get_bool (NULL, "open_to_temporary"), TRUE);
-    g_list_free (list);
+    struct index * filenames = index_new ();
+    index_append (filenames, str_get (filename));
+    add_list (filenames, -1, get_bool (NULL, "open_to_temporary"), TRUE);
 }
 
-void drct_pl_open_list (GList * list)
+void drct_pl_open_list (struct index * filenames)
 {
-    add_list (list, -1, get_bool (NULL, "open_to_temporary"), TRUE);
+    add_list (filenames, -1, get_bool (NULL, "open_to_temporary"), TRUE);
 }
 
 void drct_pl_open_temp (const char * filename)
 {
-    GList * list = g_list_prepend (NULL, (void *) filename);
-    add_list (list, -1, TRUE, TRUE);
-    g_list_free (list);
+    struct index * filenames = index_new ();
+    index_append (filenames, str_get (filename));
+    add_list (filenames, -1, TRUE, TRUE);
 }
 
-void drct_pl_open_temp_list (GList * list)
+void drct_pl_open_temp_list (struct index * filenames)
 {
-    add_list (list, -1, TRUE, TRUE);
-}
-
-void drct_pl_delete (int entry)
-{
-    playlist_entry_delete (playlist_get_active (), entry, 1);
+    add_list (filenames, -1, TRUE, TRUE);
 }
 
 /* Advancing to the next song when the current one is deleted is tricky.  First,
@@ -302,9 +253,8 @@ void drct_pl_delete (int entry)
  * to a new song without worrying about picking one that is also selected.
  * Finally, we can delete the former current song without stopping playback. */
 
-void drct_pl_delete_selected (void)
+void drct_pl_delete_selected (int list)
 {
-    int list = playlist_get_active ();
     int pos = playlist_get_position (list);
 
     if (get_bool (NULL, "advance_on_delete")
@@ -324,50 +274,4 @@ void drct_pl_delete_selected (void)
     }
     else
         playlist_delete_selected (list);
-}
-
-void drct_pl_clear (void)
-{
-    int playlist = playlist_get_active ();
-    playlist_entry_delete (playlist, 0, playlist_entry_count (playlist));
-}
-
-/* --- PLAYLIST QUEUE CONTROL --- */
-
-int drct_pq_get_length (void)
-{
-    return playlist_queue_count (playlist_get_active ());
-}
-
-int drct_pq_get_entry (int queue_position)
-{
-    return playlist_queue_get_entry (playlist_get_active (), queue_position);
-}
-
-bool_t drct_pq_is_queued (int entry)
-{
-    return (drct_pq_get_queue_position (entry) >= 0);
-}
-
-int drct_pq_get_queue_position (int entry)
-{
-    return playlist_queue_find_entry (playlist_get_active (), entry);
-}
-
-void drct_pq_add (int entry)
-{
-    playlist_queue_insert (playlist_get_active (), -1, entry);
-}
-
-void drct_pq_remove (int entry)
-{
-    int playlist = playlist_get_active ();
-    playlist_queue_delete (playlist, playlist_queue_find_entry (playlist,
-     entry), 1);
-}
-
-void drct_pq_clear (void)
-{
-    int playlist = playlist_get_active ();
-    playlist_queue_delete (playlist, 0, playlist_queue_count (playlist));
 }

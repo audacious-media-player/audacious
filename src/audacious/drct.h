@@ -22,10 +22,9 @@
 #ifndef AUDACIOUS_DRCT_H
 #define AUDACIOUS_DRCT_H
 
-#include <glib.h>
-
 #include <audacious/api.h>
 #include <libaudcore/core.h>
+#include <libaudcore/index.h>
 
 #define AUD_API_NAME DRCTAPI
 #define AUD_API_SYMBOL drct_api

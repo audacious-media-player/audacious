@@ -311,13 +311,13 @@ static void release_lock (void)
     g_free (path);
 }
 
-static GList * convert_filenames (void)
+static struct index * convert_filenames (void)
 {
     if (! options.filenames)
         return NULL;
 
+    struct index * filenames = index_new ();
     char * * f = options.filenames;
-    GList * list = NULL;
     char * cur = g_get_current_dir ();
 
     for (int i = 0; f[i]; i ++)
@@ -325,21 +325,27 @@ static GList * convert_filenames (void)
         char * uri;
 
         if (strstr (f[i], "://"))
-            uri = g_strdup (f[i]);
+            uri = str_get (f[i]);
         else if (g_path_is_absolute (f[i]))
-            uri = filename_to_uri (f[i]);
+        {
+            char * tmp = filename_to_uri (f[i]);
+            uri = str_get (tmp);
+            free (tmp);
+        }
         else
         {
             char * tmp = g_build_filename (cur, f[i], NULL);
-            uri = filename_to_uri (tmp);
-            g_free (tmp);
+            char * tmp2 = filename_to_uri (tmp);
+            uri = str_get (tmp2);
+            free (tmp);
+            free (tmp2);
         }
 
-        list = g_list_prepend (list, uri);
+        index_append (filenames, uri);
     }
 
     g_free (cur);
-    return g_list_reverse (list);
+    return filenames;
 }
 
 static void do_remote (void)
@@ -349,16 +355,21 @@ static void do_remote (void)
 
     if (session && audacious_remote_is_running (session))
     {
-        GList * list = convert_filenames ();
+        struct index * filenames = convert_filenames ();
 
         /* if no command line options, then present running instance */
-        if (! (list || options.play || options.pause || options.play_pause ||
+        if (! (filenames || options.play || options.pause || options.play_pause ||
          options.stop || options.rew || options.fwd || options.show_jump_box ||
          options.mainwin))
             options.mainwin = TRUE;
 
-        if (list)
+        if (filenames)
         {
+            GList * list = NULL;
+
+            for (int f = index_count (filenames); f --; )
+                list = g_list_prepend (list, index_get (filenames, f));
+
             if (options.enqueue_to_temp)
                 audacious_remote_playlist_open_list_to_temp (session, list);
             else if (options.enqueue)
@@ -366,8 +377,12 @@ static void do_remote (void)
             else
                 audacious_remote_playlist_open_list (session, list);
 
-            g_list_foreach (list, (GFunc) g_free, NULL);
             g_list_free (list);
+
+            for (int f = 0; f < index_count (filenames); f ++)
+                str_unref (index_get (filenames, f));
+
+            index_free (filenames);
         }
 
         if (options.play)
@@ -398,24 +413,21 @@ static void do_commands (void)
 {
     bool_t resume = get_bool (NULL, "resume_playback_on_startup");
 
-    GList * list = convert_filenames ();
-    if (list)
+    struct index * filenames = convert_filenames ();
+    if (filenames)
     {
         if (options.enqueue_to_temp)
         {
-            drct_pl_open_temp_list (list);
+            drct_pl_open_temp_list (filenames);
             resume = FALSE;
         }
         else if (options.enqueue)
-            drct_pl_add_list (list, -1);
+            drct_pl_add_list (filenames, -1);
         else
         {
-            drct_pl_open_list (list);
+            drct_pl_open_list (filenames);
             resume = FALSE;
         }
-
-        g_list_foreach (list, (GFunc) g_free, NULL);
-        g_list_free (list);
     }
 
     if (resume)

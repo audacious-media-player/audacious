@@ -436,6 +436,12 @@ static InputPlayback playback_api = {
     .set_gain_from_playlist = set_gain_from_playlist,
 };
 
+char * playback_get_filename (void)
+{
+    g_return_val_if_fail (playing, NULL);
+    return str_ref (current_filename);
+}
+
 char * playback_get_title (void)
 {
     g_return_val_if_fail (playing, NULL);
@@ -458,10 +464,10 @@ char * playback_get_title (void)
         s[0] = 0;
 
     if (get_bool (NULL, "show_numbers_in_pl"))
-        return g_strdup_printf ("%d. %s%s", 1 + playlist_get_position
+        return str_printf ("%d. %s%s", 1 + playlist_get_position
          (playlist_get_playing ()), current_title, s);
 
-    return g_strdup_printf ("%s%s", current_title, s);
+    return str_printf ("%s%s", current_title, s);
 }
 
 int playback_get_length (void)

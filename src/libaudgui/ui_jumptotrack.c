@@ -125,14 +125,16 @@ static void update_queue_button (int entry)
 
 static void do_queue (void)
 {
+    int playlist = aud_playlist_get_active ();
     int entry = get_selected_entry ();
     if (entry < 0)
         return;
 
-    if (aud_drct_pq_is_queued (entry))
-        aud_drct_pq_remove (entry);
+    int queued = aud_playlist_queue_find_entry (playlist, entry);
+    if (queued >= 0)
+        aud_playlist_queue_delete (playlist, queued, 1);
     else
-        aud_drct_pq_add (entry);
+        aud_playlist_queue_insert (playlist, -1, entry);
 
     update_queue_button (entry);
 }

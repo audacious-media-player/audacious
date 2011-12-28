@@ -29,14 +29,18 @@ AUD_VFUNC0 (drct_quit)
 
 /* --- PLAYBACK CONTROL --- */
 
+/* The strings returned by drct_get_filename() and drct_get_title() are pooled
+ * and must be freed with str_unref(). */
+
 AUD_VFUNC0 (drct_play)
 AUD_VFUNC0 (drct_pause)
 AUD_VFUNC0 (drct_stop)
 AUD_FUNC0 (bool_t, drct_get_playing)
+AUD_FUNC0 (bool_t, drct_get_ready)
 AUD_FUNC0 (bool_t, drct_get_paused)
+AUD_FUNC0 (char *, drct_get_filename)
 AUD_FUNC0 (char *, drct_get_title)
-AUD_VFUNC3 (drct_get_info, int *, bitrate, int *, samplerate, int *,
- channels)
+AUD_VFUNC3 (drct_get_info, int *, bitrate, int *, samplerate, int *, channels)
 AUD_FUNC0 (int, drct_get_time)
 AUD_FUNC0 (int, drct_get_length)
 AUD_VFUNC1 (drct_seek, int, time)
@@ -52,36 +56,18 @@ AUD_VFUNC1 (drct_set_volume_balance, int, balance)
 
 /* --- PLAYLIST CONTROL --- */
 
-AUD_FUNC0 (int, drct_pl_get_length)
+/* The indexes passed to drct_pl_add_list(), drct_pl_open_list(), and
+ * drct_pl_open_temp_list() contain pooled strings to which the caller gives up
+ * one reference.  The indexes themselves are freed by these functions. */
+
 AUD_VFUNC0 (drct_pl_next)
 AUD_VFUNC0 (drct_pl_prev)
-AUD_FUNC0 (int, drct_pl_get_pos)
-AUD_VFUNC1 (drct_pl_set_pos, int, pos)
-
-AUD_FUNC1 (char *, drct_pl_get_file, int, entry)
-AUD_FUNC1 (char *, drct_pl_get_title, int, entry)
-AUD_FUNC1 (int, drct_pl_get_time, int, entry)
 
 AUD_VFUNC2 (drct_pl_add, const char *, filename, int, at)
-AUD_VFUNC2 (drct_pl_add_list, GList *, list, int, at)
+AUD_VFUNC2 (drct_pl_add_list, struct index *, filenames, int, at)
 AUD_VFUNC1 (drct_pl_open, const char *, filename)
-AUD_VFUNC1 (drct_pl_open_list, GList *, list)
+AUD_VFUNC1 (drct_pl_open_list, struct index *, filenames)
 AUD_VFUNC1 (drct_pl_open_temp, const char *, filename)
-AUD_VFUNC1 (drct_pl_open_temp_list, GList *, list)
+AUD_VFUNC1 (drct_pl_open_temp_list, struct index *, filenames)
 
-AUD_VFUNC1 (drct_pl_delete, int, entry)
-AUD_VFUNC0 (drct_pl_delete_selected)
-AUD_VFUNC0 (drct_pl_clear)
-
-/* --- PLAYLIST QUEUE CONTROL --- */
-
-AUD_FUNC0 (int, drct_pq_get_length)
-AUD_FUNC1 (int, drct_pq_get_entry, int, queue_position)
-AUD_FUNC1 (bool_t, drct_pq_is_queued, int, entry)
-AUD_FUNC1 (int, drct_pq_get_queue_position, int, entry)
-AUD_VFUNC1 (drct_pq_add, int, entry)
-AUD_VFUNC1 (drct_pq_remove, int, entry)
-AUD_VFUNC0 (drct_pq_clear)
-
-/* New in 2.5-alpha2 */
-AUD_FUNC0 (bool_t, drct_get_ready)
+AUD_VFUNC1 (drct_pl_delete_selected, int, playlist)

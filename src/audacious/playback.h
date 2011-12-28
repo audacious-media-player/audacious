@@ -34,7 +34,8 @@ bool_t playback_get_ready (void);
 bool_t playback_get_paused(void);
 void playback_seek(int time);
 
-char * playback_get_title (void);
+char * playback_get_filename (void); /* pooled */
+char * playback_get_title (void); /* pooled */
 int playback_get_length (void);
 void playback_get_info (int * bitrate, int * samplerate, int * channels);
 

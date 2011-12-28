@@ -31,20 +31,15 @@
 static void filebrowser_add_files (GtkFileChooser * browser, GSList * files,
  bool_t play)
 {
-    GSList * node;
-    GList * list = NULL;
+    struct index * list = index_new ();
 
-    for (node = files; node != NULL; node = node->next)
-        list = g_list_prepend (list, node->data);
-
-    list = g_list_reverse (list);
+    for (GSList * node = files; node; node = node->next)
+        index_append (list, str_get (node->data));
 
     if (play)
         aud_drct_pl_open_list (list);
     else
         aud_drct_pl_add_list (list, -1);
-
-    g_list_free (list);
 
     char * path = gtk_file_chooser_get_current_folder (browser);
     if (path)
