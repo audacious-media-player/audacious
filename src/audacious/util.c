@@ -125,7 +125,7 @@ char * write_temp_file (void * data, int64_t len)
 {
     char * name = g_strdup_printf ("%s/audacious-temp-XXXXXX", g_get_tmp_dir ());
 
-    int handle = mkstemp (name);
+    int handle = g_mkstemp (name);
     if (handle < 0)
     {
         fprintf (stderr, "Error creating temporary file: %s\n", strerror (errno));
