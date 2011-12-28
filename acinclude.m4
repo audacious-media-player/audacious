@@ -1,16 +1,3 @@
-
-dnl ** ADD_PKG_REQUIRES([requirement])
-dnl ** Adds a dependency to package's pkg-config file.
-AC_DEFUN([ADD_PC_REQUIRES], [
-   if test "x$PC_REQUIRES" = "x"; then
-       PC_REQUIRES="$1"
-   else
-       PC_REQUIRES="$PC_REQUIRES, $1"
-   fi
-   AC_SUBST([PC_REQUIRES])
-])
-
-
 dnl ** AUD_CHECK_MODULE([define name], [module], [version required],
 dnl **     [informational name], [additional error message])
 dnl **
@@ -21,7 +8,6 @@ dnl **
 dnl ** AUD_CHECK_MODULE([GLIB], [gtk+-2.0], [>= 2.8.0], [Gtk+2], [See http://www.gtk.org/])
 AC_DEFUN([AUD_CHECK_MODULE], [
     PKG_CHECK_MODULES([$1], [$2 $3], [
-        ADD_PC_REQUIRES([$2 $3])
     ],[
         PKG_CHECK_EXISTS([$2], [
             cv_pkg_version=`$PKG_CONFIG --modversion "$2" 2>/dev/null`

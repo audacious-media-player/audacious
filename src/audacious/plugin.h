@@ -22,8 +22,6 @@
 #ifndef AUDACIOUS_PLUGIN_H
 #define AUDACIOUS_PLUGIN_H
 
-#include <gmodule.h>
-
 #include <audacious/api.h>
 #include <audacious/types.h>
 #include <libaudcore/audio.h>
@@ -505,7 +503,7 @@ stype _aud_plugin_self = { \
  .type = itype, \
  .size = sizeof (stype), \
  __VA_ARGS__}; \
-G_MODULE_EXPORT stype * get_plugin_info (AudAPITable * table) { \
+stype * get_plugin_info (AudAPITable * table) { \
     _aud_api_table = table; \
     return & _aud_plugin_self; \
 }

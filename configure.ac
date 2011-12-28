@@ -108,12 +108,6 @@ if test $use_gtk3 = no ; then
      AC_MSG_ERROR([Cannot find GTK headers.  Aborting ...]))
 fi
 
-if test $use_gtk3 = yes ; then
-    ADD_PC_REQUIRES([gtk+-3.0 >= 3.0.0])
-else
-    ADD_PC_REQUIRES([gtk+-2.0 >= 2.12.0])
-fi
-
 AC_SUBST([GTK_LIBS])
 AC_SUBST([GTK_CFLAGS])
 
@@ -165,8 +159,6 @@ AUD_ARG_ENABLE([dbus], [yes],
     if test "x$DBUS_BINDING_TOOL" = "xno" || test "x$GLIB_GENMARSHAL" = "xno" || test "x$enable_dbus" = "xno" ; then
         enable_dbus="no"
     else
-        ADD_PC_REQUIRES([dbus-1 >= 0.60])
-        ADD_PC_REQUIRES([dbus-glib-1 >= 0.60])
         AC_DEFINE([USE_DBUS], 1, [Define if D-Bus support enabled])
         LIBAUDCLIENT_LDFLAGS="-laudclient"
         AC_SUBST([DBUS_CFLAGS])

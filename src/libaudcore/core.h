@@ -26,6 +26,11 @@
 #undef bool_t
 #define bool_t int
 
+#undef FALSE
+#define FALSE ((bool_t) 0)
+#undef TRUE
+#define TRUE ((bool_t) 1)
+
 /* Simple sanity check to catch (1) strings that are still in use after their
  * reference count has dropped to zero and (2) strings that should have been
  * pooled but never were.  If the check fails, the program is aborted. */
