@@ -1,0 +1,10 @@
+--- testThreads.c.0	2010-10-12 02:25:32 -0400
++++ testThreads.c	2011-12-28 18:36:34 -0500
+@@ -107,7 +107,6 @@
+ 
+ 	for (i = 0; i < num_threads; i++) {
+ 	    results[i] = NULL;
+-	    tid[i] = (pthread_t) -1;
+ 	}
+ 
+ 	for (i = 0; i < num_threads; i++) {
