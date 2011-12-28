@@ -22,6 +22,7 @@
 #ifndef LIBAUDGUI_GTK_H
 #define LIBAUDGUI_GTK_H
 
+#include <stdint.h>
 #include <gtk/gtk.h>
 #include <libaudcore/core.h>
 
