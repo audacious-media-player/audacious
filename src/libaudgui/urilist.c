@@ -69,14 +69,14 @@ static void add_to_index (char * name, Index * index)
 void audgui_urilist_open (const char * list)
 {
     Index * filenames = index_new ();
-    urilist_for_each (list, (ForEachFunc) add_to_index, & filenames);
+    urilist_for_each (list, (ForEachFunc) add_to_index, filenames);
     aud_drct_pl_open_list (filenames);
 }
 
 void audgui_urilist_insert (int playlist, int at, const char * list)
 {
     Index * filenames = index_new ();
-    urilist_for_each (list, (ForEachFunc) add_to_index, & filenames);
+    urilist_for_each (list, (ForEachFunc) add_to_index, filenames);
     aud_playlist_entry_insert_batch (playlist, at, filenames, NULL, FALSE);
 }
 
