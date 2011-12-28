@@ -121,14 +121,14 @@ AUD_VFUNC5 (playlist_entry_insert, int, playlist, int, at, const char *,
  * may be NULL.  Finally, the caller also gives up ownership of the indexes
  * themselves and should not access them after the call.   */
 AUD_VFUNC5 (playlist_entry_insert_batch, int, playlist, int, at,
- struct index *, filenames, struct index *, tuples, bool_t, play)
+ Index *, filenames, Index *, tuples, bool_t, play)
 
 /* Similar to playlist_entry_insert_batch, but allows the caller to prevent some
  * items from being added by returning false from the <filter> callback.  Useful
  * for searching a folder and adding only new files to the playlist.  <user> is
  * an untyped pointer passed to the <filter> callback. */
 AUD_VFUNC7 (playlist_entry_insert_filtered, int, playlist, int, at,
- struct index *, filenames, struct index *, tuples, PlaylistFilterFunc, filter,
+ Index *, filenames, Index *, tuples, PlaylistFilterFunc, filter,
  void *, user, bool_t, play)
 
 /* Removes a contiguous block of <number> entries starting from the one numbered

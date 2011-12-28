@@ -60,7 +60,7 @@ static void urilist_for_each (const char * list, ForEachFunc func, void * user)
     }
 }
 
-static void add_to_index (char * name, struct index * index)
+static void add_to_index (char * name, Index * index)
 {
     index_append (index, str_get (name));
     g_free (name);
@@ -68,14 +68,14 @@ static void add_to_index (char * name, struct index * index)
 
 void audgui_urilist_open (const char * list)
 {
-    struct index * filenames = index_new ();
+    Index * filenames = index_new ();
     urilist_for_each (list, (ForEachFunc) add_to_index, & index);
     aud_drct_pl_open_list (filenames);
 }
 
 void audgui_urilist_insert (int playlist, int at, const char * list)
 {
-    struct index * filenames = index_new ();
+    Index * filenames = index_new ();
     urilist_for_each (list, (ForEachFunc) add_to_index, & index);
     aud_playlist_entry_insert_batch (playlist, at, filenames, NULL, FALSE);
 }

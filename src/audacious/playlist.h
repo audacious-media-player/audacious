@@ -74,7 +74,7 @@ typedef int (* PlaylistTupleCompareFunc) (const Tuple * a, const Tuple * b);
 
 /* playlist-files.c */
 bool_t playlist_load (const char * filename, char * * title,
- struct index * * filenames, struct index * * tuples);
+ Index * * filenames, Index * * tuples);
 bool_t playlist_insert_playlist_raw (int list, int at,
  const char * filename);
 
@@ -94,7 +94,7 @@ void playlist_reformat_titles (void);
 void playlist_trigger_scan (void);
 
 void playlist_entry_insert_batch_raw (int playlist, int at,
- struct index * filenames, struct index * tuples, struct index * decoders);
+ Index * filenames, Index * tuples, Index * decoders);
 
 bool_t playlist_prev_song (int playlist);
 bool_t playlist_next_song (int playlist, bool_t repeat);

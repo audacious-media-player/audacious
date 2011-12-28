@@ -311,12 +311,12 @@ static void release_lock (void)
     g_free (path);
 }
 
-static struct index * convert_filenames (void)
+static Index * convert_filenames (void)
 {
     if (! options.filenames)
         return NULL;
 
-    struct index * filenames = index_new ();
+    Index * filenames = index_new ();
     char * * f = options.filenames;
     char * cur = g_get_current_dir ();
 
@@ -355,7 +355,7 @@ static void do_remote (void)
 
     if (session && audacious_remote_is_running (session))
     {
-        struct index * filenames = convert_filenames ();
+        Index * filenames = convert_filenames ();
 
         /* if no command line options, then present running instance */
         if (! (filenames || options.play || options.pause || options.play_pause ||
@@ -413,7 +413,7 @@ static void do_commands (void)
 {
     bool_t resume = get_bool (NULL, "resume_playback_on_startup");
 
-    struct index * filenames = convert_filenames ();
+    Index * filenames = convert_filenames ();
     if (filenames)
     {
         if (options.enqueue_to_temp)

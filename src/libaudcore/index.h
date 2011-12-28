@@ -1,6 +1,6 @@
 /*
  * index.h
- * Copyright 2009-2010 John Lindgren
+ * Copyright 2009-2011 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -20,29 +20,26 @@
 #ifndef LIBAUDCORE_INDEX_H
 #define LIBAUDCORE_INDEX_H
 
-struct index;
+struct _Index;
+typedef struct _Index Index;
 
-struct index * index_new (void);
-void index_free (struct index * index);
-int index_count (struct index * index);
-void index_allocate (struct index * index, int size);
-void index_set (struct index * index, int at, void * value);
-void * index_get (struct index * index, int at);
-void index_insert (struct index * index, int at, void * value);
-void index_append (struct index * index, void * value);
-void index_copy_set (struct index * source, int from, struct index * target,
- int to, int count);
-void index_copy_insert (struct index * source, int from, struct index * target,
- int to, int count);
-void index_copy_append (struct index * source, int from, struct index * target,
- int count);
-void index_merge_insert (struct index * first, int at, struct index * second);
-void index_merge_append (struct index * first, struct index * second);
-void index_move (struct index * index, int from, int to, int count);
-void index_delete (struct index * index, int at, int count);
-void index_sort (struct index * index, int (* compare) (const void * a,
- const void * b));
-void index_sort_with_data (struct index * index, int (* compare)
- (const void * a, const void * b, void * data), void * data);
+Index * index_new (void);
+void index_free (Index * index);
+int index_count (Index * index);
+void index_allocate (Index * index, int size);
+void index_set (Index * index, int at, void * value);
+void * index_get (Index * index, int at);
+void index_insert (Index * index, int at, void * value);
+void index_append (Index * index, void * value);
+void index_copy_set (Index * source, int from, Index * target, int to, int count);
+void index_copy_insert (Index * source, int from, Index * target, int to, int count);
+void index_copy_append (Index * source, int from, Index * target, int count);
+void index_merge_insert (Index * first, int at, Index * second);
+void index_merge_append (Index * first, Index * second);
+void index_move (Index * index, int from, int to, int count);
+void index_delete (Index * index, int at, int count);
+void index_sort (Index * index, int (* compare) (const void * a, const void * b));
+void index_sort_with_data (Index * index, int (* compare) (const void * a,
+ const void * b, void * data), void * data);
 
 #endif /* LIBAUDCORE_INDEX_H */

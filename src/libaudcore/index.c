@@ -1,6 +1,6 @@
 /*
  * index.c
- * Copyright 2009-2010 John Lindgren
+ * Copyright 2009-2011 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -24,17 +24,16 @@
 
 #include "index.h"
 
-struct index
-{
+struct _Index {
     void * * data;
     int count, size;
     int (* compare) (const void * a, const void * b, void * data);
     void * compare_data;
 };
 
-struct index * index_new (void)
+Index * index_new (void)
 {
-    struct index * index = g_slice_new (struct index);
+    Index * index = g_slice_new (Index);
 
     index->data = NULL;
     index->count = 0;
@@ -45,18 +44,18 @@ struct index * index_new (void)
     return index;
 }
 
-void index_free (struct index * index)
+void index_free (Index * index)
 {
     g_free (index->data);
-    g_slice_free (struct index, index);
+    g_slice_free (Index, index);
 }
 
-int index_count (struct index * index)
+int index_count (Index * index)
 {
     return index->count;
 }
 
-void index_allocate (struct index * index, int size)
+void index_allocate (Index * index, int size)
 {
     if (size <= index->size)
         return;
@@ -70,17 +69,17 @@ void index_allocate (struct index * index, int size)
     index->data = g_realloc (index->data, sizeof (void *) * index->size);
 }
 
-void index_set (struct index * index, int at, void * value)
+void index_set (Index * index, int at, void * value)
 {
     index->data[at] = value;
 }
 
-void * index_get (struct index * index, int at)
+void * index_get (Index * index, int at)
 {
     return index->data[at];
 }
 
-static void make_room (struct index * index, int at, int count)
+static void make_room (Index * index, int at, int count)
 {
     index_allocate (index, index->count + count);
 
@@ -91,52 +90,52 @@ static void make_room (struct index * index, int at, int count)
     index->count += count;
 }
 
-void index_insert (struct index * index, int at, void * value)
+void index_insert (Index * index, int at, void * value)
 {
     make_room (index, at, 1);
     index->data[at] = value;
 }
 
-void index_append (struct index * index, void * value)
+void index_append (Index * index, void * value)
 {
     index_insert (index, index->count, value);
 }
 
-void index_copy_set (struct index * source, int from, struct index * target,
+void index_copy_set (Index * source, int from, Index * target,
  int to, int count)
 {
     memcpy (target->data + to, source->data + from, sizeof (void *) * count);
 }
 
-void index_copy_insert (struct index * source, int from, struct index * target,
+void index_copy_insert (Index * source, int from, Index * target,
  int to, int count)
 {
     make_room (target, to, count);
     memcpy (target->data + to, source->data + from, sizeof (void *) * count);
 }
 
-void index_copy_append (struct index * source, int from, struct index * target,
+void index_copy_append (Index * source, int from, Index * target,
  int count)
 {
     index_copy_insert (source, from, target, target->count, count);
 }
 
-void index_merge_insert (struct index * first, int at, struct index * second)
+void index_merge_insert (Index * first, int at, Index * second)
 {
     index_copy_insert (second, 0, first, at, second->count);
 }
 
-void index_merge_append (struct index * first, struct index * second)
+void index_merge_append (Index * first, Index * second)
 {
     index_copy_insert (second, 0, first, first->count, second->count);
 }
 
-void index_move (struct index * index, int from, int to, int count)
+void index_move (Index * index, int from, int to, int count)
 {
     memmove (index->data + to, index->data + from, sizeof (void *) * count);
 }
 
-void index_delete (struct index * index, int at, int count)
+void index_delete (Index * index, int at, int count)
 {
     index->count -= count;
     memmove (index->data + at, index->data + at + count, sizeof (void *) *
@@ -149,7 +148,7 @@ static int index_compare (const void * a, const void * b, void * compare)
      (* (const void * *) a, * (const void * *) b);
 }
 
-void index_sort (struct index * index, int (* compare) (const void *, const
+void index_sort (Index * index, int (* compare) (const void *, const
  void *))
 {
     g_qsort_with_data (index->data, index->count, sizeof (void *),
@@ -159,13 +158,13 @@ void index_sort (struct index * index, int (* compare) (const void *, const
 static int index_compare_with_data (const void * a, const void * b, void *
  _index)
 {
-    struct index * index = _index;
+    Index * index = _index;
 
     return index->compare (* (const void * *) a, * (const void * *) b,
      index->compare_data);
 }
 
-void index_sort_with_data (struct index * index, int (* compare)
+void index_sort_with_data (Index * index, int (* compare)
  (const void * a, const void * b, void * data), void * data)
 {
     index->compare = compare;

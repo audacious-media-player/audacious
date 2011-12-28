@@ -768,9 +768,9 @@ bool_t audacious_rc_add_url(RemoteObject * obj, char * file, GError * *error)
     return audacious_rc_playlist_ins_url_string(obj, file, -1, error);
 }
 
-static struct index * strings_to_index (char * * strings)
+static Index * strings_to_index (char * * strings)
 {
-    struct index * index = index_new ();
+    Index * index = index_new ();
 
     while (* strings)
         index_append (index, * strings ++);

@@ -127,11 +127,11 @@ struct _PlaylistPlugin
 	const char * const * extensions; /* array ending with NULL */
 	bool_t (* load) (const char * path, VFSFile * file,
      char * * title, /* pooled */
-     struct index * filenames, /* of (char *), pooled */
-     struct index * tuples); /* of (Tuple *) */
+     Index * filenames, /* of (char *), pooled */
+     Index * tuples); /* of (Tuple *) */
 	bool_t (* save) (const char * path, VFSFile * file, const char * title,
-     struct index * filenames, /* of (char *) */
-     struct index * tuples); /* of (Tuple *) */
+     Index * filenames, /* of (char *) */
+     Index * tuples); /* of (Tuple *) */
 };
 
 struct _OutputPlugin

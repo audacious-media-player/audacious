@@ -40,7 +40,7 @@
 typedef struct {
     int playlist_id, at;
     bool_t play;
-    struct index * filenames, * tuples;
+    Index * filenames, * tuples;
     PlaylistFilterFunc filter;
     void * user;
 } AddTask;
@@ -48,7 +48,7 @@ typedef struct {
 typedef struct {
     int playlist_id, at;
     bool_t play;
-    struct index * filenames, * tuples, * decoders;
+    Index * filenames, * tuples, * decoders;
 } AddResult;
 
 static GList * add_tasks = NULL;
@@ -155,7 +155,7 @@ static void status_done_locked (void)
         gtk_widget_destroy (status_window);
 }
 
-static void index_free_filenames (struct index * filenames)
+static void index_free_filenames (Index * filenames)
 {
     int count = index_count (filenames);
     for (int i = 0; i < count; i ++)
@@ -164,7 +164,7 @@ static void index_free_filenames (struct index * filenames)
     index_free (filenames);
 }
 
-static void index_free_tuples (struct index * tuples)
+static void index_free_tuples (Index * tuples)
 {
     int count = index_count (tuples);
     for (int i = 0; i < count; i ++)
@@ -178,7 +178,7 @@ static void index_free_tuples (struct index * tuples)
 }
 
 static AddTask * add_task_new (int playlist_id, int at, bool_t play,
- struct index * filenames, struct index * tuples, PlaylistFilterFunc filter,
+ Index * filenames, Index * tuples, PlaylistFilterFunc filter,
  void * user)
 {
     AddTask * task = g_slice_new (AddTask);
@@ -348,7 +348,7 @@ static void add_playlist (char * filename, PlaylistFilterFunc filter,
     status_update (filename, index_count (result->filenames));
 
     char * title = NULL;
-    struct index * filenames, * tuples;
+    Index * filenames, * tuples;
     if (! playlist_load (filename, & title, & filenames, & tuples))
     {
         str_unref (filename);
@@ -512,8 +512,8 @@ void adder_cleanup (void)
 void playlist_entry_insert (int playlist, int at, const char * filename,
  Tuple * tuple, bool_t play)
 {
-    struct index * filenames = index_new ();
-    struct index * tuples = index_new ();
+    Index * filenames = index_new ();
+    Index * tuples = index_new ();
     index_append (filenames, str_get (filename));
     index_append (tuples, tuple);
 
@@ -521,13 +521,13 @@ void playlist_entry_insert (int playlist, int at, const char * filename,
 }
 
 void playlist_entry_insert_batch (int playlist, int at,
- struct index * filenames, struct index * tuples, bool_t play)
+ Index * filenames, Index * tuples, bool_t play)
 {
     playlist_entry_insert_filtered (playlist, at, filenames, tuples, NULL, NULL, play);
 }
 
 void playlist_entry_insert_filtered (int playlist, int at,
- struct index * filenames, struct index * tuples, PlaylistFilterFunc filter,
+ Index * filenames, Index * tuples, PlaylistFilterFunc filter,
  void * user, bool_t play)
 {
     int playlist_id = playlist_get_unique_id (playlist);

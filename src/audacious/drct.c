@@ -194,7 +194,7 @@ void drct_pl_prev (void)
         playback_play (0, FALSE);
 }
 
-static void add_list (struct index * filenames, int at, bool_t to_temp, bool_t play)
+static void add_list (Index * filenames, int at, bool_t to_temp, bool_t play)
 {
     if (to_temp)
         playlist_set_active (playlist_get_temporary ());
@@ -214,36 +214,36 @@ static void add_list (struct index * filenames, int at, bool_t to_temp, bool_t p
 
 void drct_pl_add (const char * filename, int at)
 {
-    struct index * filenames = index_new ();
+    Index * filenames = index_new ();
     index_append (filenames, str_get (filename));
     add_list (filenames, at, FALSE, FALSE);
 }
 
-void drct_pl_add_list (struct index * filenames, int at)
+void drct_pl_add_list (Index * filenames, int at)
 {
     add_list (filenames, at, FALSE, FALSE);
 }
 
 void drct_pl_open (const char * filename)
 {
-    struct index * filenames = index_new ();
+    Index * filenames = index_new ();
     index_append (filenames, str_get (filename));
     add_list (filenames, -1, get_bool (NULL, "open_to_temporary"), TRUE);
 }
 
-void drct_pl_open_list (struct index * filenames)
+void drct_pl_open_list (Index * filenames)
 {
     add_list (filenames, -1, get_bool (NULL, "open_to_temporary"), TRUE);
 }
 
 void drct_pl_open_temp (const char * filename)
 {
-    struct index * filenames = index_new ();
+    Index * filenames = index_new ();
     index_append (filenames, str_get (filename));
     add_list (filenames, -1, TRUE, TRUE);
 }
 
-void drct_pl_open_temp_list (struct index * filenames)
+void drct_pl_open_temp_list (Index * filenames)
 {
     add_list (filenames, -1, TRUE, TRUE);
 }

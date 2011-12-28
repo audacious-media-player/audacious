@@ -71,7 +71,7 @@ static PlaylistPlugin * get_plugin (const char * filename)
 }
 
 bool_t playlist_load (const char * filename, char * * title,
- struct index * * filenames_p, struct index * * tuples_p)
+ Index * * filenames_p, Index * * tuples_p)
 {
     AUDDBG ("Loading playlist %s.\n", filename);
     PlaylistPlugin * pp = get_plugin (filename);
@@ -81,8 +81,8 @@ bool_t playlist_load (const char * filename, char * * title,
     if (! file)
         return FALSE;
 
-    struct index * filenames = index_new ();
-    struct index * tuples = index_new ();
+    Index * filenames = index_new ();
+    Index * tuples = index_new ();
     bool_t success = pp->load (filename, file, title, filenames, tuples);
 
     vfs_fclose (file);
@@ -112,7 +112,7 @@ bool_t playlist_insert_playlist_raw (int list, int at,
  const char * filename)
 {
     char * title = NULL;
-    struct index * filenames, * tuples;
+    Index * filenames, * tuples;
 
     if (! playlist_load (filename, & title, & filenames, & tuples))
         return FALSE;
@@ -141,9 +141,9 @@ bool_t playlist_save (int list, const char * filename)
     char * title = playlist_get_title (list);
 
     int entries = playlist_entry_count (list);
-    struct index * filenames = index_new ();
+    Index * filenames = index_new ();
     index_allocate (filenames, entries);
-    struct index * tuples = index_new ();
+    Index * tuples = index_new ();
     index_allocate (tuples, entries);
 
     for (int i = 0; i < entries; i ++)

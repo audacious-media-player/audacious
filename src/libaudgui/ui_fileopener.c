@@ -31,7 +31,7 @@
 static void filebrowser_add_files (GtkFileChooser * browser, GSList * files,
  bool_t play)
 {
-    struct index * list = index_new ();
+    Index * list = index_new ();
 
     for (GSList * node = files; node; node = node->next)
         index_append (list, str_get (node->data));

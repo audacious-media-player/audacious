@@ -118,7 +118,7 @@ typedef struct {
     int number, unique_id;
     char * filename, * title;
     bool_t modified;
-    struct index * entries;
+    Index * entries;
     Entry * position;
     int selected_count;
     int last_shuffle_num;
@@ -139,7 +139,7 @@ static pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
 static GHashTable * unique_id_table = NULL;
 static int next_unique_id = 1000;
 
-static struct index * playlists = NULL;
+static Index * playlists = NULL;
 static Playlist * active_playlist = NULL;
 static Playlist * playing_playlist = NULL;
 
@@ -791,7 +791,7 @@ void playlist_reorder (int from, int to, int count)
      count > index_count (playlists) || count < 0)
         LEAVE_RET_VOID;
 
-    struct index * displaced = index_new ();
+    Index * displaced = index_new ();
 
     if (to < from)
         index_copy_append (playlists, to, displaced, from - to);
@@ -1059,7 +1059,7 @@ int playlist_entry_count (int playlist_num)
 }
 
 void playlist_entry_insert_batch_raw (int playlist_num, int at,
- struct index * filenames, struct index * tuples, struct index * decoders)
+ Index * filenames, Index * tuples, Index * decoders)
 {
     ENTER;
     DECLARE_PLAYLIST;
@@ -1072,7 +1072,7 @@ void playlist_entry_insert_batch_raw (int playlist_num, int at,
 
     int number = index_count (filenames);
 
-    struct index * add = index_new ();
+    Index * add = index_new ();
     index_allocate (add, number);
 
     for (int i = 0; i < number; i ++)
@@ -1385,7 +1385,7 @@ int playlist_shift (int playlist_num, int entry_num, int distance)
             bottom = i;
     }
 
-    struct index * temp = index_new ();
+    Index * temp = index_new ();
 
     for (int i = top; i < center; i ++)
     {
@@ -1432,7 +1432,7 @@ void playlist_delete_selected (int playlist_num)
 
     int entries = index_count (playlist->entries);
 
-    struct index * others = index_new ();
+    Index * others = index_new ();
     index_allocate (others, entries - playlist->selected_count);
 
     if (playlist->position && playlist->position->selected)
@@ -1487,7 +1487,7 @@ void playlist_reverse (int playlist_num)
 
     int entries = index_count (playlist->entries);
 
-    struct index * reversed = index_new ();
+    Index * reversed = index_new ();
     index_allocate (reversed, entries);
 
     for (int count = entries; count --; )
@@ -1585,7 +1585,7 @@ static void sort_selected (Playlist * playlist, int (* compare) (const void *
 {
     int entries = index_count (playlist->entries);
 
-    struct index * selected = index_new ();
+    Index * selected = index_new ();
     index_allocate (selected, playlist->selected_count);
 
     for (int count = 0; count < entries; count++)

@@ -64,10 +64,10 @@ AUD_VFUNC0 (drct_pl_next)
 AUD_VFUNC0 (drct_pl_prev)
 
 AUD_VFUNC2 (drct_pl_add, const char *, filename, int, at)
-AUD_VFUNC2 (drct_pl_add_list, struct index *, filenames, int, at)
+AUD_VFUNC2 (drct_pl_add_list, Index *, filenames, int, at)
 AUD_VFUNC1 (drct_pl_open, const char *, filename)
-AUD_VFUNC1 (drct_pl_open_list, struct index *, filenames)
+AUD_VFUNC1 (drct_pl_open_list, Index *, filenames)
 AUD_VFUNC1 (drct_pl_open_temp, const char *, filename)
-AUD_VFUNC1 (drct_pl_open_temp_list, struct index *, filenames)
+AUD_VFUNC1 (drct_pl_open_temp_list, Index *, filenames)
 
 AUD_VFUNC1 (drct_pl_delete_selected, int, playlist)
