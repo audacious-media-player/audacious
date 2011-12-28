@@ -22,12 +22,11 @@
 #ifndef AUDACIOUS_MISC_H
 #define AUDACIOUS_MISC_H
 
-#include <glib.h>
-
 #include <audacious/api.h>
 #include <audacious/types.h>
-#include <libaudcore/vfs.h>
+#include <libaudcore/index.h>
 #include <libaudcore/tuple.h>
+#include <libaudcore/vfs.h>
 
 enum {
  AUD_PATH_BIN_DIR,

@@ -1,5 +1,5 @@
 /*  Audacious - Cross-platform multimedia player
- *  Copyright (C) 2005-2008  Audacious team
+ *  Copyright (C) 2005-2011  Audacious team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -33,13 +33,11 @@ static EqualizerPreset * equalizer_preset_new (const char * name)
     return preset;
 }
 
-GList *
-equalizer_read_presets(const char *basename)
+Index * equalizer_read_presets (const char * basename)
 {
     char *filename, *name;
     GKeyFile *rcfile;
     GError *error = NULL;
-    GList *list = NULL;
     int i, p = 0;
     EqualizerPreset *preset;
 
@@ -61,6 +59,8 @@ equalizer_read_presets(const char *basename)
     }
 
     g_free(filename);
+
+    Index * list = index_new ();
 
     for (;;)
     {
@@ -87,37 +87,33 @@ equalizer_read_presets(const char *basename)
                 preset->bands[i] = g_key_file_get_double(rcfile, name, band, &error);
             }
 
-            list = g_list_prepend(list, preset);
+            index_append (list, preset);
         }
         else
             break;
     }
 
-    list = g_list_reverse(list);
     g_key_file_free(rcfile);
 
     return list;
 }
 
-bool_t equalizer_write_preset_file (GList * list, const char * basename)
+bool_t equalizer_write_preset_file (Index * list, const char * basename)
 {
-    char *filename, *tmp;
-    int i, p;
-    EqualizerPreset *preset;
+    char *filename;
+    int i;
     GKeyFile *rcfile;
-    GList *node;
     char *data;
     gsize len;
     GError *error = NULL;
 
     rcfile = g_key_file_new();
-    p = 0;
 
-    for (node = list; node; node = g_list_next(node))
+    for (int p = 0; p < index_count (list); p ++)
     {
-        preset = node->data;
+        EqualizerPreset * preset = index_get (list, p);
 
-        tmp = g_strdup_printf("Preset%d", p++);
+        char * tmp = g_strdup_printf ("Preset%d", p);
         g_key_file_set_string(rcfile, "Presets", tmp, preset->name);
         g_free(tmp);
 
@@ -143,14 +139,12 @@ bool_t equalizer_write_preset_file (GList * list, const char * basename)
     return success;
 }
 
-GList *
-import_winamp_eqf(VFSFile * file)
+Index * import_winamp_eqf (VFSFile * file)
 {
     char header[31];
     char bands[11];
     int i = 0;
     EqualizerPreset *preset = NULL;
-    GList *list = NULL;
     char *markup;
     char preset_name[0xb4];
 
@@ -161,6 +155,8 @@ import_winamp_eqf(VFSFile * file)
     AUDDBG("The EQF header is OK\n");
 
     if (vfs_fseek(file, 0x1f, SEEK_SET) == -1) goto error;
+
+    Index * list = index_new ();
 
     while (vfs_fread(preset_name, 1, 0xb4, file) == 0xb4) {
         AUDDBG("The preset name is '%s'\n", preset_name);
@@ -175,11 +171,8 @@ import_winamp_eqf(VFSFile * file)
         for (i = 0; i < 10; i++)
             preset->bands[i] = EQUALIZER_MAX_GAIN - ((bands[i] * EQUALIZER_MAX_GAIN * 2) / 64.0);
 
-        list = g_list_prepend(list, preset);
+        index_append (list, preset);
     }
-
-    list = g_list_reverse(list);
-    if (list == NULL) goto error;
 
     return list;
 
