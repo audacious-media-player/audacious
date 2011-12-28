@@ -773,7 +773,7 @@ static Index * strings_to_index (char * * strings)
     Index * index = index_new ();
 
     while (* strings)
-        index_append (index, * strings ++);
+        index_append (index, str_get (* strings ++));
 
     return index;
 }
