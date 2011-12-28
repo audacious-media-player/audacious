@@ -929,7 +929,7 @@ static bool_t parse_apic (const unsigned char * _data, int size, char * * mime,
 static bool_t id3v24_read_image (VFSFile * handle, void * * image_data,
  int64_t * image_size64)
 {
-    int version, header_size, data_size, footer_size, parsed, image_size;
+    int version, header_size, data_size, footer_size, parsed, image_size = 0;
     bool_t syncsafe;
     int64_t offset;
     bool_t found = FALSE;
