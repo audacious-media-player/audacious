@@ -52,53 +52,53 @@ enum
     ID3_TAGS_NO
 };
 
-static const gchar * id3_frames[ID3_TAGS_NO] = {"TALB","TIT2","TCOM", "TCOP",
+static const char * id3_frames[ID3_TAGS_NO] = {"TALB","TIT2","TCOM", "TCOP",
  "TDAT", "TIME", "TLEN", "TPE1", "TRCK", "TYER","TCON", "COMM", "PRIV", "TSSE",
  "TDRC", "TXXX", "RVA2"};
 
-static const guchar PRIMARY_CLASS_MUSIC[16] = {0xBC, 0x7D, 0x60, 0xD1, 0x23,
+static const unsigned char PRIMARY_CLASS_MUSIC[16] = {0xBC, 0x7D, 0x60, 0xD1, 0x23,
  0xE3, 0xE2, 0x4B, 0x86, 0xA1, 0x48, 0xA4, 0x2A, 0x28, 0x44, 0x1E};
-static const guchar PRIMARY_CLASS_AUDIO[16] = {0x29, 0x0F, 0xCD, 0x01, 0x4E,
+static const unsigned char PRIMARY_CLASS_AUDIO[16] = {0x29, 0x0F, 0xCD, 0x01, 0x4E,
  0xDA, 0x57, 0x41, 0x89, 0x7B, 0x62, 0x75, 0xD5, 0x0C, 0x4F, 0x11};
-static const guchar SECONDARY_CLASS_AUDIOBOOK[16] = {0xEB, 0x6B, 0x23, 0xE0,
+static const unsigned char SECONDARY_CLASS_AUDIOBOOK[16] = {0xEB, 0x6B, 0x23, 0xE0,
  0x81, 0xC2, 0xDE, 0x4E, 0xA3, 0x6D, 0x7A, 0xF7, 0x6A, 0x3D, 0x45, 0xB5};
-static const guchar SECONDARY_CLASS_SPOKENWORD[16] = {0x13, 0x2A, 0x17, 0x3A,
+static const unsigned char SECONDARY_CLASS_SPOKENWORD[16] = {0x13, 0x2A, 0x17, 0x3A,
  0xD9, 0x2B, 0x31, 0x48, 0x83, 0x5B, 0x11, 0x4F, 0x6A, 0x95, 0x94, 0x3F};
-static const guchar SECONDARY_CLASS_NEWS[16] = {0x9B, 0xDB, 0x77, 0x66, 0xA0,
+static const unsigned char SECONDARY_CLASS_NEWS[16] = {0x9B, 0xDB, 0x77, 0x66, 0xA0,
  0xE5, 0x63, 0x40, 0xA1, 0xAD, 0xAC, 0xEB, 0x52, 0x84, 0x0C, 0xF1};
-static const guchar SECONDARY_CLASS_TALKSHOW[16] = {0x67, 0x4A, 0x82, 0x1B,
+static const unsigned char SECONDARY_CLASS_TALKSHOW[16] = {0x67, 0x4A, 0x82, 0x1B,
  0x80, 0x3F, 0x3E, 0x4E, 0x9C, 0xDE, 0xF7, 0x36, 0x1B, 0x0F, 0x5F, 0x1B};
-static const guchar SECONDARY_CLASS_GAMES_CLIP[16] = {0x68, 0x33, 0x03, 0x00,
+static const unsigned char SECONDARY_CLASS_GAMES_CLIP[16] = {0x68, 0x33, 0x03, 0x00,
  0x09, 0x50, 0xC3, 0x4A, 0xA8, 0x20, 0x5D, 0x2D, 0x09, 0xA4, 0xE7, 0xC1};
-static const guchar SECONDARY_CLASS_GAMES_SONG[16] = {0x31, 0xF7, 0x4F, 0xF2,
+static const unsigned char SECONDARY_CLASS_GAMES_SONG[16] = {0x31, 0xF7, 0x4F, 0xF2,
  0xFC, 0x96, 0x0F, 0x4D, 0xA2, 0xF5, 0x5A, 0x34, 0x83, 0x68, 0x2B, 0x1A};
 
 #pragma pack(push) /* must be byte-aligned */
 #pragma pack(1)
 typedef struct
 {
-    gchar magic[3];
-    guchar version;
-    guchar revision;
-    guchar flags;
-    guint32 size;
+    char magic[3];
+    unsigned char version;
+    unsigned char revision;
+    unsigned char flags;
+    uint32_t size;
 }
 ID3v2Header;
 
 typedef struct
 {
-    gchar key[4];
-    guint32 size;
-    guint16 flags;
+    char key[4];
+    uint32_t size;
+    uint16_t flags;
 }
 ID3v2FrameHeader;
 #pragma pack(pop)
 
 typedef struct
 {
-    gchar key[5];
-    guchar * data;
-    gint size;
+    char key[5];
+    unsigned char * data;
+    int size;
 }
 GenericFrame;
 
@@ -118,16 +118,16 @@ static void str_unref_cb (void * str)
     str_unref (str);
 }
 
-static gboolean skip_extended_header_3 (VFSFile * handle, gint * _size)
+static bool_t skip_extended_header_3 (VFSFile * handle, int * _size)
 {
-    guint32 size;
+    uint32_t size;
 
     if (vfs_fread (& size, 1, 4, handle) != 4)
         return FALSE;
 
     size = GUINT32_FROM_BE (size);
 
-    TAGDBG ("Found v2.3 extended header, size = %d.\n", (gint) size);
+    TAGDBG ("Found v2.3 extended header, size = %d.\n", (int) size);
 
     if (vfs_fseek (handle, size, SEEK_CUR))
         return FALSE;
@@ -136,16 +136,16 @@ static gboolean skip_extended_header_3 (VFSFile * handle, gint * _size)
     return TRUE;
 }
 
-static gboolean skip_extended_header_4 (VFSFile * handle, gint * _size)
+static bool_t skip_extended_header_4 (VFSFile * handle, int * _size)
 {
-    guint32 size;
+    uint32_t size;
 
     if (vfs_fread (& size, 1, 4, handle) != 4)
         return FALSE;
 
     size = unsyncsafe32 (GUINT32_FROM_BE (size));
 
-    TAGDBG ("Found v2.4 extended header, size = %d.\n", (gint) size);
+    TAGDBG ("Found v2.4 extended header, size = %d.\n", (int) size);
 
     if (vfs_fseek (handle, size - 4, SEEK_CUR))
         return FALSE;
@@ -154,7 +154,7 @@ static gboolean skip_extended_header_4 (VFSFile * handle, gint * _size)
     return TRUE;
 }
 
-static gboolean validate_header (ID3v2Header * header, gboolean is_footer)
+static bool_t validate_header (ID3v2Header * header, bool_t is_footer)
 {
     if (memcmp (header->magic, is_footer ? "3DI" : "ID3", 3))
         return FALSE;
@@ -166,15 +166,15 @@ static gboolean validate_header (ID3v2Header * header, gboolean is_footer)
 
     TAGDBG ("Found ID3v2 %s:\n", is_footer ? "footer" : "header");
     TAGDBG (" magic = %.3s\n", header->magic);
-    TAGDBG (" version = %d\n", (gint) header->version);
-    TAGDBG (" revision = %d\n", (gint) header->revision);
-    TAGDBG (" flags = %x\n", (gint) header->flags);
-    TAGDBG (" size = %d\n", (gint) header->size);
+    TAGDBG (" version = %d\n", (int) header->version);
+    TAGDBG (" revision = %d\n", (int) header->revision);
+    TAGDBG (" flags = %x\n", (int) header->flags);
+    TAGDBG (" size = %d\n", (int) header->size);
     return TRUE;
 }
 
-static gboolean read_header (VFSFile * handle, gint * version, gboolean *
- syncsafe, gint64 * offset, gint * header_size, gint * data_size, gint *
+static bool_t read_header (VFSFile * handle, int * version, bool_t *
+ syncsafe, int64_t * offset, int * header_size, int * data_size, int *
  footer_size)
 {
     ID3v2Header header, footer;
@@ -212,7 +212,7 @@ static gboolean read_header (VFSFile * handle, gint * version, gboolean *
     }
     else
     {
-        gint64 end = vfs_fsize (handle);
+        int64_t end = vfs_fsize (handle);
 
         if (end < 0)
             return FALSE;
@@ -248,7 +248,7 @@ static gboolean read_header (VFSFile * handle, gint * version, gboolean *
 
     if (header.flags & ID3_HEADER_HAS_EXTENDED_HEADER)
     {
-        gint extended_size = 0;
+        int extended_size = 0;
 
         if (header.version == 3)
         {
@@ -266,18 +266,18 @@ static gboolean read_header (VFSFile * handle, gint * version, gboolean *
     }
 
     TAGDBG ("Offset = %d, header size = %d, data size = %d, footer size = "
-     "%d.\n", (gint) * offset, * header_size, * data_size, * footer_size);
+     "%d.\n", (int) * offset, * header_size, * data_size, * footer_size);
 
     return TRUE;
 }
 
-static gint unsyncsafe (guchar * data, gint size)
+static int unsyncsafe (unsigned char * data, int size)
 {
-    guchar * get = data, * set = data;
+    unsigned char * get = data, * set = data;
 
     while (size --)
     {
-        guchar c = * set ++ = * get ++;
+        unsigned char c = * set ++ = * get ++;
 
         if (c == 0xff && size && ! get[0])
         {
@@ -289,11 +289,11 @@ static gint unsyncsafe (guchar * data, gint size)
     return set - data;
 }
 
-static gboolean read_frame (VFSFile * handle, gint max_size, gint version,
- gboolean syncsafe, gint * frame_size, gchar * key, guchar * * data, gint * size)
+static bool_t read_frame (VFSFile * handle, int max_size, int version,
+ bool_t syncsafe, int * frame_size, char * key, unsigned char * * data, int * size)
 {
     ID3v2FrameHeader header;
-    gint skip = 0;
+    int skip = 0;
 
     if ((max_size -= sizeof (ID3v2FrameHeader)) < 0)
         return FALSE;
@@ -314,8 +314,8 @@ static gboolean read_frame (VFSFile * handle, gint max_size, gint version,
 
     TAGDBG ("Found frame:\n");
     TAGDBG (" key = %.4s\n", header.key);
-    TAGDBG (" size = %d\n", (gint) header.size);
-    TAGDBG (" flags = %x\n", (gint) header.flags);
+    TAGDBG (" size = %d\n", (int) header.size);
+    TAGDBG (" flags = %x\n", (int) header.flags);
 
     * frame_size = sizeof (ID3v2FrameHeader) + header.size;
     sprintf (key, "%.4s", header.key);
@@ -347,18 +347,18 @@ static gboolean read_frame (VFSFile * handle, gint max_size, gint version,
     return TRUE;
 }
 
-static gchar * decode_text_frame (const guchar * data, gint size)
+static char * decode_text_frame (const unsigned char * data, int size)
 {
-    return convert_text ((const gchar *) data + 1, size - 1, data[0], FALSE,
+    return convert_text ((const char *) data + 1, size - 1, data[0], FALSE,
      NULL, NULL);
 }
 
-static gboolean decode_comment_frame (const guchar * _data, gint size, gchar * *
- lang, gchar * * type, gchar * * value)
+static bool_t decode_comment_frame (const unsigned char * _data, int size, char * *
+ lang, char * * type, char * * value)
 {
-    const gchar * data = (const gchar *) _data;
-    gchar * pair, * sep;
-    gint converted;
+    const char * data = (const char *) _data;
+    char * pair, * sep;
+    int converted;
 
     pair = convert_text (data + 4, size - 4, data[0], FALSE, & converted, NULL);
 
@@ -387,16 +387,16 @@ static void free_frame_list (GList * list)
     g_list_free (list);
 }
 
-static void read_all_frames (VFSFile * handle, gint version, gboolean syncsafe,
- gint data_size, GHashTable * dict)
+static void read_all_frames (VFSFile * handle, int version, bool_t syncsafe,
+ int data_size, GHashTable * dict)
 {
-    gint pos;
+    int pos;
 
     for (pos = 0; pos < data_size; )
     {
-        gint frame_size, size;
-        gchar key[5];
-        guchar * data;
+        int frame_size, size;
+        char key[5];
+        unsigned char * data;
         GenericFrame * frame;
 
         if (! read_frame (handle, data_size - pos, version, syncsafe,
@@ -422,7 +422,7 @@ static void read_all_frames (VFSFile * handle, gint version, gboolean syncsafe,
     }
 }
 
-static gboolean write_frame (VFSFile * handle, GenericFrame * frame, gint *
+static bool_t write_frame (VFSFile * handle, GenericFrame * frame, int *
  frame_size)
 {
     TAGDBG ("Writing frame %s, size %d\n", frame->key, frame->size);
@@ -447,7 +447,7 @@ static gboolean write_frame (VFSFile * handle, GenericFrame * frame, gint *
 
 typedef struct {
     VFSFile * file;
-    gint written_size;
+    int written_size;
 } WriteState;
 
 static void write_frame_list (void * key, void * list, void * user)
@@ -456,13 +456,13 @@ static void write_frame_list (void * key, void * list, void * user)
 
     for (GList * node = list; node; node = node->next)
     {
-        gint size;
+        int size;
         if (write_frame (state->file, node->data, & size))
             state->written_size += size;
     }
 }
 
-static gint write_all_frames (VFSFile * handle, GHashTable * dict)
+static int write_all_frames (VFSFile * handle, GHashTable * dict)
 {
     WriteState state = {handle, 0};
     g_hash_table_foreach (dict, write_frame_list, & state);
@@ -471,7 +471,7 @@ static gint write_all_frames (VFSFile * handle, GHashTable * dict)
     return state.written_size;
 }
 
-static gboolean write_header (VFSFile * handle, gint size, gboolean is_footer)
+static bool_t write_header (VFSFile * handle, int size, bool_t is_footer)
 {
     ID3v2Header header;
 
@@ -486,9 +486,9 @@ static gboolean write_header (VFSFile * handle, gint size, gboolean is_footer)
      (ID3v2Header);
 }
 
-static gint get_frame_id (const gchar * key)
+static int get_frame_id (const char * key)
 {
-    gint id;
+    int id;
 
     for (id = 0; id < ID3_TAGS_NO; id ++)
     {
@@ -499,10 +499,10 @@ static gint get_frame_id (const gchar * key)
     return -1;
 }
 
-static void associate_string (Tuple * tuple, gint field, const gchar *
- customfield, const guchar * data, gint size)
+static void associate_string (Tuple * tuple, int field, const char *
+ customfield, const unsigned char * data, int size)
 {
-    gchar * text = decode_text_frame (data, size);
+    char * text = decode_text_frame (data, size);
 
     if (text == NULL || ! text[0])
     {
@@ -519,10 +519,10 @@ static void associate_string (Tuple * tuple, gint field, const gchar *
     g_free (text);
 }
 
-static void associate_int (Tuple * tuple, gint field, const gchar *
- customfield, const guchar * data, gint size)
+static void associate_int (Tuple * tuple, int field, const char *
+ customfield, const unsigned char * data, int size)
 {
-    gchar * text = decode_text_frame (data, size);
+    char * text = decode_text_frame (data, size);
 
     if (text == NULL || atoi (text) < 1)
     {
@@ -539,17 +539,17 @@ static void associate_int (Tuple * tuple, gint field, const gchar *
     g_free (text);
 }
 
-static void decode_private_info (Tuple * tuple, const guchar * data, gint size)
+static void decode_private_info (Tuple * tuple, const unsigned char * data, int size)
 {
-    gchar * text = g_strndup ((const gchar *) data, size);
+    char * text = g_strndup ((const char *) data, size);
 
     if (!strncmp(text, "WM/", 3))
     {
-        gchar *separator = strchr(text, 0);
+        char *separator = strchr(text, 0);
         if (separator == NULL)
             goto DONE;
 
-        gchar * value = separator + 1;
+        char * value = separator + 1;
         if (!strncmp(text, "WM/MediaClassPrimaryID", 22))
         {
             if (!memcmp(value, PRIMARY_CLASS_MUSIC, 16))
@@ -581,9 +581,9 @@ DONE:
     g_free (text);
 }
 
-static void decode_comment (Tuple * tuple, const guchar * data, gint size)
+static void decode_comment (Tuple * tuple, const unsigned char * data, int size)
 {
-    gchar * lang, * type, * value;
+    char * lang, * type, * value;
 
     if (! decode_comment_frame (data, size, & lang, & type, & value))
         return;
@@ -598,19 +598,19 @@ static void decode_comment (Tuple * tuple, const guchar * data, gint size)
     g_free (value);
 }
 
-static gboolean decode_rva2_block (const guchar * * _data, gint * _size, gint *
- channel, gint * adjustment, gint * adjustment_unit, gint * peak, gint *
+static bool_t decode_rva2_block (const unsigned char * * _data, int * _size, int *
+ channel, int * adjustment, int * adjustment_unit, int * peak, int *
  peak_unit)
 {
-    const guchar * data = * _data;
-    gint size = * _size;
-    gint peak_bits;
+    const unsigned char * data = * _data;
+    int size = * _size;
+    int peak_bits;
 
     if (size < 4)
         return FALSE;
 
     * channel = data[0];
-    * adjustment = (gchar) data[1]; /* first byte is signed */
+    * adjustment = (char) data[1]; /* first byte is signed */
     * adjustment = (* adjustment << 8) | data[2];
     * adjustment_unit = 512;
     peak_bits = data[3];
@@ -621,10 +621,10 @@ static gboolean decode_rva2_block (const guchar * * _data, gint * _size, gint *
     TAGDBG ("RVA2 block: channel = %d, adjustment = %d/%d, peak bits = %d\n",
      * channel, * adjustment, * adjustment_unit, peak_bits);
 
-    if (peak_bits > 0 && peak_bits < sizeof (gint) * 8)
+    if (peak_bits > 0 && peak_bits < sizeof (int) * 8)
     {
-        gint bytes = (peak_bits + 7) / 8;
-        gint count;
+        int bytes = (peak_bits + 7) / 8;
+        int count;
 
         if (bytes > size)
             return FALSE;
@@ -651,15 +651,15 @@ static gboolean decode_rva2_block (const guchar * * _data, gint * _size, gint *
     return TRUE;
 }
 
-static void decode_rva2 (Tuple * tuple, const guchar * data, gint size)
+static void decode_rva2 (Tuple * tuple, const unsigned char * data, int size)
 {
-    const gchar * domain;
-    gint channel, adjustment, adjustment_unit, peak, peak_unit;
+    const char * domain;
+    int channel, adjustment, adjustment_unit, peak, peak_unit;
 
     if (memchr (data, 0, size) == NULL)
         return;
 
-    domain = (const gchar *) data;
+    domain = (const char *) data;
 
     TAGDBG ("RVA2 domain: %s\n", domain);
 
@@ -677,7 +677,7 @@ static void decode_rva2 (Tuple * tuple, const guchar * data, gint size)
 
         if (tuple_get_value_type (tuple, FIELD_GAIN_GAIN_UNIT, NULL) ==
          TUPLE_INT)
-            adjustment = adjustment * (gint64) tuple_get_int (tuple,
+            adjustment = adjustment * (int64_t) tuple_get_int (tuple,
              FIELD_GAIN_GAIN_UNIT, NULL) / adjustment_unit;
         else
             tuple_set_int (tuple, FIELD_GAIN_GAIN_UNIT, NULL,
@@ -687,7 +687,7 @@ static void decode_rva2 (Tuple * tuple, const guchar * data, gint size)
         {
             if (tuple_get_value_type (tuple, FIELD_GAIN_PEAK_UNIT, NULL) ==
              TUPLE_INT)
-                peak = peak * (gint64) tuple_get_int (tuple,
+                peak = peak * (int64_t) tuple_get_int (tuple,
                  FIELD_GAIN_PEAK_UNIT, NULL) / peak_unit;
             else
                 tuple_set_int (tuple, FIELD_GAIN_PEAK_UNIT, NULL,
@@ -711,10 +711,10 @@ static void decode_rva2 (Tuple * tuple, const guchar * data, gint size)
     }
 }
 
-static void decode_genre (Tuple * tuple, const guchar * data, gint size)
+static void decode_genre (Tuple * tuple, const unsigned char * data, int size)
 {
-    gint numericgenre;
-    gchar * text = decode_text_frame (data, size);
+    int numericgenre;
+    char * text = decode_text_frame (data, size);
 
     if (text == NULL)
         return;
@@ -734,7 +734,7 @@ static void decode_genre (Tuple * tuple, const guchar * data, gint size)
     return;
 }
 
-static GenericFrame * add_generic_frame (gint id, gint size,
+static GenericFrame * add_generic_frame (int id, int size,
  GHashTable * dict)
 {
     GenericFrame * frame = g_malloc (sizeof (GenericFrame));
@@ -749,13 +749,13 @@ static GenericFrame * add_generic_frame (gint id, gint size,
     return frame;
 }
 
-static void remove_frame (gint id, GHashTable * dict)
+static void remove_frame (int id, GHashTable * dict)
 {
     TAGDBG ("Deleting frame %s.\n", id3_frames[id]);
     g_hash_table_remove (dict, id3_frames[id]);
 }
 
-static void add_text_frame (gint id, const gchar * text, GHashTable * dict)
+static void add_text_frame (int id, const char * text, GHashTable * dict)
 {
     if (text == NULL)
     {
@@ -764,14 +764,14 @@ static void add_text_frame (gint id, const gchar * text, GHashTable * dict)
     }
 
     TAGDBG ("Adding text frame %s = %s.\n", id3_frames[id], text);
-    gint length = strlen (text);
+    int length = strlen (text);
 
     GenericFrame * frame = add_generic_frame (id, length + 1, dict);
     frame->data[0] = 3; /* UTF-8 encoding */
     memcpy (frame->data + 1, text, length);
 }
 
-static void add_comment_frame (const gchar * text, GHashTable * dict)
+static void add_comment_frame (const char * text, GHashTable * dict)
 {
     if (text == NULL)
     {
@@ -780,23 +780,23 @@ static void add_comment_frame (const gchar * text, GHashTable * dict)
     }
 
     TAGDBG ("Adding comment frame = %s.\n", text);
-    gint length = strlen (text);
+    int length = strlen (text);
     GenericFrame * frame = add_generic_frame (ID3_COMMENT, length + 5, dict);
 
     frame->data[0] = 3; /* UTF-8 encoding */
-    strcpy ((gchar *) frame->data + 1, "eng"); /* well, it *might* be English */
+    strcpy ((char *) frame->data + 1, "eng"); /* well, it *might* be English */
     memcpy (frame->data + 5, text, length);
 }
 
-static void add_frameFromTupleStr (const Tuple * tuple, gint field, gint
+static void add_frameFromTupleStr (const Tuple * tuple, int field, int
  id3_field, GHashTable * dict)
 {
-    gchar * str = tuple_get_str (tuple, field, NULL);
+    char * str = tuple_get_str (tuple, field, NULL);
     add_text_frame (id3_field, str, dict);
     str_unref (str);
 }
 
-static void add_frameFromTupleInt (const Tuple * tuple, gint field, gint
+static void add_frameFromTupleInt (const Tuple * tuple, int field, int
  id3_field, GHashTable * dict)
 {
     if (tuple_get_value_type (tuple, field, NULL) != TUPLE_INT)
@@ -805,27 +805,27 @@ static void add_frameFromTupleInt (const Tuple * tuple, gint field, gint
         return;
     }
 
-    gchar scratch[16];
+    char scratch[16];
     snprintf (scratch, sizeof scratch, "%d", tuple_get_int (tuple, field, NULL));
     add_text_frame (id3_field, scratch, dict);
 }
 
-static gboolean id3v24_can_handle_file (VFSFile * handle)
+static bool_t id3v24_can_handle_file (VFSFile * handle)
 {
-    gint version, header_size, data_size, footer_size;
-    gboolean syncsafe;
-    gint64 offset;
+    int version, header_size, data_size, footer_size;
+    bool_t syncsafe;
+    int64_t offset;
 
     return read_header (handle, & version, & syncsafe, & offset, & header_size,
      & data_size, & footer_size);
 }
 
-static gboolean id3v24_read_tag (Tuple * tuple, VFSFile * handle)
+static bool_t id3v24_read_tag (Tuple * tuple, VFSFile * handle)
 {
-    gint version, header_size, data_size, footer_size;
-    gboolean syncsafe;
-    gint64 offset;
-    gint pos;
+    int version, header_size, data_size, footer_size;
+    bool_t syncsafe;
+    int64_t offset;
+    int pos;
 
     if (! read_header (handle, & version, & syncsafe, & offset, & header_size,
      & data_size, & footer_size))
@@ -833,9 +833,9 @@ static gboolean id3v24_read_tag (Tuple * tuple, VFSFile * handle)
 
     for (pos = 0; pos < data_size; )
     {
-        gint frame_size, size, id;
-        gchar key[5];
-        guchar * data;
+        int frame_size, size, id;
+        char key[5];
+        unsigned char * data;
 
         if (! read_frame (handle, data_size - pos, version, syncsafe,
          & frame_size, key, & data, & size))
@@ -903,11 +903,11 @@ static gboolean id3v24_read_tag (Tuple * tuple, VFSFile * handle)
     return TRUE;
 }
 
-static gboolean parse_apic (const guchar * _data, gint size, gchar * * mime,
- gint * type, gchar * * desc, void * * image_data, gint * image_size)
+static bool_t parse_apic (const unsigned char * _data, int size, char * * mime,
+ int * type, char * * desc, void * * image_data, int * image_size)
 {
-    const gchar * data = (const gchar *) _data;
-    const gchar * sep, * after;
+    const char * data = (const char *) _data;
+    const char * sep, * after;
 
     if (size < 2 || (sep = memchr (data + 1, 0, size - 2)) == NULL)
         return FALSE;
@@ -926,13 +926,13 @@ static gboolean parse_apic (const guchar * _data, gint size, gchar * * mime,
     return TRUE;
 }
 
-static gboolean id3v24_read_image (VFSFile * handle, void * * image_data,
- gint64 * image_size64)
+static bool_t id3v24_read_image (VFSFile * handle, void * * image_data,
+ int64_t * image_size64)
 {
-    gint version, header_size, data_size, footer_size, parsed, image_size;
-    gboolean syncsafe;
-    gint64 offset;
-    gboolean found = FALSE;
+    int version, header_size, data_size, footer_size, parsed, image_size;
+    bool_t syncsafe;
+    int64_t offset;
+    bool_t found = FALSE;
 
     if (! read_header (handle, & version, & syncsafe, & offset, & header_size,
      & data_size, & footer_size))
@@ -940,10 +940,10 @@ static gboolean id3v24_read_image (VFSFile * handle, void * * image_data,
 
     for (parsed = 0; parsed < data_size && ! found; )
     {
-        gint frame_size, size, type;
-        gchar key[5];
-        guchar * data;
-        gchar * mime, * desc;
+        int frame_size, size, type;
+        char key[5];
+        unsigned char * data;
+        char * mime, * desc;
 
         if (! read_frame (handle, data_size - parsed, version, syncsafe,
          & frame_size, key, & data, & size))
@@ -976,11 +976,11 @@ static gboolean id3v24_read_image (VFSFile * handle, void * * image_data,
     return found;
 }
 
-static gboolean id3v24_write_tag (const Tuple * tuple, VFSFile * f)
+static bool_t id3v24_write_tag (const Tuple * tuple, VFSFile * f)
 {
-    gint version, header_size, data_size, footer_size;
-    gboolean syncsafe;
-    gint64 offset;
+    int version, header_size, data_size, footer_size;
+    bool_t syncsafe;
+    int64_t offset;
 
     if (! read_header (f, & version, & syncsafe, & offset, & header_size,
      & data_size, & footer_size))
@@ -999,7 +999,7 @@ static gboolean id3v24_write_tag (const Tuple * tuple, VFSFile * f)
     add_frameFromTupleInt (tuple, FIELD_TRACK_NUMBER, ID3_TRACKNR, dict);
     add_frameFromTupleStr (tuple, FIELD_GENRE, ID3_GENRE, dict);
 
-    gchar * comment = tuple_get_str (tuple, FIELD_COMMENT, NULL);
+    char * comment = tuple_get_str (tuple, FIELD_COMMENT, NULL);
     add_comment_frame (comment, dict);
     str_unref (comment);
 

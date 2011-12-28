@@ -25,24 +25,24 @@
 #include <inttypes.h>
 
 /* convert windows time to unix time */
-time_t unix_time(guint64 win_time)
+time_t unix_time(uint64_t win_time)
 {
-    guint64 t = (guint64) ((win_time / 10000000LL) - 11644473600LL);
+    uint64_t t = (uint64_t) ((win_time / 10000000LL) - 11644473600LL);
     return (time_t) t;
 }
 
-guint16 get_year(guint64 win_time)
+uint16_t get_year(uint64_t win_time)
 {
     GDate *d = g_date_new();
     g_date_set_time_t(d, unix_time(win_time));
-    guint16 year = g_date_get_year(d);
+    uint16_t year = g_date_get_year(d);
     g_date_free(d);
     return year;
 }
 
-gchar * read_char_data (VFSFile * file, int size)
+char * read_char_data (VFSFile * file, int size)
 {
-    gchar * value = g_malloc (size + 1);
+    char * value = g_malloc (size + 1);
     if (vfs_fread (value, 1, size, file) < size)
     {
         g_free (value);
@@ -52,14 +52,14 @@ gchar * read_char_data (VFSFile * file, int size)
     return value;
 }
 
-gboolean write_char_data(VFSFile * f, gchar * data, size_t i)
+bool_t write_char_data(VFSFile * f, char * data, size_t i)
 {
     return (vfs_fwrite(data, i, 1, f) == i);
 }
 
-guint8 read_uint8(VFSFile * fd)
+uint8_t read_uint8(VFSFile * fd)
 {
-    guint16 i;
+    uint16_t i;
     if (vfs_fread(&i, 1, 1, fd) == 1)
     {
         return i;
@@ -67,92 +67,92 @@ guint8 read_uint8(VFSFile * fd)
     return -1;
 }
 
-guint16 read_LEuint16(VFSFile * fd)
+uint16_t read_LEuint16(VFSFile * fd)
 {
-    guint16 a;
+    uint16_t a;
     if (vfs_fget_le16(&a, fd))
         return a;
     else
         return -1;
 }
 
-guint16 read_BEuint16(VFSFile * fd)
+uint16_t read_BEuint16(VFSFile * fd)
 {
-    guint16 a;
+    uint16_t a;
     if (vfs_fget_be16(&a, fd))
         return a;
     else
         return -1;
 }
 
-guint32 read_LEuint32(VFSFile * fd)
+uint32_t read_LEuint32(VFSFile * fd)
 {
-    guint32 a;
+    uint32_t a;
     if (vfs_fget_le32(&a, fd))
         return a;
     else
         return -1;
 }
 
-guint32 read_BEuint32(VFSFile * fd)
+uint32_t read_BEuint32(VFSFile * fd)
 {
-    guint32 a;
+    uint32_t a;
     if (vfs_fget_be32(&a, fd))
         return a;
     else
         return -1;
 }
 
-guint64 read_LEuint64(VFSFile * fd)
+uint64_t read_LEuint64(VFSFile * fd)
 {
-    guint64 a;
+    uint64_t a;
     if (vfs_fget_le64(&a, fd))
         return a;
     else
         return -1;
 }
 
-guint64 read_BEuint64(VFSFile * fd)
+uint64_t read_BEuint64(VFSFile * fd)
 {
-    guint64 a;
+    uint64_t a;
     if (vfs_fget_be64(&a, fd))
         return a;
     else
         return 1;
 }
 
-gboolean write_uint8(VFSFile * fd, guint8 val)
+bool_t write_uint8(VFSFile * fd, uint8_t val)
 {
     return (vfs_fwrite(&val, 1, 1, fd) == 1);
 }
 
-gboolean write_LEuint16(VFSFile * fd, guint16 val)
+bool_t write_LEuint16(VFSFile * fd, uint16_t val)
 {
-    guint16 le_val = GUINT32_TO_LE(val);
+    uint16_t le_val = GUINT32_TO_LE(val);
     return (vfs_fwrite(&le_val, 2, 1, fd) == 2);
 }
 
-gboolean write_BEuint32(VFSFile * fd, guint32 val)
+bool_t write_BEuint32(VFSFile * fd, uint32_t val)
 {
-    guint32 be_val = GUINT32_TO_BE(val);
+    uint32_t be_val = GUINT32_TO_BE(val);
     return (vfs_fwrite(&be_val, 4, 1, fd) == 4);
 }
 
-gboolean write_LEuint32(VFSFile * fd, guint32 val)
+bool_t write_LEuint32(VFSFile * fd, uint32_t val)
 {
-    guint32 le_val = GUINT32_TO_LE(val);
+    uint32_t le_val = GUINT32_TO_LE(val);
     return (vfs_fwrite(&le_val, 4, 1, fd) == 4);
 }
 
-gboolean write_LEuint64(VFSFile * fd, guint64 val)
+bool_t write_LEuint64(VFSFile * fd, uint64_t val)
 {
-    guint64 le_val = GUINT64_TO_LE(val);
+    uint64_t le_val = GUINT64_TO_LE(val);
     return (vfs_fwrite(&le_val, 8, 1, fd) == 8);
 }
 
-gboolean cut_beginning_tag (VFSFile * handle, gint64 tag_size)
+bool_t cut_beginning_tag (VFSFile * handle, int64_t tag_size)
 {
-    guchar buffer[16384];
+    unsigned char buffer[16384];
     gsize offset = 0, readed;
 
     if (! tag_size)
@@ -178,12 +178,12 @@ gboolean cut_beginning_tag (VFSFile * handle, gint64 tag_size)
     return vfs_ftruncate (handle, offset) == 0;
 }
 
-gchar *convert_numericgenre_to_text(gint numericgenre)
+char *convert_numericgenre_to_text(int numericgenre)
 {
     const struct
     {
-        gint numericgenre;
-        gchar *genre;
+        int numericgenre;
+        char *genre;
     }
     table[] =
     {
@@ -314,7 +314,7 @@ gchar *convert_numericgenre_to_text(gint numericgenre)
         {GENRE_EURO_HOUSE, "Euro-House"},
     };
 
-    gint count;
+    int count;
 
     for (count = 0; count < G_N_ELEMENTS(table); count++)
     {
@@ -327,13 +327,13 @@ gchar *convert_numericgenre_to_text(gint numericgenre)
     return "Unknown";
 }
 
-guint32 unsyncsafe32 (guint32 x)
+uint32_t unsyncsafe32 (uint32_t x)
 {
     return (x & 0x7f) | ((x & 0x7f00) >> 1) | ((x & 0x7f0000) >> 2) | ((x &
      0x7f000000) >> 3);
 }
 
-guint32 syncsafe32 (guint32 x)
+uint32_t syncsafe32 (uint32_t x)
 {
     return (x & 0x7f) | ((x & 0x3f80) << 1) | ((x & 0x1fc000) << 2) | ((x &
      0xfe00000) << 3);

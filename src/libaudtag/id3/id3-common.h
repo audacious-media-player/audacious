@@ -22,8 +22,6 @@
 #ifndef AUDTAG_ID3_COMMON_H
 #define AUDTAG_ID3_COMMON_H
 
-#include <glib.h>
-
 /*
  * text: A pointer to the text data to be converted.
  * length: The size in bytes of the text data.
@@ -42,7 +40,7 @@
  * returns: A pointer to the converted text with a null character appended, or
  *  NULL if an error occurs.  The text must be freed when no longer needed.
  */
-gchar * convert_text (const gchar * text, gint length, gint encoding, gboolean
- nulled, gint * _converted, const gchar * * after);
+char * convert_text (const char * text, int length, int encoding, bool_t
+ nulled, int * _converted, const char * * after);
 
 #endif

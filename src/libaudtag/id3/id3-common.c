@@ -29,11 +29,11 @@
 #include "../util.h"
 #include "id3-common.h"
 
-static void * memchr16 (const void * mem, gint16 chr, gint len)
+static void * memchr16 (const void * mem, int16_t chr, int len)
 {
     while (len >= 2)
     {
-        if (* (gint16 *) mem == chr)
+        if (* (int16_t *) mem == chr)
             return (void *) mem;
 
         mem = (char *) mem + 2;
@@ -43,10 +43,10 @@ static void * memchr16 (const void * mem, gint16 chr, gint len)
     return NULL;
 }
 
-gchar * convert_text (const gchar * text, gint length, gint encoding, gboolean
- nulled, gint * _converted, const gchar * * after)
+char * convert_text (const char * text, int length, int encoding, bool_t
+ nulled, int * _converted, const char * * after)
 {
-    gchar * buffer = NULL;
+    char * buffer = NULL;
     gsize converted = 0;
 
     TAGDBG ("length = %d, encoding = %d, nulled = %d\n", length, encoding,
@@ -54,7 +54,7 @@ gchar * convert_text (const gchar * text, gint length, gint encoding, gboolean
 
     if (nulled)
     {
-        const gchar * null;
+        const char * null;
 
         switch (encoding)
         {
@@ -89,12 +89,12 @@ gchar * convert_text (const gchar * text, gint length, gint encoding, gboolean
     {
       case 0:
       case 3:;
-        gint converted_int = 0;
+        int converted_int = 0;
         buffer = str_to_utf8_full (text, length, NULL, & converted_int);
         converted = converted_int;
         break;
       case 1:
-        if (text[0] == (gchar) 0xff)
+        if (text[0] == (char) 0xff)
             buffer = g_convert (text + 2, length - 2, "UTF-8", "UTF-16LE", NULL,
              & converted, NULL);
         else
@@ -108,7 +108,7 @@ gchar * convert_text (const gchar * text, gint length, gint encoding, gboolean
         break;
     }
 
-    TAGDBG ("length converted: %d\n", (gint) converted);
+    TAGDBG ("length converted: %d\n", (int) converted);
     TAGDBG ("string: %s\n", buffer);
 
     if (_converted != NULL)

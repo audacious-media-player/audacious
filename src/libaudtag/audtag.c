@@ -25,16 +25,16 @@
 #include "tag_module.h"
 #include "util.h"
 
-gboolean tag_verbose = FALSE;
+bool_t tag_verbose = FALSE;
 
-void tag_set_verbose (gboolean verbose)
+void tag_set_verbose (bool_t verbose)
 {
     tag_verbose = verbose;
 }
 
 /* The tuple's file-related attributes are already set */
 
-gboolean tag_tuple_read (Tuple * tuple, VFSFile * handle)
+bool_t tag_tuple_read (Tuple * tuple, VFSFile * handle)
 {
     tag_module_t * module = find_tag_module (handle, TAG_TYPE_NONE);
 
@@ -44,7 +44,7 @@ gboolean tag_tuple_read (Tuple * tuple, VFSFile * handle)
     return module->read_tag (tuple, handle);
 }
 
-gboolean tag_image_read (VFSFile * handle, void * * data, gint64 * size)
+bool_t tag_image_read (VFSFile * handle, void * * data, int64_t * size)
 {
     tag_module_t * module = find_tag_module (handle, TAG_TYPE_NONE);
 
@@ -54,7 +54,7 @@ gboolean tag_image_read (VFSFile * handle, void * * data, gint64 * size)
     return module->read_image (handle, data, size);
 }
 
-gboolean tag_tuple_write (const Tuple * tuple, VFSFile * handle, gint new_type)
+bool_t tag_tuple_write (const Tuple * tuple, VFSFile * handle, int new_type)
 {
     tag_module_t * module = find_tag_module (handle, new_type);
 
@@ -65,7 +65,7 @@ gboolean tag_tuple_write (const Tuple * tuple, VFSFile * handle, gint new_type)
 }
 
 /* deprecated */
-gboolean tag_tuple_write_to_file (Tuple * tuple, VFSFile * handle)
+bool_t tag_tuple_write_to_file (Tuple * tuple, VFSFile * handle)
 {
     return tag_tuple_write (tuple, handle, TAG_TYPE_NONE);
 }

@@ -31,12 +31,12 @@
 #include <inttypes.h>
 #include "../tag_module.h"
 
-gboolean id3v1_can_handle_file(VFSFile *f)
+bool_t id3v1_can_handle_file(VFSFile *f)
 {
     if (vfs_fseek(f, -128, SEEK_END))
         return FALSE;
 
-    gchar *tag = read_char_data(f, 3);
+    char *tag = read_char_data(f, 3);
 
     if (tag && !strncmp(tag, "TAG", 3))
     {
@@ -48,32 +48,32 @@ gboolean id3v1_can_handle_file(VFSFile *f)
     return FALSE;
 }
 
-static gchar *convert_to_utf8(gchar *str)
+static char *convert_to_utf8(char *str)
 {
     if (!str)
         return NULL;
 
-    gchar *tmp = str;
+    char *tmp = str;
     str = str_to_utf8(str);
     g_free(tmp);
 
     return g_strchomp(str);
 }
 
-gboolean id3v1_read_tag (Tuple * tuple, VFSFile * f)
+bool_t id3v1_read_tag (Tuple * tuple, VFSFile * f)
 {
-    gboolean genre_set = FALSE;
+    bool_t genre_set = FALSE;
 
     if (vfs_fseek(f, -125, SEEK_END))
         return FALSE;
 
-    gchar *title = read_char_data(f, 30);
-    gchar *artist = read_char_data(f, 30);
-    gchar *album = read_char_data(f, 30);
-    gchar *year = read_char_data(f, 4);
-    gchar *comment = read_char_data(f, 30);
-    gchar *genre = read_char_data(f, 1);
-    gchar track = 0;
+    char *title = read_char_data(f, 30);
+    char *artist = read_char_data(f, 30);
+    char *album = read_char_data(f, 30);
+    char *year = read_char_data(f, 4);
+    char *comment = read_char_data(f, 30);
+    char *genre = read_char_data(f, 1);
+    char track = 0;
 
     if (comment && comment[28] == 0 && comment[29] != 0)
         track = comment[29];
@@ -86,16 +86,16 @@ gboolean id3v1_read_tag (Tuple * tuple, VFSFile * f)
     if (vfs_fseek(f, -355, SEEK_END))
         return FALSE;
 
-    gchar *tag = read_char_data(f, 4);
+    char *tag = read_char_data(f, 4);
 
     if (tag && ! strncmp (tag, "TAG+", 4))
     {
-        gchar *ext_title = convert_to_utf8(read_char_data(f, 60));
-        gchar *ext_artist = convert_to_utf8(read_char_data(f, 60));
-        gchar *ext_album = convert_to_utf8(read_char_data(f, 60));
-        gchar *tmp_title = title ? g_strconcat(title, ext_title, NULL) : NULL;
-        gchar *tmp_artist = artist ? g_strconcat(artist, ext_artist, NULL) : NULL;
-        gchar *tmp_album = album ? g_strconcat(album, ext_album, NULL) : NULL;
+        char *ext_title = convert_to_utf8(read_char_data(f, 60));
+        char *ext_artist = convert_to_utf8(read_char_data(f, 60));
+        char *ext_album = convert_to_utf8(read_char_data(f, 60));
+        char *tmp_title = title ? g_strconcat(title, ext_title, NULL) : NULL;
+        char *tmp_artist = artist ? g_strconcat(artist, ext_artist, NULL) : NULL;
+        char *tmp_album = album ? g_strconcat(album, ext_album, NULL) : NULL;
         g_free(title);
         g_free(artist);
         g_free(album);
@@ -109,7 +109,7 @@ gboolean id3v1_read_tag (Tuple * tuple, VFSFile * f)
         if (vfs_fseek (f, -170, SEEK_END))
             goto ERR;
 
-        gchar *ext_genre = convert_to_utf8(read_char_data(f, 30));
+        char *ext_genre = convert_to_utf8(read_char_data(f, 30));
 
         if (ext_genre)
         {
@@ -154,7 +154,7 @@ ERR:
     return FALSE;
 }
 
-static gboolean id3v1_write_tag (const Tuple * tuple, VFSFile * handle)
+static bool_t id3v1_write_tag (const Tuple * tuple, VFSFile * handle)
 {
     fprintf (stderr, "Writing ID3v1 tags is not implemented yet, sorry.\n");
     return FALSE;

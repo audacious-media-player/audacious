@@ -27,19 +27,17 @@
 #include "audtag.h"
 #include "util.h"
 #include "tag_module.h"
-#include "wma/module.h"
 #include "id3/id3v1.h"
 #include "id3/id3v22.h"
 #include "id3/id3v24.h"
 #include "ape/ape.h"
-/* #include "aac/aac.h" */
 
 static tag_module_t * const modules[] = {& id3v24, & id3v22, & ape, & id3v1};
 #define N_MODULES (sizeof modules / sizeof modules[0])
 
-tag_module_t * find_tag_module (VFSFile * fd, gint new_type)
+tag_module_t * find_tag_module (VFSFile * fd, int new_type)
 {
-    gint i;
+    int i;
 
     for (i = 0; i < N_MODULES; i ++)
     {
