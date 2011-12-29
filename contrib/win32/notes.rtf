@@ -2,7 +2,7 @@
 {\b Notes for Building Audacious on Windows}
 \par
 \par {John Lindgren}
-\par {November 7, 2011}
+\par {December 29, 2011}
 \par
 \par {This is not intended to be a complete set of instructions, but merely an outline.  Use at your own risk, etc., etc.}
 \par
@@ -24,10 +24,7 @@
 \par {\ul Install GTK+}
 \par
 \par {Download and unzip to }{\fs20 C:\\GTK}{:}
-\par {\fs20 http://ftp.gnome.org/pub/gnome/binaries/win32/gtk+/2.22/gtk+-bundle_2.22.1-20101227_win32.zip}
-\par
-\par {GTK+ 2.22 supports only Windows XP and newer.  If you have Windows 2000, use GTK+ 2.16 instead:}
-\par {\fs20 http://ftp.gnome.org/pub/gnome/binaries/win32/gtk+/2.16/gtk+-bundle_2.16.5-20090731_win32.zip}
+\par {\fs20 http://ftp.gnome.org/pub/gnome/binaries/win32/gtk+/2.24/gtk+-bundle_2.24.8-20111122_win32.zip}
 \par
 \par {Copy }{\fs20 C:\\GTK\\share\\themes\\MS-Windows\\gtk-2.0\\gtkrc}{ to }{\fs20 C:\\GTK\\etc\\gtk-2.0}{.  Apply the patch }{\fs20 gtkrc.diff}{.}
 \par {Copy }{\fs20 C:\\GTK\\share\\aclocal\\pkg.m4}{ to }{\fs20 C:\\MinGW\\share\\aclocal}{.}
@@ -65,8 +62,8 @@
 \par {\ul Install regex}
 \par
 \par {Download and unzip to }{\fs20 C:\\libs}{:}
-\par {\fs20 http://sourceforge.net/projects/mingw/files/UserContributed/regex/mingw-regex-2.5.1/mingw-libgnurx-2.5.1-dev.tar.gz/download}
-\par {\fs20 http://sourceforge.net/projects/mingw/files/UserContributed/regex/mingw-regex-2.5.1/mingw-libgnurx-2.5.1-bin.tar.gz/download}
+\par {\fs20 http://sourceforge.net/projects/mingw/files/Other/UserContributed/regex/mingw-regex-2.5.1/mingw-libgnurx-2.5.1-dev.tar.gz/download}
+\par {\fs20 http://sourceforge.net/projects/mingw/files/Other/UserContributed/regex/mingw-regex-2.5.1/mingw-libgnurx-2.5.1-bin.tar.gz/download}
 \par
 \par {\ul Install mpg123}
 \par
@@ -152,7 +149,7 @@
 \par {\ul Install LAME}
 \par
 \par {Download and unzip to }{\fs20 C:\\lame}{:}
-\par {\fs20 http://sourceforge.net/projects/lame/files/lame/3.99/lame-3.99.1.tar.gz/download}
+\par {\fs20 http://sourceforge.net/projects/lame/files/lame/3.99/lame-3.99.3.tar.gz/download}
 \par
 \par {In the MinGW shell:}
 \par {\fs20 cd /C/lame}
@@ -238,7 +235,7 @@
 \par {\ul Install FFmpeg}
 \par
 \par {Download and unzip to }{\fs20 C:\\ffmpeg}{:}
-\par {\fs20 http://ffmpeg.org/releases/ffmpeg-0.8.6.tar.bz2}
+\par {\fs20 http://ffmpeg.org/releases/ffmpeg-0.9.tar.bz2}
 \par
 \par {In the MinGW shell:}
 \par {\fs20 cd /C/ffmpeg}
@@ -249,11 +246,10 @@
 \par {\ul Install Audacious}
 \par
 \par {Download and unzip to }{\fs20 C:\\audacious}{:}
-\par {\fs20 http://hg.atheme.org/audacious/audacious/archive/tip.tar.bz2}
+\par {\fs20 http://distfiles.audacious-media-player.org/audacious-3.1.tar.bz2}
 \par
 \par {In the MinGW shell:}
 \par {\fs20 cd /C/audacious}
-\par {\fs20 ./autogen.sh}
 \par {\fs20 ./configure --prefix=/C/aud}
 \par {\fs20 make}
 \par {\fs20 make install}
@@ -261,11 +257,10 @@
 \par {\ul Install Audacious plugins}
 \par
 \par {Download and unzip to }{\fs20 C:\\audacious-plugins}{:}
-\par {\fs20 http://hg.atheme.org/audacious-plugins/audacious-plugins/archive/tip.tar.bz2}
+\par {\fs20 http://distfiles.audacious-media-player.org/audacious-plugins-3.1.tar.bz2}
 \par
 \par {In the MinGW shell:}
 \par {\fs20 cd /C/audacious-plugins}
-\par {\fs20 ./autogen.sh}
 \par {\fs20 ./configure --prefix=/C/aud}
 \par {\fs20 make}
 \par {\fs20 make install}
