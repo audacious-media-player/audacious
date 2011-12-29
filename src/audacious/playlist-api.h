@@ -88,11 +88,15 @@ AUD_VFUNC1 (playlist_set_playing, int, playlist)
  * marked active. */
 AUD_FUNC0 (int, playlist_get_playing)
 
+/* Returns the number of a "blank" playlist.  The active playlist is returned if
+ * it has the default title and has no entries; otherwise, a new playlist is
+ * added and returned. */
+AUD_FUNC0 (int, playlist_get_blank)
+
 /* Returns the number of the "temporary" playlist (which is no different from
- * any other playlist except in name).  If the playlist does not exist, it is
- * created.  As a special case, if the temporary playlist does not exist and the
- * active playlist is blank (that is, has no entries and still has the default
- * title), the active playlist is renamed and becomes the temporary playlist. */
+ * any other playlist except in name).  If the playlist does not exist, a
+ * "blank" playlist is obtained from playlist_get_blank() and is renamed to
+ * become the temporary playlist. */
 AUD_FUNC0 (int, playlist_get_temporary)
 
 /* Returns the number of entries in a playlist.  The entries are numbered

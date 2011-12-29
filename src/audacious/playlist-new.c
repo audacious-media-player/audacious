@@ -991,41 +991,40 @@ int playlist_get_playing (void)
     LEAVE_RET (list);
 }
 
+int playlist_get_blank (void)
+{
+    int list = playlist_get_active ();
+    char * title = playlist_get_title (list);
+
+    if (strcmp (title, _(default_title)) || playlist_entry_count (list) > 0)
+    {
+        list = playlist_count ();
+        playlist_insert (list);
+    }
+
+    str_unref (title);
+    return list;
+}
+
 int playlist_get_temporary (void)
 {
-    int temp = -1;
-    bool_t need_rename = TRUE;
+    int list, count = playlist_count ();
+    bool_t found = FALSE;
 
-    ENTER;
-
-    for (int i = 0; i < index_count (playlists); i ++)
+    for (list = 0; list < count && ! found; list ++)
     {
-        Playlist * p = index_get (playlists, i);
-
-        if (! strcmp (p->title, _(temp_title)))
-        {
-            temp = p->number;
-            need_rename = FALSE;
-            break;
-        }
+        char * title = playlist_get_title (list);
+        found = ! strcmp (title, _(temp_title));
+        str_unref (title);
     }
 
-    if (temp < 0 && active_playlist && ! strcmp (active_playlist->title,
-     _(default_title)) && index_count (active_playlist->entries) == 0)
-        temp = active_playlist->number;
-
-    LEAVE;
-
-    if (temp < 0)
+    if (! found)
     {
-        temp = playlist_count ();
-        playlist_insert (temp);
+        list = playlist_get_blank ();
+        playlist_set_title (list, _(temp_title));
     }
 
-    if (need_rename)
-        playlist_set_title (temp, _(temp_title));
-
-    return temp;
+    return list;
 }
 
 /* If we are already at the song or it is already at the top of the shuffle
