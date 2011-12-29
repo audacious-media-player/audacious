@@ -1011,11 +1011,14 @@ int playlist_get_temporary (void)
     int list, count = playlist_count ();
     bool_t found = FALSE;
 
-    for (list = 0; list < count && ! found; list ++)
+    for (list = 0; list < count; list ++)
     {
         char * title = playlist_get_title (list);
         found = ! strcmp (title, _(temp_title));
         str_unref (title);
+
+        if (found)
+            break;
     }
 
     if (! found)
