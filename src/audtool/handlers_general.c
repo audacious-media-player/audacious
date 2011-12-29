@@ -209,7 +209,7 @@ void get_handlers_list(gint argc, gchar **argv)
 
     audtool_report("");
 	audtool_report("Handlers may be prefixed with `--' (GNU-style long-options) or not, your choice.");
-	audtool_report("Report bugs to http://bugzilla.atheme.org/");
+	audtool_report("Report bugs to http://redmine.audacious-media-player.org/");
 }
 
 void toggle_aot(gint argc, gchar **argv)
