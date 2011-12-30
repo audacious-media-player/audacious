@@ -10,6 +10,7 @@ src/audacious/ui_preferences.c
 src/audacious/util.c
 src/audtool/handlers_playlist.c
 src/audtool/handlers_vitals.c
+src/libaudcore/audstrings.c
 src/libaudcore/tuple.c
 src/libaudgui/confirm.c
 src/libaudgui/effects-menu.c
