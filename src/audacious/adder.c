@@ -286,7 +286,12 @@ static void add_folder (char * filename, PlaylistFilterFunc filter,
     status_update (filename, index_count (result->filenames));
 
     char * unix_name = uri_to_filename (filename);
-    g_return_if_fail (unix_name);
+    if (! unix_name)
+    {
+        str_unref (filename);
+        return;
+    }
+
     if (unix_name[strlen (unix_name) - 1] == '/')
         unix_name[strlen (unix_name) - 1] = 0;
 
@@ -315,14 +320,20 @@ static void add_folder (char * filename, PlaylistFilterFunc filter,
         if (S_ISREG (info.st_mode))
         {
             char * item_name = filename_to_uri (files->data);
-            add_file (str_get (item_name), NULL, NULL, filter, user, result, TRUE);
-            g_free (item_name);
+            if (item_name)
+            {
+                add_file (str_get (item_name), NULL, NULL, filter, user, result, TRUE);
+                g_free (item_name);
+            }
         }
         else if (S_ISDIR (info.st_mode))
         {
             char * item_name = filename_to_uri (files->data);
-            add_folder (str_get (item_name), filter, user, result);
-            g_free (item_name);
+            if (item_name)
+            {
+                add_folder (str_get (item_name), filter, user, result);
+                g_free (item_name);
+            }
         }
 
     NEXT:

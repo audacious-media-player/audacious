@@ -322,7 +322,7 @@ static Index * convert_filenames (void)
 
     for (int i = 0; f[i]; i ++)
     {
-        char * uri;
+        char * uri = NULL;
 
         if (strstr (f[i], "://"))
             uri = str_get (f[i]);
@@ -341,7 +341,8 @@ static Index * convert_filenames (void)
             free (tmp2);
         }
 
-        index_append (filenames, uri);
+        if (uri)
+            index_append (filenames, uri);
     }
 
     g_free (cur);

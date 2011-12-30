@@ -143,6 +143,11 @@ void str_encode_percent (const char * str, int len, char * out)
 char * filename_to_uri (const char * name)
 {
     char * utf8 = g_locale_to_utf8 (name, -1, NULL, NULL, NULL);
+    if (! utf8)
+    {
+        fprintf (stderr, "Cannot convert filename from system locale: %s\n", name);
+        return NULL;
+    }
 
 #ifdef _WIN32
     string_replace_char (utf8, '\\', '/');
