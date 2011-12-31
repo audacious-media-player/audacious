@@ -23,6 +23,8 @@
  *  Audacious or using our public API to be a derived work.
  */
 
+#include <stddef.h>
+
 #include "config.h"
 #include "i18n.h"
 #include "misc.h"
