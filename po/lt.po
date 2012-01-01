@@ -3,6 +3,7 @@
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
+#   <>, 2012.
 # Algimantas Margevičius <gymka@mail.ru>, 2011.
 # Algimantas Margevičius <margevicius.algimantas@gmail.com>, 2011.
 # Gymka <gymka@mail.ru>, 2011.
@@ -11,9 +12,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2011-12-19 14:21-0500\n"
-"PO-Revision-Date: 2011-12-20 11:21+0000\n"
-"Last-Translator: Algimantas Margevičius <margevicius.algimantas@gmail.com>\n"
+"POT-Creation-Date: 2011-12-29 19:27-0500\n"
+"PO-Revision-Date: 2012-01-01 14:42+0000\n"
+"Last-Translator: gymka <>\n"
 "Language-Team: Lithuanian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -33,7 +34,7 @@ msgstr[0] "%d failas rastas"
 msgstr[1] "%d failai rasti"
 msgstr[2] "%d failų rasti"
 
-#: src/audacious/chardet.c:38
+#: src/audacious/chardet.c:39
 msgid "  (invalid UTF-8)"
 msgstr "  (blogas UTF-8)"
 
@@ -89,139 +90,139 @@ msgstr "Į bulgarų k.:"
 msgid "Catalan:"
 msgstr "Į katalonų k.:"
 
-#: src/audacious/credits.c:201
+#: src/audacious/credits.c:202
 msgid "Chinese:"
 msgstr "Į kinų k.:"
 
-#: src/audacious/credits.c:204
+#: src/audacious/credits.c:205
 msgid "Croatian:"
 msgstr "Į kroatų k.:"
 
-#: src/audacious/credits.c:207
+#: src/audacious/credits.c:208
 msgid "Czech:"
 msgstr "Į čekų k.:"
 
-#: src/audacious/credits.c:210
+#: src/audacious/credits.c:211
 msgid "Dutch:"
 msgstr "Į olandų k.:"
 
-#: src/audacious/credits.c:214
+#: src/audacious/credits.c:215
 msgid "Estonian:"
 msgstr "Į estų k.:"
 
-#: src/audacious/credits.c:217
+#: src/audacious/credits.c:218
 msgid "Finnish:"
 msgstr "Į suomių k.:"
 
-#: src/audacious/credits.c:222
+#: src/audacious/credits.c:223
 msgid "French:"
 msgstr "Į prancūzų k.:"
 
-#: src/audacious/credits.c:228
+#: src/audacious/credits.c:229
 msgid "German:"
 msgstr "Į vokiečių k.:"
 
-#: src/audacious/credits.c:235
+#: src/audacious/credits.c:236
 msgid "Georgian:"
 msgstr "Į vokiečių k.:"
 
-#: src/audacious/credits.c:238
+#: src/audacious/credits.c:239
 msgid "Greek:"
 msgstr "Į graikų k.:"
 
-#: src/audacious/credits.c:243
+#: src/audacious/credits.c:244
 msgid "Hindi:"
 msgstr "Į hindi"
 
-#: src/audacious/credits.c:246
+#: src/audacious/credits.c:247
 msgid "Hungarian:"
 msgstr "Į vengrų k.:"
 
-#: src/audacious/credits.c:250
+#: src/audacious/credits.c:251
 msgid "Italian:"
 msgstr "Į italų k.:"
 
-#: src/audacious/credits.c:254
+#: src/audacious/credits.c:256
 msgid "Japanese:"
 msgstr "Į japonų k.:"
 
-#: src/audacious/credits.c:257
+#: src/audacious/credits.c:259
 msgid "Korean:"
 msgstr "Į korėjiečių k.:"
 
-#: src/audacious/credits.c:260
+#: src/audacious/credits.c:262
 msgid "Latvian:"
 msgstr "Į latvių k.:"
 
-#: src/audacious/credits.c:263
+#: src/audacious/credits.c:265
 msgid "Lithuanian:"
 msgstr "Į lietuvių k.:"
 
-#: src/audacious/credits.c:268
+#: src/audacious/credits.c:270
 msgid "Macedonian:"
 msgstr "Į makedonų k.:"
 
-#: src/audacious/credits.c:271
+#: src/audacious/credits.c:273
 msgid "Polish:"
 msgstr "Į lenkų k.:"
 
-#: src/audacious/credits.c:277
+#: src/audacious/credits.c:279
 msgid "Portuguese:"
 msgstr "Į portugalų k.:"
 
-#: src/audacious/credits.c:280
+#: src/audacious/credits.c:282
 msgid "Romanian:"
 msgstr "Į rumunų k.:"
 
-#: src/audacious/credits.c:284
+#: src/audacious/credits.c:286
 msgid "Russian:"
 msgstr "Į rusų k.:"
 
-#: src/audacious/credits.c:288
+#: src/audacious/credits.c:290
 msgid "Serbian (Latin):"
 msgstr "Į serbų (lotynų) k."
 
-#: src/audacious/credits.c:291
+#: src/audacious/credits.c:293
 msgid "Serbian (Cyrillic):"
 msgstr "Į serbų (Kirilica) k.:"
 
-#: src/audacious/credits.c:295
+#: src/audacious/credits.c:297
 msgid "Simplified Chinese:"
 msgstr "Supaprastinta kinų k."
 
-#: src/audacious/credits.c:298
+#: src/audacious/credits.c:300
 msgid "Slovak:"
 msgstr "Į slovakų k.:"
 
-#: src/audacious/credits.c:301
+#: src/audacious/credits.c:303
 msgid "Spanish:"
 msgstr "Į ispanų k.:"
 
-#: src/audacious/credits.c:308
+#: src/audacious/credits.c:311
 msgid "Swedish:"
 msgstr "Į švedų k.:"
 
-#: src/audacious/credits.c:311
+#: src/audacious/credits.c:314
 msgid "Traditional Chinese:"
 msgstr "Tradicinė kinų:"
 
-#: src/audacious/credits.c:317
+#: src/audacious/credits.c:320
 msgid "Turkish:"
 msgstr "Turkų:"
 
-#: src/audacious/credits.c:321
+#: src/audacious/credits.c:324
 msgid "Ukrainian:"
 msgstr "Į ukrainiečių k.:"
 
-#: src/audacious/credits.c:325
+#: src/audacious/credits.c:328
 msgid "Vietnamese:"
 msgstr "Vietnamiečių:"
 
-#: src/audacious/credits.c:328
+#: src/audacious/credits.c:331
 msgid "Welsh:"
 msgstr "Į velsiečių k.:"
 
-#: src/audacious/equalizer_preset.c:187
+#: src/audacious/equalizer_preset.c:180
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
 msgstr "Klaida įkeliant Winamp EQF failą „%s“"
@@ -295,7 +296,7 @@ msgstr ""
 "%s: %s\n"
 "Bandykite `%s --help' išsamesniai informacijai.\n"
 
-#: src/audacious/main.c:557
+#: src/audacious/main.c:572
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -312,7 +313,7 @@ msgstr "Naujas grojaraštis"
 msgid "Now Playing"
 msgstr "Dabar grojama"
 
-#: src/audacious/playlist-new.c:1625
+#: src/audacious/playlist-new.c:1627
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress"
 " (or has been disabled)."
@@ -345,7 +346,7 @@ msgid "Album"
 msgstr "Albumas"
 
 #: src/audacious/ui_preferences.c:96 src/libaudgui/infopopup.c:201
-#: src/libaudgui/ui_playlist_manager.c:278
+#: src/libaudgui/ui_playlist_manager.c:279
 msgid "Title"
 msgstr "Pavadinimas"
 
@@ -718,15 +719,20 @@ msgstr "Pozicija nerasta."
 msgid "No song playing."
 msgstr "Negroja jokia daina."
 
-#: src/libaudcore/tuple.c:462
+#: src/libaudcore/audstrings.c:194
+#, c-format
+msgid "Audio CD, track %s"
+msgstr "Audio CD, takelis %s"
+
+#: src/libaudcore/tuple.c:536
 msgid "Mono"
 msgstr "Mono"
 
-#: src/libaudcore/tuple.c:464
+#: src/libaudcore/tuple.c:538
 msgid "Stereo"
 msgstr "Stereo"
 
-#: src/libaudcore/tuple.c:466
+#: src/libaudcore/tuple.c:540
 #, c-format
 msgid "%d channel"
 msgid_plural "%d channels"
@@ -1059,7 +1065,7 @@ msgstr "Įkrauti grojaraštį"
 msgid "Overwrite %s?"
 msgstr "Perrašyti %s?"
 
-#: src/libaudgui/queue-manager.c:186
+#: src/libaudgui/queue-manager.c:198
 msgid "Queue Manager"
 msgstr "Eilės redaktorius"
 
@@ -1075,68 +1081,68 @@ msgstr "Padėkos"
 msgid "Translators"
 msgstr "Vertėjai"
 
-#: src/libaudgui/ui_fileopener.c:109
+#: src/libaudgui/ui_fileopener.c:108
 msgid "Open Files"
 msgstr "Atverti bylas"
 
-#: src/libaudgui/ui_fileopener.c:109
+#: src/libaudgui/ui_fileopener.c:108
 msgid "Add Files"
 msgstr "Pridėti bylas"
 
-#: src/libaudgui/ui_fileopener.c:111
+#: src/libaudgui/ui_fileopener.c:110
 msgid "Close dialog on Open"
 msgstr "Atvėrus, užverti dialogą"
 
-#: src/libaudgui/ui_fileopener.c:111
+#: src/libaudgui/ui_fileopener.c:110
 msgid "Close dialog on Add"
 msgstr "Pridėjus, užverti dialogą"
 
-#: src/libaudgui/ui_jumptotrack.c:103 src/libaudgui/ui_jumptotrack.c:111
-#: src/libaudgui/ui_jumptotrack.c:322
+#: src/libaudgui/ui_jumptotrack.c:112 src/libaudgui/ui_jumptotrack.c:120
+#: src/libaudgui/ui_jumptotrack.c:329
 msgid "_Queue"
 msgstr "_Į eilę"
 
-#: src/libaudgui/ui_jumptotrack.c:109
+#: src/libaudgui/ui_jumptotrack.c:118
 msgid "Un_queue"
 msgstr "Iš _eilės"
 
-#: src/libaudgui/ui_jumptotrack.c:239
-msgid "Jump to Track"
-msgstr "Šokti į takelį"
+#: src/libaudgui/ui_jumptotrack.c:261
+msgid "Jump to Song"
+msgstr "Peršokti į dainą"
 
-#: src/libaudgui/ui_jumptotrack.c:277
+#: src/libaudgui/ui_jumptotrack.c:284
 msgid "Filter: "
 msgstr "Filtruoti:"
 
-#: src/libaudgui/ui_jumptotrack.c:278
+#: src/libaudgui/ui_jumptotrack.c:285
 msgid "_Filter:"
 msgstr "_Filtruoti:"
 
-#: src/libaudgui/ui_jumptotrack.c:288
+#: src/libaudgui/ui_jumptotrack.c:295
 msgid "Remember"
 msgstr "Prisiminti"
 
-#: src/libaudgui/ui_jumptotrack.c:295
+#: src/libaudgui/ui_jumptotrack.c:302
 msgid "Clea_r"
 msgstr "Išvalyt_i"
 
-#: src/libaudgui/ui_jumptotrack.c:315
+#: src/libaudgui/ui_jumptotrack.c:322
 msgid "Close on Jump"
 msgstr "Užverti peršokant"
 
-#: src/libaudgui/ui_playlist_manager.c:252
+#: src/libaudgui/ui_playlist_manager.c:253
 msgid "Playlist Manager"
 msgstr "Grojaraščio redaktorius"
 
-#: src/libaudgui/ui_playlist_manager.c:279
+#: src/libaudgui/ui_playlist_manager.c:280
 msgid "Entries"
 msgstr "Elementai"
 
-#: src/libaudgui/ui_playlist_manager.c:300
+#: src/libaudgui/ui_playlist_manager.c:301
 msgid "_Rename"
 msgstr "_Pervadinti"
 
-#: src/libaudgui/ui_playlist_manager.c:324
+#: src/libaudgui/ui_playlist_manager.c:325
 msgid "_Close dialog on activating playlist"
 msgstr "_Įjungiant grojaraštį, užverti dialogą"
 
@@ -1148,7 +1154,7 @@ msgstr "Atverti URL"
 msgid "Add URL"
 msgstr "Pridėti URL"
 
-#: src/libaudgui/util.c:98
+#: src/libaudgui/util.c:97
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
