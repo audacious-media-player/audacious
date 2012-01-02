@@ -9,6 +9,5 @@ lib_dir=@libdir@
 Name: Audacious Client Library
 Description: Remote control library for Audacious
 Version: @VERSION@
-Requires: @PC_REQUIRES@
 Libs: -L${lib_dir} @LIBAUDCLIENT_LDFLAGS@
 Cflags: -I${audacious_include_dir}
