@@ -6,13 +6,13 @@
 # Alessio D'Ascanio <g3ntaro@gmail.com>, 2004.
 # Diego 'Flameeyes' Pettenò <flameeyes@gentoo.org>, 2006.
 # Diego 'Flameeyes' Pettenò <flameeyes@gmail.com>, 2007.
-# Jacopo Lorenzetti <jacopo.jl@gmail.com>, 2011.
+# Jacopo Lorenzetti <jacopo.jl@gmail.com>, 2011, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2011-12-19 14:21-0500\n"
-"PO-Revision-Date: 2011-12-26 22:55+0000\n"
+"POT-Creation-Date: 2011-12-29 19:27-0500\n"
+"PO-Revision-Date: 2012-01-01 23:39+0000\n"
 "Last-Translator: Jacopo Lorenzetti <jacopo.jl@gmail.com>\n"
 "Language-Team: Italian\n"
 "MIME-Version: 1.0\n"
@@ -32,7 +32,7 @@ msgid_plural "%d files found"
 msgstr[0] "Trovato %d file"
 msgstr[1] "Trovati %d file"
 
-#: src/audacious/chardet.c:38
+#: src/audacious/chardet.c:39
 msgid "  (invalid UTF-8)"
 msgstr "  (UTF-8 non valido)"
 
@@ -88,139 +88,139 @@ msgstr "Bulgaro:"
 msgid "Catalan:"
 msgstr "Catalano:"
 
-#: src/audacious/credits.c:201
+#: src/audacious/credits.c:202
 msgid "Chinese:"
 msgstr "Cinese:"
 
-#: src/audacious/credits.c:204
+#: src/audacious/credits.c:205
 msgid "Croatian:"
 msgstr "Croato:"
 
-#: src/audacious/credits.c:207
+#: src/audacious/credits.c:208
 msgid "Czech:"
 msgstr "Ceco:"
 
-#: src/audacious/credits.c:210
+#: src/audacious/credits.c:211
 msgid "Dutch:"
 msgstr "Olandese:"
 
-#: src/audacious/credits.c:214
+#: src/audacious/credits.c:215
 msgid "Estonian:"
 msgstr "Estone:"
 
-#: src/audacious/credits.c:217
+#: src/audacious/credits.c:218
 msgid "Finnish:"
 msgstr "Finlandese:"
 
-#: src/audacious/credits.c:222
+#: src/audacious/credits.c:223
 msgid "French:"
 msgstr "Francese:"
 
-#: src/audacious/credits.c:228
+#: src/audacious/credits.c:229
 msgid "German:"
 msgstr "Tedesco:"
 
-#: src/audacious/credits.c:235
+#: src/audacious/credits.c:236
 msgid "Georgian:"
 msgstr "Georgiano:"
 
-#: src/audacious/credits.c:238
+#: src/audacious/credits.c:239
 msgid "Greek:"
 msgstr "Greco:"
 
-#: src/audacious/credits.c:243
+#: src/audacious/credits.c:244
 msgid "Hindi:"
 msgstr "Hindi:"
 
-#: src/audacious/credits.c:246
+#: src/audacious/credits.c:247
 msgid "Hungarian:"
 msgstr "Ungherese:"
 
-#: src/audacious/credits.c:250
+#: src/audacious/credits.c:251
 msgid "Italian:"
 msgstr "Italiano:"
 
-#: src/audacious/credits.c:254
+#: src/audacious/credits.c:256
 msgid "Japanese:"
 msgstr "Giapponese:"
 
-#: src/audacious/credits.c:257
+#: src/audacious/credits.c:259
 msgid "Korean:"
 msgstr "Coreano:"
 
-#: src/audacious/credits.c:260
+#: src/audacious/credits.c:262
 msgid "Latvian:"
 msgstr "Lettone:"
 
-#: src/audacious/credits.c:263
+#: src/audacious/credits.c:265
 msgid "Lithuanian:"
 msgstr "Lituano:"
 
-#: src/audacious/credits.c:268
+#: src/audacious/credits.c:270
 msgid "Macedonian:"
 msgstr "Macedone:"
 
-#: src/audacious/credits.c:271
+#: src/audacious/credits.c:273
 msgid "Polish:"
 msgstr "Polacco:"
 
-#: src/audacious/credits.c:277
+#: src/audacious/credits.c:279
 msgid "Portuguese:"
 msgstr "Portoghese:"
 
-#: src/audacious/credits.c:280
+#: src/audacious/credits.c:282
 msgid "Romanian:"
 msgstr "Rumeno:"
 
-#: src/audacious/credits.c:284
+#: src/audacious/credits.c:286
 msgid "Russian:"
 msgstr "Russo:"
 
-#: src/audacious/credits.c:288
+#: src/audacious/credits.c:290
 msgid "Serbian (Latin):"
 msgstr "Serbo (Latino):"
 
-#: src/audacious/credits.c:291
+#: src/audacious/credits.c:293
 msgid "Serbian (Cyrillic):"
 msgstr "Serbo (Cirillico):"
 
-#: src/audacious/credits.c:295
+#: src/audacious/credits.c:297
 msgid "Simplified Chinese:"
 msgstr "Cinese semplificato:"
 
-#: src/audacious/credits.c:298
+#: src/audacious/credits.c:300
 msgid "Slovak:"
 msgstr "Slovacco:"
 
-#: src/audacious/credits.c:301
+#: src/audacious/credits.c:303
 msgid "Spanish:"
 msgstr "Spagnolo:"
 
-#: src/audacious/credits.c:308
+#: src/audacious/credits.c:311
 msgid "Swedish:"
 msgstr "Svedese:"
 
-#: src/audacious/credits.c:311
+#: src/audacious/credits.c:314
 msgid "Traditional Chinese:"
 msgstr "Cinese tradizionale:"
 
-#: src/audacious/credits.c:317
+#: src/audacious/credits.c:320
 msgid "Turkish:"
 msgstr "Turco:"
 
-#: src/audacious/credits.c:321
+#: src/audacious/credits.c:324
 msgid "Ukrainian:"
 msgstr "Ucraino:"
 
-#: src/audacious/credits.c:325
+#: src/audacious/credits.c:328
 msgid "Vietnamese:"
 msgstr "Vietnamita:"
 
-#: src/audacious/credits.c:328
+#: src/audacious/credits.c:331
 msgid "Welsh:"
 msgstr "Gallese:"
 
-#: src/audacious/equalizer_preset.c:187
+#: src/audacious/equalizer_preset.c:180
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
 msgstr "Errore durante l'importazione del file EQF di Winamp '%s'"
@@ -294,7 +294,7 @@ msgstr ""
 "%s: %s\n"
 "Per maggiori informazioni prova `%s --help'.\n"
 
-#: src/audacious/main.c:557
+#: src/audacious/main.c:572
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -311,7 +311,7 @@ msgstr "Nuova playlist"
 msgid "Now Playing"
 msgstr "In riproduzione"
 
-#: src/audacious/playlist-new.c:1625
+#: src/audacious/playlist-new.c:1627
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress"
 " (or has been disabled)."
@@ -344,7 +344,7 @@ msgid "Album"
 msgstr "Album"
 
 #: src/audacious/ui_preferences.c:96 src/libaudgui/infopopup.c:201
-#: src/libaudgui/ui_playlist_manager.c:278
+#: src/libaudgui/ui_playlist_manager.c:279
 msgid "Title"
 msgstr "Titolo"
 
@@ -718,15 +718,20 @@ msgstr "Posizione non trovata."
 msgid "No song playing."
 msgstr "Nessun brano in riproduzione."
 
-#: src/libaudcore/tuple.c:462
+#: src/libaudcore/audstrings.c:194
+#, c-format
+msgid "Audio CD, track %s"
+msgstr "CD Audio, traccia %s"
+
+#: src/libaudcore/tuple.c:536
 msgid "Mono"
 msgstr "Mono"
 
-#: src/libaudcore/tuple.c:464
+#: src/libaudcore/tuple.c:538
 msgid "Stereo"
 msgstr "Stereo"
 
-#: src/libaudcore/tuple.c:466
+#: src/libaudcore/tuple.c:540
 #, c-format
 msgid "%d channel"
 msgid_plural "%d channels"
@@ -1058,7 +1063,7 @@ msgstr "Importa playlist"
 msgid "Overwrite %s?"
 msgstr "Sovrascrivere %s?"
 
-#: src/libaudgui/queue-manager.c:186
+#: src/libaudgui/queue-manager.c:198
 msgid "Queue Manager"
 msgstr "Gestione coda"
 
@@ -1074,68 +1079,68 @@ msgstr "Crediti"
 msgid "Translators"
 msgstr "Traduttori"
 
-#: src/libaudgui/ui_fileopener.c:109
+#: src/libaudgui/ui_fileopener.c:108
 msgid "Open Files"
 msgstr "Apri file"
 
-#: src/libaudgui/ui_fileopener.c:109
+#: src/libaudgui/ui_fileopener.c:108
 msgid "Add Files"
 msgstr "Aggiungi file"
 
-#: src/libaudgui/ui_fileopener.c:111
+#: src/libaudgui/ui_fileopener.c:110
 msgid "Close dialog on Open"
 msgstr "Chiudi finestra quando Apri"
 
-#: src/libaudgui/ui_fileopener.c:111
+#: src/libaudgui/ui_fileopener.c:110
 msgid "Close dialog on Add"
 msgstr "Chiudi finestra quando Aggiungi"
 
-#: src/libaudgui/ui_jumptotrack.c:103 src/libaudgui/ui_jumptotrack.c:111
-#: src/libaudgui/ui_jumptotrack.c:322
+#: src/libaudgui/ui_jumptotrack.c:112 src/libaudgui/ui_jumptotrack.c:120
+#: src/libaudgui/ui_jumptotrack.c:329
 msgid "_Queue"
 msgstr "_Coda"
 
-#: src/libaudgui/ui_jumptotrack.c:109
+#: src/libaudgui/ui_jumptotrack.c:118
 msgid "Un_queue"
 msgstr "Rimuovi dalla _coda"
 
-#: src/libaudgui/ui_jumptotrack.c:239
-msgid "Jump to Track"
-msgstr "Salta alla traccia"
+#: src/libaudgui/ui_jumptotrack.c:261
+msgid "Jump to Song"
+msgstr "Salta al brano"
 
-#: src/libaudgui/ui_jumptotrack.c:277
+#: src/libaudgui/ui_jumptotrack.c:284
 msgid "Filter: "
 msgstr "Filtro:"
 
-#: src/libaudgui/ui_jumptotrack.c:278
+#: src/libaudgui/ui_jumptotrack.c:285
 msgid "_Filter:"
 msgstr "_Filtro:"
 
-#: src/libaudgui/ui_jumptotrack.c:288
+#: src/libaudgui/ui_jumptotrack.c:295
 msgid "Remember"
 msgstr "Ricorda"
 
-#: src/libaudgui/ui_jumptotrack.c:295
+#: src/libaudgui/ui_jumptotrack.c:302
 msgid "Clea_r"
 msgstr "Ca_ncella"
 
-#: src/libaudgui/ui_jumptotrack.c:315
+#: src/libaudgui/ui_jumptotrack.c:322
 msgid "Close on Jump"
 msgstr "Chiudi quando salti"
 
-#: src/libaudgui/ui_playlist_manager.c:252
+#: src/libaudgui/ui_playlist_manager.c:253
 msgid "Playlist Manager"
 msgstr "Gestione playlist"
 
-#: src/libaudgui/ui_playlist_manager.c:279
+#: src/libaudgui/ui_playlist_manager.c:280
 msgid "Entries"
 msgstr "Elementi"
 
-#: src/libaudgui/ui_playlist_manager.c:300
+#: src/libaudgui/ui_playlist_manager.c:301
 msgid "_Rename"
 msgstr "_Rinomina"
 
-#: src/libaudgui/ui_playlist_manager.c:324
+#: src/libaudgui/ui_playlist_manager.c:325
 msgid "_Close dialog on activating playlist"
 msgstr "_Chiudi finestra quando attivi la playlist"
 
@@ -1147,7 +1152,7 @@ msgstr "Apri URL"
 msgid "Add URL"
 msgstr "Aggiungi URL"
 
-#: src/libaudgui/util.c:98
+#: src/libaudgui/util.c:97
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
