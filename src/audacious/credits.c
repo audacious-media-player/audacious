@@ -29,7 +29,7 @@
 
 static const gchar *audacious_brief =
  "<big><b>Audacious %s</b></big>\n"
- "Copyright (C) 2005-2011 Audacious Team";
+ "Copyright (C) 2005-2012 Audacious Team";
 
 static const gchar *credit_text[] = {
     N_("Core developers:"),
