@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2011-12-29 19:27-0500\n"
-"PO-Revision-Date: 2012-01-01 23:39+0000\n"
+"PO-Revision-Date: 2012-01-03 05:31+0000\n"
 "Last-Translator: Jacopo Lorenzetti <jacopo.jl@gmail.com>\n"
 "Language-Team: Italian\n"
 "MIME-Version: 1.0\n"
@@ -263,7 +263,7 @@ msgstr "Aggiunge nuovi file a una playlist temporanea"
 
 #: src/audacious/main.c:252
 msgid "Display the main window"
-msgstr "Mostra la finestra principale"
+msgstr "Visualizza la finestra principale"
 
 #: src/audacious/main.c:253
 msgid "Show version"
@@ -279,7 +279,7 @@ msgstr "Modalità headless (beta)"
 
 #: src/audacious/main.c:256
 msgid "FILE..."
-msgstr "FILE..."
+msgstr "FILE…"
 
 #: src/audacious/main.c:268
 msgid "- play multimedia files"
@@ -518,7 +518,7 @@ msgstr "Individuazione automatica della codifica dei caratteri per:"
 
 #: src/audacious/ui_preferences.c:198
 msgid "Fallback character encodings:"
-msgstr "Codifica dei caratteri di riserva:"
+msgstr "Codifiche di riserva dei caratteri:"
 
 #: src/audacious/ui_preferences.c:202
 msgid "<b>Behavior</b>"
@@ -608,7 +608,7 @@ msgstr "Cerca la copertina ricorsivamente"
 
 #: src/audacious/ui_preferences.c:845
 msgid "Search depth: "
-msgstr "Profondità di ricerca:"
+msgstr "Profondità di ricerca: "
 
 #: src/audacious/ui_preferences.c:859
 msgid "Use per-file cover"
@@ -624,7 +624,7 @@ msgstr "Mostra barra di avanzamento per la traccia corrente"
 
 #: src/audacious/ui_preferences.c:881
 msgid "Delay until filepopup comes up: "
-msgstr "Attendi fino alla comparsa del popup file:"
+msgstr "Ritardo prima della comparsa del popup file: "
 
 #: src/audacious/ui_preferences.c:1309
 msgid "Custom"
@@ -668,10 +668,10 @@ msgid ""
 "window shows title of song, name of album, genre, year of publish, track "
 "number, track length, and artwork."
 msgstr ""
-"Abilita la finestra di informazioni popup per l'elemento puntato. La "
-"finestra mostra il titolo della canzone, il nome dell'album, il genere, "
-"l'anno di pubblicazione, il numero di traccia, la lunghezza della traccia e "
-"la grafica."
+"Attiva la finestra di informazioni popup per l'elemento puntato nella "
+"playlist. La finestra mostra il titolo della canzone, il nome dell'album, il"
+" genere, l'anno di pubblicazione, il numero di traccia, la durata della "
+"traccia e la grafica."
 
 #: src/audacious/ui_preferences.c:1455
 msgid "Edit settings for popup information"
@@ -699,7 +699,7 @@ msgstr "Visualizzazione"
 
 #: src/audacious/ui_preferences.c:1604
 msgid "General"
-msgstr "Generale"
+msgstr "Generici"
 
 #: src/audacious/ui_preferences.c:1644
 msgid "Audacious Preferences"
@@ -817,7 +817,7 @@ msgstr "Numero di traccia"
 
 #: src/libaudgui/infopopup.c:213
 msgid "Track Length"
-msgstr "Lunghezza della traccia"
+msgstr "Durata della traccia"
 
 #: src/libaudgui/infowin.c:78
 msgid "Acid Jazz"
@@ -1110,7 +1110,7 @@ msgstr "Salta al brano"
 
 #: src/libaudgui/ui_jumptotrack.c:284
 msgid "Filter: "
-msgstr "Filtro:"
+msgstr "Filtro: "
 
 #: src/libaudgui/ui_jumptotrack.c:285
 msgid "_Filter:"
