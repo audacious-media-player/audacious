@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2011-12-29 18:14+0100\n"
-"PO-Revision-Date: 2011-12-29 18:15+0000\n"
+"PO-Revision-Date: 2012-01-03 13:19+0000\n"
 "Last-Translator: Thomas Lange\n"
 "Language-Team: German\n"
 "Language: de\n"
@@ -714,7 +714,7 @@ msgstr "Kein Titel wird wiedergegeben."
 #: src/libaudcore/audstrings.c:194
 #, c-format
 msgid "Audio CD, track %s"
-msgstr ""
+msgstr "Audio-CD, Titel %s"
 
 #: src/libaudcore/tuple.c:536
 msgid "Mono"
