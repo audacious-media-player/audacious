@@ -50,7 +50,7 @@ static const char * const core_defaults[] = {
 
  /* info popup / info window */
  "cover_name_exclude", "back",
- "cover_name_include", "album,folder",
+ "cover_name_include", "album,cover,front,folder",
  "filepopup_delay", "5",
  "filepopup_showprogressbar", "TRUE",
  "recurse_for_cover", "FALSE",
