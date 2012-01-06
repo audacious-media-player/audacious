@@ -302,6 +302,7 @@ static const char *translators_text[] = {
     NULL,
     N_("Slovak:"),
     "Andrej Herceg",
+    "Tomáš Vadina",
     NULL,
     N_("Spanish:"),
     "Jordi Amenós",
