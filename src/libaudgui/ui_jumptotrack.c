@@ -34,7 +34,7 @@
 #include <libaudcore/hook.h>
 
 #include "config.h"
-#include "icons-stock.h"
+#include "libaudgui.h"
 #include "list.h"
 #include "ui_jumptotrack_cache.h"
 

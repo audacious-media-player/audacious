@@ -1,25 +1,22 @@
 /*
  * libaudgui/infowin.c
- * Copyright 2006 William Pitcock, Tony Vroon, George Averill, Giacomo Lozito,
- *  Derek Pomery and Yoshiki Yazawa.
- * Copyright 2008 Eugene Zagidullin
- * Copyright 2010 John Lindgren
+ * Copyright 2006-2011 William Pitcock, Tomasz Moń, Eugene Zagidullin, and
+ *                     John Lindgren
  *
- * This file is part of Audacious.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; under version 3 of the License.
  *
- * Audacious is free software: you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation, version 2 or version 3 of the License.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * Audacious is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses>.
  *
- * You should have received a copy of the GNU General Public License along with
- * Audacious. If not, see <http://www.gnu.org/licenses/>.
- *
- * The Audacious team does not consider modular code linking to Audacious or
- * using our public API to be a derived work.
+ * The Audacious team does not consider modular code linking to
+ * Audacious or using our public API to be a derived work.
  */
 
 #include <gtk/gtk.h>
