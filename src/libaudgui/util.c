@@ -228,3 +228,10 @@ void audgui_pixbuf_scale_within (GdkPixbuf * * pixbuf, int size)
     g_object_unref (* pixbuf);
     * pixbuf = pixbuf2;
 }
+
+void audgui_set_default_icon (void)
+{
+#ifndef _WIN32
+    gtk_window_set_default_icon_name ("audacious");
+#endif
+}

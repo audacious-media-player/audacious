@@ -36,8 +36,6 @@ void audgui_show_add_url_window(bool_t open);
 void audgui_jump_to_track(void);
 void audgui_jump_to_track_hide(void);
 
-void audgui_set_default_icon(void);
-
 void audgui_run_filebrowser(bool_t clear_pl_on_ok);
 void audgui_hide_filebrowser(void);
 
@@ -78,5 +76,8 @@ void audgui_playlist_manager (void);
 void audgui_urilist_open (const char * list);
 void audgui_urilist_insert (int playlist, int position, const char * list);
 char * audgui_urilist_create_from_selected (int playlist);
+
+/* util.c */
+void audgui_set_default_icon (void);
 
 #endif /* LIBAUDGUI_H */
