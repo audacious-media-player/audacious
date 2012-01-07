@@ -41,8 +41,8 @@ void audgui_set_default_icon(void);
 void audgui_run_filebrowser(bool_t clear_pl_on_ok);
 void audgui_hide_filebrowser(void);
 
-void audgui_show_about_window(void);
-void audgui_hide_about_window(void);
+/* about.c */
+void audgui_show_about_window (void);
 
 /* confirm.c */
 void audgui_confirm_playlist_delete (int playlist);

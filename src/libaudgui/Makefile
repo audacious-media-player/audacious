@@ -2,7 +2,8 @@ LIB = ${LIB_PREFIX}audgui${LIB_SUFFIX}
 LIB_MAJOR = 1
 LIB_MINOR = 0
 
-SRCS = confirm.c \
+SRCS = about.c \
+       confirm.c \
        effects-menu.c \
        equalizer.c \
        iface-menu.c \
@@ -19,8 +20,6 @@ SRCS = confirm.c \
        ui_jumptotrack.c \
        ui_jumptotrack_cache.c \
        icons-stock.c \
-       ui_about.c \
-       ui_credits.c \
        ui_playlist_manager.c \
        urilist.c \
        util.c

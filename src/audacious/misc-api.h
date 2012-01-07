@@ -61,7 +61,7 @@ AUD_FUNC2 (double, get_double, const char *, section, const char *, name)
 
 /* credits.c */
 AUD_VFUNC3 (get_audacious_credits, const char * *, brief,
- const char * * *, credits, const char * * *, translators)
+ const char * const * *, credits, const char * const * *, translators)
 
 /* equalizer.c */
 AUD_VFUNC1 (eq_set_bands, const double *, values)
