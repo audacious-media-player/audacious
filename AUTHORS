@@ -17,6 +17,20 @@ Audacious core shared library (src/libaudcore):
   Yoshiki Yazawa
   Eugene Zagidullin
 
+Audacious user interface shared library (src/libaudgui):
+ * Copyright (C) 1998-2003 XMMS development team
+ * Copyright (C) 2003-2004 BMP development team
+ * Copyright (C) 2006-2012:
+  Carlo Bramini
+  Michael Färber
+  Jussi Judin
+  John Lindgren
+  Giacomo Lozito
+  Tomasz Moń
+  William Pitcock
+  Yoshiki Yazawa
+  Eugene Zagidullin
+
 Session management support (src/libeggsmclient):
  * Copyright (C) 1999-2000 Red Hat, Inc.
  * Copyright (C) 2001 George Lebl
