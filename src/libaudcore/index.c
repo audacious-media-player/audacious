@@ -27,9 +27,16 @@
 struct _Index {
     void * * data;
     int count, size;
-    int (* compare) (const void * a, const void * b, void * data);
-    void * compare_data;
 };
+
+typedef struct {
+    int (* compare) (const void * a, const void * b);
+} CompareWrapper;
+
+typedef struct {
+    int (* compare) (const void * a, const void * b, void * data);
+    void * data;
+} CompareWrapper2;
 
 Index * index_new (void)
 {
@@ -38,8 +45,6 @@ Index * index_new (void)
     index->data = NULL;
     index->count = 0;
     index->size = 0;
-    index->compare = NULL;
-    index->compare_data = NULL;
 
     return index;
 }
@@ -142,35 +147,29 @@ void index_delete (Index * index, int at, int count)
      (index->count - at));
 }
 
-static int index_compare (const void * a, const void * b, void * compare)
+static int index_compare (const void * ap, const void * bp, void * _wrapper)
 {
-    return ((int (*) (const void *, const void *)) compare)
-     (* (const void * *) a, * (const void * *) b);
+    CompareWrapper * wrapper = _wrapper;
+    return wrapper->compare (* (const void * *) ap, * (const void * *) bp);
 }
 
-void index_sort (Index * index, int (* compare) (const void *, const
- void *))
+void index_sort (Index * index, int (* compare) (const void *, const void *))
 {
+    CompareWrapper wrapper = {compare};
     g_qsort_with_data (index->data, index->count, sizeof (void *),
-     index_compare, (void *) compare);
+     index_compare, & wrapper);
 }
 
-static int index_compare_with_data (const void * a, const void * b, void *
- _index)
+static int index_compare2 (const void * ap, const void * bp, void * _wrapper)
 {
-    Index * index = _index;
-
-    return index->compare (* (const void * *) a, * (const void * *) b,
-     index->compare_data);
+    CompareWrapper2 * wrapper = _wrapper;
+    return wrapper->compare (* (const void * *) ap, * (const void * *) bp, wrapper->data);
 }
 
 void index_sort_with_data (Index * index, int (* compare)
  (const void * a, const void * b, void * data), void * data)
 {
-    index->compare = compare;
-    index->compare_data = data;
+    CompareWrapper2 wrapper = {compare, data};
     g_qsort_with_data (index->data, index->count, sizeof (void *),
-     index_compare_with_data, index);
-    index->compare = NULL;
-    index->compare_data = NULL;
+     index_compare2, & wrapper);
 }
