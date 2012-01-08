@@ -234,6 +234,8 @@ static EqualizerPreset * equalizer_read_aud_preset (const char * filename)
     if (!g_key_file_load_from_file(rcfile, filename, G_KEY_FILE_NONE, &error))
     {
         g_key_file_free(rcfile);
+        g_free(preset->name);
+        g_free(preset);
         return NULL;
     }
 
