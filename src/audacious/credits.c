@@ -104,6 +104,7 @@ static const char * const credit_text[] = {
     "Jussi Judin",
     "Teru Kamogashira",
     "Chris Kehler",
+    "Thomas Lange",
     "Mark Loeser",
     "Alex Maclean",
     "Mikael Magnusson",
