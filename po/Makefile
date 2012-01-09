@@ -17,6 +17,7 @@ LOCALES = ast.po \
 	  de.po \
 	  el.po \
 	  es.po \
+	  es_MX.po \
 	  et.po \
 	  eu.po \
 	  fi.po \
