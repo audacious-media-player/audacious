@@ -280,6 +280,7 @@ static const char * const translators_text[] = {
     "Artur Czechowski",
     "Michał Kiedrowicz",
     "Wojciech Myrda",
+    "Piotr Sokół",
     "Szymon Weihs",
     NULL,
     N_("Portuguese:"),
