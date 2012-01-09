@@ -36,7 +36,7 @@ typedef struct
 {
     const char * filename;
     VFSFile * handle;
-    bool_t buffered;
+    bool_t buffered, failed;
     PluginHandle * plugin;
 }
 ProbeState;
@@ -45,6 +45,8 @@ static bool_t check_opened (ProbeState * state)
 {
     if (state->handle != NULL)
         return TRUE;
+    if (state->failed)
+        return FALSE;
 
     AUDDBG ("Opening %s.\n", state->filename);
     if ((state->buffered = vfs_is_remote (state->filename)))
@@ -56,6 +58,7 @@ static bool_t check_opened (ProbeState * state)
         return TRUE;
 
     AUDDBG ("FAILED.\n");
+    state->failed = TRUE;
     return FALSE;
 }
 
@@ -173,6 +176,7 @@ PluginHandle * file_find_decoder (const char * filename, bool_t fast)
     state.plugin = NULL;
     state.filename = filename;
     state.handle = NULL;
+    state.failed = FALSE;
 
     probe_by_scheme (& state);
 
