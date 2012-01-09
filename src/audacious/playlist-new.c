@@ -637,8 +637,11 @@ static void * scanner (void * data)
             entry_set_tuple (playlist, entry, tuple);
             queue_update (PLAYLIST_UPDATE_METADATA, playlist->number, entry->number, 1);
         }
-        else if (need_tuple)
+        else if (need_tuple || ! decoder)
+        {
             entry_set_failed (playlist, entry);
+            queue_update (PLAYLIST_UPDATE_METADATA, playlist->number, entry->number, 1);
+        }
 
         g_slice_free (ScanItem, scan_items[i]);
         scan_items[i] = NULL;
