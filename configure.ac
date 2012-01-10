@@ -5,8 +5,8 @@ dnl ***
 dnl Initialize
 dnl ==========
 AC_PREREQ([2.59])
-AC_INIT([audacious], [3.2-beta1])
-AC_COPYRIGHT([(C) 2005-2011 Audacious Team])
+AC_INIT([audacious], [3.3-devel])
+AC_COPYRIGHT([(C) 2005-2012 Audacious Team])
 
 AC_SUBST([PACKAGE], [AC_PACKAGE_TARNAME])
 AC_SUBST([VERSION], [AC_PACKAGE_VERSION])
