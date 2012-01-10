@@ -35,6 +35,9 @@ typedef struct {
     void (* right_click) (void * user, GdkEventButton * event); /* optional */
     void (* shift_rows) (void * user, int row, int before); /* optional */
 
+    void (* mouse_motion) (void * user, GdkEventMotion * event, int row); /* optional */
+    void (* mouse_leave) (void * user, GdkEventMotion * event, int row); /* optional */
+
     /* cross-widget drag and drop (optional) */
     const char * data_type;
     void (* get_data) (void * user, void * * data, int * length); /* data will
