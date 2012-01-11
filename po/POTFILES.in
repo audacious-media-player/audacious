@@ -5,6 +5,7 @@ src/audacious/credits.c
 src/audacious/equalizer_preset.c
 src/audacious/main.c
 src/audacious/playback.c
+src/audacious/playlist-files.c
 src/audacious/playlist-new.c
 src/audacious/ui_preferences.c
 src/audacious/util.c
@@ -12,6 +13,7 @@ src/audtool/handlers_playlist.c
 src/audtool/handlers_vitals.c
 src/libaudcore/audstrings.c
 src/libaudcore/tuple.c
+src/libaudgui/about.c
 src/libaudgui/confirm.c
 src/libaudgui/effects-menu.c
 src/libaudgui/equalizer.c
@@ -20,8 +22,6 @@ src/libaudgui/infowin.c
 src/libaudgui/jump-to-time.c
 src/libaudgui/playlists.c
 src/libaudgui/queue-manager.c
-src/libaudgui/ui_about.c
-src/libaudgui/ui_credits.c
 src/libaudgui/ui_fileopener.c
 src/libaudgui/ui_jumptotrack.c
 src/libaudgui/ui_playlist_manager.c
