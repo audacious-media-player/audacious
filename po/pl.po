@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2011-12-29 19:27-0500\n"
-"PO-Revision-Date: 2012-01-08 18:45+0000\n"
+"PO-Revision-Date: 2012-01-11 10:46+0000\n"
 "Last-Translator: Piotr Sokół <psokol@jabster.pl>\n"
 "Language-Team: Polish\n"
 "MIME-Version: 1.0\n"
@@ -310,7 +310,7 @@ msgstr "Nowa lista odtwarzania"
 
 #: src/audacious/playlist-new.c:132
 msgid "Now Playing"
-msgstr "Odtwarzanie"
+msgstr "Odtwarzane"
 
 #: src/audacious/playlist-new.c:1627
 msgid ""
@@ -322,7 +322,7 @@ msgstr ""
 
 #: src/audacious/ui_preferences.c:85
 msgid "Audio"
-msgstr "Audio"
+msgstr "Dźwięk"
 
 #: src/audacious/ui_preferences.c:86
 msgid "Network"
@@ -351,7 +351,7 @@ msgstr "Tytuł"
 
 #: src/audacious/ui_preferences.c:97
 msgid "Tracknumber"
-msgstr "Numer utworu"
+msgstr "Numer ścieżki"
 
 #: src/audacious/ui_preferences.c:98 src/libaudgui/infopopup.c:207
 msgid "Genre"
@@ -439,11 +439,11 @@ msgstr "Album"
 
 #: src/audacious/ui_preferences.c:147
 msgid "<b>Output Settings</b>"
-msgstr "<b>Opcje wyjściowe dźwięku</b>"
+msgstr "<b>Wyjście dźwięku</b>"
 
 #: src/audacious/ui_preferences.c:149
 msgid "Bit depth:"
-msgstr "Głębia:"
+msgstr "Rozdzielczość bitowa:"
 
 #: src/audacious/ui_preferences.c:152
 msgid "Buffer size:"
@@ -455,7 +455,7 @@ msgstr "ms"
 
 #: src/audacious/ui_preferences.c:155
 msgid "Use software volume control (not recommended)"
-msgstr "Użyj programowej regulacji głośności (niezalecane)"
+msgstr "Użycie programowej regulacji głośności (niezalecane)"
 
 #: src/audacious/ui_preferences.c:157
 msgid "<b>Replay Gain</b>"
@@ -463,19 +463,19 @@ msgstr "<b>Replay Gain</b>"
 
 #: src/audacious/ui_preferences.c:158
 msgid "Enable Replay Gain"
-msgstr "Włącz Replay Gain"
+msgstr "Włączenie"
 
 #: src/audacious/ui_preferences.c:161
 msgid "Prevent clipping (recommended)"
-msgstr "Zapobiegaj zakłóceniom (zalecane)"
+msgstr "Zapobieganie zakłóceniom (zalecane)"
 
 #: src/audacious/ui_preferences.c:163
 msgid "<b>Adjust Levels</b>"
-msgstr "<b>Dostrój poziomy</b>"
+msgstr "<b>Dostrajanie</b>"
 
 #: src/audacious/ui_preferences.c:164
 msgid "Amplify all files:"
-msgstr "Wzmocnij wszystkie pliki:"
+msgstr "Wzmocnienie wszystkich plików:"
 
 #: src/audacious/ui_preferences.c:166 src/audacious/ui_preferences.c:169
 msgid "dB"
@@ -483,7 +483,7 @@ msgstr "dB"
 
 #: src/audacious/ui_preferences.c:167
 msgid "Amplify untagged files:"
-msgstr "Wzmocnij nieotagowane pliki:"
+msgstr "Wzmocnienie plików bez etykiet:"
 
 #: src/audacious/ui_preferences.c:172
 msgid "Proxy hostname:"
@@ -515,7 +515,7 @@ msgstr "Uwierzytelnianie"
 
 #: src/audacious/ui_preferences.c:193
 msgid "Auto character encoding detector for:"
-msgstr "Autodetekcja kodowania na:"
+msgstr "Automatycze wykrywanie kodowania dla:"
 
 #: src/audacious/ui_preferences.c:198
 msgid "Fallback character encodings:"
@@ -547,7 +547,7 @@ msgstr "<b>Metadane</b>"
 
 #: src/audacious/ui_preferences.c:212
 msgid "Do not load metadata for songs until played"
-msgstr "Nie ładuj metadanych dla piosenek, dopóki nie zostaną odtworzone."
+msgstr "Pomijanie wczytywania metadanych nagrań do czasu odtworzenia"
 
 #: src/audacious/ui_preferences.c:230
 msgid "TITLE"
@@ -1127,7 +1127,7 @@ msgstr "_Wyczyść"
 
 #: src/libaudgui/ui_jumptotrack.c:322
 msgid "Close on Jump"
-msgstr "Zamknij to okno przy otwarciu"
+msgstr "Zamknięcie tego okna po przejściu"
 
 #: src/libaudgui/ui_playlist_manager.c:253
 msgid "Playlist Manager"
@@ -1143,7 +1143,7 @@ msgstr "Zmień _nazwę"
 
 #: src/libaudgui/ui_playlist_manager.c:325
 msgid "_Close dialog on activating playlist"
-msgstr "Zamknij to okno przy aktywa_cji playlisty"
+msgstr "Za_mknięcie tego okna po aktywowaniu listy"
 
 #: src/libaudgui/ui_urlopener.c:51
 msgid "Open URL"
