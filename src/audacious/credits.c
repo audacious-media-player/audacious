@@ -39,6 +39,7 @@ static const char * const credit_text[] = {
     "Michael Färber",
     "Matti Hämäläinen",
     "John Lindgren",
+    "Michał Lipski",
     "Cristi Măgherușan",
     "Tomasz Moń",
     "William Pitcock",

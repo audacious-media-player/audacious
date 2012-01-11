@@ -1,6 +1,6 @@
 /*
  * list.h
- * Copyright 2011 John Lindgren
+ * Copyright 2011-2012 John Lindgren and Michał Lipski
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -34,6 +34,9 @@ typedef struct {
     void (* activate_row) (void * user, int row); /* optional */
     void (* right_click) (void * user, GdkEventButton * event); /* optional */
     void (* shift_rows) (void * user, int row, int before); /* optional */
+
+    void (* mouse_motion) (void * user, GdkEventMotion * event, int row); /* optional */
+    void (* mouse_leave) (void * user, GdkEventMotion * event, int row); /* optional */
 
     /* cross-widget drag and drop (optional) */
     const char * data_type;

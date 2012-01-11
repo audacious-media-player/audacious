@@ -1,6 +1,6 @@
 /*
  * list.c
- * Copyright 2011 John Lindgren
+ * Copyright 2011-2012 John Lindgren and Michał Lipski
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -292,6 +292,50 @@ static bool_t key_press_cb (GtkWidget * widget, GdkEventKey * event, ListModel *
     return FALSE;
 }
 
+static bool_t motion_notify_cb (GtkWidget * widget, GdkEventMotion * event, ListModel * model)
+{
+    if (model->cbs->mouse_motion)
+    {
+        GtkTreePath * path = NULL;
+        gtk_tree_view_get_path_at_pos ((GtkTreeView *) widget, event->x, event->y,
+         & path, NULL, NULL, NULL);
+
+        if (! path)
+            return FALSE;
+
+        int row = gtk_tree_path_get_indices (path)[0];
+        g_return_val_if_fail (row >= 0 && row < model->rows, FALSE);
+
+        model->cbs->mouse_motion (model->user, event, row);
+
+        gtk_tree_path_free (path);
+    }
+
+    return FALSE;
+}
+
+static bool_t leave_notify_cb (GtkWidget * widget, GdkEventMotion * event, ListModel * model)
+{
+    if (model->cbs->mouse_leave)
+    {
+        GtkTreePath * path = NULL;
+        gtk_tree_view_get_path_at_pos ((GtkTreeView *) widget, event->x, event->y,
+         & path, NULL, NULL, NULL);
+
+        if (! path)
+            return FALSE;
+
+        int row = gtk_tree_path_get_indices (path)[0];
+        g_return_val_if_fail (row >= 0 && row < model->rows, FALSE);
+
+        model->cbs->mouse_leave (model->user, event, row);
+
+        gtk_tree_path_free (path);
+    }
+
+    return FALSE;
+}
+
 /* ==== DRAG AND DROP ==== */
 
 static void drag_begin (GtkWidget * widget, GdkDragContext * context,
@@ -554,6 +598,8 @@ GtkWidget * audgui_list_new (const AudguiListCallbacks * cbs, void * user,
     g_signal_connect (list, "button-press-event", (GCallback) button_press_cb, model);
     g_signal_connect (list, "button-release-event", (GCallback) button_release_cb, model);
     g_signal_connect (list, "key-press-event", (GCallback) key_press_cb, model);
+    g_signal_connect (list, "motion-notify-event", (GCallback) motion_notify_cb, model);
+    g_signal_connect (list, "leave-notify-event", (GCallback) leave_notify_cb, model);
 
     if (cbs->data_type)
     {
