@@ -204,9 +204,9 @@ static void infopopup_create (void)
      "label_genre", 3);
     infopopup_add_category (infopopup_data_table, _("Year"), "header_year",
      "label_year", 4);
-    infopopup_add_category (infopopup_data_table, _("Track Number"),
+    infopopup_add_category (infopopup_data_table, _("Track"),
      "header_tracknum", "label_tracknum", 5);
-    infopopup_add_category (infopopup_data_table, _("Track Length"),
+    infopopup_add_category (infopopup_data_table, _("Length"),
      "header_tracklen", "label_tracklen", 6);
 
     gtk_table_set_row_spacing ((GtkTable *) infopopup_data_table, 6, 6);
