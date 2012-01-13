@@ -182,6 +182,9 @@ static const char * const credit_text[] = {
 };
 
 static const char * const translators_text[] = {
+    "Argentinian Spanish",
+    "Adrián Ramirez Escalante",
+    NULL,
     N_("Belarusian:"),
     "Darafei Praliaskouski",
     NULL,
@@ -313,6 +316,7 @@ static const char * const translators_text[] = {
     "Jordi Amenós",
     "Jorge Andrés",
     "Cosme Domínguez Díaz",
+    "Adrián Ramirez Escalante",
     "Jeki Sinneo Leinos",
     "Francisco Javier F. Serrador",
     "Gustavo D. Vranjes",
