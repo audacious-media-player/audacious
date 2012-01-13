@@ -182,7 +182,7 @@ static const char * const credit_text[] = {
 };
 
 static const char * const translators_text[] = {
-    "Argentinian Spanish",
+    N_("Argentinian Spanish"),
     "Adrián Ramirez Escalante",
     NULL,
     N_("Belarusian:"),
