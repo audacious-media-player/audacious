@@ -1,4 +1,4 @@
-# Spanish translation for Audacious
+# Argentinian Spanish translation for Audacious
 # Copyright (C) Audacious translators
 # This file is distributed under the same license as the Audacious package.
 #
@@ -16,13 +16,13 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2012-01-11 08:54-0500\n"
-"PO-Revision-Date: 2012-01-12 04:11+0000\n"
+"PO-Revision-Date: 2012-01-12 04:25+0000\n"
 "Last-Translator: Adrián Ramirez Escalante <buried.prophet@gmail.com>\n"
-"Language-Team: Spanish\n"
+"Language-Team: Spanish (Argentinian)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: es\n"
+"Language: es_AR\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 #: src/audacious/adder.c:77
@@ -50,7 +50,7 @@ msgstr "Gráficos:"
 
 #: src/audacious/credits.c:56
 msgid "Default skin:"
-msgstr "Piel por defecto:"
+msgstr "Skin por defecto:"
 
 #: src/audacious/credits.c:62
 msgid "Plugin development:"
@@ -235,11 +235,11 @@ msgstr "Error importando archivo Winamp EQF  '%s'"
 
 #: src/audacious/main.c:243
 msgid "Skip backwards in playlist"
-msgstr "Saltar hacia atrás en la lista de reproducción"
+msgstr "Ir hacia atrás en la lista de reproducción"
 
 #: src/audacious/main.c:244
 msgid "Start playing current playlist"
-msgstr "Empezar la reproducción de la lista de reproducción actual"
+msgstr "Reproducir la lista de reproducción actual"
 
 #: src/audacious/main.c:245
 msgid "Pause current song"
@@ -255,11 +255,11 @@ msgstr "Pausar si se está reproduciendo, o reproducir"
 
 #: src/audacious/main.c:248
 msgid "Skip forward in playlist"
-msgstr "Saltar hacia adelante en la lista de reproducción"
+msgstr "Ir hacia adelante en la lista de reproducción"
 
 #: src/audacious/main.c:249
 msgid "Display Jump to File dialog"
-msgstr "Mostrar diálogo de salto al archivo"
+msgstr "Mostrar diálogo de ir al archivo"
 
 #: src/audacious/main.c:250
 msgid "Add files to the playlist"
@@ -267,7 +267,7 @@ msgstr "Añadir archivos a la lista de reproducción"
 
 #: src/audacious/main.c:251
 msgid "Add new files to a temporary playlist"
-msgstr "Añdir nuevos archvios a una lista de reproducción temporal"
+msgstr "Agregar nuevos archivos a una lista de reproducción temporal"
 
 #: src/audacious/main.c:252
 msgid "Display the main window"
@@ -300,7 +300,7 @@ msgid ""
 "Try `%s --help' for more information.\n"
 msgstr ""
 "%s: %s\n"
-"Prueba `%s --help' para más información.\n"
+"Probá `%s --help' para más información.\n"
 
 #: src/audacious/main.c:573
 msgid "Audacious"
@@ -326,11 +326,11 @@ msgstr "cargar"
 
 #: src/audacious/playlist-new.c:131
 msgid "New Playlist"
-msgstr "Nueva lista de reproduccion"
+msgstr "Nueva lista de reproducción"
 
 #: src/audacious/playlist-new.c:132
 msgid "Now Playing"
-msgstr "Reproduccion actual"
+msgstr "Reproducción actual"
 
 #: src/audacious/playlist-new.c:1630
 msgid ""
@@ -455,7 +455,7 @@ msgstr "Turco"
 
 #: src/audacious/ui_preferences.c:144
 msgid "Album mode"
-msgstr "Modo de album"
+msgstr "Modo de álbum"
 
 #: src/audacious/ui_preferences.c:147
 msgid "<b>Output Settings</b>"
@@ -611,9 +611,9 @@ msgid ""
 "the filename. You can specify those words in the lists below, separated "
 "using commas."
 msgstr ""
-"Cuando se busca la carátula del álbum, Audacious busca ciertas palabras en "
-"el nombre de archivo. Se pueden especificar éstas palabras en la lista de "
-"abajo, separadas usando comas."
+"Cuando se busca la carátula del álbum, Audacious se fija en ciertas palabras"
+" en el nombre del archivo. Se pueden especificar éstas palabras en la lista "
+"de abajo, separadas con comas."
 
 #: src/audacious/ui_preferences.c:811
 msgid "Exclude:"
@@ -625,7 +625,7 @@ msgstr "Incluir:"
 
 #: src/audacious/ui_preferences.c:835
 msgid "Recursively search for cover"
-msgstr "Busca recursiva para las carátulas"
+msgstr "Búsqueda recursiva para las carátulas"
 
 #: src/audacious/ui_preferences.c:845
 msgid "Search depth: "
@@ -693,7 +693,7 @@ msgstr ""
 "Activa la información de la ventana emergente para la entrada señalada en la"
 " lista de canciones. La ventana muestra el título de la canción, nombre del "
 "álbum, género, año de publicación, número de pista, duración de la pista y "
-"el trabajo."
+"el arte de tapa."
 
 #: src/audacious/ui_preferences.c:1455
 msgid "Edit settings for popup information"
@@ -743,7 +743,7 @@ msgstr "No se reproduce ninguna canción."
 #: src/libaudcore/audstrings.c:199
 #, c-format
 msgid "Audio CD, track %s"
-msgstr "CD de música, pista %s"
+msgstr "CD de audio, pista %s"
 
 #: src/libaudcore/tuple.c:536
 msgid "Mono"
@@ -778,12 +778,12 @@ msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
 msgstr ""
-"¿Esta seguro de querer cerrar %s?  Si lo haces, se perderá cualquier cambio "
-"realizado desde que fue exportada la lista de reproducción."
+"¿Estas seguro que querés cerrar %s?  Si lo haces, se perderá cualquier "
+"cambio realizado desde que fue exportada la lista de reproducción."
 
 #: src/libaudgui/confirm.c:89
 msgid "_Don't show this message again"
-msgstr "_No mostrar este mensaje de nuevo"
+msgstr "_No mostrar este mensaje otra vez"
 
 #: src/libaudgui/confirm.c:126
 msgid "Rename Playlist"
@@ -899,7 +899,7 @@ msgstr "Disco"
 
 #: src/libaudgui/infowin.c:86
 msgid "Easy Listening"
-msgstr "Escucha fácil"
+msgstr "Easy Listening"
 
 #: src/libaudgui/infowin.c:87
 msgid "Folk"
@@ -923,7 +923,7 @@ msgstr "Grunge"
 
 #: src/libaudgui/infowin.c:92
 msgid "Hard Rock"
-msgstr "Rock duro"
+msgstr "Hard Rock"
 
 #: src/libaudgui/infowin.c:93
 msgid "Heavy Metal"
@@ -959,7 +959,7 @@ msgstr "New wave"
 
 #: src/libaudgui/infowin.c:101
 msgid "Noise"
-msgstr "Ruido"
+msgstr "Noise"
 
 #: src/libaudgui/infowin.c:102
 msgid "Pop"
@@ -1020,7 +1020,7 @@ msgstr "Metadata actualizada sin problemas"
 
 #: src/libaudgui/infowin.c:272
 msgid "Metadata updating failed"
-msgstr "Actualización de metadatos fallida"
+msgstr "Falló la actualización de metadatos"
 
 #: src/libaudgui/infowin.c:320
 msgid "Track Information"
@@ -1078,7 +1078,7 @@ msgstr "No hay información disponible para %s.\n"
 
 #: src/libaudgui/jump-to-time.c:72
 msgid "Jump to Time"
-msgstr "Saltar en el tiempo"
+msgstr "Ir a tiempo"
 
 #: src/libaudgui/jump-to-time.c:87
 msgid "mm:ss"
@@ -1099,7 +1099,7 @@ msgstr "¿Sobrescribir %s?"
 
 #: src/libaudgui/queue-manager.c:196
 msgid "Queue Manager"
-msgstr "Gestor de cola"
+msgstr "Gestor de cola de reproducción"
 
 #: src/libaudgui/ui_fileopener.c:109
 msgid "Open Files"
@@ -1128,7 +1128,7 @@ msgstr "_Remover de la cola"
 
 #: src/libaudgui/ui_jumptotrack.c:258
 msgid "Jump to Song"
-msgstr "Saltar a una canción"
+msgstr "Ir a una canción"
 
 #: src/libaudgui/ui_jumptotrack.c:281
 msgid "Filter: "
