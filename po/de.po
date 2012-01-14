@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-01-07 23:59+0100\n"
-"PO-Revision-Date: 2012-01-08 00:01+0000\n"
+"POT-Creation-Date: 2012-01-14 01:37+0100\n"
+"PO-Revision-Date: 2012-01-14 01:37+0000\n"
 "Last-Translator: Thomas Lange\n"
 "Language-Team: German\n"
 "Language: de\n"
@@ -47,167 +47,175 @@ msgstr "Plugin-Entwicklung:"
 msgid "Patch authors:"
 msgstr "Patch-Autoren:"
 
-#: src/audacious/credits.c:130
+#: src/audacious/credits.c:131
 msgid "1.x developers:"
 msgstr "1.x-Entwickler:"
 
-#: src/audacious/credits.c:152
+#: src/audacious/credits.c:153
 msgid "BMP Developers:"
 msgstr "BMP-Entwickler:"
 
-#: src/audacious/credits.c:184
+#: src/audacious/credits.c:185
+msgid "Argentinian Spanish"
+msgstr "Argentinisches Spanisch:"
+
+#: src/audacious/credits.c:188
 msgid "Belarusian:"
 msgstr "Weißrussisch:"
 
-#: src/audacious/credits.c:187
+#: src/audacious/credits.c:191
 msgid "Basque:"
 msgstr "Baskisch:"
 
-#: src/audacious/credits.c:190
+#: src/audacious/credits.c:194
 msgid "Brazilian Portuguese:"
 msgstr "Brasilianisches Portugiesisch:"
 
-#: src/audacious/credits.c:195
+#: src/audacious/credits.c:199
 msgid "Breton:"
 msgstr "Bretonisch:"
 
-#: src/audacious/credits.c:198
+#: src/audacious/credits.c:202
 msgid "Bulgarian:"
 msgstr "Bulgarisch:"
 
-#: src/audacious/credits.c:201
+#: src/audacious/credits.c:205
 msgid "Catalan:"
 msgstr "Katalanisch:"
 
-#: src/audacious/credits.c:205
+#: src/audacious/credits.c:209
 msgid "Chinese:"
 msgstr "Chinesisch:"
 
-#: src/audacious/credits.c:208
+#: src/audacious/credits.c:212
 msgid "Croatian:"
 msgstr "Kroatisch:"
 
-#: src/audacious/credits.c:211
+#: src/audacious/credits.c:215
 msgid "Czech:"
 msgstr "Tschechisch:"
 
-#: src/audacious/credits.c:214
+#: src/audacious/credits.c:218
 msgid "Dutch:"
 msgstr "Niederländisch:"
 
-#: src/audacious/credits.c:218
+#: src/audacious/credits.c:222
 msgid "Estonian:"
 msgstr "Estnisch:"
 
-#: src/audacious/credits.c:221
+#: src/audacious/credits.c:225
 msgid "Finnish:"
 msgstr "Finnisch:"
 
-#: src/audacious/credits.c:226
+#: src/audacious/credits.c:230
 msgid "French:"
 msgstr "Französisch:"
 
-#: src/audacious/credits.c:232
+#: src/audacious/credits.c:236
 msgid "German:"
 msgstr "Deutsch:"
 
-#: src/audacious/credits.c:239
+#: src/audacious/credits.c:243
 msgid "Georgian:"
 msgstr "Georgisch:"
 
-#: src/audacious/credits.c:242
+#: src/audacious/credits.c:246
 msgid "Greek:"
 msgstr "Griechisch:"
 
-#: src/audacious/credits.c:247
+#: src/audacious/credits.c:251
 msgid "Hindi:"
 msgstr "Hindi:"
 
-#: src/audacious/credits.c:250
+#: src/audacious/credits.c:254
 msgid "Hungarian:"
 msgstr "Ungarisch:"
 
-#: src/audacious/credits.c:254
+#: src/audacious/credits.c:258
 msgid "Italian:"
 msgstr "Italienisch:"
 
-#: src/audacious/credits.c:259
+#: src/audacious/credits.c:263
 msgid "Japanese:"
 msgstr "Japanisch:"
 
-#: src/audacious/credits.c:262
+#: src/audacious/credits.c:266
 msgid "Korean:"
 msgstr "Koreanisch:"
 
-#: src/audacious/credits.c:265
+#: src/audacious/credits.c:269
 msgid "Latvian:"
 msgstr "Lettisch:"
 
-#: src/audacious/credits.c:268
+#: src/audacious/credits.c:272
 msgid "Lithuanian:"
 msgstr "Litauisch:"
 
-#: src/audacious/credits.c:273
+#: src/audacious/credits.c:277
 msgid "Macedonian:"
 msgstr "Makedonisch:"
 
-#: src/audacious/credits.c:276
+#: src/audacious/credits.c:280
+msgid "Mexican Spanish:"
+msgstr "Mexikanisches Spanisch:"
+
+#: src/audacious/credits.c:283
 msgid "Polish:"
 msgstr "Polnisch:"
 
-#: src/audacious/credits.c:282
+#: src/audacious/credits.c:290
 msgid "Portuguese:"
 msgstr "Portugiesisch:"
 
-#: src/audacious/credits.c:285
+#: src/audacious/credits.c:293
 msgid "Romanian:"
 msgstr "Rumänisch:"
 
-#: src/audacious/credits.c:289
+#: src/audacious/credits.c:297
 msgid "Russian:"
 msgstr "Russisch:"
 
-#: src/audacious/credits.c:293
+#: src/audacious/credits.c:301
 msgid "Serbian (Latin):"
 msgstr "Serbisch (Latin):"
 
-#: src/audacious/credits.c:296
+#: src/audacious/credits.c:304
 msgid "Serbian (Cyrillic):"
 msgstr "Serbisch (Kyrillisch):"
 
-#: src/audacious/credits.c:300
+#: src/audacious/credits.c:308
 msgid "Simplified Chinese:"
 msgstr "Vereinfachtes Chinesisch:"
 
-#: src/audacious/credits.c:303
+#: src/audacious/credits.c:311
 msgid "Slovak:"
 msgstr "Slovakisch:"
 
-#: src/audacious/credits.c:307
+#: src/audacious/credits.c:315
 msgid "Spanish:"
 msgstr "Spanisch:"
 
-#: src/audacious/credits.c:315
+#: src/audacious/credits.c:324
 msgid "Swedish:"
 msgstr "Schwedisch:"
 
-#: src/audacious/credits.c:318
+#: src/audacious/credits.c:327
 msgid "Traditional Chinese:"
 msgstr "Traditionelles Chinesisch:"
 
-#: src/audacious/credits.c:324
+#: src/audacious/credits.c:333
 msgid "Turkish:"
 msgstr "Türkisch:"
 
-#: src/audacious/credits.c:328
+#: src/audacious/credits.c:337
 msgid "Ukrainian:"
 msgstr "Ukrainisch:"
 
-#: src/audacious/credits.c:332
+#: src/audacious/credits.c:342
 msgid "Vietnamese:"
 msgstr "Vietnamesisch:"
 
-#: src/audacious/credits.c:335
+#: src/audacious/credits.c:345
 msgid "Welsh:"
 msgstr "Walisisch:"
 
@@ -315,7 +323,7 @@ msgstr "Neue Wiedergabeliste"
 msgid "Now Playing"
 msgstr "Momentane Wiedergabe"
 
-#: src/audacious/playlist-new.c:1627
+#: src/audacious/playlist-new.c:1630
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress "
 "(or has been disabled)."
