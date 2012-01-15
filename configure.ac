@@ -126,7 +126,7 @@ fi
 AUD_ARG_ENABLE([rpath], [yes], [disable rpath])
 
 if test "x$enable_rpath" = "xyes"; then
-    LDFLAGS="$LDFLAGS -Wl,-rpath,${libdir}"
+    LDFLAGS="$LDFLAGS $LDFLAGS_RPATH"
 fi
 
 ### ---------------------------------------------------------------------------
