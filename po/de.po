@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-01-14 01:37+0100\n"
-"PO-Revision-Date: 2012-01-14 01:37+0000\n"
+"POT-Creation-Date: 2012-01-15 02:23+0100\n"
+"PO-Revision-Date: 2012-01-15 02:25+0000\n"
 "Last-Translator: Thomas Lange\n"
 "Language-Team: German\n"
 "Language: de\n"
@@ -56,7 +56,7 @@ msgid "BMP Developers:"
 msgstr "BMP-Entwickler:"
 
 #: src/audacious/credits.c:185
-msgid "Argentinian Spanish"
+msgid "Argentinian Spanish:"
 msgstr "Argentinisches Spanisch:"
 
 #: src/audacious/credits.c:188
