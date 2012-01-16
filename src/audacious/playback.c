@@ -322,11 +322,14 @@ static void * playback_thread (void * unused)
     if (tuple)
         tuple_unref (tuple);
 
+    bool_t seekable = (playback_entry_get_length () > 0);
+
     VFSFile * file = vfs_fopen (current_filename, "r");
 
-    time_offset = playback_entry_get_start_time ();
+    time_offset = seekable ? playback_entry_get_start_time () : 0;
     playback_error = ! current_decoder->play (& playback_api, current_filename,
-     file, time_offset + initial_seek, playback_entry_get_end_time (), paused);
+     file, seekable ? time_offset + initial_seek : 0,
+     seekable ? playback_entry_get_end_time () : -1, paused);
 
     if (file)
         vfs_fclose (file);
