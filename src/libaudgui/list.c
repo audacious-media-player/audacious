@@ -825,11 +825,14 @@ int audgui_list_row_at_point (GtkWidget * list, int x, int y)
     int row = gtk_tree_path_get_indices (path)[0];
     g_return_val_if_fail (row >= 0 && row < model->rows, -1);
 
-    GdkRectangle rect;
-    gtk_tree_view_get_background_area ((GtkTreeView *) list, path, NULL,
-     & rect);
-    if (y > rect.y + rect.height / 2)
-        row ++;
+    if (model->dragging)
+    {
+        GdkRectangle rect;
+        gtk_tree_view_get_background_area ((GtkTreeView *) list, path, NULL,
+         & rect);
+        if (y > rect.y + rect.height / 2)
+            row ++;
+    }
 
     gtk_tree_path_free (path);
     return row;
