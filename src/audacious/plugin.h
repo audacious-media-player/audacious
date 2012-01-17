@@ -122,14 +122,14 @@ struct _TransportPlugin
 struct _PlaylistPlugin
 {
     PLUGIN_COMMON_FIELDS
-	const char * const * extensions; /* array ending with NULL */
-	bool_t (* load) (const char * path, VFSFile * file,
-     char * * title, /* pooled */
-     Index * filenames, /* of (char *), pooled */
-     Index * tuples); /* of (Tuple *) */
-	bool_t (* save) (const char * path, VFSFile * file, const char * title,
-     Index * filenames, /* of (char *) */
-     Index * tuples); /* of (Tuple *) */
+    const char * const * extensions; /* array ending with NULL */
+    bool_t (* load) (const char * path, VFSFile * file,
+    char * * title, /* pooled */
+    Index * filenames, /* of (char *), pooled */
+    Index * tuples); /* of (Tuple *) */
+    bool_t (* save) (const char * path, VFSFile * file, const char * title,
+    Index * filenames, /* of (char *) */
+    Index * tuples); /* of (Tuple *) */
 };
 
 struct _OutputPlugin
