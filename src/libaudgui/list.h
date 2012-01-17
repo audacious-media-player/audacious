@@ -23,6 +23,11 @@
 #include <gtk/gtk.h>
 #include <libaudcore/core.h>
 
+/* New callbacks should be added to the end of this struct.  The
+ * audgui_list_new() macro tells us the size of the callback struct as it was
+ * defined when the caller code was compiled, allowing us to expand the struct
+ * without breaking backward compatibility. */
+
 typedef struct {
     void (* get_value) (void * user, int row, int column, GValue * value);
 
@@ -35,18 +40,22 @@ typedef struct {
     void (* right_click) (void * user, GdkEventButton * event); /* optional */
     void (* shift_rows) (void * user, int row, int before); /* optional */
 
-    void (* mouse_motion) (void * user, GdkEventMotion * event, int row); /* optional */
-    void (* mouse_leave) (void * user, GdkEventMotion * event, int row); /* optional */
-
     /* cross-widget drag and drop (optional) */
     const char * data_type;
     void (* get_data) (void * user, void * * data, int * length); /* data will
      be freed */
     void (* receive_data) (void * user, int row, const void * data, int length);
+
+    void (* mouse_motion) (void * user, GdkEventMotion * event, int row); /* optional */
+    void (* mouse_leave) (void * user, GdkEventMotion * event, int row); /* optional */
 } AudguiListCallbacks;
 
-GtkWidget * audgui_list_new (const AudguiListCallbacks * cbs, void * user,
- int rows);
+GtkWidget * audgui_list_new_real (const AudguiListCallbacks * cbs, int cbs_size,
+ void * user, int rows);
+
+#define audgui_list_new(c, u, r) \
+ audgui_list_new_real (c, sizeof (AudguiListCallbacks), u, r)
+
 void * audgui_list_get_user (GtkWidget * list);
 void audgui_list_add_column (GtkWidget * list, const char * title,
  int column, GType type, int width);

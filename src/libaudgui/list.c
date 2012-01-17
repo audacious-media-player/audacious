@@ -17,21 +17,27 @@
  * the use of this software.
  */
 
-#include "list.h"
+#include <stddef.h>
 
+#include <gtk/gtk.h>
 #include <audacious/gtk-compat.h>
+
+#include "list.h"
 
 #define CHAR_WIDTH 12
 #define SPACING 4
 
 enum {HIGHLIGHT_COLUMN, RESERVED_COLUMNS};
 
+#define MODEL_HAS_CB(m, cb) \
+ ((m)->cbs_size > offsetof (AudguiListCallbacks, cb) && (m)->cbs->cb)
 #define PATH_IS_SELECTED(w, p) (gtk_tree_selection_path_is_selected \
  (gtk_tree_view_get_selection ((GtkTreeView *) (w)), (p)))
 
 typedef struct {
     GObject parent;
     const AudguiListCallbacks * cbs;
+    int cbs_size;
     void * user;
     int rows, highlight;
     int columns;
@@ -226,8 +232,8 @@ static bool_t button_press_cb (GtkWidget * widget, GdkEventButton * event,
     gtk_tree_view_get_path_at_pos ((GtkTreeView *) widget, event->x, event->y,
      & path, NULL, NULL, NULL);
 
-    if (event->type == GDK_BUTTON_PRESS && event->button == 3 &&
-     model->cbs->right_click)
+    if (event->type == GDK_BUTTON_PRESS && event->button == 3
+     && MODEL_HAS_CB (model, right_click))
     {
         /* Only allow GTK to select this row if it is not already selected.  We
          * don't want to clear a multiple selection. */
@@ -294,7 +300,7 @@ static bool_t key_press_cb (GtkWidget * widget, GdkEventKey * event, ListModel *
 
 static bool_t motion_notify_cb (GtkWidget * widget, GdkEventMotion * event, ListModel * model)
 {
-    if (model->cbs->mouse_motion)
+    if (MODEL_HAS_CB (model, mouse_motion))
     {
         GtkTreePath * path = NULL;
         gtk_tree_view_get_path_at_pos ((GtkTreeView *) widget, event->x, event->y,
@@ -316,7 +322,7 @@ static bool_t motion_notify_cb (GtkWidget * widget, GdkEventMotion * event, List
 
 static bool_t leave_notify_cb (GtkWidget * widget, GdkEventMotion * event, ListModel * model)
 {
-    if (model->cbs->mouse_leave)
+    if (MODEL_HAS_CB (model, mouse_leave))
     {
         GtkTreePath * path = NULL;
         gtk_tree_view_get_path_at_pos ((GtkTreeView *) widget, event->x, event->y,
@@ -429,9 +435,9 @@ static bool_t drag_motion (GtkWidget * widget, GdkDragContext * context,
      * not to clear it. */
     model->frozen = FALSE;
 
-    if (model->dragging && model->cbs->shift_rows) /* dragging within same list */
+    if (model->dragging && MODEL_HAS_CB (model, shift_rows)) /* dragging within same list */
         gdk_drag_status (context, GDK_ACTION_MOVE, time);
-    else if (model->cbs->data_type) /* cross-widget dragging */
+    else if (MODEL_HAS_CB (model, data_type)) /* cross-widget dragging */
         gdk_drag_status (context, GDK_ACTION_COPY, time);
     else
         return FALSE;
@@ -488,14 +494,14 @@ static bool_t drag_drop (GtkWidget * widget, GdkDragContext * context, int x,
     bool_t success = TRUE;
     int row = calc_drop_row (model, widget, x, y);
 
-    if (model->dragging && model->cbs->shift_rows) /* dragging within same list */
+    if (model->dragging && MODEL_HAS_CB (model, shift_rows)) /* dragging within same list */
     {
         if (model->clicked_row >= 0 && model->clicked_row < model->rows)
             model->cbs->shift_rows (model->user, model->clicked_row, row);
         else
             success = FALSE;
     }
-    else if (model->cbs->data_type) /* cross-widget dragging */
+    else if (MODEL_HAS_CB (model, data_type)) /* cross-widget dragging */
     {
         model->receive_row = row;
         gtk_drag_get_data (widget, context, gdk_atom_intern
@@ -553,17 +559,14 @@ static void update_selection (GtkWidget * list, ListModel * model, int at,
     model->blocked = FALSE;
 }
 
-GtkWidget * audgui_list_new (const AudguiListCallbacks * cbs, void * user,
- int rows)
+GtkWidget * audgui_list_new_real (const AudguiListCallbacks * cbs, int cbs_size,
+ void * user, int rows)
 {
     g_return_val_if_fail (cbs->get_value, NULL);
-    if (cbs->get_selected)
-        g_return_val_if_fail (cbs->set_selected && cbs->select_all, NULL);
-    if (cbs->data_type)
-        g_return_val_if_fail (cbs->get_data && cbs->receive_data, NULL);
 
     ListModel * model = (ListModel *) g_object_new (list_model_get_type (), NULL);
     model->cbs = cbs;
+    model->cbs_size = cbs_size;
     model->user = user;
     model->rows = rows;
     model->highlight = -1;
@@ -581,7 +584,8 @@ GtkWidget * audgui_list_new (const AudguiListCallbacks * cbs, void * user,
     gtk_tree_view_set_fixed_height_mode ((GtkTreeView *) list, TRUE);
     g_signal_connect_swapped (list, "destroy", (GCallback) destroy_cb, model);
 
-    if (cbs->get_selected)
+    if (MODEL_HAS_CB (model, get_selected) && MODEL_HAS_CB (model, set_selected)
+     && MODEL_HAS_CB (model, select_all))
     {
         GtkTreeSelection * sel = gtk_tree_view_get_selection
          ((GtkTreeView *) list);
@@ -592,7 +596,7 @@ GtkWidget * audgui_list_new (const AudguiListCallbacks * cbs, void * user,
         update_selection (list, model, 0, rows);
     }
 
-    if (cbs->activate_row)
+    if (MODEL_HAS_CB (model, activate_row))
         g_signal_connect (list, "row-activated", (GCallback) activate_cb, model);
 
     g_signal_connect (list, "button-press-event", (GCallback) button_press_cb, model);
@@ -601,7 +605,10 @@ GtkWidget * audgui_list_new (const AudguiListCallbacks * cbs, void * user,
     g_signal_connect (list, "motion-notify-event", (GCallback) motion_notify_cb, model);
     g_signal_connect (list, "leave-notify-event", (GCallback) leave_notify_cb, model);
 
-    if (cbs->data_type)
+    bool_t supports_drag = FALSE;
+
+    if (MODEL_HAS_CB (model, data_type) && MODEL_HAS_CB (model, get_data) &&
+     MODEL_HAS_CB (model, receive_data))
     {
         const GtkTargetEntry target = {(char *) cbs->data_type, 0, 0};
 
@@ -613,14 +620,17 @@ GtkWidget * audgui_list_new (const AudguiListCallbacks * cbs, void * user,
          model);
         g_signal_connect (list, "drag-data-received", (GCallback)
          drag_data_received, model);
+
+        supports_drag = TRUE;
     }
-    else if (cbs->shift_rows)
+    else if (MODEL_HAS_CB (model, shift_rows))
     {
         gtk_drag_source_set (list, GDK_BUTTON1_MASK, NULL, 0, GDK_ACTION_COPY);
         gtk_drag_dest_set (list, 0, NULL, 0, GDK_ACTION_COPY);
+        supports_drag = TRUE;
     }
 
-    if (cbs->data_type || cbs->shift_rows)
+    if (supports_drag)
     {
         g_signal_connect (list, "drag-begin", (GCallback) drag_begin, model);
         g_signal_connect (list, "drag-end", (GCallback) drag_end, model);
@@ -836,4 +846,12 @@ int audgui_list_row_at_point (GtkWidget * list, int x, int y)
 
     gtk_tree_path_free (path);
     return row;
+}
+
+/* old-style (pre-3.3) audgui_list_new() */
+#undef audgui_list_new
+GtkWidget * audgui_list_new (const AudguiListCallbacks * cbs, void * user, int rows)
+{
+    return audgui_list_new_real (cbs, offsetof (AudguiListCallbacks,
+     mouse_motion), user, rows);
 }
