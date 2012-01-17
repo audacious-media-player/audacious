@@ -165,13 +165,13 @@ if test "x$GCC" = "xyes"; then
     AUD_CHECK_CFLAGS(-Wtype-limits)
 fi
 
-dnl Enable "-z defs" only on Linux
+dnl Enable "-Wl,-z,defs" only on Linux
 dnl ==============================
 AC_MSG_CHECKING([for Linux])
 case "$target" in
     *linux*)
         AC_MSG_RESULT([yes])
-        LDFLAGS="$LDFLAGS -z defs"
+        LDFLAGS="$LDFLAGS -Wl,-z,defs"
         ;;
     *)
         AC_MSG_RESULT([no])
