@@ -145,8 +145,8 @@ static void infopopup_add_category (GtkWidget * infopopup_data_table,
 
     gtk_misc_set_alignment ((GtkMisc *) infopopup_data_info_header, 0, 0.5);
     gtk_misc_set_alignment ((GtkMisc *) infopopup_data_info_label, 0, 0.5);
-    gtk_misc_set_padding ((GtkMisc *) infopopup_data_info_header, 0, 3);
-    gtk_misc_set_padding ((GtkMisc *) infopopup_data_info_label, 0, 3);
+    gtk_misc_set_padding ((GtkMisc *) infopopup_data_info_header, 0, 1);
+    gtk_misc_set_padding ((GtkMisc *) infopopup_data_info_label, 0, 1);
 
     markup = g_markup_printf_escaped ("<span style=\"italic\">%s</span>",
      category);
@@ -174,9 +174,9 @@ static void infopopup_create (void)
     gtk_window_set_type_hint ((GtkWindow *) infopopup,
      GDK_WINDOW_TYPE_HINT_TOOLTIP);
     gtk_window_set_decorated ((GtkWindow *) infopopup, FALSE);
-    gtk_container_set_border_width ((GtkContainer *) infopopup, 6);
+    gtk_container_set_border_width ((GtkContainer *) infopopup, 4);
 
-    infopopup_hbox = gtk_hbox_new (FALSE, 0);
+    infopopup_hbox = gtk_hbox_new (FALSE, 6);
     gtk_container_add ((GtkContainer *) infopopup, infopopup_hbox);
 
     infopopup_data_image = gtk_image_new ();
@@ -184,9 +184,6 @@ static void infopopup_create (void)
     g_object_set_data ((GObject *) infopopup, "image", infopopup_data_image);
     gtk_box_pack_start ((GtkBox *) infopopup_hbox, infopopup_data_image, FALSE,
      FALSE, 0);
-
-    gtk_box_pack_start ((GtkBox *) infopopup_hbox, gtk_vseparator_new (), FALSE,
-     FALSE, 6);
 
     infopopup_data_table = gtk_table_new (8, 2, FALSE);
     gtk_table_set_row_spacings ((GtkTable *) infopopup_data_table, 0);
