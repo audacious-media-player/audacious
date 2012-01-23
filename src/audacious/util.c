@@ -31,6 +31,10 @@
 #include <windows.h>
 #endif
 
+#ifdef __APPLE__
+#include <mach-o/dyld.h>
+#endif
+
 #ifdef HAVE_CONFIG_H
 #  include "config.h"
 #endif
@@ -192,6 +196,25 @@ char * get_path_to_self (void)
 
         size += size;
         buf = g_realloc (buf, size);
+    }
+#elif defined __APPLE__
+    unsigned int size = 256;
+    char * buf = g_malloc (size);
+
+    while (1)
+    {
+        int res;
+
+        if (! (res = _NSGetExecutablePath (buf, &size)))
+            return buf;
+
+        if (res == -1)
+            buf = g_realloc (buf, size);
+        else
+        {
+            g_free (buf);
+            return NULL;
+        }
     }
 #else
     return NULL;
