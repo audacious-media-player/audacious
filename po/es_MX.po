@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2012-01-11 08:54-0500\n"
-"PO-Revision-Date: 2012-01-12 01:21+0000\n"
+"PO-Revision-Date: 2012-01-23 16:41+0000\n"
 "Last-Translator: Jorge A. García Sosa <jagsmd@gmail.com>\n"
 "Language-Team: Spanish (Mexican)\n"
 "MIME-Version: 1.0\n"
@@ -532,7 +532,7 @@ msgstr "Detector automático de codificación de caracteres para:"
 
 #: src/audacious/ui_preferences.c:198
 msgid "Fallback character encodings:"
-msgstr "Codigicación de caracteres alternativa:"
+msgstr "Codificación de caracteres alternativa:"
 
 #: src/audacious/ui_preferences.c:202
 msgid "<b>Behavior</b>"
@@ -646,7 +646,7 @@ msgstr "Personalizar"
 
 #: src/audacious/ui_preferences.c:1352
 msgid "<b>Song Display</b>"
-msgstr "<b>Visualización  de la Pista</b>"
+msgstr "<b>Visualización de Pista</b>"
 
 #: src/audacious/ui_preferences.c:1361
 msgid "Show song numbers"
