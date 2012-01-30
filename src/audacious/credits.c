@@ -225,6 +225,7 @@ static const char * const translators_text[] = {
     N_("Finnish:"),
     "Matti Hämäläinen",
     "Elias Julkunen",
+    "Tuomas Lähteenmäki",
     "Pauli Virtanen",
     NULL,
     N_("French:"),
