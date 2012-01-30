@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
-#  Lê Trường An <truongan@linuxmail.org>, 2011.
+#  Lê Trường An <truongan@linuxmail.org>, 2011, 2012.
 # Lê Trường An <truongan@linuxmail.org>, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2011-12-29 19:27-0500\n"
-"PO-Revision-Date: 2011-12-30 08:37+0000\n"
+"POT-Creation-Date: 2012-01-11 08:54-0500\n"
+"PO-Revision-Date: 2012-01-29 09:38+0000\n"
 "Last-Translator: Lê Trường An <truongan@linuxmail.org>\n"
 "Language-Team: Vietnamese\n"
 "MIME-Version: 1.0\n"
@@ -33,187 +33,191 @@ msgstr[0] "%d tập tin được tìm thấy"
 msgid "  (invalid UTF-8)"
 msgstr "  (UTF-8 không hợp lệ)"
 
-#: src/audacious/credits.c:35
+#: src/audacious/credits.c:37
 msgid "Core developers:"
 msgstr "Phát triển chính:"
 
-#: src/audacious/credits.c:49
+#: src/audacious/credits.c:51
 msgid "Graphics:"
 msgstr "Đồ họa:"
 
-#: src/audacious/credits.c:54
+#: src/audacious/credits.c:56
 msgid "Default skin:"
 msgstr "Giao diện mặc định:"
 
-#: src/audacious/credits.c:60
+#: src/audacious/credits.c:62
 msgid "Plugin development:"
 msgstr "Phát triển trình cắm:"
 
-#: src/audacious/credits.c:83
+#: src/audacious/credits.c:85
 msgid "Patch authors:"
 msgstr "Tác giả bản vá:"
 
-#: src/audacious/credits.c:127
+#: src/audacious/credits.c:131
 msgid "1.x developers:"
 msgstr "Phát triển phiên bản 1.x:"
 
-#: src/audacious/credits.c:149
+#: src/audacious/credits.c:153
 msgid "BMP Developers:"
 msgstr "Phát triển BPM:"
 
-#: src/audacious/credits.c:181
+#: src/audacious/credits.c:185
 msgid "Belarusian:"
 msgstr "Tiếng Belarus:"
 
-#: src/audacious/credits.c:184
+#: src/audacious/credits.c:188
 msgid "Basque:"
 msgstr "Tiếng Basque:"
 
-#: src/audacious/credits.c:187
+#: src/audacious/credits.c:191
 msgid "Brazilian Portuguese:"
 msgstr "Tiếng Bra-xin (Bồ Đào Nha)"
 
-#: src/audacious/credits.c:192
+#: src/audacious/credits.c:196
 msgid "Breton:"
 msgstr "Tiếng Breton:"
 
-#: src/audacious/credits.c:195
+#: src/audacious/credits.c:199
 msgid "Bulgarian:"
 msgstr "Tiếng Bun-ga-ri:"
 
-#: src/audacious/credits.c:198
+#: src/audacious/credits.c:202
 msgid "Catalan:"
 msgstr "Tiếng Catalan:"
 
-#: src/audacious/credits.c:202
+#: src/audacious/credits.c:206
 msgid "Chinese:"
 msgstr "Tiếng Trung Quốc:"
 
-#: src/audacious/credits.c:205
+#: src/audacious/credits.c:209
 msgid "Croatian:"
 msgstr "Tiếng Croatia:"
 
-#: src/audacious/credits.c:208
+#: src/audacious/credits.c:212
 msgid "Czech:"
 msgstr "Tiếng Séc:"
 
-#: src/audacious/credits.c:211
+#: src/audacious/credits.c:215
 msgid "Dutch:"
 msgstr "Tiếng Hà Lan:"
 
-#: src/audacious/credits.c:215
+#: src/audacious/credits.c:219
 msgid "Estonian:"
 msgstr "Tiếng És-tô-ni-a:"
 
-#: src/audacious/credits.c:218
+#: src/audacious/credits.c:222
 msgid "Finnish:"
 msgstr "Tiếng Phần Lan:"
 
-#: src/audacious/credits.c:223
+#: src/audacious/credits.c:227
 msgid "French:"
 msgstr "Tiếng Pháp:"
 
-#: src/audacious/credits.c:229
+#: src/audacious/credits.c:233
 msgid "German:"
 msgstr "Tiếng Đức:"
 
-#: src/audacious/credits.c:236
+#: src/audacious/credits.c:240
 msgid "Georgian:"
 msgstr "Tiếng Georgian:"
 
-#: src/audacious/credits.c:239
+#: src/audacious/credits.c:243
 msgid "Greek:"
 msgstr "Tiếng Hy Lạp:"
 
-#: src/audacious/credits.c:244
+#: src/audacious/credits.c:248
 msgid "Hindi:"
 msgstr "Tiếng Hin-đi:"
 
-#: src/audacious/credits.c:247
+#: src/audacious/credits.c:251
 msgid "Hungarian:"
 msgstr "Tiếng Hun-ga-ri:"
 
-#: src/audacious/credits.c:251
+#: src/audacious/credits.c:255
 msgid "Italian:"
 msgstr "Tiếng Ý:"
 
-#: src/audacious/credits.c:256
+#: src/audacious/credits.c:260
 msgid "Japanese:"
 msgstr "Tiếng Nhật:"
 
-#: src/audacious/credits.c:259
+#: src/audacious/credits.c:263
 msgid "Korean:"
 msgstr "Tiếng Hàn:"
 
-#: src/audacious/credits.c:262
+#: src/audacious/credits.c:266
 msgid "Latvian:"
 msgstr "Tiếng Lat-vi-a:"
 
-#: src/audacious/credits.c:265
+#: src/audacious/credits.c:269
 msgid "Lithuanian:"
 msgstr "Tiếng Lithuania:"
 
-#: src/audacious/credits.c:270
+#: src/audacious/credits.c:274
 msgid "Macedonian:"
 msgstr "Tiếng Macedonia:"
 
-#: src/audacious/credits.c:273
+#: src/audacious/credits.c:277
+msgid "Mexican Spanish:"
+msgstr ""
+
+#: src/audacious/credits.c:280
 msgid "Polish:"
 msgstr "Tiếng Ba Lan:"
 
-#: src/audacious/credits.c:279
+#: src/audacious/credits.c:287
 msgid "Portuguese:"
 msgstr "Tiếng Bồ Đào Nha:"
 
-#: src/audacious/credits.c:282
+#: src/audacious/credits.c:290
 msgid "Romanian:"
 msgstr "Tiếng Rumani:"
 
-#: src/audacious/credits.c:286
+#: src/audacious/credits.c:294
 msgid "Russian:"
 msgstr "Tiếng Nga:"
 
-#: src/audacious/credits.c:290
+#: src/audacious/credits.c:298
 msgid "Serbian (Latin):"
 msgstr "Tiếng Séc-bi-a (Latinh):"
 
-#: src/audacious/credits.c:293
+#: src/audacious/credits.c:301
 msgid "Serbian (Cyrillic):"
 msgstr "Tiếng Séc-bi-a (Kirin):"
 
-#: src/audacious/credits.c:297
+#: src/audacious/credits.c:305
 msgid "Simplified Chinese:"
 msgstr "Tiếng Trung giản thể:"
 
-#: src/audacious/credits.c:300
+#: src/audacious/credits.c:308
 msgid "Slovak:"
 msgstr "Tiếng Slovak:"
 
-#: src/audacious/credits.c:303
+#: src/audacious/credits.c:312
 msgid "Spanish:"
 msgstr "Tiếng Tây Ban Nha:"
 
-#: src/audacious/credits.c:311
+#: src/audacious/credits.c:320
 msgid "Swedish:"
 msgstr "Tiếng Thụy Điển:"
 
-#: src/audacious/credits.c:314
+#: src/audacious/credits.c:323
 msgid "Traditional Chinese:"
 msgstr "Tiếng Trung (phồn thể):"
 
-#: src/audacious/credits.c:320
+#: src/audacious/credits.c:329
 msgid "Turkish:"
 msgstr "Tiếng Thổ Nhĩ Kỳ:"
 
-#: src/audacious/credits.c:324
+#: src/audacious/credits.c:333
 msgid "Ukrainian:"
 msgstr "Tiếng U-crai-na:"
 
-#: src/audacious/credits.c:328
+#: src/audacious/credits.c:338
 msgid "Vietnamese:"
 msgstr "Tiếng Việt:"
 
-#: src/audacious/credits.c:331
+#: src/audacious/credits.c:341
 msgid "Welsh:"
 msgstr "Tiếng xứ Wales:"
 
@@ -291,7 +295,7 @@ msgstr ""
 "%s: %s\n"
 "Chạy `%s --help' để biết thêm thông tin.\n"
 
-#: src/audacious/main.c:572
+#: src/audacious/main.c:573
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -299,6 +303,19 @@ msgstr "Audacious"
 #, c-format
 msgid "No decoder found for %s."
 msgstr "Không tìm thấy bộ giải mã cho %s."
+
+#: src/audacious/playlist-files.c:53
+#, c-format
+msgid "Cannot %s %s: unsupported file extension."
+msgstr "Không thể %s %s: tập tin không được hỗ trợ."
+
+#: src/audacious/playlist-files.c:54
+msgid "save"
+msgstr "lưu"
+
+#: src/audacious/playlist-files.c:54
+msgid "load"
+msgstr "nạp"
 
 #: src/audacious/playlist-new.c:131
 msgid "New Playlist"
@@ -308,7 +325,7 @@ msgstr "D.sách mới"
 msgid "Now Playing"
 msgstr "Đang phát"
 
-#: src/audacious/playlist-new.c:1627
+#: src/audacious/playlist-new.c:1630
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress"
 " (or has been disabled)."
@@ -332,15 +349,15 @@ msgstr "Danh sách"
 msgid "Plugins"
 msgstr "Trình cắm"
 
-#: src/audacious/ui_preferences.c:94 src/libaudgui/infopopup.c:203
+#: src/audacious/ui_preferences.c:94 src/libaudgui/infopopup.c:199
 msgid "Artist"
 msgstr "Nghệ sĩ"
 
-#: src/audacious/ui_preferences.c:95 src/libaudgui/infopopup.c:205
+#: src/audacious/ui_preferences.c:95 src/libaudgui/infopopup.c:201
 msgid "Album"
 msgstr "Album"
 
-#: src/audacious/ui_preferences.c:96 src/libaudgui/infopopup.c:201
+#: src/audacious/ui_preferences.c:96 src/libaudgui/infopopup.c:197
 #: src/libaudgui/ui_playlist_manager.c:279
 msgid "Title"
 msgstr "Tựa đề"
@@ -349,7 +366,7 @@ msgstr "Tựa đề"
 msgid "Tracknumber"
 msgstr "Bài số"
 
-#: src/audacious/ui_preferences.c:98 src/libaudgui/infopopup.c:207
+#: src/audacious/ui_preferences.c:98 src/libaudgui/infopopup.c:203
 msgid "Genre"
 msgstr "Thể loại"
 
@@ -365,7 +382,7 @@ msgstr "Đường dẫn tập tin"
 msgid "Date"
 msgstr "Ngày"
 
-#: src/audacious/ui_preferences.c:102 src/libaudgui/infopopup.c:209
+#: src/audacious/ui_preferences.c:102 src/libaudgui/infopopup.c:205
 msgid "Year"
 msgstr "Năm"
 
@@ -714,7 +731,7 @@ msgstr "Không tìm thấy vị trí."
 msgid "No song playing."
 msgstr "Hiện không phát nhạc."
 
-#: src/libaudcore/audstrings.c:194
+#: src/libaudcore/audstrings.c:199
 #, c-format
 msgid "Audio CD, track %s"
 msgstr "Đĩa nhạc, bài %s"
@@ -733,7 +750,19 @@ msgid "%d channel"
 msgid_plural "%d channels"
 msgstr[0] "%d kênh"
 
-#: src/libaudgui/confirm.c:78
+#: src/libaudgui/about.c:52 src/libaudgui/about.c:115
+msgid "Credits"
+msgstr "Đóng góp"
+
+#: src/libaudgui/about.c:52
+msgid "Translators"
+msgstr "Người dịch"
+
+#: src/libaudgui/about.c:91
+msgid "About Audacious"
+msgstr "Giới thiệu Audacious"
+
+#: src/libaudgui/confirm.c:76
 #, c-format
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
@@ -742,384 +771,372 @@ msgstr ""
 "Bạn có chắc là muốn đóng %s? Nếu bạn làm vậy, các thay đổi kể từ khi danh "
 "sách được xuất ra sẽ bị mất."
 
-#: src/libaudgui/confirm.c:91
+#: src/libaudgui/confirm.c:89
 msgid "_Don't show this message again"
 msgstr "_Không hiện tin nhắn này nữa"
 
-#: src/libaudgui/confirm.c:128
+#: src/libaudgui/confirm.c:126
 msgid "Rename Playlist"
 msgstr "Đổi tên danh sách"
 
-#: src/libaudgui/effects-menu.c:76
+#: src/libaudgui/effects-menu.c:74
 msgid "settings ..."
 msgstr "thiết lập ..."
 
-#: src/libaudgui/equalizer.c:53
+#: src/libaudgui/equalizer.c:51
 msgid "_Enable"
 msgstr "_Bật"
 
-#: src/libaudgui/equalizer.c:125
+#: src/libaudgui/equalizer.c:123
 msgid "31 Hz"
 msgstr "31 Hz"
 
-#: src/libaudgui/equalizer.c:125
+#: src/libaudgui/equalizer.c:123
 msgid "63 Hz"
 msgstr "63 Hz"
 
-#: src/libaudgui/equalizer.c:126
+#: src/libaudgui/equalizer.c:124
 msgid "125 Hz"
 msgstr "125 Hz"
 
-#: src/libaudgui/equalizer.c:126
+#: src/libaudgui/equalizer.c:124
 msgid "250 Hz"
 msgstr "250 Hz"
 
-#: src/libaudgui/equalizer.c:126
+#: src/libaudgui/equalizer.c:124
 msgid "500 Hz"
 msgstr "500 Hz"
 
-#: src/libaudgui/equalizer.c:126
+#: src/libaudgui/equalizer.c:124
 msgid "1 kHz"
 msgstr "1 kHz"
 
-#: src/libaudgui/equalizer.c:126
+#: src/libaudgui/equalizer.c:124
 msgid "2 kHz"
 msgstr "2 kHz"
 
-#: src/libaudgui/equalizer.c:127
+#: src/libaudgui/equalizer.c:125
 msgid "4 kHz"
 msgstr "4 kHz"
 
-#: src/libaudgui/equalizer.c:127
+#: src/libaudgui/equalizer.c:125
 msgid "8 kHz"
 msgstr "8 kHz"
 
-#: src/libaudgui/equalizer.c:127
+#: src/libaudgui/equalizer.c:125
 msgid "16 kHz"
 msgstr "16 kHz"
 
-#: src/libaudgui/equalizer.c:132
+#: src/libaudgui/equalizer.c:130
 msgid "Equalizer"
 msgstr "Bộ cân chỉnh âm"
 
-#: src/libaudgui/equalizer.c:148
+#: src/libaudgui/equalizer.c:146
 msgid "Preamp"
 msgstr "Độ lớn"
 
-#: src/libaudgui/infopopup.c:211
+#: src/libaudgui/infopopup.c:207
 msgid "Track Number"
 msgstr "Số thứ tự"
 
-#: src/libaudgui/infopopup.c:213
+#: src/libaudgui/infopopup.c:209
 msgid "Track Length"
 msgstr "Thời lượng"
 
-#: src/libaudgui/infowin.c:78
+#: src/libaudgui/infowin.c:75
 msgid "Acid Jazz"
 msgstr "Acid Jazz"
 
-#: src/libaudgui/infowin.c:79
+#: src/libaudgui/infowin.c:76
 msgid "Acid Rock"
 msgstr "Acid Rock"
 
-#: src/libaudgui/infowin.c:80
+#: src/libaudgui/infowin.c:77
 msgid "Ambient"
 msgstr "Ambient"
 
-#: src/libaudgui/infowin.c:81
+#: src/libaudgui/infowin.c:78
 msgid "Bebop"
 msgstr "Bebop"
 
-#: src/libaudgui/infowin.c:82
+#: src/libaudgui/infowin.c:79
 msgid "Bluegrass"
 msgstr "Bluegrass"
 
-#: src/libaudgui/infowin.c:83
+#: src/libaudgui/infowin.c:80
 msgid "Blues"
 msgstr "Blues"
 
-#: src/libaudgui/infowin.c:84
+#: src/libaudgui/infowin.c:81
 msgid "Chamber Music"
 msgstr "Chamber Music"
 
-#: src/libaudgui/infowin.c:85
+#: src/libaudgui/infowin.c:82
 msgid "Classical"
 msgstr "Classical"
 
-#: src/libaudgui/infowin.c:86
+#: src/libaudgui/infowin.c:83
 msgid "Country"
 msgstr "Country"
 
-#: src/libaudgui/infowin.c:87
+#: src/libaudgui/infowin.c:84
 msgid "Death Metal"
 msgstr "Death Metal"
 
-#: src/libaudgui/infowin.c:88
+#: src/libaudgui/infowin.c:85
 msgid "Disco"
 msgstr "Disco"
 
-#: src/libaudgui/infowin.c:89
+#: src/libaudgui/infowin.c:86
 msgid "Easy Listening"
 msgstr "Easy Listening"
 
-#: src/libaudgui/infowin.c:90
+#: src/libaudgui/infowin.c:87
 msgid "Folk"
 msgstr "Folk"
 
-#: src/libaudgui/infowin.c:91
+#: src/libaudgui/infowin.c:88
 msgid "Funk"
 msgstr "Funk"
 
-#: src/libaudgui/infowin.c:92
+#: src/libaudgui/infowin.c:89
 msgid "Gangsta Rap"
 msgstr "Gangsta Rap"
 
-#: src/libaudgui/infowin.c:93
+#: src/libaudgui/infowin.c:90
 msgid "Gospel"
 msgstr "Gospel"
 
-#: src/libaudgui/infowin.c:94
+#: src/libaudgui/infowin.c:91
 msgid "Grunge"
 msgstr "Grunge"
 
-#: src/libaudgui/infowin.c:95
+#: src/libaudgui/infowin.c:92
 msgid "Hard Rock"
 msgstr "Hard Rock"
 
-#: src/libaudgui/infowin.c:96
+#: src/libaudgui/infowin.c:93
 msgid "Heavy Metal"
 msgstr "Heavy Metal"
 
-#: src/libaudgui/infowin.c:97
+#: src/libaudgui/infowin.c:94
 msgid "Hip-hop"
 msgstr "Hip-hop"
 
-#: src/libaudgui/infowin.c:98
+#: src/libaudgui/infowin.c:95
 msgid "House"
 msgstr "House"
 
-#: src/libaudgui/infowin.c:99
+#: src/libaudgui/infowin.c:96
 msgid "Jazz"
 msgstr "Jazz"
 
-#: src/libaudgui/infowin.c:100
+#: src/libaudgui/infowin.c:97
 msgid "Jungle"
 msgstr "Jungle"
 
-#: src/libaudgui/infowin.c:101
+#: src/libaudgui/infowin.c:98
 msgid "Metal"
 msgstr "Metal"
 
-#: src/libaudgui/infowin.c:102
+#: src/libaudgui/infowin.c:99
 msgid "New Age"
 msgstr "New Age"
 
-#: src/libaudgui/infowin.c:103
+#: src/libaudgui/infowin.c:100
 msgid "New Wave"
 msgstr "New Wave"
 
-#: src/libaudgui/infowin.c:104
+#: src/libaudgui/infowin.c:101
 msgid "Noise"
 msgstr "Noise"
 
-#: src/libaudgui/infowin.c:105
+#: src/libaudgui/infowin.c:102
 msgid "Pop"
 msgstr "Pop"
 
-#: src/libaudgui/infowin.c:106
+#: src/libaudgui/infowin.c:103
 msgid "Punk Rock"
 msgstr "Punk Rock"
 
-#: src/libaudgui/infowin.c:107
+#: src/libaudgui/infowin.c:104
 msgid "Rap"
 msgstr "Rap"
 
-#: src/libaudgui/infowin.c:108
+#: src/libaudgui/infowin.c:105
 msgid "Reggae"
 msgstr "Reggae"
 
-#: src/libaudgui/infowin.c:109
+#: src/libaudgui/infowin.c:106
 msgid "Rock"
 msgstr "Rock"
 
-#: src/libaudgui/infowin.c:110
+#: src/libaudgui/infowin.c:107
 msgid "Rock and Roll"
 msgstr "Rock and Roll"
 
-#: src/libaudgui/infowin.c:111
+#: src/libaudgui/infowin.c:108
 msgid "Rhythm and Blues"
 msgstr "Rhythm and Blues"
 
-#: src/libaudgui/infowin.c:112
+#: src/libaudgui/infowin.c:109
 msgid "Ska"
 msgstr "Ska"
 
-#: src/libaudgui/infowin.c:113
+#: src/libaudgui/infowin.c:110
 msgid "Soul"
 msgstr "Soul"
 
-#: src/libaudgui/infowin.c:114
+#: src/libaudgui/infowin.c:111
 msgid "Swing"
 msgstr "Swing"
 
-#: src/libaudgui/infowin.c:115
+#: src/libaudgui/infowin.c:112
 msgid "Techno"
 msgstr "Techno"
 
-#: src/libaudgui/infowin.c:116
+#: src/libaudgui/infowin.c:113
 msgid "Trip-hop"
 msgstr "Trip-hop"
 
-#: src/libaudgui/infowin.c:180 src/libaudgui/infowin.c:366
-#: src/libaudgui/infowin.c:369 src/libaudgui/infowin.c:372
+#: src/libaudgui/infowin.c:177 src/libaudgui/infowin.c:363
+#: src/libaudgui/infowin.c:366 src/libaudgui/infowin.c:369
 msgid "<span size=\"small\">n/a</span>"
 msgstr "<span size=\"small\">n/a</span>"
 
-#: src/libaudgui/infowin.c:270
+#: src/libaudgui/infowin.c:267
 msgid "Metadata updated successfully"
 msgstr "Đã cập nhật thông tin"
 
-#: src/libaudgui/infowin.c:275
+#: src/libaudgui/infowin.c:272
 msgid "Metadata updating failed"
 msgstr "Không thể cập nhật thông tin"
 
-#: src/libaudgui/infowin.c:323
+#: src/libaudgui/infowin.c:320
 msgid "Track Information"
 msgstr "Thông tin"
 
-#: src/libaudgui/infowin.c:355
+#: src/libaudgui/infowin.c:352
 msgid "<span size=\"small\">Format:</span>"
 msgstr "<span size=\"small\">Định dạng:</span>"
 
-#: src/libaudgui/infowin.c:359
+#: src/libaudgui/infowin.c:356
 msgid "<span size=\"small\">Quality:</span>"
 msgstr "<span size=\"small\">Chất lượng:</span>"
 
-#: src/libaudgui/infowin.c:362
+#: src/libaudgui/infowin.c:359
 msgid "<span size=\"small\">Bitrate:</span>"
 msgstr "<span size=\"small\">Tỉ lệ bit:</span>"
 
-#: src/libaudgui/infowin.c:392
+#: src/libaudgui/infowin.c:389
 msgid "<span size=\"small\">Title</span>"
 msgstr "<span size=\"small\">Tựa đề</span>"
 
-#: src/libaudgui/infowin.c:404
+#: src/libaudgui/infowin.c:401
 msgid "<span size=\"small\">Artist</span>"
 msgstr "<span size=\"small\">Nghệ sĩ</span>"
 
-#: src/libaudgui/infowin.c:416
+#: src/libaudgui/infowin.c:413
 msgid "<span size=\"small\">Album</span>"
 msgstr "<span size=\"small\">Album</span>"
 
-#: src/libaudgui/infowin.c:428
+#: src/libaudgui/infowin.c:425
 msgid "<span size=\"small\">Comment</span>"
 msgstr "<span size=\"small\">Bình luận</span>"
 
-#: src/libaudgui/infowin.c:440
+#: src/libaudgui/infowin.c:437
 msgid "<span size=\"small\">Genre</span>"
 msgstr "<span size=\"small\">Thể loại</span>"
 
-#: src/libaudgui/infowin.c:461
+#: src/libaudgui/infowin.c:458
 msgid "<span size=\"small\">Year</span>"
 msgstr "<span size=\"small\">Năm</span>"
 
-#: src/libaudgui/infowin.c:472
+#: src/libaudgui/infowin.c:469
 msgid "<span size=\"small\">Track Number</span>"
 msgstr "<span size=\"small\">Số thứ tự</span>"
 
-#: src/libaudgui/infowin.c:551
+#: src/libaudgui/infowin.c:548
 #, c-format
 msgid "%d kb/s"
 msgstr "%d kb/giây"
 
-#: src/libaudgui/infowin.c:578
+#: src/libaudgui/infowin.c:575
 #, c-format
 msgid "No info available for %s.\n"
 msgstr "Không có thông tin của %s.\n"
 
-#: src/libaudgui/jump-to-time.c:75
+#: src/libaudgui/jump-to-time.c:72
 msgid "Jump to Time"
 msgstr "Định mốc t.gian phát nhạc"
 
-#: src/libaudgui/jump-to-time.c:90
+#: src/libaudgui/jump-to-time.c:87
 msgid "mm:ss"
 msgstr "mm:ss"
 
-#: src/libaudgui/playlists.c:39
+#: src/libaudgui/playlists.c:33
 msgid "Export Playlist"
 msgstr "Xuất danh sách"
 
-#: src/libaudgui/playlists.c:39
+#: src/libaudgui/playlists.c:33
 msgid "Import Playlist"
 msgstr "Nhập danh sách"
 
-#: src/libaudgui/playlists.c:72
+#: src/libaudgui/playlists.c:66
 #, c-format
 msgid "Overwrite %s?"
 msgstr "Ghi đè %s?"
 
-#: src/libaudgui/queue-manager.c:198
+#: src/libaudgui/queue-manager.c:196
 msgid "Queue Manager"
 msgstr "Trình quản lí hàng đợi"
 
-#: src/libaudgui/ui_about.c:69
-msgid "About Audacious"
-msgstr "Giới thiệu Audacious"
-
-#: src/libaudgui/ui_about.c:90 src/libaudgui/ui_credits.c:122
-msgid "Credits"
-msgstr "Đóng góp"
-
-#: src/libaudgui/ui_credits.c:126
-msgid "Translators"
-msgstr "Người dịch"
-
-#: src/libaudgui/ui_fileopener.c:108
+#: src/libaudgui/ui_fileopener.c:109
 msgid "Open Files"
 msgstr "Mở tập tin"
 
-#: src/libaudgui/ui_fileopener.c:108
+#: src/libaudgui/ui_fileopener.c:109
 msgid "Add Files"
 msgstr "Thêm tập tin"
 
-#: src/libaudgui/ui_fileopener.c:110
+#: src/libaudgui/ui_fileopener.c:111
 msgid "Close dialog on Open"
 msgstr "Đóng hộp thoại khi Mở"
 
-#: src/libaudgui/ui_fileopener.c:110
+#: src/libaudgui/ui_fileopener.c:111
 msgid "Close dialog on Add"
 msgstr "Đóng hộp thoại khi Thêm"
 
-#: src/libaudgui/ui_jumptotrack.c:112 src/libaudgui/ui_jumptotrack.c:120
-#: src/libaudgui/ui_jumptotrack.c:329
+#: src/libaudgui/ui_jumptotrack.c:109 src/libaudgui/ui_jumptotrack.c:117
+#: src/libaudgui/ui_jumptotrack.c:326
 msgid "_Queue"
 msgstr "_Hàng đợi"
 
-#: src/libaudgui/ui_jumptotrack.c:118
+#: src/libaudgui/ui_jumptotrack.c:115
 msgid "Un_queue"
 msgstr "Bỏ khỏi _hàng đợi"
 
-#: src/libaudgui/ui_jumptotrack.c:261
+#: src/libaudgui/ui_jumptotrack.c:258
 msgid "Jump to Song"
 msgstr "Chuyển đến bài hát"
 
-#: src/libaudgui/ui_jumptotrack.c:284
+#: src/libaudgui/ui_jumptotrack.c:281
 msgid "Filter: "
 msgstr "Bộ lọc:"
 
-#: src/libaudgui/ui_jumptotrack.c:285
+#: src/libaudgui/ui_jumptotrack.c:282
 msgid "_Filter:"
 msgstr "_Bộ lọc:"
 
-#: src/libaudgui/ui_jumptotrack.c:295
+#: src/libaudgui/ui_jumptotrack.c:292
 msgid "Remember"
 msgstr "Ghi nhớ"
 
-#: src/libaudgui/ui_jumptotrack.c:302
+#: src/libaudgui/ui_jumptotrack.c:299
 msgid "Clea_r"
 msgstr "_Xóa trắng"
 
-#: src/libaudgui/ui_jumptotrack.c:322
+#: src/libaudgui/ui_jumptotrack.c:319
 msgid "Close on Jump"
 msgstr "Đóng khi chọn xong"
 
@@ -1139,15 +1156,15 @@ msgstr "Đổi _tên"
 msgid "_Close dialog on activating playlist"
 msgstr "Đóng hộp thoại khi _kích hoạt danh sách"
 
-#: src/libaudgui/ui_urlopener.c:51
+#: src/libaudgui/ui_urlopener.c:48
 msgid "Open URL"
 msgstr "Mở địa chỉ URL"
 
-#: src/libaudgui/ui_urlopener.c:51
+#: src/libaudgui/ui_urlopener.c:48
 msgid "Add URL"
 msgstr "Thêm URL"
 
-#: src/libaudgui/util.c:97
+#: src/libaudgui/util.c:95
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
