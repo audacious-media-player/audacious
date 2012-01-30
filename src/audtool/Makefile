@@ -16,6 +16,4 @@ CPPFLAGS += -I.. -I../.. \
             ${DBUS_CFLAGS} \
             ${GTK_CFLAGS}
 
-LIBS += ${DBUS_LIBS}				\
-	-L../libaudclient -laudclient	\
-	${GTK_LIBS}
+LIBS += -L../libaudclient -laudclient ${DBUS_LIBS} ${GTK_LIBS}
