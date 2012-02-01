@@ -11,9 +11,13 @@ SRCS = main.c				\
 include ../../buildsys.mk
 include ../../extra.mk
 
-CPPFLAGS += -I.. -I../.. \
+CPPFLAGS := -I.. -I../.. \
+            ${CPPFLAGS} \
             ${AUDACIOUS_DEFINES} \
             ${DBUS_CFLAGS} \
             ${GTK_CFLAGS}
 
-LIBS += -L../libaudclient -laudclient ${DBUS_LIBS} ${GTK_LIBS}
+LIBS := -L../libaudclient -laudclient \
+        ${LIBS} \
+        ${DBUS_LIBS} \
+        ${GTK_LIBS}

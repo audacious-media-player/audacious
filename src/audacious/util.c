@@ -35,10 +35,6 @@
 #include <mach-o/dyld.h>
 #endif
 
-#ifdef HAVE_CONFIG_H
-#  include "config.h"
-#endif
-
 #include <glib.h>
 #include <stdlib.h>
 #include <string.h>
@@ -48,6 +44,7 @@
 
 #include <libaudcore/audstrings.h>
 
+#include "config.h"
 #include "debug.h"
 #include "i18n.h"
 #include "misc.h"
