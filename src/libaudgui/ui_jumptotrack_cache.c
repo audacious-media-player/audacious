@@ -18,10 +18,6 @@
  * Audacious or using our public API to be a derived work.
  */
 
-#ifdef HAVE_CONFIG_H
-#  include "config.h"
-#endif
-
 #include <glib.h>
 
 #include <stdlib.h>
@@ -34,6 +30,7 @@
 #include <audacious/debug.h>
 #include <audacious/playlist.h>
 
+#include "config.h"
 #include "ui_jumptotrack_cache.h"
 #include "ui_regex.h"
 

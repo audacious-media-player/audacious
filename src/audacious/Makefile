@@ -90,15 +90,14 @@ endif
 include ../../buildsys.mk
 
 ifeq ($(USE_DBUS),yes)
-CPPFLAGS += -I../libaudclient
 DBUS_BINDINGS = dbus-server-bindings.h dbus-client-bindings.h
-LIBS += -L../libaudclient -laudclient
+LIBS := -L../libaudclient -laudclient ${LIBS}
 endif
 
 pre-depend: ${DBUS_BINDINGS}
 
-CPPFLAGS += \
-            -DHAVE_CONFIG_H \
+CPPFLAGS := -I.. -I../.. \
+            ${CPPFLAGS} \
 		${GLIB_CFLAGS}			\
 		${GTHREAD_CFLAGS} \
 		${GTK_CFLAGS}			\
@@ -108,17 +107,15 @@ CPPFLAGS += \
 		${PTHREAD_CFLAGS}		\
 		-D_AUDACIOUS_CORE		\
 		${EGGSM_CFLAGS}			\
-		${LIBGUESS_CFLAGS}		\
-		-I.. -I../..
+		${LIBGUESS_CFLAGS}
 
 # Essential for efficient FFTs. --jlindgren
 CFLAGS += -ffast-math
 
-LIBS += ${LDADD}						\
-        -lm \
-		-L../libaudcore -laudcore	\
-		-L../libaudgui -laudgui \
-		-L../libaudtag -laudtag		\
+LIBS := -L../libaudcore -laudcore \
+        -L../libaudgui -laudgui \
+        -L../libaudtag -laudtag \
+        ${LIBS} -lm \
 		${LIBINTL}						\
 		${EGGSM_LIBS}					\
 		${GLIB_LIBS}					\

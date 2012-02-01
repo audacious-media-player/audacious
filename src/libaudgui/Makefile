@@ -32,6 +32,16 @@ include ../../extra.mk
 
 includesubdir = libaudgui
 
-CPPFLAGS += -DHAVE_CONFIG_H -I.. -I../.. ${GLIB_CFLASG} ${GTK_CFLAGS} ${DBUS_CFLAGS} ${AUDACIOUS_DEFINES} ${REGEX_CFLAGS}
+CPPFLAGS := -I.. -I../.. \
+            ${CPPFLAGS} \
+            ${GLIB_CFLASG} \
+            ${GTK_CFLAGS} \
+            ${REGEX_CFLAGS}
+
 CFLAGS += ${LIB_CFLAGS}
-LIBS += -lm ${GLIB_LIBS} ${GTK_LIBS} ${REGEX_LIBS} -L../libaudcore -laudcore
+
+LIBS := -L../libaudcore -laudcore \
+        ${LIBS} -lm \
+        ${GLIB_LIBS} \
+        ${GTK_LIBS} \
+        ${REGEX_LIBS}

@@ -20,10 +20,6 @@
  * Audacious or using our public API to be a derived work.
  */
 
-#ifdef HAVE_CONFIG_H
-#  include "config.h"
-#endif
-
 #include <glib.h>
 #include <gtk/gtk.h>
 
@@ -32,6 +28,7 @@
 #include <audacious/drct.h>
 #include <audacious/misc.h>
 
+#include "config.h"
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
 

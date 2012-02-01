@@ -39,7 +39,7 @@
 #include "config.h"
 
 #ifdef USE_DBUS
-#include "audctrl.h"
+#include "../libaudclient/audctrl.h"
 #include "dbus.h"
 #endif
 
