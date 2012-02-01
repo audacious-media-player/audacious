@@ -1,6 +1,7 @@
 /*
- * Audacious: A cross-platform multimedia player
- * Copyright (c) 2007 Ben Tucker
+ * dbus-service.h
+ * Copyright 2007-2011 Ben Tucker, Yoshiki Yazawa, Matti Hämäläinen,
+ *                     John Lindgren, and William Pitcock
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
