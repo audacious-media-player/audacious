@@ -298,23 +298,31 @@ static bool_t key_press_cb (GtkWidget * widget, GdkEventKey * event, ListModel *
     return FALSE;
 }
 
+static int get_row_at_point (GtkWidget * widget, int x, int y)
+{
+    ListModel * model = (ListModel *) gtk_tree_view_get_model ((GtkTreeView *)
+     widget);
+
+    GtkTreePath * path = NULL;
+    gtk_tree_view_get_path_at_pos ((GtkTreeView *) widget, x, y,
+     & path, NULL, NULL, NULL);
+
+    if (! path)
+        return -1;
+
+    int row = gtk_tree_path_get_indices (path)[0];
+    g_return_val_if_fail (row >= 0 && row < model->rows, -1);
+
+    gtk_tree_path_free (path);
+    return row;
+}
+
 static bool_t motion_notify_cb (GtkWidget * widget, GdkEventMotion * event, ListModel * model)
 {
     if (MODEL_HAS_CB (model, mouse_motion))
     {
-        GtkTreePath * path = NULL;
-        gtk_tree_view_get_path_at_pos ((GtkTreeView *) widget, event->x, event->y,
-         & path, NULL, NULL, NULL);
-
-        if (! path)
-            return FALSE;
-
-        int row = gtk_tree_path_get_indices (path)[0];
-        g_return_val_if_fail (row >= 0 && row < model->rows, FALSE);
-
+        int row = get_row_at_point (widget, event->x, event->y);
         model->cbs->mouse_motion (model->user, event, row);
-
-        gtk_tree_path_free (path);
     }
 
     return FALSE;
@@ -324,19 +332,8 @@ static bool_t leave_notify_cb (GtkWidget * widget, GdkEventMotion * event, ListM
 {
     if (MODEL_HAS_CB (model, mouse_leave))
     {
-        GtkTreePath * path = NULL;
-        gtk_tree_view_get_path_at_pos ((GtkTreeView *) widget, event->x, event->y,
-         & path, NULL, NULL, NULL);
-
-        if (! path)
-            return FALSE;
-
-        int row = gtk_tree_path_get_indices (path)[0];
-        g_return_val_if_fail (row >= 0 && row < model->rows, FALSE);
-
+        int row = get_row_at_point (widget, event->x, event->y);
         model->cbs->mouse_leave (model->user, event, row);
-
-        gtk_tree_path_free (path);
     }
 
     return FALSE;
