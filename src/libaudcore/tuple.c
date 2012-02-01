@@ -400,6 +400,12 @@ void tuple_set_str (Tuple * tuple, int nfield, const char * field, const char * 
         return;
     }
 
+    if (! g_utf8_validate (str, -1, NULL))
+    {
+        fprintf (stderr, "Invalid UTF-8: %s\n", str);
+        return;
+    }
+
     if (nfield < 0)
         nfield = tuple_field_by_name (field);
     if (nfield < 0 || nfield >= TUPLE_FIELDS || tuple_fields[nfield].type != TUPLE_STRING)
