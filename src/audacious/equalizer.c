@@ -1,14 +1,22 @@
 /*
- *  Equalizer filter, implementation of a 10 band time domain graphic equalizer
- *  using IIR filters.  The IIR filters are implemented using a Direct Form II
- *  approach, modified (b1 == 0 always) to save computation.
+ * equalizer.c
+ * Copyright 2001 Anders Johansson
+ * Copyright 2010-2011 John Lindgren
  *
- *  This software has been released under the terms of the GNU General Public
- *  license.  See http://www.gnu.org/copyleft/gpl.html for details.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; under version 3 of the License.
  *
- *  Copyright 2001 Anders Johansson <ajh@atri.curtin.edu.au>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *  Adapted for Audacious by John Lindgren, 2010-2011
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses>.
+ *
+ * The Audacious team does not consider modular code linking to
+ * Audacious or using our public API to be a derived work.
  */
 
 #include <glib.h>
