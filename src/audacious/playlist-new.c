@@ -1526,12 +1526,32 @@ void playlist_randomize (int playlist_num)
     LEAVE;
 }
 
-static int filename_compare (const void * _a, const void * _b, void * compare)
+enum {
+ COMPARE_TYPE_FILENAME,
+ COMPARE_TYPE_TUPLE,
+ COMPARE_TYPE_TITLE};
+
+typedef int (* CompareFunc) (const void * a, const void * b);
+
+typedef struct {
+    int type;
+    CompareFunc func;
+} CompareData;
+
+static int compare_cb (const void * _a, const void * _b, void * _data)
 {
     const Entry * a = _a, * b = _b;
+    CompareData * data = _data;
 
-    int diff = ((int (*) (const char * a, const char * b)) compare)
-     (a->filename, b->filename);
+    int diff = 0;
+
+    if (data->type == COMPARE_TYPE_FILENAME)
+        diff = data->func (a->filename, b->filename);
+    else if (data->type == COMPARE_TYPE_TUPLE)
+        diff = data->func (a->tuple, b->tuple);
+    else if (data->type == COMPARE_TYPE_TITLE)
+        diff = data->func (a->formatted ? a->formatted : a->filename,
+         b->formatted ? b->formatted : b->filename);
 
     if (diff)
         return diff;
@@ -1540,51 +1560,15 @@ static int filename_compare (const void * _a, const void * _b, void * compare)
     return a->number - b->number;
 }
 
-static int tuple_compare (const void * _a, const void * _b, void * compare)
+static void sort (Playlist * playlist, CompareData * data)
 {
-    const Entry * a = _a, * b = _b;
-
-    if (! a->tuple)
-        return b->tuple ? -1 : 0;
-    if (! b->tuple)
-        return 1;
-
-    int diff = ((int (*) (const Tuple * a, const Tuple * b)) compare)
-     (a->tuple, b->tuple);
-
-    if (diff)
-        return diff;
-
-    /* preserve order of "equal" entries */
-    return a->number - b->number;
-}
-
-static int title_compare (const void * _a, const void * _b, void * compare)
-{
-    const Entry * a = _a, * b = _b;
-
-    int diff = ((int (*) (const char * a, const char * b)) compare)
-     (a->formatted ? a->formatted : a->filename,
-      b->formatted ? b->formatted : b->filename);
-
-    if (diff)
-        return diff;
-
-    /* preserve order of "equal" entries */
-    return a->number - b->number;
-}
-
-static void sort (Playlist * playlist, int (* compare) (const void * a,
- const void * b, void * inner), void * inner)
-{
-    index_sort_with_data (playlist->entries, compare, inner);
+    index_sort_with_data (playlist->entries, compare_cb, data);
     number_entries (playlist, 0, index_count (playlist->entries));
 
     PLAYLIST_HAS_CHANGED (playlist->number, 0, index_count (playlist->entries));
 }
 
-static void sort_selected (Playlist * playlist, int (* compare) (const void *
- a, const void * b, void * inner), void * inner)
+static void sort_selected (Playlist * playlist, CompareData * data)
 {
     int entries = index_count (playlist->entries);
 
@@ -1598,7 +1582,7 @@ static void sort_selected (Playlist * playlist, int (* compare) (const void *
             index_append (selected, entry);
     }
 
-    index_sort_with_data (selected, compare, inner);
+    index_sort_with_data (selected, compare_cb, data);
 
     int count2 = 0;
     for (int count = 0; count < entries; count++)
@@ -1641,7 +1625,8 @@ void playlist_sort_by_filename (int playlist_num, int (* compare)
     DECLARE_PLAYLIST;
     LOOKUP_PLAYLIST;
 
-    sort (playlist, filename_compare, (void *) compare);
+    CompareData data = {COMPARE_TYPE_FILENAME, (CompareFunc) compare};
+    sort (playlist, & data);
 
     LEAVE;
 }
@@ -1653,8 +1638,9 @@ void playlist_sort_by_tuple (int playlist_num, int (* compare)
     DECLARE_PLAYLIST;
     LOOKUP_PLAYLIST;
 
+    CompareData data = {COMPARE_TYPE_TUPLE, (CompareFunc) compare};
     if (entries_are_scanned (playlist, FALSE))
-        sort (playlist, tuple_compare, (void *) compare);
+        sort (playlist, & data);
 
     LEAVE;
 }
@@ -1666,8 +1652,9 @@ void playlist_sort_by_title (int playlist_num, int (* compare) (const char *
     DECLARE_PLAYLIST;
     LOOKUP_PLAYLIST;
 
+    CompareData data = {COMPARE_TYPE_TITLE, (CompareFunc) compare};
     if (entries_are_scanned (playlist, FALSE))
-        sort (playlist, title_compare, (void *) compare);
+        sort (playlist, & data);
 
     LEAVE;
 }
@@ -1679,7 +1666,8 @@ void playlist_sort_selected_by_filename (int playlist_num, int (* compare)
     DECLARE_PLAYLIST;
     LOOKUP_PLAYLIST;
 
-    sort_selected (playlist, filename_compare, (void *) compare);
+    CompareData data = {COMPARE_TYPE_FILENAME, (CompareFunc) compare};
+    sort_selected (playlist, & data);
 
     LEAVE;
 }
@@ -1691,8 +1679,9 @@ void playlist_sort_selected_by_tuple (int playlist_num, int (* compare)
     DECLARE_PLAYLIST;
     LOOKUP_PLAYLIST;
 
+    CompareData data = {COMPARE_TYPE_TUPLE, (CompareFunc) compare};
     if (entries_are_scanned (playlist, TRUE))
-        sort_selected (playlist, tuple_compare, (void *) compare);
+        sort_selected (playlist, & data);
 
     LEAVE;
 }
@@ -1704,8 +1693,9 @@ void playlist_sort_selected_by_title (int playlist_num, int (* compare)
     DECLARE_PLAYLIST;
     LOOKUP_PLAYLIST;
 
+    CompareData data = {COMPARE_TYPE_TITLE, (CompareFunc) compare};
     if (entries_are_scanned (playlist, TRUE))
-        sort (playlist, title_compare, (void *) compare);
+        sort (playlist, & data);
 
     LEAVE;
 }
