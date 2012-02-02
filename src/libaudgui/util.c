@@ -17,12 +17,13 @@
  * the use of this software.
  */
 
+#include <string.h>
+
 #include <gdk/gdkkeysyms.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gtk/gtk.h>
 
 #include <audacious/debug.h>
-#include <audacious/gtk-compat.h>
 #include <audacious/i18n.h>
 #include <audacious/playlist.h>
 #include <audacious/misc.h>
@@ -45,7 +46,7 @@ void audgui_hide_on_delete (GtkWidget * widget)
 static bool_t escape_cb (GtkWidget * widget, GdkEventKey * event, void
  (* action) (GtkWidget * widget))
 {
-    if (event->keyval == GDK_Escape)
+    if (event->keyval == GDK_KEY_Escape)
     {
         action (widget);
         return TRUE;

@@ -19,7 +19,6 @@
 
 #include <gtk/gtk.h>
 
-#include <audacious/gtk-compat.h>
 #include <audacious/i18n.h>
 #include <audacious/misc.h>
 
@@ -96,7 +95,7 @@ void audgui_show_about_window (void)
     g_signal_connect (about_window, "destroy", (GCallback) gtk_widget_destroyed,
      & about_window);
 
-    GtkWidget * vbox = gtk_vbox_new (FALSE, 6);
+    GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
     gtk_container_add ((GtkContainer *) about_window, vbox);
 
     char * name = g_strdup_printf ("%s/images/about-logo.png", aud_get_path

@@ -20,7 +20,6 @@
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
 
-#include <audacious/gtk-compat.h>
 #include <audacious/i18n.h>
 #include <audacious/playlist.h>
 #include <libaudcore/hook.h>
@@ -161,11 +160,11 @@ static void destroy_cb (void)
 
 static bool_t keypress_cb (GtkWidget * widget, GdkEventKey * event)
 {
-    if (event->keyval == GDK_A && (event->state & GDK_CONTROL_MASK))
+    if (event->keyval == GDK_KEY_A && (event->state & GDK_CONTROL_MASK))
         select_all (NULL, TRUE);
-    else if (event->keyval == GDK_Delete)
+    else if (event->keyval == GDK_KEY_Delete)
         remove_selected ();
-    else if (event->keyval == GDK_Escape)
+    else if (event->keyval == GDK_KEY_Escape)
         gtk_widget_destroy (qm_win);
     else
         return FALSE;

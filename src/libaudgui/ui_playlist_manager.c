@@ -17,9 +17,9 @@
  * the use of this software.
  */
 
+#include <string.h>
 #include <gtk/gtk.h>
 
-#include <audacious/gtk-compat.h>
 #include <audacious/i18n.h>
 #include <audacious/misc.h>
 #include <audacious/playlist.h>
@@ -272,7 +272,7 @@ void audgui_playlist_manager (void)
      hide_cb, NULL);
     audgui_hide_on_escape (playman_win);
 
-    playman_vbox = gtk_vbox_new (FALSE, 6);
+    playman_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
     gtk_container_add( GTK_CONTAINER(playman_win) , playman_vbox );
 
     playman_pl_lv = audgui_list_new (& callbacks, NULL, aud_playlist_count ());
@@ -294,7 +294,7 @@ void audgui_playlist_manager (void)
     gtk_box_pack_start ((GtkBox *) playman_vbox, playman_pl_lv_sw, TRUE, TRUE, 0);
 
     /* button bar */
-    playman_bbar_hbbox = gtk_hbutton_box_new();
+    playman_bbar_hbbox = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
     gtk_button_box_set_layout( GTK_BUTTON_BOX(playman_bbar_hbbox) , GTK_BUTTONBOX_END );
     gtk_box_set_spacing ((GtkBox *) playman_bbar_hbbox, 6);
 
@@ -319,7 +319,7 @@ void audgui_playlist_manager (void)
     g_signal_connect ((GObject *) delete_button, "clicked", (GCallback)
      delete_cb, playman_pl_lv);
 
-    hbox = gtk_hbox_new (FALSE, 6);
+    hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  6);
     gtk_box_pack_start ((GtkBox *) playman_vbox, hbox, FALSE, FALSE, 0);
     button = gtk_check_button_new_with_mnemonic
      (_("_Close dialog on activating playlist"));

@@ -22,8 +22,8 @@
 #include <gtk/gtk.h>
 #include <stdarg.h>
 #include <stdlib.h>
+#include <string.h>
 
-#include <audacious/gtk-compat.h>
 #include <audacious/i18n.h>
 #include <audacious/misc.h>
 #include <audacious/playlist.h>
@@ -321,13 +321,13 @@ void create_infowin (void)
     gtk_window_set_type_hint ((GtkWindow *) infowin,
      GDK_WINDOW_TYPE_HINT_DIALOG);
 
-    vbox0 = gtk_vbox_new (FALSE, 0);
+    vbox0 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
     gtk_container_add ((GtkContainer *) infowin, vbox0);
 
-    hbox = gtk_hbox_new (FALSE, 6);
+    hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  6);
     gtk_box_pack_start ((GtkBox *) vbox0, hbox, TRUE, TRUE, 0);
 
-    vbox2 = gtk_vbox_new (FALSE, 6);
+    vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
     gtk_box_pack_start ((GtkBox *) hbox, vbox2, TRUE, TRUE, 0);
 
     image_artwork = gtk_image_new ();
@@ -341,7 +341,7 @@ void create_infowin (void)
     gtk_label_set_selectable ((GtkLabel *) location_text, TRUE);
     gtk_box_pack_start ((GtkBox *) vbox2, location_text, FALSE, FALSE, 0);
 
-    codec_hbox = gtk_hbox_new (FALSE, 6);
+    codec_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  6);
     gtk_box_pack_start ((GtkBox *) vbox2, codec_hbox, FALSE, FALSE, 0);
 
     codec_table = gtk_table_new(3, 2, FALSE);
@@ -383,7 +383,7 @@ void create_infowin (void)
     gtk_table_attach ((GtkTable *) codec_table, label_bitrate, 1, 2, 2, 3,
      GTK_EXPAND | GTK_FILL, 0, 0, 0);
 
-    vbox2 = gtk_vbox_new (FALSE, 0);
+    vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
     gtk_box_pack_start ((GtkBox *) hbox, vbox2, TRUE, TRUE, 0);
 
     label_title = gtk_label_new (_("<span size=\"small\">Title</span>"));
@@ -477,7 +477,7 @@ void create_infowin (void)
      GTK_FILL, 0, 0, 0);
     g_signal_connect (entry_track, "changed", (GCallback) entry_changed, NULL);
 
-    hbox_status_and_bbox = gtk_hbox_new (FALSE, 0);
+    hbox_status_and_bbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  0);
     gtk_box_pack_start ((GtkBox *) vbox0, hbox_status_and_bbox, FALSE, FALSE, 0);
 
     label_mini_status = gtk_label_new ("<span size=\"small\"></span>");
@@ -486,7 +486,7 @@ void create_infowin (void)
     gtk_box_pack_start ((GtkBox *) hbox_status_and_bbox, label_mini_status,
      TRUE, TRUE, 0);
 
-    bbox_close = gtk_hbutton_box_new ();
+    bbox_close = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
     gtk_box_set_spacing ((GtkBox *) bbox_close, 6);
     gtk_box_pack_start ((GtkBox *) hbox_status_and_bbox, bbox_close, FALSE,
      FALSE, 0);

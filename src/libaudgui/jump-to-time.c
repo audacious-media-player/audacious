@@ -24,7 +24,6 @@
 #include <gtk/gtk.h>
 
 #include <audacious/drct.h>
-#include <audacious/gtk-compat.h>
 #include <audacious/i18n.h>
 
 #include "config.h"
@@ -74,10 +73,10 @@ void audgui_jump_to_time (void)
     gtk_container_set_border_width ((GtkContainer *) window, 6);
     audgui_destroy_on_escape (window);
 
-    GtkWidget * vbox = gtk_vbox_new (FALSE, 6);
+    GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
     gtk_container_add ((GtkContainer *) window, vbox);
 
-    GtkWidget * hbox_new = gtk_hbox_new (FALSE, 6);
+    GtkWidget * hbox_new = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  6);
     gtk_box_pack_start ((GtkBox *) vbox, hbox_new, FALSE, FALSE, 0);
 
     GtkWidget * time_entry = gtk_entry_new ();
@@ -87,7 +86,7 @@ void audgui_jump_to_time (void)
     GtkWidget * label = gtk_label_new (_("mm:ss"));
     gtk_box_pack_start ((GtkBox *) hbox_new, label, FALSE, FALSE, 0);
 
-    GtkWidget * bbox = gtk_hbutton_box_new ();
+    GtkWidget * bbox = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
     gtk_box_pack_start ((GtkBox *) vbox, bbox, TRUE, TRUE, 0);
     gtk_button_box_set_layout ((GtkButtonBox *) bbox, GTK_BUTTONBOX_END);
     gtk_box_set_spacing ((GtkBox *) bbox, 6);

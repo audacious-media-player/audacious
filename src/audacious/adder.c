@@ -76,7 +76,7 @@ static bool_t status_cb (void * unused)
         gtk_window_set_resizable ((GtkWindow *) status_window, FALSE);
         gtk_container_set_border_width ((GtkContainer *) status_window, 6);
 
-        GtkWidget * vbox = gtk_vbox_new (FALSE, 6);
+        GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
         gtk_container_add ((GtkContainer *) status_window, vbox);
 
         status_path_label = gtk_label_new (NULL);

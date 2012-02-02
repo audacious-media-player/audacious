@@ -19,7 +19,6 @@
 
 #include <gtk/gtk.h>
 
-#include <audacious/gtk-compat.h>
 #include <audacious/i18n.h>
 #include <audacious/misc.h>
 #include <audacious/playlist.h>
@@ -63,10 +62,10 @@ void audgui_confirm_playlist_delete (int playlist)
     gtk_container_set_border_width ((GtkContainer *) window, 6);
     audgui_destroy_on_escape (window);
 
-    vbox = gtk_vbox_new (FALSE, 6);
+    vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
     gtk_container_add ((GtkContainer *) window, vbox);
 
-    hbox = gtk_hbox_new (FALSE, 6);
+    hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  6);
     gtk_box_pack_start ((GtkBox *) vbox, hbox, FALSE, FALSE, 0);
 
     gtk_box_pack_start ((GtkBox *) hbox, gtk_image_new_from_stock
@@ -83,14 +82,14 @@ void audgui_confirm_playlist_delete (int playlist)
     gtk_widget_set_size_request (label, 320, -1);
     gtk_box_pack_start ((GtkBox *) hbox, label, TRUE, FALSE, 0);
 
-    hbox = gtk_hbox_new (FALSE, 6);
+    hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  6);
     gtk_box_pack_start ((GtkBox *) vbox, hbox, FALSE, FALSE, 0);
 
     button = gtk_check_button_new_with_mnemonic (_("_Don't show this message again"));
     gtk_box_pack_start ((GtkBox *) hbox, button, FALSE, FALSE, 0);
     g_signal_connect (button, "toggled", (GCallback) no_confirm_cb, NULL);
 
-    hbox = gtk_hbox_new (FALSE, 6);
+    hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  6);
     gtk_box_pack_start ((GtkBox *) vbox, hbox, FALSE, FALSE, 0);
 
     button = gtk_button_new_from_stock (GTK_STOCK_NO);

@@ -197,6 +197,7 @@ AUD_CHECK_MODULE([GLIB], [glib-2.0], [>= 2.16], [Glib2])
 AUD_CHECK_MODULE([GTHREAD], [gthread-2.0], [>= 2.16], [GThread])
 AUD_CHECK_MODULE([PANGO], [pango], [>= 1.20], [Pango])
 AUD_CHECK_MODULE([CAIRO], [cairo], [>= 1.6], [Cairo])
+AUD_CHECK_MODULE([GTK], [gtk+-3.0], [>= 3.0.0], [GTK+])
 
 ])
 

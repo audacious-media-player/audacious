@@ -472,8 +472,6 @@ static void init_two (int * p_argc, char * * * p_argv)
         g_thread_init (NULL);
         gdk_threads_init ();
         gdk_threads_enter ();
-
-        gtk_rc_add_default_file (aud_paths[AUD_PATH_GTKRC_FILE]);
         gtk_init (p_argc, p_argv);
     }
 

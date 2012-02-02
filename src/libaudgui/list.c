@@ -20,7 +20,6 @@
 #include <stddef.h>
 
 #include <gtk/gtk.h>
-#include <audacious/gtk-compat.h>
 
 #include "list.h"
 
@@ -394,7 +393,7 @@ static bool_t autoscroll (GtkWidget * widget)
     ListModel * model = (ListModel *) gtk_tree_view_get_model
      ((GtkTreeView *) widget);
 
-    GtkAdjustment * adj = gtk_tree_view_get_vadjustment ((GtkTreeView *) widget);
+    GtkAdjustment * adj = gtk_scrollable_get_vadjustment ((GtkScrollable *) widget);
     if (! adj)
         return FALSE;
 

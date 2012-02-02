@@ -27,7 +27,6 @@
 
 #include "config.h"
 #include "debug.h"
-#include "gtk-compat.h"
 #include "i18n.h"
 #include "misc.h"
 #include "output.h"
@@ -490,12 +489,12 @@ void plugin_preferences_show (PluginPreferences * settings)
     g_signal_connect(G_OBJECT(window), "destroy",
                      G_CALLBACK(plugin_preferences_destroy), settings);
 
-    vbox = gtk_vbox_new(FALSE, 10);
+    vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 10);
     create_widgets_with_domain ((GtkBox *) vbox, settings->prefs,
      settings->n_prefs, d);
     gtk_container_add(GTK_CONTAINER(window), vbox);
 
-    bbox = gtk_hbutton_box_new();
+    bbox = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
     gtk_button_box_set_layout(GTK_BUTTON_BOX(bbox), GTK_BUTTONBOX_END);
     gtk_box_set_spacing(GTK_BOX(bbox), 5);
     gtk_box_pack_start(GTK_BOX(vbox), bbox, FALSE, FALSE, 0);
@@ -783,7 +782,7 @@ create_filepopup_settings(void)
     gtk_window_set_type_hint(GTK_WINDOW(filepopup_settings), GDK_WINDOW_TYPE_HINT_DIALOG);
     gtk_window_set_transient_for(GTK_WINDOW(filepopup_settings), GTK_WINDOW(prefswin));
 
-    vbox = gtk_vbox_new(FALSE, 12);
+    vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
     gtk_container_add(GTK_CONTAINER(filepopup_settings), vbox);
 
     label_cover_retrieve = gtk_label_new(_("<b>Cover image retrieve</b>"));
@@ -839,7 +838,7 @@ create_filepopup_settings(void)
     gtk_box_pack_start(GTK_BOX(vbox), alignment, FALSE, FALSE, 0);
     gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 45, 0);
 
-    filepopup_recurse_depth_box = gtk_hbox_new(FALSE, 0);
+    filepopup_recurse_depth_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
     gtk_container_add(GTK_CONTAINER(alignment), filepopup_recurse_depth_box);
 
     label_search_depth = gtk_label_new(_("Search depth: "));
@@ -875,7 +874,7 @@ create_filepopup_settings(void)
     gtk_box_pack_start(GTK_BOX(vbox), alignment, TRUE, TRUE, 0);
     gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 12, 0);
 
-    hbox = gtk_hbox_new(FALSE, 0);
+    hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
     gtk_container_add(GTK_CONTAINER(alignment), hbox);
 
     label_delay = gtk_label_new(_("Delay until filepopup comes up: "));
@@ -888,7 +887,7 @@ create_filepopup_settings(void)
     gtk_box_pack_start(GTK_BOX(hbox), filepopup_delay, TRUE, TRUE, 0);
     gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(filepopup_delay), TRUE);
 
-    hbuttonbox = gtk_hbutton_box_new();
+    hbuttonbox = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
     gtk_box_pack_start(GTK_BOX(vbox), hbuttonbox, FALSE, FALSE, 0);
     gtk_button_box_set_layout(GTK_BUTTON_BOX(hbuttonbox), GTK_BUTTONBOX_END);
     gtk_box_set_spacing(GTK_BOX(hbuttonbox), 6);
@@ -1102,7 +1101,7 @@ void create_widgets_with_domain (void * box, PreferencesWidget * widgets, int
         if (widget && widgets[x].child)
         {
             if (!child_box) {
-                child_box = gtk_vbox_new(FALSE, 0);
+                child_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
                 g_object_set_data(G_OBJECT(widget), "child", child_box);
                 alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
                 gtk_box_pack_start(box, alignment, FALSE, FALSE, 0);
@@ -1136,7 +1135,7 @@ void create_widgets_with_domain (void * box, PreferencesWidget * widgets, int
                 if (icon == NULL)
                     widget = label;
                 else {
-                    widget = gtk_hbox_new(FALSE, 6);
+                    widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
                     gtk_box_pack_start(GTK_BOX(widget), icon, FALSE, FALSE, 0);
                     gtk_box_pack_start(GTK_BOX(widget), label, FALSE, FALSE, 0);
                 }
@@ -1148,7 +1147,7 @@ void create_widgets_with_domain (void * box, PreferencesWidget * widgets, int
                 init_toggle_button (widget, & widgets[x]);
                 break;
             case WIDGET_SPIN_BTN:
-                widget = gtk_hbox_new(FALSE, 6);
+                widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 
                 GtkWidget *label_pre = NULL, *spin_btn = NULL, *label_past = NULL;
                 create_spin_button (& widgets[x], & label_pre, & spin_btn,
@@ -1170,7 +1169,7 @@ void create_widgets_with_domain (void * box, PreferencesWidget * widgets, int
 
                 break;
             case WIDGET_FONT_BTN:
-                widget = gtk_hbox_new(FALSE, 6);
+                widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 
                 GtkWidget *font_btn = NULL;
                 create_font_btn (& widgets[x], & label, & font_btn, domain);
@@ -1187,7 +1186,7 @@ void create_widgets_with_domain (void * box, PreferencesWidget * widgets, int
                 gtk_table_set_row_spacings(GTK_TABLE(widget), 6);
                 break;
             case WIDGET_ENTRY:
-                widget = gtk_hbox_new(FALSE, 6);
+                widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 
                 GtkWidget *entry = NULL;
                 create_entry (& widgets[x], & label, & entry, domain);
@@ -1198,7 +1197,7 @@ void create_widgets_with_domain (void * box, PreferencesWidget * widgets, int
                     gtk_box_pack_start(GTK_BOX(widget), entry, TRUE, TRUE, 0);
                 break;
             case WIDGET_COMBO_BOX:
-                widget = gtk_hbox_new(FALSE, 6);
+                widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 
                 GtkWidget *combo = NULL;
                 create_cbox (& widgets[x], & label, & combo, domain);
@@ -1212,9 +1211,9 @@ void create_widgets_with_domain (void * box, PreferencesWidget * widgets, int
                 gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 0, 0);
 
                 if (widgets[x].data.box.horizontal) {
-                    widget = gtk_hbox_new(FALSE, 0);
+                    widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
                 } else {
-                    widget = gtk_vbox_new(FALSE, 0);
+                    widget = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
                 }
 
                 create_widgets_with_domain ((GtkBox *) widget,
@@ -1236,7 +1235,7 @@ void create_widgets_with_domain (void * box, PreferencesWidget * widgets, int
                 int i;
                 for (i = 0; i<widgets[x].data.notebook.n_tabs; i++) {
                     GtkWidget *vbox;
-                    vbox = gtk_vbox_new(FALSE, 5);
+                    vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 5);
                     create_widgets_with_domain ((GtkBox *) vbox,
                      widgets[x].data.notebook.tabs[i].settings,
                      widgets[x].data.notebook.tabs[i].n_settings, domain);
@@ -1250,9 +1249,9 @@ void create_widgets_with_domain (void * box, PreferencesWidget * widgets, int
                 gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 6, 6, 0, 0);
 
                 if (widgets[x].data.separator.horizontal == TRUE) {
-                    widget = gtk_hseparator_new();
+                    widget = gtk_separator_new (GTK_ORIENTATION_HORIZONTAL);
                 } else {
-                    widget = gtk_vseparator_new();
+                    widget = gtk_separator_new (GTK_ORIENTATION_VERTICAL);
                 }
                 break;
             default:
@@ -1340,7 +1339,7 @@ create_playlist_category(void)
     GtkWidget *titlestring_tag_menu = create_titlestring_tag_menu();
     GtkWidget * numbers_alignment, * numbers;
 
-    vbox5 = gtk_vbox_new (FALSE, 0);
+    vbox5 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
     gtk_container_add ((GtkContainer *) category_notebook, vbox5);
 
     create_widgets(GTK_BOX(vbox5), playlist_page_widgets, G_N_ELEMENTS(playlist_page_widgets));
@@ -1434,10 +1433,10 @@ create_playlist_category(void)
     gtk_box_pack_start (GTK_BOX (vbox5), alignment86, FALSE, FALSE, 0);
     gtk_alignment_set_padding (GTK_ALIGNMENT (alignment86), 0, 0, 12, 0);
 
-    hbox9 = gtk_hbox_new (FALSE, 12);
+    hbox9 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  12);
     gtk_container_add (GTK_CONTAINER (alignment86), hbox9);
 
-    vbox34 = gtk_vbox_new (FALSE, 0);
+    vbox34 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
     gtk_box_pack_start (GTK_BOX (hbox9), vbox34, TRUE, TRUE, 0);
 
     filepopupbutton = gtk_check_button_new_with_mnemonic (_("Show popup information for playlist entries"));
@@ -1540,19 +1539,19 @@ static void output_do_about (void)
 
 static void * create_output_plugin_box (void)
 {
-    GtkWidget * hbox1 = gtk_hbox_new (FALSE, 6);
+    GtkWidget * hbox1 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  6);
     gtk_box_pack_start ((GtkBox *) hbox1, gtk_label_new (_("Output plugin:")), FALSE, FALSE, 0);
 
-    GtkWidget * vbox = gtk_vbox_new (FALSE, 6);
+    GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
     gtk_box_pack_start ((GtkBox *) hbox1, vbox, FALSE, FALSE, 0);
 
-    GtkWidget * hbox2 = gtk_hbox_new (FALSE, 6);
+    GtkWidget * hbox2 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  6);
     gtk_box_pack_start ((GtkBox *) vbox, hbox2, FALSE, FALSE, 0);
 
     GtkWidget * output_plugin_cbox = gtk_combo_box_text_new ();
     gtk_box_pack_start ((GtkBox *) hbox2, output_plugin_cbox, FALSE, FALSE, 0);
 
-    GtkWidget * hbox3 = gtk_hbox_new (FALSE, 6);
+    GtkWidget * hbox3 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  6);
     gtk_box_pack_start ((GtkBox *) vbox, hbox3, FALSE, FALSE, 0);
 
     output_config_button = gtk_button_new_from_stock (GTK_STOCK_PREFERENCES);
@@ -1573,7 +1572,7 @@ static void * create_output_plugin_box (void)
 
 static void create_audio_category (void)
 {
-    GtkWidget * audio_page_vbox = gtk_vbox_new (FALSE, 0);
+    GtkWidget * audio_page_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
     create_widgets ((GtkBox *) audio_page_vbox, audio_page_widgets, G_N_ELEMENTS (audio_page_widgets));
     gtk_container_add ((GtkContainer *) category_notebook, audio_page_vbox);
 }
@@ -1584,10 +1583,10 @@ create_connectivity_category(void)
     GtkWidget *connectivity_page_vbox;
     GtkWidget *vbox29;
 
-    connectivity_page_vbox = gtk_vbox_new (FALSE, 0);
+    connectivity_page_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
     gtk_container_add (GTK_CONTAINER (category_notebook), connectivity_page_vbox);
 
-    vbox29 = gtk_vbox_new (FALSE, 0);
+    vbox29 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
     gtk_box_pack_start (GTK_BOX (connectivity_page_vbox), vbox29, TRUE, TRUE, 0);
 
     create_widgets(GTK_BOX(vbox29), connectivity_page_widgets, G_N_ELEMENTS(connectivity_page_widgets));
@@ -1645,10 +1644,10 @@ void * * create_prefs_window (void)
     gtk_window_set_position (GTK_WINDOW (prefswin), GTK_WIN_POS_CENTER);
     gtk_window_set_default_size (GTK_WINDOW (prefswin), 680, 400);
 
-    vbox = gtk_vbox_new (FALSE, 0);
+    vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
     gtk_container_add (GTK_CONTAINER (prefswin), vbox);
 
-    hbox1 = gtk_hbox_new (FALSE, 8);
+    hbox1 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  8);
     gtk_box_pack_start (GTK_BOX (vbox), hbox1, TRUE, TRUE, 0);
 
     scrolledwindow6 = gtk_scrolled_window_new (NULL, NULL);
@@ -1674,22 +1673,22 @@ void * * create_prefs_window (void)
     create_playlist_category();
     create_plugin_category();
 
-    hseparator1 = gtk_hseparator_new ();
+    hseparator1 = gtk_separator_new (GTK_ORIENTATION_HORIZONTAL);
     gtk_box_pack_start (GTK_BOX (vbox), hseparator1, FALSE, FALSE, 6);
 
-    hbox4 = gtk_hbox_new (FALSE, 0);
+    hbox4 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  0);
     gtk_box_pack_start (GTK_BOX (vbox), hbox4, FALSE, FALSE, 0);
 
     audversionlabel = gtk_label_new ("");
     gtk_box_pack_start (GTK_BOX (hbox4), audversionlabel, FALSE, FALSE, 0);
     gtk_label_set_use_markup (GTK_LABEL (audversionlabel), TRUE);
 
-    prefswin_button_box = gtk_hbutton_box_new ();
+    prefswin_button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
     gtk_box_pack_start (GTK_BOX (hbox4), prefswin_button_box, TRUE, TRUE, 0);
     gtk_button_box_set_layout (GTK_BUTTON_BOX (prefswin_button_box), GTK_BUTTONBOX_END);
     gtk_box_set_spacing (GTK_BOX (prefswin_button_box), 6);
 
-    hbox11 = gtk_hbox_new (FALSE, 2);
+    hbox11 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  2);
 
     image10 = gtk_image_new_from_stock ("gtk-refresh", GTK_ICON_SIZE_BUTTON);
     gtk_box_pack_start (GTK_BOX (hbox11), image10, FALSE, FALSE, 0);
@@ -1698,7 +1697,7 @@ void * * create_prefs_window (void)
     gtk_container_add (GTK_CONTAINER (prefswin_button_box), close);
     gtk_widget_set_can_default(close, TRUE);
     gtk_widget_add_accelerator (close, "clicked", accel_group,
-                                GDK_Escape, (GdkModifierType) 0,
+                                GDK_KEY_Escape, (GdkModifierType) 0,
                                 GTK_ACCEL_VISIBLE);
 
 

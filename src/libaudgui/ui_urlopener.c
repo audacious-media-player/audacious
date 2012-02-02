@@ -23,7 +23,6 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
-#include <audacious/gtk-compat.h>
 #include <audacious/i18n.h>
 #include <audacious/drct.h>
 #include <audacious/misc.h>
@@ -48,7 +47,7 @@ GtkWidget * urlopener_add_url_dialog_new (GCallback func, bool_t open)
     gtk_window_set_default_size(GTK_WINDOW(win), 400, -1);
     gtk_container_set_border_width(GTK_CONTAINER(win), 12);
 
-    vbox = gtk_vbox_new(FALSE, 10);
+    vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 10);
     gtk_container_add(GTK_CONTAINER(win), vbox);
 
     combo = gtk_combo_box_text_new_with_entry ();
@@ -70,7 +69,7 @@ GtkWidget * urlopener_add_url_dialog_new (GCallback func, bool_t open)
                              G_CALLBACK(gtk_widget_destroy),
                              win);
 
-    bbox = gtk_hbutton_box_new();
+    bbox = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
     gtk_button_box_set_layout(GTK_BUTTON_BOX(bbox), GTK_BUTTONBOX_END);
     gtk_box_set_spacing(GTK_BOX(bbox), 5);
     gtk_box_pack_start(GTK_BOX(vbox), bbox, FALSE, FALSE, 0);

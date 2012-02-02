@@ -21,7 +21,6 @@
 #include <string.h>
 
 #include <audacious/drct.h>
-#include <audacious/gtk-compat.h>
 #include <audacious/i18n.h>
 #include <audacious/misc.h>
 #include <audacious/playlist.h>
@@ -176,7 +175,7 @@ static void infopopup_create (void)
     gtk_window_set_decorated ((GtkWindow *) infopopup, FALSE);
     gtk_container_set_border_width ((GtkContainer *) infopopup, 4);
 
-    infopopup_hbox = gtk_hbox_new (FALSE, 6);
+    infopopup_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  6);
     gtk_container_add ((GtkContainer *) infopopup, infopopup_hbox);
 
     infopopup_data_image = gtk_image_new ();

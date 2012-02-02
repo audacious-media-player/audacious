@@ -54,7 +54,6 @@ INCLUDES = api.h \
            debug.h \
            drct.h \
            drct-api.h \
-           gtk-compat.h \
            i18n.h				\
            misc.h \
            misc-api.h \
