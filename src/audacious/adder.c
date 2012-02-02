@@ -80,23 +80,15 @@ static bool_t status_cb (void * unused)
         gtk_container_add ((GtkContainer *) status_window, vbox);
 
         status_path_label = gtk_label_new (NULL);
-#if GTK_CHECK_VERSION (3, 0, 0)
         gtk_label_set_width_chars ((GtkLabel *) status_path_label, 40);
         gtk_label_set_max_width_chars ((GtkLabel *) status_path_label, 40);
-#else
-        gtk_widget_set_size_request (status_path_label, 320, -1);
-#endif
         gtk_label_set_ellipsize ((GtkLabel *) status_path_label,
          PANGO_ELLIPSIZE_MIDDLE);
         gtk_box_pack_start ((GtkBox *) vbox, status_path_label, FALSE, FALSE, 0);
 
         status_count_label = gtk_label_new (NULL);
-#if GTK_CHECK_VERSION (3, 0, 0)
         gtk_label_set_width_chars ((GtkLabel *) status_count_label, 40);
         gtk_label_set_max_width_chars ((GtkLabel *) status_count_label, 40);
-#else
-        gtk_widget_set_size_request (status_count_label, 320, -1);
-#endif
         gtk_box_pack_start ((GtkBox *) vbox, status_count_label, FALSE, FALSE, 0);
 
         gtk_widget_show_all (status_window);
