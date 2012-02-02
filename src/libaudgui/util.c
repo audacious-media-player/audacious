@@ -1,6 +1,6 @@
 /*
  * util.c
- * Copyright 2010-2011 John Lindgren
+ * Copyright 2010-2012 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -43,12 +43,11 @@ void audgui_hide_on_delete (GtkWidget * widget)
      gtk_widget_hide_on_delete, NULL);
 }
 
-static bool_t escape_cb (GtkWidget * widget, GdkEventKey * event, void
- (* action) (GtkWidget * widget))
+static bool_t escape_hide_cb (GtkWidget * widget, GdkEventKey * event)
 {
     if (event->keyval == GDK_KEY_Escape)
     {
-        action (widget);
+        gtk_widget_hide (widget);
         return TRUE;
     }
 
@@ -57,14 +56,23 @@ static bool_t escape_cb (GtkWidget * widget, GdkEventKey * event, void
 
 void audgui_hide_on_escape (GtkWidget * widget)
 {
-    g_signal_connect (widget, "key-press-event", (GCallback) escape_cb,
-     (void *) gtk_widget_hide);
+    g_signal_connect (widget, "key-press-event", (GCallback) escape_hide_cb, NULL);
+}
+
+static bool_t escape_destroy_cb (GtkWidget * widget, GdkEventKey * event)
+{
+    if (event->keyval == GDK_KEY_Escape)
+    {
+        gtk_widget_destroy (widget);
+        return TRUE;
+    }
+
+    return FALSE;
 }
 
 void audgui_destroy_on_escape (GtkWidget * widget)
 {
-    g_signal_connect (widget, "key-press-event", (GCallback) escape_cb,
-     (void *) gtk_widget_destroy);
+    g_signal_connect (widget, "key-press-event", (GCallback) escape_destroy_cb, NULL);
 }
 
 static void toggle_cb (GtkToggleButton * toggle, bool_t * setting)
