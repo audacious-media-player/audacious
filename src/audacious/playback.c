@@ -500,10 +500,6 @@ void playback_get_volume (int * l, int * r)
 
 void playback_set_volume (int l, int r)
 {
-    int h_vol[2] = {l, r};
-
-    hook_call ("volume set", h_vol);
-
     if (playing && playback_get_ready () && current_decoder &&
      current_decoder->set_volume && current_decoder->set_volume (l, r))
         return;

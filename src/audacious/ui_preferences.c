@@ -41,8 +41,6 @@
 #include <libguess.h>
 #endif
 
-static void sw_volume_toggled (void);
-
 enum CategoryViewCols {
     CATEGORY_VIEW_COL_ICON,
     CATEGORY_VIEW_COL_NAME,
@@ -152,7 +150,7 @@ static PreferencesWidget audio_page_widgets[] = {
   .cfg_type = VALUE_INT, .cname = "output_buffer_size",
   .data = {.spin_btn = {100, 10000, 1000, N_("ms")}}},
  {WIDGET_CHK_BTN, N_("Use software volume control (not recommended)"),
-  .cfg_type = VALUE_BOOLEAN, .cname = "software_volume_control", .callback = sw_volume_toggled},
+  .cfg_type = VALUE_BOOLEAN, .cname = "software_volume_control"},
  {WIDGET_LABEL, N_("<b>Replay Gain</b>")},
  {WIDGET_CHK_BTN, N_("Enable Replay Gain"),
   .cfg_type = VALUE_BOOLEAN, .cname = "enable_replay_gain"},
@@ -1873,19 +1871,4 @@ prefswin_page_destroy(GtkWidget *container)
 
         ret = gtk_tree_model_iter_next(model, &iter);
     }
-}
-
-static void sw_volume_toggled (void)
-{
-    int vol[2];
-
-    if (get_bool (NULL, "software_volume_control"))
-    {
-        vol[0] = get_int (NULL, "sw_volume_left");
-        vol[1] = get_int (NULL, "sw_volume_right");
-    }
-    else
-        playback_get_volume (& vol[0], & vol[1]);
-
-    hook_call ("volume set", vol);
 }
