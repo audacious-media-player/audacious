@@ -140,7 +140,7 @@ char * write_temp_file (void * data, int64_t len)
             return NULL;
         }
 
-        data += written;
+        data = (char *) data + written;
         len -= written;
     }
 
