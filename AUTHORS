@@ -3,7 +3,27 @@ Audacious
 
 This file is quite out of date and in the process of being updated.
 
-Audacious core shared library (src/libaudcore):
+Core executable (src/audacious):
+ * Copyright (C) 1998-2003 XMMS development team
+ * Copyright (C) 2001 Anders Johansson
+ * Copyright (C) 2003-2004 BMP development team
+ * Copyright (C) 2005-2012:
+  Michael Färber
+  Matti Hämäläinen
+  Michael Hanselmann
+  John Lindgren
+  Michał Lipski
+  Oliver Lumpton
+  David Mohr
+  Tomasz Moń
+  William Pitcock
+  Andrew Shadoura
+  Ben Tucker
+  Yoshiki Yazawa
+  Eugene Zagidullin
+  Ivan Zlatev
+
+Core shared library (src/libaudcore):
  * Copyright (C) 2006-2011:
   Daniel Barkalow
   Christian Birchinger
@@ -17,7 +37,7 @@ Audacious core shared library (src/libaudcore):
   Yoshiki Yazawa
   Eugene Zagidullin
 
-Audacious user interface shared library (src/libaudgui):
+User interface shared library (src/libaudgui):
  * Copyright (C) 1998-2003 XMMS development team
  * Copyright (C) 2003-2004 BMP development team
  * Copyright (C) 2006-2012:
