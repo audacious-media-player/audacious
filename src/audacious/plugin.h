@@ -482,9 +482,8 @@ struct _IfacePlugin
     void (* show_filebrowser) (bool_t play_button);
     void (* show_jump_to_track) (void);
 
-    void /* GtkWidget */ * (* run_gtk_plugin) (void /* GtkWidget */ * widget,
-     const char * name);
-    void * (* stop_gtk_plugin) (void /* GtkWidget */ * widget);
+    void (* run_gtk_plugin) (void /* GtkWidget */ * widget, const char * name);
+    void (* stop_gtk_plugin) (void /* GtkWidget */ * widget);
 
     void (* install_toolbar) (void /* GtkWidget */ * button);
     void (* uninstall_toolbar) (void /* GtkWidget */ * button);
