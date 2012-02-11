@@ -51,6 +51,15 @@ User interface shared library (src/libaudgui):
   Yoshiki Yazawa
   Eugene Zagidullin
 
+Tagging support (src/libaudtag):
+ * Copyright (C) 2009-2011:
+  John Lindgren
+  Michał Lipski
+  Mikael Magnusson
+  William Pitcock
+  Paula Stanciu
+  Tony Vroon
+
 Session management support (src/libeggsmclient):
  * Copyright (C) 1999-2000 Red Hat, Inc.
  * Copyright (C) 2001 George Lebl
