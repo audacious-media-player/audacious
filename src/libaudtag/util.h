@@ -1,5 +1,6 @@
 /*
- * Copyright 2009 Paula Stanciu
+ * util.h
+ * Copyright 2009-2010 Paula Stanciu and John Lindgren
  *
  * This file is part of Audacious.
  *

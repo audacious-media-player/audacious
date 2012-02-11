@@ -1,5 +1,6 @@
 /*
- * Copyright 2009 Paula Stanciu
+ * audtag.h
+ * Copyright 2009-2011 Paula Stanciu and John Lindgren
  *
  * This file is part of Audacious.
  *
@@ -17,8 +18,6 @@
  * The Audacious team does not consider modular code linking to Audacious or
  * using our public API to be a derived work.
  */
-
-/* External Interface of the tagging library */
 
 #ifndef AUDTAG_H
 #define AUDTAG_H

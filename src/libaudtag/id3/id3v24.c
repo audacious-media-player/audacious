@@ -1,6 +1,7 @@
 /*
- * Copyright 2009 Paula Stanciu
- * Copyright 2010 John Lindgren
+ * id3v24.c
+ * Copyright 2009-2011 Paula Stanciu, Tony Vroon, John Lindgren,
+ *                     Mikael Magnusson, and Michał Lipski
  *
  * This file is part of Audacious.
  *

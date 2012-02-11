@@ -1,8 +1,7 @@
 /*
- * Copyright 2009 Paula Stanciu
- * Copyright 2010 John Lindgren
- * Copyright 2010 Tony Vroon
- * Copyright 2010 William Pitcock
+ * id3v24.c
+ * Copyright 2009-2011 Paula Stanciu, Tony Vroon, John Lindgren,
+ *                     and William Pitcock
  *
  * This file is part of Audacious.
  *

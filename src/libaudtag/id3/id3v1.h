@@ -1,4 +1,5 @@
 /*
+ * id3v1.h
  * Copyright 2010 Tony Vroon
  *
  * This file is part of Audacious.

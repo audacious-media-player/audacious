@@ -1,6 +1,6 @@
 /*
- * Copyright 2010 Tony Vroon
- * Copyright 2011 Michał Lipski <tallica@o2.pl>
+ * id3v1.c
+ * Copyright 2010-2011 Tony Vroon, Michał Lipski, and John Lindgren
  *
  * This file is part of Audacious.
  *

@@ -1,5 +1,6 @@
 /*
- * Copyright 2009 Paula Stanciu
+ * audtag.c
+ * Copyright 2009-2011 Paula Stanciu and John Lindgren
  *
  * This file is part of Audacious.
  *
