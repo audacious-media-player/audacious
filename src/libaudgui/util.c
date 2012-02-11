@@ -214,7 +214,9 @@ void audgui_pixbuf_scale_within (GdkPixbuf * * pixbuf, int size)
 {
     int width = gdk_pixbuf_get_width (* pixbuf);
     int height = gdk_pixbuf_get_height (* pixbuf);
-    GdkPixbuf * pixbuf2;
+
+    if (width <= size && height <= size)
+        return;
 
     if (width > height)
     {
@@ -232,7 +234,7 @@ void audgui_pixbuf_scale_within (GdkPixbuf * * pixbuf, int size)
     if (height < 1)
         height = 1;
 
-    pixbuf2 = gdk_pixbuf_scale_simple (* pixbuf, width, height,
+    GdkPixbuf * pixbuf2 = gdk_pixbuf_scale_simple (* pixbuf, width, height,
      GDK_INTERP_BILINEAR);
     g_object_unref (* pixbuf);
     * pixbuf = pixbuf2;
