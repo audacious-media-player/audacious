@@ -330,8 +330,11 @@ void create_infowin (void)
     vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
     gtk_box_pack_start ((GtkBox *) hbox, vbox2, TRUE, TRUE, 0);
 
+    GtkWidget * vbox3 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+    gtk_box_pack_start ((GtkBox *) vbox2, vbox3, TRUE, FALSE, 0);
+
     image_artwork = gtk_image_new ();
-    gtk_box_pack_start ((GtkBox *) vbox2, image_artwork, TRUE, TRUE, 0);
+    gtk_box_pack_start ((GtkBox *) vbox3, image_artwork, FALSE, FALSE, 0);
 
     location_text = gtk_label_new ("");
     gtk_widget_set_size_request (location_text, 200, -1);
@@ -339,7 +342,7 @@ void create_infowin (void)
     gtk_label_set_line_wrap_mode ((GtkLabel *) location_text,
      PANGO_WRAP_WORD_CHAR);
     gtk_label_set_selectable ((GtkLabel *) location_text, TRUE);
-    gtk_box_pack_start ((GtkBox *) vbox2, location_text, FALSE, FALSE, 0);
+    gtk_box_pack_start ((GtkBox *) vbox3, location_text, FALSE, FALSE, 0);
 
     codec_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  6);
     gtk_box_pack_start ((GtkBox *) vbox2, codec_hbox, FALSE, FALSE, 0);
