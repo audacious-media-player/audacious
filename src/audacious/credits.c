@@ -205,6 +205,7 @@ static const char * const translators_text[] = {
     N_("Catalan:"),
     "Ernest Adrogué",
     "Jordi Amenós",
+    "Juanma Hernández",
     NULL,
     N_("Chinese:"),
     "Tse Chih Chiu",
