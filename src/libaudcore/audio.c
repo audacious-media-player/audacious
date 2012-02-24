@@ -20,6 +20,7 @@
 
 #include <glib.h>
 #include <stdint.h>
+#include <math.h>
 
 #include "audio.h"
 
@@ -38,7 +39,7 @@ static void NAME (const float * in, TYPE * out, int samples) \
     while (in < end) \
     { \
         double f = * in ++ * (RANGE + 1.0); \
-        * out ++ = SWAP (OFFSET + (TYPE) CLAMP (f, - RANGE - 1, RANGE)); \
+        * out ++ = SWAP (OFFSET + (TYPE) lrint (CLAMP (f, - RANGE - 1, RANGE))); \
     } \
 }
 
