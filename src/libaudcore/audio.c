@@ -1,6 +1,7 @@
 /*
  * audio.c
  * Copyright 2009-2011 John Lindgren
+ * Copyright 2012 Michał Lipski
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -27,7 +28,7 @@ static void NAME (const TYPE * in, float * out, int samples) \
 { \
     const TYPE * end = in + samples; \
     while (in < end) \
-        * out ++ = (TYPE) (SWAP (* in ++) - OFFSET) / (double) RANGE; \
+        * out ++ = (TYPE) (SWAP (* in ++) - OFFSET) * (1.0 / (RANGE + 1.0)); \
 }
 
 #define TO_INT_LOOP(NAME, TYPE, SWAP, OFFSET, RANGE) \
@@ -36,8 +37,8 @@ static void NAME (const float * in, TYPE * out, int samples) \
     const float * end = in + samples; \
     while (in < end) \
     { \
-        double f = * in ++; \
-        * out ++ = SWAP (OFFSET + (TYPE) (CLAMP (f, -1, 1) * (double) RANGE)); \
+        double f = * in ++ * (RANGE + 1.0); \
+        * out ++ = SWAP (OFFSET + (TYPE) CLAMP (f, - RANGE - 1, RANGE)); \
     } \
 }
 
