@@ -1,4 +1,4 @@
-LIB = ${LIB_PREFIX}audclient${LIB_SUFFIX}
+SHARED_LIB = ${LIB_PREFIX}audclient${LIB_SUFFIX}
 LIB_MAJOR = 2
 LIB_MINOR = 0
 
