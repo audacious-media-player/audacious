@@ -1,0 +1,27 @@
+syntax: glob
+aclocal.m4
+autom4te.cache
+buildsys.mk
+config.h
+config.h.in
+config.log
+config.status
+configure
+extra.mk
+audacious.pc
+audclient.pc
+man/audacious.1
+man/audtool.1
+src/audacious/audacious
+src/audacious/dbus-client-bindings.h
+src/audacious/dbus-server-bindings.h
+src/audtool/audtool
+src/libaudcore/audio.h
+.deps
+*.a
+*.mo
+*.o
+*.so
+*~
+*.patch
+*.diff
