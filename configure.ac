@@ -200,19 +200,7 @@ AC_MSG_RESULT($regex_selected)
 AC_SUBST([REGEX_LIBS])
 AC_SUBST([REGEX_CFLAGS])
 
-
-### ---------------------------------------------------------------------------
-dnl Pthread support
-dnl ===============
-PTHREAD_LIBS=
-PTHREAD_CFLAGS=
-
-AC_CHECK_LIB(pthread, pthread_create, PTHREAD_LIBS="-lpthread",
-  [AC_CHECK_LIB(pthreads, pthread_create, PTHREAD_LIBS="-lpthreads",
-    [AC_CHECK_LIB(pthreadGC2, pthread_create, PTHREAD_LIBS="-lpthreadGC2")]
-  )]
-)
-
+ACX_PTHREAD
 AC_SUBST([PTHREAD_LIBS])
 AC_SUBST([PTHREAD_CFLAGS])
 
