@@ -1,5 +1,5 @@
 # Estonian translation for Audacious
-# Copyright Audacious translators
+# Copyright (C) Audacious translators
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2012-01-11 08:54-0500\n"
-"PO-Revision-Date: 2012-01-30 13:21+0000\n"
+"PO-Revision-Date: 2012-03-06 17:48+0000\n"
 "Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian\n"
 "MIME-Version: 1.0\n"
@@ -277,7 +277,7 @@ msgstr "Silumisteadete väljastamine"
 
 #: src/audacious/main.c:255
 msgid "Headless mode (beta)"
-msgstr ""
+msgstr "Akendeta režiim (beeta)"
 
 #: src/audacious/main.c:256
 msgid "FILE..."
@@ -292,9 +292,7 @@ msgstr "- multimeediafailide esitamine"
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
-msgstr ""
-"%s: %s\n"
-"Täiendava teabe saamiseks proovi `%s --help'.\n"
+msgstr "%s: %s\nTäiendava teabe saamiseks proovi `%s --help'.\n"
 
 #: src/audacious/main.c:573
 msgid "Audacious"
@@ -303,20 +301,20 @@ msgstr "Audacious"
 #: src/audacious/playback.c:307
 #, c-format
 msgid "No decoder found for %s."
-msgstr ""
+msgstr "Failile %s ei leitud dekoodrit."
 
 #: src/audacious/playlist-files.c:53
 #, c-format
 msgid "Cannot %s %s: unsupported file extension."
-msgstr ""
+msgstr "Faili %2$s %1$s pole võimalik: faili laiend pole toetatud"
 
 #: src/audacious/playlist-files.c:54
 msgid "save"
-msgstr ""
+msgstr "salvestamine"
 
 #: src/audacious/playlist-files.c:54
 msgid "load"
-msgstr ""
+msgstr "laadimine"
 
 #: src/audacious/playlist-new.c:131
 msgid "New Playlist"
@@ -330,7 +328,7 @@ msgstr "Praegu esitamisel"
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress"
 " (or has been disabled)."
-msgstr ""
+msgstr "Esitusnimekirja sortimine pole võimalik, kuna metaandmete laadimine on pooleli (või keelatud)."
 
 #: src/audacious/ui_preferences.c:85
 msgid "Audio"
@@ -455,7 +453,7 @@ msgstr "<b>Väljundi sätted</b>"
 
 #: src/audacious/ui_preferences.c:149
 msgid "Bit depth:"
-msgstr ""
+msgstr "Bitisügavus:"
 
 #: src/audacious/ui_preferences.c:152
 msgid "Buffer size:"
@@ -479,15 +477,15 @@ msgstr "Helitugevuse korrektsioon on lubatud"
 
 #: src/audacious/ui_preferences.c:161
 msgid "Prevent clipping (recommended)"
-msgstr ""
+msgstr "Hoidutakse kärpimisest (soovitatav)"
 
 #: src/audacious/ui_preferences.c:163
 msgid "<b>Adjust Levels</b>"
-msgstr ""
+msgstr "<b>Valjuse kohendamine</b>"
 
 #: src/audacious/ui_preferences.c:164
 msgid "Amplify all files:"
-msgstr ""
+msgstr "Kõikide failide võimendamine:"
 
 #: src/audacious/ui_preferences.c:166 src/audacious/ui_preferences.c:169
 msgid "dB"
@@ -495,7 +493,7 @@ msgstr "dB"
 
 #: src/audacious/ui_preferences.c:167
 msgid "Amplify untagged files:"
-msgstr ""
+msgstr "Sildistamata failide võimendamine:"
 
 #: src/audacious/ui_preferences.c:172
 msgid "Proxy hostname:"
@@ -523,7 +521,7 @@ msgstr "Proksi kasutamine on lubatud"
 
 #: src/audacious/ui_preferences.c:185
 msgid "Use authentication with proxy"
-msgstr "Kasutatakse proksi autentimist"
+msgstr "Proksi kasutatab autentimist"
 
 #: src/audacious/ui_preferences.c:193
 msgid "Auto character encoding detector for:"
@@ -539,11 +537,11 @@ msgstr "<b>Käitumine</b>"
 
 #: src/audacious/ui_preferences.c:203
 msgid "Continue playback on startup"
-msgstr "Käivitamisel jätkatakse esitust"
+msgstr "Käivitamisel jätkatakse esitamist"
 
 #: src/audacious/ui_preferences.c:205
 msgid "Advance when the current song is deleted"
-msgstr ""
+msgstr "Esitatava loo kustutamisel hakatakse järgmist lugu esitama"
 
 #: src/audacious/ui_preferences.c:207
 msgid "Clear the playlist when opening files"
@@ -602,10 +600,7 @@ msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
 "using commas."
-msgstr ""
-"Albumi kaanepildi otsimise käigus otsib Audacious failinimedest eelnevalt "
-"kindlaksmääratud sõnu. Neid sõnu on võimalik allpool olevate nimekirjade "
-"abil määrata, eraldades sõnad üksteisest komadega."
+msgstr "Albumi kaanepildi otsimise käigus otsib Audacious failinimedest eelnevalt kindlaksmääratud sõnu. Neid sõnu on võimalik allpool olevate nimekirjade abil määrata, eraldades sõnad üksteisest komadega."
 
 #: src/audacious/ui_preferences.c:811
 msgid "Exclude:"
@@ -680,11 +675,7 @@ msgid ""
 "Toggles popup information window for the pointed entry in the playlist. The "
 "window shows title of song, name of album, genre, year of publish, track "
 "number, track length, and artwork."
-msgstr ""
-"Teabe hüpikakna sisse- või väljalülitamine. Seda hüpikakent kuvatakse, kui "
-"hoida hiirekursorit esitusnimekirjas oleva loo kohal ja selles aknas "
-"kuvatakse andmeid loo pealkirja, numbri ja pikkuse; albumi nime, žanri, ja "
-"avaldamise aasta; ning kaanepildi kohta."
+msgstr "Teabe hüpikakna sisse- või väljalülitamine. Seda hüpikakent kuvatakse, kui hoida hiirekursorit esitusnimekirjas oleva loo kohal ja selles aknas kuvatakse andmeid loo pealkirja, numbri ja pikkuse; albumi nime, žanri, ja avaldamise aasta; ning kaanepildi kohta."
 
 #: src/audacious/ui_preferences.c:1455
 msgid "Edit settings for popup information"
@@ -729,7 +720,7 @@ msgstr "Asukohta ei leitud."
 
 #: src/audtool/handlers_vitals.c:63
 msgid "No song playing."
-msgstr ""
+msgstr "Hetkel ei esitata ühtegi lugu."
 
 #: src/libaudcore/audstrings.c:199
 #, c-format
@@ -768,9 +759,7 @@ msgstr "Audacious'est lähemalt"
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
-msgstr ""
-"Kas soovid sulgeda esitusnimekirja \"%s\"?  Kõik pärast nimekirja viimast "
-"eksportimist tehtud muutused lähevad kaotsi."
+msgstr "Kas soovid sulgeda esitusnimekirja \"%s\"?  Kõik pärast nimekirja viimast eksportimist tehtud muutused lähevad kaotsi."
 
 #: src/libaudgui/confirm.c:89
 msgid "_Don't show this message again"
@@ -1003,7 +992,7 @@ msgstr "Trip-hop"
 #: src/libaudgui/infowin.c:177 src/libaudgui/infowin.c:363
 #: src/libaudgui/infowin.c:366 src/libaudgui/infowin.c:369
 msgid "<span size=\"small\">n/a</span>"
-msgstr ""
+msgstr "<span size=\"small\">puudub</span>"
 
 #: src/libaudgui/infowin.c:267
 msgid "Metadata updated successfully"
@@ -1065,11 +1054,11 @@ msgstr "%d kb/s"
 #: src/libaudgui/infowin.c:575
 #, c-format
 msgid "No info available for %s.\n"
-msgstr ""
+msgstr "Faili %s kohta puuduvad andmed.\n"
 
 #: src/libaudgui/jump-to-time.c:72
 msgid "Jump to Time"
-msgstr "Hüppa ajahetkele"
+msgstr "Ajahetkele hüppamine"
 
 #: src/libaudgui/jump-to-time.c:87
 msgid "mm:ss"
@@ -1086,11 +1075,11 @@ msgstr "Esitusnimekirja importimine"
 #: src/libaudgui/playlists.c:66
 #, c-format
 msgid "Overwrite %s?"
-msgstr ""
+msgstr "Kas kirjutada fail %s üle?"
 
 #: src/libaudgui/queue-manager.c:196
 msgid "Queue Manager"
-msgstr ""
+msgstr "Esitusjärjekorra haldamine"
 
 #: src/libaudgui/ui_fileopener.c:109
 msgid "Open Files"
@@ -1102,11 +1091,11 @@ msgstr "Failide lisamine"
 
 #: src/libaudgui/ui_fileopener.c:111
 msgid "Close dialog on Open"
-msgstr "Dialoog sulgetakse pärast faili avamist"
+msgstr "Dialoog suletakse pärast faili avamist"
 
 #: src/libaudgui/ui_fileopener.c:111
 msgid "Close dialog on Add"
-msgstr "Dialoog sulgetakse pärast faili lisamist"
+msgstr "Dialoog suletakse pärast faili lisamist"
 
 #: src/libaudgui/ui_jumptotrack.c:109 src/libaudgui/ui_jumptotrack.c:117
 #: src/libaudgui/ui_jumptotrack.c:326
@@ -1119,7 +1108,7 @@ msgstr "Eemalda _järjekorrast"
 
 #: src/libaudgui/ui_jumptotrack.c:258
 msgid "Jump to Song"
-msgstr ""
+msgstr "Loo vahetamine"
 
 #: src/libaudgui/ui_jumptotrack.c:281
 msgid "Filter: "
@@ -1131,15 +1120,15 @@ msgstr "_Filter:"
 
 #: src/libaudgui/ui_jumptotrack.c:292
 msgid "Remember"
-msgstr ""
+msgstr "Jätetakse meelde"
 
 #: src/libaudgui/ui_jumptotrack.c:299
 msgid "Clea_r"
-msgstr ""
+msgstr "_Puhasta"
 
 #: src/libaudgui/ui_jumptotrack.c:319
 msgid "Close on Jump"
-msgstr "Pärast hüpet suletakse aken"
+msgstr "Pärast loo vahetust suletakse aken"
 
 #: src/libaudgui/ui_playlist_manager.c:253
 msgid "Playlist Manager"
@@ -1169,7 +1158,7 @@ msgstr "URL-i lisamine"
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
-msgstr ""
+msgstr "\n(Ülejäänud sõnumid peidetakse.)"
 
 #: src/libeggsmclient/eggdesktopfile.c:165
 msgid "File is not a valid .desktop file"
@@ -1183,24 +1172,24 @@ msgstr "Töölauafaili tundmatu versioon '%s'"
 #: src/libeggsmclient/eggdesktopfile.c:974
 #, c-format
 msgid "Starting %s"
-msgstr ""
+msgstr "Faili %s käivitamine"
 
 #: src/libeggsmclient/eggdesktopfile.c:1116
 msgid "Application does not accept documents on command line"
-msgstr ""
+msgstr "Rakendus ei toeta käsurealt määratud dokumente"
 
 #: src/libeggsmclient/eggdesktopfile.c:1184
 #, c-format
 msgid "Unrecognized launch option: %d"
-msgstr ""
+msgstr "Arusaamatu käivitusvõti: %d"
 
 #: src/libeggsmclient/eggdesktopfile.c:1391
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-msgstr ""
+msgstr "Dokumendi URI-sid pole võimalik 'Liik=Viit' tüüpi töölauakirjele edastada"
 
 #: src/libeggsmclient/eggdesktopfile.c:1412
 msgid "Not a launchable item"
-msgstr ""
+msgstr "Pole käivitatav kirje"
 
 #: src/libeggsmclient/eggsmclient.c:226
 msgid "Disable connection to session manager"
@@ -1208,7 +1197,7 @@ msgstr "Seansihalduriga ühendumise keelamine"
 
 #: src/libeggsmclient/eggsmclient.c:229
 msgid "Specify file containing saved configuration"
-msgstr ""
+msgstr "Salvestatud seadistusi sisaldava faili määramine"
 
 #: src/libeggsmclient/eggsmclient.c:229
 msgid "FILE"
@@ -1229,5 +1218,3 @@ msgstr "Seansihalduse valikud:"
 #: src/libeggsmclient/eggsmclient.c:254
 msgid "Show session management options"
 msgstr "Seansihalduse valikute näitamine"
-
-
