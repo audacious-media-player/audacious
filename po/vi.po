@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2012-01-11 08:54-0500\n"
-"PO-Revision-Date: 2012-01-29 09:38+0000\n"
-"Last-Translator: Lê Trường An <truongan@linuxmail.org>\n"
+"PO-Revision-Date: 2012-02-28 08:29+0000\n"
+"Last-Translator: Giận dỗi An <truongan@linuxmail.org>\n"
 "Language-Team: Vietnamese\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -159,7 +159,7 @@ msgstr "Tiếng Macedonia:"
 
 #: src/audacious/credits.c:277
 msgid "Mexican Spanish:"
-msgstr ""
+msgstr "Tiếng Tây Ban Nha (Mêxicô):"
 
 #: src/audacious/credits.c:280
 msgid "Polish:"
@@ -291,9 +291,7 @@ msgstr "- phát tập tin đa phương tiện"
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
-msgstr ""
-"%s: %s\n"
-"Chạy `%s --help' để biết thêm thông tin.\n"
+msgstr "%s: %s\nChạy `%s --help' để biết thêm thông tin.\n"
 
 #: src/audacious/main.c:573
 msgid "Audacious"
@@ -329,9 +327,7 @@ msgstr "Đang phát"
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress"
 " (or has been disabled)."
-msgstr ""
-"Danh sách không thể được sắp xếp vì quá trình quét thông tin đang diễn ra "
-"(hoặc bị tắt)."
+msgstr "Danh sách không thể được sắp xếp vì quá trình quét thông tin đang diễn ra (hoặc bị tắt)."
 
 #: src/audacious/ui_preferences.c:85
 msgid "Audio"
@@ -603,10 +599,7 @@ msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
 "using commas."
-msgstr ""
-"Khi tìm ảnh bìa của album, Audacious xem xét một số từ nhất định trong tên "
-"tập tin. Bạn có thể chỉ định những từ này trong danh sách bên dưới, dừng dấu"
-" phẩy để ngăn cách các từ."
+msgstr "Khi tìm ảnh bìa của album, Audacious xem xét một số từ nhất định trong tên tập tin. Bạn có thể chỉ định những từ này trong danh sách bên dưới, dừng dấu phẩy để ngăn cách các từ."
 
 #: src/audacious/ui_preferences.c:811
 msgid "Exclude:"
@@ -681,10 +674,7 @@ msgid ""
 "Toggles popup information window for the pointed entry in the playlist. The "
 "window shows title of song, name of album, genre, year of publish, track "
 "number, track length, and artwork."
-msgstr ""
-"Bật/tắt cửa sổ thông tin bật lên cho mục được trỏ vào trong danh sách. Cửa "
-"sổ hiện tựa đề bài hát, tên album, thể loại, năm phát hành, số thứ tự của "
-"bài, thời lượng, và ảnh bìa."
+msgstr "Bật/tắt cửa sổ thông tin bật lên cho mục được trỏ vào trong danh sách. Cửa sổ hiện tựa đề bài hát, tên album, thể loại, năm phát hành, số thứ tự của bài, thời lượng, và ảnh bìa."
 
 #: src/audacious/ui_preferences.c:1455
 msgid "Edit settings for popup information"
@@ -767,9 +757,7 @@ msgstr "Giới thiệu Audacious"
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
-msgstr ""
-"Bạn có chắc là muốn đóng %s? Nếu bạn làm vậy, các thay đổi kể từ khi danh "
-"sách được xuất ra sẽ bị mất."
+msgstr "Bạn có chắc là muốn đóng %s? Nếu bạn làm vậy, các thay đổi kể từ khi danh sách được xuất ra sẽ bị mất."
 
 #: src/libaudgui/confirm.c:89
 msgid "_Don't show this message again"
@@ -1168,9 +1156,7 @@ msgstr "Thêm URL"
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
-msgstr ""
-"\n"
-"(Các thông báo khác đã bị ẩn.)"
+msgstr "\n(Các thông báo khác đã bị ẩn.)"
 
 #: src/libeggsmclient/eggdesktopfile.c:165
 msgid "File is not a valid .desktop file"
@@ -1230,5 +1216,3 @@ msgstr "Tùy chọn quản lí phiên:"
 #: src/libeggsmclient/eggsmclient.c:254
 msgid "Show session management options"
 msgstr "Hiện các tùy chọn quản lí phiên"
-
-

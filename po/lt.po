@@ -3,7 +3,6 @@
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
-#   <>, 2012.
 # Algimantas Margevičius <gymka@mail.ru>, 2011.
 # Algimantas Margevičius <margevicius.algimantas@gmail.com>, 2011, 2012.
 # Gymka <gymka@mail.ru>, 2011.
@@ -13,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2012-01-11 08:54-0500\n"
-"PO-Revision-Date: 2012-01-13 12:21+0000\n"
+"PO-Revision-Date: 2012-02-19 16:09+0000\n"
 "Last-Translator: Algimantas Margevičius <margevicius.algimantas@gmail.com>\n"
 "Language-Team: Lithuanian\n"
 "MIME-Version: 1.0\n"
@@ -36,7 +35,7 @@ msgstr[2] "%d failų rasti"
 
 #: src/audacious/chardet.c:39
 msgid "  (invalid UTF-8)"
-msgstr "  (blogas UTF-8)"
+msgstr "  (netinkamas UTF-8)"
 
 #: src/audacious/credits.c:37
 msgid "Core developers:"
@@ -60,11 +59,11 @@ msgstr "Pataisymų kūrėjai:"
 
 #: src/audacious/credits.c:131
 msgid "1.x developers:"
-msgstr "Kūrėjai:"
+msgstr "1.x kūrėjai:"
 
 #: src/audacious/credits.c:153
 msgid "BMP Developers:"
-msgstr "Kūrėjai:"
+msgstr "BMP kūrėjai:"
 
 #: src/audacious/credits.c:185
 msgid "Belarusian:"
@@ -132,7 +131,7 @@ msgstr "Į graikų k.:"
 
 #: src/audacious/credits.c:248
 msgid "Hindi:"
-msgstr "Į hindi"
+msgstr "Į hindi k.:"
 
 #: src/audacious/credits.c:251
 msgid "Hungarian:"
@@ -164,7 +163,7 @@ msgstr "Į makedonų k.:"
 
 #: src/audacious/credits.c:277
 msgid "Mexican Spanish:"
-msgstr "Ispanų (Meksika)"
+msgstr "Į Ispanų (Meksika) k.:"
 
 #: src/audacious/credits.c:280
 msgid "Polish:"
@@ -192,7 +191,7 @@ msgstr "Į serbų (Kirilica) k.:"
 
 #: src/audacious/credits.c:305
 msgid "Simplified Chinese:"
-msgstr "Supaprastinta kinų k."
+msgstr "Į Supaprastinta kinų k."
 
 #: src/audacious/credits.c:308
 msgid "Slovak:"
@@ -208,11 +207,11 @@ msgstr "Į švedų k.:"
 
 #: src/audacious/credits.c:323
 msgid "Traditional Chinese:"
-msgstr "Tradicinė kinų:"
+msgstr "Į Tradicinę kinų k.:"
 
 #: src/audacious/credits.c:329
 msgid "Turkish:"
-msgstr "Turkų:"
+msgstr "Į Turkų k.:"
 
 #: src/audacious/credits.c:333
 msgid "Ukrainian:"
@@ -220,7 +219,7 @@ msgstr "Į ukrainiečių k.:"
 
 #: src/audacious/credits.c:338
 msgid "Vietnamese:"
-msgstr "Vietnamiečių:"
+msgstr "Į Vietnamiečių k.:"
 
 #: src/audacious/credits.c:341
 msgid "Welsh:"
@@ -233,7 +232,7 @@ msgstr "Klaida įkeliant Winamp EQF failą „%s“"
 
 #: src/audacious/main.c:243
 msgid "Skip backwards in playlist"
-msgstr "Šoktelti atgal grojaraštyje"
+msgstr "Grojaraštyje eiti atgal"
 
 #: src/audacious/main.c:244
 msgid "Start playing current playlist"
@@ -253,7 +252,7 @@ msgstr "Pristabdyti, jei grojama, kitu atveju groti"
 
 #: src/audacious/main.c:248
 msgid "Skip forward in playlist"
-msgstr "Šoktelti pirmyn grojaraštyje"
+msgstr "Grojaraštyje eiti pirmyn"
 
 #: src/audacious/main.c:249
 msgid "Display Jump to File dialog"
@@ -296,9 +295,7 @@ msgstr "- groti daugialypės terpės failus"
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
-msgstr ""
-"%s: %s\n"
-"Bandykite `%s --help' išsamesniai informacijai.\n"
+msgstr "%s: %s\nBandykite „%s --help“ išsamesniai informacijai.\n"
 
 #: src/audacious/main.c:573
 msgid "Audacious"
@@ -334,9 +331,7 @@ msgstr "Dabar grojama"
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress"
 " (or has been disabled)."
-msgstr ""
-"Vis dar vyksta(arba išjungta) meta duomenų skaitymas, todėl neįmanoma "
-"surikiuoti grojaraščio."
+msgstr "Vis dar vyksta(arba išjungta) meta duomenų skaitymas, todėl neįmanoma surikiuoti grojaraščio."
 
 #: src/audacious/ui_preferences.c:85
 msgid "Audio"
@@ -377,11 +372,11 @@ msgstr "Žanras"
 
 #: src/audacious/ui_preferences.c:99
 msgid "Filename"
-msgstr "Bylos vardas"
+msgstr "Failo vardas"
 
 #: src/audacious/ui_preferences.c:100
 msgid "Filepath"
-msgstr "Bylos kelias"
+msgstr "Failo kelias"
 
 #: src/audacious/ui_preferences.c:101
 msgid "Date"
@@ -501,7 +496,7 @@ msgstr "dB"
 
 #: src/audacious/ui_preferences.c:167
 msgid "Amplify untagged files:"
-msgstr "Pagarsinti nepažymėtus failus:"
+msgstr "Pagarsinti failus be žymių:"
 
 #: src/audacious/ui_preferences.c:172
 msgid "Proxy hostname:"
@@ -513,11 +508,11 @@ msgstr "Tarpinio serverio prievadas:"
 
 #: src/audacious/ui_preferences.c:176
 msgid "Proxy username:"
-msgstr "Naudotojas:"
+msgstr "Tarpinio serverio naudotojas:"
 
 #: src/audacious/ui_preferences.c:177
 msgid "Proxy password:"
-msgstr "Slaptažodis:"
+msgstr "Tarpinio serverio slaptažodis:"
 
 #: src/audacious/ui_preferences.c:181
 msgid "<b>Proxy Configuration</b>"
@@ -553,11 +548,11 @@ msgstr "Kai pasirinkta daina ištrinama, žengti į priekį"
 
 #: src/audacious/ui_preferences.c:207
 msgid "Clear the playlist when opening files"
-msgstr "Kai atidaromas failas, išvalyti grojaraštį"
+msgstr "Kai atveriamas failas, išvalyti grojaraštį"
 
 #: src/audacious/ui_preferences.c:209
 msgid "Open files in a temporary playlist"
-msgstr "Atidaryti failus laikiname grojaraštyje"
+msgstr "Atverti failus laikiname grojaraštyje"
 
 #: src/audacious/ui_preferences.c:211
 msgid "<b>Metadata</b>"
@@ -608,10 +603,7 @@ msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
 "using commas."
-msgstr ""
-"Kai ieškoma albumo viršelio, Audacious ieško tam tikrų žodžių failo varde. "
-"Tu gali įrašyt paieškos žodžius apačioj esančiame langelyje, atskiriant "
-"kableliais."
+msgstr "Kai ieškoma albumo viršelio, Audacious ieško tam tikrų žodžių failo varde. Tu gali įrašyt paieškos žodžius apačioje esančiame langelyje, atskiriant kableliais."
 
 #: src/audacious/ui_preferences.c:811
 msgid "Exclude:"
@@ -686,10 +678,7 @@ msgid ""
 "Toggles popup information window for the pointed entry in the playlist. The "
 "window shows title of song, name of album, genre, year of publish, track "
 "number, track length, and artwork."
-msgstr ""
-"Nurodytam grojaraščio elementui, įjungia iššokančio lango informacinį langą."
-" Lange rodomas dainos pavadinimas, albumo pavadinimas, žanras, išleidimo "
-"data, takelio numeris, takelio trukmė bei dizainas."
+msgstr "Nurodytam grojaraščio elementui, įjungia iššokančio lango informacinį langą. Lange rodomas dainos pavadinimas, albumo pavadinimas, žanras, išleidimo data, takelio numeris, takelio trukmė bei dizainas."
 
 #: src/audacious/ui_preferences.c:1455
 msgid "Edit settings for popup information"
@@ -774,9 +763,7 @@ msgstr "Apie Audacious"
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
-msgstr ""
-"Ar tu tikrai nori uždaryti %s?  Jei taip, visi pakeitimai padaryti po "
-"grojaraščio eksportavimo bus prarasti."
+msgstr "Ar tu tikrai nori uždaryti %s?  Jei taip, visi pakeitimai padaryti po grojaraščio eksportavimo bus prarasti."
 
 #: src/libaudgui/confirm.c:89
 msgid "_Don't show this message again"
@@ -1100,11 +1087,11 @@ msgstr "Eilės redaktorius"
 
 #: src/libaudgui/ui_fileopener.c:109
 msgid "Open Files"
-msgstr "Atverti bylas"
+msgstr "Atverti failus"
 
 #: src/libaudgui/ui_fileopener.c:109
 msgid "Add Files"
-msgstr "Pridėti bylas"
+msgstr "Pridėti failus"
 
 #: src/libaudgui/ui_fileopener.c:111
 msgid "Close dialog on Open"
@@ -1175,13 +1162,11 @@ msgstr "Pridėti URL"
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
-msgstr ""
-"\n"
-"(Sekantys pranešimai paslėpti.)"
+msgstr "\n(Sekantys pranešimai paslėpti.)"
 
 #: src/libeggsmclient/eggdesktopfile.c:165
 msgid "File is not a valid .desktop file"
-msgstr "Šis failas nėra tinkamas .desktop failas"
+msgstr "Šis failas nėra tinkamas .desktop failas"
 
 #: src/libeggsmclient/eggdesktopfile.c:191
 #, c-format
@@ -1237,5 +1222,3 @@ msgstr "Sesijos valdymo pasirinktys:"
 #: src/libeggsmclient/eggsmclient.c:254
 msgid "Show session management options"
 msgstr "Rodyti sesijos valdymo pasirinktis"
-
-
