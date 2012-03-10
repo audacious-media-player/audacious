@@ -1,4 +1,4 @@
-# Spanish (Mexican) translation for Audacious
+# Mexican Spanish translation for Audacious
 # Copyright (C) Audacious translators
 # This file is distributed under the same license as the Audacious package.
 #
@@ -9,9 +9,9 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2012-01-11 08:54-0500\n"
-"PO-Revision-Date: 2012-01-23 16:41+0000\n"
+"PO-Revision-Date: 2012-02-26 21:46+0000\n"
 "Last-Translator: Jorge A. García Sosa <jagsmd@gmail.com>\n"
-"Language-Team: Spanish (Mexican)\n"
+"Language-Team: Mexican Spanish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -31,7 +31,7 @@ msgstr[1] "%d archivos encontrados"
 
 #: src/audacious/chardet.c:39
 msgid "  (invalid UTF-8)"
-msgstr "(UTF-8 no válido)"
+msgstr " (UTF-8 no válido)"
 
 #: src/audacious/credits.c:37
 msgid "Core developers:"
@@ -39,7 +39,7 @@ msgstr "Desarroladores del núcleo:"
 
 #: src/audacious/credits.c:51
 msgid "Graphics:"
-msgstr "Gráficos:"
+msgstr "Gráficas:"
 
 #: src/audacious/credits.c:56
 msgid "Default skin:"
@@ -51,7 +51,7 @@ msgstr "Desarrollo de plugin:"
 
 #: src/audacious/credits.c:85
 msgid "Patch authors:"
-msgstr "Autores de parches"
+msgstr "Autores de parches:"
 
 #: src/audacious/credits.c:131
 msgid "1.x developers:"
@@ -291,9 +291,7 @@ msgstr " - Reproducir archivos multimedia"
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
-msgstr ""
-"%s: %s\n"
-"Intenta `%s --ayuda' para mayor información\n"
+msgstr "%s: %s\nIntenta `%s --ayuda' para mayor información\n"
 
 #: src/audacious/main.c:573
 msgid "Audacious"
@@ -329,9 +327,7 @@ msgstr "Reproduciendo"
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress"
 " (or has been disabled)."
-msgstr ""
-"La lista de reproducción no puede ser ordenada porque la exploración de "
-"metadatos está en progreso (o ha sido deshabilitada)"
+msgstr "La lista de reproducción no puede ser ordenada porque la exploración de metadatos está en progreso (o ha sido deshabilitada)"
 
 #: src/audacious/ui_preferences.c:85
 msgid "Audio"
@@ -456,7 +452,7 @@ msgstr "Ajustes de Salida"
 
 #: src/audacious/ui_preferences.c:149
 msgid "Bit depth:"
-msgstr "Profundida de bit"
+msgstr "Profundidad de bit:"
 
 #: src/audacious/ui_preferences.c:152
 msgid "Buffer size:"
@@ -603,10 +599,7 @@ msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
 "using commas."
-msgstr ""
-"Audacious busca ciertas palabras en el nombre del archivo mientras recupera "
-"la portada del álbum. Puedes especificar éstas palabras en la lista de "
-"abajo, sepáralas usando comas."
+msgstr "Audacious busca ciertas palabras en el nombre del archivo mientras recupera la portada del álbum. Puedes especificar éstas palabras en la lista de abajo, sepáralas usando comas."
 
 #: src/audacious/ui_preferences.c:811
 msgid "Exclude:"
@@ -670,23 +663,18 @@ msgstr "Formato de Título"
 
 #: src/audacious/ui_preferences.c:1428
 msgid "<b>Popup Information</b>"
-msgstr "Información Emergente"
+msgstr "<b>Información Emergente</b>"
 
 #: src/audacious/ui_preferences.c:1443
 msgid "Show popup information for playlist entries"
-msgstr ""
-"Mostrar información emergente para las entradas de la Lista de Reproducción"
+msgstr "Mostrar información emergente para las entradas de la Lista de Reproducción"
 
 #: src/audacious/ui_preferences.c:1444
 msgid ""
 "Toggles popup information window for the pointed entry in the playlist. The "
 "window shows title of song, name of album, genre, year of publish, track "
 "number, track length, and artwork."
-msgstr ""
-"Cambiar la ventana de información emergente por la entrada apuntada en la "
-"lista de reproducción. La ventana muestra título de la pista, nombre del "
-"álbum, género, año de publicación, número de pista, duración de la pista y "
-"arte."
+msgstr "Cambiar la ventana de información emergente por la entrada seleccionada en la lista de reproducción. La ventana muestra título de la pista, nombre del álbum, género, año de publicación, número de pista, duración de la pista y arte."
 
 #: src/audacious/ui_preferences.c:1455
 msgid "Edit settings for popup information"
@@ -731,7 +719,7 @@ msgstr "Posición no encontrada"
 
 #: src/audtool/handlers_vitals.c:63
 msgid "No song playing."
-msgstr "Ninguna pista se está reproduciendo"
+msgstr "Ninguna pista se está reproduciendo."
 
 #: src/libaudcore/audstrings.c:199
 #, c-format
@@ -770,9 +758,7 @@ msgstr "Acerca de Audacious"
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
-msgstr ""
-"¿Estás seguro que quieres cerrar %s? Si lo haces, cualquier cambio hecho "
-"desde que lalista de reproducción fue exportada se perderá."
+msgstr "¿Estás seguro que quieres cerrar %s? Si lo haces, cualquier cambio hecho desde que la lista de reproducción fue exportada se perderá."
 
 #: src/libaudgui/confirm.c:89
 msgid "_Don't show this message again"
@@ -1171,9 +1157,7 @@ msgstr "Agregar URL"
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
-msgstr ""
-"\n"
-"Más mensajes han sido ocultados."
+msgstr "\n(Más mensajes han sido ocultados.)"
 
 #: src/libeggsmclient/eggdesktopfile.c:165
 msgid "File is not a valid .desktop file"
@@ -1200,8 +1184,7 @@ msgstr "Opción de lanzamiento no reconocida: %d"
 
 #: src/libeggsmclient/eggdesktopfile.c:1391
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-msgstr ""
-"No puedes pasar documentos URIs a una entrada del escritorio 'Type=Link'"
+msgstr "No puedes pasar documentos URIs a una entrada del escritorio 'Type=Link'"
 
 #: src/libeggsmclient/eggdesktopfile.c:1412
 msgid "Not a launchable item"
@@ -1234,5 +1217,3 @@ msgstr "Opciones de administración de sesión:"
 #: src/libeggsmclient/eggsmclient.c:254
 msgid "Show session management options"
 msgstr "Mostrar opciones de administración de sesión"
-
-
