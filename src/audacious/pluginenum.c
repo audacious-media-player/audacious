@@ -30,10 +30,6 @@
 
 #include "config.h"
 
-#ifndef SHARED_SUFFIX
-# define SHARED_SUFFIX G_MODULE_SUFFIX
-#endif
-
 #include "debug.h"
 #include "plugin.h"
 #include "ui_preferences.h"
@@ -159,7 +155,7 @@ void plugin_load (const char * filename)
 
 static bool_t scan_plugin_func(const char * path, const char * basename, gpointer data)
 {
-    if (!str_has_suffix_nocase(basename, SHARED_SUFFIX))
+    if (!str_has_suffix_nocase(basename, PLUGIN_SUFFIX))
         return FALSE;
 
     if (!g_file_test(path, G_FILE_TEST_IS_REGULAR))
