@@ -148,35 +148,35 @@ depend: pre-depend ${SRCS}
 
 pre-depend:
 
-${PROG} ${PROG_NOINST}: ${EXT_DEPS} ${OBJS}
+${PROG} ${PROG_NOINST}: ${EXT_DEPS} ${OBJS} ${OBJS_EXTRA}
 	${LINK_STATUS}
-	if ${LD} -o $@ ${OBJS} ${LDFLAGS} ${LIBS}; then \
+	if ${LD} -o $@ ${OBJS} ${OBJS_EXTRA} ${LDFLAGS} ${LIBS}; then \
 		${LINK_OK}; \
 	else \
 		${LINK_FAILED}; \
 	fi
 
-${JARFILE}: ${EXT_DEPS} ${JAR_MANIFEST} ${OBJS}
+${JARFILE}: ${EXT_DEPS} ${JAR_MANIFEST} ${OBJS} ${OBJS_EXTRA}
 	${LINK_STATUS}
 	if test x"${JAR_MANIFEST}" != x""; then \
-		if ${JAR} cfm ${JARFILE} ${JAR_MANIFEST} ${OBJS}; then \
+		if ${JAR} cfm ${JARFILE} ${JAR_MANIFEST} ${OBJS} ${OBJS_EXTRA}; then \
 			${LINK_OK}; \
 		else \
 			${LINK_FAILED}; \
 		fi \
 	else \
-		if ${JAR} cf ${JARFILE} ${OBJS}; then \
+		if ${JAR} cf ${JARFILE} ${OBJS} ${OBJS_EXTRA}; then \
 			${LINK_OK}; \
 		else \
 			${LINK_FAILED}; \
 		fi \
 	fi
 
-${SHARED_LIB} ${SHARED_LIB_NOINST}: ${EXT_DEPS} ${LIB_OBJS}
+${SHARED_LIB} ${SHARED_LIB_NOINST}: ${EXT_DEPS} ${LIB_OBJS} ${LIB_OBJS_EXTRA}
 	${LINK_STATUS}; \
 	objs=""; \
 	ars=""; \
-	for i in ${LIB_OBJS}; do \
+	for i in ${LIB_OBJS} ${LIB_OBJS_EXTRA}; do \
 		case $$i in \
 			*.a) \
 				ars="$$ars $$i" \
@@ -242,12 +242,12 @@ ${PLUGIN} ${PLUGIN_NOINST}: ${EXT_DEPS} ${PLUGIN_OBJS}
 		rm -fr $$dir; \
 	done
 
-${STATIC_LIB} ${STATIC_LIB_NOINST}: ${EXT_DEPS} ${OBJS}
+${STATIC_LIB} ${STATIC_LIB_NOINST}: ${EXT_DEPS} ${OBJS} ${OBJS_EXTRA}
 	${LINK_STATUS}
 	rm -f $@
 	objs=""; \
 	ars=""; \
-	for i in ${OBJS}; do \
+	for i in ${OBJS} ${OBJS_EXTRA}; do \
 		case $$i in \
 			*.a) \
 				ars="$$ars $$i" \
@@ -279,12 +279,12 @@ ${STATIC_LIB} ${STATIC_LIB_NOINST}: ${EXT_DEPS} ${OBJS}
 		rm -fr $$dir; \
 	done
 
-${STATIC_PIC_LIB} ${STATIC_PIC_LIB_NOINST}: ${EXT_DEPS} ${LIB_OBJS}
+${STATIC_PIC_LIB} ${STATIC_PIC_LIB_NOINST}: ${EXT_DEPS} ${LIB_OBJS} ${LIB_OBJS_EXTRA}
 	${LINK_STATUS}
 	rm -f $@
 	objs=""; \
 	ars=""; \
-	for i in ${LIB_OBJS}; do \
+	for i in ${LIB_OBJS} ${LIB_OBJS_EXTRA}; do \
 		case $$i in \
 			*.a) \
 				ars="$$ars $$i" \
@@ -687,7 +687,7 @@ clean:
 		${DIR_LEAVE}; \
 	done
 
-	for i in ${DEPS} ${OBJS} ${LIB_OBJS} ${PLUGIN_OBJS} ${PROG} ${PROG_NOINST} ${SHARED_LIB} ${SHARED_LIB_NOINST} ${STATIC_LIB} ${STATIC_LIB_NOINST} ${STATIC_PIC_LIB} ${STATIC_PIC_LIB_NOINST} ${PLUGIN} ${PLUGIN_NOINST} ${CLEAN_LIB} ${MO_FILES} ${CLEAN}; do \
+	for i in ${DEPS} ${OBJS} ${OBJS_EXTRA} ${LIB_OBJS} ${LIB_OBJS_EXTRA} ${PLUGIN_OBJS} ${PROG} ${PROG_NOINST} ${SHARED_LIB} ${SHARED_LIB_NOINST} ${STATIC_LIB} ${STATIC_LIB_NOINST} ${STATIC_PIC_LIB} ${STATIC_PIC_LIB_NOINST} ${PLUGIN} ${PLUGIN_NOINST} ${CLEAN_LIB} ${MO_FILES} ${CLEAN}; do \
 		if test -f $$i -o -d $$i; then \
 			if rm -fr $$i; then \
 				${DELETE_OK}; \
