@@ -220,6 +220,7 @@ static const char * const translators_text[] = {
     NULL,
     N_("Dutch:"),
     "Laurens Buhler",
+    "Bjorn Roesbeke",
     "Tony Vroon",
     NULL,
     N_("Estonian:"),
