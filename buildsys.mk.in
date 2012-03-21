@@ -1,8 +1,8 @@
 #
-#  Copyright (c) 2007, 2008, 2009, 2010, 2011
+#  Copyright (c) 2007, 2008, 2009, 2010, 2011, 2012
 #  Jonathan Schleifer <js@webkeks.org>
 #
-#  https://webkeks.org/hg/buildsys/
+#  https://webkeks.org/git/?p=buildsys.git
 #
 #  Permission to use, copy, modify, and/or distribute this software for any
 #  purpose with or without fee is hereby granted, provided that the above
@@ -21,7 +21,8 @@
 #  POSSIBILITY OF SUCH DAMAGE.
 #
 
-PACKAGE = @PACKAGE@
+PACKAGE_NAME = @PACKAGE_NAME@
+PACKAGE_VERSION = @PACKAGE_VERSION@
 AS = @AS@
 CC = @CC@
 CXX = @CXX@
@@ -72,13 +73,13 @@ prefix = @prefix@
 exec_prefix = @exec_prefix@
 bindir = @bindir@
 libdir = @libdir@
-plugindir ?= ${libdir}/${PACKAGE}
+plugindir ?= ${libdir}/${PACKAGE_NAME}
 datarootdir = @datarootdir@
 datadir = @datadir@
 includedir = @includedir@
-includesubdir ?= ${PACKAGE}
+includesubdir ?= ${PACKAGE_NAME}
 localedir = @localedir@
-localename ?= ${PACKAGE}
+localename ?= ${PACKAGE_NAME}
 mandir = @mandir@
 mansubdir ?= man1
 
@@ -542,7 +543,7 @@ install: ${SHARED_LIB} ${STATIC_LIB} ${STATIC_PIC_LIB} ${PLUGIN} ${PROG} install
 
 	for i in ${DATA}; do \
 		${INSTALL_STATUS}; \
-		if ${MKDIR_P} $$(dirname ${DESTDIR}${datadir}/${PACKAGE}/$$i) && ${INSTALL} -m 644 $$i ${DESTDIR}${datadir}/${PACKAGE}/$$i; then \
+		if ${MKDIR_P} $$(dirname ${DESTDIR}${datadir}/${PACKAGE_NAME}/$$i) && ${INSTALL} -m 644 $$i ${DESTDIR}${datadir}/${PACKAGE_NAME}/$$i; then \
 			${INSTALL_OK}; \
 		else \
 			${INSTALL_FAILED}; \
@@ -626,16 +627,16 @@ uninstall: uninstall-extra
 	-rmdir ${DESTDIR}${plugindir} >/dev/null 2>&1
 
 	for i in ${DATA}; do \
-		if test -f ${DESTDIR}${datadir}/${PACKAGE}/$$i; then \
-			if rm -f ${DESTDIR}${datadir}/${PACKAGE}/$$i; then \
+		if test -f ${DESTDIR}${datadir}/${PACKAGE_NAME}/$$i; then \
+			if rm -f ${DESTDIR}${datadir}/${PACKAGE_NAME}/$$i; then \
 				${DELETE_OK}; \
 			else \
 				${DELETE_FAILED}; \
 			fi \
 		fi; \
-		rmdir "$$(dirname ${DESTDIR}${datadir}/${PACKAGE}/$$i)" >/dev/null 2>&1 || true; \
+		rmdir "$$(dirname ${DESTDIR}${datadir}/${PACKAGE_NAME}/$$i)" >/dev/null 2>&1 || true; \
 	done
-	-rmdir ${DESTDIR}${datadir}/${PACKAGE} >/dev/null 2>&1
+	-rmdir ${DESTDIR}${datadir}/${PACKAGE_NAME} >/dev/null 2>&1
 
 	for i in ${PROG}; do \
 		if test -f ${DESTDIR}${bindir}/$$i; then \

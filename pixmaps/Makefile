@@ -1,7 +1,7 @@
 include ../buildsys.mk
 
 # These override variables in buildsys.mk and so must come after it.
-PACKAGE = pixmaps
+PACKAGE_NAME = pixmaps
 DATA = audacious.png \
        audacious.svg
 
