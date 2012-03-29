@@ -155,7 +155,7 @@ static GtkWidget * create_window (void)
 
 static GtkWidget * equalizer_window = NULL;
 
-void audgui_show_equalizer_window (void)
+EXPORT void audgui_show_equalizer_window (void)
 {
     if (equalizer_window == NULL)
         equalizer_window = create_window ();
@@ -163,7 +163,7 @@ void audgui_show_equalizer_window (void)
     gtk_window_present ((GtkWindow *) equalizer_window);
 }
 
-void audgui_hide_equalizer_window (void)
+EXPORT void audgui_hide_equalizer_window (void)
 {
     if (! equalizer_window)
         return;

@@ -47,7 +47,7 @@ static bool_t add_item_cb (PluginHandle * plugin, IfaceMenuAddState * state)
     return TRUE;
 }
 
-GtkWidget * audgui_create_iface_menu (void)
+EXPORT GtkWidget * audgui_create_iface_menu (void)
 {
     IfaceMenuAddState state = {gtk_menu_new (), NULL};
     aud_plugin_for_each (PLUGIN_TYPE_IFACE, (PluginForEachFunc) add_item_cb,

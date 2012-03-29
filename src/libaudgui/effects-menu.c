@@ -82,7 +82,7 @@ static bool_t add_item_cb (PluginHandle * plugin, GtkWidget * menu)
     return TRUE;
 }
 
-GtkWidget * audgui_create_effects_menu (void)
+EXPORT GtkWidget * audgui_create_effects_menu (void)
 {
     GtkWidget * menu = gtk_menu_new ();
     aud_plugin_for_each (PLUGIN_TYPE_EFFECT, (PluginForEachFunc) add_item_cb,
@@ -90,7 +90,7 @@ GtkWidget * audgui_create_effects_menu (void)
     return menu;
 }
 
-GtkWidget * audgui_create_vis_menu (void)
+EXPORT GtkWidget * audgui_create_vis_menu (void)
 {
     GtkWidget * menu = gtk_menu_new ();
     aud_plugin_for_each (PLUGIN_TYPE_VIS, (PluginForEachFunc) add_item_cb, menu);

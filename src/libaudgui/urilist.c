@@ -25,6 +25,7 @@
 #include <libaudcore/audstrings.h>
 #include <libaudcore/vfs.h>
 
+#include "config.h"
 #include "libaudgui.h"
 
 typedef void (* ForEachFunc) (char *, void *);
@@ -64,21 +65,21 @@ static void add_to_index (char * name, Index * index)
     g_free (name);
 }
 
-void audgui_urilist_open (const char * list)
+EXPORT void audgui_urilist_open (const char * list)
 {
     Index * filenames = index_new ();
     urilist_for_each (list, (ForEachFunc) add_to_index, filenames);
     aud_drct_pl_open_list (filenames);
 }
 
-void audgui_urilist_insert (int playlist, int at, const char * list)
+EXPORT void audgui_urilist_insert (int playlist, int at, const char * list)
 {
     Index * filenames = index_new ();
     urilist_for_each (list, (ForEachFunc) add_to_index, filenames);
     aud_playlist_entry_insert_batch (playlist, at, filenames, NULL, FALSE);
 }
 
-char * audgui_urilist_create_from_selected (int playlist)
+EXPORT char * audgui_urilist_create_from_selected (int playlist)
 {
     int entries = aud_playlist_entry_count (playlist);
     int space = 0;

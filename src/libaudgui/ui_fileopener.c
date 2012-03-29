@@ -187,13 +187,13 @@ run_filebrowser_gtk2style(bool_t play_button, bool_t show)
  * Outputs:
  *     - none
  */
-void
+EXPORT void
 audgui_run_filebrowser(bool_t play_button)
 {
     run_filebrowser_gtk2style(play_button, TRUE);
 }
 
-void
+EXPORT void
 audgui_hide_filebrowser(void)
 {
     run_filebrowser_gtk2style(FALSE, FALSE);

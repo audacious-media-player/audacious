@@ -21,6 +21,7 @@
 #include <pthread.h>
 #include <string.h>
 
+#include "config.h"
 #include "core.h"
 #include "hook.h"
 
@@ -53,7 +54,7 @@ static bool_t event_execute (Event * event)
     return FALSE;
 }
 
-void event_queue_full (int time, const char * name, void * data, void (* destroy) (void *))
+EXPORT void event_queue_full (int time, const char * name, void * data, void (* destroy) (void *))
 {
     Event * event = g_slice_new (Event);
     event->name = g_strdup (name);
@@ -68,7 +69,7 @@ void event_queue_full (int time, const char * name, void * data, void (* destroy
     pthread_mutex_unlock (& mutex);
 }
 
-void event_queue_cancel (const char * name, void * data)
+EXPORT void event_queue_cancel (const char * name, void * data)
 {
     pthread_mutex_lock (& mutex);
 

@@ -164,7 +164,7 @@ static int field_dict_compare (const void * a, const void * b)
     return strcmp (((FieldDictEntry *) a)->name, ((FieldDictEntry *) b)->name);
 }
 
-int tuple_field_by_name (const char * name)
+EXPORT int tuple_field_by_name (const char * name)
 {
     FieldDictEntry find = {name, -1};
     FieldDictEntry * found = bsearch (& find, field_dict, TUPLE_FIELDS,
@@ -177,7 +177,7 @@ int tuple_field_by_name (const char * name)
     return -1;
 }
 
-const char * tuple_field_get_name (int field)
+EXPORT const char * tuple_field_get_name (int field)
 {
     if (field < 0 || field >= TUPLE_FIELDS)
         return NULL;
@@ -185,7 +185,7 @@ const char * tuple_field_get_name (int field)
     return tuple_fields[field].name;
 }
 
-TupleValueType tuple_field_get_type (int field)
+EXPORT TupleValueType tuple_field_get_type (int field)
 {
     if (field < 0 || field >= TUPLE_FIELDS)
         return TUPLE_UNKNOWN;
@@ -266,14 +266,14 @@ static void tuple_destroy_unlocked (Tuple * tuple)
     g_slice_free (Tuple, tuple);
 }
 
-Tuple * tuple_new (void)
+EXPORT Tuple * tuple_new (void)
 {
     Tuple * tuple = g_slice_new0 (Tuple);
     tuple->refcount = 1;
     return tuple;
 }
 
-Tuple * tuple_ref (Tuple * tuple)
+EXPORT Tuple * tuple_ref (Tuple * tuple)
 {
     pthread_mutex_lock (& mutex);
 
@@ -283,7 +283,7 @@ Tuple * tuple_ref (Tuple * tuple)
     return tuple;
 }
 
-void tuple_unref (Tuple * tuple)
+EXPORT void tuple_unref (Tuple * tuple)
 {
     pthread_mutex_lock (& mutex);
 
@@ -301,7 +301,7 @@ void tuple_unref (Tuple * tuple)
  * @param[in] filename Filename URI.
  * @param[in,out] tuple Tuple structure to manipulate.
  */
-void tuple_set_filename (Tuple * tuple, const char * filename)
+EXPORT void tuple_set_filename (Tuple * tuple, const char * filename)
 {
     const char * base, * ext, * sub;
     int isub;
@@ -333,7 +333,7 @@ void tuple_set_filename (Tuple * tuple, const char * filename)
  * @param[in] src Tuple structure to be made a copy of.
  * @return Pointer to newly allocated Tuple.
  */
-Tuple * tuple_copy (const Tuple * old)
+EXPORT Tuple * tuple_copy (const Tuple * old)
 {
     pthread_mutex_lock (& mutex);
 
@@ -368,7 +368,7 @@ Tuple * tuple_copy (const Tuple * old)
  * @param[in] filename Filename URI.
  * @return Pointer to newly allocated Tuple.
  */
-Tuple *
+EXPORT Tuple *
 tuple_new_from_filename(const char *filename)
 {
     Tuple *tuple = tuple_new();
@@ -377,7 +377,7 @@ tuple_new_from_filename(const char *filename)
     return tuple;
 }
 
-void tuple_set_int (Tuple * tuple, int nfield, const char * field, int x)
+EXPORT void tuple_set_int (Tuple * tuple, int nfield, const char * field, int x)
 {
     if (nfield < 0)
         nfield = tuple_field_by_name (field);
@@ -392,7 +392,7 @@ void tuple_set_int (Tuple * tuple, int nfield, const char * field, int x)
     pthread_mutex_unlock (& mutex);
 }
 
-void tuple_set_str (Tuple * tuple, int nfield, const char * field, const char * str)
+EXPORT void tuple_set_str (Tuple * tuple, int nfield, const char * field, const char * str)
 {
     if (! str)
     {
@@ -421,7 +421,7 @@ void tuple_set_str (Tuple * tuple, int nfield, const char * field, const char * 
     pthread_mutex_unlock (& mutex);
 }
 
-void tuple_unset (Tuple * tuple, int nfield, const char * field)
+EXPORT void tuple_unset (Tuple * tuple, int nfield, const char * field)
 {
     if (nfield < 0)
         nfield = tuple_field_by_name (field);
@@ -455,7 +455,7 @@ void tuple_unset (Tuple * tuple, int nfield, const char * field)
  * @param[in] field String acting as key name or NULL if nfield is used.
  * @return #TupleValueType of the field or TUPLE_UNKNOWN if there was an error.
  */
-TupleValueType tuple_get_value_type (const Tuple * tuple, int nfield, const char * field)
+EXPORT TupleValueType tuple_get_value_type (const Tuple * tuple, int nfield, const char * field)
 {
     if (nfield < 0)
         nfield = tuple_field_by_name (field);
@@ -474,7 +474,7 @@ TupleValueType tuple_get_value_type (const Tuple * tuple, int nfield, const char
     return type;
 }
 
-char * tuple_get_str (const Tuple * tuple, int nfield, const char * field)
+EXPORT char * tuple_get_str (const Tuple * tuple, int nfield, const char * field)
 {
     if (nfield < 0)
         nfield = tuple_field_by_name (field);
@@ -505,7 +505,7 @@ char * tuple_get_str (const Tuple * tuple, int nfield, const char * field)
  *
  * @bug There is no way to distinguish error situations if the associated value is zero.
  */
-int tuple_get_int (const Tuple * tuple, int nfield, const char * field)
+EXPORT int tuple_get_int (const Tuple * tuple, int nfield, const char * field)
 {
     if (nfield < 0)
         nfield = tuple_field_by_name (field);
@@ -527,7 +527,7 @@ int tuple_get_int (const Tuple * tuple, int nfield, const char * field)
 #define APPEND(b, ...) snprintf (b + strlen (b), sizeof b - strlen (b), \
  __VA_ARGS__)
 
-void tuple_set_format (Tuple * t, const char * format, int chans, int rate,
+EXPORT void tuple_set_format (Tuple * t, const char * format, int chans, int rate,
  int brate)
 {
     if (format)
@@ -560,7 +560,7 @@ void tuple_set_format (Tuple * t, const char * format, int chans, int rate,
         tuple_set_int (t, FIELD_BITRATE, NULL, brate);
 }
 
-void tuple_set_subtunes (Tuple * tuple, int n_subtunes, const int * subtunes)
+EXPORT void tuple_set_subtunes (Tuple * tuple, int n_subtunes, const int * subtunes)
 {
     pthread_mutex_lock (& mutex);
 
@@ -574,7 +574,7 @@ void tuple_set_subtunes (Tuple * tuple, int n_subtunes, const int * subtunes)
     pthread_mutex_unlock (& mutex);
 }
 
-int tuple_get_n_subtunes (Tuple * tuple)
+EXPORT int tuple_get_n_subtunes (Tuple * tuple)
 {
     pthread_mutex_lock (& mutex);
 
@@ -584,7 +584,7 @@ int tuple_get_n_subtunes (Tuple * tuple)
     return n_subtunes;
 }
 
-int tuple_get_nth_subtune (Tuple * tuple, int n)
+EXPORT int tuple_get_nth_subtune (Tuple * tuple, int n)
 {
     pthread_mutex_lock (& mutex);
 
@@ -596,7 +596,7 @@ int tuple_get_nth_subtune (Tuple * tuple, int n)
     return subtune;
 }
 
-char * tuple_format_title (Tuple * tuple, const char * format)
+EXPORT char * tuple_format_title (Tuple * tuple, const char * format)
 {
     static const gint fallbacks[] = {FIELD_TITLE, FIELD_FILE_NAME, FIELD_FILE_PATH};
 

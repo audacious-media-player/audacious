@@ -76,7 +76,7 @@ static GtkWidget * create_credits_notebook (const char * const * credits,
     return notebook;
 }
 
-void audgui_show_about_window (void)
+EXPORT void audgui_show_about_window (void)
 {
     if (about_window)
     {

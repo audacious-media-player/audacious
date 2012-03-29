@@ -185,7 +185,8 @@ static void response_cb (GtkDialog * dialog, int response)
         break;
     }
 }
-void audgui_queue_manager_show (void)
+
+EXPORT void audgui_queue_manager_show (void)
 {
     if (qm_win)
     {

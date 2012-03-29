@@ -43,7 +43,7 @@ static void confirm_delete_cb (GtkButton * button, void * data)
         aud_playlist_set_active (list - 1);
 }
 
-void audgui_confirm_playlist_delete (int playlist)
+EXPORT void audgui_confirm_playlist_delete (int playlist)
 {
     GtkWidget * window, * vbox, * hbox, * label, * button;
     char * message;
@@ -121,7 +121,7 @@ static void rename_cb (GtkDialog * dialog, int resp, void * list)
     gtk_widget_destroy ((GtkWidget *) dialog);
 }
 
-void audgui_show_playlist_rename (int playlist)
+EXPORT void audgui_show_playlist_rename (int playlist)
 {
     GtkWidget * dialog = gtk_dialog_new_with_buttons (_("Rename Playlist"),
      NULL, 0, GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, GTK_STOCK_CANCEL,

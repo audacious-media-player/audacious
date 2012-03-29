@@ -30,6 +30,8 @@
 #include <sys/types.h>
 #include <string.h>
 
+#include "config.h"
+
 #define VFS_SIG ('V' | ('F' << 8) | ('S' << 16))
 
 /**
@@ -52,14 +54,14 @@ struct _VFSFile {
 
 static VFSConstructor * (* lookup_func) (const char * scheme) = NULL;
 
-void vfs_set_lookup_func (VFSConstructor * (* func) (const char * scheme))
+EXPORT void vfs_set_lookup_func (VFSConstructor * (* func) (const char * scheme))
 {
     lookup_func = func;
 }
 
 static bool_t verbose = FALSE;
 
-void vfs_set_verbose (bool_t set)
+EXPORT void vfs_set_verbose (bool_t set)
 {
     verbose = set;
 }
@@ -91,7 +93,7 @@ static void logger (const char * format, ...)
     }
 }
 
-VFSFile * vfs_new (const char * path, VFSConstructor * vtable, void * handle)
+EXPORT VFSFile * vfs_new (const char * path, VFSConstructor * vtable, void * handle)
 {
     VFSFile * file = g_slice_new (VFSFile);
     file->uri = str_get (path);
@@ -101,12 +103,12 @@ VFSFile * vfs_new (const char * path, VFSConstructor * vtable, void * handle)
     return file;
 }
 
-const char * vfs_get_filename (VFSFile * file)
+EXPORT const char * vfs_get_filename (VFSFile * file)
 {
     return file->uri;
 }
 
-void * vfs_get_handle (VFSFile * file)
+EXPORT void * vfs_get_handle (VFSFile * file)
 {
     return file->handle;
 }
@@ -119,7 +121,7 @@ void * vfs_get_handle (VFSFile * file)
  * @param mode The preferred access privileges (not guaranteed).
  * @return On success, a #VFSFile object representing the stream.
  */
-VFSFile *
+EXPORT VFSFile *
 vfs_fopen(const char * path,
           const char * mode)
 {
@@ -161,7 +163,7 @@ vfs_fopen(const char * path,
  * @param file A #VFSFile object to destroy.
  * @return -1 on failure, 0 on success.
  */
-int
+EXPORT int
 vfs_fclose(VFSFile * file)
 {
     g_return_val_if_fail (file && file->sig == VFS_SIG, -1);
@@ -191,7 +193,7 @@ vfs_fclose(VFSFile * file)
  * @param file #VFSFile object that represents the VFS stream.
  * @return The number of elements succesfully read.
  */
-int64_t vfs_fread (void * ptr, int64_t size, int64_t nmemb, VFSFile * file)
+EXPORT int64_t vfs_fread (void * ptr, int64_t size, int64_t nmemb, VFSFile * file)
 {
     g_return_val_if_fail (file && file->sig == VFS_SIG, 0);
 
@@ -213,7 +215,7 @@ int64_t vfs_fread (void * ptr, int64_t size, int64_t nmemb, VFSFile * file)
  * @param file #VFSFile object that represents the VFS stream.
  * @return The number of elements succesfully written.
  */
-int64_t vfs_fwrite (const void * ptr, int64_t size, int64_t nmemb, VFSFile * file)
+EXPORT int64_t vfs_fwrite (const void * ptr, int64_t size, int64_t nmemb, VFSFile * file)
 {
     g_return_val_if_fail (file && file->sig == VFS_SIG, 0);
 
@@ -232,7 +234,7 @@ int64_t vfs_fwrite (const void * ptr, int64_t size, int64_t nmemb, VFSFile * fil
  * @param file #VFSFile object that represents the VFS stream.
  * @return On success, a character. Otherwise, EOF.
  */
-int
+EXPORT int
 vfs_getc(VFSFile *file)
 {
     g_return_val_if_fail (file && file->sig == VFS_SIG, EOF);
@@ -250,7 +252,7 @@ vfs_getc(VFSFile *file)
  * @param file #VFSFile object that represents the VFS stream.
  * @return On success, 0. Otherwise, EOF.
  */
-int
+EXPORT int
 vfs_ungetc(int c, VFSFile *file)
 {
     g_return_val_if_fail (file && file->sig == VFS_SIG, EOF);
@@ -274,7 +276,7 @@ vfs_ungetc(int c, VFSFile *file)
  * @param whence Type of the seek: SEEK_CUR, SEEK_SET or SEEK_END.
  * @return On success, 0. Otherwise, -1.
  */
-int
+EXPORT int
 vfs_fseek(VFSFile * file,
           int64_t offset,
           int whence)
@@ -294,7 +296,7 @@ vfs_fseek(VFSFile * file,
  *
  * @param file #VFSFile object that represents the VFS stream.
  */
-void
+EXPORT void
 vfs_rewind(VFSFile * file)
 {
     g_return_if_fail (file && file->sig == VFS_SIG);
@@ -311,7 +313,7 @@ vfs_rewind(VFSFile * file)
  * @param file #VFSFile object that represents the VFS stream.
  * @return On success, the current position. Otherwise, -1.
  */
-int64_t
+EXPORT int64_t
 vfs_ftell(VFSFile * file)
 {
     g_return_val_if_fail (file && file->sig == VFS_SIG, -1);
@@ -330,7 +332,7 @@ vfs_ftell(VFSFile * file)
  * @param file #VFSFile object that represents the VFS stream.
  * @return On success, whether or not the VFS stream is at EOF. Otherwise, FALSE.
  */
-bool_t
+EXPORT bool_t
 vfs_feof(VFSFile * file)
 {
     g_return_val_if_fail (file && file->sig == VFS_SIG, TRUE);
@@ -350,7 +352,7 @@ vfs_feof(VFSFile * file)
  * @param length The length to truncate at.
  * @return On success, 0. Otherwise, -1.
  */
-int vfs_ftruncate (VFSFile * file, int64_t length)
+EXPORT int vfs_ftruncate (VFSFile * file, int64_t length)
 {
     g_return_val_if_fail (file && file->sig == VFS_SIG, -1);
 
@@ -366,7 +368,7 @@ int vfs_ftruncate (VFSFile * file, int64_t length)
  * @param file #VFSFile object that represents the VFS stream.
  * @return On success, the size of the file in bytes. Otherwise, -1.
  */
-int64_t vfs_fsize (VFSFile * file)
+EXPORT int64_t vfs_fsize (VFSFile * file)
 {
     g_return_val_if_fail (file && file->sig == VFS_SIG, -1);
 
@@ -385,7 +387,7 @@ int64_t vfs_fsize (VFSFile * file)
  * @param field The string constant field name to get.
  * @return On success, a copy of the value of the field. Otherwise, NULL.
  */
-char *
+EXPORT char *
 vfs_get_metadata(VFSFile * file, const char * field)
 {
     if (file == NULL)
@@ -403,7 +405,7 @@ vfs_get_metadata(VFSFile * file, const char * field)
  * @param test A GFileTest to run.
  * @return The result of g_file_test().
  */
-bool_t
+EXPORT bool_t
 vfs_file_test(const char * path, int test)
 {
     if (strncmp (path, "file://", 7))
@@ -427,7 +429,7 @@ vfs_file_test(const char * path, int test)
  * @param path A path to test.
  * @return TRUE if the file is writeable, otherwise FALSE.
  */
-bool_t
+EXPORT bool_t
 vfs_is_writeable(const char * path)
 {
     struct stat info;
@@ -447,7 +449,7 @@ vfs_is_writeable(const char * path)
  * @param path A path to test.
  * @return TRUE if the file is remote, otherwise FALSE.
  */
-bool_t vfs_is_remote (const char * path)
+EXPORT bool_t vfs_is_remote (const char * path)
 {
     return strncmp (path, "file://", 7) ? TRUE : FALSE;
 }
@@ -458,7 +460,7 @@ bool_t vfs_is_remote (const char * path)
  * @param file A #VFSFile object to test.
  * @return TRUE if the file is streaming, otherwise FALSE.
  */
-bool_t vfs_is_streaming (VFSFile * file)
+EXPORT bool_t vfs_is_streaming (VFSFile * file)
 {
     return (vfs_fsize (file) < 0);
 }

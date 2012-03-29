@@ -37,7 +37,7 @@ static void urlopener_add_url_callback (GtkWidget * widget, GtkEntry * entry)
     aud_history_add (gtk_entry_get_text (entry));
 }
 
-GtkWidget * urlopener_add_url_dialog_new (GCallback func, bool_t open)
+static GtkWidget * urlopener_add_url_dialog_new (GCallback func, bool_t open)
 {
     GtkWidget * win, * vbox, * bbox, * cancel, * ok, * combo, * entry;
 
@@ -117,7 +117,7 @@ on_add_url_ok_clicked(GtkWidget * widget,
         aud_drct_pl_open (text);
 }
 
-void audgui_show_add_url_window (bool_t open)
+EXPORT void audgui_show_add_url_window (bool_t open)
 {
     static GtkWidget *url_window = NULL;
 

@@ -21,6 +21,7 @@
 #include <stdint.h>
 
 #include "audio.h"
+#include "config.h"
 
 #define FROM_INT_LOOP(NAME, TYPE, SWAP, OFFSET, RANGE) \
 static void NAME (const TYPE * in, float * out, int samples) \
@@ -125,7 +126,7 @@ convert_table [] =
 #endif
 };
 
-void audio_from_int (const void * in, int format, float * out, int samples)
+EXPORT void audio_from_int (const void * in, int format, float * out, int samples)
 {
     int entry;
 
@@ -139,7 +140,7 @@ void audio_from_int (const void * in, int format, float * out, int samples)
     }
 }
 
-void audio_to_int (const float * in, void * out, int format, int samples)
+EXPORT void audio_to_int (const float * in, void * out, int format, int samples)
 {
     int entry;
 
@@ -153,7 +154,7 @@ void audio_to_int (const float * in, void * out, int format, int samples)
     }
 }
 
-void audio_amplify (float * data, int channels, int frames, float * factors)
+EXPORT void audio_amplify (float * data, int channels, int frames, float * factors)
 {
     float * end = data + channels * frames;
     int channel;

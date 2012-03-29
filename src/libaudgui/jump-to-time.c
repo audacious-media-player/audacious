@@ -54,7 +54,7 @@ static void jump_to_time_cb (GtkWidget * widget, GtkWidget * entry)
         gtk_widget_destroy (window);
 }
 
-void audgui_jump_to_time (void)
+EXPORT void audgui_jump_to_time (void)
 {
     if (! aud_drct_get_playing ())
         return;

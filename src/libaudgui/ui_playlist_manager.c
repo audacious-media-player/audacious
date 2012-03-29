@@ -233,7 +233,7 @@ static void close_on_activate_cb (GtkToggleButton * toggle)
      gtk_toggle_button_get_active (toggle));
 }
 
-void audgui_playlist_manager (void)
+EXPORT void audgui_playlist_manager (void)
 {
     GtkWidget *playman_vbox;
     GtkWidget * playman_pl_lv, * playman_pl_lv_sw;

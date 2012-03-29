@@ -21,6 +21,7 @@
 #include <audacious/playlist.h>
 #include <libaudcore/hook.h>
 
+#include "config.h"
 #include "init.h"
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
@@ -46,7 +47,7 @@ static void playlist_position_cb (void * list, void * unused)
         audgui_pixbuf_uncache ();
 }
 
-void audgui_init (AudAPITable * table)
+EXPORT void audgui_init (AudAPITable * table)
 {
     _aud_api_table = table;
     aud_config_set_defaults ("audgui", audgui_defaults);
@@ -55,7 +56,7 @@ void audgui_init (AudAPITable * table)
     hook_associate ("playlist position", playlist_position_cb, NULL);
 }
 
-void audgui_cleanup (void)
+EXPORT void audgui_cleanup (void)
 {
     hook_dissociate ("playlist set playing", playlist_set_playing_cb);
     hook_dissociate ("playlist position", playlist_position_cb);

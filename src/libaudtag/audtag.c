@@ -20,21 +20,23 @@
 
 #include <glib.h>
 
-#include "libaudcore/tuple.h"
+#include <libaudcore/tuple.h>
+
 #include "audtag.h"
+#include "config.h"
 #include "tag_module.h"
 #include "util.h"
 
 bool_t tag_verbose = FALSE;
 
-void tag_set_verbose (bool_t verbose)
+EXPORT void tag_set_verbose (bool_t verbose)
 {
     tag_verbose = verbose;
 }
 
 /* The tuple's file-related attributes are already set */
 
-bool_t tag_tuple_read (Tuple * tuple, VFSFile * handle)
+EXPORT bool_t tag_tuple_read (Tuple * tuple, VFSFile * handle)
 {
     tag_module_t * module = find_tag_module (handle, TAG_TYPE_NONE);
 
@@ -44,7 +46,7 @@ bool_t tag_tuple_read (Tuple * tuple, VFSFile * handle)
     return module->read_tag (tuple, handle);
 }
 
-bool_t tag_image_read (VFSFile * handle, void * * data, int64_t * size)
+EXPORT bool_t tag_image_read (VFSFile * handle, void * * data, int64_t * size)
 {
     tag_module_t * module = find_tag_module (handle, TAG_TYPE_NONE);
 
@@ -54,7 +56,7 @@ bool_t tag_image_read (VFSFile * handle, void * * data, int64_t * size)
     return module->read_image (handle, data, size);
 }
 
-bool_t tag_tuple_write (const Tuple * tuple, VFSFile * handle, int new_type)
+EXPORT bool_t tag_tuple_write (const Tuple * tuple, VFSFile * handle, int new_type)
 {
     tag_module_t * module = find_tag_module (handle, new_type);
 
@@ -65,7 +67,7 @@ bool_t tag_tuple_write (const Tuple * tuple, VFSFile * handle, int new_type)
 }
 
 /* deprecated */
-bool_t tag_tuple_write_to_file (Tuple * tuple, VFSFile * handle)
+EXPORT bool_t tag_tuple_write_to_file (Tuple * tuple, VFSFile * handle)
 {
     return tag_tuple_write (tuple, handle, TAG_TYPE_NONE);
 }

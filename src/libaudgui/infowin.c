@@ -274,7 +274,7 @@ static void infowin_update_tuple (void * unused)
     tuple_unref (tuple);
 }
 
-bool_t genre_fill (GtkWidget * combo)
+static bool_t genre_fill (GtkWidget * combo)
 {
     GList * list = NULL;
     GList * node;
@@ -292,7 +292,7 @@ bool_t genre_fill (GtkWidget * combo)
     return FALSE;
 }
 
-void create_infowin (void)
+static void create_infowin (void)
 {
     GtkWidget * hbox;
     GtkWidget * hbox_status_and_bbox;
@@ -555,7 +555,7 @@ static void infowin_show (int list, int entry, const char * filename,
     gtk_window_present ((GtkWindow *) infowin);
 }
 
-void audgui_infowin_show (int playlist, int entry)
+EXPORT void audgui_infowin_show (int playlist, int entry)
 {
     char * filename = aud_playlist_entry_get_filename (playlist, entry);
     g_return_if_fail (filename != NULL);
@@ -587,7 +587,7 @@ FREE:
     str_unref (filename);
 }
 
-void audgui_infowin_show_current (void)
+EXPORT void audgui_infowin_show_current (void)
 {
     int playlist = aud_playlist_get_playing ();
     int position;

@@ -19,7 +19,8 @@
 
 #include <glib.h>
 
-#include <libaudcore/vfs_async.h>
+#include "config.h"
+#include "vfs_async.h"
 
 typedef struct {
     char *filename;
@@ -54,7 +55,7 @@ vfs_async_file_get_contents_worker(void * data)
     return NULL;
 }
 
-void
+EXPORT void
 vfs_async_file_get_contents(const char *filename, VFSConsumer cons_f, void * userdata)
 {
     VFSAsyncTrampoline *tr;
