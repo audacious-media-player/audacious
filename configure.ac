@@ -30,6 +30,17 @@ AC_C_BIGENDIAN([BIGENDIAN=1], [BIGENDIAN=0],
  [AC_MSG_ERROR([Universal builds are not supported, sorry])])
 AC_SUBST([BIGENDIAN])
 
+dnl Prevent symbol collisions
+dnl =========================
+if test "x$GCC" = "xyes" ; then
+    CFLAGS="$CFLAGS -fvisibility=hidden"
+    CXXFLAGS="$CXXFLAGS -fvisibility=hidden"
+    EXPORT="__attribute__((visibility(\"default\")))"
+else
+    AC_MSG_ERROR([Unknown syntax for EXPORT keyword])
+fi
+AC_DEFINE_UNQUOTED([EXPORT], [$EXPORT], [Define to compiler syntax for public symbols])
+
 dnl Headers and functions
 dnl ===============================
 AC_CHECK_HEADERS([execinfo.h regex.h rxposix.h rx/rxposix.h])

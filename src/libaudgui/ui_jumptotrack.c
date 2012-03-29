@@ -43,7 +43,7 @@ static const GArray * search_matches;
 static GtkWidget * treeview, * filter_entry, * queue_button;
 static bool_t watching = FALSE;
 
-void
+EXPORT void
 audgui_jump_to_track_hide(void)
 {
     if (watching)
@@ -346,7 +346,7 @@ static void create_window (void)
     gtk_widget_set_can_default(close, TRUE);
 }
 
-void audgui_jump_to_track (void)
+EXPORT void audgui_jump_to_track (void)
 {
     bool_t create = (! jump_to_track_win);
     if (create)

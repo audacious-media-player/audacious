@@ -64,9 +64,9 @@ static void str_destroy (void * str)
 }
 
 #ifdef STRPOOL_DEBUG
-char * str_get_debug (const char * str, const char * file, int line)
+EXPORT char * str_get_debug (const char * str, const char * file, int line)
 #else
-char * str_get (const char * str)
+EXPORT char * str_get (const char * str)
 #endif
 {
     if (! str)
@@ -104,9 +104,9 @@ char * str_get (const char * str)
 }
 
 #ifdef STRPOOL_DEBUG
-char * str_ref_debug (char * str, const char * file, int line)
+EXPORT char * str_ref_debug (char * str, const char * file, int line)
 #else
-char * str_ref (char * str)
+EXPORT char * str_ref (char * str)
 #endif
 {
     if (! str)
@@ -127,9 +127,9 @@ char * str_ref (char * str)
 }
 
 #ifdef STRPOOL_DEBUG
-void str_unref_debug (char * str, const char * file, int line)
+EXPORT void str_unref_debug (char * str, const char * file, int line)
 #else
-void str_unref (char * str)
+EXPORT void str_unref (char * str)
 #endif
 {
     if (! str)
@@ -149,7 +149,7 @@ void str_unref (char * str)
     pthread_mutex_unlock (& mutex);
 }
 
-char * str_nget (const char * str, int len)
+EXPORT char * str_nget (const char * str, int len)
 {
     if (strlen (str) <= len)
         return str_get (str);
@@ -161,7 +161,7 @@ char * str_nget (const char * str, int len)
     return str_get (buf);
 }
 
-char * str_printf (const char * format, ...)
+EXPORT char * str_printf (const char * format, ...)
 {
     va_list args;
 
@@ -178,7 +178,7 @@ char * str_printf (const char * format, ...)
     return str_get (buf);
 }
 
-void strpool_abort (char * str)
+EXPORT void strpool_abort (char * str)
 {
     fprintf (stderr, "String not in pool: %s\n", str);
 #ifdef STRPOOL_DEBUG
@@ -195,7 +195,7 @@ static void str_leaked (void * key, void * str, void * unused)
 #endif
 }
 
-void strpool_shutdown (void)
+EXPORT void strpool_shutdown (void)
 {
     if (! table)
         return;

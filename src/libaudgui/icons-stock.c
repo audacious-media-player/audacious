@@ -21,6 +21,7 @@
 #include <gtk/gtk.h>
 #include <audacious/misc.h>
 
+#include "config.h"
 #include "libaudgui.h"
 
 static void load_stock_icon (char * id, char * filename,
@@ -42,7 +43,7 @@ ERR:
     g_free (path);
 }
 
-void
+EXPORT void
 audgui_register_stock_icons(void)
 {
     GtkIconFactory *iconfactory = gtk_icon_factory_new();

@@ -18,9 +18,9 @@
  */
 
 #include <stddef.h>
-
 #include <gtk/gtk.h>
 
+#include "config.h"
 #include "list.h"
 
 #define CHAR_WIDTH 12
@@ -555,7 +555,7 @@ static void update_selection (GtkWidget * list, ListModel * model, int at,
     model->blocked = FALSE;
 }
 
-GtkWidget * audgui_list_new_real (const AudguiListCallbacks * cbs, int cbs_size,
+EXPORT GtkWidget * audgui_list_new_real (const AudguiListCallbacks * cbs, int cbs_size,
  void * user, int rows)
 {
     g_return_val_if_fail (cbs->get_value, NULL);
@@ -638,14 +638,14 @@ GtkWidget * audgui_list_new_real (const AudguiListCallbacks * cbs, int cbs_size,
     return list;
 }
 
-void * audgui_list_get_user (GtkWidget * list)
+EXPORT void * audgui_list_get_user (GtkWidget * list)
 {
     ListModel * model = (ListModel *) gtk_tree_view_get_model
      ((GtkTreeView *) list);
     return model->user;
 }
 
-void audgui_list_add_column (GtkWidget * list, const char * title,
+EXPORT void audgui_list_add_column (GtkWidget * list, const char * title,
  int column, GType type, int width)
 {
     ListModel * model = (ListModel *) gtk_tree_view_get_model
@@ -678,12 +678,12 @@ void audgui_list_add_column (GtkWidget * list, const char * title,
     gtk_tree_view_append_column ((GtkTreeView *) list, tree_column);
 }
 
-int audgui_list_row_count (GtkWidget * list)
+EXPORT int audgui_list_row_count (GtkWidget * list)
 {
     return ((ListModel *) gtk_tree_view_get_model ((GtkTreeView *) list))->rows;
 }
 
-void audgui_list_insert_rows (GtkWidget * list, int at, int rows)
+EXPORT void audgui_list_insert_rows (GtkWidget * list, int at, int rows)
 {
     ListModel * model = (ListModel *) gtk_tree_view_get_model
      ((GtkTreeView *) list);
@@ -705,7 +705,7 @@ void audgui_list_insert_rows (GtkWidget * list, int at, int rows)
         update_selection (list, model, at, rows);
 }
 
-void audgui_list_update_rows (GtkWidget * list, int at, int rows)
+EXPORT void audgui_list_update_rows (GtkWidget * list, int at, int rows)
 {
     ListModel * model = (ListModel *) gtk_tree_view_get_model
      ((GtkTreeView *) list);
@@ -724,7 +724,7 @@ void audgui_list_update_rows (GtkWidget * list, int at, int rows)
     gtk_tree_path_free (path);
 }
 
-void audgui_list_delete_rows (GtkWidget * list, int at, int rows)
+EXPORT void audgui_list_delete_rows (GtkWidget * list, int at, int rows)
 {
     ListModel * model = (ListModel *) gtk_tree_view_get_model
      ((GtkTreeView *) list);
@@ -746,7 +746,7 @@ void audgui_list_delete_rows (GtkWidget * list, int at, int rows)
     model->blocked = FALSE;
 }
 
-void audgui_list_update_selection (GtkWidget * list, int at, int rows)
+EXPORT void audgui_list_update_selection (GtkWidget * list, int at, int rows)
 {
     ListModel * model = (ListModel *) gtk_tree_view_get_model
      ((GtkTreeView *) list);
@@ -755,14 +755,14 @@ void audgui_list_update_selection (GtkWidget * list, int at, int rows)
     update_selection (list, model, at, rows);
 }
 
-int audgui_list_get_highlight (GtkWidget * list)
+EXPORT int audgui_list_get_highlight (GtkWidget * list)
 {
     ListModel * model = (ListModel *) gtk_tree_view_get_model
      ((GtkTreeView *) list);
     return model->highlight;
 }
 
-void audgui_list_set_highlight (GtkWidget * list, int row)
+EXPORT void audgui_list_set_highlight (GtkWidget * list, int row)
 {
     ListModel * model = (ListModel *) gtk_tree_view_get_model
      ((GtkTreeView *) list);
@@ -779,7 +779,7 @@ void audgui_list_set_highlight (GtkWidget * list, int row)
         audgui_list_update_rows (list, row, 1);
 }
 
-int audgui_list_get_focus (GtkWidget * list)
+EXPORT int audgui_list_get_focus (GtkWidget * list)
 {
     GtkTreePath * path = NULL;
     gtk_tree_view_get_cursor ((GtkTreeView *) list, & path, NULL);
@@ -793,7 +793,7 @@ int audgui_list_get_focus (GtkWidget * list)
     return row;
 }
 
-void audgui_list_set_focus (GtkWidget * list, int row)
+EXPORT void audgui_list_set_focus (GtkWidget * list, int row)
 {
     ListModel * model = (ListModel *) gtk_tree_view_get_model
      ((GtkTreeView *) list);
@@ -814,7 +814,7 @@ void audgui_list_set_focus (GtkWidget * list, int row)
     model->frozen = FALSE;
 }
 
-int audgui_list_row_at_point (GtkWidget * list, int x, int y)
+EXPORT int audgui_list_row_at_point (GtkWidget * list, int x, int y)
 {
     ListModel * model = (ListModel *) gtk_tree_view_get_model ((GtkTreeView *)
      list);
@@ -846,7 +846,7 @@ int audgui_list_row_at_point (GtkWidget * list, int x, int y)
 
 /* old-style (pre-3.3) audgui_list_new() */
 #undef audgui_list_new
-GtkWidget * audgui_list_new (const AudguiListCallbacks * cbs, void * user, int rows)
+EXPORT GtkWidget * audgui_list_new (const AudguiListCallbacks * cbs, void * user, int rows)
 {
     return audgui_list_new_real (cbs, offsetof (AudguiListCallbacks,
      mouse_motion), user, rows);

@@ -21,6 +21,7 @@
 #include <pthread.h>
 #include <string.h>
 
+#include "config.h"
 #include "core.h"
 #include "hook.h"
 
@@ -38,7 +39,7 @@ static void str_unref_cb (void * str)
     str_unref (str);
 }
 
-void hook_associate (const char * name, HookFunction func, void * user)
+EXPORT void hook_associate (const char * name, HookFunction func, void * user)
 {
     pthread_mutex_lock (& mutex);
 
@@ -56,7 +57,7 @@ void hook_associate (const char * name, HookFunction func, void * user)
     pthread_mutex_unlock (& mutex);
 }
 
-void hook_dissociate_full (const char * name, HookFunction func, void * user)
+EXPORT void hook_dissociate_full (const char * name, HookFunction func, void * user)
 {
     pthread_mutex_lock (& mutex);
 
@@ -89,7 +90,7 @@ DONE:
     pthread_mutex_unlock (& mutex);
 }
 
-void hook_call (const char * name, void * data)
+EXPORT void hook_call (const char * name, void * data)
 {
     pthread_mutex_lock (& mutex);
 

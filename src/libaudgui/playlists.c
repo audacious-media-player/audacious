@@ -70,7 +70,7 @@ static bool_t confirm_overwrite (const char * filename)
     return (result == GTK_RESPONSE_YES);
 }
 
-void audgui_import_playlist (void)
+EXPORT void audgui_import_playlist (void)
 {
     int list = aud_playlist_get_active ();
     int id = aud_playlist_get_unique_id (list);
@@ -88,7 +88,7 @@ void audgui_import_playlist (void)
     g_free (filename);
 }
 
-void audgui_export_playlist (void)
+EXPORT void audgui_export_playlist (void)
 {
     int list = aud_playlist_get_active ();
     int id = aud_playlist_get_unique_id (list);

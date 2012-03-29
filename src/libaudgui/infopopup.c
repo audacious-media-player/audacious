@@ -329,7 +329,7 @@ static void infopopup_show (int playlist, int entry, const char * filename,
     gtk_widget_show (infopopup);
 }
 
-void audgui_infopopup_show (int playlist, int entry)
+EXPORT void audgui_infopopup_show (int playlist, int entry)
 {
     char * filename = aud_playlist_entry_get_filename (playlist, entry);
     char * title = aud_playlist_entry_get_title (playlist, entry, FALSE);
@@ -344,7 +344,7 @@ void audgui_infopopup_show (int playlist, int entry)
         tuple_unref (tuple);
 }
 
-void audgui_infopopup_show_current (void)
+EXPORT void audgui_infopopup_show_current (void)
 {
     int playlist = aud_playlist_get_playing ();
     int position;
@@ -360,7 +360,7 @@ void audgui_infopopup_show_current (void)
     audgui_infopopup_show (playlist, position);
 }
 
-void audgui_infopopup_hide (void)
+EXPORT void audgui_infopopup_hide (void)
 {
     if (! infopopup)
         return;

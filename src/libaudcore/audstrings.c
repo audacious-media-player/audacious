@@ -36,12 +36,12 @@
 #define IS_LEGAL(c) (((c) >= 'A' && (c) <= 'Z') || ((c) >= 'a' && (c) <= 'z') \
                   || ((c) >= '0' && (c) <= '9') || (strchr ("-_.~/", (c))))
 
-bool_t str_has_prefix_nocase (const char * str, const char * prefix)
+EXPORT bool_t str_has_prefix_nocase (const char * str, const char * prefix)
 {
     return ! g_ascii_strncasecmp (str, prefix, strlen (prefix));
 }
 
-bool_t str_has_suffix_nocase (const char * str, const char * suffix)
+EXPORT bool_t str_has_suffix_nocase (const char * str, const char * suffix)
 {
     int len1 = strlen (str);
     int len2 = strlen (suffix);
@@ -55,26 +55,26 @@ bool_t str_has_suffix_nocase (const char * str, const char * suffix)
 static char * (* str_to_utf8_impl) (const char *) = NULL;
 static char * (* str_to_utf8_full_impl) (const char *, int, int *, int *) = NULL;
 
-void str_set_utf8_impl (char * (* stu_impl) (const char *),
+EXPORT void str_set_utf8_impl (char * (* stu_impl) (const char *),
  char * (* stuf_impl) (const char *, int, int *, int *))
 {
     str_to_utf8_impl = stu_impl;
     str_to_utf8_full_impl = stuf_impl;
 }
 
-char * str_to_utf8 (const char * str)
+EXPORT char * str_to_utf8 (const char * str)
 {
     g_return_val_if_fail (str_to_utf8_impl, NULL);
     return str_to_utf8_impl (str);
 }
 
-char * str_to_utf8_full (const char * str, int len, int * bytes_read, int * bytes_written)
+EXPORT char * str_to_utf8_full (const char * str, int len, int * bytes_read, int * bytes_written)
 {
     g_return_val_if_fail (str_to_utf8_full_impl, NULL);
     return str_to_utf8_full_impl (str, len, bytes_read, bytes_written);
 }
 
-void string_replace_char (char * string, char old_str, char new_str)
+EXPORT void string_replace_char (char * string, char old_str, char new_str)
 {
     while ((string = strchr (string, old_str)) != NULL)
         * string = new_str;
@@ -84,7 +84,7 @@ void string_replace_char (char * string, char old_str, char new_str)
  * enough to hold the decoded string (i.e., (len + 1) bytes).  If <len> is
  * negative, decodes all of <str>. */
 
-void str_decode_percent (const char * str, int len, char * out)
+EXPORT void str_decode_percent (const char * str, int len, char * out)
 {
     if (len < 0)
         len = INT_MAX;
@@ -112,7 +112,7 @@ void str_decode_percent (const char * str, int len, char * out)
  * enough to hold the encoded string (i.e., (3 * len + 1) bytes).  If <len> is
  * negative, decodes all of <str>. */
 
-void str_encode_percent (const char * str, int len, char * out)
+EXPORT void str_encode_percent (const char * str, int len, char * out)
 {
     if (len < 0)
         len = INT_MAX;
@@ -140,7 +140,7 @@ void str_encode_percent (const char * str, int len, char * out)
  * UTF-8 before percent-encoding.  On Windows, replaces '\' with '/' and adds a
  * leading '/'. */
 
-char * filename_to_uri (const char * name)
+EXPORT char * filename_to_uri (const char * name)
 {
     char * utf8 = g_locale_to_utf8 (name, -1, NULL, NULL, NULL);
     if (! utf8)
@@ -168,7 +168,7 @@ char * filename_to_uri (const char * name)
  * locale after percent-decoding.  On Windows, strips the leading '/' and
  * replaces '/' with '\'. */
 
-char * uri_to_filename (const char * uri)
+EXPORT char * uri_to_filename (const char * uri)
 {
 #ifdef _WIN32
     g_return_val_if_fail (! strncmp (uri, "file:///", 8), NULL);
@@ -193,7 +193,7 @@ char * uri_to_filename (const char * uri)
 /* Formats a URI for human-readable display.  Percent-decodes and, for file://
  * URI's, converts to filename format, but in UTF-8. */
 
-char * uri_to_display (const char * uri)
+EXPORT char * uri_to_display (const char * uri)
 {
     if (! strncmp (uri, "cdda://?", 8))
         return g_strdup_printf (_("Audio CD, track %s"), uri + 8);
@@ -216,7 +216,7 @@ char * uri_to_display (const char * uri)
     return g_strdup (buf);
 }
 
-void uri_parse (const char * uri, const char * * base_p, const char * * ext_p,
+EXPORT void uri_parse (const char * uri, const char * * base_p, const char * * ext_p,
  const char * * sub_p, int * isub_p)
 {
     const char * end = uri + strlen (uri);
@@ -257,7 +257,7 @@ void uri_parse (const char * uri, const char * * base_p, const char * * ext_p,
 /* Non-ASCII characters are treated exactly as is. */
 /* Handles NULL gracefully. */
 
-int string_compare (const char * ap, const char * bp)
+EXPORT int string_compare (const char * ap, const char * bp)
 {
     if (ap == NULL)
         return (bp == NULL) ? 0 : -1;
@@ -301,7 +301,7 @@ int string_compare (const char * ap, const char * bp)
 
 /* Decodes percent-encoded strings, then compares then with string_compare. */
 
-int string_compare_encoded (const char * ap, const char * bp)
+EXPORT int string_compare_encoded (const char * ap, const char * bp)
 {
     if (ap == NULL)
         return (bp == NULL) ? 0 : -1;
@@ -354,7 +354,7 @@ int string_compare_encoded (const char * ap, const char * bp)
     return 0;
 }
 
-char *
+EXPORT char *
 str_replace_fragment(char *s, int size, const char *old, const char *new)
 {
     char *ptr = s;
@@ -402,7 +402,7 @@ str_replace_fragment(char *s, int size, const char *old, const char *new)
  * have an accuracy of 6 decimal places.
  */
 
-bool_t string_to_int (const char * string, int * addr)
+EXPORT bool_t string_to_int (const char * string, int * addr)
 {
     bool_t neg = (string[0] == '-');
     if (neg)
@@ -429,7 +429,7 @@ ERR:
     return FALSE;
 }
 
-bool_t string_to_double (const char * string, double * addr)
+EXPORT bool_t string_to_double (const char * string, double * addr)
 {
     bool_t neg = (string[0] == '-');
     if (neg)
@@ -483,13 +483,13 @@ ERR:
     return FALSE;
 }
 
-char * int_to_string (int val)
+EXPORT char * int_to_string (int val)
 {
     g_return_val_if_fail (val >= -1000000000 && val <= 1000000000, NULL);
     return g_strdup_printf ("%d", val);
 }
 
-char * double_to_string (double val)
+EXPORT char * double_to_string (double val)
 {
     g_return_val_if_fail (val >= -1000000000 && val <= 1000000000, NULL);
 
@@ -518,7 +518,7 @@ char * double_to_string (double val)
     return s;
 }
 
-bool_t string_to_double_array (const char * string, double * array, int count)
+EXPORT bool_t string_to_double_array (const char * string, double * array, int count)
 {
     char * * split = g_strsplit (string, ",", -1);
     if (g_strv_length (split) != count)
@@ -538,7 +538,7 @@ ERR:
     return FALSE;
 }
 
-char * double_array_to_string (const double * array, int count)
+EXPORT char * double_array_to_string (const double * array, int count)
 {
     char * * split = g_malloc0 (sizeof (char *) * (count + 1));
 

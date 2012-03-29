@@ -37,7 +37,7 @@
 
 static GdkPixbuf * current_pixbuf;
 
-void audgui_hide_on_delete (GtkWidget * widget)
+EXPORT void audgui_hide_on_delete (GtkWidget * widget)
 {
     g_signal_connect (widget, "delete-event", (GCallback)
      gtk_widget_hide_on_delete, NULL);
@@ -54,7 +54,7 @@ static bool_t escape_hide_cb (GtkWidget * widget, GdkEventKey * event)
     return FALSE;
 }
 
-void audgui_hide_on_escape (GtkWidget * widget)
+EXPORT void audgui_hide_on_escape (GtkWidget * widget)
 {
     g_signal_connect (widget, "key-press-event", (GCallback) escape_hide_cb, NULL);
 }
@@ -70,7 +70,7 @@ static bool_t escape_destroy_cb (GtkWidget * widget, GdkEventKey * event)
     return FALSE;
 }
 
-void audgui_destroy_on_escape (GtkWidget * widget)
+EXPORT void audgui_destroy_on_escape (GtkWidget * widget)
 {
     g_signal_connect (widget, "key-press-event", (GCallback) escape_destroy_cb, NULL);
 }
@@ -80,13 +80,13 @@ static void toggle_cb (GtkToggleButton * toggle, bool_t * setting)
     * setting = gtk_toggle_button_get_active (toggle);
 }
 
-void audgui_connect_check_box (GtkWidget * box, bool_t * setting)
+EXPORT void audgui_connect_check_box (GtkWidget * box, bool_t * setting)
 {
     gtk_toggle_button_set_active ((GtkToggleButton *) box, * setting);
     g_signal_connect ((GObject *) box, "toggled", (GCallback) toggle_cb, setting);
 }
 
-void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
+EXPORT void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
  const char * title, const char * text)
 {
     AUDDBG ("%s\n", text);
@@ -130,7 +130,7 @@ CREATED:
     gtk_window_present ((GtkWindow *) * widget);
 }
 
-GdkPixbuf * audgui_pixbuf_from_data (const void * data, int64_t size)
+EXPORT GdkPixbuf * audgui_pixbuf_from_data (const void * data, int64_t size)
 {
     GdkPixbuf * pixbuf = NULL;
     GdkPixbufLoader * loader = gdk_pixbuf_loader_new ();
@@ -149,7 +149,7 @@ GdkPixbuf * audgui_pixbuf_from_data (const void * data, int64_t size)
     return pixbuf;
 }
 
-GdkPixbuf * audgui_pixbuf_for_entry (int list, int entry)
+EXPORT GdkPixbuf * audgui_pixbuf_for_entry (int list, int entry)
 {
     char * name = aud_playlist_entry_get_filename (list, entry);
     g_return_val_if_fail (name, NULL);
@@ -196,7 +196,7 @@ void audgui_pixbuf_uncache (void)
     }
 }
 
-GdkPixbuf * audgui_pixbuf_for_current (void)
+EXPORT GdkPixbuf * audgui_pixbuf_for_current (void)
 {
     if (! current_pixbuf)
     {
@@ -210,7 +210,7 @@ GdkPixbuf * audgui_pixbuf_for_current (void)
     return current_pixbuf;
 }
 
-void audgui_pixbuf_scale_within (GdkPixbuf * * pixbuf, int size)
+EXPORT void audgui_pixbuf_scale_within (GdkPixbuf * * pixbuf, int size)
 {
     int width = gdk_pixbuf_get_width (* pixbuf);
     int height = gdk_pixbuf_get_height (* pixbuf);
@@ -240,7 +240,7 @@ void audgui_pixbuf_scale_within (GdkPixbuf * * pixbuf, int size)
     * pixbuf = pixbuf2;
 }
 
-void audgui_set_default_icon (void)
+EXPORT void audgui_set_default_icon (void)
 {
 #ifndef _WIN32
     gtk_window_set_default_icon_name ("audacious");

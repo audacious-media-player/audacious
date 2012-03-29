@@ -22,6 +22,7 @@
 
 #include <glib.h>
 
+#include "config.h"
 #include "index.h"
 
 struct _Index {
@@ -38,7 +39,7 @@ typedef struct {
     void * data;
 } CompareWrapper2;
 
-Index * index_new (void)
+EXPORT Index * index_new (void)
 {
     Index * index = g_slice_new (Index);
 
@@ -49,18 +50,18 @@ Index * index_new (void)
     return index;
 }
 
-void index_free (Index * index)
+EXPORT void index_free (Index * index)
 {
     g_free (index->data);
     g_slice_free (Index, index);
 }
 
-int index_count (Index * index)
+EXPORT int index_count (Index * index)
 {
     return index->count;
 }
 
-void index_allocate (Index * index, int size)
+EXPORT void index_allocate (Index * index, int size)
 {
     if (size <= index->size)
         return;
@@ -74,12 +75,12 @@ void index_allocate (Index * index, int size)
     index->data = g_realloc (index->data, sizeof (void *) * index->size);
 }
 
-void index_set (Index * index, int at, void * value)
+EXPORT void index_set (Index * index, int at, void * value)
 {
     index->data[at] = value;
 }
 
-void * index_get (Index * index, int at)
+EXPORT void * index_get (Index * index, int at)
 {
     return index->data[at];
 }
@@ -95,52 +96,52 @@ static void make_room (Index * index, int at, int count)
     index->count += count;
 }
 
-void index_insert (Index * index, int at, void * value)
+EXPORT void index_insert (Index * index, int at, void * value)
 {
     make_room (index, at, 1);
     index->data[at] = value;
 }
 
-void index_append (Index * index, void * value)
+EXPORT void index_append (Index * index, void * value)
 {
     index_insert (index, index->count, value);
 }
 
-void index_copy_set (Index * source, int from, Index * target,
+EXPORT void index_copy_set (Index * source, int from, Index * target,
  int to, int count)
 {
     memcpy (target->data + to, source->data + from, sizeof (void *) * count);
 }
 
-void index_copy_insert (Index * source, int from, Index * target,
+EXPORT void index_copy_insert (Index * source, int from, Index * target,
  int to, int count)
 {
     make_room (target, to, count);
     memcpy (target->data + to, source->data + from, sizeof (void *) * count);
 }
 
-void index_copy_append (Index * source, int from, Index * target,
+EXPORT void index_copy_append (Index * source, int from, Index * target,
  int count)
 {
     index_copy_insert (source, from, target, target->count, count);
 }
 
-void index_merge_insert (Index * first, int at, Index * second)
+EXPORT void index_merge_insert (Index * first, int at, Index * second)
 {
     index_copy_insert (second, 0, first, at, second->count);
 }
 
-void index_merge_append (Index * first, Index * second)
+EXPORT void index_merge_append (Index * first, Index * second)
 {
     index_copy_insert (second, 0, first, first->count, second->count);
 }
 
-void index_move (Index * index, int from, int to, int count)
+EXPORT void index_move (Index * index, int from, int to, int count)
 {
     memmove (index->data + to, index->data + from, sizeof (void *) * count);
 }
 
-void index_delete (Index * index, int at, int count)
+EXPORT void index_delete (Index * index, int at, int count)
 {
     index->count -= count;
     memmove (index->data + at, index->data + at + count, sizeof (void *) *
@@ -153,7 +154,7 @@ static int index_compare (const void * ap, const void * bp, void * _wrapper)
     return wrapper->compare (* (const void * *) ap, * (const void * *) bp);
 }
 
-void index_sort (Index * index, int (* compare) (const void *, const void *))
+EXPORT void index_sort (Index * index, int (* compare) (const void *, const void *))
 {
     CompareWrapper wrapper = {compare};
     g_qsort_with_data (index->data, index->count, sizeof (void *),
@@ -166,7 +167,7 @@ static int index_compare2 (const void * ap, const void * bp, void * _wrapper)
     return wrapper->compare (* (const void * *) ap, * (const void * *) bp, wrapper->data);
 }
 
-void index_sort_with_data (Index * index, int (* compare)
+EXPORT void index_sort_with_data (Index * index, int (* compare)
  (const void * a, const void * b, void * data), void * data)
 {
     CompareWrapper2 wrapper = {compare, data};
