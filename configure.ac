@@ -35,17 +35,18 @@ AC_MSG_CHECKING([for Microsoft Windows])
 case "$target" in
     *mingw*)
         AC_MSG_RESULT([yes])
-        have_mswindows=yes
+        HAVE_MSWINDOWS="yes"
         ;;
     *)
         AC_MSG_RESULT([no])
-        have_mswindows=no
+        HAVE_MSWINDOWS="no"
         ;;
 esac
+AC_SUBST([HAVE_MSWINDOWS])
 
 dnl Prevent symbol collisions
 dnl =========================
-if test "x$have_mswindows" = "xyes" ; then
+if test "x$HAVE_MSWINDOWS" = "xyes" ; then
     EXPORT="__declspec(dllexport)"
 elif test "x$GCC" = "xyes" ; then
     CFLAGS="$CFLAGS -fvisibility=hidden"
@@ -102,7 +103,7 @@ AC_ARG_ENABLE([text-console],
 [use_text_console=no]
 )
 
-if test "x$have_mswindows" = "xyes" && test "x$use_text_console" = "xno" ; then
+if test "x$HAVE_MSWINDOWS" = "xyes" && test "x$use_text_console" = "xno" ; then
 	LDFLAGS="$LDFLAGS -Wl,-subsystem,windows"
 fi
 
