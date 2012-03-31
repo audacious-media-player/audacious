@@ -293,6 +293,7 @@ static const char * const translators_text[] = {
     "Szymon Weihs",
     NULL,
     N_("Portuguese:"),
+    "Sérgio Marques",
     "Luís Picciochi Oliveira",
     NULL,
     N_("Romanian:"),

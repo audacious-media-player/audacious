@@ -1,1203 +1,1158 @@
-# translation of audacious_2.0_eu.po to Basque
-# translation of audacious_2.0_eu.po to
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# Basque translation for Audacious
+# Copyright (C) Audacious translators
+# This file is distributed under the same license as the Audacious package.
 #
+# Translators:
+#   <ibonatan@gmail.com>, 2012.
 # Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2008, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: audacious_2.0_eu\n"
-"Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-07-05 22:45+0200\n"
-"PO-Revision-Date: 2009-04-02 22:22+0200\n"
-"Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
-"Language-Team: Basque <itzulpena@euskalgnu.org>\n"
-"Language: eu\n"
+"Project-Id-Version: Audacious\n"
+"Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
+"POT-Creation-Date: 2012-01-11 08:54-0500\n"
+"PO-Revision-Date: 2012-03-22 18:04+0000\n"
+"Last-Translator: obibon <ibonatan@gmail.com>\n"
+"Language-Team: Basque\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: eu\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: src/audacious/adder.c:71
+#: src/audacious/adder.c:77
 msgid "Searching ..."
-msgstr ""
+msgstr "Bilatzen"
 
-#: src/audacious/adder.c:99
+#: src/audacious/adder.c:113
 #, c-format
 msgid "%d file found"
 msgid_plural "%d files found"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d fitxategia ez da aurkitu"
+msgstr[1] "%d fitxategiak ez dira aurkitu"
 
-#: src/audacious/chardet.c:37
+#: src/audacious/chardet.c:39
 msgid "  (invalid UTF-8)"
 msgstr "  (UTF-8 baliogabea)"
 
-#: src/audacious/credits.c:35
-#, fuzzy
+#: src/audacious/credits.c:37
 msgid "Core developers:"
-msgstr "0.1.x garatzaileak:"
+msgstr ""
 
-#: src/audacious/credits.c:49
+#: src/audacious/credits.c:51
 msgid "Graphics:"
 msgstr "Grafikoak:"
 
-#: src/audacious/credits.c:54
+#: src/audacious/credits.c:56
 msgid "Default skin:"
 msgstr "Azal lehenetsia:"
 
-#: src/audacious/credits.c:60
+#: src/audacious/credits.c:62
 msgid "Plugin development:"
 msgstr "Pluginen garaketa:"
 
-#: src/audacious/credits.c:83
+#: src/audacious/credits.c:85
 msgid "Patch authors:"
 msgstr "Adabakien egileak:"
 
-#: src/audacious/credits.c:126
-#, fuzzy
+#: src/audacious/credits.c:131
 msgid "1.x developers:"
-msgstr "0.1.x garatzaileak:"
+msgstr ""
 
-#: src/audacious/credits.c:148
+#: src/audacious/credits.c:153
 msgid "BMP Developers:"
 msgstr "MBP garatzaileak:"
 
-#: src/audacious/credits.c:180
-#, fuzzy
+#: src/audacious/credits.c:185
 msgid "Belarusian:"
-msgstr "Bulgariera:"
+msgstr "Biolorrusiera"
 
-#: src/audacious/credits.c:183
+#: src/audacious/credits.c:188
 msgid "Basque:"
-msgstr ""
+msgstr "Euskara"
 
-#: src/audacious/credits.c:186
+#: src/audacious/credits.c:191
 msgid "Brazilian Portuguese:"
 msgstr "Brasilgo portugesa:"
 
-#: src/audacious/credits.c:190
+#: src/audacious/credits.c:196
 msgid "Breton:"
 msgstr "Bretoiera:"
 
-#: src/audacious/credits.c:193
+#: src/audacious/credits.c:199
 msgid "Bulgarian:"
 msgstr "Bulgariera:"
 
-#: src/audacious/credits.c:196
+#: src/audacious/credits.c:202
 msgid "Catalan:"
 msgstr "Katalana:"
 
-#: src/audacious/credits.c:199
-#, fuzzy
+#: src/audacious/credits.c:206
 msgid "Chinese:"
-msgstr "Txinatarra"
+msgstr "Txinera"
 
-#: src/audacious/credits.c:202
+#: src/audacious/credits.c:209
 msgid "Croatian:"
 msgstr "Kroaziera:"
 
-#: src/audacious/credits.c:205
+#: src/audacious/credits.c:212
 msgid "Czech:"
 msgstr "Txekiera:"
 
-#: src/audacious/credits.c:208
+#: src/audacious/credits.c:215
 msgid "Dutch:"
 msgstr "Nederlandera:"
 
-#: src/audacious/credits.c:212
+#: src/audacious/credits.c:219
 msgid "Estonian:"
 msgstr "Estoniera:"
 
-#: src/audacious/credits.c:215
+#: src/audacious/credits.c:222
 msgid "Finnish:"
 msgstr "Finlandiera:"
 
-#: src/audacious/credits.c:220
+#: src/audacious/credits.c:227
 msgid "French:"
 msgstr "Frantsesa:"
 
-#: src/audacious/credits.c:226
+#: src/audacious/credits.c:233
 msgid "German:"
 msgstr "Alemana:"
 
-#: src/audacious/credits.c:233
+#: src/audacious/credits.c:240
 msgid "Georgian:"
 msgstr "Georgiera:"
 
-#: src/audacious/credits.c:236
+#: src/audacious/credits.c:243
 msgid "Greek:"
 msgstr "Grekoa:"
 
-#: src/audacious/credits.c:241
+#: src/audacious/credits.c:248
 msgid "Hindi:"
 msgstr "Hindiera:"
 
-#: src/audacious/credits.c:244
+#: src/audacious/credits.c:251
 msgid "Hungarian:"
 msgstr "Hungariera:"
 
-#: src/audacious/credits.c:248
+#: src/audacious/credits.c:255
 msgid "Italian:"
 msgstr "Italiera:"
 
-#: src/audacious/credits.c:252
+#: src/audacious/credits.c:260
 msgid "Japanese:"
 msgstr "Japoniera:"
 
-#: src/audacious/credits.c:255
+#: src/audacious/credits.c:263
 msgid "Korean:"
 msgstr "Koreera:"
 
-#: src/audacious/credits.c:258
-#, fuzzy
+#: src/audacious/credits.c:266
 msgid "Latvian:"
-msgstr "Kroaziera:"
+msgstr "Letoniera"
 
-#: src/audacious/credits.c:261
+#: src/audacious/credits.c:269
 msgid "Lithuanian:"
 msgstr "Lituaniera:"
 
-#: src/audacious/credits.c:265
+#: src/audacious/credits.c:274
 msgid "Macedonian:"
 msgstr "Mazedoniera:"
 
-#: src/audacious/credits.c:268
+#: src/audacious/credits.c:277
+msgid "Mexican Spanish:"
+msgstr "Mexikoko gaztelera"
+
+#: src/audacious/credits.c:280
 msgid "Polish:"
 msgstr "Poloniera:"
 
-#: src/audacious/credits.c:274
-#, fuzzy
+#: src/audacious/credits.c:287
 msgid "Portuguese:"
-msgstr "Brasilgo portugesa:"
+msgstr "Portugesa"
 
-#: src/audacious/credits.c:277
+#: src/audacious/credits.c:290
 msgid "Romanian:"
 msgstr "Errumaniera:"
 
-#: src/audacious/credits.c:281
+#: src/audacious/credits.c:294
 msgid "Russian:"
 msgstr "Errusiera:"
 
-#: src/audacious/credits.c:285
+#: src/audacious/credits.c:298
 msgid "Serbian (Latin):"
 msgstr "Serbiera (Latinoa):"
 
-#: src/audacious/credits.c:288
+#: src/audacious/credits.c:301
 msgid "Serbian (Cyrillic):"
 msgstr "Serbiera (Zirilikoa):"
 
-#: src/audacious/credits.c:291
+#: src/audacious/credits.c:305
 msgid "Simplified Chinese:"
 msgstr "Txinera soildua:"
 
-#: src/audacious/credits.c:294
+#: src/audacious/credits.c:308
 msgid "Slovak:"
 msgstr "Eslovakiera:"
 
-#: src/audacious/credits.c:297
+#: src/audacious/credits.c:312
 msgid "Spanish:"
 msgstr "Gaztelania:"
 
-#: src/audacious/credits.c:304
+#: src/audacious/credits.c:320
 msgid "Swedish:"
 msgstr "Suediera:"
 
-#: src/audacious/credits.c:307
+#: src/audacious/credits.c:323
 msgid "Traditional Chinese:"
 msgstr "Txinera tradizionala:"
 
-#: src/audacious/credits.c:312
+#: src/audacious/credits.c:329
 msgid "Turkish:"
 msgstr "Turkiera:"
 
-#: src/audacious/credits.c:316
+#: src/audacious/credits.c:333
 msgid "Ukrainian:"
 msgstr "Ukrainera:"
 
-#: src/audacious/credits.c:319
+#: src/audacious/credits.c:338
+msgid "Vietnamese:"
+msgstr "Vietnamera"
+
+#: src/audacious/credits.c:341
 msgid "Welsh:"
 msgstr "Galesa:"
 
-#: src/audacious/drct.c:256
-#, fuzzy
-msgid "Temporary Playlist"
-msgstr "Kargatu erreprodukzio-zerrenda"
-
-#: src/audacious/equalizer_preset.c:186
+#: src/audacious/equalizer_preset.c:180
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
 msgstr "Errorea '%s' Winamp EQF fitxategia inportatzean"
 
-#: src/audacious/main.c:256
+#: src/audacious/main.c:243
 msgid "Skip backwards in playlist"
 msgstr "Erreprodukzio-zerrendan atzerantz egiten du"
 
-#: src/audacious/main.c:257
+#: src/audacious/main.c:244
 msgid "Start playing current playlist"
 msgstr "Uneko zerrenda erreproduzitzen hasten da"
 
-#: src/audacious/main.c:258
+#: src/audacious/main.c:245
 msgid "Pause current song"
 msgstr "Uneko kanta pausarazten du"
 
-#: src/audacious/main.c:259
+#: src/audacious/main.c:246
 msgid "Stop current song"
 msgstr "Uneko kanta geldiarazten du"
 
-#: src/audacious/main.c:260
+#: src/audacious/main.c:247
 msgid "Pause if playing, play otherwise"
 msgstr "Erreproduzitzen ari bada pausarazi, bestela erreproduzitu"
 
-#: src/audacious/main.c:261
+#: src/audacious/main.c:248
 msgid "Skip forward in playlist"
 msgstr "Erreprodukzio-zerrendan aurrerantz egiten du"
 
-#: src/audacious/main.c:262
+#: src/audacious/main.c:249
 msgid "Display Jump to File dialog"
 msgstr "Bistaratu 'Saltatu fitxategira' elkarrizketa-koadroa"
 
-#: src/audacious/main.c:263
-#, fuzzy
+#: src/audacious/main.c:250
 msgid "Add files to the playlist"
-msgstr "Fitxategiak gehitzen dizkio zerrendari."
+msgstr "Gehitu fitxategiak erreprodukzio-zerrendara"
 
-#: src/audacious/main.c:264
+#: src/audacious/main.c:251
 msgid "Add new files to a temporary playlist"
 msgstr "Gehitu fitxategi berriak aldi baterako erreprodukzio-zerrendari"
 
-#: src/audacious/main.c:265
+#: src/audacious/main.c:252
 msgid "Display the main window"
 msgstr "Bistaratu nagusia leihoa"
 
-#: src/audacious/main.c:266
+#: src/audacious/main.c:253
 msgid "Show version"
 msgstr "Erakutsi bertsioa"
 
-#: src/audacious/main.c:267
+#: src/audacious/main.c:254
 msgid "Print debugging messages"
 msgstr ""
 
-#: src/audacious/main.c:268
+#: src/audacious/main.c:255
+msgid "Headless mode (beta)"
+msgstr ""
+
+#: src/audacious/main.c:256
 msgid "FILE..."
 msgstr "FITXATEGIA..."
 
-#: src/audacious/main.c:280
+#: src/audacious/main.c:268
 msgid "- play multimedia files"
 msgstr "- erreproduzitu multimedia fitxategiak"
 
-#: src/audacious/main.c:290
+#: src/audacious/main.c:278
 #, c-format
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
-msgstr ""
-"%s: %s\n"
-"Exekutatu '%s --help' informazio gehiagorako.\n"
+msgstr "%s: %s\nExekutatu '%s --help' informazio gehiagorako.\n"
 
-#: src/audacious/main.c:407
-msgid ""
-"Audacious seems to be already running but is not responding.  You can start "
-"another instance of the program, but please be warned that this can cause "
-"data loss.  If Audacious is not running, you can safely ignore this "
-"message.  Press OK to start Audacious or Cancel to quit."
-msgstr ""
-
-#: src/audacious/main.c:572
+#: src/audacious/main.c:573
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/playback.c:381
+#: src/audacious/playback.c:307
 #, c-format
 msgid "No decoder found for %s."
+msgstr "Ez dago %s-rako dekodifikatzailerik."
+
+#: src/audacious/playlist-files.c:53
+#, c-format
+msgid "Cannot %s %s: unsupported file extension."
 msgstr ""
 
-#: src/audacious/playback.c:531
-msgid "Buffering ..."
-msgstr ""
+#: src/audacious/playlist-files.c:54
+msgid "save"
+msgstr "Gorde"
 
-#: src/audacious/playlist-new.c:303
-#, fuzzy
-msgid "Untitled Playlist"
+#: src/audacious/playlist-files.c:54
+msgid "load"
+msgstr "Kargatu"
+
+#: src/audacious/playlist-new.c:131
+msgid "New Playlist"
 msgstr "Erreprodukzio-zerrenda berria"
 
-#: src/audacious/ui_preferences.c:87
+#: src/audacious/playlist-new.c:132
+msgid "Now Playing"
+msgstr "Orain erreproduzitzen"
+
+#: src/audacious/playlist-new.c:1630
+msgid ""
+"The playlist cannot be sorted because metadata scanning is still in progress"
+" (or has been disabled)."
+msgstr ""
+
+#: src/audacious/ui_preferences.c:85
 msgid "Audio"
 msgstr "Audioa"
 
-#: src/audacious/ui_preferences.c:88
+#: src/audacious/ui_preferences.c:86
 msgid "Network"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:89 src/audacious/ui_preferences.c:1556
+#: src/audacious/ui_preferences.c:87 src/audacious/ui_preferences.c:1603
 msgid "Playlist"
 msgstr "Erreprodukzio-zerrenda"
 
-#: src/audacious/ui_preferences.c:90
+#: src/audacious/ui_preferences.c:88
 msgid "Plugins"
 msgstr "Pluginak"
 
-#: src/audacious/ui_preferences.c:96 src/libaudgui/infopopup.c:204
+#: src/audacious/ui_preferences.c:94 src/libaudgui/infopopup.c:199
 msgid "Artist"
 msgstr "Artista"
 
-#: src/audacious/ui_preferences.c:97 src/libaudgui/infopopup.c:206
+#: src/audacious/ui_preferences.c:95 src/libaudgui/infopopup.c:201
 msgid "Album"
 msgstr "Albuma"
 
-#: src/audacious/ui_preferences.c:98 src/libaudgui/infopopup.c:202
-#: src/libaudgui/ui_playlist_manager.c:263
+#: src/audacious/ui_preferences.c:96 src/libaudgui/infopopup.c:197
+#: src/libaudgui/ui_playlist_manager.c:279
 msgid "Title"
 msgstr "Titulua"
 
-#: src/audacious/ui_preferences.c:99
+#: src/audacious/ui_preferences.c:97
 msgid "Tracknumber"
 msgstr "Pista-zenbakia"
 
-#: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:208
+#: src/audacious/ui_preferences.c:98 src/libaudgui/infopopup.c:203
 msgid "Genre"
 msgstr "Generoa"
 
-#: src/audacious/ui_preferences.c:101
+#: src/audacious/ui_preferences.c:99
 msgid "Filename"
 msgstr "Fitxategi-izena"
 
-#: src/audacious/ui_preferences.c:102
+#: src/audacious/ui_preferences.c:100
 msgid "Filepath"
 msgstr "Fitxategiaren bide-izena"
 
-#: src/audacious/ui_preferences.c:103
+#: src/audacious/ui_preferences.c:101
 msgid "Date"
 msgstr "Data"
 
-#: src/audacious/ui_preferences.c:104 src/libaudgui/infopopup.c:210
+#: src/audacious/ui_preferences.c:102 src/libaudgui/infopopup.c:205
 msgid "Year"
 msgstr "Urtea"
 
-#: src/audacious/ui_preferences.c:105
+#: src/audacious/ui_preferences.c:103
 msgid "Comment"
 msgstr "Iruzkina"
 
-#: src/audacious/ui_preferences.c:106
+#: src/audacious/ui_preferences.c:104
 msgid "Codec"
 msgstr "Kodeka"
 
-#: src/audacious/ui_preferences.c:107
+#: src/audacious/ui_preferences.c:105
 msgid "Quality"
 msgstr "Kalitatea"
 
-#: src/audacious/ui_preferences.c:112
+#: src/audacious/ui_preferences.c:111
 msgid "None"
 msgstr "Bat ere ez"
 
-#: src/audacious/ui_preferences.c:113
-msgid "Japanese"
-msgstr "Japoniarra"
-
-#: src/audacious/ui_preferences.c:114
-msgid "Taiwanese"
-msgstr "Taiwanera"
-
-#: src/audacious/ui_preferences.c:115
-msgid "Chinese"
-msgstr "Txinatarra"
-
-#: src/audacious/ui_preferences.c:116
-msgid "Korean"
-msgstr "Korearra"
-
-#: src/audacious/ui_preferences.c:117
-msgid "Russian"
-msgstr "Errusiarra"
-
-#: src/audacious/ui_preferences.c:118
-msgid "Greek"
-msgstr "Grekoa"
-
-#: src/audacious/ui_preferences.c:119
-msgid "Hebrew"
-msgstr "Hebrearra"
-
-#: src/audacious/ui_preferences.c:120
-msgid "Turkish"
-msgstr "Turkiarra"
-
-#: src/audacious/ui_preferences.c:121
+#: src/audacious/ui_preferences.c:112
 msgid "Arabic"
 msgstr "Arabiarra"
 
-#: src/audacious/ui_preferences.c:122
-#, fuzzy
-msgid "Polish"
-msgstr "Poloniera:"
-
-#: src/audacious/ui_preferences.c:123
-#, fuzzy
+#: src/audacious/ui_preferences.c:113
 msgid "Baltic"
-msgstr "Zelta"
+msgstr "Baltikoa"
 
-#: src/audacious/ui_preferences.c:124
-msgid "Universal"
-msgstr "Unibertsala"
+#: src/audacious/ui_preferences.c:114
+msgid "Chinese"
+msgstr "Txinatarra"
 
-#: src/audacious/ui_preferences.c:146
-#, fuzzy
-msgid "Single track mode"
-msgstr "Ikusi pistaren xehetasunak"
+#: src/audacious/ui_preferences.c:115
+msgid "Greek"
+msgstr "Grekoa"
+
+#: src/audacious/ui_preferences.c:116
+msgid "Hebrew"
+msgstr "Hebrearra"
+
+#: src/audacious/ui_preferences.c:117
+msgid "Japanese"
+msgstr "Japoniarra"
+
+#: src/audacious/ui_preferences.c:118
+msgid "Korean"
+msgstr "Korearra"
+
+#: src/audacious/ui_preferences.c:119
+msgid "Polish"
+msgstr "Poloniera"
+
+#: src/audacious/ui_preferences.c:120
+msgid "Russian"
+msgstr "Errusiarra"
+
+#: src/audacious/ui_preferences.c:121
+msgid "Taiwanese"
+msgstr "Taiwanera"
+
+#: src/audacious/ui_preferences.c:122
+msgid "Turkish"
+msgstr "Turkiarra"
+
+#: src/audacious/ui_preferences.c:144
+msgid "Album mode"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:147
-#, fuzzy
-msgid "Album mode"
-msgstr "Albuma: "
-
-#: src/audacious/ui_preferences.c:150
-#, fuzzy
 msgid "<b>Output Settings</b>"
-msgstr "<b>Formatuaren detekzioa</b>"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:149
+msgid "Bit depth:"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:152
-#, fuzzy
-msgid "Bit depth:"
-msgstr "Irteerako bit-sakonera:"
-
-#: src/audacious/ui_preferences.c:155
 msgid "Buffer size:"
 msgstr "Bufferraren tamaina:"
 
-#: src/audacious/ui_preferences.c:157
+#: src/audacious/ui_preferences.c:154
 msgid "ms"
+msgstr "ms"
+
+#: src/audacious/ui_preferences.c:155
+msgid "Use software volume control (not recommended)"
+msgstr "Softwarearen bolumen kontrola erabili (ez gomendagarria)"
+
+#: src/audacious/ui_preferences.c:157
+msgid "<b>Replay Gain</b>"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:158
-#, fuzzy
-msgid "Use software volume control (not recommended)"
-msgstr "Erabili softwarearen bolumen-kontrola"
-
-#: src/audacious/ui_preferences.c:160
-#, fuzzy
-msgid "<b>Replay Gain</b>"
-msgstr "<b>Irabazpenaren modua</b>"
-
-#: src/audacious/ui_preferences.c:161
 msgid "Enable Replay Gain"
 msgstr "Gaitu irabazpena"
 
-#: src/audacious/ui_preferences.c:164
+#: src/audacious/ui_preferences.c:161
 msgid "Prevent clipping (recommended)"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:166
-#, fuzzy
+#: src/audacious/ui_preferences.c:163
 msgid "<b>Adjust Levels</b>"
-msgstr "<b>Saguaren gurpila</b>"
+msgstr ""
 
-#: src/audacious/ui_preferences.c:167
+#: src/audacious/ui_preferences.c:164
 msgid "Amplify all files:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:169 src/audacious/ui_preferences.c:172
+#: src/audacious/ui_preferences.c:166 src/audacious/ui_preferences.c:169
 msgid "dB"
 msgstr "dB"
 
-#: src/audacious/ui_preferences.c:170
-#, fuzzy
+#: src/audacious/ui_preferences.c:167
 msgid "Amplify untagged files:"
-msgstr "- erreproduzitu multimedia fitxategiak"
+msgstr ""
 
-#: src/audacious/ui_preferences.c:175
+#: src/audacious/ui_preferences.c:172
 msgid "Proxy hostname:"
 msgstr "Proxy-aren ostalari-izena:"
 
-#: src/audacious/ui_preferences.c:176
+#: src/audacious/ui_preferences.c:173
 msgid "Proxy port:"
 msgstr "Proxy-aren ataka:"
 
-#: src/audacious/ui_preferences.c:179
+#: src/audacious/ui_preferences.c:176
 msgid "Proxy username:"
 msgstr "Proxy-aren erabiltzaile-izena:"
 
-#: src/audacious/ui_preferences.c:180
+#: src/audacious/ui_preferences.c:177
 msgid "Proxy password:"
 msgstr "Proxy-aren pasahitza:"
 
-#: src/audacious/ui_preferences.c:184
+#: src/audacious/ui_preferences.c:181
 msgid "<b>Proxy Configuration</b>"
 msgstr "<b>Proxy-aren konfigurazioa</b>"
 
-#: src/audacious/ui_preferences.c:185
+#: src/audacious/ui_preferences.c:182
 msgid "Enable proxy usage"
 msgstr "Gaitu proxy-a erabiltzea"
 
-#: src/audacious/ui_preferences.c:187
+#: src/audacious/ui_preferences.c:185
 msgid "Use authentication with proxy"
 msgstr "Erabili autentifikazioa proxy-arekin"
-
-#: src/audacious/ui_preferences.c:189
-msgid ""
-"<span size=\"small\">Changing these settings will require a restart of "
-"Audacious.</span>"
-msgstr ""
-"<span size=\"small\">Ezarpen hauen aldaketek Audacious berrabiaraztea "
-"eskatzen dute.</span>"
 
 #: src/audacious/ui_preferences.c:193
 msgid "Auto character encoding detector for:"
 msgstr "Karaktere-kodeketaren detekzio automatikoa:"
 
-#: src/audacious/ui_preferences.c:201
+#: src/audacious/ui_preferences.c:198
 msgid "Fallback character encodings:"
 msgstr "Karaktere-kodeketa:"
 
-#: src/audacious/ui_preferences.c:201
-msgid ""
-"List of character encodings used for fall back conversion of metadata. If "
-"automatic character encoding detector failed or has been disabled, encodings "
-"in this list would be treated as candidates of the encoding of metadata, and "
-"fall back conversion from these encodings to UTF-8 would be attempted."
-msgstr ""
-"Metadatuen bihurketa egiteko erabiliko den karaktere-kodeketen zerrenda. "
-"Karaktere-kodeketaren detekzio automatikoak huts egiten badu, edo desgaitu "
-"egin bada, zerrenda honetako kodeketak erabiliko dira metadatuen kodeketako "
-"hautagai gisa, eta kodeketa hauetatik UTF-8ra bihurtzen saiatuko da."
-
-#: src/audacious/ui_preferences.c:205
-#, fuzzy
+#: src/audacious/ui_preferences.c:202
 msgid "<b>Behavior</b>"
-msgstr "<b>Bit-sakonera</b>"
+msgstr "<b>Jarrera</b>"
 
-#: src/audacious/ui_preferences.c:206
+#: src/audacious/ui_preferences.c:203
 msgid "Continue playback on startup"
 msgstr "Jarraitu erreprodukzioa abiaraztean"
 
-#: src/audacious/ui_preferences.c:208
+#: src/audacious/ui_preferences.c:205
 msgid "Advance when the current song is deleted"
-msgstr ""
+msgstr "Aurreratu uneko abestia ezabatzen denean"
 
-#: src/audacious/ui_preferences.c:210
-#, fuzzy
+#: src/audacious/ui_preferences.c:207
 msgid "Clear the playlist when opening files"
-msgstr "Sortu erreprodukzio-zerrenda berria bat datozten sarrerekin"
+msgstr "Garbitu erreprodukzio-zerrenda fitxategiak irekitzerakoan"
 
-#: src/audacious/ui_preferences.c:212
-#, fuzzy
+#: src/audacious/ui_preferences.c:209
 msgid "Open files in a temporary playlist"
 msgstr "Gehitu fitxategi berriak aldi baterako erreprodukzio-zerrendari"
 
-#: src/audacious/ui_preferences.c:214
+#: src/audacious/ui_preferences.c:211
 msgid "<b>Metadata</b>"
 msgstr "<b>Metadatuak</b>"
 
-#: src/audacious/ui_preferences.c:454
+#: src/audacious/ui_preferences.c:212
+msgid "Do not load metadata for songs until played"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:230
+msgid "TITLE"
+msgstr "TITULUA"
+
+#: src/audacious/ui_preferences.c:231
+msgid "ARTIST - TITLE"
+msgstr "ARTISTA - TITULUA"
+
+#: src/audacious/ui_preferences.c:232
+msgid "ARTIST - ALBUM - TITLE"
+msgstr "ARTISTA - ALBUMA - TITULUA"
+
+#: src/audacious/ui_preferences.c:233
+msgid "ARTIST - ALBUM - TRACK. TITLE"
+msgstr "ARTISTA - ALBUMA - PISTA. TITULUA"
+
+#: src/audacious/ui_preferences.c:234
+msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
+msgstr "ARTISTA - [ALBUMA] - PISTA. TITULUA"
+
+#: src/audacious/ui_preferences.c:235
+msgid "ALBUM - TITLE"
+msgstr "ALBUMA - TITULUA"
+
+#: src/audacious/ui_preferences.c:556
 msgid "Category"
 msgstr "Kategoria"
 
-#: src/audacious/ui_preferences.c:682
+#: src/audacious/ui_preferences.c:780
 msgid "Popup Information Settings"
 msgstr "Laster-leihoen ezarpenak"
 
-#: src/audacious/ui_preferences.c:691
+#: src/audacious/ui_preferences.c:789
 msgid "<b>Cover image retrieve</b>"
 msgstr "<b>Eskuratu azaleko irudia</b>"
 
-#: src/audacious/ui_preferences.c:696
+#: src/audacious/ui_preferences.c:794
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
 "using commas."
-msgstr ""
-"Albumaren azala bilatzean, Audacious-ek hitz zehatz batzuk begiratuko ditu "
-"fitxategi-izenean. Hitz horiek azpiko zerrendan zehatz ditzakezu, komaz "
-"bereiztuta."
+msgstr "Albumaren azala bilatzean, Audacious-ek hitz zehatz batzuk begiratuko ditu fitxategi-izenean. Hitz horiek azpiko zerrendan zehatz ditzakezu, komaz bereiztuta."
 
-#: src/audacious/ui_preferences.c:713
+#: src/audacious/ui_preferences.c:811
 msgid "Exclude:"
 msgstr "Baztertu:"
 
-#: src/audacious/ui_preferences.c:720
+#: src/audacious/ui_preferences.c:818
 msgid "Include:"
 msgstr "Sartu:"
 
-#: src/audacious/ui_preferences.c:737
+#: src/audacious/ui_preferences.c:835
 msgid "Recursively search for cover"
 msgstr "Bilatu azala errekurtsiboki"
 
-#: src/audacious/ui_preferences.c:747
+#: src/audacious/ui_preferences.c:845
 msgid "Search depth: "
 msgstr "Sakonera:"
 
-#: src/audacious/ui_preferences.c:761
+#: src/audacious/ui_preferences.c:859
 msgid "Use per-file cover"
 msgstr "Erabili azala fitxategiko"
 
-#: src/audacious/ui_preferences.c:764
+#: src/audacious/ui_preferences.c:862
 msgid "<b>Miscellaneous</b>"
 msgstr "<b>Hainbat</b>"
 
-#: src/audacious/ui_preferences.c:773
+#: src/audacious/ui_preferences.c:871
 msgid "Show Progress bar for the current track"
 msgstr "Erakutsi uneko kantaren progresio-barra"
 
-#: src/audacious/ui_preferences.c:783
+#: src/audacious/ui_preferences.c:881
 msgid "Delay until filepopup comes up: "
 msgstr "Atzerapena laster-leihoa agertzeko: "
 
-#: src/audacious/ui_preferences.c:1283
-msgid "<b>Song Display</b>"
-msgstr "<b>Kanten ikuspegia</b>"
-
-#: src/audacious/ui_preferences.c:1292
-msgid "Show song numbers"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:1303
-msgid "Show leading zeroes (02:00 instead of 2:00)"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:1325
-msgid "Show information about titlestring format"
-msgstr "Erakutsi titulu-formatuari buruzko informazioa"
-
-#: src/audacious/ui_preferences.c:1339
-msgid "TITLE"
-msgstr "TITULUA"
-
-#: src/audacious/ui_preferences.c:1340
-msgid "ARTIST - TITLE"
-msgstr "ARTISTA - TITULUA"
-
-#: src/audacious/ui_preferences.c:1341
-msgid "ARTIST - ALBUM - TITLE"
-msgstr "ARTISTA - ALBUMA - TITULUA"
-
-#: src/audacious/ui_preferences.c:1342
-msgid "ARTIST - ALBUM - TRACK. TITLE"
-msgstr "ARTISTA - ALBUMA - PISTA. TITULUA"
-
-#: src/audacious/ui_preferences.c:1343
-msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
-msgstr "ARTISTA - [ALBUMA] - PISTA. TITULUA"
-
-#: src/audacious/ui_preferences.c:1344
-msgid "ALBUM - TITLE"
-msgstr "ALBUMA - TITULUA"
-
-#: src/audacious/ui_preferences.c:1345
+#: src/audacious/ui_preferences.c:1309
 msgid "Custom"
 msgstr "Pertsonalizatua"
 
-#: src/audacious/ui_preferences.c:1354
+#: src/audacious/ui_preferences.c:1352
+msgid "<b>Song Display</b>"
+msgstr "<b>Kanten ikuspegia</b>"
+
+#: src/audacious/ui_preferences.c:1361
+msgid "Show song numbers"
+msgstr "Abesti zenbakiak erakutsi"
+
+#: src/audacious/ui_preferences.c:1372
+msgid "Show leading zeroes (02:00 instead of 2:00)"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:1394
+msgid "Show information about titlestring format"
+msgstr "Erakutsi titulu-formatuari buruzko informazioa"
+
+#: src/audacious/ui_preferences.c:1410
 msgid "Custom string:"
 msgstr "Kate pertsonalizatua:"
 
-#: src/audacious/ui_preferences.c:1361
+#: src/audacious/ui_preferences.c:1417
 msgid "Title format:"
 msgstr "Tituluaren formatua:"
 
-#: src/audacious/ui_preferences.c:1372
+#: src/audacious/ui_preferences.c:1428
 msgid "<b>Popup Information</b>"
 msgstr "<b>Laster-leihoa</b>"
 
-#: src/audacious/ui_preferences.c:1387
+#: src/audacious/ui_preferences.c:1443
 msgid "Show popup information for playlist entries"
-msgstr ""
-"Erakutsi erreprodukzio-zerrendako sarreren informazioaren laster-leihoa"
+msgstr "Erakutsi erreprodukzio-zerrendako sarreren informazioaren laster-leihoa"
 
-#: src/audacious/ui_preferences.c:1388
+#: src/audacious/ui_preferences.c:1444
 msgid ""
 "Toggles popup information window for the pointed entry in the playlist. The "
 "window shows title of song, name of album, genre, year of publish, track "
 "number, track length, and artwork."
-msgstr ""
-"Erakuslea erreprodukzio-zerrendako sarrera baten gainean jartzean kantari "
-"dagokion informazioa bistaratuko da laster-leihoan. Leihoak kantuaren "
-"titulua, albumaren izena, generoa, argitalpen urtea, pista-zenbakia, "
-"pistaren iraupena eta irudiak erakutsiko ditu."
+msgstr "Erakuslea erreprodukzio-zerrendako sarrera baten gainean jartzean kantari dagokion informazioa bistaratuko da laster-leihoan. Leihoak kantuaren titulua, albumaren izena, generoa, argitalpen urtea, pista-zenbakia, pistaren iraupena eta irudiak erakutsiko ditu."
 
-#: src/audacious/ui_preferences.c:1397
+#: src/audacious/ui_preferences.c:1455
 msgid "Edit settings for popup information"
 msgstr "Editatu laster-leihoaren ezarpenak"
 
-#: src/audacious/ui_preferences.c:1497
-#, fuzzy
+#: src/audacious/ui_preferences.c:1544
 msgid "Output plugin:"
-msgstr "Sarrerako plugina: %s"
+msgstr ""
 
-#: src/audacious/ui_preferences.c:1556
-#, fuzzy
+#: src/audacious/ui_preferences.c:1603
 msgid "Transport"
-msgstr "Itzultzaileak"
+msgstr ""
 
-#: src/audacious/ui_preferences.c:1556
+#: src/audacious/ui_preferences.c:1603
 msgid "Input"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1557
-#, fuzzy
+#: src/audacious/ui_preferences.c:1604
 msgid "Effect"
 msgstr "<b>Efektuak</b>"
 
-#: src/audacious/ui_preferences.c:1557
+#: src/audacious/ui_preferences.c:1604
 msgid "Visualization"
 msgstr "Bistaratzea"
 
-#: src/audacious/ui_preferences.c:1557
+#: src/audacious/ui_preferences.c:1604
 msgid "General"
-msgstr ""
+msgstr "Orokorra"
 
-#: src/audacious/ui_preferences.c:1597
+#: src/audacious/ui_preferences.c:1644
 msgid "Audacious Preferences"
 msgstr "Audacious-en hobespenak"
 
-#: src/audacious/util.c:155
+#: src/audacious/util.c:120
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Ezin izan da %s direktorioa sortu: %s\n"
 
-#: src/audtool/handlers_playlist.c:264
+#: src/audtool/handlers_playlist.c:273
 msgid "Position not found."
 msgstr ""
 
-#: src/audtool/handlers_vitals.c:64
+#: src/audtool/handlers_vitals.c:63
 msgid "No song playing."
 msgstr ""
 
-#: src/libaudcore/tuple.c:685
-msgid "Mono"
+#: src/libaudcore/audstrings.c:199
+#, c-format
+msgid "Audio CD, track %s"
 msgstr ""
 
-#: src/libaudcore/tuple.c:687
-#, fuzzy
-msgid "Stereo"
-msgstr "estereoa"
+#: src/libaudcore/tuple.c:536
+msgid "Mono"
+msgstr "Mono"
 
-#: src/libaudcore/tuple.c:689
+#: src/libaudcore/tuple.c:538
+msgid "Stereo"
+msgstr "Estereo"
+
+#: src/libaudcore/tuple.c:540
 #, c-format
 msgid "%d channel"
 msgid_plural "%d channels"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d kanala"
+msgstr[1] "%d kanalak"
 
-#: src/libaudgui/confirm.c:73
+#: src/libaudgui/about.c:52 src/libaudgui/about.c:115
+msgid "Credits"
+msgstr "Kredituak"
+
+#: src/libaudgui/about.c:52
+msgid "Translators"
+msgstr "Itzultzaileak"
+
+#: src/libaudgui/about.c:91
+msgid "About Audacious"
+msgstr "Audacious-i buruz"
+
+#: src/libaudgui/confirm.c:76
 #, c-format
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
-msgstr ""
+msgstr "%s itxi nahi duzulaz ziur zaude? Ixten baduzu, erreprodukzio-zerrenda itxi zenetik egindako aldaketak galduko dira."
 
-#: src/libaudgui/confirm.c:86
-#, fuzzy
+#: src/libaudgui/confirm.c:89
 msgid "_Don't show this message again"
 msgstr "Ez erakutsi mezu hau aurrerantzean"
 
-#: src/libaudgui/confirm.c:124
-#, fuzzy
+#: src/libaudgui/confirm.c:126
 msgid "Rename Playlist"
-msgstr "Gorde erreprodukzio-zerrenda"
+msgstr "Erreprodukzio-zerrenda berrizendatu"
 
-#: src/libaudgui/effects-menu.c:76
+#: src/libaudgui/effects-menu.c:74
 msgid "settings ..."
 msgstr ""
 
-#: src/libaudgui/equalizer.c:68
-#, fuzzy
+#: src/libaudgui/equalizer.c:51
 msgid "_Enable"
-msgstr "Gaituta"
+msgstr "Gaitu"
 
-#: src/libaudgui/equalizer.c:140
+#: src/libaudgui/equalizer.c:123
 msgid "31 Hz"
-msgstr ""
+msgstr "31 Hz"
 
-#: src/libaudgui/equalizer.c:140
+#: src/libaudgui/equalizer.c:123
 msgid "63 Hz"
-msgstr ""
+msgstr "63 Hz"
 
-#: src/libaudgui/equalizer.c:141
+#: src/libaudgui/equalizer.c:124
 msgid "125 Hz"
-msgstr ""
+msgstr "125 Hz"
 
-#: src/libaudgui/equalizer.c:141
+#: src/libaudgui/equalizer.c:124
 msgid "250 Hz"
-msgstr ""
+msgstr "250 Hz"
 
-#: src/libaudgui/equalizer.c:141
+#: src/libaudgui/equalizer.c:124
 msgid "500 Hz"
-msgstr ""
+msgstr "500 Hz"
 
-#: src/libaudgui/equalizer.c:141
+#: src/libaudgui/equalizer.c:124
 msgid "1 kHz"
-msgstr ""
+msgstr "1 kHz"
 
-#: src/libaudgui/equalizer.c:141
+#: src/libaudgui/equalizer.c:124
 msgid "2 kHz"
-msgstr ""
+msgstr "2 kHz"
 
-#: src/libaudgui/equalizer.c:142
+#: src/libaudgui/equalizer.c:125
 msgid "4 kHz"
-msgstr ""
+msgstr "4 kHz"
 
-#: src/libaudgui/equalizer.c:142
+#: src/libaudgui/equalizer.c:125
 msgid "8 kHz"
-msgstr ""
+msgstr "8 kHz"
 
-#: src/libaudgui/equalizer.c:142
+#: src/libaudgui/equalizer.c:125
 msgid "16 kHz"
-msgstr ""
+msgstr "16 kHz"
 
-#: src/libaudgui/equalizer.c:147
-#, fuzzy
+#: src/libaudgui/equalizer.c:130
 msgid "Equalizer"
 msgstr "Erakutsi ekualizadorea"
 
-#: src/libaudgui/equalizer.c:163
-#, fuzzy
+#: src/libaudgui/equalizer.c:146
 msgid "Preamp"
-msgstr "Aurre-anp:"
+msgstr ""
 
-#: src/libaudgui/infopopup.c:212
+#: src/libaudgui/infopopup.c:207
 msgid "Track Number"
 msgstr "Pista-zenbakia"
 
-#: src/libaudgui/infopopup.c:214
+#: src/libaudgui/infopopup.c:209
 msgid "Track Length"
 msgstr "Pistaren luzera"
 
-#: src/libaudgui/infowin.c:77
+#: src/libaudgui/infowin.c:75
 msgid "Acid Jazz"
 msgstr "Jazz azidoa"
 
-#: src/libaudgui/infowin.c:78
-#, fuzzy
+#: src/libaudgui/infowin.c:76
 msgid "Acid Rock"
-msgstr "Rock gogorra"
+msgstr ""
 
-#: src/libaudgui/infowin.c:79
+#: src/libaudgui/infowin.c:77
 msgid "Ambient"
 msgstr "Giroko musika"
 
-#: src/libaudgui/infowin.c:80
-#, fuzzy
+#: src/libaudgui/infowin.c:78
 msgid "Bebop"
-msgstr "Bebob"
+msgstr ""
 
-#: src/libaudgui/infowin.c:81
+#: src/libaudgui/infowin.c:79
 msgid "Bluegrass"
 msgstr "Bluegrass"
 
-#: src/libaudgui/infowin.c:82
+#: src/libaudgui/infowin.c:80
 msgid "Blues"
 msgstr "Blues-a"
 
-#: src/libaudgui/infowin.c:83
+#: src/libaudgui/infowin.c:81
 msgid "Chamber Music"
 msgstr "Ganbera-musika"
 
-#: src/libaudgui/infowin.c:84
+#: src/libaudgui/infowin.c:82
 msgid "Classical"
 msgstr "Klasikoa"
 
-#: src/libaudgui/infowin.c:85
+#: src/libaudgui/infowin.c:83
 msgid "Country"
 msgstr "Country"
 
-#: src/libaudgui/infowin.c:86
+#: src/libaudgui/infowin.c:84
 msgid "Death Metal"
 msgstr "Death Metal"
 
-#: src/libaudgui/infowin.c:87
+#: src/libaudgui/infowin.c:85
 msgid "Disco"
 msgstr "Disko"
 
-#: src/libaudgui/infowin.c:88
+#: src/libaudgui/infowin.c:86
 msgid "Easy Listening"
 msgstr "Entzuteko erraza"
 
-#: src/libaudgui/infowin.c:89
+#: src/libaudgui/infowin.c:87
 msgid "Folk"
 msgstr "Folka"
 
-#: src/libaudgui/infowin.c:90
+#: src/libaudgui/infowin.c:88
 msgid "Funk"
 msgstr "Funk-a"
 
-#: src/libaudgui/infowin.c:91
+#: src/libaudgui/infowin.c:89
 msgid "Gangsta Rap"
 msgstr "Gangsta Rap"
 
-#: src/libaudgui/infowin.c:92
+#: src/libaudgui/infowin.c:90
 msgid "Gospel"
 msgstr "Gospel-a"
 
-#: src/libaudgui/infowin.c:93
+#: src/libaudgui/infowin.c:91
 msgid "Grunge"
 msgstr "Grunge-a"
 
-#: src/libaudgui/infowin.c:94
+#: src/libaudgui/infowin.c:92
 msgid "Hard Rock"
 msgstr "Rock gogorra"
 
-#: src/libaudgui/infowin.c:95
+#: src/libaudgui/infowin.c:93
 msgid "Heavy Metal"
 msgstr "Heavy Metal-a"
 
-#: src/libaudgui/infowin.c:96
-#, fuzzy
+#: src/libaudgui/infowin.c:94
 msgid "Hip-hop"
 msgstr "Hip-Hop-a"
 
-#: src/libaudgui/infowin.c:97
+#: src/libaudgui/infowin.c:95
 msgid "House"
 msgstr "House"
 
-#: src/libaudgui/infowin.c:98
+#: src/libaudgui/infowin.c:96
 msgid "Jazz"
 msgstr "Jazza"
 
-#: src/libaudgui/infowin.c:99
+#: src/libaudgui/infowin.c:97
 msgid "Jungle"
 msgstr "Jungle-a"
 
-#: src/libaudgui/infowin.c:100
+#: src/libaudgui/infowin.c:98
 msgid "Metal"
 msgstr "Metala"
 
-#: src/libaudgui/infowin.c:101
+#: src/libaudgui/infowin.c:99
 msgid "New Age"
 msgstr "New Age"
 
-#: src/libaudgui/infowin.c:102
+#: src/libaudgui/infowin.c:100
 msgid "New Wave"
 msgstr "New Wave"
 
-#: src/libaudgui/infowin.c:103
+#: src/libaudgui/infowin.c:101
 msgid "Noise"
 msgstr "Zarata"
 
-#: src/libaudgui/infowin.c:104
+#: src/libaudgui/infowin.c:102
 msgid "Pop"
 msgstr "Pop-a"
 
-#: src/libaudgui/infowin.c:105
+#: src/libaudgui/infowin.c:103
 msgid "Punk Rock"
 msgstr "Punk Rock-a"
 
-#: src/libaudgui/infowin.c:106
+#: src/libaudgui/infowin.c:104
 msgid "Rap"
 msgstr "Rap-a"
 
-#: src/libaudgui/infowin.c:107
+#: src/libaudgui/infowin.c:105
 msgid "Reggae"
 msgstr "Reggae"
 
-#: src/libaudgui/infowin.c:108
+#: src/libaudgui/infowin.c:106
 msgid "Rock"
 msgstr "Rocka"
 
-#: src/libaudgui/infowin.c:109
-#, fuzzy
+#: src/libaudgui/infowin.c:107
 msgid "Rock and Roll"
 msgstr "Rock & Roll-a"
 
-#: src/libaudgui/infowin.c:110
+#: src/libaudgui/infowin.c:108
 msgid "Rhythm and Blues"
 msgstr ""
 
-#: src/libaudgui/infowin.c:111
+#: src/libaudgui/infowin.c:109
 msgid "Ska"
 msgstr "Ska"
 
-#: src/libaudgui/infowin.c:112
+#: src/libaudgui/infowin.c:110
 msgid "Soul"
 msgstr "Soul-a"
 
-#: src/libaudgui/infowin.c:113
+#: src/libaudgui/infowin.c:111
 msgid "Swing"
 msgstr "Swing-a"
 
-#: src/libaudgui/infowin.c:114
+#: src/libaudgui/infowin.c:112
 msgid "Techno"
 msgstr "Teknoa"
 
-#: src/libaudgui/infowin.c:115
-#, fuzzy
+#: src/libaudgui/infowin.c:113
 msgid "Trip-hop"
 msgstr "Trip-Hop-a"
 
-#: src/libaudgui/infowin.c:175 src/libaudgui/infowin.c:361
-#: src/libaudgui/infowin.c:364 src/libaudgui/infowin.c:367
+#: src/libaudgui/infowin.c:177 src/libaudgui/infowin.c:363
+#: src/libaudgui/infowin.c:366 src/libaudgui/infowin.c:369
 msgid "<span size=\"small\">n/a</span>"
 msgstr "<span size=\"small\">e/e</span>"
 
-#: src/libaudgui/infowin.c:265
+#: src/libaudgui/infowin.c:267
 msgid "Metadata updated successfully"
 msgstr "Metadatuak ongi eguneratu dira"
 
-#: src/libaudgui/infowin.c:270
+#: src/libaudgui/infowin.c:272
 msgid "Metadata updating failed"
 msgstr "Huts egin du metadatuak eguneratzean"
 
-#: src/libaudgui/infowin.c:318
+#: src/libaudgui/infowin.c:320
 msgid "Track Information"
 msgstr "Pistaren informazioa"
 
-#: src/libaudgui/infowin.c:350
+#: src/libaudgui/infowin.c:352
 msgid "<span size=\"small\">Format:</span>"
 msgstr "<span size=\"small\">Formatua:</span>"
 
-#: src/libaudgui/infowin.c:354
+#: src/libaudgui/infowin.c:356
 msgid "<span size=\"small\">Quality:</span>"
 msgstr "<span size=\"small\">Kalitatea:</span>"
 
-#: src/libaudgui/infowin.c:357
+#: src/libaudgui/infowin.c:359
 msgid "<span size=\"small\">Bitrate:</span>"
 msgstr "<span size=\"small\">Bit-tasa:</span>"
 
-#: src/libaudgui/infowin.c:387
+#: src/libaudgui/infowin.c:389
 msgid "<span size=\"small\">Title</span>"
 msgstr "<span size=\"small\">Titulua</span>"
 
-#: src/libaudgui/infowin.c:399
+#: src/libaudgui/infowin.c:401
 msgid "<span size=\"small\">Artist</span>"
 msgstr "<span size=\"small\">Artista</span>"
 
-#: src/libaudgui/infowin.c:411
+#: src/libaudgui/infowin.c:413
 msgid "<span size=\"small\">Album</span>"
 msgstr "<span size=\"small\">Albuma</span>"
 
-#: src/libaudgui/infowin.c:423
+#: src/libaudgui/infowin.c:425
 msgid "<span size=\"small\">Comment</span>"
 msgstr "<span size=\"small\">Iruzkina</span>"
 
-#: src/libaudgui/infowin.c:435
+#: src/libaudgui/infowin.c:437
 msgid "<span size=\"small\">Genre</span>"
 msgstr "<span size=\"small\">Generoa</span>"
 
-#: src/libaudgui/infowin.c:456
+#: src/libaudgui/infowin.c:458
 msgid "<span size=\"small\">Year</span>"
 msgstr "<span size=\"small\">Urtea</span>"
 
-#: src/libaudgui/infowin.c:467
+#: src/libaudgui/infowin.c:469
 msgid "<span size=\"small\">Track Number</span>"
 msgstr "<span size=\"small\">Pista-zenbakia</span>"
 
-#: src/libaudgui/infowin.c:549
+#: src/libaudgui/infowin.c:548
 #, c-format
 msgid "%d kb/s"
 msgstr "%d kb/s"
 
-#: src/libaudgui/infowin.c:579
+#: src/libaudgui/infowin.c:575
 #, c-format
 msgid "No info available for %s.\n"
 msgstr ""
 
-#: src/libaudgui/jump-to-time.c:75
+#: src/libaudgui/jump-to-time.c:72
 msgid "Jump to Time"
 msgstr "Saltatu denborara"
 
-#: src/libaudgui/jump-to-time.c:90
+#: src/libaudgui/jump-to-time.c:87
 msgid "mm:ss"
 msgstr ""
 
-#: src/libaudgui/playlists.c:39
-#, fuzzy
+#: src/libaudgui/playlists.c:33
 msgid "Export Playlist"
-msgstr "Kargatu erreprodukzio-zerrenda"
+msgstr "Erreprodukzio-zerrenda esportatu"
 
-#: src/libaudgui/playlists.c:39
-#, fuzzy
+#: src/libaudgui/playlists.c:33
 msgid "Import Playlist"
-msgstr "Kargatu erreprodukzio-zerrenda"
+msgstr "Erreprodukzio-zerrenda inportatu"
 
-#: src/libaudgui/playlists.c:71
+#: src/libaudgui/playlists.c:66
 #, c-format
 msgid "Overwrite %s?"
+msgstr "%s gainidatzi?"
+
+#: src/libaudgui/queue-manager.c:196
+msgid "Queue Manager"
 msgstr ""
 
-#: src/libaudgui/ui_about.c:71
-msgid "About Audacious"
-msgstr "Audacious-i buruz"
-
-#: src/libaudgui/ui_about.c:93 src/libaudgui/ui_credits.c:122
-msgid "Credits"
-msgstr "Kredituak"
-
-#: src/libaudgui/ui_credits.c:126
-msgid "Translators"
-msgstr "Itzultzaileak"
-
-#: src/libaudgui/ui_fileopener.c:108
+#: src/libaudgui/ui_fileopener.c:109
 msgid "Open Files"
 msgstr "Ireki fitxategiak"
 
-#: src/libaudgui/ui_fileopener.c:108
+#: src/libaudgui/ui_fileopener.c:109
 msgid "Add Files"
 msgstr "Gehitu fitxategiak"
 
-#: src/libaudgui/ui_fileopener.c:110
+#: src/libaudgui/ui_fileopener.c:111
 msgid "Close dialog on Open"
 msgstr "Itxi elkarrizketa-koadroa fitxategia ireki ondoren"
 
-#: src/libaudgui/ui_fileopener.c:110
+#: src/libaudgui/ui_fileopener.c:111
 msgid "Close dialog on Add"
 msgstr "Itxi elkarrizketa-koadroa fitxategia gehitu ondoren"
 
-#: src/libaudgui/ui_jumptotrack.c:133
-msgid "Un_queue"
-msgstr "_Kendu ilara"
-
-#: src/libaudgui/ui_jumptotrack.c:135 src/libaudgui/ui_jumptotrack.c:512
+#: src/libaudgui/ui_jumptotrack.c:109 src/libaudgui/ui_jumptotrack.c:117
+#: src/libaudgui/ui_jumptotrack.c:326
 msgid "_Queue"
 msgstr "_Ilara"
 
-#: src/libaudgui/ui_jumptotrack.c:399
-msgid "Jump to Track"
-msgstr "Saltatu pistara"
+#: src/libaudgui/ui_jumptotrack.c:115
+msgid "Un_queue"
+msgstr "_Kendu ilara"
 
-#: src/libaudgui/ui_jumptotrack.c:442
+#: src/libaudgui/ui_jumptotrack.c:258
+msgid "Jump to Song"
+msgstr "Abesti honetara saltatu"
+
+#: src/libaudgui/ui_jumptotrack.c:281
 msgid "Filter: "
 msgstr "Iragazkia: "
 
-#: src/libaudgui/ui_jumptotrack.c:443
+#: src/libaudgui/ui_jumptotrack.c:282
 msgid "_Filter:"
 msgstr "_Iragazkia:"
 
-#: src/libaudgui/ui_jumptotrack.c:461
+#: src/libaudgui/ui_jumptotrack.c:292
 msgid "Remember"
 msgstr "Gogoratu"
 
-#: src/libaudgui/ui_jumptotrack.c:470
-#, fuzzy
+#: src/libaudgui/ui_jumptotrack.c:299
 msgid "Clea_r"
-msgstr "Garbitu A-B"
+msgstr ""
 
-#: src/libaudgui/ui_jumptotrack.c:504
+#: src/libaudgui/ui_jumptotrack.c:319
 msgid "Close on Jump"
 msgstr "Itxi saltatzean"
 
-#: src/libaudgui/ui_playlist_manager.c:240
+#: src/libaudgui/ui_playlist_manager.c:253
 msgid "Playlist Manager"
 msgstr "Erreprodukzio-zerrendaren kudeatzailea"
 
-#: src/libaudgui/ui_playlist_manager.c:264
+#: src/libaudgui/ui_playlist_manager.c:280
 msgid "Entries"
 msgstr "Sarrerak"
 
-#: src/libaudgui/ui_playlist_manager.c:285
+#: src/libaudgui/ui_playlist_manager.c:301
 msgid "_Rename"
 msgstr "_Izena aldatu"
 
-#: src/libaudgui/ui_playlist_manager.c:309
-#, fuzzy
+#: src/libaudgui/ui_playlist_manager.c:325
 msgid "_Close dialog on activating playlist"
-msgstr "Itxi elkarrizketa-koadroa fitxategia ireki ondoren"
+msgstr ""
 
-#: src/libaudgui/ui_urlopener.c:58
+#: src/libaudgui/ui_urlopener.c:48
 msgid "Open URL"
-msgstr ""
+msgstr "Ireki URL"
 
-#: src/libaudgui/ui_urlopener.c:58
+#: src/libaudgui/ui_urlopener.c:48
 msgid "Add URL"
-msgstr ""
+msgstr "Gehitu URL"
 
 #: src/libaudgui/util.c:95
 msgid ""
@@ -1209,31 +1164,30 @@ msgstr ""
 msgid "File is not a valid .desktop file"
 msgstr "Ez da baliozko '.desktop' fitxategia"
 
-#: src/libeggsmclient/eggdesktopfile.c:188
+#: src/libeggsmclient/eggdesktopfile.c:191
 #, c-format
 msgid "Unrecognized desktop file Version '%s'"
 msgstr "Mahaigaineko fitxategiaren '%s' bertsioa ezezaguna"
 
-#: src/libeggsmclient/eggdesktopfile.c:967
+#: src/libeggsmclient/eggdesktopfile.c:974
 #, c-format
 msgid "Starting %s"
 msgstr "%s abiarazten"
 
-#: src/libeggsmclient/eggdesktopfile.c:1108
+#: src/libeggsmclient/eggdesktopfile.c:1116
 msgid "Application does not accept documents on command line"
 msgstr "Aplikazioak ez du dokumenturik onartzen komando-lerroan"
 
-#: src/libeggsmclient/eggdesktopfile.c:1176
+#: src/libeggsmclient/eggdesktopfile.c:1184
 #, c-format
 msgid "Unrecognized launch option: %d"
 msgstr "Abiarazteko parametro ezezaguna: %d"
 
-#: src/libeggsmclient/eggdesktopfile.c:1375
+#: src/libeggsmclient/eggdesktopfile.c:1391
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-msgstr ""
-"Ezin zaio dokumentuen URIrik eman 'Type=Link' motako mahaigaineko sarrerari"
+msgstr "Ezin zaio dokumentuen URIrik eman 'Type=Link' motako mahaigaineko sarrerari"
 
-#: src/libeggsmclient/eggdesktopfile.c:1396
+#: src/libeggsmclient/eggdesktopfile.c:1412
 msgid "Not a launchable item"
 msgstr "Ez da elementu abiarazgarria"
 
@@ -1258,1652 +1212,9 @@ msgid "ID"
 msgstr "IDa"
 
 #: src/libeggsmclient/eggsmclient.c:253
-#, fuzzy
 msgid "Session management options:"
 msgstr "Saio-kudeaketaren aukerak"
 
 #: src/libeggsmclient/eggsmclient.c:254
-#, fuzzy
 msgid "Show session management options"
 msgstr "Erakutsi saio-kudeaketaren aukerak"
-
-#~ msgid "Replay Gain"
-#~ msgstr "Irabazpena"
-
-#~ msgid "<b>Bit Depth</b>"
-#~ msgstr "<b>Bit-sakonera</b>"
-
-#~ msgid ""
-#~ "All streams will be converted to this bit depth.\n"
-#~ "This should be the max supported bit depth of\n"
-#~ "the sound card or output plugin."
-#~ msgstr ""
-#~ "Korronte guztiak bit-sakonera honetara bihurtuko dira.\n"
-#~ "Hau soinu-txartelak edo irteerako pluginak onartutako\n"
-#~ "gehienezko bit-sakonera izan beharko luke."
-
-#~ msgid "<b>Volume Control</b>"
-#~ msgstr "<b>Bolumen-kontrola</b>"
-
-#~ msgid ""
-#~ "Use software volume control. This may be useful for situations where your "
-#~ "audio system does not support controlling the playback volume."
-#~ msgstr ""
-#~ "Erabili softwarearen bolumen-kontrola. Oso erabilgarria izan daiteke "
-#~ "audioko sistemak erreprodukzioaren bolumena ezin duenean kontrolatu."
-
-#, fuzzy
-#~ msgid "<b>Mode</b>"
-#~ msgstr "<b>Metadatuak</b>"
-
-#, fuzzy
-#~ msgid "<b>Clipping Prevention</b>"
-#~ msgstr "<b>Laster-leihoa</b>"
-
-#, fuzzy
-#~ msgid "Enable clipping prevention"
-#~ msgstr "Gaitu tontorraren datuen mozketa saihestea"
-
-#~ msgid "<b>Audio System</b>"
-#~ msgstr "<b>Audio-sistema</b>"
-
-#~ msgid "Current output plugin:"
-#~ msgstr "Uneko irteerako plugina:"
-
-#~ msgid "Display all open Audacious windows"
-#~ msgstr "Bistaratu Audacious-en irekitako leiho guztiak"
-
-#~ msgid "%s: Unable to open display, exiting.\n"
-#~ msgstr "%s: ezin da pantaila ireki. Irtetzen.\n"
-
-#~ msgid "Preamp:"
-#~ msgstr "Aurre-anp:"
-
-#~ msgid "Default gain:"
-#~ msgstr "Irabazpen lehenetsia:"
-
-#~ msgid "This gain will be used if file doesn't contain Replay Gain metadata."
-#~ msgstr ""
-#~ "Irabazpen hau erabiliko da fitxategiak irabazpenaren metadaturik ez badu."
-
-#~ msgid ""
-#~ "<span size=\"small\">Please remember that the most efficient way to "
-#~ "prevent signal clipping is not to use positive values above.</span>"
-#~ msgstr ""
-#~ "<span size=\"small\">Gogoratu modu egokiena soinuaren mozketa saihesteko "
-#~ "balio positiborik ez erabiltzea da.</span>"
-
-#~ msgid "<b>Replay Gain configuration</b>"
-#~ msgstr "<b>Irabazpenaren konfigurazioa</b>"
-
-#~ msgid "Track gain/peak"
-#~ msgstr "Pistaren irabazpena/tontorra"
-
-#~ msgid "Album gain/peak"
-#~ msgstr "Albumaren irabazpena/tontorra"
-
-#~ msgid "Use peak value from Replay Gain info for clipping prevention"
-#~ msgstr "Erabili tontorrari buruzko irabazpeneko datuak mozketa saihesteko"
-
-#~ msgid "Classic Rock"
-#~ msgstr "Rock klasikoa"
-
-#~ msgid "Dance"
-#~ msgstr "Dance"
-
-#~ msgid "Oldies"
-#~ msgstr "Aspaldikoak"
-
-#~ msgid "Other"
-#~ msgstr "Bestelakoak"
-
-#~ msgid "R&B"
-#~ msgstr "R&B"
-
-#~ msgid "Industrial"
-#~ msgstr "Industriala"
-
-#~ msgid "Alternative"
-#~ msgstr "Alternatiboa"
-
-#~ msgid "Pranks"
-#~ msgstr "Pranks"
-
-#~ msgid "Soundtrack"
-#~ msgstr "Soinu-banda"
-
-#~ msgid "Euro-Techno"
-#~ msgstr "Euro Teknoa"
-
-#~ msgid "Vocal"
-#~ msgstr "Ahotsezkoa"
-
-#~ msgid "Jazz+Funk"
-#~ msgstr "Jazz+Funk-a"
-
-#~ msgid "Fusion"
-#~ msgstr "Fusion"
-
-#~ msgid "Trance"
-#~ msgstr "Trance"
-
-#~ msgid "Instrumental"
-#~ msgstr "Instrumentala"
-
-#~ msgid "Acid"
-#~ msgstr "Acid"
-
-#~ msgid "Game"
-#~ msgstr "Game"
-
-#~ msgid "Sound Clip"
-#~ msgstr "Soinu-klipa"
-
-#~ msgid "AlternRock"
-#~ msgstr "AlternRock"
-
-#~ msgid "Bass"
-#~ msgstr "Baxua"
-
-#~ msgid "Punk"
-#~ msgstr "Punk-a"
-
-#~ msgid "Space"
-#~ msgstr "Espazioa"
-
-#~ msgid "Meditative"
-#~ msgstr "Meditatiboa"
-
-#~ msgid "Instrumental Pop"
-#~ msgstr "Pop instrumentala"
-
-#~ msgid "Instrumental Rock"
-#~ msgstr "Rock instrumentala"
-
-#~ msgid "Ethnic"
-#~ msgstr "Etnikoa"
-
-#~ msgid "Gothic"
-#~ msgstr "Gotikoa"
-
-#~ msgid "Darkwave"
-#~ msgstr "Darkwave"
-
-#~ msgid "Techno-Industrial"
-#~ msgstr "Tekno industriala"
-
-#~ msgid "Electronic"
-#~ msgstr "Elektronikoa"
-
-#~ msgid "Pop-Folk"
-#~ msgstr "Pop-Folk-a"
-
-#~ msgid "Eurodance"
-#~ msgstr "Eurodance-a"
-
-#~ msgid "Dream"
-#~ msgstr "Dream"
-
-#~ msgid "Southern Rock"
-#~ msgstr "Hegoaldeko rocka"
-
-#~ msgid "Comedy"
-#~ msgstr "Komedia"
-
-#~ msgid "Cult"
-#~ msgstr "Kultua"
-
-#~ msgid "Top 40"
-#~ msgstr "40 onenak"
-
-#~ msgid "Christian Rap"
-#~ msgstr "Rap kristaua"
-
-#~ msgid "Pop/Funk"
-#~ msgstr "Pop/Funk-a"
-
-#~ msgid "Native American"
-#~ msgstr "Indioa"
-
-#~ msgid "Cabaret"
-#~ msgstr "Kabareta"
-
-#~ msgid "Psychedelic"
-#~ msgstr "Psikodelikoa"
-
-#~ msgid "Rave"
-#~ msgstr "Rave"
-
-#~ msgid "Showtunes"
-#~ msgstr "Showtunes"
-
-#~ msgid "Trailer"
-#~ msgstr "Aurrerakina"
-
-#~ msgid "Lo-Fi"
-#~ msgstr "Lo-Fi-a"
-
-#~ msgid "Tribal"
-#~ msgstr "Tribala"
-
-#~ msgid "Acid Punk"
-#~ msgstr "Punk azidoa"
-
-#~ msgid "Polka"
-#~ msgstr "Polka"
-
-#~ msgid "Retro"
-#~ msgstr "Retro"
-
-#~ msgid "Musical"
-#~ msgstr "Musikala"
-
-#~ msgid "Folk/Rock"
-#~ msgstr "Folk/Rock-a"
-
-#~ msgid "National Folk"
-#~ msgstr "Folk nazionala"
-
-#~ msgid "Fast-Fusion"
-#~ msgstr "Fast-Fusion"
-
-#~ msgid "Latin"
-#~ msgstr "Latinoa"
-
-#~ msgid "Revival"
-#~ msgstr "Revival"
-
-#~ msgid "Celtic"
-#~ msgstr "Zelta"
-
-#~ msgid "Avantgarde"
-#~ msgstr "Abangoardia"
-
-#~ msgid "Gothic Rock"
-#~ msgstr "Rock gotikoa"
-
-#~ msgid "Progressive Rock"
-#~ msgstr "Rock progresiboa"
-
-#~ msgid "Psychedelic Rock"
-#~ msgstr "Rock psikodelikoa"
-
-#~ msgid "Symphonic Rock"
-#~ msgstr "Rock sinfonikoa"
-
-#~ msgid "Slow Rock"
-#~ msgstr "Rock motela"
-
-#~ msgid "Big Band"
-#~ msgstr "Big Band-a"
-
-#~ msgid "Chorus"
-#~ msgstr "Abesbatzak"
-
-#~ msgid "Acoustic"
-#~ msgstr "Akustikoa"
-
-#~ msgid "Humour"
-#~ msgstr "Umorezkoa"
-
-#~ msgid "Speech"
-#~ msgstr "Hitzaldia"
-
-#~ msgid "Chanson"
-#~ msgstr "Chanson-a"
-
-#~ msgid "Opera"
-#~ msgstr "Opera"
-
-#~ msgid "Sonata"
-#~ msgstr "Sonata"
-
-#~ msgid "Symphony"
-#~ msgstr "Sinfonia"
-
-#~ msgid "Booty Bass"
-#~ msgstr "Booty Bass"
-
-#~ msgid "Primus"
-#~ msgstr "Primus"
-
-#~ msgid "Porn Groove"
-#~ msgstr "Porn Groove"
-
-#~ msgid "Satire"
-#~ msgstr "Satire"
-
-#~ msgid "Slow Jam"
-#~ msgstr "Jam motela"
-
-#~ msgid "Club"
-#~ msgstr "Club"
-
-#~ msgid "Tango"
-#~ msgstr "Tangoa"
-
-#~ msgid "Samba"
-#~ msgstr "Samba"
-
-#~ msgid "Folklore"
-#~ msgstr "Folklorea"
-
-#~ msgid "Ballad"
-#~ msgstr "Balada"
-
-#~ msgid "Power Ballad"
-#~ msgstr "Power balada"
-
-#~ msgid "Rhythmic Soul"
-#~ msgstr "Soul erritmikoa"
-
-#~ msgid "Freestyle"
-#~ msgstr "Estilo librea"
-
-#~ msgid "Duet"
-#~ msgstr "Duoa"
-
-#~ msgid "Drum Solo"
-#~ msgstr "Bateria bakarlaria"
-
-#~ msgid "A Cappella"
-#~ msgstr "A Cappella"
-
-#~ msgid "Euro-House"
-#~ msgstr "Euro House"
-
-#~ msgid "Dance Hall"
-#~ msgstr "Dance Hall"
-
-#~ msgid "Goa"
-#~ msgstr "Goa"
-
-#~ msgid "Drum & Bass"
-#~ msgstr "Drum & Bass"
-
-#~ msgid "Club-House"
-#~ msgstr "Club House"
-
-#~ msgid "Hardcore"
-#~ msgstr "Hardcore-a"
-
-#~ msgid "Terror"
-#~ msgstr "Beldurrezkoa"
-
-#~ msgid "Indie"
-#~ msgstr "Indie"
-
-#~ msgid "BritPop"
-#~ msgstr "Britainiako pop-a"
-
-#~ msgid "Negerpunk"
-#~ msgstr "Negerpunk-a"
-
-#~ msgid "Polsk Punk"
-#~ msgstr "Polsk Punk-a"
-
-#~ msgid "Beat"
-#~ msgstr "Beat"
-
-#~ msgid "Christian Gangsta Rap"
-#~ msgstr "Gangsta Rap kristaua"
-
-#~ msgid "Black Metal"
-#~ msgstr "Black Metal"
-
-#~ msgid "Crossover"
-#~ msgstr "Crossover"
-
-#~ msgid "Contemporary Christian"
-#~ msgstr "Kristau garaikidea"
-
-#~ msgid "Christian Rock"
-#~ msgstr "Rock kristaua"
-
-#~ msgid "Merengue"
-#~ msgstr "Merengea"
-
-#~ msgid "Salsa"
-#~ msgstr "Salsa"
-
-#~ msgid "Thrash Metal"
-#~ msgstr "Thrash Metal"
-
-#~ msgid "Anime"
-#~ msgstr "Anime"
-
-#~ msgid "JPop"
-#~ msgstr "JPop-a"
-
-#~ msgid "Synthpop"
-#~ msgstr "Synthpop"
-
-#, fuzzy
-#~ msgid ""
-#~ "<big><b>Audacious %s</b></big>\n"
-#~ "An audio player for many platforms.\n"
-#~ "Copyright (C) 2005-2011 Audacious Development Team"
-#~ msgstr ""
-#~ "<big><b>Audacious %s</b></big>\n"
-#~ "Hainbat plataformetarako multimedia erreproduzigailua.\n"
-#~ "\n"
-#~ "Copyright-a (C) 2005-2008 Audacious garatzeko taldea\n"
-
-#~ msgid "Unable to create log file (%s)!\n"
-#~ msgstr "Ezin da egunkari-fitxategia sortu (%s).\n"
-
-#~ msgid "Print all errors and warnings to stdout"
-#~ msgstr "Erakutsi errore eta abisu guztiak irteera estandarrean"
-
-#~ msgid "Used in macpacking"
-#~ msgstr "'Macpac'-en erabilita"
-
-#~ msgid "Sorry, threads aren't supported on your platform.\n"
-#~ msgstr "Plataforma honetan hariak ez daude onartuta.\n"
-
-#~ msgid "Module loading not supported! Plugins will not be loaded.\n"
-#~ msgstr ""
-#~ "Modulua kargatzea ez dago onartuta. Pluginak ezin izango dira kargatu.\n"
-
-#, fuzzy
-#~ msgid "Audacious - Unsupported Version Warning"
-#~ msgstr "Audacious - GTK motorra hautsita"
-
-#~ msgid "Playback"
-#~ msgstr "Erreproduzitzea"
-
-#~ msgid "<b>Playback</b>"
-#~ msgstr "<b>Erreproduzitzea</b>"
-
-#~ msgid ""
-#~ "When Audacious starts, automatically begin playing from the point where "
-#~ "we stopped before."
-#~ msgstr ""
-#~ "Audacious abiarazten denean, automatikoki hasiko da erreproduzitzen "
-#~ "aurrez gelditutako puntutik."
-
-#~ msgid "Don't advance in the playlist"
-#~ msgstr "Ez jarraitu erreprodukzio-zerrendan"
-
-#~ msgid ""
-#~ "When finished playing a song, don't automatically advance to the next."
-#~ msgstr ""
-#~ "Kantu baten erreprodukzioa amaitzean, ez jarraitu automatikoki hurrengo "
-#~ "abestiarekin."
-
-#~ msgid "Enabled"
-#~ msgstr "Gaituta"
-
-#~ msgid "Description"
-#~ msgstr "Azalpena"
-
-#~ msgid "Output Plugin Preferences"
-#~ msgstr "Irteerako pluginaren hobespenak"
-
-#~ msgid "Output Plugin Information"
-#~ msgstr "Irteerako pluginaren informazioa"
-
-#~ msgid "_Decoder list:"
-#~ msgstr "_Deskodetzaile-zerrenda:"
-
-#~ msgid "<span size=\"medium\"><b>Decoders</b></span>"
-#~ msgstr "<span size=\"medium\"><b>Deskodetzaileak</b></span>"
-
-#~ msgid "_General plugin list:"
-#~ msgstr "Plugin _orokorrak:"
-
-#~ msgid "<span size=\"medium\"><b>General</b></span>"
-#~ msgstr "<span size=\"medium\"><b>Orokorra</b></span>"
-
-#~ msgid "_Visualization plugin list:"
-#~ msgstr "_Bistaratzeko pluginak:"
-
-#~ msgid "<b>Visualization</b>"
-#~ msgstr "<b>Bistaratzea</b>"
-
-#, fuzzy
-#~ msgid "Effect plugins:"
-#~ msgstr "_Efektuen pluginak:"
-
-#~ msgid "<span size=\"small\">General</span>"
-#~ msgstr "<span size=\"small\">Orokorra</span>"
-
-#~ msgid "<span size=\"small\">Location</span>"
-#~ msgstr "<span size=\"small\">Kokalekua</span>"
-
-#~ msgid "<span size=\"small\">Raw Metadata</span>"
-#~ msgstr "<span size=\"small\">Metadatu gordinak</span>"
-
-#~ msgid "Key"
-#~ msgstr "Tekla"
-
-#~ msgid "Value"
-#~ msgstr "Balioa"
-
-#, fuzzy
-#~ msgid "Available Plugin Preferences:\n"
-#~ msgstr "Irteerako pluginaren hobespenak"
-
-#~ msgid "Add/Open URL Dialog"
-#~ msgstr "Gehitu/Ireki URLa elkarrizketa-koadroa"
-
-#~ msgid "Enter location to play:"
-#~ msgstr "Idatzi erreproduzitu beharreko kokalekua:"
-
-#~ msgid "Don't clear the playlist"
-#~ msgstr "Ez garbitu erreprodukzio-zerrenda"
-
-#~ msgid "audacious: %s"
-#~ msgstr "audacious: %s"
-
-#~ msgid "Filename:"
-#~ msgstr "Fitxategi-izena:"
-
-#~ msgid "No input plugin recognized this file"
-#~ msgstr "Fitxategi honek ez du sarrerako pluginik ezagutu"
-
-#~ msgid ""
-#~ "<b><big>No output plugin selected.</big></b>\n"
-#~ "You have not selected an output plugin."
-#~ msgstr ""
-#~ "<b><big>Ez da irteerako pluginik hautatu.</big></b>\n"
-#~ "Ez duzu irteerako pluginik hautatu."
-
-#~ msgid "Connectivity"
-#~ msgstr "Konektibitatea"
-
-#~ msgid "Best Sinc Interpolation"
-#~ msgstr "Kalitate onena"
-
-#~ msgid "Medium Sinc Interpolation"
-#~ msgstr "Tarteko kalitatea"
-
-#~ msgid "Fastest Sinc Interpolation"
-#~ msgstr "Interpolazio azkarrena"
-
-#~ msgid "ZOH Interpolation"
-#~ msgstr "ZOH interpolazioa"
-
-#~ msgid "Linear Interpolation"
-#~ msgstr "Interpolazio lineala"
-
-#~ msgid "Sampling Rate [Hz]:"
-#~ msgstr "Lagin-tasa [Hz]:"
-
-#~ msgid "Interpolation Engine:"
-#~ msgstr "Interpolazio-motorra:"
-
-#~ msgid ""
-#~ "<span size=\"small\">All streams will be converted to this sampling "
-#~ "rate.\n"
-#~ "This should be the max supported sampling rate of\n"
-#~ "the sound card or output plugin.</span>"
-#~ msgstr ""
-#~ "<span size=\"small\">Korronte guztiak lagin-tasa honetara bihurtuko \n"
-#~ "dira. Hau soinu-txartelak edo irteerako pluginak onartutako\n"
-#~ "gehienezko bit-sakonera izan beharko luke.</span>"
-
-#~ msgid "Detect file formats by extension."
-#~ msgstr "Detektatu fitxategi-formatuak luzapenaren arabera."
-
-#~ msgid ""
-#~ "When checked, Audacious will detect file formats based by extension. Only "
-#~ "files with extensions of supported formats will be loaded."
-#~ msgstr ""
-#~ "Aktibatuta dagoeneaz, Audacious-ek fitxategien formatuak luzapenaren "
-#~ "arabera detektatuko ditu. Onartutako formatuen luzapenak dituzten "
-#~ "fitxategiak soilik kargatuko dira."
-
-#~ msgid "<b>Sampling Rate Converter</b>"
-#~ msgstr "<b>Lagin-tasa bihurtzea</b>"
-
-#~ msgid "Enable Sampling Rate Converter"
-#~ msgstr "Gaitu lagin-tasa bihurtzea"
-
-#~ msgid "<b>Advanced</b>"
-#~ msgstr "<b>Aurreratua</b>"
-
-#~ msgid "Bypass all of signal processing if possible"
-#~ msgstr "Soinu tratamenduaren eragiketa guztiak saltatu (posible bada)"
-
-#~ msgid ""
-#~ "Try to pass input plugin's output directly to output plugin, if the "
-#~ "latter supports format produced by input plugin. If it's true, all signal "
-#~ "processing will be disabled (i.e. DSP plugins, equalizer, resampling, "
-#~ "Replay Gain and software volume control)."
-#~ msgstr ""
-#~ "Saiatu sarrerako pluginen irteera zuzenean irteerako pluginera eramaten, "
-#~ "azkenengoak sarrerako pluginak sortutako formatua onartzen badu. Egia "
-#~ "bada, soinuaren tratamenduko eragiketa guztiak desgaitu egingo dira "
-#~ "(adib. DSP plugina, ekualizadorea, birlaginketa, irabazpena eta "
-#~ "softwarearen bolumen-kontrola)."
-
-#~ msgid "Dynamically adjust scale factor to prevent clipping"
-#~ msgstr "Doitu eskala-faktorea dinamikoki mozketa saihesteko"
-
-#~ msgid "Decrease scale factor (gain) if clipping nevertheless occurred"
-#~ msgstr ""
-#~ "Gutxiagotu eskalaren faktorea (irabazpena) mozketa inoiz ez bada gertatu"
-
-#, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "Audacious has caught signal 11 (SIGSEGV).\n"
-#~ "\n"
-#~ "We apologize for the inconvenience, but Audacious has crashed.\n"
-#~ "This is a bug in the program, and should never happen under normal "
-#~ "circumstances.\n"
-#~ "Your current configuration has been saved and should not be damaged.\n"
-#~ "\n"
-#~ "You can help improve the quality of Audacious by filing a bug at http://"
-#~ "jira.atheme.org/\n"
-#~ "Please include the entire text of this message and a description of what "
-#~ "you were doing when\n"
-#~ "this crash occured in order to quickly expedite the handling of your bug "
-#~ "report:\n"
-#~ "\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Audacious-ek 11 (SIGSEGV) seinalea jaso du.\n"
-#~ "\n"
-#~ "Sentitzen dugu eragozpenak, baina Audacious kraskatu egin da.\n"
-#~ "Programaren errorea da hau, eta egoera normalean ez luke gertatu behar.\n"
-#~ "Zure uneko konfigurazioa gorde egin da, eta ez luke hondatuta egon "
-#~ "beharko.\n"
-#~ "Audacious-en kalitatea hobetzen lagun gaitzakezu. Eskertuko genizuke "
-#~ "erroreari buruzko txostena honako helbidera bidaliko bazenu:\n"
-#~ "http://bugzilla.atheme.org/\n"
-#~ "Sartu mezu honetako testu guztia eta kraskadura gertatu aurretik eman "
-#~ "dituzun urrats guztiei buruzko azalpena,\n"
-#~ "horrela errorea errazago aurkitzen lagun gaitzakezu:\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "Stacktrace was unavailable. You might want to reproduce this problem "
-#~ "while running Audacious under GDB to get a proper backtrace.\n"
-#~ msgstr ""
-#~ "Aztarnaren pila ez dago erabilgarri. Agian GDB barnean Audacious "
-#~ "exekutatzea nahiko duzu arazo hau berriro sortu eta aztarna egokia "
-#~ "lortzeko.\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "Bugs can be reported at http://jira.atheme.org/ against the Audacious or "
-#~ "Audacious Plugins product.\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Erroreei buruzko txostenak http://bugzilla.atheme.org/ webgunera bidal "
-#~ "daitezke, Audacious edo Audacious-en pluginak produktua hautatuz.\n"
-
-#~ msgid ""
-#~ "Your signaling implementation is broken.\n"
-#~ "Expect unusable crash reports.\n"
-#~ msgstr ""
-#~ "Sinatzeko inplementazioa hondatuta dago.\n"
-#~ "Kraskadurei buruzko txostenak bidaltzeko tresna ezin izango da erabili.\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "<big><b>Audacious %s</b></big>\n"
-#~ "\n"
-#~ "Copyright (C) 2005-2009 Audacious Development Team"
-#~ msgstr ""
-#~ "<big><b>Audacious %s</b></big>\n"
-#~ "\n"
-#~ "Copyright-a (C) 2005-2008 Audacious garatzeko taldea"
-
-#~ msgid "Detect file formats on demand, instead of immediately."
-#~ msgstr ""
-#~ "Detektatu fitxategi-formatuak eskatutakoan, berehala detektatu ordez."
-
-#~ msgid ""
-#~ "When checked, Audacious will detect file formats on demand. This can "
-#~ "result in a messier playlist, but delivers a major speed benefit."
-#~ msgstr ""
-#~ "Aktibatuta dagoenean, Audacious-ek fitxategien formatuak eskatutakoan "
-#~ "detektatzen ditu. Ondorioz, metodo honek erreprodukzio-zerrendaren "
-#~ "antolaketari eragin dezaiokeen arren, askoz ere azkarragoa da."
-
-#~ msgid "Load metadata from playlists and files"
-#~ msgstr "Kargatu metadatuak erreprodukzio-zerrenda eta fitxategietatik"
-
-#~ msgid "Load metadata (tag information) from music files."
-#~ msgstr "Kargatu metadatuak (etiketa-informazioa) musika-fitxategietatik."
-
-#~ msgid "Can't jump to time when no track is being played.\n"
-#~ msgstr "Ezin da denborara saltatu pista erreproduzitzen hasi gabe.\n"
-
-#~ msgid "minutes:seconds"
-#~ msgstr "minutu:segundo"
-
-#~ msgid "Track length:"
-#~ msgstr "Pistaren luzera:"
-
-#~ msgid "Save as Static Playlist"
-#~ msgstr "Gorde erreprodukzio-zerrenda estiko gisa"
-
-#~ msgid "Use Relative Path"
-#~ msgstr "Erabili bide-izen erlatiboa"
-
-#~ msgid "Error writing playlist \"%s\": %s"
-#~ msgstr "Errorera \"%s\" erreprodukzio-zerrenda idaztean: %s"
-
-#~ msgid "%s already exist. Continue?"
-#~ msgstr "%s badago lehendik ere. Jarraitu?"
-
-#~ msgid ""
-#~ "<b><big>Unable to save playlist.</big></b>\n"
-#~ "\n"
-#~ "Unknown file type for '%s'.\n"
-#~ msgstr ""
-#~ "<b><big>Ezin da erreprodukzio-zerrenda gorde.</big></b>\n"
-#~ "\n"
-#~ "Fitxategi mota ezezaguna '%s'(e)ntzako.\n"
-
-#~ msgid "Presets"
-#~ msgstr "Aurrezarpenak"
-
-#~ msgid "Mouse"
-#~ msgstr "Sagua"
-
-#~ msgid "Pause between songs"
-#~ msgstr "Kanten arteko pausa"
-
-#~ msgid "Pause for"
-#~ msgstr "Pausarazi "
-
-#~ msgid "seconds"
-#~ msgstr "segundotan"
-
-#~ msgid "<b>Filename</b>"
-#~ msgstr "<b>Fitxategi-izena</b>"
-
-#~ msgid "Convert underscores to blanks"
-#~ msgstr "Bihurtu azpimarrak zuriune"
-
-#~ msgid "Convert %20 to blanks"
-#~ msgstr "Bihurtu %20 zuriune"
-
-#~ msgid "Convert backslash '\\' to forward slash '/'"
-#~ msgstr "Bihurtu alderantzizko barra (\\) aurrera barra (/)"
-
-#~ msgid "<b>File Dialog</b>"
-#~ msgstr "<b>Fitxategia elkarrizketa-koadroa</b>"
-
-#~ msgid "Always refresh directory when opening file dialog"
-#~ msgstr ""
-#~ "Beti freskatu direktorioa fitxategien elkarrizketa-koadroa irekitzean"
-
-#~ msgid ""
-#~ "Always refresh the file dialog (this will slow opening the dialog on "
-#~ "large directories, and Gnome VFS should handle automatically)."
-#~ msgstr ""
-#~ "Beti freskatu fitxategien elkarrizketa-koadroa (elkarrizketa-koadroaren "
-#~ "irekiera moteldu lezake direktorio handietan, eta GNOME VFS-ek kudeatu "
-#~ "beharko luke automatikoki)."
-
-#~ msgid "Changes volume by"
-#~ msgstr "Aldatu bolumena: "
-
-#~ msgid "percent"
-#~ msgstr "ehuneko"
-
-#~ msgid "Scrolls playlist by"
-#~ msgstr "Korritu erreprodukzio-zerrenda:"
-
-#~ msgid "lines"
-#~ msgstr "lerro"
-
-#~ msgid "Stop after Current Song"
-#~ msgstr "Gelditu uneko kantaren ondoren"
-
-#~ msgid "Peaks"
-#~ msgstr "Tontorrak"
-
-#~ msgid "Repeat"
-#~ msgstr "Errepikatu"
-
-#~ msgid "Shuffle"
-#~ msgstr "Ausaz"
-
-#~ msgid "No Playlist Advance"
-#~ msgstr "Erreprodukzio-zerrenda ez mugitu"
-
-#~ msgid "Play"
-#~ msgstr "Erreproduzitu"
-
-#~ msgid "Pause"
-#~ msgstr "Pausarazi"
-
-#~ msgid "Stop"
-#~ msgstr "Gelditu"
-
-#~ msgid "Previous"
-#~ msgstr "Aurrekoa"
-
-#~ msgid "Next"
-#~ msgstr "Hurrengoa"
-
-#~ msgid "Visualization Mode"
-#~ msgstr "Bistaratzeko modua"
-
-#~ msgid "Analyzer Mode"
-#~ msgstr "Analizatzailearen modua"
-
-#~ msgid "Scope Mode"
-#~ msgstr "Esparruaren modua"
-
-#~ msgid "Voiceprint Mode"
-#~ msgstr "Espektrogramaren modua"
-
-#~ msgid "WindowShade VU Mode"
-#~ msgstr "Leiho-itzalduraren VU modua"
-
-#~ msgid "Refresh Rate"
-#~ msgstr "Freskatze-maiztasuna"
-
-#~ msgid "Analyzer Falloff"
-#~ msgstr "Analizatzailearen erortzea"
-
-#~ msgid "Peaks Falloff"
-#~ msgstr "Tontorren erortzea"
-
-#~ msgid "New Playlist"
-#~ msgstr "Erreprodukzio-zerrenda berria"
-
-#~ msgid "Select Next Playlist"
-#~ msgstr "Hautatu hurrengo erreprodukzio-zerrenda"
-
-#~ msgid "Select Previous Playlist"
-#~ msgstr "Hautatu aurreko erreprodukzio-zerrenda"
-
-#~ msgid "Delete Playlist"
-#~ msgstr "Ezabatu erreprodukzio-zerrenda"
-
-#~ msgid "Load List"
-#~ msgstr "Kargatu zerrenda"
-
-#~ msgid "Loads a playlist file into the selected playlist."
-#~ msgstr ""
-#~ "Erreprodukzio-zerrendaren fitxategia hautatutako zerrendan kargatzen du."
-
-#~ msgid "Save List"
-#~ msgstr "Gorde zerrenda"
-
-#~ msgid "Saves the selected playlist."
-#~ msgstr "Hautatutako erreprodukzio-zerrenda gordetzen du."
-
-#~ msgid "Save Default List"
-#~ msgstr "Gorde zerrenda lehenetsia"
-
-#~ msgid "Saves the selected playlist to the default location."
-#~ msgstr ""
-#~ "Hautatutako erreprodukzio-zerrenda kokaleku lehenetsian gordetzen du."
-
-#~ msgid "Refresh List"
-#~ msgstr "Freskatu zerrenda"
-
-#~ msgid "Refreshes metadata associated with a playlist entry."
-#~ msgstr "Erreprodukzio-zerrenda bati dagokion metadatuak freskatzen ditu."
-
-#~ msgid "List Manager"
-#~ msgstr "Zerrenda-kudeatzailea"
-
-#~ msgid "Opens the playlist manager."
-#~ msgstr "Erreprodukzio-zerrenden kudeatzailea irekitzen du."
-
-#~ msgid "View"
-#~ msgstr "Ikusi"
-
-#~ msgid "Add Internet Address..."
-#~ msgstr "Gehitu Interneteko helbidea..."
-
-#~ msgid "Adds a remote track to the playlist."
-#~ msgstr "Urruneko pista gehitzen dio zerrendari."
-
-#~ msgid "Add Files..."
-#~ msgstr "Gehitu fitxategiak..."
-
-#~ msgid "Search and Select"
-#~ msgstr "Bilatu eta hautatu"
-
-#~ msgid ""
-#~ "Searches the playlist and selects playlist entries based on specific "
-#~ "criteria."
-#~ msgstr ""
-#~ "Erreprodukzio-zerrendan bilaketa egiten du eta irizpide baten arabera "
-#~ "zerrendako sarrerak hautatzen ditu."
-
-#~ msgid "Invert Selection"
-#~ msgstr "Alderantzikatu hautapena"
-
-#~ msgid "Inverts the selected and unselected entries."
-#~ msgstr "Hautatutako eta hautatu gabeko sarrerak alderantzikatzen ditu."
-
-#~ msgid "Select All"
-#~ msgstr "Hautatu dena"
-
-#~ msgid "Selects all of the playlist entries."
-#~ msgstr "Erreprodukzioko sarrera guztiak hautatzen ditu."
-
-#~ msgid "Select None"
-#~ msgstr "Bat ere ez hautatu"
-
-#~ msgid "Deselects all of the playlist entries."
-#~ msgstr "Erreprodukzio-zerrendako sarrera guztiak deshautatzen ditu."
-
-#~ msgid "Remove All"
-#~ msgstr "Kendu denak"
-
-#~ msgid "Removes all entries from the playlist."
-#~ msgstr "Sarrera guztiak kentzen ditu erreprodukzio-zerrendatik."
-
-#~ msgid "Clear Queue"
-#~ msgstr "Garbitu ilara"
-
-#~ msgid "Clears the queue associated with this playlist."
-#~ msgstr "Erreprodukzio-zerrendarekin elkartutako ilara garbitzen du."
-
-#~ msgid "Remove Unavailable Files"
-#~ msgstr "Kendu erabilgarri ez dauden fitxategiak"
-
-#~ msgid "Removes unavailable files from the playlist."
-#~ msgstr ""
-#~ "Erabilgarri ez dauden fitxategiak kentzen ditu erreprodukzio-zerrendatik."
-
-#~ msgid "Remove Duplicates"
-#~ msgstr "Kendu bikoiztutakoak"
-
-#~ msgid "By Title"
-#~ msgstr "Tituluaren arabera"
-
-#~ msgid "Removes duplicate entries from the playlist by title."
-#~ msgstr ""
-#~ "Bikoiztutako sarrerak erreprodukzio-zerrendatik kentzen ditu tituluaren "
-#~ "arabera."
-
-#~ msgid "By Filename"
-#~ msgstr "Fitxategi-izenaren arabera"
-
-#~ msgid "Removes duplicate entries from the playlist by filename."
-#~ msgstr ""
-#~ "Bikoiztutako sarrerak erreprodukzio-zerrendatik kentzen ditu fitxategi-"
-#~ "izenaren arabera."
-
-#~ msgid "By Path + Filename"
-#~ msgstr "Bide-izenaren arabera"
-
-#~ msgid "Removes duplicate entries from the playlist by their full path."
-#~ msgstr ""
-#~ "Bikoiztutako sarrerak erreprodukzio-zerrendatik kentzen ditu bide-izen "
-#~ "osoaren arabera."
-
-#~ msgid "Remove Unselected"
-#~ msgstr "Kendu hautatu gabekoak"
-
-#~ msgid "Remove unselected entries from the playlist."
-#~ msgstr "Hautatu gabeko sarrerak erreprodukzio-zerrendatik kentzen ditu."
-
-#~ msgid "Remove Selected"
-#~ msgstr "Kendu hautatutakoak"
-
-#~ msgid "Remove selected entries from the playlist."
-#~ msgstr "Hautatutako sarrerak erreprodukzio-zerrendatik kentzen ditu."
-
-#~ msgid "Randomize List"
-#~ msgstr "Nahastu zerrenda"
-
-#~ msgid "Randomizes the playlist."
-#~ msgstr "Erreprodukzio-zerrenda ausaz nahasten du."
-
-#~ msgid "Reverse List"
-#~ msgstr "Alderantzikatu zerrenda"
-
-#~ msgid "Reverses the playlist."
-#~ msgstr "Erreprodukzio-zerrenda alderantzikatzen du."
-
-#~ msgid "Sort List"
-#~ msgstr "Ordenatu zerrenda"
-
-#~ msgid "Sorts the list by title."
-#~ msgstr "Zerrenda ordenatzen du tituluaren arabera."
-
-#, fuzzy
-#~ msgid "By Album"
-#~ msgstr "Albuma"
-
-#, fuzzy
-#~ msgid "Sorts the list by album."
-#~ msgstr "Zerrenda ordenatzen du tituluaren arabera."
-
-#~ msgid "By Artist"
-#~ msgstr "Artistaren arabera"
-
-#~ msgid "Sorts the list by artist."
-#~ msgstr "Zerrenda ordenatzen du artistaren arabera."
-
-#~ msgid "Sorts the list by filename."
-#~ msgstr "Zerrenda ordenatzen du fitxategi-izenaren arabera."
-
-#~ msgid "Sorts the list by full pathname."
-#~ msgstr "Zerrenda ordenatzen du bide-izen osoaren arabera."
-
-#~ msgid "By Date"
-#~ msgstr "Dataren arabera"
-
-#~ msgid "Sorts the list by modification time."
-#~ msgstr "Zerrenda ordenatzen du aldatze-dataren arabera."
-
-#~ msgid "By Track Number"
-#~ msgstr "Pista-zenbakiaren arabera"
-
-#~ msgid "Sorts the list by track number."
-#~ msgstr "Zerrenda ordenatzen du pista-zenbakiaren arabera."
-
-#~ msgid "By Playlist Entry"
-#~ msgstr "Erreprodukzio-zerrendako sarreraren arabera"
-
-#~ msgid "Sorts the list by playlist entry."
-#~ msgstr "Zerrenda ordenatzen du erreprodukzio-zerrendako sarreraren arabera."
-
-#~ msgid "Sort Selected"
-#~ msgstr "Ordenatu hautatutakoak"
-
-#~ msgid "File"
-#~ msgstr "Fitxategia"
-
-#~ msgid "Help"
-#~ msgstr "Laguntza"
-
-#, fuzzy
-#~ msgid "Components"
-#~ msgstr "Iruzkina"
-
-#~ msgid "View Track Details"
-#~ msgstr "Ikusi pistaren xehetasunak"
-
-#~ msgid "Play File"
-#~ msgstr "Erreproduzitu fitxategia"
-
-#~ msgid "Load and play a file"
-#~ msgstr "Kargatu eta erreproduzitu fitxategia"
-
-#~ msgid "Play Location"
-#~ msgstr "Erreproduzitu kokalekua"
-
-#~ msgid "Play media from the selected location"
-#~ msgstr "Erreproduzitu multimedia hautatutako kokalekutik"
-
-#~ msgid "Plugin services"
-#~ msgstr "Plugin zerbitzuak"
-
-#~ msgid "Preferences"
-#~ msgstr "Hobespenak"
-
-#~ msgid "Open preferences window"
-#~ msgstr "Ireki hobespenen leihoa"
-
-#~ msgid "_Quit"
-#~ msgstr "Irte_n"
-
-#~ msgid "Quit Audacious"
-#~ msgstr "Irten Audacious-etik"
-
-#~ msgid "Set A-B"
-#~ msgstr "Ezarri A-B"
-
-#~ msgid "Clear A-B"
-#~ msgstr "Garbitu A-B"
-
-#~ msgid "Jump to Playlist Start"
-#~ msgstr "Saltatu erreprodukzio-zerrendaren hasierara"
-
-#~ msgid "Jump to File"
-#~ msgstr "Saltatu fitxategira"
-
-#~ msgid "Queue Toggle"
-#~ msgstr "Txandakatu ilara"
-
-#~ msgid "Enables/disables the entry in the playlist's queue."
-#~ msgstr "Erreprodukzio-zerrendako ilarako sarrera gaitzen/desgaitzen du."
-
-#~ msgid "Load"
-#~ msgstr "Kargatu"
-
-#~ msgid "Import"
-#~ msgstr "Inportatu"
-
-#~ msgid "Save"
-#~ msgstr "Gorde"
-
-#~ msgid "Delete"
-#~ msgstr "Ezabatu"
-
-#~ msgid "Preset"
-#~ msgstr "Aurrezarpena"
-
-#~ msgid "Load preset"
-#~ msgstr "Kargatu aurrezarpena"
-
-#~ msgid "Auto-load preset"
-#~ msgstr "Zehaztutako aurrezarpena"
-
-#~ msgid "Load auto-load preset"
-#~ msgstr "Kargatu zehaztutako aurrezarpena"
-
-#~ msgid "Default"
-#~ msgstr "Lehenetsia"
-
-#~ msgid "Load default preset into equalizer"
-#~ msgstr "Kargatu aurrezarpen lehenetsia ekualizadorean"
-
-#~ msgid "Zero"
-#~ msgstr "Zero"
-
-#~ msgid "Set equalizer preset levels to zero"
-#~ msgstr "Ezarri ekualizadorearen aurrezarpenaren maila zerora"
-
-#~ msgid "From file"
-#~ msgstr "Fitxategitik"
-
-#~ msgid "Load preset from file"
-#~ msgstr "Kargatu aurrezarpena fitxategitik"
-
-#~ msgid "From WinAMP EQF file"
-#~ msgstr "WinAMP EQF fitxategitik"
-
-#~ msgid "Load preset from WinAMP EQF file"
-#~ msgstr "Kargatu aurrezarpena WinAMP EQF fitxategitik"
-
-#~ msgid "WinAMP Presets"
-#~ msgstr "WinAMP aurrezarpenak"
-
-#~ msgid "Import WinAMP presets"
-#~ msgstr "Inportatu WinAMP aurrezarpenak"
-
-#~ msgid "Save preset"
-#~ msgstr "Gorde aurrezarpena"
-
-#~ msgid "Save auto-load preset"
-#~ msgstr "Gorde zehaztutako aurrezarpena"
-
-#~ msgid "Save default preset"
-#~ msgstr "Gorde aurrezarpen lehenetsia"
-
-#~ msgid "To file"
-#~ msgstr "Fitxategian"
-
-#~ msgid "Save preset to file"
-#~ msgstr "Gorde aurrezarpena fitxategian"
-
-#~ msgid "To WinAMP EQF file"
-#~ msgstr "WinAMP EQF fitxategian"
-
-#~ msgid "Save preset to WinAMP EQF file"
-#~ msgstr "Gorde aurrezarpena WinAMP EQF fitxategian"
-
-#~ msgid "Delete preset"
-#~ msgstr "Ezabatu aurrezarpena"
-
-#~ msgid "Delete auto-load preset"
-#~ msgstr "Ezabatu zehaztutako aurrezarpena"
-
-#~ msgid ""
-#~ "<span size=\"small\">This is the amount of time to prebuffer audio "
-#~ "streams by, in milliseconds.\n"
-#~ "Increase this value if you are experiencing audio skipping.\n"
-#~ "Please note however, that high values will result in Audacious performing "
-#~ "poorly.</span>"
-#~ msgstr ""
-#~ "<span size=\"small\"> Audioaren korronteak aurrebufferrean edukiko den "
-#~ "denbora kopurua (milisegundotan)\n"
-#~ "Handiagotu balio hau audioan jauziak nabarmentzen badituzu.\n"
-#~ "Hala ere, jakin ezazu balio altuek Audacious-en errendimendua motelduko "
-#~ "dutela.</span>"
-
-#~ msgid "Enable headless operation"
-#~ msgstr "Gaitu 'zerbitzari' modua"
-
-#~ msgid ""
-#~ "<b><big>Unable to load skin.</big></b>\n"
-#~ "\n"
-#~ "Check that skin at '%s' is usable and default skin is properly installed "
-#~ "at '%s'\n"
-#~ msgstr ""
-#~ "<b><big>Ezin da azala kargatu.</big></b>\n"
-#~ "\n"
-#~ "Egiaztatu '%s' azala erabilgarri dagoela, eta azal lehenetsia '%s'(e)n "
-#~ "ongi instalatuta dagoela.\n"
-
-#~ msgid "Headless operation enabled\n"
-#~ msgstr "'Zerbitzari' modua gaituta\n"
-
-#~ msgid "Audacious core developers:"
-#~ msgstr "Audacious-eko garatzaile nagusiak:"
-
-#~ msgid "Audacious Equalizer"
-#~ msgstr "Audacious-en ekualizadorea"
-
-#~ msgid "Play files"
-#~ msgstr "Erreproduzitu fitxategiak"
-
-#~ msgid "Load files"
-#~ msgstr "Kargatu fitxategiak"
-
-#~ msgid "%s - Audacious"
-#~ msgstr "%s - Audacious"
-
-#~ msgid "VBR"
-#~ msgstr "VBR"
-
-#~ msgid "mono"
-#~ msgstr "monoa"
-
-#~ msgid "Audacious - visibility warning"
-#~ msgstr "Audacious - ikusgaitasunaren abisua"
-
-#~ msgid "Show main player window"
-#~ msgstr "Erakutsi erreproduzigailu nagusiaren leihoa"
-
-#~ msgid "Ignore"
-#~ msgstr "Ez ikusi egin"
-
-#~ msgid ""
-#~ "Audacious has been started with all of its windows hidden.\n"
-#~ "You may want to show the player window again to control Audacious; "
-#~ "otherwise, you'll have to control it remotely via audtool or enabled "
-#~ "plugins (such as the statusicon plugin)."
-#~ msgstr ""
-#~ "Audacious leiho guztiak ezkutatuta dituela abiarazi da.\n"
-#~ "Erreproduzigailuaren leihoa berriro bistaratzea nahiko duzu Audacious "
-#~ "kontrolatzeko. Bestela, urrunetik kontrola dezakezu audtool edo gaitutako "
-#~ "pluginak (egoerako ikonoa, edo statusicon, plugina bezalako bat) erabiliz."
-
-#~ msgid "Always ignore, show/hide is controlled remotely"
-#~ msgstr "Ez ikusi egin beti. Erakutsi/ezkutatu urrunetik kontrolatzen da"
-
-#~ msgid ""
-#~ "<big><b>Broken GTK engine in use</b></big>\n"
-#~ "\n"
-#~ "Audacious has detected that you are using a broken GTK engine.\n"
-#~ "\n"
-#~ "The theme engine you are using, <i>%s</i>, is incompatible with some of "
-#~ "the features used by modern skins. The incompatible features have been "
-#~ "disabled for this session.\n"
-#~ "\n"
-#~ "To use these features, please consider using a different GTK theme engine."
-#~ msgstr ""
-#~ "<big><b>Hautsitako GTK motorra erabiltzen</b></big>\n"
-#~ "\n"
-#~ "Audacious-ek hautsitako GTK motorra erabiltzen ari zarela detektatu du.\n"
-#~ "\n"
-#~ "Erabiltzen ari zaren gaiaren motorra, <i>%s</i>, azal modernoek "
-#~ "erabiltzen dituzten eginbide batzuekin ez dira bateragarriak. "
-#~ "Bateragarriak ez diren eginbideak desgaitu egin dira saio honetan.\n"
-#~ "\n"
-#~ "Eginbide hauek erabiltzeko, saiatu bestelako GTK gaiaren motorra "
-#~ "erabiltzen."
-
-#~ msgid "Seek to: %d:%-2.2d/%d:%-2.2d (%d%%)"
-#~ msgstr "Posizioa: %d:%-2.2d/%d:%-2.2d (%% %d)"
-
-#~ msgid "Volume: %d%%"
-#~ msgstr "Bolumena: %% %d"
-
-#~ msgid "Balance: %d%% left"
-#~ msgstr "Balantzea: %% %d ezkerrean"
-
-#~ msgid "Balance: center"
-#~ msgstr "Balantzea: erdian"
-
-#~ msgid "Balance: %d%% right"
-#~ msgstr "Balantzea: %% %d eskuinean"
-
-#~ msgid "Options Menu"
-#~ msgstr "Aukeren menua"
-
-#~ msgid "Disable 'Always On Top'"
-#~ msgstr "Desgaitu 'Beti goian'"
-
-#~ msgid "Enable 'Always On Top'"
-#~ msgstr "Gaitu 'Beti goian'"
-
-#~ msgid "File Info Box"
-#~ msgstr "Fitxategi-informazioaren laukia"
-
-#~ msgid "Disable 'GUI Scaling'"
-#~ msgstr "Desgaitu 'GUI eskalatzea'"
-
-#~ msgid "Enable 'GUI Scaling'"
-#~ msgstr "Gaitu 'GUI eskalatzea'"
-
-#~ msgid "Visualization Menu"
-#~ msgstr "Bistaratzeko menua"
-
-#~ msgid ""
-#~ "<b><big>Couldn't open audio.</big></b>\n"
-#~ "\n"
-#~ "Please check that:\n"
-#~ "1. You have the correct output plugin selected.\n"
-#~ "2. No other programs is blocking the soundcard.\n"
-#~ "3. Your soundcard is configured properly.\n"
-#~ msgstr ""
-#~ "<b><big>Ezin izan da audioa ireki.</big></b>\n"
-#~ "\n"
-#~ "Egiaztatu honakoak:\n"
-#~ "1. Irteerako plugin egokia duzula hautatuta\n"
-#~ "2. Beste programaren bat ez dela soinu-txartela blokeatzen ari.\n"
-#~ "3. Soinu-txartela behar bezala konfiguratuta dagoela\n"
-
-#~ msgid "Autoscroll Songname"
-#~ msgstr "Kanta-izenak automatikoki korritu"
-
-#~ msgid "Show Player"
-#~ msgstr "Erakutsi erreproduzigailua"
-
-#~ msgid "Show Playlist Editor"
-#~ msgstr "Erakutsi erreprodukzio-zerrendaren editorea"
-
-#~ msgid "Always on Top"
-#~ msgstr "Beti goian"
-
-#~ msgid "Put on All Workspaces"
-#~ msgstr "Jarri laneko area guztietan"
-
-#~ msgid "Roll up Player"
-#~ msgstr "Bildu erreproduzigailua"
-
-#~ msgid "Roll up Playlist Editor"
-#~ msgstr "Bildu erreprodukzio-zerrendaren editorea"
-
-#~ msgid "Roll up Equalizer"
-#~ msgstr "Bildu ekualizadorea"
-
-#~ msgid "Scale"
-#~ msgstr "Eskalatu"
-
-#~ msgid "DoubleSize"
-#~ msgstr "Tamaina bikoitza"
-
-#~ msgid "Easy Move"
-#~ msgstr "Erraz lekuz aldatu"
-
-#~ msgid "Analyzer"
-#~ msgstr "Analizatzailea"
-
-#~ msgid "Scope"
-#~ msgstr "Esparrua"
-
-#~ msgid "Voiceprint"
-#~ msgstr "Espektrograma"
-
-#~ msgid "Off"
-#~ msgstr "Desaktibatu"
-
-#~ msgid "Normal"
-#~ msgstr "Normala"
-
-#~ msgid "Fire"
-#~ msgstr "Garrak"
-
-#~ msgid "Vertical Lines"
-#~ msgstr "Marra bertikalak"
-
-#~ msgid "Lines"
-#~ msgstr "Marrak"
-
-#~ msgid "Bars"
-#~ msgstr "Barrak"
-
-#~ msgid "Dot Scope"
-#~ msgstr "Puntu-esparrua"
-
-#~ msgid "Line Scope"
-#~ msgstr "Marra-esparrua"
-
-#~ msgid "Solid Scope"
-#~ msgstr "Esparru solidoa"
-
-#~ msgid "Ice"
-#~ msgstr "Izotza"
-
-#~ msgid "Smooth"
-#~ msgstr "Leuna"
-
-#~ msgid "Full (~50 fps)"
-#~ msgstr "Osoa (~50 f/s)"
-
-#~ msgid "Half (~25 fps)"
-#~ msgstr "Erdia (~25 f/s)"
-
-#~ msgid "Quarter (~13 fps)"
-#~ msgstr "Laurdena (~13 f/s)"
-
-#~ msgid "Eighth (~6 fps)"
-#~ msgstr "Zortzirena (~6 f/s)"
-
-#~ msgid "Slowest"
-#~ msgstr "Motelena"
-
-#~ msgid "Slow"
-#~ msgstr "Motela"
-
-#~ msgid "Medium"
-#~ msgstr "Tartekoa"
-
-#~ msgid "Fast"
-#~ msgstr "Azkarra"
-
-#~ msgid "Fastest"
-#~ msgstr "Azkarrena"
-
-#~ msgid "Time Elapsed"
-#~ msgstr "Igarotako denbora"
-
-#~ msgid "Time Remaining"
-#~ msgstr "Geratzen den denbora"
-
-#~ msgid "Plugin Services"
-#~ msgstr "Plugin zerbitzuak"
-
-#~ msgid "Search entries in active playlist"
-#~ msgstr "Bilatu sarrerak erreprodukzio-zerrenda aktiboan"
-
-#~ msgid ""
-#~ "Select entries in playlist by filling one or more fields. Fields use "
-#~ "regular expressions syntax, case-insensitive. If you don't know how "
-#~ "regular expressions work, simply insert a literal portion of what you're "
-#~ "searching for."
-#~ msgstr ""
-#~ "Hautatu erreprodukzio-zerrendako sarrerak eremu bat edo gehiago betez. "
-#~ "Eremuek adierazpen erregularraren sintaxia erabiltzen dute. Ez badakizu "
-#~ "adierazpen erregularrak nola erabiltzen diren, bilatzea nahi duzunaren "
-#~ "zati literala idatzi."
-
-#~ msgid "Title: "
-#~ msgstr "Titulua: "
-
-#~ msgid "Artist: "
-#~ msgstr "Artista: "
-
-#~ msgid "Filename: "
-#~ msgstr "Fitxategi-izena: "
-
-#~ msgid "Clear previous selection before searching"
-#~ msgstr "Garbitu aurreko hautapena bilatu aurretik"
-
-#~ msgid "Automatically toggle queue for matching entries"
-#~ msgstr "Automatikoki txandakatu bat datozten sarreren ilara"
-
-#~ msgid "Audacious Playlist Editor"
-#~ msgstr "Audacious-en erreprodukzio-zerrendaren editorea"
-
-#~ msgid "Appearance"
-#~ msgstr "Itxura"
-
-#~ msgid "<b>_Fonts</b>"
-#~ msgstr "<b>_Letra-tipoak</b>"
-
-#~ msgid "_Player:"
-#~ msgstr "_Erreproduzigailua:"
-
-#~ msgid "Select main player window font:"
-#~ msgstr "Hautatu erreproduzigailu nagusiaren leihoaren letra-tipoa:"
-
-#~ msgid "_Playlist:"
-#~ msgstr "_Erreprodukzio-zerrenda:"
-
-#~ msgid "Select playlist font:"
-#~ msgstr "Hautatu erreprodukzio-zerrendaren letra-tipoa:"
-
-#~ msgid "Use Bitmap fonts if available"
-#~ msgstr "Erabili bit-mapa letra-tipoak erabilgarri egonez gero"
-
-#~ msgid ""
-#~ "Use bitmap fonts if they are available. Bitmap fonts do not support "
-#~ "Unicode strings."
-#~ msgstr ""
-#~ "Erabili bit-mapa motako letra-tipoak erabilgarri egonez gero. Bit-mapa "
-#~ "motako letra-tipoek ez dute Unicode motako katerik onartzen."
-
-#~ msgid "<b>_Miscellaneous</b>"
-#~ msgstr "<b>_Hainbat</b>"
-
-#~ msgid "Show track numbers in playlist"
-#~ msgstr "Erakutsi pista-zenbakia erreprodukzio-zerrendan"
-
-#~ msgid "Show separators in playlist"
-#~ msgstr "Erakutsi bereizleak erreprodukzio-zerrendan"
-
-#~ msgid "Show window manager decoration"
-#~ msgstr "Erakutsi leiho-kudeatzailearen dekorazioa"
-
-#~ msgid "This enables the window manager to show decorations for windows."
-#~ msgstr ""
-#~ "Honek leiho-kudeatzaileak leihoen dekorazioa bistaratzea gaitzen du."
-
-#~ msgid "Use XMMS-style file selector instead of the default selector"
-#~ msgstr ""
-#~ "Erabili XMMS estiloko fitxategi hautatzailea (hautatzaile lehenetsiaren "
-#~ "ordez)"
-
-#~ msgid ""
-#~ "This enables the XMMS/GTK1-style file selection dialogs. This selector is "
-#~ "provided by Audacious itself and is faster than the default GTK2 selector "
-#~ "(but sadly not as user-friendly)."
-#~ msgstr ""
-#~ "XMMS/GTK1 estiloko fitxategi-hautapenaren elkarrizketa-koadroak gaitzen "
-#~ "ditu. Hautatzaile hau Audacious berak eskaintzen du, eta GTK2 "
-#~ "hautatzailea baino azkarragoa da (tamalez piska bat zailagoa da "
-#~ "erabiltzeko)."
-
-#~ msgid "Use two-way text scroller"
-#~ msgstr "Erabili bi norantzako testu-korritzea"
-
-#~ msgid ""
-#~ "If selected, the file information text in the main window will scroll "
-#~ "back and forth. If not selected, the text will only scroll in one "
-#~ "direction."
-#~ msgstr ""
-#~ "Hautatzen bada, leiho nagusiko fitxategiaren informazioaren testua atzera "
-#~ "eta aurrera korritu daiteke. Ez bada hautatzen, testua norabide bakarrean "
-#~ "korritu daiteke."
-
-#~ msgid "Disable inline gtk theme"
-#~ msgstr "Desgaitu barneko gtk gaia"
-
-#~ msgid "Allow loading incomplete skins"
-#~ msgstr "Onartu osatu gabeko azalak kargatzea"
-
-#~ msgid ""
-#~ "If selected, audacious won't refuse loading broken skins. Use only if "
-#~ "your favourite skin doesn't work"
-#~ msgstr ""
-#~ "Hautatzen bada, Audacious-ek ezin izango du ukatu hautsitako azalak "
-#~ "kargatzea. Azal gogokoena funtzionatzen ez duenean soilik erabili aukera "
-#~ "hau."
-
-#~ msgid "On load"
-#~ msgstr "Aktibatuta kargatzean"
-
-#~ msgid "Load metadata when adding the file to the playlist or opening it"
-#~ msgstr ""
-#~ "Kargatu metadatuak fitxategia erreprodukzio-zerrendan gehitzean edo "
-#~ "irekitzean"
-
-#~ msgid "On display"
-#~ msgstr "Aktibatuta bistaratzean"
-
-#~ msgid ""
-#~ "Load metadata on demand when displaying the file in the playlist. You may "
-#~ "need to set \"Detect file formats on demand\" in Audio page for full "
-#~ "benefit."
-#~ msgstr ""
-#~ "Kargatu metadatuak eskatutakoan fitxategia erreprodukzio-zerrendan "
-#~ "bistaratzean. Audioaren ataleko  \"Detektatu fitxategi-formatuak "
-#~ "eskatutakoan\" ezarri beharko duzu abantailaz baliatzeko."
-
-#~ msgid "Color Adjustment"
-#~ msgstr "Kolore-doikuntza"
-
-#~ msgid ""
-#~ "Audacious allows you to alter the color balance of the skinned UI. The "
-#~ "sliders below will allow you to do this."
-#~ msgstr ""
-#~ "Audacious-ek interfazearen kolore-balantzea aldatzea utziko dizu. Azpiko "
-#~ "graduatzaileek baimenduko zaituzte hori egitea."
-
-#~ msgid "Blue"
-#~ msgstr "Urdina"
-
-#~ msgid "Green"
-#~ msgstr "Berdea"
-
-#~ msgid "Red"
-#~ msgstr "Gorria"
-
-#~ msgid "<b>_Skin</b>"
-#~ msgstr "<b>_Azala</b>"
-
-#~ msgid "Refresh skin list"
-#~ msgstr "Freskatu azalen zerrenda"
-
-#~ msgid "PREAMP"
-#~ msgstr "AURRE-ANP"
-
-#~ msgid "60HZ"
-#~ msgstr "60Hz"
-
-#~ msgid "170HZ"
-#~ msgstr "170Hz"
-
-#~ msgid "310HZ"
-#~ msgstr "310Hz"
-
-#~ msgid "600HZ"
-#~ msgstr "600Hz"
-
-#~ msgid "1KHZ"
-#~ msgstr "1KHz"
-
-#~ msgid "3KHZ"
-#~ msgstr "3KHz"
-
-#~ msgid "6KHZ"
-#~ msgstr "6KHz"
-
-#~ msgid "12KHZ"
-#~ msgstr "12KHz"
-
-#~ msgid "14KHZ"
-#~ msgstr "14KHz"
-
-#~ msgid "16KHZ"
-#~ msgstr "16KHz"
-
-#~ msgid "Archived Winamp 2.x skin"
-#~ msgstr "Konprimitutako Winamp 2.x azala"
-
-#~ msgid "Unarchived Winamp 2.x skin"
-#~ msgstr "Konprimitu gabeko Winamp 2.x azala"
