@@ -1,30 +1,30 @@
 # Czech translation for Audacious
-# Copyright (C) 2004 Jan Nárovec <finn@sendmail.cz>
+# Copyright (C) Audacious translators
 # This file is distributed under the same license as the Audacious package.
+#
+# Translators:
 # Jan Nárovec <finn@sendmail.cz>, 2004.
+#   <pavelfric@seznam.cz>, 2012.
 # Petr Písař <petr.pisar@atlas.cz>, 2007, 2008, 2009, 2010, 2011, 2012.
-#
-# tags (metadata) → popisky
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: audacious audacious-3.2-beta1-96-gd78a414\n"
+"Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-02-18 13:14+0100\n"
-"PO-Revision-Date: 2012-02-18 13:21+0100\n"
-"Last-Translator: Petr Písař <petr.pisar@atlas.cz>\n"
-"Language-Team: Czech <translation-team-cs@lists.sourceforge.net>\n"
-"Language: cs\n"
+"POT-Creation-Date: 2012-01-11 08:54-0500\n"
+"PO-Revision-Date: 2012-03-31 14:29+0000\n"
+"Last-Translator: jlindgren <john.lindgren@aol.com>\n"
+"Language-Team: Czech\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"Language: cs\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2\n"
 
-#: src/audacious/adder.c:75
+#: src/audacious/adder.c:77
 msgid "Searching ..."
 msgstr "Hledá se…"
 
-#: src/audacious/adder.c:103
+#: src/audacious/adder.c:113
 #, c-format
 msgid "%d file found"
 msgid_plural "%d files found"
@@ -32,313 +32,305 @@ msgstr[0] "Nalezen %d soubor"
 msgstr[1] "Nalezeny %d soubory"
 msgstr[2] "Nalezeno %d souborů"
 
+#: src/audacious/chardet.c:39
+msgid "  (invalid UTF-8)"
+msgstr "  (neplatné UTF-8)"
+
 #: src/audacious/credits.c:37
 msgid "Core developers:"
 msgstr "Vývojáři jádra:"
 
-#: src/audacious/credits.c:52
+#: src/audacious/credits.c:51
 msgid "Graphics:"
 msgstr "Grafika:"
 
-#: src/audacious/credits.c:57
+#: src/audacious/credits.c:56
 msgid "Default skin:"
 msgstr "Standardní vzhled:"
 
-#: src/audacious/credits.c:63
+#: src/audacious/credits.c:62
 msgid "Plugin development:"
 msgstr "Vývoj zásuvných modulů:"
 
-#: src/audacious/credits.c:86
+#: src/audacious/credits.c:85
 msgid "Patch authors:"
 msgstr "Autoři záplat:"
 
-#: src/audacious/credits.c:132
+#: src/audacious/credits.c:131
 msgid "1.x developers:"
 msgstr "Vývojáři řady 1.x:"
 
-#: src/audacious/credits.c:154
+#: src/audacious/credits.c:153
 msgid "BMP Developers:"
 msgstr "Vývojáři Audacious:"
 
-#: src/audacious/credits.c:186
-msgid "Argentinian Spanish:"
-msgstr "Argentinská španělština:"
-
-#: src/audacious/credits.c:189
+#: src/audacious/credits.c:185
 msgid "Belarusian:"
 msgstr "Běloruština:"
 
-#: src/audacious/credits.c:192
+#: src/audacious/credits.c:188
 msgid "Basque:"
 msgstr "Baskičtina:"
 
-#: src/audacious/credits.c:195
+#: src/audacious/credits.c:191
 msgid "Brazilian Portuguese:"
 msgstr "Brazilská portugalština:"
 
-#: src/audacious/credits.c:200
+#: src/audacious/credits.c:196
 msgid "Breton:"
 msgstr "Bretonština:"
 
-#: src/audacious/credits.c:203
+#: src/audacious/credits.c:199
 msgid "Bulgarian:"
 msgstr "Bulharština:"
 
-#: src/audacious/credits.c:206
+#: src/audacious/credits.c:202
 msgid "Catalan:"
 msgstr "Katalánština:"
 
-#: src/audacious/credits.c:211
+#: src/audacious/credits.c:206
 msgid "Chinese:"
 msgstr "Čínština:"
 
-#: src/audacious/credits.c:214
+#: src/audacious/credits.c:209
 msgid "Croatian:"
 msgstr "Chorvatština:"
 
-#: src/audacious/credits.c:217
+#: src/audacious/credits.c:212
 msgid "Czech:"
 msgstr "Čeština:"
 
-#: src/audacious/credits.c:220
+#: src/audacious/credits.c:215
 msgid "Dutch:"
 msgstr "Holandština:"
 
-#: src/audacious/credits.c:224
+#: src/audacious/credits.c:219
 msgid "Estonian:"
 msgstr "Estonština:"
 
-#: src/audacious/credits.c:227
+#: src/audacious/credits.c:222
 msgid "Finnish:"
 msgstr "Finština:"
 
-#: src/audacious/credits.c:233
+#: src/audacious/credits.c:227
 msgid "French:"
 msgstr "Francouzština:"
 
-#: src/audacious/credits.c:239
+#: src/audacious/credits.c:233
 msgid "German:"
 msgstr "Němčina:"
 
-#: src/audacious/credits.c:246
+#: src/audacious/credits.c:240
 msgid "Georgian:"
 msgstr "Gruzínština:"
 
-#: src/audacious/credits.c:249
+#: src/audacious/credits.c:243
 msgid "Greek:"
 msgstr "Řečtina:"
 
-#: src/audacious/credits.c:254
+#: src/audacious/credits.c:248
 msgid "Hindi:"
 msgstr "Hindština:"
 
-#: src/audacious/credits.c:257
+#: src/audacious/credits.c:251
 msgid "Hungarian:"
 msgstr "Maďarština:"
 
-#: src/audacious/credits.c:261
+#: src/audacious/credits.c:255
 msgid "Italian:"
 msgstr "Italština:"
 
-#: src/audacious/credits.c:266
+#: src/audacious/credits.c:260
 msgid "Japanese:"
 msgstr "Japonština:"
 
-#: src/audacious/credits.c:269
+#: src/audacious/credits.c:263
 msgid "Korean:"
 msgstr "Korejština:"
 
-#: src/audacious/credits.c:272
+#: src/audacious/credits.c:266
 msgid "Latvian:"
 msgstr "Lotyština:"
 
-#: src/audacious/credits.c:275
+#: src/audacious/credits.c:269
 msgid "Lithuanian:"
 msgstr "Litevština:"
 
-#: src/audacious/credits.c:280
+#: src/audacious/credits.c:274
 msgid "Macedonian:"
 msgstr "Makedonština:"
 
-#: src/audacious/credits.c:283
+#: src/audacious/credits.c:277
 msgid "Mexican Spanish:"
 msgstr "Mexická španělština:"
 
-#: src/audacious/credits.c:286
+#: src/audacious/credits.c:280
 msgid "Polish:"
 msgstr "Polština:"
 
-#: src/audacious/credits.c:293
+#: src/audacious/credits.c:287
 msgid "Portuguese:"
 msgstr "Portugalština:"
 
-#: src/audacious/credits.c:296
+#: src/audacious/credits.c:290
 msgid "Romanian:"
 msgstr "Rumunština:"
 
-#: src/audacious/credits.c:300
+#: src/audacious/credits.c:294
 msgid "Russian:"
 msgstr "Ruština:"
 
-#: src/audacious/credits.c:304
+#: src/audacious/credits.c:298
 msgid "Serbian (Latin):"
 msgstr "Srbština (latinka):"
 
-#: src/audacious/credits.c:307
+#: src/audacious/credits.c:301
 msgid "Serbian (Cyrillic):"
 msgstr "Srbština (cyrilice):"
 
-#: src/audacious/credits.c:311
+#: src/audacious/credits.c:305
 msgid "Simplified Chinese:"
 msgstr "Zjednodušená čínština:"
 
-#: src/audacious/credits.c:314
+#: src/audacious/credits.c:308
 msgid "Slovak:"
 msgstr "Slovenština:"
 
-#: src/audacious/credits.c:318
+#: src/audacious/credits.c:312
 msgid "Spanish:"
 msgstr "Španělština:"
 
-#: src/audacious/credits.c:327
+#: src/audacious/credits.c:320
 msgid "Swedish:"
 msgstr "Švédština:"
 
-#: src/audacious/credits.c:330
+#: src/audacious/credits.c:323
 msgid "Traditional Chinese:"
 msgstr "Tradiční čínština:"
 
-#: src/audacious/credits.c:336
+#: src/audacious/credits.c:329
 msgid "Turkish:"
 msgstr "Turečtina:"
 
-#: src/audacious/credits.c:340
+#: src/audacious/credits.c:333
 msgid "Ukrainian:"
 msgstr "Ukrajinština:"
 
-#: src/audacious/credits.c:345
+#: src/audacious/credits.c:338
 msgid "Vietnamese:"
 msgstr "Vietnamština:"
 
-#: src/audacious/credits.c:348
+#: src/audacious/credits.c:341
 msgid "Welsh:"
 msgstr "Welština:"
 
-#: src/audacious/equalizer_preset.c:183
+#: src/audacious/equalizer_preset.c:180
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
 msgstr "Chyba při importu winampovského EQF souboru „%s“"
 
-#: src/audacious/chardet.c:40
-msgid "  (invalid UTF-8)"
-msgstr "  (neplatné UTF-8)"
-
-#: src/audacious/main.c:240
+#: src/audacious/main.c:243
 msgid "Skip backwards in playlist"
 msgstr "Vrátí se zpět v seznamu skladeb"
 
-#: src/audacious/main.c:241
+#: src/audacious/main.c:244
 msgid "Start playing current playlist"
 msgstr "Přehraje skladby v aktuálním seznamu"
 
-#: src/audacious/main.c:242
+#: src/audacious/main.c:245
 msgid "Pause current song"
 msgstr "Pozastaví přehrávanou skladbu"
 
-#: src/audacious/main.c:243
+#: src/audacious/main.c:246
 msgid "Stop current song"
 msgstr "Zastaví přehrávanou skladbu"
 
-#: src/audacious/main.c:244
+#: src/audacious/main.c:247
 msgid "Pause if playing, play otherwise"
 msgstr "Pozastaví při přehrávání; jinak spustí"
 
-#: src/audacious/main.c:245
+#: src/audacious/main.c:248
 msgid "Skip forward in playlist"
 msgstr "Přejde na další skladbu"
 
-#: src/audacious/main.c:246
+#: src/audacious/main.c:249
 msgid "Display Jump to File dialog"
 msgstr "Zobrazí dialog „Přejít na soubor“"
 
-#: src/audacious/main.c:247
+#: src/audacious/main.c:250
 msgid "Add files to the playlist"
 msgstr "Přidá soubory do do seznamu skladeb"
 
-#: src/audacious/main.c:248
+#: src/audacious/main.c:251
 msgid "Add new files to a temporary playlist"
 msgstr "Přidá soubory do dočasného seznamu skladeb"
 
-#: src/audacious/main.c:249
+#: src/audacious/main.c:252
 msgid "Display the main window"
 msgstr "Zobrazí hlavní okno"
 
-#: src/audacious/main.c:250
+#: src/audacious/main.c:253
 msgid "Show version"
 msgstr "Zobrazí verzi"
 
-#: src/audacious/main.c:251
+#: src/audacious/main.c:254
 msgid "Print debugging messages"
 msgstr "Vypisuje ladicí hlášky"
 
-#: src/audacious/main.c:252
+#: src/audacious/main.c:255
 msgid "Headless mode (beta)"
 msgstr "Bezhlavý režim (beta)"
 
-#: src/audacious/main.c:253
+#: src/audacious/main.c:256
 msgid "FILE..."
 msgstr "SOUBOR…"
 
-#: src/audacious/main.c:265
+#: src/audacious/main.c:268
 msgid "- play multimedia files"
 msgstr "– přehrávat multimediální soubory"
 
-#: src/audacious/main.c:275
+#: src/audacious/main.c:278
 #, c-format
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
-msgstr ""
-"%s: %s\n"
-"Pro více informací zkuste „%s --help“.\n"
+msgstr "%s: %s\nPro více informací zkuste „%s --help“.\n"
 
-#: src/audacious/main.c:568
+#: src/audacious/main.c:573
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/playback.c:305
+#: src/audacious/playback.c:307
 #, c-format
 msgid "No decoder found for %s."
 msgstr "Pro %s nenalezen žádní dekodér."
 
-#: src/audacious/playlist-files.c:51
+#: src/audacious/playlist-files.c:53
 #, c-format
 msgid "Cannot %s %s: unsupported file extension."
 msgstr "%2$s nelze %1$s: nepodporovaná přípona souboru."
 
-#: src/audacious/playlist-files.c:52
+#: src/audacious/playlist-files.c:54
 msgid "save"
 msgstr "uložit"
 
-#: src/audacious/playlist-files.c:52
+#: src/audacious/playlist-files.c:54
 msgid "load"
 msgstr "načíst"
 
-#: src/audacious/playlist-new.c:129
+#: src/audacious/playlist-new.c:131
 msgid "New Playlist"
 msgstr "Nový seznam skladeb"
 
-#: src/audacious/playlist-new.c:130
+#: src/audacious/playlist-new.c:132
 msgid "Now Playing"
 msgstr "Nyní hraje"
 
-#: src/audacious/playlist-new.c:1612
+#: src/audacious/playlist-new.c:1630
 msgid ""
-"The playlist cannot be sorted because metadata scanning is still in progress "
-"(or has been disabled)."
-msgstr ""
-"Seznam skladeb nelze seřadit, protože hledání metadat stále probíhá (nebo je "
-"vypnuto)."
+"The playlist cannot be sorted because metadata scanning is still in progress"
+" (or has been disabled)."
+msgstr "Seznam skladeb nelze seřadit, protože hledání metadat stále probíhá (nebo je vypnuto)."
 
 #: src/audacious/ui_preferences.c:85
 msgid "Audio"
@@ -356,15 +348,15 @@ msgstr "Seznam skladeb"
 msgid "Plugins"
 msgstr "Moduly"
 
-#: src/audacious/ui_preferences.c:94 src/libaudgui/infopopup.c:195
+#: src/audacious/ui_preferences.c:94 src/libaudgui/infopopup.c:199
 msgid "Artist"
 msgstr "Umělec"
 
-#: src/audacious/ui_preferences.c:95 src/libaudgui/infopopup.c:197
+#: src/audacious/ui_preferences.c:95 src/libaudgui/infopopup.c:201
 msgid "Album"
 msgstr "Album"
 
-#: src/audacious/ui_preferences.c:96 src/libaudgui/infopopup.c:193
+#: src/audacious/ui_preferences.c:96 src/libaudgui/infopopup.c:197
 #: src/libaudgui/ui_playlist_manager.c:279
 msgid "Title"
 msgstr "Název"
@@ -373,7 +365,7 @@ msgstr "Název"
 msgid "Tracknumber"
 msgstr "Číslo stopy"
 
-#: src/audacious/ui_preferences.c:98 src/libaudgui/infopopup.c:199
+#: src/audacious/ui_preferences.c:98 src/libaudgui/infopopup.c:203
 msgid "Genre"
 msgstr "Žánr"
 
@@ -389,7 +381,7 @@ msgstr "Cesta k souboru"
 msgid "Date"
 msgstr "Datum"
 
-#: src/audacious/ui_preferences.c:102 src/libaudgui/infopopup.c:201
+#: src/audacious/ui_preferences.c:102 src/libaudgui/infopopup.c:205
 msgid "Year"
 msgstr "Rok"
 
@@ -610,9 +602,7 @@ msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
 "using commas."
-msgstr ""
-"Během hledání přebalu alba Audacious také zkouší určitá slova z názvu "
-"souboru. Tato slova oddělená čárkou můžete zadat v níže uvedených seznamech."
+msgstr "Během hledání přebalu alba Audacious také zkouší určitá slova z názvu souboru. Tato slova oddělená čárkou můžete zadat v níže uvedených seznamech."
 
 #: src/audacious/ui_preferences.c:811
 msgid "Exclude:"
@@ -687,10 +677,7 @@ msgid ""
 "Toggles popup information window for the pointed entry in the playlist. The "
 "window shows title of song, name of album, genre, year of publish, track "
 "number, track length, and artwork."
-msgstr ""
-"Přepne zobrazovaní vyskakovacího okna s podrobnostmi o vybrané položce "
-"v seznamu skladeb. V okně je zobrazen název skladby, název alba, žánr, rok "
-"vydání, číslo stopy, délka stopy a přebal."
+msgstr "Přepne zobrazovaní vyskakovacího okna s podrobnostmi o vybrané položce v seznamu skladeb. V okně je zobrazen název skladby, název alba, žánr, rok vydání, číslo stopy, délka stopy a přebal."
 
 #: src/audacious/ui_preferences.c:1455
 msgid "Edit settings for popup information"
@@ -724,7 +711,7 @@ msgstr "Obecné"
 msgid "Audacious Preferences"
 msgstr "Nastavení programu"
 
-#: src/audacious/util.c:116
+#: src/audacious/util.c:120
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Nepodařilo se vytvořit adresář (%s): %s\n"
@@ -742,15 +729,15 @@ msgstr "Žádná skladba nehraje."
 msgid "Audio CD, track %s"
 msgstr "Zvukové CD, stopa %s"
 
-#: src/libaudcore/tuple.c:542
+#: src/libaudcore/tuple.c:536
 msgid "Mono"
 msgstr "Mono"
 
-#: src/libaudcore/tuple.c:544
+#: src/libaudcore/tuple.c:538
 msgid "Stereo"
 msgstr "Stereo"
 
-#: src/libaudcore/tuple.c:546
+#: src/libaudcore/tuple.c:540
 #, c-format
 msgid "%d channel"
 msgid_plural "%d channels"
@@ -758,32 +745,30 @@ msgstr[0] "%d kanál"
 msgstr[1] "%d kanály"
 msgstr[2] "%d kanálů"
 
-#: src/libaudgui/about.c:51 src/libaudgui/about.c:114
+#: src/libaudgui/about.c:52 src/libaudgui/about.c:115
 msgid "Credits"
 msgstr "Zásluhy"
 
-#: src/libaudgui/about.c:51
+#: src/libaudgui/about.c:52
 msgid "Translators"
 msgstr "Překladatelé"
 
-#: src/libaudgui/about.c:90
+#: src/libaudgui/about.c:91
 msgid "About Audacious"
 msgstr "O Audacious"
 
-#: src/libaudgui/confirm.c:75
+#: src/libaudgui/confirm.c:76
 #, c-format
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
-msgstr ""
-"Jste si jisti, že chcete %s zavřít? Pokud tak učiníte, jakékoliv změny "
-"provedené od posledního exportu budou ztraceny."
+msgstr "Jste si jisti, že chcete %s zavřít? Pokud tak učiníte, jakékoliv změny provedené od posledního exportu budou ztraceny."
 
-#: src/libaudgui/confirm.c:88
+#: src/libaudgui/confirm.c:89
 msgid "_Don't show this message again"
 msgstr "_Příště již toto zprávu nezobrazovat"
 
-#: src/libaudgui/confirm.c:125
+#: src/libaudgui/confirm.c:126
 msgid "Rename Playlist"
 msgstr "Přejmenovat seznam skladeb"
 
@@ -795,61 +780,61 @@ msgstr "nastavení…"
 msgid "_Enable"
 msgstr "_Zapnout"
 
-#: src/libaudgui/equalizer.c:124
+#: src/libaudgui/equalizer.c:123
 msgid "31 Hz"
 msgstr "31 Hz"
 
-#: src/libaudgui/equalizer.c:124
+#: src/libaudgui/equalizer.c:123
 msgid "63 Hz"
 msgstr "63 Hz"
 
-#: src/libaudgui/equalizer.c:125
+#: src/libaudgui/equalizer.c:124
 msgid "125 Hz"
 msgstr "125 Hz"
 
-#: src/libaudgui/equalizer.c:125
+#: src/libaudgui/equalizer.c:124
 msgid "250 Hz"
 msgstr "250 Hz"
 
-#: src/libaudgui/equalizer.c:125
+#: src/libaudgui/equalizer.c:124
 msgid "500 Hz"
 msgstr "500 Hz"
 
-#: src/libaudgui/equalizer.c:125
+#: src/libaudgui/equalizer.c:124
 msgid "1 kHz"
 msgstr "1 kHz"
 
-#: src/libaudgui/equalizer.c:125
+#: src/libaudgui/equalizer.c:124
 msgid "2 kHz"
 msgstr "2 kHz"
 
-#: src/libaudgui/equalizer.c:126
+#: src/libaudgui/equalizer.c:125
 msgid "4 kHz"
 msgstr "4 kHz"
 
-#: src/libaudgui/equalizer.c:126
+#: src/libaudgui/equalizer.c:125
 msgid "8 kHz"
 msgstr "8 kHz"
 
-#: src/libaudgui/equalizer.c:126
+#: src/libaudgui/equalizer.c:125
 msgid "16 kHz"
 msgstr "16 kHz"
 
-#: src/libaudgui/equalizer.c:131
+#: src/libaudgui/equalizer.c:130
 msgid "Equalizer"
 msgstr "Ekvalizér"
 
-#: src/libaudgui/equalizer.c:147
+#: src/libaudgui/equalizer.c:146
 msgid "Preamp"
 msgstr "Předzesílení"
 
-#: src/libaudgui/infopopup.c:203
-msgid "Track"
-msgstr "Stopa"
+#: src/libaudgui/infopopup.c:207
+msgid "Track Number"
+msgstr "Číslo stopy"
 
-#: src/libaudgui/infopopup.c:205
-msgid "Length"
-msgstr "Délka"
+#: src/libaudgui/infopopup.c:209
+msgid "Track Length"
+msgstr "Délka stopy"
 
 #: src/libaudgui/infowin.c:75
 msgid "Acid Jazz"
@@ -1007,8 +992,8 @@ msgstr "Techno"
 msgid "Trip-hop"
 msgstr "Trip hop"
 
-#: src/libaudgui/infowin.c:177 src/libaudgui/infowin.c:366
-#: src/libaudgui/infowin.c:369 src/libaudgui/infowin.c:372
+#: src/libaudgui/infowin.c:177 src/libaudgui/infowin.c:363
+#: src/libaudgui/infowin.c:366 src/libaudgui/infowin.c:369
 msgid "<span size=\"small\">n/a</span>"
 msgstr "<span size=\"small\">−</span>"
 
@@ -1024,61 +1009,61 @@ msgstr "Aktualizace metadat selhala"
 msgid "Track Information"
 msgstr "Informace o stopě"
 
-#: src/libaudgui/infowin.c:355
+#: src/libaudgui/infowin.c:352
 msgid "<span size=\"small\">Format:</span>"
 msgstr "<span size=\"small\">Formát:</span>"
 
-#: src/libaudgui/infowin.c:359
+#: src/libaudgui/infowin.c:356
 msgid "<span size=\"small\">Quality:</span>"
 msgstr "<span size=\"small\">Kvalita:</span>"
 
-#: src/libaudgui/infowin.c:362
+#: src/libaudgui/infowin.c:359
 msgid "<span size=\"small\">Bitrate:</span>"
 msgstr "<span size=\"small\">Datový tok:</span>"
 
-#: src/libaudgui/infowin.c:392
+#: src/libaudgui/infowin.c:389
 msgid "<span size=\"small\">Title</span>"
 msgstr "<span size=\"small\">Název</span>"
 
-#: src/libaudgui/infowin.c:404
+#: src/libaudgui/infowin.c:401
 msgid "<span size=\"small\">Artist</span>"
 msgstr "<span size=\"small\">Umělec</span>"
 
-#: src/libaudgui/infowin.c:416
+#: src/libaudgui/infowin.c:413
 msgid "<span size=\"small\">Album</span>"
 msgstr "<span size=\"small\">Album</span>"
 
-#: src/libaudgui/infowin.c:428
+#: src/libaudgui/infowin.c:425
 msgid "<span size=\"small\">Comment</span>"
 msgstr "<span size=\"small\">Komentář</span>"
 
-#: src/libaudgui/infowin.c:440
+#: src/libaudgui/infowin.c:437
 msgid "<span size=\"small\">Genre</span>"
 msgstr "<span size=\"small\">Žánr</span>"
 
-#: src/libaudgui/infowin.c:461
+#: src/libaudgui/infowin.c:458
 msgid "<span size=\"small\">Year</span>"
 msgstr "<span size=\"small\">Rok</span>"
 
-#: src/libaudgui/infowin.c:472
+#: src/libaudgui/infowin.c:469
 msgid "<span size=\"small\">Track Number</span>"
 msgstr "<span size=\"small\">Číslo stopy</span>"
 
-#: src/libaudgui/infowin.c:551
+#: src/libaudgui/infowin.c:548
 #, c-format
 msgid "%d kb/s"
 msgstr "%d kb/s"
 
-#: src/libaudgui/infowin.c:578
+#: src/libaudgui/infowin.c:575
 #, c-format
 msgid "No info available for %s.\n"
 msgstr "Pro %s nejsou dostupné žádné údaje.\n"
 
-#: src/libaudgui/jump-to-time.c:71
+#: src/libaudgui/jump-to-time.c:72
 msgid "Jump to Time"
 msgstr "Přejít na čas"
 
-#: src/libaudgui/jump-to-time.c:86
+#: src/libaudgui/jump-to-time.c:87
 msgid "mm:ss"
 msgstr "mm:ss"
 
@@ -1095,56 +1080,56 @@ msgstr "Importovat seznam skladeb"
 msgid "Overwrite %s?"
 msgstr "Přepsat %s?"
 
-#: src/libaudgui/queue-manager.c:195
+#: src/libaudgui/queue-manager.c:196
 msgid "Queue Manager"
 msgstr "Správce fronty"
 
-#: src/libaudgui/ui_fileopener.c:108
+#: src/libaudgui/ui_fileopener.c:109
 msgid "Open Files"
 msgstr "Otevřít soubory"
 
-#: src/libaudgui/ui_fileopener.c:108
+#: src/libaudgui/ui_fileopener.c:109
 msgid "Add Files"
 msgstr "Přidat soubory"
 
-#: src/libaudgui/ui_fileopener.c:110
+#: src/libaudgui/ui_fileopener.c:111
 msgid "Close dialog on Open"
 msgstr "Zavřít dialog při otevření"
 
-#: src/libaudgui/ui_fileopener.c:110
+#: src/libaudgui/ui_fileopener.c:111
 msgid "Close dialog on Add"
 msgstr "Zavřít dialog při přidání"
 
-#: src/libaudgui/ui_jumptotrack.c:108 src/libaudgui/ui_jumptotrack.c:116
-#: src/libaudgui/ui_jumptotrack.c:325
+#: src/libaudgui/ui_jumptotrack.c:109 src/libaudgui/ui_jumptotrack.c:117
+#: src/libaudgui/ui_jumptotrack.c:326
 msgid "_Queue"
 msgstr "_Fronta"
 
-#: src/libaudgui/ui_jumptotrack.c:114
+#: src/libaudgui/ui_jumptotrack.c:115
 msgid "Un_queue"
 msgstr "Ode_brat z fronty"
 
-#: src/libaudgui/ui_jumptotrack.c:257
+#: src/libaudgui/ui_jumptotrack.c:258
 msgid "Jump to Song"
 msgstr "Přejít na skladbu"
 
-#: src/libaudgui/ui_jumptotrack.c:280
+#: src/libaudgui/ui_jumptotrack.c:281
 msgid "Filter: "
 msgstr "Filtr: "
 
-#: src/libaudgui/ui_jumptotrack.c:281
+#: src/libaudgui/ui_jumptotrack.c:282
 msgid "_Filter:"
 msgstr "_Filtr:"
 
-#: src/libaudgui/ui_jumptotrack.c:291
+#: src/libaudgui/ui_jumptotrack.c:292
 msgid "Remember"
 msgstr "Zapamatovat si"
 
-#: src/libaudgui/ui_jumptotrack.c:298
+#: src/libaudgui/ui_jumptotrack.c:299
 msgid "Clea_r"
 msgstr "Vyp_rázdnit"
 
-#: src/libaudgui/ui_jumptotrack.c:318
+#: src/libaudgui/ui_jumptotrack.c:319
 msgid "Close on Jump"
 msgstr "Zavřít při skoku"
 
@@ -1164,21 +1149,19 @@ msgstr "_Přejmenovat"
 msgid "_Close dialog on activating playlist"
 msgstr "Při aktiva_ci seznamu skladeb zavřít dialog"
 
-#: src/libaudgui/ui_urlopener.c:44
+#: src/libaudgui/ui_urlopener.c:48
 msgid "Open URL"
 msgstr "Otevřít URL"
 
-#: src/libaudgui/ui_urlopener.c:44
+#: src/libaudgui/ui_urlopener.c:48
 msgid "Add URL"
 msgstr "Přidat URL"
 
-#: src/libaudgui/util.c:104
+#: src/libaudgui/util.c:95
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
-msgstr ""
-"\n"
-"(Další zprávy jsou skryty.)"
+msgstr "\n(Další zprávy jsou skryty.)"
 
 #: src/libeggsmclient/eggdesktopfile.c:165
 msgid "File is not a valid .desktop file"
@@ -1238,4157 +1221,3 @@ msgstr "Přepínače správy relace:"
 #: src/libeggsmclient/eggsmclient.c:254
 msgid "Show session management options"
 msgstr "Zobrazí přepínače správy relace"
-
-#~ msgid "Temporary Playlist"
-#~ msgstr "Dočasný seznam skladeb"
-
-#~ msgid "Untitled Playlist"
-#~ msgstr "Nepojmenovaný seznam skladeb"
-
-#~ msgid "Track Number"
-#~ msgstr "Číslo stopy"
-
-#~ msgid "Track Length"
-#~ msgstr "Délka stopy"
-
-#~ msgid "Jump to Track"
-#~ msgstr "Skočit na stopu"
-
-#~ msgid "Buffering ..."
-#~ msgstr "Načítá se…"
-
-#~ msgid ""
-#~ "Audacious seems to be already running but is not responding.  You can "
-#~ "start another instance of the program, but please be warned that this can "
-#~ "cause data loss.  If Audacious is not running, you can safely ignore this "
-#~ "message.  Press OK to start Audacious or Cancel to quit."
-#~ msgstr ""
-#~ "Vypadá to, že Audacious již běží, ale neodpovídá. Můžete spustit další "
-#~ "instanci programu, ale mějte na paměti, že tak můžete ztratit data. Pokud "
-#~ "Audacious neběží, můžete tuto zprávu bezpečně ignorovat. Tlačítkem Budiž "
-#~ "Audacious spustíte, tlačítkem Zrušit ukončíte."
-
-#~ msgid "Universal"
-#~ msgstr "Univerzální"
-
-#~ msgid "Single track mode"
-#~ msgstr "Režim samostatné skladby"
-
-#~ msgid ""
-#~ "<span size=\"small\">Changing these settings will require a restart of "
-#~ "Audacious.</span>"
-#~ msgstr ""
-#~ "<span size=\"small\">Změna těchto nastavení se projeví až po restartu "
-#~ "Audacious.</span>"
-
-#~ msgid ""
-#~ "List of character encodings used for fall back conversion of metadata. If "
-#~ "automatic character encoding detector failed or has been disabled, "
-#~ "encodings in this list would be treated as candidates of the encoding of "
-#~ "metadata, and fall back conversion from these encodings to UTF-8 would be "
-#~ "attempted."
-#~ msgstr ""
-#~ "Seznam kódování znaků použitých pro konverzi metadat, nelze-li jejich "
-#~ "kódování s jistotou určit. Pokud automatické rozpoznávání kódování selže "
-#~ "nebo je zakázáno, kódování z tohoto seznamu budou považována za kandidáty "
-#~ "na kódování takových metadat a konverze z těchto kódování do UTF-8 bude "
-#~ "vyzkoušena."
-
-#~ msgid "Replay Gain"
-#~ msgstr "Zesílené přehrávání"
-
-#~ msgid "<b>Bit Depth</b>"
-#~ msgstr "<b>Bitová hloubka</b>"
-
-#~ msgid ""
-#~ "All streams will be converted to this bit depth.\n"
-#~ "This should be the max supported bit depth of\n"
-#~ "the sound card or output plugin."
-#~ msgstr ""
-#~ "Všechny proudy budou převedeny na tuto bitovou hloubku.\n"
-#~ "Ta by měla představovat maximální bitovou hloubku zvukové\n"
-#~ "karty nebo výstupního modulu."
-
-#~ msgid "<b>Volume Control</b>"
-#~ msgstr "<b>Ovládání hlasitosti</b>"
-
-#~ msgid ""
-#~ "Use software volume control. This may be useful for situations where your "
-#~ "audio system does not support controlling the playback volume."
-#~ msgstr ""
-#~ "Použije softwarové ovládání hlasitosti. Toto je užitečné, nepodporuje-li "
-#~ "váš zvukový systém změnu hlasitosti přehrávání."
-
-#~ msgid "<b>Mode</b>"
-#~ msgstr "<b>Režim</b>"
-
-#~ msgid "<b>Clipping Prevention</b>"
-#~ msgstr "<b>Ochrana před ořezem</b>"
-
-#~ msgid "Enable clipping prevention"
-#~ msgstr "Zapnout ochranu před ořezem"
-
-#~ msgid "<b>Audio System</b>"
-#~ msgstr "<b>Zvukový systém</b>"
-
-#~ msgid "Current output plugin:"
-#~ msgstr "Aktuální výstupní modul:"
-
-#~ msgid "Display all open Audacious windows"
-#~ msgstr "Zobrazí všechna okna Audacious"
-
-#~ msgid ""
-#~ "<big><b>Audacious %s</b></big>\n"
-#~ "An audio player for many platforms.\n"
-#~ "Copyright (C) 2005-2011 Audacious Development Team"
-#~ msgstr ""
-#~ "<big><b>Audacious %s</b></big>\n"
-#~ "Přehrávač zvuku pro mnoho platforem.\n"
-#~ "Copyright © 2005–2011 vývojový tým Audacious"
-
-#~ msgid ""
-#~ "Running multiple instances of Audacious can lead to corrupted "
-#~ "configuration files.  If Audacious is not already running, or if you want "
-#~ "to run another instance anyway, please delete the file %s and run "
-#~ "Audacious again.  Audacious will now close."
-#~ msgstr ""
-#~ "Provozování více instancí Audacious může vést k poškození konfiguračních "
-#~ "souborů. Jestliže Audacious ještě neběží nebo chcete-li přesto spustit "
-#~ "další instanci, prosím, smažte soubor %s a spusťte Audacious znovu. "
-#~ "Audacious bude nyní ukončen."
-
-#~ msgid "%s: Unable to open display, exiting.\n"
-#~ msgstr "%s: Nepodařilo se otevřít displej, končím.\n"
-
-#~ msgid "Preamp:"
-#~ msgstr "Předzesílení:"
-
-#~ msgid "Default gain:"
-#~ msgstr "Standardní zesílení:"
-
-#~ msgid "This gain will be used if file doesn't contain Replay Gain metadata."
-#~ msgstr ""
-#~ "Toto zesílení bude použito, pokud soubor neobsahuje metadata o zesílení "
-#~ "pro přehrávání."
-
-#~ msgid ""
-#~ "<span size=\"small\">Please remember that the most efficient way to "
-#~ "prevent signal clipping is not to use positive values above.</span>"
-#~ msgstr ""
-#~ "<span size=\"small\">Prosím, zapamatujte si, že nejúčinnější způsob, jak "
-#~ "předejít ořezu signálu, je výše nepoužít kladná čísla.</span>"
-
-#~ msgid "<b>Replay Gain configuration</b>"
-#~ msgstr "<b>Nastavení zesílení při přehrávání</b>"
-
-#~ msgid "Track gain/peak"
-#~ msgstr "Zesílení/vrchol skladby"
-
-#~ msgid "Album gain/peak"
-#~ msgstr "Zesílení/vrchol alba"
-
-#~ msgid "Use peak value from Replay Gain info for clipping prevention"
-#~ msgstr ""
-#~ "Použije hodnotu vrcholu z informací o zesílení pro přehrávání na ochranu "
-#~ "proti ořezu."
-
-#~ msgid "Surround"
-#~ msgstr "Prostorový zvuk"
-
-#~ msgid "Classic Rock"
-#~ msgstr "Klasický rock"
-
-#~ msgid "Dance"
-#~ msgstr "Taneční"
-
-#~ msgid "Oldies"
-#~ msgstr "Oldies"
-
-#~ msgid "Other"
-#~ msgstr "Jiný"
-
-#~ msgid "R&B"
-#~ msgstr "R&B"
-
-#~ msgid "Industrial"
-#~ msgstr "Industrial"
-
-#~ msgid "Alternative"
-#~ msgstr "Alternativní hudba"
-
-#~ msgid "Pranks"
-#~ msgstr "Pranks"
-
-#~ msgid "Soundtrack"
-#~ msgstr "Soundtrack"
-
-#~ msgid "Euro-Techno"
-#~ msgstr "Euro-Techno"
-
-#~ msgid "Vocal"
-#~ msgstr "Vokální"
-
-#~ msgid "Jazz+Funk"
-#~ msgstr "Jazz+Funk"
-
-#~ msgid "Fusion"
-#~ msgstr "Fúze"
-
-#~ msgid "Trance"
-#~ msgstr "Trance"
-
-#~ msgid "Instrumental"
-#~ msgstr "Instrumentální"
-
-#~ msgid "Acid"
-#~ msgstr "Acid"
-
-#~ msgid "Game"
-#~ msgstr "Hra"
-
-#~ msgid "Sound Clip"
-#~ msgstr "Zvukový klip"
-
-#~ msgid "AlternRock"
-#~ msgstr "Alternativní rock"
-
-#~ msgid "Bass"
-#~ msgstr "Basy"
-
-#~ msgid "Punk"
-#~ msgstr "Punk"
-
-#~ msgid "Space"
-#~ msgstr "Space"
-
-#~ msgid "Meditative"
-#~ msgstr "Meditativní"
-
-#~ msgid "Instrumental Pop"
-#~ msgstr "Instrumentální pop"
-
-#~ msgid "Instrumental Rock"
-#~ msgstr "Instrumentální Rock"
-
-#~ msgid "Ethnic"
-#~ msgstr "Etnická hudba"
-
-#~ msgid "Gothic"
-#~ msgstr "Gotická hudba"
-
-#~ msgid "Darkwave"
-#~ msgstr "Darkwave"
-
-#~ msgid "Techno-Industrial"
-#~ msgstr "Techno-Industrial"
-
-#~ msgid "Electronic"
-#~ msgstr "Elektronická"
-
-#~ msgid "Pop-Folk"
-#~ msgstr "Pop-Folk"
-
-#~ msgid "Eurodance"
-#~ msgstr "Eurodance"
-
-#~ msgid "Dream"
-#~ msgstr "Dream"
-
-#~ msgid "Southern Rock"
-#~ msgstr "Jižanský rock"
-
-#~ msgid "Comedy"
-#~ msgstr "Komedie"
-
-#~ msgid "Cult"
-#~ msgstr "Kult"
-
-#~ msgid "Top 40"
-#~ msgstr "Top 40"
-
-#~ msgid "Christian Rap"
-#~ msgstr "Křesťanský rap"
-
-#~ msgid "Pop/Funk"
-#~ msgstr "Pop/Funk"
-
-#~ msgid "Native American"
-#~ msgstr "Indiánská hudba"
-
-#~ msgid "Cabaret"
-#~ msgstr "Kabaret"
-
-#~ msgid "Psychedelic"
-#~ msgstr "Psychedelická"
-
-#~ msgid "Rave"
-#~ msgstr "Rave"
-
-#~ msgid "Showtunes"
-#~ msgstr "Šlágr z jeviště"
-
-#~ msgid "Trailer"
-#~ msgstr "Trailer"
-
-#~ msgid "Lo-Fi"
-#~ msgstr "Lo-Fi"
-
-#~ msgid "Tribal"
-#~ msgstr "Tribal"
-
-#~ msgid "Acid Punk"
-#~ msgstr "Acid punk"
-
-#~ msgid "Polka"
-#~ msgstr "Polka"
-
-#~ msgid "Retro"
-#~ msgstr "Retro"
-
-#~ msgid "Musical"
-#~ msgstr "Muzikál"
-
-#~ msgid "Folk/Rock"
-#~ msgstr "Folk/Rock"
-
-#~ msgid "National Folk"
-#~ msgstr "Národní lidová"
-
-#~ msgid "Fast-Fusion"
-#~ msgstr "Fast-Fusion"
-
-#~ msgid "Latin"
-#~ msgstr "Latinská"
-
-#~ msgid "Revival"
-#~ msgstr "Revival"
-
-#~ msgid "Celtic"
-#~ msgstr "Keltská hudba"
-
-#~ msgid "Avantgarde"
-#~ msgstr "Avantgardní"
-
-#~ msgid "Gothic Rock"
-#~ msgstr "Gotický rock"
-
-#~ msgid "Progressive Rock"
-#~ msgstr "Progresivní rock"
-
-#~ msgid "Psychedelic Rock"
-#~ msgstr "Psychedelický rock"
-
-#~ msgid "Symphonic Rock"
-#~ msgstr "Symfonický rock"
-
-#~ msgid "Slow Rock"
-#~ msgstr "Ploužák"
-
-#~ msgid "Big Band"
-#~ msgstr "Big Band"
-
-#~ msgid "Chorus"
-#~ msgstr "Chór"
-
-#~ msgid "Acoustic"
-#~ msgstr "Akustická"
-
-#~ msgid "Humour"
-#~ msgstr "Humor"
-
-#~ msgid "Speech"
-#~ msgstr "Mluvené"
-
-#~ msgid "Chanson"
-#~ msgstr "Šanson"
-
-#~ msgid "Opera"
-#~ msgstr "Opera"
-
-#~ msgid "Sonata"
-#~ msgstr "Sonáta"
-
-#~ msgid "Symphony"
-#~ msgstr "Symfonie"
-
-#~ msgid "Booty Bass"
-#~ msgstr "Booty Bass"
-
-#~ msgid "Primus"
-#~ msgstr "Primus"
-
-#~ msgid "Porn Groove"
-#~ msgstr "Porn Groove"
-
-#~ msgid "Satire"
-#~ msgstr "Satira"
-
-#~ msgid "Slow Jam"
-#~ msgstr "Slow Jam"
-
-#~ msgid "Club"
-#~ msgstr "Klub"
-
-#~ msgid "Tango"
-#~ msgstr "Tango"
-
-#~ msgid "Samba"
-#~ msgstr "Samba"
-
-#~ msgid "Folklore"
-#~ msgstr "Folklór"
-
-#~ msgid "Ballad"
-#~ msgstr "Balada"
-
-#~ msgid "Power Ballad"
-#~ msgstr "Rocková balada"
-
-#~ msgid "Rhythmic Soul"
-#~ msgstr "Rytmický soul"
-
-#~ msgid "Freestyle"
-#~ msgstr "Freestyle"
-
-#~ msgid "Duet"
-#~ msgstr "Duet"
-
-#~ msgid "Drum Solo"
-#~ msgstr "Drum Solo"
-
-#~ msgid "A Cappella"
-#~ msgstr "A Cappella"
-
-#~ msgid "Euro-House"
-#~ msgstr "Euro-House"
-
-#~ msgid "Dance Hall"
-#~ msgstr "Dance Hall"
-
-#~ msgid "Goa"
-#~ msgstr "Goa"
-
-#~ msgid "Drum & Bass"
-#~ msgstr "Drum & Bass"
-
-#~ msgid "Club-House"
-#~ msgstr "Club-House"
-
-#~ msgid "Hardcore"
-#~ msgstr "Hardcore"
-
-#~ msgid "Terror"
-#~ msgstr "Terror"
-
-#~ msgid "Indie"
-#~ msgstr "Indie"
-
-#~ msgid "BritPop"
-#~ msgstr "Britpop"
-
-#~ msgid "Negerpunk"
-#~ msgstr "Negerpunk"
-
-#~ msgid "Polsk Punk"
-#~ msgstr "Polsk Punk"
-
-#~ msgid "Beat"
-#~ msgstr "Beat"
-
-#~ msgid "Christian Gangsta Rap"
-#~ msgstr "Křesťanský Gangsta Rap"
-
-#~ msgid "Black Metal"
-#~ msgstr "Black metal"
-
-#~ msgid "Crossover"
-#~ msgstr "Crossover"
-
-#~ msgid "Contemporary Christian"
-#~ msgstr "Moderní křesťanská"
-
-#~ msgid "Christian Rock"
-#~ msgstr "Křesťanský rock"
-
-#~ msgid "Merengue"
-#~ msgstr "Merengue"
-
-#~ msgid "Salsa"
-#~ msgstr "Salsa"
-
-#~ msgid "Thrash Metal"
-#~ msgstr "Thrash metal"
-
-#~ msgid "Anime"
-#~ msgstr "Anime"
-
-#~ msgid "JPop"
-#~ msgstr "JPop"
-
-#~ msgid "Synthpop"
-#~ msgstr "Synthpop"
-
-#~ msgid "Sorry, threads aren't supported on your platform.\n"
-#~ msgstr "Je nám líto, ale vlákna nejsou na vaší platformě podporována.\n"
-
-#~ msgid "Module loading not supported! Plugins will not be loaded.\n"
-#~ msgstr "Nahrávání modulu není podporováno! Moduly nebudou nahrány.\n"
-
-# FIXME: This requires context. "Přehrávání" In preferences, "Přehrát" in
-# manager. Still?
-#~ msgid "Playback"
-#~ msgstr "Přehrávání"
-
-#~ msgid "<b>Playback</b>"
-#~ msgstr "<b>Přehrávání</b>"
-
-#~ msgid ""
-#~ "When Audacious starts, automatically begin playing from the point where "
-#~ "we stopped before."
-#~ msgstr ""
-#~ "Po spuštění Audacious automaticky začne hrát tam, kde před tím skončil."
-
-#~ msgid "Don't advance in the playlist"
-#~ msgstr "Nepokračovat v přehrávání dle seznamu skladeb"
-
-#~ msgid ""
-#~ "When finished playing a song, don't automatically advance to the next."
-#~ msgstr "Po přehrání skladby nepřecházet automaticky na následující."
-
-#~ msgid "Enabled"
-#~ msgstr "Povolený"
-
-#~ msgid "Description"
-#~ msgstr "Popis"
-
-#~ msgid "Output Plugin Preferences"
-#~ msgstr "Nastavení výstupního modulu"
-
-#~ msgid "Output Plugin Information"
-#~ msgstr "Podrobnosti o výstupním modulu"
-
-#~ msgid "_Decoder list:"
-#~ msgstr "Seznam _dekódovacích modulů:"
-
-#~ msgid "<span size=\"medium\"><b>Decoders</b></span>"
-#~ msgstr "<span size=\"medium\"><b>Dekodéry</b></span>"
-
-#~ msgid "_General plugin list:"
-#~ msgstr "_Seznam obecných modulů:"
-
-#~ msgid "<span size=\"medium\"><b>General</b></span>"
-#~ msgstr "<span size=\"medium\"><b>Obecné</b></span>"
-
-#~ msgid "_Visualization plugin list:"
-#~ msgstr "_Seznam vizualizačních modulů:"
-
-#~ msgid "<b>Visualization</b>"
-#~ msgstr "<b>Vizualizační</b>"
-
-#~ msgid "Effect plugins:"
-#~ msgstr "Moduly efektů:"
-
-#~ msgid "<b>Effects</b>"
-#~ msgstr "<b>Efekty</b>"
-
-#~ msgid "<span size=\"small\">General</span>"
-#~ msgstr "<span size=\"small\">Obecné</span>"
-
-#~ msgid "<span size=\"small\">Location</span>"
-#~ msgstr "<span size=\"small\">Umístění</span>"
-
-#~ msgid "<span size=\"small\">Raw Metadata</span>"
-#~ msgstr "<span size=\"small\">Syrová metadata</span>"
-
-#~ msgid "Key"
-#~ msgstr "Klíč"
-
-#~ msgid "Value"
-#~ msgstr "Hodnota"
-
-#~ msgid "Unable to create log file (%s)!\n"
-#~ msgstr "Nepodařilo se vytvořit protokolovací soubor (%s)!\n"
-
-#~ msgid "Print all errors and warnings to stdout"
-#~ msgstr "Všechny chyby a varování tisknout na standardní výstup"
-
-#~ msgid "Used in macpacking"
-#~ msgstr "Použito v macpackingu"
-
-#~ msgid "Audacious - Unsupported Version Warning"
-#~ msgstr "Audacious – varování před nepodporovanou verzí"
-
-#~ msgid "<big><b>Audacious2 is not ready yet!</b></big>"
-#~ msgstr "<big><b>Audacious2 ještě není hotový!</b></big>"
-
-#~ msgid ""
-#~ "<b>Please don't file bugs at this point unless they represent major "
-#~ "problems.</b>"
-#~ msgstr ""
-#~ "<b>Prosíme, abyste v ŧento okamžik nehlásili chyby, pokud nepředstavují "
-#~ "závažný problém.</b>"
-
-#~ msgid ""
-#~ "This is an <i>alpha</i> build of Audacious2. It is still fairly "
-#~ "incomplete and unpolished.\n"
-#~ "We suspect that most minor bugs reported during this time will be "
-#~ "resolved once more things\n"
-#~ "stablize. However, if there is a major bug, such as a crash on playing a "
-#~ "specific file, we\n"
-#~ "need to know about it.\n"
-#~ "\n"
-#~ "However, we ask you to be aware that dealing with trivial bugs is "
-#~ "distracting at this point,\n"
-#~ "and to please refrain from doing so. Thanks in advance!"
-#~ msgstr ""
-#~ "Toto je <i>alfa</i> sestavení Audacious2. Stále je poměrně nedokončené a "
-#~ "neutříděné.\n"
-#~ "Očekáváme, že většina drobných chyb nahlášených v této době bude "
-#~ "vyřešena, jakmile se více\n"
-#~ "věcí stabilizuje. Avšak, je-li zde zásadní chyba, jako je pád při "
-#~ "přehrávání určitého souboru,\n"
-#~ "potřebujeme o ní vědět.\n"
-#~ "\n"
-#~ "Žádáme vás, abyste chápali, že zaobírání se triviálními chybami "
-#~ "je v tento okamžik rozptylující,\n"
-#~ "a abyste se zdrželi takového chování. Děkujeme za pochopení!"
-
-#~ msgid "<b>Blogging about bugs in it is also not helpful.</b>"
-#~ msgstr "<b>Blogování o takových chybách také nepomůže.</b>"
-
-#~ msgid ""
-#~ "Likewise, we're developers. We don't read blogs on a regular basis. If "
-#~ "there is a major bug,\n"
-#~ "we ask you to bring it to our attention via our bugtracking instance at "
-#~ "http://jira.atheme.org/,\n"
-#~ "or via the forums that are on the website.\n"
-#~ "\n"
-#~ "This will help us find out more information about your concerns, which we "
-#~ "would likely\n"
-#~ "not know about otherwise."
-#~ msgstr ""
-#~ "My jsme vývojáři a blogy nečteme pravidelně. Existuje-li závažná chyba,\n"
-#~ "žádáme vás, abyste si naši pozornost získali prostřednictvím systému na\n"
-#~ "sledování chyb na adrese http://jira.atheme.org/ nebo prostřednictvím "
-#~ "fór,\n"
-#~ "které se nacházejí na našem webu.\n"
-#~ "\n"
-#~ "Toto nám pomůže zjistit více informací o vašich problémech, které bychom\n"
-#~ "pravděpodobně jinak nezjistili."
-
-#~ msgid "Interface to use (use -i list to view available interfaces)"
-#~ msgstr "Použít dané rozhraní (možná rozhraní lze vypsat pomocí „-i list“)"
-
-#~ msgid ""
-#~ "Available interfaces:\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Dostupná rozhraní:\n"
-#~ "\n"
-
-#~ msgid "Available Plugin Preferences:\n"
-#~ msgstr "Nastavení dostupných modulů:\n"
-
-#~ msgid "Headless Interface"
-#~ msgstr "Bezhlavé rozhraní"
-
-#~ msgid "Effect plugins (for 16-bit output only):"
-#~ msgstr "Moduly efektů (pouze pro 16b výstup):"
-
-#~ msgid "Add/Open URL Dialog"
-#~ msgstr "Dialog Přidat/otevřít URL"
-
-#~ msgid "Enter location to play:"
-#~ msgstr "Zadejte adresu, z které se má hrát:"
-
-#~ msgid "Don't clear the playlist"
-#~ msgstr "Nemazat seznam skladeb"
-
-#~ msgid "audacious: %s"
-#~ msgstr "audacious: %s"
-
-#~ msgid "Filename:"
-#~ msgstr "Jméno souboru:"
-
-#~ msgid "No input plugin recognized this file"
-#~ msgstr "Soubor nebyl rozpoznán žádným vstupním modulem"
-
-#~ msgid "Input plugin: %s"
-#~ msgstr "Vstupní modul: %s"
-
-#~ msgid ""
-#~ "<b><big>No output plugin selected.</big></b>\n"
-#~ "You have not selected an output plugin."
-#~ msgstr ""
-#~ "<b><big>Není vybrán žádný výstupní modul.</big></b>\n"
-#~ "Musíte vybrat výstupní modul."
-
-#~ msgid "Best Sinc Interpolation"
-#~ msgstr "Nejlepší sinová interpolace"
-
-#~ msgid "Medium Sinc Interpolation"
-#~ msgstr "Střední sinová interpolace"
-
-#~ msgid "Fastest Sinc Interpolation"
-#~ msgstr "Nejrychlejší sinová interpolace"
-
-#~ msgid "ZOH Interpolation"
-#~ msgstr "Interpolace ZOH:"
-
-#~ msgid "Linear Interpolation"
-#~ msgstr "Lineární interpolace:"
-
-#~ msgid "Sampling Rate [Hz]:"
-#~ msgstr "Vzorkovací kmitočet [Hz]:"
-
-#~ msgid "Interpolation Engine:"
-#~ msgstr "Způsob interpolace:"
-
-#~ msgid ""
-#~ "<span size=\"small\">All streams will be converted to this sampling "
-#~ "rate.\n"
-#~ "This should be the max supported sampling rate of\n"
-#~ "the sound card or output plugin.</span>"
-#~ msgstr ""
-#~ "<span size=\"small\">Všechny proudy budou převedeny na tento vzorkovací "
-#~ "kmitočet.\n"
-#~ "Ten by měl představovat maximální vzorkovací kmitočet zvukové karty nebo "
-#~ "výstupního modulu.</span>"
-
-#~ msgid "<b>Sampling Rate Converter</b>"
-#~ msgstr "<b>Konvertor vzorkovacího kmitočtu</b>"
-
-#~ msgid "Enable Sampling Rate Converter"
-#~ msgstr "Zapnout konvertor vzorkovacího kmitočtu"
-
-# TODO: plurals
-#~ msgid "%d files found"
-#~ msgstr "nalezeno %d souborů"
-
-#~ msgid "Connectivity"
-#~ msgstr "Připojení"
-
-#~ msgid "Detect file formats by extension."
-#~ msgstr "Rozpoznávat formát souboru podle přípony."
-
-#~ msgid ""
-#~ "When checked, Audacious will detect file formats based by extension. Only "
-#~ "files with extensions of supported formats will be loaded."
-#~ msgstr ""
-#~ "Je-li zatrhnuto, Audacious bude rozpoznávat formát souboru podle přípony. "
-#~ "Nahrány budou jen soubory, jejichž přípona přísluší podporovanému formátu."
-
-#~ msgid "<b>Advanced</b>"
-#~ msgstr "<b>Pokročilé</b>"
-
-#~ msgid "Bypass all of signal processing if possible"
-#~ msgstr "Obejít veškeré zpracování signálu, je-li to možno"
-
-#~ msgid ""
-#~ "Try to pass input plugin's output directly to output plugin, if the "
-#~ "latter supports format produced by input plugin. If it's true, all signal "
-#~ "processing will be disabled (i.e. DSP plugins, equalizer, resampling, "
-#~ "Replay Gain and software volume control)."
-#~ msgstr ""
-#~ "Pokusí se předávat výstup vstupního modulu přímo modulu výstupnímu, pokud "
-#~ "výstupní modul podporuje formát dat vyráběných vstupním modulem. Je-li "
-#~ "tomu tak, veškeré zpracování signálu bude zakázáno (tj. DSP moduly, "
-#~ "ekvalizér, převzorkování, zesílení přehrávání a softwarové ovládání "
-#~ "hlasitosti)."
-
-#~ msgid "Use fast floating-point conversion (16-bit output only)"
-#~ msgstr "Použít rychlý převod v plovoucí řádové čárce (pouze u 16b výstupu)"
-
-#~ msgid "Dynamically adjust scale factor to prevent clipping"
-#~ msgstr "Dynamicky upravovat škálovací činitel jako ochranu před ořezem"
-
-#~ msgid "Decrease scale factor (gain) if clipping nevertheless occurred"
-#~ msgstr "Sníží činitel zesílení, pokud by oříznutí bylo nevyhnutelné."
-
-#~ msgid ""
-#~ "\n"
-#~ "Audacious has caught signal 11 (SIGSEGV).\n"
-#~ "\n"
-#~ "We apologize for the inconvenience, but Audacious has crashed.\n"
-#~ "This is a bug in the program, and should never happen under normal "
-#~ "circumstances.\n"
-#~ "Your current configuration has been saved and should not be damaged.\n"
-#~ "\n"
-#~ "You can help improve the quality of Audacious by filing a bug at http://"
-#~ "jira.atheme.org/\n"
-#~ "Please include the entire text of this message and a description of what "
-#~ "you were doing when\n"
-#~ "this crash occured in order to quickly expedite the handling of your bug "
-#~ "report:\n"
-#~ "\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Audacious zachytil signál č. 11 (SIGSEGV).\n"
-#~ "\n"
-#~ "Omlouváme se za potíže, ale Audacious zhavaroval.\n"
-#~ "Toto je chyba programu a za běžných okolností by k ní nikdy nemělo "
-#~ "dojít.\n"
-#~ "Vaše současná konfigurace byla uložena a neměla by být poškozena.\n"
-#~ "\n"
-#~ "I vy můžete pomoci zlepšit Audacious tím, že vyplníte chybové hlášení na "
-#~ "http://jira.atheme.org/\n"
-#~ "Prosím, zahrňte celý text této hlášky a popis toho, co jste dělali, když\n"
-#~ "došlo k pádu. Pomůžete tím k rychlejšímu odbavení svého chybového "
-#~ "hlášení:\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "Stacktrace was unavailable. You might want to reproduce this problem "
-#~ "while running Audacious under GDB to get a proper backtrace.\n"
-#~ msgstr ""
-#~ "Mapa zásobníku nebyla k dispozici. Možná byste mohli chtít zreprodukovat "
-#~ "tento problém v Audicous běžícím pod GDB, aby jste tak získali správnou "
-#~ "posloupnost volání.\n"
-
-#~ msgid ""
-#~ "\n"
-#~ "Bugs can be reported at http://jira.atheme.org/ against the Audacious or "
-#~ "Audacious Plugins product.\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Chyby mohou být hlášeny na http://jira.atheme.org/ pod výrobkem\n"
-#~ "„Audacious“ nebo „Audacious Plugins“.\n"
-
-#~ msgid ""
-#~ "Your signaling implementation is broken.\n"
-#~ "Expect unusable crash reports.\n"
-#~ msgstr ""
-#~ "Vaše implementace signálů je rozbitá.\n"
-#~ "Očekávejte nepoužitelné hlášení o pádu.\n"
-
-#~ msgid ""
-#~ "<big><b>Audacious %s</b></big>\n"
-#~ "\n"
-#~ "Copyright (C) 2005-2009 Audacious Development Team"
-#~ msgstr ""
-#~ "<big><b>Audacious %s</b></big>\n"
-#~ "\n"
-#~ "Copyright © 2005–2009 vývojový tým Audacious"
-
-#~ msgid "Detect file formats on demand, instead of immediately."
-#~ msgstr "Rozpoznávat formát souboru na požádání namísto okamžitě."
-
-#~ msgid ""
-#~ "When checked, Audacious will detect file formats on demand. This can "
-#~ "result in a messier playlist, but delivers a major speed benefit."
-#~ msgstr ""
-#~ "Je-li zatrhnuto, Audacious bude rozpoznávat formát souboru, až bude "
-#~ "potřeba. Toto může vést k ošklivému seznamu skladeb, ale značně urychluje "
-#~ "jeho zpracování."
-
-#~ msgid "Load metadata from playlists and files"
-#~ msgstr "Načíst metadata ze seznamů skladeb a souborů"
-
-#~ msgid "Load metadata (tag information) from music files."
-#~ msgstr "Načíst metadata (tagy) z hudebních souborů."
-
-#~ msgid "Can't jump to time when no track is being played.\n"
-#~ msgstr "Nelze přejít na čas, když žádná skladba nehraje.\n"
-
-#~ msgid "minutes:seconds"
-#~ msgstr "minuty:sekundy"
-
-#~ msgid "Track length:"
-#~ msgstr "Délka stopy:"
-
-#~ msgid "Save as Static Playlist"
-#~ msgstr "Uložit statický seznam skladeb"
-
-#~ msgid "Use Relative Path"
-#~ msgstr "Použít relativní cesty"
-
-#~ msgid "Error writing playlist \"%s\": %s"
-#~ msgstr "Chyba při zapisování seznamu skladeb „%s“: %s"
-
-#~ msgid "%s already exist. Continue?"
-#~ msgstr "%s už existuje. Pokračovat?"
-
-#~ msgid ""
-#~ "<b><big>Unable to save playlist.</big></b>\n"
-#~ "\n"
-#~ "Unknown file type for '%s'.\n"
-#~ msgstr ""
-#~ "<b><big>Nelze uložit seznam skladeb.</big></b>\n"
-#~ "\n"
-#~ "Neznámý typ souboru %s.\n"
-
-#~ msgid "Presets"
-#~ msgstr "Předvolby"
-
-#~ msgid "Mouse"
-#~ msgstr "Myš"
-
-#~ msgid "Pause between songs"
-#~ msgstr "Pauza mezi skladbami"
-
-#~ msgid "Pause for"
-#~ msgstr "Pozastavit na"
-
-#~ msgid "seconds"
-#~ msgstr "s"
-
-#~ msgid "<b>Filename</b>"
-#~ msgstr "<b>Jméno souboru</b>"
-
-#~ msgid "Convert underscores to blanks"
-#~ msgstr "Převést podtržítka na mezery"
-
-#~ msgid "Convert %20 to blanks"
-#~ msgstr "Převést %20 na mezery"
-
-#~ msgid "Convert backslash '\\' to forward slash '/'"
-#~ msgstr "Převést zpětná lomítka „\\“ na lomítka dopředná „/“"
-
-#~ msgid "<b>File Dialog</b>"
-#~ msgstr "<b>Dialog o souboru</b>"
-
-#~ msgid "Always refresh directory when opening file dialog"
-#~ msgstr "Při otevření dialogu o souboru vždy zkontrolovat adresář"
-
-#~ msgid ""
-#~ "Always refresh the file dialog (this will slow opening the dialog on "
-#~ "large directories, and Gnome VFS should handle automatically)."
-#~ msgstr ""
-#~ "Vždy obnovit dialog o souboru (toto zpomalí dialog na velkých adresářích "
-#~ "a Gnome VFS by měl jednat automaticky)."
-
-#~ msgid "Changes volume by"
-#~ msgstr "změní hlasitost o"
-
-#~ msgid "percent"
-#~ msgstr "procent."
-
-#~ msgid "Scrolls playlist by"
-#~ msgstr "posune seznam skladeb o"
-
-#~ msgid "lines"
-#~ msgstr "řádek."
-
-#~ msgid "Stop after Current Song"
-#~ msgstr "Zastavit po současné skladbě"
-
-#~ msgid "Peaks"
-#~ msgstr "Vrcholy"
-
-#~ msgid "Repeat"
-#~ msgstr "Opakovat"
-
-#~ msgid "Shuffle"
-#~ msgstr "Náhodné přehrávání"
-
-#~ msgid "No Playlist Advance"
-#~ msgstr "Žádné pokračování dle seznamu skladeb"
-
-#~ msgid "Play"
-#~ msgstr "Hrát"
-
-#~ msgid "Pause"
-#~ msgstr "Pozastavit"
-
-#~ msgid "Stop"
-#~ msgstr "Zastavit"
-
-#~ msgid "Previous"
-#~ msgstr "Předchozí"
-
-#~ msgid "Next"
-#~ msgstr "Další"
-
-#~ msgid "Visualization Mode"
-#~ msgstr "Typ znázornění"
-
-#~ msgid "Analyzer Mode"
-#~ msgstr "Typ sloupců"
-
-#~ msgid "Scope Mode"
-#~ msgstr "Typ vlnovky"
-
-#~ msgid "Voiceprint Mode"
-#~ msgstr "Typ otisku"
-
-#~ msgid "WindowShade VU Mode"
-#~ msgstr "Typ WindowShade VU"
-
-#~ msgid "Refresh Rate"
-#~ msgstr "Rychlost překreslování"
-
-#~ msgid "Analyzer Falloff"
-#~ msgstr "Klesání sloupců"
-
-#~ msgid "Peaks Falloff"
-#~ msgstr "Klesání vrcholků"
-
-#~ msgid "Select Next Playlist"
-#~ msgstr "Vybrat následující seznam skladeb"
-
-#~ msgid "Select Previous Playlist"
-#~ msgstr "Vybrat předchozí seznam skladeb"
-
-#~ msgid "Delete Playlist"
-#~ msgstr "Smazat seznam skladeb"
-
-#~ msgid "Load List"
-#~ msgstr "Načíst seznam skladeb"
-
-#~ msgid "Loads a playlist file into the selected playlist."
-#~ msgstr "Načte soubor se seznamem skladeb do vybraného seznamu."
-
-#~ msgid "Save List"
-#~ msgstr "Uložit seznam"
-
-#~ msgid "Saves the selected playlist."
-#~ msgstr "Uloží vybraný seznam skladeb."
-
-#~ msgid "Save Default List"
-#~ msgstr "Uložit standardní seznam"
-
-#~ msgid "Saves the selected playlist to the default location."
-#~ msgstr "Uloží vybraný seznam skladeb na standardní místo."
-
-#~ msgid "Refresh List"
-#~ msgstr "Obnovit seznam"
-
-#~ msgid "Refreshes metadata associated with a playlist entry."
-#~ msgstr "Obnovuje metadata náležící skladbě ze seznamu."
-
-#~ msgid "Opens the playlist manager."
-#~ msgstr "Otevře správce seznamu skladeb."
-
-#~ msgid "View"
-#~ msgstr "Zobrazení"
-
-#~ msgid "Add Internet Address..."
-#~ msgstr "Přidat internetovou adresu…"
-
-#~ msgid "Adds a remote track to the playlist."
-#~ msgstr "Do seznamu přidá vzdálenou stopu."
-
-#~ msgid "Add Files..."
-#~ msgstr "Přidat soubory…"
-
-#~ msgid "Search and Select"
-#~ msgstr "Hledání a výběr"
-
-#~ msgid ""
-#~ "Searches the playlist and selects playlist entries based on specific "
-#~ "criteria."
-#~ msgstr ""
-#~ "Prohledá seznam skladeb a vybere skladby ze seznamu podle zadaných "
-#~ "omezení."
-
-#~ msgid "Invert Selection"
-#~ msgstr "Invertovat výběr"
-
-#~ msgid "Inverts the selected and unselected entries."
-#~ msgstr "Zamění vybrané a nevybrané položky."
-
-#~ msgid "Select All"
-#~ msgstr "Vybrat vše"
-
-#~ msgid "Selects all of the playlist entries."
-#~ msgstr "Vybere všechny skladby v seznamu."
-
-#~ msgid "Select None"
-#~ msgstr "Nevybrat žádné"
-
-#~ msgid "Deselects all of the playlist entries."
-#~ msgstr "Žádná skladba v seznamu nebude vybraná."
-
-#~ msgid "Remove All"
-#~ msgstr "Odebrat všechny"
-
-#~ msgid "Removes all entries from the playlist."
-#~ msgstr "Ze seznamu odstraní všechny skladby."
-
-#~ msgid "Clear Queue"
-#~ msgstr "Vyprázdnit frontu"
-
-#~ msgid "Clears the queue associated with this playlist."
-#~ msgstr "Vyprázdní frontu spojenou s tímto seznamem skladeb."
-
-#~ msgid "Remove Unavailable Files"
-#~ msgstr "Odstranit nedostupné soubory"
-
-#~ msgid "Removes unavailable files from the playlist."
-#~ msgstr "Ze seznamu skladeb odstraní nedostupné soubory."
-
-#~ msgid "Remove Duplicates"
-#~ msgstr "Odebrat duplikáty"
-
-#~ msgid "By Title"
-#~ msgstr "Podle názvu"
-
-#~ msgid "Removes duplicate entries from the playlist by title."
-#~ msgstr "Ze seznamu odstraní skladby na základě jejich názvu."
-
-#~ msgid "By Filename"
-#~ msgstr "Podle jména souboru"
-
-#~ msgid "Removes duplicate entries from the playlist by filename."
-#~ msgstr "Ze seznamu odstraní skladby na základě jména souboru."
-
-#~ msgid "By Path + Filename"
-#~ msgstr "Podle cesty a jména souboru"
-
-#~ msgid "Removes duplicate entries from the playlist by their full path."
-#~ msgstr "Ze seznamu odstraní skladby na základě celé cesty."
-
-#~ msgid "Remove Unselected"
-#~ msgstr "Odebrat neoznačené"
-
-#~ msgid "Remove unselected entries from the playlist."
-#~ msgstr "Odebrat neoznačené skladby se seznamu."
-
-#~ msgid "Remove Selected"
-#~ msgstr "Odebrat označené"
-
-#~ msgid "Remove selected entries from the playlist."
-#~ msgstr "Odebrat označené skladby ze seznamu."
-
-#~ msgid "Randomize List"
-#~ msgstr "Zamíchat pořadí"
-
-#~ msgid "Randomizes the playlist."
-#~ msgstr "Sklady v seznamu seřadí náhodně."
-
-#~ msgid "Reverse List"
-#~ msgstr "Otočit seznam"
-
-#~ msgid "Reverses the playlist."
-#~ msgstr "Obrátí pořadí skladeb v seznamu."
-
-#~ msgid "Sort List"
-#~ msgstr "Seřadit seznam"
-
-#~ msgid "Sorts the list by title."
-#~ msgstr "Seřadí seznam podle názvu."
-
-#~ msgid "By Album"
-#~ msgstr "Podle alba"
-
-#~ msgid "Sorts the list by album."
-#~ msgstr "Seřadí seznam podle alba."
-
-#~ msgid "By Artist"
-#~ msgstr "Podle umělce"
-
-#~ msgid "Sorts the list by artist."
-#~ msgstr "Skladby v seznam seřadí podle jména umělce."
-
-#~ msgid "Sorts the list by filename."
-#~ msgstr "Skladby v seznamu seřadí podle jména souboru"
-
-#~ msgid "Sorts the list by full pathname."
-#~ msgstr "Skladby v seznamu seřadí podle celé cesty."
-
-#~ msgid "By Date"
-#~ msgstr "Podle data"
-
-#~ msgid "Sorts the list by modification time."
-#~ msgstr ""
-#~ "Skladby v seznamu seřadí podle času poslední změny v obsahu souboru."
-
-#~ msgid "By Track Number"
-#~ msgstr "Podle čísla stopy"
-
-#~ msgid "Sorts the list by track number."
-#~ msgstr "Skladby v seznamu seřadí podle čísla stopy."
-
-#~ msgid "By Playlist Entry"
-#~ msgstr "Podle položek v seznamu"
-
-#~ msgid "Sorts the list by playlist entry."
-#~ msgstr "Skladby seřadí podle položek seznamu."
-
-#~ msgid "Sort Selected"
-#~ msgstr "Seřadit vybrané"
-
-#~ msgid "File"
-#~ msgstr "Soubor"
-
-#~ msgid "Help"
-#~ msgstr "Nápověda"
-
-#~ msgid "Components"
-#~ msgstr "Součásti"
-
-#~ msgid "View Track Details"
-#~ msgstr "Zobrazit informace o skladbě"
-
-#~ msgid "Play File"
-#~ msgstr "Přehrát soubor"
-
-#~ msgid "Load and play a file"
-#~ msgstr "Načíst a přehrát soubor"
-
-#~ msgid "Play Location"
-#~ msgstr "Hrát z adresy"
-
-#~ msgid "Play media from the selected location"
-#~ msgstr "Přehrát média z vybrané adresy"
-
-#~ msgid "Plugin services"
-#~ msgstr "Služby modulu"
-
-#~ msgid "Preferences"
-#~ msgstr "Nastavení"
-
-#~ msgid "Open preferences window"
-#~ msgstr "Otevřít okno s nastavením"
-
-#~ msgid "_Quit"
-#~ msgstr "_Konec"
-
-#~ msgid "Quit Audacious"
-#~ msgstr "O Audacious"
-
-#~ msgid "Set A-B"
-#~ msgstr "Nastavit A-B"
-
-#~ msgid "Clear A-B"
-#~ msgstr "Vyprázdnit A-B"
-
-#~ msgid "Jump to Playlist Start"
-#~ msgstr "Přejít na začátek seznamu skladeb"
-
-#~ msgid "Jump to File"
-#~ msgstr "Přejít na soubor"
-
-#~ msgid "Queue Toggle"
-#~ msgstr "Přepnout frontu"
-
-#~ msgid "Enables/disables the entry in the playlist's queue."
-#~ msgstr "Povolí/zakáže položku ve frontě seznamu skladeb."
-
-#~ msgid "Load"
-#~ msgstr "Načíst"
-
-#~ msgid "Import"
-#~ msgstr "Importovat"
-
-#~ msgid "Save"
-#~ msgstr "Uložit"
-
-#~ msgid "Delete"
-#~ msgstr "Smazat"
-
-#~ msgid "Preset"
-#~ msgstr "Předvolba"
-
-#~ msgid "Load preset"
-#~ msgstr "Načíst předvolbu"
-
-#~ msgid "Auto-load preset"
-#~ msgstr "Souborová předvolba"
-
-#~ msgid "Load auto-load preset"
-#~ msgstr "Načíst souborovou předvolbu"
-
-#~ msgid "Default"
-#~ msgstr "Standardní"
-
-#~ msgid "Load default preset into equalizer"
-#~ msgstr "Načíst standardní předvolbu do ekvalizéru"
-
-#~ msgid "Zero"
-#~ msgstr "Vynulovat"
-
-#~ msgid "Set equalizer preset levels to zero"
-#~ msgstr "Vynulovat předvolby ekvalizéru"
-
-#~ msgid "From file"
-#~ msgstr "Ze souboru"
-
-#~ msgid "Load preset from file"
-#~ msgstr "Načíst předvolbu ze souboru"
-
-#~ msgid "From WinAMP EQF file"
-#~ msgstr "Ze souboru WinAMP EQF"
-
-#~ msgid "Load preset from WinAMP EQF file"
-#~ msgstr "Načíst předvolbu ze souboru WinAMP EQF"
-
-#~ msgid "WinAMP Presets"
-#~ msgstr "Předvolby WinAMPu"
-
-#~ msgid "Import WinAMP presets"
-#~ msgstr "Importovat předvolby WinAMPu"
-
-#~ msgid "Save preset"
-#~ msgstr "Uložit předvolbu"
-
-#~ msgid "Save auto-load preset"
-#~ msgstr "Uložit souborovou předvolbu"
-
-#~ msgid "Save default preset"
-#~ msgstr "Uložit standardní předvolbu"
-
-#~ msgid "To file"
-#~ msgstr "Do souboru"
-
-#~ msgid "Save preset to file"
-#~ msgstr "Uložit předvolbu do souboru"
-
-#~ msgid "To WinAMP EQF file"
-#~ msgstr "Do souboru WinAMP EQF"
-
-#~ msgid "Save preset to WinAMP EQF file"
-#~ msgstr "Uložit předvolbu do souboru WinAMP EQF"
-
-#~ msgid "Delete preset"
-#~ msgstr "Smazat předvolbu"
-
-#~ msgid "Delete auto-load preset"
-#~ msgstr "Smazat souborovou předvolbu"
-
-#~ msgid ""
-#~ "<span size=\"small\">This is the amount of time to prebuffer audio "
-#~ "streams by, in milliseconds.\n"
-#~ "Increase this value if you are experiencing audio skipping.\n"
-#~ "Please note however, that high values will result in Audacious performing "
-#~ "poorly.</span>"
-#~ msgstr ""
-#~ "<span size=\"small\">Určuje délku zvukového proudu v milisekundách, který "
-#~ "bude předpočítán do vyrovnávací paměti.\n"
-#~ "Pokud máte problémy s přeskakováním zvuku, zvyšte tuto hodnotu.\n"
-#~ "Prosím, vezměte na vědomí, že příliš vysoké hodnoty mohou vést ke "
-#~ "zhoršení výkonu Audacious.</span>"
-
-#~ msgid "Enable headless operation"
-#~ msgstr "Zapnout bezhlavý režim"
-
-#~ msgid ""
-#~ "<b><big>Unable to load skin.</big></b>\n"
-#~ "\n"
-#~ "Check that skin at '%s' is usable and default skin is properly installed "
-#~ "at '%s'\n"
-#~ msgstr ""
-#~ "<b><big>Vzhled nelze načíst.</big></b>\n"
-#~ "\n"
-#~ "Zkontrolujte, zda vzhled v „%s“ je použitelný a zda je standardní vzhled "
-#~ "správně nainstalován v „%s“.\n"
-
-#~ msgid "Headless operation enabled\n"
-#~ msgstr "Bezhlavý režim zapnut\n"
-
-#~ msgid "Audacious core developers:"
-#~ msgstr "Vývojáři jádra Audacious:"
-
-#~ msgid "Audacious Equalizer"
-#~ msgstr "Ekvalizér"
-
-#~ msgid "Play files"
-#~ msgstr "Přehrát soubory"
-
-#~ msgid "Load files"
-#~ msgstr "Načíst soubory"
-
-#~ msgid "%s - Audacious"
-#~ msgstr "%s – Audacious"
-
-#~ msgid "VBR"
-#~ msgstr "VBR"
-
-#~ msgid "mono"
-#~ msgstr "mono"
-
-#~ msgid "Audacious - visibility warning"
-#~ msgstr "Audacious – viditelnost varování"
-
-#~ msgid "Show main player window"
-#~ msgstr "Ukázat hlavní okno přehrávače:"
-
-#~ msgid "Ignore"
-#~ msgstr "Ignorovat"
-
-#~ msgid ""
-#~ "Audacious has been started with all of its windows hidden.\n"
-#~ "You may want to show the player window again to control Audacious; "
-#~ "otherwise, you'll have to control it remotely via audtool or enabled "
-#~ "plugins (such as the statusicon plugin)."
-#~ msgstr ""
-#~ "Audacious byl spuštěn se všemi okny skrytými.\n"
-#~ "Možná budete chtít kvůli ovládání okno přehrávače opět zobrazit. V "
-#~ "opačném případě budete muset přehrávač ovládat vzdáleně pomocí audtool "
-#~ "nebo pomocí zapnutého modulu (např. modulu statusicon [stavová ikona])."
-
-#~ msgid "Always ignore, show/hide is controlled remotely"
-#~ msgstr "Vždy ignorovat, ukázat/skrýt je ovládáno vzdáleně"
-
-#~ msgid ""
-#~ "<big><b>Broken GTK engine in use</b></big>\n"
-#~ "\n"
-#~ "Audacious has detected that you are using a broken GTK engine.\n"
-#~ "\n"
-#~ "The theme engine you are using, <i>%s</i>, is incompatible with some of "
-#~ "the features used by modern skins. The incompatible features have been "
-#~ "disabled for this session.\n"
-#~ "\n"
-#~ "To use these features, please consider using a different GTK theme engine."
-#~ msgstr ""
-#~ "<big><b>Používá se rozbité jádro GTK</b></big>\n"
-#~ "\n"
-#~ "Audacious zjistil, že používáte rozbité jádro GTK.\n"
-#~ "\n"
-#~ "Tématické jádro, které používáte, <i>%s</i>, není kompatibilní "
-#~ "s některými vlastnostmi moderních témat. V této relaci budou "
-#~ "nekompatibilní vlastnosti vypnuty.\n"
-#~ "\n"
-#~ "Chcete-li využít těchto vlastností, zvažte použití jiného tematického "
-#~ "jádra pro GTK."
-
-#~ msgid "Seek to: %d:%-2.2d/%d:%-2.2d (%d%%)"
-#~ msgstr "Přejít na: %d:%-2.2d/%d:%-2.2d (%d %%)"
-
-#~ msgid "Volume: %d%%"
-#~ msgstr "Hlasitost %d %%"
-
-#~ msgid "Balance: %d%% left"
-#~ msgstr "Vyvážení: %d %% vlevo"
-
-#~ msgid "Balance: center"
-#~ msgstr "Vyvážení: střed"
-
-#~ msgid "Balance: %d%% right"
-#~ msgstr "Vyvážení: %d %% vpravo"
-
-#~ msgid "Options Menu"
-#~ msgstr "Nabídka s nastavením"
-
-#~ msgid "Disable 'Always On Top'"
-#~ msgstr "Vypnout „Vždy na vrchu“"
-
-#~ msgid "Enable 'Always On Top'"
-#~ msgstr "Zapnout „Vždy na vrchu“"
-
-#~ msgid "File Info Box"
-#~ msgstr "Informace o souboru"
-
-#~ msgid "Disable 'GUI Scaling'"
-#~ msgstr "Zapnout „Škálování GUI“"
-
-#~ msgid "Enable 'GUI Scaling'"
-#~ msgstr "Vypnout „Škálování GUI“"
-
-#~ msgid "Visualization Menu"
-#~ msgstr "Nabídka s typem znázornění"
-
-#~ msgid ""
-#~ "<b><big>Couldn't open audio.</big></b>\n"
-#~ "\n"
-#~ "Please check that:\n"
-#~ "1. You have the correct output plugin selected.\n"
-#~ "2. No other programs is blocking the soundcard.\n"
-#~ "3. Your soundcard is configured properly.\n"
-#~ msgstr ""
-#~ "<b><big>Nelze přehrávat.</big></b>\n"
-#~ "\n"
-#~ "Zkontrolujte, zda:\n"
-#~ "1. máte vybrán správný výstupní modul,\n"
-#~ "2. žádný jiný program neblokuje zvukovou kartu,\n"
-#~ "3. vaše karta je správně nakonfigurována.\n"
-
-#~ msgid "Autoscroll Songname"
-#~ msgstr "Automatický posun názvu skladby"
-
-#~ msgid "Show Player"
-#~ msgstr "Zobrazit přehrávač"
-
-#~ msgid "Show Playlist Editor"
-#~ msgstr "Zobrazit editor seznamu skladeb"
-
-#~ msgid "Show Equalizer"
-#~ msgstr "Zobrazit ekvalizér"
-
-#~ msgid "Always on Top"
-#~ msgstr "Vždy na vrchu"
-
-#~ msgid "Put on All Workspaces"
-#~ msgstr "Zobrazovat na všech plochách"
-
-#~ msgid "Roll up Player"
-#~ msgstr "Sbalit přehrávač"
-
-#~ msgid "Roll up Playlist Editor"
-#~ msgstr "Sbalit editor seznamu skladeb"
-
-#~ msgid "Roll up Equalizer"
-#~ msgstr "Sbalit ekvalizér"
-
-#~ msgid "Scale"
-#~ msgstr "Škálovat"
-
-#~ msgid "DoubleSize"
-#~ msgstr "Dvojitá velikost"
-
-#~ msgid "Easy Move"
-#~ msgstr "Snadný pohyb"
-
-#~ msgid "Analyzer"
-#~ msgstr "Sloupce"
-
-#~ msgid "Scope"
-#~ msgstr "Vlnovka"
-
-#~ msgid "Voiceprint"
-#~ msgstr "Otisk"
-
-#~ msgid "Off"
-#~ msgstr "Žádný"
-
-#~ msgid "Normal"
-#~ msgstr "Normální"
-
-#~ msgid "Fire"
-#~ msgstr "Oheň"
-
-#~ msgid "Vertical Lines"
-#~ msgstr "Svislé čáry"
-
-#~ msgid "Lines"
-#~ msgstr "Čáry"
-
-#~ msgid "Bars"
-#~ msgstr "Obdélníky"
-
-#~ msgid "Dot Scope"
-#~ msgstr "Bodová vlnovka"
-
-#~ msgid "Line Scope"
-#~ msgstr "Čárová vlnovka"
-
-#~ msgid "Solid Scope"
-#~ msgstr "Plná vlnovka"
-
-#~ msgid "Ice"
-#~ msgstr "Led"
-
-#~ msgid "Smooth"
-#~ msgstr "Plynulý"
-
-#~ msgid "Full (~50 fps)"
-#~ msgstr "Plná (~50 Hz)"
-
-#~ msgid "Half (~25 fps)"
-#~ msgstr "Poloviční (~25 Hz)"
-
-#~ msgid "Quarter (~13 fps)"
-#~ msgstr "Čtvrtinová (~13 Hz)"
-
-#~ msgid "Eighth (~6 fps)"
-#~ msgstr "Osminová (~6 Hz)"
-
-#~ msgid "Slowest"
-#~ msgstr "Nejpomalejší"
-
-#~ msgid "Slow"
-#~ msgstr "Pomalé"
-
-#~ msgid "Medium"
-#~ msgstr "Střední"
-
-#~ msgid "Fast"
-#~ msgstr "Rychlé"
-
-#~ msgid "Fastest"
-#~ msgstr "Nejrychlejší"
-
-#~ msgid "Time Elapsed"
-#~ msgstr "Dosažený čas"
-
-#~ msgid "Time Remaining"
-#~ msgstr "Zbývající čas"
-
-#~ msgid "Plugin Services"
-#~ msgstr "Služby modulu"
-
-#~ msgid "Search entries in active playlist"
-#~ msgstr "Vyhledat skladby v současném seznamu skladeb"
-
-#~ msgid ""
-#~ "Select entries in playlist by filling one or more fields. Fields use "
-#~ "regular expressions syntax, case-insensitive. If you don't know how "
-#~ "regular expressions work, simply insert a literal portion of what you're "
-#~ "searching for."
-#~ msgstr ""
-#~ "Položky seznamu skladeb vyberete vyplněním jednoho, nebo více polí. Pole "
-#~ "používají regulární výrazy a neberou ohled na velikost písmen. Pokud "
-#~ "regulárním výrazům nerozumíte, jednoduše vložte části textu, které chcete "
-#~ "vyhledat."
-
-#~ msgid "Title: "
-#~ msgstr "Název: "
-
-#~ msgid "Album: "
-#~ msgstr "Album: "
-
-#~ msgid "Artist: "
-#~ msgstr "Umělec: "
-
-#~ msgid "Filename: "
-#~ msgstr "Jméno souboru: "
-
-#~ msgid "Clear previous selection before searching"
-#~ msgstr "Před hledáním vymazat předchozí výběr"
-
-#~ msgid "Automatically toggle queue for matching entries"
-#~ msgstr "Shodující se položky automaticky zařadit/vyřadit z fronty"
-
-#~ msgid "Create a new playlist with matching entries"
-#~ msgstr "Ze shodujících se položek vytvořit nový seznam skladeb"
-
-#~ msgid "Audacious Playlist Editor"
-#~ msgstr "Zobrazit editor seznamu skladeb"
-
-#~ msgid "Appearance"
-#~ msgstr "Vzhled"
-
-#~ msgid "<b>_Fonts</b>"
-#~ msgstr "<b>_Fonty</b>"
-
-#~ msgid "_Player:"
-#~ msgstr "V okně _přehrávače:"
-
-#~ msgid "Select main player window font:"
-#~ msgstr "Vyberte font pro hlavní okno přehrávače:"
-
-#~ msgid "_Playlist:"
-#~ msgstr "V seznamu sklade_b:"
-
-#~ msgid "Select playlist font:"
-#~ msgstr "Vyberte font pro seznam skladeb:"
-
-#~ msgid "Use Bitmap fonts if available"
-#~ msgstr "Pokud možno, používat bitmapové fonty"
-
-#~ msgid ""
-#~ "Use bitmap fonts if they are available. Bitmap fonts do not support "
-#~ "Unicode strings."
-#~ msgstr ""
-#~ "Pokud to bude možné, použijí se bitmapové fonty. Bitmapové fonty "
-#~ "nepodporují unicodové řetězce."
-
-#~ msgid "<b>_Miscellaneous</b>"
-#~ msgstr "<b>_Různé</b>"
-
-#~ msgid "Show track numbers in playlist"
-#~ msgstr "Zobrazovat pořadová čísla v seznamu skladeb"
-
-#~ msgid "Show separators in playlist"
-#~ msgstr "Zobrazovat oddělovače v seznamu skladeb"
-
-#~ msgid "Show window manager decoration"
-#~ msgstr "Zobrazovat dekoraci podle správce oken"
-
-#~ msgid "This enables the window manager to show decorations for windows."
-#~ msgstr ""
-#~ "Tímto necháte rozhodnutí na správci oken, kdy má zobrazovat dekorace oken."
-
-#~ msgid "Use XMMS-style file selector instead of the default selector"
-#~ msgstr "Používat dialog výběru souboru jako v XMMS namísto implicitního"
-
-#~ msgid ""
-#~ "This enables the XMMS/GTK1-style file selection dialogs. This selector is "
-#~ "provided by Audacious itself and is faster than the default GTK2 selector "
-#~ "(but sadly not as user-friendly)."
-#~ msgstr ""
-#~ "Tato volba zapne dialog výběru souboru ve stylu XMMS/GTK1. Tento dialog "
-#~ "je poskytován samotným Audacious a je rychlejší než implicitní dialog "
-#~ "GTK2 (avšak ne tak pohodlný)."
-
-#~ msgid "Use two-way text scroller"
-#~ msgstr "Pohybovat textem v obou směrech"
-
-#~ msgid ""
-#~ "If selected, the file information text in the main window will scroll "
-#~ "back and forth. If not selected, the text will only scroll in one "
-#~ "direction."
-#~ msgstr ""
-#~ "Bude-li vybráno, text s informacemi o souboru v hlavním okně bude běhat "
-#~ "tam a zpět. Nebude-li vybráno, text se bude pohybovat jen jedním směrem."
-
-#~ msgid "Disable inline gtk theme"
-#~ msgstr "Zakázat vnitřní téma GTK"
-
-#~ msgid "Allow loading incomplete skins"
-#~ msgstr "Povolit načítání neúplných vzhledů"
-
-#~ msgid ""
-#~ "If selected, audacious won't refuse loading broken skins. Use only if "
-#~ "your favourite skin doesn't work"
-#~ msgstr ""
-#~ "Je-li vybráno, Audacious neodmítne nahrát rozbitý vzhled. Použijte, jen "
-#~ "když váš oblíbený vzhled nefunguje."
-
-#~ msgid "Load metadata when adding the file to the playlist or opening it"
-#~ msgstr ""
-#~ "Načíst metadata při vložení souboru do seznamu skladeb nebo při otevření"
-
-#~ msgid "On display"
-#~ msgstr "Při zobrazení"
-
-#~ msgid ""
-#~ "Load metadata on demand when displaying the file in the playlist. You may "
-#~ "need to set \"Detect file formats on demand\" in Audio page for full "
-#~ "benefit."
-#~ msgstr ""
-#~ "Načíst metadata na vyžádání při zobrazení souboru v seznamu skladeb. "
-#~ "Plného účinku dosáhnete, když v záložce „Zvuk“ zapnete „Rozpoznávat "
-#~ "formát souboru na požádání“."
-
-#~ msgid "Color Adjustment"
-#~ msgstr "Přizpůsobení barvy"
-
-#~ msgid ""
-#~ "Audacious allows you to alter the color balance of the skinned UI. The "
-#~ "sliders below will allow you to do this."
-#~ msgstr ""
-#~ "Audacious umožňuje změnit zabarvení vzhledu uživatelského rozhraní pomocí "
-#~ "následujících jezdců."
-
-#~ msgid "Blue"
-#~ msgstr "Modrá"
-
-#~ msgid "Green"
-#~ msgstr "Zelená"
-
-#~ msgid "Red"
-#~ msgstr "Červená"
-
-#~ msgid "<b>_Skin</b>"
-#~ msgstr "<b>_Skin</b>"
-
-#~ msgid "Refresh skin list"
-#~ msgstr "Obnovit seznam vzhledů"
-
-#~ msgid "PREAMP"
-#~ msgstr "PREAMP"
-
-#~ msgid "60HZ"
-#~ msgstr "60 Hz"
-
-#~ msgid "170HZ"
-#~ msgstr "170 Hz"
-
-#~ msgid "310HZ"
-#~ msgstr "310 Hz"
-
-#~ msgid "600HZ"
-#~ msgstr "600 Hz"
-
-#~ msgid "1KHZ"
-#~ msgstr "1 kHz"
-
-#~ msgid "3KHZ"
-#~ msgstr "3 kHz"
-
-#~ msgid "6KHZ"
-#~ msgstr "6 kHz"
-
-#~ msgid "12KHZ"
-#~ msgstr "12 kHz"
-
-#~ msgid "14KHZ"
-#~ msgstr "14 kHz"
-
-#~ msgid "16KHZ"
-#~ msgstr "16 kHz"
-
-#~ msgid "Archived Winamp 2.x skin"
-#~ msgstr "Zabalený vzhled Winapmu 2.x"
-
-#~ msgid "Unarchived Winamp 2.x skin"
-#~ msgstr "Nezabalený vzhled Winampu 2.x"
-
-#~ msgid "Show version and builtin features"
-#~ msgstr "Zobrazit verzi a vestavěné funkce"
-
-#~ msgid "Use custom cursors"
-#~ msgstr "Použít vlastní kurzory"
-
-#~ msgid "Reload Plugins"
-#~ msgstr "Znovu načíst moduly"
-
-#~ msgid ""
-#~ "Sorry, threads isn't supported on your platform.\n"
-#~ "\n"
-#~ "If you're on a libc5 based linux system and installed Glib & GTK+ before "
-#~ "you\n"
-#~ "installed LinuxThreads you need to recompile Glib & GTK+.\n"
-#~ msgstr ""
-#~ "Bohužel, váš systém nepodporuje vlákna.\n"
-#~ "\n"
-#~ "Pokud máte linux založený na libc5 a knihovny Glib a GTK+ byly "
-#~ "nainstalovány dříve\n"
-#~ "než LinuxThreads, budete muset Glib a GTK+ přeložit znovu.\n"
-
-#~ msgid "Error in Audacious."
-#~ msgstr "Chyba v Audacious"
-
-#~ msgid "Enable 6 dB hard limiter"
-#~ msgstr "Zapnout 6dB tvrdé omezení"
-
-#~ msgid "Select which Audacious session ID to use"
-#~ msgstr "Výběr identifikátoru relace Audacious"
-
-#~ msgid "Disable 'Doublesize'"
-#~ msgstr "Vypnout „Dvojitou velikost“"
-
-#~ msgid "Enable 'Doublesize'"
-#~ msgstr "Zapnout „Dvojitou velikost“"
-
-#~ msgid ""
-#~ "<b><big>Unable to create %s.</big></b>\n"
-#~ "\n"
-#~ "Could not open glade file (%s). Please check your installation.\n"
-#~ msgstr ""
-#~ "<b><big>Nelze vytvořit %s.</big></b>\n"
-#~ "\n"
-#~ "Nepodařilo se otevřít soubor %s. Zkontrolujte prosím sovou instalaci.\n"
-
-#~ msgid ""
-#~ "TITLE\n"
-#~ "ARTIST - TITLE\n"
-#~ "ARTIST - ALBUM - TITLE\n"
-#~ "ARTIST - ALBUM - TRACK. TITLE\n"
-#~ "ARTIST [ ALBUM ] - TRACK. TITLE\n"
-#~ "ALBUM - TITLE\n"
-#~ "Custom"
-#~ msgstr ""
-#~ "NÁZEV\n"
-#~ "UMĚLEC – NÁZEV\n"
-#~ "UMĚLEC – ALBUM – NÁZEV\n"
-#~ "UMĚLEC – ALBUM – STOPA. NÁZEV\n"
-#~ "UMĚLEC – [ ALBUM ] – STOPA. NÁZEV\n"
-#~ "ALBUM – NÁZEV\n"
-#~ "Vlastní"
-
-#~ msgid "<b>Presets</b>"
-#~ msgstr "<b>Předvolby</b>"
-
-#~ msgid "File preset extension:"
-#~ msgstr "Přípony souborů s předvolbami:"
-
-#~ msgid "Directory preset file:"
-#~ msgstr "Adresář s předvolbami:"
-
-#~ msgid ""
-#~ "Best Sinc Interpolation\n"
-#~ "Medium Sinc Interpolation\n"
-#~ "Fastest Sinc Interpolation\n"
-#~ "ZOH Interpolation\n"
-#~ "Linear Interpolation"
-#~ msgstr ""
-#~ "Nejlepší sinová interpolace\n"
-#~ "Střední sinová interpolace\n"
-#~ "Nejrychlejší sinová interpolace\n"
-#~ "ZOH interpolace\n"
-#~ "Lineární interpolace"
-
-#~ msgid "Track Information Window"
-#~ msgstr "Okno s podrobnosti o stopě"
-
-#~ msgid "Close"
-#~ msgstr "Zavřít"
-
-#~ msgid "localhost"
-#~ msgstr "localhost"
-
-#~ msgid "Preferences Window"
-#~ msgstr "Okno nastavení"
-
-#~ msgid ""
-#~ "<b><big>Unable to play files.</big></b>\n"
-#~ "\n"
-#~ "The following files could not be played. Please check that:\n"
-#~ "1. they are accessible.\n"
-#~ "2. you have enabled the media plugins required."
-#~ msgstr ""
-#~ "<b><big>Soubory nelze přehrát</big></b>\n"
-#~ "\n"
-#~ "Následující soubory nelze přehrát. Zkontrolujte zda:\n"
-#~ "1. jsou přístupné,\n"
-#~ "2. máte povolené příslušné moduly."
-
-#~ msgid "Show more _details"
-#~ msgstr "Ukaž podrobné _informace"
-
-#~ msgid ""
-#~ "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
-#~ "Please use GTK+ %s or newer.\n"
-#~ msgstr ""
-#~ "Verze knihovny GTK+ (%d.%d.%d) není kompatibilní s Audacious.\n"
-#~ "Použijte GTK+ %s nebo novější.\n"
-
-#~ msgid ""
-#~ "\n"
-#~ "Received SIGSEGV\n"
-#~ "\n"
-#~ "This could be a bug in Audacious. If you don't know why this happened, "
-#~ "file a bug at http://bugs-meta.atheme.org/\n"
-#~ "\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Zachycen SIGSEGV\n"
-#~ "\n"
-#~ "Asi jste narazili na chybu v programu Audacious. Pokud netušíte proč, "
-#~ "nahlaste chybu (anglicky) na http://bugs-meta.atheme.org/\n"
-#~ "\n"
-
-#~ msgid "VOLUME: %d%%"
-#~ msgstr "Hlasitost: %d%%"
-
-#~ msgid "BALANCE: %d%% LEFT"
-#~ msgstr "VYROVNÁNÍ: %d%% VLEVO"
-
-#~ msgid "BALANCE: CENTER"
-#~ msgstr "VYROVNÁNÍ: NA STŘED"
-
-#~ msgid "BALANCE: %d%% RIGHT"
-#~ msgstr "VYROVNÁNÍ: %d%% VPRAVO"
-
-#~ msgid "OPTIONS MENU"
-#~ msgstr "NASTAVENÍ"
-
-#~ msgid "DISABLE ALWAYS ON TOP"
-#~ msgstr "ZAKÁZAT FCI „VŽDY NA VRCHU“"
-
-#~ msgid "ENABLE ALWAYS ON TOP"
-#~ msgstr "POVOLIT FCI „VŽDY NA VRCHU“"
-
-#~ msgid "FILE INFO BOX"
-#~ msgstr "INFORMACE O SOUBORU"
-
-#~ msgid "DISABLE DOUBLESIZE"
-#~ msgstr "ZAKÁZAT DVOJITOU VELIKOST"
-
-#~ msgid "ENABLE DOUBLESIZE"
-#~ msgstr "POVOLIT DVOJITOU VELIKOST"
-
-#~ msgid "VISUALIZATION MENU"
-#~ msgstr "NASTAVENÍ ZOBRAZENÍ"
-
-#~ msgid ""
-#~ "<b><big>No playable CD found.</big></b>\n"
-#~ "\n"
-#~ "No CD inserted, or inserted CD is not an audio CD.\n"
-#~ msgstr ""
-#~ "<b><big>Nebylo nalezeno přehratelné CD.</big></b>\n"
-#~ "\n"
-#~ "Není vloženo CD, nebo vložené CD není typu Audio CD.\n"
-
-#~ msgid "Play CD"
-#~ msgstr "Přehrát CD"
-
-#~ msgid "Add CD..."
-#~ msgstr "Přidat CD…"
-
-#~ msgid "Adds a CD to the playlist."
-#~ msgstr "Přidá CD do seznamu skladeb"
-
-#~ msgid "Track name: "
-#~ msgstr "Název skladby: "
-
-#~ msgid "Performer/Artist"
-#~ msgstr "Interpret/umělec"
-
-#~ msgid "File name"
-#~ msgstr "Jméno souboru"
-
-#~ msgid "File path"
-#~ msgstr "Cesta k souboru"
-
-#~ msgid "File extension"
-#~ msgstr "Přípona souboru"
-
-#~ msgid "Track number"
-#~ msgstr "Číslo stopy"
-
-#~ msgid "%{n:...%}: Display \"...\" only if element %n is present"
-#~ msgstr "%{n:…%}: Zobraz „…“ pouze pokud %n nechybí"
-
-#~ msgid "/Load"
-#~ msgstr "/Načíst"
-
-#~ msgid "/Load/Preset"
-#~ msgstr "/Načíst/Uloženou předvolbu"
-
-#~ msgid "/Load/Default"
-#~ msgstr "/Načíst/Standardní předvolbu"
-
-#~ msgid "/Load/Zero"
-#~ msgstr "/Načíst/Vynulovat"
-
-#~ msgid "/Save"
-#~ msgstr "/Uložit"
-
-#~ msgid "/Save/Preset"
-#~ msgstr "/Uložit/Předvolbu"
-
-#~ msgid "/Save/Default"
-#~ msgstr "/Uložit/Jako standardní"
-
-#~ msgid "/Save/To file"
-#~ msgstr "/Uložit/Do souboru"
-
-#~ msgid "/Delete"
-#~ msgstr "/Smazat"
-
-#~ msgid "/Delete/Preset"
-#~ msgstr "/Smazat/Předvolbu"
-
-#~ msgid "Load auto-preset"
-#~ msgstr "Načíst souborovou předvolbu"
-
-#~ msgid "Load equalizer preset"
-#~ msgstr "Načíst nastavení ekvalizéru"
-
-#~ msgid "Delete auto-preset"
-#~ msgstr "Smazat souborovou předvolbu"
-
-#~ msgid "%s: option `%s' is ambiguous\n"
-#~ msgstr "%s: volba `%s' je nejasná\n"
-
-#~ msgid "%s: option `--%s' doesn't allow an argument\n"
-#~ msgstr "%s: volba `--%s' nemá parametr\n"
-
-#~ msgid "%s: option `%c%s' doesn't allow an argument\n"
-#~ msgstr "%s: volba `%c%s' nemá parametr\n"
-
-#~ msgid "%s: option `%s' requires an argument\n"
-#~ msgstr "%s: volba `%s' vyžaduje parametr\n"
-
-#~ msgid "%s: unrecognized option `%c%s'\n"
-#~ msgstr "%s: neznámá volba `%c%s'\n"
-
-#~ msgid "%s: illegal option -- %c\n"
-#~ msgstr "%s: nepřípustný parametr -- %c\n"
-
-#~ msgid "%s: invalid option -- %c\n"
-#~ msgstr "%s: neplatný parametr -- %c\n"
-
-#~ msgid "%s: option requires an argument -- %c\n"
-#~ msgstr "%s: volba vyžaduje parametr -- %c\n"
-
-#~ msgid "%s: option `-W %s' is ambiguous\n"
-#~ msgstr "%s: volba `-W %s' je nejasná\n"
-
-#~ msgid "%s: option `-W %s' doesn't allow an argument\n"
-#~ msgstr "%s: volba `-W %s' nemá parametr\n"
-
-#~ msgid ""
-#~ "Usage: audacious [options] [files] ...\n"
-#~ "\n"
-#~ "Options:\n"
-#~ "--------\n"
-#~ msgstr ""
-#~ "Použití: audacious [volby] [soubor]…\n"
-#~ "\n"
-#~ "Volby:\n"
-#~ "------\n"
-
-#~ msgid "Display this text and exit"
-#~ msgstr "Zobrazí tento text a skončí"
-
-#~ msgid "Activate Audacious"
-#~ msgstr "Aktivovat Audacious"
-
-#~ msgid "Previous session ID"
-#~ msgstr "ID předchozího sezení"
-
-#~ msgid "Disable error/warning interception (logging)"
-#~ msgstr "Nezachytávat chyby/varování (protokolování)"
-
-#~ msgid "Print version number and exit\n"
-#~ msgstr "Zobrazí číslo verze a skončí\n"
-
-#~ msgid "/Visualization Mode/Analyzer"
-#~ msgstr "/Typ zobrazení/Sloupce"
-
-#~ msgid "/Visualization Mode/Scope"
-#~ msgstr "/Typ zobrazení/Vlnovka"
-
-#~ msgid "/Visualization Mode/Off"
-#~ msgstr "/Typ zobrazení/Vypnout"
-
-#~ msgid "/Analyzer Mode/Normal"
-#~ msgstr "/Sloupce/Normální"
-
-#~ msgid "/Analyzer Mode/Fire"
-#~ msgstr "/Sloupce/Oheň"
-
-#~ msgid "/Analyzer Mode/Lines"
-#~ msgstr "/Sloupce/Tenké"
-
-#~ msgid "/Analyzer Mode/Bars"
-#~ msgstr "/Sloupce/Silné"
-
-#~ msgid "/Analyzer Mode/Peaks"
-#~ msgstr "/Sloupce/Vrcholky"
-
-#~ msgid "/WindowShade VU Mode/Normal"
-#~ msgstr "/Minimalizovaný režim/Normální"
-
-#~ msgid "/WindowShade VU Mode/Smooth"
-#~ msgstr "/Minimalizovaný režim/Jemný"
-
-#~ msgid "/Analyzer Falloff/Slowest"
-#~ msgstr "/Klesání sloupců/Nejpomalejší"
-
-#~ msgid "/Analyzer Falloff/Slow"
-#~ msgstr "/Klesání sloupců/Pomalé"
-
-#~ msgid "/Analyzer Falloff/Medium"
-#~ msgstr "/Klesání sloupců/Střední"
-
-#~ msgid "/Analyzer Falloff/Fast"
-#~ msgstr "/Klesání sloupců/Rychlé"
-
-#~ msgid "/Analyzer Falloff/Fastest"
-#~ msgstr "/Klesání sloupců/Nejrychlejší"
-
-#~ msgid "/Peaks Falloff/Slowest"
-#~ msgstr "/Klesání vrcholků/Nejpomalejší"
-
-#~ msgid "/Peaks Falloff/Slow"
-#~ msgstr "/Klesání vrcholků/Pomalé"
-
-#~ msgid "/Peaks Falloff/Medium"
-#~ msgstr "/Klesání vrcholků/Střední"
-
-#~ msgid "/Peaks Falloff/Fast"
-#~ msgstr "/Klesání vrcholků/Rychlé"
-
-#~ msgid "/Peaks Falloff/Fastest"
-#~ msgstr "/Klesání vrcholků/Nejrychlejší"
-
-#~ msgid "/Pause"
-#~ msgstr "/Pozastavit"
-
-#~ msgid "/-"
-#~ msgstr "/-"
-
-#~ msgid "/Jump to Time"
-#~ msgstr "/Přejít na čas"
-
-#~ msgid "/About Audacious"
-#~ msgstr "/O Audacious"
-
-#~ msgid "/Files..."
-#~ msgstr "/Soubory..."
-
-#~ msgid "/Internet location..."
-#~ msgstr "/Internetová adresa..."
-
-#~ msgid "Track Information Popup"
-#~ msgstr "Vyskakovací okno s informacemi o stopě"
-
-#~ msgid "/Show Popup Info"
-#~ msgstr "/Zobrazovat podrobnosti ve vyskakovacím okně"
-
-#~ msgid "/Remove Duplicates/By Title"
-#~ msgstr "/Odebrat duplikáty/Podle názvu"
-
-#~ msgid "/Remove Duplicates/By Filename"
-#~ msgstr "/Odebrat duplikáty/Podle jména souboru"
-
-#~ msgid "/New List"
-#~ msgstr "/Nový seznam"
-
-#~ msgid "/Update View"
-#~ msgstr "/Obnovit seznam"
-
-#~ msgid "/Select All"
-#~ msgstr "/Vybrat vše"
-
-#~ msgid "/Sort List/By Date"
-#~ msgstr "/Řadit/Podle data"
-
-#~ msgid "/Sort Selection/By Title"
-#~ msgstr "/Setřídit vybrané/Podle názvu"
-
-#~ msgid "/Sort Selection/By Artist"
-#~ msgstr "/Setřídit vybrané/Podle umělce"
-
-#~ msgid "/Sort Selection/By Filename"
-#~ msgstr "/Setřídit vybrané/Podle jména souboru"
-
-#~ msgid "/Sort Selection/By Path + Filename"
-#~ msgstr "/Setřídit vybrané/Podle cesty a jména souboru"
-
-#~ msgid "/Sort Selection/By Date"
-#~ msgstr "/Setřídit vybrané/Podle času"
-
-#~ msgid "/Sort Selection/By Track Number"
-#~ msgstr "/Setřídit vybrané/Podle čísla stopy"
-
-#~ msgid "/Sort Selection/By Playlist Entry"
-#~ msgstr "/Setřídit vybrané/Podle položky seznamu"
-
-#~ msgid "Close Dialog on Add"
-#~ msgstr "Zavřít dialog při přidání"
-
-#~ msgid "Deselect All"
-#~ msgstr "Odebrat vše"
-
-#~ msgid "Artist Popup"
-#~ msgstr "Vyskakovací okno o umělci"
-
-#~ msgid "<i>Title</i>"
-#~ msgstr "<i>Název</i>"
-
-#~ msgid "<i>Artist</i>"
-#~ msgstr "<i>Umělec</i>"
-
-#~ msgid "<i>Album</i>"
-#~ msgstr "<i>Album</i>"
-
-#~ msgid "<i>Genre</i>"
-#~ msgstr "<i>Žánr</i>"
-
-#~ msgid "<i>Year</i>"
-#~ msgstr "<i>Rok</i>"
-
-#~ msgid "<i>Track Number</i>"
-#~ msgstr "<i>Číslo stopy</i>"
-
-#~ msgid "<i>Track Length</i>"
-#~ msgstr "<i>Délka stopy</i>"
-
-#~ msgid "<b>_Miscillaneous UI Features</b>"
-#~ msgstr "<b>_Rozličné vlastnosti uživatelského rozhraní</b>"
-
-#~ msgid ""
-#~ "Enables playlist transparency. This is not recommended for slower "
-#~ "machines as it requires some CPU time to create and cache the pixmaps "
-#~ "used for the transparency."
-#~ msgstr ""
-#~ "Zapne průhlednost seznamu skladeb. Nedoporučuje se na pomalých "
-#~ "počítačích, protože vyžaduje jisté množství procesorového času na "
-#~ "vytvoření a udržování pixmap použitých pro průhlednost."
-
-#~ msgid "Enable playlist transparency"
-#~ msgstr "Povolit průhlednost seznamu skladeb"
-
-#~ msgid "This enables the window mangaer to show decorations for windows."
-#~ msgstr ""
-#~ "Tímto necháte rozhodní na správci oken, kdy má zobrazovat dekorace oken."
-
-#~ msgid "label65"
-#~ msgstr "jmenovka65"
-
-#~ msgid "label76"
-#~ msgstr "jmenovka76"
-
-#~ msgid "Ok"
-#~ msgstr "OK"
-
-#~ msgid "Cancel"
-#~ msgstr "Zrušit"
-
-#~ msgid "Apply"
-#~ msgstr "Použít"
-
-#~ msgid "Username:"
-#~ msgstr "Přístupové jméno:"
-
-#~ msgid "Password:"
-#~ msgstr "Heslo:"
-
-#~ msgid "Commands"
-#~ msgstr "Příkazy"
-
-#~ msgid "Command:"
-#~ msgstr "Příkaz:"
-
-#~ msgid ""
-#~ "You can use the following format strings which\n"
-#~ "will be substituted before calling the command\n"
-#~ "(not all are useful for the end-of-playlist command).\n"
-#~ "\n"
-#~ "%%F: Frequency (in hertz)\n"
-#~ "%%c: Number of channels\n"
-#~ "%%f: filename (full path)\n"
-#~ "%%l: length (in milliseconds)\n"
-#~ "%%n or %%s: Song name\n"
-#~ "%%r: Rate (in bits per second)\n"
-#~ "%%t: Playlist position (%%02d)\n"
-#~ "%%p: Currently playing (1 or 0)"
-#~ msgstr ""
-#~ "Můžete používat následující formátovací řetězce, které budou před "
-#~ "spuštěním příkazu nahrazeny (ne všechny jsou užitečné pro příkaz "
-#~ "spouštěný na konci seznamu skladeb).\n"
-#~ "\n"
-#~ "%%F: Frekvence (v hertzích)\n"
-#~ "%%c: Počet kanálů\n"
-#~ "%%f: jméno souboru (celá cesta)\n"
-#~ "%%l: délka (v milisekundách)\n"
-#~ "%%n nebo %%s: Název skladby\n"
-#~ "%%r: Datový tok (v bitech za sekundu)\n"
-#~ "%%t: Pozice v seznamu skladeb (%%02d)\n"
-#~ "%%p: Právě se hraje (1 nebo 0)"
-
-#~ msgid "Name:"
-#~ msgstr "Jméno:"
-
-#~ msgid "CD Audio Plugin"
-#~ msgstr "CD Audio modul"
-
-#~ msgid "(unknown)"
-#~ msgstr "(není známo)"
-
-#~ msgid "Drive %d"
-#~ msgstr "Mechanika %d"
-
-#~ msgid ""
-#~ "Failed to open device %s\n"
-#~ "Error: %s\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Nepodařilo se otevřít %s\n"
-#~ "Chyba: %s\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "Failed to read \"Table of Contents\"\n"
-#~ "Maybe no disc in the drive?\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Nepodařilo se načíst obsah disku.\n"
-#~ "Je disk opravdu v mechanice?\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "Device %s OK.\n"
-#~ "Disc has %d tracks"
-#~ msgstr ""
-#~ "Zařízení %s je v pořádku.\n"
-#~ "Disk obsahuje %d stop."
-
-#~ msgid " (%d data tracks)"
-#~ msgstr "(%d datových stop)"
-
-#~ msgid ""
-#~ "\n"
-#~ "Total length: %d:%d\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Celková délka: %d:%d\n"
-
-#~ msgid ""
-#~ "Digital audio extraction not tested as the disc has no audio tracks\n"
-#~ msgstr "Čtení zvuku netestováno - tento disk neobsahuje zvukové stopy.\n"
-
-#~ msgid ""
-#~ "Digital audio extraction test: OK\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Test čtení zvuku: v pořádku.\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "Digital audio extraction test failed: %s\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Test čtení zvuku selhal: %s\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "Failed to check directory %s\n"
-#~ "Error: %s"
-#~ msgstr ""
-#~ "Nepodařilo se načíst adresář %s.\n"
-#~ "Chyba: %s"
-
-#~ msgid "Error: %s exist, but is not a directory"
-#~ msgstr "Chyba: %s existuje, ale není adresářem."
-
-#~ msgid "Directory %s OK."
-#~ msgstr "Adresář %s je v pořádku."
-
-#~ msgid "Device:"
-#~ msgstr "Zařízení:"
-
-#~ msgid "_Device:"
-#~ msgstr "_Zařízení:"
-
-#~ msgid "Dir_ectory:"
-#~ msgstr "_Adresář:"
-
-#~ msgid "Play mode:"
-#~ msgstr "Způsob přehrávání:"
-
-#~ msgid "Analog"
-#~ msgstr "Analogově"
-
-#~ msgid "Digital audio extraction"
-#~ msgstr "Digitálně"
-
-#~ msgid "No mixer"
-#~ msgstr "Nepoužívat žádný mixér"
-
-#~ msgid "CDROM drive"
-#~ msgstr "CDROM mechanika"
-
-#~ msgid "OSS mixer"
-#~ msgstr "OSS mixér"
-
-#~ msgid "Check drive..."
-#~ msgstr "Zkontrolovat mechaniku..."
-
-#~ msgid "Remove drive"
-#~ msgstr "Odstranit mechaniku"
-
-#~ msgid "CD Audio Player Configuration"
-#~ msgstr "Nastavení přehrávače CD Audio"
-
-#~ msgid "Add drive"
-#~ msgstr "Přidat mechaniku"
-
-#~ msgid "Device"
-#~ msgstr "Zařízení"
-
-#~ msgid "CDDB:"
-#~ msgstr "CDDB:"
-
-#~ msgid "Use CDDB"
-#~ msgstr "Používat CDDB"
-
-#~ msgid "Get server list"
-#~ msgstr "Získat seznam serverů"
-
-#~ msgid "Show network window"
-#~ msgstr "Výpis síťového provozu"
-
-#~ msgid "CDDB server:"
-#~ msgstr "CDDB server:"
-
-#~ msgid "CD Index:"
-#~ msgstr "CD Index:"
-
-#~ msgid "Use CD Index"
-#~ msgstr "Použít server s databází CD"
-
-#~ msgid "CD Index server:"
-#~ msgstr "Server s databází CD:"
-
-#~ msgid "Override generic titles"
-#~ msgstr "Přepsat původní názvy"
-
-#~ msgid "Name format:"
-#~ msgstr "Formát názvu:"
-
-#~ msgid "CD Info"
-#~ msgstr "Informace o CD"
-
-#~ msgid ""
-#~ "Console music decoder engine based on Game_Music_Emu 0.3.0.\n"
-#~ "Audacious implementation by: William Pitcock <nenolod@nenolod.net>, \n"
-#~ "        Shay Green <hotpop.com@blargg>"
-#~ msgstr ""
-#~ "Dekodér konzolové hudby založený na Game_Music_Emu 0.3.0.\n"
-#~ "Implementace v Audacious: William Pitcock <nenold@nenold.net>,\n"
-#~ "        Shay Green <hotpop.com@blargg>"
-
-#~ msgid "SPC, VGM, NSF/NSFE, GBS, and GYM module decoder"
-#~ msgstr "Dekodér SPC, VGM, NSF/NSFE, GBS a modulů GYM"
-
-#~ msgid "Arabic (IBM-864)"
-#~ msgstr "arabštiny (IBM-864)"
-
-#~ msgid "Arabic (ISO-8859-6)"
-#~ msgstr "arabštiny (ISO-8859-6)"
-
-#~ msgid "Arabic (Windows-1256)"
-#~ msgstr "arabštiny (Windows-1256)"
-
-#~ msgid "Baltic (ISO-8859-13)"
-#~ msgstr "pobaltských jazyků (ISO-8859-13)"
-
-#~ msgid "Baltic (ISO-8859-4)"
-#~ msgstr "pobaltských jazyků (ISO-8859-4)"
-
-#~ msgid "Baltic (Windows-1257)"
-#~ msgstr "pobaltských jazyků (Windows-1257)"
-
-#~ msgid "Celtic (ISO-8859-14)"
-#~ msgstr "keltských jazyků (ISO-8859-14)"
-
-#~ msgid "Central European (IBM-852)"
-#~ msgstr "středoevropských jazyků (IBM-852)"
-
-#~ msgid "Central European (ISO-8859-2)"
-#~ msgstr "pobaltských jazyků (ISO-8859-2)"
-
-#~ msgid "Central European (Windows-1250)"
-#~ msgstr "pobaltských jazyků (Windows-1250)"
-
-#~ msgid "Chinese Simplified (GB18030)"
-#~ msgstr "zjednodušené čínštiny (GB18030)"
-
-#~ msgid "Chinese Simplified (GB2312)"
-#~ msgstr "zjednodušené čínštiny (GB2312)"
-
-#~ msgid "Chinese Traditional (Big5)"
-#~ msgstr "tradiční čínštiny (Big5)"
-
-#~ msgid "Chinese Traditional (Big5-HKSCS)"
-#~ msgstr "tradiční čínštiny (Big5-HKSCS)"
-
-#~ msgid "Cyrillic (IBM-855)"
-#~ msgstr "cyrilice (IBM-855)"
-
-#~ msgid "Cyrillic (ISO-8859-5)"
-#~ msgstr "cyrilice (ISO-8859-2)"
-
-#~ msgid "Cyrillic (ISO-IR-111)"
-#~ msgstr "cyrilice (ISO-IR-111)"
-
-#~ msgid "Cyrillic (KOI8-R)"
-#~ msgstr "cyrilice (KOI8-R)"
-
-#~ msgid "Cyrillic (Windows-1251)"
-#~ msgstr "cyrilice (Windows-1251)"
-
-#~ msgid "Cyrillic/Russian (CP-866)"
-#~ msgstr "ruské cyrilice (CP-866)"
-
-#~ msgid "Cyrillic/Ukrainian (KOI8-U)"
-#~ msgstr "ukrajinské cyrilice (KOI8-U)"
-
-#~ msgid "English (US-ASCII)"
-#~ msgstr "angličtiny (US-ASCII)"
-
-#~ msgid "Greek (ISO-8859-7)"
-#~ msgstr "řečtiny (ISO-8859-7)"
-
-#~ msgid "Greek (Windows-1253)"
-#~ msgstr "řečtiny (Windows-1253)"
-
-#~ msgid "Hebrew (IBM-862)"
-#~ msgstr "hebrejštiny (IBM-862)"
-
-#~ msgid "Hebrew (Windows-1255)"
-#~ msgstr "hebrejštiny (Windows-1255)"
-
-#~ msgid "Japanese (EUC-JP)"
-#~ msgstr "japonštiny (EUC-JP)"
-
-#~ msgid "Japanese (ISO-2022-JP)"
-#~ msgstr "japonštiny (ISO-2022-JP)"
-
-#~ msgid "Japanese (Shift_JIS)"
-#~ msgstr "japonštiny (Shif_JIS)"
-
-#~ msgid "Korean (EUC-KR)"
-#~ msgstr "korejštiny (EUC-KR)"
-
-#~ msgid "Nordic (ISO-8859-10)"
-#~ msgstr "severských jazyků (ISO-8859-10)"
-
-#~ msgid "South European (ISO-8859-3)"
-#~ msgstr "jihoevropských jazyků (ISO-8859-3)"
-
-#~ msgid "Thai (TIS-620)"
-#~ msgstr "thajštiny (TIS-620)"
-
-#~ msgid "Turkish (IBM-857)"
-#~ msgstr "turečtiny (IBM-857)"
-
-#~ msgid "Turkish (ISO-8859-9)"
-#~ msgstr "turečtiny (ISO-8859-9)"
-
-#~ msgid "Turkish (Windows-1254)"
-#~ msgstr "turečtiny (Windows-1254)"
-
-#~ msgid "Unicode (UTF-7)"
-#~ msgstr "unicode (UTF-7)"
-
-#~ msgid "Unicode (UTF-8)"
-#~ msgstr "unicode (UTF-8)"
-
-#~ msgid "Unicode (UTF-16BE)"
-#~ msgstr "unicode (UTF-16BE)"
-
-#~ msgid "Unicode (UTF-16LE)"
-#~ msgstr "unicode (UTF-16LE)"
-
-#~ msgid "Unicode (UTF-32BE)"
-#~ msgstr "unicode (UTF-32BE)"
-
-#~ msgid "Unicode (UTF-32LE)"
-#~ msgstr "unicode (UTF-32LE)"
-
-#~ msgid "Vietnamese (VISCII)"
-#~ msgstr "vietnamštiny (VISCII)"
-
-#~ msgid "Vietnamese (Windows-1258)"
-#~ msgstr "vietnamštiny (Windows-1258)"
-
-#~ msgid "Western (IBM-850)"
-#~ msgstr "západních jazyků (IBM-850)"
-
-#~ msgid "Western (ISO-8859-1)"
-#~ msgstr "západních jazyků (ISO-8859-1)"
-
-#~ msgid "Western (ISO-8859-15)"
-#~ msgstr "západních jazyků (ISO-8859-15)"
-
-#~ msgid "Western (Windows-1252)"
-#~ msgstr "západních jazyků (Windows-1252)"
-
-#~ msgid "Arabic (IBM-864-I)"
-#~ msgstr "arabštiny (IBM-864-I)"
-
-#~ msgid "Arabic (ISO-8859-6-E)"
-#~ msgstr "arabštiny (ISO-8859-6-E)"
-
-#~ msgid "Arabic (ISO-8859-6-I)"
-#~ msgstr "arabštiny (ISO-8859-6-I)"
-
-#~ msgid "Arabic (MacArabic)"
-#~ msgstr "arabštiny (MacArabic)"
-
-#~ msgid "Armenian (ARMSCII-8)"
-#~ msgstr "arménštiny (ARMSCII-8)"
-
-#~ msgid "Central European (MacCE)"
-#~ msgstr "středoevropských jazyků (MacCE)"
-
-#~ msgid "Chinese Simplified (GBK)"
-#~ msgstr "zjednodušené čínštiny (GBK)"
-
-#~ msgid "Chinese Simplified (HZ)"
-#~ msgstr "zjednodušené čínštiny (HZ)"
-
-#~ msgid "Chinese Traditional (EUC-TW)"
-#~ msgstr "tradiční čínštiny (EUC-TW)"
-
-#~ msgid "Croatian (MacCroatian)"
-#~ msgstr "chorvatštiny (MacCroatian)"
-
-#~ msgid "Cyrillic/Ukrainian (MacUkrainian)"
-#~ msgstr "ukrajinské cyrilice (MacUkrainian)"
-
-#~ msgid "Farsi (MacFarsi)"
-#~ msgstr "perštiny (MacFarsi)"
-
-#~ msgid "Greek (MacGreek)"
-#~ msgstr "řečtiny (MacGreek)"
-
-#~ msgid "Gujarati (MacGujarati)"
-#~ msgstr "gudžáratštiny (MacGujarati)"
-
-#~ msgid "Gurmukhi (MacGurmukhi)"
-#~ msgstr "gurmukhi (MacGurmukhi)"
-
-#~ msgid "Hebrew (ISO-8859-8-E)"
-#~ msgstr "hebrejštiny (ISO-8859-8-E)"
-
-#~ msgid "Hebrew (ISO-8859-8-I)"
-#~ msgstr "hebrejštiny (ISO-8859-8-I)"
-
-#~ msgid "Hebrew (MacHebrew)"
-#~ msgstr "hebrejštiny (MacHebrew)"
-
-#~ msgid "Hindi (MacDevanagari)"
-#~ msgstr "hindštiny (MacDevanagari)"
-
-#~ msgid "Icelandic (MacIcelandic)"
-#~ msgstr "islandštiny (MacIcelandic)"
-
-#~ msgid "Korean (JOHAB)"
-#~ msgstr "korejštiny (JOHAB)"
-
-#~ msgid "Korean (UHC)"
-#~ msgstr "korejštiny (UHC)"
-
-#~ msgid "Romanian (MacRomanian)"
-#~ msgstr "rumunštiny (MacRomanian)"
-
-#~ msgid "Turkish (MacTurkish)"
-#~ msgstr "turečtiny (MacTurkish)"
-
-#~ msgid "User Defined"
-#~ msgstr "Uživatelem definované"
-
-#~ msgid "Vietnamese (TCVN)"
-#~ msgstr "vietnamštiny (TCVN)"
-
-#~ msgid "Western (MacRoman)"
-#~ msgstr "západních jazyků (MacRoman)"
-
-#~ msgid "Select the directory where you want to store the MPEG streams:"
-#~ msgstr "Vyberte adresář, do něhož chcete vysílání uložit:"
-
-#~ msgid "Flac Configuration"
-#~ msgstr "Flac - nastavení"
-
-#~ msgid "Tag Handling"
-#~ msgstr "Zpracování tagů"
-
-#~ msgid "Convert Character Set"
-#~ msgstr "Změnit znakovou sadu"
-
-#~ msgid "Convert character set from :"
-#~ msgstr "Změnit znakovou sadu z :"
-
-#~ msgid "to :"
-#~ msgstr "na :"
-
-#~ msgid "Enable ReplayGain processing"
-#~ msgstr "Zapnout zesílení pro přehrávání"
-
-#~ msgid "Resolution"
-#~ msgstr "Rozlišení"
-
-#~ msgid "Without ReplayGain"
-#~ msgstr "Bez zesílení při přehrávání"
-
-#~ msgid "Dither 24bps to 16bps"
-#~ msgstr "Ditheringem převést 24 bitů na 16"
-
-#~ msgid "With ReplayGain"
-#~ msgstr "Se zesílením při přehrávání"
-
-#~ msgid "Enable dithering"
-#~ msgstr "Povolení ditheringu"
-
-#~ msgid "Noise shaping"
-#~ msgstr "Tvarování šumu"
-
-#~ msgid "high"
-#~ msgstr "silné"
-
-#~ msgid "Dither to"
-#~ msgstr "Dithering na"
-
-#~ msgid "16 bps"
-#~ msgstr "16bitové"
-
-#~ msgid "24 bps"
-#~ msgstr "24 bitů"
-
-#~ msgid "Output"
-#~ msgstr "Výstup"
-
-#~ msgid "Buffering:"
-#~ msgstr "Přednačítání"
-
-#~ msgid "Buffer size (kb):"
-#~ msgstr "Velikost vyrovnávací paměti (kB):"
-
-#~ msgid "Pre-buffer (percent):"
-#~ msgstr "Načíst předem (v procentech):"
-
-#~ msgid "Save stream to disk:"
-#~ msgstr "Uložit vysílání na disk:"
-
-#~ msgid "Save stream to disk"
-#~ msgstr "Uložit vysílání na disk:"
-
-#~ msgid "Path:"
-#~ msgstr "Cesta:"
-
-#~ msgid "Browse"
-#~ msgstr "Procházet:"
-
-#~ msgid "SHOUT/Icecast:"
-#~ msgstr "SHOUT/Icecast:"
-
-#~ msgid "Enable Icecast Metadata UDP Channel"
-#~ msgstr "Povolit Icecast Metadata UDP Channel"
-
-#~ msgid "About Flac Plugin"
-#~ msgstr "O modulu Flac"
-
-#~ msgid ""
-#~ "Flac Plugin by Josh Coalson\n"
-#~ "contributions by\n"
-#~ "......\n"
-#~ "......\n"
-#~ "and\n"
-#~ "Daisuke Shimamura\n"
-#~ "Visit http://flac.sourceforge.net/"
-#~ msgstr "Flac modul "
-
-#~ msgid "Samplerate: %d Hz"
-#~ msgstr "Vzorkovací kmitočet: %d Hz"
-
-#~ msgid "Channels: %d"
-#~ msgstr "Kanálů: %d"
-
-#~ msgid "Bits/Sample: %d"
-#~ msgstr "Bitů na vzorek: %d"
-
-#~ msgid "Blocksize: %d"
-#~ msgstr "Velikost bloku: %d"
-
-#~ msgid ""
-#~ "Blocksize: variable\n"
-#~ "  min/max: %d/%d"
-#~ msgstr ""
-#~ "Velikost bloku: proměnná\n"
-#~ "  min/max: %d/%d"
-
-#~ msgid ""
-#~ "Samples: %llu\n"
-#~ "Length: %d:%.2d"
-#~ msgstr ""
-#~ "Vzorků: %llu\n"
-#~ "Délka: %d:%.2d"
-
-#~ msgid "Filesize: %ld B"
-#~ msgstr "Velikost souboru: %ld B"
-
-#~ msgid ""
-#~ "Avg. bitrate: %.1f kb/s\n"
-#~ "Compression ratio: %.1f%%"
-#~ msgstr ""
-#~ "Prům. datový tok: %.1f kb/s\n"
-#~ "Kompresní poměr: %.1f%%"
-
-#~ msgid "Tag:"
-#~ msgstr "Tag:"
-
-#~ msgid "Comment:"
-#~ msgstr "Komentář:"
-
-#~ msgid "Date:"
-#~ msgstr "Datum:"
-
-#~ msgid "Track number:"
-#~ msgstr "Číslo stopy:"
-
-#~ msgid "Genre:"
-#~ msgstr "Žánr:"
-
-#~ msgid "Remove Tag"
-#~ msgstr "Odstranit tag"
-
-#~ msgid "Error"
-#~ msgstr "Chyba"
-
-#~ msgid "LOOKING UP %s"
-#~ msgstr "Vyhledávám %s"
-
-#~ msgid "Couldn't look up host %s"
-#~ msgstr "Nelze najít server %s"
-
-#~ msgid "CONNECTING TO %s:%d"
-#~ msgstr "Připojuji se k %s: %d"
-
-#~ msgid "Couldn't connect to host %s"
-#~ msgstr "Nelze se připojit k %s"
-
-#~ msgid "CONNECTED: WAITING FOR REPLY"
-#~ msgstr "Připojen: čekám na odpověď"
-
-#~ msgid ""
-#~ "Couldn't connect to host %s\n"
-#~ "Server reported: %s"
-#~ msgstr ""
-#~ "Nepodařilo se připojit k serveru %s\n"
-#~ "Server odpověděl: %s"
-
-#~ msgid "PRE-BUFFERING: %dKB/%dKB"
-#~ msgstr "Přednačteno: %d kB/%d kB"
-
-#~ msgid "ModPlug Configuration"
-#~ msgstr "Nastavení ModPlugu"
-
-#~ msgid "16 bit"
-#~ msgstr "16bitové"
-
-#~ msgid "8 bit"
-#~ msgstr "8bitové"
-
-#~ msgid "Resampling"
-#~ msgstr "Převzorkování"
-
-#~ msgid "Nearest (fastest)"
-#~ msgstr "Nejbližší (nejrychlejší)"
-
-#~ msgid "Linear (fast)"
-#~ msgstr "Lineární (rychlé)"
-
-#~ msgid "Spline (good quality)"
-#~ msgstr "Spline (kvalitní)"
-
-#~ msgid "8-tap Fir (extremely high quality)"
-#~ msgstr "FIR filtr osmého řádu (velmi kvalitní)"
-
-#~ msgid "Use Filename as Song Title"
-#~ msgstr "Použít jméno souboru jako název skladby"
-
-#~ msgid "Noise Reduction"
-#~ msgstr "Redukce šumu"
-
-#~ msgid "Bass Boost"
-#~ msgstr "Zvýraznění hlubokých tónů"
-
-#~ msgid "Amount"
-#~ msgstr "Množství"
-
-#~ msgid "time(s)"
-#~ msgstr "čas (s)"
-
-#~ msgid "OK"
-#~ msgstr "Budiž"
-
-#~ msgid ""
-#~ "Filename:\n"
-#~ "Title:\n"
-#~ "Type:\n"
-#~ "Length:\n"
-#~ "Speed:\n"
-#~ "Tempo:\n"
-#~ "Samples:\n"
-#~ "Instruments:\n"
-#~ "Patterns:\n"
-#~ "Channels:"
-#~ msgstr ""
-#~ "Jméno souboru:\n"
-#~ "Název skladby:\n"
-#~ "Typ:\n"
-#~ "Délka:\n"
-#~ "Rychlost:\n"
-#~ "Tempo:\n"
-#~ "Vzorků:\n"
-#~ "Nástroje:\n"
-#~ "Vzory:\n"
-#~ "Kanálů:"
-
-#~ msgid "Samples"
-#~ msgstr "Vzorky"
-
-#~ msgid "About Modplug"
-#~ msgstr "O modulu Modplug"
-
-#~ msgid "MPEG Audio Plugin Configuration"
-#~ msgstr "Nastavení modulu MPEG Audio"
-
-#~ msgid "Resolution:"
-#~ msgstr "Rozlišení:"
-
-#~ msgid "Channels:"
-#~ msgstr "Kanálů"
-
-#~ msgid "Stereo (if available)"
-#~ msgstr "Stereo (pokud existuje)"
-
-#~ msgid "Down sample:"
-#~ msgstr "Snížit vzorkovací kmitočet:"
-
-#~ msgid "1:1 (44 kHz)"
-#~ msgstr "1:1 (44 kHz)"
-
-#~ msgid "1:2 (22 kHz)"
-#~ msgstr "1:2 (22 kHz)"
-
-#~ msgid "1:4 (11 kHz)"
-#~ msgstr "1:4 (11 kHz)"
-
-#~ msgid "Decoder"
-#~ msgstr "Dekodér"
-
-#~ msgid "ID3 Tags:"
-#~ msgstr "ID3 tagy:"
-
-#~ msgid "ID3 format:"
-#~ msgstr "Formát ID3:"
-
-#~ msgid "Joint stereo"
-#~ msgstr "Joint stereo"
-
-#~ msgid "Dual channel"
-#~ msgstr "Dva kanály"
-
-#~ msgid "Single channel"
-#~ msgstr "Jeden kanál"
-
-#~ msgid "%ld Hz"
-#~ msgstr "%ld Hz"
-
-#~ msgid "50/15 ms"
-#~ msgstr "50/15 ms"
-
-#~ msgid "CCIT J.17"
-#~ msgstr "CCIT J.17"
-
-#~ msgid "No"
-#~ msgstr "Ne"
-
-#~ msgid "Yes"
-#~ msgstr "Ano"
-
-#~ msgid " MPEG Info "
-#~ msgstr " MPEG informace"
-
-#~ msgid "MPEG Level:"
-#~ msgstr "MPEG:"
-
-#~ msgid "Bit rate:"
-#~ msgstr "Datový tok:"
-
-#~ msgid "Sample rate:"
-#~ msgstr "Vzorkovací kmitočet:"
-
-#~ msgid "File size:"
-#~ msgstr "Velikost souboru:"
-
-#~ msgid "Error Protection:"
-#~ msgstr "Chybová ochrana:"
-
-#~ msgid "Copyright:"
-#~ msgstr "Autorská práva:"
-
-#~ msgid "Original:"
-#~ msgstr "Originál:"
-
-#~ msgid "Emphasis:"
-#~ msgstr "Zesílení:"
-
-#~ msgid " ID3 Tag "
-#~ msgstr " ID3 popis:"
-
-#~ msgid "Year:"
-#~ msgstr "Rok:"
-
-#~ msgid "N/A"
-#~ msgstr "není známo"
-
-#~ msgid "%s"
-#~ msgstr "%s"
-
-#~ msgid "%lu Bytes"
-#~ msgstr "%lu bajtů"
-
-#~ msgid "About MPEG Audio Plugin"
-#~ msgstr "O modulu MPEG Audio"
-
-#~ msgid "MPEG Audio Plugin"
-#~ msgstr "Modul MPEG Audio"
-
-#~ msgid "About Tone Generator"
-#~ msgstr "O generátoru tónů"
-
-#~ msgid ""
-#~ "Sinus tone generator by Haavard Kvaalen <havardk@xmms.org>\n"
-#~ "Modified by Daniel J. Peng <danielpeng@bigfoot.com>\n"
-#~ "\n"
-#~ "To use it, add a URL: tone://frequency1;frequency2;frequency3;...\n"
-#~ "e.g. tone://2000;2005 to play a 2000Hz tone and a 2005Hz tone"
-#~ msgstr ""
-#~ "Generátor harmonických tónů, vytvořil Haavard Kvaalen <havardk@xmms.org>\n"
-#~ "Upraven Danielem J. Pengem <danielpeng@bigfoot.com>\n"
-#~ "\n"
-#~ "Pro jeho aktivaci zadejte URL: tone://frekvence1;frekvence2;"
-#~ "frekvence3;...\n"
-#~ "např. tone://2000;2005 pro přehrání tónů o frekvenci 2000 a 2005 Hz."
-
-#~ msgid "Tone Generator: "
-#~ msgstr "Generátor tónů:"
-
-#~ msgid "Tone Generator %s"
-#~ msgstr "Generátor tónů %s"
-
-#~ msgid "Select the directory where you want to store the Ogg Vorbis streams:"
-#~ msgstr ""
-#~ "Vyberte adresář, do nějž bude ukládáno vysílání ve formátu Ogg Vorbis:"
-
-#~ msgid "Ogg Vorbis Audio Plugin Configuration"
-#~ msgstr "Nastavení modulu Ogg Vorbis Audio"
-
-#~ msgid "Ogg Vorbis Tags:"
-#~ msgstr "Ogg Vorbis Info:"
-
-#~ msgid "ReplayGain Settings:"
-#~ msgstr "Nastavení pro zesílení přehrávání:"
-
-#~ msgid "use Track Gain/Peak"
-#~ msgstr "použít zesílení/vrcholu skladby"
-
-#~ msgid "use Album Gain/Peak"
-#~ msgstr "použít zesílení/vrchol alba"
-
-#~ msgid "Enable 6dB Boost + Hard Limiting"
-#~ msgstr "Povolit 6 dB boost + tvrdé omezení"
-
-#~ msgid ""
-#~ "An error occured:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Nastala chyba:\n"
-#~ "%s"
-
-#~ msgid "Error!"
-#~ msgstr "Chyba!"
-
-#~ msgid "Failed to modify tag (open)"
-#~ msgstr "Změna tagu se nezdařila (otevření)"
-
-#~ msgid "Failed to modify tag (close)"
-#~ msgstr "Změna tagu se nezdařila (zavření)"
-
-#~ msgid "Failed to modify tag"
-#~ msgstr "Nepodařilo se upravit informace"
-
-#~ msgid " Ogg Vorbis Tag "
-#~ msgstr "Popis Ogg Vorbis souboru"
-
-#~ msgid "Description:"
-#~ msgstr "Popis:"
-
-#~ msgid "Location:"
-#~ msgstr "Umístění:"
-
-#~ msgid "Version:"
-#~ msgstr "Verze:"
-
-#~ msgid "ISRC number:"
-#~ msgstr "Číslo ISRC"
-
-#~ msgid "Organization:"
-#~ msgstr "Organizace:"
-
-#~ msgid " Ogg Vorbis ReplayGain "
-#~ msgstr "  Zesílení Ogg Vorbis"
-
-#~ msgid "Album peak:"
-#~ msgstr "Vrchol alba:"
-
-#~ msgid " Ogg Vorbis Info "
-#~ msgstr " Ogg Vorbis Info "
-
-#~ msgid "%d KBit/s (nominal)"
-#~ msgstr "%d kb/s (jmenovitý tok)"
-
-#~ msgid "%d Hz"
-#~ msgstr "%d Hz"
-
-#~ msgid "%d"
-#~ msgstr "%d"
-
-#~ msgid "%d:%.2d"
-#~ msgstr "%d:%.2d"
-
-#~ msgid "%d Bytes"
-#~ msgstr "%d bajtů"
-
-#~ msgid "Ogg Vorbis Audio Plugin"
-#~ msgstr "Modul Ogg Vorbis Audio"
-
-#~ msgid "About Ogg Vorbis Audio Plugin"
-#~ msgstr "O modulu Ogg Vorbis Audio"
-
-#~ msgid ""
-#~ "Ogg Vorbis Plugin by the Xiph.org Foundation\n"
-#~ "\n"
-#~ "Original code by\n"
-#~ "Tony Arcieri <bascule@inferno.tusculum.edu>\n"
-#~ "Contributions from\n"
-#~ "Chris Montgomery <monty@xiph.org>\n"
-#~ "Peter Alm <peter@xmms.org>\n"
-#~ "Michael Smith <msmith@labyrinth.edu.au>\n"
-#~ "Jack Moffitt <jack@icecast.org>\n"
-#~ "Jorn Baayen <jorn@nl.linux.org>\n"
-#~ "Haavard Kvaalen <havardk@xmms.org>\n"
-#~ "Gian-Carlo Pascutto <gcp@sjeng.org>\n"
-#~ "\n"
-#~ "Visit the Xiph.org Foundation at http://www.xiph.org/\n"
-#~ msgstr ""
-#~ "Modul Ogg Vorbis od the \"the Xiph.org Foundation\"\n"
-#~ "\n"
-#~ "Původní kód napsal\n"
-#~ "Tony Arcieri <bascule@inferno.tusculum.edu>\n"
-#~ "Přispěli\n"
-#~ "Chris Montgomery <monty@xiph.org>\n"
-#~ "Peter Alm <peter@xmms.org>\n"
-#~ "Michael Smith <msmith@labyrinth.edu.au>\n"
-#~ "Jack Moffitt <jack@icecast.org>\n"
-#~ "Jorn Baayen <jorn@nl.linux.org>\n"
-#~ "Haavard Kvaalen <havardk@xmms.org>\n"
-#~ "Gian-Carlo Pascutto <gcp@sjeng.org>\n"
-#~ "\n"
-#~ "Navštivte stránky \"the Xiph.org Foundation\": http://www.xiph.org/\n"
-
-#~ msgid ""
-#~ "Adapted for Audacious usage by Tony Vroon <chainsaw@gentoo.org>\n"
-#~ "from the xmms_sndfile plugin which is:\n"
-#~ "Copyright (C) 2000, 2002 Erik de Castro Lopo\n"
-#~ "\n"
-#~ "This program is free software ; you can redistribute it and/or modify \n"
-#~ "it under the terms of the GNU General Public License as published by \n"
-#~ "the Free Software Foundation ; either version 2 of the License, or \n"
-#~ "(at your option) any later version. \n"
-#~ " \n"
-#~ "This program is distributed in the hope that it will be useful, \n"
-#~ "but WITHOUT ANY WARRANTY ; without even the implied warranty of \n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  \n"
-#~ "See the GNU General Public License for more details. \n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public \n"
-#~ "License along with this program ; if not, write to \n"
-#~ "the Free Software Foundation, Inc., \n"
-#~ "51 Franklin Street, Fifth Floor, \n"
-#~ "Boston, MA  02110-1301  USA"
-#~ msgstr ""
-#~ "Pro Audacious upravil Tony Vroon <chainsaw@gentoo.org>\n"
-#~ "z původního modulu xmms_sndfile,\n"
-#~ "copyright © 2000, 2002 Erik de Castro Lopo\n"
-#~ "\n"
-#~ "Tento program je svobodný software; můžete jej šířit a/nebo měnit\n"
-#~ "pokud dodržíte podmínky GNU General Public License (GPL) vydané\n"
-#~ "Free Software Foundation a to buď ve verzi 2 nebo (dle vaší volby)\n"
-#~ "libovolné novější.\n"
-#~ "\n"
-#~ "Program je šířen v naději, že bude užitečný, ale BEZ JAKÉKOLIV\n"
-#~ "ZÁRUKY a to ani záruky obchodovatelnosti nebo vhodnosti pro\n"
-#~ "JAKÝKOLIV účel. Více informací najdete v GNU GPL.\n"
-#~ "\n"
-#~ "S tímto programem byste měli obdržet kopii GNU GPL.\n"
-#~ "Pokud se tak nestalo, obraťte se na\n"
-#~ "Free Software Foundation, Inc.,\n"
-#~ "51 Fraklin Streen, Fifth Floor,\n"
-#~ "Boston, MA  02110-1301,\n"
-#~ "USA.\n"
-#~ "Český překlad naleznete na webové adrese\n"
-#~ "http://www.gnu.cz/licence.html."
-
-#~ msgid "WAV Audio Plugin"
-#~ msgstr "Modul WAV Audio"
-
-#~ msgid "About OSS Driver"
-#~ msgstr "O modulu OSS"
-
-#~ msgid ""
-#~ "Audacious OSS Driver\n"
-#~ "\n"
-#~ " This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA "
-#~ "02110-1301,\n"
-#~ "USA."
-#~ msgstr ""
-#~ "Ovladač OSS programu Audacious\n"
-#~ "\n"
-#~ "Tento program je svobodný software; můžete jej šířit a/nebo měnit\n"
-#~ "pokud dodržíte podmínky GNU General Public License (GPL) vydané\n"
-#~ "Free Software Foundation a to buď ve verzi 2 nebo (dle vaší volby)\n"
-#~ "libovolné novější.\n"
-#~ "\n"
-#~ "Program je šířen v naději, že bude užitečný, ale BEZ JAKÉKOLIV\n"
-#~ "ZÁRUKY a to ani záruky OBCHODOVATELNOSTI nebo VHODNOSTI PRO\n"
-#~ "JAKÝKOLIV ÚČEL. Více informací najdete v GNU GPL.\n"
-#~ "\n"
-#~ "S tímto programem byste měli obdržet kopii GNU GPL. Pokud se\n"
-#~ "tak nestalo, obraťte se na Free Software Foundation, Inc.,\n"
-#~ "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,\n"
-#~ "USA. Český překlad naleznete na webové adrese\n"
-#~ "http://www.gnu.cz/licence.html."
-
-#~ msgid "Default (%s)"
-#~ msgstr "Standardně (%s)"
-
-#~ msgid "OSS Driver configuration"
-#~ msgstr "Nastavení ovladače OSS"
-
-#~ msgid "Audio device:"
-#~ msgstr "Zvukové zařízení:"
-
-#~ msgid "Use alternate device:"
-#~ msgstr "Použít jiné zařízení:"
-
-#~ msgid "Mixer device:"
-#~ msgstr "Mixér:"
-
-#~ msgid "Devices"
-#~ msgstr "Zařízení"
-
-#~ msgid "Buffer size (ms):"
-#~ msgstr "Velikost vyrovnávací paměti (ms):"
-
-#~ msgid "Mixer Settings:"
-#~ msgstr "Nastavení mixéru:"
-
-#~ msgid "Volume controls Master not PCM"
-#~ msgstr "Hlasitost ovládána Master kanálem místo PCM"
-
-#~ msgid "Mixer"
-#~ msgstr "Mixér"
-
-#~ msgid "About ALSA Driver"
-#~ msgstr "O ovladači ALSA"
-
-#~ msgid ""
-#~ "Audacious ALSA Driver\n"
-#~ "\n"
-#~ " This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA "
-#~ "02110-1301,\n"
-#~ "USA.\n"
-#~ "Author: Matthieu Sozeau (mattam@altern.org)"
-#~ msgstr ""
-#~ "Ovladač ALSY programu Audacious\n"
-#~ "\n"
-#~ "Tento program je svobodný software; můžete jej šířit a/nebo měnit\n"
-#~ "pokud dodržíte podmínky GNU General Public License (GPL) vydané\n"
-#~ "Free Software Foundation a to buď ve verzi 2 nebo (dle vaší volby)\n"
-#~ "libovolné novější.\n"
-#~ "\n"
-#~ "Program je šířen v naději, že bude užitečný, ale BEZ JAKÉKOLIV\n"
-#~ "ZÁRUKY a to ani záruky OBCHODOVATELNOSTI nebo VHODNOSTI PRO\n"
-#~ "JAKÝKOLIV ÚČEL. Více informací najdete v GNU GPL.\n"
-#~ "\n"
-#~ "S tímto programem byste měli obdržet kopii GNU GPL. Pokud se\n"
-#~ "tak nestalo, obraťte se na Free Software Foundation, Inc.,\n"
-#~ "51 Franklin Streen, Fifth Floor, Boston, MA 02110-1301,\n"
-#~ "USA. Český překlad naleznete na webové adrese\n"
-#~ "http://www.gnu.cz/licence.html.\n"
-#~ "Autor: Matthieu Sozeau (mattam@altern.org)"
-
-#~ msgid "ALSA %s output plugin"
-#~ msgstr "Výstupní modul ALSA %s"
-
-#~ msgid "Unknown soundcard"
-#~ msgstr "Neznámá zvuková karta"
-
-#~ msgid "Default PCM device (%s)"
-#~ msgstr "Implicitní PCM zařízení (%s)"
-
-#~ msgid "ALSA Driver configuration"
-#~ msgstr "Nastavení ovladače ALSA"
-
-#~ msgid "Mixer:"
-#~ msgstr "Mixér:"
-
-#~ msgid "Mixer card:"
-#~ msgstr "Mixovací zařízení:"
-
-#~ msgid "Device settings"
-#~ msgstr "Nastavení zařízení"
-
-#~ msgid "Soundcard:"
-#~ msgstr "Zvuková karta:"
-
-#~ msgid "Buffer time (ms):"
-#~ msgstr "Velikost vyrovnávací paměti (ms):"
-
-#~ msgid "Period time (ms):"
-#~ msgstr "Perioda (ms):"
-
-#~ msgid "Advanced settings"
-#~ msgstr "Pokročilé nastavení"
-
-#~ msgid "aRts Driver configuration"
-#~ msgstr "Nastavení ovladače aRts"
-
-#~ msgid "Disk Writer Plugin %s"
-#~ msgstr "Modul Disk writer %s"
-
-#~ msgid ""
-#~ "You cannot use the Disk Writer plugin\n"
-#~ "when you're running in realtime mode."
-#~ msgstr ""
-#~ "Disk writer nelze použít, pokud\n"
-#~ "jste v režimu reálného času."
-
-#~ msgid "Select the directory where you want to store the output files:"
-#~ msgstr "Vyberte adresář, do něhož chcete soubory uložit:"
-
-#~ msgid "Disk Writer Configuration"
-#~ msgstr "Nastavení záznamu na disk"
-
-#~ msgid "About ESounD Plugin"
-#~ msgstr "O modulu ESounD"
-
-#~ msgid ""
-#~ "Audacious ESounD Plugin\n"
-#~ "\n"
-#~ " This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA "
-#~ "02110-1301,\n"
-#~ "USA."
-#~ msgstr ""
-#~ "Modul ESounD programu Audacious\n"
-#~ "\n"
-#~ "Tento program je svobodný software; můžete jej šířit a/nebo měnit\n"
-#~ "pokud dodržíte podmínky GNU General Public License (GPL) vydané\n"
-#~ "Free Software Foundation a to buď ve verzi 2 nebo (dle vaší volby)\n"
-#~ "libovolné novější.\n"
-#~ "\n"
-#~ "Program je šířen v naději, že bude užitečný, ale BEZ JAKÉKOLIV\n"
-#~ "ZÁRUKY a to ani záruky OBCHODOVATELNOSTI nebo VHODNOSTI PRO\n"
-#~ "JAKÝKOLIV ÚČEL. Více informací najdete v GNU GPL.\n"
-#~ "\n"
-#~ "S tímto programem byste měli obdržet kopii GNU GPL. Pokud se\n"
-#~ "tak nestalo, obraťte se na Free Software Foundation, Inc.,\n"
-#~ "51 Fanklin Street, Fifth Floor, Boston, MA 02110-1301,\n"
-#~ "USA. Český překlad naleznete na webové adrese\n"
-#~ "http://www.gnu.cz/licence.html."
-
-#~ msgid "Host:"
-#~ msgstr "Adresa:"
-
-#~ msgid "Use remote host"
-#~ msgstr "Použít vzdálený počítač"
-
-#~ msgid "Volume controls OSS mixer"
-#~ msgstr "Hlasitost ovládána OO mixérem"
-
-#~ msgid "Server"
-#~ msgstr "Server"
-
-#~ msgid "eSound Output Plugin"
-#~ msgstr "Výstupní modul  eSound"
-
-#~ msgid "/Toggle Decorations"
-#~ msgstr "/Přepnout zobrazení dekorací"
-
-#~ msgid "Blur scope"
-#~ msgstr "Blur scope"
-
-#~ msgid "Blur Scope: Color selection"
-#~ msgstr "Blur scope: výběr barvy"
-
-#~ msgid "Options:"
-#~ msgstr "Volby:"
-
-#~ msgid "** DOUBLESIZE HAS BEEN REMOVED **"
-#~ msgstr "** FUNKCE ZDVOJNÁSOBENÍ VELIKOSTI BYLA ODSTRANĚNA **"
-
-#~ msgid ""
-#~ "Filename and song title tags should be inside double quotes (\").  Not "
-#~ "doing so might be a security risk.  Continue anyway?"
-#~ msgstr ""
-#~ "Jméno souboru a název skladby je lépe napsat do uvozovek (\"), jinak může "
-#~ "být ohrožena bezpečnost počítače. Chcete přesto pokračovat?"
-
-#~ msgid ""
-#~ "---\n"
-#~ "---\n"
-#~ "---\n"
-#~ "---\n"
-#~ "---\n"
-#~ "---\n"
-#~ "---\n"
-#~ "---\n"
-#~ "---\n"
-#~ "---"
-#~ msgstr ""
-#~ "---\n"
-#~ "---\n"
-#~ "---\n"
-#~ "---\n"
-#~ "---\n"
-#~ "---\n"
-#~ "---\n"
-#~ "---\n"
-#~ "---\n"
-#~ "---"
-
-#~ msgid "Convert non-UTF8 ID3 tags to UTF8"
-#~ msgstr "Převést ID3 tagy z jiných kódování do UTF-8"
-
-#~ msgid "ID3 encoding:"
-#~ msgstr "Kódování ID3:"
-
-#~ msgid "Convert non-UTF8 Vorbis tags to UTF8"
-#~ msgstr "Převést Vorbis tagy z jiných kódování do UTF-8"
-
-#~ msgid "Vorbis encoding:"
-#~ msgstr "Vorbis - kódování:"
-
-#~ msgid "Audacious:"
-#~ msgstr "Audacious:"
-
-#~ msgid "William Pitcock"
-#~ msgstr "William Pitcock"
-
-#~ msgid "Tony Vroon"
-#~ msgstr "Tony Vroon"
-
-#~ msgid "Mohammed Sameer"
-#~ msgstr "Mohammed Sameer"
-
-#~ msgid "Artem Baguinski"
-#~ msgstr "Artem Baguinski"
-
-#~ msgid "Edward Brocklesby"
-#~ msgstr "Edward Brocklesby"
-
-#~ msgid "Chong Kai Xiong"
-#~ msgstr "Chong Kai Xiong"
-
-#~ msgid "Milosz Derezynski"
-#~ msgstr "Milosz Derezynski"
-
-#~ msgid "David Lau"
-#~ msgstr "David Lau"
-
-#~ msgid "Ole Andre Vadla Ravnaas"
-#~ msgstr "Ole Andre Vadla Ravnaas"
-
-#~ msgid "Michiel Sikkes"
-#~ msgstr "Michiel Sikkes"
-
-#~ msgid "Andrei Badea"
-#~ msgstr "Andrei Badea"
-
-#~ msgid "Peter Behroozi"
-#~ msgstr "Peter Behroozi"
-
-#~ msgid "Bernard Blackham"
-#~ msgstr "Bernard Blackham"
-
-#~ msgid "Oliver Blin"
-#~ msgstr "Oliver Blin"
-
-#~ msgid "Tomas Bzatek"
-#~ msgstr "Tomas Bzatek"
-
-#~ msgid "Liviu Danicel"
-#~ msgstr "Liviu Danicel"
-
-#~ msgid "Jon Dowland"
-#~ msgstr "Jon Dowland"
-
-#~ msgid "Artur Frysiak"
-#~ msgstr "Artur Frysiak"
-
-#~ msgid "Sebastian Kapfer"
-#~ msgstr "Sebastian Kapfer"
-
-#~ msgid "Lukas Koberstein"
-#~ msgstr "Lukas Koberstein"
-
-#~ msgid "Dan Korostelev"
-#~ msgstr "Dan Korostelev"
-
-#~ msgid "Jolan Luff"
-#~ msgstr "Jolan Luff"
-
-#~ msgid "Michael Marineau"
-#~ msgstr "Michael Marineau"
-
-#~ msgid "Tim-Philipp Muller"
-#~ msgstr "Tim-Philipp Muller"
-
-#~ msgid "Julien Portalier"
-#~ msgstr "Julien Portalier"
-
-#~ msgid "Andrew Ruder"
-#~ msgstr "Andrew Ruder"
-
-#~ msgid "Olivier Samyn"
-#~ msgstr "Olivier Samyn"
-
-#~ msgid "Martijn Vernooij"
-#~ msgstr "Martijn Vernooij"
-
-#~ msgid "Philipi Pinto"
-#~ msgstr "Philipi Pinto"
-
-#~ msgid "Thierry Vignaud"
-#~ msgstr "Thierry Vignaud"
-
-#~ msgid "Chao-Hsiung Liao"
-#~ msgstr "Chao-Hsiung Liao"
-
-#~ msgid "Jan Narovec"
-#~ msgstr "Jan Narovec"
-
-#~ msgid "Laurens Buhler"
-#~ msgstr "Laurens Buhler"
-
-#~ msgid "Pauli Virtanen"
-#~ msgstr "Pauli Virtanen"
-
-#~ msgid "David Le Brun"
-#~ msgstr "David Le Brun"
-
-#~ msgid "Matthias Debus"
-#~ msgstr "Matthias Debus"
-
-#~ msgid "George Machitidze"
-#~ msgstr "George Machitidze"
-
-#~ msgid "Kouzinopoulos Haris"
-#~ msgstr "Kouzinopoulos Haris"
-
-#~ msgid "Stavros Giannouris"
-#~ msgstr "Stavros Giannouris"
-
-#~ msgid "Dhananjaya Sharma"
-#~ msgstr "Dhananjaya Sharma"
-
-#~ msgid "Laszlo Dvornik"
-#~ msgstr "Laszlo Dvornik"
-
-#~ msgid "Alessio D'Ascanio"
-#~ msgstr "Alessio D'Ascanio"
-
-#~ msgid "Dai"
-#~ msgstr "Dai"
-
-#~ msgid "DongCheon Park"
-#~ msgstr "DongCheon Park"
-
-#~ msgid "Rimas Kudelis"
-#~ msgstr "Rimas Kudelis"
-
-#~ msgid "Arangel Angov"
-#~ msgstr "Arangel Angov"
-
-#~ msgid "Jacek Wolszczak"
-#~ msgstr "Jacek Wolszczak"
-
-#~ msgid "Pavlo Bohmat"
-#~ msgstr "Pavlo Bohmat"
-
-#~ msgid "Vitaly Lipatov"
-#~ msgstr "Vitalij Lipatov"
-
-#~ msgid "Pavel Kanzelsberger"
-#~ msgstr "Pavel Kanzelsberger"
-
-#~ msgid "Martin Persenius"
-#~ msgstr "Martin Persenius"
-
-#~ msgid "Mykola Lynnyk"
-#~ msgstr "Mykola Lynnyk"
-
-#~ msgid "<span size=\"xx-large\"><b>Plugins</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>Moduly</b></span>"
-
-#~ msgid "_Media plugin list:"
-#~ msgstr "_Seznam přehrávacích modulů"
-
-#~ msgid ""
-#~ "The change is now effective in Audacious' configuration database, but "
-#~ "won't take effect for playback until the next song!\n"
-#~ "\n"
-#~ "Optionally, you can stop and restart playback for the change to take "
-#~ "effect."
-#~ msgstr ""
-#~ "Změny jsou uloženy, ale projeví se až při přehrávání další skladby.\n"
-#~ "\n"
-#~ "Po zastavení a znovuspuštění se změny samozřejmě projeví i u současné "
-#~ "skladby."
-
-#~ msgid "<span size=\"xx-large\"><b>Appearance</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>Vzhled</b></span>"
-
-#~ msgid "<span size=\"xx-large\"><b>Mouse</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>Myš</b></span>"
-
-#~ msgid "<span size=\"xx-large\"><b>Playlist</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>Seznam skladeb</b></span>"
-
-#~ msgid "<span size=\"xx-large\"><b>Equalizer</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>Ekvalizér</b></span>"
-
-#~ msgid "Use proxy"
-#~ msgstr "Použít proxy"
-
-#~ msgid "Frames:"
-#~ msgstr "Rámců:"
-
-#~ msgid ""
-#~ "Variable,\n"
-#~ "avg. bitrate: %d KBit/s"
-#~ msgstr ""
-#~ "Proměnný,\n"
-#~ "průměrný datový tok: %d kb/s"
-
-#~ msgid "Francisco Javier F. Serrador"
-#~ msgstr "Francisco Javier F. Serrador"
-
-#~ msgid ""
-#~ "%s\n"
-#~ "Unable to write to file: %s"
-#~ msgstr ""
-#~ "%s\n"
-#~ "Nelze zapsat do souboru: %s"
-
-#~ msgid "Couldn't write tag!"
-#~ msgstr "Informace nelze zapsat!"
-
-#~ msgid ""
-#~ "%s\n"
-#~ "Unable to open file: %s"
-#~ msgstr ""
-#~ "%s\n"
-#~ "Nelze otevřít soubor: %s"
-
-#~ msgid ""
-#~ "%s\n"
-#~ "Unable to truncate file: %s"
-#~ msgstr ""
-#~ "%s\n"
-#~ "Nepodařilo se upravit soubor: %s"
-
-#~ msgid "Couldn't remove tag!"
-#~ msgstr "Informace nelze odstranit!"
-
-#~ msgid "No tag to remove!"
-#~ msgstr "Žádný tag k odstranění!"
-
-#~ msgid "Copy album tags"
-#~ msgstr "Kopírovat společné položky"
-
-#~ msgid "Paste album tags"
-#~ msgstr "Vložit společné položky"
-
-#~ msgid "Content"
-#~ msgstr "Obsah"
-
-#~ msgid "Extension"
-#~ msgstr "Přípona"
-
-#~ msgid "Extension and content"
-#~ msgstr "Obsah i přípona"
-
-#~ msgid ""
-#~ "\n"
-#~ "Copyright (C) 2000-2004  Peter Eisenlohr <peter@eisenlohr.org>\n"
-#~ "\n"
-#~ "based on the original OSS Output Plugin  Copyright (C) 1998-2000\n"
-#~ "Peter Alm, Mikael Alm, Olle Hallnas, Thomas Nilsson and 4Front "
-#~ "Technologies\n"
-#~ "\n"
-#~ "This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-#~ "USA."
-#~ msgstr ""
-#~ "\n"
-#~ "Copyright (C) 2000-2004 Peter Eisenlohr <peter@eisenlohr.org>\n"
-#~ "\n"
-#~ "založeno na původním OSS modulu, copyright (C) 1998-2000\n"
-#~ "Peter Alm, Mikael Alm, Olle Hallnas, Thomas Nilsson a 4Front "
-#~ "Technologies\n"
-#~ "\n"
-#~ "  Tento program je svobodný software; můžete jej šířit a/nebo měnit\n"
-#~ "pokud dodržíte podmínky GNU General Public License (GPL) vydané\n"
-#~ "Free Software Foundation a to buď ve verzi 2 nebo (dle vaší volby)\n"
-#~ "libovolné novější.\n"
-#~ "\n"
-#~ "Program je šířen v naději, že bude užitečný, ale BEZ JAKÉKOLIV\n"
-#~ "ZÁRUKY a to ani záruky obchodovatelnosti nebo vhodnosti pro\n"
-#~ "JAKÝKOLIV účel. Více informací najdete v GNU GPL.\n"
-#~ "\n"
-#~ "S tímto programem byste měli obdržet kopii GNU GPL. Pokud se\n"
-#~ "tak nestalo, obraťte se na Free Software Foundation,\n"
-#~ "Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-#~ "USA. Český překlad naleznete na webové adrese\n"
-#~ "http://www.gnu.cz/licence.html."
-
-#~ msgid " Enable"
-#~ msgstr "Povolit"
-
-#~ msgid " left"
-#~ msgstr "zbývá"
-
-#~ msgid " total, "
-#~ msgstr "celkem,"
-
-#~ msgid "About XMMS Crossfade Plugin"
-#~ msgstr "O modulu Crossfade"
-
-#~ msgid "Advanced options"
-#~ msgstr "Pokročilé nastavení"
-
-#~ msgid ""
-#~ "Automatically calculate an optimal buffer size.\n"
-#~ "Default: On"
-#~ msgstr ""
-#~ "Automaticky určit optimální velikost vyrovnávací paměti.\n"
-#~ "Standardně: zapnuto"
-
-#~ msgid ""
-#~ "Beware that setting this value too low also increases the chance of "
-#~ "buffer underruns.\n"
-#~ "Default: 250"
-#~ msgstr ""
-#~ "Pozor, nastavení této hodnoty příliš nízko zvýší riziko podtečení "
-#~ "vyrovnávací paměti.\n"
-#~ "Standardně: 250"
-
-#~ msgid "Configure"
-#~ msgstr "Nastavit"
-
-#~ msgid ""
-#~ "Enable software mixer. Usefull for output plugins without mixer support.\n"
-#~ "Default: Off"
-#~ msgstr ""
-#~ "Povolit softwarový mixér. Užitečné pro výstupní moduly bez podpory "
-#~ "mixování zvuku.\n"
-#~ "Standardně: vypnuto"
-
-#~ msgid ""
-#~ "Enable the selected plugin. Note that after pressing 'Apply' it may take "
-#~ "a while until you can hear the effect, since it is applied before the "
-#~ "audio data goes into the buffer."
-#~ msgstr ""
-#~ "Povolí vybraný modul. Po stisknutí tlačítka ‚Použít‘ může chvilku trvat, "
-#~ "než se změny projeví, protože nové nastavení se aplikuje na data před "
-#~ "vyrovnávací pamětí."
-
-#~ msgid "Enable volume control"
-#~ msgstr "Povolit ovládání hlasitosti:"
-
-#~ msgid ""
-#~ "Enables the Buffer Monitor. This is a small window which shows how much "
-#~ "data is in the buffers. The top display belongs to the mixing buffer, the "
-#~ "bottom shows how much data is being buffered by the output plugin.\n"
-#~ "Default: Off"
-#~ msgstr ""
-#~ "Povolit sledování vyrovnávací paměti – otevře okno, které bude ukazovat "
-#~ "objem dat ve vyrovnávací paměti. Vrchní ukazatel patří vyrovnávací paměti "
-#~ "mixéru, spodní vyrovnávací paměti výstupního modulu.\n"
-#~ "Standardně: vypnuto"
-
-#~ msgid "End volume (%):"
-#~ msgstr "Koncová hlasitost (%):"
-
-#~ msgid "Keep output opened"
-#~ msgstr "Ponechat výstup otevřený"
-
-#~ msgid ""
-#~ "Keep the output device opened all the time, even if XMMS is stopped. This "
-#~ "way, you can avoid clicks caused by the soundcard when the device is "
-#~ "opened or closed\n"
-#~ "Default: Off"
-#~ msgstr ""
-#~ "Ponechá výstupní zařízení otevřené, i když je přehrávání pozastavené. Tak "
-#~ "lze zabránit cvakání, které způsobují některé zvukové karty při svém "
-#~ "spuštění/zastavení.\n"
-#~ "Standardně: vypnuto"
-
-#~ msgid "Max block size (bytes):"
-#~ msgstr "Max. velikost bloku (v bajtech):"
-
-#~ msgid "Max. length (ms):"
-#~ msgstr "Max. délka (ms):"
-
-#~ msgid "Mixing buffer size (ms):"
-#~ msgstr "Velikost vyrovnávací paměti mixéru (ms):"
-
-#~ msgid "Open the about dialog of the plugin selected above."
-#~ msgstr "Otevře okno s informacemi o výše vybraném modulu."
-
-#~ msgid "Open the configuration dialog of the plugin selected above."
-#~ msgstr "Otevře okno s nastavením výše vybraného modulu."
-
-#~ msgid "Output Buffer:"
-#~ msgstr "Výstupní vyrovnávací paměť:"
-
-#~ msgid "Position:"
-#~ msgstr "Pozice:"
-
-#~ msgid "Quality:"
-#~ msgstr "Kvalita"
-
-#~ msgid "Rate:"
-#~ msgstr "Tok:"
-
-#~ msgid "Read ID3V2 RVA2 Tag"
-#~ msgstr "Číst ID3V2 RVA2 tag"
-
-#~ msgid "Reopen"
-#~ msgstr "Znovu otevřít"
-
-#~ msgid ""
-#~ "Set the end volume. XMMS-crossfade will fade from 100% to this volume "
-#~ "during the time specified above.\n"
-#~ "Default: 0"
-#~ msgstr ""
-#~ "Zadejte koncovou hlasitost. Crossfade ztiší hudbu ze sta procent na tuto "
-#~ "hodnotu během výše specifikované doby.\n"
-#~ "Standardně: 0"
-
-#~ msgid ""
-#~ "Set the maximum length for gaps at the beginning of a stream.\n"
-#~ "Default: 500"
-#~ msgstr ""
-#~ "Zadejte maximální délku pauzy na začátku skladby.\n"
-#~ "Standardně: 500"
-
-#~ msgid ""
-#~ "Set the maximum length for gaps at the end of a stream.\n"
-#~ "Default: 500"
-#~ msgstr ""
-#~ "Zadejte maximální délku pauzy na konci skladby.\n"
-#~ "Standardně: 500"
-
-#~ msgid ""
-#~ "Set the maximum volume for gaps at the beginning of a stream. All samples "
-#~ "below this value are considered as silent.\n"
-#~ "Default: 512"
-#~ msgstr ""
-#~ "Zadejte maximální hlasitost určující mezeru na začátku skladby. Všechny "
-#~ "vzorky pod touto hodnotou budou považovány za ticho.\n"
-#~ "Standardně: 512"
-
-#~ msgid ""
-#~ "Set the maximum volume for gaps at the end of a stream. All samples below "
-#~ "this value are considered as silent.\n"
-#~ "Default: 512"
-#~ msgstr ""
-#~ "Zadejte nejvyšší hlasitost určující mezeru na konci skladby. Všechny "
-#~ "vzorky pod touto hodnotou budou považovány za ticho.\n"
-#~ "Standardně: 512"
-
-#~ msgid ""
-#~ "Set the start volume. XMMS-crossfade will fade from this volume to 100% "
-#~ "during the time specified above.\n"
-#~ "Default: 0"
-#~ msgstr ""
-#~ "Zadejte počáteční hlasitost. Crossfade bude hlasitost zesilovat od této "
-#~ "hodnoty na 100% hlasitost během doby specifikované výše.\n"
-#~ "Standardně: 0"
-
-#~ msgid "Show Buffer Monitor"
-#~ msgstr "Zapnout sledování vyrovnávací paměti"
-
-#~ msgid "Silence (ms):"
-#~ msgstr "Ticho (ms):"
-
-#~ msgid "Software Mixer"
-#~ msgstr "Softwarový mixér"
-
-#~ msgid "Start volume (%):"
-#~ msgstr "Počáteční hlasitost (%):"
-
-#~ msgid "Use plugin"
-#~ msgstr "Použít modul"
-
-#~ msgid "Volume control options"
-#~ msgstr "Nastavení ovládání hlasitosti"
-
-#~ msgid "Volume normalizer"
-#~ msgstr "Normalizace hlasitosti"
-
-#~ msgid "Write debug output to <stderr>"
-#~ msgstr "Vypisovat chyby na <stderr>"
-
-#~ msgid ""
-#~ "You do not need to press 'Apply' after making changes to the effect "
-#~ "plugin settings. It may take a while though until you can hear the "
-#~ "change, since the plugin is applied before the mixing buffer."
-#~ msgstr ""
-#~ "Změny v nastavení modulu aktivujete tlačítkem ‚Použít‘. Protože změny se "
-#~ "projeví až na nových datech ve vyrovnávací paměti, může chvíli trvat, než "
-#~ "je uslyšíte."
-
-#~ msgid "same file"
-#~ msgstr "shodný soubor"
-
-#~ msgid ""
-#~ "Libvisual Audacious Plugin\n"
-#~ "\n"
-#~ "Copyright (C) 2004, Duilio Protti <dprotti@users.sourceforge.net>\n"
-#~ "Dennis Smit <ds@nerds-incorporated.org>\n"
-#~ "\n"
-#~ "The Libvisual Audacious Plugin, more information about Libvisual can be "
-#~ "found at\n"
-#~ "http://libvisual.sf.net\n"
-#~ msgstr ""
-#~ "Modul Libvisual programu Audacious\n"
-#~ "\n"
-#~ "Copyright (C) 2004, Duilio Protti <dprotti@users.sourceforge.net>\n"
-#~ "Dennis Smit <ds@nerds-incorporated.org>\n"
-#~ "\n"
-#~ "Libvisual Audacious Plugin, více informací o modulu Libvisual naleznete "
-#~ "na\n"
-#~ "http://libvisual.sf.net\n"
-
-#~ msgid ""
-#~ "Brazilian Portuguese: Gustavo Sverzut Barbieri\n"
-#~ "Dutch: Dennis Smit\n"
-#~ "French: Jean-Christophe Hoelt\n"
-#~ "Spanish: Duilio Protti\n"
-#~ msgstr ""
-#~ "Brazilská portugalština: Gustavo Sverzut Barbieri\n"
-#~ "Holandština: Dennis Smit\n"
-#~ "Francouzština: Jean-Christophe Hoelt\n"
-#~ "Španělština: Duilio Protti\n"
-
-#~ msgid "LibVisual Audacious Plugin"
-#~ msgstr "Modul LibVisual"
-
-#~ msgid "Visualization Plugins"
-#~ msgstr "Vizualizační moduly"
-
-#~ msgid "Enable/Disable"
-#~ msgstr "Povolit/zakázat"
-
-#~ msgid "Fullscreen"
-#~ msgstr "Na celou obrazovku"
-
-#~ msgid ""
-#~ "You can toggle between normal and fullscreen mode pressing key TAB or F11"
-#~ msgstr ""
-#~ "Mezi normálním a celoobrazovkovým režimem můžete přepínat klávesami Tab "
-#~ "nebo F11."
-
-#~ msgid "All plugins"
-#~ msgstr "Všechny moduly"
-
-#~ msgid "Only non GL plugins"
-#~ msgstr "Jen moduly bez GL"
-
-#~ msgid "Only GL plugins"
-#~ msgstr "Jen GL moduly"
-
-#~ msgid "Maximum Frames Per Second:"
-#~ msgstr "Maximum snímků za sekundu:"
-
-#~ msgid "All plugins enabled"
-#~ msgstr "Všechny moduly povoleny"
-
-#~ msgid " (enabled)"
-#~ msgstr "(povolený)"
-
-#~ msgid "Version: "
-#~ msgstr "Verze:"
-
-#~ msgid "Author: "
-#~ msgstr "Autor:"
-
-#~ msgid " error"
-#~ msgstr "chyba"
-
-#~ msgid "There is no info for this plugin"
-#~ msgstr "K tomuto modulu nejsou žádné informace."
-
-#~ msgid "Audacious plugin"
-#~ msgstr "Modul Audacious"
-
-#~ msgid "Cannot initialize SDL!\n"
-#~ msgstr "Nepodařilo se inicializovat SDL.\n"
-
-#~ msgid " will not be loaded."
-#~ msgstr " nebude načten."
-
-#~ msgid "Last plugin: %s"
-#~ msgstr "Poslední modul: %s"
-
-#~ msgid "DISABLE ALWAYS ON TOP (N/A)"
-#~ msgstr "ZAKÁZAT FCI \"VŽDY NA VRCHU\" (N/A)"
-
-#~ msgid "ENABLE ALWAYS ON TOP (N/A)"
-#~ msgstr "POVOLIT FCI \"VŽDY NA VRCHU\" (N/A)"
-
-#~ msgid "Downsample:"
-#~ msgstr "Snížit vzorkovací kmitočet:"
-
-#~ msgid "%s - BMP"
-#~ msgstr "%s - BMP"
-
-#~ msgid "bmp: %s"
-#~ msgstr "bmp: %s"
-
-#~ msgid "Add Folders"
-#~ msgstr "Přidat adresáře"
-
-#~ msgid "3DNow! optimized decoder"
-#~ msgstr "Dekodér optimalizovaný pro 3DNow!"
-
-#~ msgid "MMX optimized decoder"
-#~ msgstr "Dekodér optimalizovaný pro MMX"
-
-#~ msgid "FPU decoder"
-#~ msgstr "FPU dekodér"
-
-#~ msgid ""
-#~ "mpg123 decoding engine by Michael Hipp <mh@mpg123.de>\n"
-#~ "Plugin by The XMMS team"
-#~ msgstr ""
-#~ "mpg123 dekodér vytvořil Michael Hipp <mh@mpg123.de>\n"
-#~ "Modul pochází od The XMMS team"
-
-#~ msgid "Advanced settings:"
-#~ msgstr "Pokročilé nastavení:"
-
-#~ msgid "Mmap mode"
-#~ msgstr "Mód mmap"
-
-#~ msgid "Homepage and Graphics:"
-#~ msgstr "Webové stránky a grafika:"
-
-#~ msgid "Takeshi Aihana"
-#~ msgstr "Takeshi Aihana"
-
-#~ msgid "BMP Equalizer"
-#~ msgstr "BMP ekvalizér"
-
-#~ msgid "Beep Media Player"
-#~ msgstr "Beep Media Player"
-
-#~ msgid "/About BMP"
-#~ msgstr "/O BMP"
-
-#~ msgid "BMP"
-#~ msgstr "BMP"
-
-#~ msgid "Add Internet Address"
-#~ msgstr "Přidat internetovou adresu"
-
-#~ msgid "*"
-#~ msgstr "*"
-
-#~ msgid "Vlad Gerasimov"
-#~ msgstr "Vlad Gerasimov"
-
-#~ msgid "/By extension"
-#~ msgstr "/Podle přípony"
