@@ -96,6 +96,7 @@ pre-depend: ${DBUS_BINDINGS}
 CPPFLAGS := -I.. -I../.. \
             ${CPPFLAGS} \
 		${GLIB_CFLAGS}			\
+		${GMODULE_LIBS} \
 		${GTHREAD_CFLAGS} \
 		${GTK_CFLAGS}			\
 		${AUDACIOUS_DEFINES}	\
@@ -116,6 +117,7 @@ LIBS := -L../libaudcore -laudcore \
 		${LIBINTL}						\
 		${EGGSM_LIBS}					\
 		${GLIB_LIBS}					\
+		${GMODULE_LIBS} \
 		${GTHREAD_LIBS} \
 		${GTK_LIBS}						\
 		${DBUS_LIBS}					\
