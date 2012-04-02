@@ -194,6 +194,7 @@ AC_PATH_PROG([WINDRES], [windres])
 dnl Check for Gtk+/GLib and pals
 dnl ============================
 AUD_CHECK_MODULE([GLIB], [glib-2.0], [>= 2.16], [Glib2])
+AUD_CHECK_MODULE([GMODULE], [gmodule-2.0], [>= 2.16], [GModule])
 AUD_CHECK_MODULE([GTHREAD], [gthread-2.0], [>= 2.16], [GThread])
 AUD_CHECK_MODULE([PANGO], [pango], [>= 1.20], [Pango])
 AUD_CHECK_MODULE([CAIRO], [cairo], [>= 1.6], [Cairo])
