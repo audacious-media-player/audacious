@@ -38,9 +38,9 @@ has_front_cover_extension(const char *name)
         return FALSE;
     }
 
-    return g_strcasecmp(ext, ".jpg") == 0 ||
-           g_strcasecmp(ext, ".jpeg") == 0 ||
-           g_strcasecmp(ext, ".png") == 0;
+    return g_ascii_strcasecmp(ext, ".jpg") == 0 ||
+           g_ascii_strcasecmp(ext, ".jpeg") == 0 ||
+           g_ascii_strcasecmp(ext, ".png") == 0;
 }
 
 static bool_t
@@ -57,16 +57,12 @@ cover_name_filter(const char *name, const char *filter, const bool_t ret_on_empt
     }
 
     splitted = g_strsplit(filter, ",", 0);
+    lname = g_ascii_strdown (name, -1);
 
-    lname = g_strdup(name);
-    g_strdown(lname);
-
-    for (i = 0; !result && (current = splitted[i]); i++) {
-        char *stripped = g_strstrip(g_strdup(current));
-        g_strdown(stripped);
-
+    for (i = 0; ! result && (current = splitted[i]); i ++)
+    {
+        char * stripped = g_strstrip (g_ascii_strdown (current, -1));
         result = result || strstr(lname, stripped);
-
         g_free(stripped);
     }
 

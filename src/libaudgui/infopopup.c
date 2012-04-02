@@ -309,7 +309,11 @@ static void infopopup_show (int playlist, int entry, const char * filename,
         infopopup_progress_cb (NULL);
     }
 
-    gdk_window_get_pointer (gdk_get_default_root_window (), & x, & y, NULL);
+    GdkDisplay * display = gdk_display_get_default ();
+    GdkDeviceManager * manager = gdk_display_get_device_manager (display);
+    GdkDevice * device = gdk_device_manager_get_client_pointer (manager);
+    gdk_device_get_position (device, NULL, & x, & y);
+
     gtk_window_get_size ((GtkWindow *) infopopup, & w, & h);
 
     /* If we show the popup right under the cursor, the underlying window gets
