@@ -191,6 +191,10 @@ AC_PATH_PROG([TR], [tr])
 AC_PATH_PROG([RANLIB], [ranlib])
 AC_PATH_PROG([WINDRES], [windres])
 
+dnl Check for POSIX threads
+dnl =======================
+AC_SEARCH_LIBS([pthread_create], [pthread])
+
 dnl Check for Gtk+/GLib and pals
 dnl ============================
 AUD_CHECK_MODULE([GLIB], [glib-2.0], [>= 2.16], [Glib2])

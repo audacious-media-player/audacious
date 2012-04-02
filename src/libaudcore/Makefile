@@ -32,8 +32,7 @@ includesubdir = libaudcore
 CPPFLAGS := -I.. -I../.. \
             ${CPPFLAGS} \
             ${GLIB_CFLAGS} \
-            ${PTHREAD_CFLAGS}
 
 CFLAGS += ${LIB_CFLAGS}
 
-LIBS += ${PTHREAD_LIBS} ${GLIB_LIBS} -lm
+LIBS += ${GLIB_LIBS} -lm

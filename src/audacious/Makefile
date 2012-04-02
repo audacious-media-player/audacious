@@ -102,7 +102,6 @@ CPPFLAGS := -I.. -I../.. \
 		${AUDACIOUS_DEFINES}	\
 		${DBUS_CFLAGS}			\
 		${REGEX_CFLAGS}			\
-		${PTHREAD_CFLAGS}		\
 		-D_AUDACIOUS_CORE		\
 		${EGGSM_CFLAGS}			\
 		${LIBGUESS_CFLAGS}
@@ -122,7 +121,6 @@ LIBS := -L../libaudcore -laudcore \
 		${GTK_LIBS}						\
 		${DBUS_LIBS}					\
 		${REGEX_LIBS}					\
-		${PTHREAD_LIBS}					\
 		${LIBGUESS_LIBS}
 
 DBUS_BINDINGS_SOURCES = objects.xml			\

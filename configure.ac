@@ -216,10 +216,6 @@ AC_MSG_RESULT($regex_selected)
 AC_SUBST([REGEX_LIBS])
 AC_SUBST([REGEX_CFLAGS])
 
-AX_PTHREAD
-AC_SUBST([PTHREAD_LIBS])
-AC_SUBST([PTHREAD_CFLAGS])
-
 ### ---------------------------------------------------------------------------
 dnl Session management support
 dnl ==========================
