@@ -37,6 +37,33 @@
 
 static GdkPixbuf * current_pixbuf;
 
+EXPORT void audgui_get_mouse_coords (GtkWidget * widget, int * x, int * y)
+{
+    if (widget)
+    {
+        int xwin, ywin;
+        GdkRectangle alloc;
+
+        GdkWindow * window = gtk_widget_get_window (widget);
+        GdkDisplay * display = gdk_window_get_display (window);
+        GdkDeviceManager * manager = gdk_display_get_device_manager (display);
+        GdkDevice * device = gdk_device_manager_get_client_pointer (manager);
+
+        gdk_window_get_device_position (window, device, & xwin, & ywin, NULL);
+        gtk_widget_get_allocation (widget, & alloc);
+
+        * x -= xwin - alloc.x;
+        * y -= ywin - alloc.y;
+    }
+    else
+    {
+        GdkDisplay * display = gdk_display_get_default ();
+        GdkDeviceManager * manager = gdk_display_get_device_manager (display);
+        GdkDevice * device = gdk_device_manager_get_client_pointer (manager);
+        gdk_device_get_position (device, NULL, x, y);
+    }
+}
+
 EXPORT void audgui_hide_on_delete (GtkWidget * widget)
 {
     g_signal_connect (widget, "delete-event", (GCallback)
