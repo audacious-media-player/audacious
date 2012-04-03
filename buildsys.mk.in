@@ -457,7 +457,7 @@ locales: ${MO_FILES}
 
 .rc.o .rc.lib.o .rc.plugin.o:
 	${COMPILE_STATUS}
-	if ${WINDRES} ${CPPFLAGS} -J rc -O coff -o $@ $<; then \
+	if ${WINDRES} -J rc -O coff -o $@ $<; then \
 		${COMPILE_OK}; \
 	else \
 		${COMPILE_FAILED}; \
