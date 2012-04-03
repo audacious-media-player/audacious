@@ -470,9 +470,6 @@ static void init_two (int * p_argc, char * * * p_argv)
     if (! headless)
     {
         g_thread_init (NULL);
-        gdk_threads_init ();
-        gdk_threads_enter ();
-
         gtk_rc_add_default_file (aud_paths[AUD_PATH_GTKRC_FILE]);
         gtk_init (p_argc, p_argv);
     }
@@ -550,8 +547,6 @@ static void shut_down (void)
     eq_cleanup ();
 
     strpool_shutdown ();
-
-    gdk_threads_leave ();
 }
 
 bool_t do_autosave (void)
