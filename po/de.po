@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2012-01-15 02:35+0100\n"
-"PO-Revision-Date: 2012-01-15 02:39+0000\n"
+"PO-Revision-Date: 2012-04-08 18:11+0000\n"
 "Last-Translator: Thomas Lange\n"
 "Language-Team: German\n"
 "Language: de\n"
@@ -341,9 +341,7 @@ msgstr "Netzwerk"
 
 #: src/audacious/ui_preferences.c:87 src/audacious/ui_preferences.c:1603
 msgid "Playlist"
-msgstr ""
-"Wiedergabe-\n"
-"Liste"
+msgstr "Wiedergabeliste"
 
 #: src/audacious/ui_preferences.c:88
 msgid "Plugins"
