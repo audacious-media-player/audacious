@@ -24,6 +24,7 @@
 #include <libaudcore/core.h>
 
 /* macro defines for Audacious stock icons */
+#define AUD_STOCK_AUDACIOUS   "aud-audacious"
 #define AUD_STOCK_PLAYLIST    "aud-playlist"
 #define AUD_STOCK_PLUGIN      "aud-plugin"
 #define AUD_STOCK_QUEUETOGGLE "aud-queuetoggle"

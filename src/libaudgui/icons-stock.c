@@ -48,6 +48,8 @@ audgui_register_stock_icons(void)
 {
     GtkIconFactory *iconfactory = gtk_icon_factory_new();
 
+    load_stock_icon(AUD_STOCK_AUDACIOUS,
+                    "audacious.png", iconfactory);
     load_stock_icon(AUD_STOCK_PLAYLIST,
                     "menu_playlist.png", iconfactory);
     load_stock_icon(AUD_STOCK_PLUGIN,

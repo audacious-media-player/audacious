@@ -1,10 +1,5 @@
 include ../buildsys.mk
 
-# These override variables in buildsys.mk and so must come after it.
-PACKAGE_NAME = pixmaps
-DATA = audacious.png \
-       audacious.svg
-
 install-extra:
 	${MKDIR_P} ${DESTDIR}${datadir}/icons/hicolor/48x48/apps
 	${MKDIR_P} ${DESTDIR}${datadir}/icons/hicolor/scalable/apps
