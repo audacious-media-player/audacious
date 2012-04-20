@@ -37,6 +37,14 @@
 
 static GdkPixbuf * current_pixbuf;
 
+EXPORT int audgui_get_digit_width (GtkWidget * widget)
+{
+    int width;
+    PangoLayout * layout = gtk_widget_create_pango_layout (widget, "0123456789");
+    pango_layout_get_pixel_size (layout, & width, NULL);
+    return (width + 9) / 10;
+}
+
 EXPORT void audgui_get_mouse_coords (GtkWidget * widget, int * x, int * y)
 {
     if (widget)

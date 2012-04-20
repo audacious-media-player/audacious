@@ -21,10 +21,8 @@
 #include <gtk/gtk.h>
 
 #include "config.h"
+#include "libaudgui-gtk.h"
 #include "list.h"
-
-#define CHAR_WIDTH 12
-#define SPACING 4
 
 enum {HIGHLIGHT_COLUMN, RESERVED_COLUMNS};
 
@@ -38,6 +36,7 @@ typedef struct {
     const AudguiListCallbacks * cbs;
     int cbs_size;
     void * user;
+    int charwidth;
     int rows, highlight;
     int columns;
     GList * column_types;
@@ -580,6 +579,8 @@ EXPORT GtkWidget * audgui_list_new_real (const AudguiListCallbacks * cbs, int cb
     gtk_tree_view_set_fixed_height_mode ((GtkTreeView *) list, TRUE);
     g_signal_connect_swapped (list, "destroy", (GCallback) destroy_cb, model);
 
+    model->charwidth = audgui_get_digit_width (list);
+
     if (MODEL_HAS_CB (model, get_selected) && MODEL_HAS_CB (model, set_selected)
      && MODEL_HAS_CB (model, select_all))
     {
@@ -664,14 +665,16 @@ EXPORT void audgui_list_add_column (GtkWidget * list, const char * title,
 
     if (width < 1)
     {
-        gtk_tree_view_column_set_fixed_width (tree_column, 6 * CHAR_WIDTH + SPACING);
+        gtk_tree_view_column_set_fixed_width (tree_column,
+         6 * model->charwidth + model->charwidth / 2);
         gtk_tree_view_column_set_expand (tree_column, TRUE);
         g_object_set ((GObject *) renderer, "ellipsize-set", TRUE, "ellipsize",
          PANGO_ELLIPSIZE_END, NULL);
     }
     else
     {
-        gtk_tree_view_column_set_fixed_width (tree_column, width * CHAR_WIDTH + SPACING);
+        gtk_tree_view_column_set_fixed_width (tree_column,
+         width * model->charwidth + model->charwidth / 2);
         g_object_set ((GObject *) renderer, "xalign", (float) 1, NULL);
     }
 

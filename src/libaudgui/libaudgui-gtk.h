@@ -32,6 +32,7 @@ GtkWidget * audgui_create_vis_menu (void);
 GtkWidget * audgui_create_iface_menu (void);
 
 /* util.c */
+int audgui_get_digit_width (GtkWidget * widget);
 void audgui_get_mouse_coords (GtkWidget * widget, int * x, int * y);
 void audgui_hide_on_delete (GtkWidget * widget);
 void audgui_hide_on_escape (GtkWidget * widget);
