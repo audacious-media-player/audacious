@@ -1193,7 +1193,7 @@ char * playlist_entry_get_title (int playlist_num, int entry_num, bool_t fast)
     ENTER;
 
     Entry * entry = get_entry (playlist_num, entry_num, FALSE, ! fast);
-    char * title = entry ? str_ref (entry->formatted ? entry->formatted : entry->filename) : NULL;
+    char * title = entry ? str_ref (entry->formatted ? entry->formatted : entry->title) : NULL;
 
     LEAVE_RET (title);
 }
@@ -2190,7 +2190,7 @@ char * playback_entry_get_title (void)
 
     Entry * entry = get_playback_entry (FALSE, TRUE);
     char * title = entry ? str_ref (entry->formatted ? entry->formatted :
-     entry->filename) : NULL;
+     entry->title) : NULL;
 
     LEAVE_RET (title);
 }
