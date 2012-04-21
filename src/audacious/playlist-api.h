@@ -159,7 +159,8 @@ AUD_FUNC3 (Tuple *, playlist_entry_get_tuple, int, playlist, int, entry,
 
 /* Returns a formatted title string for an entry.  This may include information
  * such as the filename, song title, and/or artist.  If <fast> is nonzero,
- * returns the entry's filename if metadata for the entry has not yet been read. */
+ * returns a "best guess" based on the entry's filename if metadata for the
+ * entry has not yet been read. */
 AUD_FUNC3 (char *, playlist_entry_get_title, int, playlist, int, entry,
  bool_t, fast)
 
