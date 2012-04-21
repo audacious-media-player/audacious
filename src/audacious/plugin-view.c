@@ -44,6 +44,11 @@ static PluginHandle * get_selected_plugin (GtkTreeView * tree)
     Node * n = NULL;
 
     GtkTreeSelection * sel = gtk_tree_view_get_selection (tree);
+
+    /* the treeview may not have a model yet */
+    if (! sel)
+        return NULL;
+
     GtkTreeModel * model;
     GtkTreeIter iter;
     if (gtk_tree_selection_get_selected (sel, & model, & iter))
