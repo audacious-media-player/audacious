@@ -29,6 +29,7 @@
 
 #include <audacious/debug.h>
 #include <audacious/playlist.h>
+#include <libaudcore/audstrings.h>
 
 #include "config.h"
 #include "ui_jumptotrack_cache.h"
@@ -38,7 +39,7 @@
 typedef struct
 {
     GArray * entries; // int
-    GArray * titles, * artists, * albums, * paths, * filenames; // char *
+    GArray * titles, * artists, * albums, * paths; // char *
 } KeywordMatches;
 
 static void ui_jump_to_track_cache_init (JumpToTrackCache * cache);
@@ -51,7 +52,6 @@ static KeywordMatches * keyword_matches_new (void)
     k->artists = g_array_new (FALSE, FALSE, sizeof (char *));
     k->albums = g_array_new (FALSE, FALSE, sizeof (char *));
     k->paths = g_array_new (FALSE, FALSE, sizeof (char *));
-    k->filenames = g_array_new (FALSE, FALSE, sizeof (char *));
     return k;
 }
 
@@ -62,7 +62,6 @@ static void keyword_matches_free (KeywordMatches * k)
     g_array_free (k->artists, TRUE);
     g_array_free (k->albums, TRUE);
     g_array_free (k->paths, TRUE);
-    g_array_free (k->filenames, TRUE);
     g_free (k);
 }
 
@@ -172,15 +171,13 @@ ui_jump_to_track_cache_match_keyword(JumpToTrackCache* cache,
         char * artist = g_array_index (search_space->artists, char *, i);
         char * album = g_array_index (search_space->albums, char *, i);
         char * path = g_array_index (search_space->paths, char *, i);
-        char * filename = g_array_index (search_space->filenames, char *, i);
         bool_t match;
 
         if (regex_list != NULL)
             match = ui_jump_to_track_match (title, regex_list)
              || ui_jump_to_track_match (artist, regex_list)
              || ui_jump_to_track_match (album, regex_list)
-             || ui_jump_to_track_match (path, regex_list)
-             || ui_jump_to_track_match (filename, regex_list);
+             || ui_jump_to_track_match (path, regex_list);
         else
             match = TRUE;
 
@@ -190,7 +187,6 @@ ui_jump_to_track_cache_match_keyword(JumpToTrackCache* cache,
             g_array_append_val (k->artists, artist);
             g_array_append_val (k->albums, album);
             g_array_append_val (k->paths, path);
-            g_array_append_val (k->filenames, filename);
         }
     }
 
@@ -200,28 +196,26 @@ ui_jump_to_track_cache_match_keyword(JumpToTrackCache* cache,
     return k->entries;
 }
 
-/**
- * Normalizes the search string to be more suitable for searches.
- *
- * Basically this does Unicode NFKD normalization to for example match
- * half-width and full-width characters and case folding mainly to match
- * upper- and lowercase letters.
- *
- * String returned by this function should be freed manually.
- */
-
 /* calls str_unref() on <string> */
-static char * normalize_search_string (char * string)
+/* returned string must be freed */
+static char * process_string (char * string, bool_t decode)
 {
     if (! string)
         return NULL;
 
-    char* normalized_string = g_utf8_normalize(string, -1, G_NORMALIZE_NFKD);
-    char* folded_string = g_utf8_casefold(normalized_string, -1);
-    g_free(normalized_string);
-    str_unref (string);
+    char * normal;
 
-    return folded_string;
+    if (decode)
+    {
+        char temp[strlen (string) + 1];
+        str_decode_percent (string, -1, temp);
+        normal = g_utf8_casefold (temp, -1);
+    }
+    else
+        normal = g_utf8_casefold (string, -1);
+
+    str_unref (string);
+    return normal;
 }
 
 /**
@@ -236,7 +230,6 @@ ui_jump_to_track_cache_free_keywordmatch_data(KeywordMatches* match_entry)
         g_free (g_array_index (match_entry->artists, char *, i));
         g_free (g_array_index (match_entry->albums, char *, i));
         g_free (g_array_index (match_entry->paths, char *, i));
-        g_free (g_array_index (match_entry->filenames, char *, i));
     }
 }
 
@@ -296,21 +289,20 @@ static void ui_jump_to_track_cache_init (JumpToTrackCache * cache)
 
     for (int entry = 0; entry < entries; entry ++)
     {
-        Tuple * tuple = aud_playlist_entry_get_tuple (playlist, entry, TRUE);
-        char * title = normalize_search_string (tuple ? tuple_get_str (tuple, FIELD_TITLE, NULL) : NULL);
-        char * artist = normalize_search_string (tuple ? tuple_get_str (tuple, FIELD_ARTIST, NULL) : NULL);
-        char * album = normalize_search_string (tuple ? tuple_get_str (tuple, FIELD_ALBUM, NULL) : NULL);
-        char * path = normalize_search_string (tuple ? tuple_get_str (tuple, FIELD_FILE_PATH, NULL) : NULL);
-        char * filename = normalize_search_string (tuple ? tuple_get_str (tuple, FIELD_FILE_NAME, NULL) : NULL);
-        if (tuple)
-            tuple_unref (tuple);
+        char * title, * artist, * album, * path;
+        aud_playlist_entry_describe (playlist, entry, & title, & artist, & album, TRUE);
+        path = aud_playlist_entry_get_filename (playlist, entry);
+
+        title = process_string (title, FALSE);
+        artist = process_string (artist, FALSE);
+        album = process_string (album, FALSE);
+        path = process_string (path, TRUE);
 
         g_array_append_val (k->entries, entry);
         g_array_append_val (k->titles, title);
         g_array_append_val (k->artists, artist);
         g_array_append_val (k->albums, album);
         g_array_append_val (k->paths, path);
-        g_array_append_val (k->filenames, filename);
     }
 
     // Finally insert all titles into cache into an empty key "" so that
@@ -373,7 +365,7 @@ static void ui_jump_to_track_cache_init (JumpToTrackCache * cache)
 const GArray * ui_jump_to_track_cache_search (JumpToTrackCache * cache, const
  char * keyword)
 {
-    char * normalized_keyword = normalize_search_string (str_get (keyword));
+    char * normalized_keyword = g_utf8_casefold (keyword, -1);
     GString* keyword_string = g_string_new(normalized_keyword);
     GString* match_string = g_string_new(normalized_keyword);
     int match_string_length = keyword_string->len;
