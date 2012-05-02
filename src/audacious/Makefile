@@ -70,6 +70,7 @@ DATA = images/about-logo.png				\
        images/audacious.png \
        images/audio.png						\
        images/connectivity.png				\
+       images/info.png \
        images/menu_playlist.png				\
        images/menu_plugin.png				\
        images/menu_queue_toggle.png			\

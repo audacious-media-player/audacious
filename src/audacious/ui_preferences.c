@@ -62,29 +62,17 @@ typedef struct {
 } TitleFieldTag;
 
 static /* GtkWidget * */ void * prefswin = NULL;
-static GtkWidget *filepopup_settings = NULL;
 static GtkWidget *category_treeview = NULL;
 static GtkWidget *category_notebook = NULL;
-GtkWidget *filepopupbutton = NULL;
-
-/* filepopup settings widgets */
-GtkWidget *filepopup_cover_name_include;
-GtkWidget *filepopup_cover_name_exclude;
-GtkWidget *filepopup_recurse;
-GtkWidget *filepopup_recurse_depth;
-GtkWidget *filepopup_recurse_depth_box;
-GtkWidget *filepopup_use_file_cover;
-GtkWidget *filepopup_showprogressbar;
-GtkWidget *filepopup_delay;
 
 /* prefswin widgets */
 GtkWidget *titlestring_entry;
-GtkWidget *filepopup_settings_button;
 
 static Category categories[] = {
  {"audio.png", N_("Audio")},
  {"connectivity.png", N_("Network")},
  {"playlist.png", N_("Playlist")},
+ {"info.png", N_("Song Info")},
  {"plugins.png", N_("Plugins")},
 };
 
@@ -215,6 +203,28 @@ static PreferencesWidget playlist_page_widgets[] = {
     {WIDGET_TABLE, .data = {.table = {chardet_elements,
      G_N_ELEMENTS (chardet_elements)}}}
 };
+
+static PreferencesWidget song_info_page_widgets[] = {
+ {WIDGET_LABEL, N_("<b>Album Art</b>")},
+ {WIDGET_LABEL, N_("Search for images matching these words (comma-separated):")},
+ {WIDGET_ENTRY, .cfg_type = VALUE_STRING, .cname = "cover_name_include"},
+ {WIDGET_LABEL, N_("Exclude images matching these words (comma-separated):")},
+ {WIDGET_ENTRY, .cfg_type = VALUE_STRING, .cname = "cover_name_exclude"},
+ {WIDGET_CHK_BTN, N_("Search for images matching song file name"),
+  .cfg_type = VALUE_BOOLEAN, .cname = "use_file_cover"},
+ {WIDGET_CHK_BTN, N_("Search recursively"),
+  .cfg_type = VALUE_BOOLEAN, .cname = "recurse_for_cover"},
+ {WIDGET_SPIN_BTN, N_("Search depth:"), .child = TRUE,
+  .cfg_type = VALUE_INT, .cname = "recurse_for_cover_depth",
+  .data = {.spin_btn = {0, 100, 1}}},
+ {WIDGET_LABEL, N_("<b>Popup Information</b>")},
+ {WIDGET_CHK_BTN, N_("Show popup information"),
+  .cfg_type = VALUE_BOOLEAN, .cname = "show_filepopup_for_tuple"},
+ {WIDGET_SPIN_BTN, N_("Popup delay (tenths of a second):"), .child = TRUE,
+  .cfg_type = VALUE_INT, .cname = "filepopup_delay",
+  .data = {.spin_btn = {0, 100, 1}}},
+ {WIDGET_CHK_BTN, N_("Show time scale for current song"), .child = TRUE,
+  .cfg_type = VALUE_BOOLEAN, .cname = "filepopup_showprogressbar"}};
 
 #define TITLESTRING_NPRESETS 6
 
@@ -606,66 +616,6 @@ static void fill_category_list (GtkTreeView * treeview, GtkNotebook * notebook)
     }
 }
 
-static void on_show_filepopup_toggled (GtkToggleButton * button)
-{
-    bool_t active = gtk_toggle_button_get_active (button);
-    set_bool (NULL, "show_filepopup_for_tuple", active);
-    gtk_widget_set_sensitive (filepopup_settings_button, active);
-}
-
-static void on_filepopup_settings_clicked (void)
-{
-    char * string = get_string (NULL, "cover_name_include");
-    gtk_entry_set_text ((GtkEntry *) filepopup_cover_name_include, string);
-    g_free (string);
-
-    string = get_string (NULL, "cover_name_exclude");
-    gtk_entry_set_text ((GtkEntry *) filepopup_cover_name_exclude, string);
-    g_free (string);
-
-    gtk_toggle_button_set_active ((GtkToggleButton *) filepopup_recurse,
-     get_bool (NULL, "recurse_for_cover"));
-    gtk_spin_button_set_value ((GtkSpinButton *) filepopup_recurse_depth,
-     get_int (NULL, "recurse_for_cover_depth"));
-    gtk_toggle_button_set_active ((GtkToggleButton *) filepopup_use_file_cover,
-     get_bool (NULL, "use_file_cover"));
-
-    gtk_toggle_button_set_active ((GtkToggleButton *) filepopup_showprogressbar,
-     get_bool (NULL, "filepopup_showprogressbar"));
-    gtk_spin_button_set_value ((GtkSpinButton *) filepopup_delay,
-     get_int (NULL, "filepopup_delay"));
-
-    gtk_widget_show (filepopup_settings);
-}
-
-static void on_filepopup_ok_clicked (void)
-{
-    set_string (NULL, "cover_name_include",
-     gtk_entry_get_text ((GtkEntry *) filepopup_cover_name_include));
-    set_string (NULL, "cover_name_exclude",
-     gtk_entry_get_text ((GtkEntry *) filepopup_cover_name_exclude));
-
-    set_bool (NULL, "recurse_for_cover",
-     gtk_toggle_button_get_active ((GtkToggleButton *) filepopup_recurse));
-    set_int (NULL, "recurse_for_cover_depth",
-     gtk_spin_button_get_value_as_int ((GtkSpinButton *) filepopup_recurse_depth));
-    set_bool (NULL, "use_file_cover",
-     gtk_toggle_button_get_active ((GtkToggleButton *) filepopup_use_file_cover));
-
-    set_bool (NULL, "filepopup_showprogressbar",
-     gtk_toggle_button_get_active ((GtkToggleButton *) filepopup_showprogressbar));
-    set_int (NULL, "filepopup_delay",
-     gtk_spin_button_get_value_as_int ((GtkSpinButton *) filepopup_delay));
-
-    gtk_widget_hide (filepopup_settings);
-}
-
-static void
-on_filepopup_cancel_clicked(GtkButton *button, gpointer data)
-{
-    gtk_widget_hide(filepopup_settings);
-}
-
 static void on_toggle_button_toggled (GtkToggleButton * button, PreferencesWidget * widget)
 {
     bool_t active = gtk_toggle_button_get_active (button);
@@ -750,168 +700,6 @@ static void fill_cbox (GtkWidget * combobox, PreferencesWidget * widget)
         gtk_combo_box_set_active(GTK_COMBO_BOX(combobox), -1);
         gtk_widget_set_sensitive(GTK_WIDGET(combobox), 0);
     }
-}
-
-void
-create_filepopup_settings(void)
-{
-    GtkWidget *vbox;
-    GtkWidget *table;
-
-    GtkWidget *label_cover_retrieve;
-    GtkWidget *label_cover_search;
-    GtkWidget *label_exclude;
-    GtkWidget *label_include;
-    GtkWidget *label_search_depth;
-    GtkWidget *label_misc;
-    GtkWidget *label_delay;
-
-    GtkAdjustment *recurse_for_cover_depth_adj;
-    GtkAdjustment *delay_adj;
-    GtkWidget *alignment;
-
-    GtkWidget *hbox;
-    GtkWidget *hbuttonbox;
-    GtkWidget *btn_cancel;
-    GtkWidget *btn_ok;
-
-    filepopup_settings = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_container_set_border_width(GTK_CONTAINER(filepopup_settings), 12);
-    gtk_window_set_title(GTK_WINDOW(filepopup_settings), _("Popup Information Settings"));
-    gtk_window_set_position(GTK_WINDOW(filepopup_settings), GTK_WIN_POS_CENTER_ON_PARENT);
-    gtk_window_set_skip_taskbar_hint(GTK_WINDOW(filepopup_settings), TRUE);
-    gtk_window_set_type_hint(GTK_WINDOW(filepopup_settings), GDK_WINDOW_TYPE_HINT_DIALOG);
-    gtk_window_set_transient_for(GTK_WINDOW(filepopup_settings), GTK_WINDOW(prefswin));
-
-    vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-    gtk_container_add(GTK_CONTAINER(filepopup_settings), vbox);
-
-    label_cover_retrieve = gtk_label_new(_("<b>Cover image retrieve</b>"));
-    gtk_box_pack_start(GTK_BOX(vbox), label_cover_retrieve, FALSE, FALSE, 0);
-    gtk_label_set_use_markup(GTK_LABEL(label_cover_retrieve), TRUE);
-    gtk_misc_set_alignment(GTK_MISC(label_cover_retrieve), 0, 0.5);
-
-    label_cover_search = gtk_label_new(_("While searching for the album's cover, Audacious looks for certain words in the filename. You can specify those words in the lists below, separated using commas."));
-    gtk_box_pack_start(GTK_BOX(vbox), label_cover_search, FALSE, FALSE, 0);
-    gtk_label_set_line_wrap(GTK_LABEL(label_cover_search), TRUE);
-    gtk_misc_set_alignment(GTK_MISC(label_cover_search), 0, 0);
-    gtk_misc_set_padding(GTK_MISC(label_cover_search), 12, 0);
-
-    table = gtk_table_new(2, 2, FALSE);
-    gtk_box_pack_start(GTK_BOX(vbox), table, FALSE, FALSE, 0);
-    gtk_table_set_row_spacings(GTK_TABLE(table), 4);
-    gtk_table_set_col_spacings(GTK_TABLE(table), 4);
-
-    filepopup_cover_name_include = gtk_entry_new();
-    gtk_table_attach(GTK_TABLE(table), filepopup_cover_name_include, 1, 2, 0, 1,
-                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                     (GtkAttachOptions) (0), 0, 0);
-    gtk_entry_set_activates_default(GTK_ENTRY(filepopup_cover_name_include), TRUE);
-
-    label_exclude = gtk_label_new(_("Exclude:"));
-    gtk_table_attach(GTK_TABLE(table), label_exclude, 0, 1, 1, 2,
-                     (GtkAttachOptions) (0),
-                     (GtkAttachOptions) (0), 0, 0);
-    gtk_misc_set_alignment(GTK_MISC(label_exclude), 0, 0.5);
-    gtk_misc_set_padding(GTK_MISC(label_exclude), 12, 0);
-
-    label_include = gtk_label_new(_("Include:"));
-    gtk_table_attach(GTK_TABLE(table), label_include, 0, 1, 0, 1,
-                     (GtkAttachOptions) (0),
-                     (GtkAttachOptions) (0), 0, 0);
-    gtk_misc_set_alignment(GTK_MISC(label_include), 0, 0.5);
-    gtk_misc_set_padding(GTK_MISC(label_include), 12, 0);
-
-    filepopup_cover_name_exclude = gtk_entry_new();
-    gtk_table_attach(GTK_TABLE(table), filepopup_cover_name_exclude, 1, 2, 1, 2,
-                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                     (GtkAttachOptions) (0), 0, 0);
-    gtk_entry_set_activates_default(GTK_ENTRY(filepopup_cover_name_exclude), TRUE);
-
-    alignment = gtk_alignment_new(0.5, 0.5, 1, 1);
-    gtk_box_pack_start(GTK_BOX(vbox), alignment, TRUE, TRUE, 0);
-    gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 12, 0);
-
-    filepopup_recurse = gtk_check_button_new_with_mnemonic(_("Recursively search for cover"));
-    gtk_container_add(GTK_CONTAINER(alignment), filepopup_recurse);
-
-    alignment = gtk_alignment_new(0.5, 0.5, 1, 1);
-    gtk_box_pack_start(GTK_BOX(vbox), alignment, FALSE, FALSE, 0);
-    gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 45, 0);
-
-    filepopup_recurse_depth_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-    gtk_container_add(GTK_CONTAINER(alignment), filepopup_recurse_depth_box);
-
-    label_search_depth = gtk_label_new(_("Search depth: "));
-    gtk_box_pack_start(GTK_BOX(filepopup_recurse_depth_box), label_search_depth, TRUE, TRUE, 0);
-    gtk_misc_set_padding(GTK_MISC(label_search_depth), 4, 0);
-
-    recurse_for_cover_depth_adj = (GtkAdjustment *) gtk_adjustment_new (0, 0,
-     100, 1, 10, 0);
-    filepopup_recurse_depth = gtk_spin_button_new(GTK_ADJUSTMENT(recurse_for_cover_depth_adj), 1, 0);
-    gtk_box_pack_start(GTK_BOX(filepopup_recurse_depth_box), filepopup_recurse_depth, TRUE, TRUE, 0);
-    gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(filepopup_recurse_depth), TRUE);
-
-    alignment = gtk_alignment_new(0.5, 0.5, 1, 1);
-    gtk_box_pack_start(GTK_BOX(vbox), alignment, TRUE, TRUE, 0);
-    gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 12, 0);
-
-    filepopup_use_file_cover = gtk_check_button_new_with_mnemonic(_("Use per-file cover"));
-    gtk_container_add(GTK_CONTAINER(alignment), filepopup_use_file_cover);
-
-    label_misc = gtk_label_new(_("<b>Miscellaneous</b>"));
-    gtk_box_pack_start(GTK_BOX(vbox), label_misc, FALSE, FALSE, 0);
-    gtk_label_set_use_markup(GTK_LABEL(label_misc), TRUE);
-    gtk_misc_set_alignment(GTK_MISC(label_misc), 0, 0.5);
-
-    alignment = gtk_alignment_new(0.5, 0.5, 1, 1);
-    gtk_box_pack_start(GTK_BOX(vbox), alignment, FALSE, FALSE, 0);
-    gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 12, 0);
-
-    filepopup_showprogressbar = gtk_check_button_new_with_mnemonic(_("Show Progress bar for the current track"));
-    gtk_container_add(GTK_CONTAINER(alignment), filepopup_showprogressbar);
-
-    alignment = gtk_alignment_new(0, 0.5, 1, 1);
-    gtk_box_pack_start(GTK_BOX(vbox), alignment, TRUE, TRUE, 0);
-    gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 12, 0);
-
-    hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-    gtk_container_add(GTK_CONTAINER(alignment), hbox);
-
-    label_delay = gtk_label_new(_("Delay until filepopup comes up: "));
-    gtk_box_pack_start(GTK_BOX(hbox), label_delay, TRUE, TRUE, 0);
-    gtk_misc_set_alignment(GTK_MISC(label_delay), 0, 0.5);
-    gtk_misc_set_padding(GTK_MISC(label_delay), 12, 0);
-
-    delay_adj = (GtkAdjustment *) gtk_adjustment_new (0, 0, 100, 1, 10, 0);
-    filepopup_delay = gtk_spin_button_new(GTK_ADJUSTMENT(delay_adj), 1, 0);
-    gtk_box_pack_start(GTK_BOX(hbox), filepopup_delay, TRUE, TRUE, 0);
-    gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(filepopup_delay), TRUE);
-
-    hbuttonbox = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
-    gtk_box_pack_start(GTK_BOX(vbox), hbuttonbox, FALSE, FALSE, 0);
-    gtk_button_box_set_layout(GTK_BUTTON_BOX(hbuttonbox), GTK_BUTTONBOX_END);
-    gtk_box_set_spacing(GTK_BOX(hbuttonbox), 6);
-
-    btn_cancel = gtk_button_new_from_stock("gtk-cancel");
-    gtk_container_add(GTK_CONTAINER(hbuttonbox), btn_cancel);
-
-    btn_ok = gtk_button_new_from_stock("gtk-ok");
-    gtk_container_add(GTK_CONTAINER(hbuttonbox), btn_ok);
-    gtk_widget_set_can_default(btn_ok, TRUE);
-
-    g_signal_connect(G_OBJECT(filepopup_settings), "delete_event",
-                     G_CALLBACK(gtk_widget_hide_on_delete),
-                     NULL);
-    g_signal_connect(G_OBJECT(btn_cancel), "clicked",
-                     G_CALLBACK(on_filepopup_cancel_clicked),
-                     NULL);
-    g_signal_connect(G_OBJECT(btn_ok), "clicked",
-                     G_CALLBACK(on_filepopup_ok_clicked),
-                     NULL);
-
-    gtk_widget_grab_default(btn_ok);
-    gtk_widget_show_all(vbox);
 }
 
 static void create_spin_button (PreferencesWidget * widget, GtkWidget * *
@@ -1093,12 +881,14 @@ static void fill_table (GtkWidget * table, PreferencesWidget * elements, int
 void create_widgets_with_domain (void * box, PreferencesWidget * widgets, int
  amt, const char * domain)
 {
-    int x;
     GtkWidget *alignment = NULL, *widget = NULL;
     GtkWidget *child_box = NULL;
     GSList *radio_btn_group = NULL;
 
-    for (x = 0; x < amt; ++x) {
+    for (int x = 0; x < amt; x ++)
+    {
+        GtkWidget * label = NULL;
+
         if (widget && widgets[x].child)
         {
             if (!child_box) {
@@ -1128,9 +918,11 @@ void create_widgets_with_domain (void * box, PreferencesWidget * widgets, int
                 init_toggle_button (widget, & widgets[x]);
                 break;
             case WIDGET_LABEL:
-                gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 12, 0, 0, 0);
+                if (strstr (widgets[x].label, "<b>"))
+                    gtk_alignment_set_padding ((GtkAlignment *) alignment,
+                     (x == 0) ? 0 : 12, 0, 0, 0);
 
-                GtkWidget *label = NULL, *icon = NULL;
+                GtkWidget * icon = NULL;
                 create_label (& widgets[x], & label, & icon, domain);
 
                 if (icon == NULL)
@@ -1331,12 +1123,6 @@ create_playlist_category(void)
     GtkWidget *image1;
     GtkWidget *label62;
     GtkWidget *label61;
-    GtkWidget *alignment85;
-    GtkWidget *label84;
-    GtkWidget *alignment86;
-    GtkWidget *hbox9;
-    GtkWidget *vbox34;
-    GtkWidget *image8;
     GtkWidget *titlestring_tag_menu = create_titlestring_tag_menu();
     GtkWidget * numbers_alignment, * numbers;
 
@@ -1421,58 +1207,17 @@ create_playlist_category(void)
     gtk_label_set_justify (GTK_LABEL (label61), GTK_JUSTIFY_RIGHT);
     gtk_misc_set_alignment (GTK_MISC (label61), 1, 0.5);
 
-    alignment85 = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start (GTK_BOX (vbox5), alignment85, FALSE, FALSE, 0);
-    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment85), 12, 12, 0, 0);
-
-    label84 = gtk_label_new (_("<b>Popup Information</b>"));
-    gtk_container_add (GTK_CONTAINER (alignment85), label84);
-    gtk_label_set_use_markup (GTK_LABEL (label84), TRUE);
-    gtk_misc_set_alignment (GTK_MISC (label84), 0, 0.5);
-
-    alignment86 = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start (GTK_BOX (vbox5), alignment86, FALSE, FALSE, 0);
-    gtk_alignment_set_padding (GTK_ALIGNMENT (alignment86), 0, 0, 12, 0);
-
-    hbox9 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  12);
-    gtk_container_add (GTK_CONTAINER (alignment86), hbox9);
-
-    vbox34 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-    gtk_box_pack_start (GTK_BOX (hbox9), vbox34, TRUE, TRUE, 0);
-
-    filepopupbutton = gtk_check_button_new_with_mnemonic (_("Show popup information for playlist entries"));
-    gtk_widget_set_tooltip_text (filepopupbutton, _("Toggles popup information window for the pointed entry in the playlist. The window shows title of song, name of album, genre, year of publish, track number, track length, and artwork."));
-    gtk_toggle_button_set_active ((GtkToggleButton *) filepopupbutton,
-     get_bool (NULL, "show_filepopup_for_tuple"));
-    gtk_box_pack_start ((GtkBox *) vbox34, filepopupbutton, TRUE, FALSE, 0);
-
-    filepopup_settings_button = gtk_button_new ();
-    gtk_widget_set_sensitive (filepopup_settings_button,
-     get_bool (NULL, "show_filepopup_for_tuple"));
-    gtk_box_pack_start (GTK_BOX (hbox9), filepopup_settings_button, FALSE, FALSE, 0);
-
-    gtk_widget_set_can_focus (filepopup_settings_button, FALSE);
-    gtk_widget_set_tooltip_text (filepopup_settings_button, _("Edit settings for popup information"));
-    gtk_button_set_relief (GTK_BUTTON (filepopup_settings_button), GTK_RELIEF_HALF);
-
-    image8 = gtk_image_new_from_stock ("gtk-properties", GTK_ICON_SIZE_BUTTON);
-    gtk_container_add (GTK_CONTAINER (filepopup_settings_button), image8);
-
-
-
-    g_signal_connect (filepopupbutton, "toggled",
-                     G_CALLBACK(on_show_filepopup_toggled),
-                     NULL);
-    g_signal_connect(G_OBJECT(filepopup_settings_button), "clicked",
-                     G_CALLBACK(on_filepopup_settings_clicked),
-                     NULL);
-
     g_signal_connect(titlestring_help_button, "clicked",
                      G_CALLBACK(on_titlestring_help_button_clicked),
                      titlestring_tag_menu);
+}
 
-    /* Create window for filepopup settings */
-    create_filepopup_settings();
+static void create_song_info_category (void)
+{
+    GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+    gtk_container_add ((GtkContainer *) category_notebook, vbox);
+    create_widgets ((GtkBox *) vbox, song_info_page_widgets,
+     G_N_ELEMENTS (song_info_page_widgets));
 }
 
 static GtkWidget * output_config_button, * output_about_button;
@@ -1613,8 +1358,6 @@ prefswin_destroy(GtkWidget *window, GdkEvent *event, gpointer data)
 {
     prefswin = NULL;
     category_notebook = NULL;
-    gtk_widget_destroy(filepopup_settings);
-    filepopup_settings = NULL;
     gtk_widget_destroy(window);
     return TRUE;
 }
@@ -1672,6 +1415,7 @@ void * * create_prefs_window (void)
     create_audio_category();
     create_connectivity_category();
     create_playlist_category();
+    create_song_info_category();
     create_plugin_category();
 
     hseparator1 = gtk_separator_new (GTK_ORIENTATION_HORIZONTAL);
