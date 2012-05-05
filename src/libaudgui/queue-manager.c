@@ -197,6 +197,7 @@ EXPORT void audgui_queue_manager_show (void)
      GTK_STOCK_REMOVE, RESPONSE_REMOVE, GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
      NULL);
     gtk_window_set_default_size ((GtkWindow *) qm_win, 400, 250);
+    gtk_window_set_position ((GtkWindow *) qm_win, GTK_WIN_POS_CENTER);
 
     GtkWidget * vbox = gtk_dialog_get_content_area ((GtkDialog *) qm_win);
 
