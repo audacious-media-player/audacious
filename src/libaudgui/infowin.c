@@ -320,6 +320,7 @@ static void create_infowin (void)
     gtk_window_set_title ((GtkWindow *) infowin, _("Track Information"));
     gtk_window_set_type_hint ((GtkWindow *) infowin,
      GDK_WINDOW_TYPE_HINT_DIALOG);
+    gtk_window_set_position ((GtkWindow *) infowin, GTK_WIN_POS_CENTER);
 
     vbox0 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
     gtk_container_add ((GtkContainer *) infowin, vbox0);

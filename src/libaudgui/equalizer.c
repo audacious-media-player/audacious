@@ -132,6 +132,7 @@ static GtkWidget * create_window (void)
     gtk_window_set_type_hint ((GtkWindow *) window, GDK_WINDOW_TYPE_HINT_DIALOG);
     gtk_window_set_resizable ((GtkWindow *) window, FALSE);
     gtk_container_set_border_width ((GtkContainer *) window, 6);
+    gtk_window_set_position ((GtkWindow *) window, GTK_WIN_POS_CENTER);
     g_signal_connect ((GObject *) window, "delete-event", (GCallback)
      gtk_widget_hide_on_delete, NULL);
     audgui_hide_on_escape (window);

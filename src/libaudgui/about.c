@@ -89,6 +89,7 @@ EXPORT void audgui_show_about_window (void)
     about_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title ((GtkWindow *) about_window, _("About Audacious"));
     gtk_window_set_resizable ((GtkWindow *) about_window, FALSE);
+    gtk_window_set_position ((GtkWindow *) about_window, GTK_WIN_POS_CENTER);
     gtk_container_set_border_width ((GtkContainer *) about_window, 3);
 
     audgui_destroy_on_escape (about_window);
