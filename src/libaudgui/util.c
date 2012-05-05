@@ -153,6 +153,7 @@ EXPORT void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
 
     * widget = gtk_message_dialog_new (NULL, 0, type, GTK_BUTTONS_OK, "%s", text);
     gtk_window_set_title ((GtkWindow *) * widget, title);
+    gtk_window_set_position ((GtkWindow *) * widget, GTK_WIN_POS_CENTER);
 
     g_object_set_data ((GObject *) * widget, "messages", GINT_TO_POINTER (1));
 
