@@ -70,7 +70,6 @@ EXPORT void audgui_jump_to_time (void)
     gtk_window_set_type_hint ((GtkWindow *) window, GDK_WINDOW_TYPE_HINT_DIALOG);
     gtk_window_set_title ((GtkWindow *) window, _("Jump to Time"));
     gtk_window_set_resizable ((GtkWindow *) window, FALSE);
-    gtk_window_set_position ((GtkWindow *) window, GTK_WIN_POS_CENTER);
     gtk_container_set_border_width ((GtkContainer *) window, 6);
     audgui_destroy_on_escape (window);
 

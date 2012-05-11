@@ -33,8 +33,6 @@ static char * select_file (bool_t save, const char * default_filename)
      _("Export Playlist") : _("Import Playlist"), NULL, save ?
      GTK_FILE_CHOOSER_ACTION_SAVE : GTK_FILE_CHOOSER_ACTION_OPEN, NULL, NULL);
 
-    gtk_window_set_position ((GtkWindow *) dialog, GTK_WIN_POS_CENTER);
-
     if (default_filename)
         gtk_file_chooser_set_uri ((GtkFileChooser *) dialog, default_filename);
 
