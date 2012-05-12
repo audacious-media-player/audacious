@@ -164,6 +164,14 @@ static void fill_list (void)
 
     audgui_list_delete_rows (treeview, 0, audgui_list_row_count (treeview));
     audgui_list_insert_rows (treeview, 0, search_matches->len);
+
+    if (search_matches->len >= 1)
+    {
+        GtkTreeSelection * sel = gtk_tree_view_get_selection ((GtkTreeView *) treeview);
+        GtkTreePath * path = gtk_tree_path_new_from_indices (0, -1);
+        gtk_tree_selection_select_path (sel, path);
+        gtk_tree_path_free (path);
+    }
 }
 
 static void clear_cb (GtkWidget * widget)
