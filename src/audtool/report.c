@@ -1,6 +1,6 @@
 /*
- * Audtool2
- * Copyright (c) 2007 Audacious development team
+ * report.c
+ * Copyright 2007-2008 William Pitcock and Matti Hämäläinen
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are

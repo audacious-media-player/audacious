@@ -1,6 +1,7 @@
 /*
- * Audtool
- * Copyright (c) 2007 Audacious development team
+ * main.c
+ * Copyright 2005-2011 George Averill, William Pitcock, Yoshiki Yazawa, and
+ *                     John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are

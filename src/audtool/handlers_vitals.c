@@ -1,6 +1,6 @@
 /*
- * Audtool2
- * Copyright (c) 2007 Audacious development team
+ * handlers_vitals.c
+ * Copyright 2005-2007 George Averill and William Pitcock
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are

@@ -23,6 +23,15 @@ Core executable (src/audacious):
   Eugene Zagidullin
   Ivan Zlatev
 
+Command line tool (src/audtool):
+ * Copyright (C) 2005-2011:
+  George Averill
+  Matti Hämäläinen
+  John Lindgren
+  Giacomo Lozito
+  William Pitcock
+  Yoshiki Yazawa
+
 Core shared library (src/libaudcore):
  * Copyright (C) 2006-2012:
   Daniel Barkalow

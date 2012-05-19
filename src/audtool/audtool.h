@@ -1,6 +1,7 @@
 /*
- * Audtool2
- * Copyright (c) 2007 Audacious development team
+ * audtool.h
+ * Copyright 2005-2011 William Pitcock, George Averill, Giacomo Lozito,
+ *                     Yoshiki Yazawa, Matti Hämäläinen, and John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
