@@ -1290,14 +1290,14 @@ create_titlestring_tag_menu(void)
 static void show_numbers_cb (GtkToggleButton * numbers, void * unused)
 {
     set_bool (NULL, "show_numbers_in_pl", gtk_toggle_button_get_active (numbers));
-
+    playlist_reformat_titles ();
     hook_call ("title change", NULL);
 }
 
 static void leading_zero_cb (GtkToggleButton * leading)
 {
     set_bool (NULL, "leading_zero", gtk_toggle_button_get_active (leading));
-
+    playlist_reformat_titles ();
     hook_call ("title change", NULL);
 }
 
