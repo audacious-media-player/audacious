@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2012-01-11 08:54-0500\n"
-"PO-Revision-Date: 2012-03-06 17:48+0000\n"
+"PO-Revision-Date: 2012-04-21 04:05+0000\n"
 "Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian\n"
 "MIME-Version: 1.0\n"
@@ -612,7 +612,7 @@ msgstr "Kaasatud:"
 
 #: src/audacious/ui_preferences.c:835
 msgid "Recursively search for cover"
-msgstr "Kaanepilti otsitakse rekursiivselt"
+msgstr "Kaanepilti otsitakse sügavuti"
 
 #: src/audacious/ui_preferences.c:845
 msgid "Search depth: "

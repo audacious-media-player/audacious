@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2012-01-11 08:54-0500\n"
-"PO-Revision-Date: 2012-03-27 10:02+0000\n"
-"Last-Translator: Nastuko Toda <m2330880989@shibuya-center.com>\n"
+"PO-Revision-Date: 2012-05-14 12:19+0000\n"
+"Last-Translator: Shuuji Takahashi <shuuji3@gmail.com>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,7 +26,7 @@ msgstr "検索中..."
 #, c-format
 msgid "%d file found"
 msgid_plural "%d files found"
-msgstr[0] ""
+msgstr[0] "%d 個のファイルが見つかりました"
 
 #: src/audacious/chardet.c:39
 msgid "  (invalid UTF-8)"
@@ -267,15 +267,15 @@ msgstr "メインウィンドウを表示する"
 
 #: src/audacious/main.c:253
 msgid "Show version"
-msgstr "ヴァージョンを表示する"
+msgstr "バージョンを表示する"
 
 #: src/audacious/main.c:254
 msgid "Print debugging messages"
-msgstr ""
+msgstr "デバッグメッセージを表示する"
 
 #: src/audacious/main.c:255
 msgid "Headless mode (beta)"
-msgstr ""
+msgstr "ヘッドレスモード (ベータ)"
 
 #: src/audacious/main.c:256
 msgid "FILE..."
@@ -299,12 +299,12 @@ msgstr "Audacious"
 #: src/audacious/playback.c:307
 #, c-format
 msgid "No decoder found for %s."
-msgstr ""
+msgstr "%s のためのデコーダがありません。"
 
 #: src/audacious/playlist-files.c:53
 #, c-format
 msgid "Cannot %s %s: unsupported file extension."
-msgstr ""
+msgstr "%s %s できません: ファイルの拡張子に対応していません。"
 
 #: src/audacious/playlist-files.c:54
 msgid "save"
@@ -312,7 +312,7 @@ msgstr "保存"
 
 #: src/audacious/playlist-files.c:54
 msgid "load"
-msgstr "読込"
+msgstr "読み込み"
 
 #: src/audacious/playlist-new.c:131
 msgid "New Playlist"
@@ -326,7 +326,7 @@ msgstr "再生中"
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress"
 " (or has been disabled)."
-msgstr ""
+msgstr "メタデータのスキャンが進行中、または無効になっているため、プレイリストをソートできません。"
 
 #: src/audacious/ui_preferences.c:85
 msgid "Audio"
@@ -403,7 +403,7 @@ msgstr "アラビア語"
 
 #: src/audacious/ui_preferences.c:113
 msgid "Baltic"
-msgstr ""
+msgstr "バルト諸語"
 
 #: src/audacious/ui_preferences.c:114
 msgid "Chinese"
@@ -427,7 +427,7 @@ msgstr "朝鮮語"
 
 #: src/audacious/ui_preferences.c:119
 msgid "Polish"
-msgstr ""
+msgstr "ポーランド語"
 
 #: src/audacious/ui_preferences.c:120
 msgid "Russian"
@@ -447,43 +447,43 @@ msgstr "アルバムモード"
 
 #: src/audacious/ui_preferences.c:147
 msgid "<b>Output Settings</b>"
-msgstr ""
+msgstr "<b>出力の設定</b>"
 
 #: src/audacious/ui_preferences.c:149
 msgid "Bit depth:"
-msgstr ""
+msgstr "ビット深度:"
 
 #: src/audacious/ui_preferences.c:152
 msgid "Buffer size:"
-msgstr "バッファのサイズ:"
+msgstr "バッファサイズ:"
 
 #: src/audacious/ui_preferences.c:154
 msgid "ms"
-msgstr ""
+msgstr "ms"
 
 #: src/audacious/ui_preferences.c:155
 msgid "Use software volume control (not recommended)"
-msgstr ""
+msgstr "ソフトウェアの音量コントロールを使う (非推奨)"
 
 #: src/audacious/ui_preferences.c:157
 msgid "<b>Replay Gain</b>"
-msgstr ""
+msgstr "<b>リプレイゲイン</b>"
 
 #: src/audacious/ui_preferences.c:158
 msgid "Enable Replay Gain"
-msgstr "リプレイゲイン有効にする"
+msgstr "リプレイゲインを有効にする"
 
 #: src/audacious/ui_preferences.c:161
 msgid "Prevent clipping (recommended)"
-msgstr ""
+msgstr "クリッピングを防ぐ (非推奨)"
 
 #: src/audacious/ui_preferences.c:163
 msgid "<b>Adjust Levels</b>"
-msgstr ""
+msgstr "<b>音量の調整</b>"
 
 #: src/audacious/ui_preferences.c:164
 msgid "Amplify all files:"
-msgstr ""
+msgstr "すべてのファイルを増幅する:"
 
 #: src/audacious/ui_preferences.c:166 src/audacious/ui_preferences.c:169
 msgid "dB"
@@ -491,7 +491,7 @@ msgstr "dB"
 
 #: src/audacious/ui_preferences.c:167
 msgid "Amplify untagged files:"
-msgstr ""
+msgstr "タグづけされていないファイルを増幅する"
 
 #: src/audacious/ui_preferences.c:172
 msgid "Proxy hostname:"
@@ -531,23 +531,23 @@ msgstr "代替キャラクタエンコーディング:"
 
 #: src/audacious/ui_preferences.c:202
 msgid "<b>Behavior</b>"
-msgstr ""
+msgstr "<b>動作</b>"
 
 #: src/audacious/ui_preferences.c:203
 msgid "Continue playback on startup"
-msgstr "起動時に再生を続ける"
+msgstr "起動時に前回再生していた曲を再生する"
 
 #: src/audacious/ui_preferences.c:205
 msgid "Advance when the current song is deleted"
-msgstr ""
+msgstr "現在の曲が削除された時に次の曲を再生する"
 
 #: src/audacious/ui_preferences.c:207
 msgid "Clear the playlist when opening files"
-msgstr ""
+msgstr "ファイルを開く時にプレイリストをクリアする"
 
 #: src/audacious/ui_preferences.c:209
 msgid "Open files in a temporary playlist"
-msgstr ""
+msgstr "ファイルを一時プレイリストで開く"
 
 #: src/audacious/ui_preferences.c:211
 msgid "<b>Metadata</b>"
@@ -555,7 +555,7 @@ msgstr "<b>メタデータ</b>"
 
 #: src/audacious/ui_preferences.c:212
 msgid "Do not load metadata for songs until played"
-msgstr ""
+msgstr "再生が終わるまで曲のメタデータを読み込まない"
 
 #: src/audacious/ui_preferences.c:230
 msgid "TITLE"
@@ -598,7 +598,7 @@ msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
 "using commas."
-msgstr "アルバムのカバーを検索する際, Audacious はファイル名の中の単語を探します. コンマで区切られた単語リストを以下に指定できます."
+msgstr "アルバムのカバーを検索する際、Audacious はファイル名の中の単語を探します。コンマで区切られた単語リストを以下に指定できます。"
 
 #: src/audacious/ui_preferences.c:811
 msgid "Exclude:"
@@ -646,7 +646,7 @@ msgstr "曲番号の表示"
 
 #: src/audacious/ui_preferences.c:1372
 msgid "Show leading zeroes (02:00 instead of 2:00)"
-msgstr ""
+msgstr "先頭のゼロを表示する (2:00 -> 02:00)"
 
 #: src/audacious/ui_preferences.c:1394
 msgid "Show information about titlestring format"
@@ -673,7 +673,7 @@ msgid ""
 "Toggles popup information window for the pointed entry in the playlist. The "
 "window shows title of song, name of album, genre, year of publish, track "
 "number, track length, and artwork."
-msgstr "プレイリスト中でポイントされたエントリのポップアップ情報ウィンドウを切り替えます. ウィンドウには曲のタイトル, アルバム名, ジャンル, 製作年, トラック番号, トラックの長さとアートワークが表示されます."
+msgstr "プレイリスト中でポイントされたエントリのポップアップ情報ウィンドウを切り替えます。ウィンドウには曲のタイトル、アルバム名、ジャンル、製作年、トラック番号、トラックの長さ、アートワークが表示されます。"
 
 #: src/audacious/ui_preferences.c:1455
 msgid "Edit settings for popup information"
@@ -681,11 +681,11 @@ msgstr "ポップアップ情報の設定を編集する"
 
 #: src/audacious/ui_preferences.c:1544
 msgid "Output plugin:"
-msgstr ""
+msgstr "出力プラグイン:"
 
 #: src/audacious/ui_preferences.c:1603
 msgid "Transport"
-msgstr ""
+msgstr "トランスポート"
 
 #: src/audacious/ui_preferences.c:1603
 msgid "Input"
@@ -701,7 +701,7 @@ msgstr "視覚化"
 
 #: src/audacious/ui_preferences.c:1604
 msgid "General"
-msgstr ""
+msgstr "一般"
 
 #: src/audacious/ui_preferences.c:1644
 msgid "Audacious Preferences"
@@ -714,16 +714,16 @@ msgstr "ディレクトリ (%s) を作成できませんでした: %s\n"
 
 #: src/audtool/handlers_playlist.c:273
 msgid "Position not found."
-msgstr ""
+msgstr "場所が見つかりませんでした。"
 
 #: src/audtool/handlers_vitals.c:63
 msgid "No song playing."
-msgstr "再生中の曲はありません"
+msgstr "再生中の曲はありません。"
 
 #: src/libaudcore/audstrings.c:199
 #, c-format
 msgid "Audio CD, track %s"
-msgstr ""
+msgstr "オーディオ CD、トラック %s"
 
 #: src/libaudcore/tuple.c:536
 msgid "Mono"
@@ -737,7 +737,7 @@ msgstr "ステレオ"
 #, c-format
 msgid "%d channel"
 msgid_plural "%d channels"
-msgstr[0] ""
+msgstr[0] "%d チャンネル"
 
 #: src/libaudgui/about.c:52 src/libaudgui/about.c:115
 msgid "Credits"
@@ -756,11 +756,11 @@ msgstr "Audacious について"
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
-msgstr "本当に %s を閉じますか?  変更が加えられていた場合、保存されずに破棄されます。"
+msgstr "本当に %s を閉じますか？ 変更が加えられていた場合、保存されずに破棄されます。"
 
 #: src/libaudgui/confirm.c:89
 msgid "_Don't show this message again"
-msgstr "_次以降このメッセージを表示しない"
+msgstr "このメッセージを二度と表示しない(_D)"
 
 #: src/libaudgui/confirm.c:126
 msgid "Rename Playlist"
@@ -772,7 +772,7 @@ msgstr "設定"
 
 #: src/libaudgui/equalizer.c:51
 msgid "_Enable"
-msgstr "_有効"
+msgstr "有効(_E)"
 
 #: src/libaudgui/equalizer.c:123
 msgid "31 Hz"
@@ -1001,7 +1001,7 @@ msgstr "メタデータの更新に失敗しました"
 
 #: src/libaudgui/infowin.c:320
 msgid "Track Information"
-msgstr "トラック"
+msgstr "トラック情報"
 
 #: src/libaudgui/infowin.c:352
 msgid "<span size=\"small\">Format:</span>"
@@ -1051,15 +1051,15 @@ msgstr "%d kb/s"
 #: src/libaudgui/infowin.c:575
 #, c-format
 msgid "No info available for %s.\n"
-msgstr ""
+msgstr "%s の情報が取得できません。\n"
 
 #: src/libaudgui/jump-to-time.c:72
 msgid "Jump to Time"
-msgstr "指定した時間へ移動"
+msgstr "指定した時間へジャンプ"
 
 #: src/libaudgui/jump-to-time.c:87
 msgid "mm:ss"
-msgstr ""
+msgstr "mm:ss"
 
 #: src/libaudgui/playlists.c:33
 msgid "Export Playlist"
@@ -1067,16 +1067,16 @@ msgstr "プレイリストを出力"
 
 #: src/libaudgui/playlists.c:33
 msgid "Import Playlist"
-msgstr "プレイリストを読込"
+msgstr "プレイリストを読み込み"
 
 #: src/libaudgui/playlists.c:66
 #, c-format
 msgid "Overwrite %s?"
-msgstr "%s を上書きしてよろしいですか？"
+msgstr "%s を上書きしてもよろしいですか？"
 
 #: src/libaudgui/queue-manager.c:196
 msgid "Queue Manager"
-msgstr ""
+msgstr "キューマネージャ"
 
 #: src/libaudgui/ui_fileopener.c:109
 msgid "Open Files"
@@ -1097,15 +1097,15 @@ msgstr "追加したらダイアログを閉じる"
 #: src/libaudgui/ui_jumptotrack.c:109 src/libaudgui/ui_jumptotrack.c:117
 #: src/libaudgui/ui_jumptotrack.c:326
 msgid "_Queue"
-msgstr "キューに入れる"
+msgstr "キューに追加(_Q)"
 
 #: src/libaudgui/ui_jumptotrack.c:115
 msgid "Un_queue"
-msgstr "キューから外す"
+msgstr "キューから外す(_U)"
 
 #: src/libaudgui/ui_jumptotrack.c:258
 msgid "Jump to Song"
-msgstr ""
+msgstr "指定した曲にジャンプ"
 
 #: src/libaudgui/ui_jumptotrack.c:281
 msgid "Filter: "
@@ -1117,11 +1117,11 @@ msgstr "フィルタ(_F):"
 
 #: src/libaudgui/ui_jumptotrack.c:292
 msgid "Remember"
-msgstr "記憶"
+msgstr "記憶する"
 
 #: src/libaudgui/ui_jumptotrack.c:299
 msgid "Clea_r"
-msgstr "クリア(_r)"
+msgstr "クリア(_R)"
 
 #: src/libaudgui/ui_jumptotrack.c:319
 msgid "Close on Jump"
@@ -1141,21 +1141,21 @@ msgstr "リネーム(_R)"
 
 #: src/libaudgui/ui_playlist_manager.c:325
 msgid "_Close dialog on activating playlist"
-msgstr ""
+msgstr "プレイリストをアクティブにしたらファイアログを閉じる(_C)"
 
 #: src/libaudgui/ui_urlopener.c:48
 msgid "Open URL"
-msgstr "URLを開く"
+msgstr "URL を開く"
 
 #: src/libaudgui/ui_urlopener.c:48
 msgid "Add URL"
-msgstr "URLを追加"
+msgstr "URL を追加"
 
 #: src/libaudgui/util.c:95
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
-msgstr ""
+msgstr "\n(追加のメッセージが隠れているかもしれません。)"
 
 #: src/libeggsmclient/eggdesktopfile.c:165
 msgid "File is not a valid .desktop file"
@@ -1164,7 +1164,7 @@ msgstr "有効な .desktop ファイルではありません"
 #: src/libeggsmclient/eggdesktopfile.c:191
 #, c-format
 msgid "Unrecognized desktop file Version '%s'"
-msgstr "認識できないデスクトップファイルヴァージョン '%s'"
+msgstr "認識できないデスクトップファイルバージョン '%s'"
 
 #: src/libeggsmclient/eggdesktopfile.c:974
 #, c-format
@@ -1178,15 +1178,15 @@ msgstr "アプリケーションはコマンドライン上のドキュメント
 #: src/libeggsmclient/eggdesktopfile.c:1184
 #, c-format
 msgid "Unrecognized launch option: %d"
-msgstr "認識できないローンチオプション: %d"
+msgstr "認識できない起動オプション: %d"
 
 #: src/libeggsmclient/eggdesktopfile.c:1391
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-msgstr "'Type=Link' デスクトップエントリにドキュメント URI を渡せません"
+msgstr "'Type=Link' デスクトップエントリにドキュメントの URI を渡せません"
 
 #: src/libeggsmclient/eggdesktopfile.c:1412
 msgid "Not a launchable item"
-msgstr "ローンチ可能なアイテムではありません"
+msgstr "起動可能なアイテムではありません"
 
 #: src/libeggsmclient/eggsmclient.c:226
 msgid "Disable connection to session manager"
@@ -1210,8 +1210,8 @@ msgstr "ID"
 
 #: src/libeggsmclient/eggsmclient.c:253
 msgid "Session management options:"
-msgstr ""
+msgstr "セッションマネージメントオプション:"
 
 #: src/libeggsmclient/eggsmclient.c:254
 msgid "Show session management options"
-msgstr ""
+msgstr "セッションマネージメントオプションを表示する"

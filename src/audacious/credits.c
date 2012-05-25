@@ -267,6 +267,7 @@ static const char * const translators_text[] = {
     NULL,
     N_("Japanese:"),
     "Dai",
+    "Shuuji Takahashi",
     NULL,
     N_("Korean:"),
     "DongCheon Park",

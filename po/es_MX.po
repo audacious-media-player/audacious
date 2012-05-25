@@ -9,9 +9,9 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2012-01-11 08:54-0500\n"
-"PO-Revision-Date: 2012-02-26 21:46+0000\n"
+"PO-Revision-Date: 2012-04-29 18:49+0000\n"
 "Last-Translator: Jorge A. García Sosa <jagsmd@gmail.com>\n"
-"Language-Team: Mexican Spanish\n"
+"Language-Team: Spanish (Mexican)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -47,7 +47,7 @@ msgstr "Skin por defecto:"
 
 #: src/audacious/credits.c:62
 msgid "Plugin development:"
-msgstr "Desarrollo de plugin:"
+msgstr "Desarrollo de plugins:"
 
 #: src/audacious/credits.c:85
 msgid "Patch authors:"
@@ -79,7 +79,7 @@ msgstr "Bretón:"
 
 #: src/audacious/credits.c:199
 msgid "Bulgarian:"
-msgstr "Búlgaro"
+msgstr "Búlgaro:"
 
 #: src/audacious/credits.c:202
 msgid "Catalan:"
@@ -135,7 +135,7 @@ msgstr "Húngaro:"
 
 #: src/audacious/credits.c:255
 msgid "Italian:"
-msgstr "italiano:"
+msgstr "Italiano:"
 
 #: src/audacious/credits.c:260
 msgid "Japanese:"
@@ -183,7 +183,7 @@ msgstr "Serbio(Latín):"
 
 #: src/audacious/credits.c:301
 msgid "Serbian (Cyrillic):"
-msgstr "Serbio(Cirílico)"
+msgstr "Serbio(Cirílico):"
 
 #: src/audacious/credits.c:305
 msgid "Simplified Chinese:"
@@ -215,11 +215,11 @@ msgstr "Ucraniano:"
 
 #: src/audacious/credits.c:338
 msgid "Vietnamese:"
-msgstr "Vietnamita"
+msgstr "Vietnamita:"
 
 #: src/audacious/credits.c:341
 msgid "Welsh:"
-msgstr "Galés"
+msgstr "Galés:"
 
 #: src/audacious/equalizer_preset.c:180
 #, c-format
@@ -291,7 +291,7 @@ msgstr " - Reproducir archivos multimedia"
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
-msgstr "%s: %s\nIntenta `%s --ayuda' para mayor información\n"
+msgstr "%s: %s\nIntenta `%s --ayuda' para mayor información.\n"
 
 #: src/audacious/main.c:573
 msgid "Audacious"
@@ -327,7 +327,7 @@ msgstr "Reproduciendo"
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress"
 " (or has been disabled)."
-msgstr "La lista de reproducción no puede ser ordenada porque la exploración de metadatos está en progreso (o ha sido deshabilitada)"
+msgstr "La lista de reproducción no puede ser ordenada porque la exploración de metadatos está en progreso (o ha sido deshabilitada)."
 
 #: src/audacious/ui_preferences.c:85
 msgid "Audio"
@@ -448,7 +448,7 @@ msgstr "Modo de Álbum"
 
 #: src/audacious/ui_preferences.c:147
 msgid "<b>Output Settings</b>"
-msgstr "Ajustes de Salida"
+msgstr "<b>Ajustes de Salida</b>"
 
 #: src/audacious/ui_preferences.c:149
 msgid "Bit depth:"
@@ -655,7 +655,7 @@ msgstr "Mostrar información sobre la cadena del formato de título"
 
 #: src/audacious/ui_preferences.c:1410
 msgid "Custom string:"
-msgstr "cadena personalizada:"
+msgstr "Cadena personalizada:"
 
 #: src/audacious/ui_preferences.c:1417
 msgid "Title format:"
@@ -715,7 +715,7 @@ msgstr "No se pudo crear el directorio (%s): %s\n"
 
 #: src/audtool/handlers_playlist.c:273
 msgid "Position not found."
-msgstr "Posición no encontrada"
+msgstr "Posición no encontrada."
 
 #: src/audtool/handlers_vitals.c:63
 msgid "No song playing."
@@ -1015,7 +1015,7 @@ msgstr "<span size=\"small\">Calidad:</span>"
 
 #: src/libaudgui/infowin.c:359
 msgid "<span size=\"small\">Bitrate:</span>"
-msgstr "<span size=\"small\">Bitrate:</span>"
+msgstr "<span size=\"small\">Tasa de bits:</span>"
 
 #: src/libaudgui/infowin.c:389
 msgid "<span size=\"small\">Title</span>"
@@ -1078,7 +1078,7 @@ msgstr "¿Sobreescribir %s?"
 
 #: src/libaudgui/queue-manager.c:196
 msgid "Queue Manager"
-msgstr "Administrador de colas:"
+msgstr "Administrador de colas"
 
 #: src/libaudgui/ui_fileopener.c:109
 msgid "Open Files"
