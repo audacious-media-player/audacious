@@ -2,7 +2,7 @@
 {\b Notes for Building Audacious on Windows}
 \par
 \par {John Lindgren}
-\par {December 29, 2011}
+\par {May 24, 2012}
 \par
 \par {This is not intended to be a complete set of instructions, but merely an outline.  Use at your own risk, etc., etc.}
 \par
@@ -33,9 +33,6 @@
 \par
 \par {Download and unzip to }{\fs20 C:\\libs}{:}
 \par {\fs20 http://www.libsdl.org/release/SDL-devel-1.2.14-mingw32.tar.gz}
-\par
-\par {Apply the patch }{\fs20 sdl-config.diff}{ to }{\fs20 C:\\libs\\bin\\sdl-config}{.}
-\par {Copy }{\fs20 C:\\libs\\share\\aclocal\\sdl.m4}{ to }{\fs20 C:\\MinGW\\share\\aclocal}{.}
 \par
 \par {\ul Set up system paths}
 \par
@@ -246,7 +243,7 @@
 \par {\ul Install Audacious}
 \par
 \par {Download and unzip to }{\fs20 C:\\audacious}{:}
-\par {\fs20 http://distfiles.audacious-media-player.org/audacious-3.2.tar.bz2}
+\par {\fs20 http://distfiles.audacious-media-player.org/audacious-3.2.3.tar.bz2}
 \par
 \par {In the MinGW shell:}
 \par {\fs20 cd /C/audacious}
@@ -257,10 +254,12 @@
 \par {\ul Install Audacious plugins}
 \par
 \par {Download and unzip to }{\fs20 C:\\audacious-plugins}{:}
-\par {\fs20 http://distfiles.audacious-media-player.org/audacious-plugins-3.2.tar.bz2}
+\par {\fs20 http://distfiles.audacious-media-player.org/audacious-plugins-3.2.3.tar.bz2}
 \par
 \par {In the MinGW shell:}
 \par {\fs20 cd /C/audacious-plugins}
+\par {\fs20 export SDL_CFLAGS="-I/C/libs/include/SDL"}
+\par {\fs20 export SDL_LIBS="-L/C/libs/lib -lSDL"}
 \par {\fs20 ./configure --prefix=/C/aud}
 \par {\fs20 make}
 \par {\fs20 make install}
