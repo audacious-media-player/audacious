@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2012-01-11 08:54-0500\n"
-"PO-Revision-Date: 2012-03-20 10:50+0000\n"
+"PO-Revision-Date: 2012-04-26 11:56+0000\n"
 "Last-Translator: Sérgio Marques <smarquespt@gmail.com>\n"
 "Language-Team: Portuguese\n"
 "MIME-Version: 1.0\n"
@@ -49,7 +49,7 @@ msgstr "Tema pré-definido:"
 
 #: src/audacious/credits.c:62
 msgid "Plugin development:"
-msgstr "Desenvolvimento de plug-ins:"
+msgstr "Desenvolvimento de suplementos:"
 
 #: src/audacious/credits.c:85
 msgid "Patch authors:"
@@ -345,7 +345,7 @@ msgstr "Lista de reprodução"
 
 #: src/audacious/ui_preferences.c:88
 msgid "Plugins"
-msgstr "Plug-ins"
+msgstr "Suplementos"
 
 #: src/audacious/ui_preferences.c:94 src/libaudgui/infopopup.c:199
 msgid "Artist"
@@ -526,7 +526,7 @@ msgstr "Utilizar autenticação do proxy"
 
 #: src/audacious/ui_preferences.c:193
 msgid "Auto character encoding detector for:"
-msgstr "Deteção automática de codificação caracteres para:"
+msgstr "Deteção automática da codificação de caracteres para:"
 
 #: src/audacious/ui_preferences.c:198
 msgid "Fallback character encodings:"
@@ -601,7 +601,7 @@ msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
 "using commas."
-msgstr "Ao procurar a capa do álbum, o Audacious pesquisa as palavras no nome do ficheiro. Pode especificar as palavras a procurar na lista abaixo, separadas por vírgulas"
+msgstr "Ao procurar a capa do álbum, o Audacious analisa as palavras no nome do ficheiro. Pode especificar as palavras a procurar na lista abaixo, separadas por vírgulas"
 
 #: src/audacious/ui_preferences.c:811
 msgid "Exclude:"
@@ -676,7 +676,7 @@ msgid ""
 "Toggles popup information window for the pointed entry in the playlist. The "
 "window shows title of song, name of album, genre, year of publish, track "
 "number, track length, and artwork."
-msgstr "Ativa a janela de informações para as entradas da lista de reprodução. A janela mostra o título da faixa, o nome do álbum, o género, o ano de publicação, o número da faixa, a duração da faixa e a capa do álbum"
+msgstr "Ativa a janela de informações para a faixa assinalada na lista de reprodução. A janela mostra o título, número e duração da faixa, o nome do álbum, o género, o ano de publicação e a capa do álbum"
 
 #: src/audacious/ui_preferences.c:1455
 msgid "Edit settings for popup information"
@@ -684,7 +684,7 @@ msgstr "Editar definições para os alertas"
 
 #: src/audacious/ui_preferences.c:1544
 msgid "Output plugin:"
-msgstr "Plug-in de saída:"
+msgstr "Suplemento de saída:"
 
 #: src/audacious/ui_preferences.c:1603
 msgid "Transport"
@@ -726,7 +726,7 @@ msgstr "Nenhuma faixa em reprodução"
 #: src/libaudcore/audstrings.c:199
 #, c-format
 msgid "Audio CD, track %s"
-msgstr "Cd áudio, faixa %s"
+msgstr "CD áudio, faixa %s"
 
 #: src/libaudcore/tuple.c:536
 msgid "Mono"
@@ -760,7 +760,7 @@ msgstr "Sobre o Audacious"
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
-msgstr "Tem a certeza que quer fechar %s? Se fechar, vai perder todas as modificações feitas após a exportação da lista de reprodução"
+msgstr "Tem a certeza que quer fechar %s? Se fechar, vai perder todas as modificações efetuadas após a exportação da lista de reprodução"
 
 #: src/libaudgui/confirm.c:89
 msgid "_Don't show this message again"
@@ -1141,11 +1141,11 @@ msgstr "Entradas"
 
 #: src/libaudgui/ui_playlist_manager.c:301
 msgid "_Rename"
-msgstr "_Mudar nome"
+msgstr "Muda_r nome"
 
 #: src/libaudgui/ui_playlist_manager.c:325
 msgid "_Close dialog on activating playlist"
-msgstr "_Fechar caixa de diálogo ao ativar a lista de reprodução"
+msgstr "Fe_char caixa de diálogo ao ativar a lista de reprodução"
 
 #: src/libaudgui/ui_urlopener.c:48
 msgid "Open URL"
