@@ -317,7 +317,7 @@ static bool_t read_frame (VFSFile * handle, int max_size, int version,
     TAGDBG (" flags = %x\n", (int) header.flags);
 
     * frame_size = sizeof (ID3v2FrameHeader) + header.size;
-    sprintf (key, "%.4s", header.key);
+    g_strlcpy (key, header.key, 5);
 
     if (header.flags & (ID3_FRAME_COMPRESSED | ID3_FRAME_ENCRYPTED))
     {

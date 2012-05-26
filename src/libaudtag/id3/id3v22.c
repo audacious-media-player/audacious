@@ -66,7 +66,7 @@ ID3v2Header;
 
 typedef struct
 {
-    unsigned char key[3];
+    char key[3];
     unsigned char size[3];
 }
 ID3v2FrameHeader;
@@ -166,7 +166,7 @@ static bool_t read_frame (VFSFile * handle, int max_size, int version,
     TAGDBG (" size = %d\n", (int) hdrsz);
 
     * frame_size = sizeof (ID3v2FrameHeader) + hdrsz;
-    sprintf (key, "%.3s", header.key);
+    g_strlcpy (key, header.key, 4);
 
     * size = hdrsz;
     * data = g_malloc (* size);
