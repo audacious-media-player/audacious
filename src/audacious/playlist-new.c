@@ -822,6 +822,7 @@ void playlist_reorder (int from, int to, int count)
 
 void playlist_delete (int playlist_num)
 {
+    /* stop playback before locking playlists */
     if (playback_get_playing () && playlist_num == playlist_get_playing ())
         playback_stop ();
 
@@ -969,6 +970,7 @@ int playlist_get_active (void)
 
 void playlist_set_playing (int playlist_num)
 {
+    /* stop playback before locking playlists */
     if (playback_get_playing ())
         playback_stop ();
 
@@ -1112,6 +1114,7 @@ void playlist_entry_insert_batch_raw (int playlist_num, int at,
 
 void playlist_entry_delete (int playlist_num, int at, int number)
 {
+    /* stop playback before locking playlists */
     if (playback_get_playing () && playlist_num == playlist_get_playing () &&
      playlist_get_position (playlist_num) >= at && playlist_get_position
      (playlist_num) < at + number)
@@ -1225,6 +1228,7 @@ int playlist_entry_get_length (int playlist_num, int entry_num, bool_t fast)
 
 void playlist_set_position (int playlist_num, int entry_num)
 {
+    /* stop playback before locking playlists */
     if (playback_get_playing () && playlist_num == playlist_get_playing ())
         playback_stop ();
 
@@ -1423,6 +1427,7 @@ int playlist_shift (int playlist_num, int entry_num, int distance)
 
 void playlist_delete_selected (int playlist_num)
 {
+    /* stop playback before locking playlists */
     if (playback_get_playing () && playlist_num == playlist_get_playing () &&
      playlist_get_position (playlist_num) >= 0 && playlist_entry_get_selected
      (playlist_num, playlist_get_position (playlist_num)))
@@ -2023,6 +2028,7 @@ static bool_t shuffle_prev (Playlist * playlist)
 
 bool_t playlist_prev_song (int playlist_num)
 {
+    /* stop playback before locking playlists */
     if (playback_get_playing () && playlist_num == playlist_get_playing ())
         playback_stop ();
 
@@ -2110,6 +2116,7 @@ static void shuffle_reset (Playlist * playlist)
 
 bool_t playlist_next_song (int playlist_num, bool_t repeat)
 {
+    /* stop playback before locking playlists */
     if (playback_get_playing () && playlist_num == playlist_get_playing ())
         playback_stop ();
 
@@ -2253,6 +2260,11 @@ int playback_entry_get_end_time (void)
 
 void playlist_save_state (void)
 {
+    /* get playback state before locking playlists */
+    resume_state = playback_get_playing () ? (playback_get_paused () ?
+     RESUME_PAUSE : RESUME_PLAY) : RESUME_STOP;
+    resume_time = playback_get_playing () ? playback_get_time () : 0;
+
     ENTER;
 
     char * path = g_strdup_printf ("%s/" STATE_FILE, get_path (AUD_PATH_USER_DIR));
@@ -2260,10 +2272,6 @@ void playlist_save_state (void)
     g_free (path);
     if (! handle)
         LEAVE_RET_VOID;
-
-    resume_state = playback_get_playing () ? (playback_get_paused () ?
-     RESUME_PAUSE : RESUME_PLAY) : RESUME_STOP;
-    resume_time = playback_get_playing () ? playback_get_time () : 0;
 
     fprintf (handle, "resume-state %d\n", resume_state);
     fprintf (handle, "resume-time %d\n", resume_time);
