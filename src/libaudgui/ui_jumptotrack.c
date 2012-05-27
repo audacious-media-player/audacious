@@ -275,6 +275,8 @@ static void create_window (void)
     gtk_container_add(GTK_CONTAINER(jump_to_track_win), vbox);
 
     treeview = audgui_list_new (& callbacks, NULL, 0);
+    gtk_tree_view_set_headers_visible ((GtkTreeView *) treeview, FALSE);
+
     audgui_list_add_column (treeview, NULL, 0, G_TYPE_INT, 7);
     audgui_list_add_column (treeview, NULL, 1, G_TYPE_STRING, -1);
 
