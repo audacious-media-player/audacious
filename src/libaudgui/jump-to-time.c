@@ -1,23 +1,20 @@
 /*
  * jump-to-time.c
- * Copyright 1998-2003 XMMS development team
- * Copyright 2003-2004 BMP development team
- * Copyright 2011 John Lindgren
+ * Copyright 2012 John Lindgren
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; under version 2 or version 3 of the License.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions, and the following disclaimer.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses>.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions, and the following disclaimer in the documentation
+ *    provided with the distribution.
  *
- * The Audacious team does not consider modular code linking to
- * Audacious or using our public API to be a derived work.
+ * This software is provided "as is" and without any warranty, express or
+ * implied. In no event shall the authors be liable for any damages arising from
+ * the use of this software.
  */
 
 #include <stdio.h>
@@ -27,86 +24,66 @@
 #include <audacious/i18n.h>
 
 #include "config.h"
+#include "init.h"
 #include "libaudgui.h"
-#include "libaudgui-gtk.h"
 
-static GtkWidget * window = NULL;
+static GtkWidget * window;
 
-static void jump_to_time_cb (GtkWidget * widget, GtkWidget * entry)
+static void response_cb (GtkWidget * dialog, int response)
 {
-    unsigned int min = 0, sec = 0;
-    int params = sscanf (gtk_entry_get_text ((GtkEntry *) entry), "%u:%u", & min,
-     & sec);
+    if (response == GTK_RESPONSE_ACCEPT)
+    {
+        GtkWidget * entry = g_object_get_data ((GObject *) dialog, "entry");
+        const char * text = gtk_entry_get_text ((GtkEntry *) entry);
+        unsigned minutes, seconds;
 
-    int time;
-    if (params == 2)
-        time = 60 * min + sec;
-    else if (params == 1)
-        time = min;
-    else
-        return;
+        if (sscanf (text, "%u:%u", & minutes, & seconds) == 2 && aud_drct_get_playing ())
+            aud_drct_seek ((minutes * 60 + seconds) * 1000);
+    }
 
-    if (aud_drct_get_playing ())
-        aud_drct_seek (1000 * time);
-
-    if (window)
-        gtk_widget_destroy (window);
+    gtk_widget_destroy (dialog);
 }
 
 EXPORT void audgui_jump_to_time (void)
 {
-    if (! aud_drct_get_playing ())
-        return;
-
     if (window)
+        gtk_widget_destroy (window);
+
+    window = gtk_dialog_new_with_buttons (_("Jump to Time"), NULL, 0,
+     GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT, GTK_STOCK_JUMP_TO,
+     GTK_RESPONSE_ACCEPT, NULL);
+    gtk_widget_set_size_request (window, 200, -1);
+    gtk_window_set_resizable ((GtkWindow *) window, FALSE);
+    gtk_dialog_set_default_response ((GtkDialog *) window, GTK_RESPONSE_ACCEPT);
+
+    GtkWidget * box = gtk_dialog_get_content_area ((GtkDialog *) window);
+
+    GtkWidget * label = gtk_label_new (_("Enter time (minutes:seconds):"));
+    gtk_misc_set_alignment ((GtkMisc *) label, 0, 0);
+    gtk_box_pack_start ((GtkBox *) box, label, FALSE, FALSE, 0);
+
+    GtkWidget * entry = gtk_entry_new ();
+    gtk_entry_set_activates_default ((GtkEntry *) entry, TRUE);
+    gtk_box_pack_start ((GtkBox *) box, entry, FALSE, FALSE, 0);
+
+    if (aud_drct_get_playing ())
     {
-        gtk_window_present ((GtkWindow *) window);
-        return;
+        char buf[16];
+        int time = aud_drct_get_time () / 1000;
+        snprintf (buf, sizeof buf, "%u:%02u", time / 60, time % 60);
+        gtk_entry_set_text ((GtkEntry *) entry, buf);
     }
 
-    window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-    g_signal_connect (window, "destroy", (GCallback) gtk_widget_destroyed,
-     & window);
-    gtk_window_set_type_hint ((GtkWindow *) window, GDK_WINDOW_TYPE_HINT_DIALOG);
-    gtk_window_set_title ((GtkWindow *) window, _("Jump to Time"));
-    gtk_window_set_resizable ((GtkWindow *) window, FALSE);
-    gtk_container_set_border_width ((GtkContainer *) window, 6);
-    audgui_destroy_on_escape (window);
+    g_object_set_data ((GObject *) window, "entry", entry);
 
-    GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-    gtk_container_add ((GtkContainer *) window, vbox);
-
-    GtkWidget * hbox_new = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  6);
-    gtk_box_pack_start ((GtkBox *) vbox, hbox_new, FALSE, FALSE, 0);
-
-    GtkWidget * time_entry = gtk_entry_new ();
-    gtk_entry_set_activates_default ((GtkEntry *) time_entry, TRUE);
-    gtk_box_pack_start ((GtkBox *) hbox_new, time_entry, FALSE, FALSE, 0);
-
-    GtkWidget * label = gtk_label_new (_("mm:ss"));
-    gtk_box_pack_start ((GtkBox *) hbox_new, label, FALSE, FALSE, 0);
-
-    GtkWidget * bbox = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
-    gtk_box_pack_start ((GtkBox *) vbox, bbox, TRUE, TRUE, 0);
-    gtk_button_box_set_layout ((GtkButtonBox *) bbox, GTK_BUTTONBOX_END);
-    gtk_box_set_spacing ((GtkBox *) bbox, 6);
-
-    GtkWidget * cancel = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
-    gtk_container_add ((GtkContainer *) bbox, cancel);
-    g_signal_connect_swapped (cancel, "clicked", (GCallback) gtk_widget_destroy,
-     window);
-
-    GtkWidget * jump = gtk_button_new_from_stock (GTK_STOCK_JUMP_TO);
-    gtk_widget_set_can_default (jump, TRUE);
-    gtk_container_add ((GtkContainer *) bbox, jump);
-    g_signal_connect (jump, "clicked", (GCallback) jump_to_time_cb, time_entry);
-
-    unsigned int tindex = aud_drct_get_time () / 1000;
-    char time_str[10];
-    snprintf (time_str, sizeof time_str, "%u:%2.2u", tindex / 60, tindex % 60);
-    gtk_entry_set_text ((GtkEntry *) time_entry, time_str);
-    gtk_editable_select_region ((GtkEditable *) time_entry, 0, -1);
+    g_signal_connect (window, "response", (GCallback) response_cb, NULL);
+    g_signal_connect (window, "destroy", (GCallback) gtk_widget_destroyed, & window);
 
     gtk_widget_show_all (window);
-    gtk_widget_grab_default (jump);
+}
+
+void audgui_jump_to_time_cleanup (void)
+{
+    if (window)
+        gtk_widget_destroy (window);
 }

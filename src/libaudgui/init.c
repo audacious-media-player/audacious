@@ -62,6 +62,7 @@ EXPORT void audgui_cleanup (void)
     hook_dissociate ("playlist position", playlist_position_cb);
 
     audgui_hide_equalizer_window ();
+    audgui_jump_to_time_cleanup ();
     audgui_jump_to_track_hide ();
     audgui_pixbuf_uncache ();
     audgui_playlist_manager_cleanup ();

@@ -18,7 +18,6 @@
  */
 
 #include <gtk/gtk.h>
-#include <stdlib.h>
 
 #include <audacious/drct.h>
 #include <audacious/i18n.h>
@@ -30,12 +29,12 @@
 
 static GtkWidget * window;
 
-void response_cb (GtkWidget * dialog, int response)
+static void response_cb (GtkWidget * dialog, int response)
 {
     if (response == GTK_RESPONSE_ACCEPT)
     {
         GtkWidget * entry = g_object_get_data ((GObject *) dialog, "entry");
-        char * text = gtk_combo_box_text_get_active_text ((GtkComboBoxText *) entry);
+        const char * text = gtk_entry_get_text ((GtkEntry *) entry);
         bool_t open = GPOINTER_TO_INT (g_object_get_data ((GObject *) dialog, "open"));
 
         if (open)
@@ -44,7 +43,6 @@ void response_cb (GtkWidget * dialog, int response)
             aud_drct_pl_add (text, -1);
 
         aud_history_add (text);
-        free (text);
     }
 
     gtk_widget_destroy (dialog);
@@ -78,7 +76,7 @@ EXPORT void audgui_show_add_url_window (bool_t open)
     for (int i = 0; (item = aud_history_get (i)); i++)
         gtk_combo_box_text_append_text ((GtkComboBoxText *) combo, item);
 
-    g_object_set_data ((GObject *) window, "entry", combo);
+    g_object_set_data ((GObject *) window, "entry", entry);
     g_object_set_data ((GObject *) window, "open", GINT_TO_POINTER (open));
 
     g_signal_connect (window, "response", (GCallback) response_cb, NULL);
