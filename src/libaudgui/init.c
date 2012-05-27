@@ -66,6 +66,7 @@ EXPORT void audgui_cleanup (void)
     audgui_pixbuf_uncache ();
     audgui_playlist_manager_cleanup ();
     audgui_queue_manager_cleanup ();
+    audgui_url_opener_cleanup ();
 
     _aud_api_table = NULL;
 }

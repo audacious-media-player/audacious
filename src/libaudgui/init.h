@@ -29,5 +29,8 @@ void audgui_queue_manager_cleanup (void);
 /* ui_playlist_manager.c */
 void audgui_playlist_manager_cleanup (void);
 
+/* url-opener.c */
+void audgui_url_opener_cleanup (void);
+
 /* util.c */
 void audgui_pixbuf_uncache (void);
