@@ -59,8 +59,6 @@ static GtkWidget * create_credits_notebook (const char * const * credits,
         GtkWidget * label = gtk_label_new (titles[i]);
 
         GtkWidget * scrolled = gtk_scrolled_window_new (NULL, NULL);
-        gtk_scrolled_window_set_shadow_type ((GtkScrolledWindow *) scrolled,
-         GTK_SHADOW_IN);
         gtk_widget_set_size_request (scrolled, -1, 200);
 
         GtkWidget * text = gtk_text_view_new_with_buffer (create_text_buffer (lists[i]));
