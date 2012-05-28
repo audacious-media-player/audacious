@@ -55,14 +55,6 @@ static PluginHandle * get_selected_plugin (GtkTreeView * tree)
     return n == NULL ? NULL : n->p;
 }
 
-static Plugin * get_selected_header (GtkTreeView * tree)
-{
-    PluginHandle * p = get_selected_plugin (tree);
-    g_return_val_if_fail (p != NULL, NULL);
-    g_return_val_if_fail (plugin_get_enabled (p), NULL);
-    return plugin_get_header (p);
-}
-
 static void do_enable (GtkCellRendererToggle * cell, const char * path_str,
  GtkTreeModel * model)
 {
@@ -202,22 +194,16 @@ static void button_update (GtkTreeView * tree, GtkWidget * b)
 
 static void do_config (GtkTreeView * tree)
 {
-    Plugin * header = get_selected_header (tree);
-    g_return_if_fail (header != NULL);
-
-    if (header->configure != NULL)
-        header->configure ();
-    else if (header->settings != NULL)
-        plugin_preferences_show (header->settings);
+    Plugin * plugin = get_selected_plugin (tree);
+    g_return_if_fail (plugin != NULL);
+    plugin_do_configure (plugin);
 }
 
 static void do_about (GtkTreeView * tree)
 {
-    Plugin * header = get_selected_header (tree);
-    g_return_if_fail (header != NULL);
-
-    if (header->about != NULL)
-        header->about ();
+    Plugin * plugin = get_selected_plugin (tree);
+    g_return_if_fail (plugin != NULL);
+    plugin_do_about (plugin);
 }
 
 static void button_destroy (GtkWidget * b)

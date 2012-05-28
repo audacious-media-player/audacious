@@ -53,3 +53,7 @@ AUD_VFUNC3 (plugin_add_watch, PluginHandle *, plugin, PluginForEachFunc,
  func, void *, data)
 AUD_VFUNC3 (plugin_remove_watch, PluginHandle *, plugin, PluginForEachFunc,
  func, void *, data)
+
+/* added in Audacious 3.3 */
+AUD_VFUNC1 (plugin_do_about, PluginHandle *, plugin)
+AUD_VFUNC1 (plugin_do_configure, PluginHandle *, plugin)

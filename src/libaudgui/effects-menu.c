@@ -52,9 +52,7 @@ static void settings_cb (GtkMenuItem * settings, PluginHandle * plugin)
     if (! aud_plugin_get_enabled (plugin))
         return;
 
-    Plugin * header = aud_plugin_get_header (plugin);
-    g_return_if_fail (header != NULL);
-    header->configure ();
+    aud_plugin_do_configure (plugin);
 }
 
 static bool_t add_item_cb (PluginHandle * plugin, GtkWidget * menu)

@@ -207,7 +207,7 @@ struct _EffectPlugin
      * passed, even a zero length. */
     void (* process) (float * * data, int * samples);
 
-    /* A seek is taking place; any buffers should be discarded. */
+    /* Optional.  A seek is taking place; any buffers should be discarded. */
     void (* flush) (void);
 
     /* Exactly like process() except that any buffers should be drained (i.e.
