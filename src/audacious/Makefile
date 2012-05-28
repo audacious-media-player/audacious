@@ -22,6 +22,7 @@ SRCS = adder.c \
        playlist-new.c \
        playlist-utils.c \
        pluginenum.c								\
+       plugin-preferences.c \
        plugin-registry.c \
        plugin-init.c \
        plugin-view.c \
