@@ -312,3 +312,25 @@ int plugin_send_message (PluginHandle * plugin, const char * code, const void * 
 
     return header->take_message (code, data, size);
 }
+
+void plugin_do_about (PluginHandle * plugin)
+{
+    g_return_if_fail (plugin_get_enabled (plugin));
+    Plugin * header = plugin_get_header (plugin);
+    g_return_if_fail (header);
+
+    if (PLUGIN_HAS_FUNC (header, about))
+        header->about ();
+}
+
+void plugin_do_configure (PluginHandle * plugin)
+{
+    g_return_if_fail (plugin_get_enabled (plugin));
+    Plugin * header = plugin_get_header (plugin);
+    g_return_if_fail (header);
+
+    if (PLUGIN_HAS_FUNC (header, configure))
+        header->configure ();
+    else if (PLUGIN_HAS_FUNC (header, settings))
+        plugin_preferences_show (header->settings);
+}
