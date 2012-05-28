@@ -194,14 +194,14 @@ static void button_update (GtkTreeView * tree, GtkWidget * b)
 
 static void do_config (GtkTreeView * tree)
 {
-    Plugin * plugin = get_selected_plugin (tree);
+    PluginHandle * plugin = get_selected_plugin (tree);
     g_return_if_fail (plugin != NULL);
     plugin_do_configure (plugin);
 }
 
 static void do_about (GtkTreeView * tree)
 {
-    Plugin * plugin = get_selected_plugin (tree);
+    PluginHandle * plugin = get_selected_plugin (tree);
     g_return_if_fail (plugin != NULL);
     plugin_do_about (plugin);
 }

@@ -1161,20 +1161,16 @@ static void output_combo_fill (GtkComboBox * combo)
 
 static void output_do_config (void)
 {
-    OutputPlugin * op = plugin_get_header (output_plugin_get_current ());
-    g_return_if_fail (op != NULL);
-    if (op->configure != NULL)
-        op->configure ();
-    else if (op->settings != NULL)
-        plugin_preferences_show (op->settings);
+    PluginHandle * plugin = output_plugin_get_current ();
+    g_return_if_fail (plugin != NULL);
+    plugin_do_configure (plugin);
 }
 
 static void output_do_about (void)
 {
-    OutputPlugin * op = plugin_get_header (output_plugin_get_current ());
-    g_return_if_fail (op != NULL);
-    if (op->about != NULL)
-        op->about ();
+    PluginHandle * plugin = output_plugin_get_current ();
+    g_return_if_fail (plugin != NULL);
+    plugin_do_about (plugin);
 }
 
 static void * create_output_plugin_box (void)
