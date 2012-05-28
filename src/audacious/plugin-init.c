@@ -261,10 +261,14 @@ static bool_t enable_multi (int type, PluginHandle * p, bool_t enable)
 bool_t plugin_enable (PluginHandle * plugin, bool_t enable)
 {
     if (! enable == ! plugin_get_enabled (plugin))
-    {
-        AUDDBG ("%s is already %sabled.\n", plugin_get_name (plugin), enable ?
-         "en" : "dis");
         return TRUE;
+
+    if (! enable)
+    {
+        Plugin * header = plugin_get_header_no_load (plugin);
+
+        if (header && PLUGIN_HAS_FUNC (header, settings))
+            plugin_preferences_cleanup (header->settings);
     }
 
     int type = plugin_get_type (plugin);

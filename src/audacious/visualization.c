@@ -242,8 +242,6 @@ void vis_plugin_stop (PluginHandle * plugin)
     if (running)
         vis_unload (plugin);
 
-    if (vp->settings != NULL)
-        plugin_preferences_cleanup (vp->settings);
     if (vp->cleanup != NULL)
         vp->cleanup ();
 }

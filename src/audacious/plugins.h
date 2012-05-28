@@ -55,6 +55,7 @@ void plugin_registry_save (void);
 void plugin_register (const char * path);
 void plugin_register_loaded (const char * path, Plugin * header);
 
+const void * plugin_get_header_no_load (PluginHandle * plugin);
 void plugin_set_enabled (PluginHandle * plugin, bool_t enabled);
 
 PluginHandle * transport_plugin_for_scheme (const char * scheme);

@@ -605,6 +605,11 @@ const void * plugin_get_header (PluginHandle * plugin)
     return plugin->header;
 }
 
+const void * plugin_get_header_no_load (PluginHandle * plugin)
+{
+    return plugin->header;
+}
+
 static int plugin_by_header_cb (PluginHandle * plugin, const void * header)
 {
     return (plugin->header == header) ? 0 : -1;

@@ -141,8 +141,6 @@ void general_plugin_stop (PluginHandle * plugin)
     if (running)
         general_unload (plugin);
 
-    if (gp->settings != NULL)
-        plugin_preferences_cleanup (gp->settings);
     if (gp->cleanup != NULL)
         gp->cleanup ();
 }
