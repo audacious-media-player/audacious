@@ -271,7 +271,7 @@ editable_insert_text(GtkEditable * editable,
 
 static void
 titlestring_tag_menu_callback(GtkMenuItem * menuitem,
-                              gpointer data)
+                              void * data)
 {
     const char *separator = " - ";
     int item = GPOINTER_TO_INT(data);
@@ -291,7 +291,7 @@ titlestring_tag_menu_callback(GtkMenuItem * menuitem,
 
 static void
 on_titlestring_help_button_clicked(GtkButton * button,
-                                   gpointer data)
+                                   void * data)
 {
     GtkMenu * menu = data;
     gtk_menu_popup (menu, NULL, NULL, NULL, NULL, 0, GDK_CURRENT_TIME);
@@ -529,7 +529,7 @@ void plugin_preferences_show (PluginPreferences * settings)
 
     gtk_window_set_transient_for(GTK_WINDOW(window), GTK_WINDOW(prefswin));
     gtk_widget_show_all(window);
-    settings->data = (gpointer)window;
+    settings->data = (void *)window;
 }
 
 void plugin_preferences_cleanup (PluginPreferences * p)
@@ -1354,7 +1354,7 @@ static void create_plugin_category (void)
 }
 
 static bool_t
-prefswin_destroy(GtkWidget *window, GdkEvent *event, gpointer data)
+prefswin_destroy(GtkWidget *window, GdkEvent *event, void * data)
 {
     prefswin = NULL;
     category_notebook = NULL;

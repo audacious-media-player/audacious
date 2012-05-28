@@ -57,7 +57,7 @@ G_DEFINE_TYPE (MprisTrackList, mpris_tracklist, G_TYPE_OBJECT)
 
 #define DBUS_TYPE_G_STRING_VALUE_HASHTABLE (dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE))
 
-static void mpris_playlist_update_hook(gpointer unused, MprisTrackList *obj);
+static void mpris_playlist_update_hook(void * unused, MprisTrackList *obj);
 
 void audacious_rc_class_init(RemoteObjectClass * klass)
 {
@@ -251,7 +251,7 @@ static void tuple_insert_to_hash(GHashTable * md, const Tuple * tuple,
     tuple_insert_to_hash_full(md, tuple, key, key);
 }
 
-static void remove_metadata_value(gpointer value)
+static void remove_metadata_value(void * value)
 {
     g_value_unset((GValue *) value);
     g_free((GValue *) value);
@@ -260,7 +260,7 @@ static void remove_metadata_value(gpointer value)
 static GHashTable *make_mpris_metadata(const char * filename, const Tuple * tuple)
 {
     GHashTable *md = NULL;
-    gpointer value;
+    void * value;
 
     md = g_hash_table_new_full(g_str_hash, g_str_equal, NULL, remove_metadata_value);
 
@@ -493,7 +493,7 @@ bool_t mpris_emit_tracklist_change(MprisTrackList * obj, int playlist)
     return TRUE;
 }
 
-static void mpris_playlist_update_hook(gpointer unused, MprisTrackList * obj)
+static void mpris_playlist_update_hook(void * unused, MprisTrackList * obj)
 {
     int playlist = playlist_get_active();
 

@@ -28,7 +28,7 @@
 #include "eggsmclient.h"
 
 static void
-signal_session_quit_cb(EggSMClient *client, gpointer user_data)
+signal_session_quit_cb(EggSMClient *client, void * user_data)
 {
     const char * argv[2];
 
@@ -42,7 +42,7 @@ signal_session_quit_cb(EggSMClient *client, gpointer user_data)
 }
 
 static void
-signal_session_save_cb(EggSMClient *client, GKeyFile *state_file, gpointer user_data)
+signal_session_save_cb(EggSMClient *client, GKeyFile *state_file, void * user_data)
 {
     const char * argv[2];
 

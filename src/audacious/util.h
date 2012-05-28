@@ -26,7 +26,7 @@
 
 typedef bool_t(*DirForeachFunc) (const char * path,
                                    const char * basename,
-                                   gpointer user_data);
+                                   void * user_data);
 
 bool_t dir_foreach (const char * path, DirForeachFunc func, void * user_data);
 

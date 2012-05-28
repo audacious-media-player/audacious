@@ -217,7 +217,7 @@ bool_t audacious_rc_playqueue_clear(RemoteObject *obj, GError **error);
 bool_t audacious_rc_playqueue_is_queued(RemoteObject *obj, int pos, bool_t *is_queued, GError **error);
 bool_t audacious_rc_playlist_ins_url_string(RemoteObject *obj, char *url, int pos, GError **error);
 bool_t audacious_rc_playlist_enqueue_to_temp(RemoteObject *obj, char *url, GError **error);
-bool_t audacious_rc_playlist_add(RemoteObject *obj, gpointer list, GError **error);
+bool_t audacious_rc_playlist_add(RemoteObject *obj, void * list, GError **error);
 
 /* new on nov 7 */
 bool_t audacious_rc_get_eq(RemoteObject *obj, double *preamp, GArray **bands, GError **error);

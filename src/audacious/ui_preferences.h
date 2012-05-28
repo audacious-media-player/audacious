@@ -38,6 +38,7 @@ int prefswin_page_new (void * container, const char * name, const char *
  imgurl);
 void prefswin_page_destroy(GtkWidget *container);
 
+/* plugin-preferences.c */
 void plugin_preferences_show (PluginPreferences * p);
 void plugin_preferences_cleanup (PluginPreferences * p);
 

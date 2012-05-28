@@ -46,7 +46,7 @@ typedef enum {
 } ValueType;
 
 typedef struct {
-    gpointer value;
+    void * value;
     const char *label;
 } ComboBoxElements;
 
@@ -55,7 +55,7 @@ struct _NotebookTab;
 struct _PreferencesWidget {
     WidgetType type;         /* widget type */
     char *label;             /* widget title (for SPIN_BTN it's text left to widget) */
-    gpointer cfg;            /* connected config value */
+    void * cfg;            /* connected config value */
     void (*callback) (void); /* this func will be called after value change, can be NULL */
     char *tooltip;           /* widget tooltip, can be NULL */
     bool_t child;
@@ -141,7 +141,7 @@ struct _PluginPreferences {
     void (*cancel)(void);
     void (*cleanup)(void);
 
-    gpointer data;    /* for internal interface use only */
+    void * data;    /* for internal interface use only */
 };
 
 #endif /* AUDACIOUS_PREFERENCES_H */

@@ -153,7 +153,7 @@ void plugin_load (const char * filename)
     g_module_close(module);
 }
 
-static bool_t scan_plugin_func(const char * path, const char * basename, gpointer data)
+static bool_t scan_plugin_func(const char * path, const char * basename, void * data)
 {
     if (!str_has_suffix_nocase(basename, PLUGIN_SUFFIX))
         return FALSE;
