@@ -45,7 +45,7 @@ static void dummy_plugin_stop (PluginHandle * p)
 
 static const struct {
     const char * name;
-    bool_t is_managed, is_single;
+    bool_t is_single;
 
     union {
         struct {
@@ -60,21 +60,15 @@ static const struct {
         } s;
     } u;
 } table[PLUGIN_TYPES] = {
- [PLUGIN_TYPE_TRANSPORT] = {"transport",  TRUE, FALSE, .u.m =
-  {dummy_plugin_start, dummy_plugin_stop}},
- [PLUGIN_TYPE_PLAYLIST] = {"playlist",  TRUE, FALSE, .u.m = {dummy_plugin_start,
-  dummy_plugin_stop}},
- [PLUGIN_TYPE_INPUT] = {"input", TRUE, FALSE, .u.m = {dummy_plugin_start,
-  dummy_plugin_stop}},
- [PLUGIN_TYPE_EFFECT] = {"effect", TRUE, FALSE, .u.m = {effect_plugin_start,
-  effect_plugin_stop}},
- [PLUGIN_TYPE_OUTPUT] = {"output", TRUE, TRUE, .u.s = {output_plugin_probe,
+ [PLUGIN_TYPE_TRANSPORT] = {"transport",  FALSE, .u.m = {dummy_plugin_start, dummy_plugin_stop}},
+ [PLUGIN_TYPE_PLAYLIST] = {"playlist",  FALSE, .u.m = {dummy_plugin_start, dummy_plugin_stop}},
+ [PLUGIN_TYPE_INPUT] = {"input", FALSE, .u.m = {dummy_plugin_start, dummy_plugin_stop}},
+ [PLUGIN_TYPE_EFFECT] = {"effect", FALSE, .u.m = {effect_plugin_start, effect_plugin_stop}},
+ [PLUGIN_TYPE_OUTPUT] = {"output", TRUE, .u.s = {output_plugin_probe,
   output_plugin_get_current, output_plugin_set_current}},
- [PLUGIN_TYPE_VIS] = {"visualization", TRUE, FALSE, .u.m = {vis_plugin_start,
-  vis_plugin_stop}},
- [PLUGIN_TYPE_GENERAL] = {"general", TRUE, FALSE, .u.m = {general_plugin_start,
-  general_plugin_stop}},
- [PLUGIN_TYPE_IFACE] = {"interface", TRUE, TRUE, .u.s = {iface_plugin_probe,
+ [PLUGIN_TYPE_VIS] = {"visualization", FALSE, .u.m = {vis_plugin_start, vis_plugin_stop}},
+ [PLUGIN_TYPE_GENERAL] = {"general", FALSE, .u.m = {general_plugin_start, general_plugin_stop}},
+ [PLUGIN_TYPE_IFACE] = {"interface", TRUE, .u.s = {iface_plugin_probe,
   iface_plugin_get_current, iface_plugin_set_current}}};
 
 static bool_t find_enabled_cb (PluginHandle * p, PluginHandle * * pp)
@@ -140,8 +134,6 @@ static bool_t start_multi_cb (PluginHandle * p, void * type)
 
 static void start_plugins (int type)
 {
-    if (! table[type].is_managed)
-        return;
     if (headless && type == PLUGIN_TYPE_IFACE)
         return;
 
@@ -186,8 +178,6 @@ static bool_t stop_multi_cb (PluginHandle * p, void * type)
 
 static void stop_plugins (int type)
 {
-    if (! table[type].is_managed)
-        return;
     if (headless && type == PLUGIN_TYPE_IFACE)
         return;
 
@@ -219,7 +209,7 @@ void stop_plugins_one (void)
 
 PluginHandle * plugin_get_current (int type)
 {
-    g_return_val_if_fail (table[type].is_managed && table[type].is_single, NULL);
+    g_return_val_if_fail (table[type].is_single, NULL);
     return table[type].u.s.get_current ();
 }
 
@@ -278,7 +268,6 @@ bool_t plugin_enable (PluginHandle * plugin, bool_t enable)
     }
 
     int type = plugin_get_type (plugin);
-    g_return_val_if_fail (table[type].is_managed, FALSE);
 
     if (table[type].is_single)
     {
