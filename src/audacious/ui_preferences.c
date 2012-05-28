@@ -1165,6 +1165,8 @@ static void output_do_config (void)
     g_return_if_fail (op != NULL);
     if (op->configure != NULL)
         op->configure ();
+    else if (op->settings != NULL)
+        plugin_preferences_show (op->settings);
 }
 
 static void output_do_about (void)
