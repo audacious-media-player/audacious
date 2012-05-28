@@ -114,7 +114,10 @@ void effect_flush (void)
     pthread_mutex_lock (& mutex);
 
     for (GList * node = running_effects; node != NULL; node = node->next)
-        ((RunningEffect *) node->data)->header->flush ();
+    {
+        if (PLUGIN_HAS_FUNC (((RunningEffect *) node->data)->header, flush))
+            ((RunningEffect *) node->data)->header->flush ();
+    }
 
     pthread_mutex_unlock (& mutex);
 }
