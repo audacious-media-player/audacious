@@ -39,7 +39,7 @@
 #include "util.h"
 
 #define FILENAME "plugin-registry"
-#define FORMAT 6
+#define FORMAT 7
 
 typedef struct {
     GList * schemes;
@@ -509,7 +509,7 @@ void plugin_register_loaded (const char * path, Plugin * header)
 
     g_free (plugin->name);
     plugin->name = g_strdup (header->name);
-    plugin->has_about = PLUGIN_HAS_FUNC (header, about);
+    plugin->has_about = PLUGIN_HAS_FUNC (header, about) || PLUGIN_HAS_FUNC (header, about_text);
     plugin->has_configure = PLUGIN_HAS_FUNC (header, configure) || PLUGIN_HAS_FUNC (header, prefs);
 
     if (header->type == PLUGIN_TYPE_TRANSPORT)
