@@ -1,6 +1,6 @@
 /*
  * plugin.h
- * Copyright 2005-2011 William Pitcock, Yoshiki Yazawa, Eugene Zagidullin, and
+ * Copyright 2005-2012 William Pitcock, Yoshiki Yazawa, Eugene Zagidullin, and
  *                     John Lindgren
  *
  * This program is free software; you can redistribute it and/or modify
@@ -45,8 +45,8 @@
  * the API tables), increment _AUD_PLUGIN_VERSION *and* set
  * _AUD_PLUGIN_VERSION_MIN to the same value. */
 
-#define _AUD_PLUGIN_VERSION_MIN 38 /* 3.2-alpha2 */
-#define _AUD_PLUGIN_VERSION     40 /* 3.3-devel */
+#define _AUD_PLUGIN_VERSION_MIN 40 /* 3.3-devel */
+#define _AUD_PLUGIN_VERSION     40
 
 /* A NOTE ON THREADS
  *
@@ -100,12 +100,18 @@
     int type; /* PLUGIN_TYPE_XXX */ \
     int size; /* size in bytes of the struct */ \
     const char * name; \
+    const char * domain; /* for gettext */ \
+    const char * about_text; \
+    const PluginPreferences * prefs; \
     bool_t (* init) (void); \
     void (* cleanup) (void); \
     int (* take_message) (const char * code, const void * data, int size); \
-    void (* about) (void); \
-    void (* configure) (void); \
-    PluginPreferences * settings;
+    void (* about) (void); /* use about_text instead if possible */ \
+    void (* configure) (void); /* use prefs instead if possible */ \
+    void * reserved1; \
+    void * reserved2; \
+    void * reserved3; \
+    void * reserved4;
 
 struct _Plugin
 {
@@ -477,6 +483,7 @@ struct _IfacePlugin
      * is_shown() and is_focused() will return nonzero. */
     void (* show) (bool_t show);
     bool_t (* is_shown) (void);
+    bool_t (* is_focused) (void);
 
     void (* show_error) (const char * markup);
     void (* show_filebrowser) (bool_t play_button);
@@ -487,9 +494,6 @@ struct _IfacePlugin
 
     void (* install_toolbar) (void /* GtkWidget */ * button);
     void (* uninstall_toolbar) (void /* GtkWidget */ * button);
-
-    /* added after 3.0-alpha1 */
-    bool_t (* is_focused) (void);
 };
 
 #undef PLUGIN_COMMON_FIELDS

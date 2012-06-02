@@ -63,6 +63,7 @@ struct PluginHandle {
     int priority;
     bool_t has_about, has_configure, enabled;
     GList * watches;
+    PluginMiscData misc;
 
     union {
         TransportPluginData t;
@@ -112,6 +113,8 @@ static PluginHandle * plugin_new (char * path, bool_t confirmed, bool_t
     plugin->has_configure = FALSE;
     plugin->enabled = FALSE;
     plugin->watches = NULL;
+
+    memset (& plugin->misc, 0, sizeof (PluginMiscData));
 
     if (type == PLUGIN_TYPE_TRANSPORT)
     {
@@ -507,8 +510,7 @@ void plugin_register_loaded (const char * path, Plugin * header)
     g_free (plugin->name);
     plugin->name = g_strdup (header->name);
     plugin->has_about = PLUGIN_HAS_FUNC (header, about);
-    plugin->has_configure = PLUGIN_HAS_FUNC (header, configure) ||
-     PLUGIN_HAS_FUNC (header, settings);
+    plugin->has_configure = PLUGIN_HAS_FUNC (header, configure) || PLUGIN_HAS_FUNC (header, prefs);
 
     if (header->type == PLUGIN_TYPE_TRANSPORT)
     {
@@ -720,6 +722,11 @@ void plugin_remove_watch (PluginHandle * plugin, PluginForEachFunc func, void *
 
         node = next;
     }
+}
+
+PluginMiscData * plugin_get_misc_data (PluginHandle * plugin)
+{
+    return & plugin->misc;
 }
 
 typedef struct {

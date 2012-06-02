@@ -112,8 +112,7 @@ static void plugin2_unload (LoadedModule * loaded)
     case PLUGIN_TYPE_PLAYLIST:
     case PLUGIN_TYPE_INPUT:
     case PLUGIN_TYPE_EFFECT:
-        if (PLUGIN_HAS_FUNC (header, settings))
-            plugin_preferences_cleanup (header->settings);
+        plugin_misc_cleanup (plugin_by_header (header));
         if (PLUGIN_HAS_FUNC (header, cleanup))
             header->cleanup ();
         break;

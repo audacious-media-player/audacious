@@ -117,7 +117,7 @@ AUD_VFUNC2 (plugin_menu_remove, int, id, MenuFunc, func)
 
 /* ui_preferences.c */
 AUD_VFUNC4 (create_widgets_with_domain, /* GtkWidget * */ void *, box,
- PreferencesWidget *, widgets, int, count, const char *, domain)
+ const PreferencesWidget *, widgets, int, n_widgets, const char *, domain)
 AUD_VFUNC0 (show_prefs_window)
 
 /* util.c */

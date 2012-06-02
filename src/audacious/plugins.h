@@ -41,6 +41,11 @@ enum {
  INPUT_KEY_MIME,
  INPUT_KEYS};
 
+typedef struct {
+    void * about_window;
+    void * config_window;
+} PluginMiscData;
+
 /* plugin-init.c */
 void start_plugins_one (void);
 void start_plugins_two (void);
@@ -57,6 +62,7 @@ void plugin_register_loaded (const char * path, Plugin * header);
 
 const void * plugin_get_header_no_load (PluginHandle * plugin);
 void plugin_set_enabled (PluginHandle * plugin, bool_t enabled);
+PluginMiscData * plugin_get_misc_data (PluginHandle * plugin);
 
 PluginHandle * transport_plugin_for_scheme (const char * scheme);
 PluginHandle * playlist_plugin_for_extension (const char * extension);

@@ -264,12 +264,7 @@ bool_t plugin_enable (PluginHandle * plugin, bool_t enable)
         return TRUE;
 
     if (! enable)
-    {
-        Plugin * header = plugin_get_header_no_load (plugin);
-
-        if (header && PLUGIN_HAS_FUNC (header, settings))
-            plugin_preferences_cleanup (header->settings);
-    }
+        plugin_misc_cleanup (plugin);
 
     int type = plugin_get_type (plugin);
 
@@ -314,6 +309,8 @@ void plugin_do_about (PluginHandle * plugin)
 
     if (PLUGIN_HAS_FUNC (header, about))
         header->about ();
+    else if (PLUGIN_HAS_FUNC (header, about_text))
+        plugin_make_about_window (plugin);
 }
 
 void plugin_do_configure (PluginHandle * plugin)
@@ -324,6 +321,6 @@ void plugin_do_configure (PluginHandle * plugin)
 
     if (PLUGIN_HAS_FUNC (header, configure))
         header->configure ();
-    else if (PLUGIN_HAS_FUNC (header, settings))
-        plugin_preferences_show (header->settings);
+    else if (PLUGIN_HAS_FUNC (header, prefs))
+        plugin_make_config_window (plugin);
 }

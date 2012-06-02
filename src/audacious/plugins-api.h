@@ -48,12 +48,10 @@ AUD_VFUNC3 (plugin_for_enabled, int, type, PluginForEachFunc, func,
 AUD_FUNC1 (const char *, plugin_get_name, PluginHandle *, plugin)
 AUD_FUNC1 (bool_t, plugin_has_about, PluginHandle *, plugin)
 AUD_FUNC1 (bool_t, plugin_has_configure, PluginHandle *, plugin)
+AUD_VFUNC1 (plugin_do_about, PluginHandle *, plugin)
+AUD_VFUNC1 (plugin_do_configure, PluginHandle *, plugin)
 
 AUD_VFUNC3 (plugin_add_watch, PluginHandle *, plugin, PluginForEachFunc,
  func, void *, data)
 AUD_VFUNC3 (plugin_remove_watch, PluginHandle *, plugin, PluginForEachFunc,
  func, void *, data)
-
-/* added in Audacious 3.3 */
-AUD_VFUNC1 (plugin_do_about, PluginHandle *, plugin)
-AUD_VFUNC1 (plugin_do_configure, PluginHandle *, plugin)

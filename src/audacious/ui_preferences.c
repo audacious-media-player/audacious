@@ -325,7 +325,7 @@ static void on_titlestring_cbox_changed (GtkComboBox * cbox, GtkEntry * entry)
         gtk_entry_set_text (entry, titlestring_presets[preset]);
 }
 
-static void widget_set_bool (PreferencesWidget * widget, bool_t value)
+static void widget_set_bool (const PreferencesWidget * widget, bool_t value)
 {
     g_return_if_fail (widget->cfg_type == VALUE_BOOLEAN);
 
@@ -338,7 +338,7 @@ static void widget_set_bool (PreferencesWidget * widget, bool_t value)
         widget->callback ();
 }
 
-static bool_t widget_get_bool (PreferencesWidget * widget)
+static bool_t widget_get_bool (const PreferencesWidget * widget)
 {
     g_return_val_if_fail (widget->cfg_type == VALUE_BOOLEAN, FALSE);
 
@@ -350,7 +350,7 @@ static bool_t widget_get_bool (PreferencesWidget * widget)
         return FALSE;
 }
 
-static void widget_set_int (PreferencesWidget * widget, int value)
+static void widget_set_int (const PreferencesWidget * widget, int value)
 {
     g_return_if_fail (widget->cfg_type == VALUE_INT);
 
@@ -363,7 +363,7 @@ static void widget_set_int (PreferencesWidget * widget, int value)
         widget->callback ();
 }
 
-static int widget_get_int (PreferencesWidget * widget)
+static int widget_get_int (const PreferencesWidget * widget)
 {
     g_return_val_if_fail (widget->cfg_type == VALUE_INT, 0);
 
@@ -375,7 +375,7 @@ static int widget_get_int (PreferencesWidget * widget)
         return 0;
 }
 
-static void widget_set_double (PreferencesWidget * widget, double value)
+static void widget_set_double (const PreferencesWidget * widget, double value)
 {
     g_return_if_fail (widget->cfg_type == VALUE_FLOAT);
 
@@ -388,7 +388,7 @@ static void widget_set_double (PreferencesWidget * widget, double value)
         widget->callback ();
 }
 
-static double widget_get_double (PreferencesWidget * widget)
+static double widget_get_double (const PreferencesWidget * widget)
 {
     g_return_val_if_fail (widget->cfg_type == VALUE_FLOAT, 0);
 
@@ -400,7 +400,7 @@ static double widget_get_double (PreferencesWidget * widget)
         return 0;
 }
 
-static void widget_set_string (PreferencesWidget * widget, const char * value)
+static void widget_set_string (const PreferencesWidget * widget, const char * value)
 {
     g_return_if_fail (widget->cfg_type == VALUE_STRING);
 
@@ -416,7 +416,7 @@ static void widget_set_string (PreferencesWidget * widget, const char * value)
         widget->callback ();
 }
 
-static char * widget_get_string (PreferencesWidget * widget)
+static char * widget_get_string (const PreferencesWidget * widget)
 {
     g_return_val_if_fail (widget->cfg_type == VALUE_STRING, NULL);
 
@@ -428,17 +428,17 @@ static char * widget_get_string (PreferencesWidget * widget)
         return NULL;
 }
 
-static void on_font_btn_font_set (GtkFontButton * button, PreferencesWidget * widget)
+static void on_font_btn_font_set (GtkFontButton * button, const PreferencesWidget * widget)
 {
     widget_set_string (widget, gtk_font_button_get_font_name (button));
 }
 
-static void on_spin_btn_changed_int (GtkSpinButton * button, PreferencesWidget * widget)
+static void on_spin_btn_changed_int (GtkSpinButton * button, const PreferencesWidget * widget)
 {
     widget_set_int (widget, gtk_spin_button_get_value_as_int (button));
 }
 
-static void on_spin_btn_changed_float (GtkSpinButton * button, PreferencesWidget * widget)
+static void on_spin_btn_changed_float (GtkSpinButton * button, const PreferencesWidget * widget)
 {
     widget_set_double (widget, gtk_spin_button_get_value (button));
 }
@@ -508,7 +508,7 @@ static void fill_category_list (GtkTreeView * treeview, GtkNotebook * notebook)
     }
 }
 
-static void on_toggle_button_toggled (GtkToggleButton * button, PreferencesWidget * widget)
+static void on_toggle_button_toggled (GtkToggleButton * button, const PreferencesWidget * widget)
 {
     bool_t active = gtk_toggle_button_get_active (button);
     widget_set_bool (widget, active);
@@ -518,33 +518,33 @@ static void on_toggle_button_toggled (GtkToggleButton * button, PreferencesWidge
         gtk_widget_set_sensitive (child, active);
 }
 
-static void init_toggle_button (GtkWidget * button, PreferencesWidget * widget)
+static void init_toggle_button (GtkWidget * button, const PreferencesWidget * widget)
 {
     if (widget->cfg_type != VALUE_BOOLEAN)
         return;
 
     gtk_toggle_button_set_active ((GtkToggleButton *) button, widget_get_bool (widget));
-    g_signal_connect (button, "toggled", (GCallback) on_toggle_button_toggled, widget);
+    g_signal_connect (button, "toggled", (GCallback) on_toggle_button_toggled, (void *) widget);
 }
 
-static void on_entry_changed (GtkEntry * entry, PreferencesWidget * widget)
+static void on_entry_changed (GtkEntry * entry, const PreferencesWidget * widget)
 {
     widget_set_string (widget, gtk_entry_get_text (entry));
 }
 
-static void on_cbox_changed_int (GtkComboBox * combobox, PreferencesWidget * widget)
+static void on_cbox_changed_int (GtkComboBox * combobox, const PreferencesWidget * widget)
 {
     int position = gtk_combo_box_get_active (combobox);
     widget_set_int (widget, GPOINTER_TO_INT (widget->data.combo.elements[position].value));
 }
 
-static void on_cbox_changed_string (GtkComboBox * combobox, PreferencesWidget * widget)
+static void on_cbox_changed_string (GtkComboBox * combobox, const PreferencesWidget * widget)
 {
     int position = gtk_combo_box_get_active (combobox);
     widget_set_string (widget, widget->data.combo.elements[position].value);
 }
 
-static void fill_cbox (GtkWidget * combobox, PreferencesWidget * widget)
+static void fill_cbox (GtkWidget * combobox, const PreferencesWidget * widget)
 {
     unsigned int i=0,index=0;
 
@@ -555,8 +555,8 @@ static void fill_cbox (GtkWidget * combobox, PreferencesWidget * widget)
     if (widget->data.combo.enabled) {
         switch (widget->cfg_type) {
             case VALUE_INT:
-                g_signal_connect(combobox, "changed",
-                                 G_CALLBACK(on_cbox_changed_int), widget);
+                g_signal_connect (combobox, "changed", (GCallback)
+                 on_cbox_changed_int, (void *) widget);
 
                 int ivalue = widget_get_int (widget);
 
@@ -569,8 +569,8 @@ static void fill_cbox (GtkWidget * combobox, PreferencesWidget * widget)
                 }
                 break;
             case VALUE_STRING:
-                g_signal_connect(combobox, "changed",
-                                 G_CALLBACK(on_cbox_changed_string), widget);
+                g_signal_connect (combobox, "changed", (GCallback)
+                 on_cbox_changed_string, (void *) widget);
 
                 char * value = widget_get_string (widget);
 
@@ -594,7 +594,7 @@ static void fill_cbox (GtkWidget * combobox, PreferencesWidget * widget)
     }
 }
 
-static void create_spin_button (PreferencesWidget * widget, GtkWidget * *
+static void create_spin_button (const PreferencesWidget * widget, GtkWidget * *
  label_pre, GtkWidget * * spin_btn, GtkWidget * * label_past, const char *
  domain)
 {
@@ -620,19 +620,20 @@ static void create_spin_button (PreferencesWidget * widget, GtkWidget * *
     {
     case VALUE_INT:
         gtk_spin_button_set_value ((GtkSpinButton *) * spin_btn, widget_get_int (widget));
-        g_signal_connect (* spin_btn, "value_changed", (GCallback) on_spin_btn_changed_int, widget);
+        g_signal_connect (* spin_btn, "value_changed", (GCallback)
+         on_spin_btn_changed_int, (void *) widget);
         break;
     case VALUE_FLOAT:
         gtk_spin_button_set_value ((GtkSpinButton *) * spin_btn, widget_get_double (widget));
         g_signal_connect (* spin_btn, "value_changed", (GCallback)
-         on_spin_btn_changed_float, widget);
+         on_spin_btn_changed_float, (void *) widget);
         break;
     default:
         break;
     }
 }
 
-void create_font_btn (PreferencesWidget * widget, GtkWidget * * label,
+void create_font_btn (const PreferencesWidget * widget, GtkWidget * * label,
  GtkWidget * * font_btn, const char * domain)
 {
     *font_btn = gtk_font_button_new();
@@ -657,10 +658,10 @@ void create_font_btn (PreferencesWidget * widget, GtkWidget * * label,
         g_free (name);
     }
 
-    g_signal_connect (* font_btn, "font_set", (GCallback) on_font_btn_font_set, widget);
+    g_signal_connect (* font_btn, "font_set", (GCallback) on_font_btn_font_set, (void *) widget);
 }
 
-static void create_entry (PreferencesWidget * widget, GtkWidget * * label,
+static void create_entry (const PreferencesWidget * widget, GtkWidget * * label,
  GtkWidget * * entry, const char * domain)
 {
     *entry = gtk_entry_new();
@@ -681,11 +682,11 @@ static void create_entry (PreferencesWidget * widget, GtkWidget * * label,
             g_free (value);
         }
 
-        g_signal_connect (* entry, "changed", (GCallback) on_entry_changed, widget);
+        g_signal_connect (* entry, "changed", (GCallback) on_entry_changed, (void *) widget);
     }
 }
 
-static void create_label (PreferencesWidget * widget, GtkWidget * * label,
+static void create_label (const PreferencesWidget * widget, GtkWidget * * label,
  GtkWidget * * icon, const char * domain)
 {
     if (widget->data.label.stock_id)
@@ -700,7 +701,7 @@ static void create_label (PreferencesWidget * widget, GtkWidget * * label,
     gtk_misc_set_alignment(GTK_MISC(*label), 0, 0.5);
 }
 
-static void create_cbox (PreferencesWidget * widget, GtkWidget * * label,
+static void create_cbox (const PreferencesWidget * widget, GtkWidget * * label,
  GtkWidget * * combobox, const char * domain)
 {
     * combobox = gtk_combo_box_text_new ();
@@ -712,7 +713,7 @@ static void create_cbox (PreferencesWidget * widget, GtkWidget * * label,
     fill_cbox (* combobox, widget);
 }
 
-static void fill_table (GtkWidget * table, PreferencesWidget * elements, int
+static void fill_table (GtkWidget * table, const PreferencesWidget * elements, int
  amt, const char * domain)
 {
     int x;
@@ -768,10 +769,9 @@ static void fill_table (GtkWidget * table, PreferencesWidget * elements, int
     }
 }
 
-/* void create_widgets_with_domain (GtkBox * box, PreferencesWidget * widgets,
- int amt, const char * domain) */
-void create_widgets_with_domain (void * box, PreferencesWidget * widgets, int
- amt, const char * domain)
+/* box: a GtkBox */
+void create_widgets_with_domain (void * box, const PreferencesWidget * widgets,
+ int amt, const char * domain)
 {
     GtkWidget *alignment = NULL, *widget = NULL;
     GtkWidget *child_box = NULL;
@@ -922,8 +922,8 @@ void create_widgets_with_domain (void * box, PreferencesWidget * widgets, int
                     GtkWidget *vbox;
                     vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 5);
                     create_widgets_with_domain ((GtkBox *) vbox,
-                     widgets[x].data.notebook.tabs[i].settings,
-                     widgets[x].data.notebook.tabs[i].n_settings, domain);
+                     widgets[x].data.notebook.tabs[i].widgets,
+                     widgets[x].data.notebook.tabs[i].n_widgets, domain);
 
                     gtk_notebook_append_page (GTK_NOTEBOOK (widget), vbox,
                      gtk_label_new (dgettext (domain,

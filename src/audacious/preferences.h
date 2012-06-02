@@ -21,6 +21,8 @@
 #ifndef AUDACIOUS_PREFERENCES_H
 #define AUDACIOUS_PREFERENCES_H
 
+#include <audacious/types.h>
+
 typedef enum {
     WIDGET_NONE,
     WIDGET_CHK_BTN,
@@ -47,26 +49,26 @@ typedef enum {
 
 typedef struct {
     void * value;
-    const char *label;
+    const char * label;
 } ComboBoxElements;
 
 struct _NotebookTab;
 
 struct _PreferencesWidget {
-    WidgetType type;         /* widget type */
-    char *label;             /* widget title (for SPIN_BTN it's text left to widget) */
-    void * cfg;            /* connected config value */
-    void (*callback) (void); /* this func will be called after value change, can be NULL */
-    char *tooltip;           /* widget tooltip, can be NULL */
+    WidgetType type;          /* widget type */
+    const char * label;       /* widget title (for SPIN_BTN it's text left to widget) */
+    void * cfg;               /* connected config value */
+    void (* callback) (void); /* this func will be called after value change, can be NULL */
+    const char * tooltip;     /* widget tooltip, can be NULL */
     bool_t child;
-    ValueType cfg_type;      /* connected value type */
-    const char * csect;     /* config file section */
-    const char * cname;     /* config file key name */
+    ValueType cfg_type;       /* connected value type */
+    const char * csect;       /* config file section */
+    const char * cname;       /* config file key name */
 
     union {
         struct {
             double min, max, step;
-            char *right_label;      /* text right to widget */
+            const char * right_label; /* text right to widget */
         } spin_btn;
 
         struct {
@@ -75,12 +77,12 @@ struct _PreferencesWidget {
         } table;
 
         struct {
-            char *stock_id;
+            const char * stock_id;
             bool_t single_line; /* FALSE to enable line wrap */
         } label;
 
         struct {
-            char *title;
+            const char * title;
         } font_btn;
 
         struct {
@@ -88,13 +90,13 @@ struct _PreferencesWidget {
         } entry;
 
         struct {
-            ComboBoxElements *elements;
+            const ComboBoxElements * elements;
             int n_elements;
             bool_t enabled;
         } combo;
 
         struct {
-            struct _PreferencesWidget *elem;
+            const struct _PreferencesWidget * elem;
             int n_elem;
 
             bool_t horizontal;  /* FALSE gives vertical, TRUE gives horizontal aligment of child widgets */
@@ -102,7 +104,7 @@ struct _PreferencesWidget {
         } box;
 
         struct {
-            struct _NotebookTab *tabs;
+            const struct _NotebookTab * tabs;
             int n_tabs;
         } notebook;
 
@@ -117,31 +119,19 @@ struct _PreferencesWidget {
 };
 
 typedef struct _NotebookTab {
-    char *name;
-    PreferencesWidget *settings;
-    int n_settings;
+    const char * name;
+    const PreferencesWidget * widgets;
+    int n_widgets;
 } NotebookTab;
 
-typedef enum {
-    PREFERENCES_WINDOW,  /* displayed in seperate window */
-} PreferencesType;
-
 struct _PluginPreferences {
-    const char * domain;
-    const char * title;
-    const char * imgurl;
-
-    PreferencesWidget *prefs;
-    int n_prefs;
-
-    PreferencesType type;
+    const PreferencesWidget * widgets;
+    int n_widgets;
 
     void (*init)(void);
     void (*apply)(void);
     void (*cancel)(void);
     void (*cleanup)(void);
-
-    void * data;    /* for internal interface use only */
 };
 
 #endif /* AUDACIOUS_PREFERENCES_H */

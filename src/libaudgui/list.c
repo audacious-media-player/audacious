@@ -846,11 +846,3 @@ EXPORT int audgui_list_row_at_point (GtkWidget * list, int x, int y)
     gtk_tree_path_free (path);
     return row;
 }
-
-/* old-style (pre-3.3) audgui_list_new() */
-#undef audgui_list_new
-EXPORT GtkWidget * audgui_list_new (const AudguiListCallbacks * cbs, void * user, int rows)
-{
-    return audgui_list_new_real (cbs, offsetof (AudguiListCallbacks,
-     mouse_motion), user, rows);
-}

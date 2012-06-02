@@ -39,8 +39,9 @@ int prefswin_page_new (void * container, const char * name, const char *
 void prefswin_page_destroy(GtkWidget *container);
 
 /* plugin-preferences.c */
-void plugin_preferences_show (PluginPreferences * p);
-void plugin_preferences_cleanup (PluginPreferences * p);
+void plugin_make_about_window (PluginHandle * plugin);
+void plugin_make_config_window (PluginHandle * plugin);
+void plugin_misc_cleanup (PluginHandle * plugin);
 
 /* plugin-view.c */
 GtkWidget * plugin_view_new (int type);
