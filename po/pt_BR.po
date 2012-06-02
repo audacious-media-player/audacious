@@ -1,19 +1,20 @@
-# Brazilian Portuguese translation for Audacious
+# Portuguese (Brazil) translation for Audacious
 # Copyright (C) Audacious translators
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
 # Cleiton cleitonlima <cleitonlima@lavabit.com>, 2011.
+#   <jimmie.macedo@gmail.com>, 2012.
 # Karen Eliot <kareneliot@riseup. net>, 2011.
 # Rafael Ferreira <rafael.f.f1@gmail.com>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-06-01 20:02-0400\n"
-"PO-Revision-Date: 2012-02-26 05:32+0000\n"
-"Last-Translator: Rafael Ferreira <rafael.f.f1@gmail.com>\n"
-"Language-Team: Brazilian Portuguese\n"
+"POT-Creation-Date: 2012-06-01 20:24-0400\n"
+"PO-Revision-Date: 2012-06-02 00:06+0000\n"
+"Last-Translator: jlindgren <john.lindgren@aol.com>\n"
+"Language-Team: Portuguese (Brazil)\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -64,9 +65,8 @@ msgid "BMP Developers:"
 msgstr "Desenvolvedores do BMP:"
 
 #: src/audacious/credits.c:186
-#, fuzzy
 msgid "Argentinian Spanish:"
-msgstr "Espanhol Mexicano:"
+msgstr ""
 
 #: src/audacious/credits.c:189
 msgid "Belarusian:"
@@ -78,7 +78,7 @@ msgstr "Basco:"
 
 #: src/audacious/credits.c:195
 msgid "Brazilian Portuguese:"
-msgstr "Português do Brasil:"
+msgstr "Brazilian Portuguese:"
 
 #: src/audacious/credits.c:201
 msgid "Breton:"
@@ -594,28 +594,24 @@ msgid "Search recursively"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:217
-#, fuzzy
 msgid "Search depth:"
-msgstr "Profundidade da busca:"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:220
 msgid "<b>Popup Information</b>"
 msgstr "<b>Informações Popup</b>"
 
 #: src/audacious/ui_preferences.c:221
-#, fuzzy
 msgid "Show popup information"
 msgstr ""
-"Exibir informações de arquivos da lista de reprodução em uma janela popup"
 
 #: src/audacious/ui_preferences.c:223
 msgid "Popup delay (tenths of a second):"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:226
-#, fuzzy
 msgid "Show time scale for current song"
-msgstr "Parar música atual"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:240
 msgid "TITLE"
@@ -820,14 +816,12 @@ msgid "Preamp"
 msgstr "Preamplificação"
 
 #: src/libaudgui/infopopup.c:203
-#, fuzzy
 msgid "Track"
-msgstr "Número da faixa"
+msgstr ""
 
 #: src/libaudgui/infopopup.c:205
-#, fuzzy
 msgid "Length"
-msgstr "Duração do arquivo"
+msgstr ""
 
 #: src/libaudgui/infowin.c:75
 msgid "Acid Jazz"
@@ -1222,57 +1216,3 @@ msgstr "Opções de gerenciamento de sessão:"
 #: src/libeggsmclient/eggsmclient.c:254
 msgid "Show session management options"
 msgstr "Mostrar opções de gerenciamento de sessão"
-
-#~ msgid "Popup Information Settings"
-#~ msgstr "Configuração de informações em janelas popup"
-
-#~ msgid "<b>Cover image retrieve</b>"
-#~ msgstr "<b>Buscar imagem de capa</b>"
-
-#~ msgid ""
-#~ "While searching for the album's cover, Audacious looks for certain words "
-#~ "in the filename. You can specify those words in the lists below, "
-#~ "separated using commas."
-#~ msgstr ""
-#~ "Para buscar imagem de capa para o Álbum, o Audacious utiliza o nome do "
-#~ "arquivo. Mas, você pode especificar outras palavras na lista abaixo, "
-#~ "separadas por vírgulas."
-
-#~ msgid "Exclude:"
-#~ msgstr "Excluir:"
-
-#~ msgid "Include:"
-#~ msgstr "Incluir:"
-
-#~ msgid "Recursively search for cover"
-#~ msgstr "Buscar pela capa"
-
-#~ msgid "Use per-file cover"
-#~ msgstr "Exibir capa"
-
-#~ msgid "<b>Miscellaneous</b>"
-#~ msgstr "<b>Diversos</b>"
-
-#~ msgid "Show Progress bar for the current track"
-#~ msgstr "Mostrar Barra de Progresso para o arquivo atual"
-
-#~ msgid "Delay until filepopup comes up: "
-#~ msgstr "Tempo até que a janela popup do arquivo apareça:"
-
-#~ msgid ""
-#~ "Toggles popup information window for the pointed entry in the playlist. "
-#~ "The window shows title of song, name of album, genre, year of publish, "
-#~ "track number, track length, and artwork."
-#~ msgstr ""
-#~ "Ativa a exibição de informações de arquivos da lista de reprodução em uma "
-#~ "janela popup. A janela mostra o título, número, álbum, gênero, ano, "
-#~ "duração e arte do arquivo selecionado."
-
-#~ msgid "Edit settings for popup information"
-#~ msgstr "Editar valores para informações popup"
-
-#~ msgid "Track Number"
-#~ msgstr "Número do Arquivo"
-
-#~ msgid "mm:ss"
-#~ msgstr "mm:ss"

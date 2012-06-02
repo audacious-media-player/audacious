@@ -1,6 +1,7 @@
 # Finnish translation for Audacious
 # Copyright (C) Audacious translators
 # This file is distributed under the same license as the Audacious package.
+#
 # Translators:
 # Elias Julkunen <elias.julkunen@gmail.com>, 2011.
 # Matti Hämäläinen, 2008.
@@ -10,9 +11,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-06-01 20:02-0400\n"
-"PO-Revision-Date: 2012-01-29 22:35+0000\n"
-"Last-Translator: Tuomas Lähteenmäki <lahtis@gmail.com>\n"
+"POT-Creation-Date: 2012-06-01 20:24-0400\n"
+"PO-Revision-Date: 2012-06-02 00:06+0000\n"
+"Last-Translator: jlindgren <john.lindgren@aol.com>\n"
 "Language-Team: Finnish\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
@@ -591,9 +592,8 @@ msgid "Search recursively"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:217
-#, fuzzy
 msgid "Search depth:"
-msgstr "Haun syvyys: "
+msgstr ""
 
 #: src/audacious/ui_preferences.c:220
 msgid "<b>Popup Information</b>"
@@ -608,9 +608,8 @@ msgid "Popup delay (tenths of a second):"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:226
-#, fuzzy
 msgid "Show time scale for current song"
-msgstr "Pysäytä nykyinen kappale"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:240
 msgid "TITLE"
@@ -815,14 +814,12 @@ msgid "Preamp"
 msgstr "Esivahvistus"
 
 #: src/libaudgui/infopopup.c:203
-#, fuzzy
 msgid "Track"
-msgstr "Kappalenumero"
+msgstr ""
 
 #: src/libaudgui/infopopup.c:205
-#, fuzzy
 msgid "Length"
-msgstr "Kappaleen kesto:"
+msgstr ""
 
 #: src/libaudgui/infowin.c:75
 msgid "Acid Jazz"
@@ -1213,36 +1210,3 @@ msgstr "Istunnonhallinnan valinnat:"
 #: src/libeggsmclient/eggsmclient.c:254
 msgid "Show session management options"
 msgstr "Näytä istunnonhallinnan valinnat"
-
-#~ msgid "<b>Cover image retrieve</b>"
-#~ msgstr "<b>Kansikuvien haku</b>"
-
-#~ msgid ""
-#~ "While searching for the album's cover, Audacious looks for certain words "
-#~ "in the filename. You can specify those words in the lists below, "
-#~ "separated using commas."
-#~ msgstr ""
-#~ "Albumin kansikuvaa etsittäessä Audacious etsii tiettyjä sanoja "
-#~ "tiedostonnimessä. Voit määritellä nämä sanat alla olevissa luetteloissa "
-#~ "pilkuilla erotettuina."
-
-#~ msgid "Exclude:"
-#~ msgstr "Jätä huomiotta:"
-
-#~ msgid "Include:"
-#~ msgstr "Sisällytä:"
-
-#~ msgid "Recursively search for cover"
-#~ msgstr "Etsi albumin kansikuvaa rekursiivisesti"
-
-#~ msgid "Use per-file cover"
-#~ msgstr "Käytä kansikuvia yksittäisille tiedostoille"
-
-#~ msgid "<b>Miscellaneous</b>"
-#~ msgstr "<b>Sekalaista</b>"
-
-#~ msgid "Show Progress bar for the current track"
-#~ msgstr "Näytä edistymispalkki nykyiselle kappaleelle"
-
-#~ msgid "Track Number"
-#~ msgstr "Kappaleen numero"

@@ -12,9 +12,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-06-01 20:02-0400\n"
-"PO-Revision-Date: 2012-01-29 17:44+0000\n"
-"Last-Translator: Piotr Sokół <psokol@jabster.pl>\n"
+"POT-Creation-Date: 2012-06-01 20:24-0400\n"
+"PO-Revision-Date: 2012-06-02 00:06+0000\n"
+"Last-Translator: jlindgren <john.lindgren@aol.com>\n"
 "Language-Team: Polish\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
@@ -68,9 +68,8 @@ msgid "BMP Developers:"
 msgstr "Programiści BMP:"
 
 #: src/audacious/credits.c:186
-#, fuzzy
 msgid "Argentinian Spanish:"
-msgstr "Hiszpański (Meksykański):"
+msgstr ""
 
 #: src/audacious/credits.c:189
 msgid "Belarusian:"
@@ -598,27 +597,24 @@ msgid "Search recursively"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:217
-#, fuzzy
 msgid "Search depth:"
-msgstr "Głębokość wyszukiwania: "
+msgstr ""
 
 #: src/audacious/ui_preferences.c:220
 msgid "<b>Popup Information</b>"
 msgstr "<b>Informacje podręczne</b>"
 
 #: src/audacious/ui_preferences.c:221
-#, fuzzy
 msgid "Show popup information"
-msgstr "Wyświetlanie podręcznych informacji elementów listy odtwarzania"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:223
 msgid "Popup delay (tenths of a second):"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:226
-#, fuzzy
 msgid "Show time scale for current song"
-msgstr "Zatrzymuje odtwarzanie bieżącego nagrania"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:240
 msgid "TITLE"
@@ -824,14 +820,12 @@ msgid "Preamp"
 msgstr "Przedwzm."
 
 #: src/libaudgui/infopopup.c:203
-#, fuzzy
 msgid "Track"
-msgstr "Numer ścieżki"
+msgstr ""
 
 #: src/libaudgui/infopopup.c:205
-#, fuzzy
 msgid "Length"
-msgstr "Czas trwania"
+msgstr ""
 
 #: src/libaudgui/infowin.c:75
 msgid "Acid Jazz"
@@ -1225,57 +1219,3 @@ msgstr "Opcje zarządzania sesją:"
 #: src/libeggsmclient/eggsmclient.c:254
 msgid "Show session management options"
 msgstr "Wyświetla opcje zarządzania sesją"
-
-#~ msgid "Popup Information Settings"
-#~ msgstr "Ustawienia informacji podręcznych"
-
-#~ msgid "<b>Cover image retrieve</b>"
-#~ msgstr "<b>Wyszukiwanie okładek albumów</b>"
-
-#~ msgid ""
-#~ "While searching for the album's cover, Audacious looks for certain words "
-#~ "in the filename. You can specify those words in the lists below, "
-#~ "separated using commas."
-#~ msgstr ""
-#~ "Podczas poszukiwania okładek albumów, program wyszukuje konkretnych "
-#~ "wyrażeń w nazwach plików. Można określić te wyrażenia w poniższych "
-#~ "polach, rozdzielając je przecinkami."
-
-#~ msgid "Exclude:"
-#~ msgstr "Pomijanie:"
-
-#~ msgid "Include:"
-#~ msgstr "Uwzględnianie:"
-
-#~ msgid "Recursively search for cover"
-#~ msgstr "Wyszukiwanie rekurencyjne"
-
-#~ msgid "Use per-file cover"
-#~ msgstr "Używanie osobnej okładki dla każdego pliku"
-
-#~ msgid "<b>Miscellaneous</b>"
-#~ msgstr "<b>Różne</b>"
-
-#~ msgid "Show Progress bar for the current track"
-#~ msgstr "Wyświetlanie paska postępu dla bieżącego nagrania"
-
-#~ msgid "Delay until filepopup comes up: "
-#~ msgstr "Opóźnienie wyświetlania informacji:"
-
-#~ msgid ""
-#~ "Toggles popup information window for the pointed entry in the playlist. "
-#~ "The window shows title of song, name of album, genre, year of publish, "
-#~ "track number, track length, and artwork."
-#~ msgstr ""
-#~ "Włącza informacje w dymkach dla wskazanych wpisów na liście odtwarzania. "
-#~ "Okno to ukazuje informacje o tytule, nazwie albumu, rodzaju muzyki, roku "
-#~ "publikacji, numeru ścieżki, jej długości oraz zdjęcie okładki."
-
-#~ msgid "Edit settings for popup information"
-#~ msgstr "Modyfikuje ustawienia podręcznych informacji"
-
-#~ msgid "Track Number"
-#~ msgstr "Numer ścieżki"
-
-#~ msgid "mm:ss"
-#~ msgstr "mm:ss"

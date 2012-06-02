@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-06-01 20:02-0400\n"
-"PO-Revision-Date: 2012-05-14 12:19+0000\n"
-"Last-Translator: Shuuji Takahashi <shuuji3@gmail.com>\n"
+"POT-Creation-Date: 2012-06-01 20:24-0400\n"
+"PO-Revision-Date: 2012-06-02 00:06+0000\n"
+"Last-Translator: jlindgren <john.lindgren@aol.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
@@ -61,9 +61,8 @@ msgid "BMP Developers:"
 msgstr "BMP 開発者:"
 
 #: src/audacious/credits.c:186
-#, fuzzy
 msgid "Argentinian Spanish:"
-msgstr "スペイン語(メキシコ):"
+msgstr ""
 
 #: src/audacious/credits.c:189
 msgid "Belarusian:"
@@ -591,27 +590,24 @@ msgid "Search recursively"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:217
-#, fuzzy
 msgid "Search depth:"
-msgstr "検索の深さ: "
+msgstr ""
 
 #: src/audacious/ui_preferences.c:220
 msgid "<b>Popup Information</b>"
 msgstr "<b>ポップアップ情報</b>"
 
 #: src/audacious/ui_preferences.c:221
-#, fuzzy
 msgid "Show popup information"
-msgstr "プレイリストのエントリのポップアップ情報を表示する"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:223
 msgid "Popup delay (tenths of a second):"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:226
-#, fuzzy
 msgid "Show time scale for current song"
-msgstr "現在の曲を停止する"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:240
 msgid "TITLE"
@@ -814,14 +810,12 @@ msgid "Preamp"
 msgstr "プリアンプ"
 
 #: src/libaudgui/infopopup.c:203
-#, fuzzy
 msgid "Track"
-msgstr "トラック番号"
+msgstr ""
 
 #: src/libaudgui/infopopup.c:205
-#, fuzzy
 msgid "Length"
-msgstr "トラックの長さ:"
+msgstr ""
 
 #: src/libaudgui/infowin.c:75
 msgid "Acid Jazz"
@@ -1214,56 +1208,3 @@ msgstr "セッションマネージメントオプション:"
 #: src/libeggsmclient/eggsmclient.c:254
 msgid "Show session management options"
 msgstr "セッションマネージメントオプションを表示する"
-
-#~ msgid "Popup Information Settings"
-#~ msgstr "ポップアップ情報の設定"
-
-#~ msgid "<b>Cover image retrieve</b>"
-#~ msgstr "<b>カバー画像の取得</b>"
-
-#~ msgid ""
-#~ "While searching for the album's cover, Audacious looks for certain words "
-#~ "in the filename. You can specify those words in the lists below, "
-#~ "separated using commas."
-#~ msgstr ""
-#~ "アルバムのカバーを検索する際、Audacious はファイル名の中の単語を探します。"
-#~ "コンマで区切られた単語リストを以下に指定できます。"
-
-#~ msgid "Exclude:"
-#~ msgstr "含まない:"
-
-#~ msgid "Include:"
-#~ msgstr "含む:"
-
-#~ msgid "Recursively search for cover"
-#~ msgstr "カバーの再帰検索"
-
-#~ msgid "Use per-file cover"
-#~ msgstr "ファイルごとのカバーを使う"
-
-#~ msgid "<b>Miscellaneous</b>"
-#~ msgstr "<b>その他</b>"
-
-#~ msgid "Show Progress bar for the current track"
-#~ msgstr "現在のトラックのプログレスバーを表示する"
-
-#~ msgid "Delay until filepopup comes up: "
-#~ msgstr "ファイルポップアップが表示されるまでの遅延: "
-
-#~ msgid ""
-#~ "Toggles popup information window for the pointed entry in the playlist. "
-#~ "The window shows title of song, name of album, genre, year of publish, "
-#~ "track number, track length, and artwork."
-#~ msgstr ""
-#~ "プレイリスト中でポイントされたエントリのポップアップ情報ウィンドウを切り替"
-#~ "えます。ウィンドウには曲のタイトル、アルバム名、ジャンル、製作年、トラック"
-#~ "番号、トラックの長さ、アートワークが表示されます。"
-
-#~ msgid "Edit settings for popup information"
-#~ msgstr "ポップアップ情報の設定を編集する"
-
-#~ msgid "Track Number"
-#~ msgstr "トラック番号"
-
-#~ msgid "mm:ss"
-#~ msgstr "mm:ss"

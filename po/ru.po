@@ -15,9 +15,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-06-01 20:02-0400\n"
-"PO-Revision-Date: 2012-01-13 11:35+0000\n"
-"Last-Translator: NaiLi Rootaerc <theism@mail.ru>\n"
+"POT-Creation-Date: 2012-06-01 20:24-0400\n"
+"PO-Revision-Date: 2012-06-02 00:06+0000\n"
+"Last-Translator: jlindgren <john.lindgren@aol.com>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -71,9 +71,8 @@ msgid "BMP Developers:"
 msgstr "Разработчики BMP:"
 
 #: src/audacious/credits.c:186
-#, fuzzy
 msgid "Argentinian Spanish:"
-msgstr "Испанский язык, Мексика:"
+msgstr ""
 
 #: src/audacious/credits.c:189
 msgid "Belarusian:"
@@ -601,29 +600,24 @@ msgid "Search recursively"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:217
-#, fuzzy
 msgid "Search depth:"
-msgstr "Глубина поиска: "
+msgstr ""
 
 #: src/audacious/ui_preferences.c:220
 msgid "<b>Popup Information</b>"
 msgstr "<b>Всплывающее информационное окно</b>"
 
 #: src/audacious/ui_preferences.c:221
-#, fuzzy
 msgid "Show popup information"
 msgstr ""
-"Показывать всплывающее информационное окно для дорожек в списке "
-"воспроизведения"
 
 #: src/audacious/ui_preferences.c:223
 msgid "Popup delay (tenths of a second):"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:226
-#, fuzzy
 msgid "Show time scale for current song"
-msgstr "Остановить текущую дорожку"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:240
 msgid "TITLE"
@@ -829,14 +823,12 @@ msgid "Preamp"
 msgstr "Пред. усиление"
 
 #: src/libaudgui/infopopup.c:203
-#, fuzzy
 msgid "Track"
-msgstr "Номер дорожки"
+msgstr ""
 
 #: src/libaudgui/infopopup.c:205
-#, fuzzy
 msgid "Length"
-msgstr "Длительность"
+msgstr ""
 
 #: src/libaudgui/infowin.c:75
 msgid "Acid Jazz"
@@ -1231,56 +1223,3 @@ msgstr "Управление опциями сессий:"
 #: src/libeggsmclient/eggsmclient.c:254
 msgid "Show session management options"
 msgstr "Показать опции управления сессиями"
-
-#~ msgid "Popup Information Settings"
-#~ msgstr "Настройка всплывающей информации"
-
-#~ msgid "<b>Cover image retrieve</b>"
-#~ msgstr "<b>Поиск обложки альбома</b>"
-
-#~ msgid ""
-#~ "While searching for the album's cover, Audacious looks for certain words "
-#~ "in the filename. You can specify those words in the lists below, "
-#~ "separated using commas."
-#~ msgstr ""
-#~ "При поиске обложки альбома Audacious ищет определенные слова в именах "
-#~ "файлов. Вы можете указать эти слова ниже, разделив их запятыми."
-
-#~ msgid "Exclude:"
-#~ msgstr "Исключая:"
-
-#~ msgid "Include:"
-#~ msgstr "Включая:"
-
-#~ msgid "Recursively search for cover"
-#~ msgstr "Искать обложку во вложенных каталогах"
-
-#~ msgid "Use per-file cover"
-#~ msgstr "Искать изображение для каждого файла"
-
-#~ msgid "<b>Miscellaneous</b>"
-#~ msgstr "<b>Разное</b>"
-
-#~ msgid "Show Progress bar for the current track"
-#~ msgstr "Показывать полосу завершения для проигрываемой дорожки"
-
-#~ msgid "Delay until filepopup comes up: "
-#~ msgstr "Задержка появления всплывающей информации: "
-
-#~ msgid ""
-#~ "Toggles popup information window for the pointed entry in the playlist. "
-#~ "The window shows title of song, name of album, genre, year of publish, "
-#~ "track number, track length, and artwork."
-#~ msgstr ""
-#~ "Включить показ всплывающего окна с информацией о выбранной дорожке в "
-#~ "списке воспроизведения. Окно содержит название песни, название альбома, "
-#~ "жанр, год, номер дорожки, длительность песни и обложку альбома."
-
-#~ msgid "Edit settings for popup information"
-#~ msgstr "Изменить настройки всплывающего информационного окна"
-
-#~ msgid "Track Number"
-#~ msgstr "Номер дорожки"
-
-#~ msgid "mm:ss"
-#~ msgstr "мин:сек"

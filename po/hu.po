@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-06-01 20:02-0400\n"
-"PO-Revision-Date: 2012-01-12 06:38+0000\n"
-"Last-Translator: Péter Polonkai <polesz@nedudu.hu>\n"
+"POT-Creation-Date: 2012-06-01 20:24-0400\n"
+"PO-Revision-Date: 2012-06-02 00:06+0000\n"
+"Last-Translator: jlindgren <john.lindgren@aol.com>\n"
 "Language-Team: Hungarian\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
@@ -64,9 +64,8 @@ msgid "BMP Developers:"
 msgstr "BMP-fejlesztők:"
 
 #: src/audacious/credits.c:186
-#, fuzzy
 msgid "Argentinian Spanish:"
-msgstr "Mexikói spanyol:"
+msgstr ""
 
 #: src/audacious/credits.c:189
 msgid "Belarusian:"
@@ -594,27 +593,24 @@ msgid "Search recursively"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:217
-#, fuzzy
 msgid "Search depth:"
-msgstr "Keresési mélység: "
+msgstr ""
 
 #: src/audacious/ui_preferences.c:220
 msgid "<b>Popup Information</b>"
 msgstr "<b>Felbukkanó információ</b>"
 
 #: src/audacious/ui_preferences.c:221
-#, fuzzy
 msgid "Show popup information"
-msgstr "Felbukkanó információ megjelenítése a lejátszólista bejegyzéseknél"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:223
 msgid "Popup delay (tenths of a second):"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:226
-#, fuzzy
 msgid "Show time scale for current song"
-msgstr "Jelenlegi szám leállítása"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:240
 msgid "TITLE"
@@ -819,14 +815,12 @@ msgid "Preamp"
 msgstr "Preamp"
 
 #: src/libaudgui/infopopup.c:203
-#, fuzzy
 msgid "Track"
-msgstr "Szám sorszáma"
+msgstr ""
 
 #: src/libaudgui/infopopup.c:205
-#, fuzzy
 msgid "Length"
-msgstr "Szám hossza"
+msgstr ""
 
 #: src/libaudgui/infowin.c:75
 msgid "Acid Jazz"
@@ -1219,58 +1213,3 @@ msgstr "Munkamenet kezelési lehetőségek:"
 #: src/libeggsmclient/eggsmclient.c:254
 msgid "Show session management options"
 msgstr "Munkamenet kezelési lehetőségek mutatása"
-
-#~ msgid "Popup Information Settings"
-#~ msgstr "Felbukkanó információ beállításai"
-
-#~ msgid "<b>Cover image retrieve</b>"
-#~ msgstr "<b>Borítókép letöltése</b>"
-
-#~ msgid ""
-#~ "While searching for the album's cover, Audacious looks for certain words "
-#~ "in the filename. You can specify those words in the lists below, "
-#~ "separated using commas."
-#~ msgstr ""
-#~ "Albumborító keresése közben az Audacious bizonyos szavakat keres a "
-#~ "fájlnévben. Megadhatja ezeket a szavakat az alábbi listában, vesszővel "
-#~ "elválasztva."
-
-#~ msgid "Exclude:"
-#~ msgstr "Kihagyja:"
-
-#~ msgid "Include:"
-#~ msgstr "Beletartozzon:"
-
-#~ msgid "Recursively search for cover"
-#~ msgstr "Borító keresése rekurzívan"
-
-#~ msgid "Use per-file cover"
-#~ msgstr "Fájlonkénti borító használata"
-
-#~ msgid "<b>Miscellaneous</b>"
-#~ msgstr "<b>Egyéb</b>"
-
-#~ msgid "Show Progress bar for the current track"
-#~ msgstr "Folyamatjelző mutatása az aktuális számhoz"
-
-#~ msgid "Delay until filepopup comes up: "
-#~ msgstr "Késleltetés a file popup ablak megnyitásakor:"
-
-#~ msgid ""
-#~ "Toggles popup information window for the pointed entry in the playlist. "
-#~ "The window shows title of song, name of album, genre, year of publish, "
-#~ "track number, track length, and artwork."
-#~ msgstr ""
-#~ "Megjelenjen-e a lejátszólistában a kiválasztott bejegyzésnél egy "
-#~ "felbukkanó információs ablak. Az ablak megjeleníti a szám címét, az album "
-#~ "nevét, a műfaját, a megjelenés évét, a szám sorszámát, a szám hosszát és "
-#~ "az albumborítót."
-
-#~ msgid "Edit settings for popup information"
-#~ msgstr "Felbukkanó információ beállításainak szerkesztése"
-
-#~ msgid "Track Number"
-#~ msgstr "Szám sorszáma"
-
-#~ msgid "mm:ss"
-#~ msgstr "mm:ss"

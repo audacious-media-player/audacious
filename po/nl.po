@@ -4,14 +4,15 @@
 #
 # Translators:
 # Bjorn Roesbeke <inbox@bjornroesbeke.be>, 2012.
+# Dennis Klomp <c_klomp@epu-forum.net>, 2012.
 #   <glenn_de_groot@hotmail.com>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-06-01 20:02-0400\n"
-"PO-Revision-Date: 2012-03-11 15:58+0000\n"
-"Last-Translator: Bjorn Roesbeke <inbox@bjornroesbeke.be>\n"
+"POT-Creation-Date: 2012-06-01 20:24-0400\n"
+"PO-Revision-Date: 2012-06-02 00:06+0000\n"
+"Last-Translator: jlindgren <john.lindgren@aol.com>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
@@ -63,9 +64,8 @@ msgid "BMP Developers:"
 msgstr "BMP ontwikkelaars:"
 
 #: src/audacious/credits.c:186
-#, fuzzy
 msgid "Argentinian Spanish:"
-msgstr "Mexicaans Spaans:"
+msgstr ""
 
 #: src/audacious/credits.c:189
 msgid "Belarusian:"
@@ -284,7 +284,7 @@ msgstr "Toon debug berichten"
 
 #: src/audacious/main.c:252
 msgid "Headless mode (beta)"
-msgstr ""
+msgstr "Onzichtbaar modus (beta)"
 
 #: src/audacious/main.c:253
 msgid "FILE..."
@@ -484,15 +484,15 @@ msgstr "Gebruik de software volumeregelaar (niet aangeraden)"
 
 #: src/audacious/ui_preferences.c:145
 msgid "<b>Replay Gain</b>"
-msgstr ""
+msgstr "<b>Normaliseren</b>"
 
 #: src/audacious/ui_preferences.c:146
 msgid "Enable Replay Gain"
-msgstr ""
+msgstr "Normaliseren gebruiken"
 
 #: src/audacious/ui_preferences.c:149
 msgid "Prevent clipping (recommended)"
-msgstr ""
+msgstr "Afknippen voorkomen (aanbevolen)"
 
 #: src/audacious/ui_preferences.c:151
 msgid "<b>Adjust Levels</b>"
@@ -508,7 +508,7 @@ msgstr "dB"
 
 #: src/audacious/ui_preferences.c:155
 msgid "Amplify untagged files:"
-msgstr ""
+msgstr "Versterk bestanden zonder tag"
 
 #: src/audacious/ui_preferences.c:160
 msgid "Proxy hostname:"
@@ -595,27 +595,24 @@ msgid "Search recursively"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:217
-#, fuzzy
 msgid "Search depth:"
-msgstr "Zoekdiepte: "
+msgstr ""
 
 #: src/audacious/ui_preferences.c:220
 msgid "<b>Popup Information</b>"
 msgstr "<b>Popup-informatie</b>"
 
 #: src/audacious/ui_preferences.c:221
-#, fuzzy
 msgid "Show popup information"
-msgstr "Popup-informatie tonen voor items in afspeellijst"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:223
 msgid "Popup delay (tenths of a second):"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:226
-#, fuzzy
 msgid "Show time scale for current song"
-msgstr "Stop huidig nummer"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:240
 msgid "TITLE"
@@ -679,7 +676,7 @@ msgstr "Uitvoer plugin"
 
 #: src/audacious/ui_preferences.c:1238
 msgid "Transport"
-msgstr ""
+msgstr "Transport"
 
 #: src/audacious/ui_preferences.c:1238
 msgid "Input"
@@ -820,9 +817,8 @@ msgid "Preamp"
 msgstr "Voorversterker"
 
 #: src/libaudgui/infopopup.c:203
-#, fuzzy
 msgid "Track"
-msgstr "Nummer"
+msgstr ""
 
 #: src/libaudgui/infopopup.c:205
 msgid "Length"
@@ -1003,7 +999,7 @@ msgstr "Nummer-informatie:"
 
 #: src/libaudgui/infowin.c:355
 msgid "<span size=\"small\">Format:</span>"
-msgstr ""
+msgstr "<span size=\"small\">Formaat:</span>"
 
 #: src/libaudgui/infowin.c:359
 msgid "<span size=\"small\">Quality:</span>"
@@ -1123,7 +1119,7 @@ msgstr "Wis_sen"
 
 #: src/libaudgui/ui_jumptotrack.c:328
 msgid "Close on Jump"
-msgstr ""
+msgstr "Sluit bij verspringen"
 
 #: src/libaudgui/ui_playlist_manager.c:253
 msgid "Playlist Manager"
@@ -1131,7 +1127,7 @@ msgstr "Speellijst beheerder"
 
 #: src/libaudgui/ui_playlist_manager.c:280
 msgid "Entries"
-msgstr ""
+msgstr "Invoer"
 
 #: src/libaudgui/ui_playlist_manager.c:301
 msgid "_Rename"
@@ -1139,7 +1135,7 @@ msgstr "_Hernoemen"
 
 #: src/libaudgui/ui_playlist_manager.c:325
 msgid "_Close dialog on activating playlist"
-msgstr ""
+msgstr "_Venster sluiten bij activeren afspeellijst"
 
 #: src/libaudgui/url-opener.c:56
 msgid "Open URL"
@@ -1187,6 +1183,7 @@ msgstr "Niet herkende opstartoptie: %d"
 #: src/libeggsmclient/eggdesktopfile.c:1391
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
 msgstr ""
+"Kan document URI's niet doorgeven aan een 'Type=Link' bureaublad invoer"
 
 #: src/libeggsmclient/eggdesktopfile.c:1412
 msgid "Not a launchable item"
@@ -1206,7 +1203,7 @@ msgstr "BESTAND"
 
 #: src/libeggsmclient/eggsmclient.c:232
 msgid "Specify session management ID"
-msgstr ""
+msgstr "Sessie management ID specificeren"
 
 #: src/libeggsmclient/eggsmclient.c:232
 msgid "ID"
@@ -1214,57 +1211,8 @@ msgstr "ID"
 
 #: src/libeggsmclient/eggsmclient.c:253
 msgid "Session management options:"
-msgstr ""
+msgstr "Sessie management opties:"
 
 #: src/libeggsmclient/eggsmclient.c:254
 msgid "Show session management options"
-msgstr ""
-
-#~ msgid "Popup Information Settings"
-#~ msgstr "Instellingen van popup-informatie"
-
-#~ msgid ""
-#~ "While searching for the album's cover, Audacious looks for certain words "
-#~ "in the filename. You can specify those words in the lists below, "
-#~ "separated using commas."
-#~ msgstr ""
-#~ "Tijdens het zoeken naar cover art wordt naar bepaalde woorden in de "
-#~ "bestandsnaam gekeken. Deze woorden kunnen hier worden opgegeven, "
-#~ "gescheiden door komma's."
-
-#~ msgid "Exclude:"
-#~ msgstr "Uitsluiten:"
-
-#~ msgid "Include:"
-#~ msgstr "Zoeken naar:"
-
-#~ msgid "Recursively search for cover"
-#~ msgstr "Recursief zoeken naar covers"
-
-#~ msgid "Use per-file cover"
-#~ msgstr "Cover per bestand"
-
-#~ msgid "<b>Miscellaneous</b>"
-#~ msgstr "<b>Diversen</b>"
-
-#~ msgid "Show Progress bar for the current track"
-#~ msgstr "Toon voortgangsbalk voor het huidige nummer"
-
-#~ msgid "Delay until filepopup comes up: "
-#~ msgstr "Vertraging tot bestandsvenster getoond wordt:"
-
-#~ msgid ""
-#~ "Toggles popup information window for the pointed entry in the playlist. "
-#~ "The window shows title of song, name of album, genre, year of publish, "
-#~ "track number, track length, and artwork."
-#~ msgstr ""
-#~ "Schakelt het tonen van een popup-venster in. Dit venster toont meer "
-#~ "informatie over het geselecteerde item in de afspeellijst, zoals de "
-#~ "titel, het album, het genre, het jaar van publicatie, tracknummer en "
-#~ "eventuele cover art."
-
-#~ msgid "Edit settings for popup information"
-#~ msgstr "Instellingen aanpassen voor popup-informatie"
-
-#~ msgid "mm:ss"
-#~ msgstr "mm:ss"
+msgstr "Sessie management opties tonen"
