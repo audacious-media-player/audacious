@@ -32,7 +32,6 @@
 
 #include "debug.h"
 #include "plugin.h"
-#include "ui_preferences.h"
 #include "util.h"
 
 #define AUD_API_DECLARE
@@ -112,7 +111,6 @@ static void plugin2_unload (LoadedModule * loaded)
     case PLUGIN_TYPE_PLAYLIST:
     case PLUGIN_TYPE_INPUT:
     case PLUGIN_TYPE_EFFECT:
-        plugin_misc_cleanup (plugin_by_header (header));
         if (PLUGIN_HAS_FUNC (header, cleanup))
             header->cleanup ();
         break;

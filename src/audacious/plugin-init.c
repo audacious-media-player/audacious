@@ -71,16 +71,16 @@ static const struct {
  [PLUGIN_TYPE_IFACE] = {"interface", TRUE, .u.s = {iface_plugin_probe,
   iface_plugin_get_current, iface_plugin_set_current}}};
 
-static bool_t find_enabled_cb (PluginHandle * p, PluginHandle * * pp)
+static bool_t find_enabled_cb (PluginHandle * p, void * pp)
 {
-    * pp = p;
+    * (PluginHandle * *) pp = p;
     return FALSE;
 }
 
 static PluginHandle * find_enabled (int type)
 {
     PluginHandle * p = NULL;
-    plugin_for_enabled (type, (PluginForEachFunc) find_enabled_cb, & p);
+    plugin_for_enabled (type, find_enabled_cb, & p);
     return p;
 }
 
@@ -140,8 +140,7 @@ static void start_plugins (int type)
     if (table[type].is_single)
         start_single (type);
     else
-        plugin_for_enabled (type, (PluginForEachFunc) start_multi_cb,
-         GINT_TO_POINTER (type));
+        plugin_for_enabled (type, start_multi_cb, GINT_TO_POINTER (type));
 }
 
 static VFSConstructor * lookup_transport (const char * scheme)
@@ -169,6 +168,12 @@ void start_plugins_two (void)
         start_plugins (i);
 }
 
+static bool_t misc_cleanup_cb (PluginHandle * p, void * unused)
+{
+    plugin_misc_cleanup (p);
+    return TRUE;
+}
+
 static bool_t stop_multi_cb (PluginHandle * p, void * type)
 {
     AUDDBG ("Shutting down %s.\n", plugin_get_name (p));
@@ -181,6 +186,8 @@ static void stop_plugins (int type)
     if (headless && type == PLUGIN_TYPE_IFACE)
         return;
 
+    plugin_for_enabled (type, misc_cleanup_cb, GINT_TO_POINTER (type));
+
     if (table[type].is_single)
     {
         AUDDBG ("Shutting down %s.\n", plugin_get_name
@@ -188,8 +195,7 @@ static void stop_plugins (int type)
         table[type].u.s.set_current (NULL);
     }
     else
-        plugin_for_enabled (type, (PluginForEachFunc) stop_multi_cb,
-         GINT_TO_POINTER (type));
+        plugin_for_enabled (type, stop_multi_cb, GINT_TO_POINTER (type));
 }
 
 void stop_plugins_two (void)
