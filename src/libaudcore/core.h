@@ -31,6 +31,17 @@
 #undef TRUE
 #define TRUE ((bool_t) 1)
 
+#undef MIN
+#define MIN(a,b) ((a) < (b) ? (a) : (b))
+#undef MAX
+#define MAX(a,b) ((a) > (b) ? (a) : (b))
+#undef CLAMP
+#define CLAMP(a,min,max) ((a) < (min) ? (min) : (a) > (max) ? (max) : (a))
+
+#define SPRINTF(s,...) \
+ char s[snprintf (NULL, 0, __VA_ARGS__) + 1]; \
+ snprintf (s, sizeof s, __VA_ARGS__);
+
 /* Simple sanity check to catch (1) strings that are still in use after their
  * reference count has dropped to zero and (2) strings that should have been
  * pooled but never were.  If the check fails, the program is aborted. */
