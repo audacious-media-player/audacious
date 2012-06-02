@@ -56,8 +56,6 @@ static void response_cb (GtkWidget * window, int response, const PluginPreferenc
 {
     if (response == GTK_RESPONSE_OK && p->apply)
         p->apply ();
-    if (response == GTK_RESPONSE_CANCEL && p->cancel)
-        p->cancel ();
 
     gtk_widget_destroy (window);
 }

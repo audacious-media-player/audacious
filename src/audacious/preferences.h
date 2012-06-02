@@ -130,7 +130,6 @@ struct _PluginPreferences {
 
     void (*init)(void);
     void (*apply)(void);
-    void (*cancel)(void);
     void (*cleanup)(void);
 };
 
