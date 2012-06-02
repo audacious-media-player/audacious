@@ -26,6 +26,7 @@ LOCALES = ast.po \
 	  hi.po \
 	  hr.po \
 	  hu.po \
+	  id_ID.po \
 	  it.po \
 	  ja.po \
 	  ka.po \
