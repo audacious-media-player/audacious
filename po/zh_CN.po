@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
-"Report-Msgid-Bugs-To: http://jira.atheme.org/\n"
-"POT-Creation-Date: 2011-10-09 12:18-0400\n"
+"Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
+"POT-Creation-Date: 2012-06-01 20:02-0400\n"
 "PO-Revision-Date: 2011-10-16 19:20+0800\n"
 "Last-Translator: Chasye <chasye@gmail.com>\n"
 "Language-Team: Chinese (simplified)\n"
@@ -18,274 +18,279 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: src/audacious/adder.c:71
+#: src/audacious/adder.c:75
 msgid "Searching ..."
 msgstr "搜索中..."
 
-#: src/audacious/adder.c:97
+#: src/audacious/adder.c:103
 #, c-format
 msgid "%d file found"
 msgid_plural "%d files found"
 msgstr[0] "找到%d个文件"
 
-#: src/audacious/chardet.c:38
+#: src/audacious/chardet.c:40
 msgid "  (invalid UTF-8)"
 msgstr "  (非法的UTF-8编码)"
 
-#: src/audacious/credits.c:35
+#: src/audacious/credits.c:37
 msgid "Core developers:"
 msgstr "核心开发者："
 
-#: src/audacious/credits.c:49
+#: src/audacious/credits.c:52
 msgid "Graphics:"
 msgstr "美工："
 
-#: src/audacious/credits.c:54
+#: src/audacious/credits.c:57
 msgid "Default skin:"
 msgstr "默认主题："
 
-#: src/audacious/credits.c:60
+#: src/audacious/credits.c:63
 msgid "Plugin development:"
 msgstr "插件开发："
 
-#: src/audacious/credits.c:83
+#: src/audacious/credits.c:86
 msgid "Patch authors:"
 msgstr "补丁提交者："
 
-#: src/audacious/credits.c:126
+#: src/audacious/credits.c:132
 msgid "1.x developers:"
 msgstr "1.x 开发者："
 
-#: src/audacious/credits.c:148
+#: src/audacious/credits.c:154
 msgid "BMP Developers:"
 msgstr "BMP 开发者："
 
-#: src/audacious/credits.c:180
+#: src/audacious/credits.c:186
+msgid "Argentinian Spanish:"
+msgstr ""
+
+#: src/audacious/credits.c:189
 msgid "Belarusian:"
 msgstr "匈牙利语："
 
-#: src/audacious/credits.c:183
+#: src/audacious/credits.c:192
 msgid "Basque:"
 msgstr "巴斯克语："
 
-#: src/audacious/credits.c:186
+#: src/audacious/credits.c:195
 msgid "Brazilian Portuguese:"
 msgstr "巴西葡萄牙语："
 
-#: src/audacious/credits.c:191
+#: src/audacious/credits.c:201
 msgid "Breton:"
 msgstr "布列塔尼语："
 
-#: src/audacious/credits.c:194
+#: src/audacious/credits.c:204
 msgid "Bulgarian:"
 msgstr "匈牙利语："
 
-#: src/audacious/credits.c:197
+#: src/audacious/credits.c:207
 msgid "Catalan:"
 msgstr "加泰罗尼亚语："
 
-#: src/audacious/credits.c:200
+#: src/audacious/credits.c:212
 msgid "Chinese:"
 msgstr "汉语："
 
-#: src/audacious/credits.c:203
+#: src/audacious/credits.c:215
 msgid "Croatian:"
 msgstr "罗马尼亚语："
 
-#: src/audacious/credits.c:206
+#: src/audacious/credits.c:218
 msgid "Czech:"
 msgstr "捷克语："
 
-#: src/audacious/credits.c:209
+#: src/audacious/credits.c:221
 msgid "Dutch:"
 msgstr "荷兰语："
 
-#: src/audacious/credits.c:213
+#: src/audacious/credits.c:226
 msgid "Estonian:"
 msgstr "爱沙尼亚语："
 
-#: src/audacious/credits.c:216
+#: src/audacious/credits.c:229
 msgid "Finnish:"
 msgstr "芬兰语："
 
-#: src/audacious/credits.c:221
+#: src/audacious/credits.c:235
 msgid "French:"
 msgstr "法语："
 
-#: src/audacious/credits.c:227
+#: src/audacious/credits.c:242
 msgid "German:"
 msgstr "德语："
 
-#: src/audacious/credits.c:234
+#: src/audacious/credits.c:249
 msgid "Georgian:"
 msgstr "乔治亚语："
 
-#: src/audacious/credits.c:237
+#: src/audacious/credits.c:252
 msgid "Greek:"
 msgstr "希腊语："
 
-#: src/audacious/credits.c:242
+#: src/audacious/credits.c:257
 msgid "Hindi:"
 msgstr "印地语："
 
-#: src/audacious/credits.c:245
+#: src/audacious/credits.c:260
 msgid "Hungarian:"
 msgstr "匈牙利语："
 
-#: src/audacious/credits.c:249
+#: src/audacious/credits.c:264
 msgid "Italian:"
 msgstr "意大利语："
 
-#: src/audacious/credits.c:253
+#: src/audacious/credits.c:269
 msgid "Japanese:"
 msgstr "日语："
 
-#: src/audacious/credits.c:256
+#: src/audacious/credits.c:273
 msgid "Korean:"
 msgstr "韩语："
 
-#: src/audacious/credits.c:259
+#: src/audacious/credits.c:276
 msgid "Latvian:"
 msgstr "拉脱维亚语："
 
-#: src/audacious/credits.c:262
+#: src/audacious/credits.c:279
 msgid "Lithuanian:"
 msgstr "立陶宛语："
 
-#: src/audacious/credits.c:267
+#: src/audacious/credits.c:284
 msgid "Macedonian:"
 msgstr "马其顿语："
 
-#: src/audacious/credits.c:270
+#: src/audacious/credits.c:287
+#, fuzzy
+msgid "Mexican Spanish:"
+msgstr "西班牙语："
+
+#: src/audacious/credits.c:290
 msgid "Polish:"
 msgstr "波兰语："
 
-#: src/audacious/credits.c:276
+#: src/audacious/credits.c:297
 msgid "Portuguese:"
 msgstr "葡萄牙语："
 
-#: src/audacious/credits.c:279
+#: src/audacious/credits.c:301
 msgid "Romanian:"
 msgstr "罗马尼亚语："
 
-#: src/audacious/credits.c:283
+#: src/audacious/credits.c:305
 msgid "Russian:"
 msgstr "俄语："
 
-#: src/audacious/credits.c:287
+#: src/audacious/credits.c:309
 msgid "Serbian (Latin):"
 msgstr "塞尔维亚语(拉丁文)："
 
-#: src/audacious/credits.c:290
+#: src/audacious/credits.c:312
 msgid "Serbian (Cyrillic):"
 msgstr "塞尔维亚语(斯拉夫文)："
 
-#: src/audacious/credits.c:293
+#: src/audacious/credits.c:316
 msgid "Simplified Chinese:"
 msgstr "简体中文："
 
-#: src/audacious/credits.c:296
+#: src/audacious/credits.c:319
 msgid "Slovak:"
 msgstr "斯洛伐克语："
 
-#: src/audacious/credits.c:299
+#: src/audacious/credits.c:323
 msgid "Spanish:"
 msgstr "西班牙语："
 
-#: src/audacious/credits.c:306
+#: src/audacious/credits.c:332
 msgid "Swedish:"
 msgstr "瑞典语："
 
-#: src/audacious/credits.c:309
+#: src/audacious/credits.c:335
 msgid "Traditional Chinese:"
 msgstr "繁体中文："
 
-#: src/audacious/credits.c:315
+#: src/audacious/credits.c:341
 msgid "Turkish:"
 msgstr "土耳其语："
 
-#: src/audacious/credits.c:319
+#: src/audacious/credits.c:345
 msgid "Ukrainian:"
 msgstr "乌克兰语："
 
-#: src/audacious/credits.c:323
+#: src/audacious/credits.c:351
 msgid "Vietnamese:"
 msgstr "越南语："
 
-#: src/audacious/credits.c:326
+#: src/audacious/credits.c:354
 msgid "Welsh:"
 msgstr "威尔斯语："
 
-#: src/audacious/drct.c:234
-msgid "Temporary Playlist"
-msgstr "临时播放列表"
-
-#: src/audacious/equalizer_preset.c:186
+#: src/audacious/equalizer_preset.c:183
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
 msgstr "导入Winamp EQF文件时发生错误 '%s'"
 
-#: src/audacious/main.c:239
+#: src/audacious/main.c:240
 msgid "Skip backwards in playlist"
 msgstr "播放前一首"
 
-#: src/audacious/main.c:240
+#: src/audacious/main.c:241
 msgid "Start playing current playlist"
 msgstr "播放当前列表"
 
-#: src/audacious/main.c:241
+#: src/audacious/main.c:242
 msgid "Pause current song"
 msgstr "暂停播放"
 
-#: src/audacious/main.c:242
+#: src/audacious/main.c:243
 msgid "Stop current song"
 msgstr "停止播放"
 
-#: src/audacious/main.c:243
+#: src/audacious/main.c:244
 msgid "Pause if playing, play otherwise"
 msgstr "暂停/播放"
 
-#: src/audacious/main.c:244
+#: src/audacious/main.c:245
 msgid "Skip forward in playlist"
 msgstr "播放下一首"
 
-#: src/audacious/main.c:245
+#: src/audacious/main.c:246
 msgid "Display Jump to File dialog"
 msgstr "显示“跳到文件”对话框"
 
-#: src/audacious/main.c:246
+#: src/audacious/main.c:247
 msgid "Add files to the playlist"
 msgstr "添加文件到播放列表"
 
-#: src/audacious/main.c:247
+#: src/audacious/main.c:248
 msgid "Add new files to a temporary playlist"
 msgstr "添加文件到临时播放列表"
 
-#: src/audacious/main.c:248
+#: src/audacious/main.c:249
 msgid "Display the main window"
 msgstr "显示主界面"
 
-#: src/audacious/main.c:249
+#: src/audacious/main.c:250
 msgid "Show version"
 msgstr "显示版本信息"
 
-#: src/audacious/main.c:250
+#: src/audacious/main.c:251
 msgid "Print debugging messages"
 msgstr "输出调试信息"
 
-#: src/audacious/main.c:251
+#: src/audacious/main.c:252
 msgid "Headless mode (beta)"
 msgstr "后台模式（beta）"
 
-#: src/audacious/main.c:252
+#: src/audacious/main.c:253
 msgid "FILE..."
 msgstr "文件..."
 
-#: src/audacious/main.c:264
+#: src/audacious/main.c:265
 msgid "- play multimedia files"
 msgstr "- 播放多媒体文件"
 
-#: src/audacious/main.c:274
+#: src/audacious/main.c:275
 #, c-format
 msgid ""
 "%s: %s\n"
@@ -294,407 +299,406 @@ msgstr ""
 "%s: %s\n"
 "用 `%s --help' 以获取更多信息.\n"
 
-#: src/audacious/main.c:547
+#: src/audacious/main.c:564
 msgid "Audacious"
 msgstr ""
 
-#: src/audacious/playback.c:376
+#: src/audacious/playback.c:305
 #, c-format
 msgid "No decoder found for %s."
 msgstr "未能为 %s 找到解码器"
 
-#: src/audacious/playback.c:526
-msgid "Buffering ..."
-msgstr "缓冲中..."
+#: src/audacious/playlist-files.c:51
+#, c-format
+msgid "Cannot %s %s: unsupported file extension."
+msgstr ""
 
-#: src/audacious/playlist-new.c:306
-msgid "Untitled Playlist"
-msgstr "新播放列表"
+#: src/audacious/playlist-files.c:52
+msgid "save"
+msgstr ""
 
-#: src/audacious/ui_preferences.c:88
+#: src/audacious/playlist-files.c:52
+msgid "load"
+msgstr ""
+
+#: src/audacious/playlist-new.c:129
+#, fuzzy
+msgid "New Playlist"
+msgstr "播放列表"
+
+#: src/audacious/playlist-new.c:130
+#, fuzzy
+msgid "Now Playing"
+msgstr "暂未播放"
+
+#: src/audacious/playlist-new.c:1617
+msgid ""
+"The playlist cannot be sorted because metadata scanning is still in progress "
+"(or has been disabled)."
+msgstr ""
+
+#: src/audacious/ui_preferences.c:72
 msgid "Audio"
 msgstr "音频"
 
-#: src/audacious/ui_preferences.c:89
+#: src/audacious/ui_preferences.c:73
 msgid "Network"
 msgstr "网络"
 
-#: src/audacious/ui_preferences.c:90 src/audacious/ui_preferences.c:1633
+#: src/audacious/ui_preferences.c:74 src/audacious/ui_preferences.c:1238
 msgid "Playlist"
 msgstr "播放列表"
 
-#: src/audacious/ui_preferences.c:91
+#: src/audacious/ui_preferences.c:75
+msgid "Song Info"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:76
 msgid "Plugins"
 msgstr "插件"
 
-#: src/audacious/ui_preferences.c:97 src/libaudgui/infopopup.c:203
+#: src/audacious/ui_preferences.c:82 src/libaudgui/infopopup.c:195
 msgid "Artist"
 msgstr "艺术家"
 
-#: src/audacious/ui_preferences.c:98 src/libaudgui/infopopup.c:205
+#: src/audacious/ui_preferences.c:83 src/libaudgui/infopopup.c:197
 msgid "Album"
 msgstr "专辑"
 
-#: src/audacious/ui_preferences.c:99 src/libaudgui/infopopup.c:201
-#: src/libaudgui/ui_playlist_manager.c:276
+#: src/audacious/ui_preferences.c:84 src/libaudgui/infopopup.c:193
+#: src/libaudgui/ui_playlist_manager.c:279
 msgid "Title"
 msgstr "标题"
 
-#: src/audacious/ui_preferences.c:100
+#: src/audacious/ui_preferences.c:85
 msgid "Tracknumber"
 msgstr "音轨序号"
 
-#: src/audacious/ui_preferences.c:101 src/libaudgui/infopopup.c:207
+#: src/audacious/ui_preferences.c:86 src/libaudgui/infopopup.c:199
 msgid "Genre"
 msgstr "风格"
 
-#: src/audacious/ui_preferences.c:102
+#: src/audacious/ui_preferences.c:87
 msgid "Filename"
 msgstr "文件名"
 
-#: src/audacious/ui_preferences.c:103
+#: src/audacious/ui_preferences.c:88
 msgid "Filepath"
 msgstr "路径"
 
-#: src/audacious/ui_preferences.c:104
+#: src/audacious/ui_preferences.c:89
 msgid "Date"
 msgstr "时间"
 
-#: src/audacious/ui_preferences.c:105 src/libaudgui/infopopup.c:209
+#: src/audacious/ui_preferences.c:90 src/libaudgui/infopopup.c:201
 msgid "Year"
 msgstr "年份"
 
-#: src/audacious/ui_preferences.c:106
+#: src/audacious/ui_preferences.c:91
 msgid "Comment"
 msgstr "备注"
 
-#: src/audacious/ui_preferences.c:107
+#: src/audacious/ui_preferences.c:92
 msgid "Codec"
 msgstr "编码"
 
-#: src/audacious/ui_preferences.c:108
+#: src/audacious/ui_preferences.c:93
 msgid "Quality"
 msgstr "音质"
 
-#: src/audacious/ui_preferences.c:114
+#: src/audacious/ui_preferences.c:99
 msgid "None"
 msgstr "无"
 
-#: src/audacious/ui_preferences.c:115
+#: src/audacious/ui_preferences.c:100
 msgid "Arabic"
 msgstr "阿拉伯语"
 
-#: src/audacious/ui_preferences.c:116
+#: src/audacious/ui_preferences.c:101
 msgid "Baltic"
 msgstr "波罗的语"
 
-#: src/audacious/ui_preferences.c:117
+#: src/audacious/ui_preferences.c:102
 msgid "Chinese"
 msgstr "汉语"
 
-#: src/audacious/ui_preferences.c:118
+#: src/audacious/ui_preferences.c:103
 msgid "Greek"
 msgstr "希腊语"
 
-#: src/audacious/ui_preferences.c:119
+#: src/audacious/ui_preferences.c:104
 msgid "Hebrew"
 msgstr "希伯来语"
 
-#: src/audacious/ui_preferences.c:120
+#: src/audacious/ui_preferences.c:105
 msgid "Japanese"
 msgstr "日语"
 
-#: src/audacious/ui_preferences.c:121
+#: src/audacious/ui_preferences.c:106
 msgid "Korean"
 msgstr "韩语"
 
-#: src/audacious/ui_preferences.c:122
+#: src/audacious/ui_preferences.c:107
 msgid "Polish"
 msgstr "波兰语"
 
-#: src/audacious/ui_preferences.c:123
+#: src/audacious/ui_preferences.c:108
 msgid "Russian"
 msgstr "俄语"
 
-#: src/audacious/ui_preferences.c:124
+#: src/audacious/ui_preferences.c:109
 msgid "Taiwanese"
 msgstr "台语"
 
-#: src/audacious/ui_preferences.c:125
+#: src/audacious/ui_preferences.c:110
 msgid "Turkish"
 msgstr "土耳其语"
 
-#: src/audacious/ui_preferences.c:147
+#: src/audacious/ui_preferences.c:132
 msgid "Album mode"
 msgstr "专辑模式"
 
-#: src/audacious/ui_preferences.c:150
+#: src/audacious/ui_preferences.c:135
 msgid "<b>Output Settings</b>"
 msgstr "<b>输出设置</b>"
 
-#: src/audacious/ui_preferences.c:152
+#: src/audacious/ui_preferences.c:137
 msgid "Bit depth:"
 msgstr "位深："
 
-#: src/audacious/ui_preferences.c:155
+#: src/audacious/ui_preferences.c:140
 msgid "Buffer size:"
 msgstr "缓冲大小："
 
-#: src/audacious/ui_preferences.c:157
+#: src/audacious/ui_preferences.c:142
 msgid "ms"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:158
+#: src/audacious/ui_preferences.c:143
 msgid "Use software volume control (not recommended)"
 msgstr "使用软音量控制（非建议）"
 
-#: src/audacious/ui_preferences.c:160
+#: src/audacious/ui_preferences.c:145
 msgid "<b>Replay Gain</b>"
 msgstr "<b>回放增益</b>"
 
-#: src/audacious/ui_preferences.c:161
+#: src/audacious/ui_preferences.c:146
 msgid "Enable Replay Gain"
 msgstr "启用回放增益"
 
-#: src/audacious/ui_preferences.c:164
+#: src/audacious/ui_preferences.c:149
 msgid "Prevent clipping (recommended)"
 msgstr "避免爆音（推荐）"
 
-#: src/audacious/ui_preferences.c:166
+#: src/audacious/ui_preferences.c:151
 msgid "<b>Adjust Levels</b>"
 msgstr "<b>调整幅度</b>"
 
-#: src/audacious/ui_preferences.c:167
+#: src/audacious/ui_preferences.c:152
 msgid "Amplify all files:"
 msgstr "应用到文件："
 
-#: src/audacious/ui_preferences.c:169 src/audacious/ui_preferences.c:172
+#: src/audacious/ui_preferences.c:154 src/audacious/ui_preferences.c:157
 msgid "dB"
 msgstr "dB"
 
-#: src/audacious/ui_preferences.c:170
+#: src/audacious/ui_preferences.c:155
 msgid "Amplify untagged files:"
 msgstr "应用到无标签文件："
 
-#: src/audacious/ui_preferences.c:175
+#: src/audacious/ui_preferences.c:160
 msgid "Proxy hostname:"
 msgstr "主机地址："
 
-#: src/audacious/ui_preferences.c:176
+#: src/audacious/ui_preferences.c:161
 msgid "Proxy port:"
 msgstr "连接端口："
 
-#: src/audacious/ui_preferences.c:179
+#: src/audacious/ui_preferences.c:164
 msgid "Proxy username:"
 msgstr "认证用户："
 
-#: src/audacious/ui_preferences.c:180
+#: src/audacious/ui_preferences.c:165
 msgid "Proxy password:"
 msgstr "认证密码："
 
-#: src/audacious/ui_preferences.c:184
+#: src/audacious/ui_preferences.c:169
 msgid "<b>Proxy Configuration</b>"
 msgstr "<b>代理服务器设置</b>"
 
-#: src/audacious/ui_preferences.c:185
+#: src/audacious/ui_preferences.c:170
 msgid "Enable proxy usage"
 msgstr "启用代理服务器"
 
-#: src/audacious/ui_preferences.c:188
+#: src/audacious/ui_preferences.c:173
 msgid "Use authentication with proxy"
 msgstr "代理服务器要求认证"
 
-#: src/audacious/ui_preferences.c:196
+#: src/audacious/ui_preferences.c:181
 msgid "Auto character encoding detector for:"
 msgstr "自动检测下列编码："
 
-#: src/audacious/ui_preferences.c:201
+#: src/audacious/ui_preferences.c:186
 msgid "Fallback character encodings:"
 msgstr "备用字符编码："
 
-#: src/audacious/ui_preferences.c:205
+#: src/audacious/ui_preferences.c:190
 msgid "<b>Behavior</b>"
 msgstr "<b>行为</b>"
 
-#: src/audacious/ui_preferences.c:206
+#: src/audacious/ui_preferences.c:191
 msgid "Continue playback on startup"
 msgstr "启动时恢复播放"
 
-#: src/audacious/ui_preferences.c:208
+#: src/audacious/ui_preferences.c:193
 msgid "Advance when the current song is deleted"
 msgstr "歌曲播放中被删除则播放下一首"
 
-#: src/audacious/ui_preferences.c:210
+#: src/audacious/ui_preferences.c:195
 msgid "Clear the playlist when opening files"
 msgstr "打开文件时清空当前播放列表"
 
-#: src/audacious/ui_preferences.c:212
+#: src/audacious/ui_preferences.c:197
 msgid "Open files in a temporary playlist"
 msgstr "在临时播放列表打开文件"
 
-#: src/audacious/ui_preferences.c:214
+#: src/audacious/ui_preferences.c:199
 msgid "<b>Metadata</b>"
 msgstr "<b>元数据</b>"
 
-#: src/audacious/ui_preferences.c:215
+#: src/audacious/ui_preferences.c:200
 msgid "Do not load metadata for songs until played"
 msgstr "未播放时切勿加载元数据"
 
-#: src/audacious/ui_preferences.c:232
-msgid "TITLE"
-msgstr "标题"
+#: src/audacious/ui_preferences.c:208
+#, fuzzy
+msgid "<b>Album Art</b>"
+msgstr "<b>音量控制</b>"
 
-#: src/audacious/ui_preferences.c:233
-msgid "ARTIST - TITLE"
-msgstr "艺术家 - 标题"
-
-#: src/audacious/ui_preferences.c:234
-msgid "ARTIST - ALBUM - TITLE"
-msgstr "艺术家 - 专辑 - 标题"
-
-#: src/audacious/ui_preferences.c:235
-msgid "ARTIST - ALBUM - TRACK. TITLE"
-msgstr "艺术家 - 专辑 - 曲目号. 标题"
-
-#: src/audacious/ui_preferences.c:236
-msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
-msgstr "艺术家 [专辑] - 曲目号. 标题"
-
-#: src/audacious/ui_preferences.c:237
-msgid "ALBUM - TITLE"
-msgstr "专辑 - 标题"
-
-#: src/audacious/ui_preferences.c:576
-msgid "Category"
-msgstr "分类"
-
-#: src/audacious/ui_preferences.c:800
-msgid "Popup Information Settings"
-msgstr "弹出信息设置"
-
-#: src/audacious/ui_preferences.c:809
-msgid "<b>Cover image retrieve</b>"
-msgstr "<b>专辑封面检索</b>"
-
-#: src/audacious/ui_preferences.c:814
-msgid ""
-"While searching for the album's cover, Audacious looks for certain words in "
-"the filename. You can specify those words in the lists below, separated "
-"using commas."
+#: src/audacious/ui_preferences.c:209
+msgid "Search for images matching these words (comma-separated):"
 msgstr ""
-"当搜索专辑封面时，Audacious从文件名中找出关键字。您可以在下面列表中指定它们，"
-"用逗号分隔。"
 
-#: src/audacious/ui_preferences.c:831
-msgid "Exclude:"
-msgstr "排除："
+#: src/audacious/ui_preferences.c:211
+msgid "Exclude images matching these words (comma-separated):"
+msgstr ""
 
-#: src/audacious/ui_preferences.c:838
-msgid "Include:"
-msgstr "包含："
+#: src/audacious/ui_preferences.c:213
+msgid "Search for images matching song file name"
+msgstr ""
 
-#: src/audacious/ui_preferences.c:855
-msgid "Recursively search for cover"
-msgstr "递归搜索封面"
+#: src/audacious/ui_preferences.c:215
+msgid "Search recursively"
+msgstr ""
 
-#: src/audacious/ui_preferences.c:865
-msgid "Search depth: "
+#: src/audacious/ui_preferences.c:217
+#, fuzzy
+msgid "Search depth:"
 msgstr "搜索深度："
 
-#: src/audacious/ui_preferences.c:879
-msgid "Use per-file cover"
-msgstr "为每个文件使用单独封面"
-
-#: src/audacious/ui_preferences.c:882
-msgid "<b>Miscellaneous</b>"
-msgstr "<b>杂项</b>"
-
-#: src/audacious/ui_preferences.c:891
-msgid "Show Progress bar for the current track"
-msgstr "显示当前音轨的进度"
-
-#: src/audacious/ui_preferences.c:901
-msgid "Delay until filepopup comes up: "
-msgstr "延迟到文件弹出窗口出现："
-
-#: src/audacious/ui_preferences.c:1339
-msgid "Custom"
-msgstr "自定义"
-
-#: src/audacious/ui_preferences.c:1382
-msgid "<b>Song Display</b>"
-msgstr "<b>歌曲显示</b>"
-
-#: src/audacious/ui_preferences.c:1391
-msgid "Show song numbers"
-msgstr "显示歌曲序号"
-
-#: src/audacious/ui_preferences.c:1402
-msgid "Show leading zeroes (02:00 instead of 2:00)"
-msgstr "显示时间前的0（如：显示2:00为02:00）"
-
-#: src/audacious/ui_preferences.c:1424
-msgid "Show information about titlestring format"
-msgstr "标题显示格式"
-
-#: src/audacious/ui_preferences.c:1440
-msgid "Custom string:"
-msgstr "自定字符："
-
-#: src/audacious/ui_preferences.c:1447
-msgid "Title format:"
-msgstr "标题样式："
-
-#: src/audacious/ui_preferences.c:1458
+#: src/audacious/ui_preferences.c:220
 msgid "<b>Popup Information</b>"
 msgstr "<b>弹出信息</b>"
 
-#: src/audacious/ui_preferences.c:1473
-msgid "Show popup information for playlist entries"
+#: src/audacious/ui_preferences.c:221
+#, fuzzy
+msgid "Show popup information"
 msgstr "为播放列表显示弹出信息"
 
-#: src/audacious/ui_preferences.c:1474
-msgid ""
-"Toggles popup information window for the pointed entry in the playlist. The "
-"window shows title of song, name of album, genre, year of publish, track "
-"number, track length, and artwork."
+#: src/audacious/ui_preferences.c:223
+msgid "Popup delay (tenths of a second):"
 msgstr ""
-"切换播放列表中指向项目的弹出信息窗口。该窗口显示歌曲标题、专辑、流派、年份，"
-"音轨编号，长度和插图等。"
 
-#: src/audacious/ui_preferences.c:1485
-msgid "Edit settings for popup information"
-msgstr "修改弹出信息的设置"
+#: src/audacious/ui_preferences.c:226
+#, fuzzy
+msgid "Show time scale for current song"
+msgstr "停止播放"
 
-#: src/audacious/ui_preferences.c:1574
+#: src/audacious/ui_preferences.c:240
+msgid "TITLE"
+msgstr "标题"
+
+#: src/audacious/ui_preferences.c:241
+msgid "ARTIST - TITLE"
+msgstr "艺术家 - 标题"
+
+#: src/audacious/ui_preferences.c:242
+msgid "ARTIST - ALBUM - TITLE"
+msgstr "艺术家 - 专辑 - 标题"
+
+#: src/audacious/ui_preferences.c:243
+msgid "ARTIST - ALBUM - TRACK. TITLE"
+msgstr "艺术家 - 专辑 - 曲目号. 标题"
+
+#: src/audacious/ui_preferences.c:244
+msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
+msgstr "艺术家 [专辑] - 曲目号. 标题"
+
+#: src/audacious/ui_preferences.c:245
+msgid "ALBUM - TITLE"
+msgstr "专辑 - 标题"
+
+#: src/audacious/ui_preferences.c:458
+msgid "Category"
+msgstr "分类"
+
+#: src/audacious/ui_preferences.c:993
+msgid "Custom"
+msgstr "自定义"
+
+#: src/audacious/ui_preferences.c:1030
+msgid "<b>Song Display</b>"
+msgstr "<b>歌曲显示</b>"
+
+#: src/audacious/ui_preferences.c:1039
+msgid "Show song numbers"
+msgstr "显示歌曲序号"
+
+#: src/audacious/ui_preferences.c:1050
+msgid "Show leading zeroes (02:00 instead of 2:00)"
+msgstr "显示时间前的0（如：显示2:00为02:00）"
+
+#: src/audacious/ui_preferences.c:1072
+msgid "Show information about titlestring format"
+msgstr "标题显示格式"
+
+#: src/audacious/ui_preferences.c:1088
+msgid "Custom string:"
+msgstr "自定字符："
+
+#: src/audacious/ui_preferences.c:1095
+msgid "Title format:"
+msgstr "标题样式："
+
+#: src/audacious/ui_preferences.c:1179
 msgid "Output plugin:"
 msgstr "输出插件："
 
-#: src/audacious/ui_preferences.c:1633
+#: src/audacious/ui_preferences.c:1238
 msgid "Transport"
 msgstr "传输"
 
-#: src/audacious/ui_preferences.c:1633
+#: src/audacious/ui_preferences.c:1238
 msgid "Input"
 msgstr "输入"
 
-#: src/audacious/ui_preferences.c:1634
+#: src/audacious/ui_preferences.c:1239
 msgid "Effect"
 msgstr "音效"
 
-#: src/audacious/ui_preferences.c:1634
+#: src/audacious/ui_preferences.c:1239
 msgid "Visualization"
 msgstr "虚拟效果"
 
-#: src/audacious/ui_preferences.c:1634
+#: src/audacious/ui_preferences.c:1239
 msgid "General"
 msgstr "一般"
 
-#: src/audacious/ui_preferences.c:1674
+#: src/audacious/ui_preferences.c:1277
 msgid "Audacious Preferences"
 msgstr "Audacious首选项"
 
-#: src/audacious/util.c:129
+#: src/audacious/util.c:116
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "无法创建目录(%s)：%s\n"
@@ -703,44 +707,61 @@ msgstr "无法创建目录(%s)：%s\n"
 msgid "Position not found."
 msgstr "位置不存在"
 
-#: src/audtool/handlers_vitals.c:64
+#: src/audtool/handlers_vitals.c:63
 msgid "No song playing."
 msgstr "暂未播放"
 
-#: src/libaudcore/tuple.c:685
+#: src/libaudcore/audstrings.c:199
+#, c-format
+msgid "Audio CD, track %s"
+msgstr ""
+
+#: src/libaudcore/tuple.c:541
 msgid "Mono"
 msgstr "单声道"
 
-#: src/libaudcore/tuple.c:687
+#: src/libaudcore/tuple.c:543
 msgid "Stereo"
 msgstr "立体声"
 
-#: src/libaudcore/tuple.c:689
+#: src/libaudcore/tuple.c:545
 #, c-format
 msgid "%d channel"
 msgid_plural "%d channels"
 msgstr[0] "%d声道"
 
-#: src/libaudgui/confirm.c:78
+#: src/libaudgui/about.c:51 src/libaudgui/about.c:112
+msgid "Credits"
+msgstr "特别鸣谢"
+
+#: src/libaudgui/about.c:51
+msgid "Translators"
+msgstr "翻译人员"
+
+#: src/libaudgui/about.c:88
+msgid "About Audacious"
+msgstr "关于Audacious"
+
+#: src/libaudgui/confirm.c:75
 #, c-format
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
 msgstr "关闭”%s“将会使所有已改变的设置丢失，要继续吗？"
 
-#: src/libaudgui/confirm.c:91
+#: src/libaudgui/confirm.c:88
 msgid "_Don't show this message again"
 msgstr "切勿再提示(_D)"
 
-#: src/libaudgui/confirm.c:128
+#: src/libaudgui/confirm.c:125
 msgid "Rename Playlist"
 msgstr "重命名播放列表"
 
-#: src/libaudgui/effects-menu.c:76
+#: src/libaudgui/effects-menu.c:72
 msgid "settings ..."
 msgstr "设置..."
 
-#: src/libaudgui/equalizer.c:52
+#: src/libaudgui/equalizer.c:51
 msgid "_Enable"
 msgstr "启用(_E)"
 
@@ -792,348 +813,343 @@ msgstr "均衡器"
 msgid "Preamp"
 msgstr "前置放大器"
 
-#: src/libaudgui/infopopup.c:211
-msgid "Track Number"
+#: src/libaudgui/infopopup.c:203
+#, fuzzy
+msgid "Track"
 msgstr "音轨序号"
 
-#: src/libaudgui/infopopup.c:213
-msgid "Track Length"
+#: src/libaudgui/infopopup.c:205
+#, fuzzy
+msgid "Length"
 msgstr "音轨长度"
 
-#: src/libaudgui/infowin.c:77
+#: src/libaudgui/infowin.c:75
 msgid "Acid Jazz"
 msgstr ""
 
-#: src/libaudgui/infowin.c:78
+#: src/libaudgui/infowin.c:76
 msgid "Acid Rock"
 msgstr ""
 
-#: src/libaudgui/infowin.c:79
+#: src/libaudgui/infowin.c:77
 msgid "Ambient"
 msgstr ""
 
-#: src/libaudgui/infowin.c:80
+#: src/libaudgui/infowin.c:78
 msgid "Bebop"
 msgstr ""
 
-#: src/libaudgui/infowin.c:81
+#: src/libaudgui/infowin.c:79
 msgid "Bluegrass"
 msgstr ""
 
-#: src/libaudgui/infowin.c:82
+#: src/libaudgui/infowin.c:80
 msgid "Blues"
 msgstr ""
 
-#: src/libaudgui/infowin.c:83
+#: src/libaudgui/infowin.c:81
 msgid "Chamber Music"
 msgstr ""
 
-#: src/libaudgui/infowin.c:84
+#: src/libaudgui/infowin.c:82
 msgid "Classical"
 msgstr ""
 
-#: src/libaudgui/infowin.c:85
+#: src/libaudgui/infowin.c:83
 msgid "Country"
 msgstr ""
 
-#: src/libaudgui/infowin.c:86
+#: src/libaudgui/infowin.c:84
 msgid "Death Metal"
 msgstr ""
 
-#: src/libaudgui/infowin.c:87
+#: src/libaudgui/infowin.c:85
 msgid "Disco"
 msgstr ""
 
-#: src/libaudgui/infowin.c:88
+#: src/libaudgui/infowin.c:86
 msgid "Easy Listening"
 msgstr ""
 
-#: src/libaudgui/infowin.c:89
+#: src/libaudgui/infowin.c:87
 msgid "Folk"
 msgstr ""
 
-#: src/libaudgui/infowin.c:90
+#: src/libaudgui/infowin.c:88
 msgid "Funk"
 msgstr ""
 
-#: src/libaudgui/infowin.c:91
+#: src/libaudgui/infowin.c:89
 msgid "Gangsta Rap"
 msgstr ""
 
-#: src/libaudgui/infowin.c:92
+#: src/libaudgui/infowin.c:90
 msgid "Gospel"
 msgstr ""
 
-#: src/libaudgui/infowin.c:93
+#: src/libaudgui/infowin.c:91
 msgid "Grunge"
 msgstr ""
 
-#: src/libaudgui/infowin.c:94
+#: src/libaudgui/infowin.c:92
 msgid "Hard Rock"
 msgstr ""
 
-#: src/libaudgui/infowin.c:95
+#: src/libaudgui/infowin.c:93
 msgid "Heavy Metal"
 msgstr ""
 
-#: src/libaudgui/infowin.c:96
+#: src/libaudgui/infowin.c:94
 msgid "Hip-hop"
 msgstr ""
 
-#: src/libaudgui/infowin.c:97
+#: src/libaudgui/infowin.c:95
 msgid "House"
 msgstr ""
 
-#: src/libaudgui/infowin.c:98
+#: src/libaudgui/infowin.c:96
 msgid "Jazz"
 msgstr ""
 
-#: src/libaudgui/infowin.c:99
+#: src/libaudgui/infowin.c:97
 msgid "Jungle"
 msgstr ""
 
-#: src/libaudgui/infowin.c:100
+#: src/libaudgui/infowin.c:98
 msgid "Metal"
 msgstr ""
 
-#: src/libaudgui/infowin.c:101
+#: src/libaudgui/infowin.c:99
 msgid "New Age"
 msgstr ""
 
-#: src/libaudgui/infowin.c:102
+#: src/libaudgui/infowin.c:100
 msgid "New Wave"
 msgstr ""
 
-#: src/libaudgui/infowin.c:103
+#: src/libaudgui/infowin.c:101
 msgid "Noise"
 msgstr ""
 
-#: src/libaudgui/infowin.c:104
+#: src/libaudgui/infowin.c:102
 msgid "Pop"
 msgstr ""
 
-#: src/libaudgui/infowin.c:105
+#: src/libaudgui/infowin.c:103
 msgid "Punk Rock"
 msgstr ""
 
-#: src/libaudgui/infowin.c:106
+#: src/libaudgui/infowin.c:104
 msgid "Rap"
 msgstr ""
 
-#: src/libaudgui/infowin.c:107
+#: src/libaudgui/infowin.c:105
 msgid "Reggae"
 msgstr ""
 
-#: src/libaudgui/infowin.c:108
+#: src/libaudgui/infowin.c:106
 msgid "Rock"
 msgstr ""
 
-#: src/libaudgui/infowin.c:109
+#: src/libaudgui/infowin.c:107
 msgid "Rock and Roll"
 msgstr ""
 
-#: src/libaudgui/infowin.c:110
+#: src/libaudgui/infowin.c:108
 msgid "Rhythm and Blues"
 msgstr ""
 
-#: src/libaudgui/infowin.c:111
+#: src/libaudgui/infowin.c:109
 msgid "Ska"
 msgstr ""
 
-#: src/libaudgui/infowin.c:112
+#: src/libaudgui/infowin.c:110
 msgid "Soul"
 msgstr ""
 
-#: src/libaudgui/infowin.c:113
+#: src/libaudgui/infowin.c:111
 msgid "Swing"
 msgstr ""
 
-#: src/libaudgui/infowin.c:114
+#: src/libaudgui/infowin.c:112
 msgid "Techno"
 msgstr ""
 
-#: src/libaudgui/infowin.c:115
+#: src/libaudgui/infowin.c:113
 msgid "Trip-hop"
 msgstr ""
 
-#: src/libaudgui/infowin.c:175 src/libaudgui/infowin.c:361
-#: src/libaudgui/infowin.c:364 src/libaudgui/infowin.c:367
+#: src/libaudgui/infowin.c:177 src/libaudgui/infowin.c:366
+#: src/libaudgui/infowin.c:369 src/libaudgui/infowin.c:372
 msgid "<span size=\"small\">n/a</span>"
 msgstr "<span size=\"small\">n/a</span>"
 
-#: src/libaudgui/infowin.c:265
+#: src/libaudgui/infowin.c:267
 msgid "Metadata updated successfully"
 msgstr "数据更新成功"
 
-#: src/libaudgui/infowin.c:270
+#: src/libaudgui/infowin.c:272
 msgid "Metadata updating failed"
 msgstr "数据更新失败"
 
-#: src/libaudgui/infowin.c:318
+#: src/libaudgui/infowin.c:320
 msgid "Track Information"
 msgstr "音轨信息"
 
-#: src/libaudgui/infowin.c:350
+#: src/libaudgui/infowin.c:355
 msgid "<span size=\"small\">Format:</span>"
 msgstr "<span size=\"small\">格式：</span>"
 
-#: src/libaudgui/infowin.c:354
+#: src/libaudgui/infowin.c:359
 msgid "<span size=\"small\">Quality:</span>"
 msgstr "<span size=\"small\">音质：</span>"
 
-#: src/libaudgui/infowin.c:357
+#: src/libaudgui/infowin.c:362
 msgid "<span size=\"small\">Bitrate:</span>"
 msgstr "<span size=\"small\">比率：</span>"
 
-#: src/libaudgui/infowin.c:387
+#: src/libaudgui/infowin.c:392
 msgid "<span size=\"small\">Title</span>"
 msgstr "<span size=\"small\">标题</span>"
 
-#: src/libaudgui/infowin.c:399
+#: src/libaudgui/infowin.c:404
 msgid "<span size=\"small\">Artist</span>"
 msgstr "<span size=\"small\">艺术家</span>"
 
-#: src/libaudgui/infowin.c:411
+#: src/libaudgui/infowin.c:416
 msgid "<span size=\"small\">Album</span>"
 msgstr "<span size=\"small\">专辑</span>"
 
-#: src/libaudgui/infowin.c:423
+#: src/libaudgui/infowin.c:428
 msgid "<span size=\"small\">Comment</span>"
 msgstr "<span size=\"small\">注释</span>"
 
-#: src/libaudgui/infowin.c:435
+#: src/libaudgui/infowin.c:440
 msgid "<span size=\"small\">Genre</span>"
 msgstr "<span size=\"small\">流派</span>"
 
-#: src/libaudgui/infowin.c:456
+#: src/libaudgui/infowin.c:461
 msgid "<span size=\"small\">Year</span>"
 msgstr "<span size=\"small\">年份</span>"
 
-#: src/libaudgui/infowin.c:467
+#: src/libaudgui/infowin.c:472
 msgid "<span size=\"small\">Track Number</span>"
 msgstr "<span size=\"small\">音轨序号</span>"
 
-#: src/libaudgui/infowin.c:549
+#: src/libaudgui/infowin.c:551
 #, c-format
 msgid "%d kb/s"
 msgstr "%d kb/s"
 
-#: src/libaudgui/infowin.c:579
+#: src/libaudgui/infowin.c:578
 #, c-format
 msgid "No info available for %s.\n"
 msgstr "未找到与‘%s’相关信息。\n"
 
-#: src/libaudgui/jump-to-time.c:75
+#: src/libaudgui/jump-to-time.c:52
 msgid "Jump to Time"
 msgstr "跳到时间"
 
-#: src/libaudgui/jump-to-time.c:90
-msgid "mm:ss"
+#: src/libaudgui/jump-to-time.c:61
+msgid "Enter time (minutes:seconds):"
 msgstr ""
 
-#: src/libaudgui/playlists.c:39
+#: src/libaudgui/playlists.c:33
 msgid "Export Playlist"
 msgstr "导出播放列表"
 
-#: src/libaudgui/playlists.c:39
+#: src/libaudgui/playlists.c:33
 msgid "Import Playlist"
 msgstr "导入播放列表"
 
-#: src/libaudgui/playlists.c:72
+#: src/libaudgui/playlists.c:66
 #, c-format
 msgid "Overwrite %s?"
 msgstr "是否覆盖 %s？"
 
-#: src/libaudgui/queue-manager.c:185
+#: src/libaudgui/queue-manager.c:196
 msgid "Queue Manager"
 msgstr "队列管理器"
 
-#: src/libaudgui/ui_about.c:69
-msgid "About Audacious"
-msgstr "关于Audacious"
-
-#: src/libaudgui/ui_about.c:90 src/libaudgui/ui_credits.c:122
-msgid "Credits"
-msgstr "特别鸣谢"
-
-#: src/libaudgui/ui_credits.c:126
-msgid "Translators"
-msgstr "翻译人员"
-
-#: src/libaudgui/ui_fileopener.c:109
+#: src/libaudgui/ui_fileopener.c:108
 msgid "Open Files"
 msgstr "打开文件"
 
-#: src/libaudgui/ui_fileopener.c:109
+#: src/libaudgui/ui_fileopener.c:108
 msgid "Add Files"
 msgstr "添加文件"
 
-#: src/libaudgui/ui_fileopener.c:111
+#: src/libaudgui/ui_fileopener.c:110
 msgid "Close dialog on Open"
 msgstr "打开时关闭对话框"
 
-#: src/libaudgui/ui_fileopener.c:111
+#: src/libaudgui/ui_fileopener.c:110
 msgid "Close dialog on Add"
 msgstr "添加时关闭对话框"
 
-#: src/libaudgui/ui_jumptotrack.c:103 src/libaudgui/ui_jumptotrack.c:111
-#: src/libaudgui/ui_jumptotrack.c:322
+#: src/libaudgui/ui_jumptotrack.c:108 src/libaudgui/ui_jumptotrack.c:116
+#: src/libaudgui/ui_jumptotrack.c:335
 msgid "_Queue"
 msgstr "入队(_Q)"
 
-#: src/libaudgui/ui_jumptotrack.c:109
+#: src/libaudgui/ui_jumptotrack.c:114
 msgid "Un_queue"
 msgstr "出列(_q)"
 
-#: src/libaudgui/ui_jumptotrack.c:239
-msgid "Jump to Track"
-msgstr "跳到"
+#: src/libaudgui/ui_jumptotrack.c:265
+#, fuzzy
+msgid "Jump to Song"
+msgstr "跳到时间"
 
-#: src/libaudgui/ui_jumptotrack.c:277
+#: src/libaudgui/ui_jumptotrack.c:290
 msgid "Filter: "
 msgstr "过滤器："
 
-#: src/libaudgui/ui_jumptotrack.c:278
+#: src/libaudgui/ui_jumptotrack.c:291
 msgid "_Filter:"
 msgstr "过滤器(_F)："
 
-#: src/libaudgui/ui_jumptotrack.c:288
+#: src/libaudgui/ui_jumptotrack.c:301
 msgid "Remember"
 msgstr "记住"
 
-#: src/libaudgui/ui_jumptotrack.c:295
+#: src/libaudgui/ui_jumptotrack.c:308
 msgid "Clea_r"
 msgstr "清空(_r)"
 
-#: src/libaudgui/ui_jumptotrack.c:315
+#: src/libaudgui/ui_jumptotrack.c:328
 msgid "Close on Jump"
 msgstr "跳转时关闭"
 
-#: src/libaudgui/ui_playlist_manager.c:250
+#: src/libaudgui/ui_playlist_manager.c:253
 msgid "Playlist Manager"
 msgstr "播放列表管理器"
 
-#: src/libaudgui/ui_playlist_manager.c:277
+#: src/libaudgui/ui_playlist_manager.c:280
 msgid "Entries"
 msgstr "条目"
 
-#: src/libaudgui/ui_playlist_manager.c:298
+#: src/libaudgui/ui_playlist_manager.c:301
 msgid "_Rename"
 msgstr "重命名(_R)"
 
-#: src/libaudgui/ui_playlist_manager.c:322
+#: src/libaudgui/ui_playlist_manager.c:325
 msgid "_Close dialog on activating playlist"
 msgstr "激活播放列表时关闭对话框(_C)"
 
-#: src/libaudgui/ui_urlopener.c:51
+#: src/libaudgui/url-opener.c:56
 msgid "Open URL"
 msgstr "打开URL"
 
-#: src/libaudgui/ui_urlopener.c:51
+#: src/libaudgui/url-opener.c:56
 msgid "Add URL"
 msgstr "添加URL"
 
-#: src/libaudgui/util.c:95
+#: src/libaudgui/url-opener.c:65
+msgid "Enter URL:"
+msgstr ""
+
+#: src/libaudgui/util.c:143
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
@@ -1145,30 +1161,30 @@ msgstr ""
 msgid "File is not a valid .desktop file"
 msgstr "非合法的.desktop文件"
 
-#: src/libeggsmclient/eggdesktopfile.c:188
+#: src/libeggsmclient/eggdesktopfile.c:191
 #, c-format
 msgid "Unrecognized desktop file Version '%s'"
 msgstr "未能识别的.desktop文件版本'%s'"
 
-#: src/libeggsmclient/eggdesktopfile.c:967
+#: src/libeggsmclient/eggdesktopfile.c:974
 #, c-format
 msgid "Starting %s"
 msgstr "正在启动 %s"
 
-#: src/libeggsmclient/eggdesktopfile.c:1108
+#: src/libeggsmclient/eggdesktopfile.c:1116
 msgid "Application does not accept documents on command line"
 msgstr "程序不支持从命令行获取文档"
 
-#: src/libeggsmclient/eggdesktopfile.c:1176
+#: src/libeggsmclient/eggdesktopfile.c:1184
 #, c-format
 msgid "Unrecognized launch option: %d"
 msgstr "未知启动选项：%d"
 
-#: src/libeggsmclient/eggdesktopfile.c:1375
+#: src/libeggsmclient/eggdesktopfile.c:1391
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
 msgstr "无法传递文档URI到Type=Link的桌面项"
 
-#: src/libeggsmclient/eggdesktopfile.c:1396
+#: src/libeggsmclient/eggdesktopfile.c:1412
 msgid "Not a launchable item"
 msgstr "非可启动项目"
 
@@ -1199,6 +1215,67 @@ msgstr "会话管理器选项："
 #: src/libeggsmclient/eggsmclient.c:254
 msgid "Show session management options"
 msgstr "显示会话管理器选项"
+
+#~ msgid "Temporary Playlist"
+#~ msgstr "临时播放列表"
+
+#~ msgid "Buffering ..."
+#~ msgstr "缓冲中..."
+
+#~ msgid "Untitled Playlist"
+#~ msgstr "新播放列表"
+
+#~ msgid "Popup Information Settings"
+#~ msgstr "弹出信息设置"
+
+#~ msgid "<b>Cover image retrieve</b>"
+#~ msgstr "<b>专辑封面检索</b>"
+
+#~ msgid ""
+#~ "While searching for the album's cover, Audacious looks for certain words "
+#~ "in the filename. You can specify those words in the lists below, "
+#~ "separated using commas."
+#~ msgstr ""
+#~ "当搜索专辑封面时，Audacious从文件名中找出关键字。您可以在下面列表中指定它"
+#~ "们，用逗号分隔。"
+
+#~ msgid "Exclude:"
+#~ msgstr "排除："
+
+#~ msgid "Include:"
+#~ msgstr "包含："
+
+#~ msgid "Recursively search for cover"
+#~ msgstr "递归搜索封面"
+
+#~ msgid "Use per-file cover"
+#~ msgstr "为每个文件使用单独封面"
+
+#~ msgid "<b>Miscellaneous</b>"
+#~ msgstr "<b>杂项</b>"
+
+#~ msgid "Show Progress bar for the current track"
+#~ msgstr "显示当前音轨的进度"
+
+#~ msgid "Delay until filepopup comes up: "
+#~ msgstr "延迟到文件弹出窗口出现："
+
+#~ msgid ""
+#~ "Toggles popup information window for the pointed entry in the playlist. "
+#~ "The window shows title of song, name of album, genre, year of publish, "
+#~ "track number, track length, and artwork."
+#~ msgstr ""
+#~ "切换播放列表中指向项目的弹出信息窗口。该窗口显示歌曲标题、专辑、流派、年"
+#~ "份，音轨编号，长度和插图等。"
+
+#~ msgid "Edit settings for popup information"
+#~ msgstr "修改弹出信息的设置"
+
+#~ msgid "Track Number"
+#~ msgstr "音轨序号"
+
+#~ msgid "Jump to Track"
+#~ msgstr "跳到"
 
 #~ msgid ""
 #~ "Audacious seems to be already running but is not responding.  You can "
@@ -1244,9 +1321,6 @@ msgstr "显示会话管理器选项"
 #~ msgstr ""
 #~ "所有音频流将会转换到此位深。\n"
 #~ "此值不应大于您的声卡或输出插件所支持的最大值。"
-
-#~ msgid "<b>Volume Control</b>"
-#~ msgstr "<b>音量控制</b>"
 
 #~ msgid ""
 #~ "Use software volume control. This may be useful for situations where your "

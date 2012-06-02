@@ -7,22 +7,23 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
-"Report-Msgid-Bugs-To: http://jira.atheme.org/browse/AUD\n"
-"POT-Creation-Date: 2011-10-19 21:32-0400\n"
+"Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
+"POT-Creation-Date: 2012-06-01 20:02-0400\n"
 "PO-Revision-Date: 2011-10-20 10:45+0000\n"
 "Last-Translator: kv1dr <poznic.davor@gmail.com>\n"
 "Language-Team: Slovenian\n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: sl\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3)\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
+"%100==4 ? 2 : 3)\n"
 
-#: src/audacious/adder.c:71
+#: src/audacious/adder.c:75
 msgid "Searching ..."
 msgstr "Iščem ..."
 
-#: src/audacious/adder.c:97
+#: src/audacious/adder.c:103
 #, c-format
 msgid "%d file found"
 msgid_plural "%d files found"
@@ -31,264 +32,269 @@ msgstr[1] "%d datoteki najdeni"
 msgstr[2] "%d datotek najdene"
 msgstr[3] "%d datotek najdenih"
 
-#: src/audacious/chardet.c:38
+#: src/audacious/chardet.c:40
 msgid "  (invalid UTF-8)"
 msgstr "  (neveljaven UTF-8)"
 
-#: src/audacious/credits.c:35
+#: src/audacious/credits.c:37
 msgid "Core developers:"
 msgstr "Razvijalci jedra:"
 
-#: src/audacious/credits.c:49
+#: src/audacious/credits.c:52
 msgid "Graphics:"
 msgstr "Grafika:"
 
-#: src/audacious/credits.c:54
+#: src/audacious/credits.c:57
 msgid "Default skin:"
 msgstr "Privzeta obleka:"
 
-#: src/audacious/credits.c:60
+#: src/audacious/credits.c:63
 msgid "Plugin development:"
 msgstr "Razvijalci vtičnikov:"
 
-#: src/audacious/credits.c:83
+#: src/audacious/credits.c:86
 msgid "Patch authors:"
 msgstr "Avtorji popravkov:"
 
-#: src/audacious/credits.c:126
+#: src/audacious/credits.c:132
 msgid "1.x developers:"
 msgstr "Razvijalci različice 1.x:"
 
-#: src/audacious/credits.c:148
+#: src/audacious/credits.c:154
 msgid "BMP Developers:"
 msgstr "BMP razvijalci:"
 
-#: src/audacious/credits.c:180
+#: src/audacious/credits.c:186
+msgid "Argentinian Spanish:"
+msgstr ""
+
+#: src/audacious/credits.c:189
 msgid "Belarusian:"
 msgstr "Beloruščina:"
 
-#: src/audacious/credits.c:183
+#: src/audacious/credits.c:192
 msgid "Basque:"
 msgstr ""
 
-#: src/audacious/credits.c:186
+#: src/audacious/credits.c:195
 msgid "Brazilian Portuguese:"
 msgstr "Brazilska portugalščina:"
 
-#: src/audacious/credits.c:191
+#: src/audacious/credits.c:201
 msgid "Breton:"
 msgstr ""
 
-#: src/audacious/credits.c:194
+#: src/audacious/credits.c:204
 msgid "Bulgarian:"
 msgstr "Bolgarščina:"
 
-#: src/audacious/credits.c:197
+#: src/audacious/credits.c:207
 msgid "Catalan:"
 msgstr "Katalonščina:"
 
-#: src/audacious/credits.c:200
+#: src/audacious/credits.c:212
 msgid "Chinese:"
 msgstr "Kitajščina:"
 
-#: src/audacious/credits.c:203
+#: src/audacious/credits.c:215
 msgid "Croatian:"
 msgstr "Hrvaščina:"
 
-#: src/audacious/credits.c:206
+#: src/audacious/credits.c:218
 msgid "Czech:"
 msgstr "Češčina:"
 
-#: src/audacious/credits.c:209
+#: src/audacious/credits.c:221
 msgid "Dutch:"
 msgstr "Nizozemščina:"
 
-#: src/audacious/credits.c:213
+#: src/audacious/credits.c:226
 msgid "Estonian:"
 msgstr "Estonščina:"
 
-#: src/audacious/credits.c:216
+#: src/audacious/credits.c:229
 msgid "Finnish:"
 msgstr "Finščina:"
 
-#: src/audacious/credits.c:221
+#: src/audacious/credits.c:235
 msgid "French:"
 msgstr "Francoščina:"
 
-#: src/audacious/credits.c:227
+#: src/audacious/credits.c:242
 msgid "German:"
 msgstr "Nemščina:"
 
-#: src/audacious/credits.c:234
+#: src/audacious/credits.c:249
 msgid "Georgian:"
 msgstr "Gruzijščina:"
 
-#: src/audacious/credits.c:237
+#: src/audacious/credits.c:252
 msgid "Greek:"
 msgstr "Grščina:"
 
-#: src/audacious/credits.c:242
+#: src/audacious/credits.c:257
 msgid "Hindi:"
 msgstr "Hindijščina:"
 
-#: src/audacious/credits.c:245
+#: src/audacious/credits.c:260
 msgid "Hungarian:"
 msgstr "Madžarščina:"
 
-#: src/audacious/credits.c:249
+#: src/audacious/credits.c:264
 msgid "Italian:"
 msgstr "Italijanščina:"
 
-#: src/audacious/credits.c:253
+#: src/audacious/credits.c:269
 msgid "Japanese:"
 msgstr "Japonščina:"
 
-#: src/audacious/credits.c:256
+#: src/audacious/credits.c:273
 msgid "Korean:"
 msgstr "Korejščina:"
 
-#: src/audacious/credits.c:259
+#: src/audacious/credits.c:276
 msgid "Latvian:"
 msgstr "Latvijščina:"
 
-#: src/audacious/credits.c:262
+#: src/audacious/credits.c:279
 msgid "Lithuanian:"
 msgstr "Litovščina:"
 
-#: src/audacious/credits.c:267
+#: src/audacious/credits.c:284
 msgid "Macedonian:"
 msgstr "Makedonščina:"
 
-#: src/audacious/credits.c:270
+#: src/audacious/credits.c:287
+#, fuzzy
+msgid "Mexican Spanish:"
+msgstr "Španščina:"
+
+#: src/audacious/credits.c:290
 msgid "Polish:"
 msgstr "Polščina:"
 
-#: src/audacious/credits.c:276
+#: src/audacious/credits.c:297
 msgid "Portuguese:"
 msgstr "Portugalščina:"
 
-#: src/audacious/credits.c:279
+#: src/audacious/credits.c:301
 msgid "Romanian:"
 msgstr "Romunščina:"
 
-#: src/audacious/credits.c:283
+#: src/audacious/credits.c:305
 msgid "Russian:"
 msgstr "Ruščina:"
 
-#: src/audacious/credits.c:287
+#: src/audacious/credits.c:309
 msgid "Serbian (Latin):"
 msgstr "Srbščina (latinsko):"
 
-#: src/audacious/credits.c:290
+#: src/audacious/credits.c:312
 msgid "Serbian (Cyrillic):"
 msgstr "Srbščina (cirilica):"
 
-#: src/audacious/credits.c:293
+#: src/audacious/credits.c:316
 msgid "Simplified Chinese:"
 msgstr "Poenostavljena kitajščina:"
 
-#: src/audacious/credits.c:296
+#: src/audacious/credits.c:319
 msgid "Slovak:"
 msgstr "Slovaščina:"
 
-#: src/audacious/credits.c:299
+#: src/audacious/credits.c:323
 msgid "Spanish:"
 msgstr "Španščina:"
 
-#: src/audacious/credits.c:306
+#: src/audacious/credits.c:332
 msgid "Swedish:"
 msgstr "Švedščina:"
 
-#: src/audacious/credits.c:309
+#: src/audacious/credits.c:335
 msgid "Traditional Chinese:"
 msgstr "Tradicionalna kitajščina:"
 
-#: src/audacious/credits.c:315
+#: src/audacious/credits.c:341
 msgid "Turkish:"
 msgstr "Turščina:"
 
-#: src/audacious/credits.c:319
+#: src/audacious/credits.c:345
 msgid "Ukrainian:"
 msgstr "Ukrajinščina:"
 
-#: src/audacious/credits.c:323
+#: src/audacious/credits.c:351
 msgid "Vietnamese:"
 msgstr "Vietnamščina:"
 
-#: src/audacious/credits.c:326
+#: src/audacious/credits.c:354
 msgid "Welsh:"
 msgstr "Valižanščina:"
 
-#: src/audacious/drct.c:234
-msgid "Temporary Playlist"
-msgstr "Začasni seznam predvajanja"
-
-#: src/audacious/equalizer_preset.c:186
+#: src/audacious/equalizer_preset.c:183
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
 msgstr ""
 
-#: src/audacious/main.c:239
+#: src/audacious/main.c:240
 msgid "Skip backwards in playlist"
 msgstr ""
 
-#: src/audacious/main.c:240
+#: src/audacious/main.c:241
 msgid "Start playing current playlist"
 msgstr ""
 
-#: src/audacious/main.c:241
+#: src/audacious/main.c:242
 msgid "Pause current song"
 msgstr ""
 
-#: src/audacious/main.c:242
+#: src/audacious/main.c:243
 msgid "Stop current song"
 msgstr "Ustavi trenutno pesem"
 
-#: src/audacious/main.c:243
+#: src/audacious/main.c:244
 msgid "Pause if playing, play otherwise"
 msgstr ""
 
-#: src/audacious/main.c:244
+#: src/audacious/main.c:245
 msgid "Skip forward in playlist"
 msgstr ""
 
-#: src/audacious/main.c:245
+#: src/audacious/main.c:246
 msgid "Display Jump to File dialog"
 msgstr ""
 
-#: src/audacious/main.c:246
+#: src/audacious/main.c:247
 msgid "Add files to the playlist"
 msgstr ""
 
-#: src/audacious/main.c:247
+#: src/audacious/main.c:248
 msgid "Add new files to a temporary playlist"
 msgstr ""
 
-#: src/audacious/main.c:248
+#: src/audacious/main.c:249
 msgid "Display the main window"
 msgstr ""
 
-#: src/audacious/main.c:249
+#: src/audacious/main.c:250
 msgid "Show version"
 msgstr "Prikaži različico"
 
-#: src/audacious/main.c:250
+#: src/audacious/main.c:251
 msgid "Print debugging messages"
 msgstr ""
 
-#: src/audacious/main.c:251
+#: src/audacious/main.c:252
 msgid "Headless mode (beta)"
 msgstr ""
 
-#: src/audacious/main.c:252
+#: src/audacious/main.c:253
 msgid "FILE..."
 msgstr "DATOTEKA ..."
 
-#: src/audacious/main.c:264
+#: src/audacious/main.c:265
 msgid "- play multimedia files"
 msgstr "- predvajaj večpredstavnostne datoteke"
 
-#: src/audacious/main.c:274
+#: src/audacious/main.c:275
 #, c-format
 msgid ""
 "%s: %s\n"
@@ -297,405 +303,403 @@ msgstr ""
 "%s: %s\n"
 "Poizkusi `%s --help' za več informacij.\n"
 
-#: src/audacious/main.c:547
+#: src/audacious/main.c:564
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/playback.c:303
+#: src/audacious/playback.c:305
 #, c-format
 msgid "No decoder found for %s."
 msgstr ""
 
-#: src/audacious/playlist-new.c:315
-msgid "Untitled Playlist"
-msgstr "Neimenovan seznam predvajanja"
-
-#: src/audacious/playlist-new.c:1496
-msgid ""
-"The playlist cannot be sorted because metadata scanning is still in progress"
-" (or has been disabled)."
+#: src/audacious/playlist-files.c:51
+#, c-format
+msgid "Cannot %s %s: unsupported file extension."
 msgstr ""
 
-#: src/audacious/ui_preferences.c:88
+#: src/audacious/playlist-files.c:52
+msgid "save"
+msgstr ""
+
+#: src/audacious/playlist-files.c:52
+msgid "load"
+msgstr ""
+
+#: src/audacious/playlist-new.c:129
+#, fuzzy
+msgid "New Playlist"
+msgstr "Seznam predvajanja"
+
+#: src/audacious/playlist-new.c:130
+#, fuzzy
+msgid "Now Playing"
+msgstr "Nobena pesem se ne predvaja"
+
+#: src/audacious/playlist-new.c:1617
+msgid ""
+"The playlist cannot be sorted because metadata scanning is still in progress "
+"(or has been disabled)."
+msgstr ""
+
+#: src/audacious/ui_preferences.c:72
 msgid "Audio"
 msgstr "Zvok"
 
-#: src/audacious/ui_preferences.c:89
+#: src/audacious/ui_preferences.c:73
 msgid "Network"
 msgstr "Omrežje"
 
-#: src/audacious/ui_preferences.c:90 src/audacious/ui_preferences.c:1634
+#: src/audacious/ui_preferences.c:74 src/audacious/ui_preferences.c:1238
 msgid "Playlist"
 msgstr "Seznam predvajanja"
 
-#: src/audacious/ui_preferences.c:91
+#: src/audacious/ui_preferences.c:75
+msgid "Song Info"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:76
 msgid "Plugins"
 msgstr "Vtičniki"
 
-#: src/audacious/ui_preferences.c:97 src/libaudgui/infopopup.c:203
+#: src/audacious/ui_preferences.c:82 src/libaudgui/infopopup.c:195
 msgid "Artist"
 msgstr "Izvajalec"
 
-#: src/audacious/ui_preferences.c:98 src/libaudgui/infopopup.c:205
+#: src/audacious/ui_preferences.c:83 src/libaudgui/infopopup.c:197
 msgid "Album"
 msgstr "Album"
 
-#: src/audacious/ui_preferences.c:99 src/libaudgui/infopopup.c:201
-#: src/libaudgui/ui_playlist_manager.c:276
+#: src/audacious/ui_preferences.c:84 src/libaudgui/infopopup.c:193
+#: src/libaudgui/ui_playlist_manager.c:279
 msgid "Title"
 msgstr "Naslov"
 
-#: src/audacious/ui_preferences.c:100
+#: src/audacious/ui_preferences.c:85
 msgid "Tracknumber"
 msgstr "Št. skladbe"
 
-#: src/audacious/ui_preferences.c:101 src/libaudgui/infopopup.c:207
+#: src/audacious/ui_preferences.c:86 src/libaudgui/infopopup.c:199
 msgid "Genre"
 msgstr "Zvrst"
 
-#: src/audacious/ui_preferences.c:102
+#: src/audacious/ui_preferences.c:87
 msgid "Filename"
 msgstr "Ime datoteke"
 
-#: src/audacious/ui_preferences.c:103
+#: src/audacious/ui_preferences.c:88
 msgid "Filepath"
 msgstr "Pot datoteke"
 
-#: src/audacious/ui_preferences.c:104
+#: src/audacious/ui_preferences.c:89
 msgid "Date"
 msgstr "Datum"
 
-#: src/audacious/ui_preferences.c:105 src/libaudgui/infopopup.c:209
+#: src/audacious/ui_preferences.c:90 src/libaudgui/infopopup.c:201
 msgid "Year"
 msgstr "Leto"
 
-#: src/audacious/ui_preferences.c:106
+#: src/audacious/ui_preferences.c:91
 msgid "Comment"
 msgstr "Komentar"
 
-#: src/audacious/ui_preferences.c:107
+#: src/audacious/ui_preferences.c:92
 msgid "Codec"
 msgstr "Kodek"
 
-#: src/audacious/ui_preferences.c:108
+#: src/audacious/ui_preferences.c:93
 msgid "Quality"
 msgstr "Kvaliteta"
 
-#: src/audacious/ui_preferences.c:114
+#: src/audacious/ui_preferences.c:99
 msgid "None"
 msgstr "Ničesar"
 
-#: src/audacious/ui_preferences.c:115
+#: src/audacious/ui_preferences.c:100
 msgid "Arabic"
 msgstr "Arabščina"
 
-#: src/audacious/ui_preferences.c:116
+#: src/audacious/ui_preferences.c:101
 msgid "Baltic"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:117
+#: src/audacious/ui_preferences.c:102
 msgid "Chinese"
 msgstr "Kitajščina"
 
-#: src/audacious/ui_preferences.c:118
+#: src/audacious/ui_preferences.c:103
 msgid "Greek"
 msgstr "Grščina"
 
-#: src/audacious/ui_preferences.c:119
+#: src/audacious/ui_preferences.c:104
 msgid "Hebrew"
 msgstr "Hebrejščina"
 
-#: src/audacious/ui_preferences.c:120
+#: src/audacious/ui_preferences.c:105
 msgid "Japanese"
 msgstr "Japonščina"
 
-#: src/audacious/ui_preferences.c:121
+#: src/audacious/ui_preferences.c:106
 msgid "Korean"
 msgstr "Korejščina"
 
-#: src/audacious/ui_preferences.c:122
+#: src/audacious/ui_preferences.c:107
 msgid "Polish"
 msgstr "Polščina"
 
-#: src/audacious/ui_preferences.c:123
+#: src/audacious/ui_preferences.c:108
 msgid "Russian"
 msgstr "Ruščina"
 
-#: src/audacious/ui_preferences.c:124
+#: src/audacious/ui_preferences.c:109
 msgid "Taiwanese"
 msgstr "Tajvanščina"
 
-#: src/audacious/ui_preferences.c:125
+#: src/audacious/ui_preferences.c:110
 msgid "Turkish"
 msgstr "Turščina"
 
-#: src/audacious/ui_preferences.c:147
+#: src/audacious/ui_preferences.c:132
 msgid "Album mode"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:150
+#: src/audacious/ui_preferences.c:135
 msgid "<b>Output Settings</b>"
 msgstr "<b>Nastavitve odvoda</b>"
 
-#: src/audacious/ui_preferences.c:152
+#: src/audacious/ui_preferences.c:137
 msgid "Bit depth:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:155
+#: src/audacious/ui_preferences.c:140
 msgid "Buffer size:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:157
+#: src/audacious/ui_preferences.c:142
 msgid "ms"
 msgstr "ms"
 
-#: src/audacious/ui_preferences.c:158
+#: src/audacious/ui_preferences.c:143
 msgid "Use software volume control (not recommended)"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:160
+#: src/audacious/ui_preferences.c:145
 msgid "<b>Replay Gain</b>"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:161
+#: src/audacious/ui_preferences.c:146
 msgid "Enable Replay Gain"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:164
+#: src/audacious/ui_preferences.c:149
 msgid "Prevent clipping (recommended)"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:166
+#: src/audacious/ui_preferences.c:151
 msgid "<b>Adjust Levels</b>"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:167
+#: src/audacious/ui_preferences.c:152
 msgid "Amplify all files:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:169 src/audacious/ui_preferences.c:172
+#: src/audacious/ui_preferences.c:154 src/audacious/ui_preferences.c:157
 msgid "dB"
 msgstr "dB"
 
-#: src/audacious/ui_preferences.c:170
+#: src/audacious/ui_preferences.c:155
 msgid "Amplify untagged files:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:175
+#: src/audacious/ui_preferences.c:160
 msgid "Proxy hostname:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:176
+#: src/audacious/ui_preferences.c:161
 msgid "Proxy port:"
 msgstr "Proxy vrata:"
 
-#: src/audacious/ui_preferences.c:179
+#: src/audacious/ui_preferences.c:164
 msgid "Proxy username:"
 msgstr "Proxy uporabniško ime:"
 
-#: src/audacious/ui_preferences.c:180
+#: src/audacious/ui_preferences.c:165
 msgid "Proxy password:"
 msgstr "Proxy geslo:"
 
-#: src/audacious/ui_preferences.c:184
+#: src/audacious/ui_preferences.c:169
 msgid "<b>Proxy Configuration</b>"
 msgstr "<b>Proxy konfiguracija</b>"
 
-#: src/audacious/ui_preferences.c:185
+#: src/audacious/ui_preferences.c:170
 msgid "Enable proxy usage"
 msgstr "Omogoči uporabi Proxy-ja"
 
-#: src/audacious/ui_preferences.c:188
+#: src/audacious/ui_preferences.c:173
 msgid "Use authentication with proxy"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:196
+#: src/audacious/ui_preferences.c:181
 msgid "Auto character encoding detector for:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:201
+#: src/audacious/ui_preferences.c:186
 msgid "Fallback character encodings:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:205
+#: src/audacious/ui_preferences.c:190
 msgid "<b>Behavior</b>"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:206
+#: src/audacious/ui_preferences.c:191
 msgid "Continue playback on startup"
 msgstr "Nadaljuj predvajanje ob zagonu programa"
 
-#: src/audacious/ui_preferences.c:208
+#: src/audacious/ui_preferences.c:193
 msgid "Advance when the current song is deleted"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:210
+#: src/audacious/ui_preferences.c:195
 msgid "Clear the playlist when opening files"
 msgstr "Počisti seznam predvajanja ob odpiranju datotek"
 
-#: src/audacious/ui_preferences.c:212
+#: src/audacious/ui_preferences.c:197
 msgid "Open files in a temporary playlist"
 msgstr "Odpri datoteke v začasnem seznamu predvajanja"
 
-#: src/audacious/ui_preferences.c:214
+#: src/audacious/ui_preferences.c:199
 msgid "<b>Metadata</b>"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:215
+#: src/audacious/ui_preferences.c:200
 msgid "Do not load metadata for songs until played"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:233
-msgid "TITLE"
-msgstr "NASLOV"
-
-#: src/audacious/ui_preferences.c:234
-msgid "ARTIST - TITLE"
-msgstr "IZVAJALEC - NASLOV"
-
-#: src/audacious/ui_preferences.c:235
-msgid "ARTIST - ALBUM - TITLE"
-msgstr "IZVAJALEC - ALBUM - NASLOV"
-
-#: src/audacious/ui_preferences.c:236
-msgid "ARTIST - ALBUM - TRACK. TITLE"
+#: src/audacious/ui_preferences.c:208
+msgid "<b>Album Art</b>"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:237
-msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
+#: src/audacious/ui_preferences.c:209
+msgid "Search for images matching these words (comma-separated):"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:238
-msgid "ALBUM - TITLE"
-msgstr "ALBUM - NASLOV"
-
-#: src/audacious/ui_preferences.c:577
-msgid "Category"
-msgstr "Kategorija"
-
-#: src/audacious/ui_preferences.c:801
-msgid "Popup Information Settings"
+#: src/audacious/ui_preferences.c:211
+msgid "Exclude images matching these words (comma-separated):"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:810
-msgid "<b>Cover image retrieve</b>"
+#: src/audacious/ui_preferences.c:213
+msgid "Search for images matching song file name"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:815
-msgid ""
-"While searching for the album's cover, Audacious looks for certain words in "
-"the filename. You can specify those words in the lists below, separated "
-"using commas."
+#: src/audacious/ui_preferences.c:215
+msgid "Search recursively"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:832
-msgid "Exclude:"
+#: src/audacious/ui_preferences.c:217
+msgid "Search depth:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:839
-msgid "Include:"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:856
-msgid "Recursively search for cover"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:866
-msgid "Search depth: "
-msgstr ""
-
-#: src/audacious/ui_preferences.c:880
-msgid "Use per-file cover"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:883
-msgid "<b>Miscellaneous</b>"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:892
-msgid "Show Progress bar for the current track"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:902
-msgid "Delay until filepopup comes up: "
-msgstr ""
-
-#: src/audacious/ui_preferences.c:1340
-msgid "Custom"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:1383
-msgid "<b>Song Display</b>"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:1392
-msgid "Show song numbers"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:1403
-msgid "Show leading zeroes (02:00 instead of 2:00)"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:1425
-msgid "Show information about titlestring format"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:1441
-msgid "Custom string:"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:1448
-msgid "Title format:"
-msgstr ""
-
-#: src/audacious/ui_preferences.c:1459
+#: src/audacious/ui_preferences.c:220
 msgid "<b>Popup Information</b>"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1474
-msgid "Show popup information for playlist entries"
+#: src/audacious/ui_preferences.c:221
+msgid "Show popup information"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1475
-msgid ""
-"Toggles popup information window for the pointed entry in the playlist. The "
-"window shows title of song, name of album, genre, year of publish, track "
-"number, track length, and artwork."
+#: src/audacious/ui_preferences.c:223
+msgid "Popup delay (tenths of a second):"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1486
-msgid "Edit settings for popup information"
+#: src/audacious/ui_preferences.c:226
+#, fuzzy
+msgid "Show time scale for current song"
+msgstr "Ustavi trenutno pesem"
+
+#: src/audacious/ui_preferences.c:240
+msgid "TITLE"
+msgstr "NASLOV"
+
+#: src/audacious/ui_preferences.c:241
+msgid "ARTIST - TITLE"
+msgstr "IZVAJALEC - NASLOV"
+
+#: src/audacious/ui_preferences.c:242
+msgid "ARTIST - ALBUM - TITLE"
+msgstr "IZVAJALEC - ALBUM - NASLOV"
+
+#: src/audacious/ui_preferences.c:243
+msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1575
+#: src/audacious/ui_preferences.c:244
+msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:245
+msgid "ALBUM - TITLE"
+msgstr "ALBUM - NASLOV"
+
+#: src/audacious/ui_preferences.c:458
+msgid "Category"
+msgstr "Kategorija"
+
+#: src/audacious/ui_preferences.c:993
+msgid "Custom"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:1030
+msgid "<b>Song Display</b>"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:1039
+msgid "Show song numbers"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:1050
+msgid "Show leading zeroes (02:00 instead of 2:00)"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:1072
+msgid "Show information about titlestring format"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:1088
+msgid "Custom string:"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:1095
+msgid "Title format:"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:1179
 msgid "Output plugin:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1634
+#: src/audacious/ui_preferences.c:1238
 msgid "Transport"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1634
+#: src/audacious/ui_preferences.c:1238
 msgid "Input"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1635
+#: src/audacious/ui_preferences.c:1239
 msgid "Effect"
 msgstr "Efekti"
 
-#: src/audacious/ui_preferences.c:1635
+#: src/audacious/ui_preferences.c:1239
 msgid "Visualization"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1635
+#: src/audacious/ui_preferences.c:1239
 msgid "General"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1675
+#: src/audacious/ui_preferences.c:1277
 msgid "Audacious Preferences"
 msgstr "Nastavitve Audacious"
 
-#: src/audacious/util.c:123
+#: src/audacious/util.c:116
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr ""
@@ -704,19 +708,24 @@ msgstr ""
 msgid "Position not found."
 msgstr ""
 
-#: src/audtool/handlers_vitals.c:64
+#: src/audtool/handlers_vitals.c:63
 msgid "No song playing."
 msgstr "Nobena pesem se ne predvaja"
 
-#: src/libaudcore/tuple.c:685
+#: src/libaudcore/audstrings.c:199
+#, c-format
+msgid "Audio CD, track %s"
+msgstr ""
+
+#: src/libaudcore/tuple.c:541
 msgid "Mono"
 msgstr "Mono"
 
-#: src/libaudcore/tuple.c:687
+#: src/libaudcore/tuple.c:543
 msgid "Stereo"
 msgstr "Stereo"
 
-#: src/libaudcore/tuple.c:689
+#: src/libaudcore/tuple.c:545
 #, c-format
 msgid "%d channel"
 msgid_plural "%d channels"
@@ -725,26 +734,38 @@ msgstr[1] "%d kanala"
 msgstr[2] "%d kanali"
 msgstr[3] "%d kanalov"
 
-#: src/libaudgui/confirm.c:78
+#: src/libaudgui/about.c:51 src/libaudgui/about.c:112
+msgid "Credits"
+msgstr ""
+
+#: src/libaudgui/about.c:51
+msgid "Translators"
+msgstr "Prevajalci"
+
+#: src/libaudgui/about.c:88
+msgid "About Audacious"
+msgstr "O Audacious"
+
+#: src/libaudgui/confirm.c:75
 #, c-format
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
 msgstr ""
 
-#: src/libaudgui/confirm.c:91
+#: src/libaudgui/confirm.c:88
 msgid "_Don't show this message again"
 msgstr "_Ne prikaži več tega sporočila"
 
-#: src/libaudgui/confirm.c:128
+#: src/libaudgui/confirm.c:125
 msgid "Rename Playlist"
 msgstr "Preimenuj seznam predvajanja"
 
-#: src/libaudgui/effects-menu.c:76
+#: src/libaudgui/effects-menu.c:72
 msgid "settings ..."
 msgstr "nastavitve ..."
 
-#: src/libaudgui/equalizer.c:52
+#: src/libaudgui/equalizer.c:51
 msgid "_Enable"
 msgstr "_Omogoči"
 
@@ -796,348 +817,342 @@ msgstr ""
 msgid "Preamp"
 msgstr ""
 
-#: src/libaudgui/infopopup.c:211
-msgid "Track Number"
-msgstr "Številka skladbe"
+#: src/libaudgui/infopopup.c:203
+#, fuzzy
+msgid "Track"
+msgstr "Št. skladbe"
 
-#: src/libaudgui/infopopup.c:213
-msgid "Track Length"
+#: src/libaudgui/infopopup.c:205
+#, fuzzy
+msgid "Length"
 msgstr "Dolžina skladbe"
 
-#: src/libaudgui/infowin.c:77
+#: src/libaudgui/infowin.c:75
 msgid "Acid Jazz"
 msgstr ""
 
-#: src/libaudgui/infowin.c:78
+#: src/libaudgui/infowin.c:76
 msgid "Acid Rock"
 msgstr ""
 
-#: src/libaudgui/infowin.c:79
+#: src/libaudgui/infowin.c:77
 msgid "Ambient"
 msgstr ""
 
-#: src/libaudgui/infowin.c:80
+#: src/libaudgui/infowin.c:78
 msgid "Bebop"
 msgstr ""
 
-#: src/libaudgui/infowin.c:81
+#: src/libaudgui/infowin.c:79
 msgid "Bluegrass"
 msgstr ""
 
-#: src/libaudgui/infowin.c:82
+#: src/libaudgui/infowin.c:80
 msgid "Blues"
 msgstr ""
 
-#: src/libaudgui/infowin.c:83
+#: src/libaudgui/infowin.c:81
 msgid "Chamber Music"
 msgstr ""
 
-#: src/libaudgui/infowin.c:84
+#: src/libaudgui/infowin.c:82
 msgid "Classical"
 msgstr ""
 
-#: src/libaudgui/infowin.c:85
+#: src/libaudgui/infowin.c:83
 msgid "Country"
 msgstr ""
 
-#: src/libaudgui/infowin.c:86
+#: src/libaudgui/infowin.c:84
 msgid "Death Metal"
 msgstr ""
 
-#: src/libaudgui/infowin.c:87
+#: src/libaudgui/infowin.c:85
 msgid "Disco"
 msgstr ""
 
-#: src/libaudgui/infowin.c:88
+#: src/libaudgui/infowin.c:86
 msgid "Easy Listening"
 msgstr ""
 
-#: src/libaudgui/infowin.c:89
+#: src/libaudgui/infowin.c:87
 msgid "Folk"
 msgstr ""
 
-#: src/libaudgui/infowin.c:90
+#: src/libaudgui/infowin.c:88
 msgid "Funk"
 msgstr ""
 
-#: src/libaudgui/infowin.c:91
+#: src/libaudgui/infowin.c:89
 msgid "Gangsta Rap"
 msgstr ""
 
-#: src/libaudgui/infowin.c:92
+#: src/libaudgui/infowin.c:90
 msgid "Gospel"
 msgstr ""
 
-#: src/libaudgui/infowin.c:93
+#: src/libaudgui/infowin.c:91
 msgid "Grunge"
 msgstr ""
 
-#: src/libaudgui/infowin.c:94
+#: src/libaudgui/infowin.c:92
 msgid "Hard Rock"
 msgstr ""
 
-#: src/libaudgui/infowin.c:95
+#: src/libaudgui/infowin.c:93
 msgid "Heavy Metal"
 msgstr ""
 
-#: src/libaudgui/infowin.c:96
+#: src/libaudgui/infowin.c:94
 msgid "Hip-hop"
 msgstr ""
 
-#: src/libaudgui/infowin.c:97
+#: src/libaudgui/infowin.c:95
 msgid "House"
 msgstr ""
 
-#: src/libaudgui/infowin.c:98
+#: src/libaudgui/infowin.c:96
 msgid "Jazz"
 msgstr ""
 
-#: src/libaudgui/infowin.c:99
+#: src/libaudgui/infowin.c:97
 msgid "Jungle"
 msgstr ""
 
-#: src/libaudgui/infowin.c:100
+#: src/libaudgui/infowin.c:98
 msgid "Metal"
 msgstr ""
 
-#: src/libaudgui/infowin.c:101
+#: src/libaudgui/infowin.c:99
 msgid "New Age"
 msgstr ""
 
-#: src/libaudgui/infowin.c:102
+#: src/libaudgui/infowin.c:100
 msgid "New Wave"
 msgstr ""
 
-#: src/libaudgui/infowin.c:103
+#: src/libaudgui/infowin.c:101
 msgid "Noise"
 msgstr ""
 
-#: src/libaudgui/infowin.c:104
+#: src/libaudgui/infowin.c:102
 msgid "Pop"
 msgstr ""
 
-#: src/libaudgui/infowin.c:105
+#: src/libaudgui/infowin.c:103
 msgid "Punk Rock"
 msgstr ""
 
-#: src/libaudgui/infowin.c:106
+#: src/libaudgui/infowin.c:104
 msgid "Rap"
 msgstr ""
 
-#: src/libaudgui/infowin.c:107
+#: src/libaudgui/infowin.c:105
 msgid "Reggae"
 msgstr ""
 
-#: src/libaudgui/infowin.c:108
+#: src/libaudgui/infowin.c:106
 msgid "Rock"
 msgstr ""
 
-#: src/libaudgui/infowin.c:109
+#: src/libaudgui/infowin.c:107
 msgid "Rock and Roll"
 msgstr ""
 
-#: src/libaudgui/infowin.c:110
+#: src/libaudgui/infowin.c:108
 msgid "Rhythm and Blues"
 msgstr ""
 
-#: src/libaudgui/infowin.c:111
+#: src/libaudgui/infowin.c:109
 msgid "Ska"
 msgstr ""
 
-#: src/libaudgui/infowin.c:112
+#: src/libaudgui/infowin.c:110
 msgid "Soul"
 msgstr ""
 
-#: src/libaudgui/infowin.c:113
+#: src/libaudgui/infowin.c:111
 msgid "Swing"
 msgstr ""
 
-#: src/libaudgui/infowin.c:114
+#: src/libaudgui/infowin.c:112
 msgid "Techno"
 msgstr ""
 
-#: src/libaudgui/infowin.c:115
+#: src/libaudgui/infowin.c:113
 msgid "Trip-hop"
 msgstr ""
 
-#: src/libaudgui/infowin.c:175 src/libaudgui/infowin.c:361
-#: src/libaudgui/infowin.c:364 src/libaudgui/infowin.c:367
+#: src/libaudgui/infowin.c:177 src/libaudgui/infowin.c:366
+#: src/libaudgui/infowin.c:369 src/libaudgui/infowin.c:372
 msgid "<span size=\"small\">n/a</span>"
 msgstr ""
 
-#: src/libaudgui/infowin.c:265
+#: src/libaudgui/infowin.c:267
 msgid "Metadata updated successfully"
 msgstr ""
 
-#: src/libaudgui/infowin.c:270
+#: src/libaudgui/infowin.c:272
 msgid "Metadata updating failed"
 msgstr ""
 
-#: src/libaudgui/infowin.c:318
+#: src/libaudgui/infowin.c:320
 msgid "Track Information"
 msgstr "Podatk o skladbi"
 
-#: src/libaudgui/infowin.c:350
+#: src/libaudgui/infowin.c:355
 msgid "<span size=\"small\">Format:</span>"
 msgstr "<span size=\"small\">Format:</span>"
 
-#: src/libaudgui/infowin.c:354
+#: src/libaudgui/infowin.c:359
 msgid "<span size=\"small\">Quality:</span>"
 msgstr "<span size=\"small\">Kvaliteta:</span>"
 
-#: src/libaudgui/infowin.c:357
+#: src/libaudgui/infowin.c:362
 msgid "<span size=\"small\">Bitrate:</span>"
 msgstr ""
 
-#: src/libaudgui/infowin.c:387
+#: src/libaudgui/infowin.c:392
 msgid "<span size=\"small\">Title</span>"
 msgstr "<span size=\"small\">Naslov</span>"
 
-#: src/libaudgui/infowin.c:399
+#: src/libaudgui/infowin.c:404
 msgid "<span size=\"small\">Artist</span>"
 msgstr "<span size=\"small\">Izvajalec</span>"
 
-#: src/libaudgui/infowin.c:411
+#: src/libaudgui/infowin.c:416
 msgid "<span size=\"small\">Album</span>"
 msgstr "<span size=\"small\">Album</span>"
 
-#: src/libaudgui/infowin.c:423
+#: src/libaudgui/infowin.c:428
 msgid "<span size=\"small\">Comment</span>"
 msgstr "<span size=\"small\">Komentar</span>"
 
-#: src/libaudgui/infowin.c:435
+#: src/libaudgui/infowin.c:440
 msgid "<span size=\"small\">Genre</span>"
 msgstr "<span size=\"small\">Zvrst</span>"
 
-#: src/libaudgui/infowin.c:456
+#: src/libaudgui/infowin.c:461
 msgid "<span size=\"small\">Year</span>"
 msgstr "<span size=\"small\">Leto</span>"
 
-#: src/libaudgui/infowin.c:467
+#: src/libaudgui/infowin.c:472
 msgid "<span size=\"small\">Track Number</span>"
 msgstr "<span size=\"small\">Številka skladbe</span>"
 
-#: src/libaudgui/infowin.c:549
+#: src/libaudgui/infowin.c:551
 #, c-format
 msgid "%d kb/s"
 msgstr "%d kb/s"
 
-#: src/libaudgui/infowin.c:579
+#: src/libaudgui/infowin.c:578
 #, c-format
 msgid "No info available for %s.\n"
 msgstr ""
 
-#: src/libaudgui/jump-to-time.c:75
+#: src/libaudgui/jump-to-time.c:52
 msgid "Jump to Time"
 msgstr ""
 
-#: src/libaudgui/jump-to-time.c:90
-msgid "mm:ss"
-msgstr "mm:ss"
+#: src/libaudgui/jump-to-time.c:61
+msgid "Enter time (minutes:seconds):"
+msgstr ""
 
-#: src/libaudgui/playlists.c:39
+#: src/libaudgui/playlists.c:33
 msgid "Export Playlist"
 msgstr "Izvozi seznam predvajanja"
 
-#: src/libaudgui/playlists.c:39
+#: src/libaudgui/playlists.c:33
 msgid "Import Playlist"
 msgstr "Uvozi seznam predvajanja"
 
-#: src/libaudgui/playlists.c:72
+#: src/libaudgui/playlists.c:66
 #, c-format
 msgid "Overwrite %s?"
 msgstr ""
 
-#: src/libaudgui/queue-manager.c:185
+#: src/libaudgui/queue-manager.c:196
 msgid "Queue Manager"
 msgstr ""
 
-#: src/libaudgui/ui_about.c:69
-msgid "About Audacious"
-msgstr "O Audacious"
-
-#: src/libaudgui/ui_about.c:90 src/libaudgui/ui_credits.c:122
-msgid "Credits"
-msgstr ""
-
-#: src/libaudgui/ui_credits.c:126
-msgid "Translators"
-msgstr "Prevajalci"
-
-#: src/libaudgui/ui_fileopener.c:109
+#: src/libaudgui/ui_fileopener.c:108
 msgid "Open Files"
 msgstr "Odpri datoteke"
 
-#: src/libaudgui/ui_fileopener.c:109
+#: src/libaudgui/ui_fileopener.c:108
 msgid "Add Files"
 msgstr "Dodaj datoteke"
 
-#: src/libaudgui/ui_fileopener.c:111
+#: src/libaudgui/ui_fileopener.c:110
 msgid "Close dialog on Open"
 msgstr ""
 
-#: src/libaudgui/ui_fileopener.c:111
+#: src/libaudgui/ui_fileopener.c:110
 msgid "Close dialog on Add"
 msgstr ""
 
-#: src/libaudgui/ui_jumptotrack.c:103 src/libaudgui/ui_jumptotrack.c:111
-#: src/libaudgui/ui_jumptotrack.c:322
+#: src/libaudgui/ui_jumptotrack.c:108 src/libaudgui/ui_jumptotrack.c:116
+#: src/libaudgui/ui_jumptotrack.c:335
 msgid "_Queue"
 msgstr ""
 
-#: src/libaudgui/ui_jumptotrack.c:109
+#: src/libaudgui/ui_jumptotrack.c:114
 msgid "Un_queue"
 msgstr ""
 
-#: src/libaudgui/ui_jumptotrack.c:239
-msgid "Jump to Track"
+#: src/libaudgui/ui_jumptotrack.c:265
+msgid "Jump to Song"
 msgstr ""
 
-#: src/libaudgui/ui_jumptotrack.c:277
+#: src/libaudgui/ui_jumptotrack.c:290
 msgid "Filter: "
 msgstr ""
 
-#: src/libaudgui/ui_jumptotrack.c:278
+#: src/libaudgui/ui_jumptotrack.c:291
 msgid "_Filter:"
 msgstr ""
 
-#: src/libaudgui/ui_jumptotrack.c:288
+#: src/libaudgui/ui_jumptotrack.c:301
 msgid "Remember"
 msgstr ""
 
-#: src/libaudgui/ui_jumptotrack.c:295
+#: src/libaudgui/ui_jumptotrack.c:308
 msgid "Clea_r"
 msgstr ""
 
-#: src/libaudgui/ui_jumptotrack.c:315
+#: src/libaudgui/ui_jumptotrack.c:328
 msgid "Close on Jump"
 msgstr ""
 
-#: src/libaudgui/ui_playlist_manager.c:250
+#: src/libaudgui/ui_playlist_manager.c:253
 msgid "Playlist Manager"
 msgstr ""
 
-#: src/libaudgui/ui_playlist_manager.c:277
+#: src/libaudgui/ui_playlist_manager.c:280
 msgid "Entries"
 msgstr ""
 
-#: src/libaudgui/ui_playlist_manager.c:298
+#: src/libaudgui/ui_playlist_manager.c:301
 msgid "_Rename"
 msgstr ""
 
-#: src/libaudgui/ui_playlist_manager.c:322
+#: src/libaudgui/ui_playlist_manager.c:325
 msgid "_Close dialog on activating playlist"
 msgstr ""
 
-#: src/libaudgui/ui_urlopener.c:51
+#: src/libaudgui/url-opener.c:56
 msgid "Open URL"
 msgstr ""
 
-#: src/libaudgui/ui_urlopener.c:51
+#: src/libaudgui/url-opener.c:56
 msgid "Add URL"
 msgstr ""
 
-#: src/libaudgui/util.c:95
+#: src/libaudgui/url-opener.c:65
+msgid "Enter URL:"
+msgstr ""
+
+#: src/libaudgui/util.c:143
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
@@ -1147,30 +1162,30 @@ msgstr ""
 msgid "File is not a valid .desktop file"
 msgstr ""
 
-#: src/libeggsmclient/eggdesktopfile.c:188
+#: src/libeggsmclient/eggdesktopfile.c:191
 #, c-format
 msgid "Unrecognized desktop file Version '%s'"
 msgstr ""
 
-#: src/libeggsmclient/eggdesktopfile.c:967
+#: src/libeggsmclient/eggdesktopfile.c:974
 #, c-format
 msgid "Starting %s"
 msgstr ""
 
-#: src/libeggsmclient/eggdesktopfile.c:1108
+#: src/libeggsmclient/eggdesktopfile.c:1116
 msgid "Application does not accept documents on command line"
 msgstr ""
 
-#: src/libeggsmclient/eggdesktopfile.c:1176
+#: src/libeggsmclient/eggdesktopfile.c:1184
 #, c-format
 msgid "Unrecognized launch option: %d"
 msgstr ""
 
-#: src/libeggsmclient/eggdesktopfile.c:1375
+#: src/libeggsmclient/eggdesktopfile.c:1391
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
 msgstr ""
 
-#: src/libeggsmclient/eggdesktopfile.c:1396
+#: src/libeggsmclient/eggdesktopfile.c:1412
 msgid "Not a launchable item"
 msgstr ""
 
@@ -1202,4 +1217,14 @@ msgstr ""
 msgid "Show session management options"
 msgstr ""
 
+#~ msgid "Temporary Playlist"
+#~ msgstr "Začasni seznam predvajanja"
 
+#~ msgid "Untitled Playlist"
+#~ msgstr "Neimenovan seznam predvajanja"
+
+#~ msgid "Track Number"
+#~ msgstr "Številka skladbe"
+
+#~ msgid "mm:ss"
+#~ msgstr "mm:ss"
