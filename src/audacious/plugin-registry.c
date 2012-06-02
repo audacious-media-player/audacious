@@ -32,6 +32,7 @@
 #include <libaudcore/audstrings.h>
 
 #include "debug.h"
+#include "i18n.h"
 #include "interface.h"
 #include "misc.h"
 #include "plugin.h"
@@ -39,7 +40,7 @@
 #include "util.h"
 
 #define FILENAME "plugin-registry"
-#define FORMAT 7
+#define FORMAT 8
 
 typedef struct {
     GList * schemes;
@@ -59,7 +60,7 @@ struct PluginHandle {
     bool_t confirmed, loaded;
     int timestamp, type;
     Plugin * header;
-    char * name;
+    char * name, * domain;
     int priority;
     bool_t has_about, has_configure, enabled;
     GList * watches;
@@ -108,6 +109,7 @@ static PluginHandle * plugin_new (char * path, bool_t confirmed, bool_t
     plugin->type = type;
     plugin->header = header;
     plugin->name = NULL;
+    plugin->domain = NULL;
     plugin->priority = 0;
     plugin->has_about = FALSE;
     plugin->has_configure = FALSE;
@@ -168,6 +170,7 @@ static void plugin_free (PluginHandle * plugin)
 
     g_free (plugin->path);
     g_free (plugin->name);
+    g_free (plugin->domain);
     g_free (plugin);
 }
 
@@ -211,6 +214,10 @@ static void plugin_save (PluginHandle * plugin, FILE * handle)
     fprintf (handle, "%s %s\n", plugin_type_names[plugin->type], plugin->path);
     fprintf (handle, "stamp %d\n", plugin->timestamp);
     fprintf (handle, "name %s\n", plugin->name);
+
+    if (plugin->domain)
+        fprintf (handle, "domain %s\n", plugin->domain);
+
     fprintf (handle, "priority %d\n", plugin->priority);
     fprintf (handle, "about %d\n", plugin->has_about);
     fprintf (handle, "config %d\n", plugin->has_configure);
@@ -344,6 +351,8 @@ FOUND:
 
     if ((plugin->name = parse_string ("name")))
         parse_next (handle);
+    if ((plugin->domain = parse_string ("domain")))
+        parse_next (handle);
     if (parse_integer ("priority", & plugin->priority))
         parse_next (handle);
     if (parse_integer ("about", & plugin->has_about))
@@ -407,7 +416,7 @@ int plugin_compare (PluginHandle * a, PluginHandle * b)
         return 1;
 
     int diff;
-    if ((diff = string_compare (a->name, b->name)))
+    if ((diff = string_compare (dgettext (a->domain, a->name), dgettext (b->domain, b->name))))
         return diff;
 
     return string_compare (a->path, b->path);
@@ -508,7 +517,9 @@ void plugin_register_loaded (const char * path, Plugin * header)
     }
 
     g_free (plugin->name);
+    g_free (plugin->domain);
     plugin->name = g_strdup (header->name);
+    plugin->domain = PLUGIN_HAS_FUNC (header, domain) ? g_strdup (header->domain) : NULL;
     plugin->has_about = PLUGIN_HAS_FUNC (header, about) || PLUGIN_HAS_FUNC (header, about_text);
     plugin->has_configure = PLUGIN_HAS_FUNC (header, configure) || PLUGIN_HAS_FUNC (header, prefs);
 
@@ -637,7 +648,7 @@ void plugin_for_each (int type, PluginForEachFunc func, void * data)
 
 const char * plugin_get_name (PluginHandle * plugin)
 {
-    return plugin->name;
+    return dgettext (plugin->domain, plugin->name);
 }
 
 bool_t plugin_has_about (PluginHandle * plugin)
