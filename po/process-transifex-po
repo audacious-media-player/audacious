@@ -1,0 +1,88 @@
+#!/bin/sh
+
+case "$1" in
+ca.po)
+    LANGUAGE="Catalan"
+    ;;
+cs.po)
+    LANGUAGE="Czech"
+    ;;
+de.po)
+    LANGUAGE="German"
+    ;;
+es.po)
+    LANGUAGE="Spanish"
+    ;;
+es_AR.po)
+    LANGUAGE="Spanish (Argentinian)"
+    ;;
+es_MX.po)
+    LANGUAGE="Spanish (Mexican)"
+    ;;
+et.po)
+    LANGUAGE="Estonian"
+    ;;
+fi.po)
+    LANGUAGE="Finnish"
+    ;;
+fr.po)
+    LANGUAGE="French"
+    ;;
+hu.po)
+    LANGUAGE="Hungarian"
+    ;;
+id_ID.po)
+    LANGUAGE="Indonesian"
+    ;;
+it.po)
+    LANGUAGE="Italian"
+    ;;
+ja.po)
+    LANGUAGE="Japanese"
+    ;;
+lt.po)
+    LANGUAGE="Lithuanian"
+    ;;
+lv.po)
+    LANGUAGE="Latvian"
+    ;;
+nl.po)
+    LANGUAGE="Dutch"
+    ;;
+pl.po)
+    LANGUAGE="Polish"
+    ;;
+pt_BR.po)
+    LANGUAGE="Portuguese (Brazil)"
+    ;;
+pt_PT.po)
+    LANGUAGE="Portuguese"
+    ;;
+ru.po)
+    LANGUAGE="Russian"
+    ;;
+sk.po)
+    LANGUAGE="Slovak"
+    ;;
+sr.po)
+    LANGUAGE="Serbian"
+    ;;
+uk.po)
+    LANGUAGE="Ukrainian"
+    ;;
+vi.po)
+    LANGUAGE="Vietnamese"
+    ;;
+zh_TW.po)
+    LANGUAGE="Chinese (traditional)"
+    ;;
+*)
+    echo "Unknown language $1"
+    exit 1
+    ;;
+esac
+
+sed -i -e "s/SOME DESCRIPTIVE TITLE./$LANGUAGE translation for Audacious/" "$1"
+sed -i -e "s/YEAR THE PACKAGE'S COPYRIGHT HOLDER/Audacious translators/" "$1"
+sed -i -e "s/as the PACKAGE package/as the Audacious package/" "$1"
+sed -i -e "s/LANGUAGE <LL@li.org>/$LANGUAGE/" "$1"
