@@ -67,6 +67,10 @@ struct _PreferencesWidget {
 
     union {
         struct {
+            int value;
+        } radio_btn;
+
+        struct {
             double min, max, step;
             const char * right_label; /* text right to widget */
         } spin_btn;
@@ -92,7 +96,6 @@ struct _PreferencesWidget {
         struct {
             const ComboBoxElements * elements;
             int n_elements;
-            bool_t enabled;
         } combo;
 
         struct {

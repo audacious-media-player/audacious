@@ -136,7 +136,7 @@ static PreferencesWidget audio_page_widgets[] = {
  {WIDGET_CUSTOM, .data = {.populate = create_output_plugin_box}},
  {WIDGET_COMBO_BOX, N_("Bit depth:"),
   .cfg_type = VALUE_INT, .cname = "output_bit_depth",
-  .data = {.combo = {bitdepth_elements, G_N_ELEMENTS (bitdepth_elements), TRUE}}},
+  .data = {.combo = {bitdepth_elements, G_N_ELEMENTS (bitdepth_elements)}}},
  {WIDGET_SPIN_BTN, N_("Buffer size:"),
   .cfg_type = VALUE_INT, .cname = "output_buffer_size",
   .data = {.spin_btn = {100, 10000, 1000, N_("ms")}}},
@@ -180,8 +180,7 @@ static PreferencesWidget chardet_elements[] = {
 #ifdef USE_CHARDET
  {WIDGET_COMBO_BOX, N_("Auto character encoding detector for:"),
   .cfg_type = VALUE_STRING, .cname = "chardet_detector", .child = TRUE,
-  .data = {.combo = {chardet_detector_presets,
-  G_N_ELEMENTS (chardet_detector_presets), TRUE}}},
+  .data = {.combo = {chardet_detector_presets, G_N_ELEMENTS (chardet_detector_presets)}}},
 #endif
  {WIDGET_ENTRY, N_("Fallback character encodings:"), .cfg_type = VALUE_STRING,
   .cname = "chardet_fallback", .child = TRUE}};
@@ -508,6 +507,23 @@ static void fill_category_list (GtkTreeView * treeview, GtkNotebook * notebook)
     }
 }
 
+static void on_radio_button_toggled (GtkWidget * button, const PreferencesWidget * widget)
+{
+    if (gtk_toggle_button_get_active ((GtkToggleButton *) button))
+        widget_set_int (widget, widget->data.radio_btn.value);
+}
+
+static void init_radio_button (GtkWidget * button, const PreferencesWidget * widget)
+{
+    if (widget->cfg_type != VALUE_INT)
+        return;
+
+    if (widget_get_int (widget) == widget->data.radio_btn.value)
+        gtk_toggle_button_set_active ((GtkToggleButton *) button, TRUE);
+
+    g_signal_connect (button, "toggled", (GCallback) on_radio_button_toggled, (void *) widget);
+}
+
 static void on_toggle_button_toggled (GtkToggleButton * button, const PreferencesWidget * widget)
 {
     bool_t active = gtk_toggle_button_get_active (button);
@@ -552,7 +568,6 @@ static void fill_cbox (GtkWidget * combobox, const PreferencesWidget * widget)
         gtk_combo_box_text_append_text ((GtkComboBoxText *) combobox,
          _(widget->data.combo.elements[i].label));
 
-    if (widget->data.combo.enabled) {
         switch (widget->cfg_type) {
             case VALUE_INT:
                 g_signal_connect (combobox, "changed", (GCallback)
@@ -588,10 +603,6 @@ static void fill_cbox (GtkWidget * combobox, const PreferencesWidget * widget)
                 break;
         }
         gtk_combo_box_set_active(GTK_COMBO_BOX(combobox), index);
-    } else {
-        gtk_combo_box_set_active(GTK_COMBO_BOX(combobox), -1);
-        gtk_widget_set_sensitive(GTK_WIDGET(combobox), 0);
-    }
 }
 
 static void create_spin_button (const PreferencesWidget * widget, GtkWidget * *
@@ -829,7 +840,7 @@ void create_widgets_with_domain (void * box, const PreferencesWidget * widgets,
                 widget = gtk_radio_button_new_with_mnemonic (radio_btn_group,
                  dgettext (domain, widgets[x].label));
                 radio_btn_group = gtk_radio_button_get_group ((GtkRadioButton *) widget);
-                init_toggle_button (widget, & widgets[x]);
+                init_radio_button (widget, & widgets[x]);
                 break;
             case WIDGET_SPIN_BTN:
                 widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
