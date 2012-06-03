@@ -31,7 +31,7 @@ void str_set_utf8_impl (char * (* stu_impl) (const char *),
 char * str_to_utf8 (const char * str);
 char * str_to_utf8_full (const char * str, int len, int * bytes_read, int * bytes_written);
 
-void string_replace_char (char * string, char old_str, char new_str);
+void string_replace_char (char * string, char old_c, char new_c);
 
 void str_decode_percent (const char * str, int len, char * out);
 void str_encode_percent (const char * str, int len, char * out);

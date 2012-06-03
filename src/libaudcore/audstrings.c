@@ -74,10 +74,10 @@ EXPORT char * str_to_utf8_full (const char * str, int len, int * bytes_read, int
     return str_to_utf8_full_impl (str, len, bytes_read, bytes_written);
 }
 
-EXPORT void string_replace_char (char * string, char old_str, char new_str)
+EXPORT void string_replace_char (char * string, char old_c, char new_c)
 {
-    while ((string = strchr (string, old_str)) != NULL)
-        * string = new_str;
+    while ((string = strchr (string, old_c)))
+        * string ++ = new_c;
 }
 
 /* Percent-decodes up to <len> bytes of <str> to <out>, which must be large
