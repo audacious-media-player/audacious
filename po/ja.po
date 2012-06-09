@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-06-01 20:24-0400\n"
+"POT-Creation-Date: 2012-06-09 17:53-0400\n"
 "PO-Revision-Date: 2012-06-02 00:06+0000\n"
 "Last-Translator: jlindgren <john.lindgren@aol.com>\n"
 "Language-Team: Japanese\n"
@@ -302,7 +302,7 @@ msgstr ""
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/playback.c:305
+#: src/audacious/playback.c:315
 #, c-format
 msgid "No decoder found for %s."
 msgstr "%s のためのデコーダがありません。"
@@ -336,6 +336,16 @@ msgstr ""
 "メタデータのスキャンが進行中、または無効になっているため、プレイリストをソー"
 "トできません。"
 
+#: src/audacious/plugin-preferences.c:50
+#, fuzzy, c-format
+msgid "About %s"
+msgstr "Audacious について"
+
+#: src/audacious/plugin-preferences.c:88
+#, fuzzy, c-format
+msgid "%s Settings"
+msgstr "設定"
+
 #: src/audacious/ui_preferences.c:72
 msgid "Audio"
 msgstr "オーディオ"
@@ -344,7 +354,7 @@ msgstr "オーディオ"
 msgid "Network"
 msgstr "ネットワーク"
 
-#: src/audacious/ui_preferences.c:74 src/audacious/ui_preferences.c:1238
+#: src/audacious/ui_preferences.c:74 src/audacious/ui_preferences.c:1255
 msgid "Playlist"
 msgstr "プレイリスト"
 
@@ -453,87 +463,87 @@ msgstr "繁体中国語"
 msgid "Turkish"
 msgstr "トルコ語"
 
-#: src/audacious/ui_preferences.c:132
+#: src/audacious/ui_preferences.c:133
 msgid "Album mode"
 msgstr "アルバムモード"
 
-#: src/audacious/ui_preferences.c:135
+#: src/audacious/ui_preferences.c:136
 msgid "<b>Output Settings</b>"
 msgstr "<b>出力の設定</b>"
 
-#: src/audacious/ui_preferences.c:137
+#: src/audacious/ui_preferences.c:138
 msgid "Bit depth:"
 msgstr "ビット深度:"
 
-#: src/audacious/ui_preferences.c:140
+#: src/audacious/ui_preferences.c:141
 msgid "Buffer size:"
 msgstr "バッファサイズ:"
 
-#: src/audacious/ui_preferences.c:142
+#: src/audacious/ui_preferences.c:143
 msgid "ms"
 msgstr "ms"
 
-#: src/audacious/ui_preferences.c:143
+#: src/audacious/ui_preferences.c:144
 msgid "Use software volume control (not recommended)"
 msgstr "ソフトウェアの音量コントロールを使う (非推奨)"
 
-#: src/audacious/ui_preferences.c:145
+#: src/audacious/ui_preferences.c:146
 msgid "<b>Replay Gain</b>"
 msgstr "<b>リプレイゲイン</b>"
 
-#: src/audacious/ui_preferences.c:146
+#: src/audacious/ui_preferences.c:147
 msgid "Enable Replay Gain"
 msgstr "リプレイゲインを有効にする"
 
-#: src/audacious/ui_preferences.c:149
+#: src/audacious/ui_preferences.c:150
 msgid "Prevent clipping (recommended)"
 msgstr "クリッピングを防ぐ (非推奨)"
 
-#: src/audacious/ui_preferences.c:151
+#: src/audacious/ui_preferences.c:152
 msgid "<b>Adjust Levels</b>"
 msgstr "<b>音量の調整</b>"
 
-#: src/audacious/ui_preferences.c:152
+#: src/audacious/ui_preferences.c:153
 msgid "Amplify all files:"
 msgstr "すべてのファイルを増幅する:"
 
-#: src/audacious/ui_preferences.c:154 src/audacious/ui_preferences.c:157
+#: src/audacious/ui_preferences.c:155 src/audacious/ui_preferences.c:158
 msgid "dB"
 msgstr "dB"
 
-#: src/audacious/ui_preferences.c:155
+#: src/audacious/ui_preferences.c:156
 msgid "Amplify untagged files:"
 msgstr "タグづけされていないファイルを増幅する"
 
-#: src/audacious/ui_preferences.c:160
+#: src/audacious/ui_preferences.c:161
 msgid "Proxy hostname:"
 msgstr "プロキシのホスト名:"
 
-#: src/audacious/ui_preferences.c:161
+#: src/audacious/ui_preferences.c:162
 msgid "Proxy port:"
 msgstr "プロキシのポート:"
 
-#: src/audacious/ui_preferences.c:164
+#: src/audacious/ui_preferences.c:165
 msgid "Proxy username:"
 msgstr "プロキシのユーザ名:"
 
-#: src/audacious/ui_preferences.c:165
+#: src/audacious/ui_preferences.c:166
 msgid "Proxy password:"
 msgstr "プロキシのパスワード:"
 
-#: src/audacious/ui_preferences.c:169
+#: src/audacious/ui_preferences.c:170
 msgid "<b>Proxy Configuration</b>"
 msgstr "<b>プロキシ設定</b>"
 
-#: src/audacious/ui_preferences.c:170
+#: src/audacious/ui_preferences.c:171
 msgid "Enable proxy usage"
 msgstr "プロキシの使用を有効にする"
 
-#: src/audacious/ui_preferences.c:173
+#: src/audacious/ui_preferences.c:174
 msgid "Use authentication with proxy"
 msgstr "プロキシの認証を行う"
 
-#: src/audacious/ui_preferences.c:181
+#: src/audacious/ui_preferences.c:182
 msgid "Auto character encoding detector for:"
 msgstr "自動キャラクタエンコーディング検出:"
 
@@ -637,59 +647,59 @@ msgstr "アルバム - タイトル"
 msgid "Category"
 msgstr "カテゴリ"
 
-#: src/audacious/ui_preferences.c:993
+#: src/audacious/ui_preferences.c:1005
 msgid "Custom"
 msgstr "カスタム"
 
-#: src/audacious/ui_preferences.c:1030
+#: src/audacious/ui_preferences.c:1042
 msgid "<b>Song Display</b>"
 msgstr "<b>曲の表示</b>"
 
-#: src/audacious/ui_preferences.c:1039
+#: src/audacious/ui_preferences.c:1051
 msgid "Show song numbers"
 msgstr "曲番号の表示"
 
-#: src/audacious/ui_preferences.c:1050
+#: src/audacious/ui_preferences.c:1062
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr "先頭のゼロを表示する (2:00 -> 02:00)"
 
-#: src/audacious/ui_preferences.c:1072
+#: src/audacious/ui_preferences.c:1084
 msgid "Show information about titlestring format"
 msgstr "タイトルに使用できる書式を表示します"
 
-#: src/audacious/ui_preferences.c:1088
+#: src/audacious/ui_preferences.c:1100
 msgid "Custom string:"
 msgstr "カスタム文字列:"
 
-#: src/audacious/ui_preferences.c:1095
+#: src/audacious/ui_preferences.c:1107
 msgid "Title format:"
 msgstr "タイトルの書式:"
 
-#: src/audacious/ui_preferences.c:1179
+#: src/audacious/ui_preferences.c:1196
 msgid "Output plugin:"
 msgstr "出力プラグイン:"
 
-#: src/audacious/ui_preferences.c:1238
+#: src/audacious/ui_preferences.c:1255
 msgid "Transport"
 msgstr "トランスポート"
 
-#: src/audacious/ui_preferences.c:1238
+#: src/audacious/ui_preferences.c:1255
 msgid "Input"
 msgstr "インプット"
 
-#: src/audacious/ui_preferences.c:1239
+#: src/audacious/ui_preferences.c:1256
 msgid "Effect"
 msgstr "エフェクト"
 
-#: src/audacious/ui_preferences.c:1239
+#: src/audacious/ui_preferences.c:1256
 msgid "Visualization"
 msgstr "視覚化"
 
-#: src/audacious/ui_preferences.c:1239
+#: src/audacious/ui_preferences.c:1256
 msgid "General"
 msgstr "一般"
 
-#: src/audacious/ui_preferences.c:1277
+#: src/audacious/ui_preferences.c:1294
 msgid "Audacious Preferences"
 msgstr "Audacious の設定"
 

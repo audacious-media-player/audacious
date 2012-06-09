@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-06-01 20:24-0400\n"
+"POT-Creation-Date: 2012-06-09 17:53-0400\n"
 "PO-Revision-Date: 2012-06-02 00:06+0000\n"
 "Last-Translator: jlindgren <john.lindgren@aol.com>\n"
 "Language-Team: Portuguese (Brazil)\n"
@@ -306,7 +306,7 @@ msgstr ""
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/playback.c:305
+#: src/audacious/playback.c:315
 #, c-format
 msgid "No decoder found for %s."
 msgstr "Decodificador para %s não encontrado "
@@ -340,6 +340,16 @@ msgstr ""
 "A lista de reprodução não pode ser ordenada porque a varredura de metadados "
 "ainda está em progresso (ou foi desabilitada)."
 
+#: src/audacious/plugin-preferences.c:50
+#, fuzzy, c-format
+msgid "About %s"
+msgstr "Sobre o Audacious"
+
+#: src/audacious/plugin-preferences.c:88
+#, fuzzy, c-format
+msgid "%s Settings"
+msgstr "configurações..."
+
 #: src/audacious/ui_preferences.c:72
 msgid "Audio"
 msgstr "Áudio"
@@ -348,7 +358,7 @@ msgstr "Áudio"
 msgid "Network"
 msgstr "Rede"
 
-#: src/audacious/ui_preferences.c:74 src/audacious/ui_preferences.c:1238
+#: src/audacious/ui_preferences.c:74 src/audacious/ui_preferences.c:1255
 msgid "Playlist"
 msgstr "Lista de Reprodução"
 
@@ -457,87 +467,87 @@ msgstr "Taiwanês"
 msgid "Turkish"
 msgstr "Turco"
 
-#: src/audacious/ui_preferences.c:132
+#: src/audacious/ui_preferences.c:133
 msgid "Album mode"
 msgstr "Modo álbum"
 
-#: src/audacious/ui_preferences.c:135
+#: src/audacious/ui_preferences.c:136
 msgid "<b>Output Settings</b>"
 msgstr "<b>Configuração de Saída</b>"
 
-#: src/audacious/ui_preferences.c:137
+#: src/audacious/ui_preferences.c:138
 msgid "Bit depth:"
 msgstr "Profundidade de bit:"
 
-#: src/audacious/ui_preferences.c:140
+#: src/audacious/ui_preferences.c:141
 msgid "Buffer size:"
 msgstr "Tamanho do armazenamento:"
 
-#: src/audacious/ui_preferences.c:142
+#: src/audacious/ui_preferences.c:143
 msgid "ms"
 msgstr "ms"
 
-#: src/audacious/ui_preferences.c:143
+#: src/audacious/ui_preferences.c:144
 msgid "Use software volume control (not recommended)"
 msgstr "Usar controle de volume de software (não recomendado)"
 
-#: src/audacious/ui_preferences.c:145
+#: src/audacious/ui_preferences.c:146
 msgid "<b>Replay Gain</b>"
 msgstr "<b>Ganho de Replay</b>"
 
-#: src/audacious/ui_preferences.c:146
+#: src/audacious/ui_preferences.c:147
 msgid "Enable Replay Gain"
 msgstr "Habilitar Ganho de Replay"
 
-#: src/audacious/ui_preferences.c:149
+#: src/audacious/ui_preferences.c:150
 msgid "Prevent clipping (recommended)"
 msgstr "Prevenir ruídos (recomendado)"
 
-#: src/audacious/ui_preferences.c:151
+#: src/audacious/ui_preferences.c:152
 msgid "<b>Adjust Levels</b>"
 msgstr "<b>Ajustar Níveis</b>"
 
-#: src/audacious/ui_preferences.c:152
+#: src/audacious/ui_preferences.c:153
 msgid "Amplify all files:"
 msgstr "Amplificar todos os arquivos:"
 
-#: src/audacious/ui_preferences.c:154 src/audacious/ui_preferences.c:157
+#: src/audacious/ui_preferences.c:155 src/audacious/ui_preferences.c:158
 msgid "dB"
 msgstr "dB"
 
-#: src/audacious/ui_preferences.c:155
+#: src/audacious/ui_preferences.c:156
 msgid "Amplify untagged files:"
 msgstr "Amplificar arquivos não-marcados:"
 
-#: src/audacious/ui_preferences.c:160
+#: src/audacious/ui_preferences.c:161
 msgid "Proxy hostname:"
 msgstr "Endereço do proxy:"
 
-#: src/audacious/ui_preferences.c:161
+#: src/audacious/ui_preferences.c:162
 msgid "Proxy port:"
 msgstr "Porta do proxy:"
 
-#: src/audacious/ui_preferences.c:164
+#: src/audacious/ui_preferences.c:165
 msgid "Proxy username:"
 msgstr "Nome de usuário do proxy:"
 
-#: src/audacious/ui_preferences.c:165
+#: src/audacious/ui_preferences.c:166
 msgid "Proxy password:"
 msgstr "Senha do proxy:"
 
-#: src/audacious/ui_preferences.c:169
+#: src/audacious/ui_preferences.c:170
 msgid "<b>Proxy Configuration</b>"
 msgstr "<b>Configurações de Proxy</b>"
 
-#: src/audacious/ui_preferences.c:170
+#: src/audacious/ui_preferences.c:171
 msgid "Enable proxy usage"
 msgstr "Ativar o uso de proxy"
 
-#: src/audacious/ui_preferences.c:173
+#: src/audacious/ui_preferences.c:174
 msgid "Use authentication with proxy"
 msgstr "Usar autenticação do proxy"
 
-#: src/audacious/ui_preferences.c:181
+#: src/audacious/ui_preferences.c:182
 msgid "Auto character encoding detector for:"
 msgstr "Converter caracteres automaticamente para:"
 
@@ -641,59 +651,59 @@ msgstr "ÁLBUM - TÍTULO"
 msgid "Category"
 msgstr "Categoria"
 
-#: src/audacious/ui_preferences.c:993
+#: src/audacious/ui_preferences.c:1005
 msgid "Custom"
 msgstr "Personalizado"
 
-#: src/audacious/ui_preferences.c:1030
+#: src/audacious/ui_preferences.c:1042
 msgid "<b>Song Display</b>"
 msgstr "<b>Exibição do Arquivo</b>"
 
-#: src/audacious/ui_preferences.c:1039
+#: src/audacious/ui_preferences.c:1051
 msgid "Show song numbers"
 msgstr "Mostrar números das músicas"
 
-#: src/audacious/ui_preferences.c:1050
+#: src/audacious/ui_preferences.c:1062
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr "Mostrar zero a esquerda (02:00 ao invés de 2:00)"
 
-#: src/audacious/ui_preferences.c:1072
+#: src/audacious/ui_preferences.c:1084
 msgid "Show information about titlestring format"
 msgstr "Mostrar informações sobre o formato do título"
 
-#: src/audacious/ui_preferences.c:1088
+#: src/audacious/ui_preferences.c:1100
 msgid "Custom string:"
 msgstr "Formato personalizado:"
 
-#: src/audacious/ui_preferences.c:1095
+#: src/audacious/ui_preferences.c:1107
 msgid "Title format:"
 msgstr "Formato do título:"
 
-#: src/audacious/ui_preferences.c:1179
+#: src/audacious/ui_preferences.c:1196
 msgid "Output plugin:"
 msgstr "Plugin de saída:"
 
-#: src/audacious/ui_preferences.c:1238
+#: src/audacious/ui_preferences.c:1255
 msgid "Transport"
 msgstr "Transportar"
 
-#: src/audacious/ui_preferences.c:1238
+#: src/audacious/ui_preferences.c:1255
 msgid "Input"
 msgstr "Entrada"
 
-#: src/audacious/ui_preferences.c:1239
+#: src/audacious/ui_preferences.c:1256
 msgid "Effect"
 msgstr "Efeito"
 
-#: src/audacious/ui_preferences.c:1239
+#: src/audacious/ui_preferences.c:1256
 msgid "Visualization"
 msgstr "Visualização"
 
-#: src/audacious/ui_preferences.c:1239
+#: src/audacious/ui_preferences.c:1256
 msgid "General"
 msgstr "Geral"
 
-#: src/audacious/ui_preferences.c:1277
+#: src/audacious/ui_preferences.c:1294
 msgid "Audacious Preferences"
 msgstr "Preferências do Audacious"
 

@@ -7,6 +7,7 @@ src/audacious/main.c
 src/audacious/playback.c
 src/audacious/playlist-files.c
 src/audacious/playlist-new.c
+src/audacious/plugin-preferences.c
 src/audacious/ui_preferences.c
 src/audacious/util.c
 src/audtool/handlers_playlist.c

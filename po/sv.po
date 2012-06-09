@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bmp 0.9.7\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-06-01 20:02-0400\n"
+"POT-Creation-Date: 2012-06-09 17:53-0400\n"
 "PO-Revision-Date: 2004-02-29 02:46+0100\n"
 "Last-Translator: Martin Persenius <martin@persenius.net>\n"
 "Language-Team: Sweden\n"
@@ -332,7 +332,7 @@ msgstr ""
 msgid "Audacious"
 msgstr ""
 
-#: src/audacious/playback.c:305
+#: src/audacious/playback.c:315
 #, c-format
 msgid "No decoder found for %s."
 msgstr ""
@@ -366,6 +366,16 @@ msgid ""
 "(or has been disabled)."
 msgstr ""
 
+#: src/audacious/plugin-preferences.c:50
+#, fuzzy, c-format
+msgid "About %s"
+msgstr "Om"
+
+#: src/audacious/plugin-preferences.c:88
+#, fuzzy, c-format
+msgid "%s Settings"
+msgstr "Mixerinställningar:"
+
 #: src/audacious/ui_preferences.c:72
 #, fuzzy
 msgid "Audio"
@@ -375,7 +385,7 @@ msgstr "Om MPEG-ljudinsticksmodulen"
 msgid "Network"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:74 src/audacious/ui_preferences.c:1238
+#: src/audacious/ui_preferences.c:74 src/audacious/ui_preferences.c:1255
 #, fuzzy
 msgid "Playlist"
 msgstr "/Spellista"
@@ -497,100 +507,100 @@ msgstr ""
 msgid "Turkish"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:132
+#: src/audacious/ui_preferences.c:133
 #, fuzzy
 msgid "Album mode"
 msgstr "Album"
 
-#: src/audacious/ui_preferences.c:135
+#: src/audacious/ui_preferences.c:136
 #, fuzzy
 msgid "<b>Output Settings</b>"
 msgstr "_Filter:"
 
-#: src/audacious/ui_preferences.c:137
+#: src/audacious/ui_preferences.c:138
 #, fuzzy
 msgid "Bit depth:"
 msgstr "Bit-hastighet:"
 
-#: src/audacious/ui_preferences.c:140
+#: src/audacious/ui_preferences.c:141
 #, fuzzy
 msgid "Buffer size:"
 msgstr "Buffertstorlek (kB):"
 
-#: src/audacious/ui_preferences.c:142
+#: src/audacious/ui_preferences.c:143
 msgid "ms"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:143
+#: src/audacious/ui_preferences.c:144
 #, fuzzy
 msgid "Use software volume control (not recommended)"
 msgstr "Volymkontrol:"
 
-#: src/audacious/ui_preferences.c:145
+#: src/audacious/ui_preferences.c:146
 #, fuzzy
 msgid "<b>Replay Gain</b>"
 msgstr "Police de la liste d'écoute:"
 
-#: src/audacious/ui_preferences.c:146
+#: src/audacious/ui_preferences.c:147
 #, fuzzy
 msgid "Enable Replay Gain"
 msgstr "Aktivera ReplayGain"
 
-#: src/audacious/ui_preferences.c:149
+#: src/audacious/ui_preferences.c:150
 msgid "Prevent clipping (recommended)"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:151
+#: src/audacious/ui_preferences.c:152
 #, fuzzy
 msgid "<b>Adjust Levels</b>"
 msgstr "_Filter:"
 
-#: src/audacious/ui_preferences.c:152
+#: src/audacious/ui_preferences.c:153
 msgid "Amplify all files:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:154 src/audacious/ui_preferences.c:157
+#: src/audacious/ui_preferences.c:155 src/audacious/ui_preferences.c:158
 msgid "dB"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:155
+#: src/audacious/ui_preferences.c:156
 msgid "Amplify untagged files:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:160
+#: src/audacious/ui_preferences.c:161
 msgid "Proxy hostname:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:161
+#: src/audacious/ui_preferences.c:162
 #, fuzzy
 msgid "Proxy port:"
 msgstr "Proxy:"
 
-#: src/audacious/ui_preferences.c:164
+#: src/audacious/ui_preferences.c:165
 #, fuzzy
 msgid "Proxy username:"
 msgstr "Användarnamn:"
 
-#: src/audacious/ui_preferences.c:165
+#: src/audacious/ui_preferences.c:166
 #, fuzzy
 msgid "Proxy password:"
 msgstr "Lösenord:"
 
-#: src/audacious/ui_preferences.c:169
+#: src/audacious/ui_preferences.c:170
 #, fuzzy
 msgid "<b>Proxy Configuration</b>"
 msgstr "bmp: Konfiguration av MPEG-ljudinsticksmodul"
 
-#: src/audacious/ui_preferences.c:170
+#: src/audacious/ui_preferences.c:171
 msgid "Enable proxy usage"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:173
+#: src/audacious/ui_preferences.c:174
 #, fuzzy
 msgid "Use authentication with proxy"
 msgstr "Använd autentisering"
 
-#: src/audacious/ui_preferences.c:181
+#: src/audacious/ui_preferences.c:182
 msgid "Auto character encoding detector for:"
 msgstr ""
 
@@ -703,65 +713,65 @@ msgstr ""
 msgid "Category"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:993
+#: src/audacious/ui_preferences.c:1005
 #, fuzzy
 msgid "Custom"
 msgstr "Bufferttid (ms):"
 
-#: src/audacious/ui_preferences.c:1030
+#: src/audacious/ui_preferences.c:1042
 #, fuzzy
 msgid "<b>Song Display</b>"
 msgstr "_Filter:"
 
-#: src/audacious/ui_preferences.c:1039
+#: src/audacious/ui_preferences.c:1051
 msgid "Show song numbers"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1050
+#: src/audacious/ui_preferences.c:1062
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1072
+#: src/audacious/ui_preferences.c:1084
 msgid "Show information about titlestring format"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1088
+#: src/audacious/ui_preferences.c:1100
 msgid "Custom string:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1095
+#: src/audacious/ui_preferences.c:1107
 msgid "Title format:"
 msgstr "Titelformat:"
 
-#: src/audacious/ui_preferences.c:1179
+#: src/audacious/ui_preferences.c:1196
 #, fuzzy
 msgid "Output plugin:"
 msgstr "OSS-uppspelningsinsticksmodul"
 
-#: src/audacious/ui_preferences.c:1238
+#: src/audacious/ui_preferences.c:1255
 msgid "Transport"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1238
+#: src/audacious/ui_preferences.c:1255
 msgid "Input"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1239
+#: src/audacious/ui_preferences.c:1256
 #, fuzzy
 msgid "Effect"
 msgstr "Förinställningar"
 
-#: src/audacious/ui_preferences.c:1239
+#: src/audacious/ui_preferences.c:1256
 #, fuzzy
 msgid "Visualization"
 msgstr "/Visualiseringsläge"
 
-#: src/audacious/ui_preferences.c:1239
+#: src/audacious/ui_preferences.c:1256
 #, fuzzy
 msgid "General"
 msgstr "Generella insticksmoduler"
 
-#: src/audacious/ui_preferences.c:1277
+#: src/audacious/ui_preferences.c:1294
 #, fuzzy
 msgid "Audacious Preferences"
 msgstr "/Inställningar"
@@ -3966,10 +3976,6 @@ msgstr "Visa fönsterhanterarens dekorationer"
 
 #~ msgid "WAV Audio Plugin"
 #~ msgstr "WAV-ljudinsticksmodul"
-
-#, fuzzy
-#~ msgid "About %s"
-#~ msgstr "Om"
 
 #~ msgid "About OSS Driver"
 #~ msgstr "Om OSS-drivrutinen"

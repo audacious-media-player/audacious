@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bmp-hi\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-06-01 20:02-0400\n"
+"POT-Creation-Date: 2012-06-09 17:53-0400\n"
 "PO-Revision-Date: 2005-08-20 21:59+0530\n"
 "Last-Translator: धनञ्जय शर्मा (Dhananjaya Sharma) <dysxhi@yahoo.co.in>\n"
 "Language-Team: Hindi, India <dysxhi@yahoo.co.in>\n"
@@ -322,7 +322,7 @@ msgstr ""
 msgid "Audacious"
 msgstr ""
 
-#: src/audacious/playback.c:305
+#: src/audacious/playback.c:315
 #, c-format
 msgid "No decoder found for %s."
 msgstr ""
@@ -357,6 +357,16 @@ msgid ""
 "(or has been disabled)."
 msgstr ""
 
+#: src/audacious/plugin-preferences.c:50
+#, fuzzy, c-format
+msgid "About %s"
+msgstr "BMP के बारे में"
+
+#: src/audacious/plugin-preferences.c:88
+#, fuzzy, c-format
+msgid "%s Settings"
+msgstr "मिक्सर की समायोजनायें:"
+
 #: src/audacious/ui_preferences.c:72
 #, fuzzy
 msgid "Audio"
@@ -366,7 +376,7 @@ msgstr "एमपीईजी आडियो प्लग-इन के बा�
 msgid "Network"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:74 src/audacious/ui_preferences.c:1238
+#: src/audacious/ui_preferences.c:74 src/audacious/ui_preferences.c:1255
 msgid "Playlist"
 msgstr "प्लेसूची"
 
@@ -486,100 +496,100 @@ msgstr "जापानी:"
 msgid "Turkish"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:132
+#: src/audacious/ui_preferences.c:133
 #, fuzzy
 msgid "Album mode"
 msgstr "एल्बम"
 
-#: src/audacious/ui_preferences.c:135
+#: src/audacious/ui_preferences.c:136
 #, fuzzy
 msgid "<b>Output Settings</b>"
 msgstr "स्वचालित पहचान"
 
-#: src/audacious/ui_preferences.c:137
+#: src/audacious/ui_preferences.c:138
 #, fuzzy
 msgid "Bit depth:"
 msgstr "बिट-दर:"
 
-#: src/audacious/ui_preferences.c:140
+#: src/audacious/ui_preferences.c:141
 #, fuzzy
 msgid "Buffer size:"
 msgstr "बफ़र का आकार (केबी):"
 
-#: src/audacious/ui_preferences.c:142
+#: src/audacious/ui_preferences.c:143
 msgid "ms"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:143
+#: src/audacious/ui_preferences.c:144
 #, fuzzy
 msgid "Use software volume control (not recommended)"
 msgstr "सॉफ़्टवेयर वाल्यूम नियंत्रक का उपयोग"
 
-#: src/audacious/ui_preferences.c:145
+#: src/audacious/ui_preferences.c:146
 #, fuzzy
 msgid "<b>Replay Gain</b>"
 msgstr "<b>संचिकानाम</b>"
 
-#: src/audacious/ui_preferences.c:146
+#: src/audacious/ui_preferences.c:147
 #, fuzzy
 msgid "Enable Replay Gain"
 msgstr "रीप्लेगेन सक्रिय"
 
-#: src/audacious/ui_preferences.c:149
+#: src/audacious/ui_preferences.c:150
 msgid "Prevent clipping (recommended)"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:151
+#: src/audacious/ui_preferences.c:152
 #, fuzzy
 msgid "<b>Adjust Levels</b>"
 msgstr "<b>माउस व्हील</b>"
 
-#: src/audacious/ui_preferences.c:152
+#: src/audacious/ui_preferences.c:153
 msgid "Amplify all files:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:154 src/audacious/ui_preferences.c:157
+#: src/audacious/ui_preferences.c:155 src/audacious/ui_preferences.c:158
 msgid "dB"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:155
+#: src/audacious/ui_preferences.c:156
 msgid "Amplify untagged files:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:160
+#: src/audacious/ui_preferences.c:161
 msgid "Proxy hostname:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:161
+#: src/audacious/ui_preferences.c:162
 #, fuzzy
 msgid "Proxy port:"
 msgstr "प्रोक्सी"
 
-#: src/audacious/ui_preferences.c:164
+#: src/audacious/ui_preferences.c:165
 #, fuzzy
 msgid "Proxy username:"
 msgstr "उपयोगकर्ता का नाम:"
 
-#: src/audacious/ui_preferences.c:165
+#: src/audacious/ui_preferences.c:166
 #, fuzzy
 msgid "Proxy password:"
 msgstr "कूटशब्द:"
 
-#: src/audacious/ui_preferences.c:169
+#: src/audacious/ui_preferences.c:170
 #, fuzzy
 msgid "<b>Proxy Configuration</b>"
 msgstr "एमपीईजी आडियो प्लग-इन संरचना"
 
-#: src/audacious/ui_preferences.c:170
+#: src/audacious/ui_preferences.c:171
 msgid "Enable proxy usage"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:173
+#: src/audacious/ui_preferences.c:174
 #, fuzzy
 msgid "Use authentication with proxy"
 msgstr "प्रमाणीकरण का उपयोग"
 
-#: src/audacious/ui_preferences.c:181
+#: src/audacious/ui_preferences.c:182
 msgid "Auto character encoding detector for:"
 msgstr ""
 
@@ -691,65 +701,65 @@ msgstr ""
 msgid "Category"
 msgstr "वर्ग"
 
-#: src/audacious/ui_preferences.c:993
+#: src/audacious/ui_preferences.c:1005
 #, fuzzy
 msgid "Custom"
 msgstr "कस्टम स्ट्रींग:"
 
-#: src/audacious/ui_preferences.c:1030
+#: src/audacious/ui_preferences.c:1042
 #, fuzzy
 msgid "<b>Song Display</b>"
 msgstr "<b>गीत को दिखाना</b>"
 
-#: src/audacious/ui_preferences.c:1039
+#: src/audacious/ui_preferences.c:1051
 msgid "Show song numbers"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1050
+#: src/audacious/ui_preferences.c:1062
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1072
+#: src/audacious/ui_preferences.c:1084
 msgid "Show information about titlestring format"
 msgstr "शीर्षकस्ट्रिंग प्रारूप के बारे में सूचना दिखाएँ"
 
-#: src/audacious/ui_preferences.c:1088
+#: src/audacious/ui_preferences.c:1100
 msgid "Custom string:"
 msgstr "कस्टम स्ट्रींग:"
 
-#: src/audacious/ui_preferences.c:1095
+#: src/audacious/ui_preferences.c:1107
 msgid "Title format:"
 msgstr "शीर्षक का प्रारूप:"
 
-#: src/audacious/ui_preferences.c:1179
+#: src/audacious/ui_preferences.c:1196
 #, fuzzy
 msgid "Output plugin:"
 msgstr "ओएसएस आउटपुट प्लग-इन"
 
-#: src/audacious/ui_preferences.c:1238
+#: src/audacious/ui_preferences.c:1255
 #, fuzzy
 msgid "Transport"
 msgstr "सभी अनुवादक"
 
-#: src/audacious/ui_preferences.c:1238
+#: src/audacious/ui_preferences.c:1255
 msgid "Input"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1239
+#: src/audacious/ui_preferences.c:1256
 #, fuzzy
 msgid "Effect"
 msgstr "<b>सभी प्रभाव</b>"
 
-#: src/audacious/ui_preferences.c:1239
+#: src/audacious/ui_preferences.c:1256
 #, fuzzy
 msgid "Visualization"
 msgstr "/कल्पना विधा"
 
-#: src/audacious/ui_preferences.c:1239
+#: src/audacious/ui_preferences.c:1256
 msgid "General"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1277
+#: src/audacious/ui_preferences.c:1294
 #, fuzzy
 msgid "Audacious Preferences"
 msgstr "BMP की वरीयतायें"
@@ -4015,10 +4025,6 @@ msgstr ""
 
 #~ msgid "WAV Audio Plugin"
 #~ msgstr "वेव आडियो प्लग-इन"
-
-#, fuzzy
-#~ msgid "About %s"
-#~ msgstr "BMP के बारे में"
 
 #, fuzzy
 #~ msgid " Close "

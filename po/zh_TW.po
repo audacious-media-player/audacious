@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-06-01 20:24-0400\n"
+"POT-Creation-Date: 2012-06-09 17:53-0400\n"
 "PO-Revision-Date: 2012-06-02 00:06+0000\n"
 "Last-Translator: jlindgren <john.lindgren@aol.com>\n"
 "Language-Team: Chinese (traditional)\n"
@@ -302,7 +302,7 @@ msgstr ""
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/playback.c:305
+#: src/audacious/playback.c:315
 #, c-format
 msgid "No decoder found for %s."
 msgstr "找不到適用於 %s 的解碼器。"
@@ -334,6 +334,16 @@ msgid ""
 "(or has been disabled)."
 msgstr "因為正在進行詮釋資料的掃描，無法對播放清單進行排序。（或者已經被關閉）"
 
+#: src/audacious/plugin-preferences.c:50
+#, fuzzy, c-format
+msgid "About %s"
+msgstr "關於 Audacious"
+
+#: src/audacious/plugin-preferences.c:88
+#, fuzzy, c-format
+msgid "%s Settings"
+msgstr "設定 ..."
+
 #: src/audacious/ui_preferences.c:72
 msgid "Audio"
 msgstr "音訊"
@@ -342,7 +352,7 @@ msgstr "音訊"
 msgid "Network"
 msgstr "網路"
 
-#: src/audacious/ui_preferences.c:74 src/audacious/ui_preferences.c:1238
+#: src/audacious/ui_preferences.c:74 src/audacious/ui_preferences.c:1255
 msgid "Playlist"
 msgstr "播放清單"
 
@@ -451,87 +461,87 @@ msgstr "正體中文"
 msgid "Turkish"
 msgstr "土耳其語"
 
-#: src/audacious/ui_preferences.c:132
+#: src/audacious/ui_preferences.c:133
 msgid "Album mode"
 msgstr "專輯模式"
 
-#: src/audacious/ui_preferences.c:135
+#: src/audacious/ui_preferences.c:136
 msgid "<b>Output Settings</b>"
 msgstr "<b>輸出設定</b>"
 
-#: src/audacious/ui_preferences.c:137
+#: src/audacious/ui_preferences.c:138
 msgid "Bit depth:"
 msgstr "取樣格式:"
 
-#: src/audacious/ui_preferences.c:140
+#: src/audacious/ui_preferences.c:141
 msgid "Buffer size:"
 msgstr "緩衝區大小:"
 
-#: src/audacious/ui_preferences.c:142
+#: src/audacious/ui_preferences.c:143
 msgid "ms"
 msgstr "毫秒"
 
-#: src/audacious/ui_preferences.c:143
+#: src/audacious/ui_preferences.c:144
 msgid "Use software volume control (not recommended)"
 msgstr "使用軟體音量控制 (不建議開啟)"
 
-#: src/audacious/ui_preferences.c:145
+#: src/audacious/ui_preferences.c:146
 msgid "<b>Replay Gain</b>"
 msgstr "<b>播放增益</b>"
 
-#: src/audacious/ui_preferences.c:146
+#: src/audacious/ui_preferences.c:147
 msgid "Enable Replay Gain"
 msgstr "啟用播放增益"
 
-#: src/audacious/ui_preferences.c:149
+#: src/audacious/ui_preferences.c:150
 msgid "Prevent clipping (recommended)"
 msgstr "防止訊號裁剪 (建議開啟)"
 
-#: src/audacious/ui_preferences.c:151
+#: src/audacious/ui_preferences.c:152
 msgid "<b>Adjust Levels</b>"
 msgstr "<b>調整音量</b>"
 
-#: src/audacious/ui_preferences.c:152
+#: src/audacious/ui_preferences.c:153
 msgid "Amplify all files:"
 msgstr "放大所有檔案的音量:"
 
-#: src/audacious/ui_preferences.c:154 src/audacious/ui_preferences.c:157
+#: src/audacious/ui_preferences.c:155 src/audacious/ui_preferences.c:158
 msgid "dB"
 msgstr "分貝"
 
-#: src/audacious/ui_preferences.c:155
+#: src/audacious/ui_preferences.c:156
 msgid "Amplify untagged files:"
 msgstr "放大無標籤檔案的音量:"
 
-#: src/audacious/ui_preferences.c:160
+#: src/audacious/ui_preferences.c:161
 msgid "Proxy hostname:"
 msgstr "代理伺服器名稱:"
 
-#: src/audacious/ui_preferences.c:161
+#: src/audacious/ui_preferences.c:162
 msgid "Proxy port:"
 msgstr "代理伺服器連接埠:"
 
-#: src/audacious/ui_preferences.c:164
+#: src/audacious/ui_preferences.c:165
 msgid "Proxy username:"
 msgstr "代理伺服器使用者名稱:"
 
-#: src/audacious/ui_preferences.c:165
+#: src/audacious/ui_preferences.c:166
 msgid "Proxy password:"
 msgstr "代理伺服器密碼:"
 
-#: src/audacious/ui_preferences.c:169
+#: src/audacious/ui_preferences.c:170
 msgid "<b>Proxy Configuration</b>"
 msgstr "<b>代理伺服器設定</b>"
 
-#: src/audacious/ui_preferences.c:170
+#: src/audacious/ui_preferences.c:171
 msgid "Enable proxy usage"
 msgstr "啟用代理伺服器"
 
-#: src/audacious/ui_preferences.c:173
+#: src/audacious/ui_preferences.c:174
 msgid "Use authentication with proxy"
 msgstr "需要認證"
 
-#: src/audacious/ui_preferences.c:181
+#: src/audacious/ui_preferences.c:182
 msgid "Auto character encoding detector for:"
 msgstr "自動偵測字元編碼:"
 
@@ -635,59 +645,59 @@ msgstr "專輯 - 標題"
 msgid "Category"
 msgstr "目錄"
 
-#: src/audacious/ui_preferences.c:993
+#: src/audacious/ui_preferences.c:1005
 msgid "Custom"
 msgstr "自訂"
 
-#: src/audacious/ui_preferences.c:1030
+#: src/audacious/ui_preferences.c:1042
 msgid "<b>Song Display</b>"
 msgstr "<b>顯示歌曲</b>"
 
-#: src/audacious/ui_preferences.c:1039
+#: src/audacious/ui_preferences.c:1051
 msgid "Show song numbers"
 msgstr "顯示歌曲編號"
 
-#: src/audacious/ui_preferences.c:1050
+#: src/audacious/ui_preferences.c:1062
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr "顯示開頭的數字零 (例：02:00 而不是 2:00)"
 
-#: src/audacious/ui_preferences.c:1072
+#: src/audacious/ui_preferences.c:1084
 msgid "Show information about titlestring format"
 msgstr "顯示關於標題字串格式的資訊"
 
-#: src/audacious/ui_preferences.c:1088
+#: src/audacious/ui_preferences.c:1100
 msgid "Custom string:"
 msgstr "自訂字串:"
 
-#: src/audacious/ui_preferences.c:1095
+#: src/audacious/ui_preferences.c:1107
 msgid "Title format:"
 msgstr "標題格式:"
 
-#: src/audacious/ui_preferences.c:1179
+#: src/audacious/ui_preferences.c:1196
 msgid "Output plugin:"
 msgstr "輸出外掛:"
 
-#: src/audacious/ui_preferences.c:1238
+#: src/audacious/ui_preferences.c:1255
 msgid "Transport"
 msgstr "傳輸"
 
-#: src/audacious/ui_preferences.c:1238
+#: src/audacious/ui_preferences.c:1255
 msgid "Input"
 msgstr "輸入"
 
-#: src/audacious/ui_preferences.c:1239
+#: src/audacious/ui_preferences.c:1256
 msgid "Effect"
 msgstr "特效"
 
-#: src/audacious/ui_preferences.c:1239
+#: src/audacious/ui_preferences.c:1256
 msgid "Visualization"
 msgstr "視覺特效"
 
-#: src/audacious/ui_preferences.c:1239
+#: src/audacious/ui_preferences.c:1256
 msgid "General"
 msgstr "一般"
 
-#: src/audacious/ui_preferences.c:1277
+#: src/audacious/ui_preferences.c:1294
 msgid "Audacious Preferences"
 msgstr "Audacious 偏好設定"
 
