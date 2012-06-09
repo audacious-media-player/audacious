@@ -95,6 +95,9 @@ AUD_VFUNC1 (interface_uninstall_toolbar, void *, button)
 /* main.c */
 AUD_FUNC1 (const char *, get_path, int, path)
 
+/* output.c */
+AUD_VFUNC1 (output_reset, int, type)
+
 /* probe.c */
 AUD_FUNC2 (PluginHandle *, file_find_decoder, const char *, filename, bool_t,
  fast)

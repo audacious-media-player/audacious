@@ -45,6 +45,8 @@ typedef struct {
     float preamp, bands[10];
 } EqualizerPreset;
 
+enum {OUTPUT_RESET_EFFECTS_ONLY, OUTPUT_RESET_SOFT, OUTPUT_RESET_HARD};
+
 enum {
  AUD_MENU_MAIN,
  AUD_MENU_PLAYLIST,

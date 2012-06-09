@@ -1,6 +1,6 @@
 /*
  * output.c
- * Copyright 2009-2010 John Lindgren
+ * Copyright 2009-2012 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -17,10 +17,11 @@
  * the use of this software.
  */
 
-#include <glib.h>
 #include <math.h>
 #include <pthread.h>
+#include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 #include "debug.h"
 #include "effect.h"
@@ -28,166 +29,125 @@
 #include "misc.h"
 #include "output.h"
 #include "playback.h"
+#include "plugin.h"
 #include "plugins.h"
 #include "vis_runner.h"
 
 #define SW_VOLUME_RANGE 40 /* decibels */
 
-static OutputPlugin * cop = NULL;
+static pthread_mutex_t mutex_major = PTHREAD_MUTEX_INITIALIZER;
+static pthread_mutex_t mutex_minor = PTHREAD_MUTEX_INITIALIZER;
 
-void output_get_volume (int * l, int * r)
+#define LOCK_MAJOR pthread_mutex_lock (& mutex_major)
+#define UNLOCK_MAJOR pthread_mutex_unlock (& mutex_major)
+#define LOCK_MINOR pthread_mutex_lock (& mutex_minor)
+#define UNLOCK_MINOR pthread_mutex_unlock (& mutex_minor)
+#define LOCK_ALL do { LOCK_MAJOR; LOCK_MINOR; } while (0)
+#define UNLOCK_ALL do { UNLOCK_MINOR; UNLOCK_MAJOR; } while (0)
+
+/* State variables.  State changes that are allowed between LOCK_MINOR and
+ * UNLOCK_MINOR (all others must take place between LOCK_ALL and UNLOCK_ALL):
+ * s_paused -> TRUE or FALSE, s_aborted -> TRUE, s_resetting -> TRUE */
+
+static bool_t s_input; /* input plugin connected */
+static bool_t s_output; /* output plugin connected */
+static bool_t s_gain; /* replay gain info set */
+static bool_t s_paused; /* paused */
+static bool_t s_aborted; /* writes aborted */
+static bool_t s_resetting; /* resetting output system */
+
+static OutputPlugin * cop;
+static int seek_time;
+static int in_format, in_channels, in_rate;
+static int out_format, out_channels, out_rate;
+static int64_t in_frames, out_frames;
+static ReplayGainInfo gain_info;
+
+static bool_t change_op;
+static OutputPlugin * new_op;
+
+static inline int FR2MS (int64_t f, int r)
+ { return (f > 0) ? (f * 1000 + r / 2) / r : (f * 1000 - r / 2) / r; }
+
+static inline int get_format (void)
 {
-    if (get_bool (NULL, "software_volume_control"))
+    switch (get_int (NULL, "output_bit_depth"))
     {
-        * l = get_int (NULL, "sw_volume_left");
-        * r = get_int (NULL, "sw_volume_right");
+        case 16: return FMT_S16_NE;
+        case 24: return FMT_S24_NE;
+        case 32: return FMT_S32_NE;
+        default: return FMT_FLOAT;
     }
-    else if (cop != NULL && cop->get_volume != NULL)
-        cop->get_volume (l, r);
-    else
+}
+
+/* assumes LOCK_ALL, s_output */
+static void cleanup_output (void)
+{
+    if (! (s_paused || s_aborted) && cop->drain)
     {
-        * l = 0;
-        * r = 0;
+        UNLOCK_MINOR;
+        cop->drain ();
+        LOCK_MINOR;
     }
-}
 
-void output_set_volume (int l, int r)
-{
-    if (get_bool (NULL, "software_volume_control"))
-    {
-        set_int (NULL, "sw_volume_left", l);
-        set_int (NULL, "sw_volume_right", r);
-    }
-    else if (cop != NULL && cop->set_volume != NULL)
-        cop->set_volume (l, r);
-}
+    s_output = FALSE;
 
-static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-static bool_t locked = FALSE;
+    if (cop->close_audio)
+        cop->close_audio ();
 
-#define LOCK do {pthread_mutex_lock (& mutex); locked = TRUE;} while (0)
-#define UNLOCK do {locked = FALSE; pthread_mutex_unlock (& mutex);} while (0)
-#define LOCKED g_return_if_fail (locked)
-#define LOCKED_RET(a) g_return_val_if_fail (locked, a)
-#define LOCK_VIS do {vis_runner_lock (); LOCK;} while (0)
-#define UNLOCK_VIS do {UNLOCK; vis_runner_unlock ();} while (0)
-#define LOCKED_VIS g_return_if_fail (locked && vis_runner_locked ())
-#define LOCKED_VIS_RET(a) g_return_val_if_fail (locked && vis_runner_locked (), a)
-
-static bool_t opened = FALSE;
-static bool_t leave_open = FALSE;
-
-static bool_t waiting, aborted, paused;
-static int decoder_format, decoder_channels, decoder_rate, effect_channels,
- effect_rate, output_format, output_channels, output_rate;
-static int64_t frames_written;
-static bool_t have_replay_gain;
-static ReplayGainInfo replay_gain_info;
-
-static void reset_time (void)
-{
-    LOCKED_VIS;
-    g_return_if_fail (cop->set_written_time != NULL);
-    vis_runner_time_offset (- cop->written_time ());
-    cop->set_written_time (0);
-}
-
-static void drain (void)
-{
-    LOCKED;
-    g_return_if_fail (cop->drain != NULL);
-    cop->drain ();
-}
-
-static void real_close (void)
-{
-    LOCKED_VIS;
+    effect_flush ();
     vis_runner_start_stop (FALSE, FALSE);
-    cop->close_audio ();
-    opened = FALSE;
-    leave_open = FALSE;
 }
 
-static bool_t open_audio (int format, int rate, int channels)
+/* assumes LOCK_ALL, s_input, s_output */
+static void apply_pause (void)
 {
-    LOCKED_VIS_RET (FALSE);
-    g_return_val_if_fail (! opened, FALSE);
+    if (cop->pause)
+        cop->pause (s_paused);
 
-    decoder_format = format;
-    decoder_channels = channels;
-    decoder_rate = rate;
-    effect_channels = channels;
-    effect_rate = rate;
-    effect_start (& effect_channels, & effect_rate);
-    eq_set_format (effect_channels, effect_rate);
+    vis_runner_start_stop (TRUE, s_paused);
+}
 
-    if (leave_open && effect_channels == output_channels && effect_rate ==
-     output_rate)
+/* assumes LOCK_ALL, s_input */
+static void setup_output (void)
+{
+    int format = get_format ();
+    int channels = in_channels;
+    int rate = in_rate;
+
+    effect_start (& channels, & rate);
+    eq_set_format (channels, rate);
+
+    if (s_output && format == out_format && channels == out_channels && rate == out_rate)
+        return;
+
+    if (s_output)
+        cleanup_output ();
+
+    if (! cop || ! cop->open_audio || ! cop->open_audio (format, rate, channels))
+        return;
+
+    s_output = TRUE;
+
+    out_format = format;
+    out_channels = channels;
+    out_rate = rate;
+    out_frames = 0;
+
+    apply_pause ();
+}
+
+/* assumes LOCK_MINOR, s_input, s_output */
+static void flush_output (void)
+{
+    if (cop->flush)
     {
-        reset_time ();
-        opened = TRUE;
-    }
-    else
-    {
-        if (leave_open)
-        {
-            drain ();
-            real_close ();
-        }
-
-        int depth = get_int (NULL, "output_bit_depth");
-        output_format = (depth == 32) ? FMT_S32_NE : (depth == 24) ? FMT_S24_NE
-         : (depth == 16) ? FMT_S16_NE : FMT_FLOAT;
-        output_channels = effect_channels;
-        output_rate = effect_rate;
-
-        if (cop->open_audio (output_format, output_rate, output_channels))
-        {
-            vis_runner_start_stop (TRUE, FALSE);
-            opened = TRUE;
-        }
+        cop->flush (0);
+        out_frames = 0;
     }
 
-    leave_open = FALSE;
-    waiting = FALSE;
-    aborted = FALSE;
-    paused = FALSE;
-    frames_written = 0;
-    have_replay_gain = FALSE;
-
-    return opened;
-}
-
-static bool_t output_open_audio (int format, int rate, int channels)
-{
-    g_return_val_if_fail (cop != NULL, FALSE);
-    LOCK_VIS;
-    bool_t success = open_audio (format, rate, channels);
-    UNLOCK_VIS;
-    return success;
-}
-
-static void set_gain (ReplayGainInfo * info)
-{
-    LOCKED;
-    g_return_if_fail (opened && ! waiting);
-
-    AUDDBG ("Replay Gain info:\n");
-    AUDDBG (" album gain: %f dB\n", info->album_gain);
-    AUDDBG (" album peak: %f\n", info->album_peak);
-    AUDDBG (" track gain: %f dB\n", info->track_gain);
-    AUDDBG (" track peak: %f\n", info->track_peak);
-
-    have_replay_gain = TRUE;
-    memcpy (& replay_gain_info, info, sizeof (ReplayGainInfo));
-}
-
-static void output_set_replaygain_info (ReplayGainInfo * info)
-{
-    g_return_if_fail (cop != NULL);
-    LOCK;
-    set_gain (info);
-    UNLOCK;
+    effect_flush ();
+    vis_runner_flush ();
 }
 
 static void apply_replay_gain (float * data, int samples)
@@ -197,24 +157,23 @@ static void apply_replay_gain (float * data, int samples)
 
     float factor = powf (10, get_double (NULL, "replay_gain_preamp") / 20);
 
-    if (have_replay_gain)
+    if (s_gain)
     {
+        float peak;
+
         if (get_bool (NULL, "replay_gain_album"))
         {
-            factor *= powf (10, replay_gain_info.album_gain / 20);
-
-            if (get_bool (NULL, "enable_clipping_prevention") &&
-             replay_gain_info.album_peak * factor > 1)
-                factor = 1 / replay_gain_info.album_peak;
+            factor *= powf (10, gain_info.album_gain / 20);
+            peak = gain_info.album_peak;
         }
         else
         {
-            factor *= powf (10, replay_gain_info.track_gain / 20);
-
-            if (get_bool (NULL, "enable_clipping_prevention") &&
-             replay_gain_info.track_peak * factor > 1)
-                factor = 1 / replay_gain_info.track_peak;
+            factor *= powf (10, gain_info.track_gain / 20);
+            peak = gain_info.track_peak;
         }
+
+        if (get_bool (NULL, "enable_clipping_prevention") && peak * factor > 1)
+            factor = 1 / peak;
     }
     else
         factor *= powf (10, get_double (NULL, "default_gain") / 20);
@@ -223,338 +182,379 @@ static void apply_replay_gain (float * data, int samples)
         audio_amplify (data, 1, samples, & factor);
 }
 
-static void apply_software_volume (float * data, int channels, int frames)
+static void apply_software_volume (float * data, int channels, int samples)
 {
-    float left_factor, right_factor;
-    float factors[channels];
-    int channel;
-
     if (! get_bool (NULL, "software_volume_control"))
         return;
 
     int l = get_int (NULL, "sw_volume_left");
     int r = get_int (NULL, "sw_volume_right");
+
     if (l == 100 && r == 100)
         return;
 
-    left_factor = (l == 0) ? 0 : powf (10, (float) SW_VOLUME_RANGE * (l - 100) / 100 / 20);
-    right_factor = (r == 0) ? 0 : powf (10, (float) SW_VOLUME_RANGE * (r - 100) / 100 / 20);
+    float lfactor = (l == 0) ? 0 : powf (10, (float) SW_VOLUME_RANGE * (l - 100) / 100 / 20);
+    float rfactor = (r == 0) ? 0 : powf (10, (float) SW_VOLUME_RANGE * (r - 100) / 100 / 20);
+    float factors[channels];
 
     if (channels == 2)
     {
-        factors[0] = left_factor;
-        factors[1] = right_factor;
+        factors[0] = lfactor;
+        factors[1] = rfactor;
     }
     else
     {
-        for (channel = 0; channel < channels; channel ++)
-            factors[channel] = MAX (left_factor, right_factor);
+        for (int c = 0; c < channels; c ++)
+            factors[c] = MAX (lfactor, rfactor);
     }
 
-    audio_amplify (data, channels, frames, factors);
+    audio_amplify (data, channels, samples / channels, factors);
 }
 
-static void write_processed (void * data, int samples)
+/* assumes LOCK_ALL, s_output */
+static void write_output_raw (void * data, int samples)
 {
-    LOCKED_VIS;
+    void * buffer = NULL;
 
-    if (! samples)
-        return;
+    vis_runner_pass_audio (FR2MS (out_frames, out_rate), data, samples,
+     out_channels, out_rate);
+    out_frames += samples / out_channels;
 
-    vis_runner_pass_audio (cop->written_time (), data, samples, output_channels,
-     output_rate);
     eq_filter (data, samples);
-    apply_software_volume (data, output_channels, samples / output_channels);
+    apply_software_volume (data, out_channels, samples);
 
-    void * allocated = NULL;
-
-    if (output_format != FMT_FLOAT)
+    if (out_format != FMT_FLOAT)
     {
-        void * new = g_malloc (FMT_SIZEOF (output_format) * samples);
-        audio_to_int (data, new, output_format, samples);
-        data = new;
-        g_free (allocated);
-        allocated = new;
+        buffer = malloc (FMT_SIZEOF (out_format) * samples);
+        audio_to_int (data, buffer, out_format, samples);
+        data = buffer;
     }
 
-    while (! aborted)
+    while (! (s_aborted || s_resetting))
     {
-        int ready = (cop->buffer_free != NULL) ? cop->buffer_free () /
-         FMT_SIZEOF (output_format) : output_channels * (output_rate / 50);
-        ready = MIN (ready, samples);
-        cop->write_audio (data, FMT_SIZEOF (output_format) * ready);
-        data = (char *) data + FMT_SIZEOF (output_format) * ready;
-        samples -= ready;
+        bool_t blocking = ! cop->buffer_free;
+        int ready;
 
-        if (! samples)
+        if (blocking)
+            ready = out_channels * (out_rate / 50);
+        else
+            ready = cop->buffer_free () / FMT_SIZEOF (out_format);
+
+        ready = MIN (ready, samples);
+
+        if (cop->write_audio)
+        {
+            cop->write_audio (data, FMT_SIZEOF (out_format) * ready);
+            data = (char *) data + FMT_SIZEOF (out_format) * ready;
+            samples -= ready;
+        }
+
+        if (samples == 0)
             break;
 
-        waiting = TRUE;
-        UNLOCK_VIS;
+        UNLOCK_MINOR;
 
-        if (cop->period_wait != NULL)
-            cop->period_wait ();
-        else if (cop->buffer_free != NULL)
-            g_usleep (20000);
+        if (! blocking)
+        {
+            if (cop->period_wait)
+                cop->period_wait ();
+            else
+                usleep (20000);
+        }
 
-        LOCK_VIS;
-        waiting = FALSE;
+        LOCK_MINOR;
     }
 
-    g_free (allocated);
+    free (buffer);
 }
 
-static void write_audio (void * data, int size)
+/* assumes LOCK_ALL, s_input, s_output */
+static void write_output (void * data, int size)
 {
-    LOCKED;
-    g_return_if_fail (opened && ! waiting);
+    void * buffer = NULL;
 
-    int samples = size / FMT_SIZEOF (decoder_format);
-    frames_written += samples / decoder_channels;
+    int samples = size / FMT_SIZEOF (in_format);
+    in_frames += samples / in_channels;
 
-    void * allocated = NULL;
-
-    if (decoder_format != FMT_FLOAT)
+    if (in_format != FMT_FLOAT)
     {
-        float * new = g_malloc (sizeof (float) * samples);
-        audio_from_int (data, decoder_format, new, samples);
-        data = new;
-        g_free (allocated);
-        allocated = new;
+        buffer = malloc (sizeof (float) * samples);
+        audio_from_int (data, in_format, buffer, samples);
+        data = buffer;
     }
 
     apply_replay_gain (data, samples);
-    float * fdata = data;
-    effect_process (& fdata, & samples);
-    data = fdata;
+    effect_process ((float * *) & data, & samples);
+    write_output_raw (data, samples);
 
-    if (data != allocated)
-    {
-        g_free (allocated);
-        allocated = NULL;
-    }
-
-    write_processed (data, samples);
-    g_free (allocated);
+    free (buffer);
 }
 
-static void output_write_audio (void * data, int size)
+/* assumes LOCK_ALL, s_output */
+static void finish_effects (void)
 {
-    g_return_if_fail (cop != NULL);
-    LOCK_VIS;
-    write_audio (data, size);
-    UNLOCK_VIS;
-}
-
-static void close_audio (void)
-{
-    LOCKED;
-    g_return_if_fail (opened && ! waiting);
-    opened = FALSE;
-
-    if (! leave_open)
-    {
-        effect_flush ();
-        real_close ();
-    }
-}
-
-static void output_close_audio (void)
-{
-    g_return_if_fail (cop != NULL);
-    LOCK_VIS;
-    close_audio ();
-    UNLOCK_VIS;
-}
-
-static void do_pause (bool_t p)
-{
-    LOCKED_VIS;
-    g_return_if_fail (opened);
-    cop->pause (p);
-    vis_runner_start_stop (TRUE, p);
-    paused = p;
-}
-
-static void output_pause (bool_t p)
-{
-    g_return_if_fail (cop != NULL);
-    LOCK_VIS;
-    do_pause (p);
-    UNLOCK_VIS;
-}
-
-static void flush (int time)
-{
-    LOCKED_VIS;
-    g_return_if_fail (opened);
-
-    aborted = FALSE;
-
-    /* When playback is started from the middle of a song, flush() is called
-     * before any audio is actually written in order to set the time counter.
-     * In this case, we do not want to cut off the end of the previous song, so
-     * we do not actually flush. */
-    if (! frames_written)
-    {
-        g_return_if_fail (cop->set_written_time != NULL);
-        vis_runner_time_offset (time - cop->written_time ());
-        cop->set_written_time (time);
-    }
-    else
-    {
-        vis_runner_flush ();
-        effect_flush ();
-        cop->flush (effect_decoder_to_output_time (time));
-    }
-
-    frames_written = time * (int64_t) decoder_rate / 1000;
-}
-
-static void output_flush (int time)
-{
-    g_return_if_fail (cop != NULL);
-    LOCK_VIS;
-    flush (time);
-    UNLOCK_VIS;
-}
-
-static int written_time (void)
-{
-    LOCKED_RET (0);
-    g_return_val_if_fail (opened && ! waiting, 0);
-    return frames_written * (int64_t) 1000 / decoder_rate;
-}
-
-static int output_written_time (void)
-{
-    g_return_val_if_fail (cop != NULL, 0);
-    LOCK;
-    int time = written_time ();
-    UNLOCK;
-    return time;
-}
-
-static void write_buffers (void)
-{
-    LOCKED;
     float * data = NULL;
     int samples = 0;
+
     effect_finish (& data, & samples);
-    write_processed (data, samples);
+    write_output_raw (data, samples);
 }
 
-static void set_leave_open (void)
+bool_t output_open_audio (int format, int rate, int channels)
 {
-    LOCKED;
-    g_return_if_fail (opened && ! waiting);
+    LOCK_ALL;
 
-    if (! paused)
+    s_input = TRUE;
+    s_gain = s_paused = s_aborted = FALSE;
+    seek_time = 0;
+
+    in_format = format;
+    in_channels = channels;
+    in_rate = rate;
+    in_frames = 0;
+
+    setup_output ();
+
+    UNLOCK_ALL;
+    return TRUE;
+}
+
+void output_set_replaygain_info (const ReplayGainInfo * info)
+{
+    LOCK_ALL;
+
+    if (s_input)
     {
-        write_buffers ();
-        leave_open = TRUE;
+        memcpy (& gain_info, info, sizeof (ReplayGainInfo));
+        s_gain = TRUE;
+
+        AUDDBG ("Replay Gain info:\n");
+        AUDDBG (" album gain: %f dB\n", info->album_gain);
+        AUDDBG (" album peak: %f\n", info->album_peak);
+        AUDDBG (" track gain: %f dB\n", info->track_gain);
+        AUDDBG (" track peak: %f\n", info->track_peak);
     }
+
+    UNLOCK_ALL;
 }
 
-static bool_t output_buffer_playing (void)
+void output_write_audio (void * data, int size)
 {
-    g_return_val_if_fail (cop != NULL, FALSE);
-    LOCK_VIS;
-    set_leave_open ();
-    UNLOCK_VIS;
-    return FALSE;
+    LOCK_ALL;
+
+    if (s_input)
+    {
+        while ((! s_output || s_resetting) && ! s_aborted)
+        {
+            UNLOCK_ALL;
+            usleep (20000);
+            LOCK_ALL;
+        }
+
+        if (! s_aborted)
+            write_output (data, size);
+    }
+
+    UNLOCK_ALL;
 }
 
-static void abort_write (void)
+void output_abort_write (void)
 {
-    LOCKED;
-    g_return_if_fail (opened);
-    aborted = TRUE;
-    cop->flush (cop->output_time ());
+    LOCK_MINOR;
+
+    if (s_input)
+    {
+        s_aborted = TRUE;
+
+        if (s_output)
+            flush_output ();
+    }
+
+    UNLOCK_MINOR;
 }
 
-static void output_abort_write (void)
+void output_pause (bool_t pause)
 {
-    g_return_if_fail (cop != NULL);
-    LOCK;
-    abort_write ();
-    UNLOCK;
+    LOCK_MINOR;
+
+    if (s_input)
+    {
+        s_paused = pause;
+
+        if (s_output)
+            apply_pause ();
+    }
+
+    UNLOCK_MINOR;
 }
 
-const struct OutputAPI output_api =
+int output_written_time (void)
 {
-    .open_audio = output_open_audio,
-    .set_replaygain_info = output_set_replaygain_info,
-    .write_audio = output_write_audio,
-    .close_audio = output_close_audio,
-
-    .pause = output_pause,
-    .flush = output_flush,
-    .written_time = output_written_time,
-    .buffer_playing = output_buffer_playing,
-    .abort_write = output_abort_write,
-};
-
-static int output_time (void)
-{
-    LOCKED_RET (0);
-    g_return_val_if_fail (opened || leave_open, 0);
-    return cop->output_time ();
-}
-
-int get_output_time (void)
-{
-    g_return_val_if_fail (cop != NULL, 0);
-    LOCK;
-
+    LOCK_MINOR;
     int time = 0;
-    if (opened)
-    {
-        time = effect_output_to_decoder_time (output_time ());
-        time = MAX (0, time);
-    }
 
-    UNLOCK;
+    if (s_input)
+        time = seek_time + FR2MS (in_frames, in_rate);
+
+    UNLOCK_MINOR;
     return time;
 }
 
-int get_raw_output_time (void)
+void output_set_time (int time)
 {
-    g_return_val_if_fail (cop != NULL, 0);
-    LOCK;
-    int time = output_time ();
-    UNLOCK;
+    LOCK_ALL;
+
+    if (s_input)
+    {
+        s_aborted = FALSE;
+        seek_time = time;
+        in_frames = 0;
+    }
+
+    UNLOCK_ALL;
+}
+
+int output_get_time (void)
+{
+    LOCK_MINOR;
+    int time = 0, delay = 0;
+
+    if (s_input)
+    {
+        if (s_output && cop->output_time)
+            delay = FR2MS (out_frames, out_rate) - cop->output_time ();
+
+        delay = effect_adjust_delay (delay);
+        time = FR2MS (in_frames, in_rate);
+        time = seek_time + MAX (time - delay, 0);
+    }
+
+    UNLOCK_MINOR;
     return time;
+}
+
+int output_get_raw_time (void)
+{
+    LOCK_MINOR;
+    int time = 0;
+
+    if (s_output)
+        time = cop->output_time ();
+
+    UNLOCK_MINOR;
+    return time;
+}
+
+void output_close_audio (void)
+{
+    LOCK_ALL;
+
+    if (s_input)
+    {
+        s_input = FALSE;
+
+        if (s_output && ! (s_paused || s_aborted || s_resetting))
+            finish_effects (); /* first time for end of song */
+    }
+
+    UNLOCK_ALL;
 }
 
 void output_drain (void)
 {
-    g_return_if_fail (cop != NULL);
-    LOCK_VIS;
+    LOCK_ALL;
 
-    if (leave_open)
+    if (! s_input)
     {
-        write_buffers ();
-        drain ();
-        real_close ();
+        if (! s_resetting)
+            finish_effects (); /* second time for end of playlist */
+
+        if (s_output)
+            cleanup_output ();
     }
 
-    UNLOCK_VIS;
+    UNLOCK_ALL;
+}
+
+void output_reset (int type)
+{
+    LOCK_MINOR;
+
+    s_resetting = TRUE;
+
+    if (s_output)
+        flush_output ();
+
+    UNLOCK_MINOR;
+    LOCK_ALL;
+
+    if (s_output && type != OUTPUT_RESET_EFFECTS_ONLY)
+        cleanup_output ();
+
+    if (type == OUTPUT_RESET_HARD)
+    {
+        if (cop && cop->cleanup)
+            cop->cleanup ();
+
+        if (change_op)
+            cop = new_op;
+
+        if (cop && cop->init && ! cop->init ())
+            cop = NULL;
+    }
+
+    if (s_input)
+        setup_output ();
+
+    s_resetting = FALSE;
+
+    UNLOCK_ALL;
+}
+
+void output_get_volume (int * left, int * right)
+{
+    LOCK_MINOR;
+
+    * left = * right = 0;
+
+    if (get_bool (NULL, "software_volume_control"))
+    {
+        * left = get_int (NULL, "sw_volume_left");
+        * right = get_int (NULL, "sw_volume_right");
+    }
+    else if (cop && cop->get_volume)
+        cop->get_volume (left, right);
+
+    UNLOCK_MINOR;
+}
+
+void output_set_volume (int left, int right)
+{
+    LOCK_MINOR;
+
+    if (get_bool (NULL, "software_volume_control"))
+    {
+        set_int (NULL, "sw_volume_left", left);
+        set_int (NULL, "sw_volume_right", right);
+    }
+    else if (cop && cop->set_volume)
+        cop->set_volume (left, right);
+
+    UNLOCK_MINOR;
 }
 
 static bool_t probe_cb (PluginHandle * p, PluginHandle * * pp)
 {
     OutputPlugin * op = plugin_get_header (p);
-    g_return_val_if_fail (op != NULL && op->init != NULL, TRUE);
 
-    if (! op->init ())
-        return TRUE;
+    if (! op || (op->init && ! op->init ()))
+        return TRUE; /* keep searching */
 
-    if (op->cleanup != NULL)
+    if (op->cleanup)
         op->cleanup ();
 
     * pp = p;
-    return FALSE;
+    return FALSE; /* stop searching */
 }
 
 PluginHandle * output_plugin_probe (void)
@@ -566,32 +566,18 @@ PluginHandle * output_plugin_probe (void)
 
 PluginHandle * output_plugin_get_current (void)
 {
-    return (cop != NULL) ? plugin_by_header (cop) : NULL;
+    return cop ? plugin_by_header (cop) : NULL;
 }
 
 bool_t output_plugin_set_current (PluginHandle * plugin)
 {
-    if (cop != NULL)
-    {
-        if (playback_get_playing ())
-            playback_stop ();
+    change_op = TRUE;
+    new_op = plugin ? plugin_get_header (plugin) : NULL;
+    output_reset (OUTPUT_RESET_HARD);
 
-        if (cop->cleanup != NULL)
-            cop->cleanup ();
+    bool_t success = (cop == new_op);
+    change_op = FALSE;
+    new_op = NULL;
 
-        cop = NULL;
-    }
-
-    if (plugin != NULL)
-    {
-        OutputPlugin * op = plugin_get_header (plugin);
-        g_return_val_if_fail (op != NULL && op->init != NULL, FALSE);
-
-        if (! op->init ())
-            return FALSE;
-
-        cop = op;
-    }
-
-    return TRUE;
+    return success;
 }

@@ -22,6 +22,7 @@
 
 #include "debug.h"
 #include "effect.h"
+#include "misc.h"
 #include "playback.h"
 #include "plugin.h"
 #include "plugins.h"
@@ -90,6 +91,8 @@ static void effect_process_cb (RunningEffect * effect, EffectProcessState *
 {
     if (effect->remove_flag)
     {
+        /* call finish twice to completely drain buffers */
+        effect->header->finish (state->data, state->samples);
         effect->header->finish (state->data, state->samples);
 
         running_effects = g_list_remove (running_effects, effect);
@@ -132,32 +135,18 @@ void effect_finish (float * * data, int * samples)
     pthread_mutex_unlock (& mutex);
 }
 
-int effect_decoder_to_output_time (int time)
-{
-    pthread_mutex_lock (& mutex);
-
-    for (GList * node = running_effects; node != NULL; node = node->next)
-    {
-        if (PLUGIN_HAS_FUNC (((RunningEffect *) node->data)->header, decoder_to_output_time))
-            time = ((RunningEffect *) node->data)->header->decoder_to_output_time (time);
-    }
-
-    pthread_mutex_unlock (& mutex);
-    return time;
-}
-
-int effect_output_to_decoder_time (int time)
+int effect_adjust_delay (int delay)
 {
     pthread_mutex_lock (& mutex);
 
     for (GList * node = g_list_last (running_effects); node != NULL; node = node->prev)
     {
-        if (PLUGIN_HAS_FUNC (((RunningEffect *) node->data)->header, output_to_decoder_time))
-            time = ((RunningEffect *) node->data)->header->output_to_decoder_time (time);
+        if (PLUGIN_HAS_FUNC (((RunningEffect *) node->data)->header, adjust_delay))
+            delay = ((RunningEffect *) node->data)->header->adjust_delay (delay);
     }
 
     pthread_mutex_unlock (& mutex);
-    return time;
+    return delay;
 }
 
 static int effect_find_cb (RunningEffect * effect, PluginHandle * plugin)
@@ -237,10 +226,7 @@ static void effect_enable (PluginHandle * plugin, EffectPlugin * ep, bool_t
     else
     {
         AUDDBG ("Reset to add/remove %s.\n", plugin_get_name (plugin));
-        int time = playback_get_time ();
-        bool_t paused = playback_get_paused ();
-        playback_stop ();
-        playback_play (time, paused);
+        output_reset (OUTPUT_RESET_EFFECTS_ONLY);
     }
 }
 

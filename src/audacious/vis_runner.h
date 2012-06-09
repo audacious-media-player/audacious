@@ -22,20 +22,9 @@
 
 #include <libaudcore/core.h>
 
-/* When the decoder thread wants to send data to the vis runner, it must block
- * the vis timeout before blocking output functions; otherwise, the vis timeout
- * will hang up waiting for those output functions to be unblocked while the
- * decoder thread hangs up waiting for the vis timeout to finish. */
-void vis_runner_lock (void);
-void vis_runner_unlock (void);
-bool_t vis_runner_locked (void);
-
 void vis_runner_start_stop (bool_t playing, bool_t paused);
-void vis_runner_pass_audio (int time, float * data, int samples, int
- channels, int rate);
-void vis_runner_time_offset (int offset);
+void vis_runner_pass_audio (int time, float * data, int samples, int channels, int rate);
 void vis_runner_flush (void);
-
 void vis_runner_enable (bool_t enable);
 
 #endif

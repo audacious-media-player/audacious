@@ -28,8 +28,7 @@ void effect_start (int * channels, int * rate);
 void effect_process (float * * data, int * samples);
 void effect_flush (void);
 void effect_finish (float * * data, int * samples);
-int effect_decoder_to_output_time (int time);
-int effect_output_to_decoder_time (int time);
+int effect_adjust_delay (int delay);
 
 bool_t effect_plugin_start (PluginHandle * plugin);
 void effect_plugin_stop (PluginHandle * plugin);

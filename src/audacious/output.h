@@ -20,16 +20,24 @@
 #ifndef AUDACIOUS_OUTPUT_H
 #define AUDACIOUS_OUTPUT_H
 
-#include "plugin.h"
+#include <libaudcore/core.h>
+#include "types.h"
 
-extern const struct OutputAPI output_api;
+bool_t output_open_audio (int format, int rate, int channels);
+void output_set_replaygain_info (const ReplayGainInfo * info);
+void output_write_audio (void * data, int length);
+void output_abort_write (void);
+void output_pause (bool_t pause);
+int output_written_time (void);
+void output_set_time (int time);
 
-void output_get_volume(int * l, int * r);
-void output_set_volume(int l, int r);
-
-int get_output_time (void);
-int get_raw_output_time (void);
+int output_get_time (void);
+int output_get_raw_time (void);
+void output_close_audio (void);
 void output_drain (void);
+
+void output_get_volume (int * left, int * right);
+void output_set_volume (int left, int right);
 
 PluginHandle * output_plugin_probe (void);
 PluginHandle * output_plugin_get_current (void);

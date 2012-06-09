@@ -127,6 +127,7 @@ typedef struct {
 CategoryQueueEntry *category_queue = NULL;
 
 static void * create_output_plugin_box (void);
+static void output_bit_depth_changed (void);
 
 static PreferencesWidget rg_mode_widgets[] = {
  {WIDGET_CHK_BTN, N_("Album mode"), .cfg_type = VALUE_BOOLEAN, .cname = "replay_gain_album"}};
@@ -135,7 +136,7 @@ static PreferencesWidget audio_page_widgets[] = {
  {WIDGET_LABEL, N_("<b>Output Settings</b>")},
  {WIDGET_CUSTOM, .data = {.populate = create_output_plugin_box}},
  {WIDGET_COMBO_BOX, N_("Bit depth:"),
-  .cfg_type = VALUE_INT, .cname = "output_bit_depth",
+  .cfg_type = VALUE_INT, .cname = "output_bit_depth", .callback = output_bit_depth_changed,
   .data = {.combo = {bitdepth_elements, G_N_ELEMENTS (bitdepth_elements)}}},
  {WIDGET_SPIN_BTN, N_("Buffer size:"),
   .cfg_type = VALUE_INT, .cname = "output_buffer_size",
@@ -1168,6 +1169,11 @@ static void output_combo_fill (GtkComboBox * combo)
     for (GList * node = output_get_list (); node != NULL; node = node->next)
         gtk_combo_box_text_append_text ((GtkComboBoxText *) combo,
          plugin_get_name (node->data));
+}
+
+static void output_bit_depth_changed (void)
+{
+    output_reset (OUTPUT_RESET_SOFT);
 }
 
 static void output_do_config (void)

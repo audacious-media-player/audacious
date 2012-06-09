@@ -31,8 +31,18 @@
 #include "output.h"
 #include "playback.h"
 #include "playlist.h"
+#include "plugin.h"
 
 static void playback_start (int playlist, int entry, int seek_time, bool_t pause);
+
+static const struct OutputAPI output_api = {
+ .open_audio = output_open_audio,
+ .set_replaygain_info = output_set_replaygain_info,
+ .write_audio = output_write_audio,
+ .abort_write = output_abort_write,
+ .pause = output_pause,
+ .written_time = output_written_time,
+ .flush = output_set_time};
 
 static InputPlayback playback_api;
 
@@ -165,7 +175,7 @@ int playback_get_time (void)
         time = current_decoder->get_time (& playback_api);
 
     if (time < 0)
-        time = get_output_time ();
+        time = output_get_time ();
 
     return time - time_offset;
 }
@@ -328,6 +338,8 @@ static void * playback_thread (void * unused)
     playback_error = ! current_decoder->play (& playback_api, current_filename,
      file, seekable ? time_offset + initial_seek : 0,
      seekable ? playback_entry_get_end_time () : -1, paused);
+
+    output_close_audio ();
 
     if (file)
         vfs_fclose (file);
