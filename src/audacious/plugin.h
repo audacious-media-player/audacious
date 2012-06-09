@@ -186,6 +186,11 @@ struct _OutputPlugin
     /* Discards any buffered audio data and sets the time counter (in
      * milliseconds) of data written. */
     void (* flush) (int time);
+
+    /* Whether close_audio() and open_audio() must always be called between
+     * songs, even if the audio format is the same.  Note that this defeats
+     * gapless playback. */
+    bool_t force_reopen;
 };
 
 struct _EffectPlugin

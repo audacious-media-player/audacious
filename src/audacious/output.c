@@ -118,7 +118,8 @@ static void setup_output (void)
     effect_start (& channels, & rate);
     eq_set_format (channels, rate);
 
-    if (s_output && format == out_format && channels == out_channels && rate == out_rate)
+    if (s_output && format == out_format && channels == out_channels && rate ==
+     out_rate && ! PLUGIN_HAS_FUNC (cop, force_reopen))
         return;
 
     if (s_output)
