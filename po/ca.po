@@ -5,13 +5,14 @@
 # Translators:
 # Ernest Adrogué <eadrogue@gmx.net>, 2007, 2008.
 # Jordi Amenós <>, 2011.
+# Juanma Hernández <juanmah@gmail.com>, 2012.
 # juanmah <juanmah@gmail.com>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-06-09 17:53-0400\n"
-"PO-Revision-Date: 2012-06-02 00:06+0000\n"
+"POT-Creation-Date: 2012-06-09 17:57-0400\n"
+"PO-Revision-Date: 2012-06-09 21:28+0000\n"
 "Last-Translator: jlindgren <john.lindgren@aol.com>\n"
 "Language-Team: Catalan\n"
 "Language: ca\n"
@@ -68,7 +69,7 @@ msgstr "Desenvolupadors del BMP:"
 
 #: src/audacious/credits.c:186
 msgid "Argentinian Spanish:"
-msgstr ""
+msgstr "Espanyol (Argentina)"
 
 #: src/audacious/credits.c:189
 msgid "Belarusian:"
@@ -343,14 +344,14 @@ msgstr ""
 "encara està en marxa (o s'ha desactivat )"
 
 #: src/audacious/plugin-preferences.c:50
-#, fuzzy, c-format
+#, c-format
 msgid "About %s"
-msgstr "Quant a l'Audacious"
+msgstr ""
 
 #: src/audacious/plugin-preferences.c:88
-#, fuzzy, c-format
+#, c-format
 msgid "%s Settings"
-msgstr "Opcions..."
+msgstr ""
 
 #: src/audacious/ui_preferences.c:72
 msgid "Audio"
@@ -366,7 +367,7 @@ msgstr "Llistes"
 
 #: src/audacious/ui_preferences.c:75
 msgid "Song Info"
-msgstr ""
+msgstr "Información de la cançó"
 
 #: src/audacious/ui_preferences.c:76
 msgid "Plugins"
@@ -587,27 +588,29 @@ msgstr "No desar metadates mentre la cançó s'està reproduint"
 
 #: src/audacious/ui_preferences.c:208
 msgid "<b>Album Art</b>"
-msgstr ""
+msgstr "<b>Caràtula d'àlbum</b>"
 
 #: src/audacious/ui_preferences.c:209
 msgid "Search for images matching these words (comma-separated):"
 msgstr ""
+"Cerca imatges que corresponguin amb aquestes paraules (separades per comes):"
 
 #: src/audacious/ui_preferences.c:211
 msgid "Exclude images matching these words (comma-separated):"
 msgstr ""
+"Exclou imatges que corresponguin amb aquestes paraules (separades per comes):"
 
 #: src/audacious/ui_preferences.c:213
 msgid "Search for images matching song file name"
-msgstr ""
+msgstr "Cerca imatges que corresponguin amb el nom de l'arxiu de la cançó"
 
 #: src/audacious/ui_preferences.c:215
 msgid "Search recursively"
-msgstr ""
+msgstr "Cerca recursivament"
 
 #: src/audacious/ui_preferences.c:217
 msgid "Search depth:"
-msgstr ""
+msgstr "Profunditat de la cerca"
 
 #: src/audacious/ui_preferences.c:220
 msgid "<b>Popup Information</b>"
@@ -615,15 +618,15 @@ msgstr "<b>Informació emergent</b>"
 
 #: src/audacious/ui_preferences.c:221
 msgid "Show popup information"
-msgstr ""
+msgstr "Mostra informació emergent"
 
 #: src/audacious/ui_preferences.c:223
 msgid "Popup delay (tenths of a second):"
-msgstr ""
+msgstr "Retard del menú emergent (desenes de segon):"
 
 #: src/audacious/ui_preferences.c:226
 msgid "Show time scale for current song"
-msgstr ""
+msgstr "Mostra escala de temps per a la cançó actual"
 
 #: src/audacious/ui_preferences.c:240
 msgid "TITLE"
@@ -832,11 +835,11 @@ msgstr "Preamplificador"
 
 #: src/libaudgui/infopopup.c:203
 msgid "Track"
-msgstr ""
+msgstr "Pista"
 
 #: src/libaudgui/infopopup.c:205
 msgid "Length"
-msgstr ""
+msgstr "Durada"
 
 #: src/libaudgui/infowin.c:75
 msgid "Acid Jazz"
@@ -1069,7 +1072,7 @@ msgstr "Salta al temps"
 
 #: src/libaudgui/jump-to-time.c:61
 msgid "Enter time (minutes:seconds):"
-msgstr ""
+msgstr "Introdueix temps (minuts: segons):"
 
 #: src/libaudgui/playlists.c:33
 msgid "Export Playlist"
@@ -1163,7 +1166,7 @@ msgstr "Afegir URL"
 
 #: src/libaudgui/url-opener.c:65
 msgid "Enter URL:"
-msgstr ""
+msgstr "Introdueix URL:"
 
 #: src/libaudgui/util.c:143
 msgid ""

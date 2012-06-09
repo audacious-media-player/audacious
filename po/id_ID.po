@@ -5,6 +5,7 @@
 # Translators:
 #  <aftian@yahoo.com>, 2012.
 #   <aftian@yahoo.com>, 2012.
+#  <andika@gmail.com>, 2012.
 #  <buitenzorg812@gmail.com>, 2012.
 #  <invaleed@gmail.com>, 2012.
 # Rahman Aftian <>, 2012.
@@ -16,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-06-09 17:53-0400\n"
-"PO-Revision-Date: 2012-06-02 00:06+0000\n"
+"POT-Creation-Date: 2012-06-09 17:57-0400\n"
+"PO-Revision-Date: 2012-06-09 21:28+0000\n"
 "Last-Translator: jlindgren <john.lindgren@aol.com>\n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -70,7 +71,7 @@ msgstr "Pengembang BMP:"
 
 #: src/audacious/credits.c:186
 msgid "Argentinian Spanish:"
-msgstr ""
+msgstr "Argentina Spanyol:"
 
 #: src/audacious/credits.c:189
 msgid "Belarusian:"
@@ -345,14 +346,14 @@ msgstr ""
 "(atau dinonaktifkan)."
 
 #: src/audacious/plugin-preferences.c:50
-#, fuzzy, c-format
+#, c-format
 msgid "About %s"
-msgstr "Tentang Audacious"
+msgstr ""
 
 #: src/audacious/plugin-preferences.c:88
-#, fuzzy, c-format
+#, c-format
 msgid "%s Settings"
-msgstr "setting..."
+msgstr ""
 
 #: src/audacious/ui_preferences.c:72
 msgid "Audio"
@@ -677,7 +678,7 @@ msgstr "Tampilkan informasi tentang format titlestring"
 
 #: src/audacious/ui_preferences.c:1100
 msgid "Custom string:"
-msgstr ""
+msgstr "String gubahan:"
 
 #: src/audacious/ui_preferences.c:1107
 msgid "Title format:"
@@ -1194,7 +1195,7 @@ msgstr "Opsi luncuran: %d tidak dikenal"
 
 #: src/libeggsmclient/eggdesktopfile.c:1391
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-msgstr ""
+msgstr "Tak bisa melewatkan URI dokumen ke suatu entri desktop 'Type=Link'"
 
 #: src/libeggsmclient/eggdesktopfile.c:1412
 msgid "Not a launchable item"

@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-06-09 17:53-0400\n"
-"PO-Revision-Date: 2012-06-02 00:06+0000\n"
+"POT-Creation-Date: 2012-06-09 17:57-0400\n"
+"PO-Revision-Date: 2012-06-09 21:28+0000\n"
 "Last-Translator: jlindgren <john.lindgren@aol.com>\n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -65,7 +65,7 @@ msgstr "Programadores do BMP:"
 
 #: src/audacious/credits.c:186
 msgid "Argentinian Spanish:"
-msgstr ""
+msgstr "Espanhol da Argentina:"
 
 #: src/audacious/credits.c:189
 msgid "Belarusian:"
@@ -340,14 +340,14 @@ msgstr ""
 "ainda está a decorrer (ou inativa)"
 
 #: src/audacious/plugin-preferences.c:50
-#, fuzzy, c-format
+#, c-format
 msgid "About %s"
-msgstr "Sobre o Audacious"
+msgstr ""
 
 #: src/audacious/plugin-preferences.c:88
-#, fuzzy, c-format
+#, c-format
 msgid "%s Settings"
-msgstr "definições..."
+msgstr ""
 
 #: src/audacious/ui_preferences.c:72
 msgid "Audio"
@@ -363,7 +363,7 @@ msgstr "Lista de reprodução"
 
 #: src/audacious/ui_preferences.c:75
 msgid "Song Info"
-msgstr ""
+msgstr "Informações da faixa"
 
 #: src/audacious/ui_preferences.c:76
 msgid "Plugins"
@@ -584,27 +584,27 @@ msgstr "Não carregar detalhes da faixa antes da reprodução"
 
 #: src/audacious/ui_preferences.c:208
 msgid "<b>Album Art</b>"
-msgstr ""
+msgstr "<b>Imagem do álbum</b>"
 
 #: src/audacious/ui_preferences.c:209
 msgid "Search for images matching these words (comma-separated):"
-msgstr ""
+msgstr "Procurar imagens que tenham estas palavras (separadas por vírgula):"
 
 #: src/audacious/ui_preferences.c:211
 msgid "Exclude images matching these words (comma-separated):"
-msgstr ""
+msgstr "Excluir imagens que tenham estas palavras (separadas por vírgula):"
 
 #: src/audacious/ui_preferences.c:213
 msgid "Search for images matching song file name"
-msgstr ""
+msgstr "Procurar imagens que coincidam com o nome do ficheiro"
 
 #: src/audacious/ui_preferences.c:215
 msgid "Search recursively"
-msgstr ""
+msgstr "Procurar recursivamente"
 
 #: src/audacious/ui_preferences.c:217
 msgid "Search depth:"
-msgstr ""
+msgstr "Extensão da procura:"
 
 #: src/audacious/ui_preferences.c:220
 msgid "<b>Popup Information</b>"
@@ -612,15 +612,15 @@ msgstr "<b>Alertas</b>"
 
 #: src/audacious/ui_preferences.c:221
 msgid "Show popup information"
-msgstr ""
+msgstr "Mostrar alertas"
 
 #: src/audacious/ui_preferences.c:223
 msgid "Popup delay (tenths of a second):"
-msgstr ""
+msgstr "Atraso do alerta (décimas de segundo):"
 
 #: src/audacious/ui_preferences.c:226
 msgid "Show time scale for current song"
-msgstr ""
+msgstr "Mostrar escala de tempo da faixa atual"
 
 #: src/audacious/ui_preferences.c:240
 msgid "TITLE"
@@ -828,11 +828,11 @@ msgstr "Amplificador"
 
 #: src/libaudgui/infopopup.c:203
 msgid "Track"
-msgstr ""
+msgstr "Faixa"
 
 #: src/libaudgui/infopopup.c:205
 msgid "Length"
-msgstr ""
+msgstr "Duração"
 
 #: src/libaudgui/infowin.c:75
 msgid "Acid Jazz"
@@ -1065,7 +1065,7 @@ msgstr "Ir para posição temporal"
 
 #: src/libaudgui/jump-to-time.c:61
 msgid "Enter time (minutes:seconds):"
-msgstr ""
+msgstr "Indique a duração (minutos:segundos)"
 
 #: src/libaudgui/playlists.c:33
 msgid "Export Playlist"
@@ -1159,7 +1159,7 @@ msgstr "Adicionar URL"
 
 #: src/libaudgui/url-opener.c:65
 msgid "Enter URL:"
-msgstr ""
+msgstr "Indique o URL:"
 
 #: src/libaudgui/util.c:143
 msgid ""

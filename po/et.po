@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-06-09 17:53-0400\n"
-"PO-Revision-Date: 2012-06-02 00:06+0000\n"
+"POT-Creation-Date: 2012-06-09 17:57-0400\n"
+"PO-Revision-Date: 2012-06-09 21:28+0000\n"
 "Last-Translator: jlindgren <john.lindgren@aol.com>\n"
 "Language-Team: Estonian\n"
 "Language: et\n"
@@ -64,7 +64,7 @@ msgstr "BMP arendajad"
 
 #: src/audacious/credits.c:186
 msgid "Argentinian Spanish:"
-msgstr ""
+msgstr "Argentiina hispaania:"
 
 #: src/audacious/credits.c:189
 msgid "Belarusian:"
@@ -339,14 +339,14 @@ msgstr ""
 "pooleli (või keelatud)."
 
 #: src/audacious/plugin-preferences.c:50
-#, fuzzy, c-format
+#, c-format
 msgid "About %s"
-msgstr "Audacious'est lähemalt"
+msgstr ""
 
 #: src/audacious/plugin-preferences.c:88
-#, fuzzy, c-format
+#, c-format
 msgid "%s Settings"
-msgstr "sätted..."
+msgstr ""
 
 #: src/audacious/ui_preferences.c:72
 msgid "Audio"
@@ -362,7 +362,7 @@ msgstr "Esitusnimekiri"
 
 #: src/audacious/ui_preferences.c:75
 msgid "Song Info"
-msgstr ""
+msgstr "Loo andmed"
 
 #: src/audacious/ui_preferences.c:76
 msgid "Plugins"
@@ -603,7 +603,7 @@ msgstr ""
 
 #: src/audacious/ui_preferences.c:217
 msgid "Search depth:"
-msgstr ""
+msgstr "Otsingu sügavus:"
 
 #: src/audacious/ui_preferences.c:220
 msgid "<b>Popup Information</b>"
@@ -757,7 +757,7 @@ msgid ""
 "playlist was exported will be lost."
 msgstr ""
 "Kas soovid sulgeda esitusnimekirja \"%s\"?  Kõik pärast nimekirja viimast "
-"eksportimist tehtud muutused lähevad kaotsi."
+"eksporti tehtud muutused lähevad kaotsi."
 
 #: src/libaudgui/confirm.c:88
 msgid "_Don't show this message again"
@@ -825,7 +825,7 @@ msgstr "Eelmoonutus"
 
 #: src/libaudgui/infopopup.c:203
 msgid "Track"
-msgstr ""
+msgstr "Rada"
 
 #: src/libaudgui/infopopup.c:205
 msgid "Length"
@@ -1060,7 +1060,7 @@ msgstr "Ajahetkele hüppamine"
 
 #: src/libaudgui/jump-to-time.c:61
 msgid "Enter time (minutes:seconds):"
-msgstr ""
+msgstr "Sisesta aeg (minutid:sekundid):"
 
 #: src/libaudgui/playlists.c:33
 msgid "Export Playlist"
@@ -1154,7 +1154,7 @@ msgstr "URL-i lisamine"
 
 #: src/libaudgui/url-opener.c:65
 msgid "Enter URL:"
-msgstr ""
+msgstr "Sisesta URL:"
 
 #: src/libaudgui/util.c:143
 msgid ""

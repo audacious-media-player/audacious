@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-06-09 17:53-0400\n"
-"PO-Revision-Date: 2012-06-02 00:06+0000\n"
+"POT-Creation-Date: 2012-06-09 17:57-0400\n"
+"PO-Revision-Date: 2012-06-09 21:28+0000\n"
 "Last-Translator: jlindgren <john.lindgren@aol.com>\n"
 "Language-Team: Lithuanian\n"
 "Language: lt\n"
@@ -69,7 +69,7 @@ msgstr "BMP kūrėjai:"
 
 #: src/audacious/credits.c:186
 msgid "Argentinian Spanish:"
-msgstr ""
+msgstr "Į ispanų(Argentina):"
 
 #: src/audacious/credits.c:189
 msgid "Belarusian:"
@@ -344,14 +344,14 @@ msgstr ""
 "surikiuoti grojaraščio."
 
 #: src/audacious/plugin-preferences.c:50
-#, fuzzy, c-format
+#, c-format
 msgid "About %s"
-msgstr "Apie Audacious"
+msgstr ""
 
 #: src/audacious/plugin-preferences.c:88
-#, fuzzy, c-format
+#, c-format
 msgid "%s Settings"
-msgstr "nustatymai ..."
+msgstr ""
 
 #: src/audacious/ui_preferences.c:72
 msgid "Audio"
@@ -367,7 +367,7 @@ msgstr "Grojaraštis"
 
 #: src/audacious/ui_preferences.c:75
 msgid "Song Info"
-msgstr ""
+msgstr "Dainos informacija"
 
 #: src/audacious/ui_preferences.c:76
 msgid "Plugins"
@@ -588,27 +588,28 @@ msgstr "Kol negrojama, dainom neįkrauti meta duomenų"
 
 #: src/audacious/ui_preferences.c:208
 msgid "<b>Album Art</b>"
-msgstr ""
+msgstr "<b>Albumo apivadalinimas</b>"
 
 #: src/audacious/ui_preferences.c:209
 msgid "Search for images matching these words (comma-separated):"
 msgstr ""
+"Ieškoti paveikslėlių kurie atitinka šiuos žodžius (atskirti kableliais):"
 
 #: src/audacious/ui_preferences.c:211
 msgid "Exclude images matching these words (comma-separated):"
-msgstr ""
+msgstr "Išskirti žodžius atitinkančius šiuos žodžius (atskirti kableliais):"
 
 #: src/audacious/ui_preferences.c:213
 msgid "Search for images matching song file name"
-msgstr ""
+msgstr "Ieškoti paveikslėlių atitinkančių dainos failo vardą"
 
 #: src/audacious/ui_preferences.c:215
 msgid "Search recursively"
-msgstr ""
+msgstr "Ieškoti rekursyviai"
 
 #: src/audacious/ui_preferences.c:217
 msgid "Search depth:"
-msgstr ""
+msgstr "Paieškos gylis:"
 
 #: src/audacious/ui_preferences.c:220
 msgid "<b>Popup Information</b>"
@@ -616,15 +617,15 @@ msgstr "<b>Iššokančio lango informacija</b>"
 
 #: src/audacious/ui_preferences.c:221
 msgid "Show popup information"
-msgstr ""
+msgstr "Rodyti iššokantį informacijos langą"
 
 #: src/audacious/ui_preferences.c:223
 msgid "Popup delay (tenths of a second):"
-msgstr ""
+msgstr "Iššokančio lango rodymo trukmė(dešimtimis sekundžių):"
 
 #: src/audacious/ui_preferences.c:226
 msgid "Show time scale for current song"
-msgstr ""
+msgstr "Rodyti grojančios dainos laiko juostą"
 
 #: src/audacious/ui_preferences.c:240
 msgid "TITLE"
@@ -656,7 +657,7 @@ msgstr "Kategorija"
 
 #: src/audacious/ui_preferences.c:1005
 msgid "Custom"
-msgstr "Pasirinkta eilutė"
+msgstr "Pasirinktinė"
 
 #: src/audacious/ui_preferences.c:1042
 msgid "<b>Song Display</b>"
@@ -676,7 +677,7 @@ msgstr "Parodyti informaciją apie pavadinimo formatą"
 
 #: src/audacious/ui_preferences.c:1100
 msgid "Custom string:"
-msgstr "Pasirinkta eilutė:"
+msgstr "Pasirinktinė eilutė:"
 
 #: src/audacious/ui_preferences.c:1107
 msgid "Title format:"
@@ -831,11 +832,11 @@ msgstr "Preamp"
 
 #: src/libaudgui/infopopup.c:203
 msgid "Track"
-msgstr ""
+msgstr "Takelis"
 
 #: src/libaudgui/infopopup.c:205
 msgid "Length"
-msgstr ""
+msgstr "Trukmė"
 
 #: src/libaudgui/infowin.c:75
 msgid "Acid Jazz"
@@ -1066,7 +1067,7 @@ msgstr "Šokti į laiką"
 
 #: src/libaudgui/jump-to-time.c:61
 msgid "Enter time (minutes:seconds):"
-msgstr ""
+msgstr "Įveskite laiką (minutės:sekundės):"
 
 #: src/libaudgui/playlists.c:33
 msgid "Export Playlist"
@@ -1160,7 +1161,7 @@ msgstr "Pridėti URL"
 
 #: src/libaudgui/url-opener.c:65
 msgid "Enter URL:"
-msgstr ""
+msgstr "Įveskite URL:"
 
 #: src/libaudgui/util.c:143
 msgid ""

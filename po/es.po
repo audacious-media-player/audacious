@@ -10,14 +10,16 @@
 # Jeki Sinneo Leinos <jeki72@gmail.com>, 2008.
 # Jordi Amenós <>, 2011.
 # Jorge Andrés <winninglero@gmail.com>, 2010.
+# Juan Manuel Hernández, 2012.
 # Marco Antonio Frias Butrón <marcoantoniofrias@gmail.com>, 2012.
+# <xukosky@yahoo.es>, 2011.
 #   <xukosky@yahoo.es>, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-06-09 17:53-0400\n"
-"PO-Revision-Date: 2012-06-02 00:06+0000\n"
+"POT-Creation-Date: 2012-06-09 17:57-0400\n"
+"PO-Revision-Date: 2012-06-09 21:28+0000\n"
 "Last-Translator: jlindgren <john.lindgren@aol.com>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -71,7 +73,7 @@ msgstr "Desarrolladores de BMP:"
 
 #: src/audacious/credits.c:186
 msgid "Argentinian Spanish:"
-msgstr ""
+msgstr "Español (Argentino):"
 
 #: src/audacious/credits.c:189
 msgid "Belarusian:"
@@ -346,14 +348,14 @@ msgstr ""
 "está en progreso (o ha sido deshabilitada)."
 
 #: src/audacious/plugin-preferences.c:50
-#, fuzzy, c-format
+#, c-format
 msgid "About %s"
-msgstr "Acerca de Audacious"
+msgstr ""
 
 #: src/audacious/plugin-preferences.c:88
-#, fuzzy, c-format
+#, c-format
 msgid "%s Settings"
-msgstr "ajustes ..."
+msgstr ""
 
 #: src/audacious/ui_preferences.c:72
 msgid "Audio"
@@ -369,7 +371,7 @@ msgstr "Lista de reproducción"
 
 #: src/audacious/ui_preferences.c:75
 msgid "Song Info"
-msgstr ""
+msgstr "Información de la canción"
 
 #: src/audacious/ui_preferences.c:76
 msgid "Plugins"
@@ -590,27 +592,30 @@ msgstr "No cargar la información de metadatos hasta reproducir"
 
 #: src/audacious/ui_preferences.c:208
 msgid "<b>Album Art</b>"
-msgstr ""
+msgstr "<b>Carátula de álbum</b>"
 
 #: src/audacious/ui_preferences.c:209
 msgid "Search for images matching these words (comma-separated):"
 msgstr ""
+"Buscar imágenes que correspondan con estas palabras (separadas por comas):"
 
 #: src/audacious/ui_preferences.c:211
 msgid "Exclude images matching these words (comma-separated):"
 msgstr ""
+"Excluir imágenes que correspondan con estas palabras (separadas por comas):"
 
 #: src/audacious/ui_preferences.c:213
 msgid "Search for images matching song file name"
 msgstr ""
+"Buscar imágenes que correspondan con el nombre de archivo de la canción"
 
 #: src/audacious/ui_preferences.c:215
 msgid "Search recursively"
-msgstr ""
+msgstr "Buscar recursivamente"
 
 #: src/audacious/ui_preferences.c:217
 msgid "Search depth:"
-msgstr ""
+msgstr "Profundidad de la búsqueda:"
 
 #: src/audacious/ui_preferences.c:220
 msgid "<b>Popup Information</b>"
@@ -618,15 +623,15 @@ msgstr "<b>Información emergente</b>"
 
 #: src/audacious/ui_preferences.c:221
 msgid "Show popup information"
-msgstr ""
+msgstr "Mostrar información emergente"
 
 #: src/audacious/ui_preferences.c:223
 msgid "Popup delay (tenths of a second):"
-msgstr ""
+msgstr "Retraso del menú emergente (décimas de segundo):"
 
 #: src/audacious/ui_preferences.c:226
 msgid "Show time scale for current song"
-msgstr ""
+msgstr "Mostrar escala de tiempo para la canción actual"
 
 #: src/audacious/ui_preferences.c:240
 msgid "TITLE"
@@ -832,11 +837,11 @@ msgstr "Preamplificación"
 
 #: src/libaudgui/infopopup.c:203
 msgid "Track"
-msgstr ""
+msgstr "Pista"
 
 #: src/libaudgui/infopopup.c:205
 msgid "Length"
-msgstr ""
+msgstr "Duración"
 
 #: src/libaudgui/infowin.c:75
 msgid "Acid Jazz"
@@ -1067,7 +1072,7 @@ msgstr "Saltar en el tiempo"
 
 #: src/libaudgui/jump-to-time.c:61
 msgid "Enter time (minutes:seconds):"
-msgstr ""
+msgstr "Introducir tiempo (minutos: segundos):"
 
 #: src/libaudgui/playlists.c:33
 msgid "Export Playlist"
@@ -1161,7 +1166,7 @@ msgstr "Añadir URL"
 
 #: src/libaudgui/url-opener.c:65
 msgid "Enter URL:"
-msgstr ""
+msgstr "Introducir URL:"
 
 #: src/libaudgui/util.c:143
 msgid ""
