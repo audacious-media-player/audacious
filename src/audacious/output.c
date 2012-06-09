@@ -83,7 +83,7 @@ static inline int get_format (void)
 /* assumes LOCK_ALL, s_output */
 static void cleanup_output (void)
 {
-    if (! (s_paused || s_aborted) && cop->drain)
+    if (! (s_paused || s_aborted) && PLUGIN_HAS_FUNC (cop, drain))
     {
         UNLOCK_MINOR;
         cop->drain ();
@@ -92,7 +92,7 @@ static void cleanup_output (void)
 
     s_output = FALSE;
 
-    if (cop->close_audio)
+    if (PLUGIN_HAS_FUNC (cop, close_audio))
         cop->close_audio ();
 
     effect_flush ();
@@ -102,7 +102,7 @@ static void cleanup_output (void)
 /* assumes LOCK_ALL, s_input, s_output */
 static void apply_pause (void)
 {
-    if (cop->pause)
+    if (PLUGIN_HAS_FUNC (cop, pause))
         cop->pause (s_paused);
 
     vis_runner_start_stop (TRUE, s_paused);
@@ -124,7 +124,7 @@ static void setup_output (void)
     if (s_output)
         cleanup_output ();
 
-    if (! cop || ! cop->open_audio || ! cop->open_audio (format, rate, channels))
+    if (! cop || ! PLUGIN_HAS_FUNC (cop, open_audio) || ! cop->open_audio (format, rate, channels))
         return;
 
     s_output = TRUE;
@@ -140,7 +140,7 @@ static void setup_output (void)
 /* assumes LOCK_MINOR, s_input, s_output */
 static void flush_output (void)
 {
-    if (cop->flush)
+    if (PLUGIN_HAS_FUNC (cop, flush))
     {
         cop->flush (0);
         out_frames = 0;
@@ -232,7 +232,7 @@ static void write_output_raw (void * data, int samples)
 
     while (! (s_aborted || s_resetting))
     {
-        bool_t blocking = ! cop->buffer_free;
+        bool_t blocking = ! PLUGIN_HAS_FUNC (cop, buffer_free);
         int ready;
 
         if (blocking)
@@ -242,7 +242,7 @@ static void write_output_raw (void * data, int samples)
 
         ready = MIN (ready, samples);
 
-        if (cop->write_audio)
+        if (PLUGIN_HAS_FUNC (cop, write_audio))
         {
             cop->write_audio (data, FMT_SIZEOF (out_format) * ready);
             data = (char *) data + FMT_SIZEOF (out_format) * ready;
@@ -256,7 +256,7 @@ static void write_output_raw (void * data, int samples)
 
         if (! blocking)
         {
-            if (cop->period_wait)
+            if (PLUGIN_HAS_FUNC (cop, period_wait))
                 cop->period_wait ();
             else
                 usleep (20000);
@@ -421,7 +421,7 @@ int output_get_time (void)
 
     if (s_input)
     {
-        if (s_output && cop->output_time)
+        if (s_output && PLUGIN_HAS_FUNC (cop, output_time))
             delay = FR2MS (out_frames, out_rate) - cop->output_time ();
 
         delay = effect_adjust_delay (delay);
@@ -438,7 +438,7 @@ int output_get_raw_time (void)
     LOCK_MINOR;
     int time = 0;
 
-    if (s_output)
+    if (s_output && PLUGIN_HAS_FUNC (cop, output_time))
         time = cop->output_time ();
 
     UNLOCK_MINOR;
@@ -493,13 +493,13 @@ void output_reset (int type)
 
     if (type == OUTPUT_RESET_HARD)
     {
-        if (cop && cop->cleanup)
+        if (cop && PLUGIN_HAS_FUNC (cop, cleanup))
             cop->cleanup ();
 
         if (change_op)
             cop = new_op;
 
-        if (cop && cop->init && ! cop->init ())
+        if (cop && PLUGIN_HAS_FUNC (cop, init) && ! cop->init ())
             cop = NULL;
     }
 
@@ -522,7 +522,7 @@ void output_get_volume (int * left, int * right)
         * left = get_int (NULL, "sw_volume_left");
         * right = get_int (NULL, "sw_volume_right");
     }
-    else if (cop && cop->get_volume)
+    else if (cop && PLUGIN_HAS_FUNC (cop, get_volume))
         cop->get_volume (left, right);
 
     UNLOCK_MINOR;
@@ -537,7 +537,7 @@ void output_set_volume (int left, int right)
         set_int (NULL, "sw_volume_left", left);
         set_int (NULL, "sw_volume_right", right);
     }
-    else if (cop && cop->set_volume)
+    else if (cop && PLUGIN_HAS_FUNC (cop, set_volume))
         cop->set_volume (left, right);
 
     UNLOCK_MINOR;
@@ -547,10 +547,10 @@ static bool_t probe_cb (PluginHandle * p, PluginHandle * * pp)
 {
     OutputPlugin * op = plugin_get_header (p);
 
-    if (! op || (op->init && ! op->init ()))
+    if (! op || (PLUGIN_HAS_FUNC (op, init) && ! op->init ()))
         return TRUE; /* keep searching */
 
-    if (op->cleanup)
+    if (PLUGIN_HAS_FUNC (op, cleanup))
         op->cleanup ();
 
     * pp = p;
