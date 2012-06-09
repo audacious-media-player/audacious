@@ -96,6 +96,8 @@ void plugin_make_config_window (PluginHandle * plugin)
 
     GtkWidget * content = gtk_dialog_get_content_area ((GtkDialog *) window);
     GtkWidget * box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+    gtk_container_set_border_width ((GtkContainer *) content, 6);
+    gtk_container_set_border_width ((GtkContainer *) box, 6);
     create_widgets_with_domain (box, p->widgets, p->n_widgets, header->domain);
     gtk_box_pack_start ((GtkBox *) content, box, TRUE, TRUE, 0);
 
