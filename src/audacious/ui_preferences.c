@@ -561,11 +561,11 @@ static void on_cbox_changed_string (GtkComboBox * combobox, const PreferencesWid
     widget_set_string (widget, widget->data.combo.elements[position].value);
 }
 
-static void fill_cbox (GtkWidget * combobox, const PreferencesWidget * widget)
+static void fill_cbox (GtkWidget * combobox, const PreferencesWidget * widget, const char * domain)
 {
     for (int i = 0; i < widget->data.combo.n_elements; i ++)
         gtk_combo_box_text_append_text ((GtkComboBoxText *) combobox,
-         _(widget->data.combo.elements[i].label));
+         dgettext (domain, widget->data.combo.elements[i].label));
 
     switch (widget->cfg_type)
     {
@@ -722,7 +722,7 @@ static void create_cbox (const PreferencesWidget * widget, GtkWidget * * label,
         * label = gtk_label_new (dgettext (domain, widget->label));
     }
 
-    fill_cbox (* combobox, widget);
+    fill_cbox (* combobox, widget, domain);
 }
 
 static void fill_table (GtkWidget * table, const PreferencesWidget * elements, int
