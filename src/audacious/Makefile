@@ -5,7 +5,6 @@ SRCS = adder.c \
        art.c \
        chardet.c								\
        config.c \
-       credits.c							\
        drct.c \
        effect.c									\
        equalizer.c								\

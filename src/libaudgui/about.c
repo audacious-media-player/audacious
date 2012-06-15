@@ -1,6 +1,6 @@
 /*
  * about.c
- * Copyright 2011-2012 John Lindgren
+ * Copyright 2012 Thomas Lange
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -23,96 +23,214 @@
 #include <audacious/misc.h>
 
 #include "config.h"
-#include "libaudgui-gtk.h"
 
-static GtkWidget * about_window;
+static GtkAboutDialog * about;
 
-static GtkTextBuffer * create_text_buffer (const char * const * items)
+static const gchar * authors[] =
 {
-    GString * string = g_string_new ("");
+    N_("Core developers:"),
+    "Christian Birchinger",
+    "Michael Färber",
+    "Matti Hämäläinen",
+    "John Lindgren",
+    "Michał Lipski",
+    "Cristi Măgherușan",
+    "Tomasz Moń",
+    "William Pitcock",
+    "Jonathan Schleifer",
+    "Ben Tucker",
+    "Tony Vroon",
+    "Yoshiki Yazawa\n",
 
-    for (; items[0] || items[1]; items ++)
-    {
-        if (items[0])
-            g_string_append (string, _(items[0]));
+    N_("Winamp skins:"),
+    "George Averill",
+    "Michael Färber",
+    "William Pitcock\n",
 
-        g_string_append_c (string, '\n');
-    }
+    N_("Plugin development:"),
+    "Kiyoshi Aman",
+    "Luca Barbato",
+    "Daniel Barkalow",
+    "Michael Färber",
+    "Shay Green",
+    "Matti Hämäläinen",
+    "Sascha Hlusiak",
+    "John Lindgren",
+    "Michał Lipski",
+    "Giacomo Lozito",
+    "Cristi Măgherușan",
+    "Boris Mikhaylov",
+    "Tomasz Moń",
+    "Sebastian Pipping",
+    "William Pitcock",
+    "Derek Pomery",
+    "Jonathan Schleifer",
+    "Andrew Shadura",
+    "Tony Vroon",
+    "Yoshiki Yazawa\n",
 
-    GtkTextBuffer * buffer = gtk_text_buffer_new (NULL);
-    gtk_text_buffer_set_text (buffer, string->str, string->len - 1);
-    g_string_free (string, TRUE);
-    return buffer;
-}
+    N_("Patch authors:"),
+    "Chris Arepantis",
+    "Anatoly Arzhnikov",
+    "Alexis Ballier",
+    "Eric Barch",
+    "Carlo Bramini",
+    "Massimo Cavalleri",
+    "Stefano D'Angelo",
+    "Jean-Louis Dupond",
+    "Laszlo Dvornik",
+    "Ralf Ertzinger",
+    "Mike Frysinger",
+    "Mark Glines",
+    "Hans de Goede",
+    "David Guglielmi",
+    "Michael Hanselmann",
+    "Juho Heikkinen",
+    "Joseph Jezak",
+    "Henrik Johansson",
+    "Jussi Judin",
+    "Teru Kamogashira",
+    "Chris Kehler",
+    "Thomas Lange",
+    "Mark Loeser",
+    "Alex Maclean",
+    "Mikael Magnusson",
+    "Rodrigo Martins de Matos Ventura",
+    "Mihai Maruseac",
+    "Diego Pettenò",
+    "Mike Ryan",
+    "Michael Schwendt",
+    "Edward Sheldrake",
+    "Kirill Shendrikowski",
+    "Kazuki Shimura",
+    "Valentine Sinitsyn",
+    "Will Storey",
+    "Johan Tavelin",
+    "Christoph J. Thompson",
+    "Bret Towe",
+    "Peter Wagner",
+    "John Wehle",
+    "Ben Wolfson",
+    "Tim Yamin",
+    "Ivan N. Zlatev\n",
 
-static GtkWidget * create_credits_notebook (const char * const * credits,
- const char * const * translators)
+    N_("1.x developers:"),
+    "George Averill",
+    "Daniel Barkalow",
+    "Christian Birchinger",
+    "Daniel Bradshaw",
+    "Adam Cecile",
+    "Michael Färber",
+    "Matti Hämäläinen",
+    "Troels Bang Jensen",
+    "Giacomo Lozito",
+    "Cristi Măgherușan",
+    "Tomasz Moń",
+    "William Pitcock",
+    "Derek Pomery",
+    "Mohammed Sameer",
+    "Jonathan Schleifer",
+    "Ben Tucker",
+    "Tony Vroon",
+    "Yoshiki Yazawa",
+    "Eugene Zagidullin\n",
+
+    N_("BMP Developers:"),
+    "Artem Baguinski",
+    "Edward Brocklesby",
+    "Chong Kai Xiong",
+    "Milosz Derezynski",
+    "David Lau",
+    "Ole Andre Vadla Ravnaas",
+    "Michiel Sikkes",
+    "Andrei Badea",
+    "Peter Behroozi",
+    "Bernard Blackham",
+    "Oliver Blin",
+    "Tomas Bzatek",
+    "Liviu Danicel",
+    "Jon Dowland",
+    "Artur Frysiak",
+    "Sebastian Kapfer",
+    "Lukas Koberstein",
+    "Dan Korostelev",
+    "Jolan Luff",
+    "Michael Marineau",
+    "Tim-Philipp Muller",
+    "Julien Portalier",
+    "Andrew Ruder",
+    "Olivier Samyn",
+    "Martijn Vernooij",
+
+    NULL
+};
+
+static const gchar * lic[] =
 {
-    const char * titles[2] = {_("Credits"), _("Translators")};
-    const char * const * lists[2] = {credits, translators};
+    ("Audacious is free software; you can redistribute it and/or modify "
+     "it under the terms of the GNU General Public License as published by "
+     "the Free Software Foundation; either version 2 of the License, or "
+     "(at your option) any later version.\n\n"),
+    ("Audacious is distributed in the hope that it will be useful, "
+     "but WITHOUT ANY WARRANTY; without even the implied warranty of "
+     "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the "
+     "GNU General Public License for more details.\n\n"),
+    ("You should have received a copy of the GNU General Public License "
+     "along with Audacious; if not, write to the Free Software Foundation, Inc., "
+     "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.\n")
+};
 
-    GtkWidget * notebook = gtk_notebook_new ();
+static const gchar * artists[] =
+{
+    "George Averill",
+    "Stephan Sokolow",
+    "http://tango.freedesktop.org/",
+    NULL
+};
 
-    for (int i = 0; i < 2; i ++)
+static void about_dialog_result (GtkWidget * widget, gint response, gpointer data)
+{
+    if (response == GTK_RESPONSE_CANCEL || response == GTK_RESPONSE_DELETE_EVENT)
     {
-        GtkWidget * label = gtk_label_new (titles[i]);
-
-        GtkWidget * scrolled = gtk_scrolled_window_new (NULL, NULL);
-        gtk_widget_set_size_request (scrolled, -1, 200);
-
-        GtkWidget * text = gtk_text_view_new_with_buffer (create_text_buffer (lists[i]));
-        gtk_text_view_set_editable ((GtkTextView *) text, FALSE);
-        gtk_text_view_set_cursor_visible ((GtkTextView *) text, FALSE);
-        gtk_text_view_set_left_margin ((GtkTextView *) text, 6);
-        gtk_text_view_set_right_margin ((GtkTextView *) text, 6);
-        gtk_container_add ((GtkContainer *) scrolled, text);
-
-        gtk_notebook_append_page ((GtkNotebook *) notebook, scrolled, label);
+        gtk_widget_destroy (widget);
+        about = NULL;
     }
-
-    return notebook;
 }
 
 EXPORT void audgui_show_about_window (void)
 {
-    if (about_window)
+    if (about != NULL)
     {
-        gtk_window_present ((GtkWindow *) about_window);
+        gtk_window_present ((GtkWindow *) about);
         return;
     }
 
-    const char * brief, * const * credits, * const * translators;
-    aud_get_audacious_credits (& brief, & credits, & translators);
+    GdkPixbuf * logo;
+    gchar * path, * license;
 
-    about_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title ((GtkWindow *) about_window, _("About Audacious"));
-    gtk_window_set_resizable ((GtkWindow *) about_window, FALSE);
-    gtk_container_set_border_width ((GtkContainer *) about_window, 3);
+    path = g_strdup_printf ("%s/images/about-logo.png", aud_get_path (AUD_PATH_DATA_DIR));
+    logo = gdk_pixbuf_new_from_file (path, NULL);
+    license = g_strconcat (lic[0], lic[1], lic[2], NULL);
+    g_free (path);
 
-    audgui_destroy_on_escape (about_window);
-    g_signal_connect (about_window, "destroy", (GCallback) gtk_widget_destroyed,
-     & about_window);
+    about = ((GtkAboutDialog *) gtk_about_dialog_new ());
+    gtk_about_dialog_set_program_name (about, "Audacious");
+    gtk_about_dialog_set_version (about, VERSION);
+    gtk_about_dialog_set_copyright (about, _("Copyright \xc2\xa9 2005-2012 Audacious Team"));
+    gtk_about_dialog_set_comments (about, _("A lightweight audio player"));
+    gtk_about_dialog_set_license (about, license);
+    gtk_about_dialog_set_wrap_license (about, TRUE);
+    gtk_about_dialog_set_website (about, "http://audacious-media-player.org");
+    gtk_about_dialog_set_website_label (about, _("Homepage"));
+    gtk_about_dialog_set_artists (about, artists);
+    gtk_about_dialog_set_authors (about, authors);
+    gtk_about_dialog_set_translator_credits (about, _("translator-credits"));
+    gtk_about_dialog_set_logo (about, logo);
 
-    GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-    gtk_container_add ((GtkContainer *) about_window, vbox);
+    g_signal_connect (about, "response", (GCallback) about_dialog_result, NULL);
 
-    char * name = g_strdup_printf ("%s/images/about-logo.png", aud_get_path
-     (AUD_PATH_DATA_DIR));
-    GtkWidget * image = gtk_image_new_from_file (name);
-    gtk_box_pack_start ((GtkBox *) vbox, image, FALSE, FALSE, 0);
-    g_free (name);
+    gtk_widget_show_all ((GtkWidget *) about);
 
-    char * markup = g_strdup_printf (brief, VERSION);
-    GtkWidget * label = gtk_label_new (NULL);
-    gtk_label_set_markup ((GtkLabel *) label, markup);
-    gtk_label_set_justify ((GtkLabel *) label, GTK_JUSTIFY_CENTER);
-    gtk_box_pack_start ((GtkBox *) vbox, label, FALSE, FALSE, 0);
-    g_free (markup);
-
-    GtkWidget * exp = gtk_expander_new (_("Credits"));
-    GtkWidget * notebook = create_credits_notebook (credits, translators);
-    gtk_container_add ((GtkContainer *) exp, notebook);
-    gtk_box_pack_start ((GtkBox *) vbox, exp, TRUE, TRUE, 0);
-
-    gtk_widget_show_all (about_window);
+    g_object_unref (logo);
+    g_free (license);
 }
