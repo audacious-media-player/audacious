@@ -22,6 +22,10 @@ AUD_COMMON_PROGS
 BUILDSYS_INIT
 BUILDSYS_SHARED_LIB
 
+dnl This is legacy branch; disable deprecation warnings
+dnl ===================================================
+CFLAGS="$CFLAGS -Wno-deprecated-declarations"
+
 dnl Byte order
 dnl ==========
 AC_C_BIGENDIAN([BIGENDIAN=1], [BIGENDIAN=0],
