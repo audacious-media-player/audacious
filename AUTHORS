@@ -1,17 +1,17 @@
 HISTORY
 
-Audacious was originally based on the X Multimedia System ("XMMS") via its GTK+
-2.x port Beep Media Player ("BMP").  Since its first release, Audacious has
+Audacious was originally based on the X Multimedia System (“XMMS”) via its GTK+
+2.x port Beep Media Player (“BMP”).  Since its first release, Audacious has
 changed quite a bit, and little of the XMMS/BMP codebase remains.
 
 The Audacious project began in 2005 under the leadership of William Pitcock
-("nenolod").  Many people have made contributions, both large and small, since
+(“nenolod”).  Many people have made contributions, both large and small, since
 that time.  Currently the project is led by John Lindgren and Michał Lipski
-("tallica"), with help from a few others.  Special thanks go to Michał Lipski
+(“tallica”), with help from a few others.  Special thanks go to Michał Lipski
 for setting up and maintaining the current website.
 
 The Audacious logo was designed by George Averill and updated by John Lindgren.
-It uses the "Circulate" font created by Brian Kent.
+It uses the “Circulate” font created by Brian Kent.
 
 Besides the developers listed below, a word of thanks is also due to the many
 people who have helped to translate the Audacious interface into a number of
@@ -26,10 +26,10 @@ Please note that many of Audacious's features are implemented by plugins, whose
 authors are listed elsewhere.
 
 Core executable (src/audacious):
- * Copyright (C) 1998-2003 XMMS development team
- * Copyright (C) 2001 Anders Johansson
- * Copyright (C) 2003-2004 BMP development team
- * Copyright (C) 2005-2012:
+ * Copyright © 1998-2003 XMMS development team
+ * Copyright © 2001 Anders Johansson
+ * Copyright © 2003-2004 BMP development team
+ * Copyright © 2005-2012:
   Michael Färber
   Matti Hämäläinen
   Michael Hanselmann
@@ -46,7 +46,7 @@ Core executable (src/audacious):
   Ivan Zlatev
 
 Command line tool (src/audtool):
- * Copyright (C) 2005-2011:
+ * Copyright © 2005-2011:
   George Averill
   Matti Hämäläinen
   John Lindgren
@@ -55,7 +55,7 @@ Command line tool (src/audtool):
   Yoshiki Yazawa
 
 Remote control shared library (src/libaudclient):
- * Copyright (C) 2007-2011:
+ * Copyright © 2007-2011:
   Matti Hämäläinen
   John Lindgren
   William Pitcock
@@ -63,7 +63,7 @@ Remote control shared library (src/libaudclient):
   Yoshiki Yazawa
 
 Core shared library (src/libaudcore):
- * Copyright (C) 2006-2012:
+ * Copyright © 2006-2012:
   Daniel Barkalow
   Christian Birchinger
   Ralf Ertzinger
@@ -78,9 +78,9 @@ Core shared library (src/libaudcore):
   Eugene Zagidullin
 
 User interface shared library (src/libaudgui):
- * Copyright (C) 1998-2003 XMMS development team
- * Copyright (C) 2003-2004 BMP development team
- * Copyright (C) 2006-2012:
+ * Copyright © 1998-2003 XMMS development team
+ * Copyright © 2003-2004 BMP development team
+ * Copyright © 2006-2012:
   Carlo Bramini
   Michael Färber
   Jussi Judin
@@ -92,7 +92,7 @@ User interface shared library (src/libaudgui):
   Eugene Zagidullin
 
 Tagging support (src/libaudtag):
- * Copyright (C) 2009-2011:
+ * Copyright © 2009-2011:
   John Lindgren
   Michał Lipski
   Mikael Magnusson
@@ -101,6 +101,6 @@ Tagging support (src/libaudtag):
   Tony Vroon
 
 Session management support (src/libeggsmclient):
- * Copyright (C) 1999-2000 Red Hat, Inc.
- * Copyright (C) 2001 George Lebl
- * Copyright (C) 2007 Novell, Inc.
+ * Copyright © 1999-2000 Red Hat, Inc.
+ * Copyright © 2001 George Lebl
+ * Copyright © 2007 Novell, Inc.

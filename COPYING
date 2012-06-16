@@ -1,6 +1,6 @@
 LICENSE
 
-Copyright (C) 1998-2012 Audacious developers and others
+Copyright © 1998-2012 Audacious developers and others
 
 (A list of the copyright holders is provided in the AUTHORS file.)
 
@@ -37,11 +37,11 @@ license is as follows:
        this list of conditions, and the following disclaimer in the
        documentation provided with the distribution.
 
-    This software is provided "as is" and without any warranty, express or
+    This software is provided “as is” and without any warranty, express or
     implied.  In no event shall the authors be liable for any damages arising
     from the use of this software.
 
-The command-line client ("audtool") is licensed under a 3-clause BSD-style
+The command-line client (“audtool”) is licensed under a 3-clause BSD-style
 license, as follows:
 
     Redistribution and use in source and binary forms, with or without
@@ -57,7 +57,7 @@ license, as follows:
     3. The name of the author may not be used to endorse or promote products
        derived from this software without specific prior written permission.
 
-    This software is provided by the author "as is", and any express or implied
+    This software is provided by the author “as is,” and any express or implied
     warranties, including, but not limited to, the implied warranties of
     merchantability and fitness for a particular purpose, are disclaimed.  In no
     event shall the author be liable for any direct, indirect, incidental,
