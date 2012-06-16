@@ -465,13 +465,10 @@ void output_drain (void)
 {
     LOCK_ALL;
 
-    if (! s_input)
+    if (! s_input && s_output)
     {
-        if (! s_resetting)
-            finish_effects (); /* second time for end of playlist */
-
-        if (s_output)
-            cleanup_output ();
+        finish_effects (); /* second time for end of playlist */
+        cleanup_output ();
     }
 
     UNLOCK_ALL;
