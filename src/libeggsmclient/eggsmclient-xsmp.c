@@ -5,20 +5,17 @@
  * 2001 Havoc Pennington, GnomeClient (C) 1998 Carsten Schaar, and twm
  * session code (C) 1998 The Open Group.
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; under version 3 of the License.
  *
- * This library is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Library General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU Library General Public
- * License along with this library; if not, write to the
- * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
- * Boston, MA 02111-1307, USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses>.
  */
 
 #include "config.h"
@@ -232,7 +229,7 @@ sm_client_xsmp_set_initial_properties (gpointer user_data)
 
       if (xsmp->restart_style == SmRestartIfRunning)
 	{
-	  if (egg_desktop_file_get_boolean (desktop_file, 
+	  if (egg_desktop_file_get_boolean (desktop_file,
 					    "X-GNOME-AutoRestart", NULL))
 	    xsmp->restart_style = SmRestartImmediately;
 	}
@@ -1141,7 +1138,7 @@ delete_properties (EggSMClientXSMP *xsmp, ...)
  * until you're done with the SmProp.
  */
 static SmProp *
-array_prop (const char *name, ...) 
+array_prop (const char *name, ...)
 {
   SmProp *prop;
   SmPropValue pv;
@@ -1359,13 +1356,13 @@ ice_error_handler (IceConn       ice_conn,
 		   IcePointer    values)
 {
   /* Do nothing */
-} 
+}
 
 static void
 ice_io_error_handler (IceConn ice_conn)
 {
   /* Do nothing */
-} 
+}
 
 static void
 smc_error_handler (SmcConn       smc_conn,
