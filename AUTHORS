@@ -1,5 +1,4 @@
-About Audacious
-===============
+HISTORY
 
 Audacious was originally based on the X Multimedia System ("XMMS") via its GTK+
 2.x port Beep Media Player ("BMP").  Since its first release, Audacious has
@@ -20,8 +19,8 @@ different (human) languages.  The translation effort is now done mostly through
 Transifex, making it easier to contribute but also nearly impossible to
 maintain a list of those who have done so.
 
-Developers
-==========
+
+DEVELOPERS
 
 Please note that many of Audacious's features are implemented by plugins, whose
 authors are listed elsewhere.
