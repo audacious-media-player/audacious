@@ -4,15 +4,16 @@
 #
 # Translators:
 # Kostyantyn Fedenko <fedenko@ukr.net>, 2011.
+#   <kvantarium@gmail.com>, 2012.
 # NaiLi Rootaerc <theism@mail.ru>, 2012.
 # Rax Garfield (http://biokillaz.com/), 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-06-09 17:57-0400\n"
-"PO-Revision-Date: 2012-06-09 21:28+0000\n"
-"Last-Translator: jlindgren <john.lindgren@aol.com>\n"
+"POT-Creation-Date: 2012-06-15 21:06-0400\n"
+"PO-Revision-Date: 2012-06-15 21:26+0000\n"
+"Last-Translator: StreamThreaedr <kvantarium@gmail.com>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
@@ -35,7 +36,7 @@ msgstr[2] "Знайдено %d файлів"
 
 #: src/audacious/chardet.c:40
 msgid "  (invalid UTF-8)"
-msgstr "  (недопустима послідовність Юнікод)"
+msgstr "(недійсний UTF-8)"
 
 #: src/audacious/credits.c:37
 msgid "Core developers:"
@@ -47,7 +48,7 @@ msgstr "Графіка:"
 
 #: src/audacious/credits.c:57
 msgid "Default skin:"
-msgstr "Стандартна обкладинка:"
+msgstr "Обкладинка за замовчуваням:"
 
 #: src/audacious/credits.c:63
 msgid "Plugin development:"
@@ -67,7 +68,7 @@ msgstr "Розробники BMP:"
 
 #: src/audacious/credits.c:186
 msgid "Argentinian Spanish:"
-msgstr ""
+msgstr "Аргентинський іспанську мову:"
 
 #: src/audacious/credits.c:189
 msgid "Belarusian:"
@@ -344,12 +345,12 @@ msgstr ""
 #: src/audacious/plugin-preferences.c:50
 #, c-format
 msgid "About %s"
-msgstr ""
+msgstr "Про %s"
 
 #: src/audacious/plugin-preferences.c:88
 #, c-format
 msgid "%s Settings"
-msgstr ""
+msgstr "%s Налаштування"
 
 #: src/audacious/ui_preferences.c:72
 msgid "Audio"
@@ -365,7 +366,7 @@ msgstr "Список відтворення"
 
 #: src/audacious/ui_preferences.c:75
 msgid "Song Info"
-msgstr ""
+msgstr "Інформація про композицію"
 
 #: src/audacious/ui_preferences.c:76
 msgid "Plugins"
@@ -586,27 +587,27 @@ msgstr "Не завантажувати метадані доріжок до в�
 
 #: src/audacious/ui_preferences.c:208
 msgid "<b>Album Art</b>"
-msgstr ""
+msgstr "<b>Обкладинка Альбому</b>"
 
 #: src/audacious/ui_preferences.c:209
 msgid "Search for images matching these words (comma-separated):"
-msgstr ""
+msgstr "Шукати зображення відповфдні з цими словами (зозділення комами)"
 
 #: src/audacious/ui_preferences.c:211
 msgid "Exclude images matching these words (comma-separated):"
-msgstr ""
+msgstr "Виключати зображення відповідні з цими словами (зозділення комами)"
 
 #: src/audacious/ui_preferences.c:213
 msgid "Search for images matching song file name"
-msgstr ""
+msgstr "Шукати зображення відповідні імені вайлу"
 
 #: src/audacious/ui_preferences.c:215
 msgid "Search recursively"
-msgstr ""
+msgstr "Пошук рекурсивно"
 
 #: src/audacious/ui_preferences.c:217
 msgid "Search depth:"
-msgstr ""
+msgstr "Пошукова глибина:"
 
 #: src/audacious/ui_preferences.c:220
 msgid "<b>Popup Information</b>"
@@ -614,15 +615,15 @@ msgstr "<b>Спливаюча інформація</b>"
 
 #: src/audacious/ui_preferences.c:221
 msgid "Show popup information"
-msgstr ""
+msgstr "Показувати спливаючу інформацію"
 
 #: src/audacious/ui_preferences.c:223
 msgid "Popup delay (tenths of a second):"
-msgstr ""
+msgstr "Затримка вспливання (десяті частки секунди):"
 
 #: src/audacious/ui_preferences.c:226
 msgid "Show time scale for current song"
-msgstr ""
+msgstr "Показувати часову довжину композиції"
 
 #: src/audacious/ui_preferences.c:240
 msgid "TITLE"
@@ -831,11 +832,11 @@ msgstr ""
 
 #: src/libaudgui/infopopup.c:203
 msgid "Track"
-msgstr ""
+msgstr "Трек"
 
 #: src/libaudgui/infopopup.c:205
 msgid "Length"
-msgstr ""
+msgstr "Длина"
 
 #: src/libaudgui/infowin.c:75
 msgid "Acid Jazz"
@@ -1066,7 +1067,7 @@ msgstr "Перейти до часу"
 
 #: src/libaudgui/jump-to-time.c:61
 msgid "Enter time (minutes:seconds):"
-msgstr ""
+msgstr "Увести час (хвилини:секунди)"
 
 #: src/libaudgui/playlists.c:33
 msgid "Export Playlist"
@@ -1160,7 +1161,7 @@ msgstr "Додати адресу"
 
 #: src/libaudgui/url-opener.c:65
 msgid "Enter URL:"
-msgstr ""
+msgstr "Увести URL:"
 
 #: src/libaudgui/util.c:143
 msgid ""

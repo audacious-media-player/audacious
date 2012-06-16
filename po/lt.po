@@ -4,7 +4,7 @@
 #
 # Translators:
 #   <>, 2012.
-# Algimantas Margevičius <gymka@mail.ru>, 2011.
+# Algimantas Margevičius <gymka@mail.ru>, 2011, 2012.
 # Algimantas Margevičius <margevicius.algimantas@gmail.com>, 2011, 2012.
 # Gymka <gymka@mail.ru>, 2011.
 # Rimas Kudelis <rq@akl.lt>, 2004.
@@ -12,9 +12,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-06-09 17:57-0400\n"
-"PO-Revision-Date: 2012-06-09 21:28+0000\n"
-"Last-Translator: jlindgren <john.lindgren@aol.com>\n"
+"POT-Creation-Date: 2012-06-15 21:06-0400\n"
+"PO-Revision-Date: 2012-06-10 05:53+0000\n"
+"Last-Translator: Algimantas Margevičius <gymka@archlinux.lt>\n"
 "Language-Team: Lithuanian\n"
 "Language: lt\n"
 "MIME-Version: 1.0\n"
@@ -346,12 +346,12 @@ msgstr ""
 #: src/audacious/plugin-preferences.c:50
 #, c-format
 msgid "About %s"
-msgstr ""
+msgstr "Apie %s"
 
 #: src/audacious/plugin-preferences.c:88
 #, c-format
 msgid "%s Settings"
-msgstr ""
+msgstr "%s nustatymai"
 
 #: src/audacious/ui_preferences.c:72
 msgid "Audio"

@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-06-09 17:57-0400\n"
-"PO-Revision-Date: 2012-06-09 21:28+0000\n"
-"Last-Translator: jlindgren <john.lindgren@aol.com>\n"
+"POT-Creation-Date: 2012-06-15 21:06-0400\n"
+"PO-Revision-Date: 2012-06-11 12:37+0000\n"
+"Last-Translator: Sérgio Marques <smarquespt@gmail.com>\n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
 "MIME-Version: 1.0\n"
@@ -342,12 +342,12 @@ msgstr ""
 #: src/audacious/plugin-preferences.c:50
 #, c-format
 msgid "About %s"
-msgstr ""
+msgstr "Sobre o %s"
 
 #: src/audacious/plugin-preferences.c:88
 #, c-format
 msgid "%s Settings"
-msgstr ""
+msgstr "Definições do %s"
 
 #: src/audacious/ui_preferences.c:72
 msgid "Audio"
@@ -384,7 +384,7 @@ msgstr "Título"
 
 #: src/audacious/ui_preferences.c:85
 msgid "Tracknumber"
-msgstr "Número da faixa"
+msgstr "N.º da faixa"
 
 #: src/audacious/ui_preferences.c:86 src/libaudgui/infopopup.c:199
 msgid "Genre"
@@ -472,7 +472,7 @@ msgstr "Modo de álbum"
 
 #: src/audacious/ui_preferences.c:136
 msgid "<b>Output Settings</b>"
-msgstr "<b>Definições de saída</b>"
+msgstr "<b>Definições de som</b>"
 
 #: src/audacious/ui_preferences.c:138
 msgid "Bit depth:"
@@ -596,7 +596,7 @@ msgstr "Excluir imagens que tenham estas palavras (separadas por vírgula):"
 
 #: src/audacious/ui_preferences.c:213
 msgid "Search for images matching song file name"
-msgstr "Procurar imagens que coincidam com o nome do ficheiro"
+msgstr "Gestor de fila de reprodução"
 
 #: src/audacious/ui_preferences.c:215
 msgid "Search recursively"
@@ -680,7 +680,7 @@ msgstr "Formato do título:"
 
 #: src/audacious/ui_preferences.c:1196
 msgid "Output plugin:"
-msgstr "Suplemento de saída:"
+msgstr "Suplemento de som:"
 
 #: src/audacious/ui_preferences.c:1255
 msgid "Transport"
@@ -709,9 +709,7 @@ msgstr "Preferências do Audacious"
 #: src/audacious/util.c:116
 #, c-format
 msgid "Could not create directory (%s): %s\n"
-msgstr ""
-"Não foi possível criar o diretório (%s): %s\n"
-"\n"
+msgstr "Não foi possível criar o diretório (%s): %s\n"
 
 #: src/audtool/handlers_playlist.c:274
 msgid "Position not found."
@@ -759,8 +757,8 @@ msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
 msgstr ""
-"Tem a certeza que quer fechar %s? Se fechar, vai perder todas as "
-"modificações efetuadas após a exportação da lista de reprodução"
+"Tem a certeza de que quer fechar %s? Se o fizer, vai perder todas as "
+"alterações efetuadas após a exportação da lista de reprodução"
 
 #: src/libaudgui/confirm.c:88
 msgid "_Don't show this message again"
@@ -1045,7 +1043,7 @@ msgstr "<span size=\"small\">Ano</span>"
 
 #: src/libaudgui/infowin.c:472
 msgid "<span size=\"small\">Track Number</span>"
-msgstr "<span size=\"small\">Número da faixa</span>"
+msgstr "<span size=\"small\">N.º da faixa</span>"
 
 #: src/libaudgui/infowin.c:551
 #, c-format
@@ -1082,7 +1080,7 @@ msgstr "Substituir %s?"
 
 #: src/libaudgui/queue-manager.c:196
 msgid "Queue Manager"
-msgstr "Gestor de fila"
+msgstr "Gestor de fila de reprodução"
 
 #: src/libaudgui/ui_fileopener.c:108
 msgid "Open Files"
