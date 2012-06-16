@@ -22,6 +22,13 @@
 
 /* #define STRPOOL_DEBUG */
 
+#undef NULL
+#ifdef __cplusplus /* *sigh* */
+#define NULL 0
+#else
+#define NULL ((void *) 0)
+#endif
+
 /* "bool_t" means "int" for compatibility with GLib */
 #undef bool_t
 #define bool_t int
