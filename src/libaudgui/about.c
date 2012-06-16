@@ -25,31 +25,18 @@
 #include "config.h"
 #include "libaudgui-gtk.h"
 
+static const char about_text[] =
+ "<big><b>Audacious " VERSION "</b></big>\n"
+ "Copyright © 1998-2012 Audacious developers and others";
+
+static const char website[] = "http://audacious-media-player.org";
+
 static GtkWidget * about_window;
 
-static GtkTextBuffer * create_text_buffer (const char * const * items)
+static GtkWidget * create_credits_notebook (const char * credits, const char * license)
 {
-    GString * string = g_string_new ("");
-
-    for (; items[0] || items[1]; items ++)
-    {
-        if (items[0])
-            g_string_append (string, _(items[0]));
-
-        g_string_append_c (string, '\n');
-    }
-
-    GtkTextBuffer * buffer = gtk_text_buffer_new (NULL);
-    gtk_text_buffer_set_text (buffer, string->str, string->len - 1);
-    g_string_free (string, TRUE);
-    return buffer;
-}
-
-static GtkWidget * create_credits_notebook (const char * const * credits,
- const char * const * translators)
-{
-    const char * titles[2] = {_("Credits"), _("Translators")};
-    const char * const * lists[2] = {credits, translators};
+    const char * titles[2] = {_("Credits"), _("License")};
+    const char * text[2] = {credits, license};
 
     GtkWidget * notebook = gtk_notebook_new ();
 
@@ -60,7 +47,9 @@ static GtkWidget * create_credits_notebook (const char * const * credits,
         GtkWidget * scrolled = gtk_scrolled_window_new (NULL, NULL);
         gtk_widget_set_size_request (scrolled, -1, 200);
 
-        GtkWidget * text = gtk_text_view_new_with_buffer (create_text_buffer (lists[i]));
+        GtkTextBuffer * buffer = gtk_text_buffer_new (NULL);
+        gtk_text_buffer_set_text (buffer, text[i], -1);
+        GtkWidget * text = gtk_text_view_new_with_buffer (buffer);
         gtk_text_view_set_editable ((GtkTextView *) text, FALSE);
         gtk_text_view_set_cursor_visible ((GtkTextView *) text, FALSE);
         gtk_text_view_set_left_margin ((GtkTextView *) text, 6);
@@ -81,9 +70,6 @@ EXPORT void audgui_show_about_window (void)
         return;
     }
 
-    const char * brief, * const * credits, * const * translators;
-    aud_get_audacious_credits (& brief, & credits, & translators);
-
     about_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title ((GtkWindow *) about_window, _("About Audacious"));
     gtk_window_set_resizable ((GtkWindow *) about_window, FALSE);
@@ -96,23 +82,38 @@ EXPORT void audgui_show_about_window (void)
     GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
     gtk_container_add ((GtkContainer *) about_window, vbox);
 
-    char * name = g_strdup_printf ("%s/images/about-logo.png", aud_get_path
-     (AUD_PATH_DATA_DIR));
-    GtkWidget * image = gtk_image_new_from_file (name);
+    SPRINTF (logo_path, "%s/images/about-logo.png", aud_get_path (AUD_PATH_DATA_DIR));
+    GtkWidget * image = gtk_image_new_from_file (logo_path);
     gtk_box_pack_start ((GtkBox *) vbox, image, FALSE, FALSE, 0);
-    g_free (name);
 
-    char * markup = g_strdup_printf (brief, VERSION);
     GtkWidget * label = gtk_label_new (NULL);
-    gtk_label_set_markup ((GtkLabel *) label, markup);
+    gtk_label_set_markup ((GtkLabel *) label, about_text);
     gtk_label_set_justify ((GtkLabel *) label, GTK_JUSTIFY_CENTER);
     gtk_box_pack_start ((GtkBox *) vbox, label, FALSE, FALSE, 0);
-    g_free (markup);
 
-    GtkWidget * exp = gtk_expander_new (_("Credits"));
-    GtkWidget * notebook = create_credits_notebook (credits, translators);
-    gtk_container_add ((GtkContainer *) exp, notebook);
-    gtk_box_pack_start ((GtkBox *) vbox, exp, TRUE, TRUE, 0);
+    GtkWidget * button = gtk_link_button_new (website);
+    gtk_widget_set_halign (button, GTK_ALIGN_CENTER);
+    gtk_box_pack_start ((GtkBox *) vbox, button, FALSE, FALSE, 0);
+
+    char * credits, * license;
+
+    SPRINTF (credits_path, "%s/AUTHORS", aud_get_path (AUD_PATH_DATA_DIR));
+    if (! g_file_get_contents (credits_path, & credits, NULL, NULL))
+        credits = g_strdup_printf ("Unable to load %s; check your installation.", credits_path);
+
+    SPRINTF (license_path, "%s/COPYING", aud_get_path (AUD_PATH_DATA_DIR));
+    if (! g_file_get_contents (license_path, & license, NULL, NULL))
+        license = g_strdup_printf ("Unable to load %s; check your installation.", license_path);
+
+    g_strchomp (credits);
+    g_strchomp (license);
+
+    GtkWidget * notebook = create_credits_notebook (credits, license);
+    gtk_widget_set_size_request (notebook, 600, 250);
+    gtk_box_pack_start ((GtkBox *) vbox, notebook, TRUE, TRUE, 0);
+
+    g_free (credits);
+    g_free (license);
 
     gtk_widget_show_all (about_window);
 }

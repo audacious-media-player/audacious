@@ -2,6 +2,8 @@ SUBDIRS = src man pixmaps po
 
 DISTCLEAN = audacious.pc audclient.pc buildsys.mk config.h config.log config.status extra.mk
 
+DATA = AUTHORS COPYING
+
 include buildsys.mk
 
 install-extra:
