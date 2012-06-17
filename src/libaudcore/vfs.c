@@ -1,7 +1,7 @@
 /*
- *  vfs.c
- *  Copyright 2006-2011 William Pitcock, Daniel Barkalow, Ralf Ertzinger,
- *                      Yoshiki Yazawa, Matti Hämäläinen, and John Lindgren
+ * vfs.c
+ * Copyright 2006-2011 William Pitcock, Daniel Barkalow, Ralf Ertzinger,
+ *                     Yoshiki Yazawa, Matti Hämäläinen, and John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
