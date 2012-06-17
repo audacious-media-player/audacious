@@ -1,6 +1,5 @@
 /*
  * ui_preferences.h
- * Copyright 2003-2004 BMP development team
  * Copyright 2006-2010 William Pitcock, Tomasz Moń, and John Lindgren
  *
  * This program is free software; you can redistribute it and/or modify

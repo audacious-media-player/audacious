@@ -1,6 +1,5 @@
 /*
  * ui_preferences.c
- * Copyright 2003-2004 BMP development team
  * Copyright 2006-2011 William Pitcock, Tomasz Moń, Michael Färber, and
  *                     John Lindgren
  *
