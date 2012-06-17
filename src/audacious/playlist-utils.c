@@ -471,8 +471,8 @@ void save_playlists (bool_t exiting)
 {
     save_playlists_real ();
 
-    /* on exit, save resume time if resume feature is enabled */
-    if (state_changed || (exiting && get_bool (NULL, "resume_playback_on_startup")))
+    /* on exit, save resume states */
+    if (state_changed || exiting)
     {
         playlist_save_state ();
         state_changed = FALSE;

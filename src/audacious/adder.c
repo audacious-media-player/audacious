@@ -408,10 +408,12 @@ static bool_t add_finish (void * unused)
 
         if (result->play && playlist_entry_count (playlist) > count)
         {
-            playlist_set_playing (playlist);
-            if (! get_bool (NULL, "shuffle"))
+            if (get_bool (NULL, "shuffle"))
+                playlist_next_song (playlist, FALSE);
+            else
                 playlist_set_position (playlist, result->at);
 
+            playlist_set_playing (playlist);
             playback_play (0, FALSE);
         }
 

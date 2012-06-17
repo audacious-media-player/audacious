@@ -91,8 +91,8 @@ static void do_jump (void)
         return;
 
     int playlist = aud_playlist_get_active ();
-    aud_playlist_set_playing (playlist);
     aud_playlist_set_position (playlist, entry);
+    aud_playlist_set_playing (playlist);
     aud_drct_play ();
 
     if (aud_get_bool ("audgui", "close_jtf_dialog"))

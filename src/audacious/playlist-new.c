@@ -1,6 +1,6 @@
 /*
  * playlist-new.c
- * Copyright 2009-2011 John Lindgren
+ * Copyright 2009-2012 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -124,6 +124,7 @@ typedef struct {
     int64_t total_length, selected_length;
     bool_t scanning, scan_ending;
     Update next_update, last_update;
+    int resume_state, resume_time;
 } Playlist;
 
 static const char * const default_title = N_("New Playlist");
@@ -142,7 +143,6 @@ static Playlist * active_playlist = NULL;
 static Playlist * playing_playlist = NULL;
 
 static int update_source = 0, update_level;
-static int resume_state, resume_time;
 
 typedef struct {
     Playlist * playlist;
@@ -342,6 +342,8 @@ static Playlist * playlist_new (int id)
     playlist->selected_length = 0;
     playlist->scanning = FALSE;
     playlist->scan_ending = FALSE;
+    playlist->resume_state = RESUME_STOP;
+    playlist->resume_time = 0;
 
     memset (& playlist->last_update, 0, sizeof (Update));
     memset (& playlist->next_update, 0, sizeof (Update));
@@ -968,11 +970,28 @@ int playlist_get_active (void)
 
 void playlist_set_playing (int playlist_num)
 {
-    /* stop playback before locking playlists */
+    if (playlist_num == playlist_get_playing ())
+        return;
+
+    int state = RESUME_STOP;
+    int time = 0;
+
+    /* get playback state and stop playback before locking playlists */
     if (playback_get_playing ())
+    {
+        state = playback_get_paused () ? RESUME_PAUSE : RESUME_PLAY;
+        time = playback_get_time ();
         playback_stop ();
+    }
 
     ENTER;
+
+    if (playing_playlist)
+    {
+        playing_playlist->resume_state = state;
+        playing_playlist->resume_time = time;
+    }
+
     DECLARE_PLAYLIST;
 
     if (playlist_num < 0)
@@ -982,9 +1001,24 @@ void playlist_set_playing (int playlist_num)
 
     playing_playlist = playlist;
 
+    if (playlist)
+    {
+        state = playlist->resume_state;
+        time = playlist->resume_time;
+    }
+    else
+    {
+        state = RESUME_STOP;
+        time = 0;
+    }
+
     LEAVE;
 
     hook_call ("playlist set playing", NULL);
+
+    /* resume playback after unlocking playlists */
+    if (state == RESUME_PLAY || state == RESUME_PAUSE)
+        playback_play (time, state == RESUME_PAUSE);
 }
 
 int playlist_get_playing (void)
@@ -1037,6 +1071,9 @@ int playlist_get_temporary (void)
  * list, we let it be.  Otherwise, we move it to the top. */
 static void set_position (Playlist * playlist, Entry * entry)
 {
+    playlist->resume_state = RESUME_STOP;
+    playlist->resume_time = 0;
+
     if (entry == playlist->position)
         return;
 
@@ -2011,6 +2048,8 @@ static bool_t shuffle_prev (Playlist * playlist)
         return FALSE;
 
     playlist->position = found;
+    playlist->resume_state = RESUME_STOP;
+    playlist->resume_time = 0;
     return TRUE;
 }
 
@@ -2064,6 +2103,8 @@ static bool_t shuffle_next (Playlist * playlist)
     if (found)
     {
         playlist->position = found;
+        playlist->resume_state = RESUME_STOP;
+        playlist->resume_time = 0;
         return TRUE;
     }
 
@@ -2248,10 +2289,15 @@ int playback_entry_get_end_time (void)
 
 void playlist_save_state (void)
 {
+    int state = RESUME_STOP;
+    int time = 0;
+
     /* get playback state before locking playlists */
-    resume_state = playback_get_playing () ? (playback_get_paused () ?
-     RESUME_PAUSE : RESUME_PLAY) : RESUME_STOP;
-    resume_time = playback_get_playing () ? playback_get_time () : 0;
+    if (playback_get_playing ())
+    {
+        state = playback_get_paused () ? RESUME_PAUSE : RESUME_PLAY;
+        time = playback_get_time ();
+    }
 
     ENTER;
 
@@ -2260,9 +2306,6 @@ void playlist_save_state (void)
     g_free (path);
     if (! handle)
         LEAVE_RET_VOID;
-
-    fprintf (handle, "resume-state %d\n", resume_state);
-    fprintf (handle, "resume-time %d\n", resume_time);
 
     fprintf (handle, "active %d\n", active_playlist ? active_playlist->number : -1);
     fprintf (handle, "playing %d\n", playing_playlist ? playing_playlist->number : -1);
@@ -2279,6 +2322,15 @@ void playlist_save_state (void)
 
         fprintf (handle, "position %d\n", playlist->position ?
          playlist->position->number : -1);
+
+        if (playlist == playing_playlist)
+        {
+            playlist->resume_state = state;
+            playlist->resume_time = time;
+        }
+
+        fprintf (handle, "resume-state %d\n", playlist->resume_state);
+        fprintf (handle, "resume-time %d\n", playlist->resume_time);
     }
 
     fclose (handle);
@@ -2331,11 +2383,6 @@ void playlist_load_state (void)
 
     parse_next (handle);
 
-    if (parse_integer ("resume-state", & resume_state))
-        parse_next (handle);
-    if (parse_integer ("resume-time", & resume_time))
-        parse_next (handle);
-
     if (parse_integer ("active", & playlist_num))
     {
         if (! (active_playlist = lookup_playlist (playlist_num)))
@@ -2370,6 +2417,11 @@ void playlist_load_state (void)
 
         if (position >= 0 && position < entries)
             set_position (playlist, index_get (playlist->entries, position));
+
+        if (parse_integer ("resume-state", & playlist->resume_state))
+            parse_next (handle);
+        if (parse_integer ("resume-time", & playlist->resume_time))
+            parse_next (handle);
     }
 
     fclose (handle);
@@ -2396,6 +2448,25 @@ void playlist_load_state (void)
 
 void playlist_resume (void)
 {
-    if (resume_state == RESUME_PLAY || resume_state == RESUME_PAUSE)
-        playback_play (resume_time, resume_state == RESUME_PAUSE);
+    int state = RESUME_STOP;
+    int time = 0;
+
+    ENTER;
+
+    if (playing_playlist)
+    {
+        state = playing_playlist->resume_state;
+        time = playing_playlist->resume_time;
+    }
+
+    LEAVE;
+
+    /* resume playback after unlocking playlists */
+    if (state == RESUME_PLAY || state == RESUME_PAUSE)
+    {
+        if (! get_bool (NULL, "resume_playback_on_startup"))
+            state = RESUME_PAUSE;
+
+        playback_play (time, state == RESUME_PAUSE);
+    }
 }

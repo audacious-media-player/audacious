@@ -185,23 +185,12 @@ void playback_play (int seek_time, bool_t pause)
     g_return_if_fail (! playing);
 
     int playlist = playlist_get_playing ();
-
-    if (playlist == -1)
-    {
-        playlist = playlist_get_active ();
-        playlist_set_playing (playlist);
-    }
+    if (playlist < 0)
+        return;
 
     int entry = playlist_get_position (playlist);
-
-    if (entry == -1)
-    {
-        playlist_next_song (playlist, TRUE);
-        entry = playlist_get_position (playlist);
-
-        if (entry == -1)
-            return;
-    }
+    if (entry < 0)
+        return;
 
     failed_entries = 0;
     playback_start (playlist, entry, seek_time, pause);

@@ -48,7 +48,12 @@ void drct_play (void)
     }
     else
     {
-        playlist_set_playing (playlist_get_active ());
+        int playlist = playlist_get_active ();
+
+        if (playlist_get_position (playlist) < 0)
+            playlist_next_song (playlist, TRUE);
+
+        playlist_set_playing (playlist);
         playback_play (0, FALSE);
     }
 }
@@ -177,19 +182,31 @@ void drct_set_volume_balance (int balance)
 void drct_pl_next (void)
 {
     bool_t play = playback_get_playing ();
-    if (playlist_get_playing () < 0)
-        playlist_set_playing (playlist_get_active ());
-    if (playlist_next_song (playlist_get_playing (), get_bool (NULL, "repeat")) && play)
+
+    int playlist = playlist_get_playing ();
+    if (playlist < 0)
+        playlist = playlist_get_active ();
+
+    if (playlist_next_song (playlist, get_bool (NULL, "repeat")) && play)
+    {
+        playlist_set_playing (playlist);
         playback_play (0, FALSE);
+    }
 }
 
 void drct_pl_prev (void)
 {
     bool_t play = playback_get_playing ();
-    if (playlist_get_playing () < 0)
-        playlist_set_playing (playlist_get_active ());
-    if (playlist_prev_song (playlist_get_playing ()) && play)
+
+    int playlist = playlist_get_playing ();
+    if (playlist < 0)
+        playlist = playlist_get_active ();
+
+    if (playlist_prev_song (playlist) && play)
+    {
+        playlist_set_playing (playlist);
         playback_play (0, FALSE);
+    }
 }
 
 static void add_list (Index * filenames, int at, bool_t to_temp, bool_t play)
