@@ -39,21 +39,27 @@ void drct_quit (void)
 
 void drct_play (void)
 {
+    int playlist = playlist_get_playing ();
+    if (playlist < 0)
+        playlist = playlist_get_active ();
+
+    drct_play_playlist (playlist);
+}
+
+void drct_play_playlist (int playlist)
+{
+    playlist_set_playing (playlist);
+
     if (playback_get_playing ())
     {
         if (playback_get_paused ())
             playback_pause ();
-        else
-            playback_seek (0);
     }
     else
     {
-        int playlist = playlist_get_active ();
-
         if (playlist_get_position (playlist) < 0)
             playlist_next_song (playlist, TRUE);
 
-        playlist_set_playing (playlist);
         playback_play (0, FALSE);
     }
 }

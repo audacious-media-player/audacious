@@ -31,6 +31,7 @@ AUD_VFUNC0 (drct_quit)
  * and must be freed with str_unref(). */
 
 AUD_VFUNC0 (drct_play)
+AUD_VFUNC1 (drct_play_playlist, int, playlist)
 AUD_VFUNC0 (drct_pause)
 AUD_VFUNC0 (drct_stop)
 AUD_FUNC0 (bool_t, drct_get_playing)
