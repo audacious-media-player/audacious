@@ -1,6 +1,6 @@
 /*
  * equalizer_preset.c
- * Copyright 2008-2011 Eugene Zagidullin, William Pitcock, and John Lindgren
+ * Copyright 2003-2011 Eugene Zagidullin, William Pitcock, and John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
