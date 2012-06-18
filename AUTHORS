@@ -26,9 +26,7 @@ Please note that many of Audacious’s features are implemented by plugins, whos
 authors are listed elsewhere.
 
 Core executable (src/audacious):
- * Copyright © 1998-2003 XMMS development team
  * Copyright © 2001 Anders Johansson
- * Copyright © 2003-2004 BMP development team
  * Copyright © 2005-2012:
   Michael Färber
   Matti Hämäläinen
@@ -77,8 +75,6 @@ Core shared library (src/libaudcore):
   Eugene Zagidullin
 
 User interface shared library (src/libaudgui):
- * Copyright © 1998-2003 XMMS development team
- * Copyright © 2003-2004 BMP development team
  * Copyright © 2006-2012:
   Carlo Bramini
   Michael Färber
