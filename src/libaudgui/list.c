@@ -663,10 +663,15 @@ EXPORT void audgui_list_add_column (GtkWidget * list, const char * title,
      HIGHLIGHT_COLUMN, NULL);
     gtk_tree_view_column_set_sizing (tree_column, GTK_TREE_VIEW_COLUMN_FIXED);
 
+    int pad1, pad2, pad3;
+    gtk_widget_style_get (list, "horizontal-separator", & pad1, "focus-line-width", & pad2, NULL);
+    gtk_cell_renderer_get_padding (renderer, & pad3, NULL);
+    int padding = pad1 + 2 * pad2 + 2 * pad3;
+
     if (width < 1)
     {
         gtk_tree_view_column_set_fixed_width (tree_column,
-         6 * model->charwidth + model->charwidth / 2);
+         6 * model->charwidth + model->charwidth / 2 + padding);
         gtk_tree_view_column_set_expand (tree_column, TRUE);
         g_object_set ((GObject *) renderer, "ellipsize-set", TRUE, "ellipsize",
          PANGO_ELLIPSIZE_END, NULL);
@@ -674,7 +679,7 @@ EXPORT void audgui_list_add_column (GtkWidget * list, const char * title,
     else
     {
         gtk_tree_view_column_set_fixed_width (tree_column,
-         width * model->charwidth + model->charwidth / 2);
+         width * model->charwidth + model->charwidth / 2 + padding);
         g_object_set ((GObject *) renderer, "xalign", (float) 1, NULL);
     }
 
