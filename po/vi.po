@@ -4,13 +4,13 @@
 #
 # Translators:
 #  Lê Trường An <truongan@linuxmail.org>, 2011, 2012.
-# Lê Trường An <truongan@linuxmail.org>, 2011.
+# Lê Trường An <truongan@linuxmail.org>, 2011, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-06-24 13:41-0400\n"
-"PO-Revision-Date: 2012-06-09 21:28+0000\n"
+"POT-Creation-Date: 2012-06-24 13:55-0400\n"
+"PO-Revision-Date: 2012-06-24 17:44+0000\n"
 "Last-Translator: jlindgren <john.lindgren@aol.com>\n"
 "Language-Team: Vietnamese\n"
 "Language: vi\n"
@@ -148,12 +148,12 @@ msgstr ""
 #: src/audacious/plugin-preferences.c:50
 #, c-format
 msgid "About %s"
-msgstr ""
+msgstr "Giới thiệu %s"
 
 #: src/audacious/plugin-preferences.c:88
 #, c-format
 msgid "%s Settings"
-msgstr ""
+msgstr "Thiết lập %s"
 
 #: src/audacious/ui_preferences.c:70
 msgid "Audio"
@@ -169,7 +169,7 @@ msgstr "Danh sách"
 
 #: src/audacious/ui_preferences.c:73
 msgid "Song Info"
-msgstr ""
+msgstr "Thông tin bài hát"
 
 #: src/audacious/ui_preferences.c:74
 msgid "Plugins"
@@ -394,15 +394,15 @@ msgstr ""
 
 #: src/audacious/ui_preferences.c:207
 msgid "Search for images matching these words (comma-separated):"
-msgstr ""
+msgstr "Tìm ảnh có tên chứa các từ sau (cách bằng dấu phẩy):"
 
 #: src/audacious/ui_preferences.c:209
 msgid "Exclude images matching these words (comma-separated):"
-msgstr ""
+msgstr "Ngoại trừ tên ảnh chứa các từ sau (cách bằng dấu phẩy):"
 
 #: src/audacious/ui_preferences.c:211
 msgid "Search for images matching song file name"
-msgstr ""
+msgstr "Tìm ảnh khớp với tên tập tin"
 
 #: src/audacious/ui_preferences.c:213
 msgid "Search recursively"
@@ -635,7 +635,7 @@ msgstr ""
 
 #: src/libaudgui/infopopup.c:205
 msgid "Length"
-msgstr ""
+msgstr "Độ dài"
 
 #: src/libaudgui/infowin.c:74
 msgid "Acid Jazz"
@@ -866,7 +866,7 @@ msgstr "Định mốc t.gian phát nhạc"
 
 #: src/libaudgui/jump-to-time.c:61
 msgid "Enter time (minutes:seconds):"
-msgstr ""
+msgstr "Nhập thời gian (phút:giây):"
 
 #: src/libaudgui/playlists.c:33
 msgid "Export Playlist"
@@ -960,7 +960,7 @@ msgstr "Thêm URL"
 
 #: src/libaudgui/url-opener.c:65
 msgid "Enter URL:"
-msgstr ""
+msgstr "Nhập URL:"
 
 #: src/libaudgui/util.c:143
 msgid ""
@@ -1028,147 +1028,3 @@ msgstr "Tùy chọn quản lí phiên:"
 #: src/libeggsmclient/eggsmclient.c:251
 msgid "Show session management options"
 msgstr "Hiện các tùy chọn quản lí phiên"
-
-#~ msgid "Core developers:"
-#~ msgstr "Phát triển chính:"
-
-#~ msgid "Graphics:"
-#~ msgstr "Đồ họa:"
-
-#~ msgid "Default skin:"
-#~ msgstr "Giao diện mặc định:"
-
-#~ msgid "Plugin development:"
-#~ msgstr "Phát triển trình cắm:"
-
-#~ msgid "Patch authors:"
-#~ msgstr "Tác giả bản vá:"
-
-#~ msgid "1.x developers:"
-#~ msgstr "Phát triển phiên bản 1.x:"
-
-#~ msgid "BMP Developers:"
-#~ msgstr "Phát triển BPM:"
-
-#~ msgid "Belarusian:"
-#~ msgstr "Tiếng Belarus:"
-
-#~ msgid "Basque:"
-#~ msgstr "Tiếng Basque:"
-
-#~ msgid "Brazilian Portuguese:"
-#~ msgstr "Tiếng Bra-xin (Bồ Đào Nha)"
-
-#~ msgid "Breton:"
-#~ msgstr "Tiếng Breton:"
-
-#~ msgid "Bulgarian:"
-#~ msgstr "Tiếng Bun-ga-ri:"
-
-#~ msgid "Catalan:"
-#~ msgstr "Tiếng Catalan:"
-
-#~ msgid "Chinese:"
-#~ msgstr "Tiếng Trung Quốc:"
-
-#~ msgid "Croatian:"
-#~ msgstr "Tiếng Croatia:"
-
-#~ msgid "Czech:"
-#~ msgstr "Tiếng Séc:"
-
-#~ msgid "Dutch:"
-#~ msgstr "Tiếng Hà Lan:"
-
-#~ msgid "Estonian:"
-#~ msgstr "Tiếng És-tô-ni-a:"
-
-#~ msgid "Finnish:"
-#~ msgstr "Tiếng Phần Lan:"
-
-#~ msgid "French:"
-#~ msgstr "Tiếng Pháp:"
-
-#~ msgid "German:"
-#~ msgstr "Tiếng Đức:"
-
-#~ msgid "Georgian:"
-#~ msgstr "Tiếng Georgian:"
-
-#~ msgid "Greek:"
-#~ msgstr "Tiếng Hy Lạp:"
-
-#~ msgid "Hindi:"
-#~ msgstr "Tiếng Hin-đi:"
-
-#~ msgid "Hungarian:"
-#~ msgstr "Tiếng Hun-ga-ri:"
-
-#~ msgid "Italian:"
-#~ msgstr "Tiếng Ý:"
-
-#~ msgid "Japanese:"
-#~ msgstr "Tiếng Nhật:"
-
-#~ msgid "Korean:"
-#~ msgstr "Tiếng Hàn:"
-
-#~ msgid "Latvian:"
-#~ msgstr "Tiếng Lat-vi-a:"
-
-#~ msgid "Lithuanian:"
-#~ msgstr "Tiếng Lithuania:"
-
-#~ msgid "Macedonian:"
-#~ msgstr "Tiếng Macedonia:"
-
-#~ msgid "Mexican Spanish:"
-#~ msgstr "Tiếng Tây Ban Nha (Mêxicô):"
-
-#~ msgid "Polish:"
-#~ msgstr "Tiếng Ba Lan:"
-
-#~ msgid "Portuguese:"
-#~ msgstr "Tiếng Bồ Đào Nha:"
-
-#~ msgid "Romanian:"
-#~ msgstr "Tiếng Rumani:"
-
-#~ msgid "Russian:"
-#~ msgstr "Tiếng Nga:"
-
-#~ msgid "Serbian (Latin):"
-#~ msgstr "Tiếng Séc-bi-a (Latinh):"
-
-#~ msgid "Serbian (Cyrillic):"
-#~ msgstr "Tiếng Séc-bi-a (Kirin):"
-
-#~ msgid "Simplified Chinese:"
-#~ msgstr "Tiếng Trung giản thể:"
-
-#~ msgid "Slovak:"
-#~ msgstr "Tiếng Slovak:"
-
-#~ msgid "Spanish:"
-#~ msgstr "Tiếng Tây Ban Nha:"
-
-#~ msgid "Swedish:"
-#~ msgstr "Tiếng Thụy Điển:"
-
-#~ msgid "Traditional Chinese:"
-#~ msgstr "Tiếng Trung (phồn thể):"
-
-#~ msgid "Turkish:"
-#~ msgstr "Tiếng Thổ Nhĩ Kỳ:"
-
-#~ msgid "Ukrainian:"
-#~ msgstr "Tiếng U-crai-na:"
-
-#~ msgid "Vietnamese:"
-#~ msgstr "Tiếng Việt:"
-
-#~ msgid "Welsh:"
-#~ msgstr "Tiếng xứ Wales:"
-
-#~ msgid "Translators"
-#~ msgstr "Người dịch"

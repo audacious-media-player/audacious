@@ -4,6 +4,7 @@
 #
 # Translators:
 # Cleiton cleitonlima <cleitonlima@lavabit.com>, 2011.
+# edu engler <eduengler@gmail.com>, 2012.
 #   <jimmie.macedo@gmail.com>, 2012.
 # Karen Eliot <kareneliot@riseup. net>, 2011.
 # Rafael Ferreira <rafael.f.f1@gmail.com>, 2012.
@@ -11,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-06-24 13:41-0400\n"
-"PO-Revision-Date: 2012-06-09 21:28+0000\n"
+"POT-Creation-Date: 2012-06-24 13:55-0400\n"
+"PO-Revision-Date: 2012-06-24 17:44+0000\n"
 "Last-Translator: jlindgren <john.lindgren@aol.com>\n"
 "Language-Team: Portuguese (Brazil)\n"
 "Language: pt_BR\n"
@@ -151,12 +152,12 @@ msgstr ""
 #: src/audacious/plugin-preferences.c:50
 #, c-format
 msgid "About %s"
-msgstr ""
+msgstr "Sobre %s"
 
 #: src/audacious/plugin-preferences.c:88
 #, c-format
 msgid "%s Settings"
-msgstr ""
+msgstr "%s Configurações"
 
 #: src/audacious/ui_preferences.c:70
 msgid "Audio"
@@ -172,7 +173,7 @@ msgstr "Lista de Reprodução"
 
 #: src/audacious/ui_preferences.c:73
 msgid "Song Info"
-msgstr ""
+msgstr "Som Info"
 
 #: src/audacious/ui_preferences.c:74
 msgid "Plugins"
@@ -393,27 +394,27 @@ msgstr "Não carregar metadados para as músicas até que sejam tocadas"
 
 #: src/audacious/ui_preferences.c:206
 msgid "<b>Album Art</b>"
-msgstr ""
+msgstr "<b>Album Art</b>"
 
 #: src/audacious/ui_preferences.c:207
 msgid "Search for images matching these words (comma-separated):"
-msgstr ""
+msgstr "Pesquisar imagens destas palavras (separado por vírgula):"
 
 #: src/audacious/ui_preferences.c:209
 msgid "Exclude images matching these words (comma-separated):"
-msgstr ""
+msgstr "Excluir imagens destas palavras (separado por vírgula):"
 
 #: src/audacious/ui_preferences.c:211
 msgid "Search for images matching song file name"
-msgstr ""
+msgstr "Pesquisar imagens correspondentes ao nome do arquivo da música"
 
 #: src/audacious/ui_preferences.c:213
 msgid "Search recursively"
-msgstr ""
+msgstr "Procurar recursivamente"
 
 #: src/audacious/ui_preferences.c:215
 msgid "Search depth:"
-msgstr ""
+msgstr "Busca profunda:"
 
 #: src/audacious/ui_preferences.c:218
 msgid "<b>Popup Information</b>"
@@ -421,15 +422,15 @@ msgstr "<b>Informações Popup</b>"
 
 #: src/audacious/ui_preferences.c:219
 msgid "Show popup information"
-msgstr ""
+msgstr "Mostrar popup de informação"
 
 #: src/audacious/ui_preferences.c:221
 msgid "Popup delay (tenths of a second):"
-msgstr ""
+msgstr "Atraso do popup (décimos de segundo):"
 
 #: src/audacious/ui_preferences.c:224
 msgid "Show time scale for current song"
-msgstr ""
+msgstr "Mostrar escala de tempo para a música atual"
 
 #: src/audacious/ui_preferences.c:238
 msgid "TITLE"
@@ -635,11 +636,11 @@ msgstr "Preamplificação"
 
 #: src/libaudgui/infopopup.c:203
 msgid "Track"
-msgstr ""
+msgstr "Trilha"
 
 #: src/libaudgui/infopopup.c:205
 msgid "Length"
-msgstr ""
+msgstr "Comprimento"
 
 #: src/libaudgui/infowin.c:74
 msgid "Acid Jazz"
@@ -870,7 +871,7 @@ msgstr "Avançar Tempo até"
 
 #: src/libaudgui/jump-to-time.c:61
 msgid "Enter time (minutes:seconds):"
-msgstr ""
+msgstr "Entrar tempo (minutos:segundos):"
 
 #: src/libaudgui/playlists.c:33
 msgid "Export Playlist"
@@ -964,7 +965,7 @@ msgstr "Adicionar URL"
 
 #: src/libaudgui/url-opener.c:65
 msgid "Enter URL:"
-msgstr ""
+msgstr "Entrar URL:"
 
 #: src/libaudgui/util.c:143
 msgid ""
@@ -1034,147 +1035,3 @@ msgstr "Opções de gerenciamento de sessão:"
 #: src/libeggsmclient/eggsmclient.c:251
 msgid "Show session management options"
 msgstr "Mostrar opções de gerenciamento de sessão"
-
-#~ msgid "Core developers:"
-#~ msgstr "Desenvolvedores do núcleo:"
-
-#~ msgid "Graphics:"
-#~ msgstr "Gráficos:"
-
-#~ msgid "Default skin:"
-#~ msgstr "Skin padrão:"
-
-#~ msgid "Plugin development:"
-#~ msgstr "Desenvolvedores dos plugins:"
-
-#~ msgid "Patch authors:"
-#~ msgstr "Autores de correções:"
-
-#~ msgid "1.x developers:"
-#~ msgstr "Desenvolvedores do 1.x:"
-
-#~ msgid "BMP Developers:"
-#~ msgstr "Desenvolvedores do BMP:"
-
-#~ msgid "Belarusian:"
-#~ msgstr "Bielorrusso:"
-
-#~ msgid "Basque:"
-#~ msgstr "Basco:"
-
-#~ msgid "Brazilian Portuguese:"
-#~ msgstr "Brazilian Portuguese:"
-
-#~ msgid "Breton:"
-#~ msgstr "Breton:"
-
-#~ msgid "Bulgarian:"
-#~ msgstr "Búlgaro:"
-
-#~ msgid "Catalan:"
-#~ msgstr "Catalão:"
-
-#~ msgid "Chinese:"
-#~ msgstr "Chinês:"
-
-#~ msgid "Croatian:"
-#~ msgstr "Croata:"
-
-#~ msgid "Czech:"
-#~ msgstr "Checo:"
-
-#~ msgid "Dutch:"
-#~ msgstr "Holandês:"
-
-#~ msgid "Estonian:"
-#~ msgstr "Estónio:"
-
-#~ msgid "Finnish:"
-#~ msgstr "Finlândes:"
-
-#~ msgid "French:"
-#~ msgstr "Francês:"
-
-#~ msgid "German:"
-#~ msgstr "Alemão:"
-
-#~ msgid "Georgian:"
-#~ msgstr "Georgiano:"
-
-#~ msgid "Greek:"
-#~ msgstr "Grego:"
-
-#~ msgid "Hindi:"
-#~ msgstr "Hindú:"
-
-#~ msgid "Hungarian:"
-#~ msgstr "Húngaro:"
-
-#~ msgid "Italian:"
-#~ msgstr "Italiano:"
-
-#~ msgid "Japanese:"
-#~ msgstr "Japonês:"
-
-#~ msgid "Korean:"
-#~ msgstr "Coreano:"
-
-#~ msgid "Latvian:"
-#~ msgstr "Letão:"
-
-#~ msgid "Lithuanian:"
-#~ msgstr "Lítuano:"
-
-#~ msgid "Macedonian:"
-#~ msgstr "Macedônio:"
-
-#~ msgid "Mexican Spanish:"
-#~ msgstr "Espanhol Mexicano:"
-
-#~ msgid "Polish:"
-#~ msgstr "Polonês:"
-
-#~ msgid "Portuguese:"
-#~ msgstr "Português:"
-
-#~ msgid "Romanian:"
-#~ msgstr "Romeno:"
-
-#~ msgid "Russian:"
-#~ msgstr "Russo:"
-
-#~ msgid "Serbian (Latin):"
-#~ msgstr "Sérvio (Latino):"
-
-#~ msgid "Serbian (Cyrillic):"
-#~ msgstr "Sérvio (Cyrillic):"
-
-#~ msgid "Simplified Chinese:"
-#~ msgstr "Chinês Simplificado:"
-
-#~ msgid "Slovak:"
-#~ msgstr "Eslovaco:"
-
-#~ msgid "Spanish:"
-#~ msgstr "Espanhol:"
-
-#~ msgid "Swedish:"
-#~ msgstr "Sueco:"
-
-#~ msgid "Traditional Chinese:"
-#~ msgstr "Chinês Tradicional:"
-
-#~ msgid "Turkish:"
-#~ msgstr "Turco:"
-
-#~ msgid "Ukrainian:"
-#~ msgstr "Ucraniano:"
-
-#~ msgid "Vietnamese:"
-#~ msgstr "Vietnamita:"
-
-#~ msgid "Welsh:"
-#~ msgstr "Galês:"
-
-#~ msgid "Translators"
-#~ msgstr "Tradutores(as)"

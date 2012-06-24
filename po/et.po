@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-06-24 13:41-0400\n"
-"PO-Revision-Date: 2012-06-09 21:28+0000\n"
+"POT-Creation-Date: 2012-06-24 13:55-0400\n"
+"PO-Revision-Date: 2012-06-24 17:44+0000\n"
 "Last-Translator: jlindgren <john.lindgren@aol.com>\n"
 "Language-Team: Estonian\n"
 "Language: et\n"
@@ -149,12 +149,12 @@ msgstr ""
 #: src/audacious/plugin-preferences.c:50
 #, c-format
 msgid "About %s"
-msgstr ""
+msgstr "%s ‒ plugina andmed"
 
 #: src/audacious/plugin-preferences.c:88
 #, c-format
 msgid "%s Settings"
-msgstr ""
+msgstr "%s ‒ plugina sätted"
 
 #: src/audacious/ui_preferences.c:70
 msgid "Audio"
@@ -637,7 +637,7 @@ msgstr "Rada"
 
 #: src/libaudgui/infopopup.c:205
 msgid "Length"
-msgstr ""
+msgstr "Pikkus"
 
 #: src/libaudgui/infowin.c:74
 msgid "Acid Jazz"
@@ -1031,150 +1031,3 @@ msgstr "Seansihalduse valikud:"
 #: src/libeggsmclient/eggsmclient.c:251
 msgid "Show session management options"
 msgstr "Seansihalduse valikute näitamine"
-
-#~ msgid "Core developers:"
-#~ msgstr "Tuumikosa arendajad:"
-
-#~ msgid "Graphics:"
-#~ msgstr "Graafika:"
-
-#~ msgid "Default skin:"
-#~ msgstr "Vaikimisi rüü:"
-
-#~ msgid "Plugin development:"
-#~ msgstr "Pluginate arendus:"
-
-#~ msgid "Patch authors:"
-#~ msgstr "Paranduste autorid:"
-
-#~ msgid "1.x developers:"
-#~ msgstr "Versioonide 1.x arendajad:"
-
-#~ msgid "BMP Developers:"
-#~ msgstr "BMP arendajad"
-
-#~ msgid "Argentinian Spanish:"
-#~ msgstr "Argentiina hispaania:"
-
-#~ msgid "Belarusian:"
-#~ msgstr "Valgevene:"
-
-#~ msgid "Basque:"
-#~ msgstr "Baski:"
-
-#~ msgid "Brazilian Portuguese:"
-#~ msgstr "Brasiilia portugali:"
-
-#~ msgid "Breton:"
-#~ msgstr "Bretooni:"
-
-#~ msgid "Bulgarian:"
-#~ msgstr "Bulgaaria:"
-
-#~ msgid "Catalan:"
-#~ msgstr "Katalaani:"
-
-#~ msgid "Chinese:"
-#~ msgstr "Hiina:"
-
-#~ msgid "Croatian:"
-#~ msgstr "Horvaatia:"
-
-#~ msgid "Czech:"
-#~ msgstr "Tšehhi:"
-
-#~ msgid "Dutch:"
-#~ msgstr "Hollandi:"
-
-#~ msgid "Estonian:"
-#~ msgstr "Eesti:"
-
-#~ msgid "Finnish:"
-#~ msgstr "Soome:"
-
-#~ msgid "French:"
-#~ msgstr "Prantsuse:"
-
-#~ msgid "German:"
-#~ msgstr "Saksa:"
-
-#~ msgid "Georgian:"
-#~ msgstr "Gruusia:"
-
-#~ msgid "Greek:"
-#~ msgstr "Kreeka:"
-
-#~ msgid "Hindi:"
-#~ msgstr "Hindi:"
-
-#~ msgid "Hungarian:"
-#~ msgstr "Ungari:"
-
-#~ msgid "Italian:"
-#~ msgstr "Itaalia:"
-
-#~ msgid "Japanese:"
-#~ msgstr "Jaapani:"
-
-#~ msgid "Korean:"
-#~ msgstr "Koera:"
-
-#~ msgid "Latvian:"
-#~ msgstr "Läti:"
-
-#~ msgid "Lithuanian:"
-#~ msgstr "Leedu:"
-
-#~ msgid "Macedonian:"
-#~ msgstr "Makedoonia:"
-
-#~ msgid "Mexican Spanish:"
-#~ msgstr "Mehhiko hispaania:"
-
-#~ msgid "Polish:"
-#~ msgstr "Poola:"
-
-#~ msgid "Portuguese:"
-#~ msgstr "Portugali:"
-
-#~ msgid "Romanian:"
-#~ msgstr "Rumeenia:"
-
-#~ msgid "Russian:"
-#~ msgstr "Vene:"
-
-#~ msgid "Serbian (Latin):"
-#~ msgstr "Serbia (ladina)"
-
-#~ msgid "Serbian (Cyrillic):"
-#~ msgstr "Serbia (kirillitsa)"
-
-#~ msgid "Simplified Chinese:"
-#~ msgstr "Hiina lihtsustatud:"
-
-#~ msgid "Slovak:"
-#~ msgstr "Slovaki:"
-
-#~ msgid "Spanish:"
-#~ msgstr "Hispaania:"
-
-#~ msgid "Swedish:"
-#~ msgstr "Rootsi:"
-
-#~ msgid "Traditional Chinese:"
-#~ msgstr "Hiina traditsiooniline:"
-
-#~ msgid "Turkish:"
-#~ msgstr "Türgi:"
-
-#~ msgid "Ukrainian:"
-#~ msgstr "Ukraina:"
-
-#~ msgid "Vietnamese:"
-#~ msgstr "Vietnami:"
-
-#~ msgid "Welsh:"
-#~ msgstr "Kõmri:"
-
-#~ msgid "Translators"
-#~ msgstr "Tõlkijad"

@@ -23,6 +23,7 @@ LOCALES = ast.po \
 	  eu.po \
 	  fi.po \
 	  fr.po \
+	  gl.po \
 	  hi.po \
 	  hr.po \
 	  hu.po \
@@ -65,4 +66,4 @@ update-pot:
 
 update-po: update-pot
 	@echo Updating .po -files ...
-	@for lang in $(LOCALES); do echo -n "$$lang : "; msgmerge --backup=simple --update "$$lang" $(POTTEMPLATE); done
+	@for lang in $(LOCALES); do echo -n "$$lang : "; msgmerge --update "$$lang" $(POTTEMPLATE); done

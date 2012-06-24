@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-06-24 13:41-0400\n"
-"PO-Revision-Date: 2012-06-09 21:28+0000\n"
+"POT-Creation-Date: 2012-06-24 13:55-0400\n"
+"PO-Revision-Date: 2012-06-24 17:44+0000\n"
 "Last-Translator: jlindgren <john.lindgren@aol.com>\n"
 "Language-Team: Hungarian\n"
 "Language: hu\n"
@@ -150,12 +150,12 @@ msgstr ""
 #: src/audacious/plugin-preferences.c:50
 #, c-format
 msgid "About %s"
-msgstr ""
+msgstr "%s névjegy"
 
 #: src/audacious/plugin-preferences.c:88
 #, c-format
 msgid "%s Settings"
-msgstr ""
+msgstr "%s beállítások"
 
 #: src/audacious/ui_preferences.c:70
 msgid "Audio"
@@ -171,7 +171,7 @@ msgstr "Lejátszólista"
 
 #: src/audacious/ui_preferences.c:73
 msgid "Song Info"
-msgstr ""
+msgstr "Dal információ"
 
 #: src/audacious/ui_preferences.c:74
 msgid "Plugins"
@@ -392,27 +392,29 @@ msgstr "Ne töltse be a metaadatokat amíg játssza a dalt"
 
 #: src/audacious/ui_preferences.c:206
 msgid "<b>Album Art</b>"
-msgstr ""
+msgstr "<b>Album borító</b>"
 
 #: src/audacious/ui_preferences.c:207
 msgid "Search for images matching these words (comma-separated):"
 msgstr ""
+"Keresés a képek között a szavaknak megfelelően (vesszővel elválasztva):"
 
 #: src/audacious/ui_preferences.c:209
 msgid "Exclude images matching these words (comma-separated):"
 msgstr ""
+"Képek kizárása a keresési szavaknak megfelelően (vesszővel elválasztva):"
 
 #: src/audacious/ui_preferences.c:211
 msgid "Search for images matching song file name"
-msgstr ""
+msgstr "A dal fájlnevével megegyező képek keresése"
 
 #: src/audacious/ui_preferences.c:213
 msgid "Search recursively"
-msgstr ""
+msgstr "Keresés rekurzívan"
 
 #: src/audacious/ui_preferences.c:215
 msgid "Search depth:"
-msgstr ""
+msgstr "Keresési mélység:"
 
 #: src/audacious/ui_preferences.c:218
 msgid "<b>Popup Information</b>"
@@ -420,15 +422,15 @@ msgstr "<b>Felbukkanó információ</b>"
 
 #: src/audacious/ui_preferences.c:219
 msgid "Show popup information"
-msgstr ""
+msgstr "Felbukkanó információs ablak mutatása"
 
 #: src/audacious/ui_preferences.c:221
 msgid "Popup delay (tenths of a second):"
-msgstr ""
+msgstr "Felbukkanó ablak késleltetése (tized másodperc):"
 
 #: src/audacious/ui_preferences.c:224
 msgid "Show time scale for current song"
-msgstr ""
+msgstr "Aktuális dal idősávjának mutatása"
 
 #: src/audacious/ui_preferences.c:238
 msgid "TITLE"
@@ -634,11 +636,11 @@ msgstr "Preamp"
 
 #: src/libaudgui/infopopup.c:203
 msgid "Track"
-msgstr ""
+msgstr "Sáv"
 
 #: src/libaudgui/infopopup.c:205
 msgid "Length"
-msgstr ""
+msgstr "Hossz"
 
 #: src/libaudgui/infowin.c:74
 msgid "Acid Jazz"
@@ -869,7 +871,7 @@ msgstr "Ugrás időpontra"
 
 #: src/libaudgui/jump-to-time.c:61
 msgid "Enter time (minutes:seconds):"
-msgstr ""
+msgstr "Idő megadása (perc:másodperc):"
 
 #: src/libaudgui/playlists.c:33
 msgid "Export Playlist"
@@ -963,7 +965,7 @@ msgstr "URL hozzáadása"
 
 #: src/libaudgui/url-opener.c:65
 msgid "Enter URL:"
-msgstr ""
+msgstr "URL megadása:"
 
 #: src/libaudgui/util.c:143
 msgid ""
@@ -1031,147 +1033,3 @@ msgstr "Munkamenet kezelési lehetőségek:"
 #: src/libeggsmclient/eggsmclient.c:251
 msgid "Show session management options"
 msgstr "Munkamenet kezelési lehetőségek mutatása"
-
-#~ msgid "Core developers:"
-#~ msgstr "Fő fejlesztők:"
-
-#~ msgid "Graphics:"
-#~ msgstr "Grafika:"
-
-#~ msgid "Default skin:"
-#~ msgstr "Alapértelmezett bőr:"
-
-#~ msgid "Plugin development:"
-#~ msgstr "Bővítmény fejlesztés:"
-
-#~ msgid "Patch authors:"
-#~ msgstr "Patch készítők:"
-
-#~ msgid "1.x developers:"
-#~ msgstr "1.x fejlesztői:"
-
-#~ msgid "BMP Developers:"
-#~ msgstr "BMP-fejlesztők:"
-
-#~ msgid "Belarusian:"
-#~ msgstr "Belorusz"
-
-#~ msgid "Basque:"
-#~ msgstr "Baszk:"
-
-#~ msgid "Brazilian Portuguese:"
-#~ msgstr "Brazil portugál:"
-
-#~ msgid "Breton:"
-#~ msgstr "Breton:"
-
-#~ msgid "Bulgarian:"
-#~ msgstr "Bolgár"
-
-#~ msgid "Catalan:"
-#~ msgstr "Katalán"
-
-#~ msgid "Chinese:"
-#~ msgstr "Kínai:"
-
-#~ msgid "Croatian:"
-#~ msgstr "Horvát"
-
-#~ msgid "Czech:"
-#~ msgstr "Cseh:"
-
-#~ msgid "Dutch:"
-#~ msgstr "Holland:"
-
-#~ msgid "Estonian:"
-#~ msgstr "Észt"
-
-#~ msgid "Finnish:"
-#~ msgstr "Finn:"
-
-#~ msgid "French:"
-#~ msgstr "Francia:"
-
-#~ msgid "German:"
-#~ msgstr "Német:"
-
-#~ msgid "Georgian:"
-#~ msgstr "Grúz"
-
-#~ msgid "Greek:"
-#~ msgstr "Görög:"
-
-#~ msgid "Hindi:"
-#~ msgstr "Hindi:"
-
-#~ msgid "Hungarian:"
-#~ msgstr "Magyar:"
-
-#~ msgid "Italian:"
-#~ msgstr "Olasz:"
-
-#~ msgid "Japanese:"
-#~ msgstr "Japán:"
-
-#~ msgid "Korean:"
-#~ msgstr "Koreai:"
-
-#~ msgid "Latvian:"
-#~ msgstr "Lett:"
-
-#~ msgid "Lithuanian:"
-#~ msgstr "Litván:"
-
-#~ msgid "Macedonian:"
-#~ msgstr "Macedón:"
-
-#~ msgid "Mexican Spanish:"
-#~ msgstr "Mexikói spanyol:"
-
-#~ msgid "Polish:"
-#~ msgstr "Lengyel:"
-
-#~ msgid "Portuguese:"
-#~ msgstr "Portugál:"
-
-#~ msgid "Romanian:"
-#~ msgstr "Román:"
-
-#~ msgid "Russian:"
-#~ msgstr "Orosz:"
-
-#~ msgid "Serbian (Latin):"
-#~ msgstr "Szerb (Latin):"
-
-#~ msgid "Serbian (Cyrillic):"
-#~ msgstr "Szerb (Cirill):"
-
-#~ msgid "Simplified Chinese:"
-#~ msgstr "Egyszerűsített kínai:"
-
-#~ msgid "Slovak:"
-#~ msgstr "Szlovák:"
-
-#~ msgid "Spanish:"
-#~ msgstr "Spanyol:"
-
-#~ msgid "Swedish:"
-#~ msgstr "Svéd:"
-
-#~ msgid "Traditional Chinese:"
-#~ msgstr "Hagyományos kínai:"
-
-#~ msgid "Turkish:"
-#~ msgstr "Török:"
-
-#~ msgid "Ukrainian:"
-#~ msgstr "Ukrán:"
-
-#~ msgid "Vietnamese:"
-#~ msgstr "Vietnami:"
-
-#~ msgid "Welsh:"
-#~ msgstr "Walesi:"
-
-#~ msgid "Translators"
-#~ msgstr "Fordítók"
