@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-06-09 17:57-0400\n"
+"POT-Creation-Date: 2012-06-24 13:41-0400\n"
 "PO-Revision-Date: 2012-06-09 21:28+0000\n"
 "Last-Translator: jlindgren <john.lindgren@aol.com>\n"
 "Language-Team: Indonesian\n"
@@ -37,268 +37,76 @@ msgid "%d file found"
 msgid_plural "%d files found"
 msgstr[0] "%d files found"
 
-#: src/audacious/chardet.c:40
+#: src/audacious/chardet.c:39
 msgid "  (invalid UTF-8)"
 msgstr "  (tidakvalid UTF-8)"
 
-#: src/audacious/credits.c:37
-msgid "Core developers:"
-msgstr "Pengembang Inti:"
-
-#: src/audacious/credits.c:52
-msgid "Graphics:"
-msgstr "Grafis"
-
-#: src/audacious/credits.c:57
-msgid "Default skin:"
-msgstr "Tema standar:"
-
-#: src/audacious/credits.c:63
-msgid "Plugin development:"
-msgstr "Pengembangan pengaya:"
-
-#: src/audacious/credits.c:86
-msgid "Patch authors:"
-msgstr "Penulis tambalan:"
-
-#: src/audacious/credits.c:132
-msgid "1.x developers:"
-msgstr "Pengembang 1.x:"
-
-#: src/audacious/credits.c:154
-msgid "BMP Developers:"
-msgstr "Pengembang BMP:"
-
-#: src/audacious/credits.c:186
-msgid "Argentinian Spanish:"
-msgstr "Argentina Spanyol:"
-
-#: src/audacious/credits.c:189
-msgid "Belarusian:"
-msgstr "Belarusia"
-
-#: src/audacious/credits.c:192
-msgid "Basque:"
-msgstr "Basque:"
-
-#: src/audacious/credits.c:195
-msgid "Brazilian Portuguese:"
-msgstr "Brasil Portugis:"
-
-#: src/audacious/credits.c:201
-msgid "Breton:"
-msgstr "Breton:"
-
-#: src/audacious/credits.c:204
-msgid "Bulgarian:"
-msgstr "Bulgaria:"
-
-#: src/audacious/credits.c:207
-msgid "Catalan:"
-msgstr "Catalan:"
-
-#: src/audacious/credits.c:212
-msgid "Chinese:"
-msgstr "Cina:"
-
-#: src/audacious/credits.c:215
-msgid "Croatian:"
-msgstr "Kroasia:"
-
-#: src/audacious/credits.c:218
-msgid "Czech:"
-msgstr "Ceko:"
-
-#: src/audacious/credits.c:221
-msgid "Dutch:"
-msgstr "Belanda"
-
-#: src/audacious/credits.c:226
-msgid "Estonian:"
-msgstr "Estonia:"
-
-#: src/audacious/credits.c:229
-msgid "Finnish:"
-msgstr "Finlandia:"
-
-#: src/audacious/credits.c:235
-msgid "French:"
-msgstr "Prancis:"
-
-#: src/audacious/credits.c:242
-msgid "German:"
-msgstr "Jerman:"
-
-#: src/audacious/credits.c:249
-msgid "Georgian:"
-msgstr "Gerogia:"
-
-#: src/audacious/credits.c:252
-msgid "Greek:"
-msgstr "Yunani:"
-
-#: src/audacious/credits.c:257
-msgid "Hindi:"
-msgstr "India:"
-
-#: src/audacious/credits.c:260
-msgid "Hungarian:"
-msgstr "Hunggaria:"
-
-#: src/audacious/credits.c:264
-msgid "Italian:"
-msgstr "Italia:"
-
-#: src/audacious/credits.c:269
-msgid "Japanese:"
-msgstr "Jepang:"
-
-#: src/audacious/credits.c:273
-msgid "Korean:"
-msgstr "Korea:"
-
-#: src/audacious/credits.c:276
-msgid "Latvian:"
-msgstr "Latvia:"
-
-#: src/audacious/credits.c:279
-msgid "Lithuanian:"
-msgstr "Lithuania:"
-
-#: src/audacious/credits.c:284
-msgid "Macedonian:"
-msgstr "Macedonia:"
-
-#: src/audacious/credits.c:287
-msgid "Mexican Spanish:"
-msgstr "Meksiko Spanyol:"
-
-#: src/audacious/credits.c:290
-msgid "Polish:"
-msgstr "Polandia:"
-
-#: src/audacious/credits.c:297
-msgid "Portuguese:"
-msgstr "Portugis:"
-
-#: src/audacious/credits.c:301
-msgid "Romanian:"
-msgstr "Romania:"
-
-#: src/audacious/credits.c:305
-msgid "Russian:"
-msgstr "Rusia:"
-
-#: src/audacious/credits.c:309
-msgid "Serbian (Latin):"
-msgstr "Sebia (latin):"
-
-#: src/audacious/credits.c:312
-msgid "Serbian (Cyrillic):"
-msgstr "Serbia (Cyrillic):"
-
-#: src/audacious/credits.c:316
-msgid "Simplified Chinese:"
-msgstr "Cina simpel:"
-
-#: src/audacious/credits.c:319
-msgid "Slovak:"
-msgstr "Slovakia:"
-
-#: src/audacious/credits.c:323
-msgid "Spanish:"
-msgstr "Spanyol:"
-
-#: src/audacious/credits.c:332
-msgid "Swedish:"
-msgstr "Swedia:"
-
-#: src/audacious/credits.c:335
-msgid "Traditional Chinese:"
-msgstr "Cina Tradisional:"
-
-#: src/audacious/credits.c:341
-msgid "Turkish:"
-msgstr "Turki"
-
-#: src/audacious/credits.c:345
-msgid "Ukrainian:"
-msgstr "Ukraina"
-
-#: src/audacious/credits.c:351
-msgid "Vietnamese:"
-msgstr "Vitnam"
-
-#: src/audacious/credits.c:354
-msgid "Welsh:"
-msgstr "Welsh:"
-
-#: src/audacious/equalizer_preset.c:183
+#: src/audacious/equalizer_preset.c:180
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
 msgstr "Galat mengimpor berkas Winamp EQF '%s'"
 
-#: src/audacious/main.c:240
+#: src/audacious/main.c:237
 msgid "Skip backwards in playlist"
 msgstr "Lewatkan mundur pada daftar lagu"
 
-#: src/audacious/main.c:241
+#: src/audacious/main.c:238
 msgid "Start playing current playlist"
 msgstr "Mainkan daftar lagu terkini"
 
-#: src/audacious/main.c:242
+#: src/audacious/main.c:239
 msgid "Pause current song"
 msgstr "Hentikan sementara lagu terkini"
 
-#: src/audacious/main.c:243
+#: src/audacious/main.c:240
 msgid "Stop current song"
 msgstr "Hentikan lagu terkini"
 
-#: src/audacious/main.c:244
+#: src/audacious/main.c:241
 msgid "Pause if playing, play otherwise"
 msgstr "Jeda ketika dimainkan, mainkan kebalikannya"
 
-#: src/audacious/main.c:245
+#: src/audacious/main.c:242
 msgid "Skip forward in playlist"
 msgstr "Lewatkan maju dalam daftar lagu"
 
-#: src/audacious/main.c:246
+#: src/audacious/main.c:243
 msgid "Display Jump to File dialog"
 msgstr "Munculkan dialog Lompat ke Berkas"
 
-#: src/audacious/main.c:247
+#: src/audacious/main.c:244
 msgid "Add files to the playlist"
 msgstr "Tambah berkas ke dalam daftar lagu"
 
-#: src/audacious/main.c:248
+#: src/audacious/main.c:245
 msgid "Add new files to a temporary playlist"
 msgstr "Tambah berkas baru ke dalam daftar lagu sementara"
 
-#: src/audacious/main.c:249
+#: src/audacious/main.c:246
 msgid "Display the main window"
 msgstr "Tampilkan jendela utama"
 
-#: src/audacious/main.c:250
+#: src/audacious/main.c:247
 msgid "Show version"
 msgstr "Tampilkan versi"
 
-#: src/audacious/main.c:251
+#: src/audacious/main.c:248
 msgid "Print debugging messages"
 msgstr "Cetak pesan debug"
 
-#: src/audacious/main.c:252
+#: src/audacious/main.c:249
 msgid "Headless mode (beta)"
 msgstr "Moda headless (beta)"
 
-#: src/audacious/main.c:253
+#: src/audacious/main.c:250
 msgid "FILE..."
 msgstr "BERKAS..."
 
-#: src/audacious/main.c:265
+#: src/audacious/main.c:262
 msgid "- play multimedia files"
 msgstr "- putar berkas multimedia "
 
-#: src/audacious/main.c:275
+#: src/audacious/main.c:272
 #, c-format
 msgid ""
 "%s: %s\n"
@@ -307,11 +115,11 @@ msgstr ""
 "%s: %s\n"
 "Coba `%s --help' untuk informasi lebih lanjut.\n"
 
-#: src/audacious/main.c:564
+#: src/audacious/main.c:561
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/playback.c:315
+#: src/audacious/playback.c:304
 #, c-format
 msgid "No decoder found for %s."
 msgstr "Tidak ada decoder untuk %s."
@@ -329,15 +137,15 @@ msgstr "simpan"
 msgid "load"
 msgstr "ambil"
 
-#: src/audacious/playlist-new.c:129
+#: src/audacious/playlist-new.c:121
 msgid "New Playlist"
 msgstr "Daftar lagu Baru"
 
-#: src/audacious/playlist-new.c:130
+#: src/audacious/playlist-new.c:122
 msgid "Now Playing"
 msgstr "Sedang Diputar"
 
-#: src/audacious/playlist-new.c:1617
+#: src/audacious/playlist-new.c:1646
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress "
 "(or has been disabled)."
@@ -355,373 +163,373 @@ msgstr ""
 msgid "%s Settings"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:72
+#: src/audacious/ui_preferences.c:70
 msgid "Audio"
 msgstr "Suara"
 
-#: src/audacious/ui_preferences.c:73
+#: src/audacious/ui_preferences.c:71
 msgid "Network"
 msgstr "Jaringan"
 
-#: src/audacious/ui_preferences.c:74 src/audacious/ui_preferences.c:1255
+#: src/audacious/ui_preferences.c:72 src/audacious/ui_preferences.c:1253
 msgid "Playlist"
 msgstr "Daftar lagu"
 
-#: src/audacious/ui_preferences.c:75
+#: src/audacious/ui_preferences.c:73
 msgid "Song Info"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:76
+#: src/audacious/ui_preferences.c:74
 msgid "Plugins"
 msgstr "Pengaya"
 
-#: src/audacious/ui_preferences.c:82 src/libaudgui/infopopup.c:195
+#: src/audacious/ui_preferences.c:80 src/libaudgui/infopopup.c:195
 msgid "Artist"
 msgstr "Artis"
 
-#: src/audacious/ui_preferences.c:83 src/libaudgui/infopopup.c:197
+#: src/audacious/ui_preferences.c:81 src/libaudgui/infopopup.c:197
 msgid "Album"
 msgstr "Album"
 
-#: src/audacious/ui_preferences.c:84 src/libaudgui/infopopup.c:193
+#: src/audacious/ui_preferences.c:82 src/libaudgui/infopopup.c:193
 #: src/libaudgui/ui_playlist_manager.c:279
 msgid "Title"
 msgstr "Judul"
 
-#: src/audacious/ui_preferences.c:85
+#: src/audacious/ui_preferences.c:83
 msgid "Tracknumber"
 msgstr "Nomor track"
 
-#: src/audacious/ui_preferences.c:86 src/libaudgui/infopopup.c:199
+#: src/audacious/ui_preferences.c:84 src/libaudgui/infopopup.c:199
 msgid "Genre"
 msgstr "Aliran"
 
-#: src/audacious/ui_preferences.c:87
+#: src/audacious/ui_preferences.c:85
 msgid "Filename"
 msgstr "Nama berkas"
 
-#: src/audacious/ui_preferences.c:88
+#: src/audacious/ui_preferences.c:86
 msgid "Filepath"
 msgstr "Jalur berkas"
 
-#: src/audacious/ui_preferences.c:89
+#: src/audacious/ui_preferences.c:87
 msgid "Date"
 msgstr "Tanggal"
 
-#: src/audacious/ui_preferences.c:90 src/libaudgui/infopopup.c:201
+#: src/audacious/ui_preferences.c:88 src/libaudgui/infopopup.c:201
 msgid "Year"
 msgstr "Tahun"
 
-#: src/audacious/ui_preferences.c:91
+#: src/audacious/ui_preferences.c:89
 msgid "Comment"
 msgstr "Komentar"
 
-#: src/audacious/ui_preferences.c:92
+#: src/audacious/ui_preferences.c:90
 msgid "Codec"
 msgstr "Kodek"
 
-#: src/audacious/ui_preferences.c:93
+#: src/audacious/ui_preferences.c:91
 msgid "Quality"
 msgstr "Kualitas"
 
-#: src/audacious/ui_preferences.c:99
+#: src/audacious/ui_preferences.c:97
 msgid "None"
 msgstr "Kosong"
 
-#: src/audacious/ui_preferences.c:100
+#: src/audacious/ui_preferences.c:98
 msgid "Arabic"
 msgstr "Arab"
 
-#: src/audacious/ui_preferences.c:101
+#: src/audacious/ui_preferences.c:99
 msgid "Baltic"
 msgstr "Baltic"
 
-#: src/audacious/ui_preferences.c:102
+#: src/audacious/ui_preferences.c:100
 msgid "Chinese"
 msgstr "Cina"
 
-#: src/audacious/ui_preferences.c:103
+#: src/audacious/ui_preferences.c:101
 msgid "Greek"
 msgstr "Yunani"
 
-#: src/audacious/ui_preferences.c:104
+#: src/audacious/ui_preferences.c:102
 msgid "Hebrew"
 msgstr "Hebrew"
 
-#: src/audacious/ui_preferences.c:105
+#: src/audacious/ui_preferences.c:103
 msgid "Japanese"
 msgstr "Jepang"
 
-#: src/audacious/ui_preferences.c:106
+#: src/audacious/ui_preferences.c:104
 msgid "Korean"
 msgstr "Korea"
 
-#: src/audacious/ui_preferences.c:107
+#: src/audacious/ui_preferences.c:105
 msgid "Polish"
 msgstr "Polandia"
 
-#: src/audacious/ui_preferences.c:108
+#: src/audacious/ui_preferences.c:106
 msgid "Russian"
 msgstr "Rusia"
 
-#: src/audacious/ui_preferences.c:109
+#: src/audacious/ui_preferences.c:107
 msgid "Taiwanese"
 msgstr "Taiwan"
 
-#: src/audacious/ui_preferences.c:110
+#: src/audacious/ui_preferences.c:108
 msgid "Turkish"
 msgstr "Turki"
 
-#: src/audacious/ui_preferences.c:133
+#: src/audacious/ui_preferences.c:131
 msgid "Album mode"
 msgstr "Moda album"
 
-#: src/audacious/ui_preferences.c:136
+#: src/audacious/ui_preferences.c:134
 msgid "<b>Output Settings</b>"
 msgstr "<b>Setelan Keluaran</b>"
 
-#: src/audacious/ui_preferences.c:138
+#: src/audacious/ui_preferences.c:136
 msgid "Bit depth:"
 msgstr "Kedalaman bit:"
 
-#: src/audacious/ui_preferences.c:141
+#: src/audacious/ui_preferences.c:139
 msgid "Buffer size:"
 msgstr "Ukuran penyangga:"
 
-#: src/audacious/ui_preferences.c:143
+#: src/audacious/ui_preferences.c:141
 msgid "ms"
 msgstr "ms"
 
-#: src/audacious/ui_preferences.c:144
+#: src/audacious/ui_preferences.c:142
 msgid "Use software volume control (not recommended)"
 msgstr "Gunakan pengatur volume (tidak direkomendasikan)"
 
-#: src/audacious/ui_preferences.c:146
+#: src/audacious/ui_preferences.c:144
 msgid "<b>Replay Gain</b>"
 msgstr "<b><i>Replay Gain</i></b>"
 
-#: src/audacious/ui_preferences.c:147
+#: src/audacious/ui_preferences.c:145
 msgid "Enable Replay Gain"
 msgstr "Aktifkan <i>Replay Gain</i>"
 
-#: src/audacious/ui_preferences.c:150
+#: src/audacious/ui_preferences.c:148
 msgid "Prevent clipping (recommended)"
 msgstr "Hindarkan pemotongan (direkomendasikan)"
 
-#: src/audacious/ui_preferences.c:152
+#: src/audacious/ui_preferences.c:150
 msgid "<b>Adjust Levels</b>"
 msgstr "<b>Sesuaikan Level</b>"
 
-#: src/audacious/ui_preferences.c:153
+#: src/audacious/ui_preferences.c:151
 msgid "Amplify all files:"
 msgstr "Kuatkan semua berkas:"
 
-#: src/audacious/ui_preferences.c:155 src/audacious/ui_preferences.c:158
+#: src/audacious/ui_preferences.c:153 src/audacious/ui_preferences.c:156
 msgid "dB"
 msgstr "dB"
 
-#: src/audacious/ui_preferences.c:156
+#: src/audacious/ui_preferences.c:154
 msgid "Amplify untagged files:"
 msgstr "Kuatkan berkas yang tak ditandai:"
 
-#: src/audacious/ui_preferences.c:161
+#: src/audacious/ui_preferences.c:159
 msgid "Proxy hostname:"
 msgstr "Namahost proxy:"
 
-#: src/audacious/ui_preferences.c:162
+#: src/audacious/ui_preferences.c:160
 msgid "Proxy port:"
 msgstr "Porta proxy:"
 
-#: src/audacious/ui_preferences.c:165
+#: src/audacious/ui_preferences.c:163
 msgid "Proxy username:"
 msgstr "Nama pengguna proxy:"
 
-#: src/audacious/ui_preferences.c:166
+#: src/audacious/ui_preferences.c:164
 msgid "Proxy password:"
 msgstr "Sandi proxy:"
 
-#: src/audacious/ui_preferences.c:170
+#: src/audacious/ui_preferences.c:168
 msgid "<b>Proxy Configuration</b>"
 msgstr "<b>KOnfigurasi Proxy</b>"
 
-#: src/audacious/ui_preferences.c:171
+#: src/audacious/ui_preferences.c:169
 msgid "Enable proxy usage"
 msgstr "Gunakan proxy"
 
-#: src/audacious/ui_preferences.c:174
+#: src/audacious/ui_preferences.c:172
 msgid "Use authentication with proxy"
 msgstr "Menggunakan otentikasi dengan proxy"
 
-#: src/audacious/ui_preferences.c:182
+#: src/audacious/ui_preferences.c:180
 msgid "Auto character encoding detector for:"
 msgstr "Deteksi enkoder karakter otomatis untuk:"
 
-#: src/audacious/ui_preferences.c:186
+#: src/audacious/ui_preferences.c:184
 msgid "Fallback character encodings:"
 msgstr "Ubah enkoder karakter"
 
-#: src/audacious/ui_preferences.c:190
+#: src/audacious/ui_preferences.c:188
 msgid "<b>Behavior</b>"
 msgstr "<b>Behavior</b>"
 
-#: src/audacious/ui_preferences.c:191
+#: src/audacious/ui_preferences.c:189
 msgid "Continue playback on startup"
 msgstr "Lanjut putar saat memula"
 
-#: src/audacious/ui_preferences.c:193
+#: src/audacious/ui_preferences.c:191
 msgid "Advance when the current song is deleted"
 msgstr "Jika lagu terkini terhapus, majukan"
 
-#: src/audacious/ui_preferences.c:195
+#: src/audacious/ui_preferences.c:193
 msgid "Clear the playlist when opening files"
 msgstr "Bersihkan daftar lagu ketika membuka berkas"
 
-#: src/audacious/ui_preferences.c:197
+#: src/audacious/ui_preferences.c:195
 msgid "Open files in a temporary playlist"
 msgstr "Buka berkas pada daftar lagu sementara"
 
-#: src/audacious/ui_preferences.c:199
+#: src/audacious/ui_preferences.c:197
 msgid "<b>Metadata</b>"
 msgstr "<b>Metadata</b>"
 
-#: src/audacious/ui_preferences.c:200
+#: src/audacious/ui_preferences.c:198
 msgid "Do not load metadata for songs until played"
 msgstr "Jangan muat metadata sampai lagu diputar"
 
-#: src/audacious/ui_preferences.c:208
+#: src/audacious/ui_preferences.c:206
 msgid "<b>Album Art</b>"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:209
+#: src/audacious/ui_preferences.c:207
 msgid "Search for images matching these words (comma-separated):"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:211
+#: src/audacious/ui_preferences.c:209
 msgid "Exclude images matching these words (comma-separated):"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:213
+#: src/audacious/ui_preferences.c:211
 msgid "Search for images matching song file name"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:215
+#: src/audacious/ui_preferences.c:213
 msgid "Search recursively"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:217
+#: src/audacious/ui_preferences.c:215
 msgid "Search depth:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:220
+#: src/audacious/ui_preferences.c:218
 msgid "<b>Popup Information</b>"
 msgstr "<b>Informasi Jendela Munculan</b>"
 
-#: src/audacious/ui_preferences.c:221
+#: src/audacious/ui_preferences.c:219
 msgid "Show popup information"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:223
+#: src/audacious/ui_preferences.c:221
 msgid "Popup delay (tenths of a second):"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:226
+#: src/audacious/ui_preferences.c:224
 msgid "Show time scale for current song"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:240
+#: src/audacious/ui_preferences.c:238
 msgid "TITLE"
 msgstr "JUDUL"
 
-#: src/audacious/ui_preferences.c:241
+#: src/audacious/ui_preferences.c:239
 msgid "ARTIST - TITLE"
 msgstr "ARTIS - JUDUL"
 
-#: src/audacious/ui_preferences.c:242
+#: src/audacious/ui_preferences.c:240
 msgid "ARTIST - ALBUM - TITLE"
 msgstr "ARTIS - ALBUM - JUDUL"
 
-#: src/audacious/ui_preferences.c:243
+#: src/audacious/ui_preferences.c:241
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr "ARTIS - ALBUM - TRACK JUDUL"
 
-#: src/audacious/ui_preferences.c:244
+#: src/audacious/ui_preferences.c:242
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr "ARIS [ALBUM] - TRACK JUDUL"
 
-#: src/audacious/ui_preferences.c:245
+#: src/audacious/ui_preferences.c:243
 msgid "ALBUM - TITLE"
 msgstr "ALBUM - JUDUL"
 
-#: src/audacious/ui_preferences.c:458
+#: src/audacious/ui_preferences.c:456
 msgid "Category"
 msgstr "kategori"
 
-#: src/audacious/ui_preferences.c:1005
+#: src/audacious/ui_preferences.c:1003
 msgid "Custom"
 msgstr "Pilihan"
 
-#: src/audacious/ui_preferences.c:1042
+#: src/audacious/ui_preferences.c:1040
 msgid "<b>Song Display</b>"
 msgstr "<b>Tampilan Lagu</b>"
 
-#: src/audacious/ui_preferences.c:1051
+#: src/audacious/ui_preferences.c:1049
 msgid "Show song numbers"
 msgstr "Tampilkan daftar lagu"
 
-#: src/audacious/ui_preferences.c:1062
+#: src/audacious/ui_preferences.c:1060
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr "Tampilkan nol didepan (02:00 bukan 2:00)"
 
-#: src/audacious/ui_preferences.c:1084
+#: src/audacious/ui_preferences.c:1082
 msgid "Show information about titlestring format"
 msgstr "Tampilkan informasi tentang format titlestring"
 
-#: src/audacious/ui_preferences.c:1100
+#: src/audacious/ui_preferences.c:1098
 msgid "Custom string:"
 msgstr "String gubahan:"
 
-#: src/audacious/ui_preferences.c:1107
+#: src/audacious/ui_preferences.c:1105
 msgid "Title format:"
 msgstr "Judul format:"
 
-#: src/audacious/ui_preferences.c:1196
+#: src/audacious/ui_preferences.c:1194
 msgid "Output plugin:"
 msgstr "Keluaran pengaya:"
 
-#: src/audacious/ui_preferences.c:1255
+#: src/audacious/ui_preferences.c:1253
 msgid "Transport"
 msgstr "Transportasi"
 
-#: src/audacious/ui_preferences.c:1255
+#: src/audacious/ui_preferences.c:1253
 msgid "Input"
 msgstr "Masukan"
 
-#: src/audacious/ui_preferences.c:1256
+#: src/audacious/ui_preferences.c:1254
 msgid "Effect"
 msgstr "Efek"
 
-#: src/audacious/ui_preferences.c:1256
+#: src/audacious/ui_preferences.c:1254
 msgid "Visualization"
 msgstr "Visualisasi"
 
-#: src/audacious/ui_preferences.c:1256
+#: src/audacious/ui_preferences.c:1254
 msgid "General"
 msgstr "Umum"
 
-#: src/audacious/ui_preferences.c:1294
+#: src/audacious/ui_preferences.c:1292
 msgid "Audacious Preferences"
 msgstr "Prefensi Audacious"
 
-#: src/audacious/util.c:116
+#: src/audacious/util.c:115
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Tidak dapat membuat folder (%s): %s\n"
 
-#: src/audtool/handlers_playlist.c:274
+#: src/audtool/handlers_playlist.c:262
 msgid "Position not found."
 msgstr "Posisi tidak ada"
 
-#: src/audtool/handlers_vitals.c:63
+#: src/audtool/handlers_vitals.c:51
 msgid "No song playing."
 msgstr "Tidak ada lagu yang sedang diputar"
 
@@ -744,15 +552,15 @@ msgid "%d channel"
 msgid_plural "%d channels"
 msgstr[0] "%d channel"
 
-#: src/libaudgui/about.c:51 src/libaudgui/about.c:112
+#: src/libaudgui/about.c:38
 msgid "Credits"
 msgstr "Kredit"
 
-#: src/libaudgui/about.c:51
-msgid "Translators"
-msgstr "Penerjemah"
+#: src/libaudgui/about.c:38
+msgid "License"
+msgstr ""
 
-#: src/libaudgui/about.c:88
+#: src/libaudgui/about.c:74
 msgid "About Audacious"
 msgstr "Tentang Audacious"
 
@@ -837,225 +645,225 @@ msgstr ""
 msgid "Length"
 msgstr ""
 
-#: src/libaudgui/infowin.c:75
+#: src/libaudgui/infowin.c:74
 msgid "Acid Jazz"
 msgstr "Acid Jazz"
 
-#: src/libaudgui/infowin.c:76
+#: src/libaudgui/infowin.c:75
 msgid "Acid Rock"
 msgstr "Acid Rock"
 
-#: src/libaudgui/infowin.c:77
+#: src/libaudgui/infowin.c:76
 msgid "Ambient"
 msgstr "Ambient"
 
-#: src/libaudgui/infowin.c:78
+#: src/libaudgui/infowin.c:77
 msgid "Bebop"
 msgstr "Bebop"
 
-#: src/libaudgui/infowin.c:79
+#: src/libaudgui/infowin.c:78
 msgid "Bluegrass"
 msgstr "Bluegrass"
 
-#: src/libaudgui/infowin.c:80
+#: src/libaudgui/infowin.c:79
 msgid "Blues"
 msgstr "Blues"
 
-#: src/libaudgui/infowin.c:81
+#: src/libaudgui/infowin.c:80
 msgid "Chamber Music"
 msgstr "Chamber Music"
 
-#: src/libaudgui/infowin.c:82
+#: src/libaudgui/infowin.c:81
 msgid "Classical"
 msgstr "Klasik"
 
-#: src/libaudgui/infowin.c:83
+#: src/libaudgui/infowin.c:82
 msgid "Country"
 msgstr "Country"
 
-#: src/libaudgui/infowin.c:84
+#: src/libaudgui/infowin.c:83
 msgid "Death Metal"
 msgstr "Death Metal"
 
-#: src/libaudgui/infowin.c:85
+#: src/libaudgui/infowin.c:84
 msgid "Disco"
 msgstr "Disko"
 
-#: src/libaudgui/infowin.c:86
+#: src/libaudgui/infowin.c:85
 msgid "Easy Listening"
 msgstr "Mudah Didengarkan"
 
-#: src/libaudgui/infowin.c:87
+#: src/libaudgui/infowin.c:86
 msgid "Folk"
 msgstr "Folk"
 
-#: src/libaudgui/infowin.c:88
+#: src/libaudgui/infowin.c:87
 msgid "Funk"
 msgstr "Funk"
 
-#: src/libaudgui/infowin.c:89
+#: src/libaudgui/infowin.c:88
 msgid "Gangsta Rap"
 msgstr "Gangsta Rap"
 
-#: src/libaudgui/infowin.c:90
+#: src/libaudgui/infowin.c:89
 msgid "Gospel"
 msgstr "Gospel"
 
-#: src/libaudgui/infowin.c:91
+#: src/libaudgui/infowin.c:90
 msgid "Grunge"
 msgstr "Grunge"
 
-#: src/libaudgui/infowin.c:92
+#: src/libaudgui/infowin.c:91
 msgid "Hard Rock"
 msgstr "Hard Rock"
 
-#: src/libaudgui/infowin.c:93
+#: src/libaudgui/infowin.c:92
 msgid "Heavy Metal"
 msgstr "Heavy Metal"
 
-#: src/libaudgui/infowin.c:94
+#: src/libaudgui/infowin.c:93
 msgid "Hip-hop"
 msgstr "Hip-hop"
 
-#: src/libaudgui/infowin.c:95
+#: src/libaudgui/infowin.c:94
 msgid "House"
 msgstr "House"
 
-#: src/libaudgui/infowin.c:96
+#: src/libaudgui/infowin.c:95
 msgid "Jazz"
 msgstr "Jazz"
 
-#: src/libaudgui/infowin.c:97
+#: src/libaudgui/infowin.c:96
 msgid "Jungle"
 msgstr "Jungle"
 
-#: src/libaudgui/infowin.c:98
+#: src/libaudgui/infowin.c:97
 msgid "Metal"
 msgstr "Metal"
 
-#: src/libaudgui/infowin.c:99
+#: src/libaudgui/infowin.c:98
 msgid "New Age"
 msgstr "New Age"
 
-#: src/libaudgui/infowin.c:100
+#: src/libaudgui/infowin.c:99
 msgid "New Wave"
 msgstr "New Wave"
 
-#: src/libaudgui/infowin.c:101
+#: src/libaudgui/infowin.c:100
 msgid "Noise"
 msgstr "Bising"
 
-#: src/libaudgui/infowin.c:102
+#: src/libaudgui/infowin.c:101
 msgid "Pop"
 msgstr "Pop"
 
-#: src/libaudgui/infowin.c:103
+#: src/libaudgui/infowin.c:102
 msgid "Punk Rock"
 msgstr "Punk Rock"
 
-#: src/libaudgui/infowin.c:104
+#: src/libaudgui/infowin.c:103
 msgid "Rap"
 msgstr "Rap"
 
-#: src/libaudgui/infowin.c:105
+#: src/libaudgui/infowin.c:104
 msgid "Reggae"
 msgstr "Reggae"
 
-#: src/libaudgui/infowin.c:106
+#: src/libaudgui/infowin.c:105
 msgid "Rock"
 msgstr "Rock"
 
-#: src/libaudgui/infowin.c:107
+#: src/libaudgui/infowin.c:106
 msgid "Rock and Roll"
 msgstr "Rock and Roll"
 
-#: src/libaudgui/infowin.c:108
+#: src/libaudgui/infowin.c:107
 msgid "Rhythm and Blues"
 msgstr "Rhythm and Blues"
 
-#: src/libaudgui/infowin.c:109
+#: src/libaudgui/infowin.c:108
 msgid "Ska"
 msgstr "Ska"
 
-#: src/libaudgui/infowin.c:110
+#: src/libaudgui/infowin.c:109
 msgid "Soul"
 msgstr "Soul"
 
-#: src/libaudgui/infowin.c:111
+#: src/libaudgui/infowin.c:110
 msgid "Swing"
 msgstr "Swing"
 
-#: src/libaudgui/infowin.c:112
+#: src/libaudgui/infowin.c:111
 msgid "Techno"
 msgstr "Techno"
 
-#: src/libaudgui/infowin.c:113
+#: src/libaudgui/infowin.c:112
 msgid "Trip-hop"
 msgstr "Trip-hop"
 
-#: src/libaudgui/infowin.c:177 src/libaudgui/infowin.c:366
-#: src/libaudgui/infowin.c:369 src/libaudgui/infowin.c:372
+#: src/libaudgui/infowin.c:176 src/libaudgui/infowin.c:365
+#: src/libaudgui/infowin.c:368 src/libaudgui/infowin.c:371
 msgid "<span size=\"small\">n/a</span>"
 msgstr "<span size=\"small\">n/a</span>"
 
-#: src/libaudgui/infowin.c:267
+#: src/libaudgui/infowin.c:266
 msgid "Metadata updated successfully"
 msgstr "Perbaharuan metadata sukses"
 
-#: src/libaudgui/infowin.c:272
+#: src/libaudgui/infowin.c:271
 msgid "Metadata updating failed"
 msgstr "Perbaharuan metadata gagal"
 
-#: src/libaudgui/infowin.c:320
+#: src/libaudgui/infowin.c:319
 msgid "Track Information"
 msgstr "Informasi Track"
 
-#: src/libaudgui/infowin.c:355
+#: src/libaudgui/infowin.c:354
 msgid "<span size=\"small\">Format:</span>"
 msgstr "<span size=\"small\">Format:</span>"
 
-#: src/libaudgui/infowin.c:359
+#: src/libaudgui/infowin.c:358
 msgid "<span size=\"small\">Quality:</span>"
 msgstr "<span size=\"small\">Kualitas:</span>"
 
-#: src/libaudgui/infowin.c:362
+#: src/libaudgui/infowin.c:361
 msgid "<span size=\"small\">Bitrate:</span>"
 msgstr "<span size=\"small\">Bitrate:</span>"
 
-#: src/libaudgui/infowin.c:392
+#: src/libaudgui/infowin.c:391
 msgid "<span size=\"small\">Title</span>"
 msgstr "<span size=\"small\">Judul</span>"
 
-#: src/libaudgui/infowin.c:404
+#: src/libaudgui/infowin.c:403
 msgid "<span size=\"small\">Artist</span>"
 msgstr "<span size=\"small\">Artis</span>"
 
-#: src/libaudgui/infowin.c:416
+#: src/libaudgui/infowin.c:415
 msgid "<span size=\"small\">Album</span>"
 msgstr "<span size=\"small\">Album</span>"
 
-#: src/libaudgui/infowin.c:428
+#: src/libaudgui/infowin.c:427
 msgid "<span size=\"small\">Comment</span>"
 msgstr "<span size=\"small\">Komentar</span>"
 
-#: src/libaudgui/infowin.c:440
+#: src/libaudgui/infowin.c:439
 msgid "<span size=\"small\">Genre</span>"
 msgstr "<span size=\"small\">Aliran</span>"
 
-#: src/libaudgui/infowin.c:461
+#: src/libaudgui/infowin.c:460
 msgid "<span size=\"small\">Year</span>"
 msgstr "<span size=\"small\">Tahun</span>"
 
-#: src/libaudgui/infowin.c:472
+#: src/libaudgui/infowin.c:471
 msgid "<span size=\"small\">Track Number</span>"
 msgstr "<span size=\"small\">Nomor Track</span>"
 
-#: src/libaudgui/infowin.c:551
+#: src/libaudgui/infowin.c:550
 #, c-format
 msgid "%d kb/s"
 msgstr "%d kb/s"
 
-#: src/libaudgui/infowin.c:578
+#: src/libaudgui/infowin.c:577
 #, c-format
 msgid "No info available for %s.\n"
 msgstr "Tidak ada info yang tersedia untuk %s.\n"
@@ -1085,52 +893,52 @@ msgstr "Menimpa %s?"
 msgid "Queue Manager"
 msgstr "Menejer Antrian"
 
-#: src/libaudgui/ui_fileopener.c:108
+#: src/libaudgui/ui_fileopener.c:107
 msgid "Open Files"
 msgstr "Buka Berkas"
 
-#: src/libaudgui/ui_fileopener.c:108
+#: src/libaudgui/ui_fileopener.c:107
 msgid "Add Files"
 msgstr "Tambah Berkas"
 
-#: src/libaudgui/ui_fileopener.c:110
+#: src/libaudgui/ui_fileopener.c:109
 msgid "Close dialog on Open"
 msgstr "Keluar dialog pada Buka"
 
-#: src/libaudgui/ui_fileopener.c:110
+#: src/libaudgui/ui_fileopener.c:109
 msgid "Close dialog on Add"
 msgstr "Keluar dialog pada Tambah"
 
-#: src/libaudgui/ui_jumptotrack.c:108 src/libaudgui/ui_jumptotrack.c:116
-#: src/libaudgui/ui_jumptotrack.c:335
+#: src/libaudgui/ui_jumptotrack.c:105 src/libaudgui/ui_jumptotrack.c:113
+#: src/libaudgui/ui_jumptotrack.c:332
 msgid "_Queue"
 msgstr "_Antrian"
 
-#: src/libaudgui/ui_jumptotrack.c:114
+#: src/libaudgui/ui_jumptotrack.c:111
 msgid "Un_queue"
 msgstr "Un_queue"
 
-#: src/libaudgui/ui_jumptotrack.c:265
+#: src/libaudgui/ui_jumptotrack.c:262
 msgid "Jump to Song"
 msgstr "Loncat ke Lagu"
 
-#: src/libaudgui/ui_jumptotrack.c:290
+#: src/libaudgui/ui_jumptotrack.c:287
 msgid "Filter: "
 msgstr "Filter: "
 
-#: src/libaudgui/ui_jumptotrack.c:291
+#: src/libaudgui/ui_jumptotrack.c:288
 msgid "_Filter:"
 msgstr "_Filter:"
 
-#: src/libaudgui/ui_jumptotrack.c:301
+#: src/libaudgui/ui_jumptotrack.c:298
 msgid "Remember"
 msgstr "Mengingat"
 
-#: src/libaudgui/ui_jumptotrack.c:308
+#: src/libaudgui/ui_jumptotrack.c:305
 msgid "Clea_r"
 msgstr "Be_rsih"
 
-#: src/libaudgui/ui_jumptotrack.c:328
+#: src/libaudgui/ui_jumptotrack.c:325
 msgid "Close on Jump"
 msgstr "Jeluar dari lompatan"
 
@@ -1170,61 +978,208 @@ msgstr ""
 "\n"
 "(Pesan lebih lanjut telah tersembunyi.)"
 
-#: src/libeggsmclient/eggdesktopfile.c:165
+#: src/libeggsmclient/eggdesktopfile.c:162
 msgid "File is not a valid .desktop file"
 msgstr "Berkas ini bukanlah berkas .desktop yang valid"
 
-#: src/libeggsmclient/eggdesktopfile.c:191
+#: src/libeggsmclient/eggdesktopfile.c:188
 #, c-format
 msgid "Unrecognized desktop file Version '%s'"
 msgstr "Versi '%s' berkas desktop tidak dikenal"
 
-#: src/libeggsmclient/eggdesktopfile.c:974
+#: src/libeggsmclient/eggdesktopfile.c:971
 #, c-format
 msgid "Starting %s"
 msgstr "Dimulai %s"
 
-#: src/libeggsmclient/eggdesktopfile.c:1116
+#: src/libeggsmclient/eggdesktopfile.c:1113
 msgid "Application does not accept documents on command line"
 msgstr "Aplikasi tidak menerima dokumen pada baris perintah"
 
-#: src/libeggsmclient/eggdesktopfile.c:1184
+#: src/libeggsmclient/eggdesktopfile.c:1181
 #, c-format
 msgid "Unrecognized launch option: %d"
 msgstr "Opsi luncuran: %d tidak dikenal"
 
-#: src/libeggsmclient/eggdesktopfile.c:1391
+#: src/libeggsmclient/eggdesktopfile.c:1388
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
 msgstr "Tak bisa melewatkan URI dokumen ke suatu entri desktop 'Type=Link'"
 
-#: src/libeggsmclient/eggdesktopfile.c:1412
+#: src/libeggsmclient/eggdesktopfile.c:1409
 msgid "Not a launchable item"
 msgstr "Bukan barang luncuran"
 
-#: src/libeggsmclient/eggsmclient.c:226
+#: src/libeggsmclient/eggsmclient.c:223
 msgid "Disable connection to session manager"
 msgstr "Nonaktifkan koneksi ke manajer sesi"
 
-#: src/libeggsmclient/eggsmclient.c:229
+#: src/libeggsmclient/eggsmclient.c:226
 msgid "Specify file containing saved configuration"
 msgstr "Tentukan berkas yang mengandung konfigurasi yang telah tersimpan"
 
-#: src/libeggsmclient/eggsmclient.c:229
+#: src/libeggsmclient/eggsmclient.c:226
 msgid "FILE"
 msgstr "BERKAS"
 
-#: src/libeggsmclient/eggsmclient.c:232
+#: src/libeggsmclient/eggsmclient.c:229
 msgid "Specify session management ID"
 msgstr "Tentukan manajemen sesi ID "
 
-#: src/libeggsmclient/eggsmclient.c:232
+#: src/libeggsmclient/eggsmclient.c:229
 msgid "ID"
 msgstr "ID"
 
-#: src/libeggsmclient/eggsmclient.c:253
+#: src/libeggsmclient/eggsmclient.c:250
 msgid "Session management options:"
 msgstr "Pilihan sesi manajemen"
 
-#: src/libeggsmclient/eggsmclient.c:254
+#: src/libeggsmclient/eggsmclient.c:251
 msgid "Show session management options"
 msgstr "Tampilkan pilihan sesi manajemen"
+
+#~ msgid "Core developers:"
+#~ msgstr "Pengembang Inti:"
+
+#~ msgid "Graphics:"
+#~ msgstr "Grafis"
+
+#~ msgid "Default skin:"
+#~ msgstr "Tema standar:"
+
+#~ msgid "Plugin development:"
+#~ msgstr "Pengembangan pengaya:"
+
+#~ msgid "Patch authors:"
+#~ msgstr "Penulis tambalan:"
+
+#~ msgid "1.x developers:"
+#~ msgstr "Pengembang 1.x:"
+
+#~ msgid "BMP Developers:"
+#~ msgstr "Pengembang BMP:"
+
+#~ msgid "Argentinian Spanish:"
+#~ msgstr "Argentina Spanyol:"
+
+#~ msgid "Belarusian:"
+#~ msgstr "Belarusia"
+
+#~ msgid "Basque:"
+#~ msgstr "Basque:"
+
+#~ msgid "Brazilian Portuguese:"
+#~ msgstr "Brasil Portugis:"
+
+#~ msgid "Breton:"
+#~ msgstr "Breton:"
+
+#~ msgid "Bulgarian:"
+#~ msgstr "Bulgaria:"
+
+#~ msgid "Catalan:"
+#~ msgstr "Catalan:"
+
+#~ msgid "Chinese:"
+#~ msgstr "Cina:"
+
+#~ msgid "Croatian:"
+#~ msgstr "Kroasia:"
+
+#~ msgid "Czech:"
+#~ msgstr "Ceko:"
+
+#~ msgid "Dutch:"
+#~ msgstr "Belanda"
+
+#~ msgid "Estonian:"
+#~ msgstr "Estonia:"
+
+#~ msgid "Finnish:"
+#~ msgstr "Finlandia:"
+
+#~ msgid "French:"
+#~ msgstr "Prancis:"
+
+#~ msgid "German:"
+#~ msgstr "Jerman:"
+
+#~ msgid "Georgian:"
+#~ msgstr "Gerogia:"
+
+#~ msgid "Greek:"
+#~ msgstr "Yunani:"
+
+#~ msgid "Hindi:"
+#~ msgstr "India:"
+
+#~ msgid "Hungarian:"
+#~ msgstr "Hunggaria:"
+
+#~ msgid "Italian:"
+#~ msgstr "Italia:"
+
+#~ msgid "Japanese:"
+#~ msgstr "Jepang:"
+
+#~ msgid "Korean:"
+#~ msgstr "Korea:"
+
+#~ msgid "Latvian:"
+#~ msgstr "Latvia:"
+
+#~ msgid "Lithuanian:"
+#~ msgstr "Lithuania:"
+
+#~ msgid "Macedonian:"
+#~ msgstr "Macedonia:"
+
+#~ msgid "Mexican Spanish:"
+#~ msgstr "Meksiko Spanyol:"
+
+#~ msgid "Polish:"
+#~ msgstr "Polandia:"
+
+#~ msgid "Portuguese:"
+#~ msgstr "Portugis:"
+
+#~ msgid "Romanian:"
+#~ msgstr "Romania:"
+
+#~ msgid "Russian:"
+#~ msgstr "Rusia:"
+
+#~ msgid "Serbian (Latin):"
+#~ msgstr "Sebia (latin):"
+
+#~ msgid "Serbian (Cyrillic):"
+#~ msgstr "Serbia (Cyrillic):"
+
+#~ msgid "Simplified Chinese:"
+#~ msgstr "Cina simpel:"
+
+#~ msgid "Slovak:"
+#~ msgstr "Slovakia:"
+
+#~ msgid "Spanish:"
+#~ msgstr "Spanyol:"
+
+#~ msgid "Swedish:"
+#~ msgstr "Swedia:"
+
+#~ msgid "Traditional Chinese:"
+#~ msgstr "Cina Tradisional:"
+
+#~ msgid "Turkish:"
+#~ msgstr "Turki"
+
+#~ msgid "Ukrainian:"
+#~ msgstr "Ukraina"
+
+#~ msgid "Vietnamese:"
+#~ msgstr "Vitnam"
+
+#~ msgid "Welsh:"
+#~ msgstr "Welsh:"
+
+#~ msgid "Translators"
+#~ msgstr "Penerjemah"

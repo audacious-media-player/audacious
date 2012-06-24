@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-06-15 21:06-0400\n"
+"POT-Creation-Date: 2012-06-24 13:41-0400\n"
 "PO-Revision-Date: 2012-06-10 05:53+0000\n"
 "Last-Translator: Algimantas Margevičius <gymka@archlinux.lt>\n"
 "Language-Team: Lithuanian\n"
@@ -35,268 +35,76 @@ msgstr[0] "%d failas rastas"
 msgstr[1] "%d failai rasti"
 msgstr[2] "%d failų rasti"
 
-#: src/audacious/chardet.c:40
+#: src/audacious/chardet.c:39
 msgid "  (invalid UTF-8)"
 msgstr "  (netinkamas UTF-8)"
 
-#: src/audacious/credits.c:37
-msgid "Core developers:"
-msgstr "Autoriai:"
-
-#: src/audacious/credits.c:52
-msgid "Graphics:"
-msgstr "Grafika:"
-
-#: src/audacious/credits.c:57
-msgid "Default skin:"
-msgstr "Numatytoji išvaizda:"
-
-#: src/audacious/credits.c:63
-msgid "Plugin development:"
-msgstr "Įskiepių kūrėjai:"
-
-#: src/audacious/credits.c:86
-msgid "Patch authors:"
-msgstr "Pataisymų kūrėjai:"
-
-#: src/audacious/credits.c:132
-msgid "1.x developers:"
-msgstr "1.x kūrėjai:"
-
-#: src/audacious/credits.c:154
-msgid "BMP Developers:"
-msgstr "BMP kūrėjai:"
-
-#: src/audacious/credits.c:186
-msgid "Argentinian Spanish:"
-msgstr "Į ispanų(Argentina):"
-
-#: src/audacious/credits.c:189
-msgid "Belarusian:"
-msgstr "Į baltarusių k.:"
-
-#: src/audacious/credits.c:192
-msgid "Basque:"
-msgstr "Į Baskų k.:"
-
-#: src/audacious/credits.c:195
-msgid "Brazilian Portuguese:"
-msgstr "Į brazilų k. (portugalų dialektą):"
-
-#: src/audacious/credits.c:201
-msgid "Breton:"
-msgstr "Į bretonų k.:"
-
-#: src/audacious/credits.c:204
-msgid "Bulgarian:"
-msgstr "Į bulgarų k.:"
-
-#: src/audacious/credits.c:207
-msgid "Catalan:"
-msgstr "Į katalonų k.:"
-
-#: src/audacious/credits.c:212
-msgid "Chinese:"
-msgstr "Į kinų k.:"
-
-#: src/audacious/credits.c:215
-msgid "Croatian:"
-msgstr "Į kroatų k.:"
-
-#: src/audacious/credits.c:218
-msgid "Czech:"
-msgstr "Į čekų k.:"
-
-#: src/audacious/credits.c:221
-msgid "Dutch:"
-msgstr "Į olandų k.:"
-
-#: src/audacious/credits.c:226
-msgid "Estonian:"
-msgstr "Į estų k.:"
-
-#: src/audacious/credits.c:229
-msgid "Finnish:"
-msgstr "Į suomių k.:"
-
-#: src/audacious/credits.c:235
-msgid "French:"
-msgstr "Į prancūzų k.:"
-
-#: src/audacious/credits.c:242
-msgid "German:"
-msgstr "Į vokiečių k.:"
-
-#: src/audacious/credits.c:249
-msgid "Georgian:"
-msgstr "Į vokiečių k.:"
-
-#: src/audacious/credits.c:252
-msgid "Greek:"
-msgstr "Į graikų k.:"
-
-#: src/audacious/credits.c:257
-msgid "Hindi:"
-msgstr "Į hindi k.:"
-
-#: src/audacious/credits.c:260
-msgid "Hungarian:"
-msgstr "Į vengrų k.:"
-
-#: src/audacious/credits.c:264
-msgid "Italian:"
-msgstr "Į italų k.:"
-
-#: src/audacious/credits.c:269
-msgid "Japanese:"
-msgstr "Į japonų k.:"
-
-#: src/audacious/credits.c:273
-msgid "Korean:"
-msgstr "Į korėjiečių k.:"
-
-#: src/audacious/credits.c:276
-msgid "Latvian:"
-msgstr "Į latvių k.:"
-
-#: src/audacious/credits.c:279
-msgid "Lithuanian:"
-msgstr "Į lietuvių k.:"
-
-#: src/audacious/credits.c:284
-msgid "Macedonian:"
-msgstr "Į makedonų k.:"
-
-#: src/audacious/credits.c:287
-msgid "Mexican Spanish:"
-msgstr "Į Ispanų (Meksika) k.:"
-
-#: src/audacious/credits.c:290
-msgid "Polish:"
-msgstr "Į lenkų k.:"
-
-#: src/audacious/credits.c:297
-msgid "Portuguese:"
-msgstr "Į portugalų k.:"
-
-#: src/audacious/credits.c:301
-msgid "Romanian:"
-msgstr "Į rumunų k.:"
-
-#: src/audacious/credits.c:305
-msgid "Russian:"
-msgstr "Į rusų k.:"
-
-#: src/audacious/credits.c:309
-msgid "Serbian (Latin):"
-msgstr "Į serbų (lotynų) k."
-
-#: src/audacious/credits.c:312
-msgid "Serbian (Cyrillic):"
-msgstr "Į serbų (Kirilica) k.:"
-
-#: src/audacious/credits.c:316
-msgid "Simplified Chinese:"
-msgstr "Į Supaprastinta kinų k."
-
-#: src/audacious/credits.c:319
-msgid "Slovak:"
-msgstr "Į slovakų k.:"
-
-#: src/audacious/credits.c:323
-msgid "Spanish:"
-msgstr "Į ispanų k.:"
-
-#: src/audacious/credits.c:332
-msgid "Swedish:"
-msgstr "Į švedų k.:"
-
-#: src/audacious/credits.c:335
-msgid "Traditional Chinese:"
-msgstr "Į Tradicinę kinų k.:"
-
-#: src/audacious/credits.c:341
-msgid "Turkish:"
-msgstr "Į Turkų k.:"
-
-#: src/audacious/credits.c:345
-msgid "Ukrainian:"
-msgstr "Į ukrainiečių k.:"
-
-#: src/audacious/credits.c:351
-msgid "Vietnamese:"
-msgstr "Į Vietnamiečių k.:"
-
-#: src/audacious/credits.c:354
-msgid "Welsh:"
-msgstr "Į velsiečių k.:"
-
-#: src/audacious/equalizer_preset.c:183
+#: src/audacious/equalizer_preset.c:180
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
 msgstr "Klaida įkeliant Winamp EQF failą „%s“"
 
-#: src/audacious/main.c:240
+#: src/audacious/main.c:237
 msgid "Skip backwards in playlist"
 msgstr "Grojaraštyje eiti atgal"
 
-#: src/audacious/main.c:241
+#: src/audacious/main.c:238
 msgid "Start playing current playlist"
 msgstr "Pradėti groti dabartinį grojaraštį"
 
-#: src/audacious/main.c:242
+#: src/audacious/main.c:239
 msgid "Pause current song"
 msgstr "Pristabdyti grojamą dainą"
 
-#: src/audacious/main.c:243
+#: src/audacious/main.c:240
 msgid "Stop current song"
 msgstr "Sustabdyti grojamą dainą"
 
-#: src/audacious/main.c:244
+#: src/audacious/main.c:241
 msgid "Pause if playing, play otherwise"
 msgstr "Pristabdyti, jei grojama, kitu atveju groti"
 
-#: src/audacious/main.c:245
+#: src/audacious/main.c:242
 msgid "Skip forward in playlist"
 msgstr "Grojaraštyje eiti pirmyn"
 
-#: src/audacious/main.c:246
+#: src/audacious/main.c:243
 msgid "Display Jump to File dialog"
 msgstr "Rodyti šokti į bylą langą"
 
-#: src/audacious/main.c:247
+#: src/audacious/main.c:244
 msgid "Add files to the playlist"
 msgstr "Pridėti failus į grojaraštį"
 
-#: src/audacious/main.c:248
+#: src/audacious/main.c:245
 msgid "Add new files to a temporary playlist"
 msgstr "Pridėti naujus failus į laikiną grojaraštį"
 
-#: src/audacious/main.c:249
+#: src/audacious/main.c:246
 msgid "Display the main window"
 msgstr "Parodyti pagrindinį langą"
 
-#: src/audacious/main.c:250
+#: src/audacious/main.c:247
 msgid "Show version"
 msgstr "Rodyti versiją"
 
-#: src/audacious/main.c:251
+#: src/audacious/main.c:248
 msgid "Print debugging messages"
 msgstr "Rodyti derinimo pranešimus"
 
-#: src/audacious/main.c:252
+#: src/audacious/main.c:249
 msgid "Headless mode (beta)"
 msgstr "Begalvis režimas (beta)"
 
-#: src/audacious/main.c:253
+#: src/audacious/main.c:250
 msgid "FILE..."
 msgstr "FAILAS..."
 
-#: src/audacious/main.c:265
+#: src/audacious/main.c:262
 msgid "- play multimedia files"
 msgstr "- groti daugialypės terpės failus"
 
-#: src/audacious/main.c:275
+#: src/audacious/main.c:272
 #, c-format
 msgid ""
 "%s: %s\n"
@@ -305,11 +113,11 @@ msgstr ""
 "%s: %s\n"
 "Bandykite „%s --help“ išsamesniai informacijai.\n"
 
-#: src/audacious/main.c:564
+#: src/audacious/main.c:561
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/playback.c:315
+#: src/audacious/playback.c:304
 #, c-format
 msgid "No decoder found for %s."
 msgstr "Failui %s dekoderis nerastas."
@@ -327,15 +135,15 @@ msgstr "išsaugoti"
 msgid "load"
 msgstr "įkelti"
 
-#: src/audacious/playlist-new.c:129
+#: src/audacious/playlist-new.c:121
 msgid "New Playlist"
 msgstr "Naujas grojaraštis"
 
-#: src/audacious/playlist-new.c:130
+#: src/audacious/playlist-new.c:122
 msgid "Now Playing"
 msgstr "Dabar grojama"
 
-#: src/audacious/playlist-new.c:1617
+#: src/audacious/playlist-new.c:1646
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress "
 "(or has been disabled)."
@@ -353,374 +161,374 @@ msgstr "Apie %s"
 msgid "%s Settings"
 msgstr "%s nustatymai"
 
-#: src/audacious/ui_preferences.c:72
+#: src/audacious/ui_preferences.c:70
 msgid "Audio"
 msgstr "Garsas"
 
-#: src/audacious/ui_preferences.c:73
+#: src/audacious/ui_preferences.c:71
 msgid "Network"
 msgstr "Tinklas"
 
-#: src/audacious/ui_preferences.c:74 src/audacious/ui_preferences.c:1255
+#: src/audacious/ui_preferences.c:72 src/audacious/ui_preferences.c:1253
 msgid "Playlist"
 msgstr "Grojaraštis"
 
-#: src/audacious/ui_preferences.c:75
+#: src/audacious/ui_preferences.c:73
 msgid "Song Info"
 msgstr "Dainos informacija"
 
-#: src/audacious/ui_preferences.c:76
+#: src/audacious/ui_preferences.c:74
 msgid "Plugins"
 msgstr "Įskiepiai"
 
-#: src/audacious/ui_preferences.c:82 src/libaudgui/infopopup.c:195
+#: src/audacious/ui_preferences.c:80 src/libaudgui/infopopup.c:195
 msgid "Artist"
 msgstr "Atlikėjas"
 
-#: src/audacious/ui_preferences.c:83 src/libaudgui/infopopup.c:197
+#: src/audacious/ui_preferences.c:81 src/libaudgui/infopopup.c:197
 msgid "Album"
 msgstr "Albumas"
 
-#: src/audacious/ui_preferences.c:84 src/libaudgui/infopopup.c:193
+#: src/audacious/ui_preferences.c:82 src/libaudgui/infopopup.c:193
 #: src/libaudgui/ui_playlist_manager.c:279
 msgid "Title"
 msgstr "Pavadinimas"
 
-#: src/audacious/ui_preferences.c:85
+#: src/audacious/ui_preferences.c:83
 msgid "Tracknumber"
 msgstr "Takelio numeris"
 
-#: src/audacious/ui_preferences.c:86 src/libaudgui/infopopup.c:199
+#: src/audacious/ui_preferences.c:84 src/libaudgui/infopopup.c:199
 msgid "Genre"
 msgstr "Žanras"
 
-#: src/audacious/ui_preferences.c:87
+#: src/audacious/ui_preferences.c:85
 msgid "Filename"
 msgstr "Failo vardas"
 
-#: src/audacious/ui_preferences.c:88
+#: src/audacious/ui_preferences.c:86
 msgid "Filepath"
 msgstr "Failo kelias"
 
-#: src/audacious/ui_preferences.c:89
+#: src/audacious/ui_preferences.c:87
 msgid "Date"
 msgstr "Data"
 
-#: src/audacious/ui_preferences.c:90 src/libaudgui/infopopup.c:201
+#: src/audacious/ui_preferences.c:88 src/libaudgui/infopopup.c:201
 msgid "Year"
 msgstr "Metai"
 
-#: src/audacious/ui_preferences.c:91
+#: src/audacious/ui_preferences.c:89
 msgid "Comment"
 msgstr "Komentaras"
 
-#: src/audacious/ui_preferences.c:92
+#: src/audacious/ui_preferences.c:90
 msgid "Codec"
 msgstr "Kodekas"
 
-#: src/audacious/ui_preferences.c:93
+#: src/audacious/ui_preferences.c:91
 msgid "Quality"
 msgstr "Kokybė"
 
-#: src/audacious/ui_preferences.c:99
+#: src/audacious/ui_preferences.c:97
 msgid "None"
 msgstr "Joks"
 
-#: src/audacious/ui_preferences.c:100
+#: src/audacious/ui_preferences.c:98
 msgid "Arabic"
 msgstr "Arabų"
 
-#: src/audacious/ui_preferences.c:101
+#: src/audacious/ui_preferences.c:99
 msgid "Baltic"
 msgstr "Baltijos"
 
-#: src/audacious/ui_preferences.c:102
+#: src/audacious/ui_preferences.c:100
 msgid "Chinese"
 msgstr "Kinų"
 
-#: src/audacious/ui_preferences.c:103
+#: src/audacious/ui_preferences.c:101
 msgid "Greek"
 msgstr "Graikų"
 
-#: src/audacious/ui_preferences.c:104
+#: src/audacious/ui_preferences.c:102
 msgid "Hebrew"
 msgstr "Hebrajų"
 
-#: src/audacious/ui_preferences.c:105
+#: src/audacious/ui_preferences.c:103
 msgid "Japanese"
 msgstr "Japonų"
 
-#: src/audacious/ui_preferences.c:106
+#: src/audacious/ui_preferences.c:104
 msgid "Korean"
 msgstr "Korėjiečių"
 
-#: src/audacious/ui_preferences.c:107
+#: src/audacious/ui_preferences.c:105
 msgid "Polish"
 msgstr "Lenkų"
 
-#: src/audacious/ui_preferences.c:108
+#: src/audacious/ui_preferences.c:106
 msgid "Russian"
 msgstr "Rusų"
 
-#: src/audacious/ui_preferences.c:109
+#: src/audacious/ui_preferences.c:107
 msgid "Taiwanese"
 msgstr "Taivaniečių"
 
-#: src/audacious/ui_preferences.c:110
+#: src/audacious/ui_preferences.c:108
 msgid "Turkish"
 msgstr "Turkų"
 
-#: src/audacious/ui_preferences.c:133
+#: src/audacious/ui_preferences.c:131
 msgid "Album mode"
 msgstr "Albumo režimas"
 
-#: src/audacious/ui_preferences.c:136
+#: src/audacious/ui_preferences.c:134
 msgid "<b>Output Settings</b>"
 msgstr "<b>Išvesties nustatymai</b>"
 
-#: src/audacious/ui_preferences.c:138
+#: src/audacious/ui_preferences.c:136
 msgid "Bit depth:"
 msgstr "Nominalus bitų sekos greitis:"
 
-#: src/audacious/ui_preferences.c:141
+#: src/audacious/ui_preferences.c:139
 msgid "Buffer size:"
 msgstr "Buferio dydis (kb):"
 
-#: src/audacious/ui_preferences.c:143
+#: src/audacious/ui_preferences.c:141
 msgid "ms"
 msgstr "ms"
 
-#: src/audacious/ui_preferences.c:144
+#: src/audacious/ui_preferences.c:142
 msgid "Use software volume control (not recommended)"
 msgstr "Naudoti programinį garso valdymą (nerekomenduojama)"
 
-#: src/audacious/ui_preferences.c:146
+#: src/audacious/ui_preferences.c:144
 msgid "<b>Replay Gain</b>"
 msgstr "<b>Garso lygio sulyginimas</b>"
 
-#: src/audacious/ui_preferences.c:147
+#: src/audacious/ui_preferences.c:145
 msgid "Enable Replay Gain"
 msgstr "Įjungt garso lygio sulyginimą"
 
-#: src/audacious/ui_preferences.c:150
+#: src/audacious/ui_preferences.c:148
 msgid "Prevent clipping (recommended)"
 msgstr "Uždrausti apkarpymą (rekomenduojama)"
 
-#: src/audacious/ui_preferences.c:152
+#: src/audacious/ui_preferences.c:150
 msgid "<b>Adjust Levels</b>"
 msgstr "<b>Nustatyti lygius</b>"
 
-#: src/audacious/ui_preferences.c:153
+#: src/audacious/ui_preferences.c:151
 msgid "Amplify all files:"
 msgstr "Pagarsinti visus failus:"
 
-#: src/audacious/ui_preferences.c:155 src/audacious/ui_preferences.c:158
+#: src/audacious/ui_preferences.c:153 src/audacious/ui_preferences.c:156
 msgid "dB"
 msgstr "dB"
 
-#: src/audacious/ui_preferences.c:156
+#: src/audacious/ui_preferences.c:154
 msgid "Amplify untagged files:"
 msgstr "Pagarsinti failus be žymių:"
 
-#: src/audacious/ui_preferences.c:161
+#: src/audacious/ui_preferences.c:159
 msgid "Proxy hostname:"
 msgstr "Tarpinis serveris:"
 
-#: src/audacious/ui_preferences.c:162
+#: src/audacious/ui_preferences.c:160
 msgid "Proxy port:"
 msgstr "Tarpinio serverio prievadas:"
 
-#: src/audacious/ui_preferences.c:165
+#: src/audacious/ui_preferences.c:163
 msgid "Proxy username:"
 msgstr "Tarpinio serverio naudotojas:"
 
-#: src/audacious/ui_preferences.c:166
+#: src/audacious/ui_preferences.c:164
 msgid "Proxy password:"
 msgstr "Tarpinio serverio slaptažodis:"
 
-#: src/audacious/ui_preferences.c:170
+#: src/audacious/ui_preferences.c:168
 msgid "<b>Proxy Configuration</b>"
 msgstr "<b>Tarpinio serverio nustatymai</b>"
 
-#: src/audacious/ui_preferences.c:171
+#: src/audacious/ui_preferences.c:169
 msgid "Enable proxy usage"
 msgstr "Leisti naudoti tarpinį serverį"
 
-#: src/audacious/ui_preferences.c:174
+#: src/audacious/ui_preferences.c:172
 msgid "Use authentication with proxy"
 msgstr "Su tarpiniu serveriu naudoti tapatybės nustatymą"
 
-#: src/audacious/ui_preferences.c:182
+#: src/audacious/ui_preferences.c:180
 msgid "Auto character encoding detector for:"
 msgstr "Automatinis koduotės nustatymas:"
 
-#: src/audacious/ui_preferences.c:186
+#: src/audacious/ui_preferences.c:184
 msgid "Fallback character encodings:"
 msgstr "Atsarginis kodavimas:"
 
-#: src/audacious/ui_preferences.c:190
+#: src/audacious/ui_preferences.c:188
 msgid "<b>Behavior</b>"
 msgstr "<b>Elgsena</b>"
 
-#: src/audacious/ui_preferences.c:191
+#: src/audacious/ui_preferences.c:189
 msgid "Continue playback on startup"
 msgstr "Paleidžiant tęsti atkūrimą"
 
-#: src/audacious/ui_preferences.c:193
+#: src/audacious/ui_preferences.c:191
 msgid "Advance when the current song is deleted"
 msgstr "Kai pasirinkta daina ištrinama, žengti į priekį"
 
-#: src/audacious/ui_preferences.c:195
+#: src/audacious/ui_preferences.c:193
 msgid "Clear the playlist when opening files"
 msgstr "Kai atveriamas failas, išvalyti grojaraštį"
 
-#: src/audacious/ui_preferences.c:197
+#: src/audacious/ui_preferences.c:195
 msgid "Open files in a temporary playlist"
 msgstr "Atverti failus laikiname grojaraštyje"
 
-#: src/audacious/ui_preferences.c:199
+#: src/audacious/ui_preferences.c:197
 msgid "<b>Metadata</b>"
 msgstr "<b>Meta duomenys</b>"
 
-#: src/audacious/ui_preferences.c:200
+#: src/audacious/ui_preferences.c:198
 msgid "Do not load metadata for songs until played"
 msgstr "Kol negrojama, dainom neįkrauti meta duomenų"
 
-#: src/audacious/ui_preferences.c:208
+#: src/audacious/ui_preferences.c:206
 msgid "<b>Album Art</b>"
 msgstr "<b>Albumo apivadalinimas</b>"
 
-#: src/audacious/ui_preferences.c:209
+#: src/audacious/ui_preferences.c:207
 msgid "Search for images matching these words (comma-separated):"
 msgstr ""
 "Ieškoti paveikslėlių kurie atitinka šiuos žodžius (atskirti kableliais):"
 
-#: src/audacious/ui_preferences.c:211
+#: src/audacious/ui_preferences.c:209
 msgid "Exclude images matching these words (comma-separated):"
 msgstr "Išskirti žodžius atitinkančius šiuos žodžius (atskirti kableliais):"
 
-#: src/audacious/ui_preferences.c:213
+#: src/audacious/ui_preferences.c:211
 msgid "Search for images matching song file name"
 msgstr "Ieškoti paveikslėlių atitinkančių dainos failo vardą"
 
-#: src/audacious/ui_preferences.c:215
+#: src/audacious/ui_preferences.c:213
 msgid "Search recursively"
 msgstr "Ieškoti rekursyviai"
 
-#: src/audacious/ui_preferences.c:217
+#: src/audacious/ui_preferences.c:215
 msgid "Search depth:"
 msgstr "Paieškos gylis:"
 
-#: src/audacious/ui_preferences.c:220
+#: src/audacious/ui_preferences.c:218
 msgid "<b>Popup Information</b>"
 msgstr "<b>Iššokančio lango informacija</b>"
 
-#: src/audacious/ui_preferences.c:221
+#: src/audacious/ui_preferences.c:219
 msgid "Show popup information"
 msgstr "Rodyti iššokantį informacijos langą"
 
-#: src/audacious/ui_preferences.c:223
+#: src/audacious/ui_preferences.c:221
 msgid "Popup delay (tenths of a second):"
 msgstr "Iššokančio lango rodymo trukmė(dešimtimis sekundžių):"
 
-#: src/audacious/ui_preferences.c:226
+#: src/audacious/ui_preferences.c:224
 msgid "Show time scale for current song"
 msgstr "Rodyti grojančios dainos laiko juostą"
 
-#: src/audacious/ui_preferences.c:240
+#: src/audacious/ui_preferences.c:238
 msgid "TITLE"
 msgstr "PAVADINIMAS"
 
-#: src/audacious/ui_preferences.c:241
+#: src/audacious/ui_preferences.c:239
 msgid "ARTIST - TITLE"
 msgstr "ATLIKĖJAS - PAVADINIMAS"
 
-#: src/audacious/ui_preferences.c:242
+#: src/audacious/ui_preferences.c:240
 msgid "ARTIST - ALBUM - TITLE"
 msgstr "ATLIKĖJAS - ALBUMAS - PAVADINIMAS"
 
-#: src/audacious/ui_preferences.c:243
+#: src/audacious/ui_preferences.c:241
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr "ATLIKĖJAS - ALBUMAS - TAKELIS. PAVADINIMAS"
 
-#: src/audacious/ui_preferences.c:244
+#: src/audacious/ui_preferences.c:242
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr "ATLIKĖJAS [ ALBUMAS ] - TAKELIS. PAVADINIMAS"
 
-#: src/audacious/ui_preferences.c:245
+#: src/audacious/ui_preferences.c:243
 msgid "ALBUM - TITLE"
 msgstr "ALBUMAS - PAVADINIMAS"
 
-#: src/audacious/ui_preferences.c:458
+#: src/audacious/ui_preferences.c:456
 msgid "Category"
 msgstr "Kategorija"
 
-#: src/audacious/ui_preferences.c:1005
+#: src/audacious/ui_preferences.c:1003
 msgid "Custom"
 msgstr "Pasirinktinė"
 
-#: src/audacious/ui_preferences.c:1042
+#: src/audacious/ui_preferences.c:1040
 msgid "<b>Song Display</b>"
 msgstr "<b>Kūrinio pavadinimo vaizdavimas</b>"
 
-#: src/audacious/ui_preferences.c:1051
+#: src/audacious/ui_preferences.c:1049
 msgid "Show song numbers"
 msgstr "Rodyti dainos numerį"
 
-#: src/audacious/ui_preferences.c:1062
+#: src/audacious/ui_preferences.c:1060
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr "Rodyti nulius priekyje (02:00 vietoj 2:00)"
 
-#: src/audacious/ui_preferences.c:1084
+#: src/audacious/ui_preferences.c:1082
 msgid "Show information about titlestring format"
 msgstr "Parodyti informaciją apie pavadinimo formatą"
 
-#: src/audacious/ui_preferences.c:1100
+#: src/audacious/ui_preferences.c:1098
 msgid "Custom string:"
 msgstr "Pasirinktinė eilutė:"
 
-#: src/audacious/ui_preferences.c:1107
+#: src/audacious/ui_preferences.c:1105
 msgid "Title format:"
 msgstr "Pavadinimo formatas:"
 
-#: src/audacious/ui_preferences.c:1196
+#: src/audacious/ui_preferences.c:1194
 msgid "Output plugin:"
 msgstr "Išvesties įskiepis:"
 
-#: src/audacious/ui_preferences.c:1255
+#: src/audacious/ui_preferences.c:1253
 msgid "Transport"
 msgstr "Transportas"
 
-#: src/audacious/ui_preferences.c:1255
+#: src/audacious/ui_preferences.c:1253
 msgid "Input"
 msgstr "Įvestis"
 
-#: src/audacious/ui_preferences.c:1256
+#: src/audacious/ui_preferences.c:1254
 msgid "Effect"
 msgstr "Efektai"
 
-#: src/audacious/ui_preferences.c:1256
+#: src/audacious/ui_preferences.c:1254
 msgid "Visualization"
 msgstr "Vizualizacija"
 
-#: src/audacious/ui_preferences.c:1256
+#: src/audacious/ui_preferences.c:1254
 msgid "General"
 msgstr "Pagrindiniai"
 
-#: src/audacious/ui_preferences.c:1294
+#: src/audacious/ui_preferences.c:1292
 msgid "Audacious Preferences"
 msgstr "Audacious nustatymai"
 
-#: src/audacious/util.c:116
+#: src/audacious/util.c:115
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Nepavyko sukurti aplanko (%s): %s\n"
 
-#: src/audtool/handlers_playlist.c:274
+#: src/audtool/handlers_playlist.c:262
 msgid "Position not found."
 msgstr "Pozicija nerasta."
 
-#: src/audtool/handlers_vitals.c:63
+#: src/audtool/handlers_vitals.c:51
 msgid "No song playing."
 msgstr "Negroja jokia daina."
 
@@ -745,15 +553,15 @@ msgstr[0] "%d kanalas"
 msgstr[1] "%d kanalai"
 msgstr[2] "%d kanalų"
 
-#: src/libaudgui/about.c:51 src/libaudgui/about.c:112
+#: src/libaudgui/about.c:38
 msgid "Credits"
 msgstr "Padėkos"
 
-#: src/libaudgui/about.c:51
-msgid "Translators"
-msgstr "Vertėjai"
+#: src/libaudgui/about.c:38
+msgid "License"
+msgstr ""
 
-#: src/libaudgui/about.c:88
+#: src/libaudgui/about.c:74
 msgid "About Audacious"
 msgstr "Apie Audacious"
 
@@ -838,225 +646,225 @@ msgstr "Takelis"
 msgid "Length"
 msgstr "Trukmė"
 
-#: src/libaudgui/infowin.c:75
+#: src/libaudgui/infowin.c:74
 msgid "Acid Jazz"
 msgstr "Acid Jazz"
 
-#: src/libaudgui/infowin.c:76
+#: src/libaudgui/infowin.c:75
 msgid "Acid Rock"
 msgstr "Acid Rock"
 
-#: src/libaudgui/infowin.c:77
+#: src/libaudgui/infowin.c:76
 msgid "Ambient"
 msgstr "Ambient"
 
-#: src/libaudgui/infowin.c:78
+#: src/libaudgui/infowin.c:77
 msgid "Bebop"
 msgstr "Bebob"
 
-#: src/libaudgui/infowin.c:79
+#: src/libaudgui/infowin.c:78
 msgid "Bluegrass"
 msgstr "Bluegrass"
 
-#: src/libaudgui/infowin.c:80
+#: src/libaudgui/infowin.c:79
 msgid "Blues"
 msgstr "Blues"
 
-#: src/libaudgui/infowin.c:81
+#: src/libaudgui/infowin.c:80
 msgid "Chamber Music"
 msgstr "Chamber Music"
 
-#: src/libaudgui/infowin.c:82
+#: src/libaudgui/infowin.c:81
 msgid "Classical"
 msgstr "Classical"
 
-#: src/libaudgui/infowin.c:83
+#: src/libaudgui/infowin.c:82
 msgid "Country"
 msgstr "Country"
 
-#: src/libaudgui/infowin.c:84
+#: src/libaudgui/infowin.c:83
 msgid "Death Metal"
 msgstr "Death Metal"
 
-#: src/libaudgui/infowin.c:85
+#: src/libaudgui/infowin.c:84
 msgid "Disco"
 msgstr "Disco"
 
-#: src/libaudgui/infowin.c:86
+#: src/libaudgui/infowin.c:85
 msgid "Easy Listening"
 msgstr "Easy Listening"
 
-#: src/libaudgui/infowin.c:87
+#: src/libaudgui/infowin.c:86
 msgid "Folk"
 msgstr "Folk"
 
-#: src/libaudgui/infowin.c:88
+#: src/libaudgui/infowin.c:87
 msgid "Funk"
 msgstr "Funk"
 
-#: src/libaudgui/infowin.c:89
+#: src/libaudgui/infowin.c:88
 msgid "Gangsta Rap"
 msgstr "Gangsta Rap"
 
-#: src/libaudgui/infowin.c:90
+#: src/libaudgui/infowin.c:89
 msgid "Gospel"
 msgstr "Gospel"
 
-#: src/libaudgui/infowin.c:91
+#: src/libaudgui/infowin.c:90
 msgid "Grunge"
 msgstr "Grunge"
 
-#: src/libaudgui/infowin.c:92
+#: src/libaudgui/infowin.c:91
 msgid "Hard Rock"
 msgstr "Hard Rock"
 
-#: src/libaudgui/infowin.c:93
+#: src/libaudgui/infowin.c:92
 msgid "Heavy Metal"
 msgstr "Heavy Metal"
 
-#: src/libaudgui/infowin.c:94
+#: src/libaudgui/infowin.c:93
 msgid "Hip-hop"
 msgstr "Hip-Hop"
 
-#: src/libaudgui/infowin.c:95
+#: src/libaudgui/infowin.c:94
 msgid "House"
 msgstr "House"
 
-#: src/libaudgui/infowin.c:96
+#: src/libaudgui/infowin.c:95
 msgid "Jazz"
 msgstr "Jazz"
 
-#: src/libaudgui/infowin.c:97
+#: src/libaudgui/infowin.c:96
 msgid "Jungle"
 msgstr "Jungle"
 
-#: src/libaudgui/infowin.c:98
+#: src/libaudgui/infowin.c:97
 msgid "Metal"
 msgstr "Metal"
 
-#: src/libaudgui/infowin.c:99
+#: src/libaudgui/infowin.c:98
 msgid "New Age"
 msgstr "New Age"
 
-#: src/libaudgui/infowin.c:100
+#: src/libaudgui/infowin.c:99
 msgid "New Wave"
 msgstr "New Wave"
 
-#: src/libaudgui/infowin.c:101
+#: src/libaudgui/infowin.c:100
 msgid "Noise"
 msgstr "Noise"
 
-#: src/libaudgui/infowin.c:102
+#: src/libaudgui/infowin.c:101
 msgid "Pop"
 msgstr "Pop"
 
-#: src/libaudgui/infowin.c:103
+#: src/libaudgui/infowin.c:102
 msgid "Punk Rock"
 msgstr "Punk Rock"
 
-#: src/libaudgui/infowin.c:104
+#: src/libaudgui/infowin.c:103
 msgid "Rap"
 msgstr "Rap"
 
-#: src/libaudgui/infowin.c:105
+#: src/libaudgui/infowin.c:104
 msgid "Reggae"
 msgstr "Reggae"
 
-#: src/libaudgui/infowin.c:106
+#: src/libaudgui/infowin.c:105
 msgid "Rock"
 msgstr "Rock"
 
-#: src/libaudgui/infowin.c:107
+#: src/libaudgui/infowin.c:106
 msgid "Rock and Roll"
 msgstr "Rock and Roll"
 
-#: src/libaudgui/infowin.c:108
+#: src/libaudgui/infowin.c:107
 msgid "Rhythm and Blues"
 msgstr "Rhythm and Blues"
 
-#: src/libaudgui/infowin.c:109
+#: src/libaudgui/infowin.c:108
 msgid "Ska"
 msgstr "Ska"
 
-#: src/libaudgui/infowin.c:110
+#: src/libaudgui/infowin.c:109
 msgid "Soul"
 msgstr "Soul"
 
-#: src/libaudgui/infowin.c:111
+#: src/libaudgui/infowin.c:110
 msgid "Swing"
 msgstr "Swing"
 
-#: src/libaudgui/infowin.c:112
+#: src/libaudgui/infowin.c:111
 msgid "Techno"
 msgstr "Techno"
 
-#: src/libaudgui/infowin.c:113
+#: src/libaudgui/infowin.c:112
 msgid "Trip-hop"
 msgstr "Trip-Hop"
 
-#: src/libaudgui/infowin.c:177 src/libaudgui/infowin.c:366
-#: src/libaudgui/infowin.c:369 src/libaudgui/infowin.c:372
+#: src/libaudgui/infowin.c:176 src/libaudgui/infowin.c:365
+#: src/libaudgui/infowin.c:368 src/libaudgui/infowin.c:371
 msgid "<span size=\"small\">n/a</span>"
 msgstr "<span size=\"small\">n/a</span>"
 
-#: src/libaudgui/infowin.c:267
+#: src/libaudgui/infowin.c:266
 msgid "Metadata updated successfully"
 msgstr "Meta duomenys atnaujinti sėkmingai"
 
-#: src/libaudgui/infowin.c:272
+#: src/libaudgui/infowin.c:271
 msgid "Metadata updating failed"
 msgstr "Meta duomenų atnaujinti nepavyko"
 
-#: src/libaudgui/infowin.c:320
+#: src/libaudgui/infowin.c:319
 msgid "Track Information"
 msgstr "Takelio informacija"
 
-#: src/libaudgui/infowin.c:355
+#: src/libaudgui/infowin.c:354
 msgid "<span size=\"small\">Format:</span>"
 msgstr "<span size=\"small\">Formatas:</span>"
 
-#: src/libaudgui/infowin.c:359
+#: src/libaudgui/infowin.c:358
 msgid "<span size=\"small\">Quality:</span>"
 msgstr "<span size=\"small\">Kokybė:</span>"
 
-#: src/libaudgui/infowin.c:362
+#: src/libaudgui/infowin.c:361
 msgid "<span size=\"small\">Bitrate:</span>"
 msgstr "<span size=\"small\">Bitai per sekundę:</span>"
 
-#: src/libaudgui/infowin.c:392
+#: src/libaudgui/infowin.c:391
 msgid "<span size=\"small\">Title</span>"
 msgstr "<span size=\"small\">Pavadinimas</span>"
 
-#: src/libaudgui/infowin.c:404
+#: src/libaudgui/infowin.c:403
 msgid "<span size=\"small\">Artist</span>"
 msgstr "<span size=\"small\">Atlikėjas</span>"
 
-#: src/libaudgui/infowin.c:416
+#: src/libaudgui/infowin.c:415
 msgid "<span size=\"small\">Album</span>"
 msgstr "<span size=\"small\">Albumas</span>"
 
-#: src/libaudgui/infowin.c:428
+#: src/libaudgui/infowin.c:427
 msgid "<span size=\"small\">Comment</span>"
 msgstr "<span size=\"small\">Komentaras</span>"
 
-#: src/libaudgui/infowin.c:440
+#: src/libaudgui/infowin.c:439
 msgid "<span size=\"small\">Genre</span>"
 msgstr "<span size=\"small\">Žanras</span>"
 
-#: src/libaudgui/infowin.c:461
+#: src/libaudgui/infowin.c:460
 msgid "<span size=\"small\">Year</span>"
 msgstr "<span size=\"small\">Metai</span>"
 
-#: src/libaudgui/infowin.c:472
+#: src/libaudgui/infowin.c:471
 msgid "<span size=\"small\">Track Number</span>"
 msgstr "<span size=\"small\">Takelio numeris</span>"
 
-#: src/libaudgui/infowin.c:551
+#: src/libaudgui/infowin.c:550
 #, c-format
 msgid "%d kb/s"
 msgstr "%d kb/s"
 
-#: src/libaudgui/infowin.c:578
+#: src/libaudgui/infowin.c:577
 #, c-format
 msgid "No info available for %s.\n"
 msgstr "Nėra informacijos apie %s.\n"
@@ -1086,52 +894,52 @@ msgstr "Perrašyti %s?"
 msgid "Queue Manager"
 msgstr "Eilės redaktorius"
 
-#: src/libaudgui/ui_fileopener.c:108
+#: src/libaudgui/ui_fileopener.c:107
 msgid "Open Files"
 msgstr "Atverti failus"
 
-#: src/libaudgui/ui_fileopener.c:108
+#: src/libaudgui/ui_fileopener.c:107
 msgid "Add Files"
 msgstr "Pridėti failus"
 
-#: src/libaudgui/ui_fileopener.c:110
+#: src/libaudgui/ui_fileopener.c:109
 msgid "Close dialog on Open"
 msgstr "Atvėrus, užverti dialogą"
 
-#: src/libaudgui/ui_fileopener.c:110
+#: src/libaudgui/ui_fileopener.c:109
 msgid "Close dialog on Add"
 msgstr "Pridėjus, užverti dialogą"
 
-#: src/libaudgui/ui_jumptotrack.c:108 src/libaudgui/ui_jumptotrack.c:116
-#: src/libaudgui/ui_jumptotrack.c:335
+#: src/libaudgui/ui_jumptotrack.c:105 src/libaudgui/ui_jumptotrack.c:113
+#: src/libaudgui/ui_jumptotrack.c:332
 msgid "_Queue"
 msgstr "_Į eilę"
 
-#: src/libaudgui/ui_jumptotrack.c:114
+#: src/libaudgui/ui_jumptotrack.c:111
 msgid "Un_queue"
 msgstr "Iš _eilės"
 
-#: src/libaudgui/ui_jumptotrack.c:265
+#: src/libaudgui/ui_jumptotrack.c:262
 msgid "Jump to Song"
 msgstr "Peršokti į dainą"
 
-#: src/libaudgui/ui_jumptotrack.c:290
+#: src/libaudgui/ui_jumptotrack.c:287
 msgid "Filter: "
 msgstr "Filtruoti:"
 
-#: src/libaudgui/ui_jumptotrack.c:291
+#: src/libaudgui/ui_jumptotrack.c:288
 msgid "_Filter:"
 msgstr "_Filtruoti:"
 
-#: src/libaudgui/ui_jumptotrack.c:301
+#: src/libaudgui/ui_jumptotrack.c:298
 msgid "Remember"
 msgstr "Prisiminti"
 
-#: src/libaudgui/ui_jumptotrack.c:308
+#: src/libaudgui/ui_jumptotrack.c:305
 msgid "Clea_r"
 msgstr "Išvalyt_i"
 
-#: src/libaudgui/ui_jumptotrack.c:328
+#: src/libaudgui/ui_jumptotrack.c:325
 msgid "Close on Jump"
 msgstr "Užverti peršokant"
 
@@ -1171,61 +979,208 @@ msgstr ""
 "\n"
 "(Sekantys pranešimai paslėpti.)"
 
-#: src/libeggsmclient/eggdesktopfile.c:165
+#: src/libeggsmclient/eggdesktopfile.c:162
 msgid "File is not a valid .desktop file"
 msgstr "Šis failas nėra tinkamas .desktop failas"
 
-#: src/libeggsmclient/eggdesktopfile.c:191
+#: src/libeggsmclient/eggdesktopfile.c:188
 #, c-format
 msgid "Unrecognized desktop file Version '%s'"
 msgstr "Neatpažinta „desktop“ failo versija „%s“"
 
-#: src/libeggsmclient/eggdesktopfile.c:974
+#: src/libeggsmclient/eggdesktopfile.c:971
 #, c-format
 msgid "Starting %s"
 msgstr "Pradedama %s"
 
-#: src/libeggsmclient/eggdesktopfile.c:1116
+#: src/libeggsmclient/eggdesktopfile.c:1113
 msgid "Application does not accept documents on command line"
 msgstr "Programa nepriima dokumentų iš komandinės eilutės"
 
-#: src/libeggsmclient/eggdesktopfile.c:1184
+#: src/libeggsmclient/eggdesktopfile.c:1181
 #, c-format
 msgid "Unrecognized launch option: %d"
 msgstr "Neatpažinta paleisties pasirinktis: %d"
 
-#: src/libeggsmclient/eggdesktopfile.c:1391
+#: src/libeggsmclient/eggdesktopfile.c:1388
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
 msgstr "Negaliu perduot dokumento URI į darbastalio įrašą „Type=Link“"
 
-#: src/libeggsmclient/eggdesktopfile.c:1412
+#: src/libeggsmclient/eggdesktopfile.c:1409
 msgid "Not a launchable item"
 msgstr "Nepaleistinas elementas"
 
-#: src/libeggsmclient/eggsmclient.c:226
+#: src/libeggsmclient/eggsmclient.c:223
 msgid "Disable connection to session manager"
 msgstr "Uždrausti prisijungimą prie sesijos valdymo"
 
-#: src/libeggsmclient/eggsmclient.c:229
+#: src/libeggsmclient/eggsmclient.c:226
 msgid "Specify file containing saved configuration"
 msgstr "Nurodykite failą kuriame išsaugoti nustatymai"
 
-#: src/libeggsmclient/eggsmclient.c:229
+#: src/libeggsmclient/eggsmclient.c:226
 msgid "FILE"
 msgstr "FAILAS"
 
-#: src/libeggsmclient/eggsmclient.c:232
+#: src/libeggsmclient/eggsmclient.c:229
 msgid "Specify session management ID"
 msgstr "Nurodyk sesijos valdymo ID"
 
-#: src/libeggsmclient/eggsmclient.c:232
+#: src/libeggsmclient/eggsmclient.c:229
 msgid "ID"
 msgstr "ID"
 
-#: src/libeggsmclient/eggsmclient.c:253
+#: src/libeggsmclient/eggsmclient.c:250
 msgid "Session management options:"
 msgstr "Sesijos valdymo pasirinktys:"
 
-#: src/libeggsmclient/eggsmclient.c:254
+#: src/libeggsmclient/eggsmclient.c:251
 msgid "Show session management options"
 msgstr "Rodyti sesijos valdymo pasirinktis"
+
+#~ msgid "Core developers:"
+#~ msgstr "Autoriai:"
+
+#~ msgid "Graphics:"
+#~ msgstr "Grafika:"
+
+#~ msgid "Default skin:"
+#~ msgstr "Numatytoji išvaizda:"
+
+#~ msgid "Plugin development:"
+#~ msgstr "Įskiepių kūrėjai:"
+
+#~ msgid "Patch authors:"
+#~ msgstr "Pataisymų kūrėjai:"
+
+#~ msgid "1.x developers:"
+#~ msgstr "1.x kūrėjai:"
+
+#~ msgid "BMP Developers:"
+#~ msgstr "BMP kūrėjai:"
+
+#~ msgid "Argentinian Spanish:"
+#~ msgstr "Į ispanų(Argentina):"
+
+#~ msgid "Belarusian:"
+#~ msgstr "Į baltarusių k.:"
+
+#~ msgid "Basque:"
+#~ msgstr "Į Baskų k.:"
+
+#~ msgid "Brazilian Portuguese:"
+#~ msgstr "Į brazilų k. (portugalų dialektą):"
+
+#~ msgid "Breton:"
+#~ msgstr "Į bretonų k.:"
+
+#~ msgid "Bulgarian:"
+#~ msgstr "Į bulgarų k.:"
+
+#~ msgid "Catalan:"
+#~ msgstr "Į katalonų k.:"
+
+#~ msgid "Chinese:"
+#~ msgstr "Į kinų k.:"
+
+#~ msgid "Croatian:"
+#~ msgstr "Į kroatų k.:"
+
+#~ msgid "Czech:"
+#~ msgstr "Į čekų k.:"
+
+#~ msgid "Dutch:"
+#~ msgstr "Į olandų k.:"
+
+#~ msgid "Estonian:"
+#~ msgstr "Į estų k.:"
+
+#~ msgid "Finnish:"
+#~ msgstr "Į suomių k.:"
+
+#~ msgid "French:"
+#~ msgstr "Į prancūzų k.:"
+
+#~ msgid "German:"
+#~ msgstr "Į vokiečių k.:"
+
+#~ msgid "Georgian:"
+#~ msgstr "Į vokiečių k.:"
+
+#~ msgid "Greek:"
+#~ msgstr "Į graikų k.:"
+
+#~ msgid "Hindi:"
+#~ msgstr "Į hindi k.:"
+
+#~ msgid "Hungarian:"
+#~ msgstr "Į vengrų k.:"
+
+#~ msgid "Italian:"
+#~ msgstr "Į italų k.:"
+
+#~ msgid "Japanese:"
+#~ msgstr "Į japonų k.:"
+
+#~ msgid "Korean:"
+#~ msgstr "Į korėjiečių k.:"
+
+#~ msgid "Latvian:"
+#~ msgstr "Į latvių k.:"
+
+#~ msgid "Lithuanian:"
+#~ msgstr "Į lietuvių k.:"
+
+#~ msgid "Macedonian:"
+#~ msgstr "Į makedonų k.:"
+
+#~ msgid "Mexican Spanish:"
+#~ msgstr "Į Ispanų (Meksika) k.:"
+
+#~ msgid "Polish:"
+#~ msgstr "Į lenkų k.:"
+
+#~ msgid "Portuguese:"
+#~ msgstr "Į portugalų k.:"
+
+#~ msgid "Romanian:"
+#~ msgstr "Į rumunų k.:"
+
+#~ msgid "Russian:"
+#~ msgstr "Į rusų k.:"
+
+#~ msgid "Serbian (Latin):"
+#~ msgstr "Į serbų (lotynų) k."
+
+#~ msgid "Serbian (Cyrillic):"
+#~ msgstr "Į serbų (Kirilica) k.:"
+
+#~ msgid "Simplified Chinese:"
+#~ msgstr "Į Supaprastinta kinų k."
+
+#~ msgid "Slovak:"
+#~ msgstr "Į slovakų k.:"
+
+#~ msgid "Spanish:"
+#~ msgstr "Į ispanų k.:"
+
+#~ msgid "Swedish:"
+#~ msgstr "Į švedų k.:"
+
+#~ msgid "Traditional Chinese:"
+#~ msgstr "Į Tradicinę kinų k.:"
+
+#~ msgid "Turkish:"
+#~ msgstr "Į Turkų k.:"
+
+#~ msgid "Ukrainian:"
+#~ msgstr "Į ukrainiečių k.:"
+
+#~ msgid "Vietnamese:"
+#~ msgstr "Į Vietnamiečių k.:"
+
+#~ msgid "Welsh:"
+#~ msgstr "Į velsiečių k.:"
+
+#~ msgid "Translators"
+#~ msgstr "Vertėjai"
