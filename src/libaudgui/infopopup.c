@@ -134,7 +134,7 @@ static void infopopup_progress_stop (void)
      (0));
 }
 
-static void infopopup_add_category (GtkWidget * infopopup_data_table,
+static void infopopup_add_category (GtkWidget * infopopup_data_grid,
  const char * category, const char * header_data, const char * label_data,
  int position)
 {
@@ -156,17 +156,17 @@ static void infopopup_add_category (GtkWidget * infopopup_data_table,
      infopopup_data_info_header);
     g_object_set_data ((GObject *) infopopup, label_data,
      infopopup_data_info_label);
-    gtk_table_attach ((GtkTable *) infopopup_data_table,
-     infopopup_data_info_header, 0, 1, position, position + 1, GTK_FILL, 0, 0, 0);
-    gtk_table_attach ((GtkTable *) infopopup_data_table,
-     infopopup_data_info_label, 1, 2, position, position + 1, GTK_FILL, 0, 0, 0);
+    gtk_grid_attach ((GtkGrid *) infopopup_data_grid,
+     infopopup_data_info_header, 0, position, 1, 1);
+    gtk_grid_attach ((GtkGrid *) infopopup_data_grid,
+     infopopup_data_info_label, 1, position, 1, 1);
 }
 
 static void infopopup_create (void)
 {
     GtkWidget * infopopup_hbox;
     GtkWidget * infopopup_data_image;
-    GtkWidget * infopopup_data_table;
+    GtkWidget * infopopup_data_grid;
     GtkWidget * infopopup_progress;
 
     infopopup = gtk_window_new (GTK_WINDOW_POPUP);
@@ -184,34 +184,32 @@ static void infopopup_create (void)
     gtk_box_pack_start ((GtkBox *) infopopup_hbox, infopopup_data_image, FALSE,
      FALSE, 0);
 
-    infopopup_data_table = gtk_table_new (8, 2, FALSE);
-    gtk_table_set_row_spacings ((GtkTable *) infopopup_data_table, 0);
-    gtk_table_set_col_spacings ((GtkTable *) infopopup_data_table, 6);
-    gtk_box_pack_start ((GtkBox *) infopopup_hbox, infopopup_data_table, TRUE,
+    infopopup_data_grid = gtk_grid_new ();
+    gtk_grid_set_column_spacing ((GtkGrid *) infopopup_data_grid, 6);
+    gtk_box_pack_start ((GtkBox *) infopopup_hbox, infopopup_data_grid, TRUE,
      TRUE, 0);
 
-    infopopup_add_category (infopopup_data_table, _("Title"), "header_title",
+    infopopup_add_category (infopopup_data_grid, _("Title"), "header_title",
      "label_title", 0);
-    infopopup_add_category (infopopup_data_table, _("Artist"), "header_artist",
+    infopopup_add_category (infopopup_data_grid, _("Artist"), "header_artist",
      "label_artist", 1);
-    infopopup_add_category (infopopup_data_table, _("Album"), "header_album",
+    infopopup_add_category (infopopup_data_grid, _("Album"), "header_album",
      "label_album", 2);
-    infopopup_add_category (infopopup_data_table, _("Genre"), "header_genre",
-     "label_genre", 3);
-    infopopup_add_category (infopopup_data_table, _("Year"), "header_year",
+    infopopup_add_category (infopopup_data_grid, _("Genre"), "header_genre",
+     "label_genre",3);
+    infopopup_add_category (infopopup_data_grid, _("Year"), "header_year",
      "label_year", 4);
-    infopopup_add_category (infopopup_data_table, _("Track"),
+    infopopup_add_category (infopopup_data_grid, _("Track"),
      "header_tracknum", "label_tracknum", 5);
-    infopopup_add_category (infopopup_data_table, _("Length"),
+    infopopup_add_category (infopopup_data_grid, _("Length"),
      "header_tracklen", "label_tracklen", 6);
-
-    gtk_table_set_row_spacing ((GtkTable *) infopopup_data_table, 6, 6);
 
     /* track progress */
     infopopup_progress = gtk_progress_bar_new ();
+    gtk_widget_set_margin_top (infopopup_progress, 6);
     gtk_progress_bar_set_text ((GtkProgressBar *) infopopup_progress, "");
-    gtk_table_attach ((GtkTable *) infopopup_data_table, infopopup_progress, 0,
-     2, 7, 8, GTK_FILL, 0, 0, 0);
+    gtk_grid_attach ((GtkGrid *) infopopup_data_grid,
+     infopopup_progress, 0, 7, 2, 1);
     g_object_set_data ((GObject *) infopopup, "file", NULL);
     g_object_set_data ((GObject *) infopopup, "progressbar", infopopup_progress);
     infopopup_progress_init ();
