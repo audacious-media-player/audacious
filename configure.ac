@@ -217,39 +217,6 @@ AC_SUBST([REGEX_LIBS])
 AC_SUBST([REGEX_CFLAGS])
 
 ### ---------------------------------------------------------------------------
-dnl Session management support
-dnl ==========================
-
-AUD_ARG_ENABLE([sm], [yes],
-[session management],
-[
-    PKG_CHECK_MODULES([SM], [sm >= 1.0], [
-        enable_sm="yes"
-    ],[
-        enable_sm="no"
-    ])
-
-    AC_SUBST([SM_CFLAGS])
-    AC_SUBST([SM_LIBS])
-
-    PKG_CHECK_MODULES([ICE], [ice >= 1.0],
-     [enable_sm="${enable_sm}"],
-     [enable_sm="no"])
-
-    AC_SUBST([ICE_CFLAGS])
-    AC_SUBST([ICE_LIBS])
-
-    PKG_CHECK_MODULES(GLIB214, glib-2.0 >= 2.14, enable_sm=$enable_sm,
-     enable_sm=no)
-
-    if test $enable_sm = yes ; then
-        AC_DEFINE(USE_EGGSM, 1, Define if session management should be used)
-    fi
-])
-
-AUD_CONDITIONAL([USE_EGGSM], [enable_sm])
-
-### ---------------------------------------------------------------------------
 dnl Define plugin directories
 dnl =========================
 plugindir="$libdir/audacious"
@@ -321,7 +288,6 @@ echo "  Allow user plugin dir:                  $enable_user_plugin_dir"
 echo ""
 echo "  Automatic character code detection:     $enable_chardet"
 echo "  D-Bus support:                          $enable_dbus"
-echo "  Session management (eggsm)              $enable_sm"
 echo ""
 
 if test "x$AUDACIOUS_PATH" != "xno" && test "x$prefix/bin/audacious" != "x$AUDACIOUS_PATH"; then

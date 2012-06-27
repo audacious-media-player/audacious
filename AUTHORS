@@ -33,14 +33,12 @@ Core executable (src/audacious):
   Michael Hanselmann
   John Lindgren
   Michał Lipski
-  David Mohr
   Tomasz Moń
   William Pitcock
   Andrew Shadoura
   Ben Tucker
   Yoshiki Yazawa
   Eugene Zagidullin
-  Ivan Zlatev
 
 Command line tool (src/audtool):
  * Copyright © 2005-2011:
@@ -94,8 +92,3 @@ Tagging support (src/libaudtag):
   William Pitcock
   Paula Stanciu
   Tony Vroon
-
-Session management support (src/libeggsmclient):
- * Copyright © 1999-2000 Red Hat, Inc.
- * Copyright © 2001 George Lebl
- * Copyright © 2007 Novell, Inc.

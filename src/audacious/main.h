@@ -54,9 +54,6 @@ void mpris_signals_cleanup (void);
 /* signals.c */
 void signals_init (void);
 
-/* smclient.c */
-void smclient_init (void);
-
 /* ui_albumart.c */
 char * get_associated_image_file (const char * filename);
 

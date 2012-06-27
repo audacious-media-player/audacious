@@ -37,11 +37,6 @@
 #include "dbus.h"
 #endif
 
-#ifdef USE_EGGSM
-#include "eggdesktopfile.h"
-#include "eggsmclient.h"
-#endif
-
 #include "debug.h"
 #include "drct.h"
 #include "equalizer.h"
@@ -262,9 +257,6 @@ static void parse_options (int * argc, char *** argv)
     context = g_option_context_new(_("- play multimedia files"));
     g_option_context_add_main_entries(context, cmd_entries, PACKAGE);
     g_option_context_add_group(context, gtk_get_option_group(FALSE));
-#ifdef USE_EGGSM
-    g_option_context_add_group(context, egg_sm_client_get_option_group());
-#endif
 
     if (!g_option_context_parse(context, argc, argv, &error))
     {
@@ -452,11 +444,6 @@ static void init_one (void)
     bindtextdomain (PACKAGE "-plugins", aud_paths[AUD_PATH_LOCALE_DIR]);
     bind_textdomain_codeset (PACKAGE "-plugins", "UTF-8");
     textdomain (PACKAGE);
-
-#ifdef USE_EGGSM
-    egg_sm_client_set_mode (EGG_SM_CLIENT_MODE_NORMAL);
-    egg_set_desktop_file (aud_paths[AUD_PATH_DESKTOP_FILE]);
-#endif
 }
 
 static void init_two (int * p_argc, char * * * p_argv)
@@ -477,9 +464,6 @@ static void init_two (int * p_argc, char * * * p_argv)
 
 #ifdef HAVE_SIGWAIT
     signals_init ();
-#endif
-#ifdef USE_EGGSM
-    smclient_init ();
 #endif
 
     AUDDBG ("Loading lowlevel plugins.\n");

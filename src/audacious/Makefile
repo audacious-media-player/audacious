@@ -28,7 +28,6 @@ SRCS = adder.c \
        probe.c \
        probe-buffer.c \
        signals.c								\
-       smclient.c \
        ui_plugin_menu.c \
        ui_preferences.c							\
        util.c									\
@@ -79,12 +78,6 @@ DATA = images/about-logo.png				\
 
 CLEAN = build_stamp.c dbus-client-bindings.h dbus-server-bindings.h
 
-ifeq ($(USE_EGGSM),yes)
-EXT_DEPS += ../libeggsmclient/libeggsmclient.a
-EGGSM_LIBS = ../libeggsmclient/libeggsmclient.a ${SM_LIBS} ${ICE_LIBS}
-EGGSM_CFLAGS =  -I../libeggsmclient ${SM_CFLAGS} ${ICE_CFLAGS}
-endif
-
 include ../../buildsys.mk
 
 ifeq ($(USE_DBUS),yes)
@@ -104,7 +97,6 @@ CPPFLAGS := -I.. -I../.. \
 		${DBUS_CFLAGS}			\
 		${REGEX_CFLAGS}			\
 		-D_AUDACIOUS_CORE		\
-		${EGGSM_CFLAGS}			\
 		${LIBGUESS_CFLAGS}
 
 # Essential for efficient FFTs. --jlindgren
@@ -115,7 +107,6 @@ LIBS := -L../libaudcore -laudcore \
         -L../libaudtag -laudtag \
         ${LIBS} -lm \
 		${LIBINTL}						\
-		${EGGSM_LIBS}					\
 		${GLIB_LIBS}					\
 		${GMODULE_LIBS} \
 		${GTHREAD_LIBS} \
