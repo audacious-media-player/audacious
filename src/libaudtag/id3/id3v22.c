@@ -507,9 +507,6 @@ bool_t id3v22_read_tag (Tuple * tuple, VFSFile * handle)
           case ID3_COMMENT:
             decode_comment (tuple, data, size);
             break;
-          case ID3_ENCODER:
-            associate_string (tuple, -1, "encoder", data, size);
-            break;
           case ID3_TXX:
             decode_txx (tuple, data, size);
             break;

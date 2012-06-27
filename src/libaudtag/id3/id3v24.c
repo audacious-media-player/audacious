@@ -885,9 +885,6 @@ static bool_t id3v24_read_tag (Tuple * tuple, VFSFile * handle)
           case ID3_PRIVATE:
             decode_private_info (tuple, data, size);
             break;
-          case ID3_ENCODER:
-            associate_string (tuple, -1, "encoder", data, size);
-            break;
           case ID3_RVA2:
             decode_rva2 (tuple, data, size);
             break;
