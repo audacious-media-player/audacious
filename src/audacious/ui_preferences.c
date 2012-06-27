@@ -18,9 +18,6 @@
  * the use of this software.
  */
 
-#include <string.h>
-#include <stdio.h>
-
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
 
@@ -1020,7 +1017,7 @@ create_playlist_category(void)
     GtkWidget *alignment55;
     GtkWidget *label60;
     GtkWidget *alignment56;
-    GtkWidget *table6;
+    GtkWidget *grid6;
     GtkWidget *titlestring_help_button;
     GtkWidget *image1;
     GtkWidget *label62;
@@ -1068,15 +1065,13 @@ create_playlist_category(void)
     gtk_box_pack_start (GTK_BOX (vbox5), alignment56, FALSE, FALSE, 0);
     gtk_alignment_set_padding (GTK_ALIGNMENT (alignment56), 0, 0, 12, 0);
 
-    table6 = gtk_table_new (2, 3, FALSE);
-    gtk_container_add (GTK_CONTAINER (alignment56), table6);
-    gtk_table_set_row_spacings (GTK_TABLE (table6), 4);
-    gtk_table_set_col_spacings (GTK_TABLE (table6), 12);
+    grid6 = gtk_grid_new ();
+    gtk_container_add (GTK_CONTAINER (alignment56), grid6);
+    gtk_grid_set_row_spacing (GTK_GRID (grid6), 4);
+    gtk_grid_set_column_spacing (GTK_GRID (grid6), 12);
 
     titlestring_help_button = gtk_button_new ();
-    gtk_table_attach (GTK_TABLE (table6), titlestring_help_button, 2, 3, 1, 2,
-                      (GtkAttachOptions) (0),
-                      (GtkAttachOptions) (0), 0, 0);
+    gtk_grid_attach (GTK_GRID (grid6), titlestring_help_button, 2, 1, 1, 1);
 
     gtk_widget_set_can_focus (titlestring_help_button, FALSE);
     gtk_widget_set_tooltip_text (titlestring_help_button, _("Show information about titlestring format"));
@@ -1088,24 +1083,18 @@ create_playlist_category(void)
 
     GtkWidget * titlestring_cbox;
     create_titlestring_widgets (& titlestring_cbox, & titlestring_entry);
-    gtk_table_attach (GTK_TABLE (table6), titlestring_cbox, 1, 3, 0, 1,
-                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                      (GtkAttachOptions) (0), 0, 0);
-    gtk_table_attach (GTK_TABLE (table6), titlestring_entry, 1, 2, 1, 2,
-                      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                      (GtkAttachOptions) (0), 0, 0);
+    gtk_widget_set_hexpand (titlestring_cbox, TRUE);
+    gtk_widget_set_hexpand (titlestring_entry, TRUE);
+    gtk_grid_attach (GTK_GRID (grid6), titlestring_cbox, 1, 0, 1, 1);
+    gtk_grid_attach (GTK_GRID (grid6), titlestring_entry, 1, 1, 1, 1);
 
     label62 = gtk_label_new (_("Custom string:"));
-    gtk_table_attach (GTK_TABLE (table6), label62, 0, 1, 1, 2,
-                      (GtkAttachOptions) (0),
-                      (GtkAttachOptions) (0), 0, 0);
+    gtk_grid_attach (GTK_GRID (grid6), label62, 0, 1, 1, 1);
     gtk_label_set_justify (GTK_LABEL (label62), GTK_JUSTIFY_RIGHT);
     gtk_misc_set_alignment (GTK_MISC (label62), 1, 0.5);
 
     label61 = gtk_label_new (_("Title format:"));
-    gtk_table_attach (GTK_TABLE (table6), label61, 0, 1, 0, 1,
-                      (GtkAttachOptions) (0),
-                      (GtkAttachOptions) (0), 0, 0);
+    gtk_grid_attach (GTK_GRID (grid6), label61, 0, 0, 1, 1);
     gtk_label_set_justify (GTK_LABEL (label61), GTK_JUSTIFY_RIGHT);
     gtk_misc_set_alignment (GTK_MISC (label61), 1, 0.5);
 
