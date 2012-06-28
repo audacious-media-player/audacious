@@ -679,6 +679,19 @@ EXPORT void audgui_list_delete_rows (GtkWidget * list, int at, int rows)
      ((GtkTreeView *) list);
     g_return_if_fail (at >= 0 && rows >= 0 && at + rows <= model->rows);
 
+    /* If we delete the last selected row, GtkTreeView tries to be helpful by
+     * selecting another one near it.  As a workaround, detect this case and
+     * clear the selection when it occurs. */
+    GtkTreeSelection * sel = gtk_tree_view_get_selection ((GtkTreeView *) list);
+    int selected = gtk_tree_selection_count_selected_rows (sel);
+
+    for (int i = at; i < at + rows; i ++)
+    {
+        GtkTreeIter iter = {.user_data = GINT_TO_POINTER (i)};
+        if (gtk_tree_selection_iter_is_selected (sel, & iter))
+            selected --;
+    }
+
     model->rows -= rows;
     if (model->highlight >= at + rows)
         model->highlight -= rows;
@@ -690,6 +703,9 @@ EXPORT void audgui_list_delete_rows (GtkWidget * list, int at, int rows)
 
     while (rows --)
         gtk_tree_model_row_deleted ((GtkTreeModel *) model, path);
+
+    if (! selected)
+        gtk_tree_selection_unselect_all (sel);
 
     gtk_tree_path_free (path);
     model->blocked = FALSE;
