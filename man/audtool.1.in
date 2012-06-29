@@ -267,19 +267,11 @@ This manual page was written by Adam Cecile <gandalf@le-vert.net> and
 Kiyoshi Aman <kiyoshi@atheme.org>. Some additional tweaks were done by
 William Pitcock <nenolod@atheme.org> and Tony Vroon <chainsaw@gentoo.org>.
 .PP
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU General Public License, Version 2 or any
-later version published by the Free Software Foundation.
-.PP
-The complete text of the GNU General Public License is available in the
-source code of Audacious, and is typically included with binary packages
-as well.
-.PP
-If installed with an operating system, see your Operating System's
-documentation for licensing details.
+This work is licensed under a Creative Commons Attribution 3.0 Unported License
+<http://creativecommons.org/licenses/by/3.0/>.
 
 .SH "SEE ALSO"
-.BR audacious2 (1)
+.BR audacious (1)
 
 .SH WEBSITE
 .I http://audacious-media-player.org
