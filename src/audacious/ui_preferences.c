@@ -704,51 +704,46 @@ static void on_cbox_changed_string (GtkComboBox * combobox, PreferencesWidget * 
 
 static void fill_cbox (GtkWidget * combobox, PreferencesWidget * widget)
 {
-    unsigned int i=0,index=0;
-
-    for (i = 0; i < widget->data.combo.n_elements; i ++)
+    for (int i = 0; i < widget->data.combo.n_elements; i ++)
         gtk_combo_box_text_append_text ((GtkComboBoxText *) combobox,
          _(widget->data.combo.elements[i].label));
 
-    if (widget->data.combo.enabled) {
-        switch (widget->cfg_type) {
-            case VALUE_INT:
-                g_signal_connect(combobox, "changed",
-                                 G_CALLBACK(on_cbox_changed_int), widget);
+    switch (widget->cfg_type)
+    {
+    case VALUE_INT:;
+        int ivalue = widget_get_int (widget);
 
-                int ivalue = widget_get_int (widget);
-
-                for(i=0; i<widget->data.combo.n_elements; i++) {
-                    if (GPOINTER_TO_INT (widget->data.combo.elements[i].value) == ivalue)
-                    {
-                        index = i;
-                        break;
-                    }
-                }
+        for (int i = 0; i < widget->data.combo.n_elements; i++)
+        {
+            if (GPOINTER_TO_INT (widget->data.combo.elements[i].value) == ivalue)
+            {
+                gtk_combo_box_set_active ((GtkComboBox *) combobox, i);
                 break;
-            case VALUE_STRING:
-                g_signal_connect(combobox, "changed",
-                                 G_CALLBACK(on_cbox_changed_string), widget);
-
-                char * value = widget_get_string (widget);
-
-                for(i=0; i<widget->data.combo.n_elements; i++) {
-                    if (value && ! strcmp ((char *) widget->data.combo.elements[i].value, value))
-                    {
-                        index = i;
-                        break;
-                    }
-                }
-
-                g_free (value);
-                break;
-            default:
-                break;
+            }
         }
-        gtk_combo_box_set_active(GTK_COMBO_BOX(combobox), index);
-    } else {
-        gtk_combo_box_set_active(GTK_COMBO_BOX(combobox), -1);
-        gtk_widget_set_sensitive(GTK_WIDGET(combobox), 0);
+
+        g_signal_connect (combobox, "changed", (GCallback) on_cbox_changed_int, (void *) widget);
+        break;
+
+    case VALUE_STRING:;
+        char * value = widget_get_string (widget);
+
+        for(int i = 0; i < widget->data.combo.n_elements; i++)
+        {
+            if (value && ! strcmp (widget->data.combo.elements[i].value, value))
+            {
+                gtk_combo_box_set_active ((GtkComboBox *) combobox, i);
+                break;
+            }
+        }
+
+        g_free (value);
+
+        g_signal_connect (combobox, "changed", (GCallback) on_cbox_changed_string, (void *) widget);
+        break;
+
+    default:
+        break;
     }
 }
 
