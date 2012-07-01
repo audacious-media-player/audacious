@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-07-01 14:46-0400\n"
-"PO-Revision-Date: 2012-06-24 17:44+0000\n"
+"POT-Creation-Date: 2012-07-01 14:54-0400\n"
+"PO-Revision-Date: 2012-07-01 18:49+0000\n"
 "Last-Translator: jlindgren <john.lindgren@aol.com>\n"
 "Language-Team: Chinese (traditional)\n"
 "Language: zh_TW\n"
@@ -964,45 +964,3 @@ msgid ""
 msgstr ""
 "\n"
 "（詳細訊息已被隱藏。）"
-
-#~ msgid "File is not a valid .desktop file"
-#~ msgstr "無效的 .desktop 檔案"
-
-#~ msgid "Unrecognized desktop file Version '%s'"
-#~ msgstr "無法辨識捷徑版本 '%s'"
-
-#~ msgid "Starting %s"
-#~ msgstr "啟動 %s 中"
-
-#~ msgid "Application does not accept documents on command line"
-#~ msgstr "應用程式不接受來自命令列的檔案參數"
-
-#~ msgid "Unrecognized launch option: %d"
-#~ msgstr "無效的啟動選項: %d"
-
-#~ msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-#~ msgstr "無法將檔案的 URI 參數傳給一個類型為連結的捷徑"
-
-#~ msgid "Not a launchable item"
-#~ msgstr "非可執行檔"
-
-#~ msgid "Disable connection to session manager"
-#~ msgstr "關閉通往工作階段管理員的連線"
-
-#~ msgid "Specify file containing saved configuration"
-#~ msgstr "指定設定檔"
-
-#~ msgid "FILE"
-#~ msgstr "檔案"
-
-#~ msgid "Specify session management ID"
-#~ msgstr "指定工作階段 ID"
-
-#~ msgid "ID"
-#~ msgstr "ID"
-
-#~ msgid "Session management options:"
-#~ msgstr "工作階段選項:"
-
-#~ msgid "Show session management options"
-#~ msgstr "顯示工作階段選項"

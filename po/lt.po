@@ -4,6 +4,7 @@
 #
 # Translators:
 #   <>, 2012.
+# Algimantas Margevičius <gymka@archlinux.lt>, 2012.
 # Algimantas Margevičius <gymka@mail.ru>, 2011, 2012.
 # Algimantas Margevičius <margevicius.algimantas@gmail.com>, 2011, 2012.
 # Gymka <gymka@mail.ru>, 2011.
@@ -12,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-07-01 14:46-0400\n"
-"PO-Revision-Date: 2012-06-24 17:44+0000\n"
+"POT-Creation-Date: 2012-07-01 14:54-0400\n"
+"PO-Revision-Date: 2012-07-01 18:48+0000\n"
 "Last-Translator: jlindgren <john.lindgren@aol.com>\n"
 "Language-Team: Lithuanian\n"
 "Language: lt\n"
@@ -559,7 +560,7 @@ msgstr "Padėkos"
 
 #: src/libaudgui/about.c:38
 msgid "License"
-msgstr ""
+msgstr "Licencija"
 
 #: src/libaudgui/about.c:74
 msgid "About Audacious"
@@ -978,45 +979,3 @@ msgid ""
 msgstr ""
 "\n"
 "(Sekantys pranešimai paslėpti.)"
-
-#~ msgid "File is not a valid .desktop file"
-#~ msgstr "Šis failas nėra tinkamas .desktop failas"
-
-#~ msgid "Unrecognized desktop file Version '%s'"
-#~ msgstr "Neatpažinta „desktop“ failo versija „%s“"
-
-#~ msgid "Starting %s"
-#~ msgstr "Pradedama %s"
-
-#~ msgid "Application does not accept documents on command line"
-#~ msgstr "Programa nepriima dokumentų iš komandinės eilutės"
-
-#~ msgid "Unrecognized launch option: %d"
-#~ msgstr "Neatpažinta paleisties pasirinktis: %d"
-
-#~ msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-#~ msgstr "Negaliu perduot dokumento URI į darbastalio įrašą „Type=Link“"
-
-#~ msgid "Not a launchable item"
-#~ msgstr "Nepaleistinas elementas"
-
-#~ msgid "Disable connection to session manager"
-#~ msgstr "Uždrausti prisijungimą prie sesijos valdymo"
-
-#~ msgid "Specify file containing saved configuration"
-#~ msgstr "Nurodykite failą kuriame išsaugoti nustatymai"
-
-#~ msgid "FILE"
-#~ msgstr "FAILAS"
-
-#~ msgid "Specify session management ID"
-#~ msgstr "Nurodyk sesijos valdymo ID"
-
-#~ msgid "ID"
-#~ msgstr "ID"
-
-#~ msgid "Session management options:"
-#~ msgstr "Sesijos valdymo pasirinktys:"
-
-#~ msgid "Show session management options"
-#~ msgstr "Rodyti sesijos valdymo pasirinktis"

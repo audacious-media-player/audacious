@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-07-01 14:46-0400\n"
-"PO-Revision-Date: 2012-06-24 17:44+0000\n"
+"POT-Creation-Date: 2012-07-01 14:54-0400\n"
+"PO-Revision-Date: 2012-07-01 18:49+0000\n"
 "Last-Translator: jlindgren <john.lindgren@aol.com>\n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
@@ -977,45 +977,3 @@ msgid ""
 msgstr ""
 "\n"
 "(Pesan lebih lanjut telah tersembunyi.)"
-
-#~ msgid "File is not a valid .desktop file"
-#~ msgstr "Berkas ini bukanlah berkas .desktop yang valid"
-
-#~ msgid "Unrecognized desktop file Version '%s'"
-#~ msgstr "Versi '%s' berkas desktop tidak dikenal"
-
-#~ msgid "Starting %s"
-#~ msgstr "Dimulai %s"
-
-#~ msgid "Application does not accept documents on command line"
-#~ msgstr "Aplikasi tidak menerima dokumen pada baris perintah"
-
-#~ msgid "Unrecognized launch option: %d"
-#~ msgstr "Opsi luncuran: %d tidak dikenal"
-
-#~ msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-#~ msgstr "Tak bisa melewatkan URI dokumen ke suatu entri desktop 'Type=Link'"
-
-#~ msgid "Not a launchable item"
-#~ msgstr "Bukan barang luncuran"
-
-#~ msgid "Disable connection to session manager"
-#~ msgstr "Nonaktifkan koneksi ke manajer sesi"
-
-#~ msgid "Specify file containing saved configuration"
-#~ msgstr "Tentukan berkas yang mengandung konfigurasi yang telah tersimpan"
-
-#~ msgid "FILE"
-#~ msgstr "BERKAS"
-
-#~ msgid "Specify session management ID"
-#~ msgstr "Tentukan manajemen sesi ID "
-
-#~ msgid "ID"
-#~ msgstr "ID"
-
-#~ msgid "Session management options:"
-#~ msgstr "Pilihan sesi manajemen"
-
-#~ msgid "Show session management options"
-#~ msgstr "Tampilkan pilihan sesi manajemen"

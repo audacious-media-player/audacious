@@ -5,12 +5,13 @@
 # Translators:
 # Ivar Smolin <okul at linux ee>, 2007.
 # Ivar Smolin <okul@linux.ee>, 2012.
+#   <john.lindgren@aol.com>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-07-01 14:46-0400\n"
-"PO-Revision-Date: 2012-06-24 17:44+0000\n"
+"POT-Creation-Date: 2012-07-01 15:00-0400\n"
+"PO-Revision-Date: 2012-07-01 18:58+0000\n"
 "Last-Translator: jlindgren <john.lindgren@aol.com>\n"
 "Language-Team: Estonian\n"
 "Language: et\n"
@@ -552,7 +553,7 @@ msgstr "Autorid"
 
 #: src/libaudgui/about.c:38
 msgid "License"
-msgstr ""
+msgstr "Litsents"
 
 #: src/libaudgui/about.c:74
 msgid "About Audacious"
@@ -971,46 +972,3 @@ msgid ""
 msgstr ""
 "\n"
 "(Ülejäänud sõnumid peidetakse.)"
-
-#~ msgid "File is not a valid .desktop file"
-#~ msgstr "Fail pole korrektne .desktop-fail"
-
-#~ msgid "Unrecognized desktop file Version '%s'"
-#~ msgstr "Töölauafaili tundmatu versioon '%s'"
-
-#~ msgid "Starting %s"
-#~ msgstr "Faili %s käivitamine"
-
-#~ msgid "Application does not accept documents on command line"
-#~ msgstr "Rakendus ei toeta käsurealt määratud dokumente"
-
-#~ msgid "Unrecognized launch option: %d"
-#~ msgstr "Arusaamatu käivitusvõti: %d"
-
-#~ msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-#~ msgstr ""
-#~ "Dokumendi URI-sid pole võimalik 'Liik=Viit' tüüpi töölauakirjele edastada"
-
-#~ msgid "Not a launchable item"
-#~ msgstr "Pole käivitatav kirje"
-
-#~ msgid "Disable connection to session manager"
-#~ msgstr "Seansihalduriga ühendumise keelamine"
-
-#~ msgid "Specify file containing saved configuration"
-#~ msgstr "Salvestatud seadistusi sisaldava faili määramine"
-
-#~ msgid "FILE"
-#~ msgstr "FAIL"
-
-#~ msgid "Specify session management ID"
-#~ msgstr "Seandihalduse ID määramine"
-
-#~ msgid "ID"
-#~ msgstr "ID"
-
-#~ msgid "Session management options:"
-#~ msgstr "Seansihalduse valikud:"
-
-#~ msgid "Show session management options"
-#~ msgstr "Seansihalduse valikute näitamine"

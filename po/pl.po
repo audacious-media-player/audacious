@@ -4,6 +4,7 @@
 #
 # Translators:
 # Bartosz Kosiorek <gang65@poczta.onet.pl>, 2003.
+#   <felikstayson@o2.pl>, 2012.
 # GNOME PL Team <translators@gnome.pl>, 2004.
 # Grzegorz Kowal <g_kowal@poczta.onet.pl>, 2000, 2001.
 # Piotr Sokół <psokol@jabster.pl>, 2012.
@@ -12,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-07-01 14:46-0400\n"
-"PO-Revision-Date: 2012-06-24 17:44+0000\n"
+"POT-Creation-Date: 2012-07-01 14:54-0400\n"
+"PO-Revision-Date: 2012-07-01 18:48+0000\n"
 "Last-Translator: jlindgren <john.lindgren@aol.com>\n"
 "Language-Team: Polish\n"
 "Language: pl\n"
@@ -154,12 +155,12 @@ msgstr ""
 #: src/audacious/plugin-preferences.c:50
 #, c-format
 msgid "About %s"
-msgstr ""
+msgstr "Około %s"
 
 #: src/audacious/plugin-preferences.c:88
 #, c-format
 msgid "%s Settings"
-msgstr ""
+msgstr "%s Ustawienia"
 
 #: src/audacious/ui_preferences.c:69
 msgid "Audio"
@@ -175,7 +176,7 @@ msgstr "Lista odtwarzania"
 
 #: src/audacious/ui_preferences.c:72
 msgid "Song Info"
-msgstr ""
+msgstr "Informacje o utworze"
 
 #: src/audacious/ui_preferences.c:73
 msgid "Plugins"
@@ -396,27 +397,27 @@ msgstr "Opóźnienie wczytywania metadanych nagrań do czasu ich odtworzenia"
 
 #: src/audacious/ui_preferences.c:205
 msgid "<b>Album Art</b>"
-msgstr ""
+msgstr "<b>Okładka albumu</b>"
 
 #: src/audacious/ui_preferences.c:206
 msgid "Search for images matching these words (comma-separated):"
-msgstr ""
+msgstr "Wyszukaj obrazy pasujące do tych słów (oddzielone przecinkiem):"
 
 #: src/audacious/ui_preferences.c:208
 msgid "Exclude images matching these words (comma-separated):"
-msgstr ""
+msgstr "Wyklucz obrazy pasujące do tych słów (oddzielone przecinkiem):"
 
 #: src/audacious/ui_preferences.c:210
 msgid "Search for images matching song file name"
-msgstr ""
+msgstr "Wyszukaj obrazy pasujące do nazwy pliku utworu"
 
 #: src/audacious/ui_preferences.c:212
 msgid "Search recursively"
-msgstr ""
+msgstr "Wyszukaj rekurencyjnie"
 
 #: src/audacious/ui_preferences.c:214
 msgid "Search depth:"
-msgstr ""
+msgstr "Poziom wyszukiwania:"
 
 #: src/audacious/ui_preferences.c:217
 msgid "<b>Popup Information</b>"
@@ -424,15 +425,15 @@ msgstr "<b>Informacje podręczne</b>"
 
 #: src/audacious/ui_preferences.c:218
 msgid "Show popup information"
-msgstr ""
+msgstr "Pokaż wyskakujące informacje"
 
 #: src/audacious/ui_preferences.c:220
 msgid "Popup delay (tenths of a second):"
-msgstr ""
+msgstr "Opóźnienie wyskakujących informacji (dziesiąte sekundy)"
 
 #: src/audacious/ui_preferences.c:223
 msgid "Show time scale for current song"
-msgstr ""
+msgstr "Pokaż skalę czasową dla bieżącej piosenki"
 
 #: src/audacious/ui_preferences.c:237
 msgid "TITLE"
@@ -558,7 +559,7 @@ msgstr "Zasługi"
 
 #: src/libaudgui/about.c:38
 msgid "License"
-msgstr ""
+msgstr "Licencja"
 
 #: src/libaudgui/about.c:74
 msgid "About Audacious"
@@ -639,11 +640,11 @@ msgstr "Przedwzm."
 
 #: src/libaudgui/infopopup.c:202
 msgid "Track"
-msgstr ""
+msgstr "Utwór"
 
 #: src/libaudgui/infopopup.c:204
 msgid "Length"
-msgstr ""
+msgstr "Długość"
 
 #: src/libaudgui/infowin.c:74
 msgid "Acid Jazz"
@@ -874,7 +875,7 @@ msgstr "Przechodzenie do czasu"
 
 #: src/libaudgui/jump-to-time.c:61
 msgid "Enter time (minutes:seconds):"
-msgstr ""
+msgstr "Wprowadź czas (minuty:sekundy):"
 
 #: src/libaudgui/playlists.c:33
 msgid "Export Playlist"
@@ -968,7 +969,7 @@ msgstr "Dodawanie adresu URL"
 
 #: src/libaudgui/url-opener.c:65
 msgid "Enter URL:"
-msgstr ""
+msgstr "Wprowadź URL:"
 
 #: src/libaudgui/util.c:143
 msgid ""
@@ -977,46 +978,3 @@ msgid ""
 msgstr ""
 "\n"
 "(Dalsze informacje zostały ukryte.)"
-
-#~ msgid "File is not a valid .desktop file"
-#~ msgstr "Plik nie jest prawidłowym plikiem typu desktop"
-
-#~ msgid "Unrecognized desktop file Version '%s'"
-#~ msgstr "Nierozpoznana wersja pliku desktop: „%s”"
-
-#~ msgid "Starting %s"
-#~ msgstr "Uruchamianie %s"
-
-#~ msgid "Application does not accept documents on command line"
-#~ msgstr "Program nie przyjmuje dokumentów poprzez wiersz poleceń"
-
-#~ msgid "Unrecognized launch option: %d"
-#~ msgstr "Nieznana opcja uruchamiania: %d"
-
-#~ msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-#~ msgstr ""
-#~ "Nie można przekazać adresów URI dokumentów do wpisu desktop „Type=Link”"
-
-#~ msgid "Not a launchable item"
-#~ msgstr "Nieobsługiwany typ pliku"
-
-#~ msgid "Disable connection to session manager"
-#~ msgstr "Przerywa połączenie z menedżerem sesji"
-
-#~ msgid "Specify file containing saved configuration"
-#~ msgstr "Określa plik zawierający zapisaną konfigurację"
-
-#~ msgid "FILE"
-#~ msgstr "PLIK"
-
-#~ msgid "Specify session management ID"
-#~ msgstr "Określa identyfikator zarządzania sesją"
-
-#~ msgid "ID"
-#~ msgstr "ID"
-
-#~ msgid "Session management options:"
-#~ msgstr "Opcje zarządzania sesją:"
-
-#~ msgid "Show session management options"
-#~ msgstr "Wyświetla opcje zarządzania sesją"

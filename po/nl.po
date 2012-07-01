@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-07-01 14:46-0400\n"
-"PO-Revision-Date: 2012-06-24 17:44+0000\n"
+"POT-Creation-Date: 2012-07-01 14:54-0400\n"
+"PO-Revision-Date: 2012-07-01 18:48+0000\n"
 "Last-Translator: jlindgren <john.lindgren@aol.com>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -974,46 +974,3 @@ msgid ""
 msgstr ""
 "\n"
 "(Verdere berichten werden verborgen.)"
-
-#~ msgid "File is not a valid .desktop file"
-#~ msgstr "Bestand is geen geldig .desktop bestand."
-
-#~ msgid "Unrecognized desktop file Version '%s'"
-#~ msgstr "Onherkend desktop bestand Versie '%s'"
-
-#~ msgid "Starting %s"
-#~ msgstr "Starten %s"
-
-#~ msgid "Application does not accept documents on command line"
-#~ msgstr "Toepassing aanvaardt geen documenten in opdrachtregel"
-
-#~ msgid "Unrecognized launch option: %d"
-#~ msgstr "Niet herkende opstartoptie: %d"
-
-#~ msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-#~ msgstr ""
-#~ "Kan document URI's niet doorgeven aan een 'Type=Link' bureaublad invoer"
-
-#~ msgid "Not a launchable item"
-#~ msgstr "Niet een startbaar item"
-
-#~ msgid "Disable connection to session manager"
-#~ msgstr "Verbinding met sessiebeheerder uitschakelen"
-
-#~ msgid "Specify file containing saved configuration"
-#~ msgstr "Geef bestand met opgeslagen configuratie op"
-
-#~ msgid "FILE"
-#~ msgstr "BESTAND"
-
-#~ msgid "Specify session management ID"
-#~ msgstr "Sessie management ID specificeren"
-
-#~ msgid "ID"
-#~ msgstr "ID"
-
-#~ msgid "Session management options:"
-#~ msgstr "Sessie management opties:"
-
-#~ msgid "Show session management options"
-#~ msgstr "Sessie management opties tonen"

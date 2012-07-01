@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-07-01 14:46-0400\n"
-"PO-Revision-Date: 2012-06-24 17:44+0000\n"
+"POT-Creation-Date: 2012-07-01 14:54-0400\n"
+"PO-Revision-Date: 2012-07-01 18:49+0000\n"
 "Last-Translator: jlindgren <john.lindgren@aol.com>\n"
 "Language-Team: Spanish (Mexican)\n"
 "Language: es_MX\n"
@@ -148,12 +148,12 @@ msgstr ""
 #: src/audacious/plugin-preferences.c:50
 #, c-format
 msgid "About %s"
-msgstr ""
+msgstr "Acerca de %s"
 
 #: src/audacious/plugin-preferences.c:88
 #, c-format
 msgid "%s Settings"
-msgstr ""
+msgstr "Configuraciones %s"
 
 #: src/audacious/ui_preferences.c:69
 msgid "Audio"
@@ -169,7 +169,7 @@ msgstr "Lista de Reproducción"
 
 #: src/audacious/ui_preferences.c:72
 msgid "Song Info"
-msgstr ""
+msgstr "Información de Pista"
 
 #: src/audacious/ui_preferences.c:73
 msgid "Plugins"
@@ -390,27 +390,27 @@ msgstr "No cargar metadatos de pistas hasta su reproducción"
 
 #: src/audacious/ui_preferences.c:205
 msgid "<b>Album Art</b>"
-msgstr ""
+msgstr "<b>Portada de Álbum</b>"
 
 #: src/audacious/ui_preferences.c:206
 msgid "Search for images matching these words (comma-separated):"
-msgstr ""
+msgstr "Buscar imágenes con éstas palabras (separadas por comas):"
 
 #: src/audacious/ui_preferences.c:208
 msgid "Exclude images matching these words (comma-separated):"
-msgstr ""
+msgstr "Excluir imágenes con éstas palabras (separadas por comas):"
 
 #: src/audacious/ui_preferences.c:210
 msgid "Search for images matching song file name"
-msgstr ""
+msgstr "Buscar imágenes con el nombre del archivo"
 
 #: src/audacious/ui_preferences.c:212
 msgid "Search recursively"
-msgstr ""
+msgstr "Buscar recursívamente"
 
 #: src/audacious/ui_preferences.c:214
 msgid "Search depth:"
-msgstr ""
+msgstr "Profundidad de búsqueda:"
 
 #: src/audacious/ui_preferences.c:217
 msgid "<b>Popup Information</b>"
@@ -418,15 +418,15 @@ msgstr "<b>Información Emergente</b>"
 
 #: src/audacious/ui_preferences.c:218
 msgid "Show popup information"
-msgstr ""
+msgstr "Mostrar información emergente"
 
 #: src/audacious/ui_preferences.c:220
 msgid "Popup delay (tenths of a second):"
-msgstr ""
+msgstr "Retraso de emergente  (décimas de segundo):"
 
 #: src/audacious/ui_preferences.c:223
 msgid "Show time scale for current song"
-msgstr ""
+msgstr "Mostrar escala de tiempo para la pista actual"
 
 #: src/audacious/ui_preferences.c:237
 msgid "TITLE"
@@ -551,7 +551,7 @@ msgstr "Créditos"
 
 #: src/libaudgui/about.c:38
 msgid "License"
-msgstr ""
+msgstr "Licencia"
 
 #: src/libaudgui/about.c:74
 msgid "About Audacious"
@@ -632,11 +632,11 @@ msgstr "Preamplificador"
 
 #: src/libaudgui/infopopup.c:202
 msgid "Track"
-msgstr ""
+msgstr "Pista"
 
 #: src/libaudgui/infopopup.c:204
 msgid "Length"
-msgstr ""
+msgstr "Duración"
 
 #: src/libaudgui/infowin.c:74
 msgid "Acid Jazz"
@@ -867,7 +867,7 @@ msgstr "Saltar al Tiempo"
 
 #: src/libaudgui/jump-to-time.c:61
 msgid "Enter time (minutes:seconds):"
-msgstr ""
+msgstr "Ingresa el tiempo (minutos:segundos):"
 
 #: src/libaudgui/playlists.c:33
 msgid "Export Playlist"
@@ -961,7 +961,7 @@ msgstr "Agregar URL"
 
 #: src/libaudgui/url-opener.c:65
 msgid "Enter URL:"
-msgstr ""
+msgstr "Ingresa URL:"
 
 #: src/libaudgui/util.c:143
 msgid ""
@@ -970,46 +970,3 @@ msgid ""
 msgstr ""
 "\n"
 "(Más mensajes han sido ocultados.)"
-
-#~ msgid "File is not a valid .desktop file"
-#~ msgstr "El archivo no es un archivo .desktop válido"
-
-#~ msgid "Unrecognized desktop file Version '%s'"
-#~ msgstr "Versión '%s' de archivo desktop no reconocida"
-
-#~ msgid "Starting %s"
-#~ msgstr "Iniciando %s"
-
-#~ msgid "Application does not accept documents on command line"
-#~ msgstr "La aplicación no acepta documentos en la línea de comandos"
-
-#~ msgid "Unrecognized launch option: %d"
-#~ msgstr "Opción de lanzamiento no reconocida: %d"
-
-#~ msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-#~ msgstr ""
-#~ "No puedes pasar documentos URIs a una entrada del escritorio 'Type=Link'"
-
-#~ msgid "Not a launchable item"
-#~ msgstr "No es una cosa lanzable"
-
-#~ msgid "Disable connection to session manager"
-#~ msgstr "Deshabilitar conección con el administrador de sesión"
-
-#~ msgid "Specify file containing saved configuration"
-#~ msgstr "Especificar archivo que contiene configuración guardada"
-
-#~ msgid "FILE"
-#~ msgstr "ARCHIVO"
-
-#~ msgid "Specify session management ID"
-#~ msgstr "Específicar ID de administración de sesión"
-
-#~ msgid "ID"
-#~ msgstr "ID"
-
-#~ msgid "Session management options:"
-#~ msgstr "Opciones de administración de sesión:"
-
-#~ msgid "Show session management options"
-#~ msgstr "Mostrar opciones de administración de sesión"

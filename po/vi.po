@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-07-01 14:46-0400\n"
-"PO-Revision-Date: 2012-06-24 17:44+0000\n"
+"POT-Creation-Date: 2012-07-01 14:54-0400\n"
+"PO-Revision-Date: 2012-07-01 18:49+0000\n"
 "Last-Translator: jlindgren <john.lindgren@aol.com>\n"
 "Language-Team: Vietnamese\n"
 "Language: vi\n"
@@ -969,45 +969,3 @@ msgid ""
 msgstr ""
 "\n"
 "(Các thông báo khác đã bị ẩn.)"
-
-#~ msgid "File is not a valid .desktop file"
-#~ msgstr "Không phải là một tập tin .desktop hợp lệ"
-
-#~ msgid "Unrecognized desktop file Version '%s'"
-#~ msgstr "Phiên bản tập tin desktop không được công nhận '%s'"
-
-#~ msgid "Starting %s"
-#~ msgstr "Đang khởi động %s"
-
-#~ msgid "Application does not accept documents on command line"
-#~ msgstr "Ứng dụng không chấp nhận tài liệu trên dòng lệnh"
-
-#~ msgid "Unrecognized launch option: %d"
-#~ msgstr "Tùy chọn khởi chạy không được công nhận: %d"
-
-#~ msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-#~ msgstr "Không thể truyền URI tài liệu đến mục màn hình 'Type=Link'"
-
-#~ msgid "Not a launchable item"
-#~ msgstr "Không phải mục có thể khởi chạy"
-
-#~ msgid "Disable connection to session manager"
-#~ msgstr "Ngắt kết nối đến trình quản lí phiên làm việc"
-
-#~ msgid "Specify file containing saved configuration"
-#~ msgstr "Chỉ định tập tin chứa cấu hình đã lưu"
-
-#~ msgid "FILE"
-#~ msgstr "TẬP TIN"
-
-#~ msgid "Specify session management ID"
-#~ msgstr "Chỉ định ID quản lí phiên"
-
-#~ msgid "ID"
-#~ msgstr "ID"
-
-#~ msgid "Session management options:"
-#~ msgstr "Tùy chọn quản lí phiên:"
-
-#~ msgid "Show session management options"
-#~ msgstr "Hiện các tùy chọn quản lí phiên"

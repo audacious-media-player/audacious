@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-07-01 14:46-0400\n"
-"PO-Revision-Date: 2012-06-24 17:44+0000\n"
+"POT-Creation-Date: 2012-07-01 14:54-0400\n"
+"PO-Revision-Date: 2012-07-01 18:48+0000\n"
 "Last-Translator: jlindgren <john.lindgren@aol.com>\n"
 "Language-Team: Catalan\n"
 "Language: ca\n"
@@ -983,47 +983,3 @@ msgid ""
 msgstr ""
 "\n"
 "(Els missatges següents han estat amagats.)"
-
-#~ msgid "File is not a valid .desktop file"
-#~ msgstr "El fitxer no és un fitxer \"desktop\" vàlid"
-
-#~ msgid "Unrecognized desktop file Version '%s'"
-#~ msgstr "Versió del fitxer \"desktop\" no reconeguda: '%s'"
-
-#~ msgid "Starting %s"
-#~ msgstr "Començant %s"
-
-#~ msgid "Application does not accept documents on command line"
-#~ msgstr "L'aplicació no admet documents a la línia d'ordres"
-
-#~ msgid "Unrecognized launch option: %d"
-#~ msgstr "Opció d'iniciació no reconeguda: %d"
-
-#~ msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-#~ msgstr ""
-#~ "No es poden passar URIs de documents a una entrada d'escriptori "
-#~ "'Type=Link'"
-
-#~ msgid "Not a launchable item"
-#~ msgstr "No és un element iniciable"
-
-#~ msgid "Disable connection to session manager"
-#~ msgstr "Desactiva la connexió amb el gestor de sessions"
-
-#~ msgid "Specify file containing saved configuration"
-#~ msgstr "Especifiqueu el fitxer que conté la configuració desada"
-
-#~ msgid "FILE"
-#~ msgstr "FITXER"
-
-#~ msgid "Specify session management ID"
-#~ msgstr "Especifiqueu una ID de sessió"
-
-#~ msgid "ID"
-#~ msgstr "ID"
-
-#~ msgid "Session management options:"
-#~ msgstr "Opcions de gestió de sessions "
-
-#~ msgid "Show session management options"
-#~ msgstr "Veure gestió d'opcions de sessions"

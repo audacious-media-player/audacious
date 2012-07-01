@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-07-01 14:46-0400\n"
-"PO-Revision-Date: 2012-06-24 17:44+0000\n"
+"POT-Creation-Date: 2012-07-01 14:54-0400\n"
+"PO-Revision-Date: 2012-07-01 18:48+0000\n"
 "Last-Translator: jlindgren <john.lindgren@aol.com>\n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -553,7 +553,7 @@ msgstr "Créditos"
 
 #: src/libaudgui/about.c:38
 msgid "License"
-msgstr ""
+msgstr "Licença"
 
 #: src/libaudgui/about.c:74
 msgid "About Audacious"
@@ -974,45 +974,3 @@ msgid ""
 msgstr ""
 "\n"
 "(Foram ocultas algumas mensagens)"
-
-#~ msgid "File is not a valid .desktop file"
-#~ msgstr "Este não é um ficheiro .desktop válido"
-
-#~ msgid "Unrecognized desktop file Version '%s'"
-#~ msgstr "Versão de ficheiro .desktop desconhecida \"%s\""
-
-#~ msgid "Starting %s"
-#~ msgstr "A iniciar %s"
-
-#~ msgid "Application does not accept documents on command line"
-#~ msgstr "A aplicação não aceita documentos na linha de comandos"
-
-#~ msgid "Unrecognized launch option: %d"
-#~ msgstr "Opção de arranque desconhecida: %d"
-
-#~ msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-#~ msgstr "Não pode enviar URIs de documentos para uma entrada \"Type=Link\""
-
-#~ msgid "Not a launchable item"
-#~ msgstr "Não é um item iniciável"
-
-#~ msgid "Disable connection to session manager"
-#~ msgstr "Desativar ligação ao gestor de sessão"
-
-#~ msgid "Specify file containing saved configuration"
-#~ msgstr "Indique o ficheiro com a configuração"
-
-#~ msgid "FILE"
-#~ msgstr "Ficheiro"
-
-#~ msgid "Specify session management ID"
-#~ msgstr "Indique a ID do gestor de sessão"
-
-#~ msgid "ID"
-#~ msgstr "ID"
-
-#~ msgid "Session management options:"
-#~ msgstr "Opções de gestão de sessão:"
-
-#~ msgid "Show session management options"
-#~ msgstr "Mostrar opções de gestão de sessão"

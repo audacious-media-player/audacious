@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-07-01 14:46-0400\n"
-"PO-Revision-Date: 2012-06-24 17:44+0000\n"
+"POT-Creation-Date: 2012-07-01 14:54-0400\n"
+"PO-Revision-Date: 2012-07-01 18:48+0000\n"
 "Last-Translator: jlindgren <john.lindgren@aol.com>\n"
 "Language-Team: Slovak\n"
 "Language: sk\n"
@@ -973,46 +973,3 @@ msgid ""
 msgstr ""
 "\n"
 "(Ďalšie správy boli skryté.)"
-
-#~ msgid "File is not a valid .desktop file"
-#~ msgstr "Súbor nie je platný .desktop súbor"
-
-#~ msgid "Unrecognized desktop file Version '%s'"
-#~ msgstr "Nerozpoznaná verzia '%s' súboru pracovnej plochy"
-
-#~ msgid "Starting %s"
-#~ msgstr "Spúšťa sa %s"
-
-#~ msgid "Application does not accept documents on command line"
-#~ msgstr "Aplikácia neprijíma dokumenty v príkazovom riadku"
-
-#~ msgid "Unrecognized launch option: %d"
-#~ msgstr "Nerozpoznaná spúšťacia voľba: %d"
-
-#~ msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-#~ msgstr ""
-#~ "URI adresa dokumentu sa nedá predať položke pracovnej plochy 'Type=Link'"
-
-#~ msgid "Not a launchable item"
-#~ msgstr "Nespustiteľná položka"
-
-#~ msgid "Disable connection to session manager"
-#~ msgstr "Zakázať spojenie so správcom relácie"
-
-#~ msgid "Specify file containing saved configuration"
-#~ msgstr "Zadať súbor obsahujúci uloženú konfiguráciu"
-
-#~ msgid "FILE"
-#~ msgstr "SÚBOR"
-
-#~ msgid "Specify session management ID"
-#~ msgstr "Zadať identifikátor správy relácie"
-
-#~ msgid "ID"
-#~ msgstr "IDENTIFIKÁTOR"
-
-#~ msgid "Session management options:"
-#~ msgstr "Možnosti správcu relácie:"
-
-#~ msgid "Show session management options"
-#~ msgstr "Zobraziť možnosti správcu relácie"

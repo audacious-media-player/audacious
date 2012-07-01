@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-07-01 14:46-0400\n"
-"PO-Revision-Date: 2012-06-24 17:44+0000\n"
+"POT-Creation-Date: 2012-07-01 14:54-0400\n"
+"PO-Revision-Date: 2012-07-01 18:48+0000\n"
 "Last-Translator: jlindgren <john.lindgren@aol.com>\n"
 "Language-Team: Serbian\n"
 "Language: sr\n"
@@ -974,46 +974,3 @@ msgid ""
 msgstr ""
 "\n"
 "(Додатне поруке су скривене.)"
-
-#~ msgid "File is not a valid .desktop file"
-#~ msgstr "Датотека није исправна „.desktop“ датотека"
-
-#~ msgid "Unrecognized desktop file Version '%s'"
-#~ msgstr "Није познато издање „%s“ датотеке за радну површ"
-
-#~ msgid "Starting %s"
-#~ msgstr "Покрећем %s"
-
-#~ msgid "Application does not accept documents on command line"
-#~ msgstr "Програм не прихвата документа из линије наредби"
-
-#~ msgid "Unrecognized launch option: %d"
-#~ msgstr "Непозната опција покретања: %d"
-
-#~ msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-#~ msgstr ""
-#~ "Не могу да проследим адресе документа у ставку радне површи „Type=Link“"
-
-#~ msgid "Not a launchable item"
-#~ msgstr "Није ставка за покретање"
-
-#~ msgid "Disable connection to session manager"
-#~ msgstr "Онемогућава повезивање са управником сесије"
-
-#~ msgid "Specify file containing saved configuration"
-#~ msgstr "Наведите датотеку која садржи сачувана подешавања"
-
-#~ msgid "FILE"
-#~ msgstr "ДАТОТЕКА"
-
-#~ msgid "Specify session management ID"
-#~ msgstr "Наведите ИБ управника сесије"
-
-#~ msgid "ID"
-#~ msgstr "ИБ"
-
-#~ msgid "Session management options:"
-#~ msgstr "Опције управљања сесијом:"
-
-#~ msgid "Show session management options"
-#~ msgstr "Приказује могућности управљања сесијом"

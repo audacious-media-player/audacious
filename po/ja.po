@@ -4,12 +4,13 @@
 #
 # Translators:
 #   <m2330880989@shibuya-center.com>, 2012.
+# Shuuji Takahashi <shuuji3@gmail.com>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-07-01 14:46-0400\n"
-"PO-Revision-Date: 2012-06-24 17:44+0000\n"
+"POT-Creation-Date: 2012-07-01 14:54-0400\n"
+"PO-Revision-Date: 2012-07-01 18:48+0000\n"
 "Last-Translator: jlindgren <john.lindgren@aol.com>\n"
 "Language-Team: Japanese\n"
 "Language: ja\n"
@@ -147,12 +148,12 @@ msgstr ""
 #: src/audacious/plugin-preferences.c:50
 #, c-format
 msgid "About %s"
-msgstr ""
+msgstr "%s について"
 
 #: src/audacious/plugin-preferences.c:88
 #, c-format
 msgid "%s Settings"
-msgstr ""
+msgstr "%s の設定"
 
 #: src/audacious/ui_preferences.c:69
 msgid "Audio"
@@ -549,7 +550,7 @@ msgstr "クレジット"
 
 #: src/libaudgui/about.c:38
 msgid "License"
-msgstr ""
+msgstr "ライセンス"
 
 #: src/libaudgui/about.c:74
 msgid "About Audacious"
@@ -967,45 +968,3 @@ msgid ""
 msgstr ""
 "\n"
 "(追加のメッセージが隠れているかもしれません。)"
-
-#~ msgid "File is not a valid .desktop file"
-#~ msgstr "有効な .desktop ファイルではありません"
-
-#~ msgid "Unrecognized desktop file Version '%s'"
-#~ msgstr "認識できないデスクトップファイルバージョン '%s'"
-
-#~ msgid "Starting %s"
-#~ msgstr "%s を開始"
-
-#~ msgid "Application does not accept documents on command line"
-#~ msgstr "アプリケーションはコマンドライン上のドキュメントを受け付けません"
-
-#~ msgid "Unrecognized launch option: %d"
-#~ msgstr "認識できない起動オプション: %d"
-
-#~ msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-#~ msgstr "'Type=Link' デスクトップエントリにドキュメントの URI を渡せません"
-
-#~ msgid "Not a launchable item"
-#~ msgstr "起動可能なアイテムではありません"
-
-#~ msgid "Disable connection to session manager"
-#~ msgstr "セッションマネージャとの接続を無効にする"
-
-#~ msgid "Specify file containing saved configuration"
-#~ msgstr "保存された構成を含むファイルを指定する"
-
-#~ msgid "FILE"
-#~ msgstr "ファイル"
-
-#~ msgid "Specify session management ID"
-#~ msgstr "セッションマネージメント ID を指定する"
-
-#~ msgid "ID"
-#~ msgstr "ID"
-
-#~ msgid "Session management options:"
-#~ msgstr "セッションマネージメントオプション:"
-
-#~ msgid "Show session management options"
-#~ msgstr "セッションマネージメントオプションを表示する"

@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-07-01 14:46-0400\n"
-"PO-Revision-Date: 2012-06-24 17:44+0000\n"
+"POT-Creation-Date: 2012-07-01 14:54-0400\n"
+"PO-Revision-Date: 2012-07-01 18:48+0000\n"
 "Last-Translator: jlindgren <john.lindgren@aol.com>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
@@ -564,7 +564,7 @@ msgstr "Авторы"
 
 #: src/libaudgui/about.c:38
 msgid "License"
-msgstr ""
+msgstr "Лицензия"
 
 #: src/libaudgui/about.c:74
 msgid "About Audacious"
@@ -983,48 +983,3 @@ msgid ""
 msgstr ""
 "\n"
 "(Дальнейшие сообщения были скрыты.)"
-
-#~ msgid "File is not a valid .desktop file"
-#~ msgstr "Этот файл не является корректным файлом .desktop"
-
-#~ msgid "Unrecognized desktop file Version '%s'"
-#~ msgstr "Данный .desktop файл имеет неизвестную версию '%s'"
-
-#~ msgid "Starting %s"
-#~ msgstr "Запускается %s"
-
-#~ msgid "Application does not accept documents on command line"
-#~ msgstr ""
-#~ "Приложение не поддерживает указание имени документа в командной строке"
-
-#~ msgid "Unrecognized launch option: %d"
-#~ msgstr "Неизвестный параметр: %d"
-
-#~ msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-#~ msgstr ""
-#~ "Невозможно передать URI документа при использовании записи 'Type=Link' в ."
-#~ "desktop файле."
-
-#~ msgid "Not a launchable item"
-#~ msgstr "Этот элемент нельзя запустить"
-
-#~ msgid "Disable connection to session manager"
-#~ msgstr "Запретить подключение к менеджеру сессий"
-
-#~ msgid "Specify file containing saved configuration"
-#~ msgstr "Указать файл, содержащий сохранённую конфигурацию"
-
-#~ msgid "FILE"
-#~ msgstr "ФАЙЛ"
-
-#~ msgid "Specify session management ID"
-#~ msgstr "Указать идентификатор сессии"
-
-#~ msgid "ID"
-#~ msgstr "ID"
-
-#~ msgid "Session management options:"
-#~ msgstr "Управление опциями сессий:"
-
-#~ msgid "Show session management options"
-#~ msgstr "Показать опции управления сессиями"

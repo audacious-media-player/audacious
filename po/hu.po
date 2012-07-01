@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-07-01 14:46-0400\n"
-"PO-Revision-Date: 2012-06-24 17:44+0000\n"
+"POT-Creation-Date: 2012-07-01 14:54-0400\n"
+"PO-Revision-Date: 2012-07-01 18:48+0000\n"
 "Last-Translator: jlindgren <john.lindgren@aol.com>\n"
 "Language-Team: Hungarian\n"
 "Language: hu\n"
@@ -974,45 +974,3 @@ msgid ""
 msgstr ""
 "\n"
 "(További üzenetek el vannak rejtve.)"
-
-#~ msgid "File is not a valid .desktop file"
-#~ msgstr "A fájl nem valós .desktop fájl"
-
-#~ msgid "Unrecognized desktop file Version '%s'"
-#~ msgstr "Ismeretlen desktop fájl verzió '%s'"
-
-#~ msgid "Starting %s"
-#~ msgstr "Indítás %s"
-
-#~ msgid "Application does not accept documents on command line"
-#~ msgstr "Az alkalmazás nem fog el dokumentumokat a parancssorban"
-
-#~ msgid "Unrecognized launch option: %d"
-#~ msgstr "Ismeretlen futtatási opció: %d"
-
-#~ msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-#~ msgstr "Nem adja át a dokumentum URI a 'Type=Link' desktop értéket"
-
-#~ msgid "Not a launchable item"
-#~ msgstr "Nincs futtatható elem"
-
-#~ msgid "Disable connection to session manager"
-#~ msgstr "Munkamenet-kezelőhöz kapcsolódás tiltása"
-
-#~ msgid "Specify file containing saved configuration"
-#~ msgstr "Adja meg a fájlt amibe menteni szeretné a beállításokat"
-
-#~ msgid "FILE"
-#~ msgstr "FÁJL"
-
-#~ msgid "Specify session management ID"
-#~ msgstr "Megadott munkamenet-kezelő ID"
-
-#~ msgid "ID"
-#~ msgstr "ID"
-
-#~ msgid "Session management options:"
-#~ msgstr "Munkamenet kezelési lehetőségek:"
-
-#~ msgid "Show session management options"
-#~ msgstr "Munkamenet kezelési lehetőségek mutatása"

@@ -28,6 +28,9 @@ fi.po)
 fr.po)
     LANGUAGE="French"
     ;;
+gl.po)
+    LANGUAGE="Galician"
+    ;;
 hu.po)
     LANGUAGE="Hungarian"
     ;;
@@ -66,6 +69,9 @@ sk.po)
     ;;
 sr.po)
     LANGUAGE="Serbian"
+    ;;
+tr.po)
+    LANGUAGE="Turkish"
     ;;
 uk.po)
     LANGUAGE="Ukrainian"

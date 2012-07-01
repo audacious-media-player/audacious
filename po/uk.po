@@ -6,13 +6,14 @@
 # Kostyantyn Fedenko <fedenko@ukr.net>, 2011.
 #   <kvantarium@gmail.com>, 2012.
 # NaiLi Rootaerc <theism@mail.ru>, 2012.
+# Rax Garfield <admin@dvizho.ks.ua>, 2012.
 # Rax Garfield (http://biokillaz.com/), 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-07-01 14:46-0400\n"
-"PO-Revision-Date: 2012-06-24 17:44+0000\n"
+"POT-Creation-Date: 2012-07-01 14:54-0400\n"
+"PO-Revision-Date: 2012-07-01 18:48+0000\n"
 "Last-Translator: jlindgren <john.lindgren@aol.com>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk\n"
@@ -557,7 +558,7 @@ msgstr "Автори"
 
 #: src/libaudgui/about.c:38
 msgid "License"
-msgstr ""
+msgstr "Ліцензія"
 
 #: src/libaudgui/about.c:74
 msgid "About Audacious"
@@ -978,47 +979,3 @@ msgid ""
 msgstr ""
 "\n"
 "(Наступні повідомлення були приховані.)"
-
-#~ msgid "File is not a valid .desktop file"
-#~ msgstr "Файл не є коректним файлом .desktop "
-
-#~ msgid "Unrecognized desktop file Version '%s'"
-#~ msgstr "Невідома версія desktop файлу '%s'"
-
-#~ msgid "Starting %s"
-#~ msgstr "Запускається %s"
-
-#~ msgid "Application does not accept documents on command line"
-#~ msgstr "Програма підтримує передачу імені документу через командний рядок"
-
-#~ msgid "Unrecognized launch option: %d"
-#~ msgstr "Невідомий параметр запуску: %d"
-
-#~ msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-#~ msgstr ""
-#~ "Не можу передати URI документа з допомогою запису 'Type = Link' у файлі ."
-#~ "desktop"
-
-#~ msgid "Not a launchable item"
-#~ msgstr "Елемент не запускається"
-
-#~ msgid "Disable connection to session manager"
-#~ msgstr "Вимкнути підключення до менеджера сесій"
-
-#~ msgid "Specify file containing saved configuration"
-#~ msgstr "Вкажіть файл, що містить збережену конфігурацю"
-
-#~ msgid "FILE"
-#~ msgstr "ФАЙЛ"
-
-#~ msgid "Specify session management ID"
-#~ msgstr "Вказати ідентифікатор сесії"
-
-#~ msgid "ID"
-#~ msgstr "ID"
-
-#~ msgid "Session management options:"
-#~ msgstr "Параметри керування сеансами:"
-
-#~ msgid "Show session management options"
-#~ msgstr "Показати параметри керування сеансами"

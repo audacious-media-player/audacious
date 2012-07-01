@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-07-01 14:46-0400\n"
-"PO-Revision-Date: 2012-06-24 17:44+0000\n"
+"POT-Creation-Date: 2012-07-01 14:54-0400\n"
+"PO-Revision-Date: 2012-07-01 18:48+0000\n"
 "Last-Translator: jlindgren <john.lindgren@aol.com>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -983,46 +983,3 @@ msgid ""
 msgstr ""
 "\n"
 "(Se han ocultado el resto de mensajes.)"
-
-#~ msgid "File is not a valid .desktop file"
-#~ msgstr "El archivo no es un archivo .desktop válido"
-
-#~ msgid "Unrecognized desktop file Version '%s'"
-#~ msgstr "Versión del archivo de escritorio no reconocida «%s»"
-
-#~ msgid "Starting %s"
-#~ msgstr "Iniciando %s"
-
-#~ msgid "Application does not accept documents on command line"
-#~ msgstr "La aplicación no acepta documentos en la linea de comandos"
-
-#~ msgid "Unrecognized launch option: %d"
-#~ msgstr "Opción de cargar no reconocida: %d"
-
-#~ msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-#~ msgstr ""
-#~ "No se pueden pasar documentos URI a una entrada de escritorio «Type=Link»"
-
-#~ msgid "Not a launchable item"
-#~ msgstr "No es un objeto lanzable"
-
-#~ msgid "Disable connection to session manager"
-#~ msgstr "Conexión con el gestor de sesión deshabilitada"
-
-#~ msgid "Specify file containing saved configuration"
-#~ msgstr "Especificar el archivo que contiene la configuración guardada"
-
-#~ msgid "FILE"
-#~ msgstr "ARCHIVO"
-
-#~ msgid "Specify session management ID"
-#~ msgstr "Especifique la ID de administración de sesiones"
-
-#~ msgid "ID"
-#~ msgstr "ID"
-
-#~ msgid "Session management options:"
-#~ msgstr "Opciones de la gestión de sesiones:"
-
-#~ msgid "Show session management options"
-#~ msgstr "Mostrar las opciones de gestión de sesiones"
