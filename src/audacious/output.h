@@ -31,6 +31,7 @@ void output_pause (bool_t pause);
 int output_written_time (void);
 void output_set_time (int time);
 
+bool_t output_is_open (void);
 int output_get_time (void);
 int output_get_raw_time (void);
 void output_close_audio (void);

@@ -23,6 +23,8 @@
 #include <string.h>
 #include <unistd.h>
 
+#include <libaudcore/hook.h>
+
 #include "debug.h"
 #include "effect.h"
 #include "equalizer.h"
@@ -413,6 +415,17 @@ void output_set_time (int time)
     }
 
     UNLOCK_ALL;
+
+    /* See comment in playback_seek(). */
+    event_queue ("playback seek", NULL);
+}
+
+bool_t output_is_open (void)
+{
+    LOCK_MINOR;
+    bool_t is_open = s_input;
+    UNLOCK_MINOR;
+    return is_open;
 }
 
 int output_get_time (void)

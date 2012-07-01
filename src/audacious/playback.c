@@ -221,6 +221,7 @@ static void playback_cleanup (void)
     playing = FALSE;
 
     event_queue_cancel ("playback ready", NULL);
+    event_queue_cancel ("playback seek", NULL);
     event_queue_cancel ("info change", NULL);
     event_queue_cancel ("title change", NULL);
 
@@ -387,7 +388,12 @@ void playback_seek (int time)
     current_decoder->mseek (& playback_api, time_offset + CLAMP (time, 0,
      current_length));
 
-    hook_call ("playback seek", NULL);
+    /* If the plugin is using our output system, don't call "playback seek"
+     * immediately but wait for output_set_time() to be called.  This ensures
+     * that a "playback seek" handler can call playback_get_time() and get the
+     * new time. */
+    if (! output_is_open ())
+        hook_call ("playback seek", NULL);
 }
 
 static void set_data (InputPlayback * p, void * data)
