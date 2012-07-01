@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-06-24 13:55-0400\n"
+"POT-Creation-Date: 2012-07-01 14:46-0400\n"
 "PO-Revision-Date: 2012-06-24 17:44+0000\n"
 "Last-Translator: jlindgren <john.lindgren@aol.com>\n"
 "Language-Team: Catalan\n"
@@ -44,67 +44,67 @@ msgstr "  (UTF-8 no vàlid)"
 msgid "Error importing Winamp EQF file '%s'"
 msgstr "Error quan s'importava el fitxer EQF de Winamp '%s'"
 
-#: src/audacious/main.c:237
+#: src/audacious/main.c:232
 msgid "Skip backwards in playlist"
 msgstr "Salta enrere en la llista de reproducció"
 
-#: src/audacious/main.c:238
+#: src/audacious/main.c:233
 msgid "Start playing current playlist"
 msgstr "Comença a reproduir la llista actual"
 
-#: src/audacious/main.c:239
+#: src/audacious/main.c:234
 msgid "Pause current song"
 msgstr "Fa una pausa en la reproducció"
 
-#: src/audacious/main.c:240
+#: src/audacious/main.c:235
 msgid "Stop current song"
 msgstr "Atura la reproducció"
 
-#: src/audacious/main.c:241
+#: src/audacious/main.c:236
 msgid "Pause if playing, play otherwise"
 msgstr "Fa una pausa, o bé reprèn la reproducció"
 
-#: src/audacious/main.c:242
+#: src/audacious/main.c:237
 msgid "Skip forward in playlist"
 msgstr "Salta endavant en la llista de reproducció"
 
-#: src/audacious/main.c:243
+#: src/audacious/main.c:238
 msgid "Display Jump to File dialog"
 msgstr "Obre el diàleg Salta al fitxer"
 
-#: src/audacious/main.c:244
+#: src/audacious/main.c:239
 msgid "Add files to the playlist"
 msgstr "Afegir arxius a la llista de reproducció"
 
-#: src/audacious/main.c:245
+#: src/audacious/main.c:240
 msgid "Add new files to a temporary playlist"
 msgstr "Afegeix els fitxers a una llista temporal"
 
-#: src/audacious/main.c:246
+#: src/audacious/main.c:241
 msgid "Display the main window"
 msgstr "Mostra la finestra principal"
 
-#: src/audacious/main.c:247
+#: src/audacious/main.c:242
 msgid "Show version"
 msgstr "Mostra la versió"
 
-#: src/audacious/main.c:248
+#: src/audacious/main.c:243
 msgid "Print debugging messages"
 msgstr "Imprimir missatges de depuració "
 
-#: src/audacious/main.c:249
+#: src/audacious/main.c:244
 msgid "Headless mode (beta)"
 msgstr "Control remot (beta)"
 
-#: src/audacious/main.c:250
+#: src/audacious/main.c:245
 msgid "FILE..."
 msgstr "FITXER..."
 
-#: src/audacious/main.c:262
+#: src/audacious/main.c:257
 msgid "- play multimedia files"
 msgstr "- reprodueix fitxers multimèdia"
 
-#: src/audacious/main.c:272
+#: src/audacious/main.c:264
 #, c-format
 msgid ""
 "%s: %s\n"
@@ -113,11 +113,11 @@ msgstr ""
 "%s: %s\n"
 "Proveu ‘%s --help’ per a més informació.\n"
 
-#: src/audacious/main.c:561
+#: src/audacious/main.c:545
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/playback.c:304
+#: src/audacious/playback.c:305
 #, c-format
 msgid "No decoder found for %s."
 msgstr "No es troba còdec per %s."
@@ -161,362 +161,362 @@ msgstr ""
 msgid "%s Settings"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:70
+#: src/audacious/ui_preferences.c:69
 msgid "Audio"
 msgstr "Àudio"
 
-#: src/audacious/ui_preferences.c:71
+#: src/audacious/ui_preferences.c:70
 msgid "Network"
 msgstr "Xarxa"
 
-#: src/audacious/ui_preferences.c:72 src/audacious/ui_preferences.c:1253
+#: src/audacious/ui_preferences.c:71 src/audacious/ui_preferences.c:1244
 msgid "Playlist"
 msgstr "Llistes"
 
-#: src/audacious/ui_preferences.c:73
+#: src/audacious/ui_preferences.c:72
 msgid "Song Info"
 msgstr "Información de la cançó"
 
-#: src/audacious/ui_preferences.c:74
+#: src/audacious/ui_preferences.c:73
 msgid "Plugins"
 msgstr "Connectors"
 
-#: src/audacious/ui_preferences.c:80 src/libaudgui/infopopup.c:195
+#: src/audacious/ui_preferences.c:79 src/libaudgui/infopopup.c:194
 msgid "Artist"
 msgstr "Artista"
 
-#: src/audacious/ui_preferences.c:81 src/libaudgui/infopopup.c:197
+#: src/audacious/ui_preferences.c:80 src/libaudgui/infopopup.c:196
 msgid "Album"
 msgstr "Àlbum"
 
-#: src/audacious/ui_preferences.c:82 src/libaudgui/infopopup.c:193
+#: src/audacious/ui_preferences.c:81 src/libaudgui/infopopup.c:192
 #: src/libaudgui/ui_playlist_manager.c:279
 msgid "Title"
 msgstr "Títol"
 
-#: src/audacious/ui_preferences.c:83
+#: src/audacious/ui_preferences.c:82
 msgid "Tracknumber"
 msgstr "Número de pista"
 
-#: src/audacious/ui_preferences.c:84 src/libaudgui/infopopup.c:199
+#: src/audacious/ui_preferences.c:83 src/libaudgui/infopopup.c:198
 msgid "Genre"
 msgstr "Gènere"
 
-#: src/audacious/ui_preferences.c:85
+#: src/audacious/ui_preferences.c:84
 msgid "Filename"
 msgstr "Nom del fitxer"
 
-#: src/audacious/ui_preferences.c:86
+#: src/audacious/ui_preferences.c:85
 msgid "Filepath"
 msgstr "Ubicació"
 
-#: src/audacious/ui_preferences.c:87
+#: src/audacious/ui_preferences.c:86
 msgid "Date"
 msgstr "Data"
 
-#: src/audacious/ui_preferences.c:88 src/libaudgui/infopopup.c:201
+#: src/audacious/ui_preferences.c:87 src/libaudgui/infopopup.c:200
 msgid "Year"
 msgstr "Any"
 
-#: src/audacious/ui_preferences.c:89
+#: src/audacious/ui_preferences.c:88
 msgid "Comment"
 msgstr "Comentari"
 
-#: src/audacious/ui_preferences.c:90
+#: src/audacious/ui_preferences.c:89
 msgid "Codec"
 msgstr "Códec"
 
-#: src/audacious/ui_preferences.c:91
+#: src/audacious/ui_preferences.c:90
 msgid "Quality"
 msgstr "Qualitat"
 
-#: src/audacious/ui_preferences.c:97
+#: src/audacious/ui_preferences.c:96
 msgid "None"
 msgstr "Cap"
 
-#: src/audacious/ui_preferences.c:98
+#: src/audacious/ui_preferences.c:97
 msgid "Arabic"
 msgstr "Àrab"
 
-#: src/audacious/ui_preferences.c:99
+#: src/audacious/ui_preferences.c:98
 msgid "Baltic"
 msgstr "Bàltic"
 
-#: src/audacious/ui_preferences.c:100
+#: src/audacious/ui_preferences.c:99
 msgid "Chinese"
 msgstr "Xinès"
 
-#: src/audacious/ui_preferences.c:101
+#: src/audacious/ui_preferences.c:100
 msgid "Greek"
 msgstr "Grec"
 
-#: src/audacious/ui_preferences.c:102
+#: src/audacious/ui_preferences.c:101
 msgid "Hebrew"
 msgstr "Hebreu"
 
-#: src/audacious/ui_preferences.c:103
+#: src/audacious/ui_preferences.c:102
 msgid "Japanese"
 msgstr "Japonès"
 
-#: src/audacious/ui_preferences.c:104
+#: src/audacious/ui_preferences.c:103
 msgid "Korean"
 msgstr "Coreà"
 
-#: src/audacious/ui_preferences.c:105
+#: src/audacious/ui_preferences.c:104
 msgid "Polish"
 msgstr "Polonès"
 
-#: src/audacious/ui_preferences.c:106
+#: src/audacious/ui_preferences.c:105
 msgid "Russian"
 msgstr "Rus"
 
-#: src/audacious/ui_preferences.c:107
+#: src/audacious/ui_preferences.c:106
 msgid "Taiwanese"
 msgstr "Taiwanès"
 
-#: src/audacious/ui_preferences.c:108
+#: src/audacious/ui_preferences.c:107
 msgid "Turkish"
 msgstr "Turc"
 
-#: src/audacious/ui_preferences.c:131
+#: src/audacious/ui_preferences.c:130
 msgid "Album mode"
 msgstr "Manera Àlbum"
 
-#: src/audacious/ui_preferences.c:134
+#: src/audacious/ui_preferences.c:133
 msgid "<b>Output Settings</b>"
 msgstr "<b>Opcions sortida</b>"
 
-#: src/audacious/ui_preferences.c:136
+#: src/audacious/ui_preferences.c:135
 msgid "Bit depth:"
 msgstr "Profunditat de bits:"
 
-#: src/audacious/ui_preferences.c:139
+#: src/audacious/ui_preferences.c:138
 msgid "Buffer size:"
 msgstr "Mida del buffer:"
 
-#: src/audacious/ui_preferences.c:141
+#: src/audacious/ui_preferences.c:140
 msgid "ms"
 msgstr "ms"
 
-#: src/audacious/ui_preferences.c:142
+#: src/audacious/ui_preferences.c:141
 msgid "Use software volume control (not recommended)"
 msgstr "Utilitzar control de volum per software (no recomanat)"
 
-#: src/audacious/ui_preferences.c:144
+#: src/audacious/ui_preferences.c:143
 msgid "<b>Replay Gain</b>"
 msgstr "<b>reproduir arxius sense fluctuacions de volum</b>"
 
-#: src/audacious/ui_preferences.c:145
+#: src/audacious/ui_preferences.c:144
 msgid "Enable Replay Gain"
 msgstr "Activa el Replay Gain"
 
-#: src/audacious/ui_preferences.c:148
+#: src/audacious/ui_preferences.c:147
 msgid "Prevent clipping (recommended)"
 msgstr "Evitar saturació (recomanat)"
 
-#: src/audacious/ui_preferences.c:150
+#: src/audacious/ui_preferences.c:149
 msgid "<b>Adjust Levels</b>"
 msgstr "<b>Ajustar nivells</b>"
 
-#: src/audacious/ui_preferences.c:151
+#: src/audacious/ui_preferences.c:150
 msgid "Amplify all files:"
 msgstr "Amplificar tots els arxius:"
 
-#: src/audacious/ui_preferences.c:153 src/audacious/ui_preferences.c:156
+#: src/audacious/ui_preferences.c:152 src/audacious/ui_preferences.c:155
 msgid "dB"
 msgstr "dB"
 
-#: src/audacious/ui_preferences.c:154
+#: src/audacious/ui_preferences.c:153
 msgid "Amplify untagged files:"
 msgstr "Amplificar arxius sense etiquetar:"
 
-#: src/audacious/ui_preferences.c:159
+#: src/audacious/ui_preferences.c:158
 msgid "Proxy hostname:"
 msgstr "Nom del servidor intermediari:"
 
-#: src/audacious/ui_preferences.c:160
+#: src/audacious/ui_preferences.c:159
 msgid "Proxy port:"
 msgstr "Port del servidor intermediari:"
 
-#: src/audacious/ui_preferences.c:163
+#: src/audacious/ui_preferences.c:162
 msgid "Proxy username:"
 msgstr "Nom d'usuari:"
 
-#: src/audacious/ui_preferences.c:164
+#: src/audacious/ui_preferences.c:163
 msgid "Proxy password:"
 msgstr "Contrasenya:"
 
-#: src/audacious/ui_preferences.c:168
+#: src/audacious/ui_preferences.c:167
 msgid "<b>Proxy Configuration</b>"
 msgstr "<b>Configuració de servidors intermediaris</b>"
 
-#: src/audacious/ui_preferences.c:169
+#: src/audacious/ui_preferences.c:168
 msgid "Enable proxy usage"
 msgstr "Activa l'ús de servidor intermediari"
 
-#: src/audacious/ui_preferences.c:172
+#: src/audacious/ui_preferences.c:171
 msgid "Use authentication with proxy"
 msgstr "Autenticació al servidor intermediari"
 
-#: src/audacious/ui_preferences.c:180
+#: src/audacious/ui_preferences.c:179
 msgid "Auto character encoding detector for:"
 msgstr "Detecció automàtica del joc de caràcters per a:"
 
-#: src/audacious/ui_preferences.c:184
+#: src/audacious/ui_preferences.c:183
 msgid "Fallback character encodings:"
 msgstr "Jocs de caràcters de reserva:"
 
-#: src/audacious/ui_preferences.c:188
+#: src/audacious/ui_preferences.c:187
 msgid "<b>Behavior</b>"
 msgstr "<b>Comportament</b>"
 
-#: src/audacious/ui_preferences.c:189
+#: src/audacious/ui_preferences.c:188
 msgid "Continue playback on startup"
 msgstr "Reprèn la reproducció en engegar"
 
-#: src/audacious/ui_preferences.c:191
+#: src/audacious/ui_preferences.c:190
 msgid "Advance when the current song is deleted"
 msgstr "Avançar quan la cançó que s'està reproduint s'elimina"
 
-#: src/audacious/ui_preferences.c:193
+#: src/audacious/ui_preferences.c:192
 msgid "Clear the playlist when opening files"
 msgstr "A l'obrir arxius esborrar la llista que s'està reproduint "
 
-#: src/audacious/ui_preferences.c:195
+#: src/audacious/ui_preferences.c:194
 msgid "Open files in a temporary playlist"
 msgstr "Obrir arxius en llista temporal de reproducció"
 
-#: src/audacious/ui_preferences.c:197
+#: src/audacious/ui_preferences.c:196
 msgid "<b>Metadata</b>"
 msgstr "<b>Meta-dades</b>"
 
-#: src/audacious/ui_preferences.c:198
+#: src/audacious/ui_preferences.c:197
 msgid "Do not load metadata for songs until played"
 msgstr "No desar metadates mentre la cançó s'està reproduint"
 
-#: src/audacious/ui_preferences.c:206
+#: src/audacious/ui_preferences.c:205
 msgid "<b>Album Art</b>"
 msgstr "<b>Caràtula d'àlbum</b>"
 
-#: src/audacious/ui_preferences.c:207
+#: src/audacious/ui_preferences.c:206
 msgid "Search for images matching these words (comma-separated):"
 msgstr ""
 "Cerca imatges que corresponguin amb aquestes paraules (separades per comes):"
 
-#: src/audacious/ui_preferences.c:209
+#: src/audacious/ui_preferences.c:208
 msgid "Exclude images matching these words (comma-separated):"
 msgstr ""
 "Exclou imatges que corresponguin amb aquestes paraules (separades per comes):"
 
-#: src/audacious/ui_preferences.c:211
+#: src/audacious/ui_preferences.c:210
 msgid "Search for images matching song file name"
 msgstr "Cerca imatges que corresponguin amb el nom de l'arxiu de la cançó"
 
-#: src/audacious/ui_preferences.c:213
+#: src/audacious/ui_preferences.c:212
 msgid "Search recursively"
 msgstr "Cerca recursivament"
 
-#: src/audacious/ui_preferences.c:215
+#: src/audacious/ui_preferences.c:214
 msgid "Search depth:"
 msgstr "Profunditat de la cerca"
 
-#: src/audacious/ui_preferences.c:218
+#: src/audacious/ui_preferences.c:217
 msgid "<b>Popup Information</b>"
 msgstr "<b>Informació emergent</b>"
 
-#: src/audacious/ui_preferences.c:219
+#: src/audacious/ui_preferences.c:218
 msgid "Show popup information"
 msgstr "Mostra informació emergent"
 
-#: src/audacious/ui_preferences.c:221
+#: src/audacious/ui_preferences.c:220
 msgid "Popup delay (tenths of a second):"
 msgstr "Retard del menú emergent (desenes de segon):"
 
-#: src/audacious/ui_preferences.c:224
+#: src/audacious/ui_preferences.c:223
 msgid "Show time scale for current song"
 msgstr "Mostra escala de temps per a la cançó actual"
 
-#: src/audacious/ui_preferences.c:238
+#: src/audacious/ui_preferences.c:237
 msgid "TITLE"
 msgstr "TÍTOL"
 
-#: src/audacious/ui_preferences.c:239
+#: src/audacious/ui_preferences.c:238
 msgid "ARTIST - TITLE"
 msgstr "ARTISTA - TÍTOL"
 
-#: src/audacious/ui_preferences.c:240
+#: src/audacious/ui_preferences.c:239
 msgid "ARTIST - ALBUM - TITLE"
 msgstr "ARTISTA - ÀLBUM - TÍTOL"
 
-#: src/audacious/ui_preferences.c:241
+#: src/audacious/ui_preferences.c:240
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr "ARTISTA - ÀLBUM - PISTA. TÍTOL"
 
-#: src/audacious/ui_preferences.c:242
+#: src/audacious/ui_preferences.c:241
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr "ARTISTA [ ÀLBUM ] - PISTA. TÍTOL"
 
-#: src/audacious/ui_preferences.c:243
+#: src/audacious/ui_preferences.c:242
 msgid "ALBUM - TITLE"
 msgstr "ÀLBUM - TÍTOL"
 
-#: src/audacious/ui_preferences.c:456
+#: src/audacious/ui_preferences.c:455
 msgid "Category"
 msgstr "Categoria"
 
-#: src/audacious/ui_preferences.c:1003
+#: src/audacious/ui_preferences.c:1002
 msgid "Custom"
 msgstr "Personalitzat"
 
-#: src/audacious/ui_preferences.c:1040
+#: src/audacious/ui_preferences.c:1039
 msgid "<b>Song Display</b>"
 msgstr "<b>Visualització de les cançons</b>"
 
-#: src/audacious/ui_preferences.c:1049
+#: src/audacious/ui_preferences.c:1048
 msgid "Show song numbers"
 msgstr "Mostrar el numero de les cançons"
 
-#: src/audacious/ui_preferences.c:1060
+#: src/audacious/ui_preferences.c:1059
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr "Mostrar zeros a l'esquerra (02:00 en comptes de 2:00)"
 
-#: src/audacious/ui_preferences.c:1082
+#: src/audacious/ui_preferences.c:1079
 msgid "Show information about titlestring format"
 msgstr "Mostra informació sobre el format del títol"
 
-#: src/audacious/ui_preferences.c:1098
+#: src/audacious/ui_preferences.c:1093
 msgid "Custom string:"
 msgstr "Cadena personalitzada:"
 
-#: src/audacious/ui_preferences.c:1105
+#: src/audacious/ui_preferences.c:1098
 msgid "Title format:"
 msgstr "Format del títol:"
 
-#: src/audacious/ui_preferences.c:1194
+#: src/audacious/ui_preferences.c:1185
 msgid "Output plugin:"
 msgstr "Connector de sortida"
 
-#: src/audacious/ui_preferences.c:1253
+#: src/audacious/ui_preferences.c:1244
 msgid "Transport"
 msgstr "Transport"
 
-#: src/audacious/ui_preferences.c:1253
+#: src/audacious/ui_preferences.c:1244
 msgid "Input"
 msgstr "Entrada"
 
-#: src/audacious/ui_preferences.c:1254
+#: src/audacious/ui_preferences.c:1245
 msgid "Effect"
 msgstr "Efectes"
 
-#: src/audacious/ui_preferences.c:1254
+#: src/audacious/ui_preferences.c:1245
 msgid "Visualization"
 msgstr "Visualització"
 
-#: src/audacious/ui_preferences.c:1254
+#: src/audacious/ui_preferences.c:1245
 msgid "General"
 msgstr "General"
 
-#: src/audacious/ui_preferences.c:1292
+#: src/audacious/ui_preferences.c:1283
 msgid "Audacious Preferences"
 msgstr "Preferències de l'Audacious"
 
@@ -641,11 +641,11 @@ msgstr "Equalitzador"
 msgid "Preamp"
 msgstr "Preamplificador"
 
-#: src/libaudgui/infopopup.c:203
+#: src/libaudgui/infopopup.c:202
 msgid "Track"
 msgstr "Pista"
 
-#: src/libaudgui/infopopup.c:205
+#: src/libaudgui/infopopup.c:204
 msgid "Length"
 msgstr "Durada"
 
@@ -834,40 +834,40 @@ msgstr "<span size=\"small\">Qualitat:</span>"
 msgid "<span size=\"small\">Bitrate:</span>"
 msgstr "<span size=\"small\">Flux de bits:</span>"
 
-#: src/libaudgui/infowin.c:391
+#: src/libaudgui/infowin.c:385
 msgid "<span size=\"small\">Title</span>"
 msgstr "<span size=\"small\">Títol</span>"
 
-#: src/libaudgui/infowin.c:403
+#: src/libaudgui/infowin.c:397
 msgid "<span size=\"small\">Artist</span>"
 msgstr "<span size=\"small\">Artista</span>"
 
-#: src/libaudgui/infowin.c:415
+#: src/libaudgui/infowin.c:409
 msgid "<span size=\"small\">Album</span>"
 msgstr "<span size=\"small\">Àlbum</span>"
 
-#: src/libaudgui/infowin.c:427
+#: src/libaudgui/infowin.c:421
 msgid "<span size=\"small\">Comment</span>"
 msgstr "<span size=\"small\">Comentari</span>"
 
-#: src/libaudgui/infowin.c:439
+#: src/libaudgui/infowin.c:433
 msgid "<span size=\"small\">Genre</span>"
 msgstr "<span size=\"small\">Gènere</span>"
 
-#: src/libaudgui/infowin.c:460
+#: src/libaudgui/infowin.c:455
 msgid "<span size=\"small\">Year</span>"
 msgstr "<span size=\"small\">Any</span>"
 
-#: src/libaudgui/infowin.c:471
+#: src/libaudgui/infowin.c:464
 msgid "<span size=\"small\">Track Number</span>"
 msgstr "<span size=\"small\">Número de pista</span>"
 
-#: src/libaudgui/infowin.c:550
+#: src/libaudgui/infowin.c:541
 #, c-format
 msgid "%d kb/s"
 msgstr "%d kb/s"
 
-#: src/libaudgui/infowin.c:577
+#: src/libaudgui/infowin.c:568
 #, c-format
 msgid "No info available for %s.\n"
 msgstr ""
@@ -984,62 +984,46 @@ msgstr ""
 "\n"
 "(Els missatges següents han estat amagats.)"
 
-#: src/libeggsmclient/eggdesktopfile.c:162
-msgid "File is not a valid .desktop file"
-msgstr "El fitxer no és un fitxer \"desktop\" vàlid"
+#~ msgid "File is not a valid .desktop file"
+#~ msgstr "El fitxer no és un fitxer \"desktop\" vàlid"
 
-#: src/libeggsmclient/eggdesktopfile.c:188
-#, c-format
-msgid "Unrecognized desktop file Version '%s'"
-msgstr "Versió del fitxer \"desktop\" no reconeguda: '%s'"
+#~ msgid "Unrecognized desktop file Version '%s'"
+#~ msgstr "Versió del fitxer \"desktop\" no reconeguda: '%s'"
 
-#: src/libeggsmclient/eggdesktopfile.c:971
-#, c-format
-msgid "Starting %s"
-msgstr "Començant %s"
+#~ msgid "Starting %s"
+#~ msgstr "Començant %s"
 
-#: src/libeggsmclient/eggdesktopfile.c:1113
-msgid "Application does not accept documents on command line"
-msgstr "L'aplicació no admet documents a la línia d'ordres"
+#~ msgid "Application does not accept documents on command line"
+#~ msgstr "L'aplicació no admet documents a la línia d'ordres"
 
-#: src/libeggsmclient/eggdesktopfile.c:1181
-#, c-format
-msgid "Unrecognized launch option: %d"
-msgstr "Opció d'iniciació no reconeguda: %d"
+#~ msgid "Unrecognized launch option: %d"
+#~ msgstr "Opció d'iniciació no reconeguda: %d"
 
-#: src/libeggsmclient/eggdesktopfile.c:1388
-msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-msgstr ""
-"No es poden passar URIs de documents a una entrada d'escriptori 'Type=Link'"
+#~ msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
+#~ msgstr ""
+#~ "No es poden passar URIs de documents a una entrada d'escriptori "
+#~ "'Type=Link'"
 
-#: src/libeggsmclient/eggdesktopfile.c:1409
-msgid "Not a launchable item"
-msgstr "No és un element iniciable"
+#~ msgid "Not a launchable item"
+#~ msgstr "No és un element iniciable"
 
-#: src/libeggsmclient/eggsmclient.c:223
-msgid "Disable connection to session manager"
-msgstr "Desactiva la connexió amb el gestor de sessions"
+#~ msgid "Disable connection to session manager"
+#~ msgstr "Desactiva la connexió amb el gestor de sessions"
 
-#: src/libeggsmclient/eggsmclient.c:226
-msgid "Specify file containing saved configuration"
-msgstr "Especifiqueu el fitxer que conté la configuració desada"
+#~ msgid "Specify file containing saved configuration"
+#~ msgstr "Especifiqueu el fitxer que conté la configuració desada"
 
-#: src/libeggsmclient/eggsmclient.c:226
-msgid "FILE"
-msgstr "FITXER"
+#~ msgid "FILE"
+#~ msgstr "FITXER"
 
-#: src/libeggsmclient/eggsmclient.c:229
-msgid "Specify session management ID"
-msgstr "Especifiqueu una ID de sessió"
+#~ msgid "Specify session management ID"
+#~ msgstr "Especifiqueu una ID de sessió"
 
-#: src/libeggsmclient/eggsmclient.c:229
-msgid "ID"
-msgstr "ID"
+#~ msgid "ID"
+#~ msgstr "ID"
 
-#: src/libeggsmclient/eggsmclient.c:250
-msgid "Session management options:"
-msgstr "Opcions de gestió de sessions "
+#~ msgid "Session management options:"
+#~ msgstr "Opcions de gestió de sessions "
 
-#: src/libeggsmclient/eggsmclient.c:251
-msgid "Show session management options"
-msgstr "Veure gestió d'opcions de sessions"
+#~ msgid "Show session management options"
+#~ msgstr "Veure gestió d'opcions de sessions"

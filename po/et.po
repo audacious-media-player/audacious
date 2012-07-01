@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-06-24 13:55-0400\n"
+"POT-Creation-Date: 2012-07-01 14:46-0400\n"
 "PO-Revision-Date: 2012-06-24 17:44+0000\n"
 "Last-Translator: jlindgren <john.lindgren@aol.com>\n"
 "Language-Team: Estonian\n"
@@ -39,67 +39,67 @@ msgstr "  (vigane UTF-8)"
 msgid "Error importing Winamp EQF file '%s'"
 msgstr "Viga Winampi EQF-faili '%s' importimisel"
 
-#: src/audacious/main.c:237
+#: src/audacious/main.c:232
 msgid "Skip backwards in playlist"
 msgstr "Esitusnimekirjas eelmisele loole hüppamine"
 
-#: src/audacious/main.c:238
+#: src/audacious/main.c:233
 msgid "Start playing current playlist"
 msgstr "Praeguse esitusnimekirja esitamise alustamine"
 
-#: src/audacious/main.c:239
+#: src/audacious/main.c:234
 msgid "Pause current song"
 msgstr "Praeguse loo pausimine"
 
-#: src/audacious/main.c:240
+#: src/audacious/main.c:235
 msgid "Stop current song"
 msgstr "Praeguse loo seiskamine"
 
-#: src/audacious/main.c:241
+#: src/audacious/main.c:236
 msgid "Pause if playing, play otherwise"
 msgstr "Esitamise korral pausimine, pausi korral esitamine"
 
-#: src/audacious/main.c:242
+#: src/audacious/main.c:237
 msgid "Skip forward in playlist"
 msgstr "Esitusnimekirjas järgmisele loole hüppamine"
 
-#: src/audacious/main.c:243
+#: src/audacious/main.c:238
 msgid "Display Jump to File dialog"
 msgstr "Failile hüppamise dialoogi kuvamine"
 
-#: src/audacious/main.c:244
+#: src/audacious/main.c:239
 msgid "Add files to the playlist"
 msgstr "Failide lisamine esitusnimekirja"
 
-#: src/audacious/main.c:245
+#: src/audacious/main.c:240
 msgid "Add new files to a temporary playlist"
 msgstr "Uute failide lisamine ajutisse esitusnimekirja"
 
-#: src/audacious/main.c:246
+#: src/audacious/main.c:241
 msgid "Display the main window"
 msgstr "Peaakna kuvamine"
 
-#: src/audacious/main.c:247
+#: src/audacious/main.c:242
 msgid "Show version"
 msgstr "Versiooni näitamine"
 
-#: src/audacious/main.c:248
+#: src/audacious/main.c:243
 msgid "Print debugging messages"
 msgstr "Silumisteadete väljastamine"
 
-#: src/audacious/main.c:249
+#: src/audacious/main.c:244
 msgid "Headless mode (beta)"
 msgstr "Akendeta režiim (beeta)"
 
-#: src/audacious/main.c:250
+#: src/audacious/main.c:245
 msgid "FILE..."
 msgstr "FAIL..."
 
-#: src/audacious/main.c:262
+#: src/audacious/main.c:257
 msgid "- play multimedia files"
 msgstr "- multimeediafailide esitamine"
 
-#: src/audacious/main.c:272
+#: src/audacious/main.c:264
 #, c-format
 msgid ""
 "%s: %s\n"
@@ -108,11 +108,11 @@ msgstr ""
 "%s: %s\n"
 "Täiendava teabe saamiseks proovi `%s --help'.\n"
 
-#: src/audacious/main.c:561
+#: src/audacious/main.c:545
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/playback.c:304
+#: src/audacious/playback.c:305
 #, c-format
 msgid "No decoder found for %s."
 msgstr "Failile %s ei leitud dekoodrit."
@@ -156,360 +156,360 @@ msgstr "%s ‒ plugina andmed"
 msgid "%s Settings"
 msgstr "%s ‒ plugina sätted"
 
-#: src/audacious/ui_preferences.c:70
+#: src/audacious/ui_preferences.c:69
 msgid "Audio"
 msgstr "Audio"
 
-#: src/audacious/ui_preferences.c:71
+#: src/audacious/ui_preferences.c:70
 msgid "Network"
 msgstr "Võrk"
 
-#: src/audacious/ui_preferences.c:72 src/audacious/ui_preferences.c:1253
+#: src/audacious/ui_preferences.c:71 src/audacious/ui_preferences.c:1244
 msgid "Playlist"
 msgstr "Esitusnimekiri"
 
-#: src/audacious/ui_preferences.c:73
+#: src/audacious/ui_preferences.c:72
 msgid "Song Info"
 msgstr "Loo andmed"
 
-#: src/audacious/ui_preferences.c:74
+#: src/audacious/ui_preferences.c:73
 msgid "Plugins"
 msgstr "Pluginad"
 
-#: src/audacious/ui_preferences.c:80 src/libaudgui/infopopup.c:195
+#: src/audacious/ui_preferences.c:79 src/libaudgui/infopopup.c:194
 msgid "Artist"
 msgstr "Esitaja"
 
-#: src/audacious/ui_preferences.c:81 src/libaudgui/infopopup.c:197
+#: src/audacious/ui_preferences.c:80 src/libaudgui/infopopup.c:196
 msgid "Album"
 msgstr "Album"
 
-#: src/audacious/ui_preferences.c:82 src/libaudgui/infopopup.c:193
+#: src/audacious/ui_preferences.c:81 src/libaudgui/infopopup.c:192
 #: src/libaudgui/ui_playlist_manager.c:279
 msgid "Title"
 msgstr "Pealkiri"
 
-#: src/audacious/ui_preferences.c:83
+#: src/audacious/ui_preferences.c:82
 msgid "Tracknumber"
 msgstr "Loo number"
 
-#: src/audacious/ui_preferences.c:84 src/libaudgui/infopopup.c:199
+#: src/audacious/ui_preferences.c:83 src/libaudgui/infopopup.c:198
 msgid "Genre"
 msgstr "Žanr"
 
-#: src/audacious/ui_preferences.c:85
+#: src/audacious/ui_preferences.c:84
 msgid "Filename"
 msgstr "Failinimi"
 
-#: src/audacious/ui_preferences.c:86
+#: src/audacious/ui_preferences.c:85
 msgid "Filepath"
 msgstr "Faili rada"
 
-#: src/audacious/ui_preferences.c:87
+#: src/audacious/ui_preferences.c:86
 msgid "Date"
 msgstr "Kuupäev"
 
-#: src/audacious/ui_preferences.c:88 src/libaudgui/infopopup.c:201
+#: src/audacious/ui_preferences.c:87 src/libaudgui/infopopup.c:200
 msgid "Year"
 msgstr "Aasta"
 
-#: src/audacious/ui_preferences.c:89
+#: src/audacious/ui_preferences.c:88
 msgid "Comment"
 msgstr "Kommentaar"
 
-#: src/audacious/ui_preferences.c:90
+#: src/audacious/ui_preferences.c:89
 msgid "Codec"
 msgstr "Koodek"
 
-#: src/audacious/ui_preferences.c:91
+#: src/audacious/ui_preferences.c:90
 msgid "Quality"
 msgstr "Kvaliteet"
 
-#: src/audacious/ui_preferences.c:97
+#: src/audacious/ui_preferences.c:96
 msgid "None"
 msgstr "Puudub"
 
-#: src/audacious/ui_preferences.c:98
+#: src/audacious/ui_preferences.c:97
 msgid "Arabic"
 msgstr "Araabia"
 
-#: src/audacious/ui_preferences.c:99
+#: src/audacious/ui_preferences.c:98
 msgid "Baltic"
 msgstr "Balti"
 
-#: src/audacious/ui_preferences.c:100
+#: src/audacious/ui_preferences.c:99
 msgid "Chinese"
 msgstr "Hiina"
 
-#: src/audacious/ui_preferences.c:101
+#: src/audacious/ui_preferences.c:100
 msgid "Greek"
 msgstr "Kreeka"
 
-#: src/audacious/ui_preferences.c:102
+#: src/audacious/ui_preferences.c:101
 msgid "Hebrew"
 msgstr "Heebrea"
 
-#: src/audacious/ui_preferences.c:103
+#: src/audacious/ui_preferences.c:102
 msgid "Japanese"
 msgstr "Jaapani"
 
-#: src/audacious/ui_preferences.c:104
+#: src/audacious/ui_preferences.c:103
 msgid "Korean"
 msgstr "Korea"
 
-#: src/audacious/ui_preferences.c:105
+#: src/audacious/ui_preferences.c:104
 msgid "Polish"
 msgstr "Poola"
 
-#: src/audacious/ui_preferences.c:106
+#: src/audacious/ui_preferences.c:105
 msgid "Russian"
 msgstr "Vene"
 
-#: src/audacious/ui_preferences.c:107
+#: src/audacious/ui_preferences.c:106
 msgid "Taiwanese"
 msgstr "Taivani"
 
-#: src/audacious/ui_preferences.c:108
+#: src/audacious/ui_preferences.c:107
 msgid "Turkish"
 msgstr "Türgi"
 
-#: src/audacious/ui_preferences.c:131
+#: src/audacious/ui_preferences.c:130
 msgid "Album mode"
 msgstr "Albumi kaupa"
 
-#: src/audacious/ui_preferences.c:134
+#: src/audacious/ui_preferences.c:133
 msgid "<b>Output Settings</b>"
 msgstr "<b>Väljundi sätted</b>"
 
-#: src/audacious/ui_preferences.c:136
+#: src/audacious/ui_preferences.c:135
 msgid "Bit depth:"
 msgstr "Bitisügavus:"
 
-#: src/audacious/ui_preferences.c:139
+#: src/audacious/ui_preferences.c:138
 msgid "Buffer size:"
 msgstr "Puhvri suurus:"
 
-#: src/audacious/ui_preferences.c:141
+#: src/audacious/ui_preferences.c:140
 msgid "ms"
 msgstr "ms"
 
-#: src/audacious/ui_preferences.c:142
+#: src/audacious/ui_preferences.c:141
 msgid "Use software volume control (not recommended)"
 msgstr "Tarkvaraline valjuse juhtimine (pole soovitatav)"
 
-#: src/audacious/ui_preferences.c:144
+#: src/audacious/ui_preferences.c:143
 msgid "<b>Replay Gain</b>"
 msgstr "<b>Helitugevuse korrektsioon</b>"
 
-#: src/audacious/ui_preferences.c:145
+#: src/audacious/ui_preferences.c:144
 msgid "Enable Replay Gain"
 msgstr "Helitugevuse korrektsioon on lubatud"
 
-#: src/audacious/ui_preferences.c:148
+#: src/audacious/ui_preferences.c:147
 msgid "Prevent clipping (recommended)"
 msgstr "Hoidutakse kärpimisest (soovitatav)"
 
-#: src/audacious/ui_preferences.c:150
+#: src/audacious/ui_preferences.c:149
 msgid "<b>Adjust Levels</b>"
 msgstr "<b>Valjuse kohendamine</b>"
 
-#: src/audacious/ui_preferences.c:151
+#: src/audacious/ui_preferences.c:150
 msgid "Amplify all files:"
 msgstr "Kõikide failide võimendamine:"
 
-#: src/audacious/ui_preferences.c:153 src/audacious/ui_preferences.c:156
+#: src/audacious/ui_preferences.c:152 src/audacious/ui_preferences.c:155
 msgid "dB"
 msgstr "dB"
 
-#: src/audacious/ui_preferences.c:154
+#: src/audacious/ui_preferences.c:153
 msgid "Amplify untagged files:"
 msgstr "Sildistamata failide võimendamine:"
 
-#: src/audacious/ui_preferences.c:159
+#: src/audacious/ui_preferences.c:158
 msgid "Proxy hostname:"
 msgstr "Proksi hostinimi:"
 
-#: src/audacious/ui_preferences.c:160
+#: src/audacious/ui_preferences.c:159
 msgid "Proxy port:"
 msgstr "Proksi port:"
 
-#: src/audacious/ui_preferences.c:163
+#: src/audacious/ui_preferences.c:162
 msgid "Proxy username:"
 msgstr "Proksi kasutajanimi:"
 
-#: src/audacious/ui_preferences.c:164
+#: src/audacious/ui_preferences.c:163
 msgid "Proxy password:"
 msgstr "Proksi parool:"
 
-#: src/audacious/ui_preferences.c:168
+#: src/audacious/ui_preferences.c:167
 msgid "<b>Proxy Configuration</b>"
 msgstr "<b>Proksi sätted</b>"
 
-#: src/audacious/ui_preferences.c:169
+#: src/audacious/ui_preferences.c:168
 msgid "Enable proxy usage"
 msgstr "Proksi kasutamine on lubatud"
 
-#: src/audacious/ui_preferences.c:172
+#: src/audacious/ui_preferences.c:171
 msgid "Use authentication with proxy"
 msgstr "Proksi kasutatab autentimist"
 
-#: src/audacious/ui_preferences.c:180
+#: src/audacious/ui_preferences.c:179
 msgid "Auto character encoding detector for:"
 msgstr "Automaatne kooditabeli tuvastaja:"
 
-#: src/audacious/ui_preferences.c:184
+#: src/audacious/ui_preferences.c:183
 msgid "Fallback character encodings:"
 msgstr "Kooditabelite tagavara:"
 
-#: src/audacious/ui_preferences.c:188
+#: src/audacious/ui_preferences.c:187
 msgid "<b>Behavior</b>"
 msgstr "<b>Käitumine</b>"
 
-#: src/audacious/ui_preferences.c:189
+#: src/audacious/ui_preferences.c:188
 msgid "Continue playback on startup"
 msgstr "Käivitamisel jätkatakse esitamist"
 
-#: src/audacious/ui_preferences.c:191
+#: src/audacious/ui_preferences.c:190
 msgid "Advance when the current song is deleted"
 msgstr "Esitatava loo kustutamisel hakatakse järgmist lugu esitama"
 
-#: src/audacious/ui_preferences.c:193
+#: src/audacious/ui_preferences.c:192
 msgid "Clear the playlist when opening files"
 msgstr "Failide avamisel tühjendatakse esitusnimekiri"
 
-#: src/audacious/ui_preferences.c:195
+#: src/audacious/ui_preferences.c:194
 msgid "Open files in a temporary playlist"
 msgstr "Failid avatakse ajutises esitusnimekirjas"
 
-#: src/audacious/ui_preferences.c:197
+#: src/audacious/ui_preferences.c:196
 msgid "<b>Metadata</b>"
 msgstr "<b>Metaandmed</b>"
 
-#: src/audacious/ui_preferences.c:198
+#: src/audacious/ui_preferences.c:197
 msgid "Do not load metadata for songs until played"
 msgstr "Loo metaandmeid enne esitamist ei laadita"
 
-#: src/audacious/ui_preferences.c:206
+#: src/audacious/ui_preferences.c:205
 msgid "<b>Album Art</b>"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:207
+#: src/audacious/ui_preferences.c:206
 msgid "Search for images matching these words (comma-separated):"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:209
+#: src/audacious/ui_preferences.c:208
 msgid "Exclude images matching these words (comma-separated):"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:211
+#: src/audacious/ui_preferences.c:210
 msgid "Search for images matching song file name"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:213
+#: src/audacious/ui_preferences.c:212
 msgid "Search recursively"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:215
+#: src/audacious/ui_preferences.c:214
 msgid "Search depth:"
 msgstr "Otsingu sügavus:"
 
-#: src/audacious/ui_preferences.c:218
+#: src/audacious/ui_preferences.c:217
 msgid "<b>Popup Information</b>"
 msgstr "<b>Teabe hüpikaken</b>"
 
-#: src/audacious/ui_preferences.c:219
+#: src/audacious/ui_preferences.c:218
 msgid "Show popup information"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:221
+#: src/audacious/ui_preferences.c:220
 msgid "Popup delay (tenths of a second):"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:224
+#: src/audacious/ui_preferences.c:223
 msgid "Show time scale for current song"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:238
+#: src/audacious/ui_preferences.c:237
 msgid "TITLE"
 msgstr "PEALKIRI"
 
-#: src/audacious/ui_preferences.c:239
+#: src/audacious/ui_preferences.c:238
 msgid "ARTIST - TITLE"
 msgstr "ESITAJA - PEALKIRI"
 
-#: src/audacious/ui_preferences.c:240
+#: src/audacious/ui_preferences.c:239
 msgid "ARTIST - ALBUM - TITLE"
 msgstr "ESITAJA - ALBUM - PEALKIRI"
 
-#: src/audacious/ui_preferences.c:241
+#: src/audacious/ui_preferences.c:240
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr "ESITAJA - ALBUM - RADA. PEALKIRI"
 
-#: src/audacious/ui_preferences.c:242
+#: src/audacious/ui_preferences.c:241
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr "ESITAJA [ALBUM] - RADA. PEALKIRI"
 
-#: src/audacious/ui_preferences.c:243
+#: src/audacious/ui_preferences.c:242
 msgid "ALBUM - TITLE"
 msgstr "ALBUM - PEALKIRI"
 
-#: src/audacious/ui_preferences.c:456
+#: src/audacious/ui_preferences.c:455
 msgid "Category"
 msgstr "Kategooria"
 
-#: src/audacious/ui_preferences.c:1003
+#: src/audacious/ui_preferences.c:1002
 msgid "Custom"
 msgstr "Kohandatud"
 
-#: src/audacious/ui_preferences.c:1040
+#: src/audacious/ui_preferences.c:1039
 msgid "<b>Song Display</b>"
 msgstr "<b>Loo kuvamine</b>"
 
-#: src/audacious/ui_preferences.c:1049
+#: src/audacious/ui_preferences.c:1048
 msgid "Show song numbers"
 msgstr "Näidatakse lugude numbreid"
 
-#: src/audacious/ui_preferences.c:1060
+#: src/audacious/ui_preferences.c:1059
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr "Alguses näidatakse nulle (2:00 asemel näidatakse 02:00)"
 
-#: src/audacious/ui_preferences.c:1082
+#: src/audacious/ui_preferences.c:1079
 msgid "Show information about titlestring format"
 msgstr "Pealkirjastringi vormingu kohta andmete näitamine"
 
-#: src/audacious/ui_preferences.c:1098
+#: src/audacious/ui_preferences.c:1093
 msgid "Custom string:"
 msgstr "Kohandatud string:"
 
-#: src/audacious/ui_preferences.c:1105
+#: src/audacious/ui_preferences.c:1098
 msgid "Title format:"
 msgstr "Pealkirja vorming:"
 
-#: src/audacious/ui_preferences.c:1194
+#: src/audacious/ui_preferences.c:1185
 msgid "Output plugin:"
 msgstr "Väljundplugin:"
 
-#: src/audacious/ui_preferences.c:1253
+#: src/audacious/ui_preferences.c:1244
 msgid "Transport"
 msgstr "Transport"
 
-#: src/audacious/ui_preferences.c:1253
+#: src/audacious/ui_preferences.c:1244
 msgid "Input"
 msgstr "Sisend"
 
-#: src/audacious/ui_preferences.c:1254
+#: src/audacious/ui_preferences.c:1245
 msgid "Effect"
 msgstr "Efekt"
 
-#: src/audacious/ui_preferences.c:1254
+#: src/audacious/ui_preferences.c:1245
 msgid "Visualization"
 msgstr "Visualiseerimine"
 
-#: src/audacious/ui_preferences.c:1254
+#: src/audacious/ui_preferences.c:1245
 msgid "General"
 msgstr "Üldine"
 
-#: src/audacious/ui_preferences.c:1292
+#: src/audacious/ui_preferences.c:1283
 msgid "Audacious Preferences"
 msgstr "Audaciouse eelistused"
 
@@ -631,11 +631,11 @@ msgstr "Ekvalaiser"
 msgid "Preamp"
 msgstr "Eelmoonutus"
 
-#: src/libaudgui/infopopup.c:203
+#: src/libaudgui/infopopup.c:202
 msgid "Track"
 msgstr "Rada"
 
-#: src/libaudgui/infopopup.c:205
+#: src/libaudgui/infopopup.c:204
 msgid "Length"
 msgstr "Pikkus"
 
@@ -824,40 +824,40 @@ msgstr "<span size=\"small\">Kvaliteet:</span>"
 msgid "<span size=\"small\">Bitrate:</span>"
 msgstr "<span size=\"small\">Bitikiirus:</span>"
 
-#: src/libaudgui/infowin.c:391
+#: src/libaudgui/infowin.c:385
 msgid "<span size=\"small\">Title</span>"
 msgstr "<span size=\"small\">Pealkiri</span>"
 
-#: src/libaudgui/infowin.c:403
+#: src/libaudgui/infowin.c:397
 msgid "<span size=\"small\">Artist</span>"
 msgstr "<span size=\"small\">Esitaja</span>"
 
-#: src/libaudgui/infowin.c:415
+#: src/libaudgui/infowin.c:409
 msgid "<span size=\"small\">Album</span>"
 msgstr "<span size=\"small\">Album</span>"
 
-#: src/libaudgui/infowin.c:427
+#: src/libaudgui/infowin.c:421
 msgid "<span size=\"small\">Comment</span>"
 msgstr "<span size=\"small\">Kommentaar</span>"
 
-#: src/libaudgui/infowin.c:439
+#: src/libaudgui/infowin.c:433
 msgid "<span size=\"small\">Genre</span>"
 msgstr "<span size=\"small\">Žanr</span>"
 
-#: src/libaudgui/infowin.c:460
+#: src/libaudgui/infowin.c:455
 msgid "<span size=\"small\">Year</span>"
 msgstr "<span size=\"small\">Aasta</span>"
 
-#: src/libaudgui/infowin.c:471
+#: src/libaudgui/infowin.c:464
 msgid "<span size=\"small\">Track Number</span>"
 msgstr "<span size=\"small\">Loo number</span>"
 
-#: src/libaudgui/infowin.c:550
+#: src/libaudgui/infowin.c:541
 #, c-format
 msgid "%d kb/s"
 msgstr "%d kb/s"
 
-#: src/libaudgui/infowin.c:577
+#: src/libaudgui/infowin.c:568
 #, c-format
 msgid "No info available for %s.\n"
 msgstr "Faili %s kohta puuduvad andmed.\n"
@@ -972,62 +972,45 @@ msgstr ""
 "\n"
 "(Ülejäänud sõnumid peidetakse.)"
 
-#: src/libeggsmclient/eggdesktopfile.c:162
-msgid "File is not a valid .desktop file"
-msgstr "Fail pole korrektne .desktop-fail"
+#~ msgid "File is not a valid .desktop file"
+#~ msgstr "Fail pole korrektne .desktop-fail"
 
-#: src/libeggsmclient/eggdesktopfile.c:188
-#, c-format
-msgid "Unrecognized desktop file Version '%s'"
-msgstr "Töölauafaili tundmatu versioon '%s'"
+#~ msgid "Unrecognized desktop file Version '%s'"
+#~ msgstr "Töölauafaili tundmatu versioon '%s'"
 
-#: src/libeggsmclient/eggdesktopfile.c:971
-#, c-format
-msgid "Starting %s"
-msgstr "Faili %s käivitamine"
+#~ msgid "Starting %s"
+#~ msgstr "Faili %s käivitamine"
 
-#: src/libeggsmclient/eggdesktopfile.c:1113
-msgid "Application does not accept documents on command line"
-msgstr "Rakendus ei toeta käsurealt määratud dokumente"
+#~ msgid "Application does not accept documents on command line"
+#~ msgstr "Rakendus ei toeta käsurealt määratud dokumente"
 
-#: src/libeggsmclient/eggdesktopfile.c:1181
-#, c-format
-msgid "Unrecognized launch option: %d"
-msgstr "Arusaamatu käivitusvõti: %d"
+#~ msgid "Unrecognized launch option: %d"
+#~ msgstr "Arusaamatu käivitusvõti: %d"
 
-#: src/libeggsmclient/eggdesktopfile.c:1388
-msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-msgstr ""
-"Dokumendi URI-sid pole võimalik 'Liik=Viit' tüüpi töölauakirjele edastada"
+#~ msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
+#~ msgstr ""
+#~ "Dokumendi URI-sid pole võimalik 'Liik=Viit' tüüpi töölauakirjele edastada"
 
-#: src/libeggsmclient/eggdesktopfile.c:1409
-msgid "Not a launchable item"
-msgstr "Pole käivitatav kirje"
+#~ msgid "Not a launchable item"
+#~ msgstr "Pole käivitatav kirje"
 
-#: src/libeggsmclient/eggsmclient.c:223
-msgid "Disable connection to session manager"
-msgstr "Seansihalduriga ühendumise keelamine"
+#~ msgid "Disable connection to session manager"
+#~ msgstr "Seansihalduriga ühendumise keelamine"
 
-#: src/libeggsmclient/eggsmclient.c:226
-msgid "Specify file containing saved configuration"
-msgstr "Salvestatud seadistusi sisaldava faili määramine"
+#~ msgid "Specify file containing saved configuration"
+#~ msgstr "Salvestatud seadistusi sisaldava faili määramine"
 
-#: src/libeggsmclient/eggsmclient.c:226
-msgid "FILE"
-msgstr "FAIL"
+#~ msgid "FILE"
+#~ msgstr "FAIL"
 
-#: src/libeggsmclient/eggsmclient.c:229
-msgid "Specify session management ID"
-msgstr "Seandihalduse ID määramine"
+#~ msgid "Specify session management ID"
+#~ msgstr "Seandihalduse ID määramine"
 
-#: src/libeggsmclient/eggsmclient.c:229
-msgid "ID"
-msgstr "ID"
+#~ msgid "ID"
+#~ msgstr "ID"
 
-#: src/libeggsmclient/eggsmclient.c:250
-msgid "Session management options:"
-msgstr "Seansihalduse valikud:"
+#~ msgid "Session management options:"
+#~ msgstr "Seansihalduse valikud:"
 
-#: src/libeggsmclient/eggsmclient.c:251
-msgid "Show session management options"
-msgstr "Seansihalduse valikute näitamine"
+#~ msgid "Show session management options"
+#~ msgstr "Seansihalduse valikute näitamine"

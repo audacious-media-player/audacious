@@ -27,5 +27,3 @@ src/libaudgui/ui_jumptotrack.c
 src/libaudgui/ui_playlist_manager.c
 src/libaudgui/url-opener.c
 src/libaudgui/util.c
-src/libeggsmclient/eggdesktopfile.c
-src/libeggsmclient/eggsmclient.c

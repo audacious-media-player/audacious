@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious 1.3.0\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-06-24 13:41-0400\n"
+"POT-Creation-Date: 2012-07-01 14:46-0400\n"
 "PO-Revision-Date: 2008-04-15 04:17-0600\n"
 "Last-Translator: William Pitcock <nenolod+i18n@sacredspiral.co.uk>\n"
 "Language-Team: Cynmaeg <nenolod+cy@sacredspiral.co.uk>\n"
@@ -45,69 +45,69 @@ msgstr "  (UTF-8 annilys)"
 msgid "Error importing Winamp EQF file '%s'"
 msgstr ""
 
-#: src/audacious/main.c:237
+#: src/audacious/main.c:232
 msgid "Skip backwards in playlist"
 msgstr "Sgipio nôl yn y rhestr chwarae"
 
-#: src/audacious/main.c:238
+#: src/audacious/main.c:233
 msgid "Start playing current playlist"
 msgstr "Cychwyn chwarae'r rhestr chwarae"
 
-#: src/audacious/main.c:239
+#: src/audacious/main.c:234
 msgid "Pause current song"
 msgstr "Oedi'r gân"
 
-#: src/audacious/main.c:240
+#: src/audacious/main.c:235
 msgid "Stop current song"
 msgstr "Atal y gân"
 
-#: src/audacious/main.c:241
+#: src/audacious/main.c:236
 msgid "Pause if playing, play otherwise"
 msgstr "Oedi os yn chwarae, chwarae fel arall"
 
-#: src/audacious/main.c:242
+#: src/audacious/main.c:237
 msgid "Skip forward in playlist"
 msgstr "Sgipio mlaen yn y rhestr chwarae"
 
-#: src/audacious/main.c:243
+#: src/audacious/main.c:238
 msgid "Display Jump to File dialog"
 msgstr "Dangos Neidio i Ffeil"
 
-#: src/audacious/main.c:244
+#: src/audacious/main.c:239
 #, fuzzy
 msgid "Add files to the playlist"
 msgstr "Adio y ffeil at ar rhestr chwarae."
 
-#: src/audacious/main.c:245
+#: src/audacious/main.c:240
 msgid "Add new files to a temporary playlist"
 msgstr "Adio y ffeil at ar rhestr chwarae ni parahol"
 
-#: src/audacious/main.c:246
+#: src/audacious/main.c:241
 msgid "Display the main window"
 msgstr "Dangos y prif ffenestr."
 
-#: src/audacious/main.c:247
+#: src/audacious/main.c:242
 #, fuzzy
 msgid "Show version"
 msgstr "Dangos Y Brif Ffenestr"
 
-#: src/audacious/main.c:248
+#: src/audacious/main.c:243
 msgid "Print debugging messages"
 msgstr ""
 
-#: src/audacious/main.c:249
+#: src/audacious/main.c:244
 msgid "Headless mode (beta)"
 msgstr ""
 
-#: src/audacious/main.c:250
+#: src/audacious/main.c:245
 msgid "FILE..."
 msgstr "FFEIL..."
 
-#: src/audacious/main.c:262
+#: src/audacious/main.c:257
 msgid "- play multimedia files"
 msgstr "- chwarae ffeil amlgyfrwng"
 
-#: src/audacious/main.c:272
+#: src/audacious/main.c:264
 #, c-format
 msgid ""
 "%s: %s\n"
@@ -116,11 +116,11 @@ msgstr ""
 "%s: %s\n"
 "Ceisio `%s --help' am ychwaneg gwybodaeth.\n"
 
-#: src/audacious/main.c:561
+#: src/audacious/main.c:545
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/playback.c:304
+#: src/audacious/playback.c:305
 #, c-format
 msgid "No decoder found for %s."
 msgstr ""
@@ -164,379 +164,379 @@ msgstr "Ynghylch Audacious"
 msgid "%s Settings"
 msgstr "Cychwyn %s"
 
-#: src/audacious/ui_preferences.c:70
+#: src/audacious/ui_preferences.c:69
 msgid "Audio"
 msgstr "Seniau"
 
-#: src/audacious/ui_preferences.c:71
+#: src/audacious/ui_preferences.c:70
 msgid "Network"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:72 src/audacious/ui_preferences.c:1253
+#: src/audacious/ui_preferences.c:71 src/audacious/ui_preferences.c:1244
 msgid "Playlist"
 msgstr "Chwarae"
 
-#: src/audacious/ui_preferences.c:73
+#: src/audacious/ui_preferences.c:72
 msgid "Song Info"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:74
+#: src/audacious/ui_preferences.c:73
 msgid "Plugins"
 msgstr "Ategynnau"
 
-#: src/audacious/ui_preferences.c:80 src/libaudgui/infopopup.c:195
+#: src/audacious/ui_preferences.c:79 src/libaudgui/infopopup.c:194
 msgid "Artist"
 msgstr "Cyflawnwr"
 
-#: src/audacious/ui_preferences.c:81 src/libaudgui/infopopup.c:197
+#: src/audacious/ui_preferences.c:80 src/libaudgui/infopopup.c:196
 msgid "Album"
 msgstr "Albwm"
 
-#: src/audacious/ui_preferences.c:82 src/libaudgui/infopopup.c:193
+#: src/audacious/ui_preferences.c:81 src/libaudgui/infopopup.c:192
 #: src/libaudgui/ui_playlist_manager.c:279
 msgid "Title"
 msgstr "Teitl"
 
-#: src/audacious/ui_preferences.c:83
+#: src/audacious/ui_preferences.c:82
 msgid "Tracknumber"
 msgstr "Rhif y Trac:"
 
-#: src/audacious/ui_preferences.c:84 src/libaudgui/infopopup.c:199
+#: src/audacious/ui_preferences.c:83 src/libaudgui/infopopup.c:198
 msgid "Genre"
 msgstr "Math"
 
-#: src/audacious/ui_preferences.c:85
+#: src/audacious/ui_preferences.c:84
 msgid "Filename"
 msgstr "Enw ffeil"
 
-#: src/audacious/ui_preferences.c:86
+#: src/audacious/ui_preferences.c:85
 msgid "Filepath"
 msgstr "Llwybr ffeil"
 
-#: src/audacious/ui_preferences.c:87
+#: src/audacious/ui_preferences.c:86
 msgid "Date"
 msgstr "Dyddiad"
 
-#: src/audacious/ui_preferences.c:88 src/libaudgui/infopopup.c:201
+#: src/audacious/ui_preferences.c:87 src/libaudgui/infopopup.c:200
 msgid "Year"
 msgstr "Blwyddyn"
 
-#: src/audacious/ui_preferences.c:89
+#: src/audacious/ui_preferences.c:88
 msgid "Comment"
 msgstr "Sylwad"
 
-#: src/audacious/ui_preferences.c:90
+#: src/audacious/ui_preferences.c:89
 msgid "Codec"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:91
+#: src/audacious/ui_preferences.c:90
 msgid "Quality"
 msgstr "Ansawdd"
 
-#: src/audacious/ui_preferences.c:97
+#: src/audacious/ui_preferences.c:96
 msgid "None"
 msgstr "Dim"
 
-#: src/audacious/ui_preferences.c:98
+#: src/audacious/ui_preferences.c:97
 msgid "Arabic"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:99
+#: src/audacious/ui_preferences.c:98
 msgid "Baltic"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:100
+#: src/audacious/ui_preferences.c:99
 #, fuzzy
 msgid "Chinese"
 msgstr "Llinellau"
 
-#: src/audacious/ui_preferences.c:101
+#: src/audacious/ui_preferences.c:100
 msgid "Greek"
 msgstr "Groeg"
 
-#: src/audacious/ui_preferences.c:102
+#: src/audacious/ui_preferences.c:101
 msgid "Hebrew"
 msgstr "Hebraeg"
 
-#: src/audacious/ui_preferences.c:103
+#: src/audacious/ui_preferences.c:102
 msgid "Japanese"
 msgstr "Siapanëeg"
 
-#: src/audacious/ui_preferences.c:104
+#: src/audacious/ui_preferences.c:103
 msgid "Korean"
 msgstr "Corëeg"
 
-#: src/audacious/ui_preferences.c:105
+#: src/audacious/ui_preferences.c:104
 #, fuzzy
 msgid "Polish"
 msgstr "Pwyleg:"
 
-#: src/audacious/ui_preferences.c:106
+#: src/audacious/ui_preferences.c:105
 msgid "Russian"
 msgstr "Rwsieg"
 
-#: src/audacious/ui_preferences.c:107
+#: src/audacious/ui_preferences.c:106
 #, fuzzy
 msgid "Taiwanese"
 msgstr "Siapanëeg:"
 
-#: src/audacious/ui_preferences.c:108
+#: src/audacious/ui_preferences.c:107
 msgid "Turkish"
 msgstr "Twrceg"
 
-#: src/audacious/ui_preferences.c:131
+#: src/audacious/ui_preferences.c:130
 #, fuzzy
 msgid "Album mode"
 msgstr "Enwau'r Albwm:"
 
-#: src/audacious/ui_preferences.c:134
+#: src/audacious/ui_preferences.c:133
 #, fuzzy
 msgid "<b>Output Settings</b>"
 msgstr "<b>Awtoganfod trefniad</b>"
 
-#: src/audacious/ui_preferences.c:136
+#: src/audacious/ui_preferences.c:135
 #, fuzzy
 msgid "Bit depth:"
 msgstr "<b>Bit Dyfnder</b>"
 
-#: src/audacious/ui_preferences.c:139
+#: src/audacious/ui_preferences.c:138
 msgid "Buffer size:"
 msgstr "Maint y byffer:"
 
-#: src/audacious/ui_preferences.c:141
+#: src/audacious/ui_preferences.c:140
 msgid "ms"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:142
+#: src/audacious/ui_preferences.c:141
 msgid "Use software volume control (not recommended)"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:144
+#: src/audacious/ui_preferences.c:143
 #, fuzzy
 msgid "<b>Replay Gain</b>"
 msgstr "<b>Ffurfweddiad Cyfraint Cynnydd</b>"
 
-#: src/audacious/ui_preferences.c:145
+#: src/audacious/ui_preferences.c:144
 msgid "Enable Replay Gain"
 msgstr "Galluogi Cyfraint Cynnydd"
 
-#: src/audacious/ui_preferences.c:148
+#: src/audacious/ui_preferences.c:147
 msgid "Prevent clipping (recommended)"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:150
+#: src/audacious/ui_preferences.c:149
 #, fuzzy
 msgid "<b>Adjust Levels</b>"
 msgstr "<b>Sidell llygod</b>"
 
-#: src/audacious/ui_preferences.c:151
+#: src/audacious/ui_preferences.c:150
 msgid "Amplify all files:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:153 src/audacious/ui_preferences.c:156
+#: src/audacious/ui_preferences.c:152 src/audacious/ui_preferences.c:155
 msgid "dB"
 msgstr "dB"
 
-#: src/audacious/ui_preferences.c:154
+#: src/audacious/ui_preferences.c:153
 #, fuzzy
 msgid "Amplify untagged files:"
 msgstr "- chwarae ffeil amlgyfrwng"
 
-#: src/audacious/ui_preferences.c:159
+#: src/audacious/ui_preferences.c:158
 msgid "Proxy hostname:"
 msgstr "Gwesteiwr ddirprwy:"
 
-#: src/audacious/ui_preferences.c:160
+#: src/audacious/ui_preferences.c:159
 msgid "Proxy port:"
 msgstr "Porth dirprwy:"
 
-#: src/audacious/ui_preferences.c:163
+#: src/audacious/ui_preferences.c:162
 msgid "Proxy username:"
 msgstr "Dirprwy enw defnyddiwr:"
 
-#: src/audacious/ui_preferences.c:164
+#: src/audacious/ui_preferences.c:163
 msgid "Proxy password:"
 msgstr "Cyfrinair dirprwy:"
 
-#: src/audacious/ui_preferences.c:168
+#: src/audacious/ui_preferences.c:167
 msgid "<b>Proxy Configuration</b>"
 msgstr "<b>Ffurfweddiad Dirprwy</b>"
 
-#: src/audacious/ui_preferences.c:169
+#: src/audacious/ui_preferences.c:168
 msgid "Enable proxy usage"
 msgstr "Galluogi defnyddiwch ddirprwy"
 
-#: src/audacious/ui_preferences.c:172
+#: src/audacious/ui_preferences.c:171
 msgid "Use authentication with proxy"
 msgstr "Defnyddiwch ddilysu am dirprwy"
 
-#: src/audacious/ui_preferences.c:180
+#: src/audacious/ui_preferences.c:179
 msgid "Auto character encoding detector for:"
 msgstr "Awtoganfod cymeriad am:"
 
-#: src/audacious/ui_preferences.c:184
+#: src/audacious/ui_preferences.c:183
 msgid "Fallback character encodings:"
 msgstr "Arallddewisiol cymeriad mathau:"
 
-#: src/audacious/ui_preferences.c:188
+#: src/audacious/ui_preferences.c:187
 #, fuzzy
 msgid "<b>Behavior</b>"
 msgstr "<b>Bit Dyfnder</b>"
 
-#: src/audacious/ui_preferences.c:189
+#: src/audacious/ui_preferences.c:188
 msgid "Continue playback on startup"
 msgstr "Parhau Chrawae am Cychwyn"
 
-#: src/audacious/ui_preferences.c:191
+#: src/audacious/ui_preferences.c:190
 msgid "Advance when the current song is deleted"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:193
+#: src/audacious/ui_preferences.c:192
 #, fuzzy
 msgid "Clear the playlist when opening files"
 msgstr "Creu rhestr chwarae am gweddu dewis"
 
-#: src/audacious/ui_preferences.c:195
+#: src/audacious/ui_preferences.c:194
 #, fuzzy
 msgid "Open files in a temporary playlist"
 msgstr "Adio y ffeil at ar rhestr chwarae ni parahol"
 
-#: src/audacious/ui_preferences.c:197
+#: src/audacious/ui_preferences.c:196
 msgid "<b>Metadata</b>"
 msgstr "<b>Gwybodaeth</b>"
 
-#: src/audacious/ui_preferences.c:198
+#: src/audacious/ui_preferences.c:197
 msgid "Do not load metadata for songs until played"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:206
+#: src/audacious/ui_preferences.c:205
 #, fuzzy
 msgid "<b>Album Art</b>"
 msgstr "<b>Cyfenwad</b>"
 
-#: src/audacious/ui_preferences.c:207
+#: src/audacious/ui_preferences.c:206
 msgid "Search for images matching these words (comma-separated):"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:209
+#: src/audacious/ui_preferences.c:208
 msgid "Exclude images matching these words (comma-separated):"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:211
+#: src/audacious/ui_preferences.c:210
 msgid "Search for images matching song file name"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:213
+#: src/audacious/ui_preferences.c:212
 msgid "Search recursively"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:215
+#: src/audacious/ui_preferences.c:214
 #, fuzzy
 msgid "Search depth:"
 msgstr "Archwilio dyfndra:"
 
-#: src/audacious/ui_preferences.c:218
+#: src/audacious/ui_preferences.c:217
 msgid "<b>Popup Information</b>"
 msgstr "<b>Gwybodaeth Popup</b>"
 
-#: src/audacious/ui_preferences.c:219
+#: src/audacious/ui_preferences.c:218
 #, fuzzy
 msgid "Show popup information"
 msgstr "Dangos gwybodaeth am chwarae llyfrifiadau"
 
-#: src/audacious/ui_preferences.c:221
+#: src/audacious/ui_preferences.c:220
 msgid "Popup delay (tenths of a second):"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:224
+#: src/audacious/ui_preferences.c:223
 #, fuzzy
 msgid "Show time scale for current song"
 msgstr "Atal y gân"
 
-#: src/audacious/ui_preferences.c:238
+#: src/audacious/ui_preferences.c:237
 msgid "TITLE"
 msgstr "TEITL"
 
-#: src/audacious/ui_preferences.c:239
+#: src/audacious/ui_preferences.c:238
 msgid "ARTIST - TITLE"
 msgstr "CYFLAWNWR - TEITL"
 
-#: src/audacious/ui_preferences.c:240
+#: src/audacious/ui_preferences.c:239
 msgid "ARTIST - ALBUM - TITLE"
 msgstr "CYFLAWNWR - ALBWM - TEITL"
 
-#: src/audacious/ui_preferences.c:241
+#: src/audacious/ui_preferences.c:240
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr "CYFLAWNWR - ALBWM - TRAC. TEITL"
 
-#: src/audacious/ui_preferences.c:242
+#: src/audacious/ui_preferences.c:241
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr "CYFLAWNWR [ ALBWM ] - TRAC. TEITL"
 
-#: src/audacious/ui_preferences.c:243
+#: src/audacious/ui_preferences.c:242
 msgid "ALBUM - TITLE"
 msgstr "ALBWM - TEITL"
 
-#: src/audacious/ui_preferences.c:456
+#: src/audacious/ui_preferences.c:455
 msgid "Category"
 msgstr "Categori"
 
-#: src/audacious/ui_preferences.c:1003
+#: src/audacious/ui_preferences.c:1002
 msgid "Custom"
 msgstr "Cynefod"
 
-#: src/audacious/ui_preferences.c:1040
+#: src/audacious/ui_preferences.c:1039
 msgid "<b>Song Display</b>"
 msgstr "<b>Dangos cerddi</b>"
 
-#: src/audacious/ui_preferences.c:1049
+#: src/audacious/ui_preferences.c:1048
 msgid "Show song numbers"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1060
+#: src/audacious/ui_preferences.c:1059
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1082
+#: src/audacious/ui_preferences.c:1079
 msgid "Show information about titlestring format"
 msgstr "Dangos gwybodaeth am titlestring"
 
-#: src/audacious/ui_preferences.c:1098
+#: src/audacious/ui_preferences.c:1093
 msgid "Custom string:"
 msgstr "Cynefod:"
 
-#: src/audacious/ui_preferences.c:1105
+#: src/audacious/ui_preferences.c:1098
 msgid "Title format:"
 msgstr "Fformat y teitl:"
 
-#: src/audacious/ui_preferences.c:1194
+#: src/audacious/ui_preferences.c:1185
 #, fuzzy
 msgid "Output plugin:"
 msgstr "Ategyn mewnbwn: %s"
 
-#: src/audacious/ui_preferences.c:1253
+#: src/audacious/ui_preferences.c:1244
 #, fuzzy
 msgid "Transport"
 msgstr "Cyfieithwyr"
 
-#: src/audacious/ui_preferences.c:1253
+#: src/audacious/ui_preferences.c:1244
 msgid "Input"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1254
+#: src/audacious/ui_preferences.c:1245
 #, fuzzy
 msgid "Effect"
 msgstr "<b>Effeithiau</b>"
 
-#: src/audacious/ui_preferences.c:1254
+#: src/audacious/ui_preferences.c:1245
 msgid "Visualization"
 msgstr "Delweddu"
 
-#: src/audacious/ui_preferences.c:1254
+#: src/audacious/ui_preferences.c:1245
 msgid "General"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1292
+#: src/audacious/ui_preferences.c:1283
 msgid "Audacious Preferences"
 msgstr "Ffurfwedd Audacious"
 
@@ -660,12 +660,12 @@ msgstr "Hafalydd"
 msgid "Preamp"
 msgstr ""
 
-#: src/libaudgui/infopopup.c:203
+#: src/libaudgui/infopopup.c:202
 #, fuzzy
 msgid "Track"
 msgstr "Rhif y Trac:"
 
-#: src/libaudgui/infopopup.c:205
+#: src/libaudgui/infopopup.c:204
 #, fuzzy
 msgid "Length"
 msgstr "Hyd trac"
@@ -860,40 +860,40 @@ msgstr "<span size=\"small\">Ansawdd:</span>"
 msgid "<span size=\"small\">Bitrate:</span>"
 msgstr "<span size=\"small\">Cyfradd bit:</span>"
 
-#: src/libaudgui/infowin.c:391
+#: src/libaudgui/infowin.c:385
 msgid "<span size=\"small\">Title</span>"
 msgstr "<span size=\"small\">Tietl</span>"
 
-#: src/libaudgui/infowin.c:403
+#: src/libaudgui/infowin.c:397
 msgid "<span size=\"small\">Artist</span>"
 msgstr "<span size=\"small\">Cyflawnwr</span>"
 
-#: src/libaudgui/infowin.c:415
+#: src/libaudgui/infowin.c:409
 msgid "<span size=\"small\">Album</span>"
 msgstr "<span size=\"small\">Crynoadau</span>"
 
-#: src/libaudgui/infowin.c:427
+#: src/libaudgui/infowin.c:421
 msgid "<span size=\"small\">Comment</span>"
 msgstr "<span size=\"small\">Sylw</span>"
 
-#: src/libaudgui/infowin.c:439
+#: src/libaudgui/infowin.c:433
 msgid "<span size=\"small\">Genre</span>"
 msgstr "<span size=\"small\">Ffurf lenyddol</span>"
 
-#: src/libaudgui/infowin.c:460
+#: src/libaudgui/infowin.c:455
 msgid "<span size=\"small\">Year</span>"
 msgstr "<span size=\"small\">Blwyddyn</span>"
 
-#: src/libaudgui/infowin.c:471
+#: src/libaudgui/infowin.c:464
 msgid "<span size=\"small\">Track Number</span>"
 msgstr "<span size=\"small\">Rhif y Trac</span>"
 
-#: src/libaudgui/infowin.c:550
+#: src/libaudgui/infowin.c:541
 #, c-format
 msgid "%d kb/s"
 msgstr ""
 
-#: src/libaudgui/infowin.c:577
+#: src/libaudgui/infowin.c:568
 #, c-format
 msgid "No info available for %s.\n"
 msgstr ""
@@ -1013,63 +1013,25 @@ msgid ""
 "(Further messages have been hidden.)"
 msgstr ""
 
-#: src/libeggsmclient/eggdesktopfile.c:162
-msgid "File is not a valid .desktop file"
-msgstr ""
+#~ msgid "Unrecognized desktop file Version '%s'"
+#~ msgstr "Anadnabyddus ffeil desktop fersiwn '%s'"
 
-#: src/libeggsmclient/eggdesktopfile.c:188
-#, c-format
-msgid "Unrecognized desktop file Version '%s'"
-msgstr "Anadnabyddus ffeil desktop fersiwn '%s'"
+#~ msgid "Starting %s"
+#~ msgstr "Cychwyn %s"
 
-#: src/libeggsmclient/eggdesktopfile.c:971
-#, c-format
-msgid "Starting %s"
-msgstr "Cychwyn %s"
+#~ msgid "Unrecognized launch option: %d"
+#~ msgstr "Anadnabyddus cychwyn dewis: %d"
 
-#: src/libeggsmclient/eggdesktopfile.c:1113
-msgid "Application does not accept documents on command line"
-msgstr ""
+#~ msgid "FILE"
+#~ msgstr "FFEIL"
 
-#: src/libeggsmclient/eggdesktopfile.c:1181
-#, c-format
-msgid "Unrecognized launch option: %d"
-msgstr "Anadnabyddus cychwyn dewis: %d"
+#~ msgid "ID"
+#~ msgstr "ID"
 
-#: src/libeggsmclient/eggdesktopfile.c:1388
-msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-msgstr ""
-
-#: src/libeggsmclient/eggdesktopfile.c:1409
-msgid "Not a launchable item"
-msgstr ""
-
-#: src/libeggsmclient/eggsmclient.c:223
-msgid "Disable connection to session manager"
-msgstr ""
-
-#: src/libeggsmclient/eggsmclient.c:226
-msgid "Specify file containing saved configuration"
-msgstr ""
-
-#: src/libeggsmclient/eggsmclient.c:226
-msgid "FILE"
-msgstr "FFEIL"
-
-#: src/libeggsmclient/eggsmclient.c:229
-msgid "Specify session management ID"
-msgstr ""
-
-#: src/libeggsmclient/eggsmclient.c:229
-msgid "ID"
-msgstr "ID"
-
-#: src/libeggsmclient/eggsmclient.c:250
 #, fuzzy
-msgid "Session management options:"
-msgstr "Dewis Sesiwn Goruchwyliaeth"
+#~ msgid "Session management options:"
+#~ msgstr "Dewis Sesiwn Goruchwyliaeth"
 
-#: src/libeggsmclient/eggsmclient.c:251
 #, fuzzy
-msgid "Show session management options"
-msgstr "Dangos dewis sesiwn goruchwyliaeth"
+#~ msgid "Show session management options"
+#~ msgstr "Dangos dewis sesiwn goruchwyliaeth"
