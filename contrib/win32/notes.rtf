@@ -144,7 +144,7 @@
 \par {\ul Install LAME}
 \par
 \par {Download and unzip to }{\fs20 C:\\lame}{:}
-\par {\fs20 http://sourceforge.net/projects/lame/files/lame/3.99/lame-3.99.3.tar.gz/download}
+\par {\fs20 http://sourceforge.net/projects/lame/files/lame/3.99/lame-3.99.5.tar.gz/download}
 \par
 \par {In the MinGW shell:}
 \par {\fs20 cd /C/lame}
@@ -238,6 +238,55 @@
 \par {\fs20 make}
 \par {\fs20 make install}
 \par
+\par {\ul Install libmodplug}
+\par
+\par {Download and unzip to }{\fs20 C:\\libmodplug}{:}
+\par {\fs20 http://sourceforge.net/projects/modplug-xmms/files/libmodplug/0.8.8.4/libmodplug-0.8.8.4.tar.gz/download}
+\par
+\par {In the MinGW shell:}
+\par {\fs20 cd /C/libmodplug}
+\par {\fs20 ./configure --prefix=/C/libs}
+\par {\fs20 make}
+\par {\fs20 make install}
+\par
+\par {\ul Install libbinio}
+\par
+\par {Download and unzip to }{\fs20 C:\\libbinio}{:}
+\par {\fs20 http://sourceforge.net/projects/libbinio/files/libbinio/1.4/libbinio-1.4.tar.bz2/download}
+\par
+\par {Apply the patch }{\fs20 binwrap.cpp.diff}{ to }{\fs20 C:\\libbinio\\src\\binwrap.cpp}{.}
+\par
+\par {In the MinGW shell:}
+\par {\fs20 cd /C/libbinio}
+\par {\fs20 ./configure --prefix=/C/libs}
+\par {\fs20 make}
+\par {\fs20 make install}
+\par
+\par {\ul Install libcurl}
+\par
+\par {Download and unzip to }{\fs20 C:\\libcurl}{:}
+\par {\fs20 http://curl.haxx.se/download/curl-7.26.0.tar.bz2}
+\par
+\par {In the MinGW shell:}
+\par {\fs20 cd /C/libcurl}
+\par {\fs20 ./configure --prefix=/C/libs}
+\par {\fs20 make}
+\par {\fs20 make install}
+\par
+\par {\ul Install libmms}
+\par
+\par {Download and unzip to }{\fs20 C:\\libmms}{:}
+\par {\fs20 http://sourceforge.net/projects/libmms/files/libmms/0.6.2/libmms-0.6.2.tar.gz/download}
+\par
+\par {Apply the patch }{\fs20 mms-Makefile.am.diff}{ to }{\fs20 C:\\libmms\\src\\Makefile.am}{.}
+\par
+\par {In the MinGW shell:}
+\par {\fs20 cd /C/libmms}
+\par {\fs20 ./autogen.sh}
+\par {\fs20 ./configure --prefix=/C/libs}
+\par {\fs20 make}
+\par {\fs20 make install}
+\par
 \par {\ul Install Audacious}
 \par
 \par {Download and unzip to }{\fs20 C:\\audacious}{:}
@@ -261,4 +310,5 @@
 \par {\fs20 ./configure --prefix=/C/aud}
 \par {\fs20 make}
 \par {\fs20 make install}
+\par
 }
