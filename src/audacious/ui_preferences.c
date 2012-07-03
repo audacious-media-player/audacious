@@ -648,6 +648,7 @@ void create_font_btn (const PreferencesWidget * widget, GtkWidget * * label,
     *font_btn = gtk_font_button_new();
     gtk_font_button_set_use_font(GTK_FONT_BUTTON(*font_btn), TRUE);
     gtk_font_button_set_use_size(GTK_FONT_BUTTON(*font_btn), TRUE);
+    gtk_widget_set_hexpand(*font_btn, TRUE);
     if (widget->label) {
         * label = gtk_label_new_with_mnemonic (dgettext (domain, widget->label));
         gtk_label_set_use_markup(GTK_LABEL(*label), TRUE);
@@ -675,6 +676,7 @@ static void create_entry (const PreferencesWidget * widget, GtkWidget * * label,
 {
     *entry = gtk_entry_new();
     gtk_entry_set_visibility(GTK_ENTRY(*entry), !widget->data.entry.password);
+    gtk_widget_set_hexpand(*entry, TRUE);
 
     if (widget->label)
         * label = gtk_label_new (dgettext (domain, widget->label));
@@ -722,12 +724,11 @@ static void create_cbox (const PreferencesWidget * widget, GtkWidget * * label,
     fill_cbox (* combobox, widget, domain);
 }
 
-static void fill_table (GtkWidget * table, const PreferencesWidget * elements, int
+static void fill_grid (GtkWidget * grid, const PreferencesWidget * elements, int
  amt, const char * domain)
 {
     int x;
     GtkWidget *widget_left, *widget_middle, *widget_right;
-    GtkAttachOptions middle_policy = (GtkAttachOptions) (0);
 
     for (x = 0; x < amt; ++x) {
         widget_left = widget_middle = widget_right = NULL;
@@ -735,46 +736,35 @@ static void fill_table (GtkWidget * table, const PreferencesWidget * elements, i
             case WIDGET_SPIN_BTN:
                 create_spin_button (& elements[x], & widget_left,
                  & widget_middle, & widget_right, domain);
-                middle_policy = (GtkAttachOptions) (GTK_FILL);
                 break;
             case WIDGET_LABEL:
                 create_label (& elements[x], & widget_middle, & widget_left,
                  domain);
-                middle_policy = (GtkAttachOptions) (GTK_FILL);
                 break;
             case WIDGET_FONT_BTN:
                 create_font_btn (& elements[x], & widget_left, & widget_middle,
                  domain);
-                middle_policy = (GtkAttachOptions) (GTK_EXPAND | GTK_FILL);
                 break;
             case WIDGET_ENTRY:
                 create_entry (& elements[x], & widget_left, & widget_middle,
                  domain);
-                middle_policy = (GtkAttachOptions) (GTK_EXPAND | GTK_FILL);
                 break;
             case WIDGET_COMBO_BOX:
                 create_cbox (& elements[x], & widget_left, & widget_middle,
                  domain);
-                middle_policy = (GtkAttachOptions) (GTK_EXPAND | GTK_FILL);
                 break;
             default:
                 g_warning("Unsupported widget type %d in table", elements[x].type);
         }
 
         if (widget_left)
-            gtk_table_attach(GTK_TABLE (table), widget_left, 0, 1, x, x+1,
-                             (GtkAttachOptions) (0),
-                             (GtkAttachOptions) (0), 0, 0);
+            gtk_grid_attach(GTK_GRID(grid), widget_left, 0, x, 1, 1);
 
         if (widget_middle)
-            gtk_table_attach(GTK_TABLE(table), widget_middle, 1, widget_right ? 2 : 3, x, x+1,
-                             middle_policy,
-                             (GtkAttachOptions) (0), 4, 0);
+            gtk_grid_attach(GTK_GRID(grid), widget_middle, 1, x, 1, 1);
 
         if (widget_right)
-            gtk_table_attach(GTK_TABLE(table), widget_right, 2, 3, x, x+1,
-                             (GtkAttachOptions) (0),
-                             (GtkAttachOptions) (0), 0, 0);
+            gtk_grid_attach(GTK_GRID(grid), widget_right, 2, x, 1, 1);
     }
 }
 
@@ -874,10 +864,10 @@ void create_widgets_with_domain (void * box, const PreferencesWidget * widgets,
                     gtk_box_pack_start(GTK_BOX(widget), font_btn, FALSE, FALSE, 0);
                 break;
             case WIDGET_TABLE:
-                widget = gtk_table_new(widgets[x].data.table.rows, 3, FALSE);
-                fill_table (widget, widgets[x].data.table.elem,
+                widget = gtk_grid_new();
+                fill_grid(widget, widgets[x].data.table.elem,
                  widgets[x].data.table.rows, domain);
-                gtk_table_set_row_spacings(GTK_TABLE(widget), 6);
+                gtk_grid_set_row_spacing(GTK_GRID(widget), 6);
                 break;
             case WIDGET_ENTRY:
                 widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
