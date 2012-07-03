@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious 3.3\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-07-01 14:46-0400\n"
-"PO-Revision-Date: 2012-06-12 20:25+0200\n"
+"POT-Creation-Date: 2012-07-03 14:15+0200\n"
+"PO-Revision-Date: 2012-07-03 14:24+0200\n"
 "Last-Translator: Thomas Lange <thomas-lange2@gmx.de>\n"
 "Language-Team: German\n"
 "Language: de\n"
@@ -30,7 +30,7 @@ msgstr "  (ungültiges UTF-8)"
 #: src/audacious/equalizer_preset.c:180
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
-msgstr "Fehler beim Import der Winamp-EQF-Datei '%s'"
+msgstr "Fehler beim Import der Winamp-EQF-Datei \"%s\""
 
 #: src/audacious/main.c:232
 msgid "Skip backwards in playlist"
@@ -157,7 +157,7 @@ msgstr "Audio"
 msgid "Network"
 msgstr "Netzwerk"
 
-#: src/audacious/ui_preferences.c:71 src/audacious/ui_preferences.c:1244
+#: src/audacious/ui_preferences.c:71 src/audacious/ui_preferences.c:1234
 msgid "Playlist"
 msgstr "Wiedergabeliste"
 
@@ -265,6 +265,10 @@ msgstr "Taiwanisch"
 #: src/audacious/ui_preferences.c:107
 msgid "Turkish"
 msgstr "Türkisch"
+
+#: src/audacious/ui_preferences.c:114
+msgid "Floating point"
+msgstr "Gleitkomma"
 
 #: src/audacious/ui_preferences.c:130
 msgid "Album mode"
@@ -452,59 +456,59 @@ msgstr "ALBUM - TITEL"
 msgid "Category"
 msgstr "Kategorie"
 
-#: src/audacious/ui_preferences.c:1002
+#: src/audacious/ui_preferences.c:992
 msgid "Custom"
 msgstr "Eigene Zeichenkette"
 
-#: src/audacious/ui_preferences.c:1039
+#: src/audacious/ui_preferences.c:1029
 msgid "<b>Song Display</b>"
 msgstr "<b>Titelanzeige</b>"
 
-#: src/audacious/ui_preferences.c:1048
+#: src/audacious/ui_preferences.c:1038
 msgid "Show song numbers"
 msgstr "Zeige Titelnummern"
 
-#: src/audacious/ui_preferences.c:1059
+#: src/audacious/ui_preferences.c:1049
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr "Führende Nullen anzeigen (02:00 anstatt 2:00)"
 
-#: src/audacious/ui_preferences.c:1079
+#: src/audacious/ui_preferences.c:1069
 msgid "Show information about titlestring format"
 msgstr "Informationen über das Format der Titelzeile anzeigen"
 
-#: src/audacious/ui_preferences.c:1093
+#: src/audacious/ui_preferences.c:1083
 msgid "Custom string:"
 msgstr "Eigene Zeichenkette:"
 
-#: src/audacious/ui_preferences.c:1098
+#: src/audacious/ui_preferences.c:1088
 msgid "Title format:"
 msgstr "Titelformat:"
 
-#: src/audacious/ui_preferences.c:1185
+#: src/audacious/ui_preferences.c:1175
 msgid "Output plugin:"
 msgstr "Ausgabe-Plugin:"
 
-#: src/audacious/ui_preferences.c:1244
+#: src/audacious/ui_preferences.c:1234
 msgid "Transport"
 msgstr "Transport"
 
-#: src/audacious/ui_preferences.c:1244
+#: src/audacious/ui_preferences.c:1234
 msgid "Input"
 msgstr "Eingabe"
 
-#: src/audacious/ui_preferences.c:1245
+#: src/audacious/ui_preferences.c:1235
 msgid "Effect"
 msgstr "Effekte"
 
-#: src/audacious/ui_preferences.c:1245
+#: src/audacious/ui_preferences.c:1235
 msgid "Visualization"
 msgstr "Visualisierung"
 
-#: src/audacious/ui_preferences.c:1245
+#: src/audacious/ui_preferences.c:1235
 msgid "General"
 msgstr "Allgemein"
 
-#: src/audacious/ui_preferences.c:1283
+#: src/audacious/ui_preferences.c:1273
 msgid "Audacious Preferences"
 msgstr "Audacious-Einstellungen"
 
@@ -559,7 +563,7 @@ msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
 msgstr ""
-"Wollen Sie wirklich '%s' löschen?  Alle seit der letzten Speicherung "
+"Willst du wirklich \"%s\" löschen?  Alle seit der letzten Speicherung "
 "geänderten Einträge gehen dadurch verloren."
 
 #: src/libaudgui/confirm.c:88
@@ -876,7 +880,7 @@ msgstr "Wiedergabeliste importieren"
 #: src/libaudgui/playlists.c:66
 #, c-format
 msgid "Overwrite %s?"
-msgstr "'%s' überschreiben?"
+msgstr "\"%s\" überschreiben?"
 
 #: src/libaudgui/queue-manager.c:196
 msgid "Queue Manager"
@@ -966,46 +970,3 @@ msgid ""
 msgstr ""
 "\n"
 "(Weitere Meldungen wurden nicht angezeigt.)"
-
-#~ msgid "File is not a valid .desktop file"
-#~ msgstr "Datei ist keine gültige .desktop-Datei"
-
-#~ msgid "Unrecognized desktop file Version '%s'"
-#~ msgstr "Unbekannte Desktop-Datei-Version '%s'"
-
-#~ msgid "Starting %s"
-#~ msgstr "Starte %s"
-
-#~ msgid "Application does not accept documents on command line"
-#~ msgstr "Programm akzeptiert keine Dokumente auf der Kommandozeile"
-
-#~ msgid "Unrecognized launch option: %d"
-#~ msgstr "Unbekannte Start-Option: %d"
-
-#~ msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-#~ msgstr ""
-#~ "Kann keine Dokument-URIs an einen 'Type=Link'-Desktopeintrag übergeben"
-
-#~ msgid "Not a launchable item"
-#~ msgstr "Ist nicht ausführbar"
-
-#~ msgid "Disable connection to session manager"
-#~ msgstr "Verbindung zu Session-Manager deaktivieren"
-
-#~ msgid "Specify file containing saved configuration"
-#~ msgstr "Konfigurations-Datei angeben"
-
-#~ msgid "FILE"
-#~ msgstr "DATEI"
-
-#~ msgid "Specify session management ID"
-#~ msgstr "Session-Management-ID angeben"
-
-#~ msgid "ID"
-#~ msgstr "ID"
-
-#~ msgid "Session management options:"
-#~ msgstr "Session-Management-Optionen:"
-
-#~ msgid "Show session management options"
-#~ msgstr "Zeige Session-Management-Optionen"
