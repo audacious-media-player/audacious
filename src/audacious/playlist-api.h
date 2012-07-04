@@ -162,7 +162,9 @@ AUD_FUNC3 (char *, playlist_entry_get_title, int, playlist, int, entry,
 /* Returns three strings (title, artist, and album) describing an entry.  The
  * strings are pooled, and the usual cautions apply.  If <fast> is nonzero,
  * returns a "best guess" based on the entry's filename if metadata for the
- * entry has not yet been read.  May return NULL for any and all values. */
+ * entry has not yet been read.  The caller may pass NULL for any values that
+ * are not needed; NULL may also be returned for any values that are not
+ * available. */
 AUD_VFUNC6 (playlist_entry_describe, int, playlist, int, entry,
  char * *, title, char * *, artist, char * *, album, bool_t, fast)
 

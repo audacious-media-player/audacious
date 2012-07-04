@@ -1236,9 +1236,13 @@ void playlist_entry_describe (int playlist_num, int entry_num,
     ENTER;
 
     Entry * entry = get_entry (playlist_num, entry_num, FALSE, ! fast);
-    * title = (entry && entry->title) ? str_ref (entry->title) : NULL;
-    * artist = (entry && entry->artist) ? str_ref (entry->artist) : NULL;
-    * album = (entry && entry->album) ? str_ref (entry->album) : NULL;
+
+    if (title)
+        * title = (entry && entry->title) ? str_ref (entry->title) : NULL;
+    if (artist)
+        * artist = (entry && entry->artist) ? str_ref (entry->artist) : NULL;
+    if (album)
+        * album = (entry && entry->album) ? str_ref (entry->album) : NULL;
 
     LEAVE;
 }
