@@ -226,6 +226,9 @@ static void write_output_raw (void * data, int samples)
     eq_filter (data, samples);
     apply_software_volume (data, out_channels, samples);
 
+    if (get_bool (NULL, "soft_clipping"))
+        audio_soft_clip (data, samples);
+
     if (out_format != FMT_FLOAT)
     {
         buffer = malloc (FMT_SIZEOF (out_format) * samples);

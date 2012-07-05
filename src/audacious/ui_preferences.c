@@ -138,6 +138,8 @@ static PreferencesWidget audio_page_widgets[] = {
  {WIDGET_SPIN_BTN, N_("Buffer size:"),
   .cfg_type = VALUE_INT, .cname = "output_buffer_size",
   .data = {.spin_btn = {100, 10000, 1000, N_("ms")}}},
+ {WIDGET_CHK_BTN, N_("Soft clipping"),
+  .cfg_type = VALUE_BOOLEAN, .cname = "soft_clipping"},
  {WIDGET_CHK_BTN, N_("Use software volume control (not recommended)"),
   .cfg_type = VALUE_BOOLEAN, .cname = "software_volume_control"},
  {WIDGET_LABEL, N_("<b>Replay Gain</b>")},

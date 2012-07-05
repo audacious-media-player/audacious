@@ -49,5 +49,6 @@ enum {
 void audio_from_int (const void * in, int format, float * out, int samples);
 void audio_to_int (const float * in, void * out, int format, int samples);
 void audio_amplify (float * data, int channels, int frames, float * factors);
+void audio_soft_clip (float * data, int samples);
 
 #endif /* LIBAUDCORE_AUDIO_H */

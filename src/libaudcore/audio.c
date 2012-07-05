@@ -1,7 +1,6 @@
 /*
  * audio.c
- * Copyright 2009-2011 John Lindgren
- * Copyright 2012 Michał Lipski
+ * Copyright 2009-2012 John Lindgren, Michał Lipski, and Anders Johansson
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -168,5 +167,33 @@ EXPORT void audio_amplify (float * data, int channels, int frames, float * facto
             * data = * data * factors[channel];
             data ++;
         }
+    }
+}
+
+/* linear approximation of y = sin(x) */
+/* contributed by Anders Johansson */
+EXPORT void audio_soft_clip (float * data, int samples)
+{
+    float * end = data + samples;
+
+    while (data < end)
+    {
+        float x = * data;
+        float y = fabsf (x);
+
+        if (y <= 0.4)
+            ;                      /* (0, 0.4) -> (0, 0.4) */
+        else if (y <= 0.7)
+            y = 0.8 * y + 0.08;    /* (0.4, 0.7) -> (0.4, 0.64) */
+        else if (y <= 1.0)
+            y = 0.7 * y + 0.15;    /* (0.7, 1) -> (0.64, 0.85) */
+        else if (y <= 1.3)
+            y = 0.4 * y + 0.45;    /* (1, 1.3) -> (0.85, 0.97) */
+        else if (y <= 1.5)
+            y = 0.15 * y + 0.775;  /* (1.3, 1.5) -> (0.97, 1) */
+        else
+            y = 1.0;               /* (1.5, inf) -> 1 */
+
+        * data ++ = (x > 0) ? y : -y;
     }
 }

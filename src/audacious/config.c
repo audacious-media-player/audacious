@@ -68,6 +68,7 @@ static const char * const core_defaults[] = {
  "output_buffer_size", "500",
  "replay_gain_album", "FALSE",
  "replay_gain_preamp", "0",
+ "soft_clipping", "FALSE",
  "software_volume_control", "FALSE",
  "sw_volume_left", "100",
  "sw_volume_right", "100",
