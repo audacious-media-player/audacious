@@ -1,7 +1,7 @@
 # Hebrew translation for Audacious
 # Copyright (C) Audacious translators
 # This file is distributed under the same license as the Audacious package.
-# 
+#
 # Translators:
 #   <genghiskhan@gmx.ca>, 2012.
 # Isratine Citizen <genghiskhan@gmx.ca>, 2012.
@@ -9,14 +9,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-07-06 18:10-0400\n"
+"POT-Creation-Date: 2012-07-06 18:48-0400\n"
 "PO-Revision-Date: 2012-07-06 22:12+0000\n"
 "Last-Translator: John Lindgren <john.lindgren@aol.com>\n"
 "Language-Team: Hebrew\n"
+"Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: he\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 #: src/audacious/adder.c:75
@@ -138,8 +138,8 @@ msgstr ""
 
 #: src/audacious/playlist-new.c:1650
 msgid ""
-"The playlist cannot be sorted because metadata scanning is still in progress"
-" (or has been disabled)."
+"The playlist cannot be sorted because metadata scanning is still in progress "
+"(or has been disabled)."
 msgstr ""
 
 #: src/audacious/plugin-preferences.c:50
