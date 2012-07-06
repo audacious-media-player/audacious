@@ -8,33 +8,25 @@
 #   'make update-pot' respectively.
 #
 LOCALES = ast.po \
-	  be.po \
-	  bg.po \
-	  br.po \
 	  ca.po \
 	  cs.po \
-	  cy.po \
 	  de.po \
-	  el.po \
 	  es.po \
 	  es_AR.po \
 	  es_MX.po \
 	  et.po \
 	  eu.po \
+	  fa_IR.po \
 	  fi.po \
 	  fr.po \
 	  gl.po \
-	  hi.po \
-	  hr.po \
+	  he.po \
 	  hu.po \
 	  id_ID.po \
 	  it.po \
 	  ja.po \
-	  ka.po \
-	  ko.po \
 	  lt.po \
 	  lv.po \
-	  mk.po \
 	  nl.po \
 	  pl.po \
 	  pt_BR.po \
@@ -42,10 +34,8 @@ LOCALES = ast.po \
 	  ro.po \
 	  ru.po \
 	  sk.po \
-	  sl.po \
-	  sr@Latn.po \
+	  sr@latin.po \
 	  sr.po \
-	  sv.po \
 	  tr.po \
 	  uk.po \
 	  vi.po \

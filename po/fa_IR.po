@@ -1,94 +1,91 @@
-# translation of bmp-hi.po to Hindi, India
-# translation of bmp-hi.po to हिन्दी, भारत (Hindi, India)
-# Copyright (C) 2005 Free Software Foundation, Inc.
-# धनञ्जय शर्मा (Dhananjaya Sharma) <dysxhi@yahoo.co.in>, 2005.
-#
+# Persian (Iran) translation for Audacious
+# Copyright (C) Audacious translators
+# This file is distributed under the same license as the Audacious package.
+# 
+# Translators:
+# John Lindgren <john.lindgren@aol.com>, 2012.
+#   <mbg1991@gmail.com>, 2012.
+# Saeed Derakhshan <saeed.love@gmail.com>, 2012.
 msgid ""
 msgstr ""
-"Project-Id-Version: bmp-hi\n"
+"Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-07-06 18:08-0400\n"
-"PO-Revision-Date: 2005-08-20 21:59+0530\n"
-"Last-Translator: धनञ्जय शर्मा (Dhananjaya Sharma) <dysxhi@yahoo.co.in>\n"
-"Language-Team: Hindi, India <dysxhi@yahoo.co.in>\n"
-"Language: \n"
+"POT-Creation-Date: 2012-07-06 18:10-0400\n"
+"PO-Revision-Date: 2012-07-06 22:41+0000\n"
+"Last-Translator: John Lindgren <john.lindgren@aol.com>\n"
+"Language-Team: Persian (Iran)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.10\n"
+"Language: fa_IR\n"
+"Plural-Forms: nplurals=1; plural=0\n"
 
 #: src/audacious/adder.c:75
 msgid "Searching ..."
-msgstr ""
+msgstr "در حال جستجو..."
 
 #: src/audacious/adder.c:103
 #, c-format
 msgid "%d file found"
 msgid_plural "%d files found"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "یک %d فایل پیدا شد"
 
 #: src/audacious/chardet.c:39
 msgid "  (invalid UTF-8)"
-msgstr "   (अवैध यूटीएफ़-८)"
+msgstr ""
 
 #: src/audacious/equalizer_preset.c:180
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
-msgstr ""
+msgstr "خطا دز وارد کردن فایل از وینامپ '%s'"
 
 #: src/audacious/main.c:232
 msgid "Skip backwards in playlist"
-msgstr "प्लेसूची में पीछे जाना"
+msgstr ""
 
 #: src/audacious/main.c:233
 msgid "Start playing current playlist"
-msgstr "वर्तमान प्लेसूची को चलाना आरम्भ करना"
+msgstr "پخش آهنگ های موجود در لیست آهنگ های فعلی"
 
 #: src/audacious/main.c:234
 msgid "Pause current song"
-msgstr "वर्तमान गीत को ठहरना"
+msgstr "نگهداشتن آهنگ فعلی"
 
 #: src/audacious/main.c:235
 msgid "Stop current song"
-msgstr "वर्तमान गीत को रोकना"
+msgstr "قطع کردن آهنگ فعلی"
 
 #: src/audacious/main.c:236
 msgid "Pause if playing, play otherwise"
-msgstr "ठहराना यदि चल रहा हो, अन्यथा चलाना"
+msgstr "نگهداشت آهنگ در حال اجرا، در غیر این صورت اجرای آن"
 
 #: src/audacious/main.c:237
 msgid "Skip forward in playlist"
-msgstr "प्लेसूची में आगे जाना"
+msgstr ""
 
 #: src/audacious/main.c:238
-#, fuzzy
 msgid "Display Jump to File dialog"
-msgstr "/संचिका पर जाएँ"
+msgstr "نمایش پنجره پرش به فایل"
 
 #: src/audacious/main.c:239
-#, fuzzy
 msgid "Add files to the playlist"
-msgstr "प्लेसूची को साफ़ नहीं करना"
+msgstr "اضافه کردن فایل به لیست آهنگ"
 
 #: src/audacious/main.c:240
-#, fuzzy
 msgid "Add new files to a temporary playlist"
-msgstr "प्लेसूची को साफ़ नहीं करना"
+msgstr "اضافه کردن یک فایل جدید به لیست آهنگ موقت"
 
 #: src/audacious/main.c:241
-#, fuzzy
 msgid "Display the main window"
-msgstr "मुख्य खिड़की को दिखाना"
+msgstr "نمایش صفحه اصلی"
 
 #: src/audacious/main.c:242
-#, fuzzy
 msgid "Show version"
-msgstr "/प्लेसूची संपादक दिखाएँ"
+msgstr "نمایش نسخه"
 
 #: src/audacious/main.c:243
 msgid "Print debugging messages"
-msgstr ""
+msgstr "پرینت پیغام رفع اشکال"
 
 #: src/audacious/main.c:244
 msgid "Headless mode (beta)"
@@ -96,11 +93,11 @@ msgstr ""
 
 #: src/audacious/main.c:245
 msgid "FILE..."
-msgstr ""
+msgstr "فایل..."
 
 #: src/audacious/main.c:257
 msgid "- play multimedia files"
-msgstr ""
+msgstr "- اجرای فایل های چندرسانه ای"
 
 #: src/audacious/main.c:264
 #, c-format
@@ -121,227 +118,204 @@ msgstr ""
 #: src/audacious/playlist-files.c:51
 #, c-format
 msgid "Cannot %s %s: unsupported file extension."
-msgstr ""
+msgstr "نمیشود %s %s: فرمت فایل پشتیبانی نمیشود."
 
 #: src/audacious/playlist-files.c:52
 msgid "save"
-msgstr ""
+msgstr "ذخیره کردن"
 
 #: src/audacious/playlist-files.c:52
-#, fuzzy
 msgid "load"
-msgstr "लाने पर"
+msgstr "بارگزاری کردن"
 
 #: src/audacious/playlist-new.c:121
-#, fuzzy
 msgid "New Playlist"
-msgstr "प्लेसूची को सुरक्षित करना"
+msgstr "لیست آهنگ جدید"
 
 #: src/audacious/playlist-new.c:122
-#, fuzzy
 msgid "Now Playing"
-msgstr "प्लेसूची को सुरक्षित करना"
+msgstr "در حال اجرا"
 
 #: src/audacious/playlist-new.c:1650
 msgid ""
-"The playlist cannot be sorted because metadata scanning is still in progress "
-"(or has been disabled)."
+"The playlist cannot be sorted because metadata scanning is still in progress"
+" (or has been disabled)."
 msgstr ""
 
 #: src/audacious/plugin-preferences.c:50
-#, fuzzy, c-format
+#, c-format
 msgid "About %s"
-msgstr "BMP के बारे में"
+msgstr ""
 
 #: src/audacious/plugin-preferences.c:88
-#, fuzzy, c-format
+#, c-format
 msgid "%s Settings"
-msgstr "मिक्सर की समायोजनायें:"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:69
-#, fuzzy
 msgid "Audio"
-msgstr "एमपीईजी आडियो प्लग-इन के बारे में"
+msgstr "فایل صوتی"
 
 #: src/audacious/ui_preferences.c:70
 msgid "Network"
-msgstr ""
+msgstr "شبکه"
 
 #: src/audacious/ui_preferences.c:71 src/audacious/ui_preferences.c:1236
 msgid "Playlist"
-msgstr "प्लेसूची"
+msgstr "لیست آهنگ"
 
 #: src/audacious/ui_preferences.c:72
-#, fuzzy
 msgid "Song Info"
-msgstr "सीडी के बारे में सूचना"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:73
 msgid "Plugins"
-msgstr "प्लग-इन्स"
+msgstr "افزونه ها"
 
 #: src/audacious/ui_preferences.c:79 src/libaudgui/infopopup.c:194
 msgid "Artist"
-msgstr "कलाकार"
+msgstr "خواننده"
 
 #: src/audacious/ui_preferences.c:80 src/libaudgui/infopopup.c:196
 msgid "Album"
-msgstr "एल्बम"
+msgstr "آلبوم"
 
 #: src/audacious/ui_preferences.c:81 src/libaudgui/infopopup.c:192
 #: src/libaudgui/ui_playlist_manager.c:279
 msgid "Title"
-msgstr "शीर्षक"
+msgstr "عنوان"
 
 #: src/audacious/ui_preferences.c:82
 msgid "Tracknumber"
-msgstr "ट्रैकसंख्या"
+msgstr "شماره آهنگ"
 
 #: src/audacious/ui_preferences.c:83 src/libaudgui/infopopup.c:198
 msgid "Genre"
-msgstr "प्रकार"
+msgstr "سبک"
 
 #: src/audacious/ui_preferences.c:84
 msgid "Filename"
-msgstr "संचिकानाम"
+msgstr "نام فایل"
 
 #: src/audacious/ui_preferences.c:85
 msgid "Filepath"
-msgstr "संचिकापथ"
+msgstr "آدرس فایل"
 
 #: src/audacious/ui_preferences.c:86
 msgid "Date"
-msgstr "दिनांक"
+msgstr "تاریخ"
 
 #: src/audacious/ui_preferences.c:87 src/libaudgui/infopopup.c:200
 msgid "Year"
-msgstr "वर्ष"
+msgstr "سال"
 
 #: src/audacious/ui_preferences.c:88
 msgid "Comment"
-msgstr "टिप्पणी"
+msgstr "نظر"
 
 #: src/audacious/ui_preferences.c:89
-#, fuzzy
 msgid "Codec"
-msgstr "/बन्द"
+msgstr "کدک"
 
 #: src/audacious/ui_preferences.c:90
-#, fuzzy
 msgid "Quality"
-msgstr "/निकास (_Q)"
+msgstr "کیفیت"
 
 #: src/audacious/ui_preferences.c:96
 msgid "None"
-msgstr "कुछ नहीं"
+msgstr "هیچکدام"
 
 #: src/audacious/ui_preferences.c:97
 msgid "Arabic"
-msgstr ""
+msgstr "عربی"
 
 #: src/audacious/ui_preferences.c:98
-#, fuzzy
 msgid "Baltic"
-msgstr "सेल्टिक"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:99
-#, fuzzy
 msgid "Chinese"
-msgstr "चीनी:"
+msgstr "چینی"
 
 #: src/audacious/ui_preferences.c:100
-#, fuzzy
 msgid "Greek"
-msgstr "ग्रीक:"
+msgstr "یونانی"
 
 #: src/audacious/ui_preferences.c:101
 msgid "Hebrew"
-msgstr ""
+msgstr "عبری"
 
 #: src/audacious/ui_preferences.c:102
-#, fuzzy
 msgid "Japanese"
-msgstr "जापानी:"
+msgstr "ژاپنی"
 
 #: src/audacious/ui_preferences.c:103
-#, fuzzy
 msgid "Korean"
-msgstr "कोरियन:"
+msgstr "کره ای"
 
 #: src/audacious/ui_preferences.c:104
-#, fuzzy
 msgid "Polish"
-msgstr "पोलिश:"
+msgstr "لهستانی"
 
 #: src/audacious/ui_preferences.c:105
-#, fuzzy
 msgid "Russian"
-msgstr "रूसी:"
+msgstr "روسیه ای"
 
 #: src/audacious/ui_preferences.c:106
-#, fuzzy
 msgid "Taiwanese"
-msgstr "जापानी:"
+msgstr "تایوانی"
 
 #: src/audacious/ui_preferences.c:107
 msgid "Turkish"
-msgstr ""
+msgstr "ترکیه ای"
 
 #: src/audacious/ui_preferences.c:114
 msgid "Floating point"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:130
-#, fuzzy
 msgid "Album mode"
-msgstr "एल्बम"
+msgstr "حالت آلبوم"
 
 #: src/audacious/ui_preferences.c:133
-#, fuzzy
 msgid "<b>Output Settings</b>"
-msgstr "स्वचालित पहचान"
+msgstr "<b>تنظیمات خروجی</b>"
 
 #: src/audacious/ui_preferences.c:135
-#, fuzzy
 msgid "Bit depth:"
-msgstr "बिट-दर:"
+msgstr "عمق بیت"
 
 #: src/audacious/ui_preferences.c:138
-#, fuzzy
 msgid "Buffer size:"
-msgstr "बफ़र का आकार (केबी):"
+msgstr "سایز بافر"
 
 #: src/audacious/ui_preferences.c:140
 msgid "ms"
-msgstr ""
+msgstr "میلی ثانیه"
 
 #: src/audacious/ui_preferences.c:141
 msgid "Soft clipping"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:143
-#, fuzzy
 msgid "Use software volume control (not recommended)"
-msgstr "सॉफ़्टवेयर वाल्यूम नियंत्रक का उपयोग"
+msgstr "استفاده از تنظیمات صدای نرم افزار (توصیه نمیشود)"
 
 #: src/audacious/ui_preferences.c:145
-#, fuzzy
 msgid "<b>Replay Gain</b>"
-msgstr "<b>संचिकानाम</b>"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:146
-#, fuzzy
 msgid "Enable Replay Gain"
-msgstr "रीप्लेगेन सक्रिय"
+msgstr "فعال کردن برگشت قدرتمند"
 
 #: src/audacious/ui_preferences.c:149
 msgid "Prevent clipping (recommended)"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:151
-#, fuzzy
 msgid "<b>Adjust Levels</b>"
-msgstr "<b>माउस व्हील</b>"
+msgstr "<b>تنظیم سطح</b>"
 
 #: src/audacious/ui_preferences.c:152
 msgid "Amplify all files:"
@@ -349,7 +323,7 @@ msgstr ""
 
 #: src/audacious/ui_preferences.c:154 src/audacious/ui_preferences.c:157
 msgid "dB"
-msgstr ""
+msgstr "دسیبل"
 
 #: src/audacious/ui_preferences.c:155
 msgid "Amplify untagged files:"
@@ -357,36 +331,31 @@ msgstr ""
 
 #: src/audacious/ui_preferences.c:160
 msgid "Proxy hostname:"
-msgstr ""
+msgstr "نام هاست پراکسی"
 
 #: src/audacious/ui_preferences.c:161
-#, fuzzy
 msgid "Proxy port:"
-msgstr "प्रोक्सी"
+msgstr "پرت پراکسی"
 
 #: src/audacious/ui_preferences.c:164
-#, fuzzy
 msgid "Proxy username:"
-msgstr "उपयोगकर्ता का नाम:"
+msgstr "نام کاربری پراکسی"
 
 #: src/audacious/ui_preferences.c:165
-#, fuzzy
 msgid "Proxy password:"
-msgstr "कूटशब्द:"
+msgstr "رمز عبور پراکسی"
 
 #: src/audacious/ui_preferences.c:169
-#, fuzzy
 msgid "<b>Proxy Configuration</b>"
-msgstr "एमपीईजी आडियो प्लग-इन संरचना"
+msgstr "<b>تنظیمات پروکسی</b>"
 
 #: src/audacious/ui_preferences.c:170
 msgid "Enable proxy usage"
-msgstr ""
+msgstr "فعال کردن استفاده از پراکسی"
 
 #: src/audacious/ui_preferences.c:173
-#, fuzzy
 msgid "Use authentication with proxy"
-msgstr "प्रमाणीकरण का उपयोग"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:181
 msgid "Auto character encoding detector for:"
@@ -397,40 +366,36 @@ msgid "Fallback character encodings:"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:189
-#, fuzzy
 msgid "<b>Behavior</b>"
-msgstr "बिट-दर:"
+msgstr "<b>رفتار</b>"
 
 #: src/audacious/ui_preferences.c:190
 msgid "Continue playback on startup"
-msgstr ""
+msgstr "ادامه اجرای فایل ها در هنگام شروع"
 
 #: src/audacious/ui_preferences.c:192
 msgid "Advance when the current song is deleted"
-msgstr ""
+msgstr "زمانی که آهنگ فعلی پاک شد ادامه بده"
 
 #: src/audacious/ui_preferences.c:194
-#, fuzzy
 msgid "Clear the playlist when opening files"
-msgstr "/सूची को क्रमानुसार लगायें/शीर्षक द्वारा"
+msgstr "پاک کردن لیست آهنگ ها در زمام باز کردن فایل ها"
 
 #: src/audacious/ui_preferences.c:196
-#, fuzzy
 msgid "Open files in a temporary playlist"
-msgstr "प्लेसूची को साफ़ नहीं करना"
+msgstr "باز کردن فایل ها در یک لیست آهنگ های موقتی"
 
 #: src/audacious/ui_preferences.c:198
 msgid "<b>Metadata</b>"
-msgstr "<b>मेटाडाटा</b>"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:199
 msgid "Do not load metadata for songs until played"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:207
-#, fuzzy
 msgid "<b>Album Art</b>"
-msgstr "<b>संचिकानाम</b>"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:208
 msgid "Search for images matching these words (comma-separated):"
@@ -449,70 +414,64 @@ msgid "Search recursively"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:216
-#, fuzzy
 msgid "Search depth:"
-msgstr "/चयन को क्रमानुसार लगायें"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:219
-#, fuzzy
 msgid "<b>Popup Information</b>"
-msgstr "एमपीईजी आडियो प्लग-इन संरचना"
+msgstr "<b>نمایش اطلاعات</b>"
 
 #: src/audacious/ui_preferences.c:220
-#, fuzzy
 msgid "Show popup information"
-msgstr "एमपीईजी आडियो प्लग-इन संरचना"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:222
 msgid "Popup delay (tenths of a second):"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:225
-#, fuzzy
 msgid "Show time scale for current song"
-msgstr "वर्तमान गीत को रोकना"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:239
 msgid "TITLE"
-msgstr ""
+msgstr "عنوان"
 
 #: src/audacious/ui_preferences.c:240
 msgid "ARTIST - TITLE"
-msgstr ""
+msgstr "خواننده - عنوان"
 
 #: src/audacious/ui_preferences.c:241
 msgid "ARTIST - ALBUM - TITLE"
-msgstr ""
+msgstr "خواننده - آلبوم - عنوان"
 
 #: src/audacious/ui_preferences.c:242
 msgid "ARTIST - ALBUM - TRACK. TITLE"
-msgstr ""
+msgstr "خواننده - آلبوم - ترک.عنوان"
 
 #: src/audacious/ui_preferences.c:243
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
-msgstr ""
+msgstr "خواننده[آلبوم]-ترک.عنوان"
 
 #: src/audacious/ui_preferences.c:244
 msgid "ALBUM - TITLE"
-msgstr ""
+msgstr "آلبوم - عنوان"
 
 #: src/audacious/ui_preferences.c:457
 msgid "Category"
-msgstr "वर्ग"
+msgstr "موضوع"
 
 #: src/audacious/ui_preferences.c:994
-#, fuzzy
 msgid "Custom"
-msgstr "कस्टम स्ट्रींग:"
+msgstr "شخصی سازی"
 
 #: src/audacious/ui_preferences.c:1031
-#, fuzzy
 msgid "<b>Song Display</b>"
-msgstr "<b>गीत को दिखाना</b>"
+msgstr "<b>نمایش آهنگ</b>"
 
 #: src/audacious/ui_preferences.c:1040
 msgid "Show song numbers"
-msgstr ""
+msgstr "نمایش شماره آهنگ"
 
 #: src/audacious/ui_preferences.c:1051
 msgid "Show leading zeroes (02:00 instead of 2:00)"
@@ -520,325 +479,298 @@ msgstr ""
 
 #: src/audacious/ui_preferences.c:1071
 msgid "Show information about titlestring format"
-msgstr "शीर्षकस्ट्रिंग प्रारूप के बारे में सूचना दिखाएँ"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:1085
 msgid "Custom string:"
-msgstr "कस्टम स्ट्रींग:"
+msgstr "رشته دلخوه:"
 
 #: src/audacious/ui_preferences.c:1090
 msgid "Title format:"
-msgstr "शीर्षक का प्रारूप:"
+msgstr "فرمتبندی عنوان:"
 
 #: src/audacious/ui_preferences.c:1177
-#, fuzzy
 msgid "Output plugin:"
-msgstr "ओएसएस आउटपुट प्लग-इन"
+msgstr "افزونه خروجی"
 
 #: src/audacious/ui_preferences.c:1236
-#, fuzzy
 msgid "Transport"
-msgstr "सभी अनुवादक"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:1236
 msgid "Input"
-msgstr ""
+msgstr "ورودی"
 
 #: src/audacious/ui_preferences.c:1237
-#, fuzzy
 msgid "Effect"
-msgstr "<b>सभी प्रभाव</b>"
+msgstr "افکت"
 
 #: src/audacious/ui_preferences.c:1237
-#, fuzzy
 msgid "Visualization"
-msgstr "/कल्पना विधा"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:1237
 msgid "General"
-msgstr ""
+msgstr "عمومی"
 
 #: src/audacious/ui_preferences.c:1275
-#, fuzzy
 msgid "Audacious Preferences"
-msgstr "BMP की वरीयतायें"
+msgstr "تنظیمات"
 
 #: src/audacious/util.c:115
-#, fuzzy, c-format
+#, c-format
 msgid "Could not create directory (%s): %s\n"
-msgstr "निर्देशिका (%s) का निर्माण करने में असफ़लता: %s"
+msgstr ""
 
 #: src/audtool/handlers_playlist.c:262
 msgid "Position not found."
-msgstr ""
+msgstr "موقعیت یافت نشد."
 
 #: src/audtool/handlers_vitals.c:51
 msgid "No song playing."
-msgstr ""
+msgstr "هیچ آهنگی در حال اجرا نیست"
 
 #: src/libaudcore/audstrings.c:199
-#, fuzzy, c-format
+#, c-format
 msgid "Audio CD, track %s"
-msgstr "सीडी आडियो ट्रैक %02u"
+msgstr "سی دی صوتی،‌آهنگ %s"
 
 #: src/libaudcore/tuple.c:541
 msgid "Mono"
-msgstr "मोनो"
+msgstr "مونو"
 
 #: src/libaudcore/tuple.c:543
-#, fuzzy
 msgid "Stereo"
-msgstr "स्टीरियो"
+msgstr "استریو"
 
 #: src/libaudcore/tuple.c:545
-#, fuzzy, c-format
+#, c-format
 msgid "%d channel"
 msgid_plural "%d channels"
-msgstr[0] "अनेक चैनल:"
-msgstr[1] "अनेक चैनल:"
+msgstr[0] ""
 
 #: src/libaudgui/about.c:38
 msgid "Credits"
-msgstr "आभार"
+msgstr "تولید کنندگان"
 
 #: src/libaudgui/about.c:38
 msgid "License"
 msgstr ""
 
 #: src/libaudgui/about.c:74
-#, fuzzy
 msgid "About Audacious"
-msgstr "एमपीईजी आडियो प्लग-इन के बारे में"
+msgstr "درمورد نرم افزار"
 
 #: src/libaudgui/confirm.c:75
 #, c-format
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
-msgstr ""
+msgstr "مطمئن هستید میخواهید فایل %s را ببندید؟ اگه این فایل را ببندید تمامی تنظیماتی که بعد از وارد کردن لیست آهنگ انجام داده اید از بین خواهد رفت."
 
 #: src/libaudgui/confirm.c:88
-#, fuzzy
 msgid "_Don't show this message again"
-msgstr "इस चेतावनी को फ़िर कभी ना दिखाएँ"
+msgstr "ـاین پیغام را دوباره نمایش نده"
 
 #: src/libaudgui/confirm.c:125
-#, fuzzy
 msgid "Rename Playlist"
-msgstr "प्लेसूची को सुरक्षित करना"
+msgstr "تغییر نام لیست آهنگ"
 
 #: src/libaudgui/effects-menu.c:72
-#, fuzzy
 msgid "settings ..."
-msgstr "मिक्सर की समायोजनायें:"
+msgstr "تنظیمات..."
 
 #: src/libaudgui/equalizer.c:51
-#, fuzzy
 msgid "_Enable"
-msgstr "सक्रिय किया गया"
+msgstr "ـفعال کردن"
 
 #: src/libaudgui/equalizer.c:124
 msgid "31 Hz"
-msgstr ""
+msgstr "31 Hz"
 
 #: src/libaudgui/equalizer.c:124
 msgid "63 Hz"
-msgstr ""
+msgstr "63 Hz"
 
 #: src/libaudgui/equalizer.c:125
 msgid "125 Hz"
-msgstr ""
+msgstr "125 Hz"
 
 #: src/libaudgui/equalizer.c:125
-#, fuzzy
 msgid "250 Hz"
-msgstr "१:१ (४४ किलोहर्टज)"
+msgstr "250 Hz"
 
 #: src/libaudgui/equalizer.c:125
-#, fuzzy
 msgid "500 Hz"
-msgstr "१:१ (४४ किलोहर्टज)"
+msgstr "500 Hz"
 
 #: src/libaudgui/equalizer.c:125
-#, fuzzy
 msgid "1 kHz"
-msgstr "१:१ (४४ किलोहर्टज)"
+msgstr "1 kHz"
 
 #: src/libaudgui/equalizer.c:125
-#, fuzzy
 msgid "2 kHz"
-msgstr "१:२ (२२ किलोहर्टज)"
+msgstr "2 kHz"
 
 #: src/libaudgui/equalizer.c:126
-#, fuzzy
 msgid "4 kHz"
-msgstr "१:१ (४४ किलोहर्टज)"
+msgstr "2 kHz"
 
 #: src/libaudgui/equalizer.c:126
-#, fuzzy
 msgid "8 kHz"
-msgstr "१:१ (४४ किलोहर्टज)"
+msgstr "8 kHz"
 
 #: src/libaudgui/equalizer.c:126
-#, fuzzy
 msgid "16 kHz"
-msgstr "१:१ (४४ किलोहर्टज)"
+msgstr "8 kHz"
 
 #: src/libaudgui/equalizer.c:131
 msgid "Equalizer"
-msgstr "ईक्यूलाईजर"
+msgstr ""
 
 #: src/libaudgui/equalizer.c:147
-#, fuzzy
 msgid "Preamp"
-msgstr "ड्रीम"
+msgstr ""
 
 #: src/libaudgui/infopopup.c:202
-#, fuzzy
 msgid "Track"
-msgstr "ट्रैक का नाम"
+msgstr ""
 
 #: src/libaudgui/infopopup.c:204
-#, fuzzy
 msgid "Length"
-msgstr "लंबाई:"
+msgstr ""
 
 #: src/libaudgui/infowin.c:74
 msgid "Acid Jazz"
-msgstr "ऐसिड जाज़"
+msgstr ""
 
 #: src/libaudgui/infowin.c:75
-#, fuzzy
 msgid "Acid Rock"
-msgstr "हार्ड रॉक"
+msgstr ""
 
 #: src/libaudgui/infowin.c:76
 msgid "Ambient"
-msgstr "एम्बियन्ट"
+msgstr ""
 
 #: src/libaudgui/infowin.c:77
-#, fuzzy
 msgid "Bebop"
-msgstr "बेबोब"
+msgstr ""
 
 #: src/libaudgui/infowin.c:78
 msgid "Bluegrass"
-msgstr "ब्लूग्रास"
+msgstr ""
 
 #: src/libaudgui/infowin.c:79
-#, fuzzy
 msgid "Blues"
-msgstr "ब्लू"
+msgstr ""
 
 #: src/libaudgui/infowin.c:80
 msgid "Chamber Music"
-msgstr "चैम्बर म्यूजिक"
+msgstr ""
 
 #: src/libaudgui/infowin.c:81
 msgid "Classical"
-msgstr "क्लासीकल"
+msgstr "کلاسیکی"
 
 #: src/libaudgui/infowin.c:82
 msgid "Country"
-msgstr "कन्ट्री"
+msgstr ""
 
 #: src/libaudgui/infowin.c:83
 msgid "Death Metal"
-msgstr "डेथ मेटल"
+msgstr ""
 
 #: src/libaudgui/infowin.c:84
 msgid "Disco"
-msgstr "डिस्को"
+msgstr "دیسکو"
 
 #: src/libaudgui/infowin.c:85
 msgid "Easy Listening"
-msgstr "ईज़ी लिस्निंग"
+msgstr ""
 
 #: src/libaudgui/infowin.c:86
 msgid "Folk"
-msgstr "फ़ोक"
+msgstr ""
 
 #: src/libaudgui/infowin.c:87
 msgid "Funk"
-msgstr "फ़ंक"
+msgstr ""
 
 #: src/libaudgui/infowin.c:88
 msgid "Gangsta Rap"
-msgstr "गैगस्टा रैप"
+msgstr ""
 
 #: src/libaudgui/infowin.c:89
 msgid "Gospel"
-msgstr "गोस्पेल"
+msgstr ""
 
 #: src/libaudgui/infowin.c:90
 msgid "Grunge"
-msgstr "ग्रज़"
+msgstr ""
 
 #: src/libaudgui/infowin.c:91
 msgid "Hard Rock"
-msgstr "हार्ड रॉक"
+msgstr ""
 
 #: src/libaudgui/infowin.c:92
 msgid "Heavy Metal"
-msgstr "हैवी मेटल"
+msgstr ""
 
 #: src/libaudgui/infowin.c:93
-#, fuzzy
 msgid "Hip-hop"
-msgstr "हिप-होप"
+msgstr "هیپ-هاپ"
 
 #: src/libaudgui/infowin.c:94
 msgid "House"
-msgstr "हाउस"
+msgstr ""
 
 #: src/libaudgui/infowin.c:95
 msgid "Jazz"
-msgstr "जाज़"
+msgstr "جاز"
 
 #: src/libaudgui/infowin.c:96
 msgid "Jungle"
-msgstr "जंगल"
+msgstr "جنگل"
 
 #: src/libaudgui/infowin.c:97
 msgid "Metal"
-msgstr "मेटल"
+msgstr "متال"
 
 #: src/libaudgui/infowin.c:98
 msgid "New Age"
-msgstr "न्य़ू ऐज"
+msgstr ""
 
 #: src/libaudgui/infowin.c:99
 msgid "New Wave"
-msgstr "न्यू वेव"
+msgstr ""
 
 #: src/libaudgui/infowin.c:100
 msgid "Noise"
-msgstr "नॉइस्ज"
+msgstr "نویز"
 
 #: src/libaudgui/infowin.c:101
 msgid "Pop"
-msgstr "पॉप"
+msgstr "پاپ"
 
 #: src/libaudgui/infowin.c:102
 msgid "Punk Rock"
-msgstr "पंक रॉक"
+msgstr ""
 
 #: src/libaudgui/infowin.c:103
 msgid "Rap"
-msgstr "रैप"
+msgstr "رپ"
 
 #: src/libaudgui/infowin.c:104
 msgid "Reggae"
-msgstr "रेगी"
+msgstr ""
 
 #: src/libaudgui/infowin.c:105
 msgid "Rock"
-msgstr "रॉक"
+msgstr "راک"
 
 #: src/libaudgui/infowin.c:106
-#, fuzzy
 msgid "Rock and Roll"
-msgstr "रॉक और रोल"
+msgstr ""
 
 #: src/libaudgui/infowin.c:107
 msgid "Rhythm and Blues"
@@ -846,30 +778,28 @@ msgstr ""
 
 #: src/libaudgui/infowin.c:108
 msgid "Ska"
-msgstr "ईस्का"
+msgstr ""
 
 #: src/libaudgui/infowin.c:109
 msgid "Soul"
-msgstr "सोल"
+msgstr ""
 
 #: src/libaudgui/infowin.c:110
 msgid "Swing"
-msgstr "स्वींग"
+msgstr ""
 
 #: src/libaudgui/infowin.c:111
 msgid "Techno"
-msgstr "टेक्नो"
+msgstr "تکنو"
 
 #: src/libaudgui/infowin.c:112
-#, fuzzy
 msgid "Trip-hop"
-msgstr "ट्रिप-हॉप"
+msgstr ""
 
 #: src/libaudgui/infowin.c:176 src/libaudgui/infowin.c:365
 #: src/libaudgui/infowin.c:368 src/libaudgui/infowin.c:371
-#, fuzzy
 msgid "<span size=\"small\">n/a</span>"
-msgstr "<span size=\"medium\"><b>मीडिया</b></span>"
+msgstr "<span size=\"small\">در دسترس نمیباشد</span>"
 
 #: src/libaudgui/infowin.c:266
 msgid "Metadata updated successfully"
@@ -880,64 +810,53 @@ msgid "Metadata updating failed"
 msgstr ""
 
 #: src/libaudgui/infowin.c:319
-#, fuzzy
 msgid "Track Information"
-msgstr "ट्रैक गेन:"
+msgstr "طلاعات آهنگ"
 
 #: src/libaudgui/infowin.c:354
-#, fuzzy
 msgid "<span size=\"small\">Format:</span>"
-msgstr "<span size=\"medium\"><b>सामान्य</b></span>"
+msgstr "<span size=\"small\">نوع فایل:</span>"
 
 #: src/libaudgui/infowin.c:358
-#, fuzzy
 msgid "<span size=\"small\">Quality:</span>"
-msgstr "<span size=\"medium\"><b>मीडिया</b></span>"
+msgstr "<span size=\"small\">کیفیت:</span>"
 
 #: src/libaudgui/infowin.c:361
-#, fuzzy
 msgid "<span size=\"small\">Bitrate:</span>"
-msgstr "<span size=\"medium\"><b>सामान्य</b></span>"
+msgstr ""
 
 #: src/libaudgui/infowin.c:385
-#, fuzzy
 msgid "<span size=\"small\">Title</span>"
-msgstr "<span size=\"medium\"><b>मीडिया</b></span>"
+msgstr "<span size=\"small\">عنوان</span>"
 
 #: src/libaudgui/infowin.c:397
-#, fuzzy
 msgid "<span size=\"small\">Artist</span>"
-msgstr "<span size=\"medium\"><b>आउटपुट</b></span>"
+msgstr "<span size=\"small\">خواننده</span>"
 
 #: src/libaudgui/infowin.c:409
-#, fuzzy
 msgid "<span size=\"small\">Album</span>"
-msgstr "<span size=\"medium\"><b>आउटपुट</b></span>"
+msgstr "<span size=\"small\">آلبوم</span>"
 
 #: src/libaudgui/infowin.c:421
-#, fuzzy
 msgid "<span size=\"small\">Comment</span>"
-msgstr "<span size=\"medium\"><b>सामान्य</b></span>"
+msgstr "<span size=\"small\">نظرات</span>"
 
 #: src/libaudgui/infowin.c:433
-#, fuzzy
 msgid "<span size=\"small\">Genre</span>"
-msgstr "<span size=\"medium\"><b>सामान्य</b></span>"
+msgstr "<span size=\"small\">سبک</span>"
 
 #: src/libaudgui/infowin.c:455
-#, fuzzy
 msgid "<span size=\"small\">Year</span>"
-msgstr "<span size=\"medium\"><b>मीडिया</b></span>"
+msgstr "<span size=\"small\">سال</span>"
 
 #: src/libaudgui/infowin.c:464
-#, fuzzy
 msgid "<span size=\"small\">Track Number</span>"
-msgstr "<span size=\"medium\"><b>सामान्य</b></span>"
+msgstr "<span size=\"small\">شماره آهنگ</span>"
 
 #: src/libaudgui/infowin.c:541
-#, fuzzy, c-format
+#, c-format
 msgid "%d kb/s"
-msgstr "%d किलोबाइट्स प्रति सेकण्ड"
+msgstr "%dکیلوبیت بر ثانیه"
 
 #: src/libaudgui/infowin.c:568
 #, c-format
@@ -946,22 +865,19 @@ msgstr ""
 
 #: src/libaudgui/jump-to-time.c:52
 msgid "Jump to Time"
-msgstr "समय पर जाएँ"
+msgstr "پرش به زمان"
 
 #: src/libaudgui/jump-to-time.c:61
-#, fuzzy
 msgid "Enter time (minutes:seconds):"
-msgstr "क्षण:पल"
+msgstr ""
 
 #: src/libaudgui/playlists.c:33
-#, fuzzy
 msgid "Export Playlist"
-msgstr "प्लेसूची को लाना"
+msgstr ""
 
 #: src/libaudgui/playlists.c:33
-#, fuzzy
 msgid "Import Playlist"
-msgstr "प्लेसूची को लाना"
+msgstr "وارد کردن لینت اهنگ"
 
 #: src/libaudgui/playlists.c:66
 #, c-format
@@ -969,91 +885,81 @@ msgid "Overwrite %s?"
 msgstr ""
 
 #: src/libaudgui/queue-manager.c:196
-#, fuzzy
 msgid "Queue Manager"
-msgstr "/कोई अग्रिम प्लेसूची नहीं"
+msgstr ""
 
 #: src/libaudgui/ui_fileopener.c:107
 msgid "Open Files"
-msgstr "संचिकाओं को खोलें"
+msgstr "باز کردن فایل ها"
 
 #: src/libaudgui/ui_fileopener.c:107
 msgid "Add Files"
-msgstr "संचिकाओं को जोड़ें"
+msgstr "اضافه کردن فایل ها"
 
 #: src/libaudgui/ui_fileopener.c:109
 msgid "Close dialog on Open"
-msgstr "खोलने पर बन्द संवाद"
+msgstr "بستن پنجره در هنگان باز کردن"
 
 #: src/libaudgui/ui_fileopener.c:109
 msgid "Close dialog on Add"
-msgstr "जोड़ने पर बन्द संवाद"
+msgstr "بستن پنجره در هنگان اضافه کردن"
 
 #: src/libaudgui/ui_jumptotrack.c:105 src/libaudgui/ui_jumptotrack.c:113
 #: src/libaudgui/ui_jumptotrack.c:332
-#, fuzzy
 msgid "_Queue"
-msgstr "कतार"
+msgstr ""
 
 #: src/libaudgui/ui_jumptotrack.c:111
-#, fuzzy
 msgid "Un_queue"
-msgstr "कतार"
+msgstr ""
 
 #: src/libaudgui/ui_jumptotrack.c:262
-#, fuzzy
 msgid "Jump to Song"
-msgstr "समय पर जाएँ"
+msgstr "پرش به آهنگ"
 
 #: src/libaudgui/ui_jumptotrack.c:287
 msgid "Filter: "
-msgstr "फ़िल्टर: "
+msgstr "فیلتر:"
 
 #: src/libaudgui/ui_jumptotrack.c:288
-#, fuzzy
 msgid "_Filter:"
-msgstr "फ़िल्टर: "
+msgstr "ـفیلتر:"
 
 #: src/libaudgui/ui_jumptotrack.c:298
 msgid "Remember"
-msgstr ""
+msgstr "به یاد داشته باش"
 
 #: src/libaudgui/ui_jumptotrack.c:305
-#, fuzzy
 msgid "Clea_r"
-msgstr "/कतार को साफ़ करें"
+msgstr "پاک ـکردن"
 
 #: src/libaudgui/ui_jumptotrack.c:325
-#, fuzzy
 msgid "Close on Jump"
-msgstr "खोलने पर बन्द संवाद"
+msgstr ""
 
 #: src/libaudgui/ui_playlist_manager.c:253
-#, fuzzy
 msgid "Playlist Manager"
-msgstr "/कोई अग्रिम प्लेसूची नहीं"
+msgstr "مدیریت لیست اهنگ"
 
 #: src/libaudgui/ui_playlist_manager.c:280
 msgid "Entries"
 msgstr ""
 
 #: src/libaudgui/ui_playlist_manager.c:301
-#, fuzzy
 msgid "_Rename"
-msgstr "संचिकानाम"
+msgstr "ـتغییرنام"
 
 #: src/libaudgui/ui_playlist_manager.c:325
-#, fuzzy
 msgid "_Close dialog on activating playlist"
-msgstr "खोलने पर बन्द संवाद"
+msgstr ""
 
 #: src/libaudgui/url-opener.c:56
 msgid "Open URL"
-msgstr ""
+msgstr "بازکردن یک آدرس از وب"
 
 #: src/libaudgui/url-opener.c:56
 msgid "Add URL"
-msgstr ""
+msgstr "اضافه کردن یک آدرس از وب"
 
 #: src/libaudgui/url-opener.c:65
 msgid "Enter URL:"
@@ -1064,15 +970,3 @@ msgid ""
 "\n"
 "(Further messages have been hidden.)"
 msgstr ""
-
-#, fuzzy
-#~ msgid "Unrecognized desktop file Version '%s'"
-#~ msgstr "%s: ना पहचाना गया विकल्प `--%s'\n"
-
-#, fuzzy
-#~ msgid "Starting %s"
-#~ msgstr "इटैलियन:"
-
-#, fuzzy
-#~ msgid "Unrecognized launch option: %d"
-#~ msgstr "%s: ना पहचाना गया विकल्प `--%s'\n"

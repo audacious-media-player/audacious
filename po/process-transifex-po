@@ -1,6 +1,9 @@
 #!/bin/sh
 
 case "$1" in
+ast.po)
+    LANGUAGE="Asturian"
+    ;;
 ca.po)
     LANGUAGE="Catalan"
     ;;
@@ -22,6 +25,12 @@ es_MX.po)
 et.po)
     LANGUAGE="Estonian"
     ;;
+eu.po)
+    LANGUAGE="Basque"
+    ;;
+fa_IR.po)
+    LANGUAGE="Persian (Iran)"
+    ;;
 fi.po)
     LANGUAGE="Finnish"
     ;;
@@ -30,6 +39,9 @@ fr.po)
     ;;
 gl.po)
     LANGUAGE="Galician"
+    ;;
+he.po)
+    LANGUAGE="Hebrew"
     ;;
 hu.po)
     LANGUAGE="Hungarian"
@@ -61,6 +73,9 @@ pt_BR.po)
 pt_PT.po)
     LANGUAGE="Portuguese"
     ;;
+ro.po)
+    LANGUAGE="Romanian"
+    ;;
 ru.po)
     LANGUAGE="Russian"
     ;;
@@ -70,6 +85,9 @@ sk.po)
 sr.po)
     LANGUAGE="Serbian"
     ;;
+sr@latin.po)
+    LANGUAGE="Serbian (Latin)"
+    ;;
 tr.po)
     LANGUAGE="Turkish"
     ;;
@@ -78,6 +96,9 @@ uk.po)
     ;;
 vi.po)
     LANGUAGE="Vietnamese"
+    ;;
+zh_CN.po)
+    LANGUAGE="Chinese (simplified)"
     ;;
 zh_TW.po)
     LANGUAGE="Chinese (traditional)"

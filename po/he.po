@@ -1,29 +1,23 @@
-#
-# Welsh translation of Audacious.
-# Copyright (C) 2006-2007 William Pitcock <nenolod@sacredspiral.co.uk>
-# This file is distributed under the same license as Audacious.
-#
-# Welsh translation of BMP.
-# Copyright (C) 2004 Edward Brocklesby <ejb@goth.net>
-# This file is distributed under the same license as the BMP package.
-# ejb <ejb@goth.net>, 2004.
-#
-# Based on XMMS from Rhoslyn Prys <rhoslyn.prys@meddal.org.uk>
-#
+# Hebrew translation for Audacious
+# Copyright (C) Audacious translators
+# This file is distributed under the same license as the Audacious package.
+# 
+# Translators:
+#   <genghiskhan@gmx.ca>, 2012.
+# Isratine Citizen <genghiskhan@gmx.ca>, 2012.
 msgid ""
 msgstr ""
-"Project-Id-Version: Audacious 1.3.0\n"
+"Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-07-06 18:08-0400\n"
-"PO-Revision-Date: 2008-04-15 04:17-0600\n"
-"Last-Translator: William Pitcock <nenolod+i18n@sacredspiral.co.uk>\n"
-"Language-Team: Cynmaeg <nenolod+cy@sacredspiral.co.uk>\n"
-"Language: \n"
+"POT-Creation-Date: 2012-07-06 18:10-0400\n"
+"PO-Revision-Date: 2012-07-06 22:12+0000\n"
+"Last-Translator: John Lindgren <john.lindgren@aol.com>\n"
+"Language-Team: Hebrew\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Welsh\n"
-"X-Poedit-SourceCharset: utf-8\n"
+"Language: he\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 #: src/audacious/adder.c:75
 msgid "Searching ..."
@@ -33,63 +27,61 @@ msgstr ""
 #, c-format
 msgid "%d file found"
 msgid_plural "%d files found"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "נמצא קובץ %d"
+msgstr[1] "נמצאו %d קבצים"
 
 #: src/audacious/chardet.c:39
 msgid "  (invalid UTF-8)"
-msgstr "  (UTF-8 annilys)"
+msgstr ""
 
 #: src/audacious/equalizer_preset.c:180
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
-msgstr ""
+msgstr "שגיאה בעת ייבוא קובץ Winamp EQF ‫'%s'"
 
 #: src/audacious/main.c:232
 msgid "Skip backwards in playlist"
-msgstr "Sgipio nôl yn y rhestr chwarae"
+msgstr ""
 
 #: src/audacious/main.c:233
 msgid "Start playing current playlist"
-msgstr "Cychwyn chwarae'r rhestr chwarae"
+msgstr ""
 
 #: src/audacious/main.c:234
 msgid "Pause current song"
-msgstr "Oedi'r gân"
+msgstr "השהיית השיר הנוכחי"
 
 #: src/audacious/main.c:235
 msgid "Stop current song"
-msgstr "Atal y gân"
+msgstr "הפסקת השיר הנוכחי"
 
 #: src/audacious/main.c:236
 msgid "Pause if playing, play otherwise"
-msgstr "Oedi os yn chwarae, chwarae fel arall"
+msgstr ""
 
 #: src/audacious/main.c:237
 msgid "Skip forward in playlist"
-msgstr "Sgipio mlaen yn y rhestr chwarae"
+msgstr ""
 
 #: src/audacious/main.c:238
 msgid "Display Jump to File dialog"
-msgstr "Dangos Neidio i Ffeil"
+msgstr ""
 
 #: src/audacious/main.c:239
-#, fuzzy
 msgid "Add files to the playlist"
-msgstr "Adio y ffeil at ar rhestr chwarae."
+msgstr "הוספת קבצים אל רשימת ההשמעה"
 
 #: src/audacious/main.c:240
 msgid "Add new files to a temporary playlist"
-msgstr "Adio y ffeil at ar rhestr chwarae ni parahol"
+msgstr "הוספת קבצים אל רשימת השמעה זמנית"
 
 #: src/audacious/main.c:241
 msgid "Display the main window"
-msgstr "Dangos y prif ffenestr."
+msgstr "הצגת החלון הראשי"
 
 #: src/audacious/main.c:242
-#, fuzzy
 msgid "Show version"
-msgstr "Dangos Y Brif Ffenestr"
+msgstr "הצגת גירסה"
 
 #: src/audacious/main.c:243
 msgid "Print debugging messages"
@@ -101,11 +93,11 @@ msgstr ""
 
 #: src/audacious/main.c:245
 msgid "FILE..."
-msgstr "FFEIL..."
+msgstr ""
 
 #: src/audacious/main.c:257
 msgid "- play multimedia files"
-msgstr "- chwarae ffeil amlgyfrwng"
+msgstr ""
 
 #: src/audacious/main.c:264
 #, c-format
@@ -113,8 +105,6 @@ msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
 msgstr ""
-"%s: %s\n"
-"Ceisio `%s --help' am ychwaneg gwybodaeth.\n"
 
 #: src/audacious/main.c:545
 msgid "Audacious"
@@ -132,184 +122,176 @@ msgstr ""
 
 #: src/audacious/playlist-files.c:52
 msgid "save"
-msgstr ""
+msgstr "שמירה"
 
 #: src/audacious/playlist-files.c:52
-#, fuzzy
 msgid "load"
-msgstr "Am llwytho"
+msgstr "טעינה"
 
 #: src/audacious/playlist-new.c:121
 msgid "New Playlist"
-msgstr "Rhestr Chwarae Newydd"
+msgstr "רשימת השמעה חדשה"
 
 #: src/audacious/playlist-new.c:122
-#, fuzzy
 msgid "Now Playing"
-msgstr "Rhestr Chwarae Newydd"
+msgstr ""
 
 #: src/audacious/playlist-new.c:1650
 msgid ""
-"The playlist cannot be sorted because metadata scanning is still in progress "
-"(or has been disabled)."
+"The playlist cannot be sorted because metadata scanning is still in progress"
+" (or has been disabled)."
 msgstr ""
 
 #: src/audacious/plugin-preferences.c:50
-#, fuzzy, c-format
+#, c-format
 msgid "About %s"
-msgstr "Ynghylch Audacious"
+msgstr "אודות %s"
 
 #: src/audacious/plugin-preferences.c:88
-#, fuzzy, c-format
+#, c-format
 msgid "%s Settings"
-msgstr "Cychwyn %s"
+msgstr "הגדרות %s"
 
 #: src/audacious/ui_preferences.c:69
 msgid "Audio"
-msgstr "Seniau"
+msgstr "שמע"
 
 #: src/audacious/ui_preferences.c:70
 msgid "Network"
-msgstr ""
+msgstr "רשת עבודה"
 
 #: src/audacious/ui_preferences.c:71 src/audacious/ui_preferences.c:1236
 msgid "Playlist"
-msgstr "Chwarae"
+msgstr "רשימת השמעה"
 
 #: src/audacious/ui_preferences.c:72
 msgid "Song Info"
-msgstr ""
+msgstr "מידע שיר"
 
 #: src/audacious/ui_preferences.c:73
 msgid "Plugins"
-msgstr "Ategynnau"
+msgstr "תוספים"
 
 #: src/audacious/ui_preferences.c:79 src/libaudgui/infopopup.c:194
 msgid "Artist"
-msgstr "Cyflawnwr"
+msgstr "אמן"
 
 #: src/audacious/ui_preferences.c:80 src/libaudgui/infopopup.c:196
 msgid "Album"
-msgstr "Albwm"
+msgstr "אלבום"
 
 #: src/audacious/ui_preferences.c:81 src/libaudgui/infopopup.c:192
 #: src/libaudgui/ui_playlist_manager.c:279
 msgid "Title"
-msgstr "Teitl"
+msgstr "כותרת"
 
 #: src/audacious/ui_preferences.c:82
 msgid "Tracknumber"
-msgstr "Rhif y Trac:"
+msgstr "מספר רצועה"
 
 #: src/audacious/ui_preferences.c:83 src/libaudgui/infopopup.c:198
 msgid "Genre"
-msgstr "Math"
+msgstr "סגנון"
 
 #: src/audacious/ui_preferences.c:84
 msgid "Filename"
-msgstr "Enw ffeil"
+msgstr "שם קובץ"
 
 #: src/audacious/ui_preferences.c:85
 msgid "Filepath"
-msgstr "Llwybr ffeil"
+msgstr "נתיב קובץ"
 
 #: src/audacious/ui_preferences.c:86
 msgid "Date"
-msgstr "Dyddiad"
+msgstr "תאריך"
 
 #: src/audacious/ui_preferences.c:87 src/libaudgui/infopopup.c:200
 msgid "Year"
-msgstr "Blwyddyn"
+msgstr "שנה"
 
 #: src/audacious/ui_preferences.c:88
 msgid "Comment"
-msgstr "Sylwad"
+msgstr "הערה"
 
 #: src/audacious/ui_preferences.c:89
 msgid "Codec"
-msgstr ""
+msgstr "קודק"
 
 #: src/audacious/ui_preferences.c:90
 msgid "Quality"
-msgstr "Ansawdd"
+msgstr "איכות"
 
 #: src/audacious/ui_preferences.c:96
 msgid "None"
-msgstr "Dim"
+msgstr "ללא"
 
 #: src/audacious/ui_preferences.c:97
 msgid "Arabic"
-msgstr ""
+msgstr "ערבית"
 
 #: src/audacious/ui_preferences.c:98
 msgid "Baltic"
-msgstr ""
+msgstr "בלטית"
 
 #: src/audacious/ui_preferences.c:99
-#, fuzzy
 msgid "Chinese"
-msgstr "Llinellau"
+msgstr "סינית"
 
 #: src/audacious/ui_preferences.c:100
 msgid "Greek"
-msgstr "Groeg"
+msgstr "יוונית"
 
 #: src/audacious/ui_preferences.c:101
 msgid "Hebrew"
-msgstr "Hebraeg"
+msgstr "עברית"
 
 #: src/audacious/ui_preferences.c:102
 msgid "Japanese"
-msgstr "Siapanëeg"
+msgstr "יפנית"
 
 #: src/audacious/ui_preferences.c:103
 msgid "Korean"
-msgstr "Corëeg"
+msgstr "קוריאנית"
 
 #: src/audacious/ui_preferences.c:104
-#, fuzzy
 msgid "Polish"
-msgstr "Pwyleg:"
+msgstr "פולנית"
 
 #: src/audacious/ui_preferences.c:105
 msgid "Russian"
-msgstr "Rwsieg"
+msgstr "רוסית"
 
 #: src/audacious/ui_preferences.c:106
-#, fuzzy
 msgid "Taiwanese"
-msgstr "Siapanëeg:"
+msgstr "טאיואנית"
 
 #: src/audacious/ui_preferences.c:107
 msgid "Turkish"
-msgstr "Twrceg"
+msgstr "טורקית"
 
 #: src/audacious/ui_preferences.c:114
 msgid "Floating point"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:130
-#, fuzzy
 msgid "Album mode"
-msgstr "Enwau'r Albwm:"
+msgstr "מצב אלבום"
 
 #: src/audacious/ui_preferences.c:133
-#, fuzzy
 msgid "<b>Output Settings</b>"
-msgstr "<b>Awtoganfod trefniad</b>"
+msgstr "<b>הגדרות פלט</b>"
 
 #: src/audacious/ui_preferences.c:135
-#, fuzzy
 msgid "Bit depth:"
-msgstr "<b>Bit Dyfnder</b>"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:138
 msgid "Buffer size:"
-msgstr "Maint y byffer:"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:140
 msgid "ms"
-msgstr ""
+msgstr "אלפית־השנייה"
 
 #: src/audacious/ui_preferences.c:141
 msgid "Soft clipping"
@@ -320,22 +302,20 @@ msgid "Use software volume control (not recommended)"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:145
-#, fuzzy
 msgid "<b>Replay Gain</b>"
-msgstr "<b>Ffurfweddiad Cyfraint Cynnydd</b>"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:146
 msgid "Enable Replay Gain"
-msgstr "Galluogi Cyfraint Cynnydd"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:149
 msgid "Prevent clipping (recommended)"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:151
-#, fuzzy
 msgid "<b>Adjust Levels</b>"
-msgstr "<b>Sidell llygod</b>"
+msgstr "<b>התאמת רמות</b>"
 
 #: src/audacious/ui_preferences.c:152
 msgid "Amplify all files:"
@@ -343,84 +323,79 @@ msgstr ""
 
 #: src/audacious/ui_preferences.c:154 src/audacious/ui_preferences.c:157
 msgid "dB"
-msgstr "dB"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:155
-#, fuzzy
 msgid "Amplify untagged files:"
-msgstr "- chwarae ffeil amlgyfrwng"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:160
 msgid "Proxy hostname:"
-msgstr "Gwesteiwr ddirprwy:"
+msgstr "מארח Proxy:"
 
 #: src/audacious/ui_preferences.c:161
 msgid "Proxy port:"
-msgstr "Porth dirprwy:"
+msgstr "פתחת Proxy:"
 
 #: src/audacious/ui_preferences.c:164
 msgid "Proxy username:"
-msgstr "Dirprwy enw defnyddiwr:"
+msgstr "שם משתמש Proxy:"
 
 #: src/audacious/ui_preferences.c:165
 msgid "Proxy password:"
-msgstr "Cyfrinair dirprwy:"
+msgstr "סיסמת Proxy:"
 
 #: src/audacious/ui_preferences.c:169
 msgid "<b>Proxy Configuration</b>"
-msgstr "<b>Ffurfweddiad Dirprwy</b>"
+msgstr "<b>תצורת מתווך</b>"
 
 #: src/audacious/ui_preferences.c:170
 msgid "Enable proxy usage"
-msgstr "Galluogi defnyddiwch ddirprwy"
+msgstr "אפשור שימוש proxy"
 
 #: src/audacious/ui_preferences.c:173
 msgid "Use authentication with proxy"
-msgstr "Defnyddiwch ddilysu am dirprwy"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:181
 msgid "Auto character encoding detector for:"
-msgstr "Awtoganfod cymeriad am:"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:185
 msgid "Fallback character encodings:"
-msgstr "Arallddewisiol cymeriad mathau:"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:189
-#, fuzzy
 msgid "<b>Behavior</b>"
-msgstr "<b>Bit Dyfnder</b>"
+msgstr "<b>התנהגות</b>"
 
 #: src/audacious/ui_preferences.c:190
 msgid "Continue playback on startup"
-msgstr "Parhau Chrawae am Cychwyn"
+msgstr "המשך ניגון בעת הפעלה"
 
 #: src/audacious/ui_preferences.c:192
 msgid "Advance when the current song is deleted"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:194
-#, fuzzy
 msgid "Clear the playlist when opening files"
-msgstr "Creu rhestr chwarae am gweddu dewis"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:196
-#, fuzzy
 msgid "Open files in a temporary playlist"
-msgstr "Adio y ffeil at ar rhestr chwarae ni parahol"
+msgstr "פתיחת קבצים ברשימת השמעה זמנית"
 
 #: src/audacious/ui_preferences.c:198
 msgid "<b>Metadata</b>"
-msgstr "<b>Gwybodaeth</b>"
+msgstr "<b>Metadata</b>"
 
 #: src/audacious/ui_preferences.c:199
 msgid "Do not load metadata for songs until played"
-msgstr ""
+msgstr "לא להטעין metadata עבור שירים שטרם נוגנו"
 
 #: src/audacious/ui_preferences.c:207
-#, fuzzy
 msgid "<b>Album Art</b>"
-msgstr "<b>Cyfenwad</b>"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:208
 msgid "Search for images matching these words (comma-separated):"
@@ -439,67 +414,64 @@ msgid "Search recursively"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:216
-#, fuzzy
 msgid "Search depth:"
-msgstr "Archwilio dyfndra:"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:219
 msgid "<b>Popup Information</b>"
-msgstr "<b>Gwybodaeth Popup</b>"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:220
-#, fuzzy
 msgid "Show popup information"
-msgstr "Dangos gwybodaeth am chwarae llyfrifiadau"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:222
 msgid "Popup delay (tenths of a second):"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:225
-#, fuzzy
 msgid "Show time scale for current song"
-msgstr "Atal y gân"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:239
 msgid "TITLE"
-msgstr "TEITL"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:240
 msgid "ARTIST - TITLE"
-msgstr "CYFLAWNWR - TEITL"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:241
 msgid "ARTIST - ALBUM - TITLE"
-msgstr "CYFLAWNWR - ALBWM - TEITL"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:242
 msgid "ARTIST - ALBUM - TRACK. TITLE"
-msgstr "CYFLAWNWR - ALBWM - TRAC. TEITL"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:243
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
-msgstr "CYFLAWNWR [ ALBWM ] - TRAC. TEITL"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:244
 msgid "ALBUM - TITLE"
-msgstr "ALBWM - TEITL"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:457
 msgid "Category"
-msgstr "Categori"
+msgstr "קטגוריה"
 
 #: src/audacious/ui_preferences.c:994
 msgid "Custom"
-msgstr "Cynefod"
+msgstr "מותאם"
 
 #: src/audacious/ui_preferences.c:1031
 msgid "<b>Song Display</b>"
-msgstr "<b>Dangos cerddi</b>"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:1040
 msgid "Show song numbers"
-msgstr ""
+msgstr "הצגת מספרי שירים"
 
 #: src/audacious/ui_preferences.c:1051
 msgid "Show leading zeroes (02:00 instead of 2:00)"
@@ -507,51 +479,48 @@ msgstr ""
 
 #: src/audacious/ui_preferences.c:1071
 msgid "Show information about titlestring format"
-msgstr "Dangos gwybodaeth am titlestring"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:1085
 msgid "Custom string:"
-msgstr "Cynefod:"
+msgstr "מחרוזת מותאמת:"
 
 #: src/audacious/ui_preferences.c:1090
 msgid "Title format:"
-msgstr "Fformat y teitl:"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:1177
-#, fuzzy
 msgid "Output plugin:"
-msgstr "Ategyn mewnbwn: %s"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:1236
-#, fuzzy
 msgid "Transport"
-msgstr "Cyfieithwyr"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:1236
 msgid "Input"
-msgstr ""
+msgstr "קלט"
 
 #: src/audacious/ui_preferences.c:1237
-#, fuzzy
 msgid "Effect"
-msgstr "<b>Effeithiau</b>"
+msgstr "אפקט"
 
 #: src/audacious/ui_preferences.c:1237
 msgid "Visualization"
-msgstr "Delweddu"
+msgstr ""
 
 #: src/audacious/ui_preferences.c:1237
 msgid "General"
-msgstr ""
+msgstr "כללי"
 
 #: src/audacious/ui_preferences.c:1275
 msgid "Audacious Preferences"
-msgstr "Ffurfwedd Audacious"
+msgstr "העדפות Audacious"
 
 #: src/audacious/util.c:115
 #, c-format
 msgid "Could not create directory (%s): %s\n"
-msgstr "Methu Creu Cyfrifiadur (%s): %s\n"
+msgstr "לא ניתן ליצור את המדור ‏(%s): ‫%s\n"
 
 #: src/audtool/handlers_playlist.c:262
 msgid "Position not found."
@@ -568,31 +537,30 @@ msgstr ""
 
 #: src/libaudcore/tuple.c:541
 msgid "Mono"
-msgstr ""
+msgstr "חד־ערוצי"
 
 #: src/libaudcore/tuple.c:543
-#, fuzzy
 msgid "Stereo"
-msgstr "Stereo"
+msgstr "דו־ערוצי"
 
 #: src/libaudcore/tuple.c:545
 #, c-format
 msgid "%d channel"
 msgid_plural "%d channels"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "ערוץ %d"
+msgstr[1] "%d ערוצים"
 
 #: src/libaudgui/about.c:38
 msgid "Credits"
-msgstr "Diolchiadau"
+msgstr "תודות"
 
 #: src/libaudgui/about.c:38
 msgid "License"
-msgstr ""
+msgstr "רישיון"
 
 #: src/libaudgui/about.c:74
 msgid "About Audacious"
-msgstr "Ynghylch Audacious"
+msgstr "אודות Audacious"
 
 #: src/libaudgui/confirm.c:75
 #, c-format
@@ -602,81 +570,76 @@ msgid ""
 msgstr ""
 
 #: src/libaudgui/confirm.c:88
-#, fuzzy
 msgid "_Don't show this message again"
-msgstr "Peidio â dangos y r rhybydd yma eto."
+msgstr ""
 
 #: src/libaudgui/confirm.c:125
-#, fuzzy
 msgid "Rename Playlist"
-msgstr "Cadw'r Rhestr Chwarae"
+msgstr ""
 
 #: src/libaudgui/effects-menu.c:72
 msgid "settings ..."
-msgstr ""
+msgstr "הגדרות ..."
 
 #: src/libaudgui/equalizer.c:51
-#, fuzzy
 msgid "_Enable"
-msgstr " (galluog)"
+msgstr ""
 
 #: src/libaudgui/equalizer.c:124
 msgid "31 Hz"
-msgstr ""
+msgstr "31 Hz"
 
 #: src/libaudgui/equalizer.c:124
 msgid "63 Hz"
-msgstr ""
+msgstr "63 Hz"
 
 #: src/libaudgui/equalizer.c:125
 msgid "125 Hz"
-msgstr ""
+msgstr "125 Hz"
 
 #: src/libaudgui/equalizer.c:125
 msgid "250 Hz"
-msgstr ""
+msgstr "250 Hz"
 
 #: src/libaudgui/equalizer.c:125
 msgid "500 Hz"
-msgstr ""
+msgstr "500 Hz"
 
 #: src/libaudgui/equalizer.c:125
 msgid "1 kHz"
-msgstr ""
+msgstr "1 kHz"
 
 #: src/libaudgui/equalizer.c:125
 msgid "2 kHz"
-msgstr ""
+msgstr "2 kHz"
 
 #: src/libaudgui/equalizer.c:126
 msgid "4 kHz"
-msgstr ""
+msgstr "4 kHz"
 
 #: src/libaudgui/equalizer.c:126
 msgid "8 kHz"
-msgstr ""
+msgstr "8 kHz"
 
 #: src/libaudgui/equalizer.c:126
 msgid "16 kHz"
-msgstr ""
+msgstr "16 kHz"
 
 #: src/libaudgui/equalizer.c:131
 msgid "Equalizer"
-msgstr "Hafalydd"
+msgstr "משווה"
 
 #: src/libaudgui/equalizer.c:147
 msgid "Preamp"
-msgstr ""
+msgstr "מגבר קדם"
 
 #: src/libaudgui/infopopup.c:202
-#, fuzzy
 msgid "Track"
-msgstr "Rhif y Trac:"
+msgstr "רצועה"
 
 #: src/libaudgui/infopopup.c:204
-#, fuzzy
 msgid "Length"
-msgstr "Hyd trac"
+msgstr ""
 
 #: src/libaudgui/infowin.c:74
 msgid "Acid Jazz"
@@ -695,34 +658,32 @@ msgid "Bebop"
 msgstr ""
 
 #: src/libaudgui/infowin.c:78
-#, fuzzy
 msgid "Bluegrass"
-msgstr "Glas"
+msgstr ""
 
 #: src/libaudgui/infowin.c:79
-#, fuzzy
 msgid "Blues"
-msgstr "Glas"
+msgstr "בלוז"
 
 #: src/libaudgui/infowin.c:80
 msgid "Chamber Music"
-msgstr ""
+msgstr "מוזיקה קאמרית"
 
 #: src/libaudgui/infowin.c:81
 msgid "Classical"
-msgstr ""
+msgstr "קלאסי"
 
 #: src/libaudgui/infowin.c:82
 msgid "Country"
-msgstr ""
+msgstr "קאנטרי"
 
 #: src/libaudgui/infowin.c:83
 msgid "Death Metal"
-msgstr ""
+msgstr "דת' מטאל"
 
 #: src/libaudgui/infowin.c:84
 msgid "Disco"
-msgstr ""
+msgstr "דיסקו"
 
 #: src/libaudgui/infowin.c:85
 msgid "Easy Listening"
@@ -738,44 +699,43 @@ msgstr ""
 
 #: src/libaudgui/infowin.c:88
 msgid "Gangsta Rap"
-msgstr ""
+msgstr "גנגסטר ראפ"
 
 #: src/libaudgui/infowin.c:89
 msgid "Gospel"
-msgstr ""
+msgstr "גוספל"
 
 #: src/libaudgui/infowin.c:90
 msgid "Grunge"
-msgstr ""
+msgstr "גראנג'"
 
 #: src/libaudgui/infowin.c:91
 msgid "Hard Rock"
-msgstr ""
+msgstr "רוק כבד"
 
 #: src/libaudgui/infowin.c:92
 msgid "Heavy Metal"
-msgstr ""
+msgstr "הבי מטאל"
 
 #: src/libaudgui/infowin.c:93
 msgid "Hip-hop"
-msgstr ""
+msgstr "היפ-הופ"
 
 #: src/libaudgui/infowin.c:94
-#, fuzzy
 msgid "House"
-msgstr "Llygod"
+msgstr "האוס"
 
 #: src/libaudgui/infowin.c:95
 msgid "Jazz"
-msgstr ""
+msgstr "ג'ז"
 
 #: src/libaudgui/infowin.c:96
 msgid "Jungle"
-msgstr ""
+msgstr "ג'ונגל"
 
 #: src/libaudgui/infowin.c:97
 msgid "Metal"
-msgstr ""
+msgstr "מטאל"
 
 #: src/libaudgui/infowin.c:98
 msgid "New Age"
@@ -783,16 +743,15 @@ msgstr ""
 
 #: src/libaudgui/infowin.c:99
 msgid "New Wave"
-msgstr ""
+msgstr "גל חדש"
 
 #: src/libaudgui/infowin.c:100
-#, fuzzy
 msgid "Noise"
-msgstr "Llygod"
+msgstr ""
 
 #: src/libaudgui/infowin.c:101
 msgid "Pop"
-msgstr ""
+msgstr "פופ"
 
 #: src/libaudgui/infowin.c:102
 msgid "Punk Rock"
@@ -800,16 +759,15 @@ msgstr ""
 
 #: src/libaudgui/infowin.c:103
 msgid "Rap"
-msgstr ""
+msgstr "ראפ"
 
 #: src/libaudgui/infowin.c:104
-#, fuzzy
 msgid "Reggae"
-msgstr "_Cyfnewid"
+msgstr "רגיי"
 
 #: src/libaudgui/infowin.c:105
 msgid "Rock"
-msgstr ""
+msgstr "רוק"
 
 #: src/libaudgui/infowin.c:106
 msgid "Rock and Roll"
@@ -821,11 +779,11 @@ msgstr ""
 
 #: src/libaudgui/infowin.c:108
 msgid "Ska"
-msgstr ""
+msgstr "סקה"
 
 #: src/libaudgui/infowin.c:109
 msgid "Soul"
-msgstr ""
+msgstr "נשמה"
 
 #: src/libaudgui/infowin.c:110
 msgid "Swing"
@@ -833,7 +791,7 @@ msgstr ""
 
 #: src/libaudgui/infowin.c:111
 msgid "Techno"
-msgstr ""
+msgstr "טכנו"
 
 #: src/libaudgui/infowin.c:112
 msgid "Trip-hop"
@@ -842,7 +800,7 @@ msgstr ""
 #: src/libaudgui/infowin.c:176 src/libaudgui/infowin.c:365
 #: src/libaudgui/infowin.c:368 src/libaudgui/infowin.c:371
 msgid "<span size=\"small\">n/a</span>"
-msgstr "<span size=\"small\">n/a</span>"
+msgstr ""
 
 #: src/libaudgui/infowin.c:266
 msgid "Metadata updated successfully"
@@ -854,76 +812,73 @@ msgstr ""
 
 #: src/libaudgui/infowin.c:319
 msgid "Track Information"
-msgstr "Cynnydd trac:"
+msgstr "מידע רצועה"
 
 #: src/libaudgui/infowin.c:354
 msgid "<span size=\"small\">Format:</span>"
-msgstr "<span size=\"small\">Rhywogaeth:</span>"
+msgstr "<span size=\"small\">פורמט:</span>"
 
 #: src/libaudgui/infowin.c:358
 msgid "<span size=\"small\">Quality:</span>"
-msgstr "<span size=\"small\">Ansawdd:</span>"
+msgstr "<span size=\"small\">איכות:</span>"
 
 #: src/libaudgui/infowin.c:361
 msgid "<span size=\"small\">Bitrate:</span>"
-msgstr "<span size=\"small\">Cyfradd bit:</span>"
+msgstr ""
 
 #: src/libaudgui/infowin.c:385
 msgid "<span size=\"small\">Title</span>"
-msgstr "<span size=\"small\">Tietl</span>"
+msgstr "<span size=\"small\">כותרת</span>"
 
 #: src/libaudgui/infowin.c:397
 msgid "<span size=\"small\">Artist</span>"
-msgstr "<span size=\"small\">Cyflawnwr</span>"
+msgstr "<span size=\"small\">אמן</span>"
 
 #: src/libaudgui/infowin.c:409
 msgid "<span size=\"small\">Album</span>"
-msgstr "<span size=\"small\">Crynoadau</span>"
+msgstr "<span size=\"small\">אלבום</span>"
 
 #: src/libaudgui/infowin.c:421
 msgid "<span size=\"small\">Comment</span>"
-msgstr "<span size=\"small\">Sylw</span>"
+msgstr "<span size=\"small\">הערה</span>"
 
 #: src/libaudgui/infowin.c:433
 msgid "<span size=\"small\">Genre</span>"
-msgstr "<span size=\"small\">Ffurf lenyddol</span>"
+msgstr "<span size=\"small\">סגנון</span>"
 
 #: src/libaudgui/infowin.c:455
 msgid "<span size=\"small\">Year</span>"
-msgstr "<span size=\"small\">Blwyddyn</span>"
+msgstr "<span size=\"small\">שנה</span>"
 
 #: src/libaudgui/infowin.c:464
 msgid "<span size=\"small\">Track Number</span>"
-msgstr "<span size=\"small\">Rhif y Trac</span>"
+msgstr "<span size=\"small\">מספר רצועה</span>"
 
 #: src/libaudgui/infowin.c:541
 #, c-format
 msgid "%d kb/s"
-msgstr ""
+msgstr "%d ק״ב/ש"
 
 #: src/libaudgui/infowin.c:568
 #, c-format
 msgid "No info available for %s.\n"
-msgstr ""
+msgstr "אין מידע זמין עבור %s.\n"
 
 #: src/libaudgui/jump-to-time.c:52
 msgid "Jump to Time"
-msgstr "Neidio i Amser"
+msgstr ""
 
 #: src/libaudgui/jump-to-time.c:61
-#, fuzzy
 msgid "Enter time (minutes:seconds):"
-msgstr "munudau:eiliadau"
+msgstr "הזנת זמן (דקות:שניות):"
 
 #: src/libaudgui/playlists.c:33
-#, fuzzy
 msgid "Export Playlist"
-msgstr "Llwytho'r rhestr chwarae"
+msgstr ""
 
 #: src/libaudgui/playlists.c:33
-#, fuzzy
 msgid "Import Playlist"
-msgstr "Llwytho'r rhestr chwarae"
+msgstr ""
 
 #: src/libaudgui/playlists.c:66
 #, c-format
@@ -931,115 +886,88 @@ msgid "Overwrite %s?"
 msgstr ""
 
 #: src/libaudgui/queue-manager.c:196
-#, fuzzy
 msgid "Queue Manager"
-msgstr "Rheolwyr Rhestr"
+msgstr "ניהול תור"
 
 #: src/libaudgui/ui_fileopener.c:107
 msgid "Open Files"
-msgstr "Tocio Ffeiliau"
+msgstr "פתיחת קבצים"
 
 #: src/libaudgui/ui_fileopener.c:107
 msgid "Add Files"
-msgstr "Ychwanegu Ffeiliau"
+msgstr "הוספת קבצים"
 
 #: src/libaudgui/ui_fileopener.c:109
 msgid "Close dialog on Open"
-msgstr "Closio am Tocio"
+msgstr "סגירת דו־שיח בפתיחה"
 
 #: src/libaudgui/ui_fileopener.c:109
 msgid "Close dialog on Add"
-msgstr "Closio am Ychwanegu"
+msgstr "סגירת דו־שיח בהוספה"
 
 #: src/libaudgui/ui_jumptotrack.c:105 src/libaudgui/ui_jumptotrack.c:113
 #: src/libaudgui/ui_jumptotrack.c:332
 msgid "_Queue"
-msgstr "_Rhes"
+msgstr "_תור"
 
 #: src/libaudgui/ui_jumptotrack.c:111
 msgid "Un_queue"
-msgstr "_Rhes tynnu"
+msgstr ""
 
 #: src/libaudgui/ui_jumptotrack.c:262
-#, fuzzy
 msgid "Jump to Song"
-msgstr "Neidio i Amser"
+msgstr ""
 
 #: src/libaudgui/ui_jumptotrack.c:287
 msgid "Filter: "
-msgstr "Hidl:"
+msgstr "מסנן: "
 
 #: src/libaudgui/ui_jumptotrack.c:288
 msgid "_Filter:"
-msgstr "_Hidl:"
+msgstr "מ_סנן:"
 
 #: src/libaudgui/ui_jumptotrack.c:298
 msgid "Remember"
 msgstr ""
 
 #: src/libaudgui/ui_jumptotrack.c:305
-#, fuzzy
 msgid "Clea_r"
-msgstr "Clirio A-B"
+msgstr ""
 
 #: src/libaudgui/ui_jumptotrack.c:325
 msgid "Close on Jump"
-msgstr "Closio am Naid"
+msgstr ""
 
 #: src/libaudgui/ui_playlist_manager.c:253
 msgid "Playlist Manager"
-msgstr "Rheolwyr am y Rhestr Chwarae"
+msgstr "ניהול רשימת השמעה"
 
 #: src/libaudgui/ui_playlist_manager.c:280
 msgid "Entries"
-msgstr "Llyfrifiadau"
+msgstr "רשומות"
 
 #: src/libaudgui/ui_playlist_manager.c:301
 msgid "_Rename"
-msgstr "_Cyfnewid"
+msgstr "_שינוי שם"
 
 #: src/libaudgui/ui_playlist_manager.c:325
-#, fuzzy
 msgid "_Close dialog on activating playlist"
-msgstr "Closio am Tocio"
+msgstr ""
 
 #: src/libaudgui/url-opener.c:56
 msgid "Open URL"
-msgstr ""
+msgstr "פתיחת URL"
 
 #: src/libaudgui/url-opener.c:56
 msgid "Add URL"
-msgstr ""
+msgstr "הוספת URL"
 
 #: src/libaudgui/url-opener.c:65
 msgid "Enter URL:"
-msgstr ""
+msgstr "הזנת URL:"
 
 #: src/libaudgui/util.c:143
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
 msgstr ""
-
-#~ msgid "Unrecognized desktop file Version '%s'"
-#~ msgstr "Anadnabyddus ffeil desktop fersiwn '%s'"
-
-#~ msgid "Starting %s"
-#~ msgstr "Cychwyn %s"
-
-#~ msgid "Unrecognized launch option: %d"
-#~ msgstr "Anadnabyddus cychwyn dewis: %d"
-
-#~ msgid "FILE"
-#~ msgstr "FFEIL"
-
-#~ msgid "ID"
-#~ msgstr "ID"
-
-#, fuzzy
-#~ msgid "Session management options:"
-#~ msgstr "Dewis Sesiwn Goruchwyliaeth"
-
-#, fuzzy
-#~ msgid "Show session management options"
-#~ msgstr "Dangos dewis sesiwn goruchwyliaeth"
