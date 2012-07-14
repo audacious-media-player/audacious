@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-07-06 18:48-0400\n"
+"POT-Creation-Date: 2012-07-14 10:04-0400\n"
 "PO-Revision-Date: 2012-07-06 22:12+0000\n"
 "Last-Translator: John Lindgren <john.lindgren@aol.com>\n"
 "Language-Team: Serbian (Latin)\n"
@@ -184,7 +184,7 @@ msgid "Album"
 msgstr "Album"
 
 #: src/audacious/ui_preferences.c:81 src/libaudgui/infopopup.c:192
-#: src/libaudgui/ui_playlist_manager.c:279
+#: src/libaudgui/ui_playlist_manager.c:287
 msgid "Title"
 msgstr "Naslov"
 
@@ -942,19 +942,19 @@ msgstr ""
 msgid "Close on Jump"
 msgstr "Zatvori posle skoka"
 
-#: src/libaudgui/ui_playlist_manager.c:253
+#: src/libaudgui/ui_playlist_manager.c:261
 msgid "Playlist Manager"
 msgstr "Menadžer liste numera"
 
-#: src/libaudgui/ui_playlist_manager.c:280
+#: src/libaudgui/ui_playlist_manager.c:288
 msgid "Entries"
 msgstr "Stavke"
 
-#: src/libaudgui/ui_playlist_manager.c:301
+#: src/libaudgui/ui_playlist_manager.c:308
 msgid "_Rename"
 msgstr "_Preimenuj"
 
-#: src/libaudgui/ui_playlist_manager.c:325
+#: src/libaudgui/ui_playlist_manager.c:328
 msgid "_Close dialog on activating playlist"
 msgstr ""
 

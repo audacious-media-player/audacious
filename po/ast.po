@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-07-06 18:08-0400\n"
+"POT-Creation-Date: 2012-07-14 10:04-0400\n"
 "PO-Revision-Date: 2010-07-18 21:16+0100\n"
 "Last-Translator: marquinos <marcos@softastur.org>\n"
 "Language-Team: Softastur <alministradores@softastur.org>\n"
@@ -185,7 +185,7 @@ msgid "Album"
 msgstr "Álbum"
 
 #: src/audacious/ui_preferences.c:81 src/libaudgui/infopopup.c:192
-#: src/libaudgui/ui_playlist_manager.c:279
+#: src/libaudgui/ui_playlist_manager.c:287
 msgid "Title"
 msgstr "Títulu"
 
@@ -979,19 +979,19 @@ msgstr "Llimpi_ar"
 msgid "Close on Jump"
 msgstr "Zarrar al Saltar"
 
-#: src/libaudgui/ui_playlist_manager.c:253
+#: src/libaudgui/ui_playlist_manager.c:261
 msgid "Playlist Manager"
 msgstr "Alministrador de la llista de reproducción"
 
-#: src/libaudgui/ui_playlist_manager.c:280
+#: src/libaudgui/ui_playlist_manager.c:288
 msgid "Entries"
 msgstr "Entraess"
 
-#: src/libaudgui/ui_playlist_manager.c:301
+#: src/libaudgui/ui_playlist_manager.c:308
 msgid "_Rename"
 msgstr "Renomar"
 
-#: src/libaudgui/ui_playlist_manager.c:325
+#: src/libaudgui/ui_playlist_manager.c:328
 msgid "_Close dialog on activating playlist"
 msgstr "Zarrar diálogu al activar llista de reproducción"
 

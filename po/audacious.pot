@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-07-06 18:48-0400\n"
+"POT-Creation-Date: 2012-07-14 10:04-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -180,7 +180,7 @@ msgid "Album"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:81 src/libaudgui/infopopup.c:192
-#: src/libaudgui/ui_playlist_manager.c:279
+#: src/libaudgui/ui_playlist_manager.c:287
 msgid "Title"
 msgstr ""
 
@@ -937,19 +937,19 @@ msgstr ""
 msgid "Close on Jump"
 msgstr ""
 
-#: src/libaudgui/ui_playlist_manager.c:253
+#: src/libaudgui/ui_playlist_manager.c:261
 msgid "Playlist Manager"
 msgstr ""
 
-#: src/libaudgui/ui_playlist_manager.c:280
+#: src/libaudgui/ui_playlist_manager.c:288
 msgid "Entries"
 msgstr ""
 
-#: src/libaudgui/ui_playlist_manager.c:301
+#: src/libaudgui/ui_playlist_manager.c:308
 msgid "_Rename"
 msgstr ""
 
-#: src/libaudgui/ui_playlist_manager.c:325
+#: src/libaudgui/ui_playlist_manager.c:328
 msgid "_Close dialog on activating playlist"
 msgstr ""
 
