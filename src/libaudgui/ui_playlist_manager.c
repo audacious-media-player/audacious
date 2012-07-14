@@ -313,8 +313,8 @@ EXPORT void audgui_playlist_manager (void)
 
     gtk_container_add ((GtkContainer *) playman_button_hbox, new_button);
     gtk_container_add ((GtkContainer *) playman_button_hbox, delete_button);
-    gtk_box_pack_end ((GtkBox *) playman_button_hbox, rename_button, FALSE, FALSE, 0);
     gtk_box_pack_end ((GtkBox *) playman_button_hbox, play_button, FALSE, FALSE, 0);
+    gtk_box_pack_end ((GtkBox *) playman_button_hbox, rename_button, FALSE, FALSE, 0);
     gtk_container_add ((GtkContainer *) playman_vbox, playman_button_hbox);
 
     g_signal_connect (play_button, "clicked", (GCallback) play_cb, NULL);
