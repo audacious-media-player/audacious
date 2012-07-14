@@ -869,6 +869,7 @@ void create_widgets_with_domain (void * box, const PreferencesWidget * widgets,
                 widget = gtk_grid_new();
                 fill_grid(widget, widgets[x].data.table.elem,
                  widgets[x].data.table.rows, domain);
+                gtk_grid_set_column_spacing(GTK_GRID(widget), 6);
                 gtk_grid_set_row_spacing(GTK_GRID(widget), 6);
                 break;
             case WIDGET_ENTRY:
