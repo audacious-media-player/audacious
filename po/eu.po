@@ -869,7 +869,7 @@ msgstr "%d kb/s"
 #: src/libaudgui/infowin.c:568
 #, c-format
 msgid "No info available for %s.\n"
-msgstr "Ez dago %s(r)en informazio eskurragarririk.\\n"
+msgstr "Ez dago %s(r)en informazio eskurragarririk.\n"
 
 #: src/libaudgui/jump-to-time.c:52
 msgid "Jump to Time"

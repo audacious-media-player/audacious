@@ -292,7 +292,7 @@ msgstr "ms"
 
 #: src/audacious/ui_preferences.c:141
 msgid "Soft clipping"
-msgstr "Soft-Clipping"
+msgstr "Software Amplitudenbegrenzung"
 
 #: src/audacious/ui_preferences.c:143
 msgid "Use software volume control (not recommended)"
