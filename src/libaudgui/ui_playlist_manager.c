@@ -22,6 +22,7 @@
 
 #include <audacious/i18n.h>
 #include <audacious/misc.h>
+#include <audacious/drct.h>
 #include <audacious/playlist.h>
 #include <libaudcore/hook.h>
 
@@ -32,6 +33,7 @@
 #include "list.h"
 
 static GtkWidget * playman_win = NULL;
+static void activate_row (void * user, int row);
 
 static void save_position (GtkWidget * window)
 {
@@ -52,18 +54,23 @@ static bool_t hide_cb (GtkWidget * window)
     return TRUE;
 }
 
+static void play_cb (void)
+{
+    activate_row (NULL, aud_playlist_get_active ());
+}
+
 static void rename_cb (void)
 {
     audgui_show_playlist_rename (aud_playlist_get_active ());
 }
 
-static void new_cb (GtkButton * button, void * unused)
+static void new_cb (void)
 {
     aud_playlist_insert (aud_playlist_get_active () + 1);
     aud_playlist_set_active (aud_playlist_get_active () + 1);
 }
 
-static void delete_cb (GtkButton * button, GtkWidget * list)
+static void delete_cb (void)
 {
     audgui_confirm_playlist_delete (aud_playlist_get_active ());
 }
@@ -107,6 +114,7 @@ static void select_all (void * user, bool_t selected)
 static void activate_row (void * user, int row)
 {
     aud_playlist_set_active (row);
+    aud_drct_play_playlist (row);
 
     if (aud_get_bool ("audgui", "playlist_manager_close_on_activate"))
         hide_cb (playman_win);
@@ -235,10 +243,10 @@ static void close_on_activate_cb (GtkToggleButton * toggle)
 
 EXPORT void audgui_playlist_manager (void)
 {
-    GtkWidget *playman_vbox;
+    GtkWidget * playman_vbox;
     GtkWidget * playman_pl_lv, * playman_pl_lv_sw;
-    GtkWidget *playman_bbar_hbbox;
-    GtkWidget * rename_button, * new_button, * delete_button;
+    GtkWidget * playman_button_hbox;
+    GtkWidget * new_button, * delete_button, * rename_button, * play_button;
     GtkWidget * hbox, * button;
     GdkGeometry playman_win_hints;
 
@@ -275,6 +283,7 @@ EXPORT void audgui_playlist_manager (void)
     playman_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
     gtk_container_add( GTK_CONTAINER(playman_win) , playman_vbox );
 
+    /* ListView */
     playman_pl_lv = audgui_list_new (& callbacks, NULL, aud_playlist_count ());
     audgui_list_add_column (playman_pl_lv, _("Title"), 0, G_TYPE_STRING, -1);
     audgui_list_add_column (playman_pl_lv, _("Entries"), 1, G_TYPE_INT, 7);
@@ -293,25 +302,22 @@ EXPORT void audgui_playlist_manager (void)
     gtk_container_add( GTK_CONTAINER(playman_pl_lv_sw) , playman_pl_lv );
     gtk_box_pack_start ((GtkBox *) playman_vbox, playman_pl_lv_sw, TRUE, TRUE, 0);
 
-    /* button bar */
-    playman_bbar_hbbox = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
-    gtk_button_box_set_layout( GTK_BUTTON_BOX(playman_bbar_hbbox) , GTK_BUTTONBOX_END );
-    gtk_box_set_spacing ((GtkBox *) playman_bbar_hbbox, 6);
-
+    /* ButtonBox */
+    playman_button_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+    new_button = gtk_button_new_from_stock (GTK_STOCK_NEW);
+    delete_button = gtk_button_new_from_stock (GTK_STOCK_DELETE);
     rename_button = gtk_button_new_with_mnemonic (_("_Rename"));
     gtk_button_set_image ((GtkButton *) rename_button, gtk_image_new_from_stock
      (GTK_STOCK_EDIT, GTK_ICON_SIZE_BUTTON));
-    new_button = gtk_button_new_from_stock (GTK_STOCK_NEW);
-    delete_button = gtk_button_new_from_stock (GTK_STOCK_DELETE);
+    play_button = gtk_button_new_from_stock (GTK_STOCK_MEDIA_PLAY);
 
-    gtk_container_add ((GtkContainer *) playman_bbar_hbbox, rename_button);
-    gtk_button_box_set_child_secondary ((GtkButtonBox *) playman_bbar_hbbox,
-     rename_button, TRUE);
-    gtk_container_add ((GtkContainer *) playman_bbar_hbbox, new_button);
-    gtk_container_add ((GtkContainer *) playman_bbar_hbbox, delete_button);
+    gtk_container_add ((GtkContainer *) playman_button_hbox, new_button);
+    gtk_container_add ((GtkContainer *) playman_button_hbox, delete_button);
+    gtk_box_pack_end ((GtkBox *) playman_button_hbox, rename_button, FALSE, FALSE, 0);
+    gtk_box_pack_end ((GtkBox *) playman_button_hbox, play_button, FALSE, FALSE, 0);
+    gtk_container_add ((GtkContainer *) playman_vbox, playman_button_hbox);
 
-    gtk_box_pack_start( GTK_BOX(playman_vbox) , playman_bbar_hbbox , FALSE , FALSE , 0 );
-
+    g_signal_connect (play_button, "clicked", (GCallback) play_cb, NULL);
     g_signal_connect ((GObject *) rename_button, "clicked", (GCallback)
      rename_cb, playman_pl_lv);
     g_signal_connect ((GObject *) new_button, "clicked", (GCallback) new_cb,
@@ -319,6 +325,7 @@ EXPORT void audgui_playlist_manager (void)
     g_signal_connect ((GObject *) delete_button, "clicked", (GCallback)
      delete_cb, playman_pl_lv);
 
+    /* CheckButton */
     hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  6);
     gtk_box_pack_start ((GtkBox *) playman_vbox, hbox, FALSE, FALSE, 0);
     button = gtk_check_button_new_with_mnemonic
