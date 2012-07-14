@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-07-14 10:04-0400\n"
-"PO-Revision-Date: 2012-07-01 18:49+0000\n"
-"Last-Translator: jlindgren <john.lindgren@aol.com>\n"
+"POT-Creation-Date: 2012-07-14 10:13-0400\n"
+"PO-Revision-Date: 2012-07-12 13:26+0000\n"
+"Last-Translator: Lê Trường An <truongan@linuxmail.org>\n"
 "Language-Team: Vietnamese\n"
 "Language: vi\n"
 "MIME-Version: 1.0\n"
@@ -558,7 +558,7 @@ msgstr "Đóng góp"
 
 #: src/libaudgui/about.c:38
 msgid "License"
-msgstr ""
+msgstr "Giấy phép"
 
 #: src/libaudgui/about.c:74
 msgid "About Audacious"

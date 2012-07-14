@@ -12,9 +12,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-07-14 10:04-0400\n"
-"PO-Revision-Date: 2012-07-01 18:48+0000\n"
-"Last-Translator: jlindgren <john.lindgren@aol.com>\n"
+"POT-Creation-Date: 2012-07-14 10:13-0400\n"
+"PO-Revision-Date: 2012-07-08 14:48+0000\n"
+"Last-Translator: StreamThreaedr <kvantarium@gmail.com>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
@@ -280,7 +280,7 @@ msgstr "Турецька"
 
 #: src/audacious/ui_preferences.c:114
 msgid "Floating point"
-msgstr ""
+msgstr "Плавающая запятая"
 
 #: src/audacious/ui_preferences.c:130
 msgid "Album mode"
@@ -304,7 +304,7 @@ msgstr "мс"
 
 #: src/audacious/ui_preferences.c:141
 msgid "Soft clipping"
-msgstr ""
+msgstr "Мягкое отсечение"
 
 #: src/audacious/ui_preferences.c:143
 msgid "Use software volume control (not recommended)"

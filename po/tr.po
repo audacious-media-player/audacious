@@ -7,13 +7,14 @@
 #   <alikoc@hush.ai>, 2012.
 # Murat Senel <muratasenel@gmail.com>, 2007.
 # Murat Şenel <muratasenel@gmail.com>, 2007.
+#   <t.oguzman@hotmail.com>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-07-14 10:04-0400\n"
-"PO-Revision-Date: 2012-07-01 18:48+0000\n"
-"Last-Translator: jlindgren <john.lindgren@aol.com>\n"
+"POT-Creation-Date: 2012-07-14 10:13-0400\n"
+"PO-Revision-Date: 2012-07-13 16:18+0000\n"
+"Last-Translator: tarkan255 <t.oguzman@hotmail.com>\n"
 "Language-Team: Turkish\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -90,7 +91,7 @@ msgstr "Hata ayıklama mesajlarını çıkart"
 
 #: src/audacious/main.c:244
 msgid "Headless mode (beta)"
-msgstr ""
+msgstr "Başlıksız mod (beta)"
 
 #: src/audacious/main.c:245
 msgid "FILE..."
@@ -144,6 +145,8 @@ msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress "
 "(or has been disabled)."
 msgstr ""
+"Çalma listesi sıralanamıyor çünkü üstveri taraması devam ediyor (ya da devre "
+"dışı bırakıldı)."
 
 #: src/audacious/plugin-preferences.c:50
 #, c-format
@@ -274,7 +277,7 @@ msgstr "Türkçe"
 
 #: src/audacious/ui_preferences.c:114
 msgid "Floating point"
-msgstr ""
+msgstr "Kayan noktalı"
 
 #: src/audacious/ui_preferences.c:130
 msgid "Album mode"
@@ -298,7 +301,7 @@ msgstr "ms"
 
 #: src/audacious/ui_preferences.c:141
 msgid "Soft clipping"
-msgstr ""
+msgstr "Yumuşak kesim"
 
 #: src/audacious/ui_preferences.c:143
 msgid "Use software volume control (not recommended)"
@@ -402,15 +405,15 @@ msgstr "<b>Album resmi</b>"
 
 #: src/audacious/ui_preferences.c:208
 msgid "Search for images matching these words (comma-separated):"
-msgstr ""
+msgstr "Bu kelimelerle eşleşen resimleri ara (virgülle ayırın)"
 
 #: src/audacious/ui_preferences.c:210
 msgid "Exclude images matching these words (comma-separated):"
-msgstr ""
+msgstr "Bu kelimeleri içeren resimleri çıkar (virgülle ayırın):"
 
 #: src/audacious/ui_preferences.c:212
 msgid "Search for images matching song file name"
-msgstr ""
+msgstr "Şarkı ismiyle eşleşen resimleri ara"
 
 #: src/audacious/ui_preferences.c:214
 msgid "Search recursively"
@@ -975,3 +978,5 @@ msgid ""
 "\n"
 "(Further messages have been hidden.)"
 msgstr ""
+"\n"
+"(Gelecekteki mesajlar gizlenecek.)"
