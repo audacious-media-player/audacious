@@ -50,7 +50,7 @@ msgstr "Aktuellen Titel stoppen"
 
 #: src/audacious/main.c:236
 msgid "Pause if playing, play otherwise"
-msgstr "Pausieren falls Wiedergabe aktiv, andernfalls Wiedergabe starten"
+msgstr "Pausieren falls Wiedergabe aktiv, andernfalls starten"
 
 #: src/audacious/main.c:237
 msgid "Skip forward in playlist"
