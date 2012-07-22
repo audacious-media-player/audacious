@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious 3.3\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-07-14 10:04-0400\n"
-"PO-Revision-Date: 2012-07-09 10:18+0200\n"
+"POT-Creation-Date: 2012-07-22 22:47+0200\n"
+"PO-Revision-Date: 2012-07-22 22:55+0200\n"
 "Last-Translator: Thomas Lange <thomas-lange2@gmx.de>\n"
 "Language-Team: German\n"
 "Language: de\n"
@@ -42,23 +42,23 @@ msgstr "Abspielen der aktuellen Wiedergabeliste beginnen"
 
 #: src/audacious/main.c:234
 msgid "Pause current song"
-msgstr "Aktuellen Song unterbrechen"
+msgstr "Aktuellen Titel pausieren"
 
 #: src/audacious/main.c:235
 msgid "Stop current song"
-msgstr "Aktuellen Song stoppen"
+msgstr "Aktuellen Titel stoppen"
 
 #: src/audacious/main.c:236
 msgid "Pause if playing, play otherwise"
-msgstr "Pause falls beim Abspielen, andernfalls Wiedergabe starten"
+msgstr "Pausieren falls Wiedergabe aktiv, andernfalls Wiedergabe starten"
 
 #: src/audacious/main.c:237
 msgid "Skip forward in playlist"
-msgstr "In der Wiedergabeliste vorspringen"
+msgstr "In der Wiedergabeliste fortschreiten"
 
 #: src/audacious/main.c:238
 msgid "Display Jump to File dialog"
-msgstr "«Springe zu Datei»-Fenster anzeigen"
+msgstr "\"Springe zu Datei\"-Fenster anzeigen"
 
 #: src/audacious/main.c:239
 msgid "Add files to the playlist"
@@ -74,7 +74,7 @@ msgstr "Hauptfenster anzeigen"
 
 #: src/audacious/main.c:242
 msgid "Show version"
-msgstr "Zeige Version"
+msgstr "Version anzeigen"
 
 #: src/audacious/main.c:243
 msgid "Print debugging messages"
@@ -99,7 +99,7 @@ msgid ""
 "Try `%s --help' for more information.\n"
 msgstr ""
 "%s: %s\n"
-"`%s --help' für weitere Informationen versuchen.\n"
+"Versuche `%s --help' für weitere Informationen.\n"
 
 #: src/audacious/main.c:545
 msgid "Audacious"
@@ -157,7 +157,7 @@ msgstr "Audio"
 msgid "Network"
 msgstr "Netzwerk"
 
-#: src/audacious/ui_preferences.c:71 src/audacious/ui_preferences.c:1236
+#: src/audacious/ui_preferences.c:71 src/audacious/ui_preferences.c:1237
 msgid "Playlist"
 msgstr "Wiedergabeliste"
 
@@ -292,7 +292,7 @@ msgstr "ms"
 
 #: src/audacious/ui_preferences.c:141
 msgid "Soft clipping"
-msgstr "Software Amplitudenbegrenzung"
+msgstr "Softwareseitige Amplitudenbegrenzung"
 
 #: src/audacious/ui_preferences.c:143
 msgid "Use software volume control (not recommended)"
@@ -460,59 +460,59 @@ msgstr "ALBUM - TITEL"
 msgid "Category"
 msgstr "Kategorie"
 
-#: src/audacious/ui_preferences.c:994
+#: src/audacious/ui_preferences.c:995
 msgid "Custom"
 msgstr "Eigene Zeichenkette"
 
-#: src/audacious/ui_preferences.c:1031
+#: src/audacious/ui_preferences.c:1032
 msgid "<b>Song Display</b>"
 msgstr "<b>Titelanzeige</b>"
 
-#: src/audacious/ui_preferences.c:1040
+#: src/audacious/ui_preferences.c:1041
 msgid "Show song numbers"
 msgstr "Zeige Titelnummern"
 
-#: src/audacious/ui_preferences.c:1051
+#: src/audacious/ui_preferences.c:1052
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr "Führende Nullen anzeigen (02:00 anstatt 2:00)"
 
-#: src/audacious/ui_preferences.c:1071
+#: src/audacious/ui_preferences.c:1072
 msgid "Show information about titlestring format"
 msgstr "Informationen über das Format der Titelzeile anzeigen"
 
-#: src/audacious/ui_preferences.c:1085
+#: src/audacious/ui_preferences.c:1086
 msgid "Custom string:"
 msgstr "Eigene Zeichenkette:"
 
-#: src/audacious/ui_preferences.c:1090
+#: src/audacious/ui_preferences.c:1091
 msgid "Title format:"
 msgstr "Titelformat:"
 
-#: src/audacious/ui_preferences.c:1177
+#: src/audacious/ui_preferences.c:1178
 msgid "Output plugin:"
 msgstr "Ausgabe-Plugin:"
 
-#: src/audacious/ui_preferences.c:1236
+#: src/audacious/ui_preferences.c:1237
 msgid "Transport"
 msgstr "Transport"
 
-#: src/audacious/ui_preferences.c:1236
+#: src/audacious/ui_preferences.c:1237
 msgid "Input"
 msgstr "Eingabe"
 
-#: src/audacious/ui_preferences.c:1237
+#: src/audacious/ui_preferences.c:1238
 msgid "Effect"
 msgstr "Effekte"
 
-#: src/audacious/ui_preferences.c:1237
+#: src/audacious/ui_preferences.c:1238
 msgid "Visualization"
 msgstr "Visualisierung"
 
-#: src/audacious/ui_preferences.c:1237
+#: src/audacious/ui_preferences.c:1238
 msgid "General"
 msgstr "Allgemein"
 
-#: src/audacious/ui_preferences.c:1275
+#: src/audacious/ui_preferences.c:1276
 msgid "Audacious Preferences"
 msgstr "Audacious-Einstellungen"
 
@@ -561,20 +561,24 @@ msgstr "Lizenz"
 msgid "About Audacious"
 msgstr "Über Audacious"
 
-#: src/libaudgui/confirm.c:75
+#: src/libaudgui/confirm.c:61
+msgid "Close Playlist"
+msgstr "Wiedergabeliste schließen"
+
+#: src/libaudgui/confirm.c:76
 #, c-format
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
 msgstr ""
-"Willst du wirklich \"%s\" löschen?  Alle seit der letzten Speicherung "
+"Willst du wirklich \"%s\" schließen?  Alle seit der letzten Speicherung "
 "geänderten Einträge gehen dadurch verloren."
 
-#: src/libaudgui/confirm.c:88
+#: src/libaudgui/confirm.c:89
 msgid "_Don't show this message again"
 msgstr "_Diese Warnung nicht mehr anzeigen"
 
-#: src/libaudgui/confirm.c:125
+#: src/libaudgui/confirm.c:126
 msgid "Rename Playlist"
 msgstr "Wiedergabeliste umbenennen"
 
