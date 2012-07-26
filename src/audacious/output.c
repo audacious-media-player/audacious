@@ -289,9 +289,10 @@ static void write_output (void * data, int size)
         data = buffer;
     }
 
-    apply_replay_gain (data, samples);
-    effect_process ((float * *) & data, & samples);
-    write_output_raw (data, samples);
+    float * fdata = data;
+    apply_replay_gain (fdata, samples);
+    effect_process (& fdata, & samples);
+    write_output_raw (fdata, samples);
 
     free (buffer);
 }
