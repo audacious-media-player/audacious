@@ -90,7 +90,7 @@ pre-depend: ${DBUS_BINDINGS}
 CPPFLAGS := -I.. -I../.. \
             ${CPPFLAGS} \
 		${GLIB_CFLAGS}			\
-		${GMODULE_LIBS} \
+		${GMODULE_CFLAGS} \
 		${GTHREAD_CFLAGS} \
 		${GTK_CFLAGS}			\
 		${AUDACIOUS_DEFINES}	\
