@@ -13,6 +13,9 @@ cs.po)
 de.po)
     LANGUAGE="German"
     ;;
+el.po)
+    LANGUAGE="Greek"
+    ;;
 es.po)
     LANGUAGE="Spanish"
     ;;
@@ -54,6 +57,9 @@ it.po)
     ;;
 ja.po)
     LANGUAGE="Japanese"
+    ;;
+ko.po)
+    LANGUAGE="Korean"
     ;;
 lt.po)
     LANGUAGE="Lithuanian"
