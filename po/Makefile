@@ -11,6 +11,7 @@ LOCALES = ast.po \
 	  ca.po \
 	  cs.po \
 	  de.po \
+	  el.po \
 	  es.po \
 	  es_AR.po \
 	  es_MX.po \
@@ -25,6 +26,7 @@ LOCALES = ast.po \
 	  id_ID.po \
 	  it.po \
 	  ja.po \
+	  ko.po \
 	  lt.po \
 	  lv.po \
 	  nl.po \

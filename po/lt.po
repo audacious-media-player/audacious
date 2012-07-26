@@ -13,9 +13,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-07-25 20:08-0400\n"
-"PO-Revision-Date: 2012-07-01 18:48+0000\n"
-"Last-Translator: jlindgren <john.lindgren@aol.com>\n"
+"POT-Creation-Date: 2012-07-25 20:19-0400\n"
+"PO-Revision-Date: 2012-07-26 00:12+0000\n"
+"Last-Translator: John Lindgren <john.lindgren@aol.com>\n"
 "Language-Team: Lithuanian\n"
 "Language: lt\n"
 "MIME-Version: 1.0\n"
@@ -281,7 +281,7 @@ msgstr "Turkų"
 
 #: src/audacious/ui_preferences.c:114
 msgid "Floating point"
-msgstr ""
+msgstr "Slankiojantis taškas"
 
 #: src/audacious/ui_preferences.c:130
 msgid "Album mode"
@@ -305,7 +305,7 @@ msgstr "ms"
 
 #: src/audacious/ui_preferences.c:141
 msgid "Soft clipping"
-msgstr ""
+msgstr "Lengvas apkrapymas"
 
 #: src/audacious/ui_preferences.c:143
 msgid "Use software volume control (not recommended)"
@@ -575,9 +575,8 @@ msgid "About Audacious"
 msgstr "Apie Audacious"
 
 #: src/libaudgui/confirm.c:61
-#, fuzzy
 msgid "Close Playlist"
-msgstr "Naujas grojaraštis"
+msgstr ""
 
 #: src/libaudgui/confirm.c:76
 #, c-format

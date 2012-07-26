@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
-# Einars Sprugis <einars8@gmail.com>, 2009, 2011.
+# Einars Sprugis <einars8@gmail.com>, 2009, 2011, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-07-25 20:08-0400\n"
-"PO-Revision-Date: 2012-06-02 00:06+0000\n"
-"Last-Translator: jlindgren <john.lindgren@aol.com>\n"
+"POT-Creation-Date: 2012-07-25 20:19-0400\n"
+"PO-Revision-Date: 2012-07-26 00:12+0000\n"
+"Last-Translator: John Lindgren <john.lindgren@aol.com>\n"
 "Language-Team: Latvian\n"
 "Language: lv\n"
 "MIME-Version: 1.0\n"
@@ -90,7 +90,7 @@ msgstr "Drukāt atkļūdošanas ziņojumus"
 
 #: src/audacious/main.c:244
 msgid "Headless mode (beta)"
-msgstr ""
+msgstr "Bezgalvas režīms (beta)"
 
 #: src/audacious/main.c:245
 msgid "FILE..."
@@ -121,39 +121,41 @@ msgstr "Netika atrasts dekodētājs priekš %s."
 #: src/audacious/playlist-files.c:51
 #, c-format
 msgid "Cannot %s %s: unsupported file extension."
-msgstr ""
+msgstr "Neizdevās %s %s: neatbalstīts faila paplašinājums."
 
 #: src/audacious/playlist-files.c:52
 msgid "save"
-msgstr ""
+msgstr "saglabāt"
 
 #: src/audacious/playlist-files.c:52
 msgid "load"
-msgstr ""
+msgstr "ielādēt"
 
 #: src/audacious/playlist-new.c:121
 msgid "New Playlist"
-msgstr ""
+msgstr "Jauns repertuārs"
 
 #: src/audacious/playlist-new.c:122
 msgid "Now Playing"
-msgstr ""
+msgstr "Pašreiz atskaņo"
 
 #: src/audacious/playlist-new.c:1650
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress "
 "(or has been disabled)."
 msgstr ""
+"Repertuārs nevar tikt sakārtots, jo joprojām noris metadatu skenēšana (vai "
+"arī tā ir atslēgta)."
 
 #: src/audacious/plugin-preferences.c:50
-#, fuzzy, c-format
+#, c-format
 msgid "About %s"
-msgstr "Par Audacious"
+msgstr "Par %s"
 
 #: src/audacious/plugin-preferences.c:88
-#, fuzzy, c-format
+#, c-format
 msgid "%s Settings"
-msgstr "iestatījumi ..."
+msgstr "%s iestatījumi"
 
 #: src/audacious/ui_preferences.c:69
 msgid "Audio"
@@ -169,7 +171,7 @@ msgstr "Repertuārs"
 
 #: src/audacious/ui_preferences.c:72
 msgid "Song Info"
-msgstr ""
+msgstr "Dziesmas info"
 
 #: src/audacious/ui_preferences.c:73
 msgid "Plugins"
@@ -274,7 +276,7 @@ msgstr "Turku"
 
 #: src/audacious/ui_preferences.c:114
 msgid "Floating point"
-msgstr ""
+msgstr "Peldošā punkta"
 
 #: src/audacious/ui_preferences.c:130
 msgid "Album mode"
@@ -298,7 +300,7 @@ msgstr "ms"
 
 #: src/audacious/ui_preferences.c:141
 msgid "Soft clipping"
-msgstr ""
+msgstr "'Mīkstā' apgriešana"
 
 #: src/audacious/ui_preferences.c:143
 msgid "Use software volume control (not recommended)"
@@ -394,47 +396,47 @@ msgstr "<b>Metadati</b>"
 
 #: src/audacious/ui_preferences.c:199
 msgid "Do not load metadata for songs until played"
-msgstr ""
+msgstr "Neielādēt metadatus, līdz dziesma tiek atskaņota"
 
 #: src/audacious/ui_preferences.c:207
 msgid "<b>Album Art</b>"
-msgstr ""
+msgstr "<b>Albuma vāks</b>"
 
 #: src/audacious/ui_preferences.c:208
 msgid "Search for images matching these words (comma-separated):"
-msgstr ""
+msgstr "Meklēt attēlus, kuri atbilst šiem vārdiem (atdalītiem ar komatu):"
 
 #: src/audacious/ui_preferences.c:210
 msgid "Exclude images matching these words (comma-separated):"
-msgstr ""
+msgstr "Neiekļaut attēlus, kuri atbilst šiem vārdiem (atdalītiem ar komatu):"
 
 #: src/audacious/ui_preferences.c:212
 msgid "Search for images matching song file name"
-msgstr ""
+msgstr "Meklēt attēlus, kas atbilst dziesmas faila nosaukumam"
 
 #: src/audacious/ui_preferences.c:214
 msgid "Search recursively"
-msgstr ""
+msgstr "Meklēt rekursīvi"
 
 #: src/audacious/ui_preferences.c:216
 msgid "Search depth:"
-msgstr ""
+msgstr "Meklēšanas dziļums:"
 
 #: src/audacious/ui_preferences.c:219
 msgid "<b>Popup Information</b>"
-msgstr "<b>Uzlecošā informācija</b>"
+msgstr "<b>Izlecošā informācija</b>"
 
 #: src/audacious/ui_preferences.c:220
 msgid "Show popup information"
-msgstr ""
+msgstr "Rādīt izlecošo informāciju"
 
 #: src/audacious/ui_preferences.c:222
 msgid "Popup delay (tenths of a second):"
-msgstr ""
+msgstr "Izlecošā loga aizture (sekundes desmitdaļas):"
 
 #: src/audacious/ui_preferences.c:225
 msgid "Show time scale for current song"
-msgstr ""
+msgstr "Rādīt laika mērogu pašreizējai dziesmai"
 
 #: src/audacious/ui_preferences.c:239
 msgid "TITLE"
@@ -536,7 +538,7 @@ msgstr "Netiek atskaņota neviena dziesma."
 #: src/libaudcore/audstrings.c:199
 #, c-format
 msgid "Audio CD, track %s"
-msgstr ""
+msgstr "Audio CD, %s. celiņš"
 
 #: src/libaudcore/tuple.c:541
 msgid "Mono"
@@ -560,16 +562,15 @@ msgstr "Izstrādātāji"
 
 #: src/libaudgui/about.c:38
 msgid "License"
-msgstr ""
+msgstr "Licence"
 
 #: src/libaudgui/about.c:74
 msgid "About Audacious"
 msgstr "Par Audacious"
 
 #: src/libaudgui/confirm.c:61
-#, fuzzy
 msgid "Close Playlist"
-msgstr "Repertuārs"
+msgstr ""
 
 #: src/libaudgui/confirm.c:76
 #, c-format
@@ -646,11 +647,11 @@ msgstr "Priekšpastiprinājums"
 
 #: src/libaudgui/infopopup.c:202
 msgid "Track"
-msgstr ""
+msgstr "Celiņš"
 
 #: src/libaudgui/infopopup.c:204
 msgid "Length"
-msgstr ""
+msgstr "Ilgums"
 
 #: src/libaudgui/infowin.c:74
 msgid "Acid Jazz"
@@ -881,7 +882,7 @@ msgstr "Pāriet uz laiku"
 
 #: src/libaudgui/jump-to-time.c:61
 msgid "Enter time (minutes:seconds):"
-msgstr ""
+msgstr "Ievadiet laiku (minūtes:sekundes)"
 
 #: src/libaudgui/playlists.c:33
 msgid "Export Playlist"
@@ -898,7 +899,7 @@ msgstr "Pārrakstīt %s?"
 
 #: src/libaudgui/queue-manager.c:196
 msgid "Queue Manager"
-msgstr ""
+msgstr "Rindas pārvaldnieks"
 
 #: src/libaudgui/ui_fileopener.c:107
 msgid "Open Files"
@@ -927,11 +928,11 @@ msgstr "Atrindot"
 
 #: src/libaudgui/ui_jumptotrack.c:262
 msgid "Jump to Song"
-msgstr ""
+msgstr "Pāriet uz dziesmu"
 
 #: src/libaudgui/ui_jumptotrack.c:287
 msgid "Filter: "
-msgstr "Filtrs:"
+msgstr "Filtrs: "
 
 #: src/libaudgui/ui_jumptotrack.c:288
 msgid "_Filter:"
@@ -975,7 +976,7 @@ msgstr "Pievienot URL"
 
 #: src/libaudgui/url-opener.c:65
 msgid "Enter URL:"
-msgstr ""
+msgstr "Ievadiet URL:"
 
 #: src/libaudgui/util.c:143
 msgid ""
@@ -984,45 +985,3 @@ msgid ""
 msgstr ""
 "\n"
 "(Turpmākie ziņojumi tika paslēpti.)"
-
-#~ msgid "File is not a valid .desktop file"
-#~ msgstr "Fails nav atļauts '.desktop' fails"
-
-#~ msgid "Unrecognized desktop file Version '%s'"
-#~ msgstr "Neatpazīta darbvirsmas faila versija '%s'"
-
-#~ msgid "Starting %s"
-#~ msgstr "Startē %s"
-
-#~ msgid "Application does not accept documents on command line"
-#~ msgstr "Programma nepieņem failus no komandrindas"
-
-#~ msgid "Unrecognized launch option: %d"
-#~ msgstr "Neatpazīta palaišanas opcija: %d"
-
-#~ msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-#~ msgstr "Nevar padot dokumenta URI uz 'Tips=Saite' darbvirsmas ierakstu"
-
-#~ msgid "Not a launchable item"
-#~ msgstr "Nav palaižams elements"
-
-#~ msgid "Disable connection to session manager"
-#~ msgstr "Atslēgt savienojumu ar sesiju pārvaldnieku"
-
-#~ msgid "Specify file containing saved configuration"
-#~ msgstr "Norādiet failu, kas satur saglabātu konfigurāciju"
-
-#~ msgid "FILE"
-#~ msgstr "FAILS"
-
-#~ msgid "Specify session management ID"
-#~ msgstr "Norādiet sesiju pārvaldīšanas ID"
-
-#~ msgid "ID"
-#~ msgstr "ID"
-
-#~ msgid "Session management options:"
-#~ msgstr "Sesiju pārvaldīšanas opcijas:"
-
-#~ msgid "Show session management options"
-#~ msgstr "Parādīt sesiju pārvaldīšanas opcijas"

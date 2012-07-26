@@ -1,9 +1,14 @@
-# Romanian translation for Audacious
+# Korean translation for Audacious
 # Copyright (C) Audacious translators
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
-# Warui-chan  <>, 2012.
+# 		ChoSeongWoo <syn333@gmail.com>, 2008.
+# ChoSeongWoo <syn333@gmail.com>, 2008.
+#       Jaegeum Choe <baedaron@hananet.net>, 2001.
+#       Man-Yong Lee <yong@linuxkorea.co.kr>, 2000.
+#       Sang-Jin Hwang <accel@accellinux.org>, 1999.
+# 		Seong-ho Cho <darkcircle.0426@gmail.com>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
@@ -11,94 +16,91 @@ msgstr ""
 "POT-Creation-Date: 2012-07-25 20:19-0400\n"
 "PO-Revision-Date: 2012-07-26 00:12+0000\n"
 "Last-Translator: John Lindgren <john.lindgren@aol.com>\n"
-"Language-Team: Romanian\n"
-"Language: ro\n"
+"Language-Team: Korean\n"
+"Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?"
-"2:1))\n"
+"Plural-Forms: nplurals=1; plural=0\n"
 
 #: src/audacious/adder.c:75
 msgid "Searching ..."
-msgstr "Cautare ..."
+msgstr "검색중 ..."
 
 #: src/audacious/adder.c:103
 #, c-format
 msgid "%d file found"
 msgid_plural "%d files found"
-msgstr[0] "%d fisiere gasite"
-msgstr[1] "%d fisiere gasite"
-msgstr[2] "%d fisiere gasite"
+msgstr[0] "%d개의 파일을 찾았습니다"
 
 #: src/audacious/chardet.c:39
 msgid "  (invalid UTF-8)"
-msgstr " (UTF-8 invalid)"
+msgstr " (유효하지 않은 UTF-8)"
 
 #: src/audacious/equalizer_preset.c:180
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
-msgstr ""
+msgstr "'%s' Winamp EQF 파일을 가져오는데 오류가 발생했습니다"
 
 #: src/audacious/main.c:232
 msgid "Skip backwards in playlist"
-msgstr "Sări înapoi în playlist"
+msgstr "재생 목록의 뒷부분 건너뛰기"
 
 #: src/audacious/main.c:233
 msgid "Start playing current playlist"
-msgstr "Începe redarea playlist-ului curent"
+msgstr "현재 재생 목록 재생 시작"
 
 #: src/audacious/main.c:234
 msgid "Pause current song"
-msgstr "Pauză"
+msgstr "현재 노래 멈춤"
 
 #: src/audacious/main.c:235
 msgid "Stop current song"
-msgstr "Oprește melodia curentă"
+msgstr "현재 노래 정지"
 
 #: src/audacious/main.c:236
 msgid "Pause if playing, play otherwise"
-msgstr "Pauză daca se redă, redare altfel"
+msgstr "재생 중이면 멈춤, 그 외에는 재생"
 
 #: src/audacious/main.c:237
 msgid "Skip forward in playlist"
-msgstr "Sări înainte în playlist"
+msgstr "재생 목록의 앞부분 건너뛰기"
 
 #: src/audacious/main.c:238
 msgid "Display Jump to File dialog"
-msgstr "Afișează dialogul de salt la fișier"
+msgstr "파일 대화상자에서 이동 표시"
 
 #: src/audacious/main.c:239
 msgid "Add files to the playlist"
-msgstr "Adauga fisiere la lista de redare"
+msgstr "재생 목록에 파일 추가하기"
 
 #: src/audacious/main.c:240
 msgid "Add new files to a temporary playlist"
-msgstr "Adaugă fișiere noi la un playlist temporar"
+msgstr "새 파일을 임시 재생 목록에 추가"
 
 #: src/audacious/main.c:241
 msgid "Display the main window"
-msgstr "Arată fereastra principală"
+msgstr "기본 창 표시"
 
 #: src/audacious/main.c:242
 msgid "Show version"
-msgstr "Arata versiunea"
+msgstr "버전 보이기"
 
 #: src/audacious/main.c:243
 msgid "Print debugging messages"
-msgstr ""
+msgstr "디버깅 메시지 출력하기"
 
 #: src/audacious/main.c:244
 msgid "Headless mode (beta)"
-msgstr ""
+msgstr "헤드리스 모드 (시험기능)"
 
 #: src/audacious/main.c:245
 msgid "FILE..."
-msgstr "Fișier..."
+msgstr "파일..."
 
 #: src/audacious/main.c:257
 msgid "- play multimedia files"
-msgstr "- redă fișierele multimedia"
+msgstr " - 멀티미디어 파일 재생"
 
 #: src/audacious/main.c:264
 #, c-format
@@ -106,8 +108,8 @@ msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
 msgstr ""
-"%s:·%s\n"
-"Rulează·`%s·--help'·pentru mai multe informații.\n"
+"%s: %s\n"
+"'%s --help'를 실행하면 더 많은 정보를 볼 수 있습니다.\n"
 
 #: src/audacious/main.c:545
 msgid "Audacious"
@@ -116,181 +118,183 @@ msgstr "Audacious"
 #: src/audacious/playback.c:305
 #, c-format
 msgid "No decoder found for %s."
-msgstr ""
+msgstr "%s의 디코더가 없습니다."
 
 #: src/audacious/playlist-files.c:51
 #, c-format
 msgid "Cannot %s %s: unsupported file extension."
-msgstr ""
+msgstr "%2$s 파일을 %1$s 할 수 없습니다: 지원하지 않는 파일 확장자입니다."
 
 #: src/audacious/playlist-files.c:52
 msgid "save"
-msgstr "salvează"
+msgstr "저장하기"
 
 #: src/audacious/playlist-files.c:52
 msgid "load"
-msgstr "încarcă"
+msgstr "불러오기"
 
 #: src/audacious/playlist-new.c:121
 msgid "New Playlist"
-msgstr "Nouă Listă de redare"
+msgstr "새 재생 목록"
 
 #: src/audacious/playlist-new.c:122
 msgid "Now Playing"
-msgstr ""
+msgstr "재생 중"
 
 #: src/audacious/playlist-new.c:1650
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress "
 "(or has been disabled)."
 msgstr ""
+"메타데이타 검색이 여전히 진행중(또는 비활성화 됨)이기 때문에 재생 목록을 정렬"
+"할 수 없습니다."
 
 #: src/audacious/plugin-preferences.c:50
 #, c-format
 msgid "About %s"
-msgstr ""
+msgstr "%s 정보"
 
 #: src/audacious/plugin-preferences.c:88
 #, c-format
 msgid "%s Settings"
-msgstr ""
+msgstr "%s 설정"
 
 #: src/audacious/ui_preferences.c:69
 msgid "Audio"
-msgstr "Audio"
+msgstr "오디오"
 
 #: src/audacious/ui_preferences.c:70
 msgid "Network"
-msgstr "Retea"
+msgstr "네트워크"
 
 #: src/audacious/ui_preferences.c:71 src/audacious/ui_preferences.c:1237
 msgid "Playlist"
-msgstr "Playlist"
+msgstr "재생 목록"
 
 #: src/audacious/ui_preferences.c:72
 msgid "Song Info"
-msgstr ""
+msgstr "곡 정보"
 
 #: src/audacious/ui_preferences.c:73
 msgid "Plugins"
-msgstr "Plugin-uri"
+msgstr "플러그인"
 
 #: src/audacious/ui_preferences.c:79 src/libaudgui/infopopup.c:194
 msgid "Artist"
-msgstr "Artist"
+msgstr "음악가"
 
 #: src/audacious/ui_preferences.c:80 src/libaudgui/infopopup.c:196
 msgid "Album"
-msgstr "Album"
+msgstr "음반"
 
 #: src/audacious/ui_preferences.c:81 src/libaudgui/infopopup.c:192
 #: src/libaudgui/ui_playlist_manager.c:287
 msgid "Title"
-msgstr "Titlu"
+msgstr "제목"
 
 #: src/audacious/ui_preferences.c:82
 msgid "Tracknumber"
-msgstr "Numărul Track-ului"
+msgstr "트랙 번호"
 
 #: src/audacious/ui_preferences.c:83 src/libaudgui/infopopup.c:198
 msgid "Genre"
-msgstr "Genul"
+msgstr "장르"
 
 #: src/audacious/ui_preferences.c:84
 msgid "Filename"
-msgstr "Fișier"
+msgstr "파일 이름"
 
 #: src/audacious/ui_preferences.c:85
 msgid "Filepath"
-msgstr "Calea spre fișier"
+msgstr "파일 경로"
 
 #: src/audacious/ui_preferences.c:86
 msgid "Date"
-msgstr "Data"
+msgstr "날짜"
 
 #: src/audacious/ui_preferences.c:87 src/libaudgui/infopopup.c:200
 msgid "Year"
-msgstr "Anul"
+msgstr "연도"
 
 #: src/audacious/ui_preferences.c:88
 msgid "Comment"
-msgstr "Comentariu"
+msgstr "주석"
 
 #: src/audacious/ui_preferences.c:89
 msgid "Codec"
-msgstr "Codec"
+msgstr "코덱"
 
 #: src/audacious/ui_preferences.c:90
 msgid "Quality"
-msgstr "Calitate"
+msgstr "음질"
 
 #: src/audacious/ui_preferences.c:96
 msgid "None"
-msgstr "Nici unul"
+msgstr "없음"
 
 #: src/audacious/ui_preferences.c:97
 msgid "Arabic"
-msgstr ""
+msgstr "아라비아어"
 
 #: src/audacious/ui_preferences.c:98
 msgid "Baltic"
-msgstr ""
+msgstr "발트 해 언어"
 
 #: src/audacious/ui_preferences.c:99
 msgid "Chinese"
-msgstr ""
+msgstr "중국어"
 
 #: src/audacious/ui_preferences.c:100
 msgid "Greek"
-msgstr ""
+msgstr "그리스어"
 
 #: src/audacious/ui_preferences.c:101
 msgid "Hebrew"
-msgstr ""
+msgstr "히브리어"
 
 #: src/audacious/ui_preferences.c:102
 msgid "Japanese"
-msgstr "Japoneză"
+msgstr "일본어"
 
 #: src/audacious/ui_preferences.c:103
 msgid "Korean"
-msgstr "Koreană"
+msgstr "한국어"
 
 #: src/audacious/ui_preferences.c:104
 msgid "Polish"
-msgstr "Poloneză"
+msgstr "폴란드어"
 
 #: src/audacious/ui_preferences.c:105
 msgid "Russian"
-msgstr "Rusă"
+msgstr "러시아어"
 
 #: src/audacious/ui_preferences.c:106
 msgid "Taiwanese"
-msgstr "Taiwaneză"
+msgstr "타이완어"
 
 #: src/audacious/ui_preferences.c:107
 msgid "Turkish"
-msgstr "Turcă"
+msgstr "터키어"
 
 #: src/audacious/ui_preferences.c:114
 msgid "Floating point"
-msgstr ""
+msgstr "부동 소숫점"
 
 #: src/audacious/ui_preferences.c:130
 msgid "Album mode"
-msgstr ""
+msgstr "음반 모드"
 
 #: src/audacious/ui_preferences.c:133
 msgid "<b>Output Settings</b>"
-msgstr "<b>Setări Ieşire</b>"
+msgstr "<b>출력 설정</b>"
 
 #: src/audacious/ui_preferences.c:135
 msgid "Bit depth:"
-msgstr "Adâncime bit:"
+msgstr "비트 깊이:"
 
 #: src/audacious/ui_preferences.c:138
 msgid "Buffer size:"
-msgstr "Mărimea Buffer-ului:"
+msgstr "버퍼 크기:"
 
 #: src/audacious/ui_preferences.c:140
 msgid "ms"
@@ -298,31 +302,31 @@ msgstr "ms"
 
 #: src/audacious/ui_preferences.c:141
 msgid "Soft clipping"
-msgstr ""
+msgstr "부드러운 클리핑"
 
 #: src/audacious/ui_preferences.c:143
 msgid "Use software volume control (not recommended)"
-msgstr ""
+msgstr "프로그램 음량 조절 사용하기 (추천하지 않음)"
 
 #: src/audacious/ui_preferences.c:145
 msgid "<b>Replay Gain</b>"
-msgstr ""
+msgstr "<b>리플레이 게인</b>"
 
 #: src/audacious/ui_preferences.c:146
 msgid "Enable Replay Gain"
-msgstr ""
+msgstr "리플레이 게인 활성화"
 
 #: src/audacious/ui_preferences.c:149
 msgid "Prevent clipping (recommended)"
-msgstr ""
+msgstr "클리핑 방지 (추천)"
 
 #: src/audacious/ui_preferences.c:151
 msgid "<b>Adjust Levels</b>"
-msgstr ""
+msgstr "<b>레벨 조정</b>"
 
 #: src/audacious/ui_preferences.c:152
 msgid "Amplify all files:"
-msgstr "Amplifică toate fişierele:"
+msgstr "모든 파일 소리 증폭하기:"
 
 #: src/audacious/ui_preferences.c:154 src/audacious/ui_preferences.c:157
 msgid "dB"
@@ -330,241 +334,239 @@ msgstr "dB"
 
 #: src/audacious/ui_preferences.c:155
 msgid "Amplify untagged files:"
-msgstr ""
+msgstr "태그가 붙지 않은 파일 증폭하기:"
 
 #: src/audacious/ui_preferences.c:160
 msgid "Proxy hostname:"
-msgstr "Adresa sau numele:"
+msgstr "호스트 이름:"
 
 #: src/audacious/ui_preferences.c:161
 msgid "Proxy port:"
-msgstr "Port-ul:"
+msgstr "포트:"
 
 #: src/audacious/ui_preferences.c:164
 msgid "Proxy username:"
-msgstr "Utilizator:"
+msgstr "사용자 이름:"
 
 #: src/audacious/ui_preferences.c:165
 msgid "Proxy password:"
-msgstr "Parolă:"
+msgstr "비밀번호:"
 
 #: src/audacious/ui_preferences.c:169
 msgid "<b>Proxy Configuration</b>"
-msgstr "<b>Configurarea Proxy-ului</b>"
+msgstr "<b>프락시 설정</b>"
 
 #: src/audacious/ui_preferences.c:170
 msgid "Enable proxy usage"
-msgstr "Activează proxy"
+msgstr "프락시 사용"
 
 #: src/audacious/ui_preferences.c:173
 msgid "Use authentication with proxy"
-msgstr "Folosește autentificarea"
+msgstr "프락시에서 인증 사용"
 
 #: src/audacious/ui_preferences.c:181
 msgid "Auto character encoding detector for:"
-msgstr "Detecție automată a codificării caracterelor pentru:"
+msgstr "문자 인코딩 자동 감지기:"
 
 #: src/audacious/ui_preferences.c:185
 msgid "Fallback character encodings:"
-msgstr "Setări de rezervă pentru codificările caracterelor"
+msgstr "대체할 문자 인코딩:"
 
 #: src/audacious/ui_preferences.c:189
 msgid "<b>Behavior</b>"
-msgstr "<b>Comportament</b>"
+msgstr "<b>동작</b>"
 
 #: src/audacious/ui_preferences.c:190
 msgid "Continue playback on startup"
-msgstr "Continuă redarea la pornire"
+msgstr "시작할 때 이어서 재생"
 
 #: src/audacious/ui_preferences.c:192
 msgid "Advance when the current song is deleted"
-msgstr ""
+msgstr "현재 곡을 지울 때 미리 알림"
 
 #: src/audacious/ui_preferences.c:194
 msgid "Clear the playlist when opening files"
-msgstr ""
+msgstr "파일을 열 때 재생 목록 지우기"
 
 #: src/audacious/ui_preferences.c:196
 msgid "Open files in a temporary playlist"
-msgstr "Deschideti fisierele intr-o lista de redare temporara"
+msgstr "임시 재생 목록에서 파일 열기"
 
 #: src/audacious/ui_preferences.c:198
 msgid "<b>Metadata</b>"
-msgstr "<b>Metadata</b>"
+msgstr "<b>메타데이터</b>"
 
 #: src/audacious/ui_preferences.c:199
 msgid "Do not load metadata for songs until played"
-msgstr ""
+msgstr "재생하기 전에는 곡에 대한 메타데이터를 불러오지 않기"
 
 #: src/audacious/ui_preferences.c:207
 msgid "<b>Album Art</b>"
-msgstr ""
+msgstr "<b>음반 표지</b>"
 
 #: src/audacious/ui_preferences.c:208
 msgid "Search for images matching these words (comma-separated):"
-msgstr ""
+msgstr "이 단어에 일치하는 그림 검색 (콤마로 구분):"
 
 #: src/audacious/ui_preferences.c:210
 msgid "Exclude images matching these words (comma-separated):"
-msgstr ""
+msgstr "이 단어에 일치하는 그림 제외 (콤마로 구분):"
 
 #: src/audacious/ui_preferences.c:212
 msgid "Search for images matching song file name"
-msgstr ""
+msgstr "곡 파일 이름에 일치하는 그림 검색"
 
 #: src/audacious/ui_preferences.c:214
 msgid "Search recursively"
-msgstr ""
+msgstr "재귀적 검색"
 
 #: src/audacious/ui_preferences.c:216
 msgid "Search depth:"
-msgstr ""
+msgstr "검색 깊이:"
 
 #: src/audacious/ui_preferences.c:219
 msgid "<b>Popup Information</b>"
-msgstr "<b>Popup cu Informații</b>"
+msgstr "<b>팝업 정보</b>"
 
 #: src/audacious/ui_preferences.c:220
 msgid "Show popup information"
-msgstr ""
+msgstr "풍선 도움말 정보 보이기"
 
 #: src/audacious/ui_preferences.c:222
 msgid "Popup delay (tenths of a second):"
-msgstr ""
+msgstr "풍선 도움말 지연시간 (10초 단위):"
 
 #: src/audacious/ui_preferences.c:225
 msgid "Show time scale for current song"
-msgstr ""
+msgstr "현재 곡의 시간 길이 보이기"
 
 #: src/audacious/ui_preferences.c:239
 msgid "TITLE"
-msgstr "TITLU"
+msgstr "제목"
 
 #: src/audacious/ui_preferences.c:240
 msgid "ARTIST - TITLE"
-msgstr "ARTIST - TITLU"
+msgstr "음악가 - 제목"
 
 #: src/audacious/ui_preferences.c:241
 msgid "ARTIST - ALBUM - TITLE"
-msgstr "ARTIST - ALBUM - TITLU"
+msgstr "음악가 - 음반 - 제목"
 
 #: src/audacious/ui_preferences.c:242
 msgid "ARTIST - ALBUM - TRACK. TITLE"
-msgstr "ARTIST - ALBUM - SEMN. TITLU"
+msgstr "음악가 - 음반 - 트랙. 제목"
 
 #: src/audacious/ui_preferences.c:243
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
-msgstr "ARTIST [ ALBUM ] - SEMN. TITLU"
+msgstr "음악가 [ 음반 ] - 트랙. 제목"
 
 #: src/audacious/ui_preferences.c:244
 msgid "ALBUM - TITLE"
-msgstr "ALBUM - TITLU"
+msgstr "음반 - 제목"
 
 #: src/audacious/ui_preferences.c:457
 msgid "Category"
-msgstr "Categorie"
+msgstr "부문"
 
 #: src/audacious/ui_preferences.c:995
 msgid "Custom"
-msgstr "Personalizat"
+msgstr "사용자 정의"
 
 #: src/audacious/ui_preferences.c:1032
 msgid "<b>Song Display</b>"
-msgstr "<b>Vizualizarea melodiei</b>"
+msgstr "<b>노래 표시</b>"
 
 #: src/audacious/ui_preferences.c:1041
 msgid "Show song numbers"
-msgstr "Show song numbers"
+msgstr "곡 번호 보이기"
 
 #: src/audacious/ui_preferences.c:1052
 msgid "Show leading zeroes (02:00 instead of 2:00)"
-msgstr ""
+msgstr "자리수 맞춤 영(0) 보이기(2:00대신 02:00으로)"
 
 #: src/audacious/ui_preferences.c:1072
 msgid "Show information about titlestring format"
-msgstr "Afișează informații despre formatarea titlurilor"
+msgstr "제목 표시 형식에 대한 정보 보기"
 
 #: src/audacious/ui_preferences.c:1086
 msgid "Custom string:"
-msgstr "Format specificat:"
+msgstr "사용자 정의:"
 
 #: src/audacious/ui_preferences.c:1091
 msgid "Title format:"
-msgstr "Formatul titlului:"
+msgstr "제목 형식:"
 
 #: src/audacious/ui_preferences.c:1178
 msgid "Output plugin:"
-msgstr "Plugin de iesire:"
+msgstr "출력 플러그인:"
 
 #: src/audacious/ui_preferences.c:1237
 msgid "Transport"
-msgstr "Transport"
+msgstr "전송"
 
 #: src/audacious/ui_preferences.c:1237
 msgid "Input"
-msgstr "Intrare"
+msgstr "입력"
 
 #: src/audacious/ui_preferences.c:1238
 msgid "Effect"
-msgstr "Efect"
+msgstr "효과?"
 
 #: src/audacious/ui_preferences.c:1238
 msgid "Visualization"
-msgstr "Vizualizare"
+msgstr "시각 효과"
 
 #: src/audacious/ui_preferences.c:1238
 msgid "General"
-msgstr "General"
+msgstr "일반"
 
 #: src/audacious/ui_preferences.c:1276
 msgid "Audacious Preferences"
-msgstr "Preferințe Audacious"
+msgstr "Audacious 환경 설정"
 
 #: src/audacious/util.c:115
 #, c-format
 msgid "Could not create directory (%s): %s\n"
-msgstr "Nu s-a putut crea directorul (%s): %s\n"
+msgstr "(%s) 디렉터리를 만들 수 없음: %s\n"
 
 #: src/audtool/handlers_playlist.c:262
 msgid "Position not found."
-msgstr "Pozitia nu a fost gasita."
+msgstr "위치를 찾을 수 없습니다."
 
 #: src/audtool/handlers_vitals.c:51
 msgid "No song playing."
-msgstr "Nu se reda nici un cantec."
+msgstr "재생중인 곡이 없습니다."
 
 #: src/libaudcore/audstrings.c:199
 #, c-format
 msgid "Audio CD, track %s"
-msgstr ""
+msgstr "음악 CD, %s 트랙"
 
 #: src/libaudcore/tuple.c:541
 msgid "Mono"
-msgstr "Mono"
+msgstr "모노"
 
 #: src/libaudcore/tuple.c:543
 msgid "Stereo"
-msgstr "Stereo"
+msgstr "스테레오"
 
 #: src/libaudcore/tuple.c:545
 #, c-format
 msgid "%d channel"
 msgid_plural "%d channels"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%d개의 채널"
 
 #: src/libaudgui/about.c:38
 msgid "Credits"
-msgstr "Credite"
+msgstr "공헌"
 
 #: src/libaudgui/about.c:38
 msgid "License"
-msgstr ""
+msgstr "라이선스"
 
 #: src/libaudgui/about.c:74
 msgid "About Audacious"
-msgstr "Despre Audacious"
+msgstr "Audacious 소개"
 
 #: src/libaudgui/confirm.c:61
 msgid "Close Playlist"
@@ -576,22 +578,24 @@ msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
 msgstr ""
+"정말로 %s을(를) 닫으시겠습니까? 재생 목록을 가져온 후 바뀐 내용을 잃을 것입니"
+"다."
 
 #: src/libaudgui/confirm.c:89
 msgid "_Don't show this message again"
-msgstr "_Nu mai arăta acest mesaj niciodată"
+msgstr "이 메시지 다시 보이기 않기(_D)"
 
 #: src/libaudgui/confirm.c:126
 msgid "Rename Playlist"
-msgstr "Redenumeste Lista de redare"
+msgstr "재생 목록 이름 바꾸기"
 
 #: src/libaudgui/effects-menu.c:72
 msgid "settings ..."
-msgstr "setări ..."
+msgstr "설정하기..."
 
 #: src/libaudgui/equalizer.c:51
 msgid "_Enable"
-msgstr ""
+msgstr "활성화(_E)"
 
 #: src/libaudgui/equalizer.c:124
 msgid "31 Hz"
@@ -635,347 +639,349 @@ msgstr "16 kHz"
 
 #: src/libaudgui/equalizer.c:131
 msgid "Equalizer"
-msgstr "Egalizator"
+msgstr "이퀄라이저"
 
 #: src/libaudgui/equalizer.c:147
 msgid "Preamp"
-msgstr ""
+msgstr "프리앰프"
 
 #: src/libaudgui/infopopup.c:202
 msgid "Track"
-msgstr ""
+msgstr "트랙"
 
 #: src/libaudgui/infopopup.c:204
 msgid "Length"
-msgstr ""
+msgstr "길이"
 
 #: src/libaudgui/infowin.c:74
 msgid "Acid Jazz"
-msgstr "Acid Jazz"
+msgstr "애이시드 재즈"
 
 #: src/libaudgui/infowin.c:75
 msgid "Acid Rock"
-msgstr "Acid Rock"
+msgstr "애이시드 락"
 
 #: src/libaudgui/infowin.c:76
 msgid "Ambient"
-msgstr ""
+msgstr "앰비언트"
 
 #: src/libaudgui/infowin.c:77
 msgid "Bebop"
-msgstr ""
+msgstr "비밥"
 
 #: src/libaudgui/infowin.c:78
 msgid "Bluegrass"
-msgstr ""
+msgstr "블루글래스"
 
 #: src/libaudgui/infowin.c:79
 msgid "Blues"
-msgstr "Blues"
+msgstr "블루스"
 
 #: src/libaudgui/infowin.c:80
 msgid "Chamber Music"
-msgstr ""
+msgstr "쳄버 뮤직"
 
 #: src/libaudgui/infowin.c:81
 msgid "Classical"
-msgstr ""
+msgstr "클래식"
 
 #: src/libaudgui/infowin.c:82
 msgid "Country"
-msgstr "Country"
+msgstr "컨트리"
 
 #: src/libaudgui/infowin.c:83
 msgid "Death Metal"
-msgstr "Death Metal"
+msgstr "데스 메탈"
 
 #: src/libaudgui/infowin.c:84
 msgid "Disco"
-msgstr "Disco"
+msgstr "디스코"
 
 #: src/libaudgui/infowin.c:85
 msgid "Easy Listening"
-msgstr ""
+msgstr "이지 리스닝"
 
 #: src/libaudgui/infowin.c:86
 msgid "Folk"
-msgstr "Folk"
+msgstr "포크"
 
 #: src/libaudgui/infowin.c:87
 msgid "Funk"
-msgstr "Funk"
+msgstr "펑크"
 
 #: src/libaudgui/infowin.c:88
 msgid "Gangsta Rap"
-msgstr ""
+msgstr "갱스터 랩"
 
 #: src/libaudgui/infowin.c:89
 msgid "Gospel"
-msgstr ""
+msgstr "가스펠"
 
 #: src/libaudgui/infowin.c:90
 msgid "Grunge"
-msgstr ""
+msgstr "그런지"
 
 #: src/libaudgui/infowin.c:91
 msgid "Hard Rock"
-msgstr "Hard Rock"
+msgstr "하드 락"
 
 #: src/libaudgui/infowin.c:92
 msgid "Heavy Metal"
-msgstr ""
+msgstr "헤비메탈"
 
 #: src/libaudgui/infowin.c:93
 msgid "Hip-hop"
-msgstr "Hip-hop"
+msgstr "힙합"
 
 #: src/libaudgui/infowin.c:94
 msgid "House"
-msgstr "House"
+msgstr "하우스"
 
 #: src/libaudgui/infowin.c:95
 msgid "Jazz"
-msgstr "Jazz"
+msgstr "재즈"
 
 #: src/libaudgui/infowin.c:96
 msgid "Jungle"
-msgstr "Jungle"
+msgstr "정글"
 
 #: src/libaudgui/infowin.c:97
 msgid "Metal"
-msgstr "Metal"
+msgstr "메달"
 
 #: src/libaudgui/infowin.c:98
 msgid "New Age"
-msgstr "New Age"
+msgstr "뉴 에이지"
 
 #: src/libaudgui/infowin.c:99
 msgid "New Wave"
-msgstr "New Wave"
+msgstr "뉴 웨이브"
 
 #: src/libaudgui/infowin.c:100
 msgid "Noise"
-msgstr ""
+msgstr "노이즈"
 
 #: src/libaudgui/infowin.c:101
 msgid "Pop"
-msgstr "Pop"
+msgstr "팝"
 
 #: src/libaudgui/infowin.c:102
 msgid "Punk Rock"
-msgstr ""
+msgstr "펑크 락"
 
 #: src/libaudgui/infowin.c:103
 msgid "Rap"
-msgstr "Rap"
+msgstr "랩"
 
 #: src/libaudgui/infowin.c:104
 msgid "Reggae"
-msgstr "Reggae"
+msgstr "레게"
 
 #: src/libaudgui/infowin.c:105
 msgid "Rock"
-msgstr "Rock"
+msgstr "락"
 
 #: src/libaudgui/infowin.c:106
 msgid "Rock and Roll"
-msgstr "Rock & Roll"
+msgstr "락 앤 롤"
 
 #: src/libaudgui/infowin.c:107
 msgid "Rhythm and Blues"
-msgstr ""
+msgstr "리듬 앤 블루스"
 
 #: src/libaudgui/infowin.c:108
 msgid "Ska"
-msgstr "Ska"
+msgstr "스카"
 
 #: src/libaudgui/infowin.c:109
 msgid "Soul"
-msgstr "Soul"
+msgstr "소울"
 
 #: src/libaudgui/infowin.c:110
 msgid "Swing"
-msgstr "Swing"
+msgstr "스윙"
 
 #: src/libaudgui/infowin.c:111
 msgid "Techno"
-msgstr "Techno"
+msgstr "테크노"
 
 #: src/libaudgui/infowin.c:112
 msgid "Trip-hop"
-msgstr "Trip-hop"
+msgstr "트리팝"
 
 #: src/libaudgui/infowin.c:176 src/libaudgui/infowin.c:365
 #: src/libaudgui/infowin.c:368 src/libaudgui/infowin.c:371
 msgid "<span size=\"small\">n/a</span>"
-msgstr ""
+msgstr "<span size=\"small\">없음</span>"
 
 #: src/libaudgui/infowin.c:266
 msgid "Metadata updated successfully"
-msgstr ""
+msgstr "메타데이터를 성공적으로 업데이트 했습니다"
 
 #: src/libaudgui/infowin.c:271
 msgid "Metadata updating failed"
-msgstr ""
+msgstr "메타데이터 업데이트에 실패했습니다"
 
 #: src/libaudgui/infowin.c:319
 msgid "Track Information"
-msgstr "Informații despre Track"
+msgstr "트랙 정보"
 
 #: src/libaudgui/infowin.c:354
 msgid "<span size=\"small\">Format:</span>"
-msgstr ""
+msgstr "<span size=\"small\">형식:</span>"
 
 #: src/libaudgui/infowin.c:358
 msgid "<span size=\"small\">Quality:</span>"
-msgstr ""
+msgstr "<span size=\"small\">음질:</span>"
 
 #: src/libaudgui/infowin.c:361
 msgid "<span size=\"small\">Bitrate:</span>"
-msgstr ""
+msgstr "<span size=\"small\">비트전송율:</span>"
 
 #: src/libaudgui/infowin.c:385
 msgid "<span size=\"small\">Title</span>"
-msgstr "<span size=\"small\">Titlu</span>"
+msgstr "<span size=\"small\">제목</span>"
 
 #: src/libaudgui/infowin.c:397
 msgid "<span size=\"small\">Artist</span>"
-msgstr "<span size=\"small\">Artist</span>"
+msgstr "<span size=\"small\">음악가</span>"
 
 #: src/libaudgui/infowin.c:409
 msgid "<span size=\"small\">Album</span>"
-msgstr "<span size=\"small\">Album</span>"
+msgstr "<span size=\"small\">음반</span>"
 
 #: src/libaudgui/infowin.c:421
 msgid "<span size=\"small\">Comment</span>"
-msgstr "<span size=\"small\">Comentariu</span>"
+msgstr "<span size=\"small\">주석</span>"
 
 #: src/libaudgui/infowin.c:433
 msgid "<span size=\"small\">Genre</span>"
-msgstr "<span size=\"small\">Gen</span>"
+msgstr "<span size=\"small\">장르</span>"
 
 #: src/libaudgui/infowin.c:455
 msgid "<span size=\"small\">Year</span>"
-msgstr "<span size=\"small\">An</span>"
+msgstr "<span size=\"small\">연도</span>"
 
 #: src/libaudgui/infowin.c:464
 msgid "<span size=\"small\">Track Number</span>"
-msgstr "<span size=\"small\">Numărul Track-ului</span>"
+msgstr "<span size=\"small\">트랙 번호</span>"
 
 #: src/libaudgui/infowin.c:541
 #, c-format
 msgid "%d kb/s"
-msgstr ""
+msgstr "%d kb/s"
 
 #: src/libaudgui/infowin.c:568
 #, c-format
 msgid "No info available for %s.\n"
-msgstr ""
+msgstr "%s에 대한 정보를 볼 수 없습니다.\n"
 
 #: src/libaudgui/jump-to-time.c:52
 msgid "Jump to Time"
-msgstr "Sări la Timp"
+msgstr "시간 이동"
 
 #: src/libaudgui/jump-to-time.c:61
 msgid "Enter time (minutes:seconds):"
-msgstr ""
+msgstr "시간 입력(분:초):"
 
 #: src/libaudgui/playlists.c:33
 msgid "Export Playlist"
-msgstr "Exportă Lista de redare"
+msgstr "재생 목록 내보내기"
 
 #: src/libaudgui/playlists.c:33
 msgid "Import Playlist"
-msgstr "Importă Lista de redare"
+msgstr "재생 목록 가져오기"
 
 #: src/libaudgui/playlists.c:66
 #, c-format
 msgid "Overwrite %s?"
-msgstr "Suprascrie %s?"
+msgstr "%s를 덮어쓰시겠습니까?"
 
 #: src/libaudgui/queue-manager.c:196
 msgid "Queue Manager"
-msgstr ""
+msgstr "대기목록 관리자"
 
 #: src/libaudgui/ui_fileopener.c:107
 msgid "Open Files"
-msgstr "Deschide Fișiere"
+msgstr "파일 열기"
 
 #: src/libaudgui/ui_fileopener.c:107
 msgid "Add Files"
-msgstr "Adaugă Fișiere"
+msgstr "파일 추가"
 
 #: src/libaudgui/ui_fileopener.c:109
 msgid "Close dialog on Open"
-msgstr "Închide dialogul la deschidere"
+msgstr "선택해서 열면 대화상자 닫기"
 
 #: src/libaudgui/ui_fileopener.c:109
 msgid "Close dialog on Add"
-msgstr "Închide dialogul la adăugare"
+msgstr "추가하면 대화상자 닫기"
 
 #: src/libaudgui/ui_jumptotrack.c:105 src/libaudgui/ui_jumptotrack.c:113
 #: src/libaudgui/ui_jumptotrack.c:332
 msgid "_Queue"
-msgstr "_Adaugă la coadă"
+msgstr "대기열(_Q)"
 
 #: src/libaudgui/ui_jumptotrack.c:111
 msgid "Un_queue"
-msgstr "Scoate din coadă"
+msgstr "대기열 해제(_Q)"
 
 #: src/libaudgui/ui_jumptotrack.c:262
 msgid "Jump to Song"
-msgstr "Sari la Melodie"
+msgstr "곡 건너뛰기"
 
 #: src/libaudgui/ui_jumptotrack.c:287
 msgid "Filter: "
-msgstr "Filtru: "
+msgstr "필터: "
 
 #: src/libaudgui/ui_jumptotrack.c:288
 msgid "_Filter:"
-msgstr "_Filtru:"
+msgstr "필터(_F):"
 
 #: src/libaudgui/ui_jumptotrack.c:298
 msgid "Remember"
-msgstr ""
+msgstr "기억"
 
 #: src/libaudgui/ui_jumptotrack.c:305
 msgid "Clea_r"
-msgstr ""
+msgstr "지우기(_R)"
 
 #: src/libaudgui/ui_jumptotrack.c:325
 msgid "Close on Jump"
-msgstr "Închide dialogul după salt"
+msgstr "이동하면 닫기"
 
 #: src/libaudgui/ui_playlist_manager.c:261
 msgid "Playlist Manager"
-msgstr "Manager de Playlist"
+msgstr "재생 목록 관리자"
 
 #: src/libaudgui/ui_playlist_manager.c:288
 msgid "Entries"
-msgstr "Intrări"
+msgstr "항목"
 
 #: src/libaudgui/ui_playlist_manager.c:308
 msgid "_Rename"
-msgstr "_Redenumește"
+msgstr "이름 바꾸기(_R)"
 
 #: src/libaudgui/ui_playlist_manager.c:328
 msgid "_Close dialog on activating playlist"
-msgstr ""
+msgstr "재생 목록 활성화시 대화상자 닫기"
 
 #: src/libaudgui/url-opener.c:56
 msgid "Open URL"
-msgstr ""
+msgstr "URL 열기"
 
 #: src/libaudgui/url-opener.c:56
 msgid "Add URL"
-msgstr ""
+msgstr "URL 추가"
 
 #: src/libaudgui/url-opener.c:65
 msgid "Enter URL:"
-msgstr ""
+msgstr "URL 입력:"
 
 #: src/libaudgui/util.c:143
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
 msgstr ""
+"\n"
+"(이하 메시지는 숨겨져 있습니다.)"

@@ -8,13 +8,14 @@
 #   <jimmie.macedo@gmail.com>, 2012.
 # Karen Eliot <kareneliot@riseup. net>, 2011.
 # Rafael Ferreira <rafael.f.f1@gmail.com>, 2012.
+# Rodrigo Macedo <rodrigomacedo@rmsolucoeseminformatica.com>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-07-25 20:08-0400\n"
-"PO-Revision-Date: 2012-07-01 18:48+0000\n"
-"Last-Translator: jlindgren <john.lindgren@aol.com>\n"
+"POT-Creation-Date: 2012-07-25 20:19-0400\n"
+"PO-Revision-Date: 2012-07-26 00:12+0000\n"
+"Last-Translator: John Lindgren <john.lindgren@aol.com>\n"
 "Language-Team: Portuguese (Brazil)\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -278,7 +279,7 @@ msgstr "Turco"
 
 #: src/audacious/ui_preferences.c:114
 msgid "Floating point"
-msgstr ""
+msgstr "ponto flutuante"
 
 #: src/audacious/ui_preferences.c:130
 msgid "Album mode"
@@ -302,7 +303,7 @@ msgstr "ms"
 
 #: src/audacious/ui_preferences.c:141
 msgid "Soft clipping"
-msgstr ""
+msgstr "Recorte suave"
 
 #: src/audacious/ui_preferences.c:143
 msgid "Use software volume control (not recommended)"
@@ -563,16 +564,15 @@ msgstr "Créditos"
 
 #: src/libaudgui/about.c:38
 msgid "License"
-msgstr ""
+msgstr "Licença"
 
 #: src/libaudgui/about.c:74
 msgid "About Audacious"
 msgstr "Sobre o Audacious"
 
 #: src/libaudgui/confirm.c:61
-#, fuzzy
 msgid "Close Playlist"
-msgstr "Nova Lista de Reprodução"
+msgstr ""
 
 #: src/libaudgui/confirm.c:76
 #, c-format
