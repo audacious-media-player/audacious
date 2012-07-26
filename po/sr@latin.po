@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-07-14 10:04-0400\n"
+"POT-Creation-Date: 2012-07-25 20:08-0400\n"
 "PO-Revision-Date: 2012-07-06 22:12+0000\n"
 "Last-Translator: John Lindgren <john.lindgren@aol.com>\n"
 "Language-Team: Serbian (Latin)\n"
@@ -163,7 +163,7 @@ msgstr "Audio"
 msgid "Network"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:71 src/audacious/ui_preferences.c:1236
+#: src/audacious/ui_preferences.c:71 src/audacious/ui_preferences.c:1237
 msgid "Playlist"
 msgstr "Lista numera"
 
@@ -464,59 +464,59 @@ msgstr "ALBUM - NASLOV"
 msgid "Category"
 msgstr "Kategorija"
 
-#: src/audacious/ui_preferences.c:994
+#: src/audacious/ui_preferences.c:995
 msgid "Custom"
 msgstr "Sopstveni"
 
-#: src/audacious/ui_preferences.c:1031
+#: src/audacious/ui_preferences.c:1032
 msgid "<b>Song Display</b>"
 msgstr "<b>Prikaz pesme</b>"
 
-#: src/audacious/ui_preferences.c:1040
+#: src/audacious/ui_preferences.c:1041
 msgid "Show song numbers"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1051
+#: src/audacious/ui_preferences.c:1052
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1071
+#: src/audacious/ui_preferences.c:1072
 msgid "Show information about titlestring format"
 msgstr "Prikaži informacije o formatu znakovnog niza naslova"
 
-#: src/audacious/ui_preferences.c:1085
+#: src/audacious/ui_preferences.c:1086
 msgid "Custom string:"
 msgstr "Sopstveni znakovni niz:"
 
-#: src/audacious/ui_preferences.c:1090
+#: src/audacious/ui_preferences.c:1091
 msgid "Title format:"
 msgstr "Format naslova:"
 
-#: src/audacious/ui_preferences.c:1177
+#: src/audacious/ui_preferences.c:1178
 msgid "Output plugin:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1236
+#: src/audacious/ui_preferences.c:1237
 msgid "Transport"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1236
+#: src/audacious/ui_preferences.c:1237
 msgid "Input"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1237
+#: src/audacious/ui_preferences.c:1238
 msgid "Effect"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1237
+#: src/audacious/ui_preferences.c:1238
 msgid "Visualization"
 msgstr "Vizuelizacija"
 
-#: src/audacious/ui_preferences.c:1237
+#: src/audacious/ui_preferences.c:1238
 msgid "General"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1275
+#: src/audacious/ui_preferences.c:1276
 msgid "Audacious Preferences"
 msgstr "Audacious podešavanja"
 
@@ -566,18 +566,23 @@ msgstr ""
 msgid "About Audacious"
 msgstr "O Audacious-u"
 
-#: src/libaudgui/confirm.c:75
+#: src/libaudgui/confirm.c:61
+#, fuzzy
+msgid "Close Playlist"
+msgstr "Lista numera"
+
+#: src/libaudgui/confirm.c:76
 #, c-format
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
 msgstr ""
 
-#: src/libaudgui/confirm.c:88
+#: src/libaudgui/confirm.c:89
 msgid "_Don't show this message again"
 msgstr ""
 
-#: src/libaudgui/confirm.c:125
+#: src/libaudgui/confirm.c:126
 msgid "Rename Playlist"
 msgstr ""
 

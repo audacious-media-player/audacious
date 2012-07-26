@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-07-14 10:04-0400\n"
+"POT-Creation-Date: 2012-07-25 20:08-0400\n"
 "PO-Revision-Date: 2012-07-01 18:49+0000\n"
 "Last-Translator: jlindgren <john.lindgren@aol.com>\n"
 "Language-Team: Chinese (traditional)\n"
@@ -160,7 +160,7 @@ msgstr "音訊"
 msgid "Network"
 msgstr "網路"
 
-#: src/audacious/ui_preferences.c:71 src/audacious/ui_preferences.c:1236
+#: src/audacious/ui_preferences.c:71 src/audacious/ui_preferences.c:1237
 msgid "Playlist"
 msgstr "播放清單"
 
@@ -461,59 +461,59 @@ msgstr "專輯 - 標題"
 msgid "Category"
 msgstr "目錄"
 
-#: src/audacious/ui_preferences.c:994
+#: src/audacious/ui_preferences.c:995
 msgid "Custom"
 msgstr "自訂"
 
-#: src/audacious/ui_preferences.c:1031
+#: src/audacious/ui_preferences.c:1032
 msgid "<b>Song Display</b>"
 msgstr "<b>顯示歌曲</b>"
 
-#: src/audacious/ui_preferences.c:1040
+#: src/audacious/ui_preferences.c:1041
 msgid "Show song numbers"
 msgstr "顯示歌曲編號"
 
-#: src/audacious/ui_preferences.c:1051
+#: src/audacious/ui_preferences.c:1052
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr "顯示開頭的數字零 (例：02:00 而不是 2:00)"
 
-#: src/audacious/ui_preferences.c:1071
+#: src/audacious/ui_preferences.c:1072
 msgid "Show information about titlestring format"
 msgstr "顯示關於標題字串格式的資訊"
 
-#: src/audacious/ui_preferences.c:1085
+#: src/audacious/ui_preferences.c:1086
 msgid "Custom string:"
 msgstr "自訂字串:"
 
-#: src/audacious/ui_preferences.c:1090
+#: src/audacious/ui_preferences.c:1091
 msgid "Title format:"
 msgstr "標題格式:"
 
-#: src/audacious/ui_preferences.c:1177
+#: src/audacious/ui_preferences.c:1178
 msgid "Output plugin:"
 msgstr "輸出外掛:"
 
-#: src/audacious/ui_preferences.c:1236
+#: src/audacious/ui_preferences.c:1237
 msgid "Transport"
 msgstr "傳輸"
 
-#: src/audacious/ui_preferences.c:1236
+#: src/audacious/ui_preferences.c:1237
 msgid "Input"
 msgstr "輸入"
 
-#: src/audacious/ui_preferences.c:1237
+#: src/audacious/ui_preferences.c:1238
 msgid "Effect"
 msgstr "特效"
 
-#: src/audacious/ui_preferences.c:1237
+#: src/audacious/ui_preferences.c:1238
 msgid "Visualization"
 msgstr "視覺特效"
 
-#: src/audacious/ui_preferences.c:1237
+#: src/audacious/ui_preferences.c:1238
 msgid "General"
 msgstr "一般"
 
-#: src/audacious/ui_preferences.c:1275
+#: src/audacious/ui_preferences.c:1276
 msgid "Audacious Preferences"
 msgstr "Audacious 偏好設定"
 
@@ -561,18 +561,23 @@ msgstr ""
 msgid "About Audacious"
 msgstr "關於 Audacious"
 
-#: src/libaudgui/confirm.c:75
+#: src/libaudgui/confirm.c:61
+#, fuzzy
+msgid "Close Playlist"
+msgstr "新播放清單"
+
+#: src/libaudgui/confirm.c:76
 #, c-format
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
 msgstr "您確定要關閉 %s? 所有未匯出的資料將會遺失。"
 
-#: src/libaudgui/confirm.c:88
+#: src/libaudgui/confirm.c:89
 msgid "_Don't show this message again"
 msgstr "不要再顯示這個訊息(_D)"
 
-#: src/libaudgui/confirm.c:125
+#: src/libaudgui/confirm.c:126
 msgid "Rename Playlist"
 msgstr "重新命名播放清單"
 

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-07-14 10:04-0400\n"
+"POT-Creation-Date: 2012-07-25 20:08-0400\n"
 "PO-Revision-Date: 2012-06-02 00:06+0000\n"
 "Last-Translator: jlindgren <john.lindgren@aol.com>\n"
 "Language-Team: Finnish\n"
@@ -164,7 +164,7 @@ msgstr "Ääni"
 msgid "Network"
 msgstr "Verkko"
 
-#: src/audacious/ui_preferences.c:71 src/audacious/ui_preferences.c:1236
+#: src/audacious/ui_preferences.c:71 src/audacious/ui_preferences.c:1237
 msgid "Playlist"
 msgstr "Soittolista"
 
@@ -465,59 +465,59 @@ msgstr "ALBUMI - NIMI"
 msgid "Category"
 msgstr "Luokka"
 
-#: src/audacious/ui_preferences.c:994
+#: src/audacious/ui_preferences.c:995
 msgid "Custom"
 msgstr "Muu ..."
 
-#: src/audacious/ui_preferences.c:1031
+#: src/audacious/ui_preferences.c:1032
 msgid "<b>Song Display</b>"
 msgstr "<b>Kappaleen näyttö</b>"
 
-#: src/audacious/ui_preferences.c:1040
+#: src/audacious/ui_preferences.c:1041
 msgid "Show song numbers"
 msgstr "Näytä kappalenumerot"
 
-#: src/audacious/ui_preferences.c:1051
+#: src/audacious/ui_preferences.c:1052
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr "Näytä edeltävät nollat (02:00 2:00:n sijasta)"
 
-#: src/audacious/ui_preferences.c:1071
+#: src/audacious/ui_preferences.c:1072
 msgid "Show information about titlestring format"
 msgstr "Näytä tietoja kappaleiden nimiketekstin muodosta"
 
-#: src/audacious/ui_preferences.c:1085
+#: src/audacious/ui_preferences.c:1086
 msgid "Custom string:"
 msgstr "Muu merkkijono:"
 
-#: src/audacious/ui_preferences.c:1090
+#: src/audacious/ui_preferences.c:1091
 msgid "Title format:"
 msgstr "Nimikkeen muoto:"
 
-#: src/audacious/ui_preferences.c:1177
+#: src/audacious/ui_preferences.c:1178
 msgid "Output plugin:"
 msgstr "Ulostulon lisäosa:"
 
-#: src/audacious/ui_preferences.c:1236
+#: src/audacious/ui_preferences.c:1237
 msgid "Transport"
 msgstr "Siirtäminen"
 
-#: src/audacious/ui_preferences.c:1236
+#: src/audacious/ui_preferences.c:1237
 msgid "Input"
 msgstr "Syöte"
 
-#: src/audacious/ui_preferences.c:1237
+#: src/audacious/ui_preferences.c:1238
 msgid "Effect"
 msgstr "Tehosteet"
 
-#: src/audacious/ui_preferences.c:1237
+#: src/audacious/ui_preferences.c:1238
 msgid "Visualization"
 msgstr "Visualisointi"
 
-#: src/audacious/ui_preferences.c:1237
+#: src/audacious/ui_preferences.c:1238
 msgid "General"
 msgstr "Yleiset"
 
-#: src/audacious/ui_preferences.c:1275
+#: src/audacious/ui_preferences.c:1276
 msgid "Audacious Preferences"
 msgstr "Audaciouksen asetukset"
 
@@ -566,7 +566,12 @@ msgstr ""
 msgid "About Audacious"
 msgstr "Tietoja Audaciouksesta"
 
-#: src/libaudgui/confirm.c:75
+#: src/libaudgui/confirm.c:61
+#, fuzzy
+msgid "Close Playlist"
+msgstr "Uusi soittolista"
+
+#: src/libaudgui/confirm.c:76
 #, c-format
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
@@ -575,11 +580,11 @@ msgstr ""
 "Suljetaanko soittolista %s? Jos suljetaan, niin kaikki tehdyt muutokset "
 "soittolistan tallentamisesta saakka menetetään."
 
-#: src/libaudgui/confirm.c:88
+#: src/libaudgui/confirm.c:89
 msgid "_Don't show this message again"
 msgstr "_Älä näytä tätä viestiä enää"
 
-#: src/libaudgui/confirm.c:125
+#: src/libaudgui/confirm.c:126
 msgid "Rename Playlist"
 msgstr "Nimeä soittolista uudelleen"
 

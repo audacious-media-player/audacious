@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-07-14 10:04-0400\n"
+"POT-Creation-Date: 2012-07-25 20:08-0400\n"
 "PO-Revision-Date: 2012-07-06 22:41+0000\n"
 "Last-Translator: John Lindgren <john.lindgren@aol.com>\n"
 "Language-Team: Persian (Iran)\n"
@@ -160,7 +160,7 @@ msgstr "فایل صوتی"
 msgid "Network"
 msgstr "شبکه"
 
-#: src/audacious/ui_preferences.c:71 src/audacious/ui_preferences.c:1236
+#: src/audacious/ui_preferences.c:71 src/audacious/ui_preferences.c:1237
 msgid "Playlist"
 msgstr "لیست آهنگ"
 
@@ -461,59 +461,59 @@ msgstr "آلبوم - عنوان"
 msgid "Category"
 msgstr "موضوع"
 
-#: src/audacious/ui_preferences.c:994
+#: src/audacious/ui_preferences.c:995
 msgid "Custom"
 msgstr "شخصی سازی"
 
-#: src/audacious/ui_preferences.c:1031
+#: src/audacious/ui_preferences.c:1032
 msgid "<b>Song Display</b>"
 msgstr "<b>نمایش آهنگ</b>"
 
-#: src/audacious/ui_preferences.c:1040
+#: src/audacious/ui_preferences.c:1041
 msgid "Show song numbers"
 msgstr "نمایش شماره آهنگ"
 
-#: src/audacious/ui_preferences.c:1051
+#: src/audacious/ui_preferences.c:1052
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1071
+#: src/audacious/ui_preferences.c:1072
 msgid "Show information about titlestring format"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1085
+#: src/audacious/ui_preferences.c:1086
 msgid "Custom string:"
 msgstr "رشته دلخوه:"
 
-#: src/audacious/ui_preferences.c:1090
+#: src/audacious/ui_preferences.c:1091
 msgid "Title format:"
 msgstr "فرمتبندی عنوان:"
 
-#: src/audacious/ui_preferences.c:1177
+#: src/audacious/ui_preferences.c:1178
 msgid "Output plugin:"
 msgstr "افزونه خروجی"
 
-#: src/audacious/ui_preferences.c:1236
+#: src/audacious/ui_preferences.c:1237
 msgid "Transport"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1236
+#: src/audacious/ui_preferences.c:1237
 msgid "Input"
 msgstr "ورودی"
 
-#: src/audacious/ui_preferences.c:1237
+#: src/audacious/ui_preferences.c:1238
 msgid "Effect"
 msgstr "افکت"
 
-#: src/audacious/ui_preferences.c:1237
+#: src/audacious/ui_preferences.c:1238
 msgid "Visualization"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1237
+#: src/audacious/ui_preferences.c:1238
 msgid "General"
 msgstr "عمومی"
 
-#: src/audacious/ui_preferences.c:1275
+#: src/audacious/ui_preferences.c:1276
 msgid "Audacious Preferences"
 msgstr "تنظیمات"
 
@@ -561,7 +561,12 @@ msgstr ""
 msgid "About Audacious"
 msgstr "درمورد نرم افزار"
 
-#: src/libaudgui/confirm.c:75
+#: src/libaudgui/confirm.c:61
+#, fuzzy
+msgid "Close Playlist"
+msgstr "لیست آهنگ جدید"
+
+#: src/libaudgui/confirm.c:76
 #, c-format
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
@@ -570,11 +575,11 @@ msgstr ""
 "مطمئن هستید میخواهید فایل %s را ببندید؟ اگه این فایل را ببندید تمامی "
 "تنظیماتی که بعد از وارد کردن لیست آهنگ انجام داده اید از بین خواهد رفت."
 
-#: src/libaudgui/confirm.c:88
+#: src/libaudgui/confirm.c:89
 msgid "_Don't show this message again"
 msgstr "ـاین پیغام را دوباره نمایش نده"
 
-#: src/libaudgui/confirm.c:125
+#: src/libaudgui/confirm.c:126
 msgid "Rename Playlist"
 msgstr "تغییر نام لیست آهنگ"
 

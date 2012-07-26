@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-07-14 10:04-0400\n"
+"POT-Creation-Date: 2012-07-25 20:08-0400\n"
 "PO-Revision-Date: 2012-07-01 18:48+0000\n"
 "Last-Translator: jlindgren <john.lindgren@aol.com>\n"
 "Language-Team: Lithuanian\n"
@@ -170,7 +170,7 @@ msgstr "Garsas"
 msgid "Network"
 msgstr "Tinklas"
 
-#: src/audacious/ui_preferences.c:71 src/audacious/ui_preferences.c:1236
+#: src/audacious/ui_preferences.c:71 src/audacious/ui_preferences.c:1237
 msgid "Playlist"
 msgstr "Grojaraštis"
 
@@ -472,59 +472,59 @@ msgstr "ALBUMAS - PAVADINIMAS"
 msgid "Category"
 msgstr "Kategorija"
 
-#: src/audacious/ui_preferences.c:994
+#: src/audacious/ui_preferences.c:995
 msgid "Custom"
 msgstr "Pasirinktinė"
 
-#: src/audacious/ui_preferences.c:1031
+#: src/audacious/ui_preferences.c:1032
 msgid "<b>Song Display</b>"
 msgstr "<b>Kūrinio pavadinimo vaizdavimas</b>"
 
-#: src/audacious/ui_preferences.c:1040
+#: src/audacious/ui_preferences.c:1041
 msgid "Show song numbers"
 msgstr "Rodyti dainos numerį"
 
-#: src/audacious/ui_preferences.c:1051
+#: src/audacious/ui_preferences.c:1052
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr "Rodyti nulius priekyje (02:00 vietoj 2:00)"
 
-#: src/audacious/ui_preferences.c:1071
+#: src/audacious/ui_preferences.c:1072
 msgid "Show information about titlestring format"
 msgstr "Parodyti informaciją apie pavadinimo formatą"
 
-#: src/audacious/ui_preferences.c:1085
+#: src/audacious/ui_preferences.c:1086
 msgid "Custom string:"
 msgstr "Pasirinktinė eilutė:"
 
-#: src/audacious/ui_preferences.c:1090
+#: src/audacious/ui_preferences.c:1091
 msgid "Title format:"
 msgstr "Pavadinimo formatas:"
 
-#: src/audacious/ui_preferences.c:1177
+#: src/audacious/ui_preferences.c:1178
 msgid "Output plugin:"
 msgstr "Išvesties įskiepis:"
 
-#: src/audacious/ui_preferences.c:1236
+#: src/audacious/ui_preferences.c:1237
 msgid "Transport"
 msgstr "Transportas"
 
-#: src/audacious/ui_preferences.c:1236
+#: src/audacious/ui_preferences.c:1237
 msgid "Input"
 msgstr "Įvestis"
 
-#: src/audacious/ui_preferences.c:1237
+#: src/audacious/ui_preferences.c:1238
 msgid "Effect"
 msgstr "Efektai"
 
-#: src/audacious/ui_preferences.c:1237
+#: src/audacious/ui_preferences.c:1238
 msgid "Visualization"
 msgstr "Vizualizacija"
 
-#: src/audacious/ui_preferences.c:1237
+#: src/audacious/ui_preferences.c:1238
 msgid "General"
 msgstr "Pagrindiniai"
 
-#: src/audacious/ui_preferences.c:1275
+#: src/audacious/ui_preferences.c:1276
 msgid "Audacious Preferences"
 msgstr "Audacious nustatymai"
 
@@ -574,7 +574,12 @@ msgstr "Licencija"
 msgid "About Audacious"
 msgstr "Apie Audacious"
 
-#: src/libaudgui/confirm.c:75
+#: src/libaudgui/confirm.c:61
+#, fuzzy
+msgid "Close Playlist"
+msgstr "Naujas grojaraštis"
+
+#: src/libaudgui/confirm.c:76
 #, c-format
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
@@ -583,11 +588,11 @@ msgstr ""
 "Ar tu tikrai nori uždaryti %s?  Jei taip, visi pakeitimai padaryti po "
 "grojaraščio eksportavimo bus prarasti."
 
-#: src/libaudgui/confirm.c:88
+#: src/libaudgui/confirm.c:89
 msgid "_Don't show this message again"
 msgstr "_Daugiau neberodyti šio pranešimo"
 
-#: src/libaudgui/confirm.c:125
+#: src/libaudgui/confirm.c:126
 msgid "Rename Playlist"
 msgstr "Pervadinti grojaraštį"
 
