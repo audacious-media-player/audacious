@@ -439,6 +439,7 @@ static void init_one (void)
     init_paths ();
     make_dirs ();
 
+    setlocale (LC_ALL, "");
     bindtextdomain (PACKAGE, aud_paths[AUD_PATH_LOCALE_DIR]);
     bind_textdomain_codeset (PACKAGE, "UTF-8");
     bindtextdomain (PACKAGE "-plugins", aud_paths[AUD_PATH_LOCALE_DIR]);
