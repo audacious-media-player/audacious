@@ -89,6 +89,8 @@ if test "$MSGFMT" = ":" ; then
     AC_MSG_ERROR([msgfmt was not found; have you installed gettext?])
 fi
 
+LIBS="$LIBS $LIBINTL"
+
 dnl Build stamp
 dnl ===========
 AC_ARG_WITH([buildstamp],
