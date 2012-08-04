@@ -9,7 +9,7 @@
 \par {\ul Install MinGW}
 \par
 \par {Download and run:}
-\par {\fs20 http://sourceforge.net/projects/mingw/files/Automated%20MinGW%20Installer/mingw-get-inst/mingw-get-inst-20110802/mingw-get-inst-20110802.exe/download}
+\par {\fs20 http://sourceforge.net/projects/mingw/files/Installer/mingw-get-inst/mingw-get-inst-20120426/mingw-get-inst-20120426.exe/download}
 \par
 \par {When prompted, use these options:}
 \par {\fs20 Use pre-packaged repository catalogues}
@@ -56,6 +56,17 @@
 \par
 \par {In the MinGW shell:}
 \par {\fs20 cd /C/libpng}
+\par {\fs20 ./configure --prefix=/C/GTK}
+\par {\fs20 make}
+\par {\fs20 make install}
+\par
+\par {\ul Install libjpeg}
+\par
+\par {Download and unzip to }{\fs20 C:\\libjpeg}{:}
+\par {\fs20 http://www.ijg.org/files/jpegsrc.v8d.tar.gz}
+\par
+\par {In the MinGW shell:}
+\par {\fs20 cd /C/libjpeg}
 \par {\fs20 ./configure --prefix=/C/GTK}
 \par {\fs20 make}
 \par {\fs20 make install}
@@ -137,11 +148,11 @@
 \par {Download and unzip to }{\fs20 C:\\gdk-pixbuf}{:}
 \par {\fs20 http://ftp.gnome.org/pub/gnome/sources/gdk-pixbuf/2.26/gdk-pixbuf-2.26.0.tar.xz}
 \par
-\par {Apply the patches }{\fs20 gdk-pixbuf-configure.diff}{ and }{\fs20 queryloaders.c.diff}{ to }{\fs20 C:\\gdk-pixbuf\\configure}{ and }{\fs20 C:\\gdk-pixbuf\\gdk-pixbuf\\queryloaders.c}{.}
+\par {Apply the patch }{\fs20 gdk-pixbuf-configure.diff}{ to }{\fs20 C:\\gdk-pixbuf\\configure}{.}
 \par
 \par {In the MinGW shell:}
 \par {\fs20 cd /C/gdk-pixbuf}
-\par {\fs20 ./configure --prefix=/C/GTK}
+\par {\fs20 ./configure --prefix=/C/GTK --without-gdiplus --without-libtiff}
 \par {\fs20 make}
 \par {\fs20 make install}
 \par
@@ -395,4 +406,4 @@
 \par {\fs20 ./configure --prefix=/C/aud}
 \par {\fs20 make}
 \par {\fs20 make install}
-}
+\par}
