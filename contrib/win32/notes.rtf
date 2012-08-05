@@ -38,7 +38,7 @@
 \par {\ul Install zlib}
 \par
 \par {Download and unzip to }{\fs20 C:\\zlib}{:}
-\par {\fs20 http://zlib.net/zlib-1.2.6.tar.gz}
+\par {\fs20 http://zlib.net/zlib-1.2.7.tar.gz}
 \par
 \par {In the MinGW shell:}
 \par {\fs20 cd /C/zlib}
@@ -52,7 +52,7 @@
 \par {\ul Install libpng}
 \par
 \par {Download and unzip to }{\fs20 C:\\libpng}{:}
-\par {\fs20 http://download.sourceforge.net/libpng/libpng-1.5.10.tar.xz}
+\par {\fs20 http://download.sourceforge.net/libpng/libpng-1.5.12.tar.xz}
 \par
 \par {In the MinGW shell:}
 \par {\fs20 cd /C/libpng}
@@ -74,7 +74,7 @@
 \par {\ul Install libffi}
 \par
 \par {Download and unzip to }{\fs20 C:\\libffi}{:}
-\par {\fs20 ftp://sourceware.org/pub/libffi/libffi-3.0.10.tar.gz}
+\par {\fs20 ftp://sourceware.org/pub/libffi/libffi-3.0.11.tar.gz}
 \par
 \par {In the MinGW shell:}
 \par {\fs20 cd /C/libffi}
@@ -85,13 +85,15 @@
 \par {\ul Install GLib}
 \par
 \par {Download and unzip to }{\fs20 C:\\glib}{:}
-\par {\fs20 http://ftp.gnome.org/pub/GNOME/sources/glib/2.32/glib-2.32.0.tar.xz}
+\par {\fs20 http://ftp.gnome.org/pub/GNOME/sources/glib/2.32/glib-2.32.4.tar.xz}
 \par
-\par {Apply the patches }{\fs20 gwin32.c.diff}{ and }{\fs20 gwin32.h.diff}{ to }{\fs20 C:\\glib\\glib\\gwin32.c}{ and }{\fs20 C:\\glib\\glib\\gwin32.h}{.}
+\par {Apply the patches }{\fs20 gwin32.c.diff}{, }{\fs20 gwin32.h.diff}{, and }
+{\fs20 gcontenttype.c.diff}{ to }{\fs20 C:\\glib\\glib\\gwin32.c}{, }
+{\fs20 C:\\glib\\glib\\gwin32.h}{, and }{\fs20 C:\\glib\\gio\\gcontenttype.c}{.}
 \par
 \par {In the MinGW shell:}
 \par {\fs20 cd /C/glib}
-\par {\fs20 CFLAGS="-march=i486" LIBFFI_CFLAGS="-I/C/GTK/lib/libffi-3.0.10/include" LIBFFI_LIBS="-lffi" ZLIB_CFLAGS="" ZLIB_LIBS="-lz" ./configure --prefix=/C/GTK}
+\par {\fs20 CFLAGS="-march=i486" LIBFFI_CFLAGS="-I/C/GTK/lib/libffi-3.0.11/include" LIBFFI_LIBS="-lffi" ZLIB_CFLAGS="" ZLIB_LIBS="-lz" ./configure --prefix=/C/GTK}
 \par {\fs20 make}
 \par {\fs20 make install}
 \par
