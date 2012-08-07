@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: audacious 3.1\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2012-02-17 11:58-0500\n"
-"PO-Revision-Date: 2012-04-23 23:28+0800\n"
+"PO-Revision-Date: 2012-08-06 21:28+0800\n"
 "Last-Translator: Ruei-Yuan Lu <RueiYuan.Lu@gmail.com>\n"
 "Language-Team: Chinese (traditional)\n"
 "Language: \n"
@@ -33,204 +33,204 @@ msgstr "  (無效的 UTF-8 字串)"
 
 #: src/audacious/credits.c:37
 msgid "Core developers:"
-msgstr "核心開發人員:"
+msgstr "核心開發人員："
 
 #: src/audacious/credits.c:51
 msgid "Graphics:"
-msgstr "美工:"
+msgstr "美工："
 
 #: src/audacious/credits.c:56
 msgid "Default skin:"
-msgstr "預設面板:"
+msgstr "預設面板："
 
 #: src/audacious/credits.c:62
 msgid "Plugin development:"
-msgstr "外掛開發:"
+msgstr "外掛開發："
 
 #: src/audacious/credits.c:85
 msgid "Patch authors:"
-msgstr "修正檔作者:"
+msgstr "修正檔作者："
 
 #: src/audacious/credits.c:131
 msgid "1.x developers:"
-msgstr "1.x 開發人員:"
+msgstr "1.x 開發人員："
 
 #: src/audacious/credits.c:153
 msgid "BMP Developers:"
-msgstr "BMP 開發人員:"
+msgstr "BMP 開發人員："
 
 #: src/audacious/credits.c:185
 msgid "Argentinian Spanish:"
-msgstr "阿根廷西班牙語:"
+msgstr "阿根廷西班牙語："
 
 #: src/audacious/credits.c:188
 msgid "Belarusian:"
-msgstr "白俄羅斯文:"
+msgstr "白俄羅斯文："
 
 #: src/audacious/credits.c:191
 msgid "Basque:"
-msgstr "巴斯克語:"
+msgstr "巴斯克語："
 
 #: src/audacious/credits.c:194
 msgid "Brazilian Portuguese:"
-msgstr "巴西葡萄牙語:"
+msgstr "巴西葡萄牙語："
 
 #: src/audacious/credits.c:199
 msgid "Breton:"
-msgstr "布列塔尼語:"
+msgstr "布列塔尼語："
 
 #: src/audacious/credits.c:202
 msgid "Bulgarian:"
-msgstr "保加利亞語:"
+msgstr "保加利亞語："
 
 #: src/audacious/credits.c:205
 msgid "Catalan:"
-msgstr "加泰羅尼亞語:"
+msgstr "加泰羅尼亞語："
 
 #: src/audacious/credits.c:210
 msgid "Chinese:"
-msgstr "中文:"
+msgstr "中文："
 
 #: src/audacious/credits.c:213
 msgid "Croatian:"
-msgstr "克羅埃西亞語:"
+msgstr "克羅埃西亞語："
 
 #: src/audacious/credits.c:216
 msgid "Czech:"
-msgstr "捷克語:"
+msgstr "捷克語："
 
 #: src/audacious/credits.c:219
 msgid "Dutch:"
-msgstr "荷蘭語:"
+msgstr "荷蘭語："
 
 #: src/audacious/credits.c:223
 msgid "Estonian:"
-msgstr "愛沙尼亞語:"
+msgstr "愛沙尼亞語："
 
 #: src/audacious/credits.c:226
 msgid "Finnish:"
-msgstr "芬蘭語:"
+msgstr "芬蘭語："
 
 #: src/audacious/credits.c:232
 msgid "French:"
-msgstr "法語:"
+msgstr "法語："
 
 #: src/audacious/credits.c:238
 msgid "German:"
-msgstr "德語:"
+msgstr "德語："
 
 #: src/audacious/credits.c:245
 msgid "Georgian:"
-msgstr "喬治亞語:"
+msgstr "喬治亞語："
 
 #: src/audacious/credits.c:248
 msgid "Greek:"
-msgstr "希臘語:"
+msgstr "希臘語："
 
 #: src/audacious/credits.c:253
 msgid "Hindi:"
-msgstr "印地語:"
+msgstr "印地語："
 
 #: src/audacious/credits.c:256
 msgid "Hungarian:"
-msgstr "匈牙利語:"
+msgstr "匈牙利語："
 
 #: src/audacious/credits.c:260
 msgid "Italian:"
-msgstr "義大利語:"
+msgstr "義大利語："
 
 #: src/audacious/credits.c:265
 msgid "Japanese:"
-msgstr "日本語:"
+msgstr "日本語："
 
 #: src/audacious/credits.c:268
 msgid "Korean:"
-msgstr "韓語:"
+msgstr "韓語："
 
 #: src/audacious/credits.c:271
 msgid "Latvian:"
-msgstr "拉脫維亞語:"
+msgstr "拉脫維亞語："
 
 #: src/audacious/credits.c:274
 msgid "Lithuanian:"
-msgstr "立陶宛語:"
+msgstr "立陶宛語："
 
 #: src/audacious/credits.c:279
 msgid "Macedonian:"
-msgstr "馬其頓語:"
+msgstr "馬其頓語："
 
 #: src/audacious/credits.c:282
 msgid "Mexican Spanish:"
-msgstr "墨西哥西班牙語:"
+msgstr "墨西哥西班牙語："
 
 #: src/audacious/credits.c:285
 msgid "Polish:"
-msgstr "波蘭語:"
+msgstr "波蘭語："
 
 #: src/audacious/credits.c:292
 msgid "Portuguese:"
-msgstr "葡萄牙文:"
+msgstr "葡萄牙文："
 
 #: src/audacious/credits.c:295
 msgid "Romanian:"
-msgstr "羅馬尼亞語:"
+msgstr "羅馬尼亞語："
 
 #: src/audacious/credits.c:299
 msgid "Russian:"
-msgstr "俄語:"
+msgstr "俄語："
 
 #: src/audacious/credits.c:303
 msgid "Serbian (Latin):"
-msgstr "塞爾維亞語 (拉丁):"
+msgstr "塞爾維亞語 (拉丁)："
 
 #: src/audacious/credits.c:306
 msgid "Serbian (Cyrillic):"
-msgstr "塞爾維亞語 (西里爾):"
+msgstr "塞爾維亞語 (西里爾)："
 
 #: src/audacious/credits.c:310
 msgid "Simplified Chinese:"
-msgstr "簡體中文:"
+msgstr "簡體中文："
 
 #: src/audacious/credits.c:313
 msgid "Slovak:"
-msgstr "斯洛伐克語:"
+msgstr "斯洛伐克語："
 
 #: src/audacious/credits.c:317
 msgid "Spanish:"
-msgstr "西班牙語:"
+msgstr "西班牙語："
 
 #: src/audacious/credits.c:326
 msgid "Swedish:"
-msgstr "瑞典語:"
+msgstr "瑞典語："
 
 #: src/audacious/credits.c:329
 msgid "Traditional Chinese:"
-msgstr "正體中文:"
+msgstr "正體中文："
 
 #: src/audacious/credits.c:335
 msgid "Turkish:"
-msgstr "土耳其語:"
+msgstr "土耳其語："
 
 #: src/audacious/credits.c:339
 msgid "Ukrainian:"
-msgstr "烏克蘭語:"
+msgstr "烏克蘭語："
 
 #: src/audacious/credits.c:344
 msgid "Vietnamese:"
-msgstr "越南語:"
+msgstr "越南語："
 
 #: src/audacious/credits.c:347
 msgid "Welsh:"
-msgstr "威爾士語:"
+msgstr "威爾士語："
 
 #: src/audacious/equalizer_preset.c:180
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
-msgstr "匯入 Winamp EQF 檔時發生錯誤 '%s'"
+msgstr "匯入 Winamp EQF 檔時發生錯誤「%s」"
 
 #: src/audacious/main.c:243
 msgid "Skip backwards in playlist"
-msgstr "切換到播放清單的上一個"
+msgstr "切換至播放清單的上一個"
 
 #: src/audacious/main.c:244
 msgid "Start playing current playlist"
@@ -250,7 +250,7 @@ msgstr "若播放中則暫停，否則繼續播放"
 
 #: src/audacious/main.c:248
 msgid "Skip forward in playlist"
-msgstr "切換到播放清單的下一個"
+msgstr "切換至播放清單的下一個"
 
 #: src/audacious/main.c:249
 msgid "Display Jump to File dialog"
@@ -258,11 +258,11 @@ msgstr "顯示跳至檔案對話視窗"
 
 #: src/audacious/main.c:250
 msgid "Add files to the playlist"
-msgstr "加入檔案到播放清單"
+msgstr "加入檔案至播放清單"
 
 #: src/audacious/main.c:251
 msgid "Add new files to a temporary playlist"
-msgstr "加入檔案到暫存播放清單"
+msgstr "加入檔案至暫存播放清單"
 
 #: src/audacious/main.c:252
 msgid "Display the main window"
@@ -294,8 +294,8 @@ msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
 msgstr ""
-"%s: %s\n"
-"請嘗試用 `%s --help' 取得更多資訊。\n"
+"%s：%s\n"
+"請嘗試用「%s --help」取得更多資訊。\n"
 
 #: src/audacious/main.c:573
 msgid "Audacious"
@@ -309,7 +309,7 @@ msgstr "找不到適用於 %s 的解碼器。"
 #: src/audacious/playlist-files.c:53
 #, c-format
 msgid "Cannot %s %s: unsupported file extension."
-msgstr "無法%s %s: 未支援的副檔名。"
+msgstr "無法%s %s：未支援的副檔名。"
 
 #: src/audacious/playlist-files.c:54
 msgid "save"
@@ -329,7 +329,7 @@ msgstr "正在播放"
 
 #: src/audacious/playlist-new.c:1630
 msgid "The playlist cannot be sorted because metadata scanning is still in progress (or has been disabled)."
-msgstr "因為正在進行詮釋資料的掃描，無法對播放清單進行排序。（或者已經被關閉）"
+msgstr "因為正在進行詮釋資料的掃描，無法對播放清單進行排序。(或者已經被關閉)"
 
 #: src/audacious/ui_preferences.c:85
 msgid "Audio"
@@ -460,11 +460,11 @@ msgstr "<b>輸出設定</b>"
 
 #: src/audacious/ui_preferences.c:149
 msgid "Bit depth:"
-msgstr "取樣格式:"
+msgstr "取樣格式："
 
 #: src/audacious/ui_preferences.c:152
 msgid "Buffer size:"
-msgstr "緩衝區大小:"
+msgstr "緩衝區大小："
 
 #: src/audacious/ui_preferences.c:154
 msgid "ms"
@@ -492,7 +492,7 @@ msgstr "<b>調整音量</b>"
 
 #: src/audacious/ui_preferences.c:164
 msgid "Amplify all files:"
-msgstr "放大所有檔案的音量:"
+msgstr "放大所有檔案的音量："
 
 #: src/audacious/ui_preferences.c:166
 #: src/audacious/ui_preferences.c:169
@@ -501,23 +501,23 @@ msgstr "分貝"
 
 #: src/audacious/ui_preferences.c:167
 msgid "Amplify untagged files:"
-msgstr "放大無標籤檔案的音量:"
+msgstr "放大無標籤檔案的音量："
 
 #: src/audacious/ui_preferences.c:172
 msgid "Proxy hostname:"
-msgstr "代理伺服器名稱:"
+msgstr "代理伺服器名稱："
 
 #: src/audacious/ui_preferences.c:173
 msgid "Proxy port:"
-msgstr "代理伺服器連接埠:"
+msgstr "代理伺服器連接埠："
 
 #: src/audacious/ui_preferences.c:176
 msgid "Proxy username:"
-msgstr "代理伺服器使用者名稱:"
+msgstr "代理伺服器使用者名稱："
 
 #: src/audacious/ui_preferences.c:177
 msgid "Proxy password:"
-msgstr "代理伺服器密碼:"
+msgstr "代理伺服器密碼："
 
 #: src/audacious/ui_preferences.c:181
 msgid "<b>Proxy Configuration</b>"
@@ -533,11 +533,11 @@ msgstr "需要認證"
 
 #: src/audacious/ui_preferences.c:193
 msgid "Auto character encoding detector for:"
-msgstr "自動偵測字元編碼:"
+msgstr "自動偵測字元編碼："
 
 #: src/audacious/ui_preferences.c:198
 msgid "Fallback character encodings:"
-msgstr "備用字元編碼:"
+msgstr "備用字元編碼："
 
 #: src/audacious/ui_preferences.c:202
 msgid "<b>Behavior</b>"
@@ -549,7 +549,7 @@ msgstr "啟動後繼續之前的播放"
 
 #: src/audacious/ui_preferences.c:205
 msgid "Advance when the current song is deleted"
-msgstr "目前的歌曲被刪除時移到下一個"
+msgstr "目前的歌曲被刪除時移至下一個"
 
 #: src/audacious/ui_preferences.c:207
 msgid "Clear the playlist when opening files"
@@ -609,11 +609,11 @@ msgstr "搜尋專輯封面時，Audacious 會從檔名中尋找特定單字。�
 
 #: src/audacious/ui_preferences.c:811
 msgid "Exclude:"
-msgstr "排除:"
+msgstr "排除："
 
 #: src/audacious/ui_preferences.c:818
 msgid "Include:"
-msgstr "包含:"
+msgstr "包含："
 
 #: src/audacious/ui_preferences.c:835
 msgid "Recursively search for cover"
@@ -621,7 +621,7 @@ msgstr "遞迴地搜尋封面"
 
 #: src/audacious/ui_preferences.c:845
 msgid "Search depth: "
-msgstr "搜尋深度:"
+msgstr "搜尋深度："
 
 #: src/audacious/ui_preferences.c:859
 msgid "Use per-file cover"
@@ -637,7 +637,7 @@ msgstr "顯示目前歌曲的進度條"
 
 #: src/audacious/ui_preferences.c:881
 msgid "Delay until filepopup comes up: "
-msgstr "顯示彈出式視窗的延遲時間:"
+msgstr "顯示彈出式視窗的延遲時間："
 
 #: src/audacious/ui_preferences.c:1309
 msgid "Custom"
@@ -661,11 +661,11 @@ msgstr "顯示關於標題字串格式的資訊"
 
 #: src/audacious/ui_preferences.c:1410
 msgid "Custom string:"
-msgstr "自訂字串:"
+msgstr "自訂字串："
 
 #: src/audacious/ui_preferences.c:1417
 msgid "Title format:"
-msgstr "標題格式:"
+msgstr "標題格式："
 
 #: src/audacious/ui_preferences.c:1428
 msgid "<b>Popup Information</b>"
@@ -685,7 +685,7 @@ msgstr "編輯彈出式資訊視窗的設定值"
 
 #: src/audacious/ui_preferences.c:1544
 msgid "Output plugin:"
-msgstr "輸出外掛:"
+msgstr "輸出外掛："
 
 #: src/audacious/ui_preferences.c:1603
 msgid "Transport"
@@ -714,7 +714,7 @@ msgstr "Audacious 偏好設定"
 #: src/audacious/util.c:121
 #, c-format
 msgid "Could not create directory (%s): %s\n"
-msgstr "無法建立資料夾 (%s): %s\n"
+msgstr "無法建立資料夾 (%s)：%s\n"
 
 #: src/audtool/handlers_playlist.c:273
 msgid "Position not found."
@@ -727,7 +727,7 @@ msgstr "無播放中歌曲。"
 #: src/libaudcore/audstrings.c:199
 #, c-format
 msgid "Audio CD, track %s"
-msgstr "音樂 CD, 音軌 %s"
+msgstr "音樂 CD，音軌 %s"
 
 #: src/libaudcore/tuple.c:542
 msgid "Mono"
@@ -756,9 +756,6 @@ msgstr "翻譯人員"
 msgid "About Audacious"
 msgstr "關於 Audacious"
 
-# msgid_plural "%d channels"
-# msgstr[0] ""
-# msgstr[1] ""
 #: src/libaudgui/confirm.c:76
 #, c-format
 msgid "Are you sure you want to close %s?  If you do, any changes made since the playlist was exported will be lost."
@@ -1013,15 +1010,15 @@ msgstr "音軌資訊"
 
 #: src/libaudgui/infowin.c:352
 msgid "<span size=\"small\">Format:</span>"
-msgstr "<span size=\"small\">格式:</span>"
+msgstr "<span size=\"small\">格式：</span>"
 
 #: src/libaudgui/infowin.c:356
 msgid "<span size=\"small\">Quality:</span>"
-msgstr "<span size=\"small\">品質:</span>"
+msgstr "<span size=\"small\">品質：</span>"
 
 #: src/libaudgui/infowin.c:359
 msgid "<span size=\"small\">Bitrate:</span>"
-msgstr "<span size=\"small\">位元率:</span>"
+msgstr "<span size=\"small\">位元率：</span>"
 
 #: src/libaudgui/infowin.c:389
 msgid "<span size=\"small\">Title</span>"
@@ -1106,11 +1103,11 @@ msgstr "加入後關閉對話視窗"
 #: src/libaudgui/ui_jumptotrack.c:117
 #: src/libaudgui/ui_jumptotrack.c:326
 msgid "_Queue"
-msgstr "排入佇列 (_Q)"
+msgstr "排入佇列(_Q)"
 
 #: src/libaudgui/ui_jumptotrack.c:115
 msgid "Un_queue"
-msgstr "移出佇列 (_q)"
+msgstr "移出佇列(_Q)"
 
 #: src/libaudgui/ui_jumptotrack.c:258
 msgid "Jump to Song"
@@ -1118,11 +1115,11 @@ msgstr "跳至歌曲"
 
 #: src/libaudgui/ui_jumptotrack.c:281
 msgid "Filter: "
-msgstr "過濾器: "
+msgstr "過濾器："
 
 #: src/libaudgui/ui_jumptotrack.c:282
 msgid "_Filter:"
-msgstr "過濾器(_F):"
+msgstr "過濾器(_F)："
 
 #: src/libaudgui/ui_jumptotrack.c:292
 msgid "Remember"
@@ -1154,11 +1151,11 @@ msgstr "啟用播放清單後關閉對話視窗(_C)"
 
 #: src/libaudgui/ui_urlopener.c:45
 msgid "Open URL"
-msgstr "開啟 URL"
+msgstr "開啟網址"
 
 #: src/libaudgui/ui_urlopener.c:45
 msgid "Add URL"
-msgstr "加入 URL"
+msgstr "加入網址"
 
 #: src/libaudgui/util.c:95
 msgid ""
@@ -1166,7 +1163,7 @@ msgid ""
 "(Further messages have been hidden.)"
 msgstr ""
 "\n"
-"（詳細訊息已被隱藏。）"
+"(詳細訊息已被隱藏。)"
 
 #: src/libeggsmclient/eggdesktopfile.c:165
 msgid "File is not a valid .desktop file"
@@ -1175,7 +1172,7 @@ msgstr "無效的 .desktop 檔案"
 #: src/libeggsmclient/eggdesktopfile.c:191
 #, c-format
 msgid "Unrecognized desktop file Version '%s'"
-msgstr "無法辨識捷徑版本 '%s'"
+msgstr "無法辨識捷徑版本「%s」"
 
 #: src/libeggsmclient/eggdesktopfile.c:974
 #, c-format
@@ -1189,7 +1186,7 @@ msgstr "應用程式不接受來自命令列的檔案參數"
 #: src/libeggsmclient/eggdesktopfile.c:1184
 #, c-format
 msgid "Unrecognized launch option: %d"
-msgstr "無效的啟動選項: %d"
+msgstr "無效的啟動選項：%d"
 
 #: src/libeggsmclient/eggdesktopfile.c:1391
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
@@ -1221,7 +1218,7 @@ msgstr "ID"
 
 #: src/libeggsmclient/eggsmclient.c:253
 msgid "Session management options:"
-msgstr "工作階段選項:"
+msgstr "工作階段選項："
 
 #: src/libeggsmclient/eggsmclient.c:254
 msgid "Show session management options"
