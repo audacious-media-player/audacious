@@ -709,6 +709,9 @@ bool_t audacious_rc_song_title (RemoteObject * obj, unsigned int pos, char * *
  title, GError * * error)
 {
     char * title2 = playlist_entry_get_title (playlist_get_active (), pos, FALSE);
+    if (! title2)
+        return FALSE;
+
     * title = strdup (title2);
     str_unref (title2);
     return TRUE;
@@ -718,6 +721,9 @@ bool_t audacious_rc_song_filename (RemoteObject * obj, unsigned int pos,
  char * * filename, GError * * error)
 {
     char * filename2 = playlist_entry_get_filename (playlist_get_active (), pos);
+    if (! filename2)
+        return FALSE;
+
     * filename = strdup (filename2);
     str_unref (filename2);
     return TRUE;
