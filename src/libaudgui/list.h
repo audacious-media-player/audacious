@@ -72,5 +72,6 @@ int audgui_list_get_focus (GtkWidget * list);
 void audgui_list_set_focus (GtkWidget * list, int row);
 
 int audgui_list_row_at_point (GtkWidget * list, int x, int y);
+int audgui_list_row_at_point_rounded (GtkWidget * list, int x, int y);
 
 #endif

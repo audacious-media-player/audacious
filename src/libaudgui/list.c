@@ -352,7 +352,7 @@ static void drag_data_get (GtkWidget * widget, GdkDragContext * context,
 
 static int calc_drop_row (ListModel * model, GtkWidget * widget, int x, int y)
 {
-    int row = audgui_list_row_at_point (widget, x, y);
+    int row = audgui_list_row_at_point_rounded (widget, x, y);
     if (row < 0)
         row = model->rows;
     return row;
@@ -821,14 +821,11 @@ EXPORT void audgui_list_set_focus (GtkWidget * list, int row)
 
 EXPORT int audgui_list_row_at_point (GtkWidget * list, int x, int y)
 {
-    ListModel * model = (ListModel *) gtk_tree_view_get_model ((GtkTreeView *)
-     list);
+    ListModel * model = (ListModel *) gtk_tree_view_get_model ((GtkTreeView *) list);
 
     GtkTreePath * path = NULL;
-    gtk_tree_view_convert_widget_to_bin_window_coords ((GtkTreeView *) list, x,
-     y, & x, & y);
-    gtk_tree_view_get_path_at_pos ((GtkTreeView *) list, x, y, & path, NULL,
-     NULL, NULL);
+    gtk_tree_view_convert_widget_to_bin_window_coords ((GtkTreeView *) list, x, y, & x, & y);
+    gtk_tree_view_get_path_at_pos ((GtkTreeView *) list, x, y, & path, NULL, NULL, NULL);
 
     if (! path)
         return -1;
@@ -836,14 +833,28 @@ EXPORT int audgui_list_row_at_point (GtkWidget * list, int x, int y)
     int row = gtk_tree_path_get_indices (path)[0];
     g_return_val_if_fail (row >= 0 && row < model->rows, -1);
 
-    if (model->dragging)
-    {
-        GdkRectangle rect;
-        gtk_tree_view_get_background_area ((GtkTreeView *) list, path, NULL,
-         & rect);
-        if (y > rect.y + rect.height / 2)
-            row ++;
-    }
+    gtk_tree_path_free (path);
+    return row;
+}
+
+EXPORT int audgui_list_row_at_point_rounded (GtkWidget * list, int x, int y)
+{
+    ListModel * model = (ListModel *) gtk_tree_view_get_model ((GtkTreeView *) list);
+
+    GtkTreePath * path = NULL;
+    gtk_tree_view_convert_widget_to_bin_window_coords ((GtkTreeView *) list, x, y, & x, & y);
+    gtk_tree_view_get_path_at_pos ((GtkTreeView *) list, x, y, & path, NULL, NULL, NULL);
+
+    if (! path)
+        return -1;
+
+    int row = gtk_tree_path_get_indices (path)[0];
+    g_return_val_if_fail (row >= 0 && row < model->rows, -1);
+
+    GdkRectangle rect;
+    gtk_tree_view_get_background_area ((GtkTreeView *) list, path, NULL, & rect);
+    if (y > rect.y + rect.height / 2)
+        row ++;
 
     gtk_tree_path_free (path);
     return row;
