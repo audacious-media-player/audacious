@@ -64,8 +64,8 @@ EXPORT void audgui_get_mouse_coords (GtkWidget * widget, int * x, int * y)
         gdk_window_get_device_position (window, device, & xwin, & ywin, NULL);
         gtk_widget_get_allocation (widget, & alloc);
 
-        * x -= xwin - alloc.x;
-        * y -= ywin - alloc.y;
+        * x = xwin - alloc.x;
+        * y = ywin - alloc.y;
     }
     else
     {
