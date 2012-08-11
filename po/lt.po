@@ -13,9 +13,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-08-11 13:29-0400\n"
-"PO-Revision-Date: 2012-07-26 00:12+0000\n"
-"Last-Translator: John Lindgren <john.lindgren@aol.com>\n"
+"POT-Creation-Date: 2012-08-11 13:36-0400\n"
+"PO-Revision-Date: 2012-07-26 04:46+0000\n"
+"Last-Translator: Algimantas Margevičius <gymka@archlinux.lt>\n"
 "Language-Team: Lithuanian\n"
 "Language: lt\n"
 "MIME-Version: 1.0\n"
@@ -576,7 +576,7 @@ msgstr "Apie Audacious"
 
 #: src/libaudgui/confirm.c:61
 msgid "Close Playlist"
-msgstr ""
+msgstr "Užverti grojaraštį"
 
 #: src/libaudgui/confirm.c:76
 #, c-format

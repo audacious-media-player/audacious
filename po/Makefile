@@ -8,6 +8,7 @@
 #   'make update-pot' respectively.
 #
 LOCALES = ast.po \
+	  be.po \
 	  ca.po \
 	  cs.po \
 	  de.po \

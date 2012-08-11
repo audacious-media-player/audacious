@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-08-11 13:29-0400\n"
-"PO-Revision-Date: 2012-07-26 00:12+0000\n"
-"Last-Translator: John Lindgren <john.lindgren@aol.com>\n"
+"POT-Creation-Date: 2012-08-11 13:36-0400\n"
+"PO-Revision-Date: 2012-07-26 16:43+0000\n"
+"Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian\n"
 "Language: et\n"
 "MIME-Version: 1.0\n"
@@ -300,7 +300,7 @@ msgstr "ms"
 
 #: src/audacious/ui_preferences.c:141
 msgid "Soft clipping"
-msgstr ""
+msgstr "Pehme kärpimine"
 
 #: src/audacious/ui_preferences.c:143
 msgid "Use software volume control (not recommended)"
@@ -571,7 +571,7 @@ msgstr "Audacious'est lähemalt"
 
 #: src/libaudgui/confirm.c:61
 msgid "Close Playlist"
-msgstr ""
+msgstr "Esitusnimekirja sulgemine"
 
 #: src/libaudgui/confirm.c:76
 #, c-format

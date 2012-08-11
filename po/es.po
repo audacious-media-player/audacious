@@ -11,6 +11,7 @@
 # Jordi Amenós <>, 2011.
 # Jorge Andrés <winninglero@gmail.com>, 2010.
 # Juan Manuel Hernández, 2012.
+# Lucía Balsa <lucia.balsa.prados@gmail.com>, 2012.
 # Marco Antonio Frias Butrón <marcoantoniofrias@gmail.com>, 2012.
 # <xukosky@yahoo.es>, 2011.
 #   <xukosky@yahoo.es>, 2011.
@@ -18,9 +19,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-08-11 13:29-0400\n"
-"PO-Revision-Date: 2012-07-01 18:48+0000\n"
-"Last-Translator: jlindgren <john.lindgren@aol.com>\n"
+"POT-Creation-Date: 2012-08-11 13:36-0400\n"
+"PO-Revision-Date: 2012-08-04 09:15+0000\n"
+"Last-Translator: Lucía Balsa <lucia.balsa.prados@gmail.com>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -158,12 +159,12 @@ msgstr ""
 #: src/audacious/plugin-preferences.c:50
 #, c-format
 msgid "About %s"
-msgstr ""
+msgstr "Acerca de %s"
 
 #: src/audacious/plugin-preferences.c:88
 #, c-format
 msgid "%s Settings"
-msgstr ""
+msgstr "%s Ajustes"
 
 #: src/audacious/ui_preferences.c:69
 msgid "Audio"
@@ -572,16 +573,15 @@ msgstr "Créditos:"
 
 #: src/libaudgui/about.c:38
 msgid "License"
-msgstr ""
+msgstr "Licencia"
 
 #: src/libaudgui/about.c:74
 msgid "About Audacious"
 msgstr "Acerca de Audacious"
 
 #: src/libaudgui/confirm.c:61
-#, fuzzy
 msgid "Close Playlist"
-msgstr "Nueva lista de reproducción"
+msgstr "Cerrar lista de reproducción"
 
 #: src/libaudgui/confirm.c:76
 #, c-format

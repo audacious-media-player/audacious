@@ -13,9 +13,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-08-11 13:29-0400\n"
-"PO-Revision-Date: 2012-07-26 00:12+0000\n"
-"Last-Translator: John Lindgren <john.lindgren@aol.com>\n"
+"POT-Creation-Date: 2012-08-11 13:36-0400\n"
+"PO-Revision-Date: 2012-07-31 05:36+0000\n"
+"Last-Translator: Darkcircle <darkcircle.0426@gmail.com>\n"
 "Language-Team: Korean\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
@@ -92,7 +92,7 @@ msgstr "디버깅 메시지 출력하기"
 
 #: src/audacious/main.c:244
 msgid "Headless mode (beta)"
-msgstr "헤드리스 모드 (시험기능)"
+msgstr "헤드리스 모드(시험기능)"
 
 #: src/audacious/main.c:245
 msgid "FILE..."
@@ -127,7 +127,7 @@ msgstr "%2$s 파일을 %1$s 할 수 없습니다: 지원하지 않는 파일 확
 
 #: src/audacious/playlist-files.c:52
 msgid "save"
-msgstr "저장하기"
+msgstr "저장"
 
 #: src/audacious/playlist-files.c:52
 msgid "load"
@@ -146,7 +146,7 @@ msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress "
 "(or has been disabled)."
 msgstr ""
-"메타데이타 검색이 여전히 진행중(또는 비활성화 됨)이기 때문에 재생 목록을 정렬"
+"메타데이터 검색이 여전히 진행중(또는 비활성화 됨)이기 때문에 재생 목록을 정렬"
 "할 수 없습니다."
 
 #: src/audacious/plugin-preferences.c:50
@@ -306,7 +306,7 @@ msgstr "부드러운 클리핑"
 
 #: src/audacious/ui_preferences.c:143
 msgid "Use software volume control (not recommended)"
-msgstr "프로그램 음량 조절 사용하기 (추천하지 않음)"
+msgstr "프로그램 음량 조절기 사용하기(추천하지 않음)"
 
 #: src/audacious/ui_preferences.c:145
 msgid "<b>Replay Gain</b>"
@@ -318,7 +318,7 @@ msgstr "리플레이 게인 활성화"
 
 #: src/audacious/ui_preferences.c:149
 msgid "Prevent clipping (recommended)"
-msgstr "클리핑 방지 (추천)"
+msgstr "클리핑 방지(추천)"
 
 #: src/audacious/ui_preferences.c:151
 msgid "<b>Adjust Levels</b>"
@@ -338,31 +338,31 @@ msgstr "태그가 붙지 않은 파일 증폭하기:"
 
 #: src/audacious/ui_preferences.c:160
 msgid "Proxy hostname:"
-msgstr "호스트 이름:"
+msgstr "프록시 호스트 이름:"
 
 #: src/audacious/ui_preferences.c:161
 msgid "Proxy port:"
-msgstr "포트:"
+msgstr "프록시 포트:"
 
 #: src/audacious/ui_preferences.c:164
 msgid "Proxy username:"
-msgstr "사용자 이름:"
+msgstr "프록시 사용자 이름:"
 
 #: src/audacious/ui_preferences.c:165
 msgid "Proxy password:"
-msgstr "비밀번호:"
+msgstr "프록시 암호:"
 
 #: src/audacious/ui_preferences.c:169
 msgid "<b>Proxy Configuration</b>"
-msgstr "<b>프락시 설정</b>"
+msgstr "<b>프록시 설정</b>"
 
 #: src/audacious/ui_preferences.c:170
 msgid "Enable proxy usage"
-msgstr "프락시 사용"
+msgstr "프록시 사용"
 
 #: src/audacious/ui_preferences.c:173
 msgid "Use authentication with proxy"
-msgstr "프락시에서 인증 사용"
+msgstr "프록시에서 인증 사용"
 
 #: src/audacious/ui_preferences.c:181
 msgid "Auto character encoding detector for:"
@@ -406,11 +406,11 @@ msgstr "<b>음반 표지</b>"
 
 #: src/audacious/ui_preferences.c:208
 msgid "Search for images matching these words (comma-separated):"
-msgstr "이 단어에 일치하는 그림 검색 (콤마로 구분):"
+msgstr "이 단어에 일치하는 그림 검색(콤마로 구분):"
 
 #: src/audacious/ui_preferences.c:210
 msgid "Exclude images matching these words (comma-separated):"
-msgstr "이 단어에 일치하는 그림 제외 (콤마로 구분):"
+msgstr "이 단어에 일치하는 그림 제외(콤마로 구분):"
 
 #: src/audacious/ui_preferences.c:212
 msgid "Search for images matching song file name"
@@ -434,7 +434,7 @@ msgstr "풍선 도움말 정보 보이기"
 
 #: src/audacious/ui_preferences.c:222
 msgid "Popup delay (tenths of a second):"
-msgstr "풍선 도움말 지연시간 (10초 단위):"
+msgstr "풍선 도움말 지연시간(10초 단위):"
 
 #: src/audacious/ui_preferences.c:225
 msgid "Show time scale for current song"
@@ -510,7 +510,7 @@ msgstr "입력"
 
 #: src/audacious/ui_preferences.c:1238
 msgid "Effect"
-msgstr "효과?"
+msgstr "효과"
 
 #: src/audacious/ui_preferences.c:1238
 msgid "Visualization"
@@ -570,7 +570,7 @@ msgstr "Audacious 소개"
 
 #: src/libaudgui/confirm.c:61
 msgid "Close Playlist"
-msgstr ""
+msgstr "재생 목록 닫기"
 
 #: src/libaudgui/confirm.c:76
 #, c-format
@@ -895,7 +895,7 @@ msgstr "재생 목록 가져오기"
 #: src/libaudgui/playlists.c:66
 #, c-format
 msgid "Overwrite %s?"
-msgstr "%s를 덮어쓰시겠습니까?"
+msgstr "%s을(를) 덮어쓰시겠습니까?"
 
 #: src/libaudgui/queue-manager.c:196
 msgid "Queue Manager"
@@ -964,7 +964,7 @@ msgstr "이름 바꾸기(_R)"
 
 #: src/libaudgui/ui_playlist_manager.c:328
 msgid "_Close dialog on activating playlist"
-msgstr "재생 목록 활성화시 대화상자 닫기"
+msgstr "재생 목록 활성화시 대화상자 닫기(_C)"
 
 #: src/libaudgui/url-opener.c:56
 msgid "Open URL"

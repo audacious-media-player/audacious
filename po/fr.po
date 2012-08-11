@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-08-11 13:29-0400\n"
-"PO-Revision-Date: 2012-07-01 18:48+0000\n"
-"Last-Translator: jlindgren <john.lindgren@aol.com>\n"
+"POT-Creation-Date: 2012-08-11 13:36-0400\n"
+"PO-Revision-Date: 2012-07-30 07:42+0000\n"
+"Last-Translator: Oxayotl <jagw40k@free.fr>\n"
 "Language-Team: French\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -150,12 +150,12 @@ msgstr ""
 #: src/audacious/plugin-preferences.c:50
 #, c-format
 msgid "About %s"
-msgstr ""
+msgstr "À propos de %s"
 
 #: src/audacious/plugin-preferences.c:88
 #, c-format
 msgid "%s Settings"
-msgstr ""
+msgstr "Paramètres de %s"
 
 #: src/audacious/ui_preferences.c:69
 msgid "Audio"
@@ -171,7 +171,7 @@ msgstr "Liste de lecture"
 
 #: src/audacious/ui_preferences.c:72
 msgid "Song Info"
-msgstr ""
+msgstr "Informations sur les morceaux"
 
 #: src/audacious/ui_preferences.c:73
 msgid "Plugins"
@@ -276,7 +276,7 @@ msgstr "Turc"
 
 #: src/audacious/ui_preferences.c:114
 msgid "Floating point"
-msgstr ""
+msgstr "Virgule flottante"
 
 #: src/audacious/ui_preferences.c:130
 msgid "Album mode"
@@ -300,7 +300,7 @@ msgstr "ms"
 
 #: src/audacious/ui_preferences.c:141
 msgid "Soft clipping"
-msgstr ""
+msgstr "Clipping logiciel"
 
 #: src/audacious/ui_preferences.c:143
 msgid "Use software volume control (not recommended)"
@@ -400,27 +400,30 @@ msgstr "Ne charger les metadonnées qu'à la lecture"
 
 #: src/audacious/ui_preferences.c:207
 msgid "<b>Album Art</b>"
-msgstr ""
+msgstr "<b>Pochettes des albums</b>"
 
 #: src/audacious/ui_preferences.c:208
 msgid "Search for images matching these words (comma-separated):"
 msgstr ""
+"Rechercher des images correspondants aux mots suivants (séparés par des "
+"virgules) :"
 
 #: src/audacious/ui_preferences.c:210
 msgid "Exclude images matching these words (comma-separated):"
 msgstr ""
+"Exclure les images contenant les mots suivants (séparés par des virgules) : "
 
 #: src/audacious/ui_preferences.c:212
 msgid "Search for images matching song file name"
-msgstr ""
+msgstr "Rechercher les images dont le nom correspond au nom au morceau joué"
 
 #: src/audacious/ui_preferences.c:214
 msgid "Search recursively"
-msgstr ""
+msgstr "Rechercher aussi dans les sous-dossiers"
 
 #: src/audacious/ui_preferences.c:216
 msgid "Search depth:"
-msgstr ""
+msgstr "Profondeur de la recherche"
 
 #: src/audacious/ui_preferences.c:219
 msgid "<b>Popup Information</b>"
@@ -428,15 +431,17 @@ msgstr "<b>Fenêtre d'information contextuelle</b>"
 
 #: src/audacious/ui_preferences.c:220
 msgid "Show popup information"
-msgstr ""
+msgstr "Afficher la fenêtre d'information contextuelle"
 
 #: src/audacious/ui_preferences.c:222
 msgid "Popup delay (tenths of a second):"
 msgstr ""
+"Délai avant l'apparition de la fenêtre d'information contextuelle (en "
+"dixièmes de seconde) :"
 
 #: src/audacious/ui_preferences.c:225
 msgid "Show time scale for current song"
-msgstr ""
+msgstr "Afficher la progression dans la lecture du morceau actuel"
 
 #: src/audacious/ui_preferences.c:239
 msgid "TITLE"
@@ -496,7 +501,7 @@ msgstr "Format du titre :"
 
 #: src/audacious/ui_preferences.c:1178
 msgid "Output plugin:"
-msgstr "Greffon de sortie"
+msgstr "Module de sortie"
 
 #: src/audacious/ui_preferences.c:1237
 msgid "Transport"
@@ -561,16 +566,15 @@ msgstr "Crédits"
 
 #: src/libaudgui/about.c:38
 msgid "License"
-msgstr ""
+msgstr "Licence"
 
 #: src/libaudgui/about.c:74
 msgid "About Audacious"
 msgstr "À propos d'Audacious"
 
 #: src/libaudgui/confirm.c:61
-#, fuzzy
 msgid "Close Playlist"
-msgstr "Nouvelle liste de lecture"
+msgstr "Fermer la liste de lecture"
 
 #: src/libaudgui/confirm.c:76
 #, c-format
@@ -647,11 +651,11 @@ msgstr "Préamp."
 
 #: src/libaudgui/infopopup.c:202
 msgid "Track"
-msgstr ""
+msgstr "Piste"
 
 #: src/libaudgui/infopopup.c:204
 msgid "Length"
-msgstr ""
+msgstr "Durée"
 
 #: src/libaudgui/infowin.c:74
 msgid "Acid Jazz"
@@ -882,7 +886,7 @@ msgstr "Sauter au temps"
 
 #: src/libaudgui/jump-to-time.c:61
 msgid "Enter time (minutes:seconds):"
-msgstr ""
+msgstr "Saisissez un temps (minutes:secondes) :"
 
 #: src/libaudgui/playlists.c:33
 msgid "Export Playlist"
@@ -980,7 +984,7 @@ msgstr "Ajouter l'adresse URL d'un flux"
 
 #: src/libaudgui/url-opener.c:65
 msgid "Enter URL:"
-msgstr ""
+msgstr "Saisissez l'url :"
 
 #: src/libaudgui/util.c:143
 msgid ""

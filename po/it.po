@@ -6,14 +6,15 @@
 # Alessio D'Ascanio <g3ntaro@gmail.com>, 2004.
 # Diego 'Flameeyes' Pettenò <flameeyes@gentoo.org>, 2006.
 # Diego 'Flameeyes' Pettenò <flameeyes@gmail.com>, 2007.
+# Giuseppe D. B. <giuped@gmail.com>, 2012.
 # Jacopo Lorenzetti <jacopo.jl@gmail.com>, 2011, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-08-11 13:29-0400\n"
-"PO-Revision-Date: 2012-07-01 18:48+0000\n"
-"Last-Translator: jlindgren <john.lindgren@aol.com>\n"
+"POT-Creation-Date: 2012-08-11 13:36-0400\n"
+"PO-Revision-Date: 2012-07-26 23:36+0000\n"
+"Last-Translator: Giuseppe D. B. <giuped@gmail.com>\n"
 "Language-Team: Italian\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
@@ -172,7 +173,7 @@ msgstr "Playlist"
 
 #: src/audacious/ui_preferences.c:72
 msgid "Song Info"
-msgstr ""
+msgstr "Info Brano"
 
 #: src/audacious/ui_preferences.c:73
 msgid "Plugins"
@@ -429,7 +430,7 @@ msgstr "<b>Informazioni popup</b>"
 
 #: src/audacious/ui_preferences.c:220
 msgid "Show popup information"
-msgstr ""
+msgstr "Mostra Finestra informazioni"
 
 #: src/audacious/ui_preferences.c:222
 msgid "Popup delay (tenths of a second):"
@@ -562,16 +563,15 @@ msgstr "Crediti"
 
 #: src/libaudgui/about.c:38
 msgid "License"
-msgstr ""
+msgstr "Licenza"
 
 #: src/libaudgui/about.c:74
 msgid "About Audacious"
 msgstr "Informazioni su Audacious"
 
 #: src/libaudgui/confirm.c:61
-#, fuzzy
 msgid "Close Playlist"
-msgstr "Nuova playlist"
+msgstr "Chiudi playlist"
 
 #: src/libaudgui/confirm.c:76
 #, c-format
@@ -648,11 +648,11 @@ msgstr "Preamplificazione"
 
 #: src/libaudgui/infopopup.c:202
 msgid "Track"
-msgstr ""
+msgstr "Traccia"
 
 #: src/libaudgui/infopopup.c:204
 msgid "Length"
-msgstr ""
+msgstr "Lunghezza"
 
 #: src/libaudgui/infowin.c:74
 msgid "Acid Jazz"
@@ -977,7 +977,7 @@ msgstr "Aggiungi URL"
 
 #: src/libaudgui/url-opener.c:65
 msgid "Enter URL:"
-msgstr ""
+msgstr "Inserisci URL:"
 
 #: src/libaudgui/util.c:143
 msgid ""

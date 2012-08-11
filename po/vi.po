@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-08-11 13:29-0400\n"
-"PO-Revision-Date: 2012-07-12 13:26+0000\n"
+"POT-Creation-Date: 2012-08-11 13:36-0400\n"
+"PO-Revision-Date: 2012-08-08 06:05+0000\n"
 "Last-Translator: Lê Trường An <truongan@linuxmail.org>\n"
 "Language-Team: Vietnamese\n"
 "Language: vi\n"
@@ -274,7 +274,7 @@ msgstr "Tiếng Thổ Nhĩ Kỳ"
 
 #: src/audacious/ui_preferences.c:114
 msgid "Floating point"
-msgstr ""
+msgstr "Điểm chuyển động"
 
 #: src/audacious/ui_preferences.c:130
 msgid "Album mode"
@@ -398,7 +398,7 @@ msgstr "Không nạp thông tin bài hát cho đến khi nó được phát"
 
 #: src/audacious/ui_preferences.c:207
 msgid "<b>Album Art</b>"
-msgstr ""
+msgstr "<b>Ảnh bìa</b>"
 
 #: src/audacious/ui_preferences.c:208
 msgid "Search for images matching these words (comma-separated):"
@@ -426,7 +426,7 @@ msgstr "<b>Cửa sổ thông tin bật lên</b>"
 
 #: src/audacious/ui_preferences.c:220
 msgid "Show popup information"
-msgstr ""
+msgstr "Hiện ô chú thích thông tin"
 
 #: src/audacious/ui_preferences.c:222
 msgid "Popup delay (tenths of a second):"
@@ -565,9 +565,8 @@ msgid "About Audacious"
 msgstr "Giới thiệu Audacious"
 
 #: src/libaudgui/confirm.c:61
-#, fuzzy
 msgid "Close Playlist"
-msgstr "D.sách mới"
+msgstr "Đóng danh sách"
 
 #: src/libaudgui/confirm.c:76
 #, c-format
@@ -644,7 +643,7 @@ msgstr "Độ lớn"
 
 #: src/libaudgui/infopopup.c:202
 msgid "Track"
-msgstr ""
+msgstr "Bài hát"
 
 #: src/libaudgui/infopopup.c:204
 msgid "Length"

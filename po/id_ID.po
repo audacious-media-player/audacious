@@ -8,18 +8,20 @@
 #  <andika@gmail.com>, 2012.
 #  <buitenzorg812@gmail.com>, 2012.
 #  <invaleed@gmail.com>, 2012.
+# Mohamad Hasan Al Banna <se7entime@gmail.com>, 2012.
 # Rahman Aftian <>, 2012.
 # Rahman Yusri Aftian <aftian@yahoo.com>, 2012.
 #  <sakrasemangat@gmail.com>, 2012.
 #  <samsul@kplibanyumas.org>, 2012.
+#   <se7entime@gmail.com>, 2012.
 #  <yoza1404@gmail.com>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-08-11 13:29-0400\n"
-"PO-Revision-Date: 2012-07-01 18:49+0000\n"
-"Last-Translator: jlindgren <john.lindgren@aol.com>\n"
+"POT-Creation-Date: 2012-08-11 13:36-0400\n"
+"PO-Revision-Date: 2012-08-07 04:42+0000\n"
+"Last-Translator: Mohamad Hasan Al Banna <se7entime@gmail.com>\n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
 "MIME-Version: 1.0\n"
@@ -156,12 +158,12 @@ msgstr ""
 #: src/audacious/plugin-preferences.c:50
 #, c-format
 msgid "About %s"
-msgstr ""
+msgstr "Tentang %s"
 
 #: src/audacious/plugin-preferences.c:88
 #, c-format
 msgid "%s Settings"
-msgstr ""
+msgstr "%s Pengaturan"
 
 #: src/audacious/ui_preferences.c:69
 msgid "Audio"
@@ -177,7 +179,7 @@ msgstr "Daftar lagu"
 
 #: src/audacious/ui_preferences.c:72
 msgid "Song Info"
-msgstr ""
+msgstr "Info Lagu"
 
 #: src/audacious/ui_preferences.c:73
 msgid "Plugins"
@@ -282,7 +284,7 @@ msgstr "Turki"
 
 #: src/audacious/ui_preferences.c:114
 msgid "Floating point"
-msgstr ""
+msgstr "Titik mengambang"
 
 #: src/audacious/ui_preferences.c:130
 msgid "Album mode"
@@ -306,7 +308,7 @@ msgstr "ms"
 
 #: src/audacious/ui_preferences.c:141
 msgid "Soft clipping"
-msgstr ""
+msgstr "Kliping lunak"
 
 #: src/audacious/ui_preferences.c:143
 msgid "Use software volume control (not recommended)"
@@ -406,27 +408,30 @@ msgstr "Jangan muat metadata sampai lagu diputar"
 
 #: src/audacious/ui_preferences.c:207
 msgid "<b>Album Art</b>"
-msgstr ""
+msgstr "<b>Gambar Sampul</b>"
 
 #: src/audacious/ui_preferences.c:208
 msgid "Search for images matching these words (comma-separated):"
 msgstr ""
+"Cari gambar yang sesuai dengan kata tersebut (pisahkan dengan tanda koma):"
 
 #: src/audacious/ui_preferences.c:210
 msgid "Exclude images matching these words (comma-separated):"
 msgstr ""
+"Mengecualikan gambar yang sesuai dengan kata tersebut (pisahkan dengan tanda "
+"koma):"
 
 #: src/audacious/ui_preferences.c:212
 msgid "Search for images matching song file name"
-msgstr ""
+msgstr "Cari gambar yang sesuai dengan nama berkas"
 
 #: src/audacious/ui_preferences.c:214
 msgid "Search recursively"
-msgstr ""
+msgstr "Cari secara rekursif"
 
 #: src/audacious/ui_preferences.c:216
 msgid "Search depth:"
-msgstr ""
+msgstr "Kedalaman pencarian:"
 
 #: src/audacious/ui_preferences.c:219
 msgid "<b>Popup Information</b>"
@@ -434,15 +439,15 @@ msgstr "<b>Informasi Jendela Munculan</b>"
 
 #: src/audacious/ui_preferences.c:220
 msgid "Show popup information"
-msgstr ""
+msgstr "Munculkan halaman informasi popup"
 
 #: src/audacious/ui_preferences.c:222
 msgid "Popup delay (tenths of a second):"
-msgstr ""
+msgstr "Tunda popup (persepuluh detik):"
 
 #: src/audacious/ui_preferences.c:225
 msgid "Show time scale for current song"
-msgstr ""
+msgstr "Tampilkan skala waktu untuk lagu saat ini"
 
 #: src/audacious/ui_preferences.c:239
 msgid "TITLE"
@@ -566,16 +571,15 @@ msgstr "Kredit"
 
 #: src/libaudgui/about.c:38
 msgid "License"
-msgstr ""
+msgstr "Lisensi"
 
 #: src/libaudgui/about.c:74
 msgid "About Audacious"
 msgstr "Tentang Audacious"
 
 #: src/libaudgui/confirm.c:61
-#, fuzzy
 msgid "Close Playlist"
-msgstr "Daftar lagu Baru"
+msgstr "Tutup Playlist"
 
 #: src/libaudgui/confirm.c:76
 #, c-format
@@ -652,11 +656,11 @@ msgstr "Preamp"
 
 #: src/libaudgui/infopopup.c:202
 msgid "Track"
-msgstr ""
+msgstr "Jalur"
 
 #: src/libaudgui/infopopup.c:204
 msgid "Length"
-msgstr ""
+msgstr "Panjang"
 
 #: src/libaudgui/infowin.c:74
 msgid "Acid Jazz"
@@ -887,7 +891,7 @@ msgstr "Loncat ke waktu"
 
 #: src/libaudgui/jump-to-time.c:61
 msgid "Enter time (minutes:seconds):"
-msgstr ""
+msgstr "Masukkan waktu (menit:detik):"
 
 #: src/libaudgui/playlists.c:33
 msgid "Export Playlist"
@@ -981,7 +985,7 @@ msgstr "Tambah URL"
 
 #: src/libaudgui/url-opener.c:65
 msgid "Enter URL:"
-msgstr ""
+msgstr "Masukkan URL:"
 
 #: src/libaudgui/util.c:143
 msgid ""

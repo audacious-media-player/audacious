@@ -4,6 +4,9 @@ case "$1" in
 ast.po)
     LANGUAGE="Asturian"
     ;;
+be.po)
+    LANGUAGE="Belarusian"
+    ;;
 ca.po)
     LANGUAGE="Catalan"
     ;;

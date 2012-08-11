@@ -9,13 +9,14 @@
 # Karen Eliot <kareneliot@riseup. net>, 2011.
 # Rafael Ferreira <rafael.f.f1@gmail.com>, 2012.
 # Rodrigo Macedo <rodrigomacedo@rmsolucoeseminformatica.com>, 2012.
+#   <vitorgatti@yahoo.com.br>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-08-11 13:29-0400\n"
-"PO-Revision-Date: 2012-07-26 00:12+0000\n"
-"Last-Translator: John Lindgren <john.lindgren@aol.com>\n"
+"POT-Creation-Date: 2012-08-11 13:36-0400\n"
+"PO-Revision-Date: 2012-07-31 22:03+0000\n"
+"Last-Translator: vitorgatti <vitorgatti@yahoo.com.br>\n"
 "Language-Team: Portuguese (Brazil)\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -259,7 +260,7 @@ msgstr "Japonês"
 
 #: src/audacious/ui_preferences.c:103
 msgid "Korean"
-msgstr "Koreano"
+msgstr "Coreano"
 
 #: src/audacious/ui_preferences.c:104
 msgid "Polish"
@@ -572,7 +573,7 @@ msgstr "Sobre o Audacious"
 
 #: src/libaudgui/confirm.c:61
 msgid "Close Playlist"
-msgstr ""
+msgstr "Fechar Lista de Reprodução"
 
 #: src/libaudgui/confirm.c:76
 #, c-format
