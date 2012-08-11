@@ -300,7 +300,11 @@ static bool_t motion_notify_cb (GtkWidget * widget, GdkEventMotion * event, List
 {
     if (MODEL_HAS_CB (model, mouse_motion))
     {
-        int row = audgui_list_row_at_point (widget, event->x, event->y);
+        int x, y;
+        gtk_tree_view_convert_bin_window_to_widget_coords ((GtkTreeView *)
+         widget, event->x, event->y, & x, & y);
+
+        int row = audgui_list_row_at_point (widget, x, y);
         model->cbs->mouse_motion (model->user, event, row);
     }
 
@@ -311,7 +315,11 @@ static bool_t leave_notify_cb (GtkWidget * widget, GdkEventMotion * event, ListM
 {
     if (MODEL_HAS_CB (model, mouse_leave))
     {
-        int row = audgui_list_row_at_point (widget, event->x, event->y);
+        int x, y;
+        gtk_tree_view_convert_bin_window_to_widget_coords ((GtkTreeView *)
+         widget, event->x, event->y, & x, & y);
+
+        int row = audgui_list_row_at_point (widget, x, y);
         model->cbs->mouse_leave (model->user, event, row);
     }
 
