@@ -451,9 +451,11 @@ static bool_t drag_motion (GtkWidget * widget, GdkDragContext * context,
     gtk_tree_view_convert_widget_to_bin_window_coords ((GtkTreeView *) widget,
      x, y, & x, & y);
 
-    if (y >= 0 && y < 48)
+    int hotspot = MIN (height / 4, 24);
+
+    if (y >= 0 && y < hotspot)
         start_autoscroll (model, widget, -2);
-    else if (y >= height - 48 && y < height)
+    else if (y >= height - hotspot && y < height)
         start_autoscroll (model, widget, 2);
     else
         stop_autoscroll (model);
