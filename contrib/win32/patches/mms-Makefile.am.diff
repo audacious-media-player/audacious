@@ -1,0 +1,11 @@
+--- Makefile.am.0	2012-07-01 21:24:36 -0400
++++ Makefile.am	2012-07-01 21:24:56 -0400
+@@ -22,7 +22,7 @@
+ # noinst_HEADERS = 
+ 
+ libmms_la_LDFLAGS = -version-info 0:2:0 -no-undefined -export-dynamic
+-libmms_la_LIBADD = $(GLIB_LIBS)
++libmms_la_LIBADD = $(MMS_LIBS) $(GLIB_LIBS)
+ 
+ libmmsincdir = $(includedir)/libmms
+ 
