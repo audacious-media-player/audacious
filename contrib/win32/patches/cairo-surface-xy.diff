@@ -1,0 +1,381 @@
+diff --git a/src/cairo-composite-rectangles-private.h b/src/cairo-composite-rectangles-private.h
+index a0f7c1a..8b24939 100644
+--- a/src/cairo-composite-rectangles-private.h
++++ b/src/cairo-composite-rectangles-private.h
+@@ -60,6 +60,7 @@ struct _cairo_composite_rectangles {
+ 
+ cairo_private cairo_int_status_t
+ _cairo_composite_rectangles_init_for_paint (cairo_composite_rectangles_t *extents,
++					 int surface_x, int surface_y,
+ 					 int surface_width, int surface_height,
+ 					 cairo_operator_t	 op,
+ 					 const cairo_pattern_t	*source,
+@@ -67,6 +68,7 @@ _cairo_composite_rectangles_init_for_paint (cairo_composite_rectangles_t *extent
+ 
+ cairo_private cairo_int_status_t
+ _cairo_composite_rectangles_init_for_mask (cairo_composite_rectangles_t *extents,
++					int surface_x, int surface_y,
+ 					int surface_width, int surface_height,
+ 					cairo_operator_t	 op,
+ 					const cairo_pattern_t	*source,
+@@ -75,6 +77,7 @@ _cairo_composite_rectangles_init_for_mask (cairo_composite_rectangles_t *extents
+ 
+ cairo_private cairo_int_status_t
+ _cairo_composite_rectangles_init_for_stroke (cairo_composite_rectangles_t *extents,
++					     int surface_x, int surface_y,
+ 					     int surface_width, int surface_height,
+ 					     cairo_operator_t	 op,
+ 					     const cairo_pattern_t	*source,
+@@ -85,6 +88,7 @@ _cairo_composite_rectangles_init_for_stroke (cairo_composite_rectangles_t *exten
+ 
+ cairo_private cairo_int_status_t
+ _cairo_composite_rectangles_init_for_fill (cairo_composite_rectangles_t *extents,
++					   int surface_x, int surface_y,
+ 					   int surface_width, int surface_height,
+ 					   cairo_operator_t	 op,
+ 					   const cairo_pattern_t	*source,
+@@ -93,6 +97,7 @@ _cairo_composite_rectangles_init_for_fill (cairo_composite_rectangles_t *extents
+ 
+ cairo_private cairo_int_status_t
+ _cairo_composite_rectangles_init_for_glyphs (cairo_composite_rectangles_t *extents,
++					     int surface_x, int surface_y,
+ 					     int surface_width, int surface_height,
+ 					     cairo_operator_t		 op,
+ 					     const cairo_pattern_t	*source,
+diff --git a/src/cairo-composite-rectangles.c b/src/cairo-composite-rectangles.c
+index 0aebee3..a1a7637 100644
+--- a/src/cairo-composite-rectangles.c
++++ b/src/cairo-composite-rectangles.c
+@@ -42,12 +42,14 @@
+ 
+ static inline cairo_bool_t
+ _cairo_composite_rectangles_init (cairo_composite_rectangles_t *extents,
++				  int x, int y,
+ 				  int width, int height,
+ 				  cairo_operator_t op,
+ 				  const cairo_pattern_t *source,
+ 				  cairo_clip_t *clip)
+ {
+-    extents->unbounded.x = extents->unbounded.y = 0;
++    extents->unbounded.x = x;
++    extents->unbounded.y = y;
+     extents->unbounded.width  = width;
+     extents->unbounded.height = height;
+ 
+@@ -76,12 +78,14 @@ _cairo_composite_rectangles_init (cairo_composite_rectangles_t *extents,
+ 
+ cairo_int_status_t
+ _cairo_composite_rectangles_init_for_paint (cairo_composite_rectangles_t *extents,
++					    int surface_x, int surface_y,
+ 					    int surface_width, int surface_height,
+ 					    cairo_operator_t		 op,
+ 					    const cairo_pattern_t	*source,
+ 					    cairo_clip_t		*clip)
+ {
+     if (! _cairo_composite_rectangles_init (extents,
++					    surface_x, surface_y,
+ 					    surface_width, surface_height,
+ 					    op, source, clip))
+     {
+@@ -106,6 +110,7 @@ _cairo_composite_rectangles_intersect (cairo_composite_rectangles_t *extents)
+ 
+ cairo_int_status_t
+ _cairo_composite_rectangles_init_for_mask (cairo_composite_rectangles_t *extents,
++					   int surface_x, int surface_y,
+ 					   int surface_width, int surface_height,
+ 					   cairo_operator_t		 op,
+ 					   const cairo_pattern_t	*source,
+@@ -113,6 +118,7 @@ _cairo_composite_rectangles_init_for_mask (cairo_composite_rectangles_t *extents
+ 					   cairo_clip_t			*clip)
+ {
+     if (! _cairo_composite_rectangles_init (extents,
++					    surface_x, surface_y,
+ 					    surface_width, surface_height,
+ 					    op, source, clip))
+     {
+@@ -126,6 +132,7 @@ _cairo_composite_rectangles_init_for_mask (cairo_composite_rectangles_t *extents
+ 
+ cairo_int_status_t
+ _cairo_composite_rectangles_init_for_stroke (cairo_composite_rectangles_t *extents,
++					     int surface_x, int surface_y,
+ 					     int surface_width, int surface_height,
+ 					     cairo_operator_t		 op,
+ 					     const cairo_pattern_t	*source,
+@@ -135,6 +142,7 @@ _cairo_composite_rectangles_init_for_stroke (cairo_composite_rectangles_t *exten
+ 					     cairo_clip_t		*clip)
+ {
+     if (! _cairo_composite_rectangles_init (extents,
++					    surface_x, surface_y,
+ 					    surface_width, surface_height,
+ 					    op, source, clip))
+     {
+@@ -148,6 +156,7 @@ _cairo_composite_rectangles_init_for_stroke (cairo_composite_rectangles_t *exten
+ 
+ cairo_int_status_t
+ _cairo_composite_rectangles_init_for_fill (cairo_composite_rectangles_t *extents,
++					   int surface_x, int surface_y,
+ 					   int surface_width, int surface_height,
+ 					   cairo_operator_t		 op,
+ 					   const cairo_pattern_t	*source,
+@@ -155,6 +164,7 @@ _cairo_composite_rectangles_init_for_fill (cairo_composite_rectangles_t *extents
+ 					   cairo_clip_t			*clip)
+ {
+     if (! _cairo_composite_rectangles_init (extents,
++					    surface_x, surface_y,
+ 					    surface_width, surface_height,
+ 					    op, source, clip))
+     {
+@@ -168,6 +178,7 @@ _cairo_composite_rectangles_init_for_fill (cairo_composite_rectangles_t *extents
+ 
+ cairo_int_status_t
+ _cairo_composite_rectangles_init_for_glyphs (cairo_composite_rectangles_t *extents,
++					     int surface_x, int surface_y,
+ 					     int surface_width, int surface_height,
+ 					     cairo_operator_t		 op,
+ 					     const cairo_pattern_t	*source,
+@@ -180,6 +191,7 @@ _cairo_composite_rectangles_init_for_glyphs (cairo_composite_rectangles_t *exten
+     cairo_status_t status;
+ 
+     if (! _cairo_composite_rectangles_init (extents,
++					    surface_x, surface_y,
+ 					    surface_width, surface_height,
+ 					    op, source, clip))
+     {
+diff --git a/src/cairo-gl-surface.c b/src/cairo-gl-surface.c
+index e53506c..0980a57 100644
+--- a/src/cairo-gl-surface.c
++++ b/src/cairo-gl-surface.c
+@@ -1479,6 +1479,7 @@ _cairo_gl_surface_stroke (void			        *abstract_surface,
+     cairo_status_t status;
+ 
+     status = _cairo_composite_rectangles_init_for_stroke (&extents,
++							  0, 0,
+ 							  surface->width,
+ 							  surface->height,
+ 							  op, source,
+@@ -1545,6 +1546,7 @@ _cairo_gl_surface_fill (void			*abstract_surface,
+     cairo_status_t status;
+ 
+     status = _cairo_composite_rectangles_init_for_fill (&extents,
++							0, 0,
+ 							surface->width,
+ 							surface->height,
+ 							op, source, path,
+diff --git a/src/cairo-image-surface.c b/src/cairo-image-surface.c
+index 4d65ee6..01e60a2 100644
+--- a/src/cairo-image-surface.c
++++ b/src/cairo-image-surface.c
+@@ -3248,6 +3248,7 @@ _cairo_image_surface_paint (void			*abstract_surface,
+     cairo_status_t status;
+ 
+     status = _cairo_composite_rectangles_init_for_paint (&extents,
++							 0, 0,
+ 							 surface->width,
+ 							 surface->height,
+ 							 op, source,
+@@ -3368,7 +3369,7 @@ _cairo_image_surface_mask (void				*abstract_surface,
+     cairo_status_t status;
+ 
+     status = _cairo_composite_rectangles_init_for_mask (&extents,
+-							surface->width, surface->height,
++							0, 0, surface->width, surface->height,
+ 							op, source, mask, clip);
+     if (unlikely (status))
+ 	return status;
+@@ -3599,6 +3600,7 @@ _cairo_image_surface_stroke (void			*abstract_surface,
+     cairo_status_t status;
+ 
+     status = _cairo_composite_rectangles_init_for_stroke (&extents,
++							  0, 0,
+ 							  surface->width,
+ 							  surface->height,
+ 							  op, source,
+@@ -3691,6 +3693,7 @@ _cairo_image_surface_fill (void				*abstract_surface,
+     cairo_status_t status;
+ 
+     status = _cairo_composite_rectangles_init_for_fill (&extents,
++							0, 0,
+ 							surface->width,
+ 							surface->height,
+ 							op, source, path,
+@@ -4022,6 +4025,7 @@ _cairo_image_surface_glyphs (void			*abstract_surface,
+     cairo_status_t status;
+ 
+     status = _cairo_composite_rectangles_init_for_glyphs (&extents,
++							  0, 0,
+ 							  surface->width,
+ 							  surface->height,
+ 							  op, source,
+diff --git a/src/cairo-pdf-surface.c b/src/cairo-pdf-surface.c
+index c60e636..24a6119 100644
+--- a/src/cairo-pdf-surface.c
++++ b/src/cairo-pdf-surface.c
+@@ -5399,6 +5399,7 @@ _cairo_pdf_surface_paint (void			*abstract_surface,
+     cairo_composite_rectangles_t extents;
+ 
+     status = _cairo_composite_rectangles_init_for_paint (&extents,
++							 0, 0,
+ 							 surface->width, surface->height,
+ 							 op, source, clip);
+     if (unlikely (status)) {
+@@ -5514,6 +5515,7 @@ _cairo_pdf_surface_mask	(void			*abstract_surface,
+     cairo_composite_rectangles_t extents;
+ 
+     status = _cairo_composite_rectangles_init_for_mask (&extents,
++							0, 0,
+ 							surface->width, surface->height,
+ 							op, source, mask, clip);
+     if (unlikely (status)) {
+@@ -5623,6 +5625,7 @@ _cairo_pdf_surface_stroke (void			*abstract_surface,
+     cairo_status_t status;
+ 
+     status = _cairo_composite_rectangles_init_for_stroke (&extents,
++							  0, 0,
+ 							  surface->width,
+ 							  surface->height,
+ 							  op, source,
+@@ -5752,6 +5755,7 @@ _cairo_pdf_surface_fill (void			*abstract_surface,
+     cairo_composite_rectangles_t extents;
+ 
+     status = _cairo_composite_rectangles_init_for_fill (&extents,
++							0, 0,
+ 							surface->width,
+ 							surface->height,
+ 							op, source, path,
+@@ -6032,6 +6036,7 @@ _cairo_pdf_surface_show_text_glyphs (void			*abstract_surface,
+     cairo_status_t status;
+ 
+     status = _cairo_composite_rectangles_init_for_glyphs (&extents,
++							  0, 0,
+ 							  surface->width,
+ 							  surface->height,
+ 							  op, source,
+diff --git a/src/cairo-ps-surface.c b/src/cairo-ps-surface.c
+index c73214e..3b7139a 100644
+--- a/src/cairo-ps-surface.c
++++ b/src/cairo-ps-surface.c
+@@ -3497,6 +3497,7 @@ _cairo_ps_surface_paint (void			*abstract_surface,
+     cairo_status_t status;
+ 
+     status = _cairo_composite_rectangles_init_for_paint (&extents,
++							 0, 0,
+ 							 surface->width, surface->height,
+ 							 op, source, clip);
+     if (unlikely (status))
+@@ -3565,6 +3566,7 @@ _cairo_ps_surface_stroke (void			*abstract_surface,
+     cairo_int_status_t status;
+ 
+     status = _cairo_composite_rectangles_init_for_stroke (&extents,
++							  0, 0,
+ 							  surface->width,
+ 							  surface->height,
+ 							  op, source,
+@@ -3630,6 +3632,7 @@ _cairo_ps_surface_fill (void		*abstract_surface,
+     cairo_int_status_t status;
+ 
+     status = _cairo_composite_rectangles_init_for_fill (&extents,
++							0, 0,
+ 							surface->width,
+ 							surface->height,
+ 							op, source, path,
+@@ -3718,6 +3721,7 @@ _cairo_ps_surface_show_glyphs (void		     *abstract_surface,
+     cairo_status_t status;
+ 
+     status = _cairo_composite_rectangles_init_for_glyphs (&extents,
++							  0, 0,
+ 							  surface->width,
+ 							  surface->height,
+ 							  op, source,
+diff --git a/src/cairo-surface-fallback.c b/src/cairo-surface-fallback.c
+index 99ea07e..c63be72 100644
+--- a/src/cairo-surface-fallback.c
++++ b/src/cairo-surface-fallback.c
+@@ -896,6 +896,8 @@ _cairo_surface_fallback_paint (cairo_surface_t		*surface,
+         ASSERT_NOT_REACHED;
+ 
+     status = _cairo_composite_rectangles_init_for_paint (&extents,
++							 rect.x,
++							 rect.y,
+ 							 rect.width,
+ 							 rect.height,
+ 							 op, source,
+@@ -1007,6 +1009,7 @@ _cairo_surface_fallback_mask (cairo_surface_t		*surface,
+         ASSERT_NOT_REACHED;
+ 
+     status = _cairo_composite_rectangles_init_for_mask (&extents,
++							rect.x, rect.y,
+ 							rect.width, rect.height,
+ 							op, source, mask, clip);
+     if (unlikely (status))
+@@ -1052,6 +1055,8 @@ _cairo_surface_fallback_stroke (cairo_surface_t		*surface,
+         ASSERT_NOT_REACHED;
+ 
+     status = _cairo_composite_rectangles_init_for_stroke (&extents,
++							  rect.x,
++							  rect.y,
+ 							  rect.width,
+ 							  rect.height,
+ 							  op, source,
+@@ -1146,6 +1151,8 @@ _cairo_surface_fallback_fill (cairo_surface_t		*surface,
+         ASSERT_NOT_REACHED;
+ 
+     status = _cairo_composite_rectangles_init_for_fill (&extents,
++							rect.x,
++							rect.y,
+ 							rect.width,
+ 							rect.height,
+ 							op, source, path,
+@@ -1316,6 +1323,8 @@ _cairo_surface_fallback_show_glyphs (cairo_surface_t		*surface,
+         ASSERT_NOT_REACHED;
+ 
+     status = _cairo_composite_rectangles_init_for_glyphs (&extents,
++							  rect.x,
++							  rect.y,
+ 							  rect.width,
+ 							  rect.height,
+ 							  op, source,
+diff --git a/src/cairo-xcb-surface-render.c b/src/cairo-xcb-surface-render.c
+index 8294a47..a38ea78 100644
+--- a/src/cairo-xcb-surface-render.c
++++ b/src/cairo-xcb-surface-render.c
+@@ -3122,6 +3122,7 @@ _cairo_xcb_surface_render_paint (cairo_xcb_surface_t	*surface,
+     }
+ 
+     status = _cairo_composite_rectangles_init_for_paint (&extents,
++							 0, 0,
+ 							 surface->width,
+ 							 surface->height,
+ 							 op, source,
+@@ -3191,6 +3192,7 @@ _cairo_xcb_surface_render_mask (cairo_xcb_surface_t	*surface,
+ 	return CAIRO_INT_STATUS_UNSUPPORTED;
+ 
+     status = _cairo_composite_rectangles_init_for_mask (&extents,
++							0, 0,
+ 							surface->width, surface->height,
+ 							op, source, mask, clip);
+     if (unlikely (status))
+@@ -3475,6 +3477,7 @@ _cairo_xcb_surface_render_stroke (cairo_xcb_surface_t	*surface,
+     }
+ 
+     status = _cairo_composite_rectangles_init_for_stroke (&extents,
++							  0, 0,
+ 							  surface->width,
+ 							  surface->height,
+ 							  op, source,
+@@ -3659,6 +3662,7 @@ _cairo_xcb_surface_render_fill (cairo_xcb_surface_t	*surface,
+     }
+ 
+     status = _cairo_composite_rectangles_init_for_fill (&extents,
++							0, 0,
+ 							surface->width,
+ 							surface->height,
+ 							op, source, path,
+@@ -4621,6 +4625,7 @@ _cairo_xcb_surface_render_glyphs (cairo_xcb_surface_t	*surface,
+ 	return CAIRO_INT_STATUS_UNSUPPORTED;
+ 
+     status = _cairo_composite_rectangles_init_for_glyphs (&extents,
++							  0, 0,
+ 							  surface->width,
+ 							  surface->height,
+ 							  op, source,
+
