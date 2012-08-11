@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-07-25 20:08-0400\n"
+"POT-Creation-Date: 2012-08-11 13:29-0400\n"
 "PO-Revision-Date: 2012-08-06 17:22+0800\n"
 "Last-Translator: Ruei-Yuan Lu <RueiYuan.Lu@gmail.com>\n"
 "Language-Team: Chinese (traditional)\n"
@@ -105,7 +105,7 @@ msgstr ""
 "%s：%s\n"
 "請嘗試用「%s --help」取得更多資訊。\n"
 
-#: src/audacious/main.c:545
+#: src/audacious/main.c:546
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -136,7 +136,9 @@ msgid "Now Playing"
 msgstr "正在播放"
 
 #: src/audacious/playlist-new.c:1650
-msgid "The playlist cannot be sorted because metadata scanning is still in progress (or has been disabled)."
+msgid ""
+"The playlist cannot be sorted because metadata scanning is still in progress "
+"(or has been disabled)."
 msgstr "因為正在進行詮釋資料的掃描，無法對播放清單進行排序。(或者已經被關閉)"
 
 #: src/audacious/plugin-preferences.c:50
@@ -157,8 +159,7 @@ msgstr "音訊"
 msgid "Network"
 msgstr "網路"
 
-#: src/audacious/ui_preferences.c:71
-#: src/audacious/ui_preferences.c:1237
+#: src/audacious/ui_preferences.c:71 src/audacious/ui_preferences.c:1237
 msgid "Playlist"
 msgstr "播放清單"
 
@@ -170,18 +171,15 @@ msgstr "歌曲資訊"
 msgid "Plugins"
 msgstr "外掛"
 
-#: src/audacious/ui_preferences.c:79
-#: src/libaudgui/infopopup.c:194
+#: src/audacious/ui_preferences.c:79 src/libaudgui/infopopup.c:194
 msgid "Artist"
 msgstr "藝人"
 
-#: src/audacious/ui_preferences.c:80
-#: src/libaudgui/infopopup.c:196
+#: src/audacious/ui_preferences.c:80 src/libaudgui/infopopup.c:196
 msgid "Album"
 msgstr "專輯"
 
-#: src/audacious/ui_preferences.c:81
-#: src/libaudgui/infopopup.c:192
+#: src/audacious/ui_preferences.c:81 src/libaudgui/infopopup.c:192
 #: src/libaudgui/ui_playlist_manager.c:287
 msgid "Title"
 msgstr "標題"
@@ -190,8 +188,7 @@ msgstr "標題"
 msgid "Tracknumber"
 msgstr "音軌編號"
 
-#: src/audacious/ui_preferences.c:83
-#: src/libaudgui/infopopup.c:198
+#: src/audacious/ui_preferences.c:83 src/libaudgui/infopopup.c:198
 msgid "Genre"
 msgstr "類型"
 
@@ -207,8 +204,7 @@ msgstr "檔案路徑"
 msgid "Date"
 msgstr "日期"
 
-#: src/audacious/ui_preferences.c:87
-#: src/libaudgui/infopopup.c:200
+#: src/audacious/ui_preferences.c:87 src/libaudgui/infopopup.c:200
 msgid "Year"
 msgstr "年份"
 
@@ -324,8 +320,7 @@ msgstr "<b>調整音量</b>"
 msgid "Amplify all files:"
 msgstr "放大所有檔案的音量："
 
-#: src/audacious/ui_preferences.c:154
-#: src/audacious/ui_preferences.c:157
+#: src/audacious/ui_preferences.c:154 src/audacious/ui_preferences.c:157
 msgid "dB"
 msgstr "分貝"
 
@@ -571,7 +566,9 @@ msgstr "關閉播放清單"
 
 #: src/libaudgui/confirm.c:76
 #, c-format
-msgid "Are you sure you want to close %s?  If you do, any changes made since the playlist was exported will be lost."
+msgid ""
+"Are you sure you want to close %s?  If you do, any changes made since the "
+"playlist was exported will be lost."
 msgstr "您確定要關閉 %s? 所有未匯出的資料將會遺失。"
 
 #: src/libaudgui/confirm.c:89
@@ -802,10 +799,8 @@ msgstr "數位"
 msgid "Trip-hop"
 msgstr "迷幻舞曲"
 
-#: src/libaudgui/infowin.c:176
-#: src/libaudgui/infowin.c:365
-#: src/libaudgui/infowin.c:368
-#: src/libaudgui/infowin.c:371
+#: src/libaudgui/infowin.c:176 src/libaudgui/infowin.c:365
+#: src/libaudgui/infowin.c:368 src/libaudgui/infowin.c:371
 msgid "<span size=\"small\">n/a</span>"
 msgstr "<span size=\"small\">n/a</span>"
 
@@ -912,8 +907,7 @@ msgstr "開啟後關閉對話視窗"
 msgid "Close dialog on Add"
 msgstr "加入後關閉對話視窗"
 
-#: src/libaudgui/ui_jumptotrack.c:105
-#: src/libaudgui/ui_jumptotrack.c:113
+#: src/libaudgui/ui_jumptotrack.c:105 src/libaudgui/ui_jumptotrack.c:113
 #: src/libaudgui/ui_jumptotrack.c:332
 msgid "_Queue"
 msgstr "排入佇列(_Q)"
@@ -981,4 +975,3 @@ msgid ""
 msgstr ""
 "\n"
 "(詳細訊息已被隱藏。)"
-

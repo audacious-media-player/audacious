@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-07-25 20:08-0400\n"
+"POT-Creation-Date: 2012-08-11 13:29-0400\n"
 "PO-Revision-Date: 2012-07-13 16:18+0000\n"
 "Last-Translator: tarkan255 <t.oguzman@hotmail.com>\n"
 "Language-Team: Turkish\n"
@@ -110,7 +110,7 @@ msgstr ""
 "%s: %s\n"
 "Daha fazla bilgi için `%s --help' komutunu kullanın.\n"
 
-#: src/audacious/main.c:545
+#: src/audacious/main.c:546
 msgid "Audacious"
 msgstr "Audacious"
 
