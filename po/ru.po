@@ -12,6 +12,7 @@
 # serg0 <serg0@ulx.ru>, 2009.
 # Sergey V. Mironov <sergo@bk.ru>, 2010.
 # Vitaly Lipatov <lav@etersoft.ru>, 2007.
+# Musatov M. <m1kc@yandex.ru>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
@@ -106,7 +107,7 @@ msgstr "ФАЙЛ..."
 
 #: src/audacious/main.c:257
 msgid "- play multimedia files"
-msgstr "- проиграть мультимедийные файлы"
+msgstr "- проигрывать мультимедийные файлы"
 
 #: src/audacious/main.c:264
 #, c-format
@@ -141,11 +142,11 @@ msgstr "загрузить"
 
 #: src/audacious/playlist-new.c:121
 msgid "New Playlist"
-msgstr "Новый Список"
+msgstr "Новый список воспроизведения"
 
 #: src/audacious/playlist-new.c:122
 msgid "Now Playing"
-msgstr "Сейчас Воспроизводится"
+msgstr "Сейчас воспроизводится"
 
 #: src/audacious/playlist-new.c:1650
 msgid ""
@@ -153,7 +154,7 @@ msgid ""
 "(or has been disabled)."
 msgstr ""
 "Список не может быть отсортирован, так как сканирование метаданных всё ещё "
-"происходит (или было выключено)."
+"идёт (или было выключено)."
 
 #: src/audacious/plugin-preferences.c:50
 #, c-format
@@ -296,7 +297,7 @@ msgstr "<b>Настройки вывода</b>"
 
 #: src/audacious/ui_preferences.c:135
 msgid "Bit depth:"
-msgstr "Разрядность"
+msgstr "Разрядность:"
 
 #: src/audacious/ui_preferences.c:138
 msgid "Buffer size:"
@@ -316,7 +317,7 @@ msgstr "Использовать программную регулировку �
 
 #: src/audacious/ui_preferences.c:145
 msgid "<b>Replay Gain</b>"
-msgstr "<b>Выравнивание громкости</b>"
+msgstr "<b>Replay Gain (выравнивание громкости)</b>"
 
 #: src/audacious/ui_preferences.c:146
 msgid "Enable Replay Gain"
@@ -332,7 +333,7 @@ msgstr "<b>Регулировка уровней</b>"
 
 #: src/audacious/ui_preferences.c:152
 msgid "Amplify all files:"
-msgstr "Увеличить всем файлам:"
+msgstr "Усилить звук во всех файлах на:"
 
 #: src/audacious/ui_preferences.c:154 src/audacious/ui_preferences.c:157
 msgid "dB"
@@ -340,23 +341,23 @@ msgstr "дБ"
 
 #: src/audacious/ui_preferences.c:155
 msgid "Amplify untagged files:"
-msgstr "Увеличить непомеченным файлам"
+msgstr "Усилить звук в файлах без тэга на:"
 
 #: src/audacious/ui_preferences.c:160
 msgid "Proxy hostname:"
-msgstr "Прокси сервер:"
+msgstr "Сервер:"
 
 #: src/audacious/ui_preferences.c:161
 msgid "Proxy port:"
-msgstr "Порт прокси:"
+msgstr "Порт:"
 
 #: src/audacious/ui_preferences.c:164
 msgid "Proxy username:"
-msgstr "Имя пользователя прокси:"
+msgstr "Имя пользователя:"
 
 #: src/audacious/ui_preferences.c:165
 msgid "Proxy password:"
-msgstr "Пароль прокси:"
+msgstr "Пароль:"
 
 #: src/audacious/ui_preferences.c:169
 msgid "<b>Proxy Configuration</b>"
@@ -372,11 +373,11 @@ msgstr "Использовать авторизацию через прокси"
 
 #: src/audacious/ui_preferences.c:181
 msgid "Auto character encoding detector for:"
-msgstr "Язык для автоматического определения кодировки:"
+msgstr "Автоматически определять кодировку для языка:"
 
 #: src/audacious/ui_preferences.c:185
 msgid "Fallback character encodings:"
-msgstr "Кодировка по умолчанию:"
+msgstr "Если не удалось определить, использовать кодировку:"
 
 #: src/audacious/ui_preferences.c:189
 msgid "<b>Behavior</b>"
@@ -388,49 +389,49 @@ msgstr "Продолжать воспроизведение при запуск�
 
 #: src/audacious/ui_preferences.c:192
 msgid "Advance when the current song is deleted"
-msgstr "Продвигаться дальше если текущая песня удалена"
+msgstr "Продвигаться дальше, если текущая песня удалена"
 
 #: src/audacious/ui_preferences.c:194
 msgid "Clear the playlist when opening files"
-msgstr "Очищать список если открывается новая песня"
+msgstr "Очищать список, если открывается новая песня"
 
 #: src/audacious/ui_preferences.c:196
 msgid "Open files in a temporary playlist"
-msgstr "Открывать файлы во временном списке"
+msgstr "Открывать файлы во временном списке воспроизведения"
 
 #: src/audacious/ui_preferences.c:198
 msgid "<b>Metadata</b>"
-msgstr "<b>Мета-информация о дорожке</b>"
+msgstr "<b>Метаданные</b>"
 
 #: src/audacious/ui_preferences.c:199
 msgid "Do not load metadata for songs until played"
-msgstr "Не загружать метаданные песен до того как они начнут проигрываться"
+msgstr "Не загружать метаданные песен до воспроизведения"
 
 #: src/audacious/ui_preferences.c:207
 msgid "<b>Album Art</b>"
-msgstr "<b>Обложка Альбома</b>"
+msgstr "<b>Обложка альбома</b>"
 
 #: src/audacious/ui_preferences.c:208
 msgid "Search for images matching these words (comma-separated):"
 msgstr ""
-"Искать для исображений совпадающих с этими словами (разделять запятыми):"
+"Искать изображения, подходящих под эти слова (разделять запятыми):"
 
 #: src/audacious/ui_preferences.c:210
 msgid "Exclude images matching these words (comma-separated):"
 msgstr ""
-"Исключать изображения совпадающии с этими словами (разделять запятыми):"
+"Исключать изображения, подходящие под эти слова (разделять запятыми):"
 
 #: src/audacious/ui_preferences.c:212
 msgid "Search for images matching song file name"
-msgstr "Искать для изображений совпадающих с именем "
+msgstr "Искать изображения, подходящие под название песни"
 
 #: src/audacious/ui_preferences.c:214
 msgid "Search recursively"
-msgstr "Рекурсивный поиск:"
+msgstr "Рекурсивный поиск"
 
 #: src/audacious/ui_preferences.c:216
 msgid "Search depth:"
-msgstr "Глюина поиска:"
+msgstr "Глубина поиска:"
 
 #: src/audacious/ui_preferences.c:219
 msgid "<b>Popup Information</b>"
@@ -490,7 +491,7 @@ msgstr "Показать номер дорожки"
 
 #: src/audacious/ui_preferences.c:1052
 msgid "Show leading zeroes (02:00 instead of 2:00)"
-msgstr "Отображать начало с нуля (02:00 вместо 2:00)"
+msgstr "Отображать нули в начале (02:00 вместо 2:00)"
 
 #: src/audacious/ui_preferences.c:1072
 msgid "Show information about titlestring format"
@@ -581,7 +582,7 @@ msgstr "Об Audacious"
 #: src/libaudgui/confirm.c:61
 #, fuzzy
 msgid "Close Playlist"
-msgstr "Новый Список"
+msgstr "Новый список воспроизведения"
 
 #: src/libaudgui/confirm.c:76
 #, c-format
@@ -598,11 +599,11 @@ msgstr "Больше не показывать это предупреждени
 
 #: src/libaudgui/confirm.c:126
 msgid "Rename Playlist"
-msgstr "Переименовать Список"
+msgstr "Переименовать список воспроизведения"
 
 #: src/libaudgui/effects-menu.c:72
 msgid "settings ..."
-msgstr "настройки..."
+msgstr "настройки ..."
 
 #: src/libaudgui/equalizer.c:51
 msgid "_Enable"
@@ -654,7 +655,7 @@ msgstr "Эквалайзер"
 
 #: src/libaudgui/equalizer.c:147
 msgid "Preamp"
-msgstr "Пред. усиление"
+msgstr "Предусиление"
 
 #: src/libaudgui/infopopup.c:202
 msgid "Track"
@@ -670,7 +671,7 @@ msgstr "Acid Jazz"
 
 #: src/libaudgui/infowin.c:75
 msgid "Acid Rock"
-msgstr "Эйсид-рок"
+msgstr "Acid Rock"
 
 #: src/libaudgui/infowin.c:76
 msgid "Ambient"
@@ -678,7 +679,7 @@ msgstr "Ambient"
 
 #: src/libaudgui/infowin.c:77
 msgid "Bebop"
-msgstr "Бибоп"
+msgstr "Bebop"
 
 #: src/libaudgui/infowin.c:78
 msgid "Bluegrass"
@@ -742,7 +743,7 @@ msgstr "Heavy Metal"
 
 #: src/libaudgui/infowin.c:93
 msgid "Hip-hop"
-msgstr "Хип-хоп"
+msgstr "Hip-hop"
 
 #: src/libaudgui/infowin.c:94
 msgid "House"
@@ -794,11 +795,11 @@ msgstr "Rock"
 
 #: src/libaudgui/infowin.c:106
 msgid "Rock and Roll"
-msgstr "Рок-н-ролл"
+msgstr "Rock and Roll"
 
 #: src/libaudgui/infowin.c:107
 msgid "Rhythm and Blues"
-msgstr "Ритм и Блюз"
+msgstr "Rhythm and Blues"
 
 #: src/libaudgui/infowin.c:108
 msgid "Ska"
@@ -818,7 +819,7 @@ msgstr "Techno"
 
 #: src/libaudgui/infowin.c:112
 msgid "Trip-hop"
-msgstr "Трип-Хоп"
+msgstr "Trip-hop"
 
 #: src/libaudgui/infowin.c:176 src/libaudgui/infowin.c:365
 #: src/libaudgui/infowin.c:368 src/libaudgui/infowin.c:371
@@ -880,7 +881,7 @@ msgstr "<span size=\"small\">Номер дорожки</span>"
 #: src/libaudgui/infowin.c:541
 #, c-format
 msgid "%d kb/s"
-msgstr "%d кб/с"
+msgstr "%d кбит/с"
 
 #: src/libaudgui/infowin.c:568
 #, c-format
@@ -889,19 +890,19 @@ msgstr "Нет информации для %s.\n"
 
 #: src/libaudgui/jump-to-time.c:52
 msgid "Jump to Time"
-msgstr "Джамп ту тайм"
+msgstr "Перейти ко времени"
 
 #: src/libaudgui/jump-to-time.c:61
 msgid "Enter time (minutes:seconds):"
-msgstr "Ввести время (минуты:секунды):"
+msgstr "Введите время (минуты:секунды):"
 
 #: src/libaudgui/playlists.c:33
 msgid "Export Playlist"
-msgstr "Экспортировать Список"
+msgstr "Экспортировать список воспроизведения"
 
 #: src/libaudgui/playlists.c:33
 msgid "Import Playlist"
-msgstr "Импортировать Список"
+msgstr "Импортировать список воспроизведения"
 
 #: src/libaudgui/playlists.c:66
 #, c-format
@@ -910,7 +911,7 @@ msgstr "Перезаписать %s?"
 
 #: src/libaudgui/queue-manager.c:196
 msgid "Queue Manager"
-msgstr "Менеджер Очереди"
+msgstr "Управление очередью"
 
 #: src/libaudgui/ui_fileopener.c:107
 msgid "Open Files"
@@ -922,11 +923,11 @@ msgstr "Добавить файлы"
 
 #: src/libaudgui/ui_fileopener.c:109
 msgid "Close dialog on Open"
-msgstr "Закрыть окно при открытии"
+msgstr "Закрыть окно после открытия файлов"
 
 #: src/libaudgui/ui_fileopener.c:109
 msgid "Close dialog on Add"
-msgstr "Закрыть окно при добавлении"
+msgstr "Закрыть окно после добавления файлов"
 
 #: src/libaudgui/ui_jumptotrack.c:105 src/libaudgui/ui_jumptotrack.c:113
 #: src/libaudgui/ui_jumptotrack.c:332
@@ -939,7 +940,7 @@ msgstr "Убрать из очереди"
 
 #: src/libaudgui/ui_jumptotrack.c:262
 msgid "Jump to Song"
-msgstr "Прыжок к Песне"
+msgstr "Перейти к песне"
 
 #: src/libaudgui/ui_jumptotrack.c:287
 msgid "Filter: "
@@ -963,7 +964,7 @@ msgstr "Закрыть после перехода"
 
 #: src/libaudgui/ui_playlist_manager.c:261
 msgid "Playlist Manager"
-msgstr "Менеджер списков"
+msgstr "Управление списками воспроизведения"
 
 #: src/libaudgui/ui_playlist_manager.c:288
 msgid "Entries"
@@ -975,19 +976,19 @@ msgstr "Переименовать"
 
 #: src/libaudgui/ui_playlist_manager.c:328
 msgid "_Close dialog on activating playlist"
-msgstr "Закрыть окно при выборе списка"
+msgstr "Закрыть окно при выборе списка воспроизведения"
 
 #: src/libaudgui/url-opener.c:56
 msgid "Open URL"
-msgstr "Открыть адрес"
+msgstr "Открыть URL"
 
 #: src/libaudgui/url-opener.c:56
 msgid "Add URL"
-msgstr "Добавить адрес"
+msgstr "Добавить URL"
 
 #: src/libaudgui/url-opener.c:65
 msgid "Enter URL:"
-msgstr "Ввести URL:"
+msgstr "Введите URL:"
 
 #: src/libaudgui/util.c:143
 msgid ""
