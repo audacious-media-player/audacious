@@ -414,16 +414,16 @@ msgstr "<b>Обложка альбома</b>"
 #: src/audacious/ui_preferences.c:208
 msgid "Search for images matching these words (comma-separated):"
 msgstr ""
-"Искать изображения, подходящих под эти слова (разделять запятыми):"
+"Искать изображения, содержащие эти слова (разделять запятыми):"
 
 #: src/audacious/ui_preferences.c:210
 msgid "Exclude images matching these words (comma-separated):"
 msgstr ""
-"Исключать изображения, подходящие под эти слова (разделять запятыми):"
+"Исключать изображения, содержащие эти слова (разделять запятыми):"
 
 #: src/audacious/ui_preferences.c:212
 msgid "Search for images matching song file name"
-msgstr "Искать изображения, подходящие под название песни"
+msgstr "Искать изображения, содержащие название песни"
 
 #: src/audacious/ui_preferences.c:214
 msgid "Search recursively"
