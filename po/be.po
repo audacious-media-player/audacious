@@ -9,16 +9,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-08-11 13:36-0400\n"
-"PO-Revision-Date: 2012-08-05 18:25+0000\n"
+"POT-Creation-Date: 2012-07-25 20:08-0400\n"
+"PO-Revision-Date: 2012-08-13 19:15+0300\n"
 "Last-Translator: Mikalai Udodau <crom-a@tut.by>\n"
 "Language-Team: Belarusian\n"
 "Language: be\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: src/audacious/adder.c:75
 msgid "Searching ..."
@@ -28,10 +28,9 @@ msgstr "Шукаецца ..."
 #, c-format
 msgid "%d file found"
 msgid_plural "%d files found"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "знойдзены %d файл"
+msgstr[1] "знойдзена %d файлы"
+msgstr[2] "знойдзена %d файлаў"
 
 #: src/audacious/chardet.c:39
 msgid "  (invalid UTF-8)"
@@ -111,7 +110,7 @@ msgstr ""
 "%s: %s\n"
 "Паспрабуйце `%s --help' для больш падрабязных звестак.\n"
 
-#: src/audacious/main.c:546
+#: src/audacious/main.c:545
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -161,11 +160,11 @@ msgstr "%s Настаўленні"
 
 #: src/audacious/ui_preferences.c:69
 msgid "Audio"
-msgstr "Аўдыа"
+msgstr "Аўдыё"
 
 #: src/audacious/ui_preferences.c:70
 msgid "Network"
-msgstr "Праца ў сетцы"
+msgstr "Сетка"
 
 #: src/audacious/ui_preferences.c:71 src/audacious/ui_preferences.c:1237
 msgid "Playlist"
@@ -278,7 +277,7 @@ msgstr "Турэцкая"
 
 #: src/audacious/ui_preferences.c:114
 msgid "Floating point"
-msgstr ""
+msgstr "З плыўной коскай"
 
 #: src/audacious/ui_preferences.c:130
 msgid "Album mode"
@@ -302,11 +301,11 @@ msgstr "мс"
 
 #: src/audacious/ui_preferences.c:141
 msgid "Soft clipping"
-msgstr ""
+msgstr "Мяккая адсечка"
 
 #: src/audacious/ui_preferences.c:143
 msgid "Use software volume control (not recommended)"
-msgstr "Карыстацца праграмным рэгулятарам гучнасці (не рэкамендуецца)"
+msgstr "Ужываць праграмны рэгулятар гучнасці (не рэкамендуецца)"
 
 #: src/audacious/ui_preferences.c:145
 msgid "<b>Replay Gain</b>"
@@ -318,11 +317,11 @@ msgstr ""
 
 #: src/audacious/ui_preferences.c:149
 msgid "Prevent clipping (recommended)"
-msgstr ""
+msgstr "Прадухіляць адсечку (рэкамендавана)"
 
 #: src/audacious/ui_preferences.c:151
 msgid "<b>Adjust Levels</b>"
-msgstr ""
+msgstr "<b>Падгонка ўзроўню</b>"
 
 #: src/audacious/ui_preferences.c:152
 msgid "Amplify all files:"
@@ -358,7 +357,7 @@ msgstr "<b>Канфігурацыя проксі</b>"
 
 #: src/audacious/ui_preferences.c:170
 msgid "Enable proxy usage"
-msgstr "Уключыць выкарыстанне проксі"
+msgstr "Уключыць проксі"
 
 #: src/audacious/ui_preferences.c:173
 msgid "Use authentication with proxy"
@@ -370,7 +369,7 @@ msgstr "Аўтавызначэнне знаказбору для:"
 
 #: src/audacious/ui_preferences.c:185
 msgid "Fallback character encodings:"
-msgstr ""
+msgstr "Прымаць нераспазнаны знаказбор як:"
 
 #: src/audacious/ui_preferences.c:189
 msgid "<b>Behavior</b>"
@@ -406,15 +405,15 @@ msgstr "<b>Афармленне альбома</b>"
 
 #: src/audacious/ui_preferences.c:208
 msgid "Search for images matching these words (comma-separated):"
-msgstr ""
+msgstr "Шукаць выявы, у якіх ёсць словы (пералік праз коску):"
 
 #: src/audacious/ui_preferences.c:210
 msgid "Exclude images matching these words (comma-separated):"
-msgstr ""
+msgstr "За выключэннем выяў, у якіх ёсць словы (пералік праз коску):"
 
 #: src/audacious/ui_preferences.c:212
 msgid "Search for images matching song file name"
-msgstr ""
+msgstr "Шукаць выявы, адпаведныя назве файла з песняй"
 
 #: src/audacious/ui_preferences.c:214
 msgid "Search recursively"
@@ -482,7 +481,7 @@ msgstr "Паказваць нумары песень"
 
 #: src/audacious/ui_preferences.c:1052
 msgid "Show leading zeroes (02:00 instead of 2:00)"
-msgstr "Паказваць вядучыя нулі (02:00 замест 2:00)"
+msgstr "Паказваць пачатковыя нулі (02:00 замест 2:00)"
 
 #: src/audacious/ui_preferences.c:1072
 msgid "Show information about titlestring format"
@@ -535,7 +534,7 @@ msgstr "Пазіцыя не знойдзена."
 
 #: src/audtool/handlers_vitals.c:51
 msgid "No song playing."
-msgstr "Не грае песня."
+msgstr "Не іграе песня."
 
 #: src/libaudcore/audstrings.c:199
 #, c-format
@@ -554,10 +553,9 @@ msgstr "Стэрэа"
 #, c-format
 msgid "%d channel"
 msgid_plural "%d channels"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "%d канал"
+msgstr[1] "%d канала"
+msgstr[2] "%d каналаў"
 
 #: src/libaudgui/about.c:38
 msgid "Credits"
@@ -581,8 +579,8 @@ msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
 msgstr ""
-"Вы ўпэўнены, што хочаце закрыць %s?  Калі вы гэта зробіце, усе змяненні, "
-"зробленыя пасля экспарту плэйліста, будуць згублены."
+"Вы ўпэўнены, што хочаце закрыць %s?  Калі вы гэта зробіце, усе змяненні, зробленыя "
+"пасля экспарту плэйліста, будуць згублены."
 
 #: src/libaudgui/confirm.c:89
 msgid "_Don't show this message again"
@@ -702,7 +700,7 @@ msgstr "Дыска"
 
 #: src/libaudgui/infowin.c:85
 msgid "Easy Listening"
-msgstr ""
+msgstr "Лёгкае слуханне"
 
 #: src/libaudgui/infowin.c:86
 msgid "Folk"
@@ -758,7 +756,7 @@ msgstr "Нью эйдж"
 
 #: src/libaudgui/infowin.c:99
 msgid "New Wave"
-msgstr "Нью вэйв"
+msgstr "Новая хваля"
 
 #: src/libaudgui/infowin.c:100
 msgid "Noise"
@@ -847,7 +845,7 @@ msgstr "<span size=\"small\">Загаловак</span>"
 
 #: src/libaudgui/infowin.c:397
 msgid "<span size=\"small\">Artist</span>"
-msgstr "<span size=\"small\">Спявак</span>"
+msgstr "<span size=\"small\">Выканаўца</span>"
 
 #: src/libaudgui/infowin.c:409
 msgid "<span size=\"small\">Album</span>"
@@ -939,7 +937,7 @@ msgstr "Фільтр: "
 
 #: src/libaudgui/ui_jumptotrack.c:288
 msgid "_Filter:"
-msgstr "Фільт_ар:"
+msgstr "Фільт_р:"
 
 #: src/libaudgui/ui_jumptotrack.c:298
 msgid "Remember"
