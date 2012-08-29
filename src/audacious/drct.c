@@ -48,12 +48,17 @@ void drct_play (void)
 
 void drct_play_playlist (int playlist)
 {
-    playlist_set_playing (playlist);
+    bool_t same_playlist = (playlist_get_playing () == playlist);
+
+    if (! same_playlist)
+        playlist_set_playing (playlist);
 
     if (playback_get_playing ())
     {
         if (playback_get_paused ())
             playback_pause ();
+        else if (same_playlist)
+            playback_seek (0);
     }
     else
     {
