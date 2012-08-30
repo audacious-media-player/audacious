@@ -120,21 +120,43 @@ struct _Plugin
 struct _TransportPlugin
 {
     PLUGIN_COMMON_FIELDS
-    const char * const * schemes; /* array ending with NULL */
+
+    /* supported URI schemes (without "://")
+     *     (array terminated with null pointer) */
+    const char * const * schemes;
+
+    /* file operation implementations
+     *     (struct of function pointers, may contain null pointers) */
     const VFSConstructor * vtable;
 };
 
 struct _PlaylistPlugin
 {
     PLUGIN_COMMON_FIELDS
-    const char * const * extensions; /* array ending with NULL */
-    bool_t (* load) (const char * path, VFSFile * file,
-    char * * title, /* pooled */
-    Index * filenames, /* of (char *), pooled */
-    Index * tuples); /* of (Tuple *) */
+
+    /* supported file extensions (without periods)
+     *     (array terminated with null pointer) */
+    const char * const * extensions;
+
+    /* path: URI of playlist file (in)
+     * file: VFS handle of playlist file (in, read-only file, not seekable)
+     * title: title of playlist (out, string-pooled)
+     * filenames: container to fill with URIs read from playlist file
+     *     (in-out, list of (char *), string-pooled)
+     * tuples: container to fill with metadata read from playlist
+     *     (in-out, list of (Tuple *), may contain null pointers) */
+    bool_t (* load) (const char * path, VFSFile * file, char * * title,
+     Index * filenames, Index * tuples);
+
+    /* path: URI of playlist file (in)
+     * file: VFS handle of playlist file (in, write-only file, not seekable)
+     * title: title of playlist (in)
+     * filenames: container filled with URIs to be written to playlist
+     *     (in, list of (char *))
+     * tuples: container filled with metadata to be written to playlist
+     *     (in, list of (Tuple *), may contain null pointers) */
     bool_t (* save) (const char * path, VFSFile * file, const char * title,
-    Index * filenames, /* of (char *) */
-    Index * tuples); /* of (Tuple *) */
+     Index * filenames, Index * tuples);
 };
 
 struct _OutputPlugin
