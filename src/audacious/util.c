@@ -89,9 +89,21 @@ char * construct_uri (const char * string, const char * playlist_name)
         return NULL;
 
     int pathlen = slash + 1 - playlist_name;
-    char buf[pathlen + 3 * strlen (string) + 1];
+    int rellen = strlen (string);
+
+    char buf[pathlen + 3 * rellen + 1];
     memcpy (buf, playlist_name, pathlen);
-    str_encode_percent (string, -1, buf + pathlen);
+
+    if (get_bool (NULL, "convert_backslash"))
+    {
+        char tmp[rellen + 1];
+        strcpy (tmp, string);
+        string_replace_char (tmp, '\\', '/');
+        str_encode_percent (tmp, -1, buf + pathlen);
+    }
+    else
+        str_encode_percent (string, -1, buf + pathlen);
+
     return strdup (buf);
 }
 
