@@ -195,10 +195,12 @@ static PreferencesWidget playlist_page_widgets[] = {
      .cfg_type = VALUE_BOOLEAN, .cname = "clear_playlist"},
     {WIDGET_CHK_BTN, N_("Open files in a temporary playlist"),
      .cfg_type = VALUE_BOOLEAN, .cname = "open_to_temporary"},
-    {WIDGET_LABEL, N_("<b>Metadata</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Do not load metadata for songs until played"),
      .cfg_type = VALUE_BOOLEAN, .cname = "metadata_on_play",
      .callback = playlist_trigger_scan},
+    {WIDGET_LABEL, N_("<b>Compatibility</b>"), NULL, NULL, NULL, FALSE},
+    {WIDGET_CHK_BTN, N_("Interpret \\ (backward slash) as a folder delimiter"),
+     .cfg_type = VALUE_BOOLEAN, .cname = "convert_backslash"},
     {WIDGET_TABLE, .data = {.table = {chardet_elements,
      G_N_ELEMENTS (chardet_elements)}}}
 };

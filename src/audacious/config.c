@@ -80,6 +80,11 @@ static const char * const core_defaults[] = {
  "stop_after_current_song", "FALSE",
 
  /* playlist */
+#ifdef _WIN32
+ "convert_backslash", "TRUE",
+#else
+ "convert_backslash", "FALSE",
+#endif
  "generic_title_format", "${?artist:${artist} - }${?album:${album} - }${title}",
  "leading_zero", "FALSE",
  "metadata_on_play", "FALSE",
