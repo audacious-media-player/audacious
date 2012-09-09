@@ -215,9 +215,6 @@ temporarily in order for GTK+ to build successfully.</p>
 <a href="http://www.libsdl.org/release/SDL-devel-1.2.15-mingw32.tar.gz">
 <tt>http://www.libsdl.org/release/SDL-devel-1.2.15-mingw32.tar.gz</tt></a></p>
 
-<p>Apply the patch <tt>sdl-config.diff</tt> to <tt>C:\libs\bin\sdl-config</tt>.<br>
-Copy <tt>C:\libs\share\aclocal\sdl.m4</tt> to <tt>C:\MinGW\share\aclocal</tt>.</p>
-
 <h3>Install libxml</h3>
 
 <p>Download and unzip to <tt>C:\libxml</tt>:<br>
@@ -492,7 +489,7 @@ make install</tt></p></blockquote>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/audacious-plugins<br>
-./configure --prefix=/C/aud<br>
+SDL_CFLAGS="-I/C/libs/include/SDL" SDL_LIBS="-L/C/libs/lib -lSDL" ./configure --prefix=/C/aud<br>
 make<br>
 make install</tt></p></blockquote>
 
