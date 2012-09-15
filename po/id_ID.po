@@ -1,7 +1,7 @@
 # Indonesian translation for Audacious
 # Copyright (C) Audacious translators
 # This file is distributed under the same license as the Audacious package.
-#
+# 
 # Translators:
 #  <aftian@yahoo.com>, 2012.
 #   <aftian@yahoo.com>, 2012.
@@ -19,15 +19,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-08-11 13:36-0400\n"
+"POT-Creation-Date: 2012-07-25 20:08-0400\n"
 "PO-Revision-Date: 2012-08-07 04:42+0000\n"
 "Last-Translator: Mohamad Hasan Al Banna <se7entime@gmail.com>\n"
 "Language-Team: Indonesian\n"
-"Language: id_ID\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0\n"
+"Language: id_ID\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: src/audacious/adder.c:75
 msgid "Searching ..."
@@ -113,11 +113,9 @@ msgstr "- putar berkas multimedia "
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
-msgstr ""
-"%s: %s\n"
-"Coba `%s --help' untuk informasi lebih lanjut.\n"
+msgstr "%s: %s\nCoba `%s --help' untuk informasi lebih lanjut.\n"
 
-#: src/audacious/main.c:546
+#: src/audacious/main.c:545
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -149,11 +147,9 @@ msgstr "Sedang Diputar"
 
 #: src/audacious/playlist-new.c:1650
 msgid ""
-"The playlist cannot be sorted because metadata scanning is still in progress "
-"(or has been disabled)."
-msgstr ""
-"Daftar lagu tidak dapat diurutkan karena pemindaian metadata sedang berjalan "
-"(atau dinonaktifkan)."
+"The playlist cannot be sorted because metadata scanning is still in progress"
+" (or has been disabled)."
+msgstr "Daftar lagu tidak dapat diurutkan karena pemindaian metadata sedang berjalan (atau dinonaktifkan)."
 
 #: src/audacious/plugin-preferences.c:50
 #, c-format
@@ -412,14 +408,11 @@ msgstr "<b>Gambar Sampul</b>"
 
 #: src/audacious/ui_preferences.c:208
 msgid "Search for images matching these words (comma-separated):"
-msgstr ""
-"Cari gambar yang sesuai dengan kata tersebut (pisahkan dengan tanda koma):"
+msgstr "Cari gambar yang sesuai dengan kata tersebut (pisahkan dengan tanda koma):"
 
 #: src/audacious/ui_preferences.c:210
 msgid "Exclude images matching these words (comma-separated):"
-msgstr ""
-"Mengecualikan gambar yang sesuai dengan kata tersebut (pisahkan dengan tanda "
-"koma):"
+msgstr "Mengecualikan gambar yang sesuai dengan kata tersebut (pisahkan dengan tanda koma):"
 
 #: src/audacious/ui_preferences.c:212
 msgid "Search for images matching song file name"
@@ -586,9 +579,7 @@ msgstr "Tutup Playlist"
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
-msgstr ""
-"Anda yakin ingin menutup %s?  Jika Anda melakukannya, setiap perubahan yang "
-"dibuat sejak playlist diekspor akan hilang."
+msgstr "Anda yakin ingin menutup %s?  Jika Anda melakukannya, setiap perubahan yang dibuat sejak playlist diekspor akan hilang."
 
 #: src/libaudgui/confirm.c:89
 msgid "_Don't show this message again"
@@ -991,6 +982,4 @@ msgstr "Masukkan URL:"
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
-msgstr ""
-"\n"
-"(Pesan lebih lanjut telah tersembunyi.)"
+msgstr "\n(Pesan lebih lanjut telah tersembunyi.)"

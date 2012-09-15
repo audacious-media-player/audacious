@@ -1,32 +1,32 @@
 # Russian translation for Audacious
 # Copyright (C) Audacious translators
 # This file is distributed under the same license as the Audacious package.
-#
+# 
 # Translators:
 # Alexander Orlov <alxorlov@pochta.ru>, 2007.
 #   <a.michurin@gmail.com>, 2011.
 # Eugene Paskevich <eugene@raptor.kiev.ua>, 2010.
 # Eugene Zagidullin <e.asphyx@gmail.com>, 2007.
 #   <kvantarium@gmail.com>, 2012.
+# Musatov M. <m1kc@yandex.ru>, 2012.
+# NaiLi (aka jamesjames) Rootaerc <theism@mail.ru>, 2012.
 # NaiLi Rootaerc <theism@mail.ru>, 2012.
 # serg0 <serg0@ulx.ru>, 2009.
 # Sergey V. Mironov <sergo@bk.ru>, 2010.
 # Vitaly Lipatov <lav@etersoft.ru>, 2007.
-# Musatov M. <m1kc@yandex.ru>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-08-11 13:29-0400\n"
-"PO-Revision-Date: 2012-07-11 08:11+0000\n"
-"Last-Translator: StreamThreaedr <kvantarium@gmail.com>\n"
+"POT-Creation-Date: 2012-07-25 20:08-0400\n"
+"PO-Revision-Date: 2012-08-18 12:00+0000\n"
+"Last-Translator: Maxim Musatov <sejava@mail.ru>\n"
 "Language-Team: Russian\n"
-"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: src/audacious/adder.c:75
 msgid "Searching ..."
@@ -114,11 +114,9 @@ msgstr "- проигрывать мультимедийные файлы"
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
-msgstr ""
-"%s: %s\n"
-"Попробуйте `%s --help' для получения подробного описания.\n"
+msgstr "%s: %s\nПопробуйте `%s --help' для получения подробного описания.\n"
 
-#: src/audacious/main.c:546
+#: src/audacious/main.c:545
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -150,11 +148,9 @@ msgstr "Сейчас воспроизводится"
 
 #: src/audacious/playlist-new.c:1650
 msgid ""
-"The playlist cannot be sorted because metadata scanning is still in progress "
-"(or has been disabled)."
-msgstr ""
-"Список не может быть отсортирован, так как сканирование метаданных всё ещё "
-"идёт (или было выключено)."
+"The playlist cannot be sorted because metadata scanning is still in progress"
+" (or has been disabled)."
+msgstr "Список не может быть отсортирован, так как сканирование метаданных всё ещё идёт (или было выключено)."
 
 #: src/audacious/plugin-preferences.c:50
 #, c-format
@@ -413,13 +409,11 @@ msgstr "<b>Обложка альбома</b>"
 
 #: src/audacious/ui_preferences.c:208
 msgid "Search for images matching these words (comma-separated):"
-msgstr ""
-"Искать изображения, содержащие эти слова (разделять запятыми):"
+msgstr "Искать изображения, содержащие эти слова (разделять запятыми):"
 
 #: src/audacious/ui_preferences.c:210
 msgid "Exclude images matching these words (comma-separated):"
-msgstr ""
-"Исключать изображения, содержащие эти слова (разделять запятыми):"
+msgstr "Исключать изображения, содержащие эти слова (разделять запятыми):"
 
 #: src/audacious/ui_preferences.c:212
 msgid "Search for images matching song file name"
@@ -580,18 +574,15 @@ msgid "About Audacious"
 msgstr "Об Audacious"
 
 #: src/libaudgui/confirm.c:61
-#, fuzzy
 msgid "Close Playlist"
-msgstr "Новый список воспроизведения"
+msgstr "Закрыть список"
 
 #: src/libaudgui/confirm.c:76
 #, c-format
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
-msgstr ""
-"Вы уверены, что хотите закрыть %s?  В этом случае все изменения с момента "
-"экспорта списка воспроизведения будут утеряны."
+msgstr "Вы уверены, что хотите закрыть %s?  В этом случае все изменения с момента экспорта списка воспроизведения будут утеряны."
 
 #: src/libaudgui/confirm.c:89
 msgid "_Don't show this message again"
@@ -994,6 +985,4 @@ msgstr "Введите URL:"
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
-msgstr ""
-"\n"
-"(Дальнейшие сообщения были скрыты.)"
+msgstr "\n(Дальнейшие сообщения были скрыты.)"

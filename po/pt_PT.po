@@ -1,7 +1,7 @@
 # Portuguese translation for Audacious
 # Copyright (C) Audacious translators
 # This file is distributed under the same license as the Audacious package.
-#
+# 
 # Translators:
 # Luís Picciochi <Pitxyoki@gmail.com>, 2010.
 # Sérgio Marques <smarquespt@gmail.com>, 2012.
@@ -10,15 +10,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-08-11 13:36-0400\n"
-"PO-Revision-Date: 2012-07-27 11:32+0000\n"
+"POT-Creation-Date: 2012-07-25 20:08-0400\n"
+"PO-Revision-Date: 2012-08-14 23:37+0000\n"
 "Last-Translator: Sérgio Marques <smarquespt@gmail.com>\n"
 "Language-Team: Portuguese\n"
-"Language: pt_PT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Language: pt_PT\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: src/audacious/adder.c:75
 msgid "Searching ..."
@@ -78,7 +78,7 @@ msgstr "Adicionar novos ficheiros a uma lista de reprodução temporária"
 
 #: src/audacious/main.c:241
 msgid "Display the main window"
-msgstr "Mostrar a janela principal"
+msgstr "Mostrar janela principal"
 
 #: src/audacious/main.c:242
 msgid "Show version"
@@ -105,11 +105,9 @@ msgstr "- reproduzir ficheiros multimédia"
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
-msgstr ""
-"%s: %s\n"
-"Utilize \"%s --help\" para mais informações\n"
+msgstr "%s: %s\nUtilize \"%s --help\" para mais informações\n"
 
-#: src/audacious/main.c:546
+#: src/audacious/main.c:545
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -141,11 +139,9 @@ msgstr "A reproduzir"
 
 #: src/audacious/playlist-new.c:1650
 msgid ""
-"The playlist cannot be sorted because metadata scanning is still in progress "
-"(or has been disabled)."
-msgstr ""
-"A lista de reprodução não pode ser ordenada porque a análise de detalhes "
-"ainda está a decorrer (ou inativa)"
+"The playlist cannot be sorted because metadata scanning is still in progress"
+" (or has been disabled)."
+msgstr "A lista de reprodução não pode ser ordenada porque a análise de detalhes ainda está a decorrer (ou inativa)"
 
 #: src/audacious/plugin-preferences.c:50
 #, c-format
@@ -175,7 +171,7 @@ msgstr "Informações da faixa"
 
 #: src/audacious/ui_preferences.c:73
 msgid "Plugins"
-msgstr "Suplementos"
+msgstr "Extras"
 
 #: src/audacious/ui_preferences.c:79 src/libaudgui/infopopup.c:194
 msgid "Artist"
@@ -292,7 +288,7 @@ msgstr "Profundidade:"
 
 #: src/audacious/ui_preferences.c:138
 msgid "Buffer size:"
-msgstr "\"Buffer\":"
+msgstr "Buffer:"
 
 #: src/audacious/ui_preferences.c:140
 msgid "ms"
@@ -576,9 +572,7 @@ msgstr "Fechar lista de reprodução"
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
-msgstr ""
-"Tem a certeza de que quer fechar %s? Se o fizer, vai perder todas as "
-"alterações efetuadas após a exportação da lista de reprodução"
+msgstr "Tem a certeza de que quer fechar %s? Se o fizer, vai perder todas as alterações efetuadas após a exportação da lista de reprodução"
 
 #: src/libaudgui/confirm.c:89
 msgid "_Don't show this message again"
@@ -873,9 +867,7 @@ msgstr "%d kb/s"
 #: src/libaudgui/infowin.c:568
 #, c-format
 msgid "No info available for %s.\n"
-msgstr ""
-"Sem informações para %s\n"
-"\n"
+msgstr "Sem informações para %s\n\n"
 
 #: src/libaudgui/jump-to-time.c:52
 msgid "Jump to Time"
@@ -965,7 +957,7 @@ msgstr "Muda_r nome"
 
 #: src/libaudgui/ui_playlist_manager.c:328
 msgid "_Close dialog on activating playlist"
-msgstr "Fe_char caixa de diálogo ao ativar a lista de reprodução"
+msgstr "Fe_char caixa de diálogo ao ativar lista de reprodução"
 
 #: src/libaudgui/url-opener.c:56
 msgid "Open URL"
@@ -983,6 +975,4 @@ msgstr "Indique o URL:"
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
-msgstr ""
-"\n"
-"(Foram ocultas algumas mensagens)"
+msgstr "\n(Foram ocultas algumas mensagens)"

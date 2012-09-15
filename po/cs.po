@@ -1,8 +1,9 @@
 # Czech translation for Audacious
 # Copyright (C) Audacious translators
 # This file is distributed under the same license as the Audacious package.
-#
+# 
 # Translators:
+#   <appukonrad@gmail.com>, 2012.
 # Jan Nárovec <finn@sendmail.cz>, 2004.
 #   <pavelfric@seznam.cz>, 2012.
 # Petr Písař <petr.pisar@atlas.cz>, 2007, 2008, 2009, 2010, 2011, 2012.
@@ -10,15 +11,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-08-11 13:29-0400\n"
-"PO-Revision-Date: 2012-07-01 18:48+0000\n"
-"Last-Translator: jlindgren <john.lindgren@aol.com>\n"
+"POT-Creation-Date: 2012-07-25 20:08-0400\n"
+"PO-Revision-Date: 2012-08-27 11:33+0000\n"
+"Last-Translator: jui <appukonrad@gmail.com>\n"
 "Language-Team: Czech\n"
-"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2\n"
+"Language: cs\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: src/audacious/adder.c:75
 msgid "Searching ..."
@@ -106,11 +107,9 @@ msgstr "– přehrávat multimediální soubory"
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
-msgstr ""
-"%s: %s\n"
-"Pro více informací zkuste „%s --help“.\n"
+msgstr "%s: %s\nPro více informací zkuste „%s --help“.\n"
 
-#: src/audacious/main.c:546
+#: src/audacious/main.c:545
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -142,21 +141,19 @@ msgstr "Nyní hraje"
 
 #: src/audacious/playlist-new.c:1650
 msgid ""
-"The playlist cannot be sorted because metadata scanning is still in progress "
-"(or has been disabled)."
-msgstr ""
-"Seznam skladeb nelze seřadit, protože hledání metadat stále probíhá (nebo je "
-"vypnuto)."
+"The playlist cannot be sorted because metadata scanning is still in progress"
+" (or has been disabled)."
+msgstr "Seznam skladeb nelze seřadit, protože hledání metadat stále probíhá (nebo je vypnuto)."
 
 #: src/audacious/plugin-preferences.c:50
 #, c-format
 msgid "About %s"
-msgstr ""
+msgstr "O %s"
 
 #: src/audacious/plugin-preferences.c:88
 #, c-format
 msgid "%s Settings"
-msgstr ""
+msgstr "%s Nastavení"
 
 #: src/audacious/ui_preferences.c:69
 msgid "Audio"
@@ -172,7 +169,7 @@ msgstr "Seznam skladeb"
 
 #: src/audacious/ui_preferences.c:72
 msgid "Song Info"
-msgstr ""
+msgstr "Informace o skladbě"
 
 #: src/audacious/ui_preferences.c:73
 msgid "Plugins"
@@ -277,7 +274,7 @@ msgstr "Turečtina"
 
 #: src/audacious/ui_preferences.c:114
 msgid "Floating point"
-msgstr ""
+msgstr "Plovoucí desetiná čárka"
 
 #: src/audacious/ui_preferences.c:130
 msgid "Album mode"
@@ -301,7 +298,7 @@ msgstr "ms"
 
 #: src/audacious/ui_preferences.c:141
 msgid "Soft clipping"
-msgstr ""
+msgstr "Měké oříznutí"
 
 #: src/audacious/ui_preferences.c:143
 msgid "Use software volume control (not recommended)"
@@ -401,27 +398,27 @@ msgstr "Nenačítat metadata skladeb před přehráním"
 
 #: src/audacious/ui_preferences.c:207
 msgid "<b>Album Art</b>"
-msgstr ""
+msgstr "<b>Album</b>"
 
 #: src/audacious/ui_preferences.c:208
 msgid "Search for images matching these words (comma-separated):"
-msgstr ""
+msgstr "Vyhledat obrázky odpovídající těmto slovům (oddělené čárkou):"
 
 #: src/audacious/ui_preferences.c:210
 msgid "Exclude images matching these words (comma-separated):"
-msgstr ""
+msgstr "Vyloučit obrázky vyhovují těmto slovům (oddělené čárkou):"
 
 #: src/audacious/ui_preferences.c:212
 msgid "Search for images matching song file name"
-msgstr ""
+msgstr "Hledat obrázky odpovídající názevu hudebního souboru"
 
 #: src/audacious/ui_preferences.c:214
 msgid "Search recursively"
-msgstr ""
+msgstr "Hledat rekurzivně"
 
 #: src/audacious/ui_preferences.c:216
 msgid "Search depth:"
-msgstr ""
+msgstr "Hloubka prohledání:"
 
 #: src/audacious/ui_preferences.c:219
 msgid "<b>Popup Information</b>"
@@ -429,15 +426,15 @@ msgstr "<b>Vyskakovací okno s podrobnostmi</b>"
 
 #: src/audacious/ui_preferences.c:220
 msgid "Show popup information"
-msgstr ""
+msgstr "Zobrazit popup informace"
 
 #: src/audacious/ui_preferences.c:222
 msgid "Popup delay (tenths of a second):"
-msgstr ""
+msgstr "Popup zpoždění (desetiny sekundy):"
 
 #: src/audacious/ui_preferences.c:225
 msgid "Show time scale for current song"
-msgstr ""
+msgstr "Zobrazit časové měřítko pro aktuální skladby"
 
 #: src/audacious/ui_preferences.c:239
 msgid "TITLE"
@@ -563,25 +560,22 @@ msgstr "Zásluhy"
 
 #: src/libaudgui/about.c:38
 msgid "License"
-msgstr ""
+msgstr "Licence"
 
 #: src/libaudgui/about.c:74
 msgid "About Audacious"
 msgstr "O Audacious"
 
 #: src/libaudgui/confirm.c:61
-#, fuzzy
 msgid "Close Playlist"
-msgstr "Nový seznam skladeb"
+msgstr "Zavřít seznam skladeb"
 
 #: src/libaudgui/confirm.c:76
 #, c-format
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
-msgstr ""
-"Jste si jisti, že chcete %s zavřít? Pokud tak učiníte, jakékoliv změny "
-"provedené od posledního exportu budou ztraceny."
+msgstr "Jste si jisti, že chcete %s zavřít? Pokud tak učiníte, jakékoliv změny provedené od posledního exportu budou ztraceny."
 
 #: src/libaudgui/confirm.c:89
 msgid "_Don't show this message again"
@@ -884,7 +878,7 @@ msgstr "Přejít na čas"
 
 #: src/libaudgui/jump-to-time.c:61
 msgid "Enter time (minutes:seconds):"
-msgstr ""
+msgstr "Zadejte čas (minuty: sekundy):"
 
 #: src/libaudgui/playlists.c:33
 msgid "Export Playlist"
@@ -978,12 +972,10 @@ msgstr "Přidat URL"
 
 #: src/libaudgui/url-opener.c:65
 msgid "Enter URL:"
-msgstr ""
+msgstr "Zadejte URL:"
 
 #: src/libaudgui/util.c:143
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
-msgstr ""
-"\n"
-"(Další zprávy jsou skryty.)"
+msgstr "\n(Další zprávy jsou skryty.)"
