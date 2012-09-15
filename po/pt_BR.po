@@ -1,7 +1,7 @@
 # Portuguese (Brazil) translation for Audacious
 # Copyright (C) Audacious translators
 # This file is distributed under the same license as the Audacious package.
-#
+# 
 # Translators:
 # Cleiton cleitonlima <cleitonlima@lavabit.com>, 2011.
 # edu engler <eduengler@gmail.com>, 2012.
@@ -9,20 +9,21 @@
 # Karen Eliot <kareneliot@riseup. net>, 2011.
 # Rafael Ferreira <rafael.f.f1@gmail.com>, 2012.
 # Rodrigo Macedo <rodrigomacedo@rmsolucoeseminformatica.com>, 2012.
+#   <shorterfire@gmail.com>, 2012.
 #   <vitorgatti@yahoo.com.br>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-08-11 13:36-0400\n"
-"PO-Revision-Date: 2012-07-31 22:03+0000\n"
-"Last-Translator: vitorgatti <vitorgatti@yahoo.com.br>\n"
+"POT-Creation-Date: 2012-07-25 20:08-0400\n"
+"PO-Revision-Date: 2012-09-10 03:13+0000\n"
+"Last-Translator: salmora8 <shorterfire@gmail.com>\n"
 "Language-Team: Portuguese (Brazil)\n"
-"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: src/audacious/adder.c:75
 msgid "Searching ..."
@@ -109,11 +110,9 @@ msgstr "- reproduzir arquivos multimídia"
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
-msgstr ""
-"%s: %s\n"
-"Tente `%s --help' para mais informações.\n"
+msgstr "%s: %s\nTente `%s --help' para mais informações.\n"
 
-#: src/audacious/main.c:546
+#: src/audacious/main.c:545
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -145,11 +144,9 @@ msgstr "Reproduzindo"
 
 #: src/audacious/playlist-new.c:1650
 msgid ""
-"The playlist cannot be sorted because metadata scanning is still in progress "
-"(or has been disabled)."
-msgstr ""
-"A lista de reprodução não pode ser ordenada porque a varredura de metadados "
-"ainda está em progresso (ou foi desabilitada)."
+"The playlist cannot be sorted because metadata scanning is still in progress"
+" (or has been disabled)."
+msgstr "A lista de reprodução não pode ser ordenada porque a varredura de metadados ainda está em progresso (ou foi desabilitada)."
 
 #: src/audacious/plugin-preferences.c:50
 #, c-format
@@ -312,7 +309,7 @@ msgstr "Usar controle de volume de software (não recomendado)"
 
 #: src/audacious/ui_preferences.c:145
 msgid "<b>Replay Gain</b>"
-msgstr "<b>Ganho de Replay</b>"
+msgstr "<b>Repetir Ganho</b>"
 
 #: src/audacious/ui_preferences.c:146
 msgid "Enable Replay Gain"
@@ -580,9 +577,7 @@ msgstr "Fechar Lista de Reprodução"
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
-msgstr ""
-"Você tem certeza que deseja fechar %s? Se você fizer isto, todas as mudanças "
-"feitas desde que a lista de reprodução foi exportada serão perdidas."
+msgstr "Você tem certeza que deseja fechar %s? Se você fizer isto, todas as mudanças feitas desde que a lista de reprodução foi exportada serão perdidas."
 
 #: src/libaudgui/confirm.c:89
 msgid "_Don't show this message again"
@@ -985,6 +980,4 @@ msgstr "Entrar URL:"
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
-msgstr ""
-"\n"
-"(Demais mensagens foram escondidas.)"
+msgstr "\n(Demais mensagens foram escondidas.)"

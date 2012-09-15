@@ -1,7 +1,7 @@
 # Ukrainian translation for Audacious
 # Copyright (C) Audacious translators
 # This file is distributed under the same license as the Audacious package.
-#
+# 
 # Translators:
 # Kostyantyn Fedenko <fedenko@ukr.net>, 2011.
 #   <kvantarium@gmail.com>, 2012.
@@ -12,20 +12,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-08-11 13:29-0400\n"
-"PO-Revision-Date: 2012-07-08 14:48+0000\n"
-"Last-Translator: StreamThreaedr <kvantarium@gmail.com>\n"
+"POT-Creation-Date: 2012-07-25 20:08-0400\n"
+"PO-Revision-Date: 2012-08-13 14:08+0000\n"
+"Last-Translator: Rax Garfield <admin@dvizho.ks.ua>\n"
 "Language-Team: Ukrainian\n"
-"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
+"Language: uk\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: src/audacious/adder.c:75
 msgid "Searching ..."
-msgstr "Пошук ..."
+msgstr "Шукаю..."
 
 #: src/audacious/adder.c:103
 #, c-format
@@ -42,7 +41,7 @@ msgstr "(недійсний UTF-8)"
 #: src/audacious/equalizer_preset.c:180
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
-msgstr "Не вдалося імпортувати Winamp EQF файл '%s'"
+msgstr "Не вдалося імпортувати Winamp EQF-файл «%s»"
 
 #: src/audacious/main.c:232
 msgid "Skip backwards in playlist"
@@ -98,29 +97,27 @@ msgstr "Headless-режим (як демон і без X11, бета)"
 
 #: src/audacious/main.c:245
 msgid "FILE..."
-msgstr "ФАЙЛ..."
+msgstr "ФАЙЛ..."
 
 #: src/audacious/main.c:257
 msgid "- play multimedia files"
-msgstr "- програти мультимедійні файли"
+msgstr "— відтворити мультимедійні файли"
 
 #: src/audacious/main.c:264
 #, c-format
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
-msgstr ""
-"%s: %s\n"
-"Спробуйте `%s --help' для отримання докладнішого опису.\n"
+msgstr "%s: %s\nСпробуйте `%s --help' для отримання докладнішого опису.\n"
 
-#: src/audacious/main.c:546
+#: src/audacious/main.c:545
 msgid "Audacious"
 msgstr "Audacious"
 
 #: src/audacious/playback.c:305
 #, c-format
 msgid "No decoder found for %s."
-msgstr "Не знайдено декодер для %s."
+msgstr "Не знайдено декодера для %s."
 
 #: src/audacious/playlist-files.c:51
 #, c-format
@@ -145,11 +142,9 @@ msgstr "Зараз відтворюється"
 
 #: src/audacious/playlist-new.c:1650
 msgid ""
-"The playlist cannot be sorted because metadata scanning is still in progress "
-"(or has been disabled)."
-msgstr ""
-"Список відтворення неможливо відсортувати, поки сканування метаданих триває "
-"або вимкнено."
+"The playlist cannot be sorted because metadata scanning is still in progress"
+" (or has been disabled)."
+msgstr "Список відтворення неможливо відсортувати, поки сканування метаданих триває або вимкнено."
 
 #: src/audacious/plugin-preferences.c:50
 #, c-format
@@ -159,7 +154,7 @@ msgstr "Про %s"
 #: src/audacious/plugin-preferences.c:88
 #, c-format
 msgid "%s Settings"
-msgstr "%s Налаштування"
+msgstr "%s. Налаштування"
 
 #: src/audacious/ui_preferences.c:69
 msgid "Audio"
@@ -171,7 +166,7 @@ msgstr "Мережа"
 
 #: src/audacious/ui_preferences.c:71 src/audacious/ui_preferences.c:1237
 msgid "Playlist"
-msgstr "Список відтворення"
+msgstr "Списки відтворення"
 
 #: src/audacious/ui_preferences.c:72
 msgid "Song Info"
@@ -280,7 +275,7 @@ msgstr "Турецька"
 
 #: src/audacious/ui_preferences.c:114
 msgid "Floating point"
-msgstr "Плавающая запятая"
+msgstr "Рухома кома"
 
 #: src/audacious/ui_preferences.c:130
 msgid "Album mode"
@@ -304,11 +299,11 @@ msgstr "мс"
 
 #: src/audacious/ui_preferences.c:141
 msgid "Soft clipping"
-msgstr "Мягкое отсечение"
+msgstr "М’яке відсікання"
 
 #: src/audacious/ui_preferences.c:143
 msgid "Use software volume control (not recommended)"
-msgstr "Програмно керувати гучністю (не рекомендовано)"
+msgstr "Керувати гучністю лише Audacious (не рекомендовано)"
 
 #: src/audacious/ui_preferences.c:145
 msgid "<b>Replay Gain</b>"
@@ -368,11 +363,11 @@ msgstr "Використовувати автентифікацію"
 
 #: src/audacious/ui_preferences.c:181
 msgid "Auto character encoding detector for:"
-msgstr "Автоматичне визначення кодування символів для:"
+msgstr "Автовизначення кодування символів:"
 
 #: src/audacious/ui_preferences.c:185
 msgid "Fallback character encodings:"
-msgstr "Стандартне кодування символів:"
+msgstr "Типове кодування символів:"
 
 #: src/audacious/ui_preferences.c:189
 msgid "<b>Behavior</b>"
@@ -380,15 +375,15 @@ msgstr "<b>Поведінка</b>"
 
 #: src/audacious/ui_preferences.c:190
 msgid "Continue playback on startup"
-msgstr "Продовжити відтворення під час запуску"
+msgstr "Продовжувати відтворення під час запуску"
 
 #: src/audacious/ui_preferences.c:192
 msgid "Advance when the current song is deleted"
-msgstr "Заздалегідь, коли поточна пісня буде видалена"
+msgstr "При видаленні поточної пісні відтворювати наступну"
 
 #: src/audacious/ui_preferences.c:194
 msgid "Clear the playlist when opening files"
-msgstr "Очищати список відтворення під час відкриття файлів"
+msgstr "Стирати список відтворення при відкритті файлів"
 
 #: src/audacious/ui_preferences.c:196
 msgid "Open files in a temporary playlist"
@@ -404,43 +399,43 @@ msgstr "Не завантажувати метадані доріжок до в�
 
 #: src/audacious/ui_preferences.c:207
 msgid "<b>Album Art</b>"
-msgstr "<b>Обкладинка Альбому</b>"
+msgstr "<b>Обкладинка альбому</b>"
 
 #: src/audacious/ui_preferences.c:208
 msgid "Search for images matching these words (comma-separated):"
-msgstr "Шукати зображення відповфдні з цими словами (зозділення комами)"
+msgstr "Шукати зображення за цими словами (розділюйте комами):"
 
 #: src/audacious/ui_preferences.c:210
 msgid "Exclude images matching these words (comma-separated):"
-msgstr "Виключати зображення відповідні з цими словами (зозділення комами)"
+msgstr "Пропускати зображення за з цими словами (розділюйте комами):"
 
 #: src/audacious/ui_preferences.c:212
 msgid "Search for images matching song file name"
-msgstr "Шукати зображення відповідні імені вайлу"
+msgstr "Шукати зображення за іменем файлу доріжки"
 
 #: src/audacious/ui_preferences.c:214
 msgid "Search recursively"
-msgstr "Пошук рекурсивно"
+msgstr "Рекурсивний пошук"
 
 #: src/audacious/ui_preferences.c:216
 msgid "Search depth:"
-msgstr "Пошукова глибина:"
+msgstr "Глибина пошуку:"
 
 #: src/audacious/ui_preferences.c:219
 msgid "<b>Popup Information</b>"
-msgstr "<b>Спливаюча інформація</b>"
+msgstr "<b>Спливна інформація</b>"
 
 #: src/audacious/ui_preferences.c:220
 msgid "Show popup information"
-msgstr "Показувати спливаючу інформацію"
+msgstr "Показувати спливну інформацію"
 
 #: src/audacious/ui_preferences.c:222
 msgid "Popup delay (tenths of a second):"
-msgstr "Затримка вспливання (десяті частки секунди):"
+msgstr "Затримка спливання (десяті частки секунди):"
 
 #: src/audacious/ui_preferences.c:225
 msgid "Show time scale for current song"
-msgstr "Показувати часову довжину композиції"
+msgstr "Показувати прогрес відтворення композиції"
 
 #: src/audacious/ui_preferences.c:239
 msgid "TITLE"
@@ -504,7 +499,7 @@ msgstr "Модуль виведення:"
 
 #: src/audacious/ui_preferences.c:1237
 msgid "Transport"
-msgstr "Засоби сполучення"
+msgstr "Транспорт"
 
 #: src/audacious/ui_preferences.c:1237
 msgid "Input"
@@ -516,11 +511,11 @@ msgstr "Ефекти"
 
 #: src/audacious/ui_preferences.c:1238
 msgid "Visualization"
-msgstr "Визуализация"
+msgstr "Візуалізація"
 
 #: src/audacious/ui_preferences.c:1238
 msgid "General"
-msgstr "Загальна"
+msgstr "Інше"
 
 #: src/audacious/ui_preferences.c:1276
 msgid "Audacious Preferences"
@@ -529,11 +524,11 @@ msgstr "Налаштування Audacious"
 #: src/audacious/util.c:115
 #, c-format
 msgid "Could not create directory (%s): %s\n"
-msgstr "Не можу створити директорію (%s): %s\n"
+msgstr "Не можу створити теку (%s): %s\n"
 
 #: src/audtool/handlers_playlist.c:262
 msgid "Position not found."
-msgstr "Позицію не знайдено."
+msgstr "Позиції не знайдено."
 
 #: src/audtool/handlers_vitals.c:51
 msgid "No song playing."
@@ -573,30 +568,27 @@ msgid "About Audacious"
 msgstr "Про Audacious"
 
 #: src/libaudgui/confirm.c:61
-#, fuzzy
 msgid "Close Playlist"
-msgstr "Новий список відтворення"
+msgstr "Закрити список відтворення"
 
 #: src/libaudgui/confirm.c:76
 #, c-format
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
-msgstr ""
-"Ви впевнені, що хочете закрити %s? Якщо так, то всі зміни з моменту експорту "
-"списку відтворення будуть втрачені."
+msgstr "Точно закрити %s? Якщо так, то всі зміни з моменту експорту списку відтворення будуть втрачені."
 
 #: src/libaudgui/confirm.c:89
 msgid "_Don't show this message again"
-msgstr "Більше не показувати це попередження"
+msgstr "Не показувати це попередження _знову"
 
 #: src/libaudgui/confirm.c:126
 msgid "Rename Playlist"
-msgstr "Перейменувати список програвання"
+msgstr "Перейменувати список відтворення"
 
 #: src/libaudgui/effects-menu.c:72
 msgid "settings ..."
-msgstr "налаштування ..."
+msgstr "налаштування..."
 
 #: src/libaudgui/equalizer.c:51
 msgid "_Enable"
@@ -648,17 +640,15 @@ msgstr "Еквалайзер"
 
 #: src/libaudgui/equalizer.c:147
 msgid "Preamp"
-msgstr ""
-"Попереднє\n"
-"підсилення"
+msgstr "Попереднє\nпідсилення"
 
 #: src/libaudgui/infopopup.c:202
 msgid "Track"
-msgstr "Трек"
+msgstr "Доріжка"
 
 #: src/libaudgui/infopopup.c:204
 msgid "Length"
-msgstr "Длина"
+msgstr "Тривалість"
 
 #: src/libaudgui/infowin.c:74
 msgid "Acid Jazz"
@@ -889,7 +879,7 @@ msgstr "Перейти до часу"
 
 #: src/libaudgui/jump-to-time.c:61
 msgid "Enter time (minutes:seconds):"
-msgstr "Увести час (хвилини:секунди)"
+msgstr "Введіть час (хвилини:секунди):"
 
 #: src/libaudgui/playlists.c:33
 msgid "Export Playlist"
@@ -983,12 +973,10 @@ msgstr "Додати адресу"
 
 #: src/libaudgui/url-opener.c:65
 msgid "Enter URL:"
-msgstr "Увести URL:"
+msgstr "Введіть URL:"
 
 #: src/libaudgui/util.c:143
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
-msgstr ""
-"\n"
-"(Наступні повідомлення були приховані.)"
+msgstr "\n(Наступні повідомлення були приховані.)"
