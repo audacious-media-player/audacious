@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-08-11 13:29-0400\n"
+"POT-Creation-Date: 2012-09-15 12:17+0200\n"
 "PO-Revision-Date: 2012-07-06 22:12+0000\n"
 "Last-Translator: John Lindgren <john.lindgren@aol.com>\n"
 "Language-Team: Serbian (Latin)\n"
@@ -163,7 +163,7 @@ msgstr "Audio"
 msgid "Network"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:71 src/audacious/ui_preferences.c:1237
+#: src/audacious/ui_preferences.c:71 src/audacious/ui_preferences.c:1239
 msgid "Playlist"
 msgstr "Lista numera"
 
@@ -389,138 +389,142 @@ msgid "Open files in a temporary playlist"
 msgstr ""
 
 #: src/audacious/ui_preferences.c:198
-msgid "<b>Metadata</b>"
-msgstr "<b>Meta-podaci</b>"
-
-#: src/audacious/ui_preferences.c:199
 msgid "Do not load metadata for songs until played"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:207
+#: src/audacious/ui_preferences.c:201
+msgid "<b>Compatibility</b>"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:202
+msgid "Interpret \\ (backward slash) as a folder delimiter"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:209
 msgid "<b>Album Art</b>"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:208
+#: src/audacious/ui_preferences.c:210
 msgid "Search for images matching these words (comma-separated):"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:210
+#: src/audacious/ui_preferences.c:212
 msgid "Exclude images matching these words (comma-separated):"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:212
+#: src/audacious/ui_preferences.c:214
 msgid "Search for images matching song file name"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:214
+#: src/audacious/ui_preferences.c:216
 msgid "Search recursively"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:216
+#: src/audacious/ui_preferences.c:218
 msgid "Search depth:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:219
+#: src/audacious/ui_preferences.c:221
 msgid "<b>Popup Information</b>"
 msgstr "<b>Iskačuće informacije</b>"
 
-#: src/audacious/ui_preferences.c:220
+#: src/audacious/ui_preferences.c:222
 msgid "Show popup information"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:222
+#: src/audacious/ui_preferences.c:224
 msgid "Popup delay (tenths of a second):"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:225
+#: src/audacious/ui_preferences.c:227
 msgid "Show time scale for current song"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:239
+#: src/audacious/ui_preferences.c:241
 msgid "TITLE"
 msgstr "NASLOV"
 
-#: src/audacious/ui_preferences.c:240
+#: src/audacious/ui_preferences.c:242
 msgid "ARTIST - TITLE"
 msgstr "IZVOĐAČ - NASLOV"
 
-#: src/audacious/ui_preferences.c:241
+#: src/audacious/ui_preferences.c:243
 msgid "ARTIST - ALBUM - TITLE"
 msgstr "IZVOĐAČ - ALBUM - NASLOV"
 
-#: src/audacious/ui_preferences.c:242
+#: src/audacious/ui_preferences.c:244
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr "IZVOĐAČ - ALBUM - BROJ. NASLOV"
 
-#: src/audacious/ui_preferences.c:243
+#: src/audacious/ui_preferences.c:245
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr "IZVOĐAČ [ ALBUM ] - BROJ. NASLOV"
 
-#: src/audacious/ui_preferences.c:244
+#: src/audacious/ui_preferences.c:246
 msgid "ALBUM - TITLE"
 msgstr "ALBUM - NASLOV"
 
-#: src/audacious/ui_preferences.c:457
+#: src/audacious/ui_preferences.c:459
 msgid "Category"
 msgstr "Kategorija"
 
-#: src/audacious/ui_preferences.c:995
+#: src/audacious/ui_preferences.c:997
 msgid "Custom"
 msgstr "Sopstveni"
 
-#: src/audacious/ui_preferences.c:1032
+#: src/audacious/ui_preferences.c:1034
 msgid "<b>Song Display</b>"
 msgstr "<b>Prikaz pesme</b>"
 
-#: src/audacious/ui_preferences.c:1041
+#: src/audacious/ui_preferences.c:1043
 msgid "Show song numbers"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1052
+#: src/audacious/ui_preferences.c:1054
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1072
+#: src/audacious/ui_preferences.c:1074
 msgid "Show information about titlestring format"
 msgstr "Prikaži informacije o formatu znakovnog niza naslova"
 
-#: src/audacious/ui_preferences.c:1086
+#: src/audacious/ui_preferences.c:1088
 msgid "Custom string:"
 msgstr "Sopstveni znakovni niz:"
 
-#: src/audacious/ui_preferences.c:1091
+#: src/audacious/ui_preferences.c:1093
 msgid "Title format:"
 msgstr "Format naslova:"
 
-#: src/audacious/ui_preferences.c:1178
+#: src/audacious/ui_preferences.c:1180
 msgid "Output plugin:"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1237
+#: src/audacious/ui_preferences.c:1239
 msgid "Transport"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1237
+#: src/audacious/ui_preferences.c:1239
 msgid "Input"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1238
+#: src/audacious/ui_preferences.c:1240
 msgid "Effect"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1238
+#: src/audacious/ui_preferences.c:1240
 msgid "Visualization"
 msgstr "Vizuelizacija"
 
-#: src/audacious/ui_preferences.c:1238
+#: src/audacious/ui_preferences.c:1240
 msgid "General"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1276
+#: src/audacious/ui_preferences.c:1278
 msgid "Audacious Preferences"
 msgstr "Audacious podešavanja"
 
-#: src/audacious/util.c:115
+#: src/audacious/util.c:127
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Nije moguće napraviti direktorijum (%s): %s\n"
@@ -980,3 +984,6 @@ msgid ""
 "\n"
 "(Further messages have been hidden.)"
 msgstr ""
+
+#~ msgid "<b>Metadata</b>"
+#~ msgstr "<b>Meta-podaci</b>"

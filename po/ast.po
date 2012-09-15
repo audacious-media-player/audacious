@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-08-11 13:29-0400\n"
+"POT-Creation-Date: 2012-09-15 12:17+0200\n"
 "PO-Revision-Date: 2010-07-18 21:16+0100\n"
 "Last-Translator: marquinos <marcos@softastur.org>\n"
 "Language-Team: Softastur <alministradores@softastur.org>\n"
@@ -164,7 +164,7 @@ msgstr "Audio"
 msgid "Network"
 msgstr "Rede"
 
-#: src/audacious/ui_preferences.c:71 src/audacious/ui_preferences.c:1237
+#: src/audacious/ui_preferences.c:71 src/audacious/ui_preferences.c:1239
 msgid "Playlist"
 msgstr "Llista de reproducción"
 
@@ -400,146 +400,150 @@ msgid "Open files in a temporary playlist"
 msgstr "Amestar nuevos ficheros a una llista de reproducción temporal"
 
 #: src/audacious/ui_preferences.c:198
-msgid "<b>Metadata</b>"
-msgstr "<b>Metadatos</b>"
-
-#: src/audacious/ui_preferences.c:199
 msgid "Do not load metadata for songs until played"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:207
+#: src/audacious/ui_preferences.c:201
+msgid "<b>Compatibility</b>"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:202
+msgid "Interpret \\ (backward slash) as a folder delimiter"
+msgstr ""
+
+#: src/audacious/ui_preferences.c:209
 #, fuzzy
 msgid "<b>Album Art</b>"
 msgstr "<b>Control de volume</b>"
 
-#: src/audacious/ui_preferences.c:208
+#: src/audacious/ui_preferences.c:210
 msgid "Search for images matching these words (comma-separated):"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:210
+#: src/audacious/ui_preferences.c:212
 msgid "Exclude images matching these words (comma-separated):"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:212
+#: src/audacious/ui_preferences.c:214
 msgid "Search for images matching song file name"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:214
+#: src/audacious/ui_preferences.c:216
 msgid "Search recursively"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:216
+#: src/audacious/ui_preferences.c:218
 #, fuzzy
 msgid "Search depth:"
 msgstr "Profundidá de la gueta:"
 
-#: src/audacious/ui_preferences.c:219
+#: src/audacious/ui_preferences.c:221
 msgid "<b>Popup Information</b>"
 msgstr "<b>Información emerxente</b>"
 
-#: src/audacious/ui_preferences.c:220
+#: src/audacious/ui_preferences.c:222
 #, fuzzy
 msgid "Show popup information"
 msgstr "Amosar información emerxente pa les entraes de la llista de canciones"
 
-#: src/audacious/ui_preferences.c:222
+#: src/audacious/ui_preferences.c:224
 msgid "Popup delay (tenths of a second):"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:225
+#: src/audacious/ui_preferences.c:227
 #, fuzzy
 msgid "Show time scale for current song"
 msgstr "Parar la canción actual"
 
-#: src/audacious/ui_preferences.c:239
+#: src/audacious/ui_preferences.c:241
 msgid "TITLE"
 msgstr "TÍTULU"
 
-#: src/audacious/ui_preferences.c:240
+#: src/audacious/ui_preferences.c:242
 msgid "ARTIST - TITLE"
 msgstr "ARTISTA - TÍTULU"
 
-#: src/audacious/ui_preferences.c:241
+#: src/audacious/ui_preferences.c:243
 msgid "ARTIST - ALBUM - TITLE"
 msgstr "ARTISTA - ÁLBUM - TÍTULU"
 
-#: src/audacious/ui_preferences.c:242
+#: src/audacious/ui_preferences.c:244
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr "ARTISTA - ÁLBUM - PISTA. TÍTULU"
 
-#: src/audacious/ui_preferences.c:243
+#: src/audacious/ui_preferences.c:245
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr "ARTISTA [ ÁLBUM ] - PISTA. TÍTULU"
 
-#: src/audacious/ui_preferences.c:244
+#: src/audacious/ui_preferences.c:246
 msgid "ALBUM - TITLE"
 msgstr "ÁLBUM - TÍTULU"
 
-#: src/audacious/ui_preferences.c:457
+#: src/audacious/ui_preferences.c:459
 msgid "Category"
 msgstr "Categoría"
 
-#: src/audacious/ui_preferences.c:995
+#: src/audacious/ui_preferences.c:997
 msgid "Custom"
 msgstr "Personalizada"
 
-#: src/audacious/ui_preferences.c:1032
+#: src/audacious/ui_preferences.c:1034
 msgid "<b>Song Display</b>"
 msgstr "<b>Visualización de les canciones</b>"
 
-#: src/audacious/ui_preferences.c:1041
+#: src/audacious/ui_preferences.c:1043
 msgid "Show song numbers"
 msgstr "Amosar númberos de canción"
 
-#: src/audacious/ui_preferences.c:1052
+#: src/audacious/ui_preferences.c:1054
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1072
+#: src/audacious/ui_preferences.c:1074
 msgid "Show information about titlestring format"
 msgstr "Amosar información tocante al formatu del títulu"
 
-#: src/audacious/ui_preferences.c:1086
+#: src/audacious/ui_preferences.c:1088
 msgid "Custom string:"
 msgstr "Cadena personalizada:"
 
-#: src/audacious/ui_preferences.c:1091
+#: src/audacious/ui_preferences.c:1093
 msgid "Title format:"
 msgstr "Formatu del títulu:"
 
-#: src/audacious/ui_preferences.c:1178
+#: src/audacious/ui_preferences.c:1180
 #, fuzzy
 msgid "Output plugin:"
 msgstr "Complementu de salida actual:"
 
-#: src/audacious/ui_preferences.c:1237
+#: src/audacious/ui_preferences.c:1239
 #, fuzzy
 msgid "Transport"
 msgstr "Traductores"
 
-#: src/audacious/ui_preferences.c:1237
+#: src/audacious/ui_preferences.c:1239
 msgid "Input"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1238
+#: src/audacious/ui_preferences.c:1240
 #, fuzzy
 msgid "Effect"
 msgstr "<b>Efeutos</b>"
 
-#: src/audacious/ui_preferences.c:1238
+#: src/audacious/ui_preferences.c:1240
 #, fuzzy
 msgid "Visualization"
 msgstr "<b>Visualización</b>"
 
-#: src/audacious/ui_preferences.c:1238
+#: src/audacious/ui_preferences.c:1240
 msgid "General"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:1276
+#: src/audacious/ui_preferences.c:1278
 msgid "Audacious Preferences"
 msgstr "Preferencies d'Audacious"
 
-#: src/audacious/util.c:115
+#: src/audacious/util.c:127
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Nun pudo crease'l direutoriu (%s): %s\n"
@@ -1017,6 +1021,9 @@ msgid ""
 "\n"
 "(Further messages have been hidden.)"
 msgstr ""
+
+#~ msgid "<b>Metadata</b>"
+#~ msgstr "<b>Metadatos</b>"
 
 #~ msgid "File is not a valid .desktop file"
 #~ msgstr "El ficheru nun ye un ficheru .desktop válidu"
