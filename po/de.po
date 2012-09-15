@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Audacious 3.3\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2012-09-15 12:17+0200\n"
-"PO-Revision-Date: 2012-08-15 12:11+0200\n"
+"PO-Revision-Date: 2012-09-15 12:48+0200\n"
 "Last-Translator: Thomas Lange <thomas-lange2@gmx.de>\n"
 "Language-Team: German\n"
 "Language: de\n"
@@ -388,11 +388,11 @@ msgstr "Metadaten erst laden, wenn Titel gespielt wird"
 
 #: src/audacious/ui_preferences.c:201
 msgid "<b>Compatibility</b>"
-msgstr ""
+msgstr "<b>Kompatibilität</b>"
 
 #: src/audacious/ui_preferences.c:202
 msgid "Interpret \\ (backward slash) as a folder delimiter"
-msgstr ""
+msgstr "Interpretiere \\ (Backslash) als Pfadtrennzeichen"
 
 #: src/audacious/ui_preferences.c:209
 msgid "<b>Album Art</b>"
@@ -982,6 +982,3 @@ msgid ""
 msgstr ""
 "\n"
 "(Weitere Meldungen wurden nicht angezeigt.)"
-
-#~ msgid "<b>Metadata</b>"
-#~ msgstr "<b>Metadaten</b>"
