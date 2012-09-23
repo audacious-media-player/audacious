@@ -28,23 +28,23 @@
 #include "plugin.h"
 #include "plugins.h"
 
-static const char * get_extension (const char * filename)
+static PluginHandle * get_plugin_silent (const char * filename)
 {
-    const char * ext;
-    uri_parse (filename, NULL, & ext, NULL, NULL);
-    return (ext && ext[0] == '.') ? ext + 1 : NULL;
+    char buf[32];
+    if (! uri_get_extension (filename, buf, sizeof buf))
+        return NULL;
+
+    return playlist_plugin_for_extension (buf);
 }
 
 bool_t filename_is_playlist (const char * filename)
 {
-    const char * ext = get_extension (filename);
-    return (ext && playlist_plugin_for_extension (ext)) ? TRUE : FALSE;
+    return (get_plugin_silent (filename) != NULL);
 }
 
 static PluginHandle * get_plugin (const char * filename, bool_t saving)
 {
-    const char * ext = get_extension (filename);
-    PluginHandle * plugin = ext ? playlist_plugin_for_extension (ext) : NULL;
+    PluginHandle * plugin = get_plugin_silent (filename);
 
     if (! plugin)
     {
