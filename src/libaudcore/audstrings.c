@@ -253,6 +253,24 @@ EXPORT void uri_parse (const char * uri, const char * * base_p, const char * * e
         * isub_p = isub;
 }
 
+EXPORT bool_t uri_get_extension (const char * uri, char * buf, int buflen)
+{
+    const char * ext;
+    uri_parse (uri, NULL, & ext, NULL, NULL);
+
+    if (ext[0] != '.')
+        return FALSE;
+
+    g_strlcpy (buf, ext + 1, buflen);
+
+    /* remove subtunes and HTTP query strings */
+    char * qmark;
+    if ((qmark = strchr (buf, '?')))
+        * qmark = 0;
+
+    return (buf[0] != 0);
+}
+
 /* Like strcasecmp, but orders numbers correctly (2 before 10). */
 /* Non-ASCII characters are treated exactly as is. */
 /* Handles NULL gracefully. */

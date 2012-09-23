@@ -130,17 +130,11 @@ static void probe_by_scheme (ProbeState * state)
 
 static void probe_by_extension (ProbeState * state)
 {
-    const char * ext, * sub;
-    uri_parse (state->filename, NULL, & ext, & sub, NULL);
-
-    if (ext == sub)
+    char buf[32];
+    if (! uri_get_extension (state->filename, buf, sizeof buf))
         return;
 
     AUDDBG ("Probing by extension.\n");
-    char buf[sub - ext];
-    memcpy (buf, ext + 1, sub - ext - 1);
-    buf[sub - ext - 1] = 0;
-
     input_plugin_for_key (INPUT_KEY_EXTENSION, buf, (PluginForEachFunc) probe_func_fast, state);
 }
 

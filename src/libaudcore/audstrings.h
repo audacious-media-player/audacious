@@ -42,6 +42,7 @@ char * uri_to_display (const char * uri);
 
 void uri_parse (const char * uri, const char * * base_p, const char * * ext_p,
  const char * * sub_p, int * isub_p);
+bool_t uri_get_extension (const char * uri, char * buf, int buflen);
 
 int string_compare (const char * a, const char * b);
 int string_compare_encoded (const char * a, const char * b);
