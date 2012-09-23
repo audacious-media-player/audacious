@@ -69,10 +69,6 @@ static void art_item_free (ArtItem * item)
 
 static ArtItem * art_item_new (const char * file)
 {
-    /* local files only */
-    if (strncmp (file, "file://", 7))
-        return NULL;
-
     ArtItem * item = g_slice_new0 (ArtItem);
     item->song_file = str_get (file);
 
