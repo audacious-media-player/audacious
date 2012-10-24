@@ -47,6 +47,7 @@
 #include "playback.h"
 #include "playlist.h"
 #include "plugins.h"
+#include "scanner.h"
 #include "util.h"
 
 #define AUTOSAVE_INTERVAL 300 /* seconds */
@@ -470,6 +471,7 @@ static void init_two (int * p_argc, char * * * p_argv)
     AUDDBG ("Loading lowlevel plugins.\n");
     start_plugins_one ();
 
+    scanner_init ();
     playlist_init ();
     adder_init ();
     art_init ();
@@ -514,6 +516,7 @@ static void shut_down (void)
     art_cleanup ();
     history_cleanup ();
     playlist_end ();
+    scanner_cleanup ();
 
     AUDDBG ("Unloading lowlevel plugins.\n");
     stop_plugins_one ();

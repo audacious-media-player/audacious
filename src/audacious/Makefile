@@ -27,6 +27,7 @@ SRCS = adder.c \
        plugin-view.c \
        probe.c \
        probe-buffer.c \
+       scanner.c \
        signals.c								\
        ui_plugin_menu.c \
        ui_preferences.c							\
