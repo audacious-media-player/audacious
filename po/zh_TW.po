@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2012-09-15 12:17+0200\n"
-"PO-Revision-Date: 2012-08-06 17:22+0800\n"
+"PO-Revision-Date: 2012-10-25 10:30+0800\n"
 "Last-Translator: Ruei-Yuan Lu <RueiYuan.Lu@gmail.com>\n"
 "Language-Team: Chinese (traditional)\n"
 "Language: zh_TW\n"
@@ -390,11 +390,11 @@ msgstr "在歌曲播放以前不要載入詮釋資料"
 
 #: src/audacious/ui_preferences.c:201
 msgid "<b>Compatibility</b>"
-msgstr ""
+msgstr "<b>相容性</b>"
 
 #: src/audacious/ui_preferences.c:202
 msgid "Interpret \\ (backward slash) as a folder delimiter"
-msgstr ""
+msgstr "將 \\ (反斜線) 視為資料夾分隔符號"
 
 #: src/audacious/ui_preferences.c:209
 msgid "<b>Album Art</b>"
@@ -980,5 +980,3 @@ msgstr ""
 "\n"
 "(詳細訊息已被隱藏。)"
 
-#~ msgid "<b>Metadata</b>"
-#~ msgstr "<b>詮釋資料</b>"
