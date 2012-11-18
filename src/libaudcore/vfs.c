@@ -411,15 +411,40 @@ vfs_file_test(const char * path, int test)
         return FALSE; /* only local files are handled */
 
     char * path2 = uri_to_filename (path);
+    if (! path2)
+        return FALSE;
+    
+#ifdef S_ISLNK
+    if (test & VFS_IS_SYMLINK)
+    {
+        struct stat st;
+        if (lstat (path2, & st) < 0)
+            return FALSE;
+    
+        if (S_ISLNK (st.st_mode))
+            test &= ~VFS_IS_SYMLINK;
+    }
+#endif
+    
+    if (test & (VFS_IS_REGULAR | VFS_IS_DIR | VFS_IS_EXECUTABLE | VFS_EXISTS))
+    {
+        struct stat st;
+        if (stat (path2, & st) < 0)
+            return FALSE;
+        
+        if (S_ISREG (st.st_mode))
+            test &= ~VFS_IS_REGULAR;
+        if (S_ISDIR (st.st_mode))
+            test &= ~VFS_IS_DIR;
+        if (st.st_mode & S_IXUSR)
+            test &= ~VFS_IS_EXECUTABLE;
+        
+        test &= ~VFS_EXISTS;
+    }
 
-    if (path2 == NULL)
-        path2 = g_strdup(path);
+    g_free (path2);
 
-    bool_t ret = g_file_test (path2, test);
-
-    g_free(path2);
-
-    return ret;
+    return ! test;
 }
 
 /**
