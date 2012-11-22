@@ -153,6 +153,7 @@ static void infopopup_create (void)
     /* track progress */
     widgets.progress = gtk_progress_bar_new ();
     gtk_widget_set_margin_top (widgets.progress, 6);
+    gtk_progress_bar_set_show_text ((GtkProgressBar *) widgets.progress, TRUE);
     gtk_progress_bar_set_text ((GtkProgressBar *) widgets.progress, "");
     gtk_grid_attach ((GtkGrid *) grid, widgets.progress, 0, 7, 2, 1);
 
