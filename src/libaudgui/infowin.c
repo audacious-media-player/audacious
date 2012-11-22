@@ -178,16 +178,6 @@ static void infowin_label_set_text (GtkWidget * widget, char * text)
     gtk_label_set_use_markup ((GtkLabel *) widget, TRUE);
 }
 
-static void infowin_entry_set_image (GtkWidget * widget, int list, int entry)
-{
-    GdkPixbuf * p = audgui_pixbuf_for_entry (list, entry);
-    g_return_if_fail (p);
-
-    audgui_pixbuf_scale_within (& p, IMAGE_SIZE);
-    gtk_image_set_from_pixbuf ((GtkImage *) widget, p);
-    g_object_unref ((GObject *) p);
-}
-
 static void clear_infowin (void)
 {
     gtk_entry_set_text ((GtkEntry *) entry_title, "");
@@ -286,6 +276,32 @@ static bool_t genre_fill (GtkWidget * combo)
     return FALSE;
 }
 
+static void infowin_display_image (const char * filename)
+{
+    if (! current_file || strcmp (filename, current_file))
+        return;
+
+    GdkPixbuf * pb = audgui_pixbuf_request (filename);
+    if (! pb)
+        pb = audgui_pixbuf_fallback ();
+
+    audgui_pixbuf_scale_within (& pb, IMAGE_SIZE);
+    gtk_image_set_from_pixbuf ((GtkImage *) image_artwork, pb);
+    g_object_unref (pb);
+}
+
+static void infowin_destroyed (void)
+{
+    hook_dissociate ("art ready", (HookFunction) infowin_display_image);
+
+    infowin = NULL;
+
+    g_free (current_file);
+    current_file = NULL;
+    current_decoder = NULL;
+    can_write = FALSE;
+}
+
 static void create_infowin (void)
 {
     GtkWidget * hbox;
@@ -328,6 +344,7 @@ static void create_infowin (void)
     gtk_box_pack_start ((GtkBox *) vbox2, vbox3, TRUE, FALSE, 0);
 
     image_artwork = gtk_image_new ();
+    gtk_widget_set_size_request (image_artwork, IMAGE_SIZE, IMAGE_SIZE);
     gtk_box_pack_start ((GtkBox *) vbox3, image_artwork, FALSE, FALSE, 0);
 
     location_text = gtk_label_new ("");
@@ -491,11 +508,13 @@ static void create_infowin (void)
     g_signal_connect_swapped (btn_close, "clicked", (GCallback) gtk_widget_hide,
      infowin);
 
-    audgui_hide_on_delete (infowin);
-    audgui_hide_on_escape (infowin);
-
     gtk_widget_show_all (vbox0);
     gtk_widget_grab_focus (entry_title);
+
+    audgui_destroy_on_escape (infowin);
+    g_signal_connect (infowin, "destroy", (GCallback) infowin_destroyed, NULL);
+
+    hook_associate ("art ready", (HookFunction) infowin_display_image, NULL);
 }
 
 static void infowin_show (int list, int entry, const char * filename,
@@ -538,7 +557,7 @@ static void infowin_show (int list, int entry, const char * filename,
     else
         infowin_label_set_text (label_bitrate, NULL);
 
-    infowin_entry_set_image (image_artwork, list, entry);
+    infowin_display_image (filename);
 
     gtk_window_present ((GtkWindow *) infowin);
 }
