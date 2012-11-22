@@ -1,6 +1,6 @@
 /*
  * infopopup.c
- * Copyright 2006-2011 William Pitcock, Giacomo Lozito, and John Lindgren
+ * Copyright 2006-2012 William Pitcock, Giacomo Lozito, and John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -31,281 +31,191 @@
 
 static GtkWidget * infopopup = NULL;
 
-static void infopopup_entry_set_text (const char * entry_name, const char *
- text)
+static struct {
+    GtkWidget * title_header, * title_label;
+    GtkWidget * artist_header, * artist_label;
+    GtkWidget * album_header, * album_label;
+    GtkWidget * genre_header, * genre_label;
+    GtkWidget * year_header, * year_label;
+    GtkWidget * track_header, * track_label;
+    GtkWidget * length_header, * length_label;
+    GtkWidget * image;
+    GtkWidget * progress;
+} widgets;
+
+static char * current_file = NULL;
+static int progress_source = 0;
+
+static void infopopup_set_image (int playlist, int entry)
 {
-    GtkWidget * widget = g_object_get_data ((GObject *) infopopup, entry_name);
-
-    g_return_if_fail (widget != NULL);
-    gtk_label_set_text ((GtkLabel *) widget, text);
-}
-
-static void infopopup_entry_set_image (int playlist, int entry)
-{
-    GtkWidget * widget = g_object_get_data ((GObject *) infopopup, "image");
-    g_return_if_fail (widget);
-
     GdkPixbuf * pixbuf = audgui_pixbuf_for_entry (playlist, entry);
 
     if (pixbuf)
     {
         audgui_pixbuf_scale_within (& pixbuf, 96);
-        gtk_image_set_from_pixbuf ((GtkImage *) widget, pixbuf);
+        gtk_image_set_from_pixbuf ((GtkImage *) widgets.image, pixbuf);
         g_object_unref (pixbuf);
     }
     else
-        gtk_image_clear ((GtkImage *) widget);
+        gtk_image_clear ((GtkImage *) widgets.image);
 }
 
 static bool_t infopopup_progress_cb (void * unused)
 {
-    GtkWidget * progressbar = g_object_get_data ((GObject *) infopopup,
-     "progressbar");
-    char * tooltip_file = g_object_get_data ((GObject *) infopopup, "file");
-    int length = GPOINTER_TO_INT (g_object_get_data ((GObject *) infopopup,
-     "length"));
-    int playlist, entry, time;
-    char * progress_time;
+    char * filename = NULL;
+    int length = 0, time = 0;
 
-    g_return_val_if_fail (tooltip_file != NULL, FALSE);
-    g_return_val_if_fail (length > 0, FALSE);
-
-    if (! aud_get_bool (NULL, "filepopup_showprogressbar") || ! aud_drct_get_playing ())
-        goto HIDE;
-
-    playlist = aud_playlist_get_playing ();
-
-    if (playlist == -1)
-        goto HIDE;
-
-    entry = aud_playlist_get_position (playlist);
-
-    if (entry == -1)
-        goto HIDE;
-
-    char * filename = aud_playlist_entry_get_filename (playlist, entry);
-    if (strcmp (filename, tooltip_file))
+    if (aud_drct_get_playing ())
     {
-        str_unref (filename);
-        goto HIDE;
+        filename = aud_drct_get_filename ();
+        length = aud_drct_get_length ();
+        time = aud_drct_get_time ();
     }
+
+    if (aud_get_bool (NULL, "filepopup_showprogressbar") && filename &&
+     current_file && ! strcmp (filename, current_file) && length > 0)
+    {
+        gtk_progress_bar_set_fraction ((GtkProgressBar *) widgets.progress,
+         time / (float) length);
+
+        SPRINTF (time_str, "%d:%02d", time / 60000, (time / 1000) % 60);
+        gtk_progress_bar_set_text ((GtkProgressBar *) widgets.progress, time_str);
+
+        gtk_widget_show (widgets.progress);
+    }
+    else
+        gtk_widget_hide (widgets.progress);
+
     str_unref (filename);
-
-    time = aud_drct_get_time ();
-    gtk_progress_bar_set_fraction ((GtkProgressBar *) progressbar, time /
-     (float) length);
-    progress_time = g_strdup_printf ("%d:%02d", time / 60000, (time / 1000) % 60);
-    gtk_progress_bar_set_text ((GtkProgressBar *) progressbar, progress_time);
-    g_free (progress_time);
-
-    gtk_widget_show (progressbar);
-    return TRUE;
-
-HIDE:
-    /* tooltip opened, but song is not the same, or playback is stopped */
-    gtk_widget_hide (progressbar);
     return TRUE;
 }
 
-static void infopopup_progress_init (void)
+static void infopopup_add_category (GtkWidget * grid, int position,
+ const char * text, GtkWidget * * header, GtkWidget * * label)
 {
-    g_object_set_data ((GObject *) infopopup, "progress_sid", GINT_TO_POINTER
-     (0));
-}
+    * header = gtk_label_new (NULL);
+    * label = gtk_label_new (NULL);
 
-static void infopopup_progress_start (void)
-{
-    int sid = g_timeout_add (500, (GSourceFunc) infopopup_progress_cb, NULL);
+    gtk_misc_set_alignment ((GtkMisc *) * header, 0, 0.5);
+    gtk_misc_set_alignment ((GtkMisc *) * label, 0, 0.5);
+    gtk_misc_set_padding ((GtkMisc *) * header, 0, 1);
+    gtk_misc_set_padding ((GtkMisc *) * label, 0, 1);
 
-    g_object_set_data ((GObject *) infopopup, "progress_sid", GINT_TO_POINTER
-     (sid));
-}
-
-static void infopopup_progress_stop (void)
-{
-    int sid = GPOINTER_TO_INT (g_object_get_data ((GObject *) infopopup,
-     "progress_sid"));
-
-    if (! sid)
-        return;
-
-    g_source_remove (sid);
-    g_object_set_data ((GObject *) infopopup, "progress_sid", GINT_TO_POINTER
-     (0));
-}
-
-static void infopopup_add_category (GtkWidget * infopopup_data_grid,
- const char * category, const char * header_data, const char * label_data,
- int position)
-{
-    GtkWidget * infopopup_data_info_header = gtk_label_new ("");
-    GtkWidget * infopopup_data_info_label = gtk_label_new ("");
-    char * markup;
-
-    gtk_misc_set_alignment ((GtkMisc *) infopopup_data_info_header, 0, 0.5);
-    gtk_misc_set_alignment ((GtkMisc *) infopopup_data_info_label, 0, 0.5);
-    gtk_misc_set_padding ((GtkMisc *) infopopup_data_info_header, 0, 1);
-    gtk_misc_set_padding ((GtkMisc *) infopopup_data_info_label, 0, 1);
-
-    markup = g_markup_printf_escaped ("<span style=\"italic\">%s</span>",
-     category);
-    gtk_label_set_markup ((GtkLabel *) infopopup_data_info_header, markup);
+    char * markup = g_markup_printf_escaped ("<span style=\"italic\">%s</span>", text);
+    gtk_label_set_markup ((GtkLabel *) * header, markup);
     g_free (markup);
 
-    g_object_set_data ((GObject *) infopopup, header_data,
-     infopopup_data_info_header);
-    g_object_set_data ((GObject *) infopopup, label_data,
-     infopopup_data_info_label);
-    gtk_grid_attach ((GtkGrid *) infopopup_data_grid,
-     infopopup_data_info_header, 0, position, 1, 1);
-    gtk_grid_attach ((GtkGrid *) infopopup_data_grid,
-     infopopup_data_info_label, 1, position, 1, 1);
+    gtk_grid_attach ((GtkGrid *) grid, * header, 0, position, 1, 1);
+    gtk_grid_attach ((GtkGrid *) grid, * label, 1, position, 1, 1);
+}
+
+static void infopopup_destroyed (void)
+{
+    if (progress_source)
+    {
+        g_source_remove (progress_source);
+        progress_source = 0;
+    }
+
+    infopopup = NULL;
+    memset (& widgets, 0, sizeof widgets);
+
+    str_unref (current_file);
+    current_file = NULL;
 }
 
 static void infopopup_create (void)
 {
-    GtkWidget * infopopup_hbox;
-    GtkWidget * infopopup_data_image;
-    GtkWidget * infopopup_data_grid;
-    GtkWidget * infopopup_progress;
-
     infopopup = gtk_window_new (GTK_WINDOW_POPUP);
-    gtk_window_set_type_hint ((GtkWindow *) infopopup,
-     GDK_WINDOW_TYPE_HINT_TOOLTIP);
+    gtk_window_set_type_hint ((GtkWindow *) infopopup, GDK_WINDOW_TYPE_HINT_TOOLTIP);
     gtk_window_set_decorated ((GtkWindow *) infopopup, FALSE);
     gtk_container_set_border_width ((GtkContainer *) infopopup, 4);
 
-    infopopup_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  6);
-    gtk_container_add ((GtkContainer *) infopopup, infopopup_hbox);
+    GtkWidget * hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  6);
+    gtk_container_add ((GtkContainer *) infopopup, hbox);
 
-    infopopup_data_image = gtk_image_new ();
-    gtk_misc_set_alignment ((GtkMisc *) infopopup_data_image, 0.5, 0);
-    g_object_set_data ((GObject *) infopopup, "image", infopopup_data_image);
-    gtk_box_pack_start ((GtkBox *) infopopup_hbox, infopopup_data_image, FALSE,
-     FALSE, 0);
+    widgets.image = gtk_image_new ();
+    gtk_misc_set_alignment ((GtkMisc *) widgets.image, 0.5, 0);
+    gtk_box_pack_start ((GtkBox *) hbox, widgets.image, FALSE, FALSE, 0);
 
-    infopopup_data_grid = gtk_grid_new ();
-    gtk_grid_set_column_spacing ((GtkGrid *) infopopup_data_grid, 6);
-    gtk_box_pack_start ((GtkBox *) infopopup_hbox, infopopup_data_grid, TRUE,
-     TRUE, 0);
+    GtkWidget * grid = gtk_grid_new ();
+    gtk_grid_set_column_spacing ((GtkGrid *) grid, 6);
+    gtk_box_pack_start ((GtkBox *) hbox, grid, TRUE, TRUE, 0);
 
-    infopopup_add_category (infopopup_data_grid, _("Title"), "header_title",
-     "label_title", 0);
-    infopopup_add_category (infopopup_data_grid, _("Artist"), "header_artist",
-     "label_artist", 1);
-    infopopup_add_category (infopopup_data_grid, _("Album"), "header_album",
-     "label_album", 2);
-    infopopup_add_category (infopopup_data_grid, _("Genre"), "header_genre",
-     "label_genre",3);
-    infopopup_add_category (infopopup_data_grid, _("Year"), "header_year",
-     "label_year", 4);
-    infopopup_add_category (infopopup_data_grid, _("Track"),
-     "header_tracknum", "label_tracknum", 5);
-    infopopup_add_category (infopopup_data_grid, _("Length"),
-     "header_tracklen", "label_tracklen", 6);
+    infopopup_add_category (grid, 0, _("Title"), & widgets.title_header, & widgets.title_label);
+    infopopup_add_category (grid, 1, _("Artist"), & widgets.artist_header, & widgets.artist_label);
+    infopopup_add_category (grid, 2, _("Album"), & widgets.album_header, & widgets.album_label);
+    infopopup_add_category (grid, 3, _("Genre"), & widgets.genre_header, & widgets.genre_label);
+    infopopup_add_category (grid, 4, _("Year"), & widgets.year_header, & widgets.year_label);
+    infopopup_add_category (grid, 5, _("Track"), & widgets.track_header, & widgets.track_label);
+    infopopup_add_category (grid, 6, _("Length"), & widgets.length_header, & widgets.length_label);
 
     /* track progress */
-    infopopup_progress = gtk_progress_bar_new ();
-    gtk_widget_set_margin_top (infopopup_progress, 6);
-    gtk_progress_bar_set_text ((GtkProgressBar *) infopopup_progress, "");
-    gtk_grid_attach ((GtkGrid *) infopopup_data_grid,
-     infopopup_progress, 0, 7, 2, 1);
-    g_object_set_data ((GObject *) infopopup, "file", NULL);
-    g_object_set_data ((GObject *) infopopup, "progressbar", infopopup_progress);
-    infopopup_progress_init ();
+    widgets.progress = gtk_progress_bar_new ();
+    gtk_widget_set_margin_top (widgets.progress, 6);
+    gtk_progress_bar_set_text ((GtkProgressBar *) widgets.progress, "");
+    gtk_grid_attach ((GtkGrid *) grid, widgets.progress, 0, 7, 2, 1);
 
     /* do not show the track progress */
-    gtk_widget_set_no_show_all (infopopup_progress, TRUE);
-    gtk_widget_show_all (infopopup_hbox);
+    gtk_widget_set_no_show_all (widgets.progress, TRUE);
+    gtk_widget_show_all (hbox);
+
+    g_signal_connect (infopopup, "destroy", (GCallback) infopopup_destroyed, NULL);
 }
 
 /* calls str_unref() on <text> */
-static void infopopup_update_data (char * text, const char * label_data,
- const char * header_data)
+static void infopopup_set_field (GtkWidget * header, GtkWidget * label, char * text)
 {
     if (text)
     {
-        infopopup_entry_set_text (label_data, text);
+        gtk_label_set_text ((GtkLabel *) label, text);
         str_unref (text);
 
-        gtk_widget_show ((GtkWidget *) g_object_get_data ((GObject *) infopopup,
-         header_data));
-        gtk_widget_show ((GtkWidget *) g_object_get_data ((GObject *) infopopup,
-         label_data));
+        gtk_widget_show (header);
+        gtk_widget_show (label);
     }
     else
     {
-        gtk_widget_hide ((GtkWidget *) g_object_get_data ((GObject *) infopopup,
-         header_data));
-        gtk_widget_hide ((GtkWidget *) g_object_get_data ((GObject *) infopopup,
-         label_data));
+        gtk_widget_hide (header);
+        gtk_widget_hide (label);
     }
 }
 
-static void infopopup_clear (void)
+static void infopopup_set_fields (const Tuple * tuple, const char * title)
 {
-    infopopup_progress_stop ();
-
-    infopopup_entry_set_text ("label_title", "");
-    infopopup_entry_set_text ("label_artist", "");
-    infopopup_entry_set_text ("label_album", "");
-    infopopup_entry_set_text ("label_genre", "");
-    infopopup_entry_set_text ("label_tracknum", "");
-    infopopup_entry_set_text ("label_year", "");
-    infopopup_entry_set_text ("label_tracklen", "");
-
-    gtk_window_resize ((GtkWindow *) infopopup, 1, 1);
-}
-
-static void infopopup_show (int playlist, int entry, const char * filename,
- const Tuple * tuple, const char * title)
-{
-    int x, y, h, w;
-    int length, value;
-    char * tmp;
-
-    if (infopopup == NULL)
-        infopopup_create ();
-    else
-        infopopup_clear ();
-
-    g_free (g_object_get_data ((GObject *) infopopup, "file"));
-    g_object_set_data ((GObject *) infopopup, "file", g_strdup (filename));
-
     /* use title from tuple if possible */
     char * title2 = tuple_get_str (tuple, FIELD_TITLE, NULL);
     if (! title2)
         title2 = str_get (title);
 
-    infopopup_update_data (title2, "label_title", "header_title");
-    infopopup_update_data (tuple_get_str (tuple, FIELD_ARTIST, NULL), "label_artist", "header_artist");
-    infopopup_update_data (tuple_get_str (tuple, FIELD_ALBUM, NULL), "label_album", "header_album");
-    infopopup_update_data (tuple_get_str (tuple, FIELD_GENRE, NULL), "label_genre", "header_genre");
+    char * artist = tuple_get_str (tuple, FIELD_ARTIST, NULL);
+    char * album = tuple_get_str (tuple, FIELD_ALBUM, NULL);
+    char * genre = tuple_get_str (tuple, FIELD_GENRE, NULL);
 
-    length = tuple_get_int (tuple, FIELD_LENGTH, NULL);
-    tmp = (length > 0) ? str_printf ("%d:%02d", length / 60000, length / 1000 % 60) : NULL;
-    infopopup_update_data (tmp, "label_tracklen", "header_tracklen");
+    infopopup_set_field (widgets.title_header, widgets.title_label, title2);
+    infopopup_set_field (widgets.artist_header, widgets.artist_label, artist);
+    infopopup_set_field (widgets.album_header, widgets.album_label, album);
+    infopopup_set_field (widgets.genre_header, widgets.genre_label, genre);
 
-    g_object_set_data ((GObject *) infopopup, "length" , GINT_TO_POINTER (length));
+    int value;
+    char * tmp;
+
+    value = tuple_get_int (tuple, FIELD_LENGTH, NULL);
+    tmp = (value > 0) ? str_printf ("%d:%02d", value / 60000, value / 1000 % 60) : NULL;
+    infopopup_set_field (widgets.length_header, widgets.length_label, tmp);
 
     value = tuple_get_int (tuple, FIELD_YEAR, NULL);
     tmp = (value > 0) ? str_printf ("%d", value) : NULL;
-    infopopup_update_data (tmp, "label_year", "header_year");
+    infopopup_set_field (widgets.year_header, widgets.year_label, tmp);
 
     value = tuple_get_int (tuple, FIELD_TRACK_NUMBER, NULL);
     tmp = (value > 0) ? str_printf ("%d", value) : NULL;
-    infopopup_update_data (tmp, "label_tracknum", "header_tracknum");
+    infopopup_set_field (widgets.track_header, widgets.track_label, tmp);
+}
 
-    infopopup_entry_set_image (playlist, entry);
-
-    /* start a timer that updates a progress bar if the tooltip
-       is shown for the song that is being currently played */
-    if (length > 0)
-    {
-        infopopup_progress_start ();
-        /* immediately run the callback once to update progressbar status */
-        infopopup_progress_cb (NULL);
-    }
+static void infopopup_move_to_mouse (void)
+{
+    int x, y, h, w;
 
     audgui_get_mouse_coords (NULL, & x, & y);
     gtk_window_get_size ((GtkWindow *) infopopup, & w, & h);
@@ -324,6 +234,30 @@ static void infopopup_show (int playlist, int entry, const char * filename,
         y += 3;
 
     gtk_window_move ((GtkWindow *) infopopup, x, y);
+}
+
+static void infopopup_show (int playlist, int entry, const char * filename,
+ const Tuple * tuple, const char * title)
+{
+    if (infopopup)
+        gtk_widget_destroy (infopopup);
+
+    str_unref (current_file);
+    current_file = str_get (filename);
+
+    infopopup_create ();
+    infopopup_set_fields (tuple, title);
+    infopopup_set_image (playlist, entry);
+
+    /* start a timer that updates a progress bar if the tooltip
+       is shown for the song that is being currently played */
+    if (! progress_source)
+        progress_source = g_timeout_add (500, infopopup_progress_cb, NULL);
+
+    /* immediately run the callback once to update progressbar status */
+    infopopup_progress_cb (NULL);
+
+    infopopup_move_to_mouse ();
     gtk_widget_show (infopopup);
 }
 
@@ -345,14 +279,11 @@ EXPORT void audgui_infopopup_show (int playlist, int entry)
 EXPORT void audgui_infopopup_show_current (void)
 {
     int playlist = aud_playlist_get_playing ();
-    int position;
-
-    if (playlist == -1)
+    if (playlist < 0)
         playlist = aud_playlist_get_active ();
 
-    position = aud_playlist_get_position (playlist);
-
-    if (position == -1)
+    int position = aud_playlist_get_position (playlist);
+    if (position < 0)
         return;
 
     audgui_infopopup_show (playlist, position);
@@ -360,9 +291,6 @@ EXPORT void audgui_infopopup_show_current (void)
 
 EXPORT void audgui_infopopup_hide (void)
 {
-    if (! infopopup)
-        return;
-
-    infopopup_progress_stop ();
-    gtk_widget_hide (infopopup);
+    if (infopopup)
+        gtk_widget_destroy (infopopup);
 }

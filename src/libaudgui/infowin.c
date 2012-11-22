@@ -1,6 +1,6 @@
 /*
  * libaudgui/infowin.c
- * Copyright 2006-2011 William Pitcock, Tomasz Moń, Eugene Zagidullin, and
+ * Copyright 2006-2012 William Pitcock, Tomasz Moń, Eugene Zagidullin, and
  *                     John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,31 +36,31 @@
 #define AUDGUI_STATUS_TIMEOUT 3000
 #define IMAGE_SIZE 150
 
-static GtkWidget * infowin = NULL;
-
-static GtkWidget * location_text;
-static GtkWidget * entry_title;
-static GtkWidget * entry_artist;
-static GtkWidget * entry_album;
-static GtkWidget * entry_comment;
-static GtkWidget * entry_year;
-static GtkWidget * entry_track;
-static GtkWidget * entry_genre;
-
-static GtkWidget * image_artwork;
-
-static GtkWidget * label_format_name;
-static GtkWidget * label_quality;
-static GtkWidget * label_bitrate;
-static GtkWidget * btn_apply;
-static GtkWidget * label_mini_status;
-
 enum
 {
     RAWDATA_KEY,
     RAWDATA_VALUE,
     RAWDATA_N_COLS
 };
+
+static GtkWidget * infowin = NULL;
+
+static struct {
+    GtkWidget * location;
+    GtkWidget * title;
+    GtkWidget * artist;
+    GtkWidget * album;
+    GtkWidget * comment;
+    GtkWidget * year;
+    GtkWidget * track;
+    GtkWidget * genre;
+    GtkWidget * image;
+    GtkWidget * format;
+    GtkWidget * quality;
+    GtkWidget * bitrate;
+    GtkWidget * apply;
+    GtkWidget * ministatus;
+} widgets;
 
 static char * current_file = NULL;
 static PluginHandle * current_decoder = NULL;
@@ -178,38 +178,10 @@ static void infowin_label_set_text (GtkWidget * widget, char * text)
     gtk_label_set_use_markup ((GtkLabel *) widget, TRUE);
 }
 
-static void clear_infowin (void)
-{
-    gtk_entry_set_text ((GtkEntry *) entry_title, "");
-    gtk_entry_set_text ((GtkEntry *) entry_artist, "");
-    gtk_entry_set_text ((GtkEntry *) entry_album, "");
-    gtk_entry_set_text ((GtkEntry *) entry_comment, "");
-    gtk_entry_set_text ((GtkEntry *) gtk_bin_get_child ((GtkBin *) entry_genre),
-     "");
-    gtk_entry_set_text ((GtkEntry *) entry_year, "");
-    gtk_entry_set_text ((GtkEntry *) entry_track, "");
-
-    infowin_label_set_text (label_format_name, NULL);
-    infowin_label_set_text (label_quality, NULL);
-    infowin_label_set_text (label_bitrate, NULL);
-
-    gtk_label_set_text ((GtkLabel *) label_mini_status,
-     "<span size=\"small\"></span>");
-    gtk_label_set_use_markup ((GtkLabel *) label_mini_status, TRUE);
-
-    g_free (current_file);
-    current_file = NULL;
-    current_decoder = NULL;
-
-    can_write = FALSE;
-    gtk_widget_set_sensitive (btn_apply, FALSE);
-    gtk_image_clear ((GtkImage *) image_artwork);
-}
-
 static void entry_changed (GtkEditable * editable, void * unused)
 {
     if (can_write)
-        gtk_widget_set_sensitive (btn_apply, TRUE);
+        gtk_widget_set_sensitive (widgets.apply, TRUE);
 }
 
 static bool_t ministatus_timeout_proc (void * data)
@@ -226,31 +198,31 @@ static void ministatus_display_message (const char * text)
 {
     char * tmp = g_strdup_printf ("<span size=\"small\">%s</span>", text);
 
-    gtk_label_set_text ((GtkLabel *) label_mini_status, tmp);
-    gtk_label_set_use_markup ((GtkLabel *) label_mini_status, TRUE);
+    gtk_label_set_text ((GtkLabel *) widgets.ministatus, tmp);
+    gtk_label_set_use_markup ((GtkLabel *) widgets.ministatus, TRUE);
     g_free (tmp);
 
     g_timeout_add (AUDGUI_STATUS_TIMEOUT, (GSourceFunc) ministatus_timeout_proc,
-     label_mini_status);
+     widgets.ministatus);
 }
 
 static void infowin_update_tuple (void * unused)
 {
     Tuple * tuple = tuple_new_from_filename (current_file);
 
-    set_field_str_from_entry (tuple, FIELD_TITLE, entry_title);
-    set_field_str_from_entry (tuple, FIELD_ARTIST, entry_artist);
-    set_field_str_from_entry (tuple, FIELD_ALBUM, entry_album);
-    set_field_str_from_entry (tuple, FIELD_COMMENT, entry_comment);
+    set_field_str_from_entry (tuple, FIELD_TITLE, widgets.title);
+    set_field_str_from_entry (tuple, FIELD_ARTIST, widgets.artist);
+    set_field_str_from_entry (tuple, FIELD_ALBUM, widgets.album);
+    set_field_str_from_entry (tuple, FIELD_COMMENT, widgets.comment);
     set_field_str_from_entry (tuple, FIELD_GENRE, gtk_bin_get_child ((GtkBin *)
-     entry_genre));
-    set_field_int_from_entry (tuple, FIELD_YEAR, entry_year);
-    set_field_int_from_entry (tuple, FIELD_TRACK_NUMBER, entry_track);
+     widgets.genre));
+    set_field_int_from_entry (tuple, FIELD_YEAR, widgets.year);
+    set_field_int_from_entry (tuple, FIELD_TRACK_NUMBER, widgets.track);
 
     if (aud_file_write_tuple (current_file, current_decoder, tuple))
     {
         ministatus_display_message (_("Metadata updated successfully"));
-        gtk_widget_set_sensitive (btn_apply, FALSE);
+        gtk_widget_set_sensitive (widgets.apply, FALSE);
     }
     else
         ministatus_display_message (_("Metadata updating failed"));
@@ -286,7 +258,7 @@ static void infowin_display_image (const char * filename)
         pb = audgui_pixbuf_fallback ();
 
     audgui_pixbuf_scale_within (& pb, IMAGE_SIZE);
-    gtk_image_set_from_pixbuf ((GtkImage *) image_artwork, pb);
+    gtk_image_set_from_pixbuf ((GtkImage *) widgets.image, pb);
     g_object_unref (pb);
 }
 
@@ -295,8 +267,9 @@ static void infowin_destroyed (void)
     hook_dissociate ("art ready", (HookFunction) infowin_display_image);
 
     infowin = NULL;
+    memset (& widgets, 0, sizeof widgets);
 
-    g_free (current_file);
+    str_unref (current_file);
     current_file = NULL;
     current_decoder = NULL;
     can_write = FALSE;
@@ -343,17 +316,16 @@ static void create_infowin (void)
     GtkWidget * vbox3 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
     gtk_box_pack_start ((GtkBox *) vbox2, vbox3, TRUE, FALSE, 0);
 
-    image_artwork = gtk_image_new ();
-    gtk_widget_set_size_request (image_artwork, IMAGE_SIZE, IMAGE_SIZE);
-    gtk_box_pack_start ((GtkBox *) vbox3, image_artwork, FALSE, FALSE, 0);
+    widgets.image = gtk_image_new ();
+    gtk_widget_set_size_request (widgets.image, IMAGE_SIZE, IMAGE_SIZE);
+    gtk_box_pack_start ((GtkBox *) vbox3, widgets.image, FALSE, FALSE, 0);
 
-    location_text = gtk_label_new ("");
-    gtk_widget_set_size_request (location_text, 200, -1);
-    gtk_label_set_line_wrap ((GtkLabel *) location_text, TRUE);
-    gtk_label_set_line_wrap_mode ((GtkLabel *) location_text,
-     PANGO_WRAP_WORD_CHAR);
-    gtk_label_set_selectable ((GtkLabel *) location_text, TRUE);
-    gtk_box_pack_start ((GtkBox *) vbox3, location_text, FALSE, FALSE, 0);
+    widgets.location = gtk_label_new ("");
+    gtk_widget_set_size_request (widgets.location, 200, -1);
+    gtk_label_set_line_wrap ((GtkLabel *) widgets.location, TRUE);
+    gtk_label_set_line_wrap_mode ((GtkLabel *) widgets.location, PANGO_WRAP_WORD_CHAR);
+    gtk_label_set_selectable ((GtkLabel *) widgets.location, TRUE);
+    gtk_box_pack_start ((GtkBox *) vbox3, widgets.location, FALSE, FALSE, 0);
 
     codec_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  6);
     gtk_box_pack_start ((GtkBox *) vbox2, codec_hbox, FALSE, FALSE, 0);
@@ -374,22 +346,22 @@ static void create_infowin (void)
     gtk_label_set_use_markup ((GtkLabel *) label_bitrate_label, TRUE);
     gtk_misc_set_alignment ((GtkMisc *) label_bitrate_label, 0, 0.5);
 
-    label_format_name = gtk_label_new (_("<span size=\"small\">n/a</span>"));
-    gtk_label_set_use_markup ((GtkLabel *) label_format_name, TRUE);
-    gtk_misc_set_alignment ((GtkMisc *) label_format_name, 0, 0.5);
-    label_quality = gtk_label_new (_("<span size=\"small\">n/a</span>"));
-    gtk_label_set_use_markup ((GtkLabel *) label_quality, TRUE);
-    gtk_misc_set_alignment ((GtkMisc *) label_quality, 0, 0.5);
-    label_bitrate = gtk_label_new (_("<span size=\"small\">n/a</span>"));
-    gtk_label_set_use_markup ((GtkLabel *) label_bitrate, TRUE);
-    gtk_misc_set_alignment ((GtkMisc *) label_bitrate, 0, 0.5);
+    widgets.format = gtk_label_new (_("<span size=\"small\">n/a</span>"));
+    gtk_label_set_use_markup ((GtkLabel *) widgets.format, TRUE);
+    gtk_misc_set_alignment ((GtkMisc *) widgets.format, 0, 0.5);
+    widgets.quality = gtk_label_new (_("<span size=\"small\">n/a</span>"));
+    gtk_label_set_use_markup ((GtkLabel *) widgets.quality, TRUE);
+    gtk_misc_set_alignment ((GtkMisc *) widgets.quality, 0, 0.5);
+    widgets.bitrate = gtk_label_new (_("<span size=\"small\">n/a</span>"));
+    gtk_label_set_use_markup ((GtkLabel *) widgets.bitrate, TRUE);
+    gtk_misc_set_alignment ((GtkMisc *) widgets.bitrate, 0, 0.5);
 
     gtk_grid_attach ((GtkGrid *) codec_grid, label_format, 0, 0, 1, 1);
-    gtk_grid_attach ((GtkGrid *) codec_grid, label_format_name, 1, 0, 1, 1);
+    gtk_grid_attach ((GtkGrid *) codec_grid, widgets.format, 1, 0, 1, 1);
     gtk_grid_attach ((GtkGrid *) codec_grid, label_quality_label, 0, 1, 1, 1);
-    gtk_grid_attach ((GtkGrid *) codec_grid, label_quality, 1, 1, 1, 1);
+    gtk_grid_attach ((GtkGrid *) codec_grid, widgets.quality, 1, 1, 1, 1);
     gtk_grid_attach ((GtkGrid *) codec_grid, label_bitrate_label, 0, 2, 1, 1);
-    gtk_grid_attach ((GtkGrid *) codec_grid, label_bitrate, 1, 2, 1, 1);
+    gtk_grid_attach ((GtkGrid *) codec_grid, widgets.bitrate, 1, 2, 1, 1);
 
     vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
     gtk_box_pack_start ((GtkBox *) hbox, vbox2, TRUE, TRUE, 0);
@@ -402,9 +374,9 @@ static void create_infowin (void)
     alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
     gtk_box_pack_start ((GtkBox *) vbox2, alignment, FALSE, FALSE, 0);
     gtk_alignment_set_padding ((GtkAlignment *) alignment, 0, 6, 0, 0);
-    entry_title = gtk_entry_new ();
-    gtk_container_add ((GtkContainer *) alignment, entry_title);
-    g_signal_connect (entry_title, "changed", (GCallback) entry_changed, NULL);
+    widgets.title = gtk_entry_new ();
+    gtk_container_add ((GtkContainer *) alignment, widgets.title);
+    g_signal_connect (widgets.title, "changed", (GCallback) entry_changed, NULL);
 
     label_artist = gtk_label_new (_("<span size=\"small\">Artist</span>"));
     gtk_box_pack_start ((GtkBox *) vbox2, label_artist, FALSE, FALSE, 0);
@@ -414,9 +386,9 @@ static void create_infowin (void)
     alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
     gtk_box_pack_start ((GtkBox *) vbox2, alignment, FALSE, FALSE, 0);
     gtk_alignment_set_padding ((GtkAlignment *) alignment, 0, 6, 0, 0);
-    entry_artist = gtk_entry_new ();
-    gtk_container_add ((GtkContainer *) alignment, entry_artist);
-    g_signal_connect (entry_artist, "changed", (GCallback) entry_changed, NULL);
+    widgets.artist = gtk_entry_new ();
+    gtk_container_add ((GtkContainer *) alignment, widgets.artist);
+    g_signal_connect (widgets.artist, "changed", (GCallback) entry_changed, NULL);
 
     label_album = gtk_label_new (_("<span size=\"small\">Album</span>"));
     gtk_box_pack_start ((GtkBox *) vbox2, label_album, FALSE, FALSE, 0);
@@ -426,9 +398,9 @@ static void create_infowin (void)
     alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
     gtk_box_pack_start ((GtkBox *) vbox2, alignment, FALSE, FALSE, 0);
     gtk_alignment_set_padding ((GtkAlignment *) alignment, 0, 6, 0, 0);
-    entry_album = gtk_entry_new ();
-    gtk_container_add ((GtkContainer *) alignment, entry_album);
-    g_signal_connect (entry_album, "changed", (GCallback) entry_changed, NULL);
+    widgets.album = gtk_entry_new ();
+    gtk_container_add ((GtkContainer *) alignment, widgets.album);
+    g_signal_connect (widgets.album, "changed", (GCallback) entry_changed, NULL);
 
     label_comment = gtk_label_new (_("<span size=\"small\">Comment</span>"));
     gtk_box_pack_start ((GtkBox *) vbox2, label_comment, FALSE, FALSE, 0);
@@ -438,9 +410,9 @@ static void create_infowin (void)
     alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
     gtk_box_pack_start ((GtkBox *) vbox2, alignment, FALSE, FALSE, 0);
     gtk_alignment_set_padding ((GtkAlignment *) alignment, 0, 6, 0, 0);
-    entry_comment = gtk_entry_new ();
-    gtk_container_add ((GtkContainer *) alignment, entry_comment);
-    g_signal_connect (entry_comment, "changed", (GCallback) entry_changed, NULL);
+    widgets.comment = gtk_entry_new ();
+    gtk_container_add ((GtkContainer *) alignment, widgets.comment);
+    g_signal_connect (widgets.comment, "changed", (GCallback) entry_changed, NULL);
 
     label_genre = gtk_label_new (_("<span size=\"small\">Genre</span>"));
     gtk_box_pack_start ((GtkBox *) vbox2, label_genre, FALSE, FALSE, 0);
@@ -451,10 +423,10 @@ static void create_infowin (void)
     gtk_box_pack_start ((GtkBox *) vbox2, alignment, FALSE, FALSE, 0);
     gtk_alignment_set_padding ((GtkAlignment *) alignment, 0, 6, 0, 0);
 
-    entry_genre = gtk_combo_box_text_new_with_entry ();
-    gtk_container_add ((GtkContainer *) alignment, entry_genre);
-    g_signal_connect (entry_genre, "changed", (GCallback) entry_changed, NULL);
-    g_idle_add ((GSourceFunc) genre_fill, entry_genre);
+    widgets.genre = gtk_combo_box_text_new_with_entry ();
+    gtk_container_add ((GtkContainer *) alignment, widgets.genre);
+    g_signal_connect (widgets.genre, "changed", (GCallback) entry_changed, NULL);
+    g_idle_add ((GSourceFunc) genre_fill, widgets.genre);
 
     alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
     gtk_box_pack_start ((GtkBox *) vbox2, alignment, FALSE, FALSE, 0);
@@ -469,26 +441,26 @@ static void create_infowin (void)
     gtk_label_set_use_markup ((GtkLabel *) label_year, TRUE);
     gtk_misc_set_alignment ((GtkMisc *) label_year, 0, 0.5);
 
-    entry_year = gtk_entry_new ();
-    gtk_grid_attach ((GtkGrid *) grid1, entry_year, 0, 1, 1, 1);
-    g_signal_connect (entry_year, "changed", (GCallback) entry_changed, NULL);
+    widgets.year = gtk_entry_new ();
+    gtk_grid_attach ((GtkGrid *) grid1, widgets.year, 0, 1, 1, 1);
+    g_signal_connect (widgets.year, "changed", (GCallback) entry_changed, NULL);
 
     label_track = gtk_label_new (_("<span size=\"small\">Track Number</span>"));
     gtk_grid_attach ((GtkGrid *) grid1, label_track, 1, 0, 1, 1);
     gtk_label_set_use_markup ((GtkLabel *) label_track, TRUE);
     gtk_misc_set_alignment ((GtkMisc *) label_track, 0, 0.5);
 
-    entry_track = gtk_entry_new ();
-    gtk_grid_attach ((GtkGrid *) grid1, entry_track, 1, 1, 1, 1);
-    g_signal_connect (entry_track, "changed", (GCallback) entry_changed, NULL);
+    widgets.track = gtk_entry_new ();
+    gtk_grid_attach ((GtkGrid *) grid1, widgets.track, 1, 1, 1, 1);
+    g_signal_connect (widgets.track, "changed", (GCallback) entry_changed, NULL);
 
     hbox_status_and_bbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  0);
     gtk_box_pack_start ((GtkBox *) vbox0, hbox_status_and_bbox, FALSE, FALSE, 0);
 
-    label_mini_status = gtk_label_new ("<span size=\"small\"></span>");
-    gtk_label_set_use_markup ((GtkLabel *) label_mini_status, TRUE);
-    gtk_misc_set_alignment ((GtkMisc *) label_mini_status, 0, 0.5);
-    gtk_box_pack_start ((GtkBox *) hbox_status_and_bbox, label_mini_status,
+    widgets.ministatus = gtk_label_new ("<span size=\"small\"></span>");
+    gtk_label_set_use_markup ((GtkLabel *) widgets.ministatus, TRUE);
+    gtk_misc_set_alignment ((GtkMisc *) widgets.ministatus, 0, 0.5);
+    gtk_box_pack_start ((GtkBox *) hbox_status_and_bbox, widgets.ministatus,
      TRUE, TRUE, 0);
 
     bbox_close = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
@@ -497,11 +469,10 @@ static void create_infowin (void)
      FALSE, 0);
     gtk_button_box_set_layout ((GtkButtonBox *) bbox_close, GTK_BUTTONBOX_END);
 
-    btn_apply = gtk_button_new_from_stock (GTK_STOCK_SAVE);
-    gtk_container_add ((GtkContainer *) bbox_close, btn_apply);
-    g_signal_connect (btn_apply, "clicked", (GCallback) infowin_update_tuple,
-     NULL);
-    gtk_widget_set_sensitive (btn_apply, FALSE);
+    widgets.apply = gtk_button_new_from_stock (GTK_STOCK_SAVE);
+    gtk_container_add ((GtkContainer *) bbox_close, widgets.apply);
+    g_signal_connect (widgets.apply, "clicked", (GCallback) infowin_update_tuple, NULL);
+    gtk_widget_set_sensitive (widgets.apply, FALSE);
 
     btn_close = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
     gtk_container_add ((GtkContainer *) bbox_close, btn_close);
@@ -509,7 +480,7 @@ static void create_infowin (void)
      infowin);
 
     gtk_widget_show_all (vbox0);
-    gtk_widget_grab_focus (entry_title);
+    gtk_widget_grab_focus (widgets.title);
 
     audgui_destroy_on_escape (infowin);
     g_signal_connect (infowin, "destroy", (GCallback) infowin_destroyed, NULL);
@@ -522,40 +493,36 @@ static void infowin_show (int list, int entry, const char * filename,
 {
     char * tmp;
 
-    if (infowin == NULL)
+    if (! infowin)
         create_infowin ();
-    else
-        clear_infowin ();
 
-    current_file = g_strdup (filename);
+    str_unref (current_file);
+    current_file = str_get (filename);
     current_decoder = decoder;
     can_write = updating_enabled;
 
-    set_entry_str_from_field (entry_title, tuple, FIELD_TITLE, updating_enabled);
-    set_entry_str_from_field (entry_artist, tuple, FIELD_ARTIST,
-     updating_enabled);
-    set_entry_str_from_field (entry_album, tuple, FIELD_ALBUM, updating_enabled);
-    set_entry_str_from_field (entry_comment, tuple, FIELD_COMMENT,
-     updating_enabled);
-    set_entry_str_from_field (gtk_bin_get_child ((GtkBin *) entry_genre), tuple,
-     FIELD_GENRE, updating_enabled);
+    set_entry_str_from_field (widgets.title, tuple, FIELD_TITLE, updating_enabled);
+    set_entry_str_from_field (widgets.artist, tuple, FIELD_ARTIST, updating_enabled);
+    set_entry_str_from_field (widgets.album, tuple, FIELD_ALBUM, updating_enabled);
+    set_entry_str_from_field (widgets.comment, tuple, FIELD_COMMENT, updating_enabled);
+    set_entry_str_from_field (gtk_bin_get_child ((GtkBin *) widgets.genre),
+     tuple, FIELD_GENRE, updating_enabled);
 
     tmp = uri_to_display (filename);
-    gtk_label_set_text ((GtkLabel *) location_text, tmp);
+    gtk_label_set_text ((GtkLabel *) widgets.location, tmp);
     g_free (tmp);
 
-    set_entry_int_from_field (entry_year, tuple, FIELD_YEAR, updating_enabled);
-    set_entry_int_from_field (entry_track, tuple, FIELD_TRACK_NUMBER,
-     updating_enabled);
+    set_entry_int_from_field (widgets.year, tuple, FIELD_YEAR, updating_enabled);
+    set_entry_int_from_field (widgets.track, tuple, FIELD_TRACK_NUMBER, updating_enabled);
 
-    infowin_label_set_text (label_format_name, tuple_get_str (tuple, FIELD_CODEC, NULL));
-    infowin_label_set_text (label_quality, tuple_get_str (tuple, FIELD_QUALITY, NULL));
+    infowin_label_set_text (widgets.format, tuple_get_str (tuple, FIELD_CODEC, NULL));
+    infowin_label_set_text (widgets.quality, tuple_get_str (tuple, FIELD_QUALITY, NULL));
 
     if (tuple_get_value_type (tuple, FIELD_BITRATE, NULL) == TUPLE_INT)
-        infowin_label_set_text (label_bitrate, str_printf (_("%d kb/s"),
+        infowin_label_set_text (widgets.bitrate, str_printf (_("%d kb/s"),
          tuple_get_int (tuple, FIELD_BITRATE, NULL)));
     else
-        infowin_label_set_text (label_bitrate, NULL);
+        infowin_label_set_text (widgets.bitrate, NULL);
 
     infowin_display_image (filename);
 
@@ -608,4 +575,10 @@ EXPORT void audgui_infowin_show_current (void)
         return;
 
     audgui_infowin_show (playlist, position);
+}
+
+EXPORT void audgui_infowin_hide (void)
+{
+    if (infowin)
+        gtk_widget_destroy (infowin);
 }
