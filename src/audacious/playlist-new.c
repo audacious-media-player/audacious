@@ -2151,6 +2151,16 @@ int playback_entry_get_position (void)
     LEAVE_RET (entry_num);
 }
 
+char * playback_entry_get_filename (void)
+{
+    ENTER;
+
+    Entry * entry = get_playback_entry (FALSE, FALSE);
+    char * filename = entry ? str_ref (entry->filename) : NULL;
+
+    LEAVE_RET (filename);
+}
+
 PluginHandle * playback_entry_get_decoder (void)
 {
     ENTER;

@@ -20,12 +20,11 @@
 #ifndef AUDACIOUS_SCANNER_H
 #define AUDACIOUS_SCANNER_H
 
-#include <stdint.h>
-
 #include <audacious/types.h>
 #include <libaudcore/tuple.h>
 
 #define SCAN_TUPLE (1 << 0)
+#define SCAN_IMAGE (1 << 1)
 
 #define SCAN_THREADS 2
 
@@ -37,8 +36,11 @@ typedef void (* ScanCallback) (ScanRequest * request);
 ScanRequest * scan_request (const char * filename, int flags,
  PluginHandle * decoder, ScanCallback callback);
 
+const char * scan_request_get_filename (ScanRequest * request);
 PluginHandle * scan_request_get_decoder (ScanRequest * request);
 Tuple * scan_request_get_tuple (ScanRequest * request);
+void scan_request_get_image_data (ScanRequest * request, void * * data, int64_t * len);
+char * scan_request_get_image_file (ScanRequest * request);
 
 void scanner_init (void);
 void scanner_cleanup (void);

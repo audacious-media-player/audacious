@@ -42,8 +42,15 @@ void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
 void audgui_connect_check_box (GtkWidget * box, bool_t * setting);
 
 GdkPixbuf * audgui_pixbuf_from_data (const void * data, int64_t size);
-GdkPixbuf * audgui_pixbuf_for_entry (int playlist, int entry);
-GdkPixbuf * audgui_pixbuf_for_current (void);
+GdkPixbuf * audgui_pixbuf_fallback (void);
 void audgui_pixbuf_scale_within (GdkPixbuf * * pixbuf, int size);
+
+/* non-blocking (like the aud_art_request_* functions) */
+GdkPixbuf * audgui_pixbuf_request (const char * filename);
+GdkPixbuf * audgui_pixbuf_request_current (void);
+
+/* deprecated */
+GdkPixbuf * audgui_pixbuf_for_current (void) __attribute ((deprecated));
+GdkPixbuf * audgui_pixbuf_for_entry (int playlist, int entry) __attribute ((deprecated));
 
 #endif

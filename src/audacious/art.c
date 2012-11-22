@@ -1,6 +1,6 @@
 /*
  * art.c
- * Copyright 2011 John Lindgren
+ * Copyright 2011-2012 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -17,8 +17,10 @@
  * the use of this software.
  */
 
+#include <assert.h>
 #include <errno.h>
 #include <glib.h>
+#include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -30,11 +32,15 @@
 #include "main.h"
 #include "misc.h"
 #include "playlist.h"
+#include "scanner.h"
 #include "util.h"
 
+#define FLAG_DONE 1
+#define FLAG_SENT 2
+
 typedef struct {
-    char * song_file; /* pooled */
     int refcount;
+    int flag;
 
     /* album art as JPEG or PNG data */
     void * data;
@@ -45,8 +51,12 @@ typedef struct {
     bool_t is_temp;
 } ArtItem;
 
-static GHashTable * art_items;
-static char * current_file; /* pooled */
+static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+static pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
+
+static GHashTable * art_items; /* of ArtItem */
+static char * current_ref; /* pooled */
+static int send_source;
 
 static void art_item_free (ArtItem * item)
 {
@@ -57,156 +67,194 @@ static void art_item_free (ArtItem * item)
         if (unixname)
         {
             unlink (unixname);
-            g_free (unixname);
+            free (unixname);
         }
     }
 
-    str_unref (item->song_file);
-    g_free (item->data);
-    g_free (item->art_file);
+    free (item->data);
+    free (item->art_file);
     g_slice_free (ArtItem, item);
 }
 
-static ArtItem * art_item_new (const char * file)
+static bool_t send_requests (void * unused)
 {
-    ArtItem * item = g_slice_new0 (ArtItem);
-    item->song_file = str_get (file);
+    pthread_mutex_lock (& mutex);
 
-    /* try to load embedded album art */
-    PluginHandle * decoder = file_find_decoder (file, FALSE);
-    if (decoder)
-        file_read_image (file, decoder, & item->data, & item->len);
+    GQueue queue = G_QUEUE_INIT;
 
-    if (item->data)
-        return item;
+    GHashTableIter iter;
+    char * file;
+    ArtItem * item;
 
-    /* try to find external image file */
-    char * unixname = get_associated_image_file (file);
-    if (unixname)
+    for (g_hash_table_iter_init (& iter, art_items);
+     g_hash_table_iter_next (& iter, (void * *) & file, (void * *) & item);)
     {
-        item->art_file = filename_to_uri (unixname);
-        g_free (unixname);
+        if (item->flag == FLAG_DONE)
+        {
+            g_queue_push_tail (& queue, str_ref (file));
+            item->flag = FLAG_SENT;
+        }
     }
 
-    if (item->art_file)
-        return item;
+    if (send_source)
+    {
+        g_source_remove (send_source);
+        send_source = 0;
+    }
 
-    /* failed */
-    art_item_free (item);
-    return NULL;
+    pthread_mutex_unlock (& mutex);
+
+    char * current = NULL;
+    if (! current_ref)
+        current = playback_entry_get_filename ();
+
+    while ((file = g_queue_pop_head (& queue)))
+    {
+        hook_call ("art ready", file);
+
+        if (current && ! strcmp (file, current))
+        {
+            hook_call ("current art ready", file);
+            current_ref = file;
+        }
+        else
+        {
+            art_unref (file); /* release temporary reference */
+            str_unref (file);
+        }
+    }
+
+    str_unref (current);
+    return FALSE;
 }
 
-static ArtItem * art_item_get (const char * file)
+static void request_callback (ScanRequest * request)
 {
-    if (! art_items)
-        art_items = g_hash_table_new_full (g_str_hash, g_str_equal,
-         NULL, (GDestroyNotify) art_item_free);
+    pthread_mutex_lock (& mutex);
 
+    const char * file = scan_request_get_filename (request);
     ArtItem * item = g_hash_table_lookup (art_items, file);
-    if (item)
+    assert (item != NULL && ! item->flag);
+
+    scan_request_get_image_data (request, & item->data, & item->len);
+    item->art_file = scan_request_get_image_file (request);
+    item->flag = FLAG_DONE;
+
+    if (! send_source)
+        send_source = g_idle_add (send_requests, NULL);
+
+    pthread_cond_broadcast (& cond);
+    pthread_mutex_unlock (& mutex);
+}
+
+static ArtItem * art_item_get (const char * file, bool_t blocking)
+{
+    ArtItem * item = g_hash_table_lookup (art_items, file);
+
+    if (item && item->flag)
     {
         item->refcount ++;
         return item;
     }
 
-    item = art_item_new (file);
     if (! item)
+    {
+        item = g_slice_new0 (ArtItem);
+        g_hash_table_insert (art_items, str_get (file), item);
+        item->refcount = 1; /* temporary reference */
+
+        scan_request (file, SCAN_IMAGE, NULL, request_callback);
+    }
+
+    if (! blocking)
         return NULL;
 
-    g_hash_table_insert (art_items, item->song_file, item);
-    item->refcount = 1;
+    item->refcount ++;
+
+    while (! item->flag)
+        pthread_cond_wait (& cond, & mutex);
+
     return item;
 }
 
-static void art_item_unref (ArtItem * item)
+static void art_item_unref (const char * file, ArtItem * item)
 {
     if (! -- item->refcount)
-    {
-        /* keep album art for current entry */
-        if (current_file && ! strcmp (current_file, item->song_file))
-            return;
-
-        g_hash_table_remove (art_items, item->song_file);
-    }
+        g_hash_table_remove (art_items, file);
 }
 
 static void release_current (void)
 {
-    if (! art_items || ! current_file)
-        return;
-
-    /* free album art for previous entry */
-    ArtItem * item = g_hash_table_lookup (art_items, current_file);
-    if (item && ! item->refcount)
-        g_hash_table_remove (art_items, current_file);
-}
-
-static void position_hook (void * data, void * user)
-{
-    release_current ();
-    str_unref (current_file);
-
-    int list = playlist_get_playing ();
-    int entry = (list >= 0) ? playlist_get_position (list) : -1;
-    current_file = (entry >= 0) ? playlist_entry_get_filename (list, entry) : NULL;
+    if (current_ref)
+    {
+        art_unref (current_ref);
+        str_unref (current_ref);
+        current_ref = NULL;
+    }
 }
 
 void art_init (void)
 {
-    hook_associate ("playlist position", position_hook, NULL);
-    hook_associate ("playlist set playing", position_hook, NULL);
+    art_items = g_hash_table_new_full (g_str_hash, g_str_equal,
+     (GDestroyNotify) str_unref, (GDestroyNotify) art_item_free);
+
+    hook_associate ("playlist position", (HookFunction) release_current, NULL);
+    hook_associate ("playlist set playing", (HookFunction) release_current, NULL);
 }
 
 void art_cleanup (void)
 {
-    hook_dissociate ("playlist position", position_hook);
-    hook_dissociate ("playlist set playing", position_hook);
+    hook_dissociate ("playlist position", (HookFunction) release_current);
+    hook_dissociate ("playlist set playing", (HookFunction) release_current);
+
+    if (send_source)
+    {
+        g_source_remove (send_source);
+        send_source = 0;
+    }
 
     release_current ();
-    str_unref (current_file);
-    current_file = NULL;
 
-    if (art_items && g_hash_table_size (art_items))
-    {
-        fprintf (stderr, "Album art not freed\n");
-        abort ();
-    }
-
-    if (art_items)
-    {
-        g_hash_table_destroy (art_items);
-        art_items = NULL;
-    }
+    g_hash_table_destroy (art_items);
+    art_items = NULL;
 }
 
-void art_get_data (const char * file, const void * * data, int64_t * len)
+void art_get_data_real (const char * file, const void * * data, int64_t * len,
+ bool_t blocking)
 {
     * data = NULL;
     * len = 0;
 
-    ArtItem * item = art_item_get (file);
+    pthread_mutex_lock (& mutex);
+
+    ArtItem * item = art_item_get (file, blocking);
     if (! item)
-        return;
+        goto UNLOCK;
 
     /* load data from external image file */
     if (! item->data && item->art_file)
         vfs_file_get_contents (item->art_file, & item->data, & item->len);
 
-    if (! item->data)
+    if (item->data)
     {
-        art_item_unref (item);
-        return;
+        * data = item->data;
+        * len = item->len;
     }
+    else
+        art_item_unref (file, item);
 
-    * data = item->data;
-    * len = item->len;
+UNLOCK:
+    pthread_mutex_unlock (& mutex);
 }
 
-const char * art_get_file (const char * file)
+const char * art_get_file_real (const char * file, bool_t blocking)
 {
-    ArtItem * item = art_item_get (file);
+    const char * art_file = NULL;
+    pthread_mutex_lock (& mutex);
+
+    ArtItem * item = art_item_get (file, blocking);
     if (! item)
-        return NULL;
+        goto UNLOCK;
 
     /* save data to temporary file */
     if (item->data && ! item->art_file)
@@ -216,22 +264,52 @@ const char * art_get_file (const char * file)
         {
             item->art_file = filename_to_uri (unixname);
             item->is_temp = TRUE;
-            g_free (unixname);
+            free (unixname);
         }
     }
 
-    if (! item->art_file)
-    {
-        art_item_unref (item);
-        return NULL;
-    }
+    if (item->art_file)
+        art_file = item->art_file;
+    else
+        art_item_unref (file, item);
 
-    return item->art_file;
+UNLOCK:
+    pthread_mutex_unlock (& mutex);
+    return art_file;
+}
+
+void art_request_data (const char * file, const void * * data, int64_t * len)
+{
+    return art_get_data_real (file, data, len, FALSE);
+}
+
+const char * art_request_file (const char * file)
+{
+    return art_get_file_real (file, FALSE);
+}
+
+void art_get_data (const char * file, const void * * data, int64_t * len)
+{
+    fprintf (stderr, "aud_art_get_data() is deprecated.  Use "
+     "aud_art_request_data() instead.\n");
+    return art_get_data_real (file, data, len, TRUE);
+}
+
+const char * art_get_file (const char * file)
+{
+    fprintf (stderr, "aud_art_get_file() is deprecated.  Use "
+     "aud_art_request_file() instead.\n");
+    return art_get_file_real (file, TRUE);
 }
 
 void art_unref (const char * file)
 {
-    ArtItem * item = art_items ? g_hash_table_lookup (art_items, file) : NULL;
-    if (item)
-        art_item_unref (item);
+    pthread_mutex_lock (& mutex);
+
+    ArtItem * item = g_hash_table_lookup (art_items, file);
+    assert (item != NULL);
+
+    art_item_unref (file, item);
+
+    pthread_mutex_unlock (& mutex);
 }

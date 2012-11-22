@@ -456,35 +456,40 @@ static void init_two (int * p_argc, char * * * p_argv)
         gtk_init (p_argc, p_argv);
     }
 
+    AUDDBG ("Loading configuration.\n");
     config_load ();
+
+    AUDDBG ("Initializing.\n");
+    art_init ();
     chardet_init ();
-
-    tag_set_verbose (verbose);
-    vfs_set_verbose (verbose);
-
     eq_init ();
+    playlist_init ();
 
 #ifdef HAVE_SIGWAIT
     signals_init ();
 #endif
 
+    tag_set_verbose (verbose);
+    vfs_set_verbose (verbose);
+
     AUDDBG ("Loading lowlevel plugins.\n");
     start_plugins_one ();
 
-    scanner_init ();
-    playlist_init ();
+    AUDDBG ("Starting worker threads.\n");
     adder_init ();
-    art_init ();
-    load_playlists ();
+    scanner_init ();
 
-#ifdef USE_DBUS
-    init_dbus ();
-#endif
+    AUDDBG ("Restoring state.\n");
+    load_playlists ();
 
     do_commands ();
 
     AUDDBG ("Loading highlevel plugins.\n");
     start_plugins_two ();
+
+#ifdef USE_DBUS
+    init_dbus ();
+#endif
 
     mpris_signals_init ();
 }
@@ -500,6 +505,10 @@ static void shut_down (void)
     AUDDBG ("Unloading highlevel plugins.\n");
     stop_plugins_two ();
 
+#ifdef USE_DBUS
+    cleanup_dbus ();
+#endif
+
     AUDDBG ("Stopping playback.\n");
     if (playback_get_playing ())
     {
@@ -508,14 +517,8 @@ static void shut_down (void)
         set_bool (NULL, "stop_after_current_song", stop_after_song);
     }
 
-#ifdef USE_DBUS
-    cleanup_dbus ();
-#endif
-
+    AUDDBG ("Stopping worker threads.\n");
     adder_cleanup ();
-    art_cleanup ();
-    history_cleanup ();
-    playlist_end ();
     scanner_cleanup ();
 
     AUDDBG ("Unloading lowlevel plugins.\n");
@@ -525,7 +528,11 @@ static void shut_down (void)
     config_save ();
     config_cleanup ();
 
+    AUDDBG ("Cleaning up.\n");
+    art_cleanup ();
     eq_cleanup ();
+    history_cleanup ();
+    playlist_end ();
 
     strpool_shutdown ();
 }

@@ -98,6 +98,7 @@ bool_t playlist_prev_song (int playlist);
 bool_t playlist_next_song (int playlist, bool_t repeat);
 
 int playback_entry_get_position (void);
+char * playback_entry_get_filename (void);
 PluginHandle * playback_entry_get_decoder (void);
 Tuple * playback_entry_get_tuple (void);
 char * playback_entry_get_title (void);

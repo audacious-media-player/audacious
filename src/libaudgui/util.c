@@ -188,6 +188,7 @@ EXPORT GdkPixbuf * audgui_pixbuf_from_data (const void * data, int64_t size)
     return pixbuf;
 }
 
+/* deprecated */
 EXPORT GdkPixbuf * audgui_pixbuf_for_entry (int list, int entry)
 {
     char * name = aud_playlist_entry_get_filename (list, entry);
@@ -211,18 +212,22 @@ EXPORT GdkPixbuf * audgui_pixbuf_for_entry (int list, int entry)
     }
 
     str_unref (name);
+    return audgui_pixbuf_fallback ();
+}
 
-    AUDDBG ("Using fallback pixbuf.\n");
+EXPORT GdkPixbuf * audgui_pixbuf_fallback (void)
+{
     static GdkPixbuf * fallback = NULL;
+
     if (! fallback)
     {
-        char * path = g_strdup_printf ("%s/images/album.png",
-         aud_get_path (AUD_PATH_DATA_DIR));
+        SPRINTF (path, "%s/images/album.png", aud_get_path (AUD_PATH_DATA_DIR));
         fallback = gdk_pixbuf_new_from_file (path, NULL);
-        g_free (path);
     }
+
     if (fallback)
         g_object_ref ((GObject *) fallback);
+
     return fallback;
 }
 
@@ -235,6 +240,7 @@ void audgui_pixbuf_uncache (void)
     }
 }
 
+/* deprecated */
 EXPORT GdkPixbuf * audgui_pixbuf_for_current (void)
 {
     if (! current_pixbuf)
@@ -277,6 +283,41 @@ EXPORT void audgui_pixbuf_scale_within (GdkPixbuf * * pixbuf, int size)
      GDK_INTERP_BILINEAR);
     g_object_unref (* pixbuf);
     * pixbuf = pixbuf2;
+}
+
+EXPORT GdkPixbuf * audgui_pixbuf_request (const char * filename)
+{
+    const void * data;
+    int64_t size;
+
+    aud_art_request_data (filename, & data, & size);
+    if (! data)
+        return NULL;
+
+    GdkPixbuf * p = audgui_pixbuf_from_data (data, size);
+
+    aud_art_unref (filename);
+    return p;
+}
+
+EXPORT GdkPixbuf * audgui_pixbuf_request_current (void)
+{
+    if (! current_pixbuf)
+    {
+        int list = aud_playlist_get_playing ();
+        int entry = aud_playlist_get_position (list);
+        if (entry < 0)
+            return NULL;
+
+        char * filename = aud_playlist_entry_get_filename (list, entry);
+        current_pixbuf = audgui_pixbuf_request (filename);
+        str_unref (filename);
+    }
+
+    if (current_pixbuf)
+        g_object_ref ((GObject *) current_pixbuf);
+
+    return current_pixbuf;
 }
 
 EXPORT void audgui_set_default_icon (void)

@@ -19,28 +19,13 @@
 
 /* Do not include this file directly; use misc.h instead. */
 
-/* CAUTION: Many of these functions are not thread safe. */
+/* art.c (thread-safe) */
 
-/* art.c */
-
-/* Fetches album art for <file> (the URI of a song file) as JPEG or PNG data.
- * The data may be embedded in the song file, or it may be loaded from a
- * separate file.  When the data is no longer needed, art_unref() should be
- * called.  If an error occurs, <data> is set to NULL and art_unref() need not
- * be called. */
+/* deprecated; use the non-blocking art_request_* functions instead */
 AUD_VFUNC3 (art_get_data, const char *, file, const void * *, data, int64_t *, len)
-
-/* Returns the URI of an image file containing album art for <file>.  If the
- * song file contains embedded album art, the data is saved to a temporary file
- * and the URI of the temporary file is returned.  When the image file is no
- * longer needed, art_unref() should be called.  If a temporary file was
- * created, art_unref() deletes it.  If an error occurs, returns NULL and
- * art_unref() need not be called. */
 AUD_FUNC1 (const char *, art_get_file, const char *, file)
 
-/* Signals that the data or file returned by art_get_data() or art_get_file() is
- * no longer needed.  <file> must be the same URI passed to art_get_data() or
- * art_get_file(). */
+/* Releases album art returned by art_request_data() or art_request_file(). */
 AUD_VFUNC1 (art_unref, const char *, file)
 
 /* config.c */
@@ -125,3 +110,17 @@ AUD_FUNC2 (char *, construct_uri, const char *, base, const char *, reference)
 /* visualization.c */
 AUD_VFUNC2 (vis_func_add, int, type, VisFunc, func)
 AUD_VFUNC1 (vis_func_remove, VisFunc, func)
+
+/* added in Audacious 3.4 */
+
+/* Gets album art for <file> (the URI of a song file) as JPEG or PNG data.  If
+ * the album art is not yet loaded, sets <data> to NULL and begins to load the
+ * album art in the background.  On completion, the "art ready" hook is called,
+ * with <file> as a parameter.  The "current art ready" hook is also called if
+ * <file> is the currently playing song. */
+AUD_VFUNC3 (art_request_data, const char *, file, const void * *, data, int64_t *, len)
+
+/* Similar to art_request_data() but returns the URI of an image file.
+ * (A temporary file will be created if necessary.) */
+AUD_FUNC1 (const char *, art_request_file, const char *, file)
+
