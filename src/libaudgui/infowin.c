@@ -64,7 +64,7 @@ enum
 
 static char * current_file = NULL;
 static PluginHandle * current_decoder = NULL;
-static bool_t can_write = FALSE, something_changed = FALSE;
+static bool_t can_write = FALSE;
 
 /* This is by no means intended to be a complete list.  If it is not short, it
  * is useless: scrolling through ten pages of dropdown list is more work than
@@ -211,7 +211,6 @@ static void clear_infowin (void)
     current_file = NULL;
     current_decoder = NULL;
 
-    something_changed = FALSE;
     can_write = FALSE;
     gtk_widget_set_sensitive (btn_apply, FALSE);
     gtk_image_clear ((GtkImage *) image_artwork);
@@ -219,11 +218,8 @@ static void clear_infowin (void)
 
 static void entry_changed (GtkEditable * editable, void * unused)
 {
-    if (! something_changed && can_write)
-    {
-        something_changed = TRUE;
+    if (can_write)
         gtk_widget_set_sensitive (btn_apply, TRUE);
-    }
 }
 
 static bool_t ministatus_timeout_proc (void * data)
@@ -264,7 +260,6 @@ static void infowin_update_tuple (void * unused)
     if (aud_file_write_tuple (current_file, current_decoder, tuple))
     {
         ministatus_display_message (_("Metadata updated successfully"));
-        something_changed = FALSE;
         gtk_widget_set_sensitive (btn_apply, FALSE);
     }
     else
