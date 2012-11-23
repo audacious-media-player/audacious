@@ -24,10 +24,13 @@
 #include <audacious/i18n.h>
 #include <audacious/misc.h>
 #include <audacious/playlist.h>
+#include <libaudcore/hook.h>
 
 #include "config.h"
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
+
+#define IMAGE_SIZE 96
 
 static GtkWidget * infopopup = NULL;
 
@@ -46,18 +49,18 @@ static struct {
 static char * current_file = NULL;
 static int progress_source = 0;
 
-static void infopopup_set_image (int playlist, int entry)
+static void infopopup_display_image (const char * filename)
 {
-    GdkPixbuf * pixbuf = audgui_pixbuf_for_entry (playlist, entry);
+    if (! current_file || strcmp (filename, current_file))
+        return;
 
-    if (pixbuf)
-    {
-        audgui_pixbuf_scale_within (& pixbuf, 96);
-        gtk_image_set_from_pixbuf ((GtkImage *) widgets.image, pixbuf);
-        g_object_unref (pixbuf);
-    }
-    else
-        gtk_image_clear ((GtkImage *) widgets.image);
+    GdkPixbuf * pb = audgui_pixbuf_request (filename);
+    if (! pb)
+        pb = audgui_pixbuf_fallback ();
+
+    audgui_pixbuf_scale_within (& pb, IMAGE_SIZE);
+    gtk_image_set_from_pixbuf ((GtkImage *) widgets.image, pb);
+    g_object_unref (pb);
 }
 
 static bool_t infopopup_progress_cb (void * unused)
@@ -111,6 +114,8 @@ static void infopopup_add_category (GtkWidget * grid, int position,
 
 static void infopopup_destroyed (void)
 {
+    hook_dissociate ("art ready", (HookFunction) infopopup_display_image);
+
     if (progress_source)
     {
         g_source_remove (progress_source);
@@ -135,7 +140,7 @@ static void infopopup_create (void)
     gtk_container_add ((GtkContainer *) infopopup, hbox);
 
     widgets.image = gtk_image_new ();
-    gtk_misc_set_alignment ((GtkMisc *) widgets.image, 0.5, 0);
+    gtk_widget_set_size_request (widgets.image, IMAGE_SIZE, IMAGE_SIZE);
     gtk_box_pack_start ((GtkBox *) hbox, widgets.image, FALSE, FALSE, 0);
 
     GtkWidget * grid = gtk_grid_new ();
@@ -160,8 +165,6 @@ static void infopopup_create (void)
     /* do not show the track progress */
     gtk_widget_set_no_show_all (widgets.progress, TRUE);
     gtk_widget_show_all (hbox);
-
-    g_signal_connect (infopopup, "destroy", (GCallback) infopopup_destroyed, NULL);
 }
 
 /* calls str_unref() on <text> */
@@ -237,8 +240,8 @@ static void infopopup_move_to_mouse (void)
     gtk_window_move ((GtkWindow *) infopopup, x, y);
 }
 
-static void infopopup_show (int playlist, int entry, const char * filename,
- const Tuple * tuple, const char * title)
+static void infopopup_show (const char * filename, const Tuple * tuple,
+ const char * title)
 {
     if (infopopup)
         gtk_widget_destroy (infopopup);
@@ -248,7 +251,11 @@ static void infopopup_show (int playlist, int entry, const char * filename,
 
     infopopup_create ();
     infopopup_set_fields (tuple, title);
-    infopopup_set_image (playlist, entry);
+    infopopup_display_image (filename);
+
+    hook_associate ("art ready", (HookFunction) infopopup_display_image, NULL);
+
+    g_signal_connect (infopopup, "destroy", (GCallback) infopopup_destroyed, NULL);
 
     /* start a timer that updates a progress bar if the tooltip
        is shown for the song that is being currently played */
@@ -269,7 +276,7 @@ EXPORT void audgui_infopopup_show (int playlist, int entry)
     Tuple * tuple = aud_playlist_entry_get_tuple (playlist, entry, FALSE);
 
     if (filename && title && tuple)
-        infopopup_show (playlist, entry, filename, tuple, title);
+        infopopup_show (filename, tuple, title);
 
     str_unref (filename);
     str_unref (title);
