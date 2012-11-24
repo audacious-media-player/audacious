@@ -17,6 +17,7 @@
  * the use of this software.
  */
 
+#include <assert.h>
 #include <glib.h>
 #include <pthread.h>
 #include <string.h>
@@ -28,6 +29,7 @@
 typedef struct {
     HookFunction func;
     void * user;
+    int lock_count;
 } HookItem;
 
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -49,6 +51,7 @@ EXPORT void hook_associate (const char * name, HookFunction func, void * user)
     HookItem * item = g_slice_new (HookItem);
     item->func = func;
     item->user = user;
+    item->lock_count = 0;
 
     GList * items = g_hash_table_lookup (hooks, name);
     items = g_list_prepend (items, item);
@@ -74,6 +77,7 @@ EXPORT void hook_dissociate_full (const char * name, HookFunction func, void * u
 
         if (item->func == func && (! user || item->user == user))
         {
+            assert (! item->lock_count);
             items = g_list_delete_link (items, node);
             g_slice_free (HookItem, item);
         }
@@ -102,7 +106,14 @@ EXPORT void hook_call (const char * name, void * data)
     for (; node; node = node->next)
     {
         HookItem * item = node->data;
+
+        item->lock_count ++;
+        pthread_mutex_unlock (& mutex);
+
         item->func (data, item->user);
+
+        pthread_mutex_lock (& mutex);
+        item->lock_count --;
     }
 
 DONE:
