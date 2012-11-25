@@ -451,7 +451,9 @@ static void init_two (int * p_argc, char * * * p_argv)
 {
     if (! headless)
     {
+#if ! GLIB_CHECK_VERSION (2, 32, 0)
         g_thread_init (NULL);
+#endif
         gtk_init (p_argc, p_argv);
     }
 

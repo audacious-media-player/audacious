@@ -18,15 +18,16 @@
  */
 
 #include <glib.h>
+#include <pthread.h>
 
 #include "config.h"
 #include "vfs_async.h"
 
 typedef struct {
-    char *filename;
+    char * filename; /* pooled */
     void *buf;
     int64_t size;
-    GThread *thread;
+    pthread_t thread;
     void * userdata;
 
     VFSConsumer cons_f;
@@ -37,7 +38,11 @@ vfs_async_file_get_contents_trampoline(void * data)
 {
     VFSAsyncTrampoline *tr = data;
 
+    pthread_join (tr->thread, NULL);
+
     tr->cons_f(tr->buf, tr->size, tr->userdata);
+
+    str_unref (tr->filename);
     g_slice_free(VFSAsyncTrampoline, tr);
 
     return FALSE;
@@ -51,7 +56,7 @@ vfs_async_file_get_contents_worker(void * data)
     vfs_file_get_contents(tr->filename, &tr->buf, &tr->size);
 
     g_idle_add_full(G_PRIORITY_HIGH_IDLE, vfs_async_file_get_contents_trampoline, tr, NULL);
-    g_thread_exit(NULL);
+
     return NULL;
 }
 
@@ -61,8 +66,9 @@ vfs_async_file_get_contents(const char *filename, VFSConsumer cons_f, void * use
     VFSAsyncTrampoline *tr;
 
     tr = g_slice_new0(VFSAsyncTrampoline);
-    tr->filename = g_strdup(filename);
+    tr->filename = str_get (filename);
     tr->cons_f = cons_f;
     tr->userdata = userdata;
-    tr->thread = g_thread_create(vfs_async_file_get_contents_worker, tr, FALSE, NULL);
+
+    pthread_create (& tr->thread, NULL, vfs_async_file_get_contents_worker, tr);
 }
