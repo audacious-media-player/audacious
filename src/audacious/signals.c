@@ -17,8 +17,8 @@
  * the use of this software.
  */
 
+#include <pthread.h>
 #include <signal.h>
-#include <glib.h>
 
 #include <libaudcore/hook.h>
 
@@ -50,6 +50,8 @@ void signals_init (void)
     sigaddset (& signal_set, SIGTERM);
 
     sigprocmask (SIG_BLOCK, & signal_set, NULL);
-    g_thread_create (signal_thread, NULL, FALSE, NULL);
+
+    pthread_t thread;
+    pthread_create (& thread, NULL, signal_thread, NULL);
 #endif
 }
