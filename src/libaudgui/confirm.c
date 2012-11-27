@@ -31,7 +31,7 @@ static void no_confirm_cb (GtkToggleButton * toggle)
     aud_set_bool ("audgui", "no_confirm_playlist_delete", gtk_toggle_button_get_active (toggle));
 }
 
-static void confirm_delete_cb (GtkButton * button, void * data)
+static void confirm_delete_cb (void * data)
 {
     int list = aud_playlist_by_unique_id (GPOINTER_TO_INT (data));
     if (list < 0)
@@ -42,9 +42,17 @@ static void confirm_delete_cb (GtkButton * button, void * data)
         aud_playlist_set_active (list - 1);
 }
 
+static void confirm_playlist_delete_response (GtkWidget * dialog, gint response, gpointer data)
+{
+    if (response == GTK_RESPONSE_YES)
+        confirm_delete_cb (data);
+
+    gtk_widget_destroy (dialog);
+}
+
 EXPORT void audgui_confirm_playlist_delete (int playlist)
 {
-    GtkWidget * window, * vbox, * hbox, * label, * button;
+    GtkWidget * dialog, * vbox, * button;
     char * message;
 
     if (aud_get_bool ("audgui", "no_confirm_playlist_delete"))
@@ -55,60 +63,27 @@ EXPORT void audgui_confirm_playlist_delete (int playlist)
         return;
     }
 
-    window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_type_hint ((GtkWindow *) window,
-     GDK_WINDOW_TYPE_HINT_DIALOG);
-    gtk_window_set_title ((GtkWindow *) window, _("Close Playlist"));
-    gtk_window_set_resizable ((GtkWindow *) window, FALSE);
-    gtk_container_set_border_width ((GtkContainer *) window, 6);
-    audgui_destroy_on_escape (window);
-
-    vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-    gtk_container_add ((GtkContainer *) window, vbox);
-
-    hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  6);
-    gtk_box_pack_start ((GtkBox *) vbox, hbox, FALSE, FALSE, 0);
-
-    gtk_box_pack_start ((GtkBox *) hbox, gtk_image_new_from_stock
-     (GTK_STOCK_DIALOG_QUESTION, GTK_ICON_SIZE_DIALOG), FALSE, FALSE, 0);
-
     char * title = aud_playlist_get_title (playlist);
     message = g_strdup_printf (_("Are you sure you want to close %s?  If you "
-     "do, any changes made since the playlist was exported will be lost."),
-     title);
+     "do, any changes made since the playlist was exported will be lost."), title);
     str_unref (title);
-    label = gtk_label_new (message);
+
+    dialog = gtk_message_dialog_new (NULL, GTK_DIALOG_DESTROY_WITH_PARENT,
+     GTK_MESSAGE_QUESTION, GTK_BUTTONS_YES_NO, "%s", message);
     g_free (message);
-    gtk_label_set_line_wrap ((GtkLabel *) label, TRUE);
-    gtk_widget_set_size_request (label, 320, -1);
-    gtk_box_pack_start ((GtkBox *) hbox, label, TRUE, FALSE, 0);
+    gtk_window_set_title ((GtkWindow *) dialog, _("Close Playlist"));
+    gtk_dialog_set_default_response ((GtkDialog *) dialog, GTK_RESPONSE_YES);
 
-    hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  6);
-    gtk_box_pack_start ((GtkBox *) vbox, hbox, FALSE, FALSE, 0);
-
+    vbox = gtk_message_dialog_get_message_area ((GtkMessageDialog *) dialog);
     button = gtk_check_button_new_with_mnemonic (_("_Don't show this message again"));
-    gtk_box_pack_start ((GtkBox *) hbox, button, FALSE, FALSE, 0);
+
+    gtk_container_add ((GtkContainer *) vbox, button);
+
     g_signal_connect (button, "toggled", (GCallback) no_confirm_cb, NULL);
+    g_signal_connect (dialog, "response", (GCallback) confirm_playlist_delete_response,
+     GINT_TO_POINTER (aud_playlist_get_unique_id (playlist)));
 
-    hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  6);
-    gtk_box_pack_start ((GtkBox *) vbox, hbox, FALSE, FALSE, 0);
-
-    button = gtk_button_new_from_stock (GTK_STOCK_NO);
-    gtk_box_pack_end ((GtkBox *) hbox, button, FALSE, FALSE, 0);
-    g_signal_connect_swapped (button, "clicked", (GCallback)
-     gtk_widget_destroy, window);
-
-    button = gtk_button_new_from_stock (GTK_STOCK_YES);
-    gtk_box_pack_end ((GtkBox *) hbox, button, FALSE, FALSE, 0);
-    gtk_widget_set_can_default (button, TRUE);
-    gtk_widget_grab_default (button);
-    gtk_widget_grab_focus (button);
-    g_signal_connect ((GObject *) button, "clicked", (GCallback)
-     confirm_delete_cb, GINT_TO_POINTER (aud_playlist_get_unique_id (playlist)));
-    g_signal_connect_swapped ((GObject *) button, "clicked", (GCallback)
-     gtk_widget_destroy, window);
-
-    gtk_widget_show_all (window);
+    gtk_widget_show_all (dialog);
 }
 
 static void rename_cb (GtkDialog * dialog, int resp, void * list)
