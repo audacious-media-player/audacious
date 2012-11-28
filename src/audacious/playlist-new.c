@@ -1499,6 +1499,39 @@ void playlist_reverse (int playlist_num)
     LEAVE;
 }
 
+void playlist_reverse_selected (int playlist_num)
+{
+    ENTER;
+    DECLARE_PLAYLIST;
+    LOOKUP_PLAYLIST;
+
+    int entries = index_count (playlist->entries);
+
+    Index * reversed = index_new ();
+    index_allocate (reversed, playlist->selected_count);
+
+    for (int count = entries; count --; )
+    {
+        Entry * entry = index_get (playlist->entries, count);
+        if (entry->selected)
+            index_append (reversed, index_get (playlist->entries, count));
+    }
+
+    int count2 = 0;
+    for (int count = 0; count < entries; count++)
+    {
+        Entry * entry = index_get (playlist->entries, count);
+        if (entry->selected)
+            index_set (playlist->entries, count, index_get (reversed, count2 ++));
+    }
+
+    index_free (reversed);
+
+    number_entries (playlist, 0, entries);
+    queue_update (PLAYLIST_UPDATE_STRUCTURE, playlist->number, 0, entries);
+    LEAVE;
+}
+
 void playlist_randomize (int playlist_num)
 {
     ENTER;
@@ -1511,10 +1544,52 @@ void playlist_randomize (int playlist_num)
     {
         int j = i + rand () % (entries - i);
 
-        struct entry * entry = index_get (playlist->entries, j);
+        Entry * entry = index_get (playlist->entries, j);
         index_set (playlist->entries, j, index_get (playlist->entries, i));
         index_set (playlist->entries, i, entry);
     }
+
+    number_entries (playlist, 0, entries);
+    queue_update (PLAYLIST_UPDATE_STRUCTURE, playlist->number, 0, entries);
+    LEAVE;
+}
+
+void playlist_randomize_selected (int playlist_num)
+{
+    ENTER;
+    DECLARE_PLAYLIST;
+    LOOKUP_PLAYLIST;
+
+    int entries = index_count (playlist->entries);
+
+    Index * selected = index_new ();
+    index_allocate (selected, playlist->selected_count);
+
+    for (int count = 0; count < entries; count++)
+    {
+        Entry * entry = index_get (playlist->entries, count);
+        if (entry->selected)
+            index_append (selected, entry);
+    }
+
+    for (int i = 0; i < playlist->selected_count; i ++)
+    {
+        int j = i + rand () % (playlist->selected_count - i);
+
+        Entry * entry = index_get (selected, j);
+        index_set (selected, j, index_get (selected, i));
+        index_set (selected, i, entry);
+    }
+
+    int count2 = 0;
+    for (int count = 0; count < entries; count++)
+    {
+        Entry * entry = index_get (playlist->entries, count);
+        if (entry->selected)
+            index_set (playlist->entries, count, index_get (selected, count2 ++));
+    }
+
+    index_free (selected);
 
     number_entries (playlist, 0, entries);
     queue_update (PLAYLIST_UPDATE_STRUCTURE, playlist->number, 0, entries);

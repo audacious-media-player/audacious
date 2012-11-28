@@ -346,3 +346,9 @@ AUD_FUNC1 (bool_t, filename_is_playlist, const char *, filename)
 /* Saves the entries in a playlist to a playlist file.  The format of the file
  * is determined from the file extension.  Returns nonzero on success. */
 AUD_FUNC2 (bool_t, playlist_save, int, playlist, const char *, filename)
+
+/* Reverses the order of the selected entries in a playlist. */
+AUD_VFUNC1 (playlist_reverse_selected, int, playlist)
+
+/* Reorders the selected entries in a playlist randomly. */
+AUD_VFUNC1 (playlist_randomize_selected, int, playlist)
