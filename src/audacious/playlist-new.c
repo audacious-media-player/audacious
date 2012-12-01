@@ -1765,7 +1765,7 @@ void playlist_sort_selected_by_title (int playlist_num, int (* compare)
 
     CompareData data = {COMPARE_TYPE_TITLE, (CompareFunc) compare};
     if (entries_are_scanned (playlist, TRUE))
-        sort (playlist, & data);
+        sort_selected (playlist, & data);
 
     LEAVE;
 }
