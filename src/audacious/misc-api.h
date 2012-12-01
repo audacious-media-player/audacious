@@ -123,4 +123,3 @@ AUD_VFUNC3 (art_request_data, const char *, file, const void * *, data, int64_t 
 /* Similar to art_request_data() but returns the URI of an image file.
  * (A temporary file will be created if necessary.) */
 AUD_FUNC1 (const char *, art_request_file, const char *, file)
-

@@ -70,3 +70,12 @@ AUD_VFUNC1 (drct_pl_open_temp, const char *, filename)
 AUD_VFUNC1 (drct_pl_open_temp_list, Index *, filenames)
 
 AUD_VFUNC1 (drct_pl_delete_selected, int, playlist)
+
+/* added in Audacious 3.4 */
+
+/* "A-B repeat": when playback reaches point B, it returns to point A (where A
+ * and B are in milliseconds).  The value -1 is interpreted as the beginning of
+ * the song (for A) or the end of the song (for B).  A-B repeat is disabled
+ * entirely by setting both A and B to -1. */
+AUD_VFUNC2 (drct_set_ab_repeat, int, a, int, b)
+AUD_VFUNC2 (drct_get_ab_repeat, int *, a, int *, b)

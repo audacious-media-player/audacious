@@ -58,7 +58,11 @@ void drct_play_playlist (int playlist)
         if (playback_get_paused ())
             playback_pause ();
         else if (same_playlist)
-            playback_seek (0);
+        {
+            int a, b;
+            drct_get_ab_repeat (& a, & b);
+            playback_seek (MAX (a, 0));
+        }
     }
     else
     {

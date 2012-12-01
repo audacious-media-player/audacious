@@ -25,6 +25,7 @@
 #include <libaudcore/hook.h>
 
 #include "config.h"
+#include "drct.h"
 #include "i18n.h"
 #include "interface.h"
 #include "misc.h"
@@ -62,6 +63,7 @@ static int current_bitrate, current_samplerate, current_channels;
 
 static ReplayGainInfo gain_from_playlist;
 
+static int repeat_a, repeat_b;
 static int time_offset, initial_seek;
 static bool_t paused;
 
@@ -193,6 +195,9 @@ void playback_play (int seek_time, bool_t pause)
         return;
 
     failed_entries = 0;
+    repeat_a = -1;
+    repeat_b = -1;
+
     playback_start (playlist, entry, seek_time, pause);
 }
 
@@ -216,6 +221,10 @@ void playback_pause (void)
 static void playback_cleanup (void)
 {
     g_return_if_fail (playing);
+    wait_until_ready ();
+
+    if (current_decoder)
+        current_decoder->stop (& playback_api);
 
     pthread_join (playback_thread_handle, NULL);
     playing = FALSE;
@@ -249,10 +258,6 @@ static void complete_stop (void)
 void playback_stop (void)
 {
     g_return_if_fail (playing);
-    wait_until_ready ();
-
-    if (current_decoder)
-        current_decoder->stop (& playback_api);
 
     playback_cleanup ();
     complete_stop ();
@@ -272,20 +277,38 @@ static bool_t end_cb (void * unused)
     playback_cleanup ();
 
     int playlist = playlist_get_playing ();
-    bool_t play;
+    bool_t play = FALSE;
+    int seek = 0;
 
-    if (get_bool (NULL, "no_playlist_advance"))
-        play = get_bool (NULL, "repeat") && ! failed_entries;
-    else if (! (play = playlist_next_song (playlist, get_bool (NULL, "repeat"))))
-        playlist_set_position (playlist, -1);
-    else if (failed_entries >= 10)
-        play = FALSE;
+    if (repeat_a >= 0 || repeat_b >= 0)
+    {
+        if (! failed_entries)
+        {
+            play = TRUE;
+            seek = MAX (repeat_a, 0);
+        }
+    }
+    else if (get_bool (NULL, "no_playlist_advance"))
+    {
+        if (! failed_entries)
+            play = get_bool (NULL, "repeat");
+    }
+    else
+    {
+        if (failed_entries < 10)
+        {
+            if (playlist_next_song (playlist, get_bool (NULL, "repeat")))
+                play = TRUE;
+            else
+                playlist_set_position (playlist, -1);
+        }
+    }
 
     if (get_bool (NULL, "stop_after_current_song"))
         play = FALSE;
 
     if (play)
-        playback_start (playlist, playlist_get_position (playlist), 0, FALSE);
+        playback_start (playlist, playlist_get_position (playlist), seek, FALSE);
     else
     {
         complete_stop ();
@@ -320,14 +343,20 @@ static void * playback_thread (void * unused)
     if (tuple)
         tuple_unref (tuple);
 
-    bool_t seekable = (playback_entry_get_length () > 0);
+    int start_time = time_offset = 0;
+    int end_time = -1;
+
+    if (playback_entry_get_length () > 0)
+    {
+        time_offset = playback_entry_get_start_time ();
+        start_time = (initial_seek >= 0) ? time_offset + initial_seek : time_offset;
+        end_time = (repeat_b >= 0) ? repeat_b : playback_entry_get_end_time ();
+    }
 
     VFSFile * file = vfs_fopen (current_filename, "r");
 
-    time_offset = seekable ? playback_entry_get_start_time () : 0;
     playback_error = ! current_decoder->play (& playback_api, current_filename,
-     file, seekable ? time_offset + initial_seek : 0,
-     seekable ? playback_entry_get_end_time () : -1, paused);
+     file, start_time, end_time, paused);
 
     output_close_audio ();
 
@@ -512,4 +541,37 @@ void playback_set_volume (int l, int r)
         return;
 
     output_set_volume (l, r);
+}
+
+void drct_set_ab_repeat (int a, int b)
+{
+    if (! playing)
+        return;
+
+    repeat_a = a;
+
+    if (repeat_b != b)
+    {
+        repeat_b = b;
+
+        /* Restart playback so the new setting takes effect.  We could add
+         * something like InputPlugin::set_stop_time(), but this is the only
+         * place it would be used. */
+        int playlist = playlist_get_playing ();
+        int entry = playlist_get_position (playlist);
+        int seek_time = playback_get_time ();
+        bool_t was_paused = paused;
+
+        if (repeat_b >= 0 && seek_time >= repeat_b)
+            seek_time = MAX (repeat_a, 0);
+
+        playback_cleanup ();
+        playback_start (playlist, entry, seek_time, was_paused);
+    }
+}
+
+void drct_get_ab_repeat (int * a, int * b)
+{
+    * a = playing ? repeat_a : -1;
+    * b = playing ? repeat_b : -1;
 }

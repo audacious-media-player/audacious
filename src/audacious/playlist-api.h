@@ -347,6 +347,8 @@ AUD_FUNC1 (bool_t, filename_is_playlist, const char *, filename)
  * is determined from the file extension.  Returns nonzero on success. */
 AUD_FUNC2 (bool_t, playlist_save, int, playlist, const char *, filename)
 
+/* added in Audacious 3.4 */
+
 /* Reverses the order of the selected entries in a playlist. */
 AUD_VFUNC1 (playlist_reverse_selected, int, playlist)
 
