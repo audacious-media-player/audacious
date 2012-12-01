@@ -227,6 +227,8 @@ static void playback_cleanup (void)
         current_decoder->stop (& playback_api);
 
     pthread_join (playback_thread_handle, NULL);
+    output_close_audio ();
+
     playing = FALSE;
 
     event_queue_cancel ("playback ready", NULL);
@@ -357,8 +359,6 @@ static void * playback_thread (void * unused)
 
     playback_error = ! current_decoder->play (& playback_api, current_filename,
      file, start_time, end_time, paused);
-
-    output_close_audio ();
 
     if (file)
         vfs_fclose (file);
