@@ -28,8 +28,7 @@ void hook_associate (const char * name, HookFunction func, void * user);
 
 /* Removes all instances matching <func> and <user> from the list of functions
  * to be called when the hook <name> is triggered.  If <user> is NULL, all
- * instances matching <func> are removed.  Trying to remove a currently running
- * function is an error. */
+ * instances matching <func> are removed. */
 void hook_dissociate_full (const char * name, HookFunction func, void * user);
 
 #define hook_dissociate(n, f) hook_dissociate_full (n, f, NULL)

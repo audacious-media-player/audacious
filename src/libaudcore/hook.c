@@ -17,10 +17,8 @@
  * the use of this software.
  */
 
-#include <assert.h>
 #include <glib.h>
 #include <pthread.h>
-#include <string.h>
 
 #include "config.h"
 #include "core.h"
@@ -30,10 +28,11 @@ typedef struct {
     HookFunction func;
     void * user;
     int lock_count;
+    bool_t remove_flag;
 } HookItem;
 
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-static GHashTable * hooks;
+static GHashTable * hooks; /* of (GQueue of (HookItem *) *)  */
 
 /* str_unref() may be a macro */
 static void str_unref_cb (void * str)
@@ -46,16 +45,21 @@ EXPORT void hook_associate (const char * name, HookFunction func, void * user)
     pthread_mutex_lock (& mutex);
 
     if (! hooks)
-        hooks = g_hash_table_new_full (g_str_hash, g_str_equal, str_unref_cb, NULL);
+        hooks = g_hash_table_new_full (g_str_hash, g_str_equal, str_unref_cb,
+         (GDestroyNotify) g_queue_free);
+
+    GQueue * list = g_hash_table_lookup (hooks, name);
+
+    if (! list)
+        g_hash_table_insert (hooks, str_get (name), list = g_queue_new ());
 
     HookItem * item = g_slice_new (HookItem);
     item->func = func;
     item->user = user;
     item->lock_count = 0;
+    item->remove_flag = FALSE;
 
-    GList * items = g_hash_table_lookup (hooks, name);
-    items = g_list_prepend (items, item);
-    g_hash_table_insert (hooks, str_get (name), items);
+    g_queue_push_tail (list, item);
 
     pthread_mutex_unlock (& mutex);
 }
@@ -67,27 +71,31 @@ EXPORT void hook_dissociate_full (const char * name, HookFunction func, void * u
     if (! hooks)
         goto DONE;
 
-    GList * items = g_hash_table_lookup (hooks, name);
+    GQueue * list = g_hash_table_lookup (hooks, name);
 
-    GList * node = items;
-    while (node)
+    if (! list)
+        goto DONE;
+
+    for (GList * node = list->head; node;)
     {
         HookItem * item = node->data;
         GList * next = node->next;
 
         if (item->func == func && (! user || item->user == user))
         {
-            assert (! item->lock_count);
-            items = g_list_delete_link (items, node);
-            g_slice_free (HookItem, item);
+            if (item->lock_count)
+                item->remove_flag = TRUE;
+            else
+            {
+                g_queue_delete_link (list, node);
+                g_slice_free (HookItem, item);
+            }
         }
 
         node = next;
     }
 
-    if (items)
-        g_hash_table_insert (hooks, str_get (name), items);
-    else
+    if (! list->head)
         g_hash_table_remove (hooks, name);
 
 DONE:
@@ -101,20 +109,39 @@ EXPORT void hook_call (const char * name, void * data)
     if (! hooks)
         goto DONE;
 
-    GList * node = g_hash_table_lookup (hooks, name);
+    GQueue * list = g_hash_table_lookup (hooks, name);
 
-    for (; node; node = node->next)
+    if (! list)
+        goto DONE;
+
+    for (GList * node = list->head; node;)
     {
         HookItem * item = node->data;
 
-        item->lock_count ++;
-        pthread_mutex_unlock (& mutex);
+        if (! item->remove_flag)
+        {
+            item->lock_count ++;
+            pthread_mutex_unlock (& mutex);
 
-        item->func (data, item->user);
+            item->func (data, item->user);
 
-        pthread_mutex_lock (& mutex);
-        item->lock_count --;
+            pthread_mutex_lock (& mutex);
+            item->lock_count --;
+        }
+
+        GList * next = node->next;
+
+        if (item->remove_flag && ! item->lock_count)
+        {
+            g_queue_delete_link (list, node);
+            g_slice_free (HookItem, item);
+        }
+
+        node = next;
     }
+
+    if (! list->head)
+        g_hash_table_remove (hooks, name);
 
 DONE:
     pthread_mutex_unlock (& mutex);
