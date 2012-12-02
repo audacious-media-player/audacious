@@ -23,6 +23,7 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <locale.h>
 
 #include <gtk/gtk.h>
 
