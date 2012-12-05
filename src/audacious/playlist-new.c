@@ -2099,7 +2099,7 @@ int playback_entry_get_length (void)
     ENTER;
 
     Entry * entry = get_playback_entry (FALSE, TRUE);
-    int length = entry->length;
+    int length = entry ? entry->length : 0;
 
     RETURN (length);
 }
