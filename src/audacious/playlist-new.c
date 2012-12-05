@@ -45,44 +45,20 @@ enum {RESUME_STOP, RESUME_PLAY, RESUME_PAUSE};
 #define ENTER pthread_mutex_lock (& mutex)
 #define LEAVE pthread_mutex_unlock (& mutex)
 
-#define LEAVE_RET_VOID do { \
+#define RETURN(...) do { \
     pthread_mutex_unlock (& mutex); \
-    return; \
+    return __VA_ARGS__; \
 } while (0)
 
-#define LEAVE_RET(ret) do { \
-    pthread_mutex_unlock (& mutex); \
-    return ret; \
-} while (0)
+#define ENTER_GET_PLAYLIST(...) ENTER; \
+    Playlist * playlist = lookup_playlist (playlist_num); \
+    if (! playlist) \
+        RETURN (__VA_ARGS__);
 
-#define DECLARE_PLAYLIST \
-    Playlist * playlist
-
-#define DECLARE_PLAYLIST_ENTRY \
-    Playlist * playlist; \
-    Entry * entry
-
-#define LOOKUP_PLAYLIST do { \
-    if (! (playlist = lookup_playlist (playlist_num))) \
-        LEAVE_RET_VOID; \
-} while (0)
-
-#define LOOKUP_PLAYLIST_RET(ret) do { \
-    if (! (playlist = lookup_playlist (playlist_num))) \
-        LEAVE_RET(ret); \
-} while (0)
-
-#define LOOKUP_PLAYLIST_ENTRY do { \
-    LOOKUP_PLAYLIST; \
-    if (! (entry = lookup_entry (playlist, entry_num))) \
-        LEAVE_RET_VOID; \
-} while (0)
-
-#define LOOKUP_PLAYLIST_ENTRY_RET(ret) do { \
-    LOOKUP_PLAYLIST_RET(ret); \
-    if (! (entry = lookup_entry (playlist, entry_num))) \
-        LEAVE_RET(ret); \
-} while (0)
+#define ENTER_GET_ENTRY(...) ENTER_GET_PLAYLIST (__VA_ARGS__); \
+    Entry * entry = lookup_entry (playlist, entry_num); \
+    if (! entry) \
+        RETURN (__VA_ARGS__);
 
 typedef struct {
     int level, before, after;
@@ -413,14 +389,12 @@ bool_t playlist_update_pending (void)
 {
     ENTER;
     bool_t pending = update_level ? TRUE : FALSE;
-    LEAVE_RET (pending);
+    RETURN (pending);
 }
 
 int playlist_updated_range (int playlist_num, int * at, int * count)
 {
-    ENTER;
-    DECLARE_PLAYLIST;
-    LOOKUP_PLAYLIST_RET (0);
+    ENTER_GET_PLAYLIST (0);
 
     Update * u = & playlist->last_update;
 
@@ -428,18 +402,14 @@ int playlist_updated_range (int playlist_num, int * at, int * count)
     * at = u->before;
     * count = index_count (playlist->entries) - u->before - u->after;
 
-    LEAVE_RET (level);
+    RETURN (level);
 }
 
 bool_t playlist_scan_in_progress (int playlist_num)
 {
-    ENTER;
-    DECLARE_PLAYLIST;
-    LOOKUP_PLAYLIST_RET (FALSE);
-
+    ENTER_GET_PLAYLIST (FALSE);
     bool_t scanning = playlist->scanning || playlist->scan_ending;
-
-    LEAVE_RET (scanning);
+    RETURN (scanning);
 }
 
 static GList * scan_list_find_playlist (Playlist * playlist)
@@ -547,7 +517,7 @@ static void scan_finish (ScanRequest * request)
 
     GList * node = scan_list_find_request (request);
     if (! node)
-        LEAVE_RET_VOID;
+        RETURN ();
 
     ScanItem * item = node->data;
     Playlist * playlist = item->playlist;
@@ -711,7 +681,7 @@ int playlist_count (void)
 {
     ENTER;
     int count = index_count (playlists);
-    LEAVE_RET (count);
+    RETURN (count);
 }
 
 void playlist_insert_with_id (int at, int id)
@@ -736,9 +706,10 @@ void playlist_insert (int at)
 void playlist_reorder (int from, int to, int count)
 {
     ENTER;
+
     if (from < 0 || from + count > index_count (playlists) || to < 0 || to +
      count > index_count (playlists) || count < 0)
-        LEAVE_RET_VOID;
+        RETURN ();
 
     Index * displaced = index_new ();
 
@@ -772,9 +743,7 @@ void playlist_delete (int playlist_num)
     if (playback_get_playing () && playlist_num == playlist_get_playing ())
         playback_stop ();
 
-    ENTER;
-    DECLARE_PLAYLIST;
-    LOOKUP_PLAYLIST;
+    ENTER_GET_PLAYLIST ();
 
     index_delete (playlists, playlist_num, 1);
     playlist_free (playlist);
@@ -795,13 +764,9 @@ void playlist_delete (int playlist_num)
 
 int playlist_get_unique_id (int playlist_num)
 {
-    ENTER;
-    DECLARE_PLAYLIST;
-    LOOKUP_PLAYLIST_RET (-1);
-
+    ENTER_GET_PLAYLIST (-1);
     int unique_id = playlist->unique_id;
-
-    LEAVE_RET (unique_id);
+    RETURN (unique_id);
 }
 
 int playlist_by_unique_id (int id)
@@ -811,14 +776,12 @@ int playlist_by_unique_id (int id)
     Playlist * p = g_hash_table_lookup (unique_id_table, GINT_TO_POINTER (id));
     int num = p ? p->number : -1;
 
-    LEAVE_RET (num);
+    RETURN (num);
 }
 
 void playlist_set_filename (int playlist_num, const char * filename)
 {
-    ENTER;
-    DECLARE_PLAYLIST;
-    LOOKUP_PLAYLIST;
+    ENTER_GET_PLAYLIST ();
 
     str_unref (playlist->filename);
     playlist->filename = str_get (filename);
@@ -830,20 +793,14 @@ void playlist_set_filename (int playlist_num, const char * filename)
 
 char * playlist_get_filename (int playlist_num)
 {
-    ENTER;
-    DECLARE_PLAYLIST;
-    LOOKUP_PLAYLIST_RET (NULL);
-
+    ENTER_GET_PLAYLIST (NULL);
     char * filename = str_ref (playlist->filename);
-
-    LEAVE_RET (filename);
+    RETURN (filename);
 }
 
 void playlist_set_title (int playlist_num, const char * title)
 {
-    ENTER;
-    DECLARE_PLAYLIST;
-    LOOKUP_PLAYLIST;
+    ENTER_GET_PLAYLIST ();
 
     str_unref (playlist->title);
     playlist->title = str_get (title);
@@ -855,42 +812,28 @@ void playlist_set_title (int playlist_num, const char * title)
 
 char * playlist_get_title (int playlist_num)
 {
-    ENTER;
-    DECLARE_PLAYLIST;
-    LOOKUP_PLAYLIST_RET (NULL);
-
+    ENTER_GET_PLAYLIST (NULL);
     char * title = str_ref (playlist->title);
-
-    LEAVE_RET (title);
+    RETURN (title);
 }
 
 void playlist_set_modified (int playlist_num, bool_t modified)
 {
-    ENTER;
-    DECLARE_PLAYLIST;
-    LOOKUP_PLAYLIST;
-
+    ENTER_GET_PLAYLIST ();
     playlist->modified = modified;
-
     LEAVE;
 }
 
 bool_t playlist_get_modified (int playlist_num)
 {
-    ENTER;
-    DECLARE_PLAYLIST;
-    LOOKUP_PLAYLIST_RET (FALSE);
-
+    ENTER_GET_PLAYLIST (FALSE);
     bool_t modified = playlist->modified;
-
-    LEAVE_RET (modified);
+    RETURN (modified);
 }
 
 void playlist_set_active (int playlist_num)
 {
-    ENTER;
-    DECLARE_PLAYLIST;
-    LOOKUP_PLAYLIST;
+    ENTER_GET_PLAYLIST ();
 
     bool_t changed = FALSE;
 
@@ -910,7 +853,7 @@ int playlist_get_active (void)
 {
     ENTER;
     int list = active_playlist ? active_playlist->number : -1;
-    LEAVE_RET (list);
+    RETURN (list);
 }
 
 void playlist_set_playing (int playlist_num)
@@ -933,19 +876,12 @@ void playlist_set_playing (int playlist_num)
         playing_playlist->resume_time = time;
     }
 
-    DECLARE_PLAYLIST;
+    playing_playlist = lookup_playlist (playlist_num);
 
-    if (playlist_num < 0)
-        playlist = NULL;
-    else
-        LOOKUP_PLAYLIST;
-
-    playing_playlist = playlist;
-
-    if (playlist)
+    if (playing_playlist)
     {
-        state = playlist->resume_state;
-        time = playlist->resume_time;
+        state = playing_playlist->resume_state;
+        time = playing_playlist->resume_time;
     }
     else
     {
@@ -965,7 +901,7 @@ int playlist_get_playing (void)
 {
     ENTER;
     int list = playing_playlist ? playing_playlist->number: -1;
-    LEAVE_RET (list);
+    RETURN (list);
 }
 
 int playlist_get_blank (void)
@@ -1020,21 +956,15 @@ static void set_position (Playlist * playlist, Entry * entry, bool_t update_shuf
 
 int playlist_entry_count (int playlist_num)
 {
-    ENTER;
-    DECLARE_PLAYLIST;
-    LOOKUP_PLAYLIST_RET (0);
-
+    ENTER_GET_PLAYLIST (0);
     int count = index_count (playlist->entries);
-
-    LEAVE_RET (count);
+    RETURN (count);
 }
 
 void playlist_entry_insert_batch_raw (int playlist_num, int at,
  Index * filenames, Index * tuples, Index * decoders)
 {
-    ENTER;
-    DECLARE_PLAYLIST;
-    LOOKUP_PLAYLIST;
+    ENTER_GET_PLAYLIST ();
 
     int entries = index_count (playlist->entries);
 
@@ -1084,9 +1014,7 @@ void playlist_entry_delete (int playlist_num, int at, int number)
      (playlist_num) < at + number)
         playback_stop ();
 
-    ENTER;
-    DECLARE_PLAYLIST;
-    LOOKUP_PLAYLIST;
+    ENTER_GET_PLAYLIST ();
 
     int entries = index_count (playlist->entries);
 
@@ -1125,13 +1053,9 @@ void playlist_entry_delete (int playlist_num, int at, int number)
 
 char * playlist_entry_get_filename (int playlist_num, int entry_num)
 {
-    ENTER;
-    DECLARE_PLAYLIST_ENTRY;
-    LOOKUP_PLAYLIST_ENTRY_RET (NULL);
-
+    ENTER_GET_ENTRY (NULL);
     char * filename = str_ref (entry->filename);
-
-    LEAVE_RET (filename);
+    RETURN (filename);
 }
 
 PluginHandle * playlist_entry_get_decoder (int playlist_num, int entry_num, bool_t fast)
@@ -1141,7 +1065,7 @@ PluginHandle * playlist_entry_get_decoder (int playlist_num, int entry_num, bool
     Entry * entry = get_entry (playlist_num, entry_num, ! fast, FALSE);
     PluginHandle * decoder = entry ? entry->decoder : NULL;
 
-    LEAVE_RET (decoder);
+    RETURN (decoder);
 }
 
 Tuple * playlist_entry_get_tuple (int playlist_num, int entry_num, bool_t fast)
@@ -1154,7 +1078,7 @@ Tuple * playlist_entry_get_tuple (int playlist_num, int entry_num, bool_t fast)
     if (tuple)
         tuple_ref (tuple);
 
-    LEAVE_RET (tuple);
+    RETURN (tuple);
 }
 
 char * playlist_entry_get_title (int playlist_num, int entry_num, bool_t fast)
@@ -1164,7 +1088,7 @@ char * playlist_entry_get_title (int playlist_num, int entry_num, bool_t fast)
     Entry * entry = get_entry (playlist_num, entry_num, FALSE, ! fast);
     char * title = entry ? str_ref (entry->formatted ? entry->formatted : entry->title) : NULL;
 
-    LEAVE_RET (title);
+    RETURN (title);
 }
 
 void playlist_entry_describe (int playlist_num, int entry_num,
@@ -1191,7 +1115,7 @@ int playlist_entry_get_length (int playlist_num, int entry_num, bool_t fast)
     Entry * entry = get_entry (playlist_num, entry_num, FALSE, ! fast);
     int length = entry ? entry->length : 0;
 
-    LEAVE_RET (length);
+    RETURN (length);
 }
 
 void playlist_set_position (int playlist_num, int entry_num)
@@ -1200,18 +1124,11 @@ void playlist_set_position (int playlist_num, int entry_num)
     if (playback_get_playing () && playlist_num == playlist_get_playing ())
         playback_stop ();
 
-    ENTER;
-    DECLARE_PLAYLIST_ENTRY;
+    ENTER_GET_PLAYLIST ();
 
-    if (entry_num == -1)
-    {
-        LOOKUP_PLAYLIST;
-        entry = NULL;
-    }
-    else
-        LOOKUP_PLAYLIST_ENTRY;
-
+    Entry * entry = lookup_entry (playlist, entry_num);
     set_position (playlist, entry, TRUE);
+
     LEAVE;
 
     hook_call ("playlist position", GINT_TO_POINTER (playlist_num));
@@ -1219,24 +1136,18 @@ void playlist_set_position (int playlist_num, int entry_num)
 
 int playlist_get_position (int playlist_num)
 {
-    ENTER;
-    DECLARE_PLAYLIST;
-    LOOKUP_PLAYLIST_RET (-1);
-
+    ENTER_GET_PLAYLIST (-1);
     int position = playlist->position ? playlist->position->number : -1;
-
-    LEAVE_RET (position);
+    RETURN (position);
 }
 
 void playlist_entry_set_selected (int playlist_num, int entry_num,
  bool_t selected)
 {
-    ENTER;
-    DECLARE_PLAYLIST_ENTRY;
-    LOOKUP_PLAYLIST_ENTRY;
+    ENTER_GET_ENTRY ();
 
     if (entry->selected == selected)
-        LEAVE_RET_VOID;
+        RETURN ();
 
     entry->selected = selected;
 
@@ -1257,31 +1168,21 @@ void playlist_entry_set_selected (int playlist_num, int entry_num,
 
 bool_t playlist_entry_get_selected (int playlist_num, int entry_num)
 {
-    ENTER;
-    DECLARE_PLAYLIST_ENTRY;
-    LOOKUP_PLAYLIST_ENTRY_RET (FALSE);
-
+    ENTER_GET_ENTRY (FALSE);
     bool_t selected = entry->selected;
-
-    LEAVE_RET (selected);
+    RETURN (selected);
 }
 
 int playlist_selected_count (int playlist_num)
 {
-    ENTER;
-    DECLARE_PLAYLIST;
-    LOOKUP_PLAYLIST_RET (0);
-
+    ENTER_GET_PLAYLIST (0);
     int selected_count = playlist->selected_count;
-
-    LEAVE_RET (selected_count);
+    RETURN (selected_count);
 }
 
 void playlist_select_all (int playlist_num, bool_t selected)
 {
-    ENTER;
-    DECLARE_PLAYLIST;
-    LOOKUP_PLAYLIST;
+    ENTER_GET_PLAYLIST ();
 
     int entries = index_count (playlist->entries);
     int first = entries, last = 0;
@@ -1317,12 +1218,10 @@ void playlist_select_all (int playlist_num, bool_t selected)
 
 int playlist_shift (int playlist_num, int entry_num, int distance)
 {
-    ENTER;
-    DECLARE_PLAYLIST_ENTRY;
-    LOOKUP_PLAYLIST_ENTRY_RET (0);
+    ENTER_GET_ENTRY (0);
 
     if (! entry->selected || ! distance)
-        LEAVE_RET (0);
+        RETURN (0);
 
     int entries = index_count (playlist->entries);
     int shift = 0, center, top, bottom;
@@ -1390,7 +1289,7 @@ int playlist_shift (int playlist_num, int entry_num, int distance)
     number_entries (playlist, top, bottom - top);
     queue_update (PLAYLIST_UPDATE_STRUCTURE, playlist->number, top, bottom - top);
 
-    LEAVE_RET (shift);
+    RETURN (shift);
 }
 
 void playlist_delete_selected (int playlist_num)
@@ -1401,12 +1300,10 @@ void playlist_delete_selected (int playlist_num)
      (playlist_num, playlist_get_position (playlist_num)))
         playback_stop ();
 
-    ENTER;
-    DECLARE_PLAYLIST;
-    LOOKUP_PLAYLIST;
+    ENTER_GET_PLAYLIST ();
 
     if (! playlist->selected_count)
-        LEAVE_RET_VOID;
+        RETURN ();
 
     int entries = index_count (playlist->entries);
 
@@ -1459,9 +1356,7 @@ void playlist_delete_selected (int playlist_num)
 
 void playlist_reverse (int playlist_num)
 {
-    ENTER;
-    DECLARE_PLAYLIST;
-    LOOKUP_PLAYLIST;
+    ENTER_GET_PLAYLIST ();
 
     int entries = index_count (playlist->entries);
 
@@ -1481,9 +1376,7 @@ void playlist_reverse (int playlist_num)
 
 void playlist_reverse_selected (int playlist_num)
 {
-    ENTER;
-    DECLARE_PLAYLIST;
-    LOOKUP_PLAYLIST;
+    ENTER_GET_PLAYLIST ();
 
     int entries = index_count (playlist->entries);
 
@@ -1514,9 +1407,7 @@ void playlist_reverse_selected (int playlist_num)
 
 void playlist_randomize (int playlist_num)
 {
-    ENTER;
-    DECLARE_PLAYLIST;
-    LOOKUP_PLAYLIST;
+    ENTER_GET_PLAYLIST ();
 
     int entries = index_count (playlist->entries);
 
@@ -1536,9 +1427,7 @@ void playlist_randomize (int playlist_num)
 
 void playlist_randomize_selected (int playlist_num)
 {
-    ENTER;
-    DECLARE_PLAYLIST;
-    LOOKUP_PLAYLIST;
+    ENTER_GET_PLAYLIST ();
 
     int entries = index_count (playlist->entries);
 
@@ -1671,9 +1560,7 @@ static bool_t entries_are_scanned (Playlist * playlist, bool_t selected)
 void playlist_sort_by_filename (int playlist_num, int (* compare)
  (const char * a, const char * b))
 {
-    ENTER;
-    DECLARE_PLAYLIST;
-    LOOKUP_PLAYLIST;
+    ENTER_GET_PLAYLIST ();
 
     CompareData data = {COMPARE_TYPE_FILENAME, (CompareFunc) compare};
     sort (playlist, & data);
@@ -1684,9 +1571,7 @@ void playlist_sort_by_filename (int playlist_num, int (* compare)
 void playlist_sort_by_tuple (int playlist_num, int (* compare)
  (const Tuple * a, const Tuple * b))
 {
-    ENTER;
-    DECLARE_PLAYLIST;
-    LOOKUP_PLAYLIST;
+    ENTER_GET_PLAYLIST ();
 
     CompareData data = {COMPARE_TYPE_TUPLE, (CompareFunc) compare};
     if (entries_are_scanned (playlist, FALSE))
@@ -1698,9 +1583,7 @@ void playlist_sort_by_tuple (int playlist_num, int (* compare)
 void playlist_sort_by_title (int playlist_num, int (* compare) (const char *
  a, const char * b))
 {
-    ENTER;
-    DECLARE_PLAYLIST;
-    LOOKUP_PLAYLIST;
+    ENTER_GET_PLAYLIST ();
 
     CompareData data = {COMPARE_TYPE_TITLE, (CompareFunc) compare};
     if (entries_are_scanned (playlist, FALSE))
@@ -1712,9 +1595,7 @@ void playlist_sort_by_title (int playlist_num, int (* compare) (const char *
 void playlist_sort_selected_by_filename (int playlist_num, int (* compare)
  (const char * a, const char * b))
 {
-    ENTER;
-    DECLARE_PLAYLIST;
-    LOOKUP_PLAYLIST;
+    ENTER_GET_PLAYLIST ();
 
     CompareData data = {COMPARE_TYPE_FILENAME, (CompareFunc) compare};
     sort_selected (playlist, & data);
@@ -1725,9 +1606,7 @@ void playlist_sort_selected_by_filename (int playlist_num, int (* compare)
 void playlist_sort_selected_by_tuple (int playlist_num, int (* compare)
  (const Tuple * a, const Tuple * b))
 {
-    ENTER;
-    DECLARE_PLAYLIST;
-    LOOKUP_PLAYLIST;
+    ENTER_GET_PLAYLIST ();
 
     CompareData data = {COMPARE_TYPE_TUPLE, (CompareFunc) compare};
     if (entries_are_scanned (playlist, TRUE))
@@ -1739,9 +1618,7 @@ void playlist_sort_selected_by_tuple (int playlist_num, int (* compare)
 void playlist_sort_selected_by_title (int playlist_num, int (* compare)
  (const char * a, const char * b))
 {
-    ENTER;
-    DECLARE_PLAYLIST;
-    LOOKUP_PLAYLIST;
+    ENTER_GET_PLAYLIST ();
 
     CompareData data = {COMPARE_TYPE_TITLE, (CompareFunc) compare};
     if (entries_are_scanned (playlist, TRUE))
@@ -1793,9 +1670,7 @@ void playlist_trigger_scan (void)
 
 static void playlist_rescan_real (int playlist_num, bool_t selected)
 {
-    ENTER;
-    DECLARE_PLAYLIST;
-    LOOKUP_PLAYLIST;
+    ENTER_GET_PLAYLIST ();
 
     int entries = index_count (playlist->entries);
 
@@ -1848,45 +1723,31 @@ void playlist_rescan_file (const char * filename)
 
 int64_t playlist_get_total_length (int playlist_num)
 {
-    ENTER;
-    DECLARE_PLAYLIST;
-    LOOKUP_PLAYLIST_RET (0);
-
+    ENTER_GET_PLAYLIST (0);
     int64_t length = playlist->total_length;
-
-    LEAVE_RET (length);
+    RETURN (length);
 }
 
 int64_t playlist_get_selected_length (int playlist_num)
 {
-    ENTER;
-    DECLARE_PLAYLIST;
-    LOOKUP_PLAYLIST_RET (0);
-
+    ENTER_GET_PLAYLIST (0);
     int64_t length = playlist->selected_length;
-
-    LEAVE_RET (length);
+    RETURN (length);
 }
 
 int playlist_queue_count (int playlist_num)
 {
-    ENTER;
-    DECLARE_PLAYLIST;
-    LOOKUP_PLAYLIST_RET (0);
-
+    ENTER_GET_PLAYLIST (0);
     int count = g_list_length (playlist->queued);
-
-    LEAVE_RET (count);
+    RETURN (count);
 }
 
 void playlist_queue_insert (int playlist_num, int at, int entry_num)
 {
-    ENTER;
-    DECLARE_PLAYLIST_ENTRY;
-    LOOKUP_PLAYLIST_ENTRY;
+    ENTER_GET_ENTRY ();
 
     if (entry->queued)
-        LEAVE_RET_VOID;
+        RETURN ();
 
     if (at < 0)
         playlist->queued = g_list_append (playlist->queued, entry);
@@ -1901,9 +1762,7 @@ void playlist_queue_insert (int playlist_num, int at, int entry_num)
 
 void playlist_queue_insert_selected (int playlist_num, int at)
 {
-    ENTER;
-    DECLARE_PLAYLIST;
-    LOOKUP_PLAYLIST;
+    ENTER_GET_PLAYLIST ();
 
     int entries = index_count(playlist->entries);
     int first = entries, last = 0;
@@ -1933,32 +1792,24 @@ void playlist_queue_insert_selected (int playlist_num, int at)
 
 int playlist_queue_get_entry (int playlist_num, int at)
 {
-    ENTER;
-    DECLARE_PLAYLIST;
-    LOOKUP_PLAYLIST_RET (-1);
+    ENTER_GET_PLAYLIST (-1);
 
     GList * node = g_list_nth (playlist->queued, at);
     int entry_num = node ? ((Entry *) node->data)->number : -1;
 
-    LEAVE_RET (entry_num);
+    RETURN (entry_num);
 }
 
 int playlist_queue_find_entry (int playlist_num, int entry_num)
 {
-    ENTER;
-    DECLARE_PLAYLIST_ENTRY;
-    LOOKUP_PLAYLIST_ENTRY_RET (-1);
-
+    ENTER_GET_ENTRY (-1);
     int pos = entry->queued ? g_list_index (playlist->queued, entry) : -1;
-
-    LEAVE_RET (pos);
+    RETURN (pos);
 }
 
 void playlist_queue_delete (int playlist_num, int at, int number)
 {
-    ENTER;
-    DECLARE_PLAYLIST;
-    LOOKUP_PLAYLIST;
+    ENTER_GET_PLAYLIST ();
 
     int entries = index_count (playlist->entries);
     int first = entries, last = 0;
@@ -2001,9 +1852,7 @@ DONE:
 
 void playlist_queue_delete_selected (int playlist_num)
 {
-    ENTER;
-    DECLARE_PLAYLIST;
-    LOOKUP_PLAYLIST;
+    ENTER_GET_PLAYLIST ();
 
     int entries = index_count (playlist->entries);
     int first = entries, last = 0;
@@ -2058,19 +1907,17 @@ bool_t playlist_prev_song (int playlist_num)
     if (playback_get_playing () && playlist_num == playlist_get_playing ())
         playback_stop ();
 
-    ENTER;
-    DECLARE_PLAYLIST;
-    LOOKUP_PLAYLIST_RET (FALSE);
+    ENTER_GET_PLAYLIST (FALSE);
 
     if (get_bool (NULL, "shuffle"))
     {
         if (! shuffle_prev (playlist))
-            LEAVE_RET (FALSE);
+            RETURN (FALSE);
     }
     else
     {
         if (! playlist->position || playlist->position->number == 0)
-            LEAVE_RET (FALSE);
+            RETURN (FALSE);
 
         set_position (playlist, index_get (playlist->entries,
          playlist->position->number - 1), TRUE);
@@ -2146,14 +1993,12 @@ bool_t playlist_next_song (int playlist_num, bool_t repeat)
     if (playback_get_playing () && playlist_num == playlist_get_playing ())
         playback_stop ();
 
-    ENTER;
-    DECLARE_PLAYLIST;
-    LOOKUP_PLAYLIST_RET (FALSE);
+    ENTER_GET_PLAYLIST (FALSE);
 
     int entries = index_count(playlist->entries);
 
     if (! entries)
-        LEAVE_RET (FALSE);
+        RETURN (FALSE);
 
     if (playlist->queued)
     {
@@ -2166,12 +2011,12 @@ bool_t playlist_next_song (int playlist_num, bool_t repeat)
         if (! shuffle_next (playlist))
         {
             if (! repeat)
-                LEAVE_RET (FALSE);
+                RETURN (FALSE);
 
             shuffle_reset (playlist);
 
             if (! shuffle_next (playlist))
-                LEAVE_RET (FALSE);
+                RETURN (FALSE);
         }
     }
     else
@@ -2181,7 +2026,7 @@ bool_t playlist_next_song (int playlist_num, bool_t repeat)
         else if (playlist->position->number == entries - 1)
         {
             if (! repeat)
-                LEAVE_RET (FALSE);
+                RETURN (FALSE);
 
             set_position (playlist, index_get (playlist->entries, 0), TRUE);
         }
@@ -2203,7 +2048,7 @@ int playback_entry_get_position (void)
     Entry * entry = get_playback_entry (FALSE, FALSE);
     int entry_num = entry ? entry->number : -1;
 
-    LEAVE_RET (entry_num);
+    RETURN (entry_num);
 }
 
 char * playback_entry_get_filename (void)
@@ -2213,7 +2058,7 @@ char * playback_entry_get_filename (void)
     Entry * entry = get_playback_entry (FALSE, FALSE);
     char * filename = entry ? str_ref (entry->filename) : NULL;
 
-    LEAVE_RET (filename);
+    RETURN (filename);
 }
 
 PluginHandle * playback_entry_get_decoder (void)
@@ -2223,7 +2068,7 @@ PluginHandle * playback_entry_get_decoder (void)
     Entry * entry = get_playback_entry (TRUE, FALSE);
     PluginHandle * decoder = entry ? entry->decoder : NULL;
 
-    LEAVE_RET (decoder);
+    RETURN (decoder);
 }
 
 Tuple * playback_entry_get_tuple (void)
@@ -2236,7 +2081,7 @@ Tuple * playback_entry_get_tuple (void)
     if (tuple)
         tuple_ref (tuple);
 
-    LEAVE_RET (tuple);
+    RETURN (tuple);
 }
 
 char * playback_entry_get_title (void)
@@ -2246,7 +2091,7 @@ char * playback_entry_get_title (void)
     Entry * entry = get_playback_entry (FALSE, TRUE);
     char * title = entry ? str_ref (entry->formatted ? entry->formatted : entry->title) : NULL;
 
-    LEAVE_RET (title);
+    RETURN (title);
 }
 
 int playback_entry_get_length (void)
@@ -2256,14 +2101,14 @@ int playback_entry_get_length (void)
     Entry * entry = get_playback_entry (FALSE, TRUE);
     int length = entry->length;
 
-    LEAVE_RET (length);
+    RETURN (length);
 }
 
 void playback_entry_set_tuple (Tuple * tuple)
 {
     ENTER;
     if (! playing_playlist || ! playing_playlist->position)
-        LEAVE_RET_VOID;
+        RETURN ();
 
     Entry * entry = playing_playlist->position;
     entry_set_tuple (playing_playlist, entry, tuple);
@@ -2284,7 +2129,7 @@ void playlist_save_state (void)
     FILE * handle = fopen (path, "w");
     g_free (path);
     if (! handle)
-        LEAVE_RET_VOID;
+        RETURN ();
 
     fprintf (handle, "active %d\n", active_playlist ? active_playlist->number : -1);
     fprintf (handle, "playing %d\n", playing_playlist ? playing_playlist->number : -1);
@@ -2356,7 +2201,7 @@ void playlist_load_state (void)
     FILE * handle = fopen (path, "r");
     g_free (path);
     if (! handle)
-        LEAVE_RET_VOID;
+        RETURN ();
 
     parse_next (handle);
 
