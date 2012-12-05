@@ -380,18 +380,25 @@ static void * playback_thread (void * unused)
 
     Tuple * tuple = playback_entry_get_tuple ();
     read_gain_from_tuple (tuple);
-    if (tuple)
-        tuple_unref (tuple);
 
     int start_time = time_offset = 0;
     int end_time = -1;
 
     if (playback_entry_get_length () > 0)
     {
-        time_offset = playback_entry_get_start_time ();
-        start_time = (initial_seek >= 0) ? time_offset + initial_seek : time_offset;
-        end_time = (repeat_b >= 0) ? repeat_b : playback_entry_get_end_time ();
+        if (tuple_get_value_type (tuple, FIELD_SEGMENT_START, NULL) == TUPLE_INT)
+            time_offset = tuple_get_int (tuple, FIELD_SEGMENT_START, NULL);
+
+        start_time = time_offset + MAX (initial_seek, 0);
+
+        if (repeat_b >= 0)
+            end_time = repeat_b;
+        else if (tuple_get_value_type (tuple, FIELD_SEGMENT_END, NULL) == TUPLE_INT)
+            end_time = tuple_get_int (tuple, FIELD_SEGMENT_START, NULL);
     }
+
+    if (tuple)
+        tuple_unref (tuple);
 
     if (current_file)
         vfs_rewind (current_file);

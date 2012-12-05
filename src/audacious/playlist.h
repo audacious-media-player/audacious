@@ -106,9 +106,6 @@ int playback_entry_get_length (void);
 
 void playback_entry_set_tuple (Tuple * tuple);
 
-int playback_entry_get_start_time (void);
-int playback_entry_get_end_time (void);
-
 /* playlist-utils.c */
 void load_playlists (void);
 void save_playlists (bool_t exiting);

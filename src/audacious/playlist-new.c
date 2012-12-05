@@ -99,8 +99,6 @@ typedef struct {
     bool_t selected;
     int shuffle_num;
     bool_t queued;
-    bool_t segmented;
-    int start, end;
 } Entry;
 
 typedef struct {
@@ -162,7 +160,8 @@ static void entry_set_tuple_real (Entry * entry, Tuple * tuple)
 {
     /* Hack: We cannot refresh segmented entries (since their info is read from
      * the cue sheet when it is first loaded), so leave them alone. -jlindgren */
-    if (entry->segmented && entry->tuple)
+    if (entry->tuple && tuple_get_value_type (entry->tuple, FIELD_SEGMENT_START,
+     NULL) == TUPLE_INT)
     {
         if (tuple)
             tuple_unref (tuple);
@@ -186,9 +185,6 @@ static void entry_set_tuple_real (Entry * entry, Tuple * tuple)
     {
         entry->formatted = NULL;
         entry->length = 0;
-        entry->segmented = FALSE;
-        entry->start = 0;
-        entry->end = -1;
     }
     else
     {
@@ -196,19 +192,6 @@ static void entry_set_tuple_real (Entry * entry, Tuple * tuple)
         entry->length = tuple_get_int (tuple, FIELD_LENGTH, NULL);
         if (entry->length < 0)
             entry->length = 0;
-
-        if (tuple_get_value_type (tuple, FIELD_SEGMENT_START, NULL) == TUPLE_INT)
-        {
-            entry->segmented = TRUE;
-            entry->start = tuple_get_int (tuple, FIELD_SEGMENT_START, NULL);
-
-            if (tuple_get_value_type (tuple, FIELD_SEGMENT_END, NULL) == TUPLE_INT)
-                entry->end = tuple_get_int (tuple, FIELD_SEGMENT_END, NULL);
-            else
-                entry->end = -1;
-        }
-        else
-            entry->segmented = FALSE;
     }
 }
 
@@ -255,9 +238,6 @@ static Entry * entry_new (char * filename, Tuple * tuple, PluginHandle * decoder
     entry->selected = FALSE;
     entry->shuffle_num = 0;
     entry->queued = FALSE;
-    entry->segmented = FALSE;
-    entry->start = 0;
-    entry->end = -1;
 
     entry_set_tuple_real (entry, tuple);
     return entry;
@@ -2290,26 +2270,6 @@ void playback_entry_set_tuple (Tuple * tuple)
 
     queue_update (PLAYLIST_UPDATE_METADATA, playing_playlist->number, entry->number, 1);
     LEAVE;
-}
-
-int playback_entry_get_start_time (void)
-{
-    ENTER;
-    if (! playing_playlist || ! playing_playlist->position)
-        LEAVE_RET (0);
-
-    int start = playing_playlist->position->start;
-    LEAVE_RET (start);
-}
-
-int playback_entry_get_end_time (void)
-{
-    ENTER;
-    if (! playing_playlist || ! playing_playlist->position)
-        LEAVE_RET (-1);
-
-    int end = playing_playlist->position->end;
-    LEAVE_RET (end);
 }
 
 void playlist_save_state (void)
