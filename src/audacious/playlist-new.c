@@ -82,7 +82,7 @@ typedef struct {
     char * filename, * title;
     bool_t modified;
     Index * entries;
-    Entry * position;
+    Entry * position, * focus;
     int selected_count;
     int last_shuffle_num;
     GList * queued;
@@ -258,6 +258,7 @@ static Playlist * playlist_new (int id)
     playlist->modified = TRUE;
     playlist->entries = index_new();
     playlist->position = NULL;
+    playlist->focus = NULL;
     playlist->selected_count = 0;
     playlist->last_shuffle_num = 0;
     playlist->queued = NULL;
@@ -1027,6 +1028,17 @@ void playlist_entry_delete (int playlist_num, int at, int number)
      playlist->position->number < at + number)
         set_position (playlist, NULL, FALSE);
 
+    if (playlist->focus && playlist->focus->number >= at &&
+     playlist->focus->number < at + number)
+    {
+        if (at + number < entries)
+            playlist->focus = index_get (playlist->entries, at + number);
+        else if (at > 0)
+            playlist->focus = index_get (playlist->entries, at - 1);
+        else
+            playlist->focus = NULL;
+    }
+
     for (int count = 0; count < number; count ++)
     {
         Entry * entry = index_get (playlist->entries, at + count);
@@ -1139,6 +1151,40 @@ int playlist_get_position (int playlist_num)
     ENTER_GET_PLAYLIST (-1);
     int position = playlist->position ? playlist->position->number : -1;
     RETURN (position);
+}
+
+void playlist_set_focus (int playlist_num, int entry_num)
+{
+    ENTER_GET_PLAYLIST ();
+
+    int first = INT_MAX;
+    int last = -1;
+
+    if (playlist->focus)
+    {
+        first = MIN (first, playlist->focus->number);
+        last = MAX (last, playlist->focus->number);
+    }
+
+    playlist->focus = lookup_entry (playlist, entry_num);
+
+    if (playlist->focus)
+    {
+        first = MIN (first, playlist->focus->number);
+        last = MAX (last, playlist->focus->number);
+    }
+
+    if (first <= last)
+        queue_update (PLAYLIST_UPDATE_SELECTION, playlist_num, first, last + 1 - first);
+
+    LEAVE;
+}
+
+int playlist_get_focus (int playlist_num)
+{
+    ENTER_GET_PLAYLIST (-1);
+    int focus = playlist->focus ? playlist->focus->number : -1;
+    RETURN (focus);
 }
 
 void playlist_entry_set_selected (int playlist_num, int entry_num,
@@ -1292,12 +1338,35 @@ int playlist_shift (int playlist_num, int entry_num, int distance)
     RETURN (shift);
 }
 
+static Entry * find_unselected_focus (Playlist * playlist)
+{
+    if (! playlist->focus || ! playlist->focus->selected)
+        return playlist->focus;
+
+    int entries = index_count (playlist->entries);
+
+    for (int search = playlist->focus->number + 1; search < entries; search ++)
+    {
+        Entry * entry = index_get (playlist->entries, search);
+        if (! entry->selected)
+            return entry;
+    }
+
+    for (int search = playlist->focus->number; search --;)
+    {
+        Entry * entry = index_get (playlist->entries, search);
+        if (! entry->selected)
+            return entry;
+    }
+
+    return NULL;
+}
+
 void playlist_delete_selected (int playlist_num)
 {
     /* stop playback before locking playlists */
     if (playback_get_playing () && playlist_num == playlist_get_playing () &&
-     playlist_get_position (playlist_num) >= 0 && playlist_entry_get_selected
-     (playlist_num, playlist_get_position (playlist_num)))
+     playlist_entry_get_selected (playlist_num, playlist_get_position (playlist_num)))
         playback_stop ();
 
     ENTER_GET_PLAYLIST ();
@@ -1312,6 +1381,8 @@ void playlist_delete_selected (int playlist_num)
 
     if (playlist->position && playlist->position->selected)
         set_position (playlist, NULL, FALSE);
+
+    playlist->focus = find_unselected_focus (playlist);
 
     int before = 0, after = 0;
     bool_t found = FALSE;

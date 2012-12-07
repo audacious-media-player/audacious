@@ -354,3 +354,9 @@ AUD_VFUNC1 (playlist_reverse_selected, int, playlist)
 
 /* Reorders the selected entries in a playlist randomly. */
 AUD_VFUNC1 (playlist_randomize_selected, int, playlist)
+
+/* Sets the entry which has keyboard focus (-1 means no entry). */
+AUD_VFUNC2 (playlist_set_focus, int, playlist_num, int, entry_num)
+
+/* Gets the entry which has keyboard focus (-1 means no entry). */
+AUD_FUNC1 (int, playlist_get_focus, int, playlist_num)
