@@ -41,13 +41,15 @@ typedef struct {
     void (* shift_rows) (void * user, int row, int before); /* optional */
 
     /* cross-widget drag and drop (optional) */
+    /* the list will handle free()ing data returned by get_data() */
     const char * data_type;
-    void (* get_data) (void * user, void * * data, int * length); /* data will
-     be freed */
+    void (* get_data) (void * user, void * * data, int * length);
     void (* receive_data) (void * user, int row, const void * data, int length);
 
     void (* mouse_motion) (void * user, GdkEventMotion * event, int row); /* optional */
     void (* mouse_leave) (void * user, GdkEventMotion * event, int row); /* optional */
+
+    void (* focus_change) (void * user, int row); /* optional */
 } AudguiListCallbacks;
 
 GtkWidget * audgui_list_new_real (const AudguiListCallbacks * cbs, int cbs_size,
