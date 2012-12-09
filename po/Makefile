@@ -28,6 +28,7 @@ LOCALES = ast.po \
 	  it.po \
 	  ja.po \
 	  ko.po \
+	  ky.po \
 	  lt.po \
 	  lv.po \
 	  nl.po \

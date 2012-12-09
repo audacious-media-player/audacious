@@ -64,6 +64,9 @@ ja.po)
 ko.po)
     LANGUAGE="Korean"
     ;;
+ky.po)
+    LANGUAGE="Kirgyz"
+    ;;
 lt.po)
     LANGUAGE="Lithuanian"
     ;;
