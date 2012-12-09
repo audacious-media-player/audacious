@@ -1,10 +1,11 @@
 # Turkish translation for Audacious
 # Copyright (C) Audacious translators
 # This file is distributed under the same license as the Audacious package.
-#
+# 
 # Translators:
 #   <aaydin159@gmail.com>, 2012.
 #   <alikoc@hush.ai>, 2012.
+#   <dead-bodies-everywhere@hotmail.com>, 2012.
 # Murat Senel <muratasenel@gmail.com>, 2007.
 # Murat Şenel <muratasenel@gmail.com>, 2007.
 #   <t.oguzman@hotmail.com>, 2012.
@@ -13,13 +14,13 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2012-09-15 12:17+0200\n"
-"PO-Revision-Date: 2012-08-29 22:42+0000\n"
-"Last-Translator: tarkan255 <t.oguzman@hotmail.com>\n"
+"PO-Revision-Date: 2012-10-20 17:28+0000\n"
+"Last-Translator: hsngrms <dead-bodies-everywhere@hotmail.com>\n"
 "Language-Team: Turkish\n"
-"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: tr\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: src/audacious/adder.c:75
@@ -106,9 +107,7 @@ msgstr "- çoklu ortam dosyalarını çal"
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
-msgstr ""
-"%s: %s\n"
-"Daha fazla bilgi için `%s --help' komutunu kullanın.\n"
+msgstr "%s: %s\nDaha fazla bilgi için `%s --help' komutunu kullanın.\n"
 
 #: src/audacious/main.c:546
 msgid "Audacious"
@@ -142,11 +141,9 @@ msgstr "Şimdi Çalınıyor"
 
 #: src/audacious/playlist-new.c:1650
 msgid ""
-"The playlist cannot be sorted because metadata scanning is still in progress "
-"(or has been disabled)."
-msgstr ""
-"Çalma listesi sıralanamıyor çünkü üstveri taraması devam ediyor (ya da devre "
-"dışı bırakıldı)."
+"The playlist cannot be sorted because metadata scanning is still in progress"
+" (or has been disabled)."
+msgstr "Çalma listesi sıralanamıyor çünkü üstveri taraması devam ediyor (ya da devre dışı bırakıldı)."
 
 #: src/audacious/plugin-preferences.c:50
 #, c-format
@@ -397,11 +394,11 @@ msgstr "Şarkı çalına kadar meta bilgisi yükleme"
 
 #: src/audacious/ui_preferences.c:201
 msgid "<b>Compatibility</b>"
-msgstr ""
+msgstr "<b>Uyumluluk</b>"
 
 #: src/audacious/ui_preferences.c:202
 msgid "Interpret \\ (backward slash) as a folder delimiter"
-msgstr ""
+msgstr "Geriye yatık taksimi ( \\ ) klasör sınırlayıcı olarak yorumla"
 
 #: src/audacious/ui_preferences.c:209
 msgid "<b>Album Art</b>"
@@ -580,9 +577,7 @@ msgstr "Çalma Listesini Kapat"
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
-msgstr ""
-"Kapatmak istediğinize emin misiniz %s?  Kapatırsanız, çalma listesi ihraç "
-"edilmeden önce yapılan hiç bir değişiklik kaydedilmeyecektir."
+msgstr "Kapatmak istediğinize emin misiniz %s?  Kapatırsanız, çalma listesi ihraç edilmeden önce yapılan hiç bir değişiklik kaydedilmeyecektir."
 
 #: src/libaudgui/confirm.c:89
 msgid "_Don't show this message again"
@@ -985,9 +980,4 @@ msgstr "URL gir :"
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
-msgstr ""
-"\n"
-"(Gelecekteki mesajlar gizlenecek.)"
-
-#~ msgid "<b>Metadata</b>"
-#~ msgstr "<b>Parça Bilgisi</b>"
+msgstr "\n(Gelecekteki mesajlar gizlenecek.)"

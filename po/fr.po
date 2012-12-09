@@ -1,23 +1,23 @@
 # French translation for Audacious
 # Copyright (C) Audacious translators
 # This file is distributed under the same license as the Audacious package.
-#
+# 
 # Translators:
 # Alain-Olivier  Breysse <yahoe.001@gmail.com>, 2012.
-#   <jagw40k@free.fr>, 2011, 2012.
+#   <jagw40k@free.fr>, 2011-2012.
 # Jean-Alexandre Anglès d'Auriac <jagw40k@free.fr>, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2012-09-15 12:17+0200\n"
-"PO-Revision-Date: 2012-08-15 23:39+0000\n"
+"PO-Revision-Date: 2012-11-05 14:45+0000\n"
 "Last-Translator: Alain-Olivier  Breysse <yahoe.001@gmail.com>\n"
 "Language-Team: French\n"
-"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: src/audacious/adder.c:75
@@ -90,7 +90,7 @@ msgstr "Afficher les messages de débogage"
 
 #: src/audacious/main.c:244
 msgid "Headless mode (beta)"
-msgstr "Mode sans interface graphique (beta)"
+msgstr "Mode sans interface graphique (betâ)"
 
 #: src/audacious/main.c:245
 msgid "FILE..."
@@ -105,9 +105,7 @@ msgstr "- lire les fichiers multimédia"
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
-msgstr ""
-"%s: %s\n"
-"Essayez '%s --help' pour davantage d'informations.\n"
+msgstr "%s: %s\nEssayez '%s --help' pour davantage d'informations.\n"
 
 #: src/audacious/main.c:546
 msgid "Audacious"
@@ -141,11 +139,9 @@ msgstr "Lecture en cours"
 
 #: src/audacious/playlist-new.c:1650
 msgid ""
-"The playlist cannot be sorted because metadata scanning is still in progress "
-"(or has been disabled)."
-msgstr ""
-"La liste de lecture ne peut pas être triée car le balayage des métadonnées "
-"est en cours (ou a été désactivé)."
+"The playlist cannot be sorted because metadata scanning is still in progress"
+" (or has been disabled)."
+msgstr "La liste de lecture ne peut pas être triée car le balayage des métadonnées est en cours (ou a été désactivé)."
 
 #: src/audacious/plugin-preferences.c:50
 #, c-format
@@ -175,7 +171,7 @@ msgstr "Informations sur les morceaux"
 
 #: src/audacious/ui_preferences.c:73
 msgid "Plugins"
-msgstr "Modules d'extension"
+msgstr "Greffons d'extension"
 
 #: src/audacious/ui_preferences.c:79 src/libaudgui/infopopup.c:194
 msgid "Artist"
@@ -368,7 +364,7 @@ msgstr "Détection automatique de l'encodage pour :"
 
 #: src/audacious/ui_preferences.c:185
 msgid "Fallback character encodings:"
-msgstr "Encodages supplémentaires de secours :"
+msgstr "Encodages des caractères de reprise :"
 
 #: src/audacious/ui_preferences.c:189
 msgid "<b>Behavior</b>"
@@ -396,34 +392,31 @@ msgstr "Ne charger les métadonnées qu'à la lecture"
 
 #: src/audacious/ui_preferences.c:201
 msgid "<b>Compatibility</b>"
-msgstr ""
+msgstr "<b>Compatibilité</b>"
 
 #: src/audacious/ui_preferences.c:202
 msgid "Interpret \\ (backward slash) as a folder delimiter"
-msgstr ""
+msgstr "Interpréter le «\\» (barre oblique inverse) comme délimiteur de dossier"
 
 #: src/audacious/ui_preferences.c:209
 msgid "<b>Album Art</b>"
-msgstr "<b>Pochettes des albums</b>"
+msgstr "<b>Pochette de l'album</b>"
 
 #: src/audacious/ui_preferences.c:210
 msgid "Search for images matching these words (comma-separated):"
-msgstr ""
-"Rechercher des images correspondants aux mots suivants (séparés par des "
-"virgules) :"
+msgstr "Rechercher des images correspondant à ces mots (séparés par des virgules) :"
 
 #: src/audacious/ui_preferences.c:212
 msgid "Exclude images matching these words (comma-separated):"
-msgstr ""
-"Exclure les images contenant les mots suivants (séparés par des virgules) : "
+msgstr "Exclure les images contenant ces mots (séparés par des virgules) : "
 
 #: src/audacious/ui_preferences.c:214
 msgid "Search for images matching song file name"
-msgstr "Rechercher les images dont le nom correspond au nom au morceau joué"
+msgstr "Rechercher des images correspondant au nom au morceau"
 
 #: src/audacious/ui_preferences.c:216
 msgid "Search recursively"
-msgstr "Rechercher aussi dans les sous-dossiers"
+msgstr "Recherche récursive"
 
 #: src/audacious/ui_preferences.c:218
 msgid "Search depth:"
@@ -439,13 +432,11 @@ msgstr "Afficher la fenêtre d'information contextuelle"
 
 #: src/audacious/ui_preferences.c:224
 msgid "Popup delay (tenths of a second):"
-msgstr ""
-"Délai avant l'apparition de la fenêtre d'information contextuelle (en "
-"dixièmes de seconde) :"
+msgstr "Délai d'apparition de la fenêtre contextuelle (en 1/10 de seconde) :"
 
 #: src/audacious/ui_preferences.c:227
 msgid "Show time scale for current song"
-msgstr "Afficher la progression dans la lecture du morceau actuel"
+msgstr "Afficher l'échelle de temps pour le morceau actuel"
 
 #: src/audacious/ui_preferences.c:241
 msgid "TITLE"
@@ -489,7 +480,7 @@ msgstr "Afficher la position des titres"
 
 #: src/audacious/ui_preferences.c:1054
 msgid "Show leading zeroes (02:00 instead of 2:00)"
-msgstr "Afficher les zéros en début d'heure (02:00 au lieu de 2:00)"
+msgstr "Afficher un zéro au début (02:00 au lieu de 2:00)"
 
 #: src/audacious/ui_preferences.c:1074
 msgid "Show information about titlestring format"
@@ -585,9 +576,7 @@ msgstr "Fermer la liste de lecture"
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
-msgstr ""
-"Êtes-vous certain de vouloir fermer %s ?  Si tel est le cas, toute "
-"modification apportée à la liste depuis l'exportation sera perdue."
+msgstr "Êtes-vous certain de vouloir fermer %s ?  Si tel est le cas, toute modification apportée à la liste depuis l'exportation sera perdue."
 
 #: src/libaudgui/confirm.c:89
 msgid "_Don't show this message again"
@@ -948,9 +937,7 @@ msgstr "_Filtre :"
 
 #: src/libaudgui/ui_jumptotrack.c:298
 msgid "Remember"
-msgstr ""
-"Se souvenir de\n"
-"la recherche"
+msgstr "Se souvenir de\nla recherche"
 
 #: src/libaudgui/ui_jumptotrack.c:305
 msgid "Clea_r"
@@ -958,9 +945,7 @@ msgstr "Efface_r"
 
 #: src/libaudgui/ui_jumptotrack.c:325
 msgid "Close on Jump"
-msgstr ""
-"Fermer la fenêtre\n"
-"après la sélection"
+msgstr "Fermer la fenêtre\naprès la sélection"
 
 #: src/libaudgui/ui_playlist_manager.c:261
 msgid "Playlist Manager"
@@ -988,15 +973,10 @@ msgstr "Ajouter l'adresse URL d'un flux"
 
 #: src/libaudgui/url-opener.c:65
 msgid "Enter URL:"
-msgstr "Saisissez l'url :"
+msgstr "Saisissez l'URL :"
 
 #: src/libaudgui/util.c:143
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
-msgstr ""
-"\n"
-"(Les messages supplémentaires ont été cachés.)"
-
-#~ msgid "<b>Metadata</b>"
-#~ msgstr "<b>Métadonnées</b>"
+msgstr "\n(Les messages supplémentaires ont été cachés.)"

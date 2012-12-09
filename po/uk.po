@@ -1,27 +1,27 @@
 # Ukrainian translation for Audacious
 # Copyright (C) Audacious translators
 # This file is distributed under the same license as the Audacious package.
-#
+# 
 # Translators:
 # Kostyantyn Fedenko <fedenko@ukr.net>, 2011.
 #   <kvantarium@gmail.com>, 2012.
 # NaiLi Rootaerc <theism@mail.ru>, 2012.
 # Rax Garfield <admin@dvizho.ks.ua>, 2012.
 # Rax Garfield (http://biokillaz.com/), 2012.
+# Rax Garfield <rax@rax.pp.ua>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2012-09-15 12:17+0200\n"
-"PO-Revision-Date: 2012-08-13 14:08+0000\n"
-"Last-Translator: Rax Garfield <admin@dvizho.ks.ua>\n"
+"PO-Revision-Date: 2012-10-01 13:10+0000\n"
+"Last-Translator: Rax Garfield <rax@rax.pp.ua>\n"
 "Language-Team: Ukrainian\n"
-"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Language: uk\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: src/audacious/adder.c:75
 msgid "Searching ..."
@@ -109,9 +109,7 @@ msgstr "— відтворити мультимедійні файли"
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
-msgstr ""
-"%s: %s\n"
-"Спробуйте `%s --help' для отримання докладнішого опису.\n"
+msgstr "%s: %s\nСпробуйте `%s --help' для отримання докладнішого опису.\n"
 
 #: src/audacious/main.c:546
 msgid "Audacious"
@@ -145,11 +143,9 @@ msgstr "Зараз відтворюється"
 
 #: src/audacious/playlist-new.c:1650
 msgid ""
-"The playlist cannot be sorted because metadata scanning is still in progress "
-"(or has been disabled)."
-msgstr ""
-"Список відтворення неможливо відсортувати, поки сканування метаданих триває "
-"або вимкнено."
+"The playlist cannot be sorted because metadata scanning is still in progress"
+" (or has been disabled)."
+msgstr "Список відтворення неможливо відсортувати, поки сканування метаданих триває або вимкнено."
 
 #: src/audacious/plugin-preferences.c:50
 #, c-format
@@ -400,11 +396,11 @@ msgstr "Не завантажувати метадані доріжок до в�
 
 #: src/audacious/ui_preferences.c:201
 msgid "<b>Compatibility</b>"
-msgstr ""
+msgstr "<b>Сумісність</b>"
 
 #: src/audacious/ui_preferences.c:202
 msgid "Interpret \\ (backward slash) as a folder delimiter"
-msgstr ""
+msgstr "Вважати \\ (обернену косу риску) розділювачем тек"
 
 #: src/audacious/ui_preferences.c:209
 msgid "<b>Album Art</b>"
@@ -585,9 +581,7 @@ msgstr "Закрити список відтворення"
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
-msgstr ""
-"Точно закрити %s? Якщо так, то всі зміни з моменту експорту списку "
-"відтворення будуть втрачені."
+msgstr "Точно закрити %s? Якщо так, то всі зміни з моменту експорту списку відтворення будуть втрачені."
 
 #: src/libaudgui/confirm.c:89
 msgid "_Don't show this message again"
@@ -651,9 +645,7 @@ msgstr "Еквалайзер"
 
 #: src/libaudgui/equalizer.c:147
 msgid "Preamp"
-msgstr ""
-"Попереднє\n"
-"підсилення"
+msgstr "Попереднє\nпідсилення"
 
 #: src/libaudgui/infopopup.c:202
 msgid "Track"
@@ -992,9 +984,4 @@ msgstr "Введіть URL:"
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
-msgstr ""
-"\n"
-"(Наступні повідомлення були приховані.)"
-
-#~ msgid "<b>Metadata</b>"
-#~ msgstr "<b>Метадані</b>"
+msgstr "\n(Наступні повідомлення були приховані.)"

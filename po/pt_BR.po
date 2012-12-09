@@ -1,7 +1,7 @@
 # Portuguese (Brazil) translation for Audacious
 # Copyright (C) Audacious translators
 # This file is distributed under the same license as the Audacious package.
-#
+# 
 # Translators:
 # Cleiton cleitonlima <cleitonlima@lavabit.com>, 2011.
 # edu engler <eduengler@gmail.com>, 2012.
@@ -16,13 +16,13 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2012-09-15 12:17+0200\n"
-"PO-Revision-Date: 2012-09-10 03:13+0000\n"
+"PO-Revision-Date: 2012-11-14 18:14+0000\n"
 "Last-Translator: salmora8 <shorterfire@gmail.com>\n"
 "Language-Team: Portuguese (Brazil)\n"
-"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: pt_BR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: src/audacious/adder.c:75
@@ -43,7 +43,7 @@ msgstr "  (UTF-8 inválido)"
 #: src/audacious/equalizer_preset.c:180
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
-msgstr "Erro importando arquivo EQF do Winamp '%s'"
+msgstr "Erro, importando arquivo EQF do Winamp '%s'"
 
 #: src/audacious/main.c:232
 msgid "Skip backwards in playlist"
@@ -75,11 +75,11 @@ msgstr "Mostrar caixa de diálogo \"Ir para o Arquivo\""
 
 #: src/audacious/main.c:239
 msgid "Add files to the playlist"
-msgstr "Adicionar arquivos à lista de reprodução"
+msgstr "Adicionar arquivo(s) à lista de reprodução"
 
 #: src/audacious/main.c:240
 msgid "Add new files to a temporary playlist"
-msgstr "Adicionar novos arquivos a uma lista de reprodução temporária"
+msgstr "Adicionar novo(s) arquivo(s) a uma lista de reprodução temporária"
 
 #: src/audacious/main.c:241
 msgid "Display the main window"
@@ -110,9 +110,7 @@ msgstr "- reproduzir arquivos multimídia"
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
-msgstr ""
-"%s: %s\n"
-"Tente `%s --help' para mais informações.\n"
+msgstr "%s: %s\nTente `%s --help' para mais informações.\n"
 
 #: src/audacious/main.c:546
 msgid "Audacious"
@@ -126,7 +124,7 @@ msgstr "Decodificador para %s não encontrado "
 #: src/audacious/playlist-files.c:51
 #, c-format
 msgid "Cannot %s %s: unsupported file extension."
-msgstr "Não é possível %s %s: extensão de arquivo não suportada"
+msgstr "Não é possível %s %s: extensão de arquivo não suportada."
 
 #: src/audacious/playlist-files.c:52
 msgid "save"
@@ -146,11 +144,9 @@ msgstr "Reproduzindo"
 
 #: src/audacious/playlist-new.c:1650
 msgid ""
-"The playlist cannot be sorted because metadata scanning is still in progress "
-"(or has been disabled)."
-msgstr ""
-"A lista de reprodução não pode ser ordenada porque a varredura de metadados "
-"ainda está em progresso (ou foi desabilitada)."
+"The playlist cannot be sorted because metadata scanning is still in progress"
+" (or has been disabled)."
+msgstr "A lista de reprodução não pode ser organizada porque a varredura de metadados ainda está em progresso (ou foi desabilitada)."
 
 #: src/audacious/plugin-preferences.c:50
 #, c-format
@@ -176,7 +172,7 @@ msgstr "Lista de Reprodução"
 
 #: src/audacious/ui_preferences.c:72
 msgid "Song Info"
-msgstr "Som Info"
+msgstr "Informações da Faixa"
 
 #: src/audacious/ui_preferences.c:73
 msgid "Plugins"
@@ -245,7 +241,7 @@ msgstr "Báltico"
 
 #: src/audacious/ui_preferences.c:99
 msgid "Chinese"
-msgstr "Chines"
+msgstr "Chinês"
 
 #: src/audacious/ui_preferences.c:100
 msgid "Greek"
@@ -281,7 +277,7 @@ msgstr "Turco"
 
 #: src/audacious/ui_preferences.c:114
 msgid "Floating point"
-msgstr "ponto flutuante"
+msgstr "Ponto flutuante"
 
 #: src/audacious/ui_preferences.c:130
 msgid "Album mode"
@@ -313,15 +309,15 @@ msgstr "Usar controle de volume de software (não recomendado)"
 
 #: src/audacious/ui_preferences.c:145
 msgid "<b>Replay Gain</b>"
-msgstr "<b>Repetir Ganho</b>"
+msgstr "<b>ReplayGain</b>"
 
 #: src/audacious/ui_preferences.c:146
 msgid "Enable Replay Gain"
-msgstr "Habilitar Ganho de Replay"
+msgstr "Habilitar ReplayGain"
 
 #: src/audacious/ui_preferences.c:149
 msgid "Prevent clipping (recommended)"
-msgstr "Prevenir ruídos (recomendado)"
+msgstr "Evitar distorção (recomendado)"
 
 #: src/audacious/ui_preferences.c:151
 msgid "<b>Adjust Levels</b>"
@@ -337,19 +333,19 @@ msgstr "dB"
 
 #: src/audacious/ui_preferences.c:155
 msgid "Amplify untagged files:"
-msgstr "Amplificar arquivos não-marcados:"
+msgstr "Amplificar arquivos não marcados:"
 
 #: src/audacious/ui_preferences.c:160
 msgid "Proxy hostname:"
-msgstr "Endereço do proxy:"
+msgstr "Proxy hostname:"
 
 #: src/audacious/ui_preferences.c:161
 msgid "Proxy port:"
-msgstr "Porta do proxy:"
+msgstr "Porta:"
 
 #: src/audacious/ui_preferences.c:164
 msgid "Proxy username:"
-msgstr "Nome de usuário do proxy:"
+msgstr "Nome de usuário proxy:"
 
 #: src/audacious/ui_preferences.c:165
 msgid "Proxy password:"
@@ -389,11 +385,11 @@ msgstr "Avançar quando a música atual for excluída"
 
 #: src/audacious/ui_preferences.c:194
 msgid "Clear the playlist when opening files"
-msgstr "Limpar lista de reprodução ao abrir arquivos"
+msgstr "Limpar lista de reprodução ao abrir arquivo(s)"
 
 #: src/audacious/ui_preferences.c:196
 msgid "Open files in a temporary playlist"
-msgstr "Abrir arquivos em uma lista de reprodução temporária"
+msgstr "Abrir arquivo(s) em uma lista de reprodução temporária"
 
 #: src/audacious/ui_preferences.c:198
 msgid "Do not load metadata for songs until played"
@@ -401,15 +397,15 @@ msgstr "Não carregar metadados para as músicas até que sejam tocadas"
 
 #: src/audacious/ui_preferences.c:201
 msgid "<b>Compatibility</b>"
-msgstr ""
+msgstr "<b>Compatibilidade</b>"
 
 #: src/audacious/ui_preferences.c:202
 msgid "Interpret \\ (backward slash) as a folder delimiter"
-msgstr ""
+msgstr "Interpretar o carácter \\ (barra invertida) como um indicador de nível na árvore de diretórios"
 
 #: src/audacious/ui_preferences.c:209
 msgid "<b>Album Art</b>"
-msgstr "<b>Album Art</b>"
+msgstr "<b>Imagem do Álbum</b>"
 
 #: src/audacious/ui_preferences.c:210
 msgid "Search for images matching these words (comma-separated):"
@@ -425,23 +421,23 @@ msgstr "Pesquisar imagens correspondentes ao nome do arquivo da música"
 
 #: src/audacious/ui_preferences.c:216
 msgid "Search recursively"
-msgstr "Procurar recursivamente"
+msgstr "Pesquisar recursivamente"
 
 #: src/audacious/ui_preferences.c:218
 msgid "Search depth:"
-msgstr "Busca profunda:"
+msgstr "Pesquisar profundidade:"
 
 #: src/audacious/ui_preferences.c:221
 msgid "<b>Popup Information</b>"
-msgstr "<b>Informações Popup</b>"
+msgstr "<b>Informações Pop-up</b>"
 
 #: src/audacious/ui_preferences.c:222
 msgid "Show popup information"
-msgstr "Mostrar popup de informação"
+msgstr "Mostrar informações pop-up"
 
 #: src/audacious/ui_preferences.c:224
 msgid "Popup delay (tenths of a second):"
-msgstr "Atraso do popup (décimos de segundo):"
+msgstr "Atraso do pop-up (décimos de segundo):"
 
 #: src/audacious/ui_preferences.c:227
 msgid "Show time scale for current song"
@@ -534,7 +530,7 @@ msgstr "Preferências do Audacious"
 #: src/audacious/util.c:127
 #, c-format
 msgid "Could not create directory (%s): %s\n"
-msgstr "Erro ao criar o diretório (%s): %s\n"
+msgstr "Não foi possível criar diretório (%s): %s\n"
 
 #: src/audtool/handlers_playlist.c:262
 msgid "Position not found."
@@ -547,7 +543,7 @@ msgstr "Nenhuma música tocando."
 #: src/libaudcore/audstrings.c:199
 #, c-format
 msgid "Audio CD, track %s"
-msgstr "CD de Áudio, trilha %s"
+msgstr "CD de Áudio, faixa %s"
 
 #: src/libaudcore/tuple.c:541
 msgid "Mono"
@@ -585,9 +581,7 @@ msgstr "Fechar Lista de Reprodução"
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
-msgstr ""
-"Você tem certeza que deseja fechar %s? Se você fizer isto, todas as mudanças "
-"feitas desde que a lista de reprodução foi exportada serão perdidas."
+msgstr "Você tem certeza que deseja fechar %s? Se você fizer isto, todas as mudanças feitas desde a lista de reprodução que foi exportada será perdida."
 
 #: src/libaudgui/confirm.c:89
 msgid "_Don't show this message again"
@@ -655,15 +649,15 @@ msgstr "Preamplificação"
 
 #: src/libaudgui/infopopup.c:202
 msgid "Track"
-msgstr "Trilha"
+msgstr "Faixa"
 
 #: src/libaudgui/infopopup.c:204
 msgid "Length"
-msgstr "Comprimento"
+msgstr "Duração"
 
 #: src/libaudgui/infowin.c:74
 msgid "Acid Jazz"
-msgstr "Jazz ácido"
+msgstr "Acid Jazz"
 
 #: src/libaudgui/infowin.c:75
 msgid "Acid Rock"
@@ -671,7 +665,7 @@ msgstr "Acid Rock"
 
 #: src/libaudgui/infowin.c:76
 msgid "Ambient"
-msgstr "Ambient"
+msgstr "Ambiente"
 
 #: src/libaudgui/infowin.c:77
 msgid "Bebop"
@@ -711,7 +705,7 @@ msgstr "Fácil de escutar"
 
 #: src/libaudgui/infowin.c:86
 msgid "Folk"
-msgstr "Folclore"
+msgstr "Folk"
 
 #: src/libaudgui/infowin.c:87
 msgid "Funk"
@@ -775,7 +769,7 @@ msgstr "Pop"
 
 #: src/libaudgui/infowin.c:102
 msgid "Punk Rock"
-msgstr "Rock Punk"
+msgstr "Punk Rock"
 
 #: src/libaudgui/infowin.c:103
 msgid "Rap"
@@ -824,15 +818,15 @@ msgstr "<span size=\"small\">n/a</span>"
 
 #: src/libaudgui/infowin.c:266
 msgid "Metadata updated successfully"
-msgstr "Metadata atualizado com sucesso"
+msgstr "Metadados atualizados com sucesso"
 
 #: src/libaudgui/infowin.c:271
 msgid "Metadata updating failed"
-msgstr "Atualização de metadata falhou"
+msgstr "Atualização de metadados falhou"
 
 #: src/libaudgui/infowin.c:319
 msgid "Track Information"
-msgstr "Informações do arquivo"
+msgstr "Informações da Faixa"
 
 #: src/libaudgui/infowin.c:354
 msgid "<span size=\"small\">Format:</span>"
@@ -852,27 +846,27 @@ msgstr "<span size=\"small\">Título</span>"
 
 #: src/libaudgui/infowin.c:397
 msgid "<span size=\"small\">Artist</span>"
-msgstr "<span size=\"medium\"><b>Artista</b></span>"
+msgstr "<span size=\"small\">Artista</span>"
 
 #: src/libaudgui/infowin.c:409
 msgid "<span size=\"small\">Album</span>"
-msgstr "<span size=\"medium\"><b>Álbum</b></span>"
+msgstr "<span size=\"small\">Álbum</span>"
 
 #: src/libaudgui/infowin.c:421
 msgid "<span size=\"small\">Comment</span>"
-msgstr "<span size=\"medium\"><b>Comentário</b></span>"
+msgstr "<span size=\"small\">Comentário</span>"
 
 #: src/libaudgui/infowin.c:433
 msgid "<span size=\"small\">Genre</span>"
-msgstr "<span size=\"medium\"><b>Gênero</b></span>"
+msgstr "<span size=\"small\">Gênero</span>"
 
 #: src/libaudgui/infowin.c:455
 msgid "<span size=\"small\">Year</span>"
-msgstr "<span size=\"medium\"><b>Ano</b></span>"
+msgstr "<span size=\"small\">Ano</span>"
 
 #: src/libaudgui/infowin.c:464
 msgid "<span size=\"small\">Track Number</span>"
-msgstr "<span size=\"medium\"><b>Número do Arquivo</b></span>"
+msgstr "<span size=\"small\">Número da Faixa</span>"
 
 #: src/libaudgui/infowin.c:541
 #, c-format
@@ -882,7 +876,7 @@ msgstr "%d kb/s"
 #: src/libaudgui/infowin.c:568
 #, c-format
 msgid "No info available for %s.\n"
-msgstr "Sem informação disponível para %s.\n"
+msgstr "Nenhuma informação disponível para %s.\n"
 
 #: src/libaudgui/jump-to-time.c:52
 msgid "Jump to Time"
@@ -890,7 +884,7 @@ msgstr "Avançar Tempo até"
 
 #: src/libaudgui/jump-to-time.c:61
 msgid "Enter time (minutes:seconds):"
-msgstr "Entrar tempo (minutos:segundos):"
+msgstr "Digite o tempo (minutos:segundos):"
 
 #: src/libaudgui/playlists.c:33
 msgid "Export Playlist"
@@ -911,11 +905,11 @@ msgstr "Gerenciador de Fila"
 
 #: src/libaudgui/ui_fileopener.c:107
 msgid "Open Files"
-msgstr "Abrir Arquivos"
+msgstr "Abrir Arquivo(s)"
 
 #: src/libaudgui/ui_fileopener.c:107
 msgid "Add Files"
-msgstr "Adicionar Arquivos"
+msgstr "Adicionar Arquivo(s)"
 
 #: src/libaudgui/ui_fileopener.c:109
 msgid "Close dialog on Open"
@@ -952,7 +946,7 @@ msgstr "Lembrar"
 
 #: src/libaudgui/ui_jumptotrack.c:305
 msgid "Clea_r"
-msgstr "Clea_r"
+msgstr "Lim_par"
 
 #: src/libaudgui/ui_jumptotrack.c:325
 msgid "Close on Jump"
@@ -984,15 +978,10 @@ msgstr "Adicionar URL"
 
 #: src/libaudgui/url-opener.c:65
 msgid "Enter URL:"
-msgstr "Entrar URL:"
+msgstr "Digite a URL:"
 
 #: src/libaudgui/util.c:143
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
-msgstr ""
-"\n"
-"(Demais mensagens foram escondidas.)"
-
-#~ msgid "<b>Metadata</b>"
-#~ msgstr "<b>TAGs</b>"
+msgstr "\n(Demais mensagens foram escondidas.)"

@@ -1,7 +1,7 @@
 # Chinese (simplified) translation for Audacious
 # Copyright (C) Audacious translators
 # This file is distributed under the same license as the Audacious package.
-#
+# 
 # Translators:
 # Chasye <chasye@gmail.com>, 2010.
 #   <runningwaterpro@gmail.com>, 2012.
@@ -10,14 +10,14 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2012-09-15 12:17+0200\n"
-"PO-Revision-Date: 2012-07-26 00:12+0000\n"
-"Last-Translator: John Lindgren <john.lindgren@aol.com>\n"
+"PO-Revision-Date: 2012-09-27 15:24+0000\n"
+"Last-Translator: Radioactiveman <thomas-lange2@gmx.de>\n"
 "Language-Team: Chinese (simplified)\n"
-"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0\n"
+"Language: zh_CN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: src/audacious/adder.c:75
 msgid "Searching ..."
@@ -103,9 +103,7 @@ msgstr "- 播放多媒体文件"
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
-msgstr ""
-"%s: %s\n"
-"用 `%s --help' 以获取更多信息.\n"
+msgstr "%s: %s\n用 `%s --help' 以获取更多信息.\n"
 
 #: src/audacious/main.c:546
 msgid "Audacious"
@@ -139,8 +137,8 @@ msgstr "正在播放"
 
 #: src/audacious/playlist-new.c:1650
 msgid ""
-"The playlist cannot be sorted because metadata scanning is still in progress "
-"(or has been disabled)."
+"The playlist cannot be sorted because metadata scanning is still in progress"
+" (or has been disabled)."
 msgstr "因正在扫描歌曲信息, 播放列表暂时无法保存."
 
 #: src/audacious/plugin-preferences.c:50
@@ -978,9 +976,4 @@ msgstr "输入地址"
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
-msgstr ""
-"\n"
-"（详细信息已隐藏。）"
-
-#~ msgid "<b>Metadata</b>"
-#~ msgstr "<b>元数据</b>"
+msgstr "\n（详细信息已隐藏。）"

@@ -1,7 +1,7 @@
 # Vietnamese translation for Audacious
 # Copyright (C) Audacious translators
 # This file is distributed under the same license as the Audacious package.
-#
+# 
 # Translators:
 #  Lê Trường An <truongan@linuxmail.org>, 2011, 2012.
 # Lê Trường An <truongan@linuxmail.org>, 2011, 2012.
@@ -10,14 +10,14 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2012-09-15 12:17+0200\n"
-"PO-Revision-Date: 2012-08-08 06:05+0000\n"
-"Last-Translator: Lê Trường An <truongan@linuxmail.org>\n"
+"PO-Revision-Date: 2012-09-27 15:24+0000\n"
+"Last-Translator: Radioactiveman <thomas-lange2@gmx.de>\n"
 "Language-Team: Vietnamese\n"
-"Language: vi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0\n"
+"Language: vi\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: src/audacious/adder.c:75
 msgid "Searching ..."
@@ -103,9 +103,7 @@ msgstr "- phát tập tin đa phương tiện"
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
-msgstr ""
-"%s: %s\n"
-"Chạy `%s --help' để biết thêm thông tin.\n"
+msgstr "%s: %s\nChạy `%s --help' để biết thêm thông tin.\n"
 
 #: src/audacious/main.c:546
 msgid "Audacious"
@@ -139,11 +137,9 @@ msgstr "Đang phát"
 
 #: src/audacious/playlist-new.c:1650
 msgid ""
-"The playlist cannot be sorted because metadata scanning is still in progress "
-"(or has been disabled)."
-msgstr ""
-"Danh sách không thể được sắp xếp vì quá trình quét thông tin đang diễn ra "
-"(hoặc bị tắt)."
+"The playlist cannot be sorted because metadata scanning is still in progress"
+" (or has been disabled)."
+msgstr "Danh sách không thể được sắp xếp vì quá trình quét thông tin đang diễn ra (hoặc bị tắt)."
 
 #: src/audacious/plugin-preferences.c:50
 #, c-format
@@ -577,9 +573,7 @@ msgstr "Đóng danh sách"
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
-msgstr ""
-"Bạn có chắc là muốn đóng %s? Nếu bạn làm vậy, các thay đổi kể từ khi danh "
-"sách được xuất ra sẽ bị mất."
+msgstr "Bạn có chắc là muốn đóng %s? Nếu bạn làm vậy, các thay đổi kể từ khi danh sách được xuất ra sẽ bị mất."
 
 #: src/libaudgui/confirm.c:89
 msgid "_Don't show this message again"
@@ -982,9 +976,4 @@ msgstr "Nhập URL:"
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
-msgstr ""
-"\n"
-"(Các thông báo khác đã bị ẩn.)"
-
-#~ msgid "<b>Metadata</b>"
-#~ msgstr "<b>Thông tin</b>"
+msgstr "\n(Các thông báo khác đã bị ẩn.)"

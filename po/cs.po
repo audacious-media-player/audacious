@@ -1,7 +1,7 @@
 # Czech translation for Audacious
 # Copyright (C) Audacious translators
 # This file is distributed under the same license as the Audacious package.
-#
+# 
 # Translators:
 #   <appukonrad@gmail.com>, 2012.
 # Jan Nárovec <finn@sendmail.cz>, 2004.
@@ -12,13 +12,13 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2012-09-15 12:17+0200\n"
-"PO-Revision-Date: 2012-08-27 11:33+0000\n"
+"PO-Revision-Date: 2012-10-01 09:40+0000\n"
 "Last-Translator: jui <appukonrad@gmail.com>\n"
 "Language-Team: Czech\n"
-"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: cs\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: src/audacious/adder.c:75
@@ -107,9 +107,7 @@ msgstr "– přehrávat multimediální soubory"
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
-msgstr ""
-"%s: %s\n"
-"Pro více informací zkuste „%s --help“.\n"
+msgstr "%s: %s\nPro více informací zkuste „%s --help“.\n"
 
 #: src/audacious/main.c:546
 msgid "Audacious"
@@ -143,11 +141,9 @@ msgstr "Nyní hraje"
 
 #: src/audacious/playlist-new.c:1650
 msgid ""
-"The playlist cannot be sorted because metadata scanning is still in progress "
-"(or has been disabled)."
-msgstr ""
-"Seznam skladeb nelze seřadit, protože hledání metadat stále probíhá (nebo je "
-"vypnuto)."
+"The playlist cannot be sorted because metadata scanning is still in progress"
+" (or has been disabled)."
+msgstr "Seznam skladeb nelze seřadit, protože hledání metadat stále probíhá (nebo je vypnuto)."
 
 #: src/audacious/plugin-preferences.c:50
 #, c-format
@@ -398,11 +394,11 @@ msgstr "Nenačítat metadata skladeb před přehráním"
 
 #: src/audacious/ui_preferences.c:201
 msgid "<b>Compatibility</b>"
-msgstr ""
+msgstr "<b>Kompatibilita</b>"
 
 #: src/audacious/ui_preferences.c:202
 msgid "Interpret \\ (backward slash) as a folder delimiter"
-msgstr ""
+msgstr "Interpret \\ (zpětné lomítko) jako oddělovač složky"
 
 #: src/audacious/ui_preferences.c:209
 msgid "<b>Album Art</b>"
@@ -583,9 +579,7 @@ msgstr "Zavřít seznam skladeb"
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
-msgstr ""
-"Jste si jisti, že chcete %s zavřít? Pokud tak učiníte, jakékoliv změny "
-"provedené od posledního exportu budou ztraceny."
+msgstr "Jste si jisti, že chcete %s zavřít? Pokud tak učiníte, jakékoliv změny provedené od posledního exportu budou ztraceny."
 
 #: src/libaudgui/confirm.c:89
 msgid "_Don't show this message again"
@@ -988,9 +982,4 @@ msgstr "Zadejte URL:"
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
-msgstr ""
-"\n"
-"(Další zprávy jsou skryty.)"
-
-#~ msgid "<b>Metadata</b>"
-#~ msgstr "<b>Metadata</b>"
+msgstr "\n(Další zprávy jsou skryty.)"

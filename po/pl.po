@@ -1,8 +1,9 @@
 # Polish translation for Audacious
 # Copyright (C) Audacious translators
 # This file is distributed under the same license as the Audacious package.
-#
+# 
 # Translators:
+#   <259095+transifex@gmail.com>, 2012.
 # Bartosz Kosiorek <gang65@poczta.onet.pl>, 2003.
 #   <felikstayson@o2.pl>, 2012.
 # GNOME PL Team <translators@gnome.pl>, 2004.
@@ -14,19 +15,18 @@ msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2012-09-15 12:17+0200\n"
-"PO-Revision-Date: 2012-08-28 05:59+0000\n"
-"Last-Translator: Szymon Weihs <sz.weihs@gmail.com>\n"
+"PO-Revision-Date: 2012-11-18 14:07+0000\n"
+"Last-Translator: CH <259095+transifex@gmail.com>\n"
 "Language-Team: Polish\n"
-"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
-"|| n%100>=20) ? 1 : 2);\n"
+"Language: pl\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: src/audacious/adder.c:75
 msgid "Searching ..."
-msgstr "Wyszukiwanie..."
+msgstr "Wyszukaj ..."
 
 #: src/audacious/adder.c:103
 #, c-format
@@ -47,51 +47,51 @@ msgstr "Błąd importowania pliku EQF, programu Winamp: %s"
 
 #: src/audacious/main.c:232
 msgid "Skip backwards in playlist"
-msgstr "Przechodzi do poprzedniego nagrania na liście odtwarzania"
+msgstr "Przejdź do poprzedniej ścieżki na liście odtwarzania"
 
 #: src/audacious/main.c:233
 msgid "Start playing current playlist"
-msgstr "Rozpoczyna odtwarzanie bieżącej listy odtwarzania"
+msgstr "Rozpocznij odtwarzanie bieżącej listy odtwarzania"
 
 #: src/audacious/main.c:234
 msgid "Pause current song"
-msgstr "Wstrzymuje odtwarzanie bieżącego nagrania"
+msgstr "Wstrzymaj odtwarzanie bieżącej ścieżki"
 
 #: src/audacious/main.c:235
 msgid "Stop current song"
-msgstr "Zatrzymuje odtwarzanie bieżącego nagrania"
+msgstr "Zatrzymaj odtwarzanie bieżącej ścieżki"
 
 #: src/audacious/main.c:236
 msgid "Pause if playing, play otherwise"
-msgstr "Wstrzymuje i wznawia odtwarzanie bieżącego nagrania"
+msgstr "Wstrzymaj i wznów odtwarzanie bieżącej ścieżki"
 
 #: src/audacious/main.c:237
 msgid "Skip forward in playlist"
-msgstr "Przechodzi do następnego nagrania na liście odtwarzania"
+msgstr "Przejdź do następnej ścieżki na liście odtwarzania"
 
 #: src/audacious/main.c:238
 msgid "Display Jump to File dialog"
-msgstr "Wyświetla okno dialogowe przechodzenia do nagrania"
+msgstr "Wyświetl okno dialogowe przejścia do ścieżki"
 
 #: src/audacious/main.c:239
 msgid "Add files to the playlist"
-msgstr "Dodaje pliki do listy odtwarzania"
+msgstr "Dodaj pliki do listy odtwarzania"
 
 #: src/audacious/main.c:240
 msgid "Add new files to a temporary playlist"
-msgstr "Dodaje pliki do tymczasowej listy odtwarzania"
+msgstr "Dodaj pliki do tymczasowej listy odtwarzania"
 
 #: src/audacious/main.c:241
 msgid "Display the main window"
-msgstr "Wyświetla główne okno programu"
+msgstr "Wyświetl główne okno programu"
 
 #: src/audacious/main.c:242
 msgid "Show version"
-msgstr "Wypisuje informacje o wersji"
+msgstr "Pokaż informacje o wersji"
 
 #: src/audacious/main.c:243
 msgid "Print debugging messages"
-msgstr "Wypisuje komunikaty diagnozowania błędów"
+msgstr "Pokaż komunikaty błędów"
 
 #: src/audacious/main.c:244
 msgid "Headless mode (beta)"
@@ -103,16 +103,14 @@ msgstr "PLIK..."
 
 #: src/audacious/main.c:257
 msgid "- play multimedia files"
-msgstr " - odtwarza pliki multimedialne"
+msgstr " - odtwórz pliki multimedialne"
 
 #: src/audacious/main.c:264
 #, c-format
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
-msgstr ""
-"%s: %s\n"
-"Proszę wprowadzić „%s --help”, aby wypisać komunikat pomocy.\n"
+msgstr "%s: %s\nProszę wprowadzić „%s --help”, aby wypisać komunikat pomocy.\n"
 
 #: src/audacious/main.c:546
 msgid "Audacious"
@@ -126,7 +124,7 @@ msgstr "Nie odnaleziono dekodera dla %s."
 #: src/audacious/playlist-files.c:51
 #, c-format
 msgid "Cannot %s %s: unsupported file extension."
-msgstr "Nie można %s %s: nieobsługiwane rozszerzenie pliku."
+msgstr "Nie można %s %s: nieobsługiwany format pliku."
 
 #: src/audacious/playlist-files.c:52
 msgid "save"
@@ -142,15 +140,13 @@ msgstr "Nowa lista odtwarzania"
 
 #: src/audacious/playlist-new.c:122
 msgid "Now Playing"
-msgstr "Aktualnie odtwarzane"
+msgstr "Teraz odtwarzane"
 
 #: src/audacious/playlist-new.c:1650
 msgid ""
-"The playlist cannot be sorted because metadata scanning is still in progress "
-"(or has been disabled)."
-msgstr ""
-"Nie można posortować listy odtwarzania, ponieważ odczytywanie metadanych "
-"nadal trwa albo zostało ono wyłączone."
+"The playlist cannot be sorted because metadata scanning is still in progress"
+" (or has been disabled)."
+msgstr "Nie można posortować listy odtwarzania, ponieważ odczytywanie metadanych nadal trwa albo zostało ono wyłączone."
 
 #: src/audacious/plugin-preferences.c:50
 #, c-format
@@ -160,7 +156,7 @@ msgstr "Około %s"
 #: src/audacious/plugin-preferences.c:88
 #, c-format
 msgid "%s Settings"
-msgstr "%s Ustawienia"
+msgstr "Ustawienia %s"
 
 #: src/audacious/ui_preferences.c:69
 msgid "Audio"
@@ -176,7 +172,7 @@ msgstr "Lista odtwarzania"
 
 #: src/audacious/ui_preferences.c:72
 msgid "Song Info"
-msgstr "Informacje o utworze"
+msgstr "Informacje o ścieżce"
 
 #: src/audacious/ui_preferences.c:73
 msgid "Plugins"
@@ -289,7 +285,7 @@ msgstr "Tryb albumu"
 
 #: src/audacious/ui_preferences.c:133
 msgid "<b>Output Settings</b>"
-msgstr "<b>Wyjście dźwiękowe</b>"
+msgstr "<b>Ustawienia wyjścia</b>"
 
 #: src/audacious/ui_preferences.c:135
 msgid "Bit depth:"
@@ -305,11 +301,11 @@ msgstr "ms"
 
 #: src/audacious/ui_preferences.c:141
 msgid "Soft clipping"
-msgstr "Delikatne zakłócenia"
+msgstr "Miękkie przesterowanie"
 
 #: src/audacious/ui_preferences.c:143
 msgid "Use software volume control (not recommended)"
-msgstr "Użycie programowej regulacji głośności (niezalecane)"
+msgstr "Użyj programowej regulacji głośności (niezalecane)"
 
 #: src/audacious/ui_preferences.c:145
 msgid "<b>Replay Gain</b>"
@@ -321,7 +317,7 @@ msgstr "Włączenie"
 
 #: src/audacious/ui_preferences.c:149
 msgid "Prevent clipping (recommended)"
-msgstr "Zapobieganie zakłóceniom (zalecane)"
+msgstr "Zapobiegaj przesterowaniu (zalecane)"
 
 #: src/audacious/ui_preferences.c:151
 msgid "<b>Adjust Levels</b>"
@@ -329,7 +325,7 @@ msgstr "<b>Dostrajanie</b>"
 
 #: src/audacious/ui_preferences.c:152
 msgid "Amplify all files:"
-msgstr "Wzmocnienie wszystkich plików:"
+msgstr "Wzmocnij wszystkie pliki:"
 
 #: src/audacious/ui_preferences.c:154 src/audacious/ui_preferences.c:157
 msgid "dB"
@@ -337,7 +333,7 @@ msgstr "dB"
 
 #: src/audacious/ui_preferences.c:155
 msgid "Amplify untagged files:"
-msgstr "Wzmocnienie plików bez etykiet:"
+msgstr "Wzmocnij pliki bez etykiet:"
 
 #: src/audacious/ui_preferences.c:160
 msgid "Proxy hostname:"
@@ -357,23 +353,23 @@ msgstr "Hasło:"
 
 #: src/audacious/ui_preferences.c:169
 msgid "<b>Proxy Configuration</b>"
-msgstr "<b>Pośrednik sieciowy</b>"
+msgstr "<b>Konfiguracja proxy</b>"
 
 #: src/audacious/ui_preferences.c:170
 msgid "Enable proxy usage"
-msgstr "Włączenie"
+msgstr "Użyj proxy"
 
 #: src/audacious/ui_preferences.c:173
 msgid "Use authentication with proxy"
-msgstr "Uwierzytelnianie"
+msgstr "Uwierzytelnij proxy"
 
 #: src/audacious/ui_preferences.c:181
 msgid "Auto character encoding detector for:"
-msgstr "Automatycze wykrywanie kodowania dla:"
+msgstr "Automatycznie wykryj kodowania dla:"
 
 #: src/audacious/ui_preferences.c:185
 msgid "Fallback character encodings:"
-msgstr "Zastępcze kodowanie znaków:"
+msgstr "Zapasowe kodowanie znaków:"
 
 #: src/audacious/ui_preferences.c:189
 msgid "<b>Behavior</b>"
@@ -381,31 +377,31 @@ msgstr "<b>Zachowanie</b>"
 
 #: src/audacious/ui_preferences.c:190
 msgid "Continue playback on startup"
-msgstr "Kontynuowanie odtwarzania po uruchomieniu programu"
+msgstr "Kontynuuj odtwarzanie po uruchomieniu programu"
 
 #: src/audacious/ui_preferences.c:192
 msgid "Advance when the current song is deleted"
-msgstr "Przejście do następnego nagrania po napotkaniu niedostępnego"
+msgstr "Przejdź do następnej gdy usunę odtwarzaną ścieżkę"
 
 #: src/audacious/ui_preferences.c:194
 msgid "Clear the playlist when opening files"
-msgstr "Czyszczenie listy odtwarzania podczas otwierania nowych plików"
+msgstr "Czyść listę odtwarzania podczas otwierania nowych plików"
 
 #: src/audacious/ui_preferences.c:196
 msgid "Open files in a temporary playlist"
-msgstr "Dodawanie plików do tymczasowej listy odtwarzania"
+msgstr "Dodaj pliki do tymczasowej listy odtwarzania"
 
 #: src/audacious/ui_preferences.c:198
 msgid "Do not load metadata for songs until played"
-msgstr "Opóźnienie wczytywania metadanych nagrań do czasu ich odtworzenia"
+msgstr "Opóźnij wczytywanie metadanych ścieżek do czasu odtworzenia"
 
 #: src/audacious/ui_preferences.c:201
 msgid "<b>Compatibility</b>"
-msgstr ""
+msgstr "<b>Zgodność</b>"
 
 #: src/audacious/ui_preferences.c:202
 msgid "Interpret \\ (backward slash) as a folder delimiter"
-msgstr ""
+msgstr "Interpretuj \\ (ukośnik wsteczny) jako separator folderów"
 
 #: src/audacious/ui_preferences.c:209
 msgid "<b>Album Art</b>"
@@ -429,11 +425,11 @@ msgstr "Wyszukaj rekurencyjnie"
 
 #: src/audacious/ui_preferences.c:218
 msgid "Search depth:"
-msgstr "Poziom wyszukiwania:"
+msgstr "Głębokość wyszukiwania:"
 
 #: src/audacious/ui_preferences.c:221
 msgid "<b>Popup Information</b>"
-msgstr "<b>Informacje podręczne</b>"
+msgstr "<b>Wyskakujące komunikaty</b>"
 
 #: src/audacious/ui_preferences.c:222
 msgid "Show popup information"
@@ -441,11 +437,11 @@ msgstr "Pokaż wyskakujące informacje"
 
 #: src/audacious/ui_preferences.c:224
 msgid "Popup delay (tenths of a second):"
-msgstr "Opóźnienie wyskakujących informacji (dziesiąte sekundy)"
+msgstr "Opóźnij wyskakujące komunikaty (dziesiąte sekundy):"
 
 #: src/audacious/ui_preferences.c:227
 msgid "Show time scale for current song"
-msgstr "Pokaż skalę czasową dla bieżącej piosenki"
+msgstr "Pokaż skalę czasową dla bieżącej ścieżki"
 
 #: src/audacious/ui_preferences.c:241
 msgid "TITLE"
@@ -481,7 +477,7 @@ msgstr "Własny"
 
 #: src/audacious/ui_preferences.c:1034
 msgid "<b>Song Display</b>"
-msgstr "<b>Wyświetlanie utworu</b>"
+msgstr "<b>Wyświetlanie ścieżki</b>"
 
 #: src/audacious/ui_preferences.c:1043
 msgid "Show song numbers"
@@ -489,7 +485,7 @@ msgstr "Numery ścieżek"
 
 #: src/audacious/ui_preferences.c:1054
 msgid "Show leading zeroes (02:00 instead of 2:00)"
-msgstr "Zera wiodące (02:00 zamiast 2:00)"
+msgstr "Pokaż zera (02:00 zamiast 2:00)"
 
 #: src/audacious/ui_preferences.c:1074
 msgid "Show information about titlestring format"
@@ -529,7 +525,7 @@ msgstr "Ogólne"
 
 #: src/audacious/ui_preferences.c:1278
 msgid "Audacious Preferences"
-msgstr "Preferencje programu Audacious"
+msgstr "Ustawienia programu Audacious"
 
 #: src/audacious/util.c:127
 #, c-format
@@ -542,7 +538,7 @@ msgstr "Nie odnaleziono pozycji"
 
 #: src/audtool/handlers_vitals.c:51
 msgid "No song playing."
-msgstr "Żadne nagranie nie jest odtwarzane."
+msgstr "Żadna ścieżka nie jest odtwarzana."
 
 #: src/libaudcore/audstrings.c:199
 #, c-format
@@ -586,25 +582,23 @@ msgstr "Zamknij listę odtwarzania"
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
-msgstr ""
-"Zamknąć listę odtwarzania „%s”? Wszelkie zmiany poczynione od momentu "
-"eksportowania listy zostaną utracone."
+msgstr "Zamknąć listę odtwarzania „%s”? Wszelkie zmiany poczynione od momentu eksportowania listy zostaną utracone."
 
 #: src/libaudgui/confirm.c:89
 msgid "_Don't show this message again"
-msgstr "_Pomijanie wyświetlania tego ostrzeżenia w przyszłości"
+msgstr "_Nie pokazuj tej informacji w przyszłości"
 
 #: src/libaudgui/confirm.c:126
 msgid "Rename Playlist"
-msgstr "Zmienianie nazwy"
+msgstr "Zmień nazwę"
 
 #: src/libaudgui/effects-menu.c:72
 msgid "settings ..."
-msgstr "Preferencje..."
+msgstr "ustawienia ..."
 
 #: src/libaudgui/equalizer.c:51
 msgid "_Enable"
-msgstr "_Włączenie"
+msgstr "_Włącz"
 
 #: src/libaudgui/equalizer.c:124
 msgid "31 Hz"
@@ -708,7 +702,7 @@ msgstr "Disco"
 
 #: src/libaudgui/infowin.c:85
 msgid "Easy Listening"
-msgstr "Prosta w odbiorze"
+msgstr "Przyjemne w odbiorze"
 
 #: src/libaudgui/infowin.c:86
 msgid "Folk"
@@ -833,7 +827,7 @@ msgstr "Nie udało się zaktualizować metadanych"
 
 #: src/libaudgui/infowin.c:319
 msgid "Track Information"
-msgstr "Informacje o nagraniu"
+msgstr "Informacje o ścieżce"
 
 #: src/libaudgui/infowin.c:354
 msgid "<span size=\"small\">Format:</span>"
@@ -887,24 +881,24 @@ msgstr "Brak informacji dla %s. \n"
 
 #: src/libaudgui/jump-to-time.c:52
 msgid "Jump to Time"
-msgstr "Przechodzenie do czasu"
+msgstr "Przejdź do momentu"
 
 #: src/libaudgui/jump-to-time.c:61
 msgid "Enter time (minutes:seconds):"
-msgstr "Wprowadź czas (minuty:sekundy):"
+msgstr "Wprowadź czas (min:sek):"
 
 #: src/libaudgui/playlists.c:33
 msgid "Export Playlist"
-msgstr "Wybór pliku eksportowania"
+msgstr "Eksportuj listę odtwarzania"
 
 #: src/libaudgui/playlists.c:33
 msgid "Import Playlist"
-msgstr "Wybór pliku importowania"
+msgstr "Importuj listę odtwarzania"
 
 #: src/libaudgui/playlists.c:66
 #, c-format
 msgid "Overwrite %s?"
-msgstr "Zastąpić %s?"
+msgstr "Nadpisać %s?"
 
 #: src/libaudgui/queue-manager.c:196
 msgid "Queue Manager"
@@ -912,19 +906,19 @@ msgstr "Menedżer kolejki"
 
 #: src/libaudgui/ui_fileopener.c:107
 msgid "Open Files"
-msgstr "Wybór pliku"
+msgstr "Otwórz pliki"
 
 #: src/libaudgui/ui_fileopener.c:107
 msgid "Add Files"
-msgstr "Dodawanie pliku"
+msgstr "Dodaj pliki"
 
 #: src/libaudgui/ui_fileopener.c:109
 msgid "Close dialog on Open"
-msgstr "Zamknięcie tego okna po otworzeniu"
+msgstr "Zamknij okno po otworzeniu"
 
 #: src/libaudgui/ui_fileopener.c:109
 msgid "Close dialog on Add"
-msgstr "Zamknięcie tego okna po dodaniu"
+msgstr "Zamknij okno po dodaniu"
 
 #: src/libaudgui/ui_jumptotrack.c:105 src/libaudgui/ui_jumptotrack.c:113
 #: src/libaudgui/ui_jumptotrack.c:332
@@ -937,7 +931,7 @@ msgstr "_Usuń z kolejki"
 
 #: src/libaudgui/ui_jumptotrack.c:262
 msgid "Jump to Song"
-msgstr "Przechodzenie do nagrania"
+msgstr "Przejdź do ścieżki"
 
 #: src/libaudgui/ui_jumptotrack.c:287
 msgid "Filter: "
@@ -949,7 +943,7 @@ msgstr "_Filtr: "
 
 #: src/libaudgui/ui_jumptotrack.c:298
 msgid "Remember"
-msgstr "Pamiętanie"
+msgstr "Pamiętaj"
 
 #: src/libaudgui/ui_jumptotrack.c:305
 msgid "Clea_r"
@@ -957,7 +951,7 @@ msgstr "_Wyczyść"
 
 #: src/libaudgui/ui_jumptotrack.c:325
 msgid "Close on Jump"
-msgstr "Zamknięcie tego okna po przejściu"
+msgstr "Zamknij okno po przejściu"
 
 #: src/libaudgui/ui_playlist_manager.c:261
 msgid "Playlist Manager"
@@ -977,11 +971,11 @@ msgstr "Za_mknięcie tego okna po aktywowaniu listy"
 
 #: src/libaudgui/url-opener.c:56
 msgid "Open URL"
-msgstr "Otwieranie adresu URL"
+msgstr "Otwórz adres URL"
 
 #: src/libaudgui/url-opener.c:56
 msgid "Add URL"
-msgstr "Dodawanie adresu URL"
+msgstr "Dodaj adres URL"
 
 #: src/libaudgui/url-opener.c:65
 msgid "Enter URL:"
@@ -991,9 +985,4 @@ msgstr "Wprowadź URL:"
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
-msgstr ""
-"\n"
-"(Dalsze informacje zostały ukryte.)"
-
-#~ msgid "<b>Metadata</b>"
-#~ msgstr "<b>Metadane</b>"
+msgstr "\n(Dalsze komunikaty zostały ukryte.)"
