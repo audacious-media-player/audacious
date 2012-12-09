@@ -523,6 +523,7 @@ static void scan_finish (ScanRequest * request)
     ScanItem * item = node->data;
     Playlist * playlist = item->playlist;
     Entry * entry = item->entry;
+    bool_t changed = FALSE;
 
     scan_list = g_list_delete_link (scan_list, node);
     g_slice_free (ScanItem, item);
@@ -534,13 +535,17 @@ static void scan_finish (ScanRequest * request)
     {
         Tuple * tuple = scan_request_get_tuple (request);
         if (tuple)
+        {
             entry_set_tuple (playlist, entry, tuple);
+            changed = TRUE;
+        }
     }
 
     if (! entry->decoder || ! entry->tuple)
         entry_set_failed (playlist, entry);
 
-    queue_update (PLAYLIST_UPDATE_METADATA, playlist->number, entry->number, 1);
+    if (changed)
+        queue_update (PLAYLIST_UPDATE_METADATA, playlist->number, entry->number, 1);
 
     scan_check_complete (playlist);
     scan_schedule ();
