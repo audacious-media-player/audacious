@@ -1,7 +1,7 @@
 # Estonian translation for Audacious
 # Copyright (C) Audacious translators
 # This file is distributed under the same license as the Audacious package.
-# 
+#
 # Translators:
 # Ivar Smolin <okul at linux ee>, 2007.
 # Ivar Smolin <okul@linux.ee>, 2012.
@@ -10,14 +10,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-09-15 12:17+0200\n"
+"POT-Creation-Date: 2012-12-09 22:42+0100\n"
 "PO-Revision-Date: 2012-10-01 09:48+0000\n"
 "Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian\n"
+"Language: et\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: et\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: src/audacious/adder.c:75
@@ -40,74 +40,76 @@ msgstr "  (vigane UTF-8)"
 msgid "Error importing Winamp EQF file '%s'"
 msgstr "Viga Winampi EQF-faili '%s' importimisel"
 
-#: src/audacious/main.c:232
+#: src/audacious/main.c:233
 msgid "Skip backwards in playlist"
 msgstr "Esitusnimekirjas eelmisele loole hüppamine"
 
-#: src/audacious/main.c:233
+#: src/audacious/main.c:234
 msgid "Start playing current playlist"
 msgstr "Praeguse esitusnimekirja esitamise alustamine"
 
-#: src/audacious/main.c:234
+#: src/audacious/main.c:235
 msgid "Pause current song"
 msgstr "Praeguse loo pausimine"
 
-#: src/audacious/main.c:235
+#: src/audacious/main.c:236
 msgid "Stop current song"
 msgstr "Praeguse loo seiskamine"
 
-#: src/audacious/main.c:236
+#: src/audacious/main.c:237
 msgid "Pause if playing, play otherwise"
 msgstr "Esitamise korral pausimine, pausi korral esitamine"
 
-#: src/audacious/main.c:237
+#: src/audacious/main.c:238
 msgid "Skip forward in playlist"
 msgstr "Esitusnimekirjas järgmisele loole hüppamine"
 
-#: src/audacious/main.c:238
+#: src/audacious/main.c:239
 msgid "Display Jump to File dialog"
 msgstr "Failile hüppamise dialoogi kuvamine"
 
-#: src/audacious/main.c:239
+#: src/audacious/main.c:240
 msgid "Add files to the playlist"
 msgstr "Failide lisamine esitusnimekirja"
 
-#: src/audacious/main.c:240
+#: src/audacious/main.c:241
 msgid "Add new files to a temporary playlist"
 msgstr "Uute failide lisamine ajutisse esitusnimekirja"
 
-#: src/audacious/main.c:241
+#: src/audacious/main.c:242
 msgid "Display the main window"
 msgstr "Peaakna kuvamine"
 
-#: src/audacious/main.c:242
+#: src/audacious/main.c:243
 msgid "Show version"
 msgstr "Versiooni näitamine"
 
-#: src/audacious/main.c:243
+#: src/audacious/main.c:244
 msgid "Print debugging messages"
 msgstr "Silumisteadete väljastamine"
 
-#: src/audacious/main.c:244
+#: src/audacious/main.c:245
 msgid "Headless mode (beta)"
 msgstr "Akendeta režiim (beeta)"
 
-#: src/audacious/main.c:245
+#: src/audacious/main.c:246
 msgid "FILE..."
 msgstr "FAIL..."
 
-#: src/audacious/main.c:257
+#: src/audacious/main.c:258
 msgid "- play multimedia files"
 msgstr "- multimeediafailide esitamine"
 
-#: src/audacious/main.c:264
+#: src/audacious/main.c:265
 #, c-format
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
-msgstr "%s: %s\nTäiendava teabe saamiseks proovi `%s --help'.\n"
+msgstr ""
+"%s: %s\n"
+"Täiendava teabe saamiseks proovi `%s --help'.\n"
 
-#: src/audacious/main.c:546
+#: src/audacious/main.c:549
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -139,9 +141,11 @@ msgstr "Praegu esitamisel"
 
 #: src/audacious/playlist-new.c:1650
 msgid ""
-"The playlist cannot be sorted because metadata scanning is still in progress"
-" (or has been disabled)."
-msgstr "Esitusnimekirja sortimine pole võimalik, kuna metaandmete laadimine on pooleli (või keelatud)."
+"The playlist cannot be sorted because metadata scanning is still in progress "
+"(or has been disabled)."
+msgstr ""
+"Esitusnimekirja sortimine pole võimalik, kuna metaandmete laadimine on "
+"pooleli (või keelatud)."
 
 #: src/audacious/plugin-preferences.c:50
 #, c-format
@@ -408,7 +412,9 @@ msgstr "Otsitakse nende sõnadega kattuvaid pilte (komaga eraldatud nimekiri):"
 
 #: src/audacious/ui_preferences.c:212
 msgid "Exclude images matching these words (comma-separated):"
-msgstr "Nende nende sõnadega kattuvad pildid välistatakse (komaga eraldatud nimekiri):"
+msgstr ""
+"Nende nende sõnadega kattuvad pildid välistatakse (komaga eraldatud "
+"nimekiri):"
 
 #: src/audacious/ui_preferences.c:214
 msgid "Search for images matching song file name"
@@ -567,22 +573,24 @@ msgstr "Litsents"
 msgid "About Audacious"
 msgstr "Audacious'est lähemalt"
 
-#: src/libaudgui/confirm.c:61
-msgid "Close Playlist"
-msgstr "Esitusnimekirja sulgemine"
-
-#: src/libaudgui/confirm.c:76
+#: src/libaudgui/confirm.c:67
 #, c-format
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
-msgstr "Kas soovid sulgeda esitusnimekirja \"%s\"?  Kõik pärast nimekirja viimast eksporti tehtud muutused lähevad kaotsi."
+msgstr ""
+"Kas soovid sulgeda esitusnimekirja \"%s\"?  Kõik pärast nimekirja viimast "
+"eksporti tehtud muutused lähevad kaotsi."
 
-#: src/libaudgui/confirm.c:89
+#: src/libaudgui/confirm.c:74
+msgid "Close Playlist"
+msgstr "Esitusnimekirja sulgemine"
+
+#: src/libaudgui/confirm.c:78
 msgid "_Don't show this message again"
 msgstr "Seda teadet rohkem ei _näidata"
 
-#: src/libaudgui/confirm.c:126
+#: src/libaudgui/confirm.c:101
 msgid "Rename Playlist"
 msgstr "Esitusnimekirja nime muutmine"
 
@@ -979,4 +987,6 @@ msgstr "Sisesta URL:"
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
-msgstr "\n(Ülejäänud sõnumid peidetakse.)"
+msgstr ""
+"\n"
+"(Ülejäänud sõnumid peidetakse.)"

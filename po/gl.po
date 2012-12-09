@@ -1,7 +1,7 @@
 # Galician translation for Audacious
 # Copyright (C) Audacious translators
 # This file is distributed under the same license as the Audacious package.
-# 
+#
 # Translators:
 #   <mbouzada@gmail.com>, 2012.
 # Miguel Anxo Bouzada <mbouzada@gmail.com>, 2012.
@@ -9,14 +9,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-09-15 12:17+0200\n"
+"POT-Creation-Date: 2012-12-09 22:42+0100\n"
 "PO-Revision-Date: 2012-09-27 18:25+0000\n"
 "Last-Translator: mbouzada <mbouzada@gmail.com>\n"
 "Language-Team: Galician\n"
+"Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: gl\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: src/audacious/adder.c:75
@@ -39,74 +39,76 @@ msgstr "  (UTF-8 incorrecto)"
 msgid "Error importing Winamp EQF file '%s'"
 msgstr "Produciuse un erro ao importar o ficheiro EQF de Winamp «%s»"
 
-#: src/audacious/main.c:232
+#: src/audacious/main.c:233
 msgid "Skip backwards in playlist"
 msgstr "Ir cara atrás na lista de reprodución"
 
-#: src/audacious/main.c:233
+#: src/audacious/main.c:234
 msgid "Start playing current playlist"
 msgstr "Iniciar a reprodución da actual lista de reprodución"
 
-#: src/audacious/main.c:234
+#: src/audacious/main.c:235
 msgid "Pause current song"
 msgstr "Deter a canción actual"
 
-#: src/audacious/main.c:235
+#: src/audacious/main.c:236
 msgid "Stop current song"
 msgstr "Parar a canción actual"
 
-#: src/audacious/main.c:236
+#: src/audacious/main.c:237
 msgid "Pause if playing, play otherwise"
 msgstr "Pausa cando reproduce, reproducir noutro caso"
 
-#: src/audacious/main.c:237
+#: src/audacious/main.c:238
 msgid "Skip forward in playlist"
 msgstr "Ir cara adiante na lista de reprodución"
 
-#: src/audacious/main.c:238
+#: src/audacious/main.c:239
 msgid "Display Jump to File dialog"
 msgstr "Amosar o diálogo de salto de ficheiro"
 
-#: src/audacious/main.c:239
+#: src/audacious/main.c:240
 msgid "Add files to the playlist"
 msgstr "Engadir ficheiros á lista de reprodución"
 
-#: src/audacious/main.c:240
+#: src/audacious/main.c:241
 msgid "Add new files to a temporary playlist"
 msgstr "Engadir os ficheiros a unha lista temporal de reprodución"
 
-#: src/audacious/main.c:241
+#: src/audacious/main.c:242
 msgid "Display the main window"
 msgstr "Amosar a xanela principal."
 
-#: src/audacious/main.c:242
+#: src/audacious/main.c:243
 msgid "Show version"
 msgstr "Amosa a versión"
 
-#: src/audacious/main.c:243
+#: src/audacious/main.c:244
 msgid "Print debugging messages"
 msgstr "Mostrar mensaxes de depuración"
 
-#: src/audacious/main.c:244
+#: src/audacious/main.c:245
 msgid "Headless mode (beta)"
 msgstr "Modo sen cabeceira (beta)"
 
-#: src/audacious/main.c:245
+#: src/audacious/main.c:246
 msgid "FILE..."
 msgstr "FICHEIRO..."
 
-#: src/audacious/main.c:257
+#: src/audacious/main.c:258
 msgid "- play multimedia files"
 msgstr "- reproducir ficheiros multimedia"
 
-#: src/audacious/main.c:264
+#: src/audacious/main.c:265
 #, c-format
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
-msgstr "%s: %s\nTente «%s --help» pra obter máis información.\n"
+msgstr ""
+"%s: %s\n"
+"Tente «%s --help» pra obter máis información.\n"
 
-#: src/audacious/main.c:546
+#: src/audacious/main.c:549
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -138,9 +140,11 @@ msgstr "Estase a reproducir"
 
 #: src/audacious/playlist-new.c:1650
 msgid ""
-"The playlist cannot be sorted because metadata scanning is still in progress"
-" (or has been disabled)."
-msgstr "A lista de reprodución non pode ordenarse xa que a detección de metadatos aínda está en proceso (ou foi desactivada)."
+"The playlist cannot be sorted because metadata scanning is still in progress "
+"(or has been disabled)."
+msgstr ""
+"A lista de reprodución non pode ordenarse xa que a detección de metadatos "
+"aínda está en proceso (ou foi desactivada)."
 
 #: src/audacious/plugin-preferences.c:50
 #, c-format
@@ -395,7 +399,9 @@ msgstr "<b>Compatibilidade</b>"
 
 #: src/audacious/ui_preferences.c:202
 msgid "Interpret \\ (backward slash) as a folder delimiter"
-msgstr "Interpretar o caracter «\\» (barra invertida) como indicador dun nivel na árbore de ficheiros"
+msgstr ""
+"Interpretar o caracter «\\» (barra invertida) como indicador dun nivel na "
+"árbore de ficheiros"
 
 #: src/audacious/ui_preferences.c:209
 msgid "<b>Album Art</b>"
@@ -403,11 +409,13 @@ msgstr "<b>Portada</b>"
 
 #: src/audacious/ui_preferences.c:210
 msgid "Search for images matching these words (comma-separated):"
-msgstr "Buscar imaxes que correspondan con estas palabras (separadas por comas):"
+msgstr ""
+"Buscar imaxes que correspondan con estas palabras (separadas por comas):"
 
 #: src/audacious/ui_preferences.c:212
 msgid "Exclude images matching these words (comma-separated):"
-msgstr "Excluir imaxes que correspondan con estas palabras (separadas por comas):"
+msgstr ""
+"Excluir imaxes que correspondan con estas palabras (separadas por comas):"
 
 #: src/audacious/ui_preferences.c:214
 msgid "Search for images matching song file name"
@@ -566,22 +574,24 @@ msgstr "Licenza"
 msgid "About Audacious"
 msgstr "Sobre Audacious"
 
-#: src/libaudgui/confirm.c:61
-msgid "Close Playlist"
-msgstr "Pechar a lista de reprodución"
-
-#: src/libaudgui/confirm.c:76
+#: src/libaudgui/confirm.c:67
 #, c-format
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
-msgstr "Esta seguro de querer pechar %s? De facelo, perderase calquera cambio realizado desde que foi exportada a lista de reprodución."
+msgstr ""
+"Esta seguro de querer pechar %s? De facelo, perderase calquera cambio "
+"realizado desde que foi exportada a lista de reprodución."
 
-#: src/libaudgui/confirm.c:89
+#: src/libaudgui/confirm.c:74
+msgid "Close Playlist"
+msgstr "Pechar a lista de reprodución"
+
+#: src/libaudgui/confirm.c:78
 msgid "_Don't show this message again"
 msgstr "_Non amosar esta mensaxe outra vez"
 
-#: src/libaudgui/confirm.c:126
+#: src/libaudgui/confirm.c:101
 msgid "Rename Playlist"
 msgstr "Renomear a lista de reprodución"
 
@@ -978,4 +988,6 @@ msgstr "Introduza o URL:"
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
-msgstr "\n(O resto de mensaxes foron agochados.)"
+msgstr ""
+"\n"
+"(O resto de mensaxes foron agochados.)"

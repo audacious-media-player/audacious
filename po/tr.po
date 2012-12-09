@@ -1,7 +1,7 @@
 # Turkish translation for Audacious
 # Copyright (C) Audacious translators
 # This file is distributed under the same license as the Audacious package.
-# 
+#
 # Translators:
 #   <aaydin159@gmail.com>, 2012.
 #   <alikoc@hush.ai>, 2012.
@@ -13,14 +13,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-09-15 12:17+0200\n"
+"POT-Creation-Date: 2012-12-09 22:42+0100\n"
 "PO-Revision-Date: 2012-10-20 17:28+0000\n"
 "Last-Translator: hsngrms <dead-bodies-everywhere@hotmail.com>\n"
 "Language-Team: Turkish\n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: tr\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: src/audacious/adder.c:75
@@ -42,74 +42,76 @@ msgstr "  (geçersiz UTF-8)"
 msgid "Error importing Winamp EQF file '%s'"
 msgstr "Winamp EQF dosyasının aktarılmasında hata '%s'"
 
-#: src/audacious/main.c:232
+#: src/audacious/main.c:233
 msgid "Skip backwards in playlist"
 msgstr "Parça listesinde geri git"
 
-#: src/audacious/main.c:233
+#: src/audacious/main.c:234
 msgid "Start playing current playlist"
 msgstr "Mevcut parça listesini çal"
 
-#: src/audacious/main.c:234
+#: src/audacious/main.c:235
 msgid "Pause current song"
 msgstr "Çalan şarkıyı beklet"
 
-#: src/audacious/main.c:235
+#: src/audacious/main.c:236
 msgid "Stop current song"
 msgstr "Çalan şarkıyı durdur"
 
-#: src/audacious/main.c:236
+#: src/audacious/main.c:237
 msgid "Pause if playing, play otherwise"
 msgstr "Çalıyorsa beklet, değilse çal"
 
-#: src/audacious/main.c:237
+#: src/audacious/main.c:238
 msgid "Skip forward in playlist"
 msgstr "Parça listesinde ileri git"
 
-#: src/audacious/main.c:238
+#: src/audacious/main.c:239
 msgid "Display Jump to File dialog"
 msgstr "Dosya Atla penceresini göster"
 
-#: src/audacious/main.c:239
+#: src/audacious/main.c:240
 msgid "Add files to the playlist"
 msgstr "Çalma listesine dosya ekle"
 
-#: src/audacious/main.c:240
+#: src/audacious/main.c:241
 msgid "Add new files to a temporary playlist"
 msgstr "Geçici parça listesine yeni dosya ekle"
 
-#: src/audacious/main.c:241
+#: src/audacious/main.c:242
 msgid "Display the main window"
 msgstr "Ana pencereyi göster"
 
-#: src/audacious/main.c:242
+#: src/audacious/main.c:243
 msgid "Show version"
 msgstr "Versiyonu göster"
 
-#: src/audacious/main.c:243
+#: src/audacious/main.c:244
 msgid "Print debugging messages"
 msgstr "Hata ayıklama mesajlarını çıkart"
 
-#: src/audacious/main.c:244
+#: src/audacious/main.c:245
 msgid "Headless mode (beta)"
 msgstr "Başlıksız mod (beta)"
 
-#: src/audacious/main.c:245
+#: src/audacious/main.c:246
 msgid "FILE..."
 msgstr "DOSYA..."
 
-#: src/audacious/main.c:257
+#: src/audacious/main.c:258
 msgid "- play multimedia files"
 msgstr "- çoklu ortam dosyalarını çal"
 
-#: src/audacious/main.c:264
+#: src/audacious/main.c:265
 #, c-format
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
-msgstr "%s: %s\nDaha fazla bilgi için `%s --help' komutunu kullanın.\n"
+msgstr ""
+"%s: %s\n"
+"Daha fazla bilgi için `%s --help' komutunu kullanın.\n"
 
-#: src/audacious/main.c:546
+#: src/audacious/main.c:549
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -141,9 +143,11 @@ msgstr "Şimdi Çalınıyor"
 
 #: src/audacious/playlist-new.c:1650
 msgid ""
-"The playlist cannot be sorted because metadata scanning is still in progress"
-" (or has been disabled)."
-msgstr "Çalma listesi sıralanamıyor çünkü üstveri taraması devam ediyor (ya da devre dışı bırakıldı)."
+"The playlist cannot be sorted because metadata scanning is still in progress "
+"(or has been disabled)."
+msgstr ""
+"Çalma listesi sıralanamıyor çünkü üstveri taraması devam ediyor (ya da devre "
+"dışı bırakıldı)."
 
 #: src/audacious/plugin-preferences.c:50
 #, c-format
@@ -568,22 +572,24 @@ msgstr "Lisans"
 msgid "About Audacious"
 msgstr "Audacious Hakkında"
 
-#: src/libaudgui/confirm.c:61
-msgid "Close Playlist"
-msgstr "Çalma Listesini Kapat"
-
-#: src/libaudgui/confirm.c:76
+#: src/libaudgui/confirm.c:67
 #, c-format
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
-msgstr "Kapatmak istediğinize emin misiniz %s?  Kapatırsanız, çalma listesi ihraç edilmeden önce yapılan hiç bir değişiklik kaydedilmeyecektir."
+msgstr ""
+"Kapatmak istediğinize emin misiniz %s?  Kapatırsanız, çalma listesi ihraç "
+"edilmeden önce yapılan hiç bir değişiklik kaydedilmeyecektir."
 
-#: src/libaudgui/confirm.c:89
+#: src/libaudgui/confirm.c:74
+msgid "Close Playlist"
+msgstr "Çalma Listesini Kapat"
+
+#: src/libaudgui/confirm.c:78
 msgid "_Don't show this message again"
 msgstr "_Bu uyarıyı bir daha gösterme"
 
-#: src/libaudgui/confirm.c:126
+#: src/libaudgui/confirm.c:101
 msgid "Rename Playlist"
 msgstr "Çalma listesini yeniden adlandır"
 
@@ -980,4 +986,6 @@ msgstr "URL gir :"
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
-msgstr "\n(Gelecekteki mesajlar gizlenecek.)"
+msgstr ""
+"\n"
+"(Gelecekteki mesajlar gizlenecek.)"

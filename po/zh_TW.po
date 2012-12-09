@@ -1,21 +1,21 @@
 # Chinese (traditional) translation for Audacious
 # Copyright (C) Audacious translators
 # This file is distributed under the same license as the Audacious package.
-# 
+#
 # Translators:
 # Ruei-Yuan Lu <RueiYuan.Lu@gmail.com>, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-09-15 12:17+0200\n"
+"POT-Creation-Date: 2012-12-09 22:42+0100\n"
 "PO-Revision-Date: 2012-09-27 15:24+0000\n"
 "Last-Translator: Radioactiveman <thomas-lange2@gmx.de>\n"
 "Language-Team: Chinese (traditional)\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: src/audacious/adder.c:75
@@ -37,74 +37,76 @@ msgstr "  (無效的 UTF-8 字串)"
 msgid "Error importing Winamp EQF file '%s'"
 msgstr "匯入 Winamp EQF 檔時發生錯誤 '%s'"
 
-#: src/audacious/main.c:232
+#: src/audacious/main.c:233
 msgid "Skip backwards in playlist"
 msgstr "切換到播放清單的上一個"
 
-#: src/audacious/main.c:233
+#: src/audacious/main.c:234
 msgid "Start playing current playlist"
 msgstr "開始播放目前的播放清單"
 
-#: src/audacious/main.c:234
+#: src/audacious/main.c:235
 msgid "Pause current song"
 msgstr "暫停播放目前歌曲"
 
-#: src/audacious/main.c:235
+#: src/audacious/main.c:236
 msgid "Stop current song"
 msgstr "停止播放目前歌曲"
 
-#: src/audacious/main.c:236
+#: src/audacious/main.c:237
 msgid "Pause if playing, play otherwise"
 msgstr "若播放中則暫停，否則繼續播放"
 
-#: src/audacious/main.c:237
+#: src/audacious/main.c:238
 msgid "Skip forward in playlist"
 msgstr "切換到播放清單的下一個"
 
-#: src/audacious/main.c:238
+#: src/audacious/main.c:239
 msgid "Display Jump to File dialog"
 msgstr "顯示跳至檔案對話視窗"
 
-#: src/audacious/main.c:239
+#: src/audacious/main.c:240
 msgid "Add files to the playlist"
 msgstr "加入檔案到播放清單"
 
-#: src/audacious/main.c:240
+#: src/audacious/main.c:241
 msgid "Add new files to a temporary playlist"
 msgstr "加入檔案到暫存播放清單"
 
-#: src/audacious/main.c:241
+#: src/audacious/main.c:242
 msgid "Display the main window"
 msgstr "顯示主視窗"
 
-#: src/audacious/main.c:242
+#: src/audacious/main.c:243
 msgid "Show version"
 msgstr "顯示版本資訊"
 
-#: src/audacious/main.c:243
+#: src/audacious/main.c:244
 msgid "Print debugging messages"
 msgstr "顯示除錯訊息"
 
-#: src/audacious/main.c:244
+#: src/audacious/main.c:245
 msgid "Headless mode (beta)"
 msgstr "無頭模式 (beta)"
 
-#: src/audacious/main.c:245
+#: src/audacious/main.c:246
 msgid "FILE..."
 msgstr "檔案..."
 
-#: src/audacious/main.c:257
+#: src/audacious/main.c:258
 msgid "- play multimedia files"
 msgstr "- 播放多媒體檔案"
 
-#: src/audacious/main.c:264
+#: src/audacious/main.c:265
 #, c-format
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
-msgstr "%s: %s\n請嘗試用 `%s --help' 取得更多資訊。\n"
+msgstr ""
+"%s: %s\n"
+"請嘗試用 `%s --help' 取得更多資訊。\n"
 
-#: src/audacious/main.c:546
+#: src/audacious/main.c:549
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -136,8 +138,8 @@ msgstr "正在播放"
 
 #: src/audacious/playlist-new.c:1650
 msgid ""
-"The playlist cannot be sorted because metadata scanning is still in progress"
-" (or has been disabled)."
+"The playlist cannot be sorted because metadata scanning is still in progress "
+"(or has been disabled)."
 msgstr "因為正在進行詮釋資料的掃描，無法對播放清單進行排序。（或者已經被關閉）"
 
 #: src/audacious/plugin-preferences.c:50
@@ -563,22 +565,22 @@ msgstr ""
 msgid "About Audacious"
 msgstr "關於 Audacious"
 
-#: src/libaudgui/confirm.c:61
-msgid "Close Playlist"
-msgstr ""
-
-#: src/libaudgui/confirm.c:76
+#: src/libaudgui/confirm.c:67
 #, c-format
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
 msgstr "您確定要關閉 %s? 所有未匯出的資料將會遺失。"
 
-#: src/libaudgui/confirm.c:89
+#: src/libaudgui/confirm.c:74
+msgid "Close Playlist"
+msgstr ""
+
+#: src/libaudgui/confirm.c:78
 msgid "_Don't show this message again"
 msgstr "不要再顯示這個訊息(_D)"
 
-#: src/libaudgui/confirm.c:126
+#: src/libaudgui/confirm.c:101
 msgid "Rename Playlist"
 msgstr "重新命名播放清單"
 
@@ -975,4 +977,6 @@ msgstr ""
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
-msgstr "\n（詳細訊息已被隱藏。）"
+msgstr ""
+"\n"
+"（詳細訊息已被隱藏。）"

@@ -1,7 +1,7 @@
 # Belarusian translation for Audacious
 # Copyright (C) Audacious translators
 # This file is distributed under the same license as the Audacious package.
-# 
+#
 # Translators:
 #   <dreadnote87@gmail.com>, 2012.
 # Mikalai Udodau <crom-a@tut.by>, 2012.
@@ -9,15 +9,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-09-15 12:17+0200\n"
+"POT-Creation-Date: 2012-12-09 22:42+0100\n"
 "PO-Revision-Date: 2012-09-27 15:24+0000\n"
 "Last-Translator: Radioactiveman <thomas-lange2@gmx.de>\n"
 "Language-Team: Belarusian\n"
+"Language: be\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: be\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: src/audacious/adder.c:75
 msgid "Searching ..."
@@ -41,74 +42,76 @@ msgstr " (недапушчальны UTF-8)"
 msgid "Error importing Winamp EQF file '%s'"
 msgstr "Памылка падчас імпарту файла Winamp EQF file '%s'"
 
-#: src/audacious/main.c:232
+#: src/audacious/main.c:233
 msgid "Skip backwards in playlist"
 msgstr "Прапусціць назад у плэйлісце"
 
-#: src/audacious/main.c:233
+#: src/audacious/main.c:234
 msgid "Start playing current playlist"
 msgstr "Пачаць праграваць бягучы спіс"
 
-#: src/audacious/main.c:234
+#: src/audacious/main.c:235
 msgid "Pause current song"
 msgstr "Прыпыніць бягучую песню"
 
-#: src/audacious/main.c:235
+#: src/audacious/main.c:236
 msgid "Stop current song"
 msgstr "Спыніць бягучую песню"
 
-#: src/audacious/main.c:236
+#: src/audacious/main.c:237
 msgid "Pause if playing, play otherwise"
 msgstr "Прыпыніць калі праграваецца, іначай граць"
 
-#: src/audacious/main.c:237
+#: src/audacious/main.c:238
 msgid "Skip forward in playlist"
 msgstr "Прапусціць наперад у плэйлісце"
 
-#: src/audacious/main.c:238
+#: src/audacious/main.c:239
 msgid "Display Jump to File dialog"
 msgstr "Паказаць дыялог пераходу да файла"
 
-#: src/audacious/main.c:239
+#: src/audacious/main.c:240
 msgid "Add files to the playlist"
 msgstr "Дадаць файлы ў плэйліст"
 
-#: src/audacious/main.c:240
+#: src/audacious/main.c:241
 msgid "Add new files to a temporary playlist"
 msgstr "Дадаць новыя файлы ў часовы плэйліст"
 
-#: src/audacious/main.c:241
+#: src/audacious/main.c:242
 msgid "Display the main window"
 msgstr "Паказаць галоўнае вакно"
 
-#: src/audacious/main.c:242
+#: src/audacious/main.c:243
 msgid "Show version"
 msgstr "Паказаць версію"
 
-#: src/audacious/main.c:243
+#: src/audacious/main.c:244
 msgid "Print debugging messages"
 msgstr "Выводзіць паведамленні адладкі"
 
-#: src/audacious/main.c:244
+#: src/audacious/main.c:245
 msgid "Headless mode (beta)"
 msgstr ""
 
-#: src/audacious/main.c:245
+#: src/audacious/main.c:246
 msgid "FILE..."
 msgstr "ФАЙЛ..."
 
-#: src/audacious/main.c:257
+#: src/audacious/main.c:258
 msgid "- play multimedia files"
 msgstr "- гранне мультымедыйных файлаў"
 
-#: src/audacious/main.c:264
+#: src/audacious/main.c:265
 #, c-format
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
-msgstr "%s: %s\nПаспрабуйце `%s --help' для больш падрабязных звестак.\n"
+msgstr ""
+"%s: %s\n"
+"Паспрабуйце `%s --help' для больш падрабязных звестак.\n"
 
-#: src/audacious/main.c:546
+#: src/audacious/main.c:549
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -140,9 +143,11 @@ msgstr "Цяпер іграе"
 
 #: src/audacious/playlist-new.c:1650
 msgid ""
-"The playlist cannot be sorted because metadata scanning is still in progress"
-" (or has been disabled)."
-msgstr "Плэйліст немагчыма ўпарадкаваць, таму што ўсё яшчэ ідзе чытанне метазвестак (ці яно было адключана)."
+"The playlist cannot be sorted because metadata scanning is still in progress "
+"(or has been disabled)."
+msgstr ""
+"Плэйліст немагчыма ўпарадкаваць, таму што ўсё яшчэ ідзе чытанне метазвестак "
+"(ці яно было адключана)."
 
 #: src/audacious/plugin-preferences.c:50
 #, c-format
@@ -570,22 +575,24 @@ msgstr "Ліцэнзія"
 msgid "About Audacious"
 msgstr "Пра Audacious"
 
-#: src/libaudgui/confirm.c:61
-msgid "Close Playlist"
-msgstr "Закрыць плэйліст"
-
-#: src/libaudgui/confirm.c:76
+#: src/libaudgui/confirm.c:67
 #, c-format
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
-msgstr "Вы ўпэўнены, што хочаце закрыць %s?  Калі вы гэта зробіце, усе змяненні, зробленыя пасля экспарту плэйліста, будуць згублены."
+msgstr ""
+"Вы ўпэўнены, што хочаце закрыць %s?  Калі вы гэта зробіце, усе змяненні, "
+"зробленыя пасля экспарту плэйліста, будуць згублены."
 
-#: src/libaudgui/confirm.c:89
+#: src/libaudgui/confirm.c:74
+msgid "Close Playlist"
+msgstr "Закрыць плэйліст"
+
+#: src/libaudgui/confirm.c:78
 msgid "_Don't show this message again"
 msgstr "Больш не паказ_ваць гэта паведамленне"
 
-#: src/libaudgui/confirm.c:126
+#: src/libaudgui/confirm.c:101
 msgid "Rename Playlist"
 msgstr "Перайменаваць плэйліст"
 
@@ -982,4 +989,6 @@ msgstr "Увядзіце URL:"
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
-msgstr "\n(Далейшыя паведамленні былі прыхаваныя.)"
+msgstr ""
+"\n"
+"(Далейшыя паведамленні былі прыхаваныя.)"

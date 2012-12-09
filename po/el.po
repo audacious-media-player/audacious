@@ -1,7 +1,7 @@
 # Greek translation for Audacious
 # Copyright (C) Audacious translators
 # This file is distributed under the same license as the Audacious package.
-# 
+#
 # Translators:
 # <marinoszak@gmail.com>, 2012.
 #   <marinoszak@gmail.com>, 2012.
@@ -13,14 +13,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-09-15 12:17+0200\n"
+"POT-Creation-Date: 2012-12-09 22:42+0100\n"
 "PO-Revision-Date: 2012-10-28 00:19+0000\n"
 "Last-Translator: Γιάννης Ανθυμίδης <yannanth@gmail.com>\n"
 "Language-Team: Greek\n"
+"Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: el\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: src/audacious/adder.c:75
@@ -43,74 +43,76 @@ msgstr "  (μη έγκυρο UTF-8)"
 msgid "Error importing Winamp EQF file '%s'"
 msgstr "Σφάλμα εισαγωγή αρχείου EQF του Winamp «%s»"
 
-#: src/audacious/main.c:232
+#: src/audacious/main.c:233
 msgid "Skip backwards in playlist"
 msgstr "Μετάβαση πίσω στη λίστα τραγουδιών"
 
-#: src/audacious/main.c:233
+#: src/audacious/main.c:234
 msgid "Start playing current playlist"
 msgstr "Έναρξη αναπαραγωγής της τρέχουσας λίστας"
 
-#: src/audacious/main.c:234
+#: src/audacious/main.c:235
 msgid "Pause current song"
 msgstr "Παύση τρέχοντος κομματιού"
 
-#: src/audacious/main.c:235
+#: src/audacious/main.c:236
 msgid "Stop current song"
 msgstr "Σταμάτημα τρέχοντος κομματιού"
 
-#: src/audacious/main.c:236
+#: src/audacious/main.c:237
 msgid "Pause if playing, play otherwise"
 msgstr "Παύση αν παίζει, αλλιώς αναπαραγωγή"
 
-#: src/audacious/main.c:237
+#: src/audacious/main.c:238
 msgid "Skip forward in playlist"
 msgstr "Μετάβαση μπροστά στη λίστα τραγουδιών"
 
-#: src/audacious/main.c:238
+#: src/audacious/main.c:239
 msgid "Display Jump to File dialog"
 msgstr "Προβολή διαλόγου Μετάβασης προς Αρχείο"
 
-#: src/audacious/main.c:239
+#: src/audacious/main.c:240
 msgid "Add files to the playlist"
 msgstr "Προσθήκη αρχείων στη λίστα τραγουδιών"
 
-#: src/audacious/main.c:240
+#: src/audacious/main.c:241
 msgid "Add new files to a temporary playlist"
 msgstr "Προσθήκη νέων αρχείων σε μια προσωρινή λίστα αναπαραγωγής"
 
-#: src/audacious/main.c:241
+#: src/audacious/main.c:242
 msgid "Display the main window"
 msgstr "Εμφάνιση του κυρίους παραθύρου"
 
-#: src/audacious/main.c:242
+#: src/audacious/main.c:243
 msgid "Show version"
 msgstr "Εμφάνιση έκδοσης"
 
-#: src/audacious/main.c:243
+#: src/audacious/main.c:244
 msgid "Print debugging messages"
 msgstr "Προβολή μηνυμάτων εντοπισμού σφαλμάτων"
 
-#: src/audacious/main.c:244
+#: src/audacious/main.c:245
 msgid "Headless mode (beta)"
 msgstr ""
 
-#: src/audacious/main.c:245
+#: src/audacious/main.c:246
 msgid "FILE..."
 msgstr "ΑΡΧΕΙΟ..."
 
-#: src/audacious/main.c:257
+#: src/audacious/main.c:258
 msgid "- play multimedia files"
 msgstr "- αναπαραγωγή αρχείων πολυμέσων"
 
-#: src/audacious/main.c:264
+#: src/audacious/main.c:265
 #, c-format
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
-msgstr "%s: %s\nΔοκιμάστε `%s --help' για περισσότερες πληροφορίες.\n"
+msgstr ""
+"%s: %s\n"
+"Δοκιμάστε `%s --help' για περισσότερες πληροφορίες.\n"
 
-#: src/audacious/main.c:546
+#: src/audacious/main.c:549
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -142,8 +144,8 @@ msgstr "Αναπαράγεται τώρα"
 
 #: src/audacious/playlist-new.c:1650
 msgid ""
-"The playlist cannot be sorted because metadata scanning is still in progress"
-" (or has been disabled)."
+"The playlist cannot be sorted because metadata scanning is still in progress "
+"(or has been disabled)."
 msgstr ""
 
 #: src/audacious/plugin-preferences.c:50
@@ -407,11 +409,14 @@ msgstr "<b> Άλμπουμ Τέχνης</ b>"
 
 #: src/audacious/ui_preferences.c:210
 msgid "Search for images matching these words (comma-separated):"
-msgstr "Αναζήτηση για εικόνες που ταιριάζουν με αυτά τα λόγια (διαχωρισμένα με κόμμα):"
+msgstr ""
+"Αναζήτηση για εικόνες που ταιριάζουν με αυτά τα λόγια (διαχωρισμένα με "
+"κόμμα):"
 
 #: src/audacious/ui_preferences.c:212
 msgid "Exclude images matching these words (comma-separated):"
-msgstr "Εξαίρεση των εικόνων που ταιριάζουν με αυτά τα λόγια (διαχωρισμένα με κόμμα):"
+msgstr ""
+"Εξαίρεση των εικόνων που ταιριάζουν με αυτά τα λόγια (διαχωρισμένα με κόμμα):"
 
 #: src/audacious/ui_preferences.c:214
 msgid "Search for images matching song file name"
@@ -570,22 +575,24 @@ msgstr "Άδεια"
 msgid "About Audacious"
 msgstr "Σχετικά με το Audacious"
 
-#: src/libaudgui/confirm.c:61
-msgid "Close Playlist"
-msgstr "Κλείσιμο Λίστας Τραγουδιών"
-
-#: src/libaudgui/confirm.c:76
+#: src/libaudgui/confirm.c:67
 #, c-format
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
-msgstr "Είστε σίγουροι πως θέλετε να κλείσετε την %s; Αν την κλείσετε, όλες οι αλλαγές που έγιναν από την τελευταία φορά που εξάχθηκε η λίστα θα χαθούν."
+msgstr ""
+"Είστε σίγουροι πως θέλετε να κλείσετε την %s; Αν την κλείσετε, όλες οι "
+"αλλαγές που έγιναν από την τελευταία φορά που εξάχθηκε η λίστα θα χαθούν."
 
-#: src/libaudgui/confirm.c:89
+#: src/libaudgui/confirm.c:74
+msgid "Close Playlist"
+msgstr "Κλείσιμο Λίστας Τραγουδιών"
+
+#: src/libaudgui/confirm.c:78
 msgid "_Don't show this message again"
 msgstr "_Να μην εμφανιστεί ξανά αυτό το μήνυμα"
 
-#: src/libaudgui/confirm.c:126
+#: src/libaudgui/confirm.c:101
 msgid "Rename Playlist"
 msgstr "Μετονομασία λίστας αναπαραγωγής"
 

@@ -1,22 +1,23 @@
 # Latvian translation for Audacious
 # Copyright (C) Audacious translators
 # This file is distributed under the same license as the Audacious package.
-# 
+#
 # Translators:
 # Einars Sprugis <einars8@gmail.com>, 2009, 2011, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-09-15 12:17+0200\n"
+"POT-Creation-Date: 2012-12-09 22:42+0100\n"
 "PO-Revision-Date: 2012-09-27 15:24+0000\n"
 "Last-Translator: Radioactiveman <thomas-lange2@gmx.de>\n"
 "Language-Team: Latvian\n"
+"Language: lv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: lv\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
+"2);\n"
 
 #: src/audacious/adder.c:75
 msgid "Searching ..."
@@ -39,74 +40,76 @@ msgstr " (nederīgs UTF-8)"
 msgid "Error importing Winamp EQF file '%s'"
 msgstr "Kļūda importējot Winamp EQF failu '%s'"
 
-#: src/audacious/main.c:232
+#: src/audacious/main.c:233
 msgid "Skip backwards in playlist"
 msgstr "Repertuārā izlaist atpakaļgaitā"
 
-#: src/audacious/main.c:233
+#: src/audacious/main.c:234
 msgid "Start playing current playlist"
 msgstr "Sākt atskaņot pašreizējo repertuāru"
 
-#: src/audacious/main.c:234
+#: src/audacious/main.c:235
 msgid "Pause current song"
 msgstr "Nopauzēt pašreizējo dziesmu"
 
-#: src/audacious/main.c:235
+#: src/audacious/main.c:236
 msgid "Stop current song"
 msgstr "Apturēt pašreizējo dziesmu"
 
-#: src/audacious/main.c:236
+#: src/audacious/main.c:237
 msgid "Pause if playing, play otherwise"
 msgstr "Nopauzēt, ja pašlaik atskaņo, citādi atskaņot"
 
-#: src/audacious/main.c:237
+#: src/audacious/main.c:238
 msgid "Skip forward in playlist"
 msgstr "Repertuārā izlaist uz priekšu"
 
-#: src/audacious/main.c:238
+#: src/audacious/main.c:239
 msgid "Display Jump to File dialog"
 msgstr "Parādīt 'Pāriet uz failu' dialogu"
 
-#: src/audacious/main.c:239
+#: src/audacious/main.c:240
 msgid "Add files to the playlist"
 msgstr "Pievieno failus repertuāram"
 
-#: src/audacious/main.c:240
+#: src/audacious/main.c:241
 msgid "Add new files to a temporary playlist"
 msgstr "Pievienot jaunus failus pagaidu repertuāram"
 
-#: src/audacious/main.c:241
+#: src/audacious/main.c:242
 msgid "Display the main window"
 msgstr "Rādīt galveno logu"
 
-#: src/audacious/main.c:242
+#: src/audacious/main.c:243
 msgid "Show version"
 msgstr "Parādīt versiju"
 
-#: src/audacious/main.c:243
+#: src/audacious/main.c:244
 msgid "Print debugging messages"
 msgstr "Drukāt atkļūdošanas ziņojumus"
 
-#: src/audacious/main.c:244
+#: src/audacious/main.c:245
 msgid "Headless mode (beta)"
 msgstr "Bezgalvas režīms (beta)"
 
-#: src/audacious/main.c:245
+#: src/audacious/main.c:246
 msgid "FILE..."
 msgstr "FAILS..."
 
-#: src/audacious/main.c:257
+#: src/audacious/main.c:258
 msgid "- play multimedia files"
 msgstr "- atskaņot multivides failus"
 
-#: src/audacious/main.c:264
+#: src/audacious/main.c:265
 #, c-format
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
-msgstr "%s: %s\nMēģiniet `%s --help', lai iegūtu vairāk informācijas.\n"
+msgstr ""
+"%s: %s\n"
+"Mēģiniet `%s --help', lai iegūtu vairāk informācijas.\n"
 
-#: src/audacious/main.c:546
+#: src/audacious/main.c:549
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -138,9 +141,11 @@ msgstr "Pašreiz atskaņo"
 
 #: src/audacious/playlist-new.c:1650
 msgid ""
-"The playlist cannot be sorted because metadata scanning is still in progress"
-" (or has been disabled)."
-msgstr "Repertuārs nevar tikt sakārtots, jo joprojām noris metadatu skenēšana (vai arī tā ir atslēgta)."
+"The playlist cannot be sorted because metadata scanning is still in progress "
+"(or has been disabled)."
+msgstr ""
+"Repertuārs nevar tikt sakārtots, jo joprojām noris metadatu skenēšana (vai "
+"arī tā ir atslēgta)."
 
 #: src/audacious/plugin-preferences.c:50
 #, c-format
@@ -567,22 +572,24 @@ msgstr "Licence"
 msgid "About Audacious"
 msgstr "Par Audacious"
 
-#: src/libaudgui/confirm.c:61
-msgid "Close Playlist"
-msgstr ""
-
-#: src/libaudgui/confirm.c:76
+#: src/libaudgui/confirm.c:67
 #, c-format
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
-msgstr "Vai tiešām vēlaties aizvērt %s? Ja to izdarīsiet, visas izmaiņas, kas veiktas kopš repertuāra eksportēšanas, tiks zaudētas."
+msgstr ""
+"Vai tiešām vēlaties aizvērt %s? Ja to izdarīsiet, visas izmaiņas, kas "
+"veiktas kopš repertuāra eksportēšanas, tiks zaudētas."
 
-#: src/libaudgui/confirm.c:89
+#: src/libaudgui/confirm.c:74
+msgid "Close Playlist"
+msgstr ""
+
+#: src/libaudgui/confirm.c:78
 msgid "_Don't show this message again"
 msgstr "_Vairs nerādīt šo ziņojumu"
 
-#: src/libaudgui/confirm.c:126
+#: src/libaudgui/confirm.c:101
 msgid "Rename Playlist"
 msgstr "Pārdēvēt repertuāru"
 
@@ -979,4 +986,6 @@ msgstr "Ievadiet URL:"
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
-msgstr "\n(Turpmākie ziņojumi tika paslēpti.)"
+msgstr ""
+"\n"
+"(Turpmākie ziņojumi tika paslēpti.)"

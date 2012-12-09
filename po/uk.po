@@ -1,7 +1,7 @@
 # Ukrainian translation for Audacious
 # Copyright (C) Audacious translators
 # This file is distributed under the same license as the Audacious package.
-# 
+#
 # Translators:
 # Kostyantyn Fedenko <fedenko@ukr.net>, 2011.
 #   <kvantarium@gmail.com>, 2012.
@@ -13,15 +13,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-09-15 12:17+0200\n"
+"POT-Creation-Date: 2012-12-09 22:42+0100\n"
 "PO-Revision-Date: 2012-10-01 13:10+0000\n"
 "Last-Translator: Rax Garfield <rax@rax.pp.ua>\n"
 "Language-Team: Ukrainian\n"
+"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: uk\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: src/audacious/adder.c:75
 msgid "Searching ..."
@@ -44,74 +45,76 @@ msgstr "(недійсний UTF-8)"
 msgid "Error importing Winamp EQF file '%s'"
 msgstr "Не вдалося імпортувати Winamp EQF-файл «%s»"
 
-#: src/audacious/main.c:232
+#: src/audacious/main.c:233
 msgid "Skip backwards in playlist"
 msgstr "Перейти до попередньої доріжки у списку"
 
-#: src/audacious/main.c:233
+#: src/audacious/main.c:234
 msgid "Start playing current playlist"
 msgstr "Почати програвати поточний список"
 
-#: src/audacious/main.c:234
+#: src/audacious/main.c:235
 msgid "Pause current song"
 msgstr "Призупинити поточну пісню"
 
-#: src/audacious/main.c:235
+#: src/audacious/main.c:236
 msgid "Stop current song"
 msgstr "Зупинити поточну пісню"
 
-#: src/audacious/main.c:236
+#: src/audacious/main.c:237
 msgid "Pause if playing, play otherwise"
 msgstr "Призупинити, якщо що-небуть програється, в іншому випадку програвати"
 
-#: src/audacious/main.c:237
+#: src/audacious/main.c:238
 msgid "Skip forward in playlist"
 msgstr "Перейти до наступної доріжки у списку відтворення"
 
-#: src/audacious/main.c:238
+#: src/audacious/main.c:239
 msgid "Display Jump to File dialog"
 msgstr "Показати діалог переходу до файлу"
 
-#: src/audacious/main.c:239
+#: src/audacious/main.c:240
 msgid "Add files to the playlist"
 msgstr "Додати файли до списку відтворення"
 
-#: src/audacious/main.c:240
+#: src/audacious/main.c:241
 msgid "Add new files to a temporary playlist"
 msgstr "Додати нові файли до тимчасового списку відтворення"
 
-#: src/audacious/main.c:241
+#: src/audacious/main.c:242
 msgid "Display the main window"
 msgstr "Показати головне вікно"
 
-#: src/audacious/main.c:242
+#: src/audacious/main.c:243
 msgid "Show version"
 msgstr "Показати версію"
 
-#: src/audacious/main.c:243
+#: src/audacious/main.c:244
 msgid "Print debugging messages"
 msgstr "Друкувати повідомлення про налагодження"
 
-#: src/audacious/main.c:244
+#: src/audacious/main.c:245
 msgid "Headless mode (beta)"
 msgstr "Headless-режим (як демон і без X11, бета)"
 
-#: src/audacious/main.c:245
+#: src/audacious/main.c:246
 msgid "FILE..."
 msgstr "ФАЙЛ..."
 
-#: src/audacious/main.c:257
+#: src/audacious/main.c:258
 msgid "- play multimedia files"
 msgstr "— відтворити мультимедійні файли"
 
-#: src/audacious/main.c:264
+#: src/audacious/main.c:265
 #, c-format
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
-msgstr "%s: %s\nСпробуйте `%s --help' для отримання докладнішого опису.\n"
+msgstr ""
+"%s: %s\n"
+"Спробуйте `%s --help' для отримання докладнішого опису.\n"
 
-#: src/audacious/main.c:546
+#: src/audacious/main.c:549
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -143,9 +146,11 @@ msgstr "Зараз відтворюється"
 
 #: src/audacious/playlist-new.c:1650
 msgid ""
-"The playlist cannot be sorted because metadata scanning is still in progress"
-" (or has been disabled)."
-msgstr "Список відтворення неможливо відсортувати, поки сканування метаданих триває або вимкнено."
+"The playlist cannot be sorted because metadata scanning is still in progress "
+"(or has been disabled)."
+msgstr ""
+"Список відтворення неможливо відсортувати, поки сканування метаданих триває "
+"або вимкнено."
 
 #: src/audacious/plugin-preferences.c:50
 #, c-format
@@ -572,22 +577,24 @@ msgstr "Ліцензія"
 msgid "About Audacious"
 msgstr "Про Audacious"
 
-#: src/libaudgui/confirm.c:61
-msgid "Close Playlist"
-msgstr "Закрити список відтворення"
-
-#: src/libaudgui/confirm.c:76
+#: src/libaudgui/confirm.c:67
 #, c-format
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
-msgstr "Точно закрити %s? Якщо так, то всі зміни з моменту експорту списку відтворення будуть втрачені."
+msgstr ""
+"Точно закрити %s? Якщо так, то всі зміни з моменту експорту списку "
+"відтворення будуть втрачені."
 
-#: src/libaudgui/confirm.c:89
+#: src/libaudgui/confirm.c:74
+msgid "Close Playlist"
+msgstr "Закрити список відтворення"
+
+#: src/libaudgui/confirm.c:78
 msgid "_Don't show this message again"
 msgstr "Не показувати це попередження _знову"
 
-#: src/libaudgui/confirm.c:126
+#: src/libaudgui/confirm.c:101
 msgid "Rename Playlist"
 msgstr "Перейменувати список відтворення"
 
@@ -645,7 +652,9 @@ msgstr "Еквалайзер"
 
 #: src/libaudgui/equalizer.c:147
 msgid "Preamp"
-msgstr "Попереднє\nпідсилення"
+msgstr ""
+"Попереднє\n"
+"підсилення"
 
 #: src/libaudgui/infopopup.c:202
 msgid "Track"
@@ -984,4 +993,6 @@ msgstr "Введіть URL:"
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
-msgstr "\n(Наступні повідомлення були приховані.)"
+msgstr ""
+"\n"
+"(Наступні повідомлення були приховані.)"

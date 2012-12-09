@@ -1,7 +1,7 @@
 # Czech translation for Audacious
 # Copyright (C) Audacious translators
 # This file is distributed under the same license as the Audacious package.
-# 
+#
 # Translators:
 #   <appukonrad@gmail.com>, 2012.
 # Jan Nárovec <finn@sendmail.cz>, 2004.
@@ -11,14 +11,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-09-15 12:17+0200\n"
+"POT-Creation-Date: 2012-12-09 22:42+0100\n"
 "PO-Revision-Date: 2012-10-01 09:40+0000\n"
 "Last-Translator: jui <appukonrad@gmail.com>\n"
 "Language-Team: Czech\n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: cs\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: src/audacious/adder.c:75
@@ -42,74 +42,76 @@ msgstr "  (neplatné UTF-8)"
 msgid "Error importing Winamp EQF file '%s'"
 msgstr "Chyba při importu winampovského EQF souboru „%s“"
 
-#: src/audacious/main.c:232
+#: src/audacious/main.c:233
 msgid "Skip backwards in playlist"
 msgstr "Vrátí se zpět v seznamu skladeb"
 
-#: src/audacious/main.c:233
+#: src/audacious/main.c:234
 msgid "Start playing current playlist"
 msgstr "Přehraje skladby v aktuálním seznamu"
 
-#: src/audacious/main.c:234
+#: src/audacious/main.c:235
 msgid "Pause current song"
 msgstr "Pozastaví přehrávanou skladbu"
 
-#: src/audacious/main.c:235
+#: src/audacious/main.c:236
 msgid "Stop current song"
 msgstr "Zastaví přehrávanou skladbu"
 
-#: src/audacious/main.c:236
+#: src/audacious/main.c:237
 msgid "Pause if playing, play otherwise"
 msgstr "Pozastaví při přehrávání; jinak spustí"
 
-#: src/audacious/main.c:237
+#: src/audacious/main.c:238
 msgid "Skip forward in playlist"
 msgstr "Přejde na další skladbu"
 
-#: src/audacious/main.c:238
+#: src/audacious/main.c:239
 msgid "Display Jump to File dialog"
 msgstr "Zobrazí dialog „Přejít na soubor“"
 
-#: src/audacious/main.c:239
+#: src/audacious/main.c:240
 msgid "Add files to the playlist"
 msgstr "Přidá soubory do do seznamu skladeb"
 
-#: src/audacious/main.c:240
+#: src/audacious/main.c:241
 msgid "Add new files to a temporary playlist"
 msgstr "Přidá soubory do dočasného seznamu skladeb"
 
-#: src/audacious/main.c:241
+#: src/audacious/main.c:242
 msgid "Display the main window"
 msgstr "Zobrazí hlavní okno"
 
-#: src/audacious/main.c:242
+#: src/audacious/main.c:243
 msgid "Show version"
 msgstr "Zobrazí verzi"
 
-#: src/audacious/main.c:243
+#: src/audacious/main.c:244
 msgid "Print debugging messages"
 msgstr "Vypisuje ladicí hlášky"
 
-#: src/audacious/main.c:244
+#: src/audacious/main.c:245
 msgid "Headless mode (beta)"
 msgstr "Bezhlavý režim (beta)"
 
-#: src/audacious/main.c:245
+#: src/audacious/main.c:246
 msgid "FILE..."
 msgstr "SOUBOR…"
 
-#: src/audacious/main.c:257
+#: src/audacious/main.c:258
 msgid "- play multimedia files"
 msgstr "– přehrávat multimediální soubory"
 
-#: src/audacious/main.c:264
+#: src/audacious/main.c:265
 #, c-format
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
-msgstr "%s: %s\nPro více informací zkuste „%s --help“.\n"
+msgstr ""
+"%s: %s\n"
+"Pro více informací zkuste „%s --help“.\n"
 
-#: src/audacious/main.c:546
+#: src/audacious/main.c:549
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -141,9 +143,11 @@ msgstr "Nyní hraje"
 
 #: src/audacious/playlist-new.c:1650
 msgid ""
-"The playlist cannot be sorted because metadata scanning is still in progress"
-" (or has been disabled)."
-msgstr "Seznam skladeb nelze seřadit, protože hledání metadat stále probíhá (nebo je vypnuto)."
+"The playlist cannot be sorted because metadata scanning is still in progress "
+"(or has been disabled)."
+msgstr ""
+"Seznam skladeb nelze seřadit, protože hledání metadat stále probíhá (nebo je "
+"vypnuto)."
 
 #: src/audacious/plugin-preferences.c:50
 #, c-format
@@ -570,22 +574,24 @@ msgstr "Licence"
 msgid "About Audacious"
 msgstr "O Audacious"
 
-#: src/libaudgui/confirm.c:61
-msgid "Close Playlist"
-msgstr "Zavřít seznam skladeb"
-
-#: src/libaudgui/confirm.c:76
+#: src/libaudgui/confirm.c:67
 #, c-format
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
-msgstr "Jste si jisti, že chcete %s zavřít? Pokud tak učiníte, jakékoliv změny provedené od posledního exportu budou ztraceny."
+msgstr ""
+"Jste si jisti, že chcete %s zavřít? Pokud tak učiníte, jakékoliv změny "
+"provedené od posledního exportu budou ztraceny."
 
-#: src/libaudgui/confirm.c:89
+#: src/libaudgui/confirm.c:74
+msgid "Close Playlist"
+msgstr "Zavřít seznam skladeb"
+
+#: src/libaudgui/confirm.c:78
 msgid "_Don't show this message again"
 msgstr "_Příště již toto zprávu nezobrazovat"
 
-#: src/libaudgui/confirm.c:126
+#: src/libaudgui/confirm.c:101
 msgid "Rename Playlist"
 msgstr "Přejmenovat seznam skladeb"
 
@@ -982,4 +988,6 @@ msgstr "Zadejte URL:"
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
-msgstr "\n(Další zprávy jsou skryty.)"
+msgstr ""
+"\n"
+"(Další zprávy jsou skryty.)"
