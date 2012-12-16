@@ -536,6 +536,46 @@ EXPORT char * double_to_string (double val)
     return s;
 }
 
+EXPORT bool_t string_to_int_array (const char * string, int * array, int count)
+{
+    char * * split = g_strsplit (string, ",", -1);
+    if (g_strv_length (split) != count)
+        goto ERR;
+
+    for (int i = 0; i < count; i ++)
+    {
+        if (! string_to_int (split[i], & array[i]))
+            goto ERR;
+    }
+
+    g_strfreev (split);
+    return TRUE;
+
+ERR:
+    g_strfreev (split);
+    return FALSE;
+}
+
+EXPORT char * int_array_to_string (const int * array, int count)
+{
+    char * * split = g_malloc0 (sizeof (char *) * (count + 1));
+
+    for (int i = 0; i < count; i ++)
+    {
+        split[i] = int_to_string (array[i]);
+        if (! split[i])
+            goto ERR;
+    }
+
+    char * string = g_strjoinv (",", split);
+    g_strfreev (split);
+    return string;
+
+ERR:
+    g_strfreev (split);
+    return NULL;
+}
+
 EXPORT bool_t string_to_double_array (const char * string, double * array, int count)
 {
     char * * split = g_strsplit (string, ",", -1);

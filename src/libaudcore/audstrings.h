@@ -54,6 +54,8 @@ bool_t string_to_double (const char * string, double * addr);
 char * int_to_string (int val);
 char * double_to_string (double val);
 
+bool_t string_to_int_array (const char * string, int * array, int count);
+char * int_array_to_string (const int * array, int count);
 bool_t string_to_double_array (const char * string, double * array, int count);
 char * double_array_to_string (const double * array, int count);
 
