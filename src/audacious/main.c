@@ -501,8 +501,7 @@ static void shut_down (void)
 {
     mpris_signals_cleanup ();
 
-    AUDDBG ("Capturing state.\n");
-    hook_call ("config save", NULL);
+    AUDDBG ("Saving playlist state.\n");
     save_playlists (TRUE);
 
     AUDDBG ("Unloading highlevel plugins.\n");
