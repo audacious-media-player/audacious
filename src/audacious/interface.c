@@ -63,6 +63,8 @@ void interface_show (bool_t show)
 {
     g_return_if_fail (current_interface);
 
+    set_bool (NULL, "show_interface", show);
+
     if (PLUGIN_HAS_FUNC (current_interface, show))
         current_interface->show (show);
 }
@@ -224,6 +226,10 @@ bool_t iface_plugin_set_current (PluginHandle * plugin)
 
     if (current_plugin != NULL)
     {
+        if (get_bool (NULL, "show_interface") && current_interface &&
+         PLUGIN_HAS_FUNC (current_interface, show))
+            current_interface->show (FALSE);
+
         AUDDBG ("Unloading plugin widgets.\n");
         general_cleanup ();
 
@@ -250,6 +256,10 @@ bool_t iface_plugin_set_current (PluginHandle * plugin)
 
         AUDDBG ("Loading plugin widgets.\n");
         general_init ();
+
+        if (get_bool (NULL, "show_interface") && current_interface &&
+         PLUGIN_HAS_FUNC (current_interface, show))
+            current_interface->show (TRUE);
     }
 
     return TRUE;

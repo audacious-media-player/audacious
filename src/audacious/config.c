@@ -37,6 +37,7 @@ static const char * const core_defaults[] = {
  "clear_playlist", "TRUE",
  "open_to_temporary", "TRUE",
  "resume_playback_on_startup", "FALSE",
+ "show_interface", "TRUE",
 
  /* equalizer */
  "eqpreset_default_file", "",
