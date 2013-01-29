@@ -55,6 +55,7 @@ enum {
  PLAYLIST_SORT_DATE,
  PLAYLIST_SORT_TRACK,
  PLAYLIST_SORT_FORMATTED_TITLE,
+ PLAYLIST_SORT_LENGTH,
  PLAYLIST_SORT_SCHEMES};
 
 typedef bool_t (* PlaylistFilterFunc) (const char * filename, void * user);
