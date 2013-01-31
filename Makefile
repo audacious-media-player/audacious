@@ -29,8 +29,8 @@ install-extra:
 
 uninstall-extra:
 	for i in audacious.pc audclient.pc; do \
-		if [ -f ${DESTDIR}${libdir}/pkgconfig/$$i ]; then \
-			if rm -f ${DESTDIR}${libdir}/pkgconfig/$$i; then \
+		if [ -f ${DESTDIR}${pkgconfigdir}/$$i ]; then \
+			if rm -f ${DESTDIR}${pkgconfigdir}/$$i; then \
 				${DELETE_OK}; \
 			else \
 				${DELETE_FAILED}; \
