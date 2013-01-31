@@ -131,6 +131,13 @@ if test "x$enable_rpath" = "xyes"; then
 fi
 
 ### ---------------------------------------------------------------------------
+dnl Thunar support
+dnl ==============
+
+AUD_ARG_ENABLE([thunar], [no], [thunar (Xfce) support files])
+AUD_CONDITIONAL([USE_THUNAR], [enable_thunar])
+
+### ---------------------------------------------------------------------------
 dnl Chardet support
 dnl ===============
 AUD_ARG_ENABLE([chardet], [yes],
@@ -292,6 +299,7 @@ echo "  Allow user plugin dir:                  $enable_user_plugin_dir"
 echo ""
 echo "  Automatic character code detection:     $enable_chardet"
 echo "  D-Bus support:                          $enable_dbus"
+echo "  Thunar support:                         $enable_thunar"
 echo ""
 
 if test "x$AUDACIOUS_PATH" != "xno" && test "x$prefix/bin/audacious" != "x$AUDACIOUS_PATH"; then
