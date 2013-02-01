@@ -528,8 +528,12 @@ static void drag_data_received (GtkWidget * widget, GdkDragContext * context, in
 
 /* ==== PUBLIC FUNCS ==== */
 
-static void destroy_cb (ListModel * model)
+static void destroy_cb (GtkWidget * list, ListModel * model)
 {
+    /* workaround for Gnome bug #679291 */
+    g_signal_handlers_disconnect_matched (list, G_SIGNAL_MATCH_DATA, 0, 0, NULL,
+     NULL, model);
+  
     stop_autoscroll (model);
     g_object_unref (model);
 }
@@ -575,7 +579,7 @@ EXPORT GtkWidget * audgui_list_new_real (const AudguiListCallbacks * cbs, int cb
 
     GtkWidget * list = gtk_tree_view_new_with_model ((GtkTreeModel *) model);
     gtk_tree_view_set_fixed_height_mode ((GtkTreeView *) list, TRUE);
-    g_signal_connect_swapped (list, "destroy", (GCallback) destroy_cb, model);
+    g_signal_connect (list, "destroy", (GCallback) destroy_cb, model);
 
     model->charwidth = audgui_get_digit_width (list);
 
