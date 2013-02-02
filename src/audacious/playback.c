@@ -369,10 +369,8 @@ static void * playback_thread (void * unused)
 
         if (! current_decoder)
         {
-            char * error = g_strdup_printf (_("No decoder found for %s."),
-             current_filename);
+            SPRINTF (error, _("No decoder found for %s."), current_filename);
             interface_show_error (error);
-            g_free (error);
             playback_error = TRUE;
             goto DONE;
         }
@@ -384,7 +382,7 @@ static void * playback_thread (void * unused)
     int start_time = time_offset = 0;
     int end_time = -1;
 
-    if (playback_entry_get_length () > 0)
+    if (tuple && playback_entry_get_length () > 0)
     {
         if (tuple_get_value_type (tuple, FIELD_SEGMENT_START, NULL) == TUPLE_INT)
             time_offset = tuple_get_int (tuple, FIELD_SEGMENT_START, NULL);
@@ -392,18 +390,29 @@ static void * playback_thread (void * unused)
         start_time = time_offset + MAX (initial_seek, 0);
 
         if (repeat_b >= 0)
-            end_time = repeat_b;
+            end_time = time_offset + repeat_b;
         else if (tuple_get_value_type (tuple, FIELD_SEGMENT_END, NULL) == TUPLE_INT)
-            end_time = tuple_get_int (tuple, FIELD_SEGMENT_START, NULL);
+            end_time = tuple_get_int (tuple, FIELD_SEGMENT_END, NULL);
     }
 
     if (tuple)
         tuple_unref (tuple);
 
-    if (current_file)
-        vfs_rewind (current_file);
-    else
-        current_file = vfs_fopen (current_filename, "r");
+    if (! current_decoder->schemes || ! current_decoder->schemes[0])
+    {
+        if (current_file)
+            vfs_rewind (current_file);
+        else 
+            current_file = vfs_fopen (current_filename, "r");
+
+        if (! current_file)
+        {
+            SPRINTF (error, _("%s could not be opened."), current_filename);
+            interface_show_error (error);
+            playback_error = TRUE;
+            goto DONE;
+        }
+    }
 
     playback_error = ! current_decoder->play (& playback_api, current_filename,
      current_file, start_time, end_time, paused);
@@ -531,7 +540,7 @@ char * playback_get_title (void)
 
     char s[32];
 
-    if (current_length)
+    if (current_length > 0)
     {
         int len = current_length / 1000;
 
@@ -590,7 +599,10 @@ void playback_set_volume (int l, int r)
 
 void drct_set_ab_repeat (int a, int b)
 {
-    if (! playing)
+    g_return_if_fail (playing);
+    wait_until_ready ();
+
+    if (current_length < 1)
         return;
 
     repeat_a = a;
