@@ -424,10 +424,10 @@ static void do_commands (void)
 
     if (options.play || options.play_pause)
     {
-        if (! playback_get_playing ())
+        if (! drct_get_playing ())
             playback_play (0, FALSE);
-        else if (playback_get_paused ())
-            playback_pause ();
+        else if (drct_get_paused ())
+            drct_pause ();
     }
 
     if (options.show_jump_box)
@@ -512,12 +512,8 @@ static void shut_down (void)
 #endif
 
     AUDDBG ("Stopping playback.\n");
-    if (playback_get_playing ())
-    {
-        bool_t stop_after_song = get_bool (NULL, "stop_after_current_song");
-        playback_stop ();
-        set_bool (NULL, "stop_after_current_song", stop_after_song);
-    }
+    if (drct_get_playing ())
+        drct_stop ();
 
     AUDDBG ("Stopping worker threads.\n");
     adder_cleanup ();

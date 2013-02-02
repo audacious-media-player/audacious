@@ -125,7 +125,7 @@ static bool_t update_from_playlist (void)
     return TRUE;
 }
 
-bool_t playback_get_ready (void)
+bool_t drct_get_ready (void)
 {
     g_return_val_if_fail (playing, FALSE);
     pthread_mutex_lock (& ready_mutex);
@@ -171,14 +171,14 @@ static void update_cb (void * hook_data, void * user_data)
 {
     g_return_if_fail (playing);
 
-    if (GPOINTER_TO_INT (hook_data) < PLAYLIST_UPDATE_METADATA || ! playback_get_ready ())
+    if (GPOINTER_TO_INT (hook_data) < PLAYLIST_UPDATE_METADATA || ! drct_get_ready ())
         return;
 
     if (update_from_playlist ())
         event_queue ("title change", NULL);
 }
 
-int playback_get_time (void)
+int drct_get_time (void)
 {
     g_return_val_if_fail (playing, 0);
     wait_until_ready ();
@@ -194,7 +194,7 @@ int playback_get_time (void)
     return time - time_offset;
 }
 
-void playback_pause (void)
+void drct_pause (void)
 {
     g_return_if_fail (playing);
     wait_until_ready ();
@@ -284,7 +284,7 @@ static void playback_stopping (void)
     hook_call ("playback stop", NULL);
 }
 
-void playback_stop (void)
+void drct_stop (void)
 {
     g_return_if_fail (playing);
 
@@ -449,18 +449,18 @@ void playback_play (int seek_time, bool_t pause)
         hook_call ("playback begin", NULL);
 }
 
-bool_t playback_get_playing (void)
+bool_t drct_get_playing (void)
 {
     return playing;
 }
 
-bool_t playback_get_paused (void)
+bool_t drct_get_paused (void)
 {
     g_return_val_if_fail (playing, FALSE);
     return paused;
 }
 
-void playback_seek (int time)
+void drct_seek (int time)
 {
     g_return_if_fail (playing);
     wait_until_ready ();
@@ -500,7 +500,7 @@ static void set_params (InputPlayback * p, int bitrate, int samplerate,
     current_samplerate = samplerate;
     current_channels = channels;
 
-    if (playback_get_ready ())
+    if (drct_get_ready ())
         event_queue ("info change", NULL);
 }
 
@@ -527,13 +527,13 @@ static InputPlayback playback_api = {
     .set_gain_from_playlist = set_gain_from_playlist,
 };
 
-char * playback_get_filename (void)
+char * drct_get_filename (void)
 {
     g_return_val_if_fail (playing, NULL);
     return str_ref (current_filename);
 }
 
-char * playback_get_title (void)
+char * drct_get_title (void)
 {
     g_return_val_if_fail (playing, NULL);
     wait_until_ready ();
@@ -561,7 +561,7 @@ char * playback_get_title (void)
     return str_printf ("%s%s", current_title, s);
 }
 
-int playback_get_length (void)
+int drct_get_length (void)
 {
     g_return_val_if_fail (playing, 0);
     wait_until_ready ();
@@ -569,7 +569,7 @@ int playback_get_length (void)
     return current_length;
 }
 
-void playback_get_info (int * bitrate, int * samplerate, int * channels)
+void drct_get_info (int * bitrate, int * samplerate, int * channels)
 {
     g_return_if_fail (playing);
     wait_until_ready ();
@@ -579,18 +579,21 @@ void playback_get_info (int * bitrate, int * samplerate, int * channels)
     * channels = current_channels;
 }
 
-void playback_get_volume (int * l, int * r)
+void drct_get_volume (int * l, int * r)
 {
-    if (playing && playback_get_ready () && current_decoder &&
+    if (playing && drct_get_ready () && current_decoder &&
      current_decoder->get_volume && current_decoder->get_volume (l, r))
         return;
 
     output_get_volume (l, r);
 }
 
-void playback_set_volume (int l, int r)
+void drct_set_volume (int l, int r)
 {
-    if (playing && playback_get_ready () && current_decoder &&
+    l = CLAMP (l, 0, 100);
+    r = CLAMP (r, 0, 100);
+
+    if (playing && drct_get_ready () && current_decoder &&
      current_decoder->set_volume && current_decoder->set_volume (l, r))
         return;
 
@@ -614,7 +617,7 @@ void drct_set_ab_repeat (int a, int b)
         /* Restart playback so the new setting takes effect.  We could add
          * something like InputPlugin::set_stop_time(), but this is the only
          * place it would be used. */
-        int seek_time = playback_get_time ();
+        int seek_time = drct_get_time ();
         bool_t was_paused = paused;
 
         if (repeat_b >= 0 && seek_time >= repeat_b)

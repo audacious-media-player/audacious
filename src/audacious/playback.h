@@ -23,20 +23,5 @@
 #include <libaudcore/core.h>
 
 void playback_play (int seek_time, bool_t pause);
-int playback_get_time(void);
-void playback_pause(void);
-void playback_stop(void);
-bool_t playback_get_playing(void);
-bool_t playback_get_ready (void);
-bool_t playback_get_paused(void);
-void playback_seek(int time);
-
-char * playback_get_filename (void); /* pooled */
-char * playback_get_title (void); /* pooled */
-int playback_get_length (void);
-void playback_get_info (int * bitrate, int * samplerate, int * channels);
-
-void playback_get_volume (int * l, int * r);
-void playback_set_volume (int l, int r);
 
 #endif /* AUDACIOUS_PLAYBACK_H */

@@ -30,6 +30,7 @@
 #include <libaudcore/tuple.h>
 
 #include "config.h"
+#include "drct.h"
 #include "i18n.h"
 #include "misc.h"
 #include "playback.h"
@@ -623,10 +624,10 @@ static Entry * get_playback_entry (bool_t need_decoder, bool_t need_tuple)
 
 static void get_resume_state (int * state, int * time)
 {
-    if (playback_get_playing ())
+    if (drct_get_playing ())
     {
-        * state = playback_get_paused () ? RESUME_PAUSE : RESUME_PLAY;
-        * time = playback_get_time ();
+        * state = drct_get_paused () ? RESUME_PAUSE : RESUME_PLAY;
+        * time = drct_get_time ();
     }
     else
     {
@@ -746,8 +747,8 @@ void playlist_reorder (int from, int to, int count)
 void playlist_delete (int playlist_num)
 {
     /* stop playback before locking playlists */
-    if (playback_get_playing () && playlist_num == playlist_get_playing ())
-        playback_stop ();
+    if (drct_get_playing () && playlist_num == playlist_get_playing ())
+        drct_stop ();
 
     ENTER_GET_PLAYLIST ();
 
@@ -872,7 +873,7 @@ void playlist_set_playing (int playlist_num)
     get_resume_state (& state, & time);
 
     if (state != RESUME_STOP)
-        playback_stop ();
+        drct_stop ();
 
     ENTER;
 
@@ -1015,10 +1016,10 @@ void playlist_entry_insert_batch_raw (int playlist_num, int at,
 void playlist_entry_delete (int playlist_num, int at, int number)
 {
     /* stop playback before locking playlists */
-    if (playback_get_playing () && playlist_num == playlist_get_playing () &&
+    if (drct_get_playing () && playlist_num == playlist_get_playing () &&
      playlist_get_position (playlist_num) >= at && playlist_get_position
      (playlist_num) < at + number)
-        playback_stop ();
+        drct_stop ();
 
     ENTER_GET_PLAYLIST ();
 
@@ -1138,8 +1139,8 @@ int playlist_entry_get_length (int playlist_num, int entry_num, bool_t fast)
 void playlist_set_position (int playlist_num, int entry_num)
 {
     /* stop playback before locking playlists */
-    if (playback_get_playing () && playlist_num == playlist_get_playing ())
-        playback_stop ();
+    if (drct_get_playing () && playlist_num == playlist_get_playing ())
+        drct_stop ();
 
     ENTER_GET_PLAYLIST ();
 
@@ -1370,9 +1371,9 @@ static Entry * find_unselected_focus (Playlist * playlist)
 void playlist_delete_selected (int playlist_num)
 {
     /* stop playback before locking playlists */
-    if (playback_get_playing () && playlist_num == playlist_get_playing () &&
+    if (drct_get_playing () && playlist_num == playlist_get_playing () &&
      playlist_entry_get_selected (playlist_num, playlist_get_position (playlist_num)))
-        playback_stop ();
+        drct_stop ();
 
     ENTER_GET_PLAYLIST ();
 
@@ -1980,8 +1981,8 @@ static bool_t shuffle_prev (Playlist * playlist)
 bool_t playlist_prev_song (int playlist_num)
 {
     /* stop playback before locking playlists */
-    if (playback_get_playing () && playlist_num == playlist_get_playing ())
-        playback_stop ();
+    if (drct_get_playing () && playlist_num == playlist_get_playing ())
+        drct_stop ();
 
     ENTER_GET_PLAYLIST (FALSE);
 
@@ -2066,8 +2067,8 @@ static void shuffle_reset (Playlist * playlist)
 bool_t playlist_next_song (int playlist_num, bool_t repeat)
 {
     /* stop playback before locking playlists */
-    if (playback_get_playing () && playlist_num == playlist_get_playing ())
-        playback_stop ();
+    if (drct_get_playing () && playlist_num == playlist_get_playing ())
+        drct_stop ();
 
     ENTER_GET_PLAYLIST (FALSE);
 

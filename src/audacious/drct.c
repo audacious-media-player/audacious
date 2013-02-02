@@ -53,15 +53,15 @@ void drct_play_playlist (int playlist)
     if (! same_playlist)
         playlist_set_playing (playlist);
 
-    if (playback_get_playing ())
+    if (drct_get_playing ())
     {
-        if (playback_get_paused ())
-            playback_pause ();
+        if (drct_get_paused ())
+            drct_pause ();
         else if (same_playlist)
         {
             int a, b;
             drct_get_ab_repeat (& a, & b);
-            playback_seek (MAX (a, 0));
+            drct_seek (MAX (a, 0));
         }
     }
     else
@@ -73,76 +73,7 @@ void drct_play_playlist (int playlist)
     }
 }
 
-void drct_pause (void)
-{
-    if (playback_get_playing ())
-        playback_pause ();
-}
-
-void drct_stop (void)
-{
-    if (playback_get_playing ())
-        playback_stop ();
-}
-
-bool_t drct_get_playing (void)
-{
-    return playback_get_playing ();
-}
-
-bool_t drct_get_ready (void)
-{
-    return playback_get_ready ();
-}
-
-bool_t drct_get_paused (void)
-{
-    return playback_get_paused ();
-}
-
-char * drct_get_filename (void)
-{
-    return playback_get_filename ();
-}
-
-char * drct_get_title (void)
-{
-    return playback_get_title ();
-}
-
-void drct_get_info (int * bitrate, int * samplerate, int * channels)
-{
-    playback_get_info (bitrate, samplerate, channels);
-}
-
-int drct_get_time (void)
-{
-    return playback_get_time ();
-}
-
-int drct_get_length (void)
-{
-    return playback_get_length ();
-}
-
-void drct_seek (int time)
-{
-    playback_seek (time);
-}
-
 /* --- VOLUME CONTROL --- */
-
-void drct_get_volume (int * left, int * right)
-{
-    playback_get_volume (left, right);
-    * left = CLAMP (* left, 0, 100);
-    * right = CLAMP (* right, 0, 100);
-}
-
-void drct_set_volume (int left, int right)
-{
-    playback_set_volume (CLAMP (left, 0, 100), CLAMP (right, 0, 100));
-}
 
 void drct_get_volume_main (int * volume)
 {
@@ -196,7 +127,7 @@ void drct_set_volume_balance (int balance)
 
 void drct_pl_next (void)
 {
-    bool_t play = playback_get_playing ();
+    bool_t play = drct_get_playing ();
 
     int playlist = playlist_get_playing ();
     if (playlist < 0)
@@ -211,7 +142,7 @@ void drct_pl_next (void)
 
 void drct_pl_prev (void)
 {
-    bool_t play = playback_get_playing ();
+    bool_t play = drct_get_playing ();
 
     int playlist = playlist_get_playing ();
     if (playlist < 0)
@@ -289,7 +220,7 @@ void drct_pl_delete_selected (int list)
 
     if (get_bool (NULL, "advance_on_delete")
      && ! get_bool (NULL, "no_playlist_advance")
-     && playback_get_playing () && list == playlist_get_playing ()
+     && drct_get_playing () && list == playlist_get_playing ()
      && pos >= 0 && playlist_entry_get_selected (list, pos))
     {
         playlist_entry_set_selected (list, pos, FALSE);

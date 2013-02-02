@@ -21,9 +21,9 @@
 #include <pthread.h>
 
 #include "debug.h"
+#include "drct.h"
 #include "effect.h"
 #include "misc.h"
-#include "playback.h"
 #include "plugin.h"
 #include "plugins.h"
 
@@ -232,7 +232,7 @@ static void effect_enable (PluginHandle * plugin, EffectPlugin * ep, bool_t
 
 bool_t effect_plugin_start (PluginHandle * plugin)
 {
-    if (playback_get_playing ())
+    if (drct_get_playing ())
     {
         EffectPlugin * ep = plugin_get_header (plugin);
         g_return_val_if_fail (ep != NULL, FALSE);
@@ -244,7 +244,7 @@ bool_t effect_plugin_start (PluginHandle * plugin)
 
 void effect_plugin_stop (PluginHandle * plugin)
 {
-    if (playback_get_playing ())
+    if (drct_get_playing ())
     {
         EffectPlugin * ep = plugin_get_header (plugin);
         g_return_if_fail (ep != NULL);
