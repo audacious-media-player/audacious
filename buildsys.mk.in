@@ -73,7 +73,6 @@ prefix = @prefix@
 exec_prefix = @exec_prefix@
 bindir = @bindir@
 libdir = @libdir@
-pkgconfigdir = @pkgconfigdir@
 plugindir ?= ${libdir}/${PACKAGE_NAME}
 datarootdir = @datarootdir@
 datadir = @datadir@
