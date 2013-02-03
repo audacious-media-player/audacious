@@ -4,14 +4,16 @@
 #
 # Translators:
 # Andrej Herceg <herceg.andrej@zoznam.sk>, 2007, 2009, 2010, 2011.
+#   <lukas.dobransky@gmail.com>, 2012.
+# Lukáš Dobránsky <lukas.dobransky@gmail.com>, 2013.
 # Tomáš Vadina <kyberdev@gmail.com>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-12-09 22:42+0100\n"
-"PO-Revision-Date: 2012-09-27 15:24+0000\n"
-"Last-Translator: Radioactiveman <thomas-lange2@gmx.de>\n"
+"POT-Creation-Date: 2013-02-03 20:49+0100\n"
+"PO-Revision-Date: 2013-02-03 19:25+0000\n"
+"Last-Translator: citro <lukas.dobransky@gmail.com>\n"
 "Language-Team: Slovak\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
@@ -118,6 +120,11 @@ msgstr "Audacious"
 msgid "No decoder found for %s."
 msgstr "Pre %s nebol nájdený žiadny dekodér."
 
+#: src/audacious/playback.c:329
+#, c-format
+msgid "%s could not be opened."
+msgstr "%s nemohol byť otvorený."
+
 #: src/audacious/playlist-files.c:51
 #, c-format
 msgid "Cannot %s %s: unsupported file extension."
@@ -150,12 +157,12 @@ msgstr ""
 #: src/audacious/plugin-preferences.c:50
 #, c-format
 msgid "About %s"
-msgstr ""
+msgstr "O %s"
 
 #: src/audacious/plugin-preferences.c:88
 #, c-format
 msgid "%s Settings"
-msgstr ""
+msgstr "%s Nastavenia"
 
 #: src/audacious/ui_preferences.c:69
 msgid "Audio"
@@ -171,7 +178,7 @@ msgstr "Zoznam skladieb"
 
 #: src/audacious/ui_preferences.c:72
 msgid "Song Info"
-msgstr ""
+msgstr "Informácie o skladbe"
 
 #: src/audacious/ui_preferences.c:73
 msgid "Plugins"
@@ -232,7 +239,7 @@ msgstr "Žiadne"
 
 #: src/audacious/ui_preferences.c:97
 msgid "Arabic"
-msgstr "Arabština"
+msgstr "Arabčina"
 
 #: src/audacious/ui_preferences.c:98
 msgid "Baltic"
@@ -276,7 +283,7 @@ msgstr "Turečtina"
 
 #: src/audacious/ui_preferences.c:114
 msgid "Floating point"
-msgstr ""
+msgstr "Plávajúca desatinná čiarka"
 
 #: src/audacious/ui_preferences.c:130
 msgid "Album mode"
@@ -300,7 +307,7 @@ msgstr "ms"
 
 #: src/audacious/ui_preferences.c:141
 msgid "Soft clipping"
-msgstr ""
+msgstr "Jemné orezanie"
 
 #: src/audacious/ui_preferences.c:143
 msgid "Use software volume control (not recommended)"
@@ -396,35 +403,35 @@ msgstr "Nenačítať metadáta skladieb pred prehraním"
 
 #: src/audacious/ui_preferences.c:201
 msgid "<b>Compatibility</b>"
-msgstr ""
+msgstr "<b>Kompatibilita</b>"
 
 #: src/audacious/ui_preferences.c:202
 msgid "Interpret \\ (backward slash) as a folder delimiter"
-msgstr ""
+msgstr "Interpret \\ (spätné lomítko) ako oddeľovač priečinku"
 
 #: src/audacious/ui_preferences.c:209
 msgid "<b>Album Art</b>"
-msgstr ""
+msgstr "<b>Album</b>"
 
 #: src/audacious/ui_preferences.c:210
 msgid "Search for images matching these words (comma-separated):"
-msgstr ""
+msgstr "Vyhľadať obrázky odpovedajúce týmto slovám (oddelené čiarkou):"
 
 #: src/audacious/ui_preferences.c:212
 msgid "Exclude images matching these words (comma-separated):"
-msgstr ""
+msgstr "Vylúčiť obrázky odpovedajúce týmto slovám (oddelené čiarkou):"
 
 #: src/audacious/ui_preferences.c:214
 msgid "Search for images matching song file name"
-msgstr ""
+msgstr "Hľadať obrázky odpovedajúce názvu súboru"
 
 #: src/audacious/ui_preferences.c:216
 msgid "Search recursively"
-msgstr ""
+msgstr "Hľadať rekurzivne"
 
 #: src/audacious/ui_preferences.c:218
 msgid "Search depth:"
-msgstr ""
+msgstr "Hĺka hľadania:"
 
 #: src/audacious/ui_preferences.c:221
 msgid "<b>Popup Information</b>"
@@ -432,15 +439,15 @@ msgstr "<b>Vyskakovacie okno s podrobnosťami</b>"
 
 #: src/audacious/ui_preferences.c:222
 msgid "Show popup information"
-msgstr ""
+msgstr "Zobraziť popup informácie"
 
 #: src/audacious/ui_preferences.c:224
 msgid "Popup delay (tenths of a second):"
-msgstr ""
+msgstr "Popup oneskorenie (desatiny sekundy):"
 
 #: src/audacious/ui_preferences.c:227
 msgid "Show time scale for current song"
-msgstr ""
+msgstr "Zobraziť časový merač pre aktuálnu skladbu"
 
 #: src/audacious/ui_preferences.c:241
 msgid "TITLE"
@@ -566,7 +573,7 @@ msgstr "Zásluhy"
 
 #: src/libaudgui/about.c:38
 msgid "License"
-msgstr ""
+msgstr "Licencia"
 
 #: src/libaudgui/about.c:74
 msgid "About Audacious"
@@ -583,7 +590,7 @@ msgstr ""
 
 #: src/libaudgui/confirm.c:74
 msgid "Close Playlist"
-msgstr ""
+msgstr "Zatvoriť zoznam skladieb"
 
 #: src/libaudgui/confirm.c:78
 msgid "_Don't show this message again"
@@ -651,11 +658,11 @@ msgstr "Predzosilnenie"
 
 #: src/libaudgui/infopopup.c:202
 msgid "Track"
-msgstr ""
+msgstr "Stopa"
 
 #: src/libaudgui/infopopup.c:204
 msgid "Length"
-msgstr ""
+msgstr "Dĺžka"
 
 #: src/libaudgui/infowin.c:74
 msgid "Acid Jazz"
@@ -886,7 +893,7 @@ msgstr "Skočiť na čas"
 
 #: src/libaudgui/jump-to-time.c:61
 msgid "Enter time (minutes:seconds):"
-msgstr ""
+msgstr "Zadajte čas (minúty:sekundy):"
 
 #: src/libaudgui/playlists.c:33
 msgid "Export Playlist"
@@ -980,7 +987,7 @@ msgstr "Pridať URL"
 
 #: src/libaudgui/url-opener.c:65
 msgid "Enter URL:"
-msgstr ""
+msgstr "Zadajte URL:"
 
 #: src/libaudgui/util.c:143
 msgid ""

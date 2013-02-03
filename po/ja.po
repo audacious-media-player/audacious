@@ -5,14 +5,14 @@
 # Translators:
 #   <dritan86@gmail.com>, 2012.
 #   <m2330880989@shibuya-center.com>, 2012.
-# Shuuji Takahashi <shuuji3@gmail.com>, 2012.
+# Shuuji Takahashi <shuuji3@gmail.com>, 2012-2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-12-09 22:42+0100\n"
-"PO-Revision-Date: 2012-10-11 10:30+0000\n"
-"Last-Translator: natird <dritan86@gmail.com>\n"
+"POT-Creation-Date: 2013-02-03 20:49+0100\n"
+"PO-Revision-Date: 2013-02-03 17:53+0000\n"
+"Last-Translator: Radioactiveman <thomas-lange2@gmx.de>\n"
 "Language-Team: Japanese\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
@@ -116,6 +116,11 @@ msgstr "Audacious"
 #, c-format
 msgid "No decoder found for %s."
 msgstr "%s のためのデコーダがありません。"
+
+#: src/audacious/playback.c:329
+#, c-format
+msgid "%s could not be opened."
+msgstr ""
 
 #: src/audacious/playlist-files.c:51
 #, c-format
@@ -395,11 +400,12 @@ msgstr "再生が終わるまで曲のメタデータを読み込まない"
 
 #: src/audacious/ui_preferences.c:201
 msgid "<b>Compatibility</b>"
-msgstr "<b>Compatibility</b>"
+msgstr "<b>互換性</b>"
 
 #: src/audacious/ui_preferences.c:202
 msgid "Interpret \\ (backward slash) as a folder delimiter"
-msgstr "Interpret \\ (backward slash) as a folder delimiter"
+msgstr ""
+"\\ (バックスラッシュ) をフォルダーのデリミタ（区切り文字）として解釈する"
 
 #: src/audacious/ui_preferences.c:209
 msgid "<b>Album Art</b>"
@@ -574,8 +580,7 @@ msgstr "Audacious について"
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
-msgstr ""
-"本当に %s を閉じますか？ 変更が加えられていた場合、保存されずに破棄されます。"
+msgstr "本当に %s を閉じますか？ プレイリストに加えられた変更は失われます。"
 
 #: src/libaudgui/confirm.c:74
 msgid "Close Playlist"

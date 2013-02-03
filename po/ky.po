@@ -4,14 +4,14 @@
 #
 # Translators:
 #   <chingis091@lavabit.com>, 2012.
-#   <translatorky@lavabit.com>, 2012.
+#   <translatorky@lavabit.com>, 2012-2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-12-09 23:50+0100\n"
-"PO-Revision-Date: 2012-11-04 22:19+0000\n"
-"Last-Translator: chingis <translatorky@lavabit.com>\n"
+"POT-Creation-Date: 2013-02-03 20:49+0100\n"
+"PO-Revision-Date: 2013-02-03 17:53+0000\n"
+"Last-Translator: Radioactiveman <thomas-lange2@gmx.de>\n"
 "Language-Team: Kirgyz\n"
 "Language: ky\n"
 "MIME-Version: 1.0\n"
@@ -27,7 +27,7 @@ msgstr "Издөө ..."
 #, c-format
 msgid "%d file found"
 msgid_plural "%d files found"
-msgstr[0] "%d файлы табылды"
+msgstr[0] "%d файл табылды"
 
 #: src/audacious/chardet.c:39
 msgid "  (invalid UTF-8)"
@@ -44,11 +44,11 @@ msgstr ""
 
 #: src/audacious/main.c:234
 msgid "Start playing current playlist"
-msgstr "Кезектеги ойнотуу тизмесин ойнотуп баштатуу"
+msgstr "Кезектеги ойнотуу тизмесин ойнотуп баштоо"
 
 #: src/audacious/main.c:235
 msgid "Pause current song"
-msgstr "Кезектеги ырды паузага коюу"
+msgstr "Кезектеги ырды бир азга токтотуу"
 
 #: src/audacious/main.c:236
 msgid "Stop current song"
@@ -112,6 +112,11 @@ msgstr "Audacious"
 #: src/audacious/playback.c:305
 #, c-format
 msgid "No decoder found for %s."
+msgstr ""
+
+#: src/audacious/playback.c:329
+#, c-format
+msgid "%s could not be opened."
 msgstr ""
 
 #: src/audacious/playlist-files.c:51
@@ -278,15 +283,15 @@ msgstr "Альбом режими"
 
 #: src/audacious/ui_preferences.c:133
 msgid "<b>Output Settings</b>"
-msgstr "<b>Чыгыш ырастоолору</b>"
+msgstr "<b>Чыгыштын ырастоолору</b>"
 
 #: src/audacious/ui_preferences.c:135
 msgid "Bit depth:"
-msgstr "Бит тереңдиги:"
+msgstr "Биттин тереңдиги:"
 
 #: src/audacious/ui_preferences.c:138
 msgid "Buffer size:"
-msgstr "Буфер өлчөмү:"
+msgstr "Буфердин өлчөмү:"
 
 #: src/audacious/ui_preferences.c:140
 msgid "ms"
@@ -330,23 +335,23 @@ msgstr ""
 
 #: src/audacious/ui_preferences.c:160
 msgid "Proxy hostname:"
-msgstr "Проксинин түйүн аты:"
+msgstr "Сервер:"
 
 #: src/audacious/ui_preferences.c:161
 msgid "Proxy port:"
-msgstr "Прокси порту:"
+msgstr "Порт:"
 
 #: src/audacious/ui_preferences.c:164
 msgid "Proxy username:"
-msgstr "Прокси колдонуучу аты:"
+msgstr "Колдонуучу аты:"
 
 #: src/audacious/ui_preferences.c:165
 msgid "Proxy password:"
-msgstr "Прокси сырсөзү:"
+msgstr "Сырсөз:"
 
 #: src/audacious/ui_preferences.c:169
 msgid "<b>Proxy Configuration</b>"
-msgstr "<b>Прокси ырастоосу</b>"
+msgstr "<b>Проксини ырастоо</b>"
 
 #: src/audacious/ui_preferences.c:170
 msgid "Enable proxy usage"
@@ -470,7 +475,7 @@ msgstr "Өз ырастоолор"
 
 #: src/audacious/ui_preferences.c:1034
 msgid "<b>Song Display</b>"
-msgstr "<b>Ыр көрсөтүү</b>"
+msgstr "<b>Ырды көрсөтүү</b>"
 
 #: src/audacious/ui_preferences.c:1043
 msgid "Show song numbers"
@@ -518,7 +523,7 @@ msgstr "Жалпы"
 
 #: src/audacious/ui_preferences.c:1278
 msgid "Audacious Preferences"
-msgstr "Audacious параметрлери"
+msgstr "Audacious'тун параметрлери"
 
 #: src/audacious/util.c:127
 #, c-format

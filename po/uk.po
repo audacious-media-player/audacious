@@ -13,9 +13,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-12-09 22:42+0100\n"
-"PO-Revision-Date: 2012-10-01 13:10+0000\n"
-"Last-Translator: Rax Garfield <rax@rax.pp.ua>\n"
+"POT-Creation-Date: 2013-02-03 20:49+0100\n"
+"PO-Revision-Date: 2013-02-03 17:53+0000\n"
+"Last-Translator: Radioactiveman <thomas-lange2@gmx.de>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
@@ -122,6 +122,11 @@ msgstr "Audacious"
 #, c-format
 msgid "No decoder found for %s."
 msgstr "Не знайдено декодера для %s."
+
+#: src/audacious/playback.c:329
+#, c-format
+msgid "%s could not be opened."
+msgstr ""
 
 #: src/audacious/playlist-files.c:51
 #, c-format

@@ -5,12 +5,13 @@
 # Translators:
 # Chasye <chasye@gmail.com>, 2010.
 #   <runningwaterpro@gmail.com>, 2012.
+# zhnagmin <zm1990s@gmail.com>, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-12-09 22:42+0100\n"
-"PO-Revision-Date: 2012-09-27 15:24+0000\n"
+"POT-Creation-Date: 2013-02-03 20:49+0100\n"
+"PO-Revision-Date: 2013-02-03 17:53+0000\n"
 "Last-Translator: Radioactiveman <thomas-lange2@gmx.de>\n"
 "Language-Team: Chinese (simplified)\n"
 "Language: zh_CN\n"
@@ -115,6 +116,11 @@ msgstr "Audacious"
 #, c-format
 msgid "No decoder found for %s."
 msgstr "未能为 %s 找到解码器。"
+
+#: src/audacious/playback.c:329
+#, c-format
+msgid "%s could not be opened."
+msgstr ""
 
 #: src/audacious/playlist-files.c:51
 #, c-format
@@ -272,7 +278,7 @@ msgstr "土耳其语"
 
 #: src/audacious/ui_preferences.c:114
 msgid "Floating point"
-msgstr ""
+msgstr "浮点"
 
 #: src/audacious/ui_preferences.c:130
 msgid "Album mode"
@@ -296,7 +302,7 @@ msgstr "毫秒"
 
 #: src/audacious/ui_preferences.c:141
 msgid "Soft clipping"
-msgstr ""
+msgstr "柔性剪峰"
 
 #: src/audacious/ui_preferences.c:143
 msgid "Use software volume control (not recommended)"
@@ -392,11 +398,11 @@ msgstr "未播放时切勿加载元数据"
 
 #: src/audacious/ui_preferences.c:201
 msgid "<b>Compatibility</b>"
-msgstr ""
+msgstr "<b>兼容性</b>"
 
 #: src/audacious/ui_preferences.c:202
 msgid "Interpret \\ (backward slash) as a folder delimiter"
-msgstr ""
+msgstr "说明 \\(反斜杠)作为一个文件夹分隔符"
 
 #: src/audacious/ui_preferences.c:209
 msgid "<b>Album Art</b>"
@@ -560,7 +566,7 @@ msgstr "特别鸣谢"
 
 #: src/libaudgui/about.c:38
 msgid "License"
-msgstr ""
+msgstr "许可"
 
 #: src/libaudgui/about.c:74
 msgid "About Audacious"
@@ -575,7 +581,7 @@ msgstr "关闭”%s“将会使所有已改变的设置丢失，要继续吗？"
 
 #: src/libaudgui/confirm.c:74
 msgid "Close Playlist"
-msgstr ""
+msgstr "关闭播放列表"
 
 #: src/libaudgui/confirm.c:78
 msgid "_Don't show this message again"
@@ -651,159 +657,159 @@ msgstr "长度"
 
 #: src/libaudgui/infowin.c:74
 msgid "Acid Jazz"
-msgstr ""
+msgstr "迷幻爵士乐"
 
 #: src/libaudgui/infowin.c:75
 msgid "Acid Rock"
-msgstr ""
+msgstr "酸性摇滚"
 
 #: src/libaudgui/infowin.c:76
 msgid "Ambient"
-msgstr ""
+msgstr "氛围音乐"
 
 #: src/libaudgui/infowin.c:77
 msgid "Bebop"
-msgstr ""
+msgstr "比波普爵士乐"
 
 #: src/libaudgui/infowin.c:78
 msgid "Bluegrass"
-msgstr ""
+msgstr "蓝草音乐"
 
 #: src/libaudgui/infowin.c:79
 msgid "Blues"
-msgstr ""
+msgstr "蓝调"
 
 #: src/libaudgui/infowin.c:80
 msgid "Chamber Music"
-msgstr ""
+msgstr "室内音乐"
 
 #: src/libaudgui/infowin.c:81
 msgid "Classical"
-msgstr ""
+msgstr "古典音乐"
 
 #: src/libaudgui/infowin.c:82
 msgid "Country"
-msgstr ""
+msgstr "乡村音乐"
 
 #: src/libaudgui/infowin.c:83
 msgid "Death Metal"
-msgstr ""
+msgstr "死亡金属"
 
 #: src/libaudgui/infowin.c:84
 msgid "Disco"
-msgstr ""
+msgstr "迪斯科"
 
 #: src/libaudgui/infowin.c:85
 msgid "Easy Listening"
-msgstr ""
+msgstr "轻音乐"
 
 #: src/libaudgui/infowin.c:86
 msgid "Folk"
-msgstr ""
+msgstr "民谣"
 
 #: src/libaudgui/infowin.c:87
 msgid "Funk"
-msgstr ""
+msgstr "放克"
 
 #: src/libaudgui/infowin.c:88
 msgid "Gangsta Rap"
-msgstr ""
+msgstr "匪帮说唱"
 
 #: src/libaudgui/infowin.c:89
 msgid "Gospel"
-msgstr ""
+msgstr "福音音乐"
 
 #: src/libaudgui/infowin.c:90
 msgid "Grunge"
-msgstr ""
+msgstr "垃圾摇滚"
 
 #: src/libaudgui/infowin.c:91
 msgid "Hard Rock"
-msgstr ""
+msgstr "硬摇滚"
 
 #: src/libaudgui/infowin.c:92
 msgid "Heavy Metal"
-msgstr ""
+msgstr "重金属"
 
 #: src/libaudgui/infowin.c:93
 msgid "Hip-hop"
-msgstr ""
+msgstr "嘻哈音乐"
 
 #: src/libaudgui/infowin.c:94
 msgid "House"
-msgstr ""
+msgstr " 浩室舞曲"
 
 #: src/libaudgui/infowin.c:95
 msgid "Jazz"
-msgstr ""
+msgstr "爵士"
 
 #: src/libaudgui/infowin.c:96
 msgid "Jungle"
-msgstr ""
+msgstr "丛林音乐"
 
 #: src/libaudgui/infowin.c:97
 msgid "Metal"
-msgstr ""
+msgstr "金属"
 
 #: src/libaudgui/infowin.c:98
 msgid "New Age"
-msgstr ""
+msgstr "新世纪"
 
 #: src/libaudgui/infowin.c:99
 msgid "New Wave"
-msgstr ""
+msgstr "新浪潮"
 
 #: src/libaudgui/infowin.c:100
 msgid "Noise"
-msgstr ""
+msgstr "噪音音乐"
 
 #: src/libaudgui/infowin.c:101
 msgid "Pop"
-msgstr ""
+msgstr "流行"
 
 #: src/libaudgui/infowin.c:102
 msgid "Punk Rock"
-msgstr ""
+msgstr "朋客摇滚乐"
 
 #: src/libaudgui/infowin.c:103
 msgid "Rap"
-msgstr ""
+msgstr "说唱"
 
 #: src/libaudgui/infowin.c:104
 msgid "Reggae"
-msgstr ""
+msgstr "雷鬼"
 
 #: src/libaudgui/infowin.c:105
 msgid "Rock"
-msgstr ""
+msgstr "摇滚"
 
 #: src/libaudgui/infowin.c:106
 msgid "Rock and Roll"
-msgstr ""
+msgstr "摇滚乐"
 
 #: src/libaudgui/infowin.c:107
 msgid "Rhythm and Blues"
-msgstr ""
+msgstr "节奏布鲁斯音乐"
 
 #: src/libaudgui/infowin.c:108
 msgid "Ska"
-msgstr ""
+msgstr "斯卡"
 
 #: src/libaudgui/infowin.c:109
 msgid "Soul"
-msgstr ""
+msgstr "灵魂乐"
 
 #: src/libaudgui/infowin.c:110
 msgid "Swing"
-msgstr ""
+msgstr " 摇摆乐"
 
 #: src/libaudgui/infowin.c:111
 msgid "Techno"
-msgstr ""
+msgstr " 科技舞曲"
 
 #: src/libaudgui/infowin.c:112
 msgid "Trip-hop"
-msgstr ""
+msgstr "神游舞曲"
 
 #: src/libaudgui/infowin.c:176 src/libaudgui/infowin.c:365
 #: src/libaudgui/infowin.c:368 src/libaudgui/infowin.c:371

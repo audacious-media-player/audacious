@@ -11,9 +11,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-12-09 22:42+0100\n"
-"PO-Revision-Date: 2012-09-28 09:57+0000\n"
-"Last-Translator: Sérgio Marques <smarquespt@gmail.com>\n"
+"POT-Creation-Date: 2013-02-03 20:49+0100\n"
+"PO-Revision-Date: 2013-02-03 17:53+0000\n"
+"Last-Translator: Radioactiveman <thomas-lange2@gmx.de>\n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
 "MIME-Version: 1.0\n"
@@ -29,8 +29,8 @@ msgstr "A procurar..."
 #, c-format
 msgid "%d file found"
 msgid_plural "%d files found"
-msgstr[0] "%d ficheiro encontrado"
-msgstr[1] "%d ficheiros encontrados"
+msgstr[0] "%d ficheiro encontrado."
+msgstr[1] "%d ficheiros encontrados."
 
 #: src/audacious/chardet.c:39
 msgid "  (invalid UTF-8)"
@@ -39,7 +39,7 @@ msgstr "  (UTF-8 inválido)"
 #: src/audacious/equalizer_preset.c:180
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
-msgstr "Erro ao importar o EQF \"%s\" do Winamp"
+msgstr "Erro ao importar o EQF \"%s\" do Winamp."
 
 #: src/audacious/main.c:233
 msgid "Skip backwards in playlist"
@@ -59,7 +59,7 @@ msgstr "Parar faixa atual"
 
 #: src/audacious/main.c:237
 msgid "Pause if playing, play otherwise"
-msgstr "Pausar se em reprodução. Caso contrário, reproduzir"
+msgstr "Pausar se em reprodução. Caso contrário, reproduzir."
 
 #: src/audacious/main.c:238
 msgid "Skip forward in playlist"
@@ -108,7 +108,7 @@ msgid ""
 "Try `%s --help' for more information.\n"
 msgstr ""
 "%s: %s\n"
-"Utilize \"%s --help\" para mais informações\n"
+"Utilize \"%s --help\" para mais informações.\n"
 
 #: src/audacious/main.c:549
 msgid "Audacious"
@@ -117,12 +117,17 @@ msgstr "Audacious"
 #: src/audacious/playback.c:305
 #, c-format
 msgid "No decoder found for %s."
-msgstr "Não foi encontrado o descodificador para %s"
+msgstr "Não foi encontrado o descodificador para %s."
+
+#: src/audacious/playback.c:329
+#, c-format
+msgid "%s could not be opened."
+msgstr ""
 
 #: src/audacious/playlist-files.c:51
 #, c-format
 msgid "Cannot %s %s: unsupported file extension."
-msgstr "Não é possível %s %s: extensão não suportada"
+msgstr "Não é possível %s %s: extensão não suportada."
 
 #: src/audacious/playlist-files.c:52
 msgid "save"
@@ -146,17 +151,17 @@ msgid ""
 "(or has been disabled)."
 msgstr ""
 "A lista de reprodução não pode ser ordenada porque a análise de detalhes "
-"ainda está a decorrer (ou inativa)"
+"ainda está a decorrer (ou inativa)."
 
 #: src/audacious/plugin-preferences.c:50
 #, c-format
 msgid "About %s"
-msgstr "Sobre o %s"
+msgstr "Sobre %s"
 
 #: src/audacious/plugin-preferences.c:88
 #, c-format
 msgid "%s Settings"
-msgstr "Definições do %s"
+msgstr "Definições de %s"
 
 #: src/audacious/ui_preferences.c:69
 msgid "Audio"
@@ -313,7 +318,7 @@ msgstr "<b>Replay Gain</b>"
 
 #: src/audacious/ui_preferences.c:146
 msgid "Enable Replay Gain"
-msgstr "Ativar Replay Gain"
+msgstr "Ativar replay gain"
 
 #: src/audacious/ui_preferences.c:149
 msgid "Prevent clipping (recommended)"
@@ -369,7 +374,7 @@ msgstr "Deteção automática da codificação de caracteres para:"
 
 #: src/audacious/ui_preferences.c:185
 msgid "Fallback character encodings:"
-msgstr "Recurso para codificação de caracteres:"
+msgstr "Codificação alternativa de caracteres:"
 
 #: src/audacious/ui_preferences.c:189
 msgid "<b>Behavior</b>"
@@ -397,7 +402,7 @@ msgstr "Não carregar detalhes da faixa antes da reprodução"
 
 #: src/audacious/ui_preferences.c:201
 msgid "<b>Compatibility</b>"
-msgstr "<b>Compatibilidade</b>"
+msgstr "<b>Compatibidade</b>"
 
 #: src/audacious/ui_preferences.c:202
 msgid "Interpret \\ (backward slash) as a folder delimiter"
@@ -417,7 +422,7 @@ msgstr "Excluir imagens que tenham estas palavras (separadas por vírgula):"
 
 #: src/audacious/ui_preferences.c:214
 msgid "Search for images matching song file name"
-msgstr "Gestor de fila de reprodução"
+msgstr "Procurar por imagens concidentes com o nome do ficheiro"
 
 #: src/audacious/ui_preferences.c:216
 msgid "Search recursively"
@@ -425,7 +430,7 @@ msgstr "Procurar recursivamente"
 
 #: src/audacious/ui_preferences.c:218
 msgid "Search depth:"
-msgstr "Profundidade da procura:"
+msgstr "Extensão da procura:"
 
 #: src/audacious/ui_preferences.c:221
 msgid "<b>Popup Information</b>"
@@ -481,7 +486,7 @@ msgstr "<b>Exibição de faixas</b>"
 
 #: src/audacious/ui_preferences.c:1043
 msgid "Show song numbers"
-msgstr "Mostrar número das faixas"
+msgstr "Mostrar número da faixa"
 
 #: src/audacious/ui_preferences.c:1054
 msgid "Show leading zeroes (02:00 instead of 2:00)"
@@ -509,15 +514,15 @@ msgstr "Transporte"
 
 #: src/audacious/ui_preferences.c:1239
 msgid "Input"
-msgstr "Entrada"
+msgstr "Reprodução"
 
 #: src/audacious/ui_preferences.c:1240
 msgid "Effect"
-msgstr "Efeito"
+msgstr "Efeitos"
 
 #: src/audacious/ui_preferences.c:1240
 msgid "Visualization"
-msgstr "Visualização"
+msgstr "Visualizações"
 
 #: src/audacious/ui_preferences.c:1240
 msgid "General"
@@ -579,7 +584,7 @@ msgid ""
 "playlist was exported will be lost."
 msgstr ""
 "Tem a certeza de que quer fechar %s? Se o fizer, vai perder todas as "
-"alterações efetuadas após a exportação da lista de reprodução"
+"alterações efetuadas após a exportação da lista de reprodução."
 
 #: src/libaudgui/confirm.c:74
 msgid "Close Playlist"
@@ -587,7 +592,7 @@ msgstr "Fechar lista de reprodução"
 
 #: src/libaudgui/confirm.c:78
 msgid "_Don't show this message again"
-msgstr "_Não mostrar mensagem novamente"
+msgstr "_Não mostrar novamente."
 
 #: src/libaudgui/confirm.c:101
 msgid "Rename Playlist"
@@ -820,11 +825,11 @@ msgstr "<span size=\"small\">n/d</span>"
 
 #: src/libaudgui/infowin.c:266
 msgid "Metadata updated successfully"
-msgstr "Detalhes atualizados com sucesso"
+msgstr "Detalhes atualizados com sucesso."
 
 #: src/libaudgui/infowin.c:271
 msgid "Metadata updating failed"
-msgstr "Falha ao atualizar os detalhes"
+msgstr "Falha ao atualizar os detalhes."
 
 #: src/libaudgui/infowin.c:319
 msgid "Track Information"
@@ -888,7 +893,7 @@ msgstr "Ir para posição temporal"
 
 #: src/libaudgui/jump-to-time.c:61
 msgid "Enter time (minutes:seconds):"
-msgstr "Indique a duração (minutos:segundos)"
+msgstr "Indique a duração (minutos:segundos):"
 
 #: src/libaudgui/playlists.c:33
 msgid "Export Playlist"
@@ -905,7 +910,7 @@ msgstr "Substituir %s?"
 
 #: src/libaudgui/queue-manager.c:196
 msgid "Queue Manager"
-msgstr "Gestor de fila de reprodução"
+msgstr "Gestão de fila de reprodução"
 
 #: src/libaudgui/ui_fileopener.c:107
 msgid "Open Files"
@@ -958,7 +963,7 @@ msgstr "Fechar ao ir para a faixa"
 
 #: src/libaudgui/ui_playlist_manager.c:261
 msgid "Playlist Manager"
-msgstr "Gestor de lista de reprodução"
+msgstr "Gestão de lista de reprodução"
 
 #: src/libaudgui/ui_playlist_manager.c:288
 msgid "Entries"
@@ -990,4 +995,4 @@ msgid ""
 "(Further messages have been hidden.)"
 msgstr ""
 "\n"
-"(Foram ocultas algumas mensagens)"
+"(Foram ocultas algumas mensagens.)"

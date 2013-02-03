@@ -15,12 +15,13 @@
 # Marco Antonio Frias Butrón <marcoantoniofrias@gmail.com>, 2012.
 # <xukosky@yahoo.es>, 2011.
 #   <xukosky@yahoo.es>, 2011.
+#   <yo@miguelrevilla.com>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-12-09 22:42+0100\n"
-"PO-Revision-Date: 2012-09-27 15:24+0000\n"
+"POT-Creation-Date: 2013-02-03 20:49+0100\n"
+"PO-Revision-Date: 2013-02-03 17:53+0000\n"
 "Last-Translator: Radioactiveman <thomas-lange2@gmx.de>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -126,6 +127,11 @@ msgstr "Audacious"
 #, c-format
 msgid "No decoder found for %s."
 msgstr "No se encontró decodificador para %s."
+
+#: src/audacious/playback.c:329
+#, c-format
+msgid "%s could not be opened."
+msgstr ""
 
 #: src/audacious/playlist-files.c:51
 #, c-format
@@ -285,7 +291,7 @@ msgstr "Turco"
 
 #: src/audacious/ui_preferences.c:114
 msgid "Floating point"
-msgstr ""
+msgstr "Coma flotante"
 
 #: src/audacious/ui_preferences.c:130
 msgid "Album mode"
@@ -405,11 +411,11 @@ msgstr "No cargar la información de metadatos hasta reproducir"
 
 #: src/audacious/ui_preferences.c:201
 msgid "<b>Compatibility</b>"
-msgstr ""
+msgstr "<b>Compatibilidad</b>"
 
 #: src/audacious/ui_preferences.c:202
 msgid "Interpret \\ (backward slash) as a folder delimiter"
-msgstr ""
+msgstr "Interpretar \\ (barra invertida) como separador de carpetas"
 
 #: src/audacious/ui_preferences.c:209
 msgid "<b>Album Art</b>"
