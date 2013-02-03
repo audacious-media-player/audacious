@@ -302,10 +302,8 @@ static void * playback_thread (void * unused)
 
     if (! current_decoder)
     {
-        char * error = g_strdup_printf (_("No decoder found for %s."),
-         current_filename);
+        SPRINTF (error, _("No decoder found for %s."), current_filename);
         interface_show_error (error);
-        g_free (error);
         playback_error = TRUE;
         goto DONE;
     }
@@ -322,7 +320,18 @@ static void * playback_thread (void * unused)
 
     bool_t seekable = (playback_entry_get_length () > 0);
 
-    VFSFile * file = vfs_fopen (current_filename, "r");
+    VFSFile * file = NULL;
+
+    if (! current_decoder->schemes || ! current_decoder->schemes[0])
+    {
+        if (! (file = vfs_fopen (current_filename, "r")))
+        {
+            SPRINTF (error, _("%s could not be opened."), current_filename);
+            interface_show_error (error);
+            playback_error = TRUE;
+            goto DONE;
+        }
+    }
 
     time_offset = seekable ? playback_entry_get_start_time () : 0;
     playback_error = ! current_decoder->play (& playback_api, current_filename,
@@ -457,7 +466,7 @@ char * playback_get_title (void)
 
     char s[32];
 
-    if (current_length)
+    if (current_length > 0)
     {
         int len = current_length / 1000;
 
