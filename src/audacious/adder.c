@@ -503,6 +503,11 @@ void adder_cleanup (void)
     pthread_mutex_unlock (& mutex);
     pthread_join (add_thread, NULL);
 
+    g_list_free_full (add_tasks, (GDestroyNotify) add_task_free);
+    add_tasks = NULL;
+    g_list_free_full (add_results, (GDestroyNotify) add_result_free);
+    add_results = NULL;
+
     if (add_source)
     {
         g_source_remove (add_source);
