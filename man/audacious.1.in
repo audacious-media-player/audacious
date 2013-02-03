@@ -75,12 +75,28 @@ Go to the next song in the playlist.
 .B Miscellaneous:
 
 .TP
-.I -v, --version
-Show the installed version of Audacious.
-
-.TP
 .I -m, --show-main-window
 Show the Audacious window if it is hidden and bring it to the top.
+
+.TP
+.I -j, --show-jump-box
+Show the Jump to Song window.
+
+.TP
+.I -h, --headless
+Start in command-line mode; i.e., without any graphical user interface.
+
+.TP
+.I -q, --quit-after-play
+Exit as soon as playback stops, or immediately if there is nothing to play.
+
+.TP
+.I -v, --version
+Print version information and exit.
+
+.TP
+.I -V, --verbose
+Print debugging output while running.
 
 .PP
 .B GTK+-related:
