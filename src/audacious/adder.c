@@ -551,23 +551,30 @@ void playlist_entry_insert_filtered (int playlist, int at,
 
 bool_t playlist_add_in_progress (int playlist)
 {
-    int playlist_id = playlist_get_unique_id (playlist);
-    g_return_val_if_fail (playlist_id >= 0, FALSE);
-
     pthread_mutex_lock (& mutex);
 
-    for (GList * node = add_tasks; node; node = node->next)
+    if (playlist >= 0)
     {
-        if (((AddTask *) node->data)->playlist_id == playlist_id)
+        int playlist_id = playlist_get_unique_id (playlist);
+
+        for (GList * node = add_tasks; node; node = node->next)
+        {
+            if (((AddTask *) node->data)->playlist_id == playlist_id)
+                goto YES;
+        }
+
+        if (current_playlist_id == playlist_id)
             goto YES;
+
+        for (GList * node = add_results; node; node = node->next)
+        {
+            if (((AddResult *) node->data)->playlist_id == playlist_id)
+                goto YES;
+        }
     }
-
-    if (current_playlist_id == playlist_id)
-        goto YES;
-
-    for (GList * node = add_results; node; node = node->next)
+    else
     {
-        if (((AddResult *) node->data)->playlist_id == playlist_id)
+        if (add_tasks || current_playlist_id >= 0 || add_results)
             goto YES;
     }
 

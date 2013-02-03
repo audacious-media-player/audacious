@@ -306,11 +306,12 @@ AUD_FUNC0 (bool_t, playlist_update_pending)
  * have changed, returns zero. */
 AUD_FUNC3 (int, playlist_updated_range, int, playlist, int *, at, int *, count)
 
-/* Returns nonzero if entries are being added to a playlist in the background. */
+/* Returns nonzero if entries are being added to a playlist in the background.
+ * If <playlist> is -1, checks all playlists. */
 AUD_FUNC1 (bool_t, playlist_add_in_progress, int, playlist)
 
 /* Returns nonzero if entries in a playlist are being scanned for metadata in
- * the background. */
+ * the background.  If <playlist> is -1, checks all playlists. */
 AUD_FUNC1 (bool_t, playlist_scan_in_progress, int, playlist)
 
 /* --- PLAYLIST UTILITY API --- */

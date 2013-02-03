@@ -409,9 +409,26 @@ int playlist_updated_range (int playlist_num, int * at, int * count)
 
 bool_t playlist_scan_in_progress (int playlist_num)
 {
-    ENTER_GET_PLAYLIST (FALSE);
-    bool_t scanning = playlist->scanning || playlist->scan_ending;
-    RETURN (scanning);
+    if (playlist_num >= 0)
+    {
+        ENTER_GET_PLAYLIST (FALSE);
+        bool_t scanning = playlist->scanning || playlist->scan_ending;
+        RETURN (scanning);
+    }
+    else
+    {
+        ENTER;
+
+        bool_t scanning = FALSE;
+        for (playlist_num = 0; playlist_num < index_count (playlists); playlist_num ++)
+        {
+            Playlist * playlist = index_get (playlists, playlist_num);
+            if (playlist->scanning || playlist->scan_ending)
+                scanning = TRUE;
+        }
+
+        RETURN (scanning);
+    }
 }
 
 static GList * scan_list_find_playlist (Playlist * playlist)
