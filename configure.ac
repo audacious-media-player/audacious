@@ -6,7 +6,7 @@ dnl Initialize
 dnl ==========
 AC_PREREQ([2.59])
 AC_INIT([audacious], [3.4-devel])
-AC_COPYRIGHT([(C) 2005-2012 Audacious Team])
+AC_COPYRIGHT([(C) 2005-2013 Audacious Team])
 
 AC_SUBST([PACKAGE], [AC_PACKAGE_TARNAME])
 AC_SUBST([VERSION], [AC_PACKAGE_VERSION])
@@ -109,7 +109,7 @@ AC_ARG_ENABLE([text-console],
 )
 
 if test "x$HAVE_MSWINDOWS" = "xyes" && test "x$use_text_console" = "xno" ; then
-	LDFLAGS="$LDFLAGS -Wl,-subsystem,windows"
+    LDFLAGS="$LDFLAGS -Wl,-subsystem,windows"
 fi
 
 ### ---------------------------------------------------------------------------
