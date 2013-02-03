@@ -34,15 +34,6 @@
 #include "ui_preferences.h"
 #include "visualization.h"
 
-static bool_t dummy_plugin_start (PluginHandle * p)
-{
-    return TRUE;
-}
-
-static void dummy_plugin_stop (PluginHandle * p)
-{
-}
-
 static const struct {
     const char * name;
     bool_t is_single;
@@ -60,9 +51,9 @@ static const struct {
         } s;
     } u;
 } table[PLUGIN_TYPES] = {
- [PLUGIN_TYPE_TRANSPORT] = {"transport",  FALSE, .u.m = {dummy_plugin_start, dummy_plugin_stop}},
- [PLUGIN_TYPE_PLAYLIST] = {"playlist",  FALSE, .u.m = {dummy_plugin_start, dummy_plugin_stop}},
- [PLUGIN_TYPE_INPUT] = {"input", FALSE, .u.m = {dummy_plugin_start, dummy_plugin_stop}},
+ [PLUGIN_TYPE_TRANSPORT] = {"transport",  FALSE, .u.m = {NULL, NULL}},
+ [PLUGIN_TYPE_PLAYLIST] = {"playlist",  FALSE, .u.m = {NULL, NULL}},
+ [PLUGIN_TYPE_INPUT] = {"input", FALSE, .u.m = {NULL, NULL}},
  [PLUGIN_TYPE_EFFECT] = {"effect", FALSE, .u.m = {effect_plugin_start, effect_plugin_stop}},
  [PLUGIN_TYPE_OUTPUT] = {"output", TRUE, .u.s = {output_plugin_probe,
   output_plugin_get_current, output_plugin_set_current}},
@@ -140,7 +131,10 @@ static void start_plugins (int type)
     if (table[type].is_single)
         start_single (type);
     else
-        plugin_for_enabled (type, start_multi_cb, GINT_TO_POINTER (type));
+    {
+        if (table[type].u.m.start)
+            plugin_for_enabled (type, start_multi_cb, GINT_TO_POINTER (type));
+    }
 }
 
 static VFSConstructor * lookup_transport (const char * scheme)
@@ -195,7 +189,10 @@ static void stop_plugins (int type)
         table[type].u.s.set_current (NULL);
     }
     else
-        plugin_for_enabled (type, stop_multi_cb, GINT_TO_POINTER (type));
+    {
+        if (table[type].u.m.stop)
+            plugin_for_enabled (type, stop_multi_cb, GINT_TO_POINTER (type));
+    }
 }
 
 void stop_plugins_two (void)
@@ -251,7 +248,7 @@ static bool_t enable_multi (int type, PluginHandle * p, bool_t enable)
 
     if (enable)
     {
-        if (! table[type].u.m.start (p))
+        if (table[type].u.m.start && ! table[type].u.m.start (p))
         {
             fprintf (stderr, "%s failed to start.\n", plugin_get_name (p));
             plugin_set_enabled (p, FALSE);
@@ -259,7 +256,10 @@ static bool_t enable_multi (int type, PluginHandle * p, bool_t enable)
         }
     }
     else
-        table[type].u.m.stop (p);
+    {
+        if (table[type].u.m.stop)
+            table[type].u.m.stop (p);
+    }
 
     return TRUE;
 }
