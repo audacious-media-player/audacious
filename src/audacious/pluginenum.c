@@ -18,9 +18,12 @@
  */
 
 #include <assert.h>
+#include <errno.h>
 #include <glib.h>
 #include <gmodule.h>
 #include <pthread.h>
+#include <string.h>
+#include <sys/stat.h>
 
 #include <libaudcore/audstrings.h>
 #include <libaudgui/init.h>
@@ -57,35 +60,49 @@ typedef struct {
 static GList * loaded_modules = NULL;
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
-static void plugin2_process (Plugin * header, GModule * module, const char * filename)
+Plugin * plugin_load (const char * filename)
 {
-    if (header->magic != _AUD_PLUGIN_MAGIC)
+    AUDDBG ("Loading plugin: %s.\n", filename);
+
+    GModule * module = g_module_open (filename, G_MODULE_BIND_LAZY | G_MODULE_BIND_LOCAL);
+    if (! module)
+    {
+        fprintf (stderr, " *** ERROR: %s could not be loaded: %s\n", filename,
+         g_module_error ());
+        return NULL;
+    }
+
+    Plugin * (* func) (AudAPITable * table);
+    Plugin * header;
+
+    if (! g_module_symbol (module, "get_plugin_info", (void *) & func) ||
+        ! (header = func (& api_table)) || header->magic != _AUD_PLUGIN_MAGIC)
     {
         fprintf (stderr, " *** ERROR: %s is not a valid Audacious plugin.\n", filename);
         g_module_close (module);
-        return;
+        return NULL;
     }
 
-    if (header->version < _AUD_PLUGIN_VERSION_MIN || header->version > _AUD_PLUGIN_VERSION)
+    if (header->version < _AUD_PLUGIN_VERSION_MIN ||
+        header->version > _AUD_PLUGIN_VERSION)
     {
-        fprintf (stderr, " *** ERROR: %s is not compatible with this version of Audacious.\n", filename);
+        fprintf (stderr, " *** ERROR: %s is not compatible with this version "
+         "of Audacious.\n", filename);
         g_module_close (module);
-        return;
+        return NULL;
     }
 
-    switch (header->type)
+    if (header->type == PLUGIN_TYPE_TRANSPORT ||
+        header->type == PLUGIN_TYPE_PLAYLIST ||
+        header->type == PLUGIN_TYPE_INPUT ||
+        header->type == PLUGIN_TYPE_EFFECT)
     {
-    case PLUGIN_TYPE_TRANSPORT:
-    case PLUGIN_TYPE_PLAYLIST:
-    case PLUGIN_TYPE_INPUT:
-    case PLUGIN_TYPE_EFFECT:
         if (PLUGIN_HAS_FUNC (header, init) && ! header->init ())
         {
             fprintf (stderr, " *** ERROR: %s failed to initialize.\n", filename);
             g_module_close (module);
-            return;
+            return NULL;
         }
-        break;
     }
 
     pthread_mutex_lock (& mutex);
@@ -95,7 +112,7 @@ static void plugin2_process (Plugin * header, GModule * module, const char * fil
     loaded_modules = g_list_prepend (loaded_modules, loaded);
     pthread_mutex_unlock (& mutex);
 
-    plugin_register_loaded (filename, header);
+    return header;
 }
 
 static void plugin2_unload (LoadedModule * loaded)
@@ -121,41 +138,20 @@ static void plugin2_unload (LoadedModule * loaded)
 
 /******************************************************************/
 
-void plugin_load (const char * filename)
-{
-    GModule *module;
-    Plugin * (* func) (AudAPITable * table);
-
-    AUDDBG ("Loading plugin: %s.\n", filename);
-
-    if (!(module = g_module_open(filename, G_MODULE_BIND_LAZY | G_MODULE_BIND_LOCAL)))
-    {
-        printf("Failed to load plugin (%s): %s\n", filename, g_module_error());
-        return;
-    }
-
-    /* v2 plugin loading */
-    if (g_module_symbol (module, "get_plugin_info", (void *) & func))
-    {
-        Plugin * header = func (& api_table);
-        g_return_if_fail (header != NULL);
-        plugin2_process(header, module, filename);
-        return;
-    }
-
-    printf("Invalid plugin (%s)\n", filename);
-    g_module_close(module);
-}
-
 static bool_t scan_plugin_func(const char * path, const char * basename, void * data)
 {
     if (!str_has_suffix_nocase(basename, PLUGIN_SUFFIX))
         return FALSE;
 
-    if (!g_file_test(path, G_FILE_TEST_IS_REGULAR))
+    struct stat st;
+    if (stat (path, & st))
+    {
+        fprintf (stderr, "Unable to stat %s: %s\n", path, strerror (errno));
         return FALSE;
+    }
 
-    plugin_register (path);
+    if (S_ISREG (st.st_mode))
+        plugin_register (path, st.st_mtime);
 
     return FALSE;
 }

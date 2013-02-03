@@ -37,7 +37,6 @@
 #include "misc.h"
 #include "plugin.h"
 #include "plugins.h"
-#include "util.h"
 
 #define FILENAME "plugin-registry"
 #define FORMAT 8
@@ -464,57 +463,9 @@ PluginHandle * plugin_lookup_basename (const char * basename)
     return node ? node->data : NULL;
 }
 
-void plugin_register (const char * path)
+static void plugin_get_info (PluginHandle * plugin, bool_t new)
 {
-    PluginHandle * plugin = plugin_lookup (path);
-    if (! plugin)
-    {
-        AUDDBG ("New plugin: %s\n", path);
-        plugin_load (path);
-        return;
-    }
-
-    int timestamp = file_get_mtime (path);
-    g_return_if_fail (timestamp >= 0);
-
-    AUDDBG ("Register plugin: %s\n", path);
-    plugin->confirmed = TRUE;
-
-    if (plugin->timestamp == timestamp)
-        return;
-
-    AUDDBG ("Rescan plugin: %s\n", path);
-    plugin->timestamp = timestamp;
-    plugin_load (path);
-}
-
-void plugin_register_loaded (const char * path, Plugin * header)
-{
-    AUDDBG ("Loaded plugin: %s\n", path);
-    PluginHandle * plugin = plugin_lookup (path);
-    bool_t new = FALSE;
-
-    if (plugin)
-    {
-        g_return_if_fail (plugin->type == header->type);
-
-        plugin->loaded = TRUE;
-        plugin->header = header;
-
-        if (registry_locked)
-            return;
-    }
-    else
-    {
-        g_return_if_fail (! registry_locked);
-
-        int timestamp = file_get_mtime (path);
-        g_return_if_fail (timestamp >= 0);
-
-        plugin = plugin_new (g_strdup (path), TRUE, TRUE, timestamp,
-         header->type, header);
-        new = TRUE;
-    }
+    Plugin * header = plugin->header;
 
     g_free (plugin->name);
     g_free (plugin->domain);
@@ -594,6 +545,43 @@ void plugin_register_loaded (const char * path, Plugin * header)
     }
 }
 
+void plugin_register (const char * path, int timestamp)
+{
+    PluginHandle * plugin = plugin_lookup (path);
+
+    if (plugin)
+    {
+        AUDDBG ("Register plugin: %s\n", path);
+        plugin->confirmed = TRUE;
+
+        if (plugin->timestamp != timestamp)
+        {
+            AUDDBG ("Rescan plugin: %s\n", path);
+            Plugin * header = plugin_load (path);
+            if (! header || header->type != plugin->type)
+                return;
+
+            plugin->loaded = TRUE;
+            plugin->header = header;
+            plugin->timestamp = timestamp;
+
+            plugin_get_info (plugin, FALSE);
+        }
+    }
+    else
+    {
+        AUDDBG ("New plugin: %s\n", path);
+        Plugin * header = plugin_load (path);
+        if (! header)
+            return;
+
+        plugin = plugin_new (g_strdup (path), TRUE, TRUE, timestamp,
+         header->type, header);
+
+        plugin_get_info (plugin, TRUE);
+    }
+}
+
 int plugin_get_type (PluginHandle * plugin)
 {
     return plugin->type;
@@ -610,16 +598,16 @@ const void * plugin_get_header (PluginHandle * plugin)
 
     if (! plugin->loaded)
     {
-        plugin_load (plugin->path);
+        Plugin * header = plugin_load (plugin->path);
+        if (! header || header->type != plugin->type)
+            goto DONE;
+
         plugin->loaded = TRUE;
+        plugin->header = header;
     }
 
+DONE:
     pthread_mutex_unlock (& mutex);
-    return plugin->header;
-}
-
-const void * plugin_get_header_no_load (PluginHandle * plugin)
-{
     return plugin->header;
 }
 

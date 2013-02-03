@@ -57,10 +57,8 @@ void plugin_registry_load (void);
 void plugin_registry_prune (void);
 void plugin_registry_save (void);
 
-void plugin_register (const char * path);
-void plugin_register_loaded (const char * path, Plugin * header);
+void plugin_register (const char * path, int timestamp);
 
-const void * plugin_get_header_no_load (PluginHandle * plugin);
 void plugin_set_enabled (PluginHandle * plugin, bool_t enabled);
 PluginMiscData * plugin_get_misc_data (PluginHandle * plugin);
 
@@ -76,7 +74,7 @@ bool_t input_plugin_has_infowin (PluginHandle * plugin);
 /* pluginenum.c */
 void plugin_system_init (void);
 void plugin_system_cleanup (void);
-void plugin_load (const char * path);
+Plugin * plugin_load (const char * path);
 
 #else
 
