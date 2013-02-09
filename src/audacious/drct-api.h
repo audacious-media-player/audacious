@@ -69,6 +69,7 @@ AUD_VFUNC1 (drct_pl_open_list, Index *, filenames)
 AUD_VFUNC1 (drct_pl_open_temp, const char *, filename)
 AUD_VFUNC1 (drct_pl_open_temp_list, Index *, filenames)
 
+/* deprecated; use playlist_delete_selected() */
 AUD_VFUNC1 (drct_pl_delete_selected, int, playlist)
 
 /* added in Audacious 3.4 */
@@ -79,3 +80,5 @@ AUD_VFUNC1 (drct_pl_delete_selected, int, playlist)
  * entirely by setting both A and B to -1. */
 AUD_VFUNC2 (drct_set_ab_repeat, int, a, int, b)
 AUD_VFUNC2 (drct_get_ab_repeat, int *, a, int *, b)
+
+AUD_VFUNC0 (drct_play_pause)

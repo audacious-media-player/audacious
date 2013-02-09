@@ -25,7 +25,6 @@
 #include "drct.h"
 #include "i18n.h"
 #include "misc.h"
-#include "playback.h"
 #include "playlist.h"
 
 /* --- PROGRAM CONTROL --- */
@@ -39,25 +38,11 @@ void drct_quit (void)
 
 void drct_play (void)
 {
-    int playlist = playlist_get_playing ();
-    if (playlist < 0)
-        playlist = playlist_get_active ();
-
-    drct_play_playlist (playlist);
-}
-
-void drct_play_playlist (int playlist)
-{
-    bool_t same_playlist = (playlist_get_playing () == playlist);
-
-    if (! same_playlist)
-        playlist_set_playing (playlist);
-
     if (drct_get_playing ())
     {
         if (drct_get_paused ())
             drct_pause ();
-        else if (same_playlist)
+        else
         {
             int a, b;
             drct_get_ab_repeat (& a, & b);
@@ -65,12 +50,27 @@ void drct_play_playlist (int playlist)
         }
     }
     else
-    {
-        if (playlist_get_position (playlist) < 0)
-            playlist_next_song (playlist, TRUE);
+        drct_play_playlist (playlist_get_active ());
+}
 
-        playback_play (0, FALSE);
-    }
+void drct_play_pause (void)
+{
+    if (drct_get_playing ())
+        drct_pause ();
+    else
+        drct_play ();
+}
+
+void drct_play_playlist (int playlist)
+{
+    playlist_set_playing (playlist);
+    if (drct_get_paused ())
+        drct_pause ();
+}
+
+void drct_stop (void)
+{
+    playlist_set_playing (-1);
 }
 
 /* --- VOLUME CONTROL --- */
@@ -127,32 +127,20 @@ void drct_set_volume_balance (int balance)
 
 void drct_pl_next (void)
 {
-    bool_t play = drct_get_playing ();
-
     int playlist = playlist_get_playing ();
     if (playlist < 0)
         playlist = playlist_get_active ();
 
-    if (playlist_next_song (playlist, get_bool (NULL, "repeat")) && play)
-    {
-        playlist_set_playing (playlist);
-        playback_play (0, FALSE);
-    }
+    playlist_next_song (playlist, get_bool (NULL, "repeat"));
 }
 
 void drct_pl_prev (void)
 {
-    bool_t play = drct_get_playing ();
-
     int playlist = playlist_get_playing ();
     if (playlist < 0)
         playlist = playlist_get_active ();
 
-    if (playlist_prev_song (playlist) && play)
-    {
-        playlist_set_playing (playlist);
-        playback_play (0, FALSE);
-    }
+    playlist_prev_song (playlist);
 }
 
 static void add_list (Index * filenames, int at, bool_t to_temp, bool_t play)
@@ -209,30 +197,7 @@ void drct_pl_open_temp_list (Index * filenames)
     add_list (filenames, -1, TRUE, TRUE);
 }
 
-/* Advancing to the next song when the current one is deleted is tricky.  First,
- * we delete all the selected songs except the current one.  We can then advance
- * to a new song without worrying about picking one that is also selected.
- * Finally, we can delete the former current song without stopping playback. */
-
 void drct_pl_delete_selected (int list)
 {
-    int pos = playlist_get_position (list);
-
-    if (get_bool (NULL, "advance_on_delete")
-     && ! get_bool (NULL, "no_playlist_advance")
-     && drct_get_playing () && list == playlist_get_playing ()
-     && pos >= 0 && playlist_entry_get_selected (list, pos))
-    {
-        playlist_entry_set_selected (list, pos, FALSE);
-        playlist_delete_selected (list);
-        pos = playlist_get_position (list); /* it may have moved */
-
-        if (playlist_next_song (list, get_bool (NULL, "repeat"))
-         && playlist_get_position (list) != pos)
-            playback_play (0, FALSE);
-
-        playlist_entry_delete (list, pos, 1);
-    }
-    else
-        playlist_delete_selected (list);
+    playlist_delete_selected (list);
 }

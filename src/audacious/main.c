@@ -45,7 +45,6 @@
 #include "interface.h"
 #include "main.h"
 #include "misc.h"
-#include "playback.h"
 #include "playlist.h"
 #include "plugins.h"
 #include "scanner.h"
@@ -427,7 +426,7 @@ static void do_commands (void)
     if (options.play || options.play_pause)
     {
         if (! drct_get_playing ())
-            playback_play (0, FALSE);
+            drct_play ();
         else if (drct_get_paused ())
             drct_pause ();
     }

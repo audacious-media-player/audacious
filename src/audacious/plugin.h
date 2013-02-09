@@ -45,7 +45,7 @@
  * _AUD_PLUGIN_VERSION_MIN to the same value. */
 
 #define _AUD_PLUGIN_VERSION_MIN 40 /* 3.3-devel */
-#define _AUD_PLUGIN_VERSION     42 /* 3.4-devel */
+#define _AUD_PLUGIN_VERSION     43 /* 3.4-devel */
 
 /* A NOTE ON THREADS
  *

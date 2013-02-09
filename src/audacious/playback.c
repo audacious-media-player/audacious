@@ -53,6 +53,7 @@ static pthread_cond_t ready_cond = PTHREAD_COND_INITIALIZER;
 
 /* level 1 data (persists to end of song) */
 static bool_t playing = FALSE;
+static bool_t restart_flag = FALSE;
 static int time_offset = 0, initial_seek = 0;
 static bool_t paused = FALSE;
 static bool_t ready_flag = FALSE;
@@ -72,9 +73,9 @@ static VFSFile * current_file = NULL;
 static ReplayGainInfo gain_from_playlist;
 
 static int repeat_a = -1, repeat_b = -1;
-static bool_t restart_flag = FALSE;
 
 /* level 3 data (persists to end of playlist) */
+static bool_t stopped = TRUE;
 static int failed_entries = 0;
 
 /* clears gain info if tuple == NULL */
@@ -127,7 +128,9 @@ static bool_t update_from_playlist (void)
 
 bool_t drct_get_ready (void)
 {
-    g_return_val_if_fail (playing, FALSE);
+    if (! playing)
+        return FALSE;
+
     pthread_mutex_lock (& ready_mutex);
 
     /* on restart, always report ready */
@@ -180,7 +183,9 @@ static void update_cb (void * hook_data, void * user_data)
 
 int drct_get_time (void)
 {
-    g_return_val_if_fail (playing, 0);
+    if (! playing)
+        return 0;
+
     wait_until_ready ();
 
     int time = -1;
@@ -196,7 +201,9 @@ int drct_get_time (void)
 
 void drct_pause (void)
 {
-    g_return_if_fail (playing);
+    if (! playing)
+        return;
+
     wait_until_ready ();
 
     if (! current_decoder || ! current_decoder->pause)
@@ -230,10 +237,9 @@ static void playback_finish (void)
         end_source = 0;
     }
 
-    restart_flag = TRUE; /* cleared later if not restarting */
-
     /* level 1 data cleanup */
     playing = FALSE;
+    restart_flag = FALSE;
     time_offset = initial_seek = 0;
     paused = FALSE;
     ready_flag = FALSE;
@@ -245,6 +251,9 @@ static void playback_finish (void)
 
 static void playback_cleanup (void)
 {
+    g_return_if_fail (current_filename);
+    playback_finish ();
+
     event_queue_cancel ("playback ready", NULL);
     event_queue_cancel ("playback seek", NULL);
     event_queue_cancel ("info change", NULL);
@@ -271,26 +280,23 @@ static void playback_cleanup (void)
     read_gain_from_tuple (NULL);
 
     repeat_a = repeat_b = -1;
-    restart_flag = FALSE;
 }
 
-static void playback_stopping (void)
+void playback_stop (void)
 {
+    if (stopped)
+        return;
+
+    if (current_filename)
+        playback_cleanup ();
+
     output_drain ();
 
     /* level 3 data cleanup */
+    stopped = TRUE;
     failed_entries = 0;
 
     hook_call ("playback stop", NULL);
-}
-
-void drct_stop (void)
-{
-    g_return_if_fail (playing);
-
-    playback_finish ();
-    playback_cleanup ();
-    playback_stopping ();
 }
 
 static bool_t end_cb (void * unused)
@@ -304,59 +310,40 @@ static bool_t end_cb (void * unused)
     else
         failed_entries = 0;
 
-    playback_finish ();
-
-    bool_t play = FALSE;
-    bool_t cleanup = TRUE;
-    int seek_time = 0;
+    if (get_bool (NULL, "stop_after_current_song"))
+        goto STOP;
 
     if (repeat_a >= 0 || repeat_b >= 0)
     {
-        if (! failed_entries)
-        {
-            play = TRUE;
-            cleanup = FALSE;
-            seek_time = MAX (repeat_a, 0);
-        }
+        if (failed_entries)
+            goto STOP;
+
+        playback_play (MAX (repeat_a, 0), FALSE);
     }
     else if (get_bool (NULL, "no_playlist_advance"))
     {
-        if (get_bool (NULL, "repeat") && ! failed_entries)
-        {
-            play = TRUE;
-            cleanup = FALSE;
-        }
+        if (failed_entries || ! get_bool (NULL, "repeat"))
+            goto STOP;
+
+        playback_play (0, FALSE);
     }
     else
     {
-        if (failed_entries < 10)
-        {
-            int playlist = playlist_get_playing ();
+        if (failed_entries >= 10)
+            goto STOP;
 
-            if (playlist_next_song (playlist, get_bool (NULL, "repeat")))
-                play = TRUE;
-            else
-            {
-                playlist_set_position (playlist, -1);
-                hook_call ("playlist end reached", NULL);
-            }
+        int playlist = playlist_get_playing ();
+        if (! playlist_next_song (playlist, get_bool (NULL, "repeat")))
+        {
+            playlist_set_position (playlist, -1);
+            hook_call ("playlist end reached", NULL);
         }
     }
 
-    if (get_bool (NULL, "stop_after_current_song"))
-    {
-        play = FALSE;
-        cleanup = TRUE;
-    }
+    return FALSE;
 
-    if (cleanup)
-        playback_cleanup ();
-
-    if (play)
-        playback_play (seek_time, FALSE);
-    else
-        playback_stopping ();
-
+STOP:
+    playlist_set_playing (-1);
     return FALSE;
 }
 
@@ -402,7 +389,7 @@ static void * playback_thread (void * unused)
     {
         if (current_file)
             vfs_rewind (current_file);
-        else 
+        else
             current_file = vfs_fopen (current_filename, "r");
 
         if (! current_file)
@@ -427,17 +414,30 @@ DONE:
 
 void playback_play (int seek_time, bool_t pause)
 {
-    g_return_if_fail (! playing);
+    char * new_filename = playback_entry_get_filename ();
+    g_return_if_fail (new_filename);
 
-    if (! current_filename)
+    /* pointer comparison works for pooled strings */
+    if (new_filename == current_filename)
     {
-        current_filename = playback_entry_get_filename ();
-        g_return_if_fail (current_filename);
+        if (playing)
+            playback_finish ();
+
+        str_unref (new_filename);
+        restart_flag = TRUE;
+    }
+    else
+    {
+        if (current_filename)
+            playback_cleanup ();
+
+        current_filename = new_filename;
     }
 
     playing = TRUE;
     initial_seek = seek_time;
     paused = pause;
+    stopped = FALSE;
 
     hook_associate ("playlist update", update_cb, NULL);
     pthread_create (& playback_thread_handle, NULL, playback_thread, NULL);
@@ -456,13 +456,14 @@ bool_t drct_get_playing (void)
 
 bool_t drct_get_paused (void)
 {
-    g_return_val_if_fail (playing, FALSE);
     return paused;
 }
 
 void drct_seek (int time)
 {
-    g_return_if_fail (playing);
+    if (! playing)
+        return;
+
     wait_until_ready ();
 
     if (! current_decoder || ! current_decoder->mseek || current_length < 1)
@@ -529,13 +530,17 @@ static InputPlayback playback_api = {
 
 char * drct_get_filename (void)
 {
-    g_return_val_if_fail (playing, NULL);
+    if (! playing)
+        return NULL;
+
     return str_ref (current_filename);
 }
 
 char * drct_get_title (void)
 {
-    g_return_val_if_fail (playing, NULL);
+    if (! playing)
+        return NULL;
+
     wait_until_ready ();
 
     char s[32];
@@ -563,16 +568,16 @@ char * drct_get_title (void)
 
 int drct_get_length (void)
 {
-    g_return_val_if_fail (playing, 0);
-    wait_until_ready ();
+    if (playing)
+        wait_until_ready ();
 
     return current_length;
 }
 
 void drct_get_info (int * bitrate, int * samplerate, int * channels)
 {
-    g_return_if_fail (playing);
-    wait_until_ready ();
+    if (playing)
+        wait_until_ready ();
 
     * bitrate = current_bitrate;
     * samplerate = current_samplerate;
@@ -602,7 +607,9 @@ void drct_set_volume (int l, int r)
 
 void drct_set_ab_repeat (int a, int b)
 {
-    g_return_if_fail (playing);
+    if (! playing)
+        return;
+
     wait_until_ready ();
 
     if (current_length < 1)

@@ -22,6 +22,9 @@
 
 #include <libaudcore/core.h>
 
+/* for use from playback.c and playlist-new.c ONLY */
+/* anywhere else, use drct_* and/or playlist_* functions */
 void playback_play (int seek_time, bool_t pause);
+void playback_stop (void);
 
 #endif /* AUDACIOUS_PLAYBACK_H */

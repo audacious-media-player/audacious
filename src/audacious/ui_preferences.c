@@ -30,7 +30,6 @@
 #include "i18n.h"
 #include "misc.h"
 #include "output.h"
-#include "playback.h"
 #include "playlist.h"
 #include "plugin.h"
 #include "plugins.h"

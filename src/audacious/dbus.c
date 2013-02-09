@@ -362,7 +362,7 @@ bool_t mpris_player_play (MprisPlayer * obj, GError * * error)
 
 bool_t mpris_player_repeat(MprisPlayer * obj, bool_t rpt, GError ** error)
 {
-    fprintf (stderr, "implement me\n");
+    set_bool (NULL, "repeat", rpt);
     return TRUE;
 }
 
@@ -897,11 +897,7 @@ bool_t audacious_rc_show_filebrowser(RemoteObject * obj, bool_t show, GError ** 
 
 bool_t audacious_rc_play_pause (RemoteObject * obj, GError * * error)
 {
-    if (drct_get_playing ())
-        drct_pause ();
-    else
-        drct_play ();
-
+    drct_play_pause ();
     return TRUE;
 }
 

@@ -30,7 +30,6 @@
 #include "equalizer.h"
 #include "misc.h"
 #include "output.h"
-#include "playback.h"
 #include "plugin.h"
 #include "plugins.h"
 #include "vis_runner.h"

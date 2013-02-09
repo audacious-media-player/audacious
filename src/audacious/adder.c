@@ -28,8 +28,8 @@
 #include <libaudcore/hook.h>
 
 #include "config.h"
+#include "drct.h"
 #include "i18n.h"
-#include "playback.h"
 #include "playlist.h"
 #include "plugins.h"
 #include "main.h"
@@ -408,13 +408,10 @@ static bool_t add_finish (void * unused)
 
         if (result->play && playlist_entry_count (playlist) > count)
         {
-            if (get_bool (NULL, "shuffle"))
-                playlist_next_song (playlist, FALSE);
-            else
+            if (! get_bool (NULL, "shuffle"))
                 playlist_set_position (playlist, result->at);
 
-            playlist_set_playing (playlist);
-            playback_play (0, FALSE);
+            drct_play_playlist (playlist);
         }
 
     FREE:

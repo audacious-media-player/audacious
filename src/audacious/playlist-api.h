@@ -29,8 +29,8 @@
  * least one playlist open.  The playlists are numbered starting from zero. */
 AUD_FUNC0 (int, playlist_count)
 
-/* Adds a new playlist before the one numbered <at>.  If <at> is negative or
- * equal to the number of playlists, adds a new playlist after the last one. */
+/* Adds a new playlist before the one numbered <at>.  If <at> is -1 or equal to
+ * the number of playlists, adds a new playlist after the last one. */
 AUD_VFUNC1 (playlist_insert, int, at)
 
 /* Moves a contiguous block of <count> playlists starting with the one numbered
@@ -41,7 +41,7 @@ AUD_VFUNC3 (playlist_reorder, int, from, int, to, int, count)
  * is presented to the user.  If <playlist> is the only playlist, a new playlist
  * is added.  If <playlist> is the active playlist, another playlist is marked
  * active.  If <playlist> is the currently playing playlist, playback is
- * stopped.  In this case, calls to playlist_get_playing() will return -1. */
+ * stopped. */
 AUD_VFUNC1 (playlist_delete, int, playlist)
 
 /* Returns a unique non-negative integer which can be used to identify a given
@@ -74,13 +74,13 @@ AUD_VFUNC1 (playlist_set_active, int, playlist)
 /* Returns the number of the active playlist. */
 AUD_FUNC0 (int, playlist_get_active)
 
-/* Sets the currently playing playlist.  Any information needed to resume
- * playback from the previously playing playlist is saved, and playback is
- * resumed in the newly set playlist if possible.  (See playlist_set_position()
- * for a way to prevent this resuming.) */
+/* Sets the currently playing playlist.  Starts playback, resuming from the
+ * position last played if possible.  If <playlist> is -1 or if the requested
+ * playlist is empty, stops playback. */
 AUD_VFUNC1 (playlist_set_playing, int, playlist)
 
-/* Returns the number of the currently playing playlist, or -1 if there is none. */
+/* Returns the number of the currently playing playlist.  If no playlist is
+ * playing, returns -1. */
 AUD_FUNC0 (int, playlist_get_playing)
 
 /* Returns the number of a "blank" playlist.  The active playlist is returned if
@@ -131,9 +131,8 @@ AUD_VFUNC7 (playlist_entry_insert_filtered, int, playlist, int, at,
  void *, user, bool_t, play)
 
 /* Removes a contiguous block of <number> entries starting from the one numbered
- * <at> from a playlist.  If the last song played is in this block, playback is
- * stopped.  In this case, calls to playlist_get_position() will return -1, and
- * the behavior of drct_play() is unspecified. */
+ * <at> from a playlist.  If necessary, the playback position is moved elsewhere
+ * in the playlist and playback is restarted (or stopped). */
 AUD_VFUNC3 (playlist_entry_delete, int, playlist, int, at, int, number)
 
 /* Returns the filename of an entry. */
@@ -173,15 +172,13 @@ AUD_VFUNC6 (playlist_entry_describe, int, playlist, int, entry,
 AUD_FUNC3 (int, playlist_entry_get_length, int, playlist, int, entry,
  bool_t, fast)
 
-/* Sets the entry which will be played (if this playlist is selected with
- * playlist_set_playing()) when drct_play() is called.  If a song from this
- * playlist is already playing, it will be stopped.  If the playlist has resume
- * information set, it will be cleared.  It is possible to set a position of -1,
- * meaning that no entry is set to be played. */
+/* Moves the playback position to the beginning of the entry at <position>.  If
+ * <position> is -1, unsets the playback position.  If <playlist> is the
+ * currently playing playlist, playback is restarted (or stopped). */
 AUD_VFUNC2 (playlist_set_position, int, playlist, int, position)
 
-/* Returns the number of the entry set to be played (which may or may not be
- * currently playing), or -1 if there is none. */
+/* Returns the playback position, or -1 if it is not set.  Note that the
+ * position may be set even if <playlist> is not currently playing. */
 AUD_FUNC1 (int, playlist_get_position, int, playlist)
 
 /* Sets whether an entry is selected. */
@@ -203,8 +200,9 @@ AUD_VFUNC2 (playlist_select_all, int, playlist, bool_t, selected)
  * requested offset. */
 AUD_FUNC3 (int, playlist_shift, int, playlist, int, position, int, distance)
 
-/* Removes the selected entries from a playlist.  If the currently playing entry
- * is among these, playback is stopped. */
+/* Removes the selected entries from a playlist.  If necessary, the playback
+ * position is moved elsewhere in the playlist and playback is restarted (or
+ * stopped). */
 AUD_VFUNC1 (playlist_delete_selected, int, playlist)
 
 /* Sorts the entries in a playlist based on filename.  The callback function
