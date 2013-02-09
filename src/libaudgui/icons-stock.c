@@ -55,8 +55,6 @@ audgui_register_stock_icons(void)
                     "menu_plugin.png", iconfactory);
     load_stock_icon(AUD_STOCK_QUEUETOGGLE,
                     "menu_queue_toggle.png", iconfactory);
-    load_stock_icon(AUD_STOCK_RANDOMIZEPL,
-                    "menu_randomize_playlist.png", iconfactory);
 
     gtk_icon_factory_add_default( iconfactory );
     g_object_unref( iconfactory );

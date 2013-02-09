@@ -27,7 +27,6 @@
 #define AUD_STOCK_PLAYLIST    "aud-playlist"
 #define AUD_STOCK_PLUGIN      "aud-plugin"
 #define AUD_STOCK_QUEUETOGGLE "aud-queuetoggle"
-#define AUD_STOCK_RANDOMIZEPL "aud-randomizepl"
 
 void audgui_register_stock_icons(void);
 
