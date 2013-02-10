@@ -63,7 +63,6 @@ static void * current_data = NULL;
 static int current_bitrate = -1, current_samplerate = -1, current_channels = -1;
 
 /* level 2 data (persists when restarting same song) */
-static int current_entry = -1;
 static char * current_filename = NULL; /* pooled */
 static char * current_title = NULL; /* pooled */
 static int current_length = -1;
@@ -108,18 +107,16 @@ static void read_gain_from_tuple (const Tuple * tuple)
 
 static bool_t update_from_playlist (void)
 {
-    int entry = playback_entry_get_position ();
     char * title = playback_entry_get_title ();
     int length = playback_entry_get_length ();
 
-    if (entry == current_entry && ! g_strcmp0 (title, current_title) &&
-     length == current_length)
+    /* pointer comparison works for pooled strings */
+    if (title == current_title && length == current_length)
     {
         str_unref (title);
         return FALSE;
     }
 
-    current_entry = entry;
     str_unref (current_title);
     current_title = title;
     current_length = length;
@@ -262,7 +259,6 @@ static void playback_cleanup (void)
     set_bool (NULL, "stop_after_current_song", FALSE);
 
     /* level 2 data cleanup */
-    current_entry = -1;
     str_unref (current_filename);
     current_filename = NULL;
     str_unref (current_title);
@@ -310,6 +306,8 @@ static bool_t end_cb (void * unused)
     else
         failed_entries = 0;
 
+    int playlist = playlist_get_playing ();
+
     if (get_bool (NULL, "stop_after_current_song"))
         goto STOP;
 
@@ -332,7 +330,6 @@ static bool_t end_cb (void * unused)
         if (failed_entries >= 10)
             goto STOP;
 
-        int playlist = playlist_get_playing ();
         if (! playlist_next_song (playlist, get_bool (NULL, "repeat")))
         {
             playlist_set_position (playlist, -1);
@@ -343,7 +340,9 @@ static bool_t end_cb (void * unused)
     return FALSE;
 
 STOP:
+    /* stop playback and set position to beginning of song */
     playlist_set_playing (-1);
+    playlist_set_position (playlist, playlist_get_position (playlist));
     return FALSE;
 }
 

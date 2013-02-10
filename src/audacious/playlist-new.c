@@ -2168,16 +2168,6 @@ bool_t playlist_next_song (int playlist_num, bool_t repeat)
     return TRUE;
 }
 
-int playback_entry_get_position (void)
-{
-    ENTER;
-
-    Entry * entry = get_playback_entry (FALSE, FALSE);
-    int entry_num = entry ? entry->number : -1;
-
-    RETURN (entry_num);
-}
-
 char * playback_entry_get_filename (void)
 {
     ENTER;
