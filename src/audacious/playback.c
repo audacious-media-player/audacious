@@ -63,6 +63,7 @@ static void * current_data = NULL;
 static int current_bitrate = -1, current_samplerate = -1, current_channels = -1;
 
 /* level 2 data (persists when restarting same song) */
+static int current_entry = -1;
 static char * current_filename = NULL; /* pooled */
 static char * current_title = NULL; /* pooled */
 static int current_length = -1;
@@ -107,16 +108,18 @@ static void read_gain_from_tuple (const Tuple * tuple)
 
 static bool_t update_from_playlist (void)
 {
+    int entry = playback_entry_get_position ();
     char * title = playback_entry_get_title ();
     int length = playback_entry_get_length ();
 
     /* pointer comparison works for pooled strings */
-    if (title == current_title && length == current_length)
+    if (entry == current_entry && title == current_title && length == current_length)
     {
         str_unref (title);
         return FALSE;
     }
 
+    current_entry = entry;
     str_unref (current_title);
     current_title = title;
     current_length = length;
@@ -259,6 +262,7 @@ static void playback_cleanup (void)
     set_bool (NULL, "stop_after_current_song", FALSE);
 
     /* level 2 data cleanup */
+    current_entry = -1;
     str_unref (current_filename);
     current_filename = NULL;
     str_unref (current_title);
@@ -559,8 +563,7 @@ char * drct_get_title (void)
         s[0] = 0;
 
     if (get_bool (NULL, "show_numbers_in_pl"))
-        return str_printf ("%d. %s%s", 1 + playlist_get_position
-         (playlist_get_playing ()), current_title, s);
+        return str_printf ("%d. %s%s", 1 + current_entry, current_title, s);
 
     return str_printf ("%s%s", current_title, s);
 }
