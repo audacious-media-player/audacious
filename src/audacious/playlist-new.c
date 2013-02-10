@@ -2377,9 +2377,6 @@ void playlist_load_state (void)
         /* compatibility with Audacious 3.3 */
         if (playlist_num == resume_playlist && resume_state == RESUME_STOP)
             resume_playlist = -1;
-
-        if (playlist_num == resume_playlist && ! get_bool (NULL, "resume_playback_on_startup"))
-            playlist->resume_paused = TRUE;
     }
 
     fclose (handle);

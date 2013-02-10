@@ -401,7 +401,7 @@ static void do_remote (void)
 
 static void do_commands (void)
 {
-    bool_t resume = TRUE;
+    bool_t resume = get_bool (NULL, "resume_playback_on_startup");
 
     Index * filenames = convert_filenames ();
     if (filenames)
