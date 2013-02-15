@@ -1,0 +1,19 @@
+[Desktop Entry]
+Version=1.0
+
+Type=Application
+
+Name=Audacious Playlist
+Name[de]=Audacious Wiedergabeliste
+Name[fr]=Liste de lecture d'Audacious
+GenericName=Audio Playlist
+GenericName[de]=Musik Wiedergabeliste
+GenericName[fr]=Liste de lecture de musique
+Comment=Enqueue files to playlist
+Comment[de]=Dateien zur Wiedergabeliste hinzufügen
+Comment[fr]=Ajouter à la liste de lecture
+Icon=sound
+
+Exec=audacious -e %F
+Terminal=false
+MimeType=application/ogg;application/x-cue;application/x-ogg;application/xspf+xml;audio/midi;audio/mp3;audio/mpeg;audio/mpegurl;audio/ogg;audio/prs.sid;audio/x-flac;audio/x-it;audio/x-mod;audio/x-mp3;audio/x-mpeg;audio/x-mpegurl;audio/x-ms-wma;audio/x-musepack;audio/x-s3m;audio/x-scpls;audio/x-stm;audio/x-vorbis+ogg;audio/x-wav;audio/x-xm;x-content/audio-cdda;x-directory/normal;inode/directory;

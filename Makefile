@@ -1,4 +1,4 @@
-SUBDIRS = src man pixmaps po
+SUBDIRS = src man pixmaps po contrib
 
 DISTCLEAN = audacious.pc audclient.pc buildsys.mk config.h config.log config.status extra.mk
 
@@ -17,7 +17,7 @@ install-extra:
 	done
 	for i in audacious.desktop; do \
 		${INSTALL_STATUS}; \
-		if ${MKDIR_P} ${DESTDIR}${datadir}/applications && ${INSTALL} -m 644 $$i ${DESTDIR}${datadir}/applications/$$i; then \
+		if ${MKDIR_P} ${DESTDIR}${datarootdir}/applications && ${INSTALL} -m 644 $$i ${DESTDIR}${datarootdir}/applications/$$i; then \
 			${INSTALL_OK}; \
 		else \
 			${INSTALL_FAILED}; \
@@ -29,8 +29,8 @@ install-extra:
 
 uninstall-extra:
 	for i in audacious.pc audclient.pc; do \
-		if [ -f ${DESTDIR}${libdir}/pkgconfig/$$i ]; then \
-			if rm -f ${DESTDIR}${libdir}/pkgconfig/$$i; then \
+		if [ -f ${DESTDIR}${pkgconfigdir}/$$i ]; then \
+			if rm -f ${DESTDIR}${pkgconfigdir}/$$i; then \
 				${DELETE_OK}; \
 			else \
 				${DELETE_FAILED}; \
@@ -38,8 +38,8 @@ uninstall-extra:
 		fi; \
 	done
 	for i in audacious.desktop; do \
-		if test -f ${DESTDIR}${datadir}/applications/$$i; then \
-			if rm -f ${DESTDIR}${datadir}/applications/$$i; then \
+		if test -f ${DESTDIR}${datarootdir}/applications/$$i; then \
+			if rm -f ${DESTDIR}${datarootdir}/applications/$$i; then \
 				${DELETE_OK}; \
 			else \
 				${DELETE_FAILED}; \
