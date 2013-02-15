@@ -122,7 +122,7 @@ DBUS_BINDINGS_SOURCES = objects.xml			\
 			mpris_player.xml
 
 desktop_DATA = audacious.desktop
-desktopdir = ${datadir}/applications
+desktopdir = ${datarootdir}/applications
 
 dbus-server-bindings.h: ${DBUS_BINDINGS_SOURCES}
 	${DBUS_BINDING_TOOL} --mode=glib-server --prefix=audacious_rc objects.xml > $@

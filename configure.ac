@@ -129,6 +129,13 @@ if test "x$enable_rpath" = "xyes"; then
 fi
 
 ### ---------------------------------------------------------------------------
+dnl Thunar support
+dnl ==============
+
+AUD_ARG_ENABLE([thunar], [no], [thunar (Xfce) support files])
+AUD_CONDITIONAL([USE_THUNAR], [enable_thunar])
+
+### ---------------------------------------------------------------------------
 dnl Chardet support
 dnl ===============
 AUD_ARG_ENABLE([chardet], [yes],
@@ -245,7 +252,7 @@ if test -z "$datadir"; then
     datadir="${prefix}/share"
 fi
 
-localedir="$datadir/locale"
+localedir="$datarootdir/locale"
 AC_SUBST([localedir])
 
 AUDACIOUS_DEFINES="-DPLUGINSUBS=$pluginsubs"
@@ -253,8 +260,8 @@ AUDACIOUS_DEFINES="$AUDACIOUS_DEFINES -DHARDCODE_BINDIR=\\\"$bindir\\\""
 AUDACIOUS_DEFINES="$AUDACIOUS_DEFINES -DHARDCODE_DATADIR=\\\"$datadir/audacious\\\""
 AUDACIOUS_DEFINES="$AUDACIOUS_DEFINES -DHARDCODE_PLUGINDIR=\\\"$plugindir\\\""
 AUDACIOUS_DEFINES="$AUDACIOUS_DEFINES -DHARDCODE_LOCALEDIR=\\\"$localedir\\\""
-AUDACIOUS_DEFINES="$AUDACIOUS_DEFINES -DHARDCODE_DESKTOPFILE=\\\"${datadir}/applications/audacious.desktop\\\""
-AUDACIOUS_DEFINES="$AUDACIOUS_DEFINES -DHARDCODE_ICONFILE=\\\"${datadir}/pixmaps/audacious.png\\\""
+AUDACIOUS_DEFINES="$AUDACIOUS_DEFINES -DHARDCODE_DESKTOPFILE=\\\"${datarootdir}/applications/audacious.desktop\\\""
+AUDACIOUS_DEFINES="$AUDACIOUS_DEFINES -DHARDCODE_ICONFILE=\\\"${datarootdir}/pixmaps/audacious.png\\\""
 AC_SUBST([AUDACIOUS_DEFINES])
 
 
@@ -290,6 +297,7 @@ echo "  Allow user plugin dir:                  $enable_user_plugin_dir"
 echo ""
 echo "  Automatic character code detection:     $enable_chardet"
 echo "  D-Bus support:                          $enable_dbus"
+echo "  Thunar support:                         $enable_thunar"
 echo ""
 
 if test "x$AUDACIOUS_PATH" != "xno" && test "x$prefix/bin/audacious" != "x$AUDACIOUS_PATH"; then
