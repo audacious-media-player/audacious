@@ -308,6 +308,10 @@ static void finish_effects (void)
 
 bool_t output_open_audio (int format, int rate, int channels)
 {
+    /* prevent division by zero */
+    if (rate < 1 || channels < 1)
+        return FALSE;
+
     LOCK_ALL;
 
     s_input = TRUE;
