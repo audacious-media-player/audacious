@@ -17,10 +17,11 @@
  * the use of this software.
  */
 
+#include "config.h"
+
 #include <gtk/gtk.h>
 #include <audacious/misc.h>
 
-#include "config.h"
 #include "libaudgui.h"
 
 static void load_stock_icon (char * id, char * filename,

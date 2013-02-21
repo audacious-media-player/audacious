@@ -17,13 +17,14 @@
  * the use of this software.
  */
 
+#include "config.h"
+
 #include <stdio.h>
 #include <gtk/gtk.h>
 
 #include <audacious/drct.h>
 #include <audacious/i18n.h>
 
-#include "config.h"
 #include "init.h"
 #include "libaudgui.h"
 

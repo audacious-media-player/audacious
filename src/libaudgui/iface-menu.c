@@ -17,10 +17,11 @@
  * the use of this software.
  */
 
+#include "config.h"
+
 #include <gtk/gtk.h>
 #include <audacious/plugins.h>
 
-#include "config.h"
 #include "libaudgui-gtk.h"
 
 static void switch_cb (GtkMenuItem * item, PluginHandle * plugin)

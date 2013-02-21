@@ -17,11 +17,12 @@
  * the use of this software.
  */
 
+#include "config.h"
+
 #include <glib.h>
 #include <libaudcore/hook.h>
 #include <libaudcore/vfs.h>
 
-#include "config.h"
 #include "drct.h"
 #include "i18n.h"
 #include "misc.h"

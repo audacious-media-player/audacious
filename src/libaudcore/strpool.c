@@ -17,6 +17,8 @@
  * the use of this software.
  */
 
+#include "config.h"
+
 #include <glib.h>
 #include <pthread.h>
 #include <stdarg.h>
@@ -25,7 +27,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "config.h"
 #include "core.h"
 
 /* Each string in the pool is allocated with five leading bytes: a 32-bit

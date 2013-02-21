@@ -17,12 +17,13 @@
  * the use of this software.
  */
 
+#include "config.h"
+
 #include <gtk/gtk.h>
 
 #include <audacious/i18n.h>
 #include <audacious/misc.h>
 
-#include "config.h"
 #include "libaudgui-gtk.h"
 
 static const char about_text[] =

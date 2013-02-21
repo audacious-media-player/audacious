@@ -17,6 +17,8 @@
  * the use of this software.
  */
 
+#include "config.h"
+
 #include <assert.h>
 #include <errno.h>
 #include <glib.h>
@@ -27,8 +29,6 @@
 
 #include <libaudcore/audstrings.h>
 #include <libaudgui/init.h>
-
-#include "config.h"
 
 #include "debug.h"
 #include "plugin.h"

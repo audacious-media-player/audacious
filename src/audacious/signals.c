@@ -17,12 +17,13 @@
  * the use of this software.
  */
 
+#include "config.h"
+
 #include <pthread.h>
 #include <signal.h>
 
 #include <libaudcore/hook.h>
 
-#include "config.h"
 #include "main.h"
 
 #ifdef HAVE_SIGWAIT

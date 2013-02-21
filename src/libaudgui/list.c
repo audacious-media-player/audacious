@@ -17,10 +17,11 @@
  * the use of this software.
  */
 
+#include "config.h"
+
 #include <stddef.h>
 #include <gtk/gtk.h>
 
-#include "config.h"
 #include "libaudgui-gtk.h"
 #include "list.h"
 
@@ -533,7 +534,7 @@ static void destroy_cb (GtkWidget * list, ListModel * model)
     /* workaround for Gnome bug #679291 */
     g_signal_handlers_disconnect_matched (list, G_SIGNAL_MATCH_DATA, 0, 0, NULL,
      NULL, model);
-  
+
     stop_autoscroll (model);
     g_object_unref (model);
 }

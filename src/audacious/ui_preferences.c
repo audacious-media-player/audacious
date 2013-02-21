@@ -18,6 +18,8 @@
  * the use of this software.
  */
 
+#include "config.h"
+
 #include <string.h>
 
 #include <gdk/gdkkeysyms.h>
@@ -25,7 +27,6 @@
 
 #include <libaudcore/hook.h>
 
-#include "config.h"
 #include "debug.h"
 #include "i18n.h"
 #include "misc.h"

@@ -18,6 +18,8 @@
  * the use of this software.
  */
 
+#include "config.h"
+
 #include <gtk/gtk.h>
 #include <stdarg.h>
 #include <stdlib.h>
@@ -29,7 +31,6 @@
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
 
-#include "config.h"
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
 

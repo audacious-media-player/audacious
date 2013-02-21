@@ -17,11 +17,12 @@
  * the use of this software.
  */
 
+#include "config.h"
+
 #include <glib.h>
 #include <pthread.h>
 #include <string.h>
 
-#include "config.h"
 #include "core.h"
 #include "hook.h"
 

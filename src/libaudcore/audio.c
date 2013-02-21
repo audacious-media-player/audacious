@@ -17,12 +17,13 @@
  * the use of this software.
  */
 
+#include "config.h"
+
 #include <glib.h>
 #include <stdint.h>
 #include <math.h>
 
 #include "audio.h"
-#include "config.h"
 
 #define FROM_INT_LOOP(NAME, TYPE, SWAP, OFFSET, RANGE) \
 static void NAME (const TYPE * in, float * out, int samples) \

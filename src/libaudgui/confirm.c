@@ -17,13 +17,14 @@
  * the use of this software.
  */
 
+#include "config.h"
+
 #include <gtk/gtk.h>
 
 #include <audacious/i18n.h>
 #include <audacious/misc.h>
 #include <audacious/playlist.h>
 
-#include "config.h"
 #include "libaudgui-gtk.h"
 
 static void no_confirm_cb (GtkToggleButton * toggle)

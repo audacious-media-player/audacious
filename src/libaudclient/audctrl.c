@@ -18,14 +18,16 @@
  * the use of this software.
  */
 
+#include "config.h"
+
 #include <stdlib.h>
 #include <glib.h>
 #include <string.h>
 #include <dbus/dbus-glib.h>
+
 #include "audacious/dbus.h"
 #include "audacious/dbus-client-bindings.h"
 #include "audctrl.h"
-#include "config.h"
 
 static GError *error = NULL; //it must be hidden from outside, otherwise symbol conflict likely to happen.
 

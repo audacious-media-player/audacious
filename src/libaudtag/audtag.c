@@ -17,12 +17,13 @@
  * the use of this software.
  */
 
+#include "config.h"
+
 #include <glib.h>
 
 #include <libaudcore/tuple.h>
 
 #include "audtag.h"
-#include "config.h"
 #include "tag_module.h"
 #include "util.h"
 

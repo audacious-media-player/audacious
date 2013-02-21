@@ -17,6 +17,8 @@
  * the use of this software.
  */
 
+#include "config.h"
+
 #include <string.h>
 
 #include <gdk/gdkkeysyms.h>
@@ -30,7 +32,6 @@
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
 
-#include "config.h"
 #include "init.h"
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"

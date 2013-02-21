@@ -17,9 +17,10 @@
  * the use of this software.
  */
 
+#include "config.h"
+
 #include <libaudgui/libaudgui-gtk.h>
 
-#include "config.h"
 #include "i18n.h"
 #include "misc.h"
 #include "plugin.h"

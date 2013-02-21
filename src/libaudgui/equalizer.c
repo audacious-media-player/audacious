@@ -23,6 +23,8 @@
  * sign of the values we get.
  */
 
+#include "config.h"
+
 #include <math.h>
 
 #include <audacious/i18n.h>
@@ -30,7 +32,6 @@
 #include <audacious/types.h>
 #include <libaudcore/hook.h>
 
-#include "config.h"
 #include "libaudgui-gtk.h"
 
 static void on_off_cb (GtkToggleButton * on_off, void * unused)

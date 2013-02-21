@@ -17,6 +17,8 @@
  * the use of this software.
  */
 
+#include "config.h"
+
 #include <glib.h>
 
 #include <stdlib.h>
@@ -30,7 +32,6 @@
 #include <audacious/playlist.h>
 #include <libaudcore/audstrings.h>
 
-#include "config.h"
 #include "ui_jumptotrack_cache.h"
 #include "ui_regex.h"
 

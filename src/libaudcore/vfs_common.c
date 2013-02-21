@@ -18,13 +18,14 @@
  * the use of this software.
  */
 
+#include "config.h"
+
 #include <glib.h>
 #include <glib/gprintf.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "config.h"
 #include "vfs.h"
 
 /**

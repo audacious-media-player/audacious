@@ -17,6 +17,8 @@
  * the use of this software.
  */
 
+#include "config.h"
+
 #include <gtk/gtk.h>
 
 #include <audacious/i18n.h>
@@ -24,7 +26,6 @@
 #include <audacious/playlist.h>
 #include <libaudcore/vfs.h>
 
-#include "config.h"
 #include "libaudgui.h"
 
 static char * select_file (bool_t save, const char * default_filename)

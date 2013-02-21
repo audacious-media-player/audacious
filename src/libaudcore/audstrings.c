@@ -18,6 +18,8 @@
  * the use of this software.
  */
 
+#include "config.h"
+
 #include <limits.h>
 #include <math.h>
 #include <stdio.h>
@@ -29,7 +31,6 @@
 #include <audacious/i18n.h>
 
 #include "audstrings.h"
-#include "config.h"
 
 #define FROM_HEX(c) ((c) < 'A' ? (c) - '0' : (c) < 'a' ? 10 + (c) - 'A' : 10 + (c) - 'a')
 #define TO_HEX(i) ((i) < 10 ? '0' + (i) : 'A' + (i) - 10)

@@ -17,10 +17,11 @@
  * the use of this software.
  */
 
+#include "config.h"
+
 #include <complex.h>
 #include <math.h>
 
-#include "config.h"
 #include "fft.h"
 
 #ifndef HAVE_CEXPF

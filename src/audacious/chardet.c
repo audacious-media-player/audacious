@@ -17,11 +17,12 @@
  * the use of this software.
  */
 
+#include "config.h"
+
 #include <glib.h>
 #include <string.h>
 #include <libaudcore/audstrings.h>
 
-#include "config.h"
 #include "debug.h"
 #include "i18n.h"
 #include "main.h"

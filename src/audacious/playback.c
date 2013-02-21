@@ -17,6 +17,8 @@
  * the use of this software.
  */
 
+#include "config.h"
+
 #include <glib.h>
 #include <pthread.h>
 #include <string.h>
@@ -24,7 +26,6 @@
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
 
-#include "config.h"
 #include "drct.h"
 #include "i18n.h"
 #include "interface.h"

@@ -17,6 +17,8 @@
  * the use of this software.
  */
 
+#include "config.h"
+
 #include <errno.h>
 #include <fcntl.h>
 #include <stdlib.h>
@@ -30,8 +32,6 @@
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
 #include <libaudtag/audtag.h>
-
-#include "config.h"
 
 #ifdef USE_DBUS
 #include "../libaudclient/audctrl.h"

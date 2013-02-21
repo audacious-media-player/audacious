@@ -17,6 +17,8 @@
  * the use of this software.
  */
 
+#include "config.h"
+
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -29,7 +31,6 @@
 #include <libaudcore/hook.h>
 #include <libaudcore/tuple.h>
 
-#include "config.h"
 #include "drct.h"
 #include "i18n.h"
 #include "misc.h"

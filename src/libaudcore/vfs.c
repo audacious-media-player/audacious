@@ -18,6 +18,8 @@
  * the use of this software.
  */
 
+#include "config.h"
+
 #include <glib.h>
 #include <inttypes.h>
 
@@ -28,8 +30,6 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <string.h>
-
-#include "config.h"
 
 #define VFS_SIG ('V' | ('F' << 8) | ('S' << 16))
 

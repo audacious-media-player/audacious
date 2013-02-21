@@ -17,6 +17,8 @@
  * the use of this software.
  */
 
+#include "config.h"
+
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
 
@@ -24,7 +26,6 @@
 #include <audacious/playlist.h>
 #include <libaudcore/hook.h>
 
-#include "config.h"
 #include "init.h"
 #include "libaudgui.h"
 #include "list.h"
