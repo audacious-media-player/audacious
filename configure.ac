@@ -267,6 +267,11 @@ AUDACIOUS_DEFINES="$AUDACIOUS_DEFINES -DHARDCODE_ICONFILE=\\\"${datarootdir}/pix
 AC_SUBST([AUDACIOUS_DEFINES])
 
 
+dnl Reliably #include "config.h" (for large file support)
+dnl =====================================================
+CPPFLAGS="$CPPFLAGS -include config.h"
+
+
 ### ---------------------------------------------------------------------------
 dnl Output configuration files
 dnl ==========================

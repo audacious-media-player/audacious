@@ -18,8 +18,6 @@
  * the use of this software.
  */
 
-#include "config.h"
-
 #include <limits.h>
 #include <math.h>
 #include <stdio.h>

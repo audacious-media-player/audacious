@@ -17,8 +17,6 @@
  * the use of this software.
  */
 
-#include "config.h"
-
 #include <dirent.h>
 #include <unistd.h>
 

@@ -17,8 +17,6 @@
  * the use of this software.
  */
 
-#include "config.h"
-
 #include <audacious/i18n.h>
 #include <audacious/plugin.h>
 #include <audacious/plugins.h>

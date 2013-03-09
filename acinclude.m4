@@ -178,12 +178,6 @@ case "$target" in
         ;;
 esac
 
-dnl Large file support is sensitive to header order
-dnl ===============================================
-AH_BOTTOM([#ifdef _SYS_TYPES_H
-#error "config.h" must be #included before <sys/types.h>
-#endif])
-
 dnl Checks for various programs
 dnl ===========================
 AUD_CHECK_GNU_MAKE

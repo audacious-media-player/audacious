@@ -17,8 +17,6 @@
  * the use of this software.
  */
 
-#include "config.h"
-
 #include <audacious/misc.h>
 #include <audacious/playlist.h>
 #include <libaudcore/hook.h>

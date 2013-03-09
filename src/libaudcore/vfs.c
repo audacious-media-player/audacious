@@ -18,8 +18,6 @@
  * the use of this software.
  */
 
-#include "config.h"
-
 #include <glib.h>
 #include <inttypes.h>
 
@@ -413,32 +411,32 @@ vfs_file_test(const char * path, int test)
     char * path2 = uri_to_filename (path);
     if (! path2)
         return FALSE;
-    
+
 #ifdef S_ISLNK
     if (test & VFS_IS_SYMLINK)
     {
         struct stat st;
         if (lstat (path2, & st) < 0)
             return FALSE;
-    
+
         if (S_ISLNK (st.st_mode))
             test &= ~VFS_IS_SYMLINK;
     }
 #endif
-    
+
     if (test & (VFS_IS_REGULAR | VFS_IS_DIR | VFS_IS_EXECUTABLE | VFS_EXISTS))
     {
         struct stat st;
         if (stat (path2, & st) < 0)
             return FALSE;
-        
+
         if (S_ISREG (st.st_mode))
             test &= ~VFS_IS_REGULAR;
         if (S_ISDIR (st.st_mode))
             test &= ~VFS_IS_DIR;
         if (st.st_mode & S_IXUSR)
             test &= ~VFS_IS_EXECUTABLE;
-        
+
         test &= ~VFS_EXISTS;
     }
 

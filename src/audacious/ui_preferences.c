@@ -18,8 +18,6 @@
  * the use of this software.
  */
 
-#include "config.h"
-
 #include <string.h>
 
 #include <gdk/gdkkeysyms.h>

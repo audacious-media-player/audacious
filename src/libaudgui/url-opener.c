@@ -17,8 +17,6 @@
  * the use of this software.
  */
 
-#include "config.h"
-
 #include <gtk/gtk.h>
 
 #include <audacious/drct.h>

@@ -19,6 +19,8 @@
 
 #ifdef USE_DBUS
 
+#include <libaudcore/hook.h>
+
 #include "dbus-service.h"
 #include "main.h"
 

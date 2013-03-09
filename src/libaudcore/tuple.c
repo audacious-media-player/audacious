@@ -23,8 +23,6 @@
  * @brief Basic Tuple handling API.
  */
 
-#include "config.h"
-
 #include <glib.h>
 #include <pthread.h>
 #include <stdio.h>

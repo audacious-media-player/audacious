@@ -17,8 +17,6 @@
  * the use of this software.
  */
 
-#include "config.h"
-
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>

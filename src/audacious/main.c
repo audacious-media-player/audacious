@@ -17,8 +17,6 @@
  * the use of this software.
  */
 
-#include "config.h"
-
 #include <errno.h>
 #include <fcntl.h>
 #include <stdlib.h>

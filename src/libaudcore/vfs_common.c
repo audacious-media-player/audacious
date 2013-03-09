@@ -18,8 +18,6 @@
  * the use of this software.
  */
 
-#include "config.h"
-
 #include <glib.h>
 #include <glib/gprintf.h>
 #include <stdio.h>

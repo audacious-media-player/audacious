@@ -23,8 +23,6 @@
  * sign of the values we get.
  */
 
-#include "config.h"
-
 #include <math.h>
 
 #include <audacious/i18n.h>

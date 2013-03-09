@@ -17,8 +17,6 @@
  * the use of this software.
  */
 
-#include "config.h"
-
 #include <assert.h>
 #include <errno.h>
 #include <glib.h>
