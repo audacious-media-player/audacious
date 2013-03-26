@@ -100,7 +100,7 @@ static void cleanup_output (void)
     vis_runner_start_stop (FALSE, FALSE);
 }
 
-/* assumes LOCK_ALL, s_input, s_output */
+/* assumes LOCK_ALL, s_output */
 static void apply_pause (void)
 {
     if (PLUGIN_HAS_FUNC (cop, pause))
@@ -139,7 +139,7 @@ static void setup_output (void)
     apply_pause ();
 }
 
-/* assumes LOCK_MINOR, s_input, s_output */
+/* assumes LOCK_MINOR, s_output */
 static void flush_output (void)
 {
     if (PLUGIN_HAS_FUNC (cop, flush))
@@ -317,9 +317,8 @@ bool_t output_open_audio (int format, int rate, int channels)
     if (s_output && s_paused)
     {
         flush_output ();
-
-        if (PLUGIN_HAS_FUNC (cop, pause))
-            cop->pause (FALSE);
+        s_paused = FALSE;
+        apply_pause ();
     }
 
     s_input = TRUE;
