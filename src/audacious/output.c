@@ -314,6 +314,14 @@ bool_t output_open_audio (int format, int rate, int channels)
 
     LOCK_ALL;
 
+    if (s_output && s_paused)
+    {
+        flush_output ();
+
+        if (PLUGIN_HAS_FUNC (cop, pause))
+            cop->pause (FALSE);
+    }
+
     s_input = TRUE;
     s_gain = s_paused = s_aborted = FALSE;
     seek_time = 0;
