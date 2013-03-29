@@ -183,7 +183,6 @@ void init_dbus()
         return;
     }
 
-    g_type_init();
     g_object_new(audacious_rc_get_type(), NULL);
     g_object_new(mpris_root_get_type(), NULL);
     mpris = g_object_new(mpris_player_get_type(), NULL);
