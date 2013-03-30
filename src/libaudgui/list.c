@@ -382,6 +382,18 @@ static void stop_autoscroll (ListModel * model)
     model->scroll_speed = 0;
 }
 
+EXPORT void list_scroll_to_end(GtkWidget *widget, int count)
+{
+    GtkAdjustment * adj = gtk_scrollable_get_vadjustment ((GtkScrollable *) widget);
+    if (! adj)
+        return;
+
+    gtk_adjustment_set_upper(adj, gtk_adjustment_get_upper(adj) + 100 * count);
+    gtk_adjustment_changed(adj);
+    int new = gtk_adjustment_get_upper (adj) - gtk_adjustment_get_page_size(adj);
+    gtk_adjustment_set_value (adj, new);
+}
+
 static bool_t autoscroll (GtkWidget * widget)
 {
     ListModel * model = (ListModel *) gtk_tree_view_get_model
