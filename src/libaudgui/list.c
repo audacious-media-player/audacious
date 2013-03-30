@@ -382,6 +382,13 @@ static void stop_autoscroll (ListModel * model)
     model->scroll_speed = 0;
 }
 
+EXPORT void audgui_list_scroll_to_end(GtkWidget *widget)
+{
+    GtkTreePath * p = gtk_tree_path_new_from_indices(audgui_list_row_count(widget) - 1, -1);
+    gtk_tree_view_scroll_to_cell((GtkTreeView *) widget, p, NULL, FALSE, 0, 0);
+    gtk_tree_path_free(p);
+}
+
 static bool_t autoscroll (GtkWidget * widget)
 {
     ListModel * model = (ListModel *) gtk_tree_view_get_model
