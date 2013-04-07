@@ -11,9 +11,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2012-09-15 12:17+0200\n"
-"PO-Revision-Date: 2012-08-27 11:33+0000\n"
-"Last-Translator: jui <appukonrad@gmail.com>\n"
+"POT-Creation-Date: 2013-04-07 19:47+0200\n"
+"PO-Revision-Date: 2013-02-03 20:17+0000\n"
+"Last-Translator: Radioactiveman <thomas-lange2@gmx.de>\n"
 "Language-Team: Czech\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
@@ -21,11 +21,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
-#: src/audacious/adder.c:75
+#: src/audacious/adder.c:74
 msgid "Searching ..."
 msgstr "Hledá se…"
 
-#: src/audacious/adder.c:103
+#: src/audacious/adder.c:102
 #, c-format
 msgid "%d file found"
 msgid_plural "%d files found"
@@ -33,11 +33,11 @@ msgstr[0] "Nalezen %d soubor"
 msgstr[1] "Nalezeny %d soubory"
 msgstr[2] "Nalezeno %d souborů"
 
-#: src/audacious/chardet.c:39
+#: src/audacious/chardet.c:38
 msgid "  (invalid UTF-8)"
 msgstr "  (neplatné UTF-8)"
 
-#: src/audacious/equalizer_preset.c:180
+#: src/audacious/equalizer_preset.c:179
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
 msgstr "Chyba při importu winampovského EQF souboru „%s“"
@@ -83,26 +83,30 @@ msgid "Display the main window"
 msgstr "Zobrazí hlavní okno"
 
 #: src/audacious/main.c:242
+msgid "Headless mode"
+msgstr ""
+
+#: src/audacious/main.c:243
+msgid "Quit on playback stop"
+msgstr ""
+
+#: src/audacious/main.c:244
 msgid "Show version"
 msgstr "Zobrazí verzi"
 
-#: src/audacious/main.c:243
+#: src/audacious/main.c:245
 msgid "Print debugging messages"
 msgstr "Vypisuje ladicí hlášky"
 
-#: src/audacious/main.c:244
-msgid "Headless mode (beta)"
-msgstr "Bezhlavý režim (beta)"
-
-#: src/audacious/main.c:245
+#: src/audacious/main.c:246
 msgid "FILE..."
 msgstr "SOUBOR…"
 
-#: src/audacious/main.c:257
+#: src/audacious/main.c:258
 msgid "- play multimedia files"
 msgstr "– přehrávat multimediální soubory"
 
-#: src/audacious/main.c:264
+#: src/audacious/main.c:265
 #, c-format
 msgid ""
 "%s: %s\n"
@@ -111,37 +115,42 @@ msgstr ""
 "%s: %s\n"
 "Pro více informací zkuste „%s --help“.\n"
 
-#: src/audacious/main.c:546
+#: src/audacious/main.c:564
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/playback.c:305
+#: src/audacious/playback.c:361
 #, c-format
 msgid "No decoder found for %s."
 msgstr "Pro %s nenalezen žádní dekodér."
 
-#: src/audacious/playlist-files.c:51
+#: src/audacious/playback.c:399
+#, c-format
+msgid "%s could not be opened."
+msgstr ""
+
+#: src/audacious/playlist-files.c:50
 #, c-format
 msgid "Cannot %s %s: unsupported file extension."
 msgstr "%2$s nelze %1$s: nepodporovaná přípona souboru."
 
-#: src/audacious/playlist-files.c:52
+#: src/audacious/playlist-files.c:51
 msgid "save"
 msgstr "uložit"
 
-#: src/audacious/playlist-files.c:52
+#: src/audacious/playlist-files.c:51
 msgid "load"
 msgstr "načíst"
 
-#: src/audacious/playlist-new.c:121
+#: src/audacious/playlist-new.c:96
 msgid "New Playlist"
 msgstr "Nový seznam skladeb"
 
-#: src/audacious/playlist-new.c:122
+#: src/audacious/playlist-new.c:97
 msgid "Now Playing"
 msgstr "Nyní hraje"
 
-#: src/audacious/playlist-new.c:1650
+#: src/audacious/playlist-new.c:1670
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress "
 "(or has been disabled)."
@@ -149,386 +158,386 @@ msgstr ""
 "Seznam skladeb nelze seřadit, protože hledání metadat stále probíhá (nebo je "
 "vypnuto)."
 
-#: src/audacious/plugin-preferences.c:50
+#: src/audacious/plugin-preferences.c:49
 #, c-format
 msgid "About %s"
 msgstr "O %s"
 
-#: src/audacious/plugin-preferences.c:88
+#: src/audacious/plugin-preferences.c:87
 #, c-format
 msgid "%s Settings"
 msgstr "%s Nastavení"
 
-#: src/audacious/ui_preferences.c:69
+#: src/audacious/ui_preferences.c:67
 msgid "Audio"
 msgstr "Zvuk"
 
-#: src/audacious/ui_preferences.c:70
+#: src/audacious/ui_preferences.c:68
 msgid "Network"
 msgstr "Síť"
 
-#: src/audacious/ui_preferences.c:71 src/audacious/ui_preferences.c:1239
+#: src/audacious/ui_preferences.c:69 src/audacious/ui_preferences.c:1237
 msgid "Playlist"
 msgstr "Seznam skladeb"
 
-#: src/audacious/ui_preferences.c:72
+#: src/audacious/ui_preferences.c:70
 msgid "Song Info"
 msgstr "Informace o skladbě"
 
-#: src/audacious/ui_preferences.c:73
+#: src/audacious/ui_preferences.c:71
 msgid "Plugins"
 msgstr "Moduly"
 
-#: src/audacious/ui_preferences.c:79 src/libaudgui/infopopup.c:194
+#: src/audacious/ui_preferences.c:77 src/libaudgui/infopopup.c:150
 msgid "Artist"
 msgstr "Umělec"
 
-#: src/audacious/ui_preferences.c:80 src/libaudgui/infopopup.c:196
+#: src/audacious/ui_preferences.c:78 src/libaudgui/infopopup.c:151
 msgid "Album"
 msgstr "Album"
 
-#: src/audacious/ui_preferences.c:81 src/libaudgui/infopopup.c:192
-#: src/libaudgui/ui_playlist_manager.c:287
+#: src/audacious/ui_preferences.c:79 src/libaudgui/infopopup.c:149
+#: src/libaudgui/ui_playlist_manager.c:286
 msgid "Title"
 msgstr "Název"
 
-#: src/audacious/ui_preferences.c:82
+#: src/audacious/ui_preferences.c:80
 msgid "Tracknumber"
 msgstr "Číslo stopy"
 
-#: src/audacious/ui_preferences.c:83 src/libaudgui/infopopup.c:198
+#: src/audacious/ui_preferences.c:81 src/libaudgui/infopopup.c:152
 msgid "Genre"
 msgstr "Žánr"
 
-#: src/audacious/ui_preferences.c:84
+#: src/audacious/ui_preferences.c:82
 msgid "Filename"
 msgstr "Jméno souboru"
 
-#: src/audacious/ui_preferences.c:85
+#: src/audacious/ui_preferences.c:83
 msgid "Filepath"
 msgstr "Cesta k souboru"
 
-#: src/audacious/ui_preferences.c:86
+#: src/audacious/ui_preferences.c:84
 msgid "Date"
 msgstr "Datum"
 
-#: src/audacious/ui_preferences.c:87 src/libaudgui/infopopup.c:200
+#: src/audacious/ui_preferences.c:85 src/libaudgui/infopopup.c:153
 msgid "Year"
 msgstr "Rok"
 
-#: src/audacious/ui_preferences.c:88
+#: src/audacious/ui_preferences.c:86
 msgid "Comment"
 msgstr "Komentář"
 
-#: src/audacious/ui_preferences.c:89
+#: src/audacious/ui_preferences.c:87
 msgid "Codec"
 msgstr "Kodek"
 
-#: src/audacious/ui_preferences.c:90
+#: src/audacious/ui_preferences.c:88
 msgid "Quality"
 msgstr "Kvalita"
 
-#: src/audacious/ui_preferences.c:96
+#: src/audacious/ui_preferences.c:94
 msgid "None"
 msgstr "Žádné"
 
-#: src/audacious/ui_preferences.c:97
+#: src/audacious/ui_preferences.c:95
 msgid "Arabic"
 msgstr "Arabština"
 
-#: src/audacious/ui_preferences.c:98
+#: src/audacious/ui_preferences.c:96
 msgid "Baltic"
 msgstr "Baltské jazyky"
 
-#: src/audacious/ui_preferences.c:99
+#: src/audacious/ui_preferences.c:97
 msgid "Chinese"
 msgstr "Čínština"
 
-#: src/audacious/ui_preferences.c:100
+#: src/audacious/ui_preferences.c:98
 msgid "Greek"
 msgstr "Řečtina"
 
-#: src/audacious/ui_preferences.c:101
+#: src/audacious/ui_preferences.c:99
 msgid "Hebrew"
 msgstr "Hebrejština"
 
-#: src/audacious/ui_preferences.c:102
+#: src/audacious/ui_preferences.c:100
 msgid "Japanese"
 msgstr "Japonština"
 
-#: src/audacious/ui_preferences.c:103
+#: src/audacious/ui_preferences.c:101
 msgid "Korean"
 msgstr "Korejština"
 
-#: src/audacious/ui_preferences.c:104
+#: src/audacious/ui_preferences.c:102
 msgid "Polish"
 msgstr "Polština"
 
-#: src/audacious/ui_preferences.c:105
+#: src/audacious/ui_preferences.c:103
 msgid "Russian"
 msgstr "Ruština"
 
-#: src/audacious/ui_preferences.c:106
+#: src/audacious/ui_preferences.c:104
 msgid "Taiwanese"
 msgstr "Tchajwanština"
 
-#: src/audacious/ui_preferences.c:107
+#: src/audacious/ui_preferences.c:105
 msgid "Turkish"
 msgstr "Turečtina"
 
-#: src/audacious/ui_preferences.c:114
+#: src/audacious/ui_preferences.c:112
 msgid "Floating point"
 msgstr "Plovoucí desetiná čárka"
 
-#: src/audacious/ui_preferences.c:130
+#: src/audacious/ui_preferences.c:128
 msgid "Album mode"
 msgstr "Režim alba"
 
-#: src/audacious/ui_preferences.c:133
+#: src/audacious/ui_preferences.c:131
 msgid "<b>Output Settings</b>"
 msgstr "<b>Nastavení výstupu</b>"
 
-#: src/audacious/ui_preferences.c:135
+#: src/audacious/ui_preferences.c:133
 msgid "Bit depth:"
 msgstr "Bitová hloubka:"
 
-#: src/audacious/ui_preferences.c:138
+#: src/audacious/ui_preferences.c:136
 msgid "Buffer size:"
 msgstr "Velikost vyrovnávací paměti:"
 
-#: src/audacious/ui_preferences.c:140
+#: src/audacious/ui_preferences.c:138
 msgid "ms"
 msgstr "ms"
 
-#: src/audacious/ui_preferences.c:141
+#: src/audacious/ui_preferences.c:139
 msgid "Soft clipping"
 msgstr "Měké oříznutí"
 
-#: src/audacious/ui_preferences.c:143
+#: src/audacious/ui_preferences.c:141
 msgid "Use software volume control (not recommended)"
 msgstr "Hlasitost ovládat softwarově (nedoporučuje se)"
 
-#: src/audacious/ui_preferences.c:145
+#: src/audacious/ui_preferences.c:143
 msgid "<b>Replay Gain</b>"
 msgstr "<b>Zesílení při přehrávání</b>"
 
-#: src/audacious/ui_preferences.c:146
+#: src/audacious/ui_preferences.c:144
 msgid "Enable Replay Gain"
 msgstr "Zapnout zesílení při přehrávání"
 
-#: src/audacious/ui_preferences.c:149
+#: src/audacious/ui_preferences.c:147
 msgid "Prevent clipping (recommended)"
 msgstr "Předcházet ořezu (doporučuje se)"
 
-#: src/audacious/ui_preferences.c:151
+#: src/audacious/ui_preferences.c:149
 msgid "<b>Adjust Levels</b>"
 msgstr "<b>Míra úpravy</b>"
 
-#: src/audacious/ui_preferences.c:152
+#: src/audacious/ui_preferences.c:150
 msgid "Amplify all files:"
 msgstr "Zesílit všechny soubory:"
 
-#: src/audacious/ui_preferences.c:154 src/audacious/ui_preferences.c:157
+#: src/audacious/ui_preferences.c:152 src/audacious/ui_preferences.c:155
 msgid "dB"
 msgstr "dB"
 
-#: src/audacious/ui_preferences.c:155
+#: src/audacious/ui_preferences.c:153
 msgid "Amplify untagged files:"
 msgstr "Zesílit soubory bez popisků:"
 
-#: src/audacious/ui_preferences.c:160
+#: src/audacious/ui_preferences.c:158
 msgid "Proxy hostname:"
 msgstr "Jméno počítače:"
 
-#: src/audacious/ui_preferences.c:161
+#: src/audacious/ui_preferences.c:159
 msgid "Proxy port:"
 msgstr "Port:"
 
-#: src/audacious/ui_preferences.c:164
+#: src/audacious/ui_preferences.c:162
 msgid "Proxy username:"
 msgstr "Jméno:"
 
-#: src/audacious/ui_preferences.c:165
+#: src/audacious/ui_preferences.c:163
 msgid "Proxy password:"
 msgstr "Heslo:"
 
-#: src/audacious/ui_preferences.c:169
+#: src/audacious/ui_preferences.c:167
 msgid "<b>Proxy Configuration</b>"
 msgstr "<b>Nastavení proxy</b>"
 
-#: src/audacious/ui_preferences.c:170
+#: src/audacious/ui_preferences.c:168
 msgid "Enable proxy usage"
 msgstr "Používat proxy"
 
-#: src/audacious/ui_preferences.c:173
+#: src/audacious/ui_preferences.c:171
 msgid "Use authentication with proxy"
 msgstr "Autentizovat se na proxy"
 
-#: src/audacious/ui_preferences.c:181
+#: src/audacious/ui_preferences.c:179
 msgid "Auto character encoding detector for:"
 msgstr "Automatické rozpoznávání kódovaní znaků:"
 
-#: src/audacious/ui_preferences.c:185
+#: src/audacious/ui_preferences.c:183
 msgid "Fallback character encodings:"
 msgstr "Záložní kódování znaků:"
 
-#: src/audacious/ui_preferences.c:189
+#: src/audacious/ui_preferences.c:187
 msgid "<b>Behavior</b>"
 msgstr "<b>Chování</b>"
 
-#: src/audacious/ui_preferences.c:190
+#: src/audacious/ui_preferences.c:188
 msgid "Continue playback on startup"
 msgstr "Pokračovat v přehrávání po spuštění"
 
-#: src/audacious/ui_preferences.c:192
+#: src/audacious/ui_preferences.c:190
 msgid "Advance when the current song is deleted"
 msgstr "Přejít dál, když současná skladba je smazána"
 
-#: src/audacious/ui_preferences.c:194
+#: src/audacious/ui_preferences.c:192
 msgid "Clear the playlist when opening files"
 msgstr "Při otvírání souborů vyprázdnit seznam skladeb"
 
-#: src/audacious/ui_preferences.c:196
+#: src/audacious/ui_preferences.c:194
 msgid "Open files in a temporary playlist"
 msgstr "Otevřít soubory do dočasného seznamu skladeb"
 
-#: src/audacious/ui_preferences.c:198
+#: src/audacious/ui_preferences.c:196
 msgid "Do not load metadata for songs until played"
 msgstr "Nenačítat metadata skladeb před přehráním"
 
-#: src/audacious/ui_preferences.c:201
+#: src/audacious/ui_preferences.c:199
 msgid "<b>Compatibility</b>"
-msgstr ""
+msgstr "<b>Kompatibilita</b>"
 
-#: src/audacious/ui_preferences.c:202
+#: src/audacious/ui_preferences.c:200
 msgid "Interpret \\ (backward slash) as a folder delimiter"
-msgstr ""
+msgstr "Interpret \\ (zpětné lomítko) jako oddělovač složky"
 
-#: src/audacious/ui_preferences.c:209
+#: src/audacious/ui_preferences.c:207
 msgid "<b>Album Art</b>"
 msgstr "<b>Album</b>"
 
-#: src/audacious/ui_preferences.c:210
+#: src/audacious/ui_preferences.c:208
 msgid "Search for images matching these words (comma-separated):"
 msgstr "Vyhledat obrázky odpovídající těmto slovům (oddělené čárkou):"
 
-#: src/audacious/ui_preferences.c:212
+#: src/audacious/ui_preferences.c:210
 msgid "Exclude images matching these words (comma-separated):"
 msgstr "Vyloučit obrázky vyhovují těmto slovům (oddělené čárkou):"
 
-#: src/audacious/ui_preferences.c:214
+#: src/audacious/ui_preferences.c:212
 msgid "Search for images matching song file name"
 msgstr "Hledat obrázky odpovídající názevu hudebního souboru"
 
-#: src/audacious/ui_preferences.c:216
+#: src/audacious/ui_preferences.c:214
 msgid "Search recursively"
 msgstr "Hledat rekurzivně"
 
-#: src/audacious/ui_preferences.c:218
+#: src/audacious/ui_preferences.c:216
 msgid "Search depth:"
 msgstr "Hloubka prohledání:"
 
-#: src/audacious/ui_preferences.c:221
+#: src/audacious/ui_preferences.c:219
 msgid "<b>Popup Information</b>"
 msgstr "<b>Vyskakovací okno s podrobnostmi</b>"
 
-#: src/audacious/ui_preferences.c:222
+#: src/audacious/ui_preferences.c:220
 msgid "Show popup information"
 msgstr "Zobrazit popup informace"
 
-#: src/audacious/ui_preferences.c:224
+#: src/audacious/ui_preferences.c:222
 msgid "Popup delay (tenths of a second):"
 msgstr "Popup zpoždění (desetiny sekundy):"
 
-#: src/audacious/ui_preferences.c:227
+#: src/audacious/ui_preferences.c:225
 msgid "Show time scale for current song"
 msgstr "Zobrazit časové měřítko pro aktuální skladby"
 
-#: src/audacious/ui_preferences.c:241
+#: src/audacious/ui_preferences.c:239
 msgid "TITLE"
 msgstr "NÁZEV"
 
-#: src/audacious/ui_preferences.c:242
+#: src/audacious/ui_preferences.c:240
 msgid "ARTIST - TITLE"
 msgstr "UMĚLEC – NÁZEV"
 
-#: src/audacious/ui_preferences.c:243
+#: src/audacious/ui_preferences.c:241
 msgid "ARTIST - ALBUM - TITLE"
 msgstr "UMĚLEC – ALBUM – NÁZEV"
 
-#: src/audacious/ui_preferences.c:244
+#: src/audacious/ui_preferences.c:242
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr "UMĚLEC – ALBUM – STOPA. NÁZEV"
 
-#: src/audacious/ui_preferences.c:245
+#: src/audacious/ui_preferences.c:243
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr "UMĚLEC [ ALBUM ] – STOPA. NÁZEV"
 
-#: src/audacious/ui_preferences.c:246
+#: src/audacious/ui_preferences.c:244
 msgid "ALBUM - TITLE"
 msgstr "ALBUM – NÁZEV"
 
-#: src/audacious/ui_preferences.c:459
+#: src/audacious/ui_preferences.c:457
 msgid "Category"
 msgstr "Kategorie"
 
-#: src/audacious/ui_preferences.c:997
+#: src/audacious/ui_preferences.c:995
 msgid "Custom"
 msgstr "Vlastní"
 
-#: src/audacious/ui_preferences.c:1034
+#: src/audacious/ui_preferences.c:1032
 msgid "<b>Song Display</b>"
 msgstr "<b>Zobrazení skladby</b>"
 
-#: src/audacious/ui_preferences.c:1043
+#: src/audacious/ui_preferences.c:1041
 msgid "Show song numbers"
 msgstr "Zobrazovat čísla skladeb"
 
-#: src/audacious/ui_preferences.c:1054
+#: src/audacious/ui_preferences.c:1052
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr "Zobrazovat úvodní nuly (02:00 místo 2:00)"
 
-#: src/audacious/ui_preferences.c:1074
+#: src/audacious/ui_preferences.c:1072
 msgid "Show information about titlestring format"
 msgstr "Zobrazit informace o formátu titulku"
 
-#: src/audacious/ui_preferences.c:1088
+#: src/audacious/ui_preferences.c:1086
 msgid "Custom string:"
 msgstr "Vlastní řetězec:"
 
-#: src/audacious/ui_preferences.c:1093
+#: src/audacious/ui_preferences.c:1091
 msgid "Title format:"
 msgstr "Formát názvu:"
 
-#: src/audacious/ui_preferences.c:1180
+#: src/audacious/ui_preferences.c:1178
 msgid "Output plugin:"
 msgstr "Výstupní modul:"
 
-#: src/audacious/ui_preferences.c:1239
+#: src/audacious/ui_preferences.c:1237
 msgid "Transport"
 msgstr "Přenos"
 
-#: src/audacious/ui_preferences.c:1239
+#: src/audacious/ui_preferences.c:1237
 msgid "Input"
 msgstr "Vstup"
 
-#: src/audacious/ui_preferences.c:1240
+#: src/audacious/ui_preferences.c:1238
 msgid "Effect"
 msgstr "Efekt"
 
-#: src/audacious/ui_preferences.c:1240
+#: src/audacious/ui_preferences.c:1238
 msgid "Visualization"
 msgstr "Znázornění"
 
-#: src/audacious/ui_preferences.c:1240
+#: src/audacious/ui_preferences.c:1238
 msgid "General"
 msgstr "Obecné"
 
-#: src/audacious/ui_preferences.c:1278
+#: src/audacious/ui_preferences.c:1276
 msgid "Audacious Preferences"
 msgstr "Nastavení programu"
 
-#: src/audacious/util.c:127
+#: src/audacious/util.c:114
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Nepodařilo se vytvořit adresář (%s): %s\n"
@@ -541,20 +550,20 @@ msgstr "Pozice nenalezena."
 msgid "No song playing."
 msgstr "Žádná skladba nehraje."
 
-#: src/libaudcore/audstrings.c:199
+#: src/libaudcore/audstrings.c:198
 #, c-format
 msgid "Audio CD, track %s"
 msgstr "Zvukové CD, stopa %s"
 
-#: src/libaudcore/tuple.c:541
+#: src/libaudcore/tuple.c:540
 msgid "Mono"
 msgstr "Mono"
 
-#: src/libaudcore/tuple.c:543
+#: src/libaudcore/tuple.c:542
 msgid "Stereo"
 msgstr "Stereo"
 
-#: src/libaudcore/tuple.c:545
+#: src/libaudcore/tuple.c:544
 #, c-format
 msgid "%d channel"
 msgid_plural "%d channels"
@@ -562,23 +571,19 @@ msgstr[0] "%d kanál"
 msgstr[1] "%d kanály"
 msgstr[2] "%d kanálů"
 
-#: src/libaudgui/about.c:38
+#: src/libaudgui/about.c:37
 msgid "Credits"
 msgstr "Zásluhy"
 
-#: src/libaudgui/about.c:38
+#: src/libaudgui/about.c:37
 msgid "License"
 msgstr "Licence"
 
-#: src/libaudgui/about.c:74
+#: src/libaudgui/about.c:73
 msgid "About Audacious"
 msgstr "O Audacious"
 
-#: src/libaudgui/confirm.c:61
-msgid "Close Playlist"
-msgstr "Zavřít seznam skladeb"
-
-#: src/libaudgui/confirm.c:76
+#: src/libaudgui/confirm.c:66
 #, c-format
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
@@ -587,410 +592,411 @@ msgstr ""
 "Jste si jisti, že chcete %s zavřít? Pokud tak učiníte, jakékoliv změny "
 "provedené od posledního exportu budou ztraceny."
 
-#: src/libaudgui/confirm.c:89
+#: src/libaudgui/confirm.c:73
+msgid "Close Playlist"
+msgstr "Zavřít seznam skladeb"
+
+#: src/libaudgui/confirm.c:77
 msgid "_Don't show this message again"
 msgstr "_Příště již toto zprávu nezobrazovat"
 
-#: src/libaudgui/confirm.c:126
+#: src/libaudgui/confirm.c:100
 msgid "Rename Playlist"
 msgstr "Přejmenovat seznam skladeb"
 
-#: src/libaudgui/effects-menu.c:72
+#: src/libaudgui/effects-menu.c:70
 msgid "settings ..."
 msgstr "nastavení…"
 
-#: src/libaudgui/equalizer.c:51
+#: src/libaudgui/equalizer.c:50
 msgid "_Enable"
 msgstr "_Zapnout"
 
-#: src/libaudgui/equalizer.c:124
+#: src/libaudgui/equalizer.c:123
 msgid "31 Hz"
 msgstr "31 Hz"
 
-#: src/libaudgui/equalizer.c:124
+#: src/libaudgui/equalizer.c:123
 msgid "63 Hz"
 msgstr "63 Hz"
 
-#: src/libaudgui/equalizer.c:125
+#: src/libaudgui/equalizer.c:124
 msgid "125 Hz"
 msgstr "125 Hz"
 
-#: src/libaudgui/equalizer.c:125
+#: src/libaudgui/equalizer.c:124
 msgid "250 Hz"
 msgstr "250 Hz"
 
-#: src/libaudgui/equalizer.c:125
+#: src/libaudgui/equalizer.c:124
 msgid "500 Hz"
 msgstr "500 Hz"
 
-#: src/libaudgui/equalizer.c:125
+#: src/libaudgui/equalizer.c:124
 msgid "1 kHz"
 msgstr "1 kHz"
 
-#: src/libaudgui/equalizer.c:125
+#: src/libaudgui/equalizer.c:124
 msgid "2 kHz"
 msgstr "2 kHz"
 
-#: src/libaudgui/equalizer.c:126
+#: src/libaudgui/equalizer.c:125
 msgid "4 kHz"
 msgstr "4 kHz"
 
-#: src/libaudgui/equalizer.c:126
+#: src/libaudgui/equalizer.c:125
 msgid "8 kHz"
 msgstr "8 kHz"
 
-#: src/libaudgui/equalizer.c:126
+#: src/libaudgui/equalizer.c:125
 msgid "16 kHz"
 msgstr "16 kHz"
 
-#: src/libaudgui/equalizer.c:131
+#: src/libaudgui/equalizer.c:130
 msgid "Equalizer"
 msgstr "Ekvalizér"
 
-#: src/libaudgui/equalizer.c:147
+#: src/libaudgui/equalizer.c:146
 msgid "Preamp"
 msgstr "Předzesílení"
 
-#: src/libaudgui/infopopup.c:202
+#: src/libaudgui/infopopup.c:154
 msgid "Track"
 msgstr "Stopa"
 
-#: src/libaudgui/infopopup.c:204
+#: src/libaudgui/infopopup.c:155
 msgid "Length"
 msgstr "Délka"
 
-#: src/libaudgui/infowin.c:74
+#: src/libaudgui/infowin.c:73
 msgid "Acid Jazz"
 msgstr "Acid jazz"
 
-#: src/libaudgui/infowin.c:75
+#: src/libaudgui/infowin.c:74
 msgid "Acid Rock"
 msgstr "Acid rock"
 
-#: src/libaudgui/infowin.c:76
+#: src/libaudgui/infowin.c:75
 msgid "Ambient"
 msgstr "Ambient"
 
-#: src/libaudgui/infowin.c:77
+#: src/libaudgui/infowin.c:76
 msgid "Bebop"
 msgstr "Bebob"
 
-#: src/libaudgui/infowin.c:78
+#: src/libaudgui/infowin.c:77
 msgid "Bluegrass"
 msgstr "Bluegrass"
 
-#: src/libaudgui/infowin.c:79
+#: src/libaudgui/infowin.c:78
 msgid "Blues"
 msgstr "Blues"
 
-#: src/libaudgui/infowin.c:80
+#: src/libaudgui/infowin.c:79
 msgid "Chamber Music"
 msgstr "Komorní hudba"
 
-#: src/libaudgui/infowin.c:81
+#: src/libaudgui/infowin.c:80
 msgid "Classical"
 msgstr "Klasika"
 
-#: src/libaudgui/infowin.c:82
+#: src/libaudgui/infowin.c:81
 msgid "Country"
 msgstr "Country"
 
-#: src/libaudgui/infowin.c:83
+#: src/libaudgui/infowin.c:82
 msgid "Death Metal"
 msgstr "Death Metal"
 
-#: src/libaudgui/infowin.c:84
+#: src/libaudgui/infowin.c:83
 msgid "Disco"
 msgstr "Disko"
 
-#: src/libaudgui/infowin.c:85
+#: src/libaudgui/infowin.c:84
 msgid "Easy Listening"
 msgstr "Příjemné poslouchání"
 
-#: src/libaudgui/infowin.c:86
+#: src/libaudgui/infowin.c:85
 msgid "Folk"
 msgstr "Folk"
 
-#: src/libaudgui/infowin.c:87
+#: src/libaudgui/infowin.c:86
 msgid "Funk"
 msgstr "Funk"
 
-#: src/libaudgui/infowin.c:88
+#: src/libaudgui/infowin.c:87
 msgid "Gangsta Rap"
 msgstr "Gangsta Rap"
 
-#: src/libaudgui/infowin.c:89
+#: src/libaudgui/infowin.c:88
 msgid "Gospel"
 msgstr "Gospel"
 
-#: src/libaudgui/infowin.c:90
+#: src/libaudgui/infowin.c:89
 msgid "Grunge"
 msgstr "Grunge"
 
-#: src/libaudgui/infowin.c:91
+#: src/libaudgui/infowin.c:90
 msgid "Hard Rock"
 msgstr "Hard rock"
 
-#: src/libaudgui/infowin.c:92
+#: src/libaudgui/infowin.c:91
 msgid "Heavy Metal"
 msgstr "Heavy metal"
 
-#: src/libaudgui/infowin.c:93
+#: src/libaudgui/infowin.c:92
 msgid "Hip-hop"
 msgstr "Hip hop"
 
-#: src/libaudgui/infowin.c:94
+#: src/libaudgui/infowin.c:93
 msgid "House"
 msgstr "House"
 
-#: src/libaudgui/infowin.c:95
+#: src/libaudgui/infowin.c:94
 msgid "Jazz"
 msgstr "Jazz"
 
-#: src/libaudgui/infowin.c:96
+#: src/libaudgui/infowin.c:95
 msgid "Jungle"
 msgstr "Jungle"
 
-#: src/libaudgui/infowin.c:97
+#: src/libaudgui/infowin.c:96
 msgid "Metal"
 msgstr "Metal"
 
-#: src/libaudgui/infowin.c:98
+#: src/libaudgui/infowin.c:97
 msgid "New Age"
 msgstr "New Age"
 
-#: src/libaudgui/infowin.c:99
+#: src/libaudgui/infowin.c:98
 msgid "New Wave"
 msgstr "Nová vlna"
 
-#: src/libaudgui/infowin.c:100
+#: src/libaudgui/infowin.c:99
 msgid "Noise"
 msgstr "Šum"
 
-#: src/libaudgui/infowin.c:101
+#: src/libaudgui/infowin.c:100
 msgid "Pop"
 msgstr "Pop"
 
-#: src/libaudgui/infowin.c:102
+#: src/libaudgui/infowin.c:101
 msgid "Punk Rock"
 msgstr "Punk rock"
 
-#: src/libaudgui/infowin.c:103
+#: src/libaudgui/infowin.c:102
 msgid "Rap"
 msgstr "Rap"
 
-#: src/libaudgui/infowin.c:104
+#: src/libaudgui/infowin.c:103
 msgid "Reggae"
 msgstr "Reggae"
 
-#: src/libaudgui/infowin.c:105
+#: src/libaudgui/infowin.c:104
 msgid "Rock"
 msgstr "Rock"
 
-#: src/libaudgui/infowin.c:106
+#: src/libaudgui/infowin.c:105
 msgid "Rock and Roll"
 msgstr "Rock and roll"
 
-#: src/libaudgui/infowin.c:107
+#: src/libaudgui/infowin.c:106
 msgid "Rhythm and Blues"
 msgstr "R&B"
 
-#: src/libaudgui/infowin.c:108
+#: src/libaudgui/infowin.c:107
 msgid "Ska"
 msgstr "Ska"
 
-#: src/libaudgui/infowin.c:109
+#: src/libaudgui/infowin.c:108
 msgid "Soul"
 msgstr "Soul"
 
-#: src/libaudgui/infowin.c:110
+#: src/libaudgui/infowin.c:109
 msgid "Swing"
 msgstr "Swing"
 
-#: src/libaudgui/infowin.c:111
+#: src/libaudgui/infowin.c:110
 msgid "Techno"
 msgstr "Techno"
 
-#: src/libaudgui/infowin.c:112
+#: src/libaudgui/infowin.c:111
 msgid "Trip-hop"
 msgstr "Trip hop"
 
-#: src/libaudgui/infowin.c:176 src/libaudgui/infowin.c:365
-#: src/libaudgui/infowin.c:368 src/libaudgui/infowin.c:371
+#: src/libaudgui/infowin.c:175 src/libaudgui/infowin.c:348
+#: src/libaudgui/infowin.c:351 src/libaudgui/infowin.c:354
 msgid "<span size=\"small\">n/a</span>"
 msgstr "<span size=\"small\">−</span>"
 
-#: src/libaudgui/infowin.c:266
+#: src/libaudgui/infowin.c:223
 msgid "Metadata updated successfully"
 msgstr "Metadata byla úspěšně aktualizována"
 
-#: src/libaudgui/infowin.c:271
+#: src/libaudgui/infowin.c:227
 msgid "Metadata updating failed"
 msgstr "Aktualizace metadat selhala"
 
-#: src/libaudgui/infowin.c:319
+#: src/libaudgui/infowin.c:302
 msgid "Track Information"
 msgstr "Informace o stopě"
 
-#: src/libaudgui/infowin.c:354
+#: src/libaudgui/infowin.c:337
 msgid "<span size=\"small\">Format:</span>"
 msgstr "<span size=\"small\">Formát:</span>"
 
-#: src/libaudgui/infowin.c:358
+#: src/libaudgui/infowin.c:341
 msgid "<span size=\"small\">Quality:</span>"
 msgstr "<span size=\"small\">Kvalita:</span>"
 
-#: src/libaudgui/infowin.c:361
+#: src/libaudgui/infowin.c:344
 msgid "<span size=\"small\">Bitrate:</span>"
 msgstr "<span size=\"small\">Datový tok:</span>"
 
-#: src/libaudgui/infowin.c:385
+#: src/libaudgui/infowin.c:368
 msgid "<span size=\"small\">Title</span>"
 msgstr "<span size=\"small\">Název</span>"
 
-#: src/libaudgui/infowin.c:397
+#: src/libaudgui/infowin.c:380
 msgid "<span size=\"small\">Artist</span>"
 msgstr "<span size=\"small\">Umělec</span>"
 
-#: src/libaudgui/infowin.c:409
+#: src/libaudgui/infowin.c:392
 msgid "<span size=\"small\">Album</span>"
 msgstr "<span size=\"small\">Album</span>"
 
-#: src/libaudgui/infowin.c:421
+#: src/libaudgui/infowin.c:404
 msgid "<span size=\"small\">Comment</span>"
 msgstr "<span size=\"small\">Komentář</span>"
 
-#: src/libaudgui/infowin.c:433
+#: src/libaudgui/infowin.c:416
 msgid "<span size=\"small\">Genre</span>"
 msgstr "<span size=\"small\">Žánr</span>"
 
-#: src/libaudgui/infowin.c:455
+#: src/libaudgui/infowin.c:438
 msgid "<span size=\"small\">Year</span>"
 msgstr "<span size=\"small\">Rok</span>"
 
-#: src/libaudgui/infowin.c:464
+#: src/libaudgui/infowin.c:447
 msgid "<span size=\"small\">Track Number</span>"
 msgstr "<span size=\"small\">Číslo stopy</span>"
 
-#: src/libaudgui/infowin.c:541
+#: src/libaudgui/infowin.c:521
 #, c-format
 msgid "%d kb/s"
 msgstr "%d kb/s"
 
-#: src/libaudgui/infowin.c:568
+#: src/libaudgui/infowin.c:548
 #, c-format
 msgid "No info available for %s.\n"
 msgstr "Pro %s nejsou dostupné žádné údaje.\n"
 
-#: src/libaudgui/jump-to-time.c:52
+#: src/libaudgui/jump-to-time.c:51
 msgid "Jump to Time"
 msgstr "Přejít na čas"
 
-#: src/libaudgui/jump-to-time.c:61
+#: src/libaudgui/jump-to-time.c:60
 msgid "Enter time (minutes:seconds):"
 msgstr "Zadejte čas (minuty: sekundy):"
 
-#: src/libaudgui/playlists.c:33
+#: src/libaudgui/playlists.c:32
 msgid "Export Playlist"
 msgstr "Exportovat seznam skladeb"
 
-#: src/libaudgui/playlists.c:33
+#: src/libaudgui/playlists.c:32
 msgid "Import Playlist"
 msgstr "Importovat seznam skladeb"
 
-#: src/libaudgui/playlists.c:66
+#: src/libaudgui/playlists.c:65
 #, c-format
 msgid "Overwrite %s?"
 msgstr "Přepsat %s?"
 
-#: src/libaudgui/queue-manager.c:196
+#: src/libaudgui/queue-manager.c:195
 msgid "Queue Manager"
 msgstr "Správce fronty"
 
-#: src/libaudgui/ui_fileopener.c:107
+#: src/libaudgui/ui_fileopener.c:106
 msgid "Open Files"
 msgstr "Otevřít soubory"
 
-#: src/libaudgui/ui_fileopener.c:107
+#: src/libaudgui/ui_fileopener.c:106
 msgid "Add Files"
 msgstr "Přidat soubory"
 
-#: src/libaudgui/ui_fileopener.c:109
+#: src/libaudgui/ui_fileopener.c:108
 msgid "Close dialog on Open"
 msgstr "Zavřít dialog při otevření"
 
-#: src/libaudgui/ui_fileopener.c:109
+#: src/libaudgui/ui_fileopener.c:108
 msgid "Close dialog on Add"
 msgstr "Zavřít dialog při přidání"
 
-#: src/libaudgui/ui_jumptotrack.c:105 src/libaudgui/ui_jumptotrack.c:113
-#: src/libaudgui/ui_jumptotrack.c:332
+#: src/libaudgui/ui_jumptotrack.c:104 src/libaudgui/ui_jumptotrack.c:112
+#: src/libaudgui/ui_jumptotrack.c:331
 msgid "_Queue"
 msgstr "_Fronta"
 
-#: src/libaudgui/ui_jumptotrack.c:111
+#: src/libaudgui/ui_jumptotrack.c:110
 msgid "Un_queue"
 msgstr "Ode_brat z fronty"
 
-#: src/libaudgui/ui_jumptotrack.c:262
+#: src/libaudgui/ui_jumptotrack.c:261
 msgid "Jump to Song"
 msgstr "Přejít na skladbu"
 
-#: src/libaudgui/ui_jumptotrack.c:287
+#: src/libaudgui/ui_jumptotrack.c:286
 msgid "Filter: "
 msgstr "Filtr: "
 
-#: src/libaudgui/ui_jumptotrack.c:288
+#: src/libaudgui/ui_jumptotrack.c:287
 msgid "_Filter:"
 msgstr "_Filtr:"
 
-#: src/libaudgui/ui_jumptotrack.c:298
+#: src/libaudgui/ui_jumptotrack.c:297
 msgid "Remember"
 msgstr "Zapamatovat si"
 
-#: src/libaudgui/ui_jumptotrack.c:305
+#: src/libaudgui/ui_jumptotrack.c:304
 msgid "Clea_r"
 msgstr "Vyp_rázdnit"
 
-#: src/libaudgui/ui_jumptotrack.c:325
+#: src/libaudgui/ui_jumptotrack.c:324
 msgid "Close on Jump"
 msgstr "Zavřít při skoku"
 
-#: src/libaudgui/ui_playlist_manager.c:261
+#: src/libaudgui/ui_playlist_manager.c:260
 msgid "Playlist Manager"
 msgstr "Správce seznamů skladeb"
 
-#: src/libaudgui/ui_playlist_manager.c:288
+#: src/libaudgui/ui_playlist_manager.c:287
 msgid "Entries"
 msgstr "Položky"
 
-#: src/libaudgui/ui_playlist_manager.c:308
+#: src/libaudgui/ui_playlist_manager.c:307
 msgid "_Rename"
 msgstr "_Přejmenovat"
 
-#: src/libaudgui/ui_playlist_manager.c:328
+#: src/libaudgui/ui_playlist_manager.c:327
 msgid "_Close dialog on activating playlist"
 msgstr "Při aktiva_ci seznamu skladeb zavřít dialog"
 
-#: src/libaudgui/url-opener.c:56
+#: src/libaudgui/url-opener.c:55
 msgid "Open URL"
 msgstr "Otevřít URL"
 
-#: src/libaudgui/url-opener.c:56
+#: src/libaudgui/url-opener.c:55
 msgid "Add URL"
 msgstr "Přidat URL"
 
-#: src/libaudgui/url-opener.c:65
+#: src/libaudgui/url-opener.c:64
 msgid "Enter URL:"
 msgstr "Zadejte URL:"
 
-#: src/libaudgui/util.c:143
+#: src/libaudgui/util.c:142
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
 msgstr ""
 "\n"
 "(Další zprávy jsou skryty.)"
-
-#~ msgid "<b>Metadata</b>"
-#~ msgstr "<b>Metadata</b>"

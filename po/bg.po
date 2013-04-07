@@ -1,20 +1,20 @@
-# Basque translation for Audacious
+# Bulgarian translation for Audacious
 # Copyright (C) Audacious translators
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
-#   <ibonatan@gmail.com>, 2012.
-# Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2008, 2009.
-#   <oelkoro@gmail.com>, 2012.
+# Kiril Kirilov (Cybercop) <acybecop_montana@abv.bg>, 2012.
+#   <pandi3a@gmail.com>, 2012.
+# Георги Пацев <>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2013-04-07 19:47+0200\n"
-"PO-Revision-Date: 2013-02-03 20:17+0000\n"
-"Last-Translator: Radioactiveman <thomas-lange2@gmx.de>\n"
-"Language-Team: Basque\n"
-"Language: eu\n"
+"PO-Revision-Date: 2013-02-13 21:20+0000\n"
+"Last-Translator: cybercop <cybercop_montana@abv.bg>\n"
+"Language-Team: Bulgarian\n"
+"Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -22,87 +22,87 @@ msgstr ""
 
 #: src/audacious/adder.c:74
 msgid "Searching ..."
-msgstr "Bilatzen"
+msgstr "Търсене ..."
 
 #: src/audacious/adder.c:102
 #, c-format
 msgid "%d file found"
 msgid_plural "%d files found"
-msgstr[0] "%d fitxategia ez da aurkitu"
-msgstr[1] "%d fitxategiak ez dira aurkitu"
+msgstr[0] "един: %d файл е намерен"
+msgstr[1] "друг: %d файл е намерен"
 
 #: src/audacious/chardet.c:38
 msgid "  (invalid UTF-8)"
-msgstr "  (UTF-8 baliogabea)"
+msgstr "  (невалиден UTF-8)"
 
 #: src/audacious/equalizer_preset.c:179
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
-msgstr "Errorea '%s' Winamp EQF fitxategia inportatzean"
+msgstr "Грешка при внасяне на Winamp EQF файл '%s'"
 
 #: src/audacious/main.c:232
 msgid "Skip backwards in playlist"
-msgstr "Erreprodukzio-zerrendan atzerantz egiten du"
+msgstr "Отиване на предишната песен в списъка"
 
 #: src/audacious/main.c:233
 msgid "Start playing current playlist"
-msgstr "Uneko zerrenda erreproduzitzen hasten da"
+msgstr "Стартиране изпълнението на текущият списък"
 
 #: src/audacious/main.c:234
 msgid "Pause current song"
-msgstr "Uneko kanta pausarazten du"
+msgstr "Паузиране на текущата песен"
 
 #: src/audacious/main.c:235
 msgid "Stop current song"
-msgstr "Uneko kanta geldiarazten du"
+msgstr "Спиране на текущата песен"
 
 #: src/audacious/main.c:236
 msgid "Pause if playing, play otherwise"
-msgstr "Erreproduzitzen ari bada pausarazi, bestela erreproduzitu"
+msgstr "Паузиране, ако се изпълнява, в противен случай ― изпълнение"
 
 #: src/audacious/main.c:237
 msgid "Skip forward in playlist"
-msgstr "Erreprodukzio-zerrendan aurrerantz egiten du"
+msgstr "Отиване на следващата песен в списъка"
 
 #: src/audacious/main.c:238
 msgid "Display Jump to File dialog"
-msgstr "Bistaratu 'Saltatu fitxategira' elkarrizketa-koadroa"
+msgstr "Показване на диалог Прескачане до файл"
 
 #: src/audacious/main.c:239
 msgid "Add files to the playlist"
-msgstr "Gehitu fitxategiak erreprodukzio-zerrendara"
+msgstr "Добавяне на файлове в списъка за изпълнение"
 
 #: src/audacious/main.c:240
 msgid "Add new files to a temporary playlist"
-msgstr "Gehitu fitxategi berriak aldi baterako erreprodukzio-zerrendari"
+msgstr "Добавяне на нови файлове във временният списък"
 
 #: src/audacious/main.c:241
 msgid "Display the main window"
-msgstr "Bistaratu nagusia leihoa"
+msgstr "Показване на основният прозорец"
 
 #: src/audacious/main.c:242
 msgid "Headless mode"
-msgstr ""
+msgstr "Компактен режим"
 
 #: src/audacious/main.c:243
 msgid "Quit on playback stop"
-msgstr ""
+msgstr "Изход при спиране на възпроизвеждането"
 
 #: src/audacious/main.c:244
 msgid "Show version"
-msgstr "Erakutsi bertsioa"
+msgstr "Показване на версията"
 
 #: src/audacious/main.c:245
 msgid "Print debugging messages"
-msgstr "Idatzi desarauzte mezuak"
+msgstr "Печат на информацията за отстраняване на грешки"
 
 #: src/audacious/main.c:246
 msgid "FILE..."
-msgstr "FITXATEGIA..."
+msgstr "ФАЙЛ..."
 
 #: src/audacious/main.c:258
 msgid "- play multimedia files"
-msgstr "- erreproduzitu multimedia fitxategiak"
+msgstr "- изпълнение на мултимедийни файлове"
 
 #: src/audacious/main.c:265
 #, c-format
@@ -111,474 +111,478 @@ msgid ""
 "Try `%s --help' for more information.\n"
 msgstr ""
 "%s: %s\n"
-"Exekutatu '%s --help' informazio gehiagorako.\n"
+"Опитайте `%s --help' за повече информация.\n"
 
 #: src/audacious/main.c:564
 msgid "Audacious"
-msgstr "Audacious"
+msgstr "Аудио плеър - Audacious"
 
 #: src/audacious/playback.c:361
 #, c-format
 msgid "No decoder found for %s."
-msgstr "Ez dago %s-rako dekodifikatzailerik."
+msgstr "Не е намерен декодер за %s."
 
 #: src/audacious/playback.c:399
 #, c-format
 msgid "%s could not be opened."
-msgstr ""
+msgstr "Неуспешно отваряне на %s."
 
 #: src/audacious/playlist-files.c:50
 #, c-format
 msgid "Cannot %s %s: unsupported file extension."
-msgstr "Ezin da %s %s: Onartu gabeko fitxategi luzapena."
+msgstr "Невъзможно %s %s: неподдържано файлово разширение."
 
 #: src/audacious/playlist-files.c:51
 msgid "save"
-msgstr "Gorde"
+msgstr "запазване"
 
 #: src/audacious/playlist-files.c:51
 msgid "load"
-msgstr "Kargatu"
+msgstr "зареждане"
 
 #: src/audacious/playlist-new.c:96
 msgid "New Playlist"
-msgstr "Erreprodukzio-zerrenda berria"
+msgstr "Нов списък за изпълнение"
 
 #: src/audacious/playlist-new.c:97
 msgid "Now Playing"
-msgstr "Orain erreproduzitzen"
+msgstr "Изпълнява се в момента"
 
 #: src/audacious/playlist-new.c:1670
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress "
 "(or has been disabled)."
 msgstr ""
-"Erreprodukzio-zerrenda hau ezin da ordenatu metadatuen azterketa oraindik "
-"bukatu ez duelako (edo desgaitu delako)."
+"Списъкът не може да бъде сортиран, защото сканираните метаданни все още  са "
+"в ход (или са изключени)."
 
 #: src/audacious/plugin-preferences.c:49
 #, c-format
 msgid "About %s"
-msgstr "%s(r)i buruz"
+msgstr "Относно %s"
 
 #: src/audacious/plugin-preferences.c:87
 #, c-format
 msgid "%s Settings"
-msgstr "%s(r)en ezarpenak"
+msgstr "%s Настройки"
 
 #: src/audacious/ui_preferences.c:67
 msgid "Audio"
-msgstr "Audioa"
+msgstr "Аудио"
 
 #: src/audacious/ui_preferences.c:68
 msgid "Network"
-msgstr "Sarea"
+msgstr "Мрежа"
 
 #: src/audacious/ui_preferences.c:69 src/audacious/ui_preferences.c:1237
 msgid "Playlist"
-msgstr "Erreprodukzio-zerrenda"
+msgstr "Списък за изпълнение"
 
 #: src/audacious/ui_preferences.c:70
 msgid "Song Info"
-msgstr "Kantu informazioa"
+msgstr "Информация за песента"
 
 #: src/audacious/ui_preferences.c:71
 msgid "Plugins"
-msgstr "Pluginak"
+msgstr "Разширения"
 
 #: src/audacious/ui_preferences.c:77 src/libaudgui/infopopup.c:150
 msgid "Artist"
-msgstr "Artista"
+msgstr "Изпълнител"
 
 #: src/audacious/ui_preferences.c:78 src/libaudgui/infopopup.c:151
 msgid "Album"
-msgstr "Diskoa"
+msgstr "Албум"
 
 #: src/audacious/ui_preferences.c:79 src/libaudgui/infopopup.c:149
 #: src/libaudgui/ui_playlist_manager.c:286
 msgid "Title"
-msgstr "Titulua"
+msgstr "Заглавие"
 
 #: src/audacious/ui_preferences.c:80
 msgid "Tracknumber"
-msgstr "Pista-zenbakia"
+msgstr "Номер на запис"
 
 #: src/audacious/ui_preferences.c:81 src/libaudgui/infopopup.c:152
 msgid "Genre"
-msgstr "Generoa"
+msgstr "Жанр"
 
 #: src/audacious/ui_preferences.c:82
 msgid "Filename"
-msgstr "Fitxategi-izena"
+msgstr "Име на файл"
 
 #: src/audacious/ui_preferences.c:83
 msgid "Filepath"
-msgstr "Fitxategiaren bide-izena"
+msgstr "Път до файл"
 
 #: src/audacious/ui_preferences.c:84
 msgid "Date"
-msgstr "Data"
+msgstr "Дата"
 
 #: src/audacious/ui_preferences.c:85 src/libaudgui/infopopup.c:153
 msgid "Year"
-msgstr "Urtea"
+msgstr "Година"
 
 #: src/audacious/ui_preferences.c:86
 msgid "Comment"
-msgstr "Iruzkina"
+msgstr "Коментар"
 
 #: src/audacious/ui_preferences.c:87
 msgid "Codec"
-msgstr "Kodeka"
+msgstr "Декодер"
 
 #: src/audacious/ui_preferences.c:88
 msgid "Quality"
-msgstr "Kalitatea"
+msgstr "Качество"
 
 #: src/audacious/ui_preferences.c:94
 msgid "None"
-msgstr "Bat ere ez"
+msgstr "Няма"
 
 #: src/audacious/ui_preferences.c:95
 msgid "Arabic"
-msgstr "Arabiarra"
+msgstr "Арабски"
 
 #: src/audacious/ui_preferences.c:96
 msgid "Baltic"
-msgstr "Baltikoa"
+msgstr "Балтийски"
 
 #: src/audacious/ui_preferences.c:97
 msgid "Chinese"
-msgstr "Txinatarra"
+msgstr "Китайски"
 
 #: src/audacious/ui_preferences.c:98
 msgid "Greek"
-msgstr "Grekoa"
+msgstr "Гръцки"
 
 #: src/audacious/ui_preferences.c:99
 msgid "Hebrew"
-msgstr "Hebrearra"
+msgstr "Иврит"
 
 #: src/audacious/ui_preferences.c:100
 msgid "Japanese"
-msgstr "Japoniarra"
+msgstr "Японски"
 
 #: src/audacious/ui_preferences.c:101
 msgid "Korean"
-msgstr "Korearra"
+msgstr "Корейски"
 
 #: src/audacious/ui_preferences.c:102
 msgid "Polish"
-msgstr "Poloniera"
+msgstr "Полски"
 
 #: src/audacious/ui_preferences.c:103
 msgid "Russian"
-msgstr "Errusiarra"
+msgstr "Руски"
 
 #: src/audacious/ui_preferences.c:104
 msgid "Taiwanese"
-msgstr "Taiwanera"
+msgstr "Тайвански"
 
 #: src/audacious/ui_preferences.c:105
 msgid "Turkish"
-msgstr "Turkiarra"
+msgstr "Турски"
 
 #: src/audacious/ui_preferences.c:112
 msgid "Floating point"
-msgstr "Koma mugikorra"
+msgstr "Плаваща точка"
 
 #: src/audacious/ui_preferences.c:128
 msgid "Album mode"
-msgstr "Disko modua"
+msgstr "Режим Албум"
 
 #: src/audacious/ui_preferences.c:131
 msgid "<b>Output Settings</b>"
-msgstr "<b>Irteera ezarpenak</b>"
+msgstr "<b>Настройки на изхода</b>"
 
 #: src/audacious/ui_preferences.c:133
 msgid "Bit depth:"
-msgstr "Bit sakonera:"
+msgstr "Битов капацитет:"
 
 #: src/audacious/ui_preferences.c:136
 msgid "Buffer size:"
-msgstr "Bufferraren tamaina:"
+msgstr "Размер на буфера:"
 
 #: src/audacious/ui_preferences.c:138
 msgid "ms"
-msgstr "ms"
+msgstr "мс"
 
 #: src/audacious/ui_preferences.c:139
 msgid "Soft clipping"
-msgstr "Muxarrakin xuabea"
+msgstr "Намаляване на пращенето"
 
 #: src/audacious/ui_preferences.c:141
 msgid "Use software volume control (not recommended)"
-msgstr "Softwarearen bolumen kontrola erabili (ez gomendagarria)"
+msgstr ""
+"Използване на програма за регулиране силата на звука (не се препоръчва)"
 
 #: src/audacious/ui_preferences.c:143
 msgid "<b>Replay Gain</b>"
-msgstr "<b>Replay Gain</b>"
+msgstr "<b>Усилване на звука</b>"
 
 #: src/audacious/ui_preferences.c:144
 msgid "Enable Replay Gain"
-msgstr "Gaitu irabazpena"
+msgstr "Включване на усилването на звука"
 
 #: src/audacious/ui_preferences.c:147
 msgid "Prevent clipping (recommended)"
-msgstr "Ekidin muxarrakina (gomendatua)"
+msgstr "Предотвратяване на пращенето (препоръчително)"
 
 #: src/audacious/ui_preferences.c:149
 msgid "<b>Adjust Levels</b>"
-msgstr "<b>Mailak doitu</b>"
+msgstr "<b>Настройване на нивата на звука</b>"
 
 #: src/audacious/ui_preferences.c:150
 msgid "Amplify all files:"
-msgstr "Anplifikatu fitxategi guztiak:"
+msgstr "Усилване на звука на всички файлове от:"
 
 #: src/audacious/ui_preferences.c:152 src/audacious/ui_preferences.c:155
 msgid "dB"
-msgstr "dB"
+msgstr "дБ"
 
 #: src/audacious/ui_preferences.c:153
 msgid "Amplify untagged files:"
-msgstr "Anplifikatu etiketa gabeko fitxategiak:"
+msgstr "Усилване на звука на нетагнатите файлове:"
 
 #: src/audacious/ui_preferences.c:158
 msgid "Proxy hostname:"
-msgstr "Proxy-aren ostalari-izena:"
+msgstr "Име на прокси:"
 
 #: src/audacious/ui_preferences.c:159
 msgid "Proxy port:"
-msgstr "Proxy-aren ataka:"
+msgstr "Порт на прокси:"
 
 #: src/audacious/ui_preferences.c:162
 msgid "Proxy username:"
-msgstr "Proxy-aren erabiltzaile-izena:"
+msgstr "Потребителско име:"
 
 #: src/audacious/ui_preferences.c:163
 msgid "Proxy password:"
-msgstr "Proxy-aren pasahitza:"
+msgstr "Парола:"
 
 #: src/audacious/ui_preferences.c:167
 msgid "<b>Proxy Configuration</b>"
-msgstr "<b>Proxy-aren konfigurazioa</b>"
+msgstr "<b>Настройка на прокси</b>"
 
 #: src/audacious/ui_preferences.c:168
 msgid "Enable proxy usage"
-msgstr "Gaitu proxy-a erabiltzea"
+msgstr "Включване използването на прокси"
 
 #: src/audacious/ui_preferences.c:171
 msgid "Use authentication with proxy"
-msgstr "Erabili autentifikazioa proxy-arekin"
+msgstr "Използване на идентификация с прокси"
 
 #: src/audacious/ui_preferences.c:179
 msgid "Auto character encoding detector for:"
-msgstr "Karaktere-kodeketaren detekzio automatikoa:"
+msgstr "Автоматично определяне на кодировка за:"
 
 #: src/audacious/ui_preferences.c:183
 msgid "Fallback character encodings:"
-msgstr "Karaktere-kodeketa:"
+msgstr "Алтернативна кодировка:"
 
 #: src/audacious/ui_preferences.c:187
 msgid "<b>Behavior</b>"
-msgstr "<b>Portaera</b>"
+msgstr "<b>Поведение</b>"
 
 #: src/audacious/ui_preferences.c:188
 msgid "Continue playback on startup"
-msgstr "Jarraitu erreprodukzioa abiaraztean"
+msgstr "Продължи изпълнението при стартиране"
 
 #: src/audacious/ui_preferences.c:190
 msgid "Advance when the current song is deleted"
-msgstr "Aurreratu uneko abestia ezabatzen denean"
+msgstr "Продължаване напред, ако текущата песен е премахната"
 
 #: src/audacious/ui_preferences.c:192
 msgid "Clear the playlist when opening files"
-msgstr "Garbitu erreprodukzio-zerrenda fitxategiak irekitzerakoan"
+msgstr "Изчистване на списъка, когато се отвори нов файл"
 
 #: src/audacious/ui_preferences.c:194
 msgid "Open files in a temporary playlist"
-msgstr "Gehitu fitxategi berriak aldi baterako erreprodukzio-zerrendari"
+msgstr "Отваряне на файловете във временен списък"
 
 #: src/audacious/ui_preferences.c:196
 msgid "Do not load metadata for songs until played"
-msgstr "Ez kargatu kantuen metadatuak jo arte"
+msgstr "Да не се зареждат метаданни за песните, докато се изпълняват"
 
 #: src/audacious/ui_preferences.c:199
 msgid "<b>Compatibility</b>"
-msgstr ""
+msgstr "<b>Съвместимост</b>"
 
 #: src/audacious/ui_preferences.c:200
 msgid "Interpret \\ (backward slash) as a folder delimiter"
 msgstr ""
+"Да се тълкува \\ (обратна наклонена черта) като раделител на папките в пътя "
+"до файла"
 
 #: src/audacious/ui_preferences.c:207
 msgid "<b>Album Art</b>"
-msgstr "<b>Disko Azala</b>"
+msgstr "<b>Обложка на албум</b>"
 
 #: src/audacious/ui_preferences.c:208
 msgid "Search for images matching these words (comma-separated):"
-msgstr "Bilatu hitz hauekin bat datozen irudiak (koma bidez banatu):"
+msgstr "Търсене на изображения, съдържащи тези думи (разделени със запетая):"
 
 #: src/audacious/ui_preferences.c:210
 msgid "Exclude images matching these words (comma-separated):"
-msgstr "Ezikusi hitz hauekin bat datozen irudiak (koma bidez banatu):"
+msgstr ""
+"Изключване на изображения, съдържащи тези думи (разделени със запетая):"
 
 #: src/audacious/ui_preferences.c:212
 msgid "Search for images matching song file name"
-msgstr "Bilatu kantuaren fitxategi izenarekin bat datozen irudiak"
+msgstr "Търсене на изображения, съдържащи името на файла"
 
 #: src/audacious/ui_preferences.c:214
 msgid "Search recursively"
-msgstr "Bilatu errekurtsiboki"
+msgstr "Рекурсивно търсене (по подобие)"
 
 #: src/audacious/ui_preferences.c:216
 msgid "Search depth:"
-msgstr "Bilaketa sakonera:"
+msgstr "Дълбочина на търсенето:"
 
 #: src/audacious/ui_preferences.c:219
 msgid "<b>Popup Information</b>"
-msgstr "<b>Laster-leihoa</b>"
+msgstr "<b>Изскачащи уведомления</b>"
 
 #: src/audacious/ui_preferences.c:220
 msgid "Show popup information"
-msgstr "Bistaratu popup informazioa"
+msgstr "Показване на изскачащи уведомления"
 
 #: src/audacious/ui_preferences.c:222
 msgid "Popup delay (tenths of a second):"
-msgstr "Popup atzeratzea (segundu hamarrenak)"
+msgstr "Задържане на изскачащите уведомления (десети от секундата):"
 
 #: src/audacious/ui_preferences.c:225
 msgid "Show time scale for current song"
-msgstr "Bistaratu oraingo kantuaren denbora eskala"
+msgstr "Покажи график за текущата песен"
 
 #: src/audacious/ui_preferences.c:239
 msgid "TITLE"
-msgstr "TITULUA"
+msgstr "ЗАГЛАВИЕ"
 
 #: src/audacious/ui_preferences.c:240
 msgid "ARTIST - TITLE"
-msgstr "ARTISTA - TITULUA"
+msgstr "ИЗПЪЛНИТЕЛ - ЗАГЛАВИЕ"
 
 #: src/audacious/ui_preferences.c:241
 msgid "ARTIST - ALBUM - TITLE"
-msgstr "ARTISTA - DISKOA - TITULUA"
+msgstr "ИЗПЪЛНИТЕЛ - АЛБУМ - ЗАГЛАВИЕ"
 
 #: src/audacious/ui_preferences.c:242
 msgid "ARTIST - ALBUM - TRACK. TITLE"
-msgstr "ARTISTA - DISKOA - PISTA. TITULUA"
+msgstr "ИЗПЪЛНИТЕЛ - АЛБУМ - ЗАПИС. ЗАГЛАВИЕ"
 
 #: src/audacious/ui_preferences.c:243
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
-msgstr "ARTISTA - [DISKOA] - PISTA. TITULUA"
+msgstr "ИЗПЪЛНИТЕЛ [ АЛБУМ ] - ЗАПИС. ЗАГЛАВИЕ"
 
 #: src/audacious/ui_preferences.c:244
 msgid "ALBUM - TITLE"
-msgstr "ALBUMA - TITULUA"
+msgstr "АЛБУМ - ЗАГЛАВИЕ"
 
 #: src/audacious/ui_preferences.c:457
 msgid "Category"
-msgstr "Kategoria"
+msgstr "Категория"
 
 #: src/audacious/ui_preferences.c:995
 msgid "Custom"
-msgstr "Pertsonalizatua"
+msgstr "Потребителски"
 
 #: src/audacious/ui_preferences.c:1032
 msgid "<b>Song Display</b>"
-msgstr "<b>Kanten ikuspegia</b>"
+msgstr "<b>Показване на песен</b>"
 
 #: src/audacious/ui_preferences.c:1041
 msgid "Show song numbers"
-msgstr "Abesti zenbakiak erakutsi"
+msgstr "Показване номера на песента"
 
 #: src/audacious/ui_preferences.c:1052
 msgid "Show leading zeroes (02:00 instead of 2:00)"
-msgstr "Erakutzi zeroak aurretik (02:00 eta ez 2:00)"
+msgstr "Показване на нула в началото (02:00 вместо 2:00)"
 
 #: src/audacious/ui_preferences.c:1072
 msgid "Show information about titlestring format"
-msgstr "Erakutsi titulu-formatuari buruzko informazioa"
+msgstr "Показване на информация за формата на подредбата"
 
 #: src/audacious/ui_preferences.c:1086
 msgid "Custom string:"
-msgstr "Kate pertsonalizatua:"
+msgstr "Потребителска подредба:"
 
 #: src/audacious/ui_preferences.c:1091
 msgid "Title format:"
-msgstr "Tituluaren formatua:"
+msgstr "Формат на заглавие:"
 
 #: src/audacious/ui_preferences.c:1178
 msgid "Output plugin:"
-msgstr "Irteera plugin-a:"
+msgstr "Изходен плъгин:"
 
 #: src/audacious/ui_preferences.c:1237
 msgid "Transport"
-msgstr "Transportea"
+msgstr "Транспорт"
 
 #: src/audacious/ui_preferences.c:1237
 msgid "Input"
-msgstr "Sarrera"
+msgstr "Вход"
 
 #: src/audacious/ui_preferences.c:1238
 msgid "Effect"
-msgstr "Efektuak"
+msgstr "Ефекти"
 
 #: src/audacious/ui_preferences.c:1238
 msgid "Visualization"
-msgstr "Bistaratzea"
+msgstr "Визуализация"
 
 #: src/audacious/ui_preferences.c:1238
 msgid "General"
-msgstr "Orokorra"
+msgstr "Общи"
 
 #: src/audacious/ui_preferences.c:1276
 msgid "Audacious Preferences"
-msgstr "Audacious-en hobespenak"
+msgstr "Настройки на Audacious"
 
 #: src/audacious/util.c:114
 #, c-format
 msgid "Could not create directory (%s): %s\n"
-msgstr "Ezin izan da %s direktorioa sortu: %s\n"
+msgstr "Не може да се създаде папка (%s): %s\n"
 
 #: src/audtool/handlers_playlist.c:262
 msgid "Position not found."
-msgstr "Posizioa ez da aurkitu."
+msgstr "Позицията не е намерена."
 
 #: src/audtool/handlers_vitals.c:51
 msgid "No song playing."
-msgstr "Ez da kanturik jotzen ari."
+msgstr "Не се изпълнява песен."
 
 #: src/libaudcore/audstrings.c:198
 #, c-format
 msgid "Audio CD, track %s"
-msgstr "Audio CDa, %s pista"
+msgstr "Аудио CD, запис %s"
 
 #: src/libaudcore/tuple.c:540
 msgid "Mono"
-msgstr "Mono"
+msgstr "Моно"
 
 #: src/libaudcore/tuple.c:542
 msgid "Stereo"
-msgstr "Estereo"
+msgstr "Стерео"
 
 #: src/libaudcore/tuple.c:544
 #, c-format
 msgid "%d channel"
 msgid_plural "%d channels"
-msgstr[0] "%d kanala"
-msgstr[1] "%d kanalak"
+msgstr[0] "%d канал"
+msgstr[1] "%d канали"
 
 #: src/libaudgui/about.c:37
 msgid "Credits"
-msgstr "Kredituak"
+msgstr "Автори"
 
 #: src/libaudgui/about.c:37
 msgid "License"
-msgstr "Lizentzia"
+msgstr "Лиценз"
 
 #: src/libaudgui/about.c:73
 msgid "About Audacious"
-msgstr "Audacious-i buruz"
+msgstr "Относно Audacious"
 
 #: src/libaudgui/confirm.c:66
 #, c-format
@@ -586,28 +590,28 @@ msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
 msgstr ""
-"%s itxi nahi duzulaz ziur zaude? Ixten baduzu, erreprodukzio-zerrenda itxi "
-"zenetik egindako aldaketak galduko dira."
+"Сигурни ли сте, че искате да затворите %s?  Ако го направите, всички "
+"промени, направени след като списъка е бил изнесен ще бъдат загубени."
 
 #: src/libaudgui/confirm.c:73
 msgid "Close Playlist"
-msgstr ""
+msgstr "Затваряне на списъка"
 
 #: src/libaudgui/confirm.c:77
 msgid "_Don't show this message again"
-msgstr "Ez erakutsi mezu hau aurrerantzean"
+msgstr "Не показвай това съобщение отново"
 
 #: src/libaudgui/confirm.c:100
 msgid "Rename Playlist"
-msgstr "Erreprodukzio-zerrenda berrizendatu"
+msgstr "Преименуване на списъка за изпълнение"
 
 #: src/libaudgui/effects-menu.c:70
 msgid "settings ..."
-msgstr "ezarpenak..."
+msgstr "настройки ..."
 
 #: src/libaudgui/equalizer.c:50
 msgid "_Enable"
-msgstr "Gaitu"
+msgstr "Включване"
 
 #: src/libaudgui/equalizer.c:123
 msgid "31 Hz"
@@ -631,43 +635,43 @@ msgstr "500 Hz"
 
 #: src/libaudgui/equalizer.c:124
 msgid "1 kHz"
-msgstr "1 kHz"
+msgstr "1 кHz"
 
 #: src/libaudgui/equalizer.c:124
 msgid "2 kHz"
-msgstr "2 kHz"
+msgstr "2 кHz"
 
 #: src/libaudgui/equalizer.c:125
 msgid "4 kHz"
-msgstr "4 kHz"
+msgstr "4 кHz"
 
 #: src/libaudgui/equalizer.c:125
 msgid "8 kHz"
-msgstr "8 kHz"
+msgstr "8 кHz"
 
 #: src/libaudgui/equalizer.c:125
 msgid "16 kHz"
-msgstr "16 kHz"
+msgstr "16 кHz"
 
 #: src/libaudgui/equalizer.c:130
 msgid "Equalizer"
-msgstr "Erakutsi ekualizadorea"
+msgstr "Еквилайзър"
 
 #: src/libaudgui/equalizer.c:146
 msgid "Preamp"
-msgstr "Aurreanplifikazioa"
+msgstr "Предусилвател"
 
 #: src/libaudgui/infopopup.c:154
 msgid "Track"
-msgstr "Pista"
+msgstr "Запис"
 
 #: src/libaudgui/infopopup.c:155
 msgid "Length"
-msgstr "Iraupena"
+msgstr "Продължителност"
 
 #: src/libaudgui/infowin.c:73
 msgid "Acid Jazz"
-msgstr "Jazz azidoa"
+msgstr "Acid Jazz"
 
 #: src/libaudgui/infowin.c:74
 msgid "Acid Rock"
@@ -675,7 +679,7 @@ msgstr "Acid Rock"
 
 #: src/libaudgui/infowin.c:75
 msgid "Ambient"
-msgstr "Giroko musika"
+msgstr "Ambient"
 
 #: src/libaudgui/infowin.c:76
 msgid "Bebop"
@@ -687,15 +691,15 @@ msgstr "Bluegrass"
 
 #: src/libaudgui/infowin.c:78
 msgid "Blues"
-msgstr "Blues-a"
+msgstr "Blues"
 
 #: src/libaudgui/infowin.c:79
 msgid "Chamber Music"
-msgstr "Ganbera-musika"
+msgstr "Chamber Music"
 
 #: src/libaudgui/infowin.c:80
 msgid "Classical"
-msgstr "Klasikoa"
+msgstr "Classical"
 
 #: src/libaudgui/infowin.c:81
 msgid "Country"
@@ -707,19 +711,19 @@ msgstr "Death Metal"
 
 #: src/libaudgui/infowin.c:83
 msgid "Disco"
-msgstr "Disko"
+msgstr "Disco"
 
 #: src/libaudgui/infowin.c:84
 msgid "Easy Listening"
-msgstr "Entzuteko erraza"
+msgstr "Easy Listening"
 
 #: src/libaudgui/infowin.c:85
 msgid "Folk"
-msgstr "Folka"
+msgstr "Folk"
 
 #: src/libaudgui/infowin.c:86
 msgid "Funk"
-msgstr "Funk-a"
+msgstr "Funk"
 
 #: src/libaudgui/infowin.c:87
 msgid "Gangsta Rap"
@@ -727,23 +731,23 @@ msgstr "Gangsta Rap"
 
 #: src/libaudgui/infowin.c:88
 msgid "Gospel"
-msgstr "Gospel-a"
+msgstr "Gospel"
 
 #: src/libaudgui/infowin.c:89
 msgid "Grunge"
-msgstr "Grunge-a"
+msgstr "Grunge"
 
 #: src/libaudgui/infowin.c:90
 msgid "Hard Rock"
-msgstr "Rock gogorra"
+msgstr "Hard Rock"
 
 #: src/libaudgui/infowin.c:91
 msgid "Heavy Metal"
-msgstr "Heavy Metal-a"
+msgstr "Heavy Metal"
 
 #: src/libaudgui/infowin.c:92
 msgid "Hip-hop"
-msgstr "Hip-Hop-a"
+msgstr "Hip-hop"
 
 #: src/libaudgui/infowin.c:93
 msgid "House"
@@ -751,15 +755,15 @@ msgstr "House"
 
 #: src/libaudgui/infowin.c:94
 msgid "Jazz"
-msgstr "Jazza"
+msgstr "Jazz"
 
 #: src/libaudgui/infowin.c:95
 msgid "Jungle"
-msgstr "Jungle-a"
+msgstr "Jungle"
 
 #: src/libaudgui/infowin.c:96
 msgid "Metal"
-msgstr "Metala"
+msgstr "Metal"
 
 #: src/libaudgui/infowin.c:97
 msgid "New Age"
@@ -771,19 +775,19 @@ msgstr "New Wave"
 
 #: src/libaudgui/infowin.c:99
 msgid "Noise"
-msgstr "Zarata"
+msgstr "Noise"
 
 #: src/libaudgui/infowin.c:100
 msgid "Pop"
-msgstr "Pop-a"
+msgstr "Pop"
 
 #: src/libaudgui/infowin.c:101
 msgid "Punk Rock"
-msgstr "Punk Rock-a"
+msgstr "Punk Rock"
 
 #: src/libaudgui/infowin.c:102
 msgid "Rap"
-msgstr "Rap-a"
+msgstr "Rap"
 
 #: src/libaudgui/infowin.c:103
 msgid "Reggae"
@@ -791,11 +795,11 @@ msgstr "Reggae"
 
 #: src/libaudgui/infowin.c:104
 msgid "Rock"
-msgstr "Rocka"
+msgstr "Rock"
 
 #: src/libaudgui/infowin.c:105
 msgid "Rock and Roll"
-msgstr "Rock & Roll-a"
+msgstr "Rock and Roll"
 
 #: src/libaudgui/infowin.c:106
 msgid "Rhythm and Blues"
@@ -807,188 +811,188 @@ msgstr "Ska"
 
 #: src/libaudgui/infowin.c:108
 msgid "Soul"
-msgstr "Soul-a"
+msgstr "Soul"
 
 #: src/libaudgui/infowin.c:109
 msgid "Swing"
-msgstr "Swing-a"
+msgstr "Swing"
 
 #: src/libaudgui/infowin.c:110
 msgid "Techno"
-msgstr "Teknoa"
+msgstr "Techno"
 
 #: src/libaudgui/infowin.c:111
 msgid "Trip-hop"
-msgstr "Trip-Hop-a"
+msgstr "Trip-hop"
 
 #: src/libaudgui/infowin.c:175 src/libaudgui/infowin.c:348
 #: src/libaudgui/infowin.c:351 src/libaudgui/infowin.c:354
 msgid "<span size=\"small\">n/a</span>"
-msgstr "<span size=\"small\">e/e</span>"
+msgstr "<span size=\"small\">н/д</span>"
 
 #: src/libaudgui/infowin.c:223
 msgid "Metadata updated successfully"
-msgstr "Metadatuak ongi eguneratu dira"
+msgstr "Метаданните са обновени успешно"
 
 #: src/libaudgui/infowin.c:227
 msgid "Metadata updating failed"
-msgstr "Huts egin du metadatuak eguneratzean"
+msgstr "Неуспешно обновяване на метаданните"
 
 #: src/libaudgui/infowin.c:302
 msgid "Track Information"
-msgstr "Pistaren informazioa"
+msgstr "Информация за записа"
 
 #: src/libaudgui/infowin.c:337
 msgid "<span size=\"small\">Format:</span>"
-msgstr "<span size=\"small\">Formatua:</span>"
+msgstr "<span size=\"small\">Формат:</span>"
 
 #: src/libaudgui/infowin.c:341
 msgid "<span size=\"small\">Quality:</span>"
-msgstr "<span size=\"small\">Kalitatea:</span>"
+msgstr "<span size=\"small\">Качество:</span>"
 
 #: src/libaudgui/infowin.c:344
 msgid "<span size=\"small\">Bitrate:</span>"
-msgstr "<span size=\"small\">Bit-tasa:</span>"
+msgstr "<span size=\"small\">Битрейт:</span>"
 
 #: src/libaudgui/infowin.c:368
 msgid "<span size=\"small\">Title</span>"
-msgstr "<span size=\"small\">Titulua</span>"
+msgstr "<span size=\"small\">Заглавие</span>"
 
 #: src/libaudgui/infowin.c:380
 msgid "<span size=\"small\">Artist</span>"
-msgstr "<span size=\"small\">Artista</span>"
+msgstr "<span size=\"small\">Изпълнител</span>"
 
 #: src/libaudgui/infowin.c:392
 msgid "<span size=\"small\">Album</span>"
-msgstr "<span size=\"small\">Diskoa</span>"
+msgstr "<span size=\"small\">Албум</span>"
 
 #: src/libaudgui/infowin.c:404
 msgid "<span size=\"small\">Comment</span>"
-msgstr "<span size=\"small\">Iruzkina</span>"
+msgstr "<span size=\"small\">Коментар</span>"
 
 #: src/libaudgui/infowin.c:416
 msgid "<span size=\"small\">Genre</span>"
-msgstr "<span size=\"small\">Generoa</span>"
+msgstr "<span size=\"small\">Жанр</span>"
 
 #: src/libaudgui/infowin.c:438
 msgid "<span size=\"small\">Year</span>"
-msgstr "<span size=\"small\">Urtea</span>"
+msgstr "<span size=\"small\">Година</span>"
 
 #: src/libaudgui/infowin.c:447
 msgid "<span size=\"small\">Track Number</span>"
-msgstr "<span size=\"small\">Pista-zenbakia</span>"
+msgstr "<span size=\"small\">Номер на запис</span>"
 
 #: src/libaudgui/infowin.c:521
 #, c-format
 msgid "%d kb/s"
-msgstr "%d kb/s"
+msgstr "%d кбит/с"
 
 #: src/libaudgui/infowin.c:548
 #, c-format
 msgid "No info available for %s.\n"
-msgstr "Ez dago %s(r)en informazio eskurragarririk.\n"
+msgstr "Липсва информация за %s.\n"
 
 #: src/libaudgui/jump-to-time.c:51
 msgid "Jump to Time"
-msgstr "Saltatu denborara"
+msgstr "Прескачане до файл"
 
 #: src/libaudgui/jump-to-time.c:60
 msgid "Enter time (minutes:seconds):"
-msgstr "Sartu denbora (minutuak:segunduak):"
+msgstr "Въвеждане на време (минути:секунди):"
 
 #: src/libaudgui/playlists.c:32
 msgid "Export Playlist"
-msgstr "Erreprodukzio-zerrenda esportatu"
+msgstr "Изнасяне на списък за изпълнение"
 
 #: src/libaudgui/playlists.c:32
 msgid "Import Playlist"
-msgstr "Erreprodukzio-zerrenda inportatu"
+msgstr "Внасяне на списък за изпълнение"
 
 #: src/libaudgui/playlists.c:65
 #, c-format
 msgid "Overwrite %s?"
-msgstr "%s gainidatzi?"
+msgstr "Презаписване %s?"
 
 #: src/libaudgui/queue-manager.c:195
 msgid "Queue Manager"
-msgstr "Ilara kudeatzailea"
+msgstr "Мениджър на опашката"
 
 #: src/libaudgui/ui_fileopener.c:106
 msgid "Open Files"
-msgstr "Ireki fitxategiak"
+msgstr "Отваряне на файлове"
 
 #: src/libaudgui/ui_fileopener.c:106
 msgid "Add Files"
-msgstr "Gehitu fitxategiak"
+msgstr "Добавяне на файлове"
 
 #: src/libaudgui/ui_fileopener.c:108
 msgid "Close dialog on Open"
-msgstr "Itxi elkarrizketa-koadroa fitxategia ireki ondoren"
+msgstr "Затваряне на диалога, след отваряне на файл"
 
 #: src/libaudgui/ui_fileopener.c:108
 msgid "Close dialog on Add"
-msgstr "Itxi elkarrizketa-koadroa fitxategia gehitu ondoren"
+msgstr "Затваряне на диалога след добавяне на файл"
 
 #: src/libaudgui/ui_jumptotrack.c:104 src/libaudgui/ui_jumptotrack.c:112
 #: src/libaudgui/ui_jumptotrack.c:331
 msgid "_Queue"
-msgstr "_Ilara"
+msgstr "На опашка"
 
 #: src/libaudgui/ui_jumptotrack.c:110
 msgid "Un_queue"
-msgstr "_Kendu ilara"
+msgstr "Премахване от опашката"
 
 #: src/libaudgui/ui_jumptotrack.c:261
 msgid "Jump to Song"
-msgstr "Abesti honetara saltatu"
+msgstr "Прескачане до песен"
 
 #: src/libaudgui/ui_jumptotrack.c:286
 msgid "Filter: "
-msgstr "Iragazkia: "
+msgstr "Филтър: "
 
 #: src/libaudgui/ui_jumptotrack.c:287
 msgid "_Filter:"
-msgstr "_Iragazkia:"
+msgstr "Филтър:"
 
 #: src/libaudgui/ui_jumptotrack.c:297
 msgid "Remember"
-msgstr "Gogoratu"
+msgstr "Запомняне"
 
 #: src/libaudgui/ui_jumptotrack.c:304
 msgid "Clea_r"
-msgstr "Ga_rbitu"
+msgstr "Изчистване"
 
 #: src/libaudgui/ui_jumptotrack.c:324
 msgid "Close on Jump"
-msgstr "Itxi saltatzean"
+msgstr "Затваряне след прескачане"
 
 #: src/libaudgui/ui_playlist_manager.c:260
 msgid "Playlist Manager"
-msgstr "Erreprodukzio-zerrendaren kudeatzailea"
+msgstr "Мениджър на списъка за изпълнение"
 
 #: src/libaudgui/ui_playlist_manager.c:287
 msgid "Entries"
-msgstr "Sarrerak"
+msgstr "Елементи"
 
 #: src/libaudgui/ui_playlist_manager.c:307
 msgid "_Rename"
-msgstr "_Izena aldatu"
+msgstr "Преименуване"
 
 #: src/libaudgui/ui_playlist_manager.c:327
 msgid "_Close dialog on activating playlist"
-msgstr "_Itxi leihoa erreprodukzio-zerrenda aktibatzean"
+msgstr "Затваряне на диалога при отваряне на списък за изпълнение"
 
 #: src/libaudgui/url-opener.c:55
 msgid "Open URL"
-msgstr "Ireki URL"
+msgstr "Отваряне на URL"
 
 #: src/libaudgui/url-opener.c:55
 msgid "Add URL"
-msgstr "Gehitu URL"
+msgstr "Добавяне на URL"
 
 #: src/libaudgui/url-opener.c:64
 msgid "Enter URL:"
-msgstr "Sartu URLa:"
+msgstr "Въвеждане на URL:"
 
 #: src/libaudgui/util.c:142
 msgid ""
@@ -996,4 +1000,4 @@ msgid ""
 "(Further messages have been hidden.)"
 msgstr ""
 "\n"
-"(Mezuak ezkutatu dira.)"
+"(Допълнителни съобщения са били скрити.)"

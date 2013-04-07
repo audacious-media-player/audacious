@@ -7,6 +7,9 @@ ast.po)
 be.po)
     LANGUAGE="Belarusian"
     ;;
+bg.po)
+    LANGUAGE="Bulgarian"
+    ;;
 ca.po)
     LANGUAGE="Catalan"
     ;;
@@ -19,14 +22,17 @@ de.po)
 el.po)
     LANGUAGE="Greek"
     ;;
-es.po)
-    LANGUAGE="Spanish"
+eo.po)
+    LANGUAGE="Esperanto"
     ;;
 es_AR.po)
     LANGUAGE="Spanish (Argentinian)"
     ;;
 es_MX.po)
     LANGUAGE="Spanish (Mexican)"
+    ;;
+es.po)
+    LANGUAGE="Spanish"
     ;;
 et.po)
     LANGUAGE="Estonian"
@@ -46,9 +52,6 @@ fr.po)
 gl.po)
     LANGUAGE="Galician"
     ;;
-he.po)
-    LANGUAGE="Hebrew"
-    ;;
 hu.po)
     LANGUAGE="Hungarian"
     ;;
@@ -64,11 +67,17 @@ ja.po)
 ko.po)
     LANGUAGE="Korean"
     ;;
+ky.po)
+    LANGUAGE="Kirgyz"
+    ;;
 lt.po)
     LANGUAGE="Lithuanian"
     ;;
 lv.po)
     LANGUAGE="Latvian"
+    ;;
+ms.po)
+    LANGUAGE="Malay"
     ;;
 nl.po)
     LANGUAGE="Dutch"
@@ -91,11 +100,14 @@ ru.po)
 sk.po)
     LANGUAGE="Slovak"
     ;;
-sr.po)
-    LANGUAGE="Serbian"
+sq.po)
+    LANGUAGE="Albanian"
     ;;
 sr@latin.po)
     LANGUAGE="Serbian (Latin)"
+    ;;
+sr.po)
+    LANGUAGE="Serbian"
     ;;
 tr.po)
     LANGUAGE="Turkish"

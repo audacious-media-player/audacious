@@ -9,27 +9,30 @@
 #
 LOCALES = ast.po \
 	  be.po \
+	  bg.po \
 	  ca.po \
 	  cs.po \
 	  de.po \
 	  el.po \
-	  es.po \
+	  eo.po \
 	  es_AR.po \
 	  es_MX.po \
+      es.po \
 	  et.po \
 	  eu.po \
 	  fa_IR.po \
 	  fi.po \
 	  fr.po \
 	  gl.po \
-	  he.po \
 	  hu.po \
 	  id_ID.po \
 	  it.po \
 	  ja.po \
 	  ko.po \
+	  ky.po \
 	  lt.po \
 	  lv.po \
+	  ms.po \
 	  nl.po \
 	  pl.po \
 	  pt_BR.po \
@@ -37,6 +40,7 @@ LOCALES = ast.po \
 	  ro.po \
 	  ru.po \
 	  sk.po \
+	  sq.po \
 	  sr@latin.po \
 	  sr.po \
 	  tr.po \
