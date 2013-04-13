@@ -145,26 +145,16 @@ static void plugin_free (PluginHandle * plugin)
 {
     plugin_list = g_list_remove (plugin_list, plugin);
 
-    g_list_foreach (plugin->watches, (GFunc) g_free, NULL);
-    g_list_free (plugin->watches);
+    g_list_free_full (plugin->watches, g_free);
 
     if (plugin->type == PLUGIN_TYPE_TRANSPORT)
-    {
-        g_list_foreach (plugin->u.t.schemes, (GFunc) g_free, NULL);
-        g_list_free (plugin->u.t.schemes);
-    }
+        g_list_free_full (plugin->u.t.schemes, g_free);
     else if (plugin->type == PLUGIN_TYPE_PLAYLIST)
-    {
-        g_list_foreach (plugin->u.p.exts, (GFunc) g_free, NULL);
-        g_list_free (plugin->u.p.exts);
-    }
+        g_list_free_full (plugin->u.p.exts, g_free);
     else if (plugin->type == PLUGIN_TYPE_INPUT)
     {
         for (int key = 0; key < INPUT_KEYS; key ++)
-        {
-            g_list_foreach (plugin->u.i.keys[key], (GFunc) g_free, NULL);
-            g_list_free (plugin->u.i.keys[key]);
-        }
+            g_list_free_full (plugin->u.i.keys[key], g_free);
     }
 
     g_free (plugin->path);
@@ -477,6 +467,10 @@ static void plugin_get_info (PluginHandle * plugin, bool_t new)
     if (header->type == PLUGIN_TYPE_TRANSPORT)
     {
         TransportPlugin * tp = (TransportPlugin *) header;
+
+        g_list_free_full (plugin->u.t.schemes, g_free);
+        plugin->u.t.schemes = NULL;
+
         for (int i = 0; tp->schemes[i]; i ++)
             plugin->u.t.schemes = g_list_prepend (plugin->u.t.schemes, g_strdup
              (tp->schemes[i]));
@@ -484,6 +478,10 @@ static void plugin_get_info (PluginHandle * plugin, bool_t new)
     else if (header->type == PLUGIN_TYPE_PLAYLIST)
     {
         PlaylistPlugin * pp = (PlaylistPlugin *) header;
+
+        g_list_free_full (plugin->u.p.exts, g_free);
+        plugin->u.p.exts = NULL;
+
         for (int i = 0; pp->extensions[i]; i ++)
             plugin->u.p.exts = g_list_prepend (plugin->u.p.exts, g_strdup
              (pp->extensions[i]));
@@ -495,8 +493,7 @@ static void plugin_get_info (PluginHandle * plugin, bool_t new)
 
         for (int key = 0; key < INPUT_KEYS; key ++)
         {
-            g_list_foreach (plugin->u.i.keys[key], (GFunc) g_free, NULL);
-            g_list_free (plugin->u.i.keys[key]);
+            g_list_free_full (plugin->u.i.keys[key], g_free);
             plugin->u.i.keys[key] = NULL;
         }
 
