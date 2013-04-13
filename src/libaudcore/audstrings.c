@@ -144,7 +144,8 @@ EXPORT char * filename_to_uri (const char * name)
     char * utf8 = g_locale_to_utf8 (name, -1, NULL, NULL, NULL);
     if (! utf8)
     {
-        fprintf (stderr, "Cannot convert filename from system locale: %s\n", name);
+        const char * locale = setlocale (LC_ALL, NULL);
+        fprintf (stderr, "Cannot convert filename from system locale (%s): %s\n", locale, name);
         return NULL;
     }
 
@@ -184,7 +185,10 @@ EXPORT char * uri_to_filename (const char * uri)
 
     char * name = g_locale_from_utf8 (buf, -1, NULL, NULL, NULL);
     if (! name)
-        fprintf (stderr, "Cannot convert filename to system locale: %s\n", buf);
+    {
+        const char * locale = setlocale (LC_ALL, NULL);
+        fprintf (stderr, "Cannot convert filename to system locale (%s): %s\n", locale, buf);
+    }
 
     return name;
 }
