@@ -239,6 +239,9 @@ void audgui_pixbuf_uncache (void)
     }
 }
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+
 /* deprecated */
 EXPORT GdkPixbuf * audgui_pixbuf_for_current (void)
 {
@@ -253,6 +256,8 @@ EXPORT GdkPixbuf * audgui_pixbuf_for_current (void)
 
     return current_pixbuf;
 }
+
+#pragma GCC diagnostic pop
 
 EXPORT void audgui_pixbuf_scale_within (GdkPixbuf * * pixbuf, int size)
 {
