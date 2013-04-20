@@ -898,7 +898,7 @@ void create_widgets_with_domain (void * box, const PreferencesWidget * widgets,
                 gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 0, 0);
 
                 if (widgets[x].data.box.horizontal) {
-                    widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+                    widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
                 } else {
                     widget = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
                 }
