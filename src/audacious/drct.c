@@ -149,6 +149,10 @@ static void add_list (Index * filenames, int at, bool_t to_temp, bool_t play)
 
     int playlist = playlist_get_active ();
 
+    /* queue the new entries before deleting the old ones */
+    /* this is to avoid triggering the --quit-after-play condition */
+    playlist_entry_insert_batch (playlist, at, filenames, NULL, play);
+
     if (play)
     {
         if (get_bool (NULL, "clear_playlist"))
@@ -156,8 +160,6 @@ static void add_list (Index * filenames, int at, bool_t to_temp, bool_t play)
         else
             playlist_queue_delete (playlist, 0, playlist_queue_count (playlist));
     }
-
-    playlist_entry_insert_batch (playlist, at, filenames, NULL, play);
 }
 
 void drct_pl_add (const char * filename, int at)
