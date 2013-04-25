@@ -49,7 +49,11 @@ void drct_play (void)
         }
     }
     else
-        drct_play_playlist (playlist_get_active ());
+    {
+        int playlist = playlist_get_active ();
+        playlist_set_position (playlist, playlist_get_position (playlist));
+        drct_play_playlist (playlist);
+    }
 }
 
 void drct_play_pause (void)
