@@ -47,10 +47,7 @@ static bool_t check_opened (ProbeState * state)
         return FALSE;
 
     AUDDBG ("Opening %s.\n", state->filename);
-    if (vfs_is_remote (state->filename))
-        state->handle = probe_buffer_new (state->filename);
-    else
-        state->handle = vfs_fopen (state->filename, "r");
+    state->handle = probe_buffer_new (state->filename);
 
     if (state->handle != NULL)
         return TRUE;

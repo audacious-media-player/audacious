@@ -69,8 +69,7 @@ static int64_t probe_buffer_fread (void * buffer, int64_t size, int64_t count,
 static int64_t probe_buffer_fwrite (const void * data, int64_t size, int64_t count,
  VFSFile * file)
 {
-    /* not implemented */
-    return 0;
+    return 0; /* not allowed */
 }
 
 static int probe_buffer_getc (VFSFile * file)
@@ -84,7 +83,7 @@ static int probe_buffer_fseek (VFSFile * file, int64_t offset, int whence)
     ProbeBuffer * p = vfs_get_handle (file);
 
     if (whence == SEEK_END)
-        return -1;
+        return -1; /* not allowed */
 
     if (whence == SEEK_CUR)
         offset += p->at;
@@ -117,18 +116,26 @@ static int64_t probe_buffer_ftell (VFSFile * file)
 static bool_t probe_buffer_feof (VFSFile * file)
 {
     ProbeBuffer * p = vfs_get_handle (file);
-    return (p->at < p->filled) ? FALSE : vfs_feof (p->file);
+
+    if (p->at < p->filled)
+        return FALSE;
+    if (p->at == sizeof p->buffer)
+        return TRUE;
+
+    return vfs_feof (p->file);
 }
 
 static int probe_buffer_ftruncate (VFSFile * file, int64_t size)
 {
-    /* not implemented */
-    return -1;
+    return -1; /* not allowed */
 }
 
 static int64_t probe_buffer_fsize (VFSFile * file)
 {
-    return vfs_fsize (((ProbeBuffer *) vfs_get_handle (file))->file);
+    ProbeBuffer * p = vfs_get_handle (file);
+
+    int64_t size = vfs_fsize (p->file);
+    return MIN (size, sizeof p->buffer);
 }
 
 static char * probe_buffer_get_metadata (VFSFile * file, const char * field)
@@ -138,19 +145,19 @@ static char * probe_buffer_get_metadata (VFSFile * file, const char * field)
 
 static VFSConstructor probe_buffer_table =
 {
-	.vfs_fopen_impl = NULL,
-	.vfs_fclose_impl = probe_buffer_fclose,
-	.vfs_fread_impl = probe_buffer_fread,
-	.vfs_fwrite_impl = probe_buffer_fwrite,
-	.vfs_getc_impl = probe_buffer_getc,
-	.vfs_ungetc_impl = probe_buffer_ungetc,
-	.vfs_fseek_impl = probe_buffer_fseek,
-	.vfs_rewind_impl = probe_buffer_rewind,
-	.vfs_ftell_impl = probe_buffer_ftell,
-	.vfs_feof_impl = probe_buffer_feof,
-	.vfs_ftruncate_impl = probe_buffer_ftruncate,
-	.vfs_fsize_impl = probe_buffer_fsize,
-	.vfs_get_metadata_impl = probe_buffer_get_metadata,
+    .vfs_fopen_impl = NULL,
+    .vfs_fclose_impl = probe_buffer_fclose,
+    .vfs_fread_impl = probe_buffer_fread,
+    .vfs_fwrite_impl = probe_buffer_fwrite,
+    .vfs_getc_impl = probe_buffer_getc,
+    .vfs_ungetc_impl = probe_buffer_ungetc,
+    .vfs_fseek_impl = probe_buffer_fseek,
+    .vfs_rewind_impl = probe_buffer_rewind,
+    .vfs_ftell_impl = probe_buffer_ftell,
+    .vfs_feof_impl = probe_buffer_feof,
+    .vfs_ftruncate_impl = probe_buffer_ftruncate,
+    .vfs_fsize_impl = probe_buffer_fsize,
+    .vfs_get_metadata_impl = probe_buffer_get_metadata,
 };
 
 VFSFile * probe_buffer_new (const char * filename)
