@@ -21,7 +21,8 @@
 #include <pthread.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
+
+#include <glib.h> /* for g_usleep */
 
 #include <libaudcore/hook.h>
 
@@ -264,7 +265,7 @@ static void write_output_raw (void * data, int samples)
             if (PLUGIN_HAS_FUNC (cop, period_wait))
                 cop->period_wait ();
             else
-                usleep (20000);
+                g_usleep (20000);
         }
 
         LOCK_MINOR;
@@ -364,7 +365,7 @@ void output_write_audio (void * data, int size)
         while ((! s_output || s_resetting) && ! s_aborted)
         {
             UNLOCK_ALL;
-            usleep (20000);
+            g_usleep (20000);
             LOCK_ALL;
         }
 
