@@ -181,7 +181,10 @@ EXPORT GdkPixbuf * audgui_pixbuf_from_data (const void * data, int64_t size)
             g_object_ref (pixbuf);
     }
     else
-        AUDDBG("error while loading pixbuf: %s\n", error->message);
+    {
+        AUDDBG ("error while loading pixbuf: %s\n", error->message);
+        g_error_free (error);
+    }
 
     g_object_unref (loader);
     return pixbuf;

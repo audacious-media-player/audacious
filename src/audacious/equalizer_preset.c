@@ -36,21 +36,19 @@ Index * equalizer_read_presets (const char * basename)
 {
     char *filename, *name;
     GKeyFile *rcfile;
-    GError *error = NULL;
     int i, p = 0;
     EqualizerPreset *preset;
 
     filename = g_build_filename (get_path (AUD_PATH_USER_DIR), basename, NULL);
 
     rcfile = g_key_file_new();
-    if (!g_key_file_load_from_file(rcfile, filename, G_KEY_FILE_NONE, &error))
+    if (!g_key_file_load_from_file(rcfile, filename, G_KEY_FILE_NONE, NULL))
     {
         g_free(filename);
         filename = g_build_filename (get_path (AUD_PATH_DATA_DIR), basename,
          NULL);
 
-        error = NULL;
-        if (!g_key_file_load_from_file(rcfile, filename, G_KEY_FILE_NONE, &error))
+        if (!g_key_file_load_from_file(rcfile, filename, G_KEY_FILE_NONE, NULL))
         {
            g_free(filename);
            return NULL;
@@ -65,25 +63,20 @@ Index * equalizer_read_presets (const char * basename)
     {
         char section[32];
 
-        error = NULL;
         g_snprintf(section, sizeof(section), "Preset%d", p++);
 
-        if ((name = g_key_file_get_string(rcfile, "Presets", section, &error)) != NULL)
+        if ((name = g_key_file_get_string(rcfile, "Presets", section, NULL)) != NULL)
         {
-            error = NULL;
-
             preset = g_new0(EqualizerPreset, 1);
             preset->name = name;
-            preset->preamp = g_key_file_get_double(rcfile, name, "Preamp", &error);
+            preset->preamp = g_key_file_get_double(rcfile, name, "Preamp", NULL);
 
             for (i = 0; i < AUD_EQUALIZER_NBANDS; i++)
             {
                 char band[16];
                 g_snprintf(band, sizeof(band), "Band%d", i);
 
-                error = NULL;
-
-                preset->bands[i] = g_key_file_get_double(rcfile, name, band, &error);
+                preset->bands[i] = g_key_file_get_double(rcfile, name, band, NULL);
             }
 
             index_append (list, preset);
@@ -104,7 +97,6 @@ bool_t equalizer_write_preset_file (Index * list, const char * basename)
     GKeyFile *rcfile;
     char *data;
     gsize len;
-    GError *error = NULL;
 
     rcfile = g_key_file_new();
 
@@ -129,8 +121,8 @@ bool_t equalizer_write_preset_file (Index * list, const char * basename)
 
     filename = g_build_filename (get_path (AUD_PATH_USER_DIR), basename, NULL);
 
-    data = g_key_file_to_data(rcfile, &len, &error);
-    bool_t success = g_file_set_contents (filename, data, len, & error);
+    data = g_key_file_to_data(rcfile, &len, NULL);
+    bool_t success = g_file_set_contents (filename, data, len, NULL);
     g_free(data);
 
     g_key_file_free(rcfile);
@@ -190,7 +182,6 @@ bool_t save_preset_file (EqualizerPreset * preset, const char * filename)
     int i;
     char *data;
     gsize len;
-    GError *error = NULL;
 
     rcfile = g_key_file_new();
     g_key_file_set_double(rcfile, "Equalizer preset", "Preamp", preset->preamp);
@@ -202,7 +193,7 @@ bool_t save_preset_file (EqualizerPreset * preset, const char * filename)
                               preset->bands[i]);
     }
 
-    data = g_key_file_to_data(rcfile, &len, &error);
+    data = g_key_file_to_data(rcfile, &len, NULL);
 
     bool_t success = FALSE;
 
@@ -224,13 +215,12 @@ static EqualizerPreset * equalizer_read_aud_preset (const char * filename)
     int i;
     EqualizerPreset *preset;
     GKeyFile *rcfile;
-    GError *error = NULL;
 
     preset = g_new0(EqualizerPreset, 1);
     preset->name = g_strdup("");
 
     rcfile = g_key_file_new();
-    if (!g_key_file_load_from_file(rcfile, filename, G_KEY_FILE_NONE, &error))
+    if (!g_key_file_load_from_file(rcfile, filename, G_KEY_FILE_NONE, NULL))
     {
         g_key_file_free(rcfile);
         g_free(preset->name);
@@ -238,13 +228,13 @@ static EqualizerPreset * equalizer_read_aud_preset (const char * filename)
         return NULL;
     }
 
-    preset->preamp = g_key_file_get_double(rcfile, "Equalizer preset", "Preamp", &error);
+    preset->preamp = g_key_file_get_double(rcfile, "Equalizer preset", "Preamp", NULL);
     for (i = 0; i < 10; i++)
     {
         char tmp[7];
         g_snprintf(tmp, sizeof(tmp), "Band%d", i);
 
-        preset->bands[i] = g_key_file_get_double(rcfile, "Equalizer preset", tmp, &error);
+        preset->bands[i] = g_key_file_get_double(rcfile, "Equalizer preset", tmp, NULL);
     }
 
     g_key_file_free(rcfile);

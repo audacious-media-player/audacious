@@ -264,6 +264,7 @@ static void parse_options (int * argc, char *** argv)
         fprintf (stderr,
          _("%s: %s\nTry `%s --help' for more information.\n"), (* argv)[0],
          error->message, (* argv)[0]);
+        g_error_free (error);
         exit (EXIT_FAILURE);
     }
 

@@ -145,6 +145,7 @@ audtool_connect(void)
 	if (connection == NULL)
 	{
 		fprintf (stderr, "D-Bus Error: %s\n", error->message);
+		g_error_free (error);
 		exit (EXIT_FAILURE);
 	}
 
