@@ -36,7 +36,6 @@ enum
     ID3_COMPOSER,
     ID3_COPYRIGHT,
     ID3_DATE,
-    ID3_TIME,
     ID3_LENGTH,
     ID3_ARTIST,
     ID3_TRACKNR,
@@ -51,9 +50,9 @@ enum
     ID3_TAGS_NO
 };
 
-static const char * id3_frames[ID3_TAGS_NO] = {"TALB","TIT2","TCOM", "TCOP",
- "TDAT", "TIME", "TLEN", "TPE1", "TRCK", "TYER","TCON", "COMM", "PRIV", "TSSE",
- "TDRC", "TXXX", "RVA2"};
+static const char * id3_frames[ID3_TAGS_NO] = {"TALB", "TIT2", "TCOM", "TCOP",
+ "TDAT", "TLEN", "TPE1", "TRCK", "TYER", "TCON", "COMM", "PRIV", "TSSE", "TDRC",
+ "TXXX", "RVA2"};
 
 static const unsigned char PRIMARY_CLASS_MUSIC[16] = {0xBC, 0x7D, 0x60, 0xD1, 0x23,
  0xE3, 0xE2, 0x4B, 0x86, 0xA1, 0x48, 0xA4, 0x2A, 0x28, 0x44, 0x1E};
@@ -858,9 +857,6 @@ static bool_t id3v24_read_tag (Tuple * tuple, VFSFile * handle)
             break;
           case ID3_DATE:
             associate_string (tuple, FIELD_DATE, NULL, data, size);
-            break;
-          case ID3_TIME:
-            associate_int (tuple, FIELD_LENGTH, NULL, data, size);
             break;
           case ID3_LENGTH:
             associate_int (tuple, FIELD_LENGTH, NULL, data, size);
