@@ -46,6 +46,7 @@ enum {
 
 #define FMT_SIZEOF(f) ((f) == FMT_FLOAT ? sizeof (float) : (f) <= FMT_U8 ? 1 : (f) <= FMT_U16_BE ? 2 : 4)
 
+void audio_interlace (const void * const * in, int format, int channels, void * out, int frames);
 void audio_from_int (const void * in, int format, float * out, int samples);
 void audio_to_int (const float * in, void * out, int format, int samples);
 void audio_amplify (float * data, int channels, int frames, float * factors);

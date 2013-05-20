@@ -23,6 +23,53 @@
 
 #include "audio.h"
 
+#define INTERLACE_LOOP(TYPE) \
+for (int c = 0; c < channels; c ++) \
+{ \
+    const TYPE * get = in[c]; \
+    const TYPE * end = get + frames; \
+    TYPE * set = (TYPE *) out + c; \
+    while (get < end) \
+    { \
+        * set = * get ++; \
+        set += channels; \
+    } \
+}
+
+EXPORT void audio_interlace (const void * const * in, int format, int channels,
+ void * out, int frames)
+{
+    switch (format)
+    {
+    case FMT_FLOAT:
+        INTERLACE_LOOP (float);
+        break;
+
+    case FMT_S8:
+    case FMT_U8:
+        INTERLACE_LOOP (int8_t);
+        break;
+
+    case FMT_S16_LE:
+    case FMT_S16_BE:
+    case FMT_U16_LE:
+    case FMT_U16_BE:
+        INTERLACE_LOOP (int16_t);
+        break;
+
+    case FMT_S24_LE:
+    case FMT_S24_BE:
+    case FMT_U24_LE:
+    case FMT_U24_BE:
+    case FMT_S32_LE:
+    case FMT_S32_BE:
+    case FMT_U32_LE:
+    case FMT_U32_BE:
+        INTERLACE_LOOP (int32_t);
+        break;
+    }
+}
+
 #define FROM_INT_LOOP(NAME, TYPE, SWAP, OFFSET, RANGE) \
 static void NAME (const TYPE * in, float * out, int samples) \
 { \
