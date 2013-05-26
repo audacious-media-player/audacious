@@ -25,6 +25,7 @@
 #include <glib.h>
 #include <string.h>
 #include <ctype.h>
+#include <locale.h>
 
 #include <audacious/i18n.h>
 
