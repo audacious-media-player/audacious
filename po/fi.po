@@ -3,19 +3,20 @@
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
-# Elias Julkunen <elias.julkunen@gmail.com>, 2011.
-# Jyri Tuomisto <jstuomisto@gmail.com>, 2013.
-# Matti Hämäläinen, 2008.
-# Pauli Virtanen <pauli.virtanen@hut.fi>, 2004.
-# Tuomas Lähteenmäki <lahtis@gmail.com>, 2012.
+# Elias Julkunen <elias.julkunen@gmail.com>, 2011
+# Jaergenoth <jstuomisto@gmail.com>, 2013
+# Matti Hämäläinen, 2008
+# Pauli Virtanen <pauli.virtanen@hut.fi>, 2004
+# Tuomas Lähteenmäki <lahtis@gmail.com>, 2012
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2013-04-07 19:47+0200\n"
+"POT-Creation-Date: 2013-05-31 18:48+0200\n"
 "PO-Revision-Date: 2013-02-07 15:32+0000\n"
 "Last-Translator: Jaergenoth <jstuomisto@gmail.com>\n"
-"Language-Team: Finnish\n"
+"Language-Team: Finnish (http://www.transifex.com/projects/p/audacious/"
+"language/fi/)\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -37,7 +38,7 @@ msgstr[1] "%d tiedostoa löytyi"
 msgid "  (invalid UTF-8)"
 msgstr "  (virheellinen UTF-8)"
 
-#: src/audacious/equalizer_preset.c:179
+#: src/audacious/equalizer_preset.c:171
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
 msgstr "Virhe tuotaessa Winampin EQF -tiedostoa '%s'"
@@ -115,7 +116,7 @@ msgstr ""
 "%s: %s\n"
 "Kokeile `%s --help' saadaksesi lisätietoja.\n"
 
-#: src/audacious/main.c:564
+#: src/audacious/main.c:565
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -550,7 +551,7 @@ msgstr "Sijaintia ei löytynyt."
 msgid "No song playing."
 msgstr "Mitään kappaletta ei soiteta."
 
-#: src/libaudcore/audstrings.c:198
+#: src/libaudcore/audstrings.c:203
 #, c-format
 msgid "Audio CD, track %s"
 msgstr "Ääni-CD, raita %s"

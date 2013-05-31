@@ -3,17 +3,18 @@
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
-# Kiril Kirilov (Cybercop) <acybecop_montana@abv.bg>, 2012.
-#   <pandi3a@gmail.com>, 2012.
-# Георги Пацев <>, 2012.
+# Kiril Kirilov (Cybercop) <acybecop_montana@abv.bg>, 2012
+# Pandi3a <pandi3a@gmail.com>, 2012
+# Георги Пацев <>, 2012
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2013-04-07 19:47+0200\n"
+"POT-Creation-Date: 2013-05-31 18:48+0200\n"
 "PO-Revision-Date: 2013-02-13 21:20+0000\n"
 "Last-Translator: cybercop <cybercop_montana@abv.bg>\n"
-"Language-Team: Bulgarian\n"
+"Language-Team: Bulgarian (http://www.transifex.com/projects/p/audacious/"
+"language/bg/)\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -35,7 +36,7 @@ msgstr[1] "друг: %d файл е намерен"
 msgid "  (invalid UTF-8)"
 msgstr "  (невалиден UTF-8)"
 
-#: src/audacious/equalizer_preset.c:179
+#: src/audacious/equalizer_preset.c:171
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
 msgstr "Грешка при внасяне на Winamp EQF файл '%s'"
@@ -113,7 +114,7 @@ msgstr ""
 "%s: %s\n"
 "Опитайте `%s --help' за повече информация.\n"
 
-#: src/audacious/main.c:564
+#: src/audacious/main.c:565
 msgid "Audacious"
 msgstr "Аудио плеър - Audacious"
 
@@ -552,7 +553,7 @@ msgstr "Позицията не е намерена."
 msgid "No song playing."
 msgstr "Не се изпълнява песен."
 
-#: src/libaudcore/audstrings.c:198
+#: src/libaudcore/audstrings.c:203
 #, c-format
 msgid "Audio CD, track %s"
 msgstr "Аудио CD, запис %s"

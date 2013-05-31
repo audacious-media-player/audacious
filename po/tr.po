@@ -3,21 +3,22 @@
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
-#   <aaydin159@gmail.com>, 2012.
-#   <alikoc@hush.ai>, 2012.
-#   <dead-bodies-everywhere@hotmail.com>, 2012.
-# Emre FIRAT <emrefirat93@gmail.com>, 2013.
-# Murat Senel <muratasenel@gmail.com>, 2007.
-# Murat Şenel <muratasenel@gmail.com>, 2007.
-#   <t.oguzman@hotmail.com>, 2012.
+# aamet <aaydin159@gmail.com>, 2012
+# Imnune <alikoc@hush.ai>, 2012
+# hsngrms <dead-bodies-everywhere@hotmail.com>, 2012
+# emfi <emrefirat93@gmail.com>, 2013
+# Murat Senel <muratasenel@gmail.com>, 2007
+# Murat Şenel <muratasenel@gmail.com>, 2007
+# tarkan255 <t.oguzman@hotmail.com>, 2012
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2013-04-07 19:47+0200\n"
+"POT-Creation-Date: 2013-05-31 18:48+0200\n"
 "PO-Revision-Date: 2013-02-08 14:18+0000\n"
 "Last-Translator: emfi <emrefirat93@gmail.com>\n"
-"Language-Team: Turkish\n"
+"Language-Team: Turkish (http://www.transifex.com/projects/p/audacious/"
+"language/tr/)\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -39,7 +40,7 @@ msgstr[1] "%d Dosya bulundu."
 msgid "  (invalid UTF-8)"
 msgstr "  (geçersiz UTF-8)"
 
-#: src/audacious/equalizer_preset.c:179
+#: src/audacious/equalizer_preset.c:171
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
 msgstr "Winamp EQF dosyasının aktarılmasında hata '%s'"
@@ -117,7 +118,7 @@ msgstr ""
 "%s: %s\n"
 "Daha fazla bilgi için `%s --help' komutunu kullanın.\n"
 
-#: src/audacious/main.c:564
+#: src/audacious/main.c:565
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -552,7 +553,7 @@ msgstr "Konum bulunamadı."
 msgid "No song playing."
 msgstr "Şarkı çalınmıyor."
 
-#: src/libaudcore/audstrings.c:198
+#: src/libaudcore/audstrings.c:203
 #, c-format
 msgid "Audio CD, track %s"
 msgstr "Ses CD'si, parça %s"

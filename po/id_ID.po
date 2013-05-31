@@ -3,27 +3,28 @@
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
-#  <aftian@yahoo.com>, 2012.
-#   <aftian@yahoo.com>, 2012.
-#  <andika@gmail.com>, 2012.
-# Ardjuna <Asyura.x@gmail.com>, 2013.
-#  <buitenzorg812@gmail.com>, 2012.
-#  <invaleed@gmail.com>, 2012.
-# Mohamad Hasan Al Banna <se7entime@gmail.com>, 2012.
-# Rahman Aftian <>, 2012.
-# Rahman Yusri Aftian <aftian@yahoo.com>, 2012.
-#  <sakrasemangat@gmail.com>, 2012.
-#  <samsul@kplibanyumas.org>, 2012.
-#   <se7entime@gmail.com>, 2012.
-#  <yoza1404@gmail.com>, 2012.
+# Rahman Yusri Aftian <aftian@yahoo.com>, 2012
+# Rahman Yusri Aftian <aftian@yahoo.com>, 2012
+# Andika Triwidada <andika@gmail.com>, 2012
+# Ardjuna <Asyura.x@gmail.com>, 2013
+# Arif Syamsudin <buitenzorg812@gmail.com>, 2012
+#  <invaleed@gmail.com>, 2012
+# Mohamad Hasan Al Banna <se7entime@gmail.com>, 2012
+# Rahman Aftian <>, 2012
+# Rahman Yusri Aftian <aftian@yahoo.com>, 2012
+#  <sakrasemangat@gmail.com>, 2012
+#  <samsul@kplibanyumas.org>, 2012
+# Mohamad Hasan Al Banna <se7entime@gmail.com>, 2012
+#  <yoza1404@gmail.com>, 2012
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2013-04-07 19:47+0200\n"
+"POT-Creation-Date: 2013-05-31 18:48+0200\n"
 "PO-Revision-Date: 2013-03-24 07:29+0000\n"
 "Last-Translator: Ardjuna <Asyura.x@gmail.com>\n"
-"Language-Team: Indonesian\n"
+"Language-Team: Indonesian (Indonesia) (http://www.transifex.com/projects/p/"
+"audacious/language/id_ID/)\n"
 "Language: id_ID\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -44,7 +45,7 @@ msgstr[0] "%d berkas ditemukan"
 msgid "  (invalid UTF-8)"
 msgstr "(UTF-8 tidak valid )"
 
-#: src/audacious/equalizer_preset.c:179
+#: src/audacious/equalizer_preset.c:171
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
 msgstr "Galat mengimpor berkas Winamp EQF '%s'"
@@ -122,7 +123,7 @@ msgstr ""
 "%s: %s\n"
 "Coba `%s --help' untuk informasi lebih lanjut.\n"
 
-#: src/audacious/main.c:564
+#: src/audacious/main.c:565
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -560,7 +561,7 @@ msgstr "Posisi tidak ditemukan."
 msgid "No song playing."
 msgstr "Tidak ada lagu yang sedang diputar."
 
-#: src/libaudcore/audstrings.c:198
+#: src/libaudcore/audstrings.c:203
 #, c-format
 msgid "Audio CD, track %s"
 msgstr "CD Audio, trek %s"

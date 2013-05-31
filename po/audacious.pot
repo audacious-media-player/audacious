@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2013-04-07 19:47+0200\n"
+"POT-Creation-Date: 2013-05-31 18:48+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,7 +33,7 @@ msgstr[1] ""
 msgid "  (invalid UTF-8)"
 msgstr ""
 
-#: src/audacious/equalizer_preset.c:179
+#: src/audacious/equalizer_preset.c:171
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
 msgstr ""
@@ -109,7 +109,7 @@ msgid ""
 "Try `%s --help' for more information.\n"
 msgstr ""
 
-#: src/audacious/main.c:564
+#: src/audacious/main.c:565
 msgid "Audacious"
 msgstr ""
 
@@ -542,7 +542,7 @@ msgstr ""
 msgid "No song playing."
 msgstr ""
 
-#: src/libaudcore/audstrings.c:198
+#: src/libaudcore/audstrings.c:203
 #, c-format
 msgid "Audio CD, track %s"
 msgstr ""

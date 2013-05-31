@@ -3,23 +3,24 @@
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
-#   <259095+transifex@gmail.com>, 2012.
-# Bartosz Kosiorek <gang65@poczta.onet.pl>, 2003.
-#   <felikstayson@o2.pl>, 2012.
-# GNOME PL Team <translators@gnome.pl>, 2004.
-# Grzegorz Kowal <g_kowal@poczta.onet.pl>, 2000, 2001.
-#  <marco@mgrvnwald.com>, 2013.
-# Marco Oliver Grunwald <marco@mgrvnwald.com>, 2013.
-# Piotr Sokół <psokol@jabster.pl>, 2012.
-# Szymon Weihs <sz.weihs@gmail.com>, 2011.
+# CH <259095+transifex@gmail.com>, 2012
+# Bartosz Kosiorek <gang65@poczta.onet.pl>, 2003
+# felikstayson <felikstayson@o2.pl>, 2012
+# GNOME PL Team <translators@gnome.pl>, 2004
+# Grzegorz Kowal <g_kowal@poczta.onet.pl>, 2000, 2001
+# mgrvnwald <marco@mgrvnwald.com>, 2013
+# mgrvnwald <marco@mgrvnwald.com>, 2013
+# Piotr Sokół <psokol@jabster.pl>, 2012
+# Szymon Weihs <sz.weihs@gmail.com>, 2011
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2013-04-07 19:47+0200\n"
+"POT-Creation-Date: 2013-05-31 18:48+0200\n"
 "PO-Revision-Date: 2013-02-10 20:54+0000\n"
 "Last-Translator: mgrvnwald <marco@mgrvnwald.com>\n"
-"Language-Team: Polish\n"
+"Language-Team: Polish (http://www.transifex.com/projects/p/audacious/"
+"language/pl/)\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -43,7 +44,7 @@ msgstr[2] "Znaleziono %d plików"
 msgid "  (invalid UTF-8)"
 msgstr " (nieprawidłowe kodowanie UTF-8)"
 
-#: src/audacious/equalizer_preset.c:179
+#: src/audacious/equalizer_preset.c:171
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
 msgstr "Błąd importowania pliku EQF, programu Winamp: %s"
@@ -121,7 +122,7 @@ msgstr ""
 "%s: %s\n"
 "Proszę wprowadzić „%s --help”, aby wypisać komunikat pomocy.\n"
 
-#: src/audacious/main.c:564
+#: src/audacious/main.c:565
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -556,7 +557,7 @@ msgstr "Nie odnaleziono pozycji"
 msgid "No song playing."
 msgstr "Żadna ścieżka nie jest odtwarzana."
 
-#: src/libaudcore/audstrings.c:198
+#: src/libaudcore/audstrings.c:203
 #, c-format
 msgid "Audio CD, track %s"
 msgstr "Płyta Audio CD, ścieżka %s"

@@ -3,20 +3,22 @@
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
-# Kostyantyn Fedenko <fedenko@ukr.net>, 2011.
-#   <kvantarium@gmail.com>, 2012.
-# NaiLi Rootaerc <theism@mail.ru>, 2012.
-# Rax Garfield <admin@dvizho.ks.ua>, 2012.
-# Rax Garfield (http://biokillaz.com/), 2012.
-# Rax Garfield <rax@rax.pp.ua>, 2012-2013.
+# Kostyantyn Fedenko <fedenko@ukr.net>, 2011
+# StreamThreaedr <kvantarium@gmail.com>, 2012
+# NaiLi (aka jamesjames) Rootaerc <theism@mail.ru>, 2012
+# Rax Garfield <admin@dvizho.ks.ua>, 2012
+# Rax Garfield (http://biokillaz.com/), 2012
+# Rax Garfield <admin@dvizho.ks.ua>, 2012-2013
+# rustam <rustam.tsurik@gmail.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2013-04-07 19:47+0200\n"
-"PO-Revision-Date: 2013-02-07 21:03+0000\n"
-"Last-Translator: Rax Garfield <rax@rax.pp.ua>\n"
-"Language-Team: Ukrainian\n"
+"POT-Creation-Date: 2013-05-31 18:48+0200\n"
+"PO-Revision-Date: 2013-04-16 15:44+0000\n"
+"Last-Translator: rustam <rustam.tsurik@gmail.com>\n"
+"Language-Team: Ukrainian (http://www.transifex.com/projects/p/audacious/"
+"language/uk/)\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -40,7 +42,7 @@ msgstr[2] "Знайдено %d файлів"
 msgid "  (invalid UTF-8)"
 msgstr "(недійсний UTF-8)"
 
-#: src/audacious/equalizer_preset.c:179
+#: src/audacious/equalizer_preset.c:171
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
 msgstr "Не вдалося імпортувати Winamp EQF-файл «%s»"
@@ -87,7 +89,7 @@ msgstr "Показати головне вікно"
 
 #: src/audacious/main.c:242
 msgid "Headless mode"
-msgstr ""
+msgstr "Headless-режим"
 
 #: src/audacious/main.c:243
 msgid "Quit on playback stop"
@@ -118,7 +120,7 @@ msgstr ""
 "%s: %s\n"
 "Спробуйте `%s --help' для отримання докладнішого опису.\n"
 
-#: src/audacious/main.c:564
+#: src/audacious/main.c:565
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -553,7 +555,7 @@ msgstr "Позиції не знайдено."
 msgid "No song playing."
 msgstr "Нічого не програється."
 
-#: src/libaudcore/audstrings.c:198
+#: src/libaudcore/audstrings.c:203
 #, c-format
 msgid "Audio CD, track %s"
 msgstr "Звуковий CD, доріжка %s"

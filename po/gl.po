@@ -3,18 +3,19 @@
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
-# antiparvos  <marcoslansgarza@gmail.com>, 2013.
-#  <mbouzada@gmail.com>, 2013.
-#   <mbouzada@gmail.com>, 2012.
-# Miguel Anxo Bouzada <mbouzada@gmail.com>, 2012.
+# antiparvos <marcoslansgarza@gmail.com>, 2013
+# mbouzada <mbouzada@gmail.com>, 2013
+# mbouzada <mbouzada@gmail.com>, 2012
+# mbouzada <mbouzada@gmail.com>, 2012
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2013-04-07 19:47+0200\n"
-"PO-Revision-Date: 2013-02-07 18:04+0000\n"
+"POT-Creation-Date: 2013-05-31 18:48+0200\n"
+"PO-Revision-Date: 2013-04-20 14:20+0000\n"
 "Last-Translator: mbouzada <mbouzada@gmail.com>\n"
-"Language-Team: Galician\n"
+"Language-Team: Galician (http://www.transifex.com/projects/p/audacious/"
+"language/gl/)\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -36,7 +37,7 @@ msgstr[1] "%d ficheiros atopados"
 msgid "  (invalid UTF-8)"
 msgstr "  (UTF-8 incorrecto)"
 
-#: src/audacious/equalizer_preset.c:179
+#: src/audacious/equalizer_preset.c:171
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
 msgstr "Produciuse un erro ao importar o ficheiro EQF de Winamp «%s»"
@@ -114,7 +115,7 @@ msgstr ""
 "%s: %s\n"
 "Tente «%s --help» pra obter máis información.\n"
 
-#: src/audacious/main.c:564
+#: src/audacious/main.c:565
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -438,7 +439,7 @@ msgstr "Buscar recursivamente"
 
 #: src/audacious/ui_preferences.c:216
 msgid "Search depth:"
-msgstr "Prfundidade da busca"
+msgstr "Profundidade da busca"
 
 #: src/audacious/ui_preferences.c:219
 msgid "<b>Popup Information</b>"
@@ -553,7 +554,7 @@ msgstr "Non se atopou a posición."
 msgid "No song playing."
 msgstr "Non se está a reproducir ningunha canción."
 
-#: src/libaudcore/audstrings.c:198
+#: src/libaudcore/audstrings.c:203
 #, c-format
 msgid "Audio CD, track %s"
 msgstr "CD de son. pista %s"

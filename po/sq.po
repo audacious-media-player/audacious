@@ -3,15 +3,16 @@
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
-#   <dritan86@gmail.com>, 2012.
+# natird <dritan86@gmail.com>, 2012
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2013-04-07 19:47+0200\n"
+"POT-Creation-Date: 2013-05-31 18:48+0200\n"
 "PO-Revision-Date: 2013-02-03 20:17+0000\n"
 "Last-Translator: Radioactiveman <thomas-lange2@gmx.de>\n"
-"Language-Team: Albanian\n"
+"Language-Team: Albanian (http://www.transifex.com/projects/p/audacious/"
+"language/sq/)\n"
 "Language: sq\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -33,7 +34,7 @@ msgstr[1] "%d skedar i gjetur"
 msgid "  (invalid UTF-8)"
 msgstr "(UTF-8 e pavleshme)"
 
-#: src/audacious/equalizer_preset.c:179
+#: src/audacious/equalizer_preset.c:171
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
 msgstr "Gabim në kalimin e skedarit Winamp EQF '%s'"
@@ -111,7 +112,7 @@ msgstr ""
 "%s: %s\n"
 "Përpiqu `%s --ndihëmo' për më shumë informacion.\n"
 
-#: src/audacious/main.c:564
+#: src/audacious/main.c:565
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -546,7 +547,7 @@ msgstr "Vendëndodhja nuk gjendet"
 msgid "No song playing."
 msgstr "Asnjë kënge nuk luhet"
 
-#: src/libaudcore/audstrings.c:198
+#: src/libaudcore/audstrings.c:203
 #, c-format
 msgid "Audio CD, track %s"
 msgstr "Audio CD, udhë %s"

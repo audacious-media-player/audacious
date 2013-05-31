@@ -3,28 +3,29 @@
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
-# Adrián Ramirez Escalante <buried.prophet@gmail.com>, 2012.
-# Cosme Domínguez Díaz <cosme.ddiaz@gmail.com>, 2010.
-# Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004.
-# Gustavo D. Vranjes <gvranjes@nerdshack.com>, 2006.
-# Jeki Sinneo Leinos <jeki72@gmail.com>, 2008.
-# Jordi Amenós <>, 2011.
-# Jorge Andrés <winninglero@gmail.com>, 2010.
-# Juan Manuel Hernández, 2012.
-# Lucía Balsa <lucia.balsa.prados@gmail.com>, 2012.
-# Marco Antonio Frias Butrón <marcoantoniofrias@gmail.com>, 2012.
-# Marcos <djoser.horus@gmail.com>, 2013.
-# <xukosky@yahoo.es>, 2011.
-#   <xukosky@yahoo.es>, 2011.
-#   <yo@miguelrevilla.com>, 2012.
+# Adrián Ramirez Escalante <buried.prophet@gmail.com>, 2012
+# Cosme Domínguez Díaz <cosme.ddiaz@gmail.com>, 2010
+# Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004
+# Gustavo D. Vranjes <gvranjes@nerdshack.com>, 2006
+# Jeki Sinneo Leinos <jeki72@gmail.com>, 2008
+# Jordi Amenós <>, 2011
+# Jorge Andrés <winninglero@gmail.com>, 2010
+# Juan Manuel Hernández, 2012
+# Lucía Balsa <lucia.balsa.prados@gmail.com>, 2012
+# Marco Antonio Frias Butrón <marcoantoniofrias@gmail.com>, 2012
+# Marcos <djoser.horus@gmail.com>, 2013
+# xukosky <xukosky@yahoo.es>, 2011
+# xukosky <xukosky@yahoo.es>, 2011
+# enjolras <yo@miguelrevilla.com>, 2012
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2013-04-07 19:47+0200\n"
+"POT-Creation-Date: 2013-05-31 18:48+0200\n"
 "PO-Revision-Date: 2013-03-14 11:25+0000\n"
 "Last-Translator: Marcos <djoser.horus@gmail.com>\n"
-"Language-Team: Spanish\n"
+"Language-Team: Spanish (http://www.transifex.com/projects/p/audacious/"
+"language/es/)\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -46,7 +47,7 @@ msgstr[1] "%d archivos encontrados"
 msgid "  (invalid UTF-8)"
 msgstr "  (UTF-8 no válido)"
 
-#: src/audacious/equalizer_preset.c:179
+#: src/audacious/equalizer_preset.c:171
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
 msgstr "Error importando archivo Winamp EQF  «%s»"
@@ -124,7 +125,7 @@ msgstr ""
 "%s: %s\n"
 "Prueba «%s --help» para más información.\n"
 
-#: src/audacious/main.c:564
+#: src/audacious/main.c:565
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -562,7 +563,7 @@ msgstr "Posición no encontrada."
 msgid "No song playing."
 msgstr "No se reproduce ninguna canción."
 
-#: src/libaudcore/audstrings.c:198
+#: src/libaudcore/audstrings.c:203
 #, c-format
 msgid "Audio CD, track %s"
 msgstr "CD de música, pista %s"

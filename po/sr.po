@@ -3,17 +3,18 @@
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
-# Strahinja Kustudic <kustudic@gmail.com>, 2007-2008.
-# Мирослав Николић <miroslavnikolic@rocketmail.com>, 2011-2012.
-# Мирослав Николић <miroslavnikolic@rocketmail.com>, 2011-2012, 2013.
+# Strahinja Kustudic <kustudic@gmail.com>, 2007-2008
+# MirosNik <miroslavnikolic@rocketmail.com>, 2011-2012
+# MirosNik <miroslavnikolic@rocketmail.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2013-04-07 19:47+0200\n"
+"POT-Creation-Date: 2013-05-31 18:48+0200\n"
 "PO-Revision-Date: 2013-03-26 08:31+0000\n"
 "Last-Translator: MirosNik <miroslavnikolic@rocketmail.com>\n"
-"Language-Team: Serbian\n"
+"Language-Team: Serbian (http://www.transifex.com/projects/p/audacious/"
+"language/sr/)\n"
 "Language: sr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -37,7 +38,7 @@ msgstr[2] "Пронашао сам %d датотека"
 msgid "  (invalid UTF-8)"
 msgstr "  (неисправан УТФ-8)"
 
-#: src/audacious/equalizer_preset.c:179
+#: src/audacious/equalizer_preset.c:171
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
 msgstr "Грешка приликом увоза ВинАМП ЕКуФ датотеке „%s“"
@@ -115,7 +116,7 @@ msgstr ""
 "%s: %s\n"
 "Пробајте „%s --help“ за више информација.\n"
 
-#: src/audacious/main.c:564
+#: src/audacious/main.c:565
 msgid "Audacious"
 msgstr "Безочник"
 
@@ -550,7 +551,7 @@ msgstr "Нисам пронашао положај."
 msgid "No song playing."
 msgstr "Није пуштена ниједна песма."
 
-#: src/libaudcore/audstrings.c:198
+#: src/libaudcore/audstrings.c:203
 #, c-format
 msgid "Audio CD, track %s"
 msgstr "Звучни ЦД, нумера %s"

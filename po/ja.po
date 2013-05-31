@@ -3,18 +3,19 @@
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
-#   <dritan86@gmail.com>, 2012.
-#  <hallconnen2+transifex@gmail.com>, 2013.
-#   <m2330880989@shibuya-center.com>, 2012.
-# Shuuji Takahashi <shuuji3@gmail.com>, 2012-2013.
+# natird <dritan86@gmail.com>, 2012
+# 読み専(先行量産型) <hallconnen2+transifex@gmail.com>, 2013
+# Nastuko Toda <m2330880989@shibuya-center.com>, 2012
+# Shuuji Takahashi <shuuji3@gmail.com>, 2012-2013
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2013-04-07 19:47+0200\n"
+"POT-Creation-Date: 2013-05-31 18:48+0200\n"
 "PO-Revision-Date: 2013-03-07 05:02+0000\n"
 "Last-Translator: 読み専(先行量産型) <hallconnen2+transifex@gmail.com>\n"
-"Language-Team: Japanese\n"
+"Language-Team: Japanese (http://www.transifex.com/projects/p/audacious/"
+"language/ja/)\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -35,7 +36,7 @@ msgstr[0] "%d 個のファイルが見つかりました"
 msgid "  (invalid UTF-8)"
 msgstr "  (不正な UTF-8)"
 
-#: src/audacious/equalizer_preset.c:179
+#: src/audacious/equalizer_preset.c:171
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
 msgstr "Winamp EQF ファイル '%s' のインポートエラー"
@@ -113,7 +114,7 @@ msgstr ""
 "%s: %s\n"
 "詳しくは `%s --help' を実行して下さい.\n"
 
-#: src/audacious/main.c:564
+#: src/audacious/main.c:565
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -549,7 +550,7 @@ msgstr "場所が見つかりませんでした。"
 msgid "No song playing."
 msgstr "再生中の曲はありません。"
 
-#: src/libaudcore/audstrings.c:198
+#: src/libaudcore/audstrings.c:203
 #, c-format
 msgid "Audio CD, track %s"
 msgstr "オーディオ CD、トラック %s"

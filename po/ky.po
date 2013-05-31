@@ -3,17 +3,19 @@
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
-#   <chingis091@lavabit.com>, 2012.
-#  <translatorky@lavabit.com>, 2013.
-#   <translatorky@lavabit.com>, 2012-2013.
+#   <chingis091@lavabit.com>, 2012
+# chingis <translatorky@lavabit.com>, 2013
+# chingis <translatorky@lavabit.com>, 2013
+# chingis <translatorky@lavabit.com>, 2012-2013
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2013-04-07 19:47+0200\n"
-"PO-Revision-Date: 2013-02-06 12:01+0000\n"
+"POT-Creation-Date: 2013-05-31 18:48+0200\n"
+"PO-Revision-Date: 2013-04-23 14:45+0000\n"
 "Last-Translator: chingis <translatorky@lavabit.com>\n"
-"Language-Team: Kirgyz\n"
+"Language-Team: Kirgyz (http://www.transifex.com/projects/p/audacious/"
+"language/ky/)\n"
 "Language: ky\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,7 +24,7 @@ msgstr ""
 
 #: src/audacious/adder.c:74
 msgid "Searching ..."
-msgstr "Издөө ..."
+msgstr "Изделүүдө ..."
 
 #: src/audacious/adder.c:102
 #, c-format
@@ -34,7 +36,7 @@ msgstr[0] "%d файл табылды"
 msgid "  (invalid UTF-8)"
 msgstr "  (туура эмес UTF-8)"
 
-#: src/audacious/equalizer_preset.c:179
+#: src/audacious/equalizer_preset.c:171
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
 msgstr ""
@@ -110,7 +112,7 @@ msgid ""
 "Try `%s --help' for more information.\n"
 msgstr ""
 
-#: src/audacious/main.c:564
+#: src/audacious/main.c:565
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -183,16 +185,16 @@ msgstr "Плагиндер"
 
 #: src/audacious/ui_preferences.c:77 src/libaudgui/infopopup.c:150
 msgid "Artist"
-msgstr "Аткаруучу"
+msgstr "Аткаруучусу"
 
 #: src/audacious/ui_preferences.c:78 src/libaudgui/infopopup.c:151
 msgid "Album"
-msgstr "Альбом"
+msgstr "Альбому"
 
 #: src/audacious/ui_preferences.c:79 src/libaudgui/infopopup.c:149
 #: src/libaudgui/ui_playlist_manager.c:286
 msgid "Title"
-msgstr "Аталыш"
+msgstr "Аты"
 
 #: src/audacious/ui_preferences.c:80
 msgid "Tracknumber"
@@ -448,27 +450,27 @@ msgstr ""
 
 #: src/audacious/ui_preferences.c:239
 msgid "TITLE"
-msgstr "АТАЛЫШ"
+msgstr "АТЫ"
 
 #: src/audacious/ui_preferences.c:240
 msgid "ARTIST - TITLE"
-msgstr "АТКАРУУЧУ - АТАЛЫШ"
+msgstr "АТКАРУУЧУСУ - АТЫ"
 
 #: src/audacious/ui_preferences.c:241
 msgid "ARTIST - ALBUM - TITLE"
-msgstr "АТКАРУУЧУ - АЛЬБОМ - АТАЛЫШ"
+msgstr "АТКАРУУЧУСУ - АЛЬБОМУ - АТЫ"
 
 #: src/audacious/ui_preferences.c:242
 msgid "ARTIST - ALBUM - TRACK. TITLE"
-msgstr "АТКАРУУЧУ - АЛЬБОМ - ЖОЛЧО, АТАЛЫШ"
+msgstr "АТКАРУУЧУСУ - АЛЬБОМУ - ЖОЛЧОСУ, АТЫ"
 
 #: src/audacious/ui_preferences.c:243
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
-msgstr "АТКАРУУЧУ [ АЛЬБОМ ] - ЖОЛЧО, АТАЛЫШ"
+msgstr "АТКАРУУЧУСУ [ АЛЬБОМУ ] - ЖОЛЧОСУ, АТЫ"
 
 #: src/audacious/ui_preferences.c:244
 msgid "ALBUM - TITLE"
-msgstr "АЛЬБОМ - АТАЛЫШ"
+msgstr "АЛЬБОМУ - АТЫ"
 
 #: src/audacious/ui_preferences.c:457
 msgid "Category"
@@ -520,7 +522,7 @@ msgstr "Эффекттер"
 
 #: src/audacious/ui_preferences.c:1238
 msgid "Visualization"
-msgstr "Визуализация"
+msgstr "Визуалдаштыруу"
 
 #: src/audacious/ui_preferences.c:1238
 msgid "General"
@@ -528,7 +530,7 @@ msgstr "Жалпы"
 
 #: src/audacious/ui_preferences.c:1276
 msgid "Audacious Preferences"
-msgstr "Audacious'тун параметрлери"
+msgstr "Audacious'тун ырастоолору"
 
 #: src/audacious/util.c:114
 #, c-format
@@ -543,7 +545,7 @@ msgstr "Оруну табылган жок."
 msgid "No song playing."
 msgstr "Эчтеке ойнолгон жок."
 
-#: src/libaudcore/audstrings.c:198
+#: src/libaudcore/audstrings.c:203
 #, c-format
 msgid "Audio CD, track %s"
 msgstr "Аудио CD, жолчо %s"
@@ -844,11 +846,11 @@ msgstr "<span size=\"small\">Битрейт:</span>"
 
 #: src/libaudgui/infowin.c:368
 msgid "<span size=\"small\">Title</span>"
-msgstr "<span size=\"small\">Аталыш</span>"
+msgstr "<span size=\"small\">Аты</span>"
 
 #: src/libaudgui/infowin.c:380
 msgid "<span size=\"small\">Artist</span>"
-msgstr "<span size=\"small\">Аткаруучу</span>"
+msgstr "<span size=\"small\">Аткаруучусу</span>"
 
 #: src/libaudgui/infowin.c:392
 msgid "<span size=\"small\">Album</span>"

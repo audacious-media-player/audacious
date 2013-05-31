@@ -3,17 +3,18 @@
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
-# Chasye <chasye@gmail.com>, 2010.
-#   <runningwaterpro@gmail.com>, 2012.
-# zhnagmin <zm1990s@gmail.com>, 2013.
+# Chasye <chasye@gmail.com>, 2010
+# Luke <runningwaterpro@gmail.com>, 2012
+# zhangmin <zm1990s@gmail.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2013-04-07 19:47+0200\n"
+"POT-Creation-Date: 2013-05-31 18:48+0200\n"
 "PO-Revision-Date: 2013-02-04 14:11+0000\n"
 "Last-Translator: zhangmin <zm1990s@gmail.com>\n"
-"Language-Team: Chinese (simplified)\n"
+"Language-Team: Chinese (China) (http://www.transifex.com/projects/p/"
+"audacious/language/zh_CN/)\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -34,7 +35,7 @@ msgstr[0] "找到%d个文件"
 msgid "  (invalid UTF-8)"
 msgstr "  (非法的UTF-8编码)"
 
-#: src/audacious/equalizer_preset.c:179
+#: src/audacious/equalizer_preset.c:171
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
 msgstr "导入Winamp EQF文件时发生错误 '%s'"
@@ -112,7 +113,7 @@ msgstr ""
 "%s: %s\n"
 "用 `%s --help' 以获取更多信息.\n"
 
-#: src/audacious/main.c:564
+#: src/audacious/main.c:565
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -545,7 +546,7 @@ msgstr "位置不存在"
 msgid "No song playing."
 msgstr "暂未播放"
 
-#: src/libaudcore/audstrings.c:198
+#: src/libaudcore/audstrings.c:203
 #, c-format
 msgid "Audio CD, track %s"
 msgstr "音频CD, 音轨 %s"
