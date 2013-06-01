@@ -83,12 +83,14 @@ static bool_t send_requests (void * unused)
     GQueue queue = G_QUEUE_INIT;
 
     GHashTableIter iter;
-    char * file;
-    ArtItem * item;
+    void * ptr1, * ptr2;
 
-    for (g_hash_table_iter_init (& iter, art_items);
-     g_hash_table_iter_next (& iter, (void * *) & file, (void * *) & item);)
+    g_hash_table_iter_init (& iter, art_items);
+    while (g_hash_table_iter_next (& iter, & ptr1, & ptr2))
     {
+        char * file = ptr1;
+        ArtItem * item = ptr2;
+
         if (item->flag == FLAG_DONE)
         {
             g_queue_push_tail (& queue, str_ref (file));
@@ -108,7 +110,8 @@ static bool_t send_requests (void * unused)
     if (! current_ref)
         current = playback_entry_get_filename ();
 
-    while ((file = g_queue_pop_head (& queue)))
+    char * file;
+    while (file = g_queue_pop_head (& queue))
     {
         hook_call ("art ready", file);
 

@@ -70,11 +70,14 @@ Plugin * plugin_load (const char * filename)
         return NULL;
     }
 
-    Plugin * (* func) (AudAPITable * table);
+    void * ptr;
+    if (! g_module_symbol (module, "get_plugin_info", & ptr))
+        ptr = NULL;
+
+    Plugin * (* func) (AudAPITable * table) = ptr;
     Plugin * header;
 
-    if (! g_module_symbol (module, "get_plugin_info", (void *) & func) ||
-        ! (header = func (& api_table)) || header->magic != _AUD_PLUGIN_MAGIC)
+    if (! func || ! (header = func (& api_table)) || header->magic != _AUD_PLUGIN_MAGIC)
     {
         fprintf (stderr, " *** ERROR: %s is not a valid Audacious plugin.\n", filename);
         g_module_close (module);

@@ -26,9 +26,14 @@
 #include "preferences.h"
 #include "ui_preferences.h"
 
+typedef struct {
+    GtkWidget * about_window;
+    GtkWidget * config_window;
+} PluginMiscData;
+
 void plugin_make_about_window (PluginHandle * plugin)
 {
-    PluginMiscData * misc = plugin_get_misc_data (plugin);
+    PluginMiscData * misc = plugin_get_misc_data (plugin, sizeof (PluginMiscData));
     Plugin * header = plugin_get_header (plugin);
 
     if (misc->about_window)
@@ -47,7 +52,7 @@ void plugin_make_about_window (PluginHandle * plugin)
     }
 
     char * title = g_strdup_printf (_("About %s"), name);
-    audgui_simple_message ((GtkWidget * *) & misc->about_window, GTK_MESSAGE_INFO, title, text);
+    audgui_simple_message (& misc->about_window, GTK_MESSAGE_INFO, title, text);
     g_free (title);
 }
 
@@ -67,7 +72,7 @@ static void destroy_cb (GtkWidget * window, const PluginPreferences * p)
 
 void plugin_make_config_window (PluginHandle * plugin)
 {
-    PluginMiscData * misc = plugin_get_misc_data (plugin);
+    PluginMiscData * misc = plugin_get_misc_data (plugin, sizeof (PluginMiscData));
     Plugin * header = plugin_get_header (plugin);
     const PluginPreferences * p = header->prefs;
 
@@ -109,7 +114,7 @@ void plugin_make_config_window (PluginHandle * plugin)
 
 void plugin_misc_cleanup (PluginHandle * plugin)
 {
-    PluginMiscData * misc = plugin_get_misc_data (plugin);
+    PluginMiscData * misc = plugin_get_misc_data (plugin, sizeof (PluginMiscData));
 
     if (misc->about_window)
         gtk_widget_destroy (misc->about_window);

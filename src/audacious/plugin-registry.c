@@ -63,7 +63,7 @@ struct PluginHandle {
     int priority;
     bool_t has_about, has_configure, enabled;
     GList * watches;
-    PluginMiscData misc;
+    void * misc;
 
     union {
         TransportPluginData t;
@@ -114,8 +114,7 @@ static PluginHandle * plugin_new (char * path, bool_t confirmed, bool_t
     plugin->has_configure = FALSE;
     plugin->enabled = FALSE;
     plugin->watches = NULL;
-
-    memset (& plugin->misc, 0, sizeof (PluginMiscData));
+    plugin->misc = NULL;
 
     if (type == PLUGIN_TYPE_TRANSPORT)
     {
@@ -160,6 +159,7 @@ static void plugin_free (PluginHandle * plugin)
     g_free (plugin->path);
     g_free (plugin->name);
     g_free (plugin->domain);
+    g_free (plugin->misc);
     g_free (plugin);
 }
 
@@ -720,9 +720,12 @@ void plugin_remove_watch (PluginHandle * plugin, PluginForEachFunc func, void *
     }
 }
 
-PluginMiscData * plugin_get_misc_data (PluginHandle * plugin)
+void * plugin_get_misc_data (PluginHandle * plugin, int size)
 {
-    return & plugin->misc;
+    if (! plugin->misc)
+        plugin->misc = g_malloc0 (size);
+
+    return plugin->misc;
 }
 
 typedef struct {
