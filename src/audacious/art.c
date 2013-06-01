@@ -111,7 +111,7 @@ static bool_t send_requests (void * unused)
         current = playback_entry_get_filename ();
 
     char * file;
-    while (file = g_queue_pop_head (& queue))
+    while ((file = g_queue_pop_head (& queue)))
     {
         hook_call ("art ready", file);
 
