@@ -7,6 +7,7 @@ SRCS = audio.c \
        eventqueue.c \
        hook.c \
        index.c \
+       inifile.c \
        strpool.c \
        tuple.c \
        tuple_compiler.c \
@@ -20,6 +21,7 @@ INCLUDES = audio.h \
            core.h \
            hook.h \
            index.h \
+           inifile.h \
            tuple.h \
            vfs.h \
            vfs_async.h

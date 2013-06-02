@@ -136,8 +136,8 @@ bool_t vfs_file_test (const char * path, int test) WARN_RETURN;
 bool_t vfs_is_writeable (const char * path) WARN_RETURN;
 bool_t vfs_is_remote (const char * path) WARN_RETURN;
 
-void vfs_file_get_contents (const char * filename, void * * buf, int64_t *
- size);
+void vfs_file_read_all (VFSFile * file, void * * buf, int64_t * size);
+void vfs_file_get_contents (const char * filename, void * * buf, int64_t * size);
 
 void vfs_set_lookup_func (VFSConstructor * (* func) (const char * scheme));
 void vfs_set_verbose (bool_t verbose);

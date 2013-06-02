@@ -137,6 +137,44 @@ EXPORT int vfs_fprintf(VFSFile *stream, char const *format, ...)
     return rv;
 }
 
+EXPORT void vfs_file_read_all (VFSFile * file, void * * buf, int64_t * size)
+{
+    * buf = NULL;
+    * size = 0;
+
+    int64_t filesize = vfs_fsize (file);
+
+    if (filesize >= 0)
+    {
+        filesize = MIN (filesize, SIZE_MAX);
+        * buf = malloc (filesize);
+        * size = vfs_fread (* buf, 1, filesize, file);
+    }
+    else
+    {
+        size_t bufsize = 4096;
+        * buf = malloc (bufsize);
+        char * ptr = (char *) buf;
+
+        size_t readsize;
+        while ((readsize = vfs_fread (ptr, 1, bufsize - * size, file)))
+        {
+            * size += readsize;
+            ptr += readsize;
+
+            if (* size == bufsize)
+            {
+                if (bufsize > SIZE_MAX - 4096)
+                    break;
+
+                bufsize += 4096;
+                * buf = realloc (* buf, bufsize);
+                ptr = (char *) (* buf) + (* size);
+            }
+        }
+    }
+}
+
 /**
  * Gets contents of the file into a buffer. Buffer of filesize bytes
  * is allocated by this function as necessary.
@@ -151,47 +189,12 @@ EXPORT void vfs_file_get_contents (const char * filename, void * * buf, int64_t 
     * buf = NULL;
     * size = 0;
 
-    VFSFile *fd;
-    gsize filled_size = 0, buf_size = 4096;
-    unsigned char * ptr;
-
-    if ((fd = vfs_fopen(filename, "rb")) == NULL)
+    VFSFile * file = vfs_fopen (filename, "r");
+    if (! file)
         return;
 
-    if ((* size = vfs_fsize (fd)) >= 0)
-    {
-        * buf = g_malloc (* size);
-        * size = vfs_fread (* buf, 1, * size, fd);
-        goto close_handle;
-    }
-
-    if ((*buf = g_malloc(buf_size)) == NULL)
-        goto close_handle;
-
-    ptr = *buf;
-    while (TRUE) {
-        gsize read_size = vfs_fread(ptr, 1, buf_size - filled_size, fd);
-        if (read_size == 0) break;
-
-        filled_size += read_size;
-        ptr += read_size;
-
-        if (filled_size == buf_size) {
-            buf_size += 4096;
-
-            *buf = g_realloc(*buf, buf_size);
-
-            if (*buf == NULL)
-                goto close_handle;
-
-            ptr = (unsigned char *) (* buf) + filled_size;
-        }
-    }
-
-    *size = filled_size;
-
-close_handle:
-    vfs_fclose(fd);
+    vfs_file_read_all (file, buf, size);
+    vfs_fclose (file);
 }
 
 
