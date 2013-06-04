@@ -62,15 +62,14 @@ struct _VFSConstructor {
     int64_t (* vfs_fwrite_impl) (const void * ptr, int64_t size, int64_t nmemb,
      VFSFile * file);
 
-    /** A function pointer which points to a getc implementation. */
-    int (* vfs_getc_impl) (VFSFile * stream);
-    /** A function pointer which points to an ungetc implementation. */
-    int (* vfs_ungetc_impl) (int c, VFSFile * stream);
-
+    void (* obs_getc) (void); // obsolete
+    void (* obs_ungetc) (void); // obsolete
+    
     /** A function pointer which points to a fseek implementation. */
     int (* vfs_fseek_impl) (VFSFile * file, int64_t offset, int whence);
-    /** function pointer which points to a rewind implementation. */
-    void (* vfs_rewind_impl) (VFSFile * file);
+
+    void (* obs_rewind) (void); // obsolete
+
     /** A function pointer which points to a ftell implementation. */
     int64_t (* vfs_ftell_impl) (VFSFile * file);
     /** A function pointer which points to a feof implementation. */
@@ -110,7 +109,6 @@ int vfs_fprintf (VFSFile * stream, char const * format, ...) __attribute__
  ((__format__ (__printf__, 2, 3)));
 
 int vfs_fseek (VFSFile * file, int64_t offset, int whence) WARN_RETURN;
-void vfs_rewind (VFSFile * file);
 int64_t vfs_ftell (VFSFile * file) WARN_RETURN;
 int64_t vfs_fsize (VFSFile * file) WARN_RETURN;
 int vfs_ftruncate (VFSFile * file, int64_t length) WARN_RETURN;
@@ -141,6 +139,9 @@ void vfs_file_get_contents (const char * filename, void * * buf, int64_t * size)
 
 void vfs_set_lookup_func (VFSConstructor * (* func) (const char * scheme));
 void vfs_set_verbose (bool_t verbose);
+
+// deprecated
+void vfs_rewind (VFSFile * file) __attribute ((deprecated));
 
 #undef WARN_RETURN
 

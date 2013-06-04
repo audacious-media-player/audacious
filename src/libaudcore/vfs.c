@@ -234,12 +234,12 @@ EXPORT int64_t vfs_fwrite (const void * ptr, int64_t size, int64_t nmemb, VFSFil
 EXPORT int
 vfs_getc(VFSFile *file)
 {
-    g_return_val_if_fail (file && file->sig == VFS_SIG, EOF);
-
-    if (verbose)
-        logger ("VFS: <%p> getc\n", file);
-
-    return file->base->vfs_getc_impl(file);
+    unsigned char c;
+    
+    if (vfs_fread (& c, 1, 1, file) != 1)
+        return EOF;
+        
+    return c;
 }
 
 /**
@@ -252,12 +252,10 @@ vfs_getc(VFSFile *file)
 EXPORT int
 vfs_ungetc(int c, VFSFile *file)
 {
-    g_return_val_if_fail (file && file->sig == VFS_SIG, EOF);
-
-    if (verbose)
-        logger ("VFS: <%p> ungetc\n", file);
-
-    return file->base->vfs_ungetc_impl(c, file);
+    if (vfs_fseek (file, -1, SEEK_CUR) < 0)
+        return EOF;
+        
+    return c;
 }
 
 /**
@@ -296,12 +294,8 @@ vfs_fseek(VFSFile * file,
 EXPORT void
 vfs_rewind(VFSFile * file)
 {
-    g_return_if_fail (file && file->sig == VFS_SIG);
-
-    if (verbose)
-        logger ("VFS: <%p> rewind\n", file);
-
-    file->base->vfs_rewind_impl(file);
+    if (vfs_fseek (file, 0, SEEK_SET) < 0)
+        ; // ignore errors
 }
 
 /**

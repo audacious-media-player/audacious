@@ -390,8 +390,15 @@ static void * playback_thread (void * unused)
     if (! current_decoder->schemes || ! current_decoder->schemes[0])
     {
         if (current_file)
-            vfs_rewind (current_file);
-        else
+        {
+            if (vfs_fseek (current_file, 0, SEEK_SET) < 0)
+            {
+                vfs_fclose (current_file);
+                current_file = 0;
+            }
+        }
+        
+        if (! current_file)
             current_file = vfs_fopen (current_filename, "r");
 
         if (! current_file)
