@@ -78,38 +78,6 @@ static void make_dirs(void)
     make_directory(aud_paths[AUD_PATH_PLAYLISTS_DIR], mode755);
 }
 
-static void normalize_path (char * path)
-{
-#ifdef _WIN32
-    string_replace_char (path, '/', '\\');
-#endif
-    int len = strlen (path);
-#ifdef _WIN32
-    if (len > 3 && path[len - 1] == '\\') /* leave "C:\" */
-#else
-    if (len > 1 && path[len - 1] == '/') /* leave leading "/" */
-#endif
-        path[len - 1] = 0;
-}
-
-static char * last_path_element (char * path)
-{
-    char * slash = strrchr (path, G_DIR_SEPARATOR);
-    return (slash && slash[1]) ? slash + 1 : NULL;
-}
-
-static void strip_path_element (char * path, char * elem)
-{
-#ifdef _WIN32
-    if (elem > path + 3)
-#else
-    if (elem > path + 1)
-#endif
-        elem[-1] = 0; /* overwrite slash */
-    else
-        elem[0] = 0; /* leave [drive letter and] leading slash */
-}
-
 static void relocate_path (char * * pathp, const char * old, const char * new)
 {
     char * path = * pathp;
@@ -138,6 +106,9 @@ static void relocate_path (char * * pathp, const char * old, const char * new)
 
 static void relocate_paths (void)
 {
+    char * old = NULL, * new = NULL;
+    char * base, * a, * b;
+
     /* Start with the paths hard coded at compile time. */
     aud_paths[AUD_PATH_BIN_DIR] = g_strdup (HARDCODE_BINDIR);
     aud_paths[AUD_PATH_DATA_DIR] = g_strdup (HARDCODE_DATADIR);
@@ -154,26 +125,21 @@ static void relocate_paths (void)
 
     /* Compare the compile-time path to the executable and the actual path to
      * see if we have been moved. */
-    char * old = g_strdup (aud_paths[AUD_PATH_BIN_DIR]);
-    char * new = get_path_to_self ();
-    if (! new)
-    {
-ERR:
-        g_free (old);
-        g_free (new);
-        return;
-    }
+    old = g_strdup (aud_paths[AUD_PATH_BIN_DIR]);
+
+    if (! (new = get_path_to_self ()))
+        goto DONE;
+
     normalize_path (new);
 
     /* Strip the name of the executable file, leaving the path. */
-    char * base = last_path_element (new);
-    if (! base)
-        goto ERR;
-    strip_path_element (new, base);
+    if (! (base = last_path_element (new)))
+        goto DONE;
+
+    cut_path_element (new, base);
 
     /* Strip innermost folder names from both paths as long as they match.  This
      * leaves a compile-time prefix and a run-time one to replace it with. */
-    char * a, * b;
     while ((a = last_path_element (old)) && (b = last_path_element (new)) &&
 #ifdef _WIN32
      ! strcasecmp (a, b))
@@ -181,8 +147,8 @@ ERR:
      ! strcmp (a, b))
 #endif
     {
-        strip_path_element (old, a);
-        strip_path_element (new, b);
+        cut_path_element (old, a);
+        cut_path_element (new, b);
     }
 
     /* Do the replacements. */
@@ -193,6 +159,7 @@ ERR:
     relocate_path (& aud_paths[AUD_PATH_DESKTOP_FILE], old, new);
     relocate_path (& aud_paths[AUD_PATH_ICON_FILE], old, new);
 
+DONE:
     g_free (old);
     g_free (new);
 }

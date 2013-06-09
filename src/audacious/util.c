@@ -413,3 +413,37 @@ DONE:
 
     goto DONE;
 }
+
+void normalize_path (char * path)
+{
+#ifdef _WIN32
+    string_replace_char (path, '/', '\\');
+#endif
+
+    int len = strlen (path);
+#ifdef _WIN32
+    if (len > 3 && path[len - 1] == '\\') /* leave "C:\" */
+#else
+    if (len > 1 && path[len - 1] == '/') /* leave leading "/" */
+#endif
+        path[len - 1] = 0;
+}
+
+char * last_path_element (char * path)
+{
+    char * slash = strrchr (path, G_DIR_SEPARATOR);
+    return (slash && slash[1]) ? slash + 1 : NULL;
+}
+
+void cut_path_element (char * path, char * elem)
+{
+#ifdef _WIN32
+    if (elem > path + 3)
+#else
+    if (elem > path + 1)
+#endif
+        elem[-1] = 0; /* overwrite slash */
+    else
+        elem[0] = 0; /* leave [drive letter and] leading slash */
+}
+
