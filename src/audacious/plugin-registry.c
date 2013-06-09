@@ -754,7 +754,8 @@ PluginHandle * transport_plugin_for_scheme (const char * scheme)
 
 typedef struct {
     const char * ext;
-    PluginHandle * plugin;
+    PluginForEachFunc func;
+    void * data;
 } PlaylistPluginForExtState;
 
 static bool_t playlist_plugin_for_ext_cb (PluginHandle * plugin,
@@ -764,16 +765,14 @@ static bool_t playlist_plugin_for_ext_cb (PluginHandle * plugin,
      (GCompareFunc) g_ascii_strcasecmp))
         return TRUE;
 
-    state->plugin = plugin;
-    return FALSE;
+    return state->func (plugin, state->data);
 }
 
-PluginHandle * playlist_plugin_for_extension (const char * extension)
+void playlist_plugin_for_ext (const char * ext, PluginForEachFunc func, void * data)
 {
-    PlaylistPluginForExtState state = {extension, NULL};
+    PlaylistPluginForExtState state = {ext, func, data};
     plugin_for_enabled (PLUGIN_TYPE_PLAYLIST, (PluginForEachFunc)
      playlist_plugin_for_ext_cb, & state);
-    return state.plugin;
 }
 
 typedef struct {

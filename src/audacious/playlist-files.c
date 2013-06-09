@@ -1,6 +1,6 @@
 /*
  * playlist-files.c
- * Copyright 2010-2011 John Lindgren
+ * Copyright 2010-2013 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -27,81 +27,98 @@
 #include "plugin.h"
 #include "plugins.h"
 
-static PluginHandle * get_plugin_silent (const char * filename)
+typedef struct
 {
-    char buf[32];
-    if (! uri_get_extension (filename, buf, sizeof buf))
-        return NULL;
+    const char * filename;
+    char * title;
+    Index * filenames;
+    Index * tuples;
+    bool_t plugin_found;
+    bool_t success;
+}
+PlaylistData;
 
-    return playlist_plugin_for_extension (buf);
+static void plugin_for_filename (const char * filename, PluginForEachFunc func, void * data)
+{
+    char ext[32];
+    if (uri_get_extension (filename, ext, sizeof ext))
+        playlist_plugin_for_ext (ext, func, data);
+}
+
+static bool_t plugin_found_cb (PluginHandle * plugin, void * data)
+{
+    * (PluginHandle * *) data = plugin;
+    return FALSE; /* stop when first plugin is found */
 }
 
 bool_t filename_is_playlist (const char * filename)
 {
-    return (get_plugin_silent (filename) != NULL);
+    PluginHandle * plugin = NULL;
+    plugin_for_filename (filename, plugin_found_cb, & plugin);
+    return (plugin != NULL);
 }
 
-static PluginHandle * get_plugin (const char * filename, bool_t saving)
+static bool_t playlist_load_cb (PluginHandle * plugin, void * data_)
 {
-    PluginHandle * plugin = get_plugin_silent (filename);
-
-    if (! plugin)
-    {
-        char * error = str_printf (_("Cannot %s %s: unsupported file "
-         "extension."), saving ? _("save") : _("load"), filename);
-        interface_show_error (error);
-        str_unref (error);
-        return NULL;
-    }
-
-    return plugin;
-}
-
-bool_t playlist_load (const char * filename, char * * title,
- Index * * filenames_p, Index * * tuples_p)
-{
-    AUDDBG ("Loading playlist %s.\n", filename);
-
-    PluginHandle * plugin = get_plugin (filename, FALSE);
-    if (! plugin)
-        return FALSE;
+    PlaylistData * data = (PlaylistData *) data_;
 
     PlaylistPlugin * pp = plugin_get_header (plugin);
-    g_return_val_if_fail (pp && PLUGIN_HAS_FUNC (pp, load), FALSE);
+    if (! pp || ! PLUGIN_HAS_FUNC (pp, load))
+        return TRUE; /* try another plugin */
 
-    VFSFile * file = vfs_fopen (filename, "r");
+    data->plugin_found = TRUE;
+
+    VFSFile * file = vfs_fopen (data->filename, "r");
     if (! file)
-        return FALSE;
+        return FALSE; /* stop if we can't open file */
 
-    Index * filenames = index_new ();
-    Index * tuples = index_new ();
-    bool_t success = pp->load (filename, file, title, filenames, tuples);
+    data->success = pp->load (data->filename, file, & data->title, data->filenames, data->tuples);
 
     vfs_fclose (file);
+    return ! data->success; /* stop when playlist is loaded */
+}
 
-    if (! success)
+bool_t playlist_load (const char * filename, char * * title, Index * * filenames, Index * * tuples)
+{
+    PlaylistData data =
     {
-        index_free (filenames);
-        index_free (tuples);
+        .filename = filename,
+        .filenames = index_new (),
+        .tuples = index_new ()
+    };
+
+    AUDDBG ("Loading playlist %s.\n", filename);
+    plugin_for_filename (filename, playlist_load_cb, & data);
+
+    if (! data.plugin_found)
+    {
+        SPRINTF (error, _("Cannot load %s: unsupported file extension."), filename);
+        interface_show_error (error);
+    }
+
+    if (! data.success)
+    {
+        str_unref (data.title);
+        index_free (data.filenames);
+        index_free (data.tuples);
         return FALSE;
     }
 
-    if (index_count (tuples))
-        g_return_val_if_fail (index_count (tuples) == index_count (filenames),
-         FALSE);
+    if (index_count (data.tuples))
+        g_return_val_if_fail (index_count (data.tuples) == index_count (data.filenames), FALSE);
     else
     {
-        index_free (tuples);
-        tuples = NULL;
+        index_free (data.tuples);
+        data.tuples = NULL;
     }
 
-    * filenames_p = filenames;
-    * tuples_p = tuples;
+    * title = data.title;
+    * filenames = data.filenames;
+    * tuples = data.tuples;
     return TRUE;
 }
 
-bool_t playlist_insert_playlist_raw (int list, int at,
- const char * filename)
+bool_t playlist_insert_playlist_raw (int list, int at, const char * filename)
 {
     char * title = NULL;
     Index * filenames, * tuples;
@@ -118,52 +135,66 @@ bool_t playlist_insert_playlist_raw (int list, int at,
     return TRUE;
 }
 
-bool_t playlist_save (int list, const char * filename)
+static bool_t playlist_save_cb (PluginHandle * plugin, void * data_)
 {
-    AUDDBG ("Saving playlist %s.\n", filename);
-
-    PluginHandle * plugin = get_plugin (filename, TRUE);
-    if (! plugin)
-        return FALSE;
+    PlaylistData * data = data_;
 
     PlaylistPlugin * pp = plugin_get_header (plugin);
-    g_return_val_if_fail (pp && PLUGIN_HAS_FUNC (pp, load), FALSE);
+    if (! pp || ! PLUGIN_HAS_FUNC (pp, save))
+        return TRUE; /* try another plugin */
 
-    bool_t fast = get_bool (NULL, "metadata_on_play");
+    data->plugin_found = TRUE;
 
-    VFSFile * file = vfs_fopen (filename, "w");
+    VFSFile * file = vfs_fopen (data->filename, "w");
     if (! file)
-        return FALSE;
+        return FALSE; /* stop if we can't open file */
 
-    char * title = playlist_get_title (list);
-
-    int entries = playlist_entry_count (list);
-    Index * filenames = index_new ();
-    index_allocate (filenames, entries);
-    Index * tuples = index_new ();
-    index_allocate (tuples, entries);
-
-    for (int i = 0; i < entries; i ++)
-    {
-        index_append (filenames, playlist_entry_get_filename (list, i));
-        index_append (tuples, playlist_entry_get_tuple (list, i, fast));
-    }
-
-    bool_t success = pp->save (filename, file, title, filenames, tuples);
+    data->success = pp->save (data->filename, file, data->title, data->filenames, data->tuples);
 
     vfs_fclose (file);
-    str_unref (title);
+    return FALSE; /* stop after first attempt (successful or not) */
+}
+
+bool_t playlist_save (int list, const char * filename)
+{
+    PlaylistData data =
+    {
+        .filename = filename,
+        .title = playlist_get_title (list),
+        .filenames = index_new (),
+        .tuples = index_new ()
+    };
+
+    int entries = playlist_entry_count (list);
+    bool_t fast = get_bool (NULL, "metadata_on_play");
+
+    index_allocate (data.filenames, entries);
+    index_allocate (data.tuples, entries);
 
     for (int i = 0; i < entries; i ++)
     {
-        str_unref (index_get (filenames, i));
-        Tuple * tuple = index_get (tuples, i);
-        if (tuple)
-            tuple_unref (tuple);
+        index_append (data.filenames, playlist_entry_get_filename (list, i));
+        index_append (data.tuples, playlist_entry_get_tuple (list, i, fast));
     }
 
-    index_free (filenames);
-    index_free (tuples);
+    AUDDBG ("Saving playlist %s.\n", filename);
+    plugin_for_filename (filename, playlist_save_cb, & data);
 
-    return success;
+    if (! data.plugin_found)
+    {
+        SPRINTF (error, _("Cannot save %s: unsupported file extension."), filename);
+        interface_show_error (error);
+    }
+
+    for (int i = 0; i < entries; i ++)
+    {
+        str_unref (index_get (data.filenames, i));
+        tuple_unref (index_get (data.tuples, i));
+    }
+
+    str_unref (data.title);
+    index_free (data.filenames);
+    index_free (data.tuples);
+
+    return data.success;
 }

@@ -24,6 +24,7 @@
 #include <audacious/types.h>
 #include <libaudcore/core.h>
 
+/* returns TRUE to call again for the next plugin, FALSE to stop */
 typedef bool_t (* PluginForEachFunc) (PluginHandle * plugin, void * data);
 
 #define AUD_API_NAME PluginsAPI
@@ -58,9 +59,8 @@ void plugin_set_enabled (PluginHandle * plugin, bool_t enabled);
 void * plugin_get_misc_data (PluginHandle * plugin, int size);
 
 PluginHandle * transport_plugin_for_scheme (const char * scheme);
-PluginHandle * playlist_plugin_for_extension (const char * extension);
-void input_plugin_for_key (int key, const char * value, PluginForEachFunc
- func, void * data);
+void playlist_plugin_for_ext (const char * ext, PluginForEachFunc func, void * data);
+void input_plugin_for_key (int key, const char * value, PluginForEachFunc func, void * data);
 bool_t input_plugin_has_images (PluginHandle * plugin);
 bool_t input_plugin_has_subtunes (PluginHandle * plugin);
 bool_t input_plugin_can_write_tuple (PluginHandle * plugin);
