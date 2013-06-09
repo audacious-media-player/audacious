@@ -283,6 +283,9 @@ EXPORT Tuple * tuple_ref (Tuple * tuple)
 
 EXPORT void tuple_unref (Tuple * tuple)
 {
+    if (! tuple)
+        return;
+
     pthread_mutex_lock (& mutex);
 
     if (! -- tuple->refcount)
