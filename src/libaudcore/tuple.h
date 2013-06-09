@@ -98,7 +98,8 @@ Tuple * tuple_new (void);
 Tuple * tuple_ref (Tuple * tuple);
 
 /* Decrements the reference count of <tuple> by one.  If the reference count
- * drops to zero, releases all memory used by <tuple>. */
+ * drops to zero, releases all memory used by <tuple>.  If <tuple> is NULL, does
+ * nothing. */
 void tuple_unref (Tuple * tuple);
 
 /* Makes a copy of <tuple>.  Only use tuple_copy() if you need to modify one
