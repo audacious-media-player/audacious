@@ -100,9 +100,6 @@ CPPFLAGS := -I.. -I../.. \
 		-D_AUDACIOUS_CORE		\
 		${LIBGUESS_CFLAGS}
 
-# Essential for efficient FFTs. --jlindgren
-CFLAGS += -ffast-math
-
 LIBS := -L../libaudcore -laudcore \
         -L../libaudgui -laudgui \
         -L../libaudtag -laudtag \
