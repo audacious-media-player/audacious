@@ -160,7 +160,7 @@ AC_REQUIRE([AC_C_BIGENDIAN])
 AC_REQUIRE([AC_SYS_LARGEFILE])
 
 if test "x$GCC" = "xyes"; then
-    CFLAGS="$CFLAGS -std=gnu99 -Wall -pipe"
+    CFLAGS="$CFLAGS -std=gnu99 -ffast-math -Wall -pipe"
     CXXFLAGS="$CXXFLAGS -Wall -pipe"
     AUD_CHECK_CFLAGS(-Wtype-limits)
 fi
