@@ -413,7 +413,14 @@ static bool_t add_finish (void * unused)
             result->at = count;
 
         if (result->title && ! count)
-            playlist_set_title (playlist, result->title);
+        {
+            char * old_title = playlist_get_title (playlist);
+
+            if (! strcmp (old_title, N_("New Playlist")))
+                playlist_set_title (playlist, result->title);
+
+            str_unref (old_title);
+        }
 
         playlist_entry_insert_batch_raw (playlist, result->at,
          result->filenames, result->tuples, result->decoders);
