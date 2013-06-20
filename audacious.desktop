@@ -18,6 +18,7 @@ GenericName[pt]=Leitor de Música
 GenericName[ro]=Lector de Muzică
 GenericName[ru]=Аудиоплеер
 GenericName[se]=Ljudspelare
+GenericName[zh_TW]=音樂播放器
 Comment=Listen to music
 Comment[be]=Слухайце музыку
 Comment[de]=Musik hören
@@ -29,6 +30,7 @@ Comment[nb]=Lytt til musikk
 Comment[nl]=Muziek luisteren
 Comment[ru]=Слушайте музыку
 Comment[es]=Escucha música
+Comment[zh_TW]=音樂鑑賞
 Icon=audacious
 
 Categories=AudioVideo;Audio;Player;GTK;
