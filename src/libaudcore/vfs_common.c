@@ -137,42 +137,45 @@ EXPORT int vfs_fprintf(VFSFile *stream, char const *format, ...)
     return rv;
 }
 
-EXPORT void vfs_file_read_all (VFSFile * file, void * * buf, int64_t * size)
+EXPORT void vfs_file_read_all (VFSFile * file, void * * bufp, int64_t * sizep)
 {
-    * buf = NULL;
-    * size = 0;
+    char * buf = NULL;
+    int64_t size = vfs_fsize (file);
 
-    int64_t filesize = vfs_fsize (file);
-
-    if (filesize >= 0)
+    if (size >= 0)
     {
-        filesize = MIN (filesize, SIZE_MAX);
-        * buf = malloc (filesize);
-        * size = vfs_fread (* buf, 1, filesize, file);
+        size = MIN (size, SIZE_MAX - 1);
+        buf = malloc (size + 1);
+        size = vfs_fread (buf, 1, size, file);
     }
     else
     {
+        size = 0;
+
         size_t bufsize = 4096;
-        * buf = malloc (bufsize);
-        char * ptr = (char *) buf;
+        buf = malloc (bufsize);
 
         size_t readsize;
-        while ((readsize = vfs_fread (ptr, 1, bufsize - * size, file)))
+        while ((readsize = vfs_fread (buf + size, 1, bufsize - 1 - size, file)))
         {
-            * size += readsize;
-            ptr += readsize;
+            size += readsize;
 
-            if (* size == bufsize)
+            if (size == bufsize - 1)
             {
                 if (bufsize > SIZE_MAX - 4096)
                     break;
 
                 bufsize += 4096;
-                * buf = realloc (* buf, bufsize);
-                ptr = (char *) (* buf) + (* size);
+                buf = realloc (buf, bufsize);
             }
         }
     }
+
+    buf[size] = 0; // nul-terminate
+
+    * bufp = buf;
+    if (sizep)
+        * sizep = size;
 }
 
 /**
@@ -187,7 +190,8 @@ EXPORT void vfs_file_read_all (VFSFile * file, void * * buf, int64_t * size)
 EXPORT void vfs_file_get_contents (const char * filename, void * * buf, int64_t * size)
 {
     * buf = NULL;
-    * size = 0;
+    if (size)
+        * size = 0;
 
     VFSFile * file = vfs_fopen (filename, "r");
     if (! file)
