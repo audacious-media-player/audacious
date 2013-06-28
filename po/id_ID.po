@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2013-05-31 18:48+0200\n"
+"POT-Creation-Date: 2013-06-29 01:09+0200\n"
 "PO-Revision-Date: 2013-03-24 07:29+0000\n"
 "Last-Translator: Ardjuna <Asyura.x@gmail.com>\n"
 "Language-Team: Indonesian (Indonesia) (http://www.transifex.com/projects/p/"
@@ -166,12 +166,12 @@ msgstr ""
 "Daftar lagu tidak dapat diurutkan karena pemindaian metadata dinonaktifkan "
 "atau sedang berjalan."
 
-#: src/audacious/plugin-preferences.c:49
+#: src/audacious/plugin-preferences.c:54
 #, c-format
 msgid "About %s"
 msgstr "Tentang %s"
 
-#: src/audacious/plugin-preferences.c:87
+#: src/audacious/plugin-preferences.c:92
 #, c-format
 msgid "%s Settings"
 msgstr "%s Pengaturan"
@@ -566,15 +566,15 @@ msgstr "Tidak ada lagu yang sedang diputar."
 msgid "Audio CD, track %s"
 msgstr "CD Audio, trek %s"
 
-#: src/libaudcore/tuple.c:540
+#: src/libaudcore/tuple.c:543
 msgid "Mono"
 msgstr "Mono"
 
-#: src/libaudcore/tuple.c:542
+#: src/libaudcore/tuple.c:545
 msgid "Stereo"
 msgstr "Stereo"
 
-#: src/libaudcore/tuple.c:544
+#: src/libaudcore/tuple.c:547
 #, c-format
 msgid "%d channel"
 msgid_plural "%d channels"

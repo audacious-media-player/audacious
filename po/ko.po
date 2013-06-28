@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2013-05-31 18:48+0200\n"
+"POT-Creation-Date: 2013-06-29 01:09+0200\n"
 "PO-Revision-Date: 2013-02-15 10:53+0000\n"
 "Last-Translator: Darkcircle <darkcircle.0426@gmail.com>\n"
 "Language-Team: Korean (http://www.transifex.com/projects/p/audacious/"
@@ -161,12 +161,12 @@ msgstr ""
 "메타데이터 검색이 여전히 진행중(또는 비활성화 됨)이기 때문에 재생 목록을 정렬"
 "할 수 없습니다."
 
-#: src/audacious/plugin-preferences.c:49
+#: src/audacious/plugin-preferences.c:54
 #, c-format
 msgid "About %s"
 msgstr "%s 정보"
 
-#: src/audacious/plugin-preferences.c:87
+#: src/audacious/plugin-preferences.c:92
 #, c-format
 msgid "%s Settings"
 msgstr "%s 설정"
@@ -558,15 +558,15 @@ msgstr "재생중인 곡이 없습니다."
 msgid "Audio CD, track %s"
 msgstr "음악 CD, %s 트랙"
 
-#: src/libaudcore/tuple.c:540
+#: src/libaudcore/tuple.c:543
 msgid "Mono"
 msgstr "모노"
 
-#: src/libaudcore/tuple.c:542
+#: src/libaudcore/tuple.c:545
 msgid "Stereo"
 msgstr "스테레오"
 
-#: src/libaudcore/tuple.c:544
+#: src/libaudcore/tuple.c:547
 #, c-format
 msgid "%d channel"
 msgid_plural "%d channels"

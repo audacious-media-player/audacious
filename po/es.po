@@ -3,6 +3,7 @@
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
+# Adolfo Jayme <fitoschido@gmail.com>, 2013
 # Adrián Ramirez Escalante <buried.prophet@gmail.com>, 2012
 # Cosme Domínguez Díaz <cosme.ddiaz@gmail.com>, 2010
 # Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004
@@ -21,9 +22,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2013-05-31 18:48+0200\n"
-"PO-Revision-Date: 2013-03-14 11:25+0000\n"
-"Last-Translator: Marcos <djoser.horus@gmail.com>\n"
+"POT-Creation-Date: 2013-06-29 01:09+0200\n"
+"PO-Revision-Date: 2013-06-17 06:56+0000\n"
+"Last-Translator: Adolfo Jayme <fitoschido@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/projects/p/audacious/"
 "language/es/)\n"
 "Language: es\n"
@@ -34,14 +35,14 @@ msgstr ""
 
 #: src/audacious/adder.c:74
 msgid "Searching ..."
-msgstr "Buscando ..."
+msgstr "Buscando…"
 
 #: src/audacious/adder.c:102
 #, c-format
 msgid "%d file found"
 msgid_plural "%d files found"
-msgstr[0] "%d archivo encontrado"
-msgstr[1] "%d archivos encontrados"
+msgstr[0] "Se encontró %d archivo"
+msgstr[1] "Se encontraron %d archivos"
 
 #: src/audacious/chardet.c:38
 msgid "  (invalid UTF-8)"
@@ -50,7 +51,7 @@ msgstr "  (UTF-8 no válido)"
 #: src/audacious/equalizer_preset.c:171
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
-msgstr "Error importando archivo Winamp EQF  «%s»"
+msgstr "Error al importar el archivo EQF de Winamp «%s»"
 
 #: src/audacious/main.c:232
 msgid "Skip backwards in playlist"
@@ -66,7 +67,7 @@ msgstr "Pausar la canción actual"
 
 #: src/audacious/main.c:235
 msgid "Stop current song"
-msgstr "Parar la canción actual"
+msgstr "Detener la canción actual"
 
 #: src/audacious/main.c:236
 msgid "Pause if playing, play otherwise"
@@ -123,7 +124,7 @@ msgid ""
 "Try `%s --help' for more information.\n"
 msgstr ""
 "%s: %s\n"
-"Prueba «%s --help» para más información.\n"
+"Ejecute «%s --help» para más información.\n"
 
 #: src/audacious/main.c:565
 msgid "Audacious"
@@ -137,7 +138,7 @@ msgstr "No se encontró decodificador para %s."
 #: src/audacious/playback.c:399
 #, c-format
 msgid "%s could not be opened."
-msgstr "%s no pudo ser abierto"
+msgstr "%s no se pudo abrir."
 
 #: src/audacious/playlist-files.c:50
 #, c-format
@@ -154,11 +155,11 @@ msgstr "cargar"
 
 #: src/audacious/playlist-new.c:96
 msgid "New Playlist"
-msgstr "Nueva lista de reproducción"
+msgstr "Lista de reproducción nueva"
 
 #: src/audacious/playlist-new.c:97
 msgid "Now Playing"
-msgstr "Reproducción actual"
+msgstr "Ahora en reproducción"
 
 #: src/audacious/playlist-new.c:1670
 msgid ""
@@ -168,19 +169,19 @@ msgstr ""
 "La lista de reproducción no se puede ordenar porque la búsqueda de metadatos "
 "está en progreso (o ha sido deshabilitada)."
 
-#: src/audacious/plugin-preferences.c:49
+#: src/audacious/plugin-preferences.c:54
 #, c-format
 msgid "About %s"
 msgstr "Acerca de %s"
 
-#: src/audacious/plugin-preferences.c:87
+#: src/audacious/plugin-preferences.c:92
 #, c-format
 msgid "%s Settings"
-msgstr "%s Ajustes"
+msgstr "Configuración de %s"
 
 #: src/audacious/ui_preferences.c:67
 msgid "Audio"
-msgstr "Audio"
+msgstr "Sonido"
 
 #: src/audacious/ui_preferences.c:68
 msgid "Network"
@@ -213,7 +214,7 @@ msgstr "Título"
 
 #: src/audacious/ui_preferences.c:80
 msgid "Tracknumber"
-msgstr "Número de pista"
+msgstr "N.º de pista"
 
 #: src/audacious/ui_preferences.c:81 src/libaudgui/infopopup.c:152
 msgid "Genre"
@@ -241,7 +242,7 @@ msgstr "Comentario"
 
 #: src/audacious/ui_preferences.c:87
 msgid "Codec"
-msgstr "Codec (formato)"
+msgstr "Códec"
 
 #: src/audacious/ui_preferences.c:88
 msgid "Quality"
@@ -301,7 +302,7 @@ msgstr "Coma flotante"
 
 #: src/audacious/ui_preferences.c:128
 msgid "Album mode"
-msgstr "Modo de album"
+msgstr "Modo de álbum"
 
 #: src/audacious/ui_preferences.c:131
 msgid "<b>Output Settings</b>"
@@ -373,7 +374,7 @@ msgstr "Contraseña del proxy:"
 
 #: src/audacious/ui_preferences.c:167
 msgid "<b>Proxy Configuration</b>"
-msgstr "<b>Configuración del Proxy</b>"
+msgstr "<b>Configuración del proxy</b>"
 
 #: src/audacious/ui_preferences.c:168
 msgid "Enable proxy usage"
@@ -568,15 +569,15 @@ msgstr "No se reproduce ninguna canción."
 msgid "Audio CD, track %s"
 msgstr "CD de música, pista %s"
 
-#: src/libaudcore/tuple.c:540
+#: src/libaudcore/tuple.c:543
 msgid "Mono"
 msgstr "Mono"
 
-#: src/libaudcore/tuple.c:542
+#: src/libaudcore/tuple.c:545
 msgid "Stereo"
 msgstr "Estéreo"
 
-#: src/libaudcore/tuple.c:544
+#: src/libaudcore/tuple.c:547
 #, c-format
 msgid "%d channel"
 msgid_plural "%d channels"
@@ -601,8 +602,8 @@ msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
 msgstr ""
-"¿Esta seguro de querer cerrar %s?  Si lo haces, se perderá cualquier cambio "
-"realizado desde que fue exportada la lista de reproducción."
+"¿Está seguro de que quiere cerrar %s? Si lo hace, se perderá cualquier "
+"cambio realizado desde que se exportó la lista de reproducción."
 
 #: src/libaudgui/confirm.c:73
 msgid "Close Playlist"
@@ -618,7 +619,7 @@ msgstr "Renombrar la lista de reproducción"
 
 #: src/libaudgui/effects-menu.c:70
 msgid "settings ..."
-msgstr "ajustes ..."
+msgstr "configuración…"
 
 #: src/libaudgui/equalizer.c:50
 msgid "_Enable"
@@ -718,7 +719,7 @@ msgstr "Country"
 
 #: src/libaudgui/infowin.c:82
 msgid "Death Metal"
-msgstr "Death Metal"
+msgstr "Death metal"
 
 #: src/libaudgui/infowin.c:83
 msgid "Disco"
@@ -738,7 +739,7 @@ msgstr "Funk"
 
 #: src/libaudgui/infowin.c:87
 msgid "Gangsta Rap"
-msgstr "Gangsta Rap"
+msgstr "Gangsta rap"
 
 #: src/libaudgui/infowin.c:88
 msgid "Gospel"
@@ -830,7 +831,7 @@ msgstr "Swing"
 
 #: src/libaudgui/infowin.c:110
 msgid "Techno"
-msgstr "Techno"
+msgstr "Tecno"
 
 #: src/libaudgui/infowin.c:111
 msgid "Trip-hop"
@@ -839,15 +840,15 @@ msgstr "Trip-hop"
 #: src/libaudgui/infowin.c:175 src/libaudgui/infowin.c:348
 #: src/libaudgui/infowin.c:351 src/libaudgui/infowin.c:354
 msgid "<span size=\"small\">n/a</span>"
-msgstr "<span size=\"small\">n/a</span>"
+msgstr "<span size=\"small\">n/d</span>"
 
 #: src/libaudgui/infowin.c:223
 msgid "Metadata updated successfully"
-msgstr "Metadata actualizada correctamente"
+msgstr "Se actualizaron los metadatos correctamente"
 
 #: src/libaudgui/infowin.c:227
 msgid "Metadata updating failed"
-msgstr "Actualización de metadatos fallida"
+msgstr "Falló la actualización de metadatos"
 
 #: src/libaudgui/infowin.c:302
 msgid "Track Information"
@@ -863,7 +864,7 @@ msgstr "<span size=\"small\">Calidad:</span>"
 
 #: src/libaudgui/infowin.c:344
 msgid "<span size=\"small\">Bitrate:</span>"
-msgstr "<span size=\"small\">Bitrate:</span>"
+msgstr "<span size=\"small\">Tasa de bits:</span>"
 
 #: src/libaudgui/infowin.c:368
 msgid "<span size=\"small\">Title</span>"
@@ -891,7 +892,7 @@ msgstr "<span size=\"small\">Año</span>"
 
 #: src/libaudgui/infowin.c:447
 msgid "<span size=\"small\">Track Number</span>"
-msgstr "<span size=\"small\">Numero de pista</span>"
+msgstr "<span size=\"small\">N.º de pista</span>"
 
 #: src/libaudgui/infowin.c:521
 #, c-format
@@ -905,7 +906,7 @@ msgstr "No hay información disponible para %s.\n"
 
 #: src/libaudgui/jump-to-time.c:51
 msgid "Jump to Time"
-msgstr "Saltar en el tiempo"
+msgstr "Saltar al tiempo"
 
 #: src/libaudgui/jump-to-time.c:60
 msgid "Enter time (minutes:seconds):"
@@ -947,11 +948,11 @@ msgstr "Cerrar diálogo al añadir"
 #: src/libaudgui/ui_jumptotrack.c:104 src/libaudgui/ui_jumptotrack.c:112
 #: src/libaudgui/ui_jumptotrack.c:331
 msgid "_Queue"
-msgstr "_Cola"
+msgstr "A_ñadir a la cola"
 
 #: src/libaudgui/ui_jumptotrack.c:110
 msgid "Un_queue"
-msgstr "_Remover de la cola"
+msgstr "_Quitar de la cola"
 
 #: src/libaudgui/ui_jumptotrack.c:261
 msgid "Jump to Song"

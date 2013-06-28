@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2013-05-31 18:48+0200\n"
+"POT-Creation-Date: 2013-06-29 01:09+0200\n"
 "PO-Revision-Date: 2013-04-23 14:45+0000\n"
 "Last-Translator: chingis <translatorky@lavabit.com>\n"
 "Language-Team: Kirgyz (http://www.transifex.com/projects/p/audacious/"
@@ -153,12 +153,12 @@ msgid ""
 "(or has been disabled)."
 msgstr ""
 
-#: src/audacious/plugin-preferences.c:49
+#: src/audacious/plugin-preferences.c:54
 #, c-format
 msgid "About %s"
 msgstr "%s жөнүндө"
 
-#: src/audacious/plugin-preferences.c:87
+#: src/audacious/plugin-preferences.c:92
 #, c-format
 msgid "%s Settings"
 msgstr "%s ырастоолору"
@@ -550,15 +550,15 @@ msgstr "Эчтеке ойнолгон жок."
 msgid "Audio CD, track %s"
 msgstr "Аудио CD, жолчо %s"
 
-#: src/libaudcore/tuple.c:540
+#: src/libaudcore/tuple.c:543
 msgid "Mono"
 msgstr "Моно"
 
-#: src/libaudcore/tuple.c:542
+#: src/libaudcore/tuple.c:545
 msgid "Stereo"
 msgstr "Стерео"
 
-#: src/libaudcore/tuple.c:544
+#: src/libaudcore/tuple.c:547
 #, c-format
 msgid "%d channel"
 msgid_plural "%d channels"

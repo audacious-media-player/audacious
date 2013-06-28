@@ -3,6 +3,7 @@
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
+# asier <asier.fernandez.iribar@gmail.com>, 2013
 # obibon <ibonatan@gmail.com>, 2012
 # Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2008, 2009
 # Osoitz <oelkoro@gmail.com>, 2012
@@ -10,9 +11,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2013-05-31 18:48+0200\n"
-"PO-Revision-Date: 2013-02-03 20:17+0000\n"
-"Last-Translator: Radioactiveman <thomas-lange2@gmx.de>\n"
+"POT-Creation-Date: 2013-06-29 01:09+0200\n"
+"PO-Revision-Date: 2013-06-03 12:42+0000\n"
+"Last-Translator: asier <asier.fernandez.iribar@gmail.com>\n"
 "Language-Team: Basque (http://www.transifex.com/projects/p/audacious/"
 "language/eu/)\n"
 "Language: eu\n"
@@ -83,11 +84,11 @@ msgstr "Bistaratu nagusia leihoa"
 
 #: src/audacious/main.c:242
 msgid "Headless mode"
-msgstr ""
+msgstr "Headless modua"
 
 #: src/audacious/main.c:243
 msgid "Quit on playback stop"
-msgstr ""
+msgstr "Irten erreprodukzioa amaitzean"
 
 #: src/audacious/main.c:244
 msgid "Show version"
@@ -126,7 +127,7 @@ msgstr "Ez dago %s-rako dekodifikatzailerik."
 #: src/audacious/playback.c:399
 #, c-format
 msgid "%s could not be opened."
-msgstr ""
+msgstr "%s ezin izan da ireki"
 
 #: src/audacious/playlist-files.c:50
 #, c-format
@@ -157,12 +158,12 @@ msgstr ""
 "Erreprodukzio-zerrenda hau ezin da ordenatu metadatuen azterketa oraindik "
 "bukatu ez duelako (edo desgaitu delako)."
 
-#: src/audacious/plugin-preferences.c:49
+#: src/audacious/plugin-preferences.c:54
 #, c-format
 msgid "About %s"
 msgstr "%s(r)i buruz"
 
-#: src/audacious/plugin-preferences.c:87
+#: src/audacious/plugin-preferences.c:92
 #, c-format
 msgid "%s Settings"
 msgstr "%s(r)en ezarpenak"
@@ -406,11 +407,12 @@ msgstr "Ez kargatu kantuen metadatuak jo arte"
 
 #: src/audacious/ui_preferences.c:199
 msgid "<b>Compatibility</b>"
-msgstr ""
+msgstr "<b>Bateragarritasuna</b>"
 
 #: src/audacious/ui_preferences.c:200
 msgid "Interpret \\ (backward slash) as a folder delimiter"
 msgstr ""
+"\\ (aderantzizkatutako diagonala) karpeta mugatzaile bezala interpretatu"
 
 #: src/audacious/ui_preferences.c:207
 msgid "<b>Album Art</b>"
@@ -554,15 +556,15 @@ msgstr "Ez da kanturik jotzen ari."
 msgid "Audio CD, track %s"
 msgstr "Audio CDa, %s pista"
 
-#: src/libaudcore/tuple.c:540
+#: src/libaudcore/tuple.c:543
 msgid "Mono"
 msgstr "Mono"
 
-#: src/libaudcore/tuple.c:542
+#: src/libaudcore/tuple.c:545
 msgid "Stereo"
 msgstr "Estereo"
 
-#: src/libaudcore/tuple.c:544
+#: src/libaudcore/tuple.c:547
 #, c-format
 msgid "%d channel"
 msgid_plural "%d channels"
@@ -592,7 +594,7 @@ msgstr ""
 
 #: src/libaudgui/confirm.c:73
 msgid "Close Playlist"
-msgstr ""
+msgstr "Erreprodukzio-zerrenda itxi"
 
 #: src/libaudgui/confirm.c:77
 msgid "_Don't show this message again"

@@ -39,10 +39,12 @@ LOCALES = ast.po \
 	  pt_PT.po \
 	  ro.po \
 	  ru.po \
+	  si.po \
 	  sk.po \
 	  sq.po \
 	  sr@latin.po \
 	  sr.po \
+	  ta.po \
 	  tr.po \
 	  uk.po \
 	  vi.po \
