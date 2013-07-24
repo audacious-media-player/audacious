@@ -57,6 +57,7 @@ static int time_offset = 0, initial_seek = 0;
 static bool_t paused = FALSE;
 static bool_t ready_flag = FALSE;
 static bool_t playback_error = FALSE;
+static bool_t song_finished = FALSE;
 
 static void * current_data = NULL;
 static int current_bitrate = -1, current_samplerate = -1, current_channels = -1;
@@ -222,7 +223,9 @@ static void playback_finish (void)
     g_return_if_fail (playing);
     wait_until_ready ();
 
-    if (current_decoder)
+    /* calling stop() is unnecessary if the song finished on its own;
+     * also, it might flush the output buffer, breaking gapless playback */
+    if (current_decoder && ! song_finished)
         current_decoder->stop (& playback_api);
 
     pthread_join (playback_thread_handle, NULL);
@@ -243,6 +246,7 @@ static void playback_finish (void)
     paused = FALSE;
     ready_flag = FALSE;
     playback_error = FALSE;
+    song_finished = FALSE;
 
     current_data = NULL;
     current_bitrate = current_samplerate = current_channels = -1;
@@ -301,6 +305,9 @@ void playback_stop (void)
 static bool_t end_cb (void * unused)
 {
     g_return_val_if_fail (playing, FALSE);
+
+    if (! playback_error)
+        song_finished = TRUE;
 
     hook_call ("playback end", NULL);
 
