@@ -324,6 +324,18 @@ struct _InputPlayback
      * those settings.  If the settings are changed in a call to set_tuple, this
      * function must be called again to apply the updated settings. */
     void (* set_gain_from_playlist) (InputPlayback * playback);
+
+    /* Checks whether playback is to be stopped.  A plugin's play() function
+     * should poll check_stop() periodically and return as soon as check_stop()
+     * returns TRUE.  Only applies for plugins that do not provide their own
+     * stop() function. */
+    bool_t (* check_stop) (void);
+
+    /* Checks whether a seek has been requested.  If so, calls
+     * OutputAPI::flush() and returns the position of the seek in milliseconds.
+     * Otherwise, returns -1.  Only applies for plugins that do not provide
+     * their own stop() function. */
+    int (* check_seek) (void);
 };
 
 struct _InputPlugin
@@ -404,23 +416,34 @@ struct _InputPlugin
      * -1 to start from the beginning of the file.  "stop_time" is the position
      * in milliseconds at which to end playback, or -1 to play to the end of the
      * file.  "paused" specifies whether playback should immediately be paused.
+     * (Plugins that do not provide a pause() function can ignore this flag.)
      * Must return nonzero if some of the file was successfully played or zero
      * on failure. */
     bool_t (* play) (InputPlayback * playback, const char * filename,
      VFSFile * file, int start_time, int stop_time, bool_t pause);
 
-    /* Must pause or unpause a file currently being played.  This function will
+    /* Optional, for plugins that use a non-standard play loop.  If not
+     * provided, a default implementation is used that simply calls
+     * OutputAPI::pause().
+     *
+     * Must pause or unpause a file currently being played.  This function will
      * be called from a different thread than play, but it will not be called
      * before the plugin calls set_pb_ready or after stop is called. */
     void (* pause) (InputPlayback * playback, bool_t paused);
 
-    /* Optional.  Must seek to the given position in milliseconds within a file
+    /* Optional, for plugins that use a non-standard play loop.  Usually, it is
+     * simpler to poll playback->check_seek() from the play loop.
+     *
+     * Must seek to the given position in milliseconds within a file
      * currently being played.  This function will be called from a different
      * thread than play, but it will not be called before the plugin calls
      * set_pb_ready or after stop is called. */
     void (* mseek) (InputPlayback * playback, int time);
 
-    /* Must signal a currently playing song to stop and cause play to return.
+    /* Optional, for plugins that use a non-standard play loop.  Usually, it is
+     * simpler to poll playback->check_stop() from the play loop.
+     *
+     * Must signal a currently playing song to stop and cause play to return.
      * This function will be called from a different thread than play.  It will
      * only be called once. It should not join the thread from which play is
      * called. */

@@ -33,8 +33,10 @@
 #include "playlist.h"
 #include "plugin.h"
 
+static bool_t open_audio_wrapper (int format, int rate, int channels);
+
 static const struct OutputAPI output_api = {
- .open_audio = output_open_audio,
+ .open_audio = open_audio_wrapper,
  .set_replaygain_info = output_set_replaygain_info,
  .write_audio = output_write_audio,
  .abort_write = output_abort_write,
@@ -50,10 +52,13 @@ static int end_source = 0;
 static pthread_mutex_t ready_mutex = PTHREAD_MUTEX_INITIALIZER;
 static pthread_cond_t ready_cond = PTHREAD_COND_INITIALIZER;
 
+static pthread_mutex_t control_mutex = PTHREAD_MUTEX_INITIALIZER;
+
 /* level 1 data (persists to end of song) */
 static bool_t playing = FALSE;
 static bool_t restart_flag = FALSE;
-static int time_offset = 0, initial_seek = 0;
+static int time_offset = 0;
+static int start_time = 0;
 static bool_t paused = FALSE;
 static bool_t ready_flag = FALSE;
 static bool_t playback_error = FALSE;
@@ -77,6 +82,10 @@ static int repeat_a = -1, repeat_b = -1;
 /* level 3 data (persists to end of playlist) */
 static bool_t stopped = TRUE;
 static int failed_entries = 0;
+
+/* playback thread control */
+static bool_t stop_flag = FALSE;
+static int seek_request = -1;
 
 /* clears gain info if tuple == NULL */
 static void read_gain_from_tuple (const Tuple * tuple)
@@ -206,16 +215,25 @@ void drct_pause (void)
 
     wait_until_ready ();
 
-    if (! current_decoder || ! current_decoder->pause)
-        return;
-
     paused = ! paused;
-    current_decoder->pause (& playback_api, paused);
+
+    if (current_decoder && current_decoder->pause)
+        current_decoder->pause (& playback_api, paused);
+    else
+        output_pause (paused);
 
     if (paused)
         hook_call ("playback pause", NULL);
     else
         hook_call ("playback unpause", NULL);
+}
+
+static void default_stop (void)
+{
+    pthread_mutex_lock (& control_mutex);
+    stop_flag = TRUE;
+    output_abort_write ();
+    pthread_mutex_unlock (& control_mutex);
 }
 
 static void playback_finish (void)
@@ -225,8 +243,13 @@ static void playback_finish (void)
 
     /* calling stop() is unnecessary if the song finished on its own;
      * also, it might flush the output buffer, breaking gapless playback */
-    if (current_decoder && ! song_finished)
-        current_decoder->stop (& playback_api);
+    if (! song_finished)
+    {
+        if (current_decoder && current_decoder->stop)
+            current_decoder->stop (& playback_api);
+        else
+            default_stop ();
+    }
 
     pthread_join (playback_thread_handle, NULL);
     output_close_audio ();
@@ -242,7 +265,8 @@ static void playback_finish (void)
     /* level 1 data cleanup */
     playing = FALSE;
     restart_flag = FALSE;
-    time_offset = initial_seek = 0;
+    time_offset = 0;
+    start_time = 0;
     paused = FALSE;
     ready_flag = FALSE;
     playback_error = FALSE;
@@ -375,15 +399,15 @@ static void * playback_thread (void * unused)
     Tuple * tuple = playback_entry_get_tuple ();
     read_gain_from_tuple (tuple);
 
-    int start_time = time_offset = 0;
     int end_time = -1;
 
     if (tuple && playback_entry_get_length () > 0)
     {
         if (tuple_get_value_type (tuple, FIELD_SEGMENT_START, NULL) == TUPLE_INT)
+        {
             time_offset = tuple_get_int (tuple, FIELD_SEGMENT_START, NULL);
-
-        start_time = time_offset + MAX (initial_seek, 0);
+            start_time += time_offset;
+        }
 
         if (repeat_b >= 0)
             end_time = time_offset + repeat_b;
@@ -416,6 +440,9 @@ static void * playback_thread (void * unused)
             goto DONE;
         }
     }
+
+    stop_flag = FALSE;
+    seek_request = -1;
 
     playback_error = ! current_decoder->play (& playback_api, current_filename,
      current_file, start_time, end_time, paused);
@@ -451,7 +478,8 @@ void playback_play (int seek_time, bool_t pause)
     }
 
     playing = TRUE;
-    initial_seek = seek_time;
+    time_offset = 0;
+    start_time = MAX (seek_time, 0);
     paused = pause;
     stopped = FALSE;
 
@@ -475,6 +503,14 @@ bool_t drct_get_paused (void)
     return paused;
 }
 
+static void default_seek (int time)
+{
+    pthread_mutex_lock (& control_mutex);
+    seek_request = time;
+    output_abort_write ();
+    pthread_mutex_unlock (& control_mutex);
+}
+
 void drct_seek (int time)
 {
     if (! playing)
@@ -482,11 +518,15 @@ void drct_seek (int time)
 
     wait_until_ready ();
 
-    if (! current_decoder || ! current_decoder->mseek || current_length < 1)
+    if (current_length < 1)
         return;
 
-    current_decoder->mseek (& playback_api, time_offset + CLAMP (time, 0,
-     current_length));
+    time = time_offset + CLAMP (time, 0, current_length);
+
+    if (current_decoder && current_decoder->mseek)
+        current_decoder->mseek (& playback_api, time);
+    else
+        default_seek (time);
 
     /* If the plugin is using our output system, don't call "playback seek"
      * immediately but wait for output_set_time() to be called.  This ensures
@@ -494,6 +534,20 @@ void drct_seek (int time)
      * new time. */
     if (! output_is_open ())
         hook_call ("playback seek", NULL);
+}
+
+static bool_t open_audio_wrapper (int format, int rate, int channels)
+{
+    if (! output_open_audio (format, rate, channels))
+        return FALSE;
+
+    if (paused)
+        output_pause (TRUE);
+
+    if (start_time)
+        output_set_time (start_time);
+
+    return TRUE;
 }
 
 static void set_data (InputPlayback * p, void * data)
@@ -534,6 +588,29 @@ static void set_gain_from_playlist (InputPlayback * p)
     p->output->set_replaygain_info (& gain_from_playlist);
 }
 
+static bool_t check_stop (void)
+{
+    pthread_mutex_lock (& control_mutex);
+    bool_t stop = stop_flag;
+    pthread_mutex_unlock (& control_mutex);
+    return stop;
+}
+
+static int check_seek (void)
+{
+    pthread_mutex_lock (& control_mutex);
+    int seek = seek_request;
+
+    if (seek != -1)
+    {
+        output_set_time (seek);
+        seek_request = -1;
+    }
+
+    pthread_mutex_unlock (& control_mutex);
+    return seek;
+}
+
 static InputPlayback playback_api = {
     .output = & output_api,
     .set_data = set_data,
@@ -542,6 +619,8 @@ static InputPlayback playback_api = {
     .set_params = set_params,
     .set_tuple = set_tuple,
     .set_gain_from_playlist = set_gain_from_playlist,
+    .check_stop = check_stop,
+    .check_seek = check_seek
 };
 
 char * drct_get_filename (void)
