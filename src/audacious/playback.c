@@ -341,20 +341,18 @@ static bool_t end_cb (void * unused)
         failed_entries = 0;
 
     int playlist = playlist_get_playing ();
-
-    if (get_bool (NULL, "stop_after_current_song"))
-        goto STOP;
+    bool_t stop = get_bool (NULL, "stop_after_current_song");
 
     if (repeat_a >= 0 || repeat_b >= 0)
     {
-        if (failed_entries)
+        if (stop || failed_entries)
             goto STOP;
 
         playback_play (MAX (repeat_a, 0), FALSE);
     }
     else if (get_bool (NULL, "no_playlist_advance"))
     {
-        if (failed_entries || ! get_bool (NULL, "repeat"))
+        if (stop || failed_entries || ! get_bool (NULL, "repeat"))
             goto STOP;
 
         playback_play (0, FALSE);
@@ -369,6 +367,8 @@ static bool_t end_cb (void * unused)
             playlist_set_position (playlist, -1);
             hook_call ("playlist end reached", NULL);
         }
+        else if (stop)
+            goto STOP;
     }
 
     return FALSE;
