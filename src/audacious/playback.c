@@ -380,6 +380,25 @@ STOP:
     return FALSE;
 }
 
+static bool_t open_file (void)
+{
+    /* no need to open a handle for custom URI schemes */
+    if (current_decoder->schemes && current_decoder->schemes[0])
+        return TRUE;
+
+    if (current_file)
+    {
+        /* if possible, seek to beginning of file rather than reopening */
+        if (vfs_fseek (current_file, 0, SEEK_SET) == 0)
+            return TRUE;
+
+        vfs_fclose (current_file);
+    }
+
+    current_file = vfs_fopen (current_filename, "r");
+    return (current_file != NULL);
+}
+
 static void * playback_thread (void * unused)
 {
     if (! current_decoder)
@@ -418,27 +437,12 @@ static void * playback_thread (void * unused)
     if (tuple)
         tuple_unref (tuple);
 
-    if (! current_decoder->schemes || ! current_decoder->schemes[0])
+    if (! open_file ())
     {
-        if (current_file)
-        {
-            if (vfs_fseek (current_file, 0, SEEK_SET) < 0)
-            {
-                vfs_fclose (current_file);
-                current_file = 0;
-            }
-        }
-
-        if (! current_file)
-            current_file = vfs_fopen (current_filename, "r");
-
-        if (! current_file)
-        {
-            SPRINTF (error, _("%s could not be opened."), current_filename);
-            interface_show_error (error);
-            playback_error = TRUE;
-            goto DONE;
-        }
+        SPRINTF (error, _("%s could not be opened."), current_filename);
+        interface_show_error (error);
+        playback_error = TRUE;
+        goto DONE;
     }
 
     stop_flag = FALSE;

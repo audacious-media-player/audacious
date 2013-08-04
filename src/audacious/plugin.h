@@ -367,8 +367,11 @@ struct _InputPlugin
     /* Pointer to an array (terminated with NULL) of MIME types the plugin can
      * handle. */
     const char * const * mimes;
+
     /* Pointer to an array (terminated with NULL) of custom URI schemes the
-     * plugin can handle. */
+     * plugin supports.  Plugins using custom URI schemes are expected to
+     * handle their own I/O.  Hence, any VFSFile pointers passed to play(),
+     * probe_for_tuple(), etc. will be NULL. */
     const char * const * schemes;
 
     /* How quickly the plugin should be tried in searching for a plugin to
@@ -376,18 +379,16 @@ struct _InputPlugin
      * with priority 0 are tried first, 10 last. */
     int priority;
 
-    /* Must return nonzero if the plugin can handle this file.  If the file
-     * could not be opened, "file" will be NULL.  (This is normal in the case of
-     * special URI schemes like cdda:// that do not represent actual files.) */
+    /* Must return nonzero if the plugin can handle this file. */
     bool_t (* is_our_file_from_vfs) (const char * filename, VFSFile * file);
 
     /* Must return a tuple containing metadata for this file, or NULL if no
-     * metadata could be read.  If the file could not be opened, "file" will be
-     * NULL.  Audacious takes over one reference to the tuple returned. */
+     * metadata could be read.  Audacious takes over one reference to the tuple
+     * returned.   */
     Tuple * (* probe_for_tuple) (const char * filename, VFSFile * file);
 
     /* Optional.  Must write metadata from a tuple to this file.  Must return
-     * nonzero on success or zero on failure.  "file" will never be NULL. */
+     * nonzero on success or zero on failure. */
     /* Bug: This function does not support special URI schemes like cdda://,
      * since no file name is passed. */
     bool_t (* update_song_tuple) (const Tuple * tuple, VFSFile * file);
@@ -399,26 +400,25 @@ struct _InputPlugin
     void (* file_info_box) (const char * filename);
 
     /* Optional.  Must try to read an "album art" image embedded in this file.
-     * Must return nonzero on success or zero on failure.  If the file could not
-     * be opened, "file" will be NULL.  On success, must fill "data" with a
-     * pointer to a block of data allocated with g_malloc and "size" with the
-     * size in bytes of that block.  The data may be in any format supported by
-     * GTK.  Audacious will free the data when it is no longer needed. */
+     * Must return nonzero on success or zero on failure.  On success, must fill
+     * <data> with a pointer to a block of data allocated with g_malloc and
+     * <size> with the size in bytes of that block.  The data may be in any
+     * format supported by GTK.  Audacious will free the data when it is no
+     * longer needed. */
     bool_t (* get_song_image) (const char * filename, VFSFile * file,
      void * * data, int64_t * size);
 
-    /* Must try to play this file.  "playback" is a structure containing output-
+    /* Must try to play this file.  <playback> is a structure containing output-
      * related functions which the plugin may make use of.  It also contains a
-     * "data" pointer which the plugin may use to refer private data associated
+     * data pointer which the plugin may use to refer private data associated
      * with the playback state.  This pointer can then be used from pause,
-     * mseek, and stop. If the file could not be opened, "file" will be NULL.
-     * "start_time" is the position in milliseconds at which to start from, or
-     * -1 to start from the beginning of the file.  "stop_time" is the position
-     * in milliseconds at which to end playback, or -1 to play to the end of the
-     * file.  "paused" specifies whether playback should immediately be paused.
-     * (Plugins that do not provide a pause() function can ignore this flag.)
-     * Must return nonzero if some of the file was successfully played or zero
-     * on failure. */
+     * mseek, and stop.  <start_time> is the position in milliseconds at which
+     * to start from, or -1 to start from the beginning of the file.
+     * <stop_time> is the position in milliseconds at which to end playback, or
+     * -1 to play to the end of the file.  <paused> specifies whether playback
+     * should immediately be paused.  (Plugins that do not provide a pause()
+     * function can ignore this flag.)  Must return nonzero if some of the file
+     * was successfully played or zero on failure. */
     bool_t (* play) (InputPlayback * playback, const char * filename,
      VFSFile * file, int start_time, int stop_time, bool_t pause);
 
