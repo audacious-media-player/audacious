@@ -44,7 +44,7 @@
  * the API tables), increment _AUD_PLUGIN_VERSION *and* set
  * _AUD_PLUGIN_VERSION_MIN to the same value. */
 
-#define _AUD_PLUGIN_VERSION_MIN 40 /* 3.3-devel */
+#define _AUD_PLUGIN_VERSION_MIN 45 /* 3.5-devel */
 #define _AUD_PLUGIN_VERSION     45 /* 3.5-devel */
 
 /* A NOTE ON THREADS
@@ -272,25 +272,10 @@ struct OutputAPI
      * been written (though it may not yet be heard by the user). */
     void (* write_audio) (void * data, int length);
 
-    /* Interrupts a call to write_audio() so that it returns immediately.
-     * Buffered audio data is discarded.  Until set_written_time() or
-     * open_audio() is called, further calls to write_audio() will have no
-     * effect and will return immediately. */
-    void (* abort_write) (void);
-
-    /* Pauses or unpauses playback.  If playback is paused during a call to
-     * write_audio(), the call will block until playback is unpaused again or
-     * abort_write() is called. */
-    void (* pause) (bool_t pause);
-
     /* Returns the time counter.  Note that this represents the amount of audio
      * data passed to the output system, not the amount actually heard by the
      * user. */
     int (* written_time) (void);
-
-    /* Sets the time counter to a new value.  Does not perform a flush; the name
-     * is kept only for compatibility. */
-    void (* flush) (int time);
 };
 
 typedef const struct _InputPlayback InputPlayback;
@@ -299,12 +284,6 @@ struct _InputPlayback
 {
     /* Pointer to the output API functions. */
     const struct OutputAPI * output;
-
-    /* Allows the plugin to associate data with a playback instance. */
-    void (* set_data) (InputPlayback * p, void * data);
-
-    /* Returns the pointer passed to set_data. */
-    void * (* get_data) (InputPlayback * p);
 
     /* Signifies that the plugin has started playback is ready to accept mseek,
      * pause, and stop calls. */
@@ -409,51 +388,14 @@ struct _InputPlugin
      void * * data, int64_t * size);
 
     /* Must try to play this file.  <playback> is a structure containing output-
-     * related functions which the plugin may make use of.  It also contains a
-     * data pointer which the plugin may use to refer private data associated
-     * with the playback state.  This pointer can then be used from pause,
-     * mseek, and stop.  <start_time> is the position in milliseconds at which
-     * to start from, or -1 to start from the beginning of the file.
-     * <stop_time> is the position in milliseconds at which to end playback, or
-     * -1 to play to the end of the file.  <paused> specifies whether playback
-     * should immediately be paused.  (Plugins that do not provide a pause()
-     * function can ignore this flag.)  Must return nonzero if some of the file
+     * related functions which the plugin may make use of.  <start_time> is the
+     * position in milliseconds at which to start from, or -1 to start from the
+     * beginning of the file.  <stop_time> is the position in milliseconds at
+     * which to end playback, or -1 to play to the end of the file.  <paused> is
+     * obsolete and should be ignored.  Must return nonzero if some of the file
      * was successfully played or zero on failure. */
     bool_t (* play) (InputPlayback * playback, const char * filename,
      VFSFile * file, int start_time, int stop_time, bool_t pause);
-
-    /* Optional, for plugins that use a non-standard play loop.  If not
-     * provided, a default implementation is used that simply calls
-     * OutputAPI::pause().
-     *
-     * Must pause or unpause a file currently being played.  This function will
-     * be called from a different thread than play, but it will not be called
-     * before the plugin calls set_pb_ready or after stop is called. */
-    void (* pause) (InputPlayback * playback, bool_t paused);
-
-    /* Optional, for plugins that use a non-standard play loop.  Usually, it is
-     * simpler to poll playback->check_seek() from the play loop.
-     *
-     * Must seek to the given position in milliseconds within a file
-     * currently being played.  This function will be called from a different
-     * thread than play, but it will not be called before the plugin calls
-     * set_pb_ready or after stop is called. */
-    void (* mseek) (InputPlayback * playback, int time);
-
-    /* Optional, for plugins that use a non-standard play loop.  Usually, it is
-     * simpler to poll playback->check_stop() from the play loop.
-     *
-     * Must signal a currently playing song to stop and cause play to return.
-     * This function will be called from a different thread than play.  It will
-     * only be called once. It should not join the thread from which play is
-     * called. */
-    void (* stop) (InputPlayback * playback);
-
-    /* Advanced, for plugins that do not use Audacious's output system.  Use at
-     * your own risk. */
-    int (* get_time) (InputPlayback * playback);
-    int (* get_volume) (int * l, int * r);
-    int (* set_volume) (int l, int r);
 };
 
 struct _GeneralPlugin

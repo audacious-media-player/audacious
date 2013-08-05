@@ -24,8 +24,6 @@
 
 #include <glib.h> /* for g_usleep */
 
-#include <libaudcore/hook.h>
-
 #include "debug.h"
 #include "effect.h"
 #include "equalizer.h"
@@ -430,9 +428,6 @@ void output_set_time (int time)
     }
 
     UNLOCK_ALL;
-
-    /* See comment in playback_seek(). */
-    event_queue ("playback seek", NULL);
 }
 
 bool_t output_is_open (void)

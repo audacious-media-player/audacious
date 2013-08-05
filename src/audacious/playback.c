@@ -39,10 +39,7 @@ static const struct OutputAPI output_api = {
  .open_audio = open_audio_wrapper,
  .set_replaygain_info = output_set_replaygain_info,
  .write_audio = output_write_audio,
- .abort_write = output_abort_write,
- .pause = output_pause,
- .written_time = output_written_time,
- .flush = output_set_time};
+ .written_time = output_written_time};
 
 static InputPlayback playback_api;
 
@@ -64,7 +61,6 @@ static bool_t ready_flag = FALSE;
 static bool_t playback_error = FALSE;
 static bool_t song_finished = FALSE;
 
-static void * current_data = NULL;
 static int current_bitrate = -1, current_samplerate = -1, current_channels = -1;
 
 /* level 2 data (persists when restarting same song) */
@@ -197,15 +193,7 @@ int drct_get_time (void)
 
     wait_until_ready ();
 
-    int time = -1;
-
-    if (current_decoder && current_decoder->get_time)
-        time = current_decoder->get_time (& playback_api);
-
-    if (time < 0)
-        time = output_get_time ();
-
-    return time - time_offset;
+    return output_get_time () - time_offset;
 }
 
 void drct_pause (void)
@@ -217,10 +205,7 @@ void drct_pause (void)
 
     paused = ! paused;
 
-    if (current_decoder && current_decoder->pause)
-        current_decoder->pause (& playback_api, paused);
-    else
-        output_pause (paused);
+    output_pause (paused);
 
     if (paused)
         hook_call ("playback pause", NULL);
@@ -244,12 +229,7 @@ static void playback_finish (void)
     /* calling stop() is unnecessary if the song finished on its own;
      * also, it might flush the output buffer, breaking gapless playback */
     if (! song_finished)
-    {
-        if (current_decoder && current_decoder->stop)
-            current_decoder->stop (& playback_api);
-        else
-            default_stop ();
-    }
+        default_stop ();
 
     pthread_join (playback_thread_handle, NULL);
     output_close_audio ();
@@ -272,7 +252,6 @@ static void playback_finish (void)
     playback_error = FALSE;
     song_finished = FALSE;
 
-    current_data = NULL;
     current_bitrate = current_samplerate = current_channels = -1;
 }
 
@@ -525,19 +504,7 @@ void drct_seek (int time)
     if (current_length < 1)
         return;
 
-    time = time_offset + CLAMP (time, 0, current_length);
-
-    if (current_decoder && current_decoder->mseek)
-        current_decoder->mseek (& playback_api, time);
-    else
-        default_seek (time);
-
-    /* If the plugin is using our output system, don't call "playback seek"
-     * immediately but wait for output_set_time() to be called.  This ensures
-     * that a "playback seek" handler can call playback_get_time() and get the
-     * new time. */
-    if (! output_is_open ())
-        hook_call ("playback seek", NULL);
+    default_seek (time_offset + CLAMP (time, 0, current_length));
 }
 
 static bool_t open_audio_wrapper (int format, int rate, int channels)
@@ -552,18 +519,6 @@ static bool_t open_audio_wrapper (int format, int rate, int channels)
         output_set_time (start_time);
 
     return TRUE;
-}
-
-static void set_data (InputPlayback * p, void * data)
-{
-    g_return_if_fail (playing);
-    current_data = data;
-}
-
-static void * get_data (InputPlayback * p)
-{
-    g_return_val_if_fail (playing, NULL);
-    return current_data;
 }
 
 static void set_params (InputPlayback * p, int bitrate, int samplerate,
@@ -609,6 +564,8 @@ static int check_seek (void)
     {
         output_set_time (seek);
         seek_request = -1;
+
+        event_queue ("playback seek", NULL);
     }
 
     pthread_mutex_unlock (& control_mutex);
@@ -617,8 +574,6 @@ static int check_seek (void)
 
 static InputPlayback playback_api = {
     .output = & output_api,
-    .set_data = set_data,
-    .get_data = get_data,
     .set_pb_ready = set_pb_ready,
     .set_params = set_params,
     .set_tuple = set_tuple,
@@ -684,23 +639,12 @@ void drct_get_info (int * bitrate, int * samplerate, int * channels)
 
 void drct_get_volume (int * l, int * r)
 {
-    if (playing && drct_get_ready () && current_decoder &&
-     current_decoder->get_volume && current_decoder->get_volume (l, r))
-        return;
-
     output_get_volume (l, r);
 }
 
 void drct_set_volume (int l, int r)
 {
-    l = CLAMP (l, 0, 100);
-    r = CLAMP (r, 0, 100);
-
-    if (playing && drct_get_ready () && current_decoder &&
-     current_decoder->set_volume && current_decoder->set_volume (l, r))
-        return;
-
-    output_set_volume (l, r);
+    output_set_volume (CLAMP (l, 0, 100), CLAMP (r, 0, 100));
 }
 
 void drct_set_ab_repeat (int a, int b)
