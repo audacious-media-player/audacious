@@ -282,6 +282,9 @@ static void write_output (void * data, int size)
     int samples = size / FMT_SIZEOF (in_format);
     in_frames += samples / in_channels;
 
+    if (s_aborted)
+        return;
+
     if (in_format != FMT_FLOAT)
     {
         buffer = malloc (sizeof (float) * samples);
@@ -369,8 +372,7 @@ void output_write_audio (void * data, int size)
             LOCK_ALL;
         }
 
-        if (! s_aborted)
-            write_output (data, size);
+        write_output (data, size);
     }
 
     UNLOCK_ALL;
