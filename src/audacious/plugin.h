@@ -285,10 +285,6 @@ struct _InputPlayback
     /* Pointer to the output API functions. */
     const struct OutputAPI * output;
 
-    /* Signifies that the plugin has started playback is ready to accept mseek,
-     * pause, and stop calls. */
-    void (* set_pb_ready) (InputPlayback * p);
-
     /* Updates attributes of the stream.  "bitrate" is in bits per second.
      * "samplerate" is in hertz. */
     void (* set_params) (InputPlayback * p, int bitrate, int samplerate,

@@ -34,11 +34,12 @@
 #include "plugin.h"
 
 static bool_t open_audio_wrapper (int format, int rate, int channels);
+static void write_audio_wrapper (void * data, int length);
 
 static const struct OutputAPI output_api = {
  .open_audio = open_audio_wrapper,
  .set_replaygain_info = output_set_replaygain_info,
- .write_audio = output_write_audio,
+ .write_audio = write_audio_wrapper,
  .written_time = output_written_time};
 
 static InputPlayback playback_api;
@@ -145,7 +146,7 @@ bool_t drct_get_ready (void)
     return ready;
 }
 
-static void set_pb_ready (InputPlayback * p)
+static void set_ready (void)
 {
     g_return_if_fail (playing);
     pthread_mutex_lock (& ready_mutex);
@@ -432,7 +433,7 @@ static void * playback_thread (void * unused)
 
 DONE:
     if (! ready_flag)
-        set_pb_ready (& playback_api);
+        set_ready ();
 
     end_source = g_timeout_add (0, end_cb, NULL);
     return NULL;
@@ -521,6 +522,14 @@ static bool_t open_audio_wrapper (int format, int rate, int channels)
     return TRUE;
 }
 
+static void write_audio_wrapper (void * data, int length)
+{
+    if (! ready_flag)
+        set_ready ();
+
+    output_write_audio (data, length);
+}
+
 static void set_params (InputPlayback * p, int bitrate, int samplerate,
  int channels)
 {
@@ -574,7 +583,6 @@ static int check_seek (void)
 
 static InputPlayback playback_api = {
     .output = & output_api,
-    .set_pb_ready = set_pb_ready,
     .set_params = set_params,
     .set_tuple = set_tuple,
     .set_gain_from_playlist = set_gain_from_playlist,
