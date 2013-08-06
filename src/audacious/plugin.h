@@ -364,9 +364,7 @@ struct _InputPlugin
 
     /* Optional.  Must write metadata from a tuple to this file.  Must return
      * nonzero on success or zero on failure. */
-    /* Bug: This function does not support special URI schemes like cdda://,
-     * since no file name is passed. */
-    bool_t (* update_song_tuple) (const Tuple * tuple, VFSFile * file);
+    bool_t (* update_song_tuple) (const char * filename, VFSFile * file, const Tuple * tuple);
 
     /* Optional, and not recommended.  Must show a window with information about
      * this file.  If this function is provided, update_song_tuple should not be. */

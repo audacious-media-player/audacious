@@ -261,7 +261,7 @@ bool_t file_write_tuple (const char * filename, PluginHandle * decoder,
     if (! open_file (filename, ip, "r+", & handle))
         return FALSE;
 
-    bool_t success = ip->update_song_tuple (tuple, handle);
+    bool_t success = ip->update_song_tuple (filename, handle, tuple);
 
     if (handle)
         vfs_fclose (handle);
