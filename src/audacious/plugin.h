@@ -302,14 +302,12 @@ struct _InputPlayback
 
     /* Checks whether playback is to be stopped.  A plugin's play() function
      * should poll check_stop() periodically and return as soon as check_stop()
-     * returns TRUE.  Only applies for plugins that do not provide their own
-     * stop() function. */
+     * returns TRUE. */
     bool_t (* check_stop) (void);
 
     /* Checks whether a seek has been requested.  If so, calls
      * OutputAPI::flush() and returns the position of the seek in milliseconds.
-     * Otherwise, returns -1.  Only applies for plugins that do not provide
-     * their own stop() function. */
+     * Otherwise, returns -1. */
     int (* check_seek) (void);
 };
 
