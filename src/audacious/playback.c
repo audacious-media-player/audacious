@@ -426,10 +426,9 @@ static void * playback_thread (void * unused)
     }
 
     stop_flag = FALSE;
-    seek_request = -1;
+    seek_request = (start_time > 0) ? start_time : -1;
 
-    playback_error = ! current_decoder->play (& playback_api, current_filename,
-     current_file, start_time, stop_time, paused);
+    playback_error = ! current_decoder->play (& playback_api, current_filename, current_file);
 
 DONE:
     if (! ready_flag)

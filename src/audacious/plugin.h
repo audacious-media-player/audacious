@@ -384,14 +384,9 @@ struct _InputPlugin
      void * * data, int64_t * size);
 
     /* Must try to play this file.  <playback> is a structure containing output-
-     * related functions which the plugin may make use of.  <start_time> is the
-     * position in milliseconds at which to start from, or -1 to start from the
-     * beginning of the file.  <stop_time> is the position in milliseconds at
-     * which to end playback, or -1 to play to the end of the file.  <paused> is
-     * obsolete and should be ignored.  Must return nonzero if some of the file
-     * was successfully played or zero on failure. */
-    bool_t (* play) (InputPlayback * playback, const char * filename,
-     VFSFile * file, int start_time, int stop_time, bool_t pause);
+     * related functions which the plugin may make use of.  Must return nonzero
+     * if some of the file was successfully played or zero on failure. */
+    bool_t (* play) (InputPlayback * playback, const char * filename, VFSFile * file);
 };
 
 struct _GeneralPlugin
