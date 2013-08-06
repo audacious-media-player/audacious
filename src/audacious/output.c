@@ -68,6 +68,8 @@ static OutputPlugin * new_op;
 
 static inline int FR2MS (int64_t f, int r)
  { return (f > 0) ? (f * 1000 + r / 2) / r : (f * 1000 - r / 2) / r; }
+static inline int MS2FR (int64_t ms, int r)
+ { return (ms > 0) ? (ms * r + 500) / 1000 : (ms * r - 500) / 1000; }
 
 static inline int get_format (void)
 {
@@ -273,15 +275,31 @@ static void write_output_raw (void * data, int samples)
 }
 
 /* assumes LOCK_ALL, s_input, s_output */
-static void write_output (void * data, int size)
+static bool_t write_output (void * data, int size, int stop_time)
 {
     void * buffer = NULL;
+    bool_t stopped = FALSE;
 
+    int64_t cur_frame = in_frames;
     int samples = size / FMT_SIZEOF (in_format);
+
+    /* always update in_frames, whether we use all the decoded frames or not */
     in_frames += samples / in_channels;
 
+    if (stop_time != -1)
+    {
+        int64_t frames_left = MS2FR (stop_time - seek_time, in_rate) - cur_frame;
+        int64_t samples_left = in_channels * MAX (0, frames_left);
+
+        if (samples >= samples_left)
+        {
+            samples = samples_left;
+            stopped = TRUE;
+        }
+    }
+
     if (s_aborted)
-        return;
+        return ! stopped;
 
     if (in_format != FMT_FLOAT)
     {
@@ -296,6 +314,7 @@ static void write_output (void * data, int size)
     write_output_raw (fdata, samples);
 
     free (buffer);
+    return ! stopped;
 }
 
 /* assumes LOCK_ALL, s_output */
@@ -357,9 +376,11 @@ void output_set_replaygain_info (const ReplayGainInfo * info)
     UNLOCK_ALL;
 }
 
-void output_write_audio (void * data, int size)
+/* returns FALSE if stop_time is reached */
+bool_t output_write_audio (void * data, int size, int stop_time)
 {
     LOCK_ALL;
+    bool_t good = FALSE;
 
     if (s_input)
     {
@@ -370,10 +391,11 @@ void output_write_audio (void * data, int size)
             LOCK_ALL;
         }
 
-        write_output (data, size);
+        good = write_output (data, size, stop_time);
     }
 
     UNLOCK_ALL;
+    return good;
 }
 
 void output_abort_write (void)

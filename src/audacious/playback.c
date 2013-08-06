@@ -56,7 +56,7 @@ static pthread_mutex_t control_mutex = PTHREAD_MUTEX_INITIALIZER;
 static bool_t playing = FALSE;
 static bool_t restart_flag = FALSE;
 static int time_offset = 0;
-static int start_time = 0;
+static int start_time = 0, stop_time = -1;
 static bool_t paused = FALSE;
 static bool_t ready_flag = FALSE;
 static bool_t playback_error = FALSE;
@@ -248,6 +248,8 @@ static void playback_finish (void)
     restart_flag = FALSE;
     time_offset = 0;
     start_time = 0;
+    stop_time = -1;
+
     paused = FALSE;
     ready_flag = FALSE;
     playback_error = FALSE;
@@ -398,8 +400,6 @@ static void * playback_thread (void * unused)
     Tuple * tuple = playback_entry_get_tuple ();
     read_gain_from_tuple (tuple);
 
-    int end_time = -1;
-
     if (tuple && playback_entry_get_length () > 0)
     {
         if (tuple_get_value_type (tuple, FIELD_SEGMENT_START, NULL) == TUPLE_INT)
@@ -409,9 +409,9 @@ static void * playback_thread (void * unused)
         }
 
         if (repeat_b >= 0)
-            end_time = time_offset + repeat_b;
+            stop_time = time_offset + repeat_b;
         else if (tuple_get_value_type (tuple, FIELD_SEGMENT_END, NULL) == TUPLE_INT)
-            end_time = tuple_get_int (tuple, FIELD_SEGMENT_END, NULL);
+            stop_time = tuple_get_int (tuple, FIELD_SEGMENT_END, NULL);
     }
 
     if (tuple)
@@ -429,7 +429,7 @@ static void * playback_thread (void * unused)
     seek_request = -1;
 
     playback_error = ! current_decoder->play (& playback_api, current_filename,
-     current_file, start_time, end_time, paused);
+     current_file, start_time, stop_time, paused);
 
 DONE:
     if (! ready_flag)
@@ -527,7 +527,12 @@ static void write_audio_wrapper (void * data, int length)
     if (! ready_flag)
         set_ready ();
 
-    output_write_audio (data, length);
+    if (! output_write_audio (data, length, stop_time))
+    {
+        pthread_mutex_lock (& control_mutex);
+        stop_flag = TRUE;
+        pthread_mutex_unlock (& control_mutex);
+    }
 }
 
 static void set_params (InputPlayback * p, int bitrate, int samplerate,

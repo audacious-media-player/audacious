@@ -25,7 +25,7 @@
 
 bool_t output_open_audio (int format, int rate, int channels);
 void output_set_replaygain_info (const ReplayGainInfo * info);
-void output_write_audio (void * data, int length);
+bool_t output_write_audio (void * data, int size, int stop_time);
 void output_abort_write (void);
 void output_pause (bool_t pause);
 int output_written_time (void);
