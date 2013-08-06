@@ -54,17 +54,21 @@ static pthread_mutex_t control_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 /* level 1 data (persists to end of song) */
 static bool_t playing = FALSE;
-static bool_t restart_flag = FALSE;
 static int time_offset = 0;
-static int start_time = 0, stop_time = -1;
+static int stop_time = -1;
 static bool_t paused = FALSE;
 static bool_t ready_flag = FALSE;
 static bool_t playback_error = FALSE;
 static bool_t song_finished = FALSE;
 
+static int seek_request = -1; /* under control_mutex */
+static int repeat_a = -1; /* under control_mutex */
+
+static volatile int repeat_b = -1; /* atomic */
+static volatile int stop_flag = FALSE; /* atomic */
+
 static int current_bitrate = -1, current_samplerate = -1, current_channels = -1;
 
-/* level 2 data (persists when restarting same song) */
 static int current_entry = -1;
 static char * current_filename = NULL; /* pooled */
 static char * current_title = NULL; /* pooled */
@@ -74,15 +78,9 @@ static InputPlugin * current_decoder = NULL;
 static VFSFile * current_file = NULL;
 static ReplayGainInfo gain_from_playlist;
 
-static int repeat_a = -1, repeat_b = -1;
-
-/* level 3 data (persists to end of playlist) */
+/* level 2 data (persists to end of playlist) */
 static bool_t stopped = TRUE;
 static int failed_entries = 0;
-
-/* playback thread control */
-static bool_t stop_flag = FALSE;
-static int seek_request = -1;
 
 /* clears gain info if tuple == NULL */
 static void read_gain_from_tuple (const Tuple * tuple)
@@ -138,10 +136,7 @@ bool_t drct_get_ready (void)
         return FALSE;
 
     pthread_mutex_lock (& ready_mutex);
-
-    /* on restart, always report ready */
-    bool_t ready = ready_flag || restart_flag;
-
+    bool_t ready = ready_flag;
     pthread_mutex_unlock (& ready_mutex);
     return ready;
 }
@@ -149,15 +144,11 @@ bool_t drct_get_ready (void)
 static void set_ready (void)
 {
     g_return_if_fail (playing);
+
     pthread_mutex_lock (& ready_mutex);
 
-    /* on restart, don't update or send "playback ready" */
-    if (! restart_flag)
-    {
-        update_from_playlist ();
-        event_queue ("playback ready", NULL);
-    }
-
+    update_from_playlist ();
+    event_queue ("playback ready", NULL);
     ready_flag = TRUE;
 
     pthread_cond_signal (& ready_cond);
@@ -214,28 +205,26 @@ void drct_pause (void)
         hook_call ("playback unpause", NULL);
 }
 
-static void default_stop (void)
-{
-    pthread_mutex_lock (& control_mutex);
-    stop_flag = TRUE;
-    output_abort_write ();
-    pthread_mutex_unlock (& control_mutex);
-}
-
-static void playback_finish (void)
+static void playback_cleanup (void)
 {
     g_return_if_fail (playing);
     wait_until_ready ();
 
-    /* calling stop() is unnecessary if the song finished on its own;
-     * also, it might flush the output buffer, breaking gapless playback */
     if (! song_finished)
-        default_stop ();
+    {
+        g_atomic_int_set (& stop_flag, TRUE);
+        output_abort_write ();
+    }
 
     pthread_join (playback_thread_handle, NULL);
     output_close_audio ();
 
     hook_dissociate ("playlist update", update_cb);
+
+    event_queue_cancel ("playback ready", NULL);
+    event_queue_cancel ("playback seek", NULL);
+    event_queue_cancel ("info change", NULL);
+    event_queue_cancel ("title change", NULL);
 
     if (end_source)
     {
@@ -245,32 +234,21 @@ static void playback_finish (void)
 
     /* level 1 data cleanup */
     playing = FALSE;
-    restart_flag = FALSE;
     time_offset = 0;
-    start_time = 0;
     stop_time = -1;
-
     paused = FALSE;
     ready_flag = FALSE;
     playback_error = FALSE;
     song_finished = FALSE;
 
+    seek_request = -1;
+    repeat_a = -1;
+
+    g_atomic_int_set (& repeat_b, -1);
+    g_atomic_int_set (& stop_flag, FALSE);
+
     current_bitrate = current_samplerate = current_channels = -1;
-}
 
-static void playback_cleanup (void)
-{
-    g_return_if_fail (current_filename);
-    playback_finish ();
-
-    event_queue_cancel ("playback ready", NULL);
-    event_queue_cancel ("playback seek", NULL);
-    event_queue_cancel ("info change", NULL);
-    event_queue_cancel ("title change", NULL);
-
-    set_bool (NULL, "stop_after_current_song", FALSE);
-
-    /* level 2 data cleanup */
     current_entry = -1;
     str_unref (current_filename);
     current_filename = NULL;
@@ -288,7 +266,7 @@ static void playback_cleanup (void)
 
     read_gain_from_tuple (NULL);
 
-    repeat_a = repeat_b = -1;
+    set_bool (NULL, "stop_after_current_song", FALSE);
 }
 
 void playback_stop (void)
@@ -296,12 +274,12 @@ void playback_stop (void)
     if (stopped)
         return;
 
-    if (current_filename)
+    if (playing)
         playback_cleanup ();
 
     output_drain ();
 
-    /* level 3 data cleanup */
+    /* level 2 data cleanup */
     stopped = TRUE;
     failed_entries = 0;
 
@@ -327,14 +305,7 @@ static bool_t end_cb (void * unused)
     if (get_bool (NULL, "stop_after_current_song"))
         goto STOP;
 
-    if (repeat_a >= 0 || repeat_b >= 0)
-    {
-        if (failed_entries)
-            goto STOP;
-
-        playback_play (MAX (repeat_a, 0), FALSE);
-    }
-    else if (get_bool (NULL, "no_playlist_advance"))
+    if (get_bool (NULL, "no_playlist_advance"))
     {
         if (failed_entries || ! get_bool (NULL, "repeat"))
             goto STOP;
@@ -368,15 +339,6 @@ static bool_t open_file (void)
     if (current_decoder->schemes && current_decoder->schemes[0])
         return TRUE;
 
-    if (current_file)
-    {
-        /* if possible, seek to beginning of file rather than reopening */
-        if (vfs_fseek (current_file, 0, SEEK_SET) == 0)
-            return TRUE;
-
-        vfs_fclose (current_file);
-    }
-
     current_file = vfs_fopen (current_filename, "r");
     return (current_file != NULL);
 }
@@ -405,12 +367,11 @@ static void * playback_thread (void * unused)
         if (tuple_get_value_type (tuple, FIELD_SEGMENT_START, NULL) == TUPLE_INT)
         {
             time_offset = tuple_get_int (tuple, FIELD_SEGMENT_START, NULL);
-            start_time += time_offset;
+            if (time_offset)
+                seek_request = time_offset + MAX (seek_request, 0);
         }
 
-        if (repeat_b >= 0)
-            stop_time = time_offset + repeat_b;
-        else if (tuple_get_value_type (tuple, FIELD_SEGMENT_END, NULL) == TUPLE_INT)
+        if (tuple_get_value_type (tuple, FIELD_SEGMENT_END, NULL) == TUPLE_INT)
             stop_time = tuple_get_int (tuple, FIELD_SEGMENT_END, NULL);
     }
 
@@ -424,9 +385,6 @@ static void * playback_thread (void * unused)
         playback_error = TRUE;
         goto DONE;
     }
-
-    stop_flag = FALSE;
-    seek_request = (start_time > 0) ? start_time : -1;
 
     playback_error = ! current_decoder->play (& playback_api, current_filename, current_file);
 
@@ -443,37 +401,22 @@ void playback_play (int seek_time, bool_t pause)
     char * new_filename = playback_entry_get_filename ();
     g_return_if_fail (new_filename);
 
-    /* pointer comparison works for pooled strings */
-    if (new_filename == current_filename)
-    {
-        if (playing)
-            playback_finish ();
+    if (playing)
+        playback_cleanup ();
 
-        str_unref (new_filename);
-        restart_flag = TRUE;
-    }
-    else
-    {
-        if (current_filename)
-            playback_cleanup ();
-
-        current_filename = new_filename;
-    }
+    current_filename = new_filename;
 
     playing = TRUE;
-    time_offset = 0;
-    start_time = MAX (seek_time, 0);
     paused = pause;
+
+    seek_request = (seek_time > 0) ? seek_time : -1;
+
     stopped = FALSE;
 
     hook_associate ("playlist update", update_cb, NULL);
     pthread_create (& playback_thread_handle, NULL, playback_thread, NULL);
 
-    /* on restart, send "playback seek" instead of "playback begin" */
-    if (restart_flag)
-        hook_call ("playback seek", NULL);
-    else
-        hook_call ("playback begin", NULL);
+    hook_call ("playback begin", NULL);
 }
 
 bool_t drct_get_playing (void)
@@ -486,14 +429,6 @@ bool_t drct_get_paused (void)
     return paused;
 }
 
-static void default_seek (int time)
-{
-    pthread_mutex_lock (& control_mutex);
-    seek_request = time;
-    output_abort_write ();
-    pthread_mutex_unlock (& control_mutex);
-}
-
 void drct_seek (int time)
 {
     if (! playing)
@@ -504,7 +439,12 @@ void drct_seek (int time)
     if (current_length < 1)
         return;
 
-    default_seek (time_offset + CLAMP (time, 0, current_length));
+    pthread_mutex_lock (& control_mutex);
+
+    seek_request = time_offset + CLAMP (time, 0, current_length);
+    output_abort_write ();
+
+    pthread_mutex_unlock (& control_mutex);
 }
 
 static bool_t open_audio_wrapper (int format, int rate, int channels)
@@ -515,9 +455,6 @@ static bool_t open_audio_wrapper (int format, int rate, int channels)
     if (paused)
         output_pause (TRUE);
 
-    if (start_time)
-        output_set_time (start_time);
-
     return TRUE;
 }
 
@@ -526,11 +463,21 @@ static void write_audio_wrapper (void * data, int length)
     if (! ready_flag)
         set_ready ();
 
-    if (! output_write_audio (data, length, stop_time))
+    int b = g_atomic_int_get (& repeat_b);
+
+    if (b >= 0)
     {
-        pthread_mutex_lock (& control_mutex);
-        stop_flag = TRUE;
-        pthread_mutex_unlock (& control_mutex);
+        if (! output_write_audio (data, length, b))
+        {
+            pthread_mutex_lock (& control_mutex);
+            seek_request = MAX (repeat_a, time_offset);
+            pthread_mutex_unlock (& control_mutex);
+        }
+    }
+    else
+    {
+        if (! output_write_audio (data, length, stop_time))
+            g_atomic_int_set (& stop_flag, TRUE);
     }
 }
 
@@ -562,10 +509,7 @@ static void set_gain_from_playlist (InputPlayback * p)
 
 static bool_t check_stop (void)
 {
-    pthread_mutex_lock (& control_mutex);
-    bool_t stop = stop_flag;
-    pthread_mutex_unlock (& control_mutex);
-    return stop;
+    return g_atomic_int_get (& stop_flag);
 }
 
 static int check_seek (void)
@@ -669,28 +613,27 @@ void drct_set_ab_repeat (int a, int b)
     if (current_length < 1)
         return;
 
+    if (a >= 0)
+        a += time_offset;
+    if (b >= 0)
+        b += time_offset;
+
+    pthread_mutex_lock (& control_mutex);
+
     repeat_a = a;
+    g_atomic_int_set (& repeat_b, b);
 
-    if (repeat_b != b)
+    if (b != -1 && output_get_time () >= b)
     {
-        repeat_b = b;
-
-        /* Restart playback so the new setting takes effect.  We could add
-         * something like InputPlugin::set_stop_time(), but this is the only
-         * place it would be used. */
-        int seek_time = drct_get_time ();
-        bool_t was_paused = paused;
-
-        if (repeat_b >= 0 && seek_time >= repeat_b)
-            seek_time = MAX (repeat_a, 0);
-
-        playback_finish ();
-        playback_play (seek_time, was_paused);
+        seek_request = MAX (a, time_offset);
+        output_abort_write ();
     }
+
+    pthread_mutex_unlock (& control_mutex);
 }
 
 void drct_get_ab_repeat (int * a, int * b)
 {
-    * a = playing ? repeat_a : -1;
-    * b = playing ? repeat_b : -1;
+    * a = (playing && repeat_a != -1) ? repeat_a - time_offset : -1;
+    * b = (playing && repeat_b != -1) ? repeat_b - time_offset : -1;
 }
