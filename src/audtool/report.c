@@ -26,42 +26,42 @@
 
 void audtool_report(const gchar *str, ...)
 {
-	gchar *buf;
-	va_list va;
+    gchar *buf;
+    va_list va;
 
-	va_start(va, str);
-	buf = g_strdup_vprintf(str, va);
-	va_end(va);
+    va_start(va, str);
+    buf = g_strdup_vprintf(str, va);
+    va_end(va);
 
-	g_print("%s\n", buf);
-	g_free(buf);
+    g_print("%s\n", buf);
+    g_free(buf);
 }
 
 void audtool_whine(const gchar *str, ...)
 {
-	gchar *buf;
-	va_list va;
+    gchar *buf;
+    va_list va;
 
-	va_start(va, str);
-	buf = g_strdup_vprintf(str, va);
-	va_end(va);
+    va_start(va, str);
+    buf = g_strdup_vprintf(str, va);
+    va_end(va);
 
-	g_printerr("audtool: %s", buf);
-	g_free(buf);
+    g_printerr("audtool: %s", buf);
+    g_free(buf);
 }
 
 void audtool_whine_args(const gchar *name, const gchar *fmt, ...)
 {
-	gchar *buf;
-	va_list va;
+    gchar *buf;
+    va_list va;
 
-	va_start(va, fmt);
-	buf = g_strdup_vprintf(fmt, va);
-	va_end(va);
+    va_start(va, fmt);
+    buf = g_strdup_vprintf(fmt, va);
+    va_end(va);
 
-	g_printerr("audtool: Invalid parameters for %s\n", name);
-	g_printerr(" syntax: %s %s\n", name, buf);
-	g_free(buf);
+    g_printerr("audtool: Invalid parameters for %s\n", name);
+    g_printerr(" syntax: %s %s\n", name, buf);
+    g_free(buf);
 }
 
 void audtool_whine_tuple_fields(void)

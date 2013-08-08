@@ -26,10 +26,10 @@
 extern DBusGProxy *dbus_proxy;
 
 struct commandhandler {
-	gchar *name;
-	void (*handler)(gint argc, gchar **argv);
-	gchar *desc;
-	gint args;
+    gchar *name;
+    void (*handler)(gint argc, gchar **argv);
+    gchar *desc;
+    gint args;
 };
 
 extern struct commandhandler handlers[];
