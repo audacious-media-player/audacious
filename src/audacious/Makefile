@@ -14,7 +14,6 @@ SRCS = adder.c \
        history.c \
        interface.c								\
        main.c									\
-       mpris-signals.c \
        output.c									\
        playback.c								\
        playlist-files.c \
@@ -113,19 +112,13 @@ LIBS := -L../libaudcore -laudcore \
 		${REGEX_LIBS}					\
 		${LIBGUESS_LIBS}
 
-DBUS_BINDINGS_SOURCES = objects.xml			\
-			mpris_root.xml			\
-			mpris_tracklist.xml		\
-			mpris_player.xml
+DBUS_BINDINGS_SOURCES = objects.xml
 
 desktop_DATA = audacious.desktop
 desktopdir = ${datarootdir}/applications
 
 dbus-server-bindings.h: ${DBUS_BINDINGS_SOURCES}
 	${DBUS_BINDING_TOOL} --mode=glib-server --prefix=audacious_rc objects.xml > $@
-	${DBUS_BINDING_TOOL} --mode=glib-server --prefix=mpris_root mpris_root.xml >> $@
-	${DBUS_BINDING_TOOL} --mode=glib-server --prefix=mpris_tracklist mpris_tracklist.xml >> $@
-	${DBUS_BINDING_TOOL} --mode=glib-server --prefix=mpris_player mpris_player.xml >> $@
 
 dbus-client-bindings.h: ${DBUS_BINDINGS_SOURCES}
 	${DBUS_BINDING_TOOL} --mode=glib-client --prefix=audacious_rc objects.xml > $@

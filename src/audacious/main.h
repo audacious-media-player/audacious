@@ -47,10 +47,6 @@ void history_cleanup (void);
 extern bool_t headless;
 bool_t do_autosave (void);
 
-/* mpris-signals.c */
-void mpris_signals_init (void);
-void mpris_signals_cleanup (void);
-
 /* signals.c */
 void signals_init (void);
 

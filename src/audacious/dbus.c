@@ -41,48 +41,13 @@
 #include "misc.h"
 
 static DBusGConnection *dbus_conn = NULL;
-static unsigned int signals[LAST_SIG] = { 0 };
-static unsigned int tracklist_signals[LAST_TRACKLIST_SIG] = { 0 };
-
-MprisPlayer * mpris = NULL;
-MprisTrackList * mpris_tracklist = NULL;
 
 G_DEFINE_TYPE (RemoteObject, audacious_rc, G_TYPE_OBJECT)
-G_DEFINE_TYPE (MprisRoot, mpris_root, G_TYPE_OBJECT)
-G_DEFINE_TYPE (MprisPlayer, mpris_player, G_TYPE_OBJECT)
-G_DEFINE_TYPE (MprisTrackList, mpris_tracklist, G_TYPE_OBJECT)
 
 #define DBUS_TYPE_G_STRING_VALUE_HASHTABLE (dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE))
 
-static void mpris_playlist_update_hook(void * unused, MprisTrackList *obj);
-
 void audacious_rc_class_init(RemoteObjectClass * klass)
 {
-}
-
-void mpris_root_class_init(MprisRootClass * klass)
-{
-}
-
-void mpris_player_class_init(MprisPlayerClass * klass)
-{
-    signals[CAPS_CHANGE_SIG] = g_signal_new("caps_change", G_OBJECT_CLASS_TYPE(klass), G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED, 0, NULL, NULL, g_cclosure_marshal_VOID__INT, G_TYPE_NONE, 1, G_TYPE_INT);
-    signals[TRACK_CHANGE_SIG] =
-        g_signal_new("track_change",
-                     G_OBJECT_CLASS_TYPE(klass), G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED, 0, NULL, NULL, g_cclosure_marshal_VOID__BOXED, G_TYPE_NONE, 1, DBUS_TYPE_G_STRING_VALUE_HASHTABLE);
-
-    GType status_type = dbus_g_type_get_struct ("GValueArray", G_TYPE_INT,
-     G_TYPE_INT, G_TYPE_INT, G_TYPE_INT, G_TYPE_INVALID);
-    signals[STATUS_CHANGE_SIG] =
-     g_signal_new ("status_change", G_OBJECT_CLASS_TYPE (klass),
-     G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED, 0, NULL, NULL,
-     g_cclosure_marshal_VOID__BOXED, G_TYPE_NONE, 1, status_type);
-}
-
-void mpris_tracklist_class_init(MprisTrackListClass * klass)
-{
-    tracklist_signals[TRACKLIST_CHANGE_SIG] = g_signal_new("track_list_change", G_OBJECT_CLASS_TYPE(klass),
-	G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED, 0, NULL, NULL, g_cclosure_marshal_VOID__INT, G_TYPE_NONE, 1, G_TYPE_INT);
 }
 
 void audacious_rc_init(RemoteObject * object)
@@ -108,65 +73,7 @@ void audacious_rc_init(RemoteObject * object)
         g_error_free(error);
     }
 
-    if (!org_freedesktop_DBus_request_name(driver_proxy, AUDACIOUS_DBUS_SERVICE_MPRIS, 0, &request_ret, &error))
-    {
-        g_warning("Unable to register service: %s", error->message);
-        g_error_free(error);
-    }
-
     g_object_unref(driver_proxy);
-}
-
-void mpris_root_init(MprisRoot * object)
-{
-    dbus_g_object_type_install_info(mpris_root_get_type(), &dbus_glib_mpris_root_object_info);
-
-    // Register DBUS path
-    dbus_g_connection_register_g_object(dbus_conn, AUDACIOUS_DBUS_PATH_MPRIS_ROOT, G_OBJECT(object));
-}
-
-void mpris_player_init(MprisPlayer * object)
-{
-    dbus_g_object_type_install_info(mpris_player_get_type(), &dbus_glib_mpris_player_object_info);
-
-    // Register DBUS path
-    dbus_g_connection_register_g_object(dbus_conn, AUDACIOUS_DBUS_PATH_MPRIS_PLAYER, G_OBJECT(object));
-
-    // Add signals
-    DBusGProxy *proxy = object->proxy;
-    if (proxy != NULL)
-    {
-        dbus_g_proxy_add_signal (proxy, "StatusChange", dbus_g_type_get_struct
-         ("GValueArray", G_TYPE_INT, G_TYPE_INT, G_TYPE_INT, G_TYPE_INT,
-         G_TYPE_INVALID), G_TYPE_INVALID);
-        dbus_g_proxy_add_signal (proxy, "CapsChange", G_TYPE_INT, G_TYPE_INVALID);
-        dbus_g_proxy_add_signal(proxy, "TrackChange", DBUS_TYPE_G_STRING_VALUE_HASHTABLE, G_TYPE_INVALID);
-    }
-    else
-    {
-        /* XXX / FIXME: Why does this happen? -- ccr */
-        AUDDBG ("object->proxy == NULL; not adding some signals.\n");
-    }
-}
-
-void mpris_tracklist_init(MprisTrackList * object)
-{
-    dbus_g_object_type_install_info(mpris_tracklist_get_type(), &dbus_glib_mpris_tracklist_object_info);
-
-    // Register DBUS path
-    dbus_g_connection_register_g_object(dbus_conn, AUDACIOUS_DBUS_PATH_MPRIS_TRACKLIST, G_OBJECT(object));
-
-    // Add signals
-    DBusGProxy *proxy = object->proxy;
-    if (proxy != NULL)
-    {
-        dbus_g_proxy_add_signal(proxy, "TrackListChange", G_TYPE_INT, G_TYPE_INVALID);
-    }
-    else
-    {
-        /* XXX / FIXME: Why does this happen? -- ccr */
-        AUDDBG ("object->proxy == NULL, not adding some signals.\n");
-    }
 }
 
 void init_dbus()
@@ -184,20 +91,13 @@ void init_dbus()
     }
 
     g_object_new(audacious_rc_get_type(), NULL);
-    g_object_new(mpris_root_get_type(), NULL);
-    mpris = g_object_new(mpris_player_get_type(), NULL);
-    mpris_tracklist = g_object_new(mpris_tracklist_get_type(), NULL);
 
     local_conn = dbus_g_connection_get_connection(dbus_conn);
     dbus_connection_set_exit_on_disconnect(local_conn, FALSE);
-
-    hook_associate ("playlist update",
-     (HookFunction) mpris_playlist_update_hook, mpris_tracklist);
 }
 
 void cleanup_dbus (void)
 {
-    hook_dissociate ("playlist update", (HookFunction) mpris_playlist_update_hook);
 }
 
 static GValue *tuple_value_to_gvalue(const Tuple * tuple, const char * key)
@@ -225,65 +125,6 @@ static GValue *tuple_value_to_gvalue(const Tuple * tuple, const char * key)
     return NULL;
 }
 
-/**
- * Retrieves value named tuple_key and inserts it inside hash table.
- *
- * @param[in,out] md GHashTable to insert into
- * @param[in] tuple Tuple to read data from
- * @param[in] tuple_key Tuple field key
- * @param[in] key key used for inserting into hash table.
- */
-static void tuple_insert_to_hash_full(GHashTable * md, const Tuple * tuple,
-                                      const char * tuple_key, const char *key)
-{
-    GValue *value = tuple_value_to_gvalue(tuple, tuple_key);
-    if (value != NULL)
-        g_hash_table_insert (md, (void *) key, value);
-}
-
-static void tuple_insert_to_hash(GHashTable * md, const Tuple * tuple,
-                                 const char *key)
-{
-    tuple_insert_to_hash_full(md, tuple, key, key);
-}
-
-static void remove_metadata_value(void * value)
-{
-    g_value_unset((GValue *) value);
-    g_free((GValue *) value);
-}
-
-static GHashTable *make_mpris_metadata(const char * filename, const Tuple * tuple)
-{
-    GHashTable *md = NULL;
-    void * value;
-
-    md = g_hash_table_new_full(g_str_hash, g_str_equal, NULL, remove_metadata_value);
-
-    value = g_malloc(sizeof(GValue));
-    memset(value, 0, sizeof(GValue));
-    g_value_init(value, G_TYPE_STRING);
-    g_value_take_string(value, g_strdup(filename));
-    g_hash_table_insert(md, "location", value);
-
-    if (tuple != NULL)
-    {
-        tuple_insert_to_hash_full(md, tuple, "length", "mtime");
-        tuple_insert_to_hash(md, tuple, "title");
-        tuple_insert_to_hash(md, tuple, "artist");
-        tuple_insert_to_hash(md, tuple, "album");
-        tuple_insert_to_hash(md, tuple, "comment");
-        tuple_insert_to_hash(md, tuple, "genre");
-        tuple_insert_to_hash(md, tuple, "year");
-        tuple_insert_to_hash(md, tuple, "codec");
-        tuple_insert_to_hash(md, tuple, "quality");
-        tuple_insert_to_hash_full(md, tuple, "track-number", "tracknumber");
-        tuple_insert_to_hash_full(md, tuple, "bitrate", "audio-bitrate");
-    }
-
-    return md;
-}
-
 static GValue * get_field (int playlist, int entry, const char * field)
 {
     Tuple * tuple = playlist_entry_get_tuple (playlist, entry, FALSE);
@@ -293,257 +134,6 @@ static GValue * get_field (int playlist, int entry, const char * field)
         tuple_unref (tuple);
 
     return value;
-}
-
-static GHashTable * get_mpris_metadata (int playlist, int entry)
-{
-    char * filename = playlist_entry_get_filename (playlist, entry);
-    Tuple * tuple = playlist_entry_get_tuple (playlist, entry, FALSE);
-
-    GHashTable * metadata = NULL;
-    if (filename && tuple)
-        metadata = make_mpris_metadata (filename, tuple);
-
-    str_unref (filename);
-    if (tuple)
-        tuple_unref (tuple);
-
-    return metadata;
-}
-
-/* MPRIS API */
-// MPRIS /
-bool_t mpris_root_identity(MprisRoot * obj, char ** identity, GError ** error)
-{
-    *identity = g_strdup_printf("Audacious %s", VERSION);
-    return TRUE;
-}
-
-bool_t mpris_root_quit(MprisPlayer * obj, GError ** error)
-{
-    event_queue("quit", NULL);
-    return TRUE;
-}
-
-// MPRIS /Player
-
-bool_t mpris_player_next (MprisPlayer * obj, GError * * error)
-{
-    drct_pl_next ();
-    return TRUE;
-}
-
-bool_t mpris_player_prev (MprisPlayer * obj, GError * * error)
-{
-    drct_pl_prev ();
-    return TRUE;
-}
-
-bool_t mpris_player_pause (MprisPlayer * obj, GError * * error)
-{
-    drct_pause ();
-    return TRUE;
-}
-
-bool_t mpris_player_stop (MprisPlayer * obj, GError * * error)
-{
-    drct_stop ();
-    return TRUE;
-}
-
-bool_t mpris_player_play (MprisPlayer * obj, GError * * error)
-{
-    drct_play ();
-    return TRUE;
-}
-
-bool_t mpris_player_repeat(MprisPlayer * obj, bool_t rpt, GError ** error)
-{
-    set_bool (NULL, "repeat", rpt);
-    return TRUE;
-}
-
-static void append_int_value(GValueArray * ar, int tmp)
-{
-    GValue value;
-    memset(&value, 0, sizeof(value));
-    g_value_init(&value, G_TYPE_INT);
-    g_value_set_int(&value, tmp);
-    g_value_array_append(ar, &value);
-}
-
-static int get_playback_status (void)
-{
-    if (! drct_get_playing ())
-        return MPRIS_STATUS_STOP;
-
-    return drct_get_paused () ? MPRIS_STATUS_PAUSE : MPRIS_STATUS_PLAY;
-}
-
-bool_t mpris_player_get_status(MprisPlayer * obj, GValueArray * *status, GError * *error)
-{
-    *status = g_value_array_new(4);
-
-    append_int_value(*status, (int) get_playback_status());
-    append_int_value (* status, get_bool (NULL, "shuffle"));
-    append_int_value (* status, get_bool (NULL, "no_playlist_advance"));
-    append_int_value (* status, get_bool (NULL, "repeat"));
-    return TRUE;
-}
-
-bool_t mpris_player_get_metadata (MprisPlayer * obj, GHashTable * * metadata,
- GError * * error)
-{
-    int playlist = playlist_get_playing ();
-    int entry = (playlist >= 0) ? playlist_get_position (playlist) : -1;
-
-    * metadata = (entry >= 0) ? get_mpris_metadata (playlist, entry) : NULL;
-    if (! * metadata)
-        * metadata = g_hash_table_new (g_str_hash, g_str_equal);
-
-    return TRUE;
-}
-
-bool_t mpris_player_get_caps(MprisPlayer * obj, int * capabilities, GError ** error)
-{
-    *capabilities = MPRIS_CAPS_CAN_GO_NEXT | MPRIS_CAPS_CAN_GO_PREV | MPRIS_CAPS_CAN_PAUSE | MPRIS_CAPS_CAN_PLAY | MPRIS_CAPS_CAN_SEEK | MPRIS_CAPS_CAN_PROVIDE_METADATA | MPRIS_CAPS_PROVIDES_TIMING;
-    return TRUE;
-}
-
-bool_t mpris_player_volume_set(MprisPlayer * obj, int vol, GError ** error)
-{
-    drct_set_volume_main (vol);
-    return TRUE;
-}
-
-bool_t mpris_player_volume_get(MprisPlayer * obj, int * vol, GError ** error)
-{
-    drct_get_volume_main (vol);
-    return TRUE;
-}
-
-bool_t mpris_player_position_set (MprisPlayer * obj, int pos, GError * * error)
-{
-    drct_seek (pos);
-    return TRUE;
-}
-
-bool_t mpris_player_position_get (MprisPlayer * obj, int * pos, GError * * error)
-{
-    * pos = drct_get_time ();
-    return TRUE;
-}
-
-// MPRIS /Player signals
-bool_t mpris_emit_caps_change(MprisPlayer * obj)
-{
-    g_signal_emit(obj, signals[CAPS_CHANGE_SIG], 0, 0);
-    return TRUE;
-}
-
-bool_t mpris_emit_track_change(MprisPlayer * obj)
-{
-    int playlist, entry;
-    GHashTable *metadata;
-
-    playlist = playlist_get_playing();
-    entry = playlist_get_position(playlist);
-    char * filename = playlist_entry_get_filename (playlist, entry);
-    Tuple * tuple = playlist_entry_get_tuple (playlist, entry, FALSE);
-
-    if (filename && tuple)
-    {
-        metadata = make_mpris_metadata (filename, tuple);
-        g_signal_emit (obj, signals[TRACK_CHANGE_SIG], 0, metadata);
-        g_hash_table_destroy (metadata);
-    }
-
-    str_unref (filename);
-    if (tuple)
-        tuple_unref (tuple);
-
-    return (filename && tuple);
-}
-
-bool_t mpris_emit_status_change(MprisPlayer * obj, PlaybackStatus status)
-{
-    GValueArray *ar = g_value_array_new(4);
-
-    if (status == MPRIS_STATUS_INVALID)
-        status = get_playback_status ();
-
-    append_int_value(ar, (int) status);
-    append_int_value (ar, get_bool (NULL, "shuffle"));
-    append_int_value (ar, get_bool (NULL, "no_playlist_advance"));
-    append_int_value (ar, get_bool (NULL, "repeat"));
-
-    g_signal_emit(obj, signals[STATUS_CHANGE_SIG], 0, ar);
-    g_value_array_free(ar);
-    return TRUE;
-}
-
-// MPRIS /TrackList
-bool_t mpris_emit_tracklist_change(MprisTrackList * obj, int playlist)
-{
-    g_signal_emit(obj, tracklist_signals[TRACKLIST_CHANGE_SIG], 0, playlist_entry_count(playlist));
-    return TRUE;
-}
-
-static void mpris_playlist_update_hook(void * unused, MprisTrackList * obj)
-{
-    int playlist = playlist_get_active();
-
-    mpris_emit_tracklist_change(obj, playlist);
-}
-
-bool_t mpris_tracklist_get_metadata (MprisTrackList * obj, int pos,
- GHashTable * * metadata, GError * * error)
-{
-    * metadata = get_mpris_metadata (playlist_get_active (), pos);
-    if (! * metadata)
-        * metadata = g_hash_table_new (g_str_hash, g_str_equal);
-
-    return TRUE;
-}
-
-bool_t mpris_tracklist_get_current_track (MprisTrackList * obj, int * pos,
- GError * * error)
-{
-    * pos = playlist_get_position (playlist_get_active ());
-    return TRUE;
-}
-
-bool_t mpris_tracklist_get_length (MprisTrackList * obj, int * length, GError * * error)
-{
-    * length = playlist_entry_count (playlist_get_active ());
-    return TRUE;
-}
-
-bool_t mpris_tracklist_add_track (MprisTrackList * obj, char * uri, bool_t play,
- GError * * error)
-{
-    playlist_entry_insert (playlist_get_active (), -1, uri, NULL, play);
-    return TRUE;
-}
-
-bool_t mpris_tracklist_del_track (MprisTrackList * obj, int pos, GError * * error)
-{
-    playlist_entry_delete (playlist_get_active (), pos, 1);
-    return TRUE;
-}
-
-bool_t mpris_tracklist_loop (MprisTrackList * obj, bool_t loop, GError * *
- error)
-{
-    set_bool (NULL, "repeat", loop);
-    return TRUE;
-}
-
-bool_t mpris_tracklist_random (MprisTrackList * obj, bool_t random,
- GError * * error)
-{
-    set_bool (NULL, "shuffle", random);
-    return TRUE;
 }
 
 // Audacious General Information

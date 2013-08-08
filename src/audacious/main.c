@@ -460,14 +460,10 @@ static void init_two (int * p_argc, char * * * p_argv)
 #ifdef USE_DBUS
     init_dbus ();
 #endif
-
-    mpris_signals_init ();
 }
 
 static void shut_down (void)
 {
-    mpris_signals_cleanup ();
-
     AUDDBG ("Saving playlist state.\n");
     save_playlists (TRUE);
 
