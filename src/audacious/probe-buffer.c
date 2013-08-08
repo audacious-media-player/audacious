@@ -17,18 +17,19 @@
  * the use of this software.
  */
 
-#include <glib.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "debug.h"
 #include "probe-buffer.h"
 
+#define BUFSIZE (256 * 1024)
+
 typedef struct
 {
     VFSFile * file;
-    unsigned char buffer[16384];
     int filled, at;
+    unsigned char buffer[BUFSIZE];
 }
 ProbeBuffer;
 
@@ -37,7 +38,7 @@ static int probe_buffer_fclose (VFSFile * file)
     ProbeBuffer * p = vfs_get_handle (file);
 
     int ret = vfs_fclose (p->file);
-    g_slice_free (ProbeBuffer, p);
+    free (p);
     return ret;
 }
 
@@ -88,7 +89,9 @@ static int probe_buffer_fseek (VFSFile * file, int64_t offset, int whence)
     if (whence == SEEK_CUR)
         offset += p->at;
 
-    g_return_val_if_fail (offset >= 0, -1);
+    if (offset < 0)
+        return -1;
+
     increase_buffer (p, offset);
 
     if (offset > p->filled)
@@ -167,7 +170,7 @@ VFSFile * probe_buffer_new (const char * filename)
     if (! file)
         return NULL;
 
-    ProbeBuffer * p = g_slice_new (ProbeBuffer);
+    ProbeBuffer * p = malloc (sizeof (ProbeBuffer));
     p->file = file;
     p->filled = 0;
     p->at = 0;
