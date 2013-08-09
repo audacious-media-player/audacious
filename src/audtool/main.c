@@ -26,7 +26,8 @@
 #include "libaudclient/audctrl.h"
 #include "audtool.h"
 
-struct commandhandler handlers[] = {
+struct commandhandler handlers[] =
+{
     {"<sep>", NULL, "Vital information", 0},
     {"current-song", get_current_song, "returns current song title", 0},
     {"current-song-filename", get_current_song_filename, "returns current song filename", 0},
@@ -43,7 +44,6 @@ struct commandhandler handlers[] = {
     {"current-song-channels", get_current_song_channels, "returns current song channels", 0},
     {"current-song-tuple-data", get_current_song_tuple_field_data, "returns the value of a tuple field for the current song", 1},
     {"current-song-info", get_current_song_info, "returns current song bitrate, frequency and channels", 0},
-
 
     {"<sep>", NULL, "Playlist manipulation", 0},
     {"playlist-advance", playlist_advance, "go to the next song in the playlist", 0},
@@ -83,7 +83,6 @@ struct commandhandler handlers[] = {
     {"playqueue-display", playqueue_display, "returns a list of currently-queued songs", 0},
     {"playqueue-clear", playqueue_clear, "clears the playqueue", 0},
 
-
     {"<sep>", NULL, "Playback manipulation", 0},
     {"playback-play", playback_play, "starts/unpauses song playback", 0},
     {"playback-pause", playback_pause, "(un)pauses song playback", 0},
@@ -96,11 +95,9 @@ struct commandhandler handlers[] = {
     {"playback-seek", playback_seek, "performs an absolute seek", 1},
     {"playback-seek-relative", playback_seek_relative, "performs a seek relative to the current position", 1},
 
-
     {"<sep>", NULL, "Volume control", 0},
     {"get-volume", get_volume, "returns the current volume level in percent", 0},
     {"set-volume", set_volume, "sets the current volume level in percent", 1},
-
 
     {"<sep>", NULL, "Equalizer manipulation", 0},
     {"equalizer-activate", equalizer_active, "activates/deactivates the equalizer", 1},
@@ -110,7 +107,6 @@ struct commandhandler handlers[] = {
     {"equalizer-set-preamp", equalizer_set_eq_preamp, "sets the equalizer pre-amplification", 1},
     {"equalizer-get-band", equalizer_get_eq_band, "gets the equalizer value in specified band", 1},
     {"equalizer-set-band", equalizer_set_eq_band, "sets the equalizer value in the specified band", 2},
-
 
     {"<sep>", NULL, "Miscellaneous", 0},
     {"mainwin-show", mainwin_show, "shows/hides the main window", 1},
@@ -123,24 +119,21 @@ struct commandhandler handlers[] = {
     {"version", get_version, "shows Audacious version", 0},
     {"shutdown", shutdown_audacious_server, "shuts down Audacious", 0},
 
-
     {"<sep>", NULL, "Help system", 0},
     {"list-handlers", get_handlers_list, "shows handlers list", 0},
     {"help", get_handlers_list, "shows handlers list", 0},
 
-
     {NULL, NULL, NULL, 0}
 };
 
-DBusGProxy *dbus_proxy = NULL;
-static DBusGConnection *connection = NULL;
+DBusGProxy * dbus_proxy = NULL;
+static DBusGConnection * connection = NULL;
 
-static void
-audtool_connect(void)
+static void audtool_connect (void)
 {
-    GError *error = NULL;
+    GError * error = NULL;
 
-    connection = dbus_g_bus_get(DBUS_BUS_SESSION, &error);
+    connection = dbus_g_bus_get (DBUS_BUS_SESSION, & error);
 
     if (connection == NULL)
     {
@@ -149,30 +142,27 @@ audtool_connect(void)
         exit (EXIT_FAILURE);
     }
 
-    dbus_proxy = dbus_g_proxy_new_for_name(connection, AUDACIOUS_DBUS_SERVICE,
-                                           AUDACIOUS_DBUS_PATH,
-                                           AUDACIOUS_DBUS_INTERFACE);
+    dbus_proxy = dbus_g_proxy_new_for_name (connection, AUDACIOUS_DBUS_SERVICE,
+     AUDACIOUS_DBUS_PATH, AUDACIOUS_DBUS_INTERFACE);
 }
 
-static void
-audtool_disconnect(void)
+static void audtool_disconnect (void)
 {
-    g_object_unref(dbus_proxy);
+    g_object_unref (dbus_proxy);
     dbus_proxy = NULL;
 }
 
-gint
-main(gint argc, gchar **argv)
+int main (int argc, char * * argv)
 {
-    gint i, j = 0, k = 0;
+    int i, j = 0, k = 0;
 
-    setlocale(LC_CTYPE, "");
+    setlocale (LC_CTYPE, "");
 
 #if ! GLIB_CHECK_VERSION (2, 36, 0)
     g_type_init();
 #endif
 
-    audtool_connect();
+    audtool_connect ();
 
     if (argc < 2)
     {
@@ -180,19 +170,20 @@ main(gint argc, gchar **argv)
         exit (EXIT_FAILURE);
     }
 
-    for (j = 1; j < argc; j++)
+    for (j = 1; j < argc; j ++)
     {
         for (i = 0; handlers[i].name != NULL; i++)
         {
-            if ((!g_ascii_strcasecmp(handlers[i].name, argv[j]) ||
-                 !g_ascii_strcasecmp(g_strconcat("--", handlers[i].name, NULL), argv[j]))
-                && g_ascii_strcasecmp("<sep>", handlers[i].name))
+            if ((! g_ascii_strcasecmp (handlers[i].name, argv[j]) ||
+             ! g_ascii_strcasecmp (g_strconcat ("--", handlers[i].name, NULL),
+             argv[j])) && g_ascii_strcasecmp ("<sep>", handlers[i].name))
             {
                 int numargs = handlers[i].args + 1 < argc - j ? handlers[i].args + 1 : argc - j;
-                handlers[i].handler(numargs, &argv[j]);
+                handlers[i].handler (numargs, & argv[j]);
                 j += handlers[i].args;
-                k++;
-                if(j >= argc)
+                k ++;
+
+                if (j >= argc)
                     break;
             }
         }
@@ -204,7 +195,7 @@ main(gint argc, gchar **argv)
         exit (EXIT_FAILURE);
     }
 
-    audtool_disconnect();
+    audtool_disconnect ();
 
     return 0;
 }

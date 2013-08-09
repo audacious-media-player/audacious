@@ -23,110 +23,111 @@
 
 #include <audacious/dbus.h>
 
-extern DBusGProxy *dbus_proxy;
+extern DBusGProxy * dbus_proxy;
 
-struct commandhandler {
-    gchar *name;
-    void (*handler)(gint argc, gchar **argv);
-    gchar *desc;
-    gint args;
+struct commandhandler
+{
+    char * name;
+    void (* handler) (int argc, char * * argv);
+    char * desc;
+    int args;
 };
 
 extern struct commandhandler handlers[];
 
-extern void audtool_report(const gchar *str, ...);
-extern void audtool_whine(const gchar *str, ...);
-extern void audtool_whine_args(const gchar *name, const gchar *str, ...);
-extern void audtool_whine_tuple_fields(void);
+void audtool_report (const char * str, ...);
+void audtool_whine (const char * str, ...);
+void audtool_whine_args (const char * name, const char * str, ...);
+void audtool_whine_tuple_fields (void);
 
-extern void get_handlers_list(gint, gchar **);
-extern void get_current_song(gint, gchar **);
-extern void get_current_song_filename(gint, gchar **);
-extern void get_current_song_length(gint, gchar **);
-extern void get_current_song_length_seconds(gint, gchar **);
-extern void get_current_song_length_frames(gint, gchar **);
-extern void get_current_song_output_length(gint, gchar **);
-extern void get_current_song_output_length_seconds(gint, gchar **);
-extern void get_current_song_output_length_frames(gint, gchar **);
-extern void get_current_song_bitrate(gint, gchar **);
-extern void get_current_song_bitrate_kbps(gint, gchar **);
-extern void get_current_song_frequency(gint, gchar **);
-extern void get_current_song_frequency_khz(gint, gchar **);
-extern void get_current_song_channels(gint, gchar **);
-extern void get_current_song_tuple_field_data(gint, gchar **argv);
-extern void get_current_song_info(gint argc, gchar **argv);
+void get_handlers_list (int, char * *);
+void get_current_song (int, char * *);
+void get_current_song_filename (int, char * *);
+void get_current_song_length (int, char * *);
+void get_current_song_length_seconds (int, char * *);
+void get_current_song_length_frames (int, char * *);
+void get_current_song_output_length (int, char * *);
+void get_current_song_output_length_seconds (int, char * *);
+void get_current_song_output_length_frames (int, char * *);
+void get_current_song_bitrate (int, char * *);
+void get_current_song_bitrate_kbps (int, char * *);
+void get_current_song_frequency (int, char * *);
+void get_current_song_frequency_khz (int, char * *);
+void get_current_song_channels (int, char * *);
+void get_current_song_tuple_field_data (int, char * * argv);
+void get_current_song_info (int argc, char * * argv);
 
-extern void get_volume(gint, gchar **);
-extern void set_volume(gint, gchar **);
+void get_volume (int, char * *);
+void set_volume (int, char * *);
 
-extern void playlist_position(gint, gchar **);
-extern void playlist_advance(gint, gchar **);
-extern void playlist_auto_advance_status(gint, gchar **);
-extern void playlist_auto_advance_toggle(gint, gchar **);
-extern void playlist_reverse(gint, gchar **);
-extern void playlist_length(gint, gchar **);
-extern void playlist_song(gint, gchar **);
-extern void playlist_song_filename(gint, gchar **);
-extern void playlist_song_length(gint, gchar **);
-extern void playlist_song_length_seconds(gint, gchar **);
-extern void playlist_song_length_frames(gint, gchar **);
-extern void playlist_display(gint, gchar **);
-extern void playlist_position(gint, gchar **);
-extern void playlist_jump(gint, gchar **);
-extern void playlist_add_url_string(gint, gchar **);
-extern void playlist_delete(gint, gchar **);
-extern void playlist_clear(gint, gchar **);
-extern void playlist_repeat_status(gint, gchar **);
-extern void playlist_repeat_toggle(gint, gchar **);
-extern void playlist_shuffle_status(gint, gchar **);
-extern void playlist_shuffle_toggle(gint, gchar **);
-void playlist_stop_after_status (gint argc, gchar * * argv);
-void playlist_stop_after_toggle (gint argc, gchar * * argv);
-extern void playlist_tuple_field_data(gint, gchar **argv);
-extern void playlist_enqueue_to_temp(gint argc, gchar **argv);
-extern void playlist_ins_url_string(gint argc, gchar **argv);
-extern void playlist_title(gint, gchar **);
+void playlist_position (int, char * *);
+void playlist_advance (int, char * *);
+void playlist_auto_advance_status (int, char * *);
+void playlist_auto_advance_toggle (int, char * *);
+void playlist_reverse (int, char * *);
+void playlist_length (int, char * *);
+void playlist_song (int, char * *);
+void playlist_song_filename (int, char * *);
+void playlist_song_length (int, char * *);
+void playlist_song_length_seconds (int, char * *);
+void playlist_song_length_frames (int, char * *);
+void playlist_display (int, char * *);
+void playlist_position (int, char * *);
+void playlist_jump (int, char * *);
+void playlist_add_url_string (int, char * *);
+void playlist_delete (int, char * *);
+void playlist_clear (int, char * *);
+void playlist_repeat_status (int, char * *);
+void playlist_repeat_toggle (int, char * *);
+void playlist_shuffle_status (int, char * *);
+void playlist_shuffle_toggle (int, char * *);
+void playlist_stop_after_status (int argc, char * * argv);
+void playlist_stop_after_toggle (int argc, char * * argv);
+void playlist_tuple_field_data (int, char * * argv);
+void playlist_enqueue_to_temp (int argc, char * * argv);
+void playlist_ins_url_string (int argc, char * * argv);
+void playlist_title (int, char * *);
 
-extern void playqueue_add(gint, gchar **);
-extern void playqueue_remove(gint, gchar **);
-extern void playqueue_is_queued(gint, gchar **);
-extern void playqueue_get_queue_position(gint, gchar **);
-extern void playqueue_get_list_position(gint, gchar **);
-extern void playqueue_display(gint, gchar **);
-extern void playqueue_length(gint, gchar **);
-extern void playqueue_clear(gint, gchar **);
+void playqueue_add (int, char * *);
+void playqueue_remove (int, char * *);
+void playqueue_is_queued (int, char * *);
+void playqueue_get_queue_position (int, char * *);
+void playqueue_get_list_position (int, char * *);
+void playqueue_display (int, char * *);
+void playqueue_length (int, char * *);
+void playqueue_clear (int, char * *);
 
-extern void playback_play(gint, gchar **);
-extern void playback_pause(gint, gchar **);
-extern void playback_playpause(gint, gchar **);
-extern void playback_stop(gint, gchar **);
-extern void playback_playing(gint, gchar **);
-extern void playback_paused(gint, gchar **);
-extern void playback_stopped(gint, gchar **);
-extern void playback_status(gint, gchar **);
-extern void playback_seek(gint, gchar **);
-extern void playback_seek_relative(gint, gchar **);
+void playback_play (int, char * *);
+void playback_pause (int, char * *);
+void playback_playpause (int, char * *);
+void playback_stop (int, char * *);
+void playback_playing (int, char * *);
+void playback_paused (int, char * *);
+void playback_stopped (int, char * *);
+void playback_status (int, char * *);
+void playback_seek (int, char * *);
+void playback_seek_relative (int, char * *);
 
-extern void mainwin_show(gint, gchar **);
-extern void show_preferences_window(gint, gchar **);
-extern void show_jtf_window(gint, gchar **);
-extern void show_filebrowser(gint, gchar **);
-extern void shutdown_audacious_server(gint, gchar **);
-extern void show_about_window(gint, gchar **);
+void mainwin_show (int, char * *);
+void show_preferences_window (int, char * *);
+void show_jtf_window (int, char * *);
+void show_filebrowser (int, char * *);
+void shutdown_audacious_server (int, char * *);
+void show_about_window (int, char * *);
 
-extern void toggle_aot(gint argc, gchar **argv);
-extern void get_skin(gint argc, gchar **argv);
-extern void set_skin(gint argc, gchar **argv);
-extern void get_version(gint argc, gchar **argv);
+void toggle_aot (int argc, char * * argv);
+void get_skin (int argc, char * * argv);
+void set_skin (int argc, char * * argv);
+void get_version (int argc, char * * argv);
 
-extern void equalizer_get_eq(gint argc, gchar **argv);
-extern void equalizer_get_eq_preamp(gint argc, gchar **argv);
-extern void equalizer_get_eq_band(gint argc, gchar **argv);
-extern void equalizer_set_eq(gint argc, gchar **argv);
-extern void equalizer_set_eq_preamp(gint argc, gchar **argv);
-extern void equalizer_set_eq_band(gint argc, gchar **argv);
-extern void equalizer_active(gint argc, gchar **argv);
+void equalizer_get_eq (int argc, char * * argv);
+void equalizer_get_eq_preamp (int argc, char * * argv);
+void equalizer_get_eq_band (int argc, char * * argv);
+void equalizer_set_eq (int argc, char * * argv);
+void equalizer_set_eq_preamp (int argc, char * * argv);
+void equalizer_set_eq_band (int argc, char * * argv);
+void equalizer_active (int argc, char * * argv);
 
-extern gint check_args_playlist_pos(gint argc, gchar **argv);
+int check_args_playlist_pos (int argc, char * * argv);
 
 #endif

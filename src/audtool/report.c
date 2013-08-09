@@ -24,75 +24,79 @@
 #include "libaudclient/audctrl.h"
 #include "audtool.h"
 
-void audtool_report(const gchar *str, ...)
+void audtool_report (const char * str, ...)
 {
-    gchar *buf;
+    char * buf;
     va_list va;
 
-    va_start(va, str);
-    buf = g_strdup_vprintf(str, va);
-    va_end(va);
+    va_start (va, str);
+    buf = g_strdup_vprintf (str, va);
+    va_end (va);
 
-    g_print("%s\n", buf);
-    g_free(buf);
+    g_print ("%s\n", buf);
+    g_free (buf);
 }
 
-void audtool_whine(const gchar *str, ...)
+void audtool_whine (const char * str, ...)
 {
-    gchar *buf;
+    char * buf;
     va_list va;
 
-    va_start(va, str);
-    buf = g_strdup_vprintf(str, va);
-    va_end(va);
+    va_start (va, str);
+    buf = g_strdup_vprintf (str, va);
+    va_end (va);
 
-    g_printerr("audtool: %s", buf);
-    g_free(buf);
+    g_printerr ("audtool: %s", buf);
+    g_free (buf);
 }
 
-void audtool_whine_args(const gchar *name, const gchar *fmt, ...)
+void audtool_whine_args (const char * name, const char * fmt, ...)
 {
-    gchar *buf;
+    char * buf;
     va_list va;
 
-    va_start(va, fmt);
-    buf = g_strdup_vprintf(fmt, va);
-    va_end(va);
+    va_start (va, fmt);
+    buf = g_strdup_vprintf (fmt, va);
+    va_end (va);
 
-    g_printerr("audtool: Invalid parameters for %s\n", name);
-    g_printerr(" syntax: %s %s\n", name, buf);
-    g_free(buf);
+    g_printerr ("audtool: Invalid parameters for %s\n", name);
+    g_printerr (" syntax: %s %s\n", name, buf);
+    g_free (buf);
 }
 
-void audtool_whine_tuple_fields(void)
+void audtool_whine_tuple_fields (void)
 {
-    gint nfields, i;
-    gchar **fields = audacious_remote_get_tuple_fields(dbus_proxy),
-          **tmp = fields;
+    int nfields, i;
+    char * * fields = audacious_remote_get_tuple_fields (dbus_proxy), * * tmp = fields;
 
-    audtool_whine("Field names include, but are not limited to:\n");
+    audtool_whine ("Field names include, but are not limited to:\n");
 
-    for (nfields = 0; tmp && *tmp; nfields++, tmp++);
+    for (nfields = 0; tmp && * tmp; nfields ++, tmp ++);
 
     tmp = fields;
     i = 0;
-    g_printerr("         ");
-    while (tmp && *tmp) {
-        i += g_utf8_strlen(*tmp, -1);
-        if (i > 45) {
-            g_printerr("\n         ");
+    g_printerr ("         ");
+
+    while (tmp && * tmp)
+    {
+        i += g_utf8_strlen (* tmp, -1);
+
+        if (i > 45)
+        {
+            g_printerr ("\n         ");
             i = 0;
         }
-        g_printerr("%s", *tmp);
-        if (--nfields > 0)
-            g_printerr(", ");
 
-        g_free(*tmp);
-        tmp++;
+        g_printerr ("%s", * tmp);
+
+        if (-- nfields > 0)
+            g_printerr (", ");
+
+        g_free (* tmp);
+        tmp ++;
     }
 
-    g_printerr("\n");
+    g_printerr ("\n");
 
-    g_free(fields);
+    g_free (fields);
 }
-
