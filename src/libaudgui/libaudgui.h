@@ -40,6 +40,7 @@ void audgui_hide_filebrowser(void);
 
 /* about.c */
 void audgui_show_about_window (void);
+void audgui_hide_about_window (void);
 
 /* confirm.c */
 void audgui_confirm_playlist_delete (int playlist);

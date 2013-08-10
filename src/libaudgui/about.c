@@ -116,3 +116,9 @@ EXPORT void audgui_show_about_window (void)
 
     gtk_widget_show_all (about_window);
 }
+
+EXPORT void audgui_hide_about_window (void)
+{
+    if (about_window)
+        gtk_widget_hide (about_window);
+}
