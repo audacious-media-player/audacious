@@ -32,6 +32,12 @@ void adder_cleanup (void);
 void art_init (void);
 void art_cleanup (void);
 
+/* dbus-server.c */
+#ifdef USE_DBUS
+void dbus_server_init (void);
+void dbus_server_cleanup (void);
+#endif
+
 /* chardet.c */
 void chardet_init (void);
 

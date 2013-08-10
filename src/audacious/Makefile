@@ -35,10 +35,6 @@ SRCS = adder.c \
        visualization.c							\
        ui_albumart.c
 
-ifeq ($(USE_DBUS),yes)
-SRCS += dbus.c
-endif
-
 ifeq ($(HAVE_MSWINDOWS),yes)
 SRCS += audacious.rc
 endif
@@ -48,8 +44,6 @@ INCLUDES = api.h \
            api-alias-end.h \
            api-define-begin.h \
            api-define-end.h \
-           dbus.h				\
-           dbus-service.h		\
            debug.h \
            drct.h \
            drct-api.h \
@@ -76,16 +70,19 @@ DATA = images/about-logo.png				\
        images/playlist.png					\
        images/plugins.png
 
-CLEAN = build_stamp.c dbus-client-bindings.h dbus-server-bindings.h
+CLEAN = build_stamp.c
+
+ifeq ($(USE_DBUS),yes)
+SRCS += dbus-server.c
+EXT_DEPS += ../dbus/aud-dbus.a
+endif
 
 include ../../buildsys.mk
 
 ifeq ($(USE_DBUS),yes)
-DBUS_BINDINGS = dbus-server-bindings.h dbus-client-bindings.h
-LIBS := -L../libaudclient -laudclient ${LIBS}
+CPPFLAGS := -I../dbus ${CPPFLAGS} ${GIO_UNIX_CFLAGS}
+LIBS := ../dbus/aud-dbus.a ${LIBS} ${GIO_UNIX_LIBS}
 endif
-
-pre-depend: ${DBUS_BINDINGS}
 
 CPPFLAGS := -I.. -I../.. \
             ${CPPFLAGS} \
@@ -94,7 +91,6 @@ CPPFLAGS := -I.. -I../.. \
 		${GTHREAD_CFLAGS} \
 		${GTK_CFLAGS}			\
 		${AUDACIOUS_DEFINES}	\
-		${DBUS_CFLAGS}			\
 		${REGEX_CFLAGS}			\
 		-D_AUDACIOUS_CORE		\
 		${LIBGUESS_CFLAGS}
@@ -108,17 +104,8 @@ LIBS := -L../libaudcore -laudcore \
 		${GMODULE_LIBS} \
 		${GTHREAD_LIBS} \
 		${GTK_LIBS}						\
-		${DBUS_LIBS}					\
 		${REGEX_LIBS}					\
 		${LIBGUESS_LIBS}
 
-DBUS_BINDINGS_SOURCES = objects.xml
-
 desktop_DATA = audacious.desktop
 desktopdir = ${datarootdir}/applications
-
-dbus-server-bindings.h: ${DBUS_BINDINGS_SOURCES}
-	${DBUS_BINDING_TOOL} --mode=glib-server --prefix=audacious_rc objects.xml > $@
-
-dbus-client-bindings.h: ${DBUS_BINDINGS_SOURCES}
-	${DBUS_BINDING_TOOL} --mode=glib-client --prefix=audacious_rc objects.xml > $@

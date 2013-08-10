@@ -33,8 +33,7 @@
 #include <libaudtag/audtag.h>
 
 #ifdef USE_DBUS
-#include "../libaudclient/audctrl.h"
-#include "dbus.h"
+#include "aud-dbus.h"
 #endif
 
 #include "debug.h"
@@ -244,32 +243,6 @@ bool_t headless_mode (void)
     return options.headless;
 }
 
-static bool_t get_lock (void)
-{
-    char * path = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "lock", aud_paths[AUD_PATH_USER_DIR]);
-    int handle = open (path, O_RDWR | O_CREAT | O_EXCL, S_IRUSR | S_IWUSR);
-
-    if (handle < 0)
-    {
-        if (errno != EEXIST)
-            fprintf (stderr, "Cannot create %s: %s.\n", path, strerror (errno));
-
-        g_free (path);
-        return FALSE;
-    }
-
-    close (handle);
-    g_free (path);
-    return TRUE;
-}
-
-static void release_lock (void)
-{
-    char * path = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "lock", aud_paths[AUD_PATH_USER_DIR]);
-    unlink (path);
-    g_free (path);
-}
-
 static Index * convert_filenames (void)
 {
     if (! options.filenames)
@@ -308,66 +281,95 @@ static Index * convert_filenames (void)
     return filenames;
 }
 
+#ifdef USE_DBUS
 static void do_remote (void)
 {
-#ifdef USE_DBUS
-    DBusGProxy * session = audacious_get_dbus_proxy ();
+    GDBusConnection * bus = NULL;
+    ObjAudacious * obj = NULL;
+    GError * error = NULL;
 
-    if (session && audacious_remote_is_running (session))
+    if (! (bus = g_bus_get_sync (G_BUS_TYPE_SESSION, NULL, & error)))
+        goto ERR;
+
+    if (! (obj = obj_audacious_proxy_new_sync (bus, 0, "org.atheme.audacious",
+     "/org/atheme/audacious", NULL, & error)))
+        goto ERR;
+
+    /* check whether remote is running */
+    char * version = NULL;
+    obj_audacious_call_version_sync (obj, & version, NULL, NULL);
+
+    if (! version)
+        goto DONE;
+
+    AUDDBG ("Connected to remote version %s.\n", version);
+
+    Index * filenames = convert_filenames ();
+
+    /* if no command line options, then present running instance */
+    if (! (filenames || options.play || options.pause || options.play_pause ||
+     options.stop || options.rew || options.fwd || options.show_jump_box ||
+     options.mainwin))
+        options.mainwin = TRUE;
+
+    if (filenames)
     {
-        Index * filenames = convert_filenames ();
+        int n_filenames = index_count (filenames);
+        const char * * list = malloc (sizeof (const char *) * (n_filenames + 1));
 
-        /* if no command line options, then present running instance */
-        if (! (filenames || options.play || options.pause || options.play_pause ||
-         options.stop || options.rew || options.fwd || options.show_jump_box ||
-         options.mainwin))
-            options.mainwin = TRUE;
+        for (int i = 0; i < n_filenames; i ++)
+            list[i] = index_get (filenames, i);
 
-        if (filenames)
-        {
-            GList * list = NULL;
+        list[n_filenames] = NULL;
 
-            for (int f = index_count (filenames); f --; )
-                list = g_list_prepend (list, index_get (filenames, f));
+        if (options.enqueue_to_temp)
+            obj_audacious_call_open_list_to_temp_sync (obj, list, NULL, NULL);
+        else if (options.enqueue)
+            obj_audacious_call_add_list_sync (obj, list, NULL, NULL);
+        else
+            obj_audacious_call_open_list_sync (obj, list, NULL, NULL);
 
-            if (options.enqueue_to_temp)
-                audacious_remote_playlist_open_list_to_temp (session, list);
-            else if (options.enqueue)
-                audacious_remote_playlist_add (session, list);
-            else
-                audacious_remote_playlist_open_list (session, list);
+        free (list);
 
-            g_list_free (list);
+        for (int i = 0; i < n_filenames; i ++)
+            str_unref (index_get (filenames, i));
 
-            for (int f = 0; f < index_count (filenames); f ++)
-                str_unref (index_get (filenames, f));
-
-            index_free (filenames);
-        }
-
-        if (options.play)
-            audacious_remote_play (session);
-        if (options.pause)
-            audacious_remote_pause (session);
-        if (options.play_pause)
-            audacious_remote_play_pause (session);
-        if (options.stop)
-            audacious_remote_stop (session);
-        if (options.rew)
-            audacious_remote_playlist_prev (session);
-        if (options.fwd)
-            audacious_remote_playlist_next (session);
-        if (options.show_jump_box)
-            audacious_remote_show_jtf_box (session);
-        if (options.mainwin)
-            audacious_remote_main_win_toggle (session, TRUE);
-
-        exit (EXIT_SUCCESS);
+        index_free (filenames);
     }
-#endif
 
-    fprintf (stderr, "WARNING: Audacious seems to be already running but is not responding.\n");
+    if (options.play)
+        obj_audacious_call_play_sync (obj, NULL, NULL);
+    if (options.pause)
+        obj_audacious_call_pause_sync (obj, NULL, NULL);
+    if (options.play_pause)
+        obj_audacious_call_play_pause_sync (obj, NULL, NULL);
+    if (options.stop)
+        obj_audacious_call_stop_sync (obj, NULL, NULL);
+    if (options.rew)
+        obj_audacious_call_reverse_sync (obj, NULL, NULL);
+    if (options.fwd)
+        obj_audacious_call_advance_sync (obj, NULL, NULL);
+    if (options.show_jump_box)
+        obj_audacious_call_show_jtf_box_sync (obj, TRUE, NULL, NULL);
+    if (options.mainwin)
+        obj_audacious_call_show_main_win_sync (obj, TRUE, NULL, NULL);
+
+    free (version);
+    g_object_unref (obj);
+
+    exit (EXIT_SUCCESS);
+
+ERR:
+    fprintf (stderr, "D-Bus error: %s\n", error->message);
+    g_error_free (error);
+
+DONE:
+    if (obj)
+        g_object_unref (obj);
+
+    return;
 }
+#endif
 
 static void do_commands (void)
 {
@@ -462,7 +464,7 @@ static void init_two (int * p_argc, char * * * p_argv)
     start_plugins_two ();
 
 #ifdef USE_DBUS
-    init_dbus ();
+    dbus_server_init ();
 #endif
 }
 
@@ -475,7 +477,7 @@ static void shut_down (void)
     stop_plugins_two ();
 
 #ifdef USE_DBUS
-    cleanup_dbus ();
+    dbus_server_cleanup ();
 #endif
 
     AUDDBG ("Stopping playback.\n");
@@ -522,7 +524,7 @@ static void maybe_quit (void)
         gtk_main_quit ();
 }
 
-int main(int argc, char ** argv)
+int main (int argc, char * * argv)
 {
     init_one ();
     parse_options (& argc, & argv);
@@ -533,8 +535,9 @@ int main(int argc, char ** argv)
         return EXIT_SUCCESS;
     }
 
-    if (! get_lock ())
-        do_remote (); /* may exit */
+#if USE_DBUS
+    do_remote (); /* may exit */
+#endif
 
     AUDDBG ("No remote session; starting up.\n");
     init_two (& argc, & argv);
@@ -547,16 +550,18 @@ int main(int argc, char ** argv)
 
     hook_associate ("playback stop", (HookFunction) maybe_quit, NULL);
     hook_associate ("playlist add complete", (HookFunction) maybe_quit, NULL);
-    hook_associate ("quit", (HookFunction) gtk_main_quit, NULL);
 
     gtk_main ();
 
     hook_dissociate ("playback stop", (HookFunction) maybe_quit);
     hook_dissociate ("playlist add complete", (HookFunction) maybe_quit);
-    hook_dissociate ("quit", (HookFunction) gtk_main_quit);
 
 QUIT:
     shut_down ();
-    release_lock ();
     return EXIT_SUCCESS;
+}
+
+void drct_quit (void)
+{
+    gtk_main_quit ();
 }

@@ -17,7 +17,6 @@
  * the use of this software.
  */
 
-#include <glib.h>
 #include <libaudcore/hook.h>
 #include <libaudcore/vfs.h>
 
@@ -25,13 +24,6 @@
 #include "i18n.h"
 #include "misc.h"
 #include "playlist.h"
-
-/* --- PROGRAM CONTROL --- */
-
-void drct_quit (void)
-{
-    hook_call ("quit", NULL);
-}
 
 /* --- PLAYBACK CONTROL --- */
 
@@ -200,9 +192,4 @@ void drct_pl_open_temp (const char * filename)
 void drct_pl_open_temp_list (Index * filenames)
 {
     add_list (filenames, -1, TRUE, TRUE);
-}
-
-void drct_pl_delete_selected (int list)
-{
-    playlist_delete_selected (list);
 }

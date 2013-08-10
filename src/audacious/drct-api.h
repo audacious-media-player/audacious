@@ -69,9 +69,6 @@ AUD_VFUNC1 (drct_pl_open_list, Index *, filenames)
 AUD_VFUNC1 (drct_pl_open_temp, const char *, filename)
 AUD_VFUNC1 (drct_pl_open_temp_list, Index *, filenames)
 
-/* deprecated; use playlist_delete_selected() */
-AUD_VFUNC1 (drct_pl_delete_selected, int, playlist)
-
 /* added in Audacious 3.4 */
 
 /* "A-B repeat": when playback reaches point B, it returns to point A (where A

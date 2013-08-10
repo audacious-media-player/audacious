@@ -156,33 +156,18 @@ AUD_CONDITIONAL([USE_CHARDET], [enable_chardet])
 ### ---------------------------------------------------------------------------
 dnl D-Bus support
 dnl =============
-AUD_ARG_ENABLE([dbus], [yes],
-[D-Bus support],
+
+AUD_ARG_ENABLE(dbus, yes, [D-Bus support],
 [
-    PKG_CHECK_MODULES([DBUS], [dbus-1 >= 0.60 dbus-glib-1 >= 0.60 gthread-2.0],
-        [enable_dbus=yes],
-        [enable_dbus=no])
+    PKG_CHECK_MODULES(GIO_UNIX, gio-unix-2.0 >= 2.30, enable_dbus=yes, enable_dbus=no)
 
-    PKG_CHECK_MODULES([GIO_UNIX], [gio-unix-2.0 >= 2.30],
-        [enable_dbus=yes],
-        [enable_dbus=no])
-
-    AC_PATH_PROG([DBUS_BINDING_TOOL], [dbus-binding-tool], [no])
-    AC_PATH_PROG([GLIB_GENMARSHAL], [glib-genmarshal], [no])
-    if test "x$DBUS_BINDING_TOOL" = "xno" || test "x$GLIB_GENMARSHAL" = "xno" || test "x$enable_dbus" = "xno" ; then
-        enable_dbus="no"
-    else
-        AC_DEFINE([USE_DBUS], 1, [Define if D-Bus support enabled])
-        LIBAUDCLIENT_LDFLAGS="-laudclient"
-        AC_SUBST([DBUS_CFLAGS])
-        AC_SUBST([DBUS_LIBS])
-        AC_SUBST([DBUS_BINDING_TOOL])
-        AC_SUBST([LIBAUDCLIENT_LDFLAGS])
-
+    if test "x$enable_dbus" = "xyes" ; then
+        AC_DEFINE(USE_DBUS, 1, [Define if D-Bus support enabled])
         AC_SUBST(GIO_UNIX_CFLAGS)
         AC_SUBST(GIO_UNIX_LIBS)
     fi
 ])
+
 AUD_CONDITIONAL([USE_DBUS], [enable_dbus])
 
 

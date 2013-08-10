@@ -6,8 +6,8 @@ CLEAN = aud-dbus.c aud-dbus.h
 include ../../buildsys.mk
 include ../../extra.mk
 
-CPPFLAGS += -I../.. ${GLIB_CFLAGS} ${GIO_UNIX_CFLAGS}
-LIBS += ${GLIB_LIBS} ${GIO_UNIX_LIBS}
+CPPFLAGS := -I../.. ${CPPFLAGS} ${GLIB_CFLAGS} ${GIO_UNIX_CFLAGS}
+LIBS := ${LIBS} ${GLIB_LIBS} ${GIO_UNIX_LIBS}
 
 pre-depend: aud-dbus.c aud-dbus.h
 
