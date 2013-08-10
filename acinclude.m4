@@ -197,12 +197,9 @@ AC_SEARCH_LIBS([pthread_create], [pthread])
 
 dnl Check for Gtk+/GLib and pals
 dnl ============================
-AUD_CHECK_MODULE([GLIB], [glib-2.0], [>= 2.28], [Glib2])
-AUD_CHECK_MODULE([GMODULE], [gmodule-2.0], [>= 2.28], [GModule])
-AUD_CHECK_MODULE([GTHREAD], [gthread-2.0], [>= 2.28], [GThread])
-AUD_CHECK_MODULE([PANGO], [pango], [>= 1.20], [Pango])
-AUD_CHECK_MODULE([CAIRO], [cairo], [>= 1.6], [Cairo])
-AUD_CHECK_MODULE([GTK], [gtk+-3.0], [>= 3.0.0], [GTK+])
+AUD_CHECK_MODULE([GLIB], [glib-2.0], [>= 2.32], [Glib2])
+AUD_CHECK_MODULE([GMODULE], [gmodule-2.0], [>= 2.32], [GModule])
+AUD_CHECK_MODULE([GTK], [gtk+-3.0], [>= 3.4], [GTK+])
 
 ])
 

@@ -88,7 +88,6 @@ CPPFLAGS := -I.. -I../.. \
             ${CPPFLAGS} \
 		${GLIB_CFLAGS}			\
 		${GMODULE_CFLAGS} \
-		${GTHREAD_CFLAGS} \
 		${GTK_CFLAGS}			\
 		${AUDACIOUS_DEFINES}	\
 		${REGEX_CFLAGS}			\
@@ -102,7 +101,6 @@ LIBS := -L../libaudcore -laudcore \
 		${LIBINTL}						\
 		${GLIB_LIBS}					\
 		${GMODULE_LIBS} \
-		${GTHREAD_LIBS} \
 		${GTK_LIBS}						\
 		${REGEX_LIBS}					\
 		${LIBGUESS_LIBS}
