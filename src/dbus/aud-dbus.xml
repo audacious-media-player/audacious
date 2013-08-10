@@ -28,14 +28,10 @@
         </method>
 
         <!-- Quit Audacious -->
-        <method name="Quit">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
-        </method>
+        <method name="Quit" />
 
         <!-- Open files (Eject) -->
-        <method name="Eject">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
-        </method>
+        <method name="Eject" />
 
         <!-- Main window visibility -->
         <method name="MainWinVisible">
@@ -44,7 +40,6 @@
 
         <!-- Toggle main window visibility -->
         <method name="ShowMainWin">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
             <arg type="b" direction="in" name="show"/>
         </method>
 
@@ -56,19 +51,13 @@
 
         <!-- Playback Information/Manipulation -->
         <!-- Begin or resume playback -->
-        <method name="Play">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
-        </method>
+        <method name="Play" />
 
         <!-- Pause playback -->
-        <method name="Pause">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
-        </method>
+        <method name="Pause" />
 
         <!-- Stop playback -->
-        <method name="Stop">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
-        </method>
+        <method name="Stop" />
 
         <!-- Is playback playing? -->
         <method name="Playing">
@@ -111,7 +100,6 @@
 
         <!-- Seek to some absolute position in the current song -->
         <method name="Seek">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
             <!-- Position of song, in ms, to seek to -->
             <arg type="u" direction="in" name="pos"/>
         </method>
@@ -126,7 +114,6 @@
 
         <!-- Set the playback volume -->
         <method name="SetVolume">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
             <!-- Volume of the left channel -->
             <arg type="i" direction="in" name="vl"/>
             <!-- Volume of the right channel -->
@@ -147,14 +134,10 @@
         </method>
 
         <!-- Skip ahead one song in the current playlist -->
-        <method name="Advance">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
-        </method>
+        <method name="Advance" />
 
         <!-- Skip backwards one song in the current playlist -->
-        <method name="Reverse">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
-        </method>
+        <method name="Reverse" />
 
         <!-- Playlist length -->
         <method name="Length">
@@ -212,57 +195,48 @@
 
         <!-- Jump to some position in the playlist -->
         <method name="Jump">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
             <!-- Song position to jump to -->
             <arg type="u" direction="in" name="pos"/>
         </method>
 
         <!-- Add some file to the current playlist -->
         <method name="Add">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
             <!-- File to add -->
             <arg type="s" direction="in" name="file"/>
         </method>
 
         <!-- Add some URL to the current playlist -->
         <method name="AddUrl">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
             <!-- URL to add -->
             <arg type="s" direction="in" name="url"/>
         </method>
 
         <!-- Add a list of files -->
         <method name="AddList">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
             <!-- Array of filenames to add -->
             <arg type="as" direction="in" name="filenames"/>
         </method>
 
         <!-- Open a list of files -->
         <method name="OpenList">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
             <!-- Array of filenames to open -->
             <arg type="as" direction="in" name="filenames"/>
         </method>
 
         <!-- Open a list of files in a temporary playlist -->
         <method name="OpenListToTemp">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
             <!-- Array of filenames to open -->
             <arg type="as" direction="in" name="filenames"/>
         </method>
 
         <!-- Delete some song from the playlist -->
         <method name="Delete">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
             <!-- Position of song to delete -->
             <arg type="u" direction="in" name="pos"/>
         </method>
 
         <!-- Clear the playlist -->
-        <method name="Clear">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
-        </method>
+        <method name="Clear" />
 
         <!-- Query auto-advance status -->
         <method name="AutoAdvance">
@@ -270,9 +244,7 @@
         </method>
 
         <!-- Toggle auto-advance -->
-        <method name="ToggleAutoAdvance">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
-        </method>
+        <method name="ToggleAutoAdvance" />
 
         <!-- Query repeat status -->
         <method name="Repeat">
@@ -280,9 +252,7 @@
         </method>
 
         <!-- Toggle repeat -->
-        <method name="ToggleRepeat">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
-        </method>
+        <method name="ToggleRepeat" />
 
         <!-- Query shuffle status -->
         <method name="Shuffle">
@@ -290,9 +260,7 @@
         </method>
 
         <!-- Toggle shuffle -->
-        <method name="ToggleShuffle">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
-        </method>
+        <method name="ToggleShuffle" />
 
         <!-- Query stop-after-song status -->
         <method name="StopAfter">
@@ -300,38 +268,30 @@
         </method>
 
         <!-- Toggle stop-after-song -->
-        <method name="ToggleStopAfter">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
-        </method>
+        <method name="ToggleStopAfter" />
 
         <!-- Show preferences window -->
         <method name="ShowPrefsBox">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
             <arg type="b" direction="in" name="show"/>
         </method>
 
         <!-- Show about window -->
         <method name="ShowAboutBox">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
             <arg type="b" direction="in" name="show"/>
         </method>
 
         <!-- Show jump to file window -->
         <method name="ShowJtfBox">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
             <arg type="b" direction="in" name="show"/>
         </method>
 
         <!-- Show filebrowser -->
         <method name="ShowFilebrowser">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
             <arg type="b" direction="in" name="show"/>
         </method>
 
         <!-- Either play or pause -->
-        <method name="PlayPause">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
-        </method>
+        <method name="PlayPause" />
 
         <!-- Playqueue get playlist pos -->
         <method name="QueueGetListPos">
@@ -357,29 +317,23 @@
         </method>
 
         <method name="PlaylistInsUrlString">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
             <arg type="s" direction="in" name="url"/>
             <arg type="i" direction="in" name="pos"/>
         </method>
 
         <method name="PlaylistAdd">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
             <arg type="s" direction="in" name="list"/>
         </method>
 
         <method name="PlayqueueAdd">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
             <arg type="i" direction="in" name="pos"/>
         </method>
 
         <method name="PlayqueueRemove">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
             <arg type="i" direction="in" name="pos"/>
         </method>
 
-        <method name="PlayqueueClear">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
-        </method>
+        <method name="PlayqueueClear" />
 
         <method name="PlayqueueIsQueued">
             <arg type="i" direction="in" name="pos"/>
@@ -387,7 +341,6 @@
         </method>
 
         <method name="PlaylistEnqueueToTemp">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
             <arg type="s" direction="in" name="url"/>
         </method>
 
@@ -407,25 +360,21 @@
         </method>
 
         <method name="SetEq">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
             <arg type="d" direction="in" name="preamp"/>
             <arg type="ad" direction="in" name="bands"/>
         </method>
 
         <method name="SetEqPreamp">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
             <arg type="d" direction="in" name="preamp"/>
         </method>
 
         <method name="SetEqBand">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
             <arg type="i" direction="in" name="band"/>
             <arg type="d" direction="in" name="value"/>
         </method>
 
         <!-- Activate/Deactivate Equalizer -->
         <method name="EqualizerActivate">
-            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
             <arg type="b" direction="in" name="active"/>
         </method>
 
