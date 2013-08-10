@@ -419,25 +419,10 @@ struct _IfacePlugin
 {
     PLUGIN_COMMON_FIELDS
 
-    /* is_shown() may return nonzero even if the interface is not actually
-     * visible; for example, if it is obscured by other windows or minimized.
-     * is_focused() only returns nonzero if the interface is actually visible;
-     * in X11, this should be determined by whether the interface has the
-     * toplevel focus.  show() should show and raise the interface, so that both
-     * is_shown() and is_focused() will return nonzero. */
     void (* show) (bool_t show);
-    bool_t (* is_shown) (void);
-    bool_t (* is_focused) (void);
-
-    void (* show_error) (const char * markup);
-    void (* show_filebrowser) (bool_t play_button);
-    void (* show_jump_to_track) (void);
 
     void (* run_gtk_plugin) (void /* GtkWidget */ * widget, const char * name);
     void (* stop_gtk_plugin) (void /* GtkWidget */ * widget);
-
-    void (* install_toolbar) (void /* GtkWidget */ * button);
-    void (* uninstall_toolbar) (void /* GtkWidget */ * button);
 };
 
 #undef PLUGIN_COMMON_FIELDS

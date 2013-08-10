@@ -33,6 +33,7 @@
 #include <math.h>
 
 #include <libaudcore/hook.h>
+#include <libaudgui/libaudgui.h>
 
 #include "debug.h"
 #include "drct.h"
@@ -151,20 +152,26 @@ bool_t audacious_rc_quit(RemoteObject * obj, GError * *error)
 
 bool_t audacious_rc_eject(RemoteObject * obj, GError ** error)
 {
-    interface_show_filebrowser (TRUE);
+    if (headless_mode ())
+        return FALSE;
+
+    audgui_run_filebrowser (TRUE);
     return TRUE;
 }
 
 bool_t audacious_rc_main_win_visible (RemoteObject * obj,
  bool_t * visible, GError ** error)
 {
-    * visible = interface_is_shown ();
+    * visible = ! headless_mode () && interface_is_shown ();
     return TRUE;
 }
 
 bool_t audacious_rc_show_main_win (RemoteObject * obj, bool_t show,
  GError * * error)
 {
+    if (headless_mode ())
+        return FALSE;
+
     interface_show (show);
     return TRUE;
 }
@@ -468,16 +475,26 @@ bool_t audacious_rc_show_about_box(RemoteObject * obj, bool_t show, GError ** er
 
 bool_t audacious_rc_show_jtf_box(RemoteObject * obj, bool_t show, GError ** error)
 {
+    if (headless_mode ())
+        return FALSE;
+
     if (show)
-        interface_show_jump_to_track ();
+        audgui_jump_to_track ();
+    else
+        audgui_jump_to_track_hide ();
 
     return TRUE;
 }
 
 bool_t audacious_rc_show_filebrowser(RemoteObject * obj, bool_t show, GError ** error)
 {
+    if (headless_mode ())
+        return FALSE;
+
     if (show)
-        interface_show_filebrowser (FALSE);
+        audgui_run_filebrowser (FALSE);
+    else
+        audgui_hide_filebrowser ();
 
     return TRUE;
 }

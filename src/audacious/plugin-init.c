@@ -27,7 +27,7 @@
 #include "effect.h"
 #include "general.h"
 #include "interface.h"
-#include "main.h"
+#include "misc.h"
 #include "output.h"
 #include "plugin.h"
 #include "plugins.h"
@@ -125,7 +125,7 @@ static bool_t start_multi_cb (PluginHandle * p, void * type)
 
 static void start_plugins (int type)
 {
-    if (headless && type == PLUGIN_TYPE_IFACE)
+    if (type == PLUGIN_TYPE_IFACE && headless_mode ())
         return;
 
     if (table[type].is_single)
@@ -177,7 +177,7 @@ static bool_t stop_multi_cb (PluginHandle * p, void * type)
 
 static void stop_plugins (int type)
 {
-    if (headless && type == PLUGIN_TYPE_IFACE)
+    if (type == PLUGIN_TYPE_IFACE && headless_mode ())
         return;
 
     plugin_for_enabled (type, misc_cleanup_cb, GINT_TO_POINTER (type));

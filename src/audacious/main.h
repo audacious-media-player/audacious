@@ -44,7 +44,6 @@ void config_cleanup (void);
 void history_cleanup (void);
 
 /* main.c */
-extern bool_t headless;
 bool_t do_autosave (void);
 
 /* signals.c */

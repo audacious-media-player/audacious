@@ -21,21 +21,23 @@
 #include <pthread.h>
 
 #include <libaudcore/hook.h>
+#include <libaudgui/libaudgui-gtk.h>
 
 #include "debug.h"
 #include "general.h"
+#include "i18n.h"
 #include "interface.h"
-#include "main.h"
 #include "misc.h"
 #include "plugin.h"
 #include "plugins.h"
 #include "visualization.h"
 
-static IfacePlugin *current_interface = NULL;
+static IfacePlugin * current_interface = NULL;
 
 static pthread_mutex_t error_mutex = PTHREAD_MUTEX_INITIALIZER;
 static GQueue error_queue = G_QUEUE_INIT;
 static int error_source;
+static GtkWidget * error_win;
 
 bool_t interface_load (PluginHandle * plugin)
 {
@@ -73,17 +75,8 @@ bool_t interface_is_shown (void)
 {
     g_return_val_if_fail (current_interface, FALSE);
 
-    if (PLUGIN_HAS_FUNC (current_interface, is_shown))
-        return current_interface->is_shown ();
-    return TRUE;
-}
+    return get_bool (NULL, "show_interface");
 
-bool_t interface_is_focused (void)
-{
-    g_return_val_if_fail (current_interface, FALSE);
-
-    if (PLUGIN_HAS_FUNC (current_interface, is_focused))
-        return current_interface->is_focused ();
     return TRUE;
 }
 
@@ -96,10 +89,10 @@ static bool_t error_idle_func (void * unused)
     {
         pthread_mutex_unlock (& error_mutex);
 
-        if (current_interface && PLUGIN_HAS_FUNC (current_interface, show_error))
-            current_interface->show_error (message);
-        else
+        if (headless_mode ())
             fprintf (stderr, "ERROR: %s\n", message);
+        else
+            audgui_simple_message (& error_win, GTK_MESSAGE_ERROR, _("Error"), message);
 
         g_free (message);
 
@@ -122,27 +115,6 @@ void interface_show_error (const char * message)
         error_source = g_idle_add (error_idle_func, NULL);
 
     pthread_mutex_unlock (& error_mutex);
-}
-
-/*
- * bool_t play_button
- *       TRUE  - open files
- *       FALSE - add files
- */
-void interface_show_filebrowser (bool_t play_button)
-{
-    g_return_if_fail (current_interface);
-
-    if (PLUGIN_HAS_FUNC (current_interface, show_filebrowser))
-        current_interface->show_filebrowser (play_button);
-}
-
-void interface_show_jump_to_track (void)
-{
-    g_return_if_fail (current_interface);
-
-    if (PLUGIN_HAS_FUNC (current_interface, show_jump_to_track))
-        current_interface->show_jump_to_track ();
 }
 
 static bool_t delete_cb (GtkWidget * window, GdkEvent * event, PluginHandle *
@@ -178,26 +150,6 @@ void interface_remove_plugin_widget (PluginHandle * plugin, GtkWidget * widget)
         current_interface->stop_gtk_plugin (widget);
     else
         gtk_widget_destroy (gtk_widget_get_parent (widget));
-}
-
-void interface_install_toolbar (void * widget)
-{
-    g_return_if_fail (current_interface);
-
-    if (PLUGIN_HAS_FUNC (current_interface, install_toolbar))
-        current_interface->install_toolbar (widget);
-    else
-        g_object_ref (widget);
-}
-
-void interface_uninstall_toolbar (void * widget)
-{
-    g_return_if_fail (current_interface);
-
-    if (PLUGIN_HAS_FUNC (current_interface, uninstall_toolbar))
-        current_interface->uninstall_toolbar (widget);
-    else
-        g_object_unref (widget);
 }
 
 static bool_t probe_cb (PluginHandle * p, PluginHandle * * pp)

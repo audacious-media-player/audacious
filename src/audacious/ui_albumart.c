@@ -23,6 +23,7 @@
 #include <libaudcore/audstrings.h>
 
 #include "i18n.h"
+#include "main.h"
 #include "misc.h"
 
 static bool_t

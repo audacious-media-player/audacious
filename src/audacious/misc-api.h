@@ -62,19 +62,13 @@ AUD_VFUNC1 (history_add, const char *, path)
 /* interface.c */
 AUD_VFUNC1 (interface_show, bool_t, show)
 AUD_FUNC0 (bool_t, interface_is_shown)
-AUD_FUNC0 (bool_t, interface_is_focused)
 
 /* interface_show_error() is safe to call from any thread */
 AUD_VFUNC1 (interface_show_error, const char *, message)
 
-AUD_VFUNC1 (interface_show_filebrowser, bool_t, play)
-AUD_VFUNC0 (interface_show_jump_to_track)
-
-AUD_VFUNC1 (interface_install_toolbar, void *, button)
-AUD_VFUNC1 (interface_uninstall_toolbar, void *, button)
-
 /* main.c */
 AUD_FUNC1 (const char *, get_path, int, path)
+AUD_FUNC0 (bool_t, headless_mode)
 
 /* output.c */
 AUD_VFUNC1 (output_reset, int, type)

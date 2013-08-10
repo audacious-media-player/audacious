@@ -29,6 +29,7 @@
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
+#include <libaudgui/libaudgui.h>
 #include <libaudtag/audtag.h>
 
 #ifdef USE_DBUS
@@ -50,13 +51,11 @@
 
 #define AUTOSAVE_INTERVAL 300 /* seconds */
 
-bool_t headless;
-
 static struct {
     char **filenames;
     int session;
     bool_t play, stop, pause, fwd, rew, play_pause, show_jump_box;
-    bool_t enqueue, mainwin, remote;
+    bool_t enqueue, mainwin, headless;
     bool_t enqueue_to_temp;
     bool_t quit_after_play;
     bool_t version;
@@ -206,7 +205,7 @@ static GOptionEntry cmd_entries[] = {
     {"enqueue", 'e', 0, G_OPTION_ARG_NONE, &options.enqueue, N_("Add files to the playlist"), NULL},
     {"enqueue-to-temp", 'E', 0, G_OPTION_ARG_NONE, &options.enqueue_to_temp, N_("Add new files to a temporary playlist"), NULL},
     {"show-main-window", 'm', 0, G_OPTION_ARG_NONE, &options.mainwin, N_("Display the main window"), NULL},
-    {"headless", 'h', 0, G_OPTION_ARG_NONE, & headless, N_("Headless mode"), NULL},
+    {"headless", 'h', 0, G_OPTION_ARG_NONE, &options.headless, N_("Headless mode"), NULL},
     {"quit-after-play", 'q', 0, G_OPTION_ARG_NONE, &options.quit_after_play, N_("Quit on playback stop"), NULL},
     {"version", 'v', 0, G_OPTION_ARG_NONE, &options.version, N_("Show version"), NULL},
     {"verbose", 'V', 0, G_OPTION_ARG_NONE, &options.verbose, N_("Print debugging messages"), NULL},
@@ -238,6 +237,11 @@ static void parse_options (int * argc, char *** argv)
     g_option_context_free (context);
 
     verbose = options.verbose;
+}
+
+bool_t headless_mode (void)
+{
+    return options.headless;
 }
 
 static bool_t get_lock (void)
@@ -397,9 +401,9 @@ static void do_commands (void)
             drct_pause ();
     }
 
-    if (options.show_jump_box)
-        interface_show_jump_to_track ();
-    if (options.mainwin)
+    if (options.show_jump_box && ! options.headless)
+        audgui_jump_to_track ();
+    if (options.mainwin && ! options.headless)
         interface_show (TRUE);
 }
 
@@ -418,7 +422,7 @@ static void init_one (void)
 
 static void init_two (int * p_argc, char * * * p_argv)
 {
-    if (! headless)
+    if (! options.headless)
     {
 #if ! GLIB_CHECK_VERSION (2, 32, 0)
         g_thread_init (NULL);
