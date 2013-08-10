@@ -19,164 +19,76 @@
  */
 
 #include <stdlib.h>
-#include <string.h>
-#include <glib.h>
-#include <locale.h>
-#include "libaudclient/audctrl.h"
+
 #include "audtool.h"
+#include "wrappers.h"
+
+static int get_main_volume (void)
+{
+    int left = 0, right = 0;
+    obj_audacious_call_volume_sync (dbus_proxy, & left, & right, NULL, NULL);
+    return MAX (left, right);
+}
 
 void get_volume (int argc, char * * argv)
 {
-    int i;
-
-    i = audacious_remote_get_main_volume (dbus_proxy);
-
-    audtool_report ("%d", i);
+    audtool_report ("%d", get_main_volume ());
 }
 
 void set_volume (int argc, char * * argv)
 {
-    int i, current_volume;
-
     if (argc < 2)
     {
-        audtool_whine_args (argv[0], "<level>", argv[0]);
+        audtool_whine_args (argv[0], "<level>");
         exit (1);
     }
 
-    current_volume = audacious_remote_get_main_volume (dbus_proxy);
+    int vol = atoi (argv[1]);
 
     switch (argv[1][0])
     {
     case '+':
     case '-':
-        i = current_volume + atoi (argv[1]);
-        break;
-
-    default:
-        i = atoi (argv[1]);
+        vol += get_main_volume ();
         break;
     }
 
-    audacious_remote_set_main_volume (dbus_proxy, i);
+    obj_audacious_call_set_volume_sync (dbus_proxy, vol, vol, NULL, NULL);
 }
 
 void mainwin_show (int argc, char * * argv)
 {
-    if (argc < 2)
-    {
-        audtool_whine_args (argv[0], "<on/off>");
-        exit (1);
-    }
-
-    if (! g_ascii_strcasecmp (argv[1], "on"))
-        audacious_remote_main_win_toggle (dbus_proxy, TRUE);
-    else if (! g_ascii_strcasecmp (argv[1], "off"))
-        audacious_remote_main_win_toggle (dbus_proxy, FALSE);
+    generic_on_off (argc, argv, obj_audacious_call_show_main_win_sync);
 }
 
 void show_preferences_window (int argc, char * * argv)
 {
-    gboolean show = TRUE;
-
-    if (argc < 2)
-    {
-        audacious_remote_toggle_prefs_box (dbus_proxy, show);
-        return;
-    }
-
-    if (! g_ascii_strcasecmp (argv[1], "on"))
-        show = TRUE;
-    else if (! g_ascii_strcasecmp (argv[1], "off"))
-        show = FALSE;
-    else
-    {
-        audtool_whine_args (argv[0], "<on/off>");
-        exit (1);
-    }
-
-    audacious_remote_toggle_prefs_box (dbus_proxy, show);
+    generic_on_off (argc, argv, obj_audacious_call_show_prefs_box_sync);
 }
 
 void show_about_window (int argc, char * * argv)
 {
-    gboolean show = TRUE;
-
-    if (argc < 2)
-    {
-        audacious_remote_toggle_about_box (dbus_proxy, show);
-        return;
-    }
-
-    if (! g_ascii_strcasecmp (argv[1], "on"))
-        show = TRUE;
-    else if (! g_ascii_strcasecmp (argv[1], "off"))
-        show = FALSE;
-    else
-    {
-        audtool_whine_args (argv[0], "<on/off>");
-        exit (1);
-    }
-
-    audacious_remote_toggle_about_box (dbus_proxy, show);
+    generic_on_off (argc, argv, obj_audacious_call_show_about_box_sync);
 }
 
 void show_jtf_window (int argc, char * * argv)
 {
-    gboolean show = TRUE;
-
-    if (argc < 2)
-    {
-        audacious_remote_toggle_jtf_box (dbus_proxy, show);
-        return;
-    }
-
-    if (! g_ascii_strcasecmp (argv[1], "on"))
-        show = TRUE;
-    else if (! g_ascii_strcasecmp (argv[1], "off"))
-        show = FALSE;
-    else
-    {
-        audtool_whine_args (argv[0], "<on/off>");
-        exit (1);
-    }
-
-    audacious_remote_toggle_jtf_box (dbus_proxy, show);
+    generic_on_off (argc, argv, obj_audacious_call_show_jtf_box_sync);
 }
 
 void show_filebrowser (int argc, char * * argv)
 {
-    gboolean show = TRUE;
-
-    if (argc < 2)
-    {
-        audacious_remote_toggle_filebrowser (dbus_proxy, show);
-        return;
-    }
-
-    if (! g_ascii_strcasecmp (argv[1], "on"))
-        show = TRUE;
-    else if (! g_ascii_strcasecmp (argv[1], "off"))
-        show = FALSE;
-    else
-    {
-        audtool_whine_args (argv[0], "<on/off>");
-        exit (1);
-    }
-
-    audacious_remote_toggle_filebrowser (dbus_proxy, show);
+    generic_on_off (argc, argv, obj_audacious_call_show_filebrowser_sync);
 }
 
 void shutdown_audacious_server (int argc, char * * argv)
 {
-    audacious_remote_quit (dbus_proxy);
+    obj_audacious_call_quit_sync (dbus_proxy, NULL, NULL);
 }
 
 void get_handlers_list (int argc, char * * argv)
 {
-    int i;
-
-    for (i = 0; handlers[i].name != NULL; i++)
+    for (int i = 0; handlers[i].name; i ++)
     {
         if (! g_ascii_strcasecmp ("<sep>", handlers[i].name))
             audtool_report ("%s%s:", i == 0 ? "" : "\n", handlers[i].desc);
@@ -189,27 +101,14 @@ void get_handlers_list (int argc, char * * argv)
     audtool_report ("Report bugs to http://redmine.audacious-media-player.org/");
 }
 
-void toggle_aot (int argc, char * * argv)
-{
-    if (argc < 2)
-    {
-        audtool_whine_args (argv[0], "<on/off>");
-        exit (1);
-    }
-
-    if (! g_ascii_strcasecmp (argv[1], "on"))
-        audacious_remote_toggle_aot (dbus_proxy, TRUE);
-    else if (! g_ascii_strcasecmp (argv[1], "off"))
-        audacious_remote_toggle_aot (dbus_proxy, FALSE);
-}
-
 void get_version (int argc, char * * argv)
 {
     char * version = NULL;
-    version = audacious_remote_get_version (dbus_proxy);
+    obj_audacious_call_version_sync (dbus_proxy, & version, NULL, NULL);
 
-    if (version)
-        audtool_report ("Audacious %s", version);
+    if (! version)
+        exit (1);
 
+    audtool_report ("Audacious %s", version);
     g_free (version);
 }

@@ -18,64 +18,63 @@
  */
 
 #include <stdlib.h>
-#include <string.h>
-#include <glib.h>
-#include <locale.h>
-#include "libaudclient/audctrl.h"
+
 #include "audtool.h"
 
 void playback_play (int argc, char * * argv)
 {
-    audacious_remote_play (dbus_proxy);
+    obj_audacious_call_play_sync (dbus_proxy, NULL, NULL);
 }
 
 void playback_pause (int argc, char * * argv)
 {
-    audacious_remote_pause (dbus_proxy);
+    obj_audacious_call_pause_sync (dbus_proxy, NULL, NULL);
 }
 
 void playback_playpause (int argc, char * * argv)
 {
-    if (audacious_remote_is_playing (dbus_proxy))
-        audacious_remote_pause (dbus_proxy);
-    else
-        audacious_remote_play (dbus_proxy);
+    obj_audacious_call_play_pause_sync (dbus_proxy, NULL, NULL);
 }
 
 void playback_stop (int argc, char * * argv)
 {
-    audacious_remote_stop (dbus_proxy);
+    obj_audacious_call_stop_sync (dbus_proxy, NULL, NULL);
 }
 
 void playback_playing (int argc, char * * argv)
 {
-    if (! audacious_remote_is_paused (dbus_proxy))
-        exit (! audacious_remote_is_playing (dbus_proxy));
-    else
-        exit (1);
+    gboolean playing = FALSE;
+    obj_audacious_call_playing_sync (dbus_proxy, & playing, NULL, NULL);
+
+    exit (! playing);
 }
 
 void playback_paused (int argc, char * * argv)
 {
-    exit (! audacious_remote_is_paused (dbus_proxy));
+    gboolean paused = FALSE;
+    obj_audacious_call_paused_sync (dbus_proxy, & paused, NULL, NULL);
+
+    exit (! paused);
 }
 
 void playback_stopped (int argc, char * * argv)
 {
-    if (! audacious_remote_is_playing (dbus_proxy) && ! audacious_remote_is_paused (dbus_proxy))
-        exit (0);
-    else
-        exit (1);
+    gboolean stopped = FALSE;
+    obj_audacious_call_stopped_sync (dbus_proxy, & stopped, NULL, NULL);
+
+    exit (! stopped);
 }
 
 void playback_status (int argc, char * * argv)
 {
-    if (audacious_remote_is_paused (dbus_proxy))
-        audtool_report ("paused");
-    else if (audacious_remote_is_playing (dbus_proxy))
-        audtool_report ("playing");
-    else
-        audtool_report ("stopped");
+    char * status = NULL;
+    obj_audacious_call_status_sync (dbus_proxy, & status, NULL, NULL);
+
+    if (! status)
+        exit (1);
+
+    audtool_report ("%s", status);
+    g_free (status);
 }
 
 void playback_seek (int argc, char * * argv)
@@ -86,22 +85,18 @@ void playback_seek (int argc, char * * argv)
         exit (1);
     }
 
-    audacious_remote_jump_to_time (dbus_proxy, atof (argv[1]) * 1000);
+    obj_audacious_call_seek_sync (dbus_proxy, atof (argv[1]) * 1000, NULL, NULL);
 }
 
 void playback_seek_relative (int argc, char * * argv)
 {
-    int oldtime, newtime, diff;
-
     if (argc < 2)
     {
         audtool_whine_args (argv[0], "<position>");
         exit (1);
     }
 
-    oldtime = audacious_remote_get_output_time (dbus_proxy);
-    diff = atof (argv[1]) * 1000;
-    newtime = oldtime + diff;
-
-    audacious_remote_jump_to_time (dbus_proxy, newtime);
+    unsigned oldtime = 0;
+    obj_audacious_call_time_sync (dbus_proxy, & oldtime, NULL, NULL);
+    obj_audacious_call_seek_sync (dbus_proxy, oldtime + atof (argv[1]) * 1000, NULL, NULL);
 }

@@ -18,10 +18,7 @@
  */
 
 #include <stdlib.h>
-#include <string.h>
-#include <glib.h>
-#include <locale.h>
-#include "libaudclient/audctrl.h"
+
 #include "audtool.h"
 
 void audtool_report (const char * str, ...)
@@ -66,34 +63,36 @@ void audtool_whine_args (const char * name, const char * fmt, ...)
 
 void audtool_whine_tuple_fields (void)
 {
-    int nfields, i;
-    char * * fields = audacious_remote_get_tuple_fields (dbus_proxy), * * tmp = fields;
+    char * * fields = NULL;
+    obj_audacious_call_get_tuple_fields_sync (dbus_proxy, & fields, NULL, NULL);
+
+    if (! fields)
+        exit (1);
 
     audtool_whine ("Field names include, but are not limited to:\n");
 
-    for (nfields = 0; tmp && * tmp; nfields ++, tmp ++);
+    char * * tmp = fields;
+    int col = 0;
 
-    tmp = fields;
-    i = 0;
     g_printerr ("         ");
 
     while (tmp && * tmp)
     {
-        i += g_utf8_strlen (* tmp, -1);
+        col += g_utf8_strlen (* tmp, -1);
 
-        if (i > 45)
+        if (col > 45)
         {
             g_printerr ("\n         ");
-            i = 0;
+            col = 0;
         }
 
         g_printerr ("%s", * tmp);
 
-        if (-- nfields > 0)
-            g_printerr (", ");
-
         g_free (* tmp);
         tmp ++;
+
+        if (* tmp)
+            g_printerr (", ");
     }
 
     g_printerr ("\n");

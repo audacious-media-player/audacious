@@ -18,140 +18,97 @@
  */
 
 #include <stdlib.h>
-#include <string.h>
-#include <glib.h>
-#include <glib/gi18n.h>
-#include <locale.h>
-#include "libaudclient/audctrl.h"
+
 #include "audtool.h"
+#include "wrappers.h"
 
 void get_current_song (int argc, char * * argv)
 {
-    int playpos = audacious_remote_get_playlist_pos (dbus_proxy);
-    char * song = audacious_remote_get_playlist_title (dbus_proxy, playpos);
-
-    if (! song)
-    {
-        audtool_report ("No song playing.");
-        return;
-    }
-
-    audtool_report ("%s", song);
+    char * title = get_entry_title (get_current_entry ());
+    audtool_report ("%s", title);
+    g_free (title);
 }
 
 void get_current_song_filename (int argc, char * * argv)
 {
-    int playpos = audacious_remote_get_playlist_pos (dbus_proxy);
-    char * uri, * filename;
-
-    uri = audacious_remote_get_playlist_file (dbus_proxy, playpos);
-    filename = (uri != NULL) ? g_filename_from_uri (uri, NULL, NULL) : NULL;
-
-    audtool_report ("%s", (filename != NULL) ? filename : (uri != NULL) ? uri
-     : _("No song playing."));
-
-    g_free (uri);
+    char * filename = get_entry_filename (get_current_entry ());
+    audtool_report ("%s", filename);
     g_free (filename);
 }
 
 void get_current_song_output_length (int argc, char * * argv)
 {
-    int frames = audacious_remote_get_output_time (dbus_proxy);
-    int length = frames / 1000;
-
-    audtool_report ("%d:%.2d", length / 60, length % 60);
+    int time = get_current_time () / 1000;
+    audtool_report ("%d:%.2d", time / 60, time % 60);
 }
 
 void get_current_song_output_length_seconds (int argc, char * * argv)
 {
-    int frames = audacious_remote_get_output_time (dbus_proxy);
-    int length = frames / 1000;
-
-    audtool_report ("%d", length);
+    int time = get_current_time () / 1000;
+    audtool_report ("%d", time);
 }
 
 void get_current_song_output_length_frames (int argc, char * * argv)
 {
-    int frames = audacious_remote_get_output_time (dbus_proxy);
-
-    audtool_report ("%d", frames);
+    int time = get_current_time ();
+    audtool_report ("%d", time);
 }
 
 void get_current_song_length (int argc, char * * argv)
 {
-    int playpos = audacious_remote_get_playlist_pos (dbus_proxy);
-    int frames = audacious_remote_get_playlist_time (dbus_proxy, playpos);
-    int length = frames / 1000;
-
+    int length = get_entry_length (get_current_entry ()) / 1000;
     audtool_report ("%d:%.2d", length / 60, length % 60);
 }
 
 void get_current_song_length_seconds (int argc, char * * argv)
 {
-    int playpos = audacious_remote_get_playlist_pos (dbus_proxy);
-    int frames = audacious_remote_get_playlist_time (dbus_proxy, playpos);
-    int length = frames / 1000;
-
+    int length = get_entry_length (get_current_entry ()) / 1000;
     audtool_report ("%d", length);
 }
 
 void get_current_song_length_frames (int argc, char * * argv)
 {
-    int playpos = audacious_remote_get_playlist_pos (dbus_proxy);
-    int frames = audacious_remote_get_playlist_time (dbus_proxy, playpos);
-
-    audtool_report ("%d", frames);
+    int length = get_entry_length (get_current_entry ());
+    audtool_report ("%d", length);
 }
 
 void get_current_song_bitrate (int argc, char * * argv)
 {
-    int rate, freq, nch;
-
-    audacious_remote_get_info (dbus_proxy, & rate, & freq, & nch);
-
-    audtool_report ("%d", rate);
+    int bitrate;
+    get_current_info (& bitrate, NULL, NULL);
+    audtool_report ("%d", bitrate);
 }
 
 void get_current_song_bitrate_kbps (int argc, char * * argv)
 {
-    int rate, freq, nch;
-
-    audacious_remote_get_info (dbus_proxy, & rate, & freq, & nch);
-
-    audtool_report ("%d", rate / 1000);
+    int bitrate;
+    get_current_info (& bitrate, NULL, NULL);
+    audtool_report ("%d", bitrate / 1000);
 }
 
 void get_current_song_frequency (int argc, char * * argv)
 {
-    int rate, freq, nch;
-
-    audacious_remote_get_info (dbus_proxy, & rate, & freq, & nch);
-
-    audtool_report ("%d", freq);
+    int samplerate;
+    get_current_info (NULL, & samplerate, NULL);
+    audtool_report ("%d", samplerate);
 }
 
 void get_current_song_frequency_khz (int argc, char * * argv)
 {
-    int rate, freq, nch;
-
-    audacious_remote_get_info (dbus_proxy, & rate, & freq, & nch);
-
-    audtool_report ("%0.1f", (float) freq / 1000);
+    int samplerate;
+    get_current_info (NULL, & samplerate, NULL);
+    audtool_report ("%d", samplerate / 1000);
 }
 
 void get_current_song_channels (int argc, char * * argv)
 {
-    int rate, freq, nch;
-
-    audacious_remote_get_info (dbus_proxy, & rate, & freq, & nch);
-
-    audtool_report ("%d", nch);
+    int channels;
+    get_current_info (NULL, NULL, & channels);
+    audtool_report ("%d", channels);
 }
 
 void get_current_song_tuple_field_data (int argc, char * * argv)
 {
-    char * data;
-
     if (argc < 2)
     {
         audtool_whine_args (argv[0], "<fieldname>");
@@ -159,19 +116,14 @@ void get_current_song_tuple_field_data (int argc, char * * argv)
         exit (1);
     }
 
-    if (! (data = audacious_get_tuple_field_data (dbus_proxy, argv[1],
-     audacious_remote_get_playlist_pos (dbus_proxy))))
-        return;
-
-    audtool_report ("%s", data);
-
-    g_free (data);
+    char * str = get_entry_field (get_current_entry (), argv[1]);
+    audtool_report ("%s", str);
+    g_free (str);
 }
 
 void get_current_song_info (int argc, char * * argv)
 {
-    int rate, freq, nch;
-
-    audacious_remote_get_info (dbus_proxy, & rate, & freq, & nch);
-    audtool_report ("rate = %d freq = %d nch = %d", rate, freq, nch);
+    int bitrate, samplerate, channels;
+    get_current_info (& bitrate, & samplerate, & channels);
+    audtool_report ("rate = %d freq = %d nch = %d", bitrate, samplerate, channels);
 }

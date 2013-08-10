@@ -21,9 +21,7 @@
 #ifndef AUDTOOL_H
 #define AUDTOOL_H
 
-#include <audacious/dbus.h>
-
-extern DBusGProxy * dbus_proxy;
+#include "aud-dbus.h"
 
 struct commandhandler
 {
@@ -33,7 +31,8 @@ struct commandhandler
     int args;
 };
 
-extern struct commandhandler handlers[];
+extern const struct commandhandler handlers[];
+extern ObjAudacious * dbus_proxy;
 
 void audtool_report (const char * str, ...);
 void audtool_whine (const char * str, ...);
@@ -115,9 +114,6 @@ void show_filebrowser (int, char * *);
 void shutdown_audacious_server (int, char * *);
 void show_about_window (int, char * *);
 
-void toggle_aot (int argc, char * * argv);
-void get_skin (int argc, char * * argv);
-void set_skin (int argc, char * * argv);
 void get_version (int argc, char * * argv);
 
 void equalizer_get_eq (int argc, char * * argv);

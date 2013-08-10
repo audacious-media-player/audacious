@@ -20,13 +20,11 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <glib.h>
 #include <locale.h>
-#include "libaudclient/audctrl.h"
+
 #include "audtool.h"
 
-struct commandhandler handlers[] =
+const struct commandhandler handlers[] =
 {
     {"<sep>", NULL, "Vital information", 0},
     {"current-song", get_current_song, "returns current song title", 0},
@@ -115,7 +113,6 @@ struct commandhandler handlers[] =
     {"preferences-show", show_preferences_window, "shows/hides the preferences window", 1},
     {"about-show", show_about_window, "shows/hides the about window", 1},
 
-    {"always-on-top", toggle_aot, "on/off always on top", 1},
     {"version", get_version, "shows Audacious version", 0},
     {"shutdown", shutdown_audacious_server, "shuts down Audacious", 0},
 
@@ -126,30 +123,43 @@ struct commandhandler handlers[] =
     {NULL, NULL, NULL, 0}
 };
 
-DBusGProxy * dbus_proxy = NULL;
-static DBusGConnection * connection = NULL;
-
-static void audtool_connect (void)
-{
-    GError * error = NULL;
-
-    connection = dbus_g_bus_get (DBUS_BUS_SESSION, & error);
-
-    if (connection == NULL)
-    {
-        fprintf (stderr, "D-Bus Error: %s\n", error->message);
-        g_error_free (error);
-        exit (EXIT_FAILURE);
-    }
-
-    dbus_proxy = dbus_g_proxy_new_for_name (connection, AUDACIOUS_DBUS_SERVICE,
-     AUDACIOUS_DBUS_PATH, AUDACIOUS_DBUS_INTERFACE);
-}
+ObjAudacious * dbus_proxy = NULL;
+static GDBusConnection * connection = NULL;
 
 static void audtool_disconnect (void)
 {
     g_object_unref (dbus_proxy);
     dbus_proxy = NULL;
+
+    g_dbus_connection_close_sync (connection, NULL, NULL);
+    connection = NULL;
+}
+
+static void audtool_connect (void)
+{
+	GError * error = NULL;
+
+	connection = g_bus_get_sync (G_BUS_TYPE_SESSION, NULL, & error);
+
+	if (! connection)
+	{
+		fprintf (stderr, "D-Bus error: %s\n", error->message);
+		g_error_free (error);
+		exit (EXIT_FAILURE);
+	}
+
+    dbus_proxy = obj_audacious_proxy_new_sync (connection, 0,
+     "org.atheme.audacious", "/org/atheme/audacious", NULL, & error);
+
+	if (! dbus_proxy)
+	{
+		fprintf (stderr, "D-Bus error: %s\n", error->message);
+		g_error_free (error);
+        g_dbus_connection_close_sync (connection, NULL, NULL);
+		exit (EXIT_FAILURE);
+	}
+
+    atexit (audtool_disconnect);
 }
 
 int main (int argc, char * * argv)
@@ -194,8 +204,6 @@ int main (int argc, char * * argv)
         fprintf (stderr, "Unknown command \"%s\".  Try \"audtool help\".\n", argv[1]);
         exit (EXIT_FAILURE);
     }
-
-    audtool_disconnect ();
 
     return 0;
 }

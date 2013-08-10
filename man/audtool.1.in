@@ -237,9 +237,6 @@ Shows/hides the preferences window.
 .I --about-show <on/off>
 Shows/hides the about window.
 .TP
-.I --always-on-top <on/off>
-Enables/disables always on top setting.
-.TP
 .I --version
 Displays Audacious version.
 .TP
