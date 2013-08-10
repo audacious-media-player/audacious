@@ -163,6 +163,10 @@ AUD_ARG_ENABLE([dbus], [yes],
         [enable_dbus=yes],
         [enable_dbus=no])
 
+    PKG_CHECK_MODULES([GIO_UNIX], [gio-unix-2.0 >= 2.30],
+        [enable_dbus=yes],
+        [enable_dbus=no])
+
     AC_PATH_PROG([DBUS_BINDING_TOOL], [dbus-binding-tool], [no])
     AC_PATH_PROG([GLIB_GENMARSHAL], [glib-genmarshal], [no])
     if test "x$DBUS_BINDING_TOOL" = "xno" || test "x$GLIB_GENMARSHAL" = "xno" || test "x$enable_dbus" = "xno" ; then
@@ -174,6 +178,9 @@ AUD_ARG_ENABLE([dbus], [yes],
         AC_SUBST([DBUS_LIBS])
         AC_SUBST([DBUS_BINDING_TOOL])
         AC_SUBST([LIBAUDCLIENT_LDFLAGS])
+
+        AC_SUBST(GIO_UNIX_CFLAGS)
+        AC_SUBST(GIO_UNIX_LIBS)
     fi
 ])
 AUD_CONDITIONAL([USE_DBUS], [enable_dbus])
