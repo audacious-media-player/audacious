@@ -5,20 +5,25 @@
 # Translators:
 # CH <259095+transifex@gmail.com>, 2012
 # Bartosz Kosiorek <gang65@poczta.onet.pl>, 2003
+# CH <259095+transifex@gmail.com>, 2012
+# felikstayson <felikstayson@o2.pl>, 2012
 # felikstayson <felikstayson@o2.pl>, 2012
 # GNOME PL Team <translators@gnome.pl>, 2004
-# Grzegorz Kowal <g_kowal@poczta.onet.pl>, 2000, 2001
+# Grzegorz Kowal <g_kowal@poczta.onet.pl>, 2000-2001
+# mkkot <marcin2006@gmail.com>, 2013
 # mgrvnwald <marco@mgrvnwald.com>, 2013
 # mgrvnwald <marco@mgrvnwald.com>, 2013
+# mgrvnwald <marco@mgrvnwald.com>, 2013
+# mkkot <marcin2006@gmail.com>, 2013
 # Piotr Sokół <psokol@jabster.pl>, 2012
 # Szymon Weihs <sz.weihs@gmail.com>, 2011
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2013-06-29 01:09+0200\n"
-"PO-Revision-Date: 2013-02-10 20:54+0000\n"
-"Last-Translator: mgrvnwald <marco@mgrvnwald.com>\n"
+"POT-Creation-Date: 2013-09-01 20:57+0200\n"
+"PO-Revision-Date: 2013-07-07 13:21+0000\n"
+"Last-Translator: mkkot <marcin2006@gmail.com>\n"
 "Language-Team: Polish (http://www.transifex.com/projects/p/audacious/"
 "language/pl/)\n"
 "Language: pl\n"
@@ -126,12 +131,12 @@ msgstr ""
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/playback.c:361
+#: src/audacious/playback.c:368
 #, c-format
 msgid "No decoder found for %s."
 msgstr "Nie odnaleziono dekodera dla %s."
 
-#: src/audacious/playback.c:399
+#: src/audacious/playback.c:406
 #, c-format
 msgid "%s could not be opened."
 msgstr "Nie można otworzyć %s."
@@ -189,7 +194,7 @@ msgstr "Lista odtwarzania"
 
 #: src/audacious/ui_preferences.c:70
 msgid "Song Info"
-msgstr "Informacje o ścieżce"
+msgstr "Informacje o nagraniu"
 
 #: src/audacious/ui_preferences.c:71
 msgid "Plugins"
@@ -302,7 +307,7 @@ msgstr "Tryb albumu"
 
 #: src/audacious/ui_preferences.c:131
 msgid "<b>Output Settings</b>"
-msgstr "<b>Ustawienia wyjścia</b>"
+msgstr "<b>Wyjście dźwięku</b>"
 
 #: src/audacious/ui_preferences.c:133
 msgid "Bit depth:"
@@ -318,7 +323,7 @@ msgstr "ms"
 
 #: src/audacious/ui_preferences.c:139
 msgid "Soft clipping"
-msgstr "Miękkie przesterowanie"
+msgstr "Usuń przesterowania w nagraniach"
 
 #: src/audacious/ui_preferences.c:141
 msgid "Use software volume control (not recommended)"
@@ -326,11 +331,11 @@ msgstr "Użyj programowej regulacji głośności (niezalecane)"
 
 #: src/audacious/ui_preferences.c:143
 msgid "<b>Replay Gain</b>"
-msgstr "<b>Replay Gain</b>"
+msgstr "<b>Wyrównaj głośność</b>"
 
 #: src/audacious/ui_preferences.c:144
 msgid "Enable Replay Gain"
-msgstr "Włączenie"
+msgstr "Włącz wyrównywanie głośności"
 
 #: src/audacious/ui_preferences.c:147
 msgid "Prevent clipping (recommended)"
@@ -354,15 +359,15 @@ msgstr "Wzmocnij pliki bez etykiet:"
 
 #: src/audacious/ui_preferences.c:158
 msgid "Proxy hostname:"
-msgstr "Nazwa komputera:"
+msgstr "Nazwa serwera:"
 
 #: src/audacious/ui_preferences.c:159
 msgid "Proxy port:"
-msgstr "Port:"
+msgstr "Port serwera:"
 
 #: src/audacious/ui_preferences.c:162
 msgid "Proxy username:"
-msgstr "Nazwa użytkownika:"
+msgstr "Użytkownik:"
 
 #: src/audacious/ui_preferences.c:163
 msgid "Proxy password:"
@@ -370,15 +375,15 @@ msgstr "Hasło:"
 
 #: src/audacious/ui_preferences.c:167
 msgid "<b>Proxy Configuration</b>"
-msgstr "<b>Konfiguracja proxy</b>"
+msgstr "<b>Konfiguracja serwera pośredniczącego</b>"
 
 #: src/audacious/ui_preferences.c:168
 msgid "Enable proxy usage"
-msgstr "Użyj proxy"
+msgstr "Użyj serwera pośredniczącego"
 
 #: src/audacious/ui_preferences.c:171
 msgid "Use authentication with proxy"
-msgstr "Uwierzytelnij proxy"
+msgstr "Uwierzytelnianie"
 
 #: src/audacious/ui_preferences.c:179
 msgid "Auto character encoding detector for:"
@@ -518,7 +523,7 @@ msgstr "Format tytułu:"
 
 #: src/audacious/ui_preferences.c:1178
 msgid "Output plugin:"
-msgstr "Wtyczka:"
+msgstr "System dźwięku:"
 
 #: src/audacious/ui_preferences.c:1237
 msgid "Transport"

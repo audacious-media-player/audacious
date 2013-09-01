@@ -3,7 +3,7 @@
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
-# Adolfo Jayme <fitoschido@gmail.com>, 2013
+# Adolfo Jayme Barrientos <fitoschido@ubuntu.com>, 2013
 # Adrián Ramirez Escalante <buried.prophet@gmail.com>, 2012
 # Cosme Domínguez Díaz <cosme.ddiaz@gmail.com>, 2010
 # Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004
@@ -22,9 +22,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2013-06-29 01:09+0200\n"
+"POT-Creation-Date: 2013-09-01 20:57+0200\n"
 "PO-Revision-Date: 2013-06-17 06:56+0000\n"
-"Last-Translator: Adolfo Jayme <fitoschido@gmail.com>\n"
+"Last-Translator: Adolfo Jayme Barrientos <fitoschido@ubuntu.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/projects/p/audacious/"
 "language/es/)\n"
 "Language: es\n"
@@ -130,12 +130,12 @@ msgstr ""
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/playback.c:361
+#: src/audacious/playback.c:368
 #, c-format
 msgid "No decoder found for %s."
 msgstr "No se encontró decodificador para %s."
 
-#: src/audacious/playback.c:399
+#: src/audacious/playback.c:406
 #, c-format
 msgid "%s could not be opened."
 msgstr "%s no se pudo abrir."

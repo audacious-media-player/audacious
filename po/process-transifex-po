@@ -16,11 +16,17 @@ ca.po)
 cs.po)
     LANGUAGE="Czech"
     ;;
+da.po)
+    LANGUAGE="Danish"
+    ;;
 de.po)
     LANGUAGE="German"
     ;;
 el.po)
     LANGUAGE="Greek"
+    ;;
+en_GB.po)
+    LANGUAGE="English (United Kingdom)"
     ;;
 eo.po)
     LANGUAGE="Esperanto"

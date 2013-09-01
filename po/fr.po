@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2013-06-29 01:09+0200\n"
+"POT-Creation-Date: 2013-09-01 20:57+0200\n"
 "PO-Revision-Date: 2013-02-04 02:20+0000\n"
 "Last-Translator: Alain-Olivier  Breysse <yahoe.001@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/projects/p/audacious/"
@@ -119,12 +119,12 @@ msgstr ""
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/playback.c:361
+#: src/audacious/playback.c:368
 #, c-format
 msgid "No decoder found for %s."
 msgstr "Aucun décodeur trouvé pour %s."
 
-#: src/audacious/playback.c:399
+#: src/audacious/playback.c:406
 #, c-format
 msgid "%s could not be opened."
 msgstr "%s n'a pas pu être ouvert."

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2013-06-29 01:09+0200\n"
+"POT-Creation-Date: 2013-09-01 20:57+0200\n"
 "PO-Revision-Date: 2013-02-03 20:17+0000\n"
 "Last-Translator: Radioactiveman <thomas-lange2@gmx.de>\n"
 "Language-Team: Czech (http://www.transifex.com/projects/p/audacious/language/"
@@ -120,12 +120,12 @@ msgstr ""
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/playback.c:361
+#: src/audacious/playback.c:368
 #, c-format
 msgid "No decoder found for %s."
 msgstr "Pro %s nenalezen žádní dekodér."
 
-#: src/audacious/playback.c:399
+#: src/audacious/playback.c:406
 #, c-format
 msgid "%s could not be opened."
 msgstr ""

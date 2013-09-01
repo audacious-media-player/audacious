@@ -5,9 +5,11 @@
 # Translators:
 # 		ChoSeongWoo <syn333@gmail.com>, 2008
 # ChoSeongWoo <syn333@gmail.com>, 2008
+# Darkcircle <darkcircle.0426@gmail.com>, 2012
 # natird <dritan86@gmail.com>, 2012
 #       Jaegeum Choe <baedaron@hananet.net>, 2001
 #       Man-Yong Lee <yong@linuxkorea.co.kr>, 2000
+# natird <dritan86@gmail.com>, 2012
 #       Sang-Jin Hwang <accel@accellinux.org>, 1999
 # Darkcircle <darkcircle.0426@gmail.com>, 2012
 # Darkcircle <darkcircle.0426@gmail.com>, 2012
@@ -15,9 +17,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2013-06-29 01:09+0200\n"
-"PO-Revision-Date: 2013-02-15 10:53+0000\n"
-"Last-Translator: Darkcircle <darkcircle.0426@gmail.com>\n"
+"POT-Creation-Date: 2013-09-01 20:57+0200\n"
+"PO-Revision-Date: 2013-08-28 06:00+0000\n"
+"Last-Translator: kentarch <bkrhlim@aol.com>\n"
 "Language-Team: Korean (http://www.transifex.com/projects/p/audacious/"
 "language/ko/)\n"
 "Language: ko\n"
@@ -28,13 +30,13 @@ msgstr ""
 
 #: src/audacious/adder.c:74
 msgid "Searching ..."
-msgstr "검색중 ..."
+msgstr "검색 중 ..."
 
 #: src/audacious/adder.c:102
 #, c-format
 msgid "%d file found"
 msgid_plural "%d files found"
-msgstr[0] "%d개의 파일을 찾았습니다"
+msgstr[0] "%d 개의 파일 발견"
 
 #: src/audacious/chardet.c:38
 msgid "  (invalid UTF-8)"
@@ -43,39 +45,39 @@ msgstr " (유효하지 않은 UTF-8)"
 #: src/audacious/equalizer_preset.c:171
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
-msgstr "'%s' Winamp EQF 파일을 가져오는데 오류가 발생했습니다"
+msgstr "'%s' Winamp EQF 파일을 가져올 때 오류 발생"
 
 #: src/audacious/main.c:232
 msgid "Skip backwards in playlist"
-msgstr "재생 목록의 뒷부분 건너뛰기"
+msgstr "재생 목록 뒤로 건너뛰기"
 
 #: src/audacious/main.c:233
 msgid "Start playing current playlist"
-msgstr "현재 재생 목록 재생 시작"
+msgstr "현재 재생 목록 재생"
 
 #: src/audacious/main.c:234
 msgid "Pause current song"
-msgstr "현재 노래 멈춤"
+msgstr "현재 노래 일시 정지"
 
 #: src/audacious/main.c:235
 msgid "Stop current song"
-msgstr "현재 노래 정지"
+msgstr "현재 노래 멈춤 "
 
 #: src/audacious/main.c:236
 msgid "Pause if playing, play otherwise"
-msgstr "재생 중이면 멈춤, 그 외에는 재생"
+msgstr "재생 중이면 일시 정지, 그 외에는 재생"
 
 #: src/audacious/main.c:237
 msgid "Skip forward in playlist"
-msgstr "재생 목록의 앞부분 건너뛰기"
+msgstr "재생 목록 앞으로 건너뛰기"
 
 #: src/audacious/main.c:238
 msgid "Display Jump to File dialog"
-msgstr "파일 대화상자에서 이동 표시"
+msgstr "파일로 이동하기 대화 상자 표시"
 
 #: src/audacious/main.c:239
 msgid "Add files to the playlist"
-msgstr "재생 목록에 파일 추가하기"
+msgstr "재생 목록에 파일 추가"
 
 #: src/audacious/main.c:240
 msgid "Add new files to a temporary playlist"
@@ -91,15 +93,15 @@ msgstr "헤드리스 모드"
 
 #: src/audacious/main.c:243
 msgid "Quit on playback stop"
-msgstr "재생을 정지하면 나가기"
+msgstr "재생을 끝나면 종료"
 
 #: src/audacious/main.c:244
 msgid "Show version"
-msgstr "버전 보이기"
+msgstr "버전 보기"
 
 #: src/audacious/main.c:245
 msgid "Print debugging messages"
-msgstr "디버깅 메시지 출력하기"
+msgstr "디버깅 메시지 출력"
 
 #: src/audacious/main.c:246
 msgid "FILE..."
@@ -120,14 +122,14 @@ msgstr ""
 
 #: src/audacious/main.c:565
 msgid "Audacious"
-msgstr "오다셔스"
+msgstr "오데이셔스 "
 
-#: src/audacious/playback.c:361
+#: src/audacious/playback.c:368
 #, c-format
 msgid "No decoder found for %s."
 msgstr "%s의 디코더가 없습니다."
 
-#: src/audacious/playback.c:399
+#: src/audacious/playback.c:406
 #, c-format
 msgid "%s could not be opened."
 msgstr "%s을(를) 열 수 없습니다."
@@ -135,7 +137,7 @@ msgstr "%s을(를) 열 수 없습니다."
 #: src/audacious/playlist-files.c:50
 #, c-format
 msgid "Cannot %s %s: unsupported file extension."
-msgstr "%2$s 파일을 %1$s 할 수 없습니다: 지원하지 않는 파일 확장자입니다."
+msgstr "%s 를  재생할 수  없습니다.  %s 파일 형식을 지원하지 않습니다."
 
 #: src/audacious/playlist-files.c:51
 msgid "save"
@@ -158,8 +160,8 @@ msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress "
 "(or has been disabled)."
 msgstr ""
-"메타데이터 검색이 여전히 진행중(또는 비활성화 됨)이기 때문에 재생 목록을 정렬"
-"할 수 없습니다."
+"메타데이터 검색이  진행 중(또는 비활성화 됨)이기 때문에 재생 목록을 정렬할 "
+"수 없습니다."
 
 #: src/audacious/plugin-preferences.c:54
 #, c-format
@@ -394,7 +396,7 @@ msgstr "시작할 때 이어서 재생"
 
 #: src/audacious/ui_preferences.c:190
 msgid "Advance when the current song is deleted"
-msgstr "현재 곡을 지울 때 미리 알림"
+msgstr "현재 곡이 삭제되면 다음곡으로 진행"
 
 #: src/audacious/ui_preferences.c:192
 msgid "Clear the playlist when opening files"
@@ -406,7 +408,7 @@ msgstr "임시 재생 목록에서 파일 열기"
 
 #: src/audacious/ui_preferences.c:196
 msgid "Do not load metadata for songs until played"
-msgstr "재생 전 음악 메타데이터를 불러오지 않기"
+msgstr "재생할 때 곡 메타데이터를 불러오기"
 
 #: src/audacious/ui_preferences.c:199
 msgid "<b>Compatibility</b>"
@@ -538,7 +540,7 @@ msgstr "일반"
 
 #: src/audacious/ui_preferences.c:1276
 msgid "Audacious Preferences"
-msgstr "오다셔스 환경 설정"
+msgstr "오데이셔스 환경 설정"
 
 #: src/audacious/util.c:114
 #, c-format
@@ -582,7 +584,7 @@ msgstr "라이선스"
 
 #: src/libaudgui/about.c:73
 msgid "About Audacious"
-msgstr "오다셔스 정보"
+msgstr "오데이셔스  정보"
 
 #: src/libaudgui/confirm.c:66
 #, c-format

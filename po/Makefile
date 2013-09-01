@@ -12,8 +12,10 @@ LOCALES = ast.po \
 	  bg.po \
 	  ca.po \
 	  cs.po \
+	  da.po \
 	  de.po \
 	  el.po \
+	  en_GB.po \
 	  eo.po \
 	  es_AR.po \
 	  es_MX.po \

@@ -8,14 +8,14 @@
 # Marinos Zak <marinoszak@gmail.com>, 2012
 # Stathis Kamperis <ekamperi@auth.gr>, 2006
 # Γιάννης Ανθυμίδης <yannanth@gmail.com>, 2011
-# Γιάννης Ανθυμίδης <yannanth@gmail.com>, 2012
+# Γιάννης Ανθυμίδης <yannanth@gmail.com>, 2011-2013
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2013-06-29 01:09+0200\n"
-"PO-Revision-Date: 2013-02-03 20:17+0000\n"
-"Last-Translator: Radioactiveman <thomas-lange2@gmx.de>\n"
+"POT-Creation-Date: 2013-09-01 20:57+0200\n"
+"PO-Revision-Date: 2013-08-22 22:02+0000\n"
+"Last-Translator: Γιάννης Ανθυμίδης <yannanth@gmail.com>\n"
 "Language-Team: Greek (http://www.transifex.com/projects/p/audacious/language/"
 "el/)\n"
 "Language: el\n"
@@ -42,7 +42,7 @@ msgstr "  (μη έγκυρο UTF-8)"
 #: src/audacious/equalizer_preset.c:171
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
-msgstr "Σφάλμα εισαγωγή αρχείου EQF του Winamp «%s»"
+msgstr "Σφάλμα κατά εισαγωγή αρχείου EQF του Winamp «%s»"
 
 #: src/audacious/main.c:232
 msgid "Skip backwards in playlist"
@@ -86,11 +86,11 @@ msgstr "Εμφάνιση του κυρίους παραθύρου"
 
 #: src/audacious/main.c:242
 msgid "Headless mode"
-msgstr ""
+msgstr "Λειτουργία χωρίς γραφική προβολή"
 
 #: src/audacious/main.c:243
 msgid "Quit on playback stop"
-msgstr ""
+msgstr "Έξοδος στη διακοπή αναπαραγωγής"
 
 #: src/audacious/main.c:244
 msgid "Show version"
@@ -121,20 +121,20 @@ msgstr ""
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/playback.c:361
+#: src/audacious/playback.c:368
 #, c-format
 msgid "No decoder found for %s."
 msgstr "Δεν βρέθηκε αποκωδικοποιητής για %s."
 
-#: src/audacious/playback.c:399
+#: src/audacious/playback.c:406
 #, c-format
 msgid "%s could not be opened."
-msgstr ""
+msgstr "Δεν ήταν δυνατό το άνοιγμα του %s."
 
 #: src/audacious/playlist-files.c:50
 #, c-format
 msgid "Cannot %s %s: unsupported file extension."
-msgstr ""
+msgstr "Δεν ήταν δυνατή η %s του %s: μη υποστηριγμένη επέκταση αρχείου."
 
 #: src/audacious/playlist-files.c:51
 msgid "save"
@@ -157,6 +157,8 @@ msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress "
 "(or has been disabled)."
 msgstr ""
+"Η λίστα αναπαραγωγής δεν μπορεί να ταξινομηθεί επειδή η σάρωση για "
+"μεταδεδομένα είναι ακόμα σε εξέλιξη (ή έχει απενεργοποιηθεί)."
 
 #: src/audacious/plugin-preferences.c:54
 #, c-format
@@ -215,7 +217,7 @@ msgstr "Όνομα Αρχείου"
 
 #: src/audacious/ui_preferences.c:83
 msgid "Filepath"
-msgstr "Διεύθυνση Αρχείου"
+msgstr "Τοποθεσία Αρχείου"
 
 #: src/audacious/ui_preferences.c:84
 msgid "Date"
@@ -231,7 +233,7 @@ msgstr "Σχόλιο"
 
 #: src/audacious/ui_preferences.c:87
 msgid "Codec"
-msgstr "Codec"
+msgstr "Πολυμέσο"
 
 #: src/audacious/ui_preferences.c:88
 msgid "Quality"
@@ -287,7 +289,7 @@ msgstr "Τούρκικα"
 
 #: src/audacious/ui_preferences.c:112
 msgid "Floating point"
-msgstr ""
+msgstr "Κινητή υποδιαστολή"
 
 #: src/audacious/ui_preferences.c:128
 msgid "Album mode"
@@ -295,11 +297,11 @@ msgstr "Λειτουργία άλμπουμ"
 
 #: src/audacious/ui_preferences.c:131
 msgid "<b>Output Settings</b>"
-msgstr "<b>Ρυθμίσεις Εξόδου</ b>"
+msgstr "<b>Ρυθμίσεις Εξόδου</b>"
 
 #: src/audacious/ui_preferences.c:133
 msgid "Bit depth:"
-msgstr "Βάθος Bit:"
+msgstr "Βάθος μπιτ:"
 
 #: src/audacious/ui_preferences.c:136
 msgid "Buffer size:"
@@ -343,7 +345,7 @@ msgstr "dB"
 
 #: src/audacious/ui_preferences.c:153
 msgid "Amplify untagged files:"
-msgstr ""
+msgstr "Ενίσχυση αρχείων χωρίς ετικέτες:"
 
 #: src/audacious/ui_preferences.c:158
 msgid "Proxy hostname:"
@@ -391,7 +393,7 @@ msgstr "Συνέχεια αναπαραγωγής στην εκκίνηση"
 
 #: src/audacious/ui_preferences.c:190
 msgid "Advance when the current song is deleted"
-msgstr "Προχώρησε όταν το τρέχων αρχείο διαγραφθεί"
+msgstr "Προχώρησε όταν το τρέχων αρχείο διαγραφεί"
 
 #: src/audacious/ui_preferences.c:192
 msgid "Clear the playlist when opening files"
@@ -403,7 +405,7 @@ msgstr "Άνοιγμα αρχείων σε μια προσωρινή λίστα 
 
 #: src/audacious/ui_preferences.c:196
 msgid "Do not load metadata for songs until played"
-msgstr "Μην φορτωθούν τα μεταδεδομένα για τα τραγούδια πρωτού παίξουν"
+msgstr "Μην φορτώνεις μεταδεδομένα για τα τραγούδια προτού παίξουν"
 
 #: src/audacious/ui_preferences.c:199
 msgid "<b>Compatibility</b>"
@@ -411,7 +413,7 @@ msgstr "<b>Συμβατότητα</b>"
 
 #: src/audacious/ui_preferences.c:200
 msgid "Interpret \\ (backward slash) as a folder delimiter"
-msgstr ""
+msgstr "Ερμηνεία \\ (αντιπλάγια) ως διαχωριστή φακέλων"
 
 #: src/audacious/ui_preferences.c:207
 msgid "<b>Album Art</b>"
@@ -430,7 +432,8 @@ msgstr ""
 
 #: src/audacious/ui_preferences.c:212
 msgid "Search for images matching song file name"
-msgstr "Αναζήτηση εικόνων που ταιριάζουν με το όνομα του αρχείου τραγουδιού"
+msgstr ""
+"Αναζήτηση για εικόνες που ταιριάζουν με το όνομα του αρχείου τραγουδιού"
 
 #: src/audacious/ui_preferences.c:214
 msgid "Search recursively"
@@ -446,7 +449,7 @@ msgstr "<b>Αναδυόμενες πληροφορίες</b>"
 
 #: src/audacious/ui_preferences.c:220
 msgid "Show popup information"
-msgstr "Εμφάνιση πληροφορίων σε αναδυόμενο παράθυρο"
+msgstr "Εμφάνιση πληροφοριών σε αναδυόμενο παράθυρο"
 
 #: src/audacious/ui_preferences.c:222
 msgid "Popup delay (tenths of a second):"
@@ -454,7 +457,7 @@ msgstr "Αναδυόμενη καθυστέρηση (δέκατα του δευ�
 
 #: src/audacious/ui_preferences.c:225
 msgid "Show time scale for current song"
-msgstr "Εμφάνιση χρονοδιάγραμμα για το τρέχον τραγούδι"
+msgstr "Εμφάνιση χρονοδιαγράμματος για το τρέχον τραγούδι"
 
 #: src/audacious/ui_preferences.c:239
 msgid "TITLE"
@@ -518,7 +521,7 @@ msgstr "Πρόσθετο γραμμής εξόδου:"
 
 #: src/audacious/ui_preferences.c:1237
 msgid "Transport"
-msgstr "Μεταφορα"
+msgstr "Μεταφορά"
 
 #: src/audacious/ui_preferences.c:1237
 msgid "Input"
@@ -556,7 +559,7 @@ msgstr "Κανένα τραγούδι σε αναπαραγωγή."
 #: src/libaudcore/audstrings.c:203
 #, c-format
 msgid "Audio CD, track %s"
-msgstr "Δίσκος Μουσικής, κομμάτι %s"
+msgstr "Μουσικό CD, κομμάτι %s"
 
 #: src/libaudcore/tuple.c:543
 msgid "Mono"
@@ -564,7 +567,7 @@ msgstr "Μονοφωνικό"
 
 #: src/libaudcore/tuple.c:545
 msgid "Stereo"
-msgstr "Στέρεοφωνικό"
+msgstr "Στερεοφωνικό"
 
 #: src/libaudcore/tuple.c:547
 #, c-format
@@ -692,7 +695,7 @@ msgstr "Bluegrass"
 
 #: src/libaudgui/infowin.c:78
 msgid "Blues"
-msgstr "Blues"
+msgstr "Μπλουζ"
 
 #: src/libaudgui/infowin.c:79
 msgid "Chamber Music"
@@ -704,7 +707,7 @@ msgstr "Κλασική Μουσική"
 
 #: src/libaudgui/infowin.c:81
 msgid "Country"
-msgstr "Country"
+msgstr "Κάντρι"
 
 #: src/libaudgui/infowin.c:82
 msgid "Death Metal"
@@ -712,7 +715,7 @@ msgstr "Death Metal"
 
 #: src/libaudgui/infowin.c:83
 msgid "Disco"
-msgstr "Disco"
+msgstr "Ντίσκο"
 
 #: src/libaudgui/infowin.c:84
 msgid "Easy Listening"
@@ -720,11 +723,11 @@ msgstr "Easy Listening"
 
 #: src/libaudgui/infowin.c:85
 msgid "Folk"
-msgstr "Folk"
+msgstr "Φολκ"
 
 #: src/libaudgui/infowin.c:86
 msgid "Funk"
-msgstr "Funk"
+msgstr "Φανκ"
 
 #: src/libaudgui/infowin.c:87
 msgid "Gangsta Rap"
@@ -748,7 +751,7 @@ msgstr "Heavy Metal"
 
 #: src/libaudgui/infowin.c:92
 msgid "Hip-hop"
-msgstr "Hip-hop"
+msgstr "Χιπ χοπ"
 
 #: src/libaudgui/infowin.c:93
 msgid "House"
@@ -756,7 +759,7 @@ msgstr "House"
 
 #: src/libaudgui/infowin.c:94
 msgid "Jazz"
-msgstr "Jazz"
+msgstr "Τζαζ"
 
 #: src/libaudgui/infowin.c:95
 msgid "Jungle"
@@ -780,7 +783,7 @@ msgstr "Noise"
 
 #: src/libaudgui/infowin.c:100
 msgid "Pop"
-msgstr "Pop"
+msgstr "Ποπ"
 
 #: src/libaudgui/infowin.c:101
 msgid "Punk Rock"
@@ -792,7 +795,7 @@ msgstr "Ραπ"
 
 #: src/libaudgui/infowin.c:103
 msgid "Reggae"
-msgstr "Reggae"
+msgstr "Ρέγκε"
 
 #: src/libaudgui/infowin.c:104
 msgid "Rock"
@@ -816,7 +819,7 @@ msgstr "Soul"
 
 #: src/libaudgui/infowin.c:109
 msgid "Swing"
-msgstr "Swing"
+msgstr "Σουίνγκ"
 
 #: src/libaudgui/infowin.c:110
 msgid "Techno"
@@ -853,7 +856,7 @@ msgstr "<span size=\"small\">Ποιότητα:</ span>"
 
 #: src/libaudgui/infowin.c:344
 msgid "<span size=\"small\">Bitrate:</span>"
-msgstr "<span size=\"small\">Bitrate:</span>"
+msgstr "<span size=\"small\">Ρυθμός μετάδοσης:</span>"
 
 #: src/libaudgui/infowin.c:368
 msgid "<span size=\"small\">Title</span>"
@@ -912,7 +915,7 @@ msgstr "Εισαγωγή Λίστας Τραγουδιών"
 #: src/libaudgui/playlists.c:65
 #, c-format
 msgid "Overwrite %s?"
-msgstr "Αντικατάσταση %s;"
+msgstr "Να γίνει αντικατάσταση του %s;"
 
 #: src/libaudgui/queue-manager.c:195
 msgid "Queue Manager"
@@ -1000,3 +1003,5 @@ msgid ""
 "\n"
 "(Further messages have been hidden.)"
 msgstr ""
+"\n"
+"(Περαιτέρω μηνύματα έχουν αποκρυφτεί)"
