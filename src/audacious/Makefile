@@ -48,6 +48,8 @@ INCLUDES = api.h \
            drct.h \
            drct-api.h \
            i18n.h				\
+           input.h \
+           input-api.h \
            misc.h \
            misc-api.h \
            playlist.h \

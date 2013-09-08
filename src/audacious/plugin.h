@@ -254,66 +254,6 @@ struct _EffectPlugin
     bool_t preserves_format;
 };
 
-struct OutputAPI
-{
-    /* Prepares the output system for playback in the specified format.  Returns
-     * TRUE on success.  If the call fails, no other output functions may be
-     * called. */
-    bool_t (* open_audio) (int format, int rate, int channels);
-
-    /* Informs the output system of replay gain values for the current song so
-     * that volume levels can be adjusted accordingly, if the user so desires.
-     * This may be called at any time during playback should the values change. */
-    void (* set_replaygain_info) (const ReplayGainInfo * info);
-
-    /* Passes audio data to the output system for playback.  The data must be in
-     * the format passed to open_audio, and the length (in bytes) must be an
-     * integral number of frames.  This function blocks until all the data has
-     * been written (though it may not yet be heard by the user). */
-    void (* write_audio) (void * data, int length);
-
-    /* Returns the time counter.  Note that this represents the amount of audio
-     * data passed to the output system, not the amount actually heard by the
-     * user. */
-    int (* written_time) (void);
-};
-
-typedef const struct _InputPlayback InputPlayback;
-
-struct _InputPlayback
-{
-    /* Pointer to the output API functions. */
-    const struct OutputAPI * output;
-
-    /* Updates attributes of the stream.  "bitrate" is in bits per second.
-     * "samplerate" is in hertz. */
-    void (* set_params) (InputPlayback * p, int bitrate, int samplerate,
-     int channels);
-
-    /* Gets cached metadata for the stream. */
-    Tuple * (* get_tuple) (InputPlayback * p);
-
-    /* Updates metadata for the stream.  Caller gives up ownership of one
-     * reference to the tuple. */
-    void (* set_tuple) (InputPlayback * playback, Tuple * tuple);
-
-    /* If replay gain settings are stored in the tuple associated with the
-     * current song, this function can be called (after opening audio) to apply
-     * those settings.  If the settings are changed in a call to set_tuple, this
-     * function must be called again to apply the updated settings. */
-    void (* set_gain_from_playlist) (InputPlayback * playback);
-
-    /* Checks whether playback is to be stopped.  A plugin's play() function
-     * should poll check_stop() periodically and return as soon as check_stop()
-     * returns TRUE. */
-    bool_t (* check_stop) (void);
-
-    /* Checks whether a seek has been requested.  If so, calls
-     * OutputAPI::flush() and returns the position of the seek in milliseconds.
-     * Otherwise, returns -1. */
-    int (* check_seek) (void);
-};
-
 struct _InputPlugin
 {
     PLUGIN_COMMON_FIELDS
@@ -355,37 +295,28 @@ struct _InputPlugin
      * with priority 0 are tried first, 10 last. */
     int priority;
 
-    /* Must return nonzero if the plugin can handle this file. */
+    /* Returns TRUE if the plugin can handle the file. */
     bool_t (* is_our_file_from_vfs) (const char * filename, VFSFile * file);
 
-    /* Must return a tuple containing metadata for this file, or NULL if no
-     * metadata could be read.  Audacious takes over one reference to the tuple
-     * returned.   */
+    /* Reads metadata from the file, returning a reference to the tuple produced. */
     Tuple * (* probe_for_tuple) (const char * filename, VFSFile * file);
 
-    /* Optional.  Must write metadata from a tuple to this file.  Must return
-     * nonzero on success or zero on failure. */
+    /* Plays the file.  Returns FALSE on error.  Also see input-api.h. */
+    bool_t (* play) (const char * filename, VFSFile * file);
+
+    /* Optional.  Writes metadata to the file, returning FALSE on error. */
     bool_t (* update_song_tuple) (const char * filename, VFSFile * file, const Tuple * tuple);
 
-    /* Optional, and not recommended.  Must show a window with information about
-     * this file.  If this function is provided, update_song_tuple should not be. */
-    /* Bug: Implementing this function duplicates user interface code and code
-     * to open the file in each and every plugin. */
-    void (* file_info_box) (const char * filename);
-
-    /* Optional.  Must try to read an "album art" image embedded in this file.
-     * Must return nonzero on success or zero on failure.  On success, must fill
-     * <data> with a pointer to a block of data allocated with g_malloc and
-     * <size> with the size in bytes of that block.  The data may be in any
-     * format supported by GTK.  Audacious will free the data when it is no
-     * longer needed. */
+    /* Optional.  Reads an album art image (JPEG or PNG data) from the file.
+     * Returns a pointer to the data along with its size in bytes.  The returned
+     * data will be freed when no longer needed.  Returns FALSE on error. */
     bool_t (* get_song_image) (const char * filename, VFSFile * file,
      void * * data, int64_t * size);
 
-    /* Must try to play this file.  <playback> is a structure containing output-
-     * related functions which the plugin may make use of.  Must return nonzero
-     * if some of the file was successfully played or zero on failure. */
-    bool_t (* play) (InputPlayback * playback, const char * filename, VFSFile * file);
+    /* Optional.  Displays a window showing info about the file.  In general,
+     * this function should be avoided since Audacious already provides a file
+     * info window. */
+    void (* file_info_box) (const char * filename);
 };
 
 struct _GeneralPlugin

@@ -26,23 +26,13 @@
 
 #include "drct.h"
 #include "i18n.h"
+#include "input.h"
 #include "interface.h"
 #include "misc.h"
 #include "output.h"
 #include "playback.h"
 #include "playlist.h"
 #include "plugin.h"
-
-static bool_t open_audio_wrapper (int format, int rate, int channels);
-static void write_audio_wrapper (void * data, int length);
-
-static const struct OutputAPI output_api = {
- .open_audio = open_audio_wrapper,
- .set_replaygain_info = output_set_replaygain_info,
- .write_audio = write_audio_wrapper,
- .written_time = output_written_time};
-
-static InputPlayback playback_api;
 
 static pthread_t playback_thread_handle;
 static int end_source = 0;
@@ -76,7 +66,7 @@ static int current_length = -1;
 
 static InputPlugin * current_decoder = NULL;
 static VFSFile * current_file = NULL;
-static ReplayGainInfo gain_from_playlist;
+static ReplayGainInfo current_gain;
 
 /* level 2 data (persists to end of playlist) */
 static bool_t stopped = TRUE;
@@ -85,7 +75,7 @@ static int failed_entries = 0;
 /* clears gain info if tuple == NULL */
 static void read_gain_from_tuple (const Tuple * tuple)
 {
-    memset (& gain_from_playlist, 0, sizeof gain_from_playlist);
+    memset (& current_gain, 0, sizeof current_gain);
 
     if (tuple == NULL)
         return;
@@ -99,14 +89,14 @@ static void read_gain_from_tuple (const Tuple * tuple)
 
     if (gain_unit)
     {
-        gain_from_playlist.album_gain = album_gain / (float) gain_unit;
-        gain_from_playlist.track_gain = track_gain / (float) gain_unit;
+        current_gain.album_gain = album_gain / (float) gain_unit;
+        current_gain.track_gain = track_gain / (float) gain_unit;
     }
 
     if (peak_unit)
     {
-        gain_from_playlist.album_peak = album_peak / (float) peak_unit;
-        gain_from_playlist.track_peak = track_peak / (float) peak_unit;
+        current_gain.album_peak = album_peak / (float) peak_unit;
+        current_gain.track_peak = track_peak / (float) peak_unit;
     }
 }
 
@@ -386,7 +376,7 @@ static void * playback_thread (void * unused)
         goto DONE;
     }
 
-    playback_error = ! current_decoder->play (& playback_api, current_filename, current_file);
+    playback_error = ! current_decoder->play (current_filename, current_file);
 
 DONE:
     if (! ready_flag)
@@ -447,19 +437,38 @@ void drct_seek (int time)
     pthread_mutex_unlock (& control_mutex);
 }
 
-static bool_t open_audio_wrapper (int format, int rate, int channels)
+bool_t input_open_audio (int format, int rate, int channels)
 {
+    g_return_val_if_fail (playing, FALSE);
+
     if (! output_open_audio (format, rate, channels))
         return FALSE;
+
+    output_set_replaygain_info (& current_gain);
 
     if (paused)
         output_pause (TRUE);
 
+    current_samplerate = rate;
+    current_channels = channels;
+
+    if (ready_flag)
+        event_queue ("info change", NULL);
+
     return TRUE;
 }
 
-static void write_audio_wrapper (void * data, int length)
+void input_set_gain (const ReplayGainInfo * info)
 {
+    g_return_if_fail (playing);
+    memcpy (& current_gain, info, sizeof current_gain);
+    output_set_replaygain_info (& current_gain);
+}
+
+void input_write_audio (void * data, int length)
+{
+    g_return_if_fail (playing);
+
     if (! ready_flag)
         set_ready ();
 
@@ -481,45 +490,43 @@ static void write_audio_wrapper (void * data, int length)
     }
 }
 
-static void set_params (InputPlayback * p, int bitrate, int samplerate,
- int channels)
+int input_written_time (void)
 {
-    g_return_if_fail (playing);
-
-    current_bitrate = bitrate;
-    current_samplerate = samplerate;
-    current_channels = channels;
-
-    if (drct_get_ready ())
-        event_queue ("info change", NULL);
+    g_return_val_if_fail (playing, -1);
+    return output_written_time ();
 }
 
-static Tuple * get_tuple (InputPlayback * p)
+Tuple * input_get_tuple (void)
 {
     g_return_val_if_fail (playing, NULL);
     return playback_entry_get_tuple ();
 }
 
-static void set_tuple (InputPlayback * p, Tuple * tuple)
+void input_set_tuple (Tuple * tuple)
 {
     g_return_if_fail (playing);
-    read_gain_from_tuple (tuple);
     playback_entry_set_tuple (tuple);
 }
 
-static void set_gain_from_playlist (InputPlayback * p)
+void input_set_bitrate (int bitrate)
 {
     g_return_if_fail (playing);
-    p->output->set_replaygain_info (& gain_from_playlist);
+    current_bitrate = bitrate;
+
+    if (ready_flag)
+        event_queue ("info change", NULL);
 }
 
-static bool_t check_stop (void)
+bool_t input_check_stop (void)
 {
+    g_return_val_if_fail (playing, TRUE);
     return g_atomic_int_get (& stop_flag);
 }
 
-static int check_seek (void)
+int input_check_seek (void)
 {
+    g_return_val_if_fail (playing, -1);
+
     pthread_mutex_lock (& control_mutex);
     int seek = seek_request;
 
@@ -534,16 +541,6 @@ static int check_seek (void)
     pthread_mutex_unlock (& control_mutex);
     return seek;
 }
-
-static InputPlayback playback_api = {
-    .output = & output_api,
-    .set_params = set_params,
-    .get_tuple = get_tuple,
-    .set_tuple = set_tuple,
-    .set_gain_from_playlist = set_gain_from_playlist,
-    .check_stop = check_stop,
-    .check_seek = check_seek
-};
 
 char * drct_get_filename (void)
 {

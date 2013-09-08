@@ -34,6 +34,7 @@
 
 #define AUD_API_DECLARE
 #include "drct.h"
+#include "input.h"
 #include "misc.h"
 #include "playlist.h"
 #include "plugins.h"
@@ -45,6 +46,7 @@ char verbose = 0;
 
 AudAPITable api_table = {
  .drct_api = & drct_api,
+ .input_api = & input_api,
  .misc_api = & misc_api,
  .playlist_api = & playlist_api,
  .plugins_api = & plugins_api,
