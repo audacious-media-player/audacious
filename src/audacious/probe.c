@@ -188,6 +188,11 @@ DONE:
     if (state.handle != NULL)
         vfs_fclose (state.handle);
 
+    if (state.plugin != NULL)
+        AUDDBG ("Probe succeeded: %s\n", plugin_get_name (state.plugin));
+    else
+        AUDDBG ("Probe failed.\n");
+
     return state.plugin;
 }
 
