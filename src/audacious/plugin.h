@@ -290,6 +290,9 @@ struct _InputPlayback
     void (* set_params) (InputPlayback * p, int bitrate, int samplerate,
      int channels);
 
+    /* Gets cached metadata for the stream. */
+    Tuple * (* get_tuple) (InputPlayback * p);
+
     /* Updates metadata for the stream.  Caller gives up ownership of one
      * reference to the tuple. */
     void (* set_tuple) (InputPlayback * playback, Tuple * tuple);

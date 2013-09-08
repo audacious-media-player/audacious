@@ -494,6 +494,12 @@ static void set_params (InputPlayback * p, int bitrate, int samplerate,
         event_queue ("info change", NULL);
 }
 
+static Tuple * get_tuple (InputPlayback * p)
+{
+    g_return_val_if_fail (playing, NULL);
+    return playback_entry_get_tuple ();
+}
+
 static void set_tuple (InputPlayback * p, Tuple * tuple)
 {
     g_return_if_fail (playing);
@@ -532,6 +538,7 @@ static int check_seek (void)
 static InputPlayback playback_api = {
     .output = & output_api,
     .set_params = set_params,
+    .get_tuple = get_tuple,
     .set_tuple = set_tuple,
     .set_gain_from_playlist = set_gain_from_playlist,
     .check_stop = check_stop,
@@ -544,11 +551,6 @@ char * drct_get_filename (void)
         return NULL;
 
     return str_ref (current_filename);
-}
-
-Tuple * drct_get_tuple (void)
-{
-    return playback_entry_get_tuple ();
 }
 
 char * drct_get_title (void)
