@@ -89,7 +89,7 @@ static int probe_buffer_fseek (VFSFile * file, int64_t offset, int whence)
     if (whence == SEEK_CUR)
         offset += p->at;
 
-    if (offset < 0)
+    if (offset < 0 || offset > sizeof p->buffer)
         return -1;
 
     increase_buffer (p, offset);
