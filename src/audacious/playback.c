@@ -546,6 +546,11 @@ char * drct_get_filename (void)
     return str_ref (current_filename);
 }
 
+Tuple * drct_get_tuple (void)
+{
+    return playback_entry_get_tuple ();
+}
+
 char * drct_get_title (void)
 {
     if (! playing)

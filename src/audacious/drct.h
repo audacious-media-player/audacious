@@ -23,6 +23,7 @@
 #include <audacious/api.h>
 #include <libaudcore/core.h>
 #include <libaudcore/index.h>
+#include <libaudcore/tuple.h>
 
 #define AUD_API_NAME DRCTAPI
 #define AUD_API_SYMBOL drct_api

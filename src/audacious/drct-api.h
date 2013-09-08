@@ -31,6 +31,7 @@ AUD_VFUNC0 (drct_quit)
  * and must be freed with str_unref(). */
 
 AUD_VFUNC0 (drct_play)
+AUD_VFUNC0 (drct_play_pause)
 AUD_VFUNC1 (drct_play_playlist, int, playlist)
 AUD_VFUNC0 (drct_pause)
 AUD_VFUNC0 (drct_stop)
@@ -38,11 +39,19 @@ AUD_FUNC0 (bool_t, drct_get_playing)
 AUD_FUNC0 (bool_t, drct_get_ready)
 AUD_FUNC0 (bool_t, drct_get_paused)
 AUD_FUNC0 (char *, drct_get_filename)
+AUD_FUNC0 (Tuple *, drct_get_tuple)
 AUD_FUNC0 (char *, drct_get_title)
 AUD_VFUNC3 (drct_get_info, int *, bitrate, int *, samplerate, int *, channels)
 AUD_FUNC0 (int, drct_get_time)
 AUD_FUNC0 (int, drct_get_length)
 AUD_VFUNC1 (drct_seek, int, time)
+
+/* "A-B repeat": when playback reaches point B, it returns to point A (where A
+ * and B are in milliseconds).  The value -1 is interpreted as the beginning of
+ * the song (for A) or the end of the song (for B).  A-B repeat is disabled
+ * entirely by setting both A and B to -1. */
+AUD_VFUNC2 (drct_set_ab_repeat, int, a, int, b)
+AUD_VFUNC2 (drct_get_ab_repeat, int *, a, int *, b)
 
 /* --- VOLUME CONTROL --- */
 
@@ -68,14 +77,3 @@ AUD_VFUNC1 (drct_pl_open, const char *, filename)
 AUD_VFUNC1 (drct_pl_open_list, Index *, filenames)
 AUD_VFUNC1 (drct_pl_open_temp, const char *, filename)
 AUD_VFUNC1 (drct_pl_open_temp_list, Index *, filenames)
-
-/* added in Audacious 3.4 */
-
-/* "A-B repeat": when playback reaches point B, it returns to point A (where A
- * and B are in milliseconds).  The value -1 is interpreted as the beginning of
- * the song (for A) or the end of the song (for B).  A-B repeat is disabled
- * entirely by setting both A and B to -1. */
-AUD_VFUNC2 (drct_set_ab_repeat, int, a, int, b)
-AUD_VFUNC2 (drct_get_ab_repeat, int *, a, int *, b)
-
-AUD_VFUNC0 (drct_play_pause)
