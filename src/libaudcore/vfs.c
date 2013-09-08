@@ -235,10 +235,10 @@ EXPORT int
 vfs_getc(VFSFile *file)
 {
     unsigned char c;
-    
+
     if (vfs_fread (& c, 1, 1, file) != 1)
         return EOF;
-        
+
     return c;
 }
 
@@ -254,7 +254,7 @@ vfs_ungetc(int c, VFSFile *file)
 {
     if (vfs_fseek (file, -1, SEEK_CUR) < 0)
         return EOF;
-        
+
     return c;
 }
 
