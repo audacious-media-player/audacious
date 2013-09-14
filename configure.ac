@@ -270,7 +270,6 @@ dnl Output configuration files
 dnl ==========================
 AC_CONFIG_FILES([
     audacious.pc
-    audclient.pc
     buildsys.mk
     extra.mk
     man/audtool.1

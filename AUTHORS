@@ -49,14 +49,6 @@ Command line tool (src/audtool):
   William Pitcock
   Yoshiki Yazawa
 
-Remote control shared library (src/libaudclient):
- * Copyright © 2007-2011:
-  Matti Hämäläinen
-  John Lindgren
-  William Pitcock
-  Ben Tucker
-  Yoshiki Yazawa
-
 Core shared library (src/libaudcore):
  * Copyright © 2006-2012:
   Daniel Barkalow
