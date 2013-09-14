@@ -116,8 +116,6 @@ fi
 ### ---------------------------------------------------------------------------
 dnl Path settings
 dnl =============
-AC_PATH_PROG([AUDACIOUS_PATH], [audacious], [no])
-
 AUD_ARG_ENABLE([user-plugin-dir], [yes],
 [per-user plugin dir])
 
@@ -287,30 +285,12 @@ echo ""
 echo "Configuration:"
 echo ""
 echo "  Install path:                           $prefix"
-
-if test "x$AUDACIOUS_PATH" != "xno"; then
-echo "  Current Audacious executable:           $AUDACIOUS_PATH"
-fi
-
 echo "  Allow user plugin dir:                  $enable_user_plugin_dir"
 echo ""
 echo "  Automatic character code detection:     $enable_chardet"
 echo "  D-Bus support:                          $enable_dbus"
 echo "  Thunar support:                         $enable_thunar"
 echo ""
-
-if test "x$AUDACIOUS_PATH" != "xno" && test "x$prefix/bin/audacious" != "x$AUDACIOUS_PATH"; then
-    audlocation=`dirname $AUDACIOUS_PATH`
-    echo "**"
-    echo "** NOTICE! Configure has discovered that you already have Audacious installed"
-    echo "** and it does not match with the given --prefix. You have Audacious installed"
-    echo "** in ${audlocation} and you chose ${prefix}/bin."
-    echo "**"
-    echo "** If you don't want two copies of Audacious installed, rerun configure with"
-    echo "** the --prefix option set to the location of the old Audacious, or uninstall"
-    echo "** the old Audacious."
-    echo "**"
-fi
 
 if test "x$enable_dbus" != "xyes"; then
     echo "**"
