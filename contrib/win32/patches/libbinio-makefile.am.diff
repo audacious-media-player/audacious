@@ -1,0 +1,11 @@
+--- Makefile.am.0	2005-09-17 11:33:29 -0400
++++ Makefile.am	2013-09-13 21:55:38 -0400
+@@ -2,7 +2,7 @@
+ 
+ libbinio_la_SOURCES = binio.cpp binfile.cpp binwrap.cpp binstr.cpp
+ 
+-libbinio_la_LDFLAGS = -version-info 1:0:0
++libbinio_la_LDFLAGS = -version-info 1:0:0 -no-undefined
+ 
+ pkginclude_HEADERS = binio.h binfile.h binwrap.h binstr.h
+ 
