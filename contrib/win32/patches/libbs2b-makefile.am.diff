@@ -1,0 +1,11 @@
+--- Makefile.am.0	2009-03-20 10:13:53 -0400
++++ Makefile.am	2013-09-13 21:12:22 -0400
+@@ -18,7 +18,7 @@
+     $(bs2b_HEADERS)
+ 
+ libbs2b_la_LDFLAGS = \
+-	-lm -version-info 0:0:0
++	-lm -version-info 0:0:0 -no-undefined
+ 
+ libbs2b_la_SOURCES = \
+ 	bs2b.c \

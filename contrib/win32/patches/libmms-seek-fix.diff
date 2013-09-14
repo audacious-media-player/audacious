@@ -1,0 +1,54 @@
+diff -ur libmms-0.6.2-base/src/mms-common-funcs.h libmms-0.6.2/src/mms-common-funcs.h
+--- libmms-0.6.2-base/src/mms-common-funcs.h	2011-01-17 05:39:09.000000000 -0500
++++ libmms-0.6.2/src/mms-common-funcs.h	2013-06-04 01:26:19.639856484 -0400
+@@ -159,6 +159,7 @@
+         }
+         this->file_len       = LE_64(this->asf_header + i + 40);
+         this->file_time      = LE_64(this->asf_header + i + 48);
++        this->asf_num_packets = LE_64(this->asf_header + i + 56);
+         this->time_len       = LE_64(this->asf_header + i + 64);
+         //this->time_len       = LE_64(this->asf_header + i + 72);
+         this->preroll        = LE_64(this->asf_header + i + 80);
+diff -ur libmms-0.6.2-base/src/mmsh.c libmms-0.6.2/src/mmsh.c
+--- libmms-0.6.2-base/src/mmsh.c	2011-01-17 05:51:12.000000000 -0500
++++ libmms-0.6.2/src/mmsh.c	2013-06-04 01:27:51.632691449 -0400
+@@ -334,6 +334,7 @@
+   }
+   this->chunk_type       = LE_16 (&chunk_header[0]);
+   this->chunk_length     = LE_16 (&chunk_header[2]);
++  this->chunk_seq_number = -1;
+ 
+   switch (this->chunk_type) {
+     case CHUNK_TYPE_DATA:
+@@ -603,6 +604,7 @@
+   this->s               = -1;
+   this->bandwidth       = bandwidth;
+   this->http_request_number = 1;
++  this->chunk_seq_number = -1;
+ 
+   if (this->proxy_url) {
+     proxy_uri = gnet_uri_new(this->proxy_url);
+@@ -691,10 +693,13 @@
+          *     0: stop
+          *     1: a new stream follows
+          */
+-        if (this->chunk_seq_number == 0)
++        if (this->chunk_seq_number == 0) {
++          this->chunk_seq_number = -1;
+           return EOS;
++        }
+ 
+         this->http_request_number = 1;
++        this->chunk_seq_number = -1;
+         if (!mmsh_connect_int (io, this, 0, 0))
+           return MMSH_ERROR;
+ 
+@@ -916,7 +921,7 @@
+     }
+     
+     lprintf("seek to %d, packet: %d\n", (int)dest, (int)dest_packet_seq);
+-    if (!mmsh_connect_int(io, this, (dest_packet_seq+1) * this->asf_packet_len, 0)) {
++    if (!mmsh_connect_int(io, this, this->asf_header_len + dest_packet_seq * this->asf_packet_len, 0)) {
+       /* Oops no more connection let our caller know things are fscked up */
+       return this->current_pos = -1;
+     }

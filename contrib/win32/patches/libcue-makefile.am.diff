@@ -1,0 +1,9 @@
+--- Makefile.am.0	2010-05-01 03:33:40 -0400
++++ Makefile.am	2013-09-13 21:17:47 -0400
+@@ -27,5 +27,5 @@
+ 
+ lib_LTLIBRARIES		= libcue.la
+ 
+-libcue_la_LDFLAGS	= -version-info @LIBCUE_LIBTOOL_VERSION@
++libcue_la_LDFLAGS	= -version-info @LIBCUE_LIBTOOL_VERSION@ -no-undefined
+ libcueincludedir	= $(includedir)/@LIBCUE_LIBRARY_NAME@-@LIBCUE_API_VERSION@/@LIBCUE_LIBRARY_NAME@

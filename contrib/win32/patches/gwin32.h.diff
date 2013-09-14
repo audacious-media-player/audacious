@@ -1,14 +1,13 @@
---- gwin32.h.0	2012-03-11 20:42:42 -0400
-+++ gwin32.h	2012-04-01 15:13:03 -0400
-@@ -86,11 +86,9 @@
- #ifndef G_DISABLE_DEPRECATED
+--- gwin32.h.0	2013-05-07 14:26:07 -0400
++++ gwin32.h	2013-09-11 19:32:14 -0400
+@@ -115,10 +115,8 @@
+ #endif	 /* G_PLATFORM_WIN32 */
  
- #ifndef __GTK_DOC_IGNORE__
+ #ifdef G_OS_WIN32
 -#ifdef _WIN64
  #define g_win32_get_package_installation_directory g_win32_get_package_installation_directory_utf8
  #define g_win32_get_package_installation_subdirectory g_win32_get_package_installation_subdirectory_utf8
- #endif
 -#endif
  
- gchar*          g_win32_get_package_installation_directory (const gchar *package,
- 							    const gchar *dll_name);
+ GLIB_AVAILABLE_IN_ALL
+ gchar *g_win32_get_package_installation_directory_utf8    (const gchar *package,
