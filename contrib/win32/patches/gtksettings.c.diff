@@ -1,0 +1,14 @@
+--- gtksettings.c.0	2013-08-30 07:08:29 -0400
++++ gtksettings.c	2013-09-15 12:55:35 -0400
+@@ -2577,9 +2577,9 @@
+   GtkSettingsPrivate *priv = settings->priv;
+   gint hinting;
+   gchar *hint_style_str;
+-  cairo_hint_style_t hint_style = CAIRO_HINT_STYLE_NONE;
++  cairo_hint_style_t hint_style = CAIRO_HINT_STYLE_DEFAULT;
+   gint antialias;
+-  cairo_antialias_t antialias_mode = CAIRO_ANTIALIAS_GRAY;
++  cairo_antialias_t antialias_mode = CAIRO_ANTIALIAS_DEFAULT;
+   gchar *rgba_str;
+   cairo_subpixel_order_t subpixel_order = CAIRO_SUBPIXEL_ORDER_DEFAULT;
+   cairo_font_options_t *options;
