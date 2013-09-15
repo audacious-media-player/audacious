@@ -14,5 +14,5 @@ EXT_DEPS += ../dbus/aud-dbus.a
 include ../../buildsys.mk
 include ../../extra.mk
 
-CPPFLAGS := -I../.. -I../dbus ${CPPFLAGS} ${GLIB_CFLAGS} ${GIO_UNIX_CFLAGS}
-LIBS := ../dbus/aud-dbus.a ${LIBS} ${GLIB_LIBS} ${GIO_UNIX_LIBS}
+CPPFLAGS := -I../.. -I../dbus ${CPPFLAGS} ${GLIB_CFLAGS} ${GIO_CFLAGS}
+LIBS := ../dbus/aud-dbus.a ${LIBS} ${GLIB_LIBS} ${GIO_LIBS}

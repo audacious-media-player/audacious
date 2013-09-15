@@ -1,29 +1,3 @@
-dnl ** AUD_CHECK_MODULE([define name], [module], [version required],
-dnl **     [informational name], [additional error message])
-dnl **
-dnl ** Works like PKG_CHECK_MODULES, but provides an informative
-dnl ** error message if the package is not found. NOTICE! Unlike
-dnl ** PKG_C_M, this macro ONLY supports one module name!
-dnl **
-dnl ** AUD_CHECK_MODULE([GLIB], [gtk+-2.0], [>= 2.8.0], [Gtk+2], [See http://www.gtk.org/])
-AC_DEFUN([AUD_CHECK_MODULE], [
-    PKG_CHECK_MODULES([$1], [$2 $3], [
-    ],[
-        PKG_CHECK_EXISTS([$2], [
-            cv_pkg_version=`$PKG_CONFIG --modversion "$2" 2>/dev/null`
-            AC_MSG_ERROR([[
-$4 version $cv_pkg_version was found, but $2 $3 is required.
-$5]])
-        ],[
-            AC_MSG_ERROR([[
-Cannot find $4! If you are using binary packages based system, check that you
-have the corresponding -dev/devel packages installed.
-$5]])
-        ])
-    ])
-])
-
-
 dnl ** AUD_CONDITIONAL([symbol], [variable to test][, value])
 dnl ** Simplifying wrapper for AM_CONDITIONAL.
 dnl **
@@ -165,18 +139,39 @@ if test "x$GCC" = "xyes"; then
     AUD_CHECK_CFLAGS(-Wtype-limits)
 fi
 
-dnl Enable "-Wl,-z,defs" only on Linux
-dnl ==============================
-AC_MSG_CHECKING([for Linux])
+dnl Check platform
+dnl ==============
+
+AC_CANONICAL_HOST
+AC_CANONICAL_TARGET
+
+AC_MSG_CHECKING([operating system type])
+
+HAVE_LINUX=no
+HAVE_MSWINDOWS=no
+
 case "$target" in
     *linux*)
-        AC_MSG_RESULT([yes])
-        LDFLAGS="$LDFLAGS -Wl,-z,defs"
+        AC_MSG_RESULT(Linux)
+        HAVE_LINUX=yes
+        ;;
+    *mingw*)
+        AC_MSG_RESULT(Windows)
+        HAVE_MSWINDOWS=yes
         ;;
     *)
-        AC_MSG_RESULT([no])
+        AC_MSG_RESULT(other UNIX)
         ;;
 esac
+
+AC_SUBST(HAVE_MSWINDOWS)
+AC_SUBST(HAVE_LINUX)
+
+dnl Enable "-Wl,-z,defs" only on Linux
+dnl ==================================
+if test $HAVE_LINUX = yes ; then
+	LDFLAGS="$LDFLAGS -Wl,-z,defs"
+fi
 
 dnl Checks for various programs
 dnl ===========================
@@ -195,11 +190,27 @@ dnl Check for POSIX threads
 dnl =======================
 AC_SEARCH_LIBS([pthread_create], [pthread])
 
-dnl Check for Gtk+/GLib and pals
-dnl ============================
-AUD_CHECK_MODULE([GLIB], [glib-2.0], [>= 2.32], [Glib2])
-AUD_CHECK_MODULE([GMODULE], [gmodule-2.0], [>= 2.32], [GModule])
-AUD_CHECK_MODULE([GTK], [gtk+-3.0], [>= 3.4], [GTK+])
+dnl Check for GTK+ and pals
+dnl =======================
+
+PKG_CHECK_MODULES(GLIB, glib-2.0 >= 2.32)
+PKG_CHECK_MODULES(GMODULE, gmodule-2.0 >= 2.32)
+PKG_CHECK_MODULES(GTK, gtk+-3.0 >= 3.4)
+
+if test $HAVE_MSWINDOWS = yes ; then
+    PKG_CHECK_MODULES(GIO, gio-2.0 >= 2.32)
+else
+	PKG_CHECK_MODULES(GIO, gio-2.0 >= 2.32 gio-unix-2.0 >= 2.32)
+fi
+
+AC_SUBST(GLIB_CFLAGS)
+AC_SUBST(GLIB_LIBS)
+AC_SUBST(GIO_CFLAGS)
+AC_SUBST(GIO_LIBS)
+AC_SUBST(GMODULE_CFLAGS)
+AC_SUBST(GMODULE_LIBS)
+AC_SUBST(GTK_CFLAGS)
+AC_SUBST(GTK_LIBS)
 
 ])
 

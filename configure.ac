@@ -17,9 +17,6 @@ AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])
 
-AC_CANONICAL_HOST
-AC_CANONICAL_TARGET
-
 AUD_COMMON_PROGS
 
 BUILDSYS_SHARED_LIB
@@ -33,21 +30,6 @@ AC_C_BIGENDIAN([BIGENDIAN=1], [BIGENDIAN=0],
  [AC_MSG_ERROR([Unknown machine byte order])],
  [AC_MSG_ERROR([Universal builds are not supported, sorry])])
 AC_SUBST([BIGENDIAN])
-
-dnl Platform
-dnl ========
-AC_MSG_CHECKING([for Microsoft Windows])
-case "$target" in
-    *mingw*)
-        AC_MSG_RESULT([yes])
-        HAVE_MSWINDOWS="yes"
-        ;;
-    *)
-        AC_MSG_RESULT([no])
-        HAVE_MSWINDOWS="no"
-        ;;
-esac
-AC_SUBST([HAVE_MSWINDOWS])
 
 dnl Prevent symbol collisions
 dnl =========================
@@ -149,19 +131,19 @@ AUD_CONDITIONAL([USE_CHARDET], [enable_chardet])
 dnl D-Bus support
 dnl =============
 
-AUD_ARG_ENABLE(dbus, yes, [D-Bus support],
-[
-    PKG_CHECK_MODULES(GIO_UNIX, gio-unix-2.0 >= 2.30, enable_dbus=yes, enable_dbus=no)
+AC_ARG_ENABLE(dbus,
+ AS_HELP_STRING(--disable-dbus, [Disable D-Bus support]),
+ USE_DBUS=$enableval, USE_DBUS=yes)
 
-    if test "x$enable_dbus" = "xyes" ; then
-        AC_DEFINE(USE_DBUS, 1, [Define if D-Bus support enabled])
-        AC_SUBST(GIO_UNIX_CFLAGS)
-        AC_SUBST(GIO_UNIX_LIBS)
-    fi
-])
+if test $USE_DBUS = yes ; then
+	AC_CHECK_PROG(have_dbus, gdbus-codegen, yes, no)
+	if test $have_dbus = no ; then
+		AC_MSG_ERROR([D-Bus support unavailable; use --disable-dbus for a crippled build])
+	fi
+    AC_DEFINE(USE_DBUS, 1, [Define if D-Bus support enabled])
+fi
 
-AUD_CONDITIONAL([USE_DBUS], [enable_dbus])
-
+AC_SUBST(USE_DBUS)
 
 ### ---------------------------------------------------------------------------
 dnl regex support (gnu/oniguruma/pcre)
@@ -179,7 +161,7 @@ AC_ARG_WITH([regexlib],
 
 case $regex_selected in
   pcre)
-    AUD_CHECK_MODULE([LIBPCRE], [libpcre], [>= 6.7], [PCRE])
+    PKG_CHECK_MODULES(LIBPCRE, libpcre >= 6.7)
     AC_DEFINE([USE_REGEX_PCRE], 1, [If this macro is defined, use PCRE regex library.])
     REGEX_LIBS="-lpcreposix $LIBPCRE_LIBS"
     REGEX_CFLAGS="$LIBPCRE_CFLAGS"
@@ -281,13 +263,5 @@ echo "  Install path:                           $prefix"
 echo "  Allow user plugin dir:                  $enable_user_plugin_dir"
 echo ""
 echo "  Automatic character code detection:     $enable_chardet"
-echo "  D-Bus support:                          $enable_dbus"
+echo "  D-Bus support:                          $USE_DBUS"
 echo ""
-
-if test "x$enable_dbus" != "xyes"; then
-    echo "**"
-    echo "** WARNING! DBUS support is disabled. This means that various features"
-    echo "** the user might expect (such as remotely adding files to session via"
-    echo "** commandline) will not work!"
-    echo "**"
-fi

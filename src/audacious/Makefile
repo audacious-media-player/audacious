@@ -82,8 +82,8 @@ endif
 include ../../buildsys.mk
 
 ifeq ($(USE_DBUS),yes)
-CPPFLAGS := -I../dbus ${CPPFLAGS} ${GIO_UNIX_CFLAGS}
-LIBS := ../dbus/aud-dbus.a ${LIBS} ${GIO_UNIX_LIBS}
+CPPFLAGS := -I../dbus ${CPPFLAGS} ${GIO_CFLAGS}
+LIBS := ../dbus/aud-dbus.a ${LIBS} ${GIO_LIBS}
 endif
 
 CPPFLAGS := -I.. -I../.. \
