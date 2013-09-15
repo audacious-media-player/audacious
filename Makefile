@@ -1,4 +1,4 @@
-SUBDIRS = src man pixmaps po contrib
+SUBDIRS = src man pixmaps po
 
 DISTCLEAN = audacious.pc buildsys.mk config.h config.log config.status extra.mk
 
