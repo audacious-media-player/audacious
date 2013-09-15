@@ -60,6 +60,11 @@ PLUGIN_SUFFIX = @PLUGIN_SUFFIX@
 INSTALL_LIB = @INSTALL_LIB@
 UNINSTALL_LIB = @UNINSTALL_LIB@
 CLEAN_LIB = @CLEAN_LIB@
+AS_DEPENDS = @AS_DEPENDS@
+CC_DEPENDS = @CC_DEPENDS@
+CXX_DEPENDS = @CXX_DEPENDS@
+OBJC_DEPENDS = @OBJC_DEPENDS@
+OBJCXX_DEPENDS = @OBJCXX_DEPENDS@
 LN_S = @LN_S@
 MKDIR_P = mkdir -p
 INSTALL = @INSTALL@
@@ -105,15 +110,17 @@ MO_FILES = ${LOCALES:.po=.mo}
 .SILENT:
 .SUFFIXES:
 .SUFFIXES: .beam .c .c.dep .cc .cc.dep .class .cxx .cxx.dep .d .erl .lib.o .java .mo .m .m.dep .mm .mm.dep .o .plugin.o .po .py .pyc .rc .S .S.dep .xpm
-.PHONY: all subdirs pre-depend depend install install-extra uninstall uninstall-extra clean distclean locales
+.PHONY: all subdirs pre-depend depend install install-extra uninstall uninstall-extra clean distclean locales ${SUBDIRS}
 
 all:
 	${MAKE} ${MFLAGS} subdirs
 	${MAKE} ${MFLAGS} depend
 	${MAKE} ${STATIC_LIB} ${STATIC_LIB_NOINST} ${STATIC_PIC_LIB} ${STATIC_PIC_LIB_NOINST} ${SHARED_LIB} ${SHARED_LIB_NOINST} ${PLUGIN} ${PLUGIN_NOINST} ${PROG} ${PROG_NOINST} ${JARFILE} locales
 
-subdirs:
-	for i in ${SUBDIRS}; do \
+subdirs: ${SUBDIRS}
+
+${SUBDIRS}:
+	for i in $@; do \
 		${DIR_ENTER}; \
 		${MAKE} ${MFLAGS} || exit $$?; \
 		${DIR_LEAVE}; \
@@ -125,9 +132,35 @@ depend: pre-depend ${SRCS}
 	test -f .deps || regen=1; \
 	for i in ${SRCS}; do \
 		case $$i in \
-			*.c | *.cc | *.cxx | *.m | *.mm | *.S) \
-				test $$i -nt .deps && regen=1; \
-				deps="$$deps $$i.dep"; \
+			*.c) \
+				if test x"${CC_DEPENDS}" = x"yes"; then \
+					test $$i -nt .deps && regen=1; \
+					deps="$$deps $$i.dep"; \
+				fi; \
+				;; \
+			*.cc | *.cxx) \
+				if test x"${CXX_DEPENDS}" = x"yes"; then \
+					test $$i -nt .deps && regen=1; \
+					deps="$$deps $$i.dep"; \
+				fi; \
+				;; \
+			*.m) \
+				if test x"${OBJC_DEPENDS}" = x"yes"; then \
+					test $$i -nt .deps && regen=1; \
+					deps="$$deps $$i.dep"; \
+				fi; \
+				;; \
+			*.mm) \
+				if test x"${OBJCXX_DEPENDS}" = x"yes"; then \
+					test $$i -nt .deps && regen=1; \
+					deps="$$deps $$i.dep"; \
+				fi; \
+				;; \
+			*.S) \
+				if test x"${AS_DEPENDS}" = x"yes"; then \
+					test $$i -nt .deps && regen=1; \
+					deps="$$deps $$i.dep"; \
+				fi; \
 				;; \
 		esac; \
 	done; \
@@ -143,8 +176,28 @@ depend: pre-depend ${SRCS}
 		fi; \
 	fi
 
-.c.c.dep .cc.cc.dep .cxx.cxx.dep .m.m.dep .mm.mm.dep .S.S.dep:
-	${CPP} ${CPPFLAGS} -M $< | \
+.c.c.dep:
+	${CPP} ${CPPFLAGS} ${CFLAGS} -M $< | \
+	sed 's/^\([^\.]*\)\.o:/\1.o \1.lib.o \1.plugin.o:/' >$@ || \
+	{ rm -f $@; false; }
+
+.cc.cc.dep .cxx.cxx.dep:
+	${CPP} ${CPPFLAGS} ${CXXFLAGS} -M $< | \
+	sed 's/^\([^\.]*\)\.o:/\1.o \1.lib.o \1.plugin.o:/' >$@ || \
+	{ rm -f $@; false; }
+
+.m.m.dep:
+	${CPP} ${CPPFLAGS} ${OBJCFLAGS} -M $< | \
+	sed 's/^\([^\.]*\)\.o:/\1.o \1.lib.o \1.plugin.o:/' >$@ || \
+	{ rm -f $@; false; }
+
+.mm.mm.dep:
+	${CPP} ${CPPFLAGS} ${OBJCPPFLAGS} -M $< | \
+	sed 's/^\([^\.]*\)\.o:/\1.o \1.lib.o \1.plugin.o:/' >$@ || \
+	{ rm -f $@; false; }
+
+.S.S.dep:
+	${CPP} ${CPPFLAGS} ${ASFLAGS} -M $< | \
 	sed 's/^\([^\.]*\)\.o:/\1.o \1.lib.o \1.plugin.o:/' >$@ || \
 	{ rm -f $@; false; }
 
@@ -508,7 +561,7 @@ locales: ${MO_FILES}
 		${COMPILE_PLUGIN_FAILED}; \
 	fi
 
-install: ${SHARED_LIB} ${STATIC_LIB} ${STATIC_PIC_LIB} ${PLUGIN} ${PROG} install-extra
+install: install-extra
 	for i in ${SUBDIRS}; do \
 		${DIR_ENTER}; \
 		${MAKE} ${MFLAGS} install || exit $$?; \

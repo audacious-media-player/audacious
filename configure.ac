@@ -22,7 +22,6 @@ AC_CANONICAL_TARGET
 
 AUD_COMMON_PROGS
 
-BUILDSYS_INIT
 BUILDSYS_SHARED_LIB
 AC_DEFINE_UNQUOTED(PLUGIN_SUFFIX, "$PLUGIN_SUFFIX", [Suffix for plugins])
 
@@ -277,7 +276,6 @@ AC_CONFIG_FILES([
     src/libaudcore/audio.h
 ])
 
-BUILDSYS_TOUCH_DEPS
 AC_OUTPUT
 
 ### ---------------------------------------------------------------------------
