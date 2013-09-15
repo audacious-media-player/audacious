@@ -8,10 +8,8 @@ AC_PREREQ([2.59])
 AC_INIT([audacious], [3.5-devel])
 AC_COPYRIGHT([(C) 2005-2013 Audacious Team])
 
-AC_SUBST([PACKAGE], [AC_PACKAGE_TARNAME])
-AC_SUBST([VERSION], [AC_PACKAGE_VERSION])
-AC_DEFINE_UNQUOTED([PACKAGE], "$PACKAGE", [Name of package])
-AC_DEFINE_UNQUOTED([VERSION], "$VERSION", [Version number of package])
+AC_DEFINE_UNQUOTED(PACKAGE, "$PACKAGE_NAME", [Name of package])
+AC_DEFINE_UNQUOTED(VERSION, "$PACKAGE_VERSION", [Version number of package])
 
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_HEADERS([config.h])
@@ -49,17 +47,6 @@ dnl ===============================
 AC_CHECK_HEADERS([execinfo.h regex.h rxposix.h rx/rxposix.h])
 AC_CHECK_FUNCS([sigwait backtrace])
 
-AC_MSG_CHECKING([for cexpf])
-OLD_LIBS="$LIBS"
-LIBS="$LIBS -lm"
-AC_LINK_IFELSE([AC_LANG_PROGRAM([#include <complex.h>
-                                 #include <stdio.h>],
-                                [printf ("%f", crealf (cexpf (1)))])],
-               [AC_MSG_RESULT(yes)
-                AC_DEFINE([HAVE_CEXPF], [1], [Define if cexpf is present])],
-               [AC_MSG_RESULT(no)])
-LIBS="$OLD_LIBS"
-
 AC_MSG_CHECKING([for /proc/self/exe])
 if test -e "/proc/self/exe" ; then
     AC_MSG_RESULT(yes)
@@ -96,43 +83,30 @@ if test "x$HAVE_MSWINDOWS" = "xyes" && test "x$use_text_console" = "xno" ; then
     LDFLAGS="$LDFLAGS -Wl,-subsystem,windows"
 fi
 
-### ---------------------------------------------------------------------------
-dnl Path settings
-dnl =============
-AUD_ARG_ENABLE([user-plugin-dir], [yes],
-[per-user plugin dir])
+dnl Character set detection
+dnl =======================
 
-if test "x$enable_user_plugin_dir" = "xno"; then
-    AC_DEFINE([DISABLE_USER_PLUGIN_DIR], 1, [Define to disable per user plugin directory])
-fi
+AC_ARG_ENABLE(chardet,
+ AS_HELP_STRING(--enable-chardet, [Disable character set detection (default=auto)]),
+ USE_CHARDET=$enableval, USE_CHARDET=auto)
 
-AUD_ARG_ENABLE([rpath], [yes], [disable rpath])
-
-if test "x$enable_rpath" = "xyes"; then
-    LDFLAGS="$LDFLAGS $LDFLAGS_RPATH"
-fi
-
-### ---------------------------------------------------------------------------
-dnl Chardet support
-dnl ===============
-AUD_ARG_ENABLE([chardet], [yes],
-[charset detection support],
-[
-    PKG_CHECK_MODULES([LIBGUESS], [libguess >= 1.1], [enable_chardet=yes], [enable_chardet=no])
-
-    if test "x$enable_chardet" = "xyes"; then
-        AC_DEFINE([USE_CHARDET], 1, [Define if character set detection enabled])
+if test $USE_CHARDET != no ; then
+    PKG_CHECK_MODULES(LIBGUESS, libguess >= 1.1, have_libguess=yes, have_libguess=no)
+    if test $have_libguess = yes ; then
+        USE_CHARDET=yes
+        AC_DEFINE(USE_CHARDET, 1, [Define if character set detection enabled])
+    elif test $USE_CHARDET = yes ; then
+        AC_MSG_ERROR([Character set detection could not be enabled; check config.log])
     fi
-])
-AUD_CONDITIONAL([USE_CHARDET], [enable_chardet])
+fi
 
+AC_SUBST(USE_CHARDET)
 
-### ---------------------------------------------------------------------------
 dnl D-Bus support
 dnl =============
 
 AC_ARG_ENABLE(dbus,
- AS_HELP_STRING(--disable-dbus, [Disable D-Bus support]),
+ AS_HELP_STRING(--disable-dbus, [Disable D-Bus support (default=enabled)]),
  USE_DBUS=$enableval, USE_DBUS=yes)
 
 if test $USE_DBUS = yes ; then
@@ -194,45 +168,14 @@ AC_MSG_RESULT($regex_selected)
 AC_SUBST([REGEX_LIBS])
 AC_SUBST([REGEX_CFLAGS])
 
-### ---------------------------------------------------------------------------
-dnl Define plugin directories
-dnl =========================
+dnl Paths
+dnl =====
+
 plugindir="$libdir/audacious"
 AC_SUBST([plugindir])
-AC_SUBST([pluginsubs])
-
-AUD_DEFINE_PLUGIN_DIR([Transport])
-AUD_DEFINE_PLUGIN_DIR([Input])
-AUD_DEFINE_PLUGIN_DIR([Output])
-AUD_DEFINE_PLUGIN_DIR([Effect])
-AUD_DEFINE_PLUGIN_DIR([General])
-AUD_DEFINE_PLUGIN_DIR([Visualization])
-AUD_DEFINE_PLUGIN_DIR([Container])
-AUD_DEFINE_PLUGIN_DIR([Discovery])
-
-
-### ---------------------------------------------------------------------------
-dnl XXX Work around some autoconf bugs.
-if test "x$prefix" = "xNONE"; then
-        prefix="${ac_default_prefix}"
-fi
-
-if test -z "$datadir"; then
-    datadir="${prefix}/share"
-fi
 
 localedir="$datarootdir/locale"
 AC_SUBST([localedir])
-
-AUDACIOUS_DEFINES="-DPLUGINSUBS=$pluginsubs"
-AUDACIOUS_DEFINES="$AUDACIOUS_DEFINES -DHARDCODE_BINDIR=\\\"$bindir\\\""
-AUDACIOUS_DEFINES="$AUDACIOUS_DEFINES -DHARDCODE_DATADIR=\\\"$datadir/audacious\\\""
-AUDACIOUS_DEFINES="$AUDACIOUS_DEFINES -DHARDCODE_PLUGINDIR=\\\"$plugindir\\\""
-AUDACIOUS_DEFINES="$AUDACIOUS_DEFINES -DHARDCODE_LOCALEDIR=\\\"$localedir\\\""
-AUDACIOUS_DEFINES="$AUDACIOUS_DEFINES -DHARDCODE_DESKTOPFILE=\\\"${datarootdir}/applications/audacious.desktop\\\""
-AUDACIOUS_DEFINES="$AUDACIOUS_DEFINES -DHARDCODE_ICONFILE=\\\"${datarootdir}/pixmaps/audacious.png\\\""
-AC_SUBST([AUDACIOUS_DEFINES])
-
 
 dnl Reliably #include "config.h" (for large file support)
 dnl =====================================================
@@ -260,8 +203,7 @@ echo ""
 echo "Configuration:"
 echo ""
 echo "  Install path:                           $prefix"
-echo "  Allow user plugin dir:                  $enable_user_plugin_dir"
 echo ""
-echo "  Automatic character code detection:     $enable_chardet"
+echo "  Automatic character code detection:     $USE_CHARDET"
 echo "  D-Bus support:                          $USE_DBUS"
 echo ""

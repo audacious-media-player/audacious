@@ -40,7 +40,16 @@
 #include "plugins.h"
 #undef AUD_API_DECLARE
 
-static const char * plugin_dir_list[] = {PLUGINSUBS, NULL};
+static const char * plugin_dir_list[] = {
+	"Transport",
+	"Container",
+	"Input",
+	"Output",
+	"Effect",
+	"General",
+	"Visualization",
+    NULL
+};
 
 char verbose = 0;
 
@@ -174,23 +183,6 @@ void plugin_system_init(void)
     audgui_init (& api_table);
 
     plugin_registry_load ();
-
-#ifndef DISABLE_USER_PLUGIN_DIR
-    scan_plugins (get_path (AUD_PATH_USER_PLUGIN_DIR));
-    /*
-     * This is in a separate loop so if the user puts them in the
-     * wrong dir we'll still get them in the right order (home dir
-     * first)                                                - Zinx
-     */
-    while (plugin_dir_list[dirsel])
-    {
-        dir = g_build_filename (get_path (AUD_PATH_USER_PLUGIN_DIR),
-         plugin_dir_list[dirsel ++], NULL);
-        scan_plugins(dir);
-        g_free(dir);
-    }
-    dirsel = 0;
-#endif
 
     while (plugin_dir_list[dirsel])
     {

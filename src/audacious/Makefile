@@ -91,10 +91,17 @@ CPPFLAGS := -I.. -I../.. \
 		${GLIB_CFLAGS}			\
 		${GMODULE_CFLAGS} \
 		${GTK_CFLAGS}			\
-		${AUDACIOUS_DEFINES}	\
 		${REGEX_CFLAGS}			\
-		-D_AUDACIOUS_CORE		\
 		${LIBGUESS_CFLAGS}
+
+CPPFLAGS := ${CPPFLAGS} \
+            -D_AUDACIOUS_CORE \
+            -DHARDCODE_BINDIR=\"${bindir}\" \
+            -DHARDCODE_DATADIR=\"${datadir}/audacious\" \
+            -DHARDCODE_PLUGINDIR=\"${plugindir}\" \
+            -DHARDCODE_LOCALEDIR=\"${localedir}\" \
+            -DHARDCODE_DESKTOPFILE=\"${datarootdir}/applications/audacious.desktop\" \
+            -DHARDCODE_ICONFILE=\"${datarootdir}/pixmaps/audacious.png\"
 
 LIBS := -L../libaudcore -laudcore \
         -L../libaudgui -laudgui \

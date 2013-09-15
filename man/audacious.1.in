@@ -1,4 +1,4 @@
-.TH AUDACIOUS "1" "April 2009" "Version @VERSION@" "Audacious"
+.TH AUDACIOUS "1" "April 2009" "Version @PACKAGE_VERSION@" "Audacious"
 
 .SH NAME
 audacious \- an advanced audio player.

@@ -167,21 +167,18 @@ static void init_paths (void)
     relocate_paths ();
 
     const char * xdg_config_home = g_get_user_config_dir ();
-    const char * xdg_data_home = g_get_user_data_dir ();
 
 #ifdef _WIN32
     /* Some libraries (libmcs) and plugins (filewriter) use these variables,
      * which are generally not set on Windows. */
     g_setenv ("HOME", g_get_home_dir (), TRUE);
     g_setenv ("XDG_CONFIG_HOME", xdg_config_home, TRUE);
-    g_setenv ("XDG_DATA_HOME", xdg_data_home, TRUE);
+    g_setenv ("XDG_DATA_HOME", g_get_user_data_dir (), TRUE);
     g_setenv ("XDG_CACHE_HOME", g_get_user_cache_dir (), TRUE);
 #endif
 
     aud_paths[AUD_PATH_USER_DIR] = g_build_filename(xdg_config_home, "audacious", NULL);
-    aud_paths[AUD_PATH_USER_PLUGIN_DIR] = g_build_filename(xdg_data_home, "audacious", "Plugins", NULL);
     aud_paths[AUD_PATH_PLAYLISTS_DIR] = g_build_filename(aud_paths[AUD_PATH_USER_DIR], "playlists", NULL);
-    aud_paths[AUD_PATH_GTKRC_FILE] = g_build_filename(aud_paths[AUD_PATH_USER_DIR], "gtkrc", NULL);
 
     for (int i = 0; i < AUD_PATH_COUNT; i ++)
         AUDDBG ("Data path: %s\n", aud_paths[i]);
