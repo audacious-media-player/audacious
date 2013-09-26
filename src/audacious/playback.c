@@ -33,6 +33,8 @@
 #include "playlist.h"
 #include "plugin.h"
 
+static void playback_restart (int seek_time, bool_t pause);
+
 static const struct OutputAPI output_api = {
  .open_audio = output_open_audio,
  .set_replaygain_info = output_set_replaygain_info,
@@ -326,14 +328,14 @@ static bool_t end_cb (void * unused)
         if (failed_entries)
             goto STOP;
 
-        playback_play (MAX (repeat_a, 0), FALSE);
+        playback_restart (MAX (repeat_a, 0), FALSE);
     }
     else if (get_bool (NULL, "no_playlist_advance"))
     {
         if (failed_entries || ! get_bool (NULL, "repeat"))
             goto STOP;
 
-        playback_play (0, FALSE);
+        playback_restart (0, FALSE);
     }
     else
     {
@@ -421,28 +423,8 @@ DONE:
     return NULL;
 }
 
-void playback_play (int seek_time, bool_t pause)
+static void playback_start (int seek_time, bool_t pause)
 {
-    char * new_filename = playback_entry_get_filename ();
-    g_return_if_fail (new_filename);
-
-    /* pointer comparison works for pooled strings */
-    if (new_filename == current_filename)
-    {
-        if (playing)
-            playback_finish ();
-
-        str_unref (new_filename);
-        restart_flag = TRUE;
-    }
-    else
-    {
-        if (current_filename)
-            playback_cleanup ();
-
-        current_filename = new_filename;
-    }
-
     playing = TRUE;
     initial_seek = seek_time;
     paused = pause;
@@ -450,12 +432,32 @@ void playback_play (int seek_time, bool_t pause)
 
     hook_associate ("playlist update", update_cb, NULL);
     pthread_create (& playback_thread_handle, NULL, playback_thread, NULL);
+}
+
+static void playback_restart (int seek_time, bool_t pause)
+{
+    if (playing)
+        playback_finish ();
+
+    restart_flag = TRUE;
+
+    playback_start (seek_time, pause);
 
     /* on restart, send "playback seek" instead of "playback begin" */
-    if (restart_flag)
-        hook_call ("playback seek", NULL);
-    else
-        hook_call ("playback begin", NULL);
+    hook_call ("playback seek", NULL);
+}
+
+void playback_play (int seek_time, bool_t pause)
+{
+    if (current_filename)
+        playback_cleanup ();
+
+    current_filename = playback_entry_get_filename ();
+    g_return_if_fail (current_filename);
+
+    playback_start (seek_time, pause);
+
+    hook_call ("playback begin", NULL);
 }
 
 bool_t drct_get_playing (void)
@@ -638,8 +640,7 @@ void drct_set_ab_repeat (int a, int b)
         if (repeat_b >= 0 && seek_time >= repeat_b)
             seek_time = MAX (repeat_a, 0);
 
-        playback_finish ();
-        playback_play (seek_time, was_paused);
+        playback_restart (seek_time, was_paused);
     }
 }
 
