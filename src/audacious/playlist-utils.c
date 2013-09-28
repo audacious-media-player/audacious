@@ -19,7 +19,6 @@
 
 #include <dirent.h>
 #include <glib.h>
-#include <regex.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -251,9 +250,9 @@ void playlist_select_by_patterns (int playlist, const Tuple * patterns)
     for (field = 0; field < G_N_ELEMENTS (fields); field ++)
     {
         char * pattern = tuple_get_str (patterns, fields[field], NULL);
-        regex_t regex;
+        GRegex * regex;
 
-        if (! pattern || ! pattern[0] || regcomp (& regex, pattern, REG_ICASE))
+        if (! pattern || ! pattern[0] || ! (regex = g_regex_new (pattern, 0, 0, NULL)))
         {
             str_unref (pattern);
             continue;
@@ -267,7 +266,7 @@ void playlist_select_by_patterns (int playlist, const Tuple * patterns)
             Tuple * tuple = playlist_entry_get_tuple (playlist, entry, FALSE);
             char * string = tuple ? tuple_get_str (tuple, fields[field], NULL) : NULL;
 
-            if (! string || regexec (& regex, string, 0, NULL, 0))
+            if (! string || ! g_regex_match (regex, string, 0, NULL))
                 playlist_entry_set_selected (playlist, entry, FALSE);
 
             str_unref (string);
@@ -275,7 +274,7 @@ void playlist_select_by_patterns (int playlist, const Tuple * patterns)
                 tuple_unref (tuple);
         }
 
-        regfree (& regex);
+        g_regex_unref (regex);
         str_unref (pattern);
     }
 }

@@ -91,7 +91,6 @@ CPPFLAGS := -I.. -I../.. \
 		${GLIB_CFLAGS}			\
 		${GMODULE_CFLAGS} \
 		${GTK_CFLAGS}			\
-		${REGEX_CFLAGS}			\
 		${LIBGUESS_CFLAGS}
 
 CPPFLAGS := ${CPPFLAGS} \
@@ -111,7 +110,6 @@ LIBS := -L../libaudcore -laudcore \
 		${GLIB_LIBS}					\
 		${GMODULE_LIBS} \
 		${GTK_LIBS}						\
-		${REGEX_LIBS}					\
 		${LIBGUESS_LIBS}
 
 desktop_DATA = audacious.desktop

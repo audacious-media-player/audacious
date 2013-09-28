@@ -22,16 +22,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
-#ifdef HAVE_SYS_TYPES_H
-#  include "sys/types.h"
-#endif
 
 #include <audacious/debug.h>
 #include <audacious/playlist.h>
 #include <libaudcore/audstrings.h>
 
 #include "ui_jumptotrack_cache.h"
-#include "ui_regex.h"
 
 // Struct to keep information about matches from searches.
 typedef struct
@@ -89,40 +85,15 @@ ui_jump_to_track_cache_regex_list_create(const GString* keyword)
         if (words[i][0] == 0) {
             continue;
         }
-        regex_t *regex = g_malloc(sizeof(regex_t));
-    #if defined(USE_REGEX_PCRE)
-        if ( regcomp( regex , words[i] , REG_NOSUB | REG_UTF8 ) == 0 )
-    #else
-        if ( regcomp( regex , words[i] , REG_NOSUB ) == 0 )
-    #endif
-            regex_list = g_slist_append( regex_list , regex );
-        else
-            g_free( regex );
+
+        GRegex * regex = g_regex_new (words[i], 0, 0, NULL);
+        if (regex)
+            regex_list = g_slist_append (regex_list, regex);
     }
 
     g_strfreev(words);
 
     return regex_list;
-}
-
-/**
- * Frees the regular expression list used in searches.
- */
-static void
-ui_jump_to_track_cache_regex_list_free(GSList* regex_list)
-{
-    if ( regex_list != NULL )
-    {
-        GSList* regex_list_tmp = regex_list;
-        while ( regex_list != NULL )
-        {
-            regex_t *regex = regex_list->data;
-            regfree( regex );
-            g_free( regex );
-            regex_list = g_slist_next(regex_list);
-        }
-        g_slist_free( regex_list_tmp );
-    }
 }
 
 /**
@@ -136,8 +107,8 @@ ui_jump_to_track_match(const char * song, GSList *regex_list)
 
     for ( ; regex_list ; regex_list = g_slist_next(regex_list) )
     {
-        regex_t *regex = regex_list->data;
-        if ( regexec( regex , song , 0 , NULL , 0 ) != 0 )
+        GRegex * regex = regex_list->data;
+        if (! g_regex_match (regex, song, 0, NULL))
             return FALSE;
     }
 
@@ -190,7 +161,8 @@ ui_jump_to_track_cache_match_keyword(JumpToTrackCache* cache,
 
     g_hash_table_insert (cache->keywords, GINT_TO_POINTER (g_string_hash (keyword)), k);
 
-    ui_jump_to_track_cache_regex_list_free(regex_list);
+    g_slist_free_full (regex_list, (GDestroyNotify) g_regex_unref);
+
     return k->entries;
 }
 

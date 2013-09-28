@@ -35,13 +35,11 @@ includesubdir = libaudgui
 CPPFLAGS := -I.. -I../.. \
             ${CPPFLAGS} \
             ${GLIB_CFLASG} \
-            ${GTK_CFLAGS} \
-            ${REGEX_CFLAGS}
+            ${GTK_CFLAGS}
 
 CFLAGS += ${LIB_CFLAGS}
 
 LIBS := -L../libaudcore -laudcore \
         ${LIBS} -lm \
         ${GLIB_LIBS} \
-        ${GTK_LIBS} \
-        ${REGEX_LIBS}
+        ${GTK_LIBS}
