@@ -1,6 +1,6 @@
 /*
  * hook.c
- * Copyright 2011 John Lindgren
+ * Copyright 2011-2012 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:

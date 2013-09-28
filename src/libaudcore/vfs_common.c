@@ -1,7 +1,7 @@
 /*
  *  vfs_common.c
- *  Copyright 2006-2010 Tony Vroon, William Pitcock, Maciej Grela,
- *                      Matti Hämäläinen, and John Lindgren
+ *  Copyright 2006-2013 Tony Vroon, William Pitcock, Matti Hämäläinen, and
+ *                      John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:

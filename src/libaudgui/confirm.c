@@ -1,6 +1,6 @@
 /*
  * confirm.c
- * Copyright 2010-2011 John Lindgren
+ * Copyright 2010-2012 John Lindgren and Thomas Lange
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:

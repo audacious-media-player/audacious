@@ -1,6 +1,6 @@
 /*
  * vfs.h
- * Copyright 2006-2011 William Pitcock, Daniel Barkalow, Ralf Ertzinger,
+ * Copyright 2006-2013 William Pitcock, Daniel Barkalow, Ralf Ertzinger,
  *                     Yoshiki Yazawa, Matti Hämäläinen, and John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
@@ -64,7 +64,7 @@ struct _VFSConstructor {
 
     void (* obs_getc) (void); // obsolete
     void (* obs_ungetc) (void); // obsolete
-    
+
     /** A function pointer which points to a fseek implementation. */
     int (* vfs_fseek_impl) (VFSFile * file, int64_t offset, int whence);
 

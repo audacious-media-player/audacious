@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <!--
- * objects.xml
- * Copyright 2007 Ben Tucker
+ * aud-dbus.xml
+ * Copyright 2007-2010 Ben Tucker, Yoshiki Yazawa, Matti Hämäläinen, and
+ *                     John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:

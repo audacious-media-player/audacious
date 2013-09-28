@@ -1,6 +1,7 @@
 /*
  * handlers_playback.c
- * Copyright 2005-2008 George Averill, William Pitcock, and Matti Hämäläinen
+ * Copyright 2005-2013 George Averill, William Pitcock, Matti Hämäläinen, and
+ *                     John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:

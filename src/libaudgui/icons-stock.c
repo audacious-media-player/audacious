@@ -1,6 +1,6 @@
 /*
  * icons-stock.c
- * Copyright 2007-2010 Michael Färber and John Lindgren
+ * Copyright 2007-2012 Michael Färber and John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:

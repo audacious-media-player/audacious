@@ -1,6 +1,6 @@
 /*
  * list.c
- * Copyright 2011-2012 John Lindgren and Michał Lipski
+ * Copyright 2011-2013 John Lindgren and Michał Lipski
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:

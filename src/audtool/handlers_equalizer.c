@@ -1,6 +1,6 @@
 /*
  * handlers_equalizer.c
- * Copyright 2007-2008 Yoshiki Yazawa and Matti Hämäläinen
+ * Copyright 2007-2013 Yoshiki Yazawa, Matti Hämäläinen, and John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:

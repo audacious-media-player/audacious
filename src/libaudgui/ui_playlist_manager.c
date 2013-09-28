@@ -1,6 +1,6 @@
 /*
  * ui_playlist_manager.c
- * Copyright 2006-2011 Giacomo Lozito and John Lindgren
+ * Copyright 2006-2012 Giacomo Lozito, John Lindgren, and Thomas Lange
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:

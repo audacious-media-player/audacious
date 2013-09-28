@@ -1,5 +1,5 @@
 /*
- * id3v24.c
+ * id3v22.c
  * Copyright 2009-2011 Paula Stanciu, Tony Vroon, John Lindgren,
  *                     and William Pitcock
  *

@@ -1,6 +1,6 @@
 /*
  * ui_preferences.h
- * Copyright 2006-2010 William Pitcock, Tomasz Moń, and John Lindgren
+ * Copyright 2006-2012 William Pitcock, Tomasz Moń, and John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
