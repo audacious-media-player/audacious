@@ -461,10 +461,10 @@ bool_t id3v22_read_tag (Tuple * tuple, VFSFile * handle)
 
         if (! read_frame (handle, data_size - pos, version, syncsafe,
          & frame_size, key, & data, & size))
-	{
-	    TAGDBG("read_frame failed at pos %i\n", pos);
-            break;
-	}
+        {
+            TAGDBG("read_frame failed at pos %i\n", pos);
+                break;
+        }
 
         id = get_frame_id (key);
 

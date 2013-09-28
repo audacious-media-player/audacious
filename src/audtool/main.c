@@ -137,27 +137,27 @@ static void audtool_disconnect (void)
 
 static void audtool_connect (void)
 {
-	GError * error = NULL;
+    GError * error = NULL;
 
-	connection = g_bus_get_sync (G_BUS_TYPE_SESSION, NULL, & error);
+    connection = g_bus_get_sync (G_BUS_TYPE_SESSION, NULL, & error);
 
-	if (! connection)
-	{
-		fprintf (stderr, "D-Bus error: %s\n", error->message);
-		g_error_free (error);
-		exit (EXIT_FAILURE);
-	}
+    if (! connection)
+    {
+        fprintf (stderr, "D-Bus error: %s\n", error->message);
+        g_error_free (error);
+        exit (EXIT_FAILURE);
+    }
 
     dbus_proxy = obj_audacious_proxy_new_sync (connection, 0,
      "org.atheme.audacious", "/org/atheme/audacious", NULL, & error);
 
-	if (! dbus_proxy)
-	{
-		fprintf (stderr, "D-Bus error: %s\n", error->message);
-		g_error_free (error);
+    if (! dbus_proxy)
+    {
+        fprintf (stderr, "D-Bus error: %s\n", error->message);
+        g_error_free (error);
         g_dbus_connection_close_sync (connection, NULL, NULL);
-		exit (EXIT_FAILURE);
-	}
+        exit (EXIT_FAILURE);
+    }
 
     atexit (audtool_disconnect);
 }

@@ -41,13 +41,13 @@
 #undef AUD_API_DECLARE
 
 static const char * plugin_dir_list[] = {
-	"Transport",
-	"Container",
-	"Input",
-	"Output",
-	"Effect",
-	"General",
-	"Visualization",
+    "Transport",
+    "Container",
+    "Input",
+    "Output",
+    "Effect",
+    "General",
+    "Visualization",
     NULL
 };
 

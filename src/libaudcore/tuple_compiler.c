@@ -41,16 +41,16 @@
 
 #include "tuple_compiler.h"
 
-#define MAX_STR		(256)
+#define MAX_STR   (256)
 #define MIN_ALLOC_NODES (8)
-#define MIN_ALLOC_BUF	(64)
+#define MIN_ALLOC_BUF (64)
 #define TUPLEZ_MAX_VARS (4)
 
 #define tuple_error(ctx, ...) fprintf (stderr, "Tuple compiler: " __VA_ARGS__)
 
 enum {
-    OP_RAW = 0,		/* plain text */
-    OP_FIELD,		/* a field/variable */
+    OP_RAW = 0,   /* plain text */
+    OP_FIELD,   /* a field/variable */
     OP_EXISTS,
     OP_EQUALS,
     OP_NOT_EQUALS,
@@ -67,19 +67,19 @@ enum {
 };
 
 struct _TupleEvalNode {
-    int opcode;		/* operator, see OP_ enums */
-    int var[TUPLEZ_MAX_VARS];	/* tuple variable references */
-    char *text;		/* raw text, if any (OP_RAW) */
+    int opcode;   /* operator, see OP_ enums */
+    int var[TUPLEZ_MAX_VARS]; /* tuple variable references */
+    char *text;   /* raw text, if any (OP_RAW) */
     struct _TupleEvalNode *children, *next, *prev; /* children of this struct, and pointer to next node. */
 };
 
 typedef struct {
     char *name;
-    int type;			/* Type of variable, see VAR_* */
+    int type;     /* Type of variable, see VAR_* */
     int defvali;
-    TupleValueType ctype;	/* Type of constant/def value */
+    TupleValueType ctype; /* Type of constant/def value */
 
-    int fieldidx;		/* if >= 0: Index # of "pre-defined" Tuple fields */
+    int fieldidx;   /* if >= 0: Index # of "pre-defined" Tuple fields */
     bool_t fieldread, fieldvalid;
     char * fieldstr;
 } TupleEvalVar;
