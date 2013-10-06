@@ -266,6 +266,16 @@ static void infowin_destroyed (void)
     can_write = FALSE;
 }
 
+static void add_entry (GtkWidget * grid, const char * title, GtkWidget * entry,
+ int x, int y, int span)
+{
+    gtk_widget_set_margin_bottom (entry, 6);
+    g_signal_connect (entry, "changed", (GCallback) entry_changed, NULL);
+
+    gtk_grid_attach ((GtkGrid *) grid, small_label_new (title), x, y, span, 1);
+    gtk_grid_attach ((GtkGrid *) grid, entry, x, y + 1, span, 1);
+}
+
 static void create_infowin (void)
 {
     GtkWidget * hbox;
@@ -273,10 +283,8 @@ static void create_infowin (void)
     GtkWidget * vbox0;
     GtkWidget * vbox2;
     GtkWidget * codec_hbox;
-    GtkWidget * grid1;
     GtkWidget * bbox_close;
     GtkWidget * btn_close;
-    GtkWidget * alignment;
 
     infowin = gtk_window_new (GTK_WINDOW_TOPLEVEL);
     gtk_container_set_border_width ((GtkContainer *) infowin, 6);
@@ -324,75 +332,32 @@ static void create_infowin (void)
         gtk_grid_attach ((GtkGrid *) codec_grid, widgets.codec[row], 1, row, 1, 1);
     }
 
-    vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-    gtk_box_pack_start ((GtkBox *) hbox, vbox2, TRUE, TRUE, 0);
+    GtkWidget * grid = gtk_grid_new ();
+    gtk_grid_set_column_homogeneous ((GtkGrid *) grid, TRUE);
+    gtk_grid_set_column_spacing ((GtkGrid *) grid, 6);
+    gtk_box_pack_start ((GtkBox *) hbox, grid, TRUE, TRUE, 0);
 
-    gtk_box_pack_start ((GtkBox *) vbox2, small_label_new (_("Title")), FALSE, FALSE, 0);
-
-    alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start ((GtkBox *) vbox2, alignment, FALSE, FALSE, 0);
-    gtk_alignment_set_padding ((GtkAlignment *) alignment, 0, 6, 0, 0);
     widgets.title = gtk_entry_new ();
-    gtk_container_add ((GtkContainer *) alignment, widgets.title);
-    g_signal_connect (widgets.title, "changed", (GCallback) entry_changed, NULL);
+    add_entry (grid, _("Title"), widgets.title, 0, 0, 2);
 
-    gtk_box_pack_start ((GtkBox *) vbox2, small_label_new (_("Artist")), FALSE, FALSE, 0);
-
-    alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start ((GtkBox *) vbox2, alignment, FALSE, FALSE, 0);
-    gtk_alignment_set_padding ((GtkAlignment *) alignment, 0, 6, 0, 0);
     widgets.artist = gtk_entry_new ();
-    gtk_container_add ((GtkContainer *) alignment, widgets.artist);
-    g_signal_connect (widgets.artist, "changed", (GCallback) entry_changed, NULL);
+    add_entry (grid, _("Artist"), widgets.artist, 0, 2, 2);
 
-    gtk_box_pack_start ((GtkBox *) vbox2, small_label_new (_("Album")), FALSE, FALSE, 0);
-
-    alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start ((GtkBox *) vbox2, alignment, FALSE, FALSE, 0);
-    gtk_alignment_set_padding ((GtkAlignment *) alignment, 0, 6, 0, 0);
     widgets.album = gtk_entry_new ();
-    gtk_container_add ((GtkContainer *) alignment, widgets.album);
-    g_signal_connect (widgets.album, "changed", (GCallback) entry_changed, NULL);
+    add_entry (grid, _("Album"), widgets.album, 0, 4, 2);
 
-    gtk_box_pack_start ((GtkBox *) vbox2, small_label_new (_("Comment")), FALSE, FALSE, 0);
-
-    alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start ((GtkBox *) vbox2, alignment, FALSE, FALSE, 0);
-    gtk_alignment_set_padding ((GtkAlignment *) alignment, 0, 6, 0, 0);
     widgets.comment = gtk_entry_new ();
-    gtk_container_add ((GtkContainer *) alignment, widgets.comment);
-    g_signal_connect (widgets.comment, "changed", (GCallback) entry_changed, NULL);
-
-    gtk_box_pack_start ((GtkBox *) vbox2, small_label_new (_("Genre")), FALSE, FALSE, 0);
-
-    alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start ((GtkBox *) vbox2, alignment, FALSE, FALSE, 0);
-    gtk_alignment_set_padding ((GtkAlignment *) alignment, 0, 6, 0, 0);
+    add_entry (grid, _("Comment"), widgets.comment, 0, 6, 2);
 
     widgets.genre = gtk_combo_box_text_new_with_entry ();
-    gtk_container_add ((GtkContainer *) alignment, widgets.genre);
-    g_signal_connect (widgets.genre, "changed", (GCallback) entry_changed, NULL);
+    add_entry (grid, _("Genre"), widgets.genre, 0, 8, 2);
     g_idle_add ((GSourceFunc) genre_fill, widgets.genre);
 
-    alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start ((GtkBox *) vbox2, alignment, FALSE, FALSE, 0);
-    gtk_alignment_set_padding ((GtkAlignment *) alignment, 0, 6, 0, 0);
-    grid1 = gtk_grid_new ();
-    gtk_grid_set_column_homogeneous ((GtkGrid *) grid1, TRUE);
-    gtk_container_add ((GtkContainer *) alignment, grid1);
-    gtk_grid_set_column_spacing ((GtkGrid *) grid1, 6);
-
-    gtk_grid_attach ((GtkGrid *) grid1, small_label_new (_("Year")), 0, 0, 1, 1);
-
     widgets.year = gtk_entry_new ();
-    gtk_grid_attach ((GtkGrid *) grid1, widgets.year, 0, 1, 1, 1);
-    g_signal_connect (widgets.year, "changed", (GCallback) entry_changed, NULL);
-
-    gtk_grid_attach ((GtkGrid *) grid1, small_label_new (_("Track Number")), 1, 0, 1, 1);
+    add_entry (grid, _("Year"), widgets.year, 0, 10, 1);
 
     widgets.track = gtk_entry_new ();
-    gtk_grid_attach ((GtkGrid *) grid1, widgets.track, 1, 1, 1, 1);
-    g_signal_connect (widgets.track, "changed", (GCallback) entry_changed, NULL);
+    add_entry (grid, _("Track Number"), widgets.track, 1, 10, 1);
 
     hbox_status_and_bbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  0);
     gtk_box_pack_start ((GtkBox *) vbox0, hbox_status_and_bbox, FALSE, FALSE, 0);
