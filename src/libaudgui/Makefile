@@ -14,6 +14,7 @@ SRCS = about.c \
        list.c \
        playlists.c \
        queue-manager.c \
+       scaled-image.c \
        ui_fileopener.c \
        ui_jumptotrack.c \
        ui_jumptotrack_cache.c \

@@ -31,6 +31,10 @@ GtkWidget * audgui_create_vis_menu (void);
 /* iface-menu.c */
 GtkWidget * audgui_create_iface_menu (void);
 
+/* scaled-image.c */
+GtkWidget * audgui_scaled_image_new (GdkPixbuf * pixbuf);
+void audgui_scaled_image_set (GtkWidget * widget, GdkPixbuf * pixbuf);
+
 /* util.c */
 int audgui_get_digit_width (GtkWidget * widget);
 void audgui_get_mouse_coords (GtkWidget * widget, int * x, int * y);
