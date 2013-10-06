@@ -33,7 +33,6 @@
 #include "libaudgui-gtk.h"
 
 #define AUDGUI_STATUS_TIMEOUT 3000
-#define IMAGE_SIZE 150
 
 enum {
     CODEC_FORMAT,
@@ -248,9 +247,11 @@ static void infowin_display_image (const char * filename)
     if (! pb)
         pb = audgui_pixbuf_fallback ();
 
-    audgui_pixbuf_scale_within (& pb, IMAGE_SIZE);
-    gtk_image_set_from_pixbuf ((GtkImage *) widgets.image, pb);
-    g_object_unref (pb);
+    if (pb)
+    {
+        audgui_scaled_image_set (widgets.image, pb);
+        g_object_unref (pb);
+    }
 }
 
 static void infowin_destroyed (void)
@@ -301,19 +302,15 @@ static void create_infowin (void)
     vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
     gtk_box_pack_start ((GtkBox *) hbox, vbox2, TRUE, TRUE, 0);
 
-    GtkWidget * vbox3 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-    gtk_box_pack_start ((GtkBox *) vbox2, vbox3, TRUE, FALSE, 0);
-
-    widgets.image = gtk_image_new ();
-    gtk_widget_set_size_request (widgets.image, IMAGE_SIZE, IMAGE_SIZE);
-    gtk_box_pack_start ((GtkBox *) vbox3, widgets.image, FALSE, FALSE, 0);
+    widgets.image = audgui_scaled_image_new (NULL);
+    gtk_box_pack_start ((GtkBox *) vbox2, widgets.image, TRUE, TRUE, 0);
 
     widgets.location = gtk_label_new ("");
     gtk_widget_set_size_request (widgets.location, 200, -1);
     gtk_label_set_line_wrap ((GtkLabel *) widgets.location, TRUE);
     gtk_label_set_line_wrap_mode ((GtkLabel *) widgets.location, PANGO_WRAP_WORD_CHAR);
     gtk_label_set_selectable ((GtkLabel *) widgets.location, TRUE);
-    gtk_box_pack_start ((GtkBox *) vbox3, widgets.location, FALSE, FALSE, 0);
+    gtk_box_pack_start ((GtkBox *) vbox2, widgets.location, FALSE, FALSE, 0);
 
     codec_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  6);
     gtk_box_pack_start ((GtkBox *) vbox2, codec_hbox, FALSE, FALSE, 0);
