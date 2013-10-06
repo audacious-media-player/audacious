@@ -371,7 +371,6 @@ static void create_infowin (void)
     widgets.apply = gtk_button_new_from_stock (GTK_STOCK_SAVE);
     gtk_container_add ((GtkContainer *) bbox_close, widgets.apply);
     g_signal_connect (widgets.apply, "clicked", (GCallback) infowin_update_tuple, NULL);
-    gtk_widget_set_sensitive (widgets.apply, FALSE);
 
     btn_close = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
     gtk_container_add ((GtkContainer *) bbox_close, btn_close);
@@ -433,6 +432,9 @@ static void infowin_show (int list, int entry, const char * filename,
     }
 
     infowin_display_image (filename);
+
+    /* nothing has been changed yet */
+    gtk_widget_set_sensitive (widgets.apply, FALSE);
 
     gtk_window_present ((GtkWindow *) infowin);
 }
