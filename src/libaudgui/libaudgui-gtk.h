@@ -24,6 +24,8 @@
 #include <gtk/gtk.h>
 #include <libaudcore/core.h>
 
+typedef void (* AudguiCallback) (void * data);
+
 /* effects-menu.c */
 GtkWidget * audgui_create_effects_menu (void);
 GtkWidget * audgui_create_vis_menu (void);
@@ -51,7 +53,11 @@ void audgui_destroy_on_escape (GtkWidget * widget);
 void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
  const char * title, const char * text);
 void audgui_connect_check_box (GtkWidget * box, bool_t * setting);
-GtkWidget * audgui_button_new (const char * text, const char * icon);
+
+GtkWidget * audgui_button_new (const char * text, const char * icon,
+ AudguiCallback callback, void * data);
+GtkWidget * audgui_dialog_new (GtkMessageType type, const char * title,
+ const char * text, GtkWidget * button1, GtkWidget * button2);
 
 /* deprecated */
 GdkPixbuf * audgui_pixbuf_for_current (void) __attribute ((deprecated));

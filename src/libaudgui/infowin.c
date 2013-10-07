@@ -353,13 +353,13 @@ static void create_infowin (void)
     widgets.ministatus = small_label_new (NULL);
     gtk_box_pack_start ((GtkBox *) bottom_hbox, widgets.ministatus, TRUE, TRUE, 0);
 
-    widgets.apply = audgui_button_new (_("_Save"), "document-save");
-    g_signal_connect (widgets.apply, "clicked", (GCallback) infowin_update_tuple, NULL);
+    widgets.apply = audgui_button_new (_("_Save"), "document-save",
+     (AudguiCallback) infowin_update_tuple, NULL);
 
-    GtkWidget * btn_close = gtk_button_new_with_mnemonic (_("_Close"));
-    g_signal_connect_swapped (btn_close, "clicked", (GCallback) audgui_infowin_hide, NULL);
+    GtkWidget * close_button = audgui_button_new (_("_Close"), NULL,
+     (AudguiCallback) audgui_infowin_hide, NULL);
 
-    gtk_box_pack_end ((GtkBox *) bottom_hbox, btn_close, FALSE, FALSE, 0);
+    gtk_box_pack_end ((GtkBox *) bottom_hbox, close_button, FALSE, FALSE, 0);
     gtk_box_pack_end ((GtkBox *) bottom_hbox, widgets.apply, FALSE, FALSE, 0);
 
     gtk_widget_show_all (main_grid);

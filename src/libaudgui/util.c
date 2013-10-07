@@ -119,17 +119,46 @@ EXPORT void audgui_connect_check_box (GtkWidget * box, bool_t * setting)
     g_signal_connect ((GObject *) box, "toggled", (GCallback) toggle_cb, setting);
 }
 
-EXPORT GtkWidget * audgui_button_new (const char * text, const char * icon)
+EXPORT GtkWidget * audgui_button_new (const char * text, const char * icon,
+ AudguiCallback callback, void * data)
 {
     GtkWidget * button = gtk_button_new_with_mnemonic (text);
-    GtkWidget * image = gtk_image_new_from_icon_name (icon, GTK_ICON_SIZE_MENU);
-    gtk_button_set_image ((GtkButton *) button, image);
+
+    if (icon)
+    {
+        GtkWidget * image = gtk_image_new_from_icon_name (icon, GTK_ICON_SIZE_MENU);
+        gtk_button_set_image ((GtkButton *) button, image);
 
 #if GTK_CHECK_VERSION (3, 6, 0)
-    gtk_button_set_always_show_image ((GtkButton *) button, TRUE);
+        gtk_button_set_always_show_image ((GtkButton *) button, TRUE);
 #endif
+    }
+
+    if (callback)
+        g_signal_connect_swapped (button, "clicked", (GCallback) callback, data);
 
     return button;
+}
+
+EXPORT GtkWidget * audgui_dialog_new (GtkMessageType type, const char * title,
+ const char * text, GtkWidget * button1, GtkWidget * button2)
+{
+    GtkWidget * dialog = gtk_message_dialog_new (NULL, 0, type, GTK_BUTTONS_NONE, "%s", text);
+    gtk_window_set_title ((GtkWindow *) dialog, title);
+
+    if (button2)
+    {
+        gtk_dialog_add_action_widget ((GtkDialog *) dialog, button2, GTK_RESPONSE_NONE);
+        g_signal_connect_swapped (button2, "clicked", (GCallback) gtk_widget_destroy, dialog);
+    }
+
+    gtk_dialog_add_action_widget ((GtkDialog *) dialog, button1, GTK_RESPONSE_NONE);
+    g_signal_connect_swapped (button1, "clicked", (GCallback) gtk_widget_destroy, dialog);
+
+    gtk_widget_set_can_default (button1, TRUE);
+    gtk_widget_grab_default (button1);
+
+    return dialog;
 }
 
 EXPORT void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,

@@ -23,9 +23,6 @@
 void audgui_init (AudAPITable * table);
 void audgui_cleanup (void);
 
-/* jump-to-time.c */
-void audgui_jump_to_time_cleanup (void);
-
 /* queue-manager.c */
 void audgui_queue_manager_cleanup (void);
 
