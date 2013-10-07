@@ -124,6 +124,19 @@ EXPORT void audgui_connect_check_box (GtkWidget * box, bool_t * setting)
     g_signal_connect ((GObject *) box, "toggled", (GCallback) toggle_cb, setting);
 }
 
+EXPORT GtkWidget * audgui_button_new (const char * text, const char * icon)
+{
+    GtkWidget * button = gtk_button_new_with_mnemonic (text);
+    GtkWidget * image = gtk_image_new_from_icon_name (icon, GTK_ICON_SIZE_MENU);
+    gtk_button_set_image ((GtkButton *) button, image);
+
+#if GTK_CHECK_VERSION (3, 6, 0)
+    gtk_button_set_always_show_image ((GtkButton *) button, TRUE);
+#endif
+
+    return button;
+}
+
 EXPORT void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
  const char * title, const char * text)
 {

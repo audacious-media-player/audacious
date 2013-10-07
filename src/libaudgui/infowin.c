@@ -1,6 +1,6 @@
 /*
  * libaudgui/infowin.c
- * Copyright 2006-2012 William Pitcock, Tomasz Moń, Eugene Zagidullin,
+ * Copyright 2006-2013 William Pitcock, Tomasz Moń, Eugene Zagidullin,
  *                     John Lindgren, and Thomas Lange
  *
  * Redistribution and use in source and binary forms, with or without
@@ -285,7 +285,7 @@ static void create_infowin (void)
 {
     infowin = gtk_window_new (GTK_WINDOW_TOPLEVEL);
     gtk_container_set_border_width ((GtkContainer *) infowin, 6);
-    gtk_window_set_title ((GtkWindow *) infowin, _("Track Information"));
+    gtk_window_set_title ((GtkWindow *) infowin, _("Song Info"));
     gtk_window_set_type_hint ((GtkWindow *) infowin,
      GDK_WINDOW_TYPE_HINT_DIALOG);
 
@@ -353,10 +353,10 @@ static void create_infowin (void)
     widgets.ministatus = small_label_new (NULL);
     gtk_box_pack_start ((GtkBox *) bottom_hbox, widgets.ministatus, TRUE, TRUE, 0);
 
-    widgets.apply = gtk_button_new_from_stock (GTK_STOCK_SAVE);
+    widgets.apply = audgui_button_new (_("_Save"), "document-save");
     g_signal_connect (widgets.apply, "clicked", (GCallback) infowin_update_tuple, NULL);
 
-    GtkWidget * btn_close = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
+    GtkWidget * btn_close = gtk_button_new_with_mnemonic (_("_Close"));
     g_signal_connect_swapped (btn_close, "clicked", (GCallback) audgui_infowin_hide, NULL);
 
     gtk_box_pack_end ((GtkBox *) bottom_hbox, btn_close, FALSE, FALSE, 0);
