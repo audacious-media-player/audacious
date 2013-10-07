@@ -270,55 +270,46 @@ static void infowin_destroyed (void)
 static void add_entry (GtkWidget * grid, const char * title, GtkWidget * entry,
  int x, int y, int span)
 {
-    gtk_widget_set_margin_bottom (entry, 6);
-    g_signal_connect (entry, "changed", (GCallback) entry_changed, NULL);
+    GtkWidget * label = small_label_new (title);
 
-    gtk_grid_attach ((GtkGrid *) grid, small_label_new (title), x, y, span, 1);
+    if (y > 0)
+        gtk_widget_set_margin_top (label, 6);
+
+    gtk_grid_attach ((GtkGrid *) grid, label, x, y, span, 1);
     gtk_grid_attach ((GtkGrid *) grid, entry, x, y + 1, span, 1);
+
+    g_signal_connect (entry, "changed", (GCallback) entry_changed, NULL);
 }
 
 static void create_infowin (void)
 {
-    GtkWidget * hbox;
-    GtkWidget * hbox_status_and_bbox;
-    GtkWidget * vbox0;
-    GtkWidget * vbox2;
-    GtkWidget * codec_hbox;
-    GtkWidget * bbox_close;
-    GtkWidget * btn_close;
-
     infowin = gtk_window_new (GTK_WINDOW_TOPLEVEL);
     gtk_container_set_border_width ((GtkContainer *) infowin, 6);
     gtk_window_set_title ((GtkWindow *) infowin, _("Track Information"));
     gtk_window_set_type_hint ((GtkWindow *) infowin,
      GDK_WINDOW_TYPE_HINT_DIALOG);
 
-    vbox0 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-    gtk_container_add ((GtkContainer *) infowin, vbox0);
-
-    hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  6);
-    gtk_box_pack_start ((GtkBox *) vbox0, hbox, TRUE, TRUE, 0);
-
-    vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-    gtk_box_pack_start ((GtkBox *) hbox, vbox2, TRUE, TRUE, 0);
+    GtkWidget * main_grid = gtk_grid_new ();
+    gtk_grid_set_column_spacing ((GtkGrid *) main_grid, 6);
+    gtk_grid_set_row_spacing ((GtkGrid *) main_grid, 6);
+    gtk_container_add ((GtkContainer *) infowin, main_grid);
 
     widgets.image = audgui_scaled_image_new (NULL);
-    gtk_box_pack_start ((GtkBox *) vbox2, widgets.image, TRUE, TRUE, 0);
+    gtk_widget_set_hexpand (widgets.image, TRUE);
+    gtk_widget_set_vexpand (widgets.image, TRUE);
+    gtk_grid_attach ((GtkGrid *) main_grid, widgets.image, 0, 0, 1, 1);
 
     widgets.location = gtk_label_new ("");
     gtk_widget_set_size_request (widgets.location, 200, -1);
     gtk_label_set_line_wrap ((GtkLabel *) widgets.location, TRUE);
     gtk_label_set_line_wrap_mode ((GtkLabel *) widgets.location, PANGO_WRAP_WORD_CHAR);
     gtk_label_set_selectable ((GtkLabel *) widgets.location, TRUE);
-    gtk_box_pack_start ((GtkBox *) vbox2, widgets.location, FALSE, FALSE, 0);
-
-    codec_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  6);
-    gtk_box_pack_start ((GtkBox *) vbox2, codec_hbox, FALSE, FALSE, 0);
+    gtk_grid_attach ((GtkGrid *) main_grid, widgets.location, 0, 1, 1, 1);
 
     GtkWidget * codec_grid = gtk_grid_new ();
     gtk_grid_set_row_spacing ((GtkGrid *) codec_grid, 3);
     gtk_grid_set_column_spacing ((GtkGrid *) codec_grid, 12);
-    gtk_box_pack_start ((GtkBox *) codec_hbox, codec_grid, FALSE, FALSE, 0);
+    gtk_grid_attach ((GtkGrid *) main_grid, codec_grid, 0, 2, 1, 1);
 
     for (int row = 0; row < CODEC_ITEMS; row ++)
     {
@@ -332,7 +323,7 @@ static void create_infowin (void)
     GtkWidget * grid = gtk_grid_new ();
     gtk_grid_set_column_homogeneous ((GtkGrid *) grid, TRUE);
     gtk_grid_set_column_spacing ((GtkGrid *) grid, 6);
-    gtk_box_pack_start ((GtkBox *) hbox, grid, TRUE, TRUE, 0);
+    gtk_grid_attach ((GtkGrid *) main_grid, grid, 1, 0, 1, 3);
 
     widgets.title = gtk_entry_new ();
     add_entry (grid, _("Title"), widgets.title, 0, 0, 2);
@@ -356,29 +347,22 @@ static void create_infowin (void)
     widgets.track = gtk_entry_new ();
     add_entry (grid, _("Track Number"), widgets.track, 1, 10, 1);
 
-    hbox_status_and_bbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  0);
-    gtk_box_pack_start ((GtkBox *) vbox0, hbox_status_and_bbox, FALSE, FALSE, 0);
+    GtkWidget * bottom_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+    gtk_grid_attach ((GtkGrid *) main_grid, bottom_hbox, 0, 3, 2, 1);
 
     widgets.ministatus = small_label_new (NULL);
-    gtk_box_pack_start ((GtkBox *) hbox_status_and_bbox, widgets.ministatus, TRUE, TRUE, 0);
-
-    bbox_close = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
-    gtk_box_set_spacing ((GtkBox *) bbox_close, 6);
-    gtk_box_pack_start ((GtkBox *) hbox_status_and_bbox, bbox_close, FALSE,
-     FALSE, 0);
-    gtk_button_box_set_layout ((GtkButtonBox *) bbox_close, GTK_BUTTONBOX_END);
+    gtk_box_pack_start ((GtkBox *) bottom_hbox, widgets.ministatus, TRUE, TRUE, 0);
 
     widgets.apply = gtk_button_new_from_stock (GTK_STOCK_SAVE);
-    gtk_container_add ((GtkContainer *) bbox_close, widgets.apply);
     g_signal_connect (widgets.apply, "clicked", (GCallback) infowin_update_tuple, NULL);
 
-    btn_close = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
-    gtk_container_add ((GtkContainer *) bbox_close, btn_close);
-    g_signal_connect_swapped (btn_close, "clicked", (GCallback) gtk_widget_hide,
-     infowin);
+    GtkWidget * btn_close = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
+    g_signal_connect_swapped (btn_close, "clicked", (GCallback) audgui_infowin_hide, NULL);
 
-    gtk_widget_show_all (vbox0);
-    gtk_widget_grab_focus (widgets.title);
+    gtk_box_pack_end ((GtkBox *) bottom_hbox, btn_close, FALSE, FALSE, 0);
+    gtk_box_pack_end ((GtkBox *) bottom_hbox, widgets.apply, FALSE, FALSE, 0);
+
+    gtk_widget_show_all (main_grid);
 
     audgui_destroy_on_escape (infowin);
     g_signal_connect (infowin, "destroy", (GCallback) infowin_destroyed, NULL);
@@ -389,8 +373,6 @@ static void create_infowin (void)
 static void infowin_show (int list, int entry, const char * filename,
  const Tuple * tuple, PluginHandle * decoder, bool_t updating_enabled)
 {
-    char * tmp;
-
     if (! infowin)
         create_infowin ();
 
@@ -406,7 +388,7 @@ static void infowin_show (int list, int entry, const char * filename,
     set_entry_str_from_field (gtk_bin_get_child ((GtkBin *) widgets.genre),
      tuple, FIELD_GENRE, updating_enabled);
 
-    tmp = uri_to_display (filename);
+    char * tmp = uri_to_display (filename);
     gtk_label_set_text ((GtkLabel *) widgets.location, tmp);
     g_free (tmp);
 
