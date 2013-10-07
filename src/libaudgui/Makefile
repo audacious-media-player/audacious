@@ -12,6 +12,7 @@ SRCS = about.c \
        init.c \
        jump-to-time.c \
        list.c \
+       pixbufs.c \
        playlists.c \
        queue-manager.c \
        scaled-image.c \
