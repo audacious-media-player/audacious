@@ -40,6 +40,7 @@ EXPORT int audgui_get_digit_width (GtkWidget * widget)
     pango_layout_set_font_description (layout, desc);
     pango_layout_get_pixel_size (layout, & width, NULL);
     pango_font_description_free (desc);
+    g_object_unref (layout);
     return (width + 9) / 10;
 }
 
