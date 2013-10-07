@@ -161,6 +161,12 @@ EXPORT GtkWidget * audgui_dialog_new (GtkMessageType type, const char * title,
     return dialog;
 }
 
+EXPORT void audgui_dialog_add_widget (GtkWidget * dialog, GtkWidget * widget)
+{
+    GtkWidget * box = gtk_message_dialog_get_message_area ((GtkMessageDialog *) dialog);
+    gtk_box_pack_start ((GtkBox *) box, widget, FALSE, FALSE, 0);
+}
+
 EXPORT void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
  const char * title, const char * text)
 {

@@ -58,10 +58,9 @@ EXPORT void audgui_confirm_playlist_delete (int playlist)
     GtkWidget * dialog = audgui_dialog_new (GTK_MESSAGE_QUESTION,
      _("Close Playlist"), message, button1, button2);
 
-    GtkWidget * box = gtk_message_dialog_get_message_area ((GtkMessageDialog *) dialog);
     GtkWidget * check = gtk_check_button_new_with_mnemonic (_("_Don’t ask again"));
     g_signal_connect (check, "toggled", (GCallback) no_confirm_cb, NULL);
-    gtk_box_pack_start ((GtkBox *) box, check, FALSE, FALSE, 0);
+    audgui_dialog_add_widget (dialog, check);
 
     gtk_widget_show_all (dialog);
 
@@ -96,8 +95,7 @@ EXPORT void audgui_show_playlist_rename (int playlist)
      _("Rename Playlist"), _("What would you like to call this playlist?"),
      button1, button2);
 
-    GtkWidget * box = gtk_message_dialog_get_message_area ((GtkMessageDialog *) dialog);
-    gtk_box_pack_start ((GtkBox *) box, entry, FALSE, FALSE, 0);
+    audgui_dialog_add_widget (dialog, entry);
 
     gtk_widget_show_all (dialog);
 

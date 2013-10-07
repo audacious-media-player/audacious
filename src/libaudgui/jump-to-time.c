@@ -47,8 +47,7 @@ EXPORT void audgui_jump_to_time (void)
     GtkWidget * dialog = audgui_dialog_new (GTK_MESSAGE_OTHER,
      _("Jump to Time"), _("Enter time (minutes:seconds):"), button1, button2);
 
-    GtkWidget * box = gtk_message_dialog_get_message_area ((GtkMessageDialog *) dialog);
-    gtk_box_pack_start ((GtkBox *) box, entry, FALSE, FALSE, 0);
+    audgui_dialog_add_widget (dialog, entry);
 
     if (aud_drct_get_playing ())
     {
