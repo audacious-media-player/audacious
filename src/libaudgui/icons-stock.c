@@ -22,6 +22,8 @@
 
 #include "libaudgui.h"
 
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+
 static void load_stock_icon (char * id, char * filename,
  GtkIconFactory * iconfactory)
 {

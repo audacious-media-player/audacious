@@ -22,13 +22,11 @@
 
 #include <libaudcore/core.h>
 
-/* macro defines for Audacious stock icons */
+/* deprecated stock icons */
 #define AUD_STOCK_AUDACIOUS   "aud-audacious"
 #define AUD_STOCK_PLAYLIST    "aud-playlist"
 #define AUD_STOCK_PLUGIN      "aud-plugin"
 #define AUD_STOCK_QUEUETOGGLE "aud-queuetoggle"
-
-void audgui_register_stock_icons(void);
 
 void audgui_show_add_url_window(bool_t open);
 
@@ -80,5 +78,8 @@ char * audgui_urilist_create_from_selected (int playlist);
 
 /* util.c */
 void audgui_set_default_icon (void);
+
+/* deprecated */
+void audgui_register_stock_icons (void) __attribute__ ((deprecated));
 
 #endif /* LIBAUDGUI_H */

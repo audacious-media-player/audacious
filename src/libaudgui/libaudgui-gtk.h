@@ -61,7 +61,7 @@ GtkWidget * audgui_dialog_new (GtkMessageType type, const char * title,
 void audgui_dialog_add_widget (GtkWidget * dialog, GtkWidget * widget);
 
 /* deprecated */
-GdkPixbuf * audgui_pixbuf_for_current (void) __attribute ((deprecated));
-GdkPixbuf * audgui_pixbuf_for_entry (int playlist, int entry) __attribute ((deprecated));
+GdkPixbuf * audgui_pixbuf_for_current (void) __attribute__ ((deprecated));
+GdkPixbuf * audgui_pixbuf_for_entry (int playlist, int entry) __attribute__ ((deprecated));
 
 #endif
