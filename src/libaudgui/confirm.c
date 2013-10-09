@@ -47,16 +47,15 @@ EXPORT void audgui_confirm_playlist_delete (int playlist)
     }
 
     char * title = aud_playlist_get_title (playlist);
-    char * message = g_strdup_printf (_("Do you want to close “%s”?\n"
-     "Once closed, the playlist cannot be recovered."), title);
+    char * message = g_strdup_printf (_("Do you want to permanently remove “%s”?"), title);
 
     int id = aud_playlist_get_unique_id (playlist);
-    GtkWidget * button1 = audgui_button_new (_("Close"), "edit-delete",
+    GtkWidget * button1 = audgui_button_new (_("Remove"), "edit-delete",
      confirm_delete_cb, GINT_TO_POINTER (id));
-    GtkWidget * button2 = audgui_button_new (_("Cancel"), NULL, NULL, NULL);
+    GtkWidget * button2 = audgui_button_new (_("Cancel"), "window-close", NULL, NULL);
 
     GtkWidget * dialog = audgui_dialog_new (GTK_MESSAGE_QUESTION,
-     _("Close Playlist"), message, button1, button2);
+     _("Remove Playlist"), message, button1, button2);
 
     GtkWidget * check = gtk_check_button_new_with_mnemonic (_("_Don’t ask again"));
     g_signal_connect (check, "toggled", (GCallback) no_confirm_cb, NULL);
@@ -89,7 +88,7 @@ EXPORT void audgui_show_playlist_rename (int playlist)
     g_object_set_data ((GObject *) entry, "playlist-id", GINT_TO_POINTER (id));
 
     GtkWidget * button1 = audgui_button_new (_("Rename"), NULL, rename_cb, entry);
-    GtkWidget * button2 = audgui_button_new (_("Cancel"), NULL, NULL, NULL);
+    GtkWidget * button2 = audgui_button_new (_("Cancel"), "window-close", NULL, NULL);
 
     GtkWidget * dialog = audgui_dialog_new (GTK_MESSAGE_QUESTION,
      _("Rename Playlist"), _("What would you like to call this playlist?"),

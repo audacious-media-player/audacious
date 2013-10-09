@@ -82,7 +82,7 @@ static void confirm_overwrite (ImportExportJob * job)
     char * message = g_strdup_printf (_("Overwrite %s?"), job->filename);
 
     GtkWidget * button1 = audgui_button_new (_("Overwrite"), "document-save", finish_job, job);
-    GtkWidget * button2 = audgui_button_new (_("Cancel"), NULL, NULL, NULL);
+    GtkWidget * button2 = audgui_button_new (_("Cancel"), "window-close", NULL, NULL);
 
     job->confirm = audgui_dialog_new (GTK_MESSAGE_QUESTION,
      _("Confirm Overwrite"), message, button1, button2);
@@ -135,7 +135,7 @@ static void create_selector (ImportExportJob * job, const char * filename, const
         gtk_file_chooser_set_current_folder_uri ((GtkFileChooser *) job->selector, folder);
 
     GtkWidget * button1 = audgui_button_new (verb, icon, check_overwrite, job);
-    GtkWidget * button2 = audgui_button_new (_("Cancel"), NULL,
+    GtkWidget * button2 = audgui_button_new (_("Cancel"), "window-close",
      (AudguiCallback) gtk_widget_destroy, job->selector);
 
     gtk_dialog_add_action_widget ((GtkDialog *) job->selector, button2, GTK_RESPONSE_NONE);

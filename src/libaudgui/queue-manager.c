@@ -185,8 +185,7 @@ static GtkWidget * create_queue_manager (void)
     audgui_list_add_column (qm_list, NULL, 1, G_TYPE_STRING, -1);
     gtk_container_add ((GtkContainer *) scrolled, qm_list);
 
-    GtkWidget * button1 = audgui_button_new (_("_Remove Selected"),
-     "edit-delete", remove_selected, NULL);
+    GtkWidget * button1 = audgui_button_new (_("_Unqueue"), "list-remove", remove_selected, NULL);
     GtkWidget * button2 = audgui_button_new (_("_Close"), "window-close",
      (AudguiCallback) gtk_widget_destroy, qm_win);
 
