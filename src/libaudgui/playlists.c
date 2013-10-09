@@ -134,7 +134,7 @@ static void create_selector (ImportExportJob * job, const char * filename, const
         gtk_file_chooser_set_current_folder_uri ((GtkFileChooser *) job->selector, folder);
 
     GtkWidget * button1 = audgui_button_new (verb, icon, check_overwrite, job);
-    GtkWidget * button2 = audgui_button_new ("Cancel", NULL,
+    GtkWidget * button2 = audgui_button_new (_("Cancel"), NULL,
      (AudguiCallback) gtk_widget_destroy, job->selector);
 
     gtk_dialog_add_action_widget ((GtkDialog *) job->selector, button2, GTK_RESPONSE_NONE);
