@@ -408,6 +408,10 @@ static void do_commands (void)
 
 static void init_one (void)
 {
+#ifdef HAVE_SIGWAIT
+    signals_init_one ();
+#endif
+
     init_paths ();
     make_dirs ();
 
@@ -424,6 +428,10 @@ static void init_two (int * p_argc, char * * * p_argv)
     if (! options.headless)
         gtk_init (p_argc, p_argv);
 
+#ifdef HAVE_SIGWAIT
+    signals_init_two ();
+#endif
+
     AUDDBG ("Loading configuration.\n");
     config_load ();
 
@@ -432,10 +440,6 @@ static void init_two (int * p_argc, char * * * p_argv)
     chardet_init ();
     eq_init ();
     playlist_init ();
-
-#ifdef HAVE_SIGWAIT
-    signals_init ();
-#endif
 
     tag_set_verbose (verbose);
     vfs_set_verbose (verbose);

@@ -53,7 +53,10 @@ void history_cleanup (void);
 bool_t do_autosave (void);
 
 /* signals.c */
-void signals_init (void);
+#ifdef HAVE_SIGWAIT
+void signals_init_one (void);
+void signals_init_two (void);
+#endif
 
 /* ui_albumart.c */
 char * get_associated_image_file (const char * filename);

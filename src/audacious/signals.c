@@ -17,14 +17,14 @@
  * the use of this software.
  */
 
+#ifdef HAVE_SIGWAIT
+
 #include <pthread.h>
 #include <signal.h>
 
-#include <libaudcore/hook.h>
-
+#include "drct.h"
 #include "main.h"
 
-#ifdef HAVE_SIGWAIT
 static sigset_t signal_set;
 
 static void * signal_thread (void * data)
@@ -32,16 +32,14 @@ static void * signal_thread (void * data)
     int signal;
 
     while (! sigwait (& signal_set, & signal))
-        event_queue ("quit", NULL);
+        drct_quit ();
 
     return NULL;
 }
-#endif
 
 /* Must be called before any threads are created. */
-void signals_init (void)
+void signals_init_one (void)
 {
-#ifdef HAVE_SIGWAIT
     sigemptyset (& signal_set);
     sigaddset (& signal_set, SIGHUP);
     sigaddset (& signal_set, SIGINT);
@@ -49,8 +47,12 @@ void signals_init (void)
     sigaddset (& signal_set, SIGTERM);
 
     sigprocmask (SIG_BLOCK, & signal_set, NULL);
+}
 
+void signals_init_two (void)
+{
     pthread_t thread;
     pthread_create (& thread, NULL, signal_thread, NULL);
-#endif
 }
+
+#endif /* HAVE_SIGWAIT */
