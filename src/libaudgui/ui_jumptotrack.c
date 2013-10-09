@@ -28,6 +28,7 @@
 
 #include "init.h"
 #include "libaudgui.h"
+#include "libaudgui-gtk.h"
 #include "list.h"
 #include "ui_jumptotrack_cache.h"
 
@@ -76,7 +77,7 @@ static int get_selected_entry (void)
     return g_array_index (search_matches, int, row);
 }
 
-static void do_jump (void)
+static void do_jump (void * unused)
 {
     int entry = get_selected_entry ();
     if (entry < 0)
@@ -111,7 +112,7 @@ static void update_queue_button (int entry)
     }
 }
 
-static void do_queue (void)
+static void do_queue (void * unused)
 {
     int playlist = aud_playlist_get_active ();
     int entry = get_selected_entry ();
@@ -163,13 +164,6 @@ static void fill_list (void)
         gtk_tree_selection_select_path (sel, path);
         gtk_tree_path_free (path);
     }
-}
-
-static void clear_cb (GtkWidget * widget)
-{
-    g_return_if_fail (filter_entry);
-    gtk_entry_set_text ((GtkEntry *) filter_entry, "");
-    gtk_widget_grab_focus (filter_entry);
 }
 
 static void update_cb (void * data, void * user)
@@ -284,18 +278,11 @@ static GtkWidget * create_window (void)
     gtk_box_pack_start ((GtkBox *) hbox, filter_entry, TRUE, TRUE, 3);
 
     /* remember text entry */
-    GtkWidget * toggle2 = gtk_check_button_new_with_label (_("Remember"));
+    GtkWidget * toggle2 = gtk_check_button_new_with_mnemonic (_("_Remember"));
     gtk_toggle_button_set_active ((GtkToggleButton *) toggle2, aud_get_bool
      ("audgui", "remember_jtf_entry"));
     gtk_box_pack_start(GTK_BOX(hbox), toggle2, FALSE, FALSE, 0);
     g_signal_connect (toggle2, "clicked", (GCallback) toggle_button_cb, "remember_jtf_entry");
-
-    /* clear button */
-    GtkWidget * rescan = gtk_button_new_with_mnemonic (_("Clea_r"));
-    gtk_button_set_image ((GtkButton *) rescan, gtk_image_new_from_stock
-     (GTK_STOCK_CLEAR, GTK_ICON_SIZE_BUTTON));
-    gtk_box_pack_start(GTK_BOX(hbox), rescan, FALSE, FALSE, 0);
-    g_signal_connect (rescan, "clicked", (GCallback) clear_cb, NULL);
 
     GtkWidget * scrollwin = gtk_scrolled_window_new (NULL, NULL);
     gtk_container_add(GTK_CONTAINER(scrollwin), treeview);
@@ -311,35 +298,27 @@ static GtkWidget * create_window (void)
     gtk_box_pack_start(GTK_BOX(vbox), bbox, FALSE, FALSE, 0);
 
     /* close dialog toggle */
-    GtkWidget * toggle = gtk_check_button_new_with_label(_("Close on Jump"));
+    GtkWidget * toggle = gtk_check_button_new_with_mnemonic (_("C_lose on jump"));
     gtk_toggle_button_set_active ((GtkToggleButton *) toggle, aud_get_bool
      ("audgui", "close_jtf_dialog"));
     gtk_box_pack_start(GTK_BOX(bbox), toggle, FALSE, FALSE, 0);
     g_signal_connect (toggle, "clicked", (GCallback) toggle_button_cb, "close_jtf_dialog");
 
     /* queue button */
-    queue_button = gtk_button_new_with_mnemonic(_("_Queue"));
-    gtk_button_set_image ((GtkButton *) queue_button, gtk_image_new_from_stock
-     (AUD_STOCK_QUEUETOGGLE, GTK_ICON_SIZE_BUTTON));
+    queue_button = audgui_button_new (_("_Queue"), NULL, do_queue, NULL);
     gtk_box_pack_start ((GtkBox *) bbox, queue_button, FALSE, FALSE, 0);
 
-    g_signal_connect (queue_button, "clicked", (GCallback) do_queue, NULL);
-
     /* jump button */
-    GtkWidget * jump = gtk_button_new_from_stock (GTK_STOCK_JUMP_TO);
+    GtkWidget * jump = audgui_button_new (_("_Jump"), "go-jump", do_jump, NULL);
     gtk_box_pack_start(GTK_BOX(bbox), jump, FALSE, FALSE, 0);
-
-    g_signal_connect (jump, "clicked", (GCallback) do_jump, NULL);
 
     gtk_widget_set_can_default(jump, TRUE);
     gtk_widget_grab_default(jump);
 
     /* close button */
-    GtkWidget * close = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
+    GtkWidget * close = audgui_button_new (_("_Close"), "window-close",
+     (AudguiCallback) audgui_jump_to_track_hide, NULL);
     gtk_box_pack_start(GTK_BOX(bbox), close, FALSE, FALSE, 0);
-    g_signal_connect (close, "clicked", (GCallback) audgui_jump_to_track_hide,
-     NULL);
-    gtk_widget_set_can_default(close, TRUE);
 
     return jump_to_track_win;
 }
