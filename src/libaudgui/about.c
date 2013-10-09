@@ -22,6 +22,7 @@
 #include <audacious/i18n.h>
 #include <audacious/misc.h>
 
+#include "init.h"
 #include "libaudgui-gtk.h"
 
 static const char about_text[] =
@@ -29,8 +30,6 @@ static const char about_text[] =
  "Copyright © 2001-2013 Audacious developers and others";
 
 static const char website[] = "http://audacious-media-player.org";
-
-static GtkWidget * about_window;
 
 static GtkWidget * create_credits_notebook (const char * credits, const char * license)
 {
@@ -61,22 +60,14 @@ static GtkWidget * create_credits_notebook (const char * credits, const char * l
     return notebook;
 }
 
-EXPORT void audgui_show_about_window (void)
+static GtkWidget * create_about_window (void)
 {
-    if (about_window)
-    {
-        gtk_window_present ((GtkWindow *) about_window);
-        return;
-    }
-
-    about_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+    GtkWidget * about_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title ((GtkWindow *) about_window, _("About Audacious"));
     gtk_window_set_resizable ((GtkWindow *) about_window, FALSE);
     gtk_container_set_border_width ((GtkContainer *) about_window, 3);
 
     audgui_destroy_on_escape (about_window);
-    g_signal_connect (about_window, "destroy", (GCallback) gtk_widget_destroyed,
-     & about_window);
 
     GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
     gtk_container_add ((GtkContainer *) about_window, vbox);
@@ -114,11 +105,16 @@ EXPORT void audgui_show_about_window (void)
     g_free (credits);
     g_free (license);
 
-    gtk_widget_show_all (about_window);
+    return about_window;
+}
+
+EXPORT void audgui_show_about_window (void)
+{
+    if (! audgui_reshow_unique_window (AUDGUI_ABOUT_WINDOW))
+        audgui_show_unique_window (AUDGUI_ABOUT_WINDOW, create_about_window ());
 }
 
 EXPORT void audgui_hide_about_window (void)
 {
-    if (about_window)
-        gtk_widget_hide (about_window);
+    audgui_hide_unique_window (AUDGUI_ABOUT_WINDOW);
 }

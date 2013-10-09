@@ -30,6 +30,7 @@
 #include <audacious/types.h>
 #include <libaudcore/hook.h>
 
+#include "init.h"
 #include "libaudgui-gtk.h"
 
 static void on_off_cb (GtkToggleButton * on_off, void * unused)
@@ -45,9 +46,7 @@ static void on_off_update (void * unused, GtkWidget * on_off)
 
 static GtkWidget * create_on_off (void)
 {
-    GtkWidget * on_off;
-
-    on_off = gtk_check_button_new_with_mnemonic (_("_Enable"));
+    GtkWidget * on_off = gtk_check_button_new_with_mnemonic (_("_Enable"));
     g_signal_connect ((GObject *) on_off, "toggled", (GCallback) on_off_cb, NULL);
     hook_associate ("set equalizer_active", (HookFunction) on_off_update, on_off);
 
@@ -88,15 +87,13 @@ static char * format_value (GtkScale * slider, double value, void * unused)
 
 static GtkWidget * create_slider (const char * name, int band)
 {
-    GtkWidget * vbox, * slider, * label;
+    GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
 
-    vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-
-    label = gtk_label_new (name);
+    GtkWidget * label = gtk_label_new (name);
     gtk_label_set_angle ((GtkLabel *) label, 90);
     gtk_box_pack_start ((GtkBox *) vbox, label, TRUE, FALSE, 0);
 
-    slider = gtk_scale_new_with_range (GTK_ORIENTATION_VERTICAL,
+    GtkWidget * slider = gtk_scale_new_with_range (GTK_ORIENTATION_VERTICAL,
      -EQUALIZER_MAX_GAIN, EQUALIZER_MAX_GAIN, 1);
     gtk_scale_set_draw_value ((GtkScale *) slider, TRUE);
     gtk_scale_set_value_pos ((GtkScale *) slider, GTK_POS_BOTTOM);
@@ -118,61 +115,53 @@ static GtkWidget * create_slider (const char * name, int band)
     return vbox;
 }
 
+static void destroy_cb (void)
+{
+    hook_dissociate ("set equalizer_active", (HookFunction) on_off_update);
+    hook_dissociate ("set equalizer_bands", (HookFunction) slider_update);
+    hook_dissociate ("set equalizer_preamp", (HookFunction) slider_update);
+}
+
 static GtkWidget * create_window (void)
 {
     const char * const names[AUD_EQUALIZER_NBANDS] = {N_("31 Hz"), N_("63 Hz"),
      N_("125 Hz"), N_("250 Hz"), N_("500 Hz"), N_("1 kHz"), N_("2 kHz"),
      N_("4 kHz"), N_("8 kHz"), N_("16 kHz")};
-    GtkWidget * window, * vbox, * hbox;
-    int i;
 
-    window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+    GtkWidget * window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title ((GtkWindow *) window, _("Equalizer"));
     gtk_window_set_type_hint ((GtkWindow *) window, GDK_WINDOW_TYPE_HINT_DIALOG);
     gtk_window_set_resizable ((GtkWindow *) window, FALSE);
     gtk_container_set_border_width ((GtkContainer *) window, 6);
-    g_signal_connect ((GObject *) window, "delete-event", (GCallback)
-     gtk_widget_hide_on_delete, NULL);
-    audgui_hide_on_escape (window);
+    audgui_destroy_on_escape (window);
 
-    vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+    GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
     gtk_container_add ((GtkContainer *) window, vbox);
 
     gtk_box_pack_start ((GtkBox *) vbox, create_on_off (), FALSE, FALSE, 0);
 
-    hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  6);
+    GtkWidget * hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  6);
     gtk_box_pack_start ((GtkBox *) vbox, hbox, FALSE, FALSE, 0);
 
     gtk_box_pack_start ((GtkBox *) hbox, create_slider (_("Preamp"), -1), FALSE, FALSE, 0);
     gtk_box_pack_start ((GtkBox *) hbox,
      gtk_separator_new (GTK_ORIENTATION_VERTICAL), FALSE, FALSE, 0);
 
-    for (i = 0; i < AUD_EQUALIZER_NBANDS; i ++)
+    for (int i = 0; i < AUD_EQUALIZER_NBANDS; i ++)
         gtk_box_pack_start ((GtkBox *) hbox, create_slider (_(names[i]), i), FALSE, FALSE, 0);
 
-    gtk_widget_show_all (vbox);
+    g_signal_connect (window, "destroy", (GCallback) destroy_cb, NULL);
+
     return window;
 }
 
-static GtkWidget * equalizer_window = NULL;
-
 EXPORT void audgui_show_equalizer_window (void)
 {
-    if (equalizer_window == NULL)
-        equalizer_window = create_window ();
-
-    gtk_window_present ((GtkWindow *) equalizer_window);
+    if (! audgui_reshow_unique_window (AUDGUI_EQUALIZER_WINDOW))
+        audgui_show_unique_window (AUDGUI_EQUALIZER_WINDOW, create_window ());
 }
 
 EXPORT void audgui_hide_equalizer_window (void)
 {
-    if (! equalizer_window)
-        return;
-
-    hook_dissociate ("set equalizer_active", (HookFunction) on_off_update);
-    hook_dissociate ("set equalizer_bands", (HookFunction) slider_update);
-    hook_dissociate ("set equalizer_preamp", (HookFunction) slider_update);
-
-    gtk_widget_destroy (equalizer_window);
-    equalizer_window = NULL;
+    audgui_hide_unique_window (AUDGUI_EQUALIZER_WINDOW);
 }

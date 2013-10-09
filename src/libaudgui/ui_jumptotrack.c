@@ -26,6 +26,7 @@
 #include <audacious/playlist.h>
 #include <libaudcore/hook.h>
 
+#include "init.h"
 #include "libaudgui.h"
 #include "list.h"
 #include "ui_jumptotrack_cache.h"
@@ -33,14 +34,12 @@
 static void update_cb (void * data, void * user);
 static void activate_cb (void * data, void * user);
 
-static GtkWidget *jump_to_track_win = NULL;
 static JumpToTrackCache* cache = NULL;
 static const GArray * search_matches;
 static GtkWidget * treeview, * filter_entry, * queue_button;
 static bool_t watching = FALSE;
 
-EXPORT void
-audgui_jump_to_track_hide(void)
+static void destroy_cb (void)
 {
     if (watching)
     {
@@ -48,9 +47,6 @@ audgui_jump_to_track_hide(void)
         hook_dissociate ("playlist activate", activate_cb);
         watching = FALSE;
     }
-
-    if (jump_to_track_win != NULL)
-        gtk_widget_hide (jump_to_track_win);
 
     if (cache != NULL)
     {
@@ -220,12 +216,6 @@ static void toggle_button_cb (GtkToggleButton * toggle, const char * setting)
     aud_set_bool ("audgui", setting, gtk_toggle_button_get_active (toggle));
 }
 
-static bool_t delete_cb (void)
-{
-    audgui_jump_to_track_hide ();
-    return TRUE;
-}
-
 static void list_get_value (void * user, int row, int column, GValue * value)
 {
     g_return_if_fail (search_matches);
@@ -252,16 +242,16 @@ static void list_get_value (void * user, int row, int column, GValue * value)
 static const AudguiListCallbacks callbacks = {
  .get_value = list_get_value};
 
-static void create_window (void)
+static GtkWidget * create_window (void)
 {
-    jump_to_track_win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    GtkWidget * jump_to_track_win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_type_hint(GTK_WINDOW(jump_to_track_win),
                              GDK_WINDOW_TYPE_HINT_DIALOG);
 
     gtk_window_set_title(GTK_WINDOW(jump_to_track_win), _("Jump to Song"));
 
     g_signal_connect (jump_to_track_win, "key_press_event", (GCallback) keypress_cb, NULL);
-    g_signal_connect (jump_to_track_win, "delete-event", (GCallback) delete_cb, NULL);
+    g_signal_connect (jump_to_track_win, "destroy", (GCallback) destroy_cb, NULL);
 
     gtk_container_set_border_width(GTK_CONTAINER(jump_to_track_win), 10);
     gtk_window_set_default_size(GTK_WINDOW(jump_to_track_win), 600, 500);
@@ -350,13 +340,16 @@ static void create_window (void)
     g_signal_connect (close, "clicked", (GCallback) audgui_jump_to_track_hide,
      NULL);
     gtk_widget_set_can_default(close, TRUE);
+
+    return jump_to_track_win;
 }
 
 EXPORT void audgui_jump_to_track (void)
 {
-    bool_t create = (! jump_to_track_win);
-    if (create)
-        create_window ();
+    if (audgui_reshow_unique_window (AUDGUI_JUMP_TO_TRACK_WINDOW))
+        return;
+
+    GtkWidget * jump_to_track_win = create_window ();
 
     g_return_if_fail (filter_entry);
 
@@ -373,10 +366,12 @@ EXPORT void audgui_jump_to_track (void)
         watching = TRUE;
     }
 
-    if (create)
-        gtk_widget_show_all (jump_to_track_win);
-    else
-        gtk_window_present ((GtkWindow *) jump_to_track_win);
-
     gtk_widget_grab_focus (filter_entry);
+
+    audgui_show_unique_window (AUDGUI_JUMP_TO_TRACK_WINDOW, jump_to_track_win);
+}
+
+EXPORT void audgui_jump_to_track_hide (void)
+{
+    audgui_hide_unique_window (AUDGUI_JUMP_TO_TRACK_WINDOW);
 }

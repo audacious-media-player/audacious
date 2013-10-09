@@ -26,8 +26,6 @@
 #include "init.h"
 #include "libaudgui.h"
 
-static GtkWidget * window;
-
 static void response_cb (GtkWidget * dialog, int response)
 {
     if (response == GTK_RESPONSE_ACCEPT)
@@ -47,14 +45,11 @@ static void response_cb (GtkWidget * dialog, int response)
     gtk_widget_destroy (dialog);
 }
 
-EXPORT void audgui_show_add_url_window (bool_t open)
+static GtkWidget * create_url_opener (bool_t open)
 {
-    if (window)
-        gtk_widget_destroy (window);
-
-    window = gtk_dialog_new_with_buttons (open ? _("Open URL") : _("Add URL"),
-     NULL, 0, GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT, open ? GTK_STOCK_OPEN :
-     GTK_STOCK_ADD, GTK_RESPONSE_ACCEPT, NULL);
+    GtkWidget * window = gtk_dialog_new_with_buttons (open ? _("Open URL") :
+     _("Add URL"), NULL, 0, GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT, open ?
+     GTK_STOCK_OPEN : GTK_STOCK_ADD, GTK_RESPONSE_ACCEPT, NULL);
     gtk_widget_set_size_request (window, 300, -1);
     gtk_window_set_resizable ((GtkWindow *) window, FALSE);
     gtk_dialog_set_default_response ((GtkDialog *) window, GTK_RESPONSE_ACCEPT);
@@ -81,11 +76,10 @@ EXPORT void audgui_show_add_url_window (bool_t open)
     g_signal_connect (window, "response", (GCallback) response_cb, NULL);
     g_signal_connect (window, "destroy", (GCallback) gtk_widget_destroyed, & window);
 
-    gtk_widget_show_all (window);
+    return window;
 }
 
-void audgui_url_opener_cleanup (void)
+EXPORT void audgui_show_add_url_window (bool_t open)
 {
-    if (window)
-        gtk_widget_destroy (window);
+    audgui_show_unique_window (AUDGUI_URL_OPENER_WINDOW, create_url_opener (open));
 }

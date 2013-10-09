@@ -27,12 +27,11 @@
 #include <audacious/playlist.h>
 #include <libaudcore/hook.h>
 
+#include "init.h"
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
 
 #define IMAGE_SIZE 96
-
-static GtkWidget * infopopup = NULL;
 
 static struct {
     GtkWidget * title_header, * title_label;
@@ -122,16 +121,15 @@ static void infopopup_destroyed (void)
         progress_source = 0;
     }
 
-    infopopup = NULL;
     memset (& widgets, 0, sizeof widgets);
 
     str_unref (current_file);
     current_file = NULL;
 }
 
-static void infopopup_create (void)
+static GtkWidget * infopopup_create (void)
 {
-    infopopup = gtk_window_new (GTK_WINDOW_POPUP);
+    GtkWidget * infopopup = gtk_window_new (GTK_WINDOW_POPUP);
     gtk_window_set_type_hint ((GtkWindow *) infopopup, GDK_WINDOW_TYPE_HINT_TOOLTIP);
     gtk_window_set_decorated ((GtkWindow *) infopopup, FALSE);
     gtk_container_set_border_width ((GtkContainer *) infopopup, 4);
@@ -164,7 +162,8 @@ static void infopopup_create (void)
 
     /* do not show the track progress */
     gtk_widget_set_no_show_all (widgets.progress, TRUE);
-    gtk_widget_show_all (hbox);
+
+    return infopopup;
 }
 
 /* calls str_unref() on <text> */
@@ -217,7 +216,7 @@ static void infopopup_set_fields (const Tuple * tuple, const char * title)
     infopopup_set_field (widgets.track_header, widgets.track_label, tmp);
 }
 
-static void infopopup_move_to_mouse (void)
+static void infopopup_move_to_mouse (GtkWidget * infopopup)
 {
     int x, y, h, w;
 
@@ -243,13 +242,12 @@ static void infopopup_move_to_mouse (void)
 static void infopopup_show (const char * filename, const Tuple * tuple,
  const char * title)
 {
-    if (infopopup)
-        gtk_widget_destroy (infopopup);
+    audgui_hide_unique_window (AUDGUI_INFOPOPUP_WINDOW);
 
     str_unref (current_file);
     current_file = str_get (filename);
 
-    infopopup_create ();
+    GtkWidget * infopopup = infopopup_create ();
     infopopup_set_fields (tuple, title);
     infopopup_display_image (filename);
 
@@ -265,8 +263,9 @@ static void infopopup_show (const char * filename, const Tuple * tuple,
     /* immediately run the callback once to update progressbar status */
     infopopup_progress_cb (NULL);
 
-    infopopup_move_to_mouse ();
-    gtk_widget_show (infopopup);
+    infopopup_move_to_mouse (infopopup);
+
+    audgui_show_unique_window (AUDGUI_INFOPOPUP_WINDOW, infopopup);
 }
 
 EXPORT void audgui_infopopup_show (int playlist, int entry)
@@ -299,6 +298,5 @@ EXPORT void audgui_infopopup_show_current (void)
 
 EXPORT void audgui_infopopup_hide (void)
 {
-    if (infopopup)
-        gtk_widget_destroy (infopopup);
+    audgui_hide_unique_window (AUDGUI_INFOPOPUP_WINDOW);
 }

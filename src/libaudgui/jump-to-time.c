@@ -38,6 +38,9 @@ static void jump_cb (void * entry)
 
 EXPORT void audgui_jump_to_time (void)
 {
+    if (audgui_reshow_unique_window (AUDGUI_JUMP_TO_TIME_WINDOW))
+        return;
+
     GtkWidget * entry = gtk_entry_new ();
     gtk_entry_set_activates_default ((GtkEntry *) entry, TRUE);
 
@@ -56,5 +59,5 @@ EXPORT void audgui_jump_to_time (void)
         gtk_entry_set_text ((GtkEntry *) entry, buf);
     }
 
-    gtk_widget_show_all (dialog);
+    audgui_show_unique_window (AUDGUI_JUMP_TO_TIME_WINDOW, dialog);
 }

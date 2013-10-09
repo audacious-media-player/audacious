@@ -24,6 +24,7 @@
 #include <audacious/playlist.h>
 #include <libaudcore/vfs.h>
 
+#include "init.h"
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
 
@@ -148,7 +149,7 @@ static void create_selector (ImportExportJob * job, const char * filename, const
     gtk_widget_show_all (job->selector);
 }
 
-static void start_job (bool_t save)
+static GtkWidget * start_job (bool_t save)
 {
     int list = aud_playlist_get_active ();
 
@@ -164,14 +165,16 @@ static void start_job (bool_t save)
 
     str_unref (filename);
     g_free (folder);
+
+    return job->selector;
 }
 
 EXPORT void audgui_import_playlist (void)
 {
-    start_job (FALSE);
+    audgui_show_unique_window (AUDGUI_PLAYLIST_IMPORT_WINDOW, start_job (FALSE));
 }
 
 EXPORT void audgui_export_playlist (void)
 {
-    start_job (TRUE);
+    audgui_show_unique_window (AUDGUI_PLAYLIST_EXPORT_WINDOW, start_job (TRUE));
 }

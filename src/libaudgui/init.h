@@ -1,6 +1,6 @@
 /*
  * init.h
- * Copyright 2010-2012 John Lindgren
+ * Copyright 2010-2013 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -17,20 +17,37 @@
  * the use of this software.
  */
 
-#include <audacious/plugin.h>
+#ifndef AUDGUI_INIT_H
+#define AUDGUI_INIT_H
 
-/* init.c */
+#include <gtk/gtk.h>
+
+#include <audacious/api.h>
+
+enum {
+    AUDGUI_ABOUT_WINDOW,
+    AUDGUI_EQUALIZER_WINDOW,
+    AUDGUI_FILEBROWSER_WINDOW,
+    AUDGUI_INFOPOPUP_WINDOW,
+    AUDGUI_INFO_WINDOW,
+    AUDGUI_JUMP_TO_TIME_WINDOW,
+    AUDGUI_JUMP_TO_TRACK_WINDOW,
+    AUDGUI_PLAYLIST_EXPORT_WINDOW,
+    AUDGUI_PLAYLIST_IMPORT_WINDOW,
+    AUDGUI_PLAYLIST_MANAGER_WINDOW,
+    AUDGUI_QUEUE_MANAGER_WINDOW,
+    AUDGUI_URL_OPENER_WINDOW,
+    AUDGUI_NUM_UNIQUE_WINDOWS
+};
+
+void audgui_show_unique_window (int id, GtkWidget * widget);
+bool_t audgui_reshow_unique_window (int id);
+void audgui_hide_unique_window (int id);
+
 void audgui_init (AudAPITable * table);
 void audgui_cleanup (void);
 
-/* queue-manager.c */
-void audgui_queue_manager_cleanup (void);
-
-/* ui_playlist_manager.c */
-void audgui_playlist_manager_cleanup (void);
-
-/* url-opener.c */
-void audgui_url_opener_cleanup (void);
-
-/* util.c */
+/* pixbufs.c */
 void audgui_pixbuf_uncache (void);
+
+#endif /* AUDGUI_INIT_H */

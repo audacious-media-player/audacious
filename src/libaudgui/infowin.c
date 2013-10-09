@@ -29,6 +29,7 @@
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
 
+#include "init.h"
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
 
@@ -46,8 +47,6 @@ static const char * codec_labels[CODEC_ITEMS] = {
     N_("Quality:"),
     N_("Bitrate:")
 };
-
-static GtkWidget * infowin = NULL;
 
 static struct {
     GtkWidget * location;
@@ -258,7 +257,6 @@ static void infowin_destroyed (void)
 {
     hook_dissociate ("art ready", (HookFunction) infowin_display_image);
 
-    infowin = NULL;
     memset (& widgets, 0, sizeof widgets);
 
     str_unref (current_file);
@@ -281,9 +279,9 @@ static void add_entry (GtkWidget * grid, const char * title, GtkWidget * entry,
     g_signal_connect (entry, "changed", (GCallback) entry_changed, NULL);
 }
 
-static void create_infowin (void)
+static GtkWidget * create_infowin (void)
 {
-    infowin = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+    GtkWidget * infowin = gtk_window_new (GTK_WINDOW_TOPLEVEL);
     gtk_container_set_border_width ((GtkContainer *) infowin, 6);
     gtk_window_set_title ((GtkWindow *) infowin, _("Song Info"));
     gtk_window_set_type_hint ((GtkWindow *) infowin,
@@ -362,19 +360,20 @@ static void create_infowin (void)
     gtk_box_pack_end ((GtkBox *) bottom_hbox, close_button, FALSE, FALSE, 0);
     gtk_box_pack_end ((GtkBox *) bottom_hbox, widgets.apply, FALSE, FALSE, 0);
 
-    gtk_widget_show_all (main_grid);
-
     audgui_destroy_on_escape (infowin);
     g_signal_connect (infowin, "destroy", (GCallback) infowin_destroyed, NULL);
 
     hook_associate ("art ready", (HookFunction) infowin_display_image, NULL);
+
+    return infowin;
 }
 
 static void infowin_show (int list, int entry, const char * filename,
  const Tuple * tuple, PluginHandle * decoder, bool_t updating_enabled)
 {
-    if (! infowin)
-        create_infowin ();
+    audgui_hide_unique_window (AUDGUI_INFO_WINDOW);
+
+    GtkWidget * infowin = create_infowin ();
 
     str_unref (current_file);
     current_file = str_get (filename);
@@ -418,7 +417,7 @@ static void infowin_show (int list, int entry, const char * filename,
     /* nothing has been changed yet */
     gtk_widget_set_sensitive (widgets.apply, FALSE);
 
-    gtk_window_present ((GtkWindow *) infowin);
+    audgui_show_unique_window (AUDGUI_INFO_WINDOW, infowin);
 }
 
 EXPORT void audgui_infowin_show (int playlist, int entry)
@@ -471,6 +470,5 @@ EXPORT void audgui_infowin_show_current (void)
 
 EXPORT void audgui_infowin_hide (void)
 {
-    if (infowin)
-        gtk_widget_destroy (infowin);
+    audgui_hide_unique_window (AUDGUI_INFO_WINDOW);
 }

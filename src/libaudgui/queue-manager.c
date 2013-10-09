@@ -34,7 +34,6 @@ enum {
 
 #define RESPONSE_REMOVE 1
 
-static GtkWidget * qm_win;
 static GtkWidget * qm_list;
 
 static void get_value (void * user, int row, int column, GValue * value)
@@ -153,7 +152,6 @@ static void destroy_cb (void)
     hook_dissociate ("playlist activate", update_hook);
     hook_dissociate ("playlist update", update_hook);
 
-    qm_win = NULL;
     qm_list = NULL;
 }
 
@@ -164,14 +162,14 @@ static bool_t keypress_cb (GtkWidget * widget, GdkEventKey * event)
     else if (event->keyval == GDK_KEY_Delete)
         remove_selected ();
     else if (event->keyval == GDK_KEY_Escape)
-        gtk_widget_destroy (qm_win);
+        gtk_widget_destroy (widget);
     else
         return FALSE;
 
     return TRUE;
 }
 
-static void response_cb (GtkDialog * dialog, int response)
+static void response_cb (GtkWidget * widget, int response)
 {
     switch (response)
     {
@@ -179,21 +177,15 @@ static void response_cb (GtkDialog * dialog, int response)
         remove_selected ();
         break;
     case GTK_RESPONSE_CLOSE:
-        gtk_widget_destroy (qm_win);
+        gtk_widget_destroy (widget);
         break;
     }
 }
 
-EXPORT void audgui_queue_manager_show (void)
+static GtkWidget * create_queue_manager (void)
 {
-    if (qm_win)
-    {
-        gtk_window_present ((GtkWindow *) qm_win);
-        return;
-    }
-
-    qm_win = gtk_dialog_new_with_buttons (_("Queue Manager"), NULL, 0,
-     GTK_STOCK_REMOVE, RESPONSE_REMOVE, GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
+    GtkWidget * qm_win = gtk_dialog_new_with_buttons (_("Queue Manager"), NULL,
+     0, GTK_STOCK_REMOVE, RESPONSE_REMOVE, GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
      NULL);
     gtk_window_set_default_size ((GtkWindow *) qm_win, 400, 250);
 
@@ -217,11 +209,11 @@ EXPORT void audgui_queue_manager_show (void)
     g_signal_connect (qm_win, "key-press-event", (GCallback) keypress_cb, NULL);
     g_signal_connect (qm_win, "response", (GCallback) response_cb, NULL);
 
-    gtk_widget_show_all (qm_win);
+    return qm_win;
 }
 
-void audgui_queue_manager_cleanup (void)
+EXPORT void audgui_queue_manager_show (void)
 {
-    if (qm_win)
-        gtk_widget_destroy (qm_win);
+    if (! audgui_reshow_unique_window (AUDGUI_QUEUE_MANAGER_WINDOW))
+        audgui_show_unique_window (AUDGUI_QUEUE_MANAGER_WINDOW, create_queue_manager ());
 }
