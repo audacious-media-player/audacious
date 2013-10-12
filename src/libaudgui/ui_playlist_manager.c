@@ -33,23 +33,23 @@
 
 static void activate_row (void * user, int row);
 
-static void play_cb (void)
+static void play_cb (void * unused)
 {
     activate_row (NULL, aud_playlist_get_active ());
 }
 
-static void rename_cb (void)
+static void rename_cb (void * unused)
 {
     audgui_show_playlist_rename (aud_playlist_get_active ());
 }
 
-static void new_cb (void)
+static void new_cb (void * unused)
 {
     aud_playlist_insert (aud_playlist_get_active () + 1);
     aud_playlist_set_active (aud_playlist_get_active () + 1);
 }
 
-static void delete_cb (void)
+static void delete_cb (void * unused)
 {
     audgui_confirm_playlist_delete (aud_playlist_get_active ());
 }
@@ -267,23 +267,16 @@ static GtkWidget * create_playlist_manager (void)
 
     /* ButtonBox */
     GtkWidget * playman_button_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-    GtkWidget * new_button = gtk_button_new_from_stock (GTK_STOCK_NEW);
-    GtkWidget * delete_button = gtk_button_new_from_stock (GTK_STOCK_DELETE);
-    GtkWidget * rename_button = gtk_button_new_with_mnemonic (_("_Rename"));
-    gtk_button_set_image ((GtkButton *) rename_button, gtk_image_new_from_stock
-     (GTK_STOCK_EDIT, GTK_ICON_SIZE_BUTTON));
-    GtkWidget * play_button = gtk_button_new_from_stock (GTK_STOCK_MEDIA_PLAY);
+    GtkWidget * new_button = audgui_button_new (_("_New"), "document-new", new_cb, NULL);
+    GtkWidget * delete_button = audgui_button_new (_("_Remove"), "edit-delete", delete_cb, NULL);
+    GtkWidget * rename_button = audgui_button_new (_("Ren_ame"), NULL, rename_cb, NULL);
+    GtkWidget * play_button = audgui_button_new (_("_Play"), "media-playback-start", play_cb, NULL);
 
     gtk_container_add ((GtkContainer *) playman_button_hbox, new_button);
     gtk_container_add ((GtkContainer *) playman_button_hbox, delete_button);
     gtk_box_pack_end ((GtkBox *) playman_button_hbox, play_button, FALSE, FALSE, 0);
     gtk_box_pack_end ((GtkBox *) playman_button_hbox, rename_button, FALSE, FALSE, 0);
     gtk_container_add ((GtkContainer *) playman_vbox, playman_button_hbox);
-
-    g_signal_connect (new_button, "clicked", (GCallback) new_cb, NULL);
-    g_signal_connect (delete_button, "clicked", (GCallback) delete_cb, NULL);
-    g_signal_connect (rename_button, "clicked", (GCallback) rename_cb, NULL);
-    g_signal_connect (play_button, "clicked", (GCallback) play_cb, NULL);
 
     /* CheckButton */
     GtkWidget * hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
