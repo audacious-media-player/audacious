@@ -44,7 +44,7 @@ void audgui_show_unique_window (int id, GtkWidget * widget);
 bool_t audgui_reshow_unique_window (int id);
 void audgui_hide_unique_window (int id);
 
-void audgui_init (AudAPITable * table);
+void audgui_init (AudAPITable * table, int version);
 void audgui_cleanup (void);
 
 /* pixbufs.c */

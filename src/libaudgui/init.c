@@ -17,6 +17,9 @@
  * the use of this software.
  */
 
+#include <stdio.h>
+#include <stdlib.h>
+
 #include <audacious/misc.h>
 #include <audacious/playlist.h>
 #include <libaudcore/audstrings.h>
@@ -127,13 +130,21 @@ static void playlist_position_cb (void * list, void * unused)
         audgui_pixbuf_uncache ();
 }
 
-EXPORT void audgui_init (AudAPITable * table)
+EXPORT void audgui_init (AudAPITable * table, int version)
 {
+    if (version != _AUD_PLUGIN_VERSION)
+    {
+        fprintf (stderr, "libaudgui version mismatch\n");
+        abort ();
+    }
+
     _aud_api_table = table;
     aud_config_set_defaults ("audgui", audgui_defaults);
 
     hook_associate ("playlist set playing", playlist_set_playing_cb, NULL);
     hook_associate ("playlist position", playlist_position_cb, NULL);
+
+    gtk_window_set_default_icon_name ("audacious");
 }
 
 EXPORT void audgui_cleanup (void)

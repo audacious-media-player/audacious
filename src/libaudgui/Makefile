@@ -1,5 +1,5 @@
 SHARED_LIB = ${LIB_PREFIX}audgui${LIB_SUFFIX}
-LIB_MAJOR = 1
+LIB_MAJOR = 2
 LIB_MINOR = 0
 
 SRCS = about.c \
@@ -19,7 +19,6 @@ SRCS = about.c \
        ui_fileopener.c \
        ui_jumptotrack.c \
        ui_jumptotrack_cache.c \
-       icons-stock.c \
        ui_playlist_manager.c \
        urilist.c \
        url-opener.c \

@@ -62,13 +62,9 @@ INCLUDES = api.h \
 
 DATA = images/about-logo.png				\
        images/album.png \
-       images/audacious.png \
        images/audio.png						\
        images/connectivity.png				\
        images/info.png \
-       images/menu_playlist.png				\
-       images/menu_plugin.png				\
-       images/menu_queue_toggle.png			\
        images/playlist.png					\
        images/plugins.png
 

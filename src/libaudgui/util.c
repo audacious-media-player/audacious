@@ -71,28 +71,6 @@ EXPORT void audgui_get_mouse_coords (GtkWidget * widget, int * x, int * y)
     }
 }
 
-EXPORT void audgui_hide_on_delete (GtkWidget * widget)
-{
-    g_signal_connect (widget, "delete-event", (GCallback)
-     gtk_widget_hide_on_delete, NULL);
-}
-
-static bool_t escape_hide_cb (GtkWidget * widget, GdkEventKey * event)
-{
-    if (event->keyval == GDK_KEY_Escape)
-    {
-        gtk_widget_hide (widget);
-        return TRUE;
-    }
-
-    return FALSE;
-}
-
-EXPORT void audgui_hide_on_escape (GtkWidget * widget)
-{
-    g_signal_connect (widget, "key-press-event", (GCallback) escape_hide_cb, NULL);
-}
-
 static bool_t escape_destroy_cb (GtkWidget * widget, GdkEventKey * event)
 {
     if (event->keyval == GDK_KEY_Escape)
@@ -107,17 +85,6 @@ static bool_t escape_destroy_cb (GtkWidget * widget, GdkEventKey * event)
 EXPORT void audgui_destroy_on_escape (GtkWidget * widget)
 {
     g_signal_connect (widget, "key-press-event", (GCallback) escape_destroy_cb, NULL);
-}
-
-static void toggle_cb (GtkToggleButton * toggle, bool_t * setting)
-{
-    * setting = gtk_toggle_button_get_active (toggle);
-}
-
-EXPORT void audgui_connect_check_box (GtkWidget * box, bool_t * setting)
-{
-    gtk_toggle_button_set_active ((GtkToggleButton *) box, * setting);
-    g_signal_connect ((GObject *) box, "toggled", (GCallback) toggle_cb, setting);
 }
 
 EXPORT GtkWidget * audgui_button_new (const char * text, const char * icon,
@@ -210,11 +177,4 @@ EXPORT void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
 
 CREATED:
     gtk_window_present ((GtkWindow *) * widget);
-}
-
-EXPORT void audgui_set_default_icon (void)
-{
-#ifndef _WIN32
-    gtk_window_set_default_icon_name ("audacious");
-#endif
 }

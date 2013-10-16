@@ -47,21 +47,14 @@ void audgui_scaled_image_set (GtkWidget * widget, GdkPixbuf * pixbuf);
 /* util.c */
 int audgui_get_digit_width (GtkWidget * widget);
 void audgui_get_mouse_coords (GtkWidget * widget, int * x, int * y);
-void audgui_hide_on_delete (GtkWidget * widget);
-void audgui_hide_on_escape (GtkWidget * widget);
 void audgui_destroy_on_escape (GtkWidget * widget);
 void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
  const char * title, const char * text);
-void audgui_connect_check_box (GtkWidget * box, bool_t * setting);
 
 GtkWidget * audgui_button_new (const char * text, const char * icon,
  AudguiCallback callback, void * data);
 GtkWidget * audgui_dialog_new (GtkMessageType type, const char * title,
  const char * text, GtkWidget * button1, GtkWidget * button2);
 void audgui_dialog_add_widget (GtkWidget * dialog, GtkWidget * widget);
-
-/* deprecated */
-GdkPixbuf * audgui_pixbuf_for_current (void) __attribute__ ((deprecated));
-GdkPixbuf * audgui_pixbuf_for_entry (int playlist, int entry) __attribute__ ((deprecated));
 
 #endif

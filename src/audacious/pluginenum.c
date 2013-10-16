@@ -180,7 +180,7 @@ void plugin_system_init(void)
     char *dir;
     int dirsel = 0;
 
-    audgui_init (& api_table);
+    audgui_init (& api_table, _AUD_PLUGIN_VERSION);
 
     plugin_registry_load ();
 

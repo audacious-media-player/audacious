@@ -1,6 +1,6 @@
 SHARED_LIB = ${LIB_PREFIX}audcore${LIB_SUFFIX}
 LIB_MAJOR = 1
-LIB_MINOR = 0
+LIB_MINOR = 1
 
 SRCS = audio.c \
        audstrings.c \
