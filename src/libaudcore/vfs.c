@@ -451,7 +451,7 @@ vfs_is_writeable(const char * path)
     struct stat info;
     char * realfn = uri_to_filename (path);
 
-    if (stat(realfn, &info) == -1)
+    if (! realfn || stat (realfn, & info) < 0)
         return FALSE;
 
     g_free(realfn);
