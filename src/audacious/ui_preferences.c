@@ -1263,8 +1263,6 @@ void * * create_prefs_window (void)
     GtkWidget *hbox4;
     GtkWidget *audversionlabel;
     GtkWidget *prefswin_button_box;
-    GtkWidget *hbox11;
-    GtkWidget *image10;
     GtkWidget *close;
     GtkAccelGroup *accel_group;
 
@@ -1321,11 +1319,6 @@ void * * create_prefs_window (void)
     gtk_box_pack_start (GTK_BOX (hbox4), prefswin_button_box, TRUE, TRUE, 0);
     gtk_button_box_set_layout (GTK_BUTTON_BOX (prefswin_button_box), GTK_BUTTONBOX_END);
     gtk_box_set_spacing (GTK_BOX (prefswin_button_box), 6);
-
-    hbox11 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  2);
-
-    image10 = gtk_image_new_from_stock ("gtk-refresh", GTK_ICON_SIZE_BUTTON);
-    gtk_box_pack_start (GTK_BOX (hbox11), image10, FALSE, FALSE, 0);
 
     close = gtk_button_new_from_stock ("gtk-close");
     gtk_container_add (GTK_CONTAINER (prefswin_button_box), close);
