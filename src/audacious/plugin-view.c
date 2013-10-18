@@ -19,6 +19,9 @@
 
 #include <gtk/gtk.h>
 
+#include <libaudgui/libaudgui-gtk.h>
+
+#include "i18n.h"
 #include "plugin.h"
 #include "plugins.h"
 #include "ui_preferences.h"
@@ -192,14 +195,14 @@ static void button_update (GtkTreeView * tree, GtkWidget * b)
         gtk_widget_set_sensitive (b, FALSE);
 }
 
-static void do_config (GtkTreeView * tree)
+static void do_config (void * tree)
 {
     PluginHandle * plugin = get_selected_plugin (tree);
     g_return_if_fail (plugin != NULL);
     plugin_do_configure (plugin);
 }
 
-static void do_about (GtkTreeView * tree)
+static void do_about (void * tree)
 {
     PluginHandle * plugin = get_selected_plugin (tree);
     g_return_if_fail (plugin != NULL);
@@ -239,21 +242,18 @@ GtkWidget * plugin_view_new (int type)
     GtkWidget * hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  6);
     gtk_box_pack_start ((GtkBox *) vbox, hbox, FALSE, FALSE, 0);
 
-    GtkWidget * config = gtk_button_new_from_stock (GTK_STOCK_PREFERENCES);
+    GtkWidget * config = audgui_button_new (_("_Preferences"), NULL, do_config, tree);
     gtk_box_pack_start ((GtkBox *) hbox, config, FALSE, FALSE, 0);
     gtk_widget_set_sensitive (config, FALSE);
     g_object_set_data ((GObject *) config, "watcher", (void *) config_watcher);
     g_signal_connect (tree, "cursor-changed", (GCallback) button_update, config);
-    g_signal_connect_swapped (config, "clicked", (GCallback)
-     do_config, tree);
     g_signal_connect (config, "destroy", (GCallback) button_destroy, NULL);
 
-    GtkWidget * about = gtk_button_new_from_stock (GTK_STOCK_ABOUT);
+    GtkWidget * about = audgui_button_new (_("_About"), "help-about", do_about, tree);
     gtk_box_pack_start ((GtkBox *) hbox, about, FALSE, FALSE, 0);
     gtk_widget_set_sensitive (about, FALSE);
     g_object_set_data ((GObject *) about, "watcher", (void *) about_watcher);
     g_signal_connect (tree, "cursor-changed", (GCallback) button_update, about);
-    g_signal_connect_swapped (about, "clicked", (GCallback) do_about, tree);
     g_signal_connect (about, "destroy", (GCallback) button_destroy, NULL);
 
     return vbox;

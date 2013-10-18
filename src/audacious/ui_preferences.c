@@ -24,6 +24,7 @@
 #include <gtk/gtk.h>
 
 #include <libaudcore/hook.h>
+#include <libaudgui/libaudgui-gtk.h>
 
 #include "debug.h"
 #include "i18n.h"
@@ -703,7 +704,7 @@ static void create_label (const PreferencesWidget * widget, GtkWidget * * label,
  GtkWidget * * icon, const char * domain)
 {
     if (widget->data.label.stock_id)
-        *icon = gtk_image_new_from_stock(widget->data.label.stock_id, GTK_ICON_SIZE_BUTTON);
+        * icon = gtk_image_new_from_icon_name (widget->data.label.stock_id, GTK_ICON_SIZE_BUTTON);
 
     * label = gtk_label_new_with_mnemonic (dgettext (domain, widget->label));
     gtk_label_set_use_markup(GTK_LABEL(*label), TRUE);
@@ -719,9 +720,8 @@ static void create_cbox (const PreferencesWidget * widget, GtkWidget * * label,
 {
     * combobox = gtk_combo_box_text_new ();
 
-    if (widget->label) {
+    if (widget->label)
         * label = gtk_label_new (dgettext (domain, widget->label));
-    }
 
     fill_cbox (* combobox, widget, domain);
 }
@@ -1073,7 +1073,7 @@ create_playlist_category(void)
     gtk_button_set_relief (GTK_BUTTON (titlestring_help_button), GTK_RELIEF_HALF);
     gtk_button_set_focus_on_click (GTK_BUTTON (titlestring_help_button), FALSE);
 
-    image1 = gtk_image_new_from_stock ("gtk-index", GTK_ICON_SIZE_BUTTON);
+    image1 = gtk_image_new_from_icon_name ("list-add", GTK_ICON_SIZE_BUTTON);
     gtk_container_add (GTK_CONTAINER (titlestring_help_button), image1);
 
     GtkWidget * titlestring_cbox;
@@ -1158,14 +1158,14 @@ static void output_bit_depth_changed (void)
     output_reset (OUTPUT_RESET_SOFT);
 }
 
-static void output_do_config (void)
+static void output_do_config (void * unused)
 {
     PluginHandle * plugin = output_plugin_get_current ();
     g_return_if_fail (plugin != NULL);
     plugin_do_configure (plugin);
 }
 
-static void output_do_about (void)
+static void output_do_about (void * unused)
 {
     PluginHandle * plugin = output_plugin_get_current ();
     g_return_if_fail (plugin != NULL);
@@ -1189,10 +1189,10 @@ static void * create_output_plugin_box (void)
     GtkWidget * hbox3 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  6);
     gtk_box_pack_start ((GtkBox *) vbox, hbox3, FALSE, FALSE, 0);
 
-    output_config_button = gtk_button_new_from_stock (GTK_STOCK_PREFERENCES);
+    output_config_button = audgui_button_new (_("_Preferences"), NULL, output_do_config, NULL);
     gtk_box_pack_start ((GtkBox *) hbox3, output_config_button, FALSE, FALSE, 0);
 
-    output_about_button = gtk_button_new_from_stock (GTK_STOCK_ABOUT);
+    output_about_button = audgui_button_new (_("_About"), "help-about", output_do_about, NULL);
     gtk_box_pack_start ((GtkBox *) hbox3, output_about_button, FALSE, FALSE, 0);
 
     output_combo_fill ((GtkComboBox *) output_plugin_cbox);
@@ -1242,13 +1242,12 @@ static void create_plugin_category (void)
          (types[i]), gtk_label_new (_(names[i])));
 }
 
-static bool_t
-prefswin_destroy(GtkWidget *window, GdkEvent *event, void * data)
+static void destroy_cb (void)
 {
     prefswin = NULL;
+    category_treeview = NULL;
     category_notebook = NULL;
-    gtk_widget_destroy(window);
-    return TRUE;
+    titlestring_entry = NULL;
 }
 
 /* GtkWidget * * create_prefs_window (void) */
@@ -1263,12 +1262,7 @@ void * * create_prefs_window (void)
     GtkWidget *hbox4;
     GtkWidget *audversionlabel;
     GtkWidget *prefswin_button_box;
-    GtkWidget *hbox11;
-    GtkWidget *image10;
     GtkWidget *close;
-    GtkAccelGroup *accel_group;
-
-    accel_group = gtk_accel_group_new ();
 
     prefswin = gtk_window_new (GTK_WINDOW_TOPLEVEL);
     gtk_window_set_type_hint (GTK_WINDOW (prefswin), GDK_WINDOW_TYPE_HINT_DIALOG);
@@ -1322,28 +1316,10 @@ void * * create_prefs_window (void)
     gtk_button_box_set_layout (GTK_BUTTON_BOX (prefswin_button_box), GTK_BUTTONBOX_END);
     gtk_box_set_spacing (GTK_BOX (prefswin_button_box), 6);
 
-    hbox11 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  2);
-
-    image10 = gtk_image_new_from_stock ("gtk-refresh", GTK_ICON_SIZE_BUTTON);
-    gtk_box_pack_start (GTK_BOX (hbox11), image10, FALSE, FALSE, 0);
-
-    close = gtk_button_new_from_stock ("gtk-close");
+    close = audgui_button_new (_("_Close"), "window-close",
+     (AudguiCallback) gtk_widget_destroy, prefswin);
     gtk_container_add (GTK_CONTAINER (prefswin_button_box), close);
     gtk_widget_set_can_default(close, TRUE);
-    gtk_widget_add_accelerator (close, "clicked", accel_group,
-                                GDK_KEY_Escape, (GdkModifierType) 0,
-                                GTK_ACCEL_VISIBLE);
-
-
-    gtk_window_add_accel_group (GTK_WINDOW (prefswin), accel_group);
-
-    /* connect signals */
-    g_signal_connect(G_OBJECT(prefswin), "delete_event",
-                     G_CALLBACK(prefswin_destroy),
-                     NULL);
-    g_signal_connect_swapped(G_OBJECT(close), "clicked",
-                             G_CALLBACK(prefswin_destroy),
-                             prefswin);
 
     /* create category view */
     fill_category_list ((GtkTreeView *) category_treeview, (GtkNotebook *) category_notebook);
@@ -1357,13 +1333,11 @@ void * * create_prefs_window (void)
     g_free(aud_version_string);
     gtk_widget_show_all(vbox);
 
-    return & prefswin;
-}
+    g_signal_connect (prefswin, "destroy", (GCallback) destroy_cb, NULL);
 
-void
-destroy_prefs_window(void)
-{
-    prefswin_destroy(prefswin, NULL, NULL);
+    audgui_destroy_on_escape (prefswin);
+
+    return & prefswin;
 }
 
 void show_prefs_window (void)
@@ -1377,8 +1351,8 @@ void show_prefs_window (void)
 void
 hide_prefs_window(void)
 {
-    g_return_if_fail(prefswin);
-    gtk_widget_hide(GTK_WIDGET(prefswin));
+    if (prefswin)
+        gtk_widget_destroy (prefswin);
 }
 
 static void prefswin_page_queue_new (GtkWidget * container, const char * name,

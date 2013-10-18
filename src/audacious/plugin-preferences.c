@@ -89,14 +89,24 @@ void plugin_make_config_window (PluginHandle * plugin)
     if (PLUGIN_HAS_FUNC (header, domain))
         name = dgettext (header->domain, header->name);
 
+    GtkWidget * window = gtk_dialog_new ();
+
     char * title = g_strdup_printf (_("%s Settings"), name);
-
-    GtkWidget * window = p->apply ? gtk_dialog_new_with_buttons (title, NULL, 0,
-     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, GTK_STOCK_OK, GTK_RESPONSE_OK, NULL)
-     : gtk_dialog_new_with_buttons (title, NULL, 0, GTK_STOCK_CLOSE,
-     GTK_RESPONSE_CLOSE, NULL);
-
+    gtk_window_set_title ((GtkWindow *) window, title);
     g_free (title);
+
+    if (p->apply)
+    {
+        GtkWidget * button1 = audgui_button_new (_("_OK"), NULL, NULL, NULL);
+        GtkWidget * button2 = audgui_button_new (_("_Cancel"), "window-close", NULL, NULL);
+        gtk_dialog_add_action_widget ((GtkDialog *) window, button2, GTK_RESPONSE_CANCEL);
+        gtk_dialog_add_action_widget ((GtkDialog *) window, button1, GTK_RESPONSE_OK);
+    }
+    else
+    {
+        GtkWidget * button = audgui_button_new (_("_Close"), "window-close", NULL, NULL);
+        gtk_dialog_add_action_widget ((GtkDialog *) window, button, GTK_RESPONSE_CLOSE);
+    }
 
     GtkWidget * content = gtk_dialog_get_content_area ((GtkDialog *) window);
     GtkWidget * box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
