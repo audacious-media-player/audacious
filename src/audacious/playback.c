@@ -310,7 +310,9 @@ static bool_t end_cb (void * unused)
     if (get_bool (NULL, "stop_after_current_song"))
     {
         do_stop (playlist);
-        do_next (playlist);
+
+        if (! get_bool (NULL, "no_playlist_advance"))
+            do_next (playlist);
     }
     else if (get_bool (NULL, "no_playlist_advance"))
     {
