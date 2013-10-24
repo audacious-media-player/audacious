@@ -20,12 +20,14 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
+#include <libaudgui/libaudgui-gtk.h>
+
 #include "misc.h"
 
 struct Item {
     MenuFunc func;
     const char * name;
-    const char * icon; /* currently unused since GTK+ 3.10 broke menu icons */
+    const char * icon;
 };
 
 static GList * items[AUD_MENU_COUNT];
@@ -33,7 +35,7 @@ static GtkWidget * menus[AUD_MENU_COUNT];
 
 static void add_to_menu (GtkWidget * menu, struct Item * item)
 {
-    GtkWidget * widget = gtk_menu_item_new_with_mnemonic (item->name);
+    GtkWidget * widget = audgui_menu_item_new (item->name, item->icon);
     g_object_set_data ((GObject *) widget, "func", (void *) item->func);
     g_signal_connect (widget, "activate", item->func, NULL);
     gtk_widget_show (widget);

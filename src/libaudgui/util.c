@@ -87,6 +87,26 @@ EXPORT void audgui_destroy_on_escape (GtkWidget * widget)
     g_signal_connect (widget, "key-press-event", (GCallback) escape_destroy_cb, NULL);
 }
 
+/* we still use GtkImageMenuItem until there is a good alternative */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+
+EXPORT GtkWidget * audgui_menu_item_new (const char * text, const char * icon)
+{
+    GtkWidget * item = gtk_image_menu_item_new_with_mnemonic (text);
+
+    if (icon)
+    {
+        GtkWidget * image = gtk_image_new_from_icon_name (icon, GTK_ICON_SIZE_MENU);
+        gtk_image_menu_item_set_image ((GtkImageMenuItem *) item, image);
+        gtk_image_menu_item_set_always_show_image ((GtkImageMenuItem *) item, TRUE);
+    }
+
+    return item;
+}
+
+#pragma GCC diagnostic pop
+
 EXPORT GtkWidget * audgui_button_new (const char * text, const char * icon,
  AudguiCallback callback, void * data)
 {

@@ -51,8 +51,10 @@ void audgui_destroy_on_escape (GtkWidget * widget);
 void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
  const char * title, const char * text);
 
+GtkWidget * audgui_menu_item_new (const char * text, const char * icon);
 GtkWidget * audgui_button_new (const char * text, const char * icon,
  AudguiCallback callback, void * data);
+
 GtkWidget * audgui_dialog_new (GtkMessageType type, const char * title,
  const char * text, GtkWidget * button1, GtkWidget * button2);
 void audgui_dialog_add_widget (GtkWidget * dialog, GtkWidget * widget);
