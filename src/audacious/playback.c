@@ -304,6 +304,21 @@ void playback_stop (void)
     hook_call ("playback stop", NULL);
 }
 
+static void do_stop (int playlist)
+{
+    playlist_set_playing (-1);
+    playlist_set_position (playlist, playlist_get_position (playlist));
+}
+
+static void do_next (int playlist)
+{
+    if (! playlist_next_song (playlist, get_bool (NULL, "repeat")))
+    {
+        playlist_set_position (playlist, -1);
+        hook_call ("playlist end reached", NULL);
+    }
+}
+
 static bool_t end_cb (void * unused)
 {
     g_return_val_if_fail (playing, FALSE);
@@ -321,40 +336,32 @@ static bool_t end_cb (void * unused)
     int playlist = playlist_get_playing ();
 
     if (get_bool (NULL, "stop_after_current_song"))
-        goto STOP;
-
-    if (repeat_a >= 0 || repeat_b >= 0)
     {
-        if (failed_entries)
-            goto STOP;
-
-        playback_restart (MAX (repeat_a, 0), FALSE);
+        do_stop (playlist);
+        do_next (playlist);
+    }
+    else if (repeat_a >= 0 || repeat_b >= 0)
+    {
+        if (! failed_entries)
+            playback_restart (MAX (repeat_a, 0), FALSE);
+        else
+            do_stop (playlist);
     }
     else if (get_bool (NULL, "no_playlist_advance"))
     {
-        if (failed_entries || ! get_bool (NULL, "repeat"))
-            goto STOP;
-
-        playback_restart (0, FALSE);
+        if (get_bool (NULL, "repeat") && ! failed_entries)
+            playback_restart (0, FALSE);
+        else
+            do_stop (playlist);
     }
     else
     {
-        if (failed_entries >= 10)
-            goto STOP;
-
-        if (! playlist_next_song (playlist, get_bool (NULL, "repeat")))
-        {
-            playlist_set_position (playlist, -1);
-            hook_call ("playlist end reached", NULL);
-        }
+        if (failed_entries < 10)
+            do_next (playlist);
+        else
+            do_stop (playlist);
     }
 
-    return FALSE;
-
-STOP:
-    /* stop playback and set position to beginning of song */
-    playlist_set_playing (-1);
-    playlist_set_position (playlist, playlist_get_position (playlist));
     return FALSE;
 }
 
