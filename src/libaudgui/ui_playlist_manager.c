@@ -269,7 +269,7 @@ static GtkWidget * create_playlist_manager (void)
     GtkWidget * playman_button_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
     GtkWidget * new_button = audgui_button_new (_("_New"), "document-new", new_cb, NULL);
     GtkWidget * delete_button = audgui_button_new (_("_Remove"), "edit-delete", delete_cb, NULL);
-    GtkWidget * rename_button = audgui_button_new (_("Ren_ame"), NULL, rename_cb, NULL);
+    GtkWidget * rename_button = audgui_button_new (_("Ren_ame"), "insert-text", rename_cb, NULL);
     GtkWidget * play_button = audgui_button_new (_("_Play"), "media-playback-start", play_cb, NULL);
 
     gtk_container_add ((GtkContainer *) playman_button_hbox, new_button);

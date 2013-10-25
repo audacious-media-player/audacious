@@ -1189,7 +1189,8 @@ static void * create_output_plugin_box (void)
     GtkWidget * hbox3 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  6);
     gtk_box_pack_start ((GtkBox *) vbox, hbox3, FALSE, FALSE, 0);
 
-    output_config_button = audgui_button_new (_("_Preferences"), NULL, output_do_config, NULL);
+    output_config_button = audgui_button_new (_("_Preferences"),
+     "preferences-system", output_do_config, NULL);
     gtk_box_pack_start ((GtkBox *) hbox3, output_config_button, FALSE, FALSE, 0);
 
     output_about_button = audgui_button_new (_("_About"), "help-about", output_do_about, NULL);

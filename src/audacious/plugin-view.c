@@ -242,7 +242,8 @@ GtkWidget * plugin_view_new (int type)
     GtkWidget * hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  6);
     gtk_box_pack_start ((GtkBox *) vbox, hbox, FALSE, FALSE, 0);
 
-    GtkWidget * config = audgui_button_new (_("_Preferences"), NULL, do_config, tree);
+    GtkWidget * config = audgui_button_new (_("_Preferences"),
+     "preferences-system", do_config, tree);
     gtk_box_pack_start ((GtkBox *) hbox, config, FALSE, FALSE, 0);
     gtk_widget_set_sensitive (config, FALSE);
     g_object_set_data ((GObject *) config, "watcher", (void *) config_watcher);

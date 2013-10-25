@@ -87,7 +87,7 @@ EXPORT void audgui_show_playlist_rename (int playlist)
     int id = aud_playlist_get_unique_id (playlist);
     g_object_set_data ((GObject *) entry, "playlist-id", GINT_TO_POINTER (id));
 
-    GtkWidget * button1 = audgui_button_new (_("Rename"), NULL, rename_cb, entry);
+    GtkWidget * button1 = audgui_button_new (_("Rename"), "insert-text", rename_cb, entry);
     GtkWidget * button2 = audgui_button_new (_("Cancel"), "window-close", NULL, NULL);
 
     GtkWidget * dialog = audgui_dialog_new (GTK_MESSAGE_QUESTION,
