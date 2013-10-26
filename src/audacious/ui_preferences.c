@@ -125,9 +125,6 @@ CategoryQueueEntry *category_queue = NULL;
 static void * create_output_plugin_box (void);
 static void output_bit_depth_changed (void);
 
-static PreferencesWidget rg_mode_widgets[] = {
- {WIDGET_CHK_BTN, N_("Album mode"), .cfg_type = VALUE_BOOLEAN, .cname = "replay_gain_album"}};
-
 static PreferencesWidget audio_page_widgets[] = {
  {WIDGET_LABEL, N_("<b>Output Settings</b>")},
  {WIDGET_CUSTOM, .data = {.populate = create_output_plugin_box}},
@@ -144,7 +141,8 @@ static PreferencesWidget audio_page_widgets[] = {
  {WIDGET_LABEL, N_("<b>Replay Gain</b>")},
  {WIDGET_CHK_BTN, N_("Enable Replay Gain"),
   .cfg_type = VALUE_BOOLEAN, .cname = "enable_replay_gain"},
- {WIDGET_BOX, .child = TRUE, .data = {.box = {rg_mode_widgets, G_N_ELEMENTS (rg_mode_widgets), TRUE}}},
+ {WIDGET_CHK_BTN, N_("Album mode"), .child = TRUE,
+  .cfg_type = VALUE_BOOLEAN, .cname = "replay_gain_album"},
  {WIDGET_CHK_BTN, N_("Prevent clipping (recommended)"), .child = TRUE,
   .cfg_type = VALUE_BOOLEAN, .cname = "enable_clipping_prevention"},
  {WIDGET_LABEL, N_("<b>Adjust Levels</b>"), .child = TRUE},
