@@ -20,6 +20,8 @@
 #ifndef AUDACIOUS_TYPES_H
 #define AUDACIOUS_TYPES_H
 
+#include <libaudcore/core.h>
+
 #define AUD_EQUALIZER_NBANDS 10
 #define EQUALIZER_MAX_GAIN 12
 
