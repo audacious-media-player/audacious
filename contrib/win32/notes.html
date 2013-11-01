@@ -203,9 +203,15 @@ temporarily in order for GTK+ to build successfully.</p>
 
 <h3>Install SDL</h3>
 
-<p>Download and unzip to <tt>C:\libs</tt>:<br>
-<a href="http://www.libsdl.org/release/SDL2-devel-2.0.0-mingw.tar.gz">
-<tt>http://www.libsdl.org/release/SDL2-devel-2.0.0-mingw.tar.gz</tt></a></p>
+<p>Download and unzip to <tt>C:\libsdl</tt>:<br>
+<a href="http://www.libsdl.org/release/SDL2-2.0.0.tar.gz">
+<tt>http://www.libsdl.org/release/SDL2-2.0.0.tar.gz</tt></a></p>
+
+<p>In the MinGW shell:</p>
+<blockquote><p><tt>cd /C/libsdl<br>
+./configure --prefix=/C/libs<br>
+make<br>
+make install</tt></p></blockquote>
 
 <h3>Install libxml</h3>
 
