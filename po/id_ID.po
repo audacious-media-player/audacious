@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2013-09-01 20:57+0200\n"
+"POT-Creation-Date: 2013-11-01 16:23+0100\n"
 "PO-Revision-Date: 2013-03-24 07:29+0000\n"
 "Last-Translator: Ardjuna <Asyura.x@gmail.com>\n"
 "Language-Team: Indonesian (Indonesia) (http://www.transifex.com/projects/p/"
@@ -127,12 +127,12 @@ msgstr ""
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/playback.c:368
+#: src/audacious/playback.c:379
 #, c-format
 msgid "No decoder found for %s."
 msgstr "Tidak ada dekoder untuk %s."
 
-#: src/audacious/playback.c:406
+#: src/audacious/playback.c:417
 #, c-format
 msgid "%s could not be opened."
 msgstr "%s tidak dapat dibuka."
@@ -544,7 +544,7 @@ msgstr "Visualisasi"
 msgid "General"
 msgstr "Umum"
 
-#: src/audacious/ui_preferences.c:1276
+#: src/audacious/ui_preferences.c:1274
 msgid "Audacious Preferences"
 msgstr "Prefensi Audacious"
 

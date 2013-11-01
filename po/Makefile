@@ -34,6 +34,7 @@ LOCALES = ast.po \
 	  ky.po \
 	  lt.po \
 	  lv.po \
+	  ml_IN.po \
 	  ms.po \
 	  nl.po \
 	  pl.po \

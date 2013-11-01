@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2013-09-01 20:57+0200\n"
+"POT-Creation-Date: 2013-11-01 16:23+0100\n"
 "PO-Revision-Date: 2013-02-05 14:09+0000\n"
 "Last-Translator: Sérgio Marques <smarquespt@gmail.com>\n"
 "Language-Team: Portuguese (Portugal) (http://www.transifex.com/projects/p/"
@@ -119,12 +119,12 @@ msgstr ""
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/playback.c:368
+#: src/audacious/playback.c:379
 #, c-format
 msgid "No decoder found for %s."
 msgstr "Não foi encontrado o descodificador para %s."
 
-#: src/audacious/playback.c:406
+#: src/audacious/playback.c:417
 #, c-format
 msgid "%s could not be opened."
 msgstr "%s não pode ser aberto."
@@ -533,7 +533,7 @@ msgstr "Visualizações"
 msgid "General"
 msgstr "Geral"
 
-#: src/audacious/ui_preferences.c:1276
+#: src/audacious/ui_preferences.c:1274
 msgid "Audacious Preferences"
 msgstr "Preferências do Audacious"
 

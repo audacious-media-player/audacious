@@ -12,14 +12,14 @@
 # natird <dritan86@gmail.com>, 2012
 #       Sang-Jin Hwang <accel@accellinux.org>, 1999
 # Darkcircle <darkcircle.0426@gmail.com>, 2012
-# Darkcircle <darkcircle.0426@gmail.com>, 2012
+# Darkcircle <darkcircle.0426@gmail.com>, 2012-2013
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2013-09-01 20:57+0200\n"
-"PO-Revision-Date: 2013-08-28 06:00+0000\n"
-"Last-Translator: kentarch <bkrhlim@aol.com>\n"
+"POT-Creation-Date: 2013-11-01 16:23+0100\n"
+"PO-Revision-Date: 2013-09-30 14:53+0000\n"
+"Last-Translator: Darkcircle <darkcircle.0426@gmail.com>\n"
 "Language-Team: Korean (http://www.transifex.com/projects/p/audacious/"
 "language/ko/)\n"
 "Language: ko\n"
@@ -124,12 +124,12 @@ msgstr ""
 msgid "Audacious"
 msgstr "오데이셔스 "
 
-#: src/audacious/playback.c:368
+#: src/audacious/playback.c:379
 #, c-format
 msgid "No decoder found for %s."
 msgstr "%s의 디코더가 없습니다."
 
-#: src/audacious/playback.c:406
+#: src/audacious/playback.c:417
 #, c-format
 msgid "%s could not be opened."
 msgstr "%s을(를) 열 수 없습니다."
@@ -137,7 +137,7 @@ msgstr "%s을(를) 열 수 없습니다."
 #: src/audacious/playlist-files.c:50
 #, c-format
 msgid "Cannot %s %s: unsupported file extension."
-msgstr "%s 를  재생할 수  없습니다.  %s 파일 형식을 지원하지 않습니다."
+msgstr "%s을(를) 재생할 수 없습니다.  %s 파일 형식을 지원하지 않습니다."
 
 #: src/audacious/playlist-files.c:51
 msgid "save"
@@ -340,7 +340,7 @@ msgstr "<b>레벨 조정</b>"
 
 #: src/audacious/ui_preferences.c:150
 msgid "Amplify all files:"
-msgstr "모든 파일 소리 증폭하기:"
+msgstr "모든 파일 소리 증폭:"
 
 #: src/audacious/ui_preferences.c:152 src/audacious/ui_preferences.c:155
 msgid "dB"
@@ -348,7 +348,7 @@ msgstr "dB"
 
 #: src/audacious/ui_preferences.c:153
 msgid "Amplify untagged files:"
-msgstr "태그가 붙지 않은 파일 증폭하기:"
+msgstr "태그가 붙지 않은 파일 증폭:"
 
 #: src/audacious/ui_preferences.c:158
 msgid "Proxy hostname:"
@@ -396,7 +396,7 @@ msgstr "시작할 때 이어서 재생"
 
 #: src/audacious/ui_preferences.c:190
 msgid "Advance when the current song is deleted"
-msgstr "현재 곡이 삭제되면 다음곡으로 진행"
+msgstr "현재 곡이 삭제되면 다음 곡으로 진행"
 
 #: src/audacious/ui_preferences.c:192
 msgid "Clear the playlist when opening files"
@@ -436,7 +436,7 @@ msgstr "곡 파일 이름에 일치하는 그림 검색"
 
 #: src/audacious/ui_preferences.c:214
 msgid "Search recursively"
-msgstr "재귀적 검색"
+msgstr "재귀 검색"
 
 #: src/audacious/ui_preferences.c:216
 msgid "Search depth:"
@@ -538,7 +538,7 @@ msgstr "시각 효과"
 msgid "General"
 msgstr "일반"
 
-#: src/audacious/ui_preferences.c:1276
+#: src/audacious/ui_preferences.c:1274
 msgid "Audacious Preferences"
 msgstr "오데이셔스 환경 설정"
 
@@ -572,7 +572,7 @@ msgstr "스테레오"
 #, c-format
 msgid "%d channel"
 msgid_plural "%d channels"
-msgstr[0] "%d개의 채널"
+msgstr[0] "채널 %d개"
 
 #: src/libaudgui/about.c:37
 msgid "Credits"
@@ -584,7 +584,7 @@ msgstr "라이선스"
 
 #: src/libaudgui/about.c:73
 msgid "About Audacious"
-msgstr "오데이셔스  정보"
+msgstr "오데이셔스 정보"
 
 #: src/libaudgui/confirm.c:66
 #, c-format
@@ -592,8 +592,7 @@ msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
 msgstr ""
-"정말로 %s을(를) 닫으시겠습니까? 재생 목록을 가져온 후 바뀐 내용을 잃을 것입니"
-"다."
+"정말로 %s을(를) 닫으시겠습니까? 재생 목록을 가져온 후 바뀐 내용을 잃게됩니다."
 
 #: src/libaudgui/confirm.c:73
 msgid "Close Playlist"
@@ -609,7 +608,7 @@ msgstr "재생 목록 이름 바꾸기"
 
 #: src/libaudgui/effects-menu.c:70
 msgid "settings ..."
-msgstr "설정하기..."
+msgstr "설정..."
 
 #: src/libaudgui/equalizer.c:50
 msgid "_Enable"

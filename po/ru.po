@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2013-09-01 20:57+0200\n"
+"POT-Creation-Date: 2013-11-01 16:23+0100\n"
 "PO-Revision-Date: 2013-02-13 19:53+0000\n"
 "Last-Translator: iavojd <iavojd@gmail.com>\n"
 "Language-Team: Russian (http://www.transifex.com/projects/p/audacious/"
@@ -130,12 +130,12 @@ msgstr ""
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/playback.c:368
+#: src/audacious/playback.c:379
 #, c-format
 msgid "No decoder found for %s."
 msgstr "Не найден декодер для %s."
 
-#: src/audacious/playback.c:406
+#: src/audacious/playback.c:417
 #, c-format
 msgid "%s could not be opened."
 msgstr "%s не может быть открыт."
@@ -545,7 +545,7 @@ msgstr "Визуализация"
 msgid "General"
 msgstr "Общие"
 
-#: src/audacious/ui_preferences.c:1276
+#: src/audacious/ui_preferences.c:1274
 msgid "Audacious Preferences"
 msgstr "Параметры Audacious"
 

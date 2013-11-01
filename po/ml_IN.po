@@ -1,19 +1,20 @@
-# English (United Kingdom) translation for Audacious
+# Malayalam translation for Audacious
 # Copyright (C) Audacious translators
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
-# Andi Chandler <andi@gowling.com>, 2013
+# <>, 2013
+# nandakumar <nandakumar96@gmail.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2013-11-01 16:23+0100\n"
-"PO-Revision-Date: 2013-07-02 20:35+0000\n"
-"Last-Translator: Andi Chandler <andi@gowling.com>\n"
-"Language-Team: English (United Kingdom) (http://www.transifex.com/projects/p/"
-"audacious/language/en_GB/)\n"
-"Language: en_GB\n"
+"PO-Revision-Date: 2013-10-15 01:22+0000\n"
+"Last-Translator: nandakumar <nandakumar96@gmail.com>\n"
+"Language-Team: Malayalam (India) (http://www.transifex.com/projects/p/"
+"audacious/language/ml_IN/)\n"
+"Language: ml_IN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -21,87 +22,87 @@ msgstr ""
 
 #: src/audacious/adder.c:74
 msgid "Searching ..."
-msgstr "Searching ..."
+msgstr "തിരയുന്നു ..."
 
 #: src/audacious/adder.c:102
 #, c-format
 msgid "%d file found"
 msgid_plural "%d files found"
-msgstr[0] "%d file found"
-msgstr[1] "%d files found"
+msgstr[0] "%d ഫയല്‍ കണ്ടെത്തി"
+msgstr[1] "%d ഫയലുകള്‍ കണ്ടെത്തി"
 
 #: src/audacious/chardet.c:38
 msgid "  (invalid UTF-8)"
-msgstr "  (invalid UTF-8)"
+msgstr "  (അസാധുവായ UTF-8)"
 
 #: src/audacious/equalizer_preset.c:171
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
-msgstr "Error importing Winamp EQF file '%s'"
+msgstr "വിനാമ്പ് EQF ഫയല്‍ '%s' ഇറക്കുമതി ചെയ്യുന്നതില്‍ പിശക്"
 
 #: src/audacious/main.c:232
 msgid "Skip backwards in playlist"
-msgstr "Skip backwards in playlist"
+msgstr "പ്ലേലിസ്റ്റില്‍ പിന്നോട്ട് ചാടുക"
 
 #: src/audacious/main.c:233
 msgid "Start playing current playlist"
-msgstr "Start playing current playlist"
+msgstr "നിലവിലുള്ള പ്ലേലിസ്റ്റ് പാടാന്‍ തുടങ്ങുക"
 
 #: src/audacious/main.c:234
 msgid "Pause current song"
-msgstr "Pause current song"
+msgstr "ഈ പാട്ട് പോസ് ചെയ്യുക"
 
 #: src/audacious/main.c:235
 msgid "Stop current song"
-msgstr "Stop current song"
+msgstr "ഈ പാട്ട് നിര്‍ത്തുക"
 
 #: src/audacious/main.c:236
 msgid "Pause if playing, play otherwise"
-msgstr "Pause if playing, play otherwise"
+msgstr "പാടുകയാണെങ്കില്‍ പോസ് ചെയ്യുക, അല്ലെങ്കില്‍ പാടുക"
 
 #: src/audacious/main.c:237
 msgid "Skip forward in playlist"
-msgstr "Skip forward in playlist"
+msgstr "പ്ലേലിസ്റ്റില്‍ മുന്നോട്ടു ചാടുക"
 
 #: src/audacious/main.c:238
 msgid "Display Jump to File dialog"
-msgstr "Display Jump to File dialogue"
+msgstr "‘ജമ്പ് റ്റു ഫയല്‍’ ജാലകം പ്രദര്‍ശിപ്പിയ്ക്കുക"
 
 #: src/audacious/main.c:239
 msgid "Add files to the playlist"
-msgstr "Add files to the playlist"
+msgstr "പ്ലേലിസ്റ്റിലേയ്ക്ക് ഫയലുകള്‍ ചേര്‍ക്കുക"
 
 #: src/audacious/main.c:240
 msgid "Add new files to a temporary playlist"
-msgstr "Add new files to a temporary playlist"
+msgstr "ഒരു താത്കാലികപ്ലേലിസ്റ്റിലേയ്ക്ക് പുതിയ ഫയലുകള്‍ ചേര്‍ക്കുക"
 
 #: src/audacious/main.c:241
 msgid "Display the main window"
-msgstr "Display the main window"
+msgstr "മുഖ്യജാലകം പ്രദര്‍ശിപ്പിയ്ക്കുക"
 
 #: src/audacious/main.c:242
 msgid "Headless mode"
-msgstr "Headless mode"
+msgstr "ഹെഡ്‌ലെസ് മോഡ്"
 
 #: src/audacious/main.c:243
 msgid "Quit on playback stop"
-msgstr "Quit on playback stop"
+msgstr "പാട്ടുനിന്നാല്‍ പുറത്തുകടക്കുക"
 
 #: src/audacious/main.c:244
 msgid "Show version"
-msgstr "Show version"
+msgstr "പതിപ്പ് കാണിയ്ക്കുക"
 
 #: src/audacious/main.c:245
 msgid "Print debugging messages"
-msgstr "Print debugging messages"
+msgstr "ഡീബഗ്ഗിങ് സന്ദേശങ്ങള്‍ പ്രദര്‍ശിപ്പിയ്ക്കുക"
 
 #: src/audacious/main.c:246
 msgid "FILE..."
-msgstr "FILE..."
+msgstr "ഫയല്‍..."
 
 #: src/audacious/main.c:258
 msgid "- play multimedia files"
-msgstr "- play multimedia files"
+msgstr "- മള്‍ട്ടിമീഡിയാ ഫയലുകള്‍ പാടുക"
 
 #: src/audacious/main.c:265
 #, c-format
@@ -110,197 +111,197 @@ msgid ""
 "Try `%s --help' for more information.\n"
 msgstr ""
 "%s: %s\n"
-"Try `%s --help' for more information.\n"
+"കൂടുതല്‍ വിവരങ്ങള്‍ക്കായി `%s --help' നോക്കുക.\n"
 
 #: src/audacious/main.c:565
 msgid "Audacious"
-msgstr "Audacious"
+msgstr "ഒഡാഷ്യസ്"
 
 #: src/audacious/playback.c:379
 #, c-format
 msgid "No decoder found for %s."
-msgstr "No decoder found for %s."
+msgstr "%s-ന് ഡീകോഡറൊന്നും കണ്ടുകിട്ടിയില്ല."
 
 #: src/audacious/playback.c:417
 #, c-format
 msgid "%s could not be opened."
-msgstr "%s could not be opened."
+msgstr "%s - തുറക്കാനായില്ല."
 
 #: src/audacious/playlist-files.c:50
 #, c-format
 msgid "Cannot %s %s: unsupported file extension."
-msgstr "Cannot %s %s: unsupported file extension."
+msgstr "%s %s സാദ്ധ്യമായില്ല: പിന്തുണയില്ലാത്ത ഫയല്‍ എക്സ്റ്റന്‍ഷന്‍"
 
 #: src/audacious/playlist-files.c:51
 msgid "save"
-msgstr "save"
+msgstr "സേവ്"
 
 #: src/audacious/playlist-files.c:51
 msgid "load"
-msgstr "load"
+msgstr "ലോഡ്"
 
 #: src/audacious/playlist-new.c:96
 msgid "New Playlist"
-msgstr "New Playlist"
+msgstr "പുതിയ പ്ലേലിസ്റ്റ്"
 
 #: src/audacious/playlist-new.c:97
 msgid "Now Playing"
-msgstr "Now Playing"
+msgstr "ഇപ്പോള്‍ പാടുന്നത്"
 
 #: src/audacious/playlist-new.c:1670
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress "
 "(or has been disabled)."
 msgstr ""
-"The playlist cannot be sorted because metadata scanning is still in progress "
-"(or has been disabled)."
+"മെറ്റാഡാറ്റാ സ്കാനിങ് കഴിഞ്ഞിട്ടില്ലാത്തതിനാല്‍ പ്ലേലിസ്റ്റ് സോര്‍ട്ട് ചെയ്യാനാവില്ല (അല്ലെങ്കില്‍ "
+"അസാദ്ധ്യമാക്കിവച്ചതിനാല്‍)."
 
 #: src/audacious/plugin-preferences.c:54
 #, c-format
 msgid "About %s"
-msgstr "About %s"
+msgstr "%s-നെപ്പറ്റി"
 
 #: src/audacious/plugin-preferences.c:92
 #, c-format
 msgid "%s Settings"
-msgstr "%s Settings"
+msgstr "%s ക്രമീകരണങ്ങള്‍"
 
 #: src/audacious/ui_preferences.c:67
 msgid "Audio"
-msgstr "Audio"
+msgstr "ഓഡിയോ"
 
 #: src/audacious/ui_preferences.c:68
 msgid "Network"
-msgstr "Network"
+msgstr "നെറ്റ്‌വര്‍ക്ക്"
 
 #: src/audacious/ui_preferences.c:69 src/audacious/ui_preferences.c:1237
 msgid "Playlist"
-msgstr "Playlist"
+msgstr "പ്ലേലിസ്റ്റ്"
 
 #: src/audacious/ui_preferences.c:70
 msgid "Song Info"
-msgstr "Song Info"
+msgstr "സോങ് ഇന്‍ഫോ"
 
 #: src/audacious/ui_preferences.c:71
 msgid "Plugins"
-msgstr "Plug-ins"
+msgstr "പ്ലഗ്ഗിന്നുകള്‍"
 
 #: src/audacious/ui_preferences.c:77 src/libaudgui/infopopup.c:150
 msgid "Artist"
-msgstr "Artist"
+msgstr "ആര്‍ട്ടിസ്റ്റ്"
 
 #: src/audacious/ui_preferences.c:78 src/libaudgui/infopopup.c:151
 msgid "Album"
-msgstr "Album"
+msgstr "ആല്‍ബം"
 
 #: src/audacious/ui_preferences.c:79 src/libaudgui/infopopup.c:149
 #: src/libaudgui/ui_playlist_manager.c:286
 msgid "Title"
-msgstr "Title"
+msgstr "ടൈറ്റില്‍"
 
 #: src/audacious/ui_preferences.c:80
 msgid "Tracknumber"
-msgstr "Tracknumber"
+msgstr "ട്രാക്ക് നമ്പര്‍"
 
 #: src/audacious/ui_preferences.c:81 src/libaudgui/infopopup.c:152
 msgid "Genre"
-msgstr "Genre"
+msgstr "തരം"
 
 #: src/audacious/ui_preferences.c:82
 msgid "Filename"
-msgstr "Filename"
+msgstr "ഫയല്‍നെയിം"
 
 #: src/audacious/ui_preferences.c:83
 msgid "Filepath"
-msgstr "Filepath"
+msgstr "ഫയല്‍പാത്ത്"
 
 #: src/audacious/ui_preferences.c:84
 msgid "Date"
-msgstr "Date"
+msgstr "തീയതി"
 
 #: src/audacious/ui_preferences.c:85 src/libaudgui/infopopup.c:153
 msgid "Year"
-msgstr "Year"
+msgstr "വര്‍ഷം"
 
 #: src/audacious/ui_preferences.c:86
 msgid "Comment"
-msgstr "Comment"
+msgstr "അഭിപ്രായം"
 
 #: src/audacious/ui_preferences.c:87
 msgid "Codec"
-msgstr "Codec"
+msgstr "കോഡെക്"
 
 #: src/audacious/ui_preferences.c:88
 msgid "Quality"
-msgstr "Quality"
+msgstr "ഗുണമേന്മ"
 
 #: src/audacious/ui_preferences.c:94
 msgid "None"
-msgstr "None"
+msgstr "ശൂന്യം"
 
 #: src/audacious/ui_preferences.c:95
 msgid "Arabic"
-msgstr "Arabic"
+msgstr "അറബിക്"
 
 #: src/audacious/ui_preferences.c:96
 msgid "Baltic"
-msgstr "Baltic"
+msgstr "ബാള്‍ട്ടിക്"
 
 #: src/audacious/ui_preferences.c:97
 msgid "Chinese"
-msgstr "Chinese"
+msgstr "ചൈനീസ്"
 
 #: src/audacious/ui_preferences.c:98
 msgid "Greek"
-msgstr "Greek"
+msgstr "ഗ്രീക്ക്"
 
 #: src/audacious/ui_preferences.c:99
 msgid "Hebrew"
-msgstr "Hebrew"
+msgstr "ഹീബ്രൂ"
 
 #: src/audacious/ui_preferences.c:100
 msgid "Japanese"
-msgstr "Japanese"
+msgstr "ജാപ്പനീസ്"
 
 #: src/audacious/ui_preferences.c:101
 msgid "Korean"
-msgstr "Korean"
+msgstr "കൊറിയന്‍"
 
 #: src/audacious/ui_preferences.c:102
 msgid "Polish"
-msgstr "Polish"
+msgstr "പോളിഷ്"
 
 #: src/audacious/ui_preferences.c:103
 msgid "Russian"
-msgstr "Russian"
+msgstr "റഷ്യന്‍"
 
 #: src/audacious/ui_preferences.c:104
 msgid "Taiwanese"
-msgstr "Taiwanese"
+msgstr "തായ്‌വാനീസ്"
 
 #: src/audacious/ui_preferences.c:105
 msgid "Turkish"
-msgstr "Turkish"
+msgstr "ടര്‍ക്കിഷ്"
 
 #: src/audacious/ui_preferences.c:112
 msgid "Floating point"
-msgstr "Floating point"
+msgstr "ഫ്ലോട്ടിങ് പോയിന്റ്"
 
 #: src/audacious/ui_preferences.c:128
 msgid "Album mode"
-msgstr "Album mode"
+msgstr "ആല്‍ബം മോഡ്"
 
 #: src/audacious/ui_preferences.c:131
 msgid "<b>Output Settings</b>"
-msgstr "<b>Output Settings</b>"
+msgstr "<b>ഔട്പുട്ട് ക്രമീകരണങ്ങള്‍</b>"
 
 #: src/audacious/ui_preferences.c:133
 msgid "Bit depth:"
-msgstr "Bit depth:"
+msgstr "ബിറ്റ് ഡെപ്ത്"
 
 #: src/audacious/ui_preferences.c:136
 msgid "Buffer size:"
-msgstr "Buffer size:"
+msgstr "ബഫര്‍ സൈസ്"
 
 #: src/audacious/ui_preferences.c:138
 msgid "ms"
@@ -308,31 +309,31 @@ msgstr "ms"
 
 #: src/audacious/ui_preferences.c:139
 msgid "Soft clipping"
-msgstr "Soft clipping"
+msgstr "സോഫ്റ്റ് ക്ലിപ്പിങ്"
 
 #: src/audacious/ui_preferences.c:141
 msgid "Use software volume control (not recommended)"
-msgstr "Use software volume control (not recommended)"
+msgstr "സോഫ്റ്റ്‌വെയര്‍ ശബ്ദനിയന്ത്രണോപാധി ഉപയോഗിയ്ക്കുക (ശുപാര്‍ശ ചെയ്യപ്പെട്ടിട്ടില്ല)"
 
 #: src/audacious/ui_preferences.c:143
 msgid "<b>Replay Gain</b>"
-msgstr "<b>Replay Gain</b>"
+msgstr "<b>റീപ്ലേ ഗെയ്ന്‍</b>"
 
 #: src/audacious/ui_preferences.c:144
 msgid "Enable Replay Gain"
-msgstr "Enable Replay Gain"
+msgstr "റീപ്ലേ ഗെയ്ന്‍ സാദ്ധ്യമാക്കുക"
 
 #: src/audacious/ui_preferences.c:147
 msgid "Prevent clipping (recommended)"
-msgstr "Prevent clipping (recommended)"
+msgstr "ക്ലിപ്പിങ് തടയുക (ശുപാര്‍ശ ചെയ്യപ്പെട്ടത്)"
 
 #: src/audacious/ui_preferences.c:149
 msgid "<b>Adjust Levels</b>"
-msgstr "<b>Adjust Levels</b>"
+msgstr "<b>ലെവലുകള്‍ ക്രമീകരിയ്ക്കുക</b>"
 
 #: src/audacious/ui_preferences.c:150
 msgid "Amplify all files:"
-msgstr "Amplify all files:"
+msgstr "എല്ലാ ഫയലുകളും ആംപ്ലിഫൈ ചെയ്യുക"
 
 #: src/audacious/ui_preferences.c:152 src/audacious/ui_preferences.c:155
 msgid "dB"
@@ -340,115 +341,115 @@ msgstr "dB"
 
 #: src/audacious/ui_preferences.c:153
 msgid "Amplify untagged files:"
-msgstr "Amplify untagged files:"
+msgstr "അണ്‍ടാഗ്ഡ് ഫയലുകള്‍ ആംപ്ലിഫൈ ചെയ്യുക:"
 
 #: src/audacious/ui_preferences.c:158
 msgid "Proxy hostname:"
-msgstr "Proxy hostname:"
+msgstr "പ്രോക്സി ഹോസ്റ്റ്നെയിം:"
 
 #: src/audacious/ui_preferences.c:159
 msgid "Proxy port:"
-msgstr "Proxy port:"
+msgstr "പ്രോക്സി പോര്‍ട്ട്"
 
 #: src/audacious/ui_preferences.c:162
 msgid "Proxy username:"
-msgstr "Proxy username:"
+msgstr "പ്രോക്സി ഉപയോക്തൃനാമം"
 
 #: src/audacious/ui_preferences.c:163
 msgid "Proxy password:"
-msgstr "Proxy password:"
+msgstr "പ്രോക്സി അടയാളവാക്യം"
 
 #: src/audacious/ui_preferences.c:167
 msgid "<b>Proxy Configuration</b>"
-msgstr "<b>Proxy Configuration</b>"
+msgstr "<b>പ്രോക്സി ക്രമീകരണം</b>"
 
 #: src/audacious/ui_preferences.c:168
 msgid "Enable proxy usage"
-msgstr "Enable proxy usage"
+msgstr "പ്രോക്സി ഉപയോഗം സാദ്ധ്യമാക്കുക"
 
 #: src/audacious/ui_preferences.c:171
 msgid "Use authentication with proxy"
-msgstr "Use authentication with proxy"
+msgstr "പ്രോക്സി ഉപയോഗിച്ചുകൊണ്ടുള്ള ഓതന്റിക്കേഷന്‍ സാദ്ധ്യമാക്കുക"
 
 #: src/audacious/ui_preferences.c:179
 msgid "Auto character encoding detector for:"
-msgstr "Auto character encoding detector for:"
+msgstr "ഇതിനായി ഓട്ടോ ക്യാരക്റ്റര്‍ എന്‍കോഡിങ് ഡിറ്റക്റ്റര്‍:"
 
 #: src/audacious/ui_preferences.c:183
 msgid "Fallback character encodings:"
-msgstr "Fallback character encodings:"
+msgstr "ഫാള്‍ബാക്ക് ക്യാരക്റ്റര്‍ എന്‍കോഡിങ്ങുകള്‍:"
 
 #: src/audacious/ui_preferences.c:187
 msgid "<b>Behavior</b>"
-msgstr "<b>Behaviour</b>"
+msgstr "<b>സ്വഭാവം</b>"
 
 #: src/audacious/ui_preferences.c:188
 msgid "Continue playback on startup"
-msgstr "Continue playback on start-up"
+msgstr "പ്രാരംഭസമയത്ത് പാടല്‍ തുടരുക"
 
 #: src/audacious/ui_preferences.c:190
 msgid "Advance when the current song is deleted"
-msgstr "Advance when the current song is deleted"
+msgstr "ഈ പാട്ട് ഡിലീറ്റായാല്‍ മുന്നോട്ടുനീങ്ങുക"
 
 #: src/audacious/ui_preferences.c:192
 msgid "Clear the playlist when opening files"
-msgstr "Clear the playlist when opening files"
+msgstr "ഫയലുകള്‍ തുറക്കുമ്പോള്‍ പ്ലേലിസ്റ്റ് വെടിപ്പാക്കുക"
 
 #: src/audacious/ui_preferences.c:194
 msgid "Open files in a temporary playlist"
-msgstr "Open files in a temporary playlist"
+msgstr "ഫയലുകള്‍ ഒരു താത്കാലികപ്ലേലിസ്റ്റില്‍ തുറക്കുക"
 
 #: src/audacious/ui_preferences.c:196
 msgid "Do not load metadata for songs until played"
-msgstr "Do not load metadata for songs until played"
+msgstr "പാട്ടുകള്‍ പാടുന്നതുവരെ മെറ്റാഡാറ്റ ലോഡ് ചെയ്യേണ്ട"
 
 #: src/audacious/ui_preferences.c:199
 msgid "<b>Compatibility</b>"
-msgstr "<b>Compatibility</b>"
+msgstr "<b>അനുയോഗ്യത</b>"
 
 #: src/audacious/ui_preferences.c:200
 msgid "Interpret \\ (backward slash) as a folder delimiter"
-msgstr "Interpret \\ (backward slash) as a folder delimiter"
+msgstr "\\ (backward slash) -നെ ഒരു ഫോള്‍ഡര്‍ ഡീലിമിറ്റര്‍ ആയി വ്യാഖ്യാനിയ്ക്കുക"
 
 #: src/audacious/ui_preferences.c:207
 msgid "<b>Album Art</b>"
-msgstr "<b>Album Art</b>"
+msgstr "<b>ആല്‍ബം ആര്‍ട്ട്</b>"
 
 #: src/audacious/ui_preferences.c:208
 msgid "Search for images matching these words (comma-separated):"
-msgstr "Search for images matching these words (comma-separated):"
+msgstr "ഈ വാക്കുകള്‍ക്കു യോജിച്ച ചിത്രങ്ങള്‍ക്കായി തിരയുക (കോമയാല്‍ വേര്‍തിരിയ്ക്കപ്പെട്ടത്)"
 
 #: src/audacious/ui_preferences.c:210
 msgid "Exclude images matching these words (comma-separated):"
-msgstr "Exclude images matching these words (comma-separated):"
+msgstr "ഈ വാക്കുകള്‍ക്കു യോജിച്ച ചിത്രങ്ങള്‍ ഒഴിവാക്കുക (കോമയാല്‍ വേര്‍തിരിയ്ക്കപ്പെട്ടത്)"
 
 #: src/audacious/ui_preferences.c:212
 msgid "Search for images matching song file name"
-msgstr "Search for images matching song file name"
+msgstr "പാട്ടിന്റെ ഫയല്‍ നെയിമിന് യോജിച്ച ചിത്രങ്ങള്‍ക്കായി തിരയുക"
 
 #: src/audacious/ui_preferences.c:214
 msgid "Search recursively"
-msgstr "Search recursively"
+msgstr "റിക്കര്‍സീവ് ആയി തിരയുക"
 
 #: src/audacious/ui_preferences.c:216
 msgid "Search depth:"
-msgstr "Search depth:"
+msgstr "സേര്‍ച്ച് ഡെപ്ത്:"
 
 #: src/audacious/ui_preferences.c:219
 msgid "<b>Popup Information</b>"
-msgstr "<b>Popup Information</b>"
+msgstr "<b>പോപ്പപ്പ് വിവരം</b>"
 
 #: src/audacious/ui_preferences.c:220
 msgid "Show popup information"
-msgstr "Show pop-up information"
+msgstr "പോപ്പപ് വിവരം പ്രദര്‍ശിപ്പിയ്ക്കുക"
 
 #: src/audacious/ui_preferences.c:222
 msgid "Popup delay (tenths of a second):"
-msgstr "Pop-up delay (tenths of a second):"
+msgstr "പോപ്പപ്പ് വൈകല്‍ (ഒരു സെക്കന്‍ഡിന്റെ പത്തിലൊന്നുകള്‍)"
 
 #: src/audacious/ui_preferences.c:225
 msgid "Show time scale for current song"
-msgstr "Show time scale for current song"
+msgstr "ഈ പാട്ടിന്റെ ടൈം സ്കെയില്‍ കാണിയ്ക്കുക"
 
 #: src/audacious/ui_preferences.c:239
 msgid "TITLE"
@@ -476,108 +477,108 @@ msgstr "ALBUM - TITLE"
 
 #: src/audacious/ui_preferences.c:457
 msgid "Category"
-msgstr "Category"
+msgstr "വിഭാഗം"
 
 #: src/audacious/ui_preferences.c:995
 msgid "Custom"
-msgstr "Custom"
+msgstr "സ്വേച്ഛയാലുള്ള"
 
 #: src/audacious/ui_preferences.c:1032
 msgid "<b>Song Display</b>"
-msgstr "<b>Song Display</b>"
+msgstr "<b>സോങ് ഡിസ്പ്ലേ</b>"
 
 #: src/audacious/ui_preferences.c:1041
 msgid "Show song numbers"
-msgstr "Show song numbers"
+msgstr "പാട്ടുനമ്പറുകള്‍ കാണിയ്ക്കുക"
 
 #: src/audacious/ui_preferences.c:1052
 msgid "Show leading zeroes (02:00 instead of 2:00)"
-msgstr "Show leading zeroes (02:00 instead of 2:00)"
+msgstr "തുടക്കത്തിലുള്ള പൂജ്യങ്ങള്‍ കാണിയ്ക്കുക (2:00 എന്നതിനുപകരം 02:00)"
 
 #: src/audacious/ui_preferences.c:1072
 msgid "Show information about titlestring format"
-msgstr "Show information about titlestring format"
+msgstr "ടൈറ്റില്‍സ്ട്രിങ് ഫോര്‍മാറ്റുമായി ബന്ധപ്പെട്ട വിവരം പ്രദര്‍ശിപ്പിയ്ക്കുക"
 
 #: src/audacious/ui_preferences.c:1086
 msgid "Custom string:"
-msgstr "Custom string:"
+msgstr "സ്വേച്ഛയാലുള്ള എഴുത്ത്:"
 
 #: src/audacious/ui_preferences.c:1091
 msgid "Title format:"
-msgstr "Title format:"
+msgstr "ടൈറ്റില്‍ ഫോര്‍മാറ്റ്:"
 
 #: src/audacious/ui_preferences.c:1178
 msgid "Output plugin:"
-msgstr "Output plug-in:"
+msgstr "ഔട്പുട്ട് പ്ലഗ്ഗിന്‍"
 
 #: src/audacious/ui_preferences.c:1237
 msgid "Transport"
-msgstr "Transport"
+msgstr "കടത്തുക"
 
 #: src/audacious/ui_preferences.c:1237
 msgid "Input"
-msgstr "Input"
+msgstr "ഇന്‍പുട്ട്"
 
 #: src/audacious/ui_preferences.c:1238
 msgid "Effect"
-msgstr "Effect"
+msgstr "പ്രഭാവം"
 
 #: src/audacious/ui_preferences.c:1238
 msgid "Visualization"
-msgstr "Visualisation"
+msgstr "ദൃശ്യവത്കരണം"
 
 #: src/audacious/ui_preferences.c:1238
 msgid "General"
-msgstr "General"
+msgstr "പൊതുവായ"
 
 #: src/audacious/ui_preferences.c:1274
 msgid "Audacious Preferences"
-msgstr "Audacious Preferences"
+msgstr "ഒഡാഷ്യസ് മുന്‍ഗണനകള്‍"
 
 #: src/audacious/util.c:114
 #, c-format
 msgid "Could not create directory (%s): %s\n"
-msgstr "Could not create directory (%s): %s\n"
+msgstr "ഡയറക്റ്ററി ഉണ്ടാക്കാനായില്ല (%s): %s\n"
 
 #: src/audtool/handlers_playlist.c:262
 msgid "Position not found."
-msgstr "Position not found."
+msgstr "സ്ഥാനം കണ്ടുകിട്ടിയില്ല."
 
 #: src/audtool/handlers_vitals.c:51
 msgid "No song playing."
-msgstr "No song playing."
+msgstr "ഒരു പാട്ടും പാടുന്നില്ല."
 
 #: src/libaudcore/audstrings.c:203
 #, c-format
 msgid "Audio CD, track %s"
-msgstr "Audio CD, track %s"
+msgstr "ഓഡിയോ സി.ഡി., ട്രാക്ക് %s"
 
 #: src/libaudcore/tuple.c:543
 msgid "Mono"
-msgstr "Mono"
+msgstr "മോണോ"
 
 #: src/libaudcore/tuple.c:545
 msgid "Stereo"
-msgstr "Stereo"
+msgstr "സ്റ്റീരിയോ"
 
 #: src/libaudcore/tuple.c:547
 #, c-format
 msgid "%d channel"
 msgid_plural "%d channels"
-msgstr[0] "%d channel"
-msgstr[1] "%d channels"
+msgstr[0] "%d ചാനല്‍"
+msgstr[1] "%d ചാനലുകള്‍"
 
 #: src/libaudgui/about.c:37
 msgid "Credits"
-msgstr "Credits"
+msgstr "ബഹുമതികള്‍"
 
 #: src/libaudgui/about.c:37
 msgid "License"
-msgstr "Licence"
+msgstr "അനുമതിപത്രം"
 
 #: src/libaudgui/about.c:73
 msgid "About Audacious"
-msgstr "About Audacious"
+msgstr "ഒഡാഷ്യസ്സിനെപ്പറ്റി"
 
 #: src/libaudgui/confirm.c:66
 #, c-format
@@ -585,28 +586,28 @@ msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
 msgstr ""
-"Are you sure you want to close %s?  If you do, any changes made since the "
-"playlist was exported will be lost."
+"%s അടയ്ക്കണമെന്ന് നിങ്ങള്‍ക്കുറപ്പുണ്ടോ?  നിങ്ങളങ്ങനെ ചെയ്താല്‍, പ്ലേലിസ്റ്റ് കയറ്റുമതി "
+"ചെയ്തതുമുതല്‍ക്കുള്ള എല്ലാ മാറ്റങ്ങളും നഷ്ടപ്പെടും."
 
 #: src/libaudgui/confirm.c:73
 msgid "Close Playlist"
-msgstr "Close Playlist"
+msgstr "പ്ലേലിസ്റ്റ് അടയ്ക്കുക"
 
 #: src/libaudgui/confirm.c:77
 msgid "_Don't show this message again"
-msgstr "_Do not show this message again"
+msgstr "_ഈ സന്ദേശം ഇനി കാണിയ്ക്കാതിരിയ്ക്കുക"
 
 #: src/libaudgui/confirm.c:100
 msgid "Rename Playlist"
-msgstr "Rename Playlist"
+msgstr "പ്ലേലിസ്റ്റിന്റെ പേര് മാറ്റുക"
 
 #: src/libaudgui/effects-menu.c:70
 msgid "settings ..."
-msgstr "settings ..."
+msgstr "ക്രമീകരണങ്ങള്‍ ..."
 
 #: src/libaudgui/equalizer.c:50
 msgid "_Enable"
-msgstr "_Enable"
+msgstr "_സാദ്ധ്യമാക്കുക"
 
 #: src/libaudgui/equalizer.c:123
 msgid "31 Hz"
@@ -650,232 +651,232 @@ msgstr "16 kHz"
 
 #: src/libaudgui/equalizer.c:130
 msgid "Equalizer"
-msgstr "Equaliser"
+msgstr "ഈക്വലൈസര്‍"
 
 #: src/libaudgui/equalizer.c:146
 msgid "Preamp"
-msgstr "Preamp"
+msgstr "പ്രീ‌ആംപ്"
 
 #: src/libaudgui/infopopup.c:154
 msgid "Track"
-msgstr "Track"
+msgstr "ട്രാക്ക്"
 
 #: src/libaudgui/infopopup.c:155
 msgid "Length"
-msgstr "Length"
+msgstr "നീളം"
 
 #: src/libaudgui/infowin.c:73
 msgid "Acid Jazz"
-msgstr "Acid Jazz"
+msgstr "ആസിഡ് ജാസ്"
 
 #: src/libaudgui/infowin.c:74
 msgid "Acid Rock"
-msgstr "Acid Rock"
+msgstr "ആസിഡ് റോക്ക്"
 
 #: src/libaudgui/infowin.c:75
 msgid "Ambient"
-msgstr "Ambient"
+msgstr "ആംബിയന്റ്"
 
 #: src/libaudgui/infowin.c:76
 msgid "Bebop"
-msgstr "Bebop"
+msgstr "ബിബോപ്"
 
 #: src/libaudgui/infowin.c:77
 msgid "Bluegrass"
-msgstr "Bluegrass"
+msgstr "ബ്ലൂഗ്രാസ്"
 
 #: src/libaudgui/infowin.c:78
 msgid "Blues"
-msgstr "Blues"
+msgstr "ബ്ലൂസ്"
 
 #: src/libaudgui/infowin.c:79
 msgid "Chamber Music"
-msgstr "Chamber Music"
+msgstr "ചേംബര്‍ മ്യൂസിക്"
 
 #: src/libaudgui/infowin.c:80
 msgid "Classical"
-msgstr "Classical"
+msgstr "ക്ലാസിക്കല്‍"
 
 #: src/libaudgui/infowin.c:81
 msgid "Country"
-msgstr "Country"
+msgstr "കണ്‍ട്രി"
 
 #: src/libaudgui/infowin.c:82
 msgid "Death Metal"
-msgstr "Death Metal"
+msgstr "ഡെത്ത് മെറ്റല്‍"
 
 #: src/libaudgui/infowin.c:83
 msgid "Disco"
-msgstr "Disco"
+msgstr "ഡിസ്കോ"
 
 #: src/libaudgui/infowin.c:84
 msgid "Easy Listening"
-msgstr "Easy Listening"
+msgstr "ഈസി ലിസണിങ്"
 
 #: src/libaudgui/infowin.c:85
 msgid "Folk"
-msgstr "Folk"
+msgstr "നാടോടി"
 
 #: src/libaudgui/infowin.c:86
 msgid "Funk"
-msgstr "Funk"
+msgstr "ഫങ്ക്"
 
 #: src/libaudgui/infowin.c:87
 msgid "Gangsta Rap"
-msgstr "Gangsta Rap"
+msgstr "ഗങ്സ്താ റാപ്പ്"
 
 #: src/libaudgui/infowin.c:88
 msgid "Gospel"
-msgstr "Gospel"
+msgstr "ഗോസ്പല്‍"
 
 #: src/libaudgui/infowin.c:89
 msgid "Grunge"
-msgstr "Grunge"
+msgstr "ഗ്രങ്"
 
 #: src/libaudgui/infowin.c:90
 msgid "Hard Rock"
-msgstr "Hard Rock"
+msgstr "ഹാഡ് റോക്ക്"
 
 #: src/libaudgui/infowin.c:91
 msgid "Heavy Metal"
-msgstr "Heavy Metal"
+msgstr "ഹെവി മെറ്റല്‍"
 
 #: src/libaudgui/infowin.c:92
 msgid "Hip-hop"
-msgstr "Hip-hop"
+msgstr "ഹിപ്-ഹോപ്പ്"
 
 #: src/libaudgui/infowin.c:93
 msgid "House"
-msgstr "House"
+msgstr "വീട്"
 
 #: src/libaudgui/infowin.c:94
 msgid "Jazz"
-msgstr "Jazz"
+msgstr "ജാസ്"
 
 #: src/libaudgui/infowin.c:95
 msgid "Jungle"
-msgstr "Jungle"
+msgstr "കാട്"
 
 #: src/libaudgui/infowin.c:96
 msgid "Metal"
-msgstr "Metal"
+msgstr "മെറ്റല്‍"
 
 #: src/libaudgui/infowin.c:97
 msgid "New Age"
-msgstr "New Age"
+msgstr "നവയുഗം"
 
 #: src/libaudgui/infowin.c:98
 msgid "New Wave"
-msgstr "New Wave"
+msgstr "നവതരംഗം"
 
 #: src/libaudgui/infowin.c:99
 msgid "Noise"
-msgstr "Noise"
+msgstr "ശബ്ദം"
 
 #: src/libaudgui/infowin.c:100
 msgid "Pop"
-msgstr "Pop"
+msgstr "പോപ്പ്"
 
 #: src/libaudgui/infowin.c:101
 msgid "Punk Rock"
-msgstr "Punk Rock"
+msgstr "പങ്ക് റോക്ക്"
 
 #: src/libaudgui/infowin.c:102
 msgid "Rap"
-msgstr "Rap"
+msgstr "റാപ്പ്"
 
 #: src/libaudgui/infowin.c:103
 msgid "Reggae"
-msgstr "Reggae"
+msgstr "റെഗ്ഗേജ്"
 
 #: src/libaudgui/infowin.c:104
 msgid "Rock"
-msgstr "Rock"
+msgstr "റോക്ക്"
 
 #: src/libaudgui/infowin.c:105
 msgid "Rock and Roll"
-msgstr "Rock and Roll"
+msgstr "റോക്ക് ആന്‍ഡ് റോള്‍"
 
 #: src/libaudgui/infowin.c:106
 msgid "Rhythm and Blues"
-msgstr "Rhythm and Blues"
+msgstr "റിഥം ആന്‍ഡ് ബ്ലൂസ്"
 
 #: src/libaudgui/infowin.c:107
 msgid "Ska"
-msgstr "Ska"
+msgstr "സ്കാ"
 
 #: src/libaudgui/infowin.c:108
 msgid "Soul"
-msgstr "Soul"
+msgstr "സോള്‍"
 
 #: src/libaudgui/infowin.c:109
 msgid "Swing"
-msgstr "Swing"
+msgstr "സ്വിങ്"
 
 #: src/libaudgui/infowin.c:110
 msgid "Techno"
-msgstr "Techno"
+msgstr "ടെക്നോ"
 
 #: src/libaudgui/infowin.c:111
 msgid "Trip-hop"
-msgstr "Trip-hop"
+msgstr "ട്രിപ്പ്-ഹോപ്പ്"
 
 #: src/libaudgui/infowin.c:175 src/libaudgui/infowin.c:348
 #: src/libaudgui/infowin.c:351 src/libaudgui/infowin.c:354
 msgid "<span size=\"small\">n/a</span>"
-msgstr "<span size=\"small\">n/a</span>"
+msgstr "<span size=\"small\">ലഭ്യമല്ല</span>"
 
 #: src/libaudgui/infowin.c:223
 msgid "Metadata updated successfully"
-msgstr "Metadata updated successfully"
+msgstr "മെറ്റാഡാറ്റ വിജയകരമായി പുതുക്കി"
 
 #: src/libaudgui/infowin.c:227
 msgid "Metadata updating failed"
-msgstr "Metadata updating failed"
+msgstr "മെറ്റാഡാറ്റ പുതുക്കല്‍ പരാജയപ്പെട്ടു"
 
 #: src/libaudgui/infowin.c:302
 msgid "Track Information"
-msgstr "Track Information"
+msgstr "ട്രാക്ക് വിവരം"
 
 #: src/libaudgui/infowin.c:337
 msgid "<span size=\"small\">Format:</span>"
-msgstr "<span size=\"small\">Format:</span>"
+msgstr "<span size=\"small\">ഫോര്‍മാറ്റ്:</span>"
 
 #: src/libaudgui/infowin.c:341
 msgid "<span size=\"small\">Quality:</span>"
-msgstr "<span size=\"small\">Quality:</span>"
+msgstr "<span size=\"small\">ഗുണമേന്മ:</span>"
 
 #: src/libaudgui/infowin.c:344
 msgid "<span size=\"small\">Bitrate:</span>"
-msgstr "<span size=\"small\">Bitrate:</span>"
+msgstr "<span size=\"small\">ബിറ്റ്‌റേറ്റ്:</span>"
 
 #: src/libaudgui/infowin.c:368
 msgid "<span size=\"small\">Title</span>"
-msgstr "<span size=\"small\">Title</span>"
+msgstr "<span size=\"small\">ടൈറ്റില്‍</span>"
 
 #: src/libaudgui/infowin.c:380
 msgid "<span size=\"small\">Artist</span>"
-msgstr "<span size=\"small\">Artist</span>"
+msgstr "<span size=\"small\">ആര്‍ട്ടിസ്റ്റ്</span>"
 
 #: src/libaudgui/infowin.c:392
 msgid "<span size=\"small\">Album</span>"
-msgstr "<span size=\"small\">Album</span>"
+msgstr "<span size=\"small\">ആല്‍ബം</span>"
 
 #: src/libaudgui/infowin.c:404
 msgid "<span size=\"small\">Comment</span>"
-msgstr "<span size=\"small\">Comment</span>"
+msgstr "<span size=\"small\">അഭിപ്രായം</span>"
 
 #: src/libaudgui/infowin.c:416
 msgid "<span size=\"small\">Genre</span>"
-msgstr "<span size=\"small\">Genre</span>"
+msgstr "<span size=\"small\">തരം</span>"
 
 #: src/libaudgui/infowin.c:438
 msgid "<span size=\"small\">Year</span>"
-msgstr "<span size=\"small\">Year</span>"
+msgstr "<span size=\"small\">വര്‍ഷം</span>"
 
 #: src/libaudgui/infowin.c:447
 msgid "<span size=\"small\">Track Number</span>"
-msgstr "<span size=\"small\">Track Number</span>"
+msgstr "<span size=\"small\">ട്രാക്ക് നമ്പര്‍</span>"
 
 #: src/libaudgui/infowin.c:521
 #, c-format
@@ -885,109 +886,109 @@ msgstr "%d kb/s"
 #: src/libaudgui/infowin.c:548
 #, c-format
 msgid "No info available for %s.\n"
-msgstr "No info available for %s.\n"
+msgstr "%s-ഉമായി ബന്ധപ്പെട്ട വിവരങ്ങളൊന്നും ലഭ്യമല്ല.\n"
 
 #: src/libaudgui/jump-to-time.c:51
 msgid "Jump to Time"
-msgstr "Jump to Time"
+msgstr "സമയത്തിലേയ്ക്ക് ചാടുക"
 
 #: src/libaudgui/jump-to-time.c:60
 msgid "Enter time (minutes:seconds):"
-msgstr "Enter time (minutes:seconds):"
+msgstr "സമയം നല്‍കുക (മിനിറ്റുകള്‍:സെക്കന്‍ഡുകള്‍)"
 
 #: src/libaudgui/playlists.c:32
 msgid "Export Playlist"
-msgstr "Export Playlist"
+msgstr "പ്ലേലിസ്റ്റ് കയറ്റുമതി ചെയ്യുക"
 
 #: src/libaudgui/playlists.c:32
 msgid "Import Playlist"
-msgstr "Import Playlist"
+msgstr "പ്ലേലിസ്റ്റ് ഇറക്കുമതി ചെയ്യുക"
 
 #: src/libaudgui/playlists.c:65
 #, c-format
 msgid "Overwrite %s?"
-msgstr "Overwrite %s?"
+msgstr "മായ്ച്ചെഴുതണോ: %s?"
 
 #: src/libaudgui/queue-manager.c:195
 msgid "Queue Manager"
-msgstr "Queue Manager"
+msgstr "ക്യൂ മാനേജര്‍"
 
 #: src/libaudgui/ui_fileopener.c:106
 msgid "Open Files"
-msgstr "Open Files"
+msgstr "ഫയലുകള്‍ തുറക്കുക"
 
 #: src/libaudgui/ui_fileopener.c:106
 msgid "Add Files"
-msgstr "Add Files"
+msgstr "ഫയലുകള്‍ ചേര്‍ക്കുക"
 
 #: src/libaudgui/ui_fileopener.c:108
 msgid "Close dialog on Open"
-msgstr "Close dialogue on Open"
+msgstr "ഫയല്‍ തുറക്കുമ്പോള്‍ ജാലകം അടയ്ക്കുക"
 
 #: src/libaudgui/ui_fileopener.c:108
 msgid "Close dialog on Add"
-msgstr "Close dialogue on Add"
+msgstr "ചേര്‍ക്കുമ്പോള്‍ ജാലകം അടയ്ക്കുക"
 
 #: src/libaudgui/ui_jumptotrack.c:104 src/libaudgui/ui_jumptotrack.c:112
 #: src/libaudgui/ui_jumptotrack.c:331
 msgid "_Queue"
-msgstr "_Queue"
+msgstr "_ക്യൂ"
 
 #: src/libaudgui/ui_jumptotrack.c:110
 msgid "Un_queue"
-msgstr "Un_queue"
+msgstr "അ_ണ്‍ക്യൂ"
 
 #: src/libaudgui/ui_jumptotrack.c:261
 msgid "Jump to Song"
-msgstr "Jump to Song"
+msgstr "പാട്ടിലേയ്ക്ക് ചാടുക"
 
 #: src/libaudgui/ui_jumptotrack.c:286
 msgid "Filter: "
-msgstr "Filter: "
+msgstr "അരിപ്പ:"
 
 #: src/libaudgui/ui_jumptotrack.c:287
 msgid "_Filter:"
-msgstr "_Filter:"
+msgstr "_അരിപ്പ:"
 
 #: src/libaudgui/ui_jumptotrack.c:297
 msgid "Remember"
-msgstr "Remember"
+msgstr "ഓര്‍ക്കുക"
 
 #: src/libaudgui/ui_jumptotrack.c:304
 msgid "Clea_r"
-msgstr "Clea_r"
+msgstr "_വെടിപ്പാക്കുക"
 
 #: src/libaudgui/ui_jumptotrack.c:324
 msgid "Close on Jump"
-msgstr "Close on Jump"
+msgstr "ചാടുമ്പോള്‍ അടയ്ക്കുക"
 
 #: src/libaudgui/ui_playlist_manager.c:260
 msgid "Playlist Manager"
-msgstr "Playlist Manager"
+msgstr "പ്ലേലിസ്റ്റ് മാനേജര്‍"
 
 #: src/libaudgui/ui_playlist_manager.c:287
 msgid "Entries"
-msgstr "Entries"
+msgstr "എന്‍ട്രികള്‍"
 
 #: src/libaudgui/ui_playlist_manager.c:307
 msgid "_Rename"
-msgstr "_Rename"
+msgstr "_പേര് മാറ്റുക"
 
 #: src/libaudgui/ui_playlist_manager.c:327
 msgid "_Close dialog on activating playlist"
-msgstr "_Close dialogue on activating playlist"
+msgstr "പ്ലേലിസ്റ്റ് ആക്റ്റിവേറ്റ് ചെയ്യുമ്പോള്‍ ജാലകം അടയ്ക്കുക"
 
 #: src/libaudgui/url-opener.c:55
 msgid "Open URL"
-msgstr "Open URL"
+msgstr "യൂ.ആര്‍.എല്‍. തുറക്കുക"
 
 #: src/libaudgui/url-opener.c:55
 msgid "Add URL"
-msgstr "Add URL"
+msgstr "യൂ.ആര്‍.എല്‍. ചേര്‍ക്കുക"
 
 #: src/libaudgui/url-opener.c:64
 msgid "Enter URL:"
-msgstr "Enter URL:"
+msgstr "യൂ.ആര്‍.എല്‍. നല്‍കുക:"
 
 #: src/libaudgui/util.c:142
 msgid ""
@@ -995,4 +996,4 @@ msgid ""
 "(Further messages have been hidden.)"
 msgstr ""
 "\n"
-"(Further messages have been hidden.)"
+"(തുടര്‍ന്നുള്ള സന്ദേശങ്ങള്‍ മറച്ചുവച്ചിരിയ്ക്കുന്നു.)"

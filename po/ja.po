@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2013-09-01 20:57+0200\n"
+"POT-Creation-Date: 2013-11-01 16:23+0100\n"
 "PO-Revision-Date: 2013-03-07 05:02+0000\n"
 "Last-Translator: 読み専(先行量産型) <hallconnen2+transifex@gmail.com>\n"
 "Language-Team: Japanese (http://www.transifex.com/projects/p/audacious/"
@@ -118,12 +118,12 @@ msgstr ""
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/playback.c:368
+#: src/audacious/playback.c:379
 #, c-format
 msgid "No decoder found for %s."
 msgstr "%s のためのデコーダがありません。"
 
-#: src/audacious/playback.c:406
+#: src/audacious/playback.c:417
 #, c-format
 msgid "%s could not be opened."
 msgstr "%s を開けませんでした。"
@@ -533,7 +533,7 @@ msgstr "視覚化"
 msgid "General"
 msgstr "一般"
 
-#: src/audacious/ui_preferences.c:1276
+#: src/audacious/ui_preferences.c:1274
 msgid "Audacious Preferences"
 msgstr "Audacious の設定"
 

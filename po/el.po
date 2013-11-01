@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2013-09-01 20:57+0200\n"
+"POT-Creation-Date: 2013-11-01 16:23+0100\n"
 "PO-Revision-Date: 2013-08-22 22:02+0000\n"
 "Last-Translator: Γιάννης Ανθυμίδης <yannanth@gmail.com>\n"
 "Language-Team: Greek (http://www.transifex.com/projects/p/audacious/language/"
@@ -121,12 +121,12 @@ msgstr ""
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/playback.c:368
+#: src/audacious/playback.c:379
 #, c-format
 msgid "No decoder found for %s."
 msgstr "Δεν βρέθηκε αποκωδικοποιητής για %s."
 
-#: src/audacious/playback.c:406
+#: src/audacious/playback.c:417
 #, c-format
 msgid "%s could not be opened."
 msgstr "Δεν ήταν δυνατό το άνοιγμα του %s."
@@ -539,7 +539,7 @@ msgstr "Οπτικοποίηση"
 msgid "General"
 msgstr "Γενικά"
 
-#: src/audacious/ui_preferences.c:1276
+#: src/audacious/ui_preferences.c:1274
 msgid "Audacious Preferences"
 msgstr "Προτιμήσεις του Audacious"
 

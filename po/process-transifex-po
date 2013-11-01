@@ -82,6 +82,9 @@ lt.po)
 lv.po)
     LANGUAGE="Latvian"
     ;;
+ml_IN.po)
+    LANGUAGE="Malayalam"
+    ;;
 ms.po)
     LANGUAGE="Malay"
     ;;

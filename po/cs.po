@@ -5,15 +5,16 @@
 # Translators:
 # jui <appukonrad@gmail.com>, 2012
 # Jan Nárovec <finn@sendmail.cz>, 2004
+# fri <pavelfric@seznam.cz>, 2013
 # fri <pavelfric@seznam.cz>, 2012
 # Petr Písař <petr.pisar@atlas.cz>, 2007, 2008, 2009, 2010, 2011, 2012
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2013-09-01 20:57+0200\n"
-"PO-Revision-Date: 2013-02-03 20:17+0000\n"
-"Last-Translator: Radioactiveman <thomas-lange2@gmx.de>\n"
+"POT-Creation-Date: 2013-11-01 16:23+0100\n"
+"PO-Revision-Date: 2013-09-08 07:25+0000\n"
+"Last-Translator: fri <pavelfric@seznam.cz>\n"
 "Language-Team: Czech (http://www.transifex.com/projects/p/audacious/language/"
 "cs/)\n"
 "Language: cs\n"
@@ -85,11 +86,11 @@ msgstr "Zobrazí hlavní okno"
 
 #: src/audacious/main.c:242
 msgid "Headless mode"
-msgstr ""
+msgstr "Bezhlavý režim"
 
 #: src/audacious/main.c:243
 msgid "Quit on playback stop"
-msgstr ""
+msgstr "Ukončit po zastavení přehrávání"
 
 #: src/audacious/main.c:244
 msgid "Show version"
@@ -120,15 +121,15 @@ msgstr ""
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/playback.c:368
+#: src/audacious/playback.c:379
 #, c-format
 msgid "No decoder found for %s."
 msgstr "Pro %s nenalezen žádní dekodér."
 
-#: src/audacious/playback.c:406
+#: src/audacious/playback.c:417
 #, c-format
 msgid "%s could not be opened."
-msgstr ""
+msgstr "%s se nepodařilo otevřít."
 
 #: src/audacious/playlist-files.c:50
 #, c-format
@@ -534,7 +535,7 @@ msgstr "Znázornění"
 msgid "General"
 msgstr "Obecné"
 
-#: src/audacious/ui_preferences.c:1276
+#: src/audacious/ui_preferences.c:1274
 msgid "Audacious Preferences"
 msgstr "Nastavení programu"
 

@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2013-09-01 20:57+0200\n"
-"PO-Revision-Date: 2013-02-04 02:20+0000\n"
+"POT-Creation-Date: 2013-11-01 16:23+0100\n"
+"PO-Revision-Date: 2013-09-11 03:30+0000\n"
 "Last-Translator: Alain-Olivier  Breysse <yahoe.001@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/projects/p/audacious/"
 "language/fr/)\n"
@@ -119,12 +119,12 @@ msgstr ""
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/playback.c:368
+#: src/audacious/playback.c:379
 #, c-format
 msgid "No decoder found for %s."
 msgstr "Aucun décodeur trouvé pour %s."
 
-#: src/audacious/playback.c:406
+#: src/audacious/playback.c:417
 #, c-format
 msgid "%s could not be opened."
 msgstr "%s n'a pas pu être ouvert."
@@ -343,7 +343,7 @@ msgstr "dB"
 
 #: src/audacious/ui_preferences.c:153
 msgid "Amplify untagged files:"
-msgstr "Amplifier les fichiers sans label :"
+msgstr "Amplifier les fichiers sans étiquette :"
 
 #: src/audacious/ui_preferences.c:158
 msgid "Proxy hostname:"
@@ -535,7 +535,7 @@ msgstr "Visualisation"
 msgid "General"
 msgstr "Général"
 
-#: src/audacious/ui_preferences.c:1276
+#: src/audacious/ui_preferences.c:1274
 msgid "Audacious Preferences"
 msgstr "Préférences d'Audacious"
 
