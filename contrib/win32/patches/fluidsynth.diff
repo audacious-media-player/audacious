@@ -1,0 +1,36 @@
+diff -ur fluidsynth-1.1.6.0/configure.ac fluidsynth-1.1.6/configure.ac
+--- fluidsynth-1.1.6.0/configure.ac	2012-08-16 00:01:13 -0400
++++ fluidsynth-1.1.6/configure.ac	2013-11-01 13:19:31 -0400
+@@ -68,7 +68,7 @@
+   AC_DEFINE(DARWIN, 1, [Define if building for Mac OS X Darwin])
+   ;;
+ mingw*)
+-  mingw32_support="yes"
++  mingw32_support="no"
+   CFLAGS="$CFLAGS -mms-bitfields"
+   AC_DEFINE(MINGW32, 1, [Define if using the MinGW32 environment])
+   LIBFLUID_LIBS="-ldsound -lwinmm -lws2_32"
+diff -ur fluidsynth-1.1.6.0/src/config_win32.h.in fluidsynth-1.1.6/src/config_win32.h.in
+--- fluidsynth-1.1.6.0/src/config_win32.h.in	2012-08-16 00:01:13 -0400
++++ fluidsynth-1.1.6/src/config_win32.h.in	2013-11-01 13:26:42 -0400
+@@ -10,8 +10,6 @@
+ #define HAVE_IO_H 1
+ #define HAVE_WINDOWS_H 1
+ 
+-#define DSOUND_SUPPORT 1
+-#define WINMIDI_SUPPORT 1
+ #define WITH_FLOAT 1
+ 
+ #define snprintf _snprintf
+diff -ur fluidsynth-1.1.6.0/src/utils/fluidsynth_priv.h fluidsynth-1.1.6/src/utils/fluidsynth_priv.h
+--- fluidsynth-1.1.6.0/src/utils/fluidsynth_priv.h	2012-08-16 00:01:13 -0400
++++ fluidsynth-1.1.6/src/utils/fluidsynth_priv.h	2013-11-01 13:31:12 -0400
+@@ -125,8 +125,6 @@
+ #define snprintf _snprintf
+ #define vsnprintf _vsnprintf
+ 
+-#define DSOUND_SUPPORT 1
+-#define WINMIDI_SUPPORT 1
+ #define STDIN_FILENO 0
+ #define STDOUT_FILENO 1
+ #define STDERR_FILENO 2
