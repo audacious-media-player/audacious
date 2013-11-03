@@ -281,9 +281,6 @@ static void add_folder (char * filename, PlaylistFilterFunc filter,
         return;
     }
 
-    if (unix_name[strlen (unix_name) - 1] == '/')
-        unix_name[strlen (unix_name) - 1] = 0;
-
     GList * files = NULL;
     DIR * folder = opendir (unix_name);
     if (! folder)
@@ -293,8 +290,7 @@ static void add_folder (char * filename, PlaylistFilterFunc filter,
     while ((entry = readdir (folder)))
     {
         if (entry->d_name[0] != '.')
-            files = g_list_prepend (files, g_strdup_printf ("%s"
-             G_DIR_SEPARATOR_S "%s", unix_name, entry->d_name));
+            files = g_list_prepend (files, g_build_filename (unix_name, entry->d_name, NULL));
     }
 
     closedir (folder);
