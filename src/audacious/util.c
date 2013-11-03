@@ -211,40 +211,45 @@ char * get_path_to_self (void)
 #endif
 }
 
-/* Strips various common top-level folders from a URI.  The string passed will
- * not be modified, but the string returned will share the same memory.
+/* Strips various common top-level folders from a filename.  The string passed
+ * will not be modified, but the string returned will share the same memory.
  * Examples:
- *     "file:///home/john/folder/file.mp3" -> "folder/file.mp3"
- *     "file:///folder/file.mp3"           -> "folder/file.mp3" */
+ *     "/home/john/folder/file.mp3" -> "folder/file.mp3"
+ *     "/folder/file.mp3"           -> "folder/file.mp3" */
 
 static char * skip_top_folders (char * name)
 {
-    static char * home;
+    static const char * home;
     static int len;
 
     if (! home)
     {
-        home = filename_to_uri (g_get_home_dir ());
+        home = g_get_home_dir ();
         len = strlen (home);
 
-        if (len > 0 && home[len - 1] == '/')
+        if (len > 0 && home[len - 1] == G_DIR_SEPARATOR)
             len --;
     }
 
 #ifdef _WIN32
-    if (! g_ascii_strncasecmp (name, home, len) && name[len] == '/')
+    if (! g_ascii_strncasecmp (name, home, len) && name[len] == '\\')
 #else
     if (! strncmp (name, home, len) && name[len] == '/')
 #endif
         return name + len + 1;
 
-    if (! strncmp (name, "file:///", 8))
-        return name + 8;
+#ifdef _WIN32
+    if (g_ascii_isalpha (name[0]) && name[1] == ':' && name[2] == '\\')
+        return name + 3;
+#else
+    if (name[0] == '/')
+        return name + 1;
+#endif
 
     return name;
 }
 
-/* Divides a URI into the base name, the lowest folder, and the
+/* Divides a filename into the base name, the lowest folder, and the
  * second lowest folder.  The string passed will be modified, and the strings
  * returned will use the same memory.  May return NULL for <first> and <second>.
  * Examples:
@@ -259,7 +264,7 @@ static void split_filename (char * name, char * * base, char * * first,
 
     char * c;
 
-    if ((c = strrchr (name, '/')))
+    if ((c = strrchr (name, G_DIR_SEPARATOR)))
     {
         * base = c + 1;
         * c = 0;
@@ -270,7 +275,7 @@ static void split_filename (char * name, char * * base, char * * first,
         goto DONE;
     }
 
-    if ((c = strrchr (name, '/')))
+    if ((c = strrchr (name, G_DIR_SEPARATOR)))
     {
         * first = c + 1;
         * c = 0;
@@ -281,7 +286,7 @@ static void split_filename (char * name, char * * base, char * * first,
         goto DONE;
     }
 
-    if ((c = strrchr (name, '/')))
+    if ((c = strrchr (name, G_DIR_SEPARATOR)))
         * second = c + 1;
     else
         * second = name;
@@ -364,16 +369,17 @@ DONE:
         return;
     }
 
-    char buf[strlen (name) + 1];
-    memcpy (buf, name, sizeof buf);
-
-    if (! strncmp (buf, "file:///", 8))
+    if (! strncmp (name, "file:///", 8))
     {
+        char * filename = uri_to_filename (name);
+        if (! filename)
+            goto DONE;
+        
         char * base, * first, * second;
-        split_filename (skip_top_folders (buf), & base, & first, & second);
+        split_filename (skip_top_folders (filename), & base, & first, & second);
 
         if (! title)
-            title = str_get_decoded (base);
+            title = str_get (base);
 
         for (int i = 0; i < G_N_ELEMENTS (skip); i ++)
         {
@@ -387,17 +393,22 @@ DONE:
         {
             if (second && ! artist && ! album)
             {
-                artist = str_get_decoded (second);
-                album = str_get_decoded (first);
+                artist = str_get (second);
+                album = str_get (first);
             }
             else if (! artist)
-                artist = str_get_decoded (first);
+                artist = str_get (first);
             else if (! album)
-                album = str_get_decoded (first);
+                album = str_get (first);
         }
+        
+        free (filename);
     }
     else
     {
+        char buf[strlen (name) + 1];
+        memcpy (buf, name, sizeof buf);
+
         if (! title)
         {
             title = str_get_decoded (stream_name (buf));
