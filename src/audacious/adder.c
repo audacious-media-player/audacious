@@ -282,8 +282,6 @@ static void add_folder (char * filename, PlaylistFilterFunc filter,
     if (! (path = uri_to_filename (filename)))
         goto DONE;
 
-    normalize_path (path);
-
     GList * files = NULL;
     DIR * folder = opendir (path);
     if (! folder)
@@ -295,7 +293,7 @@ static void add_folder (char * filename, PlaylistFilterFunc filter,
         if (entry->d_name[0] == '.')
             continue;
 
-        char * filepath = g_strconcat (path, G_DIR_SEPARATOR_S, entry->d_name, NULL);
+        char * filepath = g_build_filename (path, entry->d_name, NULL);
         files = g_list_prepend (files, filepath);
     }
 
