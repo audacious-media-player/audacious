@@ -99,11 +99,6 @@ EXPORT GtkWidget * audgui_menu_item_new (const char * text, const char * icon)
     {
         GtkWidget * image = gtk_image_new_from_icon_name (icon, GTK_ICON_SIZE_MENU);
         gtk_image_menu_item_set_image ((GtkImageMenuItem *) item, image);
-
-        /* respect "gtk-menu-images" setting in GTK+ 3.8.x and below */
-#if GTK_CHECK_VERSION (3, 10, 0)
-        gtk_image_menu_item_set_always_show_image ((GtkImageMenuItem *) item, TRUE);
-#endif
     }
 
     return item;
@@ -120,11 +115,6 @@ EXPORT GtkWidget * audgui_button_new (const char * text, const char * icon,
     {
         GtkWidget * image = gtk_image_new_from_icon_name (icon, GTK_ICON_SIZE_MENU);
         gtk_button_set_image ((GtkButton *) button, image);
-
-        /* respect "gtk-button-images" setting in GTK+ 3.8.x and below */
-#if GTK_CHECK_VERSION (3, 10, 0)
-        gtk_button_set_always_show_image ((GtkButton *) button, TRUE);
-#endif
     }
 
     if (callback)
