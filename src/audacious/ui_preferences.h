@@ -24,17 +24,8 @@
 
 #include "preferences.h"
 
-/* GtkWidget * * create_prefs_window (void); */
-void * * create_prefs_window (void);
-void destroy_prefs_window(void);
 void show_prefs_window(void);
 void hide_prefs_window(void);
-
-/* int prefswin_page_new (GtkWidget * container, const char * name,
- const char * imgurl); */
-int prefswin_page_new (void * container, const char * name, const char *
- imgurl);
-void prefswin_page_destroy(GtkWidget *container);
 
 /* plugin-preferences.c */
 void plugin_make_about_window (PluginHandle * plugin);

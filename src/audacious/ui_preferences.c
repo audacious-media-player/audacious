@@ -113,15 +113,6 @@ static ComboBoxElements bitdepth_elements[] = {
     {GINT_TO_POINTER (0), N_("Floating point")},
 };
 
-typedef struct {
-    void *next;
-    GtkWidget *container;
-    const char * pg_name;
-    const char * img_url;
-} CategoryQueueEntry;
-
-CategoryQueueEntry *category_queue = NULL;
-
 static void * create_output_plugin_box (void);
 static void output_bit_depth_changed (void);
 
@@ -241,8 +232,6 @@ static const char * const titlestring_preset_names[TITLESTRING_NPRESETS] = {
  N_("ARTIST - ALBUM - TRACK. TITLE"),
  N_("ARTIST [ ALBUM ] - TRACK. TITLE"),
  N_("ALBUM - TITLE")};
-
-static void prefswin_page_queue_destroy(CategoryQueueEntry *ent);
 
 static void
 change_category(GtkNotebook * notebook,
@@ -449,7 +438,6 @@ static void fill_category_list (GtkTreeView * treeview, GtkNotebook * notebook)
     GtkTreeSelection *selection;
     GtkTreeIter iter;
     GdkPixbuf *img;
-    CategoryQueueEntry *qlist;
     int i;
 
     column = gtk_tree_view_column_new();
@@ -492,18 +480,6 @@ static void fill_category_list (GtkTreeView * treeview, GtkNotebook * notebook)
 
     g_signal_connect_swapped(selection, "changed",
                              G_CALLBACK(change_category), notebook);
-
-    /* mark the treeview widget as available to third party plugins */
-    category_treeview = GTK_WIDGET(treeview);
-
-    /* prefswin_page_queue_destroy already pops the queue forward for us. */
-    for (qlist = category_queue; qlist != NULL; qlist = category_queue)
-    {
-        CategoryQueueEntry *ent = (CategoryQueueEntry *) qlist;
-
-        prefswin_page_new(ent->container, ent->pg_name, ent->img_url);
-        prefswin_page_queue_destroy(ent);
-    }
 }
 
 static void on_radio_button_toggled (GtkWidget * button, const PreferencesWidget * widget)
@@ -1249,8 +1225,7 @@ static void destroy_cb (void)
     titlestring_entry = NULL;
 }
 
-/* GtkWidget * * create_prefs_window (void) */
-void * * create_prefs_window (void)
+static void create_prefs_window (void)
 {
     char *aud_version_string;
 
@@ -1335,8 +1310,6 @@ void * * create_prefs_window (void)
     g_signal_connect (prefswin, "destroy", (GCallback) destroy_cb, NULL);
 
     audgui_destroy_on_escape (prefswin);
-
-    return & prefswin;
 }
 
 void show_prefs_window (void)
@@ -1347,137 +1320,8 @@ void show_prefs_window (void)
     gtk_window_present ((GtkWindow *) prefswin);
 }
 
-void
-hide_prefs_window(void)
+void hide_prefs_window (void)
 {
     if (prefswin)
         gtk_widget_destroy (prefswin);
-}
-
-static void prefswin_page_queue_new (GtkWidget * container, const char * name,
- const char * imgurl)
-{
-    CategoryQueueEntry *ent = g_new0(CategoryQueueEntry, 1);
-
-    ent->container = container;
-    ent->pg_name = name;
-    ent->img_url = imgurl;
-
-    if (category_queue)
-        ent->next = category_queue;
-
-    category_queue = ent;
-}
-
-static void
-prefswin_page_queue_destroy(CategoryQueueEntry *ent)
-{
-    category_queue = ent->next;
-    g_free(ent);
-}
-
-/*
- * Public APIs for adding new pages to the prefs window.
- *
- * Basically, the concept here is that third party components can register themselves in the root
- * preferences window.
- *
- * From a usability standpoint this makes the application look more "united", instead of cluttered
- * and malorganised. Hopefully this option will be used further in the future.
- *
- *    - nenolod
- */
-/* int prefswin_page_new (GtkWidget * container, const char * name,
- const char * imgurl) */
-int prefswin_page_new (void * container, const char * name, const char *
- imgurl)
-{
-    GtkTreeModel *model;
-    GtkTreeIter iter;
-    GdkPixbuf *img = NULL;
-    GtkTreeView *treeview = GTK_TREE_VIEW(category_treeview);
-    int id;
-
-    if (treeview == NULL || category_notebook == NULL)
-    {
-        prefswin_page_queue_new(container, name, imgurl);
-        return -1;
-    }
-
-    model = gtk_tree_view_get_model(treeview);
-
-    if (model == NULL)
-    {
-        prefswin_page_queue_new(container, name, imgurl);
-        return -1;
-    }
-
-    /* Make sure the widgets are visible. */
-    gtk_widget_show(container);
-    id = gtk_notebook_append_page(GTK_NOTEBOOK(category_notebook), container, NULL);
-
-    if (id == -1)
-        return -1;
-
-    if (imgurl != NULL)
-        img = gdk_pixbuf_new_from_file(imgurl, NULL);
-
-    gtk_list_store_append(GTK_LIST_STORE(model), &iter);
-    gtk_list_store_set(GTK_LIST_STORE(model), &iter,
-                       CATEGORY_VIEW_COL_ICON, img,
-                       CATEGORY_VIEW_COL_NAME,
-                       name, CATEGORY_VIEW_COL_ID, id, -1);
-
-    if (img != NULL)
-        g_object_unref(img);
-
-    return id;
-}
-
-void
-prefswin_page_destroy(GtkWidget *container)
-{
-    GtkTreeModel *model;
-    GtkTreeIter iter;
-    GtkTreeView *treeview = GTK_TREE_VIEW(category_treeview);
-    bool_t ret;
-    int id;
-    int index = -1;
-
-    if (category_notebook == NULL || treeview == NULL || container == NULL)
-        return;
-
-    id = gtk_notebook_page_num(GTK_NOTEBOOK(category_notebook), container);
-
-    if (id == -1)
-        return;
-
-    gtk_notebook_remove_page(GTK_NOTEBOOK(category_notebook), id);
-
-    model = gtk_tree_view_get_model(treeview);
-
-    if (model == NULL)
-        return;
-
-    ret = gtk_tree_model_get_iter_first(model, &iter);
-
-    while (ret == TRUE)
-    {
-        gtk_tree_model_get(model, &iter, CATEGORY_VIEW_COL_ID, &index, -1);
-
-        if (index == id)
-        {
-            gtk_list_store_remove(GTK_LIST_STORE(model), &iter);
-            ret = gtk_tree_model_get_iter_first(model, &iter);
-            continue;
-        }
-
-        if (index > id)
-        {
-            index--;
-            gtk_list_store_set(GTK_LIST_STORE(model), &iter, CATEGORY_VIEW_COL_ID, index, -1);
-        }
-
-        ret = gtk_tree_model_iter_next(model, &iter);
-    }
 }
