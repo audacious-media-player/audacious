@@ -22,7 +22,7 @@
 
 #include <gtk/gtk.h>
 
-#include "preferences.h"
+#include "types.h"
 
 void show_prefs_window(void);
 void hide_prefs_window(void);
