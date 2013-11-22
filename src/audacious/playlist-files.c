@@ -47,10 +47,9 @@ static PluginHandle * get_plugin (const char * filename, bool_t saving)
 
     if (! plugin)
     {
-        char * error = str_printf (_("Cannot %s %s: unsupported file "
-         "extension."), saving ? _("save") : _("load"), filename);
+        SPRINTF (error, _("Cannot %s %s: unsupported file extension."),
+         saving ? _("save") : _("load"), filename);
         interface_show_error (error);
-        str_unref (error);
         return NULL;
     }
 
@@ -127,7 +126,14 @@ bool_t playlist_save (int list, const char * filename)
         return FALSE;
 
     PlaylistPlugin * pp = plugin_get_header (plugin);
-    g_return_val_if_fail (pp && PLUGIN_HAS_FUNC (pp, load), FALSE);
+    g_return_val_if_fail (pp, FALSE);
+
+    if (! PLUGIN_HAS_FUNC (pp, save))
+    {
+        SPRINTF (error, _("Cannot save %s: plugin does not support saving."), filename);
+        interface_show_error (error);
+        return FALSE;
+    }
 
     bool_t fast = get_bool (NULL, "metadata_on_play");
 
