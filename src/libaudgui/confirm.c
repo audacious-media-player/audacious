@@ -52,7 +52,7 @@ EXPORT void audgui_confirm_playlist_delete (int playlist)
     int id = aud_playlist_get_unique_id (playlist);
     GtkWidget * button1 = audgui_button_new (_("Remove"), "edit-delete",
      confirm_delete_cb, GINT_TO_POINTER (id));
-    GtkWidget * button2 = audgui_button_new (_("Cancel"), "window-close", NULL, NULL);
+    GtkWidget * button2 = audgui_button_new (_("Cancel"), "process-stop", NULL, NULL);
 
     GtkWidget * dialog = audgui_dialog_new (GTK_MESSAGE_QUESTION,
      _("Remove Playlist"), message, button1, button2);
@@ -88,7 +88,7 @@ EXPORT void audgui_show_playlist_rename (int playlist)
     g_object_set_data ((GObject *) entry, "playlist-id", GINT_TO_POINTER (id));
 
     GtkWidget * button1 = audgui_button_new (_("Rename"), "insert-text", rename_cb, entry);
-    GtkWidget * button2 = audgui_button_new (_("Cancel"), "window-close", NULL, NULL);
+    GtkWidget * button2 = audgui_button_new (_("Cancel"), "process-stop", NULL, NULL);
 
     GtkWidget * dialog = audgui_dialog_new (GTK_MESSAGE_QUESTION,
      _("Rename Playlist"), _("What would you like to call this playlist?"),

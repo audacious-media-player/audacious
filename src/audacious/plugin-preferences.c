@@ -97,8 +97,8 @@ void plugin_make_config_window (PluginHandle * plugin)
 
     if (p->apply)
     {
-        GtkWidget * button1 = audgui_button_new (_("_OK"), NULL, NULL, NULL);
-        GtkWidget * button2 = audgui_button_new (_("_Cancel"), "window-close", NULL, NULL);
+        GtkWidget * button1 = audgui_button_new (_("_Set"), "system-run", NULL, NULL);
+        GtkWidget * button2 = audgui_button_new (_("_Cancel"), "process-stop", NULL, NULL);
         gtk_dialog_add_action_widget ((GtkDialog *) window, button2, GTK_RESPONSE_CANCEL);
         gtk_dialog_add_action_widget ((GtkDialog *) window, button1, GTK_RESPONSE_OK);
     }

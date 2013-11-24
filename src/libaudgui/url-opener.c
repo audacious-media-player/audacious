@@ -53,7 +53,7 @@ static GtkWidget * create_url_opener (bool_t open)
     g_object_set_data ((GObject *) entry, "open", GINT_TO_POINTER (open));
 
     GtkWidget * button1 = audgui_button_new (_("Open"), "document-open", open_cb, entry);
-    GtkWidget * button2 = audgui_button_new (_("Cancel"), "window-close", NULL, NULL);
+    GtkWidget * button2 = audgui_button_new (_("Cancel"), "process-stop", NULL, NULL);
 
     const char * title = open ? _("Open URL") : _("Add URL");
     GtkWidget * dialog = audgui_dialog_new (GTK_MESSAGE_OTHER, title,
