@@ -599,7 +599,7 @@ static void * create_output_plugin_box (void)
     GtkWidget * hbox3 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  6);
     gtk_box_pack_start ((GtkBox *) vbox, hbox3, FALSE, FALSE, 0);
 
-    output_config_button = audgui_button_new (_("_Preferences"),
+    output_config_button = audgui_button_new (_("_Settings"),
      "preferences-system", output_do_config, NULL);
     gtk_box_pack_start ((GtkBox *) hbox3, output_config_button, FALSE, FALSE, 0);
 
@@ -677,7 +677,7 @@ static void create_prefs_window (void)
     prefswin = gtk_window_new (GTK_WINDOW_TOPLEVEL);
     gtk_window_set_type_hint (GTK_WINDOW (prefswin), GDK_WINDOW_TYPE_HINT_DIALOG);
     gtk_container_set_border_width (GTK_CONTAINER (prefswin), 12);
-    gtk_window_set_title (GTK_WINDOW (prefswin), _("Audacious Preferences"));
+    gtk_window_set_title (GTK_WINDOW (prefswin), _("Audacious Settings"));
     gtk_window_set_position (GTK_WINDOW (prefswin), GTK_WIN_POS_CENTER);
     gtk_window_set_default_size (GTK_WINDOW (prefswin), 680, 400);
 
