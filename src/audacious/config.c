@@ -98,12 +98,6 @@ static GHashTable * defaults;
 static GKeyFile * keyfile;
 static bool_t modified;
 
-/* str_unref() may be a macro */
-static void str_unref_cb (void * str)
-{
-    str_unref (str);
-}
-
 void config_load (void)
 {
     g_return_if_fail (! defaults && ! keyfile);
@@ -200,7 +194,7 @@ void config_set_defaults (const char * section, const char * const * entries)
     GHashTable * table = g_hash_table_lookup (defaults, section);
     if (! table)
     {
-        table = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, str_unref_cb);
+        table = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, (GDestroyNotify) str_unref);
         g_hash_table_replace (defaults, g_strdup (section), table);
     }
 

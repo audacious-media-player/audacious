@@ -33,19 +33,13 @@ typedef struct {
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 static GHashTable * hooks; /* of (GQueue of (HookItem *) *)  */
 
-/* str_unref() may be a macro */
-static void str_unref_cb (void * str)
-{
-    str_unref (str);
-}
-
 EXPORT void hook_associate (const char * name, HookFunction func, void * user)
 {
     pthread_mutex_lock (& mutex);
 
     if (! hooks)
-        hooks = g_hash_table_new_full (g_str_hash, g_str_equal, str_unref_cb,
-         (GDestroyNotify) g_queue_free);
+        hooks = g_hash_table_new_full (g_str_hash, g_str_equal,
+         (GDestroyNotify) str_unref, (GDestroyNotify) g_queue_free);
 
     GQueue * list = g_hash_table_lookup (hooks, name);
 
