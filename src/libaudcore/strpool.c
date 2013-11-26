@@ -33,50 +33,19 @@
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 static GHashTable * table;
 
-#ifdef STRPOOL_DEBUG
-static GHashTable * logged;
-
-static void str_log (const char * str, const char * op, const char * file, int line)
-{
-    if (! logged)
-        logged = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
-
-    GList * list = g_hash_table_lookup (logged, str);
-    list = g_list_prepend (list, g_strdup_printf ("%s by %s:%d", op, file, line));
-    g_hash_table_insert (logged, g_strdup (str), list);
-}
-
-static void str_log_dump (const char * str)
-{
-    if (! logged)
-        return;
-
-    for (GList * node = g_hash_table_lookup (logged, str); node; node = node->next)
-        printf (" - %s\n", (char *) node->data);
-}
-#endif
-
 static void str_destroy (void * str)
 {
     * ((char *) str - 1) = 0;
     free ((char *) str - 5);
 }
 
-#ifdef STRPOOL_DEBUG
-EXPORT char * str_get_debug (const char * str, const char * file, int line)
-#else
 EXPORT char * str_get (const char * str)
-#endif
 {
     if (! str)
         return NULL;
 
     char * copy;
     pthread_mutex_lock (& mutex);
-
-#ifdef STRPOOL_DEBUG
-    str_log (str, "get", file, line);
-#endif
 
     if (! table)
         table = g_hash_table_new_full (g_str_hash, g_str_equal, NULL, str_destroy);
@@ -102,21 +71,13 @@ EXPORT char * str_get (const char * str)
     return copy;
 }
 
-#ifdef STRPOOL_DEBUG
-EXPORT char * str_ref_debug (char * str, const char * file, int line)
-#else
 EXPORT char * str_ref (char * str)
-#endif
 {
     if (! str)
         return NULL;
 
     pthread_mutex_lock (& mutex);
     STR_CHECK (str);
-
-#ifdef STRPOOL_DEBUG
-    str_log (str, "ref", file, line);
-#endif
 
     void * mem = str - 5;
     (* (int32_t *) mem) ++;
@@ -125,21 +86,13 @@ EXPORT char * str_ref (char * str)
     return str;
 }
 
-#ifdef STRPOOL_DEBUG
-EXPORT void str_unref_debug (char * str, const char * file, int line)
-#else
 EXPORT void str_unref (char * str)
-#endif
 {
     if (! str)
         return;
 
     pthread_mutex_lock (& mutex);
     STR_CHECK (str);
-
-#ifdef STRPOOL_DEBUG
-    str_log (str, "unref", file, line);
-#endif
 
     void * mem = str - 5;
     if (! -- (* (int32_t *) mem))
@@ -180,18 +133,12 @@ EXPORT char * str_printf (const char * format, ...)
 EXPORT void strpool_abort (char * str)
 {
     fprintf (stderr, "String not in pool: %s\n", str);
-#ifdef STRPOOL_DEBUG
-    str_log_dump (str);
-#endif
     abort ();
 }
 
 static void str_leaked (void * key, void * str, void * unused)
 {
     fprintf (stderr, "String not freed: %s\n", (char *) str);
-#ifdef STRPOOL_DEBUG
-    str_log_dump (str);
-#endif
 }
 
 EXPORT void strpool_shutdown (void)

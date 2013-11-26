@@ -20,8 +20,6 @@
 #ifndef LIBAUDCORE_CORE_H
 #define LIBAUDCORE_CORE_H
 
-/* #define STRPOOL_DEBUG */
-
 #undef NULL
 #ifdef __cplusplus /* *sigh* */
 #define NULL 0
@@ -59,34 +57,19 @@
  * In either case, returns the copy.  Because this copy may be shared by other
  * parts of the code, it should not be modified.  If <str> is NULL, simply
  * returns NULL with no side effects. */
-#ifdef STRPOOL_DEBUG
-char * str_get_debug (const char * str, const char * file, int line);
-#define str_get(str) str_get_debug (str, __FILE__, __LINE__)
-#else
 char * str_get (const char * str);
-#endif
 
 /* Increments the reference count of <str>, where <str> is the address of a
  * string already in the pool.  Faster than calling str_get() a second time.
  * Returns <str> for convenience.  If <str> is NULL, simply returns NULL with no
  * side effects. */
-#ifdef STRPOOL_DEBUG
-char * str_ref_debug (char * str, const char * file, int line);
-#define str_ref(str) str_ref_debug (str, __FILE__, __LINE__)
-#else
 char * str_ref (char * str);
-#endif
 
 /* Decrements the reference count of <str>, where <str> is the address of a
  * string in the pool.  If the reference count drops to zero, releases the
  * memory used by <str>.   If <str> is NULL, simply returns NULL with no side
  * effects. */
-#ifdef STRPOOL_DEBUG
-void str_unref_debug (char * str, const char * file, int line);
-#define str_unref(str) str_unref_debug (str, __FILE__, __LINE__)
-#else
 void str_unref (char * str);
-#endif
 
 /* Calls str_get() on the first <len> characters of <str>.  If <str> has less
  * than or equal to <len> characters, equivalent to str_get(). */
