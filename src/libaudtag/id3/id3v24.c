@@ -110,12 +110,6 @@ GenericFrame;
 #define ID3_FRAME_SYNCSAFE    0x0002
 #define ID3_FRAME_HAS_LENGTH  0x0001
 
-/* str_unref() may be a macro */
-static void str_unref_cb (void * str)
-{
-    str_unref (str);
-}
-
 static bool_t skip_extended_header_3 (VFSFile * handle, int * _size)
 {
     uint32_t size;
@@ -980,7 +974,7 @@ static bool_t id3v24_write_tag (const Tuple * tuple, VFSFile * f)
 
     //read all frames into generic frames;
     GHashTable * dict = g_hash_table_new_full (g_str_hash, g_str_equal,
-     str_unref_cb, (GDestroyNotify) free_frame_list);
+     (GDestroyNotify) str_unref, (GDestroyNotify) free_frame_list);
     read_all_frames (f, version, syncsafe, data_size, dict);
 
     //make the new frames from tuple and replace in the dictionary the old frames with the new ones
