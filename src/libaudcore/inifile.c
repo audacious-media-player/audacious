@@ -19,134 +19,132 @@
 
 #include "inifile.h"
 
-#include <stdlib.h>
+#include <ctype.h>
+#include <stdio.h>
 #include <string.h>
 
-#include <glib.h>
+#define MAXLINE 2000
 
-static void strip_string (GString * string)
+static char * strskip (char * str)
 {
-    int start = 0;
-    while (start < string->len && string->str[start] == ' ')
-        start ++;
+    while (isspace (* str))
+        str ++;
 
-    g_string_erase (string, 0, start);
-
-    int end = string->len;
-    while (end && string->str[end - 1] == ' ')
-        end --;
-
-    g_string_truncate (string, end);
+    return str;
 }
 
-EXPORT INIFile * inifile_read (VFSFile * file)
+static char * strtrim (char * str)
 {
-    void * buf = 0;
-    int64_t bufsize = 0;
+    int len = strlen (str);
 
-    vfs_file_read_all (file, & buf, & bufsize);
-    if (! buf)
-        return NULL;
+    while (len && isspace(str[len - 1]))
+        str[-- len] = 0;
 
-    GHashTable * inifile = g_hash_table_new_full (g_str_hash, g_str_equal, free,
-     (GDestroyNotify) g_hash_table_destroy);
+    return str;
+}
 
-    GHashTable * section = g_hash_table_new_full (g_str_hash, g_str_equal, free, free);
-    g_hash_table_insert (inifile, strdup (""), section);
+EXPORT void inifile_parse (VFSFile * file,
+ void (* handle_heading) (const char * heading, void * data),
+ void (* handle_entry) (const char * key, const char * value, void * data),
+ void * data)
+{
+    char buf[MAXLINE + 1];
+    char * pos = buf;
+    int len = 0;
+    bool_t eof = FALSE;
 
-    const char * parse = buf;
-    const char * end = buf + bufsize;
-
-    while (parse < end)
+    while (1)
     {
-        char c = * parse ++;
-        if (c == '\r' || c == '\n' || c == ' ' || c == '\t')
-            continue;
+        char * newline = memchr (pos, '\n', len);
 
-        if (c == '[')
+        if (! newline && len < MAXLINE && ! eof)
         {
-            GString * heading = g_string_new ("");
+            memmove (buf, pos, len);
+            pos = buf;
 
-            while (parse < end)
-            {
-                c = * parse ++;
-                if (c == ']' || c == '\r' || c == '\n')
-                    break;
+            len += vfs_fread (buf + len, 1, MAXLINE - len, file);
 
-                g_string_append_c (heading, c);
-            }
+            if (len < MAXLINE)
+                eof = TRUE;
 
-            if (c == ']')
-            {
-                strip_string (heading);
-                g_string_ascii_down (heading);
-
-                if (heading->len)
-                {
-                    section = g_hash_table_lookup (inifile, heading->str);
-
-                    if (! section)
-                    {
-                        section = g_hash_table_new_full (g_str_hash, g_str_equal, free, free);
-                        g_hash_table_insert (inifile, strdup (heading->str), section);
-                    }
-                }
-            }
-
-            g_string_free (heading, TRUE);
+            newline = memchr (pos, '\n', len);
         }
+
+        if (newline)
+            * newline = 0;
         else
+            pos[len] = 0;
+
+        char * start = strskip (pos);
+
+        switch (* start)
         {
-            GString * key = g_string_new ("");
-            GString * value = g_string_new ("");
+        case 0:
+        case '#':
+        case ';':
+            break;
 
-            g_string_append_c (key, c);
+        case '[':;
+            char * end = strchr (start + 1, ']');
 
-            while (parse < end)
+            if (! end)
             {
-                c = * parse ++;
-                if (c == '=' || c == '\r' || c == '\n')
-                    break;
-
-                g_string_append_c (key, c);
+                fprintf (stderr, "While parsing %s:\nMalformed heading: %s\n",
+                 vfs_get_filename (file), start);
+                break;
             }
 
-            if (c == '=')
+            * end = 0;
+            handle_heading (strtrim (strskip (start + 1)), data);
+            break;
+
+        default:;
+            char * sep = strchr (start, '=');
+
+            if (! sep)
             {
-                while (parse < end)
-                {
-                    c = * parse ++;
-                    if (c == '\r' || c == '\n')
-                        break;
-
-                    g_string_append_c (value, c);
-                }
-
-                strip_string (key);
-                strip_string (value);
-                g_string_ascii_down (key);
-
-                if (key->len && value->len)
-                    g_hash_table_insert (section, strdup (key->str), strdup (value->str));
+                fprintf (stderr, "While parsing %s:\nMalformed entry: %s\n",
+                 vfs_get_filename (file), start);
+                break;
             }
 
-            g_string_free (key, TRUE);
-            g_string_free (value, TRUE);
+            * sep = 0;
+            handle_entry (strtrim (start), strtrim (strskip (sep + 1)), data);
+            break;
         }
+
+        if (! newline)
+            break;
+
+        len -= newline + 1 - pos;
+        pos = newline + 1;
     }
-
-    free (buf);
-
-    return (INIFile *) inifile;
 }
 
-EXPORT void inifile_destroy (INIFile * inifile)
+EXPORT bool_t inifile_write_heading (VFSFile * file, const char * heading)
 {
-    g_hash_table_destroy ((GHashTable *) inifile);
+    int len = strlen (heading);
+    char buf[len + 4];
+
+    buf[0] = '\n';
+    buf[1] = '[';
+    strcpy (buf + 2, heading);
+    buf[len + 2] = ']';
+    buf[len + 3] = '\n';
+
+    return (vfs_fwrite (buf, 1, sizeof buf, file) == sizeof buf);
 }
 
-EXPORT const char * inifile_lookup (INIFile * inifile, const char * heading, const char * key)
+EXPORT bool_t inifile_write_entry (VFSFile * file, const char * key, const char * value)
 {
-    GHashTable * section = g_hash_table_lookup ((GHashTable *) inifile, heading);
-    return section ? g_hash_table_lookup (section, key) : NULL;
+    int len1 = strlen (key);
+    int len2 = strlen (value);
+    char buf[len1 + len2 + 2];
+
+    strcpy (buf, key);
+    buf[len1] = '=';
+    strcpy (buf + len1 + 1, value);
+    buf[len1 + len2 + 1] = '\n';
+
+    return (vfs_fwrite (buf, 1, sizeof buf, file) == sizeof buf);
 }

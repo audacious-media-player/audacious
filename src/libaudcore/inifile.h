@@ -22,13 +22,12 @@
 
 #include "vfs.h"
 
-struct _INIFile;
-typedef struct _INIFile INIFile;
+void inifile_parse (VFSFile * file,
+ void (* handle_heading) (const char * heading, void * data),
+ void (* handle_entry) (const char * key, const char * value, void * data),
+ void * data);
 
-INIFile * inifile_read (VFSFile * file);
-void inifile_destroy (INIFile * inifile);
-
-/* Note: section and key must be lowercase! */
-const char * inifile_lookup (INIFile * inifile, const char * heading, const char * key);
+bool_t inifile_write_heading (VFSFile * file, const char * heading);
+bool_t inifile_write_entry (VFSFile * file, const char * key, const char * value);
 
 #endif /* LIBAUDCORE_INIFILE_H */
