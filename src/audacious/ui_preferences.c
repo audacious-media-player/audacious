@@ -36,10 +36,6 @@
 #include "preferences.h"
 #include "ui_preferences.h"
 
-#ifdef USE_CHARDET
-#include <libguess.h>
-#endif
-
 enum CategoryViewCols {
     CATEGORY_VIEW_COL_ICON,
     CATEGORY_VIEW_COL_NAME,
@@ -89,22 +85,6 @@ static TitleFieldTag title_field_tags[] = {
     { N_("Quality")    , "${quality}" },
 };
 static const unsigned int n_title_field_tags = G_N_ELEMENTS(title_field_tags);
-
-#ifdef USE_CHARDET
-static ComboBoxElements chardet_detector_presets[] = {
- {"", N_("None")},
- {GUESS_REGION_AR, N_("Arabic")},
- {GUESS_REGION_BL, N_("Baltic")},
- {GUESS_REGION_CN, N_("Chinese")},
- {GUESS_REGION_GR, N_("Greek")},
- {GUESS_REGION_HW, N_("Hebrew")},
- {GUESS_REGION_JP, N_("Japanese")},
- {GUESS_REGION_KR, N_("Korean")},
- {GUESS_REGION_PL, N_("Polish")},
- {GUESS_REGION_RU, N_("Russian")},
- {GUESS_REGION_TW, N_("Taiwanese")},
- {GUESS_REGION_TR, N_("Turkish")}};
-#endif
 
 static ComboBoxElements bitdepth_elements[] = {
     { GINT_TO_POINTER(16), "16" },
@@ -165,12 +145,7 @@ static PreferencesWidget connectivity_page_widgets[] = {
 };
 
 static PreferencesWidget chardet_elements[] = {
-#ifdef USE_CHARDET
- {WIDGET_COMBO_BOX, N_("Auto character encoding detector for:"),
-  .cfg_type = VALUE_STRING, .cname = "chardet_detector", .child = TRUE,
-  .data = {.combo = {chardet_detector_presets, G_N_ELEMENTS (chardet_detector_presets)}}},
-#endif
- {WIDGET_ENTRY, N_("Fallback character encodings:"), .cfg_type = VALUE_STRING,
+ {WIDGET_ENTRY, N_("Character encodings:"), .cfg_type = VALUE_STRING,
   .cname = "chardet_fallback", .child = TRUE}};
 
 static PreferencesWidget playlist_page_widgets[] = {
