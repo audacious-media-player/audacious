@@ -87,7 +87,8 @@ CPPFLAGS := -I.. -I../.. \
             ${CPPFLAGS} \
 		${GLIB_CFLAGS}			\
 		${GMODULE_CFLAGS} \
-		${GTK_CFLAGS}
+		${GTK_CFLAGS}			\
+		${LIBGUESS_CFLAGS}
 
 CPPFLAGS := ${CPPFLAGS} \
             -D_AUDACIOUS_CORE \
@@ -105,7 +106,8 @@ LIBS := -L../libaudcore -laudcore \
 		${LIBINTL}						\
 		${GLIB_LIBS}					\
 		${GMODULE_LIBS} \
-		${GTK_LIBS}
+		${GTK_LIBS}						\
+		${LIBGUESS_LIBS}
 
 desktop_DATA = audacious.desktop
 desktopdir = ${datarootdir}/applications

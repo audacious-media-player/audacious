@@ -26,6 +26,10 @@
 #include "main.h"
 #include "misc.h"
 
+#ifdef USE_CHARDET
+#  include <libguess.h>
+#endif
+
 static char * cd_chardet_to_utf8 (const char * str, int len,
  int * arg_bytes_read, int * arg_bytes_written);
 
@@ -49,6 +53,37 @@ static char * cd_str_to_utf8 (const char * str)
     if (str == NULL)
         return NULL;
 
+    /* Note: Currently, playlist calls this function repeatedly, even
+     * if the string is already converted into utf-8.
+     * chardet_to_utf8() would convert a valid utf-8 string into a
+     * different utf-8 string, if fallback encodings were supplied and
+     * the given string could be treated as a string in one of
+     * fallback encodings. To avoid this, g_utf8_validate() had been
+     * used at the top of evaluation.
+     */
+
+    /* Note 2: g_utf8_validate() has so called encapsulated utf-8
+     * problem, thus chardet_to_utf8() took the place of that.
+     */
+
+    /* Note 3: As introducing madplug, the problem of conversion from
+     * ISO-8859-1 to UTF-8 arose. This may be coped with g_convert()
+     * located near the end of chardet_to_utf8(), but it requires utf8
+     * validation guard where g_utf8_validate() was. New
+     * dfa_validate_utf8() employs libguess' DFA engine to validate
+     * utf-8 and can properly distinguish examples of encapsulated
+     * utf-8. It is considered to be safe to use as a guard.
+     */
+
+    /* Already UTF-8? */
+#ifdef USE_CHARDET
+    if (libguess_validate_utf8(str, strlen(str)))
+        return g_strdup(str);
+#else
+    if (g_utf8_validate(str, strlen(str), NULL))
+        return g_strdup(str);
+#endif
+
     /* chardet encoding detector */
     if ((out_str = cd_chardet_to_utf8 (str, strlen (str), NULL, NULL)))
         return out_str;
@@ -69,7 +104,11 @@ static char * cd_chardet_to_utf8 (const char * str, int len,
 
     g_return_val_if_fail(str != NULL, NULL);
 
+#ifdef USE_CHARDET
+    if (libguess_validate_utf8(str, len))
+#else
     if (g_utf8_validate(str, len, NULL))
+#endif
     {
         if (len < 0)
             len = strlen (str);
@@ -85,6 +124,26 @@ static char * cd_chardet_to_utf8 (const char * str, int len,
 
         return ret;
     }
+
+#ifdef USE_CHARDET
+    char * det = get_string (NULL, "chardet_detector");
+
+    if (det[0])
+    {
+        AUDDBG("guess encoding (%s) %s\n", det, str);
+        const char * encoding = libguess_determine_encoding (str, len, det);
+        AUDDBG("encoding = %s\n", encoding);
+        if (encoding)
+        {
+            gsize read_gsize = 0, written_gsize = 0;
+            ret = g_convert (str, len, "UTF-8", encoding, & read_gsize, & written_gsize, NULL);
+            * bytes_read = read_gsize;
+            * bytes_write = written_gsize;
+        }
+    }
+
+    g_free (det);
+#endif
 
     /* If detection failed or was not enabled, try fallbacks (if there are any) */
     if (! ret)
@@ -129,10 +188,25 @@ static char * cd_chardet_to_utf8 (const char * str, int len,
         * bytes_write = written_gsize;
     }
 
-    return ret;
+    if (ret != NULL)
+    {
+        if (g_utf8_validate(ret, -1, NULL))
+            return ret;
+        else
+        {
+            g_warning("g_utf8_validate() failed for converted string in cd_chardet_to_utf8: '%s'", ret);
+            g_free(ret);
+            return NULL;
+        }
+    }
+
+    return NULL; /* If we have no idea, return NULL. */
 }
 
 void chardet_init (void)
 {
+#ifdef USE_CHARDET
+    libguess_determine_encoding(NULL, -1, "");
+#endif
     str_set_utf8_impl (cd_str_to_utf8, cd_chardet_to_utf8);
 }
