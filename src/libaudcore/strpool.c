@@ -1,6 +1,6 @@
 /*
  * strpool.c
- * Copyright 2011 John Lindgren
+ * Copyright 2011-2013 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -17,26 +17,102 @@
  * the use of this software.
  */
 
-#include <glib.h>
-#include <pthread.h>
+#include <assert.h>
 #include <stdarg.h>
 #include <stdio.h>
-#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 
+#include <glib.h>
+
 #include "core.h"
 
-/* Each string in the pool is allocated with five leading bytes: a 32-bit
- * reference count and a one-byte signature, the '@' character. */
+#define NUM_TABLES     16   /* must be a power of two */
+#define TABLE_SHIFT     4   /* log (base 2) of NUM_TABLES */
+#define INITIAL_SIZE  256   /* must be a power of two */
 
-static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-static GHashTable * table;
+typedef char TinyLock;
 
-static void str_destroy (void * str)
+struct _HashNode {
+    struct _HashNode * next;
+    unsigned hash, refs;
+    char magic;
+    char str[];
+};
+
+typedef struct _HashNode HashNode;
+
+#define NODE_SIZE_FOR(s) (offsetof (HashNode, str) + strlen (s) + 1)
+#define NODE_OF(s) ((HashNode *) ((s) - offsetof (HashNode, str)))
+
+typedef struct {
+    TinyLock lock;
+    HashNode * * buckets;
+    unsigned size, used;
+} HashTable;
+
+static HashTable tables[NUM_TABLES];
+
+static void tiny_lock (TinyLock * lock)
 {
-    * ((char *) str - 1) = 0;
-    free ((char *) str - 5);
+    while (__sync_lock_test_and_set (lock, 1))
+        sched_yield ();
+}
+
+static void tiny_unlock (TinyLock * lock)
+{
+    __sync_lock_release (lock);
+}
+
+static HashNode * find_in_list (HashNode * list, unsigned hash, const char * str)
+{
+    while (list && (list->hash != hash || strcmp (list->str, str)))
+        list = list->next;
+
+    return list;
+}
+
+static void add_to_list (HashNode * * list, HashNode * node)
+{
+    node->next = * list;
+    * list = node;
+}
+
+static void remove_from_list (HashNode * * list, HashNode * node)
+{
+    if (* list == node)
+        * list = node->next;
+    else
+    {
+        HashNode * prev = * list;
+        while (prev->next != node)
+            prev = prev->next;
+
+        prev->next = node->next;
+    }
+}
+
+static void resize_table (HashTable * table, unsigned new_size)
+{
+    HashNode * * new_buckets = calloc (new_size, sizeof (HashNode *));
+
+    for (int i = 0; i < table->size; i ++)
+    {
+        HashNode * node = table->buckets[i];
+
+        while (node)
+        {
+            HashNode * next = node->next;
+            unsigned new_bucket = (node->hash >> TABLE_SHIFT) & (new_size - 1);
+
+            add_to_list (& new_buckets[new_bucket], node);
+            node = next;
+        }
+    }
+
+    free (table->buckets);
+    table->buckets = new_buckets;
+    table->size = new_size;
 }
 
 EXPORT char * str_get (const char * str)
@@ -44,31 +120,42 @@ EXPORT char * str_get (const char * str)
     if (! str)
         return NULL;
 
-    char * copy;
-    pthread_mutex_lock (& mutex);
+    unsigned hash = g_str_hash (str);
+    HashTable * table = & tables[hash & (NUM_TABLES - 1)];
 
-    if (! table)
-        table = g_hash_table_new_full (g_str_hash, g_str_equal, NULL, str_destroy);
+    tiny_lock (& table->lock);
 
-    if ((copy = g_hash_table_lookup (table, str)))
+    if (! table->buckets)
     {
-        void * mem = copy - 5;
-        (* (int32_t *) mem) ++;
+        table->buckets = calloc (INITIAL_SIZE, sizeof (HashNode *));
+        table->size = INITIAL_SIZE;
+        table->used = 0;
     }
+
+    unsigned bucket = (hash >> TABLE_SHIFT) & (table->size - 1);
+    HashNode * node = find_in_list (table->buckets[bucket], hash, str);
+
+    if (node)
+        __sync_fetch_and_add (& node->refs, 1);
     else
     {
-        void * mem = malloc (6 + strlen (str));
-        (* (int32_t *) mem) = 1;
+        node = malloc (NODE_SIZE_FOR (str));
+        node->hash = hash;
+        node->refs = 1;
+        node->magic = '@';
+        strcpy (node->str, str);
 
-        copy = (char *) mem + 5;
-        copy[-1] = '@';
-        strcpy (copy, str);
+        add_to_list (& table->buckets[bucket], node);
 
-        g_hash_table_insert (table, copy, copy);
+        table->used ++;
+
+        if (table->used > table->size)
+            resize_table (table, table->size << 1);
     }
 
-    pthread_mutex_unlock (& mutex);
-    return copy;
+    tiny_unlock (& table->lock);
+
+    return node->str;
 }
 
 EXPORT char * str_ref (char * str)
@@ -76,13 +163,11 @@ EXPORT char * str_ref (char * str)
     if (! str)
         return NULL;
 
-    pthread_mutex_lock (& mutex);
-    STR_CHECK (str);
+    HashNode * node = NODE_OF (str);
+    assert (node->magic == '@');
 
-    void * mem = str - 5;
-    (* (int32_t *) mem) ++;
+    __sync_fetch_and_add (& node->refs, 1);
 
-    pthread_mutex_unlock (& mutex);
     return str;
 }
 
@@ -91,14 +176,42 @@ EXPORT void str_unref (char * str)
     if (! str)
         return;
 
-    pthread_mutex_lock (& mutex);
-    STR_CHECK (str);
+    HashNode * node = NODE_OF (str);
+    assert (node->magic == '@');
 
-    void * mem = str - 5;
-    if (! -- (* (int32_t *) mem))
-        g_hash_table_remove (table, str);
+restart:;
+    int refs = __sync_fetch_and_add (& node->refs, 0);
 
-    pthread_mutex_unlock (& mutex);
+    if (refs > 1)
+    {
+        if (! __sync_bool_compare_and_swap (& node->refs, refs, refs - 1))
+            goto restart;
+    }
+    else
+    {
+        HashTable * table = & tables[node->hash & (NUM_TABLES - 1)];
+
+        tiny_lock (& table->lock);
+
+        if (! __sync_bool_compare_and_swap (& node->refs, 1, 0))
+        {
+            tiny_unlock (& table->lock);
+            goto restart;
+        }
+
+        unsigned bucket = (node->hash >> TABLE_SHIFT) & (table->size - 1);
+        remove_from_list (& table->buckets[bucket], node);
+
+        node->magic = 0;
+        free (node);
+
+        table->used --;
+
+        if (table->used < table->size >> 2 && table->size > INITIAL_SIZE)
+            resize_table (table, table->size >> 1);
+
+        tiny_unlock (& table->lock);
+    }
 }
 
 EXPORT char * str_nget (const char * str, int len)
@@ -130,23 +243,30 @@ EXPORT char * str_printf (const char * format, ...)
     return str_get (buf);
 }
 
-EXPORT void strpool_abort (char * str)
-{
-    fprintf (stderr, "String not in pool: %s\n", str);
-    abort ();
-}
-
-static void str_leaked (void * key, void * str, void * unused)
-{
-    fprintf (stderr, "String not freed: %s\n", (char *) str);
-}
-
 EXPORT void strpool_shutdown (void)
 {
-    if (! table)
-        return;
+    for (int t = 0; t < NUM_TABLES; t ++)
+    {
+        HashTable * table = & tables[t];
 
-    g_hash_table_foreach (table, str_leaked, NULL);
-    g_hash_table_destroy (table);
-    table = NULL;
+        tiny_lock (& table->lock);
+
+        if (table->buckets)
+        {
+            if (table->used)
+            {
+                for (int i = 0; i < table->size; i ++)
+                    for (HashNode * node = table->buckets[i]; node; node = node->next)
+                        fprintf (stderr, "String leaked: %s\n", node->str);
+            }
+            else
+            {
+                free (table->buckets);
+                table->buckets = NULL;
+                table->size = 0;
+            }
+        }
+
+        tiny_unlock (& table->lock);
+    }
 }
