@@ -124,8 +124,9 @@ AUD_VFUNC5 (playlist_entry_insert_batch, int, playlist, int, at,
 
 /* Similar to playlist_entry_insert_batch, but allows the caller to prevent some
  * items from being added by returning false from the <filter> callback.  Useful
- * for searching a folder and adding only new files to the playlist.  <user> is
- * an untyped pointer passed to the <filter> callback. */
+ * for searching a folder and adding only new files to the playlist.  Filenames
+ * passed to the callback can be used with str_ref(), str_equal(), etc.  <user>
+ * is an additional, untyped pointer passed to the callback. */
 AUD_VFUNC7 (playlist_entry_insert_filtered, int, playlist, int, at,
  Index *, filenames, Index *, tuples, PlaylistFilterFunc, filter,
  void *, user, bool_t, play)

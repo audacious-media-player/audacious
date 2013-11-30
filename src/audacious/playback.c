@@ -106,8 +106,7 @@ static bool_t update_from_playlist (void)
     char * title = playback_entry_get_title ();
     int length = playback_entry_get_length ();
 
-    /* pointer comparison works for pooled strings */
-    if (entry == current_entry && title == current_title && length == current_length)
+    if (entry == current_entry && str_equal (title, current_title) && length == current_length)
     {
         str_unref (title);
         return FALSE;

@@ -58,13 +58,21 @@ char * str_get (const char * str);
  * string already in the pool.  Faster than calling str_get() a second time.
  * Returns <str> for convenience.  If <str> is NULL, simply returns NULL with no
  * side effects. */
-char * str_ref (char * str);
+char * str_ref (const char * str);
 
 /* Decrements the reference count of <str>, where <str> is the address of a
  * string in the pool.  If the reference count drops to zero, releases the
  * memory used by <str>.   If <str> is NULL, simply returns NULL with no side
  * effects. */
 void str_unref (char * str);
+
+/* Returns the cached hash value of a pooled string (or 0 for NULL). */
+unsigned str_hash (const char * str);
+
+/* Checks whether two pooled strings are equal.  Since the pool never contains
+ * duplicate strings, this is a simple pointer comparison and thus much faster
+ * than strcmp().  NULL is considered equal to NULL but not equal to any string. */
+bool_t str_equal (const char * str1, const char * str2);
 
 /* Calls str_get() on the first <len> characters of <str>.  If <str> has less
  * than or equal to <len> characters, equivalent to str_get(). */

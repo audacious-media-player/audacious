@@ -214,6 +214,26 @@ restart:;
     }
 }
 
+EXPORT unsigned str_hash (char * str)
+{
+    if (! str)
+        return 0;
+
+    HashNode * node = NODE_OF (str);
+    assert (node->magic == '@');
+
+    return node->hash;
+}
+
+
+EXPORT bool_t str_equal (char * str1, char * str2)
+{
+    assert (! str1 || NODE_OF (str1)->magic == '@');
+    assert (! str2 || NODE_OF (str2)->magic == '@');
+
+    return str1 == str2;
+}
+
 EXPORT char * str_nget (const char * str, int len)
 {
     if (strlen (str) <= len)
