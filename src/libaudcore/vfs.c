@@ -287,18 +287,6 @@ vfs_fseek(VFSFile * file,
 }
 
 /**
- * Rewinds a VFS stream.
- *
- * @param file #VFSFile object that represents the VFS stream.
- */
-EXPORT void
-vfs_rewind(VFSFile * file)
-{
-    if (vfs_fseek (file, 0, SEEK_SET) < 0)
-        ; // ignore errors
-}
-
-/**
  * Returns the current position in the VFS stream's buffer.
  *
  * @param file #VFSFile object that represents the VFS stream.

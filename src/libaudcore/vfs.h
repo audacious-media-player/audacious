@@ -140,9 +140,6 @@ void vfs_file_get_contents (const char * filename, void * * buf, int64_t * size)
 void vfs_set_lookup_func (VFSConstructor * (* func) (const char * scheme));
 void vfs_set_verbose (bool_t verbose);
 
-// deprecated
-void vfs_rewind (VFSFile * file) __attribute ((deprecated));
-
 #undef WARN_RETURN
 
 #endif /* LIBAUDCORE_VFS_H */
