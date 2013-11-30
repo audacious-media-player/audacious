@@ -19,7 +19,6 @@
  */
 
 #include <glib.h>
-#include <pthread.h>
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -28,6 +27,7 @@
 #include <audacious/i18n.h>
 
 #include "audstrings.h"
+#include "tinylock.h"
 #include "tuple.h"
 #include "tuple_formatter.h"
 
@@ -60,19 +60,24 @@ struct _TupleBlock {
  * metadata. This is not the same as a playlist entry, though.
  */
 struct _Tuple {
-    int refcount;
     int64_t setmask;
     TupleBlock * blocks;
 
-    int nsubtunes;                 /**< Number of subtunes, if any. Values greater than 0
-                                         mean that there are subtunes and #subtunes array
-                                         may be set. */
     int *subtunes;                 /**< Array of int containing subtune index numbers.
                                          Can be NULL if indexing is linear or if
                                          there are no subtunes. */
+    int nsubtunes;                 /**< Number of subtunes, if any. Values greater than 0
+                                         mean that there are subtunes and #subtunes array
+                                         may be set. */
+
+    int refcount;
+    TinyLock lock;
 };
 
 #define BIT(i) ((int64_t) 1 << (i))
+
+#define LOCK(t) tiny_lock ((TinyLock *) & t->lock)
+#define UNLOCK(t) tiny_unlock ((TinyLock *) & t->lock)
 
 /** Ordered table of basic #Tuple field names and their #TupleValueType.
  */
@@ -156,9 +161,6 @@ static const FieldDictEntry field_dict[TUPLE_FIELDS] = {
 #define VALID_FIELD(f) ((f) >= 0 && (f) < TUPLE_FIELDS)
 #define FIELD_TYPE(f) (tuple_fields[f].type)
 
-static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-
-
 static int field_dict_compare (const void * a, const void * b)
 {
     return strcmp (((FieldDictEntry *) a)->name, ((FieldDictEntry *) b)->name);
@@ -234,7 +236,7 @@ static TupleVal * lookup_val (Tuple * tuple, int field, bool_t add, bool_t remov
     return & block->vals[0];
 }
 
-static void tuple_destroy_unlocked (Tuple * tuple)
+static void tuple_destroy (Tuple * tuple)
 {
     TupleBlock * next;
     for (TupleBlock * block = tuple->blocks; block; block = next)
@@ -267,11 +269,8 @@ EXPORT Tuple * tuple_new (void)
 
 EXPORT Tuple * tuple_ref (Tuple * tuple)
 {
-    pthread_mutex_lock (& mutex);
+    __sync_fetch_and_add (& tuple->refcount, 1);
 
-    tuple->refcount ++;
-
-    pthread_mutex_unlock (& mutex);
     return tuple;
 }
 
@@ -280,12 +279,8 @@ EXPORT void tuple_unref (Tuple * tuple)
     if (! tuple)
         return;
 
-    pthread_mutex_lock (& mutex);
-
-    if (! -- tuple->refcount)
-        tuple_destroy_unlocked (tuple);
-
-    pthread_mutex_unlock (& mutex);
+    if (! __sync_sub_and_fetch (& tuple->refcount, 1))
+        tuple_destroy (tuple);
 }
 
 EXPORT void tuple_set_filename (Tuple * tuple, const char * filename)
@@ -316,9 +311,8 @@ EXPORT void tuple_set_filename (Tuple * tuple, const char * filename)
 
 EXPORT Tuple * tuple_copy (const Tuple * old)
 {
-    pthread_mutex_lock (& mutex);
-
     Tuple * new = tuple_new ();
+    LOCK (old);
 
     for (int f = 0; f < TUPLE_FIELDS; f ++)
     {
@@ -338,7 +332,7 @@ EXPORT Tuple * tuple_copy (const Tuple * old)
     if (old->subtunes)
         new->subtunes = g_memdup (old->subtunes, sizeof (int) * old->nsubtunes);
 
-    pthread_mutex_unlock (& mutex);
+    UNLOCK (old);
     return new;
 }
 
@@ -352,12 +346,12 @@ EXPORT Tuple * tuple_new_from_filename (const char * filename)
 EXPORT void tuple_set_int (Tuple * tuple, int field, int x)
 {
     g_return_if_fail (VALID_FIELD (field) && FIELD_TYPE (field) == TUPLE_INT);
-    pthread_mutex_lock (& mutex);
+    LOCK (tuple);
 
     TupleVal * val = lookup_val (tuple, field, TRUE, FALSE);
     val->x = x;
 
-    pthread_mutex_unlock (& mutex);
+    UNLOCK (tuple);
 }
 
 EXPORT void tuple_set_str (Tuple * tuple, int field, const char * str)
@@ -376,19 +370,19 @@ EXPORT void tuple_set_str (Tuple * tuple, int field, const char * str)
         return;
     }
 
-    pthread_mutex_lock (& mutex);
+    LOCK (tuple);
 
     TupleVal * val = lookup_val (tuple, field, TRUE, FALSE);
     str_unref (val->str);
     val->str = str_get (str);
 
-    pthread_mutex_unlock (& mutex);
+    UNLOCK (tuple);
 }
 
 EXPORT void tuple_unset (Tuple * tuple, int field)
 {
     g_return_if_fail (VALID_FIELD (field));
-    pthread_mutex_lock (& mutex);
+    LOCK (tuple);
 
     TupleVal * val = lookup_val (tuple, field, FALSE, TRUE);
     if (val)
@@ -402,42 +396,42 @@ EXPORT void tuple_unset (Tuple * tuple, int field)
             val->x = 0;
     }
 
-    pthread_mutex_unlock (& mutex);
+    UNLOCK (tuple);
 }
 
 EXPORT TupleValueType tuple_get_value_type (const Tuple * tuple, int field)
 {
     g_return_val_if_fail (VALID_FIELD (field), TUPLE_UNKNOWN);
-    pthread_mutex_lock (& mutex);
+    LOCK (tuple);
 
     TupleVal * val = lookup_val ((Tuple *) tuple, field, FALSE, FALSE);
     TupleValueType type = val ? FIELD_TYPE (field) : TUPLE_UNKNOWN;
 
-    pthread_mutex_unlock (& mutex);
+    UNLOCK (tuple);
     return type;
 }
 
 EXPORT char * tuple_get_str (const Tuple * tuple, int field)
 {
     g_return_val_if_fail (VALID_FIELD (field) && FIELD_TYPE (field) == TUPLE_STRING, NULL);
-    pthread_mutex_lock (& mutex);
+    LOCK (tuple);
 
     TupleVal * val = lookup_val ((Tuple *) tuple, field, FALSE, FALSE);
     char * str = val ? str_ref (val->str) : NULL;
 
-    pthread_mutex_unlock (& mutex);
+    UNLOCK (tuple);
     return str;
 }
 
 EXPORT int tuple_get_int (const Tuple * tuple, int field)
 {
     g_return_val_if_fail (VALID_FIELD (field) && FIELD_TYPE (field) == TUPLE_INT, -1);
-    pthread_mutex_lock (& mutex);
+    LOCK (tuple);
 
     TupleVal * val = lookup_val ((Tuple *) tuple, field, FALSE, FALSE);
     int x = val ? val->x : -1;
 
-    pthread_mutex_unlock (& mutex);
+    UNLOCK (tuple);
     return x;
 }
 
@@ -477,7 +471,7 @@ EXPORT void tuple_set_format (Tuple * t, const char * format, int chans, int rat
 
 EXPORT void tuple_set_subtunes (Tuple * tuple, int n_subtunes, const int * subtunes)
 {
-    pthread_mutex_lock (& mutex);
+    LOCK (tuple);
 
     g_free (tuple->subtunes);
     tuple->subtunes = NULL;
@@ -486,28 +480,28 @@ EXPORT void tuple_set_subtunes (Tuple * tuple, int n_subtunes, const int * subtu
     if (subtunes)
         tuple->subtunes = g_memdup (subtunes, sizeof (int) * n_subtunes);
 
-    pthread_mutex_unlock (& mutex);
+    UNLOCK (tuple);
 }
 
 EXPORT int tuple_get_n_subtunes (Tuple * tuple)
 {
-    pthread_mutex_lock (& mutex);
+    LOCK (tuple);
 
     int n_subtunes = tuple->nsubtunes;
 
-    pthread_mutex_unlock (& mutex);
+    UNLOCK (tuple);
     return n_subtunes;
 }
 
 EXPORT int tuple_get_nth_subtune (Tuple * tuple, int n)
 {
-    pthread_mutex_lock (& mutex);
+    LOCK (tuple);
 
     int subtune = -1;
     if (n >= 0 && n < tuple->nsubtunes)
         subtune = tuple->subtunes ? tuple->subtunes[n] : 1 + n;
 
-    pthread_mutex_unlock (& mutex);
+    UNLOCK (tuple);
     return subtune;
 }
 

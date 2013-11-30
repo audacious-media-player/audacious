@@ -9,6 +9,7 @@ SRCS = audio.c \
        index.c \
        inifile.c \
        strpool.c \
+       tinylock.c \
        tuple.c \
        tuple_compiler.c \
        tuple_formatter.c \

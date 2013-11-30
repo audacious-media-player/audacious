@@ -26,12 +26,11 @@
 #include <glib.h>
 
 #include "core.h"
+#include "tinylock.h"
 
 #define NUM_TABLES     16   /* must be a power of two */
 #define TABLE_SHIFT     4   /* log (base 2) of NUM_TABLES */
 #define INITIAL_SIZE  256   /* must be a power of two */
-
-typedef char TinyLock;
 
 struct _HashNode {
     struct _HashNode * next;
@@ -52,17 +51,6 @@ typedef struct {
 } HashTable;
 
 static HashTable tables[NUM_TABLES];
-
-static void tiny_lock (TinyLock * lock)
-{
-    while (__sync_lock_test_and_set (lock, 1))
-        sched_yield ();
-}
-
-static void tiny_unlock (TinyLock * lock)
-{
-    __sync_lock_release (lock);
-}
 
 static HashNode * find_in_list (HashNode * list, unsigned hash, const char * str)
 {
