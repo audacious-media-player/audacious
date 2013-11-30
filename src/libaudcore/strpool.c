@@ -158,7 +158,7 @@ EXPORT char * str_get (const char * str)
     return node->str;
 }
 
-EXPORT char * str_ref (char * str)
+EXPORT char * str_ref (const char * str)
 {
     if (! str)
         return NULL;
@@ -168,7 +168,7 @@ EXPORT char * str_ref (char * str)
 
     __sync_fetch_and_add (& node->refs, 1);
 
-    return str;
+    return (char *) str;
 }
 
 EXPORT void str_unref (char * str)
@@ -214,7 +214,7 @@ restart:;
     }
 }
 
-EXPORT unsigned str_hash (char * str)
+EXPORT unsigned str_hash (const char * str)
 {
     if (! str)
         return 0;
@@ -226,7 +226,7 @@ EXPORT unsigned str_hash (char * str)
 }
 
 
-EXPORT bool_t str_equal (char * str1, char * str2)
+EXPORT bool_t str_equal (const char * str1, const char * str2)
 {
     assert (! str1 || NODE_OF (str1)->magic == '@');
     assert (! str2 || NODE_OF (str2)->magic == '@');
