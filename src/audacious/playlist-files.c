@@ -99,8 +99,8 @@ bool_t playlist_load (const char * filename, char * * title, Index * * filenames
     if (! data.success)
     {
         str_unref (data.title);
-        index_free (data.filenames);
-        index_free (data.tuples);
+        index_free_full (data.filenames, (IndexFreeFunc) str_unref);
+        index_free_full (data.tuples, (IndexFreeFunc) tuple_unref);
         return FALSE;
     }
 
@@ -173,8 +173,8 @@ bool_t playlist_save (int list, const char * filename)
 
     for (int i = 0; i < entries; i ++)
     {
-        index_append (data.filenames, playlist_entry_get_filename (list, i));
-        index_append (data.tuples, playlist_entry_get_tuple (list, i, fast));
+        index_insert (data.filenames, -1, playlist_entry_get_filename (list, i));
+        index_insert (data.tuples, -1, playlist_entry_get_tuple (list, i, fast));
     }
 
     AUDDBG ("Saving playlist %s.\n", filename);
@@ -186,15 +186,9 @@ bool_t playlist_save (int list, const char * filename)
         interface_show_error (error);
     }
 
-    for (int i = 0; i < entries; i ++)
-    {
-        str_unref (index_get (data.filenames, i));
-        tuple_unref (index_get (data.tuples, i));
-    }
-
     str_unref (data.title);
-    index_free (data.filenames);
-    index_free (data.tuples);
+    index_free_full (data.filenames, (IndexFreeFunc) str_unref);
+    index_free_full (data.tuples, (IndexFreeFunc) tuple_unref);
 
     return data.success;
 }

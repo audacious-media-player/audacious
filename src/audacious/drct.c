@@ -161,7 +161,7 @@ static void add_list (Index * filenames, int at, bool_t to_temp, bool_t play)
 void drct_pl_add (const char * filename, int at)
 {
     Index * filenames = index_new ();
-    index_append (filenames, str_get (filename));
+    index_insert (filenames, -1, str_get (filename));
     add_list (filenames, at, FALSE, FALSE);
 }
 
@@ -173,7 +173,7 @@ void drct_pl_add_list (Index * filenames, int at)
 void drct_pl_open (const char * filename)
 {
     Index * filenames = index_new ();
-    index_append (filenames, str_get (filename));
+    index_insert (filenames, -1, str_get (filename));
     add_list (filenames, -1, get_bool (NULL, "open_to_temporary"), TRUE);
 }
 
@@ -185,7 +185,7 @@ void drct_pl_open_list (Index * filenames)
 void drct_pl_open_temp (const char * filename)
 {
     Index * filenames = index_new ();
-    index_append (filenames, str_get (filename));
+    index_insert (filenames, -1, str_get (filename));
     add_list (filenames, -1, TRUE, TRUE);
 }
 

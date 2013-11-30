@@ -33,7 +33,7 @@ static Index * get_files (GtkWidget * chooser)
     GSList * list = gtk_file_chooser_get_uris ((GtkFileChooser *) chooser);
 
     for (GSList * node = list; node; node = node->next)
-        index_append (index, str_get (node->data));
+        index_insert (index, -1, str_get (node->data));
 
     g_slist_free_full (list, g_free);
     return index;

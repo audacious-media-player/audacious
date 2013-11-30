@@ -286,11 +286,7 @@ static void playlist_free (Playlist * playlist)
 
     str_unref (playlist->filename);
     str_unref (playlist->title);
-
-    for (int count = 0; count < index_count (playlist->entries); count ++)
-        entry_free (index_get (playlist->entries, count));
-
-    index_free (playlist->entries);
+    index_free_full (playlist->entries, (IndexFreeFunc) entry_free);
     g_list_free (playlist->queued);
     g_slice_free (Playlist, playlist);
 }
@@ -670,10 +666,7 @@ void playlist_end (void)
     active_playlist = playing_playlist = NULL;
     resume_playlist = -1;
 
-    for (int i = 0; i < index_count (playlists); i ++)
-        playlist_free (index_get (playlists, i));
-
-    index_free (playlists);
+    index_free_full (playlists, (IndexFreeFunc) playlist_free);
     playlists = NULL;
 
     g_hash_table_destroy (unique_id_table);
@@ -722,11 +715,11 @@ void playlist_reorder (int from, int to, int count)
     Index * displaced = index_new ();
 
     if (to < from)
-        index_copy_append (playlists, to, displaced, from - to);
+        index_copy_insert (playlists, to, displaced, -1, from - to);
     else
-        index_copy_append (playlists, from + count, displaced, to - from);
+        index_copy_insert (playlists, from + count, displaced, -1, to - from);
 
-    index_move (playlists, from, to, count);
+    index_copy_set (playlists, from, playlists, to, count);
 
     if (to < from)
     {
@@ -751,8 +744,7 @@ void playlist_delete (int playlist_num)
 
     bool_t was_playing = (playlist == playing_playlist);
 
-    index_delete (playlists, playlist_num, 1);
-    playlist_free (playlist);
+    index_delete_full (playlists, playlist_num, 1, (IndexFreeFunc) playlist_free);
 
     if (! index_count (playlists))
         index_insert (playlists, 0, playlist_new (-1));
@@ -1010,7 +1002,7 @@ void playlist_entry_insert_batch_raw (int playlist_num, int at,
         char * filename = index_get (filenames, i);
         Tuple * tuple = tuples ? index_get (tuples, i) : NULL;
         PluginHandle * decoder = decoders ? index_get (decoders, i) : NULL;
-        index_append (add, entry_new (filename, tuple, decoder));
+        index_insert (add, -1, entry_new (filename, tuple, decoder));
     }
 
     index_free (filenames);
@@ -1020,7 +1012,7 @@ void playlist_entry_insert_batch_raw (int playlist_num, int at,
         index_free (tuples);
 
     number = index_count (add);
-    index_merge_insert (playlist->entries, at, add);
+    index_copy_insert (add, 0, playlist->entries, at, -1);
     index_free (add);
 
     number_entries (playlist, at, entries + number - at);
@@ -1083,10 +1075,9 @@ void playlist_entry_delete (int playlist_num, int at, int number)
         }
 
         playlist->total_length -= entry->length;
-        entry_free (entry);
     }
 
-    index_delete (playlist->entries, at, number);
+    index_delete_full (playlist->entries, at, number, (IndexFreeFunc) entry_free);
     number_entries (playlist, at, entries - at - number);
 
     if (position_changed && get_bool (NULL, "advance_on_delete"))
@@ -1352,21 +1343,21 @@ int playlist_shift (int playlist_num, int entry_num, int distance)
     {
         entry = index_get (playlist->entries, i);
         if (! entry->selected)
-            index_append (temp, entry);
+            index_insert (temp, -1, entry);
     }
 
     for (int i = top; i < bottom; i ++)
     {
         entry = index_get (playlist->entries, i);
         if (entry->selected)
-            index_append (temp, entry);
+            index_insert (temp, -1, entry);
     }
 
     for (int i = center; i < bottom; i ++)
     {
         entry = index_get (playlist->entries, i);
         if (! entry->selected)
-            index_append (temp, entry);
+            index_insert (temp, -1, entry);
     }
 
     index_copy_set (temp, 0, playlist->entries, top, bottom - top);
@@ -1446,7 +1437,7 @@ void playlist_delete_selected (int playlist_num)
         }
         else
         {
-            index_append (others, entry);
+            index_insert (others, -1, entry);
 
             if (found)
                 after ++;
@@ -1486,7 +1477,7 @@ void playlist_reverse (int playlist_num)
     index_allocate (reversed, entries);
 
     for (int count = entries; count --; )
-        index_append (reversed, index_get (playlist->entries, count));
+        index_insert (reversed, -1, index_get (playlist->entries, count));
 
     index_free (playlist->entries);
     playlist->entries = reversed;
@@ -1509,7 +1500,7 @@ void playlist_reverse_selected (int playlist_num)
     {
         Entry * entry = index_get (playlist->entries, count);
         if (entry->selected)
-            index_append (reversed, index_get (playlist->entries, count));
+            index_insert (reversed, -1, index_get (playlist->entries, count));
     }
 
     int count2 = 0;
@@ -1560,7 +1551,7 @@ void playlist_randomize_selected (int playlist_num)
     {
         Entry * entry = index_get (playlist->entries, count);
         if (entry->selected)
-            index_append (selected, entry);
+            index_insert (selected, -1, entry);
     }
 
     for (int i = 0; i < playlist->selected_count; i ++)
@@ -1637,7 +1628,7 @@ static void sort_selected (Playlist * playlist, CompareData * data)
     {
         Entry * entry = index_get (playlist->entries, count);
         if (entry->selected)
-            index_append (selected, entry);
+            index_insert (selected, -1, entry);
     }
 
     index_sort_with_data (selected, compare_cb, data);

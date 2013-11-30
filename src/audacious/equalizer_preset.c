@@ -80,7 +80,7 @@ Index * equalizer_read_presets (const char * basename)
                 preset->bands[i] = g_key_file_get_double(rcfile, name, band, NULL);
             }
 
-            index_append (list, preset);
+            index_insert (list, -1, preset);
         }
         else
             break;
@@ -163,7 +163,7 @@ Index * import_winamp_eqf (VFSFile * file)
         for (i = 0; i < 10; i++)
             preset->bands[i] = EQUALIZER_MAX_GAIN - ((bands[i] * EQUALIZER_MAX_GAIN * 2) / 64.0);
 
-        index_append (list, preset);
+        index_insert (list, -1, preset);
     }
 
     return list;

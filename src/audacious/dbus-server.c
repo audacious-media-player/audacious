@@ -41,7 +41,7 @@ static Index * strv_to_index (const char * const * strv)
 {
     Index * index = index_new ();
     while (* strv)
-        index_append (index, str_get (* strv ++));
+        index_insert (index, -1, str_get (* strv ++));
 
     return index;
 }

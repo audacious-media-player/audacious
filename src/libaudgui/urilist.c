@@ -60,7 +60,7 @@ static void urilist_for_each (const char * list, ForEachFunc func, void * user)
 
 static void add_to_index (char * name, Index * index)
 {
-    index_append (index, str_get (name));
+    index_insert (index, -1, str_get (name));
     g_free (name);
 }
 

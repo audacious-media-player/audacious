@@ -271,7 +271,7 @@ static Index * convert_filenames (void)
         }
 
         if (uri)
-            index_append (filenames, uri);
+            index_insert (filenames, -1, uri);
     }
 
     g_free (cur);
@@ -327,11 +327,7 @@ static void do_remote (void)
             obj_audacious_call_open_list_sync (obj, list, NULL, NULL);
 
         free (list);
-
-        for (int i = 0; i < n_filenames; i ++)
-            str_unref (index_get (filenames, i));
-
-        index_free (filenames);
+        index_free_full (filenames, (IndexFreeFunc) str_unref);
     }
 
     if (options.play)

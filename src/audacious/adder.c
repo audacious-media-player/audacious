@@ -146,28 +146,6 @@ static void status_done_locked (void)
         gtk_widget_destroy (status_window);
 }
 
-static void index_free_filenames (Index * filenames)
-{
-    int count = index_count (filenames);
-    for (int i = 0; i < count; i ++)
-        str_unref (index_get (filenames, i));
-
-    index_free (filenames);
-}
-
-static void index_free_tuples (Index * tuples)
-{
-    int count = index_count (tuples);
-    for (int i = 0; i < count; i ++)
-    {
-        Tuple * tuple = index_get (tuples, i);
-        if (tuple)
-            tuple_unref (tuple);
-    }
-
-    index_free (tuples);
-}
-
 static AddTask * add_task_new (int playlist_id, int at, bool_t play,
  Index * filenames, Index * tuples, PlaylistFilterFunc filter,
  void * user)
@@ -186,9 +164,9 @@ static AddTask * add_task_new (int playlist_id, int at, bool_t play,
 static void add_task_free (AddTask * task)
 {
     if (task->filenames)
-        index_free_filenames (task->filenames);
+        index_free_full (task->filenames, (IndexFreeFunc) str_unref);
     if (task->tuples)
-        index_free_tuples (task->tuples);
+        index_free_full (task->tuples, (IndexFreeFunc) tuple_unref);
 
     g_slice_free (AddTask, task);
 }
@@ -211,9 +189,9 @@ static void add_result_free (AddResult * result)
     str_unref (result->title);
 
     if (result->filenames)
-        index_free_filenames (result->filenames);
+        index_free_full (result->filenames, (IndexFreeFunc) str_unref);
     if (result->tuples)
-        index_free_tuples (result->tuples);
+        index_free_full (result->tuples, (IndexFreeFunc) tuple_unref);
     if (result->decoders)
         index_free (result->decoders);
 
@@ -262,9 +240,9 @@ static void add_file (char * filename, Tuple * tuple, PluginHandle * decoder,
         return;
     }
 
-    index_append (result->filenames, filename);
-    index_append (result->tuples, tuple);
-    index_append (result->decoders, decoder);
+    index_insert (result->filenames, -1, filename);
+    index_insert (result->tuples, -1, tuple);
+    index_insert (result->decoders, -1, decoder);
 }
 
 static void add_folder (char * filename, PlaylistFilterFunc filter,
@@ -539,8 +517,8 @@ void playlist_entry_insert (int playlist, int at, const char * filename,
 {
     Index * filenames = index_new ();
     Index * tuples = index_new ();
-    index_append (filenames, str_get (filename));
-    index_append (tuples, tuple);
+    index_insert (filenames, -1, str_get (filename));
+    index_insert (tuples, -1, tuple);
 
     playlist_entry_insert_batch (playlist, at, filenames, tuples, play);
 }
