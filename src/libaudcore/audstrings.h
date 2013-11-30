@@ -46,8 +46,6 @@ bool_t uri_get_extension (const char * uri, char * buf, int buflen);
 int string_compare (const char * a, const char * b);
 int string_compare_encoded (const char * a, const char * b);
 
-char *str_replace_fragment(char *s, int size, const char *old_str, const char *new_str);
-
 bool_t string_to_int (const char * string, int * addr);
 bool_t string_to_double (const char * string, double * addr);
 char * int_to_string (int val);

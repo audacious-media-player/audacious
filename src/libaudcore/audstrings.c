@@ -375,39 +375,6 @@ EXPORT int string_compare_encoded (const char * ap, const char * bp)
     return 0;
 }
 
-EXPORT char *
-str_replace_fragment(char *s, int size, const char *old, const char *new)
-{
-    char *ptr = s;
-    int left = strlen(s);
-    int avail = size - (left + 1);
-    int oldlen = strlen(old);
-    int newlen = strlen(new);
-    int diff = newlen - oldlen;
-
-    while (left >= oldlen)
-    {
-        if (strncmp(ptr, old, oldlen))
-        {
-            left--;
-            ptr++;
-            continue;
-        }
-
-        if (diff > avail)
-            break;
-
-        if (diff != 0)
-            memmove(ptr + oldlen + diff, ptr + oldlen, left + 1 - oldlen);
-
-        memcpy(ptr, new, newlen);
-        ptr += newlen;
-        left -= oldlen;
-    }
-
-    return s;
-}
-
 /*
  * Routines to convert numbers between string and binary representations.
  *
