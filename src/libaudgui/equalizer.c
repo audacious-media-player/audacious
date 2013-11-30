@@ -65,27 +65,12 @@ static void slider_moved (GtkRange * slider, void * unused)
         aud_eq_set_band (band, value);
 }
 
-static void slider_update (void * unused, GtkRange * slider)
-{
-    int band = GPOINTER_TO_INT (g_object_get_data ((GObject *) slider, "band"));
-    double value;
-
-    if (band == -1)
-        value = round (aud_get_double (NULL, "equalizer_preamp"));
-    else
-        value = round (aud_eq_get_band (band));
-
-    g_signal_handlers_block_by_func (slider, (void *) slider_moved, NULL);
-    gtk_range_set_value (slider, -value);
-    g_signal_handlers_unblock_by_func (slider, (void *) slider_moved, NULL);
-}
-
 static char * format_value (GtkScale * slider, double value, void * unused)
 {
     return g_strdup_printf ("%d", (int) -value);
 }
 
-static GtkWidget * create_slider (const char * name, int band)
+static GtkWidget * create_slider (const char * name, int band, GtkWidget * hbox)
 {
     GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
 
@@ -103,23 +88,40 @@ static GtkWidget * create_slider (const char * name, int band)
     g_signal_connect ((GObject *) slider, "format-value", (GCallback) format_value, NULL);
     g_signal_connect ((GObject *) slider, "value-changed", (GCallback) slider_moved, NULL);
 
-    slider_update (NULL, (GtkRange *) slider);
-
-    if (band == -1)
-        hook_associate ("set equalizer_preamp", (HookFunction) slider_update, slider);
-    else
-        hook_associate ("set equalizer_bands", (HookFunction) slider_update, slider);
-
     gtk_box_pack_start ((GtkBox *) vbox, slider, FALSE, FALSE, 0);
+    gtk_box_pack_start ((GtkBox *) hbox, vbox, FALSE, FALSE, 0);
 
-    return vbox;
+    return slider;
+}
+
+static void set_slider (GtkWidget * slider, double value)
+{
+    g_signal_handlers_block_by_func (slider, (void *) slider_moved, NULL);
+    gtk_range_set_value ((GtkRange *) slider, -round (value));
+    g_signal_handlers_unblock_by_func (slider, (void *) slider_moved, NULL);
+}
+
+static void update_sliders (void * unused, GtkWidget * window)
+{
+    GtkWidget * preamp = g_object_get_data ((GObject *) window, "preamp");
+    set_slider (preamp, aud_get_double (NULL, "equalizer_preamp"));
+
+    double values[AUD_EQUALIZER_NBANDS];
+    aud_eq_get_bands (values);
+
+    for (int i = 0; i < AUD_EQUALIZER_NBANDS; i ++)
+    {
+        SPRINTF (slider_id, "slider%d", i);
+        GtkWidget * slider = g_object_get_data ((GObject *) window, slider_id);
+        set_slider (slider, values[i]);
+    }
 }
 
 static void destroy_cb (void)
 {
     hook_dissociate ("set equalizer_active", (HookFunction) on_off_update);
-    hook_dissociate ("set equalizer_bands", (HookFunction) slider_update);
-    hook_dissociate ("set equalizer_preamp", (HookFunction) slider_update);
+    hook_dissociate ("set equalizer_bands", (HookFunction) update_sliders);
+    hook_dissociate ("set equalizer_preamp", (HookFunction) update_sliders);
 }
 
 static GtkWidget * create_window (void)
@@ -143,12 +145,23 @@ static GtkWidget * create_window (void)
     GtkWidget * hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  6);
     gtk_box_pack_start ((GtkBox *) vbox, hbox, FALSE, FALSE, 0);
 
-    gtk_box_pack_start ((GtkBox *) hbox, create_slider (_("Preamp"), -1), FALSE, FALSE, 0);
+    GtkWidget * preamp = create_slider (_("Preamp"), -1, hbox);
+    g_object_set_data ((GObject *) window, "preamp", preamp);
+
     gtk_box_pack_start ((GtkBox *) hbox,
      gtk_separator_new (GTK_ORIENTATION_VERTICAL), FALSE, FALSE, 0);
 
     for (int i = 0; i < AUD_EQUALIZER_NBANDS; i ++)
-        gtk_box_pack_start ((GtkBox *) hbox, create_slider (_(names[i]), i), FALSE, FALSE, 0);
+    {
+        GtkWidget * slider = create_slider (_(names[i]), i, hbox);
+        SPRINTF (slider_id, "slider%d", i);
+        g_object_set_data ((GObject *) window, slider_id, slider);
+    }
+
+    update_sliders (NULL, window);
+
+    hook_associate ("set equalizer_preamp", (HookFunction) update_sliders, window);
+    hook_associate ("set equalizer_bands", (HookFunction) update_sliders, window);
 
     g_signal_connect (window, "destroy", (GCallback) destroy_cb, NULL);
 
