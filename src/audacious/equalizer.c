@@ -185,7 +185,7 @@ void eq_set_bands (const double *values)
     char *string = double_array_to_str (values, EQ_BANDS);
     g_return_if_fail (string);
     set_string (NULL, "equalizer_bands", string);
-    g_free (string);
+    str_unref (string);
 }
 
 void eq_get_bands (double *values)

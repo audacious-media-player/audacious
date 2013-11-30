@@ -22,6 +22,9 @@
 
 #include <libaudcore/core.h>
 
+struct _Index;
+typedef struct _Index Index;
+
 bool_t str_has_prefix_nocase(const char * str, const char * prefix);
 bool_t str_has_suffix_nocase(const char * str, const char * suffix);
 
@@ -45,6 +48,11 @@ bool_t uri_get_extension (const char * uri, char * buf, int buflen);
 
 int str_compare (const char * a, const char * b);
 int str_compare_encoded (const char * a, const char * b);
+
+/* the following functions returned pooled strings */
+
+Index * str_list_to_index (const char * list, const char * delims);
+char * index_to_str_list (Index * index, const char * sep);
 
 bool_t str_to_int (const char * string, int * addr);
 bool_t str_to_double (const char * string, double * addr);

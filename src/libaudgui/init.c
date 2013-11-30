@@ -66,7 +66,7 @@ static bool_t configure_cb (GtkWidget * window, GdkEventConfigure * event, const
 
         char * str = int_array_to_str (pos, 4);
         aud_set_string ("audgui", name, str);
-        g_free (str);
+        str_unref (str);
     }
 
     return FALSE;

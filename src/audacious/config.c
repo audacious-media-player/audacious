@@ -304,7 +304,7 @@ void set_int (const char * section, const char * name, int value)
     char * string = int_to_str (value);
     g_return_if_fail (string);
     set_string (section, name, string);
-    g_free (string);
+    str_unref (string);
 }
 
 int get_int (const char * section, const char * name)
@@ -321,7 +321,7 @@ void set_double (const char * section, const char * name, double value)
     char * string = double_to_str (value);
     g_return_if_fail (string);
     set_string (section, name, string);
-    g_free (string);
+    str_unref (string);
 }
 
 double get_double (const char * section, const char * name)

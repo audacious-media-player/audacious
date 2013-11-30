@@ -29,6 +29,7 @@
 #include <audacious/i18n.h>
 
 #include "audstrings.h"
+#include "index.h"
 
 #define FROM_HEX(c) ((c) < 'A' ? (c) - '0' : (c) < 'a' ? 10 + (c) - 'A' : 10 + (c) - 'a')
 #define TO_HEX(i) ((i) < 10 ? '0' + (i) : 'A' + (i) - 10)
@@ -375,6 +376,69 @@ EXPORT int str_compare_encoded (const char * ap, const char * bp)
     return 0;
 }
 
+EXPORT Index * str_list_to_index (const char * list, const char * delims)
+{
+    Index * index = index_new ();
+    const char * word = NULL;
+
+    for (; * list; list ++)
+    {
+        if (strchr (delims, * list))
+        {
+            if (word)
+            {
+                index_insert (index, -1, str_nget (word, list - word));
+                word = NULL;
+            }
+        }
+        else
+        {
+            if (! word)
+            {
+                word = list;
+            }
+        }
+    }
+
+    if (word)
+        index_insert (index, -1, str_get (word));
+
+    return index;
+}
+
+EXPORT char * index_to_str_list (Index * index, const char * sep)
+{
+    int count = index_count (index);
+    int seplen = strlen (sep);
+    int total = count ? seplen * (count - 1) : 0;
+    int lengths[count];
+
+    for (int i = 0; i < count; i ++)
+    {
+        lengths[i] = strlen (index_get (index, i));
+        total += lengths[i];
+    }
+
+    char buf[total + 1];
+    int pos = 0;
+
+    for (int i = 0; i < count; i ++)
+    {
+        if (i)
+        {
+            strcpy (buf + pos, sep);
+            pos += seplen;
+        }
+
+        strcpy (buf + pos, index_get (index, i));
+        pos += lengths[i];
+    }
+
+    buf[pos] = 0;
+
+    return str_get (buf);
+}
+
 /*
  * Routines to convert numbers between string and binary representations.
  *
@@ -474,7 +538,7 @@ ERR:
 EXPORT char * int_to_str (int val)
 {
     g_return_val_if_fail (val >= -1000000000 && val <= 1000000000, NULL);
-    return g_strdup_printf ("%d", val);
+    return str_printf ("%d", val);
 }
 
 EXPORT char * double_to_str (double val)
@@ -494,94 +558,98 @@ EXPORT char * double_to_str (double val)
         f = 0;
     }
 
-    char * s = neg ? g_strdup_printf ("-%d.%06d", i, f) : g_strdup_printf ("%d.%06d", i, f);
+    SPRINTF (buf, "%s%d.%06d", neg ? "-" : "", i, f);
 
-    char * c = s + strlen (s);
+    char * c = buf + strlen (buf);
     while (* (c - 1) == '0')
         c --;
     if (* (c - 1) == '.')
         c --;
     * c = 0;
 
-    return s;
+    return str_get (buf);
 }
 
 EXPORT bool_t str_to_int_array (const char * string, int * array, int count)
 {
-    char * * split = g_strsplit (string, ",", -1);
-    if (g_strv_length (split) != count)
+    Index * index = str_list_to_index (string, ", ");
+    if (index_count (index) != count)
         goto ERR;
 
     for (int i = 0; i < count; i ++)
     {
-        if (! str_to_int (split[i], & array[i]))
+        if (! str_to_int (index_get (index, i), & array[i]))
             goto ERR;
     }
 
-    g_strfreev (split);
+    index_free_full (index, (IndexFreeFunc) str_unref);
     return TRUE;
 
 ERR:
-    g_strfreev (split);
+    index_free_full (index, (IndexFreeFunc) str_unref);
     return FALSE;
 }
 
 EXPORT char * int_array_to_str (const int * array, int count)
 {
-    char * * split = g_malloc0 (sizeof (char *) * (count + 1));
+    Index * index = index_new ();
 
     for (int i = 0; i < count; i ++)
     {
-        split[i] = int_to_str (array[i]);
-        if (! split[i])
+        char * value = int_to_str (array[i]);
+        if (! value)
             goto ERR;
+
+        index_insert (index, -1, value);
     }
 
-    char * string = g_strjoinv (",", split);
-    g_strfreev (split);
+    char * string = index_to_str_list (index, ",");
+    index_free_full (index, (IndexFreeFunc) str_unref);
     return string;
 
 ERR:
-    g_strfreev (split);
+    index_free_full (index, (IndexFreeFunc) str_unref);
     return NULL;
 }
 
 EXPORT bool_t str_to_double_array (const char * string, double * array, int count)
 {
-    char * * split = g_strsplit (string, ",", -1);
-    if (g_strv_length (split) != count)
+    Index * index = str_list_to_index (string, ", ");
+    if (index_count (index) != count)
         goto ERR;
 
     for (int i = 0; i < count; i ++)
     {
-        if (! str_to_double (split[i], & array[i]))
+        if (! str_to_double (index_get (index, i), & array[i]))
             goto ERR;
     }
 
-    g_strfreev (split);
+    index_free_full (index, (IndexFreeFunc) str_unref);
     return TRUE;
 
 ERR:
-    g_strfreev (split);
+    index_free_full (index, (IndexFreeFunc) str_unref);
     return FALSE;
 }
 
 EXPORT char * double_array_to_str (const double * array, int count)
 {
-    char * * split = g_malloc0 (sizeof (char *) * (count + 1));
+    Index * index = index_new ();
 
     for (int i = 0; i < count; i ++)
     {
-        split[i] = double_to_str (array[i]);
-        if (! split[i])
+        char * value = double_to_str (array[i]);
+        if (! value)
             goto ERR;
+
+        index_insert (index, -1, value);
     }
 
-    char * string = g_strjoinv (",", split);
-    g_strfreev (split);
+    char * string = index_to_str_list (index, ",");
+    index_free_full (index, (IndexFreeFunc) str_unref);
     return string;
 
 ERR:
-    g_strfreev (split);
+    index_free_full (index, (IndexFreeFunc) str_unref);
     return NULL;
 }
