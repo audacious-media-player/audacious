@@ -43,8 +43,8 @@ static int filename_compare_basename (const char * a, const char * b)
 
 static int tuple_compare_string (const Tuple * a, const Tuple * b, int field)
 {
-    char * string_a = tuple_get_str (a, field, NULL);
-    char * string_b = tuple_get_str (b, field, NULL);
+    char * string_a = tuple_get_str (a, field);
+    char * string_b = tuple_get_str (b, field);
     int ret;
 
     if (string_a == NULL)
@@ -61,13 +61,13 @@ static int tuple_compare_string (const Tuple * a, const Tuple * b, int field)
 
 static int tuple_compare_int (const Tuple * a, const Tuple * b, int field)
 {
-    if (tuple_get_value_type (a, field, NULL) != TUPLE_INT)
-        return (tuple_get_value_type (b, field, NULL) != TUPLE_INT) ? 0 : -1;
-    if (tuple_get_value_type (b, field, NULL) != TUPLE_INT)
+    if (tuple_get_value_type (a, field) != TUPLE_INT)
+        return (tuple_get_value_type (b, field) != TUPLE_INT) ? 0 : -1;
+    if (tuple_get_value_type (b, field) != TUPLE_INT)
         return 1;
 
-    int int_a = tuple_get_int (a, field, NULL);
-    int int_b = tuple_get_int (b, field, NULL);
+    int int_a = tuple_get_int (a, field);
+    int int_b = tuple_get_int (b, field);
 
     return (int_a < int_b) ? -1 : (int_a > int_b);
 }
@@ -249,7 +249,7 @@ void playlist_select_by_patterns (int playlist, const Tuple * patterns)
 
     for (field = 0; field < G_N_ELEMENTS (fields); field ++)
     {
-        char * pattern = tuple_get_str (patterns, fields[field], NULL);
+        char * pattern = tuple_get_str (patterns, fields[field]);
         GRegex * regex;
 
         if (! pattern || ! pattern[0] || ! (regex = g_regex_new (pattern, 0, 0, NULL)))
@@ -264,7 +264,7 @@ void playlist_select_by_patterns (int playlist, const Tuple * patterns)
                 continue;
 
             Tuple * tuple = playlist_entry_get_tuple (playlist, entry, FALSE);
-            char * string = tuple ? tuple_get_str (tuple, fields[field], NULL) : NULL;
+            char * string = tuple ? tuple_get_str (tuple, fields[field]) : NULL;
 
             if (! string || ! g_regex_match (regex, string, 0, NULL))
                 playlist_entry_set_selected (playlist, entry, FALSE);

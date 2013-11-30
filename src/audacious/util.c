@@ -327,7 +327,7 @@ static char * stream_name (char * name)
 
 static char * get_nonblank_field (const Tuple * tuple, int field)
 {
-    char * str = tuple ? tuple_get_str (tuple, field, NULL) : NULL;
+    char * str = tuple ? tuple_get_str (tuple, field) : NULL;
 
     if (str && ! str[0])
     {
@@ -374,7 +374,7 @@ DONE:
         char * filename = uri_to_filename (name);
         if (! filename)
             goto DONE;
-        
+
         char * base, * first, * second;
         split_filename (skip_top_folders (filename), & base, & first, & second);
 
@@ -401,7 +401,7 @@ DONE:
             else if (! album)
                 album = str_get (first);
         }
-        
+
         free (filename);
     }
     else
@@ -457,4 +457,3 @@ void cut_path_element (char * path, char * elem)
     else
         elem[0] = 0; /* leave [drive letter and] leading slash */
 }
-

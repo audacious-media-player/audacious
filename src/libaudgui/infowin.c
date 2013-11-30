@@ -132,7 +132,7 @@ static GtkWidget * small_label_new (const char * text)
 static void set_entry_str_from_field (GtkWidget * widget, const Tuple * tuple,
  int fieldn, bool_t editable)
 {
-    char * text = tuple_get_str (tuple, fieldn, NULL);
+    char * text = tuple_get_str (tuple, fieldn);
 
     gtk_entry_set_text ((GtkEntry *) widget, text != NULL ? text : "");
     gtk_editable_set_editable ((GtkEditable *) widget, editable);
@@ -145,9 +145,8 @@ static void set_entry_int_from_field (GtkWidget * widget, const Tuple * tuple,
 {
     char scratch[32];
 
-    if (tuple_get_value_type (tuple, fieldn, NULL) == TUPLE_INT)
-        snprintf (scratch, sizeof scratch, "%d", tuple_get_int (tuple, fieldn,
-         NULL));
+    if (tuple_get_value_type (tuple, fieldn) == TUPLE_INT)
+        snprintf (scratch, sizeof scratch, "%d", tuple_get_int (tuple, fieldn));
     else
         scratch[0] = 0;
 
@@ -161,9 +160,9 @@ static void set_field_str_from_entry (Tuple * tuple, int fieldn, GtkWidget *
     const char * text = gtk_entry_get_text ((GtkEntry *) widget);
 
     if (text[0])
-        tuple_set_str (tuple, fieldn, NULL, text);
+        tuple_set_str (tuple, fieldn, text);
     else
-        tuple_unset (tuple, fieldn, NULL);
+        tuple_unset (tuple, fieldn);
 }
 
 static void set_field_int_from_entry (Tuple * tuple, int fieldn, GtkWidget *
@@ -172,9 +171,9 @@ static void set_field_int_from_entry (Tuple * tuple, int fieldn, GtkWidget *
     const char * text = gtk_entry_get_text ((GtkEntry *) widget);
 
     if (text[0])
-        tuple_set_int (tuple, fieldn, NULL, atoi (text));
+        tuple_set_int (tuple, fieldn, atoi (text));
     else
-        tuple_unset (tuple, fieldn, NULL);
+        tuple_unset (tuple, fieldn);
 }
 
 static void entry_changed (GtkEditable * editable, void * unused)
@@ -395,13 +394,13 @@ static void infowin_show (int list, int entry, const char * filename,
     set_entry_int_from_field (widgets.track, tuple, FIELD_TRACK_NUMBER, updating_enabled);
 
     char * codec_values[CODEC_ITEMS] = {
-        [CODEC_FORMAT] = tuple_get_str (tuple, FIELD_CODEC, NULL),
-        [CODEC_QUALITY] = tuple_get_str (tuple, FIELD_QUALITY, NULL)
+        [CODEC_FORMAT] = tuple_get_str (tuple, FIELD_CODEC),
+        [CODEC_QUALITY] = tuple_get_str (tuple, FIELD_QUALITY)
     };
 
-    if (tuple_get_value_type (tuple, FIELD_BITRATE, NULL) == TUPLE_INT)
+    if (tuple_get_value_type (tuple, FIELD_BITRATE) == TUPLE_INT)
     {
-        int bitrate = tuple_get_int (tuple, FIELD_BITRATE, NULL);
+        int bitrate = tuple_get_int (tuple, FIELD_BITRATE);
         codec_values[CODEC_BITRATE] = str_printf (_("%d kb/s"), bitrate);
     }
 

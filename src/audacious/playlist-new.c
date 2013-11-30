@@ -140,8 +140,7 @@ static void entry_set_tuple_real (Entry * entry, Tuple * tuple)
 {
     /* Hack: We cannot refresh segmented entries (since their info is read from
      * the cue sheet when it is first loaded), so leave them alone. -jlindgren */
-    if (entry->tuple && tuple_get_value_type (entry->tuple, FIELD_SEGMENT_START,
-     NULL) == TUPLE_INT)
+    if (entry->tuple && tuple_get_value_type (entry->tuple, FIELD_SEGMENT_START) == TUPLE_INT)
     {
         if (tuple)
             tuple_unref (tuple);
@@ -169,7 +168,7 @@ static void entry_set_tuple_real (Entry * entry, Tuple * tuple)
     else
     {
         entry->formatted = title_from_tuple (tuple);
-        entry->length = tuple_get_int (tuple, FIELD_LENGTH, NULL);
+        entry->length = tuple_get_int (tuple, FIELD_LENGTH);
         if (entry->length < 0)
             entry->length = 0;
     }

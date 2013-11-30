@@ -18,11 +18,6 @@
  * the use of this software.
  */
 
-/**
- * @file tuple.c
- * @brief Basic Tuple handling API.
- */
-
 #include <glib.h>
 #include <pthread.h>
 #include <stdio.h>
@@ -35,6 +30,10 @@
 #include "audstrings.h"
 #include "tuple.h"
 #include "tuple_formatter.h"
+
+#if TUPLE_FIELDS > 64
+#error The current tuple implementation is limited to 64 fields
+#endif
 
 #define BLOCK_VALS 4
 
@@ -154,6 +153,9 @@ static const FieldDictEntry field_dict[TUPLE_FIELDS] = {
  {"track-number", FIELD_TRACK_NUMBER},
  {"year", FIELD_YEAR}};
 
+#define VALID_FIELD(f) ((f) >= 0 && (f) < TUPLE_FIELDS)
+#define FIELD_TYPE(f) (tuple_fields[f].type)
+
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
 
@@ -168,26 +170,18 @@ EXPORT int tuple_field_by_name (const char * name)
     FieldDictEntry * found = bsearch (& find, field_dict, TUPLE_FIELDS,
      sizeof (FieldDictEntry), field_dict_compare);
 
-    if (found)
-        return found->field;
-
-    fprintf (stderr, "Unknown tuple field name \"%s\".\n", name);
-    return -1;
+    return found ? found->field : -1;
 }
 
 EXPORT const char * tuple_field_get_name (int field)
 {
-    if (field < 0 || field >= TUPLE_FIELDS)
-        return NULL;
-
+    g_return_val_if_fail (VALID_FIELD (field), NULL);
     return tuple_fields[field].name;
 }
 
 EXPORT TupleValueType tuple_field_get_type (int field)
 {
-    if (field < 0 || field >= TUPLE_FIELDS)
-        return TUPLE_UNKNOWN;
-
+    g_return_val_if_fail (VALID_FIELD (field), TUPLE_UNKNOWN);
     return tuple_fields[field].type;
 }
 
@@ -294,14 +288,6 @@ EXPORT void tuple_unref (Tuple * tuple)
     pthread_mutex_unlock (& mutex);
 }
 
-/**
- * Sets filename/URI related fields of a #Tuple structure, based
- * on the given filename argument. The fields set are:
- * #FIELD_FILE_PATH, #FIELD_FILE_NAME and #FIELD_FILE_EXT.
- *
- * @param[in] filename Filename URI.
- * @param[in,out] tuple Tuple structure to manipulate.
- */
 EXPORT void tuple_set_filename (Tuple * tuple, const char * filename)
 {
     const char * base, * ext, * sub;
@@ -311,29 +297,23 @@ EXPORT void tuple_set_filename (Tuple * tuple, const char * filename)
 
     char path[base - filename + 1];
     str_decode_percent (filename, base - filename, path);
-    tuple_set_str (tuple, FIELD_FILE_PATH, NULL, path);
+    tuple_set_str (tuple, FIELD_FILE_PATH, path);
 
     char name[ext - base + 1];
     str_decode_percent (base, ext - base, name);
-    tuple_set_str (tuple, FIELD_FILE_NAME, NULL, name);
+    tuple_set_str (tuple, FIELD_FILE_NAME, name);
 
     if (ext < sub)
     {
         char extbuf[sub - ext];
         str_decode_percent (ext + 1, sub - ext - 1, extbuf);
-        tuple_set_str (tuple, FIELD_FILE_EXT, NULL, extbuf);
+        tuple_set_str (tuple, FIELD_FILE_EXT, extbuf);
     }
 
     if (sub[0])
-        tuple_set_int (tuple, FIELD_SUBSONG_ID, NULL, isub);
+        tuple_set_int (tuple, FIELD_SUBSONG_ID, isub);
 }
 
-/**
- * Creates a copy of given Tuple structure, with copied data.
- *
- * @param[in] src Tuple structure to be made a copy of.
- * @return Pointer to newly allocated Tuple.
- */
 EXPORT Tuple * tuple_copy (const Tuple * old)
 {
     pthread_mutex_lock (& mutex);
@@ -362,42 +342,31 @@ EXPORT Tuple * tuple_copy (const Tuple * old)
     return new;
 }
 
-/**
- * Allocates a new #Tuple structure, setting filename/URI related
- * fields based on the given filename argument by calling #tuple_set_filename.
- *
- * @param[in] filename Filename URI.
- * @return Pointer to newly allocated Tuple.
- */
-EXPORT Tuple *
-tuple_new_from_filename(const char *filename)
+EXPORT Tuple * tuple_new_from_filename (const char * filename)
 {
-    Tuple *tuple = tuple_new();
-
-    tuple_set_filename(tuple, filename);
+    Tuple * tuple = tuple_new ();
+    tuple_set_filename (tuple, filename);
     return tuple;
 }
 
-EXPORT void tuple_set_int (Tuple * tuple, int nfield, const char * field, int x)
+EXPORT void tuple_set_int (Tuple * tuple, int field, int x)
 {
-    if (nfield < 0)
-        nfield = tuple_field_by_name (field);
-    if (nfield < 0 || nfield >= TUPLE_FIELDS || tuple_fields[nfield].type != TUPLE_INT)
-        return;
-
+    g_return_if_fail (VALID_FIELD (field) && FIELD_TYPE (field) == TUPLE_INT);
     pthread_mutex_lock (& mutex);
 
-    TupleVal * val = lookup_val (tuple, nfield, TRUE, FALSE);
+    TupleVal * val = lookup_val (tuple, field, TRUE, FALSE);
     val->x = x;
 
     pthread_mutex_unlock (& mutex);
 }
 
-EXPORT void tuple_set_str (Tuple * tuple, int nfield, const char * field, const char * str)
+EXPORT void tuple_set_str (Tuple * tuple, int field, const char * str)
 {
+    g_return_if_fail (VALID_FIELD (field) && FIELD_TYPE (field) == TUPLE_STRING);
+
     if (! str)
     {
-        tuple_unset (tuple, nfield, field);
+        tuple_unset (tuple, field);
         return;
     }
 
@@ -407,34 +376,24 @@ EXPORT void tuple_set_str (Tuple * tuple, int nfield, const char * field, const 
         return;
     }
 
-    if (nfield < 0)
-        nfield = tuple_field_by_name (field);
-    if (nfield < 0 || nfield >= TUPLE_FIELDS || tuple_fields[nfield].type != TUPLE_STRING)
-        return;
-
     pthread_mutex_lock (& mutex);
 
-    TupleVal * val = lookup_val (tuple, nfield, TRUE, FALSE);
-    if (val->str)
-        str_unref (val->str);
+    TupleVal * val = lookup_val (tuple, field, TRUE, FALSE);
+    str_unref (val->str);
     val->str = str_get (str);
 
     pthread_mutex_unlock (& mutex);
 }
 
-EXPORT void tuple_unset (Tuple * tuple, int nfield, const char * field)
+EXPORT void tuple_unset (Tuple * tuple, int field)
 {
-    if (nfield < 0)
-        nfield = tuple_field_by_name (field);
-    if (nfield < 0 || nfield >= TUPLE_FIELDS)
-        return;
-
+    g_return_if_fail (VALID_FIELD (field));
     pthread_mutex_lock (& mutex);
 
-    TupleVal * val = lookup_val (tuple, nfield, FALSE, TRUE);
+    TupleVal * val = lookup_val (tuple, field, FALSE, TRUE);
     if (val)
     {
-        if (tuple_fields[nfield].type == TUPLE_STRING)
+        if (tuple_fields[field].type == TUPLE_STRING)
         {
             str_unref (val->str);
             val->str = NULL;
@@ -446,93 +405,49 @@ EXPORT void tuple_unset (Tuple * tuple, int nfield, const char * field)
     pthread_mutex_unlock (& mutex);
 }
 
-/**
- * Returns #TupleValueType of given #Tuple field.
- * Desired field can be specified either by key name or if it is
- * one of basic fields, by #TupleBasicType index.
- *
- * @param[in] tuple #Tuple structure pointer.
- * @param[in] cnfield #TupleBasicType index or -1 if key name is to be used instead.
- * @param[in] field String acting as key name or NULL if nfield is used.
- * @return #TupleValueType of the field or TUPLE_UNKNOWN if there was an error.
- */
-EXPORT TupleValueType tuple_get_value_type (const Tuple * tuple, int nfield, const char * field)
+EXPORT TupleValueType tuple_get_value_type (const Tuple * tuple, int field)
 {
-    if (nfield < 0)
-        nfield = tuple_field_by_name (field);
-    if (nfield < 0 || nfield >= TUPLE_FIELDS)
-        return TUPLE_UNKNOWN;
-
+    g_return_val_if_fail (VALID_FIELD (field), TUPLE_UNKNOWN);
     pthread_mutex_lock (& mutex);
 
-    TupleValueType type = TUPLE_UNKNOWN;
-
-    TupleVal * val = lookup_val ((Tuple *) tuple, nfield, FALSE, FALSE);
-    if (val)
-        type = tuple_fields[nfield].type;
+    TupleVal * val = lookup_val ((Tuple *) tuple, field, FALSE, FALSE);
+    TupleValueType type = val ? FIELD_TYPE (field) : TUPLE_UNKNOWN;
 
     pthread_mutex_unlock (& mutex);
     return type;
 }
 
-EXPORT char * tuple_get_str (const Tuple * tuple, int nfield, const char * field)
+EXPORT char * tuple_get_str (const Tuple * tuple, int field)
 {
-    if (nfield < 0)
-        nfield = tuple_field_by_name (field);
-    if (nfield < 0 || nfield >= TUPLE_FIELDS || tuple_fields[nfield].type != TUPLE_STRING)
-        return NULL;
-
+    g_return_val_if_fail (VALID_FIELD (field) && FIELD_TYPE (field) == TUPLE_STRING, NULL);
     pthread_mutex_lock (& mutex);
 
-    char * str = NULL;
-
-    TupleVal * val = lookup_val ((Tuple *) tuple, nfield, FALSE, FALSE);
-    if (val)
-        str = str_ref (val->str);
+    TupleVal * val = lookup_val ((Tuple *) tuple, field, FALSE, FALSE);
+    char * str = val ? str_ref (val->str) : NULL;
 
     pthread_mutex_unlock (& mutex);
     return str;
 }
 
-/**
- * Returns integer associated to #Tuple field.
- * Desired field can be specified either by key name or if it is
- * one of basic fields, by #TupleBasicType index.
- *
- * @param[in] tuple #Tuple structure pointer.
- * @param[in] cnfield #TupleBasicType index or -1 if key name is to be used instead.
- * @param[in] field String acting as key name or NULL if nfield is used.
- * @return Integer value or 0 if the field/key did not exist.
- *
- * @bug There is no way to distinguish error situations if the associated value is zero.
- */
-EXPORT int tuple_get_int (const Tuple * tuple, int nfield, const char * field)
+EXPORT int tuple_get_int (const Tuple * tuple, int field)
 {
-    if (nfield < 0)
-        nfield = tuple_field_by_name (field);
-    if (nfield < 0 || nfield >= TUPLE_FIELDS || tuple_fields[nfield].type != TUPLE_INT)
-        return 0;
-
+    g_return_val_if_fail (VALID_FIELD (field) && FIELD_TYPE (field) == TUPLE_INT, -1);
     pthread_mutex_lock (& mutex);
 
-    int x = 0;
-
-    TupleVal * val = lookup_val ((Tuple *) tuple, nfield, FALSE, FALSE);
-    if (val)
-        x = val->x;
+    TupleVal * val = lookup_val ((Tuple *) tuple, field, FALSE, FALSE);
+    int x = val ? val->x : -1;
 
     pthread_mutex_unlock (& mutex);
     return x;
 }
 
-#define APPEND(b, ...) snprintf (b + strlen (b), sizeof b - strlen (b), \
- __VA_ARGS__)
+#define APPEND(b, ...) snprintf (b + strlen (b), sizeof b - strlen (b), __VA_ARGS__)
 
 EXPORT void tuple_set_format (Tuple * t, const char * format, int chans, int rate,
  int brate)
 {
     if (format)
-        tuple_set_str (t, FIELD_CODEC, NULL, format);
+        tuple_set_str (t, FIELD_CODEC, format);
 
     char buf[32];
     buf[0] = 0;
@@ -544,8 +459,7 @@ EXPORT void tuple_set_format (Tuple * t, const char * format, int chans, int rat
         else if (chans == 2)
             APPEND (buf, _("Stereo"));
         else
-            APPEND (buf, dngettext (PACKAGE, "%d channel", "%d channels",
-             chans), chans);
+            APPEND (buf, dngettext (PACKAGE, "%d channel", "%d channels", chans), chans);
 
         if (rate > 0)
             APPEND (buf, ", ");
@@ -555,10 +469,10 @@ EXPORT void tuple_set_format (Tuple * t, const char * format, int chans, int rat
         APPEND (buf, "%d kHz", rate / 1000);
 
     if (buf[0])
-        tuple_set_str (t, FIELD_QUALITY, NULL, buf);
+        tuple_set_str (t, FIELD_QUALITY, buf);
 
     if (brate > 0)
-        tuple_set_int (t, FIELD_BITRATE, NULL, brate);
+        tuple_set_int (t, FIELD_BITRATE, brate);
 }
 
 EXPORT void tuple_set_subtunes (Tuple * tuple, int n_subtunes, const int * subtunes)
@@ -609,7 +523,7 @@ EXPORT char * tuple_format_title (Tuple * tuple, const char * format)
             break;
 
         str_unref (title);
-        title = tuple_get_str (tuple, fallbacks[i], NULL);
+        title = tuple_get_str (tuple, fallbacks[i]);
     }
 
     return title ? title : str_get ("");

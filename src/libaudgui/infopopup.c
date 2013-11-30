@@ -187,13 +187,13 @@ static void infopopup_set_field (GtkWidget * header, GtkWidget * label, char * t
 static void infopopup_set_fields (const Tuple * tuple, const char * title)
 {
     /* use title from tuple if possible */
-    char * title2 = tuple_get_str (tuple, FIELD_TITLE, NULL);
+    char * title2 = tuple_get_str (tuple, FIELD_TITLE);
     if (! title2)
         title2 = str_get (title);
 
-    char * artist = tuple_get_str (tuple, FIELD_ARTIST, NULL);
-    char * album = tuple_get_str (tuple, FIELD_ALBUM, NULL);
-    char * genre = tuple_get_str (tuple, FIELD_GENRE, NULL);
+    char * artist = tuple_get_str (tuple, FIELD_ARTIST);
+    char * album = tuple_get_str (tuple, FIELD_ALBUM);
+    char * genre = tuple_get_str (tuple, FIELD_GENRE);
 
     infopopup_set_field (widgets.title_header, widgets.title_label, title2);
     infopopup_set_field (widgets.artist_header, widgets.artist_label, artist);
@@ -203,15 +203,15 @@ static void infopopup_set_fields (const Tuple * tuple, const char * title)
     int value;
     char * tmp;
 
-    value = tuple_get_int (tuple, FIELD_LENGTH, NULL);
+    value = tuple_get_int (tuple, FIELD_LENGTH);
     tmp = (value > 0) ? str_printf ("%d:%02d", value / 60000, value / 1000 % 60) : NULL;
     infopopup_set_field (widgets.length_header, widgets.length_label, tmp);
 
-    value = tuple_get_int (tuple, FIELD_YEAR, NULL);
+    value = tuple_get_int (tuple, FIELD_YEAR);
     tmp = (value > 0) ? str_printf ("%d", value) : NULL;
     infopopup_set_field (widgets.year_header, widgets.year_label, tmp);
 
-    value = tuple_get_int (tuple, FIELD_TRACK_NUMBER, NULL);
+    value = tuple_get_int (tuple, FIELD_TRACK_NUMBER);
     tmp = (value > 0) ? str_printf ("%d", value) : NULL;
     infopopup_set_field (widgets.track_header, widgets.track_label, tmp);
 }

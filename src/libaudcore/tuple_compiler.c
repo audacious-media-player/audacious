@@ -562,16 +562,16 @@ static bool_t tf_get_fieldval (TupleEvalVar * var, const Tuple * tuple)
   if (var->fieldread)
     return var->fieldvalid;
 
-  if (tuple_get_value_type (tuple, var->fieldidx, NULL) != var->ctype) {
+  if (tuple_get_value_type (tuple, var->fieldidx) != var->ctype) {
     var->fieldread = TRUE;
     var->fieldvalid = FALSE;
     return FALSE;
   }
 
   if (var->ctype == TUPLE_INT)
-    var->defvali = tuple_get_int (tuple, var->fieldidx, NULL);
+    var->defvali = tuple_get_int (tuple, var->fieldidx);
   else if (var->ctype == TUPLE_STRING)
-    var->fieldstr = tuple_get_str (tuple, var->fieldidx, NULL);
+    var->fieldstr = tuple_get_str (tuple, var->fieldidx);
 
   var->fieldread = TRUE;
   var->fieldvalid = TRUE;

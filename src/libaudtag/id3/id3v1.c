@@ -111,27 +111,27 @@ bool_t id3v1_read_tag (Tuple * tuple, VFSFile * f)
 
         if (ext_genre)
         {
-            tuple_set_str(tuple, FIELD_GENRE, NULL, ext_genre);
+            tuple_set_str(tuple, FIELD_GENRE, ext_genre);
             genre_set = TRUE;
             g_free(ext_genre);
         }
     }
 
     if (title)
-        tuple_set_str(tuple, FIELD_TITLE, NULL, title);
+        tuple_set_str(tuple, FIELD_TITLE, title);
     if (artist)
-        tuple_set_str(tuple, FIELD_ARTIST, NULL, artist);
+        tuple_set_str(tuple, FIELD_ARTIST, artist);
     if (album)
-        tuple_set_str(tuple, FIELD_ALBUM, NULL, album);
+        tuple_set_str(tuple, FIELD_ALBUM, album);
     if (year)
-        tuple_set_int(tuple, FIELD_YEAR, NULL, atoi(year));
+        tuple_set_int(tuple, FIELD_YEAR, atoi(year));
     if (comment)
-        tuple_set_str(tuple, FIELD_COMMENT, NULL, comment);
+        tuple_set_str(tuple, FIELD_COMMENT, comment);
     if (track)
-        tuple_set_int(tuple, FIELD_TRACK_NUMBER, NULL, track);
+        tuple_set_int(tuple, FIELD_TRACK_NUMBER, track);
 
     if (genre && !genre_set)
-        tuple_set_str(tuple, FIELD_GENRE, NULL, convert_numericgenre_to_text(*genre));
+        tuple_set_str(tuple, FIELD_GENRE, convert_numericgenre_to_text(*genre));
 
     g_free(title);
     g_free(artist);

@@ -493,23 +493,27 @@ static bool_t do_song_title (Obj * obj, Invoc * invoc, unsigned pos)
 
 static bool_t do_song_tuple (Obj * obj, Invoc * invoc, unsigned pos, const char * key)
 {
-    Tuple * tuple = playlist_entry_get_tuple (playlist_get_active (), pos, FALSE);
+    int field = tuple_field_by_name (key);
+    Tuple * tuple = NULL;
     GVariant * var = NULL;
+
+    if (field >= 0)
+        tuple = playlist_entry_get_tuple (playlist_get_active (), pos, FALSE);
 
     if (tuple)
     {
         char * str;
 
-        switch (tuple_get_value_type (tuple, -1, key))
+        switch (tuple_get_value_type (tuple, field))
         {
         case TUPLE_STRING:
-            str = tuple_get_str (tuple, -1, key);
+            str = tuple_get_str (tuple, field);
             var = g_variant_new_string (str);
             str_unref (str);
             break;
 
         case TUPLE_INT:
-            var = g_variant_new_int32 (tuple_get_int (tuple, -1, key));
+            var = g_variant_new_int32 (tuple_get_int (tuple, field));
             break;
 
         default:

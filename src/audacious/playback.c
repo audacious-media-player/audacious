@@ -80,12 +80,12 @@ static void read_gain_from_tuple (const Tuple * tuple)
     if (tuple == NULL)
         return;
 
-    int album_gain = tuple_get_int (tuple, FIELD_GAIN_ALBUM_GAIN, NULL);
-    int album_peak = tuple_get_int (tuple, FIELD_GAIN_ALBUM_PEAK, NULL);
-    int track_gain = tuple_get_int (tuple, FIELD_GAIN_TRACK_GAIN, NULL);
-    int track_peak = tuple_get_int (tuple, FIELD_GAIN_TRACK_PEAK, NULL);
-    int gain_unit = tuple_get_int (tuple, FIELD_GAIN_GAIN_UNIT, NULL);
-    int peak_unit = tuple_get_int (tuple, FIELD_GAIN_PEAK_UNIT, NULL);
+    int album_gain = tuple_get_int (tuple, FIELD_GAIN_ALBUM_GAIN);
+    int album_peak = tuple_get_int (tuple, FIELD_GAIN_ALBUM_PEAK);
+    int track_gain = tuple_get_int (tuple, FIELD_GAIN_TRACK_GAIN);
+    int track_peak = tuple_get_int (tuple, FIELD_GAIN_TRACK_PEAK);
+    int gain_unit = tuple_get_int (tuple, FIELD_GAIN_GAIN_UNIT);
+    int peak_unit = tuple_get_int (tuple, FIELD_GAIN_PEAK_UNIT);
 
     if (gain_unit)
     {
@@ -362,15 +362,15 @@ static void * playback_thread (void * unused)
 
     if (tuple && playback_entry_get_length () > 0)
     {
-        if (tuple_get_value_type (tuple, FIELD_SEGMENT_START, NULL) == TUPLE_INT)
+        if (tuple_get_value_type (tuple, FIELD_SEGMENT_START) == TUPLE_INT)
         {
-            time_offset = tuple_get_int (tuple, FIELD_SEGMENT_START, NULL);
+            time_offset = tuple_get_int (tuple, FIELD_SEGMENT_START);
             if (time_offset)
                 seek_request = time_offset + MAX (seek_request, 0);
         }
 
-        if (tuple_get_value_type (tuple, FIELD_SEGMENT_END, NULL) == TUPLE_INT)
-            stop_time = tuple_get_int (tuple, FIELD_SEGMENT_END, NULL);
+        if (tuple_get_value_type (tuple, FIELD_SEGMENT_END) == TUPLE_INT)
+            stop_time = tuple_get_int (tuple, FIELD_SEGMENT_END);
     }
 
     if (tuple)

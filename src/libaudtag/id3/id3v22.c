@@ -217,8 +217,7 @@ static int get_frame_id (const char * key)
     return -1;
 }
 
-static void associate_string (Tuple * tuple, int field, const char *
- customfield, const unsigned char * data, int size)
+static void associate_string (Tuple * tuple, int field, const unsigned char * data, int size)
 {
     char * text = decode_text_frame (data, size);
 
@@ -228,17 +227,12 @@ static void associate_string (Tuple * tuple, int field, const char *
         return;
     }
 
-    if (customfield != NULL)
-        TAGDBG ("Custom field %s = %s.\n", customfield, text);
-    else
-        TAGDBG ("Field %i = %s.\n", field, text);
-
-    tuple_set_str (tuple, field, customfield, text);
+    TAGDBG ("Field %i = %s.\n", field, text);
+    tuple_set_str (tuple, field, text);
     g_free (text);
 }
 
-static void associate_int (Tuple * tuple, int field, const char *
- customfield, const unsigned char * data, int size)
+static void associate_int (Tuple * tuple, int field, const unsigned char * data, int size)
 {
     char * text = decode_text_frame (data, size);
 
@@ -248,12 +242,8 @@ static void associate_int (Tuple * tuple, int field, const char *
         return;
     }
 
-    if (customfield != NULL)
-        TAGDBG ("Custom field %s = %s.\n", customfield, text);
-    else
-        TAGDBG ("Field %i = %s.\n", field, text);
-
-    tuple_set_int (tuple, field, customfield, atoi (text));
+    TAGDBG ("Field %i = %s.\n", field, text);
+    tuple_set_int (tuple, field, atoi (text));
     g_free (text);
 }
 
@@ -267,13 +257,14 @@ static void decode_comment (Tuple * tuple, const unsigned char * data, int size)
     TAGDBG ("Comment: lang = %s, type = %s, value = %s.\n", lang, type, value);
 
     if (! type[0]) /* blank type == actual comment */
-        tuple_set_str (tuple, FIELD_COMMENT, NULL, value);
+        tuple_set_str (tuple, FIELD_COMMENT, value);
 
     g_free (lang);
     g_free (type);
     g_free (value);
 }
 
+#if 0
 static void decode_txx (Tuple * tuple, const unsigned char * data, int size)
 {
     char * text = decode_text_frame (data, size);
@@ -292,6 +283,7 @@ static void decode_txx (Tuple * tuple, const unsigned char * data, int size)
 
     g_free (text);
 }
+#endif
 
 static bool_t decode_rva_block (const unsigned char * * _data, int * _size, int *
  channel, int * adjustment, int * adjustment_unit, int * peak, int *
@@ -370,38 +362,34 @@ static void decode_rva (Tuple * tuple, const unsigned char * data, int size)
         if (channel != 1) /* specific channel? */
             continue;
 
-        if (tuple_get_value_type (tuple, FIELD_GAIN_GAIN_UNIT, NULL) ==
-         TUPLE_INT)
+        if (tuple_get_value_type (tuple, FIELD_GAIN_GAIN_UNIT) == TUPLE_INT)
             adjustment = adjustment * (int64_t) tuple_get_int (tuple,
-             FIELD_GAIN_GAIN_UNIT, NULL) / adjustment_unit;
+             FIELD_GAIN_GAIN_UNIT) / adjustment_unit;
         else
-            tuple_set_int (tuple, FIELD_GAIN_GAIN_UNIT, NULL,
-             adjustment_unit);
+            tuple_set_int (tuple, FIELD_GAIN_GAIN_UNIT, adjustment_unit);
 
         if (peak_unit)
         {
-            if (tuple_get_value_type (tuple, FIELD_GAIN_PEAK_UNIT, NULL) ==
-             TUPLE_INT)
+            if (tuple_get_value_type (tuple, FIELD_GAIN_PEAK_UNIT) == TUPLE_INT)
                 peak = peak * (int64_t) tuple_get_int (tuple,
-                 FIELD_GAIN_PEAK_UNIT, NULL) / peak_unit;
+                 FIELD_GAIN_PEAK_UNIT) / peak_unit;
             else
-                tuple_set_int (tuple, FIELD_GAIN_PEAK_UNIT, NULL,
-                 peak_unit);
+                tuple_set_int (tuple, FIELD_GAIN_PEAK_UNIT, peak_unit);
         }
 
         if (! g_ascii_strcasecmp (domain, "album"))
         {
-            tuple_set_int (tuple, FIELD_GAIN_ALBUM_GAIN, NULL, adjustment);
+            tuple_set_int (tuple, FIELD_GAIN_ALBUM_GAIN, adjustment);
 
             if (peak_unit)
-                tuple_set_int (tuple, FIELD_GAIN_ALBUM_PEAK, NULL, peak);
+                tuple_set_int (tuple, FIELD_GAIN_ALBUM_PEAK, peak);
         }
         else if (! g_ascii_strcasecmp (domain, "track"))
         {
-            tuple_set_int (tuple, FIELD_GAIN_TRACK_GAIN, NULL, adjustment);
+            tuple_set_int (tuple, FIELD_GAIN_TRACK_GAIN, adjustment);
 
             if (peak_unit)
-                tuple_set_int (tuple, FIELD_GAIN_TRACK_PEAK, NULL, peak);
+                tuple_set_int (tuple, FIELD_GAIN_TRACK_PEAK, peak);
         }
     }
 }
@@ -420,13 +408,11 @@ static void decode_genre (Tuple * tuple, const unsigned char * data, int size)
         numericgenre = atoi (text);
 
     if (numericgenre > 0)
-    {
-        tuple_set_str(tuple, FIELD_GENRE, NULL, convert_numericgenre_to_text(numericgenre));
-        return;
-    }
-    tuple_set_str(tuple, FIELD_GENRE, NULL, text);
+        tuple_set_str (tuple, FIELD_GENRE, convert_numericgenre_to_text (numericgenre));
+    else
+        tuple_set_str (tuple, FIELD_GENRE, text);
+
     g_free (text);
-    return;
 }
 
 static bool_t id3v22_can_handle_file (VFSFile * handle)
@@ -471,32 +457,32 @@ bool_t id3v22_read_tag (Tuple * tuple, VFSFile * handle)
         switch (id)
         {
           case ID3_ALBUM:
-            associate_string (tuple, FIELD_ALBUM, NULL, data, size);
+            associate_string (tuple, FIELD_ALBUM, data, size);
             break;
           case ID3_TITLE:
-            associate_string (tuple, FIELD_TITLE, NULL, data, size);
+            associate_string (tuple, FIELD_TITLE, data, size);
             break;
           case ID3_COMPOSER:
-            associate_string (tuple, FIELD_COMPOSER, NULL, data, size);
+            associate_string (tuple, FIELD_COMPOSER, data, size);
             break;
           case ID3_COPYRIGHT:
-            associate_string (tuple, FIELD_COPYRIGHT, NULL, data, size);
+            associate_string (tuple, FIELD_COPYRIGHT, data, size);
             break;
           case ID3_DATE:
-            associate_string (tuple, FIELD_DATE, NULL, data, size);
+            associate_string (tuple, FIELD_DATE, data, size);
             break;
           case ID3_LENGTH:
-            associate_int (tuple, FIELD_LENGTH, NULL, data, size);
+            associate_int (tuple, FIELD_LENGTH, data, size);
             break;
           case ID3_FUCKO_ARTIST:
           case ID3_ARTIST:
-            associate_string (tuple, FIELD_ARTIST, NULL, data, size);
+            associate_string (tuple, FIELD_ARTIST, data, size);
             break;
           case ID3_TRACKNR:
-            associate_int (tuple, FIELD_TRACK_NUMBER, NULL, data, size);
+            associate_int (tuple, FIELD_TRACK_NUMBER, data, size);
             break;
           case ID3_YEAR:
-            associate_int (tuple, FIELD_YEAR, NULL, data, size);
+            associate_int (tuple, FIELD_YEAR, data, size);
             break;
           case ID3_GENRE:
             decode_genre (tuple, data, size);
@@ -504,9 +490,11 @@ bool_t id3v22_read_tag (Tuple * tuple, VFSFile * handle)
           case ID3_COMMENT:
             decode_comment (tuple, data, size);
             break;
+#if 0
           case ID3_TXX:
             decode_txx (tuple, data, size);
             break;
+#endif
           case ID3_RVA:
             decode_rva (tuple, data, size);
             break;

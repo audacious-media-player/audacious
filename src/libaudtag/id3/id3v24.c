@@ -491,8 +491,7 @@ static int get_frame_id (const char * key)
     return -1;
 }
 
-static void associate_string (Tuple * tuple, int field, const char *
- customfield, const unsigned char * data, int size)
+static void associate_string (Tuple * tuple, int field, const unsigned char * data, int size)
 {
     char * text = decode_text_frame (data, size);
 
@@ -502,17 +501,12 @@ static void associate_string (Tuple * tuple, int field, const char *
         return;
     }
 
-    if (customfield != NULL)
-        TAGDBG ("Custom field %s = %s.\n", customfield, text);
-    else
-        TAGDBG ("Field %i = %s.\n", field, text);
-
-    tuple_set_str (tuple, field, customfield, text);
+    TAGDBG ("Field %i = %s.\n", field, text);
+    tuple_set_str (tuple, field, text);
     g_free (text);
 }
 
-static void associate_int (Tuple * tuple, int field, const char *
- customfield, const unsigned char * data, int size)
+static void associate_int (Tuple * tuple, int field, const unsigned char * data, int size)
 {
     char * text = decode_text_frame (data, size);
 
@@ -522,15 +516,12 @@ static void associate_int (Tuple * tuple, int field, const char *
         return;
     }
 
-    if (customfield != NULL)
-        TAGDBG ("Custom field %s = %s.\n", customfield, text);
-    else
-        TAGDBG ("Field %i = %s.\n", field, text);
-
-    tuple_set_int (tuple, field, customfield, atoi (text));
+    TAGDBG ("Field %i = %s.\n", field, text);
+    tuple_set_int (tuple, field, atoi (text));
     g_free (text);
 }
 
+#if 0
 static void decode_private_info (Tuple * tuple, const unsigned char * data, int size)
 {
     char * text = g_strndup ((const char *) data, size);
@@ -572,6 +563,7 @@ static void decode_private_info (Tuple * tuple, const unsigned char * data, int 
 DONE:
     g_free (text);
 }
+#endif
 
 static void decode_comment (Tuple * tuple, const unsigned char * data, int size)
 {
@@ -583,7 +575,7 @@ static void decode_comment (Tuple * tuple, const unsigned char * data, int size)
     TAGDBG ("Comment: lang = %s, type = %s, value = %s.\n", lang, type, value);
 
     if (! type[0]) /* blank type == actual comment */
-        tuple_set_str (tuple, FIELD_COMMENT, NULL, value);
+        tuple_set_str (tuple, FIELD_COMMENT, value);
 
     g_free (lang);
     g_free (type);
@@ -667,38 +659,34 @@ static void decode_rva2 (Tuple * tuple, const unsigned char * data, int size)
         if (channel != 1) /* specific channel? */
             continue;
 
-        if (tuple_get_value_type (tuple, FIELD_GAIN_GAIN_UNIT, NULL) ==
-         TUPLE_INT)
+        if (tuple_get_value_type (tuple, FIELD_GAIN_GAIN_UNIT) == TUPLE_INT)
             adjustment = adjustment * (int64_t) tuple_get_int (tuple,
-             FIELD_GAIN_GAIN_UNIT, NULL) / adjustment_unit;
+             FIELD_GAIN_GAIN_UNIT) / adjustment_unit;
         else
-            tuple_set_int (tuple, FIELD_GAIN_GAIN_UNIT, NULL,
-             adjustment_unit);
+            tuple_set_int (tuple, FIELD_GAIN_GAIN_UNIT, adjustment_unit);
 
         if (peak_unit)
         {
-            if (tuple_get_value_type (tuple, FIELD_GAIN_PEAK_UNIT, NULL) ==
-             TUPLE_INT)
+            if (tuple_get_value_type (tuple, FIELD_GAIN_PEAK_UNIT) == TUPLE_INT)
                 peak = peak * (int64_t) tuple_get_int (tuple,
-                 FIELD_GAIN_PEAK_UNIT, NULL) / peak_unit;
+                 FIELD_GAIN_PEAK_UNIT) / peak_unit;
             else
-                tuple_set_int (tuple, FIELD_GAIN_PEAK_UNIT, NULL,
-                 peak_unit);
+                tuple_set_int (tuple, FIELD_GAIN_PEAK_UNIT, peak_unit);
         }
 
         if (! g_ascii_strcasecmp (domain, "album"))
         {
-            tuple_set_int (tuple, FIELD_GAIN_ALBUM_GAIN, NULL, adjustment);
+            tuple_set_int (tuple, FIELD_GAIN_ALBUM_GAIN, adjustment);
 
             if (peak_unit)
-                tuple_set_int (tuple, FIELD_GAIN_ALBUM_PEAK, NULL, peak);
+                tuple_set_int (tuple, FIELD_GAIN_ALBUM_PEAK, peak);
         }
         else if (! g_ascii_strcasecmp (domain, "track"))
         {
-            tuple_set_int (tuple, FIELD_GAIN_TRACK_GAIN, NULL, adjustment);
+            tuple_set_int (tuple, FIELD_GAIN_TRACK_GAIN, adjustment);
 
             if (peak_unit)
-                tuple_set_int (tuple, FIELD_GAIN_TRACK_PEAK, NULL, peak);
+                tuple_set_int (tuple, FIELD_GAIN_TRACK_PEAK, peak);
         }
     }
 }
@@ -717,10 +705,9 @@ static void decode_genre (Tuple * tuple, const unsigned char * data, int size)
         numericgenre = atoi (text);
 
     if (numericgenre > 0)
-        tuple_set_str (tuple, FIELD_GENRE, NULL,
-         convert_numericgenre_to_text (numericgenre));
+        tuple_set_str (tuple, FIELD_GENRE, convert_numericgenre_to_text (numericgenre));
     else
-        tuple_set_str (tuple, FIELD_GENRE, NULL, text);
+        tuple_set_str (tuple, FIELD_GENRE, text);
 
     g_free (text);
     return;
@@ -783,7 +770,7 @@ static void add_comment_frame (const char * text, GHashTable * dict)
 static void add_frameFromTupleStr (const Tuple * tuple, int field, int
  id3_field, GHashTable * dict)
 {
-    char * str = tuple_get_str (tuple, field, NULL);
+    char * str = tuple_get_str (tuple, field);
     add_text_frame (id3_field, str, dict);
     str_unref (str);
 }
@@ -791,14 +778,14 @@ static void add_frameFromTupleStr (const Tuple * tuple, int field, int
 static void add_frameFromTupleInt (const Tuple * tuple, int field, int
  id3_field, GHashTable * dict)
 {
-    if (tuple_get_value_type (tuple, field, NULL) != TUPLE_INT)
+    if (tuple_get_value_type (tuple, field) != TUPLE_INT)
     {
         remove_frame (id3_field, dict);
         return;
     }
 
     char scratch[16];
-    snprintf (scratch, sizeof scratch, "%d", tuple_get_int (tuple, field, NULL));
+    snprintf (scratch, sizeof scratch, "%d", tuple_get_int (tuple, field));
     add_text_frame (id3_field, scratch, dict);
 }
 
@@ -838,32 +825,32 @@ static bool_t id3v24_read_tag (Tuple * tuple, VFSFile * handle)
         switch (id)
         {
           case ID3_ALBUM:
-            associate_string (tuple, FIELD_ALBUM, NULL, data, size);
+            associate_string (tuple, FIELD_ALBUM, data, size);
             break;
           case ID3_TITLE:
-            associate_string (tuple, FIELD_TITLE, NULL, data, size);
+            associate_string (tuple, FIELD_TITLE, data, size);
             break;
           case ID3_COMPOSER:
-            associate_string (tuple, FIELD_COMPOSER, NULL, data, size);
+            associate_string (tuple, FIELD_COMPOSER, data, size);
             break;
           case ID3_COPYRIGHT:
-            associate_string (tuple, FIELD_COPYRIGHT, NULL, data, size);
+            associate_string (tuple, FIELD_COPYRIGHT, data, size);
             break;
           case ID3_DATE:
-            associate_string (tuple, FIELD_DATE, NULL, data, size);
+            associate_string (tuple, FIELD_DATE, data, size);
             break;
           case ID3_LENGTH:
-            associate_int (tuple, FIELD_LENGTH, NULL, data, size);
+            associate_int (tuple, FIELD_LENGTH, data, size);
             break;
           case ID3_ARTIST:
-            associate_string (tuple, FIELD_ARTIST, NULL, data, size);
+            associate_string (tuple, FIELD_ARTIST, data, size);
             break;
           case ID3_TRACKNR:
-            associate_int (tuple, FIELD_TRACK_NUMBER, NULL, data, size);
+            associate_int (tuple, FIELD_TRACK_NUMBER, data, size);
             break;
           case ID3_YEAR:
           case ID3_RECORDING_TIME:
-            associate_int (tuple, FIELD_YEAR, NULL, data, size);
+            associate_int (tuple, FIELD_YEAR, data, size);
             break;
           case ID3_GENRE:
             decode_genre (tuple, data, size);
@@ -871,9 +858,11 @@ static bool_t id3v24_read_tag (Tuple * tuple, VFSFile * handle)
           case ID3_COMMENT:
             decode_comment (tuple, data, size);
             break;
+#if 0
           case ID3_PRIVATE:
             decode_private_info (tuple, data, size);
             break;
+#endif
           case ID3_RVA2:
             decode_rva2 (tuple, data, size);
             break;
@@ -985,7 +974,7 @@ static bool_t id3v24_write_tag (const Tuple * tuple, VFSFile * f)
     add_frameFromTupleInt (tuple, FIELD_TRACK_NUMBER, ID3_TRACKNR, dict);
     add_frameFromTupleStr (tuple, FIELD_GENRE, ID3_GENRE, dict);
 
-    char * comment = tuple_get_str (tuple, FIELD_COMMENT, NULL);
+    char * comment = tuple_get_str (tuple, FIELD_COMMENT);
     add_comment_frame (comment, dict);
     str_unref (comment);
 
