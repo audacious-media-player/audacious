@@ -405,10 +405,10 @@ int plugin_compare (PluginHandle * a, PluginHandle * b)
         return 1;
 
     int diff;
-    if ((diff = string_compare (dgettext (a->domain, a->name), dgettext (b->domain, b->name))))
+    if ((diff = str_compare (dgettext (a->domain, a->name), dgettext (b->domain, b->name))))
         return diff;
 
-    return string_compare (a->path, b->path);
+    return str_compare (a->path, b->path);
 }
 
 void plugin_registry_prune (void)

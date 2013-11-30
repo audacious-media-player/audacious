@@ -73,7 +73,7 @@ EXPORT char * str_to_utf8_full (const char * str, int len, int * bytes_read, int
     return str_to_utf8_full_impl (str, len, bytes_read, bytes_written);
 }
 
-EXPORT void string_replace_char (char * string, char old_c, char new_c)
+EXPORT void str_replace_char (char * string, char old_c, char new_c)
 {
     while ((string = strchr (string, old_c)))
         * string ++ = new_c;
@@ -150,7 +150,7 @@ EXPORT char * filename_to_uri (const char * name)
     }
 
 #ifdef _WIN32
-    string_replace_char (utf8, '\\', '/');
+    str_replace_char (utf8, '\\', '/');
 #endif
     char enc[3 * strlen (utf8) + 1];
     str_encode_percent (utf8, -1, enc);
@@ -180,7 +180,7 @@ EXPORT char * uri_to_filename (const char * uri)
     str_decode_percent (uri + 7, -1, buf);
 #endif
 #ifdef _WIN32
-    string_replace_char (buf, '/', '\\');
+    str_replace_char (buf, '/', '\\');
 #endif
 
     char * name = g_locale_from_utf8 (buf, -1, NULL, NULL, NULL);
@@ -207,7 +207,7 @@ EXPORT char * uri_to_display (const char * uri)
     if (! strncmp (uri, "file:///", 8))
     {
         str_decode_percent (uri + 8, -1, buf);
-        string_replace_char (buf, '/', '\\');
+        str_replace_char (buf, '/', '\\');
     }
 #else
     if (! strncmp (uri, "file://", 7))
@@ -278,7 +278,7 @@ EXPORT bool_t uri_get_extension (const char * uri, char * buf, int buflen)
 /* Non-ASCII characters are treated exactly as is. */
 /* Handles NULL gracefully. */
 
-EXPORT int string_compare (const char * ap, const char * bp)
+EXPORT int str_compare (const char * ap, const char * bp)
 {
     if (ap == NULL)
         return (bp == NULL) ? 0 : -1;
@@ -320,9 +320,9 @@ EXPORT int string_compare (const char * ap, const char * bp)
     return 0;
 }
 
-/* Decodes percent-encoded strings, then compares then with string_compare. */
+/* Decodes percent-encoded strings, then compares then with str_compare. */
 
-EXPORT int string_compare_encoded (const char * ap, const char * bp)
+EXPORT int str_compare_encoded (const char * ap, const char * bp)
 {
     if (ap == NULL)
         return (bp == NULL) ? 0 : -1;
@@ -390,7 +390,7 @@ EXPORT int string_compare_encoded (const char * ap, const char * bp)
  * have an accuracy of 6 decimal places.
  */
 
-EXPORT bool_t string_to_int (const char * string, int * addr)
+EXPORT bool_t str_to_int (const char * string, int * addr)
 {
     bool_t neg = (string[0] == '-');
     if (neg)
@@ -417,7 +417,7 @@ ERR:
     return FALSE;
 }
 
-EXPORT bool_t string_to_double (const char * string, double * addr)
+EXPORT bool_t str_to_double (const char * string, double * addr)
 {
     bool_t neg = (string[0] == '-');
     if (neg)
@@ -438,7 +438,7 @@ EXPORT bool_t string_to_double (const char * string, double * addr)
         memcpy (buf, string, len);
         buf[len] = 0;
 
-        if (! string_to_int (buf, & i))
+        if (! str_to_int (buf, & i))
             goto ERR;
 
         len = strlen (p + 1);
@@ -449,12 +449,12 @@ EXPORT bool_t string_to_double (const char * string, double * addr)
         memset (buf + len, '0', 6 - len);
         buf[6] = 0;
 
-        if (! string_to_int (buf, & f))
+        if (! str_to_int (buf, & f))
             goto ERR;
     }
     else
     {
-        if (! string_to_int (string, & i))
+        if (! str_to_int (string, & i))
             goto ERR;
 
         f = 0;
@@ -471,13 +471,13 @@ ERR:
     return FALSE;
 }
 
-EXPORT char * int_to_string (int val)
+EXPORT char * int_to_str (int val)
 {
     g_return_val_if_fail (val >= -1000000000 && val <= 1000000000, NULL);
     return g_strdup_printf ("%d", val);
 }
 
-EXPORT char * double_to_string (double val)
+EXPORT char * double_to_str (double val)
 {
     g_return_val_if_fail (val >= -1000000000 && val <= 1000000000, NULL);
 
@@ -506,7 +506,7 @@ EXPORT char * double_to_string (double val)
     return s;
 }
 
-EXPORT bool_t string_to_int_array (const char * string, int * array, int count)
+EXPORT bool_t str_to_int_array (const char * string, int * array, int count)
 {
     char * * split = g_strsplit (string, ",", -1);
     if (g_strv_length (split) != count)
@@ -514,7 +514,7 @@ EXPORT bool_t string_to_int_array (const char * string, int * array, int count)
 
     for (int i = 0; i < count; i ++)
     {
-        if (! string_to_int (split[i], & array[i]))
+        if (! str_to_int (split[i], & array[i]))
             goto ERR;
     }
 
@@ -526,13 +526,13 @@ ERR:
     return FALSE;
 }
 
-EXPORT char * int_array_to_string (const int * array, int count)
+EXPORT char * int_array_to_str (const int * array, int count)
 {
     char * * split = g_malloc0 (sizeof (char *) * (count + 1));
 
     for (int i = 0; i < count; i ++)
     {
-        split[i] = int_to_string (array[i]);
+        split[i] = int_to_str (array[i]);
         if (! split[i])
             goto ERR;
     }
@@ -546,7 +546,7 @@ ERR:
     return NULL;
 }
 
-EXPORT bool_t string_to_double_array (const char * string, double * array, int count)
+EXPORT bool_t str_to_double_array (const char * string, double * array, int count)
 {
     char * * split = g_strsplit (string, ",", -1);
     if (g_strv_length (split) != count)
@@ -554,7 +554,7 @@ EXPORT bool_t string_to_double_array (const char * string, double * array, int c
 
     for (int i = 0; i < count; i ++)
     {
-        if (! string_to_double (split[i], & array[i]))
+        if (! str_to_double (split[i], & array[i]))
             goto ERR;
     }
 
@@ -566,13 +566,13 @@ ERR:
     return FALSE;
 }
 
-EXPORT char * double_array_to_string (const double * array, int count)
+EXPORT char * double_array_to_str (const double * array, int count)
 {
     char * * split = g_malloc0 (sizeof (char *) * (count + 1));
 
     for (int i = 0; i < count; i ++)
     {
-        split[i] = double_to_string (array[i]);
+        split[i] = double_to_str (array[i]);
         if (! split[i])
             goto ERR;
     }

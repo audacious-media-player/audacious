@@ -283,7 +283,7 @@ static void add_folder (char * filename, PlaylistFilterFunc filter,
         result->title = str_get (last ? last : path);
     }
 
-    files = g_list_sort (files, (GCompareFunc) string_compare);
+    files = g_list_sort (files, (GCompareFunc) str_compare);
 
     while (files)
     {

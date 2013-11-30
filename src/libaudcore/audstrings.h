@@ -30,7 +30,7 @@ void str_set_utf8_impl (char * (* stu_impl) (const char *),
 char * str_to_utf8 (const char * str);
 char * str_to_utf8_full (const char * str, int len, int * bytes_read, int * bytes_written);
 
-void string_replace_char (char * string, char old_c, char new_c);
+void str_replace_char (char * string, char old_c, char new_c);
 
 void str_decode_percent (const char * str, int len, char * out);
 void str_encode_percent (const char * str, int len, char * out);
@@ -43,17 +43,17 @@ void uri_parse (const char * uri, const char * * base_p, const char * * ext_p,
  const char * * sub_p, int * isub_p);
 bool_t uri_get_extension (const char * uri, char * buf, int buflen);
 
-int string_compare (const char * a, const char * b);
-int string_compare_encoded (const char * a, const char * b);
+int str_compare (const char * a, const char * b);
+int str_compare_encoded (const char * a, const char * b);
 
-bool_t string_to_int (const char * string, int * addr);
-bool_t string_to_double (const char * string, double * addr);
-char * int_to_string (int val);
-char * double_to_string (double val);
+bool_t str_to_int (const char * string, int * addr);
+bool_t str_to_double (const char * string, double * addr);
+char * int_to_str (int val);
+char * double_to_str (double val);
 
-bool_t string_to_int_array (const char * string, int * array, int count);
-char * int_array_to_string (const int * array, int count);
-bool_t string_to_double_array (const char * string, double * array, int count);
-char * double_array_to_string (const double * array, int count);
+bool_t str_to_int_array (const char * string, int * array, int count);
+char * int_array_to_str (const int * array, int count);
+bool_t str_to_double_array (const char * string, double * array, int count);
+char * double_array_to_str (const double * array, int count);
 
 #endif /* LIBAUDCORE_STRINGS_H */

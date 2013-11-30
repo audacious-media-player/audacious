@@ -182,7 +182,7 @@ void eq_cleanup (void)
 
 void eq_set_bands (const double *values)
 {
-    char *string = double_array_to_string (values, EQ_BANDS);
+    char *string = double_array_to_str (values, EQ_BANDS);
     g_return_if_fail (string);
     set_string (NULL, "equalizer_bands", string);
     g_free (string);
@@ -192,7 +192,7 @@ void eq_get_bands (double *values)
 {
     memset (values, 0, sizeof (double) * EQ_BANDS);
     char *string = get_string (NULL, "equalizer_bands");
-    string_to_double_array (string, values, EQ_BANDS);
+    str_to_double_array (string, values, EQ_BANDS);
     g_free (string);
 }
 

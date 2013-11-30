@@ -64,7 +64,7 @@ static bool_t configure_cb (GtkWidget * window, GdkEventConfigure * event, const
         gtk_window_get_position ((GtkWindow *) window, & pos[0], & pos[1]);
         gtk_window_get_size ((GtkWindow *) window, & pos[2], & pos[3]);
 
-        char * str = int_array_to_string (pos, 4);
+        char * str = int_array_to_str (pos, 4);
         aud_set_string ("audgui", name, str);
         g_free (str);
     }
@@ -87,7 +87,7 @@ void audgui_show_unique_window (int id, GtkWidget * widget)
         char * str = aud_get_string ("audgui", window_names[id]);
         int pos[4];
 
-        if (string_to_int_array (str, pos, 4))
+        if (str_to_int_array (str, pos, 4))
         {
             gtk_window_move ((GtkWindow *) widget, pos[0], pos[1]);
             gtk_window_set_default_size ((GtkWindow *) widget, pos[2], pos[3]);

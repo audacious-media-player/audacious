@@ -38,7 +38,7 @@ static const char * get_basename (const char * filename)
 
 static int filename_compare_basename (const char * a, const char * b)
 {
-    return string_compare_encoded (get_basename (a), get_basename (b));
+    return str_compare_encoded (get_basename (a), get_basename (b));
 }
 
 static int tuple_compare_string (const Tuple * a, const Tuple * b, int field)
@@ -52,7 +52,7 @@ static int tuple_compare_string (const Tuple * a, const Tuple * b, int field)
     else if (string_b == NULL)
         ret = 1;
     else
-        ret = string_compare (string_a, string_b);
+        ret = str_compare (string_a, string_b);
 
     str_unref (string_a);
     str_unref (string_b);
@@ -103,7 +103,7 @@ static int tuple_compare_length (const Tuple * a, const Tuple * b)
 }
 
 static const PlaylistStringCompareFunc filename_comparisons[] = {
- [PLAYLIST_SORT_PATH] = string_compare_encoded,
+ [PLAYLIST_SORT_PATH] = str_compare_encoded,
  [PLAYLIST_SORT_FILENAME] = filename_compare_basename,
  [PLAYLIST_SORT_TITLE] = NULL,
  [PLAYLIST_SORT_ALBUM] = NULL,
@@ -132,7 +132,7 @@ static const PlaylistStringCompareFunc title_comparisons[] = {
  [PLAYLIST_SORT_ARTIST] = NULL,
  [PLAYLIST_SORT_DATE] = NULL,
  [PLAYLIST_SORT_TRACK] = NULL,
- [PLAYLIST_SORT_FORMATTED_TITLE] = string_compare,
+ [PLAYLIST_SORT_FORMATTED_TITLE] = str_compare,
  [PLAYLIST_SORT_LENGTH] = NULL};
 
 void playlist_sort_by_scheme (int playlist, int scheme)

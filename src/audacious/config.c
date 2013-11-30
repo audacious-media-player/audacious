@@ -301,7 +301,7 @@ bool_t get_bool (const char * section, const char * name)
 
 void set_int (const char * section, const char * name, int value)
 {
-    char * string = int_to_string (value);
+    char * string = int_to_str (value);
     g_return_if_fail (string);
     set_string (section, name, string);
     g_free (string);
@@ -311,14 +311,14 @@ int get_int (const char * section, const char * name)
 {
     int value = 0;
     char * string = get_string (section, name);
-    string_to_int (string, & value);
+    str_to_int (string, & value);
     g_free (string);
     return value;
 }
 
 void set_double (const char * section, const char * name, double value)
 {
-    char * string = double_to_string (value);
+    char * string = double_to_str (value);
     g_return_if_fail (string);
     set_string (section, name, string);
     g_free (string);
@@ -328,7 +328,7 @@ double get_double (const char * section, const char * name)
 {
     double value = 0;
     char * string = get_string (section, name);
-    string_to_double (string, & value);
+    str_to_double (string, & value);
     g_free (string);
     return value;
 }

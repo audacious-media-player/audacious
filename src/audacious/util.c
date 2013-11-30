@@ -96,7 +96,7 @@ char * construct_uri (const char * string, const char * playlist_name)
     {
         char tmp[rellen + 1];
         strcpy (tmp, string);
-        string_replace_char (tmp, '\\', '/');
+        str_replace_char (tmp, '\\', '/');
         str_encode_percent (tmp, -1, buf + pathlen);
     }
     else
@@ -428,7 +428,7 @@ DONE:
 void normalize_path (char * path)
 {
 #ifdef _WIN32
-    string_replace_char (path, '/', '\\');
+    str_replace_char (path, '/', '\\');
 #endif
 
     int len = strlen (path);
