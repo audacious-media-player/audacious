@@ -91,7 +91,7 @@ AC_ARG_ENABLE(chardet,
  USE_CHARDET=$enableval, USE_CHARDET=auto)
 
 if test $USE_CHARDET != no ; then
-    PKG_CHECK_MODULES(LIBGUESS, libguess >= 1.1, have_libguess=yes, have_libguess=no)
+    PKG_CHECK_MODULES(LIBGUESS, libguess >= 1.2, have_libguess=yes, have_libguess=no)
     if test $have_libguess = yes ; then
         USE_CHARDET=yes
         AC_DEFINE(USE_CHARDET, 1, [Define if character set detection enabled])
