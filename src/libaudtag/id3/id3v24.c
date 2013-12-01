@@ -95,7 +95,7 @@ ID3v2FrameHeader;
 typedef struct
 {
     char key[5];
-    unsigned char * data;
+    char * data;
     int size;
 }
 GenericFrame;
@@ -263,15 +263,15 @@ static bool_t read_header (VFSFile * handle, int * version, bool_t *
     return TRUE;
 }
 
-static int unsyncsafe (unsigned char * data, int size)
+static int unsyncsafe (char * data, int size)
 {
-    unsigned char * get = data, * set = data;
+    char * get = data, * set = data;
 
     while (size --)
     {
-        unsigned char c = * set ++ = * get ++;
+        char c = * set ++ = * get ++;
 
-        if (c == 0xff && size && ! get[0])
+        if (c == (char) 0xff && size && ! get[0])
         {
             size --;
             get ++;
@@ -282,7 +282,7 @@ static int unsyncsafe (unsigned char * data, int size)
 }
 
 static bool_t read_frame (VFSFile * handle, int max_size, int version,
- bool_t syncsafe, int * frame_size, char * key, unsigned char * * data, int * size)
+ bool_t syncsafe, int * frame_size, char * key, char * * data, int * size)
 {
     ID3v2FrameHeader header;
     int skip = 0;
@@ -339,32 +339,6 @@ static bool_t read_frame (VFSFile * handle, int max_size, int version,
     return TRUE;
 }
 
-static char * decode_text_frame (const unsigned char * data, int size)
-{
-    return convert_text ((const char *) data + 1, size - 1, data[0], FALSE,
-     NULL, NULL);
-}
-
-static bool_t decode_comment_frame (const unsigned char * _data, int size, char * *
- lang, char * * type, char * * value)
-{
-    const char * data = (const char *) _data;
-    char * pair, * sep;
-    int converted;
-
-    pair = convert_text (data + 4, size - 4, data[0], FALSE, & converted, NULL);
-
-    if (pair == NULL || (sep = memchr (pair, 0, converted)) == NULL)
-        return FALSE;
-
-    * lang = g_strndup (data + 1, 3);
-    * type = g_strdup (pair);
-    * value = g_strdup (sep + 1);
-
-    g_free (pair);
-    return TRUE;
-}
-
 static void free_frame (GenericFrame * frame)
 {
     g_free (frame->data);
@@ -388,7 +362,7 @@ static void read_all_frames (VFSFile * handle, int version, bool_t syncsafe,
     {
         int frame_size, size;
         char key[5];
-        unsigned char * data;
+        char * data;
         GenericFrame * frame;
 
         if (! read_frame (handle, data_size - pos, version, syncsafe,
@@ -491,36 +465,6 @@ static int get_frame_id (const char * key)
     return -1;
 }
 
-static void associate_string (Tuple * tuple, int field, const unsigned char * data, int size)
-{
-    char * text = decode_text_frame (data, size);
-
-    if (text == NULL || ! text[0])
-    {
-        g_free (text);
-        return;
-    }
-
-    TAGDBG ("Field %i = %s.\n", field, text);
-    tuple_set_str (tuple, field, text);
-    g_free (text);
-}
-
-static void associate_int (Tuple * tuple, int field, const unsigned char * data, int size)
-{
-    char * text = decode_text_frame (data, size);
-
-    if (text == NULL || atoi (text) < 1)
-    {
-        g_free (text);
-        return;
-    }
-
-    TAGDBG ("Field %i = %s.\n", field, text);
-    tuple_set_int (tuple, field, atoi (text));
-    g_free (text);
-}
-
 #if 0
 static void decode_private_info (Tuple * tuple, const unsigned char * data, int size)
 {
@@ -564,154 +508,6 @@ DONE:
     g_free (text);
 }
 #endif
-
-static void decode_comment (Tuple * tuple, const unsigned char * data, int size)
-{
-    char * lang, * type, * value;
-
-    if (! decode_comment_frame (data, size, & lang, & type, & value))
-        return;
-
-    TAGDBG ("Comment: lang = %s, type = %s, value = %s.\n", lang, type, value);
-
-    if (! type[0]) /* blank type == actual comment */
-        tuple_set_str (tuple, FIELD_COMMENT, value);
-
-    g_free (lang);
-    g_free (type);
-    g_free (value);
-}
-
-static bool_t decode_rva2_block (const unsigned char * * _data, int * _size, int *
- channel, int * adjustment, int * adjustment_unit, int * peak, int *
- peak_unit)
-{
-    const unsigned char * data = * _data;
-    int size = * _size;
-    int peak_bits;
-
-    if (size < 4)
-        return FALSE;
-
-    * channel = data[0];
-    * adjustment = (char) data[1]; /* first byte is signed */
-    * adjustment = (* adjustment << 8) | data[2];
-    * adjustment_unit = 512;
-    peak_bits = data[3];
-
-    data += 4;
-    size -= 4;
-
-    TAGDBG ("RVA2 block: channel = %d, adjustment = %d/%d, peak bits = %d\n",
-     * channel, * adjustment, * adjustment_unit, peak_bits);
-
-    if (peak_bits > 0 && peak_bits < sizeof (int) * 8)
-    {
-        int bytes = (peak_bits + 7) / 8;
-        int count;
-
-        if (bytes > size)
-            return FALSE;
-
-        * peak = 0;
-        * peak_unit = 1 << peak_bits;
-
-        for (count = 0; count < bytes; count ++)
-            * peak = (* peak << 8) | data[count];
-
-        data += bytes;
-        size -= count;
-
-        TAGDBG ("RVA2 block: peak = %d/%d\n", * peak, * peak_unit);
-    }
-    else
-    {
-        * peak = 0;
-        * peak_unit = 0;
-    }
-
-    * _data = data;
-    * _size = size;
-    return TRUE;
-}
-
-static void decode_rva2 (Tuple * tuple, const unsigned char * data, int size)
-{
-    const char * domain;
-    int channel, adjustment, adjustment_unit, peak, peak_unit;
-
-    if (memchr (data, 0, size) == NULL)
-        return;
-
-    domain = (const char *) data;
-
-    TAGDBG ("RVA2 domain: %s\n", domain);
-
-    size -= strlen (domain) + 1;
-    data += strlen (domain) + 1;
-
-    while (size > 0)
-    {
-        if (! decode_rva2_block (& data, & size, & channel, & adjustment,
-         & adjustment_unit, & peak, & peak_unit))
-            break;
-
-        if (channel != 1) /* specific channel? */
-            continue;
-
-        if (tuple_get_value_type (tuple, FIELD_GAIN_GAIN_UNIT) == TUPLE_INT)
-            adjustment = adjustment * (int64_t) tuple_get_int (tuple,
-             FIELD_GAIN_GAIN_UNIT) / adjustment_unit;
-        else
-            tuple_set_int (tuple, FIELD_GAIN_GAIN_UNIT, adjustment_unit);
-
-        if (peak_unit)
-        {
-            if (tuple_get_value_type (tuple, FIELD_GAIN_PEAK_UNIT) == TUPLE_INT)
-                peak = peak * (int64_t) tuple_get_int (tuple,
-                 FIELD_GAIN_PEAK_UNIT) / peak_unit;
-            else
-                tuple_set_int (tuple, FIELD_GAIN_PEAK_UNIT, peak_unit);
-        }
-
-        if (! g_ascii_strcasecmp (domain, "album"))
-        {
-            tuple_set_int (tuple, FIELD_GAIN_ALBUM_GAIN, adjustment);
-
-            if (peak_unit)
-                tuple_set_int (tuple, FIELD_GAIN_ALBUM_PEAK, peak);
-        }
-        else if (! g_ascii_strcasecmp (domain, "track"))
-        {
-            tuple_set_int (tuple, FIELD_GAIN_TRACK_GAIN, adjustment);
-
-            if (peak_unit)
-                tuple_set_int (tuple, FIELD_GAIN_TRACK_PEAK, peak);
-        }
-    }
-}
-
-static void decode_genre (Tuple * tuple, const unsigned char * data, int size)
-{
-    int numericgenre;
-    char * text = decode_text_frame (data, size);
-
-    if (text == NULL)
-        return;
-
-    if (text[0] == '(')
-        numericgenre = atoi (text + 1);
-    else
-        numericgenre = atoi (text);
-
-    if (numericgenre > 0)
-        tuple_set_str (tuple, FIELD_GENRE, convert_numericgenre_to_text (numericgenre));
-    else
-        tuple_set_str (tuple, FIELD_GENRE, text);
-
-    g_free (text);
-    return;
-}
 
 static GenericFrame * add_generic_frame (int id, int size,
  GHashTable * dict)
@@ -814,7 +610,7 @@ static bool_t id3v24_read_tag (Tuple * tuple, VFSFile * handle)
     {
         int frame_size, size, id;
         char key[5];
-        unsigned char * data;
+        char * data;
 
         if (! read_frame (handle, data_size - pos, version, syncsafe,
          & frame_size, key, & data, & size))
@@ -825,38 +621,38 @@ static bool_t id3v24_read_tag (Tuple * tuple, VFSFile * handle)
         switch (id)
         {
           case ID3_ALBUM:
-            associate_string (tuple, FIELD_ALBUM, data, size);
+            id3_associate_string (tuple, FIELD_ALBUM, data, size);
             break;
           case ID3_TITLE:
-            associate_string (tuple, FIELD_TITLE, data, size);
+            id3_associate_string (tuple, FIELD_TITLE, data, size);
             break;
           case ID3_COMPOSER:
-            associate_string (tuple, FIELD_COMPOSER, data, size);
+            id3_associate_string (tuple, FIELD_COMPOSER, data, size);
             break;
           case ID3_COPYRIGHT:
-            associate_string (tuple, FIELD_COPYRIGHT, data, size);
+            id3_associate_string (tuple, FIELD_COPYRIGHT, data, size);
             break;
           case ID3_DATE:
-            associate_string (tuple, FIELD_DATE, data, size);
+            id3_associate_string (tuple, FIELD_DATE, data, size);
             break;
           case ID3_LENGTH:
-            associate_int (tuple, FIELD_LENGTH, data, size);
+            id3_associate_int (tuple, FIELD_LENGTH, data, size);
             break;
           case ID3_ARTIST:
-            associate_string (tuple, FIELD_ARTIST, data, size);
+            id3_associate_string (tuple, FIELD_ARTIST, data, size);
             break;
           case ID3_TRACKNR:
-            associate_int (tuple, FIELD_TRACK_NUMBER, data, size);
+            id3_associate_int (tuple, FIELD_TRACK_NUMBER, data, size);
             break;
           case ID3_YEAR:
           case ID3_RECORDING_TIME:
-            associate_int (tuple, FIELD_YEAR, data, size);
+            id3_associate_int (tuple, FIELD_YEAR, data, size);
             break;
           case ID3_GENRE:
-            decode_genre (tuple, data, size);
+            id3_decode_genre (tuple, data, size);
             break;
           case ID3_COMMENT:
-            decode_comment (tuple, data, size);
+            id3_decode_comment (tuple, data, size);
             break;
 #if 0
           case ID3_PRIVATE:
@@ -864,7 +660,7 @@ static bool_t id3v24_read_tag (Tuple * tuple, VFSFile * handle)
             break;
 #endif
           case ID3_RVA2:
-            decode_rva2 (tuple, data, size);
+            id3_decode_rva (tuple, data, size);
             break;
           default:
             TAGDBG ("Ignoring unsupported ID3 frame %s.\n", key);
@@ -878,33 +674,10 @@ static bool_t id3v24_read_tag (Tuple * tuple, VFSFile * handle)
     return TRUE;
 }
 
-static bool_t parse_apic (const unsigned char * _data, int size, char * * mime,
- int * type, char * * desc, void * * image_data, int * image_size)
-{
-    const char * data = (const char *) _data;
-    const char * sep, * after;
-
-    if (size < 2 || (sep = memchr (data + 1, 0, size - 2)) == NULL)
-        return FALSE;
-
-    if ((* desc = convert_text (sep + 2, data + size - sep - 2, data[0], TRUE,
-     NULL, & after)) == NULL)
-        return FALSE;
-
-    * mime = g_strdup (data + 1);
-    * type = sep[1];
-    * image_data = g_memdup (after, data + size - after);
-    * image_size = data + size - after;
-
-    TAGDBG ("APIC: mime = %s, type = %d, desc = %s, size = %d.\n", * mime,
-     * type, * desc, * image_size);
-    return TRUE;
-}
-
 static bool_t id3v24_read_image (VFSFile * handle, void * * image_data,
- int64_t * image_size64)
+ int64_t * image_size)
 {
-    int version, header_size, data_size, footer_size, parsed, image_size = 0;
+    int version, header_size, data_size, footer_size, parsed;
     bool_t syncsafe;
     int64_t offset;
     bool_t found = FALSE;
@@ -917,19 +690,15 @@ static bool_t id3v24_read_image (VFSFile * handle, void * * image_data,
     {
         int frame_size, size, type;
         char key[5];
-        unsigned char * data;
-        char * mime, * desc;
+        char * data;
 
         if (! read_frame (handle, data_size - parsed, version, syncsafe,
          & frame_size, key, & data, & size))
             break;
 
-        if (! strcmp (key, "APIC") && parse_apic (data, size, & mime, & type,
-         & desc, image_data, & image_size))
+        if (! strcmp (key, "APIC") && id3_decode_picture (data, size, & type,
+         image_data, image_size))
         {
-            g_free (mime);
-            g_free (desc);
-
             if (type == 3) /* album cover */
                 found = TRUE;
             else if (type == 0) /* iTunes */
@@ -944,9 +713,6 @@ static bool_t id3v24_read_image (VFSFile * handle, void * * image_data,
         g_free (data);
         parsed += frame_size;
     }
-
-    if (found)
-        * image_size64 = image_size;
 
     return found;
 }

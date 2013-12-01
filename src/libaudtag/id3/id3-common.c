@@ -1,6 +1,6 @@
 /*
  * id3-common.c
- * Copyright 2010-2011 John Lindgren
+ * Copyright 2010-2013 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -17,7 +17,10 @@
  * the use of this software.
  */
 
+#include "id3-common.h"
+
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include <glib.h>
@@ -25,7 +28,11 @@
 #include <libaudcore/audstrings.h>
 
 #include "../util.h"
-#include "id3-common.h"
+
+#define ID3_ENCODING_LATIN1    0
+#define ID3_ENCODING_UTF16     1
+#define ID3_ENCODING_UTF16_BE  2
+#define ID3_ENCODING_UTF8      3
 
 static void * memchr16 (const void * mem, int16_t chr, int len)
 {
@@ -41,76 +48,250 @@ static void * memchr16 (const void * mem, int16_t chr, int len)
     return NULL;
 }
 
-char * convert_text (const char * text, int length, int encoding, bool_t
- nulled, int * _converted, const char * * after)
+void id3_strnlen (const char * data, int size, int encoding,
+ int * bytes_without_nul, int * bytes_with_nul)
 {
-    char * buffer = NULL;
-    gsize converted = 0;
+    bool_t is16 = (encoding == ID3_ENCODING_UTF16 || encoding == ID3_ENCODING_UTF16_BE);
+    char * nul = is16 ? memchr16 (data, 0, size) : memchr (data, 0, size);
 
-    TAGDBG ("length = %d, encoding = %d, nulled = %d\n", length, encoding,
-     nulled);
-
-    if (nulled)
+    if (nul)
     {
-        const char * null;
+        if (bytes_without_nul)
+            * bytes_without_nul = nul - data;
+        if (bytes_with_nul)
+            * bytes_with_nul = is16 ? nul + 2 - data : nul + 1 - data;
+    }
+    else
+    {
+        if (bytes_without_nul)
+            * bytes_without_nul = size;
+        if (bytes_with_nul)
+            * bytes_with_nul = size;
+    }
+}
 
-        switch (encoding)
+char * id3_convert (const char * data, int size, int encoding)
+{
+    if (encoding == ID3_ENCODING_UTF16)
+        return g_convert (data, size, "UTF-8", "UTF-16", NULL, NULL, NULL);
+    else if (encoding == ID3_ENCODING_UTF16_BE)
+        return g_convert (data, size, "UTF-8", "UTF-16BE", NULL, NULL, NULL);
+    else
+        return str_to_utf8_full (data, size, NULL, NULL);
+}
+
+char * id3_decode_text (const char * data, int size)
+{
+    if (size < 1)
+        return NULL;
+
+    return id3_convert ((const char *) data + 1, size - 1, data[0]);
+}
+
+void id3_associate_string (Tuple * tuple, int field, const char * data, int size)
+{
+    char * text = id3_decode_text (data, size);
+
+    if (text == NULL || ! text[0])
+    {
+        free (text);
+        return;
+    }
+
+    TAGDBG ("Field %i = %s.\n", field, text);
+    tuple_set_str (tuple, field, text);
+    free (text);
+}
+
+void id3_associate_int (Tuple * tuple, int field, const char * data, int size)
+{
+    char * text = id3_decode_text (data, size);
+
+    if (text == NULL || atoi (text) < 1)
+    {
+        g_free (text);
+        return;
+    }
+
+    TAGDBG ("Field %i = %s.\n", field, text);
+    tuple_set_int (tuple, field, atoi (text));
+    free (text);
+}
+
+void id3_decode_genre (Tuple * tuple, const char * data, int size)
+{
+    char * text = id3_decode_text (data, size);
+    int numericgenre;
+
+    if (! text)
+        return;
+
+    if (text[0] == '(')
+        numericgenre = atoi (text + 1);
+    else
+        numericgenre = atoi (text);
+
+    if (numericgenre > 0)
+        tuple_set_str (tuple, FIELD_GENRE, convert_numericgenre_to_text (numericgenre));
+    else
+        tuple_set_str (tuple, FIELD_GENRE, text);
+
+    free (text);
+}
+
+void id3_decode_comment (Tuple * tuple, const char * data, int size)
+{
+    if (size < 4)
+        return;
+
+    int before_nul, after_nul;
+    id3_strnlen (data + 4, size - 4, data[0], & before_nul, & after_nul);
+
+    const char * lang = data + 1;
+    char * type = id3_convert (data + 4, before_nul, data[0]);
+    char * value = id3_convert (data + 4 + after_nul, size - 4 - after_nul, data[0]);
+
+    TAGDBG ("Comment: lang = %.3s, type = %s, value = %s.\n", lang, type, value);
+
+    if (type && ! type[0] && value) /* blank type = actual comment */
+        tuple_set_str (tuple, FIELD_COMMENT, value);
+
+    free (type);
+    free (value);
+}
+
+static bool_t decode_rva_block (const char * * _data, int * _size,
+ int * channel, int * adjustment, int * adjustment_unit, int * peak,
+ int * peak_unit)
+{
+    const char * data = * _data;
+    int size = * _size;
+    int peak_bits;
+
+    if (size < 4)
+        return FALSE;
+
+    * channel = data[0];
+    * adjustment = (char) data[1]; /* first byte is signed */
+    * adjustment = (* adjustment << 8) | data[2];
+    * adjustment_unit = 512;
+    peak_bits = data[3];
+
+    data += 4;
+    size -= 4;
+
+    TAGDBG ("RVA block: channel = %d, adjustment = %d/%d, peak bits = %d\n",
+     * channel, * adjustment, * adjustment_unit, peak_bits);
+
+    if (peak_bits > 0 && peak_bits < sizeof (int) * 8)
+    {
+        int bytes = (peak_bits + 7) / 8;
+        int count;
+
+        if (bytes > size)
+            return FALSE;
+
+        * peak = 0;
+        * peak_unit = 1 << peak_bits;
+
+        for (count = 0; count < bytes; count ++)
+            * peak = (* peak << 8) | data[count];
+
+        data += bytes;
+        size -= count;
+
+        TAGDBG ("RVA block: peak = %d/%d\n", * peak, * peak_unit);
+    }
+    else
+    {
+        * peak = 0;
+        * peak_unit = 0;
+    }
+
+    * _data = data;
+    * _size = size;
+    return TRUE;
+}
+
+void id3_decode_rva (Tuple * tuple, const char * data, int size)
+{
+    const char * domain;
+    int channel, adjustment, adjustment_unit, peak, peak_unit;
+
+    if (memchr (data, 0, size) == NULL)
+        return;
+
+    domain = data;
+
+    TAGDBG ("RVA domain: %s\n", domain);
+
+    size -= strlen (domain) + 1;
+    data += strlen (domain) + 1;
+
+    while (size > 0)
+    {
+        if (! decode_rva_block (& data, & size, & channel, & adjustment,
+         & adjustment_unit, & peak, & peak_unit))
+            break;
+
+        if (channel != 1) /* specific channel? */
+            continue;
+
+        if (tuple_get_value_type (tuple, FIELD_GAIN_GAIN_UNIT) == TUPLE_INT)
+            adjustment = adjustment * (int64_t) tuple_get_int (tuple,
+             FIELD_GAIN_GAIN_UNIT) / adjustment_unit;
+        else
+            tuple_set_int (tuple, FIELD_GAIN_GAIN_UNIT, adjustment_unit);
+
+        if (peak_unit)
         {
-          case 0:
-          case 3:
-            if ((null = memchr (text, 0, length)) == NULL)
-                return NULL;
+            if (tuple_get_value_type (tuple, FIELD_GAIN_PEAK_UNIT) == TUPLE_INT)
+                peak = peak * (int64_t) tuple_get_int (tuple,
+                 FIELD_GAIN_PEAK_UNIT) / peak_unit;
+            else
+                tuple_set_int (tuple, FIELD_GAIN_PEAK_UNIT, peak_unit);
+        }
 
-            length = null - text;
-            TAGDBG ("length before null = %d\n", length);
+        if (! g_ascii_strcasecmp (domain, "album"))
+        {
+            tuple_set_int (tuple, FIELD_GAIN_ALBUM_GAIN, adjustment);
 
-            if (after != NULL)
-                * after = null + 1;
+            if (peak_unit)
+                tuple_set_int (tuple, FIELD_GAIN_ALBUM_PEAK, peak);
+        }
+        else if (! g_ascii_strcasecmp (domain, "track"))
+        {
+            tuple_set_int (tuple, FIELD_GAIN_TRACK_GAIN, adjustment);
 
-            break;
-          case 1:
-          case 2:
-            if ((null = memchr16 (text, 0, length)) == NULL)
-                return NULL;
-
-            length = null - text;
-            TAGDBG ("length before null = %d\n", length);
-
-            if (after != NULL)
-                * after = null + 2;
-
-            break;
+            if (peak_unit)
+                tuple_set_int (tuple, FIELD_GAIN_TRACK_PEAK, peak);
         }
     }
+}
 
-    switch (encoding)
-    {
-      case 0:
-      case 3:;
-        int converted_int = 0;
-        buffer = str_to_utf8_full (text, length, NULL, & converted_int);
-        converted = converted_int;
-        break;
-      case 1:
-        if (text[0] == (char) 0xff)
-            buffer = g_convert (text + 2, length - 2, "UTF-8", "UTF-16LE", NULL,
-             & converted, NULL);
-        else
-            buffer = g_convert (text + 2, length - 2, "UTF-8", "UTF-16BE", NULL,
-             & converted, NULL);
+bool_t id3_decode_picture (const char * data, int size, int * type,
+ void * * image_data, int64_t * image_size)
+{
+    const char * nul;
+    if (size < 2 || ! (nul = memchr (data + 1, 0, size - 2)))
+        return FALSE;
 
-        break;
-      case 2:
-        buffer = g_convert (text, length, "UTF-8", "UTF-16BE", NULL,
-         & converted, NULL);
-        break;
-    }
+    const char * body = nul + 2;
+    int body_size = data + size - body;
 
-    TAGDBG ("length converted: %d\n", (int) converted);
-    TAGDBG ("string: %s\n", buffer);
+    int before_nul2, after_nul2;
+    id3_strnlen (body, body_size, data[0], & before_nul2, & after_nul2);
 
-    if (_converted != NULL)
-        * _converted = converted;
+    const char * mime = data + 1;
+    char * desc = id3_convert (body, before_nul2, data[0]);
 
-    return buffer;
+    * type = nul[1];
+    * image_size = body_size - after_nul2;
+    * image_data = g_memdup (body + after_nul2, * image_size);
+
+    TAGDBG ("Picture: mime = %s, type = %d, desc = %s, size = %d.\n", mime,
+     * type, desc, (int) * image_size);
+
+    free (desc);
+    return TRUE;
 }
