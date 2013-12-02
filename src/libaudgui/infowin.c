@@ -353,7 +353,7 @@ static GtkWidget * create_infowin (void)
     widgets.apply = audgui_button_new (_("_Save"), "document-save",
      (AudguiCallback) infowin_update_tuple, NULL);
 
-    GtkWidget * close_button = audgui_button_new (_("_Close"), NULL,
+    GtkWidget * close_button = audgui_button_new (_("_Close"), "window-close",
      (AudguiCallback) audgui_infowin_hide, NULL);
 
     gtk_box_pack_end ((GtkBox *) bottom_hbox, close_button, FALSE, FALSE, 0);
