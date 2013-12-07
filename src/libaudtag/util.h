@@ -188,7 +188,7 @@ bool_t write_LEuint64(VFSFile *fd, uint64_t val);
 uint64_t read_LEint64(VFSFile *fd);
 bool_t cut_beginning_tag (VFSFile * handle, int64_t tag_size);
 
-char *convert_numericgenre_to_text(int numericgenre);
+const char *convert_numericgenre_to_text(int numericgenre);
 
 uint32_t unsyncsafe32 (uint32_t x);
 uint32_t syncsafe32 (uint32_t x);
