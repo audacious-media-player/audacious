@@ -177,12 +177,12 @@ bool_t cut_beginning_tag (VFSFile * handle, int64_t tag_size)
     return vfs_ftruncate (handle, offset) == 0;
 }
 
-char *convert_numericgenre_to_text(int numericgenre)
+const char *convert_numericgenre_to_text(int numericgenre)
 {
     const struct
     {
         int numericgenre;
-        char *genre;
+        const char *genre;
     }
     table[] =
     {
