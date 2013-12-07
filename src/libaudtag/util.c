@@ -17,142 +17,14 @@
  * the use of this software.
  */
 
-#include <glib.h>
-#include <stdio.h>
+#include <fcntl.h>
 
 #include "util.h"
-#include <inttypes.h>
-
-/* convert windows time to unix time */
-time_t unix_time(uint64_t win_time)
-{
-    uint64_t t = (uint64_t) ((win_time / 10000000LL) - 11644473600LL);
-    return (time_t) t;
-}
-
-uint16_t get_year(uint64_t win_time)
-{
-    GDate *d = g_date_new();
-    g_date_set_time_t(d, unix_time(win_time));
-    uint16_t year = g_date_get_year(d);
-    g_date_free(d);
-    return year;
-}
-
-char * read_char_data (VFSFile * file, int size)
-{
-    char * value = g_malloc (size + 1);
-    if (vfs_fread (value, 1, size, file) < size)
-    {
-        g_free (value);
-        return NULL;
-    }
-    value[size] = 0;
-    return value;
-}
-
-bool_t write_char_data(VFSFile * f, char * data, size_t i)
-{
-    return (vfs_fwrite(data, i, 1, f) == i);
-}
-
-uint8_t read_uint8(VFSFile * fd)
-{
-    uint16_t i;
-    if (vfs_fread(&i, 1, 1, fd) == 1)
-    {
-        return i;
-    }
-    return -1;
-}
-
-uint16_t read_LEuint16(VFSFile * fd)
-{
-    uint16_t a;
-    if (vfs_fget_le16(&a, fd))
-        return a;
-    else
-        return -1;
-}
-
-uint16_t read_BEuint16(VFSFile * fd)
-{
-    uint16_t a;
-    if (vfs_fget_be16(&a, fd))
-        return a;
-    else
-        return -1;
-}
-
-uint32_t read_LEuint32(VFSFile * fd)
-{
-    uint32_t a;
-    if (vfs_fget_le32(&a, fd))
-        return a;
-    else
-        return -1;
-}
-
-uint32_t read_BEuint32(VFSFile * fd)
-{
-    uint32_t a;
-    if (vfs_fget_be32(&a, fd))
-        return a;
-    else
-        return -1;
-}
-
-uint64_t read_LEuint64(VFSFile * fd)
-{
-    uint64_t a;
-    if (vfs_fget_le64(&a, fd))
-        return a;
-    else
-        return -1;
-}
-
-uint64_t read_BEuint64(VFSFile * fd)
-{
-    uint64_t a;
-    if (vfs_fget_be64(&a, fd))
-        return a;
-    else
-        return 1;
-}
-
-bool_t write_uint8(VFSFile * fd, uint8_t val)
-{
-    return (vfs_fwrite(&val, 1, 1, fd) == 1);
-}
-
-bool_t write_LEuint16(VFSFile * fd, uint16_t val)
-{
-    uint16_t le_val = GUINT32_TO_LE(val);
-    return (vfs_fwrite(&le_val, 2, 1, fd) == 2);
-}
-
-bool_t write_BEuint32(VFSFile * fd, uint32_t val)
-{
-    uint32_t be_val = GUINT32_TO_BE(val);
-    return (vfs_fwrite(&be_val, 4, 1, fd) == 4);
-}
-
-bool_t write_LEuint32(VFSFile * fd, uint32_t val)
-{
-    uint32_t le_val = GUINT32_TO_LE(val);
-    return (vfs_fwrite(&le_val, 4, 1, fd) == 4);
-}
-
-bool_t write_LEuint64(VFSFile * fd, uint64_t val)
-{
-    uint64_t le_val = GUINT64_TO_LE(val);
-    return (vfs_fwrite(&le_val, 8, 1, fd) == 8);
-}
 
 bool_t cut_beginning_tag (VFSFile * handle, int64_t tag_size)
 {
     unsigned char buffer[16384];
-    gsize offset = 0, readed;
+    int64_t offset = 0, readed;
 
     if (! tag_size)
         return TRUE;
@@ -315,7 +187,7 @@ const char *convert_numericgenre_to_text(int numericgenre)
 
     int count;
 
-    for (count = 0; count < G_N_ELEMENTS(table); count++)
+    for (count = 0; count < sizeof table / sizeof table[0]; count++)
     {
         if (table[count].numericgenre == numericgenre)
         {
@@ -337,4 +209,3 @@ uint32_t syncsafe32 (uint32_t x)
     return (x & 0x7f) | ((x & 0x3f80) << 1) | ((x & 0x1fc000) << 2) | ((x &
      0xfe00000) << 3);
 }
-
