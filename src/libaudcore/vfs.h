@@ -113,20 +113,6 @@ int64_t vfs_ftell (VFSFile * file) WARN_RETURN;
 int64_t vfs_fsize (VFSFile * file) WARN_RETURN;
 int vfs_ftruncate (VFSFile * file, int64_t length) WARN_RETURN;
 
-bool_t vfs_fget_le16 (uint16_t * value, VFSFile * stream) WARN_RETURN;
-bool_t vfs_fget_le32 (uint32_t * value, VFSFile * stream) WARN_RETURN;
-bool_t vfs_fget_le64 (uint64_t * value, VFSFile * stream) WARN_RETURN;
-bool_t vfs_fget_be16 (uint16_t * value, VFSFile * stream) WARN_RETURN;
-bool_t vfs_fget_be32 (uint32_t * value, VFSFile * stream) WARN_RETURN;
-bool_t vfs_fget_be64 (uint64_t * value, VFSFile * stream) WARN_RETURN;
-
-bool_t vfs_fput_le16 (uint16_t value, VFSFile * stream) WARN_RETURN;
-bool_t vfs_fput_le32 (uint32_t value, VFSFile * stream) WARN_RETURN;
-bool_t vfs_fput_le64 (uint64_t value, VFSFile * stream) WARN_RETURN;
-bool_t vfs_fput_be16 (uint16_t value, VFSFile * stream) WARN_RETURN;
-bool_t vfs_fput_be32 (uint32_t value, VFSFile * stream) WARN_RETURN;
-bool_t vfs_fput_be64 (uint64_t value, VFSFile * stream) WARN_RETURN;
-
 bool_t vfs_is_streaming (VFSFile * file) WARN_RETURN;
 char * vfs_get_metadata (VFSFile * file, const char * field) WARN_RETURN;
 
