@@ -30,10 +30,34 @@
 #include "audstrings.h"
 #include "index.h"
 
-#define FROM_HEX(c) ((c) < 'A' ? (c) - '0' : (c) < 'a' ? 10 + (c) - 'A' : 10 + (c) - 'a')
-#define TO_HEX(i) ((i) < 10 ? '0' + (i) : 'A' + (i) - 10)
-#define IS_LEGAL(c) (((c) >= 'A' && (c) <= 'Z') || ((c) >= 'a' && (c) <= 'z') \
-                  || ((c) >= '0' && (c) <= '9') || (strchr ("-_.~/", (c))))
+static const char ascii_to_hex[256] = {
+    ['0'] = 0x0, ['1'] = 0x1, ['2'] = 0x2, ['3'] = 0x3, ['4'] = 0x4,
+    ['5'] = 0x5, ['6'] = 0x6, ['7'] = 0x7, ['8'] = 0x8, ['9'] = 0x9,
+    ['a'] = 0xa, ['b'] = 0xb, ['c'] = 0xc, ['d'] = 0xd, ['e'] = 0xe, ['f'] = 0xf,
+    ['A'] = 0xa, ['B'] = 0xb, ['C'] = 0xc, ['D'] = 0xd, ['E'] = 0xe, ['F'] = 0xf
+};
+
+static const char hex_to_ascii[16] = {
+    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'
+};
+
+static const char uri_legal_table[128] = {
+    ['0'] = 1, ['1'] = 1, ['2'] = 1, ['3'] = 1, ['4'] = 1,
+    ['5'] = 1, ['6'] = 1, ['7'] = 1, ['8'] = 1, ['9'] = 1,
+    ['a'] = 1, ['b'] = 1, ['c'] = 1, ['d'] = 1, ['e'] = 1, ['f'] = 1, ['g'] = 1,
+    ['h'] = 1, ['i'] = 1, ['j'] = 1, ['k'] = 1, ['l'] = 1, ['m'] = 1, ['n'] = 1,
+    ['o'] = 1, ['p'] = 1, ['q'] = 1, ['r'] = 1, ['s'] = 1, ['t'] = 1, ['u'] = 1,
+    ['v'] = 1, ['w'] = 1, ['x'] = 1, ['y'] = 1, ['z'] = 1,
+    ['A'] = 1, ['B'] = 1, ['C'] = 1, ['D'] = 1, ['E'] = 1, ['F'] = 1, ['G'] = 1,
+    ['H'] = 1, ['I'] = 1, ['J'] = 1, ['K'] = 1, ['L'] = 1, ['M'] = 1, ['N'] = 1,
+    ['O'] = 1, ['P'] = 1, ['Q'] = 1, ['R'] = 1, ['S'] = 1, ['T'] = 1, ['U'] = 1,
+    ['V'] = 1, ['W'] = 1, ['X'] = 1, ['Y'] = 1, ['Z'] = 1,
+    ['-'] = 1, ['_'] = 1, ['.'] = 1, ['~'] = 1, ['/'] = 1
+};
+
+#define FROM_HEX(c)  (ascii_to_hex[(unsigned char) (c)])
+#define TO_HEX(i)    (hex_to_ascii[(i) & 15])
+#define IS_LEGAL(c)  (uri_legal_table[(unsigned char) (c)])
 
 EXPORT char * str_printf (const char * format, ...)
 {
@@ -81,25 +105,34 @@ EXPORT void str_replace_char (char * string, char old_c, char new_c)
 EXPORT void str_decode_percent (const char * str, int len, char * out)
 {
     if (len < 0)
-        len = INT_MAX;
+        len = strlen (str);
+    else
+        len = strnlen (str, len);
 
-    while (len --)
+    while (1)
     {
-        char c = * str ++;
-        if (! c)
+        const char * p = memchr (str, '%', len);
+        if (! p)
             break;
 
-        if (c == '%' && len >= 2 && str[0] && str[1])
-        {
-            c = (FROM_HEX (str[0]) << 4) | FROM_HEX (str[1]);
-            str += 2;
-            len -= 2;
-        }
+        int block = p - str;
+        memmove (out, str, block);
 
-        * out ++ = c;
+        str += block;
+        out += block;
+        len -= block;
+
+        if (len < 3)
+            break;
+
+        * out ++ = (FROM_HEX (str[1]) << 4) | FROM_HEX (str[2]);
+
+        str += 3;
+        len -= 3;
     }
 
-    * out = 0;
+    memmove (out, str, len);
+    out[len] = 0;
 }
 
 /* Percent-encodes up to <len> bytes of <str> to <out>, which must be large
@@ -109,13 +142,13 @@ EXPORT void str_decode_percent (const char * str, int len, char * out)
 EXPORT void str_encode_percent (const char * str, int len, char * out)
 {
     if (len < 0)
-        len = INT_MAX;
+        len = strlen (str);
+    else
+        len = strnlen (str, len);
 
     while (len --)
     {
         char c = * str ++;
-        if (! c)
-            break;
 
         if (IS_LEGAL (c))
             * out ++ = c;
