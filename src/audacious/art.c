@@ -138,12 +138,7 @@ static void request_callback (ScanRequest * request)
     assert (item != NULL && ! item->flag);
 
     scan_request_get_image_data (request, & item->data, & item->len);
-
-    /* FIXME: get pooled string */
-    char * tmp = scan_request_get_image_file (request);
-    item->art_file = str_get (tmp);
-    free (tmp);
-
+    item->art_file = str_get (scan_request_get_image_file (request));
     item->flag = FLAG_DONE;
 
     if (! send_source)

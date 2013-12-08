@@ -144,11 +144,9 @@ void scan_request_get_image_data (ScanRequest * request, void * * data, int64_t 
     request->image_len = 0;
 }
 
-char * scan_request_get_image_file (ScanRequest * request)
+const char * scan_request_get_image_file (ScanRequest * request)
 {
-    char * image_file = request->image_file;
-    request->image_file = NULL;
-    return image_file;
+    return request->image_file;
 }
 
 void scanner_init (void)

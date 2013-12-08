@@ -40,7 +40,7 @@ const char * scan_request_get_filename (ScanRequest * request);
 PluginHandle * scan_request_get_decoder (ScanRequest * request);
 Tuple * scan_request_get_tuple (ScanRequest * request);
 void scan_request_get_image_data (ScanRequest * request, void * * data, int64_t * len);
-char * scan_request_get_image_file (ScanRequest * request);
+const char * scan_request_get_image_file (ScanRequest * request);
 
 void scanner_init (void);
 void scanner_cleanup (void);
