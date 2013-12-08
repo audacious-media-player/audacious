@@ -106,7 +106,16 @@ AUD_VFUNC4 (create_widgets_with_domain, /* GtkWidget * */ void *, box,
 AUD_VFUNC0 (show_prefs_window)
 
 /* util.c */
-AUD_FUNC2 (char *, construct_uri, const char *, base, const char *, reference)
+
+/* Constructs a full URI given:
+ *   1. path: one of the following:
+ *     a. a full URI (returned unchanged)
+ *     b. an absolute filename (in the system locale)
+ *     c. a relative path (character set detected according to user settings)
+ *   2. reference: the full URI of the playlist containing <path>
+ *
+ * The returned string (if not NULL) must be freed with str_unref(). */
+AUD_FUNC2 (char *, construct_uri, const char *, path, const char *, reference)
 
 /* visualization.c */
 AUD_VFUNC2 (vis_func_add, int, type, VisFunc, func)

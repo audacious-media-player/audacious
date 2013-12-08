@@ -67,48 +67,47 @@ bool_t dir_foreach (const char * path, DirForeachFunc func, void * user)
     return TRUE;
 }
 
-char * construct_uri (const char * string, const char * playlist_name)
+char * construct_uri (const char * path, const char * reference)
 {
     /* URI */
-    if (strstr (string, "://"))
-        return strdup (string);
+    if (strstr (path, "://"))
+        return str_get (path);
 
-    /* absolute filename (assumed UTF-8) */
+    /* absolute filename */
 #ifdef _WIN32
-    if (string[0] && string[1] == ':' && string[2] == '\\')
+    if (path[0] && path[1] == ':' && path[2] == '\\')
 #else
-    if (string[0] == '/')
+    if (path[0] == '/')
 #endif
-    {
-        /* FIXME: return pooled string */
-        char * uri = filename_to_uri (string);
-        char * dup = uri ? strdup (uri) : NULL;
-        str_unref (uri);
-        return dup;
-    }
+        return filename_to_uri (path);
 
-    /* relative filename (assumed UTF-8) */
-    const char * slash = strrchr (playlist_name, '/');
+    /* relative path */
+    const char * slash = strrchr (reference, '/');
     if (! slash)
         return NULL;
 
-    int pathlen = slash + 1 - playlist_name;
-    int rellen = strlen (string);
+    char * utf8 = str_to_utf8 (path, -1);
+    if (! utf8)
+        return NULL;
+
+    int pathlen = slash + 1 - reference;
+    int rellen = strlen (utf8);
 
     char buf[pathlen + 3 * rellen + 1];
-    memcpy (buf, playlist_name, pathlen);
+    memcpy (buf, reference, pathlen);
 
     if (get_bool (NULL, "convert_backslash"))
     {
         char tmp[rellen + 1];
-        strcpy (tmp, string);
+        strcpy (tmp, utf8);
         str_replace_char (tmp, '\\', '/');
         str_encode_percent (tmp, -1, buf + pathlen);
     }
     else
-        str_encode_percent (string, -1, buf + pathlen);
+        str_encode_percent (utf8, -1, buf + pathlen);
 
-    return strdup (buf);
+    str_unref (utf8);
+    return str_get (buf);
 }
 
 void
