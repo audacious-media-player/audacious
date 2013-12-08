@@ -168,12 +168,6 @@ static void tuple_evalnode_insert(TupleEvalNode **nodes, TupleEvalNode *node)
 }
 
 
-static TupleEvalNode *tuple_evalnode_new(void)
-{
-  return g_new0(TupleEvalNode, 1);
-}
-
-
 void tuple_evalnode_free(TupleEvalNode *expr)
 {
   TupleEvalNode *curr = expr, *next;
@@ -181,12 +175,12 @@ void tuple_evalnode_free(TupleEvalNode *expr)
   while (curr) {
     next = curr->next;
 
-    g_free(curr->text);
+    str_unref (curr->text);
 
     if (curr->children)
       tuple_evalnode_free(curr->children);
 
-    g_free(curr);
+    g_slice_free (TupleEvalNode, curr);
 
     curr = next;
   }
@@ -288,7 +282,7 @@ static bool_t tc_parse_construct(TupleEvalContext *ctx, TupleEvalNode **res,
   if (tc_get_item(ctx, c, tmps1, MAX_STR, ',', &literal1, "tag1", item)) {
     (*c)++;
     if (tc_get_item(ctx, c, tmps2, MAX_STR, ':', &literal2, "tag2", item)) {
-      TupleEvalNode *tmp = tuple_evalnode_new();
+      TupleEvalNode *tmp = g_slice_new0 (TupleEvalNode);
       (*c)++;
 
       tmp->opcode = opcode;
@@ -345,7 +339,7 @@ static TupleEvalNode *tuple_compiler_pass1(int *level, TupleEvalContext *ctx, co
             literal = FALSE;
             if (tc_get_item(ctx, &c, tmps1, MAX_STR, ':', &literal, "tag", item)) {
               c++;
-              tmp = tuple_evalnode_new();
+              tmp = g_slice_new0 (TupleEvalNode);
               tmp->opcode = OP_EXISTS;
               if ((tmp->var[0] = tc_get_variable(ctx, tmps1, TUPLE_VAR_FIELD)) < 0) {
                 tuple_error(ctx, "Invalid variable '%s' in '%s'.\n", tmps1, expr);
@@ -415,7 +409,7 @@ static TupleEvalNode *tuple_compiler_pass1(int *level, TupleEvalContext *ctx, co
               literal = FALSE;
               if (tc_get_item(ctx, &c, tmps1, MAX_STR, ':', &literal, "tag", item)) {
                 c++;
-                tmp = tuple_evalnode_new();
+                tmp = g_slice_new0 (TupleEvalNode);
                 tmp->opcode = OP_IS_EMPTY;
                 if ((tmp->var[0] = tc_get_variable(ctx, tmps1, TUPLE_VAR_FIELD)) < 0) {
                   tuple_error(ctx, "Invalid variable '%s' in '%s'.\n", tmps1, expr);
@@ -438,7 +432,7 @@ static TupleEvalNode *tuple_compiler_pass1(int *level, TupleEvalContext *ctx, co
               /* FIXME!! FIX ME! Check for external expressions */
 
               /* I HAS A FIELD - A field. You has it. */
-              tmp = tuple_evalnode_new();
+              tmp = g_slice_new0 (TupleEvalNode);
               tmp->opcode = OP_FIELD;
               if ((tmp->var[0] = tc_get_variable(ctx, tmps1, TUPLE_VAR_FIELD)) < 0) {
                 tuple_error(ctx, "Invalid variable '%s' in '%s'.\n", tmps1, expr);
@@ -487,9 +481,9 @@ static TupleEvalNode *tuple_compiler_pass1(int *level, TupleEvalContext *ctx, co
       }
       tmps1[i] = '\0';
 
-      tmp = tuple_evalnode_new();
+      tmp = g_slice_new0 (TupleEvalNode);
       tmp->opcode = OP_RAW;
-      tmp->text = g_strdup(tmps1);
+      tmp->text = str_get (tmps1);
       tuple_evalnode_insert(&res, tmp);
     }
   }
