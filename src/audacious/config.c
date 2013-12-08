@@ -81,6 +81,7 @@ static const char * const core_defaults[] = {
  "stop_after_current_song", "FALSE",
 
  /* playlist */
+ "chardet_fallback", "ISO-8859-1",
 #ifdef _WIN32
  "convert_backslash", "TRUE",
 #else
