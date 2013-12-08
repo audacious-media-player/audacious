@@ -118,8 +118,10 @@ Tuple * tuple_new_from_filename (const char * filename);
 /* Sets a field to the integer value <x>. */
 void tuple_set_int (Tuple * tuple, int field, int x);
 
-/* Sets a field to the string value <str>.  As a special case, if <str> is NULL,
- * the result is equivalent to calling tuple_unset(). */
+/* Sets a field to the string value <str>.  If <str> is not valid UTF-8, it will
+ * be converted according to the user's character set detection rules.  As a
+ * special case, if <str> is NULL, the result is equivalent to calling
+ * tuple_unset(). */
 void tuple_set_str (Tuple * tuple, int field, const char * str);
 
 /* Clears any value that a field is currently set to. */

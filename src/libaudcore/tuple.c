@@ -364,17 +364,11 @@ EXPORT void tuple_set_str (Tuple * tuple, int field, const char * str)
         return;
     }
 
-    if (! g_utf8_validate (str, -1, NULL))
-    {
-        fprintf (stderr, "Invalid UTF-8: %s\n", str);
-        return;
-    }
-
     LOCK (tuple);
 
     TupleVal * val = lookup_val (tuple, field, TRUE, FALSE);
     str_unref (val->str);
-    val->str = str_get (str);
+    val->str = str_to_utf8 (str, -1);
 
     UNLOCK (tuple);
 }
