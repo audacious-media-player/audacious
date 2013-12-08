@@ -21,7 +21,6 @@
 #include <errno.h>
 #include <glib.h>
 #include <pthread.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
@@ -52,7 +51,6 @@ typedef struct {
 } ArtItem;
 
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-static pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
 
 static GHashTable * art_items; /* of ArtItem */
 static char * current_ref; /* pooled */
@@ -151,11 +149,10 @@ static void request_callback (ScanRequest * request)
     if (! send_source)
         send_source = g_idle_add (send_requests, NULL);
 
-    pthread_cond_broadcast (& cond);
     pthread_mutex_unlock (& mutex);
 }
 
-static ArtItem * art_item_get (const char * file, bool_t blocking)
+static ArtItem * art_item_get (const char * file)
 {
     ArtItem * item = g_hash_table_lookup (art_items, file);
 
@@ -174,15 +171,7 @@ static ArtItem * art_item_get (const char * file, bool_t blocking)
         scan_request (file, SCAN_IMAGE, NULL, request_callback);
     }
 
-    if (! blocking)
-        return NULL;
-
-    item->refcount ++;
-
-    while (! item->flag)
-        pthread_cond_wait (& cond, & mutex);
-
-    return item;
+    return NULL;
 }
 
 static void art_item_unref (const char * file, ArtItem * item)
@@ -227,15 +216,14 @@ void art_cleanup (void)
     art_items = NULL;
 }
 
-void art_get_data_real (const char * file, const void * * data, int64_t * len,
- bool_t blocking)
+void art_request_data (const char * file, const void * * data, int64_t * len)
 {
     * data = NULL;
     * len = 0;
 
     pthread_mutex_lock (& mutex);
 
-    ArtItem * item = art_item_get (file, blocking);
+    ArtItem * item = art_item_get (file);
     if (! item)
         goto UNLOCK;
 
@@ -255,12 +243,12 @@ UNLOCK:
     pthread_mutex_unlock (& mutex);
 }
 
-const char * art_get_file_real (const char * file, bool_t blocking)
+const char * art_request_file (const char * file)
 {
     const char * art_file = NULL;
     pthread_mutex_lock (& mutex);
 
-    ArtItem * item = art_item_get (file, blocking);
+    ArtItem * item = art_item_get (file);
     if (! item)
         goto UNLOCK;
 
@@ -284,30 +272,6 @@ const char * art_get_file_real (const char * file, bool_t blocking)
 UNLOCK:
     pthread_mutex_unlock (& mutex);
     return art_file;
-}
-
-void art_request_data (const char * file, const void * * data, int64_t * len)
-{
-    return art_get_data_real (file, data, len, FALSE);
-}
-
-const char * art_request_file (const char * file)
-{
-    return art_get_file_real (file, FALSE);
-}
-
-void art_get_data (const char * file, const void * * data, int64_t * len)
-{
-    fprintf (stderr, "aud_art_get_data() is deprecated.  Use "
-     "aud_art_request_data() instead.\n");
-    return art_get_data_real (file, data, len, TRUE);
-}
-
-const char * art_get_file (const char * file)
-{
-    fprintf (stderr, "aud_art_get_file() is deprecated.  Use "
-     "aud_art_request_file() instead.\n");
-    return art_get_file_real (file, TRUE);
 }
 
 void art_unref (const char * file)

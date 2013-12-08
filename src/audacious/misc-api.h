@@ -21,9 +21,16 @@
 
 /* art.c (thread-safe) */
 
-/* deprecated; use the non-blocking art_request_* functions instead */
-AUD_VFUNC3 (art_get_data, const char *, file, const void * *, data, int64_t *, len)
-AUD_FUNC1 (const char *, art_get_file, const char *, file)
+/* Gets album art for <file> (the URI of a song file) as JPEG or PNG data.  If
+ * the album art is not yet loaded, sets <data> to NULL and begins to load the
+ * album art in the background.  On completion, the "art ready" hook is called,
+ * with <file> as a parameter.  The "current art ready" hook is also called if
+ * <file> is the currently playing song. */
+AUD_VFUNC3 (art_request_data, const char *, file, const void * *, data, int64_t *, len)
+
+/* Similar to art_request_data() but returns the URI of an image file.
+ * (A temporary file will be created if necessary.) */
+AUD_FUNC1 (const char *, art_request_file, const char *, file)
 
 /* Releases album art returned by art_request_data() or art_request_file(). */
 AUD_VFUNC1 (art_unref, const char *, file)
@@ -104,16 +111,3 @@ AUD_FUNC2 (char *, construct_uri, const char *, base, const char *, reference)
 /* visualization.c */
 AUD_VFUNC2 (vis_func_add, int, type, VisFunc, func)
 AUD_VFUNC1 (vis_func_remove, VisFunc, func)
-
-/* added in Audacious 3.4 */
-
-/* Gets album art for <file> (the URI of a song file) as JPEG or PNG data.  If
- * the album art is not yet loaded, sets <data> to NULL and begins to load the
- * album art in the background.  On completion, the "art ready" hook is called,
- * with <file> as a parameter.  The "current art ready" hook is also called if
- * <file> is the currently playing song. */
-AUD_VFUNC3 (art_request_data, const char *, file, const void * *, data, int64_t *, len)
-
-/* Similar to art_request_data() but returns the URI of an image file.
- * (A temporary file will be created if necessary.) */
-AUD_FUNC1 (const char *, art_request_file, const char *, file)
