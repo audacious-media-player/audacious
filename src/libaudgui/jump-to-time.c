@@ -22,6 +22,7 @@
 
 #include <audacious/drct.h>
 #include <audacious/i18n.h>
+#include <libaudcore/audstrings.h>
 
 #include "init.h"
 #include "libaudgui.h"

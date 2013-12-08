@@ -18,7 +18,6 @@
  */
 
 #include <assert.h>
-#include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -230,23 +229,6 @@ EXPORT char * str_nget (const char * str, int len)
     char buf[len + 1];
     memcpy (buf, str, len);
     buf[len] = 0;
-
-    return str_get (buf);
-}
-
-EXPORT char * str_printf (const char * format, ...)
-{
-    va_list args;
-
-    va_start (args, format);
-    int len = vsnprintf (NULL, 0, format, args);
-    va_end (args);
-
-    char buf[len + 1];
-
-    va_start (args, format);
-    vsnprintf (buf, sizeof buf, format, args);
-    va_end (args);
 
     return str_get (buf);
 }

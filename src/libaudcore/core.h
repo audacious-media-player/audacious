@@ -43,10 +43,6 @@
 #undef CLAMP
 #define CLAMP(a,min,max) ((a) < (min) ? (min) : (a) > (max) ? (max) : (a))
 
-#define SPRINTF(s,...) \
- char s[snprintf (NULL, 0, __VA_ARGS__) + 1]; \
- snprintf (s, sizeof s, __VA_ARGS__);
-
 /* If the pool contains a copy of <str>, increments its reference count.
  * Otherwise, adds a copy of <str> to the pool with a reference count of one.
  * In either case, returns the copy.  Because this copy may be shared by other
@@ -77,9 +73,6 @@ bool_t str_equal (const char * str1, const char * str2);
 /* Calls str_get() on the first <len> characters of <str>.  If <str> has less
  * than or equal to <len> characters, equivalent to str_get(). */
 char * str_nget (const char * str, int len);
-
-/* Calls sprintf() internally, then pools the produced string with str_get(). */
-char * str_printf (const char * format, ...);
 
 /* Releases all memory used by the string pool.  If strings remain in the pool,
  * a warning may be printed to stderr in order to reveal memory leaks. */

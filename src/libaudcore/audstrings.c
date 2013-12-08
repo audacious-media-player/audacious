@@ -35,6 +35,23 @@
 #define IS_LEGAL(c) (((c) >= 'A' && (c) <= 'Z') || ((c) >= 'a' && (c) <= 'z') \
                   || ((c) >= '0' && (c) <= '9') || (strchr ("-_.~/", (c))))
 
+EXPORT char * str_printf (const char * format, ...)
+{
+    va_list args;
+    va_start (args, format);
+
+    char * str = str_vprintf (format, args);
+
+    va_end (args);
+    return str;
+}
+
+EXPORT char * str_vprintf (const char * format, va_list args)
+{
+    VSPRINTF (buf, format, args);
+    return str_get (buf);
+}
+
 EXPORT bool_t str_has_prefix_nocase (const char * str, const char * prefix)
 {
     return ! g_ascii_strncasecmp (str, prefix, strlen (prefix));

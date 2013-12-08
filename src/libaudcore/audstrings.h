@@ -20,12 +20,29 @@
 #ifndef LIBAUDCORE_STRINGS_H
 #define LIBAUDCORE_STRINGS_H
 
+#include <stdarg.h>
 #include <libaudcore/core.h>
+
+/* <stdio.h> is needed to use the following macros */
+
+#define SPRINTF(s, ...) \
+ char s[snprintf (NULL, 0, __VA_ARGS__) + 1]; \
+ snprintf (s, sizeof s, __VA_ARGS__)
+
+#define VSPRINTF(s, f, v) \
+ va_list v##2; \
+ va_copy (v##2, v); \
+ char s[vsnprintf (NULL, 0, f, v##2) + 1]; \
+ va_end (v##2); \
+ vsnprintf (s, sizeof s, f, v)
 
 /* all (char *) return values must be freed with str_unref() */
 
 struct _Index;
 typedef struct _Index Index;
+
+char * str_printf (const char * format, ...);
+char * str_vprintf (const char * format, va_list args);
 
 bool_t str_has_prefix_nocase(const char * str, const char * prefix);
 bool_t str_has_suffix_nocase(const char * str, const char * suffix);
