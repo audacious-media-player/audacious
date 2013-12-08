@@ -399,7 +399,7 @@ vfs_file_test(const char * path, int test)
     {
         struct stat st;
         if (lstat (path2, & st) < 0)
-            return FALSE;
+            goto DONE;
 
         if (S_ISLNK (st.st_mode))
             test &= ~VFS_IS_SYMLINK;
@@ -410,7 +410,7 @@ vfs_file_test(const char * path, int test)
     {
         struct stat st;
         if (stat (path2, & st) < 0)
-            return FALSE;
+            goto DONE;
 
         if (S_ISREG (st.st_mode))
             test &= ~VFS_IS_REGULAR;
@@ -422,6 +422,7 @@ vfs_file_test(const char * path, int test)
         test &= ~VFS_EXISTS;
     }
 
+DONE:
     str_unref (path2);
     return ! test;
 }
