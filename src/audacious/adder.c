@@ -295,19 +295,13 @@ static void add_folder (char * filename, PlaylistFilterFunc filter,
         {
             char * item_name = filename_to_uri (files->data);
             if (item_name)
-            {
-                add_file (str_get (item_name), NULL, NULL, filter, user, result, TRUE);
-                g_free (item_name);
-            }
+                add_file (item_name, NULL, NULL, filter, user, result, TRUE);
         }
         else if (S_ISDIR (info.st_mode))
         {
             char * item_name = filename_to_uri (files->data);
             if (item_name)
-            {
-                add_folder (str_get (item_name), filter, user, result, FALSE);
-                g_free (item_name);
-            }
+                add_folder (item_name, filter, user, result, FALSE);
         }
 
     NEXT:
@@ -317,7 +311,7 @@ static void add_folder (char * filename, PlaylistFilterFunc filter,
 
 DONE:
     str_unref (filename);
-    g_free (path);
+    str_unref (path);
 }
 
 static void add_playlist (char * filename, PlaylistFilterFunc filter,

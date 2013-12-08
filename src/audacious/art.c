@@ -47,7 +47,7 @@ typedef struct {
     int64_t len;
 
     /* album art as (possibly a temporary) file */
-    char * art_file;
+    char * art_file; /* pooled */
     bool_t is_temp;
 } ArtItem;
 
@@ -67,12 +67,12 @@ static void art_item_free (ArtItem * item)
         if (unixname)
         {
             unlink (unixname);
-            free (unixname);
+            str_unref (unixname);
         }
     }
 
     free (item->data);
-    free (item->art_file);
+    str_unref (item->art_file);
     g_slice_free (ArtItem, item);
 }
 
@@ -140,7 +140,12 @@ static void request_callback (ScanRequest * request)
     assert (item != NULL && ! item->flag);
 
     scan_request_get_image_data (request, & item->data, & item->len);
-    item->art_file = scan_request_get_image_file (request);
+
+    /* FIXME: get pooled string */
+    char * tmp = scan_request_get_image_file (request);
+    item->art_file = str_get (tmp);
+    free (tmp);
+
     item->flag = FLAG_DONE;
 
     if (! send_source)

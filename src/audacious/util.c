@@ -79,7 +79,13 @@ char * construct_uri (const char * string, const char * playlist_name)
 #else
     if (string[0] == '/')
 #endif
-        return filename_to_uri (string);
+    {
+        /* FIXME: return pooled string */
+        char * uri = filename_to_uri (string);
+        char * dup = uri ? strdup (uri) : NULL;
+        str_unref (uri);
+        return dup;
+    }
 
     /* relative filename (assumed UTF-8) */
     const char * slash = strrchr (playlist_name, '/');
@@ -402,7 +408,7 @@ DONE:
                 album = str_get (first);
         }
 
-        free (filename);
+        str_unref (filename);
     }
     else
     {

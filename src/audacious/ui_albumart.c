@@ -192,19 +192,22 @@ char * get_associated_image_file (const char * filename)
     if (strncmp (filename, "file://", 7))
         return NULL;
 
-    char * unesc = uri_to_filename (filename);
-    if (! unesc)
+    char * local = uri_to_filename (filename);
+    if (! local)
         return NULL;
 
-    char * path = g_path_get_dirname (unesc);
-    char * base = g_path_get_basename (unesc);
-    char * image_unesc = fileinfo_recursive_get_image (path, base, 0);
-    char * image_file = image_unesc ? filename_to_uri (image_unesc) : NULL;
+    char * path = g_path_get_dirname (local);
+    char * base = g_path_get_basename (local);
+    char * image_local = fileinfo_recursive_get_image (path, base, 0);
+    char * image_uri = image_local ? filename_to_uri (image_local) : NULL;
 
-    g_free (unesc);
+    str_unref (local);
     g_free (path);
     g_free (base);
-    g_free (image_unesc);
+    g_free (image_local);
 
-    return image_file;
+    /* FIXME: return pooled string */
+    char * dup = image_uri ? strdup (image_uri) : NULL;
+    str_unref (image_uri);
+    return dup;
 }

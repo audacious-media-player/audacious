@@ -422,8 +422,7 @@ vfs_file_test(const char * path, int test)
         test &= ~VFS_EXISTS;
     }
 
-    g_free (path2);
-
+    str_unref (path2);
     return ! test;
 }
 
@@ -442,8 +441,7 @@ vfs_is_writeable(const char * path)
     if (! realfn || stat (realfn, & info) < 0)
         return FALSE;
 
-    g_free(realfn);
-
+    str_unref (realfn);
     return (info.st_mode & S_IWUSR);
 }
 

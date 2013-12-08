@@ -22,21 +22,26 @@
 
 #include <libaudcore/core.h>
 
+/* all (char *) return values must be freed with str_unref() */
+
 struct _Index;
 typedef struct _Index Index;
 
 bool_t str_has_prefix_nocase(const char * str, const char * prefix);
 bool_t str_has_suffix_nocase(const char * str, const char * suffix);
 
-void str_set_utf8_impl (char * (* stu_impl) (const char *),
- char * (* stuf_impl) (const char *, int, int *, int *));
-char * str_to_utf8 (const char * str);
-char * str_to_utf8_full (const char * str, int len, int * bytes_read, int * bytes_written);
-
 void str_replace_char (char * string, char old_c, char new_c);
 
 void str_decode_percent (const char * str, int len, char * out);
 void str_encode_percent (const char * str, int len, char * out);
+
+char * str_convert (const char * str, int len, const char * from_charset, const char * to_charset);
+char * str_from_locale (const char * str, int len);
+char * str_to_locale (const char * str, int len);
+char * str_to_utf8 (const char * str, int len);
+
+/* takes ownership of <fallbacks> and the pooled strings in it */
+void str_set_charsets (const char * region, Index * fallbacks);
 
 char * filename_to_uri (const char * filename);
 char * uri_to_filename (const char * uri);
@@ -48,8 +53,6 @@ bool_t uri_get_extension (const char * uri, char * buf, int buflen);
 
 int str_compare (const char * a, const char * b);
 int str_compare_encoded (const char * a, const char * b);
-
-/* the following functions returned pooled strings */
 
 Index * str_list_to_index (const char * list, const char * delims);
 char * index_to_str_list (Index * index, const char * sep);

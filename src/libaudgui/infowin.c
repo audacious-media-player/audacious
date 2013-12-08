@@ -388,7 +388,7 @@ static void infowin_show (int list, int entry, const char * filename,
 
     char * tmp = uri_to_display (filename);
     gtk_label_set_text ((GtkLabel *) widgets.location, tmp);
-    g_free (tmp);
+    str_unref (tmp);
 
     set_entry_int_from_field (widgets.year, tuple, FIELD_YEAR, updating_enabled);
     set_entry_int_from_field (widgets.track, tuple, FIELD_TRACK_NUMBER, updating_enabled);

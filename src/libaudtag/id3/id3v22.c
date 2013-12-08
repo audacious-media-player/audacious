@@ -192,27 +192,6 @@ static int get_frame_id (const char * key)
     return -1;
 }
 
-#if 0
-static void decode_txx (Tuple * tuple, const unsigned char * data, int size)
-{
-    char * text = id3_decode_text (data, size);
-
-    if (text == NULL)
-        return;
-
-    char *separator = strchr(text, 0);
-
-    if (separator == NULL)
-        return;
-
-    char * value = separator + 1;
-    TAGDBG ("TXX: %s = %s.\n", text, value);
-    tuple_set_str (tuple, -1, text, value);
-
-    g_free (text);
-}
-#endif
-
 static bool_t id3v22_can_handle_file (VFSFile * handle)
 {
     int version, header_size, data_size;
@@ -288,11 +267,6 @@ bool_t id3v22_read_tag (Tuple * tuple, VFSFile * handle)
           case ID3_COMMENT:
             id3_decode_comment (tuple, data, size);
             break;
-#if 0
-          case ID3_TXX:
-            decode_txx (tuple, data, size);
-            break;
-#endif
           case ID3_RVA:
             id3_decode_rva (tuple, data, size);
             break;

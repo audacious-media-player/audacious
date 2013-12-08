@@ -23,11 +23,6 @@
 #include <stdint.h>
 #include <libaudcore/tuple.h>
 
-void id3_strnlen (const char * data, int size, int encoding,
- int * bytes_without_nul, int * bytes_with_nul);
-char * id3_convert (const char * data, int size, int encoding);
-char * id3_decode_text (const char * data, int size);
-
 void id3_associate_string (Tuple * tuple, int field, const char * data, int size);
 void id3_associate_int (Tuple * tuple, int field, const char * data, int size);
 void id3_decode_genre (Tuple * tuple, const char * data, int size);

@@ -106,8 +106,7 @@ LIBS := -L../libaudcore -laudcore \
 		${LIBINTL}						\
 		${GLIB_LIBS}					\
 		${GMODULE_LIBS} \
-		${GTK_LIBS}						\
-		${LIBGUESS_LIBS}
+		${GTK_LIBS}
 
 desktop_DATA = audacious.desktop
 desktopdir = ${datarootdir}/applications

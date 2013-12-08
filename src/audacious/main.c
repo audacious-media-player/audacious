@@ -256,18 +256,12 @@ static Index * convert_filenames (void)
         if (strstr (f[i], "://"))
             uri = str_get (f[i]);
         else if (g_path_is_absolute (f[i]))
-        {
-            char * tmp = filename_to_uri (f[i]);
-            uri = str_get (tmp);
-            free (tmp);
-        }
+            uri = filename_to_uri (f[i]);
         else
         {
             char * tmp = g_build_filename (cur, f[i], NULL);
-            char * tmp2 = filename_to_uri (tmp);
-            uri = str_get (tmp2);
+            uri = filename_to_uri (tmp);
             free (tmp);
-            free (tmp2);
         }
 
         if (uri)
@@ -489,6 +483,7 @@ static void shut_down (void)
 
     AUDDBG ("Cleaning up.\n");
     art_cleanup ();
+    chardet_cleanup ();
     eq_cleanup ();
     history_cleanup ();
     playlist_end ();

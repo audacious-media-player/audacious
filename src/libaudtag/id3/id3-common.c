@@ -73,11 +73,11 @@ void id3_strnlen (const char * data, int size, int encoding,
 char * id3_convert (const char * data, int size, int encoding)
 {
     if (encoding == ID3_ENCODING_UTF16)
-        return g_convert (data, size, "UTF-8", "UTF-16", NULL, NULL, NULL);
+        return str_convert (data, size, "UTF-16", "UTF-8");
     else if (encoding == ID3_ENCODING_UTF16_BE)
-        return g_convert (data, size, "UTF-8", "UTF-16BE", NULL, NULL, NULL);
+        return str_convert (data, size, "UTF-16BE", "UTF-8");
     else
-        return str_to_utf8_full (data, size, NULL, NULL);
+        return str_to_utf8 (data, size);
 }
 
 char * id3_decode_text (const char * data, int size)
@@ -92,30 +92,26 @@ void id3_associate_string (Tuple * tuple, int field, const char * data, int size
 {
     char * text = id3_decode_text (data, size);
 
-    if (text == NULL || ! text[0])
+    if (text && text[0])
     {
-        free (text);
-        return;
+        TAGDBG ("Field %i = %s.\n", field, text);
+        tuple_set_str (tuple, field, text);
     }
 
-    TAGDBG ("Field %i = %s.\n", field, text);
-    tuple_set_str (tuple, field, text);
-    free (text);
+    str_unref (text);
 }
 
 void id3_associate_int (Tuple * tuple, int field, const char * data, int size)
 {
     char * text = id3_decode_text (data, size);
 
-    if (text == NULL || atoi (text) < 1)
+    if (text && atoi (text) >= 0)
     {
-        g_free (text);
-        return;
+        TAGDBG ("Field %i = %s.\n", field, text);
+        tuple_set_int (tuple, field, atoi (text));
     }
 
-    TAGDBG ("Field %i = %s.\n", field, text);
-    tuple_set_int (tuple, field, atoi (text));
-    free (text);
+    str_unref (text);
 }
 
 void id3_decode_genre (Tuple * tuple, const char * data, int size)
@@ -136,7 +132,7 @@ void id3_decode_genre (Tuple * tuple, const char * data, int size)
     else
         tuple_set_str (tuple, FIELD_GENRE, text);
 
-    free (text);
+    str_unref (text);
 }
 
 void id3_decode_comment (Tuple * tuple, const char * data, int size)
@@ -156,8 +152,8 @@ void id3_decode_comment (Tuple * tuple, const char * data, int size)
     if (type && ! type[0] && value) /* blank type = actual comment */
         tuple_set_str (tuple, FIELD_COMMENT, value);
 
-    free (type);
-    free (value);
+    str_unref (type);
+    str_unref (value);
 }
 
 static bool_t decode_rva_block (const char * * _data, int * _size,
@@ -292,6 +288,6 @@ bool_t id3_decode_picture (const char * data, int size, int * type,
     TAGDBG ("Picture: mime = %s, type = %d, desc = %s, size = %d.\n", mime,
      * type, desc, (int) * image_size);
 
-    free (desc);
+    str_unref (desc);
     return TRUE;
 }

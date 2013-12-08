@@ -40,6 +40,7 @@ void dbus_server_cleanup (void);
 
 /* chardet.c */
 void chardet_init (void);
+void chardet_cleanup (void);
 
 /* config.c */
 void config_load (void);

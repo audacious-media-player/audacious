@@ -114,6 +114,8 @@ int64_t vfs_fsize (VFSFile * file) WARN_RETURN;
 int vfs_ftruncate (VFSFile * file, int64_t length) WARN_RETURN;
 
 bool_t vfs_is_streaming (VFSFile * file) WARN_RETURN;
+
+/* free returned string with str_unref() */
 char * vfs_get_metadata (VFSFile * file, const char * field) WARN_RETURN;
 
 bool_t vfs_file_test (const char * path, int test) WARN_RETURN;

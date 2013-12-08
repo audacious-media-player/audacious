@@ -4,6 +4,7 @@ LIB_MINOR = 0
 
 SRCS = audio.c \
        audstrings.c \
+       charset.c \
        eventqueue.c \
        hook.c \
        index.c \
@@ -35,7 +36,10 @@ includesubdir = libaudcore
 CPPFLAGS := -I.. -I../.. \
             ${CPPFLAGS} \
             ${GLIB_CFLAGS} \
+            ${LIBGUESS_CFLAGS}
 
 CFLAGS += ${LIB_CFLAGS}
 
-LIBS += ${GLIB_LIBS} -lm
+LIBS += -lm \
+        ${GLIB_LIBS} \
+        ${LIBGUESS_LIBS}

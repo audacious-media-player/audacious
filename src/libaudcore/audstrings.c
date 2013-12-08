@@ -24,7 +24,6 @@
 #include <glib.h>
 #include <string.h>
 #include <ctype.h>
-#include <locale.h>
 
 #include <audacious/i18n.h>
 
@@ -50,28 +49,6 @@ EXPORT bool_t str_has_suffix_nocase (const char * str, const char * suffix)
         return FALSE;
 
     return ! g_ascii_strcasecmp (str + len1 - len2, suffix);
-}
-
-static char * (* str_to_utf8_impl) (const char *) = NULL;
-static char * (* str_to_utf8_full_impl) (const char *, int, int *, int *) = NULL;
-
-EXPORT void str_set_utf8_impl (char * (* stu_impl) (const char *),
- char * (* stuf_impl) (const char *, int, int *, int *))
-{
-    str_to_utf8_impl = stu_impl;
-    str_to_utf8_full_impl = stuf_impl;
-}
-
-EXPORT char * str_to_utf8 (const char * str)
-{
-    g_return_val_if_fail (str_to_utf8_impl, NULL);
-    return str_to_utf8_impl (str);
-}
-
-EXPORT char * str_to_utf8_full (const char * str, int len, int * bytes_read, int * bytes_written)
-{
-    g_return_val_if_fail (str_to_utf8_full_impl, NULL);
-    return str_to_utf8_full_impl (str, len, bytes_read, bytes_written);
 }
 
 EXPORT void str_replace_char (char * string, char old_c, char new_c)
@@ -142,13 +119,9 @@ EXPORT void str_encode_percent (const char * str, int len, char * out)
 
 EXPORT char * filename_to_uri (const char * name)
 {
-    char * utf8 = g_locale_to_utf8 (name, -1, NULL, NULL, NULL);
+    char * utf8 = str_from_locale (name, -1);
     if (! utf8)
-    {
-        const char * locale = setlocale (LC_ALL, NULL);
-        fprintf (stderr, "Cannot convert filename from system locale (%s): %s\n", locale, name);
         return NULL;
-    }
 
 #ifdef _WIN32
     str_replace_char (utf8, '\\', '/');
@@ -156,12 +129,12 @@ EXPORT char * filename_to_uri (const char * name)
     char enc[3 * strlen (utf8) + 1];
     str_encode_percent (utf8, -1, enc);
 
-    g_free (utf8);
+    str_unref (utf8);
 
 #ifdef _WIN32
-    return g_strdup_printf ("file:///%s", enc);
+    return str_printf ("file:///%s", enc);
 #else
-    return g_strdup_printf ("file://%s", enc);
+    return str_printf ("file://%s", enc);
 #endif
 }
 
@@ -184,14 +157,7 @@ EXPORT char * uri_to_filename (const char * uri)
     str_replace_char (buf, '/', '\\');
 #endif
 
-    char * name = g_locale_from_utf8 (buf, -1, NULL, NULL, NULL);
-    if (! name)
-    {
-        const char * locale = setlocale (LC_ALL, NULL);
-        fprintf (stderr, "Cannot convert filename to system locale (%s): %s\n", locale, buf);
-    }
-
-    return name;
+    return str_to_locale (buf, -1);
 }
 
 /* Formats a URI for human-readable display.  Percent-decodes and, for file://
@@ -200,7 +166,7 @@ EXPORT char * uri_to_filename (const char * uri)
 EXPORT char * uri_to_display (const char * uri)
 {
     if (! strncmp (uri, "cdda://?", 8))
-        return g_strdup_printf (_("Audio CD, track %s"), uri + 8);
+        return str_printf (_("Audio CD, track %s"), uri + 8);
 
     char buf[strlen (uri) + 1];
 
@@ -217,7 +183,7 @@ EXPORT char * uri_to_display (const char * uri)
     else
         str_decode_percent (uri, -1, buf);
 
-    return g_strdup (buf);
+    return str_get (buf);
 }
 
 EXPORT void uri_parse (const char * uri, const char * * base_p, const char * * ext_p,

@@ -310,7 +310,7 @@ static void load_playlists_real (void)
         playlist_set_modified (count, TRUE);
 
         g_free (path);
-        g_free (uri);
+        str_unref (uri);
     }
 
     /* unique ID-based naming scheme */
@@ -346,7 +346,7 @@ static void load_playlists_real (void)
             playlist_set_modified (count + i, TRUE);
 
         g_free (path);
-        g_free (uri);
+        str_unref (uri);
     }
 
     g_strfreev (order);
@@ -382,7 +382,7 @@ static void save_playlists_real (void)
             playlist_set_modified (i, FALSE);
 
             g_free (path);
-            g_free (uri);
+            str_unref (uri);
         }
 
         g_hash_table_insert (saved, g_strdup_printf ("%d.audpl", id), NULL);

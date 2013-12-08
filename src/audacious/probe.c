@@ -148,7 +148,7 @@ static void probe_by_mime (ProbeState * state)
     AUDDBG ("Probing by MIME type.\n");
     input_plugin_for_key (INPUT_KEY_MIME, mime, (PluginForEachFunc)
      probe_func_fast, state);
-    g_free (mime);
+    str_unref (mime);
 }
 
 static void probe_by_content (ProbeState * state)
