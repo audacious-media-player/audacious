@@ -223,7 +223,7 @@ EXPORT bool_t str_equal (const char * str1, const char * str2)
 
 EXPORT char * str_nget (const char * str, int len)
 {
-    if (strlen (str) <= len)
+    if (strnlen (str, len) < len)
         return str_get (str);
 
     char buf[len + 1];
