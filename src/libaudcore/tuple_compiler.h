@@ -35,7 +35,7 @@ void tuple_evalctx_free(TupleEvalContext *ctx);
 
 void tuple_evalnode_free(TupleEvalNode *expr);
 
-TupleEvalNode *tuple_formatter_compile(TupleEvalContext *ctx, char *expr);
+TupleEvalNode *tuple_formatter_compile(TupleEvalContext *ctx, const char *expr);
 void tuple_formatter_eval (TupleEvalContext * ctx, TupleEvalNode * expr,
  const Tuple * tuple, GString * out);
 

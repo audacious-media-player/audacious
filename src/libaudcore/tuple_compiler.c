@@ -221,15 +221,16 @@ void tuple_evalnode_free(TupleEvalNode *expr)
 }
 
 
-static TupleEvalNode *tuple_compiler_pass1(int *level, TupleEvalContext *ctx, char **expression);
+static TupleEvalNode *tuple_compiler_pass1(int *level, TupleEvalContext *ctx, const char **expression);
 
 
 static bool_t tc_get_item(TupleEvalContext *ctx,
-    char **str, char *buf, gssize max,
-    char endch, bool_t *literal, char *errstr, char *item)
+    const char **str, char *buf, gssize max,
+    char endch, bool_t *literal, char *errstr, const char *item)
 {
   gssize i = 0;
-  char *s = *str, tmpendch;
+  const char *s = *str;
+  char tmpendch;
 
   if (*s == '"') {
     if (*literal == FALSE) {
@@ -306,7 +307,8 @@ static int tc_get_variable(TupleEvalContext *ctx, char *name, int type)
 }
 
 
-static bool_t tc_parse_construct(TupleEvalContext *ctx, TupleEvalNode **res, char *item, char **c, int *level, int opcode)
+static bool_t tc_parse_construct(TupleEvalContext *ctx, TupleEvalNode **res,
+ const char *item, const char **c, int *level, int opcode)
 {
   char tmps1[MAX_STR], tmps2[MAX_STR];
   bool_t literal1 = TRUE, literal2 = TRUE;
@@ -344,10 +346,11 @@ static bool_t tc_parse_construct(TupleEvalContext *ctx, TupleEvalNode **res, cha
  * A "simple" straight compilation is sufficient in first pass, later
  * passes can perform subexpression removal and other optimizations.
  */
-static TupleEvalNode *tuple_compiler_pass1(int *level, TupleEvalContext *ctx, char **expression)
+static TupleEvalNode *tuple_compiler_pass1(int *level, TupleEvalContext *ctx, const char **expression)
 {
   TupleEvalNode *res = NULL, *tmp = NULL;
-  char *c = *expression, *item, tmps1[MAX_STR];
+  const char *c = *expression, *item;
+  char tmps1[MAX_STR];
   bool_t literal, end = FALSE;
 
   (*level)++;
@@ -363,7 +366,7 @@ static TupleEvalNode *tuple_compiler_pass1(int *level, TupleEvalContext *ctx, ch
       item = c++;
       if (*c == '{') {
         int opcode;
-        char *expr = ++c;
+        const char *expr = ++c;
 
         switch (*c) {
           case '?': c++;
@@ -535,10 +538,10 @@ ret_error:
 }
 
 
-TupleEvalNode *tuple_formatter_compile(TupleEvalContext *ctx, char *expr)
+TupleEvalNode *tuple_formatter_compile(TupleEvalContext *ctx, const char *expr)
 {
   int level = 0;
-  char *tmpexpr = expr;
+  const char *tmpexpr = expr;
   TupleEvalNode *res1;
 
   res1 = tuple_compiler_pass1(&level, ctx, &tmpexpr);
