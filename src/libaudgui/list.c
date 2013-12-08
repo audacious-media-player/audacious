@@ -534,6 +534,7 @@ static void destroy_cb (GtkWidget * list, ListModel * model)
      NULL, model);
 
     stop_autoscroll (model);
+    g_list_free (model->column_types);
     g_object_unref (model);
 }
 
