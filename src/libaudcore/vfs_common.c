@@ -18,12 +18,11 @@
  * the use of this software.
  */
 
-#include <glib.h>
-#include <glib/gprintf.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+#include "audstrings.h"
 #include "vfs.h"
 
 /**
@@ -94,7 +93,7 @@ EXPORT char *vfs_fgets(char *s, int n, VFSFile *stream)
  */
 EXPORT int vfs_fputs(const char *s, VFSFile *stream)
 {
-    gsize n = strlen(s);
+    int64_t n = strlen(s);
 
     return ((vfs_fwrite(s, 1, n, stream) == n) ? n : EOF);
 }
@@ -109,12 +108,8 @@ EXPORT int vfs_fputs(const char *s, VFSFile *stream)
  */
 EXPORT int vfs_vfprintf(VFSFile *stream, char const *format, va_list args)
 {
-    char *string;
-    int rv = g_vasprintf(&string, format, args);
-    if (rv < 0) return rv;
-    rv = vfs_fputs(string, stream);
-    g_free(string);
-    return rv;
+    VSPRINTF (buf, format, args);
+    return vfs_fputs (buf, stream);
 }
 
 /**
