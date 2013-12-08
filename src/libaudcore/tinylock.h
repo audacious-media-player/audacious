@@ -20,7 +20,7 @@
 #ifndef LIBAUDCORE_TINYLOCK_H
 #define LIBAUDCORE_TINYLOCK_H
 
-#ifdef HELGRIND_FRIENDLY
+#ifdef VALGRIND_FRIENDLY
 
 #include <pthread.h>
 
@@ -34,7 +34,7 @@ typedef pthread_rwlock_t TinyRWLock;
 #define tiny_lock_write pthread_rwlock_wrlock
 #define tiny_unlock_write pthread_rwlock_unlock
 
-#else /* ! HELGRIND_FRIENDLY */
+#else /* ! VALGRIND_FRIENDLY */
 
 /* TinyLock is an extremely low-overhead lock object (in terms of speed and
  * memory usage).  It makes no guarantees of fair scheduling, however. */
@@ -51,6 +51,6 @@ void tiny_unlock_read (TinyRWLock * lock);
 void tiny_lock_write (TinyRWLock * lock);
 void tiny_unlock_write (TinyRWLock * lock);
 
-#endif /* ! HELGRIND_FRIENDLY */
+#endif /* ! VALGRIND_FRIENDLY */
 
 #endif /* LIBAUDCORE_TINYLOCK_H */

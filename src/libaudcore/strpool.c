@@ -27,6 +27,66 @@
 #include "core.h"
 #include "tinylock.h"
 
+#ifdef VALGRIND_FRIENDLY
+
+typedef struct {
+    char magic;
+    char str[];
+} HashNode;
+
+#define NODE_SIZE_FOR(s) (offsetof (HashNode, str) + strlen (s) + 1)
+#define NODE_OF(s) ((HashNode *) ((s) - offsetof (HashNode, str)))
+
+EXPORT char * str_get (const char * str)
+{
+    if (! str)
+        return NULL;
+
+    HashNode * node = malloc (NODE_SIZE_FOR (str));
+    node->magic = '@';
+
+    strcpy (node->str, str);
+    return node->str;
+}
+
+EXPORT char * str_ref (const char * str)
+{
+    return str_get (str);
+}
+
+EXPORT void str_unref (char * str)
+{
+    if (! str)
+        return;
+
+    HashNode * node = NODE_OF (str);
+    assert (node->magic == '@');
+
+    node->magic = 0;
+    free (node);
+}
+
+EXPORT unsigned str_hash (const char * str)
+{
+    if (! str)
+        return 0;
+
+    HashNode * node = NODE_OF (str);
+    assert (node->magic == '@');
+
+    return g_str_hash (str);
+}
+
+EXPORT bool_t str_equal (const char * str1, const char * str2)
+{
+    assert (! str1 || NODE_OF (str1)->magic == '@');
+    assert (! str2 || NODE_OF (str2)->magic == '@');
+
+    return ! g_strcmp0 (str1, str2);
+}
+
+#else /* ! VALGRIND_FRIENDLY */
+
 #define NUM_TABLES     16   /* must be a power of two */
 #define TABLE_SHIFT     4   /* log (base 2) of NUM_TABLES */
 #define INITIAL_SIZE  256   /* must be a power of two */
@@ -221,6 +281,8 @@ EXPORT bool_t str_equal (const char * str1, const char * str2)
     return str1 == str2;
 }
 
+#endif /* ! VALGRIND_FRIENDLY */
+
 EXPORT char * str_nget (const char * str, int len)
 {
     if (strnlen (str, len) < len)
@@ -235,6 +297,7 @@ EXPORT char * str_nget (const char * str, int len)
 
 EXPORT void strpool_shutdown (void)
 {
+#ifndef VALGRIND_FRIENDLY
     for (int t = 0; t < NUM_TABLES; t ++)
     {
         HashTable * table = & tables[t];
@@ -259,4 +322,5 @@ EXPORT void strpool_shutdown (void)
 
         tiny_unlock (& table->lock);
     }
+#endif /* ! VALGRIND_FRIENDLY */
 }

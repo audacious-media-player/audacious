@@ -143,7 +143,9 @@ static void plugin2_unload (LoadedModule * loaded)
     }
 
     pthread_mutex_lock (& mutex);
+#ifndef VALGRIND_FRIENDLY
     g_module_close (loaded->module);
+#endif
     g_slice_free (LoadedModule, loaded);
     pthread_mutex_unlock (& mutex);
 }

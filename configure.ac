@@ -119,15 +119,15 @@ fi
 
 AC_SUBST(USE_DBUS)
 
-dnl Helgrind analysis support
+dnl Valgrind analysis support
 dnl =========================
 
-AC_ARG_ENABLE(helgrind,
- AS_HELP_STRING(--enable-helgrind, [Helgrind analysis support (default=disabled)]),
- HELGRIND_FRIENDLY=$enableval, HELGRIND_FRIENDLY=no)
+AC_ARG_ENABLE(valgrind,
+ AS_HELP_STRING(--enable-valgrind, [Valgrind analysis support (default=disabled)]),
+ VALGRIND_FRIENDLY=$enableval, VALGRIND_FRIENDLY=no)
 
-if test $HELGRIND_FRIENDLY = yes ; then
-    AC_DEFINE(HELGRIND_FRIENDLY, 1, [Define to allow Helgrind analysis])
+if test $VALGRIND_FRIENDLY = yes ; then
+    AC_DEFINE(VALGRIND_FRIENDLY, 1, [Define to allow Valgrind analysis])
 fi
 
 dnl Paths
@@ -168,5 +168,5 @@ echo "  Install path:                           $prefix"
 echo ""
 echo "  Automatic character code detection:     $USE_CHARDET"
 echo "  D-Bus support:                          $USE_DBUS"
-echo "  Helgrind analysis support:              $HELGRIND_FRIENDLY"
+echo "  Valgrind analysis support:              $VALGRIND_FRIENDLY"
 echo ""
