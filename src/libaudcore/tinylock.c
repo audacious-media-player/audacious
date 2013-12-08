@@ -19,6 +19,8 @@
 
 #include "tinylock.h"
 
+#ifndef HELGRIND_FRIENDLY
+
 #include <limits.h>
 #include <sched.h>
 
@@ -59,3 +61,5 @@ void tiny_unlock_write (TinyRWLock * lock)
 {
     __sync_fetch_and_sub (lock, WRITE_BIT);
 }
+
+#endif /* ! HELGRIND_FRIENDLY */
