@@ -371,7 +371,7 @@ DONE:
 
     if (! strncmp (name, "file:///", 8))
     {
-        char * filename = uri_to_filename (name);
+        char * filename = uri_to_display (name);
         if (! filename)
             goto DONE;
 
