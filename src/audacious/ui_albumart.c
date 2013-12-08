@@ -206,8 +206,5 @@ char * get_associated_image_file (const char * filename)
     g_free (base);
     g_free (image_local);
 
-    /* FIXME: return pooled string */
-    char * dup = image_uri ? strdup (image_uri) : NULL;
-    str_unref (image_uri);
-    return dup;
+    return image_uri;
 }

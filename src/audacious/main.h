@@ -60,6 +60,6 @@ void signals_init_two (void);
 #endif
 
 /* ui_albumart.c */
-char * get_associated_image_file (const char * filename);
+char * get_associated_image_file (const char * filename); /* pooled */
 
 #endif
