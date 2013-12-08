@@ -90,6 +90,7 @@ const char * tuple_field_get_name (int field);
 TupleValueType tuple_field_get_type (int field);
 
 typedef struct _Tuple Tuple;
+typedef struct _TupleFormatter TupleFormatter;
 
 /* Creates a new, blank tuple with a reference count of one. */
 Tuple * tuple_new (void);
@@ -164,10 +165,16 @@ int tuple_get_n_subtunes (Tuple * tuple);
 /* Returns the <n>th member of the subtune array. */
 int tuple_get_nth_subtune (Tuple * tuple, int n);
 
-/* Generates a formatted title string for <tuple> according to <format>.  The
- * syntax of <format> is documented in tuple_formatter.c.  The returned string
- * is pooled and must be released with str_unref() when no longer need.  The
- * returned string is never NULL, though it may be the empty string. */
-char * tuple_format_title (Tuple * tuple, const char * format);
+/* Creates a tuple formatter object for the given format.  The syntax of
+ * <format> is documented in tuple_formatter.c. */
+TupleFormatter * tuple_formatter_new (const char * format);
+
+/* Destroys a tuple formatter object. */
+void tuple_formatter_free (TupleFormatter * formatter);
+
+/* Generates a title string for <tuple> using the given formatter object.  The
+ * returned string is pooled and must be released with str_unref() when no
+ * longer needed.  Never returns NULL, but may return an empty string. */
+char * tuple_format_title (TupleFormatter * formatter, const Tuple * tuple);
 
 #endif /* LIBAUDCORE_TUPLE_H */

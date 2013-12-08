@@ -38,7 +38,6 @@
 
 /* all (char *) return values must be freed with str_unref() */
 
-struct _Index;
 typedef struct _Index Index;
 
 char * str_printf (const char * format, ...);

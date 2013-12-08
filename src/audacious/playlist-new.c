@@ -126,15 +126,7 @@ static void scan_restart (void);
 
 static bool_t next_song_locked (Playlist * playlist, bool_t repeat, int hint);
 
-static char * title_format;
-
-static char * title_from_tuple (Tuple * tuple)
-{
-    if (! title_format)
-        title_format = get_string (NULL, "generic_title_format");
-
-    return tuple_format_title (tuple, title_format);
-}
+static TupleFormatter * title_formatter;
 
 static void entry_set_tuple_real (Entry * entry, Tuple * tuple)
 {
@@ -167,7 +159,7 @@ static void entry_set_tuple_real (Entry * entry, Tuple * tuple)
     }
     else
     {
-        entry->formatted = title_from_tuple (tuple);
+        entry->formatted = tuple_format_title (title_formatter, tuple);
         entry->length = tuple_get_int (tuple, FIELD_LENGTH);
         if (entry->length < 0)
             entry->length = 0;
@@ -650,6 +642,9 @@ void playlist_init (void)
     scan_playlist = scan_row = 0;
 
     LEAVE;
+
+    /* initialize title formatter */
+    playlist_reformat_titles ();
 }
 
 void playlist_end (void)
@@ -671,8 +666,8 @@ void playlist_end (void)
     g_hash_table_destroy (unique_id_table);
     unique_id_table = NULL;
 
-    g_free (title_format);
-    title_format = NULL;
+    tuple_formatter_free (title_formatter);
+    title_formatter = NULL;
 
     LEAVE;
 }
@@ -1740,11 +1735,14 @@ void playlist_reformat_titles (void)
 {
     ENTER;
 
-    g_free (title_format);
-    title_format = NULL;
+    if (title_formatter)
+        tuple_formatter_free (title_formatter);
 
-    for (int playlist_num = 0; playlist_num < index_count (playlists);
-     playlist_num ++)
+    char * format = get_string (NULL, "generic_title_format");
+    title_formatter = tuple_formatter_new (format);
+    g_free (format);
+
+    for (int playlist_num = 0; playlist_num < index_count (playlists); playlist_num ++)
     {
         Playlist * playlist = index_get (playlists, playlist_num);
         int entries = index_count (playlist->entries);
@@ -1753,7 +1751,11 @@ void playlist_reformat_titles (void)
         {
             Entry * entry = index_get (playlist->entries, count);
             str_unref (entry->formatted);
-            entry->formatted = entry->tuple ? title_from_tuple (entry->tuple) : NULL;
+
+            if (entry->tuple)
+                entry->formatted = tuple_format_title (title_formatter, entry->tuple);
+            else
+                entry->formatted = NULL;
         }
 
         queue_update (PLAYLIST_UPDATE_METADATA, playlist_num, 0, entries);

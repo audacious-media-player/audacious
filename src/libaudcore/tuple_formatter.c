@@ -1,6 +1,6 @@
 /*
  * tuple_formatter.c
- * Copyright (c) 2007-2011 William Pitcock and John Lindgren
+ * Copyright (c) 2007-2013 William Pitcock and John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -18,11 +18,9 @@
  */
 
 #include <glib.h>
-#include <pthread.h>
-#include <string.h>
 
+#include "tuple.h"
 #include "tuple_compiler.h"
-#include "tuple_formatter.h"
 
 /*
  * the tuple formatter:
@@ -47,48 +45,52 @@
  *   - %{function:args,arg2,...}: runs function and inserts the result.
  *
  * everything else is treated as raw text.
- * additionally, plugins can add additional instructions and functions!
  */
 
-/*
- * Compile a tuplez string and cache the result.
- * This caches the result for the last string, so that
- * successive calls are sped up.
- */
-
-char * tuple_formatter_process_string (const Tuple * tuple, const char * string)
+struct _TupleFormatter
 {
-    static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-    pthread_mutex_lock (& mutex);
+    TupleEvalContext * context;
+    TupleEvalNode * node;
+    GString * buf;
+};
 
-    static char *last_string = NULL;
-    static TupleEvalContext *last_ctx = NULL;
-    static TupleEvalNode *last_ev = NULL;
+EXPORT TupleFormatter * tuple_formatter_new (const char * format)
+{
+    TupleFormatter * formatter = g_slice_new (TupleFormatter);
 
-    if (! last_string || strcmp (string, last_string))
+    formatter->context = tuple_evalctx_new ();
+    formatter->node = tuple_formatter_compile (formatter->context, format);
+    formatter->buf = g_string_sized_new (255);
+
+    return formatter;
+}
+
+EXPORT void tuple_formatter_free (TupleFormatter * formatter)
+{
+    tuple_evalctx_free (formatter->context);
+    tuple_evalnode_free (formatter->node);
+    g_string_free (formatter->buf, TRUE);
+
+    g_slice_free (TupleFormatter, formatter);
+}
+
+EXPORT char * tuple_format_title (TupleFormatter * formatter, const Tuple * tuple)
+{
+    tuple_formatter_eval (formatter->context, formatter->node, tuple, formatter->buf);
+    tuple_evalctx_reset (formatter->context);
+
+    if (formatter->buf->len)
+        return str_get (formatter->buf->str);
+
+    /* formatting failed, try fallbacks */
+    static const int fallbacks[] = {FIELD_TITLE, FIELD_FILE_NAME};
+
+    for (int i = 0; i < G_N_ELEMENTS (fallbacks); i ++)
     {
-        g_free(last_string);
-
-        if (last_ctx != NULL)
-        {
-            tuple_evalctx_free(last_ctx);
-            tuple_evalnode_free(last_ev);
-        }
-
-        last_ctx = tuple_evalctx_new();
-        last_string = g_strdup(string);
-        last_ev = tuple_formatter_compile(last_ctx, last_string);
+        char * title = tuple_get_str (tuple, fallbacks[i]);
+        if (title)
+            return title;
     }
 
-    static GString * buf;
-    if (! buf)
-        buf = g_string_sized_new (255);
-
-    tuple_formatter_eval (last_ctx, last_ev, tuple, buf);
-    tuple_evalctx_reset (last_ctx);
-
-    char * result = str_get (buf->str);
-
-    pthread_mutex_unlock (& mutex);
-    return result;
+    return str_get ("");
 }
