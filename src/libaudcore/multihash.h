@@ -45,8 +45,7 @@ typedef struct _MultihashNode {
     struct _MultihashNode * next;
 } MultihashNode;
 
-/* Single channel of a multihash table.  This an internal structure and should
- * not be touched outside multihash.c. */
+/* Single channel of a multihash table.  For internal use only. */
 typedef struct {
     TinyLock lock;
     MultihashNode * * buckets;
@@ -88,7 +87,7 @@ int multihash_lookup (MultihashTable * table, const void * data, unsigned hash,
  MultihashAddFunc add, MultihashActionFunc action, void * state);
 
 /* All-purpose iteration function.  All channels of the table are locked
- * simultaneously during the iterarion to freeze the table in a consistent
+ * simultaneously during the iteration to freeze the table in a consistent
  * state.  <action> is called on each node in order, and may return TRUE to
  * remove the node from the table.  <state> is forwarded to <action>. */
 void multihash_iterate (MultihashTable * table, MultihashActionFunc action, void * state);
