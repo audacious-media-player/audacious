@@ -12,12 +12,11 @@ audclient.pc
 man/audacious.1
 man/audtool.1
 src/audacious/audacious
-src/audacious/dbus-client-bindings.h
-src/audacious/dbus-server-bindings.h
 src/audtool/audtool
 src/dbus/aud-dbus.c
 src/dbus/aud-dbus.h
 src/libaudcore/audio.h
+src/libaudcore/tinylock.h
 .deps
 *.a
 *.mo
