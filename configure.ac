@@ -124,11 +124,16 @@ dnl =========================
 
 AC_ARG_ENABLE(valgrind,
  AS_HELP_STRING(--enable-valgrind, [Valgrind analysis support (default=disabled)]),
- VALGRIND_FRIENDLY=$enableval, VALGRIND_FRIENDLY=no)
+ enable_valgrind=$enableval, enable_valgrind=no)
 
-if test $VALGRIND_FRIENDLY = yes ; then
+if test $enable_valgrind = yes ; then
     AC_DEFINE(VALGRIND_FRIENDLY, 1, [Define to allow Valgrind analysis])
+    VALGRIND_FRIENDLY=1
+else
+    VALGRIND_FRIENDLY=0
 fi
+
+AC_SUBST([VALGRIND_FRIENDLY])
 
 dnl Paths
 dnl =====
@@ -154,6 +159,7 @@ AC_CONFIG_FILES([
     man/audtool.1
     man/audacious.1
     src/libaudcore/audio.h
+    src/libaudcore/tinylock.h
 ])
 
 AC_OUTPUT
@@ -168,5 +174,5 @@ echo "  Install path:                           $prefix"
 echo ""
 echo "  Automatic character code detection:     $USE_CHARDET"
 echo "  D-Bus support:                          $USE_DBUS"
-echo "  Valgrind analysis support:              $VALGRIND_FRIENDLY"
+echo "  Valgrind analysis support:              $enable_valgrind"
 echo ""

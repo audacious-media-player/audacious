@@ -24,6 +24,7 @@ INCLUDES = audio.h \
            hook.h \
            index.h \
            inifile.h \
+           tinylock.h \
            tuple.h \
            vfs.h \
            vfs_async.h
