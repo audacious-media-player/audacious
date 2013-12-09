@@ -24,25 +24,24 @@
 
 #include <glib.h>
 
-#include "core.h"
-#include "tinylock.h"
+#include "multihash.h"
 
 #ifdef VALGRIND_FRIENDLY
 
 typedef struct {
     char magic;
     char str[];
-} HashNode;
+} StrNode;
 
-#define NODE_SIZE_FOR(s) (offsetof (HashNode, str) + strlen (s) + 1)
-#define NODE_OF(s) ((HashNode *) ((s) - offsetof (HashNode, str)))
+#define NODE_SIZE_FOR(s) (offsetof (StrNode, str) + strlen (s) + 1)
+#define NODE_OF(s) ((StrNode *) ((s) - offsetof (StrNode, str)))
 
 EXPORT char * str_get (const char * str)
 {
     if (! str)
         return NULL;
 
-    HashNode * node = malloc (NODE_SIZE_FOR (str));
+    StrNode * node = malloc (NODE_SIZE_FOR (str));
     node->magic = '@';
 
     strcpy (node->str, str);
@@ -59,7 +58,7 @@ EXPORT void str_unref (char * str)
     if (! str)
         return;
 
-    HashNode * node = NODE_OF (str);
+    StrNode * node = NODE_OF (str);
     assert (node->magic == '@');
 
     node->magic = 0;
@@ -71,7 +70,7 @@ EXPORT unsigned str_hash (const char * str)
     if (! str)
         return 0;
 
-    HashNode * node = NODE_OF (str);
+    StrNode * node = NODE_OF (str);
     assert (node->magic == '@');
 
     return g_str_hash (str);
@@ -85,81 +84,58 @@ EXPORT bool_t str_equal (const char * str1, const char * str2)
     return ! g_strcmp0 (str1, str2);
 }
 
+EXPORT void strpool_shutdown (void)
+{
+}
+
 #else /* ! VALGRIND_FRIENDLY */
 
-#define NUM_TABLES     16   /* must be a power of two */
-#define TABLE_SHIFT     4   /* log (base 2) of NUM_TABLES */
-#define INITIAL_SIZE  256   /* must be a power of two */
-
-struct _HashNode {
-    struct _HashNode * next;
+typedef struct {
+    MultihashNode node;
     unsigned hash, refs;
     char magic;
     char str[];
+} StrNode;
+
+#define NODE_SIZE_FOR(s) (offsetof (StrNode, str) + strlen (s) + 1)
+#define NODE_OF(s) ((StrNode *) ((s) - offsetof (StrNode, str)))
+
+static unsigned hash_cb (const MultihashNode * node)
+{
+    return ((const StrNode *) node)->hash;
+}
+
+static bool_t match_cb (const MultihashNode * node_, const void * data, unsigned hash)
+{
+    const StrNode * node = (const StrNode *) node_;
+    return data == node->str || (hash == node->hash && ! strcmp (data, node->str));
+}
+
+static MultihashTable strpool_table = {
+    .hash_func = hash_cb,
+    .match_func = match_cb
 };
 
-typedef struct _HashNode HashNode;
-
-#define NODE_SIZE_FOR(s) (offsetof (HashNode, str) + strlen (s) + 1)
-#define NODE_OF(s) ((HashNode *) ((s) - offsetof (HashNode, str)))
-
-typedef struct {
-    TinyLock lock;
-    HashNode * * buckets;
-    unsigned size, used;
-} HashTable;
-
-static HashTable tables[NUM_TABLES];
-
-static HashNode * find_in_list (HashNode * list, unsigned hash, const char * str)
+static MultihashNode * add_cb (const void * data, unsigned hash, void * state)
 {
-    while (list && (list->hash != hash || strcmp (list->str, str)))
-        list = list->next;
+    StrNode * node = malloc (NODE_SIZE_FOR (data));
+    node->hash = hash;
+    node->refs = 1;
+    node->magic = '@';
+    strcpy (node->str, data);
 
-    return list;
+    * ((char * *) state) = node->str;
+    return (MultihashNode *) node;
 }
 
-static void add_to_list (HashNode * * list, HashNode * node)
+static bool_t ref_cb (MultihashNode * node_, void * state)
 {
-    node->next = * list;
-    * list = node;
-}
+    StrNode * node = (StrNode *) node_;
 
-static void remove_from_list (HashNode * * list, HashNode * node)
-{
-    if (* list == node)
-        * list = node->next;
-    else
-    {
-        HashNode * prev = * list;
-        while (prev->next != node)
-            prev = prev->next;
+    __sync_fetch_and_add (& node->refs, 1);
 
-        prev->next = node->next;
-    }
-}
-
-static void resize_table (HashTable * table, unsigned new_size)
-{
-    HashNode * * new_buckets = calloc (new_size, sizeof (HashNode *));
-
-    for (int i = 0; i < table->size; i ++)
-    {
-        HashNode * node = table->buckets[i];
-
-        while (node)
-        {
-            HashNode * next = node->next;
-            unsigned new_bucket = (node->hash >> TABLE_SHIFT) & (new_size - 1);
-
-            add_to_list (& new_buckets[new_bucket], node);
-            node = next;
-        }
-    }
-
-    free (table->buckets);
-    table->buckets = new_buckets;
-    table->size = new_size;
+    * ((char * *) state) = node->str;
+    return FALSE;
 }
 
 EXPORT char * str_get (const char * str)
@@ -167,42 +143,9 @@ EXPORT char * str_get (const char * str)
     if (! str)
         return NULL;
 
-    unsigned hash = g_str_hash (str);
-    HashTable * table = & tables[hash & (NUM_TABLES - 1)];
-
-    tiny_lock (& table->lock);
-
-    if (! table->buckets)
-    {
-        table->buckets = calloc (INITIAL_SIZE, sizeof (HashNode *));
-        table->size = INITIAL_SIZE;
-        table->used = 0;
-    }
-
-    unsigned bucket = (hash >> TABLE_SHIFT) & (table->size - 1);
-    HashNode * node = find_in_list (table->buckets[bucket], hash, str);
-
-    if (node)
-        __sync_fetch_and_add (& node->refs, 1);
-    else
-    {
-        node = malloc (NODE_SIZE_FOR (str));
-        node->hash = hash;
-        node->refs = 1;
-        node->magic = '@';
-        strcpy (node->str, str);
-
-        add_to_list (& table->buckets[bucket], node);
-
-        table->used ++;
-
-        if (table->used > table->size)
-            resize_table (table, table->size << 1);
-    }
-
-    tiny_unlock (& table->lock);
-
-    return node->str;
+    char * ret = NULL;
+    multihash_lookup (& strpool_table, str, g_str_hash (str), add_cb, ref_cb, & ret);
+    return ret;
 }
 
 EXPORT char * str_ref (const char * str)
@@ -210,7 +153,7 @@ EXPORT char * str_ref (const char * str)
     if (! str)
         return NULL;
 
-    HashNode * node = NODE_OF (str);
+    StrNode * node = NODE_OF (str);
     assert (node->magic == '@');
 
     __sync_fetch_and_add (& node->refs, 1);
@@ -218,47 +161,56 @@ EXPORT char * str_ref (const char * str)
     return (char *) str;
 }
 
+static bool_t remove_cb (MultihashNode * node_, void * state)
+{
+    StrNode * node = (StrNode *) node_;
+
+    if (! __sync_bool_compare_and_swap (& node->refs, 1, 0))
+        return FALSE;
+
+    node->magic = 0;
+    free (node);
+    return TRUE;
+}
+
 EXPORT void str_unref (char * str)
 {
     if (! str)
         return;
 
-    HashNode * node = NODE_OF (str);
+    StrNode * node = NODE_OF (str);
     assert (node->magic == '@');
 
-restart:;
-    int refs = __sync_fetch_and_add (& node->refs, 0);
-
-    if (refs > 1)
+    while (1)
     {
-        if (! __sync_bool_compare_and_swap (& node->refs, refs, refs - 1))
-            goto restart;
-    }
-    else
-    {
-        HashTable * table = & tables[node->hash & (NUM_TABLES - 1)];
+        int refs = __sync_fetch_and_add (& node->refs, 0);
 
-        tiny_lock (& table->lock);
-
-        if (! __sync_bool_compare_and_swap (& node->refs, 1, 0))
+        if (refs > 1)
         {
-            tiny_unlock (& table->lock);
-            goto restart;
+            if (__sync_bool_compare_and_swap (& node->refs, refs, refs - 1))
+                break;
         }
+        else
+        {
+            int status = multihash_lookup (& strpool_table, node->str,
+             node->hash, NULL, remove_cb, NULL);
 
-        unsigned bucket = (node->hash >> TABLE_SHIFT) & (table->size - 1);
-        remove_from_list (& table->buckets[bucket], node);
-
-        node->magic = 0;
-        free (node);
-
-        table->used --;
-
-        if (table->used < table->size >> 2 && table->size > INITIAL_SIZE)
-            resize_table (table, table->size >> 1);
-
-        tiny_unlock (& table->lock);
+            assert (status & MULTIHASH_FOUND);
+            if (status & MULTIHASH_REMOVED)
+                break;
+        }
     }
+}
+
+static bool_t leak_cb (MultihashNode * node, void * state)
+{
+    fprintf (stderr, "String leaked: %s\n", ((StrNode *) node)->str);
+    return FALSE;
+}
+
+EXPORT void strpool_shutdown (void)
+{
+    multihash_iterate (& strpool_table, leak_cb, NULL);
 }
 
 EXPORT unsigned str_hash (const char * str)
@@ -266,7 +218,7 @@ EXPORT unsigned str_hash (const char * str)
     if (! str)
         return 0;
 
-    HashNode * node = NODE_OF (str);
+    StrNode * node = NODE_OF (str);
     assert (node->magic == '@');
 
     return node->hash;
@@ -293,34 +245,4 @@ EXPORT char * str_nget (const char * str, int len)
     buf[len] = 0;
 
     return str_get (buf);
-}
-
-EXPORT void strpool_shutdown (void)
-{
-#ifndef VALGRIND_FRIENDLY
-    for (int t = 0; t < NUM_TABLES; t ++)
-    {
-        HashTable * table = & tables[t];
-
-        tiny_lock (& table->lock);
-
-        if (table->buckets)
-        {
-            if (table->used)
-            {
-                for (int i = 0; i < table->size; i ++)
-                    for (HashNode * node = table->buckets[i]; node; node = node->next)
-                        fprintf (stderr, "String leaked: %s\n", node->str);
-            }
-            else
-            {
-                free (table->buckets);
-                table->buckets = NULL;
-                table->size = 0;
-            }
-        }
-
-        tiny_unlock (& table->lock);
-    }
-#endif /* ! VALGRIND_FRIENDLY */
 }

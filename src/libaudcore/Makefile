@@ -9,6 +9,7 @@ SRCS = audio.c \
        hook.c \
        index.c \
        inifile.c \
+       multihash.c \
        strpool.c \
        tinylock.c \
        tuple.c \
@@ -24,6 +25,7 @@ INCLUDES = audio.h \
            hook.h \
            index.h \
            inifile.h \
+           multihash.h \
            tinylock.h \
            tuple.h \
            vfs.h \
