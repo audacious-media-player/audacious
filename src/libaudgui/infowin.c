@@ -146,7 +146,7 @@ static void set_entry_int_from_field (GtkWidget * widget, const Tuple * tuple,
     char scratch[32];
 
     if (tuple_get_value_type (tuple, fieldn) == TUPLE_INT)
-        snprintf (scratch, sizeof scratch, "%d", tuple_get_int (tuple, fieldn));
+        str_itoa (tuple_get_int (tuple, fieldn), scratch, sizeof scratch);
     else
         scratch[0] = 0;
 

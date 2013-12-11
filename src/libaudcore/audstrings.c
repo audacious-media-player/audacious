@@ -98,6 +98,35 @@ EXPORT void str_replace_char (char * string, char old_c, char new_c)
         * string ++ = new_c;
 }
 
+EXPORT void str_itoa (int x, char * buf, int bufsize)
+{
+    if (! bufsize)
+        return;
+
+    if (x < 0)
+    {
+        if (bufsize > 1)
+        {
+            * buf ++ = '-';
+            bufsize --;
+        }
+
+        x = -x;
+    }
+
+    char * rev = buf + bufsize - 1;
+    * rev = 0;
+
+    while (rev > buf)
+    {
+        * (-- rev) = '0' + x % 10;
+        if (! (x /= 10))
+            break;
+    }
+
+    while ((* buf ++ = * rev ++));
+}
+
 /* Percent-decodes up to <len> bytes of <str> to <out>, which must be large
  * enough to hold the decoded string (i.e., (len + 1) bytes).  If <len> is
  * negative, decodes all of <str>. */
@@ -554,7 +583,10 @@ ERR:
 EXPORT char * int_to_str (int val)
 {
     g_return_val_if_fail (val >= -1000000000 && val <= 1000000000, NULL);
-    return str_printf ("%d", val);
+
+    char buf[16];
+    str_itoa (val, buf, sizeof buf);
+    return str_get (buf);
 }
 
 EXPORT char * double_to_str (double val)

@@ -48,6 +48,8 @@ bool_t str_has_suffix_nocase(const char * str, const char * suffix);
 
 void str_replace_char (char * string, char old_c, char new_c);
 
+void str_itoa (int x, char * buf, int bufsize);
+
 void str_decode_percent (const char * str, int len, char * out);
 void str_encode_percent (const char * str, int len, char * out);
 

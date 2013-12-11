@@ -209,11 +209,11 @@ static void infopopup_set_fields (const Tuple * tuple, const char * title)
     infopopup_set_field (widgets.length_header, widgets.length_label, tmp);
 
     value = tuple_get_int (tuple, FIELD_YEAR);
-    tmp = (value > 0) ? str_printf ("%d", value) : NULL;
+    tmp = (value > 0) ? int_to_str (value) : NULL;
     infopopup_set_field (widgets.year_header, widgets.year_label, tmp);
 
     value = tuple_get_int (tuple, FIELD_TRACK_NUMBER);
-    tmp = (value > 0) ? str_printf ("%d", value) : NULL;
+    tmp = (value > 0) ? int_to_str (value) : NULL;
     infopopup_set_field (widgets.track_header, widgets.track_label, tmp);
 }
 

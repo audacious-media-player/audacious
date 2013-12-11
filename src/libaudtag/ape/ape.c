@@ -26,6 +26,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <libaudcore/audstrings.h>
 #include <libaudcore/vfs.h>
 
 #include "ape.h"
@@ -393,7 +394,7 @@ static bool_t write_integer_item (const Tuple * tuple, int field, VFSFile *
     if (! value)
         return TRUE;
 
-    snprintf (scratch, sizeof scratch, "%d", value);
+    str_itoa (value, scratch, sizeof scratch);
 
     if (! ape_write_item (handle, key, scratch, written_length))
         return FALSE;

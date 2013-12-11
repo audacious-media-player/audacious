@@ -37,6 +37,7 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "audstrings.h"
 #include "tuple_compiler.h"
 
 #define MAX_STR   (256)
@@ -618,7 +619,7 @@ static bool_t tuple_formatter_eval_do (TupleEvalContext * ctx, TupleEvalNode *
                   break;
 
                 case TUPLE_INT:
-                  g_snprintf (tmps, sizeof (tmps), "%d", var0->defvali);
+                  str_itoa (var0->defvali, tmps, sizeof (tmps));
                   str = tmps;
                   break;
 

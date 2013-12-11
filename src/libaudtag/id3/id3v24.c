@@ -581,7 +581,7 @@ static void add_frameFromTupleInt (const Tuple * tuple, int field, int
     }
 
     char scratch[16];
-    snprintf (scratch, sizeof scratch, "%d", tuple_get_int (tuple, field));
+    str_itoa (tuple_get_int (tuple, field), scratch, sizeof scratch);
     add_text_frame (id3_field, scratch, dict);
 }
 
