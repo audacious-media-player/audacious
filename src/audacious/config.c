@@ -310,9 +310,8 @@ void set_int (const char * section, const char * name, int value)
 
 int get_int (const char * section, const char * name)
 {
-    int value = 0;
     char * string = get_string (section, name);
-    str_to_int (string, & value);
+    int value = str_to_int (string);
     g_free (string);
     return value;
 }
@@ -327,9 +326,8 @@ void set_double (const char * section, const char * name, double value)
 
 double get_double (const char * section, const char * name)
 {
-    double value = 0;
     char * string = get_string (section, name);
-    str_to_double (string, & value);
+    double value = str_to_double (string);
     g_free (string);
     return value;
 }

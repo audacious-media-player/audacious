@@ -495,11 +495,11 @@ EXPORT char * index_to_str_list (Index * index, const char * sep)
  *    architecture or locale we have to deal with.
  *  - Readability, meaning that the number one is rendered "1", not "1.000".
  *
- * Values are limited between -1,000,000,000 and 1,000,000,000 (inclusive) and
+ * Values between -1,000,000,000 and 1,000,000,000 (inclusive) are guaranteed to
  * have an accuracy of 6 decimal places.
  */
 
-EXPORT bool_t str_to_int (const char * string, int * addr)
+EXPORT int str_to_int (const char * string)
 {
     bool_t neg = (string[0] == '-');
     if (neg)
@@ -508,82 +508,33 @@ EXPORT bool_t str_to_int (const char * string, int * addr)
     int val = 0;
     char c;
 
-    while ((c = * string ++))
-    {
-        if (c < '0' || c > '9' || val > 100000000)
-            goto ERR;
-
+    while ((c = * string ++) && c >= '0' && c <= '9')
         val = val * 10 + (c - '0');
-    }
 
-    if (val > 1000000000)
-        goto ERR;
-
-    * addr = neg ? -val : val;
-    return TRUE;
-
-ERR:
-    return FALSE;
+    return neg ? -val : val;
 }
 
-EXPORT bool_t str_to_double (const char * string, double * addr)
+EXPORT double str_to_double (const char * string)
 {
     bool_t neg = (string[0] == '-');
     if (neg)
         string ++;
 
+    double val = str_to_int (string);
     const char * p = strchr (string, '.');
-    int i, f;
 
     if (p)
     {
-        char buf[11];
-        int len;
-
-        len = p - string;
-        if (len > 10)
-            goto ERR;
-
-        memcpy (buf, string, len);
-        buf[len] = 0;
-
-        if (! str_to_int (buf, & i))
-            goto ERR;
-
-        len = strlen (p + 1);
-        if (len > 6)
-            goto ERR;
-
-        memcpy (buf, p + 1, len);
-        memset (buf + len, '0', 6 - len);
-        buf[6] = 0;
-
-        if (! str_to_int (buf, & f))
-            goto ERR;
-    }
-    else
-    {
-        if (! str_to_int (string, & i))
-            goto ERR;
-
-        f = 0;
+        char buf[7] = "000000";
+        memcpy (buf, p + 1, strnlen (p + 1, 6));
+        val += (double) str_to_int (buf) / 1000000;
     }
 
-    double val = i + (double) f / 1000000;
-    if (val > 1000000000)
-        goto ERR;
-
-    * addr = neg ? -val : val;
-    return TRUE;
-
-ERR:
-    return FALSE;
+    return neg ? -val : val;
 }
 
 EXPORT char * int_to_str (int val)
 {
-    g_return_val_if_fail (val >= -1000000000 && val <= 1000000000, NULL);
-
     char buf[16];
     str_itoa (val, buf, sizeof buf);
     return str_get (buf);
@@ -591,8 +542,6 @@ EXPORT char * int_to_str (int val)
 
 EXPORT char * double_to_str (double val)
 {
-    g_return_val_if_fail (val >= -1000000000 && val <= 1000000000, NULL);
-
     bool_t neg = (val < 0);
     if (neg)
         val = -val;
@@ -621,21 +570,16 @@ EXPORT char * double_to_str (double val)
 EXPORT bool_t str_to_int_array (const char * string, int * array, int count)
 {
     Index * index = str_list_to_index (string, ", ");
-    if (index_count (index) != count)
-        goto ERR;
+    bool_t okay = (index_count (index) == count);
 
-    for (int i = 0; i < count; i ++)
+    if (okay)
     {
-        if (! str_to_int (index_get (index, i), & array[i]))
-            goto ERR;
+        for (int i = 0; i < count; i ++)
+            array[i] = str_to_int (index_get (index, i));
     }
 
     index_free_full (index, (IndexFreeFunc) str_unref);
-    return TRUE;
-
-ERR:
-    index_free_full (index, (IndexFreeFunc) str_unref);
-    return FALSE;
+    return okay;
 }
 
 EXPORT char * int_array_to_str (const int * array, int count)
@@ -663,21 +607,16 @@ ERR:
 EXPORT bool_t str_to_double_array (const char * string, double * array, int count)
 {
     Index * index = str_list_to_index (string, ", ");
-    if (index_count (index) != count)
-        goto ERR;
+    bool_t okay = (index_count (index) == count);
 
-    for (int i = 0; i < count; i ++)
+    if (okay)
     {
-        if (! str_to_double (index_get (index, i), & array[i]))
-            goto ERR;
+        for (int i = 0; i < count; i ++)
+            array[i] = str_to_double (index_get (index, i));
     }
 
     index_free_full (index, (IndexFreeFunc) str_unref);
-    return TRUE;
-
-ERR:
-    index_free_full (index, (IndexFreeFunc) str_unref);
-    return FALSE;
+    return okay;
 }
 
 EXPORT char * double_array_to_str (const double * array, int count)

@@ -75,8 +75,8 @@ int str_compare_encoded (const char * a, const char * b);
 Index * str_list_to_index (const char * list, const char * delims);
 char * index_to_str_list (Index * index, const char * sep);
 
-bool_t str_to_int (const char * string, int * addr);
-bool_t str_to_double (const char * string, double * addr);
+int str_to_int (const char * string);
+double str_to_double (const char * string);
 char * int_to_str (int val);
 char * double_to_str (double val);
 
