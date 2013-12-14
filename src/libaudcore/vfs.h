@@ -105,6 +105,7 @@ int64_t vfs_fwrite (const void * ptr, int64_t size, int64_t nmemb, VFSFile * fil
 int vfs_getc (VFSFile * stream) WARN_RETURN;
 int vfs_ungetc (int c, VFSFile * stream) WARN_RETURN;
 char * vfs_fgets (char * s, int n, VFSFile * stream) WARN_RETURN;
+int vfs_fputs (const char * s, VFSFile * stream) WARN_RETURN;
 bool_t vfs_feof (VFSFile * file) WARN_RETURN;
 int vfs_fprintf (VFSFile * stream, char const * format, ...) __attribute__
  ((__format__ (__printf__, 2, 3)));
