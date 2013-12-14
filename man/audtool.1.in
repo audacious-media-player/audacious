@@ -1,13 +1,13 @@
 .TH AUDTOOL "1" "April 2009" "Version @VERSION@"
 .SH NAME
 .B audtool
-- a small tool to modify behavior of a running audacious2 instance.
+- a small tool to modify behavior of a running Audacious instance.
 .SH SYNOPSIS
 .B audtool
 [\-\-[[handler [parameters]] [...]
 .SH DESCRIPTION
 .B audtool
-is designed to send commands to a running audacious.
+is designed to send commands to a running Audacious.
 .PP
 It can handle various things like jumping to the next track in playlist
 or returning the current playing track title, as well as other status
@@ -172,13 +172,13 @@ Plays/(un)pauses song playback.
 Stops song playback.
 .TP
 .I --playback-playing
-Returns OK if audacious is playing.
+Returns OK if Audacious is playing.
 .TP
 .I --playback-paused
-Returns OK if audacious is paused.
+Returns OK if Audacious is paused.
 .TP
 .I --playback-stopped
-Returns OK if audacious is stopped.
+Returns OK if Audacious is stopped.
 .TP
 .I --playback-status
 Returns the playback status.
@@ -244,7 +244,7 @@ Enables/disables always on top setting.
 Displays Audacious version.
 .TP
 .I --shutdown
-Shuts down audacious.
+Shuts down Audacious.
 .PP
 .B "Help system:"
 .TP
@@ -257,7 +257,7 @@ Shows handlers list.
 Handlers may be prefixed with `\-\-' (GNU\-style long\-options) or not, your choice.
 .SH BUGS
 There are no known bugs in audtool at this time; if you find any please
-report them on www.redmine.audacious-media-player.org in the Audacious issue tracker.
+report them on <www.redmine.audacious-media-player.org> in the Audacious issue tracker.
 .SH AUTHORS
 .B audtool
 was written by George Averill <nhjm@nhjm.net> and William
