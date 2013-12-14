@@ -127,9 +127,8 @@ vfs_fopen(const char * path,
 
     const char * s = strstr (path, "://");
     g_return_val_if_fail (s, NULL);
-    char scheme[s - path + 1];
-    strncpy (scheme, path, s - path);
-    scheme[s - path] = 0;
+
+    SNCOPY (scheme, path, s - path);
 
     VFSConstructor * vtable = lookup_func (scheme);
     if (! vtable)
@@ -138,9 +137,7 @@ vfs_fopen(const char * path,
     const gchar * sub;
     uri_parse (path, NULL, NULL, & sub, NULL);
 
-    gchar buf[sub - path + 1];
-    memcpy (buf, path, sub - path);
-    buf[sub - path] = 0;
+    SNCOPY (buf, path, sub - path);
 
     void * handle = vtable->vfs_fopen_impl (buf, mode);
     if (! handle)

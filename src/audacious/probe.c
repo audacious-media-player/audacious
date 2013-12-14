@@ -113,15 +113,11 @@ static bool_t probe_func_fast (PluginHandle * plugin, ProbeState * state)
 static void probe_by_scheme (ProbeState * state)
 {
     const char * s = strstr (state->filename, "://");
-
     if (s == NULL)
         return;
 
     AUDDBG ("Probing by scheme.\n");
-    char buf[s - state->filename + 1];
-    memcpy (buf, state->filename, s - state->filename);
-    buf[s - state->filename] = 0;
-
+    SNCOPY (buf, state->filename, s - state->filename);
     input_plugin_for_key (INPUT_KEY_SCHEME, buf, (PluginForEachFunc) probe_func_fast, state);
 }
 

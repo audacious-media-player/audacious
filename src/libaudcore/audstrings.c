@@ -17,13 +17,13 @@
  * the use of this software.
  */
 
+#include <ctype.h>
 #include <limits.h>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <glib.h>
 #include <string.h>
-#include <ctype.h>
+#include <strings.h>
 
 #include <audacious/i18n.h>
 
@@ -78,7 +78,7 @@ EXPORT char * str_vprintf (const char * format, va_list args)
 
 EXPORT bool_t str_has_prefix_nocase (const char * str, const char * prefix)
 {
-    return ! g_ascii_strncasecmp (str, prefix, strlen (prefix));
+    return ! strncasecmp (str, prefix, strlen (prefix));
 }
 
 EXPORT bool_t str_has_suffix_nocase (const char * str, const char * suffix)
@@ -89,7 +89,7 @@ EXPORT bool_t str_has_suffix_nocase (const char * str, const char * suffix)
     if (len2 > len1)
         return FALSE;
 
-    return ! g_ascii_strcasecmp (str + len1 - len2, suffix);
+    return ! strcasecmp (str + len1 - len2, suffix);
 }
 
 EXPORT void str_replace_char (char * string, char old_c, char new_c)
@@ -211,10 +211,11 @@ EXPORT char * filename_to_uri (const char * name)
     str_unref (utf8);
 
 #ifdef _WIN32
-    return str_printf ("file:///%s", enc);
+    SCONCAT2 (buf, "file:///", enc);
 #else
-    return str_printf ("file://%s", enc);
+    SCONCAT2 (buf, "file://", enc);
 #endif
+    return str_get (buf);
 }
 
 /* Like g_filename_from_uri, but converts the filename from UTF-8 to the system
@@ -224,16 +225,18 @@ EXPORT char * filename_to_uri (const char * name)
 EXPORT char * uri_to_filename (const char * uri)
 {
 #ifdef _WIN32
-    g_return_val_if_fail (! strncmp (uri, "file:///", 8), NULL);
+    if (strncmp (uri, "file:///", 8))
+        return NULL;
+
     char buf[strlen (uri + 8) + 1];
     str_decode_percent (uri + 8, -1, buf);
+    str_replace_char (buf, '/', '\\');
 #else
-    g_return_val_if_fail (! strncmp (uri, "file://", 7), NULL);
+    if (strncmp (uri, "file://", 7))
+        return NULL;
+
     char buf[strlen (uri + 7) + 1];
     str_decode_percent (uri + 7, -1, buf);
-#endif
-#ifdef _WIN32
-    str_replace_char (buf, '/', '\\');
 #endif
 
     return str_to_locale (buf, -1);
@@ -283,9 +286,7 @@ EXPORT void uri_parse (const char * uri, const char * * base_p, const char * * e
     else
         sub = end;
 
-    char buf[sub - base + 1];
-    memcpy (buf, base, sub - base);
-    buf[sub - base] = 0;
+    SNCOPY (buf, base, sub - base);
 
     if ((c = strrchr (buf, '.')))
         ext = base + (c - buf);
@@ -310,7 +311,8 @@ EXPORT bool_t uri_get_extension (const char * uri, char * buf, int buflen)
     if (ext[0] != '.')
         return FALSE;
 
-    g_strlcpy (buf, ext + 1, buflen);
+    strncpy (buf, ext + 1, buflen - 1);
+    buf[buflen - 1] = 0;
 
     /* remove subtunes and HTTP query strings */
     char * qmark;

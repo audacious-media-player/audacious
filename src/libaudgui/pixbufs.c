@@ -34,7 +34,8 @@ EXPORT GdkPixbuf * audgui_pixbuf_fallback (void)
 
     if (! fallback)
     {
-        SPRINTF (path, "%s/images/album.png", aud_get_path (AUD_PATH_DATA_DIR));
+        const char * data_dir = aud_get_path (AUD_PATH_DATA_DIR);
+        SCONCAT2 (path, data_dir, "/images/album.png");
         fallback = gdk_pixbuf_new_from_file (path, NULL);
     }
 

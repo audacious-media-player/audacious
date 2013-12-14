@@ -21,9 +21,10 @@
 #define LIBAUDCORE_STRINGS_H
 
 #include <stdarg.h>
-#include <libaudcore/core.h>
+#include <stdio.h>
+#include <string.h>
 
-/* <stdio.h> is needed to use the following macros */
+#include <libaudcore/core.h>
 
 #define SPRINTF(s, ...) \
  char s[snprintf (NULL, 0, __VA_ARGS__) + 1]; \
@@ -35,6 +36,36 @@
  char s[vsnprintf (NULL, 0, f, v##2) + 1]; \
  va_end (v##2); \
  vsnprintf (s, sizeof s, f, v)
+
+#define SCOPY(s, a) \
+ char s[strlen (a) + 1]; \
+ strcpy (s, a)
+
+#define SNCOPY(s, a, x) \
+ char s[(x) + 1]; \
+ strncpy (s, a, sizeof s - 1); \
+ s[sizeof s - 1] = 0
+
+#define SCONCAT2(s, a, b) \
+ int s##_1 = strlen (a), s##_2 = strlen (b); \
+ char s[s##_1 + s##_2 + 1]; \
+ memcpy (s, (a), s##_1); \
+ strcpy (s + s##_1, (b))
+
+#define SCONCAT3(s, a, b, c) \
+ int s##_1 = strlen (a), s##_2 = strlen (b), s##_3 = strlen (c); \
+ char s[s##_1 + s##_2 + s##_3 + 1]; \
+ memcpy (s, (a), s##_1); \
+ memcpy (s + s##_1, (b), s##_2); \
+ strcpy (s + s##_1 + s##_2, (c))
+
+#define SCONCAT4(s, a, b, c, d) \
+ int s##_1 = strlen (a), s##_2 = strlen (b), s##_3 = strlen (c), s##_4 = strlen (d); \
+ char s[s##_1 + s##_2 + s##_3 + s##_4 + 1]; \
+ memcpy (s, (a), s##_1); \
+ memcpy (s + s##_1, (b), s##_2); \
+ memcpy (s + s##_1 + s##_2, (c), s##_3); \
+ strcpy (s + s##_1 + s##_2 + s##_3, (d))
 
 /* all (char *) return values must be freed with str_unref() */
 

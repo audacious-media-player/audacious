@@ -91,15 +91,13 @@ char * construct_uri (const char * path, const char * reference)
         return NULL;
 
     int pathlen = slash + 1 - reference;
-    int rellen = strlen (utf8);
 
-    char buf[pathlen + 3 * rellen + 1];
+    char buf[pathlen + 3 * strlen (utf8) + 1];
     memcpy (buf, reference, pathlen);
 
     if (get_bool (NULL, "convert_backslash"))
     {
-        char tmp[rellen + 1];
-        strcpy (tmp, utf8);
+        SCOPY (tmp, utf8);
         str_replace_char (tmp, '\\', '/');
         str_encode_percent (tmp, -1, buf + pathlen);
     }
@@ -411,8 +409,7 @@ DONE:
     }
     else
     {
-        char buf[strlen (name) + 1];
-        memcpy (buf, name, sizeof buf);
+        SCOPY (buf, name);
 
         if (! title)
         {

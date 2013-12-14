@@ -24,6 +24,7 @@
 
 #include <glib.h>
 
+#include "audstrings.h"
 #include "multihash.h"
 
 #ifdef VALGRIND_FRIENDLY
@@ -240,9 +241,6 @@ EXPORT char * str_nget (const char * str, int len)
     if (strnlen (str, len) < len)
         return str_get (str);
 
-    char buf[len + 1];
-    memcpy (buf, str, len);
-    buf[len] = 0;
-
+    SNCOPY (buf, str, len);
     return str_get (buf);
 }

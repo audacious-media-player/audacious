@@ -63,6 +63,8 @@ static GtkWidget * create_credits_notebook (const char * credits, const char * l
 
 static GtkWidget * create_about_window (void)
 {
+    const char * data_dir = aud_get_path (AUD_PATH_DATA_DIR);
+
     GtkWidget * about_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title ((GtkWindow *) about_window, _("About Audacious"));
     gtk_window_set_resizable ((GtkWindow *) about_window, FALSE);
@@ -73,7 +75,7 @@ static GtkWidget * create_about_window (void)
     GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
     gtk_container_add ((GtkContainer *) about_window, vbox);
 
-    SPRINTF (logo_path, "%s/images/about-logo.png", aud_get_path (AUD_PATH_DATA_DIR));
+    SCONCAT2 (logo_path, data_dir, "/images/about-logo.png");
     GtkWidget * image = gtk_image_new_from_file (logo_path);
     gtk_box_pack_start ((GtkBox *) vbox, image, FALSE, FALSE, 0);
 
@@ -88,11 +90,11 @@ static GtkWidget * create_about_window (void)
 
     char * credits, * license;
 
-    SPRINTF (credits_path, "%s/AUTHORS", aud_get_path (AUD_PATH_DATA_DIR));
+    SCONCAT2 (credits_path, data_dir, "/AUTHORS");
     if (! g_file_get_contents (credits_path, & credits, NULL, NULL))
         credits = g_strdup_printf ("Unable to load %s; check your installation.", credits_path);
 
-    SPRINTF (license_path, "%s/COPYING", aud_get_path (AUD_PATH_DATA_DIR));
+    SCONCAT2 (license_path, data_dir, "/COPYING");
     if (! g_file_get_contents (license_path, & license, NULL, NULL))
         license = g_strdup_printf ("Unable to load %s; check your installation.", license_path);
 

@@ -17,6 +17,7 @@
  * the use of this software.
  */
 
+#include "audstrings.h"
 #include "inifile.h"
 
 #include <ctype.h>
@@ -123,28 +124,12 @@ EXPORT void inifile_parse (VFSFile * file,
 
 EXPORT bool_t inifile_write_heading (VFSFile * file, const char * heading)
 {
-    int len = strlen (heading);
-    char buf[len + 4];
-
-    buf[0] = '\n';
-    buf[1] = '[';
-    strcpy (buf + 2, heading);
-    buf[len + 2] = ']';
-    buf[len + 3] = '\n';
-
-    return (vfs_fwrite (buf, 1, sizeof buf, file) == sizeof buf);
+    SCONCAT3 (buf, "\n[", heading, "[\n");
+    return (vfs_fwrite (buf, 1, sizeof buf - 1, file) == sizeof buf - 1);
 }
 
 EXPORT bool_t inifile_write_entry (VFSFile * file, const char * key, const char * value)
 {
-    int len1 = strlen (key);
-    int len2 = strlen (value);
-    char buf[len1 + len2 + 2];
-
-    strcpy (buf, key);
-    buf[len1] = '=';
-    strcpy (buf + len1 + 1, value);
-    buf[len1 + len2 + 1] = '\n';
-
-    return (vfs_fwrite (buf, 1, sizeof buf, file) == sizeof buf);
+    SCONCAT4 (buf, key, "=", value, "\n");
+    return (vfs_fwrite (buf, 1, sizeof buf - 1, file) == sizeof buf - 1);
 }

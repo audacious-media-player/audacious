@@ -124,7 +124,7 @@ static bool_t id3v1_read_tag (Tuple * tuple, VFSFile * file)
     combine_string (tuple, FIELD_ALBUM, tag.album, sizeof tag.album, ext.album, sizeof ext.album);
     combine_string (tuple, FIELD_COMMENT, tag.comment, sizeof tag.comment, NULL, 0);
 
-    SPRINTF (year, "%.4s", tag.year);
+    SNCOPY (year, tag.year, 4);
     if (atoi (year))
         tuple_set_int (tuple, FIELD_YEAR, atoi (year));
 
