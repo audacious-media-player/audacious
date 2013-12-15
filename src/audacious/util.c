@@ -384,7 +384,7 @@ DONE:
         if (! title)
             title = str_get (base);
 
-        for (int i = 0; i < G_N_ELEMENTS (skip); i ++)
+        for (int i = 0; i < ARRAY_LEN (skip); i ++)
         {
             if (first && ! g_ascii_strcasecmp (first, skip[i]))
                 first = NULL;

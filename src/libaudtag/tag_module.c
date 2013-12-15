@@ -32,13 +32,12 @@
 #include "ape/ape.h"
 
 static tag_module_t * const modules[] = {& id3v24, & id3v22, & ape, & id3v1};
-#define N_MODULES (sizeof modules / sizeof modules[0])
 
 tag_module_t * find_tag_module (VFSFile * fd, int new_type)
 {
     int i;
 
-    for (i = 0; i < N_MODULES; i ++)
+    for (i = 0; i < ARRAY_LEN (modules); i ++)
     {
         if (vfs_fseek(fd, 0, SEEK_SET))
         {
@@ -56,7 +55,7 @@ tag_module_t * find_tag_module (VFSFile * fd, int new_type)
     /* No existing tag; see if we can create a new one. */
     if (new_type != TAG_TYPE_NONE)
     {
-        for (i = 0; i < N_MODULES; i ++)
+        for (i = 0; i < ARRAY_LEN (modules); i ++)
         {
             if (modules[i]->type == new_type)
                 return modules[i];

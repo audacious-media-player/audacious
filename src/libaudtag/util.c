@@ -187,12 +187,10 @@ const char *convert_numericgenre_to_text(int numericgenre)
 
     int count;
 
-    for (count = 0; count < sizeof table / sizeof table[0]; count++)
+    for (count = 0; count < ARRAY_LEN (table); count++)
     {
         if (table[count].numericgenre == numericgenre)
-        {
-             return table[count].genre;
-        }
+            return table[count].genre;
     }
 
     return "Unknown";

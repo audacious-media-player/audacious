@@ -224,7 +224,7 @@ static bool_t genre_fill (GtkWidget * combo)
     GList * node;
     int i;
 
-    for (i = 0; i < G_N_ELEMENTS (genre_table); i ++)
+    for (i = 0; i < ARRAY_LEN (genre_table); i ++)
         list = g_list_prepend (list, _(genre_table[i]));
 
     list = g_list_sort (list, (GCompareFunc) strcmp);

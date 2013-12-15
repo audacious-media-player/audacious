@@ -72,7 +72,7 @@ static Category categories[] = {
  {"plugins.png", N_("Plugins")},
 };
 
-static int n_categories = G_N_ELEMENTS(categories);
+static int n_categories = ARRAY_LEN(categories);
 
 static TitleFieldTag title_field_tags[] = {
     { N_("Artist")     , "${artist}" },
@@ -88,7 +88,7 @@ static TitleFieldTag title_field_tags[] = {
     { N_("Codec")      , "${codec}" },
     { N_("Quality")    , "${quality}" },
 };
-static const unsigned int n_title_field_tags = G_N_ELEMENTS(title_field_tags);
+static const unsigned int n_title_field_tags = ARRAY_LEN(title_field_tags);
 
 #ifdef USE_CHARDET
 static ComboBoxElements chardet_detector_presets[] = {
@@ -121,7 +121,7 @@ static PreferencesWidget audio_page_widgets[] = {
  {WIDGET_CUSTOM, .data = {.populate = create_output_plugin_box}},
  {WIDGET_COMBO_BOX, N_("Bit depth:"),
   .cfg_type = VALUE_INT, .cname = "output_bit_depth", .callback = output_bit_depth_changed,
-  .data = {.combo = {bitdepth_elements, G_N_ELEMENTS (bitdepth_elements)}}},
+  .data = {.combo = {bitdepth_elements, ARRAY_LEN (bitdepth_elements)}}},
  {WIDGET_SPIN_BTN, N_("Buffer size:"),
   .cfg_type = VALUE_INT, .cname = "output_buffer_size",
   .data = {.spin_btn = {100, 10000, 1000, N_("ms")}}},
@@ -157,18 +157,18 @@ static PreferencesWidget connectivity_page_widgets[] = {
     {WIDGET_LABEL, N_("<b>Proxy Configuration</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Enable proxy usage"), .cfg_type = VALUE_BOOLEAN, .cname = "use_proxy"},
     {WIDGET_TABLE, .child = TRUE, .data = {.table = {proxy_host_port_elements,
-     G_N_ELEMENTS (proxy_host_port_elements)}}},
+     ARRAY_LEN (proxy_host_port_elements)}}},
     {WIDGET_CHK_BTN, N_("Use authentication with proxy"),
      .cfg_type = VALUE_BOOLEAN, .cname = "use_proxy_auth"},
     {WIDGET_TABLE, .child = TRUE, .data = {.table = {proxy_auth_elements,
-     G_N_ELEMENTS (proxy_auth_elements)}}}
+     ARRAY_LEN (proxy_auth_elements)}}}
 };
 
 static PreferencesWidget chardet_elements[] = {
 #ifdef USE_CHARDET
  {WIDGET_COMBO_BOX, N_("Auto character encoding detector for:"),
   .cfg_type = VALUE_STRING, .cname = "chardet_detector", .child = TRUE,
-  .data = {.combo = {chardet_detector_presets, G_N_ELEMENTS (chardet_detector_presets)}}},
+  .data = {.combo = {chardet_detector_presets, ARRAY_LEN (chardet_detector_presets)}}},
 #endif
  {WIDGET_ENTRY, N_("Fallback character encodings:"), .cfg_type = VALUE_STRING,
   .cname = "chardet_fallback", .child = TRUE}};
@@ -190,7 +190,7 @@ static PreferencesWidget playlist_page_widgets[] = {
     {WIDGET_CHK_BTN, N_("Interpret \\ (backward slash) as a folder delimiter"),
      .cfg_type = VALUE_BOOLEAN, .cname = "convert_backslash"},
     {WIDGET_TABLE, .data = {.table = {chardet_elements,
-     G_N_ELEMENTS (chardet_elements)}}}
+     ARRAY_LEN (chardet_elements)}}}
 };
 
 static PreferencesWidget song_info_page_widgets[] = {
@@ -433,7 +433,7 @@ create_playlist_category(void)
     vbox5 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
     gtk_container_add ((GtkContainer *) category_notebook, vbox5);
 
-    create_widgets(GTK_BOX(vbox5), playlist_page_widgets, G_N_ELEMENTS(playlist_page_widgets));
+    create_widgets(GTK_BOX(vbox5), playlist_page_widgets, ARRAY_LEN(playlist_page_widgets));
 
     alignment55 = gtk_alignment_new (0.5, 0.5, 1, 1);
     gtk_box_pack_start (GTK_BOX (vbox5), alignment55, FALSE, FALSE, 0);
@@ -513,7 +513,7 @@ static void create_song_info_category (void)
     GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
     gtk_container_add ((GtkContainer *) category_notebook, vbox);
     create_widgets ((GtkBox *) vbox, song_info_page_widgets,
-     G_N_ELEMENTS (song_info_page_widgets));
+     ARRAY_LEN (song_info_page_widgets));
 }
 
 static GtkWidget * output_config_button, * output_about_button;
@@ -619,7 +619,7 @@ static void * create_output_plugin_box (void)
 static void create_audio_category (void)
 {
     GtkWidget * audio_page_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-    create_widgets ((GtkBox *) audio_page_vbox, audio_page_widgets, G_N_ELEMENTS (audio_page_widgets));
+    create_widgets ((GtkBox *) audio_page_vbox, audio_page_widgets, ARRAY_LEN (audio_page_widgets));
     gtk_container_add ((GtkContainer *) category_notebook, audio_page_vbox);
 }
 
@@ -635,7 +635,7 @@ create_connectivity_category(void)
     vbox29 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
     gtk_box_pack_start (GTK_BOX (connectivity_page_vbox), vbox29, TRUE, TRUE, 0);
 
-    create_widgets(GTK_BOX(vbox29), connectivity_page_widgets, G_N_ELEMENTS(connectivity_page_widgets));
+    create_widgets(GTK_BOX(vbox29), connectivity_page_widgets, ARRAY_LEN(connectivity_page_widgets));
 }
 
 static void create_plugin_category (void)
@@ -648,7 +648,7 @@ static void create_plugin_category (void)
     const char * names[] = {N_("Transport"), N_("Playlist"), N_("Input"),
      N_("Effect"), N_("Visualization"), N_("General")};
 
-    for (int i = 0; i < G_N_ELEMENTS (types); i ++)
+    for (int i = 0; i < ARRAY_LEN (types); i ++)
         gtk_notebook_append_page ((GtkNotebook *) notebook, plugin_view_new
          (types[i]), gtk_label_new (_(names[i])));
 }

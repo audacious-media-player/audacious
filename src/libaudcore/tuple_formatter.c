@@ -85,7 +85,7 @@ EXPORT char * tuple_format_title (TupleFormatter * formatter, const Tuple * tupl
     /* formatting failed, try fallbacks */
     static const int fallbacks[] = {FIELD_TITLE, FIELD_FILE_NAME};
 
-    for (int i = 0; i < G_N_ELEMENTS (fallbacks); i ++)
+    for (int i = 0; i < ARRAY_LEN (fallbacks); i ++)
     {
         char * title = tuple_get_str (tuple, fallbacks[i]);
         if (title)

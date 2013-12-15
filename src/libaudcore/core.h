@@ -43,6 +43,8 @@
 #undef CLAMP
 #define CLAMP(a,min,max) ((a) < (min) ? (min) : (a) > (max) ? (max) : (a))
 
+#define ARRAY_LEN(a) (sizeof (a) / sizeof (a)[0])
+
 /* If the pool contains a copy of <str>, increments its reference count.
  * Otherwise, adds a copy of <str> to the pool with a reference count of one.
  * In either case, returns the copy.  Because this copy may be shared by other

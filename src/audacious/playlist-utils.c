@@ -247,7 +247,7 @@ void playlist_select_by_patterns (int playlist, const Tuple * patterns)
 
     playlist_select_all (playlist, TRUE);
 
-    for (field = 0; field < G_N_ELEMENTS (fields); field ++)
+    for (field = 0; field < ARRAY_LEN (fields); field ++)
     {
         char * pattern = tuple_get_str (patterns, fields[field]);
         GRegex * regex;
