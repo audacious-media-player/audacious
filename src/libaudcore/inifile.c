@@ -124,7 +124,7 @@ EXPORT void inifile_parse (VFSFile * file,
 
 EXPORT bool_t inifile_write_heading (VFSFile * file, const char * heading)
 {
-    SCONCAT3 (buf, "\n[", heading, "[\n");
+    SCONCAT3 (buf, "\n[", heading, "]\n");
     return (vfs_fwrite (buf, 1, sizeof buf - 1, file) == sizeof buf - 1);
 }
 
