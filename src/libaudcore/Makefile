@@ -17,7 +17,8 @@ SRCS = audio.c \
        tuple_formatter.c \
        vfs.c \
        vfs_async.c \
-       vfs_common.c
+       vfs_common.c \
+       vfs_local.c
 
 INCLUDES = audio.h \
            audstrings.h \

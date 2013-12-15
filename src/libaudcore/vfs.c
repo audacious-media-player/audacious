@@ -18,16 +18,19 @@
  * the use of this software.
  */
 
+#include "vfs.h"
+
 #include <glib.h>
 #include <inttypes.h>
 
-#include "vfs.h"
-#include "audstrings.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <string.h>
+
+#include "audstrings.h"
+#include "vfs_local.h"
 
 #define VFS_SIG ('V' | ('F' << 8) | ('S' << 16))
 
@@ -123,16 +126,21 @@ vfs_fopen(const char * path,
           const char * mode)
 {
     g_return_val_if_fail (path && mode, NULL);
-    g_return_val_if_fail (lookup_func, NULL);
 
-    const char * s = strstr (path, "://");
-    g_return_val_if_fail (s, NULL);
+    VFSConstructor * vtable = NULL;
 
-    SNCOPY (scheme, path, s - path);
+    if (! strncmp (path, "file://", 7))
+        vtable = & vfs_local_vtable;
+    else
+    {
+        const char * s = strstr (path, "://");
+        g_return_val_if_fail (s, NULL);
 
-    VFSConstructor * vtable = lookup_func (scheme);
-    if (! vtable)
-        return NULL;
+        SNCOPY (scheme, path, s - path);
+
+        if (! (vtable = lookup_func (scheme)))
+            return NULL;
+    }
 
     const gchar * sub;
     uri_parse (path, NULL, NULL, & sub, NULL);
