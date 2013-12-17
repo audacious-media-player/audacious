@@ -60,7 +60,7 @@ static void destroy_cb (GtkWidget * chooser)
     char * path = gtk_file_chooser_get_current_folder ((GtkFileChooser *) chooser);
     if (path)
     {
-        aud_set_string ("audgui", "filesel_path", path);
+        aud_set_str ("audgui", "filesel_path", path);
         g_free (path);
     }
 }
@@ -103,10 +103,10 @@ static GtkWidget * create_filebrowser (bool_t open)
     GtkWidget * chooser = gtk_file_chooser_widget_new(GTK_FILE_CHOOSER_ACTION_OPEN);
     gtk_file_chooser_set_select_multiple(GTK_FILE_CHOOSER(chooser), TRUE);
 
-    char * path = aud_get_string ("audgui", "filesel_path");
+    char * path = aud_get_str ("audgui", "filesel_path");
     if (path[0])
         gtk_file_chooser_set_current_folder ((GtkFileChooser *) chooser, path);
-    g_free (path);
+    str_unref (path);
 
     gtk_box_pack_start(GTK_BOX(vbox), chooser, TRUE, TRUE, 3);
 

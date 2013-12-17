@@ -44,7 +44,7 @@ static void history_save (void)
 
         char name[32];
         snprintf (name, sizeof name, "entry%d", i);
-        set_string ("history", name, node->data);
+        set_str ("history", name, node->data);
 
         node = node->next;
     }
@@ -61,11 +61,11 @@ static void history_load (void)
     {
         char name[32];
         snprintf (name, sizeof name, "entry%d", i);
-        char * path = get_string ("history", name);
+        char * path = get_str ("history", name);
 
         if (! path[0])
         {
-            g_free (path);
+            str_unref (path);
             break;
         }
 
@@ -83,7 +83,7 @@ void history_cleanup (void)
 
     hook_dissociate ("config save", (HookFunction) history_save);
 
-    g_queue_foreach (& history, (GFunc) g_free, NULL);
+    g_queue_foreach (& history, (GFunc) str_unref, NULL);
     g_queue_clear (& history);
 
     loaded = FALSE;

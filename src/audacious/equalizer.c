@@ -184,16 +184,16 @@ void eq_set_bands (const double *values)
 {
     char *string = double_array_to_str (values, EQ_BANDS);
     g_return_if_fail (string);
-    set_string (NULL, "equalizer_bands", string);
+    set_str (NULL, "equalizer_bands", string);
     str_unref (string);
 }
 
 void eq_get_bands (double *values)
 {
     memset (values, 0, sizeof (double) * EQ_BANDS);
-    char *string = get_string (NULL, "equalizer_bands");
+    char *string = get_str (NULL, "equalizer_bands");
     str_to_double_array (string, values, EQ_BANDS);
-    g_free (string);
+    str_unref (string);
 }
 
 void eq_set_band (int band, double value)

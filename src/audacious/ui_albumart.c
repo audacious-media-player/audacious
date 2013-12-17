@@ -74,12 +74,12 @@ cover_name_filter(const char *name, const char *filter, const bool_t ret_on_empt
 /* Check wether it's an image we want */
 static bool_t is_front_cover_image (const char * file)
 {
-    char * include = get_string (NULL, "cover_name_include");
-    char * exclude = get_string (NULL, "cover_name_exclude");
+    char * include = get_str (NULL, "cover_name_include");
+    char * exclude = get_str (NULL, "cover_name_exclude");
     bool_t accept = cover_name_filter (file, include, TRUE) &&
      ! cover_name_filter (file, exclude, FALSE);
-    g_free (include);
-    g_free (exclude);
+    str_unref (include);
+    str_unref (exclude);
     return accept;
 }
 

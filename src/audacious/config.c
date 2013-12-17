@@ -424,7 +424,7 @@ void set_int (const char * section, const char * name, int value)
 {
     char * string = int_to_str (value);
     g_return_if_fail (string);
-    set_string (section, name, string);
+    set_str (section, name, string);
     str_unref (string);
 }
 

@@ -107,9 +107,9 @@ static char * widget_get_string (const PreferencesWidget * widget)
     g_return_val_if_fail (widget->cfg_type == VALUE_STRING, NULL);
 
     if (widget->cfg)
-        return g_strdup (* (char * *) widget->cfg);
+        return str_get (* (char * *) widget->cfg);
     else if (widget->cname)
-        return get_string (widget->csect, widget->cname);
+        return get_str (widget->csect, widget->cname);
     else
         return NULL;
 }
@@ -124,7 +124,7 @@ static void widget_set_string (const PreferencesWidget * widget, const char * va
         * (char * *) widget->cfg = g_strdup (value);
     }
     else if (widget->cname)
-        set_string (widget->csect, widget->cname, value);
+        set_str (widget->csect, widget->cname, value);
 
     if (widget->callback)
         widget->callback ();
@@ -264,7 +264,7 @@ void create_font_btn (const PreferencesWidget * widget, GtkWidget * * label,
     if (name)
     {
         gtk_font_button_set_font_name ((GtkFontButton *) * font_btn, name);
-        g_free (name);
+        str_unref (name);
     }
 
     g_signal_connect (* font_btn, "font_set", (GCallback) on_font_btn_font_set, (void *) widget);
@@ -296,7 +296,7 @@ static void create_entry (const PreferencesWidget * widget, GtkWidget * * label,
         if (value)
         {
             gtk_entry_set_text ((GtkEntry *) * entry, value);
-            g_free (value);
+            str_unref (value);
         }
 
         g_signal_connect (* entry, "changed", (GCallback) on_entry_changed, (void *) widget);
@@ -352,7 +352,7 @@ static void fill_cbox (GtkWidget * combobox, const PreferencesWidget * widget, c
             }
         }
 
-        g_free (value);
+        str_unref (value);
 
         g_signal_connect (combobox, "changed", (GCallback) on_cbox_changed_string, (void *) widget);
         break;

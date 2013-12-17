@@ -300,7 +300,7 @@ static void update_titlestring_cbox (GtkComboBox * cbox, const char * format)
 static void on_titlestring_entry_changed (GtkEntry * entry, GtkComboBox * cbox)
 {
     const char * format = gtk_entry_get_text (entry);
-    set_string (NULL, "generic_title_format", format);
+    set_str (NULL, "generic_title_format", format);
     update_titlestring_cbox (cbox, format);
     playlist_reformat_titles ();
 }
@@ -406,10 +406,10 @@ static void create_titlestring_widgets (GtkWidget * * cbox, GtkWidget * * entry)
 
     * entry = gtk_entry_new ();
 
-    char * format = get_string (NULL, "generic_title_format");
+    char * format = get_str (NULL, "generic_title_format");
     update_titlestring_cbox ((GtkComboBox *) * cbox, format);
     gtk_entry_set_text ((GtkEntry *) * entry, format);
-    g_free (format);
+    str_unref (format);
 
     g_signal_connect (* cbox, "changed", (GCallback) on_titlestring_cbox_changed, * entry);
     g_signal_connect (* entry, "changed", (GCallback) on_titlestring_entry_changed, * cbox);

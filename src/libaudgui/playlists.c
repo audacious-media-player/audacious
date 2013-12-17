@@ -43,7 +43,7 @@ static void cleanup_job (void * data)
     ImportExportJob * job = data;
 
     char * folder = gtk_file_chooser_get_current_folder_uri ((GtkFileChooser *) job->selector);
-    aud_set_string ("audgui", "playlist_path", folder);
+    aud_set_str ("audgui", "playlist_path", folder);
     g_free (folder);
 
     if (job->confirm)
@@ -154,7 +154,7 @@ static GtkWidget * start_job (bool_t save)
     int list = aud_playlist_get_active ();
 
     char * filename = aud_playlist_get_filename (list);
-    char * folder = aud_get_string ("audgui", "playlist_path");
+    char * folder = aud_get_str ("audgui", "playlist_path");
 
     ImportExportJob * job = g_slice_new0 (ImportExportJob);
 
@@ -164,7 +164,7 @@ static GtkWidget * start_job (bool_t save)
     create_selector (job, filename, folder[0] ? folder : NULL);
 
     str_unref (filename);
-    g_free (folder);
+    str_unref (folder);
 
     return job->selector;
 }

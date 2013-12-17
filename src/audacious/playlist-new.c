@@ -1738,9 +1738,9 @@ void playlist_reformat_titles (void)
     if (title_formatter)
         tuple_formatter_free (title_formatter);
 
-    char * format = get_string (NULL, "generic_title_format");
+    char * format = get_str (NULL, "generic_title_format");
     title_formatter = tuple_formatter_new (format);
-    g_free (format);
+    str_unref (format);
 
     for (int playlist_num = 0; playlist_num < index_count (playlists); playlist_num ++)
     {
