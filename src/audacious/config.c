@@ -18,12 +18,12 @@
  */
 
 #include <glib.h>
-#include <pthread.h>
-#include <stdio.h>
 #include <string.h>
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
+#include <libaudcore/inifile.h>
+#include <libaudcore/multihash.h>
 
 #include "main.h"
 #include "misc.h"
@@ -94,110 +94,269 @@ static const char * const core_defaults[] = {
 
  NULL};
 
-static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-static GHashTable * defaults;
-static GKeyFile * keyfile;
-static bool_t modified;
+typedef enum {
+    OP_IS_DEFAULT,
+    OP_GET,
+    OP_SET,
+    OP_SET_NO_FLAG,
+    OP_CLEAR,
+    OP_CLEAR_NO_FLAG
+} OpType;
+
+typedef struct {
+    const char * section;
+    const char * key;
+    const char * value;
+} ConfigItem;
+
+typedef struct {
+    MultihashNode node;
+    ConfigItem item;
+} ConfigNode;
+
+typedef struct {
+    OpType type;
+    ConfigItem item;
+    unsigned hash;
+    bool_t result;
+} ConfigOp;
+
+typedef struct {
+    char * section;
+} LoadState;
+
+typedef struct {
+    GArray * list;
+} SaveState;
+
+static unsigned item_hash (const ConfigItem * item)
+{
+    return g_str_hash (item->section) + g_str_hash (item->key);
+}
+
+/* assumes pooled strings */
+static int item_compare (const ConfigItem * a, const ConfigItem * b)
+{
+    if (str_equal (a->section, b->section))
+        return strcmp (a->key, b->key);
+    else
+        return strcmp (a->section, b->section);
+}
+
+/* assumes pooled strings */
+static void item_clear (ConfigItem * item)
+{
+    str_unref ((char *) item->section);
+    str_unref ((char *) item->key);
+    str_unref ((char *) item->value);
+}
+
+static unsigned config_node_hash (const MultihashNode * node0)
+{
+    const ConfigNode * node = (const ConfigNode *) node0;
+
+    return item_hash (& node->item);
+}
+
+static bool_t config_node_match (const MultihashNode * node0, const void * data, unsigned hash)
+{
+    const ConfigNode * node = (const ConfigNode *) node0;
+    const ConfigItem * item = data;
+
+    return ! strcmp (node->item.section, item->section) && ! strcmp (node->item.key, item->key);
+}
+
+static MultihashTable defaults = {
+    .hash_func = config_node_hash,
+    .match_func = config_node_match
+};
+
+static MultihashTable config = {
+    .hash_func = config_node_hash,
+    .match_func = config_node_match
+};
+
+static volatile bool_t modified;
+
+static MultihashNode * add_cb (const void * data, unsigned hash, void * state)
+{
+    ConfigOp * op = state;
+
+    switch (op->type)
+    {
+    case OP_IS_DEFAULT:
+        op->result = ! op->item.value[0]; /* empty string is default */
+        return NULL;
+
+    case OP_SET:
+        op->result = TRUE;
+        modified = TRUE;
+
+    case OP_SET_NO_FLAG:;
+        ConfigNode * node = g_slice_new (ConfigNode);
+        node->item.section = str_get (op->item.section);
+        node->item.key = str_get (op->item.key);
+        node->item.value = str_get (op->item.value);
+        return (MultihashNode *) node;
+
+    default:
+        return NULL;
+    }
+}
+
+static bool_t action_cb (MultihashNode * node0, void * state)
+{
+    ConfigNode * node = (ConfigNode *) node0;
+    ConfigOp * op = state;
+
+    switch (op->type)
+    {
+    case OP_IS_DEFAULT:
+        op->result = ! strcmp (node->item.value, op->item.value);
+        return FALSE;
+
+    case OP_GET:
+        op->item.value = str_ref (node->item.value);
+        return FALSE;
+
+    case OP_SET:
+        op->result = !! strcmp (node->item.value, op->item.value);
+        if (op->result)
+            modified = TRUE;
+
+    case OP_SET_NO_FLAG:
+        str_unref ((char *) node->item.value);
+        node->item.value = str_get (op->item.value);
+        return FALSE;
+
+    case OP_CLEAR:
+        op->result = TRUE;
+        modified = TRUE;
+
+    case OP_CLEAR_NO_FLAG:
+        item_clear (& node->item);
+        g_slice_free (ConfigNode, node);
+        return TRUE;
+
+    default:
+        return FALSE;
+    }
+}
+
+static bool_t config_op_run (ConfigOp * op, OpType type, MultihashTable * table)
+{
+    if (! op->hash)
+        op->hash = item_hash (& op->item);
+
+    op->type = type;
+    op->result = FALSE;
+    multihash_lookup (table, & op->item, op->hash, add_cb, action_cb, op);
+    return op->result;
+}
+
+static void load_heading (const char * section, void * data)
+{
+    LoadState * state = data;
+
+    str_unref (state->section);
+    state->section = str_get (section);
+}
+
+static void load_entry (const char * key, const char * value, void * data)
+{
+    LoadState * state = data;
+    g_return_if_fail (state->section);
+
+    ConfigOp op = {.item = {state->section, key, value}};
+    config_op_run (& op, OP_SET_NO_FLAG, & config);
+}
 
 void config_load (void)
 {
-    g_return_if_fail (! defaults && ! keyfile);
-    pthread_mutex_lock (& mutex);
+    char * folder = filename_to_uri (get_path (AUD_PATH_USER_DIR));
+    SCONCAT2 (path, folder, "/config");
+    str_unref (folder);
 
-    defaults = g_hash_table_new_full (g_str_hash, g_str_equal, g_free,
-     (GDestroyNotify) g_hash_table_destroy);
-    keyfile = g_key_file_new ();
-
-    char * path = g_strdup_printf ("%s/config", get_path (AUD_PATH_USER_DIR));
-    if (g_file_test (path, G_FILE_TEST_EXISTS))
+    if (vfs_file_test (path, VFS_EXISTS))
     {
-        GError * error = NULL;
-        if (! g_key_file_load_from_file (keyfile, path, 0, & error))
+        VFSFile * file = vfs_fopen (path, "r");
+
+        if (file)
         {
-            fprintf (stderr, "Error loading config: %s\n", error->message);
-            g_error_free (error);
+            LoadState state = {0};
+
+            inifile_parse (file, load_heading, load_entry, & state);
+
+            str_unref (state.section);
+            vfs_fclose (file);
         }
     }
-    g_free (path);
-
-    modified = FALSE;
-    pthread_mutex_unlock (& mutex);
 
     config_set_defaults (NULL, core_defaults);
 }
 
-void config_save (void)
+static bool_t add_to_save_list (MultihashNode * node0, void * state0)
 {
-    g_return_if_fail (defaults && keyfile);
-    pthread_mutex_lock (& mutex);
+    ConfigNode * node = (ConfigNode *) node0;
+    SaveState * state = state0;
 
-    if (! modified)
-    {
-        pthread_mutex_unlock (& mutex);
-        return;
-    }
+    int pos = state->list->len;
+    g_array_set_size (state->list, pos + 1);
 
-    char * path = g_strdup_printf ("%s/config", get_path (AUD_PATH_USER_DIR));
-    char * data = g_key_file_to_data (keyfile, NULL, NULL);
-
-    GError * error = NULL;
-    if (! g_file_set_contents (path, data, -1, & error))
-    {
-        fprintf (stderr, "Error saving config: %s\n", error->message);
-        g_error_free (error);
-    }
-
-    g_free (data);
-    g_free (path);
+    ConfigItem * copy = & g_array_index (state->list, ConfigItem, pos);
+    copy->section = str_ref (node->item.section);
+    copy->key = str_ref (node->item.key);
+    copy->value = str_ref (node->item.value);
 
     modified = FALSE;
-    pthread_mutex_unlock (& mutex);
+
+    return FALSE;
 }
 
-void config_cleanup (void)
+void config_save (void)
 {
-    g_return_if_fail (defaults && keyfile);
-    pthread_mutex_lock (& mutex);
+    if (! modified)
+        return;
 
-    g_key_file_free (keyfile);
-    keyfile = NULL;
-    g_hash_table_destroy (defaults);
-    defaults = NULL;
+    SaveState state = {.list = g_array_new (FALSE, FALSE, sizeof (ConfigItem))};
 
-    pthread_mutex_unlock (& mutex);
-}
+    multihash_iterate (& config, add_to_save_list, & state);
+    g_array_sort (state.list, (GCompareFunc) item_compare);
 
-void config_clear_section (const char * section)
-{
-    g_return_if_fail (defaults && keyfile);
-    pthread_mutex_lock (& mutex);
+    char * folder = filename_to_uri (get_path (AUD_PATH_USER_DIR));
+    SCONCAT2 (path, folder, "/config");
+    str_unref (folder);
 
-    if (! section)
-        section = DEFAULT_SECTION;
+    VFSFile * file = vfs_fopen (path, "w");
 
-    if (g_key_file_has_group (keyfile, section))
+    if (file)
     {
-        g_key_file_remove_group (keyfile, section, NULL);
-        modified = TRUE;
+        const char * current_heading = NULL;
+
+        for (int i = 0; i < state.list->len; i ++)
+        {
+            ConfigItem * item = & g_array_index (state.list, ConfigItem, i);
+
+            if (! str_equal (item->section, current_heading))
+            {
+                inifile_write_heading (file, item->section);
+                current_heading = item->section;
+            }
+
+            inifile_write_entry (file, item->key, item->value);
+        }
+
+        vfs_fclose (file);
     }
 
-    pthread_mutex_unlock (& mutex);
+    g_array_set_clear_func (state.list, (GDestroyNotify) item_clear);
+    g_array_free (state.list, TRUE);
 }
 
 void config_set_defaults (const char * section, const char * const * entries)
 {
-    g_return_if_fail (defaults && keyfile);
-    pthread_mutex_lock (& mutex);
-
     if (! section)
         section = DEFAULT_SECTION;
-
-    GHashTable * table = g_hash_table_lookup (defaults, section);
-    if (! table)
-    {
-        table = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, (GDestroyNotify) str_unref);
-        g_hash_table_replace (defaults, g_strdup (section), table);
-    }
 
     while (1)
     {
@@ -206,97 +365,58 @@ void config_set_defaults (const char * section, const char * const * entries)
         if (! name || ! value)
             break;
 
-        g_hash_table_replace (table, g_strdup (name), str_get (value));
+        ConfigOp op = {.item = {section, name, value}};
+        config_op_run (& op, OP_SET_NO_FLAG, & defaults);
     }
-
-    pthread_mutex_unlock (& mutex);
 }
 
-static const char * get_default (const char * section, const char * name)
+void config_cleanup (void)
 {
-    GHashTable * table = g_hash_table_lookup (defaults, section);
-    const char * def = table ? g_hash_table_lookup (table, name) : NULL;
-    return def ? def : "";
+    ConfigOp op = {.type = OP_CLEAR_NO_FLAG};
+    multihash_iterate (& config, action_cb, & op);
+    multihash_iterate (& defaults, action_cb, & op);
 }
 
-void set_string (const char * section, const char * name, const char * value)
+void set_str (const char * section, const char * name, const char * value)
 {
-    g_return_if_fail (defaults && keyfile);
     g_return_if_fail (name && value);
-    pthread_mutex_lock (& mutex);
 
-    if (! section)
-        section = DEFAULT_SECTION;
+    ConfigOp op = {.item = {section ? section : DEFAULT_SECTION, name, value}};
 
-    const char * def = get_default (section, name);
-    bool_t changed = FALSE;
+    bool_t is_default = config_op_run (& op, OP_IS_DEFAULT, & defaults);
+    bool_t changed = config_op_run (& op, is_default ? OP_CLEAR : OP_SET, & config);
 
-    if (! strcmp (value, def))
+    if (changed && ! section)
     {
-        if (g_key_file_has_key (keyfile, section, name, NULL))
-        {
-            g_key_file_remove_key (keyfile, section, name, NULL);
-            changed = TRUE;
-        }
+        SCONCAT2 (event, "set ", name);
+        event_queue (event, NULL);
     }
-    else
-    {
-        char * old = g_key_file_has_key (keyfile, section, name, NULL) ?
-         g_key_file_get_value (keyfile, section, name, NULL) : NULL;
-
-        if (! old || strcmp (value, old))
-        {
-            g_key_file_set_value (keyfile, section, name, value);
-            changed = TRUE;
-        }
-
-        g_free (old);
-    }
-
-    if (changed)
-    {
-        modified = TRUE;
-
-        if (! strcmp (section, DEFAULT_SECTION))
-        {
-            char * event = g_strdup_printf ("set %s", name);
-            event_queue (event, NULL);
-            g_free (event);
-        }
-    }
-
-    pthread_mutex_unlock (& mutex);
 }
 
-char * get_string (const char * section, const char * name)
+char * get_str (const char * section, const char * name)
 {
-    g_return_val_if_fail (defaults && keyfile, g_strdup (""));
-    g_return_val_if_fail (name, g_strdup (""));
-    pthread_mutex_lock (& mutex);
+    g_return_val_if_fail (name, NULL);
 
-    if (! section)
-        section = DEFAULT_SECTION;
+    ConfigOp op = {.item = {section ? section : DEFAULT_SECTION, name, NULL}};
 
-    char * value = g_key_file_has_key (keyfile, section, name, NULL) ?
-     g_key_file_get_value (keyfile, section, name, NULL) : NULL;
+    config_op_run (& op, OP_GET, & config);
 
-    if (! value)
-        value = g_strdup (get_default (section, name));
+    if (! op.item.value)
+        config_op_run (& op, OP_GET, & defaults);
 
-    pthread_mutex_unlock (& mutex);
-    return value;
+    return op.item.value ? (char *) op.item.value : str_get ("");
 }
 
 void set_bool (const char * section, const char * name, bool_t value)
 {
-    set_string (section, name, value ? "TRUE" : "FALSE");
+    set_str (section, name, value ? "TRUE" : "FALSE");
 }
 
 bool_t get_bool (const char * section, const char * name)
 {
-    char * string = get_string (section, name);
+    char * string = get_str (section, name);
     bool_t value = ! strcmp (string, "TRUE");
-    g_free (string);
+    str_unref (string);
     return value;
 }
 
@@ -310,9 +430,9 @@ void set_int (const char * section, const char * name, int value)
 
 int get_int (const char * section, const char * name)
 {
-    char * string = get_string (section, name);
+    char * string = get_str (section, name);
     int value = str_to_int (string);
-    g_free (string);
+    str_unref (string);
     return value;
 }
 
@@ -320,14 +440,29 @@ void set_double (const char * section, const char * name, double value)
 {
     char * string = double_to_str (value);
     g_return_if_fail (string);
-    set_string (section, name, string);
+    set_str (section, name, string);
     str_unref (string);
 }
 
 double get_double (const char * section, const char * name)
 {
-    char * string = get_string (section, name);
+    char * string = get_str (section, name);
     double value = str_to_double (string);
-    g_free (string);
+    str_unref (string);
     return value;
+}
+
+/* deprecated */
+void set_string (const char * section, const char * name, const char * value)
+{
+    set_str (section, name, value);
+}
+
+/* deprecated */
+char * get_string (const char * section, const char * name)
+{
+    char * str = get_str (section, name);
+    char * dup = strdup (str);
+    str_unref (str);
+    return dup;
 }

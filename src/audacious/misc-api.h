@@ -19,6 +19,8 @@
 
 /* Do not include this file directly; use misc.h instead. */
 
+/* all (char *) return values must be freed with str_unref() */
+
 /* art.c (thread-safe) */
 
 /* Gets album art for <file> (the URI of a song file) as JPEG or PNG data.  If
@@ -35,13 +37,12 @@ AUD_FUNC1 (const char *, art_request_file, const char *, file)
 /* Releases album art returned by art_request_data() or art_request_file(). */
 AUD_VFUNC1 (art_unref, const char *, file)
 
-/* config.c */
+/* config.c (thread-safe) */
 
-AUD_VFUNC1 (config_clear_section, const char *, section)
 AUD_VFUNC2 (config_set_defaults, const char *, section, const char * const *, entries)
 
-AUD_VFUNC3 (set_string, const char *, section, const char *, name, const char *, value)
-AUD_FUNC2 (char *, get_string, const char *, section, const char *, name)
+AUD_VFUNC3 (set_str, const char *, section, const char *, name, const char *, value)
+AUD_FUNC2 (char *, get_str, const char *, section, const char *, name)
 AUD_VFUNC3 (set_bool, const char *, section, const char *, name, bool_t, value)
 AUD_FUNC2 (bool_t, get_bool, const char *, section, const char *, name)
 AUD_VFUNC3 (set_int, const char *, section, const char *, name, int, value)
@@ -112,11 +113,13 @@ AUD_VFUNC0 (show_prefs_window)
  *     a. a full URI (returned unchanged)
  *     b. an absolute filename (in the system locale)
  *     c. a relative path (character set detected according to user settings)
- *   2. reference: the full URI of the playlist containing <path>
- *
- * The returned string (if not NULL) must be freed with str_unref(). */
+ *   2. reference: the full URI of the playlist containing <path> */
 AUD_FUNC2 (char *, construct_uri, const char *, path, const char *, reference)
 
 /* visualization.c */
 AUD_VFUNC2 (vis_func_add, int, type, VisFunc, func)
 AUD_VFUNC1 (vis_func_remove, VisFunc, func)
+
+/* deprecated */
+AUD_VFUNC3 (set_string, const char *, section, const char *, name, const char *, value)
+AUD_FUNC2 (char *, get_string, const char *, section, const char *, name)
