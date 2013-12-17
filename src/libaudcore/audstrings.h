@@ -67,9 +67,9 @@
  memcpy (s + s##_1 + s##_2, (c), s##_3); \
  strcpy (s + s##_1 + s##_2 + s##_3, (d))
 
-/* all (char *) return values must be freed with str_unref() */
+struct _Index;
 
-typedef struct _Index Index;
+/* all (char *) return values must be freed with str_unref() */
 
 char * str_printf (const char * format, ...);
 char * str_vprintf (const char * format, va_list args);
@@ -90,7 +90,7 @@ char * str_to_locale (const char * str, int len);
 char * str_to_utf8 (const char * str, int len);
 
 /* takes ownership of <fallbacks> and the pooled strings in it */
-void str_set_charsets (const char * region, Index * fallbacks);
+void str_set_charsets (const char * region, struct _Index * fallbacks);
 
 char * filename_to_uri (const char * filename);
 char * uri_to_filename (const char * uri);
@@ -103,8 +103,8 @@ bool_t uri_get_extension (const char * uri, char * buf, int buflen);
 int str_compare (const char * a, const char * b);
 int str_compare_encoded (const char * a, const char * b);
 
-Index * str_list_to_index (const char * list, const char * delims);
-char * index_to_str_list (Index * index, const char * sep);
+struct _Index * str_list_to_index (const char * list, const char * delims);
+char * index_to_str_list (struct _Index * index, const char * sep);
 
 int str_to_int (const char * string);
 double str_to_double (const char * string);
