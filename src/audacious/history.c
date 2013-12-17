@@ -36,8 +36,6 @@ static void history_save (void)
     if (! modified)
         return;
 
-    config_clear_section ("history");
-
     GList * node = history.head;
     for (int i = 0; i < MAX_ENTRIES; i ++)
     {
