@@ -119,7 +119,3 @@ AUD_FUNC2 (char *, construct_uri, const char *, path, const char *, reference)
 /* visualization.c */
 AUD_VFUNC2 (vis_func_add, int, type, VisFunc, func)
 AUD_VFUNC1 (vis_func_remove, VisFunc, func)
-
-/* deprecated */
-AUD_VFUNC3 (set_string, const char *, section, const char *, name, const char *, value)
-AUD_FUNC2 (char *, get_string, const char *, section, const char *, name)

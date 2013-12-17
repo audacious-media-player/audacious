@@ -451,18 +451,3 @@ double get_double (const char * section, const char * name)
     str_unref (string);
     return value;
 }
-
-/* deprecated */
-void set_string (const char * section, const char * name, const char * value)
-{
-    set_str (section, name, value);
-}
-
-/* deprecated */
-char * get_string (const char * section, const char * name)
-{
-    char * str = get_str (section, name);
-    char * dup = strdup (str);
-    str_unref (str);
-    return dup;
-}
