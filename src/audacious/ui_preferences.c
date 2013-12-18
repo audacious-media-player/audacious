@@ -250,14 +250,6 @@ change_category(GtkNotebook * notebook,
 }
 
 static void
-editable_insert_text(GtkEditable * editable,
-                     const char * text,
-                     int * pos)
-{
-    gtk_editable_insert_text(editable, text, strlen(text), pos);
-}
-
-static void
 titlestring_tag_menu_callback(GtkMenuItem * menuitem,
                               void * data)
 {
@@ -268,12 +260,10 @@ titlestring_tag_menu_callback(GtkMenuItem * menuitem,
     pos = gtk_editable_get_position(GTK_EDITABLE(titlestring_entry));
 
     /* insert separator as needed */
-    if (g_utf8_strlen(gtk_entry_get_text(GTK_ENTRY(titlestring_entry)), -1) > 0)
-        editable_insert_text(GTK_EDITABLE(titlestring_entry), separator, &pos);
+    if (gtk_entry_get_text(GTK_ENTRY(titlestring_entry))[0])
+        gtk_editable_insert_text(GTK_EDITABLE(titlestring_entry), separator, -1, &pos);
 
-    editable_insert_text(GTK_EDITABLE(titlestring_entry), _(title_field_tags[item].tag),
-                         &pos);
-
+    gtk_editable_insert_text(GTK_EDITABLE(titlestring_entry), _(title_field_tags[item].tag), -1, &pos);
     gtk_editable_set_position(GTK_EDITABLE(titlestring_entry), pos);
 }
 
