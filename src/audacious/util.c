@@ -419,21 +419,6 @@ DONE:
     goto DONE;
 }
 
-void normalize_path (char * path)
-{
-#ifdef _WIN32
-    str_replace_char (path, '/', '\\');
-#endif
-
-    int len = strlen (path);
-#ifdef _WIN32
-    if (len > 3 && path[len - 1] == '\\') /* leave "C:\" */
-#else
-    if (len > 1 && path[len - 1] == '/') /* leave leading "/" */
-#endif
-        path[len - 1] = 0;
-}
-
 char * last_path_element (char * path)
 {
     char * slash = strrchr (path, G_DIR_SEPARATOR);

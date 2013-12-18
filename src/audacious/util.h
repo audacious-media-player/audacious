@@ -37,7 +37,6 @@ char * get_path_to_self (void); /* pooled */
 void describe_song (const char * filename, const Tuple * tuple,
  char * * title, char * * artist, char * * album);
 
-void normalize_path (char * path);
 char * last_path_element (char * path);
 void cut_path_element (char * path, char * elem);
 

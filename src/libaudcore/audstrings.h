@@ -92,6 +92,8 @@ char * str_to_utf8 (const char * str, int len);
 /* takes ownership of <fallbacks> and the pooled strings in it */
 void str_set_charsets (const char * region, struct _Index * fallbacks);
 
+void filename_normalize (char * filename);
+
 char * filename_build (const char * path, const char * name);
 char * filename_to_uri (const char * filename);
 char * uri_to_filename (const char * uri);

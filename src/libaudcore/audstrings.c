@@ -192,6 +192,23 @@ EXPORT void str_encode_percent (const char * str, int len, char * out)
     * out = 0;
 }
 
+EXPORT void filename_normalize (char * filename)
+{
+#ifdef _WIN32
+    /* convert slash to backslash on Windows */
+    str_replace_char (filename, '/', '\\');
+#endif
+
+    /* remove trailing slash */
+    int len = strlen (filename);
+#ifdef _WIN32
+    if (len > 3 && filename[len - 1] == '\\') /* leave "C:\" */
+#else
+    if (len > 1 && filename[len - 1] == '/') /* leave leading "/" */
+#endif
+        filename[len - 1] = 0;
+}
+
 EXPORT char * filename_build (const char * path, const char * name)
 {
     int len = strlen (path);
@@ -230,6 +247,7 @@ EXPORT char * filename_to_uri (const char * name)
 #ifdef _WIN32
     str_replace_char (utf8, '\\', '/');
 #endif
+
     char enc[3 * strlen (utf8) + 1];
     str_encode_percent (utf8, -1, enc);
 
@@ -255,7 +273,6 @@ EXPORT char * uri_to_filename (const char * uri)
 
     char buf[strlen (uri + 8) + 1];
     str_decode_percent (uri + 8, -1, buf);
-    str_replace_char (buf, '/', '\\');
 #else
     if (strncmp (uri, "file://", 7))
         return NULL;
@@ -263,6 +280,8 @@ EXPORT char * uri_to_filename (const char * uri)
     char buf[strlen (uri + 7) + 1];
     str_decode_percent (uri + 7, -1, buf);
 #endif
+
+    filename_normalize (buf);
 
     return str_to_locale (buf, -1);
 }

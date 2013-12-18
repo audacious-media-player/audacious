@@ -109,12 +109,12 @@ static void relocate_paths (void)
     char desktopfile[] = HARDCODE_DESKTOPFILE;
     char iconfile[] = HARDCODE_ICONFILE;
 
-    normalize_path (bindir);
-    normalize_path (datadir);
-    normalize_path (plugindir);
-    normalize_path (localedir);
-    normalize_path (desktopfile);
-    normalize_path (iconfile);
+    filename_normalize (bindir);
+    filename_normalize (datadir);
+    filename_normalize (plugindir);
+    filename_normalize (localedir);
+    filename_normalize (desktopfile);
+    filename_normalize (iconfile);
 
     /* Compare the compile-time path to the executable and the actual path to
      * see if we have been moved. */
@@ -138,7 +138,7 @@ FALLBACK:
 
     str_unref (self);
 
-    normalize_path (new);
+    filename_normalize (new);
 
     /* Strip the name of the executable file, leaving the path. */
     char * base = last_path_element (new);
