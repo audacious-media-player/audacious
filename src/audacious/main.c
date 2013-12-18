@@ -270,9 +270,9 @@ static Index * convert_filenames (void)
             uri = filename_to_uri (f[i]);
         else
         {
-            char * tmp = g_build_filename (cur, f[i], NULL);
+            char * tmp = filename_build (cur, f[i]);
             uri = filename_to_uri (tmp);
-            free (tmp);
+            str_unref (tmp);
         }
 
         if (uri)

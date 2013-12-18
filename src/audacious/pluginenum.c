@@ -47,8 +47,7 @@ static const char * plugin_dir_list[] = {
     "Output",
     "Effect",
     "General",
-    "Visualization",
-    NULL
+    "Visualization"
 };
 
 char verbose = 0;
@@ -179,19 +178,17 @@ void plugin_system_init(void)
 {
     assert (g_module_supported ());
 
-    char *dir;
-    int dirsel = 0;
-
     audgui_init (& api_table, _AUD_PLUGIN_VERSION);
 
     plugin_registry_load ();
 
-    while (plugin_dir_list[dirsel])
+    const char * path = get_path (AUD_PATH_PLUGIN_DIR);
+
+    for (int i = 0; i < ARRAY_LEN (plugin_dir_list); i ++)
     {
-        dir = g_build_filename (get_path (AUD_PATH_PLUGIN_DIR),
-         plugin_dir_list[dirsel ++], NULL);
-        scan_plugins(dir);
-        g_free(dir);
+        char * dir = filename_build (path, plugin_dir_list[i]);
+        scan_plugins (dir);
+        str_unref (dir);
     }
 
     plugin_registry_prune ();

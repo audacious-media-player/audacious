@@ -21,6 +21,8 @@
 #include <glib.h>
 #include <string.h>
 
+#include <libaudcore/audstrings.h>
+
 #include "debug.h"
 #include "i18n.h"
 #include "interface.h"
@@ -40,23 +42,22 @@ Index * equalizer_read_presets (const char * basename)
     int i, p = 0;
     EqualizerPreset *preset;
 
-    filename = g_build_filename (get_path (AUD_PATH_USER_DIR), basename, NULL);
+    filename = filename_build (get_path (AUD_PATH_USER_DIR), basename);
 
     rcfile = g_key_file_new();
     if (!g_key_file_load_from_file(rcfile, filename, G_KEY_FILE_NONE, NULL))
     {
-        g_free(filename);
-        filename = g_build_filename (get_path (AUD_PATH_DATA_DIR), basename,
-         NULL);
+        str_unref (filename);
+        filename = filename_build (get_path (AUD_PATH_DATA_DIR), basename);
 
         if (!g_key_file_load_from_file(rcfile, filename, G_KEY_FILE_NONE, NULL))
         {
-           g_free(filename);
+           str_unref (filename);
            return NULL;
         }
     }
 
-    g_free(filename);
+    str_unref (filename);
 
     Index * list = index_new ();
 
@@ -120,14 +121,14 @@ bool_t equalizer_write_preset_file (Index * list, const char * basename)
         }
     }
 
-    filename = g_build_filename (get_path (AUD_PATH_USER_DIR), basename, NULL);
+    filename = filename_build (get_path (AUD_PATH_USER_DIR), basename);
 
     data = g_key_file_to_data(rcfile, &len, NULL);
     bool_t success = g_file_set_contents (filename, data, len, NULL);
     g_free(data);
 
     g_key_file_free(rcfile);
-    g_free(filename);
+    str_unref (filename);
     return success;
 }
 
