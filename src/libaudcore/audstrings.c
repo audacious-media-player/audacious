@@ -192,6 +192,31 @@ EXPORT void str_encode_percent (const char * str, int len, char * out)
     * out = 0;
 }
 
+EXPORT char * filename_build (const char * path, const char * name)
+{
+    int len = strlen (path);
+
+#ifdef _WIN32
+    if (! len || path[len - 1] == '/' || path[len - 1] == '\\')
+    {
+        SCONCAT2 (filename, path, name);
+        return str_get (filename);
+    }
+
+    SCONCAT3 (filename, path, "\\", name);
+    return str_get (filename);
+#else
+    if (! len || path[len - 1] == '/')
+    {
+        SCONCAT2 (filename, path, name);
+        return str_get (filename);
+    }
+
+    SCONCAT3 (filename, path, "/", name);
+    return str_get (filename);
+#endif
+}
+
 /* Like g_filename_to_uri, but converts the filename from the system locale to
  * UTF-8 before percent-encoding.  On Windows, replaces '\' with '/' and adds a
  * leading '/'. */
