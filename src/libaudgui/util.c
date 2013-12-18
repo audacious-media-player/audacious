@@ -170,8 +170,7 @@ EXPORT void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
         if (strstr (old, text))
             goto CREATED;
 
-        char both[strlen (old) + strlen (text) + 2];
-        snprintf (both, sizeof both, "%s\n%s", old, text);
+        SCONCAT3 (both, old, "\n", text);
         g_object_set ((GObject *) * widget, "text", both, NULL);
 
         g_object_set_data ((GObject *) * widget, "messages", GINT_TO_POINTER

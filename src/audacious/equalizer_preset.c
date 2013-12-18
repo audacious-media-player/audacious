@@ -201,7 +201,7 @@ bool_t save_preset_file (EqualizerPreset * preset, const char * filename)
     VFSFile * file = vfs_fopen (filename, "w");
     if (file == NULL)
         goto DONE;
-    if (vfs_fwrite (data, 1, strlen (data), file) == strlen (data))
+    if (vfs_fputs (data, file) >= 0)
         success = TRUE;
     vfs_fclose (file);
 
