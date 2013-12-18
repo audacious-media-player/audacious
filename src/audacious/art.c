@@ -255,7 +255,7 @@ const char * art_request_file (const char * file)
         {
             item->art_file = filename_to_uri (unixname);
             item->is_temp = TRUE;
-            free (unixname);
+            str_unref (unixname);
         }
     }
 

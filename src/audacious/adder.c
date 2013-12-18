@@ -271,7 +271,7 @@ static void add_folder (char * filename, PlaylistFilterFunc filter,
         if (entry->d_name[0] == '.')
             continue;
 
-        char * filepath = g_build_filename (path, entry->d_name, NULL);
+        char * filepath = filename_build (path, entry->d_name);
         files = g_list_prepend (files, filepath);
     }
 
@@ -305,7 +305,7 @@ static void add_folder (char * filename, PlaylistFilterFunc filter,
         }
 
     NEXT:
-        g_free (files->data);
+        str_unref (files->data);
         files = g_list_delete_link (files, files);
     }
 

@@ -55,9 +55,9 @@ bool_t dir_foreach (const char * path, DirForeachFunc func, void * user)
         if (entry->d_name[0] == '.')
             continue;
 
-        char * full = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "%s", path, entry->d_name);
+        char * full = filename_build (path, entry->d_name);
         bool_t stop = func (full, entry->d_name, user);
-        g_free (full);
+        str_unref (full);
 
         if (stop)
             break;
@@ -120,13 +120,13 @@ make_directory(const char * path, mode_t mode)
 
 char * write_temp_file (void * data, int64_t len)
 {
-    char * name = g_strdup_printf ("%s/audacious-temp-XXXXXX", g_get_tmp_dir ());
+    char * name = filename_build (g_get_tmp_dir (), "audacious-temp-XXXXXX");
 
     int handle = g_mkstemp (name);
     if (handle < 0)
     {
         fprintf (stderr, "Error creating temporary file: %s\n", strerror (errno));
-        g_free (name);
+        str_unref (name);
         return NULL;
     }
 
@@ -137,7 +137,7 @@ char * write_temp_file (void * data, int64_t len)
         {
             fprintf (stderr, "Error writing %s: %s\n", name, strerror (errno));
             close (handle);
-            g_free (name);
+            str_unref (name);
             return NULL;
         }
 
@@ -148,7 +148,7 @@ char * write_temp_file (void * data, int64_t len)
     if (close (handle) < 0)
     {
         fprintf (stderr, "Error closing %s: %s\n", name, strerror (errno));
-        g_free (name);
+        str_unref (name);
         return NULL;
     }
 
@@ -159,24 +159,22 @@ char * get_path_to_self (void)
 {
 #if defined _WIN32 || defined HAVE_PROC_SELF_EXE
     int size = 256;
-    char * buf = g_malloc (size);
 
     while (1)
     {
+        char buf[size];
         int len;
 
 #ifdef _WIN32
         if (! (len = GetModuleFileName (NULL, buf, size)))
         {
             fprintf (stderr, "GetModuleFileName failed.\n");
-            g_free (buf);
             return NULL;
         }
 #else
         if ((len = readlink ("/proc/self/exe", buf, size)) < 0)
         {
             fprintf (stderr, "Cannot access /proc/self/exe: %s.\n", strerror (errno));
-            g_free (buf);
             return NULL;
         }
 #endif
@@ -184,30 +182,24 @@ char * get_path_to_self (void)
         if (len < size)
         {
             buf[len] = 0;
-            return buf;
+            return str_get (buf);
         }
 
         size += size;
-        buf = g_realloc (buf, size);
     }
 #elif defined __APPLE__
     unsigned int size = 256;
-    char * buf = g_malloc (size);
 
     while (1)
     {
+        char buf[size];
         int res;
 
         if (! (res = _NSGetExecutablePath (buf, &size)))
-            return buf;
+            return str_get (buf);
 
-        if (res == -1)
-            buf = g_realloc (buf, size);
-        else
-        {
-            g_free (buf);
+        if (res != -1)
             return NULL;
-        }
     }
 #else
     return NULL;

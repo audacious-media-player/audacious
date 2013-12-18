@@ -76,9 +76,8 @@ static void make_dirs(void)
     make_directory(aud_paths[AUD_PATH_PLAYLISTS_DIR], mode755);
 }
 
-static void relocate_path (char * * pathp, const char * old, const char * new)
+static char * relocate_path (const char * path, const char * old, const char * new)
 {
-    char * path = * pathp;
     int oldlen = strlen (old);
     int newlen = strlen (new);
 
@@ -95,49 +94,62 @@ static void relocate_path (char * * pathp, const char * old, const char * new)
     {
         fprintf (stderr, "Failed to relocate a data path.  Falling back to "
          "compile-time path: %s\n", path);
-        return;
+        return str_get (path);
     }
 
-    * pathp = g_strdup_printf ("%.*s%s", newlen, new, path + oldlen);
-    g_free (path);
+    return str_printf ("%.*s%s", newlen, new, path + oldlen);
 }
 
 static void relocate_paths (void)
 {
-    char * old = NULL, * new = NULL;
-    char * base, * a, * b;
+    char bindir[] = HARDCODE_BINDIR;
+    char datadir[] = HARDCODE_DATADIR;
+    char plugindir[] = HARDCODE_PLUGINDIR;
+    char localedir[] = HARDCODE_LOCALEDIR;
+    char desktopfile[] = HARDCODE_DESKTOPFILE;
+    char iconfile[] = HARDCODE_ICONFILE;
 
-    /* Start with the paths hard coded at compile time. */
-    aud_paths[AUD_PATH_BIN_DIR] = g_strdup (HARDCODE_BINDIR);
-    aud_paths[AUD_PATH_DATA_DIR] = g_strdup (HARDCODE_DATADIR);
-    aud_paths[AUD_PATH_PLUGIN_DIR] = g_strdup (HARDCODE_PLUGINDIR);
-    aud_paths[AUD_PATH_LOCALE_DIR] = g_strdup (HARDCODE_LOCALEDIR);
-    aud_paths[AUD_PATH_DESKTOP_FILE] = g_strdup (HARDCODE_DESKTOPFILE);
-    aud_paths[AUD_PATH_ICON_FILE] = g_strdup (HARDCODE_ICONFILE);
-    normalize_path (aud_paths[AUD_PATH_BIN_DIR]);
-    normalize_path (aud_paths[AUD_PATH_DATA_DIR]);
-    normalize_path (aud_paths[AUD_PATH_PLUGIN_DIR]);
-    normalize_path (aud_paths[AUD_PATH_LOCALE_DIR]);
-    normalize_path (aud_paths[AUD_PATH_DESKTOP_FILE]);
-    normalize_path (aud_paths[AUD_PATH_ICON_FILE]);
+    normalize_path (bindir);
+    normalize_path (datadir);
+    normalize_path (plugindir);
+    normalize_path (localedir);
+    normalize_path (desktopfile);
+    normalize_path (iconfile);
 
     /* Compare the compile-time path to the executable and the actual path to
      * see if we have been moved. */
-    old = g_strdup (aud_paths[AUD_PATH_BIN_DIR]);
+    char * self = get_path_to_self ();
+    if (! self)
+    {
+FALLBACK:
+        /* Fall back to compile-time paths. */
+        aud_paths[AUD_PATH_BIN_DIR] = str_get (bindir);
+        aud_paths[AUD_PATH_DATA_DIR] = str_get (datadir);
+        aud_paths[AUD_PATH_PLUGIN_DIR] = str_get (plugindir);
+        aud_paths[AUD_PATH_LOCALE_DIR] = str_get (localedir);
+        aud_paths[AUD_PATH_DESKTOP_FILE] = str_get (desktopfile);
+        aud_paths[AUD_PATH_ICON_FILE] = str_get (iconfile);
 
-    if (! (new = get_path_to_self ()))
-        goto DONE;
+        return;
+    }
+
+    SCOPY (old, bindir);
+    SCOPY (new, self);
+
+    str_unref (self);
 
     normalize_path (new);
 
     /* Strip the name of the executable file, leaving the path. */
-    if (! (base = last_path_element (new)))
-        goto DONE;
+    char * base = last_path_element (new);
+    if (! base)
+        goto FALLBACK;
 
     cut_path_element (new, base);
 
     /* Strip innermost folder names from both paths as long as they match.  This
      * leaves a compile-time prefix and a run-time one to replace it with. */
+    char * a, * b;
     while ((a = last_path_element (old)) && (b = last_path_element (new)) &&
 #ifdef _WIN32
      ! g_ascii_strcasecmp (a, b))
@@ -150,16 +162,12 @@ static void relocate_paths (void)
     }
 
     /* Do the replacements. */
-    relocate_path (& aud_paths[AUD_PATH_BIN_DIR], old, new);
-    relocate_path (& aud_paths[AUD_PATH_DATA_DIR], old, new);
-    relocate_path (& aud_paths[AUD_PATH_PLUGIN_DIR], old, new);
-    relocate_path (& aud_paths[AUD_PATH_LOCALE_DIR], old, new);
-    relocate_path (& aud_paths[AUD_PATH_DESKTOP_FILE], old, new);
-    relocate_path (& aud_paths[AUD_PATH_ICON_FILE], old, new);
-
-DONE:
-    g_free (old);
-    g_free (new);
+    aud_paths[AUD_PATH_BIN_DIR] = relocate_path (bindir, old, new);
+    aud_paths[AUD_PATH_DATA_DIR] = relocate_path (datadir, old, new);
+    aud_paths[AUD_PATH_PLUGIN_DIR] = relocate_path (plugindir, old, new);
+    aud_paths[AUD_PATH_LOCALE_DIR] = relocate_path (localedir, old, new);
+    aud_paths[AUD_PATH_DESKTOP_FILE] = relocate_path (desktopfile, old, new);
+    aud_paths[AUD_PATH_ICON_FILE] = relocate_path (iconfile, old, new);
 }
 
 static void init_paths (void)
@@ -167,6 +175,9 @@ static void init_paths (void)
     relocate_paths ();
 
     const char * xdg_config_home = g_get_user_config_dir ();
+
+    aud_paths[AUD_PATH_USER_DIR] = filename_build (xdg_config_home, "audacious");
+    aud_paths[AUD_PATH_PLAYLISTS_DIR] = filename_build (aud_paths[AUD_PATH_USER_DIR], "playlists");
 
 #ifdef _WIN32
     /* Some libraries (libmcs) and plugins (filewriter) use these variables,
@@ -176,12 +187,12 @@ static void init_paths (void)
     g_setenv ("XDG_DATA_HOME", g_get_user_data_dir (), TRUE);
     g_setenv ("XDG_CACHE_HOME", g_get_user_cache_dir (), TRUE);
 #endif
+}
 
-    aud_paths[AUD_PATH_USER_DIR] = g_build_filename(xdg_config_home, "audacious", NULL);
-    aud_paths[AUD_PATH_PLAYLISTS_DIR] = g_build_filename(aud_paths[AUD_PATH_USER_DIR], "playlists", NULL);
-
+static void free_paths (void)
+{
     for (int i = 0; i < AUD_PATH_COUNT; i ++)
-        AUDDBG ("Data path: %s\n", aud_paths[i]);
+        str_unref (aud_paths[i]);
 }
 
 const char * get_path (int id)
@@ -488,6 +499,7 @@ static void shut_down (void)
     history_cleanup ();
     playlist_end ();
 
+    free_paths ();
     strpool_shutdown ();
 }
 

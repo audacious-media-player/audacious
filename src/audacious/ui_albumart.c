@@ -27,6 +27,7 @@
 #include "i18n.h"
 #include "main.h"
 #include "misc.h"
+#include "util.h"
 
 static bool_t has_front_cover_extension (const char * name)
 {
@@ -105,7 +106,7 @@ static char * fileinfo_recursive_get_image (const char * path, const char * file
             if (entry->d_name[0] == '.')
                 continue;
 
-            char * newpath = g_build_filename (path, entry->d_name, NULL);
+            char * newpath = filename_build (path, entry->d_name);
 
             if (! g_file_test (newpath, G_FILE_TEST_IS_DIR) &&
              has_front_cover_extension (entry->d_name) &&
@@ -115,7 +116,7 @@ static char * fileinfo_recursive_get_image (const char * path, const char * file
                 return newpath;
             }
 
-            g_free (newpath);
+            str_unref (newpath);
         }
 
         rewinddir (d);
@@ -127,7 +128,7 @@ static char * fileinfo_recursive_get_image (const char * path, const char * file
         if (entry->d_name[0] == '.')
             continue;
 
-        char * newpath = g_build_filename (path, entry->d_name, NULL);
+        char * newpath = filename_build (path, entry->d_name);
 
         if (! g_file_test (newpath, G_FILE_TEST_IS_DIR) &&
          has_front_cover_extension (entry->d_name) &&
@@ -137,7 +138,7 @@ static char * fileinfo_recursive_get_image (const char * path, const char * file
             return newpath;
         }
 
-        g_free (newpath);
+        str_unref (newpath);
     }
 
     rewinddir (d);
@@ -150,7 +151,7 @@ static char * fileinfo_recursive_get_image (const char * path, const char * file
             if (entry->d_name[0] == '.')
                 continue;
 
-            char * newpath = g_build_filename (path, entry->d_name, NULL);
+            char * newpath = filename_build (path, entry->d_name);
 
             if (g_file_test (newpath, G_FILE_TEST_IS_DIR))
             {
@@ -158,13 +159,13 @@ static char * fileinfo_recursive_get_image (const char * path, const char * file
 
                 if (tmp)
                 {
-                    g_free (newpath);
+                    str_unref (newpath);
                     closedir (d);
                     return tmp;
                 }
             }
 
-            g_free (newpath);
+            str_unref (newpath);
         }
     }
 
@@ -174,22 +175,23 @@ static char * fileinfo_recursive_get_image (const char * path, const char * file
 
 char * get_associated_image_file (const char * filename)
 {
-    if (strncmp (filename, "file://", 7))
-        return NULL;
+    char * image_uri = NULL;
 
     char * local = uri_to_filename (filename);
-    if (! local)
-        return NULL;
+    char * base = local ? last_path_element (local) : NULL;
 
-    char * path = g_path_get_dirname (local);
-    char * base = g_path_get_basename (local);
-    char * image_local = fileinfo_recursive_get_image (path, base, 0);
-    char * image_uri = image_local ? filename_to_uri (image_local) : NULL;
+    if (local && base)
+    {
+        SNCOPY (path, local, base - 1 - local);
+
+        char * image_local = fileinfo_recursive_get_image (path, base, 0);
+        if (image_local)
+            image_uri = filename_to_uri (image_local);
+
+        str_unref (image_local);
+    }
 
     str_unref (local);
-    g_free (path);
-    g_free (base);
-    g_free (image_local);
 
     return image_uri;
 }

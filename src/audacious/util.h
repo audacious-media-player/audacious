@@ -30,9 +30,9 @@ typedef bool_t(*DirForeachFunc) (const char * path,
 bool_t dir_foreach (const char * path, DirForeachFunc func, void * user_data);
 
 void make_directory(const char * path, mode_t mode);
-char * write_temp_file (void * data, int64_t len);
+char * write_temp_file (void * data, int64_t len); /* pooled */
 
-char * get_path_to_self (void);
+char * get_path_to_self (void); /* pooled */
 
 void describe_song (const char * filename, const Tuple * tuple,
  char * * title, char * * artist, char * * album);
