@@ -196,9 +196,9 @@ static ValuePair * ape_read_item (void * * data, int length)
         return NULL;
     }
 
-    pair = g_malloc (sizeof (ValuePair));
-    pair->key = g_strdup ((char *) (* data) + 8);
-    pair->value = g_strndup (value, header[0]);
+    pair = g_slice_new (ValuePair);
+    pair->key = str_get ((char *) (* data) + 8);
+    pair->value = str_nget (value, header[0]);
 
     * data = value + header[0];
 
@@ -246,15 +246,11 @@ static GList * ape_read_items (VFSFile * handle)
     return g_list_reverse (list);
 }
 
-static void free_tag_list (GList * list)
+static void free_value_pair (ValuePair * pair)
 {
-    while (list != NULL)
-    {
-        g_free (((ValuePair *) list->data)->key);
-        g_free (((ValuePair *) list->data)->value);
-        g_free (list->data);
-        list = g_list_delete_link (list, list);
-    }
+    str_unref (pair->key);
+    str_unref (pair->value);
+    g_slice_free (ValuePair, pair);
 }
 
 static void parse_gain_text (const char * text, int * value, int * unit)
@@ -339,7 +335,7 @@ static bool_t ape_read_tag (Tuple * tuple, VFSFile * handle)
             set_gain_info (tuple, FIELD_GAIN_ALBUM_PEAK, FIELD_GAIN_PEAK_UNIT, value);
     }
 
-    free_tag_list (list);
+    g_list_free_full (list, (GDestroyNotify) free_value_pair);
     return TRUE;
 }
 
@@ -485,11 +481,11 @@ static bool_t ape_write_tag (const Tuple * tuple, VFSFile * handle)
      start, SEEK_SET) || ! write_header (length, items, TRUE, handle))
         goto ERR;
 
-    free_tag_list (list);
+    g_list_free_full (list, (GDestroyNotify) free_value_pair);
     return TRUE;
 
 ERR:
-    free_tag_list (list);
+    g_list_free_full (list, (GDestroyNotify) free_value_pair);
     return FALSE;
 }
 
