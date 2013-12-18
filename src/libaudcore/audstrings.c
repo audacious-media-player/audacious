@@ -17,13 +17,13 @@
  * the use of this software.
  */
 
-#include <ctype.h>
 #include <limits.h>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <strings.h>
+
+#include <glib.h>
 
 #include <audacious/i18n.h>
 
@@ -78,7 +78,7 @@ EXPORT char * str_vprintf (const char * format, va_list args)
 
 EXPORT bool_t str_has_prefix_nocase (const char * str, const char * prefix)
 {
-    return ! strncasecmp (str, prefix, strlen (prefix));
+    return ! g_ascii_strncasecmp (str, prefix, strlen (prefix));
 }
 
 EXPORT bool_t str_has_suffix_nocase (const char * str, const char * suffix)
@@ -89,7 +89,7 @@ EXPORT bool_t str_has_suffix_nocase (const char * str, const char * suffix)
     if (len2 > len1)
         return FALSE;
 
-    return ! strcasecmp (str + len1 - len2, suffix);
+    return ! g_ascii_strcasecmp (str + len1 - len2, suffix);
 }
 
 EXPORT void str_replace_char (char * string, char old_c, char new_c)

@@ -31,11 +31,12 @@
  *   currently there is just a single context, is a "global" context needed?
  */
 
-#include <ctype.h>
 #include <stdarg.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+
+#include <glib.h>
 
 #include "audstrings.h"
 #include "tuple_compiler.h"
@@ -213,11 +214,11 @@ static bool_t tc_get_item(TupleEvalContext *ctx,
   }
 
   if (*literal == FALSE) {
-    while (*s != '\0' && *s != tmpendch && (isalnum(*s) || *s == '-') && i < (max - 1)) {
+    while (*s != '\0' && *s != tmpendch && (g_ascii_isalnum(*s) || *s == '-') && i < (max - 1)) {
       buf[i++] = *(s++);
     }
 
-    if (*s != tmpendch && *s != '}' && !isalnum(*s) && *s != '-') {
+    if (*s != tmpendch && *s != '}' && !g_ascii_isalnum(*s) && *s != '-') {
       tuple_error(ctx, "Invalid field '%s' in '%s'.\n", *str, item);
       return FALSE;
     } else if (*s != tmpendch) {
@@ -257,7 +258,7 @@ static int tc_get_variable(TupleEvalContext *ctx, char *name, int type)
 
   if (name == '\0') return -1;
 
-  if (isdigit(name[0])) {
+  if (g_ascii_isdigit(name[0])) {
     ctype = TUPLE_INT;
     type = TUPLE_VAR_CONST;
   } else
@@ -361,7 +362,7 @@ static TupleEvalNode *tuple_compiler_pass1(int *level, TupleEvalContext *ctx, co
                 if (*c == '"') {
                   /* String */
                   c++;
-                } else if (isdigit(*c)) {
+                } else if (g_ascii_isdigit(*c)) {
                   /* Integer */
                 }
 
@@ -457,7 +458,7 @@ static TupleEvalNode *tuple_compiler_pass1(int *level, TupleEvalContext *ctx, co
         gssize i = 0;
         c++;
 
-        while (*c != '\0' && (isalnum(*c) || *c == '-') && *c != '}' && *c != ':' && i < (MAX_STR - 1))
+        while (*c != '\0' && (g_ascii_isalnum(*c) || *c == '-') && *c != '}' && *c != ':' && i < (MAX_STR - 1))
           tmps1[i++] = *(c++);
         tmps1[i] = '\0';
 
@@ -692,9 +693,8 @@ static bool_t tuple_formatter_eval_do (TupleEvalContext * ctx, TupleEvalNode *
             tmps2 = var0->fieldstr;
 
             while (result && tmps2 && *tmps2 != '\0') {
-              gunichar uc = g_utf8_get_char(tmps2);
-              if (g_unichar_isspace(uc))
-                tmps2 = g_utf8_next_char(tmps2);
+              if (g_ascii_isspace (* tmps2))
+                tmps2 ++;
               else
                 result = FALSE;
             }

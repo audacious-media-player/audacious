@@ -20,7 +20,8 @@
 #include "audstrings.h"
 #include "inifile.h"
 
-#include <ctype.h>
+#include <glib.h>
+
 #include <stdio.h>
 #include <string.h>
 
@@ -28,7 +29,7 @@
 
 static char * strskip (char * str)
 {
-    while (isspace (* str))
+    while (g_ascii_isspace (* str))
         str ++;
 
     return str;
@@ -38,7 +39,7 @@ static char * strtrim (char * str)
 {
     int len = strlen (str);
 
-    while (len && isspace(str[len - 1]))
+    while (len && g_ascii_isspace(str[len - 1]))
         str[-- len] = 0;
 
     return str;

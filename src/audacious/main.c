@@ -88,7 +88,7 @@ static void relocate_path (char * * pathp, const char * old, const char * new)
         newlen --;
 
 #ifdef _WIN32
-    if (strncasecmp (path, old, oldlen) || (path[oldlen] && path[oldlen] != G_DIR_SEPARATOR))
+    if (g_ascii_strncasecmp (path, old, oldlen) || (path[oldlen] && path[oldlen] != G_DIR_SEPARATOR))
 #else
     if (strncmp (path, old, oldlen) || (path[oldlen] && path[oldlen] != G_DIR_SEPARATOR))
 #endif
@@ -140,7 +140,7 @@ static void relocate_paths (void)
      * leaves a compile-time prefix and a run-time one to replace it with. */
     while ((a = last_path_element (old)) && (b = last_path_element (new)) &&
 #ifdef _WIN32
-     ! strcasecmp (a, b))
+     ! g_ascii_strcasecmp (a, b))
 #else
      ! strcmp (a, b))
 #endif
