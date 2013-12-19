@@ -92,6 +92,37 @@ EXPORT bool_t str_has_suffix_nocase (const char * str, const char * suffix)
     return ! g_ascii_strcasecmp (str + len1 - len2, suffix);
 }
 
+EXPORT char * strstr_nocase (const char * haystack, const char * needle)
+{
+    static const char swap_case[256] =
+        "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"
+        "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"
+        "\0abcdefghijklmnopqrstuvwxyz\0\0\0\0\0"
+        "\0ABCDEFGHIJKLMNOPQRSTUVWXYZ\0\0\0\0\0";
+
+    while (1)
+    {
+        const char * ap = haystack;
+        const char * bp = needle;
+
+        while (1)
+        {
+            char a = * ap ++;
+            char b = * bp ++;
+
+            if (! b) /* all of needle matched */
+                return (char *) haystack;
+            if (! a) /* end of haystack reached */
+                return NULL;
+
+            if (a != b && a != swap_case[(unsigned char) b])
+                break;
+        }
+
+        haystack ++;
+    }
+}
+
 EXPORT void str_replace_char (char * string, char old_c, char new_c)
 {
     while ((string = strchr (string, old_c)))
