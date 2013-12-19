@@ -299,7 +299,7 @@ static void add_folder (char * filename, PlaylistFilterFunc filter,
     while (files)
     {
         struct stat info;
-        if (stat (files->data, & info) < 0)
+        if (lstat (files->data, & info) < 0)
             goto NEXT;
 
         if (S_ISREG (info.st_mode))
