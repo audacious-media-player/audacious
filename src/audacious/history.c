@@ -106,11 +106,11 @@ void history_add (const char * path)
         next = node->next;
         if (! strcmp (node->data, path))
         {
-            g_free (node->data);
+            str_unref (node->data);
             g_queue_delete_link (& history, node);
         }
     }
 
-    g_queue_push_head (& history, g_strdup (path));
+    g_queue_push_head (& history, str_get (path));
     modified = TRUE;
 }

@@ -147,28 +147,27 @@ static void plugin_free (PluginHandle * plugin)
     g_list_free_full (plugin->watches, g_free);
 
     if (plugin->type == PLUGIN_TYPE_TRANSPORT)
-        g_list_free_full (plugin->u.t.schemes, g_free);
+        g_list_free_full (plugin->u.t.schemes, (GDestroyNotify) str_unref);
     else if (plugin->type == PLUGIN_TYPE_PLAYLIST)
-        g_list_free_full (plugin->u.p.exts, g_free);
+        g_list_free_full (plugin->u.p.exts, (GDestroyNotify) str_unref);
     else if (plugin->type == PLUGIN_TYPE_INPUT)
     {
         for (int key = 0; key < INPUT_KEYS; key ++)
-            g_list_free_full (plugin->u.i.keys[key], g_free);
+            g_list_free_full (plugin->u.i.keys[key], (GDestroyNotify) str_unref);
     }
 
-    g_free (plugin->path);
-    g_free (plugin->name);
-    g_free (plugin->domain);
+    str_unref (plugin->path);
+    str_unref (plugin->name);
+    str_unref (plugin->domain);
     g_free (plugin->misc);
     g_free (plugin);
 }
 
 static FILE * open_registry_file (const char * mode)
 {
-    char * path = g_strdup_printf ("%s/" FILENAME, get_path (AUD_PATH_USER_DIR));
-    FILE * file = fopen (path, mode);
-    g_free (path);
-    return file;
+    const char * user_dir = get_path (AUD_PATH_USER_DIR);
+    SCONCAT2 (path, user_dir, "/" FILENAME);
+    return fopen (path, mode);
 }
 
 static void transport_plugin_save (PluginHandle * plugin, FILE * handle)
@@ -264,8 +263,7 @@ static bool_t parse_integer (const char * key, int * value)
 
 static char * parse_string (const char * key)
 {
-    return (parse_value && ! strcmp (parse_key, key)) ? g_strdup (parse_value) :
-     NULL;
+    return (parse_value && ! strcmp (parse_key, key)) ? str_get (parse_value) : NULL;
 }
 
 static void transport_plugin_parse (PluginHandle * plugin, FILE * handle)
@@ -330,7 +328,7 @@ FOUND:
     int timestamp;
     if (! parse_integer ("stamp", & timestamp))
     {
-        g_free (path);
+        str_unref (path);
         return FALSE;
     }
 
@@ -432,16 +430,15 @@ PluginHandle * plugin_lookup (const char * path)
 
 static int plugin_lookup_basename_cb (PluginHandle * plugin, const char * basename)
 {
-    char * test = g_path_get_basename (plugin->path);
+    const char * slash = strrchr (plugin->path, G_DIR_SEPARATOR);
+    if (! slash)
+        return TRUE;
 
-    char * dot = strrchr (test, '.');
-    if (dot)
-        * dot = 0;
+    const char * dot = strrchr (slash + 1, '.');
+    if (! dot)
+        return TRUE;
 
-    int ret = strcmp (test, basename);
-
-    g_free (test);
-    return ret;
+    return strncmp (slash + 1, basename, dot - (slash + 1));
 }
 
 /* Note: If there are multiple plugins with the same basename, this returns only
@@ -457,10 +454,10 @@ static void plugin_get_info (PluginHandle * plugin, bool_t new)
 {
     Plugin * header = plugin->header;
 
-    g_free (plugin->name);
-    g_free (plugin->domain);
-    plugin->name = g_strdup (header->name);
-    plugin->domain = PLUGIN_HAS_FUNC (header, domain) ? g_strdup (header->domain) : NULL;
+    str_unref (plugin->name);
+    str_unref (plugin->domain);
+    plugin->name = str_get (header->name);
+    plugin->domain = PLUGIN_HAS_FUNC (header, domain) ? str_get (header->domain) : NULL;
     plugin->has_about = PLUGIN_HAS_FUNC (header, about) || PLUGIN_HAS_FUNC (header, about_text);
     plugin->has_configure = PLUGIN_HAS_FUNC (header, configure) || PLUGIN_HAS_FUNC (header, prefs);
 
@@ -468,23 +465,21 @@ static void plugin_get_info (PluginHandle * plugin, bool_t new)
     {
         TransportPlugin * tp = (TransportPlugin *) header;
 
-        g_list_free_full (plugin->u.t.schemes, g_free);
+        g_list_free_full (plugin->u.t.schemes, (GDestroyNotify) str_unref);
         plugin->u.t.schemes = NULL;
 
         for (int i = 0; tp->schemes[i]; i ++)
-            plugin->u.t.schemes = g_list_prepend (plugin->u.t.schemes, g_strdup
-             (tp->schemes[i]));
+            plugin->u.t.schemes = g_list_prepend (plugin->u.t.schemes, str_get (tp->schemes[i]));
     }
     else if (header->type == PLUGIN_TYPE_PLAYLIST)
     {
         PlaylistPlugin * pp = (PlaylistPlugin *) header;
 
-        g_list_free_full (plugin->u.p.exts, g_free);
+        g_list_free_full (plugin->u.p.exts, (GDestroyNotify) str_unref);
         plugin->u.p.exts = NULL;
 
         for (int i = 0; pp->extensions[i]; i ++)
-            plugin->u.p.exts = g_list_prepend (plugin->u.p.exts, g_strdup
-             (pp->extensions[i]));
+            plugin->u.p.exts = g_list_prepend (plugin->u.p.exts, str_get (pp->extensions[i]));
     }
     else if (header->type == PLUGIN_TYPE_INPUT)
     {
@@ -493,7 +488,7 @@ static void plugin_get_info (PluginHandle * plugin, bool_t new)
 
         for (int key = 0; key < INPUT_KEYS; key ++)
         {
-            g_list_free_full (plugin->u.i.keys[key], g_free);
+            g_list_free_full (plugin->u.i.keys[key], (GDestroyNotify) str_unref);
             plugin->u.i.keys[key] = NULL;
         }
 
@@ -501,22 +496,22 @@ static void plugin_get_info (PluginHandle * plugin, bool_t new)
         {
             for (int i = 0; ip->extensions[i]; i ++)
                 plugin->u.i.keys[INPUT_KEY_EXTENSION] = g_list_prepend
-                 (plugin->u.i.keys[INPUT_KEY_EXTENSION], g_strdup
-                 (ip->extensions[i]));
+                 (plugin->u.i.keys[INPUT_KEY_EXTENSION],
+                 str_get (ip->extensions[i]));
         }
 
         if (PLUGIN_HAS_FUNC (ip, mimes))
         {
             for (int i = 0; ip->mimes[i]; i ++)
                 plugin->u.i.keys[INPUT_KEY_MIME] = g_list_prepend
-                 (plugin->u.i.keys[INPUT_KEY_MIME], g_strdup (ip->mimes[i]));
+                 (plugin->u.i.keys[INPUT_KEY_MIME], str_get (ip->mimes[i]));
         }
 
         if (PLUGIN_HAS_FUNC (ip, schemes))
         {
             for (int i = 0; ip->schemes[i]; i ++)
                 plugin->u.i.keys[INPUT_KEY_SCHEME] = g_list_prepend
-                 (plugin->u.i.keys[INPUT_KEY_SCHEME], g_strdup (ip->schemes[i]));
+                 (plugin->u.i.keys[INPUT_KEY_SCHEME], str_get (ip->schemes[i]));
         }
 
         plugin->u.i.has_images = PLUGIN_HAS_FUNC (ip, get_song_image);
@@ -572,7 +567,7 @@ void plugin_register (const char * path, int timestamp)
         if (! header)
             return;
 
-        plugin = plugin_new (g_strdup (path), TRUE, TRUE, timestamp,
+        plugin = plugin_new (str_get (path), TRUE, TRUE, timestamp,
          header->type, header);
 
         plugin_get_info (plugin, TRUE);

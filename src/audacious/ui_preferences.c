@@ -23,6 +23,7 @@
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
 
+#include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
 #include <libaudgui/libaudgui-gtk.h>
 
@@ -56,6 +57,9 @@ typedef struct {
     const char *name;
     const char *tag;
 } TitleFieldTag;
+
+static const char aud_version_string[] =
+ "<span size='small'>Audacious " VERSION " (" BUILDSTAMP ")</span>";
 
 static /* GtkWidget * */ void * prefswin = NULL;
 static GtkWidget *category_treeview = NULL;
@@ -308,9 +312,6 @@ static void fill_category_list (GtkTreeView * treeview, GtkNotebook * notebook)
     GtkCellRenderer *renderer;
     GtkTreeViewColumn *column;
     GtkTreeSelection *selection;
-    GtkTreeIter iter;
-    GdkPixbuf *img;
-    int i;
 
     column = gtk_tree_view_column_new();
     gtk_tree_view_column_set_title(column, _("Category"));
@@ -332,12 +333,14 @@ static void fill_category_list (GtkTreeView * treeview, GtkNotebook * notebook)
                                GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_INT);
     gtk_tree_view_set_model(treeview, GTK_TREE_MODEL(store));
 
-    for (i = 0; i < n_categories; i ++)
+    const char * data_dir = get_path (AUD_PATH_DATA_DIR);
+
+    for (int i = 0; i < n_categories; i ++)
     {
-        char * path = g_strdup_printf ("%s/images/%s",
-         get_path (AUD_PATH_DATA_DIR), categories[i].icon_path);
-        img = gdk_pixbuf_new_from_file (path, NULL);
-        g_free (path);
+        SCONCAT3 (path, data_dir, "/images/", categories[i].icon_path);
+
+        GdkPixbuf * img = gdk_pixbuf_new_from_file (path, NULL);
+        GtkTreeIter iter;
 
         gtk_list_store_append(store, &iter);
         gtk_list_store_set(store, &iter,
@@ -653,8 +656,6 @@ static void destroy_cb (void)
 
 static void create_prefs_window (void)
 {
-    char *aud_version_string;
-
     GtkWidget *vbox;
     GtkWidget *hbox1;
     GtkWidget *scrolledwindow6;
@@ -707,7 +708,7 @@ static void create_prefs_window (void)
     hbox4 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  0);
     gtk_box_pack_start (GTK_BOX (vbox), hbox4, FALSE, FALSE, 0);
 
-    audversionlabel = gtk_label_new ("");
+    audversionlabel = gtk_label_new (aud_version_string);
     gtk_box_pack_start (GTK_BOX (hbox4), audversionlabel, FALSE, FALSE, 0);
     gtk_label_set_use_markup (GTK_LABEL (audversionlabel), TRUE);
 
@@ -724,13 +725,6 @@ static void create_prefs_window (void)
     /* create category view */
     fill_category_list ((GtkTreeView *) category_treeview, (GtkNotebook *) category_notebook);
 
-    /* audacious version label */
-
-    aud_version_string = g_strdup_printf
-     ("<span size='small'>%s (%s)</span>", "Audacious " VERSION, BUILDSTAMP);
-
-    gtk_label_set_markup( GTK_LABEL(audversionlabel) , aud_version_string );
-    g_free(aud_version_string);
     gtk_widget_show_all(vbox);
 
     g_signal_connect (prefswin, "destroy", (GCallback) destroy_cb, NULL);

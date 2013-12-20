@@ -94,7 +94,7 @@ static bool_t error_idle_func (void * unused)
         else
             audgui_simple_message (& error_win, GTK_MESSAGE_ERROR, _("Error"), message);
 
-        g_free (message);
+        str_unref (message);
 
         pthread_mutex_lock (& error_mutex);
     }
@@ -109,7 +109,7 @@ void interface_show_error (const char * message)
 {
     pthread_mutex_lock (& error_mutex);
 
-    g_queue_push_tail (& error_queue, g_strdup (message));
+    g_queue_push_tail (& error_queue, str_get (message));
 
     if (! error_source)
         error_source = g_idle_add (error_idle_func, NULL);

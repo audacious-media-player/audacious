@@ -17,6 +17,7 @@
  * the use of this software.
  */
 
+#include <libaudcore/audstrings.h>
 #include <libaudgui/libaudgui-gtk.h>
 
 #include "i18n.h"
@@ -51,9 +52,8 @@ void plugin_make_about_window (PluginHandle * plugin)
         text = dgettext (header->domain, text);
     }
 
-    char * title = g_strdup_printf (_("About %s"), name);
+    SCONCAT2 (title, _("About "), name);
     audgui_simple_message (& misc->about_window, GTK_MESSAGE_INFO, title, text);
-    g_free (title);
 }
 
 static void response_cb (GtkWidget * window, int response, const PluginPreferences * p)
@@ -91,9 +91,8 @@ void plugin_make_config_window (PluginHandle * plugin)
 
     GtkWidget * window = gtk_dialog_new ();
 
-    char * title = g_strdup_printf (_("%s Settings"), name);
+    SCONCAT2 (title, name, _(" Settings"));
     gtk_window_set_title ((GtkWindow *) window, title);
-    g_free (title);
 
     if (p->apply)
     {
