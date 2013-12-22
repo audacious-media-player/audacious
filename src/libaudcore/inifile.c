@@ -25,8 +25,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#define MAXLINE 2000
-
 static char * strskip (char * str)
 {
     while (g_ascii_isspace (* str))
@@ -50,7 +48,9 @@ EXPORT void inifile_parse (VFSFile * file,
  void (* handle_entry) (const char * key, const char * value, void * data),
  void * data)
 {
-    char buf[MAXLINE + 1];
+    int size = 512;
+    char * buf = g_new (char, size);
+
     char * pos = buf;
     int len = 0;
     bool_t eof = FALSE;
@@ -59,14 +59,21 @@ EXPORT void inifile_parse (VFSFile * file,
     {
         char * newline = memchr (pos, '\n', len);
 
-        if (! newline && len < MAXLINE && ! eof)
+        while (! newline && ! eof)
         {
             memmove (buf, pos, len);
             pos = buf;
 
-            len += vfs_fread (buf + len, 1, MAXLINE - len, file);
+            if (len >= size - 1)
+            {
+                size <<= 1;
+                buf = g_renew (char, buf, size);
+                pos = buf;
+            }
 
-            if (len < MAXLINE)
+            len += vfs_fread (buf + len, 1, size - 1 - len, file);
+
+            if (len < size - 1)
                 eof = TRUE;
 
             newline = memchr (pos, '\n', len);
@@ -121,6 +128,8 @@ EXPORT void inifile_parse (VFSFile * file,
         len -= newline + 1 - pos;
         pos = newline + 1;
     }
+
+    g_free (buf);
 }
 
 EXPORT bool_t inifile_write_heading (VFSFile * file, const char * heading)
