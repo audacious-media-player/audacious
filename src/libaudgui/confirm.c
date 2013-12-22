@@ -22,6 +22,7 @@
 #include <audacious/i18n.h>
 #include <audacious/misc.h>
 #include <audacious/playlist.h>
+#include <libaudcore/audstrings.h>
 
 #include "libaudgui-gtk.h"
 
@@ -47,7 +48,8 @@ EXPORT void audgui_confirm_playlist_delete (int playlist)
     }
 
     char * title = aud_playlist_get_title (playlist);
-    char * message = g_strdup_printf (_("Do you want to permanently remove “%s”?"), title);
+    SPRINTF (message, _("Do you want to permanently remove “%s”?"), title);
+    str_unref (title);
 
     int id = aud_playlist_get_unique_id (playlist);
     GtkWidget * button1 = audgui_button_new (_("Remove"), "edit-delete",
@@ -62,9 +64,6 @@ EXPORT void audgui_confirm_playlist_delete (int playlist)
     audgui_dialog_add_widget (dialog, check);
 
     gtk_widget_show_all (dialog);
-
-    str_unref (title);
-    g_free (message);
 }
 
 static void rename_cb (void * entry)

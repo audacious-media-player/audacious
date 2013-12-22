@@ -436,10 +436,8 @@ EXPORT void audgui_infowin_show (int playlist, int entry)
 
     if (tuple == NULL)
     {
-        char * message = g_strdup_printf (_("No info available for %s.\n"),
-         filename);
+        SPRINTF (message, _("No info available for %s.\n"), filename);
         aud_interface_show_error (message);
-        g_free (message);
         goto FREE;
     }
 

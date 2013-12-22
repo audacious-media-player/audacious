@@ -22,6 +22,7 @@
 #include <audacious/i18n.h>
 #include <audacious/misc.h>
 #include <audacious/playlist.h>
+#include <libaudcore/audstrings.h>
 #include <libaudcore/vfs.h>
 
 #include "init.h"
@@ -79,7 +80,7 @@ static void confirm_overwrite (ImportExportJob * job)
     if (job->confirm)
         gtk_widget_destroy (job->confirm);
 
-    char * message = g_strdup_printf (_("Overwrite %s?"), job->filename);
+    SPRINTF (message, _("Overwrite %s?"), job->filename);
 
     GtkWidget * button1 = audgui_button_new (_("Overwrite"), "document-save", finish_job, job);
     GtkWidget * button2 = audgui_button_new (_("Cancel"), "process-stop", NULL, NULL);

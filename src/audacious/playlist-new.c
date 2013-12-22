@@ -2243,9 +2243,10 @@ void playlist_save_state (void)
 
     ENTER;
 
-    char * path = g_strdup_printf ("%s/" STATE_FILE, get_path (AUD_PATH_USER_DIR));
+    const char * user_dir = get_path (AUD_PATH_USER_DIR);
+    SCONCAT2 (path, user_dir, "/" STATE_FILE);
+
     FILE * handle = fopen (path, "w");
-    g_free (path);
     if (! handle)
         RETURN ();
 
@@ -2315,9 +2316,10 @@ void playlist_load_state (void)
     ENTER;
     int playlist_num;
 
-    char * path = g_strdup_printf ("%s/" STATE_FILE, get_path (AUD_PATH_USER_DIR));
+    const char * user_dir = get_path (AUD_PATH_USER_DIR);
+    SCONCAT2 (path, user_dir, "/" STATE_FILE);
+
     FILE * handle = fopen (path, "r");
-    g_free (path);
     if (! handle)
         RETURN ();
 

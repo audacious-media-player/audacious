@@ -24,6 +24,7 @@
 #include <audacious/misc.h>
 #include <audacious/drct.h>
 #include <audacious/playlist.h>
+#include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
 
 #include "init.h"
@@ -121,23 +122,17 @@ static bool_t search_cb (GtkTreeModel * model, int column, const char * key,
     int row = gtk_tree_path_get_indices (path)[0];
     gtk_tree_path_free (path);
 
-    char * temp = aud_playlist_get_title (row);
-    g_return_val_if_fail (temp, TRUE);
-    char * title = g_utf8_strdown (temp, -1);
-    str_unref (temp);
+    char * title = aud_playlist_get_title (row);
+    g_return_val_if_fail (title, TRUE);
 
-    temp = g_utf8_strdown (key, -1);
-    char * * keys = g_strsplit (temp, " ", 0);
-    g_free (temp);
+    Index * keys = str_list_to_index (key, " ");
+    int count = index_count (keys);
 
     bool_t match = FALSE;
 
-    for (int i = 0; keys[i]; i ++)
+    for (int i = 0; i < count; i ++)
     {
-        if (! keys[i][0])
-            continue;
-
-        if (strstr (title, keys[i]))
+        if (strstr_nocase (title, index_get (keys, i)))
             match = TRUE;
         else
         {
@@ -146,8 +141,8 @@ static bool_t search_cb (GtkTreeModel * model, int column, const char * key,
         }
     }
 
-    g_free (title);
-    g_strfreev (keys);
+    index_free_full (keys, (IndexFreeFunc) str_unref);
+    str_unref (title);
 
     return ! match; /* TRUE == not matched, FALSE == matched */
 }
