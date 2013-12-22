@@ -252,7 +252,8 @@ void playlist_select_by_patterns (int playlist, const Tuple * patterns)
         char * pattern = tuple_get_str (patterns, fields[field]);
         GRegex * regex;
 
-        if (! pattern || ! pattern[0] || ! (regex = g_regex_new (pattern, 0, 0, NULL)))
+        if (! pattern || ! pattern[0] || ! (regex = g_regex_new (pattern,
+         G_REGEX_CASELESS, 0, NULL)))
         {
             str_unref (pattern);
             continue;

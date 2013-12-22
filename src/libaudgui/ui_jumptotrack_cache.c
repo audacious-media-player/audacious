@@ -33,7 +33,7 @@
 typedef struct
 {
     GArray * entries; // int
-    GArray * titles, * artists, * albums, * paths; // char *
+    GArray * titles, * artists, * albums, * paths; // char * (pooled)
 } KeywordMatches;
 
 static void ui_jump_to_track_cache_init (JumpToTrackCache * cache);
@@ -86,7 +86,7 @@ ui_jump_to_track_cache_regex_list_create(const GString* keyword)
             continue;
         }
 
-        GRegex * regex = g_regex_new (words[i], 0, 0, NULL);
+        GRegex * regex = g_regex_new (words[i], G_REGEX_CASELESS, 0, NULL);
         if (regex)
             regex_list = g_slist_append (regex_list, regex);
     }
@@ -166,28 +166,6 @@ ui_jump_to_track_cache_match_keyword(JumpToTrackCache* cache,
     return k->entries;
 }
 
-/* calls str_unref() on <string> */
-/* returned string must be freed */
-static char * process_string (char * string, bool_t decode)
-{
-    if (! string)
-        return NULL;
-
-    char * normal;
-
-    if (decode)
-    {
-        char temp[strlen (string) + 1];
-        str_decode_percent (string, -1, temp);
-        normal = g_utf8_casefold (temp, -1);
-    }
-    else
-        normal = g_utf8_casefold (string, -1);
-
-    str_unref (string);
-    return normal;
-}
-
 /**
  * Frees the possibly allocated data in KeywordMatches.
  */
@@ -196,10 +174,10 @@ ui_jump_to_track_cache_free_keywordmatch_data(KeywordMatches* match_entry)
 {
     for (int i = 0; i < match_entry->entries->len; i ++)
     {
-        g_free (g_array_index (match_entry->titles, char *, i));
-        g_free (g_array_index (match_entry->artists, char *, i));
-        g_free (g_array_index (match_entry->albums, char *, i));
-        g_free (g_array_index (match_entry->paths, char *, i));
+        str_unref (g_array_index (match_entry->titles, char *, i));
+        str_unref (g_array_index (match_entry->artists, char *, i));
+        str_unref (g_array_index (match_entry->albums, char *, i));
+        str_unref (g_array_index (match_entry->paths, char *, i));
     }
 }
 
@@ -259,20 +237,18 @@ static void ui_jump_to_track_cache_init (JumpToTrackCache * cache)
 
     for (int entry = 0; entry < entries; entry ++)
     {
-        char * title, * artist, * album, * path;
+        char * title, * artist, * album;
         aud_playlist_entry_describe (playlist, entry, & title, & artist, & album, TRUE);
-        path = aud_playlist_entry_get_filename (playlist, entry);
 
-        title = process_string (title, FALSE);
-        artist = process_string (artist, FALSE);
-        album = process_string (album, FALSE);
-        path = process_string (path, TRUE);
+        char * uri = aud_playlist_entry_get_filename (playlist, entry);
+        char * decoded = uri_to_display (uri);
+        str_unref (uri);
 
         g_array_append_val (k->entries, entry);
         g_array_append_val (k->titles, title);
         g_array_append_val (k->artists, artist);
         g_array_append_val (k->albums, album);
-        g_array_append_val (k->paths, path);
+        g_array_append_val (k->paths, decoded);
     }
 
     // Finally insert all titles into cache into an empty key "" so that
@@ -335,9 +311,8 @@ static void ui_jump_to_track_cache_init (JumpToTrackCache * cache)
 const GArray * ui_jump_to_track_cache_search (JumpToTrackCache * cache, const
  char * keyword)
 {
-    char * normalized_keyword = g_utf8_casefold (keyword, -1);
-    GString* keyword_string = g_string_new(normalized_keyword);
-    GString* match_string = g_string_new(normalized_keyword);
+    GString* keyword_string = g_string_new(keyword);
+    GString* match_string = g_string_new(keyword);
     int match_string_length = keyword_string->len;
 
     while (match_string_length >= 0)
@@ -353,7 +328,6 @@ const GArray * ui_jump_to_track_cache_search (JumpToTrackCache * cache, const
             if (match_string_length == keyword_string->len) {
                 g_string_free(keyword_string, TRUE);
                 g_string_free(match_string, TRUE);
-                g_free(normalized_keyword);
                 return matched_entries->entries;
             }
 
@@ -364,7 +338,6 @@ const GArray * ui_jump_to_track_cache_search (JumpToTrackCache * cache, const
                                                                   keyword_string);
             g_string_free(keyword_string, TRUE);
             g_string_free(match_string, TRUE);
-            g_free(normalized_keyword);
             return result;
         }
         match_string_length--;
