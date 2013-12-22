@@ -57,11 +57,17 @@ AUD_VFUNC2 (eq_set_band, int, band, double, value)
 AUD_FUNC1 (double, eq_get_band, int, band)
 
 /* equalizer_preset.c */
+AUD_FUNC1 (EqualizerPreset *, equalizer_preset_new, const char *, name)
+AUD_VFUNC1 (equalizer_preset_free, EqualizerPreset *, preset)
 AUD_FUNC1 (Index *, equalizer_read_presets, const char *, basename)
-AUD_FUNC2 (bool_t, equalizer_write_preset_file, Index *, list, const char *, basename)
+AUD_FUNC2 (bool_t, equalizer_write_presets, Index *, list, const char *, basename)
+
+/* note: legacy code! these are local filenames, not URIs */
 AUD_FUNC1 (EqualizerPreset *, load_preset_file, const char *, filename)
 AUD_FUNC2 (bool_t, save_preset_file, EqualizerPreset *, preset, const char *, filename)
-AUD_FUNC1 (Index *, import_winamp_eqf, VFSFile *, file)
+
+AUD_FUNC1 (Index *, import_winamp_presets, VFSFile *, file)
+AUD_FUNC2 (bool_t, export_winamp_preset, EqualizerPreset *, preset, VFSFile *, file)
 
 /* history.c */
 AUD_FUNC1 (const char *, history_get, int, entry)

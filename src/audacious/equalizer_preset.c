@@ -19,20 +19,26 @@
  */
 
 #include <glib.h>
+#include <math.h>
 #include <string.h>
 
 #include <libaudcore/audstrings.h>
 
 #include "debug.h"
 #include "i18n.h"
-#include "interface.h"
 #include "misc.h"
 
-static EqualizerPreset * equalizer_preset_new (const char * name)
+EqualizerPreset * equalizer_preset_new (const char * name)
 {
-    EqualizerPreset * preset = g_new0 (EqualizerPreset, 1);
-    preset->name = g_strdup (name);
+    EqualizerPreset * preset = g_slice_new0 (EqualizerPreset);
+    preset->name = str_get (name);
     return preset;
+}
+
+void equalizer_preset_free (EqualizerPreset * preset)
+{
+    str_unref (preset->name);
+    g_slice_free (EqualizerPreset, preset);
 }
 
 Index * equalizer_read_presets (const char * basename)
@@ -66,8 +72,7 @@ Index * equalizer_read_presets (const char * basename)
         if (! name)
             break;
 
-        EqualizerPreset * preset = g_new0 (EqualizerPreset, 1);
-        preset->name = name;
+        EqualizerPreset * preset = equalizer_preset_new (name);
         preset->preamp = g_key_file_get_double (rcfile, name, "Preamp", NULL);
 
         for (int i = 0; i < AUD_EQUALIZER_NBANDS; i++)
@@ -77,6 +82,8 @@ Index * equalizer_read_presets (const char * basename)
         }
 
         index_insert (list, -1, preset);
+
+        g_free (name);
     }
 
     g_key_file_free (rcfile);
@@ -84,7 +91,7 @@ Index * equalizer_read_presets (const char * basename)
     return list;
 }
 
-bool_t equalizer_write_preset_file (Index * list, const char * basename)
+bool_t equalizer_write_presets (Index * list, const char * basename)
 {
     GKeyFile * rcfile = g_key_file_new ();
 
@@ -116,51 +123,67 @@ bool_t equalizer_write_preset_file (Index * list, const char * basename)
     return success;
 }
 
-Index * import_winamp_eqf (VFSFile * file)
+/* Note: Winamp 2.x had a +/- 20 dB range.
+ *       Winamp 5.x had a +/- 12 dB range, which we use here. */
+#define FROM_WINAMP_VAL(x)  ((31.5 - (x)) * (12.0 / 31.5))
+#define TO_WINAMP_VAL(x)  (round (31.5 - (x) * (31.5 / 12.0)))
+
+Index * import_winamp_presets (VFSFile * file)
 {
     char header[31];
     char bands[11];
-    char preset_name[0xb4];
+    char preset_name[181];
 
     if (vfs_fread (header, 1, sizeof header, file) != sizeof header ||
      strncmp (header, "Winamp EQ library file v1.1", 27))
-        goto error;
-
-    AUDDBG ("The EQF header is OK\n");
-
-    if (vfs_fseek (file, 0x1f, SEEK_SET) < 0)
-        goto error;
+        return NULL;
 
     Index * list = index_new ();
 
-    while (vfs_fread (preset_name, 1, 0xb4, file) == 0xb4)
+    while (vfs_fread (preset_name, 1, 180, file) == 180)
     {
-        AUDDBG ("The preset name is '%s'\n", preset_name);
+        preset_name[180] = 0; /* protect against buffer overflow */
 
-        if (vfs_fseek (file, 0x4d, SEEK_CUR)) /* unknown crap --asphyx */
+        if (vfs_fseek (file, 77, SEEK_CUR)) /* unknown crap --asphyx */
             break;
 
         if (vfs_fread (bands, 1, 11, file) != 11)
             break;
 
         EqualizerPreset * preset = equalizer_preset_new (preset_name);
-
-        /* this was divided by 63, but shouldn't it be 64? --majeru */
-        preset->preamp = EQUALIZER_MAX_GAIN - ((bands[10] * EQUALIZER_MAX_GAIN * 2) / 64.0);
+        preset->preamp = FROM_WINAMP_VAL (bands[10]);
 
         for (int i = 0; i < AUD_EQUALIZER_NBANDS; i ++)
-            preset->bands[i] = EQUALIZER_MAX_GAIN - ((bands[i] * EQUALIZER_MAX_GAIN * 2) / 64.0);
+            preset->bands[i] = FROM_WINAMP_VAL (bands[i]);
 
         index_insert (list, -1, preset);
     }
 
     return list;
+}
 
-error:;
-    SPRINTF (markup, _("Error importing Winamp EQF file '%s'"), vfs_get_filename (file));
-    interface_show_error (markup);
+bool_t export_winamp_preset (EqualizerPreset * preset, VFSFile * file)
+{
+    char name[257];
+    char bands[11];
 
-    return NULL;
+    if (vfs_fwrite ("Winamp EQ library file v1.1\x1a!--", 1, 31, file) != 31)
+        return FALSE;
+
+    strncpy (name, preset->name, 257);
+
+    if (vfs_fwrite (name, 1, 257, file) != 257)
+        return FALSE;
+
+    for (int i = 0; i < AUD_EQUALIZER_NBANDS; i ++)
+        bands[i] = TO_WINAMP_VAL (preset->bands[i]);
+
+    bands[10] = TO_WINAMP_VAL (preset->preamp);
+
+    if (vfs_fwrite (bands, 1, 11, file) != 11)
+        return FALSE;
+
+    return TRUE;
 }
 
 bool_t save_preset_file (EqualizerPreset * preset, const char * filename)
@@ -203,8 +226,8 @@ EqualizerPreset * load_preset_file (const char * filename)
         return NULL;
     }
 
-    EqualizerPreset * preset = g_new0 (EqualizerPreset, 1);
-    preset->name = g_strdup ("");
+    EqualizerPreset * preset = equalizer_preset_new ("");
+
     preset->preamp = g_key_file_get_double (rcfile, "Equalizer preset", "Preamp", NULL);
 
     for (int i = 0; i < AUD_EQUALIZER_NBANDS; i ++)
