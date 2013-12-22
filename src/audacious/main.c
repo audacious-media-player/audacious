@@ -317,7 +317,7 @@ static void do_remote (void)
     if (filenames)
     {
         int n_filenames = index_count (filenames);
-        const char * * list = malloc (sizeof (const char *) * (n_filenames + 1));
+        const char * * list = g_new (const char *, n_filenames + 1);
 
         for (int i = 0; i < n_filenames; i ++)
             list[i] = index_get (filenames, i);
@@ -331,7 +331,7 @@ static void do_remote (void)
         else
             obj_audacious_call_open_list_sync (obj, list, NULL, NULL);
 
-        free (list);
+        g_free (list);
         index_free_full (filenames, (IndexFreeFunc) str_unref);
     }
 
@@ -352,7 +352,7 @@ static void do_remote (void)
     if (options.mainwin)
         obj_audacious_call_show_main_win_sync (obj, TRUE, NULL, NULL);
 
-    free (version);
+    g_free (version);
     g_object_unref (obj);
 
     exit (EXIT_SUCCESS);

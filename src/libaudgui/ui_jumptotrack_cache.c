@@ -40,7 +40,7 @@ static void ui_jump_to_track_cache_init (JumpToTrackCache * cache);
 
 static KeywordMatches * keyword_matches_new (void)
 {
-    KeywordMatches * k = g_malloc (sizeof (KeywordMatches));
+    KeywordMatches * k = g_slice_new (KeywordMatches);
     k->entries = g_array_new (FALSE, FALSE, sizeof (int));
     k->titles = g_array_new (FALSE, FALSE, sizeof (char *));
     k->artists = g_array_new (FALSE, FALSE, sizeof (char *));
@@ -56,7 +56,7 @@ static void keyword_matches_free (KeywordMatches * k)
     g_array_free (k->artists, TRUE);
     g_array_free (k->albums, TRUE);
     g_array_free (k->paths, TRUE);
-    g_free (k);
+    g_slice_free (KeywordMatches, k);
 }
 
 /**
@@ -189,7 +189,7 @@ ui_jump_to_track_cache_free_keywordmatch_data(KeywordMatches* match_entry)
 JumpToTrackCache*
 ui_jump_to_track_cache_new()
 {
-    JumpToTrackCache* cache = g_new(JumpToTrackCache, 1);
+    JumpToTrackCache * cache = g_slice_new (JumpToTrackCache);
 
     cache->keywords = g_hash_table_new_full (NULL, NULL, NULL, (GDestroyNotify) keyword_matches_free);
     ui_jump_to_track_cache_init (cache);
@@ -354,5 +354,5 @@ void ui_jump_to_track_cache_free (JumpToTrackCache * cache)
 {
     ui_jump_to_track_cache_clear (cache);
     g_hash_table_unref (cache->keywords);
-    g_free (cache);
+    g_slice_free (JumpToTrackCache, cache);
 }

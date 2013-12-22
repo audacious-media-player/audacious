@@ -46,7 +46,7 @@ EXPORT Index * index_new (void)
 
 EXPORT void index_free (Index * index)
 {
-    free (index->data);
+    g_free (index->data);
     g_slice_free (Index, index);
 }
 
@@ -76,7 +76,7 @@ EXPORT void index_allocate (Index * index, int size)
     while (index->size < size)
         index->size <<= 1;
 
-    index->data = realloc (index->data, sizeof (void *) * index->size);
+    index->data = g_renew (void *, index->data, index->size);
 }
 
 EXPORT void * index_get (Index * index, int at)

@@ -17,8 +17,9 @@
  * the use of this software.
  */
 
-#include <stdlib.h>
 #include <string.h>
+
+#include <glib.h>
 
 #include "debug.h"
 #include "probe-buffer.h"
@@ -38,7 +39,7 @@ static int probe_buffer_fclose (VFSFile * file)
     ProbeBuffer * p = vfs_get_handle (file);
 
     int ret = vfs_fclose (p->file);
-    free (p);
+    g_free (p);
     return ret;
 }
 
@@ -151,7 +152,7 @@ VFSFile * probe_buffer_new (const char * filename)
     if (! file)
         return NULL;
 
-    ProbeBuffer * p = malloc (sizeof (ProbeBuffer));
+    ProbeBuffer * p = g_new (ProbeBuffer, 1);
     p->file = file;
     p->filled = 0;
     p->at = 0;

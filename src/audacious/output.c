@@ -231,7 +231,7 @@ static void write_output_raw (void * data, int samples)
 
     if (out_format != FMT_FLOAT)
     {
-        buffer = malloc (FMT_SIZEOF (out_format) * samples);
+        buffer = g_malloc (FMT_SIZEOF (out_format) * samples);
         audio_to_int (data, buffer, out_format, samples);
         data = buffer;
     }
@@ -271,7 +271,7 @@ static void write_output_raw (void * data, int samples)
         LOCK_MINOR;
     }
 
-    free (buffer);
+    g_free (buffer);
 }
 
 /* assumes LOCK_ALL, s_input, s_output */
@@ -303,7 +303,7 @@ static bool_t write_output (void * data, int size, int stop_time)
 
     if (in_format != FMT_FLOAT)
     {
-        buffer = malloc (sizeof (float) * samples);
+        buffer = g_new (float, samples);
         audio_from_int (data, in_format, buffer, samples);
         data = buffer;
     }
@@ -313,7 +313,7 @@ static bool_t write_output (void * data, int size, int stop_time)
     effect_process (& fdata, & samples);
     write_output_raw (fdata, samples);
 
-    free (buffer);
+    g_free (buffer);
     return ! stopped;
 }
 

@@ -73,7 +73,7 @@ static void scan_request_free (ScanRequest * request)
         tuple_unref (request->tuple);
 
     str_unref (request->filename);
-    free (request->image_data);
+    g_free (request->image_data);
     str_unref (request->image_file);
     g_slice_free (ScanRequest, request);
 }

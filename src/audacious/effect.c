@@ -50,7 +50,7 @@ static bool_t effect_start_cb (PluginHandle * plugin, EffectStartState * state)
     g_return_val_if_fail (header != NULL, TRUE);
     header->start (state->channels, state->rate);
 
-    RunningEffect * effect = g_malloc (sizeof (RunningEffect));
+    RunningEffect * effect = g_slice_new (RunningEffect);
     effect->plugin = plugin;
     effect->header = header;
     effect->channels_returned = * state->channels;
@@ -66,7 +66,10 @@ void effect_start (int * channels, int * rate)
     pthread_mutex_lock (& mutex);
 
     AUDDBG ("Starting effects.\n");
-    g_list_foreach (running_effects, (GFunc) g_free, NULL);
+
+    for (GList * node = running_effects; node; node = node->next)
+        g_slice_free (RunningEffect, node->data);
+
     g_list_free (running_effects);
     running_effects = NULL;
 
@@ -96,7 +99,7 @@ static void effect_process_cb (RunningEffect * effect, EffectProcessState *
         effect->header->finish (state->data, state->samples);
 
         running_effects = g_list_remove (running_effects, effect);
-        g_free (effect);
+        g_slice_free (RunningEffect, effect);
     }
     else
         effect->header->process (state->data, state->samples);
@@ -166,7 +169,7 @@ static void effect_insert (PluginHandle * plugin, EffectPlugin * header)
         return;
 
     AUDDBG ("Adding %s without reset.\n", plugin_get_name (plugin));
-    RunningEffect * effect = g_malloc (sizeof (RunningEffect));
+    RunningEffect * effect = g_slice_new (RunningEffect);
     effect->plugin = plugin;
     effect->header = header;
     effect->remove_flag = FALSE;

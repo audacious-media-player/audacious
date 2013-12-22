@@ -249,13 +249,10 @@ static void tuple_destroy (Tuple * tuple)
                 str_unref (block->vals[i].str);
         }
 
-        memset (block, 0, sizeof (TupleBlock));
         g_slice_free (TupleBlock, block);
     }
 
-    g_free(tuple->subtunes);
-
-    memset (tuple, 0, sizeof (Tuple));
+    g_free (tuple->subtunes);
     g_slice_free (Tuple, tuple);
 }
 

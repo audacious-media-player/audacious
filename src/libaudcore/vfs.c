@@ -179,8 +179,6 @@ vfs_fclose(VFSFile * file)
         ret = -1;
 
     str_unref (file->uri);
-
-    memset (file, 0, sizeof (VFSFile));
     g_slice_free (VFSFile, file);
 
     return ret;

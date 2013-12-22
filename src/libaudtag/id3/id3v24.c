@@ -342,15 +342,12 @@ static bool_t read_frame (VFSFile * handle, int max_size, int version,
 static void free_frame (GenericFrame * frame)
 {
     g_free (frame->data);
-    g_free (frame);
+    g_slice_free (GenericFrame, frame);
 }
 
 static void free_frame_list (GList * list)
 {
-    for (GList * node = list; node; node = node->next)
-        free_frame (node->data);
-
-    g_list_free (list);
+    g_list_free_full (list, (GDestroyNotify) free_frame);
 }
 
 static void read_all_frames (VFSFile * handle, int version, bool_t syncsafe,
@@ -371,7 +368,7 @@ static void read_all_frames (VFSFile * handle, int version, bool_t syncsafe,
 
         pos += frame_size;
 
-        frame = g_malloc (sizeof (GenericFrame));
+        frame = g_slice_new (GenericFrame);
         strcpy (frame->key, key);
         frame->data = data;
         frame->size = size;
@@ -512,7 +509,7 @@ DONE:
 static GenericFrame * add_generic_frame (int id, int size,
  GHashTable * dict)
 {
-    GenericFrame * frame = g_malloc (sizeof (GenericFrame));
+    GenericFrame * frame = g_slice_new (GenericFrame);
 
     strcpy (frame->key, id3_frames[id]);
     frame->data = g_malloc (size);

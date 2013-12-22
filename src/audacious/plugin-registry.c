@@ -99,7 +99,7 @@ static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 static PluginHandle * plugin_new (char * path, bool_t confirmed, bool_t
  loaded, int timestamp, int type, Plugin * header)
 {
-    PluginHandle * plugin = g_malloc (sizeof (PluginHandle));
+    PluginHandle * plugin = g_slice_new (PluginHandle);
 
     plugin->path = path;
     plugin->confirmed = confirmed;
@@ -144,7 +144,8 @@ static void plugin_free (PluginHandle * plugin)
 {
     plugin_list = g_list_remove (plugin_list, plugin);
 
-    g_list_free_full (plugin->watches, g_free);
+    for (GList * node = plugin->watches; node; node = node->next)
+        g_slice_free (PluginWatch, node->data);
 
     if (plugin->type == PLUGIN_TYPE_TRANSPORT)
         g_list_free_full (plugin->u.t.schemes, (GDestroyNotify) str_unref);
@@ -160,7 +161,7 @@ static void plugin_free (PluginHandle * plugin)
     str_unref (plugin->name);
     str_unref (plugin->domain);
     g_free (plugin->misc);
-    g_free (plugin);
+    g_slice_free (PluginHandle, plugin);
 }
 
 static FILE * open_registry_file (const char * mode)
@@ -655,7 +656,7 @@ static void plugin_call_watches (PluginHandle * plugin)
 
         if (! watch->func (plugin, watch->data))
         {
-            g_free (watch);
+            g_slice_free (PluginWatch, watch);
             plugin->watches = g_list_delete_link (plugin->watches, node);
         }
 
@@ -691,7 +692,7 @@ void plugin_for_enabled (int type, PluginForEachFunc func, void * data)
 void plugin_add_watch (PluginHandle * plugin, PluginForEachFunc func, void *
  data)
 {
-    PluginWatch * watch = g_malloc (sizeof (PluginWatch));
+    PluginWatch * watch = g_slice_new (PluginWatch);
     watch->func = func;
     watch->data = data;
     plugin->watches = g_list_prepend (plugin->watches, watch);
@@ -707,7 +708,7 @@ void plugin_remove_watch (PluginHandle * plugin, PluginForEachFunc func, void *
 
         if (watch->func == func && watch->data == data)
         {
-            g_free (watch);
+            g_slice_free (PluginWatch, watch);
             plugin->watches = g_list_delete_link (plugin->watches, node);
         }
 

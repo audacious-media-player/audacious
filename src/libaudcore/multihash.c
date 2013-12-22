@@ -19,13 +19,13 @@
 
 #include "multihash.h"
 
-#include <stdlib.h>
+#include <glib.h>
 
 #define INITIAL_SIZE 256  /* must be a power of two */
 
 static void resize_channel (MultihashTable * table, MultihashChannel * channel, unsigned size)
 {
-    MultihashNode * * buckets = calloc (size, sizeof (MultihashNode *));
+    MultihashNode * * buckets = g_new0 (MultihashNode *, size);
 
     for (int b1 = 0; b1 < channel->size; b1 ++)
     {
@@ -46,7 +46,7 @@ static void resize_channel (MultihashTable * table, MultihashChannel * channel, 
         }
     }
 
-    free (channel->buckets);
+    g_free (channel->buckets);
     channel->buckets = buckets;
     channel->size = size;
 }
@@ -65,7 +65,7 @@ EXPORT int multihash_lookup (MultihashTable * table, const void * data,
         if (! add)
             goto DONE;
 
-        channel->buckets = calloc (INITIAL_SIZE, sizeof (MultihashNode *));
+        channel->buckets = g_new0 (MultihashNode *, INITIAL_SIZE);
         channel->size = INITIAL_SIZE;
         channel->used = 0;
     }

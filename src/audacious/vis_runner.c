@@ -45,7 +45,7 @@ static int send_source = 0, clear_source = 0;
 static void vis_node_free (VisNode * node)
 {
     g_free (node->data);
-    g_free (node);
+    g_slice_free (VisNode, node);
 }
 
 static bool_t send_audio (void * unused)
@@ -198,9 +198,9 @@ void vis_runner_pass_audio (int time, float * data, int samples, int
             if (at >= samples)
                 break;
 
-            current_node = g_malloc (sizeof (VisNode));
+            current_node = g_slice_new (VisNode);
             current_node->time = node_time;
-            current_node->data = g_malloc (sizeof (float) * channels * 512);
+            current_node->data = g_new (float, channels * 512);
             current_node->channels = channels;
             current_frames = 0;
         }

@@ -42,7 +42,7 @@ EXPORT char * str_get (const char * str)
     if (! str)
         return NULL;
 
-    StrNode * node = malloc (NODE_SIZE_FOR (str));
+    StrNode * node = g_malloc (NODE_SIZE_FOR (str));
     node->magic = '@';
 
     strcpy (node->str, str);
@@ -63,7 +63,7 @@ EXPORT void str_unref (char * str)
     assert (node->magic == '@');
 
     node->magic = 0;
-    free (node);
+    g_free (node);
 }
 
 EXPORT unsigned str_hash (const char * str)
@@ -119,7 +119,7 @@ static MultihashTable strpool_table = {
 
 static MultihashNode * add_cb (const void * data, unsigned hash, void * state)
 {
-    StrNode * node = malloc (NODE_SIZE_FOR (data));
+    StrNode * node = g_malloc (NODE_SIZE_FOR (data));
     node->hash = hash;
     node->refs = 1;
     node->magic = '@';
@@ -170,7 +170,7 @@ static bool_t remove_cb (MultihashNode * node_, void * state)
         return FALSE;
 
     node->magic = 0;
-    free (node);
+    g_free (node);
     return TRUE;
 }
 

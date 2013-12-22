@@ -69,7 +69,7 @@ static void art_item_free (ArtItem * item)
         }
     }
 
-    free (item->data);
+    g_free (item->data);
     str_unref (item->art_file);
     g_slice_free (ArtItem, item);
 }
