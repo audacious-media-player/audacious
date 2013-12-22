@@ -71,7 +71,7 @@ struct _Index;
 
 /* all (char *) return values must be freed with str_unref() */
 
-char * str_printf (const char * format, ...);
+char * str_printf (const char * format, ...) __attribute__ ((__format__ (__printf__, 1, 2)));
 char * str_vprintf (const char * format, va_list args);
 
 bool_t str_has_prefix_nocase(const char * str, const char * prefix);
