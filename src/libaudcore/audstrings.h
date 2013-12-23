@@ -80,6 +80,8 @@ bool_t str_has_suffix_nocase(const char * str, const char * suffix);
 char * strstr_nocase (const char * haystack, const char * needle);
 char * strstr_nocase_utf8 (const char * haystack, const char * needle);
 
+char * str_tolower_utf8 (const char * str);
+
 void str_replace_char (char * string, char old_c, char new_c);
 
 void str_itoa (int x, char * buf, int bufsize);

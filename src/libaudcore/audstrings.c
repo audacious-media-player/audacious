@@ -153,6 +153,28 @@ EXPORT char * strstr_nocase_utf8 (const char * haystack, const char * needle)
     }
 }
 
+EXPORT char * str_tolower_utf8 (const char * str)
+{
+    char buf[6 * strlen (str) + 1];
+    const char * get = str;
+    char * set = buf;
+    gunichar c;
+
+    while ((c = g_utf8_get_char (get)))
+    {
+        if (c < 128)
+            * set ++ = g_ascii_tolower (c);
+        else
+            set += g_unichar_to_utf8 (g_unichar_tolower (c), set);
+
+        get = g_utf8_next_char (get);
+    }
+
+    * set = 0;
+
+    return str_get (buf);
+}
+
 EXPORT void str_replace_char (char * string, char old_c, char new_c)
 {
     while ((string = strchr (string, old_c)))
