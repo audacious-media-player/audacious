@@ -132,7 +132,7 @@ static bool_t search_cb (GtkTreeModel * model, int column, const char * key,
 
     for (int i = 0; i < count; i ++)
     {
-        if (strstr_nocase (title, index_get (keys, i)))
+        if (strstr_nocase_utf8 (title, index_get (keys, i)))
             match = TRUE;
         else
         {
