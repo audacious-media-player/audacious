@@ -30,6 +30,7 @@
 #ifdef VALGRIND_FRIENDLY
 
 typedef struct {
+    unsigned hash;
     char magic;
     char str[];
 } StrNode;
@@ -44,6 +45,7 @@ EXPORT char * str_get (const char * str)
 
     StrNode * node = g_malloc (NODE_SIZE_FOR (str));
     node->magic = '@';
+    node->hash = g_str_hash (str);
 
     strcpy (node->str, str);
     return node->str;
@@ -51,6 +53,10 @@ EXPORT char * str_get (const char * str)
 
 EXPORT char * str_ref (const char * str)
 {
+    StrNode * node = NODE_OF (str);
+    assert (node->magic == '@');
+    assert (g_str_hash (str) == node->hash);
+
     return str_get (str);
 }
 
@@ -61,6 +67,7 @@ EXPORT void str_unref (char * str)
 
     StrNode * node = NODE_OF (str);
     assert (node->magic == '@');
+    assert (g_str_hash (str) == node->hash);
 
     node->magic = 0;
     g_free (node);
