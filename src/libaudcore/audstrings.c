@@ -55,9 +55,16 @@ static const char uri_legal_table[256] = {
     ['-'] = 1, ['_'] = 1, ['.'] = 1, ['~'] = 1, ['/'] = 1
 };
 
+static const char swap_case[256] =
+    "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"
+    "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"
+    "\0abcdefghijklmnopqrstuvwxyz\0\0\0\0\0"
+    "\0ABCDEFGHIJKLMNOPQRSTUVWXYZ\0\0\0\0\0";
+
 #define FROM_HEX(c)  (ascii_to_hex[(unsigned char) (c)])
 #define TO_HEX(i)    (hex_to_ascii[(i) & 15])
 #define IS_LEGAL(c)  (uri_legal_table[(unsigned char) (c)])
+#define SWAP_CASE(c) (swap_case[(unsigned char) (c)])
 
 EXPORT char * str_printf (const char * format, ...)
 {
@@ -94,12 +101,6 @@ EXPORT bool_t str_has_suffix_nocase (const char * str, const char * suffix)
 
 EXPORT char * strstr_nocase (const char * haystack, const char * needle)
 {
-    static const char swap_case[256] =
-        "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"
-        "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"
-        "\0abcdefghijklmnopqrstuvwxyz\0\0\0\0\0"
-        "\0ABCDEFGHIJKLMNOPQRSTUVWXYZ\0\0\0\0\0";
-
     while (1)
     {
         const char * ap = haystack;
@@ -115,11 +116,40 @@ EXPORT char * strstr_nocase (const char * haystack, const char * needle)
             if (! a) /* end of haystack reached */
                 return NULL;
 
-            if (a != b && a != swap_case[(unsigned char) b])
+            if (a != b && a != SWAP_CASE (b))
                 break;
         }
 
         haystack ++;
+    }
+}
+
+EXPORT char * strstr_nocase_utf8 (const char * haystack, const char * needle)
+{
+    while (1)
+    {
+        const char * ap = haystack;
+        const char * bp = needle;
+
+        while (1)
+        {
+            gunichar a = g_utf8_get_char (ap);
+            gunichar b = g_utf8_get_char (bp);
+
+            if (! b) /* all of needle matched */
+                return (char *) haystack;
+            if (! a) /* end of haystack reached */
+                return NULL;
+
+            if (a != b && (a < 128 ? SWAP_CASE (a) != b :
+             g_unichar_tolower (a) != g_unichar_tolower (b)))
+                break;
+
+            ap = g_utf8_next_char (ap);
+            bp = g_utf8_next_char (bp);
+        }
+
+        haystack = g_utf8_next_char (haystack);
     }
 }
 

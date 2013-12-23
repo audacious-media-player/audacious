@@ -78,6 +78,7 @@ bool_t str_has_prefix_nocase(const char * str, const char * prefix);
 bool_t str_has_suffix_nocase(const char * str, const char * suffix);
 
 char * strstr_nocase (const char * haystack, const char * needle);
+char * strstr_nocase_utf8 (const char * haystack, const char * needle);
 
 void str_replace_char (char * string, char old_c, char new_c);
 
