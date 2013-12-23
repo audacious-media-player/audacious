@@ -530,12 +530,17 @@ EXPORT int str_compare_encoded (const char * ap, const char * bp)
 
 EXPORT Index * str_list_to_index (const char * list, const char * delims)
 {
+    char dmap[256] = {0};
+
+    for (; * delims; delims ++)
+        dmap[(unsigned char) (* delims)] = 1;
+
     Index * index = index_new ();
     const char * word = NULL;
 
     for (; * list; list ++)
     {
-        if (strchr (delims, * list))
+        if (dmap[(unsigned char) (* list)])
         {
             if (word)
             {
