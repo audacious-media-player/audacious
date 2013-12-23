@@ -23,11 +23,13 @@
 
 #include <glib.h>
 
+#include "core.h"
 #include "index.h"
 
 struct _Index {
     void * * data;
     int count, size;
+    void * sdata[16];
 };
 
 typedef struct {
@@ -41,13 +43,18 @@ typedef struct {
 
 EXPORT Index * index_new (void)
 {
-    return g_slice_new0 (Index);
+    Index * index = g_new0 (Index, 1);
+    index->data = index->sdata;
+    index->size = ARRAY_LEN (index->sdata);
+    return index;
 }
 
 EXPORT void index_free (Index * index)
 {
-    g_free (index->data);
-    g_slice_free (Index, index);
+    if (index->data != index->sdata)
+        g_free (index->data);
+
+    g_free (index);
 }
 
 EXPORT void index_free_full (Index * index, IndexFreeFunc func)
@@ -70,13 +77,19 @@ EXPORT void index_allocate (Index * index, int size)
     if (index->size >= size)
         return;
 
-    if (! index->size)
+    if (index->size < 64)
         index->size = 64;
 
     while (index->size < size)
         index->size <<= 1;
 
-    index->data = g_renew (void *, index->data, index->size);
+    if (index->data == index->sdata)
+    {
+        index->data = g_new (void *, index->size);
+        memcpy (index->data, index->sdata, sizeof index->sdata);
+    }
+    else
+        index->data = g_renew (void *, index->data, index->size);
 }
 
 EXPORT void * index_get (Index * index, int at)
