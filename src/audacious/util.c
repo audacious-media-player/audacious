@@ -370,8 +370,10 @@ DONE:
         if (! filename)
             goto DONE;
 
+        SCOPY (buf, filename);
+
         char * base, * first, * second;
-        split_filename (skip_top_folders (filename), & base, & first, & second);
+        split_filename (skip_top_folders (buf), & base, & first, & second);
 
         if (! title)
             title = str_get (base);
