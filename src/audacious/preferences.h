@@ -93,8 +93,12 @@ struct _PreferencesWidget {
         } entry;
 
         struct {
+            /* static init */
             const ComboBoxElements * elements;
             int n_elements;
+
+            /* runtime init */
+            const ComboBoxElements * (* fill) (int * n_elements);
         } combo;
 
         struct {
