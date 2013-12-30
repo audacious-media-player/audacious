@@ -220,6 +220,8 @@ static bool_t enable_single (int type, PluginHandle * p)
 {
     PluginHandle * old = table[type].u.s.get_current ();
 
+    plugin_misc_cleanup (old);
+
     AUDDBG ("Switching from %s to %s.\n", plugin_get_name (old),
      plugin_get_name (p));
     plugin_set_enabled (old, FALSE);
@@ -243,6 +245,9 @@ static bool_t enable_single (int type, PluginHandle * p)
 
 static bool_t enable_multi (int type, PluginHandle * p, bool_t enable)
 {
+    if (! enable)
+        plugin_misc_cleanup (p);
+
     AUDDBG ("%sabling %s.\n", enable ? "En" : "Dis", plugin_get_name (p));
     plugin_set_enabled (p, enable);
 
@@ -268,9 +273,6 @@ bool_t plugin_enable (PluginHandle * plugin, bool_t enable)
 {
     if (! enable == ! plugin_get_enabled (plugin))
         return TRUE;
-
-    if (! enable)
-        plugin_misc_cleanup (plugin);
 
     int type = plugin_get_type (plugin);
 
