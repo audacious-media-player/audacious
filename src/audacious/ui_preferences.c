@@ -113,12 +113,29 @@ static ComboBoxElements bitdepth_elements[] = {
     {GINT_TO_POINTER (0), N_("Floating point")},
 };
 
-static void * create_output_plugin_box (void);
+static GArray * output_combo_elements;
+static int output_combo_selected;
+static GtkWidget * output_config_button;
+static GtkWidget * output_about_button;
+
+static const ComboBoxElements * output_combo_fill (int * n_elements);
+static void output_combo_changed (void);
+static void * output_create_config_button (void);
+static void * output_create_about_button (void);
+
+static PreferencesWidget output_combo_widgets[] = {
+ {WIDGET_COMBO_BOX, N_("Output plugin:"),
+  .cfg_type = VALUE_INT, .cfg = & output_combo_selected,
+  .data.combo.fill = output_combo_fill, .callback = output_combo_changed},
+ {WIDGET_CUSTOM, .data.populate = output_create_config_button},
+ {WIDGET_CUSTOM, .data.populate = output_create_about_button}};
+
 static void output_bit_depth_changed (void);
 
 static PreferencesWidget audio_page_widgets[] = {
  {WIDGET_LABEL, N_("<b>Output Settings</b>")},
- {WIDGET_CUSTOM, .data = {.populate = create_output_plugin_box}},
+ {WIDGET_BOX, .data.box = {.elem = output_combo_widgets,
+  .n_elem = ARRAY_LEN (output_combo_widgets), .horizontal = TRUE}},
  {WIDGET_COMBO_BOX, N_("Bit depth:"),
   .cfg_type = VALUE_INT, .cname = "output_bit_depth", .callback = output_bit_depth_changed,
   .data = {.combo = {bitdepth_elements, ARRAY_LEN (bitdepth_elements)}}},
@@ -232,6 +249,21 @@ static const char * const titlestring_preset_names[TITLESTRING_NPRESETS] = {
  N_("ARTIST - ALBUM - TRACK. TITLE"),
  N_("ARTIST [ ALBUM ] - TRACK. TITLE"),
  N_("ALBUM - TITLE")};
+
+static GArray * fill_plugin_combo (int type)
+{
+    GArray * array = g_array_new (FALSE, FALSE, sizeof (ComboBoxElements));
+    g_array_set_size (array, plugin_count (type));
+
+    for (int i = 0; i < array->len; i ++)
+    {
+        ComboBoxElements * elem = & g_array_index (array, ComboBoxElements, i);
+        elem->label = plugin_get_name (plugin_by_index (PLUGIN_TYPE_OUTPUT, i));
+        elem->value = GINT_TO_POINTER (i);
+    }
+
+    return array;
+}
 
 static void
 change_category(GtkNotebook * notebook,
@@ -507,51 +539,27 @@ static void create_song_info_category (void)
      ARRAY_LEN (song_info_page_widgets));
 }
 
-static GtkWidget * output_config_button, * output_about_button;
-
-static bool_t output_enum_cb (PluginHandle * plugin, GList * * list)
+static void output_combo_changed (void)
 {
-    * list = g_list_prepend (* list, plugin);
-    return TRUE;
+    PluginHandle * plugin = plugin_by_index (PLUGIN_TYPE_OUTPUT, output_combo_selected);
+
+    if (plugin_enable (plugin, TRUE))
+    {
+        gtk_widget_set_sensitive (output_config_button, plugin_has_configure (plugin));
+        gtk_widget_set_sensitive (output_about_button, plugin_has_about (plugin));
+    }
 }
 
-static GList * output_get_list (void)
+static const ComboBoxElements * output_combo_fill (int * n_elements)
 {
-    static GList * list = NULL;
-
-    if (list == NULL)
+    if (! output_combo_elements)
     {
-        plugin_for_each (PLUGIN_TYPE_OUTPUT, (PluginForEachFunc) output_enum_cb,
-         & list);
-        list = g_list_reverse (list);
+        output_combo_elements = fill_plugin_combo (PLUGIN_TYPE_OUTPUT);
+        output_combo_selected = plugin_get_index (output_plugin_get_current ());
     }
 
-    return list;
-}
-
-static void output_combo_update (GtkComboBox * combo)
-{
-    PluginHandle * plugin = plugin_get_current (PLUGIN_TYPE_OUTPUT);
-    gtk_combo_box_set_active (combo, g_list_index (output_get_list (), plugin));
-    gtk_widget_set_sensitive (output_config_button, plugin_has_configure (plugin));
-    gtk_widget_set_sensitive (output_about_button, plugin_has_about (plugin));
-}
-
-static void output_combo_changed (GtkComboBox * combo)
-{
-    PluginHandle * plugin = g_list_nth_data (output_get_list (),
-     gtk_combo_box_get_active (combo));
-    g_return_if_fail (plugin != NULL);
-
-    plugin_enable (plugin, TRUE);
-    output_combo_update (combo);
-}
-
-static void output_combo_fill (GtkComboBox * combo)
-{
-    for (GList * node = output_get_list (); node != NULL; node = node->next)
-        gtk_combo_box_text_append_text ((GtkComboBoxText *) combo,
-         plugin_get_name (node->data));
+    * n_elements = output_combo_elements->len;
+    return (const ComboBoxElements *) output_combo_elements->data;
 }
 
 static void output_bit_depth_changed (void)
@@ -561,50 +569,33 @@ static void output_bit_depth_changed (void)
 
 static void output_do_config (void * unused)
 {
-    PluginHandle * plugin = output_plugin_get_current ();
-    g_return_if_fail (plugin != NULL);
-    plugin_do_configure (plugin);
+    plugin_do_configure (output_plugin_get_current ());
 }
 
 static void output_do_about (void * unused)
 {
-    PluginHandle * plugin = output_plugin_get_current ();
-    g_return_if_fail (plugin != NULL);
-    plugin_do_about (plugin);
+    plugin_do_about (output_plugin_get_current ());
 }
 
-static void * create_output_plugin_box (void)
+static void * output_create_config_button (void)
 {
-    GtkWidget * hbox1 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  6);
-    gtk_box_pack_start ((GtkBox *) hbox1, gtk_label_new (_("Output plugin:")), FALSE, FALSE, 0);
-
-    GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-    gtk_box_pack_start ((GtkBox *) hbox1, vbox, FALSE, FALSE, 0);
-
-    GtkWidget * hbox2 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  6);
-    gtk_box_pack_start ((GtkBox *) vbox, hbox2, FALSE, FALSE, 0);
-
-    GtkWidget * output_plugin_cbox = gtk_combo_box_text_new ();
-    gtk_box_pack_start ((GtkBox *) hbox2, output_plugin_cbox, FALSE, FALSE, 0);
-
-    GtkWidget * hbox3 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  6);
-    gtk_box_pack_start ((GtkBox *) vbox, hbox3, FALSE, FALSE, 0);
+    bool_t enabled = plugin_has_configure (output_plugin_get_current ());
 
     output_config_button = audgui_button_new (_("_Settings"),
      "preferences-system", output_do_config, NULL);
-    gtk_box_pack_start ((GtkBox *) hbox3, output_config_button, FALSE, FALSE, 0);
+    gtk_widget_set_sensitive (output_config_button, enabled);
+
+    return output_config_button;
+}
+
+static void * output_create_about_button (void)
+{
+    bool_t enabled = plugin_has_about (output_plugin_get_current ());
 
     output_about_button = audgui_button_new (_("_About"), "help-about", output_do_about, NULL);
-    gtk_box_pack_start ((GtkBox *) hbox3, output_about_button, FALSE, FALSE, 0);
+    gtk_widget_set_sensitive (output_about_button, enabled);
 
-    output_combo_fill ((GtkComboBox *) output_plugin_cbox);
-    output_combo_update ((GtkComboBox *) output_plugin_cbox);
-
-    g_signal_connect (output_plugin_cbox, "changed", (GCallback) output_combo_changed, NULL);
-    g_signal_connect (output_config_button, "clicked", (GCallback) output_do_config, NULL);
-    g_signal_connect (output_about_button, "clicked", (GCallback) output_do_about, NULL);
-
-    return hbox1;
+    return output_about_button;
 }
 
 static void create_audio_category (void)
@@ -650,6 +641,12 @@ static void destroy_cb (void)
     category_treeview = NULL;
     category_notebook = NULL;
     titlestring_entry = NULL;
+
+    if (output_combo_elements)
+    {
+        g_array_free (output_combo_elements, TRUE);
+        output_combo_elements = NULL;
+    }
 }
 
 static void create_prefs_window (void)
