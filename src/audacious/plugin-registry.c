@@ -616,6 +616,54 @@ PluginHandle * plugin_by_header (const void * header)
     return node ? node->data : NULL;
 }
 
+int plugin_count (int type)
+{
+    int count = 0;
+
+    for (GList * node = plugin_list; node; node = node->next)
+    {
+        PluginHandle * plugin = node->data;
+        if (plugin->type == type)
+            count ++;
+    }
+
+    return count;
+}
+
+int plugin_get_index (PluginHandle * plugin)
+{
+    int index = 0;
+
+    for (GList * node = plugin_list; node; node = node->next)
+    {
+        PluginHandle * plugin2 = node->data;
+        if (plugin2->type == plugin->type)
+        {
+            if (plugin2 == plugin)
+                return index;
+            index ++;
+        }
+    }
+
+    return -1;
+}
+
+PluginHandle * plugin_by_index (int type, int index)
+{
+    for (GList * node = plugin_list; node; node = node->next)
+    {
+        PluginHandle * plugin = node->data;
+        if (plugin->type == type)
+        {
+            if (! index)
+                return plugin;
+            index --;
+        }
+    }
+
+    return NULL;
+}
+
 void plugin_for_each (int type, PluginForEachFunc func, void * data)
 {
     for (GList * node = plugin_list; node; node = node->next)

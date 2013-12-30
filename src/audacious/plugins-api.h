@@ -37,9 +37,12 @@ AUD_FUNC1 (PluginHandle *, plugin_lookup_basename, const char *, basename)
 AUD_FUNC1 (const void *, plugin_get_header, PluginHandle *, plugin)
 AUD_FUNC1 (PluginHandle *, plugin_by_header, const void *, header)
 
+AUD_FUNC1 (int, plugin_count, int, type)
+AUD_FUNC1 (int, plugin_get_index, PluginHandle *, plugin)
+AUD_FUNC2 (PluginHandle *, plugin_by_index, int, type, int, index)
+
 AUD_FUNC2 (int, plugin_compare, PluginHandle *, a, PluginHandle *, b)
-AUD_VFUNC3 (plugin_for_each, int, type, PluginForEachFunc, func, void *,
- data)
+AUD_VFUNC3 (plugin_for_each, int, type, PluginForEachFunc, func, void *, data)
 
 AUD_FUNC1 (bool_t, plugin_get_enabled, PluginHandle *, plugin)
 AUD_VFUNC3 (plugin_for_enabled, int, type, PluginForEachFunc, func,
