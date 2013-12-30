@@ -565,10 +565,10 @@ void create_widgets_with_domain (void * box, const PreferencesWidget * widgets,
                 break;
 
             case WIDGET_BOX:
-                gtk_alignment_set_padding ((GtkAlignment *) alignment, 0, 0, 0, 0);
-
-                widget = gtk_box_new (widgets[i].data.box.horizontal ?
-                 GTK_ORIENTATION_HORIZONTAL : GTK_ORIENTATION_VERTICAL, 6);
+                if (widgets[i].data.box.horizontal)
+                    widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+                else
+                    widget = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
 
                 create_widgets_with_domain ((GtkBox *) widget,
                  widgets[i].data.box.elem, widgets[i].data.box.n_elem, domain);
@@ -615,6 +615,11 @@ void create_widgets_with_domain (void * box, const PreferencesWidget * widgets,
 
         if (widget)
         {
+            /* use uniform spacing for horizontal boxes */
+            if (gtk_orientable_get_orientation ((GtkOrientable *) box) ==
+             GTK_ORIENTATION_HORIZONTAL)
+                gtk_alignment_set_padding ((GtkAlignment *) alignment, 0, 0, 0, 0);
+
             gtk_container_add ((GtkContainer *) alignment, widget);
 
             if (widgets[i].tooltip && widgets[i].type != WIDGET_SPIN_BTN)
