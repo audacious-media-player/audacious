@@ -138,10 +138,10 @@ static PreferencesWidget audio_page_widgets[] = {
   .n_elem = ARRAY_LEN (output_combo_widgets), .horizontal = TRUE}},
  {WIDGET_COMBO_BOX, N_("Bit depth:"),
   .cfg_type = VALUE_INT, .cname = "output_bit_depth", .callback = output_bit_depth_changed,
-  .data = {.combo = {bitdepth_elements, ARRAY_LEN (bitdepth_elements)}}},
+  .data.combo = {bitdepth_elements, ARRAY_LEN (bitdepth_elements)}},
  {WIDGET_SPIN_BTN, N_("Buffer size:"),
   .cfg_type = VALUE_INT, .cname = "output_buffer_size",
-  .data = {.spin_btn = {100, 10000, 1000, N_("ms")}}},
+  .data.spin_btn = {100, 10000, 1000, N_("ms")}},
  {WIDGET_CHK_BTN, N_("Soft clipping"),
   .cfg_type = VALUE_BOOLEAN, .cname = "soft_clipping"},
  {WIDGET_CHK_BTN, N_("Use software volume control (not recommended)"),
@@ -156,10 +156,10 @@ static PreferencesWidget audio_page_widgets[] = {
  {WIDGET_LABEL, N_("<b>Adjust Levels</b>"), .child = TRUE},
  {WIDGET_SPIN_BTN, N_("Amplify all files:"), .child = TRUE,
   .cfg_type = VALUE_FLOAT, .cname = "replay_gain_preamp",
-  .data = {.spin_btn = {-15, 15, 0.1, N_("dB")}}},
+  .data.spin_btn = {-15, 15, 0.1, N_("dB")}},
  {WIDGET_SPIN_BTN, N_("Amplify untagged files:"), .child = TRUE,
   .cfg_type = VALUE_FLOAT, .cname = "default_gain",
-  .data = {.spin_btn = {-15, 15, 0.1, N_("dB")}}}};
+  .data.spin_btn = {-15, 15, 0.1, N_("dB")}}};
 
 static PreferencesWidget proxy_host_port_elements[] = {
  {WIDGET_ENTRY, N_("Proxy hostname:"), .cfg_type = VALUE_STRING, .cname = "proxy_host"},
@@ -168,24 +168,24 @@ static PreferencesWidget proxy_host_port_elements[] = {
 static PreferencesWidget proxy_auth_elements[] = {
  {WIDGET_ENTRY, N_("Proxy username:"), .cfg_type = VALUE_STRING, .cname = "proxy_user"},
  {WIDGET_ENTRY, N_("Proxy password:"), .cfg_type = VALUE_STRING, .cname = "proxy_pass",
-  .data = {.entry = {.password = TRUE}}}};
+  .data.entry.password = TRUE}};
 
 static PreferencesWidget connectivity_page_widgets[] = {
     {WIDGET_LABEL, N_("<b>Proxy Configuration</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Enable proxy usage"), .cfg_type = VALUE_BOOLEAN, .cname = "use_proxy"},
-    {WIDGET_TABLE, .child = TRUE, .data = {.table = {proxy_host_port_elements,
-     ARRAY_LEN (proxy_host_port_elements)}}},
+    {WIDGET_TABLE, .child = TRUE, .data.table = {proxy_host_port_elements,
+     ARRAY_LEN (proxy_host_port_elements)}},
     {WIDGET_CHK_BTN, N_("Use authentication with proxy"),
      .cfg_type = VALUE_BOOLEAN, .cname = "use_proxy_auth"},
-    {WIDGET_TABLE, .child = TRUE, .data = {.table = {proxy_auth_elements,
-     ARRAY_LEN (proxy_auth_elements)}}}
+    {WIDGET_TABLE, .child = TRUE, .data.table = {proxy_auth_elements,
+     ARRAY_LEN (proxy_auth_elements)}}
 };
 
 static PreferencesWidget chardet_elements[] = {
 #ifdef USE_CHARDET
  {WIDGET_COMBO_BOX, N_("Auto character encoding detector for:"),
   .cfg_type = VALUE_STRING, .cname = "chardet_detector", .child = TRUE,
-  .data = {.combo = {chardet_detector_presets, ARRAY_LEN (chardet_detector_presets)}}},
+  .data.combo = {chardet_detector_presets, ARRAY_LEN (chardet_detector_presets)}},
 #endif
  {WIDGET_ENTRY, N_("Fallback character encodings:"), .cfg_type = VALUE_STRING,
   .cname = "chardet_fallback", .child = TRUE}};
@@ -206,8 +206,7 @@ static PreferencesWidget playlist_page_widgets[] = {
     {WIDGET_LABEL, N_("<b>Compatibility</b>"), NULL, NULL, NULL, FALSE},
     {WIDGET_CHK_BTN, N_("Interpret \\ (backward slash) as a folder delimiter"),
      .cfg_type = VALUE_BOOLEAN, .cname = "convert_backslash"},
-    {WIDGET_TABLE, .data = {.table = {chardet_elements,
-     ARRAY_LEN (chardet_elements)}}}
+    {WIDGET_TABLE, .data.table = {chardet_elements, ARRAY_LEN (chardet_elements)}}
 };
 
 static PreferencesWidget song_info_page_widgets[] = {
@@ -222,13 +221,13 @@ static PreferencesWidget song_info_page_widgets[] = {
   .cfg_type = VALUE_BOOLEAN, .cname = "recurse_for_cover"},
  {WIDGET_SPIN_BTN, N_("Search depth:"), .child = TRUE,
   .cfg_type = VALUE_INT, .cname = "recurse_for_cover_depth",
-  .data = {.spin_btn = {0, 100, 1}}},
+  .data.spin_btn = {0, 100, 1}},
  {WIDGET_LABEL, N_("<b>Popup Information</b>")},
  {WIDGET_CHK_BTN, N_("Show popup information"),
   .cfg_type = VALUE_BOOLEAN, .cname = "show_filepopup_for_tuple"},
  {WIDGET_SPIN_BTN, N_("Popup delay (tenths of a second):"), .child = TRUE,
   .cfg_type = VALUE_INT, .cname = "filepopup_delay",
-  .data = {.spin_btn = {0, 100, 1}}},
+  .data.spin_btn = {0, 100, 1}},
  {WIDGET_CHK_BTN, N_("Show time scale for current song"), .child = TRUE,
   .cfg_type = VALUE_BOOLEAN, .cname = "filepopup_showprogressbar"}};
 
