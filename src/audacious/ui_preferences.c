@@ -65,8 +65,7 @@ static /* GtkWidget * */ void * prefswin = NULL;
 static GtkWidget *category_treeview = NULL;
 static GtkWidget *category_notebook = NULL;
 
-/* prefswin widgets */
-GtkWidget *titlestring_entry;
+static GtkWidget * titlestring_entry;
 
 static Category categories[] = {
  {"audio.png", N_("Audio")},
@@ -75,8 +74,6 @@ static Category categories[] = {
  {"info.png", N_("Song Info")},
  {"plugins.png", N_("Plugins")},
 };
-
-static int n_categories = ARRAY_LEN(categories);
 
 static TitleFieldTag title_field_tags[] = {
     { N_("Artist")     , "${artist}" },
@@ -92,7 +89,6 @@ static TitleFieldTag title_field_tags[] = {
     { N_("Codec")      , "${codec}" },
     { N_("Quality")    , "${quality}" },
 };
-static const unsigned int n_title_field_tags = ARRAY_LEN(title_field_tags);
 
 #ifdef USE_CHARDET
 static ComboBoxElements chardet_detector_presets[] = {
@@ -335,7 +331,7 @@ static void fill_category_list (GtkTreeView * treeview, GtkNotebook * notebook)
 
     const char * data_dir = get_path (AUD_PATH_DATA_DIR);
 
-    for (int i = 0; i < n_categories; i ++)
+    for (int i = 0; i < ARRAY_LEN (categories); i ++)
     {
         SCONCAT3 (path, data_dir, "/images/", categories[i].icon_path);
 
@@ -361,16 +357,18 @@ static GtkWidget *
 create_titlestring_tag_menu(void)
 {
     GtkWidget *titlestring_tag_menu, *menu_item;
-    unsigned int i;
 
     titlestring_tag_menu = gtk_menu_new();
-    for(i = 0; i < n_title_field_tags; i++) {
+
+    for (int i = 0; i < ARRAY_LEN (title_field_tags); i ++)
+    {
         menu_item = gtk_menu_item_new_with_label(_(title_field_tags[i].name));
         gtk_menu_shell_append(GTK_MENU_SHELL(titlestring_tag_menu), menu_item);
         g_signal_connect(menu_item, "activate",
                          G_CALLBACK(titlestring_tag_menu_callback),
                          GINT_TO_POINTER(i));
     };
+
     gtk_widget_show_all(titlestring_tag_menu);
 
     return titlestring_tag_menu;
