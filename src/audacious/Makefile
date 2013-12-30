@@ -63,6 +63,7 @@ INCLUDES = api.h \
 
 DATA = images/about-logo.png				\
        images/album.png \
+       images/appearance.png \
        images/audio.png						\
        images/connectivity.png				\
        images/info.png \

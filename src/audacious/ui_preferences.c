@@ -68,6 +68,7 @@ static GtkWidget *category_notebook = NULL;
 static GtkWidget * titlestring_entry;
 
 static Category categories[] = {
+ {"appearance.png", N_("Appearance")},
  {"audio.png", N_("Audio")},
  {"connectivity.png", N_("Network")},
  {"playlist.png", N_("Playlist")},
@@ -112,6 +113,18 @@ static ComboBoxElements bitdepth_elements[] = {
     { GINT_TO_POINTER(32), "32" },
     {GINT_TO_POINTER (0), N_("Floating point")},
 };
+
+static GArray * iface_combo_elements;
+static int iface_combo_selected;
+
+static const ComboBoxElements * iface_combo_fill (int * n_elements);
+static void iface_combo_changed (void);
+
+static PreferencesWidget appearance_page_widgets[] = {
+ {WIDGET_LABEL, N_("<b>Interface Settings</b>")},
+ {WIDGET_COMBO_BOX, N_("Interface plugin:"),
+  .cfg_type = VALUE_INT, .cfg = & iface_combo_selected,
+  .data.combo.fill = iface_combo_fill, .callback = iface_combo_changed}};
 
 static GArray * output_combo_elements;
 static int output_combo_selected;
@@ -257,7 +270,7 @@ static GArray * fill_plugin_combo (int type)
     for (int i = 0; i < array->len; i ++)
     {
         ComboBoxElements * elem = & g_array_index (array, ComboBoxElements, i);
-        elem->label = plugin_get_name (plugin_by_index (PLUGIN_TYPE_OUTPUT, i));
+        elem->label = plugin_get_name (plugin_by_index (type, i));
         elem->value = GINT_TO_POINTER (i);
     }
 
@@ -538,6 +551,30 @@ static void create_song_info_category (void)
      ARRAY_LEN (song_info_page_widgets));
 }
 
+static void iface_combo_changed (void)
+{
+    plugin_enable (plugin_by_index (PLUGIN_TYPE_IFACE, iface_combo_selected), TRUE);
+}
+
+static const ComboBoxElements * iface_combo_fill (int * n_elements)
+{
+    if (! iface_combo_elements)
+    {
+        iface_combo_elements = fill_plugin_combo (PLUGIN_TYPE_IFACE);
+        iface_combo_selected = plugin_get_index (plugin_get_current (PLUGIN_TYPE_IFACE));
+    }
+
+    * n_elements = iface_combo_elements->len;
+    return (const ComboBoxElements *) iface_combo_elements->data;
+}
+
+static void create_appearance_category (void)
+{
+    GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+    gtk_container_add ((GtkContainer *) category_notebook, vbox);
+    create_widgets ((GtkBox *) vbox, appearance_page_widgets, ARRAY_LEN (appearance_page_widgets));
+}
+
 static void output_combo_changed (void)
 {
     PluginHandle * plugin = plugin_by_index (PLUGIN_TYPE_OUTPUT, output_combo_selected);
@@ -641,6 +678,12 @@ static void destroy_cb (void)
     category_notebook = NULL;
     titlestring_entry = NULL;
 
+    if (iface_combo_elements)
+    {
+        g_array_free (iface_combo_elements, TRUE);
+        iface_combo_elements = NULL;
+    }
+
     if (output_combo_elements)
     {
         g_array_free (output_combo_elements, TRUE);
@@ -690,6 +733,7 @@ static void create_prefs_window (void)
     gtk_notebook_set_show_border (GTK_NOTEBOOK (category_notebook), FALSE);
     gtk_notebook_set_scrollable (GTK_NOTEBOOK (category_notebook), TRUE);
 
+    create_appearance_category ();
     create_audio_category();
     create_connectivity_category();
     create_playlist_category();
