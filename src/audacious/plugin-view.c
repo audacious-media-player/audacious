@@ -30,7 +30,6 @@ enum {
  PVIEW_COL_NODE,
  PVIEW_COL_ENABLED,
  PVIEW_COL_NAME,
- PVIEW_COL_PATH,
  PVIEW_COLS
 };
 
@@ -91,8 +90,8 @@ static bool_t fill_cb (PluginHandle * p, GtkTreeModel * model)
     GtkTreeIter iter;
     gtk_list_store_append ((GtkListStore *) model, & iter);
     gtk_list_store_set ((GtkListStore *) model, & iter, PVIEW_COL_NODE, n,
-     PVIEW_COL_ENABLED, plugin_get_enabled (p), PVIEW_COL_NAME, plugin_get_name
-     (p), PVIEW_COL_PATH, plugin_get_filename (p), -1);
+     PVIEW_COL_ENABLED, plugin_get_enabled (p), PVIEW_COL_NAME,
+     plugin_get_name (p), -1);
 
     n->p = p;
     n->model = model;
@@ -106,7 +105,7 @@ static bool_t fill_cb (PluginHandle * p, GtkTreeModel * model)
 static void list_fill (GtkTreeView * tree, void * type)
 {
     GtkTreeModel * model = (GtkTreeModel *) gtk_list_store_new (PVIEW_COLS,
-     G_TYPE_POINTER, G_TYPE_BOOLEAN, G_TYPE_STRING, G_TYPE_STRING);
+     G_TYPE_POINTER, G_TYPE_BOOLEAN, G_TYPE_STRING);
     gtk_tree_view_set_model (tree, model);
 
     GtkTreeViewColumn * col = gtk_tree_view_column_new ();
@@ -120,17 +119,15 @@ static void list_fill (GtkTreeView * tree, void * type)
     gtk_tree_view_column_set_attributes (col, rend, "active", PVIEW_COL_ENABLED,
      NULL);
 
-    for (int i = PVIEW_COL_NAME; i <= PVIEW_COL_PATH; i ++)
-    {
-        col = gtk_tree_view_column_new ();
-        gtk_tree_view_column_set_sizing (col, GTK_TREE_VIEW_COLUMN_GROW_ONLY);
-        gtk_tree_view_column_set_resizable (col, FALSE);
-        gtk_tree_view_append_column (tree, col);
+    col = gtk_tree_view_column_new ();
+    gtk_tree_view_column_set_sizing (col, GTK_TREE_VIEW_COLUMN_FIXED);
+    gtk_tree_view_column_set_expand (col, TRUE);
+    gtk_tree_view_column_set_resizable (col, FALSE);
+    gtk_tree_view_append_column (tree, col);
 
-        rend = gtk_cell_renderer_text_new ();
-        gtk_tree_view_column_pack_start (col, rend, FALSE);
-        gtk_tree_view_column_set_attributes (col, rend, "text", i, NULL);
-    }
+    rend = gtk_cell_renderer_text_new ();
+    gtk_tree_view_column_pack_start (col, rend, FALSE);
+    gtk_tree_view_column_set_attributes (col, rend, "text", PVIEW_COL_NAME, NULL);
 
     plugin_for_each (GPOINTER_TO_INT (type), (PluginForEachFunc) fill_cb, model);
 }
