@@ -22,6 +22,7 @@
 
 #include <libaudgui/libaudgui-gtk.h>
 
+#include "i18n.h"
 #include "misc.h"
 
 struct Item {
@@ -32,6 +33,11 @@ struct Item {
 
 static GList * items[AUD_MENU_COUNT];
 static GtkWidget * menus[AUD_MENU_COUNT];
+
+static void configure_plugins (void)
+{
+    show_prefs_for_plugin_type (PLUGIN_TYPE_GENERAL);
+}
 
 static void add_to_menu (GtkWidget * menu, struct Item * item)
 {
@@ -50,6 +56,18 @@ void * get_plugin_menu (int id)
         menus[id] = gtk_menu_new ();
         g_signal_connect (menus[id], "destroy", (GCallback)
          gtk_widget_destroyed, & menus[id]);
+
+        if (id == AUD_MENU_MAIN)
+        {
+            GtkWidget * item = audgui_menu_item_new (_("_Plugins ..."), NULL);
+            g_signal_connect (item, "activate", (GCallback) configure_plugins, NULL);
+            gtk_widget_show (item);
+            gtk_menu_shell_append ((GtkMenuShell *) menus[id], item);
+
+            item = gtk_separator_menu_item_new ();
+            gtk_widget_show (item);
+            gtk_menu_shell_append ((GtkMenuShell *) menus[id], item);
+        }
 
         for (GList * node = items[id]; node; node = node->next)
             add_to_menu (menus[id], node->data);
