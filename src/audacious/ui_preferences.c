@@ -44,7 +44,6 @@
 enum CategoryViewCols {
     CATEGORY_VIEW_COL_ICON,
     CATEGORY_VIEW_COL_NAME,
-    CATEGORY_VIEW_COL_ID,
     CATEGORY_VIEW_N_COLS
 };
 
@@ -54,6 +53,11 @@ typedef struct {
 } Category;
 
 typedef struct {
+    int type;
+    const char * name;
+} PluginCategory;
+
+typedef struct {
     const char *name;
     const char *tag;
 } TitleFieldTag;
@@ -61,19 +65,35 @@ typedef struct {
 static const char aud_version_string[] =
  "<span size='small'>Audacious " VERSION " (" BUILDSTAMP ")</span>";
 
-static /* GtkWidget * */ void * prefswin = NULL;
-static GtkWidget *category_treeview = NULL;
-static GtkWidget *category_notebook = NULL;
-
+static GtkWidget * prefswin;
+static GtkWidget * category_treeview, * category_notebook, * plugin_notebook;
 static GtkWidget * titlestring_entry;
 
-static Category categories[] = {
+enum {
+    CATEGORY_APPEARANCE = 0,
+    CATEGORY_AUDIO,
+    CATEGORY_NETWORK,
+    CATEGORY_PLAYLIST,
+    CATEGORY_SONG_INFO,
+    CATEGORY_PLUGINS
+};
+
+static const Category categories[] = {
  {"appearance.png", N_("Appearance")},
  {"audio.png", N_("Audio")},
  {"connectivity.png", N_("Network")},
  {"playlist.png", N_("Playlist")},
  {"info.png", N_("Song Info")},
  {"plugins.png", N_("Plugins")},
+};
+
+static const PluginCategory plugin_categories[] = {
+    {PLUGIN_TYPE_GENERAL, N_("General")},
+    {PLUGIN_TYPE_EFFECT, N_("Effect")},
+    {PLUGIN_TYPE_VIS, N_("Visualization")},
+    {PLUGIN_TYPE_INPUT, N_("Input")},
+    {PLUGIN_TYPE_PLAYLIST, N_("Playlist")},
+    {PLUGIN_TYPE_TRANSPORT, N_("Transport")}
 };
 
 static TitleFieldTag title_field_tags[] = {
@@ -280,19 +300,26 @@ static GArray * fill_plugin_combo (int type)
     return array;
 }
 
-static void
-change_category(GtkNotebook * notebook,
-                GtkTreeSelection * selection)
+static void change_category (int category)
 {
-    GtkTreeModel *model;
+    GtkTreeSelection * selection = gtk_tree_view_get_selection ((GtkTreeView *) category_treeview);
+    GtkTreePath * path = gtk_tree_path_new_from_indices (category, -1);
+    gtk_tree_selection_select_path (selection, path);
+    gtk_tree_path_free (path);
+}
+
+static void category_changed (GtkTreeSelection * selection)
+{
+    GtkTreeModel * model;
     GtkTreeIter iter;
-    int index;
 
-    if (!gtk_tree_selection_get_selected(selection, &model, &iter))
-        return;
-
-    gtk_tree_model_get(model, &iter, CATEGORY_VIEW_COL_ID, &index, -1);
-    gtk_notebook_set_current_page(notebook, index);
+    if (gtk_tree_selection_get_selected (selection, & model, & iter))
+    {
+        GtkTreePath * path = gtk_tree_model_get_path (model, & iter);
+        int category = gtk_tree_path_get_indices (path)[0];
+        gtk_notebook_set_current_page ((GtkNotebook *) category_notebook, category);
+        gtk_tree_path_free (path);
+    }
 }
 
 static void
@@ -354,7 +381,6 @@ static void fill_category_list (GtkTreeView * treeview, GtkNotebook * notebook)
     GtkListStore *store;
     GtkCellRenderer *renderer;
     GtkTreeViewColumn *column;
-    GtkTreeSelection *selection;
 
     column = gtk_tree_view_column_new();
     gtk_tree_view_column_set_title(column, _("Category"));
@@ -382,22 +408,23 @@ static void fill_category_list (GtkTreeView * treeview, GtkNotebook * notebook)
     {
         SCONCAT3 (path, data_dir, "/images/", categories[i].icon_path);
 
-        GdkPixbuf * img = gdk_pixbuf_new_from_file (path, NULL);
         GtkTreeIter iter;
 
-        gtk_list_store_append(store, &iter);
-        gtk_list_store_set(store, &iter,
-                           CATEGORY_VIEW_COL_ICON, img,
-                           CATEGORY_VIEW_COL_NAME,
-                           gettext(categories[i].name), CATEGORY_VIEW_COL_ID,
-                           i, -1);
-        g_object_unref(img);
+        gtk_list_store_append (store, & iter);
+        gtk_list_store_set (store, & iter, CATEGORY_VIEW_COL_NAME,
+         gettext (categories[i].name), -1);
+
+        GdkPixbuf * img = gdk_pixbuf_new_from_file (path, NULL);
+
+        if (img)
+        {
+            gtk_list_store_set (store, & iter, CATEGORY_VIEW_COL_ICON, img, -1);
+            g_object_unref (img);
+        }
     }
 
-    selection = gtk_tree_view_get_selection(treeview);
-
-    g_signal_connect_swapped(selection, "changed",
-                             G_CALLBACK(change_category), notebook);
+    GtkTreeSelection * selection = gtk_tree_view_get_selection (treeview);
+    g_signal_connect (selection, "changed", (GCallback) category_changed, NULL);
 }
 
 static GtkWidget *
@@ -681,17 +708,15 @@ create_connectivity_category(void)
 
 static void create_plugin_category (void)
 {
-    GtkWidget * notebook = gtk_notebook_new ();
-    gtk_container_add ((GtkContainer *) category_notebook, notebook);
+    plugin_notebook = gtk_notebook_new ();
+    gtk_container_add ((GtkContainer *) category_notebook, plugin_notebook);
 
-    int types[] = {PLUGIN_TYPE_TRANSPORT, PLUGIN_TYPE_PLAYLIST,
-     PLUGIN_TYPE_INPUT, PLUGIN_TYPE_EFFECT, PLUGIN_TYPE_VIS, PLUGIN_TYPE_GENERAL};
-    const char * names[] = {N_("Transport"), N_("Playlist"), N_("Input"),
-     N_("Effect"), N_("Visualization"), N_("General")};
-
-    for (int i = 0; i < ARRAY_LEN (types); i ++)
-        gtk_notebook_append_page ((GtkNotebook *) notebook, plugin_view_new
-         (types[i]), gtk_label_new (_(names[i])));
+    for (int i = 0; i < ARRAY_LEN (plugin_categories); i ++)
+    {
+        const PluginCategory * cat = & plugin_categories[i];
+        gtk_notebook_append_page ((GtkNotebook *) plugin_notebook,
+         plugin_view_new (cat->type), gtk_label_new (_(cat->name)));
+    }
 }
 
 static void destroy_cb (void)
@@ -797,6 +822,31 @@ void show_prefs_window (void)
 {
     if (! prefswin)
         create_prefs_window ();
+
+    change_category (CATEGORY_APPEARANCE);
+
+    gtk_window_present ((GtkWindow *) prefswin);
+}
+
+void show_prefs_for_plugin_type (int type)
+{
+    if (! prefswin)
+        create_prefs_window ();
+
+    if (type == PLUGIN_TYPE_IFACE)
+        change_category (CATEGORY_APPEARANCE);
+    else if (type == PLUGIN_TYPE_OUTPUT)
+        change_category (CATEGORY_AUDIO);
+    else
+    {
+        change_category (CATEGORY_PLUGINS);
+
+        for (int i = 0; i < ARRAY_LEN (plugin_categories); i ++)
+        {
+            if (plugin_categories[i].type == type)
+                gtk_notebook_set_current_page ((GtkNotebook *) plugin_notebook, i);
+        }
+    }
 
     gtk_window_present ((GtkWindow *) prefswin);
 }
