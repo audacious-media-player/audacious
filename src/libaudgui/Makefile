@@ -6,7 +6,6 @@ SRCS = about.c \
        confirm.c \
        effects-menu.c \
        equalizer.c \
-       iface-menu.c \
        infopopup.c \
        infowin.c \
        init.c \
