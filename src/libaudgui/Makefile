@@ -4,7 +4,6 @@ LIB_MINOR = 0
 
 SRCS = about.c \
        confirm.c \
-       effects-menu.c \
        equalizer.c \
        infopopup.c \
        infowin.c \

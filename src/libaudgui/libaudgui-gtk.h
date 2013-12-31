@@ -26,10 +26,6 @@
 
 typedef void (* AudguiCallback) (void * data);
 
-/* effects-menu.c */
-GtkWidget * audgui_create_effects_menu (void);
-GtkWidget * audgui_create_vis_menu (void);
-
 /* pixbufs.c */
 GdkPixbuf * audgui_pixbuf_from_data (const void * data, int64_t size);
 GdkPixbuf * audgui_pixbuf_fallback (void);
