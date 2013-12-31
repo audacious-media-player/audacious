@@ -116,15 +116,18 @@ static ComboBoxElements bitdepth_elements[] = {
 
 static GArray * iface_combo_elements;
 static int iface_combo_selected;
+static GtkWidget * iface_prefs_box;
 
 static const ComboBoxElements * iface_combo_fill (int * n_elements);
 static void iface_combo_changed (void);
+static void * iface_create_prefs_box (void);
 
 static PreferencesWidget appearance_page_widgets[] = {
  {WIDGET_LABEL, N_("<b>Interface Settings</b>")},
  {WIDGET_COMBO_BOX, N_("Interface plugin:"),
   .cfg_type = VALUE_INT, .cfg = & iface_combo_selected,
-  .data.combo.fill = iface_combo_fill, .callback = iface_combo_changed}};
+  .data.combo.fill = iface_combo_fill, .callback = iface_combo_changed},
+ {WIDGET_CUSTOM, .data.populate = iface_create_prefs_box}};
 
 static GArray * output_combo_elements;
 static int output_combo_selected;
@@ -551,9 +554,22 @@ static void create_song_info_category (void)
      ARRAY_LEN (song_info_page_widgets));
 }
 
+static void iface_fill_prefs_box (void)
+{
+    Plugin * header = plugin_get_header (plugin_get_current (PLUGIN_TYPE_IFACE));
+    if (header && header->prefs)
+        create_widgets_with_domain (iface_prefs_box, header->prefs->widgets,
+         header->prefs->n_widgets, header->domain);
+}
+
 static void iface_combo_changed (void)
 {
+    gtk_container_foreach ((GtkContainer *) iface_prefs_box, (GtkCallback) gtk_widget_destroy, NULL);
+
     plugin_enable (plugin_by_index (PLUGIN_TYPE_IFACE, iface_combo_selected), TRUE);
+
+    iface_fill_prefs_box ();
+    gtk_widget_show_all (iface_prefs_box);
 }
 
 static const ComboBoxElements * iface_combo_fill (int * n_elements)
@@ -566,6 +582,13 @@ static const ComboBoxElements * iface_combo_fill (int * n_elements)
 
     * n_elements = iface_combo_elements->len;
     return (const ComboBoxElements *) iface_combo_elements->data;
+}
+
+static void * iface_create_prefs_box (void)
+{
+    iface_prefs_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+    iface_fill_prefs_box ();
+    return iface_prefs_box;
 }
 
 static void create_appearance_category (void)
