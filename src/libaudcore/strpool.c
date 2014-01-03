@@ -103,7 +103,7 @@ EXPORT void str_unref (char * str)
 
 EXPORT char * str_nget (const char * str, int len)
 {
-    if (strlen (str) <= len)
+    if (strnlen (str, len) < len)
         return str_get (str);
 
     char buf[len + 1];
