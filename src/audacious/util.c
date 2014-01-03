@@ -374,7 +374,7 @@ DONE:
         char * filename = uri_to_display (name);
         if (! filename)
             goto DONE;
-        
+
         char * base, * first, * second;
         split_filename (skip_top_folders (filename), & base, & first, & second);
 
@@ -401,13 +401,13 @@ DONE:
             else if (! album)
                 album = str_get (first);
         }
-        
+
         free (filename);
     }
     else
     {
         char buf[strlen (name) + 1];
-        memcpy (buf, name, sizeof buf);
+        strcpy (buf, name);
 
         if (! title)
         {
