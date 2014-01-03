@@ -26,7 +26,7 @@
 
 static const char about_text[] =
  "<big><b>Audacious " VERSION "</b></big>\n"
- "Copyright © 2001-2013 Audacious developers and others";
+ "Copyright © 2001-2014 Audacious developers and others";
 
 static const char website[] = "http://audacious-media-player.org";
 
