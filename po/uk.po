@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2013-11-01 16:23+0100\n"
+"POT-Creation-Date: 2014-01-03 15:24+0100\n"
 "PO-Revision-Date: 2013-04-16 15:44+0000\n"
 "Last-Translator: rustam <rustam.tsurik@gmail.com>\n"
 "Language-Team: Ukrainian (http://www.transifex.com/projects/p/audacious/"
@@ -147,6 +147,11 @@ msgstr "зберегти"
 msgid "load"
 msgstr "завантажити"
 
+#: src/audacious/playlist-files.c:133
+#, fuzzy, c-format
+msgid "Cannot save %s: plugin does not support saving."
+msgstr "Неможливо %s %s: розширення файлу не підтримується."
+
 #: src/audacious/playlist-new.c:96
 msgid "New Playlist"
 msgstr "Новий список відтворення"
@@ -181,7 +186,7 @@ msgstr "Звук"
 msgid "Network"
 msgstr "Мережа"
 
-#: src/audacious/ui_preferences.c:69 src/audacious/ui_preferences.c:1237
+#: src/audacious/ui_preferences.c:69 src/audacious/ui_preferences.c:1203
 msgid "Playlist"
 msgstr "Списки відтворення"
 
@@ -294,251 +299,251 @@ msgstr "Турецька"
 msgid "Floating point"
 msgstr "Рухома кома"
 
-#: src/audacious/ui_preferences.c:128
+#: src/audacious/ui_preferences.c:119
 msgid "Album mode"
 msgstr "Режим альбому"
 
-#: src/audacious/ui_preferences.c:131
+#: src/audacious/ui_preferences.c:122
 msgid "<b>Output Settings</b>"
 msgstr "<b>Параметри виводу</b>"
 
-#: src/audacious/ui_preferences.c:133
+#: src/audacious/ui_preferences.c:124
 msgid "Bit depth:"
 msgstr "Амплітудна розрядність:"
 
-#: src/audacious/ui_preferences.c:136
+#: src/audacious/ui_preferences.c:127
 msgid "Buffer size:"
 msgstr "Розмір буфера:"
 
-#: src/audacious/ui_preferences.c:138
+#: src/audacious/ui_preferences.c:129
 msgid "ms"
 msgstr "мс"
 
-#: src/audacious/ui_preferences.c:139
+#: src/audacious/ui_preferences.c:130
 msgid "Soft clipping"
 msgstr "М’яке відсікання"
 
-#: src/audacious/ui_preferences.c:141
+#: src/audacious/ui_preferences.c:132
 msgid "Use software volume control (not recommended)"
 msgstr "Керувати гучністю лише Audacious (не рекомендовано)"
 
-#: src/audacious/ui_preferences.c:143
+#: src/audacious/ui_preferences.c:134
 msgid "<b>Replay Gain</b>"
 msgstr "<b>Replay Gain</b>"
 
-#: src/audacious/ui_preferences.c:144
+#: src/audacious/ui_preferences.c:135
 msgid "Enable Replay Gain"
 msgstr "Увімкнути Replay Gain"
 
-#: src/audacious/ui_preferences.c:147
+#: src/audacious/ui_preferences.c:138
 msgid "Prevent clipping (recommended)"
 msgstr "Запобігати зрізанню (рекомендовано)"
 
-#: src/audacious/ui_preferences.c:149
+#: src/audacious/ui_preferences.c:140
 msgid "<b>Adjust Levels</b>"
 msgstr "<b>Регулювати рівні</b>"
 
-#: src/audacious/ui_preferences.c:150
+#: src/audacious/ui_preferences.c:141
 msgid "Amplify all files:"
 msgstr "Підсилювати всі файли:"
 
-#: src/audacious/ui_preferences.c:152 src/audacious/ui_preferences.c:155
+#: src/audacious/ui_preferences.c:143 src/audacious/ui_preferences.c:146
 msgid "dB"
 msgstr "дБ"
 
-#: src/audacious/ui_preferences.c:153
+#: src/audacious/ui_preferences.c:144
 msgid "Amplify untagged files:"
 msgstr "Підсилювати непозначені файли:"
 
-#: src/audacious/ui_preferences.c:158
+#: src/audacious/ui_preferences.c:149
 msgid "Proxy hostname:"
 msgstr "Адреса проксі-сервера:"
 
-#: src/audacious/ui_preferences.c:159
+#: src/audacious/ui_preferences.c:150
 msgid "Proxy port:"
 msgstr "Порт:"
 
-#: src/audacious/ui_preferences.c:162
+#: src/audacious/ui_preferences.c:153
 msgid "Proxy username:"
 msgstr "Ім'я користувача:"
 
-#: src/audacious/ui_preferences.c:163
+#: src/audacious/ui_preferences.c:154
 msgid "Proxy password:"
 msgstr "Пароль:"
 
-#: src/audacious/ui_preferences.c:167
+#: src/audacious/ui_preferences.c:158
 msgid "<b>Proxy Configuration</b>"
 msgstr "<b>Конфігурація проксі</b>"
 
-#: src/audacious/ui_preferences.c:168
+#: src/audacious/ui_preferences.c:159
 msgid "Enable proxy usage"
 msgstr "Використовувати проксі"
 
-#: src/audacious/ui_preferences.c:171
+#: src/audacious/ui_preferences.c:162
 msgid "Use authentication with proxy"
 msgstr "Використовувати автентифікацію"
 
-#: src/audacious/ui_preferences.c:179
+#: src/audacious/ui_preferences.c:170
 msgid "Auto character encoding detector for:"
 msgstr "Автовизначення кодування символів:"
 
-#: src/audacious/ui_preferences.c:183
+#: src/audacious/ui_preferences.c:174
 msgid "Fallback character encodings:"
 msgstr "Типове кодування символів:"
 
-#: src/audacious/ui_preferences.c:187
+#: src/audacious/ui_preferences.c:178
 msgid "<b>Behavior</b>"
 msgstr "<b>Поведінка</b>"
 
-#: src/audacious/ui_preferences.c:188
+#: src/audacious/ui_preferences.c:179
 msgid "Continue playback on startup"
 msgstr "Продовжувати відтворення під час запуску"
 
-#: src/audacious/ui_preferences.c:190
+#: src/audacious/ui_preferences.c:181
 msgid "Advance when the current song is deleted"
 msgstr "При видаленні поточної пісні відтворювати наступну"
 
-#: src/audacious/ui_preferences.c:192
+#: src/audacious/ui_preferences.c:183
 msgid "Clear the playlist when opening files"
 msgstr "Стирати список відтворення при відкритті файлів"
 
-#: src/audacious/ui_preferences.c:194
+#: src/audacious/ui_preferences.c:185
 msgid "Open files in a temporary playlist"
 msgstr "Відкривати файли у тимчасовому списку відтворення"
 
-#: src/audacious/ui_preferences.c:196
+#: src/audacious/ui_preferences.c:187
 msgid "Do not load metadata for songs until played"
 msgstr "Не завантажувати метадані доріжок до відтворення"
 
-#: src/audacious/ui_preferences.c:199
+#: src/audacious/ui_preferences.c:190
 msgid "<b>Compatibility</b>"
 msgstr "<b>Сумісність</b>"
 
-#: src/audacious/ui_preferences.c:200
+#: src/audacious/ui_preferences.c:191
 msgid "Interpret \\ (backward slash) as a folder delimiter"
 msgstr "Вважати \\ (обернену косу риску) розділювачем тек"
 
-#: src/audacious/ui_preferences.c:207
+#: src/audacious/ui_preferences.c:198
 msgid "<b>Album Art</b>"
 msgstr "<b>Обкладинка альбому</b>"
 
-#: src/audacious/ui_preferences.c:208
+#: src/audacious/ui_preferences.c:199
 msgid "Search for images matching these words (comma-separated):"
 msgstr "Шукати зображення за цими словами (розділюйте комами):"
 
-#: src/audacious/ui_preferences.c:210
+#: src/audacious/ui_preferences.c:201
 msgid "Exclude images matching these words (comma-separated):"
 msgstr "Пропускати зображення за з цими словами (розділюйте комами):"
 
-#: src/audacious/ui_preferences.c:212
+#: src/audacious/ui_preferences.c:203
 msgid "Search for images matching song file name"
 msgstr "Шукати зображення за іменем файлу доріжки"
 
-#: src/audacious/ui_preferences.c:214
+#: src/audacious/ui_preferences.c:205
 msgid "Search recursively"
 msgstr "Рекурсивний пошук"
 
-#: src/audacious/ui_preferences.c:216
+#: src/audacious/ui_preferences.c:207
 msgid "Search depth:"
 msgstr "Глибина пошуку:"
 
-#: src/audacious/ui_preferences.c:219
+#: src/audacious/ui_preferences.c:210
 msgid "<b>Popup Information</b>"
 msgstr "<b>Спливна інформація</b>"
 
-#: src/audacious/ui_preferences.c:220
+#: src/audacious/ui_preferences.c:211
 msgid "Show popup information"
 msgstr "Показувати спливну інформацію"
 
-#: src/audacious/ui_preferences.c:222
+#: src/audacious/ui_preferences.c:213
 msgid "Popup delay (tenths of a second):"
 msgstr "Затримка спливання (десяті частки секунди):"
 
-#: src/audacious/ui_preferences.c:225
+#: src/audacious/ui_preferences.c:216
 msgid "Show time scale for current song"
 msgstr "Показувати прогрес відтворення композиції"
 
-#: src/audacious/ui_preferences.c:239
+#: src/audacious/ui_preferences.c:230
 msgid "TITLE"
 msgstr "НАЗВА"
 
-#: src/audacious/ui_preferences.c:240
+#: src/audacious/ui_preferences.c:231
 msgid "ARTIST - TITLE"
 msgstr "ВИКОНАВЕЦЬ - НАЗВА"
 
-#: src/audacious/ui_preferences.c:241
+#: src/audacious/ui_preferences.c:232
 msgid "ARTIST - ALBUM - TITLE"
 msgstr "ВИКОНАВЕЦЬ - АЛЬБОМ - НАЗВА"
 
-#: src/audacious/ui_preferences.c:242
+#: src/audacious/ui_preferences.c:233
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr "ВИКОНАВЕЦЬ - АЛЬБОМ - ДОРІЖКА. НАЗВА"
 
-#: src/audacious/ui_preferences.c:243
+#: src/audacious/ui_preferences.c:234
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr "ВИКОНАВЕЦЬ [ АЛЬБОМ ] ДОРІЖКА. НАЗВА"
 
-#: src/audacious/ui_preferences.c:244
+#: src/audacious/ui_preferences.c:235
 msgid "ALBUM - TITLE"
 msgstr "АЛЬБОМ - НАЗВА"
 
-#: src/audacious/ui_preferences.c:457
+#: src/audacious/ui_preferences.c:435
 msgid "Category"
 msgstr "Категорія"
 
-#: src/audacious/ui_preferences.c:995
+#: src/audacious/ui_preferences.c:961
 msgid "Custom"
 msgstr "Власні налаштування"
 
-#: src/audacious/ui_preferences.c:1032
+#: src/audacious/ui_preferences.c:998
 msgid "<b>Song Display</b>"
 msgstr "<b>Відображення пісні</b>"
 
-#: src/audacious/ui_preferences.c:1041
+#: src/audacious/ui_preferences.c:1007
 msgid "Show song numbers"
 msgstr "Показувати номер пісні"
 
-#: src/audacious/ui_preferences.c:1052
+#: src/audacious/ui_preferences.c:1018
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr "Показувати нульові старші розряди (02:00 замість 2:00)"
 
-#: src/audacious/ui_preferences.c:1072
+#: src/audacious/ui_preferences.c:1038
 msgid "Show information about titlestring format"
 msgstr "Показувати інформацію про формат назви"
 
-#: src/audacious/ui_preferences.c:1086
+#: src/audacious/ui_preferences.c:1052
 msgid "Custom string:"
 msgstr "Власний формат:"
 
-#: src/audacious/ui_preferences.c:1091
+#: src/audacious/ui_preferences.c:1057
 msgid "Title format:"
 msgstr "Формат назви:"
 
-#: src/audacious/ui_preferences.c:1178
+#: src/audacious/ui_preferences.c:1144
 msgid "Output plugin:"
 msgstr "Модуль виведення:"
 
-#: src/audacious/ui_preferences.c:1237
+#: src/audacious/ui_preferences.c:1203
 msgid "Transport"
 msgstr "Транспорт"
 
-#: src/audacious/ui_preferences.c:1237
+#: src/audacious/ui_preferences.c:1203
 msgid "Input"
 msgstr "Вхід"
 
-#: src/audacious/ui_preferences.c:1238
+#: src/audacious/ui_preferences.c:1204
 msgid "Effect"
 msgstr "Ефекти"
 
-#: src/audacious/ui_preferences.c:1238
+#: src/audacious/ui_preferences.c:1204
 msgid "Visualization"
 msgstr "Візуалізація"
 
-#: src/audacious/ui_preferences.c:1238
+#: src/audacious/ui_preferences.c:1204
 msgid "General"
 msgstr "Інше"
 
-#: src/audacious/ui_preferences.c:1274
+#: src/audacious/ui_preferences.c:1239
 msgid "Audacious Preferences"
 msgstr "Налаштування Audacious"
 

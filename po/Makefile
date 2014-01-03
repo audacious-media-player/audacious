@@ -11,6 +11,7 @@ LOCALES = ast.po \
 	  be.po \
 	  bg.po \
 	  ca.po \
+	  cmn.po \
 	  cs.po \
 	  da.po \
 	  de.po \

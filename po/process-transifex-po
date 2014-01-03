@@ -13,6 +13,9 @@ bg.po)
 ca.po)
     LANGUAGE="Catalan"
     ;;
+cmn.po)
+    LANGUAGE="Mandarin"
+    ;;
 cs.po)
     LANGUAGE="Czech"
     ;;

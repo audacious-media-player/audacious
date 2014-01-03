@@ -5,6 +5,8 @@
 # Translators:
 # Elias Julkunen <elias.julkunen@gmail.com>, 2011
 # Jaergenoth <jstuomisto@gmail.com>, 2013
+# Jaergenoth <jstuomisto@gmail.com>, 2013
+# Jaergenoth <jstuomisto@gmail.com>, 2013
 # Matti Hämäläinen, 2008
 # Pauli Virtanen <pauli.virtanen@hut.fi>, 2004
 # Tuomas Lähteenmäki <lahtis@gmail.com>, 2012
@@ -12,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2013-11-01 16:23+0100\n"
-"PO-Revision-Date: 2013-02-07 15:32+0000\n"
+"POT-Creation-Date: 2014-01-03 15:24+0100\n"
+"PO-Revision-Date: 2013-12-04 14:33+0000\n"
 "Last-Translator: Jaergenoth <jstuomisto@gmail.com>\n"
 "Language-Team: Finnish (http://www.transifex.com/projects/p/audacious/"
 "language/fi/)\n"
@@ -45,7 +47,7 @@ msgstr "Virhe tuotaessa Winampin EQF -tiedostoa '%s'"
 
 #: src/audacious/main.c:232
 msgid "Skip backwards in playlist"
-msgstr "Siirry taaksepäin soittolistassa"
+msgstr "Siirry taaksepäin soittolistalla"
 
 #: src/audacious/main.c:233
 msgid "Start playing current playlist"
@@ -65,11 +67,11 @@ msgstr "Keskeytä jos kappale soi, muutoin jatka soittamista"
 
 #: src/audacious/main.c:237
 msgid "Skip forward in playlist"
-msgstr "Siirry eteenpäin soittolistassa"
+msgstr "Siirry eteenpäin soittolistalla"
 
 #: src/audacious/main.c:238
 msgid "Display Jump to File dialog"
-msgstr "Näytä Siirry tiedostoon -valintaikkuna"
+msgstr "Näytä Hyppää tiedostoon -valintaikkuna"
 
 #: src/audacious/main.c:239
 msgid "Add files to the playlist"
@@ -143,6 +145,11 @@ msgstr "tallenna"
 msgid "load"
 msgstr "lataa"
 
+#: src/audacious/playlist-files.c:133
+#, fuzzy, c-format
+msgid "Cannot save %s: plugin does not support saving."
+msgstr "Ei voida %s %s: tiedostotyyppiä ei tueta."
+
 #: src/audacious/playlist-new.c:96
 msgid "New Playlist"
 msgstr "Uusi soittolista"
@@ -177,7 +184,7 @@ msgstr "Ääni"
 msgid "Network"
 msgstr "Verkko"
 
-#: src/audacious/ui_preferences.c:69 src/audacious/ui_preferences.c:1237
+#: src/audacious/ui_preferences.c:69 src/audacious/ui_preferences.c:1203
 msgid "Playlist"
 msgstr "Soittolista"
 
@@ -290,251 +297,251 @@ msgstr "Turkki"
 msgid "Floating point"
 msgstr "Liukuluku"
 
-#: src/audacious/ui_preferences.c:128
+#: src/audacious/ui_preferences.c:119
 msgid "Album mode"
 msgstr "Albumitila"
 
-#: src/audacious/ui_preferences.c:131
+#: src/audacious/ui_preferences.c:122
 msgid "<b>Output Settings</b>"
 msgstr "<b>Ulostulon asetukset</b>"
 
-#: src/audacious/ui_preferences.c:133
+#: src/audacious/ui_preferences.c:124
 msgid "Bit depth:"
 msgstr "Bittisyvyys:"
 
-#: src/audacious/ui_preferences.c:136
+#: src/audacious/ui_preferences.c:127
 msgid "Buffer size:"
 msgstr "Puskurin koko:"
 
-#: src/audacious/ui_preferences.c:138
+#: src/audacious/ui_preferences.c:129
 msgid "ms"
 msgstr "ms"
 
-#: src/audacious/ui_preferences.c:139
+#: src/audacious/ui_preferences.c:130
 msgid "Soft clipping"
 msgstr "Pehmeä leikkaantuminen"
 
-#: src/audacious/ui_preferences.c:141
+#: src/audacious/ui_preferences.c:132
 msgid "Use software volume control (not recommended)"
 msgstr "Käytä ohjelmallista äänensäätöä (ei suositeltu)"
 
-#: src/audacious/ui_preferences.c:143
+#: src/audacious/ui_preferences.c:134
 msgid "<b>Replay Gain</b>"
 msgstr "<b>Replay Gain</b>"
 
-#: src/audacious/ui_preferences.c:144
+#: src/audacious/ui_preferences.c:135
 msgid "Enable Replay Gain"
 msgstr "Käytä Replay Gainia"
 
-#: src/audacious/ui_preferences.c:147
+#: src/audacious/ui_preferences.c:138
 msgid "Prevent clipping (recommended)"
 msgstr "Estä leikkaantuminen (suositeltu)"
 
-#: src/audacious/ui_preferences.c:149
+#: src/audacious/ui_preferences.c:140
 msgid "<b>Adjust Levels</b>"
 msgstr "<b>Säädä tasoja</b>"
 
-#: src/audacious/ui_preferences.c:150
+#: src/audacious/ui_preferences.c:141
 msgid "Amplify all files:"
 msgstr "Vahvista kaikki tiedostot:"
 
-#: src/audacious/ui_preferences.c:152 src/audacious/ui_preferences.c:155
+#: src/audacious/ui_preferences.c:143 src/audacious/ui_preferences.c:146
 msgid "dB"
 msgstr "dB"
 
-#: src/audacious/ui_preferences.c:153
+#: src/audacious/ui_preferences.c:144
 msgid "Amplify untagged files:"
 msgstr "Vahvista luokittelemattomat tiedostot:"
 
-#: src/audacious/ui_preferences.c:158
+#: src/audacious/ui_preferences.c:149
 msgid "Proxy hostname:"
 msgstr "Välityspalvelimen osoite:"
 
-#: src/audacious/ui_preferences.c:159
+#: src/audacious/ui_preferences.c:150
 msgid "Proxy port:"
 msgstr "Välityspalvelimen portti:"
 
-#: src/audacious/ui_preferences.c:162
+#: src/audacious/ui_preferences.c:153
 msgid "Proxy username:"
 msgstr "Välityspalvelimen käyttäjätunnus:"
 
-#: src/audacious/ui_preferences.c:163
+#: src/audacious/ui_preferences.c:154
 msgid "Proxy password:"
 msgstr "Välityspalvelimen salasana:"
 
-#: src/audacious/ui_preferences.c:167
+#: src/audacious/ui_preferences.c:158
 msgid "<b>Proxy Configuration</b>"
 msgstr "<b>Välityspalvelimen asetukset</b>"
 
-#: src/audacious/ui_preferences.c:168
+#: src/audacious/ui_preferences.c:159
 msgid "Enable proxy usage"
 msgstr "Käytä välityspalvelinta"
 
-#: src/audacious/ui_preferences.c:171
+#: src/audacious/ui_preferences.c:162
 msgid "Use authentication with proxy"
 msgstr "Käytä tunnistautumista välityspalvelimen kanssa"
 
-#: src/audacious/ui_preferences.c:179
+#: src/audacious/ui_preferences.c:170
 msgid "Auto character encoding detector for:"
 msgstr "Automaattinen merkistökoodauksen tunnistus:"
 
-#: src/audacious/ui_preferences.c:183
+#: src/audacious/ui_preferences.c:174
 msgid "Fallback character encodings:"
 msgstr "Toissijaiset merkistökoodaukset:"
 
-#: src/audacious/ui_preferences.c:187
+#: src/audacious/ui_preferences.c:178
 msgid "<b>Behavior</b>"
 msgstr "<b>Käytös</b>"
 
-#: src/audacious/ui_preferences.c:188
+#: src/audacious/ui_preferences.c:179
 msgid "Continue playback on startup"
 msgstr "Jatka soittoa käynnistettäessä"
 
-#: src/audacious/ui_preferences.c:190
+#: src/audacious/ui_preferences.c:181
 msgid "Advance when the current song is deleted"
 msgstr "Jatka, kun nykyinen kappale on poistettu"
 
-#: src/audacious/ui_preferences.c:192
+#: src/audacious/ui_preferences.c:183
 msgid "Clear the playlist when opening files"
 msgstr "Tyhjennä soittolista avattaessa tiedostoja"
 
-#: src/audacious/ui_preferences.c:194
+#: src/audacious/ui_preferences.c:185
 msgid "Open files in a temporary playlist"
 msgstr "Avaa tiedostot väliaikaisessa soittolistassa"
 
-#: src/audacious/ui_preferences.c:196
+#: src/audacious/ui_preferences.c:187
 msgid "Do not load metadata for songs until played"
 msgstr "Älä lataa metatietoja kun kappaletta soitetaan"
 
-#: src/audacious/ui_preferences.c:199
+#: src/audacious/ui_preferences.c:190
 msgid "<b>Compatibility</b>"
 msgstr "<b>Yhteensopivuus</b>"
 
-#: src/audacious/ui_preferences.c:200
+#: src/audacious/ui_preferences.c:191
 msgid "Interpret \\ (backward slash) as a folder delimiter"
 msgstr "Tulkitse \\ (kenoviiva) kansioerottimeksi"
 
-#: src/audacious/ui_preferences.c:207
+#: src/audacious/ui_preferences.c:198
 msgid "<b>Album Art</b>"
 msgstr "<b>Levynkansi</b>"
 
-#: src/audacious/ui_preferences.c:208
+#: src/audacious/ui_preferences.c:199
 msgid "Search for images matching these words (comma-separated):"
 msgstr "Etsi kuvia joissa esiintyy sanat (erota pilkulla):"
 
-#: src/audacious/ui_preferences.c:210
+#: src/audacious/ui_preferences.c:201
 msgid "Exclude images matching these words (comma-separated):"
 msgstr "Hylkää kuvat joissa esiintyy sanat (erota pilkulla):"
 
-#: src/audacious/ui_preferences.c:212
+#: src/audacious/ui_preferences.c:203
 msgid "Search for images matching song file name"
 msgstr "Etsi kuvia jotka täsmäävät kappaleen tiedostonimeen"
 
-#: src/audacious/ui_preferences.c:214
+#: src/audacious/ui_preferences.c:205
 msgid "Search recursively"
 msgstr "Etsi rekursiivisesti"
 
-#: src/audacious/ui_preferences.c:216
+#: src/audacious/ui_preferences.c:207
 msgid "Search depth:"
 msgstr "Etsintäsyvyys:"
 
-#: src/audacious/ui_preferences.c:219
+#: src/audacious/ui_preferences.c:210
 msgid "<b>Popup Information</b>"
 msgstr "<b>Ponnahdusikkuna</b>"
 
-#: src/audacious/ui_preferences.c:220
+#: src/audacious/ui_preferences.c:211
 msgid "Show popup information"
 msgstr "Näytä ponnahdusikkuna"
 
-#: src/audacious/ui_preferences.c:222
+#: src/audacious/ui_preferences.c:213
 msgid "Popup delay (tenths of a second):"
 msgstr "Ponnahdusikkunan viive (kymmenesosasekunti):"
 
-#: src/audacious/ui_preferences.c:225
+#: src/audacious/ui_preferences.c:216
 msgid "Show time scale for current song"
 msgstr "Näytä soivan kappaleen aikapalkki"
 
-#: src/audacious/ui_preferences.c:239
+#: src/audacious/ui_preferences.c:230
 msgid "TITLE"
 msgstr "NIMI"
 
-#: src/audacious/ui_preferences.c:240
+#: src/audacious/ui_preferences.c:231
 msgid "ARTIST - TITLE"
 msgstr "ARTISTI - NIMI"
 
-#: src/audacious/ui_preferences.c:241
+#: src/audacious/ui_preferences.c:232
 msgid "ARTIST - ALBUM - TITLE"
 msgstr "ARTISTI - ALBUMI - NIMI"
 
-#: src/audacious/ui_preferences.c:242
+#: src/audacious/ui_preferences.c:233
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr "ARTISTI - ALBUMI - KAPPALENUMERO. NIMI"
 
-#: src/audacious/ui_preferences.c:243
+#: src/audacious/ui_preferences.c:234
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr "ARTISTI [ ALBUMI ] - KAPPALENUMERO. NIMI"
 
-#: src/audacious/ui_preferences.c:244
+#: src/audacious/ui_preferences.c:235
 msgid "ALBUM - TITLE"
 msgstr "ALBUMI - NIMI"
 
-#: src/audacious/ui_preferences.c:457
+#: src/audacious/ui_preferences.c:435
 msgid "Category"
 msgstr "Luokka"
 
-#: src/audacious/ui_preferences.c:995
+#: src/audacious/ui_preferences.c:961
 msgid "Custom"
 msgstr "Mukautettu..."
 
-#: src/audacious/ui_preferences.c:1032
+#: src/audacious/ui_preferences.c:998
 msgid "<b>Song Display</b>"
 msgstr "<b>Kappaleen näyttö</b>"
 
-#: src/audacious/ui_preferences.c:1041
+#: src/audacious/ui_preferences.c:1007
 msgid "Show song numbers"
 msgstr "Näytä kappalenumerot"
 
-#: src/audacious/ui_preferences.c:1052
+#: src/audacious/ui_preferences.c:1018
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr "Näytä edeltävät nollat (2:00:n sijasta 02:00)"
 
-#: src/audacious/ui_preferences.c:1072
+#: src/audacious/ui_preferences.c:1038
 msgid "Show information about titlestring format"
 msgstr "Näytä tietoja kappaleiden nimiketekstin muodosta"
 
-#: src/audacious/ui_preferences.c:1086
+#: src/audacious/ui_preferences.c:1052
 msgid "Custom string:"
 msgstr "Muu merkkijono:"
 
-#: src/audacious/ui_preferences.c:1091
+#: src/audacious/ui_preferences.c:1057
 msgid "Title format:"
 msgstr "Nimikkeen muoto:"
 
-#: src/audacious/ui_preferences.c:1178
+#: src/audacious/ui_preferences.c:1144
 msgid "Output plugin:"
 msgstr "Ulostulon lisäosa:"
 
-#: src/audacious/ui_preferences.c:1237
+#: src/audacious/ui_preferences.c:1203
 msgid "Transport"
 msgstr "Siirtokanavat"
 
-#: src/audacious/ui_preferences.c:1237
+#: src/audacious/ui_preferences.c:1203
 msgid "Input"
 msgstr "Äänilähteet"
 
-#: src/audacious/ui_preferences.c:1238
+#: src/audacious/ui_preferences.c:1204
 msgid "Effect"
 msgstr "Tehosteet"
 
-#: src/audacious/ui_preferences.c:1238
+#: src/audacious/ui_preferences.c:1204
 msgid "Visualization"
 msgstr "Visualisoinnit"
 
-#: src/audacious/ui_preferences.c:1238
+#: src/audacious/ui_preferences.c:1204
 msgid "General"
 msgstr "Yleiset"
 
-#: src/audacious/ui_preferences.c:1274
+#: src/audacious/ui_preferences.c:1239
 msgid "Audacious Preferences"
 msgstr "Audaciouksen asetukset"
 
@@ -963,7 +970,7 @@ msgstr "_Tyhjennä"
 
 #: src/libaudgui/ui_jumptotrack.c:324
 msgid "Close on Jump"
-msgstr "Sulje ikkuna siirryttäessä"
+msgstr "Sulje ikkuna hypätessä"
 
 #: src/libaudgui/ui_playlist_manager.c:260
 msgid "Playlist Manager"

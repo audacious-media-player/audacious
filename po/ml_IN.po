@@ -5,13 +5,14 @@
 # Translators:
 # <>, 2013
 # nandakumar <nandakumar96@gmail.com>, 2013
+# nandakumar <nandakumar96@gmail.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2013-11-01 16:23+0100\n"
-"PO-Revision-Date: 2013-10-15 01:22+0000\n"
-"Last-Translator: nandakumar <nandakumar96@gmail.com>\n"
+"POT-Creation-Date: 2014-01-03 15:24+0100\n"
+"PO-Revision-Date: 2013-12-29 07:35+0000\n"
+"Last-Translator: navaneeths52 <navaneeths52@gmail.com>\n"
 "Language-Team: Malayalam (India) (http://www.transifex.com/projects/p/"
 "audacious/language/ml_IN/)\n"
 "Language: ml_IN\n"
@@ -140,6 +141,11 @@ msgstr "സേവ്"
 msgid "load"
 msgstr "ലോഡ്"
 
+#: src/audacious/playlist-files.c:133
+#, fuzzy, c-format
+msgid "Cannot save %s: plugin does not support saving."
+msgstr "%s %s സാദ്ധ്യമായില്ല: പിന്തുണയില്ലാത്ത ഫയല്‍ എക്സ്റ്റന്‍ഷന്‍"
+
 #: src/audacious/playlist-new.c:96
 msgid "New Playlist"
 msgstr "പുതിയ പ്ലേലിസ്റ്റ്"
@@ -174,7 +180,7 @@ msgstr "ഓഡിയോ"
 msgid "Network"
 msgstr "നെറ്റ്‌വര്‍ക്ക്"
 
-#: src/audacious/ui_preferences.c:69 src/audacious/ui_preferences.c:1237
+#: src/audacious/ui_preferences.c:69 src/audacious/ui_preferences.c:1203
 msgid "Playlist"
 msgstr "പ്ലേലിസ്റ്റ്"
 
@@ -287,251 +293,251 @@ msgstr "ടര്‍ക്കിഷ്"
 msgid "Floating point"
 msgstr "ഫ്ലോട്ടിങ് പോയിന്റ്"
 
-#: src/audacious/ui_preferences.c:128
+#: src/audacious/ui_preferences.c:119
 msgid "Album mode"
 msgstr "ആല്‍ബം മോഡ്"
 
-#: src/audacious/ui_preferences.c:131
+#: src/audacious/ui_preferences.c:122
 msgid "<b>Output Settings</b>"
 msgstr "<b>ഔട്പുട്ട് ക്രമീകരണങ്ങള്‍</b>"
 
-#: src/audacious/ui_preferences.c:133
+#: src/audacious/ui_preferences.c:124
 msgid "Bit depth:"
 msgstr "ബിറ്റ് ഡെപ്ത്"
 
-#: src/audacious/ui_preferences.c:136
+#: src/audacious/ui_preferences.c:127
 msgid "Buffer size:"
 msgstr "ബഫര്‍ സൈസ്"
 
-#: src/audacious/ui_preferences.c:138
+#: src/audacious/ui_preferences.c:129
 msgid "ms"
 msgstr "ms"
 
-#: src/audacious/ui_preferences.c:139
+#: src/audacious/ui_preferences.c:130
 msgid "Soft clipping"
 msgstr "സോഫ്റ്റ് ക്ലിപ്പിങ്"
 
-#: src/audacious/ui_preferences.c:141
+#: src/audacious/ui_preferences.c:132
 msgid "Use software volume control (not recommended)"
 msgstr "സോഫ്റ്റ്‌വെയര്‍ ശബ്ദനിയന്ത്രണോപാധി ഉപയോഗിയ്ക്കുക (ശുപാര്‍ശ ചെയ്യപ്പെട്ടിട്ടില്ല)"
 
-#: src/audacious/ui_preferences.c:143
+#: src/audacious/ui_preferences.c:134
 msgid "<b>Replay Gain</b>"
 msgstr "<b>റീപ്ലേ ഗെയ്ന്‍</b>"
 
-#: src/audacious/ui_preferences.c:144
+#: src/audacious/ui_preferences.c:135
 msgid "Enable Replay Gain"
 msgstr "റീപ്ലേ ഗെയ്ന്‍ സാദ്ധ്യമാക്കുക"
 
-#: src/audacious/ui_preferences.c:147
+#: src/audacious/ui_preferences.c:138
 msgid "Prevent clipping (recommended)"
 msgstr "ക്ലിപ്പിങ് തടയുക (ശുപാര്‍ശ ചെയ്യപ്പെട്ടത്)"
 
-#: src/audacious/ui_preferences.c:149
+#: src/audacious/ui_preferences.c:140
 msgid "<b>Adjust Levels</b>"
 msgstr "<b>ലെവലുകള്‍ ക്രമീകരിയ്ക്കുക</b>"
 
-#: src/audacious/ui_preferences.c:150
+#: src/audacious/ui_preferences.c:141
 msgid "Amplify all files:"
 msgstr "എല്ലാ ഫയലുകളും ആംപ്ലിഫൈ ചെയ്യുക"
 
-#: src/audacious/ui_preferences.c:152 src/audacious/ui_preferences.c:155
+#: src/audacious/ui_preferences.c:143 src/audacious/ui_preferences.c:146
 msgid "dB"
 msgstr "dB"
 
-#: src/audacious/ui_preferences.c:153
+#: src/audacious/ui_preferences.c:144
 msgid "Amplify untagged files:"
 msgstr "അണ്‍ടാഗ്ഡ് ഫയലുകള്‍ ആംപ്ലിഫൈ ചെയ്യുക:"
 
-#: src/audacious/ui_preferences.c:158
+#: src/audacious/ui_preferences.c:149
 msgid "Proxy hostname:"
 msgstr "പ്രോക്സി ഹോസ്റ്റ്നെയിം:"
 
-#: src/audacious/ui_preferences.c:159
+#: src/audacious/ui_preferences.c:150
 msgid "Proxy port:"
 msgstr "പ്രോക്സി പോര്‍ട്ട്"
 
-#: src/audacious/ui_preferences.c:162
+#: src/audacious/ui_preferences.c:153
 msgid "Proxy username:"
 msgstr "പ്രോക്സി ഉപയോക്തൃനാമം"
 
-#: src/audacious/ui_preferences.c:163
+#: src/audacious/ui_preferences.c:154
 msgid "Proxy password:"
 msgstr "പ്രോക്സി അടയാളവാക്യം"
 
-#: src/audacious/ui_preferences.c:167
+#: src/audacious/ui_preferences.c:158
 msgid "<b>Proxy Configuration</b>"
 msgstr "<b>പ്രോക്സി ക്രമീകരണം</b>"
 
-#: src/audacious/ui_preferences.c:168
+#: src/audacious/ui_preferences.c:159
 msgid "Enable proxy usage"
 msgstr "പ്രോക്സി ഉപയോഗം സാദ്ധ്യമാക്കുക"
 
-#: src/audacious/ui_preferences.c:171
+#: src/audacious/ui_preferences.c:162
 msgid "Use authentication with proxy"
 msgstr "പ്രോക്സി ഉപയോഗിച്ചുകൊണ്ടുള്ള ഓതന്റിക്കേഷന്‍ സാദ്ധ്യമാക്കുക"
 
-#: src/audacious/ui_preferences.c:179
+#: src/audacious/ui_preferences.c:170
 msgid "Auto character encoding detector for:"
 msgstr "ഇതിനായി ഓട്ടോ ക്യാരക്റ്റര്‍ എന്‍കോഡിങ് ഡിറ്റക്റ്റര്‍:"
 
-#: src/audacious/ui_preferences.c:183
+#: src/audacious/ui_preferences.c:174
 msgid "Fallback character encodings:"
 msgstr "ഫാള്‍ബാക്ക് ക്യാരക്റ്റര്‍ എന്‍കോഡിങ്ങുകള്‍:"
 
-#: src/audacious/ui_preferences.c:187
+#: src/audacious/ui_preferences.c:178
 msgid "<b>Behavior</b>"
 msgstr "<b>സ്വഭാവം</b>"
 
-#: src/audacious/ui_preferences.c:188
+#: src/audacious/ui_preferences.c:179
 msgid "Continue playback on startup"
 msgstr "പ്രാരംഭസമയത്ത് പാടല്‍ തുടരുക"
 
-#: src/audacious/ui_preferences.c:190
+#: src/audacious/ui_preferences.c:181
 msgid "Advance when the current song is deleted"
 msgstr "ഈ പാട്ട് ഡിലീറ്റായാല്‍ മുന്നോട്ടുനീങ്ങുക"
 
-#: src/audacious/ui_preferences.c:192
+#: src/audacious/ui_preferences.c:183
 msgid "Clear the playlist when opening files"
 msgstr "ഫയലുകള്‍ തുറക്കുമ്പോള്‍ പ്ലേലിസ്റ്റ് വെടിപ്പാക്കുക"
 
-#: src/audacious/ui_preferences.c:194
+#: src/audacious/ui_preferences.c:185
 msgid "Open files in a temporary playlist"
 msgstr "ഫയലുകള്‍ ഒരു താത്കാലികപ്ലേലിസ്റ്റില്‍ തുറക്കുക"
 
-#: src/audacious/ui_preferences.c:196
+#: src/audacious/ui_preferences.c:187
 msgid "Do not load metadata for songs until played"
 msgstr "പാട്ടുകള്‍ പാടുന്നതുവരെ മെറ്റാഡാറ്റ ലോഡ് ചെയ്യേണ്ട"
 
-#: src/audacious/ui_preferences.c:199
+#: src/audacious/ui_preferences.c:190
 msgid "<b>Compatibility</b>"
 msgstr "<b>അനുയോഗ്യത</b>"
 
-#: src/audacious/ui_preferences.c:200
+#: src/audacious/ui_preferences.c:191
 msgid "Interpret \\ (backward slash) as a folder delimiter"
 msgstr "\\ (backward slash) -നെ ഒരു ഫോള്‍ഡര്‍ ഡീലിമിറ്റര്‍ ആയി വ്യാഖ്യാനിയ്ക്കുക"
 
-#: src/audacious/ui_preferences.c:207
+#: src/audacious/ui_preferences.c:198
 msgid "<b>Album Art</b>"
 msgstr "<b>ആല്‍ബം ആര്‍ട്ട്</b>"
 
-#: src/audacious/ui_preferences.c:208
+#: src/audacious/ui_preferences.c:199
 msgid "Search for images matching these words (comma-separated):"
 msgstr "ഈ വാക്കുകള്‍ക്കു യോജിച്ച ചിത്രങ്ങള്‍ക്കായി തിരയുക (കോമയാല്‍ വേര്‍തിരിയ്ക്കപ്പെട്ടത്)"
 
-#: src/audacious/ui_preferences.c:210
+#: src/audacious/ui_preferences.c:201
 msgid "Exclude images matching these words (comma-separated):"
 msgstr "ഈ വാക്കുകള്‍ക്കു യോജിച്ച ചിത്രങ്ങള്‍ ഒഴിവാക്കുക (കോമയാല്‍ വേര്‍തിരിയ്ക്കപ്പെട്ടത്)"
 
-#: src/audacious/ui_preferences.c:212
+#: src/audacious/ui_preferences.c:203
 msgid "Search for images matching song file name"
 msgstr "പാട്ടിന്റെ ഫയല്‍ നെയിമിന് യോജിച്ച ചിത്രങ്ങള്‍ക്കായി തിരയുക"
 
-#: src/audacious/ui_preferences.c:214
+#: src/audacious/ui_preferences.c:205
 msgid "Search recursively"
 msgstr "റിക്കര്‍സീവ് ആയി തിരയുക"
 
-#: src/audacious/ui_preferences.c:216
+#: src/audacious/ui_preferences.c:207
 msgid "Search depth:"
 msgstr "സേര്‍ച്ച് ഡെപ്ത്:"
 
-#: src/audacious/ui_preferences.c:219
+#: src/audacious/ui_preferences.c:210
 msgid "<b>Popup Information</b>"
 msgstr "<b>പോപ്പപ്പ് വിവരം</b>"
 
-#: src/audacious/ui_preferences.c:220
+#: src/audacious/ui_preferences.c:211
 msgid "Show popup information"
 msgstr "പോപ്പപ് വിവരം പ്രദര്‍ശിപ്പിയ്ക്കുക"
 
-#: src/audacious/ui_preferences.c:222
+#: src/audacious/ui_preferences.c:213
 msgid "Popup delay (tenths of a second):"
 msgstr "പോപ്പപ്പ് വൈകല്‍ (ഒരു സെക്കന്‍ഡിന്റെ പത്തിലൊന്നുകള്‍)"
 
-#: src/audacious/ui_preferences.c:225
+#: src/audacious/ui_preferences.c:216
 msgid "Show time scale for current song"
 msgstr "ഈ പാട്ടിന്റെ ടൈം സ്കെയില്‍ കാണിയ്ക്കുക"
 
-#: src/audacious/ui_preferences.c:239
+#: src/audacious/ui_preferences.c:230
 msgid "TITLE"
 msgstr "TITLE"
 
-#: src/audacious/ui_preferences.c:240
+#: src/audacious/ui_preferences.c:231
 msgid "ARTIST - TITLE"
 msgstr "ARTIST - TITLE"
 
-#: src/audacious/ui_preferences.c:241
+#: src/audacious/ui_preferences.c:232
 msgid "ARTIST - ALBUM - TITLE"
 msgstr "ARTIST - ALBUM - TITLE"
 
-#: src/audacious/ui_preferences.c:242
+#: src/audacious/ui_preferences.c:233
 msgid "ARTIST - ALBUM - TRACK. TITLE"
 msgstr "ARTIST - ALBUM - TRACK. TITLE"
 
-#: src/audacious/ui_preferences.c:243
+#: src/audacious/ui_preferences.c:234
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgstr "ARTIST [ ALBUM ] - TRACK. TITLE"
 
-#: src/audacious/ui_preferences.c:244
+#: src/audacious/ui_preferences.c:235
 msgid "ALBUM - TITLE"
 msgstr "ALBUM - TITLE"
 
-#: src/audacious/ui_preferences.c:457
+#: src/audacious/ui_preferences.c:435
 msgid "Category"
 msgstr "വിഭാഗം"
 
-#: src/audacious/ui_preferences.c:995
+#: src/audacious/ui_preferences.c:961
 msgid "Custom"
 msgstr "സ്വേച്ഛയാലുള്ള"
 
-#: src/audacious/ui_preferences.c:1032
+#: src/audacious/ui_preferences.c:998
 msgid "<b>Song Display</b>"
 msgstr "<b>സോങ് ഡിസ്പ്ലേ</b>"
 
-#: src/audacious/ui_preferences.c:1041
+#: src/audacious/ui_preferences.c:1007
 msgid "Show song numbers"
 msgstr "പാട്ടുനമ്പറുകള്‍ കാണിയ്ക്കുക"
 
-#: src/audacious/ui_preferences.c:1052
+#: src/audacious/ui_preferences.c:1018
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr "തുടക്കത്തിലുള്ള പൂജ്യങ്ങള്‍ കാണിയ്ക്കുക (2:00 എന്നതിനുപകരം 02:00)"
 
-#: src/audacious/ui_preferences.c:1072
+#: src/audacious/ui_preferences.c:1038
 msgid "Show information about titlestring format"
 msgstr "ടൈറ്റില്‍സ്ട്രിങ് ഫോര്‍മാറ്റുമായി ബന്ധപ്പെട്ട വിവരം പ്രദര്‍ശിപ്പിയ്ക്കുക"
 
-#: src/audacious/ui_preferences.c:1086
+#: src/audacious/ui_preferences.c:1052
 msgid "Custom string:"
 msgstr "സ്വേച്ഛയാലുള്ള എഴുത്ത്:"
 
-#: src/audacious/ui_preferences.c:1091
+#: src/audacious/ui_preferences.c:1057
 msgid "Title format:"
 msgstr "ടൈറ്റില്‍ ഫോര്‍മാറ്റ്:"
 
-#: src/audacious/ui_preferences.c:1178
+#: src/audacious/ui_preferences.c:1144
 msgid "Output plugin:"
 msgstr "ഔട്പുട്ട് പ്ലഗ്ഗിന്‍"
 
-#: src/audacious/ui_preferences.c:1237
+#: src/audacious/ui_preferences.c:1203
 msgid "Transport"
 msgstr "കടത്തുക"
 
-#: src/audacious/ui_preferences.c:1237
+#: src/audacious/ui_preferences.c:1203
 msgid "Input"
 msgstr "ഇന്‍പുട്ട്"
 
-#: src/audacious/ui_preferences.c:1238
+#: src/audacious/ui_preferences.c:1204
 msgid "Effect"
 msgstr "പ്രഭാവം"
 
-#: src/audacious/ui_preferences.c:1238
+#: src/audacious/ui_preferences.c:1204
 msgid "Visualization"
 msgstr "ദൃശ്യവത്കരണം"
 
-#: src/audacious/ui_preferences.c:1238
+#: src/audacious/ui_preferences.c:1204
 msgid "General"
 msgstr "പൊതുവായ"
 
-#: src/audacious/ui_preferences.c:1274
+#: src/audacious/ui_preferences.c:1239
 msgid "Audacious Preferences"
 msgstr "ഒഡാഷ്യസ് മുന്‍ഗണനകള്‍"
 

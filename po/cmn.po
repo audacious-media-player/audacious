@@ -1,107 +1,108 @@
-# Albanian translation for Audacious
+# Mandarin translation for Audacious
 # Copyright (C) Audacious translators
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
-# natird <dritan86@gmail.com>, 2012
+# Ruei-Yuan Lu <RueiYuan.Lu@gmail.com>, 2011
+# Wai Hon Law <whhone@gmail.com>, 2013
+# Wei-Lun Chao <bluebat@member.fsf.org>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
 "POT-Creation-Date: 2014-01-03 15:24+0100\n"
-"PO-Revision-Date: 2013-02-03 20:17+0000\n"
-"Last-Translator: Radioactiveman <thomas-lange2@gmx.de>\n"
-"Language-Team: Albanian (http://www.transifex.com/projects/p/audacious/"
-"language/sq/)\n"
-"Language: sq\n"
+"PO-Revision-Date: 2013-12-19 03:50+0000\n"
+"Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
+"Language-Team: Chinese (Mandarin) (http://www.transifex.com/projects/p/"
+"audacious/language/cmn/)\n"
+"Language: cmn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: src/audacious/adder.c:74
 msgid "Searching ..."
-msgstr "Duke kërkuar"
+msgstr "搜尋中…"
 
 #: src/audacious/adder.c:102
 #, c-format
 msgid "%d file found"
 msgid_plural "%d files found"
-msgstr[0] "%d skedar i gjetur"
-msgstr[1] "%d skedar i gjetur"
+msgstr[0] "找到 %d 個檔案"
 
 #: src/audacious/chardet.c:38
 msgid "  (invalid UTF-8)"
-msgstr "(UTF-8 e pavleshme)"
+msgstr "  (無效的 UTF-8 字串)"
 
 #: src/audacious/equalizer_preset.c:171
 #, c-format
 msgid "Error importing Winamp EQF file '%s'"
-msgstr "Gabim në kalimin e skedarit Winamp EQF '%s'"
+msgstr "匯入 Winamp EQF 檔時發生錯誤「%s」"
 
 #: src/audacious/main.c:232
 msgid "Skip backwards in playlist"
-msgstr "Kalo mbrapa në këngëlist"
+msgstr "切換至播放列表的上一首"
 
 #: src/audacious/main.c:233
 msgid "Start playing current playlist"
-msgstr "Fillo duke luajtur këngëlistën në vazhdim"
+msgstr "開始播放目前的播放列表"
 
 #: src/audacious/main.c:234
 msgid "Pause current song"
-msgstr "Pushim këngës në vazhdim"
+msgstr "暫停播放目前歌曲"
 
 #: src/audacious/main.c:235
 msgid "Stop current song"
-msgstr "Ndalo këngën në vazhdim"
+msgstr "停止播放目前歌曲"
 
 #: src/audacious/main.c:236
 msgid "Pause if playing, play otherwise"
-msgstr "pushim nëse luhet , luaj përndryshe"
+msgstr "若播放中則暫停，否則繼續播放"
 
 #: src/audacious/main.c:237
 msgid "Skip forward in playlist"
-msgstr "Kalo përpara në këngëlist"
+msgstr "切換至播放列表的下一首"
 
 #: src/audacious/main.c:238
 msgid "Display Jump to File dialog"
-msgstr "Ekranizo kalimin në dialogun e Skedarit "
+msgstr "顯示跳至檔案對話視窗"
 
 #: src/audacious/main.c:239
 msgid "Add files to the playlist"
-msgstr "Shto skedë k"
+msgstr "加入檔案至播放列表"
 
 #: src/audacious/main.c:240
 msgid "Add new files to a temporary playlist"
-msgstr "Shto nje skedë të re në këngëlistën e përkohëshme"
+msgstr "加入檔案至暫存播放列表"
 
 #: src/audacious/main.c:241
 msgid "Display the main window"
-msgstr "Ekranizo dritaren kryesore"
+msgstr "顯示主視窗"
 
 #: src/audacious/main.c:242
 msgid "Headless mode"
-msgstr ""
+msgstr "隱形模式"
 
 #: src/audacious/main.c:243
 msgid "Quit on playback stop"
-msgstr ""
+msgstr "播放停止後離開"
 
 #: src/audacious/main.c:244
 msgid "Show version"
-msgstr "Trego variantin"
+msgstr "顯示版本資訊"
 
 #: src/audacious/main.c:245
 msgid "Print debugging messages"
-msgstr "Shtyp mesazhin e debagut"
+msgstr "顯示除錯訊息"
 
 #: src/audacious/main.c:246
 msgid "FILE..."
-msgstr "SKEDAR..."
+msgstr "檔案…"
 
 #: src/audacious/main.c:258
 msgid "- play multimedia files"
-msgstr "- luaj skedar multimediatik"
+msgstr "- 播放多媒體檔案"
 
 #: src/audacious/main.c:265
 #, c-format
@@ -109,8 +110,8 @@ msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
 msgstr ""
-"%s: %s\n"
-"Përpiqu `%s --ndihëmo' për më shumë informacion.\n"
+"%s：%s\n"
+"請嘗試用「%s --help」取得更多資訊。\n"
 
 #: src/audacious/main.c:565
 msgid "Audacious"
@@ -119,499 +120,494 @@ msgstr "Audacious"
 #: src/audacious/playback.c:379
 #, c-format
 msgid "No decoder found for %s."
-msgstr "Asnjë dekoder nuk u gjetë për %s."
+msgstr "找不到適用於 %s 的解碼器。"
 
 #: src/audacious/playback.c:417
 #, c-format
 msgid "%s could not be opened."
-msgstr ""
+msgstr "無法開啟 %s。"
 
 #: src/audacious/playlist-files.c:50
 #, c-format
 msgid "Cannot %s %s: unsupported file extension."
-msgstr "Nuk mundet %s %s: shtrirja e skedarit e pa mbështetur."
+msgstr "無法 %s %s：未支援的副檔名。"
 
 #: src/audacious/playlist-files.c:51
 msgid "save"
-msgstr "ruaj"
+msgstr "儲存"
 
 #: src/audacious/playlist-files.c:51
 msgid "load"
-msgstr "ngarko"
+msgstr "載入"
 
 #: src/audacious/playlist-files.c:133
 #, fuzzy, c-format
 msgid "Cannot save %s: plugin does not support saving."
-msgstr "Nuk mundet %s %s: shtrirja e skedarit e pa mbështetur."
+msgstr "無法 %s %s：未支援的副檔名。"
 
 #: src/audacious/playlist-new.c:96
 msgid "New Playlist"
-msgstr "Këngëlist e Re"
+msgstr "新播放列表"
 
 #: src/audacious/playlist-new.c:97
 msgid "Now Playing"
-msgstr "Tani duke Luajtur"
+msgstr "正在播放"
 
 #: src/audacious/playlist-new.c:1670
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress "
 "(or has been disabled)."
-msgstr ""
-"Këngëlista nuk mund të zgjidhet për shkak skanimi i metadatas është ende në "
-"zhvillim e sipër (ose ka qenë çaktivizuar)."
+msgstr "因為正在進行詮釋資料的掃描，無法對播放列表進行排序。(或者已經被關閉)"
 
 #: src/audacious/plugin-preferences.c:54
 #, c-format
 msgid "About %s"
-msgstr "Rreth %s"
+msgstr "關於 %s"
 
 #: src/audacious/plugin-preferences.c:92
 #, c-format
 msgid "%s Settings"
-msgstr "%s Konfigurimet"
+msgstr "%s 設定值"
 
 #: src/audacious/ui_preferences.c:67
 msgid "Audio"
-msgstr "Zëri"
+msgstr "音訊"
 
 #: src/audacious/ui_preferences.c:68
 msgid "Network"
-msgstr "Rrejt"
+msgstr "網路"
 
 #: src/audacious/ui_preferences.c:69 src/audacious/ui_preferences.c:1203
 msgid "Playlist"
-msgstr "Këngëlist"
+msgstr "播放列表"
 
 #: src/audacious/ui_preferences.c:70
 msgid "Song Info"
-msgstr "të dhënat e këngës"
+msgstr "歌曲資訊"
 
 #: src/audacious/ui_preferences.c:71
 msgid "Plugins"
-msgstr "Plugine"
+msgstr "外掛"
 
 #: src/audacious/ui_preferences.c:77 src/libaudgui/infopopup.c:150
 msgid "Artist"
-msgstr "Artist"
+msgstr "演出者"
 
 #: src/audacious/ui_preferences.c:78 src/libaudgui/infopopup.c:151
 msgid "Album"
-msgstr "Album"
+msgstr "專輯"
 
 #: src/audacious/ui_preferences.c:79 src/libaudgui/infopopup.c:149
 #: src/libaudgui/ui_playlist_manager.c:286
 msgid "Title"
-msgstr "Titull"
+msgstr "標題"
 
 #: src/audacious/ui_preferences.c:80
 msgid "Tracknumber"
-msgstr "Numërkënga"
+msgstr "音軌編號"
 
 #: src/audacious/ui_preferences.c:81 src/libaudgui/infopopup.c:152
 msgid "Genre"
-msgstr "Lloji"
+msgstr "類型"
 
 #: src/audacious/ui_preferences.c:82
 msgid "Filename"
-msgstr "Emëriskedarit"
+msgstr "檔案名稱"
 
 #: src/audacious/ui_preferences.c:83
 msgid "Filepath"
-msgstr "Shtegëskedari"
+msgstr "檔案路徑"
 
 #: src/audacious/ui_preferences.c:84
 msgid "Date"
-msgstr "Datë"
+msgstr "日期"
 
 #: src/audacious/ui_preferences.c:85 src/libaudgui/infopopup.c:153
 msgid "Year"
-msgstr "Vitë"
+msgstr "年分"
 
 #: src/audacious/ui_preferences.c:86
 msgid "Comment"
-msgstr "Koment"
+msgstr "備註"
 
 #: src/audacious/ui_preferences.c:87
 msgid "Codec"
-msgstr "Kodek"
+msgstr "編解碼器"
 
 #: src/audacious/ui_preferences.c:88
 msgid "Quality"
-msgstr "Cilësi"
+msgstr "品質"
 
 #: src/audacious/ui_preferences.c:94
 msgid "None"
-msgstr "Asnjë"
+msgstr "無"
 
 #: src/audacious/ui_preferences.c:95
 msgid "Arabic"
-msgstr "Arabisht"
+msgstr "阿拉伯語"
 
 #: src/audacious/ui_preferences.c:96
 msgid "Baltic"
-msgstr "Baltike"
+msgstr "波羅的海"
 
 #: src/audacious/ui_preferences.c:97
 msgid "Chinese"
-msgstr "Kinezëçe"
+msgstr "漢語"
 
 #: src/audacious/ui_preferences.c:98
 msgid "Greek"
-msgstr "Greqisht"
+msgstr "希臘語"
 
 #: src/audacious/ui_preferences.c:99
 msgid "Hebrew"
-msgstr "Hebraishte"
+msgstr "希伯來語"
 
 #: src/audacious/ui_preferences.c:100
 msgid "Japanese"
-msgstr "Japonisht"
+msgstr "日本語"
 
 #: src/audacious/ui_preferences.c:101
 msgid "Korean"
-msgstr "Koreane"
+msgstr "韓語"
 
 #: src/audacious/ui_preferences.c:102
 msgid "Polish"
-msgstr "Polonisht"
+msgstr "波蘭語"
 
 #: src/audacious/ui_preferences.c:103
 msgid "Russian"
-msgstr "Rusisht"
+msgstr "俄語"
 
 #: src/audacious/ui_preferences.c:104
 msgid "Taiwanese"
-msgstr "Tavanisht"
+msgstr "傳統字漢語"
 
 #: src/audacious/ui_preferences.c:105
 msgid "Turkish"
-msgstr "Turqisht"
+msgstr "土耳其語"
 
 #: src/audacious/ui_preferences.c:112
 msgid "Floating point"
-msgstr "Pika lundrues"
+msgstr "浮點數"
 
 #: src/audacious/ui_preferences.c:119
 msgid "Album mode"
-msgstr "Mënyra Album"
+msgstr "專輯模式"
 
 #: src/audacious/ui_preferences.c:122
 msgid "<b>Output Settings</b>"
-msgstr "<b>Konfigurimet e Prodhimit</b>"
+msgstr "<b>輸出設定</b>"
 
 #: src/audacious/ui_preferences.c:124
 msgid "Bit depth:"
-msgstr "Thellësia e Bitit"
+msgstr "取樣格式："
 
 #: src/audacious/ui_preferences.c:127
 msgid "Buffer size:"
-msgstr "Madhësia e Bufferit"
+msgstr "緩衝區大小："
 
 #: src/audacious/ui_preferences.c:129
 msgid "ms"
-msgstr "ms"
+msgstr "毫秒"
 
 #: src/audacious/ui_preferences.c:130
 msgid "Soft clipping"
-msgstr "Prerëje e butë"
+msgstr "軟性削峰"
 
 #: src/audacious/ui_preferences.c:132
 msgid "Use software volume control (not recommended)"
-msgstr "Përdorimi i programit të kontrollit të volumit (nuk rekomandohet)"
+msgstr "使用軟體音量控制 (不建議開啟)"
 
 #: src/audacious/ui_preferences.c:134
 msgid "<b>Replay Gain</b>"
-msgstr "<b>Riluaj Gain</b>"
+msgstr "<b>播放增益</b>"
 
 #: src/audacious/ui_preferences.c:135
 msgid "Enable Replay Gain"
-msgstr "Aktivizo Rregulluesin Zanor"
+msgstr "啟用播放增益"
 
 #: src/audacious/ui_preferences.c:138
 msgid "Prevent clipping (recommended)"
-msgstr "Parandalo klipimin (e recomanduara)"
+msgstr "防止訊號裁剪 (建議開啟)"
 
 #: src/audacious/ui_preferences.c:140
 msgid "<b>Adjust Levels</b>"
-msgstr "<b>Rregullo Livelet </b>"
+msgstr "<b>調整音量</b>"
 
 #: src/audacious/ui_preferences.c:141
 msgid "Amplify all files:"
-msgstr "Amplifiko te gjitha skedarët"
+msgstr "放大所有檔案的音量："
 
 #: src/audacious/ui_preferences.c:143 src/audacious/ui_preferences.c:146
 msgid "dB"
-msgstr "dB"
+msgstr "分貝"
 
 #: src/audacious/ui_preferences.c:144
 msgid "Amplify untagged files:"
-msgstr "Amplifiko skedarët e pa etiketuar"
+msgstr "放大無標籤檔案的音量："
 
 #: src/audacious/ui_preferences.c:149
 msgid "Proxy hostname:"
-msgstr "Prokura emërbuajtëse"
+msgstr "代理伺服器名稱："
 
 #: src/audacious/ui_preferences.c:150
 msgid "Proxy port:"
-msgstr "Prokura portë"
+msgstr "代理伺服器通訊埠："
 
 #: src/audacious/ui_preferences.c:153
 msgid "Proxy username:"
-msgstr "Prokura emërpërdorim"
+msgstr "代理伺服器使用者名稱："
 
 #: src/audacious/ui_preferences.c:154
 msgid "Proxy password:"
-msgstr "Prokura fjalëkalim"
+msgstr "代理伺服器密碼："
 
 #: src/audacious/ui_preferences.c:158
 msgid "<b>Proxy Configuration</b>"
-msgstr "<b>Konfigurim i Prokurës</b>"
+msgstr "<b>代理伺服器設定</b>"
 
 #: src/audacious/ui_preferences.c:159
 msgid "Enable proxy usage"
-msgstr "Aktivizo përdorimin e prokurës"
+msgstr "啟用代理伺服器"
 
 #: src/audacious/ui_preferences.c:162
 msgid "Use authentication with proxy"
-msgstr "Përdorni vertetimi me prokurë"
+msgstr "需要認證"
 
 #: src/audacious/ui_preferences.c:170
 msgid "Auto character encoding detector for:"
-msgstr "Vetë karakteri duke koduar detektor për:"
+msgstr "自動偵測字元編碼："
 
 #: src/audacious/ui_preferences.c:174
 msgid "Fallback character encodings:"
-msgstr "Kodifikimet follbek karakter:"
+msgstr "備用字元編碼："
 
 #: src/audacious/ui_preferences.c:178
 msgid "<b>Behavior</b>"
-msgstr "<b>Sjellëjet</b>"
+msgstr "<b>行為</b>"
 
 #: src/audacious/ui_preferences.c:179
 msgid "Continue playback on startup"
-msgstr "Vazhdo playback në fillimin e"
+msgstr "啟動後繼續之前的播放"
 
 #: src/audacious/ui_preferences.c:181
 msgid "Advance when the current song is deleted"
-msgstr "Përparo kur kënga e tanishme është fshirë"
+msgstr "目前的歌曲被刪除時移至下一首"
 
 #: src/audacious/ui_preferences.c:183
 msgid "Clear the playlist when opening files"
-msgstr "Fshi këngëlistës kur hapen e skedarët"
+msgstr "開啟檔案後清除播放列表"
 
 #: src/audacious/ui_preferences.c:185
 msgid "Open files in a temporary playlist"
-msgstr "Hap skedarët në një këngëlist të përkohshëme"
+msgstr "在暫存播放列表中開啟檔案"
 
 #: src/audacious/ui_preferences.c:187
 msgid "Do not load metadata for songs until played"
-msgstr "Mos ngarko metadata për këngën derisa të luahet"
+msgstr "在歌曲播放以前不要載入詮釋資料"
 
 #: src/audacious/ui_preferences.c:190
 msgid "<b>Compatibility</b>"
-msgstr "<b>Pajtueshmëri</b>"
+msgstr "<b>相容性</b>"
 
 #: src/audacious/ui_preferences.c:191
 msgid "Interpret \\ (backward slash) as a folder delimiter"
-msgstr "Interpreto \\ (slash e prapambetur) si një Kufizues dosjesh"
+msgstr "將 \\ (反斜線) 視為資料夾分隔符號"
 
 #: src/audacious/ui_preferences.c:198
 msgid "<b>Album Art</b>"
-msgstr "<b>Albumi Art</b>"
+msgstr "<b>專輯封面</b>"
 
 #: src/audacious/ui_preferences.c:199
 msgid "Search for images matching these words (comma-separated):"
-msgstr "Kërko per figura që i përkojnë këtyre fjalëve ( të ndara me presje)"
+msgstr "搜尋符合這些單字的圖片 (以逗號分隔)："
 
 #: src/audacious/ui_preferences.c:201
 msgid "Exclude images matching these words (comma-separated):"
-msgstr "Përjashto imazhet që përkojnë këto fjalë (të ndara me presje-):"
+msgstr "排除符合這些單字的圖片 (以逗號分隔)："
 
 #: src/audacious/ui_preferences.c:203
 msgid "Search for images matching song file name"
-msgstr "Kërko për imazhe që përputhen me emëri e skedarit këngë"
+msgstr "搜尋符合歌曲檔名的圖片"
 
 #: src/audacious/ui_preferences.c:205
 msgid "Search recursively"
-msgstr "Kërkim rekursivisht"
+msgstr "遞迴搜尋"
 
 #: src/audacious/ui_preferences.c:207
 msgid "Search depth:"
-msgstr "Kërko thellësi:"
+msgstr "搜尋深度："
 
 #: src/audacious/ui_preferences.c:210
 msgid "<b>Popup Information</b>"
-msgstr "<b>Informacioni Popap</b>"
+msgstr "<b>彈出式資訊視窗</b>"
 
 #: src/audacious/ui_preferences.c:211
 msgid "Show popup information"
-msgstr "Trego informacion popap"
+msgstr "顯示彈出式資訊視窗"
 
 #: src/audacious/ui_preferences.c:213
 msgid "Popup delay (tenths of a second):"
-msgstr "Vonesë popapi (të dhjetat e një sekonde):"
+msgstr "彈出視窗的延遲時間 (十分之一秒)："
 
 #: src/audacious/ui_preferences.c:216
 msgid "Show time scale for current song"
-msgstr "Trego shkallëkohën për këngën e tanishme"
+msgstr "顯示目前歌曲的時間軸"
 
 #: src/audacious/ui_preferences.c:230
 msgid "TITLE"
-msgstr "TITULLI"
+msgstr "標題"
 
 #: src/audacious/ui_preferences.c:231
 msgid "ARTIST - TITLE"
-msgstr "ARTIST - TITULLI"
+msgstr "演出者 - 標題"
 
 #: src/audacious/ui_preferences.c:232
 msgid "ARTIST - ALBUM - TITLE"
-msgstr "ARTIST - ALBUMI - TITULLI"
+msgstr "演出者 - 專輯 - 標題"
 
 #: src/audacious/ui_preferences.c:233
 msgid "ARTIST - ALBUM - TRACK. TITLE"
-msgstr "ARTISTI - ALBUMI - KËNGA. TITULLI"
+msgstr "演出者 - 專輯 - 音軌. 標題"
 
 #: src/audacious/ui_preferences.c:234
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
-msgstr "ARTISTI [ ALBUMI ] - KËNGA. TITULLI"
+msgstr "演出者 [ 專輯 ] - 音軌. 標題"
 
 #: src/audacious/ui_preferences.c:235
 msgid "ALBUM - TITLE"
-msgstr "TITULLI I ALBUMIT"
+msgstr "專輯 - 標題"
 
 #: src/audacious/ui_preferences.c:435
 msgid "Category"
-msgstr "Kategoria"
+msgstr "目錄"
 
 #: src/audacious/ui_preferences.c:961
 msgid "Custom"
-msgstr "Porosi"
+msgstr "自訂"
 
 #: src/audacious/ui_preferences.c:998
 msgid "<b>Song Display</b>"
-msgstr "<b>Ekranizimi i Këngës</b>"
+msgstr "<b>顯示歌曲</b>"
 
 #: src/audacious/ui_preferences.c:1007
 msgid "Show song numbers"
-msgstr "Trego numwrin e kwngws"
+msgstr "顯示歌曲編號"
 
 #: src/audacious/ui_preferences.c:1018
 msgid "Show leading zeroes (02:00 instead of 2:00)"
-msgstr "Trego zeron kryesore (2:00 në vend të 02:00)"
+msgstr "顯示開頭的數字零 (例：02:00 而不是 2:00)"
 
 #: src/audacious/ui_preferences.c:1038
 msgid "Show information about titlestring format"
-msgstr "Trego informacion në lidhje me formatin e rrjeshtit e titullit"
+msgstr "顯示關於標題字串格式的資訊"
 
 #: src/audacious/ui_preferences.c:1052
 msgid "Custom string:"
-msgstr "Vargu me porosi"
+msgstr "自訂字串："
 
 #: src/audacious/ui_preferences.c:1057
 msgid "Title format:"
-msgstr "Formati i titullit"
+msgstr "標題格式："
 
 #: src/audacious/ui_preferences.c:1144
 msgid "Output plugin:"
-msgstr "Shtojca e Prodhimit"
+msgstr "輸出外掛："
 
 #: src/audacious/ui_preferences.c:1203
 msgid "Transport"
-msgstr "Trasport"
+msgstr "傳輸"
 
 #: src/audacious/ui_preferences.c:1203
 msgid "Input"
-msgstr "Të dhëna"
+msgstr "輸入"
 
 #: src/audacious/ui_preferences.c:1204
 msgid "Effect"
-msgstr "Pasojat"
+msgstr "特效"
 
 #: src/audacious/ui_preferences.c:1204
 msgid "Visualization"
-msgstr "Vizualizimi"
+msgstr "視覺特效"
 
 #: src/audacious/ui_preferences.c:1204
 msgid "General"
-msgstr "E përgjithëshme"
+msgstr "一般"
 
 #: src/audacious/ui_preferences.c:1239
 msgid "Audacious Preferences"
-msgstr "Preferncat e Audaciuos"
+msgstr "Audacious 偏好設定"
 
 #: src/audacious/util.c:114
 #, c-format
 msgid "Could not create directory (%s): %s\n"
-msgstr "Nuk mund të krijoj direktori (%s): %s\n"
+msgstr "無法建立資料夾 (%s)：%s\n"
 
 #: src/audtool/handlers_playlist.c:262
 msgid "Position not found."
-msgstr "Vendëndodhja nuk gjendet"
+msgstr "找不到位址。"
 
 #: src/audtool/handlers_vitals.c:51
 msgid "No song playing."
-msgstr "Asnjë kënge nuk luhet"
+msgstr "無播放中歌曲。"
 
 #: src/libaudcore/audstrings.c:203
 #, c-format
 msgid "Audio CD, track %s"
-msgstr "Audio CD, udhë %s"
+msgstr "音樂 CD，音軌 %s"
 
 #: src/libaudcore/tuple.c:543
 msgid "Mono"
-msgstr "Mono"
+msgstr "單聲道"
 
 #: src/libaudcore/tuple.c:545
 msgid "Stereo"
-msgstr "Sterejo"
+msgstr "立體聲"
 
 #: src/libaudcore/tuple.c:547
 #, c-format
 msgid "%d channel"
 msgid_plural "%d channels"
-msgstr[0] "%d kanale"
-msgstr[1] "%d kanalet"
+msgstr[0] "%d 聲道"
 
 #: src/libaudgui/about.c:37
 msgid "Credits"
-msgstr "Kredite"
+msgstr "開發團隊"
 
 #: src/libaudgui/about.c:37
 msgid "License"
-msgstr "Liçenca"
+msgstr "授權條款"
 
 #: src/libaudgui/about.c:73
 msgid "About Audacious"
-msgstr "Rreth Audaciousit"
+msgstr "關於 Audacious"
 
 #: src/libaudgui/confirm.c:66
 #, c-format
 msgid ""
 "Are you sure you want to close %s?  If you do, any changes made since the "
 "playlist was exported will be lost."
-msgstr ""
-"Jeni te sigurte qe doni te mbyllni %s?  Nëse ju e kryeni, çdo ndryshim i "
-"bërë deri kur këngëlista u eksportuar do të humbas."
+msgstr "您確定要關閉 %s？ 所有未匯出的資料將會遺失。"
 
 #: src/libaudgui/confirm.c:73
 msgid "Close Playlist"
-msgstr "Mbyll Këngëlistën"
+msgstr "關閉播放列表"
 
 #: src/libaudgui/confirm.c:77
 msgid "_Don't show this message again"
-msgstr "_Mos e trego këtë mesazh përsëri"
+msgstr "不要再顯示這個訊息(_D)"
 
 #: src/libaudgui/confirm.c:100
 msgid "Rename Playlist"
-msgstr "Riemëro këngëlistën"
+msgstr "重新命名播放列表"
 
 #: src/libaudgui/effects-menu.c:70
 msgid "settings ..."
-msgstr "Konfigurimet ..."
+msgstr "設定…"
 
 #: src/libaudgui/equalizer.c:50
 msgid "_Enable"
-msgstr "_Aktivizo"
+msgstr "啟用(_E)"
 
 #: src/libaudgui/equalizer.c:123
 msgid "31 Hz"
@@ -655,31 +651,31 @@ msgstr "16 kHz"
 
 #: src/libaudgui/equalizer.c:130
 msgid "Equalizer"
-msgstr "Balancues"
+msgstr "等化器"
 
 #: src/libaudgui/equalizer.c:146
 msgid "Preamp"
-msgstr "Preamp"
+msgstr "前置放大"
 
 #: src/libaudgui/infopopup.c:154
 msgid "Track"
-msgstr "Udhë"
+msgstr "音軌"
 
 #: src/libaudgui/infopopup.c:155
 msgid "Length"
-msgstr "Gjatësia"
+msgstr "長度"
 
 #: src/libaudgui/infowin.c:73
 msgid "Acid Jazz"
-msgstr "Xhaz Acid"
+msgstr "迷幻爵士"
 
 #: src/libaudgui/infowin.c:74
 msgid "Acid Rock"
-msgstr "Rrok Acid"
+msgstr "迷幻搖滾"
 
 #: src/libaudgui/infowin.c:75
 msgid "Ambient"
-msgstr "Ambient"
+msgstr "氛圍音樂"
 
 #: src/libaudgui/infowin.c:76
 msgid "Bebop"
@@ -687,123 +683,123 @@ msgstr "Bebop"
 
 #: src/libaudgui/infowin.c:77
 msgid "Bluegrass"
-msgstr "Blugras"
+msgstr "藍草"
 
 #: src/libaudgui/infowin.c:78
 msgid "Blues"
-msgstr "Bluz"
+msgstr "藍調"
 
 #: src/libaudgui/infowin.c:79
 msgid "Chamber Music"
-msgstr "Muzik Dhome"
+msgstr "室內樂"
 
 #: src/libaudgui/infowin.c:80
 msgid "Classical"
-msgstr "Klasike"
+msgstr "古典"
 
 #: src/libaudgui/infowin.c:81
 msgid "Country"
-msgstr "Kauntri"
+msgstr "鄉村"
 
 #: src/libaudgui/infowin.c:82
 msgid "Death Metal"
-msgstr "Metal Vdekje"
+msgstr "死亡金屬"
 
 #: src/libaudgui/infowin.c:83
 msgid "Disco"
-msgstr "Disko"
+msgstr "迪斯可"
 
 #: src/libaudgui/infowin.c:84
 msgid "Easy Listening"
-msgstr "Dëgjimi i lehtë"
+msgstr "輕音樂"
 
 #: src/libaudgui/infowin.c:85
 msgid "Folk"
-msgstr "Folkloristike"
+msgstr "民謠"
 
 #: src/libaudgui/infowin.c:86
 msgid "Funk"
-msgstr "Funk"
+msgstr "放客"
 
 #: src/libaudgui/infowin.c:87
 msgid "Gangsta Rap"
-msgstr "Gengstarep"
+msgstr "黑幫說唱"
 
 #: src/libaudgui/infowin.c:88
 msgid "Gospel"
-msgstr "Gospel"
+msgstr "福音音樂"
 
 #: src/libaudgui/infowin.c:89
 msgid "Grunge"
-msgstr "Granxhë"
+msgstr "垃圾搖滾"
 
 #: src/libaudgui/infowin.c:90
 msgid "Hard Rock"
-msgstr "HardRrok"
+msgstr "硬式搖滾"
 
 #: src/libaudgui/infowin.c:91
 msgid "Heavy Metal"
-msgstr "Hevimetal "
+msgstr "重金屬"
 
 #: src/libaudgui/infowin.c:92
 msgid "Hip-hop"
-msgstr "Hip hop"
+msgstr "嘻哈"
 
 #: src/libaudgui/infowin.c:93
 msgid "House"
-msgstr "Hauz"
+msgstr "House"
 
 #: src/libaudgui/infowin.c:94
 msgid "Jazz"
-msgstr "Xhaz"
+msgstr "爵士"
 
 #: src/libaudgui/infowin.c:95
 msgid "Jungle"
-msgstr "Xhungël"
+msgstr "叢林"
 
 #: src/libaudgui/infowin.c:96
 msgid "Metal"
-msgstr "Metal"
+msgstr "金屬"
 
 #: src/libaudgui/infowin.c:97
 msgid "New Age"
-msgstr "Nju Eixh"
+msgstr "新世紀"
 
 #: src/libaudgui/infowin.c:98
 msgid "New Wave"
-msgstr "Valë e Re"
+msgstr "新浪潮"
 
 #: src/libaudgui/infowin.c:99
 msgid "Noise"
-msgstr "Zhurmë"
+msgstr "噪音"
 
 #: src/libaudgui/infowin.c:100
 msgid "Pop"
-msgstr "Pop"
+msgstr "流行"
 
 #: src/libaudgui/infowin.c:101
 msgid "Punk Rock"
-msgstr "Pank Rrok"
+msgstr "龐克搖滾"
 
 #: src/libaudgui/infowin.c:102
 msgid "Rap"
-msgstr "Rrep"
+msgstr "說唱"
 
 #: src/libaudgui/infowin.c:103
 msgid "Reggae"
-msgstr "Rrege"
+msgstr "雷鬼"
 
 #: src/libaudgui/infowin.c:104
 msgid "Rock"
-msgstr "Rrok"
+msgstr "搖滾 (Rock)"
 
 #: src/libaudgui/infowin.c:105
 msgid "Rock and Roll"
-msgstr "Rrok en Rroll"
+msgstr "搖滾 (Rock&Roll)"
 
 #: src/libaudgui/infowin.c:106
 msgid "Rhythm and Blues"
-msgstr "Ridhëm dhe Bluz"
+msgstr "R&B"
 
 #: src/libaudgui/infowin.c:107
 msgid "Ska"
@@ -811,19 +807,19 @@ msgstr "Ska"
 
 #: src/libaudgui/infowin.c:108
 msgid "Soul"
-msgstr "Soul"
+msgstr "靈魂"
 
 #: src/libaudgui/infowin.c:109
 msgid "Swing"
-msgstr "Suing"
+msgstr "搖擺樂"
 
 #: src/libaudgui/infowin.c:110
 msgid "Techno"
-msgstr "Tenko"
+msgstr "數位"
 
 #: src/libaudgui/infowin.c:111
 msgid "Trip-hop"
-msgstr "Trip hop"
+msgstr "迷幻舞曲"
 
 #: src/libaudgui/infowin.c:175 src/libaudgui/infowin.c:348
 #: src/libaudgui/infowin.c:351 src/libaudgui/infowin.c:354
@@ -832,55 +828,55 @@ msgstr "<span size=\"small\">n/a</span>"
 
 #: src/libaudgui/infowin.c:223
 msgid "Metadata updated successfully"
-msgstr "Metadata u përditësua me sukses"
+msgstr "成功地更新了詮釋資料"
 
 #: src/libaudgui/infowin.c:227
 msgid "Metadata updating failed"
-msgstr "Metadata përditësimin dështoj"
+msgstr "詮釋資料更新失敗"
 
 #: src/libaudgui/infowin.c:302
 msgid "Track Information"
-msgstr "Informacione e Këngës"
+msgstr "音軌資訊"
 
 #: src/libaudgui/infowin.c:337
 msgid "<span size=\"small\">Format:</span>"
-msgstr "<span size=\"small\">Format:</span>"
+msgstr "<span size=\"small\">格式：</span>"
 
 #: src/libaudgui/infowin.c:341
 msgid "<span size=\"small\">Quality:</span>"
-msgstr "<span size=\"small\">Quality:</span>"
+msgstr "<span size=\"small\">品質：</span>"
 
 #: src/libaudgui/infowin.c:344
 msgid "<span size=\"small\">Bitrate:</span>"
-msgstr "<span size=\"small\">Bitrate:</span>"
+msgstr "<span size=\"small\">位元率：</span>"
 
 #: src/libaudgui/infowin.c:368
 msgid "<span size=\"small\">Title</span>"
-msgstr "<span size=\"small\">Title</span>"
+msgstr "<span size=\"small\">標題</span>"
 
 #: src/libaudgui/infowin.c:380
 msgid "<span size=\"small\">Artist</span>"
-msgstr "<span size=\"small\">Artist</span>"
+msgstr "<span size=\"small\">演出者</span>"
 
 #: src/libaudgui/infowin.c:392
 msgid "<span size=\"small\">Album</span>"
-msgstr "<span size=\"small\">Album</span>"
+msgstr "<span size=\"small\">專輯</span>"
 
 #: src/libaudgui/infowin.c:404
 msgid "<span size=\"small\">Comment</span>"
-msgstr "<span size=\"small\">Comment</span>"
+msgstr "<span size=\"small\">備註</span>"
 
 #: src/libaudgui/infowin.c:416
 msgid "<span size=\"small\">Genre</span>"
-msgstr "<span size=\"small\">Genre</span>"
+msgstr "<span size=\"small\">類型</span>"
 
 #: src/libaudgui/infowin.c:438
 msgid "<span size=\"small\">Year</span>"
-msgstr "<span size=\"small\">Year</span>"
+msgstr "<span size=\"small\">年分</span>"
 
 #: src/libaudgui/infowin.c:447
 msgid "<span size=\"small\">Track Number</span>"
-msgstr "<span size=\"small\">Track Number</span>"
+msgstr "<span size=\"small\">音軌編號</span>"
 
 #: src/libaudgui/infowin.c:521
 #, c-format
@@ -890,109 +886,109 @@ msgstr "%d kb/s"
 #: src/libaudgui/infowin.c:548
 #, c-format
 msgid "No info available for %s.\n"
-msgstr "Asnjë e dhëne e gjindëshme për %s.\n"
+msgstr "無關於 %s 的資訊。\n"
 
 #: src/libaudgui/jump-to-time.c:51
 msgid "Jump to Time"
-msgstr "Kalo në Kohë"
+msgstr "跳至時間"
 
 #: src/libaudgui/jump-to-time.c:60
 msgid "Enter time (minutes:seconds):"
-msgstr "Hyrje kohës (minuta:sekonda)"
+msgstr "請輸入時間 (分:秒)："
 
 #: src/libaudgui/playlists.c:32
 msgid "Export Playlist"
-msgstr "Eksporto këngëlistën"
+msgstr "匯出播放列表"
 
 #: src/libaudgui/playlists.c:32
 msgid "Import Playlist"
-msgstr "Importo këngëlistën"
+msgstr "匯入播放列表"
 
 #: src/libaudgui/playlists.c:65
 #, c-format
 msgid "Overwrite %s?"
-msgstr "Mbishkruaj %s?"
+msgstr "覆寫 %s？"
 
 #: src/libaudgui/queue-manager.c:195
 msgid "Queue Manager"
-msgstr "Menaxheri i radhëve"
+msgstr "佇列管理"
 
 #: src/libaudgui/ui_fileopener.c:106
 msgid "Open Files"
-msgstr "Hap Skedarin"
+msgstr "開啟檔案"
 
 #: src/libaudgui/ui_fileopener.c:106
 msgid "Add Files"
-msgstr "Shto Skedarin"
+msgstr "加入檔案"
 
 #: src/libaudgui/ui_fileopener.c:108
 msgid "Close dialog on Open"
-msgstr "Mbyll dialog në Hapje"
+msgstr "開啟後關閉對話視窗"
 
 #: src/libaudgui/ui_fileopener.c:108
 msgid "Close dialog on Add"
-msgstr "Mbyll dialog në Shtim"
+msgstr "加入後關閉對話視窗"
 
 #: src/libaudgui/ui_jumptotrack.c:104 src/libaudgui/ui_jumptotrack.c:112
 #: src/libaudgui/ui_jumptotrack.c:331
 msgid "_Queue"
-msgstr "_Radhë"
+msgstr "排入佇列(_Q)"
 
 #: src/libaudgui/ui_jumptotrack.c:110
 msgid "Un_queue"
-msgstr "Un_radhë"
+msgstr "移出佇列(_Q)"
 
 #: src/libaudgui/ui_jumptotrack.c:261
 msgid "Jump to Song"
-msgstr "Kalo tek kënga"
+msgstr "跳至歌曲"
 
 #: src/libaudgui/ui_jumptotrack.c:286
 msgid "Filter: "
-msgstr "Filtër:"
+msgstr "過濾器："
 
 #: src/libaudgui/ui_jumptotrack.c:287
 msgid "_Filter:"
-msgstr "_Filtër:"
+msgstr "過濾器(_F)："
 
 #: src/libaudgui/ui_jumptotrack.c:297
 msgid "Remember"
-msgstr "Kujto"
+msgstr "記住"
 
 #: src/libaudgui/ui_jumptotrack.c:304
 msgid "Clea_r"
-msgstr "Pastro_j"
+msgstr "清除(_R)"
 
 #: src/libaudgui/ui_jumptotrack.c:324
 msgid "Close on Jump"
-msgstr "Mbyll në Kalim"
+msgstr "切換後關閉"
 
 #: src/libaudgui/ui_playlist_manager.c:260
 msgid "Playlist Manager"
-msgstr "Menaxher i Këngëlistës"
+msgstr "播放列表管理"
 
 #: src/libaudgui/ui_playlist_manager.c:287
 msgid "Entries"
-msgstr "Hyrjet"
+msgstr "數量"
 
 #: src/libaudgui/ui_playlist_manager.c:307
 msgid "_Rename"
-msgstr "_Riemëro"
+msgstr "重新命名(_R)"
 
 #: src/libaudgui/ui_playlist_manager.c:327
 msgid "_Close dialog on activating playlist"
-msgstr "_Mbyll Dialogun për aktivizimin këngëlistës"
+msgstr "啟用播放列表後關閉對話視窗(_C)"
 
 #: src/libaudgui/url-opener.c:55
 msgid "Open URL"
-msgstr "Hap URL"
+msgstr "開啟網址"
 
 #: src/libaudgui/url-opener.c:55
 msgid "Add URL"
-msgstr "Shto URL"
+msgstr "加入網址"
 
 #: src/libaudgui/url-opener.c:64
 msgid "Enter URL:"
-msgstr "Hyrje URL"
+msgstr "請輸入網址："
 
 #: src/libaudgui/util.c:142
 msgid ""
@@ -1000,4 +996,4 @@ msgid ""
 "(Further messages have been hidden.)"
 msgstr ""
 "\n"
-"(Mesazhe e tjera kanë qenë të fshehura.)"
+"(詳細訊息已被隱藏。)"
