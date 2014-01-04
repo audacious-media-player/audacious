@@ -861,8 +861,6 @@ void create_widgets_with_domain (void * box, const PreferencesWidget * widgets,
                     gtk_box_pack_start(GTK_BOX(widget), combo, FALSE, FALSE, 0);
                 break;
             case WIDGET_BOX:
-                gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0, 0, 0);
-
                 if (widgets[x].data.box.horizontal) {
                     widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
                 } else {
@@ -881,14 +879,15 @@ void create_widgets_with_domain (void * box, const PreferencesWidget * widgets,
                 }
                 break;
             case WIDGET_NOTEBOOK:
-                gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 6, 0, 0, 0);
+                gtk_alignment_set_padding ((GtkAlignment *) alignment, 0, 0, 0, 0);
 
                 widget = gtk_notebook_new();
 
-                int i;
-                for (i = 0; i<widgets[x].data.notebook.n_tabs; i++) {
-                    GtkWidget *vbox;
-                    vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 5);
+                for (int i = 0; i < widgets[x].data.notebook.n_tabs; i ++)
+                {
+                    GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+                    gtk_container_set_border_width ((GtkContainer *) vbox, 6);
+
                     create_widgets_with_domain ((GtkBox *) vbox,
                      widgets[x].data.notebook.tabs[i].widgets,
                      widgets[x].data.notebook.tabs[i].n_widgets, domain);
@@ -910,6 +909,10 @@ void create_widgets_with_domain (void * box, const PreferencesWidget * widgets,
             default:
                 break;
         }
+
+        /* use uniform spacing for horizontal boxes */
+        if (gtk_orientable_get_orientation ((GtkOrientable *) box) == GTK_ORIENTATION_HORIZONTAL)
+            gtk_alignment_set_padding ((GtkAlignment *) alignment, 0, 0, 0, 0);
 
         if (widget && !gtk_widget_get_parent(widget))
             gtk_container_add(GTK_CONTAINER(alignment), widget);
