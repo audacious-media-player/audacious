@@ -10,6 +10,7 @@ SRCS = about.c \
        init.c \
        jump-to-time.c \
        list.c \
+       menu.c \
        pixbufs.c \
        playlists.c \
        queue-manager.c \
@@ -24,7 +25,8 @@ SRCS = about.c \
 
 INCLUDES = libaudgui.h \
            libaudgui-gtk.h \
-           list.h
+           list.h \
+           menu.h
 
 include ../../buildsys.mk
 include ../../extra.mk
