@@ -593,13 +593,14 @@ void create_widgets_with_domain (void * box, const PreferencesWidget * widgets,
                 break;
 
             case WIDGET_NOTEBOOK:
-                gtk_alignment_set_padding ((GtkAlignment *) alignment, 6, 0, 0, 0);
+                gtk_alignment_set_padding ((GtkAlignment *) alignment, 0, 0, 0, 0);
 
                 widget = gtk_notebook_new ();
 
                 for (int j = 0; j < widgets[i].data.notebook.n_tabs; j ++)
                 {
-                    GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+                    GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+                    gtk_container_set_border_width ((GtkContainer *) vbox, 6);
 
                     create_widgets_with_domain ((GtkBox *) vbox,
                      widgets[i].data.notebook.tabs[j].widgets,
