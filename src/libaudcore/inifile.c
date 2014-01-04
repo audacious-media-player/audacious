@@ -22,7 +22,6 @@
 
 #include <glib.h>
 
-#include <stdio.h>
 #include <string.h>
 
 static char * strskip (char * str)
@@ -95,13 +94,8 @@ EXPORT void inifile_parse (VFSFile * file,
 
         case '[':;
             char * end = strchr (start + 1, ']');
-
             if (! end)
-            {
-                fprintf (stderr, "While parsing %s:\nMalformed heading: %s\n",
-                 vfs_get_filename (file), start);
                 break;
-            }
 
             * end = 0;
             handle_heading (strtrim (strskip (start + 1)), data);
@@ -109,13 +103,8 @@ EXPORT void inifile_parse (VFSFile * file,
 
         default:;
             char * sep = strchr (start, '=');
-
             if (! sep)
-            {
-                fprintf (stderr, "While parsing %s:\nMalformed entry: %s\n",
-                 vfs_get_filename (file), start);
                 break;
-            }
 
             * sep = 0;
             handle_entry (strtrim (start), strtrim (strskip (sep + 1)), data);
