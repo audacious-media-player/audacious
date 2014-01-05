@@ -52,6 +52,12 @@ typedef struct _PluginPreferences PluginPreferences;
 typedef struct _PreferencesWidget PreferencesWidget;
 
 typedef struct {
+    char * name;
+    float preamp;
+    float bands[AUD_EQUALIZER_NBANDS];
+} EqualizerPreset;
+
+typedef struct {
     float track_gain; /* dB */
     float track_peak; /* 0-1 */
     float album_gain; /* dB */
