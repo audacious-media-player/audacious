@@ -136,40 +136,33 @@ EXPORT void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
 {
     AUDDBG ("%s\n", text);
 
-    if (* widget != NULL)
+    if (* widget)
     {
         const char * old = NULL;
         g_object_get ((GObject *) * widget, "text", & old, NULL);
         g_return_if_fail (old);
 
-        int messages = GPOINTER_TO_INT (g_object_get_data ((GObject *)
-         * widget, "messages"));
-
+        int messages = GPOINTER_TO_INT (g_object_get_data ((GObject *) * widget, "messages"));
         if (messages > 10)
             text = _("\n(Further messages have been hidden.)");
 
-        if (strstr (old, text))
-            goto CREATED;
+        if (! strstr (old, text))
+        {
+            SCONCAT3 (both, old, "\n", text);
+            g_object_set ((GObject *) * widget, "text", both, NULL);
+            g_object_set_data ((GObject *) * widget, "messages", GINT_TO_POINTER (messages + 1));
+        }
 
-        SCONCAT3 (both, old, "\n", text);
-        g_object_set ((GObject *) * widget, "text", both, NULL);
-
-        g_object_set_data ((GObject *) * widget, "messages", GINT_TO_POINTER
-         (messages + 1));
-
-        goto CREATED;
+        gtk_window_present ((GtkWindow *) * widget);
     }
+    else
+    {
+        GtkWidget * button = audgui_button_new (_("Close"), "window-close", NULL, NULL);
+        * widget = audgui_dialog_new (type, title, text, button, NULL);
 
-    * widget = gtk_message_dialog_new (NULL, 0, type, GTK_BUTTONS_OK, "%s", text);
-    gtk_window_set_title ((GtkWindow *) * widget, title);
+        g_object_set_data ((GObject *) * widget, "messages", GINT_TO_POINTER (1));
+        g_signal_connect (* widget, "destroy", (GCallback) gtk_widget_destroyed, widget);
 
-    g_object_set_data ((GObject *) * widget, "messages", GINT_TO_POINTER (1));
-
-    g_signal_connect (* widget, "response", (GCallback) gtk_widget_destroy, NULL);
-    audgui_destroy_on_escape (* widget);
-    g_signal_connect (* widget, "destroy", (GCallback) gtk_widget_destroyed,
-     widget);
-
-CREATED:
-    gtk_window_present ((GtkWindow *) * widget);
+        gtk_widget_show_all (* widget);
+    }
 }
