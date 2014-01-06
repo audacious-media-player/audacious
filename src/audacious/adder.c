@@ -288,7 +288,11 @@ static void add_folder (char * filename, PlaylistFilterFunc filter,
     while (files)
     {
         struct stat info;
+#ifdef S_ISLNK
         if (lstat (files->data, & info) < 0)
+#else
+        if (stat (files->data, & info) < 0)
+#endif
             goto NEXT;
 
         if (S_ISREG (info.st_mode))

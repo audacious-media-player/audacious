@@ -68,6 +68,12 @@ if test $HAVE_LINUX = yes ; then
 	LDFLAGS="$LDFLAGS -Wl,-z,defs"
 fi
 
+dnl MinGW needs -march=i686 for atomics
+dnl ===================================
+if test $HAVE_MSWINDOWS = yes ; then
+	CFLAGS="$CFLAGS -march=i686"
+fi
+
 dnl Checks for various programs
 dnl ===========================
 AC_PROG_LN_S

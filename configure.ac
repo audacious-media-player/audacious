@@ -55,6 +55,12 @@ else
     AC_MSG_RESULT(no)
 fi
 
+dnl iconv
+dnl =====
+
+AM_ICONV
+LIBS="$LIBS $LIBICONV"
+
 dnl gettext
 dnl =======
 AM_GNU_GETTEXT([external])

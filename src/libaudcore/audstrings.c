@@ -216,10 +216,12 @@ EXPORT void str_itoa (int x, char * buf, int bufsize)
 
 EXPORT void str_decode_percent (const char * str, int len, char * out)
 {
+    const char * nul;
+    
     if (len < 0)
         len = strlen (str);
-    else
-        len = strnlen (str, len);
+    else if ((nul = memchr (str, 0, len)))
+        len = nul - str;
 
     while (1)
     {
@@ -253,10 +255,12 @@ EXPORT void str_decode_percent (const char * str, int len, char * out)
 
 EXPORT void str_encode_percent (const char * str, int len, char * out)
 {
+    const char * nul;
+
     if (len < 0)
         len = strlen (str);
-    else
-        len = strnlen (str, len);
+    else if ((nul = memchr (str, 0, len)))
+        len = nul - str;
 
     while (len --)
     {
@@ -660,7 +664,8 @@ EXPORT double str_to_double (const char * string)
     if (p)
     {
         char buf[7] = "000000";
-        memcpy (buf, p + 1, strnlen (p + 1, 6));
+        const char * nul = memchr (p + 1, 0, 6);
+        memcpy (buf, p + 1, nul ? nul - (p + 1) : 6);
         val += (double) str_to_int (buf) / 1000000;
     }
 

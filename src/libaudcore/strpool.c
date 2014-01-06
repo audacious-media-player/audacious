@@ -245,7 +245,7 @@ EXPORT bool_t str_equal (const char * str1, const char * str2)
 
 EXPORT char * str_nget (const char * str, int len)
 {
-    if (strnlen (str, len) < len)
+    if (memchr (str, 0, len))
         return str_get (str);
 
     SNCOPY (buf, str, len);

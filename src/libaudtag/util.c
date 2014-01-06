@@ -17,7 +17,7 @@
  * the use of this software.
  */
 
-#include <fcntl.h>
+#include <stdio.h>
 
 #include "util.h"
 
