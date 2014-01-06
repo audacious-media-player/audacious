@@ -103,7 +103,7 @@ EXPORT GtkWidget * audgui_menu_item_new_with_domain
         else
         {
             sub = gtk_menu_new ();
-            audgui_menu_init (sub, item->items, item->n_items, accel);
+            audgui_menu_init_with_domain (sub, item->items, item->n_items, accel, domain);
         }
 
         gtk_menu_item_set_submenu ((GtkMenuItem *) widget, sub);
