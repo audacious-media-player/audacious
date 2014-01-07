@@ -81,9 +81,9 @@ EXPORT void audgui_scaled_image_set (GtkWidget * widget, GdkPixbuf * pixbuf)
 {
     GdkPixbuf * old;
 
-    if ((old = g_object_get_data ((GObject *) widget, "pixbux-unscaled")))
+    if ((old = g_object_get_data ((GObject *) widget, "pixbuf-unscaled")))
         g_object_unref (old);
-    if ((old = g_object_get_data ((GObject *) widget, "pixbux-scaled")))
+    if ((old = g_object_get_data ((GObject *) widget, "pixbuf-scaled")))
         g_object_unref (old);
 
     if (pixbuf)
