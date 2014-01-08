@@ -314,26 +314,14 @@ make install</tt></p></blockquote>
 <h3>Install libcdio</h3>
 
 <p>Download and unzip to <tt>C:\libcdio</tt>:<br>
-<a href="http://ftp.gnu.org/gnu/libcdio/libcdio-0.90.tar.gz">
-<tt>http://ftp.gnu.org/gnu/libcdio/libcdio-0.90.tar.gz</tt></a></p>
+<a href="http://ftp.gnu.org/gnu/libcdio/libcdio-0.83.tar.gz">
+<tt>http://ftp.gnu.org/gnu/libcdio/libcdio-0.83.tar.gz</tt></a></p>
 
 <p>Apply the patch <tt>libcdio-util.c.diff</tt> to <tt>C:\libcdio\src\util.c</tt>.</p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libcdio<br>
 ./configure --prefix=/C/libs --disable-rock<br>
-make<br>
-make install</tt></p></blockquote>
-
-<h3>Install libcdio-paranoia</h3>
-
-<p>Download and unzip to <tt>C:\libcdio-paranoia</tt>:<br>
-<a href="http://ftp.gnu.org/gnu/libcdio/libcdio-paranoia-10.2+0.90+1.tar.bz2">
-<tt>http://ftp.gnu.org/gnu/libcdio/libcdio-paranoia-10.2+0.90+1.tar.bz2</tt></a></p>
-
-<p>In the MinGW shell:</p>
-<blockquote><p><tt>cd /C/libcdio-paranoia<br>
-./configure --prefix=/C/libs<br>
 make<br>
 make install</tt></p></blockquote>
 
