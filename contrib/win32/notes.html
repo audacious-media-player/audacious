@@ -201,6 +201,35 @@ make install</tt></p></blockquote>
 <p>On Windows Vista or later, User Account Control may need to be disabled
 temporarily in order for GTK+ to build successfully.</p>
 
+<h3>Install intltool</h3>
+
+<p>Download and unzip to <tt>C:\intltool</tt>:<br>
+<a href="http://ftp.gnome.org/pub/GNOME/sources/intltool/0.40/intltool-0.40.6.tar.bz2">
+<tt>http://ftp.gnome.org/pub/GNOME/sources/intltool/0.40/intltool-0.40.6.tar.bz2</tt></a></p>
+
+<p>In the MinGW shell:</p>
+<blockquote><p><tt>cd /C/intltool<br>
+./configure --prefix=/C/GTK<br>
+make<br>
+make install</tt></p></blockquote>
+
+<h3>Install GNOME Icon Theme</h3>
+
+<p>Download and unzip to <tt>C:\gnome-icon-theme</tt>:<br>
+<a href="http://ftp.gnome.org/pub/GNOME/sources/gnome-icon-theme/3.8/gnome-icon-theme-3.8.3.tar.xz">
+<tt>http://ftp.gnome.org/pub/GNOME/sources/gnome-icon-theme/3.8/gnome-icon-theme-3.8.3.tar.xz</tt></a></p>
+
+<p>In the MinGW shell:</p>
+<blockquote><p><tt>cd /C/gnome-icon-theme<br>
+./configure --prefix=/C/GTK --disable-icon-mapping<br>
+make<br>
+make install</tt></p></blockquote>
+
+<p>Create the file <tt>C:\GTK\etc\gtk-3.0\settings.ini</tt> containing the following:</p>
+
+<blockquote><p><tt>[Settings]<br>
+gtk-icon-theme-name=gnome</tt></p></blockquote>
+
 <h3>Install SDL</h3>
 
 <p>Download and unzip to <tt>C:\libsdl</tt>:<br>
