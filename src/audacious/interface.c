@@ -76,8 +76,6 @@ bool_t interface_is_shown (void)
     g_return_val_if_fail (current_interface, FALSE);
 
     return get_bool (NULL, "show_interface");
-
-    return TRUE;
 }
 
 static bool_t error_idle_func (void * unused)

@@ -59,7 +59,6 @@ static struct {
     bool_t quit_after_play;
     bool_t version;
     bool_t verbose;
-    char *previous_session_id;
 } options;
 
 static char * aud_paths[AUD_PATH_COUNT];
