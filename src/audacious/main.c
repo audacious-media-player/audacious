@@ -51,15 +51,38 @@
 #define AUTOSAVE_INTERVAL 300 /* seconds */
 
 static struct {
-    char **filenames;
-    int session;
-    bool_t play, stop, pause, fwd, rew, play_pause, show_jump_box;
-    bool_t enqueue, mainwin, headless;
-    bool_t enqueue_to_temp;
-    bool_t quit_after_play;
-    bool_t version;
+    bool_t help, version;
+    bool_t play, pause, play_pause, stop, fwd, rew;
+    bool_t enqueue, enqueue_to_temp;
+    bool_t mainwin, show_jump_box;
+    bool_t headless, quit_after_play;
     bool_t verbose;
 } options;
+
+static Index * filenames;
+
+static const struct {
+    const char * long_arg;
+    char short_arg;
+    bool_t * value;
+    const char * desc;
+} arg_map[] = {
+    {"help", 'h', & options.help, N_("Show command-line help")},
+    {"version", 'v', & options.version, N_("Show version")},
+    {"play", 'p', & options.play, N_("Start playback")},
+    {"pause", 'u', & options.pause, N_("Pause playback")},
+    {"play-pause", 't', & options.play_pause, N_("Pause if playing, play otherwise")},
+    {"stop", 's', & options.stop, N_("Stop playback")},
+    {"rew", 'r', & options.rew, N_("Skip to previous song")},
+    {"fwd", 'f', & options.fwd, N_("Skip to next song")},
+    {"enqueue", 'e', & options.enqueue, N_("Add files to the playlist")},
+    {"enqueue-to-temp", 'E', & options.enqueue_to_temp, N_("Add files to a temporary playlist")},
+    {"show-main-window", 'm', & options.mainwin, N_("Display the main window")},
+    {"show-jump-box", 'j', & options.show_jump_box, N_("Display the jump-to-song window")},
+    {"headless", 'h', & options.headless, N_("Start without a graphical interface")},
+    {"quit-after-play", 'q', & options.quit_after_play, N_("Quit on playback stop")},
+    {"verbose", 'V', & options.verbose, N_("Print debugging messages")},
+};
 
 static char * aud_paths[AUD_PATH_COUNT];
 
@@ -188,98 +211,111 @@ static void init_paths (void)
 #endif
 }
 
-static void free_paths (void)
-{
-    for (int i = 0; i < AUD_PATH_COUNT; i ++)
-        str_unref (aud_paths[i]);
-}
-
 const char * get_path (int id)
 {
     g_return_val_if_fail (id >= 0 && id < AUD_PATH_COUNT, NULL);
     return aud_paths[id];
 }
 
-static GOptionEntry cmd_entries[] = {
-    {"rew", 'r', 0, G_OPTION_ARG_NONE, &options.rew, N_("Skip backwards in playlist"), NULL},
-    {"play", 'p', 0, G_OPTION_ARG_NONE, &options.play, N_("Start playing current playlist"), NULL},
-    {"pause", 'u', 0, G_OPTION_ARG_NONE, &options.pause, N_("Pause current song"), NULL},
-    {"stop", 's', 0, G_OPTION_ARG_NONE, &options.stop, N_("Stop current song"), NULL},
-    {"play-pause", 't', 0, G_OPTION_ARG_NONE, &options.play_pause, N_("Pause if playing, play otherwise"), NULL},
-    {"fwd", 'f', 0, G_OPTION_ARG_NONE, &options.fwd, N_("Skip forward in playlist"), NULL},
-    {"show-jump-box", 'j', 0, G_OPTION_ARG_NONE, &options.show_jump_box, N_("Display Jump to File dialog"), NULL},
-    {"enqueue", 'e', 0, G_OPTION_ARG_NONE, &options.enqueue, N_("Add files to the playlist"), NULL},
-    {"enqueue-to-temp", 'E', 0, G_OPTION_ARG_NONE, &options.enqueue_to_temp, N_("Add new files to a temporary playlist"), NULL},
-    {"show-main-window", 'm', 0, G_OPTION_ARG_NONE, &options.mainwin, N_("Display the main window"), NULL},
-    {"headless", 'h', 0, G_OPTION_ARG_NONE, &options.headless, N_("Headless mode"), NULL},
-    {"quit-after-play", 'q', 0, G_OPTION_ARG_NONE, &options.quit_after_play, N_("Quit on playback stop"), NULL},
-    {"version", 'v', 0, G_OPTION_ARG_NONE, &options.version, N_("Show version"), NULL},
-    {"verbose", 'V', 0, G_OPTION_ARG_NONE, &options.verbose, N_("Print debugging messages"), NULL},
-    {G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_FILENAME_ARRAY, &options.filenames, N_("FILE..."), NULL},
-    {NULL},
-};
-
-static void parse_options (int * argc, char *** argv)
+static bool_t parse_options (int argc, char * * argv)
 {
-    GOptionContext *context;
-    GError *error = NULL;
+    char * cur = g_get_current_dir ();
 
-    memset (& options, 0, sizeof options);
-    options.session = -1;
-
-    context = g_option_context_new(_("- play multimedia files"));
-    g_option_context_add_main_entries(context, cmd_entries, PACKAGE);
-    g_option_context_add_group(context, gtk_get_option_group(FALSE));
-
-    if (!g_option_context_parse(context, argc, argv, &error))
+    for (int n = 1; n < argc; n ++)
     {
-        fprintf (stderr,
-         _("%s: %s\nTry `%s --help' for more information.\n"), (* argv)[0],
-         error->message, (* argv)[0]);
-        g_error_free (error);
-        exit (EXIT_FAILURE);
+        if (argv[n][0] != '-')  /* filename */
+        {
+            char * uri = NULL;
+
+            if (strstr (argv[n], "://"))
+                uri = str_get (argv[n]);
+            else if (g_path_is_absolute (argv[n]))
+                uri = filename_to_uri (argv[n]);
+            else
+            {
+                char * tmp = filename_build (cur, argv[n]);
+                uri = filename_to_uri (tmp);
+                str_unref (tmp);
+            }
+
+            if (uri)
+            {
+                if (! filenames)
+                    filenames = index_new ();
+
+                index_insert (filenames, -1, uri);
+            }
+        }
+        else if (argv[n][1] == '-')  /* long option */
+        {
+            int i;
+
+            for (i = 0; i < ARRAY_LEN (arg_map); i ++)
+            {
+                if (! strcmp (argv[n] + 2, arg_map[i].long_arg))
+                {
+                    * arg_map[i].value = TRUE;
+                    break;
+                }
+            }
+
+            if (i == ARRAY_LEN (arg_map))
+            {
+                fprintf (stderr, "Unknown option: %s\n", argv[n]);
+                goto FAIL;
+            }
+        }
+        else  /* short form */
+        {
+            for (int c = 1; argv[n][c]; c ++)
+            {
+                int i;
+
+                for (i = 0; i < ARRAY_LEN (arg_map); i ++)
+                {
+                    if (argv[n][c] == arg_map[i].short_arg)
+                    {
+                        * arg_map[i].value = TRUE;
+                        break;
+                    }
+                }
+
+                if (i == ARRAY_LEN (arg_map))
+                {
+                    fprintf (stderr, "Unknown option: -%c\n", argv[n][c]);
+                    goto FAIL;
+                }
+            }
+        }
     }
 
-    g_option_context_free (context);
-
     verbose = options.verbose;
+
+    g_free (cur);
+    return TRUE;
+
+FAIL:
+    g_free (cur);
+    return FALSE;
+}
+
+static void print_help (void)
+{
+    static const char pad[20] = "                    ";
+
+    fprintf (stderr, "Usage: audacious [OPTION] ... [FILE] ...\n\n");
+
+    for (int i = 0; i < ARRAY_LEN (arg_map); i ++)
+        fprintf (stderr, "  -%c, --%s%.*s%s\n", arg_map[i].short_arg,
+         arg_map[i].long_arg, (int) (20 - strlen (arg_map[i].long_arg)), pad,
+         _(arg_map[i].desc));
+
+    fprintf (stderr, "\n");
 }
 
 bool_t headless_mode (void)
 {
     return options.headless;
-}
-
-static Index * convert_filenames (void)
-{
-    if (! options.filenames)
-        return NULL;
-
-    Index * filenames = index_new ();
-    char * * f = options.filenames;
-    char * cur = g_get_current_dir ();
-
-    for (int i = 0; f[i]; i ++)
-    {
-        char * uri = NULL;
-
-        if (strstr (f[i], "://"))
-            uri = str_get (f[i]);
-        else if (g_path_is_absolute (f[i]))
-            uri = filename_to_uri (f[i]);
-        else
-        {
-            char * tmp = filename_build (cur, f[i]);
-            uri = filename_to_uri (tmp);
-            str_unref (tmp);
-        }
-
-        if (uri)
-            index_insert (filenames, -1, uri);
-    }
-
-    g_free (cur);
-    return filenames;
 }
 
 #ifdef USE_DBUS
@@ -305,8 +341,6 @@ static void do_remote (void)
 
     AUDDBG ("Connected to remote version %s.\n", version);
 
-    Index * filenames = convert_filenames ();
-
     /* if no command line options, then present running instance */
     if (! (filenames || options.play || options.pause || options.play_pause ||
      options.stop || options.rew || options.fwd || options.show_jump_box ||
@@ -331,7 +365,6 @@ static void do_remote (void)
             obj_audacious_call_open_list_sync (obj, list, NULL, NULL);
 
         g_free (list);
-        index_free_full (filenames, (IndexFreeFunc) str_unref);
     }
 
     if (options.play)
@@ -372,7 +405,6 @@ static void do_commands (void)
 {
     bool_t resume = get_bool (NULL, "resume_playback_on_startup");
 
-    Index * filenames = convert_filenames ();
     if (filenames)
     {
         if (options.enqueue_to_temp)
@@ -387,6 +419,8 @@ static void do_commands (void)
             drct_pl_open_list (filenames);
             resume = FALSE;
         }
+
+        filenames = NULL;
     }
 
     if (resume)
@@ -406,8 +440,21 @@ static void do_commands (void)
         interface_show (TRUE);
 }
 
+static void main_cleanup (void)
+{
+    for (int i = 0; i < AUD_PATH_COUNT; i ++)
+        str_unref (aud_paths[i]);
+
+    if (filenames)
+        index_free_full (filenames, (IndexFreeFunc) str_unref);
+
+    strpool_shutdown ();
+}
+
 static void init_one (void)
 {
+    atexit (main_cleanup);
+
 #ifdef HAVE_SIGWAIT
     signals_init_one ();
 #endif
@@ -423,10 +470,10 @@ static void init_one (void)
     textdomain (PACKAGE);
 }
 
-static void init_two (int * p_argc, char * * * p_argv)
+static void init_two (void)
 {
     if (! options.headless)
-        gtk_init (p_argc, p_argv);
+        gtk_init (NULL, NULL);
 
 #ifdef HAVE_SIGWAIT
     signals_init_two ();
@@ -497,9 +544,6 @@ static void shut_down (void)
     eq_cleanup ();
     history_cleanup ();
     playlist_end ();
-
-    free_paths ();
-    strpool_shutdown ();
 }
 
 bool_t do_autosave (void)
@@ -525,7 +569,18 @@ static void maybe_quit (void)
 int main (int argc, char * * argv)
 {
     init_one ();
-    parse_options (& argc, & argv);
+
+    if (! parse_options (argc, argv))
+    {
+        print_help ();
+        return EXIT_FAILURE;
+    }
+
+    if (options.help)
+    {
+        print_help ();
+        return EXIT_SUCCESS;
+    }
 
     if (options.version)
     {
@@ -538,7 +593,7 @@ int main (int argc, char * * argv)
 #endif
 
     AUDDBG ("No remote session; starting up.\n");
-    init_two (& argc, & argv);
+    init_two ();
 
     AUDDBG ("Startup complete.\n");
     g_timeout_add_seconds (AUTOSAVE_INTERVAL, (GSourceFunc) do_autosave, NULL);
