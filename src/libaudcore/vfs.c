@@ -286,7 +286,13 @@ vfs_fseek(VFSFile * file,
          SEEK_CUR ? "current" : whence == SEEK_SET ? "beginning" : whence ==
          SEEK_END ? "end" : "invalid");
 
-    return file->base->vfs_fseek_impl(file, offset, whence);
+    if (! file->base->vfs_fseek_impl (file, offset, whence))
+        return 0;
+
+    if (verbose)
+        logger ("VFS: <%p> seek failed!\n", file);
+
+    return -1;
 }
 
 /**
