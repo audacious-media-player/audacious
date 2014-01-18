@@ -134,7 +134,12 @@ vfs_fopen(const char * path,
     else
     {
         const char * s = strstr (path, "://");
-        g_return_val_if_fail (s, NULL);
+        
+        if (! s)
+        {
+            fprintf (stderr, "Invalid URI: %s\n", path);
+            return NULL;
+        }
 
         SNCOPY (scheme, path, s - path);
 
