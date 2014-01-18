@@ -120,13 +120,14 @@ make_directory(const char * path, mode_t mode)
 
 char * write_temp_file (void * data, int64_t len)
 {
-    char * name = filename_build (g_get_tmp_dir (), "audacious-temp-XXXXXX");
+    char * temp = filename_build (g_get_tmp_dir (), "audacious-temp-XXXXXX");
+    SCOPY (name, temp);
+    str_unref (temp);
 
     int handle = g_mkstemp (name);
     if (handle < 0)
     {
         fprintf (stderr, "Error creating temporary file: %s\n", strerror (errno));
-        str_unref (name);
         return NULL;
     }
 
@@ -137,7 +138,6 @@ char * write_temp_file (void * data, int64_t len)
         {
             fprintf (stderr, "Error writing %s: %s\n", name, strerror (errno));
             close (handle);
-            str_unref (name);
             return NULL;
         }
 
@@ -148,11 +148,10 @@ char * write_temp_file (void * data, int64_t len)
     if (close (handle) < 0)
     {
         fprintf (stderr, "Error closing %s: %s\n", name, strerror (errno));
-        str_unref (name);
         return NULL;
     }
 
-    return name;
+    return str_get (name);
 }
 
 char * get_path_to_self (void)
