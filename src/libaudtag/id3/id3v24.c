@@ -389,15 +389,17 @@ static void read_all_frames (VFSFile * handle, int version, bool_t syncsafe,
     }
 }
 
-static bool_t write_frame (int fd, GenericFrame * frame, int * frame_size)
+static bool_t write_frame (int fd, GenericFrame * frame, int version, int * frame_size)
 {
     TAGDBG ("Writing frame %s, size %d\n", frame->key, frame->size);
 
     ID3v2FrameHeader header;
 
     memcpy (header.key, frame->key, 4);
-    header.size = syncsafe32 (frame->size);
-    header.size = GUINT32_TO_BE (header.size);
+
+    uint32_t size = (version == 3) ? frame->size : syncsafe32 (frame->size);
+    header.size = GUINT32_TO_BE (size);
+
     header.flags = 0;
 
     if (write (fd, & header, sizeof (ID3v2FrameHeader)) != sizeof (ID3v2FrameHeader))
@@ -412,6 +414,7 @@ static bool_t write_frame (int fd, GenericFrame * frame, int * frame_size)
 
 typedef struct {
     int fd;
+    int version;
     int written_size;
 } WriteState;
 
@@ -422,26 +425,26 @@ static void write_frame_list (void * key, void * list, void * user)
     for (GList * node = list; node; node = node->next)
     {
         int size;
-        if (write_frame (state->fd, node->data, & size))
+        if (write_frame (state->fd, node->data, state->version, & size))
             state->written_size += size;
     }
 }
 
-static int write_all_frames (int fd, GHashTable * dict)
+static int write_all_frames (int fd, GHashTable * dict, int version)
 {
-    WriteState state = {fd, 0};
+    WriteState state = {fd, version, 0};
     g_hash_table_foreach (dict, write_frame_list, & state);
 
     TAGDBG ("Total frame bytes written = %d.\n", state.written_size);
     return state.written_size;
 }
 
-static bool_t write_header (int fd, int size)
+static bool_t write_header (int fd, int version, int size)
 {
     ID3v2Header header;
 
     memcpy (header.magic, "ID3", 3);
-    header.version = 4;
+    header.version = version;
     header.revision = 0;
     header.flags = 0;
     header.size = syncsafe32 (size);
@@ -751,18 +754,18 @@ static bool_t id3v24_write_tag (const Tuple * tuple, VFSFile * f)
         goto ERR;
 
     /* write empty header (will be overwritten later) */
-    if (! write_header (temp.fd, 0))
+    if (! write_header (temp.fd, version, 0))
         goto ERR;
 
     /* write tag data */
-    data_size = write_all_frames (temp.fd, dict);
+    data_size = write_all_frames (temp.fd, dict, version);
 
     /* copy non-tag data */
     if (! copy_region_to_temp_file (& temp, f, mp3_offset, mp3_size))
         goto ERR;
 
     /* go back to beginning and write real header */
-    if (lseek (temp.fd, 0, SEEK_SET) < 0 || ! write_header (temp.fd, data_size))
+    if (lseek (temp.fd, 0, SEEK_SET) < 0 || ! write_header (temp.fd, version, data_size))
         goto ERR;
 
     if (! replace_with_temp_file (& temp, f))
