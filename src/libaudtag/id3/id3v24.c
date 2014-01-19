@@ -198,6 +198,9 @@ static bool_t read_header (VFSFile * handle, int * version, bool_t *
             if (! validate_header (& footer, TRUE))
                 return FALSE;
 
+            if (vfs_fseek (handle, sizeof (ID3v2Header), SEEK_SET))
+                return FALSE;
+
             * footer_size = sizeof (ID3v2Header);
         }
         else
