@@ -1,6 +1,6 @@
 /*
  * util.c
- * Copyright 2009-2011 Paula Stanciu, Tony Vroon, and John Lindgren
+ * Copyright 2009-2014 Paula Stanciu, Tony Vroon, and John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -18,36 +18,13 @@
  */
 
 #include <stdio.h>
+#include <unistd.h>
+
+#include <glib.h>
+
+#include <libaudcore/audstrings.h>
 
 #include "util.h"
-
-bool_t cut_beginning_tag (VFSFile * handle, int64_t tag_size)
-{
-    unsigned char buffer[16384];
-    int64_t offset = 0, readed;
-
-    if (! tag_size)
-        return TRUE;
-
-    do
-    {
-        if (vfs_fseek (handle, offset + tag_size, SEEK_SET))
-            return FALSE;
-
-        readed = vfs_fread (buffer, 1, sizeof buffer, handle);
-
-        if (vfs_fseek (handle, offset, SEEK_SET))
-            return FALSE;
-
-        if (vfs_fwrite (buffer, 1, readed, handle) != readed)
-            return FALSE;
-
-        offset += readed;
-    }
-    while (readed);
-
-    return vfs_ftruncate (handle, offset) == 0;
-}
 
 const char *convert_numericgenre_to_text(int numericgenre)
 {
@@ -206,4 +183,92 @@ uint32_t syncsafe32 (uint32_t x)
 {
     return (x & 0x7f) | ((x & 0x3f80) << 1) | ((x & 0x1fc000) << 2) | ((x &
      0xfe00000) << 3);
+}
+
+bool_t open_temp_file_for (TempFile * temp, VFSFile * file)
+{
+    char * template = filename_build (g_get_tmp_dir (), "audacious-temp-XXXXXX");
+    SCOPY (tempname, template);
+    str_unref (template);
+
+    temp->fd = g_mkstemp (tempname);
+    if (temp->fd < 0)
+        return FALSE;
+
+    temp->name = str_get (tempname);
+
+    return TRUE;
+}
+
+bool_t copy_region_to_temp_file (TempFile * temp, VFSFile * file, int64_t offset, int64_t size)
+{
+    if (vfs_fseek (file, offset, SEEK_SET) < 0)
+        return FALSE;
+
+    char buf[16384];
+
+    while (size < 0 || size > 0)
+    {
+        int64_t readsize;
+
+        if (size > 0)
+        {
+            readsize = MIN (size, sizeof buf);
+            if (vfs_fread (buf, 1, readsize, file) != readsize)
+                return FALSE;
+
+            size -= readsize;
+        }
+        else
+        {
+            /* negative size means copy to EOF */
+            readsize = vfs_fread (buf, 1, sizeof buf, file);
+            if (! readsize)
+                break;
+        }
+
+        int64_t written = 0;
+        while (written < readsize)
+        {
+            int64_t writesize = write (temp->fd, buf + written, readsize - written);
+            if (writesize <= 0)
+                return FALSE;
+
+            written += writesize;
+        }
+    }
+
+    return TRUE;
+}
+
+bool_t replace_with_temp_file (TempFile * temp, VFSFile * file)
+{
+    if (lseek (temp->fd, 0, SEEK_SET) < 0)
+        return FALSE;
+
+    if (vfs_fseek (file, 0, SEEK_SET) < 0)
+        return FALSE;
+
+    if (vfs_ftruncate (file, 0) < 0)
+        return FALSE;
+
+    char buf[16384];
+
+    while (1)
+    {
+        int64_t readsize = read (temp->fd, buf, sizeof buf);
+        if (readsize < 0)
+            return FALSE;
+
+        if (readsize == 0)
+            break;
+
+        if (vfs_fwrite (buf, 1, readsize, file) != readsize)
+            return FALSE;
+    }
+
+    close (temp->fd);
+    unlink (temp->name);
+
+    return TRUE;
 }

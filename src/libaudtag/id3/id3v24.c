@@ -1,6 +1,6 @@
 /*
  * id3v24.c
- * Copyright 2009-2011 Paula Stanciu, Tony Vroon, John Lindgren,
+ * Copyright 2009-2014 Paula Stanciu, Tony Vroon, John Lindgren,
  *                     Mikael Magnusson, and Michał Lipski
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,6 +22,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 #include <libaudcore/audstrings.h>
 
@@ -385,8 +386,7 @@ static void read_all_frames (VFSFile * handle, int version, bool_t syncsafe,
     }
 }
 
-static bool_t write_frame (VFSFile * handle, GenericFrame * frame, int *
- frame_size)
+static bool_t write_frame (int fd, GenericFrame * frame, int * frame_size)
 {
     TAGDBG ("Writing frame %s, size %d\n", frame->key, frame->size);
 
@@ -397,11 +397,10 @@ static bool_t write_frame (VFSFile * handle, GenericFrame * frame, int *
     header.size = GUINT32_TO_BE (header.size);
     header.flags = 0;
 
-    if (vfs_fwrite (& header, 1, sizeof (ID3v2FrameHeader), handle) != sizeof
-     (ID3v2FrameHeader))
+    if (write (fd, & header, sizeof (ID3v2FrameHeader)) != sizeof (ID3v2FrameHeader))
         return FALSE;
 
-    if (vfs_fwrite (frame->data, 1, frame->size, handle) != frame->size)
+    if (write (fd, frame->data, frame->size) != frame->size)
         return FALSE;
 
     * frame_size = sizeof (ID3v2FrameHeader) + frame->size;
@@ -409,7 +408,7 @@ static bool_t write_frame (VFSFile * handle, GenericFrame * frame, int *
 }
 
 typedef struct {
-    VFSFile * file;
+    int fd;
     int written_size;
 } WriteState;
 
@@ -420,21 +419,21 @@ static void write_frame_list (void * key, void * list, void * user)
     for (GList * node = list; node; node = node->next)
     {
         int size;
-        if (write_frame (state->file, node->data, & size))
+        if (write_frame (state->fd, node->data, & size))
             state->written_size += size;
     }
 }
 
-static int write_all_frames (VFSFile * handle, GHashTable * dict)
+static int write_all_frames (int fd, GHashTable * dict)
 {
-    WriteState state = {handle, 0};
+    WriteState state = {fd, 0};
     g_hash_table_foreach (dict, write_frame_list, & state);
 
     TAGDBG ("Total frame bytes written = %d.\n", state.written_size);
     return state.written_size;
 }
 
-static bool_t write_header (VFSFile * handle, int size, bool_t is_footer)
+static bool_t write_header (int fd, int size, bool_t is_footer)
 {
     ID3v2Header header;
 
@@ -445,8 +444,7 @@ static bool_t write_header (VFSFile * handle, int size, bool_t is_footer)
     header.size = syncsafe32 (size);
     header.size = GUINT32_TO_BE (header.size);
 
-    return vfs_fwrite (& header, 1, sizeof (ID3v2Header), handle) == sizeof
-     (ID3v2Header);
+    return write (fd, & header, sizeof (ID3v2Header)) == sizeof (ID3v2Header);
 }
 
 static int get_frame_id (const char * key)
@@ -741,36 +739,43 @@ static bool_t id3v24_write_tag (const Tuple * tuple, VFSFile * f)
     add_comment_frame (comment, dict);
     str_unref (comment);
 
-    if (! offset)
-    {
-        if (! cut_beginning_tag (f, header_size + data_size + footer_size))
-            goto ERR;
-    }
-    else
-    {
-        if (offset + header_size + data_size + footer_size != vfs_fsize (f))
-            goto ERR;
-        if (vfs_ftruncate (f, offset))
-            goto ERR;
-    }
+    /* location and size of non-tag data */
+    int64_t mp3_offset = offset ? 0 : header_size + data_size + footer_size;
+    int64_t mp3_size = offset ? offset : -1;
 
-    offset = vfs_fsize (f);
-
-    if (offset < 0 || vfs_fseek (f, offset, SEEK_SET) || ! write_header (f, 0,
-     FALSE))
+    TempFile temp = {0};
+    if (! open_temp_file_for (& temp, f))
         goto ERR;
 
-    data_size = write_all_frames (f, dict);
+    /* write empty header (will be overwritten later) */
+    if (! write_header (temp.fd, 0, FALSE))
+        goto ERR;
 
-    if (! write_header (f, data_size, TRUE) || vfs_fseek (f, offset, SEEK_SET)
-     || ! write_header (f, data_size, FALSE))
+    /* write tag data */
+    data_size = write_all_frames (temp.fd, dict);
+
+    /* write footer */
+    if (! write_header (temp.fd, data_size, TRUE))
+        goto ERR;
+
+    /* copy non-tag data */
+    if (! copy_region_to_temp_file (& temp, f, mp3_offset, mp3_size))
+        goto ERR;
+
+    /* go back to beginning and write real header */
+    if (lseek (temp.fd, 0, SEEK_SET) < 0 || ! write_header (temp.fd, data_size, FALSE))
+        goto ERR;
+
+    if (! replace_with_temp_file (& temp, f))
         goto ERR;
 
     g_hash_table_destroy (dict);
+    str_unref (temp.name);
     return TRUE;
 
 ERR:
     g_hash_table_destroy (dict);
+    str_unref (temp.name);
     return FALSE;
 }
 

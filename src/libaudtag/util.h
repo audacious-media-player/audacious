@@ -156,11 +156,18 @@ extern bool_t tag_verbose;
 
 #define TAGDBG(...) do {if (tag_verbose) {printf ("%s:%d [%s]: ", __FILE__, __LINE__, __FUNCTION__); printf (__VA_ARGS__);}} while (0)
 
-bool_t cut_beginning_tag (VFSFile * handle, int64_t tag_size);
-
 const char *convert_numericgenre_to_text(int numericgenre);
 
 uint32_t unsyncsafe32 (uint32_t x);
 uint32_t syncsafe32 (uint32_t x);
+
+typedef struct {
+    char * name;
+    int fd;
+} TempFile;
+
+bool_t open_temp_file_for (TempFile * temp, VFSFile * file);
+bool_t copy_region_to_temp_file (TempFile * temp, VFSFile * file, int64_t offset, int64_t size);
+bool_t replace_with_temp_file (TempFile * temp, VFSFile * file);
 
 #endif /* TAGUTIL_H */
