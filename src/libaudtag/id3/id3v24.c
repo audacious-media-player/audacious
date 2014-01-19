@@ -436,14 +436,14 @@ static int write_all_frames (int fd, GHashTable * dict)
     return state.written_size;
 }
 
-static bool_t write_header (int fd, int size, bool_t is_footer)
+static bool_t write_header (int fd, int size)
 {
     ID3v2Header header;
 
-    memcpy (header.magic, is_footer ? "3DI" : "ID3", 3);
+    memcpy (header.magic, "ID3", 3);
     header.version = 4;
     header.revision = 0;
-    header.flags = ID3_HEADER_HAS_FOOTER;
+    header.flags = 0;
     header.size = syncsafe32 (size);
     header.size = GUINT32_TO_BE (header.size);
 
@@ -751,22 +751,18 @@ static bool_t id3v24_write_tag (const Tuple * tuple, VFSFile * f)
         goto ERR;
 
     /* write empty header (will be overwritten later) */
-    if (! write_header (temp.fd, 0, FALSE))
+    if (! write_header (temp.fd, 0))
         goto ERR;
 
     /* write tag data */
     data_size = write_all_frames (temp.fd, dict);
-
-    /* write footer */
-    if (! write_header (temp.fd, data_size, TRUE))
-        goto ERR;
 
     /* copy non-tag data */
     if (! copy_region_to_temp_file (& temp, f, mp3_offset, mp3_size))
         goto ERR;
 
     /* go back to beginning and write real header */
-    if (lseek (temp.fd, 0, SEEK_SET) < 0 || ! write_header (temp.fd, data_size, FALSE))
+    if (lseek (temp.fd, 0, SEEK_SET) < 0 || ! write_header (temp.fd, data_size))
         goto ERR;
 
     if (! replace_with_temp_file (& temp, f))
