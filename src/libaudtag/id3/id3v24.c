@@ -540,11 +540,18 @@ static void add_text_frame (int id, const char * text, GHashTable * dict)
     }
 
     TAGDBG ("Adding text frame %s = %s.\n", id3_frames[id], text);
-    int length = strlen (text);
 
-    GenericFrame * frame = add_generic_frame (id, length + 1, dict);
-    frame->data[0] = 3; /* UTF-8 encoding */
-    memcpy (frame->data + 1, text, length);
+    long words;
+    uint16_t * utf16 = g_utf8_to_utf16 (text, -1, NULL, & words, NULL);
+    g_return_if_fail (utf16);
+
+    GenericFrame * frame = add_generic_frame (id, 3 + 2 * words, dict);
+
+    frame->data[0] = 1;                            /* UTF-16 encoding */
+    * (uint16_t *) (frame->data + 1) = 0xfeff;     /* byte order mark */
+    memcpy (frame->data + 3, utf16, 2 * words);
+
+    g_free (utf16);
 }
 
 static void add_comment_frame (const char * text, GHashTable * dict)
@@ -556,12 +563,21 @@ static void add_comment_frame (const char * text, GHashTable * dict)
     }
 
     TAGDBG ("Adding comment frame = %s.\n", text);
-    int length = strlen (text);
-    GenericFrame * frame = add_generic_frame (ID3_COMMENT, length + 5, dict);
 
-    frame->data[0] = 3; /* UTF-8 encoding */
-    strcpy ((char *) frame->data + 1, "eng"); /* well, it *might* be English */
-    memcpy (frame->data + 5, text, length);
+    long words;
+    uint16_t * utf16 = g_utf8_to_utf16 (text, -1, NULL, & words, NULL);
+    g_return_if_fail (utf16);
+
+    GenericFrame * frame = add_generic_frame (ID3_COMMENT, 10 + 2 * words, dict);
+
+    frame->data[0] = 1;                             /* UTF-16 encoding */
+    memcpy (frame->data + 1, "eng", 3);             /* language */
+    * (uint16_t *) (frame->data + 4) = 0xfeff;      /* byte order mark */
+    * (uint16_t *) (frame->data + 6) = 0;           /* end of content description */
+    * (uint16_t *) (frame->data + 8) = 0xfeff;      /* byte order mark */
+    memcpy (frame->data + 10, utf16, 2 * words);
+
+    g_free (utf16);
 }
 
 static void add_frameFromTupleStr (const Tuple * tuple, int field, int
