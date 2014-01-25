@@ -103,6 +103,8 @@ if test $USE_CHARDET != no ; then
         AC_DEFINE(USE_CHARDET, 1, [Define if character set detection enabled])
     elif test $USE_CHARDET = yes ; then
         AC_MSG_ERROR([Character set detection could not be enabled; check config.log])
+    else
+        USE_CHARDET=no
     fi
 fi
 
