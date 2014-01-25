@@ -10,31 +10,9 @@
 <h2>Notes for Building Audacious on Windows</h2>
 
 <p><em>John Lindgren<br>
-September 15, 2013</em></p>
+January 24, 2014</em></p>
 
 <p>Several patch files should accompany this document.</p>
-
-<h3>Install MinGW</h3>
-
-<p>Download and run:<br>
-<a href="http://sourceforge.net/projects/mingw/files/Installer/mingw-get-inst/mingw-get-inst-20120426/mingw-get-inst-20120426.exe/download">
-<tt>http://sourceforge.net/projects/mingw/files/Installer/mingw-get-inst/mingw-get-inst-20120426/mingw-get-inst-20120426.exe/download</tt></a></p>
-
-<p>When prompted, use these options:</p>
-<ul><li>Use pre-packaged repository catalogues</li>
-<li>C++ compiler</li>
-<li>MinGW Developer Toolkit</li></ul>
-
-<p>Copy <tt>C:\MinGW\lib\libiconv.*</tt> to <tt>C:\MinGW\msys\1.0\lib</tt>.<br>
-Apply the patch <tt>libintl.h.diff</tt> to <tt>C:\MinGW\include\libintl.h</tt>.</p>
-
-<h3>Install Python</h3>
-
-<p>Download and run:<br>
-<a href="http://python.org/ftp/python/2.7.5/python-2.7.5.msi">
-<tt>http://python.org/ftp/python/2.7.5/python-2.7.5.msi</tt></a></p>
-
-<p>Follow the prompts to install with default options to <tt>C:\Python27</tt>.</p>
 
 <h3>Set up system paths</h3>
 
@@ -45,22 +23,43 @@ C_INCLUDE_PATH=/C/GTK/include:/C/libs/include<br>
 CPLUS_INCLUDE_PATH=/C/GTK/include:/C/libs/include<br>
 LIBRARY_PATH=/C/GTK/lib:/C/libs/lib</tt></p></blockquote>
 
-<h3>Install zlib</h3>
+<h3>Install MinGW</h3>
 
-<p>Download and unzip to <tt>C:\zlib</tt>:<br>
-<a href="http://zlib.net/zlib-1.2.8.tar.gz">
-<tt>http://zlib.net/zlib-1.2.8.tar.gz</tt></a></p>
+<p>Download and run:<br>
+<a href="http://sourceforge.net/projects/mingw/files/Installer/mingw-get-setup.exe/download">
+<tt>http://sourceforge.net/projects/mingw/files/Installer/mingw-get-setup.exe/download</tt></a></p>
 
-<p>In the MinGW shell:</p>
-<blockquote><p><tt>cd /C/zlib<br>
-make -f win32/Makefile.gcc<br>
-BINARY_PATH=/C/GTK/bin INCLUDE_PATH=/C/GTK/include LIBRARY_PATH=/C/GTK/lib make -f win32/Makefile.gcc SHARED_MODE=1 install</tt></p></blockquote>
+<p>In the MinGW Installation Manager window, install the following packages:</p>
+<ul><li>mingw32-base (bin)</li>
+<li>mingw32-gcc-g++ (bin)</li>
+<li>mingw32-gcc-g++ (bin)</li>
+<li>mingw-developer-toolkit (bin)</li>
+<li>mingw32-pthreads-w32 (dev)</li>
+<li>mingw32-libz (dev)</li></ul>
+
+<p>Edit the file <tt>C:\MinGW\msys\1.0\etc\fstab</tt> to contain only the
+following line, in lowercase:</p>
+<blockquote><p><tt>c:/mingw /mingw</tt></p></blockquote>
+
+<p>As of version 4.0.3-1, the MinGW runtime library is missing some mathematical
+functions that are necessary to build Audacious.  Downgrade the library by
+running the following in a command prompt window:<p>
+<blockquote><p><tt>mingw-get upgrade mingw32-mingwrt-dev=3.20-2<br>
+mingw-get upgrade mingw32-w32api=3.17-2</tt></p></blockquote>
+
+<h3>Install Python</h3>
+
+<p>Download and run:<br>
+<a href="http://python.org/ftp/python/2.7.6/python-2.7.6.msi">
+<tt>http://python.org/ftp/python/2.7.6/python-2.7.6.msi</tt></a></p>
+
+<p>Follow the prompts to install with default options to <tt>C:\Python27</tt>.</p>
 
 <h3>Install libpng</h3>
 
 <p>Download and unzip to <tt>C:\libpng</tt>:<br>
-<a href="http://sourceforge.net/projects/libpng/files/libpng16/1.6.3/libpng-1.6.3.tar.xz/download">
-<tt>http://sourceforge.net/projects/libpng/files/libpng16/1.6.3/libpng-1.6.3.tar.xz/download</tt></a></p>
+<a href="http://sourceforge.net/projects/libpng/files/libpng16/1.6.8/libpng-1.6.8.tar.xz/download">
+<tt>http://sourceforge.net/projects/libpng/files/libpng16/1.6.8/libpng-1.6.8.tar.xz/download</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libpng<br>
@@ -71,8 +70,8 @@ make install</tt></p></blockquote>
 <h3>Install libjpeg</h3>
 
 <p>Download and unzip to <tt>C:\libjpeg</tt>:<br>
-<a href="http://www.ijg.org/files/jpegsrc.v9.tar.gz">
-<tt>http://www.ijg.org/files/jpegsrc.v9.tar.gz</tt></a></p>
+<a href="http://www.ijg.org/files/jpegsrc.v9a.tar.gz">
+<tt>http://www.ijg.org/files/jpegsrc.v9a.tar.gz</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libjpeg<br>
@@ -95,17 +94,13 @@ make install</tt></p></blockquote>
 <h3>Install GLib</h3>
 
 <p>Download and unzip to <tt>C:\glib</tt>:<br>
-<a href="http://ftp.gnome.org/pub/GNOME/sources/glib/2.36/glib-2.36.4.tar.xz">
-<tt>http://ftp.gnome.org/pub/GNOME/sources/glib/2.36/glib-2.36.4.tar.xz</tt></a></p>
+<a href="http://ftp.gnome.org/pub/GNOME/sources/glib/2.38/glib-2.38.2.tar.xz">
+<tt>http://ftp.gnome.org/pub/GNOME/sources/glib/2.38/glib-2.38.2.tar.xz</tt></a></p>
 
-<p>Apply the patch <tt>gwin32.c.diff</tt> to <tt>C:\glib\glib\gwin32.c</tt>.<br>
-Apply the patch <tt>gwin32.h.diff</tt> to <tt>C:\glib\glib\gwin32.h</tt>.<br>
-Apply the patch <tt>gcontenttype.c.diff</tt> to <tt>C:\glib\gio\gcontenttype.c</tt>.<br>
-Apply the patch <tt>gdbus-codegen.in.diff</tt> to <tt>C:\glib\gio\gdbus-2.0\codegen\gdbus-codegen.in</tt>.</p>
+<p>Apply the patch <tt>gdbus-codegen.in.diff</tt> to <tt>C:\glib\gio\gdbus-2.0\codegen\gdbus-codegen.in</tt>.</p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/glib<br>
-touch -t 200001010000 gtk-doc.make<br>
 CFLAGS="-march=i686" LIBFFI_CFLAGS="-I/C/GTK/lib/libffi-3.0.13/include" LIBFFI_LIBS="-lffi" ZLIB_CFLAGS="" ZLIB_LIBS="-lz" ./configure --prefix=/C/GTK<br>
 make<br>
 make install</tt></p></blockquote>
@@ -127,12 +122,12 @@ make install</tt></p></blockquote>
 <h3>Install pixman</h3>
 
 <p>Download and unzip to <tt>C:\pixman</tt>:<br>
-<a href="http://cairographics.org/releases/pixman-0.30.2.tar.gz">
-<tt>http://cairographics.org/releases/pixman-0.30.2.tar.gz</tt></a></p>
+<a href="http://cairographics.org/releases/pixman-0.32.4.tar.gz">
+<tt>http://cairographics.org/releases/pixman-0.32.4.tar.gz</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/pixman<br>
-./configure --prefix=/C/GTK --disable-sse2<br>
+./configure --prefix=/C/GTK --disable-sse2 --disable-ssse3<br>
 make<br>
 make install</tt></p></blockquote>
 
@@ -151,8 +146,8 @@ make install</tt></p></blockquote>
 <h3>Install Pango</h3>
 
 <p>Download and unzip to <tt>C:\pango</tt>:<br>
-<a href="http://ftp.gnome.org/pub/GNOME/sources/pango/1.35/pango-1.35.3.tar.xz">
-<tt>http://ftp.gnome.org/pub/GNOME/sources/pango/1.35/pango-1.35.3.tar.xz</tt></a></p>
+<a href="http://ftp.gnome.org/pub/GNOME/sources/pango/1.36/pango-1.36.1.tar.xz">
+<tt>http://ftp.gnome.org/pub/GNOME/sources/pango/1.36/pango-1.36.1.tar.xz</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/pango<br>
@@ -163,8 +158,8 @@ make install</tt></p></blockquote>
 <h3>Install gdk-pixbuf</h3>
 
 <p>Download and unzip to <tt>C:\gdk-pixbuf</tt>:<br>
-<a href="http://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/2.28/gdk-pixbuf-2.28.2.tar.xz">
-<tt>http://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/2.28/gdk-pixbuf-2.28.2.tar.xz</tt></a></p>
+<a href="http://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/2.30/gdk-pixbuf-2.30.3.tar.xz">
+<tt>http://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/2.30/gdk-pixbuf-2.30.3.tar.xz</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/gdk-pixbuf<br>
@@ -175,8 +170,8 @@ make install</tt></p></blockquote>
 <h3>Install ATK</h3>
 
 <p>Download and unzip to <tt>C:\atk</tt>:<br>
-<a href="http://ftp.gnome.org/pub/gnome/sources/atk/2.8/atk-2.8.0.tar.xz">
-<tt>http://ftp.gnome.org/pub/gnome/sources/atk/2.8/atk-2.8.0.tar.xz</tt></a></p>
+<a href="http://ftp.gnome.org/pub/gnome/sources/atk/2.10/atk-2.10.0.tar.xz">
+<tt>http://ftp.gnome.org/pub/gnome/sources/atk/2.10/atk-2.10.0.tar.xz</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/atk<br>
@@ -187,8 +182,8 @@ make install</tt></p></blockquote>
 <h3>Install GTK+</h3>
 
 <p>Download and unzip to <tt>C:\gtksrc</tt>:<br>
-<a href="http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.8/gtk+-3.8.4.tar.xz">
-<tt>http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.8/gtk+-3.8.4.tar.xz</tt></a></p>
+<a href="http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.8/gtk+-3.8.8.tar.xz">
+<tt>http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.8/gtk+-3.8.8.tar.xz</tt></a></p>
 
 <p>Apply the patch <tt>gtksettings.c.diff</tt> to <tt>C:\gtksrc\gtk\gtksettings.c</tt>.</p>
 
@@ -226,21 +221,28 @@ make<br>
 make install</tt></p></blockquote>
 
 <p>Create the file <tt>C:\GTK\etc\gtk-3.0\settings.ini</tt> containing the following:</p>
-
 <blockquote><p><tt>[Settings]<br>
 gtk-icon-theme-name=gnome</tt></p></blockquote>
 
 <h3>Install SDL</h3>
 
 <p>Download and unzip to <tt>C:\libsdl</tt>:<br>
-<a href="http://www.libsdl.org/release/SDL2-2.0.0.tar.gz">
-<tt>http://www.libsdl.org/release/SDL2-2.0.0.tar.gz</tt></a></p>
+<a href="http://www.libsdl.org/release/SDL2-2.0.1.tar.gz">
+<tt>http://www.libsdl.org/release/SDL2-2.0.1.tar.gz</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libsdl<br>
 ./configure --prefix=/C/libs<br>
 make<br>
 make install</tt></p></blockquote>
+
+<h3>Install GNU regex</h3>
+
+<p>Download and unzip to <tt>C:\libs</tt>:<br>
+<a href="http://sourceforge.net/projects/mingw/files/Other/UserContributed/regex/mingw-regex-2.5.1/mingw-libgnurx-2.5.1-bin.tar.gz/download">
+<tt>http://sourceforge.net/projects/mingw/files/Other/UserContributed/regex/mingw-regex-2.5.1/mingw-libgnurx-2.5.1-bin.tar.gz/download</tt></a><br>
+<a href="http://sourceforge.net/projects/mingw/files/Other/UserContributed/regex/mingw-regex-2.5.1/mingw-libgnurx-2.5.1-dev.tar.gz/download">
+<tt>http://sourceforge.net/projects/mingw/files/Other/UserContributed/regex/mingw-regex-2.5.1/mingw-libgnurx-2.5.1-dev.tar.gz/download</tt></a></p>
 
 <h3>Install libxml</h3>
 
@@ -257,8 +259,8 @@ make install</tt></p></blockquote>
 <h3>Install mpg123</h3>
 
 <p>Download and unzip to <tt>C:\mpg123</tt>:<br>
-<a href="http://mpg123.de/download/mpg123-1.15.4.tar.bz2">
-<tt>http://mpg123.de/download/mpg123-1.15.4.tar.bz2</tt></a></p>
+<a href="http://mpg123.de/download/mpg123-1.17.0.tar.bz2">
+<tt>http://mpg123.de/download/mpg123-1.17.0.tar.bz2</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/mpg123<br>
@@ -393,8 +395,8 @@ make install</tt></p></blockquote>
 <h3>Install libvorbis</h3>
 
 <p>Download and unzip to <tt>C:\libvorbis</tt>:<br>
-<a href="http://downloads.xiph.org/releases/vorbis/libvorbis-1.3.3.tar.xz">
-<tt>http://downloads.xiph.org/releases/vorbis/libvorbis-1.3.3.tar.xz</tt></a></p>
+<a href="http://downloads.xiph.org/releases/vorbis/libvorbis-1.3.4.tar.xz">
+<tt>http://downloads.xiph.org/releases/vorbis/libvorbis-1.3.4.tar.xz</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libvorbis<br>
@@ -405,8 +407,8 @@ make install</tt></p></blockquote>
 <h3>Install OpenSSL</h3>
 
 <p>Download and unzip to <tt>C:\openssl</tt>:<br>
-<a href="http://www.openssl.org/source/openssl-1.0.1e.tar.gz">
-<tt>http://www.openssl.org/source/openssl-1.0.1e.tar.gz</tt></a></p>
+<a href="http://www.openssl.org/source/openssl-1.0.1f.tar.gz">
+<tt>http://www.openssl.org/source/openssl-1.0.1f.tar.gz</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/openssl<br>
@@ -441,10 +443,11 @@ make install</tt></p></blockquote>
 <h3>Install libwavpack</h3>
 
 <p>Download and unzip to <tt>C:\libwavpack</tt>:<br>
-<a href="http://www.wavpack.com/wavpack-4.60.1.tar.bz2">
-<tt>http://www.wavpack.com/wavpack-4.60.1.tar.bz2</tt></a></p>
+<a href="http://www.wavpack.com/wavpack-4.70.0.tar.bz2">
+<tt>http://www.wavpack.com/wavpack-4.70.0.tar.bz2</tt></a></p>
 
-<p>Apply the patch <tt>libwavpack-utils.c.diff</tt> to <tt>C:\libwavpack\cli\utils.c</tt>.</p>
+<p>Apply the patch <tt>wavpack.pc.in.diff</tt> to <tt>C:\libwavpack\wavpack.pc.in</tt>.<br>
+Apply the patch <tt>libwavpack-utils.c.diff</tt> to <tt>C:\libwavpack\cli\utils.c</tt>.</p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libwavpack<br>
@@ -455,8 +458,8 @@ make install</tt></p></blockquote>
 <h3>Install FFmpeg</h3>
 
 <p>Download and unzip to <tt>C:\ffmpeg</tt>:<br>
-<a href="http://ffmpeg.org/releases/ffmpeg-2.0.1.tar.bz2">
-<tt>http://ffmpeg.org/releases/ffmpeg-2.0.1.tar.bz2</tt></a></p>
+<a href="http://ffmpeg.org/releases/ffmpeg-2.1.3.tar.bz2">
+<tt>http://ffmpeg.org/releases/ffmpeg-2.1.3.tar.bz2</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/ffmpeg<br>
@@ -484,8 +487,8 @@ make install</tt></p></blockquote>
 <h3>Install libcurl</h3>
 
 <p>Download and unzip to <tt>C:\libcurl</tt>:<br>
-<a href="http://curl.haxx.se/download/curl-7.32.0.tar.bz2">
-<tt>http://curl.haxx.se/download/curl-7.32.0.tar.bz2</tt></a></p>
+<a href="http://curl.haxx.se/download/curl-7.34.0.tar.bz2">
+<tt>http://curl.haxx.se/download/curl-7.34.0.tar.bz2</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libcurl<br>
@@ -505,7 +508,7 @@ Apply the patch <tt>libmms-seek-fix.diff</tt> (it changes multiple files).</p>
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libmms<br>
 ./autogen.sh<br>
-./configure --prefix=/C/libs<br>
+LIBS=-liconv ./configure --prefix=/C/libs<br>
 make<br>
 make install</tt></p></blockquote>
 
@@ -524,8 +527,8 @@ make install</tt></p></blockquote>
 <h3>Install libsidplayfp</h3>
 
 <p>Download and unzip to <tt>C:\libsidplayfp</tt>:<br>
-<a href="http://sourceforge.net/projects/sidplay-residfp/files/libsidplayfp/1.0/libsidplayfp-1.0.3.tar.gz/download">
-<tt>http://sourceforge.net/projects/sidplay-residfp/files/libsidplayfp/1.0/libsidplayfp-1.0.3.tar.gz/download</tt></a></p>
+<a href="http://sourceforge.net/projects/sidplay-residfp/files/libsidplayfp/1.2/libsidplayfp-1.2.2.tar.gz/download">
+<tt>http://sourceforge.net/projects/sidplay-residfp/files/libsidplayfp/1.2/libsidplayfp-1.2.2.tar.gz/download</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libsidplayfp<br>
@@ -543,6 +546,7 @@ make install</tt></p></blockquote>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/fluidsynth<br>
+./autogen.sh<br>
 ./configure --prefix=/C/libs<br>
 make<br>
 make install</tt></p></blockquote>

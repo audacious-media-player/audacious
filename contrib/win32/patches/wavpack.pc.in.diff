@@ -1,0 +1,8 @@
+--- wavpack.pc.in.0	2013-09-29 17:30:14 -0400
++++ wavpack.pc.in	2014-01-25 16:47:55 -0500
+@@ -1,4 +1,5 @@
+ prefix=@prefix@
++exec_prefix=@exec_prefix@
+ libdir=@libdir@
+ includedir=${prefix}/include
+ 
