@@ -468,6 +468,10 @@ static void init_one (void)
     bindtextdomain (PACKAGE "-plugins", aud_paths[AUD_PATH_LOCALE_DIR]);
     bind_textdomain_codeset (PACKAGE "-plugins", "UTF-8");
     textdomain (PACKAGE);
+
+#if ! GLIB_CHECK_VERSION (2, 36, 0)
+    g_type_init ();
+#endif
 }
 
 static void init_two (void)
