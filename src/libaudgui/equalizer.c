@@ -17,12 +17,6 @@
  * the use of this software.
  */
 
-/*
- * Note: Because some GTK developer had the bright idea to put the minimum at
- * the top of a GtkVScale and the maximum at the bottom, we have to reverse the
- * sign of the values we get.
- */
-
 #include <math.h>
 
 #include <audacious/i18n.h>
@@ -58,17 +52,12 @@ static GtkWidget * create_on_off (void)
 static void slider_moved (GtkRange * slider, void * unused)
 {
     int band = GPOINTER_TO_INT (g_object_get_data ((GObject *) slider, "band"));
-    double value = round (-gtk_range_get_value (slider));
+    double value = round (gtk_range_get_value (slider));
 
     if (band == -1)
         aud_set_double (NULL, "equalizer_preamp", value);
     else
         aud_eq_set_band (band, value);
-}
-
-static char * format_value (GtkScale * slider, double value, void * unused)
-{
-    return g_strdup_printf ("%d", (int) -value);
 }
 
 static GtkWidget * create_slider (const char * name, int band, GtkWidget * hbox)
@@ -83,10 +72,10 @@ static GtkWidget * create_slider (const char * name, int band, GtkWidget * hbox)
      -EQUALIZER_MAX_GAIN, EQUALIZER_MAX_GAIN, 1);
     gtk_scale_set_draw_value ((GtkScale *) slider, TRUE);
     gtk_scale_set_value_pos ((GtkScale *) slider, GTK_POS_BOTTOM);
+    gtk_range_set_inverted ((GtkRange *) slider, TRUE);
     gtk_widget_set_size_request (slider, -1, 120);
 
     g_object_set_data ((GObject *) slider, "band", GINT_TO_POINTER (band));
-    g_signal_connect ((GObject *) slider, "format-value", (GCallback) format_value, NULL);
     g_signal_connect ((GObject *) slider, "value-changed", (GCallback) slider_moved, NULL);
 
     gtk_box_pack_start ((GtkBox *) vbox, slider, FALSE, FALSE, 0);
@@ -98,7 +87,7 @@ static GtkWidget * create_slider (const char * name, int band, GtkWidget * hbox)
 static void set_slider (GtkWidget * slider, double value)
 {
     g_signal_handlers_block_by_func (slider, (void *) slider_moved, NULL);
-    gtk_range_set_value ((GtkRange *) slider, -round (value));
+    gtk_range_set_value ((GtkRange *) slider, round (value));
     g_signal_handlers_unblock_by_func (slider, (void *) slider_moved, NULL);
 }
 
