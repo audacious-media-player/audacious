@@ -224,17 +224,6 @@ static GtkWidget * create_playlist_manager (void)
     gtk_container_set_border_width ((GtkContainer *) playman_win, 6);
     gtk_widget_set_size_request (playman_win, 400, 250);
 
-    int x = aud_get_int ("audgui", "playlist_manager_x");
-    int y = aud_get_int ("audgui", "playlist_manager_y");
-    int w = aud_get_int ("audgui", "playlist_manager_w");
-    int h = aud_get_int ("audgui", "playlist_manager_h");
-
-    if (w && h)
-    {
-        gtk_window_move ((GtkWindow *) playman_win, x, y);
-        gtk_window_set_default_size ((GtkWindow *) playman_win, w, h);
-    }
-
     g_signal_connect (playman_win, "destroy", (GCallback) destroy_cb, NULL);
     audgui_destroy_on_escape (playman_win);
 
