@@ -423,6 +423,8 @@ static void fill_category_list (GtkTreeView * treeview, GtkNotebook * notebook)
         }
     }
 
+    g_object_unref (store);
+
     GtkTreeSelection * selection = gtk_tree_view_get_selection (treeview);
     g_signal_connect (selection, "changed", (GCallback) category_changed, NULL);
 }
