@@ -102,6 +102,7 @@ static const TupleBasicType tuple_fields[TUPLE_FIELDS] = {
     { "performer",      TUPLE_STRING },
     { "copyright",      TUPLE_STRING },
     { "date",           TUPLE_STRING },
+    { "mbid",           TUPLE_STRING },
 
     { "subsong-id",     TUPLE_INT },
     { "subsong-num",    TUPLE_INT },
@@ -145,6 +146,7 @@ static const FieldDictEntry field_dict[TUPLE_FIELDS] = {
  {"gain-track-peak", FIELD_GAIN_TRACK_PEAK},
  {"genre", FIELD_GENRE},
  {"length", FIELD_LENGTH},
+ {"mbid", FIELD_MBID},
  {"mime-type", FIELD_MIMETYPE},
  {"performer", FIELD_PERFORMER},
  {"quality", FIELD_QUALITY},
