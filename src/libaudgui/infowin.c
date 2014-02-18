@@ -311,7 +311,7 @@ static GtkWidget * create_infowin (void)
     gtk_grid_attach ((GtkGrid *) main_grid, widgets.image, 0, 0, 1, 1);
 
     widgets.location = gtk_label_new ("");
-    gtk_widget_set_size_request (widgets.location, 200, -1);
+    gtk_label_set_max_width_chars ((GtkLabel *) widgets.location, 40);
     gtk_label_set_line_wrap ((GtkLabel *) widgets.location, TRUE);
     gtk_label_set_line_wrap_mode ((GtkLabel *) widgets.location, PANGO_WRAP_WORD_CHAR);
     gtk_label_set_selectable ((GtkLabel *) widgets.location, TRUE);
