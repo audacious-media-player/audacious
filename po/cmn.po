@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-01-03 15:24+0100\n"
+"POT-Creation-Date: 2014-02-22 00:11+0100\n"
 "PO-Revision-Date: 2013-12-19 03:50+0000\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/projects/p/"
@@ -177,7 +177,7 @@ msgstr "音訊"
 msgid "Network"
 msgstr "網路"
 
-#: src/audacious/ui_preferences.c:69 src/audacious/ui_preferences.c:1203
+#: src/audacious/ui_preferences.c:69 src/audacious/ui_preferences.c:1206
 msgid "Playlist"
 msgstr "播放列表"
 
@@ -482,59 +482,59 @@ msgstr "專輯 - 標題"
 msgid "Category"
 msgstr "目錄"
 
-#: src/audacious/ui_preferences.c:961
+#: src/audacious/ui_preferences.c:964
 msgid "Custom"
 msgstr "自訂"
 
-#: src/audacious/ui_preferences.c:998
+#: src/audacious/ui_preferences.c:1001
 msgid "<b>Song Display</b>"
 msgstr "<b>顯示歌曲</b>"
 
-#: src/audacious/ui_preferences.c:1007
+#: src/audacious/ui_preferences.c:1010
 msgid "Show song numbers"
 msgstr "顯示歌曲編號"
 
-#: src/audacious/ui_preferences.c:1018
+#: src/audacious/ui_preferences.c:1021
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr "顯示開頭的數字零 (例：02:00 而不是 2:00)"
 
-#: src/audacious/ui_preferences.c:1038
+#: src/audacious/ui_preferences.c:1041
 msgid "Show information about titlestring format"
 msgstr "顯示關於標題字串格式的資訊"
 
-#: src/audacious/ui_preferences.c:1052
+#: src/audacious/ui_preferences.c:1055
 msgid "Custom string:"
 msgstr "自訂字串："
 
-#: src/audacious/ui_preferences.c:1057
+#: src/audacious/ui_preferences.c:1060
 msgid "Title format:"
 msgstr "標題格式："
 
-#: src/audacious/ui_preferences.c:1144
+#: src/audacious/ui_preferences.c:1147
 msgid "Output plugin:"
 msgstr "輸出外掛："
 
-#: src/audacious/ui_preferences.c:1203
+#: src/audacious/ui_preferences.c:1206
 msgid "Transport"
 msgstr "傳輸"
 
-#: src/audacious/ui_preferences.c:1203
+#: src/audacious/ui_preferences.c:1206
 msgid "Input"
 msgstr "輸入"
 
-#: src/audacious/ui_preferences.c:1204
+#: src/audacious/ui_preferences.c:1207
 msgid "Effect"
 msgstr "特效"
 
-#: src/audacious/ui_preferences.c:1204
+#: src/audacious/ui_preferences.c:1207
 msgid "Visualization"
 msgstr "視覺特效"
 
-#: src/audacious/ui_preferences.c:1204
+#: src/audacious/ui_preferences.c:1207
 msgid "General"
 msgstr "一般"
 
-#: src/audacious/ui_preferences.c:1239
+#: src/audacious/ui_preferences.c:1242
 msgid "Audacious Preferences"
 msgstr "Audacious 偏好設定"
 

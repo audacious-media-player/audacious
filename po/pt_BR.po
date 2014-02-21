@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-01-03 15:24+0100\n"
+"POT-Creation-Date: 2014-02-22 00:11+0100\n"
 "PO-Revision-Date: 2013-04-19 22:34+0000\n"
 "Last-Translator: salmora8 <shorterfire@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/"
@@ -187,7 +187,7 @@ msgstr "Áudio"
 msgid "Network"
 msgstr "Rede"
 
-#: src/audacious/ui_preferences.c:69 src/audacious/ui_preferences.c:1203
+#: src/audacious/ui_preferences.c:69 src/audacious/ui_preferences.c:1206
 msgid "Playlist"
 msgstr "Lista de Reprodução"
 
@@ -494,59 +494,59 @@ msgstr "ÁLBUM - TÍTULO"
 msgid "Category"
 msgstr "Categoria"
 
-#: src/audacious/ui_preferences.c:961
+#: src/audacious/ui_preferences.c:964
 msgid "Custom"
 msgstr "Personalizado"
 
-#: src/audacious/ui_preferences.c:998
+#: src/audacious/ui_preferences.c:1001
 msgid "<b>Song Display</b>"
 msgstr "<b>Exibição do Arquivo</b>"
 
-#: src/audacious/ui_preferences.c:1007
+#: src/audacious/ui_preferences.c:1010
 msgid "Show song numbers"
 msgstr "Mostrar números das músicas"
 
-#: src/audacious/ui_preferences.c:1018
+#: src/audacious/ui_preferences.c:1021
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr "Mostrar zero a esquerda (02:00 ao invés de 2:00)"
 
-#: src/audacious/ui_preferences.c:1038
+#: src/audacious/ui_preferences.c:1041
 msgid "Show information about titlestring format"
 msgstr "Mostrar informações sobre o formato do título"
 
-#: src/audacious/ui_preferences.c:1052
+#: src/audacious/ui_preferences.c:1055
 msgid "Custom string:"
 msgstr "Formato personalizado:"
 
-#: src/audacious/ui_preferences.c:1057
+#: src/audacious/ui_preferences.c:1060
 msgid "Title format:"
 msgstr "Formato do título:"
 
-#: src/audacious/ui_preferences.c:1144
+#: src/audacious/ui_preferences.c:1147
 msgid "Output plugin:"
 msgstr "Plugin de saída:"
 
-#: src/audacious/ui_preferences.c:1203
+#: src/audacious/ui_preferences.c:1206
 msgid "Transport"
 msgstr "Transportar"
 
-#: src/audacious/ui_preferences.c:1203
+#: src/audacious/ui_preferences.c:1206
 msgid "Input"
 msgstr "Entrada"
 
-#: src/audacious/ui_preferences.c:1204
+#: src/audacious/ui_preferences.c:1207
 msgid "Effect"
 msgstr "Efeito"
 
-#: src/audacious/ui_preferences.c:1204
+#: src/audacious/ui_preferences.c:1207
 msgid "Visualization"
 msgstr "Visualização"
 
-#: src/audacious/ui_preferences.c:1204
+#: src/audacious/ui_preferences.c:1207
 msgid "General"
 msgstr "Geral"
 
-#: src/audacious/ui_preferences.c:1239
+#: src/audacious/ui_preferences.c:1242
 msgid "Audacious Preferences"
 msgstr "Preferências do Audacious"
 

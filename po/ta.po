@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-01-03 15:24+0100\n"
+"POT-Creation-Date: 2014-02-22 00:11+0100\n"
 "PO-Revision-Date: 2013-06-01 13:51+0000\n"
 "Last-Translator: nar7esh <rajnareshwar@gmail.com>\n"
 "Language-Team: Tamil (http://www.transifex.com/projects/p/audacious/language/"
@@ -179,7 +179,7 @@ msgstr "ஒலி"
 msgid "Network"
 msgstr "வலையமைப்பு"
 
-#: src/audacious/ui_preferences.c:69 src/audacious/ui_preferences.c:1203
+#: src/audacious/ui_preferences.c:69 src/audacious/ui_preferences.c:1206
 msgid "Playlist"
 msgstr "பாடல் பட்டியல்"
 
@@ -484,59 +484,59 @@ msgstr "குறுவட்டு - தலைப்பு"
 msgid "Category"
 msgstr "பிரிவு"
 
-#: src/audacious/ui_preferences.c:961
+#: src/audacious/ui_preferences.c:964
 msgid "Custom"
 msgstr "தனிப்பயன்"
 
-#: src/audacious/ui_preferences.c:998
+#: src/audacious/ui_preferences.c:1001
 msgid "<b>Song Display</b>"
 msgstr "<b>பாடல் kaatchippaduththu</b>"
 
-#: src/audacious/ui_preferences.c:1007
+#: src/audacious/ui_preferences.c:1010
 msgid "Show song numbers"
 msgstr "பாடல் இலக்கங்களை kaattuga"
 
-#: src/audacious/ui_preferences.c:1018
+#: src/audacious/ui_preferences.c:1021
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr "முன்னைய சுழியத்தை காட்டுக (2:00 இற்கு பதிலாக 02:00)"
 
-#: src/audacious/ui_preferences.c:1038
+#: src/audacious/ui_preferences.c:1041
 msgid "Show information about titlestring format"
 msgstr "தலைப்பு சரம் வடிவம் சார்ந்த தகவல்களை காட்டுக "
 
-#: src/audacious/ui_preferences.c:1052
+#: src/audacious/ui_preferences.c:1055
 msgid "Custom string:"
 msgstr "தனிப்பயன் சரம்:"
 
-#: src/audacious/ui_preferences.c:1057
+#: src/audacious/ui_preferences.c:1060
 msgid "Title format:"
 msgstr "தலைப்பு வடிவம்:"
 
-#: src/audacious/ui_preferences.c:1144
+#: src/audacious/ui_preferences.c:1147
 msgid "Output plugin:"
 msgstr "வெளியீட்டு நீட்சிகள்"
 
-#: src/audacious/ui_preferences.c:1203
+#: src/audacious/ui_preferences.c:1206
 msgid "Transport"
 msgstr "போக்குவரத்து"
 
-#: src/audacious/ui_preferences.c:1203
+#: src/audacious/ui_preferences.c:1206
 msgid "Input"
 msgstr "ulleedu"
 
-#: src/audacious/ui_preferences.c:1204
+#: src/audacious/ui_preferences.c:1207
 msgid "Effect"
 msgstr "vilaivugal"
 
-#: src/audacious/ui_preferences.c:1204
+#: src/audacious/ui_preferences.c:1207
 msgid "Visualization"
 msgstr "உருவக காட்சிப்படுthதல் "
 
-#: src/audacious/ui_preferences.c:1204
+#: src/audacious/ui_preferences.c:1207
 msgid "General"
 msgstr "பொதுவானது"
 
-#: src/audacious/ui_preferences.c:1239
+#: src/audacious/ui_preferences.c:1242
 msgid "Audacious Preferences"
 msgstr "ஔடகிவஸ் viruppaththerivugal"
 

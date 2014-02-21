@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-01-03 15:24+0100\n"
+"POT-Creation-Date: 2014-02-22 00:11+0100\n"
 "PO-Revision-Date: 2013-02-03 20:17+0000\n"
 "Last-Translator: Radioactiveman <thomas-lange2@gmx.de>\n"
 "Language-Team: Malay (http://www.transifex.com/projects/p/audacious/language/"
@@ -177,7 +177,7 @@ msgstr "Audio"
 msgid "Network"
 msgstr "Rangkaian"
 
-#: src/audacious/ui_preferences.c:69 src/audacious/ui_preferences.c:1203
+#: src/audacious/ui_preferences.c:69 src/audacious/ui_preferences.c:1206
 msgid "Playlist"
 msgstr "Senarai main"
 
@@ -482,59 +482,59 @@ msgstr "ALBUM - TAJUK"
 msgid "Category"
 msgstr "Kategori"
 
-#: src/audacious/ui_preferences.c:961
+#: src/audacious/ui_preferences.c:964
 msgid "Custom"
 msgstr "Custom"
 
-#: src/audacious/ui_preferences.c:998
+#: src/audacious/ui_preferences.c:1001
 msgid "<b>Song Display</b>"
 msgstr "<b>Paparan Lagu</b>"
 
-#: src/audacious/ui_preferences.c:1007
+#: src/audacious/ui_preferences.c:1010
 msgid "Show song numbers"
 msgstr "Tunjuk nombor lagu"
 
-#: src/audacious/ui_preferences.c:1018
+#: src/audacious/ui_preferences.c:1021
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr "Tunjukkan mengetuai sifar (02:00 bukan 2:00)"
 
-#: src/audacious/ui_preferences.c:1038
+#: src/audacious/ui_preferences.c:1041
 msgid "Show information about titlestring format"
 msgstr "Tunjukkan maklumat tentang format rentetan tajuk"
 
-#: src/audacious/ui_preferences.c:1052
+#: src/audacious/ui_preferences.c:1055
 msgid "Custom string:"
 msgstr "Rentetan custom:"
 
-#: src/audacious/ui_preferences.c:1057
+#: src/audacious/ui_preferences.c:1060
 msgid "Title format:"
 msgstr "Tajuk format:"
 
-#: src/audacious/ui_preferences.c:1144
+#: src/audacious/ui_preferences.c:1147
 msgid "Output plugin:"
 msgstr "Plugin luaran:"
 
-#: src/audacious/ui_preferences.c:1203
+#: src/audacious/ui_preferences.c:1206
 msgid "Transport"
 msgstr "Memindah"
 
-#: src/audacious/ui_preferences.c:1203
+#: src/audacious/ui_preferences.c:1206
 msgid "Input"
 msgstr "Dalaman"
 
-#: src/audacious/ui_preferences.c:1204
+#: src/audacious/ui_preferences.c:1207
 msgid "Effect"
 msgstr "Kesan"
 
-#: src/audacious/ui_preferences.c:1204
+#: src/audacious/ui_preferences.c:1207
 msgid "Visualization"
 msgstr "Visualisasi"
 
-#: src/audacious/ui_preferences.c:1204
+#: src/audacious/ui_preferences.c:1207
 msgid "General"
 msgstr "Umum"
 
-#: src/audacious/ui_preferences.c:1239
+#: src/audacious/ui_preferences.c:1242
 msgid "Audacious Preferences"
 msgstr "Pilihan Audacious"
 

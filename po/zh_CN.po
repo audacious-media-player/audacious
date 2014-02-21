@@ -5,14 +5,16 @@
 # Translators:
 # Chasye <chasye@gmail.com>, 2010
 # Luke <runningwaterpro@gmail.com>, 2012
-# zhangmin <zm1990s@gmail.com>, 2013
+# Luke <runningwaterpro@gmail.com>, 2012
+# MinZhang <zm1990s@gmail.com>, 2013-2014
+# MinZhang <zm1990s@gmail.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-01-03 15:24+0100\n"
-"PO-Revision-Date: 2013-02-04 14:11+0000\n"
-"Last-Translator: zhangmin <zm1990s@gmail.com>\n"
+"POT-Creation-Date: 2014-02-22 00:11+0100\n"
+"PO-Revision-Date: 2014-02-06 07:49+0000\n"
+"Last-Translator: MinZhang <zm1990s@gmail.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/projects/p/"
 "audacious/language/zh_CN/)\n"
 "Language: zh_CN\n"
@@ -82,7 +84,7 @@ msgstr "显示主界面"
 
 #: src/audacious/main.c:242
 msgid "Headless mode"
-msgstr "无首模式"
+msgstr "无用户界面模式"
 
 #: src/audacious/main.c:243
 msgid "Quit on playback stop"
@@ -177,7 +179,7 @@ msgstr "音频"
 msgid "Network"
 msgstr "网络"
 
-#: src/audacious/ui_preferences.c:69 src/audacious/ui_preferences.c:1203
+#: src/audacious/ui_preferences.c:69 src/audacious/ui_preferences.c:1206
 msgid "Playlist"
 msgstr "播放列表"
 
@@ -482,59 +484,59 @@ msgstr "专辑 - 标题"
 msgid "Category"
 msgstr "分类"
 
-#: src/audacious/ui_preferences.c:961
+#: src/audacious/ui_preferences.c:964
 msgid "Custom"
 msgstr "自定义"
 
-#: src/audacious/ui_preferences.c:998
+#: src/audacious/ui_preferences.c:1001
 msgid "<b>Song Display</b>"
 msgstr "<b>歌曲显示</b>"
 
-#: src/audacious/ui_preferences.c:1007
+#: src/audacious/ui_preferences.c:1010
 msgid "Show song numbers"
 msgstr "显示歌曲序号"
 
-#: src/audacious/ui_preferences.c:1018
+#: src/audacious/ui_preferences.c:1021
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr "显示时间前的0（如：显示2:00为02:00）"
 
-#: src/audacious/ui_preferences.c:1038
+#: src/audacious/ui_preferences.c:1041
 msgid "Show information about titlestring format"
 msgstr "标题显示格式"
 
-#: src/audacious/ui_preferences.c:1052
+#: src/audacious/ui_preferences.c:1055
 msgid "Custom string:"
 msgstr "自定字符："
 
-#: src/audacious/ui_preferences.c:1057
+#: src/audacious/ui_preferences.c:1060
 msgid "Title format:"
 msgstr "标题样式："
 
-#: src/audacious/ui_preferences.c:1144
+#: src/audacious/ui_preferences.c:1147
 msgid "Output plugin:"
 msgstr "输出插件："
 
-#: src/audacious/ui_preferences.c:1203
+#: src/audacious/ui_preferences.c:1206
 msgid "Transport"
 msgstr "传输"
 
-#: src/audacious/ui_preferences.c:1203
+#: src/audacious/ui_preferences.c:1206
 msgid "Input"
 msgstr "输入"
 
-#: src/audacious/ui_preferences.c:1204
+#: src/audacious/ui_preferences.c:1207
 msgid "Effect"
 msgstr "音效"
 
-#: src/audacious/ui_preferences.c:1204
+#: src/audacious/ui_preferences.c:1207
 msgid "Visualization"
 msgstr "虚拟效果"
 
-#: src/audacious/ui_preferences.c:1204
+#: src/audacious/ui_preferences.c:1207
 msgid "General"
 msgstr "一般"
 
-#: src/audacious/ui_preferences.c:1239
+#: src/audacious/ui_preferences.c:1242
 msgid "Audacious Preferences"
 msgstr "Audacious首选项"
 
@@ -695,7 +697,7 @@ msgstr "室内音乐"
 
 #: src/libaudgui/infowin.c:80
 msgid "Classical"
-msgstr "古典音乐"
+msgstr "古典"
 
 #: src/libaudgui/infowin.c:81
 msgid "Country"
@@ -779,7 +781,7 @@ msgstr "流行"
 
 #: src/libaudgui/infowin.c:101
 msgid "Punk Rock"
-msgstr "朋客摇滚乐"
+msgstr "朋克摇滚乐"
 
 #: src/libaudgui/infowin.c:102
 msgid "Rap"
@@ -787,7 +789,7 @@ msgstr "说唱"
 
 #: src/libaudgui/infowin.c:103
 msgid "Reggae"
-msgstr "雷鬼"
+msgstr "雷盖舞曲"
 
 #: src/libaudgui/infowin.c:104
 msgid "Rock"
@@ -815,7 +817,7 @@ msgstr " 摇摆乐"
 
 #: src/libaudgui/infowin.c:110
 msgid "Techno"
-msgstr " 科技舞曲"
+msgstr " 电子舞曲"
 
 #: src/libaudgui/infowin.c:111
 msgid "Trip-hop"
