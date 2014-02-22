@@ -79,7 +79,7 @@ static const struct {
     {"enqueue-to-temp", 'E', & options.enqueue_to_temp, N_("Add files to a temporary playlist")},
     {"show-main-window", 'm', & options.mainwin, N_("Display the main window")},
     {"show-jump-box", 'j', & options.show_jump_box, N_("Display the jump-to-song window")},
-    {"headless", 'h', & options.headless, N_("Start without a graphical interface")},
+    {"headless", 'H', & options.headless, N_("Start without a graphical interface")},
     {"quit-after-play", 'q', & options.quit_after_play, N_("Quit on playback stop")},
     {"verbose", 'V', & options.verbose, N_("Print debugging messages")},
 };
