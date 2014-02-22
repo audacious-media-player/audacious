@@ -66,6 +66,9 @@ static ReplayGainInfo gain_info;
 static bool_t change_op;
 static OutputPlugin * new_op;
 
+static void * buffer1, * buffer2;
+static int buffer1_size, buffer2_size;
+
 static inline int FR2MS (int64_t f, int r)
  { return (f > 0) ? (f * 1000 + r / 2) / r : (f * 1000 - r / 2) / r; }
 static inline int MS2FR (int64_t ms, int r)
@@ -82,6 +85,16 @@ static inline int get_format (void)
     }
 }
 
+static void ensure_buffer (void * * buffer, int * size, int newsize)
+{
+    if (newsize > * size)
+    {
+        g_free (* buffer);
+        * buffer = g_malloc (newsize);
+        * size = newsize;
+    }
+}
+
 /* assumes LOCK_ALL, s_output */
 static void cleanup_output (void)
 {
@@ -93,6 +106,13 @@ static void cleanup_output (void)
     }
 
     s_output = FALSE;
+
+    g_free (buffer1);
+    g_free (buffer2);
+    buffer1 = NULL;
+    buffer2 = NULL;
+    buffer1_size = 0;
+    buffer2_size = 0;
 
     if (PLUGIN_HAS_FUNC (cop, close_audio))
         cop->close_audio ();
@@ -217,8 +237,6 @@ static void apply_software_volume (float * data, int channels, int samples)
 /* assumes LOCK_ALL, s_output */
 static void write_output_raw (void * data, int samples)
 {
-    void * buffer = NULL;
-
     vis_runner_pass_audio (FR2MS (out_frames, out_rate), data, samples,
      out_channels, out_rate);
     out_frames += samples / out_channels;
@@ -231,9 +249,9 @@ static void write_output_raw (void * data, int samples)
 
     if (out_format != FMT_FLOAT)
     {
-        buffer = g_malloc (FMT_SIZEOF (out_format) * samples);
-        audio_to_int (data, buffer, out_format, samples);
-        data = buffer;
+        ensure_buffer (& buffer2, & buffer2_size, FMT_SIZEOF (out_format) * samples);
+        audio_to_int (data, buffer2, out_format, samples);
+        data = buffer2;
     }
 
     while (! (s_aborted || s_resetting))
@@ -270,14 +288,11 @@ static void write_output_raw (void * data, int samples)
 
         LOCK_MINOR;
     }
-
-    g_free (buffer);
 }
 
 /* assumes LOCK_ALL, s_input, s_output */
 static bool_t write_output (void * data, int size, int stop_time)
 {
-    void * buffer = NULL;
     bool_t stopped = FALSE;
 
     int64_t cur_frame = in_frames;
@@ -303,9 +318,9 @@ static bool_t write_output (void * data, int size, int stop_time)
 
     if (in_format != FMT_FLOAT)
     {
-        buffer = g_new (float, samples);
-        audio_from_int (data, in_format, buffer, samples);
-        data = buffer;
+        ensure_buffer (& buffer1, & buffer1_size, sizeof (float) * samples);
+        audio_from_int (data, in_format, buffer1, samples);
+        data = buffer1;
     }
 
     float * fdata = data;
@@ -313,7 +328,6 @@ static bool_t write_output (void * data, int size, int stop_time)
     effect_process (& fdata, & samples);
     write_output_raw (fdata, samples);
 
-    g_free (buffer);
     return ! stopped;
 }
 

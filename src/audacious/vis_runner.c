@@ -17,35 +17,85 @@
  * the use of this software.
  */
 
-#include <glib.h>
+#include <assert.h>
 #include <pthread.h>
 #include <stdint.h>
 #include <string.h>
+
+#include <glib.h>
 
 #include "output.h"
 #include "vis_runner.h"
 #include "visualization.h"
 
 #define INTERVAL 30 /* milliseconds */
+#define FRAMES_PER_NODE 512
 
-typedef struct {
-    int time;
-    float * data;
+struct _VisNode {
+    struct _VisNode * next;
     int channels;
-} VisNode;
+    int time;
+    float data[];
+};
+
+typedef struct _VisNode VisNode;
 
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 static bool_t enabled = FALSE;
 static bool_t playing = FALSE, paused = FALSE, active = FALSE;
 static VisNode * current_node = NULL;
 static int current_frames;
-static GQueue vis_list = G_QUEUE_INIT;
+static VisNode * vis_list = NULL;
+static VisNode * vis_list_tail = NULL;
+static VisNode * vis_pool = NULL;
 static int send_source = 0, clear_source = 0;
 
-static void vis_node_free (VisNode * node)
+static VisNode * alloc_node_locked (int channels)
 {
-    g_free (node->data);
-    g_slice_free (VisNode, node);
+    VisNode * node;
+
+    if (vis_pool)
+    {
+        node = vis_pool;
+        assert (node->channels == channels);
+        vis_pool = node->next;
+    }
+    else
+    {
+        node = g_malloc (offsetof (VisNode, data) + sizeof (float) * channels * FRAMES_PER_NODE);
+        node->channels = channels;
+    }
+
+    node->next = NULL;
+    return node;
+}
+
+static void free_node_locked (VisNode * node)
+{
+    node->next = vis_pool;
+    vis_pool = node;
+}
+
+static void push_node_locked (VisNode * node)
+{
+    if (vis_list)
+        vis_list_tail->next = node;
+    else
+        vis_list = node;
+
+    vis_list_tail = node;
+}
+
+static VisNode * pop_node_locked (void)
+{
+    VisNode * node = vis_list;
+    vis_list = node->next;
+    node->next = NULL;
+
+    if (vis_list_tail == node)
+        vis_list_tail = NULL;
+
+    return node;
 }
 
 static bool_t send_audio (void * unused)
@@ -62,21 +112,20 @@ static bool_t send_audio (void * unused)
     }
 
     VisNode * vis_node = NULL;
-    VisNode * next;
 
-    while ((next = g_queue_peek_head (& vis_list)))
+    while (vis_list)
     {
         /* If we are considering a node, stop searching and use it if it is the
          * most recent (that is, the next one is in the future).  Otherwise,
          * consider the next node if it is not in the future by more than the
          * length of an interval. */
-        if (next->time > outputted + (vis_node ? 0 : INTERVAL))
+        if (vis_list->time > outputted + (vis_node ? 0 : INTERVAL))
             break;
 
         if (vis_node)
-            vis_node_free (vis_node);
+            free_node_locked (vis_node);
 
-        vis_node = g_queue_pop_head (& vis_list);
+        vis_node = pop_node_locked ();
     }
 
     pthread_mutex_unlock (& mutex);
@@ -86,7 +135,10 @@ static bool_t send_audio (void * unused)
 
     vis_send_audio (vis_node->data, vis_node->channels);
 
-    vis_node_free (vis_node);
+    pthread_mutex_lock (& mutex);
+    free_node_locked (vis_node);
+    pthread_mutex_unlock (& mutex);
+
     return TRUE;
 }
 
@@ -101,16 +153,26 @@ static bool_t send_clear (void * unused)
     return FALSE;
 }
 
-static void flush (void)
+static void flush_locked (void)
 {
-    if (current_node)
+    g_free (current_node);
+    current_node = NULL;
+
+    while (vis_list)
     {
-        vis_node_free (current_node);
-        current_node = NULL;
+        VisNode * node = vis_list;
+        vis_list = node->next;
+        g_free (node);
     }
 
-    g_queue_foreach (& vis_list, (GFunc) vis_node_free, NULL);
-    g_queue_clear (& vis_list);
+    vis_list_tail = NULL;
+
+    while (vis_pool)
+    {
+        VisNode * node = vis_pool;
+        vis_pool = node->next;
+        g_free (node);
+    }
 
     if (! clear_source)
         clear_source = g_timeout_add (0, send_clear, NULL);
@@ -119,11 +181,11 @@ static void flush (void)
 void vis_runner_flush (void)
 {
     pthread_mutex_lock (& mutex);
-    flush ();
+    flush_locked ();
     pthread_mutex_unlock (& mutex);
 }
 
-static void start_stop (bool_t new_playing, bool_t new_paused)
+static void start_stop_locked (bool_t new_playing, bool_t new_paused)
 {
     playing = new_playing;
     paused = new_paused;
@@ -142,7 +204,7 @@ static void start_stop (bool_t new_playing, bool_t new_paused)
     }
 
     if (! active)
-        flush ();
+        flush_locked ();
     else if (! paused)
         send_source = g_timeout_add (INTERVAL, send_audio, NULL);
 }
@@ -150,7 +212,7 @@ static void start_stop (bool_t new_playing, bool_t new_paused)
 void vis_runner_start_stop (bool_t new_playing, bool_t new_paused)
 {
     pthread_mutex_lock (& mutex);
-    start_stop (new_playing, new_paused);
+    start_stop_locked (new_playing, new_paused);
     pthread_mutex_unlock (& mutex);
 }
 
@@ -166,20 +228,15 @@ void vis_runner_pass_audio (int time, float * data, int samples, int
      * multiple nodes from the same call.  If current_node is present, it was
      * partly built in the last call and needs to be finished. */
 
-    if (current_node && current_node->channels != channels)
-    {
-        vis_node_free (current_node);
-        current_node = NULL;
-    }
-
     int at = 0;
 
     while (1)
     {
-        if (! current_node)
+        if (current_node)
+            assert (current_node->channels == channels);
+        else
         {
             int node_time = time;
-            VisNode * last;
 
             /* There is no partly-built node, so start a new one.  Normally
              * there will be nodes in the queue already; if so, we want to copy
@@ -188,8 +245,8 @@ void vis_runner_pass_audio (int time, float * data, int samples, int
              * queue, we are at the beginning of the song or had an underrun,
              * and we want to copy the earliest audio data we have. */
 
-            if ((last = g_queue_peek_tail (& vis_list)))
-                node_time = last->time + INTERVAL;
+            if (vis_list_tail)
+                node_time = vis_list_tail->time + INTERVAL;
 
             at = channels * (int) ((int64_t) (node_time - time) * rate / 1000);
 
@@ -198,10 +255,8 @@ void vis_runner_pass_audio (int time, float * data, int samples, int
             if (at >= samples)
                 break;
 
-            current_node = g_slice_new (VisNode);
+            current_node = alloc_node_locked (channels);
             current_node->time = node_time;
-            current_node->data = g_new (float, channels * 512);
-            current_node->channels = channels;
             current_frames = 0;
         }
 
@@ -210,14 +265,14 @@ void vis_runner_pass_audio (int time, float * data, int samples, int
          * wait for more data to be passed in the next call.  If we do fill the
          * node, we loop and start building a new one. */
 
-        int copy = MIN (samples - at, channels * (512 - current_frames));
+        int copy = MIN (samples - at, channels * (FRAMES_PER_NODE - current_frames));
         memcpy (current_node->data + channels * current_frames, data + at, sizeof (float) * copy);
         current_frames += copy / channels;
 
-        if (current_frames < 512)
+        if (current_frames < FRAMES_PER_NODE)
             break;
 
-        g_queue_push_tail (& vis_list, current_node);
+        push_node_locked (current_node);
         current_node = NULL;
     }
 
@@ -229,6 +284,6 @@ void vis_runner_enable (bool_t enable)
 {
     pthread_mutex_lock (& mutex);
     enabled = enable;
-    start_stop (playing, paused);
+    start_stop_locked (playing, paused);
     pthread_mutex_unlock (& mutex);
 }
