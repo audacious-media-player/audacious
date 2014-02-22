@@ -261,7 +261,7 @@ static bool_t parse_options (int argc, char * * argv)
 
             if (i == ARRAY_LEN (arg_map))
             {
-                fprintf (stderr, "Unknown option: %s\n", argv[n]);
+                fprintf (stderr, _("Unknown option: %s\n"), argv[n]);
                 goto FAIL;
             }
         }
@@ -282,7 +282,7 @@ static bool_t parse_options (int argc, char * * argv)
 
                 if (i == ARRAY_LEN (arg_map))
                 {
-                    fprintf (stderr, "Unknown option: -%c\n", argv[n][c]);
+                    fprintf (stderr, _("Unknown option: -%c\n"), argv[n][c]);
                     goto FAIL;
                 }
             }
@@ -303,7 +303,7 @@ static void print_help (void)
 {
     static const char pad[20] = "                    ";
 
-    fprintf (stderr, "Usage: audacious [OPTION] ... [FILE] ...\n\n");
+    fprintf (stderr, _("Usage: audacious [OPTION] ... [FILE] ...\n\n"));
 
     for (int i = 0; i < ARRAY_LEN (arg_map); i ++)
         fprintf (stderr, "  -%c, --%s%.*s%s\n", arg_map[i].short_arg,
