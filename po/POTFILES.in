@@ -1,21 +1,19 @@
 # Please don't update this file manually - use ./update-potfiles.sh instead!
 src/audacious/adder.c
-src/audacious/chardet.c
-src/audacious/equalizer_preset.c
+src/audacious/interface.c
 src/audacious/main.c
 src/audacious/playback.c
 src/audacious/playlist-files.c
 src/audacious/playlist-new.c
 src/audacious/plugin-preferences.c
+src/audacious/plugin-view.c
+src/audacious/ui_plugin_menu.c
 src/audacious/ui_preferences.c
 src/audacious/util.c
-src/audtool/handlers_playlist.c
-src/audtool/handlers_vitals.c
 src/libaudcore/audstrings.c
 src/libaudcore/tuple.c
 src/libaudgui/about.c
 src/libaudgui/confirm.c
-src/libaudgui/effects-menu.c
 src/libaudgui/equalizer.c
 src/libaudgui/infopopup.c
 src/libaudgui/infowin.c
