@@ -1,4 +1,4 @@
-.TH AUDACIOUS "1" "April 2009" "Version @PACKAGE_VERSION@" "Audacious"
+.TH AUDACIOUS "1" "February 2014" "Version @PACKAGE_VERSION@" "Audacious"
 
 .SH NAME
 audacious \- an advanced audio player.
@@ -17,20 +17,8 @@ Media Player, which was in turn based on XMMS.
 .B Getting help:
 
 .TP
-.I -?, --help
+.I -h, --help
 Show a brief list of options.
-
-.TP
-.I --help-all
-Show a complete list of options.
-
-.TP
-.I --help-gtk
-Show a list of GTK+-related options.
-
-.TP
-.I --help-sm-client
-Show a list of session management options.
 
 .PP
 .B Opening files:
@@ -83,7 +71,7 @@ Show the Audacious window if it is hidden and bring it to the top.
 Show the Jump to Song window.
 
 .TP
-.I -h, --headless
+.I -H, --headless
 Start in command-line mode; i.e., without any graphical user interface.
 
 .TP
@@ -97,52 +85,6 @@ Print version information and exit.
 .TP
 .I -V, --verbose
 Print debugging output while running.
-
-.PP
-.B GTK+-related:
-
-.TP
-.I --display DISPLAY
-Start Audacious on the given X display.
-
-.TP
-.I --screen SCREEN
-Start Audacious on the given X screen.
-
-.TP
-.I --sync
-Use synchronous X calls.
-
-.TP
-.I --name NAME
-Set Audacious's program name (for use by the window manager).
-
-.TP
-.I --class CLASS
-Set Audacious's program class (for use by the window manager).
-
-.TP
-.I --gtk-module MODULE
-Load a GTK+ module manually.
-
-.TP
-.I --g-fatal-warnings
-Treat all warnings as fatal errors.
-
-.PP
-.B Session management:
-
-.TP
-.I --sm-client-disable
-Do not connect to the session manager.
-
-.TP
-.I --sm-client-id ID
-Set session management ID.
-
-.TP
-.I --sm-client-state-file FILE
-Load saved configuration from FILE.
 
 .SH KEYBINDINGS
 .ta 24
@@ -221,12 +163,8 @@ Control + p	Display Preferences dialog
 ~/.config/audacious/config
 User's Audacious configuration.
 .TP
-~/.config/audacious/playlist.xspf
+~/.config/audacious/playlists/1000.audpl
 Default playlist usually loaded on startup.
-.TP
-~/.config/audacious/gtkrc
-User's set of Audacious-specific GTK+ config settings. Options such as widget
-color and fonts sizes can be set here.
 .TP
 ~/.local/share/audacious/Skins, @datarootdir@/audacious/Skins
 Default location(s) where Audacious should look for skin files.
