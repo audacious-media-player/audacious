@@ -69,7 +69,16 @@ const struct commandhandler handlers[] =
     {"playlist-stop-after-status", playlist_stop_after_status, "queries if stopping after current song", 0},
     {"playlist-stop-after-toggle", playlist_stop_after_toggle, "toggles if stopping after current song", 0},
     {"playlist-tuple-data", playlist_tuple_field_data, "returns the value of a tuple field for a song in the playlist", 2},
-    {"current-playlist-name", playlist_title, "returns the playlist title of the active playlist", 0},
+
+    {"<sep>", NULL, "More playlist manipulation", 0},
+    {"number-of-playlists", number_of_playlists, "returns the number of open playlists", 0},
+    {"current-playlist", current_playlist, "returns the number of the active playlist", 0},
+    {"set-current-playlist", set_current_playlist, "activates the specified playlist", 1},
+    {"current-playlist-name", playlist_title, "returns the title of the active playlist", 0},
+    {"set-current-playlist-name", set_playlist_title, "sets the title of the active playlist", 1},
+    {"new-playlist", new_playlist, "creates a new playlist", 0},
+    {"delete-current-playlist", delete_current_playlist, "removes the active playlist", 0},
+    {"play-current-playlist", play_current_playlist, "starts or resumes playing the active playlist", 0},
 
     {"<sep>", NULL, "Playqueue manipulation", 0},
     {"playqueue-add", playqueue_add, "adds a song to the playqueue", 1},

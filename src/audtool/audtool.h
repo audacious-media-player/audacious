@@ -85,7 +85,15 @@ void playlist_stop_after_toggle (int argc, char * * argv);
 void playlist_tuple_field_data (int, char * * argv);
 void playlist_enqueue_to_temp (int argc, char * * argv);
 void playlist_ins_url_string (int argc, char * * argv);
-void playlist_title (int, char * *);
+
+void number_of_playlists (int argc, char * * argv);
+void current_playlist (int argc, char * * argv);
+void set_current_playlist (int argc, char * * argv);
+void playlist_title (int argc, char * * argv);
+void set_playlist_title (int argc, char * * argv);
+void new_playlist (int argc, char * * argv);
+void delete_current_playlist (int argc, char * * argv);
+void play_current_playlist (int argc, char * * argv);
 
 void playqueue_add (int, char * *);
 void playqueue_remove (int, char * *);

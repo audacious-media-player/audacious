@@ -104,6 +104,13 @@ static bool_t do_delete (Obj * obj, Invoc * invoc, unsigned pos)
     return TRUE;
 }
 
+static bool_t do_delete_active_playlist (Obj * obj, Invoc * invoc)
+{
+    playlist_delete (playlist_get_active ());
+    FINISH (delete_active_playlist);
+    return TRUE;
+}
+
 static bool_t do_eject (Obj * obj, Invoc * invoc)
 {
     if (! headless_mode ())
@@ -117,6 +124,12 @@ static bool_t do_equalizer_activate (Obj * obj, Invoc * invoc, bool_t active)
 {
     set_bool (NULL, "equalizer_active", active);
     FINISH (equalizer_activate);
+    return TRUE;
+}
+
+static bool_t do_get_active_playlist (Obj * obj, Invoc * invoc)
+{
+    FINISH2 (get_active_playlist, playlist_get_active ());
     return TRUE;
 }
 
@@ -206,6 +219,20 @@ static bool_t do_main_win_visible (Obj * obj, Invoc * invoc)
     return TRUE;
 }
 
+static bool_t do_new_playlist (Obj * obj, Invoc * invoc)
+{
+    playlist_insert (-1);
+    playlist_set_active (playlist_count () - 1);
+    FINISH (new_playlist);
+    return TRUE;
+}
+
+static bool_t do_number_of_playlists (Obj * obj, Invoc * invoc)
+{
+    FINISH2 (number_of_playlists, playlist_count ());
+    return TRUE;
+}
+
 static bool_t do_open_list (Obj * obj, Invoc * invoc, const char * const * filenames)
 {
     drct_pl_open_list (strv_to_index (filenames));
@@ -237,6 +264,13 @@ static bool_t do_play (Obj * obj, Invoc * invoc)
 {
     drct_play ();
     FINISH (play);
+    return TRUE;
+}
+
+static bool_t do_play_active_playlist (Obj * obj, Invoc * invoc)
+{
+    drct_play_playlist (playlist_get_active ());
+    FINISH (play_active_playlist);
     return TRUE;
 }
 
@@ -350,6 +384,20 @@ static bool_t do_seek (Obj * obj, Invoc * invoc, unsigned pos)
 {
     drct_seek (pos);
     FINISH (seek);
+    return TRUE;
+}
+
+static bool_t do_set_active_playlist (Obj * obj, Invoc * invoc, int playlist)
+{
+    playlist_set_active (playlist);
+    FINISH (set_active_playlist);
+    return TRUE;
+}
+
+static bool_t do_set_active_playlist_name (Obj * obj, Invoc * invoc, const char * title)
+{
+    playlist_set_title (playlist_get_active (), title);
+    FINISH (set_active_playlist_name);
     return TRUE;
 }
 
@@ -622,8 +670,10 @@ handlers[] =
     {"handle-balance", (GCallback) do_balance},
     {"handle-clear", (GCallback) do_clear},
     {"handle-delete", (GCallback) do_delete},
+    {"handle-delete-active-playlist", (GCallback) do_delete_active_playlist},
     {"handle-eject", (GCallback) do_eject},
     {"handle-equalizer-activate", (GCallback) do_equalizer_activate},
+    {"handle-get-active-playlist", (GCallback) do_get_active_playlist},
     {"handle-get-active-playlist-name", (GCallback) do_get_active_playlist_name},
     {"handle-get-eq", (GCallback) do_get_eq},
     {"handle-get-eq-band", (GCallback) do_get_eq_band},
@@ -635,11 +685,14 @@ handlers[] =
     {"handle-jump", (GCallback) do_jump},
     {"handle-length", (GCallback) do_length},
     {"handle-main-win-visible", (GCallback) do_main_win_visible},
+    {"handle-new-playlist", (GCallback) do_new_playlist},
+    {"handle-number-of-playlists", (GCallback) do_number_of_playlists},
     {"handle-open-list", (GCallback) do_open_list},
     {"handle-open-list-to-temp", (GCallback) do_open_list_to_temp},
     {"handle-pause", (GCallback) do_pause},
     {"handle-paused", (GCallback) do_paused},
     {"handle-play", (GCallback) do_play},
+    {"handle-play-active-playlist", (GCallback) do_play_active_playlist},
     {"handle-play-pause", (GCallback) do_play_pause},
     {"handle-playing", (GCallback) do_playing},
     {"handle-playlist-add", (GCallback) do_playlist_add},
@@ -656,6 +709,8 @@ handlers[] =
     {"handle-repeat", (GCallback) do_repeat},
     {"handle-reverse", (GCallback) do_reverse},
     {"handle-seek", (GCallback) do_seek},
+    {"handle-set-active-playlist", (GCallback) do_set_active_playlist},
+    {"handle-set-active-playlist-name", (GCallback) do_set_active_playlist_name},
     {"handle-set-eq", (GCallback) do_set_eq},
     {"handle-set-eq-band", (GCallback) do_set_eq_band},
     {"handle-set-eq-preamp", (GCallback) do_set_eq_preamp},

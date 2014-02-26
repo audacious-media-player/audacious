@@ -2,7 +2,7 @@
 
 <!--
  * aud-dbus.xml
- * Copyright 2007-2010 Ben Tucker, Yoshiki Yazawa, Matti Hämäläinen, and
+ * Copyright 2007-2014 Ben Tucker, Yoshiki Yazawa, Matti Hämäläinen, and
  *                     John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
@@ -379,8 +379,31 @@
             <arg type="b" direction="in" name="active"/>
         </method>
 
+        <method name="NumberOfPlaylists">
+            <arg type="i" direction="out" name="count" />
+        </method>
+
+        <method name="GetActivePlaylist">
+            <arg type="i" direction="out" name="plnum" />
+        </method>
+
+        <method name="SetActivePlaylist">
+            <arg type="i" direction="in" name="plnum" />
+        </method>
+
         <method name="GetActivePlaylistName">
             <arg type="s" direction="out" name="plname" />
         </method>
+
+        <method name="SetActivePlaylistName">
+            <arg type="s" direction="in" name="plname" />
+        </method>
+
+        <method name="NewPlaylist" />
+
+        <method name="DeleteActivePlaylist" />
+
+        <method name="PlayActivePlaylist" />
+
     </interface>
 </node>
