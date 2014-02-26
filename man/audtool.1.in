@@ -1,4 +1,4 @@
-.TH AUDTOOL "1" "April 2009" "Version @PACKAGE_VERSION@"
+.TH AUDTOOL "1" "February 2014" "Version @PACKAGE_VERSION@"
 .SH NAME
 .B audtool
 - a small tool to modify behavior of a running Audacious instance.
@@ -127,6 +127,32 @@ Toggles the "stop after current song" option.
 .TP
 .I --playlist-tuple-data <fieldname> <position>
 Returns the value of a tuple field for a song in the playlist.
+.PP
+.B More playlist manipulation:
+.TP
+.I --number-of-playlists
+Returns the number of open playlists.
+.TP
+.I --current-playlist
+Returns the number of the active playlist.
+.TP
+.I --set-current-playlist
+Activates the specified playlist.
+.TP
+.I --current-playlist-name
+Returns the title of the active playlist.
+.TP
+.I --set-current-playlist-name
+Sets the title of the active playlist.
+.TP
+.I --new-playlist
+Creates a new playlist.
+.TP
+.I --delete-current-playlist
+Removes the active playlist.
+.TP
+.I --play-current-playlist
+Starts or resumes playing the active playlist.
 .PP
 .B Playqueue manipulation:
 .TP
