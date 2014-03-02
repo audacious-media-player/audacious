@@ -39,6 +39,8 @@ bool_t tag_image_read (VFSFile * handle, void * * data, int64_t * size);
  * written if the file does not have any existing tag. */
 bool_t tag_tuple_write (const Tuple * tuple, VFSFile * handle, int new_type);
 
+bool_t tag_update_stream_metadata (Tuple * tuple, VFSFile * handle);
+
 /* deprecated, use tag_tuple_write */
 bool_t tag_tuple_write_to_file (Tuple * tuple, VFSFile * handle);
 
