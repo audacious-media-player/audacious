@@ -387,7 +387,7 @@ static bool_t write_integer_item (const Tuple * tuple, int field, VFSFile *
     int value = tuple_get_int (tuple, field);
     char scratch[32];
 
-    if (! value)
+    if (value <= 0)
         return TRUE;
 
     str_itoa (value, scratch, sizeof scratch);
