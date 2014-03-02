@@ -27,6 +27,7 @@ enum
 {
     TAG_TYPE_NONE = 0,
     TAG_TYPE_APE,
+    TAG_TYPE_ID3V2
 };
 
 void tag_set_verbose (bool_t verbose);

@@ -736,18 +736,17 @@ static bool_t id3v24_read_image (VFSFile * handle, void * * image_data,
 
 static bool_t id3v24_write_tag (const Tuple * tuple, VFSFile * f)
 {
-    int version, header_size, data_size, footer_size;
+    int version = 3;
+    int header_size, data_size, footer_size;
     bool_t syncsafe;
     int64_t offset;
-
-    if (! read_header (f, & version, & syncsafe, & offset, & header_size,
-     & data_size, & footer_size))
-        return FALSE;
 
     //read all frames into generic frames;
     GHashTable * dict = g_hash_table_new_full (g_str_hash, g_str_equal,
      (GDestroyNotify) str_unref, (GDestroyNotify) free_frame_list);
-    read_all_frames (f, version, syncsafe, data_size, dict);
+
+    if (read_header (f, & version, & syncsafe, & offset, & header_size, & data_size, & footer_size))
+        read_all_frames (f, version, syncsafe, data_size, dict);
 
     //make the new frames from tuple and replace in the dictionary the old frames with the new ones
     add_frameFromTupleStr (tuple, FIELD_TITLE, ID3_TITLE, dict);
@@ -800,6 +799,7 @@ ERR:
 tag_module_t id3v24 =
 {
     .name = "ID3v2.3/4",
+    .type = TAG_TYPE_ID3V2,
     .can_handle_file = id3v24_can_handle_file,
     .read_tag = id3v24_read_tag,
     .read_image = id3v24_read_image,
