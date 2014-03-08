@@ -47,7 +47,7 @@ EXPORT void inifile_parse (VFSFile * file,
  void (* handle_entry) (const char * key, const char * value, void * data),
  void * data)
 {
-    int size = 512;
+    int size = 4096;
     char * buf = g_new (char, size);
 
     char * pos = buf;
