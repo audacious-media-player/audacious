@@ -1,6 +1,6 @@
 /*
  * vfs_local.c
- * Copyright 2009-2013 John Lindgren
+ * Copyright 2009-2014 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -20,215 +20,199 @@
 #include "vfs_local.h"
 
 #include <errno.h>
-#include <stddef.h>
 #include <stdio.h>
 #include <string.h>
-
-#include <fcntl.h>
-#include <sys/stat.h>
 #include <unistd.h>
+
+#include <glib.h>
 
 #include "audstrings.h"
 
-#define INT_TO_POINTER(x) ((void *) (ptrdiff_t) (x))
-#define POINTER_TO_INT(x) ((int) (ptrdiff_t) (x))
+#ifdef _WIN32
+#define fseeko fseeko64
+#define ftello ftello64
+#endif
 
-#define local_error(...) do { \
-    fprintf (stderr, __VA_ARGS__); \
-    fputc ('\n', stderr); \
-} while (0)
+typedef enum {
+    OP_NONE,
+    OP_READ,
+    OP_WRITE
+} LocalOp;
+
+typedef struct {
+    char * path;
+    FILE * stream;
+    int64_t cached_size;
+    LocalOp last_op;
+} LocalFile;
 
 static void * local_fopen (const char * uri, const char * mode)
 {
-    bool_t update;
-    mode_t mode_flag;
-    int handle;
+    char * path = uri_to_filename (uri);
+    g_return_val_if_fail (path, NULL);
 
-    update = (strchr (mode, '+') != NULL);
+    const char * suffix = "";
 
-    switch (mode[0])
-    {
-      case 'r':
-        mode_flag = update ? O_RDWR : O_RDONLY;
-        break;
-      case 'w':
-        mode_flag = (update ? O_RDWR : O_WRONLY) | O_CREAT | O_TRUNC;
-        break;
-      case 'a':
-        mode_flag = (update ? O_RDWR : O_WRONLY) | O_CREAT | O_APPEND;
-        break;
-      default:
-        return NULL;
-    }
-
-#ifdef O_CLOEXEC
-    mode_flag |= O_CLOEXEC;
-#endif
 #ifdef _WIN32
-    mode_flag |= O_BINARY;
-#endif
-
-    char * filename = uri_to_filename (uri);
-    if (! filename)
-        return NULL;
-
-    if (mode_flag & O_CREAT)
-#ifdef S_IRGRP
-        handle = open (filename, mode_flag, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+    if (! strchr (mode, 'b'))  /* binary mode (Windows) */
+        suffix = "b";
 #else
-        handle = open (filename, mode_flag, S_IRUSR | S_IWUSR);
+    if (! strchr (mode, 'e'))  /* close on exec (POSIX) */
+        suffix = "e";
 #endif
-    else
-        handle = open (filename, mode_flag);
 
-    if (handle < 0)
+    SCONCAT2 (mode2, mode, suffix);
+
+    FILE * stream = fopen (path, mode2);
+
+    if (! stream)
     {
-        local_error ("Cannot open %s: %s.", filename, strerror (errno));
-        str_unref (filename);
+        perror (path);
+        str_unref (path);
         return NULL;
     }
 
-    str_unref (filename);
-    return INT_TO_POINTER (handle);
+    LocalFile * local = g_slice_new (LocalFile);
+
+    local->path = path;
+    local->stream = stream;
+    local->cached_size = -1;
+    local->last_op = OP_NONE;
+
+    return local;
 }
 
 static int local_fclose (VFSFile * file)
 {
-    int handle = POINTER_TO_INT (vfs_get_handle (file));
-    int result = 0;
+    LocalFile * local = vfs_get_handle (file);
 
-    if (close (handle) < 0)
-    {
-        local_error ("close failed: %s.", strerror (errno));
-        result = -1;
-    }
+    int result = fclose (local->stream);
+    if (result < 0)
+        perror (local->path);
+
+    str_unref (local->path);
+    g_slice_free (LocalFile, local);
 
     return result;
 }
 
 static int64_t local_fread (void * ptr, int64_t size, int64_t nitems, VFSFile * file)
 {
-    int handle = POINTER_TO_INT (vfs_get_handle (file));
-    int64_t goal = size * nitems;
-    int64_t total = 0;
+    LocalFile * local = vfs_get_handle (file);
 
-    while (total < goal)
+    if (local->last_op == OP_WRITE)
     {
-        int64_t readed = read (handle, (char *) ptr + total, goal - total);
-
-        if (readed < 0)
+        if (fseeko (local->stream, 0, SEEK_CUR) < 0)  /* flush buffers */
         {
-            local_error ("read failed: %s.", strerror (errno));
-            break;
+            perror (local->path);
+            return 0;
         }
-
-        if (! readed)
-            break;
-
-        total += readed;
     }
 
-    return (size > 0) ? total / size : 0;
-}
+    local->last_op = OP_READ;
 
-static int64_t local_fwrite (const void * ptr, int64_t size, int64_t nitems,
- VFSFile * file)
-{
-    int handle = POINTER_TO_INT (vfs_get_handle (file));
-    int64_t goal = size * nitems;
-    int64_t total = 0;
+    clearerr (local->stream);
 
-    while (total < goal)
-    {
-        int64_t written = write (handle, (char *) ptr + total, goal - total);
-
-        if (written < 0)
-        {
-            local_error ("write failed: %s.", strerror (errno));
-            break;
-        }
-
-        total += written;
-    }
-
-    return (size > 0) ? total / size : 0;
-}
-
-static int local_fseek (VFSFile * file, int64_t offset, int whence)
-{
-    int handle = POINTER_TO_INT (vfs_get_handle (file));
-
-    if (lseek (handle, offset, whence) < 0)
-    {
-        local_error ("lseek failed: %s.", strerror (errno));
-        return -1;
-    }
-
-    return 0;
-}
-
-static int64_t local_ftell (VFSFile * file)
-{
-    int handle = POINTER_TO_INT (vfs_get_handle (file));
-    int64_t result = lseek (handle, 0, SEEK_CUR);
-
-    if (result < 0)
-        local_error ("lseek failed: %s.", strerror (errno));
+    int64_t result = fread (ptr, size, nitems, local->stream);
+    if (result < nitems && ferror (local->stream))
+        perror (local->path);
 
     return result;
 }
 
-static int local_getc (VFSFile * file)
+static int64_t local_fwrite (const void * ptr, int64_t size, int64_t nitems, VFSFile * file)
 {
-    unsigned char c;
+    LocalFile * local = vfs_get_handle (file);
 
-    return (local_fread (& c, 1, 1, file) == 1) ? c : -1;
+    if (local->last_op == OP_READ)
+    {
+        if (fseeko (local->stream, 0, SEEK_CUR) < 0)  /* flush buffers */
+        {
+            perror (local->path);
+            return 0;
+        }
+    }
+
+    local->last_op = OP_WRITE;
+    local->cached_size = -1;
+
+    clearerr (local->stream);
+
+    int64_t result = fwrite (ptr, size, nitems, local->stream);
+    if (result < nitems && ferror (local->stream))
+        perror (local->path);
+
+    return result;
 }
 
-static int local_ungetc (int c, VFSFile * file)
+static int local_fseek (VFSFile * file, int64_t offset, int whence)
 {
-    return (! local_fseek (file, -1, SEEK_CUR)) ? c : -1;
+    LocalFile * local = vfs_get_handle (file);
+
+    int result = fseeko (local->stream, offset, whence);
+    if (result < 0)
+        perror (local->path);
+
+    if (result == 0)
+        local->last_op = OP_NONE;
+
+    return result;
+}
+
+static int64_t local_ftell (VFSFile * file)
+{
+    LocalFile * local = vfs_get_handle (file);
+    return ftello (local->stream);
 }
 
 static bool_t local_feof (VFSFile * file)
 {
-    int test = local_getc (file);
-
-    if (test < 0)
-        return TRUE;
-
-    local_ungetc (test, file);
-    return FALSE;
+    LocalFile * local = vfs_get_handle (file);
+    return feof (local->stream);
 }
 
 static int local_ftruncate (VFSFile * file, int64_t length)
 {
-    int handle = POINTER_TO_INT (vfs_get_handle (file));
+    LocalFile * local = vfs_get_handle (file);
 
-    int result = ftruncate (handle, length);
+    if (local->last_op != OP_NONE)
+    {
+        if (fseeko (local->stream, 0, SEEK_CUR) < 0)  /* flush buffers */
+        {
+            perror (local->path);
+            return 0;
+        }
+    }
 
+    int result = ftruncate (fileno (local->stream), length);
     if (result < 0)
-        local_error ("ftruncate failed: %s.", strerror (errno));
+        perror (local->path);
+
+    if (result == 0)
+    {
+        local->last_op = OP_NONE;
+        local->cached_size = length;
+    }
 
     return result;
 }
 
 static int64_t local_fsize (VFSFile * file)
 {
-    int64_t position, length;
+    LocalFile * local = vfs_get_handle (file);
 
-    position = local_ftell (file);
+    if (local->cached_size >= 0)
+        return local->cached_size;
 
-    if (position < 0)
+    int64_t saved_pos = ftello (local->stream);
+
+    if (local_fseek (file, 0, SEEK_END) < 0)
         return -1;
 
-    local_fseek (file, 0, SEEK_END);
-    length = local_ftell (file);
+    int64_t length = ftello (local->stream);
 
-    if (length < 0)
+    if (local_fseek (file, saved_pos, SEEK_SET) < 0)
         return -1;
-
-    local_fseek (file, position, SEEK_SET);
 
     return length;
 }
