@@ -42,6 +42,21 @@ static void open_cb (void * entry)
 
 static GtkWidget * create_url_opener (bool_t open)
 {
+    const char * title, * verb, * icon;
+
+    if (open)
+    {
+        title = _("Open URL");
+        verb = _("_Open");
+        icon = "document-open";
+    }
+    else
+    {
+        title = _("Add URL");
+        verb = _("_Add");
+        icon = "list-add";
+    }
+
     GtkWidget * combo = gtk_combo_box_text_new_with_entry ();
     GtkWidget * entry = gtk_bin_get_child ((GtkBin *) combo);
     gtk_entry_set_activates_default ((GtkEntry *) entry, TRUE);
@@ -52,10 +67,9 @@ static GtkWidget * create_url_opener (bool_t open)
 
     g_object_set_data ((GObject *) entry, "open", GINT_TO_POINTER (open));
 
-    GtkWidget * button1 = audgui_button_new (_("Open"), "document-open", open_cb, entry);
+    GtkWidget * button1 = audgui_button_new (verb, icon, open_cb, entry);
     GtkWidget * button2 = audgui_button_new (_("Cancel"), "process-stop", NULL, NULL);
 
-    const char * title = open ? _("Open URL") : _("Add URL");
     GtkWidget * dialog = audgui_dialog_new (GTK_MESSAGE_OTHER, title,
      _("Enter URL:"), button1, button2);
     gtk_widget_set_size_request (dialog, 400, -1);
