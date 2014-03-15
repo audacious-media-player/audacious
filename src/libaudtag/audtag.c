@@ -41,8 +41,11 @@ EXPORT bool_t tag_tuple_read (Tuple * tuple, VFSFile * handle)
 {
     tag_module_t * module = find_tag_module (handle, TAG_TYPE_NONE);
 
-    if (module == NULL)
+    if (! module || ! module->read_tag)
+    {
+        TAGDBG ("read_tag() not supported for %s\n", vfs_get_filename (handle));
         return FALSE;
+    }
 
     return module->read_tag (tuple, handle);
 }
@@ -51,8 +54,11 @@ EXPORT bool_t tag_image_read (VFSFile * handle, void * * data, int64_t * size)
 {
     tag_module_t * module = find_tag_module (handle, TAG_TYPE_NONE);
 
-    if (module == NULL || module->read_image == NULL)
+    if (! module || ! module->read_image)
+    {
+        TAGDBG ("read_image() not supported for %s\n", vfs_get_filename (handle));
         return FALSE;
+    }
 
     return module->read_image (handle, data, size);
 }
@@ -61,8 +67,11 @@ EXPORT bool_t tag_tuple_write (const Tuple * tuple, VFSFile * handle, int new_ty
 {
     tag_module_t * module = find_tag_module (handle, new_type);
 
-    if (module == NULL)
+    if (! module || ! module->write_tag)
+    {
+        TAGDBG ("write_tag() not supported for %s\n", vfs_get_filename (handle));
         return FALSE;
+    }
 
     return module->write_tag (tuple, handle);
 }
