@@ -157,7 +157,7 @@ EXPORT void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
     }
     else
     {
-        GtkWidget * button = audgui_button_new (_("Close"), "window-close", NULL, NULL);
+        GtkWidget * button = audgui_button_new (_("_Close"), "window-close", NULL, NULL);
         * widget = audgui_dialog_new (type, title, text, button, NULL);
 
         g_object_set_data ((GObject *) * widget, "messages", GINT_TO_POINTER (1));
