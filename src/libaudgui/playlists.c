@@ -44,7 +44,10 @@ static void cleanup_job (void * data)
     ImportExportJob * job = data;
 
     char * folder = gtk_file_chooser_get_current_folder_uri ((GtkFileChooser *) job->selector);
-    aud_set_str ("audgui", "playlist_path", folder);
+
+    if (folder)
+        aud_set_str ("audgui", "playlist_path", folder);
+
     g_free (folder);
 
     if (job->confirm)
