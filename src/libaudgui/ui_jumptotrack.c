@@ -263,7 +263,7 @@ static GtkWidget * create_window (void)
      "changed", (GCallback) selection_changed, NULL);
     g_signal_connect (treeview, "row-activated", (GCallback) do_jump, NULL);
 
-    GtkWidget * hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  3);
+    GtkWidget * hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 3);
 
     /* filter box */
@@ -275,14 +275,7 @@ static GtkWidget * create_window (void)
     gtk_label_set_mnemonic_widget ((GtkLabel *) search_label, filter_entry);
     g_signal_connect (filter_entry, "changed", (GCallback) fill_list, NULL);
     gtk_entry_set_activates_default ((GtkEntry *) filter_entry, TRUE);
-    gtk_box_pack_start ((GtkBox *) hbox, filter_entry, TRUE, TRUE, 3);
-
-    /* remember text entry */
-    GtkWidget * toggle2 = gtk_check_button_new_with_mnemonic (_("_Remember"));
-    gtk_toggle_button_set_active ((GtkToggleButton *) toggle2, aud_get_bool
-     ("audgui", "remember_jtf_entry"));
-    gtk_box_pack_start(GTK_BOX(hbox), toggle2, FALSE, FALSE, 0);
-    g_signal_connect (toggle2, "clicked", (GCallback) toggle_button_cb, "remember_jtf_entry");
+    gtk_box_pack_start ((GtkBox *) hbox, filter_entry, TRUE, TRUE, 0);
 
     GtkWidget * scrollwin = gtk_scrolled_window_new (NULL, NULL);
     gtk_container_add(GTK_CONTAINER(scrollwin), treeview);
@@ -329,13 +322,6 @@ EXPORT void audgui_jump_to_track (void)
         return;
 
     GtkWidget * jump_to_track_win = create_window ();
-
-    g_return_if_fail (filter_entry);
-
-    if (aud_get_bool ("audgui", "remember_jtf_entry"))
-        gtk_editable_select_region ((GtkEditable *) filter_entry, 0, -1);
-    else
-        gtk_entry_set_text ((GtkEntry *) filter_entry, "");
 
     if (! watching)
     {
