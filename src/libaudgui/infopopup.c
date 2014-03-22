@@ -81,7 +81,8 @@ static bool_t infopopup_progress_cb (void * unused)
         gtk_progress_bar_set_fraction ((GtkProgressBar *) widgets.progress,
          time / (float) length);
 
-        SPRINTF (time_str, "%d:%02d", time / 60000, (time / 1000) % 60);
+        char time_str[16];
+        audgui_format_time (time_str, sizeof time_str, time);
         gtk_progress_bar_set_text ((GtkProgressBar *) widgets.progress, time_str);
 
         gtk_widget_show (widgets.progress);
@@ -205,7 +206,16 @@ static void infopopup_set_fields (const Tuple * tuple, const char * title)
     char * tmp;
 
     value = tuple_get_int (tuple, FIELD_LENGTH);
-    tmp = (value > 0) ? str_printf ("%d:%02d", value / 60000, value / 1000 % 60) : NULL;
+
+    if (value > 0)
+    {
+        char buf[16];
+        audgui_format_time (buf, sizeof buf, value);
+        tmp = str_get (buf);
+    }
+    else
+        tmp = NULL;
+
     infopopup_set_field (widgets.length_header, widgets.length_label, tmp);
 
     value = tuple_get_int (tuple, FIELD_YEAR);

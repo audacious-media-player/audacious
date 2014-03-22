@@ -23,6 +23,7 @@
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
+#include <libaudgui/libaudgui.h>
 
 #include "drct.h"
 #include "i18n.h"
@@ -569,14 +570,9 @@ char * drct_get_title (void)
 
     if (current_length > 0)
     {
-        int len = current_length / 1000;
-
-        if (len < 3600)
-            snprintf (s, sizeof s, get_bool (NULL, "leading_zero") ?
-             " (%02d:%02d)" : " (%d:%02d)", len / 60, len % 60);
-        else
-            snprintf (s, sizeof s, " (%d:%02d:%02d)", len / 3600, (len / 60) %
-             60, len % 60);
+        char t[16];
+        audgui_format_time (t, sizeof t, current_length);
+        snprintf (s, sizeof s, " (%s)", t);
     }
     else
         s[0] = 0;
