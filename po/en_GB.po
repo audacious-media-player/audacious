@@ -1,10 +1,9 @@
-# Vietnamese translation for Audacious
+# English (United Kingdom) translation for Audacious
 # Copyright (C) Audacious translators
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
-# Lê Trường An <truongan@linuxmail.org>, 2011, 2012
-# Lê Trường An <truongan@linuxmail.org>, 2011-2012
+# Andi Chandler <andi@gowling.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
@@ -12,27 +11,28 @@ msgstr ""
 "POT-Creation-Date: 2014-03-23 21:24+0100\n"
 "PO-Revision-Date: 2014-03-15 22:38+0000\n"
 "Last-Translator: Radioactiveman <thomas-lange2@gmx.de>\n"
-"Language-Team: Vietnamese (http://www.transifex.com/projects/p/audacious/"
-"language/vi/)\n"
-"Language: vi\n"
+"Language-Team: English (United Kingdom) (http://www.transifex.com/projects/p/"
+"audacious/language/en_GB/)\n"
+"Language: en_GB\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: src/audacious/adder.c:76
 msgid "Searching ..."
-msgstr "Đang tìm ..."
+msgstr "Searching ..."
 
 #: src/audacious/adder.c:104
 #, c-format
 msgid "%d file found"
 msgid_plural "%d files found"
-msgstr[0] "%d tập tin được tìm thấy"
+msgstr[0] "%d file found"
+msgstr[1] "%d files found"
 
 #: src/audacious/adder.c:393 src/audacious/playlist-new.c:96
 msgid "New Playlist"
-msgstr "D.sách mới"
+msgstr "New Playlist"
 
 #: src/audacious/interface.c:93
 msgid "Error"
@@ -44,7 +44,7 @@ msgstr ""
 
 #: src/audacious/main.c:71
 msgid "Show version"
-msgstr "Hiện phiên bản"
+msgstr "Show version"
 
 #: src/audacious/main.c:72
 msgid "Start playback"
@@ -56,7 +56,7 @@ msgstr ""
 
 #: src/audacious/main.c:74
 msgid "Pause if playing, play otherwise"
-msgstr "Tạm dừng nếu đang phát, phát trở lại nếu đang tạm dừng"
+msgstr "Pause if playing, play otherwise"
 
 #: src/audacious/main.c:75
 msgid "Stop playback"
@@ -72,7 +72,7 @@ msgstr ""
 
 #: src/audacious/main.c:78
 msgid "Add files to the playlist"
-msgstr "Thêm tập tin vào danh sách"
+msgstr "Add files to the playlist"
 
 #: src/audacious/main.c:79
 msgid "Add files to a temporary playlist"
@@ -80,7 +80,7 @@ msgstr ""
 
 #: src/audacious/main.c:80
 msgid "Display the main window"
-msgstr "Hiện cửa sổ chính"
+msgstr "Display the main window"
 
 #: src/audacious/main.c:81
 msgid "Display the jump-to-song window"
@@ -92,11 +92,11 @@ msgstr ""
 
 #: src/audacious/main.c:83
 msgid "Quit on playback stop"
-msgstr ""
+msgstr "Quit on playback stop"
 
 #: src/audacious/main.c:84
 msgid "Print debugging messages"
-msgstr "Hiện thông báo gỡ lỗi"
+msgstr "Print debugging messages"
 
 #: src/audacious/main.c:264
 #, c-format
@@ -122,12 +122,12 @@ msgstr "Audacious"
 #: src/audacious/playback.c:354
 #, c-format
 msgid "No decoder found for %s."
-msgstr "Không tìm thấy bộ giải mã cho %s."
+msgstr "No decoder found for %s."
 
 #: src/audacious/playback.c:382
 #, c-format
 msgid "%s could not be opened."
-msgstr ""
+msgstr "%s could not be opened."
 
 #: src/audacious/playlist-files.c:95
 #, c-format
@@ -141,15 +141,15 @@ msgstr ""
 
 #: src/audacious/playlist-new.c:97
 msgid "Now Playing"
-msgstr "Đang phát"
+msgstr "Now Playing"
 
 #: src/audacious/playlist-new.c:1655
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress "
 "(or has been disabled)."
 msgstr ""
-"Danh sách không thể được sắp xếp vì quá trình quét thông tin đang diễn ra "
-"(hoặc bị tắt)."
+"The playlist cannot be sorted because metadata scanning is still in progress "
+"(or has been disabled)."
 
 #: src/audacious/plugin-preferences.c:55
 msgid "About "
@@ -195,48 +195,48 @@ msgstr ""
 
 #: src/audacious/ui_preferences.c:83
 msgid "Audio"
-msgstr "Âm thanh"
+msgstr "Audio"
 
 #: src/audacious/ui_preferences.c:84
 msgid "Network"
-msgstr "Mạng"
+msgstr "Network"
 
 #: src/audacious/ui_preferences.c:85 src/audacious/ui_preferences.c:95
 msgid "Playlist"
-msgstr "Danh sách"
+msgstr "Playlist"
 
 #: src/audacious/ui_preferences.c:86 src/libaudgui/infowin.c:299
 msgid "Song Info"
-msgstr "Thông tin bài hát"
+msgstr "Song Info"
 
 #: src/audacious/ui_preferences.c:87
 msgid "Plugins"
-msgstr "Trình cắm"
+msgstr "Plug-ins"
 
 #: src/audacious/ui_preferences.c:91
 msgid "General"
-msgstr "Tổng quát"
+msgstr "General"
 
 #: src/audacious/ui_preferences.c:92
 msgid "Effect"
-msgstr "Hiệu ứng"
+msgstr "Effect"
 
 #: src/audacious/ui_preferences.c:93
 msgid "Visualization"
-msgstr "Hình ảnh ảo"
+msgstr "Visualisation"
 
 #: src/audacious/ui_preferences.c:94
 msgid "Input"
-msgstr "Đầu vào"
+msgstr "Input"
 
 #: src/audacious/ui_preferences.c:96
 msgid "Transport"
-msgstr "Truyền tải"
+msgstr "Transport"
 
 #: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:151
 #: src/libaudgui/infowin.c:343
 msgid "Artist"
-msgstr "Nghệ sĩ"
+msgstr "Artist"
 
 #: src/audacious/ui_preferences.c:101 src/libaudgui/infopopup.c:152
 #: src/libaudgui/infowin.c:346
@@ -246,97 +246,97 @@ msgstr "Album"
 #: src/audacious/ui_preferences.c:102 src/libaudgui/infopopup.c:150
 #: src/libaudgui/infowin.c:340 src/libaudgui/ui_playlist_manager.c:235
 msgid "Title"
-msgstr "Tựa đề"
+msgstr "Title"
 
 #: src/audacious/ui_preferences.c:103
 msgid "Tracknumber"
-msgstr "Bài số"
+msgstr "Tracknumber"
 
 #: src/audacious/ui_preferences.c:104 src/libaudgui/infopopup.c:153
 #: src/libaudgui/infowin.c:352
 msgid "Genre"
-msgstr "Thể loại"
+msgstr "Genre"
 
 #: src/audacious/ui_preferences.c:105
 msgid "Filename"
-msgstr "Tên tập tin"
+msgstr "Filename"
 
 #: src/audacious/ui_preferences.c:106
 msgid "Filepath"
-msgstr "Đường dẫn tập tin"
+msgstr "Filepath"
 
 #: src/audacious/ui_preferences.c:107
 msgid "Date"
-msgstr "Ngày"
+msgstr "Date"
 
 #: src/audacious/ui_preferences.c:108 src/libaudgui/infopopup.c:154
 #: src/libaudgui/infowin.c:356
 msgid "Year"
-msgstr "Năm"
+msgstr "Year"
 
 #: src/audacious/ui_preferences.c:109 src/libaudgui/infowin.c:349
 msgid "Comment"
-msgstr "Bình luận"
+msgstr "Comment"
 
 #: src/audacious/ui_preferences.c:110
 msgid "Codec"
-msgstr "Bộ giải mã"
+msgstr "Codec"
 
 #: src/audacious/ui_preferences.c:111
 msgid "Quality"
-msgstr "Chất lượng"
+msgstr "Quality"
 
 #: src/audacious/ui_preferences.c:116
 msgid "None"
-msgstr "Không"
+msgstr "None"
 
 #: src/audacious/ui_preferences.c:117
 msgid "Arabic"
-msgstr "Tiếng Ả Rập"
+msgstr "Arabic"
 
 #: src/audacious/ui_preferences.c:118
 msgid "Baltic"
-msgstr "Tiếng Ban-tic"
+msgstr "Baltic"
 
 #: src/audacious/ui_preferences.c:119
 msgid "Chinese"
-msgstr "Tiếng Trung"
+msgstr "Chinese"
 
 #: src/audacious/ui_preferences.c:120
 msgid "Greek"
-msgstr "Tiếng Hy Lạp"
+msgstr "Greek"
 
 #: src/audacious/ui_preferences.c:121
 msgid "Hebrew"
-msgstr "Tiếng Do Thái"
+msgstr "Hebrew"
 
 #: src/audacious/ui_preferences.c:122
 msgid "Japanese"
-msgstr "Tiếng Nhật"
+msgstr "Japanese"
 
 #: src/audacious/ui_preferences.c:123
 msgid "Korean"
-msgstr "Tiếng Hàn"
+msgstr "Korean"
 
 #: src/audacious/ui_preferences.c:124
 msgid "Polish"
-msgstr "Tiếng Ba Lan"
+msgstr "Polish"
 
 #: src/audacious/ui_preferences.c:125
 msgid "Russian"
-msgstr "Tiếng Nga"
+msgstr "Russian"
 
 #: src/audacious/ui_preferences.c:126
 msgid "Taiwanese"
-msgstr "Tiếng Đài Loan"
+msgstr "Taiwanese"
 
 #: src/audacious/ui_preferences.c:127
 msgid "Turkish"
-msgstr "Tiếng Thổ Nhĩ Kỳ"
+msgstr "Turkish"
 
 #: src/audacious/ui_preferences.c:135
 msgid "Floating point"
-msgstr "Điểm chuyển động"
+msgstr "Floating point"
 
 #: src/audacious/ui_preferences.c:147
 msgid "<b>Interface Settings</b>"
@@ -348,19 +348,19 @@ msgstr ""
 
 #: src/audacious/ui_preferences.c:165
 msgid "Output plugin:"
-msgstr "Trình cắm xuất ra:"
+msgstr "Output plug-in:"
 
 #: src/audacious/ui_preferences.c:172
 msgid "<b>Output Settings</b>"
-msgstr "<b>Thiết lập xuất âm thanh</b>"
+msgstr "<b>Output Settings</b>"
 
 #: src/audacious/ui_preferences.c:175
 msgid "Bit depth:"
-msgstr "Chiều sâu âm thanh:"
+msgstr "Bit depth:"
 
 #: src/audacious/ui_preferences.c:178
 msgid "Buffer size:"
-msgstr "Dung lượng bộ đệm:"
+msgstr "Buffer size:"
 
 #: src/audacious/ui_preferences.c:180
 msgid "ms"
@@ -368,35 +368,35 @@ msgstr "ms"
 
 #: src/audacious/ui_preferences.c:181
 msgid "Soft clipping"
-msgstr ""
+msgstr "Soft clipping"
 
 #: src/audacious/ui_preferences.c:183
 msgid "Use software volume control (not recommended)"
-msgstr "Sử dụng kiểm soát âm lượng của phần mềm (không nên)"
+msgstr "Use software volume control (not recommended)"
 
 #: src/audacious/ui_preferences.c:185
 msgid "<b>Replay Gain</b>"
-msgstr "<b>Tăng âm</b>"
+msgstr "<b>Replay Gain</b>"
 
 #: src/audacious/ui_preferences.c:186
 msgid "Enable Replay Gain"
-msgstr "Bật chế độ tăng thêm âm lượng"
+msgstr "Enable Replay Gain"
 
 #: src/audacious/ui_preferences.c:188
 msgid "Album mode"
-msgstr "Chế độ album"
+msgstr "Album mode"
 
 #: src/audacious/ui_preferences.c:190
 msgid "Prevent clipping (recommended)"
-msgstr "Tránh tổn thất (khuyên dùng)"
+msgstr "Prevent clipping (recommended)"
 
 #: src/audacious/ui_preferences.c:192
 msgid "<b>Adjust Levels</b>"
-msgstr "<b>Các mức điều chỉnh</b>"
+msgstr "<b>Adjust Levels</b>"
 
 #: src/audacious/ui_preferences.c:193
 msgid "Amplify all files:"
-msgstr "Khuếch đại mọi tập tin:"
+msgstr "Amplify all files:"
 
 #: src/audacious/ui_preferences.c:195 src/audacious/ui_preferences.c:198
 msgid "dB"
@@ -404,167 +404,167 @@ msgstr "dB"
 
 #: src/audacious/ui_preferences.c:196
 msgid "Amplify untagged files:"
-msgstr "Khuếch đại tập tin chưa gán thẻ:"
+msgstr "Amplify untagged files:"
 
 #: src/audacious/ui_preferences.c:201
 msgid "Proxy hostname:"
-msgstr "Tên máy chủ proxy:"
+msgstr "Proxy hostname:"
 
 #: src/audacious/ui_preferences.c:202
 msgid "Proxy port:"
-msgstr "Cổng proxy:"
+msgstr "Proxy port:"
 
 #: src/audacious/ui_preferences.c:205
 msgid "Proxy username:"
-msgstr "Tên người dùng proxy:"
+msgstr "Proxy username:"
 
 #: src/audacious/ui_preferences.c:206
 msgid "Proxy password:"
-msgstr "Mật khẩu proxy:"
+msgstr "Proxy password:"
 
 #: src/audacious/ui_preferences.c:210
 msgid "<b>Proxy Configuration</b>"
-msgstr "<b>Cấu hình Proxy</b>"
+msgstr "<b>Proxy Configuration</b>"
 
 #: src/audacious/ui_preferences.c:211
 msgid "Enable proxy usage"
-msgstr "Cho phép dùng proxy"
+msgstr "Enable proxy usage"
 
 #: src/audacious/ui_preferences.c:214
 msgid "Use authentication with proxy"
-msgstr "Xác thực với proxy"
+msgstr "Use authentication with proxy"
 
 #: src/audacious/ui_preferences.c:221
 msgid "Auto character encoding detector for:"
-msgstr "Tự động nhận diện bảng mã kí tự cho:"
+msgstr "Auto character encoding detector for:"
 
 #: src/audacious/ui_preferences.c:225
 msgid "Fallback character encodings:"
-msgstr "Bảng mã kí tự dự phòng:"
+msgstr "Fallback character encodings:"
 
 #: src/audacious/ui_preferences.c:229
 msgid "<b>Behavior</b>"
-msgstr "<b>Hành động</b>"
+msgstr "<b>Behaviour</b>"
 
 #: src/audacious/ui_preferences.c:230
 msgid "Continue playback on startup"
-msgstr "Tiếp tục phát khi khởi động"
+msgstr "Continue playback on start-up"
 
 #: src/audacious/ui_preferences.c:232
 msgid "Advance when the current song is deleted"
-msgstr "Đến bài kế tiếp khi xóa bài hiện tại"
+msgstr "Advance when the current song is deleted"
 
 #: src/audacious/ui_preferences.c:234
 msgid "Clear the playlist when opening files"
-msgstr "Dọn sạch danh sách khi mở các tập tin"
+msgstr "Clear the playlist when opening files"
 
 #: src/audacious/ui_preferences.c:236
 msgid "Open files in a temporary playlist"
-msgstr "Mở các tập tin trong một danh sách tạm"
+msgstr "Open files in a temporary playlist"
 
 #: src/audacious/ui_preferences.c:238
 msgid "Do not load metadata for songs until played"
-msgstr "Không nạp thông tin bài hát cho đến khi nó được phát"
+msgstr "Do not load metadata for songs until played"
 
 #: src/audacious/ui_preferences.c:241
 msgid "<b>Compatibility</b>"
-msgstr ""
+msgstr "<b>Compatibility</b>"
 
 #: src/audacious/ui_preferences.c:242
 msgid "Interpret \\ (backward slash) as a folder delimiter"
-msgstr ""
+msgstr "Interpret \\ (backward slash) as a folder delimiter"
 
 #: src/audacious/ui_preferences.c:247
 msgid "<b>Album Art</b>"
-msgstr "<b>Ảnh bìa</b>"
+msgstr "<b>Album Art</b>"
 
 #: src/audacious/ui_preferences.c:248
 msgid "Search for images matching these words (comma-separated):"
-msgstr "Tìm ảnh có tên chứa các từ sau (cách bằng dấu phẩy):"
+msgstr "Search for images matching these words (comma-separated):"
 
 #: src/audacious/ui_preferences.c:250
 msgid "Exclude images matching these words (comma-separated):"
-msgstr "Ngoại trừ tên ảnh chứa các từ sau (cách bằng dấu phẩy):"
+msgstr "Exclude images matching these words (comma-separated):"
 
 #: src/audacious/ui_preferences.c:252
 msgid "Search for images matching song file name"
-msgstr "Tìm ảnh khớp với tên tập tin"
+msgstr "Search for images matching song file name"
 
 #: src/audacious/ui_preferences.c:254
 msgid "Search recursively"
-msgstr ""
+msgstr "Search recursively"
 
 #: src/audacious/ui_preferences.c:256
 msgid "Search depth:"
-msgstr ""
+msgstr "Search depth:"
 
 #: src/audacious/ui_preferences.c:259
 msgid "<b>Popup Information</b>"
-msgstr "<b>Cửa sổ thông tin bật lên</b>"
+msgstr "<b>Popup Information</b>"
 
 #: src/audacious/ui_preferences.c:260
 msgid "Show popup information"
-msgstr "Hiện ô chú thích thông tin"
+msgstr "Show pop-up information"
 
 #: src/audacious/ui_preferences.c:262
 msgid "Popup delay (tenths of a second):"
-msgstr ""
+msgstr "Pop-up delay (tenths of a second):"
 
 #: src/audacious/ui_preferences.c:265
 msgid "Show time scale for current song"
-msgstr ""
+msgstr "Show time scale for current song"
 
 #: src/audacious/ui_preferences.c:280
 msgid "TITLE"
-msgstr "TỰA ĐỀ"
+msgstr "TITLE"
 
 #: src/audacious/ui_preferences.c:281
 msgid "ARTIST - TITLE"
-msgstr "NGHỆ SĨ - TỰA ĐỀ"
+msgstr "ARTIST - TITLE"
 
 #: src/audacious/ui_preferences.c:282
 msgid "ARTIST - ALBUM - TITLE"
-msgstr "NGHỆ SĨ - ALBUM - TỰA"
+msgstr "ARTIST - ALBUM - TITLE"
 
 #: src/audacious/ui_preferences.c:283
 msgid "ARTIST - ALBUM - TRACK. TITLE"
-msgstr "NGHỆ SĨ - ALBUM - BÀI. TỰA"
+msgstr "ARTIST - ALBUM - TRACK. TITLE"
 
 #: src/audacious/ui_preferences.c:284
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
-msgstr "NGHỆ SĨ [ALBUM ] - BÀI. TỰA"
+msgstr "ARTIST [ ALBUM ] - TRACK. TITLE"
 
 #: src/audacious/ui_preferences.c:285
 msgid "ALBUM - TITLE"
-msgstr "ALBUM - TỰA ĐỀ"
+msgstr "ALBUM - TITLE"
 
 #: src/audacious/ui_preferences.c:386
 msgid "Category"
-msgstr "Danh mục"
+msgstr "Category"
 
 #: src/audacious/ui_preferences.c:468
 msgid "Custom"
-msgstr "Tùy chọn"
+msgstr "Custom"
 
 #: src/audacious/ui_preferences.c:492
 msgid "<b>Song Display</b>"
-msgstr "<b>Hiển thị bài hát</b>"
+msgstr "<b>Song Display</b>"
 
 #: src/audacious/ui_preferences.c:501
 msgid "Show song numbers"
-msgstr "Hiện số thứ tự trong danh sách của bài hát"
+msgstr "Show song numbers"
 
 #: src/audacious/ui_preferences.c:512
 msgid "Show leading zeroes (02:00 instead of 2:00)"
-msgstr "Hiện số không ở đầu (02:00 thay vì of 2:00)"
+msgstr "Show leading zeroes (02:00 instead of 2:00)"
 
 #: src/audacious/ui_preferences.c:526
 msgid "Title format:"
-msgstr "Định dạng tựa đề:"
+msgstr "Title format:"
 
 #: src/audacious/ui_preferences.c:531
 msgid "Custom string:"
-msgstr "Chuỗi tùy chọn:"
+msgstr "Custom string:"
 
 #: src/audacious/ui_preferences.c:734
 msgid "Audacious Settings"
@@ -573,12 +573,12 @@ msgstr ""
 #: src/audacious/util.c:117
 #, c-format
 msgid "Could not create directory (%s): %s\n"
-msgstr "Không thể tạo thư mục (%s): %s\n"
+msgstr "Could not create directory (%s): %s\n"
 
 #: src/libaudcore/audstrings.c:382
 #, c-format
 msgid "Audio CD, track %s"
-msgstr "Đĩa nhạc, bài %s"
+msgstr "Audio CD, track %s"
 
 #: src/libaudcore/tuple.c:442
 msgid "Mono"
@@ -592,19 +592,20 @@ msgstr "Stereo"
 #, c-format
 msgid "%d channel"
 msgid_plural "%d channels"
-msgstr[0] "%d kênh"
+msgstr[0] "%d channel"
+msgstr[1] "%d channels"
 
 #: src/libaudgui/about.c:37
 msgid "Credits"
-msgstr "Đóng góp"
+msgstr "Credits"
 
 #: src/libaudgui/about.c:37
 msgid "License"
-msgstr "Giấy phép"
+msgstr "Licence"
 
 #: src/libaudgui/about.c:69
 msgid "About Audacious"
-msgstr "Giới thiệu Audacious"
+msgstr "About Audacious"
 
 #: src/libaudgui/confirm.c:51
 #, c-format
@@ -629,7 +630,7 @@ msgstr ""
 
 #: src/libaudgui/confirm.c:93
 msgid "Rename Playlist"
-msgstr "Đổi tên danh sách"
+msgstr "Rename Playlist"
 
 #: src/libaudgui/confirm.c:93
 msgid "What would you like to call this playlist?"
@@ -637,7 +638,7 @@ msgstr ""
 
 #: src/libaudgui/equalizer.c:44
 msgid "_Enable"
-msgstr "_Bật"
+msgstr "_Enable"
 
 #: src/libaudgui/equalizer.c:119
 msgid "31 Hz"
@@ -681,19 +682,19 @@ msgstr "16 kHz"
 
 #: src/libaudgui/equalizer.c:124
 msgid "Equalizer"
-msgstr "Bộ cân chỉnh âm"
+msgstr "Equaliser"
 
 #: src/libaudgui/equalizer.c:138
 msgid "Preamp"
-msgstr "Độ lớn"
+msgstr "Preamp"
 
 #: src/libaudgui/infopopup.c:155
 msgid "Track"
-msgstr "Bài hát"
+msgstr "Track"
 
 #: src/libaudgui/infopopup.c:156
 msgid "Length"
-msgstr "Độ dài"
+msgstr "Length"
 
 #: src/libaudgui/infowin.c:46
 msgid "Format:"
@@ -882,7 +883,7 @@ msgstr ""
 #: src/libaudgui/infowin.c:418
 #, c-format
 msgid "%d kb/s"
-msgstr "%d kb/giây"
+msgstr "%d kb/s"
 
 #: src/libaudgui/infowin.c:423
 msgid "N/A"
@@ -891,7 +892,7 @@ msgstr ""
 #: src/libaudgui/infowin.c:453
 #, c-format
 msgid "No info available for %s.\n"
-msgstr "Không có thông tin của %s.\n"
+msgstr "No info available for %s.\n"
 
 #: src/libaudgui/jump-to-time.c:48 src/libaudgui/ui_jumptotrack.c:305
 msgid "_Jump"
@@ -899,16 +900,16 @@ msgstr ""
 
 #: src/libaudgui/jump-to-time.c:52
 msgid "Jump to Time"
-msgstr "Định mốc t.gian phát nhạc"
+msgstr "Jump to Time"
 
 #: src/libaudgui/jump-to-time.c:52
 msgid "Enter time (minutes:seconds):"
-msgstr "Nhập thời gian (phút:giây):"
+msgstr "Enter time (minutes:seconds):"
 
 #: src/libaudgui/playlists.c:86
 #, c-format
 msgid "Overwrite %s?"
-msgstr "Ghi đè %s?"
+msgstr "Overwrite %s?"
 
 #: src/libaudgui/playlists.c:88
 msgid "_Overwrite"
@@ -920,7 +921,7 @@ msgstr ""
 
 #: src/libaudgui/playlists.c:121
 msgid "Export Playlist"
-msgstr "Xuất danh sách"
+msgstr "Export Playlist"
 
 #: src/libaudgui/playlists.c:122
 msgid "_Export"
@@ -928,7 +929,7 @@ msgstr ""
 
 #: src/libaudgui/playlists.c:128
 msgid "Import Playlist"
-msgstr "Nhập danh sách"
+msgstr "Import Playlist"
 
 #: src/libaudgui/playlists.c:129
 msgid "_Import"
@@ -936,7 +937,7 @@ msgstr ""
 
 #: src/libaudgui/queue-manager.c:172
 msgid "Queue Manager"
-msgstr "Trình quản lí hàng đợi"
+msgstr "Queue Manager"
 
 #: src/libaudgui/queue-manager.c:188
 msgid "_Unqueue"
@@ -944,7 +945,7 @@ msgstr ""
 
 #: src/libaudgui/ui_fileopener.c:79
 msgid "Open Files"
-msgstr "Mở tập tin"
+msgstr "Open Files"
 
 #: src/libaudgui/ui_fileopener.c:80 src/libaudgui/url-opener.c:50
 msgid "_Open"
@@ -956,7 +957,7 @@ msgstr ""
 
 #: src/libaudgui/ui_fileopener.c:87
 msgid "Add Files"
-msgstr "Thêm tập tin"
+msgstr "Add Files"
 
 #: src/libaudgui/ui_fileopener.c:88 src/libaudgui/url-opener.c:56
 msgid "_Add"
@@ -969,23 +970,23 @@ msgstr ""
 #: src/libaudgui/ui_jumptotrack.c:101 src/libaudgui/ui_jumptotrack.c:109
 #: src/libaudgui/ui_jumptotrack.c:301
 msgid "_Queue"
-msgstr "_Hàng đợi"
+msgstr "_Queue"
 
 #: src/libaudgui/ui_jumptotrack.c:107
 msgid "Un_queue"
-msgstr "Bỏ khỏi _hàng đợi"
+msgstr "Un_queue"
 
 #: src/libaudgui/ui_jumptotrack.c:245
 msgid "Jump to Song"
-msgstr "Chuyển đến bài hát"
+msgstr "Jump to Song"
 
 #: src/libaudgui/ui_jumptotrack.c:270
 msgid "Filter: "
-msgstr "Bộ lọc:"
+msgstr "Filter: "
 
 #: src/libaudgui/ui_jumptotrack.c:271
 msgid "_Filter:"
-msgstr "_Bộ lọc:"
+msgstr "_Filter:"
 
 #: src/libaudgui/ui_jumptotrack.c:294
 msgid "C_lose on jump"
@@ -993,11 +994,11 @@ msgstr ""
 
 #: src/libaudgui/ui_playlist_manager.c:223
 msgid "Playlist Manager"
-msgstr "Quản lý danh sách"
+msgstr "Playlist Manager"
 
 #: src/libaudgui/ui_playlist_manager.c:236
 msgid "Entries"
-msgstr "Số mục"
+msgstr "Entries"
 
 #: src/libaudgui/ui_playlist_manager.c:254
 msgid "_New"
@@ -1013,19 +1014,19 @@ msgstr ""
 
 #: src/libaudgui/ui_playlist_manager.c:269
 msgid "_Close dialog on activating playlist"
-msgstr "Đóng hộp thoại khi _kích hoạt danh sách"
+msgstr "_Close dialogue on activating playlist"
 
 #: src/libaudgui/url-opener.c:49
 msgid "Open URL"
-msgstr "Mở địa chỉ URL"
+msgstr "Open URL"
 
 #: src/libaudgui/url-opener.c:55
 msgid "Add URL"
-msgstr "Thêm URL"
+msgstr "Add URL"
 
 #: src/libaudgui/url-opener.c:74
 msgid "Enter URL:"
-msgstr "Nhập URL:"
+msgstr "Enter URL:"
 
 #: src/libaudgui/util.c:148
 msgid ""
@@ -1033,4 +1034,4 @@ msgid ""
 "(Further messages have been hidden.)"
 msgstr ""
 "\n"
-"(Các thông báo khác đã bị ẩn.)"
+"(Further messages have been hidden.)"

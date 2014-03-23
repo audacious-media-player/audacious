@@ -1,10 +1,9 @@
-# Vietnamese translation for Audacious
+# Serbian (Serbia) translation for Audacious
 # Copyright (C) Audacious translators
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
-# Lê Trường An <truongan@linuxmail.org>, 2011, 2012
-# Lê Trường An <truongan@linuxmail.org>, 2011-2012
+# MirosNik <miroslavnikolic@rocketmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
@@ -12,101 +11,104 @@ msgstr ""
 "POT-Creation-Date: 2014-03-23 21:24+0100\n"
 "PO-Revision-Date: 2014-03-15 22:38+0000\n"
 "Last-Translator: Radioactiveman <thomas-lange2@gmx.de>\n"
-"Language-Team: Vietnamese (http://www.transifex.com/projects/p/audacious/"
-"language/vi/)\n"
-"Language: vi\n"
+"Language-Team: Serbian (Serbia) (http://www.transifex.com/projects/p/"
+"audacious/language/sr_RS/)\n"
+"Language: sr_RS\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: src/audacious/adder.c:76
 msgid "Searching ..."
-msgstr "Đang tìm ..."
+msgstr "Тражим ..."
 
 #: src/audacious/adder.c:104
 #, c-format
 msgid "%d file found"
 msgid_plural "%d files found"
-msgstr[0] "%d tập tin được tìm thấy"
+msgstr[0] "Пронашао сам %d датотеку"
+msgstr[1] "Пронашао сам %d датотеке"
+msgstr[2] "Пронашао сам %d датотека"
 
 #: src/audacious/adder.c:393 src/audacious/playlist-new.c:96
 msgid "New Playlist"
-msgstr "D.sách mới"
+msgstr "Нови списак нумера"
 
 #: src/audacious/interface.c:93
 msgid "Error"
-msgstr ""
+msgstr "Грeшкa"
 
 #: src/audacious/main.c:70
 msgid "Show command-line help"
-msgstr ""
+msgstr "Приказује помоћ линије наредби"
 
 #: src/audacious/main.c:71
 msgid "Show version"
-msgstr "Hiện phiên bản"
+msgstr "Приказује издање"
 
 #: src/audacious/main.c:72
 msgid "Start playback"
-msgstr ""
+msgstr "Започиње пуштање"
 
 #: src/audacious/main.c:73
 msgid "Pause playback"
-msgstr ""
+msgstr "Паузира пуштање"
 
 #: src/audacious/main.c:74
 msgid "Pause if playing, play otherwise"
-msgstr "Tạm dừng nếu đang phát, phát trở lại nếu đang tạm dừng"
+msgstr "Паузира ако свира, иначе пушта"
 
 #: src/audacious/main.c:75
 msgid "Stop playback"
-msgstr ""
+msgstr "Зауставља пуштање"
 
 #: src/audacious/main.c:76
 msgid "Skip to previous song"
-msgstr ""
+msgstr "Иде на претходну песму"
 
 #: src/audacious/main.c:77
 msgid "Skip to next song"
-msgstr ""
+msgstr "Иде на следећу песму"
 
 #: src/audacious/main.c:78
 msgid "Add files to the playlist"
-msgstr "Thêm tập tin vào danh sách"
+msgstr "Додаје датотеке на списак нумера"
 
 #: src/audacious/main.c:79
 msgid "Add files to a temporary playlist"
-msgstr ""
+msgstr "Додаје датотеке на привремени списак нумера"
 
 #: src/audacious/main.c:80
 msgid "Display the main window"
-msgstr "Hiện cửa sổ chính"
+msgstr "Приказује главни прозор"
 
 #: src/audacious/main.c:81
 msgid "Display the jump-to-song window"
-msgstr ""
+msgstr "Приказује прозор за бирање песама"
 
 #: src/audacious/main.c:82
 msgid "Start without a graphical interface"
-msgstr ""
+msgstr "Покреће се без графичког сучеља"
 
 #: src/audacious/main.c:83
 msgid "Quit on playback stop"
-msgstr ""
+msgstr "Излази на заустављање пуштања"
 
 #: src/audacious/main.c:84
 msgid "Print debugging messages"
-msgstr "Hiện thông báo gỡ lỗi"
+msgstr "Исписује поруке прочишћавања"
 
 #: src/audacious/main.c:264
 #, c-format
 msgid "Unknown option: %s\n"
-msgstr ""
+msgstr "Непозната опција: %s\n"
 
 #: src/audacious/main.c:285
 #, c-format
 msgid "Unknown option: -%c\n"
-msgstr ""
+msgstr "Непозната опција: -%c\n"
 
 #: src/audacious/main.c:306
 #, c-format
@@ -114,253 +116,255 @@ msgid ""
 "Usage: audacious [OPTION] ... [FILE] ...\n"
 "\n"
 msgstr ""
+"Употреба: audacious [ОПЦИЈА] ... [ДАТОТЕКА] ...\n"
+"\n"
 
 #: src/audacious/main.c:591
 msgid "Audacious"
-msgstr "Audacious"
+msgstr "Безочник"
 
 #: src/audacious/playback.c:354
 #, c-format
 msgid "No decoder found for %s."
-msgstr "Không tìm thấy bộ giải mã cho %s."
+msgstr "Нисам пронашао декодер за „%s“."
 
 #: src/audacious/playback.c:382
 #, c-format
 msgid "%s could not be opened."
-msgstr ""
+msgstr "Не могу да отворим „%s“."
 
 #: src/audacious/playlist-files.c:95
 #, c-format
 msgid "Cannot load %s: unsupported file extension."
-msgstr ""
+msgstr "Не могу да учитам „%s“: проширење датотеке није подржано."
 
 #: src/audacious/playlist-files.c:185
 #, c-format
 msgid "Cannot save %s: unsupported file extension."
-msgstr ""
+msgstr "Не могу да сачувам „%s“: проширење датотеке није подржано."
 
 #: src/audacious/playlist-new.c:97
 msgid "Now Playing"
-msgstr "Đang phát"
+msgstr "Сад пуштам"
 
 #: src/audacious/playlist-new.c:1655
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress "
 "(or has been disabled)."
 msgstr ""
-"Danh sách không thể được sắp xếp vì quá trình quét thông tin đang diễn ra "
-"(hoặc bị tắt)."
+"Списак нумера не може бити поређан зато што је прегледање метаподатака још "
+"увек у току (или је искључено)."
 
 #: src/audacious/plugin-preferences.c:55
 msgid "About "
-msgstr ""
+msgstr "О програму "
 
 #: src/audacious/plugin-preferences.c:94
 msgid " Settings"
-msgstr ""
+msgstr " Подешавања"
 
 #: src/audacious/plugin-preferences.c:99
 msgid "_Set"
-msgstr ""
+msgstr "_Подеси"
 
 #: src/audacious/plugin-preferences.c:100 src/libaudgui/confirm.c:57
 #: src/libaudgui/confirm.c:90 src/libaudgui/jump-to-time.c:49
 #: src/libaudgui/playlists.c:89 src/libaudgui/playlists.c:142
 #: src/libaudgui/url-opener.c:71
 msgid "_Cancel"
-msgstr ""
+msgstr "_Откажи"
 
 #: src/audacious/plugin-preferences.c:106 src/audacious/ui_preferences.c:783
 #: src/libaudgui/infowin.c:370 src/libaudgui/queue-manager.c:189
 #: src/libaudgui/ui_fileopener.c:127 src/libaudgui/ui_jumptotrack.c:312
 #: src/libaudgui/util.c:161
 msgid "_Close"
-msgstr ""
+msgstr "_Затвори"
 
 #: src/audacious/plugin-view.c:242 src/audacious/ui_preferences.c:661
 msgid "_Settings"
-msgstr ""
+msgstr "_Подешавања"
 
 #: src/audacious/plugin-view.c:250 src/audacious/ui_preferences.c:672
 msgid "_About"
-msgstr ""
+msgstr "_О програму"
 
 #: src/audacious/ui_plugin_menu.c:37
 msgid "_Plugins ..."
-msgstr ""
+msgstr "_Прикључци ..."
 
 #: src/audacious/ui_preferences.c:82
 msgid "Appearance"
-msgstr ""
+msgstr "Изглед"
 
 #: src/audacious/ui_preferences.c:83
 msgid "Audio"
-msgstr "Âm thanh"
+msgstr "Звук"
 
 #: src/audacious/ui_preferences.c:84
 msgid "Network"
-msgstr "Mạng"
+msgstr "Мрежа"
 
 #: src/audacious/ui_preferences.c:85 src/audacious/ui_preferences.c:95
 msgid "Playlist"
-msgstr "Danh sách"
+msgstr "Списак нумера"
 
 #: src/audacious/ui_preferences.c:86 src/libaudgui/infowin.c:299
 msgid "Song Info"
-msgstr "Thông tin bài hát"
+msgstr "Подаци песме"
 
 #: src/audacious/ui_preferences.c:87
 msgid "Plugins"
-msgstr "Trình cắm"
+msgstr "Прикључци"
 
 #: src/audacious/ui_preferences.c:91
 msgid "General"
-msgstr "Tổng quát"
+msgstr "Опште"
 
 #: src/audacious/ui_preferences.c:92
 msgid "Effect"
-msgstr "Hiệu ứng"
+msgstr "Дејство"
 
 #: src/audacious/ui_preferences.c:93
 msgid "Visualization"
-msgstr "Hình ảnh ảo"
+msgstr "Приказивање"
 
 #: src/audacious/ui_preferences.c:94
 msgid "Input"
-msgstr "Đầu vào"
+msgstr "Унос"
 
 #: src/audacious/ui_preferences.c:96
 msgid "Transport"
-msgstr "Truyền tải"
+msgstr "Пренос"
 
 #: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:151
 #: src/libaudgui/infowin.c:343
 msgid "Artist"
-msgstr "Nghệ sĩ"
+msgstr "Извођач"
 
 #: src/audacious/ui_preferences.c:101 src/libaudgui/infopopup.c:152
 #: src/libaudgui/infowin.c:346
 msgid "Album"
-msgstr "Album"
+msgstr "Албум"
 
 #: src/audacious/ui_preferences.c:102 src/libaudgui/infopopup.c:150
 #: src/libaudgui/infowin.c:340 src/libaudgui/ui_playlist_manager.c:235
 msgid "Title"
-msgstr "Tựa đề"
+msgstr "Наслов"
 
 #: src/audacious/ui_preferences.c:103
 msgid "Tracknumber"
-msgstr "Bài số"
+msgstr "Број нумере"
 
 #: src/audacious/ui_preferences.c:104 src/libaudgui/infopopup.c:153
 #: src/libaudgui/infowin.c:352
 msgid "Genre"
-msgstr "Thể loại"
+msgstr "Жанр"
 
 #: src/audacious/ui_preferences.c:105
 msgid "Filename"
-msgstr "Tên tập tin"
+msgstr "Назив датотеке"
 
 #: src/audacious/ui_preferences.c:106
 msgid "Filepath"
-msgstr "Đường dẫn tập tin"
+msgstr "Путања датотеке"
 
 #: src/audacious/ui_preferences.c:107
 msgid "Date"
-msgstr "Ngày"
+msgstr "Датум"
 
 #: src/audacious/ui_preferences.c:108 src/libaudgui/infopopup.c:154
 #: src/libaudgui/infowin.c:356
 msgid "Year"
-msgstr "Năm"
+msgstr "Година"
 
 #: src/audacious/ui_preferences.c:109 src/libaudgui/infowin.c:349
 msgid "Comment"
-msgstr "Bình luận"
+msgstr "Напомена"
 
 #: src/audacious/ui_preferences.c:110
 msgid "Codec"
-msgstr "Bộ giải mã"
+msgstr "Кодек"
 
 #: src/audacious/ui_preferences.c:111
 msgid "Quality"
-msgstr "Chất lượng"
+msgstr "Квалитет"
 
 #: src/audacious/ui_preferences.c:116
 msgid "None"
-msgstr "Không"
+msgstr "Ништа"
 
 #: src/audacious/ui_preferences.c:117
 msgid "Arabic"
-msgstr "Tiếng Ả Rập"
+msgstr "арапски"
 
 #: src/audacious/ui_preferences.c:118
 msgid "Baltic"
-msgstr "Tiếng Ban-tic"
+msgstr "балтички"
 
 #: src/audacious/ui_preferences.c:119
 msgid "Chinese"
-msgstr "Tiếng Trung"
+msgstr "кинески"
 
 #: src/audacious/ui_preferences.c:120
 msgid "Greek"
-msgstr "Tiếng Hy Lạp"
+msgstr "грчки"
 
 #: src/audacious/ui_preferences.c:121
 msgid "Hebrew"
-msgstr "Tiếng Do Thái"
+msgstr "јеврејски"
 
 #: src/audacious/ui_preferences.c:122
 msgid "Japanese"
-msgstr "Tiếng Nhật"
+msgstr "јапански"
 
 #: src/audacious/ui_preferences.c:123
 msgid "Korean"
-msgstr "Tiếng Hàn"
+msgstr "корејски"
 
 #: src/audacious/ui_preferences.c:124
 msgid "Polish"
-msgstr "Tiếng Ba Lan"
+msgstr "пољски"
 
 #: src/audacious/ui_preferences.c:125
 msgid "Russian"
-msgstr "Tiếng Nga"
+msgstr "руски"
 
 #: src/audacious/ui_preferences.c:126
 msgid "Taiwanese"
-msgstr "Tiếng Đài Loan"
+msgstr "тајвански"
 
 #: src/audacious/ui_preferences.c:127
 msgid "Turkish"
-msgstr "Tiếng Thổ Nhĩ Kỳ"
+msgstr "турски"
 
 #: src/audacious/ui_preferences.c:135
 msgid "Floating point"
-msgstr "Điểm chuyển động"
+msgstr "Покретни зарез"
 
 #: src/audacious/ui_preferences.c:147
 msgid "<b>Interface Settings</b>"
-msgstr ""
+msgstr "<b>Подешавања сучеља</b>"
 
 #: src/audacious/ui_preferences.c:148
 msgid "Interface plugin:"
-msgstr ""
+msgstr "Прикључак сучеља:"
 
 #: src/audacious/ui_preferences.c:165
 msgid "Output plugin:"
-msgstr "Trình cắm xuất ra:"
+msgstr "Прикључак излаза:"
 
 #: src/audacious/ui_preferences.c:172
 msgid "<b>Output Settings</b>"
-msgstr "<b>Thiết lập xuất âm thanh</b>"
+msgstr "<b>Подешавања излаза</b>"
 
 #: src/audacious/ui_preferences.c:175
 msgid "Bit depth:"
-msgstr "Chiều sâu âm thanh:"
+msgstr "Дубина бита:"
 
 #: src/audacious/ui_preferences.c:178
 msgid "Buffer size:"
-msgstr "Dung lượng bộ đệm:"
+msgstr "Величина међумеморије:"
 
 #: src/audacious/ui_preferences.c:180
 msgid "ms"
@@ -368,35 +372,35 @@ msgstr "ms"
 
 #: src/audacious/ui_preferences.c:181
 msgid "Soft clipping"
-msgstr ""
+msgstr "Меко исецање"
 
 #: src/audacious/ui_preferences.c:183
 msgid "Use software volume control (not recommended)"
-msgstr "Sử dụng kiểm soát âm lượng của phần mềm (không nên)"
+msgstr "Користи софтверско управљање јачином звука (није препоручљиво)"
 
 #: src/audacious/ui_preferences.c:185
 msgid "<b>Replay Gain</b>"
-msgstr "<b>Tăng âm</b>"
+msgstr "<b>Појачање понављања</b>"
 
 #: src/audacious/ui_preferences.c:186
 msgid "Enable Replay Gain"
-msgstr "Bật chế độ tăng thêm âm lượng"
+msgstr "Укључи појачање понављања"
 
 #: src/audacious/ui_preferences.c:188
 msgid "Album mode"
-msgstr "Chế độ album"
+msgstr "Режим албума"
 
 #: src/audacious/ui_preferences.c:190
 msgid "Prevent clipping (recommended)"
-msgstr "Tránh tổn thất (khuyên dùng)"
+msgstr "Спречи одсецање (препоручљиво)"
 
 #: src/audacious/ui_preferences.c:192
 msgid "<b>Adjust Levels</b>"
-msgstr "<b>Các mức điều chỉnh</b>"
+msgstr "<b>Дотеривања нивоа</b>"
 
 #: src/audacious/ui_preferences.c:193
 msgid "Amplify all files:"
-msgstr "Khuếch đại mọi tập tin:"
+msgstr "Појачај све датотеке:"
 
 #: src/audacious/ui_preferences.c:195 src/audacious/ui_preferences.c:198
 msgid "dB"
@@ -404,224 +408,226 @@ msgstr "dB"
 
 #: src/audacious/ui_preferences.c:196
 msgid "Amplify untagged files:"
-msgstr "Khuếch đại tập tin chưa gán thẻ:"
+msgstr "Појачај датотеке без ознака:"
 
 #: src/audacious/ui_preferences.c:201
 msgid "Proxy hostname:"
-msgstr "Tên máy chủ proxy:"
+msgstr "Назив домаћина посредника:"
 
 #: src/audacious/ui_preferences.c:202
 msgid "Proxy port:"
-msgstr "Cổng proxy:"
+msgstr "Прикључник посредника:"
 
 #: src/audacious/ui_preferences.c:205
 msgid "Proxy username:"
-msgstr "Tên người dùng proxy:"
+msgstr "Корисничко име посредника:"
 
 #: src/audacious/ui_preferences.c:206
 msgid "Proxy password:"
-msgstr "Mật khẩu proxy:"
+msgstr "Лозинка посредника:"
 
 #: src/audacious/ui_preferences.c:210
 msgid "<b>Proxy Configuration</b>"
-msgstr "<b>Cấu hình Proxy</b>"
+msgstr "<b>Подешавања посредника</b>"
 
 #: src/audacious/ui_preferences.c:211
 msgid "Enable proxy usage"
-msgstr "Cho phép dùng proxy"
+msgstr "Укључи коришћење посредника"
 
 #: src/audacious/ui_preferences.c:214
 msgid "Use authentication with proxy"
-msgstr "Xác thực với proxy"
+msgstr "Користи потврђивање идентитета са посредником"
 
 #: src/audacious/ui_preferences.c:221
 msgid "Auto character encoding detector for:"
-msgstr "Tự động nhận diện bảng mã kí tự cho:"
+msgstr "Самостални откривач кодирања знакова за:"
 
 #: src/audacious/ui_preferences.c:225
 msgid "Fallback character encodings:"
-msgstr "Bảng mã kí tự dự phòng:"
+msgstr "Резервна кодирања знакова:"
 
 #: src/audacious/ui_preferences.c:229
 msgid "<b>Behavior</b>"
-msgstr "<b>Hành động</b>"
+msgstr "<b>Понашање</b>"
 
 #: src/audacious/ui_preferences.c:230
 msgid "Continue playback on startup"
-msgstr "Tiếp tục phát khi khởi động"
+msgstr "Настави пуштање приликом покретања"
 
 #: src/audacious/ui_preferences.c:232
 msgid "Advance when the current song is deleted"
-msgstr "Đến bài kế tiếp khi xóa bài hiện tại"
+msgstr "Напредуј када је обрисана текућа песма"
 
 #: src/audacious/ui_preferences.c:234
 msgid "Clear the playlist when opening files"
-msgstr "Dọn sạch danh sách khi mở các tập tin"
+msgstr "Очисти списак нумера приликом отварања датотека"
 
 #: src/audacious/ui_preferences.c:236
 msgid "Open files in a temporary playlist"
-msgstr "Mở các tập tin trong một danh sách tạm"
+msgstr "Отвори датотеке у привременом списку нумера"
 
 #: src/audacious/ui_preferences.c:238
 msgid "Do not load metadata for songs until played"
-msgstr "Không nạp thông tin bài hát cho đến khi nó được phát"
+msgstr "Не учитавај метаподатке за песме док се не пусте"
 
 #: src/audacious/ui_preferences.c:241
 msgid "<b>Compatibility</b>"
-msgstr ""
+msgstr "<b>Сагласност</b>"
 
 #: src/audacious/ui_preferences.c:242
 msgid "Interpret \\ (backward slash) as a folder delimiter"
-msgstr ""
+msgstr "Протумачи \\ (контра косу црту) као граничник фасцикле"
 
 #: src/audacious/ui_preferences.c:247
 msgid "<b>Album Art</b>"
-msgstr "<b>Ảnh bìa</b>"
+msgstr "<b>Омот албума</b>"
 
 #: src/audacious/ui_preferences.c:248
 msgid "Search for images matching these words (comma-separated):"
-msgstr "Tìm ảnh có tên chứa các từ sau (cách bằng dấu phẩy):"
+msgstr "Потражи слике које одговарају овим речима (раздвојене зарезом):"
 
 #: src/audacious/ui_preferences.c:250
 msgid "Exclude images matching these words (comma-separated):"
-msgstr "Ngoại trừ tên ảnh chứa các từ sau (cách bằng dấu phẩy):"
+msgstr "Искључи слике које одговарају овим речима (раздвојене зарезом):"
 
 #: src/audacious/ui_preferences.c:252
 msgid "Search for images matching song file name"
-msgstr "Tìm ảnh khớp với tên tập tin"
+msgstr "Потражи слике које одговарају називу песме"
 
 #: src/audacious/ui_preferences.c:254
 msgid "Search recursively"
-msgstr ""
+msgstr "Потражи дубински"
 
 #: src/audacious/ui_preferences.c:256
 msgid "Search depth:"
-msgstr ""
+msgstr "Дубина претраге: "
 
 #: src/audacious/ui_preferences.c:259
 msgid "<b>Popup Information</b>"
-msgstr "<b>Cửa sổ thông tin bật lên</b>"
+msgstr "<b>Облачић података</b>"
 
 #: src/audacious/ui_preferences.c:260
 msgid "Show popup information"
-msgstr "Hiện ô chú thích thông tin"
+msgstr "Прикажи облачиће података"
 
 #: src/audacious/ui_preferences.c:262
 msgid "Popup delay (tenths of a second):"
-msgstr ""
+msgstr "Застој искакања (десетинке секунде):"
 
 #: src/audacious/ui_preferences.c:265
 msgid "Show time scale for current song"
-msgstr ""
+msgstr "Прикажи временску лествицу за текућу песму"
 
 #: src/audacious/ui_preferences.c:280
 msgid "TITLE"
-msgstr "TỰA ĐỀ"
+msgstr "НАСЛОВ"
 
 #: src/audacious/ui_preferences.c:281
 msgid "ARTIST - TITLE"
-msgstr "NGHỆ SĨ - TỰA ĐỀ"
+msgstr "ИЗВОЂАЧ — НАСЛОВ"
 
 #: src/audacious/ui_preferences.c:282
 msgid "ARTIST - ALBUM - TITLE"
-msgstr "NGHỆ SĨ - ALBUM - TỰA"
+msgstr "ИЗВОЂАЧ — АЛБУМ — НАСЛОВ"
 
 #: src/audacious/ui_preferences.c:283
 msgid "ARTIST - ALBUM - TRACK. TITLE"
-msgstr "NGHỆ SĨ - ALBUM - BÀI. TỰA"
+msgstr "ИЗВОЂАЧ — АЛБУМ — БРОЈ. НАСЛОВ"
 
 #: src/audacious/ui_preferences.c:284
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
-msgstr "NGHỆ SĨ [ALBUM ] - BÀI. TỰA"
+msgstr "ИЗВОЂАЧ [ АЛБУМ ] — БРОЈ. НАСЛОВ"
 
 #: src/audacious/ui_preferences.c:285
 msgid "ALBUM - TITLE"
-msgstr "ALBUM - TỰA ĐỀ"
+msgstr "АЛБУМ — НАСЛОВ"
 
 #: src/audacious/ui_preferences.c:386
 msgid "Category"
-msgstr "Danh mục"
+msgstr "Категорија"
 
 #: src/audacious/ui_preferences.c:468
 msgid "Custom"
-msgstr "Tùy chọn"
+msgstr "Произвољно"
 
 #: src/audacious/ui_preferences.c:492
 msgid "<b>Song Display</b>"
-msgstr "<b>Hiển thị bài hát</b>"
+msgstr "<b>Приказ песме</b>"
 
 #: src/audacious/ui_preferences.c:501
 msgid "Show song numbers"
-msgstr "Hiện số thứ tự trong danh sách của bài hát"
+msgstr "Прикажи бројеве песама"
 
 #: src/audacious/ui_preferences.c:512
 msgid "Show leading zeroes (02:00 instead of 2:00)"
-msgstr "Hiện số không ở đầu (02:00 thay vì of 2:00)"
+msgstr "Прикажи почетне нуле (02:00 уместо 2:00)"
 
 #: src/audacious/ui_preferences.c:526
 msgid "Title format:"
-msgstr "Định dạng tựa đề:"
+msgstr "Запис наслова:"
 
 #: src/audacious/ui_preferences.c:531
 msgid "Custom string:"
-msgstr "Chuỗi tùy chọn:"
+msgstr "Произвољна ниска:"
 
 #: src/audacious/ui_preferences.c:734
 msgid "Audacious Settings"
-msgstr ""
+msgstr "Подешавања Безочника"
 
 #: src/audacious/util.c:117
 #, c-format
 msgid "Could not create directory (%s): %s\n"
-msgstr "Không thể tạo thư mục (%s): %s\n"
+msgstr "Не могу да направим директоријум (%s): %s\n"
 
 #: src/libaudcore/audstrings.c:382
 #, c-format
 msgid "Audio CD, track %s"
-msgstr "Đĩa nhạc, bài %s"
+msgstr "Звучни ЦД, нумера %s"
 
 #: src/libaudcore/tuple.c:442
 msgid "Mono"
-msgstr "Mono"
+msgstr "Моно"
 
 #: src/libaudcore/tuple.c:444
 msgid "Stereo"
-msgstr "Stereo"
+msgstr "Стерео"
 
 #: src/libaudcore/tuple.c:446
 #, c-format
 msgid "%d channel"
 msgid_plural "%d channels"
-msgstr[0] "%d kênh"
+msgstr[0] "%d канал"
+msgstr[1] "%d канала"
+msgstr[2] "%d канала"
 
 #: src/libaudgui/about.c:37
 msgid "Credits"
-msgstr "Đóng góp"
+msgstr "Заслуге"
 
 #: src/libaudgui/about.c:37
 msgid "License"
-msgstr "Giấy phép"
+msgstr "Дозвола"
 
 #: src/libaudgui/about.c:69
 msgid "About Audacious"
-msgstr "Giới thiệu Audacious"
+msgstr "O Безочнику"
 
 #: src/libaudgui/confirm.c:51
 #, c-format
 msgid "Do you want to permanently remove “%s”?"
-msgstr ""
+msgstr "Да ли желите да трајно уклоните „%s“?"
 
 #: src/libaudgui/confirm.c:55 src/libaudgui/ui_playlist_manager.c:255
 msgid "_Remove"
-msgstr ""
+msgstr "_Уклони"
 
 #: src/libaudgui/confirm.c:60
 msgid "Remove Playlist"
-msgstr ""
+msgstr "Уклони списак нумера"
 
 #: src/libaudgui/confirm.c:62
 msgid "_Don’t ask again"
-msgstr ""
+msgstr "_Не питај поново"
 
 #: src/libaudgui/confirm.c:89
 msgid "_Rename"
@@ -629,15 +635,15 @@ msgstr ""
 
 #: src/libaudgui/confirm.c:93
 msgid "Rename Playlist"
-msgstr "Đổi tên danh sách"
+msgstr "Преименуј списак нумера"
 
 #: src/libaudgui/confirm.c:93
 msgid "What would you like to call this playlist?"
-msgstr ""
+msgstr "Како желите да назовете овај списак нумера?"
 
 #: src/libaudgui/equalizer.c:44
 msgid "_Enable"
-msgstr "_Bật"
+msgstr "_Укључи"
 
 #: src/libaudgui/equalizer.c:119
 msgid "31 Hz"
@@ -681,234 +687,234 @@ msgstr "16 kHz"
 
 #: src/libaudgui/equalizer.c:124
 msgid "Equalizer"
-msgstr "Bộ cân chỉnh âm"
+msgstr "Уједначавач"
 
 #: src/libaudgui/equalizer.c:138
 msgid "Preamp"
-msgstr "Độ lớn"
+msgstr "Претпојачање"
 
 #: src/libaudgui/infopopup.c:155
 msgid "Track"
-msgstr "Bài hát"
+msgstr "Нумера"
 
 #: src/libaudgui/infopopup.c:156
 msgid "Length"
-msgstr "Độ dài"
+msgstr "Дужина"
 
 #: src/libaudgui/infowin.c:46
 msgid "Format:"
-msgstr ""
+msgstr "Запис:"
 
 #: src/libaudgui/infowin.c:47
 msgid "Quality:"
-msgstr ""
+msgstr "Квалитет:"
 
 #: src/libaudgui/infowin.c:48
 msgid "Bitrate:"
-msgstr ""
+msgstr "Проток бита:"
 
 #: src/libaudgui/infowin.c:76
 msgid "Acid Jazz"
-msgstr "Acid Jazz"
+msgstr "Кисели џез"
 
 #: src/libaudgui/infowin.c:77
 msgid "Acid Rock"
-msgstr "Acid Rock"
+msgstr "Кисели рок"
 
 #: src/libaudgui/infowin.c:78
 msgid "Ambient"
-msgstr "Ambient"
+msgstr "Амбијентална"
 
 #: src/libaudgui/infowin.c:79
 msgid "Bebop"
-msgstr "Bebop"
+msgstr "Бебоп"
 
 #: src/libaudgui/infowin.c:80
 msgid "Bluegrass"
-msgstr "Bluegrass"
+msgstr "Блуграс"
 
 #: src/libaudgui/infowin.c:81
 msgid "Blues"
-msgstr "Blues"
+msgstr "Блуз"
 
 #: src/libaudgui/infowin.c:82
 msgid "Chamber Music"
-msgstr "Chamber Music"
+msgstr "Камерна музика"
 
 #: src/libaudgui/infowin.c:83
 msgid "Classical"
-msgstr "Classical"
+msgstr "Класична"
 
 #: src/libaudgui/infowin.c:84
 msgid "Country"
-msgstr "Country"
+msgstr "Кантри"
 
 #: src/libaudgui/infowin.c:85
 msgid "Death Metal"
-msgstr "Death Metal"
+msgstr "Мртви метал"
 
 #: src/libaudgui/infowin.c:86
 msgid "Disco"
-msgstr "Disco"
+msgstr "Диско"
 
 #: src/libaudgui/infowin.c:87
 msgid "Easy Listening"
-msgstr "Easy Listening"
+msgstr "Лако слушање"
 
 #: src/libaudgui/infowin.c:88
 msgid "Folk"
-msgstr "Folk"
+msgstr "Народна"
 
 #: src/libaudgui/infowin.c:89
 msgid "Funk"
-msgstr "Funk"
+msgstr "Фанки"
 
 #: src/libaudgui/infowin.c:90
 msgid "Gangsta Rap"
-msgstr "Gangsta Rap"
+msgstr "Гангста реп"
 
 #: src/libaudgui/infowin.c:91
 msgid "Gospel"
-msgstr "Gospel"
+msgstr "Верска"
 
 #: src/libaudgui/infowin.c:92
 msgid "Grunge"
-msgstr "Grunge"
+msgstr "Гранџ"
 
 #: src/libaudgui/infowin.c:93
 msgid "Hard Rock"
-msgstr "Hard Rock"
+msgstr "Хард рок"
 
 #: src/libaudgui/infowin.c:94
 msgid "Heavy Metal"
-msgstr "Heavy Metal"
+msgstr "Хеви метал"
 
 #: src/libaudgui/infowin.c:95
 msgid "Hip-hop"
-msgstr "Hip-hop"
+msgstr "Хип-Хоп"
 
 #: src/libaudgui/infowin.c:96
 msgid "House"
-msgstr "House"
+msgstr "Хауз"
 
 #: src/libaudgui/infowin.c:97
 msgid "Jazz"
-msgstr "Jazz"
+msgstr "Џез"
 
 #: src/libaudgui/infowin.c:98
 msgid "Jungle"
-msgstr "Jungle"
+msgstr "Џунгла"
 
 #: src/libaudgui/infowin.c:99
 msgid "Metal"
-msgstr "Metal"
+msgstr "Метал"
 
 #: src/libaudgui/infowin.c:100
 msgid "New Age"
-msgstr "New Age"
+msgstr "Ново доба"
 
 #: src/libaudgui/infowin.c:101
 msgid "New Wave"
-msgstr "New Wave"
+msgstr "Нови талас"
 
 #: src/libaudgui/infowin.c:102
 msgid "Noise"
-msgstr "Noise"
+msgstr "Бука"
 
 #: src/libaudgui/infowin.c:103
 msgid "Pop"
-msgstr "Pop"
+msgstr "Поп"
 
 #: src/libaudgui/infowin.c:104
 msgid "Punk Rock"
-msgstr "Punk Rock"
+msgstr "Панк Рок"
 
 #: src/libaudgui/infowin.c:105
 msgid "Rap"
-msgstr "Rap"
+msgstr "Реп"
 
 #: src/libaudgui/infowin.c:106
 msgid "Reggae"
-msgstr "Reggae"
+msgstr "Реге"
 
 #: src/libaudgui/infowin.c:107
 msgid "Rock"
-msgstr "Rock"
+msgstr "Рок"
 
 #: src/libaudgui/infowin.c:108
 msgid "Rock and Roll"
-msgstr "Rock and Roll"
+msgstr "Рокенрол"
 
 #: src/libaudgui/infowin.c:109
 msgid "Rhythm and Blues"
-msgstr "Rhythm and Blues"
+msgstr "Ритам и Блуз"
 
 #: src/libaudgui/infowin.c:110
 msgid "Ska"
-msgstr "Ska"
+msgstr "Ска"
 
 #: src/libaudgui/infowin.c:111
 msgid "Soul"
-msgstr "Soul"
+msgstr "Соул"
 
 #: src/libaudgui/infowin.c:112
 msgid "Swing"
-msgstr "Swing"
+msgstr "Свинг"
 
 #: src/libaudgui/infowin.c:113
 msgid "Techno"
-msgstr "Techno"
+msgstr "Техно"
 
 #: src/libaudgui/infowin.c:114
 msgid "Trip-hop"
-msgstr "Trip-hop"
+msgstr "Трип-Хоп"
 
 #: src/libaudgui/infowin.c:220
 msgid "Save successful"
-msgstr ""
+msgstr "Чување је успело"
 
 #: src/libaudgui/infowin.c:224
 msgid "Save error"
-msgstr ""
+msgstr "Чување није успело"
 
 #: src/libaudgui/infowin.c:359
 msgid "Track Number"
-msgstr ""
+msgstr "Број нумере"
 
 #: src/libaudgui/infowin.c:367
 msgid "_Save"
-msgstr ""
+msgstr "_Сачувај"
 
 #: src/libaudgui/infowin.c:418
 #, c-format
 msgid "%d kb/s"
-msgstr "%d kb/giây"
+msgstr "%d kb/s"
 
 #: src/libaudgui/infowin.c:423
 msgid "N/A"
-msgstr ""
+msgstr "Н/Д"
 
 #: src/libaudgui/infowin.c:453
 #, c-format
 msgid "No info available for %s.\n"
-msgstr "Không có thông tin của %s.\n"
+msgstr "Нису доступни подаци за „%s“.\n"
 
 #: src/libaudgui/jump-to-time.c:48 src/libaudgui/ui_jumptotrack.c:305
 msgid "_Jump"
-msgstr ""
+msgstr "_Скочи"
 
 #: src/libaudgui/jump-to-time.c:52
 msgid "Jump to Time"
-msgstr "Định mốc t.gian phát nhạc"
+msgstr "Пређи на време"
 
 #: src/libaudgui/jump-to-time.c:52
 msgid "Enter time (minutes:seconds):"
-msgstr "Nhập thời gian (phút:giây):"
+msgstr "Унесите време (минути:секунде):"
 
 #: src/libaudgui/playlists.c:86
 #, c-format
 msgid "Overwrite %s?"
-msgstr "Ghi đè %s?"
+msgstr "Да препишем „%s“?"
 
 #: src/libaudgui/playlists.c:88
 msgid "_Overwrite"
@@ -916,11 +922,11 @@ msgstr ""
 
 #: src/libaudgui/playlists.c:92
 msgid "Confirm Overwrite"
-msgstr ""
+msgstr "Потврди преписивање"
 
 #: src/libaudgui/playlists.c:121
 msgid "Export Playlist"
-msgstr "Xuất danh sách"
+msgstr "Извези списак нумера"
 
 #: src/libaudgui/playlists.c:122
 msgid "_Export"
@@ -928,7 +934,7 @@ msgstr ""
 
 #: src/libaudgui/playlists.c:128
 msgid "Import Playlist"
-msgstr "Nhập danh sách"
+msgstr "Увези списак нумера"
 
 #: src/libaudgui/playlists.c:129
 msgid "_Import"
@@ -936,96 +942,96 @@ msgstr ""
 
 #: src/libaudgui/queue-manager.c:172
 msgid "Queue Manager"
-msgstr "Trình quản lí hàng đợi"
+msgstr "Управник реда"
 
 #: src/libaudgui/queue-manager.c:188
 msgid "_Unqueue"
-msgstr ""
+msgstr "Избаци из _реда"
 
 #: src/libaudgui/ui_fileopener.c:79
 msgid "Open Files"
-msgstr "Mở tập tin"
+msgstr "Отвори датотеке"
 
 #: src/libaudgui/ui_fileopener.c:80 src/libaudgui/url-opener.c:50
 msgid "_Open"
-msgstr ""
+msgstr "_Отвори"
 
 #: src/libaudgui/ui_fileopener.c:82
 msgid "Close _dialog on open"
-msgstr ""
+msgstr "Затвори _прозорче на „Отвори“"
 
 #: src/libaudgui/ui_fileopener.c:87
 msgid "Add Files"
-msgstr "Thêm tập tin"
+msgstr "Додај датотеке"
 
 #: src/libaudgui/ui_fileopener.c:88 src/libaudgui/url-opener.c:56
 msgid "_Add"
-msgstr ""
+msgstr "_Додај"
 
 #: src/libaudgui/ui_fileopener.c:90
 msgid "Close _dialog on add"
-msgstr ""
+msgstr "Затвори _прозорче на „Додај“"
 
 #: src/libaudgui/ui_jumptotrack.c:101 src/libaudgui/ui_jumptotrack.c:109
 #: src/libaudgui/ui_jumptotrack.c:301
 msgid "_Queue"
-msgstr "_Hàng đợi"
+msgstr "Стави у _ред"
 
 #: src/libaudgui/ui_jumptotrack.c:107
 msgid "Un_queue"
-msgstr "Bỏ khỏi _hàng đợi"
+msgstr "Избаци из _реда"
 
 #: src/libaudgui/ui_jumptotrack.c:245
 msgid "Jump to Song"
-msgstr "Chuyển đến bài hát"
+msgstr "Пређи на песму"
 
 #: src/libaudgui/ui_jumptotrack.c:270
 msgid "Filter: "
-msgstr "Bộ lọc:"
+msgstr "Пропусник: "
 
 #: src/libaudgui/ui_jumptotrack.c:271
 msgid "_Filter:"
-msgstr "_Bộ lọc:"
+msgstr "_Пропусти:"
 
 #: src/libaudgui/ui_jumptotrack.c:294
 msgid "C_lose on jump"
-msgstr ""
+msgstr "Затвори после _скока"
 
 #: src/libaudgui/ui_playlist_manager.c:223
 msgid "Playlist Manager"
-msgstr "Quản lý danh sách"
+msgstr "Управник списка нумера"
 
 #: src/libaudgui/ui_playlist_manager.c:236
 msgid "Entries"
-msgstr "Số mục"
+msgstr "Ставке"
 
 #: src/libaudgui/ui_playlist_manager.c:254
 msgid "_New"
-msgstr ""
+msgstr "_Нова"
 
 #: src/libaudgui/ui_playlist_manager.c:256
 msgid "Ren_ame"
-msgstr ""
+msgstr "_Преименуј"
 
 #: src/libaudgui/ui_playlist_manager.c:257
 msgid "_Play"
-msgstr ""
+msgstr "_Пусти"
 
 #: src/libaudgui/ui_playlist_manager.c:269
 msgid "_Close dialog on activating playlist"
-msgstr "Đóng hộp thoại khi _kích hoạt danh sách"
+msgstr "_Затвори прозорче на покретање списка нумера"
 
 #: src/libaudgui/url-opener.c:49
 msgid "Open URL"
-msgstr "Mở địa chỉ URL"
+msgstr "Отворите адресу"
 
 #: src/libaudgui/url-opener.c:55
 msgid "Add URL"
-msgstr "Thêm URL"
+msgstr "Додајте адресу"
 
 #: src/libaudgui/url-opener.c:74
 msgid "Enter URL:"
-msgstr "Nhập URL:"
+msgstr "Унеси адресу:"
 
 #: src/libaudgui/util.c:148
 msgid ""
@@ -1033,4 +1039,7 @@ msgid ""
 "(Further messages have been hidden.)"
 msgstr ""
 "\n"
-"(Các thông báo khác đã bị ẩn.)"
+"(Додатне поруке су скривене.)"
+
+#~ msgid "_Remember"
+#~ msgstr "_Запамти"

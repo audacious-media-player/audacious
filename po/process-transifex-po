@@ -13,14 +13,23 @@ bg.po)
 ca.po)
     LANGUAGE="Catalan"
     ;;
+cmn.po)
+    LANGUAGE="Chinese (Mandarin)"
+    ;;
 cs.po)
     LANGUAGE="Czech"
+    ;;
+da.po)
+    LANGUAGE="Danish"
     ;;
 de.po)
     LANGUAGE="German"
     ;;
 el.po)
     LANGUAGE="Greek"
+    ;;
+en_GB.po)
+    LANGUAGE="English (United Kingdom)"
     ;;
 eo.po)
     LANGUAGE="Esperanto"
@@ -76,6 +85,9 @@ lt.po)
 lv.po)
     LANGUAGE="Latvian"
     ;;
+ml_IN.po)
+    LANGUAGE="Malayalam (India)"
+    ;;
 ms.po)
     LANGUAGE="Malay"
     ;;
@@ -97,6 +109,9 @@ ro.po)
 ru.po)
     LANGUAGE="Russian"
     ;;
+si.po)
+    LANGUAGE="Sinhala"
+    ;;
 sk.po)
     LANGUAGE="Slovak"
     ;;
@@ -108,6 +123,12 @@ sr@latin.po)
     ;;
 sr.po)
     LANGUAGE="Serbian"
+    ;;
+sr_RS.po)
+    LANGUAGE="Serbian (Serbia)"
+    ;;
+ta.po)
+    LANGUAGE="Tamil"
     ;;
 tr.po)
     LANGUAGE="Turkish"

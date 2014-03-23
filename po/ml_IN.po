@@ -1,10 +1,11 @@
-# Vietnamese translation for Audacious
+# Malayalam (India) translation for Audacious
 # Copyright (C) Audacious translators
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
-# Lê Trường An <truongan@linuxmail.org>, 2011, 2012
-# Lê Trường An <truongan@linuxmail.org>, 2011-2012
+# <>, 2013
+# nandakumar <nandakumar96@gmail.com>, 2013
+# nandakumar <nandakumar96@gmail.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
@@ -12,27 +13,28 @@ msgstr ""
 "POT-Creation-Date: 2014-03-23 21:24+0100\n"
 "PO-Revision-Date: 2014-03-15 22:38+0000\n"
 "Last-Translator: Radioactiveman <thomas-lange2@gmx.de>\n"
-"Language-Team: Vietnamese (http://www.transifex.com/projects/p/audacious/"
-"language/vi/)\n"
-"Language: vi\n"
+"Language-Team: Malayalam (India) (http://www.transifex.com/projects/p/"
+"audacious/language/ml_IN/)\n"
+"Language: ml_IN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: src/audacious/adder.c:76
 msgid "Searching ..."
-msgstr "Đang tìm ..."
+msgstr "തിരയുന്നു ..."
 
 #: src/audacious/adder.c:104
 #, c-format
 msgid "%d file found"
 msgid_plural "%d files found"
-msgstr[0] "%d tập tin được tìm thấy"
+msgstr[0] "%d ഫയല്‍ കണ്ടെത്തി"
+msgstr[1] "%d ഫയലുകള്‍ കണ്ടെത്തി"
 
 #: src/audacious/adder.c:393 src/audacious/playlist-new.c:96
 msgid "New Playlist"
-msgstr "D.sách mới"
+msgstr "പുതിയ പ്ലേലിസ്റ്റ്"
 
 #: src/audacious/interface.c:93
 msgid "Error"
@@ -44,7 +46,7 @@ msgstr ""
 
 #: src/audacious/main.c:71
 msgid "Show version"
-msgstr "Hiện phiên bản"
+msgstr "പതിപ്പ് കാണിയ്ക്കുക"
 
 #: src/audacious/main.c:72
 msgid "Start playback"
@@ -56,7 +58,7 @@ msgstr ""
 
 #: src/audacious/main.c:74
 msgid "Pause if playing, play otherwise"
-msgstr "Tạm dừng nếu đang phát, phát trở lại nếu đang tạm dừng"
+msgstr "പാടുകയാണെങ്കില്‍ പോസ് ചെയ്യുക, അല്ലെങ്കില്‍ പാടുക"
 
 #: src/audacious/main.c:75
 msgid "Stop playback"
@@ -72,7 +74,7 @@ msgstr ""
 
 #: src/audacious/main.c:78
 msgid "Add files to the playlist"
-msgstr "Thêm tập tin vào danh sách"
+msgstr "പ്ലേലിസ്റ്റിലേയ്ക്ക് ഫയലുകള്‍ ചേര്‍ക്കുക"
 
 #: src/audacious/main.c:79
 msgid "Add files to a temporary playlist"
@@ -80,7 +82,7 @@ msgstr ""
 
 #: src/audacious/main.c:80
 msgid "Display the main window"
-msgstr "Hiện cửa sổ chính"
+msgstr "മുഖ്യജാലകം പ്രദര്‍ശിപ്പിയ്ക്കുക"
 
 #: src/audacious/main.c:81
 msgid "Display the jump-to-song window"
@@ -92,11 +94,11 @@ msgstr ""
 
 #: src/audacious/main.c:83
 msgid "Quit on playback stop"
-msgstr ""
+msgstr "പാട്ടുനിന്നാല്‍ പുറത്തുകടക്കുക"
 
 #: src/audacious/main.c:84
 msgid "Print debugging messages"
-msgstr "Hiện thông báo gỡ lỗi"
+msgstr "ഡീബഗ്ഗിങ് സന്ദേശങ്ങള്‍ പ്രദര്‍ശിപ്പിയ്ക്കുക"
 
 #: src/audacious/main.c:264
 #, c-format
@@ -117,17 +119,17 @@ msgstr ""
 
 #: src/audacious/main.c:591
 msgid "Audacious"
-msgstr "Audacious"
+msgstr "ഒഡാഷ്യസ്"
 
 #: src/audacious/playback.c:354
 #, c-format
 msgid "No decoder found for %s."
-msgstr "Không tìm thấy bộ giải mã cho %s."
+msgstr "%s-ന് ഡീകോഡറൊന്നും കണ്ടുകിട്ടിയില്ല."
 
 #: src/audacious/playback.c:382
 #, c-format
 msgid "%s could not be opened."
-msgstr ""
+msgstr "%s - തുറക്കാനായില്ല."
 
 #: src/audacious/playlist-files.c:95
 #, c-format
@@ -141,15 +143,15 @@ msgstr ""
 
 #: src/audacious/playlist-new.c:97
 msgid "Now Playing"
-msgstr "Đang phát"
+msgstr "ഇപ്പോള്‍ പാടുന്നത്"
 
 #: src/audacious/playlist-new.c:1655
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress "
 "(or has been disabled)."
 msgstr ""
-"Danh sách không thể được sắp xếp vì quá trình quét thông tin đang diễn ra "
-"(hoặc bị tắt)."
+"മെറ്റാഡാറ്റാ സ്കാനിങ് കഴിഞ്ഞിട്ടില്ലാത്തതിനാല്‍ പ്ലേലിസ്റ്റ് സോര്‍ട്ട് ചെയ്യാനാവില്ല (അല്ലെങ്കില്‍ "
+"അസാദ്ധ്യമാക്കിവച്ചതിനാല്‍)."
 
 #: src/audacious/plugin-preferences.c:55
 msgid "About "
@@ -195,148 +197,148 @@ msgstr ""
 
 #: src/audacious/ui_preferences.c:83
 msgid "Audio"
-msgstr "Âm thanh"
+msgstr "ഓഡിയോ"
 
 #: src/audacious/ui_preferences.c:84
 msgid "Network"
-msgstr "Mạng"
+msgstr "നെറ്റ്‌വര്‍ക്ക്"
 
 #: src/audacious/ui_preferences.c:85 src/audacious/ui_preferences.c:95
 msgid "Playlist"
-msgstr "Danh sách"
+msgstr "പ്ലേലിസ്റ്റ്"
 
 #: src/audacious/ui_preferences.c:86 src/libaudgui/infowin.c:299
 msgid "Song Info"
-msgstr "Thông tin bài hát"
+msgstr "സോങ് ഇന്‍ഫോ"
 
 #: src/audacious/ui_preferences.c:87
 msgid "Plugins"
-msgstr "Trình cắm"
+msgstr "പ്ലഗ്ഗിന്നുകള്‍"
 
 #: src/audacious/ui_preferences.c:91
 msgid "General"
-msgstr "Tổng quát"
+msgstr "പൊതുവായ"
 
 #: src/audacious/ui_preferences.c:92
 msgid "Effect"
-msgstr "Hiệu ứng"
+msgstr "പ്രഭാവം"
 
 #: src/audacious/ui_preferences.c:93
 msgid "Visualization"
-msgstr "Hình ảnh ảo"
+msgstr "ദൃശ്യവത്കരണം"
 
 #: src/audacious/ui_preferences.c:94
 msgid "Input"
-msgstr "Đầu vào"
+msgstr "ഇന്‍പുട്ട്"
 
 #: src/audacious/ui_preferences.c:96
 msgid "Transport"
-msgstr "Truyền tải"
+msgstr "കടത്തുക"
 
 #: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:151
 #: src/libaudgui/infowin.c:343
 msgid "Artist"
-msgstr "Nghệ sĩ"
+msgstr "ആര്‍ട്ടിസ്റ്റ്"
 
 #: src/audacious/ui_preferences.c:101 src/libaudgui/infopopup.c:152
 #: src/libaudgui/infowin.c:346
 msgid "Album"
-msgstr "Album"
+msgstr "ആല്‍ബം"
 
 #: src/audacious/ui_preferences.c:102 src/libaudgui/infopopup.c:150
 #: src/libaudgui/infowin.c:340 src/libaudgui/ui_playlist_manager.c:235
 msgid "Title"
-msgstr "Tựa đề"
+msgstr "ടൈറ്റില്‍"
 
 #: src/audacious/ui_preferences.c:103
 msgid "Tracknumber"
-msgstr "Bài số"
+msgstr "ട്രാക്ക് നമ്പര്‍"
 
 #: src/audacious/ui_preferences.c:104 src/libaudgui/infopopup.c:153
 #: src/libaudgui/infowin.c:352
 msgid "Genre"
-msgstr "Thể loại"
+msgstr "തരം"
 
 #: src/audacious/ui_preferences.c:105
 msgid "Filename"
-msgstr "Tên tập tin"
+msgstr "ഫയല്‍നെയിം"
 
 #: src/audacious/ui_preferences.c:106
 msgid "Filepath"
-msgstr "Đường dẫn tập tin"
+msgstr "ഫയല്‍പാത്ത്"
 
 #: src/audacious/ui_preferences.c:107
 msgid "Date"
-msgstr "Ngày"
+msgstr "തീയതി"
 
 #: src/audacious/ui_preferences.c:108 src/libaudgui/infopopup.c:154
 #: src/libaudgui/infowin.c:356
 msgid "Year"
-msgstr "Năm"
+msgstr "വര്‍ഷം"
 
 #: src/audacious/ui_preferences.c:109 src/libaudgui/infowin.c:349
 msgid "Comment"
-msgstr "Bình luận"
+msgstr "അഭിപ്രായം"
 
 #: src/audacious/ui_preferences.c:110
 msgid "Codec"
-msgstr "Bộ giải mã"
+msgstr "കോഡെക്"
 
 #: src/audacious/ui_preferences.c:111
 msgid "Quality"
-msgstr "Chất lượng"
+msgstr "ഗുണമേന്മ"
 
 #: src/audacious/ui_preferences.c:116
 msgid "None"
-msgstr "Không"
+msgstr "ശൂന്യം"
 
 #: src/audacious/ui_preferences.c:117
 msgid "Arabic"
-msgstr "Tiếng Ả Rập"
+msgstr "അറബിക്"
 
 #: src/audacious/ui_preferences.c:118
 msgid "Baltic"
-msgstr "Tiếng Ban-tic"
+msgstr "ബാള്‍ട്ടിക്"
 
 #: src/audacious/ui_preferences.c:119
 msgid "Chinese"
-msgstr "Tiếng Trung"
+msgstr "ചൈനീസ്"
 
 #: src/audacious/ui_preferences.c:120
 msgid "Greek"
-msgstr "Tiếng Hy Lạp"
+msgstr "ഗ്രീക്ക്"
 
 #: src/audacious/ui_preferences.c:121
 msgid "Hebrew"
-msgstr "Tiếng Do Thái"
+msgstr "ഹീബ്രൂ"
 
 #: src/audacious/ui_preferences.c:122
 msgid "Japanese"
-msgstr "Tiếng Nhật"
+msgstr "ജാപ്പനീസ്"
 
 #: src/audacious/ui_preferences.c:123
 msgid "Korean"
-msgstr "Tiếng Hàn"
+msgstr "കൊറിയന്‍"
 
 #: src/audacious/ui_preferences.c:124
 msgid "Polish"
-msgstr "Tiếng Ba Lan"
+msgstr "പോളിഷ്"
 
 #: src/audacious/ui_preferences.c:125
 msgid "Russian"
-msgstr "Tiếng Nga"
+msgstr "റഷ്യന്‍"
 
 #: src/audacious/ui_preferences.c:126
 msgid "Taiwanese"
-msgstr "Tiếng Đài Loan"
+msgstr "തായ്‌വാനീസ്"
 
 #: src/audacious/ui_preferences.c:127
 msgid "Turkish"
-msgstr "Tiếng Thổ Nhĩ Kỳ"
+msgstr "ടര്‍ക്കിഷ്"
 
 #: src/audacious/ui_preferences.c:135
 msgid "Floating point"
-msgstr "Điểm chuyển động"
+msgstr "ഫ്ലോട്ടിങ് പോയിന്റ്"
 
 #: src/audacious/ui_preferences.c:147
 msgid "<b>Interface Settings</b>"
@@ -348,19 +350,19 @@ msgstr ""
 
 #: src/audacious/ui_preferences.c:165
 msgid "Output plugin:"
-msgstr "Trình cắm xuất ra:"
+msgstr "ഔട്പുട്ട് പ്ലഗ്ഗിന്‍"
 
 #: src/audacious/ui_preferences.c:172
 msgid "<b>Output Settings</b>"
-msgstr "<b>Thiết lập xuất âm thanh</b>"
+msgstr "<b>ഔട്പുട്ട് ക്രമീകരണങ്ങള്‍</b>"
 
 #: src/audacious/ui_preferences.c:175
 msgid "Bit depth:"
-msgstr "Chiều sâu âm thanh:"
+msgstr "ബിറ്റ് ഡെപ്ത്"
 
 #: src/audacious/ui_preferences.c:178
 msgid "Buffer size:"
-msgstr "Dung lượng bộ đệm:"
+msgstr "ബഫര്‍ സൈസ്"
 
 #: src/audacious/ui_preferences.c:180
 msgid "ms"
@@ -368,35 +370,35 @@ msgstr "ms"
 
 #: src/audacious/ui_preferences.c:181
 msgid "Soft clipping"
-msgstr ""
+msgstr "സോഫ്റ്റ് ക്ലിപ്പിങ്"
 
 #: src/audacious/ui_preferences.c:183
 msgid "Use software volume control (not recommended)"
-msgstr "Sử dụng kiểm soát âm lượng của phần mềm (không nên)"
+msgstr "സോഫ്റ്റ്‌വെയര്‍ ശബ്ദനിയന്ത്രണോപാധി ഉപയോഗിയ്ക്കുക (ശുപാര്‍ശ ചെയ്യപ്പെട്ടിട്ടില്ല)"
 
 #: src/audacious/ui_preferences.c:185
 msgid "<b>Replay Gain</b>"
-msgstr "<b>Tăng âm</b>"
+msgstr "<b>റീപ്ലേ ഗെയ്ന്‍</b>"
 
 #: src/audacious/ui_preferences.c:186
 msgid "Enable Replay Gain"
-msgstr "Bật chế độ tăng thêm âm lượng"
+msgstr "റീപ്ലേ ഗെയ്ന്‍ സാദ്ധ്യമാക്കുക"
 
 #: src/audacious/ui_preferences.c:188
 msgid "Album mode"
-msgstr "Chế độ album"
+msgstr "ആല്‍ബം മോഡ്"
 
 #: src/audacious/ui_preferences.c:190
 msgid "Prevent clipping (recommended)"
-msgstr "Tránh tổn thất (khuyên dùng)"
+msgstr "ക്ലിപ്പിങ് തടയുക (ശുപാര്‍ശ ചെയ്യപ്പെട്ടത്)"
 
 #: src/audacious/ui_preferences.c:192
 msgid "<b>Adjust Levels</b>"
-msgstr "<b>Các mức điều chỉnh</b>"
+msgstr "<b>ലെവലുകള്‍ ക്രമീകരിയ്ക്കുക</b>"
 
 #: src/audacious/ui_preferences.c:193
 msgid "Amplify all files:"
-msgstr "Khuếch đại mọi tập tin:"
+msgstr "എല്ലാ ഫയലുകളും ആംപ്ലിഫൈ ചെയ്യുക"
 
 #: src/audacious/ui_preferences.c:195 src/audacious/ui_preferences.c:198
 msgid "dB"
@@ -404,167 +406,167 @@ msgstr "dB"
 
 #: src/audacious/ui_preferences.c:196
 msgid "Amplify untagged files:"
-msgstr "Khuếch đại tập tin chưa gán thẻ:"
+msgstr "അണ്‍ടാഗ്ഡ് ഫയലുകള്‍ ആംപ്ലിഫൈ ചെയ്യുക:"
 
 #: src/audacious/ui_preferences.c:201
 msgid "Proxy hostname:"
-msgstr "Tên máy chủ proxy:"
+msgstr "പ്രോക്സി ഹോസ്റ്റ്നെയിം:"
 
 #: src/audacious/ui_preferences.c:202
 msgid "Proxy port:"
-msgstr "Cổng proxy:"
+msgstr "പ്രോക്സി പോര്‍ട്ട്"
 
 #: src/audacious/ui_preferences.c:205
 msgid "Proxy username:"
-msgstr "Tên người dùng proxy:"
+msgstr "പ്രോക്സി ഉപയോക്തൃനാമം"
 
 #: src/audacious/ui_preferences.c:206
 msgid "Proxy password:"
-msgstr "Mật khẩu proxy:"
+msgstr "പ്രോക്സി അടയാളവാക്യം"
 
 #: src/audacious/ui_preferences.c:210
 msgid "<b>Proxy Configuration</b>"
-msgstr "<b>Cấu hình Proxy</b>"
+msgstr "<b>പ്രോക്സി ക്രമീകരണം</b>"
 
 #: src/audacious/ui_preferences.c:211
 msgid "Enable proxy usage"
-msgstr "Cho phép dùng proxy"
+msgstr "പ്രോക്സി ഉപയോഗം സാദ്ധ്യമാക്കുക"
 
 #: src/audacious/ui_preferences.c:214
 msgid "Use authentication with proxy"
-msgstr "Xác thực với proxy"
+msgstr "പ്രോക്സി ഉപയോഗിച്ചുകൊണ്ടുള്ള ഓതന്റിക്കേഷന്‍ സാദ്ധ്യമാക്കുക"
 
 #: src/audacious/ui_preferences.c:221
 msgid "Auto character encoding detector for:"
-msgstr "Tự động nhận diện bảng mã kí tự cho:"
+msgstr "ഇതിനായി ഓട്ടോ ക്യാരക്റ്റര്‍ എന്‍കോഡിങ് ഡിറ്റക്റ്റര്‍:"
 
 #: src/audacious/ui_preferences.c:225
 msgid "Fallback character encodings:"
-msgstr "Bảng mã kí tự dự phòng:"
+msgstr "ഫാള്‍ബാക്ക് ക്യാരക്റ്റര്‍ എന്‍കോഡിങ്ങുകള്‍:"
 
 #: src/audacious/ui_preferences.c:229
 msgid "<b>Behavior</b>"
-msgstr "<b>Hành động</b>"
+msgstr "<b>സ്വഭാവം</b>"
 
 #: src/audacious/ui_preferences.c:230
 msgid "Continue playback on startup"
-msgstr "Tiếp tục phát khi khởi động"
+msgstr "പ്രാരംഭസമയത്ത് പാടല്‍ തുടരുക"
 
 #: src/audacious/ui_preferences.c:232
 msgid "Advance when the current song is deleted"
-msgstr "Đến bài kế tiếp khi xóa bài hiện tại"
+msgstr "ഈ പാട്ട് ഡിലീറ്റായാല്‍ മുന്നോട്ടുനീങ്ങുക"
 
 #: src/audacious/ui_preferences.c:234
 msgid "Clear the playlist when opening files"
-msgstr "Dọn sạch danh sách khi mở các tập tin"
+msgstr "ഫയലുകള്‍ തുറക്കുമ്പോള്‍ പ്ലേലിസ്റ്റ് വെടിപ്പാക്കുക"
 
 #: src/audacious/ui_preferences.c:236
 msgid "Open files in a temporary playlist"
-msgstr "Mở các tập tin trong một danh sách tạm"
+msgstr "ഫയലുകള്‍ ഒരു താത്കാലികപ്ലേലിസ്റ്റില്‍ തുറക്കുക"
 
 #: src/audacious/ui_preferences.c:238
 msgid "Do not load metadata for songs until played"
-msgstr "Không nạp thông tin bài hát cho đến khi nó được phát"
+msgstr "പാട്ടുകള്‍ പാടുന്നതുവരെ മെറ്റാഡാറ്റ ലോഡ് ചെയ്യേണ്ട"
 
 #: src/audacious/ui_preferences.c:241
 msgid "<b>Compatibility</b>"
-msgstr ""
+msgstr "<b>അനുയോഗ്യത</b>"
 
 #: src/audacious/ui_preferences.c:242
 msgid "Interpret \\ (backward slash) as a folder delimiter"
-msgstr ""
+msgstr "\\ (backward slash) -നെ ഒരു ഫോള്‍ഡര്‍ ഡീലിമിറ്റര്‍ ആയി വ്യാഖ്യാനിയ്ക്കുക"
 
 #: src/audacious/ui_preferences.c:247
 msgid "<b>Album Art</b>"
-msgstr "<b>Ảnh bìa</b>"
+msgstr "<b>ആല്‍ബം ആര്‍ട്ട്</b>"
 
 #: src/audacious/ui_preferences.c:248
 msgid "Search for images matching these words (comma-separated):"
-msgstr "Tìm ảnh có tên chứa các từ sau (cách bằng dấu phẩy):"
+msgstr "ഈ വാക്കുകള്‍ക്കു യോജിച്ച ചിത്രങ്ങള്‍ക്കായി തിരയുക (കോമയാല്‍ വേര്‍തിരിയ്ക്കപ്പെട്ടത്)"
 
 #: src/audacious/ui_preferences.c:250
 msgid "Exclude images matching these words (comma-separated):"
-msgstr "Ngoại trừ tên ảnh chứa các từ sau (cách bằng dấu phẩy):"
+msgstr "ഈ വാക്കുകള്‍ക്കു യോജിച്ച ചിത്രങ്ങള്‍ ഒഴിവാക്കുക (കോമയാല്‍ വേര്‍തിരിയ്ക്കപ്പെട്ടത്)"
 
 #: src/audacious/ui_preferences.c:252
 msgid "Search for images matching song file name"
-msgstr "Tìm ảnh khớp với tên tập tin"
+msgstr "പാട്ടിന്റെ ഫയല്‍ നെയിമിന് യോജിച്ച ചിത്രങ്ങള്‍ക്കായി തിരയുക"
 
 #: src/audacious/ui_preferences.c:254
 msgid "Search recursively"
-msgstr ""
+msgstr "റിക്കര്‍സീവ് ആയി തിരയുക"
 
 #: src/audacious/ui_preferences.c:256
 msgid "Search depth:"
-msgstr ""
+msgstr "സേര്‍ച്ച് ഡെപ്ത്:"
 
 #: src/audacious/ui_preferences.c:259
 msgid "<b>Popup Information</b>"
-msgstr "<b>Cửa sổ thông tin bật lên</b>"
+msgstr "<b>പോപ്പപ്പ് വിവരം</b>"
 
 #: src/audacious/ui_preferences.c:260
 msgid "Show popup information"
-msgstr "Hiện ô chú thích thông tin"
+msgstr "പോപ്പപ് വിവരം പ്രദര്‍ശിപ്പിയ്ക്കുക"
 
 #: src/audacious/ui_preferences.c:262
 msgid "Popup delay (tenths of a second):"
-msgstr ""
+msgstr "പോപ്പപ്പ് വൈകല്‍ (ഒരു സെക്കന്‍ഡിന്റെ പത്തിലൊന്നുകള്‍)"
 
 #: src/audacious/ui_preferences.c:265
 msgid "Show time scale for current song"
-msgstr ""
+msgstr "ഈ പാട്ടിന്റെ ടൈം സ്കെയില്‍ കാണിയ്ക്കുക"
 
 #: src/audacious/ui_preferences.c:280
 msgid "TITLE"
-msgstr "TỰA ĐỀ"
+msgstr "TITLE"
 
 #: src/audacious/ui_preferences.c:281
 msgid "ARTIST - TITLE"
-msgstr "NGHỆ SĨ - TỰA ĐỀ"
+msgstr "ARTIST - TITLE"
 
 #: src/audacious/ui_preferences.c:282
 msgid "ARTIST - ALBUM - TITLE"
-msgstr "NGHỆ SĨ - ALBUM - TỰA"
+msgstr "ARTIST - ALBUM - TITLE"
 
 #: src/audacious/ui_preferences.c:283
 msgid "ARTIST - ALBUM - TRACK. TITLE"
-msgstr "NGHỆ SĨ - ALBUM - BÀI. TỰA"
+msgstr "ARTIST - ALBUM - TRACK. TITLE"
 
 #: src/audacious/ui_preferences.c:284
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
-msgstr "NGHỆ SĨ [ALBUM ] - BÀI. TỰA"
+msgstr "ARTIST [ ALBUM ] - TRACK. TITLE"
 
 #: src/audacious/ui_preferences.c:285
 msgid "ALBUM - TITLE"
-msgstr "ALBUM - TỰA ĐỀ"
+msgstr "ALBUM - TITLE"
 
 #: src/audacious/ui_preferences.c:386
 msgid "Category"
-msgstr "Danh mục"
+msgstr "വിഭാഗം"
 
 #: src/audacious/ui_preferences.c:468
 msgid "Custom"
-msgstr "Tùy chọn"
+msgstr "സ്വേച്ഛയാലുള്ള"
 
 #: src/audacious/ui_preferences.c:492
 msgid "<b>Song Display</b>"
-msgstr "<b>Hiển thị bài hát</b>"
+msgstr "<b>സോങ് ഡിസ്പ്ലേ</b>"
 
 #: src/audacious/ui_preferences.c:501
 msgid "Show song numbers"
-msgstr "Hiện số thứ tự trong danh sách của bài hát"
+msgstr "പാട്ടുനമ്പറുകള്‍ കാണിയ്ക്കുക"
 
 #: src/audacious/ui_preferences.c:512
 msgid "Show leading zeroes (02:00 instead of 2:00)"
-msgstr "Hiện số không ở đầu (02:00 thay vì of 2:00)"
+msgstr "തുടക്കത്തിലുള്ള പൂജ്യങ്ങള്‍ കാണിയ്ക്കുക (2:00 എന്നതിനുപകരം 02:00)"
 
 #: src/audacious/ui_preferences.c:526
 msgid "Title format:"
-msgstr "Định dạng tựa đề:"
+msgstr "ടൈറ്റില്‍ ഫോര്‍മാറ്റ്:"
 
 #: src/audacious/ui_preferences.c:531
 msgid "Custom string:"
-msgstr "Chuỗi tùy chọn:"
+msgstr "സ്വേച്ഛയാലുള്ള എഴുത്ത്:"
 
 #: src/audacious/ui_preferences.c:734
 msgid "Audacious Settings"
@@ -573,38 +575,39 @@ msgstr ""
 #: src/audacious/util.c:117
 #, c-format
 msgid "Could not create directory (%s): %s\n"
-msgstr "Không thể tạo thư mục (%s): %s\n"
+msgstr "ഡയറക്റ്ററി ഉണ്ടാക്കാനായില്ല (%s): %s\n"
 
 #: src/libaudcore/audstrings.c:382
 #, c-format
 msgid "Audio CD, track %s"
-msgstr "Đĩa nhạc, bài %s"
+msgstr "ഓഡിയോ സി.ഡി., ട്രാക്ക് %s"
 
 #: src/libaudcore/tuple.c:442
 msgid "Mono"
-msgstr "Mono"
+msgstr "മോണോ"
 
 #: src/libaudcore/tuple.c:444
 msgid "Stereo"
-msgstr "Stereo"
+msgstr "സ്റ്റീരിയോ"
 
 #: src/libaudcore/tuple.c:446
 #, c-format
 msgid "%d channel"
 msgid_plural "%d channels"
-msgstr[0] "%d kênh"
+msgstr[0] "%d ചാനല്‍"
+msgstr[1] "%d ചാനലുകള്‍"
 
 #: src/libaudgui/about.c:37
 msgid "Credits"
-msgstr "Đóng góp"
+msgstr "ബഹുമതികള്‍"
 
 #: src/libaudgui/about.c:37
 msgid "License"
-msgstr "Giấy phép"
+msgstr "അനുമതിപത്രം"
 
 #: src/libaudgui/about.c:69
 msgid "About Audacious"
-msgstr "Giới thiệu Audacious"
+msgstr "ഒഡാഷ്യസ്സിനെപ്പറ്റി"
 
 #: src/libaudgui/confirm.c:51
 #, c-format
@@ -629,7 +632,7 @@ msgstr ""
 
 #: src/libaudgui/confirm.c:93
 msgid "Rename Playlist"
-msgstr "Đổi tên danh sách"
+msgstr "പ്ലേലിസ്റ്റിന്റെ പേര് മാറ്റുക"
 
 #: src/libaudgui/confirm.c:93
 msgid "What would you like to call this playlist?"
@@ -637,7 +640,7 @@ msgstr ""
 
 #: src/libaudgui/equalizer.c:44
 msgid "_Enable"
-msgstr "_Bật"
+msgstr "_സാദ്ധ്യമാക്കുക"
 
 #: src/libaudgui/equalizer.c:119
 msgid "31 Hz"
@@ -681,19 +684,19 @@ msgstr "16 kHz"
 
 #: src/libaudgui/equalizer.c:124
 msgid "Equalizer"
-msgstr "Bộ cân chỉnh âm"
+msgstr "ഈക്വലൈസര്‍"
 
 #: src/libaudgui/equalizer.c:138
 msgid "Preamp"
-msgstr "Độ lớn"
+msgstr "പ്രീ‌ആംപ്"
 
 #: src/libaudgui/infopopup.c:155
 msgid "Track"
-msgstr "Bài hát"
+msgstr "ട്രാക്ക്"
 
 #: src/libaudgui/infopopup.c:156
 msgid "Length"
-msgstr "Độ dài"
+msgstr "നീളം"
 
 #: src/libaudgui/infowin.c:46
 msgid "Format:"
@@ -709,159 +712,159 @@ msgstr ""
 
 #: src/libaudgui/infowin.c:76
 msgid "Acid Jazz"
-msgstr "Acid Jazz"
+msgstr "ആസിഡ് ജാസ്"
 
 #: src/libaudgui/infowin.c:77
 msgid "Acid Rock"
-msgstr "Acid Rock"
+msgstr "ആസിഡ് റോക്ക്"
 
 #: src/libaudgui/infowin.c:78
 msgid "Ambient"
-msgstr "Ambient"
+msgstr "ആംബിയന്റ്"
 
 #: src/libaudgui/infowin.c:79
 msgid "Bebop"
-msgstr "Bebop"
+msgstr "ബിബോപ്"
 
 #: src/libaudgui/infowin.c:80
 msgid "Bluegrass"
-msgstr "Bluegrass"
+msgstr "ബ്ലൂഗ്രാസ്"
 
 #: src/libaudgui/infowin.c:81
 msgid "Blues"
-msgstr "Blues"
+msgstr "ബ്ലൂസ്"
 
 #: src/libaudgui/infowin.c:82
 msgid "Chamber Music"
-msgstr "Chamber Music"
+msgstr "ചേംബര്‍ മ്യൂസിക്"
 
 #: src/libaudgui/infowin.c:83
 msgid "Classical"
-msgstr "Classical"
+msgstr "ക്ലാസിക്കല്‍"
 
 #: src/libaudgui/infowin.c:84
 msgid "Country"
-msgstr "Country"
+msgstr "കണ്‍ട്രി"
 
 #: src/libaudgui/infowin.c:85
 msgid "Death Metal"
-msgstr "Death Metal"
+msgstr "ഡെത്ത് മെറ്റല്‍"
 
 #: src/libaudgui/infowin.c:86
 msgid "Disco"
-msgstr "Disco"
+msgstr "ഡിസ്കോ"
 
 #: src/libaudgui/infowin.c:87
 msgid "Easy Listening"
-msgstr "Easy Listening"
+msgstr "ഈസി ലിസണിങ്"
 
 #: src/libaudgui/infowin.c:88
 msgid "Folk"
-msgstr "Folk"
+msgstr "നാടോടി"
 
 #: src/libaudgui/infowin.c:89
 msgid "Funk"
-msgstr "Funk"
+msgstr "ഫങ്ക്"
 
 #: src/libaudgui/infowin.c:90
 msgid "Gangsta Rap"
-msgstr "Gangsta Rap"
+msgstr "ഗങ്സ്താ റാപ്പ്"
 
 #: src/libaudgui/infowin.c:91
 msgid "Gospel"
-msgstr "Gospel"
+msgstr "ഗോസ്പല്‍"
 
 #: src/libaudgui/infowin.c:92
 msgid "Grunge"
-msgstr "Grunge"
+msgstr "ഗ്രങ്"
 
 #: src/libaudgui/infowin.c:93
 msgid "Hard Rock"
-msgstr "Hard Rock"
+msgstr "ഹാഡ് റോക്ക്"
 
 #: src/libaudgui/infowin.c:94
 msgid "Heavy Metal"
-msgstr "Heavy Metal"
+msgstr "ഹെവി മെറ്റല്‍"
 
 #: src/libaudgui/infowin.c:95
 msgid "Hip-hop"
-msgstr "Hip-hop"
+msgstr "ഹിപ്-ഹോപ്പ്"
 
 #: src/libaudgui/infowin.c:96
 msgid "House"
-msgstr "House"
+msgstr "വീട്"
 
 #: src/libaudgui/infowin.c:97
 msgid "Jazz"
-msgstr "Jazz"
+msgstr "ജാസ്"
 
 #: src/libaudgui/infowin.c:98
 msgid "Jungle"
-msgstr "Jungle"
+msgstr "കാട്"
 
 #: src/libaudgui/infowin.c:99
 msgid "Metal"
-msgstr "Metal"
+msgstr "മെറ്റല്‍"
 
 #: src/libaudgui/infowin.c:100
 msgid "New Age"
-msgstr "New Age"
+msgstr "നവയുഗം"
 
 #: src/libaudgui/infowin.c:101
 msgid "New Wave"
-msgstr "New Wave"
+msgstr "നവതരംഗം"
 
 #: src/libaudgui/infowin.c:102
 msgid "Noise"
-msgstr "Noise"
+msgstr "ശബ്ദം"
 
 #: src/libaudgui/infowin.c:103
 msgid "Pop"
-msgstr "Pop"
+msgstr "പോപ്പ്"
 
 #: src/libaudgui/infowin.c:104
 msgid "Punk Rock"
-msgstr "Punk Rock"
+msgstr "പങ്ക് റോക്ക്"
 
 #: src/libaudgui/infowin.c:105
 msgid "Rap"
-msgstr "Rap"
+msgstr "റാപ്പ്"
 
 #: src/libaudgui/infowin.c:106
 msgid "Reggae"
-msgstr "Reggae"
+msgstr "റെഗ്ഗേജ്"
 
 #: src/libaudgui/infowin.c:107
 msgid "Rock"
-msgstr "Rock"
+msgstr "റോക്ക്"
 
 #: src/libaudgui/infowin.c:108
 msgid "Rock and Roll"
-msgstr "Rock and Roll"
+msgstr "റോക്ക് ആന്‍ഡ് റോള്‍"
 
 #: src/libaudgui/infowin.c:109
 msgid "Rhythm and Blues"
-msgstr "Rhythm and Blues"
+msgstr "റിഥം ആന്‍ഡ് ബ്ലൂസ്"
 
 #: src/libaudgui/infowin.c:110
 msgid "Ska"
-msgstr "Ska"
+msgstr "സ്കാ"
 
 #: src/libaudgui/infowin.c:111
 msgid "Soul"
-msgstr "Soul"
+msgstr "സോള്‍"
 
 #: src/libaudgui/infowin.c:112
 msgid "Swing"
-msgstr "Swing"
+msgstr "സ്വിങ്"
 
 #: src/libaudgui/infowin.c:113
 msgid "Techno"
-msgstr "Techno"
+msgstr "ടെക്നോ"
 
 #: src/libaudgui/infowin.c:114
 msgid "Trip-hop"
-msgstr "Trip-hop"
+msgstr "ട്രിപ്പ്-ഹോപ്പ്"
 
 #: src/libaudgui/infowin.c:220
 msgid "Save successful"
@@ -882,7 +885,7 @@ msgstr ""
 #: src/libaudgui/infowin.c:418
 #, c-format
 msgid "%d kb/s"
-msgstr "%d kb/giây"
+msgstr "%d kb/s"
 
 #: src/libaudgui/infowin.c:423
 msgid "N/A"
@@ -891,7 +894,7 @@ msgstr ""
 #: src/libaudgui/infowin.c:453
 #, c-format
 msgid "No info available for %s.\n"
-msgstr "Không có thông tin của %s.\n"
+msgstr "%s-ഉമായി ബന്ധപ്പെട്ട വിവരങ്ങളൊന്നും ലഭ്യമല്ല.\n"
 
 #: src/libaudgui/jump-to-time.c:48 src/libaudgui/ui_jumptotrack.c:305
 msgid "_Jump"
@@ -899,16 +902,16 @@ msgstr ""
 
 #: src/libaudgui/jump-to-time.c:52
 msgid "Jump to Time"
-msgstr "Định mốc t.gian phát nhạc"
+msgstr "സമയത്തിലേയ്ക്ക് ചാടുക"
 
 #: src/libaudgui/jump-to-time.c:52
 msgid "Enter time (minutes:seconds):"
-msgstr "Nhập thời gian (phút:giây):"
+msgstr "സമയം നല്‍കുക (മിനിറ്റുകള്‍:സെക്കന്‍ഡുകള്‍)"
 
 #: src/libaudgui/playlists.c:86
 #, c-format
 msgid "Overwrite %s?"
-msgstr "Ghi đè %s?"
+msgstr "മായ്ച്ചെഴുതണോ: %s?"
 
 #: src/libaudgui/playlists.c:88
 msgid "_Overwrite"
@@ -920,7 +923,7 @@ msgstr ""
 
 #: src/libaudgui/playlists.c:121
 msgid "Export Playlist"
-msgstr "Xuất danh sách"
+msgstr "പ്ലേലിസ്റ്റ് കയറ്റുമതി ചെയ്യുക"
 
 #: src/libaudgui/playlists.c:122
 msgid "_Export"
@@ -928,7 +931,7 @@ msgstr ""
 
 #: src/libaudgui/playlists.c:128
 msgid "Import Playlist"
-msgstr "Nhập danh sách"
+msgstr "പ്ലേലിസ്റ്റ് ഇറക്കുമതി ചെയ്യുക"
 
 #: src/libaudgui/playlists.c:129
 msgid "_Import"
@@ -936,7 +939,7 @@ msgstr ""
 
 #: src/libaudgui/queue-manager.c:172
 msgid "Queue Manager"
-msgstr "Trình quản lí hàng đợi"
+msgstr "ക്യൂ മാനേജര്‍"
 
 #: src/libaudgui/queue-manager.c:188
 msgid "_Unqueue"
@@ -944,7 +947,7 @@ msgstr ""
 
 #: src/libaudgui/ui_fileopener.c:79
 msgid "Open Files"
-msgstr "Mở tập tin"
+msgstr "ഫയലുകള്‍ തുറക്കുക"
 
 #: src/libaudgui/ui_fileopener.c:80 src/libaudgui/url-opener.c:50
 msgid "_Open"
@@ -956,7 +959,7 @@ msgstr ""
 
 #: src/libaudgui/ui_fileopener.c:87
 msgid "Add Files"
-msgstr "Thêm tập tin"
+msgstr "ഫയലുകള്‍ ചേര്‍ക്കുക"
 
 #: src/libaudgui/ui_fileopener.c:88 src/libaudgui/url-opener.c:56
 msgid "_Add"
@@ -969,23 +972,23 @@ msgstr ""
 #: src/libaudgui/ui_jumptotrack.c:101 src/libaudgui/ui_jumptotrack.c:109
 #: src/libaudgui/ui_jumptotrack.c:301
 msgid "_Queue"
-msgstr "_Hàng đợi"
+msgstr "_ക്യൂ"
 
 #: src/libaudgui/ui_jumptotrack.c:107
 msgid "Un_queue"
-msgstr "Bỏ khỏi _hàng đợi"
+msgstr "അ_ണ്‍ക്യൂ"
 
 #: src/libaudgui/ui_jumptotrack.c:245
 msgid "Jump to Song"
-msgstr "Chuyển đến bài hát"
+msgstr "പാട്ടിലേയ്ക്ക് ചാടുക"
 
 #: src/libaudgui/ui_jumptotrack.c:270
 msgid "Filter: "
-msgstr "Bộ lọc:"
+msgstr "അരിപ്പ:"
 
 #: src/libaudgui/ui_jumptotrack.c:271
 msgid "_Filter:"
-msgstr "_Bộ lọc:"
+msgstr "_അരിപ്പ:"
 
 #: src/libaudgui/ui_jumptotrack.c:294
 msgid "C_lose on jump"
@@ -993,11 +996,11 @@ msgstr ""
 
 #: src/libaudgui/ui_playlist_manager.c:223
 msgid "Playlist Manager"
-msgstr "Quản lý danh sách"
+msgstr "പ്ലേലിസ്റ്റ് മാനേജര്‍"
 
 #: src/libaudgui/ui_playlist_manager.c:236
 msgid "Entries"
-msgstr "Số mục"
+msgstr "എന്‍ട്രികള്‍"
 
 #: src/libaudgui/ui_playlist_manager.c:254
 msgid "_New"
@@ -1013,19 +1016,19 @@ msgstr ""
 
 #: src/libaudgui/ui_playlist_manager.c:269
 msgid "_Close dialog on activating playlist"
-msgstr "Đóng hộp thoại khi _kích hoạt danh sách"
+msgstr "പ്ലേലിസ്റ്റ് ആക്റ്റിവേറ്റ് ചെയ്യുമ്പോള്‍ ജാലകം അടയ്ക്കുക"
 
 #: src/libaudgui/url-opener.c:49
 msgid "Open URL"
-msgstr "Mở địa chỉ URL"
+msgstr "യൂ.ആര്‍.എല്‍. തുറക്കുക"
 
 #: src/libaudgui/url-opener.c:55
 msgid "Add URL"
-msgstr "Thêm URL"
+msgstr "യൂ.ആര്‍.എല്‍. ചേര്‍ക്കുക"
 
 #: src/libaudgui/url-opener.c:74
 msgid "Enter URL:"
-msgstr "Nhập URL:"
+msgstr "യൂ.ആര്‍.എല്‍. നല്‍കുക:"
 
 #: src/libaudgui/util.c:148
 msgid ""
@@ -1033,4 +1036,4 @@ msgid ""
 "(Further messages have been hidden.)"
 msgstr ""
 "\n"
-"(Các thông báo khác đã bị ẩn.)"
+"(തുടര്‍ന്നുള്ള സന്ദേശങ്ങള്‍ മറച്ചുവച്ചിരിയ്ക്കുന്നു.)"

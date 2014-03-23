@@ -3,20 +3,32 @@
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
+# 80s <onder.y@msn.com>, 2013
+# aamet <aaydin159@gmail.com>, 2012
 # aamet <aaydin159@gmail.com>, 2012
 # Imnune <alikoc@hush.ai>, 2012
+# Ali Orhun Akkirman <the.alorak@gmail.com>, 2013
 # hsngrms <dead-bodies-everywhere@hotmail.com>, 2012
 # emfi <emrefirat93@gmail.com>, 2013
+# emfi <emrefirat93@gmail.com>, 2013
+# hsngrms <dead-bodies-everywhere@hotmail.com>, 2012
+# Imnune <alikoc@hush.ai>, 2012
+# kodadiirem <kodadiirem@gmail.com>, 2013
+# maruf1 <turk.etna@gmail.com>, 2013
 # Murat Senel <muratasenel@gmail.com>, 2007
 # Murat Şenel <muratasenel@gmail.com>, 2007
+# nicotine <zekeriya.cihan@gmail.com>, 2013
 # tarkan255 <t.oguzman@hotmail.com>, 2012
+# Tayyip <m.tayyib.yel@gmail.com>, 2013
+# tarkan255 <t.oguzman@hotmail.com>, 2012
+# volkangezer <volkangezer@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2013-05-31 18:48+0200\n"
-"PO-Revision-Date: 2013-02-08 14:18+0000\n"
-"Last-Translator: emfi <emrefirat93@gmail.com>\n"
+"POT-Creation-Date: 2014-03-23 21:24+0100\n"
+"PO-Revision-Date: 2014-03-16 15:22+0000\n"
+"Last-Translator: volkangezer <volkangezer@gmail.com>\n"
 "Language-Team: Turkish (http://www.transifex.com/projects/p/audacious/"
 "language/tr/)\n"
 "Language: tr\n"
@@ -25,548 +37,578 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: src/audacious/adder.c:74
+#: src/audacious/adder.c:76
 msgid "Searching ..."
 msgstr "Aranıyor..."
 
-#: src/audacious/adder.c:102
+#: src/audacious/adder.c:104
 #, c-format
 msgid "%d file found"
 msgid_plural "%d files found"
-msgstr[0] "%d Dosya bulundu."
-msgstr[1] "%d Dosya bulundu."
+msgstr[0] "%d dosya bulundu"
+msgstr[1] "%d dosya bulundu"
 
-#: src/audacious/chardet.c:38
-msgid "  (invalid UTF-8)"
-msgstr "  (geçersiz UTF-8)"
+#: src/audacious/adder.c:393 src/audacious/playlist-new.c:96
+msgid "New Playlist"
+msgstr "Yeni Çalma Listesi"
 
-#: src/audacious/equalizer_preset.c:171
-#, c-format
-msgid "Error importing Winamp EQF file '%s'"
-msgstr "Winamp EQF dosyasının aktarılmasında hata '%s'"
+#: src/audacious/interface.c:93
+msgid "Error"
+msgstr "Hata"
 
-#: src/audacious/main.c:232
-msgid "Skip backwards in playlist"
-msgstr "Parça listesinde geri git"
+#: src/audacious/main.c:70
+msgid "Show command-line help"
+msgstr "Komut satırı yardımını göster"
 
-#: src/audacious/main.c:233
-msgid "Start playing current playlist"
-msgstr "Mevcut parça listesini çal"
+#: src/audacious/main.c:71
+msgid "Show version"
+msgstr "Sürüm bilgisini göster"
 
-#: src/audacious/main.c:234
-msgid "Pause current song"
-msgstr "Çalan şarkıyı beklet"
+#: src/audacious/main.c:72
+msgid "Start playback"
+msgstr "Oynatmayı başlat"
 
-#: src/audacious/main.c:235
-msgid "Stop current song"
-msgstr "Çalan şarkıyı durdur"
+#: src/audacious/main.c:73
+msgid "Pause playback"
+msgstr "Oynatmayı duraklat"
 
-#: src/audacious/main.c:236
+#: src/audacious/main.c:74
 msgid "Pause if playing, play otherwise"
-msgstr "Çalıyorsa beklet, değilse çal"
+msgstr "Duraklat veya devam et"
 
-#: src/audacious/main.c:237
-msgid "Skip forward in playlist"
-msgstr "Parça listesinde ileri git"
+#: src/audacious/main.c:75
+msgid "Stop playback"
+msgstr "Oynatmayı durdur"
 
-#: src/audacious/main.c:238
-msgid "Display Jump to File dialog"
-msgstr "Dosya Atla penceresini göster"
+#: src/audacious/main.c:76
+msgid "Skip to previous song"
+msgstr "Önceki şarkıya geç"
 
-#: src/audacious/main.c:239
+#: src/audacious/main.c:77
+msgid "Skip to next song"
+msgstr "Sonraki şarkıya geç"
+
+#: src/audacious/main.c:78
 msgid "Add files to the playlist"
 msgstr "Çalma listesine dosya ekle"
 
-#: src/audacious/main.c:240
-msgid "Add new files to a temporary playlist"
-msgstr "Geçici parça listesine yeni dosya ekle"
+#: src/audacious/main.c:79
+msgid "Add files to a temporary playlist"
+msgstr "Dosyaları geçici bir listeye ekle"
 
-#: src/audacious/main.c:241
+#: src/audacious/main.c:80
 msgid "Display the main window"
 msgstr "Ana pencereyi göster"
 
-#: src/audacious/main.c:242
-msgid "Headless mode"
-msgstr "Başsız modu"
+#: src/audacious/main.c:81
+msgid "Display the jump-to-song window"
+msgstr "Şarkıya atla penceresini görüntüle"
 
-#: src/audacious/main.c:243
+#: src/audacious/main.c:82
+msgid "Start without a graphical interface"
+msgstr "Grafiksel arayüz olmadan başla"
+
+#: src/audacious/main.c:83
 msgid "Quit on playback stop"
 msgstr "Kayıttan yürütmeyi durdur ve çık"
 
-#: src/audacious/main.c:244
-msgid "Show version"
-msgstr "Versiyonu göster"
-
-#: src/audacious/main.c:245
+#: src/audacious/main.c:84
 msgid "Print debugging messages"
-msgstr "Hata ayıklama mesajlarını çıkart"
+msgstr "Hata ayıklama iletilerini göster"
 
-#: src/audacious/main.c:246
-msgid "FILE..."
-msgstr "DOSYA..."
+#: src/audacious/main.c:264
+#, c-format
+msgid "Unknown option: %s\n"
+msgstr "Bilinmeyen seçenek: %s\n"
 
-#: src/audacious/main.c:258
-msgid "- play multimedia files"
-msgstr "- çoklu ortam dosyalarını çal"
+#: src/audacious/main.c:285
+#, c-format
+msgid "Unknown option: -%c\n"
+msgstr "Bilinmeyen seçenek: -%c\n"
 
-#: src/audacious/main.c:265
+#: src/audacious/main.c:306
 #, c-format
 msgid ""
-"%s: %s\n"
-"Try `%s --help' for more information.\n"
+"Usage: audacious [OPTION] ... [FILE] ...\n"
+"\n"
 msgstr ""
-"%s: %s\n"
-"Daha fazla bilgi için `%s --help' komutunu kullanın.\n"
+"Kullanım: audacious [SEÇENEK] ... [DOSYA] ...\n"
+"\n"
 
-#: src/audacious/main.c:565
+#: src/audacious/main.c:591
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/playback.c:361
+#: src/audacious/playback.c:354
 #, c-format
 msgid "No decoder found for %s."
-msgstr "%s için hiç çözücü bulunamadı."
+msgstr "%s için çözücü bulunamadı."
 
-#: src/audacious/playback.c:399
+#: src/audacious/playback.c:382
 #, c-format
 msgid "%s could not be opened."
 msgstr "%s açılamadı."
 
-#: src/audacious/playlist-files.c:50
+#: src/audacious/playlist-files.c:95
 #, c-format
-msgid "Cannot %s %s: unsupported file extension."
-msgstr "Çalınamıyor %s %s: desteklenmeyen dosya uzantısı."
+msgid "Cannot load %s: unsupported file extension."
+msgstr "%s yüklenemiyor: desteklenmeyen dosya uzantısı."
 
-#: src/audacious/playlist-files.c:51
-msgid "save"
-msgstr "kaydet"
-
-#: src/audacious/playlist-files.c:51
-msgid "load"
-msgstr "yükle"
-
-#: src/audacious/playlist-new.c:96
-msgid "New Playlist"
-msgstr "Yeni Çalma Listesi"
+#: src/audacious/playlist-files.c:185
+#, c-format
+msgid "Cannot save %s: unsupported file extension."
+msgstr "%s kaydedilemiyor: desteklenmeyen dosya uzantısı."
 
 #: src/audacious/playlist-new.c:97
 msgid "Now Playing"
 msgstr "Şimdi Çalınıyor"
 
-#: src/audacious/playlist-new.c:1670
+#: src/audacious/playlist-new.c:1655
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress "
 "(or has been disabled)."
 msgstr ""
-"Çalma listesi sıralanamıyor çünkü üstveri taraması devam ediyor (ya da devre "
-"dışı bırakıldı)."
+"Üstveri taraması devam ettiğinden (veya iptal edildiğinden) listede sıralama "
+"yapılamıyor."
 
-#: src/audacious/plugin-preferences.c:49
-#, c-format
-msgid "About %s"
-msgstr "Hakkında%s"
+#: src/audacious/plugin-preferences.c:55
+msgid "About "
+msgstr "Hakkında"
 
-#: src/audacious/plugin-preferences.c:87
-#, c-format
-msgid "%s Settings"
-msgstr "%sAyarları"
+#: src/audacious/plugin-preferences.c:94
+msgid " Settings"
+msgstr "Ayarlar"
 
-#: src/audacious/ui_preferences.c:67
+#: src/audacious/plugin-preferences.c:99
+msgid "_Set"
+msgstr "_Ayarla"
+
+#: src/audacious/plugin-preferences.c:100 src/libaudgui/confirm.c:57
+#: src/libaudgui/confirm.c:90 src/libaudgui/jump-to-time.c:49
+#: src/libaudgui/playlists.c:89 src/libaudgui/playlists.c:142
+#: src/libaudgui/url-opener.c:71
+msgid "_Cancel"
+msgstr "_İptal"
+
+#: src/audacious/plugin-preferences.c:106 src/audacious/ui_preferences.c:783
+#: src/libaudgui/infowin.c:370 src/libaudgui/queue-manager.c:189
+#: src/libaudgui/ui_fileopener.c:127 src/libaudgui/ui_jumptotrack.c:312
+#: src/libaudgui/util.c:161
+msgid "_Close"
+msgstr "_Kapat"
+
+#: src/audacious/plugin-view.c:242 src/audacious/ui_preferences.c:661
+msgid "_Settings"
+msgstr "A_yarlar"
+
+#: src/audacious/plugin-view.c:250 src/audacious/ui_preferences.c:672
+msgid "_About"
+msgstr "_Hakkında"
+
+#: src/audacious/ui_plugin_menu.c:37
+msgid "_Plugins ..."
+msgstr "_Eklentiler ..."
+
+#: src/audacious/ui_preferences.c:82
+msgid "Appearance"
+msgstr "Görünüm"
+
+#: src/audacious/ui_preferences.c:83
 msgid "Audio"
 msgstr "Ses"
 
-#: src/audacious/ui_preferences.c:68
+#: src/audacious/ui_preferences.c:84
 msgid "Network"
 msgstr "Ağ"
 
-#: src/audacious/ui_preferences.c:69 src/audacious/ui_preferences.c:1237
+#: src/audacious/ui_preferences.c:85 src/audacious/ui_preferences.c:95
 msgid "Playlist"
-msgstr "Parça Listesi"
+msgstr "Çalma Listesi"
 
-#: src/audacious/ui_preferences.c:70
+#: src/audacious/ui_preferences.c:86 src/libaudgui/infowin.c:299
 msgid "Song Info"
 msgstr "Şarkı bilgisi"
 
-#: src/audacious/ui_preferences.c:71
+#: src/audacious/ui_preferences.c:87
 msgid "Plugins"
 msgstr "Eklentiler"
 
-#: src/audacious/ui_preferences.c:77 src/libaudgui/infopopup.c:150
-msgid "Artist"
-msgstr "Sanatçı"
-
-#: src/audacious/ui_preferences.c:78 src/libaudgui/infopopup.c:151
-msgid "Album"
-msgstr "Albüm"
-
-#: src/audacious/ui_preferences.c:79 src/libaudgui/infopopup.c:149
-#: src/libaudgui/ui_playlist_manager.c:286
-msgid "Title"
-msgstr "Başlık"
-
-#: src/audacious/ui_preferences.c:80
-msgid "Tracknumber"
-msgstr "Parça numarası"
-
-#: src/audacious/ui_preferences.c:81 src/libaudgui/infopopup.c:152
-msgid "Genre"
-msgstr "Tür"
-
-#: src/audacious/ui_preferences.c:82
-msgid "Filename"
-msgstr "Dosya adı"
-
-#: src/audacious/ui_preferences.c:83
-msgid "Filepath"
-msgstr "Dosya yolu"
-
-#: src/audacious/ui_preferences.c:84
-msgid "Date"
-msgstr "Tarih"
-
-#: src/audacious/ui_preferences.c:85 src/libaudgui/infopopup.c:153
-msgid "Year"
-msgstr "Yıl"
-
-#: src/audacious/ui_preferences.c:86
-msgid "Comment"
-msgstr "Yorum"
-
-#: src/audacious/ui_preferences.c:87
-msgid "Codec"
-msgstr "Kodlayıcı"
-
-#: src/audacious/ui_preferences.c:88
-msgid "Quality"
-msgstr "Kalite"
-
-#: src/audacious/ui_preferences.c:94
-msgid "None"
-msgstr "Hiçbiri"
-
-#: src/audacious/ui_preferences.c:95
-msgid "Arabic"
-msgstr "Arapça"
-
-#: src/audacious/ui_preferences.c:96
-msgid "Baltic"
-msgstr "Baltık dili"
-
-#: src/audacious/ui_preferences.c:97
-msgid "Chinese"
-msgstr "Çince"
-
-#: src/audacious/ui_preferences.c:98
-msgid "Greek"
-msgstr "Yunanca"
-
-#: src/audacious/ui_preferences.c:99
-msgid "Hebrew"
-msgstr "İbranice"
-
-#: src/audacious/ui_preferences.c:100
-msgid "Japanese"
-msgstr "Japonca"
-
-#: src/audacious/ui_preferences.c:101
-msgid "Korean"
-msgstr "Korece"
-
-#: src/audacious/ui_preferences.c:102
-msgid "Polish"
-msgstr "Lehce"
-
-#: src/audacious/ui_preferences.c:103
-msgid "Russian"
-msgstr "Rusça"
-
-#: src/audacious/ui_preferences.c:104
-msgid "Taiwanese"
-msgstr "Tayvanca"
-
-#: src/audacious/ui_preferences.c:105
-msgid "Turkish"
-msgstr "Türkçe"
-
-#: src/audacious/ui_preferences.c:112
-msgid "Floating point"
-msgstr "Kayan noktalı"
-
-#: src/audacious/ui_preferences.c:128
-msgid "Album mode"
-msgstr "Albüm modu"
-
-#: src/audacious/ui_preferences.c:131
-msgid "<b>Output Settings</b>"
-msgstr "<b>Çıkış Ayarları</b>"
-
-#: src/audacious/ui_preferences.c:133
-msgid "Bit depth:"
-msgstr "Bit Derinliği"
-
-#: src/audacious/ui_preferences.c:136
-msgid "Buffer size:"
-msgstr "Tampon büyüklüğü:"
-
-#: src/audacious/ui_preferences.c:138
-msgid "ms"
-msgstr "ms"
-
-#: src/audacious/ui_preferences.c:139
-msgid "Soft clipping"
-msgstr "Yumuşak kesim"
-
-#: src/audacious/ui_preferences.c:141
-msgid "Use software volume control (not recommended)"
-msgstr "Yazılımın ses kontrolünü kullan (tavsiye edilmez)"
-
-#: src/audacious/ui_preferences.c:143
-msgid "<b>Replay Gain</b>"
-msgstr "<b>Yineleme Yükseltmesi</b>"
-
-#: src/audacious/ui_preferences.c:144
-msgid "Enable Replay Gain"
-msgstr "Yineleme Yükseltmesini Aç"
-
-#: src/audacious/ui_preferences.c:147
-msgid "Prevent clipping (recommended)"
-msgstr "Kırpma önleme(önerilir)"
-
-#: src/audacious/ui_preferences.c:149
-msgid "<b>Adjust Levels</b>"
-msgstr "<b>Düzey Ayarla</b>"
-
-#: src/audacious/ui_preferences.c:150
-msgid "Amplify all files:"
-msgstr "Tüm dosyaları yükselt"
-
-#: src/audacious/ui_preferences.c:152 src/audacious/ui_preferences.c:155
-msgid "dB"
-msgstr "dB"
-
-#: src/audacious/ui_preferences.c:153
-msgid "Amplify untagged files:"
-msgstr "Etiketsiz dosyaları yükselt"
-
-#: src/audacious/ui_preferences.c:158
-msgid "Proxy hostname:"
-msgstr "Vekil sunucu makine adı:"
-
-#: src/audacious/ui_preferences.c:159
-msgid "Proxy port:"
-msgstr "Vekil sunucu portu:"
-
-#: src/audacious/ui_preferences.c:162
-msgid "Proxy username:"
-msgstr "Vekil sunucu kullanıcı adı:"
-
-#: src/audacious/ui_preferences.c:163
-msgid "Proxy password:"
-msgstr "Vekil sunucu parolası:"
-
-#: src/audacious/ui_preferences.c:167
-msgid "<b>Proxy Configuration</b>"
-msgstr "<b>Vekil Sunucu Seçenekleri</b>"
-
-#: src/audacious/ui_preferences.c:168
-msgid "Enable proxy usage"
-msgstr "Vekil sunucu kullanımını etkinleştir"
-
-#: src/audacious/ui_preferences.c:171
-msgid "Use authentication with proxy"
-msgstr "Vekil sunucu ile yetkilendirme kullan"
-
-#: src/audacious/ui_preferences.c:179
-msgid "Auto character encoding detector for:"
-msgstr "Otomatik karakter kodlama bulucu:"
-
-#: src/audacious/ui_preferences.c:183
-msgid "Fallback character encodings:"
-msgstr "Geri düşüm karakter kodlaması:"
-
-#: src/audacious/ui_preferences.c:187
-msgid "<b>Behavior</b>"
-msgstr "<b>Davranış</b>"
-
-#: src/audacious/ui_preferences.c:188
-msgid "Continue playback on startup"
-msgstr "Başlatıldığında parçayı kaldığı yerden oynat"
-
-#: src/audacious/ui_preferences.c:190
-msgid "Advance when the current song is deleted"
-msgstr "Geçerli şarkı silindiğinde ileri al"
-
-#: src/audacious/ui_preferences.c:192
-msgid "Clear the playlist when opening files"
-msgstr "Dosyaları açarken çalma listesini temizle"
-
-#: src/audacious/ui_preferences.c:194
-msgid "Open files in a temporary playlist"
-msgstr "Dosyaları geçici bir çalma listesinde aç"
-
-#: src/audacious/ui_preferences.c:196
-msgid "Do not load metadata for songs until played"
-msgstr "Şarkı çalına kadar meta bilgisi yükleme"
-
-#: src/audacious/ui_preferences.c:199
-msgid "<b>Compatibility</b>"
-msgstr "<b>Uyumluluk</b>"
-
-#: src/audacious/ui_preferences.c:200
-msgid "Interpret \\ (backward slash) as a folder delimiter"
-msgstr "Geriye yatık taksimi ( \\ ) klasör sınırlayıcı olarak yorumla"
-
-#: src/audacious/ui_preferences.c:207
-msgid "<b>Album Art</b>"
-msgstr "<b>Album resmi</b>"
-
-#: src/audacious/ui_preferences.c:208
-msgid "Search for images matching these words (comma-separated):"
-msgstr "Bu kelimelerle eşleşen resimleri ara (virgülle ayırın)"
-
-#: src/audacious/ui_preferences.c:210
-msgid "Exclude images matching these words (comma-separated):"
-msgstr "Bu kelimeleri içeren resimleri çıkar (virgülle ayırın):"
-
-#: src/audacious/ui_preferences.c:212
-msgid "Search for images matching song file name"
-msgstr "Şarkı ismiyle eşleşen resimleri ara"
-
-#: src/audacious/ui_preferences.c:214
-msgid "Search recursively"
-msgstr "Arama yineleme"
-
-#: src/audacious/ui_preferences.c:216
-msgid "Search depth:"
-msgstr "Arama derinliği:"
-
-#: src/audacious/ui_preferences.c:219
-msgid "<b>Popup Information</b>"
-msgstr "<b>Açılır Pencere Bilgisi</b>"
-
-#: src/audacious/ui_preferences.c:220
-msgid "Show popup information"
-msgstr "Popup bilgisi göster"
-
-#: src/audacious/ui_preferences.c:222
-msgid "Popup delay (tenths of a second):"
-msgstr "Popup erteleme (saniyenin onda biri):"
-
-#: src/audacious/ui_preferences.c:225
-msgid "Show time scale for current song"
-msgstr "Şarkı zamanını göster"
-
-#: src/audacious/ui_preferences.c:239
-msgid "TITLE"
-msgstr "BAŞLIK"
-
-#: src/audacious/ui_preferences.c:240
-msgid "ARTIST - TITLE"
-msgstr "SANATÇI - BAŞLIK"
-
-#: src/audacious/ui_preferences.c:241
-msgid "ARTIST - ALBUM - TITLE"
-msgstr "SANATÇI - ALBÜM - BAŞLIK"
-
-#: src/audacious/ui_preferences.c:242
-msgid "ARTIST - ALBUM - TRACK. TITLE"
-msgstr "SANATÇI - ALBÜM - PARÇA - BAŞLIK"
-
-#: src/audacious/ui_preferences.c:243
-msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
-msgstr "SANATÇI [ ALBÜM ] - PARÇA - BAŞLIK"
-
-#: src/audacious/ui_preferences.c:244
-msgid "ALBUM - TITLE"
-msgstr "ALBÜM - BAŞLIK"
-
-#: src/audacious/ui_preferences.c:457
-msgid "Category"
-msgstr "Kategori"
-
-#: src/audacious/ui_preferences.c:995
-msgid "Custom"
-msgstr "Özel"
-
-#: src/audacious/ui_preferences.c:1032
-msgid "<b>Song Display</b>"
-msgstr "<b>Parça Gösterimi</b>"
-
-#: src/audacious/ui_preferences.c:1041
-msgid "Show song numbers"
-msgstr "Şarkı numaralarını göster"
-
-#: src/audacious/ui_preferences.c:1052
-msgid "Show leading zeroes (02:00 instead of 2:00)"
-msgstr "Öndeki sıfırı göster (02:00 yerine 2:00)"
-
-#: src/audacious/ui_preferences.c:1072
-msgid "Show information about titlestring format"
-msgstr "Başlık dizisi biçimi hakkında bilgi göster"
-
-#: src/audacious/ui_preferences.c:1086
-msgid "Custom string:"
-msgstr "Özel dizi:"
-
-#: src/audacious/ui_preferences.c:1091
-msgid "Title format:"
-msgstr "Başlık biçimi:"
-
-#: src/audacious/ui_preferences.c:1178
-msgid "Output plugin:"
-msgstr "Çıkış eklentisi:"
-
-#: src/audacious/ui_preferences.c:1237
-msgid "Transport"
-msgstr "Taşıma"
-
-#: src/audacious/ui_preferences.c:1237
-msgid "Input"
-msgstr "Giriş"
-
-#: src/audacious/ui_preferences.c:1238
-msgid "Effect"
-msgstr "Efekt"
-
-#: src/audacious/ui_preferences.c:1238
-msgid "Visualization"
-msgstr "Canlandırma"
-
-#: src/audacious/ui_preferences.c:1238
+#: src/audacious/ui_preferences.c:91
 msgid "General"
 msgstr "Genel"
 
-#: src/audacious/ui_preferences.c:1276
-msgid "Audacious Preferences"
-msgstr "Audacious Seçenekleri"
+#: src/audacious/ui_preferences.c:92
+msgid "Effect"
+msgstr "Efekt"
 
-#: src/audacious/util.c:114
+#: src/audacious/ui_preferences.c:93
+msgid "Visualization"
+msgstr "Görsel öğeler"
+
+#: src/audacious/ui_preferences.c:94
+msgid "Input"
+msgstr "Giriş"
+
+#: src/audacious/ui_preferences.c:96
+msgid "Transport"
+msgstr "Aktarım"
+
+#: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:151
+#: src/libaudgui/infowin.c:343
+msgid "Artist"
+msgstr "Sanatçı"
+
+#: src/audacious/ui_preferences.c:101 src/libaudgui/infopopup.c:152
+#: src/libaudgui/infowin.c:346
+msgid "Album"
+msgstr "Albüm"
+
+#: src/audacious/ui_preferences.c:102 src/libaudgui/infopopup.c:150
+#: src/libaudgui/infowin.c:340 src/libaudgui/ui_playlist_manager.c:235
+msgid "Title"
+msgstr "Başlık"
+
+#: src/audacious/ui_preferences.c:103
+msgid "Tracknumber"
+msgstr "Parça Numarası"
+
+#: src/audacious/ui_preferences.c:104 src/libaudgui/infopopup.c:153
+#: src/libaudgui/infowin.c:352
+msgid "Genre"
+msgstr "Tür"
+
+#: src/audacious/ui_preferences.c:105
+msgid "Filename"
+msgstr "Dosya Adı"
+
+#: src/audacious/ui_preferences.c:106
+msgid "Filepath"
+msgstr "Dosya Yolu"
+
+#: src/audacious/ui_preferences.c:107
+msgid "Date"
+msgstr "Tarih"
+
+#: src/audacious/ui_preferences.c:108 src/libaudgui/infopopup.c:154
+#: src/libaudgui/infowin.c:356
+msgid "Year"
+msgstr "Yıl"
+
+#: src/audacious/ui_preferences.c:109 src/libaudgui/infowin.c:349
+msgid "Comment"
+msgstr "Yorum"
+
+#: src/audacious/ui_preferences.c:110
+msgid "Codec"
+msgstr "Çözücü"
+
+#: src/audacious/ui_preferences.c:111
+msgid "Quality"
+msgstr "Kalite"
+
+#: src/audacious/ui_preferences.c:116
+msgid "None"
+msgstr "Hiçbiri"
+
+#: src/audacious/ui_preferences.c:117
+msgid "Arabic"
+msgstr "Arapça"
+
+#: src/audacious/ui_preferences.c:118
+msgid "Baltic"
+msgstr "Baltık Dili"
+
+#: src/audacious/ui_preferences.c:119
+msgid "Chinese"
+msgstr "Çince"
+
+#: src/audacious/ui_preferences.c:120
+msgid "Greek"
+msgstr "Yunanca"
+
+#: src/audacious/ui_preferences.c:121
+msgid "Hebrew"
+msgstr "İbranice"
+
+#: src/audacious/ui_preferences.c:122
+msgid "Japanese"
+msgstr "Japonca"
+
+#: src/audacious/ui_preferences.c:123
+msgid "Korean"
+msgstr "Korece"
+
+#: src/audacious/ui_preferences.c:124
+msgid "Polish"
+msgstr "Lehçe"
+
+#: src/audacious/ui_preferences.c:125
+msgid "Russian"
+msgstr "Rusça"
+
+#: src/audacious/ui_preferences.c:126
+msgid "Taiwanese"
+msgstr "Tayvanca"
+
+#: src/audacious/ui_preferences.c:127
+msgid "Turkish"
+msgstr "Türkçe"
+
+#: src/audacious/ui_preferences.c:135
+msgid "Floating point"
+msgstr "Kayan noktalı"
+
+#: src/audacious/ui_preferences.c:147
+msgid "<b>Interface Settings</b>"
+msgstr "<b>Arayüz Ayarları</b>"
+
+#: src/audacious/ui_preferences.c:148
+msgid "Interface plugin:"
+msgstr "Arayüz eklentisi:"
+
+#: src/audacious/ui_preferences.c:165
+msgid "Output plugin:"
+msgstr "Çıkış eklentisi:"
+
+#: src/audacious/ui_preferences.c:172
+msgid "<b>Output Settings</b>"
+msgstr "<b>Çıkış Ayarları</b>"
+
+#: src/audacious/ui_preferences.c:175
+msgid "Bit depth:"
+msgstr "Bit derinliği:"
+
+#: src/audacious/ui_preferences.c:178
+msgid "Buffer size:"
+msgstr "Arabellek boyutu:"
+
+#: src/audacious/ui_preferences.c:180
+msgid "ms"
+msgstr "ms"
+
+#: src/audacious/ui_preferences.c:181
+msgid "Soft clipping"
+msgstr "Yumuşak kesim"
+
+#: src/audacious/ui_preferences.c:183
+msgid "Use software volume control (not recommended)"
+msgstr "Yazılımsal ses denetimi kullan (önerilmez)"
+
+#: src/audacious/ui_preferences.c:185
+msgid "<b>Replay Gain</b>"
+msgstr "<b>Ses Güçlendirme</b>"
+
+#: src/audacious/ui_preferences.c:186
+msgid "Enable Replay Gain"
+msgstr "Çalarken ses güçlendirmeyi etkinleştir"
+
+#: src/audacious/ui_preferences.c:188
+msgid "Album mode"
+msgstr "Albüm modu"
+
+#: src/audacious/ui_preferences.c:190
+msgid "Prevent clipping (recommended)"
+msgstr "Tıraşlamayı önle (önerilir)"
+
+#: src/audacious/ui_preferences.c:192
+msgid "<b>Adjust Levels</b>"
+msgstr "<b>Seviyeleri Ayarla</b>"
+
+#: src/audacious/ui_preferences.c:193
+msgid "Amplify all files:"
+msgstr "Tüm dosyaları yükselt:"
+
+#: src/audacious/ui_preferences.c:195 src/audacious/ui_preferences.c:198
+msgid "dB"
+msgstr "dB"
+
+#: src/audacious/ui_preferences.c:196
+msgid "Amplify untagged files:"
+msgstr "Etiketsiz dosyaları yükselt:"
+
+#: src/audacious/ui_preferences.c:201
+msgid "Proxy hostname:"
+msgstr "Vekil sunucu makine adı:"
+
+#: src/audacious/ui_preferences.c:202
+msgid "Proxy port:"
+msgstr "Vekil sunucu bağlantı noktası:"
+
+#: src/audacious/ui_preferences.c:205
+msgid "Proxy username:"
+msgstr "Vekil sunucu kullanıcı adı:"
+
+#: src/audacious/ui_preferences.c:206
+msgid "Proxy password:"
+msgstr "Vekil sunucu şifresi:"
+
+#: src/audacious/ui_preferences.c:210
+msgid "<b>Proxy Configuration</b>"
+msgstr "<b>Vekil Sunucu Yapılandırması</b>"
+
+#: src/audacious/ui_preferences.c:211
+msgid "Enable proxy usage"
+msgstr "Vekil sunucu kullanımını etkinleştir"
+
+#: src/audacious/ui_preferences.c:214
+msgid "Use authentication with proxy"
+msgstr "Vekil sunucu doğrulaması kullan"
+
+#: src/audacious/ui_preferences.c:221
+msgid "Auto character encoding detector for:"
+msgstr "Şu dil için otomatik karakter tanımlamayı aç:"
+
+#: src/audacious/ui_preferences.c:225
+msgid "Fallback character encodings:"
+msgstr "Alternatif karakter kodlamaları:"
+
+#: src/audacious/ui_preferences.c:229
+msgid "<b>Behavior</b>"
+msgstr "<b>Davranış</b>"
+
+#: src/audacious/ui_preferences.c:230
+msgid "Continue playback on startup"
+msgstr "Başlangıçta kalınan yerden devam et"
+
+#: src/audacious/ui_preferences.c:232
+msgid "Advance when the current song is deleted"
+msgstr "Çalan şarkı silindiğinde sonrakine atla"
+
+#: src/audacious/ui_preferences.c:234
+msgid "Clear the playlist when opening files"
+msgstr "Dosya açarken listeyi temizle"
+
+#: src/audacious/ui_preferences.c:236
+msgid "Open files in a temporary playlist"
+msgstr "Dosyaları geçici bir listede aç"
+
+#: src/audacious/ui_preferences.c:238
+msgid "Do not load metadata for songs until played"
+msgstr "Çalınana kadar şarkı üstverilerini yükleme"
+
+#: src/audacious/ui_preferences.c:241
+msgid "<b>Compatibility</b>"
+msgstr "<b>Uyumluluk</b>"
+
+#: src/audacious/ui_preferences.c:242
+msgid "Interpret \\ (backward slash) as a folder delimiter"
+msgstr "Geriye yatık taksimi ( \\ ) klasör sınırlayıcı olarak yorumla"
+
+#: src/audacious/ui_preferences.c:247
+msgid "<b>Album Art</b>"
+msgstr "<b>Album resmi</b>"
+
+#: src/audacious/ui_preferences.c:248
+msgid "Search for images matching these words (comma-separated):"
+msgstr "Bu kelimelerle eşleşen resimleri ara (virgülle ayırın)"
+
+#: src/audacious/ui_preferences.c:250
+msgid "Exclude images matching these words (comma-separated):"
+msgstr "Bu kelimeleri içeren resimleri çıkar (virgülle ayırın):"
+
+#: src/audacious/ui_preferences.c:252
+msgid "Search for images matching song file name"
+msgstr "Şarkı ismiyle eşleşen resimleri ara"
+
+#: src/audacious/ui_preferences.c:254
+msgid "Search recursively"
+msgstr "Arama yineleme"
+
+#: src/audacious/ui_preferences.c:256
+msgid "Search depth:"
+msgstr "Arama derinliği:"
+
+#: src/audacious/ui_preferences.c:259
+msgid "<b>Popup Information</b>"
+msgstr "<b>Açılır Bilgi</b>"
+
+#: src/audacious/ui_preferences.c:260
+msgid "Show popup information"
+msgstr "Popup bilgisi göster"
+
+#: src/audacious/ui_preferences.c:262
+msgid "Popup delay (tenths of a second):"
+msgstr "Popup erteleme (saniyenin onda biri):"
+
+#: src/audacious/ui_preferences.c:265
+msgid "Show time scale for current song"
+msgstr "Şarkı zamanını göster"
+
+#: src/audacious/ui_preferences.c:280
+msgid "TITLE"
+msgstr "BAŞLIK"
+
+#: src/audacious/ui_preferences.c:281
+msgid "ARTIST - TITLE"
+msgstr "SANATÇI - BAŞLIK"
+
+#: src/audacious/ui_preferences.c:282
+msgid "ARTIST - ALBUM - TITLE"
+msgstr "SANATÇI - ALBÜM - BAŞLIK"
+
+#: src/audacious/ui_preferences.c:283
+msgid "ARTIST - ALBUM - TRACK. TITLE"
+msgstr "SANATÇI - ALBÜM - PARÇA. BAŞLIK"
+
+#: src/audacious/ui_preferences.c:284
+msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
+msgstr "SANATÇI  [ ALBÜM ] - PARÇA. BAŞLIK"
+
+#: src/audacious/ui_preferences.c:285
+msgid "ALBUM - TITLE"
+msgstr "ALBÜM - BAŞLIK"
+
+#: src/audacious/ui_preferences.c:386
+msgid "Category"
+msgstr "Kategori"
+
+#: src/audacious/ui_preferences.c:468
+msgid "Custom"
+msgstr "Özel"
+
+#: src/audacious/ui_preferences.c:492
+msgid "<b>Song Display</b>"
+msgstr "<b>Şarkı Göstergesi</b>"
+
+#: src/audacious/ui_preferences.c:501
+msgid "Show song numbers"
+msgstr "Şarkı numaralarını göster"
+
+#: src/audacious/ui_preferences.c:512
+msgid "Show leading zeroes (02:00 instead of 2:00)"
+msgstr "Baştaki sıfırları göster (2:00 yerine 02:00)"
+
+#: src/audacious/ui_preferences.c:526
+msgid "Title format:"
+msgstr "Başlık biçimi:"
+
+#: src/audacious/ui_preferences.c:531
+msgid "Custom string:"
+msgstr "Özel metin:"
+
+#: src/audacious/ui_preferences.c:734
+msgid "Audacious Settings"
+msgstr "Audacious Ayarları"
+
+#: src/audacious/util.c:117
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Dizin oluşturulamadı (%s): %s\n"
 
-#: src/audtool/handlers_playlist.c:262
-msgid "Position not found."
-msgstr "Konum bulunamadı."
-
-#: src/audtool/handlers_vitals.c:51
-msgid "No song playing."
-msgstr "Şarkı çalınmıyor."
-
-#: src/libaudcore/audstrings.c:203
+#: src/libaudcore/audstrings.c:382
 #, c-format
 msgid "Audio CD, track %s"
 msgstr "Ses CD'si, parça %s"
 
-#: src/libaudcore/tuple.c:540
+#: src/libaudcore/tuple.c:442
 msgid "Mono"
 msgstr "Mono"
 
-#: src/libaudcore/tuple.c:542
+#: src/libaudcore/tuple.c:444
 msgid "Stereo"
 msgstr "Stereo"
 
-#: src/libaudcore/tuple.c:544
+#: src/libaudcore/tuple.c:446
 #, c-format
 msgid "%d channel"
 msgid_plural "%d channels"
@@ -575,430 +617,444 @@ msgstr[1] "%d kanal"
 
 #: src/libaudgui/about.c:37
 msgid "Credits"
-msgstr "Yazarlar"
+msgstr "Katkıda bulunanlar"
 
 #: src/libaudgui/about.c:37
 msgid "License"
 msgstr "Lisans"
 
-#: src/libaudgui/about.c:73
+#: src/libaudgui/about.c:69
 msgid "About Audacious"
 msgstr "Audacious Hakkında"
 
-#: src/libaudgui/confirm.c:66
+#: src/libaudgui/confirm.c:51
 #, c-format
-msgid ""
-"Are you sure you want to close %s?  If you do, any changes made since the "
-"playlist was exported will be lost."
-msgstr ""
-"Kapatmak istediğinize emin misiniz %s?  Kapatırsanız, çalma listesi ihraç "
-"edilmeden önce yapılan hiç bir değişiklik kaydedilmeyecektir."
+msgid "Do you want to permanently remove “%s”?"
+msgstr "\"%s\" ögesini kalıcı olarak silmek istiyor musunuz?"
 
-#: src/libaudgui/confirm.c:73
-msgid "Close Playlist"
-msgstr "Çalma Listesini Kapat"
+#: src/libaudgui/confirm.c:55 src/libaudgui/ui_playlist_manager.c:255
+msgid "_Remove"
+msgstr "_Kaldır"
 
-#: src/libaudgui/confirm.c:77
-msgid "_Don't show this message again"
-msgstr "_Bu uyarıyı bir daha gösterme"
+#: src/libaudgui/confirm.c:60
+msgid "Remove Playlist"
+msgstr "Çalma Listesini Kaldır"
 
-#: src/libaudgui/confirm.c:100
+#: src/libaudgui/confirm.c:62
+msgid "_Don’t ask again"
+msgstr "_Bir daha sorma"
+
+#: src/libaudgui/confirm.c:89
+msgid "_Rename"
+msgstr "_Yeniden Adlandır"
+
+#: src/libaudgui/confirm.c:93
 msgid "Rename Playlist"
-msgstr "Çalma listesini yeniden adlandır"
+msgstr "Listeyi Yeniden Adlandır"
 
-#: src/libaudgui/effects-menu.c:70
-msgid "settings ..."
-msgstr "ayarlar ..."
+#: src/libaudgui/confirm.c:93
+msgid "What would you like to call this playlist?"
+msgstr "Bu dosya adına ne ad vermek istersiniz?"
 
-#: src/libaudgui/equalizer.c:50
+#: src/libaudgui/equalizer.c:44
 msgid "_Enable"
-msgstr "_izin ver"
+msgstr "_Etkinleştir"
 
-#: src/libaudgui/equalizer.c:123
+#: src/libaudgui/equalizer.c:119
 msgid "31 Hz"
 msgstr "31 Hz"
 
-#: src/libaudgui/equalizer.c:123
+#: src/libaudgui/equalizer.c:119
 msgid "63 Hz"
 msgstr "63 Hz"
 
-#: src/libaudgui/equalizer.c:124
+#: src/libaudgui/equalizer.c:120
 msgid "125 Hz"
 msgstr "125 Hz"
 
-#: src/libaudgui/equalizer.c:124
+#: src/libaudgui/equalizer.c:120
 msgid "250 Hz"
 msgstr "250 Hz"
 
-#: src/libaudgui/equalizer.c:124
+#: src/libaudgui/equalizer.c:120
 msgid "500 Hz"
 msgstr "500 Hz"
 
-#: src/libaudgui/equalizer.c:124
+#: src/libaudgui/equalizer.c:120
 msgid "1 kHz"
 msgstr "1 kHz"
 
-#: src/libaudgui/equalizer.c:124
+#: src/libaudgui/equalizer.c:120
 msgid "2 kHz"
 msgstr "2 kHz"
 
-#: src/libaudgui/equalizer.c:125
+#: src/libaudgui/equalizer.c:121
 msgid "4 kHz"
 msgstr "4 kHz"
 
-#: src/libaudgui/equalizer.c:125
+#: src/libaudgui/equalizer.c:121
 msgid "8 kHz"
 msgstr "8 kHz"
 
-#: src/libaudgui/equalizer.c:125
+#: src/libaudgui/equalizer.c:121
 msgid "16 kHz"
 msgstr "16 kHz"
 
-#: src/libaudgui/equalizer.c:130
+#: src/libaudgui/equalizer.c:124
 msgid "Equalizer"
-msgstr "Ekolayzır"
+msgstr "Ekolayzer"
 
-#: src/libaudgui/equalizer.c:146
+#: src/libaudgui/equalizer.c:138
 msgid "Preamp"
-msgstr "Preamp"
+msgstr "Ön güçlendirme"
 
-#: src/libaudgui/infopopup.c:154
+#: src/libaudgui/infopopup.c:155
 msgid "Track"
 msgstr "Parça"
 
-#: src/libaudgui/infopopup.c:155
+#: src/libaudgui/infopopup.c:156
 msgid "Length"
 msgstr "uzunluk"
 
-#: src/libaudgui/infowin.c:73
+#: src/libaudgui/infowin.c:46
+msgid "Format:"
+msgstr "Biçim:"
+
+#: src/libaudgui/infowin.c:47
+msgid "Quality:"
+msgstr "Kalite:"
+
+#: src/libaudgui/infowin.c:48
+msgid "Bitrate:"
+msgstr "Bit oranı:"
+
+#: src/libaudgui/infowin.c:76
 msgid "Acid Jazz"
 msgstr "Acid Jazz"
 
-#: src/libaudgui/infowin.c:74
+#: src/libaudgui/infowin.c:77
 msgid "Acid Rock"
 msgstr "Acid Rock"
 
-#: src/libaudgui/infowin.c:75
+#: src/libaudgui/infowin.c:78
 msgid "Ambient"
-msgstr "Ambient"
+msgstr "Çevre"
 
-#: src/libaudgui/infowin.c:76
+#: src/libaudgui/infowin.c:79
 msgid "Bebop"
 msgstr "Bebop"
 
-#: src/libaudgui/infowin.c:77
+#: src/libaudgui/infowin.c:80
 msgid "Bluegrass"
 msgstr "Bluegrass"
 
-#: src/libaudgui/infowin.c:78
+#: src/libaudgui/infowin.c:81
 msgid "Blues"
 msgstr "Blues"
 
-#: src/libaudgui/infowin.c:79
+#: src/libaudgui/infowin.c:82
 msgid "Chamber Music"
-msgstr "Chamber Music"
+msgstr "Oda müziği"
 
-#: src/libaudgui/infowin.c:80
+#: src/libaudgui/infowin.c:83
 msgid "Classical"
-msgstr "Klasik müzik"
+msgstr "Klasik"
 
-#: src/libaudgui/infowin.c:81
+#: src/libaudgui/infowin.c:84
 msgid "Country"
 msgstr "Country"
 
-#: src/libaudgui/infowin.c:82
+#: src/libaudgui/infowin.c:85
 msgid "Death Metal"
 msgstr "Death Metal"
 
-#: src/libaudgui/infowin.c:83
+#: src/libaudgui/infowin.c:86
 msgid "Disco"
 msgstr "Disko"
 
-#: src/libaudgui/infowin.c:84
+#: src/libaudgui/infowin.c:87
 msgid "Easy Listening"
-msgstr "Easy Listening"
+msgstr "Kolay Dinleme"
 
-#: src/libaudgui/infowin.c:85
+#: src/libaudgui/infowin.c:88
 msgid "Folk"
 msgstr "Folk"
 
-#: src/libaudgui/infowin.c:86
+#: src/libaudgui/infowin.c:89
 msgid "Funk"
 msgstr "Funk"
 
-#: src/libaudgui/infowin.c:87
+#: src/libaudgui/infowin.c:90
 msgid "Gangsta Rap"
 msgstr "Gangsta Rap"
 
-#: src/libaudgui/infowin.c:88
+#: src/libaudgui/infowin.c:91
 msgid "Gospel"
 msgstr "Gospel"
 
-#: src/libaudgui/infowin.c:89
+#: src/libaudgui/infowin.c:92
 msgid "Grunge"
 msgstr "Grunge"
 
-#: src/libaudgui/infowin.c:90
+#: src/libaudgui/infowin.c:93
 msgid "Hard Rock"
 msgstr "Hard Rock"
 
-#: src/libaudgui/infowin.c:91
+#: src/libaudgui/infowin.c:94
 msgid "Heavy Metal"
 msgstr "Heavy Metal"
 
-#: src/libaudgui/infowin.c:92
+#: src/libaudgui/infowin.c:95
 msgid "Hip-hop"
 msgstr "Hip-hop"
 
-#: src/libaudgui/infowin.c:93
+#: src/libaudgui/infowin.c:96
 msgid "House"
 msgstr "House"
 
-#: src/libaudgui/infowin.c:94
+#: src/libaudgui/infowin.c:97
 msgid "Jazz"
-msgstr "Jazz"
+msgstr "Caz"
 
-#: src/libaudgui/infowin.c:95
+#: src/libaudgui/infowin.c:98
 msgid "Jungle"
 msgstr "Jungle"
 
-#: src/libaudgui/infowin.c:96
+#: src/libaudgui/infowin.c:99
 msgid "Metal"
 msgstr "Metal"
 
-#: src/libaudgui/infowin.c:97
+#: src/libaudgui/infowin.c:100
 msgid "New Age"
 msgstr "New Age"
 
-#: src/libaudgui/infowin.c:98
+#: src/libaudgui/infowin.c:101
 msgid "New Wave"
 msgstr "New Wave"
 
-#: src/libaudgui/infowin.c:99
+#: src/libaudgui/infowin.c:102
 msgid "Noise"
 msgstr "Noise"
 
-#: src/libaudgui/infowin.c:100
+#: src/libaudgui/infowin.c:103
 msgid "Pop"
 msgstr "Pop"
 
-#: src/libaudgui/infowin.c:101
+#: src/libaudgui/infowin.c:104
 msgid "Punk Rock"
 msgstr "Punk Rock"
 
-#: src/libaudgui/infowin.c:102
+#: src/libaudgui/infowin.c:105
 msgid "Rap"
 msgstr "Rap"
 
-#: src/libaudgui/infowin.c:103
+#: src/libaudgui/infowin.c:106
 msgid "Reggae"
 msgstr "Reggae"
 
-#: src/libaudgui/infowin.c:104
+#: src/libaudgui/infowin.c:107
 msgid "Rock"
 msgstr "Rock"
 
-#: src/libaudgui/infowin.c:105
+#: src/libaudgui/infowin.c:108
 msgid "Rock and Roll"
 msgstr "Rock and Roll"
 
-#: src/libaudgui/infowin.c:106
+#: src/libaudgui/infowin.c:109
 msgid "Rhythm and Blues"
 msgstr "Rhythm and Blues"
 
-#: src/libaudgui/infowin.c:107
+#: src/libaudgui/infowin.c:110
 msgid "Ska"
 msgstr "Ska"
 
-#: src/libaudgui/infowin.c:108
+#: src/libaudgui/infowin.c:111
 msgid "Soul"
 msgstr "Soul"
 
-#: src/libaudgui/infowin.c:109
+#: src/libaudgui/infowin.c:112
 msgid "Swing"
 msgstr "Swing"
 
-#: src/libaudgui/infowin.c:110
+#: src/libaudgui/infowin.c:113
 msgid "Techno"
 msgstr "Tekno"
 
-#: src/libaudgui/infowin.c:111
+#: src/libaudgui/infowin.c:114
 msgid "Trip-hop"
 msgstr "Trip-hop"
 
-#: src/libaudgui/infowin.c:175 src/libaudgui/infowin.c:348
-#: src/libaudgui/infowin.c:351 src/libaudgui/infowin.c:354
-msgid "<span size=\"small\">n/a</span>"
-msgstr "<span size=\"small\">yok</span>"
+#: src/libaudgui/infowin.c:220
+msgid "Save successful"
+msgstr "Kayıt başarılı"
 
-#: src/libaudgui/infowin.c:223
-msgid "Metadata updated successfully"
-msgstr "Parça bilgisi başarılı şekilde güncellendi"
+#: src/libaudgui/infowin.c:224
+msgid "Save error"
+msgstr "Kayıt hatası"
 
-#: src/libaudgui/infowin.c:227
-msgid "Metadata updating failed"
-msgstr "Parça bilgisi güncellenemedi"
+#: src/libaudgui/infowin.c:359
+msgid "Track Number"
+msgstr "Parça Numarası"
 
-#: src/libaudgui/infowin.c:302
-msgid "Track Information"
-msgstr "Parça Bilgisi"
+#: src/libaudgui/infowin.c:367
+msgid "_Save"
+msgstr "_Kaydet"
 
-#: src/libaudgui/infowin.c:337
-msgid "<span size=\"small\">Format:</span>"
-msgstr "<span size=\"small\">Biçim:</span>"
-
-#: src/libaudgui/infowin.c:341
-msgid "<span size=\"small\">Quality:</span>"
-msgstr "<span size=\"small\">Kalite:</span>"
-
-#: src/libaudgui/infowin.c:344
-msgid "<span size=\"small\">Bitrate:</span>"
-msgstr "<span size=\"small\">Bit Oranı:</span>"
-
-#: src/libaudgui/infowin.c:368
-msgid "<span size=\"small\">Title</span>"
-msgstr "<span size=\"small\">Başlık</span>"
-
-#: src/libaudgui/infowin.c:380
-msgid "<span size=\"small\">Artist</span>"
-msgstr "<span size=\"small\">Sanatçı</span>"
-
-#: src/libaudgui/infowin.c:392
-msgid "<span size=\"small\">Album</span>"
-msgstr "<span size=\"small\">Albüm</span>"
-
-#: src/libaudgui/infowin.c:404
-msgid "<span size=\"small\">Comment</span>"
-msgstr "<span size=\"small\">Yorum</span>"
-
-#: src/libaudgui/infowin.c:416
-msgid "<span size=\"small\">Genre</span>"
-msgstr "<span size=\"small\">Tür</span>"
-
-#: src/libaudgui/infowin.c:438
-msgid "<span size=\"small\">Year</span>"
-msgstr "<span size=\"small\">Yıl</span>"
-
-#: src/libaudgui/infowin.c:447
-msgid "<span size=\"small\">Track Number</span>"
-msgstr "<span size=\"small\">Parça Numarası</span>"
-
-#: src/libaudgui/infowin.c:521
+#: src/libaudgui/infowin.c:418
 #, c-format
 msgid "%d kb/s"
 msgstr "%d kb/s"
 
-#: src/libaudgui/infowin.c:548
+#: src/libaudgui/infowin.c:423
+msgid "N/A"
+msgstr "Bilinmiyor"
+
+#: src/libaudgui/infowin.c:453
 #, c-format
 msgid "No info available for %s.\n"
-msgstr "Bilgi mevcut değil ; %s.\n"
+msgstr "%s için kullanılabilir bilgi yok.\n"
 
-#: src/libaudgui/jump-to-time.c:51
+#: src/libaudgui/jump-to-time.c:48 src/libaudgui/ui_jumptotrack.c:305
+msgid "_Jump"
+msgstr "_Atla"
+
+#: src/libaudgui/jump-to-time.c:52
 msgid "Jump to Time"
 msgstr "Zamana Atla"
 
-#: src/libaudgui/jump-to-time.c:60
+#: src/libaudgui/jump-to-time.c:52
 msgid "Enter time (minutes:seconds):"
 msgstr "Giriş zamanı (dakika:saniye):"
 
-#: src/libaudgui/playlists.c:32
-msgid "Export Playlist"
-msgstr "Çalma Listesi İhraç et"
-
-#: src/libaudgui/playlists.c:32
-msgid "Import Playlist"
-msgstr "Çalma Listesi Ekle"
-
-#: src/libaudgui/playlists.c:65
+#: src/libaudgui/playlists.c:86
 #, c-format
 msgid "Overwrite %s?"
-msgstr "Üstüne yaz %s?"
+msgstr "%s üzerine yazılsın mı?"
 
-#: src/libaudgui/queue-manager.c:195
+#: src/libaudgui/playlists.c:88
+msgid "_Overwrite"
+msgstr "_Üzerine Yaz"
+
+#: src/libaudgui/playlists.c:92
+msgid "Confirm Overwrite"
+msgstr "Üzerine Yazmayı Onayla"
+
+#: src/libaudgui/playlists.c:121
+msgid "Export Playlist"
+msgstr "Çalma Listesini Dışa Aktar"
+
+#: src/libaudgui/playlists.c:122
+msgid "_Export"
+msgstr "_Dışa Aktar"
+
+#: src/libaudgui/playlists.c:128
+msgid "Import Playlist"
+msgstr "Çalma Listesini İçe Aktar"
+
+#: src/libaudgui/playlists.c:129
+msgid "_Import"
+msgstr "_İçe Aktar"
+
+#: src/libaudgui/queue-manager.c:172
 msgid "Queue Manager"
 msgstr "Kuyruk Yöneticisi"
 
-#: src/libaudgui/ui_fileopener.c:106
+#: src/libaudgui/queue-manager.c:188
+msgid "_Unqueue"
+msgstr "_Sıradan Kaldır"
+
+#: src/libaudgui/ui_fileopener.c:79
 msgid "Open Files"
 msgstr "Dosyaları Aç"
 
-#: src/libaudgui/ui_fileopener.c:106
+#: src/libaudgui/ui_fileopener.c:80 src/libaudgui/url-opener.c:50
+msgid "_Open"
+msgstr "_Aç"
+
+#: src/libaudgui/ui_fileopener.c:82
+msgid "Close _dialog on open"
+msgstr "Açtıktan sonra _pencereyi kapat"
+
+#: src/libaudgui/ui_fileopener.c:87
 msgid "Add Files"
 msgstr "Dosyaları Ekle"
 
-#: src/libaudgui/ui_fileopener.c:108
-msgid "Close dialog on Open"
-msgstr "Açtıktan sonra pencereyi kapat"
+#: src/libaudgui/ui_fileopener.c:88 src/libaudgui/url-opener.c:56
+msgid "_Add"
+msgstr "_Ekle"
 
-#: src/libaudgui/ui_fileopener.c:108
-msgid "Close dialog on Add"
-msgstr "Ekledikten sonra pencereyi kapat"
+#: src/libaudgui/ui_fileopener.c:90
+msgid "Close _dialog on add"
+msgstr "Ekledikten sonra _pencereyi kapat"
 
-#: src/libaudgui/ui_jumptotrack.c:104 src/libaudgui/ui_jumptotrack.c:112
-#: src/libaudgui/ui_jumptotrack.c:331
+#: src/libaudgui/ui_jumptotrack.c:101 src/libaudgui/ui_jumptotrack.c:109
+#: src/libaudgui/ui_jumptotrack.c:301
 msgid "_Queue"
-msgstr "_Kuyruk"
+msgstr "_Kuyruğa al"
 
-#: src/libaudgui/ui_jumptotrack.c:110
+#: src/libaudgui/ui_jumptotrack.c:107
 msgid "Un_queue"
-msgstr "K_uyruktan çıkar"
+msgstr "Kuyruktan _çıkar"
 
-#: src/libaudgui/ui_jumptotrack.c:261
+#: src/libaudgui/ui_jumptotrack.c:245
 msgid "Jump to Song"
 msgstr "Şarkıya Atla"
 
-#: src/libaudgui/ui_jumptotrack.c:286
+#: src/libaudgui/ui_jumptotrack.c:270
 msgid "Filter: "
-msgstr "Süzgeç: "
+msgstr "Süzgeç:"
 
-#: src/libaudgui/ui_jumptotrack.c:287
+#: src/libaudgui/ui_jumptotrack.c:271
 msgid "_Filter:"
 msgstr "_Süzgeç:"
 
-#: src/libaudgui/ui_jumptotrack.c:297
-msgid "Remember"
-msgstr "Hatırla"
+#: src/libaudgui/ui_jumptotrack.c:294
+msgid "C_lose on jump"
+msgstr "Geçişten sonra _kapat"
 
-#: src/libaudgui/ui_jumptotrack.c:304
-msgid "Clea_r"
-msgstr "Clea_r"
-
-#: src/libaudgui/ui_jumptotrack.c:324
-msgid "Close on Jump"
-msgstr "Geçişten sonra kapat"
-
-#: src/libaudgui/ui_playlist_manager.c:260
+#: src/libaudgui/ui_playlist_manager.c:223
 msgid "Playlist Manager"
-msgstr "Parça Listesi Yöneticisi"
+msgstr "Çalma Listesi Yöneticisi"
 
-#: src/libaudgui/ui_playlist_manager.c:287
+#: src/libaudgui/ui_playlist_manager.c:236
 msgid "Entries"
-msgstr "Girdiler"
+msgstr "Girişler"
 
-#: src/libaudgui/ui_playlist_manager.c:307
-msgid "_Rename"
-msgstr "_Yeniden adlandır"
+#: src/libaudgui/ui_playlist_manager.c:254
+msgid "_New"
+msgstr "_Yeni"
 
-#: src/libaudgui/ui_playlist_manager.c:327
+#: src/libaudgui/ui_playlist_manager.c:256
+msgid "Ren_ame"
+msgstr "_Adlandır"
+
+#: src/libaudgui/ui_playlist_manager.c:257
+msgid "_Play"
+msgstr "_Oynat"
+
+#: src/libaudgui/ui_playlist_manager.c:269
 msgid "_Close dialog on activating playlist"
-msgstr "_Çalma listesi aktif edilirken diyalogu kapa"
+msgstr "Liste etkinleştirildiğinde diyaloğu _kapat"
 
-#: src/libaudgui/url-opener.c:55
+#: src/libaudgui/url-opener.c:49
 msgid "Open URL"
-msgstr "URL Aç"
+msgstr "Bağlantı Aç"
 
 #: src/libaudgui/url-opener.c:55
 msgid "Add URL"
-msgstr "URL Ekle"
+msgstr "Bağlantı Ekle"
 
-#: src/libaudgui/url-opener.c:64
+#: src/libaudgui/url-opener.c:74
 msgid "Enter URL:"
 msgstr "URL gir :"
 
-#: src/libaudgui/util.c:142
+#: src/libaudgui/util.c:148
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
 msgstr ""
 "\n"
-"(Gelecekteki mesajlar gizlenecek.)"
+"(Devam eden iletiler gizlendi.)"
+
+#~ msgid "_Remember"
+#~ msgstr "_Hatırla"
