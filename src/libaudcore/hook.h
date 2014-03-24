@@ -47,4 +47,7 @@ void event_queue_full (int time, const char * name, void * data, void (* destroy
  * all hook calls matching <name> are canceled. */
 void event_queue_cancel (const char * name, void * data);
 
+/* Cancels all pending hook calls. */
+void event_queue_cancel_all (void);
+
 #endif /* LIBAUDCORE_HOOK_H */

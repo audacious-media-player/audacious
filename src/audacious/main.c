@@ -546,6 +546,8 @@ static void shut_down (void)
     AUDDBG ("Unloading lowlevel plugins.\n");
     stop_plugins_one ();
 
+    event_queue_cancel_all ();
+
     AUDDBG ("Saving configuration.\n");
     config_save ();
     config_cleanup ();
