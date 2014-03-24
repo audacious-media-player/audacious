@@ -146,7 +146,9 @@ EXPORT void audgui_init (AudAPITable * table, int version)
     hook_associate ("playlist set playing", playlist_set_playing_cb, NULL);
     hook_associate ("playlist position", playlist_position_cb, NULL);
 
+#ifndef _WIN32
     gtk_window_set_default_icon_name ("audacious");
+#endif
 }
 
 EXPORT void audgui_cleanup (void)
