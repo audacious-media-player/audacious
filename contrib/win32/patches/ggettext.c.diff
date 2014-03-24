@@ -1,0 +1,66 @@
+--- ggettext.c.0	2013-10-25 11:58:38 -0400
++++ ggettext.c	2014-03-23 22:07:29 -0400
+@@ -94,17 +94,32 @@
+ #endif /* G_OS_WIN32 */
+ 
+ 
+-static void
++static gboolean
+ ensure_gettext_initialized (void)
+ {
+   static gsize initialised;
+ 
++#ifdef G_OS_WIN32
++  static GThread * init_thread_atomic;
++  GThread * init_thread = g_atomic_pointer_get (& init_thread_atomic);
++
++  /* avoid deadlock if _glib_get_locale_dir() calls back into gettext */
++  if (G_UNLIKELY (init_thread && init_thread == g_thread_self ()))
++    return FALSE;
++#endif
++
+   if (g_once_init_enter (&initialised))
+     {
+ #ifdef G_OS_WIN32
+-      gchar *tmp = _glib_get_locale_dir ();
++      gchar *tmp;
++
++      g_atomic_pointer_set (&init_thread_atomic, g_thread_self ());
++
++      tmp = _glib_get_locale_dir ();
+       bindtextdomain (GETTEXT_PACKAGE, tmp);
+       g_free (tmp);
++
++      g_atomic_pointer_set (&init_thread_atomic, NULL);
+ #else
+       bindtextdomain (GETTEXT_PACKAGE, GLIB_LOCALE_DIR);
+ #endif
+@@ -113,6 +128,8 @@
+ #    endif
+       g_once_init_leave (&initialised, TRUE);
+     }
++
++  return TRUE;
+ }
+ 
+ /**
+@@ -128,7 +145,8 @@
+ const gchar *
+ glib_gettext (const gchar *str)
+ {
+-  ensure_gettext_initialized ();
++  if (G_UNLIKELY (!ensure_gettext_initialized ()))
++    return str;
+ 
+   return g_dgettext (GETTEXT_PACKAGE, str);
+ }
+@@ -152,7 +170,8 @@
+ glib_pgettext (const gchar *msgctxtid,
+                gsize        msgidoffset)
+ {
+-  ensure_gettext_initialized ();
++  if (G_UNLIKELY (!ensure_gettext_initialized ()))
++    return msgctxtid;
+ 
+   return g_dpgettext (GETTEXT_PACKAGE, msgctxtid, msgidoffset);
+ }
