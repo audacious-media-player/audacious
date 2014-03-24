@@ -19,6 +19,8 @@ src/libaudcore/audio.h
 src/libaudcore/tinylock.h
 .deps
 *.a
+*.dll
+*.exe
 *.mo
 *.o
 *.so
