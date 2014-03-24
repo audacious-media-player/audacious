@@ -36,10 +36,7 @@ EXPORT char * str_convert (const char * str, int len, const char * from_charset,
 {
     iconv_t conv = iconv_open (to_charset, from_charset);
     if (conv == (iconv_t) -1)
-    {
-        printf ("iconv_open failure");
         return NULL;
-    }
 
     if (len < 0)
         len = strlen (str);
@@ -60,10 +57,7 @@ EXPORT char * str_convert (const char * str, int len, const char * from_charset,
     {
         buf[maxlen - outbytes] = 0;
         result = str_get (buf);
-        printf ("Converted %d bytes: [%s]\n", strlen (result), result);
     }
-    else
-        printf ("iconv failure");
 
     iconv_close (conv);
     return result;
