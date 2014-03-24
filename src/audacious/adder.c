@@ -17,11 +17,11 @@
  * the use of this software.
  */
 
-#include <dirent.h>
 #include <pthread.h>
 #include <string.h>
 #include <sys/stat.h>
 
+#include <glib/gstdio.h>
 #include <gtk/gtk.h>
 
 #include <libaudcore/audstrings.h>
@@ -261,21 +261,18 @@ static void add_folder (char * filename, PlaylistFilterFunc filter,
         goto DONE;
 
     GList * files = NULL;
-    DIR * folder = opendir (path);
+    GDir * folder = g_dir_open (path, 0, NULL);
     if (! folder)
         goto DONE;
 
-    struct dirent * entry;
-    while ((entry = readdir (folder)))
+    const char * name;
+    while ((name = g_dir_read_name (folder)))
     {
-        if (entry->d_name[0] == '.')
-            continue;
-
-        char * filepath = filename_build (path, entry->d_name);
+        char * filepath = filename_build (path, name);
         files = g_list_prepend (files, filepath);
     }
 
-    closedir (folder);
+    g_dir_close (folder);
 
     if (files && is_single)
     {
@@ -287,12 +284,8 @@ static void add_folder (char * filename, PlaylistFilterFunc filter,
 
     while (files)
     {
-        struct stat info;
-#ifdef S_ISLNK
-        if (lstat (files->data, & info) < 0)
-#else
-        if (stat (files->data, & info) < 0)
-#endif
+        GStatBuf info;
+        if (g_lstat (files->data, & info) < 0)
             goto NEXT;
 
         if (S_ISREG (info.st_mode))

@@ -17,11 +17,12 @@
  * the use of this software.
  */
 
-#include <dirent.h>
-#include <glib.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include <glib.h>
+#include <glib/gstdio.h>
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
@@ -425,29 +426,28 @@ static void save_playlists_real (void)
     /* clean up deleted playlists and files from old naming scheme */
 
     char * path = make_playlist_path (0);
-    remove (path);
+    g_unlink (path);
     str_unref (path);
 
-    DIR * dir = opendir (folder);
+    GDir * dir = g_dir_open (folder, 0, NULL);
     if (! dir)
         goto DONE;
 
-    struct dirent * entry;
-    while ((entry = readdir (dir)))
+    const char * name;
+    while ((name = g_dir_read_name (dir)))
     {
-        if (! g_str_has_suffix (entry->d_name, ".audpl")
-         && ! g_str_has_suffix (entry->d_name, ".xspf"))
+        if (! g_str_has_suffix (name, ".audpl") && ! g_str_has_suffix (name, ".xspf"))
             continue;
 
-        if (! g_hash_table_contains (saved, entry->d_name))
+        if (! g_hash_table_contains (saved, name))
         {
-            char * path = filename_build (folder, entry->d_name);
-            remove (path);
+            char * path = filename_build (folder, name);
+            g_unlink (path);
             str_unref (path);
         }
     }
 
-    closedir (dir);
+    g_dir_close (dir);
 
 DONE:
     g_hash_table_destroy (saved);

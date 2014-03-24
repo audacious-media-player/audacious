@@ -20,14 +20,15 @@
 
 #include "vfs.h"
 
-#include <glib.h>
 #include <inttypes.h>
-
 #include <stdio.h>
-#include <unistd.h>
+#include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <string.h>
+#include <unistd.h>
+
+#include <glib.h>
+#include <glib/gstdio.h>
 
 #include "audstrings.h"
 #include "vfs_local.h"
@@ -134,7 +135,7 @@ vfs_fopen(const char * path,
     else
     {
         const char * s = strstr (path, "://");
-        
+
         if (! s)
         {
             fprintf (stderr, "Invalid URI: %s\n", path);
@@ -411,8 +412,8 @@ vfs_file_test(const char * path, int test)
 #ifdef S_ISLNK
     if (test & VFS_IS_SYMLINK)
     {
-        struct stat st;
-        if (lstat (path2, & st) < 0)
+        GStatBuf st;
+        if (g_lstat (path2, & st) < 0)
             goto DONE;
 
         if (S_ISLNK (st.st_mode))
@@ -422,8 +423,8 @@ vfs_file_test(const char * path, int test)
 
     if (test & (VFS_IS_REGULAR | VFS_IS_DIR | VFS_IS_EXECUTABLE | VFS_EXISTS))
     {
-        struct stat st;
-        if (stat (path2, & st) < 0)
+        GStatBuf st;
+        if (g_stat (path2, & st) < 0)
             goto DONE;
 
         if (S_ISREG (st.st_mode))
@@ -450,10 +451,10 @@ DONE:
 EXPORT bool_t
 vfs_is_writeable(const char * path)
 {
-    struct stat info;
+    GStatBuf info;
     char * realfn = uri_to_filename (path);
 
-    if (! realfn || stat (realfn, & info) < 0)
+    if (! realfn || g_stat (realfn, & info) < 0)
         return FALSE;
 
     str_unref (realfn);

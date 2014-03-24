@@ -24,6 +24,7 @@
 #include <time.h>
 
 #include <glib.h>
+#include <glib/gstdio.h>
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
@@ -2246,7 +2247,7 @@ void playlist_save_state (void)
     const char * user_dir = get_path (AUD_PATH_USER_DIR);
     SCONCAT2 (path, user_dir, "/" STATE_FILE);
 
-    FILE * handle = fopen (path, "w");
+    FILE * handle = g_fopen (path, "w");
     if (! handle)
         RETURN ();
 
@@ -2319,7 +2320,7 @@ void playlist_load_state (void)
     const char * user_dir = get_path (AUD_PATH_USER_DIR);
     SCONCAT2 (path, user_dir, "/" STATE_FILE);
 
-    FILE * handle = fopen (path, "r");
+    FILE * handle = g_fopen (path, "r");
     if (! handle)
         RETURN ();
 

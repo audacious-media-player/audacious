@@ -34,6 +34,11 @@ char * write_temp_file (void * data, int64_t len); /* pooled */
 
 char * get_path_to_self (void); /* pooled */
 
+#ifdef _WIN32
+void get_argv_utf8 (int * argc, char * * * argv);
+void free_argv_utf8 (int * argc, char * * * argv);
+#endif
+
 void describe_song (const char * filename, const Tuple * tuple,
  char * * title, char * * artist, char * * album);
 

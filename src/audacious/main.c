@@ -220,6 +220,11 @@ const char * get_path (int id)
 static bool_t parse_options (int argc, char * * argv)
 {
     char * cur = g_get_current_dir ();
+    bool_t success = TRUE;
+
+#ifdef _WIN32
+    get_argv_utf8 (& argc, & argv);
+#endif
 
     for (int n = 1; n < argc; n ++)
     {
@@ -262,7 +267,8 @@ static bool_t parse_options (int argc, char * * argv)
             if (i == ARRAY_LEN (arg_map))
             {
                 fprintf (stderr, _("Unknown option: %s\n"), argv[n]);
-                goto FAIL;
+                success = FALSE;
+                goto OUT;
             }
         }
         else  /* short form */
@@ -283,7 +289,8 @@ static bool_t parse_options (int argc, char * * argv)
                 if (i == ARRAY_LEN (arg_map))
                 {
                     fprintf (stderr, _("Unknown option: -%c\n"), argv[n][c]);
-                    goto FAIL;
+                    success = FALSE;
+                    goto OUT;
                 }
             }
         }
@@ -291,12 +298,13 @@ static bool_t parse_options (int argc, char * * argv)
 
     verbose = options.verbose;
 
-    g_free (cur);
-    return TRUE;
+OUT:
+#ifdef _WIN32
+    free_argv_utf8 (& argc, & argv);
+#endif
 
-FAIL:
     g_free (cur);
-    return FALSE;
+    return success;
 }
 
 static void print_help (void)

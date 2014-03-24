@@ -25,6 +25,7 @@
 #include <unistd.h>
 
 #include <glib.h>
+#include <glib/gstdio.h>
 
 #include "audstrings.h"
 
@@ -63,7 +64,7 @@ static void * local_fopen (const char * uri, const char * mode)
 
     SCONCAT2 (mode2, mode, suffix);
 
-    FILE * stream = fopen (path, mode2);
+    FILE * stream = g_fopen (path, mode2);
 
     if (! stream)
     {

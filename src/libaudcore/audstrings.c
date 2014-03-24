@@ -217,7 +217,7 @@ EXPORT void str_itoa (int x, char * buf, int bufsize)
 EXPORT void str_decode_percent (const char * str, int len, char * out)
 {
     const char * nul;
-    
+
     if (len < 0)
         len = strlen (str);
     else if ((nul = memchr (str, 0, len)))
@@ -321,56 +321,59 @@ EXPORT char * filename_build (const char * path, const char * name)
 #endif
 }
 
+#ifdef _WIN32
+#define URI_PREFIX "file:///"
+#define URI_PREFIX_LEN 8
+#else
+#define URI_PREFIX "file://"
+#define URI_PREFIX_LEN 7
+#endif
+
 /* Like g_filename_to_uri, but converts the filename from the system locale to
- * UTF-8 before percent-encoding.  On Windows, replaces '\' with '/' and adds a
- * leading '/'. */
+ * UTF-8 before percent-encoding (except on Windows, where filenames are assumed
+ * to be UTF-8).  On Windows, replaces '\' with '/' and adds a leading '/'. */
 
 EXPORT char * filename_to_uri (const char * name)
 {
+#ifdef _WIN32
+    SCOPY (utf8, name);
+    str_replace_char (utf8, '\\', '/');
+#else
     char * utf8 = str_from_locale (name, -1);
     if (! utf8)
         return NULL;
-
-#ifdef _WIN32
-    str_replace_char (utf8, '\\', '/');
 #endif
 
-    char enc[3 * strlen (utf8) + 1];
-    str_encode_percent (utf8, -1, enc);
+    char enc[URI_PREFIX_LEN + 3 * strlen (utf8) + 1];
+    strcpy (enc, URI_PREFIX);
+    str_encode_percent (utf8, -1, enc + URI_PREFIX_LEN);
 
+#ifndef _WIN32
     str_unref (utf8);
-
-#ifdef _WIN32
-    SCONCAT2 (buf, "file:///", enc);
-#else
-    SCONCAT2 (buf, "file://", enc);
 #endif
-    return str_get (buf);
+
+    return str_get (enc);
 }
 
 /* Like g_filename_from_uri, but converts the filename from UTF-8 to the system
- * locale after percent-decoding.  On Windows, strips the leading '/' and
- * replaces '/' with '\'. */
+ * locale after percent-decoding (except on Windows, where filenames are assumed
+ * to be UTF-8).  On Windows, strips the leading '/' and replaces '/' with '\'. */
 
 EXPORT char * uri_to_filename (const char * uri)
 {
-#ifdef _WIN32
-    if (strncmp (uri, "file:///", 8))
+    if (strncmp (uri, URI_PREFIX, URI_PREFIX_LEN))
         return NULL;
 
-    char buf[strlen (uri + 8) + 1];
-    str_decode_percent (uri + 8, -1, buf);
-#else
-    if (strncmp (uri, "file://", 7))
-        return NULL;
-
-    char buf[strlen (uri + 7) + 1];
-    str_decode_percent (uri + 7, -1, buf);
-#endif
+    char buf[strlen (uri + URI_PREFIX_LEN) + 1];
+    str_decode_percent (uri + URI_PREFIX_LEN, -1, buf);
 
     filename_normalize (buf);
 
+#ifdef _WIN32
+    return str_get (buf);
+#else
     return str_to_locale (buf, -1);
+#endif
 }
 
 /* Formats a URI for human-readable display.  Percent-decodes and, for file://
@@ -383,21 +386,21 @@ EXPORT char * uri_to_display (const char * uri)
 
     char buf[strlen (uri) + 1];
 
-#ifdef _WIN32
-    if (! strncmp (uri, "file:///", 8))
+    if (! strncmp (uri, URI_PREFIX, URI_PREFIX_LEN))
     {
-        str_decode_percent (uri + 8, -1, buf);
+        str_decode_percent (uri + URI_PREFIX_LEN, -1, buf);
+#ifdef _WIN32
         str_replace_char (buf, '/', '\\');
-    }
-#else
-    if (! strncmp (uri, "file://", 7))
-        str_decode_percent (uri + 7, -1, buf);
 #endif
+    }
     else
         str_decode_percent (uri, -1, buf);
 
     return str_get (buf);
 }
+
+#undef URI_PREFIX
+#undef URI_PREFIX_LEN
 
 EXPORT void uri_parse (const char * uri, const char * * base_p, const char * * ext_p,
  const char * * sub_p, int * isub_p)

@@ -17,10 +17,8 @@
  * the use of this software.
  */
 
-#include <dirent.h>
-#include <string.h>
-
 #include <glib.h>
+#include <string.h>
 
 #include <libaudcore/audstrings.h>
 
@@ -78,67 +76,58 @@ static bool_t is_file_image (const char * imgfile, const char * file_name)
 static char * fileinfo_recursive_get_image (const char * path,
  const SearchParams * params, int depth)
 {
-    DIR * d = opendir (path);
+    GDir * d = g_dir_open (path, 0, NULL);
     if (! d)
         return NULL;
 
-    struct dirent * entry;
+    const char * name;
 
     if (get_bool (NULL, "use_file_cover") && ! depth)
     {
         /* Look for images matching file name */
-        while ((entry = readdir (d)))
+        while ((name = g_dir_read_name (d)))
         {
-            if (entry->d_name[0] == '.')
-                continue;
-
-            char * newpath = filename_build (path, entry->d_name);
+            char * newpath = filename_build (path, name);
 
             if (! g_file_test (newpath, G_FILE_TEST_IS_DIR) &&
-             has_front_cover_extension (entry->d_name) &&
-             is_file_image (entry->d_name, params->basename))
+             has_front_cover_extension (name) &&
+             is_file_image (name, params->basename))
             {
-                closedir (d);
+                g_dir_close (d);
                 return newpath;
             }
 
             str_unref (newpath);
         }
 
-        rewinddir (d);
+        g_dir_rewind (d);
     }
 
     /* Search for files using filter */
-    while ((entry = readdir (d)))
+    while ((name = g_dir_read_name (d)))
     {
-        if (entry->d_name[0] == '.')
-            continue;
-
-        char * newpath = filename_build (path, entry->d_name);
+        char * newpath = filename_build (path, name);
 
         if (! g_file_test (newpath, G_FILE_TEST_IS_DIR) &&
-         has_front_cover_extension (entry->d_name) &&
-         cover_name_filter (entry->d_name, params->include, TRUE) &&
-         ! cover_name_filter (entry->d_name, params->exclude, FALSE))
+         has_front_cover_extension (name) &&
+         cover_name_filter (name, params->include, TRUE) &&
+         ! cover_name_filter (name, params->exclude, FALSE))
         {
-            closedir (d);
+            g_dir_close (d);
             return newpath;
         }
 
         str_unref (newpath);
     }
 
-    rewinddir (d);
+    g_dir_rewind (d);
 
     if (get_bool (NULL, "recurse_for_cover") && depth < get_int (NULL, "recurse_for_cover_depth"))
     {
         /* Descend into directories recursively. */
-        while ((entry = readdir (d)))
+        while ((name = g_dir_read_name (d)))
         {
-            if (entry->d_name[0] == '.')
-                continue;
-
-            char * newpath = filename_build (path, entry->d_name);
+            char * newpath = filename_build (path, name);
 
             if (g_file_test (newpath, G_FILE_TEST_IS_DIR))
             {
@@ -147,7 +136,7 @@ static char * fileinfo_recursive_get_image (const char * path,
                 if (tmp)
                 {
                     str_unref (newpath);
-                    closedir (d);
+                    g_dir_close (d);
                     return tmp;
                 }
             }
@@ -156,7 +145,7 @@ static char * fileinfo_recursive_get_image (const char * path,
         }
     }
 
-    closedir (d);
+    g_dir_close (d);
     return NULL;
 }
 

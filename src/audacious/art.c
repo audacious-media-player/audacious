@@ -19,11 +19,13 @@
 
 #include <assert.h>
 #include <errno.h>
-#include <glib.h>
 #include <pthread.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+
+#include <glib.h>
+#include <glib/gstdio.h>
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
@@ -64,7 +66,7 @@ static void art_item_free (ArtItem * item)
         char * unixname = uri_to_filename (item->art_file);
         if (unixname)
         {
-            unlink (unixname);
+            g_unlink (unixname);
             str_unref (unixname);
         }
     }

@@ -24,10 +24,12 @@
  * loaded; hence the mutex must be locked before checking that a plugin is
  * loaded and while loading it. */
 
-#include <glib.h>
 #include <pthread.h>
 #include <stdio.h>
 #include <string.h>
+
+#include <glib.h>
+#include <glib/gstdio.h>
 
 #include <libaudcore/audstrings.h>
 
@@ -168,7 +170,7 @@ static FILE * open_registry_file (const char * mode)
 {
     const char * user_dir = get_path (AUD_PATH_USER_DIR);
     SCONCAT2 (path, user_dir, "/" FILENAME);
-    return fopen (path, mode);
+    return g_fopen (path, mode);
 }
 
 static void transport_plugin_save (PluginHandle * plugin, FILE * handle)

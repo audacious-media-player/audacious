@@ -21,6 +21,7 @@
 #include <unistd.h>
 
 #include <glib.h>
+#include <glib/gstdio.h>
 
 #include <libaudcore/audstrings.h>
 
@@ -268,7 +269,7 @@ bool_t replace_with_temp_file (TempFile * temp, VFSFile * file)
     }
 
     close (temp->fd);
-    unlink (temp->name);
+    g_unlink (temp->name);
 
     return TRUE;
 }

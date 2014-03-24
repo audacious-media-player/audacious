@@ -17,7 +17,10 @@
  * the use of this software.
  */
 
-#include <dirent.h>
+#include <ctype.h>
+#include <errno.h>
+#include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 
 #ifdef _WIN32
@@ -29,11 +32,6 @@
 #endif
 
 #include <glib.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
-
-#include <errno.h>
 
 #include <libaudcore/audstrings.h>
 
@@ -45,25 +43,22 @@
 
 bool_t dir_foreach (const char * path, DirForeachFunc func, void * user)
 {
-    DIR * dir = opendir (path);
+    GDir * dir = g_dir_open (path, 0, NULL);
     if (! dir)
         return FALSE;
 
-    struct dirent * entry;
-    while ((entry = readdir (dir)))
+    const char * name;
+    while ((name = g_dir_read_name (dir)))
     {
-        if (entry->d_name[0] == '.')
-            continue;
-
-        char * full = filename_build (path, entry->d_name);
-        bool_t stop = func (full, entry->d_name, user);
+        char * full = filename_build (path, name);
+        bool_t stop = func (full, name, user);
         str_unref (full);
 
         if (stop)
             break;
     }
 
-    closedir (dir);
+    g_dir_close (dir);
     return TRUE;
 }
 
@@ -156,7 +151,7 @@ char * write_temp_file (void * data, int64_t len)
 
 char * get_path_to_self (void)
 {
-#if defined _WIN32 || defined HAVE_PROC_SELF_EXE
+#ifdef HAVE_PROC_SELF_EXE
     int size = 256;
 
     while (1)
@@ -164,24 +159,40 @@ char * get_path_to_self (void)
         char buf[size];
         int len;
 
-#ifdef _WIN32
-        if (! (len = GetModuleFileName (NULL, buf, size)))
-        {
-            fprintf (stderr, "GetModuleFileName failed.\n");
-            return NULL;
-        }
-#else
         if ((len = readlink ("/proc/self/exe", buf, size)) < 0)
         {
             fprintf (stderr, "Cannot access /proc/self/exe: %s.\n", strerror (errno));
             return NULL;
         }
-#endif
 
         if (len < size)
         {
             buf[len] = 0;
             return str_get (buf);
+        }
+
+        size += size;
+    }
+#elif defined _WIN32
+    int size = 256;
+
+    while (1)
+    {
+        wchar_t buf[size];
+        int len;
+
+        if (! (len = GetModuleFileNameW (NULL, buf, size)))
+        {
+            fprintf (stderr, "GetModuleFileName failed.\n");
+            return NULL;
+        }
+
+        if (len < size)
+        {
+            char * temp = g_utf16_to_utf8 (buf, len, NULL, NULL, NULL);
+            char * path = str_get (temp);
+            g_free (temp);
+            return path;
         }
 
         size += size;
@@ -204,6 +215,30 @@ char * get_path_to_self (void)
     return NULL;
 #endif
 }
+
+#ifdef _WIN32
+void get_argv_utf8 (int * argc, char * * * argv)
+{
+    wchar_t * combined = GetCommandLineW ();
+    wchar_t * * split = CommandLineToArgvW (combined, argc);
+
+    * argv = g_new (char *, argc + 1);
+
+    for (int i = 0; i < * argc; i ++)
+        (* argv)[i] = g_utf16_to_utf8 (split[i], -1, NULL, NULL, NULL);
+
+    (* argv)[* argc] = 0;
+
+    LocalFree (split);
+}
+
+void free_argv_utf8 (int * argc, char * * * argv)
+{
+    g_strfreev (* argv);
+    * argc = 0;
+    * argv = NULL;
+}
+#endif
 
 /* Strips various common top-level folders from a filename.  The string passed
  * will not be modified, but the string returned will share the same memory.

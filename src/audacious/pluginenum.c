@@ -19,11 +19,13 @@
 
 #include <assert.h>
 #include <errno.h>
-#include <glib.h>
-#include <gmodule.h>
 #include <pthread.h>
 #include <string.h>
 #include <sys/stat.h>
+
+#include <glib.h>
+#include <glib/gstdio.h>
+#include <gmodule.h>
 
 #include <libaudcore/audstrings.h>
 #include <libaudgui/init.h>
@@ -156,8 +158,8 @@ static bool_t scan_plugin_func(const char * path, const char * basename, void * 
     if (!str_has_suffix_nocase(basename, PLUGIN_SUFFIX))
         return FALSE;
 
-    struct stat st;
-    if (stat (path, & st))
+    GStatBuf st;
+    if (g_stat (path, & st) < 0)
     {
         fprintf (stderr, "Unable to stat %s: %s\n", path, strerror (errno));
         return FALSE;
