@@ -194,8 +194,11 @@ CFLAGS="-DHAVE_ISNAN -DHAVE_ISINF" ./configure --prefix=/C/GTK<br>
 make<br>
 make install</tt></p></blockquote>
 
-<p>On Windows Vista or later, User Account Control may need to be disabled
-temporarily in order for GTK+ to build successfully.</p>
+<p><i>It may be necessary to run the MinGW shell with administrative privileges
+for GTK+ to build successfully.</i></p>
+
+<p>Copy <tt>settings.ini</tt> (accompanying this document) to
+<tt>C:\GTK\etc\gtk-3.0\settings.ini</tt>.
 
 <h3>Install intltool</h3>
 
@@ -220,10 +223,6 @@ make install</tt></p></blockquote>
 ./configure --prefix=/C/GTK --disable-icon-mapping<br>
 make<br>
 make install</tt></p></blockquote>
-
-<p>Create the file <tt>C:\GTK\etc\gtk-3.0\settings.ini</tt> containing the following:</p>
-<blockquote><p><tt>[Settings]<br>
-gtk-icon-theme-name=gnome</tt></p></blockquote>
 
 <h3>Install SDL</h3>
 
