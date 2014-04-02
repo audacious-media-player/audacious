@@ -359,9 +359,12 @@ static void * playback_thread (void * unused)
     }
 
     Tuple * tuple = playback_entry_get_tuple ();
-    read_gain_from_tuple (tuple);
+    int length = playback_entry_get_length ();
 
-    if (tuple && playback_entry_get_length () > 0)
+    if (length < 1)
+        seek_request = -1;
+
+    if (tuple && length > 0)
     {
         if (tuple_get_value_type (tuple, FIELD_SEGMENT_START) == TUPLE_INT)
         {
@@ -373,6 +376,8 @@ static void * playback_thread (void * unused)
         if (tuple_get_value_type (tuple, FIELD_SEGMENT_END) == TUPLE_INT)
             stop_time = tuple_get_int (tuple, FIELD_SEGMENT_END);
     }
+
+    read_gain_from_tuple (tuple);
 
     if (tuple)
         tuple_unref (tuple);
