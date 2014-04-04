@@ -52,7 +52,7 @@ void plugin_make_about_window (PluginHandle * plugin)
         text = dgettext (header->domain, text);
     }
 
-    SCONCAT2 (title, _("About "), name);
+    SCONCAT3 (title, _("About"), " ", name);
     audgui_simple_message (& misc->about_window, GTK_MESSAGE_INFO, title, text);
 }
 
@@ -91,7 +91,7 @@ void plugin_make_config_window (PluginHandle * plugin)
 
     GtkWidget * window = gtk_dialog_new ();
 
-    SCONCAT2 (title, name, _(" Settings"));
+    SCONCAT3 (title, name, " ", _("Settings"));
     gtk_window_set_title ((GtkWindow *) window, title);
 
     if (p->apply)
