@@ -128,6 +128,15 @@ void tuple_evalctx_free(TupleEvalContext *ctx)
 static int tuple_evalctx_add_var (TupleEvalContext * ctx, const char * name,
  const int type, const TupleValueType ctype)
 {
+  int field = -1;
+
+  if (type == TUPLE_VAR_FIELD)
+  {
+    field = tuple_field_by_name (name);
+    if (field < 0)
+      return -1;
+  }
+
   int i = ctx->len;
   g_array_set_size (ctx, i + 1);
 
@@ -135,14 +144,12 @@ static int tuple_evalctx_add_var (TupleEvalContext * ctx, const char * name,
 
   var->name = str_get (name);
   var->type = type;
-  var->fieldidx = -1;
+  var->fieldidx = field;
   var->ctype = ctype;
 
-  /* Find fieldidx, if any */
   switch (type) {
     case TUPLE_VAR_FIELD:
-      var->fieldidx = tuple_field_by_name (name);
-      var->ctype = tuple_field_get_type (var->fieldidx);
+      var->ctype = tuple_field_get_type (field);
       break;
 
     case TUPLE_VAR_CONST:
@@ -255,8 +262,6 @@ static bool_t tc_get_item(TupleEvalContext *ctx,
 static int tc_get_variable(TupleEvalContext *ctx, char *name, int type)
 {
   TupleValueType ctype = TUPLE_UNKNOWN;
-
-  if (name == '\0') return -1;
 
   if (g_ascii_isdigit(name[0])) {
     ctype = TUPLE_INT;
