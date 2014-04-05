@@ -1,7 +1,7 @@
 /*
  * ui_preferences.c
- * Copyright 2006-2014 William Pitcock, Tomasz Moń, Michael Färber,
- *                     John Lindgren and Thomas Lange
+ * Copyright 2006-2012 William Pitcock, Tomasz Moń, Michael Färber, and
+ *                     John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -365,17 +365,6 @@ static void on_titlestring_entry_changed (GtkEntry * entry, GtkComboBox * cbox)
 static void on_titlestring_cbox_changed (GtkComboBox * cbox, GtkEntry * entry)
 {
     int preset = gtk_combo_box_get_active (cbox);
-
-    bool_t sensitive = (preset == TITLESTRING_NPRESETS);
-
-    GtkWidget * grid = gtk_widget_get_parent ((GtkWidget *) cbox);
-    GtkWidget * label = gtk_grid_get_child_at ((GtkGrid *) grid, 0, 1);
-    GtkWidget * button = gtk_grid_get_child_at ((GtkGrid *) grid, 2, 1);
-
-    gtk_widget_set_sensitive ((GtkWidget *) entry, sensitive);
-    gtk_widget_set_sensitive (label, sensitive);
-    gtk_widget_set_sensitive (button, sensitive);
-
     if (preset < TITLESTRING_NPRESETS)
         gtk_entry_set_text (entry, titlestring_presets[preset]);
 }
@@ -553,15 +542,6 @@ static void create_playlist_category (void)
 
     GtkWidget * image = gtk_image_new_from_icon_name ("list-add", GTK_ICON_SIZE_BUTTON);
     gtk_container_add ((GtkContainer *) titlestring_help_button, image);
-
-    int active_index = gtk_combo_box_get_active ((GtkComboBox *) titlestring_cbox);
-
-    if (active_index < TITLESTRING_NPRESETS)
-    {
-        gtk_widget_set_sensitive (label, FALSE);
-        gtk_widget_set_sensitive (titlestring_entry, FALSE);
-        gtk_widget_set_sensitive (titlestring_help_button, FALSE);
-    }
 }
 
 static void create_song_info_category (void)
