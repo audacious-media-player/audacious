@@ -18,13 +18,12 @@
  * the use of this software.
  */
 
-#include <glib.h>
 #include <math.h>
 #include <string.h>
 
+#include <glib.h>
 #include <libaudcore/audstrings.h>
 
-#include "debug.h"
 #include "i18n.h"
 #include "misc.h"
 

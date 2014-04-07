@@ -43,12 +43,9 @@ typedef const struct {
     const struct MiscAPI * misc_api;
     const struct PlaylistAPI * playlist_api;
     const struct PluginsAPI * plugins_api;
-    char * verbose;
 } AudAPITable;
 
-#ifdef _AUDACIOUS_CORE
-extern char verbose;
-#else
+#ifndef _AUDACIOUS_CORE
 extern AudAPITable * _aud_api_table;
 #endif
 

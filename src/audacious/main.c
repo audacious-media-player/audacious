@@ -28,15 +28,14 @@
 #include <gtk/gtk.h>
 
 #include <libaudcore/audstrings.h>
+#include <libaudcore/debug.h>
 #include <libaudcore/hook.h>
 #include <libaudgui/libaudgui.h>
-#include <libaudtag/audtag.h>
 
 #ifdef USE_DBUS
 #include "aud-dbus.h"
 #endif
 
-#include "debug.h"
 #include "drct.h"
 #include "equalizer.h"
 #include "i18n.h"
@@ -296,7 +295,7 @@ static bool_t parse_options (int argc, char * * argv)
         }
     }
 
-    verbose = options.verbose;
+    aud_enable_debug (options.verbose);
 
 OUT:
 #ifdef _WIN32
@@ -499,9 +498,6 @@ static void init_two (void)
     chardet_init ();
     eq_init ();
     playlist_init ();
-
-    tag_set_verbose (verbose);
-    vfs_set_verbose (verbose);
 
     AUDDBG ("Loading lowlevel plugins.\n");
     start_plugins_one ();

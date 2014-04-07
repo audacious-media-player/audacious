@@ -5,6 +5,7 @@ LIB_MINOR = 0
 SRCS = audio.c \
        audstrings.c \
        charset.c \
+       debug.c \
        eventqueue.c \
        hook.c \
        index.c \
@@ -23,6 +24,7 @@ SRCS = audio.c \
 INCLUDES = audio.h \
            audstrings.h \
            core.h \
+           debug.h \
            hook.h \
            index.h \
            inifile.h \

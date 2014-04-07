@@ -31,6 +31,7 @@
 #include <glib/gstdio.h>
 
 #include "audstrings.h"
+#include "debug.h"
 #include "vfs_local.h"
 
 #define VFS_SIG ('V' | ('F' << 8) | ('S' << 16))
@@ -58,13 +59,6 @@ static VFSConstructor * (* lookup_func) (const char * scheme) = NULL;
 EXPORT void vfs_set_lookup_func (VFSConstructor * (* func) (const char * scheme))
 {
     lookup_func = func;
-}
-
-static bool_t verbose = FALSE;
-
-EXPORT void vfs_set_verbose (bool_t set)
-{
-    verbose = set;
 }
 
 static void logger (const char * format, ...)
@@ -159,7 +153,7 @@ vfs_fopen(const char * path,
 
     VFSFile * file = vfs_new (path, vtable, handle);
 
-    if (verbose)
+    if (_libaudcore_debug_enabled)
         logger ("VFS: <%p> open (mode %s) %s\n", file, mode, path);
 
     return file;
@@ -176,7 +170,7 @@ vfs_fclose(VFSFile * file)
 {
     g_return_val_if_fail (file && file->sig == VFS_SIG, -1);
 
-    if (verbose)
+    if (_libaudcore_debug_enabled)
         logger ("VFS: <%p> close\n", file);
 
     int ret = 0;
@@ -205,7 +199,7 @@ EXPORT int64_t vfs_fread (void * ptr, int64_t size, int64_t nmemb, VFSFile * fil
 
     int64_t readed = file->base->vfs_fread_impl (ptr, size, nmemb, file);
 
-/*    if (verbose)
+/*    if (_libaudcore_debug_enabled)
         logger ("VFS: <%p> read %"PRId64" elements of size %"PRId64" = "
          "%"PRId64"\n", file, nmemb, size, readed); */
 
@@ -227,7 +221,7 @@ EXPORT int64_t vfs_fwrite (const void * ptr, int64_t size, int64_t nmemb, VFSFil
 
     int64_t written = file->base->vfs_fwrite_impl (ptr, size, nmemb, file);
 
-    if (verbose)
+    if (_libaudcore_debug_enabled)
         logger ("VFS: <%p> write %"PRId64" elements of size %"PRId64" = "
          "%"PRId64"\n", file, nmemb, size, written);
 
@@ -287,7 +281,7 @@ vfs_fseek(VFSFile * file,
 {
     g_return_val_if_fail (file && file->sig == VFS_SIG, -1);
 
-    if (verbose)
+    if (_libaudcore_debug_enabled)
         logger ("VFS: <%p> seek to %"PRId64" from %s\n", file, offset, whence ==
          SEEK_CUR ? "current" : whence == SEEK_SET ? "beginning" : whence ==
          SEEK_END ? "end" : "invalid");
@@ -295,7 +289,7 @@ vfs_fseek(VFSFile * file,
     if (! file->base->vfs_fseek_impl (file, offset, whence))
         return 0;
 
-    if (verbose)
+    if (_libaudcore_debug_enabled)
         logger ("VFS: <%p> seek failed!\n", file);
 
     return -1;
@@ -314,7 +308,7 @@ vfs_ftell(VFSFile * file)
 
     int64_t told = file->base->vfs_ftell_impl (file);
 
-    if (verbose)
+    if (_libaudcore_debug_enabled)
         logger ("VFS: <%p> tell = %"PRId64"\n", file, told);
 
     return told;
@@ -333,7 +327,7 @@ vfs_feof(VFSFile * file)
 
     bool_t eof = file->base->vfs_feof_impl (file);
 
-    if (verbose)
+    if (_libaudcore_debug_enabled)
         logger ("VFS: <%p> eof = %s\n", file, eof ? "yes" : "no");
 
     return eof;
@@ -350,7 +344,7 @@ EXPORT int vfs_ftruncate (VFSFile * file, int64_t length)
 {
     g_return_val_if_fail (file && file->sig == VFS_SIG, -1);
 
-    if (verbose)
+    if (_libaudcore_debug_enabled)
         logger ("VFS: <%p> truncate to %"PRId64"\n", file, length);
 
     return file->base->vfs_ftruncate_impl(file, length);
@@ -368,7 +362,7 @@ EXPORT int64_t vfs_fsize (VFSFile * file)
 
     int64_t size = file->base->vfs_fsize_impl (file);
 
-    if (verbose)
+    if (_libaudcore_debug_enabled)
         logger ("VFS: <%p> size = %"PRId64"\n", file, size);
 
     return size;

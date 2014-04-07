@@ -17,10 +17,11 @@
  * the use of this software.
  */
 
-#include <glib.h>
 #include <pthread.h>
 
-#include "debug.h"
+#include <glib.h>
+#include <libaudcore/debug.h>
+
 #include "drct.h"
 #include "effect.h"
 #include "misc.h"

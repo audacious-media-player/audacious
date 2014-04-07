@@ -17,11 +17,11 @@
  * the use of this software.
  */
 
+#include <stdio.h>
 #include <string.h>
 
 #include <glib.h>
 
-#include "debug.h"
 #include "probe-buffer.h"
 
 #define BUFSIZE (256 * 1024)

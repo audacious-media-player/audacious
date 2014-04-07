@@ -127,7 +127,6 @@ void vfs_file_read_all (VFSFile * file, void * * buf, int64_t * size);
 void vfs_file_get_contents (const char * filename, void * * buf, int64_t * size);
 
 void vfs_set_lookup_func (VFSConstructor * (* func) (const char * scheme));
-void vfs_set_verbose (bool_t verbose);
 
 #undef WARN_RETURN
 

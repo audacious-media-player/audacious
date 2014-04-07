@@ -22,8 +22,8 @@
 #include <stdlib.h>
 
 #include <glib.h>
+#include <libaudcore/debug.h>
 
-#include "debug.h"
 #include "effect.h"
 #include "general.h"
 #include "interface.h"

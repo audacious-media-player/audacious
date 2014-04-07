@@ -25,6 +25,7 @@
 #include <unistd.h>
 
 #include <libaudcore/audstrings.h>
+#include <libaudcore/debug.h>
 
 #include "id3-common.h"
 #include "id3v24.h"
@@ -120,7 +121,7 @@ static bool_t skip_extended_header_3 (VFSFile * handle, int * _size)
 
     size = GUINT32_FROM_BE (size);
 
-    TAGDBG ("Found v2.3 extended header, size = %d.\n", (int) size);
+    AUDDBG ("Found v2.3 extended header, size = %d.\n", (int) size);
 
     if (vfs_fseek (handle, size, SEEK_CUR))
         return FALSE;
@@ -138,7 +139,7 @@ static bool_t skip_extended_header_4 (VFSFile * handle, int * _size)
 
     size = unsyncsafe32 (GUINT32_FROM_BE (size));
 
-    TAGDBG ("Found v2.4 extended header, size = %d.\n", (int) size);
+    AUDDBG ("Found v2.4 extended header, size = %d.\n", (int) size);
 
     if (vfs_fseek (handle, size - 4, SEEK_CUR))
         return FALSE;
@@ -157,12 +158,12 @@ static bool_t validate_header (ID3v2Header * header, bool_t is_footer)
 
     header->size = unsyncsafe32 (GUINT32_FROM_BE (header->size));
 
-    TAGDBG ("Found ID3v2 %s:\n", is_footer ? "footer" : "header");
-    TAGDBG (" magic = %.3s\n", header->magic);
-    TAGDBG (" version = %d\n", (int) header->version);
-    TAGDBG (" revision = %d\n", (int) header->revision);
-    TAGDBG (" flags = %x\n", (int) header->flags);
-    TAGDBG (" size = %d\n", (int) header->size);
+    AUDDBG ("Found ID3v2 %s:\n", is_footer ? "footer" : "header");
+    AUDDBG (" magic = %.3s\n", header->magic);
+    AUDDBG (" version = %d\n", (int) header->version);
+    AUDDBG (" revision = %d\n", (int) header->revision);
+    AUDDBG (" flags = %x\n", (int) header->flags);
+    AUDDBG (" size = %d\n", (int) header->size);
     return TRUE;
 }
 
@@ -261,7 +262,7 @@ static bool_t read_header (VFSFile * handle, int * version, bool_t *
         * data_size -= extended_size;
     }
 
-    TAGDBG ("Offset = %d, header size = %d, data size = %d, footer size = "
+    AUDDBG ("Offset = %d, header size = %d, data size = %d, footer size = "
      "%d.\n", (int) * offset, * header_size, * data_size, * footer_size);
 
     return TRUE;
@@ -308,17 +309,17 @@ static bool_t read_frame (VFSFile * handle, int max_size, int version,
     if (header.size > max_size || header.size == 0)
         return FALSE;
 
-    TAGDBG ("Found frame:\n");
-    TAGDBG (" key = %.4s\n", header.key);
-    TAGDBG (" size = %d\n", (int) header.size);
-    TAGDBG (" flags = %x\n", (int) header.flags);
+    AUDDBG ("Found frame:\n");
+    AUDDBG (" key = %.4s\n", header.key);
+    AUDDBG (" size = %d\n", (int) header.size);
+    AUDDBG (" flags = %x\n", (int) header.flags);
 
     * frame_size = sizeof (ID3v2FrameHeader) + header.size;
     g_strlcpy (key, header.key, 5);
 
     if (header.flags & (ID3_FRAME_COMPRESSED | ID3_FRAME_ENCRYPTED))
     {
-        TAGDBG ("Hit compressed/encrypted frame %s.\n", key);
+        AUDDBG ("Hit compressed/encrypted frame %s.\n", key);
         return FALSE;
     }
 
@@ -339,7 +340,7 @@ static bool_t read_frame (VFSFile * handle, int max_size, int version,
     if (syncsafe || (header.flags & ID3_FRAME_SYNCSAFE))
         * size = unsyncsafe (* data, * size);
 
-    TAGDBG ("Data size = %d.\n", * size);
+    AUDDBG ("Data size = %d.\n", * size);
     return TRUE;
 }
 
@@ -391,7 +392,7 @@ static void read_all_frames (VFSFile * handle, int version, bool_t syncsafe,
 
 static bool_t write_frame (int fd, GenericFrame * frame, int version, int * frame_size)
 {
-    TAGDBG ("Writing frame %s, size %d\n", frame->key, frame->size);
+    AUDDBG ("Writing frame %s, size %d\n", frame->key, frame->size);
 
     ID3v2FrameHeader header;
 
@@ -435,7 +436,7 @@ static int write_all_frames (int fd, GHashTable * dict, int version)
     WriteState state = {fd, version, 0};
     g_hash_table_foreach (dict, write_frame_list, & state);
 
-    TAGDBG ("Total frame bytes written = %d.\n", state.written_size);
+    AUDDBG ("Total frame bytes written = %d.\n", state.written_size);
     return state.written_size;
 }
 
@@ -499,10 +500,10 @@ static void decode_private_info (Tuple * tuple, const unsigned char * data, int 
             if (!memcmp(value, SECONDARY_CLASS_GAMES_SONG, 16))
                 tuple_set_str (tuple, -1, "media-class", "Game Soundtrack");
         } else {
-            TAGDBG("Unrecognised tag %s (Windows Media) ignored\n", text);
+            AUDDBG("Unrecognised tag %s (Windows Media) ignored\n", text);
         }
     } else {
-        TAGDBG("Unable to decode private data, skipping: %s\n", text);
+        AUDDBG("Unable to decode private data, skipping: %s\n", text);
     }
 
 DONE:
@@ -527,7 +528,7 @@ static GenericFrame * add_generic_frame (int id, int size,
 
 static void remove_frame (int id, GHashTable * dict)
 {
-    TAGDBG ("Deleting frame %s.\n", id3_frames[id]);
+    AUDDBG ("Deleting frame %s.\n", id3_frames[id]);
     g_hash_table_remove (dict, id3_frames[id]);
 }
 
@@ -539,7 +540,7 @@ static void add_text_frame (int id, const char * text, GHashTable * dict)
         return;
     }
 
-    TAGDBG ("Adding text frame %s = %s.\n", id3_frames[id], text);
+    AUDDBG ("Adding text frame %s = %s.\n", id3_frames[id], text);
 
     long words;
     uint16_t * utf16 = g_utf8_to_utf16 (text, -1, NULL, & words, NULL);
@@ -562,7 +563,7 @@ static void add_comment_frame (const char * text, GHashTable * dict)
         return;
     }
 
-    TAGDBG ("Adding comment frame = %s.\n", text);
+    AUDDBG ("Adding comment frame = %s.\n", text);
 
     long words;
     uint16_t * utf16 = g_utf8_to_utf16 (text, -1, NULL, & words, NULL);
@@ -680,7 +681,7 @@ static bool_t id3v24_read_tag (Tuple * tuple, VFSFile * handle)
             id3_decode_rva (tuple, data, size);
             break;
           default:
-            TAGDBG ("Ignoring unsupported ID3 frame %s.\n", key);
+            AUDDBG ("Ignoring unsupported ID3 frame %s.\n", key);
             break;
         }
 

@@ -30,8 +30,6 @@ enum
     TAG_TYPE_ID3V2
 };
 
-void tag_set_verbose (bool_t verbose);
-
 bool_t tag_tuple_read (Tuple * tuple, VFSFile *fd);
 bool_t tag_image_read (VFSFile * handle, void * * data, int64_t * size);
 

@@ -22,9 +22,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <glib.h> /* for g_usleep */
+#include <glib.h>
+#include <libaudcore/debug.h>
 
-#include "debug.h"
 #include "effect.h"
 #include "equalizer.h"
 #include "misc.h"

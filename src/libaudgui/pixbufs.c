@@ -19,10 +19,10 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include <audacious/debug.h>
 #include <audacious/misc.h>
 #include <audacious/playlist.h>
 #include <libaudcore/audstrings.h>
+#include <libaudcore/debug.h>
 
 #include "libaudgui-gtk.h"
 

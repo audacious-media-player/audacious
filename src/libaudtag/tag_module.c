@@ -20,6 +20,7 @@
 #include <glib.h>
 #include <stdio.h>
 
+#include <libaudcore/debug.h>
 #include <libaudcore/tuple.h>
 #include <libaudcore/vfs.h>
 
@@ -41,13 +42,13 @@ tag_module_t * find_tag_module (VFSFile * fd, int new_type)
     {
         if (vfs_fseek(fd, 0, SEEK_SET))
         {
-            TAGDBG("not a seekable file\n");
+            AUDDBG("not a seekable file\n");
             return NULL;
         }
 
         if (modules[i]->can_handle_file (fd))
         {
-            TAGDBG ("Module %s accepted file.\n", modules[i]->name);
+            AUDDBG ("Module %s accepted file.\n", modules[i]->name);
             return modules[i];
         }
     }
@@ -62,6 +63,6 @@ tag_module_t * find_tag_module (VFSFile * fd, int new_type)
         }
     }
 
-    TAGDBG("no module found\n");
+    AUDDBG("no module found\n");
     return NULL;
 }

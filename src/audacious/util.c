@@ -35,7 +35,6 @@
 
 #include <libaudcore/audstrings.h>
 
-#include "debug.h"
 #include "i18n.h"
 #include "misc.h"
 #include "plugins.h"

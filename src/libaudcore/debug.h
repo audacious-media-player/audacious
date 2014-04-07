@@ -1,6 +1,6 @@
 /*
  * debug.h
- * Copyright 2010-2011 John Lindgren
+ * Copyright 2014 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -17,17 +17,24 @@
  * the use of this software.
  */
 
-#ifndef AUDACIOUS_DEBUG_H
-#define AUDACIOUS_DEBUG_H
+#ifndef LIBAUDCORE_DEBUG_H
+#define LIBAUDCORE_DEBUG_H
 
 #include <stdio.h>
 
-#include <audacious/api.h>
+#include "core.h"
 
-#ifdef _AUDACIOUS_CORE
-#define AUDDBG(...) do {if (verbose) {printf ("%s:%d [%s]: ", __FILE__, __LINE__, __FUNCTION__); printf (__VA_ARGS__);}} while (0)
-#else
-#define AUDDBG(...) do {if (* _aud_api_table->verbose) {printf ("%s:%d [%s]: ", __FILE__, __LINE__, __FUNCTION__); printf (__VA_ARGS__);}} while (0)
-#endif
+extern bool_t _libaudcore_debug_enabled;
+
+#define aud_enable_debug(enable) do { \
+    _libaudcore_debug_enabled = (enable); \
+} while (0)
+
+#define AUDDBG(...) do { \
+    if (_libaudcore_debug_enabled) { \
+        printf ("%s:%d [%s]: ", __FILE__, __LINE__, __FUNCTION__); \
+        printf (__VA_ARGS__); \
+    } \
+} while (0)
 
 #endif

@@ -45,7 +45,6 @@ INCLUDES = api.h \
            api-alias-end.h \
            api-define-begin.h \
            api-define-end.h \
-           debug.h \
            drct.h \
            drct-api.h \
            i18n.h				\

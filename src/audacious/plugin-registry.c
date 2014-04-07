@@ -32,8 +32,8 @@
 #include <glib/gstdio.h>
 
 #include <libaudcore/audstrings.h>
+#include <libaudcore/debug.h>
 
-#include "debug.h"
 #include "i18n.h"
 #include "interface.h"
 #include "misc.h"

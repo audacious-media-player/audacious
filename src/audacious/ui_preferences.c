@@ -27,7 +27,6 @@
 #include <libaudcore/hook.h>
 #include <libaudgui/libaudgui-gtk.h>
 
-#include "debug.h"
 #include "i18n.h"
 #include "misc.h"
 #include "output.h"

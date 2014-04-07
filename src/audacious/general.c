@@ -18,8 +18,8 @@
  */
 
 #include <gtk/gtk.h>
+#include <libaudcore/debug.h>
 
-#include "debug.h"
 #include "general.h"
 #include "interface.h"
 #include "plugin.h"

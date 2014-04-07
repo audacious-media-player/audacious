@@ -22,6 +22,7 @@
 
 #include <glib.h>
 
+#include <libaudcore/debug.h>
 #include <libaudcore/tuple.h>
 
 #include "audtag.h"
@@ -43,7 +44,7 @@ EXPORT bool_t tag_tuple_read (Tuple * tuple, VFSFile * handle)
 
     if (! module || ! module->read_tag)
     {
-        TAGDBG ("read_tag() not supported for %s\n", vfs_get_filename (handle));
+        AUDDBG ("read_tag() not supported for %s\n", vfs_get_filename (handle));
         return FALSE;
     }
 
@@ -56,7 +57,7 @@ EXPORT bool_t tag_image_read (VFSFile * handle, void * * data, int64_t * size)
 
     if (! module || ! module->read_image)
     {
-        TAGDBG ("read_image() not supported for %s\n", vfs_get_filename (handle));
+        AUDDBG ("read_image() not supported for %s\n", vfs_get_filename (handle));
         return FALSE;
     }
 
@@ -69,7 +70,7 @@ EXPORT bool_t tag_tuple_write (const Tuple * tuple, VFSFile * handle, int new_ty
 
     if (! module || ! module->write_tag)
     {
-        TAGDBG ("write_tag() not supported for %s\n", vfs_get_filename (handle));
+        AUDDBG ("write_tag() not supported for %s\n", vfs_get_filename (handle));
         return FALSE;
     }
 

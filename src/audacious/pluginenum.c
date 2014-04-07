@@ -28,9 +28,9 @@
 #include <gmodule.h>
 
 #include <libaudcore/audstrings.h>
+#include <libaudcore/debug.h>
 #include <libaudgui/init.h>
 
-#include "debug.h"
 #include "plugin.h"
 #include "util.h"
 
@@ -52,15 +52,12 @@ static const char * plugin_dir_list[] = {
     "Visualization"
 };
 
-char verbose = 0;
-
 AudAPITable api_table = {
  .drct_api = & drct_api,
  .input_api = & input_api,
  .misc_api = & misc_api,
  .playlist_api = & playlist_api,
- .plugins_api = & plugins_api,
- .verbose = & verbose};
+ .plugins_api = & plugins_api};
 
 typedef struct {
     Plugin * header;

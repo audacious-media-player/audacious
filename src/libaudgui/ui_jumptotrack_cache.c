@@ -23,9 +23,9 @@
 #include <string.h>
 #include <assert.h>
 
-#include <audacious/debug.h>
 #include <audacious/playlist.h>
 #include <libaudcore/audstrings.h>
+#include <libaudcore/debug.h>
 
 #include "ui_jumptotrack_cache.h"
 

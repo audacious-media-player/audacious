@@ -21,9 +21,8 @@
 #define TAGUTIL_H
 
 #include <stdint.h>
-#include <stdio.h>
 
-#include "libaudcore/vfs.h"
+#include <libaudcore/vfs.h>
 
 enum {
     GENRE_BLUES = 0,
@@ -152,10 +151,6 @@ enum {
     GENRE_A_CAPELLA,
     GENRE_EURO_HOUSE
 };
-
-extern bool_t tag_verbose;
-
-#define TAGDBG(...) do {if (tag_verbose) {printf ("%s:%d [%s]: ", __FILE__, __LINE__, __FUNCTION__); printf (__VA_ARGS__);}} while (0)
 
 const char *convert_numericgenre_to_text(int numericgenre);
 

@@ -26,6 +26,7 @@
 #include <glib.h>
 
 #include <libaudcore/audstrings.h>
+#include <libaudcore/debug.h>
 
 #include "../util.h"
 
@@ -94,7 +95,7 @@ void id3_associate_string (Tuple * tuple, int field, const char * data, int size
 
     if (text && text[0])
     {
-        TAGDBG ("Field %i = %s.\n", field, text);
+        AUDDBG ("Field %i = %s.\n", field, text);
         tuple_set_str (tuple, field, text);
     }
 
@@ -107,7 +108,7 @@ void id3_associate_int (Tuple * tuple, int field, const char * data, int size)
 
     if (text && atoi (text) >= 0)
     {
-        TAGDBG ("Field %i = %s.\n", field, text);
+        AUDDBG ("Field %i = %s.\n", field, text);
         tuple_set_int (tuple, field, atoi (text));
     }
 
@@ -147,7 +148,7 @@ void id3_decode_comment (Tuple * tuple, const char * data, int size)
     char * type = id3_convert (data + 4, before_nul, data[0]);
     char * value = id3_convert (data + 4 + after_nul, size - 4 - after_nul, data[0]);
 
-    TAGDBG ("Comment: lang = %.3s, type = %s, value = %s.\n", lang, type, value);
+    AUDDBG ("Comment: lang = %.3s, type = %s, value = %s.\n", lang, type, value);
 
     if (type && ! type[0] && value) /* blank type = actual comment */
         tuple_set_str (tuple, FIELD_COMMENT, value);
@@ -176,7 +177,7 @@ static bool_t decode_rva_block (const char * * _data, int * _size,
     data += 4;
     size -= 4;
 
-    TAGDBG ("RVA block: channel = %d, adjustment = %d/%d, peak bits = %d\n",
+    AUDDBG ("RVA block: channel = %d, adjustment = %d/%d, peak bits = %d\n",
      * channel, * adjustment, * adjustment_unit, peak_bits);
 
     if (peak_bits > 0 && peak_bits < sizeof (int) * 8)
@@ -196,7 +197,7 @@ static bool_t decode_rva_block (const char * * _data, int * _size,
         data += bytes;
         size -= count;
 
-        TAGDBG ("RVA block: peak = %d/%d\n", * peak, * peak_unit);
+        AUDDBG ("RVA block: peak = %d/%d\n", * peak, * peak_unit);
     }
     else
     {
@@ -219,7 +220,7 @@ void id3_decode_rva (Tuple * tuple, const char * data, int size)
 
     domain = data;
 
-    TAGDBG ("RVA domain: %s\n", domain);
+    AUDDBG ("RVA domain: %s\n", domain);
 
     size -= strlen (domain) + 1;
     data += strlen (domain) + 1;
@@ -285,7 +286,7 @@ bool_t id3_decode_picture (const char * data, int size, int * type,
     * image_size = body_size - after_nul2;
     * image_data = g_memdup (body + after_nul2, * image_size);
 
-    TAGDBG ("Picture: mime = %s, type = %d, desc = %s, size = %d.\n", mime,
+    AUDDBG ("Picture: mime = %s, type = %d, desc = %s, size = %d.\n", mime,
      * type, desc, (int) * image_size);
 
     str_unref (desc);

@@ -24,6 +24,7 @@
 #include <string.h>
 
 #include <libaudcore/audstrings.h>
+#include <libaudcore/debug.h>
 
 #include "id3-common.h"
 #include "id3v22.h"
@@ -97,12 +98,12 @@ static bool_t validate_header (ID3v2Header * header)
 
     header->size = unsyncsafe32(GUINT32_FROM_BE(header->size));
 
-    TAGDBG ("Found ID3v2 header:\n");
-    TAGDBG (" magic = %.3s\n", header->magic);
-    TAGDBG (" version = %d\n", (int) header->version);
-    TAGDBG (" revision = %d\n", (int) header->revision);
-    TAGDBG (" flags = %x\n", (int) header->flags);
-    TAGDBG (" size = %d\n", (int) header->size);
+    AUDDBG ("Found ID3v2 header:\n");
+    AUDDBG (" magic = %.3s\n", header->magic);
+    AUDDBG (" version = %d\n", (int) header->version);
+    AUDDBG (" revision = %d\n", (int) header->revision);
+    AUDDBG (" flags = %x\n", (int) header->flags);
+    AUDDBG (" size = %d\n", (int) header->size);
     return TRUE;
 }
 
@@ -128,7 +129,7 @@ static bool_t read_header (VFSFile * handle, int * version, bool_t *
 
     * syncsafe = (header.flags & ID3_HEADER_SYNCSAFE) ? TRUE : FALSE;
 
-    TAGDBG ("Offset = %d, header size = %d, data size = %d\n",
+    AUDDBG ("Offset = %d, header size = %d, data size = %d\n",
      (int) * offset, * header_size, * data_size);
 
     return TRUE;
@@ -154,16 +155,16 @@ static bool_t read_frame (VFSFile * handle, int max_size, int version,
     for (i = 0; i < 3; i++)
     {
         hdrsz |= (uint32_t) header.size[i] << ((2 - i) * 8);
-        TAGDBG("header.size[%d] = %d hdrsz %d slot %d\n", i, header.size[i], hdrsz, 2 - i);
+        AUDDBG("header.size[%d] = %d hdrsz %d slot %d\n", i, header.size[i], hdrsz, 2 - i);
     }
 
 //    hdrsz = GUINT32_TO_BE(hdrsz);
     if (hdrsz > max_size || hdrsz == 0)
         return FALSE;
 
-    TAGDBG ("Found frame:\n");
-    TAGDBG (" key = %.3s\n", header.key);
-    TAGDBG (" size = %d\n", (int) hdrsz);
+    AUDDBG ("Found frame:\n");
+    AUDDBG (" key = %.3s\n", header.key);
+    AUDDBG (" size = %d\n", (int) hdrsz);
 
     * frame_size = sizeof (ID3v2FrameHeader) + hdrsz;
     g_strlcpy (key, header.key, 4);
@@ -174,7 +175,7 @@ static bool_t read_frame (VFSFile * handle, int max_size, int version,
     if (vfs_fread (* data, 1, * size, handle) != * size)
         return FALSE;
 
-    TAGDBG ("Data size = %d.\n", * size);
+    AUDDBG ("Data size = %d.\n", * size);
     return TRUE;
 }
 
@@ -213,7 +214,7 @@ bool_t id3v22_read_tag (Tuple * tuple, VFSFile * handle)
      & data_size))
         return FALSE;
 
-    TAGDBG ("Reading tags from %i bytes of ID3 data in %s\n", data_size,
+    AUDDBG ("Reading tags from %i bytes of ID3 data in %s\n", data_size,
      vfs_get_filename (handle));
 
     for (pos = 0; pos < data_size; )
@@ -225,7 +226,7 @@ bool_t id3v22_read_tag (Tuple * tuple, VFSFile * handle)
         if (! read_frame (handle, data_size - pos, version, syncsafe,
          & frame_size, key, & data, & size))
         {
-            TAGDBG("read_frame failed at pos %i\n", pos);
+            AUDDBG("read_frame failed at pos %i\n", pos);
                 break;
         }
 
@@ -271,7 +272,7 @@ bool_t id3v22_read_tag (Tuple * tuple, VFSFile * handle)
             id3_decode_rva (tuple, data, size);
             break;
           default:
-            TAGDBG ("Ignoring unsupported ID3 frame %s.\n", key);
+            AUDDBG ("Ignoring unsupported ID3 frame %s.\n", key);
             break;
         }
 

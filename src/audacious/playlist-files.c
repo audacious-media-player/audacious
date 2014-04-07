@@ -18,9 +18,10 @@
  */
 
 #include <glib.h>
-#include <libaudcore/audstrings.h>
 
-#include "debug.h"
+#include <libaudcore/audstrings.h>
+#include <libaudcore/debug.h>
+
 #include "i18n.h"
 #include "misc.h"
 #include "playlist.h"

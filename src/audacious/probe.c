@@ -22,8 +22,8 @@
 #include <string.h>
 
 #include <libaudcore/audstrings.h>
+#include <libaudcore/debug.h>
 
-#include "debug.h"
 #include "misc.h"
 #include "playlist.h"
 #include "plugin.h"

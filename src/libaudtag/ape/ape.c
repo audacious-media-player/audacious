@@ -27,6 +27,7 @@
 #include <string.h>
 
 #include <libaudcore/audstrings.h>
+#include <libaudcore/debug.h>
 #include <libaudcore/vfs.h>
 
 #include "ape.h"
@@ -84,7 +85,7 @@ static bool_t ape_find_header (VFSFile * handle, APEHeader * header,
 
     if (ape_read_header (handle, header))
     {
-        TAGDBG ("Found header at 0, length = %d, version = %d.\n",
+        AUDDBG ("Found header at 0, length = %d, version = %d.\n",
          (int) header->length, (int) header->version);
 
         * start = 0;
@@ -94,7 +95,7 @@ static bool_t ape_find_header (VFSFile * handle, APEHeader * header,
 
         if (! (header->flags & APE_FLAG_HAS_HEADER) || ! (header->flags & APE_FLAG_IS_HEADER))
         {
-            TAGDBG ("Invalid header flags (%u).\n", (unsigned int) header->flags);
+            AUDDBG ("Invalid header flags (%u).\n", (unsigned int) header->flags);
             return FALSE;
         }
 
@@ -105,7 +106,7 @@ static bool_t ape_find_header (VFSFile * handle, APEHeader * header,
 
             if (! ape_read_header (handle, & secondary))
             {
-                TAGDBG ("Expected footer, but found none.\n");
+                AUDDBG ("Expected footer, but found none.\n");
                 return FALSE;
             }
 
@@ -126,12 +127,12 @@ static bool_t ape_find_header (VFSFile * handle, APEHeader * header,
 
         if (! ape_read_header (handle, header))
         {
-            TAGDBG ("No header found.\n");
+            AUDDBG ("No header found.\n");
             return FALSE;
         }
     }
 
-    TAGDBG ("Found footer at %d, length = %d, version = %d.\n",
+    AUDDBG ("Found footer at %d, length = %d, version = %d.\n",
      (int) vfs_ftell (handle) - (int) sizeof (APEHeader), (int) header->length,
      (int) header->version);
 
@@ -142,7 +143,7 @@ static bool_t ape_find_header (VFSFile * handle, APEHeader * header,
 
     if ((header->flags & APE_FLAG_HAS_NO_FOOTER) || (header->flags & APE_FLAG_IS_HEADER))
     {
-        TAGDBG ("Invalid footer flags (%u).\n", (unsigned) header->flags);
+        AUDDBG ("Invalid footer flags (%u).\n", (unsigned) header->flags);
         return FALSE;
     }
 
@@ -153,7 +154,7 @@ static bool_t ape_find_header (VFSFile * handle, APEHeader * header,
 
         if (! ape_read_header (handle, & secondary))
         {
-            TAGDBG ("Expected header, but found none.\n");
+            AUDDBG ("Expected header, but found none.\n");
             return FALSE;
         }
 
@@ -181,7 +182,7 @@ static ValuePair * ape_read_item (void * * data, int length)
 
     if (length < 8)
     {
-        TAGDBG ("Expected item, but only %d bytes remain in tag.\n", length);
+        AUDDBG ("Expected item, but only %d bytes remain in tag.\n", length);
         return NULL;
     }
 
@@ -189,7 +190,7 @@ static ValuePair * ape_read_item (void * * data, int length)
 
     if (value == NULL)
     {
-        TAGDBG ("Unterminated item key (max length = %d).\n", length - 8);
+        AUDDBG ("Unterminated item key (max length = %d).\n", length - 8);
         return NULL;
     }
 
@@ -197,7 +198,7 @@ static ValuePair * ape_read_item (void * * data, int length)
 
     if (header[0] > (char *) (* data) + length - value)
     {
-        TAGDBG ("Item value of length %d, but only %d bytes remain in tag.\n",
+        AUDDBG ("Item value of length %d, but only %d bytes remain in tag.\n",
          (int) header[0], (int) ((char *) (* data) + length - value));
         return NULL;
     }
@@ -233,7 +234,7 @@ static GList * ape_read_items (VFSFile * handle)
         return NULL;
     }
 
-    TAGDBG ("Reading %d items:\n", header.items);
+    AUDDBG ("Reading %d items:\n", header.items);
     item = data;
 
     while (header.items --)
@@ -244,7 +245,7 @@ static GList * ape_read_items (VFSFile * handle)
         if (pair == NULL)
             break;
 
-        TAGDBG ("Read: %s = %s.\n", pair->key, pair->value);
+        AUDDBG ("Read: %s = %s.\n", pair->key, pair->value);
         list = g_list_prepend (list, pair);
     }
 
@@ -352,7 +353,7 @@ static bool_t ape_write_item (VFSFile * handle, const char * key,
     int value_len = strlen (value);
     uint32_t header[2];
 
-    TAGDBG ("Write: %s = %s.\n", key, value);
+    AUDDBG ("Write: %s = %s.\n", key, value);
 
     header[0] = GUINT32_TO_LE (value_len);
     header[1] = 0;
@@ -433,7 +434,7 @@ static bool_t ape_write_tag (const Tuple * tuple, VFSFile * handle)
     {
         if (start + length != vfs_fsize (handle))
         {
-            TAGDBG ("Writing tags is only supported at end of file.\n");
+            AUDDBG ("Writing tags is only supported at end of file.\n");
             goto ERR;
         }
 
@@ -481,7 +482,7 @@ static bool_t ape_write_tag (const Tuple * tuple, VFSFile * handle)
         items ++;
     }
 
-    TAGDBG ("Wrote %d items, %d bytes.\n", items, length);
+    AUDDBG ("Wrote %d items, %d bytes.\n", items, length);
 
     if (! write_header (length, items, FALSE, handle) || vfs_fseek (handle,
      start, SEEK_SET) || ! write_header (length, items, TRUE, handle))

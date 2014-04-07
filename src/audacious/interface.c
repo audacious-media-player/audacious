@@ -20,10 +20,10 @@
 #include <gtk/gtk.h>
 #include <pthread.h>
 
+#include <libaudcore/debug.h>
 #include <libaudcore/hook.h>
 #include <libaudgui/libaudgui-gtk.h>
 
-#include "debug.h"
 #include "general.h"
 #include "i18n.h"
 #include "interface.h"
