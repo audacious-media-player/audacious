@@ -17,19 +17,15 @@
  * the use of this software.
  */
 
-#include <errno.h>
-#include <fcntl.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/stat.h>
-#include <unistd.h>
 #include <locale.h>
 
 #include <gtk/gtk.h>
 
 #include <libaudcore/audstrings.h>
-#include <libaudcore/debug.h>
 #include <libaudcore/hook.h>
+#include <libaudcore/runtime.h>
 #include <libaudgui/libaudgui.h>
 
 #ifdef USE_DBUS
@@ -82,139 +78,6 @@ static const struct {
     {"quit-after-play", 'q', & options.quit_after_play, N_("Quit on playback stop")},
     {"verbose", 'V', & options.verbose, N_("Print debugging messages")},
 };
-
-static char * aud_paths[AUD_PATH_COUNT];
-
-static void make_dirs(void)
-{
-#ifdef S_IRGRP
-    const mode_t mode755 = S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH;
-#else
-    const mode_t mode755 = S_IRWXU;
-#endif
-
-    make_directory(aud_paths[AUD_PATH_USER_DIR], mode755);
-    make_directory(aud_paths[AUD_PATH_PLAYLISTS_DIR], mode755);
-}
-
-static char * relocate_path (const char * path, const char * old, const char * new)
-{
-    int oldlen = strlen (old);
-    int newlen = strlen (new);
-
-    if (oldlen && old[oldlen - 1] == G_DIR_SEPARATOR)
-        oldlen --;
-    if (newlen && new[newlen - 1] == G_DIR_SEPARATOR)
-        newlen --;
-
-#ifdef _WIN32
-    if (g_ascii_strncasecmp (path, old, oldlen) || (path[oldlen] && path[oldlen] != G_DIR_SEPARATOR))
-#else
-    if (strncmp (path, old, oldlen) || (path[oldlen] && path[oldlen] != G_DIR_SEPARATOR))
-#endif
-    {
-        fprintf (stderr, "Failed to relocate a data path.  Falling back to "
-         "compile-time path: %s\n", path);
-        return str_get (path);
-    }
-
-    return str_printf ("%.*s%s", newlen, new, path + oldlen);
-}
-
-static void relocate_paths (void)
-{
-    char bindir[] = HARDCODE_BINDIR;
-    char datadir[] = HARDCODE_DATADIR;
-    char plugindir[] = HARDCODE_PLUGINDIR;
-    char localedir[] = HARDCODE_LOCALEDIR;
-    char desktopfile[] = HARDCODE_DESKTOPFILE;
-    char iconfile[] = HARDCODE_ICONFILE;
-
-    filename_normalize (bindir);
-    filename_normalize (datadir);
-    filename_normalize (plugindir);
-    filename_normalize (localedir);
-    filename_normalize (desktopfile);
-    filename_normalize (iconfile);
-
-    /* Compare the compile-time path to the executable and the actual path to
-     * see if we have been moved. */
-    char * self = get_path_to_self ();
-    if (! self)
-    {
-FALLBACK:
-        /* Fall back to compile-time paths. */
-        aud_paths[AUD_PATH_BIN_DIR] = str_get (bindir);
-        aud_paths[AUD_PATH_DATA_DIR] = str_get (datadir);
-        aud_paths[AUD_PATH_PLUGIN_DIR] = str_get (plugindir);
-        aud_paths[AUD_PATH_LOCALE_DIR] = str_get (localedir);
-        aud_paths[AUD_PATH_DESKTOP_FILE] = str_get (desktopfile);
-        aud_paths[AUD_PATH_ICON_FILE] = str_get (iconfile);
-
-        return;
-    }
-
-    SCOPY (old, bindir);
-    SCOPY (new, self);
-
-    str_unref (self);
-
-    filename_normalize (new);
-
-    /* Strip the name of the executable file, leaving the path. */
-    char * base = last_path_element (new);
-    if (! base)
-        goto FALLBACK;
-
-    cut_path_element (new, base);
-
-    /* Strip innermost folder names from both paths as long as they match.  This
-     * leaves a compile-time prefix and a run-time one to replace it with. */
-    char * a, * b;
-    while ((a = last_path_element (old)) && (b = last_path_element (new)) &&
-#ifdef _WIN32
-     ! g_ascii_strcasecmp (a, b))
-#else
-     ! strcmp (a, b))
-#endif
-    {
-        cut_path_element (old, a);
-        cut_path_element (new, b);
-    }
-
-    /* Do the replacements. */
-    aud_paths[AUD_PATH_BIN_DIR] = relocate_path (bindir, old, new);
-    aud_paths[AUD_PATH_DATA_DIR] = relocate_path (datadir, old, new);
-    aud_paths[AUD_PATH_PLUGIN_DIR] = relocate_path (plugindir, old, new);
-    aud_paths[AUD_PATH_LOCALE_DIR] = relocate_path (localedir, old, new);
-    aud_paths[AUD_PATH_DESKTOP_FILE] = relocate_path (desktopfile, old, new);
-    aud_paths[AUD_PATH_ICON_FILE] = relocate_path (iconfile, old, new);
-}
-
-static void init_paths (void)
-{
-    relocate_paths ();
-
-    const char * xdg_config_home = g_get_user_config_dir ();
-
-    aud_paths[AUD_PATH_USER_DIR] = filename_build (xdg_config_home, "audacious");
-    aud_paths[AUD_PATH_PLAYLISTS_DIR] = filename_build (aud_paths[AUD_PATH_USER_DIR], "playlists");
-
-#ifdef _WIN32
-    /* Some libraries (libmcs) and plugins (filewriter) use these variables,
-     * which are generally not set on Windows. */
-    g_setenv ("HOME", g_get_home_dir (), TRUE);
-    g_setenv ("XDG_CONFIG_HOME", xdg_config_home, TRUE);
-    g_setenv ("XDG_DATA_HOME", g_get_user_data_dir (), TRUE);
-    g_setenv ("XDG_CACHE_HOME", g_get_user_cache_dir (), TRUE);
-#endif
-}
-
-const char * get_path (int id)
-{
-    g_return_val_if_fail (id >= 0 && id < AUD_PATH_COUNT, NULL);
-    return aud_paths[id];
-}
 
 static bool_t parse_options (int argc, char * * argv)
 {
@@ -295,7 +158,8 @@ static bool_t parse_options (int argc, char * * argv)
         }
     }
 
-    aud_enable_debug (options.verbose);
+    aud_set_headless_mode (options.headless);
+    aud_set_verbose_mode (options.verbose);
 
 OUT:
 #ifdef _WIN32
@@ -318,11 +182,6 @@ static void print_help (void)
          _(arg_map[i].desc));
 
     fprintf (stderr, "\n");
-}
-
-bool_t headless_mode (void)
-{
-    return options.headless;
 }
 
 #ifdef USE_DBUS
@@ -449,8 +308,7 @@ static void do_commands (void)
 
 static void main_cleanup (void)
 {
-    for (int i = 0; i < AUD_PATH_COUNT; i ++)
-        str_unref (aud_paths[i]);
+    aud_cleanup_paths ();
 
     if (filenames)
         index_free_full (filenames, (IndexFreeFunc) str_unref);
@@ -466,13 +324,14 @@ static void init_one (void)
     signals_init_one ();
 #endif
 
-    init_paths ();
-    make_dirs ();
+    aud_init_paths ();
+
+    const char * localedir = aud_get_path (AUD_PATH_LOCALE_DIR);
 
     setlocale (LC_ALL, "");
-    bindtextdomain (PACKAGE, aud_paths[AUD_PATH_LOCALE_DIR]);
+    bindtextdomain (PACKAGE, localedir);
     bind_textdomain_codeset (PACKAGE, "UTF-8");
-    bindtextdomain (PACKAGE "-plugins", aud_paths[AUD_PATH_LOCALE_DIR]);
+    bindtextdomain (PACKAGE "-plugins", localedir);
     bind_textdomain_codeset (PACKAGE "-plugins", "UTF-8");
     textdomain (PACKAGE);
 

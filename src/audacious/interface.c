@@ -20,8 +20,8 @@
 #include <gtk/gtk.h>
 #include <pthread.h>
 
-#include <libaudcore/debug.h>
 #include <libaudcore/hook.h>
+#include <libaudcore/runtime.h>
 #include <libaudgui/libaudgui-gtk.h>
 
 #include "general.h"
@@ -87,7 +87,7 @@ static bool_t error_idle_func (void * unused)
     {
         pthread_mutex_unlock (& error_mutex);
 
-        if (headless_mode ())
+        if (aud_get_headless_mode ())
             fprintf (stderr, "ERROR: %s\n", message);
         else
             audgui_simple_message (& error_win, GTK_MESSAGE_ERROR, _("Error"), message);

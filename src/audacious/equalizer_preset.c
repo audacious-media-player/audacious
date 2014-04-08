@@ -22,7 +22,9 @@
 #include <string.h>
 
 #include <glib.h>
+
 #include <libaudcore/audstrings.h>
+#include <libaudcore/runtime.h>
 
 #include "i18n.h"
 #include "misc.h"
@@ -44,12 +46,12 @@ Index * equalizer_read_presets (const char * basename)
 {
     GKeyFile * rcfile = g_key_file_new ();
 
-    char * filename = filename_build (get_path (AUD_PATH_USER_DIR), basename);
+    char * filename = filename_build (aud_get_path (AUD_PATH_USER_DIR), basename);
 
     if (! g_key_file_load_from_file (rcfile, filename, G_KEY_FILE_NONE, NULL))
     {
         str_unref (filename);
-        filename = filename_build (get_path (AUD_PATH_DATA_DIR), basename);
+        filename = filename_build (aud_get_path (AUD_PATH_DATA_DIR), basename);
 
         if (! g_key_file_load_from_file (rcfile, filename, G_KEY_FILE_NONE, NULL))
         {
@@ -112,7 +114,7 @@ bool_t equalizer_write_presets (Index * list, const char * basename)
     size_t len;
     char * data = g_key_file_to_data (rcfile, & len, NULL);
 
-    char * filename = filename_build (get_path (AUD_PATH_USER_DIR), basename);
+    char * filename = filename_build (aud_get_path (AUD_PATH_USER_DIR), basename);
     bool_t success = g_file_set_contents (filename, data, len, NULL);
     str_unref (filename);
 

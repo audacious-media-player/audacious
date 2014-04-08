@@ -28,6 +28,7 @@
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
+#include <libaudcore/runtime.h>
 #include <libaudcore/tuple.h>
 
 #include "drct.h"
@@ -2244,7 +2245,7 @@ void playlist_save_state (void)
 
     ENTER;
 
-    const char * user_dir = get_path (AUD_PATH_USER_DIR);
+    const char * user_dir = aud_get_path (AUD_PATH_USER_DIR);
     SCONCAT2 (path, user_dir, "/" STATE_FILE);
 
     FILE * handle = g_fopen (path, "w");
@@ -2317,7 +2318,7 @@ void playlist_load_state (void)
     ENTER;
     int playlist_num;
 
-    const char * user_dir = get_path (AUD_PATH_USER_DIR);
+    const char * user_dir = aud_get_path (AUD_PATH_USER_DIR);
     SCONCAT2 (path, user_dir, "/" STATE_FILE);
 
     FILE * handle = g_fopen (path, "r");

@@ -18,7 +18,7 @@
  */
 
 #include <gtk/gtk.h>
-#include <libaudcore/debug.h>
+#include <libaudcore/runtime.h>
 
 #include "general.h"
 #include "interface.h"

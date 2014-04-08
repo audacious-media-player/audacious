@@ -25,8 +25,8 @@
 #include <audacious/i18n.h>
 #include <audacious/misc.h>
 #include <libaudcore/audstrings.h>
-#include <libaudcore/debug.h>
 #include <libaudcore/hook.h>
+#include <libaudcore/runtime.h>
 
 #include "init.h"
 #include "libaudgui.h"

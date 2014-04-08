@@ -28,7 +28,7 @@
 #include <gmodule.h>
 
 #include <libaudcore/audstrings.h>
-#include <libaudcore/debug.h>
+#include <libaudcore/runtime.h>
 #include <libaudgui/init.h>
 
 #include "plugin.h"
@@ -181,7 +181,7 @@ void plugin_system_init(void)
 
     plugin_registry_load ();
 
-    const char * path = get_path (AUD_PATH_PLUGIN_DIR);
+    const char * path = aud_get_path (AUD_PATH_PLUGIN_DIR);
 
     for (int i = 0; i < ARRAY_LEN (plugin_dir_list); i ++)
     {

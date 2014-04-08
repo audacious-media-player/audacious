@@ -20,8 +20,8 @@
 #include <gtk/gtk.h>
 
 #include <audacious/i18n.h>
-#include <audacious/misc.h>
 #include <libaudcore/audstrings.h>
+#include <libaudcore/runtime.h>
 
 #include "init.h"
 #include "libaudgui-gtk.h"

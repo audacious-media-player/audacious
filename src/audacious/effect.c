@@ -20,7 +20,7 @@
 #include <pthread.h>
 
 #include <glib.h>
-#include <libaudcore/debug.h>
+#include <libaudcore/runtime.h>
 
 #include "drct.h"
 #include "effect.h"

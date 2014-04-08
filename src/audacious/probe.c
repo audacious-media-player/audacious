@@ -22,7 +22,7 @@
 #include <string.h>
 
 #include <libaudcore/audstrings.h>
-#include <libaudcore/debug.h>
+#include <libaudcore/runtime.h>
 
 #include "misc.h"
 #include "playlist.h"

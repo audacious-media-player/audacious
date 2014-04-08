@@ -1,5 +1,5 @@
 /*
- * debug.h
+ * runtime.h
  * Copyright 2014 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
@@ -24,14 +24,31 @@
 
 #include "core.h"
 
-extern bool_t _libaudcore_debug_enabled;
+enum {
+    AUD_PATH_BIN_DIR,
+    AUD_PATH_DATA_DIR,
+    AUD_PATH_PLUGIN_DIR,
+    AUD_PATH_LOCALE_DIR,
+    AUD_PATH_DESKTOP_FILE,
+    AUD_PATH_ICON_FILE,
+    AUD_PATH_USER_DIR,
+    AUD_PATH_PLAYLISTS_DIR,
+    AUD_PATH_COUNT
+};
 
-#define aud_enable_debug(enable) do { \
-    _libaudcore_debug_enabled = (enable); \
-} while (0)
+void aud_init_paths (void);
+void aud_cleanup_paths (void);
+
+const char * aud_get_path (int id);
+
+void aud_set_headless_mode (bool_t headless);
+bool_t aud_get_headless_mode (void);
+
+void aud_set_verbose_mode (bool_t verbose);
+bool_t aud_get_verbose_mode (void);
 
 #define AUDDBG(...) do { \
-    if (_libaudcore_debug_enabled) { \
+    if (aud_get_verbose_mode ()) { \
         printf ("%s:%d [%s]: ", __FILE__, __LINE__, __FUNCTION__); \
         printf (__VA_ARGS__); \
     } \

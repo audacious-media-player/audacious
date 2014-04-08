@@ -20,7 +20,7 @@
 #include <glib.h>
 #include <stdio.h>
 
-#include <libaudcore/debug.h>
+#include <libaudcore/runtime.h>
 #include <libaudcore/tuple.h>
 #include <libaudcore/vfs.h>
 

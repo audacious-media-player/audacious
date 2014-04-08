@@ -27,10 +27,6 @@
 #include <windows.h>
 #endif
 
-#ifdef __APPLE__
-#include <mach-o/dyld.h>
-#endif
-
 #include <glib.h>
 
 #include <libaudcore/audstrings.h>
@@ -102,16 +98,6 @@ char * construct_uri (const char * path, const char * reference)
     return str_get (buf);
 }
 
-void
-make_directory(const char * path, mode_t mode)
-{
-    if (g_mkdir_with_parents(path, mode) == 0)
-        return;
-
-    g_printerr(_("Could not create directory (%s): %s\n"), path,
-               g_strerror(errno));
-}
-
 char * write_temp_file (void * data, int64_t len)
 {
     char * temp = filename_build (g_get_tmp_dir (), "audacious-temp-XXXXXX");
@@ -146,73 +132,6 @@ char * write_temp_file (void * data, int64_t len)
     }
 
     return str_get (name);
-}
-
-char * get_path_to_self (void)
-{
-#ifdef HAVE_PROC_SELF_EXE
-    int size = 256;
-
-    while (1)
-    {
-        char buf[size];
-        int len;
-
-        if ((len = readlink ("/proc/self/exe", buf, size)) < 0)
-        {
-            fprintf (stderr, "Cannot access /proc/self/exe: %s.\n", strerror (errno));
-            return NULL;
-        }
-
-        if (len < size)
-        {
-            buf[len] = 0;
-            return str_get (buf);
-        }
-
-        size += size;
-    }
-#elif defined _WIN32
-    int size = 256;
-
-    while (1)
-    {
-        wchar_t buf[size];
-        int len;
-
-        if (! (len = GetModuleFileNameW (NULL, buf, size)))
-        {
-            fprintf (stderr, "GetModuleFileName failed.\n");
-            return NULL;
-        }
-
-        if (len < size)
-        {
-            char * temp = g_utf16_to_utf8 (buf, len, NULL, NULL, NULL);
-            char * path = str_get (temp);
-            g_free (temp);
-            return path;
-        }
-
-        size += size;
-    }
-#elif defined __APPLE__
-    unsigned int size = 256;
-
-    while (1)
-    {
-        char buf[size];
-        int res;
-
-        if (! (res = _NSGetExecutablePath (buf, &size)))
-            return str_get (buf);
-
-        if (res != -1)
-            return NULL;
-    }
-#else
-    return NULL;
-#endif
 }
 
 #ifdef _WIN32
@@ -458,16 +377,4 @@ char * last_path_element (char * path)
 {
     char * slash = strrchr (path, G_DIR_SEPARATOR);
     return (slash && slash[1]) ? slash + 1 : NULL;
-}
-
-void cut_path_element (char * path, char * elem)
-{
-#ifdef _WIN32
-    if (elem > path + 3)
-#else
-    if (elem > path + 1)
-#endif
-        elem[-1] = 0; /* overwrite slash */
-    else
-        elem[0] = 0; /* leave [drive letter and] leading slash */
 }

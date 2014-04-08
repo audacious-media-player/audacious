@@ -22,7 +22,7 @@
 #include <audacious/misc.h>
 #include <audacious/playlist.h>
 #include <libaudcore/audstrings.h>
-#include <libaudcore/debug.h>
+#include <libaudcore/runtime.h>
 
 #include "libaudgui-gtk.h"
 

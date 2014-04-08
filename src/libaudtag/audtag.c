@@ -22,7 +22,7 @@
 
 #include <glib.h>
 
-#include <libaudcore/debug.h>
+#include <libaudcore/runtime.h>
 #include <libaudcore/tuple.h>
 
 #include "audtag.h"

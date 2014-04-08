@@ -5,12 +5,12 @@ LIB_MINOR = 0
 SRCS = audio.c \
        audstrings.c \
        charset.c \
-       debug.c \
        eventqueue.c \
        hook.c \
        index.c \
        inifile.c \
        multihash.c \
+       runtime.c \
        strpool.c \
        tinylock.c \
        tuple.c \
@@ -24,11 +24,11 @@ SRCS = audio.c \
 INCLUDES = audio.h \
            audstrings.h \
            core.h \
-           debug.h \
            hook.h \
            index.h \
            inifile.h \
            multihash.h \
+           runtime.h \
            tinylock.h \
            tuple.h \
            vfs.h \
@@ -42,7 +42,13 @@ includesubdir = libaudcore
 CPPFLAGS := -I.. -I../.. \
             ${CPPFLAGS} \
             ${GLIB_CFLAGS} \
-            ${LIBGUESS_CFLAGS}
+            ${LIBGUESS_CFLAGS} \
+            -DHARDCODE_BINDIR=\"${bindir}\" \
+            -DHARDCODE_DATADIR=\"${datadir}/audacious\" \
+            -DHARDCODE_PLUGINDIR=\"${plugindir}\" \
+            -DHARDCODE_LOCALEDIR=\"${localedir}\" \
+            -DHARDCODE_DESKTOPFILE=\"${datarootdir}/applications/audacious.desktop\" \
+            -DHARDCODE_ICONFILE=\"${datarootdir}/pixmaps/audacious.png\"
 
 CFLAGS += ${LIB_CFLAGS}
 

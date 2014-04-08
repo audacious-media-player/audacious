@@ -32,7 +32,7 @@
 #include <glib/gstdio.h>
 
 #include <libaudcore/audstrings.h>
-#include <libaudcore/debug.h>
+#include <libaudcore/runtime.h>
 
 #include "i18n.h"
 #include "interface.h"
@@ -168,7 +168,7 @@ static void plugin_free (PluginHandle * plugin)
 
 static FILE * open_registry_file (const char * mode)
 {
-    const char * user_dir = get_path (AUD_PATH_USER_DIR);
+    const char * user_dir = aud_get_path (AUD_PATH_USER_DIR);
     SCONCAT2 (path, user_dir, "/" FILENAME);
     return g_fopen (path, mode);
 }

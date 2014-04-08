@@ -25,6 +25,7 @@
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
+#include <libaudcore/runtime.h>
 #include <libaudgui/libaudgui-gtk.h>
 
 #include "i18n.h"
@@ -390,7 +391,7 @@ static void fill_category_list (GtkTreeView * treeview, GtkNotebook * notebook)
      GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_INT);
     gtk_tree_view_set_model (treeview, (GtkTreeModel *) store);
 
-    const char * data_dir = get_path (AUD_PATH_DATA_DIR);
+    const char * data_dir = aud_get_path (AUD_PATH_DATA_DIR);
 
     for (int i = 0; i < ARRAY_LEN (categories); i ++)
     {

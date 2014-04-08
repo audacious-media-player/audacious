@@ -26,6 +26,7 @@
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
+#include <libaudcore/runtime.h>
 
 #include "misc.h"
 #include "playlist.h"
@@ -284,15 +285,15 @@ void playlist_select_by_patterns (int playlist, const Tuple * patterns)
 static char * make_playlist_path (int playlist)
 {
     if (! playlist)
-        return filename_build (get_path (AUD_PATH_USER_DIR), "playlist.xspf");
+        return filename_build (aud_get_path (AUD_PATH_USER_DIR), "playlist.xspf");
 
     SPRINTF (name, "playlist_%02d.xspf", 1 + playlist);
-    return filename_build (get_path (AUD_PATH_PLAYLISTS_DIR), name);
+    return filename_build (aud_get_path (AUD_PATH_PLAYLISTS_DIR), name);
 }
 
 static void load_playlists_real (void)
 {
-    const char * folder = get_path (AUD_PATH_PLAYLISTS_DIR);
+    const char * folder = aud_get_path (AUD_PATH_PLAYLISTS_DIR);
 
     /* old (v3.1 and earlier) naming scheme */
 
@@ -370,7 +371,7 @@ DONE:
 static void save_playlists_real (void)
 {
     int lists = playlist_count ();
-    const char * folder = get_path (AUD_PATH_PLAYLISTS_DIR);
+    const char * folder = aud_get_path (AUD_PATH_PLAYLISTS_DIR);
 
     /* save playlists */
 

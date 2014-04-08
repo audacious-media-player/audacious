@@ -24,6 +24,7 @@
 #include <libaudcore/hook.h>
 #include <libaudcore/inifile.h>
 #include <libaudcore/multihash.h>
+#include <libaudcore/runtime.h>
 
 #include "main.h"
 #include "misc.h"
@@ -273,7 +274,7 @@ static void load_entry (const char * key, const char * value, void * data)
 
 void config_load (void)
 {
-    char * folder = filename_to_uri (get_path (AUD_PATH_USER_DIR));
+    char * folder = filename_to_uri (aud_get_path (AUD_PATH_USER_DIR));
     SCONCAT2 (path, folder, "/config");
     str_unref (folder);
 
@@ -323,7 +324,7 @@ void config_save (void)
     multihash_iterate (& config, add_to_save_list, & state);
     g_array_sort (state.list, (GCompareFunc) item_compare);
 
-    char * folder = filename_to_uri (get_path (AUD_PATH_USER_DIR));
+    char * folder = filename_to_uri (aud_get_path (AUD_PATH_USER_DIR));
     SCONCAT2 (path, folder, "/config");
     str_unref (folder);
 

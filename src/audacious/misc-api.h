@@ -80,10 +80,6 @@ AUD_FUNC0 (bool_t, interface_is_shown)
 /* interface_show_error() is safe to call from any thread */
 AUD_VFUNC1 (interface_show_error, const char *, message)
 
-/* main.c */
-AUD_FUNC1 (const char *, get_path, int, path)
-AUD_FUNC0 (bool_t, headless_mode)
-
 /* output.c */
 AUD_VFUNC1 (output_reset, int, type)
 

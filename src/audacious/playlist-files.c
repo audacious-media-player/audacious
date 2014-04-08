@@ -20,7 +20,7 @@
 #include <glib.h>
 
 #include <libaudcore/audstrings.h>
-#include <libaudcore/debug.h>
+#include <libaudcore/runtime.h>
 
 #include "i18n.h"
 #include "misc.h"

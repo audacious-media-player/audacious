@@ -21,7 +21,7 @@
 #include <gtk/gtk.h>
 #include <string.h>
 
-#include <libaudcore/debug.h>
+#include <libaudcore/runtime.h>
 
 #include "fft.h"
 #include "interface.h"

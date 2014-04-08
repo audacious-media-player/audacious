@@ -26,6 +26,7 @@
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
+#include <libaudcore/runtime.h>
 
 #include "drct.h"
 #include "i18n.h"
@@ -68,7 +69,7 @@ static GtkWidget * status_window = NULL, * status_path_label,
 
 static bool_t status_cb (void * unused)
 {
-    if (! headless_mode () && ! status_window)
+    if (! aud_get_headless_mode () && ! status_window)
     {
         status_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
         gtk_window_set_type_hint ((GtkWindow *) status_window,
@@ -104,7 +105,7 @@ static bool_t status_cb (void * unused)
     snprintf (scratch, sizeof scratch, dngettext (PACKAGE, "%d file found",
      "%d files found", status_count), status_count);
 
-    if (headless_mode ())
+    if (aud_get_headless_mode ())
     {
         printf ("Searching, %s ...\r", scratch);
         fflush (stdout);
@@ -140,7 +141,7 @@ static void status_done_locked (void)
         status_source = 0;
     }
 
-    if (headless_mode ())
+    if (aud_get_headless_mode ())
         printf ("\n");
     else if (status_window)
         gtk_widget_destroy (status_window);
