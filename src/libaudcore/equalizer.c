@@ -23,20 +23,17 @@
  *    - tallica
  */
 
+#include "equalizer.h"
+
 #include <glib.h>
 #include <math.h>
 #include <pthread.h>
 #include <string.h>
 
-#include <libaudcore/audstrings.h>
-#include <libaudcore/hook.h>
-#include <libaudcore/runtime.h>
+#include "audstrings.h"
+#include "hook.h"
+#include "runtime.h"
 
-#include "equalizer.h"
-#include "misc.h"
-#include "types.h"
-
-#define EQ_BANDS AUD_EQUALIZER_NBANDS
 #define MAX_CHANNELS 10
 
 /* Q value for band-pass filters 1.2247 = (3/2)^(1/2)
@@ -47,17 +44,17 @@
 /* These are not the historical WinAmp frequencies, because the IIR filters used
  * here are designed for each frequency to be twice the previous.  Using WinAmp
  * frequencies leads to too much gain in some bands and too little in others. */
-static const float CF[EQ_BANDS] = {31.25, 62.5, 125, 250, 500, 1000, 2000,
+static const float CF[AUD_EQ_NBANDS] = {31.25, 62.5, 125, 250, 500, 1000, 2000,
  4000, 8000, 16000};
 
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 static bool_t active;
 static int channels, rate;
-static float a[EQ_BANDS][2]; /* A weights */
-static float b[EQ_BANDS][2]; /* B weights */
-static float wqv[MAX_CHANNELS][EQ_BANDS][2]; /* Circular buffer for W data */
-static float gv[MAX_CHANNELS][EQ_BANDS]; /* Gain factor for each channel and band */
-static int K; /* Number of used eq bands */
+static float a[AUD_EQ_NBANDS][2]; /* A weights */
+static float b[AUD_EQ_NBANDS][2]; /* B weights */
+static float wqv[MAX_CHANNELS][AUD_EQ_NBANDS][2]; /* Circular buffer for W data */
+static float gv[MAX_CHANNELS][AUD_EQ_NBANDS]; /* Gain factor for each channel and band */
+static int K; /* Number of used EQ bands */
 
 /* 2nd order band-pass filter design */
 static void bp2 (float *a, float *b, float fc, float q)
@@ -71,7 +68,7 @@ static void bp2 (float *a, float *b, float fc, float q)
     b[1] = -1.005;
 }
 
-void eq_set_format (int new_channels, int new_rate)
+EXPORT void eq_set_format (int new_channels, int new_rate)
 {
     int k;
 
@@ -81,7 +78,7 @@ void eq_set_format (int new_channels, int new_rate)
     rate = new_rate;
 
     /* Calculate number of active filters */
-    K = EQ_BANDS;
+    K = AUD_EQ_NBANDS;
 
     while (CF[K - 1] > (float) rate / 2.2)
         K --;
@@ -98,16 +95,16 @@ void eq_set_format (int new_channels, int new_rate)
 
 static void eq_set_bands_real (double preamp, double *values)
 {
-    float adj[EQ_BANDS];
-    for (int i = 0; i < EQ_BANDS; i ++)
+    float adj[AUD_EQ_NBANDS];
+    for (int i = 0; i < AUD_EQ_NBANDS; i ++)
         adj[i] = preamp + values[i];
 
     for (int c = 0; c < MAX_CHANNELS; c ++)
-    for (int i = 0; i < EQ_BANDS; i ++)
+    for (int i = 0; i < AUD_EQ_NBANDS; i ++)
         gv[c][i] = pow (10, adj[i] / 20) - 1;
 }
 
-void eq_filter (float *data, int samples)
+EXPORT void eq_filter (float *data, int samples)
 {
     int channel;
 
@@ -159,14 +156,14 @@ static void eq_update (void *data, void *user)
 
     active = aud_get_bool (NULL, "equalizer_active");
 
-    double values[EQ_BANDS];
-    eq_get_bands (values);
+    double values[AUD_EQ_NBANDS];
+    aud_eq_get_bands (values);
     eq_set_bands_real (aud_get_double (NULL, "equalizer_preamp"), values);
 
     pthread_mutex_unlock (& mutex);
 }
 
-void eq_init (void)
+EXPORT void eq_init (void)
 {
     eq_update (NULL, NULL);
     hook_associate ("set equalizer_active", eq_update, NULL);
@@ -174,42 +171,42 @@ void eq_init (void)
     hook_associate ("set equalizer_bands", eq_update, NULL);
 }
 
-void eq_cleanup (void)
+EXPORT void eq_cleanup (void)
 {
     hook_dissociate ("set equalizer_active", eq_update);
     hook_dissociate ("set equalizer_preamp", eq_update);
     hook_dissociate ("set equalizer_bands", eq_update);
 }
 
-void eq_set_bands (const double *values)
+EXPORT void aud_eq_set_bands (const double *values)
 {
-    char *string = double_array_to_str (values, EQ_BANDS);
+    char *string = double_array_to_str (values, AUD_EQ_NBANDS);
     g_return_if_fail (string);
     aud_set_str (NULL, "equalizer_bands", string);
     str_unref (string);
 }
 
-void eq_get_bands (double *values)
+EXPORT void aud_eq_get_bands (double *values)
 {
-    memset (values, 0, sizeof (double) * EQ_BANDS);
+    memset (values, 0, sizeof (double) * AUD_EQ_NBANDS);
     char *string = aud_get_str (NULL, "equalizer_bands");
-    str_to_double_array (string, values, EQ_BANDS);
+    str_to_double_array (string, values, AUD_EQ_NBANDS);
     str_unref (string);
 }
 
-void eq_set_band (int band, double value)
+EXPORT void aud_eq_set_band (int band, double value)
 {
-    g_return_if_fail (band >= 0 && band < EQ_BANDS);
-    double values[EQ_BANDS];
-    eq_get_bands (values);
+    g_return_if_fail (band >= 0 && band < AUD_EQ_NBANDS);
+    double values[AUD_EQ_NBANDS];
+    aud_eq_get_bands (values);
     values[band] = value;
-    eq_set_bands (values);
+    aud_eq_set_bands (values);
 }
 
-double eq_get_band (int band)
+EXPORT double aud_eq_get_band (int band)
 {
-    g_return_val_if_fail (band >= 0 && band < EQ_BANDS, 0);
-    double values[EQ_BANDS];
-    eq_get_bands (values);
+    g_return_val_if_fail (band >= 0 && band < AUD_EQ_NBANDS, 0);
+    double values[AUD_EQ_NBANDS];
+    aud_eq_get_bands (values);
     return values[band];
 }

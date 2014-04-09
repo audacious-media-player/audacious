@@ -5,8 +5,6 @@ SRCS = adder.c \
        art.c \
        drct.c \
        effect.c									\
-       equalizer.c								\
-       equalizer_preset.c						\
        fft.c									\
        interface.c								\
        main.c									\

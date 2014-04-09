@@ -19,9 +19,8 @@
 
 #include <math.h>
 
-#include <audacious/misc.h>
-#include <audacious/types.h>
 #include <libaudcore/audstrings.h>
+#include <libaudcore/equalizer.h>
 #include <libaudcore/hook.h>
 #include <libaudcore/i18n.h>
 #include <libaudcore/runtime.h>
@@ -70,7 +69,7 @@ static GtkWidget * create_slider (const char * name, int band, GtkWidget * hbox)
     gtk_box_pack_start ((GtkBox *) vbox, label, TRUE, FALSE, 0);
 
     GtkWidget * slider = gtk_scale_new_with_range (GTK_ORIENTATION_VERTICAL,
-     -EQUALIZER_MAX_GAIN, EQUALIZER_MAX_GAIN, 1);
+     -AUD_EQ_MAX_GAIN, AUD_EQ_MAX_GAIN, 1);
     gtk_scale_set_draw_value ((GtkScale *) slider, TRUE);
     gtk_scale_set_value_pos ((GtkScale *) slider, GTK_POS_BOTTOM);
     gtk_range_set_inverted ((GtkRange *) slider, TRUE);
@@ -97,10 +96,10 @@ static void update_sliders (void * unused, GtkWidget * window)
     GtkWidget * preamp = g_object_get_data ((GObject *) window, "preamp");
     set_slider (preamp, aud_get_double (NULL, "equalizer_preamp"));
 
-    double values[AUD_EQUALIZER_NBANDS];
+    double values[AUD_EQ_NBANDS];
     aud_eq_get_bands (values);
 
-    for (int i = 0; i < AUD_EQUALIZER_NBANDS; i ++)
+    for (int i = 0; i < AUD_EQ_NBANDS; i ++)
     {
         SPRINTF (slider_id, "slider%d", i);
         GtkWidget * slider = g_object_get_data ((GObject *) window, slider_id);
@@ -117,7 +116,7 @@ static void destroy_cb (void)
 
 static GtkWidget * create_window (void)
 {
-    const char * const names[AUD_EQUALIZER_NBANDS] = {N_("31 Hz"), N_("63 Hz"),
+    const char * const names[AUD_EQ_NBANDS] = {N_("31 Hz"), N_("63 Hz"),
      N_("125 Hz"), N_("250 Hz"), N_("500 Hz"), N_("1 kHz"), N_("2 kHz"),
      N_("4 kHz"), N_("8 kHz"), N_("16 kHz")};
 
@@ -142,7 +141,7 @@ static GtkWidget * create_window (void)
     gtk_box_pack_start ((GtkBox *) hbox,
      gtk_separator_new (GTK_ORIENTATION_VERTICAL), FALSE, FALSE, 0);
 
-    for (int i = 0; i < AUD_EQUALIZER_NBANDS; i ++)
+    for (int i = 0; i < AUD_EQ_NBANDS; i ++)
     {
         GtkWidget * slider = create_slider (_(names[i]), i, hbox);
         SPRINTF (slider_id, "slider%d", i);

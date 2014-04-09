@@ -18,31 +18,30 @@
  * the use of this software.
  */
 
+#include "equalizer.h"
+
 #include <math.h>
 #include <string.h>
 
 #include <glib.h>
 
-#include <libaudcore/audstrings.h>
-#include <libaudcore/i18n.h>
-#include <libaudcore/runtime.h>
+#include "audstrings.h"
+#include "runtime.h"
 
-#include "misc.h"
-
-EqualizerPreset * equalizer_preset_new (const char * name)
+EXPORT EqualizerPreset * aud_eq_preset_new (const char * name)
 {
     EqualizerPreset * preset = g_slice_new0 (EqualizerPreset);
     preset->name = str_get (name);
     return preset;
 }
 
-void equalizer_preset_free (EqualizerPreset * preset)
+EXPORT void aud_eq_preset_free (EqualizerPreset * preset)
 {
     str_unref (preset->name);
     g_slice_free (EqualizerPreset, preset);
 }
 
-Index * equalizer_read_presets (const char * basename)
+EXPORT Index * aud_eq_read_presets (const char * basename)
 {
     GKeyFile * rcfile = g_key_file_new ();
 
@@ -73,10 +72,10 @@ Index * equalizer_read_presets (const char * basename)
         if (! name)
             break;
 
-        EqualizerPreset * preset = equalizer_preset_new (name);
+        EqualizerPreset * preset = aud_eq_preset_new (name);
         preset->preamp = g_key_file_get_double (rcfile, name, "Preamp", NULL);
 
-        for (int i = 0; i < AUD_EQUALIZER_NBANDS; i++)
+        for (int i = 0; i < AUD_EQ_NBANDS; i++)
         {
             SPRINTF (band, "Band%d", i);
             preset->bands[i] = g_key_file_get_double (rcfile, name, band, NULL);
@@ -92,7 +91,7 @@ Index * equalizer_read_presets (const char * basename)
     return list;
 }
 
-bool_t equalizer_write_presets (Index * list, const char * basename)
+EXPORT bool_t aud_eq_write_presets (Index * list, const char * basename)
 {
     GKeyFile * rcfile = g_key_file_new ();
 
@@ -104,7 +103,7 @@ bool_t equalizer_write_presets (Index * list, const char * basename)
         g_key_file_set_string (rcfile, "Presets", tmp, preset->name);
         g_key_file_set_double (rcfile, preset->name, "Preamp", preset->preamp);
 
-        for (int i = 0; i < AUD_EQUALIZER_NBANDS; i ++)
+        for (int i = 0; i < AUD_EQ_NBANDS; i ++)
         {
             SPRINTF (tmp, "Band%d", i);
             g_key_file_set_double (rcfile, preset->name, tmp, preset->bands[i]);
@@ -129,7 +128,7 @@ bool_t equalizer_write_presets (Index * list, const char * basename)
 #define FROM_WINAMP_VAL(x)  ((31.5 - (x)) * (12.0 / 31.5))
 #define TO_WINAMP_VAL(x)  (round (31.5 - (x) * (31.5 / 12.0)))
 
-Index * import_winamp_presets (VFSFile * file)
+EXPORT Index * aud_import_winamp_presets (VFSFile * file)
 {
     char header[31];
     char bands[11];
@@ -151,10 +150,10 @@ Index * import_winamp_presets (VFSFile * file)
         if (vfs_fread (bands, 1, 11, file) != 11)
             break;
 
-        EqualizerPreset * preset = equalizer_preset_new (preset_name);
+        EqualizerPreset * preset = aud_eq_preset_new (preset_name);
         preset->preamp = FROM_WINAMP_VAL (bands[10]);
 
-        for (int i = 0; i < AUD_EQUALIZER_NBANDS; i ++)
+        for (int i = 0; i < AUD_EQ_NBANDS; i ++)
             preset->bands[i] = FROM_WINAMP_VAL (bands[i]);
 
         index_insert (list, -1, preset);
@@ -163,7 +162,7 @@ Index * import_winamp_presets (VFSFile * file)
     return list;
 }
 
-bool_t export_winamp_preset (EqualizerPreset * preset, VFSFile * file)
+EXPORT bool_t aud_export_winamp_preset (EqualizerPreset * preset, VFSFile * file)
 {
     char name[257];
     char bands[11];
@@ -176,7 +175,7 @@ bool_t export_winamp_preset (EqualizerPreset * preset, VFSFile * file)
     if (vfs_fwrite (name, 1, 257, file) != 257)
         return FALSE;
 
-    for (int i = 0; i < AUD_EQUALIZER_NBANDS; i ++)
+    for (int i = 0; i < AUD_EQ_NBANDS; i ++)
         bands[i] = TO_WINAMP_VAL (preset->bands[i]);
 
     bands[10] = TO_WINAMP_VAL (preset->preamp);
@@ -187,13 +186,13 @@ bool_t export_winamp_preset (EqualizerPreset * preset, VFSFile * file)
     return TRUE;
 }
 
-bool_t save_preset_file (EqualizerPreset * preset, const char * filename)
+EXPORT bool_t aud_save_preset_file (EqualizerPreset * preset, const char * filename)
 {
     GKeyFile * rcfile = g_key_file_new ();
 
     g_key_file_set_double (rcfile, "Equalizer preset", "Preamp", preset->preamp);
 
-    for (int i = 0; i < AUD_EQUALIZER_NBANDS; i ++)
+    for (int i = 0; i < AUD_EQ_NBANDS; i ++)
     {
         SPRINTF (tmp, "Band%d", i);
         g_key_file_set_double (rcfile, "Equalizer preset", tmp, preset->bands[i]);
@@ -217,7 +216,7 @@ bool_t save_preset_file (EqualizerPreset * preset, const char * filename)
     return success;
 }
 
-EqualizerPreset * load_preset_file (const char * filename)
+EXPORT EqualizerPreset * aud_load_preset_file (const char * filename)
 {
     GKeyFile * rcfile = g_key_file_new ();
 
@@ -227,11 +226,11 @@ EqualizerPreset * load_preset_file (const char * filename)
         return NULL;
     }
 
-    EqualizerPreset * preset = equalizer_preset_new ("");
+    EqualizerPreset * preset = aud_eq_preset_new ("");
 
     preset->preamp = g_key_file_get_double (rcfile, "Equalizer preset", "Preamp", NULL);
 
-    for (int i = 0; i < AUD_EQUALIZER_NBANDS; i ++)
+    for (int i = 0; i < AUD_EQ_NBANDS; i ++)
     {
         SPRINTF (tmp, "Band%d", i);
         preset->bands[i] = g_key_file_get_double (rcfile, "Equalizer preset", tmp, NULL);

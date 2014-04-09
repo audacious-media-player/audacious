@@ -23,6 +23,7 @@
 #include <gtk/gtk.h>
 
 #include <libaudcore/audstrings.h>
+#include <libaudcore/equalizer.h>
 #include <libaudcore/hook.h>
 #include <libaudcore/i18n.h>
 #include <libaudcore/runtime.h>
@@ -33,7 +34,6 @@
 #endif
 
 #include "drct.h"
-#include "equalizer.h"
 #include "interface.h"
 #include "main.h"
 #include "misc.h"

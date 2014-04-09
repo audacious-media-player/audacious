@@ -6,6 +6,8 @@ SRCS = audio.c \
        audstrings.c \
        charset.c \
        config.c \
+       equalizer.c \
+       equalizer-preset.c \
        eventqueue.c \
        history.c \
        hook.c \
@@ -27,6 +29,7 @@ SRCS = audio.c \
 INCLUDES = audio.h \
            audstrings.h \
            core.h \
+           equalizer.h \
            hook.h \
            i18n.h \
            index.h \

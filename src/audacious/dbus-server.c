@@ -19,6 +19,7 @@
 
 #include <stdio.h>
 
+#include <libaudcore/equalizer.h>
 #include <libaudcore/runtime.h>
 #include <libaudgui/libaudgui.h>
 
@@ -145,18 +146,18 @@ static bool_t do_get_active_playlist_name (Obj * obj, Invoc * invoc)
 static bool_t do_get_eq (Obj * obj, Invoc * invoc)
 {
     double preamp = aud_get_double (NULL, "equalizer_preamp");
-    double bands[AUD_EQUALIZER_NBANDS];
-    eq_get_bands (bands);
+    double bands[AUD_EQ_NBANDS];
+    aud_eq_get_bands (bands);
 
     GVariant * var = g_variant_new_fixed_array (G_VARIANT_TYPE_DOUBLE, bands,
-     AUD_EQUALIZER_NBANDS, sizeof (double));
+     AUD_EQ_NBANDS, sizeof (double));
     FINISH2 (get_eq, preamp, var);
     return TRUE;
 }
 
 static bool_t do_get_eq_band (Obj * obj, Invoc * invoc, int band)
 {
-    FINISH2 (get_eq_band, eq_get_band (band));
+    FINISH2 (get_eq_band, aud_eq_get_band (band));
     return TRUE;
 }
 
@@ -410,18 +411,18 @@ static bool_t do_set_eq (Obj * obj, Invoc * invoc, double preamp, GVariant * var
     size_t nbands = 0;
     const double * bands = g_variant_get_fixed_array (var, & nbands, sizeof (double));
 
-    if (nbands != AUD_EQUALIZER_NBANDS)
+    if (nbands != AUD_EQ_NBANDS)
         return FALSE;
 
     aud_set_double (NULL, "equalizer_preamp", preamp);
-    eq_set_bands (bands);
+    aud_eq_set_bands (bands);
     FINISH (set_eq);
     return TRUE;
 }
 
 static bool_t do_set_eq_band (Obj * obj, Invoc * invoc, int band, double value)
 {
-    eq_set_band (band, value);
+    aud_eq_set_band (band, value);
     FINISH (set_eq_band);
     return TRUE;
 }

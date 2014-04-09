@@ -22,9 +22,6 @@
 
 #include <libaudcore/core.h>
 
-#define AUD_EQUALIZER_NBANDS 10
-#define EQUALIZER_MAX_GAIN 12
-
 enum {
  PLUGIN_TYPE_TRANSPORT,
  PLUGIN_TYPE_PLAYLIST,
@@ -50,12 +47,6 @@ typedef const struct _IfacePlugin IfacePlugin;
 
 typedef struct _PluginPreferences PluginPreferences;
 typedef struct _PreferencesWidget PreferencesWidget;
-
-typedef struct {
-    char * name;
-    float preamp;
-    float bands[AUD_EQUALIZER_NBANDS];
-} EqualizerPreset;
 
 typedef struct {
     float track_gain; /* dB */

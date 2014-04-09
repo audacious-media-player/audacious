@@ -24,10 +24,10 @@
 
 #include <glib.h>
 
+#include <libaudcore/equalizer.h>
 #include <libaudcore/runtime.h>
 
 #include "effect.h"
-#include "equalizer.h"
 #include "misc.h"
 #include "output.h"
 #include "plugin.h"
