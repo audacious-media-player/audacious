@@ -25,12 +25,9 @@
 void vis_send_clear (void);
 void vis_send_audio (const float * data, int channels);
 
-void vis_init (void);
-void vis_cleanup (void);
+void vis_activate (bool_t activate);
 
 bool_t vis_plugin_start (PluginHandle * plugin);
 void vis_plugin_stop (PluginHandle * plugin);
-
-PluginHandle * vis_plugin_by_widget (/* GtkWidget * */ void * widget);
 
 #endif

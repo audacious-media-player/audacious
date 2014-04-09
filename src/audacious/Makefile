@@ -8,7 +8,6 @@ SRCS = adder.c \
        equalizer.c								\
        equalizer_preset.c						\
        fft.c									\
-       general.c \
        interface.c								\
        main.c									\
        output.c									\

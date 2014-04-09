@@ -22,10 +22,11 @@
 #include <stdlib.h>
 
 #include <glib.h>
+
+#include <libaudcore/hook.h>
 #include <libaudcore/runtime.h>
 
 #include "effect.h"
-#include "general.h"
 #include "interface.h"
 #include "misc.h"
 #include "output.h"
@@ -33,6 +34,26 @@
 #include "plugins.h"
 #include "ui_preferences.h"
 #include "visualization.h"
+
+static bool_t general_plugin_start (PluginHandle * plugin)
+{
+    GeneralPlugin * gp = plugin_get_header (plugin);
+    g_return_val_if_fail (gp, FALSE);
+
+    if (gp->init && ! gp->init ())
+        return FALSE;
+
+    return TRUE;
+}
+
+void general_plugin_stop (PluginHandle * plugin)
+{
+    GeneralPlugin * gp = plugin_get_header (plugin);
+    g_return_if_fail (gp);
+
+    if (gp->cleanup)
+        gp->cleanup ();
+}
 
 static const struct {
     const char * name;
@@ -259,9 +280,15 @@ static bool_t enable_multi (int type, PluginHandle * p, bool_t enable)
             plugin_set_enabled (p, FALSE);
             return FALSE;
         }
+
+        if (type == PLUGIN_TYPE_VIS || type == PLUGIN_TYPE_GENERAL)
+            hook_call ("dock plugin enabled", p);
     }
     else
     {
+        if (type == PLUGIN_TYPE_VIS || type == PLUGIN_TYPE_GENERAL)
+            hook_call ("dock plugin disabled", p);
+
         if (table[type].u.m.stop)
             table[type].u.m.stop (p);
     }
@@ -286,16 +313,6 @@ bool_t plugin_enable (PluginHandle * plugin, bool_t enable)
 }
 
 /* Miscellaneous plugin-related functions ... */
-
-PluginHandle * plugin_by_widget (/* GtkWidget * */ void * widget)
-{
-    PluginHandle * p;
-    if ((p = vis_plugin_by_widget (widget)))
-        return p;
-    if ((p = general_plugin_by_widget (widget)))
-        return p;
-    return NULL;
-}
 
 int plugin_send_message (PluginHandle * plugin, const char * code, const void * data, int size)
 {
@@ -331,4 +348,30 @@ void plugin_do_configure (PluginHandle * plugin)
         header->configure ();
     else if (PLUGIN_HAS_FUNC (header, prefs))
         plugin_make_config_window (plugin);
+}
+
+void * plugin_get_widget (PluginHandle * plugin)
+{
+    g_return_if_fail (plugin_get_enabled (plugin));
+    int type = plugin_get_type (plugin);
+
+    if (type == PLUGIN_TYPE_GENERAL)
+    {
+        GeneralPlugin * gp = plugin_get_header (plugin);
+        g_return_if_fail (gp != NULL);
+
+        if (PLUGIN_HAS_FUNC (gp, get_widget))
+            return gp->get_widget ();
+    }
+
+    if (type == PLUGIN_TYPE_VIS)
+    {
+        VisPlugin * vp = plugin_get_header (plugin);
+        g_return_if_fail (vp != NULL);
+
+        if (PLUGIN_HAS_FUNC (vp, get_widget))
+            return vp->get_widget ();
+    }
+
+    return NULL;
 }

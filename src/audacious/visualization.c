@@ -18,17 +18,13 @@
  */
 
 #include <glib.h>
-#include <gtk/gtk.h>
 #include <string.h>
 
 #include <libaudcore/runtime.h>
 
 #include "fft.h"
-#include "interface.h"
 #include "misc.h"
 #include "plugin.h"
-#include "plugins.h"
-#include "ui_preferences.h"
 #include "visualization.h"
 #include "vis_runner.h"
 
@@ -37,13 +33,12 @@ static GList * vis_funcs[AUD_VIS_TYPES];
 typedef struct {
     PluginHandle * plugin;
     VisPlugin * header;
-    GtkWidget * widget;
 } LoadedVis;
 
 static int running = FALSE;
 static GList * loaded_vis_plugins = NULL;
 
-void vis_func_add (int type, GCallback func)
+void vis_func_add (int type, VisFunc func)
 {
     g_return_if_fail (type >= 0 && type < AUD_VIS_TYPES);
     vis_funcs[type] = g_list_prepend (vis_funcs[type], (void *) func);
@@ -51,7 +46,7 @@ void vis_func_add (int type, GCallback func)
     vis_runner_enable (TRUE);
 }
 
-void vis_func_remove (GCallback func)
+void vis_func_remove (VisFunc func)
 {
     bool_t disable = TRUE;
 
@@ -131,34 +126,22 @@ static void vis_load (PluginHandle * plugin)
     if (node != NULL)
         return;
 
-    AUDDBG ("Loading %s.\n", plugin_get_name (plugin));
+    AUDDBG ("Activating %s.\n", plugin_get_name (plugin));
     VisPlugin * header = plugin_get_header (plugin);
     g_return_if_fail (header != NULL);
 
     LoadedVis * vis = g_slice_new (LoadedVis);
     vis->plugin = plugin;
     vis->header = header;
-    vis->widget = NULL;
-
-    if (header->get_widget != NULL)
-        vis->widget = header->get_widget ();
-
-    if (vis->widget != NULL)
-    {
-        AUDDBG ("Adding %s to interface.\n", plugin_get_name (plugin));
-        g_signal_connect (vis->widget, "destroy", (GCallback)
-         gtk_widget_destroyed, & vis->widget);
-        interface_add_plugin_widget (plugin, vis->widget);
-    }
 
     if (PLUGIN_HAS_FUNC (header, clear))
-        vis_func_add (AUD_VIS_TYPE_CLEAR, (GCallback) header->clear);
+        vis_func_add (AUD_VIS_TYPE_CLEAR, (VisFunc) header->clear);
     if (PLUGIN_HAS_FUNC (header, render_mono_pcm))
-        vis_func_add (AUD_VIS_TYPE_MONO_PCM, (GCallback) header->render_mono_pcm);
+        vis_func_add (AUD_VIS_TYPE_MONO_PCM, (VisFunc) header->render_mono_pcm);
     if (PLUGIN_HAS_FUNC (header, render_multi_pcm))
-        vis_func_add (AUD_VIS_TYPE_MULTI_PCM, (GCallback) header->render_multi_pcm);
+        vis_func_add (AUD_VIS_TYPE_MULTI_PCM, (VisFunc) header->render_multi_pcm);
     if (PLUGIN_HAS_FUNC (header, render_freq))
-        vis_func_add (AUD_VIS_TYPE_FREQ, (GCallback) header->render_freq);
+        vis_func_add (AUD_VIS_TYPE_FREQ, (VisFunc) header->render_freq);
 
     loaded_vis_plugins = g_list_prepend (loaded_vis_plugins, vis);
 }
@@ -170,26 +153,22 @@ static void vis_unload (PluginHandle * plugin)
     if (node == NULL)
         return;
 
-    AUDDBG ("Unloading %s.\n", plugin_get_name (plugin));
+    AUDDBG ("Deactivating %s.\n", plugin_get_name (plugin));
     LoadedVis * vis = node->data;
     loaded_vis_plugins = g_list_delete_link (loaded_vis_plugins, node);
 
     VisPlugin * header = vis->header;
     if (PLUGIN_HAS_FUNC (header, clear))
-        vis_func_remove ((GCallback) header->clear);
+        vis_func_remove ((VisFunc) header->clear);
     if (PLUGIN_HAS_FUNC (header, render_mono_pcm))
-        vis_func_remove ((GCallback) header->render_mono_pcm);
+        vis_func_remove ((VisFunc) header->render_mono_pcm);
     if (PLUGIN_HAS_FUNC (header, render_multi_pcm))
-        vis_func_remove ((GCallback) header->render_multi_pcm);
+        vis_func_remove ((VisFunc) header->render_multi_pcm);
     if (PLUGIN_HAS_FUNC (header, render_freq))
-        vis_func_remove ((GCallback) header->render_freq);
+        vis_func_remove ((VisFunc) header->render_freq);
 
-    if (vis->widget != NULL)
-    {
-        AUDDBG ("Removing %s from interface.\n", plugin_get_name (plugin));
-        interface_remove_plugin_widget (plugin, vis->widget);
-        g_return_if_fail (vis->widget == NULL); /* not destroyed? */
-    }
+    if (PLUGIN_HAS_FUNC (header, clear))
+        header->clear ();
 
     g_slice_free (LoadedVis, vis);
 }
@@ -200,25 +179,22 @@ static bool_t vis_init_cb (PluginHandle * plugin)
     return TRUE;
 }
 
-void vis_init (void)
-{
-    g_return_if_fail (! running);
-    running = TRUE;
-
-    plugin_for_enabled (PLUGIN_TYPE_VIS, (PluginForEachFunc) vis_init_cb, NULL);
-}
-
 static void vis_cleanup_cb (LoadedVis * vis)
 {
     vis_unload (vis->plugin);
 }
 
-void vis_cleanup (void)
+void vis_activate (bool_t activate)
 {
-    g_return_if_fail (running);
-    running = FALSE;
+    if (! activate == ! running)
+        return;
 
-    g_list_foreach (loaded_vis_plugins, (GFunc) vis_cleanup_cb, NULL);
+    if (activate)
+        plugin_for_enabled (PLUGIN_TYPE_VIS, (PluginForEachFunc) vis_init_cb, NULL);
+    else
+        g_list_foreach (loaded_vis_plugins, (GFunc) vis_cleanup_cb, NULL);
+
+    running = activate;
 }
 
 bool_t vis_plugin_start (PluginHandle * plugin)
@@ -245,18 +221,4 @@ void vis_plugin_stop (PluginHandle * plugin)
 
     if (vp->cleanup != NULL)
         vp->cleanup ();
-}
-
-PluginHandle * vis_plugin_by_widget (/* GtkWidget * */ void * widget)
-{
-    g_return_val_if_fail (widget, NULL);
-
-    for (GList * node = loaded_vis_plugins; node; node = node->next)
-    {
-        LoadedVis * vis = node->data;
-        if (vis->widget == widget)
-            return vis->plugin;
-    }
-
-    return NULL;
 }

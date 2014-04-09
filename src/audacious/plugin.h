@@ -338,9 +338,6 @@ struct _IfacePlugin
     PLUGIN_COMMON_FIELDS
 
     void (* show) (bool_t show);
-
-    void (* run_gtk_plugin) (void /* GtkWidget */ * widget, const char * name);
-    void (* stop_gtk_plugin) (void /* GtkWidget */ * widget);
 };
 
 #undef PLUGIN_COMMON_FIELDS

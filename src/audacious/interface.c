@@ -25,7 +25,6 @@
 #include <libaudcore/runtime.h>
 #include <libaudgui/libaudgui-gtk.h>
 
-#include "general.h"
 #include "interface.h"
 #include "misc.h"
 #include "plugin.h"
@@ -69,6 +68,8 @@ void interface_show (bool_t show)
 
     if (PLUGIN_HAS_FUNC (current_interface, show))
         current_interface->show (show);
+
+    vis_activate (show);
 }
 
 bool_t interface_is_shown (void)
@@ -115,41 +116,6 @@ void interface_show_error (const char * message)
     pthread_mutex_unlock (& error_mutex);
 }
 
-static bool_t delete_cb (GtkWidget * window, GdkEvent * event, PluginHandle *
- plugin)
-{
-    plugin_enable (plugin, FALSE);
-    return TRUE;
-}
-
-void interface_add_plugin_widget (PluginHandle * plugin, GtkWidget * widget)
-{
-    g_return_if_fail (current_interface);
-
-    if (PLUGIN_HAS_FUNC (current_interface, run_gtk_plugin))
-        current_interface->run_gtk_plugin (widget, plugin_get_name (plugin));
-    else
-    {
-        GtkWidget * window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-        gtk_window_set_title ((GtkWindow *) window, plugin_get_name (plugin));
-        gtk_window_set_default_size ((GtkWindow *) window, 300, 200);
-        gtk_window_set_has_resize_grip ((GtkWindow *) window, FALSE);
-        gtk_container_add ((GtkContainer *) window, widget);
-        g_signal_connect (window, "delete-event", (GCallback) delete_cb, plugin);
-        gtk_widget_show_all (window);
-    }
-}
-
-void interface_remove_plugin_widget (PluginHandle * plugin, GtkWidget * widget)
-{
-    g_return_if_fail (current_interface);
-
-    if (PLUGIN_HAS_FUNC (current_interface, stop_gtk_plugin))
-        current_interface->stop_gtk_plugin (widget);
-    else
-        gtk_widget_destroy (gtk_widget_get_parent (widget));
-}
-
 static bool_t probe_cb (PluginHandle * p, PluginHandle * * pp)
 {
     * pp = p;
@@ -174,17 +140,12 @@ bool_t iface_plugin_set_current (PluginHandle * plugin)
 {
     hook_call ("config save", NULL); /* tell interface to save layout */
 
-    if (current_plugin != NULL)
+    bool_t shown = aud_get_bool (NULL, "show_interface");
+
+    if (current_plugin)
     {
-        if (aud_get_bool (NULL, "show_interface") && current_interface &&
-         PLUGIN_HAS_FUNC (current_interface, show))
+        if (shown && current_interface && PLUGIN_HAS_FUNC (current_interface, show))
             current_interface->show (FALSE);
-
-        AUDDBG ("Unloading plugin widgets.\n");
-        general_cleanup ();
-
-        AUDDBG ("Unloading visualizers.\n");
-        vis_cleanup ();
 
         AUDDBG ("Unloading %s.\n", plugin_get_name (current_plugin));
         interface_unload ();
@@ -192,7 +153,7 @@ bool_t iface_plugin_set_current (PluginHandle * plugin)
         current_plugin = NULL;
     }
 
-    if (plugin != NULL)
+    if (plugin)
     {
         AUDDBG ("Loading %s.\n", plugin_get_name (plugin));
 
@@ -201,16 +162,11 @@ bool_t iface_plugin_set_current (PluginHandle * plugin)
 
         current_plugin = plugin;
 
-        AUDDBG ("Loading visualizers.\n");
-        vis_init ();
-
-        AUDDBG ("Loading plugin widgets.\n");
-        general_init ();
-
-        if (aud_get_bool (NULL, "show_interface") && current_interface &&
-         PLUGIN_HAS_FUNC (current_interface, show))
+        if (shown && current_interface && PLUGIN_HAS_FUNC (current_interface, show))
             current_interface->show (TRUE);
     }
+
+    vis_activate (shown && current_interface);
 
     return TRUE;
 }
