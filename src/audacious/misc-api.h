@@ -56,10 +56,6 @@ AUD_FUNC2 (bool_t, save_preset_file, EqualizerPreset *, preset, const char *, fi
 AUD_FUNC1 (Index *, import_winamp_presets, VFSFile *, file)
 AUD_FUNC2 (bool_t, export_winamp_preset, EqualizerPreset *, preset, VFSFile *, file)
 
-/* history.c */
-AUD_FUNC1 (const char *, history_get, int, entry)
-AUD_VFUNC1 (history_add, const char *, path)
-
 /* interface.c */
 AUD_VFUNC1 (interface_show, bool_t, show)
 AUD_FUNC0 (bool_t, interface_is_shown)

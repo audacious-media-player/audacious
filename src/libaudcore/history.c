@@ -17,15 +17,13 @@
  * the use of this software.
  */
 
+#include "runtime.h"
+
 #include <glib.h>
 #include <stdio.h>
 #include <string.h>
 
-#include <libaudcore/hook.h>
-#include <libaudcore/runtime.h>
-
-#include "main.h"
-#include "misc.h"
+#include "hook.h"
 
 #define MAX_ENTRIES 30
 
@@ -77,7 +75,7 @@ static void history_load (void)
     hook_associate ("config save", (HookFunction) history_save, NULL);
 }
 
-void history_cleanup (void)
+EXPORT void aud_cleanup_history (void)
 {
     if (! loaded)
         return;
@@ -91,13 +89,13 @@ void history_cleanup (void)
     modified = FALSE;
 }
 
-const char * history_get (int entry)
+EXPORT const char * aud_history_get (int entry)
 {
     history_load ();
     return g_queue_peek_nth (& history, entry);
 }
 
-void history_add (const char * path)
+EXPORT void aud_history_add (const char * path)
 {
     history_load ();
 

@@ -38,9 +38,6 @@ void dbus_server_init (void);
 void dbus_server_cleanup (void);
 #endif
 
-/* history.c */
-void history_cleanup (void);
-
 /* main.c */
 bool_t do_autosave (void);
 

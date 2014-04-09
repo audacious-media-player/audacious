@@ -375,6 +375,7 @@ static void shut_down (void)
     save_playlists (TRUE);
 
     AUDDBG ("Unloading highlevel plugins.\n");
+    /* Note: calls "config save" hook */
     stop_plugins_two ();
 
 #ifdef USE_DBUS
@@ -401,8 +402,8 @@ static void shut_down (void)
     AUDDBG ("Cleaning up.\n");
     art_cleanup ();
     aud_cleanup_chardet ();
+    aud_cleanup_history ();
     eq_cleanup ();
-    history_cleanup ();
     playlist_end ();
 }
 

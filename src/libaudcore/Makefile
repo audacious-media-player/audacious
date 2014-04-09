@@ -7,6 +7,7 @@ SRCS = audio.c \
        charset.c \
        config.c \
        eventqueue.c \
+       history.c \
        hook.c \
        i18n.c \
        index.c \

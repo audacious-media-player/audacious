@@ -74,4 +74,10 @@ double aud_get_double (const char * section, const char * name);
 void aud_init_chardet (void);
 void aud_cleanup_chardet (void);
 
+/* Requires: aud_config_load() */
+const char * aud_history_get (int entry);
+void aud_history_add (const char * path);
+
+void aud_cleanup_history (void);
+
 #endif
