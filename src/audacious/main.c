@@ -345,7 +345,7 @@ static void init_two (void)
 
     AUDDBG ("Initializing.\n");
     art_init ();
-    chardet_init ();
+    aud_init_chardet ();
     eq_init ();
     playlist_init ();
 
@@ -400,7 +400,7 @@ static void shut_down (void)
 
     AUDDBG ("Cleaning up.\n");
     art_cleanup ();
-    chardet_cleanup ();
+    aud_cleanup_chardet ();
     eq_cleanup ();
     history_cleanup ();
     playlist_end ();

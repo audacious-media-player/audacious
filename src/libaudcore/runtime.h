@@ -54,6 +54,7 @@ bool_t aud_get_verbose_mode (void);
     } \
 } while (0)
 
+/* Requires: aud_init_paths() */
 void aud_config_load (void);
 void aud_config_save (void);
 void aud_config_cleanup (void);
@@ -68,5 +69,9 @@ void aud_set_int (const char * section, const char * name, int value);
 int aud_get_int (const char * section, const char * name);
 void aud_set_double (const char * section, const char * name, double value);
 double aud_get_double (const char * section, const char * name);
+
+/* Requires: aud_config_load() */
+void aud_init_chardet (void);
+void aud_cleanup_chardet (void);
 
 #endif

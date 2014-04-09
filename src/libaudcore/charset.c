@@ -28,7 +28,9 @@
 #endif
 
 #include "audstrings.h"
+#include "hook.h"
 #include "index.h"
+#include "runtime.h"
 #include "tinylock.h"
 
 EXPORT char * str_convert (const char * str, int len, const char * from_charset,
@@ -119,7 +121,7 @@ static TinyRWLock settings_lock;
 static char * detect_region;
 static Index * fallback_charsets;
 
-EXPORT void str_set_charsets (const char * region, Index * fallbacks)
+static void set_charsets (const char * region, Index * fallbacks)
 {
     tiny_lock_write (& settings_lock);
 
@@ -177,4 +179,32 @@ EXPORT char * str_to_utf8 (const char * str, int len)
 DONE:
     tiny_unlock_read (& settings_lock);
     return utf8;
+}
+
+static void chardet_update (void)
+{
+    char * region = aud_get_str (NULL, "chardet_detector");
+    char * fallbacks = aud_get_str (NULL, "chardet_fallback");
+
+    Index * list = str_list_to_index (fallbacks, ", ");
+    set_charsets (region[0] ? region : NULL, list);
+
+    str_unref (region);
+    str_unref (fallbacks);
+}
+
+EXPORT void aud_init_chardet (void)
+{
+    chardet_update ();
+
+    hook_associate ("set chardet_detector", (HookFunction) chardet_update, NULL);
+    hook_associate ("set chardet_fallback", (HookFunction) chardet_update, NULL);
+}
+
+EXPORT void aud_cleanup_chardet (void)
+{
+    hook_dissociate ("set chardet_detector", (HookFunction) chardet_update);
+    hook_dissociate ("set chardet_fallback", (HookFunction) chardet_update);
+
+    set_charsets (NULL, NULL);
 }

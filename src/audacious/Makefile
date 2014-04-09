@@ -3,7 +3,6 @@ include ../../extra.mk
 PROG = audacious${PROG_SUFFIX}
 SRCS = adder.c \
        art.c \
-       chardet.c								\
        drct.c \
        effect.c									\
        equalizer.c								\

@@ -38,10 +38,6 @@ void dbus_server_init (void);
 void dbus_server_cleanup (void);
 #endif
 
-/* chardet.c */
-void chardet_init (void);
-void chardet_cleanup (void);
-
 /* history.c */
 void history_cleanup (void);
 
