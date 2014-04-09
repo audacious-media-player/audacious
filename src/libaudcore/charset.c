@@ -121,6 +121,7 @@ static TinyRWLock settings_lock;
 static char * detect_region;
 static Index * fallback_charsets;
 
+/* takes ownership of <fallbacks> and the pooled strings in it */
 static void set_charsets (const char * region, Index * fallbacks)
 {
     tiny_lock_write (& settings_lock);
