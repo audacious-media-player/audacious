@@ -30,6 +30,7 @@
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
+#include <libaudcore/runtime.h>
 
 #include "equalizer.h"
 #include "misc.h"
@@ -156,11 +157,11 @@ static void eq_update (void *data, void *user)
 {
     pthread_mutex_lock (& mutex);
 
-    active = get_bool (NULL, "equalizer_active");
+    active = aud_get_bool (NULL, "equalizer_active");
 
     double values[EQ_BANDS];
     eq_get_bands (values);
-    eq_set_bands_real (get_double (NULL, "equalizer_preamp"), values);
+    eq_set_bands_real (aud_get_double (NULL, "equalizer_preamp"), values);
 
     pthread_mutex_unlock (& mutex);
 }
@@ -184,14 +185,14 @@ void eq_set_bands (const double *values)
 {
     char *string = double_array_to_str (values, EQ_BANDS);
     g_return_if_fail (string);
-    set_str (NULL, "equalizer_bands", string);
+    aud_set_str (NULL, "equalizer_bands", string);
     str_unref (string);
 }
 
 void eq_get_bands (double *values)
 {
     memset (values, 0, sizeof (double) * EQ_BANDS);
-    char *string = get_str (NULL, "equalizer_bands");
+    char *string = aud_get_str (NULL, "equalizer_bands");
     str_to_double_array (string, values, EQ_BANDS);
     str_unref (string);
 }

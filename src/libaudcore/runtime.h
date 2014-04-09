@@ -54,4 +54,19 @@ bool_t aud_get_verbose_mode (void);
     } \
 } while (0)
 
+void aud_config_load (void);
+void aud_config_save (void);
+void aud_config_cleanup (void);
+
+void aud_config_set_defaults (const char * section, const char * const * entries);
+
+void aud_set_str (const char * section, const char * name, const char * value);
+char * aud_get_str (const char * section, const char * name);
+void aud_set_bool (const char * section, const char * name, bool_t value);
+bool_t aud_get_bool (const char * section, const char * name);
+void aud_set_int (const char * section, const char * name, int value);
+int aud_get_int (const char * section, const char * name);
+void aud_set_double (const char * section, const char * name, double value);
+double aud_get_double (const char * section, const char * name);
+
 #endif

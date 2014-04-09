@@ -17,17 +17,16 @@
  * the use of this software.
  */
 
+#include "runtime.h"
+
 #include <glib.h>
 #include <string.h>
 
-#include <libaudcore/audstrings.h>
-#include <libaudcore/hook.h>
-#include <libaudcore/inifile.h>
-#include <libaudcore/multihash.h>
-#include <libaudcore/runtime.h>
-
-#include "main.h"
-#include "misc.h"
+#include "audstrings.h"
+#include "hook.h"
+#include "inifile.h"
+#include "multihash.h"
+#include "runtime.h"
 
 #define DEFAULT_SECTION "audacious"
 
@@ -272,7 +271,7 @@ static void load_entry (const char * key, const char * value, void * data)
     config_op_run (& op, OP_SET_NO_FLAG, & config);
 }
 
-void config_load (void)
+EXPORT void aud_config_load (void)
 {
     char * folder = filename_to_uri (aud_get_path (AUD_PATH_USER_DIR));
     SCONCAT2 (path, folder, "/config");
@@ -293,7 +292,7 @@ void config_load (void)
         }
     }
 
-    config_set_defaults (NULL, core_defaults);
+    aud_config_set_defaults (NULL, core_defaults);
 }
 
 static bool_t add_to_save_list (MultihashNode * node0, void * state0)
@@ -314,7 +313,7 @@ static bool_t add_to_save_list (MultihashNode * node0, void * state0)
     return FALSE;
 }
 
-void config_save (void)
+EXPORT void aud_config_save (void)
 {
     if (! modified)
         return;
@@ -354,7 +353,7 @@ void config_save (void)
     g_array_free (state.list, TRUE);
 }
 
-void config_set_defaults (const char * section, const char * const * entries)
+EXPORT void aud_config_set_defaults (const char * section, const char * const * entries)
 {
     if (! section)
         section = DEFAULT_SECTION;
@@ -371,14 +370,14 @@ void config_set_defaults (const char * section, const char * const * entries)
     }
 }
 
-void config_cleanup (void)
+EXPORT void aud_config_cleanup (void)
 {
     ConfigOp op = {.type = OP_CLEAR_NO_FLAG};
     multihash_iterate (& config, action_cb, & op);
     multihash_iterate (& defaults, action_cb, & op);
 }
 
-void set_str (const char * section, const char * name, const char * value)
+EXPORT void aud_set_str (const char * section, const char * name, const char * value)
 {
     g_return_if_fail (name && value);
 
@@ -394,7 +393,7 @@ void set_str (const char * section, const char * name, const char * value)
     }
 }
 
-char * get_str (const char * section, const char * name)
+EXPORT char * aud_get_str (const char * section, const char * name)
 {
     g_return_val_if_fail (name, NULL);
 
@@ -408,46 +407,46 @@ char * get_str (const char * section, const char * name)
     return op.item.value ? (char *) op.item.value : str_get ("");
 }
 
-void set_bool (const char * section, const char * name, bool_t value)
+EXPORT void aud_set_bool (const char * section, const char * name, bool_t value)
 {
-    set_str (section, name, value ? "TRUE" : "FALSE");
+    aud_set_str (section, name, value ? "TRUE" : "FALSE");
 }
 
-bool_t get_bool (const char * section, const char * name)
+EXPORT bool_t aud_get_bool (const char * section, const char * name)
 {
-    char * string = get_str (section, name);
+    char * string = aud_get_str (section, name);
     bool_t value = ! strcmp (string, "TRUE");
     str_unref (string);
     return value;
 }
 
-void set_int (const char * section, const char * name, int value)
+EXPORT void aud_set_int (const char * section, const char * name, int value)
 {
     char * string = int_to_str (value);
     g_return_if_fail (string);
-    set_str (section, name, string);
+    aud_set_str (section, name, string);
     str_unref (string);
 }
 
-int get_int (const char * section, const char * name)
+EXPORT int aud_get_int (const char * section, const char * name)
 {
-    char * string = get_str (section, name);
+    char * string = aud_get_str (section, name);
     int value = str_to_int (string);
     str_unref (string);
     return value;
 }
 
-void set_double (const char * section, const char * name, double value)
+EXPORT void aud_set_double (const char * section, const char * name, double value)
 {
     char * string = double_to_str (value);
     g_return_if_fail (string);
-    set_str (section, name, string);
+    aud_set_str (section, name, string);
     str_unref (string);
 }
 
-double get_double (const char * section, const char * name)
+EXPORT double aud_get_double (const char * section, const char * name)
 {
-    char * string = get_str (section, name);
+    char * string = aud_get_str (section, name);
     double value = str_to_double (string);
     str_unref (string);
     return value;

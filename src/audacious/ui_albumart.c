@@ -22,9 +22,10 @@
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/i18n.h>
+#include <libaudcore/index.h>
+#include <libaudcore/runtime.h>
 
 #include "main.h"
-#include "misc.h"
 #include "util.h"
 
 typedef struct {
@@ -82,7 +83,7 @@ static char * fileinfo_recursive_get_image (const char * path,
 
     const char * name;
 
-    if (get_bool (NULL, "use_file_cover") && ! depth)
+    if (aud_get_bool (NULL, "use_file_cover") && ! depth)
     {
         /* Look for images matching file name */
         while ((name = g_dir_read_name (d)))
@@ -122,7 +123,7 @@ static char * fileinfo_recursive_get_image (const char * path,
 
     g_dir_rewind (d);
 
-    if (get_bool (NULL, "recurse_for_cover") && depth < get_int (NULL, "recurse_for_cover_depth"))
+    if (aud_get_bool (NULL, "recurse_for_cover") && depth < aud_get_int (NULL, "recurse_for_cover_depth"))
     {
         /* Descend into directories recursively. */
         while ((name = g_dir_read_name (d)))
@@ -158,8 +159,8 @@ char * get_associated_image_file (const char * filename)
 
     if (local && base)
     {
-        char * include = get_str (NULL, "cover_name_include");
-        char * exclude = get_str (NULL, "cover_name_exclude");
+        char * include = aud_get_str (NULL, "cover_name_include");
+        char * exclude = aud_get_str (NULL, "cover_name_exclude");
 
         SearchParams params = {
             .basename = base,

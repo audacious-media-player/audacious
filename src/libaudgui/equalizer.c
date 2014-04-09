@@ -24,6 +24,7 @@
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
 #include <libaudcore/i18n.h>
+#include <libaudcore/runtime.h>
 
 #include "init.h"
 #include "libaudgui-gtk.h"

@@ -357,7 +357,7 @@ static void update_titlestring_cbox (GtkComboBox * cbox, const char * format)
 static void on_titlestring_entry_changed (GtkEntry * entry, GtkComboBox * cbox)
 {
     const char * format = gtk_entry_get_text (entry);
-    set_str (NULL, "generic_title_format", format);
+    aud_set_str (NULL, "generic_title_format", format);
     update_titlestring_cbox (cbox, format);
     playlist_reformat_titles ();
 }
@@ -437,14 +437,14 @@ static GtkWidget * create_titlestring_tag_menu (void)
 
 static void show_numbers_cb (GtkToggleButton * numbers, void * unused)
 {
-    set_bool (NULL, "show_numbers_in_pl", gtk_toggle_button_get_active (numbers));
+    aud_set_bool (NULL, "show_numbers_in_pl", gtk_toggle_button_get_active (numbers));
     playlist_reformat_titles ();
     hook_call ("title change", NULL);
 }
 
 static void leading_zero_cb (GtkToggleButton * leading)
 {
-    set_bool (NULL, "leading_zero", gtk_toggle_button_get_active (leading));
+    aud_set_bool (NULL, "leading_zero", gtk_toggle_button_get_active (leading));
     playlist_reformat_titles ();
     hook_call ("title change", NULL);
 }
@@ -458,7 +458,7 @@ static void create_titlestring_widgets (GtkWidget * * cbox, GtkWidget * * entry)
 
     * entry = gtk_entry_new ();
 
-    char * format = get_str (NULL, "generic_title_format");
+    char * format = aud_get_str (NULL, "generic_title_format");
     update_titlestring_cbox ((GtkComboBox *) * cbox, format);
     gtk_entry_set_text ((GtkEntry *) * entry, format);
     str_unref (format);
@@ -489,7 +489,7 @@ static void create_playlist_category (void)
 
     GtkWidget * numbers = gtk_check_button_new_with_label (_("Show song numbers"));
     gtk_toggle_button_set_active ((GtkToggleButton *) numbers,
-     get_bool (NULL, "show_numbers_in_pl"));
+     aud_get_bool (NULL, "show_numbers_in_pl"));
     g_signal_connect (numbers, "toggled", (GCallback) show_numbers_cb, 0);
     gtk_container_add ((GtkContainer *) numbers_alignment, numbers);
 
@@ -499,7 +499,7 @@ static void create_playlist_category (void)
 
     numbers = gtk_check_button_new_with_label (
      _("Show leading zeroes (02:00 instead of 2:00)"));
-    gtk_toggle_button_set_active ((GtkToggleButton *) numbers, get_bool (NULL, "leading_zero"));
+    gtk_toggle_button_set_active ((GtkToggleButton *) numbers, aud_get_bool (NULL, "leading_zero"));
     g_signal_connect (numbers, "toggled", (GCallback) leading_zero_cb, 0);
     gtk_container_add ((GtkContainer *) numbers_alignment, numbers);
 

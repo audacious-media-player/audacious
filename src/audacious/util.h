@@ -21,7 +21,8 @@
 #define AUDACIOUS_UTIL_H
 
 #include <sys/types.h>
-#include <libaudcore/core.h>
+
+#include <libaudcore/tuple.h>
 
 typedef bool_t(*DirForeachFunc) (const char * path,
                                    const char * basename,

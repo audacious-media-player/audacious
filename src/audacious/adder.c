@@ -398,7 +398,7 @@ static bool_t add_finish (void * unused)
 
         if (result->play && playlist_entry_count (playlist) > count)
         {
-            if (! get_bool (NULL, "shuffle"))
+            if (! aud_get_bool (NULL, "shuffle"))
                 playlist_set_position (playlist, result->at);
 
             drct_play_playlist (playlist);

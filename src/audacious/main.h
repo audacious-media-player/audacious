@@ -42,11 +42,6 @@ void dbus_server_cleanup (void);
 void chardet_init (void);
 void chardet_cleanup (void);
 
-/* config.c */
-void config_load (void);
-void config_save (void);
-void config_cleanup (void);
-
 /* history.c */
 void history_cleanup (void);
 

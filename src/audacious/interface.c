@@ -65,7 +65,7 @@ void interface_show (bool_t show)
 {
     g_return_if_fail (current_interface);
 
-    set_bool (NULL, "show_interface", show);
+    aud_set_bool (NULL, "show_interface", show);
 
     if (PLUGIN_HAS_FUNC (current_interface, show))
         current_interface->show (show);
@@ -75,7 +75,7 @@ bool_t interface_is_shown (void)
 {
     g_return_val_if_fail (current_interface, FALSE);
 
-    return get_bool (NULL, "show_interface");
+    return aud_get_bool (NULL, "show_interface");
 }
 
 static bool_t error_idle_func (void * unused)
@@ -176,7 +176,7 @@ bool_t iface_plugin_set_current (PluginHandle * plugin)
 
     if (current_plugin != NULL)
     {
-        if (get_bool (NULL, "show_interface") && current_interface &&
+        if (aud_get_bool (NULL, "show_interface") && current_interface &&
          PLUGIN_HAS_FUNC (current_interface, show))
             current_interface->show (FALSE);
 
@@ -207,7 +207,7 @@ bool_t iface_plugin_set_current (PluginHandle * plugin)
         AUDDBG ("Loading plugin widgets.\n");
         general_init ();
 
-        if (get_bool (NULL, "show_interface") && current_interface &&
+        if (aud_get_bool (NULL, "show_interface") && current_interface &&
          PLUGIN_HAS_FUNC (current_interface, show))
             current_interface->show (TRUE);
     }

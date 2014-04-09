@@ -24,6 +24,7 @@
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
 #include <libaudcore/i18n.h>
+#include <libaudcore/runtime.h>
 #include <libaudgui/libaudgui.h>
 
 #include "drct.h"
@@ -256,7 +257,7 @@ static void playback_cleanup (void)
 
     read_gain_from_tuple (NULL);
 
-    set_bool (NULL, "stop_after_current_song", FALSE);
+    aud_set_bool (NULL, "stop_after_current_song", FALSE);
 }
 
 void playback_stop (void)
@@ -284,7 +285,7 @@ static void do_stop (int playlist)
 
 static void do_next (int playlist)
 {
-    if (! playlist_next_song (playlist, get_bool (NULL, "repeat")))
+    if (! playlist_next_song (playlist, aud_get_bool (NULL, "repeat")))
     {
         playlist_set_position (playlist, -1);
         hook_call ("playlist end reached", NULL);
@@ -307,16 +308,16 @@ static bool_t end_cb (void * unused)
 
     int playlist = playlist_get_playing ();
 
-    if (get_bool (NULL, "stop_after_current_song"))
+    if (aud_get_bool (NULL, "stop_after_current_song"))
     {
         do_stop (playlist);
 
-        if (! get_bool (NULL, "no_playlist_advance"))
+        if (! aud_get_bool (NULL, "no_playlist_advance"))
             do_next (playlist);
     }
-    else if (get_bool (NULL, "no_playlist_advance"))
+    else if (aud_get_bool (NULL, "no_playlist_advance"))
     {
-        if (get_bool (NULL, "repeat") && ! failed_entries)
+        if (aud_get_bool (NULL, "repeat") && ! failed_entries)
             playback_play (0, FALSE);
         else
             do_stop (playlist);
@@ -582,7 +583,7 @@ char * drct_get_title (void)
     else
         s[0] = 0;
 
-    if (get_bool (NULL, "show_numbers_in_pl"))
+    if (aud_get_bool (NULL, "show_numbers_in_pl"))
         return str_printf ("%d. %s%s", 1 + current_entry, current_title, s);
 
     return str_printf ("%s%s", current_title, s);

@@ -19,14 +19,15 @@
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
+#include <libaudcore/index.h>
+#include <libaudcore/runtime.h>
 
 #include "main.h"
-#include "misc.h"
 
 static void chardet_update (void)
 {
-    char * region = get_str (NULL, "chardet_detector");
-    char * fallbacks = get_str (NULL, "chardet_fallback");
+    char * region = aud_get_str (NULL, "chardet_detector");
+    char * fallbacks = aud_get_str (NULL, "chardet_fallback");
 
     Index * list = str_list_to_index (fallbacks, ", ");
     str_set_charsets (region[0] ? region : NULL, list);

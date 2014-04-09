@@ -17,14 +17,14 @@
  * the use of this software.
  */
 
+#include "misc.h"
 #include "preferences.h"
 
 #include <string.h>
 #include <gtk/gtk.h>
 
 #include <libaudcore/i18n.h>
-
-#include "misc.h"
+#include <libaudcore/runtime.h>
 
 /* HELPERS */
 
@@ -35,7 +35,7 @@ static bool_t widget_get_bool (const PreferencesWidget * widget)
     if (widget->cfg)
         return * (bool_t *) widget->cfg;
     else if (widget->cname)
-        return get_bool (widget->csect, widget->cname);
+        return aud_get_bool (widget->csect, widget->cname);
     else
         return FALSE;
 }
@@ -47,7 +47,7 @@ static void widget_set_bool (const PreferencesWidget * widget, bool_t value)
     if (widget->cfg)
         * (bool_t *) widget->cfg = value;
     else if (widget->cname)
-        set_bool (widget->csect, widget->cname, value);
+        aud_set_bool (widget->csect, widget->cname, value);
 
     if (widget->callback)
         widget->callback ();
@@ -60,7 +60,7 @@ static int widget_get_int (const PreferencesWidget * widget)
     if (widget->cfg)
         return * (int *) widget->cfg;
     else if (widget->cname)
-        return get_int (widget->csect, widget->cname);
+        return aud_get_int (widget->csect, widget->cname);
     else
         return 0;
 }
@@ -72,7 +72,7 @@ static void widget_set_int (const PreferencesWidget * widget, int value)
     if (widget->cfg)
         * (int *) widget->cfg = value;
     else if (widget->cname)
-        set_int (widget->csect, widget->cname, value);
+        aud_set_int (widget->csect, widget->cname, value);
 
     if (widget->callback)
         widget->callback ();
@@ -85,7 +85,7 @@ static double widget_get_double (const PreferencesWidget * widget)
     if (widget->cfg)
         return * (float *) widget->cfg;
     else if (widget->cname)
-        return get_double (widget->csect, widget->cname);
+        return aud_get_double (widget->csect, widget->cname);
     else
         return 0;
 }
@@ -97,7 +97,7 @@ static void widget_set_double (const PreferencesWidget * widget, double value)
     if (widget->cfg)
         * (float *) widget->cfg = value;
     else if (widget->cname)
-        set_double (widget->csect, widget->cname, value);
+        aud_set_double (widget->csect, widget->cname, value);
 
     if (widget->callback)
         widget->callback ();
@@ -110,7 +110,7 @@ static char * widget_get_string (const PreferencesWidget * widget)
     if (widget->cfg)
         return str_get (* (char * *) widget->cfg);
     else if (widget->cname)
-        return get_str (widget->csect, widget->cname);
+        return aud_get_str (widget->csect, widget->cname);
     else
         return NULL;
 }
@@ -125,7 +125,7 @@ static void widget_set_string (const PreferencesWidget * widget, const char * va
         * (char * *) widget->cfg = g_strdup (value);
     }
     else if (widget->cname)
-        set_str (widget->csect, widget->cname, value);
+        aud_set_str (widget->csect, widget->cname, value);
 
     if (widget->callback)
         widget->callback ();

@@ -20,10 +20,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <audacious/misc.h>
 #include <audacious/playlist.h>
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
+#include <libaudcore/runtime.h>
 
 #include "init.h"
 #include "libaudgui.h"

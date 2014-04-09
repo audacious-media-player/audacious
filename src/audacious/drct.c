@@ -19,10 +19,10 @@
 
 #include <libaudcore/hook.h>
 #include <libaudcore/i18n.h>
+#include <libaudcore/runtime.h>
 #include <libaudcore/vfs.h>
 
 #include "drct.h"
-#include "misc.h"
 #include "playlist.h"
 
 /* --- PLAYBACK CONTROL --- */
@@ -126,7 +126,7 @@ void drct_pl_next (void)
     if (playlist < 0)
         playlist = playlist_get_active ();
 
-    playlist_next_song (playlist, get_bool (NULL, "repeat"));
+    playlist_next_song (playlist, aud_get_bool (NULL, "repeat"));
 }
 
 void drct_pl_prev (void)
@@ -151,7 +151,7 @@ static void add_list (Index * filenames, int at, bool_t to_temp, bool_t play)
 
     if (play)
     {
-        if (get_bool (NULL, "clear_playlist"))
+        if (aud_get_bool (NULL, "clear_playlist"))
             playlist_entry_delete (playlist, 0, playlist_entry_count (playlist));
         else
             playlist_queue_delete (playlist, 0, playlist_queue_count (playlist));
@@ -174,12 +174,12 @@ void drct_pl_open (const char * filename)
 {
     Index * filenames = index_new ();
     index_insert (filenames, -1, str_get (filename));
-    add_list (filenames, -1, get_bool (NULL, "open_to_temporary"), TRUE);
+    add_list (filenames, -1, aud_get_bool (NULL, "open_to_temporary"), TRUE);
 }
 
 void drct_pl_open_list (Index * filenames)
 {
-    add_list (filenames, -1, get_bool (NULL, "open_to_temporary"), TRUE);
+    add_list (filenames, -1, aud_get_bool (NULL, "open_to_temporary"), TRUE);
 }
 
 void drct_pl_open_temp (const char * filename)

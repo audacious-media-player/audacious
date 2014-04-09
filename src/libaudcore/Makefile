@@ -5,6 +5,7 @@ LIB_MINOR = 0
 SRCS = audio.c \
        audstrings.c \
        charset.c \
+       config.c \
        eventqueue.c \
        hook.c \
        i18n.c \

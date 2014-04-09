@@ -268,7 +268,7 @@ DONE:
 
 static void do_commands (void)
 {
-    bool_t resume = get_bool (NULL, "resume_playback_on_startup");
+    bool_t resume = aud_get_bool (NULL, "resume_playback_on_startup");
 
     if (filenames)
     {
@@ -341,7 +341,7 @@ static void init_two (void)
 #endif
 
     AUDDBG ("Loading configuration.\n");
-    config_load ();
+    aud_config_load ();
 
     AUDDBG ("Initializing.\n");
     art_init ();
@@ -395,8 +395,8 @@ static void shut_down (void)
     event_queue_cancel_all ();
 
     AUDDBG ("Saving configuration.\n");
-    config_save ();
-    config_cleanup ();
+    aud_config_save ();
+    aud_config_cleanup ();
 
     AUDDBG ("Cleaning up.\n");
     art_cleanup ();
@@ -411,7 +411,7 @@ bool_t do_autosave (void)
     AUDDBG ("Saving configuration.\n");
     hook_call ("config save", NULL);
     save_playlists (FALSE);
-    config_save ();
+    aud_config_save ();
     return TRUE;
 }
 

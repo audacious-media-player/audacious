@@ -78,7 +78,7 @@ static bool_t do_advance (Obj * obj, Invoc * invoc)
 
 static bool_t do_auto_advance (Obj * obj, Invoc * invoc)
 {
-    FINISH2 (auto_advance, ! get_bool (NULL, "no_playlist_advance"));
+    FINISH2 (auto_advance, ! aud_get_bool (NULL, "no_playlist_advance"));
     return TRUE;
 }
 
@@ -123,7 +123,7 @@ static bool_t do_eject (Obj * obj, Invoc * invoc)
 
 static bool_t do_equalizer_activate (Obj * obj, Invoc * invoc, bool_t active)
 {
-    set_bool (NULL, "equalizer_active", active);
+    aud_set_bool (NULL, "equalizer_active", active);
     FINISH (equalizer_activate);
     return TRUE;
 }
@@ -144,7 +144,7 @@ static bool_t do_get_active_playlist_name (Obj * obj, Invoc * invoc)
 
 static bool_t do_get_eq (Obj * obj, Invoc * invoc)
 {
-    double preamp = get_double (NULL, "equalizer_preamp");
+    double preamp = aud_get_double (NULL, "equalizer_preamp");
     double bands[AUD_EQUALIZER_NBANDS];
     eq_get_bands (bands);
 
@@ -162,7 +162,7 @@ static bool_t do_get_eq_band (Obj * obj, Invoc * invoc, int band)
 
 static bool_t do_get_eq_preamp (Obj * obj, Invoc * invoc)
 {
-    FINISH2 (get_eq_preamp, get_double (NULL, "equalizer_preamp"));
+    FINISH2 (get_eq_preamp, aud_get_double (NULL, "equalizer_preamp"));
     return TRUE;
 }
 
@@ -370,7 +370,7 @@ static bool_t do_quit (Obj * obj, Invoc * invoc)
 
 static bool_t do_repeat (Obj * obj, Invoc * invoc)
 {
-    FINISH2 (repeat, get_bool (NULL, "repeat"));
+    FINISH2 (repeat, aud_get_bool (NULL, "repeat"));
     return TRUE;
 }
 
@@ -413,7 +413,7 @@ static bool_t do_set_eq (Obj * obj, Invoc * invoc, double preamp, GVariant * var
     if (nbands != AUD_EQUALIZER_NBANDS)
         return FALSE;
 
-    set_double (NULL, "equalizer_preamp", preamp);
+    aud_set_double (NULL, "equalizer_preamp", preamp);
     eq_set_bands (bands);
     FINISH (set_eq);
     return TRUE;
@@ -428,7 +428,7 @@ static bool_t do_set_eq_band (Obj * obj, Invoc * invoc, int band, double value)
 
 static bool_t do_set_eq_preamp (Obj * obj, Invoc * invoc, double preamp)
 {
-    set_double (NULL, "equalizer_preamp", preamp);
+    aud_set_double (NULL, "equalizer_preamp", preamp);
     FINISH (set_eq_preamp);
     return TRUE;
 }
@@ -507,7 +507,7 @@ static bool_t do_show_prefs_box (Obj * obj, Invoc * invoc, bool_t show)
 
 static bool_t do_shuffle (Obj * obj, Invoc * invoc)
 {
-    FINISH2 (shuffle, get_bool (NULL, "shuffle"));
+    FINISH2 (shuffle, aud_get_bool (NULL, "shuffle"));
     return TRUE;
 }
 
@@ -598,7 +598,7 @@ static bool_t do_stop (Obj * obj, Invoc * invoc)
 
 static bool_t do_stop_after (Obj * obj, Invoc * invoc)
 {
-    FINISH2 (stop_after, get_bool (NULL, "stop_after_current_song"));
+    FINISH2 (stop_after, aud_get_bool (NULL, "stop_after_current_song"));
     return TRUE;
 }
 
@@ -616,28 +616,28 @@ static bool_t do_time (Obj * obj, Invoc * invoc)
 
 static bool_t do_toggle_auto_advance (Obj * obj, Invoc * invoc)
 {
-    set_bool (NULL, "no_playlist_advance", ! get_bool (NULL, "no_playlist_advance"));
+    aud_set_bool (NULL, "no_playlist_advance", ! aud_get_bool (NULL, "no_playlist_advance"));
     FINISH (toggle_auto_advance);
     return TRUE;
 }
 
 static bool_t do_toggle_repeat (Obj * obj, Invoc * invoc)
 {
-    set_bool (NULL, "repeat", ! get_bool (NULL, "repeat"));
+    aud_set_bool (NULL, "repeat", ! aud_get_bool (NULL, "repeat"));
     FINISH (toggle_repeat);
     return TRUE;
 }
 
 static bool_t do_toggle_shuffle (Obj * obj, Invoc * invoc)
 {
-    set_bool (NULL, "shuffle", ! get_bool (NULL, "shuffle"));
+    aud_set_bool (NULL, "shuffle", ! aud_get_bool (NULL, "shuffle"));
     FINISH (toggle_shuffle);
     return TRUE;
 }
 
 static bool_t do_toggle_stop_after (Obj * obj, Invoc * invoc)
 {
-    set_bool (NULL, "stop_after_current_song", ! get_bool (NULL, "stop_after_current_song"));
+    aud_set_bool (NULL, "stop_after_current_song", ! aud_get_bool (NULL, "stop_after_current_song"));
     FINISH (toggle_stop_after);
     return TRUE;
 }

@@ -22,6 +22,7 @@
 #include <string.h>
 
 #include <libaudcore/hook.h>
+#include <libaudcore/runtime.h>
 
 #include "main.h"
 #include "misc.h"
@@ -44,7 +45,7 @@ static void history_save (void)
 
         char name[32];
         snprintf (name, sizeof name, "entry%d", i);
-        set_str ("history", name, node->data);
+        aud_set_str ("history", name, node->data);
 
         node = node->next;
     }
@@ -61,7 +62,7 @@ static void history_load (void)
     {
         char name[32];
         snprintf (name, sizeof name, "entry%d", i);
-        char * path = get_str ("history", name);
+        char * path = aud_get_str ("history", name);
 
         if (! path[0])
         {

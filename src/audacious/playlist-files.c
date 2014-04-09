@@ -167,7 +167,7 @@ bool_t playlist_save (int list, const char * filename)
     };
 
     int entries = playlist_entry_count (list);
-    bool_t fast = get_bool (NULL, "metadata_on_play");
+    bool_t fast = aud_get_bool (NULL, "metadata_on_play");
 
     index_allocate (data.filenames, entries);
     index_allocate (data.tuples, entries);

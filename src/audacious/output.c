@@ -23,6 +23,7 @@
 #include <string.h>
 
 #include <glib.h>
+
 #include <libaudcore/runtime.h>
 
 #include "effect.h"
@@ -76,7 +77,7 @@ static inline int MS2FR (int64_t ms, int r)
 
 static inline int get_format (void)
 {
-    switch (get_int (NULL, "output_bit_depth"))
+    switch (aud_get_int (NULL, "output_bit_depth"))
     {
         case 16: return FMT_S16_NE;
         case 24: return FMT_S24_NE;
@@ -175,16 +176,16 @@ static void flush_output (void)
 
 static void apply_replay_gain (float * data, int samples)
 {
-    if (! get_bool (NULL, "enable_replay_gain"))
+    if (! aud_get_bool (NULL, "enable_replay_gain"))
         return;
 
-    float factor = powf (10, get_double (NULL, "replay_gain_preamp") / 20);
+    float factor = powf (10, aud_get_double (NULL, "replay_gain_preamp") / 20);
 
     if (s_gain)
     {
         float peak;
 
-        if (get_bool (NULL, "replay_gain_album"))
+        if (aud_get_bool (NULL, "replay_gain_album"))
         {
             factor *= powf (10, gain_info.album_gain / 20);
             peak = gain_info.album_peak;
@@ -195,11 +196,11 @@ static void apply_replay_gain (float * data, int samples)
             peak = gain_info.track_peak;
         }
 
-        if (get_bool (NULL, "enable_clipping_prevention") && peak * factor > 1)
+        if (aud_get_bool (NULL, "enable_clipping_prevention") && peak * factor > 1)
             factor = 1 / peak;
     }
     else
-        factor *= powf (10, get_double (NULL, "default_gain") / 20);
+        factor *= powf (10, aud_get_double (NULL, "default_gain") / 20);
 
     if (factor < 0.99 || factor > 1.01)
         audio_amplify (data, 1, samples, & factor);
@@ -207,11 +208,11 @@ static void apply_replay_gain (float * data, int samples)
 
 static void apply_software_volume (float * data, int channels, int samples)
 {
-    if (! get_bool (NULL, "software_volume_control"))
+    if (! aud_get_bool (NULL, "software_volume_control"))
         return;
 
-    int l = get_int (NULL, "sw_volume_left");
-    int r = get_int (NULL, "sw_volume_right");
+    int l = aud_get_int (NULL, "sw_volume_left");
+    int r = aud_get_int (NULL, "sw_volume_right");
 
     if (l == 100 && r == 100)
         return;
@@ -244,7 +245,7 @@ static void write_output_raw (void * data, int samples)
     eq_filter (data, samples);
     apply_software_volume (data, out_channels, samples);
 
-    if (get_bool (NULL, "soft_clipping"))
+    if (aud_get_bool (NULL, "soft_clipping"))
         audio_soft_clip (data, samples);
 
     if (out_format != FMT_FLOAT)
@@ -576,10 +577,10 @@ void output_get_volume (int * left, int * right)
 
     * left = * right = 0;
 
-    if (get_bool (NULL, "software_volume_control"))
+    if (aud_get_bool (NULL, "software_volume_control"))
     {
-        * left = get_int (NULL, "sw_volume_left");
-        * right = get_int (NULL, "sw_volume_right");
+        * left = aud_get_int (NULL, "sw_volume_left");
+        * right = aud_get_int (NULL, "sw_volume_right");
     }
     else if (cop && PLUGIN_HAS_FUNC (cop, get_volume))
         cop->get_volume (left, right);
@@ -591,10 +592,10 @@ void output_set_volume (int left, int right)
 {
     LOCK_MINOR;
 
-    if (get_bool (NULL, "software_volume_control"))
+    if (aud_get_bool (NULL, "software_volume_control"))
     {
-        set_int (NULL, "sw_volume_left", left);
-        set_int (NULL, "sw_volume_right", right);
+        aud_set_int (NULL, "sw_volume_left", left);
+        aud_set_int (NULL, "sw_volume_right", right);
     }
     else if (cop && PLUGIN_HAS_FUNC (cop, set_volume))
         cop->set_volume (left, right);

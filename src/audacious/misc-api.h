@@ -37,19 +37,6 @@ AUD_FUNC1 (const char *, art_request_file, const char *, file)
 /* Releases album art returned by art_request_data() or art_request_file(). */
 AUD_VFUNC1 (art_unref, const char *, file)
 
-/* config.c (thread-safe) */
-
-AUD_VFUNC2 (config_set_defaults, const char *, section, const char * const *, entries)
-
-AUD_VFUNC3 (set_str, const char *, section, const char *, name, const char *, value)
-AUD_FUNC2 (char *, get_str, const char *, section, const char *, name)
-AUD_VFUNC3 (set_bool, const char *, section, const char *, name, bool_t, value)
-AUD_FUNC2 (bool_t, get_bool, const char *, section, const char *, name)
-AUD_VFUNC3 (set_int, const char *, section, const char *, name, int, value)
-AUD_FUNC2 (int, get_int, const char *, section, const char *, name)
-AUD_VFUNC3 (set_double, const char *, section, const char *, name, double, value)
-AUD_FUNC2 (double, get_double, const char *, section, const char *, name)
-
 /* equalizer.c */
 AUD_VFUNC1 (eq_set_bands, const double *, values)
 AUD_VFUNC1 (eq_get_bands, double *, values)
@@ -83,6 +70,10 @@ AUD_VFUNC1 (interface_show_error, const char *, message)
 /* output.c */
 AUD_VFUNC1 (output_reset, int, type)
 
+/* preferences.c */
+AUD_VFUNC4 (create_widgets_with_domain, /* GtkWidget * */ void *, box,
+ const PreferencesWidget *, widgets, int, n_widgets, const char *, domain)
+
 /* probe.c */
 AUD_FUNC2 (PluginHandle *, file_find_decoder, const char *, filename, bool_t,
  fast)
@@ -104,8 +95,6 @@ AUD_VFUNC4 (plugin_menu_add, int, id, MenuFunc, func, const char *, name,
 AUD_VFUNC2 (plugin_menu_remove, int, id, MenuFunc, func)
 
 /* ui_preferences.c */
-AUD_VFUNC4 (create_widgets_with_domain, /* GtkWidget * */ void *, box,
- const PreferencesWidget *, widgets, int, n_widgets, const char *, domain)
 AUD_VFUNC0 (show_prefs_window)
 AUD_VFUNC1 (show_prefs_for_plugin_type, int, type)
 

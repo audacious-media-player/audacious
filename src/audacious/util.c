@@ -31,6 +31,7 @@
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/i18n.h>
+#include <libaudcore/runtime.h>
 
 #include "misc.h"
 #include "plugins.h"
@@ -85,7 +86,7 @@ char * construct_uri (const char * path, const char * reference)
     char buf[pathlen + 3 * strlen (utf8) + 1];
     memcpy (buf, reference, pathlen);
 
-    if (get_bool (NULL, "convert_backslash"))
+    if (aud_get_bool (NULL, "convert_backslash"))
     {
         SCOPY (tmp, utf8);
         str_replace_char (tmp, '\\', '/');

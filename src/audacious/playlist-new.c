@@ -350,7 +350,7 @@ static void queue_update (int level, int list, int at, int count)
         {
             p->modified = TRUE;
 
-            if (! get_bool (NULL, "metadata_on_play"))
+            if (! aud_get_bool (NULL, "metadata_on_play"))
             {
                 p->scanning = TRUE;
                 p->scan_ending = FALSE;
@@ -1076,8 +1076,8 @@ void playlist_entry_delete (int playlist_num, int at, int number)
     index_delete_full (playlist->entries, at, number, (IndexFreeFunc) entry_free);
     number_entries (playlist, at, entries - at - number);
 
-    if (position_changed && get_bool (NULL, "advance_on_delete"))
-        can_play = next_song_locked (playlist, get_bool (NULL, "repeat"), at);
+    if (position_changed && aud_get_bool (NULL, "advance_on_delete"))
+        can_play = next_song_locked (playlist, aud_get_bool (NULL, "repeat"), at);
 
     queue_update (PLAYLIST_UPDATE_STRUCTURE, playlist->number, at, 0);
     LEAVE;
@@ -1451,8 +1451,8 @@ void playlist_delete_selected (int playlist_num)
     entries = index_count (playlist->entries);
     number_entries (playlist, before, entries - before);
 
-    if (position_changed && get_bool (NULL, "advance_on_delete"))
-        can_play = next_song_locked (playlist, get_bool (NULL, "repeat"), entries - after);
+    if (position_changed && aud_get_bool (NULL, "advance_on_delete"))
+        can_play = next_song_locked (playlist, aud_get_bool (NULL, "repeat"), entries - after);
 
     queue_update (PLAYLIST_UPDATE_STRUCTURE, playlist->number, before, entries - after - before);
     LEAVE;
@@ -1740,7 +1740,7 @@ void playlist_reformat_titles (void)
     if (title_formatter)
         tuple_formatter_free (title_formatter);
 
-    char * format = get_str (NULL, "generic_title_format");
+    char * format = aud_get_str (NULL, "generic_title_format");
     title_formatter = tuple_formatter_new (format);
     str_unref (format);
 
@@ -2020,7 +2020,7 @@ bool_t playlist_prev_song (int playlist_num)
 
     bool_t was_playing = (playlist == playing_playlist);
 
-    if (get_bool (NULL, "shuffle"))
+    if (aud_get_bool (NULL, "shuffle"))
     {
         if (! shuffle_prev (playlist))
             RETURN (FALSE);
@@ -2113,7 +2113,7 @@ static bool_t next_song_locked (Playlist * playlist, bool_t repeat, int hint)
         playlist->queued = g_list_remove (playlist->queued, playlist->position);
         playlist->position->queued = FALSE;
     }
-    else if (get_bool (NULL, "shuffle"))
+    else if (aud_get_bool (NULL, "shuffle"))
     {
         if (! shuffle_next (playlist))
         {
