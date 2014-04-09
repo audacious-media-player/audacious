@@ -29,4 +29,7 @@
 #define N_(String) (String)
 #endif
 
+/* Requires: aud_init_paths() */
+void aud_init_i18n (void);
+
 #endif /* AUDACIOUS_I18N_H */

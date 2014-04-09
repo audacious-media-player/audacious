@@ -19,10 +19,10 @@
 
 #include <gtk/gtk.h>
 
-#include <audacious/i18n.h>
 #include <audacious/misc.h>
 #include <audacious/playlist.h>
 #include <libaudcore/audstrings.h>
+#include <libaudcore/i18n.h>
 #include <libaudcore/vfs.h>
 
 #include "init.h"

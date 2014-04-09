@@ -20,9 +20,9 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
+#include <libaudcore/i18n.h>
 #include <libaudgui/menu.h>
 
-#include "i18n.h"
 #include "misc.h"
 
 static GList * items[AUD_MENU_COUNT]; /* of AudguiMenuItem */

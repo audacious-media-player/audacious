@@ -23,10 +23,10 @@
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
+#include <libaudcore/i18n.h>
 #include <libaudgui/libaudgui.h>
 
 #include "drct.h"
-#include "i18n.h"
 #include "input.h"
 #include "interface.h"
 #include "misc.h"

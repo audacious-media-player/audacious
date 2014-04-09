@@ -25,9 +25,8 @@
 
 #include <glib.h>
 
-#include <audacious/i18n.h>
-
 #include "audstrings.h"
+#include "i18n.h"
 #include "index.h"
 
 static const char ascii_to_hex[256] = {

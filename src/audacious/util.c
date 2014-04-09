@@ -30,8 +30,8 @@
 #include <glib.h>
 
 #include <libaudcore/audstrings.h>
+#include <libaudcore/i18n.h>
 
-#include "i18n.h"
 #include "misc.h"
 #include "plugins.h"
 #include "util.h"

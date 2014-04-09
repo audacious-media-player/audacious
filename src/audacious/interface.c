@@ -21,11 +21,11 @@
 #include <pthread.h>
 
 #include <libaudcore/hook.h>
+#include <libaudcore/i18n.h>
 #include <libaudcore/runtime.h>
 #include <libaudgui/libaudgui-gtk.h>
 
 #include "general.h"
-#include "i18n.h"
 #include "interface.h"
 #include "misc.h"
 #include "plugin.h"

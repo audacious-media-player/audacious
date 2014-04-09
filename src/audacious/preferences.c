@@ -22,7 +22,8 @@
 #include <string.h>
 #include <gtk/gtk.h>
 
-#include "i18n.h"
+#include <libaudcore/i18n.h>
+
 #include "misc.h"
 
 /* HELPERS */

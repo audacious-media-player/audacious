@@ -24,9 +24,9 @@
 #include <glib.h>
 
 #include <libaudcore/audstrings.h>
+#include <libaudcore/i18n.h>
 #include <libaudcore/runtime.h>
 
-#include "i18n.h"
 #include "misc.h"
 
 EqualizerPreset * equalizer_preset_new (const char * name)

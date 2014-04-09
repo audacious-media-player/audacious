@@ -20,12 +20,12 @@
 #include <string.h>
 #include <gtk/gtk.h>
 
-#include <audacious/i18n.h>
 #include <audacious/misc.h>
 #include <audacious/drct.h>
 #include <audacious/playlist.h>
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
+#include <libaudcore/i18n.h>
 
 #include "init.h"
 #include "libaudgui.h"

@@ -24,9 +24,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <audacious/i18n.h>
-
 #include "audstrings.h"
+#include "i18n.h"
 #include "tinylock.h"
 #include "tuple.h"
 

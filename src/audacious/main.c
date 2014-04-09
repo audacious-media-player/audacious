@@ -19,12 +19,12 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include <locale.h>
 
 #include <gtk/gtk.h>
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
+#include <libaudcore/i18n.h>
 #include <libaudcore/runtime.h>
 #include <libaudgui/libaudgui.h>
 
@@ -34,7 +34,6 @@
 
 #include "drct.h"
 #include "equalizer.h"
-#include "i18n.h"
 #include "interface.h"
 #include "main.h"
 #include "misc.h"
@@ -325,15 +324,7 @@ static void init_one (void)
 #endif
 
     aud_init_paths ();
-
-    const char * localedir = aud_get_path (AUD_PATH_LOCALE_DIR);
-
-    setlocale (LC_ALL, "");
-    bindtextdomain (PACKAGE, localedir);
-    bind_textdomain_codeset (PACKAGE, "UTF-8");
-    bindtextdomain (PACKAGE "-plugins", localedir);
-    bind_textdomain_codeset (PACKAGE "-plugins", "UTF-8");
-    textdomain (PACKAGE);
+    aud_init_i18n ();
 
 #if ! GLIB_CHECK_VERSION (2, 36, 0)
     g_type_init ();

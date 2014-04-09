@@ -19,9 +19,9 @@
 
 #include <gtk/gtk.h>
 
+#include <libaudcore/i18n.h>
 #include <libaudgui/libaudgui-gtk.h>
 
-#include "i18n.h"
 #include "plugin.h"
 #include "plugins.h"
 #include "ui_preferences.h"

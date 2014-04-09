@@ -20,9 +20,9 @@
 #include <glib.h>
 
 #include <libaudcore/audstrings.h>
+#include <libaudcore/i18n.h>
 #include <libaudcore/runtime.h>
 
-#include "i18n.h"
 #include "misc.h"
 #include "playlist.h"
 #include "plugin.h"

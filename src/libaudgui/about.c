@@ -19,8 +19,8 @@
 
 #include <gtk/gtk.h>
 
-#include <audacious/i18n.h>
 #include <libaudcore/audstrings.h>
+#include <libaudcore/i18n.h>
 #include <libaudcore/runtime.h>
 
 #include "init.h"

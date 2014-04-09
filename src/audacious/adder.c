@@ -26,10 +26,10 @@
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
+#include <libaudcore/i18n.h>
 #include <libaudcore/runtime.h>
 
 #include "drct.h"
-#include "i18n.h"
 #include "playlist.h"
 #include "plugins.h"
 #include "main.h"

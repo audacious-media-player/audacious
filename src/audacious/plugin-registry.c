@@ -32,9 +32,9 @@
 #include <glib/gstdio.h>
 
 #include <libaudcore/audstrings.h>
+#include <libaudcore/i18n.h>
 #include <libaudcore/runtime.h>
 
-#include "i18n.h"
 #include "interface.h"
 #include "misc.h"
 #include "plugin.h"

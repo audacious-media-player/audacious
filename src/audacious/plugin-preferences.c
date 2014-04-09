@@ -18,9 +18,9 @@
  */
 
 #include <libaudcore/audstrings.h>
+#include <libaudcore/i18n.h>
 #include <libaudgui/libaudgui-gtk.h>
 
-#include "i18n.h"
 #include "misc.h"
 #include "plugin.h"
 #include "plugins.h"

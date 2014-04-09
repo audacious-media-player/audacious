@@ -19,9 +19,9 @@
 
 #include "menu.h"
 
-#include <audacious/i18n.h>
 #include <audacious/misc.h>
 #include <libaudcore/hook.h>
+#include <libaudcore/i18n.h>
 
 /* we still use GtkImageMenuItem until there is a good alternative */
 #pragma GCC diagnostic push

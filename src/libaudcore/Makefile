@@ -7,6 +7,7 @@ SRCS = audio.c \
        charset.c \
        eventqueue.c \
        hook.c \
+       i18n.c \
        index.c \
        inifile.c \
        multihash.c \
@@ -25,6 +26,7 @@ INCLUDES = audio.h \
            audstrings.h \
            core.h \
            hook.h \
+           i18n.h \
            index.h \
            inifile.h \
            multihash.h \

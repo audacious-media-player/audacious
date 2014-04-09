@@ -18,10 +18,10 @@
  */
 
 #include <libaudcore/hook.h>
+#include <libaudcore/i18n.h>
 #include <libaudcore/vfs.h>
 
 #include "drct.h"
-#include "i18n.h"
 #include "misc.h"
 #include "playlist.h"
 
