@@ -30,13 +30,7 @@
 
 static GList * vis_funcs[AUD_VIS_TYPES];
 
-typedef struct {
-    PluginHandle * plugin;
-    VisPlugin * header;
-} LoadedVis;
-
 static int running = FALSE;
-static GList * loaded_vis_plugins = NULL;
 
 void vis_func_add (int type, VisFunc func)
 {
@@ -114,25 +108,11 @@ void vis_send_audio (const float * data, int channels)
     }
 }
 
-static int vis_find_cb (LoadedVis * vis, PluginHandle * plugin)
+static bool_t vis_load (PluginHandle * plugin, void * unused)
 {
-    return (vis->plugin == plugin) ? 0 : -1;
-}
-
-static void vis_load (PluginHandle * plugin)
-{
-    GList * node = g_list_find_custom (loaded_vis_plugins, plugin,
-     (GCompareFunc) vis_find_cb);
-    if (node != NULL)
-        return;
-
     AUDDBG ("Activating %s.\n", plugin_get_name (plugin));
     VisPlugin * header = plugin_get_header (plugin);
-    g_return_if_fail (header != NULL);
-
-    LoadedVis * vis = g_slice_new (LoadedVis);
-    vis->plugin = plugin;
-    vis->header = header;
+    g_return_if_fail (header);
 
     if (PLUGIN_HAS_FUNC (header, clear))
         vis_func_add (AUD_VIS_TYPE_CLEAR, (VisFunc) header->clear);
@@ -143,21 +123,15 @@ static void vis_load (PluginHandle * plugin)
     if (PLUGIN_HAS_FUNC (header, render_freq))
         vis_func_add (AUD_VIS_TYPE_FREQ, (VisFunc) header->render_freq);
 
-    loaded_vis_plugins = g_list_prepend (loaded_vis_plugins, vis);
+    return TRUE;
 }
 
-static void vis_unload (PluginHandle * plugin)
+static bool_t vis_unload (PluginHandle * plugin, void * unused)
 {
-    GList * node = g_list_find_custom (loaded_vis_plugins, plugin,
-     (GCompareFunc) vis_find_cb);
-    if (node == NULL)
-        return;
-
     AUDDBG ("Deactivating %s.\n", plugin_get_name (plugin));
-    LoadedVis * vis = node->data;
-    loaded_vis_plugins = g_list_delete_link (loaded_vis_plugins, node);
+    VisPlugin * header = plugin_get_header (plugin);
+    g_return_if_fail (header);
 
-    VisPlugin * header = vis->header;
     if (PLUGIN_HAS_FUNC (header, clear))
         vis_func_remove ((VisFunc) header->clear);
     if (PLUGIN_HAS_FUNC (header, render_mono_pcm))
@@ -170,18 +144,7 @@ static void vis_unload (PluginHandle * plugin)
     if (PLUGIN_HAS_FUNC (header, clear))
         header->clear ();
 
-    g_slice_free (LoadedVis, vis);
-}
-
-static bool_t vis_init_cb (PluginHandle * plugin)
-{
-    vis_load (plugin);
     return TRUE;
-}
-
-static void vis_cleanup_cb (LoadedVis * vis)
-{
-    vis_unload (vis->plugin);
 }
 
 void vis_activate (bool_t activate)
@@ -190,9 +153,9 @@ void vis_activate (bool_t activate)
         return;
 
     if (activate)
-        plugin_for_enabled (PLUGIN_TYPE_VIS, (PluginForEachFunc) vis_init_cb, NULL);
+        plugin_for_enabled (PLUGIN_TYPE_VIS, vis_load, NULL);
     else
-        g_list_foreach (loaded_vis_plugins, (GFunc) vis_cleanup_cb, NULL);
+        plugin_for_enabled (PLUGIN_TYPE_VIS, vis_unload, NULL);
 
     running = activate;
 }
@@ -200,13 +163,13 @@ void vis_activate (bool_t activate)
 bool_t vis_plugin_start (PluginHandle * plugin)
 {
     VisPlugin * vp = plugin_get_header (plugin);
-    g_return_val_if_fail (vp != NULL, FALSE);
+    g_return_val_if_fail (vp, FALSE);
 
     if (vp->init != NULL && ! vp->init ())
         return FALSE;
 
     if (running)
-        vis_load (plugin);
+        vis_load (plugin, NULL);
 
     return TRUE;
 }
@@ -214,11 +177,11 @@ bool_t vis_plugin_start (PluginHandle * plugin)
 void vis_plugin_stop (PluginHandle * plugin)
 {
     VisPlugin * vp = plugin_get_header (plugin);
-    g_return_if_fail (vp != NULL);
+    g_return_if_fail (vp);
 
     if (running)
-        vis_unload (plugin);
+        vis_unload (plugin, NULL);
 
-    if (vp->cleanup != NULL)
+    if (vp->cleanup)
         vp->cleanup ();
 }
