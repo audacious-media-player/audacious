@@ -38,9 +38,6 @@ void dbus_server_init (void);
 void dbus_server_cleanup (void);
 #endif
 
-/* main.c */
-bool_t do_autosave (void);
-
 /* signals.c */
 #ifdef HAVE_SIGWAIT
 void signals_init_one (void);

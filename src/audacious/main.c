@@ -407,7 +407,7 @@ static void shut_down (void)
     playlist_end ();
 }
 
-bool_t do_autosave (void)
+static bool_t do_autosave (void)
 {
     AUDDBG ("Saving configuration.\n");
     hook_call ("config save", NULL);
