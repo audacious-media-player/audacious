@@ -120,7 +120,7 @@ static char * get_path_to_self (void)
             return NULL;
     }
 #else
-#error No known method to identify run-time executable path!
+    return NULL;
 #endif
 }
 
@@ -142,12 +142,6 @@ static void cut_path_element (char * path, char * elem)
         elem[0] = 0; /* leave [drive letter and] leading slash */
 }
 
-static void relocation_error (void)
-{
-    fprintf (stderr, "Unable to identify installation path.\n");
-    abort ();
-}
-
 static char * relocate_path (const char * path, const char * old, const char * new)
 {
     int oldlen = strlen (old);
@@ -163,9 +157,19 @@ static char * relocate_path (const char * path, const char * old, const char * n
 #else
     if (strncmp (path, old, oldlen) || (path[oldlen] && path[oldlen] != G_DIR_SEPARATOR))
 #endif
-        relocation_error ();
+        return str_get (path);
 
     return str_printf ("%.*s%s", newlen, new, path + oldlen);
+}
+
+static void set_default_paths (void)
+{
+    aud_paths[AUD_PATH_BIN_DIR] = str_get (HARDCODE_BINDIR);
+    aud_paths[AUD_PATH_DATA_DIR] = str_get (HARDCODE_DATADIR);
+    aud_paths[AUD_PATH_PLUGIN_DIR] = str_get (HARDCODE_PLUGINDIR);
+    aud_paths[AUD_PATH_LOCALE_DIR] = str_get (HARDCODE_LOCALEDIR);
+    aud_paths[AUD_PATH_DESKTOP_FILE] = str_get (HARDCODE_DESKTOPFILE);
+    aud_paths[AUD_PATH_ICON_FILE] = str_get (HARDCODE_ICONFILE);
 }
 
 static void relocate_all_paths (void)
@@ -188,14 +192,23 @@ static void relocate_all_paths (void)
 
     /* get path to current executable */
     char * new = get_path_to_self ();
+
     if (! new)
-        relocation_error ();
+    {
+        set_default_paths ();
+        return;
+    }
 
     filename_normalize (new);
 
     char * base = last_path_element (new);
+
     if (! base)
-        relocation_error ();
+    {
+        g_free (new);
+        set_default_paths ();
+        return;
+    }
 
     cut_path_element (new, base);
 
