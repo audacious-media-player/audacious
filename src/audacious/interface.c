@@ -23,13 +23,17 @@
 #include <libaudcore/hook.h>
 #include <libaudcore/i18n.h>
 #include <libaudcore/runtime.h>
+#include <libaudgui/init.h>
 #include <libaudgui/libaudgui-gtk.h>
 
 #include "interface.h"
 #include "misc.h"
 #include "plugin.h"
 #include "plugins.h"
+#include "ui_preferences.h"
 #include "visualization.h"
+
+extern AudAPITable api_table;
 
 static IfacePlugin * current_interface = NULL;
 
@@ -43,8 +47,13 @@ bool_t interface_load (PluginHandle * plugin)
     IfacePlugin * i = plugin_get_header (plugin);
     g_return_val_if_fail (i, FALSE);
 
+    audgui_init (& api_table, _AUD_PLUGIN_VERSION);
+
     if (PLUGIN_HAS_FUNC (i, init) && ! i->init ())
+    {
+        audgui_cleanup ();
         return FALSE;
+    }
 
     current_interface = i;
     return TRUE;
@@ -58,6 +67,10 @@ void interface_unload (void)
         current_interface->cleanup ();
 
     current_interface = NULL;
+
+    hide_prefs_window ();
+    plugin_preferences_cleanup ();
+    audgui_cleanup ();
 }
 
 void interface_show (bool_t show)

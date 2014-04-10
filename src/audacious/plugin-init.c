@@ -117,7 +117,7 @@ static void start_single (int type)
     if ((p = table[type].u.s.probe ()) == NULL)
     {
         fprintf (stderr, "FATAL: No %s plugin found.\n", table[type].name);
-        exit (EXIT_FAILURE);
+        abort ();
     }
 
     AUDDBG ("Starting %s.\n", plugin_get_name (p));
@@ -126,8 +126,7 @@ static void start_single (int type)
     if (! table[type].u.s.set_current (p))
     {
         fprintf (stderr, "FATAL: %s failed to start.\n", plugin_get_name (p));
-        plugin_set_enabled (p, FALSE);
-        exit (EXIT_FAILURE);
+        abort ();
     }
 }
 
@@ -183,12 +182,6 @@ void start_plugins_two (void)
         start_plugins (i);
 }
 
-static bool_t misc_cleanup_cb (PluginHandle * p, void * unused)
-{
-    plugin_misc_cleanup (p);
-    return TRUE;
-}
-
 static bool_t stop_multi_cb (PluginHandle * p, void * type)
 {
     AUDDBG ("Shutting down %s.\n", plugin_get_name (p));
@@ -200,8 +193,6 @@ static void stop_plugins (int type)
 {
     if (type == PLUGIN_TYPE_IFACE && aud_get_headless_mode ())
         return;
-
-    plugin_for_enabled (type, misc_cleanup_cb, GINT_TO_POINTER (type));
 
     if (table[type].is_single)
     {
@@ -241,8 +232,6 @@ static bool_t enable_single (int type, PluginHandle * p)
 {
     PluginHandle * old = table[type].u.s.get_current ();
 
-    plugin_misc_cleanup (old);
-
     AUDDBG ("Switching from %s to %s.\n", plugin_get_name (old),
      plugin_get_name (p));
     plugin_set_enabled (old, FALSE);
@@ -260,15 +249,11 @@ static bool_t enable_single (int type, PluginHandle * p)
         return FALSE;
 
     fprintf (stderr, "FATAL: %s failed to start.\n", plugin_get_name (old));
-    plugin_set_enabled (old, FALSE);
-    exit (EXIT_FAILURE);
+    abort ();
 }
 
 static bool_t enable_multi (int type, PluginHandle * p, bool_t enable)
 {
-    if (! enable)
-        plugin_misc_cleanup (p);
-
     AUDDBG ("%sabling %s.\n", enable ? "En" : "Dis", plugin_get_name (p));
     plugin_set_enabled (p, enable);
 

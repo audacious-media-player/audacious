@@ -27,22 +27,69 @@
 #include "preferences.h"
 #include "ui_preferences.h"
 
-typedef struct {
-    GtkWidget * about_window;
-    GtkWidget * config_window;
-} PluginMiscData;
+static GList * about_windows;
+static GList * config_windows;
+
+static int find_cb (GtkWidget * window, PluginHandle * plugin)
+{
+    return (g_object_get_data ((GObject *) window, "plugin-id") != plugin);
+}
+
+static bool_t watch_cb (PluginHandle * plugin, void * window);
+
+/* window destroyed before plugin disabled */
+static void destroy_cb (GtkWidget * window, PluginHandle * plugin)
+{
+    GList * * list = & config_windows;
+    GList * node = g_list_find (* list, window);
+
+    if (! node)
+    {
+        list = & about_windows;
+        node = g_list_find (* list, NULL);  /* set to NULL by audgui_simple_message() */
+        g_return_if_fail (node);
+    }
+
+    plugin_remove_watch (plugin, watch_cb, window);
+
+    * list = g_list_delete_link (* list, node);
+}
+
+/* plugin disabled before window destroyed */
+static bool_t watch_cb (PluginHandle * plugin, void * window)
+{
+    if (plugin_get_enabled (plugin))
+        return TRUE;
+
+    GList * * list = & about_windows;
+    GList * node = g_list_find (* list, window);
+
+    if (! node)
+    {
+        list = & config_windows;
+        node = g_list_find (* list, window);
+        g_return_if_fail (node);
+    }
+
+    g_signal_handlers_disconnect_by_func (window, destroy_cb, plugin);
+    gtk_widget_destroy (window);
+
+    * list = g_list_delete_link (* list, node);
+
+    return FALSE;
+}
 
 void plugin_make_about_window (PluginHandle * plugin)
 {
-    PluginMiscData * misc = plugin_get_misc_data (plugin, sizeof (PluginMiscData));
-    Plugin * header = plugin_get_header (plugin);
+    GList * node = g_list_find_custom (about_windows, plugin, (GCompareFunc) find_cb);
 
-    if (misc->about_window)
+    if (node)
     {
-        gtk_window_present ((GtkWindow *) misc->about_window);
+        gtk_window_present (node->data);
         return;
     }
 
+    Plugin * header = plugin_get_header (plugin);
     const char * name = header->name;
     const char * text = header->about_text;
 
@@ -52,8 +99,14 @@ void plugin_make_about_window (PluginHandle * plugin)
         text = dgettext (header->domain, text);
     }
 
+    about_windows = node = g_list_prepend (about_windows, NULL);
+
     SCONCAT3 (title, _("About"), " ", name);
-    audgui_simple_message (& misc->about_window, GTK_MESSAGE_INFO, title, text);
+    audgui_simple_message ((GtkWidget * *) & node->data, GTK_MESSAGE_INFO, title, text);
+    g_object_set_data ((GObject *) node->data, "plugin-id", plugin);
+
+    g_signal_connect_after (node->data, "destroy", (GCallback) destroy_cb, plugin);
+    plugin_add_watch (plugin, watch_cb, node->data);
 }
 
 static void response_cb (GtkWidget * window, int response, const PluginPreferences * p)
@@ -64,7 +117,7 @@ static void response_cb (GtkWidget * window, int response, const PluginPreferenc
     gtk_widget_destroy (window);
 }
 
-static void destroy_cb (GtkWidget * window, const PluginPreferences * p)
+static void cleanup_cb (GtkWidget * window, const PluginPreferences * p)
 {
     if (p->cleanup)
         p->cleanup ();
@@ -72,15 +125,16 @@ static void destroy_cb (GtkWidget * window, const PluginPreferences * p)
 
 void plugin_make_config_window (PluginHandle * plugin)
 {
-    PluginMiscData * misc = plugin_get_misc_data (plugin, sizeof (PluginMiscData));
-    Plugin * header = plugin_get_header (plugin);
-    const PluginPreferences * p = header->prefs;
+    GList * node = g_list_find_custom (config_windows, plugin, (GCompareFunc) find_cb);
 
-    if (misc->config_window)
+    if (node)
     {
-        gtk_window_present ((GtkWindow *) misc->config_window);
+        gtk_window_present (node->data);
         return;
     }
+
+    Plugin * header = plugin_get_header (plugin);
+    const PluginPreferences * p = header->prefs;
 
     if (p->init)
         p->init ();
@@ -113,20 +167,19 @@ void plugin_make_config_window (PluginHandle * plugin)
     gtk_box_pack_start ((GtkBox *) content, box, TRUE, TRUE, 0);
 
     g_signal_connect (window, "response", (GCallback) response_cb, (void *) p);
-    g_signal_connect (window, "destroy", (GCallback) destroy_cb, (void *) p);
-
-    misc->config_window = window;
-    g_signal_connect (window, "destroy", (GCallback) gtk_widget_destroyed, & misc->config_window);
+    g_signal_connect (window, "destroy", (GCallback) cleanup_cb, (void *) p);
 
     gtk_widget_show_all (window);
+
+    g_object_set_data ((GObject *) window, "plugin-id", plugin);
+    config_windows = node = g_list_prepend (config_windows, window);
+
+    g_signal_connect_after (window, "destroy", (GCallback) destroy_cb, plugin);
+    plugin_add_watch (plugin, watch_cb, window);
 }
 
-void plugin_misc_cleanup (PluginHandle * plugin)
+void plugin_preferences_cleanup (void)
 {
-    PluginMiscData * misc = plugin_get_misc_data (plugin, sizeof (PluginMiscData));
-
-    if (misc->about_window)
-        gtk_widget_destroy (misc->about_window);
-    if (misc->config_window)
-        gtk_widget_destroy (misc->config_window);
+    g_list_foreach (about_windows, (GFunc) gtk_widget_destroy, NULL);
+    g_list_foreach (config_windows, (GFunc) gtk_widget_destroy, NULL);
 }

@@ -560,14 +560,18 @@ static void iface_fill_prefs_box (void)
          header->prefs->n_widgets, header->domain);
 }
 
+static int iface_switch_at_idle (void * plugin)
+{
+    plugin_enable (plugin, TRUE);
+    return G_SOURCE_REMOVE;
+}
+
 static void iface_combo_changed (void)
 {
-    gtk_container_foreach ((GtkContainer *) iface_prefs_box, (GtkCallback) gtk_widget_destroy, NULL);
-
-    plugin_enable (plugin_by_index (PLUGIN_TYPE_IFACE, iface_combo_selected), TRUE);
-
-    iface_fill_prefs_box ();
-    gtk_widget_show_all (iface_prefs_box);
+    /* changing interfaces will destroy the prefs window */
+    /* that's bad to do from deep inside a widget callback, so use an idle handler */
+    PluginHandle * plugin = plugin_by_index (PLUGIN_TYPE_IFACE, iface_combo_selected);
+    g_idle_add (iface_switch_at_idle, plugin);
 }
 
 static const ComboBoxElements * iface_combo_fill (int * n_elements)

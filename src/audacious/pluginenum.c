@@ -29,7 +29,6 @@
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/runtime.h>
-#include <libaudgui/init.h>
 
 #include "plugin.h"
 #include "util.h"
@@ -177,8 +176,6 @@ void plugin_system_init(void)
 {
     assert (g_module_supported ());
 
-    audgui_init (& api_table, _AUD_PLUGIN_VERSION);
-
     plugin_registry_load ();
 
     const char * path = aud_get_path (AUD_PATH_PLUGIN_DIR);
@@ -202,6 +199,4 @@ void plugin_system_cleanup(void)
 
     g_list_free (loaded_modules);
     loaded_modules = NULL;
-
-    audgui_cleanup ();
 }

@@ -30,7 +30,7 @@ void hide_prefs_window(void);
 /* plugin-preferences.c */
 void plugin_make_about_window (PluginHandle * plugin);
 void plugin_make_config_window (PluginHandle * plugin);
-void plugin_misc_cleanup (PluginHandle * plugin);
+void plugin_preferences_cleanup (void);
 
 /* plugin-view.c */
 GtkWidget * plugin_view_new (int type);

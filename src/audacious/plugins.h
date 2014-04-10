@@ -54,9 +54,7 @@ void plugin_registry_prune (void);
 void plugin_registry_save (void);
 
 void plugin_register (const char * path, int timestamp);
-
 void plugin_set_enabled (PluginHandle * plugin, bool_t enabled);
-void * plugin_get_misc_data (PluginHandle * plugin, int size);
 
 PluginHandle * transport_plugin_for_scheme (const char * scheme);
 void playlist_plugin_for_ext (const char * ext, PluginForEachFunc func, void * data);

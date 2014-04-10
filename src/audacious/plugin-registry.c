@@ -65,7 +65,6 @@ struct PluginHandle {
     int priority;
     bool_t has_about, has_configure, enabled;
     GList * watches;
-    void * misc;
 
     union {
         TransportPluginData t;
@@ -116,7 +115,6 @@ static PluginHandle * plugin_new (char * path, bool_t confirmed, bool_t
     plugin->has_configure = FALSE;
     plugin->enabled = FALSE;
     plugin->watches = NULL;
-    plugin->misc = NULL;
 
     if (type == PLUGIN_TYPE_TRANSPORT)
     {
@@ -146,8 +144,7 @@ static void plugin_free (PluginHandle * plugin)
 {
     plugin_list = g_list_remove (plugin_list, plugin);
 
-    for (GList * node = plugin->watches; node; node = node->next)
-        g_slice_free (PluginWatch, node->data);
+    g_warn_if_fail (! plugin->watches);
 
     if (plugin->type == PLUGIN_TYPE_TRANSPORT)
         g_list_free_full (plugin->u.t.schemes, (GDestroyNotify) str_unref);
@@ -162,7 +159,6 @@ static void plugin_free (PluginHandle * plugin)
     str_unref (plugin->path);
     str_unref (plugin->name);
     str_unref (plugin->domain);
-    g_free (plugin->misc);
     g_slice_free (PluginHandle, plugin);
 }
 
@@ -764,14 +760,6 @@ void plugin_remove_watch (PluginHandle * plugin, PluginForEachFunc func, void *
 
         node = next;
     }
-}
-
-void * plugin_get_misc_data (PluginHandle * plugin, int size)
-{
-    if (! plugin->misc)
-        plugin->misc = g_malloc0 (size);
-
-    return plugin->misc;
 }
 
 typedef struct {
