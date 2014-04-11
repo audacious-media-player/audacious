@@ -22,7 +22,6 @@
 #define AUDACIOUS_PLUGIN_H
 
 #include <audacious/api.h>
-#include <audacious/types.h>
 #include <libaudcore/audio.h>
 #include <libaudcore/index.h>
 #include <libaudcore/tuple.h>

@@ -23,7 +23,6 @@
 #include <stdint.h>
 
 #include <audacious/api.h>
-#include <audacious/types.h>
 #include <libaudcore/index.h>
 #include <libaudcore/tuple.h>
 

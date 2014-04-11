@@ -19,12 +19,12 @@
 
 #include <gtk/gtk.h>
 
+#include <audacious/plugin.h>
+#include <audacious/plugins.h>
 #include <libaudcore/i18n.h>
-#include <libaudgui/libaudgui-gtk.h>
 
-#include "plugin.h"
-#include "plugins.h"
-#include "ui_preferences.h"
+#include "init.h"
+#include "libaudgui-gtk.h"
 
 enum {
  PVIEW_COL_NODE,
@@ -71,7 +71,7 @@ static void do_enable (GtkCellRendererToggle * cell, const char * path_str,
      PVIEW_COL_ENABLED, & enabled, -1);
     g_return_if_fail (n != NULL);
 
-    plugin_enable (n->p, ! enabled);
+    aud_plugin_enable (n->p, ! enabled);
 }
 
 static bool_t list_watcher (PluginHandle * p, Node * n)
@@ -79,7 +79,7 @@ static bool_t list_watcher (PluginHandle * p, Node * n)
     GtkTreeIter iter;
     gtk_tree_model_get_iter (n->model, & iter, n->path);
     gtk_list_store_set ((GtkListStore *) n->model, & iter, PVIEW_COL_ENABLED,
-     plugin_get_enabled (n->p), -1);
+     aud_plugin_get_enabled (n->p), -1);
     return TRUE;
 }
 
@@ -90,14 +90,14 @@ static bool_t fill_cb (PluginHandle * p, GtkTreeModel * model)
     GtkTreeIter iter;
     gtk_list_store_append ((GtkListStore *) model, & iter);
     gtk_list_store_set ((GtkListStore *) model, & iter, PVIEW_COL_NODE, n,
-     PVIEW_COL_ENABLED, plugin_get_enabled (p), PVIEW_COL_NAME,
-     plugin_get_name (p), -1);
+     PVIEW_COL_ENABLED, aud_plugin_get_enabled (p), PVIEW_COL_NAME,
+     aud_plugin_get_name (p), -1);
 
     n->p = p;
     n->model = model;
     n->path = gtk_tree_model_get_path (model, & iter);
 
-    plugin_add_watch (p, (PluginForEachFunc) list_watcher, n);
+    aud_plugin_add_watch (p, (PluginForEachFunc) list_watcher, n);
 
     return TRUE;
 }
@@ -129,7 +129,7 @@ static void list_fill (GtkTreeView * tree, void * type)
     gtk_tree_view_column_pack_start (col, rend, FALSE);
     gtk_tree_view_column_set_attributes (col, rend, "text", PVIEW_COL_NAME, NULL);
 
-    plugin_for_each (GPOINTER_TO_INT (type), (PluginForEachFunc) fill_cb, model);
+    aud_plugin_for_each (GPOINTER_TO_INT (type), (PluginForEachFunc) fill_cb, model);
 }
 
 static void list_destroy (GtkTreeView * tree)
@@ -147,7 +147,7 @@ static void list_destroy (GtkTreeView * tree)
             gtk_tree_model_get (model, & iter, PVIEW_COL_NODE, & n, -1);
             g_return_if_fail (n != NULL);
 
-            plugin_remove_watch (n->p, (PluginForEachFunc) list_watcher, n);
+            aud_plugin_remove_watch (n->p, (PluginForEachFunc) list_watcher, n);
             gtk_tree_path_free (n->path);
             g_slice_free (Node, n);
         }
@@ -159,15 +159,13 @@ static void list_destroy (GtkTreeView * tree)
 
 static bool_t config_watcher (PluginHandle * p, GtkWidget * config)
 {
-    gtk_widget_set_sensitive (config, plugin_has_configure (p) &&
-     plugin_get_enabled (p));
+    gtk_widget_set_sensitive (config, aud_plugin_has_configure (p) && aud_plugin_get_enabled (p));
     return TRUE;
 }
 
 static bool_t about_watcher (PluginHandle * p, GtkWidget * about)
 {
-    gtk_widget_set_sensitive (about, plugin_has_about (p) && plugin_get_enabled
-     (p));
+    gtk_widget_set_sensitive (about, aud_plugin_has_about (p) && aud_plugin_get_enabled (p));
     return TRUE;
 }
 
@@ -179,14 +177,14 @@ static void button_update (GtkTreeView * tree, GtkWidget * b)
 
     PluginHandle * p = g_object_steal_data ((GObject *) b, "plugin");
     if (p != NULL)
-        plugin_remove_watch (p, watcher, b);
+        aud_plugin_remove_watch (p, watcher, b);
 
     p = get_selected_plugin (tree);
     if (p != NULL)
     {
         g_object_set_data ((GObject *) b, "plugin", p);
         watcher (p, b);
-        plugin_add_watch (p, watcher, b);
+        aud_plugin_add_watch (p, watcher, b);
     }
     else
         gtk_widget_set_sensitive (b, FALSE);
@@ -196,14 +194,14 @@ static void do_config (void * tree)
 {
     PluginHandle * plugin = get_selected_plugin (tree);
     g_return_if_fail (plugin != NULL);
-    plugin_do_configure (plugin);
+    aud_plugin_do_configure (plugin);
 }
 
 static void do_about (void * tree)
 {
     PluginHandle * plugin = get_selected_plugin (tree);
     g_return_if_fail (plugin != NULL);
-    plugin_do_about (plugin);
+    aud_plugin_do_about (plugin);
 }
 
 static void button_destroy (GtkWidget * b)
@@ -214,7 +212,7 @@ static void button_destroy (GtkWidget * b)
 
     PluginHandle * p = g_object_steal_data ((GObject *) b, "plugin");
     if (p != NULL)
-        plugin_remove_watch (p, watcher, b);
+        aud_plugin_remove_watch (p, watcher, b);
 }
 
 GtkWidget * plugin_view_new (int type)

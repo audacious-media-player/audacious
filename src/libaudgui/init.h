@@ -50,4 +50,10 @@ void audgui_cleanup (void);
 /* pixbufs.c */
 void audgui_pixbuf_uncache (void);
 
+/* plugin-prefs.c */
+void plugin_prefs_cleanup (void);
+
+/* plugin-view.c */
+GtkWidget * plugin_view_new (int type);
+
 #endif /* AUDGUI_INIT_H */

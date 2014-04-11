@@ -13,6 +13,10 @@ SRCS = about.c \
        menu.c \
        pixbufs.c \
        playlists.c \
+       plugin-prefs.c \
+       plugin-view.c \
+       prefs-widget.c \
+       prefs-window.c \
        queue-manager.c \
        scaled-image.c \
        ui_fileopener.c \
@@ -35,8 +39,9 @@ includesubdir = libaudgui
 
 CPPFLAGS := -I.. -I../.. \
             ${CPPFLAGS} \
-            ${GLIB_CFLASG} \
-            ${GTK_CFLAGS}
+            ${GLIB_CFLAGS} \
+            ${GTK_CFLAGS} \
+            ${LIBGUESS_CFLAGS}
 
 CFLAGS += ${LIB_CFLAGS}
 

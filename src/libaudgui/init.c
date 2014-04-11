@@ -159,5 +159,8 @@ EXPORT void audgui_cleanup (void)
     for (int id = 0; id < AUDGUI_NUM_UNIQUE_WINDOWS; id ++)
         audgui_hide_unique_window (id);
 
+    audgui_hide_prefs_window ();
+    plugin_prefs_cleanup ();
+
     _aud_api_table = NULL;
 }

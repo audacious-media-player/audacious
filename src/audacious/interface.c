@@ -30,7 +30,6 @@
 #include "misc.h"
 #include "plugin.h"
 #include "plugins.h"
-#include "ui_preferences.h"
 #include "visualization.h"
 
 extern AudAPITable api_table;
@@ -68,8 +67,6 @@ void interface_unload (void)
 
     current_interface = NULL;
 
-    hide_prefs_window ();
-    plugin_preferences_cleanup ();
     audgui_cleanup ();
 }
 

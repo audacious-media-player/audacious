@@ -47,10 +47,6 @@ AUD_VFUNC1 (interface_show_error, const char *, message)
 /* output.c */
 AUD_VFUNC1 (output_reset, int, type)
 
-/* preferences.c */
-AUD_VFUNC4 (create_widgets_with_domain, /* GtkWidget * */ void *, box,
- const PreferencesWidget *, widgets, int, n_widgets, const char *, domain)
-
 /* probe.c */
 AUD_FUNC2 (PluginHandle *, file_find_decoder, const char *, filename, bool_t,
  fast)
@@ -70,10 +66,6 @@ AUD_FUNC1 (/* GtkWidget * */ void *, get_plugin_menu, int, id)
 AUD_VFUNC4 (plugin_menu_add, int, id, MenuFunc, func, const char *, name,
  const char *, icon)
 AUD_VFUNC2 (plugin_menu_remove, int, id, MenuFunc, func)
-
-/* ui_preferences.c */
-AUD_VFUNC0 (show_prefs_window)
-AUD_VFUNC1 (show_prefs_for_plugin_type, int, type)
 
 /* util.c */
 

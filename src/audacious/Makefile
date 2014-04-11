@@ -14,17 +14,13 @@ SRCS = adder.c \
        playlist-new.c \
        playlist-utils.c \
        pluginenum.c								\
-       plugin-preferences.c \
        plugin-registry.c \
        plugin-init.c \
-       plugin-view.c \
-       preferences.c \
        probe.c \
        probe-buffer.c \
        scanner.c \
        signals.c								\
        ui_plugin_menu.c \
-       ui_preferences.c							\
        util.c									\
        vis_runner.c \
        visualization.c							\
@@ -49,9 +45,7 @@ INCLUDES = api.h \
            playlist-api.h \
            plugin.h				\
            plugins.h \
-           plugins-api.h \
-           preferences.h		\
-           types.h
+           plugins-api.h
 
 DATA = images/about-logo.png				\
        images/album.png \
@@ -80,8 +74,7 @@ CPPFLAGS := -I.. -I../.. \
             ${CPPFLAGS} \
 		${GLIB_CFLAGS}			\
 		${GMODULE_CFLAGS} \
-		${GTK_CFLAGS}			\
-		${LIBGUESS_CFLAGS}
+		${GTK_CFLAGS}
 
 CPPFLAGS += -D_AUDACIOUS_CORE
 

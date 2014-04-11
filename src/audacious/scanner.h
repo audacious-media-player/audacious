@@ -20,7 +20,6 @@
 #ifndef AUDACIOUS_SCANNER_H
 #define AUDACIOUS_SCANNER_H
 
-#include <audacious/types.h>
 #include <libaudcore/tuple.h>
 
 #define SCAN_TUPLE (1 << 0)

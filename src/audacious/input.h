@@ -21,7 +21,6 @@
 #define AUDACIOUS_INPUT_H
 
 #include <audacious/api.h>
-#include <audacious/types.h>
 #include <libaudcore/tuple.h>
 
 #define AUD_API_NAME InputAPI

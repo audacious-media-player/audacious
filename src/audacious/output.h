@@ -21,7 +21,6 @@
 #define AUDACIOUS_OUTPUT_H
 
 #include <libaudcore/core.h>
-#include "types.h"
 
 bool_t output_open_audio (int format, int rate, int channels);
 void output_set_replaygain_info (const ReplayGainInfo * info);

@@ -35,6 +35,7 @@ INCLUDES = audio.h \
            index.h \
            inifile.h \
            multihash.h \
+           preferences.h \
            runtime.h \
            tinylock.h \
            tuple.h \

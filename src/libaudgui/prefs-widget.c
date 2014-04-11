@@ -1,5 +1,5 @@
 /*
- * preferences.c
+ * prefs-widget.c
  * Copyright 2007-2012 Tomasz Moń, William Pitcock, and John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
@@ -17,14 +17,15 @@
  * the use of this software.
  */
 
-#include "misc.h"
-#include "preferences.h"
-
 #include <string.h>
 #include <gtk/gtk.h>
 
+#include <audacious/misc.h>
 #include <libaudcore/i18n.h>
+#include <libaudcore/preferences.h>
 #include <libaudcore/runtime.h>
+
+#include "libaudgui-gtk.h"
 
 /* HELPERS */
 
@@ -434,8 +435,8 @@ static void fill_grid (GtkWidget * grid, const PreferencesWidget * elements,
 /* ALL WIDGETS */
 
 /* box: a GtkBox */
-void create_widgets_with_domain (void * box, const PreferencesWidget * widgets,
- int n_widgets, const char * domain)
+void audgui_create_widgets_with_domain (GtkWidget * box,
+ const PreferencesWidget * widgets, int n_widgets, const char * domain)
 {
     GtkWidget * widget = NULL, * child_box = NULL;
     GSList * radio_btn_group = NULL;
@@ -452,7 +453,7 @@ void create_widgets_with_domain (void * box, const PreferencesWidget * widgets,
                 g_object_set_data ((GObject *) widget, "child", child_box);
 
                 GtkWidget * alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
-                gtk_box_pack_start (box, alignment, FALSE, FALSE, 0);
+                gtk_box_pack_start ((GtkBox *) box, alignment, FALSE, FALSE, 0);
                 gtk_alignment_set_padding ((GtkAlignment *) alignment, 0, 0, 12, 0);
                 gtk_container_add ((GtkContainer *) alignment, child_box);
 
@@ -466,7 +467,7 @@ void create_widgets_with_domain (void * box, const PreferencesWidget * widgets,
 
         GtkWidget * alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
         gtk_alignment_set_padding ((GtkAlignment *) alignment, 6, 0, 12, 0);
-        gtk_box_pack_start (child_box ? (GtkBox *) child_box : box, alignment, FALSE, FALSE, 0);
+        gtk_box_pack_start ((GtkBox *) (child_box ? child_box : box), alignment, FALSE, FALSE, 0);
 
         widget = NULL;
 
@@ -581,7 +582,7 @@ void create_widgets_with_domain (void * box, const PreferencesWidget * widgets,
                 else
                     widget = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
 
-                create_widgets_with_domain ((GtkBox *) widget,
+                audgui_create_widgets_with_domain (widget,
                  widgets[i].data.box.elem, widgets[i].data.box.n_elem, domain);
 
                 if (widgets[i].data.box.frame)
@@ -603,7 +604,7 @@ void create_widgets_with_domain (void * box, const PreferencesWidget * widgets,
                     GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
                     gtk_container_set_border_width ((GtkContainer *) vbox, 6);
 
-                    create_widgets_with_domain ((GtkBox *) vbox,
+                    audgui_create_widgets_with_domain (vbox,
                      widgets[i].data.notebook.tabs[j].widgets,
                      widgets[i].data.notebook.tabs[j].n_widgets, domain);
 

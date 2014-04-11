@@ -21,7 +21,6 @@
 #define AUDACIOUS_PLUGINS_H
 
 #include <audacious/api.h>
-#include <audacious/types.h>
 #include <libaudcore/core.h>
 
 /* returns TRUE to call again for the next plugin, FALSE to stop */

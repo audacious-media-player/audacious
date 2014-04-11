@@ -1,5 +1,5 @@
 /*
- * ui_preferences.c
+ * prefs-window.c
  * Copyright 2006-2012 William Pitcock, Tomasz Moń, Michael Färber, and
  *                     John Lindgren
  *
@@ -23,19 +23,20 @@
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
 
+#include <audacious/misc.h>
+#include <audacious/playlist.h>
+#include <audacious/plugin.h>
+#include <audacious/plugins.h>
+
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
 #include <libaudcore/i18n.h>
+#include <libaudcore/preferences.h>
 #include <libaudcore/runtime.h>
-#include <libaudgui/libaudgui-gtk.h>
 
-#include "misc.h"
-#include "output.h"
-#include "playlist.h"
-#include "plugin.h"
-#include "plugins.h"
-#include "preferences.h"
-#include "ui_preferences.h"
+#include "init.h"
+#include "libaudgui.h"
+#include "libaudgui-gtk.h"
 
 #ifdef USE_CHARDET
 #include <libguess.h>
@@ -236,8 +237,8 @@ static PreferencesWidget playlist_page_widgets[] = {
  {WIDGET_CHK_BTN, N_("Open files in a temporary playlist"),
   .cfg_type = VALUE_BOOLEAN, .cname = "open_to_temporary"},
  {WIDGET_CHK_BTN, N_("Do not load metadata for songs until played"),
-  .cfg_type = VALUE_BOOLEAN, .cname = "metadata_on_play",
-  .callback = playlist_trigger_scan},
+  .cfg_type = VALUE_BOOLEAN, .cname = "metadata_on_play"},
+  /* FIXME .callback = playlist_trigger_scan}, */
  {WIDGET_LABEL, N_("<b>Compatibility</b>"), NULL, NULL, NULL, FALSE},
  {WIDGET_CHK_BTN, N_("Interpret \\ (backward slash) as a folder delimiter"),
   .cfg_type = VALUE_BOOLEAN, .cname = "convert_backslash"},
@@ -288,12 +289,12 @@ static const char * const titlestring_preset_names[TITLESTRING_NPRESETS] = {
 static GArray * fill_plugin_combo (int type)
 {
     GArray * array = g_array_new (FALSE, FALSE, sizeof (ComboBoxElements));
-    g_array_set_size (array, plugin_count (type));
+    g_array_set_size (array, aud_plugin_count (type));
 
     for (int i = 0; i < array->len; i ++)
     {
         ComboBoxElements * elem = & g_array_index (array, ComboBoxElements, i);
-        elem->label = plugin_get_name (plugin_by_index (type, i));
+        elem->label = aud_plugin_get_name (aud_plugin_by_index (type, i));
         elem->value = GINT_TO_POINTER (i);
     }
 
@@ -359,7 +360,7 @@ static void on_titlestring_entry_changed (GtkEntry * entry, GtkComboBox * cbox)
     const char * format = gtk_entry_get_text (entry);
     aud_set_str (NULL, "generic_title_format", format);
     update_titlestring_cbox (cbox, format);
-    playlist_reformat_titles ();
+    /* FIXME playlist_reformat_titles (); */
 }
 
 static void on_titlestring_cbox_changed (GtkComboBox * cbox, GtkEntry * entry)
@@ -438,14 +439,14 @@ static GtkWidget * create_titlestring_tag_menu (void)
 static void show_numbers_cb (GtkToggleButton * numbers, void * unused)
 {
     aud_set_bool (NULL, "show_numbers_in_pl", gtk_toggle_button_get_active (numbers));
-    playlist_reformat_titles ();
+    /* FIXME playlist_reformat_titles (); */
     hook_call ("title change", NULL);
 }
 
 static void leading_zero_cb (GtkToggleButton * leading)
 {
     aud_set_bool (NULL, "leading_zero", gtk_toggle_button_get_active (leading));
-    playlist_reformat_titles ();
+    /* FIXME playlist_reformat_titles (); */
     hook_call ("title change", NULL);
 }
 
@@ -472,7 +473,7 @@ static void create_playlist_category (void)
     GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
     gtk_container_add ((GtkContainer *) category_notebook, vbox);
 
-    create_widgets ((GtkBox *) vbox, playlist_page_widgets, ARRAY_LEN (playlist_page_widgets));
+    audgui_create_widgets (vbox, playlist_page_widgets, ARRAY_LEN (playlist_page_widgets));
 
     GtkWidget * alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
     gtk_box_pack_start ((GtkBox *) vbox, alignment, FALSE, FALSE, 0);
@@ -548,21 +549,20 @@ static void create_song_info_category (void)
 {
     GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
     gtk_container_add ((GtkContainer *) category_notebook, vbox);
-    create_widgets ((GtkBox *) vbox, song_info_page_widgets,
-     ARRAY_LEN (song_info_page_widgets));
+    audgui_create_widgets (vbox, song_info_page_widgets, ARRAY_LEN (song_info_page_widgets));
 }
 
 static void iface_fill_prefs_box (void)
 {
-    Plugin * header = plugin_get_header (plugin_get_current (PLUGIN_TYPE_IFACE));
+    Plugin * header = aud_plugin_get_header (aud_plugin_get_current (PLUGIN_TYPE_IFACE));
     if (header && header->prefs)
-        create_widgets_with_domain (iface_prefs_box, header->prefs->widgets,
-         header->prefs->n_widgets, header->domain);
+        audgui_create_widgets_with_domain (iface_prefs_box,
+         header->prefs->widgets, header->prefs->n_widgets, header->domain);
 }
 
 static int iface_switch_at_idle (void * plugin)
 {
-    plugin_enable (plugin, TRUE);
+    aud_plugin_enable (plugin, TRUE);
     return G_SOURCE_REMOVE;
 }
 
@@ -570,7 +570,7 @@ static void iface_combo_changed (void)
 {
     /* changing interfaces will destroy the prefs window */
     /* that's bad to do from deep inside a widget callback, so use an idle handler */
-    PluginHandle * plugin = plugin_by_index (PLUGIN_TYPE_IFACE, iface_combo_selected);
+    PluginHandle * plugin = aud_plugin_by_index (PLUGIN_TYPE_IFACE, iface_combo_selected);
     g_idle_add (iface_switch_at_idle, plugin);
 }
 
@@ -579,7 +579,7 @@ static const ComboBoxElements * iface_combo_fill (int * n_elements)
     if (! iface_combo_elements)
     {
         iface_combo_elements = fill_plugin_combo (PLUGIN_TYPE_IFACE);
-        iface_combo_selected = plugin_get_index (plugin_get_current (PLUGIN_TYPE_IFACE));
+        iface_combo_selected = aud_plugin_get_index (aud_plugin_get_current (PLUGIN_TYPE_IFACE));
     }
 
     * n_elements = iface_combo_elements->len;
@@ -597,17 +597,17 @@ static void create_appearance_category (void)
 {
     GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
     gtk_container_add ((GtkContainer *) category_notebook, vbox);
-    create_widgets ((GtkBox *) vbox, appearance_page_widgets, ARRAY_LEN (appearance_page_widgets));
+    audgui_create_widgets (vbox, appearance_page_widgets, ARRAY_LEN (appearance_page_widgets));
 }
 
 static void output_combo_changed (void)
 {
-    PluginHandle * plugin = plugin_by_index (PLUGIN_TYPE_OUTPUT, output_combo_selected);
+    PluginHandle * plugin = aud_plugin_by_index (PLUGIN_TYPE_OUTPUT, output_combo_selected);
 
-    if (plugin_enable (plugin, TRUE))
+    if (aud_plugin_enable (plugin, TRUE))
     {
-        gtk_widget_set_sensitive (output_config_button, plugin_has_configure (plugin));
-        gtk_widget_set_sensitive (output_about_button, plugin_has_about (plugin));
+        gtk_widget_set_sensitive (output_config_button, aud_plugin_has_configure (plugin));
+        gtk_widget_set_sensitive (output_about_button, aud_plugin_has_about (plugin));
     }
 }
 
@@ -616,7 +616,7 @@ static const ComboBoxElements * output_combo_fill (int * n_elements)
     if (! output_combo_elements)
     {
         output_combo_elements = fill_plugin_combo (PLUGIN_TYPE_OUTPUT);
-        output_combo_selected = plugin_get_index (output_plugin_get_current ());
+        output_combo_selected = aud_plugin_get_index (aud_plugin_get_current (PLUGIN_TYPE_OUTPUT));
     }
 
     * n_elements = output_combo_elements->len;
@@ -625,22 +625,22 @@ static const ComboBoxElements * output_combo_fill (int * n_elements)
 
 static void output_bit_depth_changed (void)
 {
-    output_reset (OUTPUT_RESET_SOFT);
+    /* FIXME output_reset (OUTPUT_RESET_SOFT); */
 }
 
 static void output_do_config (void * unused)
 {
-    plugin_do_configure (output_plugin_get_current ());
+    aud_plugin_do_configure (aud_plugin_get_current (PLUGIN_TYPE_OUTPUT));
 }
 
 static void output_do_about (void * unused)
 {
-    plugin_do_about (output_plugin_get_current ());
+    aud_plugin_do_about (aud_plugin_get_current (PLUGIN_TYPE_OUTPUT));
 }
 
 static void * output_create_config_button (void)
 {
-    bool_t enabled = plugin_has_configure (output_plugin_get_current ());
+    bool_t enabled = aud_plugin_has_configure (aud_plugin_get_current (PLUGIN_TYPE_OUTPUT));
 
     output_config_button = audgui_button_new (_("_Settings"),
      "preferences-system", output_do_config, NULL);
@@ -651,7 +651,7 @@ static void * output_create_config_button (void)
 
 static void * output_create_about_button (void)
 {
-    bool_t enabled = plugin_has_about (output_plugin_get_current ());
+    bool_t enabled = aud_plugin_has_about (aud_plugin_get_current (PLUGIN_TYPE_OUTPUT));
 
     output_about_button = audgui_button_new (_("_About"), "help-about", output_do_about, NULL);
     gtk_widget_set_sensitive (output_about_button, enabled);
@@ -662,7 +662,7 @@ static void * output_create_about_button (void)
 static void create_audio_category (void)
 {
     GtkWidget * audio_page_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-    create_widgets ((GtkBox *) audio_page_vbox, audio_page_widgets, ARRAY_LEN (audio_page_widgets));
+    audgui_create_widgets (audio_page_vbox, audio_page_widgets, ARRAY_LEN (audio_page_widgets));
     gtk_container_add ((GtkContainer *) category_notebook, audio_page_vbox);
 }
 
@@ -674,7 +674,7 @@ static void create_connectivity_category (void)
     GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
     gtk_box_pack_start ((GtkBox *) connectivity_page_vbox, vbox, TRUE, TRUE, 0);
 
-    create_widgets ((GtkBox *) vbox, connectivity_page_widgets, ARRAY_LEN (connectivity_page_widgets));
+    audgui_create_widgets (vbox, connectivity_page_widgets, ARRAY_LEN (connectivity_page_widgets));
 }
 
 static void create_plugin_category (void)
@@ -778,7 +778,7 @@ static void create_prefs_window (void)
     audgui_destroy_on_escape (prefswin);
 }
 
-void show_prefs_window (void)
+EXPORT void audgui_show_prefs_window (void)
 {
     if (! prefswin)
         create_prefs_window ();
@@ -788,7 +788,7 @@ void show_prefs_window (void)
     gtk_window_present ((GtkWindow *) prefswin);
 }
 
-void show_prefs_for_plugin_type (int type)
+EXPORT void audgui_show_prefs_for_plugin_type (int type)
 {
     if (! prefswin)
         create_prefs_window ();
@@ -811,7 +811,7 @@ void show_prefs_for_plugin_type (int type)
     gtk_window_present ((GtkWindow *) prefswin);
 }
 
-void hide_prefs_window (void)
+EXPORT void audgui_hide_prefs_window (void)
 {
     if (prefswin)
         gtk_widget_destroy (prefswin);

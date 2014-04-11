@@ -25,6 +25,7 @@
 
 #include <libaudcore/hook.h>
 #include <libaudcore/runtime.h>
+#include <libaudgui/libaudgui.h>
 
 #include "effect.h"
 #include "interface.h"
@@ -32,7 +33,6 @@
 #include "output.h"
 #include "plugin.h"
 #include "plugins.h"
-#include "ui_preferences.h"
 #include "visualization.h"
 
 static bool_t general_plugin_start (PluginHandle * plugin)
@@ -320,7 +320,7 @@ void plugin_do_about (PluginHandle * plugin)
     if (PLUGIN_HAS_FUNC (header, about))
         header->about ();
     else if (PLUGIN_HAS_FUNC (header, about_text))
-        plugin_make_about_window (plugin);
+        audgui_show_plugin_about (plugin);
 }
 
 void plugin_do_configure (PluginHandle * plugin)
@@ -332,7 +332,7 @@ void plugin_do_configure (PluginHandle * plugin)
     if (PLUGIN_HAS_FUNC (header, configure))
         header->configure ();
     else if (PLUGIN_HAS_FUNC (header, prefs))
-        plugin_make_config_window (plugin);
+        audgui_show_plugin_prefs (plugin);
 }
 
 void * plugin_get_widget (PluginHandle * plugin)

@@ -28,7 +28,6 @@
 #include "main.h"
 #include "misc.h"
 #include "playlist.h"
-#include "ui_preferences.h"
 
 typedef ObjAudacious Obj;
 typedef GDBusMethodInvocation Invoc;
@@ -497,9 +496,9 @@ static bool_t do_show_prefs_box (Obj * obj, Invoc * invoc, bool_t show)
     if (! aud_get_headless_mode ())
     {
         if (show)
-            show_prefs_window ();
+            audgui_show_prefs_window ();
         else
-            hide_prefs_window ();
+            audgui_hide_prefs_window ();
     }
 
     FINISH (show_prefs_box);

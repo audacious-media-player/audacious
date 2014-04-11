@@ -1,5 +1,5 @@
 /*
- * plugin-preferences.c
+ * plugin-prefs.c
  * Copyright 2012-2013 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
@@ -19,13 +19,14 @@
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/i18n.h>
-#include <libaudgui/libaudgui-gtk.h>
+#include <libaudcore/preferences.h>
 
-#include "misc.h"
-#include "plugin.h"
-#include "plugins.h"
-#include "preferences.h"
-#include "ui_preferences.h"
+#include <audacious/misc.h>
+#include <audacious/plugin.h>
+#include <audacious/plugins.h>
+
+#include "init.h"
+#include "libaudgui-gtk.h"
 
 static GList * about_windows;
 static GList * config_windows;
@@ -50,7 +51,7 @@ static void destroy_cb (GtkWidget * window, PluginHandle * plugin)
         g_return_if_fail (node);
     }
 
-    plugin_remove_watch (plugin, watch_cb, window);
+    aud_plugin_remove_watch (plugin, watch_cb, window);
 
     * list = g_list_delete_link (* list, node);
 }
@@ -58,7 +59,7 @@ static void destroy_cb (GtkWidget * window, PluginHandle * plugin)
 /* plugin disabled before window destroyed */
 static bool_t watch_cb (PluginHandle * plugin, void * window)
 {
-    if (plugin_get_enabled (plugin))
+    if (aud_plugin_get_enabled (plugin))
         return TRUE;
 
     GList * * list = & about_windows;
@@ -79,7 +80,7 @@ static bool_t watch_cb (PluginHandle * plugin, void * window)
     return FALSE;
 }
 
-void plugin_make_about_window (PluginHandle * plugin)
+EXPORT void audgui_show_plugin_about (PluginHandle * plugin)
 {
     GList * node = g_list_find_custom (about_windows, plugin, (GCompareFunc) find_cb);
 
@@ -89,7 +90,7 @@ void plugin_make_about_window (PluginHandle * plugin)
         return;
     }
 
-    Plugin * header = plugin_get_header (plugin);
+    Plugin * header = aud_plugin_get_header (plugin);
     const char * name = header->name;
     const char * text = header->about_text;
 
@@ -106,7 +107,7 @@ void plugin_make_about_window (PluginHandle * plugin)
     g_object_set_data ((GObject *) node->data, "plugin-id", plugin);
 
     g_signal_connect_after (node->data, "destroy", (GCallback) destroy_cb, plugin);
-    plugin_add_watch (plugin, watch_cb, node->data);
+    aud_plugin_add_watch (plugin, watch_cb, node->data);
 }
 
 static void response_cb (GtkWidget * window, int response, const PluginPreferences * p)
@@ -123,7 +124,7 @@ static void cleanup_cb (GtkWidget * window, const PluginPreferences * p)
         p->cleanup ();
 }
 
-void plugin_make_config_window (PluginHandle * plugin)
+EXPORT void audgui_show_plugin_prefs (PluginHandle * plugin)
 {
     GList * node = g_list_find_custom (config_windows, plugin, (GCompareFunc) find_cb);
 
@@ -133,7 +134,7 @@ void plugin_make_config_window (PluginHandle * plugin)
         return;
     }
 
-    Plugin * header = plugin_get_header (plugin);
+    Plugin * header = aud_plugin_get_header (plugin);
     const PluginPreferences * p = header->prefs;
 
     if (p->init)
@@ -163,7 +164,7 @@ void plugin_make_config_window (PluginHandle * plugin)
 
     GtkWidget * content = gtk_dialog_get_content_area ((GtkDialog *) window);
     GtkWidget * box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-    create_widgets_with_domain (box, p->widgets, p->n_widgets, header->domain);
+    audgui_create_widgets_with_domain (box, p->widgets, p->n_widgets, header->domain);
     gtk_box_pack_start ((GtkBox *) content, box, TRUE, TRUE, 0);
 
     g_signal_connect (window, "response", (GCallback) response_cb, (void *) p);
@@ -175,10 +176,10 @@ void plugin_make_config_window (PluginHandle * plugin)
     config_windows = node = g_list_prepend (config_windows, window);
 
     g_signal_connect_after (window, "destroy", (GCallback) destroy_cb, plugin);
-    plugin_add_watch (plugin, watch_cb, window);
+    aud_plugin_add_watch (plugin, watch_cb, window);
 }
 
-void plugin_preferences_cleanup (void)
+void plugin_prefs_cleanup (void)
 {
     g_list_foreach (about_windows, (GFunc) gtk_widget_destroy, NULL);
     g_list_foreach (config_windows, (GFunc) gtk_widget_destroy, NULL);

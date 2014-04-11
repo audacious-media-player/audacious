@@ -22,8 +22,6 @@
 
 #include <libaudcore/core.h>
 
-#include "types.h"
-
 void effect_start (int * channels, int * rate);
 void effect_process (float * * data, int * samples);
 void effect_flush (void);

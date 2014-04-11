@@ -17,10 +17,10 @@
  * the use of this software.
  */
 
-#ifndef AUDACIOUS_PREFERENCES_H
-#define AUDACIOUS_PREFERENCES_H
+#ifndef LIBAUDCORE_PREFERENCES_H
+#define LIBAUDCORE_PREFERENCES_H
 
-#include <audacious/types.h>
+#include <libaudcore/core.h>
 
 typedef enum {
     WIDGET_NONE,
@@ -134,9 +134,9 @@ struct _PluginPreferences {
     const PreferencesWidget * widgets;
     int n_widgets;
 
-    void (*init)(void);
-    void (*apply)(void);
-    void (*cleanup)(void);
+    void (* init) (void);
+    void (* apply) (void);
+    void (* cleanup) (void);
 };
 
-#endif /* AUDACIOUS_PREFERENCES_H */
+#endif /* LIBAUDCORE_PREFERENCES_H */

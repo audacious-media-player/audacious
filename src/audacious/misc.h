@@ -21,7 +21,6 @@
 #define AUDACIOUS_MISC_H
 
 #include <audacious/api.h>
-#include <audacious/types.h>
 #include <libaudcore/index.h>
 #include <libaudcore/tuple.h>
 #include <libaudcore/vfs.h>
@@ -56,8 +55,6 @@ typedef void (* VisFunc) (void);
 #include "misc-api.h"
 #include "api-local-end.h"
 
-#define create_widgets(b, w, a) create_widgets_with_domain (b, w, a, PACKAGE)
-
 #else
 
 #include <audacious/api-define-begin.h>
@@ -67,9 +64,6 @@ typedef void (* VisFunc) (void);
 #include <audacious/api-alias-begin.h>
 #include <audacious/misc-api.h>
 #include <audacious/api-alias-end.h>
-
-#define aud_create_widgets(b, w, a) aud_create_widgets_with_domain (b, w, a, \
- PACKAGE)
 
 #endif
 

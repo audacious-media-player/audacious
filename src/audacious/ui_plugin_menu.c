@@ -21,6 +21,7 @@
 #include <gtk/gtk.h>
 
 #include <libaudcore/i18n.h>
+#include <libaudgui/libaudgui.h>
 #include <libaudgui/menu.h>
 
 #include "misc.h"
@@ -30,7 +31,7 @@ static GtkWidget * menus[AUD_MENU_COUNT];
 
 static void configure_plugins (void)
 {
-    show_prefs_for_plugin_type (PLUGIN_TYPE_GENERAL);
+    audgui_show_prefs_for_plugin_type (PLUGIN_TYPE_GENERAL);
 }
 
 static const AudguiMenuItem main_items[] = {

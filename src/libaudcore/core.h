@@ -20,6 +20,8 @@
 #ifndef LIBAUDCORE_CORE_H
 #define LIBAUDCORE_CORE_H
 
+/* COMMON MACROS */
+
 #undef NULL
 #ifdef __cplusplus /* *sigh* */
 #define NULL 0
@@ -44,6 +46,43 @@
 #define CLAMP(a,min,max) ((a) < (min) ? (min) : (a) > (max) ? (max) : (a))
 
 #define ARRAY_LEN(a) (sizeof (a) / sizeof (a)[0])
+
+/* CORE TYPES */
+
+enum {
+ PLUGIN_TYPE_TRANSPORT,
+ PLUGIN_TYPE_PLAYLIST,
+ PLUGIN_TYPE_INPUT,
+ PLUGIN_TYPE_EFFECT,
+ PLUGIN_TYPE_OUTPUT,
+ PLUGIN_TYPE_VIS,
+ PLUGIN_TYPE_GENERAL,
+ PLUGIN_TYPE_IFACE,
+ PLUGIN_TYPES};
+
+typedef struct PluginHandle PluginHandle;
+
+typedef const struct _Plugin Plugin;
+typedef const struct _TransportPlugin TransportPlugin;
+typedef const struct _PlaylistPlugin PlaylistPlugin;
+typedef const struct _InputPlugin InputPlugin;
+typedef const struct _EffectPlugin EffectPlugin;
+typedef const struct _OutputPlugin OutputPlugin;
+typedef const struct _VisPlugin VisPlugin;
+typedef const struct _GeneralPlugin GeneralPlugin;
+typedef const struct _IfacePlugin IfacePlugin;
+
+typedef struct _PluginPreferences PluginPreferences;
+typedef struct _PreferencesWidget PreferencesWidget;
+
+typedef struct {
+    float track_gain; /* dB */
+    float track_peak; /* 0-1 */
+    float album_gain; /* dB */
+    float album_peak; /* 0-1 */
+} ReplayGainInfo;
+
+/* STRING POOL */
 
 /* If the pool contains a copy of <str>, increments its reference count.
  * Otherwise, adds a copy of <str> to the pool with a reference count of one.

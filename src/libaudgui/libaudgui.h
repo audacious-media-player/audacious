@@ -60,6 +60,15 @@ void audgui_jump_to_time (void);
 void audgui_import_playlist (void);
 void audgui_export_playlist (void);
 
+/* plugin-prefs.c */
+void audgui_show_plugin_about (PluginHandle * plugin);
+void audgui_show_plugin_prefs (PluginHandle * plugin);
+
+/* prefs-window.c */
+void audgui_show_prefs_window (void);
+void audgui_show_prefs_for_plugin_type (int type);
+void audgui_hide_prefs_window (void);
+
 /* queue-manager.c */
 void audgui_queue_manager_show (void);
 
