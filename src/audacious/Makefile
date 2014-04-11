@@ -47,15 +47,6 @@ INCLUDES = api.h \
            plugins.h \
            plugins-api.h
 
-DATA = images/about-logo.png				\
-       images/album.png \
-       images/appearance.png \
-       images/audio.png						\
-       images/connectivity.png				\
-       images/info.png \
-       images/playlist.png					\
-       images/plugins.png
-
 CLEAN = build_stamp.c
 
 ifeq ($(USE_DBUS),yes)
@@ -86,6 +77,3 @@ LIBS := -L../libaudcore -laudcore \
 		${GLIB_LIBS}					\
 		${GMODULE_LIBS} \
 		${GTK_LIBS}
-
-desktop_DATA = audacious.desktop
-desktopdir = ${datarootdir}/applications

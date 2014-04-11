@@ -1,8 +1,17 @@
-SUBDIRS = src man pixmaps po
+SUBDIRS = src man images po
 
 DISTCLEAN = audacious.pc buildsys.mk config.h config.log config.status extra.mk
 
-DATA = AUTHORS COPYING
+DATA = AUTHORS \
+       COPYING \
+       images/about-logo.png \
+       images/album.png \
+       images/appearance.png \
+       images/audio.png \
+       images/connectivity.png \
+       images/info.png \
+       images/playlist.png \
+       images/plugins.png
 
 include buildsys.mk
 
