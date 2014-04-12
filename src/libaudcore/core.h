@@ -50,6 +50,13 @@
 /* CORE TYPES */
 
 enum {
+ AUD_MENU_MAIN,
+ AUD_MENU_PLAYLIST,
+ AUD_MENU_PLAYLIST_ADD,
+ AUD_MENU_PLAYLIST_REMOVE,
+ AUD_MENU_COUNT};
+
+enum {
  PLUGIN_TYPE_TRANSPORT,
  PLUGIN_TYPE_PLAYLIST,
  PLUGIN_TYPE_INPUT,
@@ -81,6 +88,8 @@ typedef struct {
     float album_gain; /* dB */
     float album_peak; /* 0-1 */
 } ReplayGainInfo;
+
+typedef void (* MenuFunc) (void);
 
 /* STRING POOL */
 

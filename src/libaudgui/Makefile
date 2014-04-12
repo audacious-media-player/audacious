@@ -13,6 +13,7 @@ SRCS = about.c \
        menu.c \
        pixbufs.c \
        playlists.c \
+       plugin-menu.c \
        plugin-prefs.c \
        plugin-view.c \
        prefs-widget.c \

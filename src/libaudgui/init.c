@@ -160,6 +160,8 @@ EXPORT void audgui_cleanup (void)
         audgui_hide_unique_window (id);
 
     audgui_hide_prefs_window ();
+
+    plugin_menu_cleanup ();
     plugin_prefs_cleanup ();
 
     _aud_api_table = NULL;

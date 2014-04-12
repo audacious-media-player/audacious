@@ -60,6 +60,10 @@ void audgui_jump_to_time (void);
 void audgui_import_playlist (void);
 void audgui_export_playlist (void);
 
+/* plugin-menu.c */
+void audgui_plugin_menu_add (int id, MenuFunc func, const char * name, const char * icon);
+void audgui_plugin_menu_remove (int id, MenuFunc func);
+
 /* plugin-prefs.c */
 void audgui_show_plugin_about (PluginHandle * plugin);
 void audgui_show_plugin_prefs (PluginHandle * plugin);

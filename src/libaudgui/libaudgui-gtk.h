@@ -35,6 +35,9 @@ void audgui_pixbuf_scale_within (GdkPixbuf * * pixbuf, int size);
 GdkPixbuf * audgui_pixbuf_request (const char * filename);
 GdkPixbuf * audgui_pixbuf_request_current (void);
 
+/* plugin-menu.c */
+GtkWidget * audgui_get_plugin_menu (int id);
+
 /* prefs-widget.c */
 void audgui_create_widgets_with_domain (GtkWidget * box,
  const PreferencesWidget * widgets, int n_widgets, const char * domain);

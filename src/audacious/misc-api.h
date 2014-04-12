@@ -41,8 +41,10 @@ AUD_VFUNC1 (art_unref, const char *, file)
 AUD_VFUNC1 (interface_show, bool_t, show)
 AUD_FUNC0 (bool_t, interface_is_shown)
 
-/* interface_show_error() is safe to call from any thread */
-AUD_VFUNC1 (interface_show_error, const char *, message)
+AUD_VFUNC1 (interface_show_error, const char *, message)  /* thread-safe */
+
+AUD_VFUNC4 (plugin_menu_add, int, id, MenuFunc, func, const char *, name, const char *, icon)
+AUD_VFUNC2 (plugin_menu_remove, int, id, MenuFunc, func)
 
 /* output.c */
 AUD_VFUNC1 (output_reset, int, type)
@@ -60,12 +62,6 @@ AUD_FUNC3 (bool_t, file_write_tuple, const char *, filename, PluginHandle *,
  decoder, const Tuple *, tuple)
 AUD_FUNC2 (bool_t, custom_infowin, const char *, filename, PluginHandle *,
  decoder)
-
-/* ui_plugin_menu.c */
-AUD_FUNC1 (/* GtkWidget * */ void *, get_plugin_menu, int, id)
-AUD_VFUNC4 (plugin_menu_add, int, id, MenuFunc, func, const char *, name,
- const char *, icon)
-AUD_VFUNC2 (plugin_menu_remove, int, id, MenuFunc, func)
 
 /* util.c */
 

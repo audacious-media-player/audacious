@@ -20,7 +20,6 @@ SRCS = adder.c \
        probe-buffer.c \
        scanner.c \
        signals.c								\
-       ui_plugin_menu.c \
        util.c									\
        vis_runner.c \
        visualization.c							\

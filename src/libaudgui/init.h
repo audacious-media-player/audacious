@@ -50,6 +50,9 @@ void audgui_cleanup (void);
 /* pixbufs.c */
 void audgui_pixbuf_uncache (void);
 
+/* plugin-menu.c */
+void plugin_menu_cleanup (void);
+
 /* plugin-prefs.c */
 void plugin_prefs_cleanup (void);
 

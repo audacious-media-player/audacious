@@ -28,15 +28,6 @@
 enum {OUTPUT_RESET_EFFECTS_ONLY, OUTPUT_RESET_SOFT, OUTPUT_RESET_HARD};
 
 enum {
- AUD_MENU_MAIN,
- AUD_MENU_PLAYLIST,
- AUD_MENU_PLAYLIST_ADD,
- AUD_MENU_PLAYLIST_REMOVE,
- AUD_MENU_COUNT};
-
-typedef void (* MenuFunc) (void);
-
-enum {
  AUD_VIS_TYPE_CLEAR,        /* like VisPlugin::clear() */
  AUD_VIS_TYPE_MONO_PCM,     /* like VisPlugin::render_mono_pcm() */
  AUD_VIS_TYPE_MULTI_PCM,    /* like VisPlugin::render_multi_pcm() */
