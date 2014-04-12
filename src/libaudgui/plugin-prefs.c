@@ -91,10 +91,20 @@ EXPORT void audgui_show_plugin_about (PluginHandle * plugin)
     }
 
     Plugin * header = aud_plugin_get_header (plugin);
+    g_return_if_fail (header);
+
     const char * name = header->name;
     const char * text = header->about_text;
 
-    if (PLUGIN_HAS_FUNC (header, domain))
+    if (! text)
+    {
+        /* deprecated method */
+        if (header->about)
+            header->about ();
+        return;
+    }
+
+    if (header->domain)
     {
         name = dgettext (header->domain, name);
         text = dgettext (header->domain, text);
@@ -135,13 +145,23 @@ EXPORT void audgui_show_plugin_prefs (PluginHandle * plugin)
     }
 
     Plugin * header = aud_plugin_get_header (plugin);
+    g_return_if_fail (header);
+
     const PluginPreferences * p = header->prefs;
+
+    if (! p)
+    {
+        /* deprecated method */
+        if (header->configure)
+            header->configure ();
+        return;
+    }
 
     if (p->init)
         p->init ();
 
     const char * name = header->name;
-    if (PLUGIN_HAS_FUNC (header, domain))
+    if (header->domain)
         name = dgettext (header->domain, header->name);
 
     GtkWidget * window = gtk_dialog_new ();

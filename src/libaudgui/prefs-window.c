@@ -630,12 +630,12 @@ static void output_bit_depth_changed (void)
 
 static void output_do_config (void * unused)
 {
-    aud_plugin_do_configure (aud_plugin_get_current (PLUGIN_TYPE_OUTPUT));
+    audgui_show_plugin_prefs (aud_plugin_get_current (PLUGIN_TYPE_OUTPUT));
 }
 
 static void output_do_about (void * unused)
 {
-    aud_plugin_do_about (aud_plugin_get_current (PLUGIN_TYPE_OUTPUT));
+    audgui_show_plugin_about (aud_plugin_get_current (PLUGIN_TYPE_OUTPUT));
 }
 
 static void * output_create_config_button (void)

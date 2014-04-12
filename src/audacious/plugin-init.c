@@ -25,7 +25,6 @@
 
 #include <libaudcore/hook.h>
 #include <libaudcore/runtime.h>
-#include <libaudgui/libaudgui.h>
 
 #include "effect.h"
 #include "interface.h"
@@ -309,30 +308,6 @@ int plugin_send_message (PluginHandle * plugin, const char * code, const void * 
         return ENOSYS;
 
     return header->take_message (code, data, size);
-}
-
-void plugin_do_about (PluginHandle * plugin)
-{
-    g_return_if_fail (plugin_get_enabled (plugin));
-    Plugin * header = plugin_get_header (plugin);
-    g_return_if_fail (header);
-
-    if (PLUGIN_HAS_FUNC (header, about))
-        header->about ();
-    else if (PLUGIN_HAS_FUNC (header, about_text))
-        audgui_show_plugin_about (plugin);
-}
-
-void plugin_do_configure (PluginHandle * plugin)
-{
-    g_return_if_fail (plugin_get_enabled (plugin));
-    Plugin * header = plugin_get_header (plugin);
-    g_return_if_fail (header);
-
-    if (PLUGIN_HAS_FUNC (header, configure))
-        header->configure ();
-    else if (PLUGIN_HAS_FUNC (header, prefs))
-        audgui_show_plugin_prefs (plugin);
 }
 
 void * plugin_get_widget (PluginHandle * plugin)

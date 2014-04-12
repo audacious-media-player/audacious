@@ -24,6 +24,7 @@
 #include <libaudcore/i18n.h>
 
 #include "init.h"
+#include "libaudgui.h"
 #include "libaudgui-gtk.h"
 
 enum {
@@ -194,14 +195,14 @@ static void do_config (void * tree)
 {
     PluginHandle * plugin = get_selected_plugin (tree);
     g_return_if_fail (plugin != NULL);
-    aud_plugin_do_configure (plugin);
+    audgui_show_plugin_prefs (plugin);
 }
 
 static void do_about (void * tree)
 {
     PluginHandle * plugin = get_selected_plugin (tree);
     g_return_if_fail (plugin != NULL);
-    aud_plugin_do_about (plugin);
+    audgui_show_plugin_about (plugin);
 }
 
 static void button_destroy (GtkWidget * b)
