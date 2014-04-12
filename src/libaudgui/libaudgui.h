@@ -21,6 +21,8 @@
 #define LIBAUDGUI_H
 
 #include <stdint.h>
+
+#include <audacious/api.h>
 #include <libaudcore/core.h>
 
 void audgui_show_add_url_window(bool_t open);
@@ -53,6 +55,10 @@ void audgui_infowin_show (int playlist, int entry);
 void audgui_infowin_show_current (void);
 void audgui_infowin_hide (void);
 
+/* init.c */
+void audgui_init (AudAPITable * table);
+void audgui_cleanup (void);
+
 /* jump-to-time.c */
 void audgui_jump_to_time (void);
 
@@ -83,5 +89,7 @@ void audgui_playlist_manager (void);
 void audgui_urilist_open (const char * list);
 void audgui_urilist_insert (int playlist, int position, const char * list);
 char * audgui_urilist_create_from_selected (int playlist);
+
+#define audgui_init() audgui_init (_aud_api_table)
 
 #endif /* LIBAUDGUI_H */

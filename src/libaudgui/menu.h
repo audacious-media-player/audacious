@@ -20,6 +20,8 @@
 #ifndef AUDGUI_MENU_H
 #define AUDGUI_MENU_H
 
+/* okay to use without audgui_init() */
+
 #include <gtk/gtk.h>
 #include <libaudcore/core.h>
 

@@ -42,11 +42,11 @@ GtkWidget * audgui_get_plugin_menu (int id);
 void audgui_create_widgets_with_domain (GtkWidget * box,
  const PreferencesWidget * widgets, int n_widgets, const char * domain);
 
-/* scaled-image.c */
+/* scaled-image.c -- okay to use without audgui_init() */
 GtkWidget * audgui_scaled_image_new (GdkPixbuf * pixbuf);
 void audgui_scaled_image_set (GtkWidget * widget, GdkPixbuf * pixbuf);
 
-/* util.c */
+/* util.c -- okay to use without audgui_init() */
 int audgui_get_digit_width (GtkWidget * widget);
 void audgui_get_mouse_coords (GtkWidget * widget, int * x, int * y);
 void audgui_destroy_on_escape (GtkWidget * widget);

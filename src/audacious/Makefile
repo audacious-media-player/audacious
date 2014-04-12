@@ -63,16 +63,12 @@ endif
 CPPFLAGS := -I.. -I../.. \
             ${CPPFLAGS} \
 		${GLIB_CFLAGS}			\
-		${GMODULE_CFLAGS} \
-		${GTK_CFLAGS}
+		${GMODULE_CFLAGS}
 
 CPPFLAGS += -D_AUDACIOUS_CORE
 
 LIBS := -L../libaudcore -laudcore \
-        -L../libaudgui -laudgui \
-        -L../libaudtag -laudtag \
         ${LIBS} -lm \
 		${LIBINTL}						\
 		${GLIB_LIBS}					\
-		${GMODULE_LIBS} \
-		${GTK_LIBS}
+		${GMODULE_LIBS}

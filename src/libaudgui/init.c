@@ -29,6 +29,8 @@
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
 
+#undef audgui_init
+
 static const char * const audgui_defaults[] = {
  "close_dialog_add", "FALSE",
  "close_dialog_open", "TRUE",
@@ -53,6 +55,7 @@ static const char * const window_names[AUDGUI_NUM_UNIQUE_WINDOWS] = {
 };
 
 AudAPITable * _aud_api_table = NULL;
+static int init_count = 0;
 
 static GtkWidget * windows[AUDGUI_NUM_UNIQUE_WINDOWS];
 
@@ -132,13 +135,12 @@ static void playlist_position_cb (void * list, void * unused)
         audgui_pixbuf_uncache ();
 }
 
-EXPORT void audgui_init (AudAPITable * table, int version)
+EXPORT void audgui_init (AudAPITable * table)
 {
-    if (version != _AUD_PLUGIN_VERSION)
-    {
-        fprintf (stderr, "libaudgui version mismatch\n");
-        abort ();
-    }
+    if (init_count ++)
+        return;
+
+    gtk_init (NULL, NULL);
 
     _aud_api_table = table;
     aud_config_set_defaults ("audgui", audgui_defaults);
@@ -155,6 +157,9 @@ EXPORT void audgui_init (AudAPITable * table, int version)
 
 EXPORT void audgui_cleanup (void)
 {
+    if (-- init_count)
+        return;
+
     hook_dissociate ("playlist set playing", playlist_set_playing_cb);
     hook_dissociate ("playlist position", playlist_position_cb);
 

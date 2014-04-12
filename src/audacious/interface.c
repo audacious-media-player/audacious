@@ -17,10 +17,11 @@
  * the use of this software.
  */
 
+#include <glib.h>
+
 #include <libaudcore/hook.h>
 #include <libaudcore/i18n.h>
 #include <libaudcore/runtime.h>
-#include <libaudgui/init.h>
 
 #include "drct.h"
 #include "interface.h"
@@ -34,8 +35,6 @@ typedef struct {
     const char * icon;
     MenuFunc func;
 } MenuItem;
-
-extern AudAPITable api_table;
 
 static GMainLoop * mainloop = NULL;
 static IfacePlugin * current_interface = NULL;
@@ -77,14 +76,8 @@ static bool_t interface_load (PluginHandle * plugin)
     IfacePlugin * i = plugin_get_header (plugin);
     g_return_val_if_fail (i, FALSE);
 
-    gtk_init (NULL, NULL);
-    audgui_init (& api_table, _AUD_PLUGIN_VERSION);
-
     if (PLUGIN_HAS_FUNC (i, init) && ! i->init ())
-    {
-        audgui_cleanup ();
         return FALSE;
-    }
 
     current_interface = i;
 
@@ -103,8 +96,6 @@ static void interface_unload (void)
         current_interface->cleanup ();
 
     current_interface = NULL;
-
-    audgui_cleanup ();
 }
 
 void ui_show (bool_t show)

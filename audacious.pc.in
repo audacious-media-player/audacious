@@ -12,5 +12,5 @@ plugin_dir=@plugindir@
 Name: Audacious
 Description: Audacious is a versatile and handy multi platform media player
 Version: @PACKAGE_VERSION@
-Libs: -L${lib_dir} -laudcore -laudgui
+Libs: -L${lib_dir} -laudcore
 Cflags: -I${audacious_include_dir}
