@@ -312,13 +312,13 @@ int plugin_send_message (PluginHandle * plugin, const char * code, const void * 
 
 void * plugin_get_widget (PluginHandle * plugin)
 {
-    g_return_if_fail (plugin_get_enabled (plugin));
+    g_return_val_if_fail (plugin_get_enabled (plugin), NULL);
     int type = plugin_get_type (plugin);
 
     if (type == PLUGIN_TYPE_GENERAL)
     {
         GeneralPlugin * gp = plugin_get_header (plugin);
-        g_return_if_fail (gp != NULL);
+        g_return_val_if_fail (gp != NULL, NULL);
 
         if (PLUGIN_HAS_FUNC (gp, get_widget))
             return gp->get_widget ();
@@ -327,7 +327,7 @@ void * plugin_get_widget (PluginHandle * plugin)
     if (type == PLUGIN_TYPE_VIS)
     {
         VisPlugin * vp = plugin_get_header (plugin);
-        g_return_if_fail (vp != NULL);
+        g_return_val_if_fail (vp != NULL, NULL);
 
         if (PLUGIN_HAS_FUNC (vp, get_widget))
             return vp->get_widget ();
