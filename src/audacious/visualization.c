@@ -112,7 +112,7 @@ static bool_t vis_load (PluginHandle * plugin, void * unused)
 {
     AUDDBG ("Activating %s.\n", plugin_get_name (plugin));
     VisPlugin * header = plugin_get_header (plugin);
-    g_return_if_fail (header);
+    g_return_val_if_fail (header, FALSE);
 
     if (PLUGIN_HAS_FUNC (header, clear))
         vis_func_add (AUD_VIS_TYPE_CLEAR, (VisFunc) header->clear);
@@ -130,7 +130,7 @@ static bool_t vis_unload (PluginHandle * plugin, void * unused)
 {
     AUDDBG ("Deactivating %s.\n", plugin_get_name (plugin));
     VisPlugin * header = plugin_get_header (plugin);
-    g_return_if_fail (header);
+    g_return_val_if_fail (header, FALSE);
 
     if (PLUGIN_HAS_FUNC (header, clear))
         vis_func_remove ((VisFunc) header->clear);
