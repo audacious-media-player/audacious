@@ -20,6 +20,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <glib.h>
+
 #include <libaudcore/audstrings.h>
 #include <libaudcore/equalizer.h>
 #include <libaudcore/hook.h>
