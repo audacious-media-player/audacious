@@ -44,6 +44,7 @@ AC_MSG_CHECKING([operating system type])
 
 HAVE_LINUX=no
 HAVE_MSWINDOWS=no
+HAVE_DARWIN=no
 
 case "$target" in
     *linux*)
@@ -54,6 +55,10 @@ case "$target" in
         AC_MSG_RESULT(Windows)
         HAVE_MSWINDOWS=yes
         ;;
+    *darwin*)
+        AC_MSG_RESULT(Darwin)
+        HAVE_DARWIN=yes
+        ;;
     *)
         AC_MSG_RESULT(other UNIX)
         ;;
@@ -61,6 +66,7 @@ esac
 
 AC_SUBST(HAVE_MSWINDOWS)
 AC_SUBST(HAVE_LINUX)
+AC_SUBST(HAVE_DARWIN)
 
 dnl Enable "-Wl,-z,defs" only on Linux
 dnl ==================================
