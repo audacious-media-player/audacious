@@ -451,7 +451,7 @@ EXPORT void audgui_infowin_show (int playlist, int entry)
     if (tuple == NULL)
     {
         SPRINTF (message, _("No info available for %s.\n"), filename);
-        aud_interface_show_error (message);
+        aud_ui_show_error (message);
         goto FREE;
     }
 

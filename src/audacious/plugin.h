@@ -337,6 +337,19 @@ struct _IfacePlugin
     PLUGIN_COMMON_FIELDS
 
     void (* show) (bool_t show);
+    void (* run) (void);
+    void (* quit) (void);
+
+    void (* show_about_window) (void);
+    void (* hide_about_window) (void);
+    void (* show_filebrowser) (bool_t open);
+    void (* hide_filebrowser) (void);
+    void (* show_jump_to_song) (void);
+    void (* hide_jump_to_song) (void);
+    void (* show_prefs_window) (void);
+    void (* hide_prefs_window) (void);
+    void (* plugin_menu_add) (int id, MenuFunc func, const char * name, const char * icon);
+    void (* plugin_menu_remove) (int id, MenuFunc func);
 };
 
 #undef PLUGIN_COMMON_FIELDS

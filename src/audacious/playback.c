@@ -352,7 +352,7 @@ static void * playback_thread (void * unused)
         if (! current_decoder)
         {
             SPRINTF (error, _("No decoder found for %s."), current_filename);
-            interface_show_error (error);
+            ui_show_error (error);
             playback_error = TRUE;
             goto DONE;
         }
@@ -385,7 +385,7 @@ static void * playback_thread (void * unused)
     if (! open_file ())
     {
         SPRINTF (error, _("%s could not be opened."), current_filename);
-        interface_show_error (error);
+        ui_show_error (error);
         playback_error = TRUE;
         goto DONE;
     }

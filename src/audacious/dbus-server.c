@@ -21,7 +21,6 @@
 
 #include <libaudcore/equalizer.h>
 #include <libaudcore/runtime.h>
-#include <libaudgui/libaudgui.h>
 
 #include "aud-dbus.h"
 #include "drct.h"
@@ -115,7 +114,7 @@ static bool_t do_delete_active_playlist (Obj * obj, Invoc * invoc)
 static bool_t do_eject (Obj * obj, Invoc * invoc)
 {
     if (! aud_get_headless_mode ())
-        audgui_run_filebrowser (TRUE);
+        ui_show_filebrowser (TRUE);
 
     FINISH (eject);
     return TRUE;
@@ -216,7 +215,7 @@ static bool_t do_length (Obj * obj, Invoc * invoc)
 
 static bool_t do_main_win_visible (Obj * obj, Invoc * invoc)
 {
-    FINISH2 (main_win_visible, ! aud_get_headless_mode () && interface_is_shown ());
+    FINISH2 (main_win_visible, ! aud_get_headless_mode () && ui_is_shown ());
     return TRUE;
 }
 
@@ -445,9 +444,9 @@ static bool_t do_show_about_box (Obj * obj, Invoc * invoc, bool_t show)
     if (! aud_get_headless_mode ())
     {
         if (show)
-            audgui_show_about_window ();
+            ui_show_about_window ();
         else
-            audgui_hide_about_window ();
+            ui_hide_about_window ();
     }
 
     FINISH (show_about_box);
@@ -459,9 +458,9 @@ static bool_t do_show_filebrowser (Obj * obj, Invoc * invoc, bool_t show)
     if (! aud_get_headless_mode ())
     {
         if (show)
-            audgui_run_filebrowser (FALSE);
+            ui_show_filebrowser (FALSE);
         else
-            audgui_hide_filebrowser ();
+            ui_hide_filebrowser ();
     }
 
     FINISH (show_filebrowser);
@@ -473,9 +472,9 @@ static bool_t do_show_jtf_box (Obj * obj, Invoc * invoc, bool_t show)
     if (! aud_get_headless_mode ())
     {
         if (show)
-            audgui_jump_to_track ();
+            ui_show_jump_to_song ();
         else
-            audgui_jump_to_track_hide ();
+            ui_hide_jump_to_song ();
     }
 
     FINISH (show_jtf_box);
@@ -485,7 +484,7 @@ static bool_t do_show_jtf_box (Obj * obj, Invoc * invoc, bool_t show)
 static bool_t do_show_main_win (Obj * obj, Invoc * invoc, bool_t show)
 {
     if (! aud_get_headless_mode ())
-        interface_show (show);
+        ui_show (show);
 
     FINISH (show_main_win);
     return TRUE;
@@ -496,9 +495,9 @@ static bool_t do_show_prefs_box (Obj * obj, Invoc * invoc, bool_t show)
     if (! aud_get_headless_mode ())
     {
         if (show)
-            audgui_show_prefs_window ();
+            ui_show_prefs_window ();
         else
-            audgui_hide_prefs_window ();
+            ui_hide_prefs_window ();
     }
 
     FINISH (show_prefs_box);

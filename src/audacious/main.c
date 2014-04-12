@@ -25,7 +25,6 @@
 #include <libaudcore/hook.h>
 #include <libaudcore/i18n.h>
 #include <libaudcore/runtime.h>
-#include <libaudgui/libaudgui.h>
 
 #ifdef USE_DBUS
 #include "aud-dbus.h"
@@ -298,9 +297,9 @@ static void do_commands (void)
     }
 
     if (options.show_jump_box && ! options.headless)
-        audgui_jump_to_track ();
+        ui_show_jump_to_song ();
     if (options.mainwin && ! options.headless)
-        interface_show (TRUE);
+        ui_show (TRUE);
 }
 
 static void main_cleanup (void)

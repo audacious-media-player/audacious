@@ -94,7 +94,7 @@ bool_t playlist_load (const char * filename, char * * title, Index * * filenames
     if (! data.plugin_found)
     {
         SPRINTF (error, _("Cannot load %s: unsupported file extension."), filename);
-        interface_show_error (error);
+        ui_show_error (error);
     }
 
     if (! data.success)
@@ -184,7 +184,7 @@ bool_t playlist_save (int list, const char * filename)
     if (! data.plugin_found)
     {
         SPRINTF (error, _("Cannot save %s: unsupported file extension."), filename);
-        interface_show_error (error);
+        ui_show_error (error);
     }
 
     str_unref (data.title);

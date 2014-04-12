@@ -38,10 +38,19 @@ AUD_FUNC1 (const char *, art_request_file, const char *, file)
 AUD_VFUNC1 (art_unref, const char *, file)
 
 /* interface.c */
-AUD_VFUNC1 (interface_show, bool_t, show)
-AUD_FUNC0 (bool_t, interface_is_shown)
+AUD_VFUNC1 (ui_show, bool_t, show)
+AUD_FUNC0 (bool_t, ui_is_shown)
 
-AUD_VFUNC1 (interface_show_error, const char *, message)  /* thread-safe */
+AUD_VFUNC1 (ui_show_error, const char *, message)  /* thread-safe */
+
+AUD_VFUNC0 (ui_show_about_window)
+AUD_VFUNC0 (ui_hide_about_window)
+AUD_VFUNC1 (ui_show_filebrowser, bool_t, open)
+AUD_VFUNC0 (ui_hide_filebrowser)
+AUD_VFUNC0 (ui_show_jump_to_song)
+AUD_VFUNC0 (ui_hide_jump_to_song)
+AUD_VFUNC0 (ui_show_prefs_window)
+AUD_VFUNC0 (ui_hide_prefs_window)
 
 AUD_VFUNC4 (plugin_menu_add, int, id, MenuFunc, func, const char *, name, const char *, icon)
 AUD_VFUNC2 (plugin_menu_remove, int, id, MenuFunc, func)

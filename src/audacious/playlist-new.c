@@ -1654,7 +1654,7 @@ static bool_t entries_are_scanned (Playlist * playlist, bool_t selected)
 
         if (! entry->tuple)
         {
-            interface_show_error (_("The playlist cannot be sorted because "
+            ui_show_error (_("The playlist cannot be sorted because "
              "metadata scanning is still in progress (or has been disabled)."));
             return FALSE;
         }
