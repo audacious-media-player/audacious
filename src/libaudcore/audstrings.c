@@ -28,6 +28,7 @@
 #include "audstrings.h"
 #include "i18n.h"
 #include "index.h"
+#include "runtime.h"
 
 static const char ascii_to_hex[256] = {
     ['0'] = 0x0, ['1'] = 0x1, ['2'] = 0x2, ['3'] = 0x3, ['4'] = 0x4,
@@ -780,4 +781,19 @@ EXPORT char * double_array_to_str (const double * array, int count)
 ERR:
     index_free_full (index, (IndexFreeFunc) str_unref);
     return NULL;
+}
+
+EXPORT void str_format_time (char * buf, int bufsize, int64_t milliseconds)
+{
+    int hours = milliseconds / 3600000;
+    int minutes = (milliseconds / 60000) % 60;
+    int seconds = (milliseconds / 1000) % 60;
+
+    if (hours)
+        snprintf (buf, bufsize, "%d:%02d:%02d", hours, minutes, seconds);
+    else
+    {
+        bool_t zero = aud_get_bool (NULL, "leading_zero");
+        snprintf (buf, bufsize, zero ? "%02d:%02d" : "%d:%02d", minutes, seconds);
+    }
 }

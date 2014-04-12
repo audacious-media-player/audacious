@@ -21,6 +21,7 @@
 #define LIBAUDCORE_STRINGS_H
 
 #include <stdarg.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -120,5 +121,8 @@ bool_t str_to_int_array (const char * string, int * array, int count);
 char * int_array_to_str (const int * array, int count);
 bool_t str_to_double_array (const char * string, double * array, int count);
 char * double_array_to_str (const double * array, int count);
+
+/* Requires: aud_config_load() */
+void str_format_time (char * buf, int bufsize, int64_t milliseconds);
 
 #endif /* LIBAUDCORE_STRINGS_H */

@@ -84,7 +84,4 @@ void audgui_urilist_open (const char * list);
 void audgui_urilist_insert (int playlist, int position, const char * list);
 char * audgui_urilist_create_from_selected (int playlist);
 
-/* util.c */
-void audgui_format_time (char * buf, int bufsize, int64_t milliseconds);
-
 #endif /* LIBAUDGUI_H */

@@ -166,18 +166,3 @@ EXPORT void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
         gtk_widget_show_all (* widget);
     }
 }
-
-EXPORT void audgui_format_time (char * buf, int bufsize, int64_t milliseconds)
-{
-    int hours = milliseconds / 3600000;
-    int minutes = (milliseconds / 60000) % 60;
-    int seconds = (milliseconds / 1000) % 60;
-
-    if (hours)
-        snprintf (buf, bufsize, "%d:%02d:%02d", hours, minutes, seconds);
-    else
-    {
-        bool_t zero = aud_get_bool (NULL, "leading_zero");
-        snprintf (buf, bufsize, zero ? "%02d:%02d" : "%d:%02d", minutes, seconds);
-    }
-}

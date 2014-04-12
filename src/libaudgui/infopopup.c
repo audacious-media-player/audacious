@@ -82,7 +82,7 @@ static bool_t infopopup_progress_cb (void * unused)
          time / (float) length);
 
         char time_str[16];
-        audgui_format_time (time_str, sizeof time_str, time);
+        str_format_time (time_str, sizeof time_str, time);
         gtk_progress_bar_set_text ((GtkProgressBar *) widgets.progress, time_str);
 
         gtk_widget_show (widgets.progress);
@@ -210,7 +210,7 @@ static void infopopup_set_fields (const Tuple * tuple, const char * title)
     if (value > 0)
     {
         char buf[16];
-        audgui_format_time (buf, sizeof buf, value);
+        str_format_time (buf, sizeof buf, value);
         tmp = str_get (buf);
     }
     else

@@ -25,7 +25,6 @@
 #include <libaudcore/hook.h>
 #include <libaudcore/i18n.h>
 #include <libaudcore/runtime.h>
-#include <libaudgui/libaudgui.h>
 
 #include "drct.h"
 #include "input.h"
@@ -577,7 +576,7 @@ char * drct_get_title (void)
     if (current_length > 0)
     {
         char t[16];
-        audgui_format_time (t, sizeof t, current_length);
+        str_format_time (t, sizeof t, current_length);
         snprintf (s, sizeof s, " (%s)", t);
     }
     else
