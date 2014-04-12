@@ -17,13 +17,10 @@
  * the use of this software.
  */
 
-#ifndef __AUDACIOUS2_INTERFACE_H__
-#define __AUDACIOUS2_INTERFACE_H__
+#ifndef AUDACIOUS_INTERFACE_H
+#define AUDACIOUS_INTERFACE_H
 
 #include <audacious/plugins.h>
-
-bool_t interface_load (PluginHandle * plugin);
-void interface_unload (void);
 
 PluginHandle * iface_plugin_probe (void);
 PluginHandle * iface_plugin_get_current (void);

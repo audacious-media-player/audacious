@@ -41,7 +41,7 @@ static IfacePlugin * current_interface = NULL;
 
 static GList * menu_items[AUD_MENU_COUNT]; /* of MenuItem */
 
-bool_t interface_load (PluginHandle * plugin)
+static bool_t interface_load (PluginHandle * plugin)
 {
     IfacePlugin * i = plugin_get_header (plugin);
     g_return_val_if_fail (i, FALSE);
@@ -68,7 +68,7 @@ bool_t interface_load (PluginHandle * plugin)
     return TRUE;
 }
 
-void interface_unload (void)
+static void interface_unload (void)
 {
     g_return_if_fail (current_interface);
 
