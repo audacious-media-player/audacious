@@ -238,7 +238,6 @@ static PreferencesWidget playlist_page_widgets[] = {
   .cfg_type = VALUE_BOOLEAN, .cname = "open_to_temporary"},
  {WIDGET_CHK_BTN, N_("Do not load metadata for songs until played"),
   .cfg_type = VALUE_BOOLEAN, .cname = "metadata_on_play"},
-  /* FIXME .callback = playlist_trigger_scan}, */
  {WIDGET_LABEL, N_("<b>Compatibility</b>"), NULL, NULL, NULL, FALSE},
  {WIDGET_CHK_BTN, N_("Interpret \\ (backward slash) as a folder delimiter"),
   .cfg_type = VALUE_BOOLEAN, .cname = "convert_backslash"},
@@ -360,7 +359,6 @@ static void on_titlestring_entry_changed (GtkEntry * entry, GtkComboBox * cbox)
     const char * format = gtk_entry_get_text (entry);
     aud_set_str (NULL, "generic_title_format", format);
     update_titlestring_cbox (cbox, format);
-    /* FIXME playlist_reformat_titles (); */
 }
 
 static void on_titlestring_cbox_changed (GtkComboBox * cbox, GtkEntry * entry)
@@ -439,14 +437,12 @@ static GtkWidget * create_titlestring_tag_menu (void)
 static void show_numbers_cb (GtkToggleButton * numbers, void * unused)
 {
     aud_set_bool (NULL, "show_numbers_in_pl", gtk_toggle_button_get_active (numbers));
-    /* FIXME playlist_reformat_titles (); */
     hook_call ("title change", NULL);
 }
 
 static void leading_zero_cb (GtkToggleButton * leading)
 {
     aud_set_bool (NULL, "leading_zero", gtk_toggle_button_get_active (leading));
-    /* FIXME playlist_reformat_titles (); */
     hook_call ("title change", NULL);
 }
 

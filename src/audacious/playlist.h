@@ -88,9 +88,6 @@ void playlist_load_state (void);
 void playlist_save_state (void);
 void playlist_resume (void);
 
-void playlist_reformat_titles (void);
-void playlist_trigger_scan (void);
-
 void playlist_entry_insert_batch_raw (int playlist, int at,
  Index * filenames, Index * tuples, Index * decoders);
 

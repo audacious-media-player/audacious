@@ -128,6 +128,9 @@ static void scan_restart (void);
 
 static bool_t next_song_locked (Playlist * playlist, bool_t repeat, int hint);
 
+static void playlist_reformat_titles (void);
+static void playlist_trigger_scan (void);
+
 static TupleFormatter * title_formatter;
 
 static void entry_set_tuple_real (Entry * entry, Tuple * tuple)
@@ -647,10 +650,20 @@ void playlist_init (void)
 
     /* initialize title formatter */
     playlist_reformat_titles ();
+
+    hook_associate ("set metadata_on_play", (HookFunction) playlist_trigger_scan, NULL);
+    hook_associate ("set generic_title_format", (HookFunction) playlist_reformat_titles, NULL);
+    hook_associate ("set show_numbers_in_pl", (HookFunction) playlist_reformat_titles, NULL);
+    hook_associate ("set leading_zero", (HookFunction) playlist_reformat_titles, NULL);
 }
 
 void playlist_end (void)
 {
+    hook_dissociate ("set metadata_on_play", (HookFunction) playlist_trigger_scan);
+    hook_dissociate ("set generic_title_format", (HookFunction) playlist_reformat_titles);
+    hook_dissociate ("set show_numbers_in_pl", (HookFunction) playlist_reformat_titles);
+    hook_dissociate ("set leading_zero", (HookFunction) playlist_reformat_titles);
+
     ENTER;
 
     if (update_source)
@@ -1733,7 +1746,7 @@ void playlist_sort_selected_by_title (int playlist_num, int (* compare)
     LEAVE;
 }
 
-void playlist_reformat_titles (void)
+static void playlist_reformat_titles (void)
 {
     ENTER;
 
@@ -1766,7 +1779,7 @@ void playlist_reformat_titles (void)
     LEAVE;
 }
 
-void playlist_trigger_scan (void)
+static void playlist_trigger_scan (void)
 {
     ENTER;
 
