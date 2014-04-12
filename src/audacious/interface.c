@@ -23,6 +23,7 @@
 #include <libaudgui/init.h>
 #include <libaudgui/libaudgui.h>
 
+#include "drct.h"
 #include "interface.h"
 #include "misc.h"
 #include "plugin.h"
@@ -37,6 +38,7 @@ typedef struct {
 
 extern AudAPITable api_table;
 
+static GMainLoop * mainloop = NULL;
 static IfacePlugin * current_interface = NULL;
 
 static GList * menu_items[AUD_MENU_COUNT]; /* of MenuItem */
@@ -46,6 +48,7 @@ static bool_t interface_load (PluginHandle * plugin)
     IfacePlugin * i = plugin_get_header (plugin);
     g_return_val_if_fail (i, FALSE);
 
+    gtk_init (NULL, NULL);
     audgui_init (& api_table, _AUD_PLUGIN_VERSION);
 
     if (PLUGIN_HAS_FUNC (i, init) && ! i->init ())
@@ -169,6 +172,31 @@ bool_t iface_plugin_set_current (PluginHandle * plugin)
     vis_activate (shown && current_interface);
 
     return TRUE;
+}
+
+void iface_run_mainloop (void)
+{
+    if (current_interface)
+        gtk_main ();
+    else
+    {
+        mainloop = g_main_loop_new (NULL, FALSE);
+        g_main_loop_run (mainloop);
+        g_main_loop_unref (mainloop);
+        mainloop = NULL;
+    }
+}
+
+
+void drct_quit (void)
+{
+    if (current_interface)
+        gtk_main_quit ();
+    else
+    {
+        g_return_if_fail (mainloop);
+        g_main_loop_quit (mainloop);
+    }
 }
 
 void plugin_menu_add (int id, MenuFunc func, const char * name, const char * icon)

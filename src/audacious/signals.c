@@ -22,7 +22,8 @@
 #include <pthread.h>
 #include <signal.h>
 
-#include "drct.h"
+#include <libaudcore/hook.h>
+
 #include "main.h"
 
 static sigset_t signal_set;
@@ -32,7 +33,7 @@ static void * signal_thread (void * data)
     int signal;
 
     while (! sigwait (& signal_set, & signal))
-        drct_quit ();
+        event_queue ("quit", NULL);
 
     return NULL;
 }

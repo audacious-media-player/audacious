@@ -20,8 +20,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <gtk/gtk.h>
-
 #include <libaudcore/audstrings.h>
 #include <libaudcore/equalizer.h>
 #include <libaudcore/hook.h>
@@ -333,9 +331,6 @@ static void init_one (void)
 
 static void init_two (void)
 {
-    if (! options.headless)
-        gtk_init (NULL, NULL);
-
 #ifdef HAVE_SIGWAIT
     signals_init_two ();
 #endif
@@ -424,7 +419,7 @@ static bool_t check_should_quit (void)
 static void maybe_quit (void)
 {
     if (check_should_quit ())
-        gtk_main_quit ();
+        drct_quit ();
 }
 
 int main (int argc, char * * argv)
@@ -464,18 +459,15 @@ int main (int argc, char * * argv)
 
     hook_associate ("playback stop", (HookFunction) maybe_quit, NULL);
     hook_associate ("playlist add complete", (HookFunction) maybe_quit, NULL);
+    hook_associate ("quit", (HookFunction) drct_quit, NULL);
 
-    gtk_main ();
+    iface_run_mainloop ();
 
     hook_dissociate ("playback stop", (HookFunction) maybe_quit);
     hook_dissociate ("playlist add complete", (HookFunction) maybe_quit);
+    hook_dissociate ("quit", (HookFunction) drct_quit);
 
 QUIT:
     shut_down ();
     return EXIT_SUCCESS;
-}
-
-void drct_quit (void)
-{
-    gtk_main_quit ();
 }

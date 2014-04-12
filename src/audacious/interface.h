@@ -26,4 +26,6 @@ PluginHandle * iface_plugin_probe (void);
 PluginHandle * iface_plugin_get_current (void);
 bool_t iface_plugin_set_current (PluginHandle * plugin);
 
+void iface_run_mainloop (void);
+
 #endif
