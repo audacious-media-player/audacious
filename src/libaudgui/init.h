@@ -23,6 +23,7 @@
 #include <gtk/gtk.h>
 
 #include <audacious/api.h>
+#include <libaudcore/core.h>
 
 enum {
     AUDGUI_ABOUT_WINDOW,
@@ -58,5 +59,9 @@ void plugin_prefs_cleanup (void);
 
 /* plugin-view.c */
 GtkWidget * plugin_view_new (int type);
+
+/* status.c */
+void status_init (void);
+void status_cleanup (void);
 
 #endif /* AUDGUI_INIT_H */

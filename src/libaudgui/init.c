@@ -143,6 +143,8 @@ EXPORT void audgui_init (AudAPITable * table, int version)
     _aud_api_table = table;
     aud_config_set_defaults ("audgui", audgui_defaults);
 
+    status_init ();
+
     hook_associate ("playlist set playing", playlist_set_playing_cb, NULL);
     hook_associate ("playlist position", playlist_position_cb, NULL);
 
@@ -155,6 +157,8 @@ EXPORT void audgui_cleanup (void)
 {
     hook_dissociate ("playlist set playing", playlist_set_playing_cb);
     hook_dissociate ("playlist position", playlist_position_cb);
+
+    status_cleanup ();
 
     for (int id = 0; id < AUDGUI_NUM_UNIQUE_WINDOWS; id ++)
         audgui_hide_unique_window (id);

@@ -20,7 +20,6 @@
 #ifndef __AUDACIOUS2_INTERFACE_H__
 #define __AUDACIOUS2_INTERFACE_H__
 
-#include <gtk/gtk.h>
 #include <audacious/plugins.h>
 
 bool_t interface_load (PluginHandle * plugin);

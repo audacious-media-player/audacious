@@ -17,15 +17,11 @@
  * the use of this software.
  */
 
-#include <gtk/gtk.h>
-#include <pthread.h>
-
 #include <libaudcore/hook.h>
 #include <libaudcore/i18n.h>
 #include <libaudcore/runtime.h>
 #include <libaudgui/init.h>
 #include <libaudgui/libaudgui.h>
-#include <libaudgui/libaudgui-gtk.h>
 
 #include "interface.h"
 #include "misc.h"
@@ -44,11 +40,6 @@ extern AudAPITable api_table;
 static IfacePlugin * current_interface = NULL;
 
 static GList * menu_items[AUD_MENU_COUNT]; /* of MenuItem */
-
-static pthread_mutex_t error_mutex = PTHREAD_MUTEX_INITIALIZER;
-static GQueue error_queue = G_QUEUE_INIT;
-static int error_source;
-static GtkWidget * error_win;
 
 bool_t interface_load (PluginHandle * plugin)
 {
@@ -117,41 +108,12 @@ bool_t interface_is_shown (void)
     return aud_get_bool (NULL, "show_interface");
 }
 
-static bool_t error_idle_func (void * unused)
-{
-    pthread_mutex_lock (& error_mutex);
-
-    char * message;
-    while ((message = g_queue_pop_head (& error_queue)))
-    {
-        pthread_mutex_unlock (& error_mutex);
-
-        if (aud_get_headless_mode ())
-            fprintf (stderr, "ERROR: %s\n", message);
-        else
-            audgui_simple_message (& error_win, GTK_MESSAGE_ERROR, _("Error"), message);
-
-        str_unref (message);
-
-        pthread_mutex_lock (& error_mutex);
-    }
-
-    error_source = 0;
-
-    pthread_mutex_unlock (& error_mutex);
-    return FALSE;
-}
-
 void interface_show_error (const char * message)
 {
-    pthread_mutex_lock (& error_mutex);
-
-    g_queue_push_tail (& error_queue, str_get (message));
-
-    if (! error_source)
-        error_source = g_idle_add (error_idle_func, NULL);
-
-    pthread_mutex_unlock (& error_mutex);
+    if (aud_get_headless_mode ())
+        fprintf (stderr, "ERROR: %s\n", message);
+    else
+        event_queue_full (0, "ui show error", str_get (message), (GDestroyNotify) str_unref);
 }
 
 static bool_t probe_cb (PluginHandle * p, PluginHandle * * pp)

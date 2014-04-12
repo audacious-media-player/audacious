@@ -20,6 +20,7 @@ SRCS = about.c \
        prefs-window.c \
        queue-manager.c \
        scaled-image.c \
+       status.c \
        ui_fileopener.c \
        ui_jumptotrack.c \
        ui_jumptotrack_cache.c \

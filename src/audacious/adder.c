@@ -22,7 +22,6 @@
 #include <sys/stat.h>
 
 #include <glib/gstdio.h>
-#include <gtk/gtk.h>
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
@@ -64,41 +63,9 @@ static int add_source = 0;
 static int status_source = 0;
 static char status_path[512];
 static int status_count;
-static GtkWidget * status_window = NULL, * status_path_label,
- * status_count_label;
 
 static bool_t status_cb (void * unused)
 {
-    if (! aud_get_headless_mode () && ! status_window)
-    {
-        status_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-        gtk_window_set_type_hint ((GtkWindow *) status_window,
-         GDK_WINDOW_TYPE_HINT_DIALOG);
-        gtk_window_set_title ((GtkWindow *) status_window, _("Searching ..."));
-        gtk_window_set_resizable ((GtkWindow *) status_window, FALSE);
-        gtk_container_set_border_width ((GtkContainer *) status_window, 6);
-
-        GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-        gtk_container_add ((GtkContainer *) status_window, vbox);
-
-        status_path_label = gtk_label_new (NULL);
-        gtk_label_set_width_chars ((GtkLabel *) status_path_label, 40);
-        gtk_label_set_max_width_chars ((GtkLabel *) status_path_label, 40);
-        gtk_label_set_ellipsize ((GtkLabel *) status_path_label,
-         PANGO_ELLIPSIZE_MIDDLE);
-        gtk_box_pack_start ((GtkBox *) vbox, status_path_label, FALSE, FALSE, 0);
-
-        status_count_label = gtk_label_new (NULL);
-        gtk_label_set_width_chars ((GtkLabel *) status_count_label, 40);
-        gtk_label_set_max_width_chars ((GtkLabel *) status_count_label, 40);
-        gtk_box_pack_start ((GtkBox *) vbox, status_count_label, FALSE, FALSE, 0);
-
-        gtk_widget_show_all (status_window);
-
-        g_signal_connect (status_window, "destroy", (GCallback)
-         gtk_widget_destroyed, & status_window);
-    }
-
     pthread_mutex_lock (& mutex);
 
     char scratch[128];
@@ -112,8 +79,8 @@ static bool_t status_cb (void * unused)
     }
     else
     {
-        gtk_label_set_text ((GtkLabel *) status_path_label, status_path);
-        gtk_label_set_text ((GtkLabel *) status_count_label, scratch);
+        hook_call ("ui show progress", status_path);
+        hook_call ("ui show progress 2", scratch);
     }
 
     pthread_mutex_unlock (& mutex);
@@ -143,8 +110,8 @@ static void status_done_locked (void)
 
     if (aud_get_headless_mode ())
         printf ("\n");
-    else if (status_window)
-        gtk_widget_destroy (status_window);
+    else
+        hook_call ("ui hide progress", NULL);
 }
 
 static AddTask * add_task_new (int playlist_id, int at, bool_t play,
