@@ -625,7 +625,7 @@ static const ComboBoxElements * output_combo_fill (int * n_elements)
 
 static void output_bit_depth_changed (void)
 {
-    /* FIXME output_reset (OUTPUT_RESET_SOFT); */
+    aud_output_reset (OUTPUT_RESET_SOFT);
 }
 
 static void output_do_config (void * unused)
