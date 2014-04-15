@@ -556,18 +556,9 @@ static void iface_fill_prefs_box (void)
          header->prefs->widgets, header->prefs->n_widgets, header->domain);
 }
 
-static int iface_switch_at_idle (void * plugin)
-{
-    aud_plugin_enable (plugin, TRUE);
-    return G_SOURCE_REMOVE;
-}
-
 static void iface_combo_changed (void)
 {
-    /* changing interfaces will destroy the prefs window */
-    /* that's bad to do from deep inside a widget callback, so use an idle handler */
-    PluginHandle * plugin = aud_plugin_by_index (PLUGIN_TYPE_IFACE, iface_combo_selected);
-    g_idle_add (iface_switch_at_idle, plugin);
+    aud_plugin_enable (aud_plugin_by_index (PLUGIN_TYPE_IFACE, iface_combo_selected), TRUE);
 }
 
 static const ComboBoxElements * iface_combo_fill (int * n_elements)

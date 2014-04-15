@@ -36,6 +36,9 @@ typedef struct {
     MenuFunc func;
 } MenuItem;
 
+static PluginHandle * current_plugin = NULL;
+static PluginHandle * next_plugin = NULL;
+
 static GMainLoop * mainloop = NULL;
 static IfacePlugin * current_interface = NULL;
 
@@ -76,25 +79,37 @@ static bool_t interface_load (PluginHandle * plugin)
     IfacePlugin * i = plugin_get_header (plugin);
     g_return_val_if_fail (i, FALSE);
 
+    AUDDBG ("Loading %s.\n", plugin_get_name (plugin));
+
     if (PLUGIN_HAS_FUNC (i, init) && ! i->init ())
         return FALSE;
 
+    current_plugin = plugin;
     current_interface = i;
 
     add_menu_items ();
+
+    if (PLUGIN_HAS_FUNC (current_interface, show) && aud_get_bool (NULL, "show_interface"))
+        current_interface->show (TRUE);
 
     return TRUE;
 }
 
 static void interface_unload (void)
 {
-    g_return_if_fail (current_interface);
+    g_return_if_fail (current_plugin && current_interface);
+
+    AUDDBG ("Unloading %s.\n", plugin_get_name (current_plugin));
+
+    if (PLUGIN_HAS_FUNC (current_interface, show) && aud_get_bool (NULL, "show_interface"))
+        current_interface->show (FALSE);
 
     remove_menu_items ();
 
     if (PLUGIN_HAS_FUNC (current_interface, cleanup))
         current_interface->cleanup ();
 
+    current_plugin = NULL;
     current_interface = NULL;
 }
 
@@ -129,7 +144,7 @@ void ui_show_error (const char * message)
 
 static bool_t probe_cb (PluginHandle * p, PluginHandle * * pp)
 {
-    * pp = p;
+    * pp = p;  /* just pick the first one */
     return FALSE;
 }
 
@@ -140,8 +155,6 @@ PluginHandle * iface_plugin_probe (void)
     return p;
 }
 
-static PluginHandle * current_plugin = NULL;
-
 PluginHandle * iface_plugin_get_current (void)
 {
     return current_plugin;
@@ -149,50 +162,45 @@ PluginHandle * iface_plugin_get_current (void)
 
 bool_t iface_plugin_set_current (PluginHandle * plugin)
 {
-    hook_call ("config save", NULL); /* tell interface to save layout */
+    next_plugin = plugin;
 
-    bool_t shown = aud_get_bool (NULL, "show_interface");
-
-    if (current_plugin)
-    {
-        if (shown && current_interface && PLUGIN_HAS_FUNC (current_interface, show))
-            current_interface->show (FALSE);
-
-        AUDDBG ("Unloading %s.\n", plugin_get_name (current_plugin));
-        interface_unload ();
-
-        current_plugin = NULL;
-    }
-
-    if (plugin)
-    {
-        AUDDBG ("Loading %s.\n", plugin_get_name (plugin));
-
-        if (! interface_load (plugin))
-            return FALSE;
-
-        current_plugin = plugin;
-
-        if (shown && current_interface && PLUGIN_HAS_FUNC (current_interface, show))
-            current_interface->show (TRUE);
-    }
-
-    vis_activate (shown && current_interface);
+    /* restart main loop, if running */
+    if (current_interface || mainloop)
+        drct_quit ();
 
     return TRUE;
 }
 
-void iface_run_mainloop (void)
+void iface_run (void)
 {
-    if (current_interface && PLUGIN_HAS_FUNC (current_interface, run))
-        current_interface->run ();
-    else
+    do
     {
-        mainloop = g_main_loop_new (NULL, FALSE);
-        g_main_loop_run (mainloop);
-        g_main_loop_unref (mainloop);
-        mainloop = NULL;
+        if (next_plugin)
+        {
+            if (! interface_load (next_plugin))
+                return;
+
+            next_plugin = NULL;
+        }
+
+        vis_activate (ui_is_shown ());
+
+        if (current_interface && PLUGIN_HAS_FUNC (current_interface, run))
+            current_interface->run ();
+        else
+        {
+            mainloop = g_main_loop_new (NULL, FALSE);
+            g_main_loop_run (mainloop);
+            g_main_loop_unref (mainloop);
+            mainloop = NULL;
+        }
+
+        /* tell interface to save layout */
+        hook_call ("config save", NULL);
+
+        interface_unload ();
     }
+    while (next_plugin);
 }
 
 void drct_quit (void)

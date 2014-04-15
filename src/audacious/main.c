@@ -462,7 +462,7 @@ int main (int argc, char * * argv)
     hook_associate ("playlist add complete", (HookFunction) maybe_quit, NULL);
     hook_associate ("quit", (HookFunction) drct_quit, NULL);
 
-    iface_run_mainloop ();
+    iface_run ();
 
     hook_dissociate ("playback stop", (HookFunction) maybe_quit);
     hook_dissociate ("playlist add complete", (HookFunction) maybe_quit);
