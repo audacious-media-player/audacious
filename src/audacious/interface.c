@@ -173,6 +173,7 @@ bool_t iface_plugin_set_current (PluginHandle * plugin)
 
 void iface_run (void)
 {
+    /* in headless mode, next_plugin is null and this loop runs just once */
     do
     {
         if (next_plugin)
