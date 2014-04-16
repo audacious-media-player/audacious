@@ -171,37 +171,43 @@ bool_t iface_plugin_set_current (PluginHandle * plugin)
     return TRUE;
 }
 
-void iface_run (void)
+static void run_glib_mainloop (void)
 {
-    /* in headless mode, next_plugin is null and this loop runs just once */
-    do
+    mainloop = g_main_loop_new (NULL, FALSE);
+    g_main_loop_run (mainloop);
+    g_main_loop_unref (mainloop);
+    mainloop = NULL;
+}
+
+static void run_iface_plugins (void)
+{
+    vis_activate (aud_get_bool (NULL, "show_interface"));
+
+    while (next_plugin)
     {
-        if (next_plugin)
-        {
-            if (! interface_load (next_plugin))
-                return;
+        if (! interface_load (next_plugin))
+            return;
 
-            next_plugin = NULL;
-        }
+        next_plugin = NULL;
 
-        vis_activate (ui_is_shown ());
-
-        if (current_interface && PLUGIN_HAS_FUNC (current_interface, run))
+        if (PLUGIN_HAS_FUNC (current_interface, run))
             current_interface->run ();
         else
-        {
-            mainloop = g_main_loop_new (NULL, FALSE);
-            g_main_loop_run (mainloop);
-            g_main_loop_unref (mainloop);
-            mainloop = NULL;
-        }
+            run_glib_mainloop ();
 
         /* tell interface to save layout */
         hook_call ("config save", NULL);
 
         interface_unload ();
     }
-    while (next_plugin);
+}
+
+void iface_run (void)
+{
+    if (aud_get_headless_mode ())
+        run_glib_mainloop ();
+    else
+        run_iface_plugins ();
 }
 
 void drct_quit (void)
