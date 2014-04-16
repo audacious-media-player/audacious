@@ -11,7 +11,6 @@ SRCS = audio.c \
        eventqueue.c \
        history.c \
        hook.c \
-       i18n.c \
        index.c \
        inifile.c \
        multihash.c \

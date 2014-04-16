@@ -24,6 +24,7 @@
  */
 
 #include "equalizer.h"
+#include "internal.h"
 
 #include <glib.h>
 #include <math.h>
@@ -163,7 +164,7 @@ static void eq_update (void *data, void *user)
     pthread_mutex_unlock (& mutex);
 }
 
-EXPORT void eq_init (void)
+void eq_init (void)
 {
     eq_update (NULL, NULL);
     hook_associate ("set equalizer_active", eq_update, NULL);
@@ -171,7 +172,7 @@ EXPORT void eq_init (void)
     hook_associate ("set equalizer_bands", eq_update, NULL);
 }
 
-EXPORT void eq_cleanup (void)
+void eq_cleanup (void)
 {
     hook_dissociate ("set equalizer_active", eq_update);
     hook_dissociate ("set equalizer_preamp", eq_update);

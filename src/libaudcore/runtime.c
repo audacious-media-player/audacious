@@ -19,6 +19,7 @@
 
 #include "runtime.h"
 
+#include <locale.h>
 #include <stdlib.h>
 #include <sys/stat.h>
 #include <unistd.h>
@@ -31,8 +32,10 @@
 #endif
 
 #include <glib.h>
+#include <libintl.h>
 
 #include "audstrings.h"
+#include "internal.h"
 
 static bool_t headless_mode;
 static bool_t verbose_mode;
@@ -269,4 +272,29 @@ EXPORT const char * aud_get_path (int id)
 {
     g_return_val_if_fail (id >= 0 && id < AUD_PATH_COUNT, NULL);
     return aud_paths[id];
+}
+
+EXPORT void aud_init_i18n (void)
+{
+    const char * localedir = aud_get_path (AUD_PATH_LOCALE_DIR);
+
+    setlocale (LC_ALL, "");
+    bindtextdomain (PACKAGE, localedir);
+    bind_textdomain_codeset (PACKAGE, "UTF-8");
+    bindtextdomain (PACKAGE "-plugins", localedir);
+    bind_textdomain_codeset (PACKAGE "-plugins", "UTF-8");
+    textdomain (PACKAGE);
+}
+
+EXPORT void aud_init_core (void)
+{
+    chardet_init ();
+    eq_init ();
+}
+
+EXPORT void aud_cleanup_core (void)
+{
+    chardet_cleanup ();
+    eq_cleanup ();
+    history_cleanup ();
 }

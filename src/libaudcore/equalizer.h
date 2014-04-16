@@ -51,8 +51,6 @@ Index * aud_import_winamp_presets (VFSFile * file);
 bool_t aud_export_winamp_preset (EqualizerPreset * preset, VFSFile * file);
 
 /* TODO: make these private */
-void eq_init (void);
-void eq_cleanup (void);
 void eq_set_format (int new_channels, int new_rate);
 void eq_filter (float * data, int samples);
 

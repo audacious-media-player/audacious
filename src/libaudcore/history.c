@@ -17,6 +17,7 @@
  * the use of this software.
  */
 
+#include "internal.h"
 #include "runtime.h"
 
 #include <glib.h>
@@ -75,7 +76,7 @@ static void history_load (void)
     hook_associate ("config save", (HookFunction) history_save, NULL);
 }
 
-EXPORT void aud_cleanup_history (void)
+void history_cleanup (void)
 {
     if (! loaded)
         return;

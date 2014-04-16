@@ -30,6 +30,7 @@
 #include "audstrings.h"
 #include "hook.h"
 #include "index.h"
+#include "internal.h"
 #include "runtime.h"
 #include "tinylock.h"
 
@@ -194,7 +195,7 @@ static void chardet_update (void)
     str_unref (fallbacks);
 }
 
-EXPORT void aud_init_chardet (void)
+void chardet_init (void)
 {
     chardet_update ();
 
@@ -202,7 +203,7 @@ EXPORT void aud_init_chardet (void)
     hook_associate ("set chardet_fallback", (HookFunction) chardet_update, NULL);
 }
 
-EXPORT void aud_cleanup_chardet (void)
+void chardet_cleanup (void)
 {
     hook_dissociate ("set chardet_detector", (HookFunction) chardet_update);
     hook_dissociate ("set chardet_fallback", (HookFunction) chardet_update);

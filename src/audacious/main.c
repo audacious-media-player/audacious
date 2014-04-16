@@ -340,9 +340,9 @@ static void init_two (void)
     aud_config_load ();
 
     AUDDBG ("Initializing.\n");
+    aud_init_core ();
+
     art_init ();
-    aud_init_chardet ();
-    eq_init ();
     playlist_init ();
 
     AUDDBG ("Loading lowlevel plugins.\n");
@@ -397,10 +397,9 @@ static void shut_down (void)
 
     AUDDBG ("Cleaning up.\n");
     art_cleanup ();
-    aud_cleanup_chardet ();
-    aud_cleanup_history ();
-    eq_cleanup ();
     playlist_end ();
+
+    aud_cleanup_core ();
 }
 
 static bool_t do_autosave (void)
