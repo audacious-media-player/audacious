@@ -19,10 +19,10 @@
 
 #include <gtk/gtk.h>
 
-#include <audacious/misc.h>
 #include <libaudcore/i18n.h>
+#include <libaudcore/interface.h>
 
-#include "init.h"
+#include "internal.h"
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
 #include "menu.h"
@@ -68,7 +68,8 @@ EXPORT GtkWidget * audgui_get_plugin_menu (int id)
     return menus[id];
 }
 
-EXPORT void audgui_plugin_menu_add (int id, MenuFunc func, const char * name, const char * icon)
+EXPORT void audgui_plugin_menu_add (int id, void (* func) (void),
+ const char * name, const char * icon)
 {
     g_return_if_fail (id >= 0 && id < AUD_MENU_COUNT);
 
@@ -83,13 +84,13 @@ EXPORT void audgui_plugin_menu_add (int id, MenuFunc func, const char * name, co
         add_to_menu (menus[id], item);
 }
 
-static void remove_cb (GtkWidget * widget, MenuFunc func)
+static void remove_cb (GtkWidget * widget, void (* func) (void))
 {
-    if ((MenuFunc) g_object_get_data ((GObject *) widget, "func") == func)
+    if (g_object_get_data ((GObject *) widget, "func") == (void *) func)
         gtk_widget_destroy (widget);
 }
 
-EXPORT void audgui_plugin_menu_remove (int id, MenuFunc func)
+EXPORT void audgui_plugin_menu_remove (int id, void (* func) (void))
 {
     g_return_if_fail (id >= 0 && id < AUD_MENU_COUNT);
 

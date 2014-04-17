@@ -20,8 +20,8 @@
 #ifndef LIBAUDCORE_EQUALIZER_H
 #define LIBAUDCORE_EQUALIZER_H
 
+#include <libaudcore/core.h>
 #include <libaudcore/index.h>
-#include <libaudcore/vfs.h>
 
 #define AUD_EQ_NBANDS 10
 #define AUD_EQ_MAX_GAIN 12
@@ -49,9 +49,5 @@ bool_t aud_save_preset_file (EqualizerPreset * preset, const char * filename);
 
 Index * aud_import_winamp_presets (VFSFile * file);
 bool_t aud_export_winamp_preset (EqualizerPreset * preset, VFSFile * file);
-
-/* TODO: make these private */
-void eq_set_format (int new_channels, int new_rate);
-void eq_filter (float * data, int samples);
 
 #endif /* LIBAUDCORE_EQUALIZER_H */

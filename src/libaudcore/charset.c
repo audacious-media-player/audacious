@@ -17,6 +17,9 @@
  * the use of this software.
  */
 
+#include "audstrings.h"
+#include "internal.h"
+
 #include <iconv.h>
 #include <stdio.h>
 #include <string.h>
@@ -27,10 +30,8 @@
 #include <libguess/libguess.h>
 #endif
 
-#include "audstrings.h"
 #include "hook.h"
 #include "index.h"
-#include "internal.h"
 #include "runtime.h"
 #include "tinylock.h"
 

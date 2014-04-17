@@ -18,6 +18,7 @@
  */
 
 #include "runtime.h"
+#include "internal.h"
 
 #include <glib.h>
 #include <string.h>
@@ -27,6 +28,7 @@
 #include "inifile.h"
 #include "multihash.h"
 #include "runtime.h"
+#include "vfs.h"
 
 #define DEFAULT_SECTION "audacious"
 
@@ -271,7 +273,7 @@ static void load_entry (const char * key, const char * value, void * data)
     config_op_run (& op, OP_SET_NO_FLAG, & config);
 }
 
-EXPORT void aud_config_load (void)
+void config_load (void)
 {
     char * folder = filename_to_uri (aud_get_path (AUD_PATH_USER_DIR));
     SCONCAT2 (path, folder, "/config");
@@ -313,7 +315,7 @@ static bool_t add_to_save_list (MultihashNode * node0, void * state0)
     return FALSE;
 }
 
-EXPORT void aud_config_save (void)
+void config_save (void)
 {
     if (! modified)
         return;
@@ -370,7 +372,7 @@ EXPORT void aud_config_set_defaults (const char * section, const char * const * 
     }
 }
 
-EXPORT void aud_config_cleanup (void)
+void config_cleanup (void)
 {
     ConfigOp op = {.type = OP_CLEAR_NO_FLAG};
     multihash_iterate (& config, action_cb, & op);

@@ -50,13 +50,6 @@
 /* CORE TYPES */
 
 enum {
- AUD_MENU_MAIN,
- AUD_MENU_PLAYLIST,
- AUD_MENU_PLAYLIST_ADD,
- AUD_MENU_PLAYLIST_REMOVE,
- AUD_MENU_COUNT};
-
-enum {
  PLUGIN_TYPE_TRANSPORT,
  PLUGIN_TYPE_PLAYLIST,
  PLUGIN_TYPE_INPUT,
@@ -66,8 +59,6 @@ enum {
  PLUGIN_TYPE_GENERAL,
  PLUGIN_TYPE_IFACE,
  PLUGIN_TYPES};
-
-typedef struct PluginHandle PluginHandle;
 
 typedef const struct _Plugin Plugin;
 typedef const struct _TransportPlugin TransportPlugin;
@@ -79,17 +70,10 @@ typedef const struct _VisPlugin VisPlugin;
 typedef const struct _GeneralPlugin GeneralPlugin;
 typedef const struct _IfacePlugin IfacePlugin;
 
+typedef struct _PluginHandle PluginHandle;
 typedef struct _PluginPreferences PluginPreferences;
 typedef struct _PreferencesWidget PreferencesWidget;
-
-typedef struct {
-    float track_gain; /* dB */
-    float track_peak; /* 0-1 */
-    float album_gain; /* dB */
-    float album_peak; /* 0-1 */
-} ReplayGainInfo;
-
-typedef void (* MenuFunc) (void);
+typedef struct _VFSFile VFSFile;
 
 /* STRING POOL */
 

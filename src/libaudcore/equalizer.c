@@ -69,7 +69,7 @@ static void bp2 (float *a, float *b, float fc, float q)
     b[1] = -1.005;
 }
 
-EXPORT void eq_set_format (int new_channels, int new_rate)
+void eq_set_format (int new_channels, int new_rate)
 {
     int k;
 
@@ -105,7 +105,7 @@ static void eq_set_bands_real (double preamp, double *values)
         gv[c][i] = pow (10, adj[i] / 20) - 1;
 }
 
-EXPORT void eq_filter (float *data, int samples)
+void eq_filter (float *data, int samples)
 {
     int channel;
 

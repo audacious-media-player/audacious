@@ -17,20 +17,8 @@
  * the use of this software.
  */
 
-/* Header for all those files that have just one or two public identifiers. */
-
 #ifndef _AUDACIOUS_MAIN_H
 #define _AUDACIOUS_MAIN_H
-
-#include <libaudcore/core.h>
-
-/* adder.c */
-void adder_init (void);
-void adder_cleanup (void);
-
-/* art.c */
-void art_init (void);
-void art_cleanup (void);
 
 /* dbus-server.c */
 #ifdef USE_DBUS
@@ -43,8 +31,5 @@ void dbus_server_cleanup (void);
 void signals_init_one (void);
 void signals_init_two (void);
 #endif
-
-/* ui_albumart.c */
-char * get_associated_image_file (const char * filename); /* pooled */
 
 #endif

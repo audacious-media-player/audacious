@@ -17,6 +17,8 @@
  * the use of this software.
  */
 
+#include "audstrings.h"
+
 #include <limits.h>
 #include <math.h>
 #include <stdio.h>
@@ -25,7 +27,6 @@
 
 #include <glib.h>
 
-#include "audstrings.h"
 #include "i18n.h"
 #include "index.h"
 #include "runtime.h"
@@ -454,6 +455,54 @@ EXPORT bool_t uri_get_extension (const char * uri, char * buf, int buflen)
         * qmark = 0;
 
     return (buf[0] != 0);
+}
+
+/* Constructs a full URI given:
+ *   1. path: one of the following:
+ *     a. a full URI (returned unchanged)
+ *     b. an absolute filename (in the system locale)
+ *     c. a relative path (character set detected according to user settings)
+ *   2. reference: the full URI of the playlist containing <path> */
+
+EXPORT char * uri_construct (const char * path, const char * reference)
+{
+    /* URI */
+    if (strstr (path, "://"))
+        return str_get (path);
+
+    /* absolute filename */
+#ifdef _WIN32
+    if (path[0] && path[1] == ':' && path[2] == '\\')
+#else
+    if (path[0] == '/')
+#endif
+        return filename_to_uri (path);
+
+    /* relative path */
+    const char * slash = strrchr (reference, '/');
+    if (! slash)
+        return NULL;
+
+    char * utf8 = str_to_utf8 (path, -1);
+    if (! utf8)
+        return NULL;
+
+    int pathlen = slash + 1 - reference;
+
+    char buf[pathlen + 3 * strlen (utf8) + 1];
+    memcpy (buf, reference, pathlen);
+
+    if (aud_get_bool (NULL, "convert_backslash"))
+    {
+        SCOPY (tmp, utf8);
+        str_replace_char (tmp, '\\', '/');
+        str_encode_percent (tmp, -1, buf + pathlen);
+    }
+    else
+        str_encode_percent (utf8, -1, buf + pathlen);
+
+    str_unref (utf8);
+    return str_get (buf);
 }
 
 /* Like strcasecmp, but orders numbers correctly (2 before 10). */

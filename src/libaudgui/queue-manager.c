@@ -20,11 +20,11 @@
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
 
-#include <audacious/playlist.h>
 #include <libaudcore/hook.h>
 #include <libaudcore/i18n.h>
+#include <libaudcore/playlist.h>
 
-#include "init.h"
+#include "internal.h"
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
 #include "list.h"

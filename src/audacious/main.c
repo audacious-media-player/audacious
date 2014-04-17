@@ -23,25 +23,19 @@
 #include <glib.h>
 
 #include <libaudcore/audstrings.h>
-#include <libaudcore/equalizer.h>
+#include <libaudcore/drct.h>
 #include <libaudcore/hook.h>
 #include <libaudcore/i18n.h>
+#include <libaudcore/interface.h>
+#include <libaudcore/playlist.h>
 #include <libaudcore/runtime.h>
 
 #ifdef USE_DBUS
 #include "aud-dbus.h"
 #endif
 
-#include "drct.h"
-#include "interface.h"
 #include "main.h"
-#include "misc.h"
-#include "playlist.h"
-#include "plugins.h"
-#include "scanner.h"
 #include "util.h"
-
-#define AUTOSAVE_INTERVAL 300 /* seconds */
 
 static struct {
     bool_t help, version;
@@ -273,14 +267,14 @@ static void do_commands (void)
     {
         if (options.enqueue_to_temp)
         {
-            drct_pl_open_temp_list (filenames);
+            aud_drct_pl_open_temp_list (filenames);
             resume = FALSE;
         }
         else if (options.enqueue)
-            drct_pl_add_list (filenames, -1);
+            aud_drct_pl_add_list (filenames, -1);
         else
         {
-            drct_pl_open_list (filenames);
+            aud_drct_pl_open_list (filenames);
             resume = FALSE;
         }
 
@@ -288,20 +282,20 @@ static void do_commands (void)
     }
 
     if (resume)
-        playlist_resume ();
+        aud_resume ();
 
     if (options.play || options.play_pause)
     {
-        if (! drct_get_playing ())
-            drct_play ();
-        else if (drct_get_paused ())
-            drct_pause ();
+        if (! aud_drct_get_playing ())
+            aud_drct_play ();
+        else if (aud_drct_get_paused ())
+            aud_drct_pause ();
     }
 
     if (options.show_jump_box && ! options.headless)
-        ui_show_jump_to_song ();
+        aud_ui_show_jump_to_song ();
     if (options.mainwin && ! options.headless)
-        ui_show (TRUE);
+        aud_ui_show (TRUE);
 }
 
 static void main_cleanup (void)
@@ -314,7 +308,19 @@ static void main_cleanup (void)
     strpool_shutdown ();
 }
 
-static void init_one (void)
+static bool_t check_should_quit (void)
+{
+    return options.quit_after_play && ! aud_drct_get_playing () &&
+     ! aud_playlist_add_in_progress (-1);
+}
+
+static void maybe_quit (void)
+{
+    if (check_should_quit ())
+        aud_quit ();
+}
+
+int main (int argc, char * * argv)
 {
     atexit (main_cleanup);
 
@@ -328,103 +334,6 @@ static void init_one (void)
 #if ! GLIB_CHECK_VERSION (2, 36, 0)
     g_type_init ();
 #endif
-}
-
-static void init_two (void)
-{
-#ifdef HAVE_SIGWAIT
-    signals_init_two ();
-#endif
-
-    AUDDBG ("Loading configuration.\n");
-    aud_config_load ();
-
-    AUDDBG ("Initializing.\n");
-    aud_init_core ();
-
-    art_init ();
-    playlist_init ();
-
-    AUDDBG ("Loading lowlevel plugins.\n");
-    start_plugins_one ();
-
-    AUDDBG ("Starting worker threads.\n");
-    adder_init ();
-    scanner_init ();
-
-    AUDDBG ("Restoring state.\n");
-    load_playlists ();
-
-    do_commands ();
-
-    AUDDBG ("Loading highlevel plugins.\n");
-    start_plugins_two ();
-
-#ifdef USE_DBUS
-    dbus_server_init ();
-#endif
-}
-
-static void shut_down (void)
-{
-    AUDDBG ("Saving playlist state.\n");
-    save_playlists (TRUE);
-
-    AUDDBG ("Unloading highlevel plugins.\n");
-    /* Note: calls "config save" hook */
-    stop_plugins_two ();
-
-#ifdef USE_DBUS
-    dbus_server_cleanup ();
-#endif
-
-    AUDDBG ("Stopping playback.\n");
-    if (drct_get_playing ())
-        drct_stop ();
-
-    AUDDBG ("Stopping worker threads.\n");
-    adder_cleanup ();
-    scanner_cleanup ();
-
-    AUDDBG ("Unloading lowlevel plugins.\n");
-    stop_plugins_one ();
-
-    event_queue_cancel_all ();
-
-    AUDDBG ("Saving configuration.\n");
-    aud_config_save ();
-    aud_config_cleanup ();
-
-    AUDDBG ("Cleaning up.\n");
-    art_cleanup ();
-    playlist_end ();
-
-    aud_cleanup_core ();
-}
-
-static bool_t do_autosave (void)
-{
-    AUDDBG ("Saving configuration.\n");
-    hook_call ("config save", NULL);
-    save_playlists (FALSE);
-    aud_config_save ();
-    return TRUE;
-}
-
-static bool_t check_should_quit (void)
-{
-    return options.quit_after_play && ! drct_get_playing () && ! playlist_add_in_progress (-1);
-}
-
-static void maybe_quit (void)
-{
-    if (check_should_quit ())
-        drct_quit ();
-}
-
-int main (int argc, char * * argv)
-{
-    init_one ();
 
     if (! parse_options (argc, argv))
     {
@@ -449,25 +358,38 @@ int main (int argc, char * * argv)
 #endif
 
     AUDDBG ("No remote session; starting up.\n");
-    init_two ();
 
-    AUDDBG ("Startup complete.\n");
-    g_timeout_add_seconds (AUTOSAVE_INTERVAL, (GSourceFunc) do_autosave, NULL);
+#ifdef HAVE_SIGWAIT
+    signals_init_two ();
+#endif
+
+    aud_init ();
+
+    do_commands ();
+
+#ifdef USE_DBUS
+    dbus_server_init ();
+#endif
 
     if (check_should_quit ())
         goto QUIT;
 
     hook_associate ("playback stop", (HookFunction) maybe_quit, NULL);
     hook_associate ("playlist add complete", (HookFunction) maybe_quit, NULL);
-    hook_associate ("quit", (HookFunction) drct_quit, NULL);
+    hook_associate ("quit", (HookFunction) aud_quit, NULL);
 
-    iface_run ();
+    aud_run ();
 
     hook_dissociate ("playback stop", (HookFunction) maybe_quit);
     hook_dissociate ("playlist add complete", (HookFunction) maybe_quit);
-    hook_dissociate ("quit", (HookFunction) drct_quit);
+    hook_dissociate ("quit", (HookFunction) aud_quit);
 
 QUIT:
-    shut_down ();
+#ifdef USE_DBUS
+    dbus_server_cleanup ();
+#endif
+
+    aud_cleanup ();
+
     return EXIT_SUCCESS;
 }

@@ -25,7 +25,7 @@
 #include <libaudcore/i18n.h>
 #include <libaudcore/runtime.h>
 
-#include "init.h"
+#include "internal.h"
 #include "libaudgui-gtk.h"
 
 static void on_off_cb (GtkToggleButton * on_off, void * unused)

@@ -19,9 +19,9 @@
 
 #include <gtk/gtk.h>
 
-#include <audacious/playlist.h>
 #include <libaudcore/audstrings.h>
 #include <libaudcore/i18n.h>
+#include <libaudcore/playlist.h>
 #include <libaudcore/runtime.h>
 
 #include "libaudgui-gtk.h"

@@ -23,13 +23,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <audacious/misc.h>
-#include <audacious/playlist.h>
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
 #include <libaudcore/i18n.h>
+#include <libaudcore/interface.h>
+#include <libaudcore/playlist.h>
+#include <libaudcore/probe.h>
 
-#include "init.h"
+#include "internal.h"
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
 

@@ -19,13 +19,11 @@
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/i18n.h>
+#include <libaudcore/plugin.h>
+#include <libaudcore/plugins.h>
 #include <libaudcore/preferences.h>
 
-#include <audacious/misc.h>
-#include <audacious/plugin.h>
-#include <audacious/plugins.h>
-
-#include "init.h"
+#include "internal.h"
 #include "libaudgui-gtk.h"
 
 static GList * about_windows;

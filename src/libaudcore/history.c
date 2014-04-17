@@ -17,8 +17,8 @@
  * the use of this software.
  */
 
-#include "internal.h"
 #include "runtime.h"
+#include "internal.h"
 
 #include <glib.h>
 #include <stdio.h>

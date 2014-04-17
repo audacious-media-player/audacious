@@ -17,12 +17,13 @@
  * the use of this software.
  */
 
+#include "hook.h"
+
 #include <glib.h>
 #include <pthread.h>
 #include <string.h>
 
 #include "core.h"
-#include "hook.h"
 
 typedef struct {
     char * name;

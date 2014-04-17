@@ -35,7 +35,14 @@
 #include <libintl.h>
 
 #include "audstrings.h"
+#include "drct.h"
+#include "hook.h"
 #include "internal.h"
+#include "playlist-internal.h"
+#include "plugins-internal.h"
+#include "scanner.h"
+
+#define AUTOSAVE_INTERVAL 300 /* seconds */
 
 static bool_t headless_mode;
 static bool_t verbose_mode;
@@ -125,12 +132,6 @@ static char * get_path_to_self (void)
 #else
     return NULL;
 #endif
-}
-
-static char * last_path_element (char * path)
-{
-    char * slash = strrchr (path, G_DIR_SEPARATOR);
-    return (slash && slash[1]) ? slash + 1 : NULL;
 }
 
 static void cut_path_element (char * path, char * elem)
@@ -286,15 +287,65 @@ EXPORT void aud_init_i18n (void)
     textdomain (PACKAGE);
 }
 
-EXPORT void aud_init_core (void)
+EXPORT void aud_init (void)
 {
+    config_load ();
+
+    art_init ();
     chardet_init ();
     eq_init ();
+    playlist_init ();
+
+    start_plugins_one ();
+
+    adder_init ();
+    scanner_init ();
+
+    load_playlists ();
 }
 
-EXPORT void aud_cleanup_core (void)
+static bool_t do_autosave (void)
 {
+    hook_call ("config save", NULL);
+    save_playlists (FALSE);
+    config_save ();
+    return TRUE;
+}
+
+EXPORT void aud_run (void)
+{
+    start_plugins_two ();
+
+    int save_source = g_timeout_add_seconds (AUTOSAVE_INTERVAL, (GSourceFunc) do_autosave, NULL);
+
+    /* calls "config save" before returning */
+    interface_run ();
+
+    g_source_remove (save_source);
+
+    stop_plugins_two ();
+}
+
+EXPORT void aud_cleanup (void)
+{
+    save_playlists (TRUE);
+
+    if (aud_drct_get_playing ())
+        aud_drct_stop ();
+
+    adder_cleanup ();
+    scanner_cleanup ();
+
+    stop_plugins_one ();
+
+    art_cleanup ();
     chardet_cleanup ();
     eq_cleanup ();
     history_cleanup ();
+    playlist_end ();
+
+    event_queue_cancel_all ();
+
+    config_save ();
+    config_cleanup ();
 }

@@ -20,11 +20,11 @@
 #include <stdio.h>
 #include <gtk/gtk.h>
 
-#include <audacious/drct.h>
 #include <libaudcore/audstrings.h>
+#include <libaudcore/drct.h>
 #include <libaudcore/i18n.h>
 
-#include "init.h"
+#include "internal.h"
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
 

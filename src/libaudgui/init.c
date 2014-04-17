@@ -20,16 +20,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <audacious/playlist.h>
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
+#include <libaudcore/playlist.h>
 #include <libaudcore/runtime.h>
 
-#include "init.h"
+#include "internal.h"
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
-
-#undef audgui_init
 
 static const char * const audgui_defaults[] = {
  "close_dialog_add", "FALSE",
@@ -54,7 +52,6 @@ static const char * const window_names[AUDGUI_NUM_UNIQUE_WINDOWS] = {
  "url_opener_win"
 };
 
-AudAPITable * _aud_api_table = NULL;
 static int init_count = 0;
 
 static GtkWidget * windows[AUDGUI_NUM_UNIQUE_WINDOWS];
@@ -135,14 +132,13 @@ static void playlist_position_cb (void * list, void * unused)
         audgui_pixbuf_uncache ();
 }
 
-EXPORT void audgui_init (AudAPITable * table)
+EXPORT void audgui_init (void)
 {
     if (init_count ++)
         return;
 
     gtk_init (NULL, NULL);
 
-    _aud_api_table = table;
     aud_config_set_defaults ("audgui", audgui_defaults);
 
     status_init ();
@@ -172,6 +168,4 @@ EXPORT void audgui_cleanup (void)
 
     plugin_menu_cleanup ();
     plugin_prefs_cleanup ();
-
-    _aud_api_table = NULL;
 }

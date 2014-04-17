@@ -19,11 +19,11 @@
 
 #include <gtk/gtk.h>
 
-#include <audacious/drct.h>
+#include <libaudcore/drct.h>
 #include <libaudcore/i18n.h>
 #include <libaudcore/runtime.h>
 
-#include "init.h"
+#include "internal.h"
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
 

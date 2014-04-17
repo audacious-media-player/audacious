@@ -36,6 +36,12 @@ enum {
     AUD_PATH_COUNT
 };
 
+enum {
+    OUTPUT_RESET_EFFECTS_ONLY,
+    OUTPUT_RESET_SOFT,
+    OUTPUT_RESET_HARD
+};
+
 void aud_init_paths (void);
 void aud_cleanup_paths (void);
 
@@ -57,11 +63,6 @@ bool_t aud_get_verbose_mode (void);
 /* Requires: aud_init_paths() */
 void aud_init_i18n (void);
 
-/* Requires: aud_init_paths() */
-void aud_config_load (void);
-void aud_config_save (void);
-void aud_config_cleanup (void);
-
 void aud_config_set_defaults (const char * section, const char * const * entries);
 
 void aud_set_str (const char * section, const char * name, const char * value);
@@ -73,12 +74,15 @@ int aud_get_int (const char * section, const char * name);
 void aud_set_double (const char * section, const char * name, double value);
 double aud_get_double (const char * section, const char * name);
 
-/* Requires: aud_config_load() */
-void aud_init_core (void);
-void aud_cleanup_core (void);
+void aud_init (void);
+void aud_resume (void);
+void aud_run (void);
+void aud_quit (void);
+void aud_cleanup (void);
 
-/* Requires: aud_init_core() */
 const char * aud_history_get (int entry);
 void aud_history_add (const char * path);
+
+void aud_output_reset (int type);
 
 #endif

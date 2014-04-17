@@ -20,12 +20,90 @@
 #ifndef LIBAUDCORE_INTERNAL_H
 #define LIBAUDCORE_INTERNAL_H
 
+#include <stdint.h>
+
+#include "index.h"
+#include "tuple.h"
+
+typedef bool_t (* DirForeachFunc) (const char * path, const char * basename, void * user);
+
+/* adder.c */
+void adder_init (void);
+void adder_cleanup (void);
+
+/* art.c */
+void art_init (void);
+void art_cleanup (void);
+
+/* art-search.c */
+char * art_search (const char * filename); /* pooled */
+
+/* charset.c */
 void chardet_init (void);
 void chardet_cleanup (void);
 
+/* config.c */
+void config_load (void);
+void config_save (void);
+void config_cleanup (void);
+
+/* effect.c */
+void effect_start (int * channels, int * rate);
+void effect_process (float * * data, int * samples);
+void effect_flush (void);
+void effect_finish (float * * data, int * samples);
+int effect_adjust_delay (int delay);
+
+bool_t effect_plugin_start (PluginHandle * plugin);
+void effect_plugin_stop (PluginHandle * plugin);
+
+/* equalizer.c */
 void eq_init (void);
 void eq_cleanup (void);
+void eq_set_format (int new_channels, int new_rate);
+void eq_filter (float * data, int samples);
 
+/* fft.c */
+void calc_freq (const float data[512], float freq[256]);
+
+/* history.c */
 void history_cleanup (void);
+
+/* interface.c */
+PluginHandle * iface_plugin_probe (void);
+PluginHandle * iface_plugin_get_current (void);
+bool_t iface_plugin_set_current (PluginHandle * plugin);
+
+void interface_run (void);
+
+/* playback.c */
+/* do not call these; use aud_drct_play/stop() instead */
+void playback_play (int seek_time, bool_t pause);
+void playback_stop (void);
+
+/* probe-buffer.c */
+VFSFile * probe_buffer_new (const char * filename);
+
+/* util.c */
+bool_t dir_foreach (const char * path, DirForeachFunc func, void * user_data);
+char * write_temp_file (void * data, int64_t len); /* pooled */
+
+void describe_song (const char * filename, const Tuple * tuple, char * * title,
+ char * * artist, char * * album);
+char * last_path_element (char * path);
+
+/* vis-runner.c */
+void vis_runner_start_stop (bool_t playing, bool_t paused);
+void vis_runner_pass_audio (int time, float * data, int samples, int channels, int rate);
+void vis_runner_flush (void);
+void vis_runner_enable (bool_t enable);
+
+/* visualization.c */
+void vis_activate (bool_t activate);
+void vis_send_clear (void);
+void vis_send_audio (const float * data, int channels);
+
+bool_t vis_plugin_start (PluginHandle * plugin);
+void vis_plugin_stop (PluginHandle * plugin);
 
 #endif

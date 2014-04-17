@@ -23,7 +23,7 @@
 #include <libaudcore/i18n.h>
 #include <libaudcore/runtime.h>
 
-#include "init.h"
+#include "internal.h"
 #include "libaudgui-gtk.h"
 
 static const char about_text[] =

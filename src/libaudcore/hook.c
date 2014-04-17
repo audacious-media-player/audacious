@@ -17,11 +17,12 @@
  * the use of this software.
  */
 
+#include "hook.h"
+
 #include <glib.h>
 #include <pthread.h>
 
 #include "core.h"
-#include "hook.h"
 
 typedef struct {
     HookFunction func;

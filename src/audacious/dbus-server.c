@@ -19,14 +19,14 @@
 
 #include <stdio.h>
 
+#include <libaudcore/drct.h>
 #include <libaudcore/equalizer.h>
+#include <libaudcore/interface.h>
+#include <libaudcore/playlist.h>
 #include <libaudcore/runtime.h>
 
 #include "aud-dbus.h"
-#include "drct.h"
 #include "main.h"
-#include "misc.h"
-#include "playlist.h"
 
 typedef ObjAudacious Obj;
 typedef GDBusMethodInvocation Invoc;
@@ -48,14 +48,14 @@ static Index * strv_to_index (const char * const * strv)
 
 static bool_t do_add (Obj * obj, Invoc * invoc, const char * file)
 {
-    playlist_entry_insert (playlist_get_active (), -1, file, NULL, FALSE);
+    aud_playlist_entry_insert (aud_playlist_get_active (), -1, file, NULL, FALSE);
     FINISH (add);
     return TRUE;
 }
 
 static bool_t do_add_list (Obj * obj, Invoc * invoc, const char * const * filenames)
 {
-    playlist_entry_insert_batch (playlist_get_active (), -1,
+    aud_playlist_entry_insert_batch (aud_playlist_get_active (), -1,
      strv_to_index (filenames), NULL, FALSE);
     FINISH (add_list);
     return TRUE;
@@ -63,14 +63,14 @@ static bool_t do_add_list (Obj * obj, Invoc * invoc, const char * const * filena
 
 static bool_t do_add_url (Obj * obj, Invoc * invoc, const char * url)
 {
-    playlist_entry_insert (playlist_get_active (), -1, url, NULL, FALSE);
+    aud_playlist_entry_insert (aud_playlist_get_active (), -1, url, NULL, FALSE);
     FINISH (add_url);
     return TRUE;
 }
 
 static bool_t do_advance (Obj * obj, Invoc * invoc)
 {
-    drct_pl_next ();
+    aud_drct_pl_next ();
     FINISH (advance);
     return TRUE;
 }
@@ -84,29 +84,29 @@ static bool_t do_auto_advance (Obj * obj, Invoc * invoc)
 static bool_t do_balance (Obj * obj, Invoc * invoc)
 {
     int balance;
-    drct_get_volume_balance (& balance);
+    aud_drct_get_volume_balance (& balance);
     FINISH2 (balance, balance);
     return TRUE;
 }
 
 static bool_t do_clear (Obj * obj, Invoc * invoc)
 {
-    int playlist = playlist_get_active ();
-    playlist_entry_delete (playlist, 0, playlist_entry_count (playlist));
+    int playlist = aud_playlist_get_active ();
+    aud_playlist_entry_delete (playlist, 0, aud_playlist_entry_count (playlist));
     FINISH (clear);
     return TRUE;
 }
 
 static bool_t do_delete (Obj * obj, Invoc * invoc, unsigned pos)
 {
-    playlist_entry_delete (playlist_get_active (), pos, 1);
+    aud_playlist_entry_delete (aud_playlist_get_active (), pos, 1);
     FINISH (delete);
     return TRUE;
 }
 
 static bool_t do_delete_active_playlist (Obj * obj, Invoc * invoc)
 {
-    playlist_delete (playlist_get_active ());
+    aud_playlist_delete (aud_playlist_get_active ());
     FINISH (delete_active_playlist);
     return TRUE;
 }
@@ -114,7 +114,7 @@ static bool_t do_delete_active_playlist (Obj * obj, Invoc * invoc)
 static bool_t do_eject (Obj * obj, Invoc * invoc)
 {
     if (! aud_get_headless_mode ())
-        ui_show_filebrowser (TRUE);
+        aud_ui_show_filebrowser (TRUE);
 
     FINISH (eject);
     return TRUE;
@@ -129,13 +129,13 @@ static bool_t do_equalizer_activate (Obj * obj, Invoc * invoc, bool_t active)
 
 static bool_t do_get_active_playlist (Obj * obj, Invoc * invoc)
 {
-    FINISH2 (get_active_playlist, playlist_get_active ());
+    FINISH2 (get_active_playlist, aud_playlist_get_active ());
     return TRUE;
 }
 
 static bool_t do_get_active_playlist_name (Obj * obj, Invoc * invoc)
 {
-    char * title = playlist_get_title (playlist_get_active ());
+    char * title = aud_playlist_get_title (aud_playlist_get_active ());
     FINISH2 (get_active_playlist_name, title ? title : "");
     str_unref (title);
     return TRUE;
@@ -168,14 +168,14 @@ static bool_t do_get_eq_preamp (Obj * obj, Invoc * invoc)
 static bool_t do_get_info (Obj * obj, Invoc * invoc)
 {
     int bitrate, samplerate, channels;
-    drct_get_info (& bitrate, & samplerate, & channels);
+    aud_drct_get_info (& bitrate, & samplerate, & channels);
     FINISH2 (get_info, bitrate, samplerate, channels);
     return TRUE;
 }
 
 static bool_t do_get_playqueue_length (Obj * obj, Invoc * invoc)
 {
-    FINISH2 (get_playqueue_length, playlist_queue_count (playlist_get_active ()));
+    FINISH2 (get_playqueue_length, aud_playlist_queue_count (aud_playlist_get_active ()));
     return TRUE;
 }
 
@@ -195,148 +195,148 @@ static bool_t do_get_tuple_fields (Obj * obj, Invoc * invoc)
 static bool_t do_info (Obj * obj, Invoc * invoc)
 {
     int bitrate, samplerate, channels;
-    drct_get_info (& bitrate, & samplerate, & channels);
+    aud_drct_get_info (& bitrate, & samplerate, & channels);
     FINISH2 (info, bitrate, samplerate, channels);
     return TRUE;
 }
 
 static bool_t do_jump (Obj * obj, Invoc * invoc, unsigned pos)
 {
-    playlist_set_position (playlist_get_active (), pos);
+    aud_playlist_set_position (aud_playlist_get_active (), pos);
     FINISH (jump);
     return TRUE;
 }
 
 static bool_t do_length (Obj * obj, Invoc * invoc)
 {
-    FINISH2 (length, playlist_entry_count (playlist_get_active ()));
+    FINISH2 (length, aud_playlist_entry_count (aud_playlist_get_active ()));
     return TRUE;
 }
 
 static bool_t do_main_win_visible (Obj * obj, Invoc * invoc)
 {
-    FINISH2 (main_win_visible, ! aud_get_headless_mode () && ui_is_shown ());
+    FINISH2 (main_win_visible, ! aud_get_headless_mode () && aud_ui_is_shown ());
     return TRUE;
 }
 
 static bool_t do_new_playlist (Obj * obj, Invoc * invoc)
 {
-    playlist_insert (-1);
-    playlist_set_active (playlist_count () - 1);
+    aud_playlist_insert (-1);
+    aud_playlist_set_active (aud_playlist_count () - 1);
     FINISH (new_playlist);
     return TRUE;
 }
 
 static bool_t do_number_of_playlists (Obj * obj, Invoc * invoc)
 {
-    FINISH2 (number_of_playlists, playlist_count ());
+    FINISH2 (number_of_playlists, aud_playlist_count ());
     return TRUE;
 }
 
 static bool_t do_open_list (Obj * obj, Invoc * invoc, const char * const * filenames)
 {
-    drct_pl_open_list (strv_to_index (filenames));
+    aud_drct_pl_open_list (strv_to_index (filenames));
     FINISH (open_list);
     return TRUE;
 }
 
 static bool_t do_open_list_to_temp (Obj * obj, Invoc * invoc, const char * const * filenames)
 {
-    drct_pl_open_temp_list (strv_to_index (filenames));
+    aud_drct_pl_open_temp_list (strv_to_index (filenames));
     FINISH (open_list_to_temp);
     return TRUE;
 }
 
 static bool_t do_pause (Obj * obj, Invoc * invoc)
 {
-    drct_pause ();
+    aud_drct_pause ();
     FINISH (pause);
     return TRUE;
 }
 
 static bool_t do_paused (Obj * obj, Invoc * invoc)
 {
-    FINISH2 (paused, drct_get_paused ());
+    FINISH2 (paused, aud_drct_get_paused ());
     return TRUE;
 }
 
 static bool_t do_play (Obj * obj, Invoc * invoc)
 {
-    drct_play ();
+    aud_drct_play ();
     FINISH (play);
     return TRUE;
 }
 
 static bool_t do_play_active_playlist (Obj * obj, Invoc * invoc)
 {
-    drct_play_playlist (playlist_get_active ());
+    aud_drct_play_playlist (aud_playlist_get_active ());
     FINISH (play_active_playlist);
     return TRUE;
 }
 
 static bool_t do_play_pause (Obj * obj, Invoc * invoc)
 {
-    drct_play_pause ();
+    aud_drct_play_pause ();
     FINISH (play_pause);
     return TRUE;
 }
 
 static bool_t do_playing (Obj * obj, Invoc * invoc)
 {
-    FINISH2 (playing, drct_get_playing ());
+    FINISH2 (playing, aud_drct_get_playing ());
     return TRUE;
 }
 
 static bool_t do_playlist_add (Obj * obj, Invoc * invoc, const char * list)
 {
-    playlist_entry_insert (playlist_get_active (), -1, list, NULL, FALSE);
+    aud_playlist_entry_insert (aud_playlist_get_active (), -1, list, NULL, FALSE);
     FINISH (playlist_add);
     return TRUE;
 }
 
 static bool_t do_playlist_enqueue_to_temp (Obj * obj, Invoc * invoc, const char * url)
 {
-    drct_pl_open_temp (url);
+    aud_drct_pl_open_temp (url);
     FINISH (playlist_enqueue_to_temp);
     return TRUE;
 }
 
 static bool_t do_playlist_ins_url_string (Obj * obj, Invoc * invoc, const char * url, int pos)
 {
-    playlist_entry_insert (playlist_get_active (), pos, url, NULL, FALSE);
+    aud_playlist_entry_insert (aud_playlist_get_active (), pos, url, NULL, FALSE);
     FINISH (playlist_ins_url_string);
     return TRUE;
 }
 
 static bool_t do_playqueue_add (Obj * obj, Invoc * invoc, int pos)
 {
-    playlist_queue_insert (playlist_get_active (), -1, pos);
+    aud_playlist_queue_insert (aud_playlist_get_active (), -1, pos);
     FINISH (playqueue_add);
     return TRUE;
 }
 
 static bool_t do_playqueue_clear (Obj * obj, Invoc * invoc)
 {
-    int playlist = playlist_get_active ();
-    playlist_queue_delete (playlist, 0, playlist_queue_count (playlist));
+    int playlist = aud_playlist_get_active ();
+    aud_playlist_queue_delete (playlist, 0, aud_playlist_queue_count (playlist));
     FINISH (playqueue_clear);
     return TRUE;
 }
 
 static bool_t do_playqueue_is_queued (Obj * obj, Invoc * invoc, int pos)
 {
-    bool_t queued = (playlist_queue_find_entry (playlist_get_active (), pos) >= 0);
+    bool_t queued = (aud_playlist_queue_find_entry (aud_playlist_get_active (), pos) >= 0);
     FINISH2 (playqueue_is_queued, queued);
     return TRUE;
 }
 
 static bool_t do_playqueue_remove (Obj * obj, Invoc * invoc, int pos)
 {
-    int playlist = playlist_get_active ();
-    int qpos = playlist_queue_find_entry (playlist, pos);
+    int playlist = aud_playlist_get_active ();
+    int qpos = aud_playlist_queue_find_entry (playlist, pos);
 
     if (qpos >= 0)
-        playlist_queue_delete (playlist, qpos, 1);
+        aud_playlist_queue_delete (playlist, qpos, 1);
 
     FINISH (playqueue_remove);
     return TRUE;
@@ -344,25 +344,25 @@ static bool_t do_playqueue_remove (Obj * obj, Invoc * invoc, int pos)
 
 static bool_t do_position (Obj * obj, Invoc * invoc)
 {
-    FINISH2 (position, playlist_get_position (playlist_get_active ()));
+    FINISH2 (position, aud_playlist_get_position (aud_playlist_get_active ()));
     return TRUE;
 }
 
 static bool_t do_queue_get_list_pos (Obj * obj, Invoc * invoc, unsigned qpos)
 {
-    FINISH2 (queue_get_list_pos, playlist_queue_get_entry (playlist_get_active (), qpos));
+    FINISH2 (queue_get_list_pos, aud_playlist_queue_get_entry (aud_playlist_get_active (), qpos));
     return TRUE;
 }
 
 static bool_t do_queue_get_queue_pos (Obj * obj, Invoc * invoc, unsigned pos)
 {
-    FINISH2 (queue_get_queue_pos, playlist_queue_find_entry (playlist_get_active (), pos));
+    FINISH2 (queue_get_queue_pos, aud_playlist_queue_find_entry (aud_playlist_get_active (), pos));
     return TRUE;
 }
 
 static bool_t do_quit (Obj * obj, Invoc * invoc)
 {
-    drct_quit ();
+    aud_quit ();
     FINISH (quit);
     return TRUE;
 }
@@ -375,28 +375,28 @@ static bool_t do_repeat (Obj * obj, Invoc * invoc)
 
 static bool_t do_reverse (Obj * obj, Invoc * invoc)
 {
-    drct_pl_prev ();
+    aud_drct_pl_prev ();
     FINISH (reverse);
     return TRUE;
 }
 
 static bool_t do_seek (Obj * obj, Invoc * invoc, unsigned pos)
 {
-    drct_seek (pos);
+    aud_drct_seek (pos);
     FINISH (seek);
     return TRUE;
 }
 
 static bool_t do_set_active_playlist (Obj * obj, Invoc * invoc, int playlist)
 {
-    playlist_set_active (playlist);
+    aud_playlist_set_active (playlist);
     FINISH (set_active_playlist);
     return TRUE;
 }
 
 static bool_t do_set_active_playlist_name (Obj * obj, Invoc * invoc, const char * title)
 {
-    playlist_set_title (playlist_get_active (), title);
+    aud_playlist_set_title (aud_playlist_get_active (), title);
     FINISH (set_active_playlist_name);
     return TRUE;
 }
@@ -434,7 +434,7 @@ static bool_t do_set_eq_preamp (Obj * obj, Invoc * invoc, double preamp)
 
 static bool_t do_set_volume (Obj * obj, Invoc * invoc, int vl, int vr)
 {
-    drct_set_volume (vl, vr);
+    aud_drct_set_volume (vl, vr);
     FINISH (set_volume);
     return TRUE;
 }
@@ -444,9 +444,9 @@ static bool_t do_show_about_box (Obj * obj, Invoc * invoc, bool_t show)
     if (! aud_get_headless_mode ())
     {
         if (show)
-            ui_show_about_window ();
+            aud_ui_show_about_window ();
         else
-            ui_hide_about_window ();
+            aud_ui_hide_about_window ();
     }
 
     FINISH (show_about_box);
@@ -458,9 +458,9 @@ static bool_t do_show_filebrowser (Obj * obj, Invoc * invoc, bool_t show)
     if (! aud_get_headless_mode ())
     {
         if (show)
-            ui_show_filebrowser (FALSE);
+            aud_ui_show_filebrowser (FALSE);
         else
-            ui_hide_filebrowser ();
+            aud_ui_hide_filebrowser ();
     }
 
     FINISH (show_filebrowser);
@@ -472,9 +472,9 @@ static bool_t do_show_jtf_box (Obj * obj, Invoc * invoc, bool_t show)
     if (! aud_get_headless_mode ())
     {
         if (show)
-            ui_show_jump_to_song ();
+            aud_ui_show_jump_to_song ();
         else
-            ui_hide_jump_to_song ();
+            aud_ui_hide_jump_to_song ();
     }
 
     FINISH (show_jtf_box);
@@ -484,7 +484,7 @@ static bool_t do_show_jtf_box (Obj * obj, Invoc * invoc, bool_t show)
 static bool_t do_show_main_win (Obj * obj, Invoc * invoc, bool_t show)
 {
     if (! aud_get_headless_mode ())
-        ui_show (show);
+        aud_ui_show (show);
 
     FINISH (show_main_win);
     return TRUE;
@@ -495,9 +495,9 @@ static bool_t do_show_prefs_box (Obj * obj, Invoc * invoc, bool_t show)
     if (! aud_get_headless_mode ())
     {
         if (show)
-            ui_show_prefs_window ();
+            aud_ui_show_prefs_window ();
         else
-            ui_hide_prefs_window ();
+            aud_ui_hide_prefs_window ();
     }
 
     FINISH (show_prefs_box);
@@ -512,7 +512,7 @@ static bool_t do_shuffle (Obj * obj, Invoc * invoc)
 
 static bool_t do_song_filename (Obj * obj, Invoc * invoc, unsigned pos)
 {
-    char * filename = playlist_entry_get_filename (playlist_get_active (), pos);
+    char * filename = aud_playlist_entry_get_filename (aud_playlist_get_active (), pos);
     FINISH2 (song_filename, filename ? filename : "");
     str_unref (filename);
     return TRUE;
@@ -520,20 +520,20 @@ static bool_t do_song_filename (Obj * obj, Invoc * invoc, unsigned pos)
 
 static bool_t do_song_frames (Obj * obj, Invoc * invoc, unsigned pos)
 {
-    FINISH2 (song_frames, playlist_entry_get_length (playlist_get_active (), pos, FALSE));
+    FINISH2 (song_frames, aud_playlist_entry_get_length (aud_playlist_get_active (), pos, FALSE));
     return TRUE;
 }
 
 static bool_t do_song_length (Obj * obj, Invoc * invoc, unsigned pos)
 {
-    int length = playlist_entry_get_length (playlist_get_active (), pos, FALSE);
+    int length = aud_playlist_entry_get_length (aud_playlist_get_active (), pos, FALSE);
     FINISH2 (song_length, length >= 0 ? length / 1000 : -1);
     return TRUE;
 }
 
 static bool_t do_song_title (Obj * obj, Invoc * invoc, unsigned pos)
 {
-    char * title = playlist_entry_get_title (playlist_get_active (), pos, FALSE);
+    char * title = aud_playlist_entry_get_title (aud_playlist_get_active (), pos, FALSE);
     FINISH2 (song_title, title ? title : "");
     str_unref (title);
     return TRUE;
@@ -546,7 +546,7 @@ static bool_t do_song_tuple (Obj * obj, Invoc * invoc, unsigned pos, const char 
     GVariant * var = NULL;
 
     if (field >= 0)
-        tuple = playlist_entry_get_tuple (playlist_get_active (), pos, FALSE);
+        tuple = aud_playlist_entry_get_tuple (aud_playlist_get_active (), pos, FALSE);
 
     if (tuple)
     {
@@ -581,8 +581,8 @@ static bool_t do_song_tuple (Obj * obj, Invoc * invoc, unsigned pos, const char 
 static bool_t do_status (Obj * obj, Invoc * invoc)
 {
     const char * status = "stopped";
-    if (drct_get_playing ())
-        status = drct_get_paused () ? "paused" : "playing";
+    if (aud_drct_get_playing ())
+        status = aud_drct_get_paused () ? "paused" : "playing";
 
     FINISH2 (status, status);
     return TRUE;
@@ -590,7 +590,7 @@ static bool_t do_status (Obj * obj, Invoc * invoc)
 
 static bool_t do_stop (Obj * obj, Invoc * invoc)
 {
-    drct_stop ();
+    aud_drct_stop ();
     FINISH (stop);
     return TRUE;
 }
@@ -603,13 +603,13 @@ static bool_t do_stop_after (Obj * obj, Invoc * invoc)
 
 static bool_t do_stopped (Obj * obj, Invoc * invoc)
 {
-    FINISH2 (stopped, ! drct_get_playing ());
+    FINISH2 (stopped, ! aud_drct_get_playing ());
     return TRUE;
 }
 
 static bool_t do_time (Obj * obj, Invoc * invoc)
 {
-    FINISH2 (time, drct_get_time ());
+    FINISH2 (time, aud_drct_get_time ());
     return TRUE;
 }
 
@@ -650,7 +650,7 @@ static bool_t do_version (Obj * obj, Invoc * invoc)
 static bool_t do_volume (Obj * obj, Invoc * invoc)
 {
     int left, right;
-    drct_get_volume (& left, & right);
+    aud_drct_get_volume (& left, & right);
     FINISH2 (volume, left, right);
     return TRUE;
 }

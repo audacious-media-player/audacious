@@ -17,12 +17,13 @@
  * the use of this software.
  */
 
-#include "audstrings.h"
 #include "inifile.h"
 
+#include <string.h>
 #include <glib.h>
 
-#include <string.h>
+#include "audstrings.h"
+#include "vfs.h"
 
 static char * strskip (char * str)
 {

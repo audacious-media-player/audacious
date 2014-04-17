@@ -27,6 +27,7 @@
 
 #include "audstrings.h"
 #include "runtime.h"
+#include "vfs.h"
 
 EXPORT EqualizerPreset * aud_eq_preset_new (const char * name)
 {

@@ -22,7 +22,7 @@
 #include <libaudcore/hook.h>
 #include <libaudcore/i18n.h>
 
-#include "init.h"
+#include "internal.h"
 #include "libaudgui-gtk.h"
 
 static GtkWidget * progress_window;

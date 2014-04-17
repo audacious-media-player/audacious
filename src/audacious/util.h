@@ -1,6 +1,6 @@
 /*
  * util.h
- * Copyright 2009-2013 John Lindgren
+ * Copyright 2014 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -20,26 +20,9 @@
 #ifndef AUDACIOUS_UTIL_H
 #define AUDACIOUS_UTIL_H
 
-#include <sys/types.h>
-
-#include <libaudcore/tuple.h>
-
-typedef bool_t(*DirForeachFunc) (const char * path,
-                                   const char * basename,
-                                   void * user_data);
-
-bool_t dir_foreach (const char * path, DirForeachFunc func, void * user_data);
-
-char * write_temp_file (void * data, int64_t len); /* pooled */
-
 #ifdef _WIN32
 void get_argv_utf8 (int * argc, char * * * argv);
 void free_argv_utf8 (int * argc, char * * * argv);
 #endif
-
-void describe_song (const char * filename, const Tuple * tuple,
- char * * title, char * * artist, char * * album);
-
-char * last_path_element (char * path);
 
 #endif /* AUDACIOUS_UTIL_H */

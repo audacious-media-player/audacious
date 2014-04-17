@@ -23,8 +23,8 @@
 #include <string.h>
 #include <assert.h>
 
-#include <audacious/playlist.h>
 #include <libaudcore/audstrings.h>
+#include <libaudcore/playlist.h>
 #include <libaudcore/runtime.h>
 
 #include "ui_jumptotrack_cache.h"

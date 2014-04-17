@@ -93,6 +93,8 @@ void str_encode_percent (const char * str, int len, char * out);
 char * str_convert (const char * str, int len, const char * from_charset, const char * to_charset);
 char * str_from_locale (const char * str, int len);
 char * str_to_locale (const char * str, int len);
+
+/* Requires: aud_init() */
 char * str_to_utf8 (const char * str, int len);
 
 void filename_normalize (char * filename);
@@ -105,6 +107,9 @@ char * uri_to_display (const char * uri);
 void uri_parse (const char * uri, const char * * base_p, const char * * ext_p,
  const char * * sub_p, int * isub_p);
 bool_t uri_get_extension (const char * uri, char * buf, int buflen);
+
+/* Requires: aud_init() */
+char * uri_construct (const char * path, const char * reference);
 
 int str_compare (const char * a, const char * b);
 int str_compare_encoded (const char * a, const char * b);
@@ -122,7 +127,7 @@ char * int_array_to_str (const int * array, int count);
 bool_t str_to_double_array (const char * string, double * array, int count);
 char * double_array_to_str (const double * array, int count);
 
-/* Requires: aud_config_load() */
+/* Requires: aud_init() */
 void str_format_time (char * buf, int bufsize, int64_t milliseconds);
 
 #endif /* LIBAUDCORE_STRINGS_H */

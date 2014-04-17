@@ -20,9 +20,9 @@
 #include <string.h>
 #include <glib.h>
 
-#include <audacious/drct.h>
-#include <audacious/playlist.h>
 #include <libaudcore/audstrings.h>
+#include <libaudcore/drct.h>
+#include <libaudcore/playlist.h>
 #include <libaudcore/vfs.h>
 
 #include "libaudgui.h"
