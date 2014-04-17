@@ -3,7 +3,8 @@ include ../../extra.mk
 PROG = audacious${PROG_SUFFIX}
 
 SRCS = main.c \
-       signals.c
+       signals.c \
+       util.c
 
 ifeq ($(HAVE_MSWINDOWS),yes)
 SRCS += audacious.rc
