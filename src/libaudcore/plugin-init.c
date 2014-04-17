@@ -142,6 +142,7 @@ static bool_t start_multi_cb (PluginHandle * p, void * type)
 
 static void start_plugins (int type)
 {
+    /* no interface plugin in headless mode */
     if (type == PLUGIN_TYPE_IFACE && aud_get_headless_mode ())
         return;
 
@@ -188,7 +189,8 @@ static bool_t stop_multi_cb (PluginHandle * p, void * type)
 
 static void stop_plugins (int type)
 {
-    if (type == PLUGIN_TYPE_IFACE && aud_get_headless_mode ())
+    /* interface plugin is already shut down */
+    if (type == PLUGIN_TYPE_IFACE)
         return;
 
     if (table[type].is_single)
