@@ -42,8 +42,8 @@
  * the API tables), increment _AUD_PLUGIN_VERSION *and* set
  * _AUD_PLUGIN_VERSION_MIN to the same value. */
 
-#define _AUD_PLUGIN_VERSION_MIN 45 /* 3.5-devel */
-#define _AUD_PLUGIN_VERSION     45 /* 3.5-devel */
+#define _AUD_PLUGIN_VERSION_MIN 46 /* 3.6-devel */
+#define _AUD_PLUGIN_VERSION     46 /* 3.6-devel */
 
 /* A NOTE ON THREADS
  *
