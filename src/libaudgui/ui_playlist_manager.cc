@@ -59,11 +59,13 @@ static void get_value (void * user, int row, int column, GValue * value)
 {
     switch (column)
     {
-    case 0:;
+    case 0:
+    {
         char * title = aud_playlist_get_title (row);
         g_value_set_string (value, title);
         str_unref (title);
         break;
+    }
     case 1:
         g_value_set_int (value, aud_playlist_entry_count (row));
         break;
@@ -132,7 +134,7 @@ static bool_t search_cb (GtkTreeModel * model, int column, const char * key,
 
     for (int i = 0; i < count; i ++)
     {
-        if (strstr_nocase_utf8 (title, index_get (keys, i)))
+        if (strstr_nocase_utf8 (title, (char *) index_get (keys, i)))
             match = TRUE;
         else
         {
@@ -150,8 +152,9 @@ static bool_t search_cb (GtkTreeModel * model, int column, const char * key,
 static bool_t position_changed = FALSE;
 static bool_t playlist_activated = FALSE;
 
-static void update_hook (void * data, void * list)
+static void update_hook (void * data, void * list_)
 {
+    GtkWidget * list = (GtkWidget *) list_;
     int rows = aud_playlist_count ();
 
     if (GPOINTER_TO_INT (data) == PLAYLIST_UPDATE_STRUCTURE)
@@ -184,8 +187,10 @@ static void update_hook (void * data, void * list)
     }
 }
 
-static void activate_hook (void * data, void * list)
+static void activate_hook (void * data, void * list_)
 {
+    GtkWidget * list = (GtkWidget *) list_;
+
     if (aud_playlist_update_pending ())
         playlist_activated = TRUE;
     else
@@ -195,8 +200,10 @@ static void activate_hook (void * data, void * list)
     }
 }
 
-static void position_hook (void * data, void * list)
+static void position_hook (void * data, void * list_)
 {
+    GtkWidget * list = (GtkWidget *) list_;
+
     if (aud_playlist_update_pending ())
         position_changed = TRUE;
     else

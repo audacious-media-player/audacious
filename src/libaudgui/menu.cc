@@ -57,7 +57,8 @@ static void toggled_cb (GtkCheckMenuItem * check, const AudguiMenuItem * item)
 
 static void hook_cb (void * data, GtkWidget * check)
 {
-    const AudguiMenuItem * item = g_object_get_data ((GObject *) check, "item");
+    const AudguiMenuItem * item = (const AudguiMenuItem *) g_object_get_data
+     ((GObject *) check, "item");
     gtk_check_menu_item_set_active ((GtkCheckMenuItem *) check, aud_get_bool
      (item->csect, item->cname));
 }

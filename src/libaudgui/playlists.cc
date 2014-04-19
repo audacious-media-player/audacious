@@ -41,7 +41,7 @@ ImportExportJob;
 /* "destroy" callback; do not call directly */
 static void cleanup_job (void * data)
 {
-    ImportExportJob * job = data;
+    ImportExportJob * job = (ImportExportJob *) data;
 
     char * folder = gtk_file_chooser_get_current_folder_uri ((GtkFileChooser *) job->selector);
 
@@ -59,7 +59,7 @@ static void cleanup_job (void * data)
 
 static void finish_job (void * data)
 {
-    ImportExportJob * job = data;
+    ImportExportJob * job = (ImportExportJob *) data;
     int list = aud_playlist_by_unique_id (job->list_id);
 
     if (list >= 0)
@@ -98,7 +98,7 @@ static void confirm_overwrite (ImportExportJob * job)
 
 static void check_overwrite (void * data)
 {
-    ImportExportJob * job = data;
+    ImportExportJob * job = (ImportExportJob *) data;
 
     job->filename = gtk_file_chooser_get_uri ((GtkFileChooser *) job->selector);
 

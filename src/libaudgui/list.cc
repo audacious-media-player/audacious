@@ -183,7 +183,7 @@ static GType list_model_get_type (void)
     if (type == G_TYPE_INVALID)
     {
         type = g_type_register_static_simple (G_TYPE_OBJECT, "AudguiListModel",
-         sizeof (GObjectClass), NULL, sizeof (ListModel), NULL, 0);
+         sizeof (GObjectClass), NULL, sizeof (ListModel), NULL, (GTypeFlags) 0);
         g_type_add_interface_static (type, GTK_TYPE_TREE_MODEL, & iface_info);
     }
     return type;
@@ -360,7 +360,7 @@ static void drag_data_get (GtkWidget * widget, GdkDragContext * context,
     int length = 0;
     model->cbs->get_data (model->user, & data, & length);
     gtk_selection_data_set (sel, gdk_atom_intern (model->cbs->data_type, FALSE),
-     8, data, length);
+     8, (const unsigned char *) data, length);
     g_free (data);
 }
 
@@ -391,12 +391,12 @@ static bool_t autoscroll (GtkWidget * widget)
     if (! adj)
         return FALSE;
 
-    int new = gtk_adjustment_get_value (adj) + model->scroll_speed;
-    int clamped = CLAMP (new, 0, gtk_adjustment_get_upper (adj) -
+    int pos = gtk_adjustment_get_value (adj) + model->scroll_speed;
+    int clamped = CLAMP (pos, 0, gtk_adjustment_get_upper (adj) -
      gtk_adjustment_get_page_size (adj));
     gtk_adjustment_set_value (adj, clamped);
 
-    if (clamped != new) /* reached top or bottom? */
+    if (clamped != pos) /* reached top or bottom? */
         return FALSE;
 
     if (model->scroll_speed > 0)
@@ -474,7 +474,7 @@ static void drag_leave (GtkWidget * widget, GdkDragContext * context,
 {
     g_signal_stop_emission_by_name (widget, "drag-leave");
 
-    gtk_tree_view_set_drag_dest_row ((GtkTreeView *) widget, NULL, 0);
+    gtk_tree_view_set_drag_dest_row ((GtkTreeView *) widget, NULL, (GtkTreeViewDropPosition) 0);
     stop_autoscroll (model);
 }
 
@@ -503,7 +503,7 @@ static bool_t drag_drop (GtkWidget * widget, GdkDragContext * context, int x,
         success = FALSE;
 
     gtk_drag_finish (context, success, FALSE, time);
-    gtk_tree_view_set_drag_dest_row ((GtkTreeView *) widget, NULL, 0);
+    gtk_tree_view_set_drag_dest_row ((GtkTreeView *) widget, NULL, (GtkTreeViewDropPosition) 0);
     stop_autoscroll (model);
     return TRUE;
 }
@@ -546,7 +546,7 @@ static void update_selection (GtkWidget * list, ListModel * model, int at,
 
     for (int i = at; i < at + rows; i ++)
     {
-        GtkTreeIter iter = {.user_data = GINT_TO_POINTER (i)};
+        GtkTreeIter iter = {0, GINT_TO_POINTER (i)};
         if (model->cbs->get_selected (model->user, i))
             gtk_tree_selection_select_iter (sel, & iter);
         else
@@ -616,7 +616,7 @@ EXPORT GtkWidget * audgui_list_new_real (const AudguiListCallbacks * cbs, int cb
 
         gtk_drag_source_set (list, GDK_BUTTON1_MASK, & target, 1,
          GDK_ACTION_COPY);
-        gtk_drag_dest_set (list, 0, & target, 1, GDK_ACTION_COPY);
+        gtk_drag_dest_set (list, (GtkDestDefaults) 0, & target, 1, GDK_ACTION_COPY);
 
         g_signal_connect (list, "drag-data-get", (GCallback) drag_data_get,
          model);
@@ -628,7 +628,7 @@ EXPORT GtkWidget * audgui_list_new_real (const AudguiListCallbacks * cbs, int cb
     else if (MODEL_HAS_CB (model, shift_rows))
     {
         gtk_drag_source_set (list, GDK_BUTTON1_MASK, NULL, 0, GDK_ACTION_COPY);
-        gtk_drag_dest_set (list, 0, NULL, 0, GDK_ACTION_COPY);
+        gtk_drag_dest_set (list, (GtkDestDefaults) 0, NULL, 0, GDK_ACTION_COPY);
         supports_drag = TRUE;
     }
 
@@ -707,7 +707,7 @@ EXPORT void audgui_list_insert_rows (GtkWidget * list, int at, int rows)
     if (model->highlight >= at)
         model->highlight += rows;
 
-    GtkTreeIter iter = {.user_data = GINT_TO_POINTER (at)};
+    GtkTreeIter iter = {0, GINT_TO_POINTER (at)};
     GtkTreePath * path = gtk_tree_path_new_from_indices (at, -1);
 
     for (int i = rows; i --; )
@@ -725,7 +725,7 @@ EXPORT void audgui_list_update_rows (GtkWidget * list, int at, int rows)
      ((GtkTreeView *) list);
     g_return_if_fail (at >= 0 && rows >= 0 && at + rows <= model->rows);
 
-    GtkTreeIter iter = {.user_data = GINT_TO_POINTER (at)};
+    GtkTreeIter iter = {0, GINT_TO_POINTER (at)};
     GtkTreePath * path = gtk_tree_path_new_from_indices (at, -1);
 
     while (rows --)

@@ -54,6 +54,10 @@ typedef struct {
     void (* focus_change) (void * user, int row); /* optional */
 } AudguiListCallbacks;
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 GtkWidget * audgui_list_new_real (const AudguiListCallbacks * cbs, int cbs_size,
  void * user, int rows);
 
@@ -77,5 +81,9 @@ void audgui_list_set_focus (GtkWidget * list, int row);
 
 int audgui_list_row_at_point (GtkWidget * list, int x, int y);
 int audgui_list_row_at_point_rounded (GtkWidget * list, int x, int y);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

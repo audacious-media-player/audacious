@@ -63,7 +63,7 @@ static void show_progress (void * data, void * user)
     if (! progress_window)
         create_progress_window ();
 
-    gtk_label_set_text ((GtkLabel *) progress_label, data);
+    gtk_label_set_text ((GtkLabel *) progress_label, (const char *) data);
 }
 
 static void show_progress_2 (void * data, void * user)
@@ -71,7 +71,7 @@ static void show_progress_2 (void * data, void * user)
     if (! progress_window)
         create_progress_window ();
 
-    gtk_label_set_text ((GtkLabel *) progress_label_2, data);
+    gtk_label_set_text ((GtkLabel *) progress_label_2, (const char *) data);
 }
 
 static void hide_progress (void * data, void * user)
@@ -82,7 +82,7 @@ static void hide_progress (void * data, void * user)
 
 static void show_error (void * data, void * user)
 {
-    audgui_simple_message (& error_window, GTK_MESSAGE_ERROR, _("Error"), data);
+    audgui_simple_message (& error_window, GTK_MESSAGE_ERROR, _("Error"), (const char *) data);
 }
 
 void status_init (void)

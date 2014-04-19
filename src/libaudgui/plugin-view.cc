@@ -176,7 +176,7 @@ static void button_update (GtkTreeView * tree, GtkWidget * b)
      ((GObject *) b, "watcher");
     g_return_if_fail (watcher != NULL);
 
-    PluginHandle * p = g_object_steal_data ((GObject *) b, "plugin");
+    PluginHandle * p = (PluginHandle *) g_object_steal_data ((GObject *) b, "plugin");
     if (p != NULL)
         aud_plugin_remove_watch (p, watcher, b);
 
@@ -193,14 +193,14 @@ static void button_update (GtkTreeView * tree, GtkWidget * b)
 
 static void do_config (void * tree)
 {
-    PluginHandle * plugin = get_selected_plugin (tree);
+    PluginHandle * plugin = get_selected_plugin ((GtkTreeView *) tree);
     g_return_if_fail (plugin != NULL);
     audgui_show_plugin_prefs (plugin);
 }
 
 static void do_about (void * tree)
 {
-    PluginHandle * plugin = get_selected_plugin (tree);
+    PluginHandle * plugin = get_selected_plugin ((GtkTreeView *) tree);
     g_return_if_fail (plugin != NULL);
     audgui_show_plugin_about (plugin);
 }
@@ -211,7 +211,7 @@ static void button_destroy (GtkWidget * b)
      ((GObject *) b, "watcher");
     g_return_if_fail (watcher != NULL);
 
-    PluginHandle * p = g_object_steal_data ((GObject *) b, "plugin");
+    PluginHandle * p = (PluginHandle *) g_object_steal_data ((GObject *) b, "plugin");
     if (p != NULL)
         aud_plugin_remove_watch (p, watcher, b);
 }

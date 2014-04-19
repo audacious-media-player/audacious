@@ -231,15 +231,14 @@ static bool_t genre_fill (GtkWidget * combo)
 {
     GList * list = NULL;
     GList * node;
-    int i;
 
-    for (i = 0; i < ARRAY_LEN (genre_table); i ++)
+    for (unsigned i = 0; i < ARRAY_LEN (genre_table); i ++)
         list = g_list_prepend (list, _(genre_table[i]));
 
     list = g_list_sort (list, (GCompareFunc) strcmp);
 
     for (node = list; node != NULL; node = node->next)
-        gtk_combo_box_text_append_text ((GtkComboBoxText *) combo, node->data);
+        gtk_combo_box_text_append_text ((GtkComboBoxText *) combo, (const char *) node->data);
 
     g_list_free (list);
     return FALSE;
@@ -439,28 +438,25 @@ EXPORT void audgui_infowin_show (int playlist, int entry)
     char * filename = aud_playlist_entry_get_filename (playlist, entry);
     g_return_if_fail (filename != NULL);
 
-    PluginHandle * decoder = aud_playlist_entry_get_decoder (playlist, entry,
-     FALSE);
-    if (decoder == NULL)
-        goto FREE;
+    PluginHandle * decoder = aud_playlist_entry_get_decoder (playlist, entry, FALSE);
 
-    if (aud_custom_infowin (filename, decoder))
-        goto FREE;
-
-    Tuple * tuple = aud_playlist_entry_get_tuple (playlist, entry, FALSE);
-
-    if (tuple == NULL)
+    if (decoder && ! aud_custom_infowin (filename, decoder))
     {
-        SPRINTF (message, _("No info available for %s.\n"), filename);
-        aud_ui_show_error (message);
-        goto FREE;
+        Tuple * tuple = aud_playlist_entry_get_tuple (playlist, entry, FALSE);
+
+        if (tuple)
+        {
+            infowin_show (playlist, entry, filename, tuple, decoder,
+             aud_file_can_write_tuple (filename, decoder));
+            tuple_unref (tuple);
+        }
+        else
+        {
+            SPRINTF (message, _("No info available for %s.\n"), filename);
+            aud_ui_show_error (message);
+        }
     }
 
-    infowin_show (playlist, entry, filename, tuple, decoder,
-     aud_file_can_write_tuple (filename, decoder));
-    tuple_unref (tuple);
-
-FREE:
     str_unref (filename);
 }
 

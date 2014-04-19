@@ -138,7 +138,7 @@ static void on_toggle_button_toggled (GtkToggleButton * button, const Preference
     bool_t active = gtk_toggle_button_get_active (button);
     widget_set_bool (widget, active);
 
-    GtkWidget * child = g_object_get_data ((GObject *) button, "child");
+    GtkWidget * child = (GtkWidget *) g_object_get_data ((GObject *) button, "child");
     if (child)
         gtk_widget_set_sensitive (child, active);
 }
@@ -309,15 +309,17 @@ static void create_entry (const PreferencesWidget * widget, GtkWidget * * label,
 static void on_cbox_changed_int (GtkComboBox * combobox, const PreferencesWidget * widget)
 {
     int position = gtk_combo_box_get_active (combobox);
-    const ComboBoxElements * elements = g_object_get_data ((GObject *) combobox, "comboboxelements");
+    const ComboBoxElements * elements = (const ComboBoxElements *)
+     g_object_get_data ((GObject *) combobox, "comboboxelements");
     widget_set_int (widget, GPOINTER_TO_INT (elements[position].value));
 }
 
 static void on_cbox_changed_string (GtkComboBox * combobox, const PreferencesWidget * widget)
 {
     int position = gtk_combo_box_get_active (combobox);
-    const ComboBoxElements * elements = g_object_get_data ((GObject *) combobox, "comboboxelements");
-    widget_set_string (widget, elements[position].value);
+    const ComboBoxElements * elements = (const ComboBoxElements *)
+     g_object_get_data ((GObject *) combobox, "comboboxelements");
+    widget_set_string (widget, (const char *) elements[position].value);
 }
 
 static void fill_cbox (GtkWidget * combobox, const PreferencesWidget * widget, const char * domain)
@@ -336,7 +338,8 @@ static void fill_cbox (GtkWidget * combobox, const PreferencesWidget * widget, c
 
     switch (widget->cfg_type)
     {
-    case VALUE_INT:;
+    case VALUE_INT:
+    {
         int ivalue = widget_get_int (widget);
 
         for (int i = 0; i < n_elements; i++)
@@ -350,13 +353,15 @@ static void fill_cbox (GtkWidget * combobox, const PreferencesWidget * widget, c
 
         g_signal_connect (combobox, "changed", (GCallback) on_cbox_changed_int, (void *) widget);
         break;
+    }
 
-    case VALUE_STRING:;
+    case VALUE_STRING:
+    {
         char * value = widget_get_string (widget);
 
         for(int i = 0; i < n_elements; i++)
         {
-            if (value && ! strcmp (elements[i].value, value))
+            if (value && ! strcmp ((const char *) elements[i].value, value))
             {
                 gtk_combo_box_set_active ((GtkComboBox *) combobox, i);
                 break;
@@ -367,6 +372,7 @@ static void fill_cbox (GtkWidget * combobox, const PreferencesWidget * widget, c
 
         g_signal_connect (combobox, "changed", (GCallback) on_cbox_changed_string, (void *) widget);
         break;
+    }
 
     default:
         break;
@@ -481,6 +487,7 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
                 break;
 
             case WIDGET_LABEL:
+            {
                 if (strstr (widgets[i].label, "<b>"))
                     gtk_alignment_set_padding ((GtkAlignment *) alignment,
                      (i == 0) ? 0 : 12, 0, 0, 0);
@@ -498,6 +505,7 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
                     widget = label;
 
                 break;
+            }
 
             case WIDGET_RADIO_BTN:
                 widget = gtk_radio_button_new_with_mnemonic (radio_btn_group,
@@ -507,6 +515,7 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
                 break;
 
             case WIDGET_SPIN_BTN:
+            {
                 widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 
                 GtkWidget * label_pre = NULL, * spin_btn = NULL, * label_past = NULL;
@@ -520,14 +529,16 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
                     gtk_box_pack_start ((GtkBox *) widget, label_past, FALSE, FALSE, 0);
 
                 break;
+            }
 
             case WIDGET_CUSTOM:
                 if (widgets[i].data.populate)
-                    widget = widgets[i].data.populate ();
+                    widget = (GtkWidget *) widgets[i].data.populate ();
 
                 break;
 
             case WIDGET_FONT_BTN:
+            {
                 widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 
                 GtkWidget * font_btn = NULL;
@@ -539,6 +550,7 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
                     gtk_box_pack_start ((GtkBox *) widget, font_btn, FALSE, FALSE, 0);
 
                 break;
+            }
 
             case WIDGET_TABLE:
                 widget = gtk_grid_new ();
@@ -550,6 +562,7 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
                 break;
 
             case WIDGET_ENTRY:
+            {
                 widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 
                 GtkWidget * entry = NULL;
@@ -561,8 +574,10 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
                     gtk_box_pack_start ((GtkBox *) widget, entry, TRUE, TRUE, 0);
 
                 break;
+            }
 
             case WIDGET_COMBO_BOX:
+            {
                 widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 
                 GtkWidget * combo = NULL;
@@ -574,6 +589,7 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
                     gtk_box_pack_start ((GtkBox *) widget, combo, FALSE, FALSE, 0);
 
                 break;
+            }
 
             case WIDGET_BOX:
                 if (widgets[i].data.box.horizontal)

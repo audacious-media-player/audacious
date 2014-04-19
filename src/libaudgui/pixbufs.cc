@@ -24,6 +24,7 @@
 #include <libaudcore/probe.h>
 #include <libaudcore/runtime.h>
 
+#include "internal.h"
 #include "libaudgui-gtk.h"
 
 static GdkPixbuf * current_pixbuf;
@@ -124,8 +125,8 @@ EXPORT GdkPixbuf * audgui_pixbuf_from_data (const void * data, int64_t size)
     GdkPixbufLoader * loader = gdk_pixbuf_loader_new ();
     GError * error = NULL;
 
-    if (gdk_pixbuf_loader_write (loader, data, size, & error) &&
-     gdk_pixbuf_loader_close (loader, & error))
+    if (gdk_pixbuf_loader_write (loader, (const unsigned char *) data, size,
+     & error) && gdk_pixbuf_loader_close (loader, & error))
     {
         if ((pixbuf = gdk_pixbuf_loader_get_pixbuf (loader)))
             g_object_ref (pixbuf);

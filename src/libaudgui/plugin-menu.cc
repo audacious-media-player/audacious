@@ -36,8 +36,8 @@ static void configure_plugins (void)
 }
 
 static const AudguiMenuItem main_items[] = {
-    {N_("_Plugins ..."), .func = configure_plugins},
-    {.sep = TRUE}
+    MenuCommand (N_("_Plugins ..."), 0, 0, (GdkModifierType) 0, configure_plugins),
+    MenuSep ()
 };
 
 static void add_to_menu (GtkWidget * menu, const AudguiMenuItem * item)
@@ -62,7 +62,7 @@ EXPORT GtkWidget * audgui_get_plugin_menu (int id)
             audgui_menu_init (menus[id], main_items, ARRAY_LEN (main_items), NULL);
 
         for (GList * node = items[id]; node; node = node->next)
-            add_to_menu (menus[id], node->data);
+            add_to_menu (menus[id], (const AudguiMenuItem *) node->data);
     }
 
     return menus[id];

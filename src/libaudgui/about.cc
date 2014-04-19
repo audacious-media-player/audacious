@@ -24,6 +24,7 @@
 #include <libaudcore/runtime.h>
 
 #include "internal.h"
+#include "libaudgui.h"
 #include "libaudgui-gtk.h"
 
 static const char about_text[] =

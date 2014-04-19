@@ -29,9 +29,16 @@ struct _JumpToTrackCache
     GHashTable* keywords;
 };
 
-extern JumpToTrackCache* ui_jump_to_track_cache_new(void);
-extern const GArray * ui_jump_to_track_cache_search (JumpToTrackCache * cache,
- const char * keyword);
-extern void ui_jump_to_track_cache_free(JumpToTrackCache* cache);
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+JumpToTrackCache* ui_jump_to_track_cache_new (void);
+const GArray * ui_jump_to_track_cache_search (JumpToTrackCache * cache, const char * keyword);
+void ui_jump_to_track_cache_free (JumpToTrackCache * cache);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

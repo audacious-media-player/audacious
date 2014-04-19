@@ -107,7 +107,8 @@ EXPORT GtkWidget * audgui_button_new (const char * text, const char * icon,
 EXPORT GtkWidget * audgui_dialog_new (GtkMessageType type, const char * title,
  const char * text, GtkWidget * button1, GtkWidget * button2)
 {
-    GtkWidget * dialog = gtk_message_dialog_new (NULL, 0, type, GTK_BUTTONS_NONE, "%s", text);
+    GtkWidget * dialog = gtk_message_dialog_new (NULL, (GtkDialogFlags) 0, type,
+     GTK_BUTTONS_NONE, "%s", text);
     gtk_window_set_title ((GtkWindow *) dialog, title);
 
     if (button2)

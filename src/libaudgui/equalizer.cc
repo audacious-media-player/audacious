@@ -26,6 +26,7 @@
 #include <libaudcore/runtime.h>
 
 #include "internal.h"
+#include "libaudgui.h"
 #include "libaudgui-gtk.h"
 
 static void on_off_cb (GtkToggleButton * on_off, void * unused)
@@ -93,7 +94,7 @@ static void set_slider (GtkWidget * slider, double value)
 
 static void update_sliders (void * unused, GtkWidget * window)
 {
-    GtkWidget * preamp = g_object_get_data ((GObject *) window, "preamp");
+    GtkWidget * preamp = (GtkWidget *) g_object_get_data ((GObject *) window, "preamp");
     set_slider (preamp, aud_get_double (NULL, "equalizer_preamp"));
 
     double values[AUD_EQ_NBANDS];
@@ -102,7 +103,7 @@ static void update_sliders (void * unused, GtkWidget * window)
     for (int i = 0; i < AUD_EQ_NBANDS; i ++)
     {
         SPRINTF (slider_id, "slider%d", i);
-        GtkWidget * slider = g_object_get_data ((GObject *) window, slider_id);
+        GtkWidget * slider = (GtkWidget *) g_object_get_data ((GObject *) window, slider_id);
         set_slider (slider, values[i]);
     }
 }

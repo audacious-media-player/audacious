@@ -21,7 +21,7 @@
 
 static GdkPixbuf * get_scaled (GtkWidget * widget, int maxwidth, int maxheight)
 {
-    GdkPixbuf * unscaled = g_object_get_data ((GObject *) widget, "pixbuf-unscaled");
+    GdkPixbuf * unscaled = (GdkPixbuf *) g_object_get_data ((GObject *) widget, "pixbuf-unscaled");
 
     if (! unscaled)
         return NULL;
@@ -43,7 +43,7 @@ static GdkPixbuf * get_scaled (GtkWidget * widget, int maxwidth, int maxheight)
         }
     }
 
-    GdkPixbuf * scaled = g_object_get_data ((GObject *) widget, "pixbuf-scaled");
+    GdkPixbuf * scaled = (GdkPixbuf *) g_object_get_data ((GObject *) widget, "pixbuf-scaled");
 
     if (scaled)
     {
@@ -81,9 +81,9 @@ EXPORT void audgui_scaled_image_set (GtkWidget * widget, GdkPixbuf * pixbuf)
 {
     GdkPixbuf * old;
 
-    if ((old = g_object_get_data ((GObject *) widget, "pixbuf-unscaled")))
+    if ((old = (GdkPixbuf *) g_object_get_data ((GObject *) widget, "pixbuf-unscaled")))
         g_object_unref (old);
-    if ((old = g_object_get_data ((GObject *) widget, "pixbuf-scaled")))
+    if ((old = (GdkPixbuf *) g_object_get_data ((GObject *) widget, "pixbuf-scaled")))
         g_object_unref (old);
 
     if (pixbuf)

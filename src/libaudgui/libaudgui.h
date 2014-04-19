@@ -23,6 +23,10 @@
 #include <stdint.h>
 #include <libaudcore/core.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void audgui_show_add_url_window(bool_t open);
 
 void audgui_jump_to_track(void);
@@ -87,5 +91,9 @@ void audgui_playlist_manager (void);
 void audgui_urilist_open (const char * list);
 void audgui_urilist_insert (int playlist, int position, const char * list);
 char * audgui_urilist_create_from_selected (int playlist);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* LIBAUDGUI_H */

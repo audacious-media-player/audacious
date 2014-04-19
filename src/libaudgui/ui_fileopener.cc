@@ -33,7 +33,7 @@ static Index * get_files (GtkWidget * chooser)
     GSList * list = gtk_file_chooser_get_uris ((GtkFileChooser *) chooser);
 
     for (GSList * node = list; node; node = node->next)
-        index_insert (index, -1, str_get (node->data));
+        index_insert (index, -1, str_get ((const char *) node->data));
 
     g_slist_free_full (list, g_free);
     return index;
@@ -41,7 +41,7 @@ static Index * get_files (GtkWidget * chooser)
 
 static void open_cb (void * data)
 {
-    GtkWidget * chooser = data;
+    GtkWidget * chooser = (GtkWidget *) data;
     Index * files = get_files (chooser);
     bool_t open = GPOINTER_TO_INT (g_object_get_data ((GObject *) chooser, "do-open"));
 
@@ -50,7 +50,7 @@ static void open_cb (void * data)
     else
         aud_drct_pl_add_list (files, -1);
 
-    GtkWidget * toggle = g_object_get_data ((GObject *) chooser, "toggle-button");
+    GtkWidget * toggle = (GtkWidget *) g_object_get_data ((GObject *) chooser, "toggle-button");
     if (gtk_toggle_button_get_active ((GtkToggleButton *) toggle))
         audgui_hide_filebrowser ();
 }

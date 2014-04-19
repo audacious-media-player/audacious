@@ -86,7 +86,7 @@ ui_jump_to_track_cache_regex_list_create(const GString* keyword)
             continue;
         }
 
-        GRegex * regex = g_regex_new (words[i], G_REGEX_CASELESS, 0, NULL);
+        GRegex * regex = g_regex_new (words[i], G_REGEX_CASELESS, (GRegexMatchFlags) 0, NULL);
         if (regex)
             regex_list = g_slist_append (regex_list, regex);
     }
@@ -107,8 +107,8 @@ ui_jump_to_track_match(const char * song, GSList *regex_list)
 
     for ( ; regex_list ; regex_list = g_slist_next(regex_list) )
     {
-        GRegex * regex = regex_list->data;
-        if (! g_regex_match (regex, song, 0, NULL))
+        GRegex * regex = (GRegex *) regex_list->data;
+        if (! g_regex_match (regex, song, (GRegexMatchFlags) 0, NULL))
             return FALSE;
     }
 
@@ -134,7 +134,7 @@ ui_jump_to_track_cache_match_keyword(JumpToTrackCache* cache,
 
     KeywordMatches * k = keyword_matches_new ();
 
-    for (int i = 0; i < search_space->entries->len; i ++)
+    for (unsigned i = 0; i < search_space->entries->len; i ++)
     {
         char * title = g_array_index (search_space->titles, char *, i);
         char * artist = g_array_index (search_space->artists, char *, i);
@@ -172,7 +172,7 @@ ui_jump_to_track_cache_match_keyword(JumpToTrackCache* cache,
 static void
 ui_jump_to_track_cache_free_keywordmatch_data(KeywordMatches* match_entry)
 {
-    for (int i = 0; i < match_entry->entries->len; i ++)
+    for (unsigned i = 0; i < match_entry->entries->len; i ++)
     {
         str_unref (g_array_index (match_entry->titles, char *, i));
         str_unref (g_array_index (match_entry->artists, char *, i));
@@ -325,7 +325,7 @@ const GArray * ui_jump_to_track_cache_search (JumpToTrackCache * cache, const
             KeywordMatches* matched_entries = (KeywordMatches*)result_entries;
             // if keyword matches something we have, we'll just return the list
             // of matches that the keyword has.
-            if (match_string_length == keyword_string->len) {
+            if (match_string_length == (int) keyword_string->len) {
                 g_string_free(keyword_string, TRUE);
                 g_string_free(match_string, TRUE);
                 return matched_entries->entries;

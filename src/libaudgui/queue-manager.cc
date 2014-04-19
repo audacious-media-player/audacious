@@ -93,18 +93,21 @@ static void shift_rows (void * user, int row, int before)
 
     aud_playlist_queue_delete_selected (list);
 
-    for (int i = 0; i < shift->len; i ++)
+    for (unsigned i = 0; i < shift->len; i ++)
         aud_playlist_queue_insert (list, before + i, g_array_index (shift, int, i));
 
     g_array_free (shift, TRUE);
 }
 
 static const AudguiListCallbacks callbacks = {
- .get_value = get_value,
- .get_selected = get_selected,
- .set_selected = set_selected,
- .select_all = select_all,
- .shift_rows = shift_rows};
+    get_value,
+    get_selected,
+    set_selected,
+    select_all,
+    0,  // activate_row
+    0,  // right_click
+    shift_rows
+};
 
 static void remove_selected (void * unused)
 {
@@ -128,7 +131,7 @@ static void remove_selected (void * unused)
 
 static void update_hook (void * data, void * user)
 {
-    GtkWidget * qm_list = user;
+    GtkWidget * qm_list = (GtkWidget *) user;
 
     int oldrows = audgui_list_row_count (qm_list);
     int newrows = aud_playlist_queue_count (aud_playlist_get_active ());

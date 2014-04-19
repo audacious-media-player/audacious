@@ -39,6 +39,10 @@ enum {
     AUDGUI_NUM_UNIQUE_WINDOWS
 };
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void audgui_show_unique_window (int id, GtkWidget * widget);
 bool_t audgui_reshow_unique_window (int id);
 void audgui_hide_unique_window (int id);
@@ -58,5 +62,9 @@ GtkWidget * plugin_view_new (int type);
 /* status.c */
 void status_init (void);
 void status_cleanup (void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* AUDGUI_INTERNAL_H */

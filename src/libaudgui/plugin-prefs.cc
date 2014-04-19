@@ -24,6 +24,7 @@
 #include <libaudcore/preferences.h>
 
 #include "internal.h"
+#include "libaudgui.h"
 #include "libaudgui-gtk.h"
 
 static GList * about_windows;
@@ -67,11 +68,11 @@ static bool_t watch_cb (PluginHandle * plugin, void * window)
     {
         list = & config_windows;
         node = g_list_find (* list, window);
-        g_return_if_fail (node);
+        g_return_val_if_fail (node, FALSE);
     }
 
-    g_signal_handlers_disconnect_by_func (window, destroy_cb, plugin);
-    gtk_widget_destroy (window);
+    g_signal_handlers_disconnect_by_func (window, (void *) destroy_cb, plugin);
+    gtk_widget_destroy ((GtkWidget *) window);
 
     * list = g_list_delete_link (* list, node);
 
@@ -84,11 +85,11 @@ EXPORT void audgui_show_plugin_about (PluginHandle * plugin)
 
     if (node)
     {
-        gtk_window_present (node->data);
+        gtk_window_present ((GtkWindow *) node->data);
         return;
     }
 
-    Plugin * header = aud_plugin_get_header (plugin);
+    Plugin * header = (Plugin *) aud_plugin_get_header (plugin);
     g_return_if_fail (header);
 
     const char * name = header->name;
@@ -138,11 +139,11 @@ EXPORT void audgui_show_plugin_prefs (PluginHandle * plugin)
 
     if (node)
     {
-        gtk_window_present (node->data);
+        gtk_window_present ((GtkWindow *) node->data);
         return;
     }
 
-    Plugin * header = aud_plugin_get_header (plugin);
+    Plugin * header = (Plugin *) aud_plugin_get_header (plugin);
     g_return_if_fail (header);
 
     const PluginPreferences * p = header->prefs;

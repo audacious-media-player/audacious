@@ -31,13 +31,13 @@ typedef void (* ForEachFunc) (char *, void *);
 
 static char * check_uri (char * name)
 {
-    char * new;
+    char * uri;
 
-    if (strstr (name, "://") || ! (new = filename_to_uri (name)))
+    if (strstr (name, "://") || ! (uri = filename_to_uri (name)))
         return name;
 
     str_unref (name);
-    return new;
+    return uri;
 }
 
 static void urilist_for_each (const char * list, ForEachFunc func, void * user)
@@ -99,7 +99,7 @@ EXPORT char * audgui_urilist_create_from_selected (int playlist)
     if (! space)
         return NULL;
 
-    buffer = g_malloc (space);
+    buffer = g_new (char, space);
     set = buffer;
 
     for (count = 0; count < entries; count ++)

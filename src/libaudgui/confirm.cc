@@ -24,6 +24,7 @@
 #include <libaudcore/playlist.h>
 #include <libaudcore/runtime.h>
 
+#include "libaudgui.h"
 #include "libaudgui-gtk.h"
 
 static void no_confirm_cb (GtkToggleButton * toggle)

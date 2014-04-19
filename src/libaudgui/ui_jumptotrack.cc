@@ -73,7 +73,7 @@ static int get_selected_entry (void)
     int row = gtk_tree_path_get_indices (path)[0];
     gtk_tree_path_free (path);
 
-    g_return_val_if_fail (row >= 0 && row < search_matches->len, -1);
+    g_return_val_if_fail (row >= 0 && (unsigned) row < search_matches->len, -1);
     return g_array_index (search_matches, int, row);
 }
 
@@ -205,16 +205,16 @@ static void activate_cb (void * data, void * user)
     update_cb (GINT_TO_POINTER (PLAYLIST_UPDATE_STRUCTURE), NULL);
 }
 
-static void toggle_button_cb (GtkToggleButton * toggle, const char * setting)
+static void toggle_button_cb (GtkToggleButton * toggle)
 {
-    aud_set_bool ("audgui", setting, gtk_toggle_button_get_active (toggle));
+    aud_set_bool ("audgui", "close_jtf_dialog", gtk_toggle_button_get_active (toggle));
 }
 
 static void list_get_value (void * user, int row, int column, GValue * value)
 {
     g_return_if_fail (search_matches);
     g_return_if_fail (column >= 0 && column < 2);
-    g_return_if_fail (row >= 0 && row < search_matches->len);
+    g_return_if_fail (row >= 0 && (unsigned) row < search_matches->len);
 
     int playlist = aud_playlist_get_active ();
     int entry = g_array_index (search_matches, int, row);
@@ -295,7 +295,7 @@ static GtkWidget * create_window (void)
     gtk_toggle_button_set_active ((GtkToggleButton *) toggle, aud_get_bool
      ("audgui", "close_jtf_dialog"));
     gtk_box_pack_start(GTK_BOX(bbox), toggle, FALSE, FALSE, 0);
-    g_signal_connect (toggle, "clicked", (GCallback) toggle_button_cb, "close_jtf_dialog");
+    g_signal_connect (toggle, "clicked", (GCallback) toggle_button_cb, NULL);
 
     /* queue button */
     queue_button = audgui_button_new (_("_Queue"), NULL, do_queue, NULL);
