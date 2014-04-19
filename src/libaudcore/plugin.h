@@ -371,11 +371,12 @@ struct _IfacePlugin
 
 #define AUD_PLUGIN(stype, itype, ...) \
 stype _aud_plugin_self = { \
- .magic = _AUD_PLUGIN_MAGIC, \
- .version = _AUD_PLUGIN_VERSION, \
- .type = itype, \
- .size = sizeof (stype), \
- __VA_ARGS__};
+    _AUD_PLUGIN_MAGIC, \
+    _AUD_PLUGIN_VERSION, \
+    itype, \
+    sizeof (stype), \
+    __VA_ARGS__ \
+};
 
 #define AUD_TRANSPORT_PLUGIN(...) AUD_PLUGIN (TransportPlugin, PLUGIN_TYPE_TRANSPORT, __VA_ARGS__)
 #define AUD_PLAYLIST_PLUGIN(...) AUD_PLUGIN (PlaylistPlugin, PLUGIN_TYPE_PLAYLIST, __VA_ARGS__)
