@@ -269,7 +269,7 @@ static void write_output_raw (float * data, int samples)
 
         if (PLUGIN_HAS_FUNC (cop, write_audio))
         {
-            cop->write_audio (data, FMT_SIZEOF (out_format) * ready);
+            cop->write_audio (out_data, FMT_SIZEOF (out_format) * ready);
             out_data = (char *) out_data + FMT_SIZEOF (out_format) * ready;
             samples -= ready;
         }
