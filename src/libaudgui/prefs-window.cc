@@ -215,7 +215,7 @@ static const PreferencesWidget proxy_auth_elements[] = {
         {VALUE_STRING, 0, 0, "proxy_user"}),
     WidgetEntry (N_("Proxy password:"),
         {VALUE_STRING, 0, 0, "proxy_pass"},
-        true)  // password
+        {true})
 };
 
 static const PreferencesWidget connectivity_page_widgets[] = {

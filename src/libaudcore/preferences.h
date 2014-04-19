@@ -186,10 +186,9 @@ constexpr PreferencesWidget WidgetSpin (const char * label, WidgetConfig cfg,
        (child == WIDGET_CHILD), cfg.type, cfg.section, cfg.name, spin}; }
 
 constexpr PreferencesWidget WidgetEntry (const char * label, WidgetConfig cfg,
- bool password = false, WidgetIsChild child = WIDGET_NOT_CHILD)
+ WidgetVEntry entry = WidgetVEntry(), WidgetIsChild child = WIDGET_NOT_CHILD)
     { return {WIDGET_ENTRY, label, cfg.value, cfg.callback, 0,
-       (child == WIDGET_CHILD), cfg.type, cfg.section, cfg.name,
-       WidgetVEntry({password})}; }
+       (child == WIDGET_CHILD), cfg.type, cfg.section, cfg.name, entry}; }
 
 constexpr PreferencesWidget WidgetCombo (const char * label, WidgetConfig cfg,
  WidgetVCombo combo, WidgetIsChild child = WIDGET_NOT_CHILD)
