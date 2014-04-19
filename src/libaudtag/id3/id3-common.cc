@@ -53,7 +53,7 @@ void id3_strnlen (const char * data, int size, int encoding,
  int * bytes_without_nul, int * bytes_with_nul)
 {
     bool_t is16 = (encoding == ID3_ENCODING_UTF16 || encoding == ID3_ENCODING_UTF16_BE);
-    char * nul = is16 ? memchr16 (data, 0, size) : memchr (data, 0, size);
+    char * nul = is16 ? (char *) memchr16 (data, 0, size) : (char *) memchr (data, 0, size);
 
     if (nul)
     {
@@ -180,7 +180,7 @@ static bool_t decode_rva_block (const char * * _data, int * _size,
     AUDDBG ("RVA block: channel = %d, adjustment = %d/%d, peak bits = %d\n",
      * channel, * adjustment, * adjustment_unit, peak_bits);
 
-    if (peak_bits > 0 && peak_bits < sizeof (int) * 8)
+    if (peak_bits > 0 && peak_bits < (int) sizeof (int) * 8)
     {
         int bytes = (peak_bits + 7) / 8;
         int count;
@@ -270,7 +270,7 @@ bool_t id3_decode_picture (const char * data, int size, int * type,
  void * * image_data, int64_t * image_size)
 {
     const char * nul;
-    if (size < 2 || ! (nul = memchr (data + 1, 0, size - 2)))
+    if (size < 2 || ! (nul = (char *) memchr (data + 1, 0, size - 2)))
         return FALSE;
 
     const char * body = nul + 2;

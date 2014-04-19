@@ -163,9 +163,7 @@ const char *convert_numericgenre_to_text(int numericgenre)
         {GENRE_EURO_HOUSE, "Euro-House"},
     };
 
-    int count;
-
-    for (count = 0; count < ARRAY_LEN (table); count++)
+    for (unsigned count = 0; count < ARRAY_LEN (table); count++)
     {
         if (table[count].numericgenre == numericgenre)
             return table[count].genre;
@@ -188,9 +186,9 @@ uint32_t syncsafe32 (uint32_t x)
 
 bool_t open_temp_file_for (TempFile * temp, VFSFile * file)
 {
-    char * template = filename_build (g_get_tmp_dir (), "audacious-temp-XXXXXX");
-    SCOPY (tempname, template);
-    str_unref (template);
+    char * templ = filename_build (g_get_tmp_dir (), "audacious-temp-XXXXXX");
+    SCOPY (tempname, templ);
+    str_unref (templ);
 
     temp->fd = g_mkstemp (tempname);
     if (temp->fd < 0)
@@ -214,7 +212,7 @@ bool_t copy_region_to_temp_file (TempFile * temp, VFSFile * file, int64_t offset
 
         if (size > 0)
         {
-            readsize = MIN (size, sizeof buf);
+            readsize = MIN (size, (int64_t) sizeof buf);
             if (vfs_fread (buf, 1, readsize, file) != readsize)
                 return FALSE;
 

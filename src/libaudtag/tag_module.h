@@ -26,14 +26,22 @@
 typedef Tuple* pTuple;
 
 typedef struct _module {
-    char *name;
+    const char * name;
     int type; /* set to TAG_TYPE_NONE if the module cannot create new tags */
-    bool_t(*can_handle_file) (VFSFile *fd);
+    bool_t (* can_handle_file) (VFSFile *fd);
     bool_t (* read_tag) (Tuple * tuple, VFSFile * handle);
     bool_t (* read_image) (VFSFile * handle, void * * data, int64_t * size);
     bool_t (* write_tag) (const Tuple * tuple, VFSFile * handle);
 } tag_module_t;
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 tag_module_t * find_tag_module (VFSFile * handle, int new_type);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* TAG_MODULE_H */

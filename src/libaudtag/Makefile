@@ -2,14 +2,14 @@ SHARED_LIB = ${LIB_PREFIX}audtag${LIB_SUFFIX}
 LIB_MAJOR = 1
 LIB_MINOR = 0
 
-SRCS = audtag.c		\
-       util.c		\
-       tag_module.c	\
-       id3/id3-common.c \
-       id3/id3v1.c	\
-       id3/id3v22.c	\
-       id3/id3v24.c	\
-       ape/ape.c
+SRCS = audtag.cc		\
+       util.cc		\
+       tag_module.cc	\
+       id3/id3-common.cc \
+       id3/id3v1.cc	\
+       id3/id3v22.cc	\
+       id3/id3v24.cc	\
+       ape/ape.cc
 
 INCLUDES = audtag.h
 

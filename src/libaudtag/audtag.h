@@ -30,6 +30,10 @@ enum
     TAG_TYPE_ID3V2
 };
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 bool_t tag_tuple_read (Tuple * tuple, VFSFile *fd);
 bool_t tag_image_read (VFSFile * handle, void * * data, int64_t * size);
 
@@ -41,5 +45,9 @@ bool_t tag_update_stream_metadata (Tuple * tuple, VFSFile * handle);
 
 /* deprecated, use tag_tuple_write */
 bool_t tag_tuple_write_to_file (Tuple * tuple, VFSFile * handle);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* AUDTAG_H */

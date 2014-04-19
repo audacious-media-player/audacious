@@ -25,6 +25,7 @@
 
 #include <libaudcore/audstrings.h>
 
+#include "../audtag.h"
 #include "../tag_module.h"
 #include "../util.h"
 
@@ -86,7 +87,7 @@ static bool_t combine_string (Tuple * tuple, int field, const char * str1,
  int size1, const char * str2, int size2)
 {
     char str[size1 + size2 + 1];
-    
+
     memset (str, 0, sizeof str);
     strncpy (str, str1, size1);
     strncpy (str + strlen (str), str2, size2);
@@ -136,7 +137,8 @@ static bool_t id3v1_read_tag (Tuple * tuple, VFSFile * file)
 }
 
 tag_module_t id3v1 = {
-    .name = "ID3v1",
-    .can_handle_file = id3v1_can_handle_file,
-    .read_tag = id3v1_read_tag,
+    "ID3v1",
+    TAG_TYPE_NONE,
+    id3v1_can_handle_file,
+    id3v1_read_tag,
 };

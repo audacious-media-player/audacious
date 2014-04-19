@@ -290,7 +290,7 @@ static bool_t read_frame (VFSFile * handle, int max_size, int version,
  bool_t syncsafe, int * frame_size, char * key, char * * data, int * size)
 {
     ID3v2FrameHeader header;
-    int skip = 0;
+    unsigned skip = 0;
 
     if ((max_size -= sizeof (ID3v2FrameHeader)) < 0)
         return FALSE;
@@ -306,7 +306,7 @@ static bool_t read_frame (VFSFile * handle, int max_size, int version,
      (GUINT32_FROM_BE (header.size));
     header.flags = GUINT16_FROM_BE (header.flags);
 
-    if (header.size > max_size || header.size == 0)
+    if (header.size > (unsigned) max_size || header.size == 0)
         return FALSE;
 
     AUDDBG ("Found frame:\n");
@@ -332,7 +332,7 @@ static bool_t read_frame (VFSFile * handle, int max_size, int version,
         return FALSE;
 
     * size = header.size - skip;
-    * data = g_malloc (* size);
+    * data = g_new (char, * size);
 
     if (vfs_fread (* data, 1, * size, handle) != * size)
         return FALSE;
@@ -385,7 +385,7 @@ static void read_all_frames (VFSFile * handle, int version, bool_t syncsafe,
         else
             key2 = str_get (key);
 
-        list = g_list_append (list, frame);
+        list = g_list_append ((GList *) list, frame);
         g_hash_table_insert (dict, key2, list);
     }
 }
@@ -421,12 +421,12 @@ typedef struct {
 
 static void write_frame_list (void * key, void * list, void * user)
 {
-    WriteState * state = user;
+    WriteState * state = (WriteState *) user;
 
-    for (GList * node = list; node; node = node->next)
+    for (GList * node = (GList *) list; node; node = node->next)
     {
         int size;
-        if (write_frame (state->fd, node->data, state->version, & size))
+        if (write_frame (state->fd, (GenericFrame *) node->data, state->version, & size))
             state->written_size += size;
     }
 }
@@ -517,7 +517,7 @@ static GenericFrame * add_generic_frame (int id, int size,
     GenericFrame * frame = g_slice_new (GenericFrame);
 
     strcpy (frame->key, id3_frames[id]);
-    frame->data = g_malloc (size);
+    frame->data = g_new (char, size);
     frame->size = size;
 
     GList * list = g_list_append (NULL, frame);

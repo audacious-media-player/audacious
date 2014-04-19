@@ -159,7 +159,7 @@ static bool_t read_frame (VFSFile * handle, int max_size, int version,
     }
 
 //    hdrsz = GUINT32_TO_BE(hdrsz);
-    if (hdrsz > max_size || hdrsz == 0)
+    if (hdrsz > (unsigned) max_size || hdrsz == 0)
         return FALSE;
 
     AUDDBG ("Found frame:\n");
@@ -170,7 +170,7 @@ static bool_t read_frame (VFSFile * handle, int max_size, int version,
     g_strlcpy (key, header.key, 4);
 
     * size = hdrsz;
-    * data = g_malloc (* size);
+    * data = g_new (char, * size);
 
     if (vfs_fread (* data, 1, * size, handle) != * size)
         return FALSE;
@@ -336,9 +336,10 @@ static bool_t id3v22_write_tag (const Tuple * tuple, VFSFile * f)
 
 tag_module_t id3v22 =
 {
-    .name = "ID3v2.2",
-    .can_handle_file = id3v22_can_handle_file,
-    .read_tag = id3v22_read_tag,
-    .read_image = id3v22_read_image,
-    .write_tag = id3v22_write_tag,
+    "ID3v2.2",
+    TAG_TYPE_NONE,
+    id3v22_can_handle_file,
+    id3v22_read_tag,
+    id3v22_read_image,
+    id3v22_write_tag
 };

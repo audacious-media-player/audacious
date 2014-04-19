@@ -176,7 +176,7 @@ static bool_t ape_is_our_file (VFSFile * handle)
 
 static ValuePair * ape_read_item (void * * data, int length)
 {
-    uint32_t * header = * data;
+    uint32_t * header = (uint32_t *) * data;
     char * value;
     ValuePair * pair;
 
@@ -186,7 +186,7 @@ static ValuePair * ape_read_item (void * * data, int length)
         return NULL;
     }
 
-    value = memchr ((char *) (* data) + 8, 0, length - 8);
+    value = (char *) memchr ((char *) (* data) + 8, 0, length - 8);
 
     if (value == NULL)
     {
@@ -498,9 +498,10 @@ ERR:
 
 tag_module_t ape =
 {
-    .name = "APE",
-    .type = TAG_TYPE_APE,
-    .can_handle_file = ape_is_our_file,
-    .read_tag = ape_read_tag,
-    .write_tag = ape_write_tag,
+    "APE",
+    TAG_TYPE_APE,
+    ape_is_our_file,
+    ape_read_tag,
+    0,  // read_image
+    ape_write_tag
 };
