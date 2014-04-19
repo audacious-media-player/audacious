@@ -2,16 +2,16 @@ include ../../extra.mk
 
 PROG = audacious${PROG_SUFFIX}
 
-SRCS = main.c \
-       signals.c \
-       util.c
+SRCS = main.cc \
+       signals.cc \
+       util.cc
 
 ifeq ($(HAVE_MSWINDOWS),yes)
 SRCS += audacious.rc
 endif
 
 ifeq ($(USE_DBUS),yes)
-SRCS += dbus-server.c
+SRCS += dbus-server.cc
 EXT_DEPS += ../dbus/aud-dbus.a
 endif
 
@@ -21,6 +21,8 @@ ifeq ($(USE_DBUS),yes)
 CPPFLAGS := -I../dbus ${CPPFLAGS} ${GIO_CFLAGS}
 LIBS := ../dbus/aud-dbus.a ${LIBS} ${GIO_LIBS}
 endif
+
+LD = ${CXX}
 
 CPPFLAGS := -I.. -I../.. \
             ${CPPFLAGS} \

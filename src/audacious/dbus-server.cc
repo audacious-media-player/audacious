@@ -407,7 +407,7 @@ static bool_t do_set_eq (Obj * obj, Invoc * invoc, double preamp, GVariant * var
         return FALSE;
 
     size_t nbands = 0;
-    const double * bands = g_variant_get_fixed_array (var, & nbands, sizeof (double));
+    const double * bands = (double *) g_variant_get_fixed_array (var, & nbands, sizeof (double));
 
     if (nbands != AUD_EQ_NBANDS)
         return FALSE;
@@ -749,11 +749,12 @@ void dbus_server_init (void)
     if (! bus)
         goto ERROR;
 
-    g_bus_own_name_on_connection (bus, "org.atheme.audacious", 0, NULL, NULL, NULL, NULL);
+    g_bus_own_name_on_connection (bus, "org.atheme.audacious",
+     (GBusNameOwnerFlags) 0, NULL, NULL, NULL, NULL);
 
     skeleton = (GDBusInterfaceSkeleton *) obj_audacious_skeleton_new ();
 
-    for (int i = 0; i < ARRAY_LEN (handlers); i ++)
+    for (unsigned i = 0; i < ARRAY_LEN (handlers); i ++)
         g_signal_connect (skeleton, handlers[i].signal, handlers[i].callback, NULL);
 
     if (! g_dbus_interface_skeleton_export (skeleton, bus, "/org/atheme/audacious", & error))

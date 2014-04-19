@@ -107,7 +107,7 @@ static bool_t parse_options (int argc, char * * argv)
         }
         else if (argv[n][1] == '-')  /* long option */
         {
-            int i;
+            unsigned i;
 
             for (i = 0; i < ARRAY_LEN (arg_map); i ++)
             {
@@ -129,7 +129,7 @@ static bool_t parse_options (int argc, char * * argv)
         {
             for (int c = 1; argv[n][c]; c ++)
             {
-                int i;
+                unsigned i;
 
                 for (i = 0; i < ARRAY_LEN (arg_map); i ++)
                 {
@@ -164,11 +164,11 @@ OUT:
 
 static void print_help (void)
 {
-    static const char pad[20] = "                    ";
+    static const char pad[21] = "                    ";
 
     fprintf (stderr, _("Usage: audacious [OPTION] ... [FILE] ...\n\n"));
 
-    for (int i = 0; i < ARRAY_LEN (arg_map); i ++)
+    for (unsigned i = 0; i < ARRAY_LEN (arg_map); i ++)
         fprintf (stderr, "  -%c, --%s%.*s%s\n", arg_map[i].short_arg,
          arg_map[i].long_arg, (int) (20 - strlen (arg_map[i].long_arg)), pad,
          _(arg_map[i].desc));
@@ -182,16 +182,16 @@ static void do_remote (void)
     GDBusConnection * bus = NULL;
     ObjAudacious * obj = NULL;
     GError * error = NULL;
+    char * version = NULL;
 
     if (! (bus = g_bus_get_sync (G_BUS_TYPE_SESSION, NULL, & error)))
         goto ERR;
 
-    if (! (obj = obj_audacious_proxy_new_sync (bus, 0, "org.atheme.audacious",
-     "/org/atheme/audacious", NULL, & error)))
+    if (! (obj = obj_audacious_proxy_new_sync (bus, (GDBusProxyFlags) 0,
+     "org.atheme.audacious", "/org/atheme/audacious", NULL, & error)))
         goto ERR;
 
     /* check whether remote is running */
-    char * version = NULL;
     obj_audacious_call_version_sync (obj, & version, NULL, NULL);
 
     if (! version)
@@ -211,7 +211,7 @@ static void do_remote (void)
         const char * * list = g_new (const char *, n_filenames + 1);
 
         for (int i = 0; i < n_filenames; i ++)
-            list[i] = index_get (filenames, i);
+            list[i] = (char *) index_get (filenames, i);
 
         list[n_filenames] = NULL;
 
