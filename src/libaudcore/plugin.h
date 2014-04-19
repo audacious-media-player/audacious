@@ -27,7 +27,7 @@
 #include <libaudcore/vfs.h>
 
 /* "Magic" bytes identifying an Audacious plugin header. */
-#define _AUD_PLUGIN_MAGIC 0x8EAC8DE2
+#define _AUD_PLUGIN_MAGIC ((int) 0x8EAC8DE2)
 
 /* API version.  Plugins are marked with this number at compile time.
  *

@@ -33,6 +33,10 @@ typedef struct _ScanRequest ScanRequest;
 
 typedef void (* ScanCallback) (ScanRequest * request);
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 ScanRequest * scan_request (const char * filename, int flags,
  PluginHandle * decoder, ScanCallback callback);
 
@@ -44,5 +48,9 @@ const char * scan_request_get_image_file (ScanRequest * request);
 
 void scanner_init (void);
 void scanner_cleanup (void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

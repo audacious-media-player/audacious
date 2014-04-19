@@ -70,6 +70,10 @@
 
 struct _Index;
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* all (char *) return values must be freed with str_unref() */
 
 char * str_printf (const char * format, ...) __attribute__ ((__format__ (__printf__, 1, 2)));
@@ -129,5 +133,9 @@ char * double_array_to_str (const double * array, int count);
 
 /* Requires: aud_init() */
 void str_format_time (char * buf, int bufsize, int64_t milliseconds);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* LIBAUDCORE_STRINGS_H */

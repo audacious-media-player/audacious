@@ -39,6 +39,10 @@ enum {
 /* generic type; see VisPlugin for actual function types */
 typedef void (* VisFunc) (void);
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void aud_ui_show (bool_t show);
 bool_t aud_ui_is_shown (void);
 
@@ -58,5 +62,9 @@ void aud_plugin_menu_remove (int id, void (* func) (void));
 
 void aud_vis_func_add (int type, VisFunc func);
 void aud_vis_func_remove (VisFunc func);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

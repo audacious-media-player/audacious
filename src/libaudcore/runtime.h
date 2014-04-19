@@ -42,6 +42,10 @@ enum {
     OUTPUT_RESET_HARD
 };
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void aud_init_paths (void);
 void aud_cleanup_paths (void);
 
@@ -84,5 +88,9 @@ const char * aud_history_get (int entry);
 void aud_history_add (const char * path);
 
 void aud_output_reset (int type);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

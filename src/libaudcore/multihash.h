@@ -76,6 +76,10 @@ typedef MultihashNode * (* MultihashAddFunc) (const void * data, unsigned hash, 
  * to be removed, otherwise FALSE. */
 typedef bool_t (* MultihashActionFunc) (MultihashNode * node, void * state);
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* All-purpose lookup function.  The caller passes in the data to be looked up
  * along with its hash value.  The two callbacks are optional.  <add> (if not
  * NULL) is called if no matching node is found, and may return a new node to
@@ -91,5 +95,9 @@ int multihash_lookup (MultihashTable * table, const void * data, unsigned hash,
  * state.  <action> is called on each node in order, and may return TRUE to
  * remove the node from the table.  <state> is forwarded to <action>. */
 void multihash_iterate (MultihashTable * table, MultihashActionFunc action, void * state);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* LIBAUDCORE_MULTIHASH_H */

@@ -85,6 +85,10 @@ typedef enum {
     TUPLE_UNKNOWN
 } TupleValueType;
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 int tuple_field_by_name (const char * name);
 const char * tuple_field_get_name (int field);
 TupleValueType tuple_field_get_type (int field);
@@ -176,5 +180,9 @@ void tuple_formatter_free (TupleFormatter * formatter);
  * returned string is pooled and must be released with str_unref() when no
  * longer needed.  Never returns NULL, but may return an empty string. */
 char * tuple_format_title (TupleFormatter * formatter, const Tuple * tuple);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* LIBAUDCORE_TUPLE_H */

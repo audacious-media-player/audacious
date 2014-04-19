@@ -31,6 +31,10 @@ typedef struct {
     float album_peak; /* 0-1 */
 } ReplayGainInfo;
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* Prepares the output system for playback in the specified format.  Returns
  * TRUE on success, FALSE if the selected format is not supported. */
 bool_t aud_input_open_audio (int format, int rate, int channels);
@@ -68,5 +72,9 @@ bool_t aud_input_check_stop (void);
 /* Checks whether a seek has been requested.  If so, discards any buffered audio
  * and returns the position to seek to, in milliseconds.  Otherwise, returns -1. */
 int aud_input_check_seek (void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

@@ -25,6 +25,10 @@
 
 /* CAUTION: These functions are not thread safe. */
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* --- PLAYBACK CONTROL --- */
 
 /* The strings returned by drct_get_filename() and drct_get_title() are pooled
@@ -76,5 +80,9 @@ void aud_drct_pl_open (const char * filename);
 void aud_drct_pl_open_list (Index * filenames);
 void aud_drct_pl_open_temp (const char * filename);
 void aud_drct_pl_open_temp_list (Index * filenames);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

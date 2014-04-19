@@ -2,49 +2,49 @@ SHARED_LIB = ${LIB_PREFIX}audcore${LIB_SUFFIX}
 LIB_MAJOR = 3
 LIB_MINOR = 0
 
-SRCS = adder.c \
-       art.c \
-       art-search.c \
-       audio.c \
-       audstrings.c \
-       charset.c \
-       config.c \
-       drct.c \
-       effect.c \
-       equalizer.c \
-       equalizer-preset.c \
-       eventqueue.c \
-       fft.c \
-       history.c \
-       hook.c \
-       index.c \
-       inifile.c \
-       interface.c \
-       multihash.c \
-       output.c \
-       playback.c \
-       playlist.c \
-       playlist-files.c \
-       playlist-utils.c \
-       plugin-init.c \
-       plugin-load.c \
-       plugin-registry.c \
-       probe.c \
-       probe-buffer.c \
-       runtime.c \
-       scanner.c \
-       strpool.c \
-       tinylock.c \
-       tuple.c \
-       tuple_compiler.c \
-       tuple_formatter.c \
-       util.c \
-       vfs.c \
-       vfs_async.c \
-       vfs_common.c \
-       vfs_local.c \
-       vis-runner.c \
-       visualization.c
+SRCS = adder.cc \
+       art.cc \
+       art-search.cc \
+       audio.cc \
+       audstrings.cc \
+       charset.cc \
+       config.cc \
+       drct.cc \
+       effect.cc \
+       equalizer.cc \
+       equalizer-preset.cc \
+       eventqueue.cc \
+       fft.cc \
+       history.cc \
+       hook.cc \
+       index.cc \
+       inifile.cc \
+       interface.cc \
+       multihash.cc \
+       output.cc \
+       playback.cc \
+       playlist.cc \
+       playlist-files.cc \
+       playlist-utils.cc \
+       plugin-init.cc \
+       plugin-load.cc \
+       plugin-registry.cc \
+       probe.cc \
+       probe-buffer.cc \
+       runtime.cc \
+       scanner.cc \
+       strpool.cc \
+       tinylock.cc \
+       tuple.cc \
+       tuple_compiler.cc \
+       tuple_formatter.cc \
+       util.cc \
+       vfs.cc \
+       vfs_async.cc \
+       vfs_common.cc \
+       vfs_local.cc \
+       vis-runner.cc \
+       visualization.cc
 
 INCLUDES = audio.h \
            audstrings.h \
@@ -73,6 +73,8 @@ include ../../buildsys.mk
 include ../../extra.mk
 
 includesubdir = libaudcore
+
+LD = ${CXX}
 
 CPPFLAGS := -I.. -I../.. \
             ${CPPFLAGS} \

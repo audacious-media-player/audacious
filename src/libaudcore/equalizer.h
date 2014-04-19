@@ -32,6 +32,10 @@ typedef struct {
     float bands[AUD_EQ_NBANDS];
 } EqualizerPreset;
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void aud_eq_set_bands (const double * values);
 void aud_eq_get_bands (double * values);
 void aud_eq_set_band (int band, double value);
@@ -49,5 +53,9 @@ bool_t aud_save_preset_file (EqualizerPreset * preset, const char * filename);
 
 Index * aud_import_winamp_presets (VFSFile * file);
 bool_t aud_export_winamp_preset (EqualizerPreset * preset, VFSFile * file);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* LIBAUDCORE_EQUALIZER_H */

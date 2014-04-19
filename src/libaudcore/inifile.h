@@ -22,6 +22,10 @@
 
 #include <libaudcore/core.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void inifile_parse (VFSFile * file,
  void (* handle_heading) (const char * heading, void * data),
  void (* handle_entry) (const char * key, const char * value, void * data),
@@ -29,5 +33,9 @@ void inifile_parse (VFSFile * file,
 
 bool_t inifile_write_heading (VFSFile * file, const char * heading);
 bool_t inifile_write_entry (VFSFile * file, const char * key, const char * value);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* LIBAUDCORE_INIFILE_H */

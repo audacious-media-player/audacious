@@ -29,6 +29,10 @@ typedef struct _Index Index;
 
 typedef void (* IndexFreeFunc) (void * value);
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* Returns a new, empty index. */
 Index * index_new (void);
 
@@ -93,5 +97,9 @@ void index_sort (Index * index, int (* compare) (const void * a, const void * b)
  * on context. */
 void index_sort_with_data (Index * index, int (* compare) (const void * a,
  const void * b, void * data), void * data);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* LIBAUDCORE_INDEX_H */

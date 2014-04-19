@@ -30,7 +30,7 @@ AC_REQUIRE([AC_SYS_LARGEFILE])
 
 if test "x$GCC" = "xyes"; then
     CFLAGS="$CFLAGS -std=gnu99 -ffast-math -Wall -pipe"
-    CXXFLAGS="$CXXFLAGS -Wall -pipe"
+    CXXFLAGS="$CXXFLAGS -std=c++11 -ffast-math -Wall -pipe"
     AUD_CHECK_CFLAGS(-Wtype-limits)
 fi
 

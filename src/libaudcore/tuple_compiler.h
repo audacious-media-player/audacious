@@ -26,6 +26,10 @@
 typedef GArray TupleEvalContext;
 typedef struct _TupleEvalNode TupleEvalNode;
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 TupleEvalContext * tuple_evalctx_new(void);
 void tuple_evalctx_reset(TupleEvalContext *ctx);
 void tuple_evalctx_free(TupleEvalContext *ctx);
@@ -35,5 +39,9 @@ void tuple_evalnode_free(TupleEvalNode *expr);
 TupleEvalNode *tuple_formatter_compile(TupleEvalContext *ctx, const char *expr);
 void tuple_formatter_eval (TupleEvalContext * ctx, TupleEvalNode * expr,
  const Tuple * tuple, GString * out);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* LIBAUDCORE_TUPLE_COMPILER_H */

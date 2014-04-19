@@ -22,6 +22,10 @@
 
 typedef void (* HookFunction) (void * data, void * user);
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* Adds <func> to the list of functions to be called when the hook <name> is
  * triggered. */
 void hook_associate (const char * name, HookFunction func, void * user);
@@ -49,5 +53,9 @@ void event_queue_cancel (const char * name, void * data);
 
 /* Cancels all pending hook calls. */
 void event_queue_cancel_all (void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* LIBAUDCORE_HOOK_H */
