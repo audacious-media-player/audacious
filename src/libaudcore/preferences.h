@@ -176,9 +176,9 @@ constexpr PreferencesWidget WidgetCheck (const char * label, WidgetConfig cfg,
        (child == WIDGET_CHILD), cfg.type, cfg.section, cfg.name}; }
 
 constexpr PreferencesWidget WidgetRadio (const char * label, WidgetConfig cfg,
- WidgetIsChild child = WIDGET_NOT_CHILD)
+ WidgetVRadio radio, WidgetIsChild child = WIDGET_NOT_CHILD)
     { return {WIDGET_RADIO_BTN, label, cfg.value, cfg.callback, 0,
-       (child == WIDGET_CHILD), cfg.type, cfg.section, cfg.name}; }
+       (child == WIDGET_CHILD), cfg.type, cfg.section, cfg.name, radio}; }
 
 constexpr PreferencesWidget WidgetSpin (const char * label, WidgetConfig cfg,
  WidgetVSpin spin, WidgetIsChild child = WIDGET_NOT_CHILD)
