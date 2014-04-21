@@ -3,14 +3,18 @@
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
-# Rahman Yusri Aftian <aftian@yahoo.com>, 2012
+# Rahman Yusri Aftian <aftian@yahoo.com>, 2012,2014
 # Rahman Yusri Aftian <aftian@yahoo.com>, 2012
 # Andika Triwidada <andika@gmail.com>, 2012
 # Andika Triwidada <andika@gmail.com>, 2012
 # Ardjuna <Asyura.x@gmail.com>, 2013
 # Arif Syamsudin <buitenzorg812@gmail.com>, 2012
+#  <bu0ncu3@yahoo.com>, 2012,2014
 # Arif Syamsudin <buitenzorg812@gmail.com>, 2012
 #  <invaleed@gmail.com>, 2012
+# ivanzulfikar <ivan.zulf.ikar@gmail.com>, 2014
+# ivanzulfikar <ivan.zulf.ikar@gmail.com>, 2014
+# Mohamad Hasan Al Banna, 2012
 # Mohamad Hasan Al Banna, 2012
 # Rahman Aftian <>, 2012
 # Rahman Yusri Aftian <aftian@yahoo.com>, 2012
@@ -18,13 +22,14 @@
 #  <samsul@kplibanyumas.org>, 2012
 # Mohamad Hasan Al Banna, 2012
 # yoza1404 <yoza1404@gmail.com>, 2012
+# yoza1404 <yoza1404@gmail.com>, 2012
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-03-23 21:24+0100\n"
-"PO-Revision-Date: 2014-03-15 22:38+0000\n"
-"Last-Translator: Radioactiveman <thomas-lange2@gmx.de>\n"
+"POT-Creation-Date: 2014-04-21 22:48+0200\n"
+"PO-Revision-Date: 2014-04-09 08:45+0000\n"
+"Last-Translator: Rahman Yusri Aftian <aftian@yahoo.com>\n"
 "Language-Team: Indonesian (Indonesia) (http://www.transifex.com/projects/p/"
 "audacious/language/id_ID/)\n"
 "Language: id_ID\n"
@@ -43,13 +48,13 @@ msgid "%d file found"
 msgid_plural "%d files found"
 msgstr[0] "%d berkas ditemukan"
 
-#: src/audacious/adder.c:393 src/audacious/playlist-new.c:96
+#: src/audacious/adder.c:386 src/audacious/playlist-new.c:97
 msgid "New Playlist"
 msgstr "Daftar Main Baru"
 
 #: src/audacious/interface.c:93
 msgid "Error"
-msgstr ""
+msgstr "Galat"
 
 #: src/audacious/main.c:70
 msgid "Show command-line help"
@@ -111,24 +116,24 @@ msgstr "Keluar setelah berhenti memutar"
 msgid "Print debugging messages"
 msgstr "Cetak pesan debug"
 
-#: src/audacious/main.c:264
+#: src/audacious/main.c:269
 #, c-format
 msgid "Unknown option: %s\n"
 msgstr ""
 
-#: src/audacious/main.c:285
+#: src/audacious/main.c:291
 #, c-format
 msgid "Unknown option: -%c\n"
 msgstr ""
 
-#: src/audacious/main.c:306
+#: src/audacious/main.c:314
 #, c-format
 msgid ""
 "Usage: audacious [OPTION] ... [FILE] ...\n"
 "\n"
 msgstr ""
 
-#: src/audacious/main.c:591
+#: src/audacious/main.c:601
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -137,7 +142,7 @@ msgstr "Audacious"
 msgid "No decoder found for %s."
 msgstr "Tidak ada dekoder untuk %s."
 
-#: src/audacious/playback.c:382
+#: src/audacious/playback.c:387
 #, c-format
 msgid "%s could not be opened."
 msgstr "%s tidak dapat dibuka."
@@ -152,11 +157,11 @@ msgstr ""
 msgid "Cannot save %s: unsupported file extension."
 msgstr ""
 
-#: src/audacious/playlist-new.c:97
+#: src/audacious/playlist-new.c:98
 msgid "Now Playing"
 msgstr "Sedang Diputar"
 
-#: src/audacious/playlist-new.c:1655
+#: src/audacious/playlist-new.c:1656
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress "
 "(or has been disabled)."
@@ -165,12 +170,12 @@ msgstr ""
 "atau sedang berjalan."
 
 #: src/audacious/plugin-preferences.c:55
-msgid "About "
-msgstr ""
+msgid "About"
+msgstr "Tentang"
 
 #: src/audacious/plugin-preferences.c:94
-msgid " Settings"
-msgstr ""
+msgid "Settings"
+msgstr "Pengaturan"
 
 #: src/audacious/plugin-preferences.c:99
 msgid "_Set"
@@ -183,20 +188,20 @@ msgstr ""
 msgid "_Cancel"
 msgstr ""
 
-#: src/audacious/plugin-preferences.c:106 src/audacious/ui_preferences.c:783
+#: src/audacious/plugin-preferences.c:106 src/audacious/ui_preferences.c:763
 #: src/libaudgui/infowin.c:370 src/libaudgui/queue-manager.c:189
 #: src/libaudgui/ui_fileopener.c:127 src/libaudgui/ui_jumptotrack.c:312
 #: src/libaudgui/util.c:161
 msgid "_Close"
 msgstr ""
 
-#: src/audacious/plugin-view.c:242 src/audacious/ui_preferences.c:661
+#: src/audacious/plugin-view.c:242 src/audacious/ui_preferences.c:641
 msgid "_Settings"
 msgstr ""
 
-#: src/audacious/plugin-view.c:250 src/audacious/ui_preferences.c:672
+#: src/audacious/plugin-view.c:250 src/audacious/ui_preferences.c:652
 msgid "_About"
-msgstr ""
+msgstr "Tent_ang"
 
 #: src/audacious/ui_plugin_menu.c:37
 msgid "_Plugins ..."
@@ -554,44 +559,44 @@ msgstr "ARIS [ALBUM] - TREK. JUDUL"
 msgid "ALBUM - TITLE"
 msgstr "ALBUM - JUDUL"
 
-#: src/audacious/ui_preferences.c:386
+#: src/audacious/ui_preferences.c:375
 msgid "Category"
 msgstr "Kategori"
 
-#: src/audacious/ui_preferences.c:468
+#: src/audacious/ui_preferences.c:457
 msgid "Custom"
 msgstr "Pilihan"
 
-#: src/audacious/ui_preferences.c:492
+#: src/audacious/ui_preferences.c:481
 msgid "<b>Song Display</b>"
 msgstr "<b>Tampilan Lagu</b>"
 
-#: src/audacious/ui_preferences.c:501
+#: src/audacious/ui_preferences.c:490
 msgid "Show song numbers"
 msgstr "Tampilkan no. urut daftar lagu"
 
-#: src/audacious/ui_preferences.c:512
+#: src/audacious/ui_preferences.c:501
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr "Tampilkan nol di depan (02:00 bukan 2:00)"
 
-#: src/audacious/ui_preferences.c:526
+#: src/audacious/ui_preferences.c:515
 msgid "Title format:"
 msgstr "Format judul:"
 
-#: src/audacious/ui_preferences.c:531
+#: src/audacious/ui_preferences.c:520
 msgid "Custom string:"
 msgstr "Rangkaian kata gubahan:"
 
-#: src/audacious/ui_preferences.c:734
+#: src/audacious/ui_preferences.c:714
 msgid "Audacious Settings"
 msgstr ""
 
-#: src/audacious/util.c:117
+#: src/audacious/util.c:112
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Tidak dapat membuat folder (%s): %s⏎\n"
 
-#: src/libaudcore/audstrings.c:382
+#: src/libaudcore/audstrings.c:385
 #, c-format
 msgid "Audio CD, track %s"
 msgstr "CD Audio, trek %s"
@@ -641,7 +646,7 @@ msgstr ""
 
 #: src/libaudgui/confirm.c:89
 msgid "_Rename"
-msgstr ""
+msgstr "Gant_i Nama"
 
 #: src/libaudgui/confirm.c:93
 msgid "Rename Playlist"

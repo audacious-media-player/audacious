@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-03-23 21:24+0100\n"
-"PO-Revision-Date: 2014-03-17 11:15+0000\n"
+"POT-Creation-Date: 2014-04-21 22:48+0200\n"
+"PO-Revision-Date: 2014-04-04 08:03+0000\n"
 "Last-Translator: mkkot <marcin2006@gmail.com>\n"
 "Language-Team: Polish (http://www.transifex.com/projects/p/audacious/"
 "language/pl/)\n"
@@ -45,7 +45,7 @@ msgstr[0] "Znaleziono plik %d"
 msgstr[1] "Znaleziono %d pliki"
 msgstr[2] "Znaleziono %d plików"
 
-#: src/audacious/adder.c:393 src/audacious/playlist-new.c:96
+#: src/audacious/adder.c:386 src/audacious/playlist-new.c:97
 msgid "New Playlist"
 msgstr "Nowa lista odtwarzania"
 
@@ -113,17 +113,17 @@ msgstr "Zamknij program po zakończeniu odtwarzania"
 msgid "Print debugging messages"
 msgstr "Pokaż komunikaty błędów"
 
-#: src/audacious/main.c:264
+#: src/audacious/main.c:269
 #, c-format
 msgid "Unknown option: %s\n"
 msgstr "Nieznana opcja: %s\n"
 
-#: src/audacious/main.c:285
+#: src/audacious/main.c:291
 #, c-format
 msgid "Unknown option: -%c\n"
 msgstr "Nieznana opcja: -%c\n"
 
-#: src/audacious/main.c:306
+#: src/audacious/main.c:314
 #, c-format
 msgid ""
 "Usage: audacious [OPTION] ... [FILE] ...\n"
@@ -132,7 +132,7 @@ msgstr ""
 "Obsługa:  audacious [OPCJE] ... [PLIK] ...\n"
 "\n"
 
-#: src/audacious/main.c:591
+#: src/audacious/main.c:601
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -141,7 +141,7 @@ msgstr "Audacious"
 msgid "No decoder found for %s."
 msgstr "Nie odnaleziono dekodera dla %s."
 
-#: src/audacious/playback.c:382
+#: src/audacious/playback.c:387
 #, c-format
 msgid "%s could not be opened."
 msgstr "Nie można otworzyć %s."
@@ -156,11 +156,11 @@ msgstr "Nie można otworzyć %s: nieobsługiwane rozszerzenie pliku."
 msgid "Cannot save %s: unsupported file extension."
 msgstr "Nie można zapisać %s: nieobsługiwane rozszerzenie pliku."
 
-#: src/audacious/playlist-new.c:97
+#: src/audacious/playlist-new.c:98
 msgid "Now Playing"
 msgstr "Teraz odtwarzane"
 
-#: src/audacious/playlist-new.c:1655
+#: src/audacious/playlist-new.c:1656
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress "
 "(or has been disabled)."
@@ -169,12 +169,12 @@ msgstr ""
 "nadal trwa albo zostało ono wyłączone."
 
 #: src/audacious/plugin-preferences.c:55
-msgid "About "
+msgid "About"
 msgstr "O programie"
 
 #: src/audacious/plugin-preferences.c:94
-msgid " Settings"
-msgstr " Ustawienia"
+msgid "Settings"
+msgstr "Ustawienia"
 
 #: src/audacious/plugin-preferences.c:99
 msgid "_Set"
@@ -187,18 +187,18 @@ msgstr "U_staw"
 msgid "_Cancel"
 msgstr "_Anuluj"
 
-#: src/audacious/plugin-preferences.c:106 src/audacious/ui_preferences.c:783
+#: src/audacious/plugin-preferences.c:106 src/audacious/ui_preferences.c:763
 #: src/libaudgui/infowin.c:370 src/libaudgui/queue-manager.c:189
 #: src/libaudgui/ui_fileopener.c:127 src/libaudgui/ui_jumptotrack.c:312
 #: src/libaudgui/util.c:161
 msgid "_Close"
 msgstr "_Zamknij"
 
-#: src/audacious/plugin-view.c:242 src/audacious/ui_preferences.c:661
+#: src/audacious/plugin-view.c:242 src/audacious/ui_preferences.c:641
 msgid "_Settings"
 msgstr "_Ustawienia"
 
-#: src/audacious/plugin-view.c:250 src/audacious/ui_preferences.c:672
+#: src/audacious/plugin-view.c:250 src/audacious/ui_preferences.c:652
 msgid "_About"
 msgstr "_O programie"
 
@@ -555,44 +555,44 @@ msgstr "WYKONAWCA [ ALBUM ] - NUMER ŚCIEŻKI. TYTUŁ"
 msgid "ALBUM - TITLE"
 msgstr "ALBUM - TYTUŁ"
 
-#: src/audacious/ui_preferences.c:386
+#: src/audacious/ui_preferences.c:375
 msgid "Category"
 msgstr "Kategoria"
 
-#: src/audacious/ui_preferences.c:468
+#: src/audacious/ui_preferences.c:457
 msgid "Custom"
 msgstr "Własny"
 
-#: src/audacious/ui_preferences.c:492
+#: src/audacious/ui_preferences.c:481
 msgid "<b>Song Display</b>"
 msgstr "<b>Wyświetlanie ścieżki</b>"
 
-#: src/audacious/ui_preferences.c:501
+#: src/audacious/ui_preferences.c:490
 msgid "Show song numbers"
 msgstr "Numery ścieżek"
 
-#: src/audacious/ui_preferences.c:512
+#: src/audacious/ui_preferences.c:501
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr "Pokaż zera (02:00 zamiast 2:00)"
 
-#: src/audacious/ui_preferences.c:526
+#: src/audacious/ui_preferences.c:515
 msgid "Title format:"
 msgstr "Format tytułu:"
 
-#: src/audacious/ui_preferences.c:531
+#: src/audacious/ui_preferences.c:520
 msgid "Custom string:"
 msgstr "Własny:"
 
-#: src/audacious/ui_preferences.c:734
+#: src/audacious/ui_preferences.c:714
 msgid "Audacious Settings"
 msgstr "Ustawienia Audaciousa"
 
-#: src/audacious/util.c:117
+#: src/audacious/util.c:112
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Nie można utworzyć katalogu (%s): %s\n"
 
-#: src/libaudcore/audstrings.c:382
+#: src/libaudcore/audstrings.c:385
 #, c-format
 msgid "Audio CD, track %s"
 msgstr "Płyta Audio CD, ścieżka %s"
@@ -1053,6 +1053,3 @@ msgid ""
 msgstr ""
 "\n"
 "(Dalsze komunikaty zostały ukryte.)"
-
-#~ msgid "_Remember"
-#~ msgstr "Zapamię_taj"

@@ -61,6 +61,9 @@ fr.po)
 gl.po)
     LANGUAGE="Galician"
     ;;
+he.po)
+    LANGUAGE="Hebrew"
+    ;;
 hu.po)
     LANGUAGE="Hungarian"
     ;;
@@ -126,6 +129,9 @@ sr.po)
     ;;
 sr_RS.po)
     LANGUAGE="Serbian (Serbia)"
+    ;;
+sv.po)
+    LANGUAGE="Swedish"
     ;;
 ta.po)
     LANGUAGE="Tamil"

@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-03-23 21:24+0100\n"
-"PO-Revision-Date: 2014-03-15 22:38+0000\n"
+"POT-Creation-Date: 2014-04-21 22:48+0200\n"
+"PO-Revision-Date: 2014-04-04 07:08+0000\n"
 "Last-Translator: Radioactiveman <thomas-lange2@gmx.de>\n"
 "Language-Team: Slovak (http://www.transifex.com/projects/p/audacious/"
 "language/sk/)\n"
@@ -38,7 +38,7 @@ msgstr[0] "Nájdených %d súborov"
 msgstr[1] "Nájdený %d súbor"
 msgstr[2] "Nájdené %d súbory"
 
-#: src/audacious/adder.c:393 src/audacious/playlist-new.c:96
+#: src/audacious/adder.c:386 src/audacious/playlist-new.c:97
 msgid "New Playlist"
 msgstr "Nový zoznam skladieb"
 
@@ -106,24 +106,24 @@ msgstr "Ukončiť program po zastavení prehrávania"
 msgid "Print debugging messages"
 msgstr "Vypisuje ladiace hlásenia"
 
-#: src/audacious/main.c:264
+#: src/audacious/main.c:269
 #, c-format
 msgid "Unknown option: %s\n"
 msgstr "Neznáma možnosť: %s\n"
 
-#: src/audacious/main.c:285
+#: src/audacious/main.c:291
 #, c-format
 msgid "Unknown option: -%c\n"
 msgstr "Neznáma možnosť: -%c\n"
 
-#: src/audacious/main.c:306
+#: src/audacious/main.c:314
 #, c-format
 msgid ""
 "Usage: audacious [OPTION] ... [FILE] ...\n"
 "\n"
 msgstr "Pouzitie: audacious [VOLBA] ... [SUBOR] ...\n"
 
-#: src/audacious/main.c:591
+#: src/audacious/main.c:601
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -132,7 +132,7 @@ msgstr "Audacious"
 msgid "No decoder found for %s."
 msgstr "Pre %s nebol nájdený žiadny dekodér."
 
-#: src/audacious/playback.c:382
+#: src/audacious/playback.c:387
 #, c-format
 msgid "%s could not be opened."
 msgstr "%s nemohol byť otvorený."
@@ -147,11 +147,11 @@ msgstr "Nedokážem otvoriť %s: Nepodporovaná prípona súboru."
 msgid "Cannot save %s: unsupported file extension."
 msgstr "Nedokážem uložiť %s: Nepodporovaná prípona súboru.."
 
-#: src/audacious/playlist-new.c:97
+#: src/audacious/playlist-new.c:98
 msgid "Now Playing"
 msgstr "Práve hrá"
 
-#: src/audacious/playlist-new.c:1655
+#: src/audacious/playlist-new.c:1656
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress "
 "(or has been disabled)."
@@ -160,12 +160,12 @@ msgstr ""
 "prebieha (alebo boli zakázané)."
 
 #: src/audacious/plugin-preferences.c:55
-msgid "About "
-msgstr "Pomoc."
+msgid "About"
+msgstr ""
 
 #: src/audacious/plugin-preferences.c:94
-msgid " Settings"
-msgstr "Nastavenia"
+msgid "Settings"
+msgstr ""
 
 #: src/audacious/plugin-preferences.c:99
 msgid "_Set"
@@ -178,18 +178,18 @@ msgstr "_Nastaviť"
 msgid "_Cancel"
 msgstr "_Zrušiť"
 
-#: src/audacious/plugin-preferences.c:106 src/audacious/ui_preferences.c:783
+#: src/audacious/plugin-preferences.c:106 src/audacious/ui_preferences.c:763
 #: src/libaudgui/infowin.c:370 src/libaudgui/queue-manager.c:189
 #: src/libaudgui/ui_fileopener.c:127 src/libaudgui/ui_jumptotrack.c:312
 #: src/libaudgui/util.c:161
 msgid "_Close"
 msgstr "_Zatvoriť"
 
-#: src/audacious/plugin-view.c:242 src/audacious/ui_preferences.c:661
+#: src/audacious/plugin-view.c:242 src/audacious/ui_preferences.c:641
 msgid "_Settings"
 msgstr "_Nastavenia"
 
-#: src/audacious/plugin-view.c:250 src/audacious/ui_preferences.c:672
+#: src/audacious/plugin-view.c:250 src/audacious/ui_preferences.c:652
 msgid "_About"
 msgstr "_Pomoc"
 
@@ -546,44 +546,44 @@ msgstr "UMELEC [ALBUM] - STOPA. NÁZOV"
 msgid "ALBUM - TITLE"
 msgstr "ALBUM - NÁZOV"
 
-#: src/audacious/ui_preferences.c:386
+#: src/audacious/ui_preferences.c:375
 msgid "Category"
 msgstr "Kategória"
 
-#: src/audacious/ui_preferences.c:468
+#: src/audacious/ui_preferences.c:457
 msgid "Custom"
 msgstr "Vlastné"
 
-#: src/audacious/ui_preferences.c:492
+#: src/audacious/ui_preferences.c:481
 msgid "<b>Song Display</b>"
 msgstr "<b>Zobrazenie skladby</b>"
 
-#: src/audacious/ui_preferences.c:501
+#: src/audacious/ui_preferences.c:490
 msgid "Show song numbers"
 msgstr "Zobraziť čísla skladieb"
 
-#: src/audacious/ui_preferences.c:512
+#: src/audacious/ui_preferences.c:501
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr "Zobrazovať úvodné nuly (02:00 namiesto 2:00)"
 
-#: src/audacious/ui_preferences.c:526
+#: src/audacious/ui_preferences.c:515
 msgid "Title format:"
 msgstr "Formát názvu:"
 
-#: src/audacious/ui_preferences.c:531
+#: src/audacious/ui_preferences.c:520
 msgid "Custom string:"
 msgstr "Vlastný reťazec:"
 
-#: src/audacious/ui_preferences.c:734
+#: src/audacious/ui_preferences.c:714
 msgid "Audacious Settings"
 msgstr "Nastavenia programu"
 
-#: src/audacious/util.c:117
+#: src/audacious/util.c:112
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Nepodarilo sa vytvoriť adresár (%s): %s\n"
 
-#: src/libaudcore/audstrings.c:382
+#: src/libaudcore/audstrings.c:385
 #, c-format
 msgid "Audio CD, track %s"
 msgstr "Zvukové CD, stopa %s"
@@ -1044,6 +1044,3 @@ msgid ""
 msgstr ""
 "\n"
 "(Ďalšie správy boli skryté.)"
-
-#~ msgid "_Remember"
-#~ msgstr "Zapamätať"

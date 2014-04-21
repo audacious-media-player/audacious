@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-03-23 21:24+0100\n"
-"PO-Revision-Date: 2014-03-15 22:38+0000\n"
+"POT-Creation-Date: 2014-04-21 22:48+0200\n"
+"PO-Revision-Date: 2014-04-04 07:08+0000\n"
 "Last-Translator: Radioactiveman <thomas-lange2@gmx.de>\n"
 "Language-Team: Malayalam (India) (http://www.transifex.com/projects/p/"
 "audacious/language/ml_IN/)\n"
@@ -32,7 +32,7 @@ msgid_plural "%d files found"
 msgstr[0] "%d ഫയല്‍ കണ്ടെത്തി"
 msgstr[1] "%d ഫയലുകള്‍ കണ്ടെത്തി"
 
-#: src/audacious/adder.c:393 src/audacious/playlist-new.c:96
+#: src/audacious/adder.c:386 src/audacious/playlist-new.c:97
 msgid "New Playlist"
 msgstr "പുതിയ പ്ലേലിസ്റ്റ്"
 
@@ -100,24 +100,24 @@ msgstr "പാട്ടുനിന്നാല്‍ പുറത്തുക�
 msgid "Print debugging messages"
 msgstr "ഡീബഗ്ഗിങ് സന്ദേശങ്ങള്‍ പ്രദര്‍ശിപ്പിയ്ക്കുക"
 
-#: src/audacious/main.c:264
+#: src/audacious/main.c:269
 #, c-format
 msgid "Unknown option: %s\n"
 msgstr ""
 
-#: src/audacious/main.c:285
+#: src/audacious/main.c:291
 #, c-format
 msgid "Unknown option: -%c\n"
 msgstr ""
 
-#: src/audacious/main.c:306
+#: src/audacious/main.c:314
 #, c-format
 msgid ""
 "Usage: audacious [OPTION] ... [FILE] ...\n"
 "\n"
 msgstr ""
 
-#: src/audacious/main.c:591
+#: src/audacious/main.c:601
 msgid "Audacious"
 msgstr "ഒഡാഷ്യസ്"
 
@@ -126,7 +126,7 @@ msgstr "ഒഡാഷ്യസ്"
 msgid "No decoder found for %s."
 msgstr "%s-ന് ഡീകോഡറൊന്നും കണ്ടുകിട്ടിയില്ല."
 
-#: src/audacious/playback.c:382
+#: src/audacious/playback.c:387
 #, c-format
 msgid "%s could not be opened."
 msgstr "%s - തുറക്കാനായില്ല."
@@ -141,11 +141,11 @@ msgstr ""
 msgid "Cannot save %s: unsupported file extension."
 msgstr ""
 
-#: src/audacious/playlist-new.c:97
+#: src/audacious/playlist-new.c:98
 msgid "Now Playing"
 msgstr "ഇപ്പോള്‍ പാടുന്നത്"
 
-#: src/audacious/playlist-new.c:1655
+#: src/audacious/playlist-new.c:1656
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress "
 "(or has been disabled)."
@@ -154,11 +154,11 @@ msgstr ""
 "അസാദ്ധ്യമാക്കിവച്ചതിനാല്‍)."
 
 #: src/audacious/plugin-preferences.c:55
-msgid "About "
+msgid "About"
 msgstr ""
 
 #: src/audacious/plugin-preferences.c:94
-msgid " Settings"
+msgid "Settings"
 msgstr ""
 
 #: src/audacious/plugin-preferences.c:99
@@ -172,18 +172,18 @@ msgstr ""
 msgid "_Cancel"
 msgstr ""
 
-#: src/audacious/plugin-preferences.c:106 src/audacious/ui_preferences.c:783
+#: src/audacious/plugin-preferences.c:106 src/audacious/ui_preferences.c:763
 #: src/libaudgui/infowin.c:370 src/libaudgui/queue-manager.c:189
 #: src/libaudgui/ui_fileopener.c:127 src/libaudgui/ui_jumptotrack.c:312
 #: src/libaudgui/util.c:161
 msgid "_Close"
 msgstr ""
 
-#: src/audacious/plugin-view.c:242 src/audacious/ui_preferences.c:661
+#: src/audacious/plugin-view.c:242 src/audacious/ui_preferences.c:641
 msgid "_Settings"
 msgstr ""
 
-#: src/audacious/plugin-view.c:250 src/audacious/ui_preferences.c:672
+#: src/audacious/plugin-view.c:250 src/audacious/ui_preferences.c:652
 msgid "_About"
 msgstr ""
 
@@ -540,44 +540,44 @@ msgstr "ARTIST [ ALBUM ] - TRACK. TITLE"
 msgid "ALBUM - TITLE"
 msgstr "ALBUM - TITLE"
 
-#: src/audacious/ui_preferences.c:386
+#: src/audacious/ui_preferences.c:375
 msgid "Category"
 msgstr "വിഭാഗം"
 
-#: src/audacious/ui_preferences.c:468
+#: src/audacious/ui_preferences.c:457
 msgid "Custom"
 msgstr "സ്വേച്ഛയാലുള്ള"
 
-#: src/audacious/ui_preferences.c:492
+#: src/audacious/ui_preferences.c:481
 msgid "<b>Song Display</b>"
 msgstr "<b>സോങ് ഡിസ്പ്ലേ</b>"
 
-#: src/audacious/ui_preferences.c:501
+#: src/audacious/ui_preferences.c:490
 msgid "Show song numbers"
 msgstr "പാട്ടുനമ്പറുകള്‍ കാണിയ്ക്കുക"
 
-#: src/audacious/ui_preferences.c:512
+#: src/audacious/ui_preferences.c:501
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr "തുടക്കത്തിലുള്ള പൂജ്യങ്ങള്‍ കാണിയ്ക്കുക (2:00 എന്നതിനുപകരം 02:00)"
 
-#: src/audacious/ui_preferences.c:526
+#: src/audacious/ui_preferences.c:515
 msgid "Title format:"
 msgstr "ടൈറ്റില്‍ ഫോര്‍മാറ്റ്:"
 
-#: src/audacious/ui_preferences.c:531
+#: src/audacious/ui_preferences.c:520
 msgid "Custom string:"
 msgstr "സ്വേച്ഛയാലുള്ള എഴുത്ത്:"
 
-#: src/audacious/ui_preferences.c:734
+#: src/audacious/ui_preferences.c:714
 msgid "Audacious Settings"
 msgstr ""
 
-#: src/audacious/util.c:117
+#: src/audacious/util.c:112
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "ഡയറക്റ്ററി ഉണ്ടാക്കാനായില്ല (%s): %s\n"
 
-#: src/libaudcore/audstrings.c:382
+#: src/libaudcore/audstrings.c:385
 #, c-format
 msgid "Audio CD, track %s"
 msgstr "ഓഡിയോ സി.ഡി., ട്രാക്ക് %s"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-03-23 21:24+0100\n"
+"POT-Creation-Date: 2014-04-21 22:48+0200\n"
 "PO-Revision-Date: 2014-03-15 22:38+0000\n"
 "Last-Translator: Radioactiveman <thomas-lange2@gmx.de>\n"
 "Language-Team: Serbian (Serbia) (http://www.transifex.com/projects/p/"
@@ -32,7 +32,7 @@ msgstr[0] "Пронашао сам %d датотеку"
 msgstr[1] "Пронашао сам %d датотеке"
 msgstr[2] "Пронашао сам %d датотека"
 
-#: src/audacious/adder.c:393 src/audacious/playlist-new.c:96
+#: src/audacious/adder.c:386 src/audacious/playlist-new.c:97
 msgid "New Playlist"
 msgstr "Нови списак нумера"
 
@@ -100,17 +100,17 @@ msgstr "Излази на заустављање пуштања"
 msgid "Print debugging messages"
 msgstr "Исписује поруке прочишћавања"
 
-#: src/audacious/main.c:264
+#: src/audacious/main.c:269
 #, c-format
 msgid "Unknown option: %s\n"
 msgstr "Непозната опција: %s\n"
 
-#: src/audacious/main.c:285
+#: src/audacious/main.c:291
 #, c-format
 msgid "Unknown option: -%c\n"
 msgstr "Непозната опција: -%c\n"
 
-#: src/audacious/main.c:306
+#: src/audacious/main.c:314
 #, c-format
 msgid ""
 "Usage: audacious [OPTION] ... [FILE] ...\n"
@@ -119,7 +119,7 @@ msgstr ""
 "Употреба: audacious [ОПЦИЈА] ... [ДАТОТЕКА] ...\n"
 "\n"
 
-#: src/audacious/main.c:591
+#: src/audacious/main.c:601
 msgid "Audacious"
 msgstr "Безочник"
 
@@ -128,7 +128,7 @@ msgstr "Безочник"
 msgid "No decoder found for %s."
 msgstr "Нисам пронашао декодер за „%s“."
 
-#: src/audacious/playback.c:382
+#: src/audacious/playback.c:387
 #, c-format
 msgid "%s could not be opened."
 msgstr "Не могу да отворим „%s“."
@@ -143,11 +143,11 @@ msgstr "Не могу да учитам „%s“: проширење датот�
 msgid "Cannot save %s: unsupported file extension."
 msgstr "Не могу да сачувам „%s“: проширење датотеке није подржано."
 
-#: src/audacious/playlist-new.c:97
+#: src/audacious/playlist-new.c:98
 msgid "Now Playing"
 msgstr "Сад пуштам"
 
-#: src/audacious/playlist-new.c:1655
+#: src/audacious/playlist-new.c:1656
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress "
 "(or has been disabled)."
@@ -156,11 +156,13 @@ msgstr ""
 "увек у току (или је искључено)."
 
 #: src/audacious/plugin-preferences.c:55
-msgid "About "
+#, fuzzy
+msgid "About"
 msgstr "О програму "
 
 #: src/audacious/plugin-preferences.c:94
-msgid " Settings"
+#, fuzzy
+msgid "Settings"
 msgstr " Подешавања"
 
 #: src/audacious/plugin-preferences.c:99
@@ -174,18 +176,18 @@ msgstr "_Подеси"
 msgid "_Cancel"
 msgstr "_Откажи"
 
-#: src/audacious/plugin-preferences.c:106 src/audacious/ui_preferences.c:783
+#: src/audacious/plugin-preferences.c:106 src/audacious/ui_preferences.c:763
 #: src/libaudgui/infowin.c:370 src/libaudgui/queue-manager.c:189
 #: src/libaudgui/ui_fileopener.c:127 src/libaudgui/ui_jumptotrack.c:312
 #: src/libaudgui/util.c:161
 msgid "_Close"
 msgstr "_Затвори"
 
-#: src/audacious/plugin-view.c:242 src/audacious/ui_preferences.c:661
+#: src/audacious/plugin-view.c:242 src/audacious/ui_preferences.c:641
 msgid "_Settings"
 msgstr "_Подешавања"
 
-#: src/audacious/plugin-view.c:250 src/audacious/ui_preferences.c:672
+#: src/audacious/plugin-view.c:250 src/audacious/ui_preferences.c:652
 msgid "_About"
 msgstr "_О програму"
 
@@ -542,44 +544,44 @@ msgstr "ИЗВОЂАЧ [ АЛБУМ ] — БРОЈ. НАСЛОВ"
 msgid "ALBUM - TITLE"
 msgstr "АЛБУМ — НАСЛОВ"
 
-#: src/audacious/ui_preferences.c:386
+#: src/audacious/ui_preferences.c:375
 msgid "Category"
 msgstr "Категорија"
 
-#: src/audacious/ui_preferences.c:468
+#: src/audacious/ui_preferences.c:457
 msgid "Custom"
 msgstr "Произвољно"
 
-#: src/audacious/ui_preferences.c:492
+#: src/audacious/ui_preferences.c:481
 msgid "<b>Song Display</b>"
 msgstr "<b>Приказ песме</b>"
 
-#: src/audacious/ui_preferences.c:501
+#: src/audacious/ui_preferences.c:490
 msgid "Show song numbers"
 msgstr "Прикажи бројеве песама"
 
-#: src/audacious/ui_preferences.c:512
+#: src/audacious/ui_preferences.c:501
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr "Прикажи почетне нуле (02:00 уместо 2:00)"
 
-#: src/audacious/ui_preferences.c:526
+#: src/audacious/ui_preferences.c:515
 msgid "Title format:"
 msgstr "Запис наслова:"
 
-#: src/audacious/ui_preferences.c:531
+#: src/audacious/ui_preferences.c:520
 msgid "Custom string:"
 msgstr "Произвољна ниска:"
 
-#: src/audacious/ui_preferences.c:734
+#: src/audacious/ui_preferences.c:714
 msgid "Audacious Settings"
 msgstr "Подешавања Безочника"
 
-#: src/audacious/util.c:117
+#: src/audacious/util.c:112
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Не могу да направим директоријум (%s): %s\n"
 
-#: src/libaudcore/audstrings.c:382
+#: src/libaudcore/audstrings.c:385
 #, c-format
 msgid "Audio CD, track %s"
 msgstr "Звучни ЦД, нумера %s"

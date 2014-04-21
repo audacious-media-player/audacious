@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-03-23 21:24+0100\n"
-"PO-Revision-Date: 2014-03-15 22:38+0000\n"
-"Last-Translator: Radioactiveman <thomas-lange2@gmx.de>\n"
+"POT-Creation-Date: 2014-04-21 22:48+0200\n"
+"PO-Revision-Date: 2014-04-04 13:35+0000\n"
+"Last-Translator: fefcas <fefcas@gmail.com>\n"
 "Language-Team: Esperanto (http://www.transifex.com/projects/p/audacious/"
 "language/eo/)\n"
 "Language: eo\n"
@@ -23,7 +23,7 @@ msgstr ""
 
 #: src/audacious/adder.c:76
 msgid "Searching ..."
-msgstr "Serchado ..."
+msgstr "Serĉado ..."
 
 #: src/audacious/adder.c:104
 #, c-format
@@ -32,7 +32,7 @@ msgid_plural "%d files found"
 msgstr[0] "%d dosiero trovita"
 msgstr[1] "%d dosieroj trovitaj"
 
-#: src/audacious/adder.c:393 src/audacious/playlist-new.c:96
+#: src/audacious/adder.c:386 src/audacious/playlist-new.c:97
 msgid "New Playlist"
 msgstr "Nova Ludlisto"
 
@@ -54,11 +54,11 @@ msgstr "Komenci ludadon"
 
 #: src/audacious/main.c:73
 msgid "Pause playback"
-msgstr "Pauzi ludadon"
+msgstr "Paŭzi ludadon"
 
 #: src/audacious/main.c:74
 msgid "Pause if playing, play otherwise"
-msgstr "Pauzi se estas ludata, ludi alie"
+msgstr "Paŭzi se oni ludas, ludi alie"
 
 #: src/audacious/main.c:75
 msgid "Stop playback"
@@ -66,7 +66,7 @@ msgstr "Halti ludadon"
 
 #: src/audacious/main.c:76
 msgid "Skip to previous song"
-msgstr "Salti al antaua muziko"
+msgstr "Salti al antaŭa muziko"
 
 #: src/audacious/main.c:77
 msgid "Skip to next song"
@@ -82,7 +82,7 @@ msgstr "Aldoni dosierojn al provizora ludlisto"
 
 #: src/audacious/main.c:80
 msgid "Display the main window"
-msgstr "Montrigi la chefan fenestron"
+msgstr "Montrigi la ĉefan fenestron"
 
 #: src/audacious/main.c:81
 msgid "Display the jump-to-song window"
@@ -98,19 +98,19 @@ msgstr "Eliri post fini la ludadon"
 
 #: src/audacious/main.c:84
 msgid "Print debugging messages"
-msgstr "Printi rafinigajn mesaghojn"
+msgstr "Printi rafinigajn mesaĝojn"
 
-#: src/audacious/main.c:264
+#: src/audacious/main.c:269
 #, c-format
 msgid "Unknown option: %s\n"
 msgstr "Nekonata modifilo: %s\n"
 
-#: src/audacious/main.c:285
+#: src/audacious/main.c:291
 #, c-format
 msgid "Unknown option: -%c\n"
 msgstr "Nekonata modifilo: -%c\n"
 
-#: src/audacious/main.c:306
+#: src/audacious/main.c:314
 #, c-format
 msgid ""
 "Usage: audacious [OPTION] ... [FILE] ...\n"
@@ -119,7 +119,7 @@ msgstr ""
 "Uzmaniero: audacious [MODIFILO] ... [DOSIERO] ...\n"
 "\n"
 
-#: src/audacious/main.c:591
+#: src/audacious/main.c:601
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -128,7 +128,7 @@ msgstr "Audacious"
 msgid "No decoder found for %s."
 msgstr "Neniu dekodilo trovita por %s."
 
-#: src/audacious/playback.c:382
+#: src/audacious/playback.c:387
 #, c-format
 msgid "%s could not be opened."
 msgstr "%s ne povis esti malfermata."
@@ -136,31 +136,31 @@ msgstr "%s ne povis esti malfermata."
 #: src/audacious/playlist-files.c:95
 #, c-format
 msgid "Cannot load %s: unsupported file extension."
-msgstr "Ne eblas shargi %s: nesubtenata dosier-sufikso."
+msgstr "Ne eblas ŝargi je %s: nesubtenata dosier-sufikso."
 
 #: src/audacious/playlist-files.c:185
 #, c-format
 msgid "Cannot save %s: unsupported file extension."
 msgstr "Ne eblas konservi %s: nesubtenata dosier-sufikso."
 
-#: src/audacious/playlist-new.c:97
+#: src/audacious/playlist-new.c:98
 msgid "Now Playing"
 msgstr "Nune Ludanta"
 
-#: src/audacious/playlist-new.c:1655
+#: src/audacious/playlist-new.c:1656
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress "
 "(or has been disabled)."
 msgstr ""
-"La ludlisto ne povas esti ordigata char skanado de metadatumaro ankorau "
-"plenumighas (au ghi estis malebligata)."
+"La ludlisto ne povas esti ordigata ĉar skanado de metadatumaro ankoraŭ "
+"plenumiĝas (aŭ ĝi estis malebligata)."
 
 #: src/audacious/plugin-preferences.c:55
-msgid "About "
+msgid "About"
 msgstr "Pri"
 
 #: src/audacious/plugin-preferences.c:94
-msgid " Settings"
+msgid "Settings"
 msgstr "Agordoj"
 
 #: src/audacious/plugin-preferences.c:99
@@ -174,24 +174,24 @@ msgstr "_Difini"
 msgid "_Cancel"
 msgstr "_Rezigni"
 
-#: src/audacious/plugin-preferences.c:106 src/audacious/ui_preferences.c:783
+#: src/audacious/plugin-preferences.c:106 src/audacious/ui_preferences.c:763
 #: src/libaudgui/infowin.c:370 src/libaudgui/queue-manager.c:189
 #: src/libaudgui/ui_fileopener.c:127 src/libaudgui/ui_jumptotrack.c:312
 #: src/libaudgui/util.c:161
 msgid "_Close"
 msgstr "_Fermi"
 
-#: src/audacious/plugin-view.c:242 src/audacious/ui_preferences.c:661
+#: src/audacious/plugin-view.c:242 src/audacious/ui_preferences.c:641
 msgid "_Settings"
 msgstr "_Agordoj"
 
-#: src/audacious/plugin-view.c:250 src/audacious/ui_preferences.c:672
+#: src/audacious/plugin-view.c:250 src/audacious/ui_preferences.c:652
 msgid "_About"
 msgstr "_Pri"
 
 #: src/audacious/ui_plugin_menu.c:37
 msgid "_Plugins ..."
-msgstr "_Kromajhoj ..."
+msgstr "_Kromaĵoj ..."
 
 #: src/audacious/ui_preferences.c:82
 msgid "Appearance"
@@ -215,11 +215,11 @@ msgstr "Muzik-informo"
 
 #: src/audacious/ui_preferences.c:87
 msgid "Plugins"
-msgstr "Kromajhoj"
+msgstr "Kromaĵoj"
 
 #: src/audacious/ui_preferences.c:91
 msgid "General"
-msgstr "Ghenerale"
+msgstr "Ĝenerale"
 
 #: src/audacious/ui_preferences.c:92
 msgid "Effect"
@@ -259,7 +259,7 @@ msgstr "Bendnumero"
 #: src/audacious/ui_preferences.c:104 src/libaudgui/infopopup.c:153
 #: src/libaudgui/infowin.c:352
 msgid "Genre"
-msgstr "Ghenro"
+msgstr "Ĝenro"
 
 #: src/audacious/ui_preferences.c:105
 msgid "Filename"
@@ -276,7 +276,7 @@ msgstr "Dato"
 #: src/audacious/ui_preferences.c:108 src/libaudgui/infopopup.c:154
 #: src/libaudgui/infowin.c:356
 msgid "Year"
-msgstr "Yaro"
+msgstr "Jaro"
 
 #: src/audacious/ui_preferences.c:109 src/libaudgui/infowin.c:349
 msgid "Comment"
@@ -304,7 +304,7 @@ msgstr "Balta"
 
 #: src/audacious/ui_preferences.c:119
 msgid "Chinese"
-msgstr "China"
+msgstr "Ĉina"
 
 #: src/audacious/ui_preferences.c:120
 msgid "Greek"
@@ -348,11 +348,11 @@ msgstr "<b>Interfac-agordoj</b>"
 
 #: src/audacious/ui_preferences.c:148
 msgid "Interface plugin:"
-msgstr "Interfac-kromajho:"
+msgstr "Interfac-kromaĵo:"
 
 #: src/audacious/ui_preferences.c:165
 msgid "Output plugin:"
-msgstr "Eliga kromajho:"
+msgstr "Eliga kromaĵo:"
 
 #: src/audacious/ui_preferences.c:172
 msgid "<b>Output Settings</b>"
@@ -376,19 +376,19 @@ msgstr "Milda saturo"
 
 #: src/audacious/ui_preferences.c:183
 msgid "Use software volume control (not recommended)"
-msgstr "Uzi virtualan lautec-regilon (ne rekomendinde)"
+msgstr "Uzi virtualan laŭtec-regilon (ne rekomendinde)"
 
 #: src/audacious/ui_preferences.c:185
 msgid "<b>Replay Gain</b>"
-msgstr "<b>Alghustigi Amplifon</b>"
+msgstr "<b>Alĝustigi Amplifon</b>"
 
 #: src/audacious/ui_preferences.c:186
 msgid "Enable Replay Gain"
-msgstr "Ebligi Alghustigon de Amplifo"
+msgstr "Ebligi Alĝustigon de Amplifo"
 
 #: src/audacious/ui_preferences.c:188
 msgid "Album mode"
-msgstr "Albuma reghimo"
+msgstr "Albuma reĝimo"
 
 #: src/audacious/ui_preferences.c:190
 msgid "Prevent clipping (recommended)"
@@ -400,7 +400,7 @@ msgstr "<b>Agordi Nivelojn</b>"
 
 #: src/audacious/ui_preferences.c:193
 msgid "Amplify all files:"
-msgstr "Amplifi chiujn dosierojn:"
+msgstr "Amplifi ĉiujn dosierojn:"
 
 #: src/audacious/ui_preferences.c:195 src/audacious/ui_preferences.c:198
 msgid "dB"
@@ -436,11 +436,11 @@ msgstr "Ebligi uzadon de prokurilo"
 
 #: src/audacious/ui_preferences.c:214
 msgid "Use authentication with proxy"
-msgstr "Uzi autentikadon per prokurilo"
+msgstr "Uzi aŭtentikadon per prokurilo"
 
 #: src/audacious/ui_preferences.c:221
 msgid "Auto character encoding detector for:"
-msgstr "Automata detektilo de signo-kodaro por:"
+msgstr "Aŭtomata detektilo de signo-kodaro por:"
 
 #: src/audacious/ui_preferences.c:225
 msgid "Fallback character encodings:"
@@ -452,11 +452,11 @@ msgstr "<b>Konduto</b>"
 
 #: src/audacious/ui_preferences.c:230
 msgid "Continue playback on startup"
-msgstr "Daurigi ludadon che komencigho"
+msgstr "Daŭrigi ludadon ĉe komenciĝo"
 
 #: src/audacious/ui_preferences.c:232
 msgid "Advance when the current song is deleted"
-msgstr "Antauiri kiam la aktuala muziko estas forvishata"
+msgstr "Antaŭiri kiam la aktuala muziko estas forviŝata"
 
 #: src/audacious/ui_preferences.c:234
 msgid "Clear the playlist when opening files"
@@ -468,7 +468,7 @@ msgstr "Malfermi dosierojn en provizora ludlisto"
 
 #: src/audacious/ui_preferences.c:238
 msgid "Do not load metadata for songs until played"
-msgstr "Ne shargi je metadatumaro por muzikoj ghis kiam ludate"
+msgstr "Ne ŝargi je metadatumaro por muzikoj ĝis kiam ludate"
 
 #: src/audacious/ui_preferences.c:241
 msgid "<b>Compatibility</b>"
@@ -484,39 +484,39 @@ msgstr "<b>Album-bildo</b>"
 
 #: src/audacious/ui_preferences.c:248
 msgid "Search for images matching these words (comma-separated):"
-msgstr "Serchi bildojn kongruajn al tiuj chi vortoj (kom-apartite):"
+msgstr "Serĉi bildojn kongruajn al tiuj ĉi vortoj (kom-apartigitaj):"
 
 #: src/audacious/ui_preferences.c:250
 msgid "Exclude images matching these words (comma-separated):"
-msgstr "Forjheti bildojn kongruajn al tiuj chi vortoj (kom-apartite):"
+msgstr "Forĵeti bildojn kongruajn al tiuj ĉi vortoj (kom-apartigitaj):"
 
 #: src/audacious/ui_preferences.c:252
 msgid "Search for images matching song file name"
-msgstr "Serchi bildojn kongruajn al la dosier-nomo de la muziko"
+msgstr "Serĉi bildojn kongruajn al la dosier-nomo de la muziko"
 
 #: src/audacious/ui_preferences.c:254
 msgid "Search recursively"
-msgstr "Serchi rikure"
+msgstr "Serĉi rikure"
 
 #: src/audacious/ui_preferences.c:256
 msgid "Search depth:"
-msgstr "Serch-profundo:"
+msgstr "Serĉ-profundo:"
 
 #: src/audacious/ui_preferences.c:259
 msgid "<b>Popup Information</b>"
-msgstr "<b>Shprucajha Informo</b>"
+msgstr "<b>Ŝprucaĵa Informo</b>"
 
 #: src/audacious/ui_preferences.c:260
 msgid "Show popup information"
-msgstr "Montri shpruc-informon"
+msgstr "Montri ŝpruc-informon"
 
 #: src/audacious/ui_preferences.c:262
 msgid "Popup delay (tenths of a second):"
-msgstr "Shpruca prokrasto (dekonoj da sekundoj):"
+msgstr "Ŝpruca prokrasto (dekonoj da sekundoj):"
 
 #: src/audacious/ui_preferences.c:265
 msgid "Show time scale for current song"
-msgstr "Montri tempo-skalo por la aktuala muziko"
+msgstr "Montri tempo-skalon por la aktuala muziko"
 
 #: src/audacious/ui_preferences.c:280
 msgid "TITLE"
@@ -542,44 +542,44 @@ msgstr "ARTIST [ALBUMO] - TRAKO. TITOLO"
 msgid "ALBUM - TITLE"
 msgstr "ALBUMO - TITOLO"
 
-#: src/audacious/ui_preferences.c:386
+#: src/audacious/ui_preferences.c:375
 msgid "Category"
 msgstr "Kategorio"
 
-#: src/audacious/ui_preferences.c:468
+#: src/audacious/ui_preferences.c:457
 msgid "Custom"
 msgstr "Personigite"
 
-#: src/audacious/ui_preferences.c:492
+#: src/audacious/ui_preferences.c:481
 msgid "<b>Song Display</b>"
 msgstr "<b>Muzik-Montrilo</b>"
 
-#: src/audacious/ui_preferences.c:501
+#: src/audacious/ui_preferences.c:490
 msgid "Show song numbers"
 msgstr "Montri muzik-numerojn"
 
-#: src/audacious/ui_preferences.c:512
+#: src/audacious/ui_preferences.c:501
 msgid "Show leading zeroes (02:00 instead of 2:00)"
-msgstr "Montri antau-nuloj  (02:00 anstatau 2:00)"
+msgstr "Montri antaŭ-nuloj  (02:00 anstatau 2:00)"
 
-#: src/audacious/ui_preferences.c:526
+#: src/audacious/ui_preferences.c:515
 msgid "Title format:"
 msgstr "Titol-formo:"
 
-#: src/audacious/ui_preferences.c:531
+#: src/audacious/ui_preferences.c:520
 msgid "Custom string:"
 msgstr "Personigita formo:"
 
-#: src/audacious/ui_preferences.c:734
+#: src/audacious/ui_preferences.c:714
 msgid "Audacious Settings"
 msgstr "Agordaro de Audacious"
 
-#: src/audacious/util.c:117
+#: src/audacious/util.c:112
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Ne eblis krei dosierujon (%s): %s\n"
 
-#: src/libaudcore/audstrings.c:382
+#: src/libaudcore/audstrings.c:385
 #, c-format
 msgid "Audio CD, track %s"
 msgstr "Muzika KD, trako %s"
@@ -614,7 +614,7 @@ msgstr "Pri Audacious"
 #: src/libaudgui/confirm.c:51
 #, c-format
 msgid "Do you want to permanently remove “%s”?"
-msgstr "Chu vi volas definitive forigi \"%s\"?"
+msgstr "Ĉu vi volas definitive forigi \"%s\"?"
 
 #: src/libaudgui/confirm.c:55 src/libaudgui/ui_playlist_manager.c:255
 msgid "_Remove"
@@ -630,7 +630,7 @@ msgstr "_Ne demandi refoje"
 
 #: src/libaudgui/confirm.c:89
 msgid "_Rename"
-msgstr ""
+msgstr "_Renomigi"
 
 #: src/libaudgui/confirm.c:93
 msgid "Rename Playlist"
@@ -638,7 +638,7 @@ msgstr "Renomigi Ludliston"
 
 #: src/libaudgui/confirm.c:93
 msgid "What would you like to call this playlist?"
-msgstr "Kiel vi deziras nomigi tiun chi ludliston?"
+msgstr "Kiel vi deziras nomigi tiun ĉi ludliston?"
 
 #: src/libaudgui/equalizer.c:44
 msgid "_Enable"
@@ -690,7 +690,7 @@ msgstr "Egaligilo"
 
 #: src/libaudgui/equalizer.c:138
 msgid "Preamp"
-msgstr "Antauamplifilo"
+msgstr "Antaŭamplifilo"
 
 #: src/libaudgui/infopopup.c:155
 msgid "Track"
@@ -714,7 +714,7 @@ msgstr "Bit-rapido:"
 
 #: src/libaudgui/infowin.c:76
 msgid "Acid Jazz"
-msgstr "Acida Jhazo"
+msgstr "Acida Ĵazo"
 
 #: src/libaudgui/infowin.c:77
 msgid "Acid Rock"
@@ -738,7 +738,7 @@ msgstr "Bluso"
 
 #: src/libaudgui/infowin.c:82
 msgid "Chamber Music"
-msgstr "Chambra Muziko"
+msgstr "Ĉambra Muziko"
 
 #: src/libaudgui/infowin.c:83
 msgid "Classical"
@@ -758,11 +758,11 @@ msgstr "Diskoo"
 
 #: src/libaudgui/infowin.c:87
 msgid "Easy Listening"
-msgstr "Facil-auskultebla"
+msgstr "Facil-aŭskultebla"
 
 #: src/libaudgui/infowin.c:88
 msgid "Folk"
-msgstr "Folk"
+msgstr "Folko"
 
 #: src/libaudgui/infowin.c:89
 msgid "Funk"
@@ -778,7 +778,7 @@ msgstr "Gospelo"
 
 #: src/libaudgui/infowin.c:92
 msgid "Grunge"
-msgstr "Grunge"
+msgstr "Grunĝo"
 
 #: src/libaudgui/infowin.c:93
 msgid "Hard Rock"
@@ -790,15 +790,15 @@ msgstr "Peza Metalo"
 
 #: src/libaudgui/infowin.c:95
 msgid "Hip-hop"
-msgstr "Hip-hop"
+msgstr "Hip-hopo"
 
 #: src/libaudgui/infowin.c:96
 msgid "House"
-msgstr "Hauzo"
+msgstr "Haŭzo"
 
 #: src/libaudgui/infowin.c:97
 msgid "Jazz"
-msgstr "Jhazo"
+msgstr "Ĵazo"
 
 #: src/libaudgui/infowin.c:98
 msgid "Jungle"
@@ -814,7 +814,7 @@ msgstr "Novepoka"
 
 #: src/libaudgui/infowin.c:101
 msgid "New Wave"
-msgstr "New Wave"
+msgstr "Nova Ondo"
 
 #: src/libaudgui/infowin.c:102
 msgid "Noise"
@@ -866,7 +866,7 @@ msgstr "Tekno"
 
 #: src/libaudgui/infowin.c:114
 msgid "Trip-hop"
-msgstr "Trip-hop"
+msgstr "Trip-hopo"
 
 #: src/libaudgui/infowin.c:220
 msgid "Save successful"
@@ -913,15 +913,15 @@ msgstr "Enigu tempon (minutoj:sekundoj):"
 #: src/libaudgui/playlists.c:86
 #, c-format
 msgid "Overwrite %s?"
-msgstr "Chu anstatauigi %s?"
+msgstr "Ĉu anstataŭigi %s?"
 
 #: src/libaudgui/playlists.c:88
 msgid "_Overwrite"
-msgstr ""
+msgstr "_Anstataŭigi"
 
 #: src/libaudgui/playlists.c:92
 msgid "Confirm Overwrite"
-msgstr "Konfirmi anstatauigon"
+msgstr "Konfirmi anstataŭigon"
 
 #: src/libaudgui/playlists.c:121
 msgid "Export Playlist"
@@ -929,7 +929,7 @@ msgstr "Eksporti Ludliston"
 
 #: src/libaudgui/playlists.c:122
 msgid "_Export"
-msgstr ""
+msgstr "_Eksporti"
 
 #: src/libaudgui/playlists.c:128
 msgid "Import Playlist"
@@ -937,7 +937,7 @@ msgstr "Importi Ludliston"
 
 #: src/libaudgui/playlists.c:129
 msgid "_Import"
-msgstr ""
+msgstr "_Importi"
 
 #: src/libaudgui/queue-manager.c:172
 msgid "Queue Manager"
@@ -986,11 +986,11 @@ msgstr "Salti al Muziko"
 
 #: src/libaudgui/ui_jumptotrack.c:270
 msgid "Filter: "
-msgstr "Filtro:"
+msgstr "Filtrilo:"
 
 #: src/libaudgui/ui_jumptotrack.c:271
 msgid "_Filter:"
-msgstr "_Filtro:"
+msgstr "_Filtrilo:"
 
 #: src/libaudgui/ui_jumptotrack.c:294
 msgid "C_lose on jump"
@@ -1038,7 +1038,4 @@ msgid ""
 "(Further messages have been hidden.)"
 msgstr ""
 "\n"
-"(Kromaj mesaghoj estis kashataj.)"
-
-#~ msgid "_Remember"
-#~ msgstr "_Parkeri"
+"(Kromaj mesaĝoj estis kaŝataj.)"

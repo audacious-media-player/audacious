@@ -9,6 +9,7 @@
 # Someonefree <drag-sasha@mail.ru>, 2014
 # Eugene Paskevich <eugene@raptor.kiev.ua>, 2010
 # Eugene Zagidullin <e.asphyx@gmail.com>, 2007
+# arinov <i.arinov@iht.kz>, 2014
 # iavojd <iavojd@gmail.com>, 2013
 # iavojd <iavojd@gmail.com>, 2013
 # StreamThreaedr <kvantarium@gmail.com>, 2012
@@ -29,9 +30,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-03-23 21:24+0100\n"
-"PO-Revision-Date: 2014-03-16 14:26+0000\n"
-"Last-Translator: Someonefree <drag-sasha@mail.ru>\n"
+"POT-Creation-Date: 2014-04-21 22:48+0200\n"
+"PO-Revision-Date: 2014-04-04 19:44+0000\n"
+"Last-Translator: arinov <i.arinov@iht.kz>\n"
 "Language-Team: Russian (http://www.transifex.com/projects/p/audacious/"
 "language/ru/)\n"
 "Language: ru\n"
@@ -53,7 +54,7 @@ msgstr[0] "Найден %d файл"
 msgstr[1] "Найдено %d файла"
 msgstr[2] "Найдено %d файлов"
 
-#: src/audacious/adder.c:393 src/audacious/playlist-new.c:96
+#: src/audacious/adder.c:386 src/audacious/playlist-new.c:97
 msgid "New Playlist"
 msgstr "Новый список воспроизведения"
 
@@ -121,24 +122,24 @@ msgstr "Выйти по окончании воспроизведения"
 msgid "Print debugging messages"
 msgstr "Вывести сообщения об отладке"
 
-#: src/audacious/main.c:264
+#: src/audacious/main.c:269
 #, c-format
 msgid "Unknown option: %s\n"
 msgstr "Неизвестная опция :%s\n"
 
-#: src/audacious/main.c:285
+#: src/audacious/main.c:291
 #, c-format
 msgid "Unknown option: -%c\n"
 msgstr "Неизвестная опция :%c\n"
 
-#: src/audacious/main.c:306
+#: src/audacious/main.c:314
 #, c-format
 msgid ""
 "Usage: audacious [OPTION] ... [FILE] ...\n"
 "\n"
 msgstr "Пример:audacious[ опция].....[файл]...\n"
 
-#: src/audacious/main.c:591
+#: src/audacious/main.c:601
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -147,7 +148,7 @@ msgstr "Audacious"
 msgid "No decoder found for %s."
 msgstr "Не найден декодер для %s."
 
-#: src/audacious/playback.c:382
+#: src/audacious/playback.c:387
 #, c-format
 msgid "%s could not be opened."
 msgstr "%s не может быть открыт."
@@ -162,11 +163,11 @@ msgstr "Невозможно загрузить %s: расширение фай�
 msgid "Cannot save %s: unsupported file extension."
 msgstr "Невозможно сохранить %s : расширение файла не поддерживается."
 
-#: src/audacious/playlist-new.c:97
+#: src/audacious/playlist-new.c:98
 msgid "Now Playing"
 msgstr "Сейчас воспроизводится"
 
-#: src/audacious/playlist-new.c:1655
+#: src/audacious/playlist-new.c:1656
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress "
 "(or has been disabled)."
@@ -175,11 +176,11 @@ msgstr ""
 "идёт (или было выключено)."
 
 #: src/audacious/plugin-preferences.c:55
-msgid "About "
-msgstr "О"
+msgid "About"
+msgstr "О программе"
 
 #: src/audacious/plugin-preferences.c:94
-msgid " Settings"
+msgid "Settings"
 msgstr "Настройки"
 
 #: src/audacious/plugin-preferences.c:99
@@ -193,18 +194,18 @@ msgstr "_Сделать"
 msgid "_Cancel"
 msgstr "Закончить"
 
-#: src/audacious/plugin-preferences.c:106 src/audacious/ui_preferences.c:783
+#: src/audacious/plugin-preferences.c:106 src/audacious/ui_preferences.c:763
 #: src/libaudgui/infowin.c:370 src/libaudgui/queue-manager.c:189
 #: src/libaudgui/ui_fileopener.c:127 src/libaudgui/ui_jumptotrack.c:312
 #: src/libaudgui/util.c:161
 msgid "_Close"
 msgstr "Закрыть"
 
-#: src/audacious/plugin-view.c:242 src/audacious/ui_preferences.c:661
+#: src/audacious/plugin-view.c:242 src/audacious/ui_preferences.c:641
 msgid "_Settings"
 msgstr "Настройки"
 
-#: src/audacious/plugin-view.c:250 src/audacious/ui_preferences.c:672
+#: src/audacious/plugin-view.c:250 src/audacious/ui_preferences.c:652
 msgid "_About"
 msgstr "_О"
 
@@ -562,44 +563,44 @@ msgstr "ИСПОЛНИТЕЛЬ [ АЛЬБОМ ] - ДОРОЖКА. НАЗВАНИ
 msgid "ALBUM - TITLE"
 msgstr "АЛЬБОМ - НАЗВАНИЕ"
 
-#: src/audacious/ui_preferences.c:386
+#: src/audacious/ui_preferences.c:375
 msgid "Category"
 msgstr "Категория"
 
-#: src/audacious/ui_preferences.c:468
+#: src/audacious/ui_preferences.c:457
 msgid "Custom"
 msgstr "Собственные установки"
 
-#: src/audacious/ui_preferences.c:492
+#: src/audacious/ui_preferences.c:481
 msgid "<b>Song Display</b>"
 msgstr "<b>Отображение композиций</b>"
 
-#: src/audacious/ui_preferences.c:501
+#: src/audacious/ui_preferences.c:490
 msgid "Show song numbers"
 msgstr "Показать номер композиции"
 
-#: src/audacious/ui_preferences.c:512
+#: src/audacious/ui_preferences.c:501
 msgid "Show leading zeroes (02:00 instead of 2:00)"
 msgstr "Отображать нули в начале (02:00 вместо 2:00)"
 
-#: src/audacious/ui_preferences.c:526
+#: src/audacious/ui_preferences.c:515
 msgid "Title format:"
 msgstr "Формат названия:"
 
-#: src/audacious/ui_preferences.c:531
+#: src/audacious/ui_preferences.c:520
 msgid "Custom string:"
 msgstr "Задать формат:"
 
-#: src/audacious/ui_preferences.c:734
+#: src/audacious/ui_preferences.c:714
 msgid "Audacious Settings"
 msgstr "Аудациос Настройки"
 
-#: src/audacious/util.c:117
+#: src/audacious/util.c:112
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Невозможно создать каталог (%s): %s\n"
 
-#: src/libaudcore/audstrings.c:382
+#: src/libaudcore/audstrings.c:385
 #, c-format
 msgid "Audio CD, track %s"
 msgstr "Музыкальный компакт-диск, композиция %s"
@@ -1060,6 +1061,3 @@ msgid ""
 msgstr ""
 "\n"
 "(Подробные сообщения были скрыты.)"
-
-#~ msgid "_Remember"
-#~ msgstr "Запомнить"
