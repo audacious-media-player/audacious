@@ -140,7 +140,7 @@ EXPORT void vfs_file_read_all (VFSFile * file, void * * bufp, int64_t * sizep)
 
     if (size >= 0)
     {
-        size = MIN (size, (int64_t) SIZE_MAX - 1);
+        size = MIN (size, SSIZE_MAX - 1);
         buf = g_new (char, size + 1);
         size = vfs_fread (buf, 1, size, file);
     }
@@ -148,17 +148,17 @@ EXPORT void vfs_file_read_all (VFSFile * file, void * * bufp, int64_t * sizep)
     {
         size = 0;
 
-        size_t bufsize = 4096;
+        ssize_t bufsize = 4096;
         buf = g_new (char, bufsize);
 
-        size_t readsize;
+        ssize_t readsize;
         while ((readsize = vfs_fread (buf + size, 1, bufsize - 1 - size, file)))
         {
             size += readsize;
 
-            if (size == (int64_t) bufsize - 1)
+            if (size == bufsize - 1)
             {
-                if (bufsize > SIZE_MAX - 4096)
+                if (bufsize > SSIZE_MAX - 4096)
                     break;
 
                 bufsize += 4096;
