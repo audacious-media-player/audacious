@@ -20,11 +20,7 @@
 #include "scanner.h"
 
 #include <glib.h>
-#include <pthread.h>
-#include <stdlib.h>
-#include <string.h>
 
-#include "audstrings.h"
 #include "internal.h"
 #include "probe.h"
 
@@ -39,14 +35,7 @@ struct _ScanRequest {
     char * image_file; /* pooled */
 };
 
-static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-static pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
-
-static GQueue requests = G_QUEUE_INIT;
-
-static pthread_t scan_threads[SCAN_THREADS];
-
-static bool_t quit_flag = FALSE;
+static GThreadPool * pool;
 
 ScanRequest * scan_request (const char * filename, int flags,
  PluginHandle * decoder, ScanCallback callback)
@@ -58,65 +47,38 @@ ScanRequest * scan_request (const char * filename, int flags,
     request->decoder = decoder;
     request->callback = callback;
 
-    pthread_mutex_lock (& mutex);
+    g_thread_pool_push (pool, request, NULL);
 
-    g_queue_push_tail (& requests, request);
-    pthread_cond_signal (& cond);
-
-    pthread_mutex_unlock (& mutex);
     return request;
 }
 
-static void scan_request_free (ScanRequest * request)
+static void scan_worker (void * data, void * unused)
 {
-    if (request->tuple)
-        tuple_unref (request->tuple);
+    ScanRequest * request = (ScanRequest *) data;
 
+    if (! request->decoder)
+        request->decoder = aud_file_find_decoder (request->filename, FALSE);
+
+    if (request->decoder && (request->flags & SCAN_TUPLE))
+        request->tuple = aud_file_read_tuple (request->filename, request->decoder);
+
+    if (request->decoder && (request->flags & SCAN_IMAGE))
+    {
+        aud_file_read_image (request->filename, request->decoder,
+         & request->image_data, & request->image_len);
+
+        if (! request->image_data)
+            request->image_file = art_search (request->filename);
+    }
+
+    request->callback (request);
+
+    tuple_unref (request->tuple);
     str_unref (request->filename);
     g_free (request->image_data);
     str_unref (request->image_file);
+
     g_slice_free (ScanRequest, request);
-}
-
-static void * scan_worker (void * unused)
-{
-    pthread_mutex_lock (& mutex);
-
-    while (! quit_flag)
-    {
-        ScanRequest * request = (ScanRequest *) g_queue_pop_head (& requests);
-
-        if (! request)
-        {
-            pthread_cond_wait (& cond, & mutex);
-            continue;
-        }
-
-        pthread_mutex_unlock (& mutex);
-
-        if (! request->decoder)
-            request->decoder = aud_file_find_decoder (request->filename, FALSE);
-
-        if (request->decoder && (request->flags & SCAN_TUPLE))
-            request->tuple = aud_file_read_tuple (request->filename, request->decoder);
-
-        if (request->decoder && (request->flags & SCAN_IMAGE))
-        {
-            aud_file_read_image (request->filename, request->decoder,
-             & request->image_data, & request->image_len);
-
-            if (! request->image_data)
-                request->image_file = art_search (request->filename);
-        }
-
-        request->callback (request);
-        scan_request_free (request);
-
-        pthread_mutex_lock (& mutex);
-    }
-
-    pthread_mutex_unlock (& mutex);
-    return NULL;
 }
 
 const char * scan_request_get_filename (ScanRequest * request)
@@ -151,25 +113,10 @@ const char * scan_request_get_image_file (ScanRequest * request)
 
 void scanner_init (void)
 {
-    for (int i = 0; i < SCAN_THREADS; i ++)
-        pthread_create (& scan_threads[i], 0, scan_worker, NULL);
+    pool = g_thread_pool_new (scan_worker, NULL, SCAN_THREADS, FALSE, NULL);
 }
 
 void scanner_cleanup (void)
 {
-    pthread_mutex_lock (& mutex);
-
-    quit_flag = TRUE;
-    pthread_cond_broadcast (& cond);
-
-    pthread_mutex_unlock (& mutex);
-
-    for (int i = 0; i < SCAN_THREADS; i ++)
-        pthread_join (scan_threads[i], NULL);
-
-    ScanRequest * request;
-    while ((request = (ScanRequest *) g_queue_pop_head (& requests)))
-        scan_request_free (request);
-
-    quit_flag = FALSE;
+    g_thread_pool_free (pool, FALSE, TRUE);
 }

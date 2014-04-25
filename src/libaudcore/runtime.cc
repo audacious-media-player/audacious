@@ -289,6 +289,8 @@ EXPORT void aud_init_i18n (void)
 
 EXPORT void aud_init (void)
 {
+    g_thread_pool_set_max_idle_time (100);
+
     config_load ();
 
     art_init ();
