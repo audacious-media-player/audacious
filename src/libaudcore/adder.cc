@@ -50,13 +50,15 @@ typedef struct {
     Index * filenames, * tuples, * decoders;
 } AddResult;
 
+static void * add_worker (void * unused);
+
 static GList * add_tasks = NULL;
 static GList * add_results = NULL;
 static int current_playlist_id = -1;
 
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-static pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
-static bool_t add_quit;
+static bool_t add_thread_started = FALSE;
+static bool_t add_thread_exited = FALSE;
 static pthread_t add_thread;
 static int add_source = 0;
 
@@ -334,6 +336,35 @@ static void add_generic (char * filename, Tuple * tuple,
         add_file (filename, NULL, NULL, filter, user, result, FALSE);
 }
 
+static void start_thread_locked (void)
+{
+    if (add_thread_exited)
+    {
+        pthread_mutex_unlock (& mutex);
+        pthread_join (add_thread, NULL);
+        pthread_mutex_lock (& mutex);
+    }
+
+    if (! add_thread_started || add_thread_exited)
+    {
+        pthread_create (& add_thread, NULL, add_worker, NULL);
+        add_thread_started = TRUE;
+        add_thread_exited = FALSE;
+    }
+}
+
+static void stop_thread_locked (void)
+{
+    if (add_thread_started)
+    {
+        pthread_mutex_unlock (& mutex);
+        pthread_join (add_thread, NULL);
+        pthread_mutex_lock (& mutex);
+        add_thread_started = FALSE;
+        add_thread_exited = FALSE;
+    }
+}
+
 static bool_t add_finish (void * unused)
 {
     pthread_mutex_lock (& mutex);
@@ -387,27 +418,24 @@ static bool_t add_finish (void * unused)
         add_source = 0;
     }
 
-    if (! add_tasks)
+    if (add_thread_exited)
+    {
+        stop_thread_locked ();
         status_done_locked ();
+    }
 
     pthread_mutex_unlock (& mutex);
 
     hook_call ("playlist add complete", NULL);
-    return FALSE;
+    return G_SOURCE_REMOVE;
 }
 
 static void * add_worker (void * unused)
 {
     pthread_mutex_lock (& mutex);
 
-    while (! add_quit)
+    while (add_tasks)
     {
-        if (! add_tasks)
-        {
-            pthread_cond_wait (& cond, & mutex);
-            continue;
-        }
-
         AddTask * task = (AddTask *) add_tasks->data;
         add_tasks = g_list_delete_link (add_tasks, add_tasks);
 
@@ -443,28 +471,21 @@ static void * add_worker (void * unused)
             add_source = g_timeout_add (0, add_finish, NULL);
     }
 
+    add_thread_exited = TRUE;
     pthread_mutex_unlock (& mutex);
     return NULL;
-}
-
-void adder_init (void)
-{
-    pthread_mutex_lock (& mutex);
-    add_quit = FALSE;
-    pthread_create (& add_thread, NULL, add_worker, NULL);
-    pthread_mutex_unlock (& mutex);
 }
 
 void adder_cleanup (void)
 {
     pthread_mutex_lock (& mutex);
-    add_quit = TRUE;
-    pthread_cond_broadcast (& cond);
-    pthread_mutex_unlock (& mutex);
-    pthread_join (add_thread, NULL);
 
     g_list_free_full (add_tasks, (GDestroyNotify) add_task_free);
     add_tasks = NULL;
+
+    stop_thread_locked ();
+    status_done_locked ();
+
     g_list_free_full (add_results, (GDestroyNotify) add_result_free);
     add_results = NULL;
 
@@ -474,7 +495,7 @@ void adder_cleanup (void)
         add_source = 0;
     }
 
-    status_done_locked ();
+    pthread_mutex_unlock (& mutex);
 }
 
 EXPORT void aud_playlist_entry_insert (int playlist, int at, const char * filename,
@@ -501,11 +522,12 @@ EXPORT void aud_playlist_entry_insert_filtered (int playlist, int at,
     int playlist_id = aud_playlist_get_unique_id (playlist);
     g_return_if_fail (playlist_id >= 0);
 
-    AddTask * task = add_task_new (playlist_id, at, play, filenames, tuples, filter, user);
-
     pthread_mutex_lock (& mutex);
+
+    AddTask * task = add_task_new (playlist_id, at, play, filenames, tuples, filter, user);
     add_tasks = g_list_append (add_tasks, task);
-    pthread_cond_broadcast (& cond);
+    start_thread_locked ();
+
     pthread_mutex_unlock (& mutex);
 }
 

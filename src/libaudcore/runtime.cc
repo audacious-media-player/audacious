@@ -298,7 +298,6 @@ EXPORT void aud_init (void)
 
     start_plugins_one ();
 
-    adder_init ();
     scanner_init ();
 
     load_playlists ();

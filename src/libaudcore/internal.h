@@ -32,7 +32,6 @@ extern "C" {
 #endif
 
 /* adder.c */
-void adder_init (void);
 void adder_cleanup (void);
 
 /* art.c */
