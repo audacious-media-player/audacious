@@ -50,8 +50,6 @@ typedef struct _AudguiMenuItem {
     bool_t sep;
 } AudguiMenuItem;
 
-#ifdef __cplusplus
-
 constexpr AudguiMenuItem MenuCommand (const char * name, const char * icon,
  unsigned key, GdkModifierType mod, void (* func) (void))
     { return {name, icon, key, mod, func}; }
@@ -72,12 +70,6 @@ constexpr AudguiMenuItem MenuSub (const char * name, const char * icon,
 constexpr AudguiMenuItem MenuSep ()
     { return {0, 0, 0, (GdkModifierType) 0, 0, 0, 0, 0, 0, 0, 0, TRUE}; }
 
-#endif
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /* use NULL for domain to skip translation */
 GtkWidget * audgui_menu_item_new_with_domain (const AudguiMenuItem * item,
  GtkAccelGroup * accel, const char * domain);
@@ -88,9 +80,5 @@ void audgui_menu_init_with_domain (GtkWidget * shell,
 
 #define audgui_menu_item_new(i, a) audgui_menu_item_new_with_domain (i, a, PACKAGE)
 #define audgui_menu_init(s, i, n, a) audgui_menu_init_with_domain (s, i, n, a, PACKAGE)
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* AUDGUI_MENU_H */

@@ -28,10 +28,6 @@
 
 typedef void (* AudguiCallback) (void * data);
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /* pixbufs.c */
 GdkPixbuf * audgui_pixbuf_from_data (const void * data, int64_t size);
 GdkPixbuf * audgui_pixbuf_fallback (void);
@@ -63,9 +59,5 @@ GtkWidget * audgui_button_new (const char * text, const char * icon,
 GtkWidget * audgui_dialog_new (GtkMessageType type, const char * title,
  const char * text, GtkWidget * button1, GtkWidget * button2);
 void audgui_dialog_add_widget (GtkWidget * dialog, GtkWidget * widget);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif

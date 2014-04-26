@@ -122,7 +122,6 @@ typedef union _WidgetVariant {
     /* GtkWidget * (* populate) (void); */
     void * (* populate) (void);
 
-#ifdef __cplusplus
     constexpr _WidgetVariant (WidgetVRadio radio) : radio_btn (radio) {}
     constexpr _WidgetVariant (WidgetVSpin spin) : spin_btn (spin) {}
     constexpr _WidgetVariant (WidgetVTable table) : table (table) {}
@@ -136,7 +135,6 @@ typedef union _WidgetVariant {
 
     /* also serves as default constructor */
     constexpr _WidgetVariant (void * (* populate) (void) = 0) : populate (populate) {}
-#endif
 } WidgetVariant;
 
 struct _PreferencesWidget {
@@ -152,8 +150,6 @@ struct _PreferencesWidget {
 
     WidgetVariant data;
 };
-
-#ifdef __cplusplus
 
 struct WidgetConfig {
     ValueType type;
@@ -214,8 +210,6 @@ constexpr PreferencesWidget WidgetSeparator (WidgetVSeparator separator = Widget
 
 constexpr PreferencesWidget WidgetCustom (void * (* populate) (void))
     { return {WIDGET_CUSTOM, 0, 0, 0, 0, 0, VALUE_NULL, 0, 0, populate}; }
-
-#endif
 
 typedef struct _NotebookTab {
     const char * name;

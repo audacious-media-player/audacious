@@ -22,10 +22,6 @@
 
 #include "playlist.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /* playlist.c */
 void playlist_init (void);
 void playlist_end (void);
@@ -60,9 +56,5 @@ bool_t playlist_insert_playlist_raw (int list, int at, const char * filename);
 /* playlist-utils.c */
 void load_playlists (void);
 void save_playlists (bool_t exiting);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif

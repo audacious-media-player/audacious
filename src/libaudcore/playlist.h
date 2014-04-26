@@ -60,10 +60,6 @@ typedef bool_t (* PlaylistFilterFunc) (const char * filename, void * user);
 typedef int (* PlaylistStringCompareFunc) (const char * a, const char * b);
 typedef int (* PlaylistTupleCompareFunc) (const Tuple * a, const Tuple * b);
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /* Any functions in this API with a return type of (char *) return pooled
  * strings that must not be modified and must be released with str_unref() when
  * no longer needed. */
@@ -390,9 +386,5 @@ bool_t aud_filename_is_playlist (const char * filename);
 /* Saves the entries in a playlist to a playlist file.  The format of the file
  * is determined from the file extension.  Returns nonzero on success. */
 bool_t aud_playlist_save (int playlist, const char * filename);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif

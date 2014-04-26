@@ -23,10 +23,6 @@
 #include <libaudcore/core.h>
 #include <libaudcore/input.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 bool_t output_open_audio (int format, int rate, int channels);
 void output_set_replaygain_info (const ReplayGainInfo * info);
 bool_t output_write_audio (void * data, int size, int stop_time);
@@ -47,9 +43,5 @@ void output_set_volume (int left, int right);
 PluginHandle * output_plugin_probe (void);
 PluginHandle * output_plugin_get_current (void);
 bool_t output_plugin_set_current (PluginHandle * plugin);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif

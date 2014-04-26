@@ -34,14 +34,6 @@ typedef struct _module {
     bool_t (* write_tag) (const Tuple * tuple, VFSFile * handle);
 } tag_module_t;
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 tag_module_t * find_tag_module (VFSFile * handle, int new_type);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* TAG_MODULE_H */

@@ -24,10 +24,6 @@
 
 #include <libaudcore/tuple.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /* all (char *) return values must be freed with str_unref() */
 
 /* Gets album art for <file> (the URI of a song file) as JPEG or PNG data.  If
@@ -51,9 +47,5 @@ bool_t aud_file_read_image (const char * filename, PluginHandle * decoder,
 bool_t aud_file_can_write_tuple (const char * filename, PluginHandle * decoder);
 bool_t aud_file_write_tuple (const char * filename, PluginHandle * decoder, const Tuple * tuple);
 bool_t aud_custom_infowin (const char * filename, PluginHandle * decoder);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif

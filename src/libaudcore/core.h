@@ -23,11 +23,7 @@
 /* COMMON MACROS */
 
 #undef NULL
-#ifdef __cplusplus
 #define NULL nullptr
-#else
-#define NULL ((void *) 0)
-#endif
 
 /* "bool_t" means "int" for compatibility with GLib */
 #undef bool_t
@@ -75,10 +71,6 @@ typedef struct _PluginPreferences PluginPreferences;
 typedef struct _PreferencesWidget PreferencesWidget;
 typedef struct _VFSFile VFSFile;
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /* STRING POOL */
 
 /* If the pool contains a copy of <str>, increments its reference count.
@@ -115,9 +107,5 @@ char * str_nget (const char * str, int len);
 /* Releases all memory used by the string pool.  If strings remain in the pool,
  * a warning may be printed to stderr in order to reveal memory leaks. */
 void strpool_shutdown (void);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* LIBAUDCORE_CORE_H */

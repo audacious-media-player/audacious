@@ -81,10 +81,6 @@ struct _VFSConstructor {
 #define WARN_RETURN
 #endif
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 VFSFile * vfs_new (const char * path, VFSConstructor * vtable, void * handle) WARN_RETURN;
 const char * vfs_get_filename (VFSFile * file) WARN_RETURN;
 void * vfs_get_handle (VFSFile * file) WARN_RETURN;
@@ -123,10 +119,6 @@ void vfs_file_read_all (VFSFile * file, void * * buf, int64_t * size);
 void vfs_file_get_contents (const char * filename, void * * buf, int64_t * size);
 
 void vfs_set_lookup_func (VFSConstructor * (* func) (const char * scheme));
-
-#ifdef __cplusplus
-}
-#endif
 
 #undef WARN_RETURN
 

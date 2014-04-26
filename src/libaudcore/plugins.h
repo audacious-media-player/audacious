@@ -22,10 +22,6 @@
 
 #include <libaudcore/core.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /* CAUTION: These functions are not thread safe. */
 
 /* returns TRUE to call again for the next plugin, FALSE to stop */
@@ -60,9 +56,5 @@ bool_t aud_plugin_has_configure (PluginHandle * plugin);
 
 void aud_plugin_add_watch (PluginHandle * plugin, PluginForEachFunc func, void * data);
 void aud_plugin_remove_watch (PluginHandle * plugin, PluginForEachFunc func, void * data);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif

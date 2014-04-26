@@ -27,10 +27,6 @@
 
 typedef bool_t (* DirForeachFunc) (const char * path, const char * basename, void * user);
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /* adder.c */
 void adder_cleanup (void);
 
@@ -108,9 +104,5 @@ void vis_send_audio (const float * data, int channels);
 
 bool_t vis_plugin_start (PluginHandle * plugin);
 void vis_plugin_stop (PluginHandle * plugin);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif

@@ -369,7 +369,6 @@ struct _IfacePlugin
 
 #undef PLUGIN_COMMON_FIELDS
 
-#ifdef __cplusplus
 #define AUD_PLUGIN(stype, itype, ...) \
 extern "C" stype _aud_plugin_self = { \
     _AUD_PLUGIN_MAGIC, \
@@ -378,16 +377,6 @@ extern "C" stype _aud_plugin_self = { \
     sizeof (stype), \
     __VA_ARGS__ \
 };
-#else
-#define AUD_PLUGIN(stype, itype, ...) \
-stype _aud_plugin_self = { \
-    _AUD_PLUGIN_MAGIC, \
-    _AUD_PLUGIN_VERSION, \
-    itype, \
-    sizeof (stype), \
-    __VA_ARGS__ \
-};
-#endif
 
 #define AUD_TRANSPORT_PLUGIN(...) AUD_PLUGIN (TransportPlugin, PLUGIN_TYPE_TRANSPORT, __VA_ARGS__)
 #define AUD_PLAYLIST_PLUGIN(...) AUD_PLUGIN (PlaylistPlugin, PLUGIN_TYPE_PLAYLIST, __VA_ARGS__)

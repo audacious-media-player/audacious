@@ -28,10 +28,6 @@ enum {
  INPUT_KEY_MIME,
  INPUT_KEYS};
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /* plugin-init.c */
 void start_plugins_one (void);
 void start_plugins_two (void);
@@ -58,9 +54,5 @@ bool_t input_plugin_has_images (PluginHandle * plugin);
 bool_t input_plugin_has_subtunes (PluginHandle * plugin);
 bool_t input_plugin_can_write_tuple (PluginHandle * plugin);
 bool_t input_plugin_has_infowin (PluginHandle * plugin);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif
