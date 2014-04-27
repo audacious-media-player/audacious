@@ -25,7 +25,7 @@
 #include <gtk/gtk.h>
 #include <libaudcore/core.h>
 
-typedef struct _AudguiMenuItem {
+struct AudguiMenuItem {
     const char * name;
     const char * icon;
     unsigned key;
@@ -40,7 +40,7 @@ typedef struct _AudguiMenuItem {
     const char * hook;
 
     /* for submenus */
-    const struct _AudguiMenuItem * items;
+    const AudguiMenuItem * items;
     int n_items;
 
     /* for custom submenus */
@@ -48,7 +48,7 @@ typedef struct _AudguiMenuItem {
 
     /* for separators */
     bool_t sep;
-} AudguiMenuItem;
+};
 
 constexpr AudguiMenuItem MenuCommand (const char * name, const char * icon,
  unsigned key, GdkModifierType mod, void (* func) (void))

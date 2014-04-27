@@ -174,7 +174,7 @@ static void start_plugins (int type)
     }
 }
 
-static VFSConstructor * lookup_transport (const char * scheme)
+static const VFSConstructor * lookup_transport (const char * scheme)
 {
     PluginHandle * plugin = transport_plugin_for_scheme (scheme);
     if (! plugin)

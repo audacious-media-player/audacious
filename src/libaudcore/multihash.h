@@ -41,16 +41,16 @@
 
 /* Skeleton structure containing internal member(s) of a multihash node.  Actual
  * node structures should be defined with MultihashNode as the first member. */
-typedef struct _MultihashNode {
-    struct _MultihashNode * next;
-} MultihashNode;
+struct MultihashNode {
+    MultihashNode * next;
+};
 
 /* Single channel of a multihash table.  For internal use only. */
-typedef struct {
+struct MultihashChannel {
     TinyLock lock;
     MultihashNode * * buckets;
     unsigned size, used;
-} MultihashChannel;
+};
 
 /* Callback.  Calculates (or retrieves) the hash value of <node>. */
 typedef unsigned (* MultihashFunc) (const MultihashNode * node);
@@ -61,11 +61,11 @@ typedef bool_t (* MultihashMatchFunc) (const MultihashNode * node,
 
 /* Multihash table.  <hash_func> and <match_func> should be initialized to
  * functions appropriate for the type of data to be stored in the table. */
-typedef struct {
+struct MultihashTable {
     MultihashFunc hash_func;
     MultihashMatchFunc match_func;
     MultihashChannel channels[MULTIHASH_CHANNELS];
-} MultihashTable;
+};
 
 /* Callback.  May create a new node representing <data> to be added to the
  * table.  Returns the new node or NULL. */

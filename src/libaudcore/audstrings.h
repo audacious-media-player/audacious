@@ -68,7 +68,7 @@
  memcpy (s + s##_1 + s##_2, (c), s##_3); \
  strcpy (s + s##_1 + s##_2 + s##_3, (d))
 
-struct _Index;
+struct Index;
 
 /* all (char *) return values must be freed with str_unref() */
 
@@ -114,8 +114,8 @@ char * uri_construct (const char * path, const char * reference);
 int str_compare (const char * a, const char * b);
 int str_compare_encoded (const char * a, const char * b);
 
-struct _Index * str_list_to_index (const char * list, const char * delims);
-char * index_to_str_list (struct _Index * index, const char * sep);
+Index * str_list_to_index (const char * list, const char * delims);
+char * index_to_str_list (Index * index, const char * sep);
 
 int str_to_int (const char * string);
 double str_to_double (const char * string);

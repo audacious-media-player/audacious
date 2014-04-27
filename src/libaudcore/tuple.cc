@@ -35,19 +35,17 @@
 
 #define BLOCK_VALS 4
 
-typedef struct {
+struct TupleBasicType {
     const char *name;
     TupleValueType type;
-} TupleBasicType;
+};
 
-typedef union {
+union TupleVal {
     char * str;
     int x;
-} TupleVal;
+};
 
-typedef struct _TupleBlock TupleBlock;
-
-struct _TupleBlock {
+struct TupleBlock {
     TupleBlock * next;
     char fields[BLOCK_VALS];
     TupleVal vals[BLOCK_VALS];
@@ -57,7 +55,7 @@ struct _TupleBlock {
  * Structure for holding and passing around miscellaneous track
  * metadata. This is not the same as a playlist entry, though.
  */
-struct _Tuple {
+struct Tuple {
     int64_t setmask;
     TupleBlock * blocks;
 
@@ -118,10 +116,10 @@ static const TupleBasicType tuple_fields[TUPLE_FIELDS] = {
     { "gain-peak-unit", TUPLE_INT },
 };
 
-typedef struct {
+struct FieldDictEntry {
     const char * name;
     int field;
-} FieldDictEntry;
+};
 
 /* used for binary search, MUST be in alphabetical order */
 static const FieldDictEntry field_dict[TUPLE_FIELDS] = {

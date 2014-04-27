@@ -61,11 +61,11 @@ enum {RESUME_STOP, RESUME_PLAY, RESUME_PAUSE};
     if (! entry) \
         RETURN (__VA_ARGS__);
 
-typedef struct {
+struct Update {
     int level, before, after;
-} Update;
+};
 
-typedef struct {
+struct Entry {
     int number;
     char * filename;
     PluginHandle * decoder;
@@ -76,9 +76,9 @@ typedef struct {
     bool_t selected;
     int shuffle_num;
     bool_t queued;
-} Entry;
+};
 
-typedef struct {
+struct Playlist {
     int number, unique_id;
     char * filename, * title;
     bool_t modified;
@@ -92,7 +92,7 @@ typedef struct {
     Update next_update, last_update;
     bool_t resume_paused;
     int resume_time;
-} Playlist;
+};
 
 static const char * const default_title = N_("New Playlist");
 static const char * const temp_title = N_("Now Playing");
@@ -112,11 +112,11 @@ static int resume_playlist = -1;
 
 static int update_source = 0, update_level;
 
-typedef struct {
+struct ScanItem {
     Playlist * playlist;
     Entry * entry;
     ScanRequest * request;
-} ScanItem;
+};
 
 static int scan_playlist, scan_row;
 static GList * scan_list = NULL;
@@ -1583,10 +1583,10 @@ enum {COMPARE_TYPE_FILENAME, COMPARE_TYPE_TUPLE, COMPARE_TYPE_TITLE};
 
 typedef int (* CompareFunc) (const void * a, const void * b);
 
-typedef struct {
+struct CompareData {
     int type;
     CompareFunc func;
-} CompareData;
+};
 
 static int compare_cb (const void * _a, const void * _b, void * _data)
 {

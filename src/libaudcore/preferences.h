@@ -22,7 +22,7 @@
 
 #include <libaudcore/core.h>
 
-typedef enum {
+enum WidgetType {
     WIDGET_NONE,
     WIDGET_CHK_BTN,
     WIDGET_LABEL,
@@ -36,22 +36,20 @@ typedef enum {
     WIDGET_BOX,
     WIDGET_NOTEBOOK,
     WIDGET_SEPARATOR,
-} WidgetType;
+};
 
-typedef enum {
+enum ValueType {
     VALUE_INT,
     VALUE_FLOAT,
     VALUE_BOOLEAN,
     VALUE_STRING,
     VALUE_NULL,
-} ValueType;
+};
 
-typedef struct {
+struct ComboBoxElements {
     const void * value;
     const char * label;
-} ComboBoxElements;
-
-struct _NotebookTab;
+};
 
 struct WidgetVRadio {
     int value;
@@ -63,7 +61,7 @@ struct WidgetVSpin {
 };
 
 struct WidgetVTable {
-    const struct _PreferencesWidget * elem;
+    const PreferencesWidget * elem;
     int rows;
 };
 
@@ -90,15 +88,21 @@ struct WidgetVCombo {
 };
 
 struct WidgetVBox {
-    const struct _PreferencesWidget * elem;
+    const PreferencesWidget * elem;
     int n_elem;
 
     bool_t horizontal;  /* FALSE gives vertical, TRUE gives horizontal aligment of child widgets */
     bool_t frame;       /* whether to draw frame around box */
 };
 
+struct NotebookTab {
+    const char * name;
+    const PreferencesWidget * widgets;
+    int n_widgets;
+};
+
 struct WidgetVNotebook {
-    const struct _NotebookTab * tabs;
+    const NotebookTab * tabs;
     int n_tabs;
 };
 
@@ -106,7 +110,7 @@ struct WidgetVSeparator {
     bool_t horizontal;  /* FALSE gives vertical, TRUE gives horizontal separator */
 };
 
-typedef union _WidgetVariant {
+union WidgetVariant {
     struct WidgetVRadio radio_btn;
     struct WidgetVSpin spin_btn;
     struct WidgetVTable table;
@@ -122,22 +126,22 @@ typedef union _WidgetVariant {
     /* GtkWidget * (* populate) (void); */
     void * (* populate) (void);
 
-    constexpr _WidgetVariant (WidgetVRadio radio) : radio_btn (radio) {}
-    constexpr _WidgetVariant (WidgetVSpin spin) : spin_btn (spin) {}
-    constexpr _WidgetVariant (WidgetVTable table) : table (table) {}
-    constexpr _WidgetVariant (WidgetVLabel label) : label (label) {}
-    constexpr _WidgetVariant (WidgetVFonts fonts) : font_btn (fonts) {}
-    constexpr _WidgetVariant (WidgetVEntry entry) : entry (entry) {}
-    constexpr _WidgetVariant (WidgetVCombo combo) : combo (combo) {}
-    constexpr _WidgetVariant (WidgetVBox box) : box (box) {}
-    constexpr _WidgetVariant (WidgetVNotebook notebook) : notebook (notebook) {}
-    constexpr _WidgetVariant (WidgetVSeparator separator) : separator (separator) {}
+    constexpr WidgetVariant (WidgetVRadio radio) : radio_btn (radio) {}
+    constexpr WidgetVariant (WidgetVSpin spin) : spin_btn (spin) {}
+    constexpr WidgetVariant (WidgetVTable table) : table (table) {}
+    constexpr WidgetVariant (WidgetVLabel label) : label (label) {}
+    constexpr WidgetVariant (WidgetVFonts fonts) : font_btn (fonts) {}
+    constexpr WidgetVariant (WidgetVEntry entry) : entry (entry) {}
+    constexpr WidgetVariant (WidgetVCombo combo) : combo (combo) {}
+    constexpr WidgetVariant (WidgetVBox box) : box (box) {}
+    constexpr WidgetVariant (WidgetVNotebook notebook) : notebook (notebook) {}
+    constexpr WidgetVariant (WidgetVSeparator separator) : separator (separator) {}
 
     /* also serves as default constructor */
-    constexpr _WidgetVariant (void * (* populate) (void) = 0) : populate (populate) {}
-} WidgetVariant;
+    constexpr WidgetVariant (void * (* populate) (void) = 0) : populate (populate) {}
+};
 
-struct _PreferencesWidget {
+struct PreferencesWidget {
     WidgetType type;          /* widget type */
     const char * label;       /* widget title (for SPIN_BTN it's text left to widget) */
     void * cfg;               /* connected config value */
@@ -163,61 +167,55 @@ enum WidgetIsChild {
     WIDGET_CHILD
 };
 
-constexpr PreferencesWidget WidgetLabel (const char * label, WidgetIsChild child = WIDGET_NOT_CHILD)
+constexpr const PreferencesWidget WidgetLabel (const char * label, WidgetIsChild child = WIDGET_NOT_CHILD)
     { return {WIDGET_LABEL, label, 0, 0, 0, (child == WIDGET_CHILD)}; }
 
-constexpr PreferencesWidget WidgetCheck (const char * label, WidgetConfig cfg,
+constexpr const PreferencesWidget WidgetCheck (const char * label, WidgetConfig cfg,
  WidgetIsChild child = WIDGET_NOT_CHILD)
     { return {WIDGET_CHK_BTN, label, cfg.value, cfg.callback, 0,
        (child == WIDGET_CHILD), cfg.type, cfg.section, cfg.name}; }
 
-constexpr PreferencesWidget WidgetRadio (const char * label, WidgetConfig cfg,
+constexpr const PreferencesWidget WidgetRadio (const char * label, WidgetConfig cfg,
  WidgetVRadio radio, WidgetIsChild child = WIDGET_NOT_CHILD)
     { return {WIDGET_RADIO_BTN, label, cfg.value, cfg.callback, 0,
        (child == WIDGET_CHILD), cfg.type, cfg.section, cfg.name, radio}; }
 
-constexpr PreferencesWidget WidgetSpin (const char * label, WidgetConfig cfg,
+constexpr const PreferencesWidget WidgetSpin (const char * label, WidgetConfig cfg,
  WidgetVSpin spin, WidgetIsChild child = WIDGET_NOT_CHILD)
     { return {WIDGET_SPIN_BTN, label, cfg.value, cfg.callback, 0,
        (child == WIDGET_CHILD), cfg.type, cfg.section, cfg.name, spin}; }
 
-constexpr PreferencesWidget WidgetEntry (const char * label, WidgetConfig cfg,
+constexpr const PreferencesWidget WidgetEntry (const char * label, WidgetConfig cfg,
  WidgetVEntry entry = WidgetVEntry(), WidgetIsChild child = WIDGET_NOT_CHILD)
     { return {WIDGET_ENTRY, label, cfg.value, cfg.callback, 0,
        (child == WIDGET_CHILD), cfg.type, cfg.section, cfg.name, entry}; }
 
-constexpr PreferencesWidget WidgetCombo (const char * label, WidgetConfig cfg,
+constexpr const PreferencesWidget WidgetCombo (const char * label, WidgetConfig cfg,
  WidgetVCombo combo, WidgetIsChild child = WIDGET_NOT_CHILD)
     { return {WIDGET_COMBO_BOX, label, cfg.value, cfg.callback, 0,
        (child == WIDGET_CHILD), cfg.type, cfg.section, cfg.name, combo}; }
 
-constexpr PreferencesWidget WidgetFonts (const char * label, WidgetConfig cfg,
+constexpr const PreferencesWidget WidgetFonts (const char * label, WidgetConfig cfg,
  WidgetVFonts fonts, WidgetIsChild child = WIDGET_NOT_CHILD)
     { return {WIDGET_FONT_BTN, label, cfg.value, cfg.callback, 0,
        (child == WIDGET_CHILD), cfg.type, cfg.section, cfg.name, fonts}; }
 
-constexpr PreferencesWidget WidgetBox (WidgetVBox box, WidgetIsChild child = WIDGET_NOT_CHILD)
+constexpr const PreferencesWidget WidgetBox (WidgetVBox box, WidgetIsChild child = WIDGET_NOT_CHILD)
     { return {WIDGET_BOX, 0, 0, 0, 0, (child == WIDGET_CHILD), VALUE_NULL, 0, 0, box}; }
 
-constexpr PreferencesWidget WidgetTable (WidgetVTable table, WidgetIsChild child = WIDGET_NOT_CHILD)
+constexpr const PreferencesWidget WidgetTable (WidgetVTable table, WidgetIsChild child = WIDGET_NOT_CHILD)
     { return {WIDGET_TABLE, 0, 0, 0, 0, (child == WIDGET_CHILD), VALUE_NULL, 0, 0, table}; }
 
-constexpr PreferencesWidget WidgetNotebook (WidgetVNotebook notebook)
+constexpr const PreferencesWidget WidgetNotebook (WidgetVNotebook notebook)
     { return {WIDGET_NOTEBOOK, 0, 0, 0, 0, 0, VALUE_NULL, 0, 0, notebook}; }
 
-constexpr PreferencesWidget WidgetSeparator (WidgetVSeparator separator = WidgetVSeparator ())
+constexpr const PreferencesWidget WidgetSeparator (WidgetVSeparator separator = WidgetVSeparator ())
     { return {WIDGET_SEPARATOR, 0, 0, 0, 0, 0, VALUE_NULL, 0, 0, separator}; }
 
-constexpr PreferencesWidget WidgetCustom (void * (* populate) (void))
+constexpr const PreferencesWidget WidgetCustom (void * (* populate) (void))
     { return {WIDGET_CUSTOM, 0, 0, 0, 0, 0, VALUE_NULL, 0, 0, populate}; }
 
-typedef struct _NotebookTab {
-    const char * name;
-    const PreferencesWidget * widgets;
-    int n_widgets;
-} NotebookTab;
-
-struct _PluginPreferences {
+struct PluginPreferences {
     const PreferencesWidget * widgets;
     int n_widgets;
 

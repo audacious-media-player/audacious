@@ -46,20 +46,20 @@ enum CategoryViewCols {
     CATEGORY_VIEW_N_COLS
 };
 
-typedef struct {
+struct Category {
     const char * icon_path;
     const char * name;
-} Category;
+};
 
-typedef struct {
+struct PluginCategory {
     int type;
     const char * name;
-} PluginCategory;
+};
 
-typedef struct {
+struct TitleFieldTag {
     const char * name;
     const char * tag;
-} TitleFieldTag;
+};
 
 static const char aud_version_string[] =
  "<span size='small'>Audacious " VERSION " (" BUILDSTAMP ")</span>";

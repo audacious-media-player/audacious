@@ -24,8 +24,7 @@
  * used primarily to store Audacious playlists, but can be useful for other
  * purposes as well. */
 
-struct _Index;
-typedef struct _Index Index;
+struct Index;
 
 typedef void (* IndexFreeFunc) (void * value);
 

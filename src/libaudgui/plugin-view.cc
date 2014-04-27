@@ -34,11 +34,11 @@ enum {
  PVIEW_COLS
 };
 
-typedef struct {
+struct Node {
     PluginHandle * p;
     GtkTreeModel * model;
     GtkTreePath * path;
-} Node;
+};
 
 static PluginHandle * get_selected_plugin (GtkTreeView * tree)
 {

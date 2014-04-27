@@ -27,20 +27,20 @@
 #include "plugins.h"
 #include "runtime.h"
 
-typedef struct {
+struct RunningEffect {
     PluginHandle * plugin;
     EffectPlugin * header;
     int channels_returned, rate_returned;
     bool_t remove_flag;
-} RunningEffect;
+};
 
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 static GList * running_effects = NULL; /* (RunningEffect *) */
 static int input_channels, input_rate;
 
-typedef struct {
+struct EffectStartState {
     int * channels, * rate;
-} EffectStartState;
+};
 
 static bool_t effect_start_cb (PluginHandle * plugin, EffectStartState * state)
 {
@@ -83,10 +83,10 @@ void effect_start (int * channels, int * rate)
     pthread_mutex_unlock (& mutex);
 }
 
-typedef struct {
+struct EffectProcessState {
     float * * data;
     int * samples;
-} EffectProcessState;
+};
 
 static void effect_process_cb (RunningEffect * effect, EffectProcessState * state)
 {

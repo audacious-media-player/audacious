@@ -56,20 +56,20 @@ enum {
  PLUGIN_TYPE_IFACE,
  PLUGIN_TYPES};
 
-typedef const struct _Plugin Plugin;
-typedef const struct _TransportPlugin TransportPlugin;
-typedef const struct _PlaylistPlugin PlaylistPlugin;
-typedef const struct _InputPlugin InputPlugin;
-typedef const struct _EffectPlugin EffectPlugin;
-typedef const struct _OutputPlugin OutputPlugin;
-typedef const struct _VisPlugin VisPlugin;
-typedef const struct _GeneralPlugin GeneralPlugin;
-typedef const struct _IfacePlugin IfacePlugin;
+struct Plugin;
+struct TransportPlugin;
+struct PlaylistPlugin;
+struct InputPlugin;
+struct EffectPlugin;
+struct OutputPlugin;
+struct VisPlugin;
+struct GeneralPlugin;
+struct IfacePlugin;
 
-typedef struct _PluginHandle PluginHandle;
-typedef struct _PluginPreferences PluginPreferences;
-typedef struct _PreferencesWidget PreferencesWidget;
-typedef struct _VFSFile VFSFile;
+struct PluginHandle;
+struct PluginPreferences;
+struct PreferencesWidget;
+struct VFSFile;
 
 /* STRING POOL */
 

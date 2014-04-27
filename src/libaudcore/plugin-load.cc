@@ -44,10 +44,10 @@ static const char * plugin_dir_list[] = {
     "Visualization"
 };
 
-typedef struct {
+struct LoadedModule {
     Plugin * header;
     GModule * module;
-} LoadedModule;
+};
 
 static GList * loaded_modules = NULL;
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;

@@ -22,6 +22,6 @@
 
 #include "vfs.h"
 
-extern VFSConstructor vfs_local_vtable;
+extern const VFSConstructor vfs_local_vtable;
 
 #endif /* LIBAUDCORE_VFS_LOCAL_H */

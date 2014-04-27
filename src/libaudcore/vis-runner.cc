@@ -31,14 +31,12 @@
 #define INTERVAL 30 /* milliseconds */
 #define FRAMES_PER_NODE 512
 
-struct _VisNode {
-    struct _VisNode * next;
+struct VisNode {
+    VisNode * next;
     int channels;
     int time;
     float data[];
 };
-
-typedef struct _VisNode VisNode;
 
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 static bool_t enabled = FALSE;

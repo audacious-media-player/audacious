@@ -28,13 +28,11 @@
 
 #define BUFSIZE (256 * 1024)
 
-typedef struct
-{
+struct ProbeBuffer {
     VFSFile * file;
     int filled, at;
     unsigned char buffer[BUFSIZE];
-}
-ProbeBuffer;
+};
 
 static int probe_buffer_fclose (VFSFile * file)
 {
@@ -133,7 +131,7 @@ static char * probe_buffer_get_metadata (VFSFile * file, const char * field)
     return vfs_get_metadata (((ProbeBuffer *) vfs_get_handle (file))->file, field);
 }
 
-static VFSConstructor probe_buffer_table =
+static const VFSConstructor probe_buffer_table =
 {
     NULL,
     probe_buffer_fclose,

@@ -24,12 +24,12 @@
 
 #include "core.h"
 
-typedef struct {
+struct HookItem {
     HookFunction func;
     void * user;
     int lock_count;
     bool_t remove_flag;
-} HookItem;
+};
 
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 static GHashTable * hooks; /* of (GQueue of (HookItem *) *)  */

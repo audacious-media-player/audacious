@@ -110,12 +110,12 @@
     void * reserved3; \
     void * reserved4;
 
-struct _Plugin
+struct Plugin
 {
     PLUGIN_COMMON_FIELDS
 };
 
-struct _TransportPlugin
+struct TransportPlugin
 {
     PLUGIN_COMMON_FIELDS
 
@@ -128,7 +128,7 @@ struct _TransportPlugin
     const VFSConstructor * vtable;
 };
 
-struct _PlaylistPlugin
+struct PlaylistPlugin
 {
     PLUGIN_COMMON_FIELDS
 
@@ -157,7 +157,7 @@ struct _PlaylistPlugin
      Index * filenames, Index * tuples);
 };
 
-struct _OutputPlugin
+struct OutputPlugin
 {
     PLUGIN_COMMON_FIELDS
 
@@ -212,7 +212,7 @@ struct _OutputPlugin
     bool_t force_reopen;
 };
 
-struct _EffectPlugin
+struct EffectPlugin
 {
     PLUGIN_COMMON_FIELDS
 
@@ -252,7 +252,7 @@ struct _EffectPlugin
     bool_t preserves_format;
 };
 
-struct _InputPlugin
+struct InputPlugin
 {
     PLUGIN_COMMON_FIELDS
 
@@ -317,7 +317,7 @@ struct _InputPlugin
     void (* file_info_box) (const char * filename);
 };
 
-struct _GeneralPlugin
+struct GeneralPlugin
 {
     PLUGIN_COMMON_FIELDS
 
@@ -327,7 +327,7 @@ struct _GeneralPlugin
     void * (* get_widget) (void);
 };
 
-struct _VisPlugin
+struct VisPlugin
 {
     PLUGIN_COMMON_FIELDS
 
@@ -347,7 +347,7 @@ struct _VisPlugin
     void * (* get_widget) (void);
 };
 
-struct _IfacePlugin
+struct IfacePlugin
 {
     PLUGIN_COMMON_FIELDS
 
@@ -370,7 +370,7 @@ struct _IfacePlugin
 #undef PLUGIN_COMMON_FIELDS
 
 #define AUD_PLUGIN(stype, itype, ...) \
-extern "C" stype _aud_plugin_self = { \
+extern "C" const stype _aud_plugin_self = { \
     _AUD_PLUGIN_MAGIC, \
     _AUD_PLUGIN_VERSION, \
     itype, \

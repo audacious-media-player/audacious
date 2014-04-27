@@ -22,10 +22,7 @@
 
 #include <glib.h>
 
-typedef struct _JumpToTrackCache JumpToTrackCache;
-
-struct _JumpToTrackCache
-{
+struct JumpToTrackCache {
     GHashTable* keywords;
 };
 

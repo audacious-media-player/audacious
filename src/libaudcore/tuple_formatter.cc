@@ -47,8 +47,7 @@
  * everything else is treated as raw text.
  */
 
-struct _TupleFormatter
-{
+struct TupleFormatter {
     TupleEvalContext * context;
     TupleEvalNode * node;
     GString * buf;

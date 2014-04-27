@@ -30,11 +30,10 @@
 #include "ui_jumptotrack_cache.h"
 
 // Struct to keep information about matches from searches.
-typedef struct
-{
+struct KeywordMatches {
     GArray * entries; // int
     GArray * titles, * artists, * albums, * paths; // char * (pooled)
-} KeywordMatches;
+};
 
 static void ui_jump_to_track_cache_init (JumpToTrackCache * cache);
 

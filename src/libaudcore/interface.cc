@@ -28,11 +28,11 @@
 #include "plugins.h"
 #include "runtime.h"
 
-typedef struct {
+struct MenuItem {
     const char * name;
     const char * icon;
     void (* func) (void);
-} MenuItem;
+};
 
 static PluginHandle * current_plugin = NULL;
 static PluginHandle * next_plugin = NULL;

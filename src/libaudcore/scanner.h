@@ -29,7 +29,7 @@
 
 #define SCAN_THREADS 2
 
-typedef struct _ScanRequest ScanRequest;
+struct ScanRequest;
 
 typedef void (* ScanCallback) (ScanRequest * request);
 

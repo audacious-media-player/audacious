@@ -28,16 +28,14 @@
 #include "plugins-internal.h"
 #include "runtime.h"
 
-typedef struct
-{
+struct PlaylistData {
     const char * filename;
     char * title;
     Index * filenames;
     Index * tuples;
     bool_t plugin_found;
     bool_t success;
-}
-PlaylistData;
+};
 
 static void plugin_for_filename (const char * filename, PluginForEachFunc func, void * data)
 {

@@ -38,16 +38,13 @@
 #define VFS_IS_EXECUTABLE (1 << 3)
 #define VFS_EXISTS        (1 << 4)
 
-/** @struct VFSConstructor */
-typedef const struct _VFSConstructor VFSConstructor;
-
 /**
- * @struct _VFSConstructor
+ * @struct VFSConstructor
  * #VFSConstructor objects contain the base vtables used for extrapolating
  * a VFS stream. #VFSConstructor objects should be considered %virtual in
  * nature. VFS base vtables are registered via vfs_register_transport().
  */
-struct _VFSConstructor {
+struct VFSConstructor {
     /** A function pointer which points to a fopen implementation. */
     void * (* vfs_fopen_impl) (const char * filename, const char * mode);
     /** A function pointer which points to a fclose implementation. */
@@ -81,7 +78,7 @@ struct _VFSConstructor {
 #define WARN_RETURN
 #endif
 
-VFSFile * vfs_new (const char * path, VFSConstructor * vtable, void * handle) WARN_RETURN;
+VFSFile * vfs_new (const char * path, const VFSConstructor * vtable, void * handle) WARN_RETURN;
 const char * vfs_get_filename (VFSFile * file) WARN_RETURN;
 void * vfs_get_handle (VFSFile * file) WARN_RETURN;
 
@@ -118,7 +115,7 @@ bool_t vfs_is_remote (const char * path) WARN_RETURN;
 void vfs_file_read_all (VFSFile * file, void * * buf, int64_t * size);
 void vfs_file_get_contents (const char * filename, void * * buf, int64_t * size);
 
-void vfs_set_lookup_func (VFSConstructor * (* func) (const char * scheme));
+void vfs_set_lookup_func (const VFSConstructor * (* func) (const char * scheme));
 
 #undef WARN_RETURN
 

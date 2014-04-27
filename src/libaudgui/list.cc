@@ -30,7 +30,7 @@ enum {HIGHLIGHT_COLUMN, RESERVED_COLUMNS};
 #define PATH_IS_SELECTED(w, p) (gtk_tree_selection_path_is_selected \
  (gtk_tree_view_get_selection ((GtkTreeView *) (w)), (p)))
 
-typedef struct {
+struct ListModel {
     GObject parent;
     const AudguiListCallbacks * cbs;
     int cbs_size;
@@ -43,7 +43,7 @@ typedef struct {
     bool_t dragging;
     bool_t clicked_row, receive_row;
     int scroll_source, scroll_speed;
-} ListModel;
+};
 
 /* ==== MODEL ==== */
 

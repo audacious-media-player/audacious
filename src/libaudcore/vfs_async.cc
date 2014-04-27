@@ -22,7 +22,7 @@
 
 #include "vfs_async.h"
 
-typedef struct {
+struct VFSAsyncTrampoline {
     char * filename; /* pooled */
     void *buf;
     int64_t size;
@@ -30,7 +30,7 @@ typedef struct {
     void * userdata;
 
     VFSConsumer cons_f;
-} VFSAsyncTrampoline;
+};
 
 bool_t
 vfs_async_file_get_contents_trampoline(void * data)

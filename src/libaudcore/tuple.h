@@ -79,18 +79,18 @@ enum {
     TUPLE_FIELDS
 };
 
-typedef enum {
+enum TupleValueType {
     TUPLE_STRING,
     TUPLE_INT,
     TUPLE_UNKNOWN
-} TupleValueType;
+};
 
 int tuple_field_by_name (const char * name);
 const char * tuple_field_get_name (int field);
 TupleValueType tuple_field_get_type (int field);
 
-typedef struct _Tuple Tuple;
-typedef struct _TupleFormatter TupleFormatter;
+struct Tuple;
+struct TupleFormatter;
 
 /* Creates a new, blank tuple with a reference count of one. */
 Tuple * tuple_new (void);

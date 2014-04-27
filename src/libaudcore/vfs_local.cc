@@ -34,18 +34,18 @@
 #define ftello ftello64
 #endif
 
-typedef enum {
+enum LocalOp {
     OP_NONE,
     OP_READ,
     OP_WRITE
-} LocalOp;
+};
 
-typedef struct {
+struct LocalFile {
     char * path;
     FILE * stream;
     int64_t cached_size;
     LocalOp last_op;
-} LocalFile;
+};
 
 static void * local_fopen (const char * uri, const char * mode)
 {
@@ -218,7 +218,7 @@ static int64_t local_fsize (VFSFile * file)
     return length;
 }
 
-VFSConstructor vfs_local_vtable = {
+const VFSConstructor vfs_local_vtable = {
     .vfs_fopen_impl = local_fopen,
     .vfs_fclose_impl = local_fclose,
     .vfs_fread_impl = local_fread,

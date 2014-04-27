@@ -25,12 +25,12 @@
 
 #include "core.h"
 
-typedef struct {
+struct Event {
     char * name;
     void * data;
     void (* destroy) (void *);
     int source;
-} Event;
+};
 
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 static GList * events;

@@ -96,40 +96,40 @@ static const char * const core_defaults[] = {
 
  NULL};
 
-typedef enum {
+enum OpType {
     OP_IS_DEFAULT,
     OP_GET,
     OP_SET,
     OP_SET_NO_FLAG,
     OP_CLEAR,
     OP_CLEAR_NO_FLAG
-} OpType;
+};
 
-typedef struct {
+struct ConfigItem {
     const char * section;
     const char * key;
     const char * value;
-} ConfigItem;
+};
 
-typedef struct {
+struct ConfigNode {
     MultihashNode node;
     ConfigItem item;
-} ConfigNode;
+};
 
-typedef struct {
+struct ConfigOp {
     OpType type;
     ConfigItem item;
     unsigned hash;
     bool_t result;
-} ConfigOp;
+};
 
-typedef struct {
+struct LoadState {
     char * section;
-} LoadState;
+};
 
-typedef struct {
+struct SaveState {
     GArray * list;
-} SaveState;
+};
 
 static unsigned item_hash (const ConfigItem * item)
 {

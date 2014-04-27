@@ -42,20 +42,20 @@
 #define FILENAME "plugin-registry"
 #define FORMAT 8
 
-typedef struct {
+struct TransportPluginData {
     GList * schemes;
-} TransportPluginData;
+};
 
-typedef struct {
+struct PlaylistPluginData {
     GList * exts;
-} PlaylistPluginData;
+};
 
-typedef struct {
+struct InputPluginData {
     GList * keys[INPUT_KEYS];
     bool_t has_images, has_subtunes, can_write_tuple, has_infowin;
-} InputPluginData;
+};
 
-struct _PluginHandle {
+struct PluginHandle {
     char * path;
     bool_t confirmed, loaded;
     int timestamp, type;
@@ -72,10 +72,10 @@ struct _PluginHandle {
     } u;
 };
 
-typedef struct {
+struct PluginWatch {
     PluginForEachFunc func;
     void * data;
-} PluginWatch;
+};
 
 static const char * plugin_type_names[] = {
  [PLUGIN_TYPE_TRANSPORT] = "transport",
@@ -715,10 +715,10 @@ void plugin_set_enabled (PluginHandle * plugin, bool_t enabled)
     plugin_call_watches (plugin);
 }
 
-typedef struct {
+struct PluginForEnabledState {
     PluginForEachFunc func;
     void * data;
-} PluginForEnabledState;
+};
 
 static bool_t plugin_for_enabled_cb (PluginHandle * plugin,
  PluginForEnabledState * state)
@@ -759,10 +759,10 @@ EXPORT void aud_plugin_remove_watch (PluginHandle * plugin, PluginForEachFunc fu
     }
 }
 
-typedef struct {
+struct TransportPluginForSchemeState {
     const char * scheme;
     PluginHandle * plugin;
-} TransportPluginForSchemeState;
+};
 
 static bool_t transport_plugin_for_scheme_cb (PluginHandle * plugin,
  TransportPluginForSchemeState * state)
@@ -783,11 +783,11 @@ PluginHandle * transport_plugin_for_scheme (const char * scheme)
     return state.plugin;
 }
 
-typedef struct {
+struct PlaylistPluginForExtState {
     const char * ext;
     PluginForEachFunc func;
     void * data;
-} PlaylistPluginForExtState;
+};
 
 static bool_t playlist_plugin_for_ext_cb (PluginHandle * plugin,
  PlaylistPluginForExtState * state)
@@ -806,12 +806,12 @@ void playlist_plugin_for_ext (const char * ext, PluginForEachFunc func, void * d
      playlist_plugin_for_ext_cb, & state);
 }
 
-typedef struct {
+struct InputPluginForKeyState {
     int key;
     const char * value;
     PluginForEachFunc func;
     void * data;
-} InputPluginForKeyState;
+};
 
 static bool_t input_plugin_for_key_cb (PluginHandle * plugin,
  InputPluginForKeyState * state)

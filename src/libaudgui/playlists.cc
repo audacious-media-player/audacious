@@ -29,14 +29,12 @@
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
 
-typedef struct
-{
+struct ImportExportJob {
     bool_t save;
     int list_id;
     char * filename;
     GtkWidget * selector, * confirm;
-}
-ImportExportJob;
+};
 
 /* "destroy" callback; do not call directly */
 static void cleanup_job (void * data)

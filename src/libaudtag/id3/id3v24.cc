@@ -75,32 +75,29 @@ static const unsigned char SECONDARY_CLASS_GAMES_SONG[16] = {0x31, 0xF7, 0x4F, 0
 
 #pragma pack(push) /* must be byte-aligned */
 #pragma pack(1)
-typedef struct
+struct ID3v2Header
 {
     char magic[3];
     unsigned char version;
     unsigned char revision;
     unsigned char flags;
     uint32_t size;
-}
-ID3v2Header;
+};
 
-typedef struct
+struct ID3v2FrameHeader
 {
     char key[4];
     uint32_t size;
     uint16_t flags;
-}
-ID3v2FrameHeader;
+};
 #pragma pack(pop)
 
-typedef struct
+struct GenericFrame
 {
     char key[5];
     char * data;
     int size;
-}
-GenericFrame;
+};
 
 #define ID3_HEADER_SYNCSAFE             0x80
 #define ID3_HEADER_HAS_EXTENDED_HEADER  0x40
@@ -413,11 +410,11 @@ static bool_t write_frame (int fd, GenericFrame * frame, int version, int * fram
     return TRUE;
 }
 
-typedef struct {
+struct WriteState {
     int fd;
     int version;
     int written_size;
-} WriteState;
+};
 
 static void write_frame_list (void * key, void * list, void * user)
 {

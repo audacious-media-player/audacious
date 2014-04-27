@@ -30,7 +30,7 @@
  * defined when the caller code was compiled, allowing us to expand the struct
  * without breaking backward compatibility. */
 
-typedef struct {
+struct AudguiListCallbacks {
     void (* get_value) (void * user, int row, int column, GValue * value);
 
     /* selection (optional) */
@@ -52,7 +52,7 @@ typedef struct {
     void (* mouse_leave) (void * user, GdkEventMotion * event, int row); /* optional */
 
     void (* focus_change) (void * user, int row); /* optional */
-} AudguiListCallbacks;
+};
 
 GtkWidget * audgui_list_new_real (const AudguiListCallbacks * cbs, int cbs_size,
  void * user, int rows);

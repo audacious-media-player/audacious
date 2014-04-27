@@ -29,11 +29,11 @@
 
 #ifdef VALGRIND_FRIENDLY
 
-typedef struct {
+struct StrNode {
     unsigned hash;
     char magic;
     char str[];
-} StrNode;
+};
 
 #define NODE_SIZE_FOR(s) (offsetof (StrNode, str) + strlen (s) + 1)
 #define NODE_OF(s) ((StrNode *) ((s) - offsetof (StrNode, str)))
@@ -98,12 +98,12 @@ EXPORT void strpool_shutdown (void)
 
 #else /* ! VALGRIND_FRIENDLY */
 
-typedef struct {
+struct StrNode {
     MultihashNode node;
     unsigned hash, refs;
     char magic;
     char str[];
-} StrNode;
+};
 
 #define NODE_SIZE_FOR(s) (offsetof (StrNode, str) + strlen (s) + 1)
 #define NODE_OF(s) ((StrNode *) ((s) - offsetof (StrNode, str)))

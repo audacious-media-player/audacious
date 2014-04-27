@@ -35,20 +35,20 @@
 #include "runtime.h"
 #include "vfs.h"
 
-typedef struct {
+struct AddTask {
     int playlist_id, at;
     bool_t play;
     Index * filenames, * tuples;
     PlaylistFilterFunc filter;
     void * user;
-} AddTask;
+};
 
-typedef struct {
+struct AddResult {
     int playlist_id, at;
     bool_t play;
     char * title;
     Index * filenames, * tuples, * decoders;
-} AddResult;
+};
 
 static void * add_worker (void * unused);
 

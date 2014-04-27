@@ -39,7 +39,7 @@
 #define FLAG_DONE 1
 #define FLAG_SENT 2
 
-typedef struct {
+struct ArtItem {
     int refcount;
     int flag;
 
@@ -50,7 +50,7 @@ typedef struct {
     /* album art as (possibly a temporary) file */
     char * art_file; /* pooled */
     bool_t is_temp;
-} ArtItem;
+};
 
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 

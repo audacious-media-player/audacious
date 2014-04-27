@@ -34,23 +34,19 @@
 
 #pragma pack(push) /* must be byte-aligned */
 #pragma pack(1)
-typedef struct
-{
+struct APEHeader {
     char magic[8];
     uint32_t version; /* LE */
     uint32_t length; /* LE */
     uint32_t items; /* LE */
     uint32_t flags; /* LE */
     uint64_t reserved;
-}
-APEHeader;
+};
 #pragma pack(pop)
 
-typedef struct
-{
+struct ValuePair {
     char * key, * value;
-}
-ValuePair;
+};
 
 #define APE_FLAG_HAS_HEADER (1 << 31)
 #define APE_FLAG_HAS_NO_FOOTER (1 << 30)

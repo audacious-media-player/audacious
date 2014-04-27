@@ -26,20 +26,20 @@
 #include "core.h"
 #include "index.h"
 
-struct _Index {
+struct Index {
     void * * data;
     int count, size;
     void * sdata[16];
 };
 
-typedef struct {
+struct CompareWrapper {
     int (* compare) (const void * a, const void * b);
-} CompareWrapper;
+};
 
-typedef struct {
+struct CompareWrapper2 {
     int (* compare) (const void * a, const void * b, void * data);
     void * data;
-} CompareWrapper2;
+};
 
 EXPORT Index * index_new (void)
 {

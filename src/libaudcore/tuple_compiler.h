@@ -24,7 +24,7 @@
 #include <libaudcore/tuple.h>
 
 typedef GArray TupleEvalContext;
-typedef struct _TupleEvalNode TupleEvalNode;
+struct TupleEvalNode;
 
 TupleEvalContext * tuple_evalctx_new(void);
 void tuple_evalctx_reset(TupleEvalContext *ctx);

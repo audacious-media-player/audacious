@@ -55,31 +55,25 @@ static const char * id3_frames[ID3_TAGS_NO] = {"TAL", "TT2", "TCM", "TCR",
 
 #pragma pack(push) /* must be byte-aligned */
 #pragma pack(1)
-typedef struct
-{
+struct ID3v2Header {
     char magic[3];
     unsigned char version;
     unsigned char revision;
     unsigned char flags;
     uint32_t size;
-}
-ID3v2Header;
+};
 
-typedef struct
-{
+struct ID3v2FrameHeader {
     char key[3];
     unsigned char size[3];
-}
-ID3v2FrameHeader;
+};
 #pragma pack(pop)
 
-typedef struct
-{
+struct GenericFrame {
     char key[5];
     unsigned char * data;
     int size;
-}
-GenericFrame;
+};
 
 #define ID3_HEADER_SYNCSAFE             0x40
 #define ID3_HEADER_COMPRESSED           0x20

@@ -37,13 +37,13 @@
 #define VFS_SIG ('V' | ('F' << 8) | ('S' << 16))
 
 /**
- * @struct _VFSFile
+ * @struct VFSFile
  * #VFSFile objects describe an opened VFS stream, basically being
  * similar in purpose as stdio FILE
  */
-struct _VFSFile {
+struct VFSFile {
     char * uri;               /**< The URI of the stream */
-    VFSConstructor * base;    /**< The base vtable used for VFS functions */
+    const VFSConstructor * base;    /**< The base vtable used for VFS functions */
     void * handle;            /**< Opaque data used by the transport plugins */
     int sig;                  /**< Used to detect invalid or twice-closed objects */
 };
@@ -54,9 +54,9 @@ struct _VFSFile {
  * vfs_prepare must be called from the main thread to look up any needed
  * transports beforehand. */
 
-static VFSConstructor * (* lookup_func) (const char * scheme) = NULL;
+static const VFSConstructor * (* lookup_func) (const char * scheme) = NULL;
 
-EXPORT void vfs_set_lookup_func (VFSConstructor * (* func) (const char * scheme))
+EXPORT void vfs_set_lookup_func (const VFSConstructor * (* func) (const char * scheme))
 {
     lookup_func = func;
 }
@@ -88,7 +88,7 @@ static void logger (const char * format, ...)
     }
 }
 
-EXPORT VFSFile * vfs_new (const char * path, VFSConstructor * vtable, void * handle)
+EXPORT VFSFile * vfs_new (const char * path, const VFSConstructor * vtable, void * handle)
 {
     VFSFile * file = g_slice_new (VFSFile);
     file->uri = str_get (path);
@@ -122,7 +122,7 @@ vfs_fopen(const char * path,
 {
     g_return_val_if_fail (path && mode, NULL);
 
-    VFSConstructor * vtable = NULL;
+    const VFSConstructor * vtable = NULL;
 
     if (! strncmp (path, "file://", 7))
         vtable = & vfs_local_vtable;

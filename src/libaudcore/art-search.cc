@@ -26,10 +26,10 @@
 #include "index.h"
 #include "runtime.h"
 
-typedef struct {
+struct SearchParams {
     const char * basename;
     Index * include, * exclude;
-} SearchParams;
+};
 
 static bool_t has_front_cover_extension (const char * name)
 {

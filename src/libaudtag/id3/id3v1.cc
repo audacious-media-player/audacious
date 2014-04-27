@@ -34,7 +34,7 @@
 #pragma pack(push)
 #pragma pack(1)
 
-typedef struct {
+struct ID3v1Tag {
     char header[3];
     char title[30];
     char artist[30];
@@ -42,9 +42,9 @@ typedef struct {
     char year[4];
     char comment[30];
     unsigned char genre;
-} ID3v1Tag;
+};
 
-typedef struct {
+struct ID3v1Ext {
     char header[4];
     char title[60];
     char artist[60];
@@ -53,7 +53,7 @@ typedef struct {
     char genre[30];
     char start[6];
     char end[6];
-} ID3v1Ext;
+};
 
 #pragma pack(pop)
 

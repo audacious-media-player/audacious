@@ -24,12 +24,12 @@
 
 /* These functions are to be used only from the play() function of an input plugin. */
 
-typedef struct {
+struct ReplayGainInfo {
     float track_gain; /* dB */
     float track_peak; /* 0-1 */
     float album_gain; /* dB */
     float album_peak; /* 0-1 */
-} ReplayGainInfo;
+};
 
 /* Prepares the output system for playback in the specified format.  Returns
  * TRUE on success, FALSE if the selected format is not supported. */

@@ -66,14 +66,14 @@ enum {
     TUPLE_VAR_CONST
 };
 
-struct _TupleEvalNode {
+struct TupleEvalNode {
     int opcode;   /* operator, see OP_ enums */
     int var[TUPLEZ_MAX_VARS]; /* tuple variable references */
     char *text;   /* raw text, if any (OP_RAW) */
-    struct _TupleEvalNode *children, *next, *prev; /* children of this struct, and pointer to next node. */
+    TupleEvalNode *children, *next, *prev; /* children of this struct, and pointer to next node. */
 };
 
-typedef struct {
+struct TupleEvalVar {
     char *name;
     int type;     /* Type of variable, see VAR_* */
     int defvali;
@@ -82,7 +82,7 @@ typedef struct {
     int fieldidx;   /* if >= 0: Index # of "pre-defined" Tuple fields */
     bool_t fieldread, fieldvalid;
     char * fieldstr;
-} TupleEvalVar;
+};
 
 /* Initialize an evaluation context
  */

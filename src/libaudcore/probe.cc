@@ -30,14 +30,12 @@
 #include "plugins-internal.h"
 #include "runtime.h"
 
-typedef struct
-{
+struct ProbeState {
     const char * filename;
     VFSFile * handle;
     bool_t failed;
     PluginHandle * plugin;
-}
-ProbeState;
+};
 
 static bool_t check_opened (ProbeState * state)
 {

@@ -24,7 +24,7 @@
 #include "internal.h"
 #include "probe.h"
 
-struct _ScanRequest {
+struct ScanRequest {
     char * filename; /* pooled */
     int flags;
     PluginHandle * decoder;

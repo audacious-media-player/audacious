@@ -26,11 +26,11 @@
 #define AUD_EQ_NBANDS 10
 #define AUD_EQ_MAX_GAIN 12
 
-typedef struct {
+struct EqualizerPreset {
     char * name;
     float preamp;
     float bands[AUD_EQ_NBANDS];
-} EqualizerPreset;
+};
 
 void aud_eq_set_bands (const double * values);
 void aud_eq_get_bands (double * values);
