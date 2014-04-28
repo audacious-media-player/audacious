@@ -27,13 +27,13 @@
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
 
-static Index * get_files (GtkWidget * chooser)
+static Index<PlaylistAddItem> get_files (GtkWidget * chooser)
 {
-    Index * index = index_new ();
+    Index<PlaylistAddItem> index;
     GSList * list = gtk_file_chooser_get_uris ((GtkFileChooser *) chooser);
 
     for (GSList * node = list; node; node = node->next)
-        index_insert (index, -1, str_get ((const char *) node->data));
+        index.append ({str_get ((const char *) node->data)});
 
     g_slist_free_full (list, g_free);
     return index;
@@ -42,13 +42,13 @@ static Index * get_files (GtkWidget * chooser)
 static void open_cb (void * data)
 {
     GtkWidget * chooser = (GtkWidget *) data;
-    Index * files = get_files (chooser);
+    Index<PlaylistAddItem> files = get_files (chooser);
     bool_t open = GPOINTER_TO_INT (g_object_get_data ((GObject *) chooser, "do-open"));
 
     if (open)
-        aud_drct_pl_open_list (files);
+        aud_drct_pl_open_list (std::move (files));
     else
-        aud_drct_pl_add_list (files, -1);
+        aud_drct_pl_add_list (std::move (files), -1);
 
     GtkWidget * toggle = (GtkWidget *) g_object_get_data ((GObject *) chooser, "toggle-button");
     if (gtk_toggle_button_get_active ((GtkToggleButton *) toggle))

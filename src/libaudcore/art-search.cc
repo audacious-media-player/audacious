@@ -28,7 +28,7 @@
 
 struct SearchParams {
     const char * basename;
-    Index * include, * exclude;
+    Index<char *> include, exclude;
 };
 
 static bool_t has_front_cover_extension (const char * name)
@@ -41,15 +41,15 @@ static bool_t has_front_cover_extension (const char * name)
      ! g_ascii_strcasecmp (ext, ".jpeg") || ! g_ascii_strcasecmp (ext, ".png");
 }
 
-static bool_t cover_name_filter (const char * name, Index * keywords, bool_t ret_on_empty)
+static bool_t cover_name_filter (const char * name,
+ const Index<char *> & keywords, bool_t ret_on_empty)
 {
-    int count = index_count (keywords);
-    if (! count)
+    if (! keywords.len ())
         return ret_on_empty;
 
-    for (int i = 0; i < count; i ++)
+    for (char * keyword : keywords)
     {
-        if (strstr_nocase (name, (char *) index_get (keywords, i)))
+        if (strstr_nocase (name, keyword))
             return TRUE;
     }
 
@@ -177,8 +177,10 @@ char * art_search (const char * filename)
 
         str_unref (image_local);
 
-        index_free_full (params.include, (IndexFreeFunc) str_unref);
-        index_free_full (params.exclude, (IndexFreeFunc) str_unref);
+        for (char * keyword : params.include)
+            str_unref (keyword);
+        for (char * keyword : params.exclude)
+            str_unref (keyword);
     }
 
     str_unref (local);

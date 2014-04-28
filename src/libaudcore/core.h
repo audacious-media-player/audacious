@@ -69,7 +69,14 @@ struct IfacePlugin;
 struct PluginHandle;
 struct PluginPreferences;
 struct PreferencesWidget;
+struct Tuple;
 struct VFSFile;
+
+struct PlaylistAddItem {
+    char * filename;  /* pooled */
+    Tuple * tuple;
+    PluginHandle * decoder;
+};
 
 /* STRING POOL */
 

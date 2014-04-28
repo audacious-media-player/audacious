@@ -23,6 +23,7 @@
 
 #include "internal.h"
 #include "probe.h"
+#include "tuple.h"
 
 struct ScanRequest {
     char * filename; /* pooled */

@@ -22,7 +22,7 @@
 
 #include <stdint.h>
 
-#include <libaudcore/tuple.h>
+#include <libaudcore/core.h>
 
 /* all (char *) return values must be freed with str_unref() */
 

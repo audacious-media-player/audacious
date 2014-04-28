@@ -1,6 +1,6 @@
 /*
  * index.h
- * Copyright 2009-2013 John Lindgren
+ * Copyright 2014 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -20,77 +20,177 @@
 #ifndef LIBAUDCORE_INDEX_H
 #define LIBAUDCORE_INDEX_H
 
-/* An "index" is an opaque structure representing a list of pointers.  It is
- * used primarily to store Audacious playlists, but can be useful for other
- * purposes as well. */
+#include <type_traits>
+#include <utility>
 
-struct Index;
+/*
+ * Index is a lightweight list class similar to std::vector, but with the
+ * following differences:
+ *  - The base implementation is type-agnostic, so it only needs to be compiled
+ *    once.  Type-safety is provided by a thin template subclass.
+ *  - Insertion of new objects into the list initializes them to zero; no
+ *    constructors are called.  Be careful to use only objects that can handle
+ *    this.
+ *  - Objects are moved in memory without calling any assignment operator.
+ *    Again, be careful to use only objects that can handle this.
+ */
 
-typedef void (* IndexFreeFunc) (void * value);
+class IndexBase
+{
+public:
+    typedef void (* EraseFunc) (void * data, int len);
+    typedef int (* RawCompare) (const void * a, const void * b, void * userdata);
 
-/* Returns a new, empty index. */
-Index * index_new (void);
+    static void raw_erase (void * data, int len);
 
-/* Destroys <index>. */
-void index_free (Index * index);
+    constexpr IndexBase (EraseFunc erase) :
+        erase_func (erase),
+        m_data (nullptr),
+        m_len (0),
+        m_size (0) {}
 
-/* Destroys <index>, first calling <func> on each pointer stored in it. */
-void index_free_full (Index * index, IndexFreeFunc func);
+    ~IndexBase ();
 
-/* Returns the number of pointers stored in <index>. */
-int index_count (Index * index);
+    IndexBase (const IndexBase &) = delete;
+    void operator= (const IndexBase &) = delete;
 
-/* Preallocates space to store <size> pointers in <index>.  This can be used to
- * avoid repeated memory allocations when adding pointers to <index> one by one.
- * The value returned by index_count() does not changed until the pointers are
- * actually added. */
-void index_allocate (Index * index, int size);
+    IndexBase (IndexBase && b) :
+        erase_func (b.erase_func),
+        m_data (b.m_data),
+        m_len (b.m_len),
+        m_size (b.m_size)
+    {
+        b.m_data = nullptr;
+        b.m_len = 0;
+        b.m_size = 0;
+    }
 
-/* Returns the value stored in <index> at position <at>. */
-void * index_get (Index * index, int at);
+    void operator= (IndexBase && b)
+    {
+        if (this != & b)
+        {
+            this->~IndexBase ();
+            erase_func = b.erase_func;
+            m_data = b.m_data;
+            m_len = b.m_len;
+            m_size = b.m_size;
+            b.m_data = nullptr;
+            b.m_len = 0;
+            b.m_size = 0;
+        }
+    }
 
-/* Stores <value> in <index> at position <at>, overwriting the previous value. */
-void index_set (Index * index, int at, void * value);
+    void * begin ()
+        { return m_data; }
+    const void * begin () const
+        { return m_data; }
+    void * end ()
+        { return (char *) m_data + m_len; }
+    const void * end () const
+        { return (char *) m_data + m_len; }
 
-/* Stores <value> in <index> at position <at>, shifting the previous value (if
- * any) and those following it forward to make room.  If <at> is -1, <value> is
- * added to the end of <index>. */
-void index_insert (Index * index, int at, void * value);
+    int len () const
+        { return m_len; }
 
-/* Copies <count> pointers from <source>, starting at position <from>, to
- * <target>, starting at position <to>.  Existing pointers in <target> are
- * overwritten.  Overlapping regions are handled correctly if <source> and
- * <target> are the same index. */
-void index_copy_set (Index * source, int from, Index * target, int to, int count);
+    void insert (int pos, int len);
+    void remove (int pos, int len);
+    void erase (int pos, int len);
+    void shift (int from, int to, int len);
 
-/* Copies <count> pointers from <source>, starting at position <from>, to
- * <target>, starting at position <to>.  Existing pointers in <target> are
- * shifted forward to make room.  All cases are handled correctly if <source>
- * and <target> are the same index, including the case where <to> is between
- * <from> and <from + count>.  If <to> is -1, the pointers are added to the end
- * of <target>.  If <count> is -1, copying continues until the end of <source>
- * is reached. */
-void index_copy_insert (Index * source, int from, Index * target, int to, int count);
+    void move_from (IndexBase & b, int from, int to, int len, bool expand, bool collapse);
 
-/* Removes <count> pointers from <index>, start at position <at>.  Any following
- * pointers are shifted backward to close the gap.  If <count> is -1, all
- * pointers from <at> to the end of <index> are removed. */
-void index_delete (Index * index, int at, int count);
+    void sort (RawCompare compare, int elemsize, void * userdata);
 
-/* Like index_delete(), but first calls <func> on any pointer that is being
- * removed. */
-void index_delete_full (Index * index, int at, int count, IndexFreeFunc func);
+private:
+    EraseFunc erase_func;
+    void * m_data;
+    int m_len, m_size;
+};
 
-/* Sort the entries in <index> using the quick-sort algorithm with the given
- * comparison function.  The return value of <compare> should follow the
- * convention used by strcmp(): negative if (a < b), zero if (a = b), positive
- * if (a > b). */
-void index_sort (Index * index, int (* compare) (const void * a, const void * b));
+template<class T>
+class Index : private IndexBase
+{
+public:
+    typedef int (* CompareFunc) (const T & a, const T & b, void * userdata);
 
-/* Exactly like index_sort() except that <data> is forwarded to the comparison
- * function.  This allows comparison functions whose behavior changes depending
- * on context. */
-void index_sort_with_data (Index * index, int (* compare) (const void * a,
- const void * b, void * data), void * data);
+    constexpr Index () :
+        IndexBase (plain ? raw_erase : erase_objects) {};
 
-#endif /* LIBAUDCORE_INDEX_H */
+    void clear ()
+        { this->~IndexBase (); }
+
+    T * begin ()
+        { return (T *) IndexBase::begin (); }
+    const T * begin () const
+        { return (const T *) IndexBase::begin (); }
+    T * end ()
+        { return (T *) IndexBase::end (); }
+    const T * end () const
+        { return (const T *) IndexBase::end (); }
+
+    int len () const
+        { return cooked (IndexBase::len ()); }
+
+    T & operator[] (int i)
+        { return begin ()[i]; }
+    const T & operator[] (int i) const
+        { return begin ()[i]; }
+
+    void insert (int pos, int len)
+        { IndexBase::insert (raw (pos), raw (len)); }
+    void remove (int pos, int len)
+        { IndexBase::remove (raw (pos), raw (len)); }
+    void erase (int pos, int len)
+        { IndexBase::erase (raw (pos), raw (len)); }
+    void shift (int from, int to, int len)
+        { IndexBase::shift (raw (from), raw (to), raw (len)); }
+
+    void move_from (Index<T> & b, int from, int to, int len, bool expand, bool collapse)
+        { IndexBase::move_from (b, raw (from), raw (to), raw (len), expand, collapse); }
+
+    void sort (CompareFunc compare, void * userdata)
+    {
+        const CompareData data = {compare, userdata};
+        IndexBase::sort (compare_wrapper, sizeof (T), (void *) & data);
+    }
+
+    T & append ()
+    {
+        insert (-1, 1);
+        return end ()[-1];
+    }
+
+    void append (const T & val)
+        { append () = val; }
+    void append (T && val)
+        { append () = std::move (val); }
+
+private:
+    struct CompareData {
+        CompareFunc compare;
+        void * userdata;
+    };
+
+    static constexpr bool plain = std::is_trivial<T>::value;
+
+    static constexpr int raw (int len)
+        { return len * sizeof (T); }
+    static constexpr int cooked (int len)
+        { return len / sizeof (T); }
+
+    static void erase_objects (void * data, int len)
+    {
+        T * iter = (T *) data;
+        T * end = (T *) ((char *) data + len);
+        while (iter < end)
+            (* iter ++).~T ();
+    }
+
+    static int compare_wrapper (const void * a, const void * b, void * userdata)
+    {
+        const CompareData & data = * (const CompareData *) userdata;
+        return data.compare (* (const T *) a, * (const T *) b, data.userdata);
+    }
+};
+
+#endif // LIBAUDCORE_INDEX_H

@@ -33,21 +33,43 @@
 #include "plugins-internal.h"
 #include "probe.h"
 #include "runtime.h"
+#include "tuple.h"
 #include "vfs.h"
 
-struct AddTask {
+struct AddTask
+{
     int playlist_id, at;
     bool_t play;
-    Index * filenames, * tuples;
+    Index<PlaylistAddItem> items;
     PlaylistFilterFunc filter;
     void * user;
+
+    ~AddTask ()
+    {
+        for (auto & item : items)
+        {
+            str_unref (item.filename);
+            tuple_unref (item.tuple);
+        }
+    }
 };
 
 struct AddResult {
     int playlist_id, at;
     bool_t play;
     char * title;
-    Index * filenames, * tuples, * decoders;
+    Index<PlaylistAddItem> items;
+
+    ~AddResult ()
+    {
+        str_unref (title);
+
+        for (auto & item : items)
+        {
+            str_unref (item.filename);
+            tuple_unref (item.tuple);
+        }
+    }
 };
 
 static void * add_worker (void * unused);
@@ -116,58 +138,6 @@ static void status_done_locked (void)
         hook_call ("ui hide progress", NULL);
 }
 
-static AddTask * add_task_new (int playlist_id, int at, bool_t play,
- Index * filenames, Index * tuples, PlaylistFilterFunc filter,
- void * user)
-{
-    AddTask * task = g_slice_new (AddTask);
-    task->playlist_id = playlist_id;
-    task->at = at;
-    task->play = play;
-    task->filenames = filenames;
-    task->tuples = tuples;
-    task->filter = filter;
-    task->user = user;
-    return task;
-}
-
-static void add_task_free (AddTask * task)
-{
-    if (task->filenames)
-        index_free_full (task->filenames, (IndexFreeFunc) str_unref);
-    if (task->tuples)
-        index_free_full (task->tuples, (IndexFreeFunc) tuple_unref);
-
-    g_slice_free (AddTask, task);
-}
-
-static AddResult * add_result_new (int playlist_id, int at, bool_t play)
-{
-    AddResult * result = g_slice_new (AddResult);
-    result->playlist_id = playlist_id;
-    result->at = at;
-    result->play = play;
-    result->title = NULL;
-    result->filenames = index_new ();
-    result->tuples = index_new ();
-    result->decoders = index_new ();
-    return result;
-}
-
-static void add_result_free (AddResult * result)
-{
-    str_unref (result->title);
-
-    if (result->filenames)
-        index_free_full (result->filenames, (IndexFreeFunc) str_unref);
-    if (result->tuples)
-        index_free_full (result->tuples, (IndexFreeFunc) tuple_unref);
-    if (result->decoders)
-        index_free (result->decoders);
-
-    g_slice_free (AddResult, result);
-}
-
 static void add_file (char * filename, Tuple * tuple, PluginHandle * decoder,
  PlaylistFilterFunc filter, void * user, AddResult * result, bool_t validate)
 {
@@ -178,7 +148,7 @@ static void add_file (char * filename, Tuple * tuple, PluginHandle * decoder,
         return;
     }
 
-    status_update (filename, index_count (result->filenames));
+    status_update (filename, result->items.len ());
 
     if (! tuple && ! decoder)
     {
@@ -209,9 +179,7 @@ static void add_file (char * filename, Tuple * tuple, PluginHandle * decoder,
         return;
     }
 
-    index_insert (result->filenames, -1, filename);
-    index_insert (result->tuples, -1, tuple);
-    index_insert (result->decoders, -1, decoder);
+    result->items.append ({filename, tuple, decoder});
 }
 
 static void add_folder (char * filename, PlaylistFilterFunc filter,
@@ -226,7 +194,7 @@ static void add_folder (char * filename, PlaylistFilterFunc filter,
     if (filter && ! filter (filename, user))
         goto DONE;
 
-    status_update (filename, index_count (result->filenames));
+    status_update (filename, result->items.len ());
 
     if (! (path = uri_to_filename (filename)))
         goto DONE;
@@ -292,11 +260,12 @@ static void add_playlist (char * filename, PlaylistFilterFunc filter,
         return;
     }
 
-    status_update (filename, index_count (result->filenames));
+    status_update (filename, result->items.len ());
 
     char * title = NULL;
-    Index * filenames, * tuples;
-    if (! playlist_load (filename, & title, & filenames, & tuples))
+    Index<PlaylistAddItem> items;
+
+    if (! playlist_load (filename, & title, items))
     {
         str_unref (filename);
         return;
@@ -307,18 +276,10 @@ static void add_playlist (char * filename, PlaylistFilterFunc filter,
     else
         str_unref (title);
 
-    int count = index_count (filenames);
-    for (int i = 0; i < count; i ++)
-    {
-        char * filename2 = (char *) index_get (filenames, i);
-        Tuple * tuple = tuples ? (Tuple *) index_get (tuples, i) : NULL;
-        add_file (filename2, tuple, NULL, filter, user, result, FALSE);
-    }
+    for (auto & item : items)
+        add_file (item.filename, item.tuple, NULL, filter, user, result, FALSE);
 
     str_unref (filename);
-    index_free (filenames);
-    if (tuples)
-        index_free (tuples);
 }
 
 static void add_generic (char * filename, Tuple * tuple,
@@ -394,11 +355,7 @@ static bool_t add_finish (void * unused)
             str_unref (old_title);
         }
 
-        playlist_entry_insert_batch_raw (playlist, result->at,
-         result->filenames, result->tuples, result->decoders);
-        result->filenames = NULL;
-        result->tuples = NULL;
-        result->decoders = NULL;
+        playlist_entry_insert_batch_raw (playlist, result->at, std::move (result->items));
 
         if (result->play && aud_playlist_entry_count (playlist) > count)
         {
@@ -409,7 +366,7 @@ static bool_t add_finish (void * unused)
         }
 
     FREE:
-        add_result_free (result);
+        delete result;
     }
 
     if (add_source)
@@ -442,25 +399,23 @@ static void * add_worker (void * unused)
         current_playlist_id = task->playlist_id;
         pthread_mutex_unlock (& mutex);
 
-        AddResult * result = add_result_new (task->playlist_id, task->at, task->play);
+        AddResult * result = new AddResult ();
 
-        int count = index_count (task->filenames);
-        if (task->tuples)
-            count = MIN (count, index_count (task->tuples));
+        result->playlist_id = task->playlist_id;
+        result->at = task->at;
+        result->play = task->play;
 
-        for (int i = 0; i < count; i ++)
+        bool_t is_single = (task->items.len () == 1);
+
+        for (auto & item : task->items)
         {
-            char * filename = (char *) index_get (task->filenames, i);
-            Tuple * tuple = task->tuples ? (Tuple *) index_get (task->tuples, i) : NULL;
+            add_generic (item.filename, item.tuple, task->filter, task->user, result, is_single);
 
-            add_generic (filename, tuple, task->filter, task->user, result, (count == 1));
-
-            index_set (task->filenames, i, NULL);
-            if (task->tuples)
-                index_set (task->tuples, i, NULL);
+            item.filename = NULL;
+            item.tuple = NULL;
         }
 
-        add_task_free (task);
+        delete task;
 
         pthread_mutex_lock (& mutex);
         current_playlist_id = -1;
@@ -480,13 +435,19 @@ void adder_cleanup (void)
 {
     pthread_mutex_lock (& mutex);
 
-    g_list_free_full (add_tasks, (GDestroyNotify) add_task_free);
+    for (GList * node = add_tasks; node; node = node->next)
+        delete ((AddTask *) node->data);
+
+    g_list_free (add_tasks);
     add_tasks = NULL;
 
     stop_thread_locked ();
     status_done_locked ();
 
-    g_list_free_full (add_results, (GDestroyNotify) add_result_free);
+    for (GList * node = add_results; node; node = node->next)
+        delete ((AddResult *) node->data);
+
+    g_list_free (add_results);
     add_results = NULL;
 
     if (add_source)
@@ -501,30 +462,36 @@ void adder_cleanup (void)
 EXPORT void aud_playlist_entry_insert (int playlist, int at, const char * filename,
  Tuple * tuple, bool_t play)
 {
-    Index * filenames = index_new ();
-    Index * tuples = index_new ();
-    index_insert (filenames, -1, str_get (filename));
-    index_insert (tuples, -1, tuple);
+    Index<PlaylistAddItem> items;
+    items.append ({str_get (filename), tuple});
 
-    aud_playlist_entry_insert_batch (playlist, at, filenames, tuples, play);
+    aud_playlist_entry_insert_batch (playlist, at, std::move (items), play);
 }
 
 EXPORT void aud_playlist_entry_insert_batch (int playlist, int at,
- Index * filenames, Index * tuples, bool_t play)
+ Index<PlaylistAddItem> && items, bool_t play)
 {
-    aud_playlist_entry_insert_filtered (playlist, at, filenames, tuples, NULL, NULL, play);
+    aud_playlist_entry_insert_filtered (playlist, at, std::move (items), NULL, NULL, play);
 }
 
 EXPORT void aud_playlist_entry_insert_filtered (int playlist, int at,
- Index * filenames, Index * tuples, PlaylistFilterFunc filter,
- void * user, bool_t play)
+ Index<PlaylistAddItem> && items, PlaylistFilterFunc filter, void * user,
+ bool_t play)
 {
     int playlist_id = aud_playlist_get_unique_id (playlist);
     g_return_if_fail (playlist_id >= 0);
 
     pthread_mutex_lock (& mutex);
 
-    AddTask * task = add_task_new (playlist_id, at, play, filenames, tuples, filter, user);
+    AddTask * task = new AddTask ();
+
+    task->playlist_id = playlist_id;
+    task->at = at;
+    task->play = play;
+    task->items = std::move (items);
+    task->filter = filter;
+    task->user = user;
+
     add_tasks = g_list_append (add_tasks, task);
     start_thread_locked ();
 

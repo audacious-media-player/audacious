@@ -22,8 +22,8 @@
 
 #include <stdint.h>
 
+#include "core.h"
 #include "index.h"
-#include "tuple.h"
 
 typedef bool_t (* DirForeachFunc) (const char * path, const char * basename, void * user);
 

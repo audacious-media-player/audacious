@@ -33,8 +33,7 @@ bool_t playlist_get_modified (int playlist);
 void playlist_load_state (void);
 void playlist_save_state (void);
 
-void playlist_entry_insert_batch_raw (int playlist, int at, Index * filenames,
- Index * tuples, Index * decoders);
+void playlist_entry_insert_batch_raw (int playlist, int at, Index<PlaylistAddItem> && items);
 
 bool_t playlist_prev_song (int playlist);
 bool_t playlist_next_song (int playlist, bool_t repeat);
@@ -49,8 +48,7 @@ int playback_entry_get_length (void);
 void playback_entry_set_tuple (Tuple * tuple);
 
 /* playlist-files.c */
-bool_t playlist_load (const char * filename, char * * title,
- Index * * filenames, Index * * tuples);
+bool_t playlist_load (const char * filename, char * * title, Index<PlaylistAddItem> & items);
 bool_t playlist_insert_playlist_raw (int list, int at, const char * filename);
 
 /* playlist-utils.c */

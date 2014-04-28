@@ -31,8 +31,7 @@
 struct PlaylistData {
     const char * filename;
     char * title;
-    Index * filenames;
-    Index * tuples;
+    Index<PlaylistAddItem> items;
     bool_t plugin_found;
     bool_t success;
 };
@@ -71,20 +70,16 @@ static bool_t playlist_load_cb (PluginHandle * plugin, void * data_)
     if (! file)
         return FALSE; /* stop if we can't open file */
 
-    data->success = pp->load (data->filename, file, & data->title, data->filenames, data->tuples);
+    data->success = pp->load (data->filename, file, & data->title, data->items);
 
     vfs_fclose (file);
     return ! data->success; /* stop when playlist is loaded */
 }
 
-bool_t playlist_load (const char * filename, char * * title, Index * * filenames, Index * * tuples)
+bool_t playlist_load (const char * filename, char * * title, Index<PlaylistAddItem> & items)
 {
-    PlaylistData data =
-    {
-        filename,
-        NULL,
-        index_new (),
-        index_new ()
+    PlaylistData data = {
+        filename
     };
 
     AUDDBG ("Loading playlist %s.\n", filename);
@@ -99,37 +94,33 @@ bool_t playlist_load (const char * filename, char * * title, Index * * filenames
     if (! data.success)
     {
         str_unref (data.title);
-        index_free_full (data.filenames, (IndexFreeFunc) str_unref);
-        index_free_full (data.tuples, (IndexFreeFunc) tuple_unref);
+
+        for (auto & item : data.items)
+        {
+            str_unref (item.filename);
+            tuple_unref (item.tuple);
+        }
+
         return FALSE;
     }
 
-    if (index_count (data.tuples))
-        g_return_val_if_fail (index_count (data.tuples) == index_count (data.filenames), FALSE);
-    else
-    {
-        index_free (data.tuples);
-        data.tuples = NULL;
-    }
-
     * title = data.title;
-    * filenames = data.filenames;
-    * tuples = data.tuples;
+    items = std::move (data.items);
     return TRUE;
 }
 
 bool_t playlist_insert_playlist_raw (int list, int at, const char * filename)
 {
     char * title = NULL;
-    Index * filenames, * tuples;
+    Index<PlaylistAddItem> items;
 
-    if (! playlist_load (filename, & title, & filenames, & tuples))
+    if (! playlist_load (filename, & title, items))
         return FALSE;
 
     if (title && ! aud_playlist_entry_count (list))
         aud_playlist_set_title (list, title);
 
-    playlist_entry_insert_batch_raw (list, at, filenames, tuples, NULL);
+    playlist_entry_insert_batch_raw (list, at, std::move (items));
 
     str_unref (title);
     return TRUE;
@@ -149,7 +140,7 @@ static bool_t playlist_save_cb (PluginHandle * plugin, void * data_)
     if (! file)
         return FALSE; /* stop if we can't open file */
 
-    data->success = pp->save (data->filename, file, data->title, data->filenames, data->tuples);
+    data->success = pp->save (data->filename, file, data->title, data->items);
 
     vfs_fclose (file);
     return FALSE; /* stop after first attempt (successful or not) */
@@ -157,24 +148,20 @@ static bool_t playlist_save_cb (PluginHandle * plugin, void * data_)
 
 EXPORT bool_t aud_playlist_save (int list, const char * filename)
 {
-    PlaylistData data =
-    {
+    PlaylistData data = {
         filename,
-        aud_playlist_get_title (list),
-        index_new (),
-        index_new ()
+        aud_playlist_get_title (list)
     };
 
     int entries = aud_playlist_entry_count (list);
     bool_t fast = aud_get_bool (NULL, "metadata_on_play");
 
-    index_allocate (data.filenames, entries);
-    index_allocate (data.tuples, entries);
+    data.items.insert (0, entries);
 
     for (int i = 0; i < entries; i ++)
     {
-        index_insert (data.filenames, -1, aud_playlist_entry_get_filename (list, i));
-        index_insert (data.tuples, -1, aud_playlist_entry_get_tuple (list, i, fast));
+        data.items[i].filename = aud_playlist_entry_get_filename (list, i);
+        data.items[i].tuple = aud_playlist_entry_get_tuple (list, i, fast);
     }
 
     AUDDBG ("Saving playlist %s.\n", filename);
@@ -187,8 +174,12 @@ EXPORT bool_t aud_playlist_save (int list, const char * filename)
     }
 
     str_unref (data.title);
-    index_free_full (data.filenames, (IndexFreeFunc) str_unref);
-    index_free_full (data.tuples, (IndexFreeFunc) tuple_unref);
+
+    for (auto & item : data.items)
+    {
+        str_unref (item.filename);
+        tuple_unref (item.tuple);
+    }
 
     return data.success;
 }

@@ -22,14 +22,14 @@
 #include <complex>
 #include <math.h>
 
-using namespace std;
-
 #define N 512                         /* size of the DFT */
 #define LOGN 9                        /* log N (base 2) */
 
+typedef std::complex<float> Complex;
+
 static float hamming[N];              /* hamming window, scaled to sum to 1 */
 static int reversed[N];               /* bit-reversal table */
-static complex<float> roots[N / 2];    /* N-th roots of unity */
+static Complex roots[N / 2];    /* N-th roots of unity */
 static char generated = 0;            /* set if tables have been generated */
 
 /* Reverse the order of the lowest LOGN bits in an integer. */
@@ -59,7 +59,7 @@ static void generate_tables (void)
     for (int n = 0; n < N; n ++)
         reversed[n] = bit_reverse (n);
     for (int n = 0; n < N / 2; n ++)
-        roots[n] = exp (complex<float> (0, 2 * M_PI * n / N));
+        roots[n] = exp (Complex (0, 2 * M_PI * n / N));
 
     generated = 1;
 }
@@ -69,7 +69,7 @@ static void generate_tables (void)
  * operations.  Each group contains (2^s)/2 butterflies, and each butterfly has
  * a span of (2^s)/2.  The twiddle factors are nth roots of unity where n = 2^s. */
 
-static void do_fft (complex<float> a[N])
+static void do_fft (Complex a[N])
 {
     int half = 1;       /* (2^s)/2 */
     int inv = N / 2;    /* N/(2^s) */
@@ -83,8 +83,8 @@ static void do_fft (complex<float> a[N])
             /* loop through butterflies */
             for (int b = 0, r = 0; b < half; b ++, r += inv)
             {
-                complex<float> even = a[g + b];
-                complex<float> odd = roots[r] * a[g + half + b];
+                Complex even = a[g + b];
+                Complex odd = roots[r] * a[g + half + b];
                 a[g + b] = even + odd;
                 a[g + half + b] = even - odd;
             }
@@ -104,7 +104,7 @@ void calc_freq (const float data[N], float freq[N / 2])
 
     /* input is filtered by a Hamming window */
     /* input values are in bit-reversed order */
-    complex<float> a[N];
+    Complex a[N];
     for (int n = 0; n < N; n ++)
         a[reversed[n]] = data[n] * hamming[n];
 

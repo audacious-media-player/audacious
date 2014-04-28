@@ -26,6 +26,7 @@
 #include <string.h>
 
 #include <libaudcore/core.h>
+#include <libaudcore/index.h>
 
 #define SPRINTF(s, ...) \
  char s[snprintf (NULL, 0, __VA_ARGS__) + 1]; \
@@ -67,8 +68,6 @@
  memcpy (s + s##_1, (b), s##_2); \
  memcpy (s + s##_1 + s##_2, (c), s##_3); \
  strcpy (s + s##_1 + s##_2 + s##_3, (d))
-
-struct Index;
 
 /* all (char *) return values must be freed with str_unref() */
 
@@ -114,8 +113,8 @@ char * uri_construct (const char * path, const char * reference);
 int str_compare (const char * a, const char * b);
 int str_compare_encoded (const char * a, const char * b);
 
-Index * str_list_to_index (const char * list, const char * delims);
-char * index_to_str_list (Index * index, const char * sep);
+Index<char *> str_list_to_index (const char * list, const char * delims);
+char * index_to_str_list (const Index<char *> & index, const char * sep);
 
 int str_to_int (const char * string);
 double str_to_double (const char * string);

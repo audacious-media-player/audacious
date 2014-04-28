@@ -27,6 +27,7 @@
 #include <libaudcore/i18n.h>
 #include <libaudcore/playlist.h>
 #include <libaudcore/runtime.h>
+#include <libaudcore/tuple.h>
 
 #include "internal.h"
 #include "libaudgui.h"

@@ -33,6 +33,7 @@
 
 #include "audstrings.h"
 #include "runtime.h"
+#include "tuple.h"
 
 bool_t dir_foreach (const char * path, DirForeachFunc func, void * user)
 {

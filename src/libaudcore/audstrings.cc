@@ -605,14 +605,14 @@ EXPORT int str_compare_encoded (const char * ap, const char * bp)
     return 0;
 }
 
-EXPORT Index * str_list_to_index (const char * list, const char * delims)
+EXPORT Index<char *> str_list_to_index (const char * list, const char * delims)
 {
     char dmap[256] = {0};
 
     for (; * delims; delims ++)
         dmap[(unsigned char) (* delims)] = 1;
 
-    Index * index = index_new ();
+    Index<char *> index;
     const char * word = NULL;
 
     for (; * list; list ++)
@@ -621,7 +621,7 @@ EXPORT Index * str_list_to_index (const char * list, const char * delims)
         {
             if (word)
             {
-                index_insert (index, -1, str_nget (word, list - word));
+                index.append (str_nget (word, list - word));
                 word = NULL;
             }
         }
@@ -635,21 +635,21 @@ EXPORT Index * str_list_to_index (const char * list, const char * delims)
     }
 
     if (word)
-        index_insert (index, -1, str_get (word));
+        index.append (str_get (word));
 
     return index;
 }
 
-EXPORT char * index_to_str_list (Index * index, const char * sep)
+EXPORT char * index_to_str_list (const Index<char *> & index, const char * sep)
 {
-    int count = index_count (index);
+    int count = index.len ();
     int seplen = strlen (sep);
     int total = count ? seplen * (count - 1) : 0;
     int lengths[count];
 
     for (int i = 0; i < count; i ++)
     {
-        lengths[i] = strlen ((char *) index_get (index, i));
+        lengths[i] = strlen (index[i]);
         total += lengths[i];
     }
 
@@ -664,7 +664,7 @@ EXPORT char * index_to_str_list (Index * index, const char * sep)
             pos += seplen;
         }
 
-        strcpy (buf + pos, (char *) index_get (index, i));
+        strcpy (buf + pos, index[i]);
         pos += lengths[i];
     }
 
@@ -759,75 +759,81 @@ EXPORT char * double_to_str (double val)
 
 EXPORT bool_t str_to_int_array (const char * string, int * array, int count)
 {
-    Index * index = str_list_to_index (string, ", ");
-    bool_t okay = (index_count (index) == count);
+    Index<char *> index = str_list_to_index (string, ", ");
+    bool_t okay = (index.len () == count);
 
     if (okay)
     {
         for (int i = 0; i < count; i ++)
-            array[i] = str_to_int ((char *) index_get (index, i));
+            array[i] = str_to_int (index[i]);
     }
 
-    index_free_full (index, (IndexFreeFunc) str_unref);
+    for (char * str : index)
+        str_unref (str);
+
     return okay;
 }
 
 EXPORT char * int_array_to_str (const int * array, int count)
 {
-    Index * index = index_new ();
+    Index<char *> index;
+    char * string = NULL;
 
     for (int i = 0; i < count; i ++)
     {
         char * value = int_to_str (array[i]);
-
         if (! value)
-        {
-            index_free_full (index, (IndexFreeFunc) str_unref);
-            return NULL;
-        }
+            goto BAD;
 
-        index_insert (index, -1, value);
+        index.append (value);
     }
 
-    char * string = index_to_str_list (index, ",");
-    index_free_full (index, (IndexFreeFunc) str_unref);
+    string = index_to_str_list (index, ",");
+
+BAD:
+    for (char * str : index)
+        str_unref (str);
+
     return string;
 }
 
 EXPORT bool_t str_to_double_array (const char * string, double * array, int count)
 {
-    Index * index = str_list_to_index (string, ", ");
-    bool_t okay = (index_count (index) == count);
+    Index<char *> index = str_list_to_index (string, ", ");
+    bool_t okay = (index.len () == count);
 
     if (okay)
     {
         for (int i = 0; i < count; i ++)
-            array[i] = str_to_double ((char *) index_get (index, i));
+            array[i] = str_to_double (index[i]);
     }
 
-    index_free_full (index, (IndexFreeFunc) str_unref);
+    for (char * str : index)
+        str_unref (str);
+
     return okay;
 }
 
 EXPORT char * double_array_to_str (const double * array, int count)
 {
-    Index * index = index_new ();
+    Index<char *> index;
+    char * string = NULL;
 
     for (int i = 0; i < count; i ++)
     {
         char * value = double_to_str (array[i]);
-
         if (! value)
-        {
-            index_free_full (index, (IndexFreeFunc) str_unref);
-            return NULL;
-        }
+            goto BAD;
 
-        index_insert (index, -1, value);
+        index.append (value);
     }
 
-    char * string = index_to_str_list (index, ",");
-    index_free_full (index, (IndexFreeFunc) str_unref);
+    string = index_to_str_list (index, ",");
+
+BAD:
+    for (char * str : index)
+        str_unref (str);
+
     return string;
 }
 

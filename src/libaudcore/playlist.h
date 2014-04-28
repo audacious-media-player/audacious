@@ -22,8 +22,8 @@
 
 #include <stdint.h>
 
+#include <libaudcore/core.h>
 #include <libaudcore/index.h>
-#include <libaudcore/tuple.h>
 
 /* The values which can be passed (packed into a pointer) to the "playlist
  * update" hook.  PLAYLIST_UPDATE_SELECTION means that entries have been
@@ -153,15 +153,9 @@ void aud_playlist_entry_insert (int playlist, int at, const char * filename,
  Tuple * tuple, bool_t play);
 
 /* Similar to playlist_entry_insert, adds multiple song files, playlist files,
- * or folders to a playlist.  The filenames, stored as (char *) in an index
- * (see libaudcore/index.h), must be pooled with str_get(); the caller gives up
- * one reference count to each filename.  Tuples are likewise stored as
- * (Tuple *) in an index of the same length; the caller gives up one reference
- * count to each tuple.  <tuples> may be NULL, or individual pointers within it
- * may be NULL.  Finally, the caller also gives up ownership of the indexes
- * themselves and should not access them after the call.   */
-void aud_playlist_entry_insert_batch (int playlist, int at, Index * filenames,
- Index * tuples, bool_t play);
+ * or folders to a playlist. */
+void aud_playlist_entry_insert_batch (int playlist, int at,
+ Index<PlaylistAddItem> && items, bool_t play);
 
 /* Similar to playlist_entry_insert_batch, but allows the caller to prevent some
  * items from being added by returning false from the <filter> callback.  Useful
@@ -169,7 +163,7 @@ void aud_playlist_entry_insert_batch (int playlist, int at, Index * filenames,
  * passed to the callback can be used with str_ref(), str_equal(), etc.  <user>
  * is an additional, untyped pointer passed to the callback. */
 void aud_playlist_entry_insert_filtered (int playlist, int at,
- Index * filenames, Index * tuples, PlaylistFilterFunc filter, void * user,
+ Index<PlaylistAddItem> && items, PlaylistFilterFunc filter, void * user,
  bool_t play);
 
 /* Removes a contiguous block of <number> entries starting from the one numbered

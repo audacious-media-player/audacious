@@ -139,22 +139,16 @@ struct PlaylistPlugin
     /* path: URI of playlist file (in)
      * file: VFS handle of playlist file (in, read-only file, not seekable)
      * title: title of playlist (out, string-pooled)
-     * filenames: container to fill with URIs read from playlist file
-     *     (in-out, list of (char *), string-pooled)
-     * tuples: container to fill with metadata read from playlist
-     *     (in-out, list of (Tuple *), may contain null pointers) */
+     * items: container to fill with data read from playlist file (out) */
     bool_t (* load) (const char * path, VFSFile * file, char * * title,
-     Index * filenames, Index * tuples);
+     Index<PlaylistAddItem> & items);
 
     /* path: URI of playlist file (in)
      * file: VFS handle of playlist file (in, write-only file, not seekable)
      * title: title of playlist (in)
-     * filenames: container filled with URIs to be written to playlist
-     *     (in, list of (char *))
-     * tuples: container filled with metadata to be written to playlist
-     *     (in, list of (Tuple *), may contain null pointers) */
+     * items: container filled with data to be written to playlist */
     bool_t (* save) (const char * path, VFSFile * file, const char * title,
-     Index * filenames, Index * tuples);
+     const Index<PlaylistAddItem> & items);
 };
 
 struct OutputPlugin

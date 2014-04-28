@@ -29,6 +29,7 @@
 #include <libaudcore/interface.h>
 #include <libaudcore/playlist.h>
 #include <libaudcore/probe.h>
+#include <libaudcore/tuple.h>
 
 #include "internal.h"
 #include "libaudgui.h"

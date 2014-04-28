@@ -137,7 +137,7 @@ EXPORT void aud_drct_pl_prev (void)
     playlist_prev_song (playlist);
 }
 
-static void add_list (Index * filenames, int at, bool_t to_temp, bool_t play)
+static void add_list (Index<PlaylistAddItem> && items, int at, bool_t to_temp, bool_t play)
 {
     if (to_temp)
         aud_playlist_set_active (aud_playlist_get_temporary ());
@@ -146,7 +146,7 @@ static void add_list (Index * filenames, int at, bool_t to_temp, bool_t play)
 
     /* queue the new entries before deleting the old ones */
     /* this is to avoid triggering the --quit-after-play condition */
-    aud_playlist_entry_insert_batch (playlist, at, filenames, NULL, play);
+    aud_playlist_entry_insert_batch (playlist, at, std::move (items), play);
 
     if (play)
     {
@@ -159,36 +159,36 @@ static void add_list (Index * filenames, int at, bool_t to_temp, bool_t play)
 
 EXPORT void aud_drct_pl_add (const char * filename, int at)
 {
-    Index * filenames = index_new ();
-    index_insert (filenames, -1, str_get (filename));
-    add_list (filenames, at, FALSE, FALSE);
+    Index<PlaylistAddItem> items;
+    items.append ({str_get (filename)});
+    add_list (std::move (items), at, FALSE, FALSE);
 }
 
-EXPORT void aud_drct_pl_add_list (Index * filenames, int at)
+EXPORT void aud_drct_pl_add_list (Index<PlaylistAddItem> && items, int at)
 {
-    add_list (filenames, at, FALSE, FALSE);
+    add_list (std::move (items), at, FALSE, FALSE);
 }
 
 EXPORT void aud_drct_pl_open (const char * filename)
 {
-    Index * filenames = index_new ();
-    index_insert (filenames, -1, str_get (filename));
-    add_list (filenames, -1, aud_get_bool (NULL, "open_to_temporary"), TRUE);
+    Index<PlaylistAddItem> items;
+    items.append ({str_get (filename)});
+    add_list (std::move (items), -1, aud_get_bool (NULL, "open_to_temporary"), TRUE);
 }
 
-EXPORT void aud_drct_pl_open_list (Index * filenames)
+EXPORT void aud_drct_pl_open_list (Index<PlaylistAddItem> && items)
 {
-    add_list (filenames, -1, aud_get_bool (NULL, "open_to_temporary"), TRUE);
+    add_list (std::move (items), -1, aud_get_bool (NULL, "open_to_temporary"), TRUE);
 }
 
 EXPORT void aud_drct_pl_open_temp (const char * filename)
 {
-    Index * filenames = index_new ();
-    index_insert (filenames, -1, str_get (filename));
-    add_list (filenames, -1, TRUE, TRUE);
+    Index<PlaylistAddItem> items;
+    items.append ({str_get (filename)});
+    add_list (std::move (items), -1, TRUE, TRUE);
 }
 
-EXPORT void aud_drct_pl_open_temp_list (Index * filenames)
+EXPORT void aud_drct_pl_open_temp_list (Index<PlaylistAddItem> && items)
 {
-    add_list (filenames, -1, TRUE, TRUE);
+    add_list (std::move (items), -1, TRUE, TRUE);
 }

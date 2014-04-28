@@ -46,7 +46,7 @@ static struct {
     bool_t verbose;
 } options;
 
-static Index * filenames;
+static Index<PlaylistAddItem> filenames;
 
 static const struct {
     const char * long_arg;
@@ -98,12 +98,7 @@ static bool_t parse_options (int argc, char * * argv)
             }
 
             if (uri)
-            {
-                if (! filenames)
-                    filenames = index_new ();
-
-                index_insert (filenames, -1, uri);
-            }
+                filenames.append ({uri});
         }
         else if (argv[n][1] == '-')  /* long option */
         {
@@ -200,18 +195,18 @@ static void do_remote (void)
     AUDDBG ("Connected to remote version %s.\n", version);
 
     /* if no command line options, then present running instance */
-    if (! (filenames || options.play || options.pause || options.play_pause ||
-     options.stop || options.rew || options.fwd || options.show_jump_box ||
-     options.mainwin))
+    if (! (filenames.len () || options.play || options.pause ||
+     options.play_pause || options.stop || options.rew || options.fwd ||
+     options.show_jump_box || options.mainwin))
         options.mainwin = TRUE;
 
-    if (filenames)
+    if (filenames.len ())
     {
-        int n_filenames = index_count (filenames);
+        int n_filenames = filenames.len ();
         const char * * list = g_new (const char *, n_filenames + 1);
 
         for (int i = 0; i < n_filenames; i ++)
-            list[i] = (char *) index_get (filenames, i);
+            list[i] = filenames[i].filename;
 
         list[n_filenames] = NULL;
 
@@ -263,22 +258,20 @@ static void do_commands (void)
 {
     bool_t resume = aud_get_bool (NULL, "resume_playback_on_startup");
 
-    if (filenames)
+    if (filenames.len ())
     {
         if (options.enqueue_to_temp)
         {
-            aud_drct_pl_open_temp_list (filenames);
+            aud_drct_pl_open_temp_list (std::move (filenames));
             resume = FALSE;
         }
         else if (options.enqueue)
-            aud_drct_pl_add_list (filenames, -1);
+            aud_drct_pl_add_list (std::move (filenames), -1);
         else
         {
-            aud_drct_pl_open_list (filenames);
+            aud_drct_pl_open_list (std::move (filenames));
             resume = FALSE;
         }
-
-        filenames = NULL;
     }
 
     if (resume)
@@ -302,8 +295,10 @@ static void main_cleanup (void)
 {
     aud_cleanup_paths ();
 
-    if (filenames)
-        index_free_full (filenames, (IndexFreeFunc) str_unref);
+    for (auto & item : filenames)
+        str_unref (item.filename);
+
+    filenames.clear ();
 
     strpool_shutdown ();
 }

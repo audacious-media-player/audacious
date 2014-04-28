@@ -127,14 +127,13 @@ static bool_t search_cb (GtkTreeModel * model, int column, const char * key,
     char * title = aud_playlist_get_title (row);
     g_return_val_if_fail (title, TRUE);
 
-    Index * keys = str_list_to_index (key, " ");
-    int count = index_count (keys);
+    Index<char *> keys = str_list_to_index (key, " ");
 
     bool_t match = FALSE;
 
-    for (int i = 0; i < count; i ++)
+    for (char * key : keys)
     {
-        if (strstr_nocase_utf8 (title, (char *) index_get (keys, i)))
+        if (strstr_nocase_utf8 (title, key))
             match = TRUE;
         else
         {
@@ -143,7 +142,9 @@ static bool_t search_cb (GtkTreeModel * model, int column, const char * key,
         }
     }
 
-    index_free_full (keys, (IndexFreeFunc) str_unref);
+    for (char * key : keys)
+        str_unref (key);
+
     str_unref (title);
 
     return ! match; /* TRUE == not matched, FALSE == matched */

@@ -58,6 +58,7 @@ INCLUDES = audio.h \
            input.h \
            interface.h \
            multihash.h \
+           objects.h \
            playlist.h \
            plugin.h \
            plugin-declare.h \

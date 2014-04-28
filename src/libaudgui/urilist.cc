@@ -27,8 +27,6 @@
 
 #include "libaudgui.h"
 
-typedef void (* ForEachFunc) (char *, void *);
-
 static char * check_uri (char * name)
 {
     char * uri;
@@ -40,8 +38,9 @@ static char * check_uri (char * name)
     return uri;
 }
 
-static void urilist_for_each (const char * list, ForEachFunc func, void * user)
+static Index<PlaylistAddItem> urilist_to_index (const char * list)
 {
+    Index<PlaylistAddItem> index;
     const char * end, * next;
 
     while (list[0])
@@ -53,28 +52,21 @@ static void urilist_for_each (const char * list, ForEachFunc func, void * user)
         else
             next = end = strchr (list, 0);
 
-        func (check_uri (str_nget (list, end - list)), user);
+        index.append ({check_uri (str_nget (list, end - list))});
         list = next;
     }
-}
 
-static void add_to_index (char * name, Index * index)
-{
-    index_insert (index, -1, name);
+    return index;
 }
 
 EXPORT void audgui_urilist_open (const char * list)
 {
-    Index * filenames = index_new ();
-    urilist_for_each (list, (ForEachFunc) add_to_index, filenames);
-    aud_drct_pl_open_list (filenames);
+    aud_drct_pl_open_list (urilist_to_index (list));
 }
 
 EXPORT void audgui_urilist_insert (int playlist, int at, const char * list)
 {
-    Index * filenames = index_new ();
-    urilist_for_each (list, (ForEachFunc) add_to_index, filenames);
-    aud_playlist_entry_insert_batch (playlist, at, filenames, NULL, FALSE);
+    aud_playlist_entry_insert_batch (playlist, at, urilist_to_index (list), FALSE);
 }
 
 EXPORT char * audgui_urilist_create_from_selected (int playlist)

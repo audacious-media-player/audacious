@@ -29,6 +29,7 @@
 #include "audstrings.h"
 #include "hook.h"
 #include "runtime.h"
+#include "tuple.h"
 #include "vfs.h"
 
 static const char * get_basename (const char * filename)
@@ -317,7 +318,7 @@ static void load_playlists_real (void)
 
     char * order_path = filename_build (folder, "order");
     char * order_string;
-    Index * order;
+    Index<char *> order;
 
     g_file_get_contents (order_path, & order_string, NULL, NULL);
     str_unref (order_path);
@@ -328,10 +329,9 @@ static void load_playlists_real (void)
     order = str_list_to_index (order_string, " ");
     g_free (order_string);
 
-    for (int i = 0; i < index_count (order); i ++)
+    for (int i = 0; i < order.len (); i ++)
     {
-        char * number = (char *) index_get (order, i);
-
+        char * number = order[i];
         SCONCAT2 (name, number, ".audpl");
         char * path = filename_build (folder, name);
 
@@ -354,9 +354,8 @@ static void load_playlists_real (void)
 
         str_unref (path);
         str_unref (uri);
+        str_unref (number);
     }
-
-    index_free_full (order, (IndexFreeFunc) str_unref);
 
 DONE:
     if (! aud_playlist_count ())
@@ -372,7 +371,7 @@ static void save_playlists_real (void)
 
     /* save playlists */
 
-    Index * order = index_new ();
+    Index<char *> order;
     GHashTable * saved = g_hash_table_new_full (g_str_hash, g_str_equal,
      (GDestroyNotify) str_unref, NULL);
 
@@ -395,12 +394,14 @@ static void save_playlists_real (void)
             str_unref (uri);
         }
 
-        index_insert (order, -1, number);
+        order.append (number);
         g_hash_table_insert (saved, str_get (name), NULL);
     }
 
     char * order_string = index_to_str_list (order, " ");
-    index_free_full (order, (IndexFreeFunc) str_unref);
+
+    for (char * number : order)
+        str_unref (number);
 
     GError * error = NULL;
     char * order_path = filename_build (folder, "order");

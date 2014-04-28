@@ -71,10 +71,10 @@ void aud_drct_pl_next (void);
 void aud_drct_pl_prev (void);
 
 void aud_drct_pl_add (const char * filename, int at);
-void aud_drct_pl_add_list (Index * filenames, int at);
+void aud_drct_pl_add_list (Index<PlaylistAddItem> && items, int at);
 void aud_drct_pl_open (const char * filename);
-void aud_drct_pl_open_list (Index * filenames);
+void aud_drct_pl_open_list (Index<PlaylistAddItem> && items);
 void aud_drct_pl_open_temp (const char * filename);
-void aud_drct_pl_open_temp_list (Index * filenames);
+void aud_drct_pl_open_temp_list (Index<PlaylistAddItem> && items);
 
 #endif

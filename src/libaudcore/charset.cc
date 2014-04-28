@@ -123,10 +123,9 @@ EXPORT char * str_to_locale (const char * str, int len)
 
 static TinyRWLock settings_lock;
 static char * detect_region;
-static Index * fallback_charsets;
+static Index<char *> fallback_charsets;
 
-/* takes ownership of <fallbacks> and the pooled strings in it */
-static void set_charsets (const char * region, Index * fallbacks)
+static void set_charsets (const char * region, const char * fallbacks)
 {
     tiny_lock_write (& settings_lock);
 
@@ -138,10 +137,13 @@ static void set_charsets (const char * region, Index * fallbacks)
         libguess_init ();
 #endif
 
-    if (fallback_charsets)
-        index_free_full (fallback_charsets, (IndexFreeFunc) str_unref);
+    for (char * fallback : fallback_charsets)
+        str_unref (fallback);
 
-    fallback_charsets = fallbacks;
+    if (fallbacks)
+        fallback_charsets = str_list_to_index (fallbacks, ", ");
+    else
+        fallback_charsets.clear ();
 
     tiny_unlock_write (& settings_lock);
 }
@@ -168,14 +170,11 @@ EXPORT char * str_to_utf8 (const char * str, int len)
     }
 #endif
 
-    if (fallback_charsets)
+    /* try user-configured fallbacks */
+    for (char * fallback : fallback_charsets)
     {
-        /* try user-configured fallbacks */
-        for (int i = 0; i < index_count (fallback_charsets); i ++)
-        {
-            if ((utf8 = str_convert (str, len, (char *) index_get (fallback_charsets, i), "UTF-8")))
-                goto DONE;
-        }
+        if ((utf8 = str_convert (str, len, fallback, "UTF-8")))
+            goto DONE;
     }
 
     /* try system locale last (this one will print a warning if it fails) */
@@ -191,8 +190,7 @@ static void chardet_update (void)
     char * region = aud_get_str (NULL, "chardet_detector");
     char * fallbacks = aud_get_str (NULL, "chardet_fallback");
 
-    Index * list = str_list_to_index (fallbacks, ", ");
-    set_charsets (region[0] ? region : NULL, list);
+    set_charsets (region[0] ? region : NULL, fallbacks);
 
     str_unref (region);
     str_unref (fallbacks);

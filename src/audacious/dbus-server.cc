@@ -24,6 +24,7 @@
 #include <libaudcore/interface.h>
 #include <libaudcore/playlist.h>
 #include <libaudcore/runtime.h>
+#include <libaudcore/tuple.h>
 
 #include "aud-dbus.h"
 #include "main.h"
@@ -37,11 +38,11 @@ typedef GDBusMethodInvocation Invoc;
 #define FINISH2(name, ...) \
  obj_audacious_complete_##name (obj, invoc, __VA_ARGS__)
 
-static Index * strv_to_index (const char * const * strv)
+static Index<PlaylistAddItem> strv_to_index (const char * const * strv)
 {
-    Index * index = index_new ();
+    Index<PlaylistAddItem> index;
     while (* strv)
-        index_insert (index, -1, str_get (* strv ++));
+        index.append ({str_get (* strv ++)});
 
     return index;
 }
@@ -56,7 +57,7 @@ static bool_t do_add (Obj * obj, Invoc * invoc, const char * file)
 static bool_t do_add_list (Obj * obj, Invoc * invoc, const char * const * filenames)
 {
     aud_playlist_entry_insert_batch (aud_playlist_get_active (), -1,
-     strv_to_index (filenames), NULL, FALSE);
+     strv_to_index (filenames), FALSE);
     FINISH (add_list);
     return TRUE;
 }
