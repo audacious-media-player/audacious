@@ -1271,7 +1271,7 @@ EXPORT int aud_playlist_shift (int playlist_num, int entry_num, int distance)
     {
         for (center = entry_num; center > 0 && shift > distance; )
         {
-            if (! playlist->entries[-- center]->selected);
+            if (! playlist->entries[-- center]->selected)
                 shift --;
         }
     }
