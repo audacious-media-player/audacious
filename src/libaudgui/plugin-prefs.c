@@ -67,7 +67,7 @@ static bool_t watch_cb (PluginHandle * plugin, void * window)
     {
         list = & config_windows;
         node = g_list_find (* list, window);
-        g_return_if_fail (node);
+        g_return_val_if_fail (node, FALSE);
     }
 
     g_signal_handlers_disconnect_by_func (window, destroy_cb, plugin);
