@@ -80,7 +80,7 @@ void aud_run (void);
 void aud_quit (void);
 void aud_cleanup (void);
 
-const char * aud_history_get (int entry);
+String aud_history_get (int entry);
 void aud_history_add (const char * path);
 
 void aud_output_reset (int type);

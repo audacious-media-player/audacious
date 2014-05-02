@@ -65,9 +65,6 @@ void eq_filter (float * data, int samples);
 /* fft.c */
 void calc_freq (const float data[512], float freq[256]);
 
-/* history.c */
-void history_cleanup (void);
-
 /* interface.c */
 PluginHandle * iface_plugin_probe (void);
 PluginHandle * iface_plugin_get_current (void);

@@ -61,9 +61,14 @@ static GtkWidget * create_url_opener (bool_t open)
     GtkWidget * entry = gtk_bin_get_child ((GtkBin *) combo);
     gtk_entry_set_activates_default ((GtkEntry *) entry, TRUE);
 
-    const char * item;
-    for (int i = 0; (item = aud_history_get (i)); i++)
+    for (int i = 0;; i++)
+    {
+        String item = aud_history_get (i);
+        if (! item)
+            break;
+
         gtk_combo_box_text_append_text ((GtkComboBoxText *) combo, item);
+    }
 
     g_object_set_data ((GObject *) entry, "open", GINT_TO_POINTER (open));
 

@@ -343,7 +343,6 @@ EXPORT void aud_cleanup (void)
     art_cleanup ();
     chardet_cleanup ();
     eq_cleanup ();
-    history_cleanup ();
     playlist_end ();
 
     event_queue_cancel_all ();
