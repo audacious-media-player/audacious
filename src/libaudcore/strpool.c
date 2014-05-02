@@ -53,6 +53,9 @@ EXPORT char * str_get (const char * str)
 
 EXPORT char * str_ref (const char * str)
 {
+    if (! str)
+        return NULL;
+
     StrNode * node = NODE_OF (str);
     assert (node->magic == '@');
     assert (g_str_hash (str) == node->hash);
