@@ -384,8 +384,7 @@ EXPORT int64_t vfs_fsize (VFSFile * file)
 EXPORT char *
 vfs_get_metadata(VFSFile * file, const char * field)
 {
-    if (file == NULL)
-        return NULL;
+    g_return_val_if_fail (file && file->sig == VFS_SIG, NULL);
 
     if (file->base->vfs_get_metadata_impl)
         return file->base->vfs_get_metadata_impl(file, field);
