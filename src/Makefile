@@ -12,7 +12,7 @@ endif
 
 include ../buildsys.mk
 
-audacious libaudtag: libaudcore
+audacious libaudgui libaudtag: libaudcore
 
 ifeq ($(USE_DBUS),yes)
 audacious audtool: dbus
