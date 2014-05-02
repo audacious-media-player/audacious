@@ -106,9 +106,9 @@ enum OpType {
 };
 
 struct ConfigItem {
-    const char * section;
-    const char * key;
-    const char * value;
+    String section;
+    String key;
+    String value;
 };
 
 struct ConfigNode {
@@ -118,54 +118,42 @@ struct ConfigNode {
 
 struct ConfigOp {
     OpType type;
-    ConfigItem item;
+    const char * section;
+    const char * key;
+    String value;
     unsigned hash;
     bool_t result;
 };
 
 struct LoadState {
-    char * section;
+    String section;
 };
 
 struct SaveState {
-    GArray * list;
+    Index<ConfigItem> list;
 };
 
-static unsigned item_hash (const ConfigItem * item)
+static int item_compare (const ConfigItem & a, const ConfigItem & b, void *)
 {
-    return g_str_hash (item->section) + g_str_hash (item->key);
-}
-
-/* assumes pooled strings */
-static int item_compare (const ConfigItem * a, const ConfigItem * b)
-{
-    if (str_equal (a->section, b->section))
-        return strcmp (a->key, b->key);
+    if (str_equal (a.section, b.section))
+        return strcmp (a.key, b.key);
     else
-        return strcmp (a->section, b->section);
-}
-
-/* assumes pooled strings */
-static void item_clear (ConfigItem * item)
-{
-    str_unref ((char *) item->section);
-    str_unref ((char *) item->key);
-    str_unref ((char *) item->value);
+        return strcmp (a.section, b.section);
 }
 
 static unsigned config_node_hash (const MultihashNode * node0)
 {
     const ConfigNode * node = (const ConfigNode *) node0;
 
-    return item_hash (& node->item);
+    return g_str_hash (node->item.section) + g_str_hash (node->item.key);
 }
 
 static bool_t config_node_match (const MultihashNode * node0, const void * data, unsigned hash)
 {
     const ConfigNode * node = (const ConfigNode *) node0;
-    const ConfigItem * item = (const ConfigItem *) data;
+    const ConfigOp * op = (const ConfigOp *) data;
 
-    return ! strcmp (node->item.section, item->section) && ! strcmp (node->item.key, item->key);
+    return ! strcmp (node->item.section, op->section) && ! strcmp (node->item.key, op->key);
 }
 
 static MultihashTable defaults = {
@@ -187,7 +175,7 @@ static MultihashNode * add_cb (const void * data, unsigned hash, void * state)
     switch (op->type)
     {
     case OP_IS_DEFAULT:
-        op->result = ! op->item.value[0]; /* empty string is default */
+        op->result = ! op->value[0]; /* empty string is default */
         return NULL;
 
     case OP_SET:
@@ -196,10 +184,10 @@ static MultihashNode * add_cb (const void * data, unsigned hash, void * state)
 
     case OP_SET_NO_FLAG:
     {
-        ConfigNode * node = g_slice_new (ConfigNode);
-        node->item.section = str_get (op->item.section);
-        node->item.key = str_get (op->item.key);
-        node->item.value = str_get (op->item.value);
+        ConfigNode * node = new ConfigNode;
+        node->item.section = String (op->section);
+        node->item.key = String (op->key);
+        node->item.value = op->value;
         return (MultihashNode *) node;
     }
 
@@ -216,21 +204,20 @@ static bool_t action_cb (MultihashNode * node0, void * state)
     switch (op->type)
     {
     case OP_IS_DEFAULT:
-        op->result = ! strcmp (node->item.value, op->item.value);
+        op->result = ! strcmp (node->item.value, op->value);
         return FALSE;
 
     case OP_GET:
-        op->item.value = str_ref (node->item.value);
+        op->value = node->item.value;
         return FALSE;
 
     case OP_SET:
-        op->result = !! strcmp (node->item.value, op->item.value);
+        op->result = !! strcmp (node->item.value, op->value);
         if (op->result)
             modified = TRUE;
 
     case OP_SET_NO_FLAG:
-        str_unref ((char *) node->item.value);
-        node->item.value = str_get (op->item.value);
+        node->item.value = op->value;
         return FALSE;
 
     case OP_CLEAR:
@@ -238,8 +225,7 @@ static bool_t action_cb (MultihashNode * node0, void * state)
         modified = TRUE;
 
     case OP_CLEAR_NO_FLAG:
-        item_clear (& node->item);
-        g_slice_free (ConfigNode, node);
+        delete node;
         return TRUE;
 
     default:
@@ -250,10 +236,10 @@ static bool_t action_cb (MultihashNode * node0, void * state)
 static bool_t config_op_run (ConfigOp * op, MultihashTable * table)
 {
     if (! op->hash)
-        op->hash = item_hash (& op->item);
+        op->hash = g_str_hash (op->section) + g_str_hash (op->key);
 
     op->result = FALSE;
-    multihash_lookup (table, & op->item, op->hash, add_cb, action_cb, op);
+    multihash_lookup (table, op, op->hash, add_cb, action_cb, op);
     return op->result;
 }
 
@@ -261,8 +247,7 @@ static void load_heading (const char * section, void * data)
 {
     LoadState * state = (LoadState *) data;
 
-    str_unref (state->section);
-    state->section = str_get (section);
+    state->section = String (section);
 }
 
 static void load_entry (const char * key, const char * value, void * data)
@@ -270,15 +255,14 @@ static void load_entry (const char * key, const char * value, void * data)
     LoadState * state = (LoadState *) data;
     g_return_if_fail (state->section);
 
-    ConfigOp op = {OP_SET_NO_FLAG, {state->section, key, value}};
+    ConfigOp op = {OP_SET_NO_FLAG, state->section, key, String (value)};
     config_op_run (& op, & config);
 }
 
 void config_load (void)
 {
-    char * folder = filename_to_uri (aud_get_path (AUD_PATH_USER_DIR));
+    String folder = filename_to_uri (aud_get_path (AUD_PATH_USER_DIR));
     SCONCAT2 (path, folder, "/config");
-    str_unref (folder);
 
     if (vfs_file_test (path, VFS_EXISTS))
     {
@@ -286,11 +270,10 @@ void config_load (void)
 
         if (file)
         {
-            LoadState state = {0};
+            LoadState state = LoadState ();
 
             inifile_parse (file, load_heading, load_entry, & state);
 
-            str_unref (state.section);
             vfs_fclose (file);
         }
     }
@@ -303,13 +286,11 @@ static bool_t add_to_save_list (MultihashNode * node0, void * state0)
     ConfigNode * node = (ConfigNode *) node0;
     SaveState * state = (SaveState *) state0;
 
-    int pos = state->list->len;
-    g_array_set_size (state->list, pos + 1);
+    ConfigItem & item = state->list.append ();
 
-    ConfigItem * copy = & g_array_index (state->list, ConfigItem, pos);
-    copy->section = str_ref (node->item.section);
-    copy->key = str_ref (node->item.key);
-    copy->value = str_ref (node->item.value);
+    item.section = node->item.section;
+    item.key = node->item.key;
+    item.value = node->item.value;
 
     modified = FALSE;
 
@@ -321,14 +302,13 @@ void config_save (void)
     if (! modified)
         return;
 
-    SaveState state = {.list = g_array_new (FALSE, FALSE, sizeof (ConfigItem))};
+    SaveState state = SaveState ();
 
     multihash_iterate (& config, add_to_save_list, & state);
-    g_array_sort (state.list, (GCompareFunc) item_compare);
+    state.list.sort (item_compare, nullptr);
 
-    char * folder = filename_to_uri (aud_get_path (AUD_PATH_USER_DIR));
+    String folder = filename_to_uri (aud_get_path (AUD_PATH_USER_DIR));
     SCONCAT2 (path, folder, "/config");
-    str_unref (folder);
 
     VFSFile * file = vfs_fopen (path, "w");
 
@@ -336,24 +316,19 @@ void config_save (void)
     {
         const char * current_heading = NULL;
 
-        for (unsigned i = 0; i < state.list->len; i ++)
+        for (const ConfigItem & item : state.list)
         {
-            ConfigItem * item = & g_array_index (state.list, ConfigItem, i);
-
-            if (! str_equal (item->section, current_heading))
+            if (! str_equal (item.section, current_heading))
             {
-                inifile_write_heading (file, item->section);
-                current_heading = item->section;
+                inifile_write_heading (file, item.section);
+                current_heading = item.section;
             }
 
-            inifile_write_entry (file, item->key, item->value);
+            inifile_write_entry (file, item.key, item.value);
         }
 
         vfs_fclose (file);
     }
-
-    g_array_set_clear_func (state.list, (GDestroyNotify) item_clear);
-    g_array_free (state.list, TRUE);
 }
 
 EXPORT void aud_config_set_defaults (const char * section, const char * const * entries)
@@ -368,7 +343,7 @@ EXPORT void aud_config_set_defaults (const char * section, const char * const * 
         if (! name || ! value)
             break;
 
-        ConfigOp op = {OP_SET_NO_FLAG, {section, name, value}};
+        ConfigOp op = {OP_SET_NO_FLAG, section, name, String (value)};
         config_op_run (& op, & defaults);
     }
 }
@@ -384,7 +359,7 @@ EXPORT void aud_set_str (const char * section, const char * name, const char * v
 {
     g_return_if_fail (name && value);
 
-    ConfigOp op = {OP_IS_DEFAULT, {section ? section : DEFAULT_SECTION, name, value}};
+    ConfigOp op = {OP_IS_DEFAULT, section ? section : DEFAULT_SECTION, name, String (value)};
     bool_t is_default = config_op_run (& op, & defaults);
 
     op.type = is_default ? OP_CLEAR : OP_SET;
@@ -397,17 +372,17 @@ EXPORT void aud_set_str (const char * section, const char * name, const char * v
     }
 }
 
-EXPORT char * aud_get_str (const char * section, const char * name)
+EXPORT String aud_get_str (const char * section, const char * name)
 {
-    g_return_val_if_fail (name, NULL);
+    g_return_val_if_fail (name, String ());
 
-    ConfigOp op = {OP_GET, {section ? section : DEFAULT_SECTION, name, NULL}};
+    ConfigOp op = {OP_GET, section ? section : DEFAULT_SECTION, name};
     config_op_run (& op, & config);
 
-    if (! op.item.value)
+    if (! op.value)
         config_op_run (& op, & defaults);
 
-    return op.item.value ? (char *) op.item.value : str_get ("");
+    return op.value ? op.value : String ("");
 }
 
 EXPORT void aud_set_bool (const char * section, const char * name, bool_t value)
@@ -417,40 +392,25 @@ EXPORT void aud_set_bool (const char * section, const char * name, bool_t value)
 
 EXPORT bool_t aud_get_bool (const char * section, const char * name)
 {
-    char * string = aud_get_str (section, name);
-    bool_t value = ! strcmp (string, "TRUE");
-    str_unref (string);
-    return value;
+    return ! strcmp (aud_get_str (section, name), "TRUE");
 }
 
 EXPORT void aud_set_int (const char * section, const char * name, int value)
 {
-    char * string = int_to_str (value);
-    g_return_if_fail (string);
-    aud_set_str (section, name, string);
-    str_unref (string);
+    aud_set_str (section, name, int_to_str (value));
 }
 
 EXPORT int aud_get_int (const char * section, const char * name)
 {
-    char * string = aud_get_str (section, name);
-    int value = str_to_int (string);
-    str_unref (string);
-    return value;
+    return str_to_int (aud_get_str (section, name));
 }
 
 EXPORT void aud_set_double (const char * section, const char * name, double value)
 {
-    char * string = double_to_str (value);
-    g_return_if_fail (string);
-    aud_set_str (section, name, string);
-    str_unref (string);
+    aud_set_str (section, name, double_to_str (value));
 }
 
 EXPORT double aud_get_double (const char * section, const char * name)
 {
-    char * string = aud_get_str (section, name);
-    double value = str_to_double (string);
-    str_unref (string);
-    return value;
+    return str_to_double (aud_get_str (section, name));
 }

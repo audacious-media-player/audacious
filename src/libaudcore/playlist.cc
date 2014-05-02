@@ -71,10 +71,10 @@ struct Entry {
     ~Entry ();
 
     int number;
-    char * filename;
+    String filename;
     PluginHandle * decoder;
     Tuple * tuple;
-    char * formatted, * title, * artist, * album;
+    String formatted, title, artist, album;
     int length;
     bool_t failed;
     bool_t selected;
@@ -87,7 +87,7 @@ struct Playlist {
     ~Playlist ();
 
     int number, unique_id;
-    char * filename, * title;
+    String filename, title;
     bool_t modified;
     Index<SmartPtr<Entry>> entries;
     Entry * position, * focus;
@@ -153,16 +153,11 @@ static void entry_set_tuple_real (Entry * entry, Tuple * tuple)
     entry->tuple = tuple;
     entry->failed = FALSE;
 
-    str_unref (entry->formatted);
-    str_unref (entry->title);
-    str_unref (entry->artist);
-    str_unref (entry->album);
-
-    describe_song (entry->filename, tuple, & entry->title, & entry->artist, & entry->album);
+    describe_song (entry->filename, tuple, entry->title, entry->artist, entry->album);
 
     if (! tuple)
     {
-        entry->formatted = NULL;
+        entry->formatted = String ();
         entry->length = 0;
     }
     else
@@ -223,12 +218,7 @@ Entry::~Entry ()
 {
     scan_cancel (this);
 
-    str_unref (filename);
     tuple_unref (tuple);
-    str_unref (formatted);
-    str_unref (title);
-    str_unref (artist);
-    str_unref (album);
 }
 
 static int new_unique_id (int preferred)
@@ -248,7 +238,7 @@ Playlist::Playlist (int id) :
     number (-1),
     unique_id (new_unique_id (id)),
     filename (NULL),
-    title (str_get (_(default_title))),
+    title (_(default_title)),
     modified (TRUE),
     position (NULL),
     focus (NULL),
@@ -271,8 +261,6 @@ Playlist::~Playlist ()
 {
     g_hash_table_insert (unique_id_table, GINT_TO_POINTER (unique_id), NULL);
 
-    str_unref (filename);
-    str_unref (title);
     g_list_free (queued);
 }
 
@@ -767,18 +755,17 @@ EXPORT void aud_playlist_set_filename (int playlist_num, const char * filename)
 {
     ENTER_GET_PLAYLIST ();
 
-    str_unref (playlist->filename);
-    playlist->filename = str_get (filename);
+    playlist->filename = String (filename);
     playlist->modified = TRUE;
 
     queue_update (PLAYLIST_UPDATE_METADATA, NULL, 0, 0);
     LEAVE;
 }
 
-EXPORT char * aud_playlist_get_filename (int playlist_num)
+EXPORT String aud_playlist_get_filename (int playlist_num)
 {
-    ENTER_GET_PLAYLIST (NULL);
-    char * filename = str_ref (playlist->filename);
+    ENTER_GET_PLAYLIST (String ());
+    String filename = playlist->filename;
     RETURN (filename);
 }
 
@@ -786,18 +773,17 @@ EXPORT void aud_playlist_set_title (int playlist_num, const char * title)
 {
     ENTER_GET_PLAYLIST ();
 
-    str_unref (playlist->title);
-    playlist->title = str_get (title);
+    playlist->title = String (title);
     playlist->modified = TRUE;
 
     queue_update (PLAYLIST_UPDATE_METADATA, NULL, 0, 0);
     LEAVE;
 }
 
-EXPORT char * aud_playlist_get_title (int playlist_num)
+EXPORT String aud_playlist_get_title (int playlist_num)
 {
-    ENTER_GET_PLAYLIST (NULL);
-    char * title = str_ref (playlist->title);
+    ENTER_GET_PLAYLIST (String ());
+    String title = playlist->title;
     RETURN (title);
 }
 
@@ -903,7 +889,7 @@ EXPORT int aud_playlist_get_playing (void)
 EXPORT int aud_playlist_get_blank (void)
 {
     int list = aud_playlist_get_active ();
-    char * title = aud_playlist_get_title (list);
+    String title = aud_playlist_get_title (list);
 
     if (strcmp (title, _(default_title)) || aud_playlist_entry_count (list) > 0)
     {
@@ -911,31 +897,22 @@ EXPORT int aud_playlist_get_blank (void)
         aud_playlist_insert (list);
     }
 
-    str_unref (title);
     return list;
 }
 
 EXPORT int aud_playlist_get_temporary (void)
 {
-    int list, count = aud_playlist_count ();
-    bool_t found = FALSE;
+    int count = aud_playlist_count ();
 
-    for (list = 0; list < count; list ++)
+    for (int list = 0; list < count; list ++)
     {
-        char * title = aud_playlist_get_title (list);
-        found = ! strcmp (title, _(temp_title));
-        str_unref (title);
-
-        if (found)
-            break;
+        String title = aud_playlist_get_title (list);
+        if (! strcmp (title, _(temp_title)))
+            return list;
     }
 
-    if (! found)
-    {
-        list = aud_playlist_get_blank ();
-        aud_playlist_set_title (list, _(temp_title));
-    }
-
+    int list = aud_playlist_get_blank ();
+    aud_playlist_set_title (list, _(temp_title));
     return list;
 }
 
@@ -1059,10 +1036,10 @@ EXPORT void aud_playlist_entry_delete (int playlist_num, int at, int number)
         change_playback (can_play);
 }
 
-EXPORT char * aud_playlist_entry_get_filename (int playlist_num, int entry_num)
+EXPORT String aud_playlist_entry_get_filename (int playlist_num, int entry_num)
 {
-    ENTER_GET_ENTRY (NULL);
-    char * filename = str_ref (entry->filename);
+    ENTER_GET_ENTRY (String ());
+    String filename = entry->filename;
     RETURN (filename);
 }
 
@@ -1089,29 +1066,26 @@ EXPORT Tuple * aud_playlist_entry_get_tuple (int playlist_num, int entry_num, bo
     RETURN (tuple);
 }
 
-EXPORT char * aud_playlist_entry_get_title (int playlist_num, int entry_num, bool_t fast)
+EXPORT String aud_playlist_entry_get_title (int playlist_num, int entry_num, bool_t fast)
 {
     ENTER;
 
     Entry * entry = get_entry (playlist_num, entry_num, FALSE, ! fast);
-    char * title = entry ? str_ref (entry->formatted ? entry->formatted : entry->title) : NULL;
+    String title = entry ? (entry->formatted ? entry->formatted : entry->title) : String ();
 
     RETURN (title);
 }
 
 EXPORT void aud_playlist_entry_describe (int playlist_num, int entry_num,
- char * * title, char * * artist, char * * album, bool_t fast)
+ String & title, String & artist, String & album, bool_t fast)
 {
     ENTER;
 
     Entry * entry = get_entry (playlist_num, entry_num, FALSE, ! fast);
 
-    if (title)
-        * title = (entry && entry->title) ? str_ref (entry->title) : NULL;
-    if (artist)
-        * artist = (entry && entry->artist) ? str_ref (entry->artist) : NULL;
-    if (album)
-        * album = (entry && entry->album) ? str_ref (entry->album) : NULL;
+    title = entry ? entry->title : String ();
+    artist = entry ? entry->artist : String ();
+    album = entry ? entry->album : String ();
 
     LEAVE;
 }
@@ -1658,20 +1632,17 @@ static void playlist_reformat_titles (void)
     if (title_formatter)
         tuple_formatter_free (title_formatter);
 
-    char * format = aud_get_str (NULL, "generic_title_format");
+    String format = aud_get_str (NULL, "generic_title_format");
     title_formatter = tuple_formatter_new (format);
-    str_unref (format);
 
     for (auto & playlist : playlists)
     {
         for (auto & entry : playlist->entries)
         {
-            str_unref (entry->formatted);
-
             if (entry->tuple)
                 entry->formatted = tuple_format_title (title_formatter, entry->tuple);
             else
-                entry->formatted = NULL;
+                entry->formatted = String ();
         }
 
         queue_update (PLAYLIST_UPDATE_METADATA, playlist.get (), 0, playlist->entries.len ());
@@ -2059,12 +2030,12 @@ int playback_entry_get_position (void)
     RETURN (entry_num);
 }
 
-char * playback_entry_get_filename (void)
+String playback_entry_get_filename (void)
 {
     ENTER;
 
     Entry * entry = get_playback_entry (FALSE, FALSE);
-    char * filename = entry ? str_ref (entry->filename) : NULL;
+    String filename = entry ? entry->filename : String ();
 
     RETURN (filename);
 }
@@ -2092,12 +2063,12 @@ Tuple * playback_entry_get_tuple (void)
     RETURN (tuple);
 }
 
-char * playback_entry_get_title (void)
+String playback_entry_get_title (void)
 {
     ENTER;
 
     Entry * entry = get_playback_entry (FALSE, TRUE);
-    char * title = entry ? str_ref (entry->formatted ? entry->formatted : entry->title) : NULL;
+    String title = entry ? (entry->formatted ? entry->formatted : entry->title) : String ();
 
     RETURN (title);
 }
@@ -2148,7 +2119,7 @@ void playlist_save_state (void)
         fprintf (handle, "playlist %d\n", playlist->number);
 
         if (playlist->filename)
-            fprintf (handle, "filename %s\n", playlist->filename);
+            fprintf (handle, "filename %s\n", (const char *) playlist->filename);
 
         fprintf (handle, "position %d\n", playlist->position ? playlist->position->number : -1);
 
@@ -2193,9 +2164,9 @@ static bool_t parse_integer (const char * key, int * value)
     return (parse_value && ! strcmp (parse_key, key) && sscanf (parse_value, "%d", value) == 1);
 }
 
-static char * parse_string (const char * key)
+static String parse_string (const char * key)
 {
-    return (parse_value && ! strcmp (parse_key, key)) ? str_get (parse_value) : NULL;
+    return (parse_value && ! strcmp (parse_key, key)) ? String (parse_value) : String ();
 }
 
 void playlist_load_state (void)
@@ -2230,13 +2201,9 @@ void playlist_load_state (void)
 
         parse_next (handle);
 
-        char * s;
-        if ((s = parse_string ("filename")))
-        {
-            str_unref (playlist->filename);
-            playlist->filename = s;
+        playlist->filename = parse_string ("filename");
+        if (playlist->filename)
             parse_next (handle);
-        }
 
         int position = -1;
         if (parse_integer ("position", & position))

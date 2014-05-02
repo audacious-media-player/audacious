@@ -103,16 +103,16 @@ static void widget_set_double (const PreferencesWidget * widget, double value)
         widget->callback ();
 }
 
-static char * widget_get_string (const PreferencesWidget * widget)
+static String widget_get_string (const PreferencesWidget * widget)
 {
-    g_return_val_if_fail (widget->cfg_type == VALUE_STRING, NULL);
+    g_return_val_if_fail (widget->cfg_type == VALUE_STRING, String ());
 
     if (widget->cfg)
-        return str_get (* (char * *) widget->cfg);
+        return String (* (char * *) widget->cfg);
     else if (widget->cname)
         return aud_get_str (widget->csect, widget->cname);
     else
-        return NULL;
+        return String ();
 }
 
 static void widget_set_string (const PreferencesWidget * widget, const char * value)
@@ -261,12 +261,9 @@ void create_font_btn (const PreferencesWidget * widget, GtkWidget * * label,
         gtk_font_button_set_title ((GtkFontButton *) * font_btn,
          dgettext (domain, widget->data.font_btn.title));
 
-    char * name = widget_get_string (widget);
+    String name = widget_get_string (widget);
     if (name)
-    {
         gtk_font_button_set_font_name ((GtkFontButton *) * font_btn, name);
-        str_unref (name);
-    }
 
     g_signal_connect (* font_btn, "font_set", (GCallback) on_font_btn_font_set, (void *) widget);
 }
@@ -293,12 +290,9 @@ static void create_entry (const PreferencesWidget * widget, GtkWidget * * label,
 
     if (widget->cfg_type == VALUE_STRING)
     {
-        char * value = widget_get_string (widget);
+        String value = widget_get_string (widget);
         if (value)
-        {
             gtk_entry_set_text ((GtkEntry *) * entry, value);
-            str_unref (value);
-        }
 
         g_signal_connect (* entry, "changed", (GCallback) on_entry_changed, (void *) widget);
     }
@@ -357,7 +351,7 @@ static void fill_cbox (GtkWidget * combobox, const PreferencesWidget * widget, c
 
     case VALUE_STRING:
     {
-        char * value = widget_get_string (widget);
+        String value = widget_get_string (widget);
 
         for(int i = 0; i < n_elements; i++)
         {
@@ -367,8 +361,6 @@ static void fill_cbox (GtkWidget * combobox, const PreferencesWidget * widget, c
                 break;
             }
         }
-
-        str_unref (value);
 
         g_signal_connect (combobox, "changed", (GCallback) on_cbox_changed_string, (void *) widget);
         break;

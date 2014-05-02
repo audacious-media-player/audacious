@@ -72,12 +72,6 @@ struct PreferencesWidget;
 struct Tuple;
 struct VFSFile;
 
-struct PlaylistAddItem {
-    char * filename;  /* pooled */
-    Tuple * tuple;
-    PluginHandle * decoder;
-};
-
 /* STRING POOL */
 
 /* If the pool contains a copy of <str>, increments its reference count.
@@ -106,10 +100,6 @@ unsigned str_hash (const char * str);
  * duplicate strings, this is a simple pointer comparison and thus much faster
  * than strcmp().  NULL is considered equal to NULL but not equal to any string. */
 bool_t str_equal (const char * str1, const char * str2);
-
-/* Calls str_get() on the first <len> characters of <str>.  If <str> has less
- * than or equal to <len> characters, equivalent to str_get(). */
-char * str_nget (const char * str, int len);
 
 /* Releases all memory used by the string pool.  If strings remain in the pool,
  * a warning may be printed to stderr in order to reveal memory leaks. */

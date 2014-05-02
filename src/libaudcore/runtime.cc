@@ -47,7 +47,7 @@
 static bool_t headless_mode;
 static bool_t verbose_mode;
 
-static char * aud_paths[AUD_PATH_COUNT];
+static String aud_paths[AUD_PATH_COUNT];
 
 #ifdef S_IRGRP
 #define DIRMODE (S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH)
@@ -146,7 +146,7 @@ static void cut_path_element (char * path, char * elem)
         elem[0] = 0; /* leave [drive letter and] leading slash */
 }
 
-static char * relocate_path (const char * path, const char * from, const char * to)
+static String relocate_path (const char * path, const char * from, const char * to)
 {
     int oldlen = strlen (from);
     int newlen = strlen (to);
@@ -161,19 +161,19 @@ static char * relocate_path (const char * path, const char * from, const char * 
 #else
     if (strncmp (path, from, oldlen) || (path[oldlen] && path[oldlen] != G_DIR_SEPARATOR))
 #endif
-        return str_get (path);
+        return String (path);
 
     return str_printf ("%.*s%s", newlen, to, path + oldlen);
 }
 
 static void set_default_paths (void)
 {
-    aud_paths[AUD_PATH_BIN_DIR] = str_get (HARDCODE_BINDIR);
-    aud_paths[AUD_PATH_DATA_DIR] = str_get (HARDCODE_DATADIR);
-    aud_paths[AUD_PATH_PLUGIN_DIR] = str_get (HARDCODE_PLUGINDIR);
-    aud_paths[AUD_PATH_LOCALE_DIR] = str_get (HARDCODE_LOCALEDIR);
-    aud_paths[AUD_PATH_DESKTOP_FILE] = str_get (HARDCODE_DESKTOPFILE);
-    aud_paths[AUD_PATH_ICON_FILE] = str_get (HARDCODE_ICONFILE);
+    aud_paths[AUD_PATH_BIN_DIR] = String (HARDCODE_BINDIR);
+    aud_paths[AUD_PATH_DATA_DIR] = String (HARDCODE_DATADIR);
+    aud_paths[AUD_PATH_PLUGIN_DIR] = String (HARDCODE_PLUGINDIR);
+    aud_paths[AUD_PATH_LOCALE_DIR] = String (HARDCODE_LOCALEDIR);
+    aud_paths[AUD_PATH_DESKTOP_FILE] = String (HARDCODE_DESKTOPFILE);
+    aud_paths[AUD_PATH_ICON_FILE] = String (HARDCODE_ICONFILE);
 }
 
 static void relocate_all_paths (void)
@@ -205,7 +205,7 @@ static void relocate_all_paths (void)
 
     filename_normalize (to);
 
-    char * base = last_path_element (to);
+    char * base = (char *) last_path_element (to);
 
     if (! base)
     {
@@ -219,7 +219,8 @@ static void relocate_all_paths (void)
     /* trim trailing path elements common to old and new paths */
     /* at the end, the old and new installation prefixes are left */
     char * a, * b;
-    while ((a = last_path_element (from)) && (b = last_path_element (to)) &&
+    while ((a = (char *) last_path_element (from)) &&
+     (b = (char *) last_path_element (to)) &&
 #ifdef _WIN32
      ! g_ascii_strcasecmp (a, b))
 #else
@@ -265,8 +266,8 @@ EXPORT void aud_init_paths (void)
 
 EXPORT void aud_cleanup_paths (void)
 {
-    for (int i = 0; i < AUD_PATH_COUNT; i ++)
-        str_unref (aud_paths[i]);
+    for (String & path : aud_paths)
+        path = String ();
 }
 
 EXPORT const char * aud_get_path (int id)

@@ -16,6 +16,8 @@ INCLUDES = audtag.h
 include ../../buildsys.mk
 include ../../extra.mk
 
+LD = ${CXX}
+
 CPPFLAGS := -I.. -I../.. \
             ${CPPFLAGS} \
             ${GLIB_CFLAGS}

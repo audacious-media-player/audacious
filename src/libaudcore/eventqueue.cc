@@ -23,10 +23,10 @@
 #include <pthread.h>
 #include <string.h>
 
-#include "core.h"
+#include "objects.h"
 
 struct Event {
-    char * name;
+    String name;
     void * data;
     void (* destroy) (void *);
     int source;
@@ -46,18 +46,18 @@ static bool_t event_execute (Event * event)
 
     hook_call (event->name, event->data);
 
-    str_unref (event->name);
     if (event->destroy)
         event->destroy (event->data);
 
-    g_slice_free (Event, event);
+    delete event;
     return FALSE;
 }
 
 EXPORT void event_queue_full (int time, const char * name, void * data, void (* destroy) (void *))
 {
-    Event * event = g_slice_new (Event);
-    event->name = str_get (name);
+    Event * event = new Event ();
+
+    event->name = String (name);
     event->data = data;
     event->destroy = destroy;
 
@@ -84,11 +84,10 @@ EXPORT void event_queue_cancel (const char * name, void * data)
             g_source_remove (event->source);
             events = g_list_delete_link (events, node);
 
-            str_unref (event->name);
             if (event->destroy)
                 event->destroy (event->data);
 
-            g_slice_free (Event, event);
+            delete event;
         }
 
         node = next;
@@ -110,11 +109,10 @@ EXPORT void event_queue_cancel_all (void)
         g_source_remove (event->source);
         events = g_list_delete_link (events, node);
 
-        str_unref (event->name);
         if (event->destroy)
             event->destroy (event->data);
 
-        g_slice_free (Event, event);
+        delete event;
 
         node = next;
     }

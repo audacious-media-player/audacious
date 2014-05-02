@@ -361,7 +361,7 @@ EXPORT void tuple_set_str (Tuple * tuple, int field, const char * str)
 
     TupleVal * val = lookup_val (tuple, field, TRUE, FALSE);
     str_unref (val->str);
-    val->str = str_to_utf8 (str, -1);
+    val->str = str_to_utf8 (str, -1).to_c ();
 
     UNLOCK (tuple);
 }
@@ -398,13 +398,13 @@ EXPORT TupleValueType tuple_get_value_type (const Tuple * tuple, int field)
     return type;
 }
 
-EXPORT char * tuple_get_str (const Tuple * tuple, int field)
+EXPORT String tuple_get_str (const Tuple * tuple, int field)
 {
-    g_return_val_if_fail (VALID_FIELD (field) && FIELD_TYPE (field) == TUPLE_STRING, NULL);
+    g_return_val_if_fail (VALID_FIELD (field) && FIELD_TYPE (field) == TUPLE_STRING, String ());
     LOCK (tuple);
 
     TupleVal * val = lookup_val ((Tuple *) tuple, field, FALSE, FALSE);
-    char * str = val ? str_ref (val->str) : NULL;
+    String str = String::from_c (val ? str_ref (val->str) : nullptr);
 
     UNLOCK (tuple);
     return str;

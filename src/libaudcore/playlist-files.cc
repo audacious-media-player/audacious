@@ -30,7 +30,7 @@
 
 struct PlaylistData {
     const char * filename;
-    char * title;
+    String title;
     Index<PlaylistAddItem> items;
     bool_t plugin_found;
     bool_t success;
@@ -70,13 +70,13 @@ static bool_t playlist_load_cb (PluginHandle * plugin, void * data_)
     if (! file)
         return FALSE; /* stop if we can't open file */
 
-    data->success = pp->load (data->filename, file, & data->title, data->items);
+    data->success = pp->load (data->filename, file, data->title, data->items);
 
     vfs_fclose (file);
     return ! data->success; /* stop when playlist is loaded */
 }
 
-bool_t playlist_load (const char * filename, char * * title, Index<PlaylistAddItem> & items)
+bool_t playlist_load (const char * filename, String & title, Index<PlaylistAddItem> & items)
 {
     PlaylistData data = {
         filename
@@ -93,28 +93,23 @@ bool_t playlist_load (const char * filename, char * * title, Index<PlaylistAddIt
 
     if (! data.success)
     {
-        str_unref (data.title);
-
         for (auto & item : data.items)
-        {
-            str_unref (item.filename);
             tuple_unref (item.tuple);
-        }
 
         return FALSE;
     }
 
-    * title = data.title;
+    title = std::move (data.title);
     items = std::move (data.items);
     return TRUE;
 }
 
 bool_t playlist_insert_playlist_raw (int list, int at, const char * filename)
 {
-    char * title = NULL;
+    String title;
     Index<PlaylistAddItem> items;
 
-    if (! playlist_load (filename, & title, items))
+    if (! playlist_load (filename, title, items))
         return FALSE;
 
     if (title && ! aud_playlist_entry_count (list))
@@ -122,7 +117,6 @@ bool_t playlist_insert_playlist_raw (int list, int at, const char * filename)
 
     playlist_entry_insert_batch_raw (list, at, std::move (items));
 
-    str_unref (title);
     return TRUE;
 }
 
@@ -173,13 +167,8 @@ EXPORT bool_t aud_playlist_save (int list, const char * filename)
         aud_ui_show_error (error);
     }
 
-    str_unref (data.title);
-
     for (auto & item : data.items)
-    {
-        str_unref (item.filename);
         tuple_unref (item.tuple);
-    }
 
     return data.success;
 }

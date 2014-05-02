@@ -138,15 +138,15 @@ struct PlaylistPlugin
 
     /* path: URI of playlist file (in)
      * file: VFS handle of playlist file (in, read-only file, not seekable)
-     * title: title of playlist (out, string-pooled)
-     * items: container to fill with data read from playlist file (out) */
-    bool_t (* load) (const char * path, VFSFile * file, char * * title,
+     * title: title of playlist (out)
+     * items: playlist entries (out) */
+    bool_t (* load) (const char * path, VFSFile * file, String & title,
      Index<PlaylistAddItem> & items);
 
     /* path: URI of playlist file (in)
      * file: VFS handle of playlist file (in, write-only file, not seekable)
      * title: title of playlist (in)
-     * items: container filled with data to be written to playlist */
+     * items: playlist entries (in) */
     bool_t (* save) (const char * path, VFSFile * file, const char * title,
      const Index<PlaylistAddItem> & items);
 };

@@ -181,18 +181,16 @@ void eq_cleanup (void)
 
 EXPORT void aud_eq_set_bands (const double *values)
 {
-    char *string = double_array_to_str (values, AUD_EQ_NBANDS);
+    String string = double_array_to_str (values, AUD_EQ_NBANDS);
     g_return_if_fail (string);
     aud_set_str (NULL, "equalizer_bands", string);
-    str_unref (string);
 }
 
 EXPORT void aud_eq_get_bands (double *values)
 {
     memset (values, 0, sizeof (double) * AUD_EQ_NBANDS);
-    char *string = aud_get_str (NULL, "equalizer_bands");
+    String string = aud_get_str (NULL, "equalizer_bands");
     str_to_double_array (string, values, AUD_EQ_NBANDS);
-    str_unref (string);
 }
 
 EXPORT void aud_eq_set_band (int band, double value)

@@ -108,9 +108,8 @@ EXPORT GdkPixbuf * audgui_pixbuf_request_current (void)
         if (entry < 0)
             return NULL;
 
-        char * filename = aud_playlist_entry_get_filename (list, entry);
+        String filename = aud_playlist_entry_get_filename (list, entry);
         current_pixbuf = audgui_pixbuf_request (filename);
-        str_unref (filename);
     }
 
     if (current_pixbuf)

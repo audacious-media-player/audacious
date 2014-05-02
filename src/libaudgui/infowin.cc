@@ -135,12 +135,9 @@ static GtkWidget * small_label_new (const char * text)
 static void set_entry_str_from_field (GtkWidget * widget, const Tuple * tuple,
  int fieldn, bool_t editable)
 {
-    char * text = tuple_get_str (tuple, fieldn);
-
+    String text = tuple_get_str (tuple, fieldn);
     gtk_entry_set_text ((GtkEntry *) widget, text != NULL ? text : "");
     gtk_editable_set_editable ((GtkEditable *) widget, editable);
-
-    str_unref (text);
 }
 
 static void set_entry_int_from_field (GtkWidget * widget, const Tuple * tuple,
@@ -401,14 +398,12 @@ static void infowin_show (int list, int entry, const char * filename,
     set_entry_str_from_field (gtk_bin_get_child ((GtkBin *) widgets.genre),
      tuple, FIELD_GENRE, updating_enabled);
 
-    char * tmp = uri_to_display (filename);
-    gtk_label_set_text ((GtkLabel *) widgets.location, tmp);
-    str_unref (tmp);
+    gtk_label_set_text ((GtkLabel *) widgets.location, uri_to_display (filename));
 
     set_entry_int_from_field (widgets.year, tuple, FIELD_YEAR, updating_enabled);
     set_entry_int_from_field (widgets.track, tuple, FIELD_TRACK_NUMBER, updating_enabled);
 
-    char * codec_values[CODEC_ITEMS] = {
+    String codec_values[CODEC_ITEMS] = {
         [CODEC_FORMAT] = tuple_get_str (tuple, FIELD_CODEC),
         [CODEC_QUALITY] = tuple_get_str (tuple, FIELD_QUALITY)
     };
@@ -421,9 +416,8 @@ static void infowin_show (int list, int entry, const char * filename,
 
     for (int row = 0; row < CODEC_ITEMS; row ++)
     {
-        const char * text = codec_values[row] ? codec_values[row] : _("N/A");
+        const char * text = codec_values[row] ? (const char *) codec_values[row] : _("N/A");
         gtk_label_set_text ((GtkLabel *) widgets.codec[row], text);
-        str_unref (codec_values[row]);
     }
 
     infowin_display_image (filename);
@@ -436,7 +430,7 @@ static void infowin_show (int list, int entry, const char * filename,
 
 EXPORT void audgui_infowin_show (int playlist, int entry)
 {
-    char * filename = aud_playlist_entry_get_filename (playlist, entry);
+    String filename = aud_playlist_entry_get_filename (playlist, entry);
     g_return_if_fail (filename != NULL);
 
     PluginHandle * decoder = aud_playlist_entry_get_decoder (playlist, entry, FALSE);
@@ -453,12 +447,10 @@ EXPORT void audgui_infowin_show (int playlist, int entry)
         }
         else
         {
-            SPRINTF (message, _("No info available for %s.\n"), filename);
+            SPRINTF (message, _("No info available for %s.\n"), (const char *) filename);
             aud_ui_show_error (message);
         }
     }
-
-    str_unref (filename);
 }
 
 EXPORT void audgui_infowin_show_current (void)

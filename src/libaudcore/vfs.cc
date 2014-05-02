@@ -42,7 +42,7 @@
  * similar in purpose as stdio FILE
  */
 struct VFSFile {
-    char * uri;               /**< The URI of the stream */
+    String uri;               /**< The URI of the stream */
     const VFSConstructor * base;    /**< The base vtable used for VFS functions */
     void * handle;            /**< Opaque data used by the transport plugins */
     int sig;                  /**< Used to detect invalid or twice-closed objects */
@@ -90,11 +90,13 @@ static void logger (const char * format, ...)
 
 EXPORT VFSFile * vfs_new (const char * path, const VFSConstructor * vtable, void * handle)
 {
-    VFSFile * file = g_slice_new (VFSFile);
-    file->uri = str_get (path);
+    VFSFile * file = new VFSFile ();
+
+    file->uri = String (path);
     file->base = vtable;
     file->handle = handle;
     file->sig = VFS_SIG;
+
     return file;
 }
 
@@ -178,8 +180,7 @@ vfs_fclose(VFSFile * file)
     if (file->base->vfs_fclose_impl(file) != 0)
         ret = -1;
 
-    str_unref (file->uri);
-    g_slice_free (VFSFile, file);
+    delete file;
 
     return ret;
 }
@@ -375,15 +376,14 @@ EXPORT int64_t vfs_fsize (VFSFile * file)
  * @param field The string constant field name to get.
  * @return On success, a copy of the value of the field. Otherwise, NULL.
  */
-EXPORT char *
+EXPORT String
 vfs_get_metadata(VFSFile * file, const char * field)
 {
-    if (file == NULL)
-        return NULL;
+    g_return_val_if_fail (file && file->sig == VFS_SIG, String ());
 
     if (file->base->vfs_get_metadata_impl)
         return file->base->vfs_get_metadata_impl(file, field);
-    return NULL;
+    return String ();
 }
 
 /**
@@ -399,7 +399,7 @@ vfs_file_test(const char * path, int test)
     if (strncmp (path, "file://", 7))
         return FALSE; /* only local files are handled */
 
-    char * path2 = uri_to_filename (path);
+    String path2 = uri_to_filename (path);
     if (! path2)
         return FALSE;
 
@@ -408,7 +408,7 @@ vfs_file_test(const char * path, int test)
     {
         GStatBuf st;
         if (g_lstat (path2, & st) < 0)
-            goto DONE;
+            return FALSE;
 
         if (S_ISLNK (st.st_mode))
             test &= ~VFS_IS_SYMLINK;
@@ -419,7 +419,7 @@ vfs_file_test(const char * path, int test)
     {
         GStatBuf st;
         if (g_stat (path2, & st) < 0)
-            goto DONE;
+            return FALSE;
 
         if (S_ISREG (st.st_mode))
             test &= ~VFS_IS_REGULAR;
@@ -431,8 +431,6 @@ vfs_file_test(const char * path, int test)
         test &= ~VFS_EXISTS;
     }
 
-DONE:
-    str_unref (path2);
     return ! test;
 }
 
@@ -446,12 +444,11 @@ EXPORT bool_t
 vfs_is_writeable(const char * path)
 {
     GStatBuf info;
-    char * realfn = uri_to_filename (path);
+    String realfn = uri_to_filename (path);
 
     if (! realfn || g_stat (realfn, & info) < 0)
         return FALSE;
 
-    str_unref (realfn);
     return (info.st_mode & S_IWUSR);
 }
 

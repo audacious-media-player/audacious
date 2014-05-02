@@ -73,23 +73,23 @@ EXPORT void tuple_formatter_free (TupleFormatter * formatter)
     g_slice_free (TupleFormatter, formatter);
 }
 
-EXPORT char * tuple_format_title (TupleFormatter * formatter, const Tuple * tuple)
+EXPORT String tuple_format_title (TupleFormatter * formatter, const Tuple * tuple)
 {
     tuple_formatter_eval (formatter->context, formatter->node, tuple, formatter->buf);
     tuple_evalctx_reset (formatter->context);
 
     if (formatter->buf->len)
-        return str_get (formatter->buf->str);
+        return String (formatter->buf->str);
 
     /* formatting failed, try fallbacks */
     static const int fallbacks[] = {FIELD_TITLE, FIELD_FILE_NAME};
 
     for (unsigned i = 0; i < ARRAY_LEN (fallbacks); i ++)
     {
-        char * title = tuple_get_str (tuple, fallbacks[i]);
+        String title = tuple_get_str (tuple, fallbacks[i]);
         if (title)
             return title;
     }
 
-    return str_get ("");
+    return String ("");
 }

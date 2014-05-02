@@ -41,7 +41,7 @@ enum LocalOp {
 };
 
 struct LocalFile {
-    char * path;
+    String path;
     FILE * stream;
     int64_t cached_size;
     LocalOp last_op;
@@ -49,7 +49,7 @@ struct LocalFile {
 
 static void * local_fopen (const char * uri, const char * mode)
 {
-    char * path = uri_to_filename (uri);
+    String path = uri_to_filename (uri);
     g_return_val_if_fail (path, NULL);
 
     const char * suffix = "";
@@ -69,11 +69,10 @@ static void * local_fopen (const char * uri, const char * mode)
     if (! stream)
     {
         perror (path);
-        str_unref (path);
         return NULL;
     }
 
-    LocalFile * local = g_slice_new (LocalFile);
+    LocalFile * local = new LocalFile ();
 
     local->path = path;
     local->stream = stream;
@@ -91,8 +90,7 @@ static int local_fclose (VFSFile * file)
     if (result < 0)
         perror (local->path);
 
-    str_unref (local->path);
-    g_slice_free (LocalFile, local);
+    delete local;
 
     return result;
 }

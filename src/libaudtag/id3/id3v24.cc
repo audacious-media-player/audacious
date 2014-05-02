@@ -581,9 +581,7 @@ static void add_comment_frame (const char * text, GHashTable * dict)
 static void add_frameFromTupleStr (const Tuple * tuple, int field, int
  id3_field, GHashTable * dict)
 {
-    char * str = tuple_get_str (tuple, field);
-    add_text_frame (id3_field, str, dict);
-    str_unref (str);
+    add_text_frame (id3_field, tuple_get_str (tuple, field), dict);
 }
 
 static void add_frameFromTupleInt (const Tuple * tuple, int field, int
@@ -754,15 +752,14 @@ static bool_t id3v24_write_tag (const Tuple * tuple, VFSFile * f)
     add_frameFromTupleInt (tuple, FIELD_TRACK_NUMBER, ID3_TRACKNR, dict);
     add_frameFromTupleStr (tuple, FIELD_GENRE, ID3_GENRE, dict);
 
-    char * comment = tuple_get_str (tuple, FIELD_COMMENT);
+    String comment = tuple_get_str (tuple, FIELD_COMMENT);
     add_comment_frame (comment, dict);
-    str_unref (comment);
 
     /* location and size of non-tag data */
     int64_t mp3_offset = offset ? 0 : header_size + data_size + footer_size;
     int64_t mp3_size = offset ? offset : -1;
 
-    TempFile temp = {0};
+    TempFile temp = TempFile ();
     if (! open_temp_file_for (& temp, f))
         goto ERR;
 
@@ -785,12 +782,10 @@ static bool_t id3v24_write_tag (const Tuple * tuple, VFSFile * f)
         goto ERR;
 
     g_hash_table_destroy (dict);
-    str_unref (temp.name);
     return TRUE;
 
 ERR:
     g_hash_table_destroy (dict);
-    str_unref (temp.name);
     return FALSE;
 }
 

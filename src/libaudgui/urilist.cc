@@ -27,15 +27,16 @@
 
 #include "libaudgui.h"
 
-static char * check_uri (char * name)
+static String check_uri (String && name)
 {
-    char * uri;
+    if (strstr (name, "://"))
+    {
+        String uri = filename_to_uri (name);
+        if (uri)
+            return uri;
+    }
 
-    if (strstr (name, "://") || ! (uri = filename_to_uri (name)))
-        return name;
-
-    str_unref (name);
-    return uri;
+    return std::move (name);
 }
 
 static Index<PlaylistAddItem> urilist_to_index (const char * list)
@@ -74,7 +75,6 @@ EXPORT char * audgui_urilist_create_from_selected (int playlist)
     int entries = aud_playlist_entry_count (playlist);
     int space = 0;
     int count, length;
-    char * name;
     char * buffer, * set;
 
     for (count = 0; count < entries; count ++)
@@ -82,10 +82,9 @@ EXPORT char * audgui_urilist_create_from_selected (int playlist)
         if (! aud_playlist_entry_get_selected (playlist, count))
             continue;
 
-        name = aud_playlist_entry_get_filename (playlist, count);
+        String name = aud_playlist_entry_get_filename (playlist, count);
         g_return_val_if_fail (name != NULL, NULL);
         space += strlen (name) + 1;
-        str_unref (name);
     }
 
     if (! space)
@@ -99,7 +98,7 @@ EXPORT char * audgui_urilist_create_from_selected (int playlist)
         if (! aud_playlist_entry_get_selected (playlist, count))
             continue;
 
-        name = aud_playlist_entry_get_filename (playlist, count);
+        String name = aud_playlist_entry_get_filename (playlist, count);
         g_return_val_if_fail (name != NULL, NULL);
         length = strlen (name);
         g_return_val_if_fail (length + 1 <= space, NULL);
@@ -107,7 +106,6 @@ EXPORT char * audgui_urilist_create_from_selected (int playlist)
         set += length;
         * set ++ = '\n';
         space -= length + 1;
-        str_unref (name);
     }
 
     * -- set = 0; /* last newline replaced with null */

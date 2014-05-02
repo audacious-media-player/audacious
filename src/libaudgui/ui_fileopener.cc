@@ -33,7 +33,7 @@ static Index<PlaylistAddItem> get_files (GtkWidget * chooser)
     GSList * list = gtk_file_chooser_get_uris ((GtkFileChooser *) chooser);
 
     for (GSList * node = list; node; node = node->next)
-        index.append ({str_get ((const char *) node->data)});
+        index.append ({String ((const char *) node->data)});
 
     g_slist_free_full (list, g_free);
     return index;
@@ -103,10 +103,9 @@ static GtkWidget * create_filebrowser (bool_t open)
     GtkWidget * chooser = gtk_file_chooser_widget_new(GTK_FILE_CHOOSER_ACTION_OPEN);
     gtk_file_chooser_set_select_multiple(GTK_FILE_CHOOSER(chooser), TRUE);
 
-    char * path = aud_get_str ("audgui", "filesel_path");
+    String path = aud_get_str ("audgui", "filesel_path");
     if (path[0])
         gtk_file_chooser_set_current_folder ((GtkFileChooser *) chooser, path);
-    str_unref (path);
 
     gtk_box_pack_start(GTK_BOX(vbox), chooser, TRUE, TRUE, 3);
 

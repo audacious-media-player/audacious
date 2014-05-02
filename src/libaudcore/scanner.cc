@@ -26,14 +26,14 @@
 #include "tuple.h"
 
 struct ScanRequest {
-    char * filename; /* pooled */
+    String filename;
     int flags;
     PluginHandle * decoder;
     ScanCallback callback;
     Tuple * tuple;
     void * image_data;
     int64_t image_len;
-    char * image_file; /* pooled */
+    String image_file;
 };
 
 static GThreadPool * pool;
@@ -41,9 +41,9 @@ static GThreadPool * pool;
 ScanRequest * scan_request (const char * filename, int flags,
  PluginHandle * decoder, ScanCallback callback)
 {
-    ScanRequest * request = g_slice_new0 (ScanRequest);
+    ScanRequest * request = new ScanRequest ();
 
-    request->filename = str_get (filename);
+    request->filename = String (filename);
     request->flags = flags;
     request->decoder = decoder;
     request->callback = callback;
@@ -75,14 +75,12 @@ static void scan_worker (void * data, void * unused)
     request->callback (request);
 
     tuple_unref (request->tuple);
-    str_unref (request->filename);
     g_free (request->image_data);
-    str_unref (request->image_file);
 
-    g_slice_free (ScanRequest, request);
+    delete request;
 }
 
-const char * scan_request_get_filename (ScanRequest * request)
+String scan_request_get_filename (ScanRequest * request)
 {
     return request->filename;
 }
@@ -107,7 +105,7 @@ void scan_request_get_image_data (ScanRequest * request, void * * data, int64_t 
     request->image_len = 0;
 }
 
-const char * scan_request_get_image_file (ScanRequest * request)
+String scan_request_get_image_file (ScanRequest * request)
 {
     return request->image_file;
 }

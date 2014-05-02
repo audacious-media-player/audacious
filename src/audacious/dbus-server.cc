@@ -42,7 +42,7 @@ static Index<PlaylistAddItem> strv_to_index (const char * const * strv)
 {
     Index<PlaylistAddItem> index;
     while (* strv)
-        index.append ({str_get (* strv ++)});
+        index.append ({String (* strv ++)});
 
     return index;
 }
@@ -136,9 +136,8 @@ static bool_t do_get_active_playlist (Obj * obj, Invoc * invoc)
 
 static bool_t do_get_active_playlist_name (Obj * obj, Invoc * invoc)
 {
-    char * title = aud_playlist_get_title (aud_playlist_get_active ());
+    String title = aud_playlist_get_title (aud_playlist_get_active ());
     FINISH2 (get_active_playlist_name, title ? title : "");
-    str_unref (title);
     return TRUE;
 }
 
@@ -513,9 +512,8 @@ static bool_t do_shuffle (Obj * obj, Invoc * invoc)
 
 static bool_t do_song_filename (Obj * obj, Invoc * invoc, unsigned pos)
 {
-    char * filename = aud_playlist_entry_get_filename (aud_playlist_get_active (), pos);
+    String filename = aud_playlist_entry_get_filename (aud_playlist_get_active (), pos);
     FINISH2 (song_filename, filename ? filename : "");
-    str_unref (filename);
     return TRUE;
 }
 
@@ -534,9 +532,8 @@ static bool_t do_song_length (Obj * obj, Invoc * invoc, unsigned pos)
 
 static bool_t do_song_title (Obj * obj, Invoc * invoc, unsigned pos)
 {
-    char * title = aud_playlist_entry_get_title (aud_playlist_get_active (), pos, FALSE);
+    String title = aud_playlist_entry_get_title (aud_playlist_get_active (), pos, FALSE);
     FINISH2 (song_title, title ? title : "");
-    str_unref (title);
     return TRUE;
 }
 
@@ -551,14 +548,10 @@ static bool_t do_song_tuple (Obj * obj, Invoc * invoc, unsigned pos, const char 
 
     if (tuple)
     {
-        char * str;
-
         switch (tuple_get_value_type (tuple, field))
         {
         case TUPLE_STRING:
-            str = tuple_get_str (tuple, field);
-            var = g_variant_new_string (str);
-            str_unref (str);
+            var = g_variant_new_string (tuple_get_str (tuple, field));
             break;
 
         case TUPLE_INT:

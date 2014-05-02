@@ -22,12 +22,21 @@
 
 #include <glib.h>
 
-struct JumpToTrackCache {
-    GHashTable* keywords;
+#include <libaudcore/index.h>
+#include <libaudcore/objects.h>
+
+// Struct to keep information about matches from searches.
+struct KeywordMatch {
+    int entry;
+    String title, artist, album, path;
 };
 
+typedef Index<KeywordMatch> KeywordMatches;
+
+typedef GHashTable JumpToTrackCache;
+
 JumpToTrackCache* ui_jump_to_track_cache_new (void);
-const GArray * ui_jump_to_track_cache_search (JumpToTrackCache * cache, const char * keyword);
+const KeywordMatches * ui_jump_to_track_cache_search (JumpToTrackCache * cache, const char * keyword);
 void ui_jump_to_track_cache_free (JumpToTrackCache * cache);
 
 #endif

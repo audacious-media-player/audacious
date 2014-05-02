@@ -66,21 +66,30 @@ static const char swap_case[256] =
 #define IS_LEGAL(c)  (uri_legal_table[(unsigned char) (c)])
 #define SWAP_CASE(c) (swap_case[(unsigned char) (c)])
 
-EXPORT char * str_printf (const char * format, ...)
+EXPORT String str_nget (const char * str, int len)
+{
+    if (memchr (str, 0, len))
+        return String (str);
+
+    SNCOPY (buf, str, len);
+    return String (buf);
+}
+
+EXPORT String str_printf (const char * format, ...)
 {
     va_list args;
     va_start (args, format);
 
-    char * str = str_vprintf (format, args);
+    String str = str_vprintf (format, args);
 
     va_end (args);
     return str;
 }
 
-EXPORT char * str_vprintf (const char * format, va_list args)
+EXPORT String str_vprintf (const char * format, va_list args)
 {
     VSPRINTF (buf, format, args);
-    return str_get (buf);
+    return String (buf);
 }
 
 EXPORT bool_t str_has_prefix_nocase (const char * str, const char * prefix)
@@ -153,7 +162,7 @@ EXPORT char * strstr_nocase_utf8 (const char * haystack, const char * needle)
     }
 }
 
-EXPORT char * str_tolower_utf8 (const char * str)
+EXPORT String str_tolower_utf8 (const char * str)
 {
     char buf[6 * strlen (str) + 1];
     const char * get = str;
@@ -172,7 +181,7 @@ EXPORT char * str_tolower_utf8 (const char * str)
 
     * set = 0;
 
-    return str_get (buf);
+    return String (buf);
 }
 
 EXPORT void str_replace_char (char * string, char old_c, char new_c)
@@ -296,7 +305,7 @@ EXPORT void filename_normalize (char * filename)
         filename[len - 1] = 0;
 }
 
-EXPORT char * filename_build (const char * path, const char * name)
+EXPORT String filename_build (const char * path, const char * name)
 {
     int len = strlen (path);
 
@@ -304,20 +313,20 @@ EXPORT char * filename_build (const char * path, const char * name)
     if (! len || path[len - 1] == '/' || path[len - 1] == '\\')
     {
         SCONCAT2 (filename, path, name);
-        return str_get (filename);
+        return String (filename);
     }
 
     SCONCAT3 (filename, path, "\\", name);
-    return str_get (filename);
+    return String (filename);
 #else
     if (! len || path[len - 1] == '/')
     {
         SCONCAT2 (filename, path, name);
-        return str_get (filename);
+        return String (filename);
     }
 
     SCONCAT3 (filename, path, "/", name);
-    return str_get (filename);
+    return String (filename);
 #endif
 }
 
@@ -333,36 +342,31 @@ EXPORT char * filename_build (const char * path, const char * name)
  * UTF-8 before percent-encoding (except on Windows, where filenames are assumed
  * to be UTF-8).  On Windows, replaces '\' with '/' and adds a leading '/'. */
 
-EXPORT char * filename_to_uri (const char * name)
+EXPORT String filename_to_uri (const char * name)
 {
 #ifdef _WIN32
     SCOPY (utf8, name);
     str_replace_char (utf8, '\\', '/');
 #else
-    char * utf8 = str_from_locale (name, -1);
+    String utf8 = str_from_locale (name, -1);
     if (! utf8)
-        return NULL;
+        return String ();
 #endif
 
     char enc[URI_PREFIX_LEN + 3 * strlen (utf8) + 1];
     strcpy (enc, URI_PREFIX);
     str_encode_percent (utf8, -1, enc + URI_PREFIX_LEN);
-
-#ifndef _WIN32
-    str_unref (utf8);
-#endif
-
-    return str_get (enc);
+    return String (enc);
 }
 
 /* Like g_filename_from_uri, but converts the filename from UTF-8 to the system
  * locale after percent-decoding (except on Windows, where filenames are assumed
  * to be UTF-8).  On Windows, strips the leading '/' and replaces '/' with '\'. */
 
-EXPORT char * uri_to_filename (const char * uri)
+EXPORT String uri_to_filename (const char * uri)
 {
     if (strncmp (uri, URI_PREFIX, URI_PREFIX_LEN))
-        return NULL;
+        return String ();
 
     char buf[strlen (uri + URI_PREFIX_LEN) + 1];
     str_decode_percent (uri + URI_PREFIX_LEN, -1, buf);
@@ -370,7 +374,7 @@ EXPORT char * uri_to_filename (const char * uri)
     filename_normalize (buf);
 
 #ifdef _WIN32
-    return str_get (buf);
+    return String (buf);
 #else
     return str_to_locale (buf, -1);
 #endif
@@ -379,7 +383,7 @@ EXPORT char * uri_to_filename (const char * uri)
 /* Formats a URI for human-readable display.  Percent-decodes and, for file://
  * URI's, converts to filename format, but in UTF-8. */
 
-EXPORT char * uri_to_display (const char * uri)
+EXPORT String uri_to_display (const char * uri)
 {
     if (! strncmp (uri, "cdda://?", 8))
         return str_printf (_("Audio CD, track %s"), uri + 8);
@@ -396,7 +400,7 @@ EXPORT char * uri_to_display (const char * uri)
     else
         str_decode_percent (uri, -1, buf);
 
-    return str_get (buf);
+    return String (buf);
 }
 
 #undef URI_PREFIX
@@ -463,11 +467,11 @@ EXPORT bool_t uri_get_extension (const char * uri, char * buf, int buflen)
  *     c. a relative path (character set detected according to user settings)
  *   2. reference: the full URI of the playlist containing <path> */
 
-EXPORT char * uri_construct (const char * path, const char * reference)
+EXPORT String uri_construct (const char * path, const char * reference)
 {
     /* URI */
     if (strstr (path, "://"))
-        return str_get (path);
+        return String (path);
 
     /* absolute filename */
 #ifdef _WIN32
@@ -480,11 +484,11 @@ EXPORT char * uri_construct (const char * path, const char * reference)
     /* relative path */
     const char * slash = strrchr (reference, '/');
     if (! slash)
-        return NULL;
+        return String ();
 
-    char * utf8 = str_to_utf8 (path, -1);
+    String utf8 = str_to_utf8 (path, -1);
     if (! utf8)
-        return NULL;
+        return String ();
 
     int pathlen = slash + 1 - reference;
 
@@ -500,8 +504,7 @@ EXPORT char * uri_construct (const char * path, const char * reference)
     else
         str_encode_percent (utf8, -1, buf + pathlen);
 
-    str_unref (utf8);
-    return str_get (buf);
+    return String (buf);
 }
 
 /* Like strcasecmp, but orders numbers correctly (2 before 10). */
@@ -605,14 +608,14 @@ EXPORT int str_compare_encoded (const char * ap, const char * bp)
     return 0;
 }
 
-EXPORT Index<char *> str_list_to_index (const char * list, const char * delims)
+EXPORT Index<String> str_list_to_index (const char * list, const char * delims)
 {
     char dmap[256] = {0};
 
     for (; * delims; delims ++)
         dmap[(unsigned char) (* delims)] = 1;
 
-    Index<char *> index;
+    Index<String> index;
     const char * word = NULL;
 
     for (; * list; list ++)
@@ -635,12 +638,12 @@ EXPORT Index<char *> str_list_to_index (const char * list, const char * delims)
     }
 
     if (word)
-        index.append (str_get (word));
+        index.append (String (word));
 
     return index;
 }
 
-EXPORT char * index_to_str_list (const Index<char *> & index, const char * sep)
+EXPORT String index_to_str_list (const Index<String> & index, const char * sep)
 {
     int count = index.len ();
     int seplen = strlen (sep);
@@ -670,7 +673,7 @@ EXPORT char * index_to_str_list (const Index<char *> & index, const char * sep)
 
     buf[pos] = 0;
 
-    return str_get (buf);
+    return String (buf);
 }
 
 /*
@@ -723,14 +726,14 @@ EXPORT double str_to_double (const char * string)
     return neg ? -val : val;
 }
 
-EXPORT char * int_to_str (int val)
+EXPORT String int_to_str (int val)
 {
     char buf[16];
     str_itoa (val, buf, sizeof buf);
-    return str_get (buf);
+    return String (buf);
 }
 
-EXPORT char * double_to_str (double val)
+EXPORT String double_to_str (double val)
 {
     bool_t neg = (val < 0);
     if (neg)
@@ -754,87 +757,65 @@ EXPORT char * double_to_str (double val)
         c --;
     * c = 0;
 
-    return str_get (buf);
+    return String (buf);
 }
 
 EXPORT bool_t str_to_int_array (const char * string, int * array, int count)
 {
-    Index<char *> index = str_list_to_index (string, ", ");
-    bool_t okay = (index.len () == count);
+    Index<String> index = str_list_to_index (string, ", ");
 
-    if (okay)
-    {
-        for (int i = 0; i < count; i ++)
-            array[i] = str_to_int (index[i]);
-    }
+    if (index.len () != count)
+        return FALSE;
 
-    for (char * str : index)
-        str_unref (str);
+    for (int i = 0; i < count; i ++)
+        array[i] = str_to_int (index[i]);
 
-    return okay;
+    return TRUE;
 }
 
-EXPORT char * int_array_to_str (const int * array, int count)
+EXPORT String int_array_to_str (const int * array, int count)
 {
-    Index<char *> index;
-    char * string = NULL;
+    Index<String> index;
 
     for (int i = 0; i < count; i ++)
     {
-        char * value = int_to_str (array[i]);
+        String value = int_to_str (array[i]);
         if (! value)
-            goto BAD;
+            return String ();
 
         index.append (value);
     }
 
-    string = index_to_str_list (index, ",");
-
-BAD:
-    for (char * str : index)
-        str_unref (str);
-
-    return string;
+    return index_to_str_list (index, ",");
 }
 
 EXPORT bool_t str_to_double_array (const char * string, double * array, int count)
 {
-    Index<char *> index = str_list_to_index (string, ", ");
-    bool_t okay = (index.len () == count);
+    Index<String> index = str_list_to_index (string, ", ");
 
-    if (okay)
-    {
-        for (int i = 0; i < count; i ++)
-            array[i] = str_to_double (index[i]);
-    }
+    if (index.len () != count)
+        return FALSE;
 
-    for (char * str : index)
-        str_unref (str);
+    for (int i = 0; i < count; i ++)
+        array[i] = str_to_double (index[i]);
 
-    return okay;
+    return TRUE;
 }
 
-EXPORT char * double_array_to_str (const double * array, int count)
+EXPORT String double_array_to_str (const double * array, int count)
 {
-    Index<char *> index;
-    char * string = NULL;
+    Index<String> index;
 
     for (int i = 0; i < count; i ++)
     {
-        char * value = double_to_str (array[i]);
+        String value = double_to_str (array[i]);
         if (! value)
-            goto BAD;
+            return String ();
 
         index.append (value);
     }
 
-    string = index_to_str_list (index, ",");
-
-BAD:
-    for (char * str : index)
-        str_unref (str);
-
-    return string;
+    return index_to_str_list (index, ",");
 }
 
 EXPORT void str_format_time (char * buf, int bufsize, int64_t milliseconds)

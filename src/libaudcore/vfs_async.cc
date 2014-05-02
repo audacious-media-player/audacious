@@ -23,7 +23,7 @@
 #include "vfs_async.h"
 
 struct VFSAsyncTrampoline {
-    char * filename; /* pooled */
+    String filename;
     void *buf;
     int64_t size;
     pthread_t thread;
@@ -41,8 +41,7 @@ vfs_async_file_get_contents_trampoline(void * data)
 
     tr->cons_f(tr->buf, tr->size, tr->userdata);
 
-    str_unref (tr->filename);
-    g_slice_free(VFSAsyncTrampoline, tr);
+    delete tr;
 
     return FALSE;
 }
@@ -62,10 +61,9 @@ vfs_async_file_get_contents_worker(void * data)
 EXPORT void
 vfs_async_file_get_contents(const char *filename, VFSConsumer cons_f, void * userdata)
 {
-    VFSAsyncTrampoline *tr;
+    VFSAsyncTrampoline * tr = new VFSAsyncTrampoline ();
 
-    tr = g_slice_new0(VFSAsyncTrampoline);
-    tr->filename = str_get (filename);
+    tr->filename = String (filename);
     tr->cons_f = cons_f;
     tr->userdata = userdata;
 

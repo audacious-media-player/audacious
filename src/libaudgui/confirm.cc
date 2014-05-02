@@ -48,9 +48,8 @@ EXPORT void audgui_confirm_playlist_delete (int playlist)
         return;
     }
 
-    char * title = aud_playlist_get_title (playlist);
-    SPRINTF (message, _("Do you want to permanently remove “%s”?"), title);
-    str_unref (title);
+    SPRINTF (message, _("Do you want to permanently remove “%s”?"),
+     (const char *) aud_playlist_get_title (playlist));
 
     int id = aud_playlist_get_unique_id (playlist);
     GtkWidget * button1 = audgui_button_new (_("_Remove"), "edit-delete",
@@ -78,10 +77,8 @@ static void rename_cb (void * entry)
 
 EXPORT void audgui_show_playlist_rename (int playlist)
 {
-    char * title = aud_playlist_get_title (playlist);
-
     GtkWidget * entry = gtk_entry_new ();
-    gtk_entry_set_text ((GtkEntry *) entry, title);
+    gtk_entry_set_text ((GtkEntry *) entry, aud_playlist_get_title (playlist));
     gtk_entry_set_activates_default ((GtkEntry *) entry, TRUE);
 
     int id = aud_playlist_get_unique_id (playlist);
@@ -97,6 +94,4 @@ EXPORT void audgui_show_playlist_rename (int playlist)
     audgui_dialog_add_widget (dialog, entry);
 
     gtk_widget_show_all (dialog);
-
-    str_unref (title);
 }

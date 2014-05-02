@@ -44,9 +44,7 @@ static void get_value (void * user, int row, int column, GValue * value)
         g_value_set_int (value, 1 + entry);
         break;
     case COLUMN_TITLE:;
-        char * title = aud_playlist_entry_get_title (list, entry, TRUE);
-        g_value_set_string (value, title);
-        str_unref (title);
+        g_value_set_string (value, aud_playlist_entry_get_title (list, entry, TRUE));
         break;
     }
 }

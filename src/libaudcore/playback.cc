@@ -61,8 +61,8 @@ static volatile int stop_flag = FALSE; /* atomic */
 static int current_bitrate = -1, current_samplerate = -1, current_channels = -1;
 
 static int current_entry = -1;
-static char * current_filename = NULL; /* pooled */
-static char * current_title = NULL; /* pooled */
+static String current_filename;
+static String current_title;
 static int current_length = -1;
 
 static InputPlugin * current_decoder = NULL;
@@ -104,17 +104,13 @@ static void read_gain_from_tuple (const Tuple * tuple)
 static bool_t update_from_playlist (void)
 {
     int entry = playback_entry_get_position ();
-    char * title = playback_entry_get_title ();
+    String title = playback_entry_get_title ();
     int length = playback_entry_get_length ();
 
     if (entry == current_entry && str_equal (title, current_title) && length == current_length)
-    {
-        str_unref (title);
         return FALSE;
-    }
 
     current_entry = entry;
-    str_unref (current_title);
     current_title = title;
     current_length = length;
     return TRUE;
@@ -240,10 +236,8 @@ static void playback_cleanup (void)
     current_bitrate = current_samplerate = current_channels = -1;
 
     current_entry = -1;
-    str_unref (current_filename);
-    current_filename = NULL;
-    str_unref (current_title);
-    current_title = NULL;
+    current_filename = String ();
+    current_title = String ();
     current_length = -1;
 
     current_decoder = NULL;
@@ -354,7 +348,7 @@ static void * playback_thread (void * unused)
 
         if (! current_decoder)
         {
-            SPRINTF (error, _("No decoder found for %s."), current_filename);
+            SPRINTF (error, _("No decoder found for %s."), (const char *) current_filename);
             aud_ui_show_error (error);
             playback_error = TRUE;
             goto DONE;
@@ -387,7 +381,7 @@ static void * playback_thread (void * unused)
 
     if (! open_file ())
     {
-        SPRINTF (error, _("%s could not be opened."), current_filename);
+        SPRINTF (error, _("%s could not be opened."), (const char *) current_filename);
         aud_ui_show_error (error);
         playback_error = TRUE;
         goto DONE;
@@ -405,7 +399,7 @@ DONE:
 
 void playback_play (int seek_time, bool_t pause)
 {
-    char * new_filename = playback_entry_get_filename ();
+    String new_filename = playback_entry_get_filename ();
     g_return_if_fail (new_filename);
 
     if (playing)
@@ -559,18 +553,18 @@ EXPORT int aud_input_check_seek (void)
     return seek;
 }
 
-EXPORT char * aud_drct_get_filename (void)
+EXPORT String aud_drct_get_filename (void)
 {
     if (! playing)
-        return NULL;
+        return String ();
 
-    return str_ref (current_filename);
+    return current_filename;
 }
 
-EXPORT char * aud_drct_get_title (void)
+EXPORT String aud_drct_get_title (void)
 {
     if (! playing)
-        return NULL;
+        return String ();
 
     wait_until_ready ();
 
@@ -586,9 +580,9 @@ EXPORT char * aud_drct_get_title (void)
         s[0] = 0;
 
     if (aud_get_bool (NULL, "show_numbers_in_pl"))
-        return str_printf ("%d. %s%s", 1 + current_entry, current_title, s);
+        return str_printf ("%d. %s%s", 1 + current_entry, (const char *) current_title, s);
 
-    return str_printf ("%s%s", current_title, s);
+    return str_printf ("%s%s", (const char *) current_title, s);
 }
 
 EXPORT int aud_drct_get_length (void)

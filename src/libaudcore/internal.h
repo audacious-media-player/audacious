@@ -22,8 +22,8 @@
 
 #include <stdint.h>
 
-#include "core.h"
 #include "index.h"
+#include "objects.h"
 
 typedef bool_t (* DirForeachFunc) (const char * path, const char * basename, void * user);
 
@@ -35,7 +35,7 @@ void art_init (void);
 void art_cleanup (void);
 
 /* art-search.c */
-char * art_search (const char * filename); /* pooled */
+String art_search (const char * filename);
 
 /* charset.c */
 void chardet_init (void);
@@ -85,11 +85,11 @@ VFSFile * probe_buffer_new (const char * filename);
 
 /* util.c */
 bool_t dir_foreach (const char * path, DirForeachFunc func, void * user_data);
-char * write_temp_file (void * data, int64_t len); /* pooled */
+String write_temp_file (void * data, int64_t len);
 
-void describe_song (const char * filename, const Tuple * tuple, char * * title,
- char * * artist, char * * album);
-char * last_path_element (char * path);
+void describe_song (const char * filename, const Tuple * tuple, String & title,
+ String & artist, String & album);
+const char * last_path_element (const char * path);
 
 /* vis-runner.c */
 void vis_runner_start_stop (bool_t playing, bool_t paused);

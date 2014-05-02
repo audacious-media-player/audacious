@@ -20,15 +20,12 @@
 #ifndef LIBAUDCORE_DRCT_H
 #define LIBAUDCORE_DRCT_H
 
-#include <libaudcore/core.h>
 #include <libaudcore/index.h>
+#include <libaudcore/objects.h>
 
 /* CAUTION: These functions are not thread safe. */
 
 /* --- PLAYBACK CONTROL --- */
-
-/* The strings returned by drct_get_filename() and drct_get_title() are pooled
- * and must be freed with str_unref(). */
 
 void aud_drct_play (void);
 void aud_drct_play_pause (void);
@@ -38,8 +35,8 @@ void aud_drct_stop (void);
 bool_t aud_drct_get_playing (void);
 bool_t aud_drct_get_ready (void);
 bool_t aud_drct_get_paused (void);
-char * aud_drct_get_filename (void);
-char * aud_drct_get_title (void);
+String aud_drct_get_filename (void);
+String aud_drct_get_title (void);
 void aud_drct_get_info (int * bitrate, int * samplerate, int * channels);
 int aud_drct_get_time (void);
 int aud_drct_get_length (void);

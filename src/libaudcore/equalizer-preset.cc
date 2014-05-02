@@ -34,22 +34,18 @@ EXPORT Index<EqualizerPreset> aud_eq_read_presets (const char * basename)
     Index<EqualizerPreset> list;
 
     GKeyFile * rcfile = g_key_file_new ();
-    char * filename = filename_build (aud_get_path (AUD_PATH_USER_DIR), basename);
+    String filename = filename_build (aud_get_path (AUD_PATH_USER_DIR), basename);
 
     if (! g_key_file_load_from_file (rcfile, filename, G_KEY_FILE_NONE, NULL))
     {
-        str_unref (filename);
         filename = filename_build (aud_get_path (AUD_PATH_DATA_DIR), basename);
 
         if (! g_key_file_load_from_file (rcfile, filename, G_KEY_FILE_NONE, NULL))
         {
-            str_unref (filename);
             g_key_file_free (rcfile);
             return list;
         }
     }
-
-    str_unref (filename);
 
     for (int p = 0;; p ++)
     {
@@ -61,7 +57,7 @@ EXPORT Index<EqualizerPreset> aud_eq_read_presets (const char * basename)
 
         EqualizerPreset & preset = list.append ();
 
-        preset.name = str_get (name);
+        preset.name = String (name);
         preset.preamp = g_key_file_get_double (rcfile, name, "Preamp", NULL);
 
         for (int i = 0; i < AUD_EQ_NBANDS; i++)
@@ -100,9 +96,8 @@ EXPORT bool_t aud_eq_write_presets (const Index<EqualizerPreset> & list, const c
     size_t len;
     char * data = g_key_file_to_data (rcfile, & len, NULL);
 
-    char * filename = filename_build (aud_get_path (AUD_PATH_USER_DIR), basename);
+    String filename = filename_build (aud_get_path (AUD_PATH_USER_DIR), basename);
     bool_t success = g_file_set_contents (filename, data, len, NULL);
-    str_unref (filename);
 
     g_key_file_free (rcfile);
     g_free (data);
@@ -139,7 +134,7 @@ EXPORT Index<EqualizerPreset> aud_import_winamp_presets (VFSFile * file)
 
         EqualizerPreset & preset = list.append ();
 
-        preset.name = str_get (preset_name);
+        preset.name = String (preset_name);
         preset.preamp = FROM_WINAMP_VAL (bands[10]);
 
         for (int i = 0; i < AUD_EQ_NBANDS; i ++)
@@ -213,8 +208,7 @@ EXPORT bool_t aud_load_preset_file (EqualizerPreset & preset, const char * filen
         return FALSE;
     }
 
-    str_unref (preset.name);
-    preset.name = str_get ("");
+    preset.name = String ("");
     preset.preamp = g_key_file_get_double (rcfile, "Equalizer preset", "Preamp", NULL);
 
     for (int i = 0; i < AUD_EQ_NBANDS; i ++)

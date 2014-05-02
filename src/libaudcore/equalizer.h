@@ -20,29 +20,14 @@
 #ifndef LIBAUDCORE_EQUALIZER_H
 #define LIBAUDCORE_EQUALIZER_H
 
-#include <libaudcore/core.h>
 #include <libaudcore/index.h>
+#include <libaudcore/objects.h>
 
 #define AUD_EQ_NBANDS 10
 #define AUD_EQ_MAX_GAIN 12
 
 struct EqualizerPreset {
-    EqualizerPreset (const char * name = nullptr) :
-        name (str_get (name)),
-        preamp (0),
-        bands () {}
-
-    ~EqualizerPreset ()
-    {
-        str_unref (name);
-        name = nullptr;
-    }
-
-    // implement these if needed
-    EqualizerPreset (const EqualizerPreset &) = delete;
-    void operator= (const EqualizerPreset &) = delete;
-
-    char * name;
+    String name;
     float preamp;
     float bands[AUD_EQ_NBANDS];
 };

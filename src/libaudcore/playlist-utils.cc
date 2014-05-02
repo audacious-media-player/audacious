@@ -46,20 +46,13 @@ static int filename_compare_basename (const char * a, const char * b)
 
 static int tuple_compare_string (const Tuple * a, const Tuple * b, int field)
 {
-    char * string_a = tuple_get_str (a, field);
-    char * string_b = tuple_get_str (b, field);
-    int ret;
+    String string_a = tuple_get_str (a, field);
+    String string_b = tuple_get_str (b, field);
 
-    if (string_a == NULL)
-        ret = (string_b == NULL) ? 0 : -1;
-    else if (string_b == NULL)
-        ret = 1;
-    else
-        ret = str_compare (string_a, string_b);
+    if (! string_a)
+        return (! string_b) ? 0 : -1;
 
-    str_unref (string_a);
-    str_unref (string_b);
-    return ret;
+    return (! string_b) ? 1 : str_compare (string_a, string_b);
 }
 
 static int tuple_compare_int (const Tuple * a, const Tuple * b, int field)
@@ -173,20 +166,17 @@ EXPORT void aud_playlist_remove_duplicates_by_scheme (int playlist, int scheme)
          filename_comparisons[scheme];
 
         aud_playlist_sort_by_filename (playlist, compare);
-        char * last = aud_playlist_entry_get_filename (playlist, 0);
+        String last = aud_playlist_entry_get_filename (playlist, 0);
 
         for (int count = 1; count < entries; count ++)
         {
-            char * current = aud_playlist_entry_get_filename (playlist, count);
+            String current = aud_playlist_entry_get_filename (playlist, count);
 
             if (compare (last, current) == 0)
                 aud_playlist_entry_set_selected (playlist, count, TRUE);
 
-            str_unref (last);
             last = current;
         }
-
-        str_unref (last);
     }
     else if (tuple_comparisons[scheme] != NULL)
     {
@@ -203,13 +193,11 @@ EXPORT void aud_playlist_remove_duplicates_by_scheme (int playlist, int scheme)
             if (last != NULL && current != NULL && compare (last, current) == 0)
                 aud_playlist_entry_set_selected (playlist, count, TRUE);
 
-            if (last)
-                tuple_unref (last);
+            tuple_unref (last);
             last = current;
         }
 
-        if (last)
-            tuple_unref (last);
+        tuple_unref (last);
     }
 
     aud_playlist_delete_selected (playlist);
@@ -224,13 +212,11 @@ EXPORT void aud_playlist_remove_failed (int playlist)
 
     for (count = 0; count < entries; count ++)
     {
-        char * filename = aud_playlist_entry_get_filename (playlist, count);
+        String filename = aud_playlist_entry_get_filename (playlist, count);
 
         /* vfs_file_test() only works for file:// URIs currently */
         if (! strncmp (filename, "file://", 7) && ! vfs_file_test (filename, G_FILE_TEST_EXISTS))
             aud_playlist_entry_set_selected (playlist, count, TRUE);
-
-        str_unref (filename);
     }
 
     aud_playlist_delete_selected (playlist);
@@ -247,15 +233,12 @@ EXPORT void aud_playlist_select_by_patterns (int playlist, const Tuple * pattern
 
     for (unsigned field = 0; field < ARRAY_LEN (fields); field ++)
     {
-        char * pattern = tuple_get_str (patterns, fields[field]);
+        String pattern = tuple_get_str (patterns, fields[field]);
         GRegex * regex;
 
         if (! pattern || ! pattern[0] || ! (regex = g_regex_new (pattern,
          G_REGEX_CASELESS, (GRegexMatchFlags) 0, NULL)))
-        {
-            str_unref (pattern);
             continue;
-        }
 
         for (int entry = 0; entry < entries; entry ++)
         {
@@ -263,22 +246,19 @@ EXPORT void aud_playlist_select_by_patterns (int playlist, const Tuple * pattern
                 continue;
 
             Tuple * tuple = aud_playlist_entry_get_tuple (playlist, entry, FALSE);
-            char * string = tuple ? tuple_get_str (tuple, fields[field]) : NULL;
+            String string = tuple ? tuple_get_str (tuple, fields[field]) : String ();
 
             if (! string || ! g_regex_match (regex, string, (GRegexMatchFlags) 0, NULL))
                 aud_playlist_entry_set_selected (playlist, entry, FALSE);
 
-            str_unref (string);
-            if (tuple)
-                tuple_unref (tuple);
+            tuple_unref (tuple);
         }
 
         g_regex_unref (regex);
-        str_unref (pattern);
     }
 }
 
-static char * make_playlist_path (int playlist)
+static String make_playlist_path (int playlist)
 {
     if (! playlist)
         return filename_build (aud_get_path (AUD_PATH_USER_DIR), "playlist.xspf");
@@ -296,33 +276,22 @@ static void load_playlists_real (void)
     int count;
     for (count = 0; ; count ++)
     {
-        char * path = make_playlist_path (count);
-
+        String path = make_playlist_path (count);
         if (! g_file_test (path, G_FILE_TEST_EXISTS))
-        {
-            str_unref (path);
             break;
-        }
-
-        char * uri = filename_to_uri (path);
 
         aud_playlist_insert (count);
-        playlist_insert_playlist_raw (count, 0, uri);
+        playlist_insert_playlist_raw (count, 0, filename_to_uri (path));
         playlist_set_modified (count, TRUE);
-
-        str_unref (path);
-        str_unref (uri);
     }
 
     /* unique ID-based naming scheme */
 
-    char * order_path = filename_build (folder, "order");
+    String order_path = filename_build (folder, "order");
     char * order_string;
-    Index<char *> order;
+    Index<String> order;
 
     g_file_get_contents (order_path, & order_string, NULL, NULL);
-    str_unref (order_path);
-
     if (! order_string)
         goto DONE;
 
@@ -331,30 +300,22 @@ static void load_playlists_real (void)
 
     for (int i = 0; i < order.len (); i ++)
     {
-        char * number = order[i];
+        const String & number = order[i];
         SCONCAT2 (name, number, ".audpl");
-        char * path = filename_build (folder, name);
 
+        String path = filename_build (folder, name);
         if (! g_file_test (path, G_FILE_TEST_EXISTS))
         {
-            str_unref (path);
-
             SCONCAT2 (name2, number, ".xspf");
             path = filename_build (folder, name2);
         }
 
-        char * uri = filename_to_uri (path);
-
         playlist_insert_with_id (count + i, atoi (number));
-        playlist_insert_playlist_raw (count + i, 0, uri);
+        playlist_insert_playlist_raw (count + i, 0, filename_to_uri (path));
         playlist_set_modified (count + i, FALSE);
 
         if (g_str_has_suffix (path, ".xspf"))
             playlist_set_modified (count + i, TRUE);
-
-        str_unref (path);
-        str_unref (uri);
-        str_unref (number);
     }
 
 DONE:
@@ -371,62 +332,50 @@ static void save_playlists_real (void)
 
     /* save playlists */
 
-    Index<char *> order;
+    Index<String> order;
     GHashTable * saved = g_hash_table_new_full (g_str_hash, g_str_equal,
      (GDestroyNotify) str_unref, NULL);
 
     for (int i = 0; i < lists; i ++)
     {
         int id = aud_playlist_get_unique_id (i);
-        char * number = int_to_str (id);
+        String number = int_to_str (id);
 
         SCONCAT2 (name, number, ".audpl");
 
         if (playlist_get_modified (i))
         {
-            char * path = filename_build (folder, name);
-            char * uri = filename_to_uri (path);
+            String path = filename_build (folder, name);
 
-            aud_playlist_save (i, uri);
+            aud_playlist_save (i, filename_to_uri (path));
             playlist_set_modified (i, FALSE);
-
-            str_unref (path);
-            str_unref (uri);
         }
 
-        order.append (number);
+        order.append (std::move (number));
         g_hash_table_insert (saved, str_get (name), NULL);
     }
 
-    char * order_string = index_to_str_list (order, " ");
-
-    for (char * number : order)
-        str_unref (number);
-
-    GError * error = NULL;
-    char * order_path = filename_build (folder, "order");
+    String order_string = index_to_str_list (order, " ");
+    String order_path = filename_build (folder, "order");
 
     char * old_order_string;
     g_file_get_contents (order_path, & old_order_string, NULL, NULL);
 
     if (! old_order_string || strcmp (old_order_string, order_string))
     {
+        GError * error = NULL;
         if (! g_file_set_contents (order_path, order_string, -1, & error))
         {
-            fprintf (stderr, "Cannot write to %s: %s\n", order_path, error->message);
+            fprintf (stderr, "Cannot write to %s: %s\n", (const char *) order_path, error->message);
             g_error_free (error);
         }
     }
 
-    str_unref (order_string);
-    str_unref (order_path);
     g_free (old_order_string);
 
     /* clean up deleted playlists and files from old naming scheme */
 
-    char * path = make_playlist_path (0);
-    g_unlink (path);
-    str_unref (path);
+    g_unlink (make_playlist_path (0));
 
     GDir * dir = g_dir_open (folder, 0, NULL);
     if (! dir)
@@ -439,11 +388,7 @@ static void save_playlists_real (void)
             continue;
 
         if (! g_hash_table_contains (saved, name))
-        {
-            char * path = filename_build (folder, name);
-            g_unlink (path);
-            str_unref (path);
-        }
+            g_unlink (filename_build (folder, name));
     }
 
     g_dir_close (dir);

@@ -22,8 +22,8 @@
 
 #include <stdint.h>
 
-#include <libaudcore/core.h>
 #include <libaudcore/index.h>
+#include <libaudcore/objects.h>
 
 /* The values which can be passed (packed into a pointer) to the "playlist
  * update" hook.  PLAYLIST_UPDATE_SELECTION means that entries have been
@@ -59,10 +59,6 @@ enum {
 typedef bool_t (* PlaylistFilterFunc) (const char * filename, void * user);
 typedef int (* PlaylistStringCompareFunc) (const char * a, const char * b);
 typedef int (* PlaylistTupleCompareFunc) (const Tuple * a, const Tuple * b);
-
-/* Any functions in this API with a return type of (char *) return pooled
- * strings that must not be modified and must be released with str_unref() when
- * no longer needed. */
 
 /* --- PLAYLIST CORE API --- */
 
@@ -100,13 +96,13 @@ int aud_playlist_by_unique_id (int id);
 void aud_playlist_set_filename (int playlist, const char * filename);
 
 /* Returns the filename associated with a playlist. */
-char * aud_playlist_get_filename (int playlist);
+String aud_playlist_get_filename (int playlist);
 
 /* Sets the title associated with a playlist. */
 void aud_playlist_set_title (int playlist, const char * title);
 
 /* Returns the title associated with a playlist. */
-char * aud_playlist_get_title (int playlist);
+String aud_playlist_get_title (int playlist);
 
 /* Sets the active playlist.  This is the playlist that user interfaces will
  * show to the user. */
@@ -172,7 +168,7 @@ void aud_playlist_entry_insert_filtered (int playlist, int at,
 void aud_playlist_entry_delete (int playlist, int at, int number);
 
 /* Returns the filename of an entry. */
-char * aud_playlist_entry_get_filename (int playlist, int entry);
+String aud_playlist_entry_get_filename (int playlist, int entry);
 
 /* Returns a handle to the decoder plugin associated with an entry, or NULL if
  * none can be found.  If <fast> is nonzero, returns NULL if no decoder plugin
@@ -189,16 +185,15 @@ Tuple * aud_playlist_entry_get_tuple (int playlist, int entry, bool_t fast);
  * such as the filename, song title, and/or artist.  If <fast> is nonzero,
  * returns a "best guess" based on the entry's filename if metadata for the
  * entry has not yet been read. */
-char * aud_playlist_entry_get_title (int playlist, int entry, bool_t fast);
+String aud_playlist_entry_get_title (int playlist, int entry, bool_t fast);
 
-/* Returns three strings (title, artist, and album) describing an entry.  The
- * strings are pooled, and the usual cautions apply.  If <fast> is nonzero,
- * returns a "best guess" based on the entry's filename if metadata for the
- * entry has not yet been read.  The caller may pass NULL for any values that
- * are not needed; NULL may also be returned for any values that are not
- * available. */
-void aud_playlist_entry_describe (int playlist, int entry, char * * title,
- char * * artist, char * * album, bool_t fast);
+/* Returns three strings (title, artist, and album) describing an entry.  If
+ * <fast> is nonzero, returns a "best guess" based on the entry's filename if
+ * metadata for the entry has not yet been read.  The caller may pass NULL for
+ * any values that are not needed; NULL may also be returned for any values that
+ * are not available. */
+void aud_playlist_entry_describe (int playlist, int entry, String & title,
+ String & artist, String & album, bool_t fast);
 
 /* Returns the length in milliseconds of an entry, or -1 if the length is not
  * known.  <fast> is as in playlist_entry_get_tuple(). */

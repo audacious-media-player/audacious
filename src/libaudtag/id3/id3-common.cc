@@ -49,7 +49,7 @@ static void * memchr16 (const void * mem, int16_t chr, int len)
     return NULL;
 }
 
-void id3_strnlen (const char * data, int size, int encoding,
+static void id3_strnlen (const char * data, int size, int encoding,
  int * bytes_without_nul, int * bytes_with_nul)
 {
     bool_t is16 = (encoding == ID3_ENCODING_UTF16 || encoding == ID3_ENCODING_UTF16_BE);
@@ -71,7 +71,7 @@ void id3_strnlen (const char * data, int size, int encoding,
     }
 }
 
-char * id3_convert (const char * data, int size, int encoding)
+static String id3_convert (const char * data, int size, int encoding)
 {
     if (encoding == ID3_ENCODING_UTF16)
         return str_convert (data, size, "UTF-16", "UTF-8");
@@ -81,43 +81,39 @@ char * id3_convert (const char * data, int size, int encoding)
         return str_to_utf8 (data, size);
 }
 
-char * id3_decode_text (const char * data, int size)
+static String id3_decode_text (const char * data, int size)
 {
     if (size < 1)
-        return NULL;
+        return String ();
 
     return id3_convert ((const char *) data + 1, size - 1, data[0]);
 }
 
 void id3_associate_string (Tuple * tuple, int field, const char * data, int size)
 {
-    char * text = id3_decode_text (data, size);
+    String text = id3_decode_text (data, size);
 
     if (text && text[0])
     {
-        AUDDBG ("Field %i = %s.\n", field, text);
+        AUDDBG ("Field %i = %s.\n", field, (const char *) text);
         tuple_set_str (tuple, field, text);
     }
-
-    str_unref (text);
 }
 
 void id3_associate_int (Tuple * tuple, int field, const char * data, int size)
 {
-    char * text = id3_decode_text (data, size);
+    String text = id3_decode_text (data, size);
 
     if (text && atoi (text) >= 0)
     {
-        AUDDBG ("Field %i = %s.\n", field, text);
+        AUDDBG ("Field %i = %s.\n", field, (const char *) text);
         tuple_set_int (tuple, field, atoi (text));
     }
-
-    str_unref (text);
 }
 
 void id3_decode_genre (Tuple * tuple, const char * data, int size)
 {
-    char * text = id3_decode_text (data, size);
+    String text = id3_decode_text (data, size);
     int numericgenre;
 
     if (! text)
@@ -132,8 +128,6 @@ void id3_decode_genre (Tuple * tuple, const char * data, int size)
         tuple_set_str (tuple, FIELD_GENRE, convert_numericgenre_to_text (numericgenre));
     else
         tuple_set_str (tuple, FIELD_GENRE, text);
-
-    str_unref (text);
 }
 
 void id3_decode_comment (Tuple * tuple, const char * data, int size)
@@ -145,16 +139,14 @@ void id3_decode_comment (Tuple * tuple, const char * data, int size)
     id3_strnlen (data + 4, size - 4, data[0], & before_nul, & after_nul);
 
     const char * lang = data + 1;
-    char * type = id3_convert (data + 4, before_nul, data[0]);
-    char * value = id3_convert (data + 4 + after_nul, size - 4 - after_nul, data[0]);
+    String type = id3_convert (data + 4, before_nul, data[0]);
+    String value = id3_convert (data + 4 + after_nul, size - 4 - after_nul, data[0]);
 
-    AUDDBG ("Comment: lang = %.3s, type = %s, value = %s.\n", lang, type, value);
+    AUDDBG ("Comment: lang = %.3s, type = %s, value = %s.\n", lang,
+     (const char *) type, (const char *) value);
 
     if (type && ! type[0] && value) /* blank type = actual comment */
         tuple_set_str (tuple, FIELD_COMMENT, value);
-
-    str_unref (type);
-    str_unref (value);
 }
 
 static bool_t decode_rva_block (const char * * _data, int * _size,
@@ -280,15 +272,14 @@ bool_t id3_decode_picture (const char * data, int size, int * type,
     id3_strnlen (body, body_size, data[0], & before_nul2, & after_nul2);
 
     const char * mime = data + 1;
-    char * desc = id3_convert (body, before_nul2, data[0]);
+    String desc = id3_convert (body, before_nul2, data[0]);
 
     * type = nul[1];
     * image_size = body_size - after_nul2;
     * image_data = g_memdup (body + after_nul2, * image_size);
 
     AUDDBG ("Picture: mime = %s, type = %d, desc = %s, size = %d.\n", mime,
-     * type, desc, (int) * image_size);
+     * type, (const char *) desc, (int) * image_size);
 
-    str_unref (desc);
     return TRUE;
 }

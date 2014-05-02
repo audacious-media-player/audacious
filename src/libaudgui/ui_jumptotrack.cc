@@ -36,7 +36,7 @@ static void update_cb (void * data, void * user);
 static void activate_cb (void * data, void * user);
 
 static JumpToTrackCache* cache = NULL;
-static const GArray * search_matches;
+static const KeywordMatches * search_matches;
 static GtkWidget * treeview, * filter_entry, * queue_button;
 static bool_t watching = FALSE;
 
@@ -73,8 +73,8 @@ static int get_selected_entry (void)
     int row = gtk_tree_path_get_indices (path)[0];
     gtk_tree_path_free (path);
 
-    g_return_val_if_fail (row >= 0 && (unsigned) row < search_matches->len, -1);
-    return g_array_index (search_matches, int, row);
+    g_return_val_if_fail (row >= 0 && row < search_matches->len (), -1);
+    return (* search_matches)[row].entry;
 }
 
 static void do_jump (void * unused)
@@ -155,9 +155,9 @@ static void fill_list (void)
      ((GtkEntry *) filter_entry));
 
     audgui_list_delete_rows (treeview, 0, audgui_list_row_count (treeview));
-    audgui_list_insert_rows (treeview, 0, search_matches->len);
+    audgui_list_insert_rows (treeview, 0, search_matches->len ());
 
-    if (search_matches->len >= 1)
+    if (search_matches->len () >= 1)
     {
         GtkTreeSelection * sel = gtk_tree_view_get_selection ((GtkTreeView *) treeview);
         GtkTreePath * path = gtk_tree_path_new_from_indices (0, -1);
@@ -214,10 +214,10 @@ static void list_get_value (void * user, int row, int column, GValue * value)
 {
     g_return_if_fail (search_matches);
     g_return_if_fail (column >= 0 && column < 2);
-    g_return_if_fail (row >= 0 && (unsigned) row < search_matches->len);
+    g_return_if_fail (row >= 0 && row < search_matches->len ());
 
     int playlist = aud_playlist_get_active ();
-    int entry = g_array_index (search_matches, int, row);
+    int entry = (* search_matches)[row].entry;
 
     switch (column)
     {
@@ -225,10 +225,7 @@ static void list_get_value (void * user, int row, int column, GValue * value)
         g_value_set_int (value, 1 + entry);
         break;
     case 1:;
-        char * title = aud_playlist_entry_get_title (playlist, entry, TRUE);
-        g_return_if_fail (title);
-        g_value_set_string (value, title);
-        str_unref (title);
+        g_value_set_string (value, aud_playlist_entry_get_title (playlist, entry, TRUE));
         break;
     }
 }

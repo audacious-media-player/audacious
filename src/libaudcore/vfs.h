@@ -29,7 +29,7 @@
 
 #include <stdint.h>
 
-#include <libaudcore/core.h>
+#include <libaudcore/objects.h>
 
 /* equivalent to G_FILE_TEST_XXX */
 #define VFS_IS_REGULAR    (1 << 0)
@@ -69,7 +69,7 @@ struct VFSConstructor {
     int64_t (* vfs_fsize_impl) (VFSFile * file);
 
     /** A function pointer which points to a (stream) metadata fetching implementation. */
-    char * (* vfs_get_metadata_impl) (VFSFile * file, const char * field);
+    String (* vfs_get_metadata_impl) (VFSFile * file, const char * field);
 };
 
 #ifdef __GNUC__
@@ -105,8 +105,7 @@ int vfs_ftruncate (VFSFile * file, int64_t length) WARN_RETURN;
 
 bool_t vfs_is_streaming (VFSFile * file) WARN_RETURN;
 
-/* free returned string with str_unref() */
-char * vfs_get_metadata (VFSFile * file, const char * field) WARN_RETURN;
+String vfs_get_metadata (VFSFile * file, const char * field) WARN_RETURN;
 
 bool_t vfs_file_test (const char * path, int test) WARN_RETURN;
 bool_t vfs_is_writeable (const char * path) WARN_RETURN;

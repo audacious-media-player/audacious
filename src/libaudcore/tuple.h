@@ -26,7 +26,7 @@
 #ifndef LIBAUDCORE_TUPLE_H
 #define LIBAUDCORE_TUPLE_H
 
-#include <libaudcore/core.h>
+#include <libaudcore/objects.h>
 
 /** Ordered enum for basic #Tuple fields.
  * @sa TupleBasicType
@@ -132,10 +132,9 @@ void tuple_unset (Tuple * tuple, int field);
  * set to any value. */
 TupleValueType tuple_get_value_type (const Tuple * tuple, int field);
 
-/* Returns the string value of a field.  The returned string is pooled and must
- * be released with str_unref() when no longer needed.  If the field has not
- * been set to any value, returns NULL. */
-char * tuple_get_str (const Tuple * tuple, int field);
+/* Returns the string value of a field.  If the field has not been set to any
+ * value, returns NULL. */
+String tuple_get_str (const Tuple * tuple, int field);
 
 /* Returns the integer value of a field.  If the field has not been set to any
  * value, returns -1.  If you need to distinguish between a value of -1 and a
@@ -172,9 +171,8 @@ TupleFormatter * tuple_formatter_new (const char * format);
 /* Destroys a tuple formatter object. */
 void tuple_formatter_free (TupleFormatter * formatter);
 
-/* Generates a title string for <tuple> using the given formatter object.  The
- * returned string is pooled and must be released with str_unref() when no
- * longer needed.  Never returns NULL, but may return an empty string. */
-char * tuple_format_title (TupleFormatter * formatter, const Tuple * tuple);
+/* Generates a title string for <tuple> using the given formatter object.  Never
+ * returns NULL, but may return an empty string. */
+String tuple_format_title (TupleFormatter * formatter, const Tuple * tuple);
 
 #endif /* LIBAUDCORE_TUPLE_H */

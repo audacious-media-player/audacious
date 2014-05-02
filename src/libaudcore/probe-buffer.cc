@@ -126,7 +126,7 @@ static int64_t probe_buffer_fsize (VFSFile * file)
     return MIN (size, (int64_t) sizeof p->buffer);
 }
 
-static char * probe_buffer_get_metadata (VFSFile * file, const char * field)
+static String probe_buffer_get_metadata (VFSFile * file, const char * field)
 {
     return vfs_get_metadata (((ProbeBuffer *) vfs_get_handle (file))->file, field);
 }

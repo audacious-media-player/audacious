@@ -28,7 +28,7 @@
 
 struct SearchParams {
     const char * basename;
-    Index<char *> include, exclude;
+    Index<String> include, exclude;
 };
 
 static bool_t has_front_cover_extension (const char * name)
@@ -42,12 +42,12 @@ static bool_t has_front_cover_extension (const char * name)
 }
 
 static bool_t cover_name_filter (const char * name,
- const Index<char *> & keywords, bool_t ret_on_empty)
+ const Index<String> & keywords, bool_t ret_on_empty)
 {
     if (! keywords.len ())
         return ret_on_empty;
 
-    for (char * keyword : keywords)
+    for (const String & keyword : keywords)
     {
         if (strstr_nocase (name, keyword))
             return TRUE;
@@ -72,12 +72,12 @@ static bool_t is_file_image (const char * imgfile, const char * file_name)
     return imgfile_len == file_name_len && ! g_ascii_strncasecmp (imgfile, file_name, imgfile_len);
 }
 
-static char * fileinfo_recursive_get_image (const char * path,
+static String fileinfo_recursive_get_image (const char * path,
  const SearchParams * params, int depth)
 {
     GDir * d = g_dir_open (path, 0, NULL);
     if (! d)
-        return NULL;
+        return String ();
 
     const char * name;
 
@@ -86,7 +86,7 @@ static char * fileinfo_recursive_get_image (const char * path,
         /* Look for images matching file name */
         while ((name = g_dir_read_name (d)))
         {
-            char * newpath = filename_build (path, name);
+            String newpath = filename_build (path, name);
 
             if (! g_file_test (newpath, G_FILE_TEST_IS_DIR) &&
              has_front_cover_extension (name) &&
@@ -95,8 +95,6 @@ static char * fileinfo_recursive_get_image (const char * path,
                 g_dir_close (d);
                 return newpath;
             }
-
-            str_unref (newpath);
         }
 
         g_dir_rewind (d);
@@ -105,7 +103,7 @@ static char * fileinfo_recursive_get_image (const char * path,
     /* Search for files using filter */
     while ((name = g_dir_read_name (d)))
     {
-        char * newpath = filename_build (path, name);
+        String newpath = filename_build (path, name);
 
         if (! g_file_test (newpath, G_FILE_TEST_IS_DIR) &&
          has_front_cover_extension (name) &&
@@ -115,8 +113,6 @@ static char * fileinfo_recursive_get_image (const char * path,
             g_dir_close (d);
             return newpath;
         }
-
-        str_unref (newpath);
     }
 
     g_dir_rewind (d);
@@ -126,64 +122,49 @@ static char * fileinfo_recursive_get_image (const char * path,
         /* Descend into directories recursively. */
         while ((name = g_dir_read_name (d)))
         {
-            char * newpath = filename_build (path, name);
+            String newpath = filename_build (path, name);
 
             if (g_file_test (newpath, G_FILE_TEST_IS_DIR))
             {
-                char * tmp = fileinfo_recursive_get_image (newpath, params, depth + 1);
+                String tmp = fileinfo_recursive_get_image (newpath, params, depth + 1);
 
                 if (tmp)
                 {
-                    str_unref (newpath);
                     g_dir_close (d);
                     return tmp;
                 }
             }
-
-            str_unref (newpath);
         }
     }
 
     g_dir_close (d);
-    return NULL;
+    return String ();
 }
 
-char * art_search (const char * filename)
+String art_search (const char * filename)
 {
-    char * image_uri = NULL;
+    String local = uri_to_filename (filename);
+    if (! local)
+        return String ();
 
-    char * local = uri_to_filename (filename);
-    char * base = local ? last_path_element (local) : NULL;
+    const char * base = last_path_element (local);
+    if (! base)
+        return String ();
 
-    if (local && base)
-    {
-        char * include = aud_get_str (NULL, "cover_name_include");
-        char * exclude = aud_get_str (NULL, "cover_name_exclude");
+    String include = aud_get_str (NULL, "cover_name_include");
+    String exclude = aud_get_str (NULL, "cover_name_exclude");
 
-        SearchParams params = {
-            .basename = base,
-            .include = str_list_to_index (include, ", "),
-            .exclude = str_list_to_index (exclude, ", ")
-        };
+    SearchParams params = {
+        .basename = base,
+        .include = str_list_to_index (include, ", "),
+        .exclude = str_list_to_index (exclude, ", ")
+    };
 
-        str_unref (include);
-        str_unref (exclude);
+    SNCOPY (path, local, base - 1 - local);
 
-        SNCOPY (path, local, base - 1 - local);
+    String image_local = fileinfo_recursive_get_image (path, & params, 0);
+    if (! image_local)
+        return String ();
 
-        char * image_local = fileinfo_recursive_get_image (path, & params, 0);
-        if (image_local)
-            image_uri = filename_to_uri (image_local);
-
-        str_unref (image_local);
-
-        for (char * keyword : params.include)
-            str_unref (keyword);
-        for (char * keyword : params.exclude)
-            str_unref (keyword);
-    }
-
-    str_unref (local);
-
-    return image_uri;
+    return filename_to_uri (image_local);
 }

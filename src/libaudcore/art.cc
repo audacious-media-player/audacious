@@ -48,14 +48,14 @@ struct ArtItem {
     int64_t len;
 
     /* album art as (possibly a temporary) file */
-    char * art_file; /* pooled */
+    String art_file;
     bool_t is_temp;
 };
 
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
 static GHashTable * art_items; /* of ArtItem */
-static char * current_ref; /* pooled */
+static String current_ref;
 static int send_source;
 
 static void art_item_free (ArtItem * item)
@@ -63,17 +63,13 @@ static void art_item_free (ArtItem * item)
     /* delete temporary file */
     if (item->art_file && item->is_temp)
     {
-        char * unixname = uri_to_filename (item->art_file);
-        if (unixname)
-        {
-            g_unlink (unixname);
-            str_unref (unixname);
-        }
+        String local = uri_to_filename (item->art_file);
+        if (local)
+            g_unlink (local);
     }
 
     g_free (item->data);
-    str_unref (item->art_file);
-    g_slice_free (ArtItem, item);
+    delete item;
 }
 
 static bool_t send_requests (void * unused)
@@ -106,7 +102,7 @@ static bool_t send_requests (void * unused)
 
     pthread_mutex_unlock (& mutex);
 
-    char * current = NULL;
+    String current;
     if (! current_ref)
         current = playback_entry_get_filename ();
 
@@ -118,7 +114,7 @@ static bool_t send_requests (void * unused)
         if (current && ! strcmp (file, current))
         {
             hook_call ("current art ready", file);
-            current_ref = file;
+            current_ref = String::from_c (file);
         }
         else
         {
@@ -127,7 +123,6 @@ static bool_t send_requests (void * unused)
         }
     }
 
-    str_unref (current);
     return FALSE;
 }
 
@@ -135,12 +130,12 @@ static void request_callback (ScanRequest * request)
 {
     pthread_mutex_lock (& mutex);
 
-    const char * file = scan_request_get_filename (request);
+    String file = scan_request_get_filename (request);
     ArtItem * item = (ArtItem *) g_hash_table_lookup (art_items, file);
     assert (item != NULL && ! item->flag);
 
     scan_request_get_image_data (request, & item->data, & item->len);
-    item->art_file = str_get (scan_request_get_image_file (request));
+    item->art_file = scan_request_get_image_file (request);
     item->flag = FLAG_DONE;
 
     if (! send_source)
@@ -161,7 +156,7 @@ static ArtItem * art_item_get (const char * file)
 
     if (! item)
     {
-        item = g_slice_new0 (ArtItem);
+        item = new ArtItem ();
         g_hash_table_insert (art_items, str_get (file), item);
         item->refcount = 1; /* temporary reference */
 
@@ -182,8 +177,7 @@ static void release_current (void)
     if (current_ref)
     {
         aud_art_unref (current_ref);
-        str_unref (current_ref);
-        current_ref = NULL;
+        current_ref = String ();
     }
 }
 
@@ -252,12 +246,11 @@ EXPORT const char * aud_art_request_file (const char * file)
     /* save data to temporary file */
     if (item->data && ! item->art_file)
     {
-        char * unixname = write_temp_file (item->data, item->len);
-        if (unixname)
+        String local = write_temp_file (item->data, item->len);
+        if (local)
         {
-            item->art_file = filename_to_uri (unixname);
+            item->art_file = filename_to_uri (local);
             item->is_temp = TRUE;
-            str_unref (unixname);
         }
     }
 

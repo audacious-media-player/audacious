@@ -43,7 +43,7 @@ EXPORT char * str_get (const char * str)
     if (! str)
         return NULL;
 
-    StrNode * node = g_malloc (NODE_SIZE_FOR (str));
+    StrNode * node = (StrNode *) g_malloc (NODE_SIZE_FOR (str));
     node->magic = '@';
     node->hash = g_str_hash (str);
 
@@ -53,6 +53,9 @@ EXPORT char * str_get (const char * str)
 
 EXPORT char * str_ref (const char * str)
 {
+    if (! str)
+        return NULL;
+
     StrNode * node = NODE_OF (str);
     assert (node->magic == '@');
     assert (g_str_hash (str) == node->hash);
@@ -246,12 +249,3 @@ EXPORT bool_t str_equal (const char * str1, const char * str2)
 }
 
 #endif /* ! VALGRIND_FRIENDLY */
-
-EXPORT char * str_nget (const char * str, int len)
-{
-    if (memchr (str, 0, len))
-        return str_get (str);
-
-    SNCOPY (buf, str, len);
-    return str_get (buf);
-}

@@ -97,13 +97,11 @@ static bool_t combine_string (Tuple * tuple, int field, const char * str1,
     if (! str[0])
         return FALSE;
 
-    char * utf8 = str_to_utf8 (str, -1);
+    String utf8 = str_to_utf8 (str, -1);
     if (! utf8)
         return FALSE;
 
     tuple_set_str (tuple, field, utf8);
-
-    str_unref (utf8);
     return TRUE;
 }
 

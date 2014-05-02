@@ -61,9 +61,7 @@ static void get_value (void * user, int row, int column, GValue * value)
     {
     case 0:
     {
-        char * title = aud_playlist_get_title (row);
-        g_value_set_string (value, title);
-        str_unref (title);
+        g_value_set_string (value, aud_playlist_get_title (row));
         break;
     }
     case 1:
@@ -124,30 +122,21 @@ static bool_t search_cb (GtkTreeModel * model, int column, const char * key,
     int row = gtk_tree_path_get_indices (path)[0];
     gtk_tree_path_free (path);
 
-    char * title = aud_playlist_get_title (row);
+    String title = aud_playlist_get_title (row);
     g_return_val_if_fail (title, TRUE);
 
-    Index<char *> keys = str_list_to_index (key, " ");
+    Index<String> keys = str_list_to_index (key, " ");
 
-    bool_t match = FALSE;
+    if (! keys.len ())
+        return TRUE;  /* not matched */
 
-    for (char * key : keys)
+    for (const String & key : keys)
     {
-        if (strstr_nocase_utf8 (title, key))
-            match = TRUE;
-        else
-        {
-            match = FALSE;
-            break;
-        }
+        if (! strstr_nocase_utf8 (title, key))
+            return TRUE;  /* not matched */
     }
 
-    for (char * key : keys)
-        str_unref (key);
-
-    str_unref (title);
-
-    return ! match; /* TRUE == not matched, FALSE == matched */
+    return FALSE;  /* matched */
 }
 
 static bool_t position_changed = FALSE;

@@ -84,18 +84,14 @@ static bool_t parse_options (int argc, char * * argv)
     {
         if (argv[n][0] != '-')  /* filename */
         {
-            char * uri = NULL;
+            String uri;
 
             if (strstr (argv[n], "://"))
-                uri = str_get (argv[n]);
+                uri = String (argv[n]);
             else if (g_path_is_absolute (argv[n]))
                 uri = filename_to_uri (argv[n]);
             else
-            {
-                char * tmp = filename_build (cur, argv[n]);
-                uri = filename_to_uri (tmp);
-                str_unref (tmp);
-            }
+                uri = filename_to_uri (filename_build (cur, argv[n]));
 
             if (uri)
                 filenames.append ({uri});
@@ -294,9 +290,6 @@ static void do_commands (void)
 static void main_cleanup (void)
 {
     aud_cleanup_paths ();
-
-    for (auto & item : filenames)
-        str_unref (item.filename);
 
     filenames.clear ();
 

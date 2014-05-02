@@ -80,20 +80,16 @@ EXPORT bool_t tag_tuple_write (const Tuple * tuple, VFSFile * handle, int new_ty
 EXPORT bool_t tag_update_stream_metadata (Tuple * tuple, VFSFile * handle)
 {
     bool_t updated = FALSE;
-    char * old, * val;
     int value;
 
-    old = tuple_get_str (tuple, FIELD_TITLE);
-    val = vfs_get_metadata (handle, "track-name");
+    String old = tuple_get_str (tuple, FIELD_TITLE);
+    String val = vfs_get_metadata (handle, "track-name");
 
     if (val && (! old || strcmp (old, val)))
     {
         tuple_set_str (tuple, FIELD_TITLE, val);
         updated = TRUE;
     }
-
-    str_unref (old);
-    str_unref (val);
 
     old = tuple_get_str (tuple, FIELD_ARTIST);
     val = vfs_get_metadata (handle, "stream-name");
@@ -104,9 +100,6 @@ EXPORT bool_t tag_update_stream_metadata (Tuple * tuple, VFSFile * handle)
         updated = TRUE;
     }
 
-    str_unref (old);
-    str_unref (val);
-
     val = vfs_get_metadata (handle, "content-bitrate");
     value = val ? atoi (val) / 1000 : 0;
 
@@ -115,8 +108,6 @@ EXPORT bool_t tag_update_stream_metadata (Tuple * tuple, VFSFile * handle)
         tuple_set_int (tuple, FIELD_BITRATE, value);
         updated = TRUE;
     }
-
-    str_unref (val);
 
     return updated;
 }

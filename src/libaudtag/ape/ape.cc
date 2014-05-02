@@ -45,7 +45,7 @@ struct APEHeader {
 #pragma pack(pop)
 
 struct ValuePair {
-    char * key, * value;
+    String key, value;
 };
 
 #define APE_FLAG_HAS_HEADER (1 << 31)
@@ -170,16 +170,15 @@ static bool_t ape_is_our_file (VFSFile * handle)
      & data_length);
 }
 
-static ValuePair * ape_read_item (void * * data, int length)
+static bool_t ape_read_item (void * * data, int length, ValuePair & pair)
 {
     uint32_t * header = (uint32_t *) * data;
     char * value;
-    ValuePair * pair;
 
     if (length < 8)
     {
         AUDDBG ("Expected item, but only %d bytes remain in tag.\n", length);
-        return NULL;
+        return FALSE;
     }
 
     value = (char *) memchr ((char *) (* data) + 8, 0, length - 8);
@@ -187,7 +186,7 @@ static ValuePair * ape_read_item (void * * data, int length)
     if (value == NULL)
     {
         AUDDBG ("Unterminated item key (max length = %d).\n", length - 8);
-        return NULL;
+        return FALSE;
     }
 
     value ++;
@@ -196,38 +195,37 @@ static ValuePair * ape_read_item (void * * data, int length)
     {
         AUDDBG ("Item value of length %d, but only %d bytes remain in tag.\n",
          (int) header[0], (int) ((char *) (* data) + length - value));
-        return NULL;
+        return FALSE;
     }
 
-    pair = g_slice_new (ValuePair);
-    pair->key = str_get ((char *) (* data) + 8);
-    pair->value = str_nget (value, header[0]);
+    pair.key = String ((char *) (* data) + 8);
+    pair.value = str_nget (value, header[0]);
 
     * data = value + header[0];
 
-    return pair;
+    return TRUE;
 }
 
-static GList * ape_read_items (VFSFile * handle)
+static Index<ValuePair> ape_read_items (VFSFile * handle)
 {
-    GList * list = NULL;
+    Index<ValuePair> list;
     APEHeader header;
     int start, length, data_start, data_length;
     void * data, * item;
 
     if (! ape_find_header (handle, & header, & start, & length, & data_start,
      & data_length))
-        return NULL;
+        return list;
 
     if (vfs_fseek (handle, data_start, SEEK_SET))
-        return NULL;
+        return list;
 
     data = g_malloc (data_length);
 
     if (vfs_fread (data, 1, data_length, handle) != data_length)
     {
         g_free (data);
-        return NULL;
+        return list;
     }
 
     AUDDBG ("Reading %d items:\n", header.items);
@@ -235,25 +233,16 @@ static GList * ape_read_items (VFSFile * handle)
 
     while (header.items --)
     {
-        ValuePair * pair = ape_read_item (& item, (char *) data + data_length -
-         (char *) item);
-
-        if (pair == NULL)
+        ValuePair pair;
+        if (! ape_read_item (& item, (char *) data + data_length - (char *) item, pair))
             break;
 
-        AUDDBG ("Read: %s = %s.\n", pair->key, pair->value);
-        list = g_list_prepend (list, pair);
+        AUDDBG ("Read: %s = %s.\n", (const char *) pair.key, (const char *) pair.value);
+        list.append (std::move (pair));
     }
 
     g_free (data);
-    return g_list_reverse (list);
-}
-
-static void free_value_pair (ValuePair * pair)
-{
-    str_unref (pair->key);
-    str_unref (pair->value);
-    g_slice_free (ValuePair, pair);
+    return list;
 }
 
 static void parse_gain_text (const char * text, int * value, int * unit)
@@ -307,38 +296,34 @@ static void set_gain_info (Tuple * tuple, int field, int unit_field,
 
 static bool_t ape_read_tag (Tuple * tuple, VFSFile * handle)
 {
-    GList * list = ape_read_items (handle), * node;
+    Index<ValuePair> list = ape_read_items (handle);
 
-    for (node = list; node != NULL; node = node->next)
+    for (const ValuePair & pair : list)
     {
-        char * key = ((ValuePair *) node->data)->key;
-        char * value = ((ValuePair *) node->data)->value;
-
-        if (! strcmp (key, "Artist"))
-            tuple_set_str (tuple, FIELD_ARTIST, value);
-        else if (! strcmp (key, "Title"))
-            tuple_set_str (tuple, FIELD_TITLE, value);
-        else if (! strcmp (key, "Album"))
-            tuple_set_str (tuple, FIELD_ALBUM, value);
-        else if (! strcmp (key, "Comment"))
-            tuple_set_str (tuple, FIELD_COMMENT, value);
-        else if (! strcmp (key, "Genre"))
-            tuple_set_str (tuple, FIELD_GENRE, value);
-        else if (! strcmp (key, "Track"))
-            tuple_set_int (tuple, FIELD_TRACK_NUMBER, atoi (value));
-        else if (! strcmp (key, "Year"))
-            tuple_set_int (tuple, FIELD_YEAR, atoi (value));
-        else if (! g_ascii_strcasecmp (key, "REPLAYGAIN_TRACK_GAIN"))
-            set_gain_info (tuple, FIELD_GAIN_TRACK_GAIN, FIELD_GAIN_GAIN_UNIT, value);
-        else if (! g_ascii_strcasecmp (key, "REPLAYGAIN_TRACK_PEAK"))
-            set_gain_info (tuple, FIELD_GAIN_TRACK_PEAK, FIELD_GAIN_PEAK_UNIT, value);
-        else if (! g_ascii_strcasecmp (key, "REPLAYGAIN_ALBUM_GAIN"))
-            set_gain_info (tuple, FIELD_GAIN_ALBUM_GAIN, FIELD_GAIN_GAIN_UNIT, value);
-        else if (! g_ascii_strcasecmp (key, "REPLAYGAIN_ALBUM_PEAK"))
-            set_gain_info (tuple, FIELD_GAIN_ALBUM_PEAK, FIELD_GAIN_PEAK_UNIT, value);
+        if (! strcmp (pair.key, "Artist"))
+            tuple_set_str (tuple, FIELD_ARTIST, pair.value);
+        else if (! strcmp (pair.key, "Title"))
+            tuple_set_str (tuple, FIELD_TITLE, pair.value);
+        else if (! strcmp (pair.key, "Album"))
+            tuple_set_str (tuple, FIELD_ALBUM, pair.value);
+        else if (! strcmp (pair.key, "Comment"))
+            tuple_set_str (tuple, FIELD_COMMENT, pair.value);
+        else if (! strcmp (pair.key, "Genre"))
+            tuple_set_str (tuple, FIELD_GENRE, pair.value);
+        else if (! strcmp (pair.key, "Track"))
+            tuple_set_int (tuple, FIELD_TRACK_NUMBER, atoi (pair.value));
+        else if (! strcmp (pair.key, "Year"))
+            tuple_set_int (tuple, FIELD_YEAR, atoi (pair.value));
+        else if (! g_ascii_strcasecmp (pair.key, "REPLAYGAIN_TRACK_GAIN"))
+            set_gain_info (tuple, FIELD_GAIN_TRACK_GAIN, FIELD_GAIN_GAIN_UNIT, pair.value);
+        else if (! g_ascii_strcasecmp (pair.key, "REPLAYGAIN_TRACK_PEAK"))
+            set_gain_info (tuple, FIELD_GAIN_TRACK_PEAK, FIELD_GAIN_PEAK_UNIT, pair.value);
+        else if (! g_ascii_strcasecmp (pair.key, "REPLAYGAIN_ALBUM_GAIN"))
+            set_gain_info (tuple, FIELD_GAIN_ALBUM_GAIN, FIELD_GAIN_GAIN_UNIT, pair.value);
+        else if (! g_ascii_strcasecmp (pair.key, "REPLAYGAIN_ALBUM_PEAK"))
+            set_gain_info (tuple, FIELD_GAIN_ALBUM_PEAK, FIELD_GAIN_PEAK_UNIT, pair.value);
     }
 
-    g_list_free_full (list, (GDestroyNotify) free_value_pair);
     return TRUE;
 }
 
@@ -370,7 +355,7 @@ static bool_t ape_write_item (VFSFile * handle, const char * key,
 static bool_t write_string_item (const Tuple * tuple, int field, VFSFile *
  handle, const char * key, int * written_length, int * written_items)
 {
-    char * value = tuple_get_str (tuple, field);
+    String value = tuple_get_str (tuple, field);
 
     if (value == NULL)
         return TRUE;
@@ -380,7 +365,6 @@ static bool_t write_string_item (const Tuple * tuple, int field, VFSFile *
     if (success)
         (* written_items) ++;
 
-    str_unref (value);
     return success;
 }
 
@@ -421,7 +405,7 @@ static bool_t write_header (int data_length, int items, bool_t is_header,
 
 static bool_t ape_write_tag (const Tuple * tuple, VFSFile * handle)
 {
-    GList * list = ape_read_items (handle), * node;
+    Index<ValuePair> list = ape_read_items (handle);
     APEHeader header;
     int start, length, data_start, data_length, items;
 
@@ -431,49 +415,45 @@ static bool_t ape_write_tag (const Tuple * tuple, VFSFile * handle)
         if (start + length != vfs_fsize (handle))
         {
             AUDDBG ("Writing tags is only supported at end of file.\n");
-            goto ERR;
+            return FALSE;
         }
 
         if (vfs_ftruncate (handle, start))
-            goto ERR;
+            return FALSE;
     }
     else
     {
         start = vfs_fsize (handle);
 
         if (start < 0)
-            goto ERR;
+            return FALSE;
     }
 
-    if (vfs_fseek (handle, start, SEEK_SET) || ! write_header (0, 0, TRUE,
-     handle))
-        goto ERR;
+    if (vfs_fseek (handle, start, SEEK_SET) || ! write_header (0, 0, TRUE, handle))
+        return FALSE;
 
     length = 0;
     items = 0;
 
-    if (! write_string_item (tuple, FIELD_ARTIST, handle, "Artist", & length,
-     & items) || ! write_string_item (tuple, FIELD_TITLE, handle, "Title",
-     & length, & items) || ! write_string_item (tuple, FIELD_ALBUM, handle,
-     "Album", & length, & items) || ! write_string_item (tuple, FIELD_COMMENT,
-     handle, "Comment", & length, & items) || ! write_string_item (tuple,
-     FIELD_GENRE, handle, "Genre", & length, & items) || ! write_integer_item
-     (tuple, FIELD_TRACK_NUMBER, handle, "Track", & length, & items) ||
+    if (! write_string_item (tuple, FIELD_ARTIST, handle, "Artist", & length, & items) ||
+     ! write_string_item (tuple, FIELD_TITLE, handle, "Title", & length, & items) ||
+     ! write_string_item (tuple, FIELD_ALBUM, handle, "Album", & length, & items) ||
+     ! write_string_item (tuple, FIELD_COMMENT, handle, "Comment", & length, & items) ||
+     ! write_string_item (tuple, FIELD_GENRE, handle, "Genre", & length, & items) ||
+     ! write_integer_item (tuple, FIELD_TRACK_NUMBER, handle, "Track", & length, & items) ||
      ! write_integer_item (tuple, FIELD_YEAR, handle, "Year", & length, & items))
-        goto ERR;
+        return FALSE;
 
-    for (node = list; node != NULL; node = node->next)
+    for (const ValuePair & pair : list)
     {
-        char * key = ((ValuePair *) node->data)->key;
-        char * value = ((ValuePair *) node->data)->value;
-
-        if (! strcmp (key, "Artist") || ! strcmp (key, "Title") || ! strcmp
-         (key, "Album") || ! strcmp (key, "Comment") || ! strcmp (key, "Genre")
-         || ! strcmp (key, "Track") || ! strcmp (key, "Year"))
+        if (! strcmp (pair.key, "Artist") || ! strcmp (pair.key, "Title") ||
+         ! strcmp (pair.key, "Album") || ! strcmp (pair.key, "Comment") ||
+         ! strcmp (pair.key, "Genre") || ! strcmp (pair.key, "Track") ||
+         ! strcmp (pair.key, "Year"))
             continue;
 
-        if (! ape_write_item (handle, key, value, & length))
-            goto ERR;
+        if (! ape_write_item (handle, pair.key, pair.value, & length))
+            return FALSE;
 
         items ++;
     }
@@ -482,14 +462,9 @@ static bool_t ape_write_tag (const Tuple * tuple, VFSFile * handle)
 
     if (! write_header (length, items, FALSE, handle) || vfs_fseek (handle,
      start, SEEK_SET) || ! write_header (length, items, TRUE, handle))
-        goto ERR;
+        return FALSE;
 
-    g_list_free_full (list, (GDestroyNotify) free_value_pair);
     return TRUE;
-
-ERR:
-    g_list_free_full (list, (GDestroyNotify) free_value_pair);
-    return FALSE;
 }
 
 tag_module_t ape =

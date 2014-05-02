@@ -155,18 +155,15 @@ static GtkWidget * start_job (bool_t save)
 {
     int list = aud_playlist_get_active ();
 
-    char * filename = aud_playlist_get_filename (list);
-    char * folder = aud_get_str ("audgui", "playlist_path");
+    String filename = aud_playlist_get_filename (list);
+    String folder = aud_get_str ("audgui", "playlist_path");
 
     ImportExportJob * job = g_slice_new0 (ImportExportJob);
 
     job->save = save;
     job->list_id = aud_playlist_get_unique_id (list);
 
-    create_selector (job, filename, folder[0] ? folder : NULL);
-
-    str_unref (filename);
-    str_unref (folder);
+    create_selector (job, filename, folder[0] ? (const char *) folder : NULL);
 
     return job->selector;
 }

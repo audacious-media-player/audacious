@@ -1,6 +1,6 @@
 /*
  * ui_jumptotrack_cache.c
- * Copyright 2008-2012 Jussi Judin and John Lindgren
+ * Copyright 2008-2014 Jussi Judin and John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -29,35 +29,6 @@
 
 #include "ui_jumptotrack_cache.h"
 
-// Struct to keep information about matches from searches.
-struct KeywordMatches {
-    GArray * entries; // int
-    GArray * titles, * artists, * albums, * paths; // char * (pooled)
-};
-
-static void ui_jump_to_track_cache_init (JumpToTrackCache * cache);
-
-static KeywordMatches * keyword_matches_new (void)
-{
-    KeywordMatches * k = g_slice_new (KeywordMatches);
-    k->entries = g_array_new (FALSE, FALSE, sizeof (int));
-    k->titles = g_array_new (FALSE, FALSE, sizeof (char *));
-    k->artists = g_array_new (FALSE, FALSE, sizeof (char *));
-    k->albums = g_array_new (FALSE, FALSE, sizeof (char *));
-    k->paths = g_array_new (FALSE, FALSE, sizeof (char *));
-    return k;
-}
-
-static void keyword_matches_free (KeywordMatches * k)
-{
-    g_array_free (k->entries, TRUE);
-    g_array_free (k->titles, TRUE);
-    g_array_free (k->artists, TRUE);
-    g_array_free (k->albums, TRUE);
-    g_array_free (k->paths, TRUE);
-    g_slice_free (KeywordMatches, k);
-}
-
 /**
  * Creates an regular expression list usable in searches from search keyword.
  *
@@ -69,13 +40,13 @@ static void keyword_matches_free (KeywordMatches * k)
  * by splitting the keyword string with space character.
  */
 static GSList*
-ui_jump_to_track_cache_regex_list_create(const GString* keyword)
+ui_jump_to_track_cache_regex_list_create(const char* keyword)
 {
     GSList *regex_list = NULL;
     char **words = NULL;
     int i = -1;
     /* Chop the key string into ' '-separated key regex-pattern strings */
-    words = g_strsplit(keyword->str, " ", 0);
+    words = g_strsplit(keyword, " ", 0);
 
     /* create a list of regex using the regex-pattern strings */
     while ( words[++i] != NULL )
@@ -124,61 +95,34 @@ ui_jump_to_track_match(const char * song, GSList *regex_list)
  * @param search_space Entries inside which the search is conducted.
  * @param keyword Normalized string for searches.
  */
-static GArray*
+static const KeywordMatches *
 ui_jump_to_track_cache_match_keyword(JumpToTrackCache* cache,
                                      const KeywordMatches* search_space,
-                                     const GString* keyword)
+                                     const char* keyword)
 {
     GSList* regex_list = ui_jump_to_track_cache_regex_list_create(keyword);
 
-    KeywordMatches * k = keyword_matches_new ();
+    KeywordMatches * k = new KeywordMatches;
 
-    for (unsigned i = 0; i < search_space->entries->len; i ++)
+    for (auto & item : * search_space)
     {
-        char * title = g_array_index (search_space->titles, char *, i);
-        char * artist = g_array_index (search_space->artists, char *, i);
-        char * album = g_array_index (search_space->albums, char *, i);
-        char * path = g_array_index (search_space->paths, char *, i);
-        bool_t match;
-
-        if (regex_list != NULL)
-            match = ui_jump_to_track_match (title, regex_list)
-             || ui_jump_to_track_match (artist, regex_list)
-             || ui_jump_to_track_match (album, regex_list)
-             || ui_jump_to_track_match (path, regex_list);
-        else
-            match = TRUE;
-
-        if (match) {
-            g_array_append_val (k->entries, g_array_index (search_space->entries, int, i));
-            g_array_append_val (k->titles, title);
-            g_array_append_val (k->artists, artist);
-            g_array_append_val (k->albums, album);
-            g_array_append_val (k->paths, path);
-        }
+        if (! regex_list ||
+         ui_jump_to_track_match (item.title, regex_list) ||
+         ui_jump_to_track_match (item.artist, regex_list) ||
+         ui_jump_to_track_match (item.album, regex_list) ||
+         ui_jump_to_track_match (item.path, regex_list))
+            k->append (item);
     }
 
-    g_hash_table_insert (cache->keywords, GINT_TO_POINTER (g_string_hash (keyword)), k);
+    g_hash_table_insert (cache, str_get (keyword), k);
 
     g_slist_free_full (regex_list, (GDestroyNotify) g_regex_unref);
 
-    return k->entries;
+    return k;
 }
 
-/**
- * Frees the possibly allocated data in KeywordMatches.
- */
-static void
-ui_jump_to_track_cache_free_keywordmatch_data(KeywordMatches* match_entry)
-{
-    for (unsigned i = 0; i < match_entry->entries->len; i ++)
-    {
-        str_unref (g_array_index (match_entry->titles, char *, i));
-        str_unref (g_array_index (match_entry->artists, char *, i));
-        str_unref (g_array_index (match_entry->albums, char *, i));
-        str_unref (g_array_index (match_entry->paths, char *, i));
-    }
-}
+static void delete_matches (KeywordMatches * matches)
+    { delete matches; }
 
 /**
  * Creates a new song search cache.
@@ -188,73 +132,29 @@ ui_jump_to_track_cache_free_keywordmatch_data(KeywordMatches* match_entry)
 JumpToTrackCache*
 ui_jump_to_track_cache_new()
 {
-    JumpToTrackCache * cache = g_slice_new (JumpToTrackCache);
-
-    cache->keywords = g_hash_table_new_full (NULL, NULL, NULL, (GDestroyNotify) keyword_matches_free);
-    ui_jump_to_track_cache_init (cache);
-    return cache;
-}
-
-/**
- * Clears the search cache.
- */
-static void
-ui_jump_to_track_cache_clear(JumpToTrackCache* cache)
-{
-    GString* empty_keyword = g_string_new("");
-    gpointer found_keyword = NULL;
-
-    // All normalized titles reside in an empty key "" so we'll free them
-    // first.
-    found_keyword = g_hash_table_lookup(cache->keywords,
-                                        GINT_TO_POINTER(g_string_hash(empty_keyword)));
-    g_string_free(empty_keyword,
-                  TRUE);
-    if (found_keyword != NULL)
-    {
-        KeywordMatches* all_titles = (KeywordMatches*)found_keyword;
-        ui_jump_to_track_cache_free_keywordmatch_data(all_titles);
-    }
-    // Now when all normalized strings are freed, no need to worry about
-    // double frees or memory leaks.
-    g_hash_table_remove_all(cache->keywords);
-}
-
-/**
- * Initializes the search cache if cache is empty or has wrong playlist.
- */
-static void ui_jump_to_track_cache_init (JumpToTrackCache * cache)
-{
-    // Reset cache state
-    ui_jump_to_track_cache_clear(cache);
+    JumpToTrackCache * cache = g_hash_table_new_full (g_str_hash, g_str_equal,
+     (GDestroyNotify) str_unref, (GDestroyNotify) delete_matches);
 
     // Initialize cache with playlist data
     int playlist = aud_playlist_get_active ();
     int entries = aud_playlist_entry_count (playlist);
 
-    KeywordMatches * k = keyword_matches_new ();
+    KeywordMatches * k = new KeywordMatches;
 
     for (int entry = 0; entry < entries; entry ++)
     {
-        char * title, * artist, * album;
-        aud_playlist_entry_describe (playlist, entry, & title, & artist, & album, TRUE);
+        KeywordMatch & item = k->append ();
 
-        char * uri = aud_playlist_entry_get_filename (playlist, entry);
-        char * decoded = uri_to_display (uri);
-        str_unref (uri);
-
-        g_array_append_val (k->entries, entry);
-        g_array_append_val (k->titles, title);
-        g_array_append_val (k->artists, artist);
-        g_array_append_val (k->albums, album);
-        g_array_append_val (k->paths, decoded);
+        item.entry = entry;
+        aud_playlist_entry_describe (playlist, entry, item.title, item.artist, item.album, TRUE);
+        item.path = uri_to_display (aud_playlist_entry_get_filename (playlist, entry));
     }
 
     // Finally insert all titles into cache into an empty key "" so that
     // the matchable data has specified place to be.
-    GString * empty_keyword = g_string_new ("");
-    g_hash_table_insert (cache->keywords, GINT_TO_POINTER (g_string_hash (empty_keyword)), k);
-    g_string_free (empty_keyword, TRUE);
+    g_hash_table_insert (cache, str_get (""), k);
+
+    return cache;
 }
 
 /**
@@ -307,40 +207,38 @@ static void ui_jump_to_track_cache_init (JumpToTrackCache * cache)
  *
  * Return: GArray of int
  */
-const GArray * ui_jump_to_track_cache_search (JumpToTrackCache * cache, const
- char * keyword)
+const KeywordMatches * ui_jump_to_track_cache_search (JumpToTrackCache * cache,
+ const char * keyword)
 {
-    GString* keyword_string = g_string_new(keyword);
     GString* match_string = g_string_new(keyword);
-    int match_string_length = keyword_string->len;
 
-    while (match_string_length >= 0)
+    while (1)
     {
-        gpointer string_ptr =  GINT_TO_POINTER(g_string_hash(match_string));
-        gpointer result_entries = g_hash_table_lookup(cache->keywords,
-                                                      string_ptr);
-        if (result_entries != NULL)
+        const KeywordMatches * matches = (const KeywordMatches *)
+         g_hash_table_lookup (cache, match_string->str);
+
+        if (matches)
         {
-            KeywordMatches* matched_entries = (KeywordMatches*)result_entries;
             // if keyword matches something we have, we'll just return the list
             // of matches that the keyword has.
-            if (match_string_length == (int) keyword_string->len) {
-                g_string_free(keyword_string, TRUE);
+            if (! strcmp (match_string->str, keyword))
+            {
                 g_string_free(match_string, TRUE);
-                return matched_entries->entries;
+                return matches;
             }
 
             // Do normal search by using the result of previous search
             // as search space.
-            GArray* result = ui_jump_to_track_cache_match_keyword(cache,
-                                                                  matched_entries,
-                                                                  keyword_string);
-            g_string_free(keyword_string, TRUE);
+            matches = ui_jump_to_track_cache_match_keyword (cache, matches, keyword);
+
             g_string_free(match_string, TRUE);
-            return result;
+            return matches;
         }
-        match_string_length--;
-        g_string_set_size(match_string, match_string_length);
+
+        if (! match_string->len)
+            break;
+
+        g_string_set_size (match_string, match_string->len - 1);
     }
     // This should never, ever get to this point because there is _always_
     // the empty string to match against.
@@ -351,7 +249,5 @@ cache->keywords hash table.");
 
 void ui_jump_to_track_cache_free (JumpToTrackCache * cache)
 {
-    ui_jump_to_track_cache_clear (cache);
-    g_hash_table_unref (cache->keywords);
-    g_slice_free (JumpToTrackCache, cache);
+    g_hash_table_unref (cache);
 }

@@ -37,12 +37,12 @@ extern "C" {
 #include "runtime.h"
 #include "tinylock.h"
 
-EXPORT char * str_convert (const char * str, int len, const char * from_charset,
+EXPORT String str_convert (const char * str, int len, const char * from_charset,
  const char * to_charset)
 {
     iconv_t conv = iconv_open (to_charset, from_charset);
     if (conv == (iconv_t) -1)
-        return NULL;
+        return String ();
 
     if (len < 0)
         len = strlen (str);
@@ -52,7 +52,7 @@ EXPORT char * str_convert (const char * str, int len, const char * from_charset,
     int maxlen = 4 * len;
 
     char buf[maxlen + 1];
-    char * result = NULL;
+    String result;
 
     size_t inbytes = len;
     size_t outbytes = maxlen;
@@ -62,7 +62,7 @@ EXPORT char * str_convert (const char * str, int len, const char * from_charset,
     if (iconv (conv, & in, & inbytes, & out, & outbytes) != (size_t) -1 && ! inbytes)
     {
         buf[maxlen - outbytes] = 0;
-        result = str_get (buf);
+        result = String (buf);
     }
 
     iconv_close (conv);
@@ -77,7 +77,7 @@ static void whine_locale (const char * str, int len, const char * dir, const cha
         fprintf (stderr, "Cannot convert %s locale (%s): %.*s\n", dir, charset, len, str);
 }
 
-EXPORT char * str_from_locale (const char * str, int len)
+EXPORT String str_from_locale (const char * str, int len)
 {
     const char * charset;
 
@@ -87,14 +87,14 @@ EXPORT char * str_from_locale (const char * str, int len)
         if (! g_utf8_validate (str, len, NULL))
         {
             whine_locale (str, len, "from", "UTF-8");
-            return NULL;
+            return String ();
         }
 
-        return (len < 0) ? str_get (str) : str_nget (str, len);
+        return (len < 0) ? String (str) : str_nget (str, len);
     }
     else
     {
-        char * utf8 = str_convert (str, len, charset, "UTF-8");
+        String utf8 = str_convert (str, len, charset, "UTF-8");
         if (! utf8)
             whine_locale (str, len, "from", charset);
 
@@ -102,18 +102,18 @@ EXPORT char * str_from_locale (const char * str, int len)
     }
 }
 
-EXPORT char * str_to_locale (const char * str, int len)
+EXPORT String str_to_locale (const char * str, int len)
 {
     const char * charset;
 
     if (g_get_charset (& charset))
     {
         /* locale is UTF-8 */
-        return (len < 0) ? str_get (str) : str_nget (str, len);
+        return (len < 0) ? String (str) : str_nget (str, len);
     }
     else
     {
-        char * local = str_convert (str, len, "UTF-8", charset);
+        String local = str_convert (str, len, "UTF-8", charset);
         if (! local)
             whine_locale (str, len, "to", charset);
 
@@ -122,23 +122,19 @@ EXPORT char * str_to_locale (const char * str, int len)
 }
 
 static TinyRWLock settings_lock;
-static char * detect_region;
-static Index<char *> fallback_charsets;
+static String detect_region;
+static Index<String> fallback_charsets;
 
 static void set_charsets (const char * region, const char * fallbacks)
 {
     tiny_lock_write (& settings_lock);
 
-    str_unref (detect_region);
-    detect_region = str_get (region);
+    detect_region = String (region);
 
 #ifdef USE_CHARDET
     if (detect_region)
         libguess_init ();
 #endif
-
-    for (char * fallback : fallback_charsets)
-        str_unref (fallback);
 
     if (fallbacks)
         fallback_charsets = str_list_to_index (fallbacks, ", ");
@@ -148,16 +144,16 @@ static void set_charsets (const char * region, const char * fallbacks)
     tiny_unlock_write (& settings_lock);
 }
 
-EXPORT char * str_to_utf8 (const char * str, int len)
+EXPORT String str_to_utf8 (const char * str, int len)
 {
     /* check whether already UTF-8 */
     if (g_utf8_validate (str, len, NULL))
-        return (len < 0) ? str_get (str) : str_nget (str, len);
+        return (len < 0) ? String (str) : str_nget (str, len);
 
     if (len < 0)
         len = strlen (str);
 
-    char * utf8 = NULL;
+    String utf8;
     tiny_lock_read (& settings_lock);
 
 #ifdef USE_CHARDET
@@ -165,15 +161,20 @@ EXPORT char * str_to_utf8 (const char * str, int len)
     {
         /* prefer libguess-detected charset */
         const char * detected = libguess_determine_encoding (str, len, detect_region);
-        if (detected && (utf8 = str_convert (str, len, detected, "UTF-8")))
-            goto DONE;
+        if (detected)
+        {
+            utf8 = str_convert (str, len, detected, "UTF-8");
+            if (utf8)
+                goto DONE;
+        }
     }
 #endif
 
     /* try user-configured fallbacks */
-    for (char * fallback : fallback_charsets)
+    for (const String & fallback : fallback_charsets)
     {
-        if ((utf8 = str_convert (str, len, fallback, "UTF-8")))
+        utf8 = str_convert (str, len, fallback, "UTF-8");
+        if (utf8)
             goto DONE;
     }
 
@@ -187,13 +188,10 @@ DONE:
 
 static void chardet_update (void)
 {
-    char * region = aud_get_str (NULL, "chardet_detector");
-    char * fallbacks = aud_get_str (NULL, "chardet_fallback");
+    String region = aud_get_str (NULL, "chardet_detector");
+    String fallbacks = aud_get_str (NULL, "chardet_fallback");
 
-    set_charsets (region[0] ? region : NULL, fallbacks);
-
-    str_unref (region);
-    str_unref (fallbacks);
+    set_charsets (region[0] ? (const char *) region : NULL, fallbacks);
 }
 
 void chardet_init (void)

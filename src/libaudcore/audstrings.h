@@ -25,8 +25,8 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <libaudcore/core.h>
 #include <libaudcore/index.h>
+#include <libaudcore/objects.h>
 
 #define SPRINTF(s, ...) \
  char s[snprintf (NULL, 0, __VA_ARGS__) + 1]; \
@@ -69,10 +69,10 @@
  memcpy (s + s##_1 + s##_2, (c), s##_3); \
  strcpy (s + s##_1 + s##_2 + s##_3, (d))
 
-/* all (char *) return values must be freed with str_unref() */
+String str_nget (const char * str, int len);
 
-char * str_printf (const char * format, ...) __attribute__ ((__format__ (__printf__, 1, 2)));
-char * str_vprintf (const char * format, va_list args);
+String str_printf (const char * format, ...) __attribute__ ((__format__ (__printf__, 1, 2)));
+String str_vprintf (const char * format, va_list args);
 
 bool_t str_has_prefix_nocase(const char * str, const char * prefix);
 bool_t str_has_suffix_nocase(const char * str, const char * suffix);
@@ -80,7 +80,7 @@ bool_t str_has_suffix_nocase(const char * str, const char * suffix);
 char * strstr_nocase (const char * haystack, const char * needle);
 char * strstr_nocase_utf8 (const char * haystack, const char * needle);
 
-char * str_tolower_utf8 (const char * str);
+String str_tolower_utf8 (const char * str);
 
 void str_replace_char (char * string, char old_c, char new_c);
 
@@ -89,42 +89,42 @@ void str_itoa (int x, char * buf, int bufsize);
 void str_decode_percent (const char * str, int len, char * out);
 void str_encode_percent (const char * str, int len, char * out);
 
-char * str_convert (const char * str, int len, const char * from_charset, const char * to_charset);
-char * str_from_locale (const char * str, int len);
-char * str_to_locale (const char * str, int len);
+String str_convert (const char * str, int len, const char * from_charset, const char * to_charset);
+String str_from_locale (const char * str, int len);
+String str_to_locale (const char * str, int len);
 
 /* Requires: aud_init() */
-char * str_to_utf8 (const char * str, int len);
+String str_to_utf8 (const char * str, int len);
 
 void filename_normalize (char * filename);
 
-char * filename_build (const char * path, const char * name);
-char * filename_to_uri (const char * filename);
-char * uri_to_filename (const char * uri);
-char * uri_to_display (const char * uri);
+String filename_build (const char * path, const char * name);
+String filename_to_uri (const char * filename);
+String uri_to_filename (const char * uri);
+String uri_to_display (const char * uri);
 
 void uri_parse (const char * uri, const char * * base_p, const char * * ext_p,
  const char * * sub_p, int * isub_p);
 bool_t uri_get_extension (const char * uri, char * buf, int buflen);
 
 /* Requires: aud_init() */
-char * uri_construct (const char * path, const char * reference);
+String uri_construct (const char * path, const char * reference);
 
 int str_compare (const char * a, const char * b);
 int str_compare_encoded (const char * a, const char * b);
 
-Index<char *> str_list_to_index (const char * list, const char * delims);
-char * index_to_str_list (const Index<char *> & index, const char * sep);
+Index<String> str_list_to_index (const char * list, const char * delims);
+String index_to_str_list (const Index<String> & index, const char * sep);
 
 int str_to_int (const char * string);
 double str_to_double (const char * string);
-char * int_to_str (int val);
-char * double_to_str (double val);
+String int_to_str (int val);
+String double_to_str (double val);
 
 bool_t str_to_int_array (const char * string, int * array, int count);
-char * int_array_to_str (const int * array, int count);
+String int_array_to_str (const int * array, int count);
 bool_t str_to_double_array (const char * string, double * array, int count);
-char * double_array_to_str (const double * array, int count);
+String double_array_to_str (const double * array, int count);
 
 /* Requires: aud_init() */
 void str_format_time (char * buf, int bufsize, int64_t milliseconds);

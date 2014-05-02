@@ -20,6 +20,8 @@
 #ifndef LIBAUDCORE_OBJECTS_H
 #define LIBAUDCORE_OBJECTS_H
 
+#include <libaudcore/core.h>
+
 template<class T>
 class SmartPtr
 {
@@ -77,6 +79,79 @@ public:
 
 private:
     T * ptr;
+};
+
+class String
+{
+public:
+    constexpr String () :
+        raw (nullptr) {}
+
+    ~String ()
+    {
+        str_unref (raw);
+        raw = nullptr;
+    }
+
+    String (const String & b) :
+        raw (str_ref (b.raw)) {}
+
+    void operator= (const String & b)
+    {
+        if (this != & b)
+        {
+            str_unref (raw);
+            raw = str_ref (b.raw);
+        }
+    }
+
+    String (String && b) :
+        raw (b.raw)
+    {
+        b.raw = nullptr;
+    }
+
+    void operator= (String && b)
+    {
+        if (this != & b)
+        {
+            str_unref (raw);
+            raw = b.raw;
+            b.raw = nullptr;
+        }
+    }
+
+    explicit String (const char * str) :
+        raw (str_get (str)) {}
+
+    operator const char * () const
+        { return raw; }
+
+    /* considered harmful */
+    static String from_c (char * str)
+    {
+        String s;
+        s.raw = str;
+        return s;
+    }
+
+    /* considered harmful */
+    char * to_c ()
+    {
+        char * str = raw;
+        raw = nullptr;
+        return str;
+    }
+
+private:
+    char * raw;
+};
+
+/* somewhat out of place here */
+struct PlaylistAddItem {
+    String filename;
+    Tuple * tuple;
+    PluginHandle * decoder;
 };
 
 #endif // LIBAUDCORE_OBJECTS_H

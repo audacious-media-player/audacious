@@ -474,10 +474,9 @@ static void create_titlestring_widgets (GtkWidget * * cbox, GtkWidget * * entry)
 
     * entry = gtk_entry_new ();
 
-    char * format = aud_get_str (NULL, "generic_title_format");
+    String format = aud_get_str (NULL, "generic_title_format");
     update_titlestring_cbox ((GtkComboBox *) * cbox, format);
     gtk_entry_set_text ((GtkEntry *) * entry, format);
-    str_unref (format);
 
     g_signal_connect (* cbox, "changed", (GCallback) on_titlestring_cbox_changed, * entry);
     g_signal_connect (* entry, "changed", (GCallback) on_titlestring_entry_changed, * cbox);

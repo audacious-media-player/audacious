@@ -44,11 +44,7 @@ bool_t dir_foreach (const char * path, DirForeachFunc func, void * user)
     const char * name;
     while ((name = g_dir_read_name (dir)))
     {
-        char * full = filename_build (path, name);
-        bool_t stop = func (full, name, user);
-        str_unref (full);
-
-        if (stop)
+        if (func (filename_build (path, name), name, user))
             break;
     }
 
@@ -56,17 +52,16 @@ bool_t dir_foreach (const char * path, DirForeachFunc func, void * user)
     return TRUE;
 }
 
-char * write_temp_file (void * data, int64_t len)
+String write_temp_file (void * data, int64_t len)
 {
-    char * temp = filename_build (g_get_tmp_dir (), "audacious-temp-XXXXXX");
+    String temp = filename_build (g_get_tmp_dir (), "audacious-temp-XXXXXX");
     SCOPY (name, temp);
-    str_unref (temp);
 
     int handle = g_mkstemp (name);
     if (handle < 0)
     {
         fprintf (stderr, "Error creating temporary file: %s\n", strerror (errno));
-        return NULL;
+        return String ();
     }
 
     while (len)
@@ -76,7 +71,7 @@ char * write_temp_file (void * data, int64_t len)
         {
             fprintf (stderr, "Error writing %s: %s\n", name, strerror (errno));
             close (handle);
-            return NULL;
+            return String ();
         }
 
         data = (char *) data + written;
@@ -86,10 +81,10 @@ char * write_temp_file (void * data, int64_t len)
     if (close (handle) < 0)
     {
         fprintf (stderr, "Error closing %s: %s\n", name, strerror (errno));
-        return NULL;
+        return String ();
     }
 
-    return str_get (name);
+    return String (name);
 }
 
 /* Strips various common top-level folders from a filename.  The string passed
@@ -205,55 +200,42 @@ static char * stream_name (char * name)
     return name;
 }
 
-static char * get_nonblank_field (const Tuple * tuple, int field)
+static String get_nonblank_field (const Tuple * tuple, int field)
 {
-    char * str = tuple ? tuple_get_str (tuple, field) : NULL;
-
-    if (str && ! str[0])
-    {
-        str_unref (str);
-        str = NULL;
-    }
-
-    return str;
+    String str = tuple ? tuple_get_str (tuple, field) : String ();
+    return (str && str[0]) ? str : String ();
 }
 
-static char * str_get_decoded (char * str)
+static String str_get_decoded (char * str)
 {
     if (! str)
-        return NULL;
+        return String ();
 
     str_decode_percent (str, -1, str);
-    return str_get (str);
+    return String (str);
 }
 
 /* Derives best guesses of title, artist, and album from a file name (URI) and
  * tuple (which may be NULL).  The returned strings are stringpooled or NULL. */
 
-void describe_song (const char * name, const Tuple * tuple, char * * _title,
- char * * _artist, char * * _album)
+void describe_song (const char * name, const Tuple * tuple, String & title,
+ String & artist, String & album)
 {
     /* Common folder names to skip */
-    static const char * const skip[] = {"music"};
+    static const char * const skip_list[] = {"music"};
 
-    char * title = get_nonblank_field (tuple, FIELD_TITLE);
-    char * artist = get_nonblank_field (tuple, FIELD_ARTIST);
-    char * album = get_nonblank_field (tuple, FIELD_ALBUM);
+    title = get_nonblank_field (tuple, FIELD_TITLE);
+    artist = get_nonblank_field (tuple, FIELD_ARTIST);
+    album = get_nonblank_field (tuple, FIELD_ALBUM);
 
     if (title && artist && album)
-    {
-DONE:
-        * _title = title;
-        * _artist = artist;
-        * _album = album;
         return;
-    }
 
     if (! strncmp (name, "file:///", 8))
     {
-        char * filename = uri_to_display (name);
+        String filename = uri_to_display (name);
         if (! filename)
-            goto DONE;
+            return;
 
         SCOPY (buf, filename);
 
@@ -261,13 +243,13 @@ DONE:
         split_filename (skip_top_folders (buf), & base, & first, & second);
 
         if (! title)
-            title = str_get (base);
+            title = String (base);
 
-        for (unsigned i = 0; i < ARRAY_LEN (skip); i ++)
+        for (const char * skip : skip_list)
         {
-            if (first && ! g_ascii_strcasecmp (first, skip[i]))
+            if (first && ! g_ascii_strcasecmp (first, skip))
                 first = NULL;
-            if (second && ! g_ascii_strcasecmp (second, skip[i]))
+            if (second && ! g_ascii_strcasecmp (second, skip))
                 second = NULL;
         }
 
@@ -275,16 +257,14 @@ DONE:
         {
             if (second && ! artist && ! album)
             {
-                artist = str_get (second);
-                album = str_get (first);
+                artist = String (second);
+                album = String (first);
             }
             else if (! artist)
-                artist = str_get (first);
+                artist = String (first);
             else if (! album)
-                album = str_get (first);
+                album = String (first);
         }
-
-        str_unref (filename);
     }
     else
     {
@@ -302,12 +282,10 @@ DONE:
         else if (! album)
             album = str_get_decoded (stream_name (buf));
     }
-
-    goto DONE;
 }
 
-char * last_path_element (char * path)
+const char * last_path_element (const char * path)
 {
-    char * slash = strrchr (path, G_DIR_SEPARATOR);
+    const char * slash = strrchr (path, G_DIR_SEPARATOR);
     return (slash && slash[1]) ? slash + 1 : NULL;
 }

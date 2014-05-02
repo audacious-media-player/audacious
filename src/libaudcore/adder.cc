@@ -47,28 +47,20 @@ struct AddTask
     ~AddTask ()
     {
         for (auto & item : items)
-        {
-            str_unref (item.filename);
             tuple_unref (item.tuple);
-        }
     }
 };
 
 struct AddResult {
     int playlist_id, at;
     bool_t play;
-    char * title;
+    String title;
     Index<PlaylistAddItem> items;
 
     ~AddResult ()
     {
-        str_unref (title);
-
         for (auto & item : items)
-        {
-            str_unref (item.filename);
             tuple_unref (item.tuple);
-        }
     }
 };
 
@@ -138,15 +130,13 @@ static void status_done_locked (void)
         hook_call ("ui hide progress", NULL);
 }
 
-static void add_file (char * filename, Tuple * tuple, PluginHandle * decoder,
+static void add_file (String && filename, Tuple * tuple, PluginHandle * decoder,
  PlaylistFilterFunc filter, void * user, AddResult * result, bool_t validate)
 {
     g_return_if_fail (filename);
+
     if (filter && ! filter (filename, user))
-    {
-        str_unref (filename);
         return;
-    }
 
     status_update (filename, result->items.len ());
 
@@ -154,10 +144,7 @@ static void add_file (char * filename, Tuple * tuple, PluginHandle * decoder,
     {
         decoder = aud_file_find_decoder (filename, TRUE);
         if (validate && ! decoder)
-        {
-            str_unref (filename);
             return;
-        }
     }
 
     if (! tuple && decoder && input_plugin_has_subtunes (decoder) && ! strchr (filename, '?'))
@@ -169,12 +156,11 @@ static void add_file (char * filename, Tuple * tuple, PluginHandle * decoder,
     {
         for (int sub = 0; sub < n_subtunes; sub ++)
         {
-            char * subname = str_printf ("%s?%d", filename,
+            String subname = str_printf ("%s?%d", (const char *) filename,
              tuple_get_nth_subtune (tuple, sub));
-            add_file (subname, NULL, decoder, filter, user, result, FALSE);
+            add_file (std::move (subname), NULL, decoder, filter, user, result, FALSE);
         }
 
-        str_unref (filename);
         tuple_unref (tuple);
         return;
     }
@@ -182,119 +168,106 @@ static void add_file (char * filename, Tuple * tuple, PluginHandle * decoder,
     result->items.append ({filename, tuple, decoder});
 }
 
-static void add_folder (char * filename, PlaylistFilterFunc filter,
+static int compare_wrapper (const String & a, const String & b, void *)
+{
+    return str_compare (a, b);
+}
+
+static void add_folder (String && filename, PlaylistFilterFunc filter,
  void * user, AddResult * result, bool_t is_single)
 {
-    char * path = NULL;
-    GList * files = NULL;
+    String path;
+    Index<String> files;
     GDir * folder;
 
     g_return_if_fail (filename);
 
     if (filter && ! filter (filename, user))
-        goto DONE;
+        return;
 
     status_update (filename, result->items.len ());
 
-    if (! (path = uri_to_filename (filename)))
-        goto DONE;
+    path = uri_to_filename (filename);
+    if (! path)
+        return;
 
     if (! (folder = g_dir_open (path, 0, NULL)))
-        goto DONE;
+        return;
 
     const char * name;
     while ((name = g_dir_read_name (folder)))
-    {
-        char * filepath = filename_build (path, name);
-        files = g_list_prepend (files, filepath);
-    }
+        files.append (filename_build (path, name));
 
     g_dir_close (folder);
 
-    if (files && is_single)
+    if (! files.len ())
+        return;
+
+    if (is_single)
     {
-        char * last = last_path_element (path);
-        result->title = str_get (last ? last : path);
+        const char * last = last_path_element (path);
+        result->title = String (last ? last : path);
     }
 
-    files = g_list_sort (files, (GCompareFunc) str_compare);
+    files.sort (compare_wrapper, nullptr);
 
-    while (files)
+    for (const String & filepath : files)
     {
-        char * filepath = (char *) files->data;
-
         GStatBuf info;
         if (g_lstat (filepath, & info) < 0)
-            goto NEXT;
+            continue;
 
         if (S_ISREG (info.st_mode))
         {
-            char * item_name = filename_to_uri (filepath);
+            String item_name = filename_to_uri (filepath);
             if (item_name)
-                add_file (item_name, NULL, NULL, filter, user, result, TRUE);
+                add_file (std::move (item_name), NULL, NULL, filter, user, result, TRUE);
         }
         else if (S_ISDIR (info.st_mode))
         {
-            char * item_name = filename_to_uri (filepath);
+            String item_name = filename_to_uri (filepath);
             if (item_name)
-                add_folder (item_name, filter, user, result, FALSE);
+                add_folder (std::move (item_name), filter, user, result, FALSE);
         }
-
-    NEXT:
-        str_unref (filepath);
-        files = g_list_delete_link (files, files);
     }
-
-DONE:
-    str_unref (filename);
-    str_unref (path);
 }
 
-static void add_playlist (char * filename, PlaylistFilterFunc filter,
+static void add_playlist (String && filename, PlaylistFilterFunc filter,
  void * user, AddResult * result, bool_t is_single)
 {
     g_return_if_fail (filename);
+
     if (filter && ! filter (filename, user))
-    {
-        str_unref (filename);
         return;
-    }
 
     status_update (filename, result->items.len ());
 
-    char * title = NULL;
+    String title;
     Index<PlaylistAddItem> items;
 
-    if (! playlist_load (filename, & title, items))
-    {
-        str_unref (filename);
+    if (! playlist_load (filename, title, items))
         return;
-    }
 
     if (is_single)
         result->title = title;
-    else
-        str_unref (title);
 
     for (auto & item : items)
-        add_file (item.filename, item.tuple, NULL, filter, user, result, FALSE);
-
-    str_unref (filename);
+        add_file (std::move (item.filename), item.tuple, NULL, filter, user, result, FALSE);
 }
 
-static void add_generic (char * filename, Tuple * tuple,
+static void add_generic (String && filename, Tuple * tuple,
  PlaylistFilterFunc filter, void * user, AddResult * result, bool_t is_single)
 {
     g_return_if_fail (filename);
 
     if (tuple)
-        add_file (filename, tuple, NULL, filter, user, result, FALSE);
+        add_file (std::move (filename), tuple, NULL, filter, user, result, FALSE);
     else if (vfs_file_test (filename, G_FILE_TEST_IS_DIR))
-        add_folder (filename, filter, user, result, is_single);
+        add_folder (std::move (filename), filter, user, result, is_single);
     else if (aud_filename_is_playlist (filename))
-        add_playlist (filename, filter, user, result, is_single);
+        add_playlist (std::move (filename), filter, user, result, is_single);
     else
-        add_file (filename, NULL, NULL, filter, user, result, FALSE);
+        add_file (std::move (filename), NULL, NULL, filter, user, result, FALSE);
 }
 
 static void start_thread_locked (void)
@@ -347,12 +320,10 @@ static bool_t add_finish (void * unused)
 
         if (result->title && ! count)
         {
-            char * old_title = aud_playlist_get_title (playlist);
+            String old_title = aud_playlist_get_title (playlist);
 
             if (! strcmp (old_title, N_("New Playlist")))
                 aud_playlist_set_title (playlist, result->title);
-
-            str_unref (old_title);
         }
 
         playlist_entry_insert_batch_raw (playlist, result->at, std::move (result->items));
@@ -409,9 +380,9 @@ static void * add_worker (void * unused)
 
         for (auto & item : task->items)
         {
-            add_generic (item.filename, item.tuple, task->filter, task->user, result, is_single);
+            add_generic (std::move (item.filename), item.tuple, task->filter,
+             task->user, result, is_single);
 
-            item.filename = NULL;
             item.tuple = NULL;
         }
 
@@ -463,7 +434,7 @@ EXPORT void aud_playlist_entry_insert (int playlist, int at, const char * filena
  Tuple * tuple, bool_t play)
 {
     Index<PlaylistAddItem> items;
-    items.append ({str_get (filename), tuple});
+    items.append ({String (filename), tuple});
 
     aud_playlist_entry_insert_batch (playlist, at, std::move (items), play);
 }

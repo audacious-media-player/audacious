@@ -24,8 +24,6 @@
 
 #include <libaudcore/core.h>
 
-/* all (char *) return values must be freed with str_unref() */
-
 /* Gets album art for <file> (the URI of a song file) as JPEG or PNG data.  If
  * the album art is not yet loaded, sets <data> to NULL and begins to load the
  * album art in the background.  On completion, the "art ready" hook is called,

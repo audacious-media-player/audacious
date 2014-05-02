@@ -61,15 +61,11 @@ static void history_load (void)
     {
         char name[32];
         snprintf (name, sizeof name, "entry%d", i);
-        char * path = aud_get_str ("history", name);
-
+        String path = aud_get_str ("history", name);
         if (! path[0])
-        {
-            str_unref (path);
             break;
-        }
 
-        g_queue_push_tail (& history, path);
+        g_queue_push_tail (& history, path.to_c ());
     }
 
     loaded = TRUE;

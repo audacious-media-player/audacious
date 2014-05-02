@@ -131,18 +131,16 @@ static void probe_by_extension (ProbeState * state)
 
 static void probe_by_mime (ProbeState * state)
 {
-    char * mime;
-
     if (! check_opened (state))
         return;
 
-    if ((mime = vfs_get_metadata (state->handle, "content-type")) == NULL)
+    String mime = vfs_get_metadata (state->handle, "content-type");
+    if (! mime)
         return;
 
     AUDDBG ("Probing by MIME type.\n");
     input_plugin_for_key (INPUT_KEY_MIME, mime, (PluginForEachFunc)
      probe_func_fast, state);
-    str_unref (mime);
 }
 
 static void probe_by_content (ProbeState * state)

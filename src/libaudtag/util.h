@@ -158,7 +158,7 @@ uint32_t unsyncsafe32 (uint32_t x);
 uint32_t syncsafe32 (uint32_t x);
 
 struct TempFile {
-    char * name;
+    String name;
     int fd;
 };
 

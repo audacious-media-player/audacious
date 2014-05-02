@@ -22,7 +22,7 @@
 
 #include <stdio.h>
 
-#include "core.h"
+#include "objects.h"
 
 enum {
     AUD_PATH_BIN_DIR,
@@ -66,7 +66,7 @@ void aud_init_i18n (void);
 void aud_config_set_defaults (const char * section, const char * const * entries);
 
 void aud_set_str (const char * section, const char * name, const char * value);
-char * aud_get_str (const char * section, const char * name);
+String aud_get_str (const char * section, const char * name);
 void aud_set_bool (const char * section, const char * name, bool_t value);
 bool_t aud_get_bool (const char * section, const char * name);
 void aud_set_int (const char * section, const char * name, int value);
