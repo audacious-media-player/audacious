@@ -102,8 +102,8 @@ EXPORT void strpool_shutdown (void)
 #else /* ! VALGRIND_FRIENDLY */
 
 struct StrNode {
-    MultihashNode node;
-    unsigned hash, refs;
+    MultiHash::Node base;
+    unsigned refs;
     char magic;
     char str[];
 };
@@ -111,46 +111,37 @@ struct StrNode {
 #define NODE_SIZE_FOR(s) (offsetof (StrNode, str) + strlen (s) + 1)
 #define NODE_OF(s) ((StrNode *) ((s) - offsetof (StrNode, str)))
 
-static unsigned hash_cb (const MultihashNode * node)
-{
-    return ((const StrNode *) node)->hash;
-}
-
-static bool_t match_cb (const MultihashNode * node_, const void * data_, unsigned hash)
+static bool match_cb (const MultiHash::Node * node_, const void * data_)
 {
     const StrNode * node = (const StrNode *) node_;
     const char * data = (const char *) data_;
 
-    return data == node->str || (hash == node->hash && ! strcmp (data, node->str));
+    return data == node->str || ! strcmp (data, node->str);
 }
 
-static MultihashTable strpool_table = {
-    .hash_func = hash_cb,
-    .match_func = match_cb
-};
+static MultiHash strpool_table (match_cb);
 
-static MultihashNode * add_cb (const void * data_, unsigned hash, void * state)
+static MultiHash::Node * add_cb (const void * data_, void * state)
 {
     const char * data = (const char *) data_;
 
     StrNode * node = (StrNode *) g_malloc (NODE_SIZE_FOR (data));
-    node->hash = hash;
     node->refs = 1;
     node->magic = '@';
     strcpy (node->str, data);
 
     * ((char * *) state) = node->str;
-    return (MultihashNode *) node;
+    return (MultiHash::Node *) node;
 }
 
-static bool_t ref_cb (MultihashNode * node_, void * state)
+static bool ref_cb (MultiHash::Node * node_, void * state)
 {
     StrNode * node = (StrNode *) node_;
 
     __sync_fetch_and_add (& node->refs, 1);
 
     * ((char * *) state) = node->str;
-    return FALSE;
+    return false;
 }
 
 EXPORT char * str_get (const char * str)
@@ -159,7 +150,7 @@ EXPORT char * str_get (const char * str)
         return NULL;
 
     char * ret = NULL;
-    multihash_lookup (& strpool_table, str, g_str_hash (str), add_cb, ref_cb, & ret);
+    strpool_table.lookup (str, g_str_hash (str), add_cb, ref_cb, & ret);
     return ret;
 }
 
@@ -176,16 +167,16 @@ EXPORT char * str_ref (const char * str)
     return (char *) str;
 }
 
-static bool_t remove_cb (MultihashNode * node_, void * state)
+static bool remove_cb (MultiHash::Node * node_, void * state)
 {
     StrNode * node = (StrNode *) node_;
 
     if (! __sync_bool_compare_and_swap (& node->refs, 1, 0))
-        return FALSE;
+        return false;
 
     node->magic = 0;
     g_free (node);
-    return TRUE;
+    return true;
 }
 
 EXPORT void str_unref (char * str)
@@ -207,25 +198,25 @@ EXPORT void str_unref (char * str)
         }
         else
         {
-            int status = multihash_lookup (& strpool_table, node->str,
-             node->hash, NULL, remove_cb, NULL);
+            int status = strpool_table.lookup (node->str, node->base.hash, NULL,
+             remove_cb, NULL);
 
-            assert (status & MULTIHASH_FOUND);
-            if (status & MULTIHASH_REMOVED)
+            assert (status & MultiHash::Found);
+            if (status & MultiHash::Removed)
                 break;
         }
     }
 }
 
-static bool_t leak_cb (MultihashNode * node, void * state)
+static bool leak_cb (MultiHash::Node * node, void * state)
 {
     fprintf (stderr, "String leaked: %s\n", ((StrNode *) node)->str);
-    return FALSE;
+    return false;
 }
 
 EXPORT void strpool_shutdown (void)
 {
-    multihash_iterate (& strpool_table, leak_cb, NULL);
+    strpool_table.iterate (leak_cb, NULL);
 }
 
 EXPORT unsigned str_hash (const char * str)
@@ -236,7 +227,7 @@ EXPORT unsigned str_hash (const char * str)
     StrNode * node = NODE_OF (str);
     assert (node->magic == '@');
 
-    return node->hash;
+    return node->base.hash;
 }
 
 

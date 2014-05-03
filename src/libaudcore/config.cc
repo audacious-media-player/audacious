@@ -112,7 +112,7 @@ struct ConfigItem {
 };
 
 struct ConfigNode {
-    MultihashNode node;
+    MultiHash::Node node;
     ConfigItem item;
 };
 
@@ -122,7 +122,7 @@ struct ConfigOp {
     const char * key;
     String value;
     unsigned hash;
-    bool_t result;
+    bool result;
 };
 
 struct LoadState {
@@ -141,14 +141,7 @@ static int item_compare (const ConfigItem & a, const ConfigItem & b, void *)
         return strcmp (a.section, b.section);
 }
 
-static unsigned config_node_hash (const MultihashNode * node0)
-{
-    const ConfigNode * node = (const ConfigNode *) node0;
-
-    return g_str_hash (node->item.section) + g_str_hash (node->item.key);
-}
-
-static bool_t config_node_match (const MultihashNode * node0, const void * data, unsigned hash)
+static bool config_node_match (const MultiHash::Node * node0, const void * data)
 {
     const ConfigNode * node = (const ConfigNode *) node0;
     const ConfigOp * op = (const ConfigOp *) data;
@@ -156,19 +149,12 @@ static bool_t config_node_match (const MultihashNode * node0, const void * data,
     return ! strcmp (node->item.section, op->section) && ! strcmp (node->item.key, op->key);
 }
 
-static MultihashTable defaults = {
-    .hash_func = config_node_hash,
-    .match_func = config_node_match
-};
+static MultiHash defaults (config_node_match);
+static MultiHash config (config_node_match);
 
-static MultihashTable config = {
-    .hash_func = config_node_hash,
-    .match_func = config_node_match
-};
+static volatile bool modified;
 
-static volatile bool_t modified;
-
-static MultihashNode * add_cb (const void * data, unsigned hash, void * state)
+static MultiHash::Node * add_cb (const void * data, void * state)
 {
     ConfigOp * op = (ConfigOp *) state;
 
@@ -179,8 +165,8 @@ static MultihashNode * add_cb (const void * data, unsigned hash, void * state)
         return NULL;
 
     case OP_SET:
-        op->result = TRUE;
-        modified = TRUE;
+        op->result = true;
+        modified = true;
 
     case OP_SET_NO_FLAG:
     {
@@ -188,7 +174,7 @@ static MultihashNode * add_cb (const void * data, unsigned hash, void * state)
         node->item.section = String (op->section);
         node->item.key = String (op->key);
         node->item.value = op->value;
-        return (MultihashNode *) node;
+        return (MultiHash::Node *) node;
     }
 
     default:
@@ -196,7 +182,7 @@ static MultihashNode * add_cb (const void * data, unsigned hash, void * state)
     }
 }
 
-static bool_t action_cb (MultihashNode * node0, void * state)
+static bool action_cb (MultiHash::Node * node0, void * state)
 {
     ConfigNode * node = (ConfigNode *) node0;
     ConfigOp * op = (ConfigOp *) state;
@@ -205,41 +191,41 @@ static bool_t action_cb (MultihashNode * node0, void * state)
     {
     case OP_IS_DEFAULT:
         op->result = ! strcmp (node->item.value, op->value);
-        return FALSE;
+        return false;
 
     case OP_GET:
         op->value = node->item.value;
-        return FALSE;
+        return false;
 
     case OP_SET:
         op->result = !! strcmp (node->item.value, op->value);
         if (op->result)
-            modified = TRUE;
+            modified = true;
 
     case OP_SET_NO_FLAG:
         node->item.value = op->value;
-        return FALSE;
+        return false;
 
     case OP_CLEAR:
-        op->result = TRUE;
-        modified = TRUE;
+        op->result = true;
+        modified = true;
 
     case OP_CLEAR_NO_FLAG:
         delete node;
-        return TRUE;
+        return true;
 
     default:
-        return FALSE;
+        return false;
     }
 }
 
-static bool_t config_op_run (ConfigOp * op, MultihashTable * table)
+static bool config_op_run (ConfigOp * op, MultiHash * table)
 {
     if (! op->hash)
         op->hash = g_str_hash (op->section) + g_str_hash (op->key);
 
-    op->result = FALSE;
-    multihash_lookup (table, op, op->hash, add_cb, action_cb, op);
+    op->result = false;
+    table->lookup (op, op->hash, add_cb, action_cb, op);
     return op->result;
 }
 
@@ -281,7 +267,7 @@ void config_load (void)
     aud_config_set_defaults (NULL, core_defaults);
 }
 
-static bool_t add_to_save_list (MultihashNode * node0, void * state0)
+static bool add_to_save_list (MultiHash::Node * node0, void * state0)
 {
     ConfigNode * node = (ConfigNode *) node0;
     SaveState * state = (SaveState *) state0;
@@ -292,9 +278,9 @@ static bool_t add_to_save_list (MultihashNode * node0, void * state0)
     item.key = node->item.key;
     item.value = node->item.value;
 
-    modified = FALSE;
+    modified = false;
 
-    return FALSE;
+    return false;
 }
 
 void config_save (void)
@@ -304,7 +290,7 @@ void config_save (void)
 
     SaveState state = SaveState ();
 
-    multihash_iterate (& config, add_to_save_list, & state);
+    config.iterate (add_to_save_list, & state);
     state.list.sort (item_compare, nullptr);
 
     String folder = filename_to_uri (aud_get_path (AUD_PATH_USER_DIR));
@@ -351,8 +337,8 @@ EXPORT void aud_config_set_defaults (const char * section, const char * const * 
 void config_cleanup (void)
 {
     ConfigOp op = {.type = OP_CLEAR_NO_FLAG};
-    multihash_iterate (& config, action_cb, & op);
-    multihash_iterate (& defaults, action_cb, & op);
+    config.iterate (action_cb, & op);
+    defaults.iterate (action_cb, & op);
 }
 
 EXPORT void aud_set_str (const char * section, const char * name, const char * value)
@@ -360,10 +346,10 @@ EXPORT void aud_set_str (const char * section, const char * name, const char * v
     g_return_if_fail (name && value);
 
     ConfigOp op = {OP_IS_DEFAULT, section ? section : DEFAULT_SECTION, name, String (value)};
-    bool_t is_default = config_op_run (& op, & defaults);
+    bool is_default = config_op_run (& op, & defaults);
 
     op.type = is_default ? OP_CLEAR : OP_SET;
-    bool_t changed = config_op_run (& op, & config);
+    bool changed = config_op_run (& op, & config);
 
     if (changed && ! section)
     {

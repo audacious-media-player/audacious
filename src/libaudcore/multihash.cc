@@ -1,6 +1,6 @@
 /*
  * multihash.c
- * Copyright 2013 John Lindgren
+ * Copyright 2013-2014 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -19,137 +19,157 @@
 
 #include "multihash.h"
 
-#include <glib.h>
+#include <assert.h>
 
-#define INITIAL_SIZE 256  /* must be a power of two */
-
-static void resize_channel (MultihashTable * table, MultihashChannel * channel, unsigned size)
+EXPORT void HashBase::add (Node * node, unsigned hash)
 {
-    MultihashNode * * buckets = g_new0 (MultihashNode *, size);
-
-    for (unsigned b1 = 0; b1 < channel->size; b1 ++)
+    if (! buckets)
     {
-        MultihashNode * node = channel->buckets[b1];
+        buckets = new Node *[InitialSize]();
+        size = InitialSize;
+    }
+
+    unsigned b = hash & (size - 1);
+    node->next = buckets[b];
+    node->hash = hash;
+    buckets[b] = node;
+
+    used ++;
+    if (used > size)
+        resize (size << 1);
+}
+
+EXPORT HashBase::Node * HashBase::lookup (MatchFunc match, const void * data,
+ unsigned hash, NodeLoc * loc) const
+{
+    if (! buckets)
+        return nullptr;
+
+    unsigned b = hash & (size - 1);
+    Node * * node_ptr = & buckets[b];
+    Node * node = * node_ptr;
+
+    while (1)
+    {
+        if (! node)
+            return nullptr;
+
+        if (node->hash == hash && match (node, data))
+            break;
+
+        node_ptr = & node->next;
+        node = * node_ptr;
+    }
+
+    if (loc)
+    {
+        loc->ptr = node_ptr;
+        loc->next = node->next;
+    }
+
+    return node;
+}
+
+EXPORT void HashBase::remove (const NodeLoc & loc)
+{
+    * loc.ptr = loc.next;
+
+    used --;
+    if (used < size >> 2 && size > InitialSize)
+        resize (size >> 1);
+}
+
+EXPORT void HashBase::iterate (FoundFunc func, void * state)
+{
+    for (unsigned b = 0; b < size; b ++)
+    {
+        Node * * ptr = & buckets[b];
+        Node * node = * ptr;
 
         while (node)
         {
-            MultihashNode * next = node->next;
+            Node * next = node->next;
 
-            unsigned hash = table->hash_func (node);
-            unsigned b2 = (hash >> MULTIHASH_SHIFT) & (size - 1);
-            MultihashNode * * node_ptr = & buckets[b2];
-
-            node->next = * node_ptr;
-            * node_ptr = node;
+            if (func (node, state))
+            {
+                * ptr = next;
+                used --;
+            }
+            else
+                ptr = & node->next;
 
             node = next;
         }
     }
 
-    g_free (channel->buckets);
-    channel->buckets = buckets;
-    channel->size = size;
+    if (used < size >> 2 && size > InitialSize)
+        resize (size >> 1);
 }
 
-EXPORT int multihash_lookup (MultihashTable * table, const void * data,
- unsigned hash, MultihashAddFunc add, MultihashActionFunc action, void * state)
+void HashBase::resize (unsigned new_size)
 {
-    unsigned c = hash & (MULTIHASH_CHANNELS - 1);
-    MultihashChannel * channel = & table->channels[c];
+    Node * * new_buckets = new Node *[new_size]();
+
+    for (unsigned b1 = 0; b1 < size; b1 ++)
+    {
+        Node * node = buckets[b1];
+
+        while (node)
+        {
+            Node * next = node->next;
+
+            unsigned b2 = node->hash & (new_size - 1);
+            node->next = new_buckets[b2];
+            new_buckets[b2] = node;
+
+            node = next;
+        }
+    }
+
+    delete[] buckets;
+    buckets = new_buckets;
+    size = new_size;
+}
+
+EXPORT int MultiHash::lookup (const void * data, unsigned hash, AddFunc add,
+ FoundFunc found, void * state)
+{
+    const unsigned c = (hash >> Shift) & (Channels - 1);
+    HashBase & channel = channels[c];
 
     int status = 0;
-    tiny_lock (& channel->lock);
+    tiny_lock (& locks[c]);
 
-    if (! channel->buckets)
-    {
-        if (! add)
-        {
-            tiny_unlock (& channel->lock);
-            return status;
-        }
-
-        channel->buckets = g_new0 (MultihashNode *, INITIAL_SIZE);
-        channel->size = INITIAL_SIZE;
-        channel->used = 0;
-    }
-
-    unsigned b = (hash >> MULTIHASH_SHIFT) & (channel->size - 1);
-    MultihashNode * * node_ptr = & channel->buckets[b];
-    MultihashNode * node = * node_ptr;
-
-    while (node && ! table->match_func (node, data, hash))
-    {
-        node_ptr = & node->next;
-        node = * node_ptr;
-    }
+    HashBase::NodeLoc loc;
+    Node * node = channel.lookup (match, data, hash, & loc);
 
     if (node)
     {
-        status |= MULTIHASH_FOUND;
-
-        MultihashNode * next = node->next;
-
-        if (action && action (node, state))
+        status |= Found;
+        if (found && found (node, state))
         {
-            status |= MULTIHASH_REMOVED;
-
-            * node_ptr = next;
-
-            channel->used --;
-            if (channel->used < channel->size >> 2 && channel->size > INITIAL_SIZE)
-                resize_channel (table, channel, channel->size >> 1);
+            status |= Removed;
+            channel.remove (loc);
         }
     }
-    else if (add && (node = add (data, hash, state)))
+    else if (add && (node = add (data, state)))
     {
-        status |= MULTIHASH_ADDED;
-
-        * node_ptr = node;
-        node->next = NULL;
-
-        channel->used ++;
-        if (channel->used > channel->size)
-            resize_channel (table, channel, channel->size << 1);
+        status |= Added;
+        channel.add (node, hash);
     }
 
-    tiny_unlock (& channel->lock);
+    tiny_unlock (& locks[c]);
     return status;
 }
 
-EXPORT void multihash_iterate (MultihashTable * table, MultihashActionFunc action, void * state)
+EXPORT void MultiHash::iterate (FoundFunc func, void * state)
 {
-    for (int c = 0; c < MULTIHASH_CHANNELS; c ++)
-        tiny_lock (& table->channels[c].lock);
+    for (TinyLock & lock : locks)
+        tiny_lock (& lock);
 
-    for (int c = 0; c < MULTIHASH_CHANNELS; c ++)
-    {
-        MultihashChannel * channel = & table->channels[c];
+    for (HashBase & channel : channels)
+        channel.iterate (func, state);
 
-        for (unsigned b = 0; b < channel->size; b ++)
-        {
-            MultihashNode * * node_ptr = & channel->buckets[b];
-            MultihashNode * node = * node_ptr;
-
-            while (node)
-            {
-                MultihashNode * next = node->next;
-
-                if (action (node, state))
-                {
-                    * node_ptr = next;
-                    channel->used --;
-                }
-                else
-                    node_ptr = & node->next;
-
-                node = next;
-            }
-        }
-
-        if (channel->used < channel->size >> 2 && channel->size > INITIAL_SIZE)
-            resize_channel (table, channel, channel->size >> 1);
-    }
-
-    for (int c = 0; c < MULTIHASH_CHANNELS; c ++)
-        tiny_unlock (& table->channels[c].lock);
+    for (TinyLock & lock : locks)
+        tiny_unlock (& lock);
 }
