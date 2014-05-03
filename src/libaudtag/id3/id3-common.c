@@ -105,7 +105,10 @@ void id3_associate_int (Tuple * tuple, int field, const char * data, int size)
 {
     char * text = id3_decode_text (data, size);
 
-    if (text && atoi (text) >= 0)
+    /* Ignore zeros here.  In particular, there are many ID3 tags with invalid
+     * TLEN fields floating around, and we want to let mpg123 recalculate the
+     * length in such cases. */
+    if (text && atoi (text) > 0)
     {
         TAGDBG ("Field %i = %s.\n", field, text);
         tuple_set_int (tuple, field, atoi (text));
