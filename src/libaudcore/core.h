@@ -41,7 +41,7 @@
 #undef CLAMP
 #define CLAMP(a,min,max) ((a) < (min) ? (min) : (a) > (max) ? (max) : (a))
 
-#define ARRAY_LEN(a) (sizeof (a) / sizeof (a)[0])
+#define ARRAY_LEN(a) ((int) sizeof (a) / (int) sizeof (a)[0])
 
 /* CORE TYPES */
 

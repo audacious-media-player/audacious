@@ -26,7 +26,7 @@
 enum {HIGHLIGHT_COLUMN, RESERVED_COLUMNS};
 
 #define MODEL_HAS_CB(m, cb) \
- ((m)->cbs_size > offsetof (AudguiListCallbacks, cb) && (m)->cbs->cb)
+ ((m)->cbs_size > (int) offsetof (AudguiListCallbacks, cb) && (m)->cbs->cb)
 #define PATH_IS_SELECTED(w, p) (gtk_tree_selection_path_is_selected \
  (gtk_tree_view_get_selection ((GtkTreeView *) (w)), (p)))
 
