@@ -28,12 +28,12 @@
 
 EXPORT void IndexBase::raw_erase (void * data, int len)
 {
-    memset (data, 0, len);
 }
 
-EXPORT IndexBase::~IndexBase ()
+EXPORT void IndexBase::clear ()
 {
     erase_func (m_data, m_len);
+    memset (m_data, 0, m_len);
     g_free (m_data);
 
     m_data = nullptr;
@@ -88,6 +88,7 @@ EXPORT void IndexBase::erase (int pos, int len)
         len = m_len - pos;  /* erase all following */
 
     erase_func ((char *) m_data + pos, len);
+    memset ((char *) m_data + pos, 0, len);
 }
 
 EXPORT void IndexBase::shift (int from, int to, int len)

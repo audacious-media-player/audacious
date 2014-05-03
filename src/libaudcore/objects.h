@@ -32,7 +32,6 @@ public:
     ~SmartPtr ()
     {
         delete ptr;
-        ptr = nullptr;
     }
 
     SmartPtr (const SmartPtr &) = delete;
@@ -90,7 +89,6 @@ public:
     ~String ()
     {
         str_unref (raw);
-        raw = nullptr;
     }
 
     String (const String & b) :

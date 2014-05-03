@@ -49,7 +49,10 @@ public:
         m_len (0),
         m_size (0) {}
 
-    ~IndexBase ();
+    void clear ();
+
+    ~IndexBase ()
+        { clear (); }
 
     IndexBase (const IndexBase &) = delete;
     void operator= (const IndexBase &) = delete;
@@ -69,7 +72,7 @@ public:
     {
         if (this != & b)
         {
-            this->~IndexBase ();
+            clear ();
             erase_func = b.erase_func;
             m_data = b.m_data;
             m_len = b.m_len;
@@ -116,8 +119,7 @@ public:
     constexpr Index () :
         IndexBase (plain ? raw_erase : erase_objects) {};
 
-    void clear ()
-        { this->~IndexBase (); }
+    using IndexBase::clear;
 
     T * begin ()
         { return (T *) IndexBase::begin (); }
