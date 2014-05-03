@@ -51,8 +51,8 @@ EXPORT void IndexBase::insert (int pos, int len)
 
     if (m_len + len > m_size)
     {
-        if (m_size < 256)
-            m_size = 256;  /* allocate minimum of 256 bytes */
+        if (m_size < InitialSize)
+            m_size = InitialSize;
 
         while (m_size < m_len + len)
             m_size <<= 1;  /* then increase by powers of two */

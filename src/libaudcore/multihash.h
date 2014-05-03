@@ -20,6 +20,7 @@
 #ifndef LIBAUDCORE_MULTIHASH_H
 #define LIBAUDCORE_MULTIHASH_H
 
+#include <utility>
 #include <libaudcore/tinylock.h>
 
 /* HashBase is a low-level hash table implementation.  It is used as a backend
@@ -56,6 +57,9 @@ public:
     ~HashBase ()
         { delete[] buckets; }
 
+    int n_items () const
+        { return used; }
+
     /* Adds a node.  Does not check for duplicates. */
     void add (Node * node, unsigned hash);
 
@@ -72,7 +76,7 @@ public:
     void iterate (FoundFunc func, void * state);
 
 private:
-    static constexpr int InitialSize = 256;
+    static constexpr int InitialSize = 16;
 
     void resize (unsigned new_size);
 
@@ -129,6 +133,94 @@ private:
     const MatchFunc match;
     TinyLock locks[Channels];
     HashBase channels[Channels];
+};
+
+template<class Key, class Value>
+class SimpleHash : private HashBase
+{
+public:
+    typedef void (* IterFunc) (const Key & key, const Value & value, void * state);
+
+    ~SimpleHash ()
+        { clear (); }
+
+    using HashBase::n_items;
+
+    Value * lookup (const Key & key)
+    {
+        Node * node = (Node *) HashBase::lookup (match_cb, & key, key.hash ());
+        return node ? & node->value : nullptr;
+    }
+
+    Value * add (const Key & key, Value && value)
+    {
+        unsigned hash = key.hash ();
+        Node * node = (Node *) HashBase::lookup (match_cb, & key, hash);
+
+        if (node)
+            node->value = std::move (value);
+        else
+        {
+            node = new Node (key, std::move (value));
+            HashBase::add (node, hash);
+        }
+
+        return & node->value;
+    }
+
+    void remove (const Key & key)
+    {
+        NodeLoc loc;
+        Node * node = (Node *) HashBase::lookup (match_cb, & key, key.hash (), & loc);
+
+        if (node)
+        {
+            delete node;
+            HashBase::remove (loc);
+        }
+    }
+
+    void iterate (IterFunc func, void * state) const
+    {
+        IterData data = {func, state};
+        ((SimpleHash *) this)->HashBase::iterate (iterate_cb, & data);
+    }
+
+    void clear ()
+        { HashBase::iterate (remove_cb, nullptr); }
+
+private:
+    struct Node : public HashBase::Node
+    {
+        Node (const Key & key, Value && value) :
+            key (key),
+            value (std::move (value)) {}
+
+        Key key;
+        Value value;
+    };
+
+    struct IterData {
+        IterFunc func;
+        void * state;
+    };
+
+    static bool match_cb (const HashBase::Node * node, const void * data)
+        { return ((const Node *) node)->key == * (const Key *) data; }
+
+    static bool remove_cb (HashBase::Node * node, void *)
+    {
+        delete (Node *) node;
+        return true;
+    }
+
+    static bool iterate_cb (HashBase::Node * node0, void * data0)
+    {
+        const Node * node = (const Node *) node0;
+        IterData * data = (IterData *) data0;
+        data->func (node->key, node->value, data->state);
+        return false;
+    }
 };
 
 #endif /* LIBAUDCORE_MULTIHASH_H */

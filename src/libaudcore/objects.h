@@ -119,11 +119,17 @@ public:
         }
     }
 
+    bool operator== (const String & b) const
+        { return str_equal (raw, b.raw); }
+
     explicit String (const char * str) :
         raw (str_get (str)) {}
 
     operator const char * () const
         { return raw; }
+
+    unsigned hash () const
+        { return str_hash (raw); }
 
     /* considered harmful */
     static String from_c (char * str)

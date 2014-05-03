@@ -105,6 +105,8 @@ public:
     void sort (RawCompare compare, int elemsize, void * userdata);
 
 private:
+    static constexpr int InitialSize = 16 * sizeof (void *);
+
     EraseFunc erase_func;
     void * m_data;
     int m_len, m_size;
