@@ -88,6 +88,8 @@ void describe_song (const char * filename, const Tuple * tuple, String & title,
  String & artist, String & album);
 const char * last_path_element (const char * path);
 
+unsigned int32_hash (unsigned val);
+
 /* vis-runner.c */
 void vis_runner_start_stop (bool_t playing, bool_t paused);
 void vis_runner_pass_audio (int time, float * data, int samples, int channels, int rate);

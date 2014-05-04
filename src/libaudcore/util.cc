@@ -289,3 +289,17 @@ const char * last_path_element (const char * path)
     const char * slash = strrchr (path, G_DIR_SEPARATOR);
     return (slash && slash[1]) ? slash + 1 : NULL;
 }
+
+/* Thomas Wang's 32-bit mix function.  See:
+ * http://web.archive.org/web/20070307172248/http://www.concentric.net/~Ttwang/tech/inthash.htm */
+
+unsigned int32_hash (unsigned val)
+{
+    val = ~val + (val << 15);
+    val = val ^ (val >> 12);
+    val = val + (val << 2);
+    val = val ^ (val >> 4);
+    val = val * 2057;
+    val = val ^ (val >> 16);
+    return val;
+}

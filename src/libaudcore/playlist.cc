@@ -35,6 +35,7 @@
 #include "i18n.h"
 #include "interface.h"
 #include "internal.h"
+#include "multihash.h"
 #include "objects.h"
 #include "plugins.h"
 #include "scanner.h"
@@ -61,6 +62,21 @@ enum {RESUME_STOP, RESUME_PLAY, RESUME_PAUSE};
     Entry * entry = lookup_entry (playlist, entry_num); \
     if (! entry) \
         RETURN (__VA_ARGS__);
+
+struct UniqueID
+{
+    constexpr UniqueID (int val) :
+        val (val) {}
+
+    operator int () const
+        { return val; }
+
+    unsigned hash () const
+        { return int32_hash (val); }
+
+private:
+    int val;
+};
 
 struct Update {
     int level, before, after;
@@ -109,7 +125,7 @@ static pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
 
 /* The unique ID table contains pointers to Playlist for ID's in use and NULL
  * for "dead" (previously used and therefore unavailable) ID's. */
-static GHashTable * unique_id_table = NULL;
+static SimpleHash<UniqueID, Playlist *> unique_id_table;
 static int next_unique_id = 1000;
 
 static Index<SmartPtr<Playlist>> playlists;
@@ -223,12 +239,10 @@ Entry::~Entry ()
 
 static int new_unique_id (int preferred)
 {
-    if (preferred >= 0 && ! g_hash_table_lookup_extended (unique_id_table,
-     GINT_TO_POINTER (preferred), NULL, NULL))
+    if (preferred >= 0 && ! unique_id_table.lookup (preferred))
         return preferred;
 
-    while (g_hash_table_lookup_extended (unique_id_table,
-     GINT_TO_POINTER (next_unique_id), NULL, NULL))
+    while (unique_id_table.lookup (next_unique_id))
         next_unique_id ++;
 
     return next_unique_id ++;
@@ -254,13 +268,12 @@ Playlist::Playlist (int id) :
     resume_paused (FALSE),
     resume_time (0)
 {
-    g_hash_table_insert (unique_id_table, GINT_TO_POINTER (unique_id), this);
+    unique_id_table.add (unique_id, this);
 }
 
 Playlist::~Playlist ()
 {
-    g_hash_table_insert (unique_id_table, GINT_TO_POINTER (unique_id), NULL);
-
+    unique_id_table.add (unique_id, nullptr);
     g_list_free (queued);
 }
 
@@ -600,8 +613,6 @@ void playlist_init (void)
 
     ENTER;
 
-    unique_id_table = g_hash_table_new (g_direct_hash, g_direct_equal);
-
     update_level = 0;
     scan_playlist = scan_row = 0;
 
@@ -635,9 +646,7 @@ void playlist_end (void)
     resume_playlist = -1;
 
     playlists.clear ();
-
-    g_hash_table_destroy (unique_id_table);
-    unique_id_table = NULL;
+    unique_id_table.clear ();
 
     tuple_formatter_free (title_formatter);
     title_formatter = NULL;
@@ -745,8 +754,8 @@ EXPORT int aud_playlist_by_unique_id (int id)
 {
     ENTER;
 
-    Playlist * p = (Playlist *) g_hash_table_lookup (unique_id_table, GINT_TO_POINTER (id));
-    int num = p ? p->number : -1;
+    Playlist * * ptr = unique_id_table.lookup (id);
+    int num = (ptr && * ptr) ? (* ptr)->number : -1;
 
     RETURN (num);
 }
