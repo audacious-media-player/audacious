@@ -102,8 +102,12 @@ EXPORT void hook_call (const char * name, void * data)
 
     list->use_count ++;
 
-    for (HookItem & item : list->items)
+    /* note: the list may grow (but not shrink) during the hook call */
+    for (int i = 0; i < list->items.len (); i ++)
     {
+        /* copy locally to prevent race condition */
+        HookItem item = list->items[i];
+
         if (item.func)
         {
             pthread_mutex_unlock (& mutex);
