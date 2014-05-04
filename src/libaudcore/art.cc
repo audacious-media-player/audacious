@@ -32,6 +32,7 @@
 
 #include "audstrings.h"
 #include "hook.h"
+#include "multihash.h"
 #include "playlist-internal.h"
 #include "scanner.h"
 #include "vfs.h"
@@ -49,50 +50,30 @@ struct ArtItem {
 
     /* album art as (possibly a temporary) file */
     String art_file;
-    bool_t is_temp;
+    bool is_temp;
 };
 
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
-static GHashTable * art_items; /* of ArtItem */
+static SimpleHash<String, ArtItem> art_items;
 static String current_ref;
 static int send_source;
 
-static void art_item_free (ArtItem * item)
+static void get_queued_cb (const String & key, ArtItem & item, void * list)
 {
-    /* delete temporary file */
-    if (item->art_file && item->is_temp)
+    if (item.flag == FLAG_DONE)
     {
-        String local = uri_to_filename (item->art_file);
-        if (local)
-            g_unlink (local);
+        ((Index<String> *) list)->append (key);
+        item.flag = FLAG_SENT;
     }
-
-    g_free (item->data);
-    delete item;
 }
 
-static bool_t send_requests (void * unused)
+static Index<String> get_queued ()
 {
+    Index<String> queued;
     pthread_mutex_lock (& mutex);
 
-    GQueue queue = G_QUEUE_INIT;
-
-    GHashTableIter iter;
-    void * ptr1, * ptr2;
-
-    g_hash_table_iter_init (& iter, art_items);
-    while (g_hash_table_iter_next (& iter, & ptr1, & ptr2))
-    {
-        char * file = (char *) ptr1;
-        ArtItem * item = (ArtItem *) ptr2;
-
-        if (item->flag == FLAG_DONE)
-        {
-            g_queue_push_tail (& queue, str_ref (file));
-            item->flag = FLAG_SENT;
-        }
-    }
+    art_items.iterate (get_queued_cb, & queued);
 
     if (send_source)
     {
@@ -101,29 +82,31 @@ static bool_t send_requests (void * unused)
     }
 
     pthread_mutex_unlock (& mutex);
+    return queued;
+}
 
-    String current;
+static int send_requests (void * unused)
+{
+    Index<String> queued = get_queued ();
+
+    String current_wanted;
     if (! current_ref)
-        current = playback_entry_get_filename ();
+        current_wanted = playback_entry_get_filename ();
 
-    char * file;
-    while ((file = (char *) g_queue_pop_head (& queue)))
+    for (const String & file : queued)
     {
-        hook_call ("art ready", file);
+        hook_call ("art ready", (void *) (const char *) file);
 
-        if (current && ! strcmp (file, current))
+        if (file == current_wanted)
         {
-            hook_call ("current art ready", file);
-            current_ref = String::from_c (file);
+            hook_call ("current art ready", (void *) (const char *) file);
+            current_ref = file;
         }
         else
-        {
             aud_art_unref (file); /* release temporary reference */
-            str_unref (file);
-        }
     }
 
-    return FALSE;
+    return G_SOURCE_REMOVE;
 }
 
 static void request_callback (ScanRequest * request)
@@ -131,8 +114,8 @@ static void request_callback (ScanRequest * request)
     pthread_mutex_lock (& mutex);
 
     String file = scan_request_get_filename (request);
-    ArtItem * item = (ArtItem *) g_hash_table_lookup (art_items, file);
-    assert (item != NULL && ! item->flag);
+    ArtItem * item = art_items.lookup (file);
+    assert (item && ! item->flag);
 
     scan_request_get_image_data (request, & item->data, & item->len);
     item->art_file = scan_request_get_image_file (request);
@@ -144,9 +127,9 @@ static void request_callback (ScanRequest * request)
     pthread_mutex_unlock (& mutex);
 }
 
-static ArtItem * art_item_get (const char * file)
+static ArtItem * art_item_get (const String & file)
 {
-    ArtItem * item = (ArtItem *) g_hash_table_lookup (art_items, file);
+    ArtItem * item = art_items.lookup (file);
 
     if (item && item->flag)
     {
@@ -156,8 +139,7 @@ static ArtItem * art_item_get (const char * file)
 
     if (! item)
     {
-        item = new ArtItem ();
-        g_hash_table_insert (art_items, str_get (file), item);
+        item = art_items.add (file, ArtItem ());
         item->refcount = 1; /* temporary reference */
 
         scan_request (file, SCAN_IMAGE, NULL, request_callback);
@@ -166,10 +148,22 @@ static ArtItem * art_item_get (const char * file)
     return NULL;
 }
 
-static void art_item_unref (const char * file, ArtItem * item)
+static void art_item_unref (const String & file, ArtItem * item)
 {
     if (! -- item->refcount)
-        g_hash_table_remove (art_items, file);
+    {
+        /* delete temporary file */
+        if (item->art_file && item->is_temp)
+        {
+            String local = uri_to_filename (item->art_file);
+            if (local)
+                g_unlink (local);
+        }
+
+        g_free (item->data);
+
+        art_items.remove (file);
+    }
 }
 
 static void release_current (void)
@@ -183,9 +177,6 @@ static void release_current (void)
 
 void art_init (void)
 {
-    art_items = g_hash_table_new_full ((GHashFunc) str_calc_hash, g_str_equal,
-     (GDestroyNotify) str_unref, (GDestroyNotify) art_item_free);
-
     hook_associate ("playlist position", (HookFunction) release_current, NULL);
     hook_associate ("playlist set playing", (HookFunction) release_current, NULL);
 }
@@ -195,16 +186,13 @@ void art_cleanup (void)
     hook_dissociate ("playlist position", (HookFunction) release_current);
     hook_dissociate ("playlist set playing", (HookFunction) release_current);
 
-    if (send_source)
-    {
-        g_source_remove (send_source);
-        send_source = 0;
-    }
+    Index<String> queued = get_queued ();
+    for (const String & file : queued)
+        aud_art_unref (file); /* release temporary reference */
 
     release_current ();
 
-    g_hash_table_destroy (art_items);
-    art_items = NULL;
+    g_warn_if_fail (! art_items.n_items ());
 }
 
 EXPORT void aud_art_request_data (const char * file, const void * * data, int64_t * len)
@@ -214,7 +202,8 @@ EXPORT void aud_art_request_data (const char * file, const void * * data, int64_
 
     pthread_mutex_lock (& mutex);
 
-    ArtItem * item = art_item_get (file);
+    String key (file);
+    ArtItem * item = art_item_get (key);
     if (! item)
         goto UNLOCK;
 
@@ -228,7 +217,7 @@ EXPORT void aud_art_request_data (const char * file, const void * * data, int64_
         * len = item->len;
     }
     else
-        art_item_unref (file, item);
+        art_item_unref (key, item);
 
 UNLOCK:
     pthread_mutex_unlock (& mutex);
@@ -239,7 +228,8 @@ EXPORT const char * aud_art_request_file (const char * file)
     const char * art_file = NULL;
     pthread_mutex_lock (& mutex);
 
-    ArtItem * item = art_item_get (file);
+    String key (file);
+    ArtItem * item = art_item_get (key);
     if (! item)
         goto UNLOCK;
 
@@ -250,14 +240,14 @@ EXPORT const char * aud_art_request_file (const char * file)
         if (local)
         {
             item->art_file = filename_to_uri (local);
-            item->is_temp = TRUE;
+            item->is_temp = true;
         }
     }
 
     if (item->art_file)
         art_file = item->art_file;
     else
-        art_item_unref (file, item);
+        art_item_unref (key, item);
 
 UNLOCK:
     pthread_mutex_unlock (& mutex);
@@ -268,10 +258,11 @@ EXPORT void aud_art_unref (const char * file)
 {
     pthread_mutex_lock (& mutex);
 
-    ArtItem * item = (ArtItem *) g_hash_table_lookup (art_items, file);
-    assert (item != NULL);
+    String key (file);
+    ArtItem * item = art_items.lookup (key);
+    assert (item);
 
-    art_item_unref (file, item);
+    art_item_unref (key, item);
 
     pthread_mutex_unlock (& mutex);
 }

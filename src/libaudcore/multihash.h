@@ -139,7 +139,7 @@ template<class Key, class Value>
 class SimpleHash : private HashBase
 {
 public:
-    typedef void (* IterFunc) (const Key & key, const Value & value, void * state);
+    typedef void (* IterFunc) (const Key & key, Value & value, void * state);
 
     ~SimpleHash ()
         { clear (); }
@@ -180,10 +180,10 @@ public:
         }
     }
 
-    void iterate (IterFunc func, void * state) const
+    void iterate (IterFunc func, void * state)
     {
         IterData data = {func, state};
-        ((SimpleHash *) this)->HashBase::iterate (iterate_cb, & data);
+        HashBase::iterate (iterate_cb, & data);
     }
 
     void clear ()
@@ -216,7 +216,7 @@ private:
 
     static bool iterate_cb (HashBase::Node * node0, void * data0)
     {
-        const Node * node = (const Node *) node0;
+        Node * node = (Node *) node0;
         IterData * data = (IterData *) data0;
         data->func (node->key, node->value, data->state);
         return false;
