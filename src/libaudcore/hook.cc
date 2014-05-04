@@ -1,6 +1,6 @@
 /*
  * hook.c
- * Copyright 2011-2012 John Lindgren
+ * Copyright 2011-2014 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -19,41 +19,48 @@
 
 #include "hook.h"
 
-#include <glib.h>
 #include <pthread.h>
 
-#include "core.h"
+#include "index.h"
+#include "multihash.h"
+#include "objects.h"
 
 struct HookItem {
     HookFunction func;
     void * user;
-    int lock_count;
-    bool_t remove_flag;
+};
+
+struct HookList
+{
+    Index<HookItem> items;
+    int use_count;
+
+    void compact ()
+    {
+        int i = 0;
+        while (i < items.len ())
+        {
+            if (items[i].func)
+                i ++;
+            else
+                items.remove (i, 1);
+        }
+    }
 };
 
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-static GHashTable * hooks; /* of (GQueue of (HookItem *) *)  */
+static SimpleHash<String, HookList> hooks;
 
 EXPORT void hook_associate (const char * name, HookFunction func, void * user)
 {
     pthread_mutex_lock (& mutex);
 
-    if (! hooks)
-        hooks = g_hash_table_new_full (g_str_hash, g_str_equal,
-         (GDestroyNotify) str_unref, (GDestroyNotify) g_queue_free);
-
-    GQueue * list = (GQueue *) g_hash_table_lookup (hooks, name);
-
+    String key (name);
+    HookList * list = hooks.lookup (key);
     if (! list)
-        g_hash_table_insert (hooks, str_get (name), list = g_queue_new ());
+        list = hooks.add (key, HookList ());
 
-    HookItem * item = g_slice_new (HookItem);
-    item->func = func;
-    item->user = user;
-    item->lock_count = 0;
-    item->remove_flag = FALSE;
-
-    g_queue_push_tail (list, item);
+    list->items.append ({func, user});
 
     pthread_mutex_unlock (& mutex);
 }
@@ -62,32 +69,23 @@ EXPORT void hook_dissociate_full (const char * name, HookFunction func, void * u
 {
     pthread_mutex_lock (& mutex);
 
-    GQueue * list;
-
-    if (! hooks || ! (list = (GQueue *) g_hash_table_lookup (hooks, name)))
+    String key (name);
+    HookList * list = hooks.lookup (key);
+    if (! list)
         goto DONE;
 
-    for (GList * node = list->head; node;)
+    for (HookItem & item : list->items)
     {
-        HookItem * item = (HookItem *) node->data;
-        GList * next = node->next;
-
-        if (item->func == func && (! user || item->user == user))
-        {
-            if (item->lock_count)
-                item->remove_flag = TRUE;
-            else
-            {
-                g_queue_delete_link (list, node);
-                g_slice_free (HookItem, item);
-            }
-        }
-
-        node = next;
+        if (item.func == func && (! user || item.user == user))
+            item.func = nullptr;
     }
 
-    if (! list->head)
-        g_hash_table_remove (hooks, name);
+    if (! list->use_count)
+    {
+        list->compact ();
+        if (! list->items.len ())
+            hooks.remove (key);
+    }
 
 DONE:
     pthread_mutex_unlock (& mutex);
@@ -97,39 +95,31 @@ EXPORT void hook_call (const char * name, void * data)
 {
     pthread_mutex_lock (& mutex);
 
-    GQueue * list;
-
-    if (! hooks || ! (list = (GQueue *) g_hash_table_lookup (hooks, name)))
+    String key (name);
+    HookList * list = hooks.lookup (key);
+    if (! list)
         goto DONE;
 
-    for (GList * node = list->head; node;)
+    list->use_count ++;
+
+    for (HookItem & item : list->items)
     {
-        HookItem * item = (HookItem *) node->data;
-
-        if (! item->remove_flag)
+        if (item.func)
         {
-            item->lock_count ++;
             pthread_mutex_unlock (& mutex);
-
-            item->func (data, item->user);
-
+            item.func (data, item.user);
             pthread_mutex_lock (& mutex);
-            item->lock_count --;
         }
-
-        GList * next = node->next;
-
-        if (item->remove_flag && ! item->lock_count)
-        {
-            g_queue_delete_link (list, node);
-            g_slice_free (HookItem, item);
-        }
-
-        node = next;
     }
 
-    if (! list->head)
-        g_hash_table_remove (hooks, name);
+    list->use_count --;
+
+    if (! list->use_count)
+    {
+        list->compact ();
+        if (! list->items.len ())
+            hooks.remove (key);
+    }
 
 DONE:
     pthread_mutex_unlock (& mutex);
