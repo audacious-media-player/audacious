@@ -183,7 +183,7 @@ static void release_current (void)
 
 void art_init (void)
 {
-    art_items = g_hash_table_new_full (g_str_hash, g_str_equal,
+    art_items = g_hash_table_new_full ((GHashFunc) str_calc_hash, g_str_equal,
      (GDestroyNotify) str_unref, (GDestroyNotify) art_item_free);
 
     hook_associate ("playlist position", (HookFunction) release_current, NULL);

@@ -45,7 +45,7 @@ EXPORT char * str_get (const char * str)
 
     StrNode * node = (StrNode *) g_malloc (NODE_SIZE_FOR (str));
     node->magic = '@';
-    node->hash = g_str_hash (str);
+    node->hash = str_calc_hash (str);
 
     strcpy (node->str, str);
     return node->str;
@@ -58,7 +58,7 @@ EXPORT char * str_ref (const char * str)
 
     StrNode * node = NODE_OF (str);
     assert (node->magic == '@');
-    assert (g_str_hash (str) == node->hash);
+    assert (str_calc_hash (str) == node->hash);
 
     return str_get (str);
 }
@@ -70,7 +70,7 @@ EXPORT void str_unref (char * str)
 
     StrNode * node = NODE_OF (str);
     assert (node->magic == '@');
-    assert (g_str_hash (str) == node->hash);
+    assert (str_calc_hash (str) == node->hash);
 
     node->magic = 0;
     g_free (node);
@@ -84,7 +84,7 @@ EXPORT unsigned str_hash (const char * str)
     StrNode * node = NODE_OF (str);
     assert (node->magic == '@');
 
-    return g_str_hash (str);
+    return str_calc_hash (str);
 }
 
 EXPORT bool_t str_equal (const char * str1, const char * str2)
@@ -150,7 +150,7 @@ EXPORT char * str_get (const char * str)
         return NULL;
 
     char * ret = NULL;
-    strpool_table.lookup (str, g_str_hash (str), add_cb, ref_cb, & ret);
+    strpool_table.lookup (str, str_calc_hash (str), add_cb, ref_cb, & ret);
     return ret;
 }
 

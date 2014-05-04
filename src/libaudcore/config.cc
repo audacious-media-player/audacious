@@ -222,7 +222,7 @@ static bool action_cb (MultiHash::Node * node0, void * state)
 static bool config_op_run (ConfigOp * op, MultiHash * table)
 {
     if (! op->hash)
-        op->hash = g_str_hash (op->section) + g_str_hash (op->key);
+        op->hash = str_calc_hash (op->section) + str_calc_hash (op->key);
 
     op->result = false;
     table->lookup (op, op->hash, add_cb, action_cb, op);

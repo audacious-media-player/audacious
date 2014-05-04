@@ -132,8 +132,8 @@ static void delete_matches (KeywordMatches * matches)
 JumpToTrackCache*
 ui_jump_to_track_cache_new()
 {
-    JumpToTrackCache * cache = g_hash_table_new_full (g_str_hash, g_str_equal,
-     (GDestroyNotify) str_unref, (GDestroyNotify) delete_matches);
+    JumpToTrackCache * cache = g_hash_table_new_full ((GHashFunc) str_calc_hash,
+     g_str_equal, (GDestroyNotify) str_unref, (GDestroyNotify) delete_matches);
 
     // Initialize cache with playlist data
     int playlist = aud_playlist_get_active ();

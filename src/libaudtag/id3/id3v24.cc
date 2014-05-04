@@ -738,8 +738,8 @@ static bool_t id3v24_write_tag (const Tuple * tuple, VFSFile * f)
     int64_t offset;
 
     //read all frames into generic frames;
-    GHashTable * dict = g_hash_table_new_full (g_str_hash, g_str_equal,
-     (GDestroyNotify) str_unref, (GDestroyNotify) free_frame_list);
+    GHashTable * dict = g_hash_table_new_full ((GHashFunc) str_calc_hash,
+     g_str_equal, (GDestroyNotify) str_unref, (GDestroyNotify) free_frame_list);
 
     if (read_header (f, & version, & syncsafe, & offset, & header_size, & data_size, & footer_size))
         read_all_frames (f, version, syncsafe, data_size, dict);

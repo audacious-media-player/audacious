@@ -108,6 +108,55 @@ EXPORT bool_t str_has_suffix_nocase (const char * str, const char * suffix)
     return ! g_ascii_strcasecmp (str + len1 - len2, suffix);
 }
 
+/* Bernstein's hash function (unrolled version):
+ *    h(0) = 5381
+ *    h(n) = 33 * h(n-1) + c
+ *
+ * This function is more than twice as fast as g_str_hash (a simpler version of
+ * Bernstein's hash) and even slightly faster than Murmur 3. */
+
+EXPORT unsigned str_calc_hash (const char * s)
+{
+    unsigned h = 5381;
+
+    int len = strlen (s);
+
+    while (len >= 8)
+    {
+        h *= 1954312449;
+        h += (* s ++) * 3963737313;
+        h += (* s ++) * 1291467969;
+        h += (* s ++) * 39135393;
+        h += (* s ++) * 1185921;
+        h += (* s ++) * 35937;
+        h += (* s ++) * 1089;
+        h += (* s ++) * 33;
+        h += (* s ++);
+
+        len -= 8;
+    }
+
+    if (len >= 4)
+    {
+        h *= 1185921;
+        h += (* s ++) * 35937;
+        h += (* s ++) * 1089;
+        h += (* s ++) * 33;
+        h += (* s ++);
+
+        len -= 4;
+    }
+
+    switch (len)
+    {
+        case 3: h = h * 33 + (* s ++);
+        case 2: h = h * 33 + (* s ++);
+        case 1: h = h * 33 + (* s ++);
+    }
+
+    return h;
+}
+
 EXPORT char * strstr_nocase (const char * haystack, const char * needle)
 {
     while (1)

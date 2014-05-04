@@ -333,8 +333,8 @@ static void save_playlists_real (void)
     /* save playlists */
 
     Index<String> order;
-    GHashTable * saved = g_hash_table_new_full (g_str_hash, g_str_equal,
-     (GDestroyNotify) str_unref, NULL);
+    GHashTable * saved = g_hash_table_new_full ((GHashFunc) str_calc_hash,
+     g_str_equal, (GDestroyNotify) str_unref, NULL);
 
     for (int i = 0; i < lists; i ++)
     {
