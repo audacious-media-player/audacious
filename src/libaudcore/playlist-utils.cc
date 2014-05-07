@@ -28,6 +28,7 @@
 
 #include "audstrings.h"
 #include "hook.h"
+#include "multihash.h"
 #include "runtime.h"
 #include "tuple.h"
 #include "vfs.h"
@@ -333,8 +334,7 @@ static void save_playlists_real (void)
     /* save playlists */
 
     Index<String> order;
-    GHashTable * saved = g_hash_table_new_full ((GHashFunc) str_calc_hash,
-     g_str_equal, (GDestroyNotify) str_unref, NULL);
+    SimpleHash<String, bool> saved;
 
     for (int i = 0; i < lists; i ++)
     {
@@ -352,7 +352,7 @@ static void save_playlists_real (void)
         }
 
         order.append (std::move (number));
-        g_hash_table_insert (saved, str_get (name), NULL);
+        saved.add (String (name), true);
     }
 
     String order_string = index_to_str_list (order, " ");
@@ -379,7 +379,7 @@ static void save_playlists_real (void)
 
     GDir * dir = g_dir_open (folder, 0, NULL);
     if (! dir)
-        goto DONE;
+        return;
 
     const char * name;
     while ((name = g_dir_read_name (dir)))
@@ -387,14 +387,11 @@ static void save_playlists_real (void)
         if (! g_str_has_suffix (name, ".audpl") && ! g_str_has_suffix (name, ".xspf"))
             continue;
 
-        if (! g_hash_table_contains (saved, name))
+        if (! saved.lookup (String (name)))
             g_unlink (filename_build (folder, name));
     }
 
     g_dir_close (dir);
-
-DONE:
-    g_hash_table_destroy (saved);
 }
 
 static bool_t hooks_added, state_changed;
