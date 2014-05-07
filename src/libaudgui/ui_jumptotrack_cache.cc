@@ -95,16 +95,14 @@ ui_jump_to_track_match(const char * song, GSList *regex_list)
  * @param search_space Entries inside which the search is conducted.
  * @param keyword Normalized string for searches.
  */
-static const KeywordMatches *
-ui_jump_to_track_cache_match_keyword(JumpToTrackCache* cache,
-                                     const KeywordMatches* search_space,
-                                     const char* keyword)
+const KeywordMatches * JumpToTrackCache::search_within
+ (const KeywordMatches * subset, const char * keyword)
 {
     GSList* regex_list = ui_jump_to_track_cache_regex_list_create(keyword);
 
-    KeywordMatches * k = new KeywordMatches;
+    KeywordMatches * k = add (String (keyword), KeywordMatches ());
 
-    for (auto & item : * search_space)
+    for (const KeywordMatch & item : * subset)
     {
         if (! regex_list ||
          ui_jump_to_track_match (item.title, regex_list) ||
@@ -114,47 +112,33 @@ ui_jump_to_track_cache_match_keyword(JumpToTrackCache* cache,
             k->append (item);
     }
 
-    g_hash_table_insert (cache, str_get (keyword), k);
-
     g_slist_free_full (regex_list, (GDestroyNotify) g_regex_unref);
 
     return k;
 }
-
-static void delete_matches (KeywordMatches * matches)
-    { delete matches; }
 
 /**
  * Creates a new song search cache.
  *
  * Returned value should be freed with ui_jump_to_track_cache_free() function.
  */
-JumpToTrackCache*
-ui_jump_to_track_cache_new()
+void JumpToTrackCache::init ()
 {
-    JumpToTrackCache * cache = g_hash_table_new_full ((GHashFunc) str_calc_hash,
-     g_str_equal, (GDestroyNotify) str_unref, (GDestroyNotify) delete_matches);
-
-    // Initialize cache with playlist data
     int playlist = aud_playlist_get_active ();
     int entries = aud_playlist_entry_count (playlist);
 
-    KeywordMatches * k = new KeywordMatches;
+    // the empty string will match all playlist entries
+    KeywordMatches & k = * add (String (""), KeywordMatches ());
+
+    k.insert (0, entries);
 
     for (int entry = 0; entry < entries; entry ++)
     {
-        KeywordMatch & item = k->append ();
-
+        KeywordMatch & item = k[entry];
         item.entry = entry;
-        aud_playlist_entry_describe (playlist, entry, item.title, item.artist, item.album, TRUE);
+        aud_playlist_entry_describe (playlist, entry, item.title, item.artist, item.album, true);
         item.path = uri_to_display (aud_playlist_entry_get_filename (playlist, entry));
     }
-
-    // Finally insert all titles into cache into an empty key "" so that
-    // the matchable data has specified place to be.
-    g_hash_table_insert (cache, str_get (""), k);
-
-    return cache;
 }
 
 /**
@@ -207,47 +191,26 @@ ui_jump_to_track_cache_new()
  *
  * Return: GArray of int
  */
-const KeywordMatches * ui_jump_to_track_cache_search (JumpToTrackCache * cache,
- const char * keyword)
+const KeywordMatches * JumpToTrackCache::search (const char * keyword)
 {
-    GString* match_string = g_string_new(keyword);
+    if (! n_items ())
+        init ();
 
-    while (1)
+    SCOPY (match_string, keyword);
+    const KeywordMatches * matches;
+
+    while (! (matches = lookup (String (match_string))))
     {
-        const KeywordMatches * matches = (const KeywordMatches *)
-         g_hash_table_lookup (cache, match_string->str);
-
-        if (matches)
-        {
-            // if keyword matches something we have, we'll just return the list
-            // of matches that the keyword has.
-            if (! strcmp (match_string->str, keyword))
-            {
-                g_string_free(match_string, TRUE);
-                return matches;
-            }
-
-            // Do normal search by using the result of previous search
-            // as search space.
-            matches = ui_jump_to_track_cache_match_keyword (cache, matches, keyword);
-
-            g_string_free(match_string, TRUE);
-            return matches;
-        }
-
-        if (! match_string->len)
-            break;
-
-        g_string_set_size (match_string, match_string->len - 1);
+        // try to reuse the result of a previous search
+        // (the empty string is always present as a fallback)
+        assert (match_string[0]);
+        match_string[strlen (match_string) - 1] = 0;
     }
-    // This should never, ever get to this point because there is _always_
-    // the empty string to match against.
-    AUDDBG("One should never get to this point. Something is really wrong with \
-cache->keywords hash table.");
-    abort ();
-}
 
-void ui_jump_to_track_cache_free (JumpToTrackCache * cache)
-{
-    g_hash_table_unref (cache);
+    // exact match?
+    if (! strcmp (match_string, keyword))
+        return matches;
+
+    // search within the previous result
+    return search_within (matches, keyword);
 }

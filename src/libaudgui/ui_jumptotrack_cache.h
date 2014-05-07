@@ -20,9 +20,8 @@
 #ifndef LIBAUDGUI_UI_JUMPTOTRACK_CACHE_H
 #define LIBAUDGUI_UI_JUMPTOTRACK_CACHE_H
 
-#include <glib.h>
-
 #include <libaudcore/index.h>
+#include <libaudcore/multihash.h>
 #include <libaudcore/objects.h>
 
 // Struct to keep information about matches from searches.
@@ -33,10 +32,15 @@ struct KeywordMatch {
 
 typedef Index<KeywordMatch> KeywordMatches;
 
-typedef GHashTable JumpToTrackCache;
+class JumpToTrackCache : private SimpleHash<String, KeywordMatches>
+{
+public:
+    const KeywordMatches * search (const char * keyword);
+    using SimpleHash::clear;
 
-JumpToTrackCache* ui_jump_to_track_cache_new (void);
-const KeywordMatches * ui_jump_to_track_cache_search (JumpToTrackCache * cache, const char * keyword);
-void ui_jump_to_track_cache_free (JumpToTrackCache * cache);
+private:
+    void init ();
+    const KeywordMatches * search_within (const KeywordMatches * subset, const char * keyword);
+};
 
 #endif

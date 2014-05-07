@@ -35,7 +35,7 @@
 static void update_cb (void * data, void * user);
 static void activate_cb (void * data, void * user);
 
-static JumpToTrackCache* cache = NULL;
+static JumpToTrackCache cache;
 static const KeywordMatches * search_matches;
 static GtkWidget * treeview, * filter_entry, * queue_button;
 static bool_t watching = FALSE;
@@ -49,11 +49,7 @@ static void destroy_cb (void)
         watching = FALSE;
     }
 
-    if (cache != NULL)
-    {
-        ui_jump_to_track_cache_free (cache);
-        cache = NULL;
-    }
+    cache.clear ();
 
     search_matches = NULL;
 }
@@ -148,11 +144,7 @@ static void fill_list (void)
 {
     g_return_if_fail (treeview && filter_entry);
 
-    if (! cache)
-        cache = ui_jump_to_track_cache_new();
-
-    search_matches = ui_jump_to_track_cache_search (cache, gtk_entry_get_text
-     ((GtkEntry *) filter_entry));
+    search_matches = cache.search (gtk_entry_get_text ((GtkEntry *) filter_entry));
 
     audgui_list_delete_rows (treeview, 0, audgui_list_row_count (treeview));
     audgui_list_insert_rows (treeview, 0, search_matches->len ());
@@ -177,11 +169,7 @@ static void update_cb (void * data, void * user)
     if (GPOINTER_TO_INT (data) <= PLAYLIST_UPDATE_SELECTION)
         return;
 
-    if (cache != NULL)
-    {
-        ui_jump_to_track_cache_free (cache);
-        cache = NULL;
-    }
+    cache.clear ();
 
     /* If it's only a metadata update, save and restore the cursor position. */
     if (GPOINTER_TO_INT (data) <= PLAYLIST_UPDATE_METADATA &&
