@@ -39,26 +39,19 @@ class IndexBase
 {
 public:
     typedef void (* EraseFunc) (void * data, int len);
-    typedef int (* RawCompare) (const void * a, const void * b, void * userdata);
+    typedef int (* CompareFunc) (const void * a, const void * b, void * userdata);
 
-    static void raw_erase (void * data, int len);
-
-    constexpr IndexBase (EraseFunc erase) :
-        erase_func (erase),
+    constexpr IndexBase () :
         m_data (nullptr),
         m_len (0),
         m_size (0) {}
 
-    void clear ();
-
-    ~IndexBase ()
-        { clear (); }
+    void clear (EraseFunc erase_func);  // use as destructor
 
     IndexBase (const IndexBase &) = delete;
     void operator= (const IndexBase &) = delete;
 
     IndexBase (IndexBase && b) :
-        erase_func (b.erase_func),
         m_data (b.m_data),
         m_len (b.m_len),
         m_size (b.m_size)
@@ -68,12 +61,11 @@ public:
         b.m_size = 0;
     }
 
-    void operator= (IndexBase && b)
+    void steal (IndexBase && b, EraseFunc erase_func)
     {
         if (this != & b)
         {
-            clear ();
-            erase_func = b.erase_func;
+            clear (erase_func);
             m_data = b.m_data;
             m_len = b.m_len;
             m_size = b.m_size;
@@ -96,18 +88,18 @@ public:
         { return m_len; }
 
     void insert (int pos, int len);
-    void remove (int pos, int len);
-    void erase (int pos, int len);
-    void shift (int from, int to, int len);
+    void remove (int pos, int len, EraseFunc erase_func);
+    void erase (int pos, int len, EraseFunc erase_func);
+    void shift (int from, int to, int len, EraseFunc erase_func);
 
-    void move_from (IndexBase & b, int from, int to, int len, bool expand, bool collapse);
+    void move_from (IndexBase & b, int from, int to, int len, bool expand,
+     bool collapse, EraseFunc erase_func);
 
-    void sort (RawCompare compare, int elemsize, void * userdata);
+    void sort (CompareFunc compare, int elemsize, void * userdata);
 
 private:
     static constexpr int InitialSize = 16 * sizeof (void *);
 
-    EraseFunc erase_func;
     void * m_data;
     int m_len, m_size;
 };
@@ -119,9 +111,17 @@ public:
     typedef int (* CompareFunc) (const T & a, const T & b, void * userdata);
 
     constexpr Index () :
-        IndexBase (plain ? raw_erase : erase_objects) {};
+        IndexBase () {}
 
-    using IndexBase::clear;
+    void clear ()
+        { IndexBase::clear (erase_func); }
+    ~Index ()
+        { clear (); }
+
+    Index (Index && b) :
+        IndexBase (std::move (b)) {}
+    void operator= (Index && b)
+        { steal (std::move (b), erase_func); }
 
     T * begin ()
         { return (T *) IndexBase::begin (); }
@@ -143,14 +143,14 @@ public:
     void insert (int pos, int len)
         { IndexBase::insert (raw (pos), raw (len)); }
     void remove (int pos, int len)
-        { IndexBase::remove (raw (pos), raw (len)); }
+        { IndexBase::remove (raw (pos), raw (len), erase_func); }
     void erase (int pos, int len)
-        { IndexBase::erase (raw (pos), raw (len)); }
+        { IndexBase::erase (raw (pos), raw (len), erase_func); }
     void shift (int from, int to, int len)
-        { IndexBase::shift (raw (from), raw (to), raw (len)); }
+        { IndexBase::shift (raw (from), raw (to), raw (len), erase_func); }
 
     void move_from (Index<T> & b, int from, int to, int len, bool expand, bool collapse)
-        { IndexBase::move_from (b, raw (from), raw (to), raw (len), expand, collapse); }
+        { IndexBase::move_from (b, raw (from), raw (to), raw (len), expand, collapse, erase_func); }
 
     void sort (CompareFunc compare, void * userdata)
     {
@@ -175,8 +175,6 @@ private:
         void * userdata;
     };
 
-    static constexpr bool plain = std::is_trivial<T>::value;
-
     static constexpr int raw (int len)
         { return len * sizeof (T); }
     static constexpr int cooked (int len)
@@ -189,6 +187,8 @@ private:
         while (iter < end)
             (* iter ++).~T ();
     }
+
+    static constexpr EraseFunc erase_func = std::is_trivial<T>::value ? nullptr : erase_objects;
 
     static int compare_wrapper (const void * a, const void * b, void * userdata)
     {

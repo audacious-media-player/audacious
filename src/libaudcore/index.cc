@@ -26,13 +26,10 @@
 
 #include <glib.h>
 
-EXPORT void IndexBase::raw_erase (void * data, int len)
+EXPORT void IndexBase::clear (EraseFunc erase_func)
 {
-}
-
-EXPORT void IndexBase::clear ()
-{
-    erase_func (m_data, m_len);
+    if (erase_func)
+        erase_func (m_data, m_len);
     memset (m_data, 0, m_len);
     g_free (m_data);
 
@@ -65,7 +62,7 @@ EXPORT void IndexBase::insert (int pos, int len)
     m_len += len;
 }
 
-EXPORT void IndexBase::remove (int pos, int len)
+EXPORT void IndexBase::remove (int pos, int len, EraseFunc erase_func)
 {
     assert (pos >= 0 && pos <= m_len);
     assert (len <= m_len - pos);
@@ -73,13 +70,14 @@ EXPORT void IndexBase::remove (int pos, int len)
     if (len < 0)
         len = m_len - pos;  /* remove all following */
 
-    erase_func ((char *) m_data + pos, len);
+    if (erase_func)
+        erase_func ((char *) m_data + pos, len);
     memmove ((char *) m_data + pos, (char *) m_data + pos + len, m_len - pos - len);
     memset ((char *) m_data + m_len - len, 0, len);
     m_len -= len;
 }
 
-EXPORT void IndexBase::erase (int pos, int len)
+EXPORT void IndexBase::erase (int pos, int len, EraseFunc erase_func)
 {
     assert (pos >= 0 && pos <= m_len);
     assert (len <= m_len - pos);
@@ -87,11 +85,12 @@ EXPORT void IndexBase::erase (int pos, int len)
     if (len < 0)
         len = m_len - pos;  /* erase all following */
 
-    erase_func ((char *) m_data + pos, len);
+    if (erase_func)
+        erase_func ((char *) m_data + pos, len);
     memset ((char *) m_data + pos, 0, len);
 }
 
-EXPORT void IndexBase::shift (int from, int to, int len)
+EXPORT void IndexBase::shift (int from, int to, int len, EraseFunc erase_func)
 {
     assert (len >= 0 && len <= m_len);
     assert (from >= 0 && from + len <= m_len);
@@ -99,10 +98,13 @@ EXPORT void IndexBase::shift (int from, int to, int len)
 
     int erase_len = std::min (len, abs (to - from));
 
-    if (to < from)
-        erase_func ((char *) m_data + to, erase_len);
-    else
-        erase_func ((char *) m_data + to + len - erase_len, erase_len);
+    if (erase_func)
+    {
+        if (to < from)
+            erase_func ((char *) m_data + to, erase_len);
+        else
+            erase_func ((char *) m_data + to + len - erase_len, erase_len);
+    }
 
     memmove ((char *) m_data + to, (char *) m_data + from, len);
 
@@ -112,7 +114,8 @@ EXPORT void IndexBase::shift (int from, int to, int len)
         memset ((char *) m_data + from, 0, erase_len);
 }
 
-EXPORT void IndexBase::move_from (IndexBase & b, int from, int to, int len, bool expand, bool collapse)
+EXPORT void IndexBase::move_from (IndexBase & b, int from, int to, int len,
+ bool expand, bool collapse, EraseFunc erase_func)
 {
     assert (this != & b);
     assert (from >= 0 && from <= b.m_len);
@@ -132,7 +135,7 @@ EXPORT void IndexBase::move_from (IndexBase & b, int from, int to, int len, bool
     else
     {
         assert (to >= 0 && to <= m_len - len);
-        erase (to, len);
+        erase (to, len, erase_func);
     }
 
     memcpy ((char *) m_data + to, (char *) b.m_data + from, len);
@@ -147,7 +150,7 @@ EXPORT void IndexBase::move_from (IndexBase & b, int from, int to, int len, bool
         memset ((char *) b.m_data + from, 0, len);
 }
 
-EXPORT void IndexBase::sort (RawCompare compare, int elemsize, void * userdata)
+EXPORT void IndexBase::sort (CompareFunc compare, int elemsize, void * userdata)
 {
     g_qsort_with_data (m_data, m_len / elemsize, elemsize, compare, userdata);
 }
