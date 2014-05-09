@@ -46,13 +46,19 @@ EXPORT void IndexBase::insert (int pos, int len)
     if (pos < 0)
         pos = m_len;  /* insert at end */
 
-    if (m_len + len > m_size)
+    if (m_size < m_len + len)
     {
-        if (m_size < InitialSize)
-            m_size = InitialSize;
+        /* never allocate less than 16 bytes */
+        if (m_size < 16)
+            m_size = 16;
 
-        while (m_size < m_len + len)
-            m_size <<= 1;  /* then increase by powers of two */
+        /* next try 4/3 current size, biased toward multiples of 4 */
+        if (m_size < m_len + len)
+            m_size = (m_size + 2) / 3 * 4;
+
+        /* use requested size if still too small */
+        if (m_size < m_len + len)
+            m_size = m_len + len;
 
         m_data = g_realloc (m_data, m_size);
     }

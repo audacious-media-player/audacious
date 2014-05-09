@@ -98,8 +98,6 @@ public:
     void sort (CompareFunc compare, int elemsize, void * userdata);
 
 private:
-    static constexpr int InitialSize = 16 * sizeof (void *);
-
     void * m_data;
     int m_len, m_size;
 };
