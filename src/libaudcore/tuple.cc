@@ -40,15 +40,15 @@ struct TupleBasicType {
     TupleValueType type;
 };
 
-union TupleVal {
-    char * str;
+union TupleVal
+{
+    String str;
     int x;
-};
 
-struct TupleBlock {
-    TupleBlock * next;
-    char fields[BLOCK_VALS];
-    TupleVal vals[BLOCK_VALS];
+    // dummy constructor and destructor
+    constexpr TupleVal () :
+        str () {}
+    ~TupleVal () {}
 };
 
 /**
@@ -56,8 +56,8 @@ struct TupleBlock {
  * metadata. This is not the same as a playlist entry, though.
  */
 struct Tuple {
-    int64_t setmask;
-    TupleBlock * blocks;
+    uint64_t setmask;      // which fields are present
+    Index<TupleVal> vals;  // ordered list of field values
 
     int *subtunes;                 /**< Array of int containing subtune index numbers.
                                          Can be NULL if indexing is linear or if
@@ -70,7 +70,7 @@ struct Tuple {
     TinyLock lock;
 };
 
-#define BIT(i) ((int64_t) 1 << (i))
+#define BIT(i) ((uint64_t) 1 << (i))
 
 #define LOCK(t) tiny_lock ((TinyLock *) & t->lock)
 #define UNLOCK(t) tiny_unlock ((TinyLock *) & t->lock)
@@ -157,6 +157,15 @@ static const FieldDictEntry field_dict[TUPLE_FIELDS] = {
 #define VALID_FIELD(f) ((f) >= 0 && (f) < TUPLE_FIELDS)
 #define FIELD_TYPE(f) (tuple_fields[f].type)
 
+static int bitcount (uint64_t x)
+{
+    /* algorithm from http://en.wikipedia.org/wiki/Hamming_weight */
+    x -= (x >> 1) & 0x5555555555555555;
+    x = (x & 0x3333333333333333) + ((x >> 2) & 0x3333333333333333);
+    x = (x + (x >> 4)) & 0x0f0f0f0f0f0f0f0f;
+    return (x * 0x0101010101010101) >> 56;
+}
+
 static int field_dict_compare (const void * a, const void * b)
 {
     return strcmp (((FieldDictEntry *) a)->name, ((FieldDictEntry *) b)->name);
@@ -183,71 +192,50 @@ EXPORT TupleValueType tuple_field_get_type (int field)
     return tuple_fields[field].type;
 }
 
-static TupleVal * lookup_val (Tuple * tuple, int field, bool_t add, bool_t remove)
+static TupleVal * lookup_val (Tuple * tuple, int field, bool add, bool remove)
 {
+    /* calculate number of preceding fields */
+    int pos = bitcount (tuple->setmask & (BIT (field) - 1));
+
     if ((tuple->setmask & BIT (field)))
     {
-        for (TupleBlock * block = tuple->blocks; block; block = block->next)
+        if (remove)
         {
-            for (int i = 0; i < BLOCK_VALS; i ++)
-            {
-                if (block->fields[i] == field)
-                {
-                    if (remove)
-                    {
-                        tuple->setmask &= ~BIT (field);
-                        block->fields[i] = -1;
-                    }
+            if (FIELD_TYPE (field) == TUPLE_STRING)
+                tuple->vals[pos].str.~String ();
 
-                    return & block->vals[i];
-                }
-            }
+            tuple->setmask &= ~BIT (field);
+            tuple->vals.remove (pos, 1);
+            return nullptr;
         }
+
+        return & tuple->vals[pos];
     }
 
     if (! add)
-        return NULL;
+        return nullptr;
 
     tuple->setmask |= BIT (field);
-
-    for (TupleBlock * block = tuple->blocks; block; block = block->next)
-    {
-        for (int i = 0; i < BLOCK_VALS; i ++)
-        {
-            if (block->fields[i] < 0)
-            {
-                block->fields[i] = field;
-                return & block->vals[i];
-            }
-        }
-    }
-
-    TupleBlock * block = g_slice_new0 (TupleBlock);
-    memset (block->fields, -1, BLOCK_VALS);
-
-    block->next = tuple->blocks;
-    tuple->blocks = block;
-
-    block->fields[0] = field;
-    return & block->vals[0];
+    tuple->vals.insert (pos, 1);
+    return & tuple->vals[pos];
 }
 
 static void tuple_destroy (Tuple * tuple)
 {
-    TupleBlock * next;
-    for (TupleBlock * block = tuple->blocks; block; block = next)
+    auto iter = tuple->vals.begin ();
+
+    for (int f = 0; f < TUPLE_FIELDS; f ++)
     {
-        next = block->next;
-
-        for (int i = 0; i < BLOCK_VALS; i ++)
+        if (tuple->setmask & BIT (f))
         {
-            int field = block->fields[i];
-            if (field >= 0 && tuple_fields[field].type == TUPLE_STRING)
-                str_unref (block->vals[i].str);
-        }
+            if (FIELD_TYPE (f) == TUPLE_STRING)
+                iter->str.~String ();
 
-        g_slice_free (TupleBlock, block);
+            iter ++;
+        }
     }
+
+    tuple->vals.clear ();
 
     g_free (tuple->subtunes);
     g_slice_free (Tuple, tuple);
@@ -307,16 +295,23 @@ EXPORT Tuple * tuple_copy (const Tuple * old)
     Tuple * tuple = tuple_new ();
     LOCK (old);
 
+    tuple->setmask = old->setmask;
+    tuple->vals.insert (0, old->vals.len ());
+
+    auto get = old->vals.begin ();
+    auto set = tuple->vals.begin ();
+
     for (int f = 0; f < TUPLE_FIELDS; f ++)
     {
-        TupleVal * oldval = lookup_val ((Tuple *) old, f, FALSE, FALSE);
-        if (oldval)
+        if (old->setmask & BIT (f))
         {
-            TupleVal * newval = lookup_val (tuple, f, TRUE, FALSE);
-            if (tuple_fields[f].type == TUPLE_STRING)
-                newval->str = str_ref (oldval->str);
+            if (FIELD_TYPE (f) == TUPLE_STRING)
+                set->str = get->str;
             else
-                newval->x = oldval->x;
+                set->x = get->x;
+
+            get ++;
+            set ++;
         }
     }
 
@@ -341,7 +336,7 @@ EXPORT void tuple_set_int (Tuple * tuple, int field, int x)
     g_return_if_fail (VALID_FIELD (field) && FIELD_TYPE (field) == TUPLE_INT);
     LOCK (tuple);
 
-    TupleVal * val = lookup_val (tuple, field, TRUE, FALSE);
+    TupleVal * val = lookup_val (tuple, field, true, false);
     val->x = x;
 
     UNLOCK (tuple);
@@ -359,9 +354,8 @@ EXPORT void tuple_set_str (Tuple * tuple, int field, const char * str)
 
     LOCK (tuple);
 
-    TupleVal * val = lookup_val (tuple, field, TRUE, FALSE);
-    str_unref (val->str);
-    val->str = str_to_utf8 (str, -1).to_c ();
+    TupleVal * val = lookup_val (tuple, field, true, false);
+    val->str = str_to_utf8 (str, -1);
 
     UNLOCK (tuple);
 }
@@ -371,17 +365,7 @@ EXPORT void tuple_unset (Tuple * tuple, int field)
     g_return_if_fail (VALID_FIELD (field));
     LOCK (tuple);
 
-    TupleVal * val = lookup_val (tuple, field, FALSE, TRUE);
-    if (val)
-    {
-        if (tuple_fields[field].type == TUPLE_STRING)
-        {
-            str_unref (val->str);
-            val->str = NULL;
-        }
-        else
-            val->x = 0;
-    }
+    lookup_val (tuple, field, false, true);
 
     UNLOCK (tuple);
 }
@@ -391,7 +375,7 @@ EXPORT TupleValueType tuple_get_value_type (const Tuple * tuple, int field)
     g_return_val_if_fail (VALID_FIELD (field), TUPLE_UNKNOWN);
     LOCK (tuple);
 
-    TupleVal * val = lookup_val ((Tuple *) tuple, field, FALSE, FALSE);
+    TupleVal * val = lookup_val ((Tuple *) tuple, field, false, false);
     TupleValueType type = val ? FIELD_TYPE (field) : TUPLE_UNKNOWN;
 
     UNLOCK (tuple);
@@ -403,8 +387,8 @@ EXPORT String tuple_get_str (const Tuple * tuple, int field)
     g_return_val_if_fail (VALID_FIELD (field) && FIELD_TYPE (field) == TUPLE_STRING, String ());
     LOCK (tuple);
 
-    TupleVal * val = lookup_val ((Tuple *) tuple, field, FALSE, FALSE);
-    String str = String::from_c (val ? str_ref (val->str) : nullptr);
+    TupleVal * val = lookup_val ((Tuple *) tuple, field, false, false);
+    String str = val ? val->str : String ();
 
     UNLOCK (tuple);
     return str;
@@ -415,7 +399,7 @@ EXPORT int tuple_get_int (const Tuple * tuple, int field)
     g_return_val_if_fail (VALID_FIELD (field) && FIELD_TYPE (field) == TUPLE_INT, -1);
     LOCK (tuple);
 
-    TupleVal * val = lookup_val ((Tuple *) tuple, field, FALSE, FALSE);
+    TupleVal * val = lookup_val ((Tuple *) tuple, field, false, false);
     int x = val ? val->x : -1;
 
     UNLOCK (tuple);
