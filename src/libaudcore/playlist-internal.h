@@ -41,11 +41,11 @@ bool_t playlist_next_song (int playlist, bool_t repeat);
 int playback_entry_get_position (void);
 String playback_entry_get_filename (void);
 PluginHandle * playback_entry_get_decoder (void);
-Tuple * playback_entry_get_tuple (void);
+Tuple playback_entry_get_tuple (void);
 String playback_entry_get_title (void);
 int playback_entry_get_length (void);
 
-void playback_entry_set_tuple (Tuple * tuple);
+void playback_entry_set_tuple (Tuple && tuple);
 
 /* playlist-files.c */
 bool_t playlist_load (const char * filename, String & title, Index<PlaylistAddItem> & items);

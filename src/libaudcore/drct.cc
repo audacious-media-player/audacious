@@ -23,6 +23,7 @@
 #include "internal.h"
 #include "playlist-internal.h"
 #include "runtime.h"
+#include "tuple.h"
 
 /* --- PLAYBACK CONTROL --- */
 

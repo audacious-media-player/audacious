@@ -23,6 +23,7 @@
 #include <libaudcore/i18n.h>
 #include <libaudcore/playlist.h>
 #include <libaudcore/runtime.h>
+#include <libaudcore/tuple.h>
 #include <libaudcore/vfs.h>
 
 #include "internal.h"
@@ -69,7 +70,7 @@ static void finish_job (void * data)
         else
         {
             aud_playlist_entry_delete (list, 0, aud_playlist_entry_count (list));
-            aud_playlist_entry_insert (list, 0, job->filename, NULL, FALSE);
+            aud_playlist_entry_insert (list, 0, job->filename, Tuple (), FALSE);
         }
     }
 

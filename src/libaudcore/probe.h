@@ -39,11 +39,11 @@ const char * aud_art_request_file (const char * file);
 void aud_art_unref (const char * file);
 
 PluginHandle * aud_file_find_decoder (const char * filename, bool_t fast);
-Tuple * aud_file_read_tuple (const char * filename, PluginHandle * decoder);
+Tuple aud_file_read_tuple (const char * filename, PluginHandle * decoder);
 bool_t aud_file_read_image (const char * filename, PluginHandle * decoder,
  void * * data, int64_t * size);
 bool_t aud_file_can_write_tuple (const char * filename, PluginHandle * decoder);
-bool_t aud_file_write_tuple (const char * filename, PluginHandle * decoder, const Tuple * tuple);
+bool_t aud_file_write_tuple (const char * filename, PluginHandle * decoder, const Tuple & tuple);
 bool_t aud_custom_infowin (const char * filename, PluginHandle * decoder);
 
 #endif

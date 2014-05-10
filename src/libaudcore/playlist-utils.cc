@@ -45,10 +45,10 @@ static int filename_compare_basename (const char * a, const char * b)
     return str_compare_encoded (get_basename (a), get_basename (b));
 }
 
-static int tuple_compare_string (const Tuple * a, const Tuple * b, int field)
+static int tuple_compare_string (const Tuple & a, const Tuple & b, int field)
 {
-    String string_a = tuple_get_str (a, field);
-    String string_b = tuple_get_str (b, field);
+    String string_a = a.get_str (field);
+    String string_b = b.get_str (field);
 
     if (! string_a)
         return (! string_b) ? 0 : -1;
@@ -56,45 +56,45 @@ static int tuple_compare_string (const Tuple * a, const Tuple * b, int field)
     return (! string_b) ? 1 : str_compare (string_a, string_b);
 }
 
-static int tuple_compare_int (const Tuple * a, const Tuple * b, int field)
+static int tuple_compare_int (const Tuple & a, const Tuple & b, int field)
 {
-    if (tuple_get_value_type (a, field) != TUPLE_INT)
-        return (tuple_get_value_type (b, field) != TUPLE_INT) ? 0 : -1;
-    if (tuple_get_value_type (b, field) != TUPLE_INT)
+    if (a.get_value_type (field) != TUPLE_INT)
+        return (b.get_value_type (field) != TUPLE_INT) ? 0 : -1;
+    if (b.get_value_type (field) != TUPLE_INT)
         return 1;
 
-    int int_a = tuple_get_int (a, field);
-    int int_b = tuple_get_int (b, field);
+    int int_a = a.get_int (field);
+    int int_b = b.get_int (field);
 
     return (int_a < int_b) ? -1 : (int_a > int_b);
 }
 
-static int tuple_compare_title (const Tuple * a, const Tuple * b)
+static int tuple_compare_title (const Tuple & a, const Tuple & b)
 {
     return tuple_compare_string (a, b, FIELD_TITLE);
 }
 
-static int tuple_compare_album (const Tuple * a, const Tuple * b)
+static int tuple_compare_album (const Tuple & a, const Tuple & b)
 {
     return tuple_compare_string (a, b, FIELD_ALBUM);
 }
 
-static int tuple_compare_artist (const Tuple * a, const Tuple * b)
+static int tuple_compare_artist (const Tuple & a, const Tuple & b)
 {
     return tuple_compare_string (a, b, FIELD_ARTIST);
 }
 
-static int tuple_compare_date (const Tuple * a, const Tuple * b)
+static int tuple_compare_date (const Tuple & a, const Tuple & b)
 {
     return tuple_compare_int (a, b, FIELD_YEAR);
 }
 
-static int tuple_compare_track (const Tuple * a, const Tuple * b)
+static int tuple_compare_track (const Tuple & a, const Tuple & b)
 {
     return tuple_compare_int (a, b, FIELD_TRACK_NUMBER);
 }
 
-static int tuple_compare_length (const Tuple * a, const Tuple * b)
+static int tuple_compare_length (const Tuple & a, const Tuple & b)
 {
     return tuple_compare_int (a, b, FIELD_LENGTH);
 }
@@ -163,8 +163,7 @@ EXPORT void aud_playlist_remove_duplicates_by_scheme (int playlist, int scheme)
 
     if (filename_comparisons[scheme] != NULL)
     {
-        int (* compare) (const char * a, const char * b) =
-         filename_comparisons[scheme];
+        PlaylistStringCompareFunc compare = filename_comparisons[scheme];
 
         aud_playlist_sort_by_filename (playlist, compare);
         String last = aud_playlist_entry_get_filename (playlist, 0);
@@ -181,24 +180,20 @@ EXPORT void aud_playlist_remove_duplicates_by_scheme (int playlist, int scheme)
     }
     else if (tuple_comparisons[scheme] != NULL)
     {
-        int (* compare) (const Tuple * a, const Tuple * b) =
-         tuple_comparisons[scheme];
+        PlaylistTupleCompareFunc compare = tuple_comparisons[scheme];
 
         aud_playlist_sort_by_tuple (playlist, compare);
-        Tuple * last = aud_playlist_entry_get_tuple (playlist, 0, FALSE);
+        Tuple last = aud_playlist_entry_get_tuple (playlist, 0, FALSE);
 
         for (int count = 1; count < entries; count ++)
         {
-            Tuple * current = aud_playlist_entry_get_tuple (playlist, count, FALSE);
+            Tuple current = aud_playlist_entry_get_tuple (playlist, count, FALSE);
 
-            if (last != NULL && current != NULL && compare (last, current) == 0)
+            if (last && current && compare (last, current) == 0)
                 aud_playlist_entry_set_selected (playlist, count, TRUE);
 
-            tuple_unref (last);
-            last = current;
+            last = std::move (current);
         }
-
-        tuple_unref (last);
     }
 
     aud_playlist_delete_selected (playlist);
@@ -223,7 +218,7 @@ EXPORT void aud_playlist_remove_failed (int playlist)
     aud_playlist_delete_selected (playlist);
 }
 
-EXPORT void aud_playlist_select_by_patterns (int playlist, const Tuple * patterns)
+EXPORT void aud_playlist_select_by_patterns (int playlist, const Tuple & patterns)
 {
     const int fields[] = {FIELD_TITLE, FIELD_ALBUM, FIELD_ARTIST,
      FIELD_FILE_NAME};
@@ -234,7 +229,7 @@ EXPORT void aud_playlist_select_by_patterns (int playlist, const Tuple * pattern
 
     for (unsigned field = 0; field < ARRAY_LEN (fields); field ++)
     {
-        String pattern = tuple_get_str (patterns, fields[field]);
+        String pattern = patterns.get_str (fields[field]);
         GRegex * regex;
 
         if (! pattern || ! pattern[0] || ! (regex = g_regex_new (pattern,
@@ -246,13 +241,11 @@ EXPORT void aud_playlist_select_by_patterns (int playlist, const Tuple * pattern
             if (! aud_playlist_entry_get_selected (playlist, entry))
                 continue;
 
-            Tuple * tuple = aud_playlist_entry_get_tuple (playlist, entry, FALSE);
-            String string = tuple ? tuple_get_str (tuple, fields[field]) : String ();
+            Tuple tuple = aud_playlist_entry_get_tuple (playlist, entry, FALSE);
+            String string = tuple.get_str (fields[field]);
 
             if (! string || ! g_regex_match (regex, string, (GRegexMatchFlags) 0, NULL))
                 aud_playlist_entry_set_selected (playlist, entry, FALSE);
-
-            tuple_unref (tuple);
         }
 
         g_regex_unref (regex);

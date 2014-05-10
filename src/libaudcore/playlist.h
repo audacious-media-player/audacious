@@ -58,7 +58,7 @@ enum {
 
 typedef bool_t (* PlaylistFilterFunc) (const char * filename, void * user);
 typedef int (* PlaylistStringCompareFunc) (const char * a, const char * b);
-typedef int (* PlaylistTupleCompareFunc) (const Tuple * a, const Tuple * b);
+typedef int (* PlaylistTupleCompareFunc) (const Tuple & a, const Tuple & b);
 
 /* --- PLAYLIST CORE API --- */
 
@@ -138,15 +138,15 @@ int aud_playlist_entry_count (int playlist);
 /* Adds a song file, playlist file, or folder to a playlist before the entry
  * numbered <at>.  If <at> is negative or equal to the number of entries, the
  * item is added after the last entry.  <tuple> may be NULL, in which case
- * Audacious will attempt to read metadata from the song file.  The caller gives
- * up one reference count to <tuple>.  If <play> is nonzero, Audacious will
- * begin playback of the items once they have been added.
+ * Audacious will attempt to read metadata from the song file.  If <play> is
+ * nonzero, Audacious will begin playback of the items once they have been
+ * added.
  *
  * Because adding items to the playlist can be a slow process, this function may
  * return before the process is complete.  Hence, the caller must not assume
  * that there will be new entries in the playlist immediately. */
 void aud_playlist_entry_insert (int playlist, int at, const char * filename,
- Tuple * tuple, bool_t play);
+ Tuple && tuple, bool_t play);
 
 /* Similar to playlist_entry_insert, adds multiple song files, playlist files,
  * or folders to a playlist. */
@@ -176,10 +176,9 @@ String aud_playlist_entry_get_filename (int playlist, int entry);
 PluginHandle * aud_playlist_entry_get_decoder (int playlist, int entry, bool_t fast);
 
 /* Returns the tuple associated with an entry, or NULL if one is not available.
- * The reference count of the tuple is incremented.  If <fast> is nonzero,
- * returns NULL if metadata for the entry has not yet been read from the song
- * file. */
-Tuple * aud_playlist_entry_get_tuple (int playlist, int entry, bool_t fast);
+ * If <fast> is nonzero, returns NULL if metadata for the entry has not yet been
+ * read from the song file. */
+Tuple aud_playlist_entry_get_tuple (int playlist, int entry, bool_t fast);
 
 /* Returns a formatted title string for an entry.  This may include information
  * such as the filename, song title, and/or artist.  If <fast> is nonzero,
@@ -367,7 +366,7 @@ void aud_playlist_remove_failed (int playlist);
  * in the fields of a tuple.  Does not free the memory used by the tuple.
  * Example: To select all the songs whose title starts with the letter "A",
  * create a blank tuple and set its title field to "^A". */
-void aud_playlist_select_by_patterns (int playlist, const Tuple * patterns);
+void aud_playlist_select_by_patterns (int playlist, const Tuple & patterns);
 
 /* Returns nonzero if <filename> refers to a playlist file. */
 bool_t aud_filename_is_playlist (const char * filename);

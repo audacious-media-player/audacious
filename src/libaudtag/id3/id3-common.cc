@@ -89,29 +89,29 @@ static String id3_decode_text (const char * data, int size)
     return id3_convert ((const char *) data + 1, size - 1, data[0]);
 }
 
-void id3_associate_string (Tuple * tuple, int field, const char * data, int size)
+void id3_associate_string (Tuple & tuple, int field, const char * data, int size)
 {
     String text = id3_decode_text (data, size);
 
     if (text && text[0])
     {
         AUDDBG ("Field %i = %s.\n", field, (const char *) text);
-        tuple_set_str (tuple, field, text);
+        tuple.set_str (field, text);
     }
 }
 
-void id3_associate_int (Tuple * tuple, int field, const char * data, int size)
+void id3_associate_int (Tuple & tuple, int field, const char * data, int size)
 {
     String text = id3_decode_text (data, size);
 
     if (text && atoi (text) >= 0)
     {
         AUDDBG ("Field %i = %s.\n", field, (const char *) text);
-        tuple_set_int (tuple, field, atoi (text));
+        tuple.set_int (field, atoi (text));
     }
 }
 
-void id3_decode_genre (Tuple * tuple, const char * data, int size)
+void id3_decode_genre (Tuple & tuple, const char * data, int size)
 {
     String text = id3_decode_text (data, size);
     int numericgenre;
@@ -125,12 +125,12 @@ void id3_decode_genre (Tuple * tuple, const char * data, int size)
         numericgenre = atoi (text);
 
     if (numericgenre > 0)
-        tuple_set_str (tuple, FIELD_GENRE, convert_numericgenre_to_text (numericgenre));
+        tuple.set_str (FIELD_GENRE, convert_numericgenre_to_text (numericgenre));
     else
-        tuple_set_str (tuple, FIELD_GENRE, text);
+        tuple.set_str (FIELD_GENRE, text);
 }
 
-void id3_decode_comment (Tuple * tuple, const char * data, int size)
+void id3_decode_comment (Tuple & tuple, const char * data, int size)
 {
     if (size < 4)
         return;
@@ -146,7 +146,7 @@ void id3_decode_comment (Tuple * tuple, const char * data, int size)
      (const char *) type, (const char *) value);
 
     if (type && ! type[0] && value) /* blank type = actual comment */
-        tuple_set_str (tuple, FIELD_COMMENT, value);
+        tuple.set_str (FIELD_COMMENT, value);
 }
 
 static bool_t decode_rva_block (const char * * _data, int * _size,
@@ -202,7 +202,7 @@ static bool_t decode_rva_block (const char * * _data, int * _size,
     return TRUE;
 }
 
-void id3_decode_rva (Tuple * tuple, const char * data, int size)
+void id3_decode_rva (Tuple & tuple, const char * data, int size)
 {
     const char * domain;
     int channel, adjustment, adjustment_unit, peak, peak_unit;
@@ -226,34 +226,33 @@ void id3_decode_rva (Tuple * tuple, const char * data, int size)
         if (channel != 1) /* specific channel? */
             continue;
 
-        if (tuple_get_value_type (tuple, FIELD_GAIN_GAIN_UNIT) == TUPLE_INT)
-            adjustment = adjustment * (int64_t) tuple_get_int (tuple,
-             FIELD_GAIN_GAIN_UNIT) / adjustment_unit;
+        if (tuple.get_value_type (FIELD_GAIN_GAIN_UNIT) == TUPLE_INT)
+            adjustment = adjustment * (int64_t) tuple.get_int
+             (FIELD_GAIN_GAIN_UNIT) / adjustment_unit;
         else
-            tuple_set_int (tuple, FIELD_GAIN_GAIN_UNIT, adjustment_unit);
+            tuple.set_int (FIELD_GAIN_GAIN_UNIT, adjustment_unit);
 
         if (peak_unit)
         {
-            if (tuple_get_value_type (tuple, FIELD_GAIN_PEAK_UNIT) == TUPLE_INT)
-                peak = peak * (int64_t) tuple_get_int (tuple,
-                 FIELD_GAIN_PEAK_UNIT) / peak_unit;
+            if (tuple.get_value_type (FIELD_GAIN_PEAK_UNIT) == TUPLE_INT)
+                peak = peak * (int64_t) tuple.get_int (FIELD_GAIN_PEAK_UNIT) / peak_unit;
             else
-                tuple_set_int (tuple, FIELD_GAIN_PEAK_UNIT, peak_unit);
+                tuple.set_int (FIELD_GAIN_PEAK_UNIT, peak_unit);
         }
 
         if (! g_ascii_strcasecmp (domain, "album"))
         {
-            tuple_set_int (tuple, FIELD_GAIN_ALBUM_GAIN, adjustment);
+            tuple.set_int (FIELD_GAIN_ALBUM_GAIN, adjustment);
 
             if (peak_unit)
-                tuple_set_int (tuple, FIELD_GAIN_ALBUM_PEAK, peak);
+                tuple.set_int (FIELD_GAIN_ALBUM_PEAK, peak);
         }
         else if (! g_ascii_strcasecmp (domain, "track"))
         {
-            tuple_set_int (tuple, FIELD_GAIN_TRACK_GAIN, adjustment);
+            tuple.set_int (FIELD_GAIN_TRACK_GAIN, adjustment);
 
             if (peak_unit)
-                tuple_set_int (tuple, FIELD_GAIN_TRACK_PEAK, peak);
+                tuple.set_int (FIELD_GAIN_TRACK_PEAK, peak);
         }
     }
 }

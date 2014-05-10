@@ -85,84 +85,97 @@ enum TupleValueType {
     TUPLE_UNKNOWN
 };
 
-int tuple_field_by_name (const char * name);
-const char * tuple_field_get_name (int field);
-TupleValueType tuple_field_get_type (int field);
+struct TupleData;
 
-struct Tuple;
+/* Smart pointer to the actual TupleData struct.
+ * Uses create-on-write and copy-on-write. */
+
+class Tuple
+{
+public:
+    static int field_by_name (const char * name);
+    static const char * field_get_name (int field);
+    static TupleValueType field_get_type (int field);
+
+    constexpr Tuple () :
+        data (nullptr) {}
+
+    ~Tuple ();
+
+    Tuple (Tuple && b) :
+        data (b.data)
+    {
+        b.data = nullptr;
+    }
+
+    void operator= (Tuple && b)
+    {
+        if (this != & b)
+        {
+            this->~Tuple ();
+            data = b.data;
+            b.data = nullptr;
+        }
+    }
+
+    explicit operator bool () const
+        { return (bool) data; }
+
+    Tuple ref () const;
+
+    /* Returns the value type of a field if set, otherwise TUPLE_UNKNOWN. */
+    TupleValueType get_value_type (int field) const;
+
+    /* Returns the integer value of a field if set, otherwise -1.  If you need
+     * to distinguish between a value of -1 and an unset value, use
+     * get_value_type(). */
+    int get_int (int field) const;
+
+    /* Returns the string value of a field if set, otherwise null. */
+    String get_str (int field) const;
+
+    /* Sets a field to the integer value <x>. */
+    void set_int (int field, int x);
+
+    /* Sets a field to the string value <str>.  If <str> is not valid UTF-8, it
+     * will be converted according to the user's character set detection rules.
+     * Equivalent to unset() if <str> is null. */
+    void set_str (int field, const char * str);
+
+    /* Clears any value that a field is currently set to. */
+    void unset (int field);
+
+    /* Parses the URI <filename> and sets FIELD_FILE_NAME, FIELD_FILE_PATH,
+     * FIELD_FILE_EXT, and FIELD_SUBSONG_ID accordingly. */
+    void set_filename (const char * filename);
+
+    /* Fills in format-related fields (specifically FIELD_CODEC, FIELD_QUALITY,
+     * and FIELD_BITRATE).  Plugins should use this function instead of setting
+     * these fields individually to allow a consistent style across file
+     * formats.  <format> should be a brief description such as "Microsoft WAV",
+     * "MPEG-1 layer 3", "Audio CD", and so on.  <samplerate> is in Hertz.
+     * <bitrate> is in (decimal) kbps. */
+    void set_format (const char * format, int channels, int samplerate, int bitrate);
+
+    /* In addition to the normal fields, tuples contain an integer array of
+     * subtune ID numbers.  This function sets that array.  It also sets
+     * FIELD_SUBSONG_NUM to the value <n_subtunes>. */
+    void set_subtunes (int n_subtunes, const int * subtunes);
+
+    /* Returns the length of the subtune array.  If the array has not been set,
+     * returns zero.  Note that if FIELD_SUBSONG_NUM is changed after
+     * set_subtunes() is called, this function returns the value <n_subtunes>
+     * passed to set_subtunes(), not the value of FIELD_SUBSONG_NUM. */
+    int get_n_subtunes () const;
+
+    /* Returns the <n>th member of the subtune array. */
+    int get_nth_subtune (int n) const;
+
+private:
+    TupleData * data;
+};
+
 struct TupleFormatter;
-
-/* Creates a new, blank tuple with a reference count of one. */
-Tuple * tuple_new (void);
-
-/* Increments the reference count of <tuple> by one. */
-Tuple * tuple_ref (Tuple * tuple);
-
-/* Decrements the reference count of <tuple> by one.  If the reference count
- * drops to zero, releases all memory used by <tuple>.  If <tuple> is NULL, does
- * nothing. */
-void tuple_unref (Tuple * tuple);
-
-/* Makes a copy of <tuple>.  Only use tuple_copy() if you need to modify one
- * copy of the tuple while not modifying the other.  In most cases, tuple_ref()
- * is more appropriate. */
-Tuple * tuple_copy (const Tuple * tuple);
-
-/* Parses the URI <filename> and sets FIELD_FILE_NAME, FIELD_FILE_PATH,
- * FIELD_FILE_EXT, and FIELD_SUBSONG_ID accordingly. */
-void tuple_set_filename (Tuple * tuple, const char * filename);
-
-/* Convenience function, equivalent to calling tuple_new() and then
- * tuple_set_filename(). */
-Tuple * tuple_new_from_filename (const char * filename);
-
-/* Sets a field to the integer value <x>. */
-void tuple_set_int (Tuple * tuple, int field, int x);
-
-/* Sets a field to the string value <str>.  If <str> is not valid UTF-8, it will
- * be converted according to the user's character set detection rules.  As a
- * special case, if <str> is NULL, the result is equivalent to calling
- * tuple_unset(). */
-void tuple_set_str (Tuple * tuple, int field, const char * str);
-
-/* Clears any value that a field is currently set to. */
-void tuple_unset (Tuple * tuple, int field);
-
-/* Returns the value type of a field, or TUPLE_UNKNOWN if the field has not been
- * set to any value. */
-TupleValueType tuple_get_value_type (const Tuple * tuple, int field);
-
-/* Returns the string value of a field.  If the field has not been set to any
- * value, returns NULL. */
-String tuple_get_str (const Tuple * tuple, int field);
-
-/* Returns the integer value of a field.  If the field has not been set to any
- * value, returns -1.  If you need to distinguish between a value of -1 and a
- * field not set to any value, use tuple_get_value_type(). */
-int tuple_get_int (const Tuple * tuple, int field);
-
-/* Fills in format-related fields (specifically FIELD_CODEC, FIELD_QUALITY, and
- * FIELD_BITRATE).  Plugins should use this function instead of setting these
- * fields individually so that the style is consistent across file formats.
- * <format> should be a brief description such as "Microsoft WAV", "MPEG-1 layer
- * 3", "Audio CD", and so on.  <samplerate> is in Hertz.  <bitrate> is in 1000
- * bits per second. */
-void tuple_set_format (Tuple * tuple, const char * format, int channels, int
- samplerate, int bitrate);
-
-/* In addition to the normal fields, tuples contain an integer array of subtune
- * ID numbers.  This function sets that array.  It also sets FIELD_SUBSONG_NUM
- * to the value <n_subtunes>. */
-void tuple_set_subtunes (Tuple * tuple, int n_subtunes, const int * subtunes);
-
-/* Returns the length of the subtune array.  If the array has not been set,
- * returns zero.  Note that if FIELD_SUBSONG_NUM is changed after
- * tuple_set_subtunes() is called, this function returns the value <n_subtunes>
- * passed to tuple_set_subtunes(), not the value of FIELD_SUBSONG_NUM. */
-int tuple_get_n_subtunes (Tuple * tuple);
-
-/* Returns the <n>th member of the subtune array. */
-int tuple_get_nth_subtune (Tuple * tuple, int n);
 
 /* Creates a tuple formatter object for the given format.  The syntax of
  * <format> is documented in tuple_formatter.c. */
@@ -173,6 +186,14 @@ void tuple_formatter_free (TupleFormatter * formatter);
 
 /* Generates a title string for <tuple> using the given formatter object.  Never
  * returns NULL, but may return an empty string. */
-String tuple_format_title (TupleFormatter * formatter, const Tuple * tuple);
+String tuple_format_title (TupleFormatter * formatter, const Tuple & tuple);
+
+/* somewhat out of place here */
+struct PluginHandle;
+struct PlaylistAddItem {
+    String filename;
+    Tuple tuple;
+    PluginHandle * decoder;
+};
 
 #endif /* LIBAUDCORE_TUPLE_H */

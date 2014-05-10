@@ -22,6 +22,7 @@
 #include <libaudcore/drct.h>
 #include <libaudcore/i18n.h>
 #include <libaudcore/runtime.h>
+#include <libaudcore/tuple.h>
 
 #include "internal.h"
 #include "libaudgui.h"

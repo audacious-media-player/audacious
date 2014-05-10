@@ -51,12 +51,11 @@ void aud_input_write_audio (void * data, int length);
  * user. */
 int aud_input_written_time (void);
 
-/* Returns a reference to the current tuple for the stream. */
-Tuple * aud_input_get_tuple (void);
+/* Returns the current tuple for the stream. */
+Tuple aud_input_get_tuple (void);
 
-/* Updates the tuple for the stream.  The caller gives up ownership of one
- * reference to the tuple. */
-void aud_input_set_tuple (Tuple * tuple);
+/* Updates the tuple for the stream. */
+void aud_input_set_tuple (Tuple && tuple);
 
 /* Updates the displayed bitrate, in bits per second. */
 void aud_input_set_bitrate (int bitrate);

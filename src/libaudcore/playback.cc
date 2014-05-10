@@ -74,19 +74,19 @@ static bool_t stopped = TRUE;
 static int failed_entries = 0;
 
 /* clears gain info if tuple == NULL */
-static void read_gain_from_tuple (const Tuple * tuple)
+static void read_gain_from_tuple (const Tuple & tuple)
 {
     memset (& current_gain, 0, sizeof current_gain);
 
-    if (tuple == NULL)
+    if (! tuple)
         return;
 
-    int album_gain = tuple_get_int (tuple, FIELD_GAIN_ALBUM_GAIN);
-    int album_peak = tuple_get_int (tuple, FIELD_GAIN_ALBUM_PEAK);
-    int track_gain = tuple_get_int (tuple, FIELD_GAIN_TRACK_GAIN);
-    int track_peak = tuple_get_int (tuple, FIELD_GAIN_TRACK_PEAK);
-    int gain_unit = tuple_get_int (tuple, FIELD_GAIN_GAIN_UNIT);
-    int peak_unit = tuple_get_int (tuple, FIELD_GAIN_PEAK_UNIT);
+    int album_gain = tuple.get_int (FIELD_GAIN_ALBUM_GAIN);
+    int album_peak = tuple.get_int (FIELD_GAIN_ALBUM_PEAK);
+    int track_gain = tuple.get_int (FIELD_GAIN_TRACK_GAIN);
+    int track_peak = tuple.get_int (FIELD_GAIN_TRACK_PEAK);
+    int gain_unit = tuple.get_int (FIELD_GAIN_GAIN_UNIT);
+    int peak_unit = tuple.get_int (FIELD_GAIN_PEAK_UNIT);
 
     if (gain_unit)
     {
@@ -248,7 +248,7 @@ static void playback_cleanup (void)
         current_file = NULL;
     }
 
-    read_gain_from_tuple (NULL);
+    read_gain_from_tuple (Tuple ());
 
     aud_set_bool (NULL, "stop_after_current_song", FALSE);
 }
@@ -338,7 +338,7 @@ static bool_t open_file (void)
 
 static void * playback_thread (void * unused)
 {
-    Tuple * tuple;
+    Tuple tuple;
     int length;
 
     if (! current_decoder)
@@ -363,21 +363,18 @@ static void * playback_thread (void * unused)
 
     if (tuple && length > 0)
     {
-        if (tuple_get_value_type (tuple, FIELD_SEGMENT_START) == TUPLE_INT)
+        if (tuple.get_value_type (FIELD_SEGMENT_START) == TUPLE_INT)
         {
-            time_offset = tuple_get_int (tuple, FIELD_SEGMENT_START);
+            time_offset = tuple.get_int (FIELD_SEGMENT_START);
             if (time_offset)
                 seek_request = time_offset + MAX (seek_request, 0);
         }
 
-        if (tuple_get_value_type (tuple, FIELD_SEGMENT_END) == TUPLE_INT)
-            stop_time = tuple_get_int (tuple, FIELD_SEGMENT_END);
+        if (tuple.get_value_type (FIELD_SEGMENT_END) == TUPLE_INT)
+            stop_time = tuple.get_int (FIELD_SEGMENT_END);
     }
 
     read_gain_from_tuple (tuple);
-
-    if (tuple)
-        tuple_unref (tuple);
 
     if (! open_file ())
     {
@@ -507,16 +504,16 @@ EXPORT int aud_input_written_time (void)
     return output_written_time ();
 }
 
-EXPORT Tuple * aud_input_get_tuple (void)
+EXPORT Tuple aud_input_get_tuple (void)
 {
-    g_return_val_if_fail (playing, NULL);
+    g_return_val_if_fail (playing, Tuple ());
     return playback_entry_get_tuple ();
 }
 
-EXPORT void aud_input_set_tuple (Tuple * tuple)
+EXPORT void aud_input_set_tuple (Tuple && tuple)
 {
     g_return_if_fail (playing);
-    playback_entry_set_tuple (tuple);
+    playback_entry_set_tuple (std::move (tuple));
 }
 
 EXPORT void aud_input_set_bitrate (int bitrate)

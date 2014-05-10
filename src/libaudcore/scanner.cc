@@ -30,7 +30,7 @@ struct ScanRequest {
     int flags;
     PluginHandle * decoder;
     ScanCallback callback;
-    Tuple * tuple;
+    Tuple tuple;
     void * image_data;
     int64_t image_len;
     String image_file;
@@ -74,7 +74,6 @@ static void scan_worker (void * data, void * unused)
 
     request->callback (request);
 
-    tuple_unref (request->tuple);
     g_free (request->image_data);
 
     delete request;
@@ -90,11 +89,9 @@ PluginHandle * scan_request_get_decoder (ScanRequest * request)
     return request->decoder;
 }
 
-Tuple * scan_request_get_tuple (ScanRequest * request)
+Tuple scan_request_get_tuple (ScanRequest * request)
 {
-    Tuple * tuple = request->tuple;
-    request->tuple = NULL;
-    return tuple;
+    return std::move (request->tuple);
 }
 
 void scan_request_get_image_data (ScanRequest * request, void * * data, int64_t * len)

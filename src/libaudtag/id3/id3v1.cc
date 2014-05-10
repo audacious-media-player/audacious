@@ -83,7 +83,7 @@ static bool_t id3v1_can_handle_file (VFSFile * file)
     return read_id3v1_tag (file, & tag);
 }
 
-static bool_t combine_string (Tuple * tuple, int field, const char * str1,
+static bool_t combine_string (Tuple & tuple, int field, const char * str1,
  int size1, const char * str2, int size2)
 {
     char str[size1 + size2 + 1];
@@ -101,11 +101,11 @@ static bool_t combine_string (Tuple * tuple, int field, const char * str1,
     if (! utf8)
         return FALSE;
 
-    tuple_set_str (tuple, field, utf8);
+    tuple.set_str (field, utf8);
     return TRUE;
 }
 
-static bool_t id3v1_read_tag (Tuple * tuple, VFSFile * file)
+static bool_t id3v1_read_tag (Tuple & tuple, VFSFile * file)
 {
     ID3v1Tag tag;
     ID3v1Ext ext;
@@ -123,13 +123,13 @@ static bool_t id3v1_read_tag (Tuple * tuple, VFSFile * file)
 
     SNCOPY (year, tag.year, 4);
     if (atoi (year))
-        tuple_set_int (tuple, FIELD_YEAR, atoi (year));
+        tuple.set_int (FIELD_YEAR, atoi (year));
 
     if (! tag.comment[28] && tag.comment[29])
-        tuple_set_int (tuple, FIELD_TRACK_NUMBER, (unsigned char) tag.comment[29]);
+        tuple.set_int (FIELD_TRACK_NUMBER, (unsigned char) tag.comment[29]);
 
     if (! combine_string (tuple, FIELD_GENRE, ext.genre, sizeof ext.genre, NULL, 0))
-        tuple_set_str (tuple, FIELD_GENRE, convert_numericgenre_to_text (tag.genre));
+        tuple.set_str (FIELD_GENRE, convert_numericgenre_to_text (tag.genre));
 
     return TRUE;
 }

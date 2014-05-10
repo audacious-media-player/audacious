@@ -132,21 +132,21 @@ static GtkWidget * small_label_new (const char * text)
     return label;
 }
 
-static void set_entry_str_from_field (GtkWidget * widget, const Tuple * tuple,
+static void set_entry_str_from_field (GtkWidget * widget, const Tuple & tuple,
  int fieldn, bool_t editable)
 {
-    String text = tuple_get_str (tuple, fieldn);
+    String text = tuple.get_str (fieldn);
     gtk_entry_set_text ((GtkEntry *) widget, text != NULL ? text : "");
     gtk_editable_set_editable ((GtkEditable *) widget, editable);
 }
 
-static void set_entry_int_from_field (GtkWidget * widget, const Tuple * tuple,
+static void set_entry_int_from_field (GtkWidget * widget, const Tuple & tuple,
  int fieldn, bool_t editable)
 {
     char scratch[32];
 
-    if (tuple_get_value_type (tuple, fieldn) == TUPLE_INT)
-        str_itoa (tuple_get_int (tuple, fieldn), scratch, sizeof scratch);
+    if (tuple.get_value_type (fieldn) == TUPLE_INT)
+        str_itoa (tuple.get_int (fieldn), scratch, sizeof scratch);
     else
         scratch[0] = 0;
 
@@ -154,26 +154,26 @@ static void set_entry_int_from_field (GtkWidget * widget, const Tuple * tuple,
     gtk_editable_set_editable ((GtkEditable *) widget, editable);
 }
 
-static void set_field_str_from_entry (Tuple * tuple, int fieldn, GtkWidget *
+static void set_field_str_from_entry (Tuple & tuple, int fieldn, GtkWidget *
  widget)
 {
     const char * text = gtk_entry_get_text ((GtkEntry *) widget);
 
     if (text[0])
-        tuple_set_str (tuple, fieldn, text);
+        tuple.set_str (fieldn, text);
     else
-        tuple_unset (tuple, fieldn);
+        tuple.unset (fieldn);
 }
 
-static void set_field_int_from_entry (Tuple * tuple, int fieldn, GtkWidget *
+static void set_field_int_from_entry (Tuple & tuple, int fieldn, GtkWidget *
  widget)
 {
     const char * text = gtk_entry_get_text ((GtkEntry *) widget);
 
     if (text[0])
-        tuple_set_int (tuple, fieldn, atoi (text));
+        tuple.set_int (fieldn, atoi (text));
     else
-        tuple_unset (tuple, fieldn);
+        tuple.unset (fieldn);
 }
 
 static void entry_changed (GtkEditable * editable, void * unused)
@@ -203,7 +203,8 @@ static void ministatus_display_message (const char * text)
 
 static void infowin_update_tuple (void * unused)
 {
-    Tuple * tuple = tuple_new_from_filename (current_file);
+    Tuple tuple;
+    tuple.set_filename (current_file);
 
     set_field_str_from_entry (tuple, FIELD_TITLE, widgets.title);
     set_field_str_from_entry (tuple, FIELD_ARTIST, widgets.artist);
@@ -221,8 +222,6 @@ static void infowin_update_tuple (void * unused)
     }
     else
         ministatus_display_message (_("Save error"));
-
-    tuple_unref (tuple);
 }
 
 static bool_t genre_fill (GtkWidget * combo)
@@ -380,7 +379,7 @@ static GtkWidget * create_infowin (void)
 }
 
 static void infowin_show (int list, int entry, const char * filename,
- const Tuple * tuple, PluginHandle * decoder, bool_t updating_enabled)
+ const Tuple & tuple, PluginHandle * decoder, bool_t updating_enabled)
 {
     audgui_hide_unique_window (AUDGUI_INFO_WINDOW);
 
@@ -404,13 +403,13 @@ static void infowin_show (int list, int entry, const char * filename,
     set_entry_int_from_field (widgets.track, tuple, FIELD_TRACK_NUMBER, updating_enabled);
 
     String codec_values[CODEC_ITEMS] = {
-        [CODEC_FORMAT] = tuple_get_str (tuple, FIELD_CODEC),
-        [CODEC_QUALITY] = tuple_get_str (tuple, FIELD_QUALITY)
+        [CODEC_FORMAT] = tuple.get_str (FIELD_CODEC),
+        [CODEC_QUALITY] = tuple.get_str (FIELD_QUALITY)
     };
 
-    if (tuple_get_value_type (tuple, FIELD_BITRATE) == TUPLE_INT)
+    if (tuple.get_value_type (FIELD_BITRATE) == TUPLE_INT)
     {
-        int bitrate = tuple_get_int (tuple, FIELD_BITRATE);
+        int bitrate = tuple.get_int (FIELD_BITRATE);
         codec_values[CODEC_BITRATE] = str_printf (_("%d kb/s"), bitrate);
     }
 
@@ -437,14 +436,11 @@ EXPORT void audgui_infowin_show (int playlist, int entry)
 
     if (decoder && ! aud_custom_infowin (filename, decoder))
     {
-        Tuple * tuple = aud_playlist_entry_get_tuple (playlist, entry, FALSE);
+        Tuple tuple = aud_playlist_entry_get_tuple (playlist, entry, FALSE);
 
         if (tuple)
-        {
             infowin_show (playlist, entry, filename, tuple, decoder,
              aud_file_can_write_tuple (filename, decoder));
-            tuple_unref (tuple);
-        }
         else
         {
             SPRINTF (message, _("No info available for %s.\n"), (const char *) filename);

@@ -38,7 +38,7 @@ ScanRequest * scan_request (const char * filename, int flags,
 
 String scan_request_get_filename (ScanRequest * request);
 PluginHandle * scan_request_get_decoder (ScanRequest * request);
-Tuple * scan_request_get_tuple (ScanRequest * request);
+Tuple scan_request_get_tuple (ScanRequest * request);
 void scan_request_get_image_data (ScanRequest * request, void * * data, int64_t * len);
 String scan_request_get_image_file (ScanRequest * request);
 

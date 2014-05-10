@@ -23,6 +23,7 @@
 #include <libaudcore/audstrings.h>
 #include <libaudcore/drct.h>
 #include <libaudcore/playlist.h>
+#include <libaudcore/tuple.h>
 #include <libaudcore/vfs.h>
 
 #include "libaudgui.h"

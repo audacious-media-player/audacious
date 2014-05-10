@@ -191,7 +191,7 @@ static bool_t id3v22_can_handle_file (VFSFile * handle)
      & data_size);
 }
 
-static bool_t id3v22_read_tag (Tuple * tuple, VFSFile * handle)
+static bool_t id3v22_read_tag (Tuple & tuple, VFSFile * handle)
 {
     int version, header_size, data_size;
     bool syncsafe;
@@ -306,12 +306,6 @@ static bool_t id3v22_read_image (VFSFile * handle, void * * image_data, int64_t 
     return found;
 }
 
-static bool_t id3v22_write_tag (const Tuple * tuple, VFSFile * f)
-{
-    fprintf (stderr, "Writing ID3v2.2 tags is not implemented yet, sorry.\n");
-    return FALSE;
-}
-
 tag_module_t id3v22 =
 {
     "ID3v2.2",
@@ -319,5 +313,5 @@ tag_module_t id3v22 =
     id3v22_can_handle_file,
     id3v22_read_tag,
     id3v22_read_image,
-    id3v22_write_tag
+    nullptr
 };

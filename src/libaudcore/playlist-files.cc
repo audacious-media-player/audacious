@@ -92,12 +92,7 @@ bool_t playlist_load (const char * filename, String & title, Index<PlaylistAddIt
     }
 
     if (! data.success)
-    {
-        for (auto & item : data.items)
-            tuple_unref (item.tuple);
-
         return FALSE;
-    }
 
     title = std::move (data.title);
     items = std::move (data.items);
@@ -166,9 +161,6 @@ EXPORT bool_t aud_playlist_save (int list, const char * filename)
         SPRINTF (error, _("Cannot save %s: unsupported file extension."), filename);
         aud_ui_show_error (error);
     }
-
-    for (auto & item : data.items)
-        tuple_unref (item.tuple);
 
     return data.success;
 }

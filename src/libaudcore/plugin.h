@@ -290,14 +290,14 @@ struct InputPlugin
     /* Returns TRUE if the plugin can handle the file. */
     bool_t (* is_our_file_from_vfs) (const char * filename, VFSFile * file);
 
-    /* Reads metadata from the file, returning a reference to the tuple produced. */
-    Tuple * (* probe_for_tuple) (const char * filename, VFSFile * file);
+    /* Reads metadata from the file. */
+    Tuple (* probe_for_tuple) (const char * filename, VFSFile * file);
 
     /* Plays the file.  Returns FALSE on error.  Also see input-api.h. */
     bool_t (* play) (const char * filename, VFSFile * file);
 
     /* Optional.  Writes metadata to the file, returning FALSE on error. */
-    bool_t (* update_song_tuple) (const char * filename, VFSFile * file, const Tuple * tuple);
+    bool_t (* update_song_tuple) (const char * filename, VFSFile * file, const Tuple & tuple);
 
     /* Optional.  Reads an album art image (JPEG or PNG data) from the file.
      * Returns a pointer to the data along with its size in bytes.  The returned

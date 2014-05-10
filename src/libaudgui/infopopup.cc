@@ -183,16 +183,16 @@ static void infopopup_set_field (GtkWidget * header, GtkWidget * label, const ch
     }
 }
 
-static void infopopup_set_fields (const Tuple * tuple, const char * title)
+static void infopopup_set_fields (const Tuple & tuple, const char * title)
 {
     /* use title from tuple if possible */
-    String title2 = tuple_get_str (tuple, FIELD_TITLE);
+    String title2 = tuple.get_str (FIELD_TITLE);
     if (! title2)
         title2 = String (title);
 
-    String artist = tuple_get_str (tuple, FIELD_ARTIST);
-    String album = tuple_get_str (tuple, FIELD_ALBUM);
-    String genre = tuple_get_str (tuple, FIELD_GENRE);
+    String artist = tuple.get_str (FIELD_ARTIST);
+    String album = tuple.get_str (FIELD_ALBUM);
+    String genre = tuple.get_str (FIELD_GENRE);
 
     infopopup_set_field (widgets.title_header, widgets.title_label, title2);
     infopopup_set_field (widgets.artist_header, widgets.artist_label, artist);
@@ -202,7 +202,7 @@ static void infopopup_set_fields (const Tuple * tuple, const char * title)
     int value;
     String tmp;
 
-    value = tuple_get_int (tuple, FIELD_LENGTH);
+    value = tuple.get_int (FIELD_LENGTH);
 
     if (value > 0)
     {
@@ -213,11 +213,11 @@ static void infopopup_set_fields (const Tuple * tuple, const char * title)
 
     infopopup_set_field (widgets.length_header, widgets.length_label, tmp);
 
-    value = tuple_get_int (tuple, FIELD_YEAR);
+    value = tuple.get_int (FIELD_YEAR);
     tmp = (value > 0) ? int_to_str (value) : String ();
     infopopup_set_field (widgets.year_header, widgets.year_label, tmp);
 
-    value = tuple_get_int (tuple, FIELD_TRACK_NUMBER);
+    value = tuple.get_int (FIELD_TRACK_NUMBER);
     tmp = (value > 0) ? int_to_str (value) : String ();
     infopopup_set_field (widgets.track_header, widgets.track_label, tmp);
 }
@@ -245,7 +245,7 @@ static void infopopup_move_to_mouse (GtkWidget * infopopup)
     gtk_window_move ((GtkWindow *) infopopup, x, y);
 }
 
-static void infopopup_show (const char * filename, const Tuple * tuple,
+static void infopopup_show (const char * filename, const Tuple & tuple,
  const char * title)
 {
     audgui_hide_unique_window (AUDGUI_INFOPOPUP_WINDOW);
@@ -278,12 +278,10 @@ EXPORT void audgui_infopopup_show (int playlist, int entry)
 {
     String filename = aud_playlist_entry_get_filename (playlist, entry);
     String title = aud_playlist_entry_get_title (playlist, entry, FALSE);
-    Tuple * tuple = aud_playlist_entry_get_tuple (playlist, entry, FALSE);
+    Tuple tuple = aud_playlist_entry_get_tuple (playlist, entry, FALSE);
 
     if (filename && title && tuple)
         infopopup_show (filename, tuple, title);
-
-    tuple_unref (tuple);
 }
 
 EXPORT void audgui_infopopup_show_current (void)

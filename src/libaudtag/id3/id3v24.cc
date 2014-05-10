@@ -444,7 +444,7 @@ static int get_frame_id (const char * key)
 }
 
 #if 0
-static void decode_private_info (Tuple * tuple, const unsigned char * data, int size)
+static void decode_private_info (Tuple & tuple, const unsigned char * data, int size)
 {
     char * text = g_strndup ((const char *) data, size);
 
@@ -458,23 +458,23 @@ static void decode_private_info (Tuple * tuple, const unsigned char * data, int 
         if (!strncmp(text, "WM/MediaClassPrimaryID", 22))
         {
             if (!memcmp(value, PRIMARY_CLASS_MUSIC, 16))
-                tuple_set_str (tuple, -1, "media-class", "Music");
+                tuple.set_str (-1, "media-class", "Music");
             if (!memcmp(value, PRIMARY_CLASS_AUDIO, 16))
-                tuple_set_str (tuple, -1, "media-class", "Audio (non-music)");
+                tuple.set_str (-1, "media-class", "Audio (non-music)");
         } else if (!strncmp(text, "WM/MediaClassSecondaryID", 24))
         {
             if (!memcmp(value, SECONDARY_CLASS_AUDIOBOOK, 16))
-                tuple_set_str (tuple, -1, "media-class", "Audio Book");
+                tuple.set_str (-1, "media-class", "Audio Book");
             if (!memcmp(value, SECONDARY_CLASS_SPOKENWORD, 16))
-                tuple_set_str (tuple, -1, "media-class", "Spoken Word");
+                tuple.set_str (-1, "media-class", "Spoken Word");
             if (!memcmp(value, SECONDARY_CLASS_NEWS, 16))
-                tuple_set_str (tuple, -1, "media-class", "News");
+                tuple.set_str (-1, "media-class", "News");
             if (!memcmp(value, SECONDARY_CLASS_TALKSHOW, 16))
-                tuple_set_str (tuple, -1, "media-class", "Talk Show");
+                tuple.set_str (-1, "media-class", "Talk Show");
             if (!memcmp(value, SECONDARY_CLASS_GAMES_CLIP, 16))
-                tuple_set_str (tuple, -1, "media-class", "Game Audio (clip)");
+                tuple.set_str (-1, "media-class", "Game Audio (clip)");
             if (!memcmp(value, SECONDARY_CLASS_GAMES_SONG, 16))
-                tuple_set_str (tuple, -1, "media-class", "Game Soundtrack");
+                tuple.set_str (-1, "media-class", "Game Soundtrack");
         } else {
             AUDDBG("Unrecognised tag %s (Windows Media) ignored\n", text);
         }
@@ -555,21 +555,21 @@ static void add_comment_frame (const char * text, FrameDict & dict)
     g_free (utf16);
 }
 
-static void add_frameFromTupleStr (const Tuple * tuple, int field, int id3_field, FrameDict & dict)
+static void add_frameFromTupleStr (const Tuple & tuple, int field, int id3_field, FrameDict & dict)
 {
-    add_text_frame (id3_field, tuple_get_str (tuple, field), dict);
+    add_text_frame (id3_field, tuple.get_str (field), dict);
 }
 
-static void add_frameFromTupleInt (const Tuple * tuple, int field, int id3_field, FrameDict & dict)
+static void add_frameFromTupleInt (const Tuple & tuple, int field, int id3_field, FrameDict & dict)
 {
-    if (tuple_get_value_type (tuple, field) != TUPLE_INT)
+    if (tuple.get_value_type (field) != TUPLE_INT)
     {
         remove_frame (id3_field, dict);
         return;
     }
 
     char scratch[16];
-    str_itoa (tuple_get_int (tuple, field), scratch, sizeof scratch);
+    str_itoa (tuple.get_int (field), scratch, sizeof scratch);
     add_text_frame (id3_field, scratch, dict);
 }
 
@@ -583,7 +583,7 @@ static bool_t id3v24_can_handle_file (VFSFile * handle)
      & data_size, & footer_size);
 }
 
-static bool_t id3v24_read_tag (Tuple * tuple, VFSFile * handle)
+static bool_t id3v24_read_tag (Tuple & tuple, VFSFile * handle)
 {
     int version, header_size, data_size, footer_size;
     bool syncsafe;
@@ -697,7 +697,7 @@ static bool_t id3v24_read_image (VFSFile * handle, void * * image_data, int64_t 
     return found;
 }
 
-static bool_t id3v24_write_tag (const Tuple * tuple, VFSFile * f)
+static bool_t id3v24_write_tag (const Tuple & tuple, VFSFile * f)
 {
     int version = 3;
     int header_size, data_size, footer_size;
@@ -718,7 +718,7 @@ static bool_t id3v24_write_tag (const Tuple * tuple, VFSFile * f)
     add_frameFromTupleInt (tuple, FIELD_TRACK_NUMBER, ID3_TRACKNR, dict);
     add_frameFromTupleStr (tuple, FIELD_GENRE, ID3_GENRE, dict);
 
-    String comment = tuple_get_str (tuple, FIELD_COMMENT);
+    String comment = tuple.get_str (FIELD_COMMENT);
     add_comment_frame (comment, dict);
 
     /* location and size of non-tag data */

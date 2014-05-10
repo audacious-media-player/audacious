@@ -69,6 +69,8 @@ struct IfacePlugin;
 struct PluginHandle;
 struct PluginPreferences;
 struct PreferencesWidget;
+
+struct PlaylistAddItem;
 struct Tuple;
 struct VFSFile;
 

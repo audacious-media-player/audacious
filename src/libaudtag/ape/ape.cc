@@ -279,41 +279,41 @@ static void parse_gain_text (const char * text, int * value, int * unit)
     * value = * value * sign;
 }
 
-static void set_gain_info (Tuple * tuple, int field, int unit_field,
+static void set_gain_info (Tuple & tuple, int field, int unit_field,
  const char * text)
 {
     int value, unit;
 
     parse_gain_text (text, & value, & unit);
 
-    if (tuple_get_value_type (tuple, unit_field) == TUPLE_INT)
-        value = value * (int64_t) tuple_get_int (tuple, unit_field) / unit;
+    if (tuple.get_value_type (unit_field) == TUPLE_INT)
+        value = value * (int64_t) tuple.get_int (unit_field) / unit;
     else
-        tuple_set_int (tuple, unit_field, unit);
+        tuple.set_int (unit_field, unit);
 
-    tuple_set_int (tuple, field, value);
+    tuple.set_int (field, value);
 }
 
-static bool_t ape_read_tag (Tuple * tuple, VFSFile * handle)
+static bool_t ape_read_tag (Tuple & tuple, VFSFile * handle)
 {
     Index<ValuePair> list = ape_read_items (handle);
 
     for (const ValuePair & pair : list)
     {
         if (! strcmp (pair.key, "Artist"))
-            tuple_set_str (tuple, FIELD_ARTIST, pair.value);
+            tuple.set_str (FIELD_ARTIST, pair.value);
         else if (! strcmp (pair.key, "Title"))
-            tuple_set_str (tuple, FIELD_TITLE, pair.value);
+            tuple.set_str (FIELD_TITLE, pair.value);
         else if (! strcmp (pair.key, "Album"))
-            tuple_set_str (tuple, FIELD_ALBUM, pair.value);
+            tuple.set_str (FIELD_ALBUM, pair.value);
         else if (! strcmp (pair.key, "Comment"))
-            tuple_set_str (tuple, FIELD_COMMENT, pair.value);
+            tuple.set_str (FIELD_COMMENT, pair.value);
         else if (! strcmp (pair.key, "Genre"))
-            tuple_set_str (tuple, FIELD_GENRE, pair.value);
+            tuple.set_str (FIELD_GENRE, pair.value);
         else if (! strcmp (pair.key, "Track"))
-            tuple_set_int (tuple, FIELD_TRACK_NUMBER, atoi (pair.value));
+            tuple.set_int (FIELD_TRACK_NUMBER, atoi (pair.value));
         else if (! strcmp (pair.key, "Year"))
-            tuple_set_int (tuple, FIELD_YEAR, atoi (pair.value));
+            tuple.set_int (FIELD_YEAR, atoi (pair.value));
         else if (! g_ascii_strcasecmp (pair.key, "REPLAYGAIN_TRACK_GAIN"))
             set_gain_info (tuple, FIELD_GAIN_TRACK_GAIN, FIELD_GAIN_GAIN_UNIT, pair.value);
         else if (! g_ascii_strcasecmp (pair.key, "REPLAYGAIN_TRACK_PEAK"))
@@ -352,10 +352,10 @@ static bool_t ape_write_item (VFSFile * handle, const char * key,
     return TRUE;
 }
 
-static bool_t write_string_item (const Tuple * tuple, int field, VFSFile *
+static bool_t write_string_item (const Tuple & tuple, int field, VFSFile *
  handle, const char * key, int * written_length, int * written_items)
 {
-    String value = tuple_get_str (tuple, field);
+    String value = tuple.get_str (field);
 
     if (value == NULL)
         return TRUE;
@@ -368,10 +368,10 @@ static bool_t write_string_item (const Tuple * tuple, int field, VFSFile *
     return success;
 }
 
-static bool_t write_integer_item (const Tuple * tuple, int field, VFSFile *
+static bool_t write_integer_item (const Tuple & tuple, int field, VFSFile *
  handle, const char * key, int * written_length, int * written_items)
 {
-    int value = tuple_get_int (tuple, field);
+    int value = tuple.get_int (field);
     char scratch[32];
 
     if (value <= 0)
@@ -403,7 +403,7 @@ static bool_t write_header (int data_length, int items, bool_t is_header,
      (APEHeader);
 }
 
-static bool_t ape_write_tag (const Tuple * tuple, VFSFile * handle)
+static bool_t ape_write_tag (const Tuple & tuple, VFSFile * handle)
 {
     Index<ValuePair> list = ape_read_items (handle);
     APEHeader header;

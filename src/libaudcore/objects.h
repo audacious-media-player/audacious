@@ -53,7 +53,7 @@ public:
         }
     }
 
-    operator bool () const
+    explicit operator bool () const
         { return (bool) ptr; }
 
     void swap (SmartPtr & b)
@@ -149,13 +149,6 @@ public:
 
 private:
     char * raw;
-};
-
-/* somewhat out of place here */
-struct PlaylistAddItem {
-    String filename;
-    Tuple * tuple;
-    PluginHandle * decoder;
 };
 
 #endif // LIBAUDCORE_OBJECTS_H

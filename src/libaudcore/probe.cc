@@ -199,17 +199,17 @@ static bool_t open_file (const char * filename, InputPlugin * ip,
     return (* handle != NULL);
 }
 
-EXPORT Tuple * aud_file_read_tuple (const char * filename, PluginHandle * decoder)
+EXPORT Tuple aud_file_read_tuple (const char * filename, PluginHandle * decoder)
 {
     InputPlugin * ip = (InputPlugin *) aud_plugin_get_header (decoder);
-    g_return_val_if_fail (ip, NULL);
-    g_return_val_if_fail (ip->probe_for_tuple, NULL);
+    g_return_val_if_fail (ip, Tuple ());
+    g_return_val_if_fail (ip->probe_for_tuple, Tuple ());
 
     VFSFile * handle = NULL;
     if (! open_file (filename, ip, "r", & handle))
-        return NULL;
+        return Tuple ();
 
-    Tuple * tuple = ip->probe_for_tuple (filename, handle);
+    Tuple tuple = ip->probe_for_tuple (filename, handle);
 
     if (handle)
         vfs_fclose (handle);
@@ -248,7 +248,7 @@ EXPORT bool_t aud_file_can_write_tuple (const char * filename, PluginHandle * de
 }
 
 EXPORT bool_t aud_file_write_tuple (const char * filename,
- PluginHandle * decoder, const Tuple * tuple)
+ PluginHandle * decoder, const Tuple & tuple)
 {
     InputPlugin * ip = (InputPlugin *) aud_plugin_get_header (decoder);
     g_return_val_if_fail (ip, FALSE);

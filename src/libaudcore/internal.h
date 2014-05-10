@@ -84,7 +84,7 @@ VFSFile * probe_buffer_new (const char * filename);
 bool_t dir_foreach (const char * path, DirForeachFunc func, void * user_data);
 String write_temp_file (void * data, int64_t len);
 
-void describe_song (const char * filename, const Tuple * tuple, String & title,
+void describe_song (const char * filename, const Tuple & tuple, String & title,
  String & artist, String & album);
 const char * last_path_element (const char * path);
 

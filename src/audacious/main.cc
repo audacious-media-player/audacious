@@ -29,6 +29,7 @@
 #include <libaudcore/interface.h>
 #include <libaudcore/playlist.h>
 #include <libaudcore/runtime.h>
+#include <libaudcore/tuple.h>
 
 #ifdef USE_DBUS
 #include "aud-dbus.h"

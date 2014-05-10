@@ -200,9 +200,9 @@ static char * stream_name (char * name)
     return name;
 }
 
-static String get_nonblank_field (const Tuple * tuple, int field)
+static String get_nonblank_field (const Tuple & tuple, int field)
 {
-    String str = tuple ? tuple_get_str (tuple, field) : String ();
+    String str = tuple.get_str (field);
     return (str && str[0]) ? str : String ();
 }
 
@@ -218,7 +218,7 @@ static String str_get_decoded (char * str)
 /* Derives best guesses of title, artist, and album from a file name (URI) and
  * tuple (which may be NULL).  The returned strings are stringpooled or NULL. */
 
-void describe_song (const char * name, const Tuple * tuple, String & title,
+void describe_song (const char * name, const Tuple & tuple, String & title,
  String & artist, String & album)
 {
     /* Common folder names to skip */

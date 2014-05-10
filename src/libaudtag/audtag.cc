@@ -38,7 +38,7 @@ EXPORT void tag_set_verbose (bool_t verbose)
 
 /* The tuple's file-related attributes are already set */
 
-EXPORT bool_t tag_tuple_read (Tuple * tuple, VFSFile * handle)
+EXPORT bool_t tag_tuple_read (Tuple & tuple, VFSFile * handle)
 {
     tag_module_t * module = find_tag_module (handle, TAG_TYPE_NONE);
 
@@ -64,7 +64,7 @@ EXPORT bool_t tag_image_read (VFSFile * handle, void * * data, int64_t * size)
     return module->read_image (handle, data, size);
 }
 
-EXPORT bool_t tag_tuple_write (const Tuple * tuple, VFSFile * handle, int new_type)
+EXPORT bool_t tag_tuple_write (const Tuple & tuple, VFSFile * handle, int new_type)
 {
     tag_module_t * module = find_tag_module (handle, new_type);
 
@@ -77,43 +77,37 @@ EXPORT bool_t tag_tuple_write (const Tuple * tuple, VFSFile * handle, int new_ty
     return module->write_tag (tuple, handle);
 }
 
-EXPORT bool_t tag_update_stream_metadata (Tuple * tuple, VFSFile * handle)
+EXPORT bool_t tag_update_stream_metadata (Tuple & tuple, VFSFile * handle)
 {
     bool_t updated = FALSE;
     int value;
 
-    String old = tuple_get_str (tuple, FIELD_TITLE);
+    String old = tuple.get_str (FIELD_TITLE);
     String val = vfs_get_metadata (handle, "track-name");
 
     if (val && (! old || strcmp (old, val)))
     {
-        tuple_set_str (tuple, FIELD_TITLE, val);
+        tuple.set_str (FIELD_TITLE, val);
         updated = TRUE;
     }
 
-    old = tuple_get_str (tuple, FIELD_ARTIST);
+    old = tuple.get_str (FIELD_ARTIST);
     val = vfs_get_metadata (handle, "stream-name");
 
     if (val && (! old || strcmp (old, val)))
     {
-        tuple_set_str (tuple, FIELD_ARTIST, val);
+        tuple.set_str (FIELD_ARTIST, val);
         updated = TRUE;
     }
 
     val = vfs_get_metadata (handle, "content-bitrate");
     value = val ? atoi (val) / 1000 : 0;
 
-    if (value && value != tuple_get_int (tuple, FIELD_BITRATE))
+    if (value && value != tuple.get_int (FIELD_BITRATE))
     {
-        tuple_set_int (tuple, FIELD_BITRATE, value);
+        tuple.set_int (FIELD_BITRATE, value);
         updated = TRUE;
     }
 
     return updated;
-}
-
-/* deprecated */
-EXPORT bool_t tag_tuple_write_to_file (Tuple * tuple, VFSFile * handle)
-{
-    return tag_tuple_write (tuple, handle, TAG_TYPE_NONE);
 }

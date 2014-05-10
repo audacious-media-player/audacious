@@ -83,13 +83,13 @@ struct Update {
 };
 
 struct Entry {
-    Entry (const PlaylistAddItem & item);
+    Entry (PlaylistAddItem && item);
     ~Entry ();
 
     int number;
     String filename;
     PluginHandle * decoder;
-    Tuple * tuple;
+    Tuple tuple;
     String formatted, title, artist, album;
     int length;
     bool_t failed;
@@ -155,68 +155,59 @@ static void playlist_trigger_scan (void);
 
 static TupleFormatter * title_formatter;
 
-static void entry_set_tuple_real (Entry * entry, Tuple * tuple)
+static void entry_set_tuple_real (Entry * entry, Tuple && tuple)
 {
     /* Hack: We cannot refresh segmented entries (since their info is read from
      * the cue sheet when it is first loaded), so leave them alone. -jlindgren */
-    if (entry->tuple && tuple_get_value_type (entry->tuple, FIELD_SEGMENT_START) == TUPLE_INT)
-    {
-        tuple_unref (tuple);
+    if (entry->tuple.get_value_type (FIELD_SEGMENT_START) == TUPLE_INT)
         return;
-    }
 
-    tuple_unref (entry->tuple);
-    entry->tuple = tuple;
+    entry->tuple = std::move (tuple);
     entry->failed = FALSE;
 
-    describe_song (entry->filename, tuple, entry->title, entry->artist, entry->album);
+    describe_song (entry->filename, entry->tuple, entry->title, entry->artist, entry->album);
 
-    if (! tuple)
+    if (! entry->tuple)
     {
         entry->formatted = String ();
         entry->length = 0;
     }
     else
     {
-        entry->formatted = tuple_format_title (title_formatter, tuple);
-        entry->length = tuple_get_int (tuple, FIELD_LENGTH);
+        entry->formatted = tuple_format_title (title_formatter, entry->tuple);
+        entry->length = entry->tuple.get_int (FIELD_LENGTH);
         if (entry->length < 0)
             entry->length = 0;
     }
 }
 
-static void entry_set_tuple (Playlist * playlist, Entry * entry, Tuple * tuple)
+static void entry_set_tuple (Playlist * playlist, Entry * entry, Tuple && tuple)
 {
     scan_cancel (entry);
 
-    if (entry->tuple)
-    {
-        playlist->total_length -= entry->length;
-        if (entry->selected)
-            playlist->selected_length -= entry->length;
-    }
+    playlist->total_length -= entry->length;
+    if (entry->selected)
+        playlist->selected_length -= entry->length;
 
-    entry_set_tuple_real (entry, tuple);
+    entry_set_tuple_real (entry, std::move (tuple));
 
-    if (tuple)
-    {
-        playlist->total_length += entry->length;
-        if (entry->selected)
-            playlist->selected_length += entry->length;
-    }
+    playlist->total_length += entry->length;
+    if (entry->selected)
+        playlist->selected_length += entry->length;
 }
 
 static void entry_set_failed (Playlist * playlist, Entry * entry)
 {
-    entry_set_tuple (playlist, entry, tuple_new_from_filename (entry->filename));
+    Tuple tuple;
+    tuple.set_filename (entry->filename);
+    entry_set_tuple (playlist, entry, std::move (tuple));
     entry->failed = TRUE;
 }
 
-Entry::Entry (const PlaylistAddItem & item) :
+Entry::Entry (PlaylistAddItem && item) :
     number (-1),
     filename (item.filename),
     decoder (item.decoder),
-    tuple (NULL),
     formatted (NULL),
     title (NULL),
     artist (NULL),
@@ -227,14 +218,12 @@ Entry::Entry (const PlaylistAddItem & item) :
     shuffle_num (0),
     queued (FALSE)
 {
-    entry_set_tuple_real (this, item.tuple);
+    entry_set_tuple_real (this, std::move (item.tuple));
 }
 
 Entry::~Entry ()
 {
     scan_cancel (this);
-
-    tuple_unref (tuple);
 }
 
 static int new_unique_id (int preferred)
@@ -522,10 +511,10 @@ static void scan_finish (ScanRequest * request)
 
     if (! entry->tuple)
     {
-        Tuple * tuple = scan_request_get_tuple (request);
+        Tuple tuple = scan_request_get_tuple (request);
         if (tuple)
         {
-            entry_set_tuple (playlist, entry, tuple);
+            entry_set_tuple (playlist, entry, std::move (tuple));
             queue_update (PLAYLIST_UPDATE_METADATA, playlist, entry->number, 1);
         }
     }
@@ -967,7 +956,7 @@ void playlist_entry_insert_batch_raw (int playlist_num, int at, Index<PlaylistAd
     int i = at;
     for (auto & item : items)
     {
-        Entry * entry = new Entry (item);
+        Entry * entry = new Entry (std::move (item));
         playlist->entries[i ++] = SmartPtr<Entry> (entry);
         playlist->total_length += entry->length;
     }
@@ -1062,15 +1051,12 @@ EXPORT PluginHandle * aud_playlist_entry_get_decoder (int playlist_num, int entr
     RETURN (decoder);
 }
 
-EXPORT Tuple * aud_playlist_entry_get_tuple (int playlist_num, int entry_num, bool_t fast)
+EXPORT Tuple aud_playlist_entry_get_tuple (int playlist_num, int entry_num, bool_t fast)
 {
     ENTER;
 
     Entry * entry = get_entry (playlist_num, entry_num, FALSE, ! fast);
-    Tuple * tuple = entry ? entry->tuple : NULL;
-
-    if (tuple)
-        tuple_ref (tuple);
+    Tuple tuple = entry->tuple.ref ();
 
     RETURN (tuple);
 }
@@ -1485,11 +1471,10 @@ EXPORT void aud_playlist_randomize_selected (int playlist_num)
 
 enum {COMPARE_TYPE_FILENAME, COMPARE_TYPE_TUPLE, COMPARE_TYPE_TITLE};
 
-typedef int (* CompareFunc) (const void * a, const void * b);
-
 struct CompareData {
-    int type;
-    CompareFunc func;
+    PlaylistStringCompareFunc filename_compare;
+    PlaylistTupleCompareFunc tuple_compare;
+    PlaylistStringCompareFunc title_compare;
 };
 
 static int compare_cb (const SmartPtr<Entry> & a, const SmartPtr<Entry> & b, void * _data)
@@ -1498,12 +1483,12 @@ static int compare_cb (const SmartPtr<Entry> & a, const SmartPtr<Entry> & b, voi
 
     int diff = 0;
 
-    if (data->type == COMPARE_TYPE_FILENAME)
-        diff = data->func (a->filename, b->filename);
-    else if (data->type == COMPARE_TYPE_TUPLE)
-        diff = data->func (a->tuple, b->tuple);
-    else if (data->type == COMPARE_TYPE_TITLE)
-        diff = data->func (a->formatted ? a->formatted : a->filename,
+    if (data->filename_compare)
+        diff = data->filename_compare (a->filename, b->filename);
+    else if (data->tuple_compare)
+        diff = data->tuple_compare (a->tuple, b->tuple);
+    else if (data->title_compare)
+        diff = data->title_compare (a->formatted ? a->formatted : a->filename,
          b->formatted ? b->formatted : b->filename);
 
     if (diff)
@@ -1564,70 +1549,67 @@ static bool_t entries_are_scanned (Playlist * playlist, bool_t selected)
     return TRUE;
 }
 
-EXPORT void aud_playlist_sort_by_filename (int playlist_num, int (* compare)
- (const char * a, const char * b))
+EXPORT void aud_playlist_sort_by_filename (int playlist_num, PlaylistStringCompareFunc compare)
 {
     ENTER_GET_PLAYLIST ();
 
-    CompareData data = {COMPARE_TYPE_FILENAME, (CompareFunc) compare};
+    CompareData data = {compare};
     sort (playlist, & data);
 
     LEAVE;
 }
 
-EXPORT void aud_playlist_sort_by_tuple (int playlist_num, int (* compare)
- (const Tuple * a, const Tuple * b))
+EXPORT void aud_playlist_sort_by_tuple (int playlist_num, PlaylistTupleCompareFunc compare)
 {
     ENTER_GET_PLAYLIST ();
 
-    CompareData data = {COMPARE_TYPE_TUPLE, (CompareFunc) compare};
+    CompareData data = {nullptr, compare};
     if (entries_are_scanned (playlist, FALSE))
         sort (playlist, & data);
 
     LEAVE;
 }
 
-EXPORT void aud_playlist_sort_by_title (int playlist_num, int (* compare) (const char *
- a, const char * b))
+EXPORT void aud_playlist_sort_by_title (int playlist_num, PlaylistStringCompareFunc compare)
 {
     ENTER_GET_PLAYLIST ();
 
-    CompareData data = {COMPARE_TYPE_TITLE, (CompareFunc) compare};
+    CompareData data = {nullptr, nullptr, compare};
     if (entries_are_scanned (playlist, FALSE))
         sort (playlist, & data);
 
     LEAVE;
 }
 
-EXPORT void aud_playlist_sort_selected_by_filename (int playlist_num, int (* compare)
- (const char * a, const char * b))
+EXPORT void aud_playlist_sort_selected_by_filename (int playlist_num,
+ PlaylistStringCompareFunc compare)
 {
     ENTER_GET_PLAYLIST ();
 
-    CompareData data = {COMPARE_TYPE_FILENAME, (CompareFunc) compare};
+    CompareData data = {compare};
     sort_selected (playlist, & data);
 
     LEAVE;
 }
 
-EXPORT void aud_playlist_sort_selected_by_tuple (int playlist_num, int (* compare)
- (const Tuple * a, const Tuple * b))
+EXPORT void aud_playlist_sort_selected_by_tuple (int playlist_num,
+ PlaylistTupleCompareFunc compare)
 {
     ENTER_GET_PLAYLIST ();
 
-    CompareData data = {COMPARE_TYPE_TUPLE, (CompareFunc) compare};
+    CompareData data = {nullptr, compare};
     if (entries_are_scanned (playlist, TRUE))
         sort_selected (playlist, & data);
 
     LEAVE;
 }
 
-EXPORT void aud_playlist_sort_selected_by_title (int playlist_num, int (* compare)
- (const char * a, const char * b))
+EXPORT void aud_playlist_sort_selected_by_title (int playlist_num,
+ PlaylistStringCompareFunc compare)
 {
     ENTER_GET_PLAYLIST ();
 
-    CompareData data = {COMPARE_TYPE_TITLE, (CompareFunc) compare};
+    CompareData data = {nullptr, nullptr, compare};
     if (entries_are_scanned (playlist, TRUE))
         sort_selected (playlist, & data);
 
@@ -1679,7 +1661,7 @@ static void playlist_rescan_real (int playlist_num, bool_t selected)
     for (auto & entry : playlist->entries)
     {
         if (! selected || entry->selected)
-            entry_set_tuple (playlist, entry.get (), NULL);
+            entry_set_tuple (playlist, entry.get (), Tuple ());
     }
 
     queue_update (PLAYLIST_UPDATE_METADATA, playlist, 0, playlist->entries.len ());
@@ -1706,7 +1688,7 @@ EXPORT void aud_playlist_rescan_file (const char * filename)
         {
             if (! strcmp (entry->filename, filename))
             {
-                entry_set_tuple (playlist.get (), entry.get (), NULL);
+                entry_set_tuple (playlist.get (), entry.get (), Tuple ());
                 queue_update (PLAYLIST_UPDATE_METADATA, playlist.get (), entry->number, 1);
             }
         }
@@ -2059,15 +2041,12 @@ PluginHandle * playback_entry_get_decoder (void)
     RETURN (decoder);
 }
 
-Tuple * playback_entry_get_tuple (void)
+Tuple playback_entry_get_tuple (void)
 {
     ENTER;
 
     Entry * entry = get_playback_entry (FALSE, TRUE);
-    Tuple * tuple = entry ? entry->tuple : NULL;
-
-    if (tuple)
-        tuple_ref (tuple);
+    Tuple tuple = entry->tuple.ref ();
 
     RETURN (tuple);
 }
@@ -2092,14 +2071,14 @@ int playback_entry_get_length (void)
     RETURN (length);
 }
 
-void playback_entry_set_tuple (Tuple * tuple)
+void playback_entry_set_tuple (Tuple && tuple)
 {
     ENTER;
     if (! playing_playlist || ! playing_playlist->position)
         RETURN ();
 
     Entry * entry = playing_playlist->position;
-    entry_set_tuple (playing_playlist, entry, tuple);
+    entry_set_tuple (playing_playlist, entry, std::move (tuple));
 
     queue_update (PLAYLIST_UPDATE_METADATA, playing_playlist, entry->number, 1);
     LEAVE;

@@ -49,7 +49,7 @@ static Index<PlaylistAddItem> strv_to_index (const char * const * strv)
 
 static bool_t do_add (Obj * obj, Invoc * invoc, const char * file)
 {
-    aud_playlist_entry_insert (aud_playlist_get_active (), -1, file, NULL, FALSE);
+    aud_playlist_entry_insert (aud_playlist_get_active (), -1, file, Tuple (), FALSE);
     FINISH (add);
     return TRUE;
 }
@@ -64,7 +64,7 @@ static bool_t do_add_list (Obj * obj, Invoc * invoc, const char * const * filena
 
 static bool_t do_add_url (Obj * obj, Invoc * invoc, const char * url)
 {
-    aud_playlist_entry_insert (aud_playlist_get_active (), -1, url, NULL, FALSE);
+    aud_playlist_entry_insert (aud_playlist_get_active (), -1, url, Tuple (), FALSE);
     FINISH (add_url);
     return TRUE;
 }
@@ -184,7 +184,7 @@ static bool_t do_get_tuple_fields (Obj * obj, Invoc * invoc)
     const char * fields[TUPLE_FIELDS + 1];
 
     for (int i = 0; i < TUPLE_FIELDS; i ++)
-        fields[i] = tuple_field_get_name (i);
+        fields[i] = Tuple::field_get_name (i);
 
     fields[TUPLE_FIELDS] = NULL;
 
@@ -289,7 +289,7 @@ static bool_t do_playing (Obj * obj, Invoc * invoc)
 
 static bool_t do_playlist_add (Obj * obj, Invoc * invoc, const char * list)
 {
-    aud_playlist_entry_insert (aud_playlist_get_active (), -1, list, NULL, FALSE);
+    aud_playlist_entry_insert (aud_playlist_get_active (), -1, list, Tuple (), FALSE);
     FINISH (playlist_add);
     return TRUE;
 }
@@ -303,7 +303,7 @@ static bool_t do_playlist_enqueue_to_temp (Obj * obj, Invoc * invoc, const char 
 
 static bool_t do_playlist_ins_url_string (Obj * obj, Invoc * invoc, const char * url, int pos)
 {
-    aud_playlist_entry_insert (aud_playlist_get_active (), pos, url, NULL, FALSE);
+    aud_playlist_entry_insert (aud_playlist_get_active (), pos, url, Tuple (), FALSE);
     FINISH (playlist_ins_url_string);
     return TRUE;
 }
@@ -539,8 +539,8 @@ static bool_t do_song_title (Obj * obj, Invoc * invoc, unsigned pos)
 
 static bool_t do_song_tuple (Obj * obj, Invoc * invoc, unsigned pos, const char * key)
 {
-    int field = tuple_field_by_name (key);
-    Tuple * tuple = NULL;
+    int field = Tuple::field_by_name (key);
+    Tuple tuple;
     GVariant * var = NULL;
 
     if (field >= 0)
@@ -548,21 +548,19 @@ static bool_t do_song_tuple (Obj * obj, Invoc * invoc, unsigned pos, const char 
 
     if (tuple)
     {
-        switch (tuple_get_value_type (tuple, field))
+        switch (tuple.get_value_type (field))
         {
         case TUPLE_STRING:
-            var = g_variant_new_string (tuple_get_str (tuple, field));
+            var = g_variant_new_string (tuple.get_str (field));
             break;
 
         case TUPLE_INT:
-            var = g_variant_new_int32 (tuple_get_int (tuple, field));
+            var = g_variant_new_int32 (tuple.get_int (field));
             break;
 
         default:
             break;
         }
-
-        tuple_unref (tuple);
     }
 
     if (! var)

@@ -73,7 +73,7 @@ EXPORT void tuple_formatter_free (TupleFormatter * formatter)
     g_slice_free (TupleFormatter, formatter);
 }
 
-EXPORT String tuple_format_title (TupleFormatter * formatter, const Tuple * tuple)
+EXPORT String tuple_format_title (TupleFormatter * formatter, const Tuple & tuple)
 {
     tuple_formatter_eval (formatter->context, formatter->node, tuple, formatter->buf);
     tuple_evalctx_reset (formatter->context);
@@ -86,7 +86,7 @@ EXPORT String tuple_format_title (TupleFormatter * formatter, const Tuple * tupl
 
     for (unsigned i = 0; i < ARRAY_LEN (fallbacks); i ++)
     {
-        String title = tuple_get_str (tuple, fallbacks[i]);
+        String title = tuple.get_str (fallbacks[i]);
         if (title)
             return title;
     }

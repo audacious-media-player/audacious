@@ -26,7 +26,6 @@
 
 #include "audstrings.h"
 #include "i18n.h"
-#include "tinylock.h"
 #include "tuple.h"
 
 #if TUPLE_FIELDS > 64
@@ -55,7 +54,7 @@ union TupleVal
  * Structure for holding and passing around miscellaneous track
  * metadata. This is not the same as a playlist entry, though.
  */
-struct Tuple {
+struct TupleData {
     uint64_t setmask;      // which fields are present
     Index<TupleVal> vals;  // ordered list of field values
 
@@ -67,7 +66,6 @@ struct Tuple {
                                          may be set. */
 
     int refcount;
-    TinyLock lock;
 };
 
 #define BIT(i) ((uint64_t) 1 << (i))
@@ -171,7 +169,7 @@ static int field_dict_compare (const void * a, const void * b)
     return strcmp (((FieldDictEntry *) a)->name, ((FieldDictEntry *) b)->name);
 }
 
-EXPORT int tuple_field_by_name (const char * name)
+EXPORT int Tuple::field_by_name (const char * name)
 {
     FieldDictEntry find = {name, -1};
     FieldDictEntry * found = (FieldDictEntry *) bsearch (& find, field_dict,
@@ -180,19 +178,19 @@ EXPORT int tuple_field_by_name (const char * name)
     return found ? found->field : -1;
 }
 
-EXPORT const char * tuple_field_get_name (int field)
+EXPORT const char * Tuple::field_get_name (int field)
 {
     g_return_val_if_fail (VALID_FIELD (field), NULL);
     return tuple_fields[field].name;
 }
 
-EXPORT TupleValueType tuple_field_get_type (int field)
+EXPORT TupleValueType Tuple::field_get_type (int field)
 {
     g_return_val_if_fail (VALID_FIELD (field), TUPLE_UNKNOWN);
     return tuple_fields[field].type;
 }
 
-static TupleVal * lookup_val (Tuple * tuple, int field, bool add, bool remove)
+static TupleVal * lookup_val (TupleData * tuple, int field, bool add, bool remove)
 {
     /* calculate number of preceding fields */
     int pos = bitcount (tuple->setmask & (BIT (field) - 1));
@@ -220,80 +218,16 @@ static TupleVal * lookup_val (Tuple * tuple, int field, bool add, bool remove)
     return & tuple->vals[pos];
 }
 
-static void tuple_destroy (Tuple * tuple)
+static TupleData * tuple_new ()
 {
-    auto iter = tuple->vals.begin ();
-
-    for (int f = 0; f < TUPLE_FIELDS; f ++)
-    {
-        if (tuple->setmask & BIT (f))
-        {
-            if (FIELD_TYPE (f) == TUPLE_STRING)
-                iter->str.~String ();
-
-            iter ++;
-        }
-    }
-
-    tuple->vals.clear ();
-
-    g_free (tuple->subtunes);
-    g_slice_free (Tuple, tuple);
-}
-
-EXPORT Tuple * tuple_new (void)
-{
-    Tuple * tuple = g_slice_new0 (Tuple);
+    TupleData * tuple = g_slice_new0 (TupleData);
     tuple->refcount = 1;
     return tuple;
 }
 
-EXPORT Tuple * tuple_ref (Tuple * tuple)
+static TupleData * tuple_copy (const TupleData * old)
 {
-    __sync_fetch_and_add (& tuple->refcount, 1);
-
-    return tuple;
-}
-
-EXPORT void tuple_unref (Tuple * tuple)
-{
-    if (! tuple)
-        return;
-
-    if (! __sync_sub_and_fetch (& tuple->refcount, 1))
-        tuple_destroy (tuple);
-}
-
-EXPORT void tuple_set_filename (Tuple * tuple, const char * filename)
-{
-    const char * base, * ext, * sub;
-    int isub;
-
-    uri_parse (filename, & base, & ext, & sub, & isub);
-
-    char path[base - filename + 1];
-    str_decode_percent (filename, base - filename, path);
-    tuple_set_str (tuple, FIELD_FILE_PATH, path);
-
-    char name[ext - base + 1];
-    str_decode_percent (base, ext - base, name);
-    tuple_set_str (tuple, FIELD_FILE_NAME, name);
-
-    if (ext < sub)
-    {
-        char extbuf[sub - ext];
-        str_decode_percent (ext + 1, sub - ext - 1, extbuf);
-        tuple_set_str (tuple, FIELD_FILE_EXT, extbuf);
-    }
-
-    if (sub[0])
-        tuple_set_int (tuple, FIELD_SUBSONG_ID, isub);
-}
-
-EXPORT Tuple * tuple_copy (const Tuple * old)
-{
-    Tuple * tuple = tuple_new ();
-    LOCK (old);
+    TupleData * tuple = tuple_new ();
 
     tuple->setmask = old->setmask;
     tuple->vals.insert (0, old->vals.len ());
@@ -320,99 +254,160 @@ EXPORT Tuple * tuple_copy (const Tuple * old)
     if (old->subtunes)
         tuple->subtunes = (int *) g_memdup (old->subtunes, sizeof (int) * old->nsubtunes);
 
-    UNLOCK (old);
     return tuple;
 }
 
-EXPORT Tuple * tuple_new_from_filename (const char * filename)
+static void tuple_destroy (TupleData * tuple)
 {
-    Tuple * tuple = tuple_new ();
-    tuple_set_filename (tuple, filename);
+    auto iter = tuple->vals.begin ();
+
+    for (int f = 0; f < TUPLE_FIELDS; f ++)
+    {
+        if (tuple->setmask & BIT (f))
+        {
+            if (FIELD_TYPE (f) == TUPLE_STRING)
+                iter->str.~String ();
+
+            iter ++;
+        }
+    }
+
+    tuple->vals.clear ();
+
+    g_free (tuple->subtunes);
+    g_slice_free (TupleData, tuple);
+}
+
+static TupleData * tuple_ref (TupleData * tuple)
+{
+    if (tuple)
+        __sync_fetch_and_add (& tuple->refcount, 1);
+
     return tuple;
 }
 
-EXPORT void tuple_set_int (Tuple * tuple, int field, int x)
+static void tuple_unref (TupleData * tuple)
+{
+    if (tuple && ! __sync_sub_and_fetch (& tuple->refcount, 1))
+        tuple_destroy (tuple);
+}
+
+static TupleData * tuple_get_writable (TupleData * tuple)
+{
+    if (! tuple)
+        return tuple_new ();
+
+    if (__sync_fetch_and_add (& tuple->refcount, 0) == 1)
+        return tuple;
+
+    TupleData * copy = tuple_copy (tuple);
+    tuple_unref (tuple);
+    return copy;
+}
+
+EXPORT Tuple::~Tuple ()
+{
+    tuple_unref (data);
+}
+
+EXPORT Tuple Tuple::ref () const
+{
+    Tuple tuple;
+    tuple.data = tuple_ref (data);
+    return tuple;
+}
+
+EXPORT TupleValueType Tuple::get_value_type (int field) const
+{
+    g_return_val_if_fail (VALID_FIELD (field), TUPLE_UNKNOWN);
+
+    TupleVal * val = data ? lookup_val (data, field, false, false) : nullptr;
+    return val ? FIELD_TYPE (field) : TUPLE_UNKNOWN;
+}
+
+EXPORT int Tuple::get_int (int field) const
+{
+    g_return_val_if_fail (VALID_FIELD (field) && FIELD_TYPE (field) == TUPLE_INT, -1);
+
+    TupleVal * val = data ? lookup_val (data, field, false, false) : nullptr;
+    return val ? val->x : -1;
+}
+
+EXPORT String Tuple::get_str (int field) const
+{
+    g_return_val_if_fail (VALID_FIELD (field) && FIELD_TYPE (field) == TUPLE_STRING, String ());
+
+    TupleVal * val = data ? lookup_val (data, field, false, false) : nullptr;
+    return val ? val->str : String ();
+}
+
+EXPORT void Tuple::set_int (int field, int x)
 {
     g_return_if_fail (VALID_FIELD (field) && FIELD_TYPE (field) == TUPLE_INT);
-    LOCK (tuple);
 
-    TupleVal * val = lookup_val (tuple, field, true, false);
+    data = tuple_get_writable (data);
+    TupleVal * val = lookup_val (data, field, true, false);
     val->x = x;
-
-    UNLOCK (tuple);
 }
 
-EXPORT void tuple_set_str (Tuple * tuple, int field, const char * str)
+EXPORT void Tuple::set_str (int field, const char * str)
 {
-    g_return_if_fail (VALID_FIELD (field) && FIELD_TYPE (field) == TUPLE_STRING);
-
     if (! str)
     {
-        tuple_unset (tuple, field);
+        unset (field);
         return;
     }
 
-    LOCK (tuple);
+    g_return_if_fail (VALID_FIELD (field) && FIELD_TYPE (field) == TUPLE_STRING);
 
-    TupleVal * val = lookup_val (tuple, field, true, false);
+    data = tuple_get_writable (data);
+    TupleVal * val = lookup_val (data, field, true, false);
     val->str = str_to_utf8 (str, -1);
-
-    UNLOCK (tuple);
 }
 
-EXPORT void tuple_unset (Tuple * tuple, int field)
+EXPORT void Tuple::unset (int field)
 {
     g_return_if_fail (VALID_FIELD (field));
-    LOCK (tuple);
 
-    lookup_val (tuple, field, false, true);
+    if (! data)
+        return;
 
-    UNLOCK (tuple);
+    data = tuple_get_writable (data);
+    lookup_val (data, field, false, true);
 }
 
-EXPORT TupleValueType tuple_get_value_type (const Tuple * tuple, int field)
+EXPORT void Tuple::set_filename (const char * filename)
 {
-    g_return_val_if_fail (VALID_FIELD (field), TUPLE_UNKNOWN);
-    LOCK (tuple);
+    const char * base, * ext, * sub;
+    int isub;
 
-    TupleVal * val = lookup_val ((Tuple *) tuple, field, false, false);
-    TupleValueType type = val ? FIELD_TYPE (field) : TUPLE_UNKNOWN;
+    uri_parse (filename, & base, & ext, & sub, & isub);
 
-    UNLOCK (tuple);
-    return type;
-}
+    char path[base - filename + 1];
+    str_decode_percent (filename, base - filename, path);
+    set_str (FIELD_FILE_PATH, path);
 
-EXPORT String tuple_get_str (const Tuple * tuple, int field)
-{
-    g_return_val_if_fail (VALID_FIELD (field) && FIELD_TYPE (field) == TUPLE_STRING, String ());
-    LOCK (tuple);
+    char name[ext - base + 1];
+    str_decode_percent (base, ext - base, name);
+    set_str (FIELD_FILE_NAME, name);
 
-    TupleVal * val = lookup_val ((Tuple *) tuple, field, false, false);
-    String str = val ? val->str : String ();
+    if (ext < sub)
+    {
+        char extbuf[sub - ext];
+        str_decode_percent (ext + 1, sub - ext - 1, extbuf);
+        set_str (FIELD_FILE_EXT, extbuf);
+    }
 
-    UNLOCK (tuple);
-    return str;
-}
-
-EXPORT int tuple_get_int (const Tuple * tuple, int field)
-{
-    g_return_val_if_fail (VALID_FIELD (field) && FIELD_TYPE (field) == TUPLE_INT, -1);
-    LOCK (tuple);
-
-    TupleVal * val = lookup_val ((Tuple *) tuple, field, false, false);
-    int x = val ? val->x : -1;
-
-    UNLOCK (tuple);
-    return x;
+    if (sub[0])
+        set_int (FIELD_SUBSONG_ID, isub);
 }
 
 #define APPEND(b, ...) snprintf (b + strlen (b), sizeof b - strlen (b), __VA_ARGS__)
 
-EXPORT void tuple_set_format (Tuple * t, const char * format, int chans, int rate,
- int brate)
+EXPORT void Tuple::set_format (const char * format, int chans, int rate, int brate)
 {
     if (format)
-        tuple_set_str (t, FIELD_CODEC, format);
+        set_str (FIELD_CODEC, format);
 
     char buf[32];
     buf[0] = 0;
@@ -434,44 +429,33 @@ EXPORT void tuple_set_format (Tuple * t, const char * format, int chans, int rat
         APPEND (buf, "%d kHz", rate / 1000);
 
     if (buf[0])
-        tuple_set_str (t, FIELD_QUALITY, buf);
+        set_str (FIELD_QUALITY, buf);
 
     if (brate > 0)
-        tuple_set_int (t, FIELD_BITRATE, brate);
+        set_int (FIELD_BITRATE, brate);
 }
 
-EXPORT void tuple_set_subtunes (Tuple * tuple, int n_subtunes, const int * subtunes)
+EXPORT void Tuple::set_subtunes (int n_subtunes, const int * subtunes)
 {
-    LOCK (tuple);
+    data = tuple_get_writable (data);
 
-    g_free (tuple->subtunes);
-    tuple->subtunes = NULL;
+    g_free (data->subtunes);
+    data->subtunes = nullptr;
 
-    tuple->nsubtunes = n_subtunes;
+    data->nsubtunes = n_subtunes;
     if (subtunes)
-        tuple->subtunes = (int *) g_memdup (subtunes, sizeof (int) * n_subtunes);
-
-    UNLOCK (tuple);
+        data->subtunes = (int *) g_memdup (subtunes, sizeof (int) * n_subtunes);
 }
 
-EXPORT int tuple_get_n_subtunes (Tuple * tuple)
+EXPORT int Tuple::get_n_subtunes () const
 {
-    LOCK (tuple);
-
-    int n_subtunes = tuple->nsubtunes;
-
-    UNLOCK (tuple);
-    return n_subtunes;
+    return data ? data->nsubtunes : 0;
 }
 
-EXPORT int tuple_get_nth_subtune (Tuple * tuple, int n)
+EXPORT int Tuple::get_nth_subtune (int n) const
 {
-    LOCK (tuple);
+    if (! data || n < 0 || n >= data->nsubtunes)
+        return -1;
 
-    int subtune = -1;
-    if (n >= 0 && n < tuple->nsubtunes)
-        subtune = tuple->subtunes ? tuple->subtunes[n] : 1 + n;
-
-    UNLOCK (tuple);
-    return subtune;
+    return data->subtunes ? data->subtunes[n] : 1 + n;
 }

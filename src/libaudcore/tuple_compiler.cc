@@ -132,7 +132,7 @@ static int tuple_evalctx_add_var (TupleEvalContext * ctx, const char * name,
 
   if (type == TUPLE_VAR_FIELD)
   {
-    field = tuple_field_by_name (name);
+    field = Tuple::field_by_name (name);
     if (field < 0)
       return -1;
   }
@@ -149,7 +149,7 @@ static int tuple_evalctx_add_var (TupleEvalContext * ctx, const char * name,
 
   switch (type) {
     case TUPLE_VAR_FIELD:
-      var->ctype = tuple_field_get_type (field);
+      var->ctype = Tuple::field_get_type (field);
       break;
 
     case TUPLE_VAR_CONST:
@@ -529,7 +529,7 @@ TupleEvalNode *tuple_formatter_compile(TupleEvalContext *ctx, const char *expr)
 
 
 /* Fetch a tuple field value.  Return TRUE if found. */
-static bool_t tf_get_fieldval (TupleEvalVar * var, const Tuple * tuple)
+static bool_t tf_get_fieldval (TupleEvalVar * var, const Tuple & tuple)
 {
   if (var->type != TUPLE_VAR_FIELD || var->fieldidx < 0)
     return FALSE;
@@ -537,16 +537,16 @@ static bool_t tf_get_fieldval (TupleEvalVar * var, const Tuple * tuple)
   if (var->fieldread)
     return var->fieldvalid;
 
-  if (tuple_get_value_type (tuple, var->fieldidx) != var->ctype) {
+  if (tuple.get_value_type (var->fieldidx) != var->ctype) {
     var->fieldread = TRUE;
     var->fieldvalid = FALSE;
     return FALSE;
   }
 
   if (var->ctype == TUPLE_INT)
-    var->defvali = tuple_get_int (tuple, var->fieldidx);
+    var->defvali = tuple.get_int (var->fieldidx);
   else if (var->ctype == TUPLE_STRING)
-    var->fieldstr = tuple_get_str (tuple, var->fieldidx).to_c ();
+    var->fieldstr = tuple.get_str (var->fieldidx).to_c ();
 
   var->fieldread = TRUE;
   var->fieldvalid = TRUE;
@@ -558,7 +558,7 @@ static bool_t tf_get_fieldval (TupleEvalVar * var, const Tuple * tuple)
  * Return VAR_* type for the variable.
  */
 static TupleValueType tf_get_var (char * * tmps, int * tmpi, TupleEvalVar *
- var, const Tuple * tuple)
+ var, const Tuple & tuple)
 {
   TupleValueType type = TUPLE_UNKNOWN;
   *tmps = NULL;
@@ -593,7 +593,7 @@ static TupleValueType tf_get_var (char * * tmps, int * tmpi, TupleEvalVar *
  * context and return resulting string.
  */
 static bool_t tuple_formatter_eval_do (TupleEvalContext * ctx, TupleEvalNode *
- expr, const Tuple * tuple, GString * out)
+ expr, const Tuple & tuple, GString * out)
 {
   TupleEvalNode *curr = expr;
   TupleEvalVar *var0, *var1;
@@ -731,7 +731,7 @@ static bool_t tuple_formatter_eval_do (TupleEvalContext * ctx, TupleEvalNode *
 }
 
 void tuple_formatter_eval (TupleEvalContext * ctx, TupleEvalNode * expr,
- const Tuple * tuple, GString * out)
+ const Tuple & tuple, GString * out)
 {
     g_string_truncate (out, 0);
     tuple_formatter_eval_do (ctx, expr, tuple, out);
