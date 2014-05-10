@@ -34,9 +34,6 @@ public:
         delete ptr;
     }
 
-    SmartPtr (const SmartPtr &) = delete;
-    void operator= (const SmartPtr &) = delete;
-
     SmartPtr (SmartPtr && b) :
         ptr (b.ptr)
     {

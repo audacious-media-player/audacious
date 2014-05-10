@@ -48,9 +48,6 @@ public:
 
     void clear (EraseFunc erase_func);  // use as destructor
 
-    IndexBase (const IndexBase &) = delete;
-    void operator= (const IndexBase &) = delete;
-
     IndexBase (IndexBase && b) :
         m_data (b.m_data),
         m_len (b.m_len),
