@@ -144,6 +144,17 @@ static bool_t keypress_cb (GtkWidget * widget, GdkEventKey * event)
     return FALSE;
 }
 
+static void set_starting_position(void)
+{
+    int playlist = aud_playlist_get_active();
+    int pos = aud_playlist_get_position (playlist);
+    GtkTreeSelection * sel = gtk_tree_view_get_selection ((GtkTreeView *) treeview);
+    GtkTreePath * path = gtk_tree_path_new_from_indices (pos, -1);
+    gtk_tree_selection_select_path (sel, path);
+    gtk_tree_view_scroll_to_cell ((GtkTreeView *) treeview, path, NULL, TRUE, 0.5, 0);
+    gtk_tree_path_free (path);
+}
+
 static void fill_list (void)
 {
     g_return_if_fail (treeview && filter_entry);
@@ -162,6 +173,7 @@ static void fill_list (void)
         GtkTreeSelection * sel = gtk_tree_view_get_selection ((GtkTreeView *) treeview);
         GtkTreePath * path = gtk_tree_path_new_from_indices (0, -1);
         gtk_tree_selection_select_path (sel, path);
+        gtk_tree_view_scroll_to_cell ((GtkTreeView *) treeview, path, NULL, TRUE, 0.5, 0);
         gtk_tree_path_free (path);
     }
 }
@@ -326,6 +338,7 @@ EXPORT void audgui_jump_to_track (void)
     if (! watching)
     {
         fill_list ();
+        set_starting_position();
         hook_associate ("playlist update", update_cb, NULL);
         hook_associate ("playlist activate", activate_cb, NULL);
         watching = TRUE;
