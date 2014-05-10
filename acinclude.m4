@@ -21,19 +21,6 @@ dnl ** Common checks
 dnl **
 AC_DEFUN([AUD_COMMON_PROGS], [
 
-dnl Check for C and C++ compilers
-dnl =============================
-AC_REQUIRE([AC_PROG_CC])
-AC_REQUIRE([AC_PROG_CXX])
-AC_REQUIRE([AC_C_BIGENDIAN])
-AC_REQUIRE([AC_SYS_LARGEFILE])
-
-if test "x$GCC" = "xyes"; then
-    CFLAGS="$CFLAGS -std=gnu99 -ffast-math -Wall -pipe"
-    CXXFLAGS="$CXXFLAGS -std=c++11 -ffast-math -Wall -pipe"
-    AUD_CHECK_CFLAGS(-Wtype-limits)
-fi
-
 dnl Check platform
 dnl ==============
 
@@ -67,6 +54,23 @@ esac
 AC_SUBST(HAVE_MSWINDOWS)
 AC_SUBST(HAVE_LINUX)
 AC_SUBST(HAVE_DARWIN)
+
+dnl Check for C and C++ compilers
+dnl =============================
+AC_REQUIRE([AC_PROG_CC])
+AC_REQUIRE([AC_PROG_CXX])
+AC_REQUIRE([AC_C_BIGENDIAN])
+AC_REQUIRE([AC_SYS_LARGEFILE])
+
+if test "x$GCC" = "xyes"; then
+    CFLAGS="$CFLAGS -std=gnu99 -ffast-math -Wall -pipe"
+    if test "x$HAVE_DARWIN" = "xyes"; then
+        CXXFLAGS="$CXXFLAGS -stdlib=libc++ -std=c++11 -ffast-math -Wall -pipe"
+    else
+        CXXFLAGS="$CXXFLAGS -std=c++11 -ffast-math -Wall -pipe"
+    fi
+    AUD_CHECK_CFLAGS(-Wtype-limits)
+fi
 
 dnl Enable "-Wl,-z,defs" only on Linux
 dnl ==================================
