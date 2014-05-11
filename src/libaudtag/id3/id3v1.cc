@@ -86,11 +86,8 @@ static bool_t id3v1_can_handle_file (VFSFile * file)
 static bool_t combine_string (Tuple & tuple, int field, const char * str1,
  int size1, const char * str2, int size2)
 {
-    char str[size1 + size2 + 1];
-
-    memset (str, 0, sizeof str);
-    strncpy (str, str1, size1);
-    strncpy (str + strlen (str), str2, size2);
+    StringBuf str = str_copy (str1, size1);
+    str_insert (str, -1, str2, size2);
 
     g_strchomp (str);
 
