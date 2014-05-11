@@ -207,7 +207,7 @@ EXPORT Tuple * aud_file_read_tuple (const char * filename, PluginHandle * decode
 
     VFSFile * handle = NULL;
     if (! open_file (filename, ip, "r", & handle))
-        return FALSE;
+        return NULL;
 
     Tuple * tuple = ip->probe_for_tuple (filename, handle);
 
