@@ -706,34 +706,32 @@ EXPORT Index<String> str_list_to_index (const char * list, const char * delims)
 
 EXPORT StringBuf index_to_str_list (const Index<String> & index, const char * sep)
 {
-    int count = index.len ();
+    StringBuf str (-1);
+    char * set = str;
+    int left = str.size ();
     int seplen = strlen (sep);
-    int total = count ? seplen * (count - 1) : 0;
-    int lengths[count];
 
-    for (int i = 0; i < count; i ++)
+    for (const String & s : index)
     {
-        lengths[i] = strlen (index[i]);
-        total += lengths[i];
-    }
+        int len = strlen (s);
+        assert (len + seplen < left);
 
-    StringBuf buf (total + 1);
-    int pos = 0;
-
-    for (int i = 0; i < count; i ++)
-    {
-        if (i)
+        if (set > str)
         {
-            strcpy (buf + pos, sep);
-            pos += seplen;
+            strcpy (set, sep);
+
+            set += seplen;
+            left -= seplen;
         }
 
-        strcpy (buf + pos, index[i]);
-        pos += lengths[i];
+        strcpy (set, s);
+
+        set += len;
+        left -= len;
     }
 
-    buf[pos] = 0;
-    return buf;
+    str.resize (set + 1 - str);
+    return str;
 }
 
 /*
