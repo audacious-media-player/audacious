@@ -137,7 +137,7 @@ void JumpToTrackCache::init ()
         KeywordMatch & item = k[entry];
         item.entry = entry;
         aud_playlist_entry_describe (playlist, entry, item.title, item.artist, item.album, true);
-        item.path = uri_to_display (aud_playlist_entry_get_filename (playlist, entry));
+        item.path = String (uri_to_display (aud_playlist_entry_get_filename (playlist, entry)));
     }
 }
 
@@ -196,7 +196,7 @@ const KeywordMatches * JumpToTrackCache::search (const char * keyword)
     if (! n_items ())
         init ();
 
-    SCOPY (match_string, keyword);
+    StringBuf match_string = str_copy (keyword);
     const KeywordMatches * matches;
 
     while (! (matches = lookup (String (match_string))))

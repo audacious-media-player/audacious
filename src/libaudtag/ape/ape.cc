@@ -199,7 +199,7 @@ static bool_t ape_read_item (void * * data, int length, ValuePair & pair)
     }
 
     pair.key = String ((char *) (* data) + 8);
-    pair.value = str_nget (value, header[0]);
+    pair.value = String (str_copy (value, header[0]));
 
     * data = value + header[0];
 
@@ -372,14 +372,11 @@ static bool_t write_integer_item (const Tuple & tuple, int field, VFSFile *
  handle, const char * key, int * written_length, int * written_items)
 {
     int value = tuple.get_int (field);
-    char scratch[32];
 
     if (value <= 0)
         return TRUE;
 
-    str_itoa (value, scratch, sizeof scratch);
-
-    if (! ape_write_item (handle, key, scratch, written_length))
+    if (! ape_write_item (handle, key, int_to_str (value), written_length))
         return FALSE;
 
     (* written_items) ++;

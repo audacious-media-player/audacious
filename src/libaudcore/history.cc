@@ -24,7 +24,7 @@
 
 EXPORT String aud_history_get (int entry)
 {
-    SPRINTF (name, "entry%d", entry);
+    StringBuf name = str_printf ("entry%d", entry);
     String path = aud_get_str ("history", name);
     return (path[0] ? path : String ());
 }
@@ -35,7 +35,7 @@ EXPORT void aud_history_add (const char * path)
 
     for (int i = 0; i < MAX_ENTRIES; i ++)
     {
-        SPRINTF (name, "entry%d", i);
+        StringBuf name = str_printf ("entry%d", i);
         String old = aud_get_str ("history", name);
         aud_set_str ("history", name, add);
 

@@ -109,8 +109,7 @@ EXPORT int vfs_fputs(const char *s, VFSFile *stream)
  */
 EXPORT int vfs_vfprintf(VFSFile *stream, char const *format, va_list args)
 {
-    VSPRINTF (buf, format, args);
-    return vfs_fputs (buf, stream);
+    return vfs_fputs (str_vprintf (format, args), stream);
 }
 
 /**

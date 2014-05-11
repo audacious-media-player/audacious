@@ -155,7 +155,7 @@ static void art_item_unref (const String & file, ArtItem * item)
         /* delete temporary file */
         if (item->art_file && item->is_temp)
         {
-            String local = uri_to_filename (item->art_file);
+            StringBuf local = uri_to_filename (item->art_file);
             if (local)
                 g_unlink (local);
         }
@@ -239,7 +239,7 @@ EXPORT const char * aud_art_request_file (const char * file)
         String local = write_temp_file (item->data, item->len);
         if (local)
         {
-            item->art_file = filename_to_uri (local);
+            item->art_file = String (filename_to_uri (local));
             item->is_temp = true;
         }
     }

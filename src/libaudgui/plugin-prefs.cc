@@ -111,8 +111,8 @@ EXPORT void audgui_show_plugin_about (PluginHandle * plugin)
 
     about_windows = node = g_list_prepend (about_windows, NULL);
 
-    SCONCAT3 (title, _("About"), " ", name);
-    audgui_simple_message ((GtkWidget * *) & node->data, GTK_MESSAGE_INFO, title, text);
+    audgui_simple_message ((GtkWidget * *) & node->data, GTK_MESSAGE_INFO,
+     str_printf (_("About %s"), name), text);
     g_object_set_data ((GObject *) node->data, "plugin-id", plugin);
 
     g_signal_connect_after (node->data, "destroy", (GCallback) destroy_cb, plugin);
@@ -164,9 +164,7 @@ EXPORT void audgui_show_plugin_prefs (PluginHandle * plugin)
         name = dgettext (header->domain, header->name);
 
     GtkWidget * window = gtk_dialog_new ();
-
-    SCONCAT3 (title, name, " ", _("Settings"));
-    gtk_window_set_title ((GtkWindow *) window, title);
+    gtk_window_set_title ((GtkWindow *) window, str_printf (_("%s Settings"), name));
 
     if (p->apply)
     {

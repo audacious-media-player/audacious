@@ -33,6 +33,7 @@ SRCS = adder.cc \
        probe-buffer.cc \
        runtime.cc \
        scanner.cc \
+       stringbuf.cc \
        strpool.cc \
        tinylock.cc \
        tuple.cc \

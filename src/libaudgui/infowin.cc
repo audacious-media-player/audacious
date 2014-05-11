@@ -136,21 +136,15 @@ static void set_entry_str_from_field (GtkWidget * widget, const Tuple & tuple,
  int fieldn, bool_t editable)
 {
     String text = tuple.get_str (fieldn);
-    gtk_entry_set_text ((GtkEntry *) widget, text != NULL ? text : "");
+    gtk_entry_set_text ((GtkEntry *) widget, text ? text : "");
     gtk_editable_set_editable ((GtkEditable *) widget, editable);
 }
 
 static void set_entry_int_from_field (GtkWidget * widget, const Tuple & tuple,
  int fieldn, bool_t editable)
 {
-    char scratch[32];
-
-    if (tuple.get_value_type (fieldn) == TUPLE_INT)
-        str_itoa (tuple.get_int (fieldn), scratch, sizeof scratch);
-    else
-        scratch[0] = 0;
-
-    gtk_entry_set_text ((GtkEntry *) widget, scratch);
+    int value = tuple.get_int (fieldn);
+    gtk_entry_set_text ((GtkEntry *) widget, (value > 0) ? int_to_str (value) : "");
     gtk_editable_set_editable ((GtkEditable *) widget, editable);
 }
 
@@ -408,10 +402,8 @@ static void infowin_show (int list, int entry, const char * filename,
     };
 
     if (tuple.get_value_type (FIELD_BITRATE) == TUPLE_INT)
-    {
-        int bitrate = tuple.get_int (FIELD_BITRATE);
-        codec_values[CODEC_BITRATE] = str_printf (_("%d kb/s"), bitrate);
-    }
+        codec_values[CODEC_BITRATE] = String (str_printf (_("%d kb/s"),
+         tuple.get_int (FIELD_BITRATE)));
 
     for (int row = 0; row < CODEC_ITEMS; row ++)
     {
@@ -442,10 +434,8 @@ EXPORT void audgui_infowin_show (int playlist, int entry)
             infowin_show (playlist, entry, filename, tuple, decoder,
              aud_file_can_write_tuple (filename, decoder));
         else
-        {
-            SPRINTF (message, _("No info available for %s.\n"), (const char *) filename);
-            aud_ui_show_error (message);
-        }
+            aud_ui_show_error (str_printf (_("No info available for %s.\n"),
+             (const char *) filename));
     }
 }
 

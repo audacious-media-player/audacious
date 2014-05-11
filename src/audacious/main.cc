@@ -90,9 +90,9 @@ static bool_t parse_options (int argc, char * * argv)
             if (strstr (argv[n], "://"))
                 uri = String (argv[n]);
             else if (g_path_is_absolute (argv[n]))
-                uri = filename_to_uri (argv[n]);
+                uri = String (filename_to_uri (argv[n]));
             else
-                uri = filename_to_uri (filename_build (cur, argv[n]));
+                uri = String (filename_to_uri (filename_build ({cur, argv[n]})));
 
             if (uri)
                 filenames.append ({uri});

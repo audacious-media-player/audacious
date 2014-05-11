@@ -22,6 +22,8 @@
 
 #include <libaudcore/core.h>
 
+// Smart pointer.  Deletes object pointed to when the pointer goes out of scope.
+
 template<class T>
 class SmartPtr
 {
@@ -77,6 +79,9 @@ private:
     T * ptr;
 };
 
+// Wrapper class for a string stored in the string pool.  Use this instead of
+// str_get() and str_unref() wherever possible.
+
 class String
 {
 public:
@@ -84,9 +89,7 @@ public:
         raw (nullptr) {}
 
     ~String ()
-    {
-        str_unref (raw);
-    }
+        { str_unref (raw); }
 
     String (const String & b) :
         raw (str_ref (b.raw)) {}
@@ -128,7 +131,7 @@ public:
     unsigned hash () const
         { return str_hash (raw); }
 
-    /* considered harmful */
+    // please don't use
     static String from_c (char * str)
     {
         String s;
@@ -136,7 +139,7 @@ public:
         return s;
     }
 
-    /* considered harmful */
+    // please don't use
     char * to_c ()
     {
         char * str = raw;
@@ -146,6 +149,72 @@ public:
 
 private:
     char * raw;
+};
+
+struct StringStack;
+
+// Mutable string buffer, allocated on a stack to allow fast allocation.  The
+// price for this speed is that only the top string in the stack (i.e. the one
+// most recently allocated) can be resized or deleted.  Rules for the correct
+// use of StringBuf can be summarized as follows:
+//
+//   1. Always declare StringBufs within function or block scope, never at file
+//      or class scope.  Do not attempt to create a StringBuf with new or
+//      malloc().
+//   2. Only the first StringBuf declared in a function can be used as the
+//      return value.  It is possible to create a second StringBuf and then
+//      transfer its contents to the first with steal(), but doing so carries
+//      a performance penalty.
+
+class StringBuf
+{
+public:
+    constexpr StringBuf () :
+        stack (nullptr),
+        m_data (nullptr),
+        m_size (0) {}
+
+    // A size of -1 means to use all available space.  This can be useful when
+    // the final size of the string is not known in advance, but keep in mind
+    // that you will not be able to create any further StringBufs until you call
+    // resize().
+    explicit StringBuf (int size) :
+        stack (nullptr),
+        m_data (nullptr),
+        m_size (0)
+    {
+        resize (size);
+    }
+
+    StringBuf (StringBuf && other) :
+        stack (other.stack),
+        m_data (other.m_data),
+        m_size (other.m_size)
+    {
+        other.stack = nullptr;
+        other.m_data = nullptr;
+        other.m_size = 0;
+    }
+
+    // only allowed for top string
+    ~StringBuf ();
+
+    // only allowed for top string
+    void resize (int size);
+
+    // only allowed for top two strings
+    void steal (StringBuf && other);
+
+    int size () const
+        { return m_size; }
+
+    operator char * ()
+        { return m_data; }
+
+private:
+    StringStack * stack;
+    char * m_data;
+    int m_size;
 };
 
 #endif // LIBAUDCORE_OBJECTS_H

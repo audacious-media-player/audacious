@@ -138,7 +138,7 @@ vfs_fopen(const char * path,
             return NULL;
         }
 
-        SNCOPY (scheme, path, s - path);
+        StringBuf scheme = str_copy (path, s - path);
 
         if (! (vtable = lookup_func (scheme)))
             return NULL;
@@ -147,7 +147,7 @@ vfs_fopen(const char * path,
     const gchar * sub;
     uri_parse (path, NULL, NULL, & sub, NULL);
 
-    SNCOPY (buf, path, sub - path);
+    StringBuf buf = str_copy (path, sub - path);
 
     void * handle = vtable->vfs_fopen_impl (buf, mode);
     if (! handle)
@@ -399,7 +399,7 @@ vfs_file_test(const char * path, int test)
     if (strncmp (path, "file://", 7))
         return FALSE; /* only local files are handled */
 
-    String path2 = uri_to_filename (path);
+    StringBuf path2 = uri_to_filename (path);
     if (! path2)
         return FALSE;
 
@@ -444,7 +444,7 @@ EXPORT bool_t
 vfs_is_writeable(const char * path)
 {
     GStatBuf info;
-    String realfn = uri_to_filename (path);
+    StringBuf realfn = uri_to_filename (path);
 
     if (! realfn || g_stat (realfn, & info) < 0)
         return FALSE;

@@ -76,7 +76,7 @@ static GtkWidget * create_about_window (void)
     GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
     gtk_container_add ((GtkContainer *) about_window, vbox);
 
-    SCONCAT2 (logo_path, data_dir, "/images/about-logo.png");
+    StringBuf logo_path = filename_build ({data_dir, "images", "about-logo.png"});
     GtkWidget * image = gtk_image_new_from_file (logo_path);
     gtk_box_pack_start ((GtkBox *) vbox, image, FALSE, FALSE, 0);
 
@@ -91,13 +91,13 @@ static GtkWidget * create_about_window (void)
 
     char * credits, * license;
 
-    SCONCAT2 (credits_path, data_dir, "/AUTHORS");
+    StringBuf credits_path = filename_build ({data_dir, "AUTHORS"});
     if (! g_file_get_contents (credits_path, & credits, NULL, NULL))
-        credits = g_strdup_printf ("Unable to load %s; check your installation.", credits_path);
+        credits = g_strdup_printf ("Unable to load %s; check your installation.", (const char *) credits_path);
 
-    SCONCAT2 (license_path, data_dir, "/COPYING");
+    StringBuf license_path = filename_build ({data_dir, "COPYING"});
     if (! g_file_get_contents (license_path, & license, NULL, NULL))
-        license = g_strdup_printf ("Unable to load %s; check your installation.", license_path);
+        license = g_strdup_printf ("Unable to load %s; check your installation.", (const char *) license_path);
 
     g_strchomp (credits);
     g_strchomp (license);

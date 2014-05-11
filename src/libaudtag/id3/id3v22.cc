@@ -156,7 +156,7 @@ static bool read_frame (VFSFile * handle, int max_size, int version,
 
     * frame_size = sizeof (ID3v2FrameHeader) + hdrsz;
 
-    frame.key = str_nget (header.key, 3);
+    frame.key = String (str_copy (header.key, 3));
     frame.clear ();
     frame.insert (0, hdrsz);
 

@@ -413,14 +413,13 @@ static void fill_category_list (GtkTreeView * treeview, GtkNotebook * notebook)
 
     for (unsigned i = 0; i < ARRAY_LEN (categories); i ++)
     {
-        SCONCAT3 (path, data_dir, "/images/", categories[i].icon_path);
-
         GtkTreeIter iter;
 
         gtk_list_store_append (store, & iter);
         gtk_list_store_set (store, & iter, CATEGORY_VIEW_COL_NAME,
          gettext (categories[i].name), -1);
 
+        StringBuf path = filename_build ({data_dir, "images", categories[i].icon_path});
         GdkPixbuf * img = gdk_pixbuf_new_from_file (path, NULL);
 
         if (img)

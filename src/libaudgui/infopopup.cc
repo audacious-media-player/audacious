@@ -79,13 +79,8 @@ static bool_t infopopup_progress_cb (void * unused)
     if (aud_get_bool (NULL, "filepopup_showprogressbar") && filename &&
      current_file && ! strcmp (filename, current_file) && length > 0)
     {
-        gtk_progress_bar_set_fraction ((GtkProgressBar *) widgets.progress,
-         time / (float) length);
-
-        char time_str[16];
-        str_format_time (time_str, sizeof time_str, time);
-        gtk_progress_bar_set_text ((GtkProgressBar *) widgets.progress, time_str);
-
+        gtk_progress_bar_set_fraction ((GtkProgressBar *) widgets.progress, time / (float) length);
+        gtk_progress_bar_set_text ((GtkProgressBar *) widgets.progress, str_format_time (time));
         gtk_widget_show (widgets.progress);
     }
     else
@@ -199,27 +194,17 @@ static void infopopup_set_fields (const Tuple & tuple, const char * title)
     infopopup_set_field (widgets.album_header, widgets.album_label, album);
     infopopup_set_field (widgets.genre_header, widgets.genre_label, genre);
 
-    int value;
-    String tmp;
-
-    value = tuple.get_int (FIELD_LENGTH);
-
-    if (value > 0)
-    {
-        char buf[16];
-        str_format_time (buf, sizeof buf, value);
-        tmp = String (buf);
-    }
-
-    infopopup_set_field (widgets.length_header, widgets.length_label, tmp);
+    int value = tuple.get_int (FIELD_LENGTH);
+    infopopup_set_field (widgets.length_header, widgets.length_label,
+     (value > 0) ? (const char *) str_format_time (value) : nullptr);
 
     value = tuple.get_int (FIELD_YEAR);
-    tmp = (value > 0) ? int_to_str (value) : String ();
-    infopopup_set_field (widgets.year_header, widgets.year_label, tmp);
+    infopopup_set_field (widgets.year_header, widgets.year_label,
+     (value > 0) ? (const char *) int_to_str (value) : nullptr);
 
     value = tuple.get_int (FIELD_TRACK_NUMBER);
-    tmp = (value > 0) ? int_to_str (value) : String ();
-    infopopup_set_field (widgets.track_header, widgets.track_label, tmp);
+    infopopup_set_field (widgets.track_header, widgets.track_label,
+     (value > 0) ? (const char *) int_to_str (value) : nullptr);
 }
 
 static void infopopup_move_to_mouse (GtkWidget * infopopup)

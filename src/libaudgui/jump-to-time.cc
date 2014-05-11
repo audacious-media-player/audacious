@@ -56,8 +56,7 @@ EXPORT void audgui_jump_to_time (void)
     if (aud_drct_get_playing ())
     {
         int time = aud_drct_get_time () / 1000;
-        SPRINTF (buf, "%u:%02u", time / 60, time % 60);
-        gtk_entry_set_text ((GtkEntry *) entry, buf);
+        gtk_entry_set_text ((GtkEntry *) entry, str_printf ("%u:%02u", time / 60, time % 60));
     }
 
     audgui_show_unique_window (AUDGUI_JUMP_TO_TIME_WINDOW, dialog);

@@ -19,6 +19,7 @@
 
 #include "runtime.h"
 
+#include <assert.h>
 #include <locale.h>
 #include <stdlib.h>
 #include <sys/stat.h>
@@ -44,16 +45,22 @@
 
 #define AUTOSAVE_INTERVAL 300 /* seconds */
 
-static bool_t headless_mode;
-static bool_t verbose_mode;
-
-static String aud_paths[AUD_PATH_COUNT];
+#if G_BYTE_ORDER == G_LITTLE_ENDIAN
+#define UTF16_NATIVE "UTF-16LE"
+#else
+#define UTF16_NATIVE "UTF-16BE"
+#endif
 
 #ifdef S_IRGRP
 #define DIRMODE (S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH)
 #else
 #define DIRMODE (S_IRWXU)
 #endif
+
+static bool_t headless_mode;
+static bool_t verbose_mode;
+
+static String aud_paths[AUD_PATH_COUNT];
 
 EXPORT void aud_set_headless_mode (bool_t headless)
 {
@@ -75,62 +82,59 @@ EXPORT bool_t aud_get_verbose_mode (void)
     return verbose_mode;
 }
 
-static char * get_path_to_self (void)
+static StringBuf get_path_to_self (void)
 {
 #ifdef HAVE_PROC_SELF_EXE
-    int size = 256;
 
-    while (1)
+    StringBuf buf (-1);
+    int len = readlink ("/proc/self/exe", buf, buf.size ());
+
+    if (len < 0)
     {
-        char buf[size];
-        int len;
-
-        if ((len = readlink ("/proc/self/exe", buf, size)) < 0)
-        {
-            perror ("/proc/self/exe");
-            return NULL;
-        }
-
-        if (len < size)
-            return g_strndup (buf, len);
-
-        size += size;
+        perror ("/proc/self/exe");
+        return StringBuf ();
     }
+
+    assert (len < buf.size ());  // abort if out of memory
+
+    buf[len] = 0;
+    buf.resize (len + 1);
+    return buf;
+
 #elif defined _WIN32
-    int size = 256;
 
-    while (1)
+    StringBuf buf (-1);
+    wchar_t * bufw = (wchar_t *) (char *) buf;
+    int sizew = buf.size () / sizeof (wchar_t);
+    int lenw = GetModuleFileNameW (NULL, bufw, sizew);
+
+    if (! lenw)
     {
-        wchar_t buf[size];
-        int len;
-
-        if (! (len = GetModuleFileNameW (NULL, buf, size)))
-        {
-            fprintf (stderr, "GetModuleFileName failed.\n");
-            return NULL;
-        }
-
-        if (len < size)
-            return g_utf16_to_utf8 (buf, len, NULL, NULL, NULL);
-
-        size += size;
+        fprintf (stderr, "GetModuleFileName failed.\n");
+        return StringBuf ();
     }
+
+    assert (lenw < sizew);  // abort if out of memory
+
+    buf.resize (lenw * sizeof (wchar_t));
+    buf.steal (str_convert (buf, buf.size (), UTF16_NATIVE, "UTF8"));
+    return buf;
+
 #elif defined __APPLE__
-    unsigned int size = 256;
 
-    while (1)
-    {
-        char buf[size];
-        int res;
+    StringBuf buf (-1);
+    uint32_t size = buf.size ();
+    int ret = _NSGetExecutablePath (buf, & size);
 
-        if (! (res = _NSGetExecutablePath (buf, & size)))
-            return g_strdup (buf);
+    assert (! ret);  // abort if out of memory
 
-        if (res != -1)
-            return NULL;
-    }
+    buf.resize (strlen (buf) + 1);
+    return buf;
+
 #else
-    return NULL;
+
+    return StringBuf ();
+
 #endif
 }
 
@@ -163,7 +167,7 @@ static String relocate_path (const char * path, const char * from, const char * 
 #endif
         return String (path);
 
-    return str_printf ("%.*s%s", newlen, to, path + oldlen);
+    return String (str_printf ("%.*s%s", newlen, to, path + oldlen));
 }
 
 static void set_default_paths (void)
@@ -192,10 +196,10 @@ static void relocate_all_paths (void)
     filename_normalize (desktopfile);
     filename_normalize (iconfile);
 
-    SCOPY (from, bindir);
+    StringBuf from = str_copy (bindir);
 
     /* get path to current executable */
-    char * to = get_path_to_self ();
+    StringBuf to = get_path_to_self ();
 
     if (! to)
     {
@@ -209,7 +213,6 @@ static void relocate_all_paths (void)
 
     if (! base)
     {
-        g_free (to);
         set_default_paths ();
         return;
     }
@@ -238,8 +241,6 @@ static void relocate_all_paths (void)
     aud_paths[AUD_PATH_LOCALE_DIR] = relocate_path (localedir, from, to);
     aud_paths[AUD_PATH_DESKTOP_FILE] = relocate_path (desktopfile, from, to);
     aud_paths[AUD_PATH_ICON_FILE] = relocate_path (iconfile, from, to);
-
-    g_free (to);
 }
 
 EXPORT void aud_init_paths (void)
@@ -248,8 +249,9 @@ EXPORT void aud_init_paths (void)
 
     const char * xdg_config_home = g_get_user_config_dir ();
 
-    aud_paths[AUD_PATH_USER_DIR] = filename_build (xdg_config_home, "audacious");
-    aud_paths[AUD_PATH_PLAYLISTS_DIR] = filename_build (aud_paths[AUD_PATH_USER_DIR], "playlists");
+    aud_paths[AUD_PATH_USER_DIR] = String (filename_build ({xdg_config_home, "audacious"}));
+    aud_paths[AUD_PATH_PLAYLISTS_DIR] = String (filename_build
+     ({aud_paths[AUD_PATH_USER_DIR], "playlists"}));
 
     /* create ~/.config/audacious/playlists */
     if (g_mkdir_with_parents (aud_paths[AUD_PATH_PLAYLISTS_DIR], DIRMODE) < 0)

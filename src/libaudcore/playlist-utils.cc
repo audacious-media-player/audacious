@@ -252,13 +252,14 @@ EXPORT void aud_playlist_select_by_patterns (int playlist, const Tuple & pattern
     }
 }
 
-static String make_playlist_path (int playlist)
+static StringBuf make_playlist_path (int playlist)
 {
     if (! playlist)
-        return filename_build (aud_get_path (AUD_PATH_USER_DIR), "playlist.xspf");
+        return filename_build ({aud_get_path (AUD_PATH_USER_DIR), "playlist.xspf"});
 
-    SPRINTF (name, "playlist_%02d.xspf", 1 + playlist);
-    return filename_build (aud_get_path (AUD_PATH_PLAYLISTS_DIR), name);
+    StringBuf name = str_printf ("playlist_%02d.xspf", 1 + playlist);
+    name.steal (filename_build ({aud_get_path (AUD_PATH_USER_DIR), name}));
+    return name;
 }
 
 static void load_playlists_real (void)
@@ -270,7 +271,7 @@ static void load_playlists_real (void)
     int count;
     for (count = 0; ; count ++)
     {
-        String path = make_playlist_path (count);
+        StringBuf path = make_playlist_path (count);
         if (! g_file_test (path, G_FILE_TEST_EXISTS))
             break;
 
@@ -281,7 +282,7 @@ static void load_playlists_real (void)
 
     /* unique ID-based naming scheme */
 
-    String order_path = filename_build (folder, "order");
+    StringBuf order_path = filename_build ({folder, "order"});
     char * order_string;
     Index<String> order;
 
@@ -295,14 +296,13 @@ static void load_playlists_real (void)
     for (int i = 0; i < order.len (); i ++)
     {
         const String & number = order[i];
-        SCONCAT2 (name, number, ".audpl");
 
-        String path = filename_build (folder, name);
+        StringBuf name1 = str_concat ({number, ".audpl"});
+        StringBuf name2 = str_concat ({number, ".xspf"});
+
+        StringBuf path = filename_build ({folder, name1});
         if (! g_file_test (path, G_FILE_TEST_EXISTS))
-        {
-            SCONCAT2 (name2, number, ".xspf");
-            path = filename_build (folder, name2);
-        }
+            path.steal (filename_build ({folder, name2}));
 
         playlist_insert_with_id (count + i, atoi (number));
         playlist_insert_playlist_raw (count + i, 0, filename_to_uri (path));
@@ -332,24 +332,22 @@ static void save_playlists_real (void)
     for (int i = 0; i < lists; i ++)
     {
         int id = aud_playlist_get_unique_id (i);
-        String number = int_to_str (id);
-
-        SCONCAT2 (name, number, ".audpl");
+        StringBuf number = int_to_str (id);
+        StringBuf name = str_concat ({number, ".audpl"});
 
         if (playlist_get_modified (i))
         {
-            String path = filename_build (folder, name);
-
+            StringBuf path = filename_build ({folder, name});
             aud_playlist_save (i, filename_to_uri (path));
             playlist_set_modified (i, FALSE);
         }
 
-        order.append (std::move (number));
+        order.append (String (number));
         saved.add (String (name), true);
     }
 
-    String order_string = index_to_str_list (order, " ");
-    String order_path = filename_build (folder, "order");
+    StringBuf order_string = index_to_str_list (order, " ");
+    StringBuf order_path = filename_build ({folder, "order"});
 
     char * old_order_string;
     g_file_get_contents (order_path, & old_order_string, NULL, NULL);
@@ -381,7 +379,7 @@ static void save_playlists_real (void)
             continue;
 
         if (! saved.lookup (String (name)))
-            g_unlink (filename_build (folder, name));
+            g_unlink (filename_build ({folder, name}));
     }
 
     g_dir_close (dir);

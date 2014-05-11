@@ -48,7 +48,7 @@ EXPORT void audgui_confirm_playlist_delete (int playlist)
         return;
     }
 
-    SPRINTF (message, _("Do you want to permanently remove “%s”?"),
+    StringBuf message = str_printf (_("Do you want to permanently remove “%s”?"),
      (const char *) aud_playlist_get_title (playlist));
 
     int id = aud_playlist_get_unique_id (playlist);

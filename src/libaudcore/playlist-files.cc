@@ -38,8 +38,8 @@ struct PlaylistData {
 
 static void plugin_for_filename (const char * filename, PluginForEachFunc func, void * data)
 {
-    char ext[32];
-    if (uri_get_extension (filename, ext, sizeof ext))
+    StringBuf ext = uri_get_extension (filename);
+    if (ext)
         playlist_plugin_for_ext (ext, func, data);
 }
 
@@ -86,10 +86,7 @@ bool_t playlist_load (const char * filename, String & title, Index<PlaylistAddIt
     plugin_for_filename (filename, playlist_load_cb, & data);
 
     if (! data.plugin_found)
-    {
-        SPRINTF (error, _("Cannot load %s: unsupported file extension."), filename);
-        aud_ui_show_error (error);
-    }
+        aud_ui_show_error (str_printf (_("Cannot load %s: unsupported file extension."), filename));
 
     if (! data.success)
         return FALSE;
@@ -157,10 +154,7 @@ EXPORT bool_t aud_playlist_save (int list, const char * filename)
     plugin_for_filename (filename, playlist_save_cb, & data);
 
     if (! data.plugin_found)
-    {
-        SPRINTF (error, _("Cannot save %s: unsupported file extension."), filename);
-        aud_ui_show_error (error);
-    }
+        aud_ui_show_error (str_printf (_("Cannot save %s: unsupported file extension."), filename));
 
     return data.success;
 }

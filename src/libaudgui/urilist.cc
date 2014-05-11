@@ -28,16 +28,16 @@
 
 #include "libaudgui.h"
 
-static String check_uri (String && name)
+static String check_uri (const char * name)
 {
     if (strstr (name, "://"))
     {
-        String uri = filename_to_uri (name);
+        StringBuf uri = filename_to_uri (name);
         if (uri)
-            return uri;
+            return String (uri);
     }
 
-    return std::move (name);
+    return String (name);
 }
 
 static Index<PlaylistAddItem> urilist_to_index (const char * list)
@@ -54,7 +54,7 @@ static Index<PlaylistAddItem> urilist_to_index (const char * list)
         else
             next = end = strchr (list, 0);
 
-        index.append ({check_uri (str_nget (list, end - list))});
+        index.append ({check_uri (str_copy (list, end - list))});
         list = next;
     }
 

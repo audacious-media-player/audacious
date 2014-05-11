@@ -181,8 +181,7 @@ void eq_cleanup (void)
 
 EXPORT void aud_eq_set_bands (const double *values)
 {
-    String string = double_array_to_str (values, AUD_EQ_NBANDS);
-    g_return_if_fail (string);
+    StringBuf string = double_array_to_str (values, AUD_EQ_NBANDS);
     aud_set_str (NULL, "equalizer_bands", string);
 }
 

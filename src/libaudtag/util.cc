@@ -186,8 +186,7 @@ uint32_t syncsafe32 (uint32_t x)
 
 bool_t open_temp_file_for (TempFile * temp, VFSFile * file)
 {
-    String templ = filename_build (g_get_tmp_dir (), "audacious-temp-XXXXXX");
-    SCOPY (tempname, templ);
+    StringBuf tempname = filename_build ({g_get_tmp_dir (), "audacious-temp-XXXXXX"});
 
     temp->fd = g_mkstemp (tempname);
     if (temp->fd < 0)

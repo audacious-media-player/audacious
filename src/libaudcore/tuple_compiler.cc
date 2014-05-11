@@ -599,13 +599,14 @@ static bool_t tuple_formatter_eval_do (TupleEvalContext * ctx, TupleEvalNode *
   TupleEvalVar *var0, *var1;
   TupleValueType type0, type1;
   int tmpi0, tmpi1;
-  char tmps[MAX_STR], *tmps0, *tmps1, *tmps2;
+  char *tmps0, *tmps1, *tmps2;
   bool_t result;
   int resulti;
 
   if (!expr) return FALSE;
 
   while (curr) {
+    StringBuf tmps (0);
     const char *str = NULL;
 
     switch (curr->opcode) {
@@ -625,7 +626,7 @@ static bool_t tuple_formatter_eval_do (TupleEvalContext * ctx, TupleEvalNode *
                   break;
 
                 case TUPLE_INT:
-                  str_itoa (var0->defvali, tmps, sizeof (tmps));
+                  tmps.steal (int_to_str (var0->defvali));
                   str = tmps;
                   break;
 

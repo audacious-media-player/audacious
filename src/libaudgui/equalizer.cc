@@ -102,7 +102,7 @@ static void update_sliders (void * unused, GtkWidget * window)
 
     for (int i = 0; i < AUD_EQ_NBANDS; i ++)
     {
-        SPRINTF (slider_id, "slider%d", i);
+        StringBuf slider_id = str_printf ("slider%d", i);
         GtkWidget * slider = (GtkWidget *) g_object_get_data ((GObject *) window, slider_id);
         set_slider (slider, values[i]);
     }
@@ -144,8 +144,8 @@ static GtkWidget * create_window (void)
 
     for (int i = 0; i < AUD_EQ_NBANDS; i ++)
     {
+        StringBuf slider_id = str_printf ("slider%d", i);
         GtkWidget * slider = create_slider (_(names[i]), i, hbox);
-        SPRINTF (slider_id, "slider%d", i);
         g_object_set_data ((GObject *) window, slider_id, slider);
     }
 

@@ -163,8 +163,7 @@ static void plugin_free (PluginHandle * plugin)
 
 static FILE * open_registry_file (const char * mode)
 {
-    const char * user_dir = aud_get_path (AUD_PATH_USER_DIR);
-    SCONCAT2 (path, user_dir, "/" FILENAME);
+    StringBuf path = filename_build ({aud_get_path (AUD_PATH_USER_DIR), FILENAME});
     return g_fopen (path, mode);
 }
 

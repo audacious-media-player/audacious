@@ -362,7 +362,14 @@ EXPORT void Tuple::set_str (int field, const char * str)
 
     data = tuple_get_writable (data);
     TupleVal * val = lookup_val (data, field, true, false);
-    val->str = str_to_utf8 (str, -1);
+
+    if (g_utf8_validate (str, -1, nullptr))
+        val->str = String (str);
+    else
+    {
+        StringBuf utf8 = str_to_utf8 (str);
+        val->str = String (utf8 ? utf8 : "(character encoding error)");
+    }
 }
 
 EXPORT void Tuple::unset (int field)
@@ -383,20 +390,11 @@ EXPORT void Tuple::set_filename (const char * filename)
 
     uri_parse (filename, & base, & ext, & sub, & isub);
 
-    char path[base - filename + 1];
-    str_decode_percent (filename, base - filename, path);
-    set_str (FIELD_FILE_PATH, path);
-
-    char name[ext - base + 1];
-    str_decode_percent (base, ext - base, name);
-    set_str (FIELD_FILE_NAME, name);
+    set_str (FIELD_FILE_PATH, str_decode_percent (filename, base - filename));
+    set_str (FIELD_FILE_NAME, str_decode_percent (base, ext - base));
 
     if (ext < sub)
-    {
-        char extbuf[sub - ext];
-        str_decode_percent (ext + 1, sub - ext - 1, extbuf);
-        set_str (FIELD_FILE_EXT, extbuf);
-    }
+        set_str (FIELD_FILE_EXT, str_decode_percent (ext + 1, sub - ext - 1));
 
     if (sub[0])
         set_int (FIELD_SUBSONG_ID, isub);

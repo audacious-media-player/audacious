@@ -115,14 +115,14 @@ static void probe_by_scheme (ProbeState * state)
         return;
 
     AUDDBG ("Probing by scheme.\n");
-    SNCOPY (buf, state->filename, s - state->filename);
+    StringBuf buf = str_copy (state->filename, s - state->filename);
     input_plugin_for_key (INPUT_KEY_SCHEME, buf, (PluginForEachFunc) probe_func_fast, state);
 }
 
 static void probe_by_extension (ProbeState * state)
 {
-    char buf[32];
-    if (! uri_get_extension (state->filename, buf, sizeof buf))
+    StringBuf buf = uri_get_extension (state->filename);
+    if (! buf)
         return;
 
     AUDDBG ("Probing by extension.\n");

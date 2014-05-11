@@ -165,7 +165,7 @@ void plugin_system_init(void)
 
     const char * path = aud_get_path (AUD_PATH_PLUGIN_DIR);
     for (const char * dir : plugin_dir_list)
-        scan_plugins (filename_build (path, dir));
+        scan_plugins (filename_build ({path, dir}));
 
     plugin_registry_prune ();
 }

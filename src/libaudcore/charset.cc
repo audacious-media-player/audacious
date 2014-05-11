@@ -20,6 +20,8 @@
 #include "audstrings.h"
 #include "internal.h"
 
+#include <assert.h>
+#include <errno.h>
 #include <iconv.h>
 #include <stdio.h>
 #include <string.h>
@@ -37,36 +39,39 @@ extern "C" {
 #include "runtime.h"
 #include "tinylock.h"
 
-EXPORT String str_convert (const char * str, int len, const char * from_charset,
+EXPORT StringBuf str_convert (const char * str, int len, const char * from_charset,
  const char * to_charset)
 {
     iconv_t conv = iconv_open (to_charset, from_charset);
     if (conv == (iconv_t) -1)
-        return String ();
+        return StringBuf ();
 
     if (len < 0)
         len = strlen (str);
 
-    // liberal estimate of how much space we will need
-    // are there obscure cases that require even more?
-    int maxlen = 4 * len;
+    StringBuf buf (-1);
+    assert (buf.size () > 0);
 
-    char buf[maxlen + 1];
-    String result;
-
-    size_t inbytes = len;
-    size_t outbytes = maxlen;
+    size_t inbytesleft = len;
+    size_t outbytesleft = buf.size () - 1;
     char * in = (char *) str;
     char * out = buf;
 
-    if (iconv (conv, & in, & inbytes, & out, & outbytes) != (size_t) -1 && ! inbytes)
-    {
-        buf[maxlen - outbytes] = 0;
-        result = String (buf);
-    }
+    errno = 0;
+    size_t ret = iconv (conv, & in, & inbytesleft, & out, & outbytesleft);
+
+    if (ret == (size_t) -1)
+        assert (errno != E2BIG);  // abort if out of memory
 
     iconv_close (conv);
-    return result;
+
+    if (ret == (size_t) -1 || inbytesleft)
+        return StringBuf ();
+
+    int outlen = buf.size () - 1 - outbytesleft;
+    buf[outlen] = 0;
+    buf.resize (outlen + 1);
+    return buf;
 }
 
 static void whine_locale (const char * str, int len, const char * dir, const char * charset)
@@ -77,7 +82,7 @@ static void whine_locale (const char * str, int len, const char * dir, const cha
         fprintf (stderr, "Cannot convert %s locale (%s): %.*s\n", dir, charset, len, str);
 }
 
-EXPORT String str_from_locale (const char * str, int len)
+EXPORT StringBuf str_from_locale (const char * str, int len)
 {
     const char * charset;
 
@@ -87,14 +92,14 @@ EXPORT String str_from_locale (const char * str, int len)
         if (! g_utf8_validate (str, len, NULL))
         {
             whine_locale (str, len, "from", "UTF-8");
-            return String ();
+            return StringBuf ();
         }
 
-        return (len < 0) ? String (str) : str_nget (str, len);
+        return str_copy (str, len);
     }
     else
     {
-        String utf8 = str_convert (str, len, charset, "UTF-8");
+        StringBuf utf8 = str_convert (str, len, charset, "UTF-8");
         if (! utf8)
             whine_locale (str, len, "from", charset);
 
@@ -102,18 +107,18 @@ EXPORT String str_from_locale (const char * str, int len)
     }
 }
 
-EXPORT String str_to_locale (const char * str, int len)
+EXPORT StringBuf str_to_locale (const char * str, int len)
 {
     const char * charset;
 
     if (g_get_charset (& charset))
     {
         /* locale is UTF-8 */
-        return (len < 0) ? String (str) : str_nget (str, len);
+        return str_copy (str, len);
     }
     else
     {
-        String local = str_convert (str, len, "UTF-8", charset);
+        StringBuf local = str_convert (str, len, "UTF-8", charset);
         if (! local)
             whine_locale (str, len, "to", charset);
 
@@ -144,17 +149,10 @@ static void set_charsets (const char * region, const char * fallbacks)
     tiny_unlock_write (& settings_lock);
 }
 
-EXPORT String str_to_utf8 (const char * str, int len)
+static StringBuf convert_to_utf8_locked (const char * str, int len)
 {
-    /* check whether already UTF-8 */
-    if (g_utf8_validate (str, len, NULL))
-        return (len < 0) ? String (str) : str_nget (str, len);
-
     if (len < 0)
         len = strlen (str);
-
-    String utf8;
-    tiny_lock_read (& settings_lock);
 
 #ifdef USE_CHARDET
     if (detect_region)
@@ -163,9 +161,9 @@ EXPORT String str_to_utf8 (const char * str, int len)
         const char * detected = libguess_determine_encoding (str, len, detect_region);
         if (detected)
         {
-            utf8 = str_convert (str, len, detected, "UTF-8");
+            StringBuf utf8 = str_convert (str, len, detected, "UTF-8");
             if (utf8)
-                goto DONE;
+                return utf8;
         }
     }
 #endif
@@ -173,15 +171,23 @@ EXPORT String str_to_utf8 (const char * str, int len)
     /* try user-configured fallbacks */
     for (const String & fallback : fallback_charsets)
     {
-        utf8 = str_convert (str, len, fallback, "UTF-8");
+        StringBuf utf8 = str_convert (str, len, fallback, "UTF-8");
         if (utf8)
-            goto DONE;
+            return utf8;
     }
 
     /* try system locale last (this one will print a warning if it fails) */
-    utf8 = str_from_locale (str, len);
+    return str_from_locale (str, len);
+}
 
-DONE:
+EXPORT StringBuf str_to_utf8 (const char * str, int len)
+{
+    /* check whether already UTF-8 */
+    if (g_utf8_validate (str, len, NULL))
+        return str_copy (str, len);
+
+    tiny_lock_read (& settings_lock);
+    StringBuf utf8 = convert_to_utf8_locked (str, len);
     tiny_unlock_read (& settings_lock);
     return utf8;
 }

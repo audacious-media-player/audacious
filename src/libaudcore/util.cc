@@ -44,7 +44,7 @@ bool_t dir_foreach (const char * path, DirForeachFunc func, void * user)
     const char * name;
     while ((name = g_dir_read_name (dir)))
     {
-        if (func (filename_build (path, name), name, user))
+        if (func (filename_build ({path, name}), name, user))
             break;
     }
 
@@ -54,8 +54,7 @@ bool_t dir_foreach (const char * path, DirForeachFunc func, void * user)
 
 String write_temp_file (void * data, int64_t len)
 {
-    String temp = filename_build (g_get_tmp_dir (), "audacious-temp-XXXXXX");
-    SCOPY (name, temp);
+    StringBuf name = filename_build ({g_get_tmp_dir (), "audacious-temp-XXXXXX"});
 
     int handle = g_mkstemp (name);
     if (handle < 0)
@@ -69,7 +68,7 @@ String write_temp_file (void * data, int64_t len)
         int64_t written = write (handle, data, len);
         if (written < 0)
         {
-            fprintf (stderr, "Error writing %s: %s\n", name, strerror (errno));
+            fprintf (stderr, "Error writing %s: %s\n", (const char *) name, strerror (errno));
             close (handle);
             return String ();
         }
@@ -80,7 +79,7 @@ String write_temp_file (void * data, int64_t len)
 
     if (close (handle) < 0)
     {
-        fprintf (stderr, "Error closing %s: %s\n", name, strerror (errno));
+        fprintf (stderr, "Error closing %s: %s\n", (const char *) name, strerror (errno));
         return String ();
     }
 
@@ -211,8 +210,7 @@ static String str_get_decoded (char * str)
     if (! str)
         return String ();
 
-    str_decode_percent (str, -1, str);
-    return String (str);
+    return String (str_decode_percent (str));
 }
 
 /* Derives best guesses of title, artist, and album from a file name (URI) and
@@ -233,14 +231,12 @@ void describe_song (const char * name, const Tuple & tuple, String & title,
 
     if (! strncmp (name, "file:///", 8))
     {
-        String filename = uri_to_display (name);
+        StringBuf filename = uri_to_display (name);
         if (! filename)
             return;
 
-        SCOPY (buf, filename);
-
         char * base, * first, * second;
-        split_filename (skip_top_folders (buf), & base, & first, & second);
+        split_filename (skip_top_folders (filename), & base, & first, & second);
 
         if (! title)
             title = String (base);
@@ -268,7 +264,7 @@ void describe_song (const char * name, const Tuple & tuple, String & title,
     }
     else
     {
-        SCOPY (buf, name);
+        StringBuf buf = str_copy (name);
 
         if (! title)
         {

@@ -71,7 +71,7 @@ static void id3_strnlen (const char * data, int size, int encoding,
     }
 }
 
-static String id3_convert (const char * data, int size, int encoding)
+static StringBuf id3_convert (const char * data, int size, int encoding)
 {
     if (encoding == ID3_ENCODING_UTF16)
         return str_convert (data, size, "UTF-16", "UTF-8");
@@ -81,17 +81,17 @@ static String id3_convert (const char * data, int size, int encoding)
         return str_to_utf8 (data, size);
 }
 
-static String id3_decode_text (const char * data, int size)
+static StringBuf id3_decode_text (const char * data, int size)
 {
     if (size < 1)
-        return String ();
+        return StringBuf ();
 
     return id3_convert ((const char *) data + 1, size - 1, data[0]);
 }
 
 void id3_associate_string (Tuple & tuple, int field, const char * data, int size)
 {
-    String text = id3_decode_text (data, size);
+    StringBuf text = id3_decode_text (data, size);
 
     if (text && text[0])
     {
@@ -102,7 +102,7 @@ void id3_associate_string (Tuple & tuple, int field, const char * data, int size
 
 void id3_associate_int (Tuple & tuple, int field, const char * data, int size)
 {
-    String text = id3_decode_text (data, size);
+    StringBuf text = id3_decode_text (data, size);
 
     if (text && atoi (text) >= 0)
     {
@@ -113,7 +113,7 @@ void id3_associate_int (Tuple & tuple, int field, const char * data, int size)
 
 void id3_decode_genre (Tuple & tuple, const char * data, int size)
 {
-    String text = id3_decode_text (data, size);
+    StringBuf text = id3_decode_text (data, size);
     int numericgenre;
 
     if (! text)
@@ -139,8 +139,8 @@ void id3_decode_comment (Tuple & tuple, const char * data, int size)
     id3_strnlen (data + 4, size - 4, data[0], & before_nul, & after_nul);
 
     const char * lang = data + 1;
-    String type = id3_convert (data + 4, before_nul, data[0]);
-    String value = id3_convert (data + 4 + after_nul, size - 4 - after_nul, data[0]);
+    StringBuf type = id3_convert (data + 4, before_nul, data[0]);
+    StringBuf value = id3_convert (data + 4 + after_nul, size - 4 - after_nul, data[0]);
 
     AUDDBG ("Comment: lang = %.3s, type = %s, value = %s.\n", lang,
      (const char *) type, (const char *) value);
@@ -271,7 +271,7 @@ bool_t id3_decode_picture (const char * data, int size, int * type,
     id3_strnlen (body, body_size, data[0], & before_nul2, & after_nul2);
 
     const char * mime = data + 1;
-    String desc = id3_convert (body, before_nul2, data[0]);
+    StringBuf desc = id3_convert (body, before_nul2, data[0]);
 
     * type = nul[1];
     * image_size = body_size - after_nul2;

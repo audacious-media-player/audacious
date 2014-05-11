@@ -232,7 +232,6 @@ static bool config_op_run (ConfigOp * op, MultiHash * table)
 static void load_heading (const char * section, void * data)
 {
     LoadState * state = (LoadState *) data;
-
     state->section = String (section);
 }
 
@@ -247,8 +246,8 @@ static void load_entry (const char * key, const char * value, void * data)
 
 void config_load (void)
 {
-    String folder = filename_to_uri (aud_get_path (AUD_PATH_USER_DIR));
-    SCONCAT2 (path, folder, "/config");
+    StringBuf path = filename_to_uri (aud_get_path (AUD_PATH_USER_DIR));
+    str_insert (path, -1, "/config");
 
     if (vfs_file_test (path, VFS_EXISTS))
     {
@@ -257,9 +256,7 @@ void config_load (void)
         if (file)
         {
             LoadState state = LoadState ();
-
             inifile_parse (file, load_heading, load_entry, & state);
-
             vfs_fclose (file);
         }
     }
@@ -293,8 +290,8 @@ void config_save (void)
     config.iterate (add_to_save_list, & state);
     state.list.sort (item_compare, nullptr);
 
-    String folder = filename_to_uri (aud_get_path (AUD_PATH_USER_DIR));
-    SCONCAT2 (path, folder, "/config");
+    StringBuf path = filename_to_uri (aud_get_path (AUD_PATH_USER_DIR));
+    str_insert (path, -1, "/config");
 
     VFSFile * file = vfs_fopen (path, "w");
 
@@ -352,10 +349,7 @@ EXPORT void aud_set_str (const char * section, const char * name, const char * v
     bool changed = config_op_run (& op, & config);
 
     if (changed && ! section)
-    {
-        SCONCAT2 (event, "set ", name);
-        event_queue (event, NULL);
-    }
+        event_queue (str_concat ({"set ", name}), NULL);
 }
 
 EXPORT String aud_get_str (const char * section, const char * name)

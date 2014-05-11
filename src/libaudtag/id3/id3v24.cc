@@ -327,7 +327,7 @@ static bool read_frame (VFSFile * handle, int max_size, int version,
 
     * frame_size = sizeof (ID3v2FrameHeader) + header.size;
 
-    frame.key = str_nget (header.key, 4);
+    frame.key = String (str_copy (header.key, 4));
     frame.clear ();
     frame.insert (0, header.size - skip);
 
@@ -568,9 +568,7 @@ static void add_frameFromTupleInt (const Tuple & tuple, int field, int id3_field
         return;
     }
 
-    char scratch[16];
-    str_itoa (tuple.get_int (field), scratch, sizeof scratch);
-    add_text_frame (id3_field, scratch, dict);
+    add_text_frame (id3_field, int_to_str (tuple.get_int (field)), dict);
 }
 
 static bool_t id3v24_can_handle_file (VFSFile * handle)

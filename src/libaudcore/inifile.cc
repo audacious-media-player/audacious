@@ -49,7 +49,7 @@ EXPORT void inifile_parse (VFSFile * file,
  void * data)
 {
     int size = 512;
-    char * buf = g_new (char, size);
+    StringBuf buf (size);
 
     char * pos = buf;
     int len = 0;
@@ -67,7 +67,7 @@ EXPORT void inifile_parse (VFSFile * file,
             if (len >= size - 1)
             {
                 size <<= 1;
-                buf = g_renew (char, buf, size);
+                buf.resize (size);
                 pos = buf;
             }
 
@@ -122,18 +122,14 @@ EXPORT void inifile_parse (VFSFile * file,
         len -= newline + 1 - pos;
         pos = newline + 1;
     }
-
-    g_free (buf);
 }
 
 EXPORT bool_t inifile_write_heading (VFSFile * file, const char * heading)
 {
-    SCONCAT3 (buf, "\n[", heading, "]\n");
-    return (vfs_fwrite (buf, 1, sizeof buf - 1, file) == (int64_t) (sizeof buf - 1));
+    return (vfs_fputs (str_concat ({"\n[", heading, "]\n"}), file) >= 0);
 }
 
 EXPORT bool_t inifile_write_entry (VFSFile * file, const char * key, const char * value)
 {
-    SCONCAT4 (buf, key, "=", value, "\n");
-    return (vfs_fwrite (buf, 1, sizeof buf - 1, file) == (int64_t) (sizeof buf - 1));
+    return (vfs_fputs (str_concat ({key, "=", value, "\n"}), file) >= 0);
 }

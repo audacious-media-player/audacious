@@ -348,8 +348,8 @@ static void * playback_thread (void * unused)
 
         if (! current_decoder)
         {
-            SPRINTF (error, _("No decoder found for %s."), (const char *) current_filename);
-            aud_ui_show_error (error);
+            aud_ui_show_error (str_printf (_("No decoder found for %s."),
+             (const char *) current_filename));
             playback_error = TRUE;
             goto DONE;
         }
@@ -378,8 +378,8 @@ static void * playback_thread (void * unused)
 
     if (! open_file ())
     {
-        SPRINTF (error, _("%s could not be opened."), (const char *) current_filename);
-        aud_ui_show_error (error);
+        aud_ui_show_error (str_printf (_("%s could not be opened."),
+         (const char *) current_filename));
         playback_error = TRUE;
         goto DONE;
     }
@@ -565,21 +565,13 @@ EXPORT String aud_drct_get_title (void)
 
     wait_until_ready ();
 
-    char s[32];
+    StringBuf prefix = aud_get_bool (NULL, "show_numbers_in_pl") ?
+     str_printf ("%d. ", 1 + current_entry) : str_copy ("");
 
-    if (current_length > 0)
-    {
-        char t[16];
-        str_format_time (t, sizeof t, current_length);
-        snprintf (s, sizeof s, " (%s)", t);
-    }
-    else
-        s[0] = 0;
+    StringBuf time = (current_length > 0) ? str_format_time (current_length) : StringBuf ();
+    StringBuf suffix = time ? str_concat ({" (", time, ")"}) : str_copy ("");
 
-    if (aud_get_bool (NULL, "show_numbers_in_pl"))
-        return str_printf ("%d. %s%s", 1 + current_entry, (const char *) current_title, s);
-
-    return str_printf ("%s%s", (const char *) current_title, s);
+    return String (str_concat ({prefix, current_title, suffix}));
 }
 
 EXPORT int aud_drct_get_length (void)

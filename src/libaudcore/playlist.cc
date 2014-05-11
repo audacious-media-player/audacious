@@ -2093,7 +2093,7 @@ void playlist_save_state (void)
     ENTER;
 
     const char * user_dir = aud_get_path (AUD_PATH_USER_DIR);
-    SCONCAT2 (path, user_dir, "/" STATE_FILE);
+    StringBuf path = filename_build ({user_dir, STATE_FILE});
 
     FILE * handle = g_fopen (path, "w");
     if (! handle)
@@ -2163,7 +2163,7 @@ void playlist_load_state (void)
     int playlist_num;
 
     const char * user_dir = aud_get_path (AUD_PATH_USER_DIR);
-    SCONCAT2 (path, user_dir, "/" STATE_FILE);
+    StringBuf path = filename_build ({user_dir, STATE_FILE});
 
     FILE * handle = g_fopen (path, "r");
     if (! handle)

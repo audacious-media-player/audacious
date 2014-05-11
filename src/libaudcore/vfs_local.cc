@@ -49,7 +49,7 @@ struct LocalFile {
 
 static void * local_fopen (const char * uri, const char * mode)
 {
-    String path = uri_to_filename (uri);
+    StringBuf path = uri_to_filename (uri);
     g_return_val_if_fail (path, NULL);
 
     const char * suffix = "";
@@ -62,7 +62,7 @@ static void * local_fopen (const char * uri, const char * mode)
         suffix = "e";
 #endif
 
-    SCONCAT2 (mode2, mode, suffix);
+    StringBuf mode2 = str_concat ({mode, suffix});
 
     FILE * stream = g_fopen (path, mode2);
 
@@ -74,7 +74,7 @@ static void * local_fopen (const char * uri, const char * mode)
 
     LocalFile * local = new LocalFile ();
 
-    local->path = path;
+    local->path = String (path);
     local->stream = stream;
     local->cached_size = -1;
     local->last_op = OP_NONE;

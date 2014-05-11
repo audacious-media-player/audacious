@@ -82,13 +82,12 @@ static void confirm_overwrite (ImportExportJob * job)
     if (job->confirm)
         gtk_widget_destroy (job->confirm);
 
-    SPRINTF (message, _("Overwrite %s?"), job->filename);
-
     GtkWidget * button1 = audgui_button_new (_("_Overwrite"), "document-save", finish_job, job);
     GtkWidget * button2 = audgui_button_new (_("_Cancel"), "process-stop", NULL, NULL);
 
     job->confirm = audgui_dialog_new (GTK_MESSAGE_QUESTION,
-     _("Confirm Overwrite"), message, button1, button2);
+     _("Confirm Overwrite"), str_printf (_("Overwrite %s?"), job->filename),
+     button1, button2);
 
     g_signal_connect (job->confirm, "destroy", (GCallback) gtk_widget_destroyed, & job->confirm);
 

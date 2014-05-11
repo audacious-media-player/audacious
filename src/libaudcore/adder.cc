@@ -145,8 +145,8 @@ static void add_file (const String & filename, Tuple && tuple,
     {
         for (int sub = 0; sub < n_subtunes; sub ++)
         {
-            String subname = str_printf ("%s?%d", (const char *) filename,
-             tuple.get_nth_subtune (sub));
+            String subname = String (str_printf ("%s?%d",
+             (const char *) filename, tuple.get_nth_subtune (sub)));
             add_file (subname, Tuple (), decoder, filter, user, result, FALSE);
         }
 
@@ -164,7 +164,6 @@ static int compare_wrapper (const String & a, const String & b, void *)
 static void add_folder (const String & filename, PlaylistFilterFunc filter,
  void * user, AddResult * result, bool_t is_single)
 {
-    String path;
     Index<String> files;
     GDir * folder;
 
@@ -175,7 +174,7 @@ static void add_folder (const String & filename, PlaylistFilterFunc filter,
 
     status_update (filename, result->items.len ());
 
-    path = uri_to_filename (filename);
+    StringBuf path = uri_to_filename (filename);
     if (! path)
         return;
 
@@ -184,7 +183,7 @@ static void add_folder (const String & filename, PlaylistFilterFunc filter,
 
     const char * name;
     while ((name = g_dir_read_name (folder)))
-        files.append (filename_build (path, name));
+        files.append (String (filename_build ({path, name})));
 
     g_dir_close (folder);
 
@@ -207,15 +206,15 @@ static void add_folder (const String & filename, PlaylistFilterFunc filter,
 
         if (S_ISREG (info.st_mode))
         {
-            String item_name = filename_to_uri (filepath);
+            StringBuf item_name = filename_to_uri (filepath);
             if (item_name)
-                add_file (item_name, Tuple (), NULL, filter, user, result, TRUE);
+                add_file (String (item_name), Tuple (), NULL, filter, user, result, TRUE);
         }
         else if (S_ISDIR (info.st_mode))
         {
-            String item_name = filename_to_uri (filepath);
+            StringBuf item_name = filename_to_uri (filepath);
             if (item_name)
-                add_folder (item_name, filter, user, result, FALSE);
+                add_folder (String (item_name), filter, user, result, FALSE);
         }
     }
 }

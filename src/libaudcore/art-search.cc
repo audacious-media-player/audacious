@@ -86,14 +86,14 @@ static String fileinfo_recursive_get_image (const char * path,
         /* Look for images matching file name */
         while ((name = g_dir_read_name (d)))
         {
-            String newpath = filename_build (path, name);
+            StringBuf newpath = filename_build ({path, name});
 
             if (! g_file_test (newpath, G_FILE_TEST_IS_DIR) &&
              has_front_cover_extension (name) &&
              is_file_image (name, params->basename))
             {
                 g_dir_close (d);
-                return newpath;
+                return String (newpath);
             }
         }
 
@@ -103,7 +103,7 @@ static String fileinfo_recursive_get_image (const char * path,
     /* Search for files using filter */
     while ((name = g_dir_read_name (d)))
     {
-        String newpath = filename_build (path, name);
+        StringBuf newpath = filename_build ({path, name});
 
         if (! g_file_test (newpath, G_FILE_TEST_IS_DIR) &&
          has_front_cover_extension (name) &&
@@ -111,7 +111,7 @@ static String fileinfo_recursive_get_image (const char * path,
          ! cover_name_filter (name, params->exclude, FALSE))
         {
             g_dir_close (d);
-            return newpath;
+            return String (newpath);
         }
     }
 
@@ -122,7 +122,7 @@ static String fileinfo_recursive_get_image (const char * path,
         /* Descend into directories recursively. */
         while ((name = g_dir_read_name (d)))
         {
-            String newpath = filename_build (path, name);
+            StringBuf newpath = filename_build ({path, name});
 
             if (g_file_test (newpath, G_FILE_TEST_IS_DIR))
             {
@@ -143,7 +143,7 @@ static String fileinfo_recursive_get_image (const char * path,
 
 String art_search (const char * filename)
 {
-    String local = uri_to_filename (filename);
+    StringBuf local = uri_to_filename (filename);
     if (! local)
         return String ();
 
@@ -160,11 +160,11 @@ String art_search (const char * filename)
         .exclude = str_list_to_index (exclude, ", ")
     };
 
-    SNCOPY (path, local, base - 1 - local);
+    StringBuf path = str_copy (local, base - 1 - local);
 
     String image_local = fileinfo_recursive_get_image (path, & params, 0);
     if (! image_local)
         return String ();
 
-    return filename_to_uri (image_local);
+    return String (filename_to_uri (image_local));
 }

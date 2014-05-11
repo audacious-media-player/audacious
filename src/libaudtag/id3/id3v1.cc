@@ -97,11 +97,7 @@ static bool_t combine_string (Tuple & tuple, int field, const char * str1,
     if (! str[0])
         return FALSE;
 
-    String utf8 = str_to_utf8 (str, -1);
-    if (! utf8)
-        return FALSE;
-
-    tuple.set_str (field, utf8);
+    tuple.set_str (field, str);
     return TRUE;
 }
 
@@ -121,7 +117,7 @@ static bool_t id3v1_read_tag (Tuple & tuple, VFSFile * file)
     combine_string (tuple, FIELD_ALBUM, tag.album, sizeof tag.album, ext.album, sizeof ext.album);
     combine_string (tuple, FIELD_COMMENT, tag.comment, sizeof tag.comment, NULL, 0);
 
-    SNCOPY (year, tag.year, 4);
+    StringBuf year = str_copy (tag.year, 4);
     if (atoi (year))
         tuple.set_int (FIELD_YEAR, atoi (year));
 
