@@ -108,13 +108,13 @@ AC_DEFUN([BUILDSYS_SHARED_LIB], [
 	case "$host_os" in
 		darwin*)
 			AC_MSG_RESULT(Darwin)
-			LIB_CFLAGS='-fPIC -DPIC -mmacosx-version-min=10.8'
-			LIB_LDFLAGS='-dynamiclib -current_version ${LIB_MAJOR}.${LIB_MINOR} -compatibility_version ${LIB_MAJOR} -mmacosx-version-min=10.8 -install_name "${libdir}/$$(i=${SHARED_LIB}; echo $${i%${LIB_SUFFIX}}).${LIB_MAJOR}${LIB_SUFFIX}"'
+			LIB_CFLAGS='-fPIC -DPIC -mmacosx-version-min=10.7'
+			LIB_LDFLAGS='-dynamiclib -current_version ${LIB_MAJOR}.${LIB_MINOR} -compatibility_version ${LIB_MAJOR} -mmacosx-version-min=10.7 -install_name "${libdir}/$$(i=${SHARED_LIB}; echo $${i%${LIB_SUFFIX}}).${LIB_MAJOR}${LIB_SUFFIX}"'
 			LIB_PREFIX='lib'
 			LIB_SUFFIX='.dylib'
 			LDFLAGS_RPATH='-Wl,-rpath,${libdir}'
-			PLUGIN_CFLAGS='-fPIC -DPIC -mmacosx-version-min=10.8'
-			PLUGIN_LDFLAGS='-bundle -undefined dynamic_lookup -mmacosx-version-min=10.8'
+			PLUGIN_CFLAGS='-fPIC -DPIC -mmacosx-version-min=10.7'
+			PLUGIN_LDFLAGS='-bundle -undefined dynamic_lookup -mmacosx-version-min=10.7'
 			PLUGIN_SUFFIX='.bundle'
 			INSTALL_LIB='&& ${INSTALL} -m 755 $$i ${DESTDIR}${libdir}/$${i%.dylib}.${LIB_MAJOR}.${LIB_MINOR}.dylib && ${LN_S} -f $${i%.dylib}.${LIB_MAJOR}.${LIB_MINOR}.dylib ${DESTDIR}${libdir}/$${i%.dylib}.${LIB_MAJOR}.dylib && ${LN_S} -f $${i%.dylib}.${LIB_MAJOR}.${LIB_MINOR}.dylib ${DESTDIR}${libdir}/$$i'
 			UNINSTALL_LIB='&& rm -f ${DESTDIR}${libdir}/$$i ${DESTDIR}${libdir}/$${i%.dylib}.${LIB_MAJOR}.dylib ${DESTDIR}${libdir}/$${i%.dylib}.${LIB_MAJOR}.${LIB_MINOR}.dylib'
