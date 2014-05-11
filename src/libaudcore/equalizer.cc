@@ -31,11 +31,10 @@
 #include <pthread.h>
 #include <string.h>
 
+#include "audio.h"
 #include "audstrings.h"
 #include "hook.h"
 #include "runtime.h"
-
-#define MAX_CHANNELS 10
 
 /* Q value for band-pass filters 1.2247 = (3/2)^(1/2)
  * Gives 4 dB suppression at Fc*2 and Fc/2 */
@@ -53,8 +52,8 @@ static bool_t active;
 static int channels, rate;
 static float a[AUD_EQ_NBANDS][2]; /* A weights */
 static float b[AUD_EQ_NBANDS][2]; /* B weights */
-static float wqv[MAX_CHANNELS][AUD_EQ_NBANDS][2]; /* Circular buffer for W data */
-static float gv[MAX_CHANNELS][AUD_EQ_NBANDS]; /* Gain factor for each channel and band */
+static float wqv[AUD_MAX_CHANNELS][AUD_EQ_NBANDS][2]; /* Circular buffer for W data */
+static float gv[AUD_MAX_CHANNELS][AUD_EQ_NBANDS]; /* Gain factor for each channel and band */
 static int K; /* Number of used EQ bands */
 
 /* 2nd order band-pass filter design */
@@ -71,8 +70,6 @@ static void bp2 (float *a, float *b, float fc, float q)
 
 void eq_set_format (int new_channels, int new_rate)
 {
-    int k;
-
     pthread_mutex_lock (& mutex);
 
     channels = new_channels;
@@ -85,7 +82,7 @@ void eq_set_format (int new_channels, int new_rate)
         K --;
 
     /* Generate filter taps */
-    for (k = 0; k < K; k ++)
+    for (int k = 0; k < K; k ++)
         bp2 (a[k], b[k], CF[k] / (float) rate, Q);
 
     /* Reset state */
@@ -97,12 +94,15 @@ void eq_set_format (int new_channels, int new_rate)
 static void eq_set_bands_real (double preamp, double *values)
 {
     float adj[AUD_EQ_NBANDS];
+
     for (int i = 0; i < AUD_EQ_NBANDS; i ++)
         adj[i] = preamp + values[i];
 
-    for (int c = 0; c < MAX_CHANNELS; c ++)
-    for (int i = 0; i < AUD_EQ_NBANDS; i ++)
-        gv[c][i] = pow (10, adj[i] / 20) - 1;
+    for (int c = 0; c < AUD_MAX_CHANNELS; c ++)
+    {
+        for (int i = 0; i < AUD_EQ_NBANDS; i ++)
+            gv[c][i] = pow (10, adj[i] / 20) - 1;
+    }
 }
 
 void eq_filter (float *data, int samples)

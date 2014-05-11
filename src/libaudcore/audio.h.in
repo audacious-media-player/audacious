@@ -20,6 +20,8 @@
 #ifndef LIBAUDCORE_AUDIO_H
 #define LIBAUDCORE_AUDIO_H
 
+#define AUD_MAX_CHANNELS 10
+
 /* 24-bit integer samples are padded to 32-bit; high byte is always 0 */
 enum {
  FMT_FLOAT,

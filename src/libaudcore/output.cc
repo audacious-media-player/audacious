@@ -217,7 +217,7 @@ static void apply_software_volume (float * data, int channels, int samples)
 
     float lfactor = (l == 0) ? 0 : powf (10, (float) SW_VOLUME_RANGE * (l - 100) / 100 / 20);
     float rfactor = (r == 0) ? 0 : powf (10, (float) SW_VOLUME_RANGE * (r - 100) / 100 / 20);
-    float factors[channels];
+    float factors[AUD_MAX_CHANNELS];
 
     if (channels == 2)
     {
@@ -345,7 +345,7 @@ static void finish_effects (void)
 bool_t output_open_audio (int format, int rate, int channels)
 {
     /* prevent division by zero */
-    if (rate < 1 || channels < 1)
+    if (rate < 1 || channels < 1 || channels > AUD_MAX_CHANNELS)
         return FALSE;
 
     LOCK_ALL;
