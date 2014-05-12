@@ -155,9 +155,9 @@ String art_search (const char * filename)
     String exclude = aud_get_str (NULL, "cover_name_exclude");
 
     SearchParams params = {
-        .basename = base,
-        .include = str_list_to_index (include, ", "),
-        .exclude = str_list_to_index (exclude, ", ")
+        base,
+        str_list_to_index (include, ", "),
+        str_list_to_index (exclude, ", ")
     };
 
     StringBuf path = str_copy (local, base - 1 - local);

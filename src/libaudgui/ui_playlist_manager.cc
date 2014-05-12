@@ -103,16 +103,14 @@ static void shift_rows (void * user, int row, int before)
 }
 
 static const AudguiListCallbacks callbacks = {
- .get_value = get_value,
- .get_selected = get_selected,
- .set_selected = set_selected,
- .select_all = select_all,
- .activate_row = activate_row,
- .right_click = NULL,
- .shift_rows = shift_rows,
- .data_type = NULL,
- .get_data = NULL,
- .receive_data = NULL};
+    get_value,
+    get_selected,
+    set_selected,
+    select_all,
+    activate_row,
+    nullptr,  // right_click
+    shift_rows
+};
 
 static bool_t search_cb (GtkTreeModel * model, int column, const char * key,
  GtkTreeIter * iter, void * user)

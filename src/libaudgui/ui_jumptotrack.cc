@@ -219,7 +219,8 @@ static void list_get_value (void * user, int row, int column, GValue * value)
 }
 
 static const AudguiListCallbacks callbacks = {
- .get_value = list_get_value};
+    list_get_value
+};
 
 static GtkWidget * create_window (void)
 {

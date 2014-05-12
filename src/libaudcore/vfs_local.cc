@@ -217,13 +217,13 @@ static int64_t local_fsize (VFSFile * file)
 }
 
 const VFSConstructor vfs_local_vtable = {
-    .vfs_fopen_impl = local_fopen,
-    .vfs_fclose_impl = local_fclose,
-    .vfs_fread_impl = local_fread,
-    .vfs_fwrite_impl = local_fwrite,
-    .vfs_fseek_impl = local_fseek,
-    .vfs_ftell_impl = local_ftell,
-    .vfs_feof_impl = local_feof,
-    .vfs_ftruncate_impl = local_ftruncate,
-    .vfs_fsize_impl = local_fsize
+    local_fopen,
+    local_fclose,
+    local_fread,
+    local_fwrite,
+    local_fseek,
+    local_ftell,
+    local_feof,
+    local_ftruncate,
+    local_fsize
 };

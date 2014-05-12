@@ -170,11 +170,8 @@ static void iface_init (GtkTreeModelIface * iface)
     iface->iter_parent = list_model_iter_parent;
 }
 
-static const GInterfaceInfo iface_info =
-{
-    .interface_init = (GInterfaceInitFunc) iface_init,
-    .interface_finalize = NULL,
-    .interface_data = NULL,
+static const GInterfaceInfo iface_info = {
+    (GInterfaceInitFunc) iface_init
 };
 
 static GType list_model_get_type (void)

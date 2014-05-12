@@ -35,7 +35,7 @@ struct VisNode {
     VisNode * next;
     int channels;
     int time;
-    float data[];
+    float data[1];  // variable size
 };
 
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;

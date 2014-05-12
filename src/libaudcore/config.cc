@@ -333,7 +333,7 @@ EXPORT void aud_config_set_defaults (const char * section, const char * const * 
 
 void config_cleanup (void)
 {
-    ConfigOp op = {.type = OP_CLEAR_NO_FLAG};
+    ConfigOp op = {OP_CLEAR_NO_FLAG};
     config.iterate (action_cb, & op);
     defaults.iterate (action_cb, & op);
 }

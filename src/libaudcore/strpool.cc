@@ -105,7 +105,7 @@ struct StrNode {
     MultiHash::Node base;
     unsigned refs;
     char magic;
-    char str[];
+    char str[1];  // variable size
 };
 
 #define NODE_SIZE_FOR(s) (offsetof (StrNode, str) + strlen (s) + 1)
