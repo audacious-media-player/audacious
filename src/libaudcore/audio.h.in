@@ -31,19 +31,53 @@ enum {
  FMT_S32_LE, FMT_S32_BE, FMT_U32_LE, FMT_U32_BE};
 
 #if @BIGENDIAN@
+
 #define FMT_S16_NE FMT_S16_BE
 #define FMT_U16_NE FMT_U16_BE
 #define FMT_S24_NE FMT_S24_BE
 #define FMT_U24_NE FMT_U24_BE
 #define FMT_S32_NE FMT_S32_BE
 #define FMT_U32_NE FMT_U32_BE
-#else
+
+#ifdef WANT_AUD_BSWAP
+#define FROM_BE16(x)  (x)
+#define FROM_BE32(x)  (x)
+#define FROM_BE64(x)  (x)
+#define FROM_LE16(x)  (__builtin_bswap16 (x))
+#define FROM_LE32(x)  (__builtin_bswap32 (x))
+#define FROM_LE64(x)  (__builtin_bswap64 (x))
+#define TO_BE16(x)  (x)
+#define TO_BE32(x)  (x)
+#define TO_BE64(x)  (x)
+#define TO_LE16(x)  (__builtin_bswap16 (x))
+#define TO_LE32(x)  (__builtin_bswap32 (x))
+#define TO_LE64(x)  (__builtin_bswap64 (x))
+#endif
+
+#else  // ! BIGENDIAN
+
 #define FMT_S16_NE FMT_S16_LE
 #define FMT_U16_NE FMT_U16_LE
 #define FMT_S24_NE FMT_S24_LE
 #define FMT_U24_NE FMT_U24_LE
 #define FMT_S32_NE FMT_S32_LE
 #define FMT_U32_NE FMT_U32_LE
+
+#ifdef WANT_AUD_BSWAP
+#define FROM_BE16(x)  (__builtin_bswap16 (x))
+#define FROM_BE32(x)  (__builtin_bswap32 (x))
+#define FROM_BE64(x)  (__builtin_bswap64 (x))
+#define FROM_LE16(x)  (x)
+#define FROM_LE32(x)  (x)
+#define FROM_LE64(x)  (x)
+#define TO_BE16(x)  (__builtin_bswap16 (x))
+#define TO_BE32(x)  (__builtin_bswap32 (x))
+#define TO_BE64(x)  (__builtin_bswap64 (x))
+#define TO_LE16(x)  (x)
+#define TO_LE32(x)  (x)
+#define TO_LE64(x)  (x)
+#endif
+
 #endif
 
 #define FMT_SIZEOF(f) ((f) == FMT_FLOAT ? sizeof (float) : (f) <= FMT_U8 ? 1 : (f) <= FMT_U16_BE ? 2 : 4)

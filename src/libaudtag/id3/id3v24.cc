@@ -24,6 +24,8 @@
 #include <string.h>
 #include <unistd.h>
 
+#define WANT_AUD_BSWAP
+#include <libaudcore/audio.h>
 #include <libaudcore/audstrings.h>
 #include <libaudcore/multihash.h>
 #include <libaudcore/runtime.h>
@@ -117,7 +119,7 @@ static bool skip_extended_header_3 (VFSFile * handle, int * _size)
     if (vfs_fread (& size, 1, 4, handle) != 4)
         return false;
 
-    size = GUINT32_FROM_BE (size);
+    size = FROM_BE32 (size);
 
     AUDDBG ("Found v2.3 extended header, size = %d.\n", (int) size);
 
@@ -135,7 +137,7 @@ static bool skip_extended_header_4 (VFSFile * handle, int * _size)
     if (vfs_fread (& size, 1, 4, handle) != 4)
         return false;
 
-    size = unsyncsafe32 (GUINT32_FROM_BE (size));
+    size = unsyncsafe32 (FROM_BE32 (size));
 
     AUDDBG ("Found v2.4 extended header, size = %d.\n", (int) size);
 
@@ -154,7 +156,7 @@ static bool validate_header (ID3v2Header * header, bool is_footer)
     if ((header->version != 3 && header->version != 4) || header->revision != 0)
         return false;
 
-    header->size = unsyncsafe32 (GUINT32_FROM_BE (header->size));
+    header->size = unsyncsafe32 (FROM_BE32 (header->size));
 
     AUDDBG ("Found ID3v2 %s:\n", is_footer ? "footer" : "header");
     AUDDBG (" magic = %.3s\n", header->magic);
@@ -301,9 +303,8 @@ static bool read_frame (VFSFile * handle, int max_size, int version,
     if (! header.key[0]) /* padding */
         return false;
 
-    header.size = (version == 3) ? GUINT32_FROM_BE (header.size) : unsyncsafe32
-     (GUINT32_FROM_BE (header.size));
-    header.flags = GUINT16_FROM_BE (header.flags);
+    header.size = (version == 3) ? FROM_BE32 (header.size) : unsyncsafe32 (FROM_BE32 (header.size));
+    header.flags = FROM_BE16 (header.flags);
 
     if (header.size > (unsigned) max_size || header.size == 0)
         return false;
@@ -378,7 +379,7 @@ static bool write_frame (int fd, const GenericFrame & frame, int version, int * 
     if (version > 3)
         size = syncsafe32 (size);
 
-    header.size = GUINT32_TO_BE (size);
+    header.size = TO_BE32 (size);
     header.flags = 0;
 
     if (write (fd, & header, sizeof (ID3v2FrameHeader)) != sizeof (ID3v2FrameHeader))
@@ -426,8 +427,7 @@ static bool write_header (int fd, int version, int size)
     header.version = version;
     header.revision = 0;
     header.flags = 0;
-    header.size = syncsafe32 (size);
-    header.size = GUINT32_TO_BE (header.size);
+    header.size = TO_BE32 (syncsafe32 (size));
 
     return write (fd, & header, sizeof (ID3v2Header)) == sizeof (ID3v2Header);
 }

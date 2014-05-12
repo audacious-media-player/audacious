@@ -23,6 +23,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define WANT_AUD_BSWAP
+#include <libaudcore/audio.h>
 #include <libaudcore/audstrings.h>
 #include <libaudcore/runtime.h>
 
@@ -84,7 +86,7 @@ static bool validate_header (ID3v2Header * header)
     if ((header->version != 2))
         return false;
 
-    header->size = unsyncsafe32 (GUINT32_FROM_BE (header->size));
+    header->size = unsyncsafe32 (FROM_BE32 (header->size));
 
     AUDDBG ("Found ID3v2 header:\n");
     AUDDBG (" magic = %.3s\n", header->magic);
