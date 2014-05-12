@@ -25,6 +25,10 @@
 
 #include "objects.h"
 
+#ifndef MAP_ANONYMOUS
+    #define MAP_ANONYMOUS MAP_ANON
+#endif
+
 struct StringStack
 {
     static constexpr int Size = 1048576;  // 1 MB
