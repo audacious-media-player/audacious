@@ -63,7 +63,7 @@ EXPORT int vfs_fputc(int c, VFSFile *stream)
 EXPORT char *vfs_fgets(char *s, int n, VFSFile *stream)
 {
     int c;
-    register char *p;
+    char *p;
 
     if (n <= 0) return NULL;
 

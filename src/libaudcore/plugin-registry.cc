@@ -78,19 +78,21 @@ struct PluginWatch {
 };
 
 static const char * plugin_type_names[] = {
- [PLUGIN_TYPE_TRANSPORT] = "transport",
- [PLUGIN_TYPE_PLAYLIST] = "playlist",
- [PLUGIN_TYPE_INPUT] = "input",
- [PLUGIN_TYPE_EFFECT] = "effect",
- [PLUGIN_TYPE_OUTPUT] = "output",
- [PLUGIN_TYPE_VIS] = "vis",
- [PLUGIN_TYPE_GENERAL] = "general",
- [PLUGIN_TYPE_IFACE] = "iface"};
+    "transport",
+    "playlist",
+    "input",
+    "effect",
+    "output",
+    "vis",
+    "general",
+    "iface"
+};
 
 static const char * input_key_names[] = {
- [INPUT_KEY_SCHEME] = "scheme",
- [INPUT_KEY_EXTENSION] = "ext",
- [INPUT_KEY_MIME] = "mime"};
+    "scheme",
+    "ext",
+    "mime"
+};
 
 static GList * plugin_list = NULL;
 static bool_t registry_locked = TRUE;

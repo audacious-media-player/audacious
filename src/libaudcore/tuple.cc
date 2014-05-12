@@ -45,8 +45,7 @@ union TupleVal
     int x;
 
     // dummy constructor and destructor
-    constexpr TupleVal () :
-        str () {}
+    TupleVal () {}
     ~TupleVal () {}
 };
 
@@ -368,7 +367,7 @@ EXPORT void Tuple::set_str (int field, const char * str)
     else
     {
         StringBuf utf8 = str_to_utf8 (str);
-        val->str = String (utf8 ? utf8 : "(character encoding error)");
+        val->str = String (utf8 ? (const char *) utf8 : "(character encoding error)");
     }
 }
 

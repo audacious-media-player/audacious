@@ -107,7 +107,7 @@ public:
      * table.  Returns the new node or null. */
     typedef Node * (* AddFunc) (const void * data, void * state);
 
-    constexpr MultiHash (MatchFunc match) :
+    MultiHash (MatchFunc match) :
         match (match),
         locks (),
         channels () {}

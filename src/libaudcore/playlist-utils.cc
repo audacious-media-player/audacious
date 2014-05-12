@@ -100,37 +100,40 @@ static int tuple_compare_length (const Tuple & a, const Tuple & b)
 }
 
 static const PlaylistStringCompareFunc filename_comparisons[] = {
- [PLAYLIST_SORT_PATH] = str_compare_encoded,
- [PLAYLIST_SORT_FILENAME] = filename_compare_basename,
- [PLAYLIST_SORT_TITLE] = NULL,
- [PLAYLIST_SORT_ALBUM] = NULL,
- [PLAYLIST_SORT_ARTIST] = NULL,
- [PLAYLIST_SORT_DATE] = NULL,
- [PLAYLIST_SORT_TRACK] = NULL,
- [PLAYLIST_SORT_FORMATTED_TITLE] = NULL,
- [PLAYLIST_SORT_LENGTH] = NULL};
+    str_compare_encoded,  // path
+    filename_compare_basename,  // filename
+    nullptr,  // title
+    nullptr,  // album
+    nullptr,  // artist
+    nullptr,  // date
+    nullptr,  // track
+    nullptr,  // formatted title
+    nullptr  // length
+};
 
 static const PlaylistTupleCompareFunc tuple_comparisons[] = {
- [PLAYLIST_SORT_PATH] = NULL,
- [PLAYLIST_SORT_FILENAME] = NULL,
- [PLAYLIST_SORT_TITLE] = tuple_compare_title,
- [PLAYLIST_SORT_ALBUM] = tuple_compare_album,
- [PLAYLIST_SORT_ARTIST] = tuple_compare_artist,
- [PLAYLIST_SORT_DATE] = tuple_compare_date,
- [PLAYLIST_SORT_TRACK] = tuple_compare_track,
- [PLAYLIST_SORT_FORMATTED_TITLE] = NULL,
- [PLAYLIST_SORT_LENGTH] = tuple_compare_length};
+    nullptr,  // path
+    nullptr,  // filename
+    tuple_compare_title,  // title
+    tuple_compare_album,  // album
+    tuple_compare_artist,  // artist
+    tuple_compare_date,  // date
+    tuple_compare_track,  // track
+    nullptr,  // formatted title
+    tuple_compare_length  // length
+};
 
 static const PlaylistStringCompareFunc title_comparisons[] = {
- [PLAYLIST_SORT_PATH] = NULL,
- [PLAYLIST_SORT_FILENAME] = NULL,
- [PLAYLIST_SORT_TITLE] = NULL,
- [PLAYLIST_SORT_ALBUM] = NULL,
- [PLAYLIST_SORT_ARTIST] = NULL,
- [PLAYLIST_SORT_DATE] = NULL,
- [PLAYLIST_SORT_TRACK] = NULL,
- [PLAYLIST_SORT_FORMATTED_TITLE] = str_compare,
- [PLAYLIST_SORT_LENGTH] = NULL};
+    nullptr,  // path
+    nullptr,  // filename
+    nullptr,  // title
+    nullptr,  // album
+    nullptr,  // artist
+    nullptr,  // date
+    nullptr,  // track
+    str_compare,  // formatted title
+    nullptr  // length
+};
 
 EXPORT void aud_playlist_sort_by_scheme (int playlist, int scheme)
 {

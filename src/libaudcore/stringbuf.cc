@@ -25,8 +25,6 @@
 
 #include "objects.h"
 
-using namespace std;
-
 struct StringStack
 {
     static constexpr int Size = 1048576;  // 1 MB

@@ -144,7 +144,7 @@ static void set_entry_int_from_field (GtkWidget * widget, const Tuple & tuple,
  int fieldn, bool_t editable)
 {
     int value = tuple.get_int (fieldn);
-    gtk_entry_set_text ((GtkEntry *) widget, (value > 0) ? int_to_str (value) : "");
+    gtk_entry_set_text ((GtkEntry *) widget, (value > 0) ? (const char *) int_to_str (value) : "");
     gtk_editable_set_editable ((GtkEditable *) widget, editable);
 }
 
@@ -396,10 +396,10 @@ static void infowin_show (int list, int entry, const char * filename,
     set_entry_int_from_field (widgets.year, tuple, FIELD_YEAR, updating_enabled);
     set_entry_int_from_field (widgets.track, tuple, FIELD_TRACK_NUMBER, updating_enabled);
 
-    String codec_values[CODEC_ITEMS] = {
-        [CODEC_FORMAT] = tuple.get_str (FIELD_CODEC),
-        [CODEC_QUALITY] = tuple.get_str (FIELD_QUALITY)
-    };
+    String codec_values[CODEC_ITEMS];
+
+    codec_values[CODEC_FORMAT] = tuple.get_str (FIELD_CODEC);
+    codec_values[CODEC_QUALITY] = tuple.get_str (FIELD_QUALITY);
 
     if (tuple.get_value_type (FIELD_BITRATE) == TUPLE_INT)
         codec_values[CODEC_BITRATE] = String (str_printf (_("%d kb/s"),

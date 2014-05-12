@@ -71,7 +71,7 @@ struct PluginPreferences;
 struct PreferencesWidget;
 
 struct PlaylistAddItem;
-struct Tuple;
+class Tuple;
 struct VFSFile;
 
 /* STRING POOL */
