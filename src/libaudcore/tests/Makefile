@@ -11,7 +11,7 @@ SRCS = ../audstrings.cc \
        ../tuple_formatter.cc \
        test.cc
 
-FLAGS = -I.. -DEXPORT= -DPACKAGE=\"audacious\" \
+FLAGS = -I.. -I../.. -DEXPORT= -DPACKAGE=\"audacious\" \
         $(shell pkg-config --cflags --libs glib-2.0) \
         -std=c++11 -Wall -g -O0 -fno-elide-constructors \
         -fprofile-arcs -ftest-coverage -pthread
