@@ -311,8 +311,6 @@ static bool tc_parse_construct (TupleEvalContext * ctx, TupleEvalNode * * res,
     char tmps1[MAX_STR], tmps2[MAX_STR];
     bool literal1 = true, literal2 = true;
 
-    (* c) ++;
-
     if (tc_get_item (ctx, c, tmps1, MAX_STR, ',', & literal1, "tag1", item))
     {
         (* c) ++;
@@ -443,6 +441,8 @@ static TupleEvalNode * tuple_compiler_pass1 (int * level,
                     }
                     else
                     {
+                        c ++;
+
                         /* Equals? */
                         if (! tc_parse_construct (ctx, & res, item, & c, level, OP_EQUALS))
                             goto ret_error;
@@ -455,6 +455,8 @@ static TupleEvalNode * tuple_compiler_pass1 (int * level,
 
                     if (* c != '=')
                         goto ext_expression;
+
+                    c ++;
 
                     if (! tc_parse_construct (ctx, & res, item, & c, level, OP_NOT_EQUALS))
                         goto ret_error;
