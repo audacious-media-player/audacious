@@ -17,11 +17,12 @@
  * the use of this software.
  */
 
-#include <assert.h>
 #include <pthread.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/mman.h>
+
+#include <new>
 
 #include "objects.h"
 
@@ -65,7 +66,8 @@ static StringStack * get_stack ()
         stack = (StringStack *) mmap (nullptr, sizeof (StringStack),
          PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
 
-        assert (stack != MAP_FAILED);
+        if (stack == MAP_FAILED)
+            throw std::bad_alloc ();
 
         stack->top = stack->buf;
         pthread_setspecific (key, stack);
@@ -80,29 +82,40 @@ EXPORT void StringBuf::resize (int len)
     {
         stack = get_stack ();
         m_data = stack->top;
-        stack->top ++;
     }
-
-    assert (m_data + m_len + 1 == stack->top);
+    else
+    {
+        if (m_data + m_len + 1 != stack->top)
+            throw std::bad_alloc ();
+    }
 
     if (len < 0)
     {
-        len = stack->avail (m_data) - 1;
-        assert (len >= 0);
+        stack->top = stack->buf + sizeof stack->buf;
+        m_len = stack->top - m_data - 1;
+
+        if (m_len < 0)
+            throw std::bad_alloc ();
     }
     else
-        assert (len < stack->avail (m_data));
+    {
+        stack->top = m_data + len + 1;
 
-    m_len = len;
-    m_data[len] = 0;
-    stack->top = m_data + len + 1;
+        if (stack->top - stack->buf > (int) sizeof stack->buf)
+            throw std::bad_alloc ();
+
+        m_data[len] = 0;
+        m_len = len;
+    }
 }
 
 EXPORT StringBuf::~StringBuf ()
 {
     if (m_data)
     {
-        assert (m_data + m_len + 1 == stack->top);
+        if (m_data + m_len + 1 != stack->top)
+            throw std::bad_alloc ();
+
         stack->top = m_data;
     }
 }
@@ -113,8 +126,8 @@ EXPORT void StringBuf::steal (StringBuf && other)
     {
         if (m_data)
         {
-            assert (m_data + m_len + 1 == other.m_data);
-            assert (other.m_data + other.m_len + 1 == stack->top);
+            if (m_data + m_len + 1 != other.m_data || other.m_data + other.m_len + 1 != stack->top)
+                throw std::bad_alloc ();
 
             m_len = other.m_len;
             memmove (m_data, other.m_data, m_len + 1);
@@ -145,8 +158,8 @@ EXPORT void StringBuf::steal (StringBuf && other)
 
 EXPORT void StringBuf::combine (StringBuf && other)
 {
-    assert (m_data + m_len + 1 == other.m_data);
-    assert (other.m_data + other.m_len + 1 == stack->top);
+    if (m_data + m_len + 1 != other.m_data || other.m_data + other.m_len + 1 != stack->top)
+        throw std::bad_alloc ();
 
     memmove (m_data + m_len, other.m_data, other.m_len + 1);
     m_len += other.m_len;

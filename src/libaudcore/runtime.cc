@@ -19,11 +19,12 @@
 
 #include "runtime.h"
 
-#include <assert.h>
 #include <locale.h>
 #include <stdlib.h>
 #include <sys/stat.h>
 #include <unistd.h>
+
+#include <new>
 
 #ifdef _WIN32
 #include <windows.h>
@@ -95,7 +96,8 @@ static StringBuf get_path_to_self (void)
         return StringBuf ();
     }
 
-    assert (len < buf.len ());  // abort if out of memory
+    if (len == buf.len ())
+        throw std::bad_alloc ();
 
     buf.resize (len);
     return buf;
@@ -113,7 +115,8 @@ static StringBuf get_path_to_self (void)
         return StringBuf ();
     }
 
-    assert (lenw < sizew);  // abort if out of memory
+    if (lenw == sizew)
+        throw std::bad_alloc ();
 
     buf.resize (lenw * sizeof (wchar_t));
     buf.steal (str_convert (buf, buf.len (), UTF16_NATIVE, "UTF8"));
@@ -123,9 +126,9 @@ static StringBuf get_path_to_self (void)
 
     StringBuf buf (-1);
     uint32_t size = buf.len ();
-    int ret = _NSGetExecutablePath (buf, & size);
 
-    assert (! ret);  // abort if out of memory
+    if (_NSGetExecutablePath (buf, & size) < 0)
+        throw std::bad_alloc ();
 
     buf.resize (strlen (buf));
     return buf;

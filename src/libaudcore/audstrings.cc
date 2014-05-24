@@ -19,11 +19,12 @@
 
 #include "audstrings.h"
 
-#include <assert.h>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include <new>
 
 #include <glib.h>
 
@@ -98,7 +99,8 @@ EXPORT StringBuf str_concat (const std::initializer_list<const char *> & strings
     for (const char * s : strings)
     {
         int len = strlen (s);
-        assert (len <= left);
+        if (len > left)
+            throw std::bad_alloc ();
 
         memcpy (set, s, len);
 
@@ -136,7 +138,7 @@ EXPORT StringBuf str_printf (const char * format, ...)
 EXPORT StringBuf str_vprintf (const char * format, va_list args)
 {
     StringBuf str (-1);
-    int len = vsnprintf (str, str.len () + 1, format, args);
+    int len = vsnprintf (str, str.len (), format, args);
     str.resize (len);
     return str;
 }
@@ -382,21 +384,26 @@ EXPORT StringBuf filename_build (const std::initializer_list<const char *> & ele
 #ifdef _WIN32
         if (set > str && set[-1] != '/' && set[-1] != '\\')
         {
-            assert (left);
+            if (! left)
+                throw std::bad_alloc ();
+
             * set ++ = '\\';
             left --;
         }
 #else
         if (set > str && set[-1] != '/')
         {
-            assert (left);
+            if (! left)
+                throw std::bad_alloc ();
+
             * set ++ = '/';
             left --;
         }
 #endif
 
         int len = strlen (s);
-        assert (len <= left);
+        if (len > left)
+            throw std::bad_alloc ();
 
         memcpy (set, s, len);
 
@@ -710,7 +717,8 @@ EXPORT StringBuf index_to_str_list (const Index<String> & index, const char * se
     for (const String & s : index)
     {
         int len = strlen (s);
-        assert (len + seplen <= left);
+        if (len + seplen > left)
+            throw std::bad_alloc ();
 
         if (set > str)
         {

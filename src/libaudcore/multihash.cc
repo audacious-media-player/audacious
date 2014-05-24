@@ -19,8 +19,6 @@
 
 #include "multihash.h"
 
-#include <assert.h>
-
 EXPORT void HashBase::add (Node * node, unsigned hash)
 {
     if (! buckets)

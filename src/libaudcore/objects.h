@@ -180,7 +180,7 @@ public:
     // A length of -1 means to use all available space.  This can be useful when
     // the final length of the string is not known in advance, but keep in mind
     // that you will not be able to create any further StringBufs until you call
-    // resize().
+    // resize().  Also, the string will not be null-terminated in this case.
     explicit StringBuf (int len) :
         stack (nullptr),
         m_data (nullptr),
