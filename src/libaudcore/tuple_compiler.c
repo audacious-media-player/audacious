@@ -271,8 +271,11 @@ static int tc_get_variable(TupleEvalContext *ctx, char *name, int type)
 
   if (type != TUPLE_VAR_CONST) {
     for (int i = 0; i < ctx->len; i ++)
-      if (! strcmp (GET_VAR (ctx, i)->name, name))
+    {
+      TupleEvalVar * var = GET_VAR (ctx, i);
+      if (var->type == type && ! strcmp (var->name, name))
         return i;
+    }
   }
 
   return tuple_evalctx_add_var(ctx, name, type, ctype);
