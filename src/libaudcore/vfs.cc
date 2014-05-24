@@ -20,7 +20,7 @@
 
 #include "vfs.h"
 
-#include <inttypes.h>
+#include <cinttypes>
 #include <stdio.h>
 #include <string.h>
 #include <sys/stat.h>

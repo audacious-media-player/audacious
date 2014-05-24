@@ -191,7 +191,7 @@ static bool_t ape_read_item (void * * data, int length, ValuePair & pair)
 
     value ++;
 
-    if (header[0] > (char *) (* data) + length - value)
+    if (header[0] > (unsigned) ((char *) (* data) + length - value))
     {
         AUDDBG ("Item value of length %d, but only %d bytes remain in tag.\n",
          (int) header[0], (int) ((char *) (* data) + length - value));

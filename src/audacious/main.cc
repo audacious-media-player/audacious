@@ -78,32 +78,38 @@ static bool_t parse_options (int argc, char * * argv)
     bool_t success = TRUE;
 
 #ifdef _WIN32
-    get_argv_utf8 (& argc, & argv);
-#endif
+    Index<String> args = get_argv_utf8 ();
 
+    for (int n = 1; n < args.len (); n ++)
+    {
+        const char * arg = args[n];
+#else
     for (int n = 1; n < argc; n ++)
     {
-        if (argv[n][0] != '-')  /* filename */
+        const char * arg = argv[n];
+#endif
+
+        if (arg[0] != '-')  /* filename */
         {
             String uri;
 
-            if (strstr (argv[n], "://"))
-                uri = String (argv[n]);
-            else if (g_path_is_absolute (argv[n]))
-                uri = String (filename_to_uri (argv[n]));
+            if (strstr (arg, "://"))
+                uri = String (arg);
+            else if (g_path_is_absolute (arg))
+                uri = String (filename_to_uri (arg));
             else
-                uri = String (filename_to_uri (filename_build ({cur, argv[n]})));
+                uri = String (filename_to_uri (filename_build ({cur, arg})));
 
             if (uri)
                 filenames.append ({uri});
         }
-        else if (argv[n][1] == '-')  /* long option */
+        else if (arg[1] == '-')  /* long option */
         {
             unsigned i;
 
             for (i = 0; i < ARRAY_LEN (arg_map); i ++)
             {
-                if (! strcmp (argv[n] + 2, arg_map[i].long_arg))
+                if (! strcmp (arg + 2, arg_map[i].long_arg))
                 {
                     * arg_map[i].value = TRUE;
                     break;
@@ -112,20 +118,20 @@ static bool_t parse_options (int argc, char * * argv)
 
             if (i == ARRAY_LEN (arg_map))
             {
-                fprintf (stderr, _("Unknown option: %s\n"), argv[n]);
+                fprintf (stderr, _("Unknown option: %s\n"), arg);
                 success = FALSE;
                 goto OUT;
             }
         }
         else  /* short form */
         {
-            for (int c = 1; argv[n][c]; c ++)
+            for (int c = 1; arg[c]; c ++)
             {
                 unsigned i;
 
                 for (i = 0; i < ARRAY_LEN (arg_map); i ++)
                 {
-                    if (argv[n][c] == arg_map[i].short_arg)
+                    if (arg[c] == arg_map[i].short_arg)
                     {
                         * arg_map[i].value = TRUE;
                         break;
@@ -134,7 +140,7 @@ static bool_t parse_options (int argc, char * * argv)
 
                 if (i == ARRAY_LEN (arg_map))
                 {
-                    fprintf (stderr, _("Unknown option: -%c\n"), argv[n][c]);
+                    fprintf (stderr, _("Unknown option: -%c\n"), arg[c]);
                     success = FALSE;
                     goto OUT;
                 }
@@ -146,10 +152,6 @@ static bool_t parse_options (int argc, char * * argv)
     aud_set_verbose_mode (options.verbose);
 
 OUT:
-#ifdef _WIN32
-    free_argv_utf8 (& argc, & argv);
-#endif
-
     g_free (cur);
     return success;
 }

@@ -20,14 +20,18 @@
 #include <pthread.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/mman.h>
 
 #include <new>
 
 #include "objects.h"
 
+#ifdef _WIN32
+#include <windows.h>
+#else
+#include <sys/mman.h>
 #ifndef MAP_ANONYMOUS
 #define MAP_ANONYMOUS MAP_ANON
+#endif
 #endif
 
 struct StringStack
@@ -47,15 +51,31 @@ static constexpr int align (int len)
 static pthread_key_t key;
 static pthread_once_t once = PTHREAD_ONCE_INIT;
 
+#ifdef _WIN32
+static HANDLE mapping;
+#endif
+
 static void free_stack (void * stack)
 {
     if (stack)
+#ifdef _WIN32
+        UnmapViewOfFile (stack);
+#else
         munmap (stack, sizeof (StringStack));
+#endif
 }
 
 static void make_key ()
 {
     pthread_key_create (& key, free_stack);
+
+#ifdef _WIN32
+    mapping = CreateFileMappingW (INVALID_HANDLE_VALUE, nullptr, PAGE_READWRITE,
+     0, sizeof (StringStack), nullptr);
+
+    if (! mapping)
+        throw std::bad_alloc ();
+#endif
 }
 
 static StringStack * get_stack ()
@@ -66,11 +86,18 @@ static StringStack * get_stack ()
 
     if (! stack)
     {
+#ifdef _WIN32
+        stack = (StringStack *) MapViewOfFile (mapping, FILE_MAP_COPY, 0, 0, sizeof (StringStack));
+
+        if (! stack)
+            throw std::bad_alloc ();
+#else
         stack = (StringStack *) mmap (nullptr, sizeof (StringStack),
          PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
 
         if (stack == MAP_FAILED)
             throw std::bad_alloc ();
+#endif
 
         stack->top = stack->buf;
         pthread_setspecific (key, stack);

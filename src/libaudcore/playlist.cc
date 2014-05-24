@@ -257,7 +257,7 @@ Playlist::Playlist (int id) :
     resume_paused (FALSE),
     resume_time (0)
 {
-    unique_id_table.add (unique_id, this);
+    unique_id_table.add (unique_id, (Playlist *) this);
 }
 
 Playlist::~Playlist ()

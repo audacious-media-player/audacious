@@ -46,10 +46,10 @@
 
 #define AUTOSAVE_INTERVAL 300 /* seconds */
 
-#if G_BYTE_ORDER == G_LITTLE_ENDIAN
-#define UTF16_NATIVE "UTF-16LE"
-#else
+#ifdef WORDS_BIGENDIAN
 #define UTF16_NATIVE "UTF-16BE"
+#else
+#define UTF16_NATIVE "UTF-16LE"
 #endif
 
 #ifdef S_IRGRP
@@ -119,7 +119,7 @@ static StringBuf get_path_to_self (void)
         throw std::bad_alloc ();
 
     buf.resize (lenw * sizeof (wchar_t));
-    buf.steal (str_convert (buf, buf.len (), UTF16_NATIVE, "UTF8"));
+    buf.steal (str_convert (buf, buf.len (), UTF16_NATIVE, "UTF-8"));
     return buf;
 
 #elif defined __APPLE__

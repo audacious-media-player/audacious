@@ -19,32 +19,30 @@
 
 #include "util.h"
 
-#include <glib.h>
-
 #ifdef _WIN32
-
 #include <windows.h>
 
-void get_argv_utf8 (int * argc, char * * * argv)
+#ifdef WORDS_BIGENDIAN
+#define UTF16_NATIVE "UTF-16BE"
+#else
+#define UTF16_NATIVE "UTF-16LE"
+#endif
+
+Index<String> get_argv_utf8 ()
 {
+    int argc;
     wchar_t * combined = GetCommandLineW ();
-    wchar_t * * split = CommandLineToArgvW (combined, argc);
+    wchar_t * * split = CommandLineToArgvW (combined, & argc);
 
-    * argv = g_new (char *, argc + 1);
+    Index<String> argv;
+    argv.insert (0, argc);
 
-    for (int i = 0; i < * argc; i ++)
-        (* argv)[i] = g_utf16_to_utf8 (split[i], -1, NULL, NULL, NULL);
-
-    (* argv)[* argc] = 0;
+    for (int i = 0; i < argc; i ++)
+        argv[i] = String (str_convert ((char *) split[i],
+         wcslen (split[i]) * sizeof (wchar_t), UTF16_NATIVE, "UTF-8"));
 
     LocalFree (split);
-}
-
-void free_argv_utf8 (int * argc, char * * * argv)
-{
-    g_strfreev (* argv);
-    * argc = 0;
-    * argv = NULL;
+    return argv;
 }
 
 #endif

@@ -20,9 +20,10 @@
 #ifndef AUDACIOUS_UTIL_H
 #define AUDACIOUS_UTIL_H
 
+#include <libaudcore/audstrings.h>
+
 #ifdef _WIN32
-void get_argv_utf8 (int * argc, char * * * argv);
-void free_argv_utf8 (int * argc, char * * * argv);
+Index<String> get_argv_utf8 ();
 #endif
 
 #endif /* AUDACIOUS_UTIL_H */
