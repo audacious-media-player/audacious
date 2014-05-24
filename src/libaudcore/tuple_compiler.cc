@@ -292,7 +292,9 @@ static int tc_get_variable (TupleEvalContext * ctx, char * name, int type)
     {
         for (unsigned i = 0; i < ctx->len; i ++)
         {
-            if (! strcmp (GET_VAR (ctx, i)->name, name))
+            TupleEvalVar * var = GET_VAR (ctx, i);
+
+            if (var->type == type && ! strcmp (var->name, name))
                 return i;
         }
     }
