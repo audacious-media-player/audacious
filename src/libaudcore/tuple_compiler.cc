@@ -35,7 +35,7 @@
 
 #define tuple_error(ctx, ...) fprintf (stderr, "Tuple compiler: " __VA_ARGS__)
 
-enum
+enum TupleEvalOp
 {
     OP_RAW = 0,       /* plain text */
     OP_FIELD,         /* a field/variable */
@@ -49,7 +49,7 @@ enum
     OP_IS_EMPTY
 };
 
-enum
+enum TupleEvalType
 {
     TUPLE_VAR_FIELD = 0,
     TUPLE_VAR_CONST
@@ -57,7 +57,7 @@ enum
 
 struct TupleEvalNode
 {
-    int opcode;                                  /* operator, see OP_ enums */
+    TupleEvalOp opcode;                          /* operator, see OP_ enums */
     int var[MAX_VARS];                           /* tuple variable references */
     char * text;                                 /* raw text, if any (OP_RAW) */
     TupleEvalNode * children, * next, * prev;    /* children of this struct, and pointer to next node. */
@@ -66,7 +66,7 @@ struct TupleEvalNode
 struct TupleEvalVar
 {
     char * name;
-    int type;                /* Type of variable, see VAR_* */
+    TupleEvalType type;      /* Type of variable, see VAR_* */
     int defvali;
     TupleValueType ctype;    /* Type of constant/def value */
 
@@ -111,7 +111,7 @@ void tuple_evalctx_free (TupleEvalContext * ctx)
 
 /* note: may invalidate TupleEvalVar pointers due to reallocation */
 static int tuple_evalctx_add_var (TupleEvalContext * ctx, const char * name,
- const int type, const TupleValueType ctype)
+ TupleEvalType type, TupleValueType ctype)
 {
     int field = -1;
 
@@ -263,7 +263,7 @@ static bool tc_get_item (TupleEvalContext * ctx, const char * * str,
 }
 
 
-static int tc_get_variable (TupleEvalContext * ctx, char * name, int type)
+static int tc_get_variable (TupleEvalContext * ctx, char * name, TupleEvalType type)
 {
     TupleValueType ctype = TUPLE_UNKNOWN;
 
@@ -293,7 +293,7 @@ static TupleEvalNode * tuple_compiler_pass1 (int * level,
  TupleEvalContext * ctx, const char * * expression);
 
 static bool tc_parse_construct (TupleEvalContext * ctx, TupleEvalNode * * res,
- const char * item, const char ** c, int * level, int opcode)
+ const char * item, const char * * c, int * level, TupleEvalOp opcode)
 {
     char tmps1[MAX_STR], tmps2[MAX_STR];
     bool literal1 = true, literal2 = true;
@@ -367,7 +367,7 @@ static TupleEvalNode * tuple_compiler_pass1 (int * level,
 
             if (* c == '{')
             {
-                int opcode;
+                TupleEvalOp opcode;
                 const char * expr = ++ c;
 
                 switch (* c)
@@ -677,28 +677,22 @@ static bool tuple_formatter_eval_do (TupleEvalContext * ctx,
         case OP_FIELD:
             var0 = GET_VAR (ctx, curr->var[0]);
 
-            switch (var0->type)
+            if (tf_get_fieldval (var0, tuple))
             {
-            case TUPLE_VAR_FIELD:
-                if (tf_get_fieldval (var0, tuple))
+                switch (var0->ctype)
                 {
-                    switch (var0->ctype)
-                    {
-                    case TUPLE_STRING:
-                        str = var0->fieldstr;
-                        break;
+                case TUPLE_STRING:
+                    str = var0->fieldstr;
+                    break;
 
-                    case TUPLE_INT:
-                        tmps.steal (int_to_str (var0->defvali));
-                        str = tmps;
-                        break;
+                case TUPLE_INT:
+                    tmps.steal (int_to_str (var0->defvali));
+                    str = tmps;
+                    break;
 
-                    default:
-                        str = nullptr;
-                    }
+                default:
+                    str = nullptr;
                 }
-
-                break;
             }
 
             break;
@@ -744,7 +738,7 @@ static bool tuple_formatter_eval_do (TupleEvalContext * ctx,
                     break;
 
                 case OP_LT:
-                    result = (resulti <  0);
+                    result = (resulti < 0);
                     break;
 
                 case OP_LTEQ:
@@ -752,7 +746,7 @@ static bool tuple_formatter_eval_do (TupleEvalContext * ctx,
                     break;
 
                 case OP_GT:
-                    result = (resulti >  0);
+                    result = (resulti > 0);
                     break;
 
                 case OP_GTEQ:
