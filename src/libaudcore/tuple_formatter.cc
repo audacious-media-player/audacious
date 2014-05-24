@@ -25,8 +25,7 @@
 /*
  * the tuple formatter:
  *
- * this is a data-driven meta-language which eventually hopes to be
- * turing complete.
+ * this is a data-driven meta-language.
  *
  * language constructs follow the following basic rules:
  *   - begin with ${
@@ -35,14 +34,9 @@
  * language constructs:
  *   - ${field}: prints a field
  *   - ${?field:expr}: evaluates expr if field exists
- *   - ${=field,"value"}: defines field in the currently iterated
- *                        tuple as string value of "value"
- *   - ${=field,value}: defines field in the currently iterated
- *                      tuple as integer value of "value"
  *   - ${==field,field:expr}: evaluates expr if both fields are the same
  *   - ${!=field,field:expr}: evaluates expr if both fields are not the same
  *   - ${(empty)?field:expr}: evaluates expr if field is empty or does not exist
- *   - %{function:args,arg2,...}: runs function and inserts the result.
  *
  * everything else is treated as raw text.
  */

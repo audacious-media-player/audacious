@@ -18,19 +18,6 @@
  * the use of this software.
  */
 
-/*
- * TODO:
- * - Unicode/UTF-8 support in format strings. using any non-ASCII
- *   characters in Tuplez format strings WILL cause things go boom
- *   at the moment!
- *
- * - implement definitions (${=foo,"baz"} ${=foo,1234})
- * - implement functions
- * - implement handling of external expressions
- * - evaluation context: how local variables should REALLY work?
- *   currently there is just a single context, is a "global" context needed?
- */
-
 #include <stdarg.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -414,39 +401,13 @@ static TupleEvalNode * tuple_compiler_pass1 (int * level,
                     c ++;
 
                     if (* c != '=')
-                    {
-                        /* Definition */
-                        literal = false;
+                        goto ret_error;
 
-                        if (tc_get_item (ctx, & c, tmps1, MAX_STR, ',',
-                         & literal, "variable", item))
-                        {
-                            c ++;
+                    c ++;
 
-                            if (* c == '"')
-                            {
-                                /* String */
-                                c ++;
-                            }
-                            else if (g_ascii_isdigit (* c))
-                            {
-                                /* Integer */
-                            }
-
-                            tuple_error (ctx, "Definitions are not yet supported!\n");
-                            goto ret_error;
-                        }
-                        else
-                            goto ret_error;
-                    }
-                    else
-                    {
-                        c ++;
-
-                        /* Equals? */
-                        if (! tc_parse_construct (ctx, & res, item, & c, level, OP_EQUALS))
-                            goto ret_error;
-                    }
+                    /* Equals? */
+                    if (! tc_parse_construct (ctx, & res, item, & c, level, OP_EQUALS))
+                        goto ret_error;
 
                     break;
 
@@ -454,7 +415,7 @@ static TupleEvalNode * tuple_compiler_pass1 (int * level,
                     c ++;
 
                     if (* c != '=')
-                        goto ext_expression;
+                        goto ret_error;
 
                     c ++;
 
@@ -522,20 +483,16 @@ static TupleEvalNode * tuple_compiler_pass1 (int * level,
                             goto ret_error;
                     }
                     else
-                        goto ext_expression;
+                        goto ret_error;
 
                     break;
 
                 default:
-ext_expression:
                     /* Get expression content */
-                    c = expr;
                     literal = false;
 
                     if (tc_get_item (ctx, & c, tmps1, MAX_STR, '}', & literal, "field", item))
                     {
-                        /* FIXME!! FIX ME! Check for external expressions */
-
                         /* I HAS A FIELD - A field. You has it. */
                         tmp = g_slice_new0 (TupleEvalNode);
                         tmp->opcode = OP_FIELD;
@@ -560,35 +517,6 @@ ext_expression:
                 goto ret_error;
             }
 
-        }
-        else if (* c == '%')
-        {
-            /* Function? */
-            item = c ++;
-
-            if (* c != '{')
-            {
-                tuple_error (ctx, "Expected '{', got '%c' in '%s'.\n", * c, c);
-                goto ret_error;
-            }
-
-            int i = 0;
-            c ++;
-
-            while (* c != '\0' && (g_ascii_isalnum (* c) || * c == '-') &&
-             * c != '}' && * c != ':' && i < (MAX_STR - 1))
-                tmps1[i ++] = * c ++;
-
-            tmps1[i] = '\0';
-
-            if (* c == '\0')
-            {
-                tuple_error (ctx, "Expected '}' or function arguments in '%s'\n", item);
-                goto ret_error;
-            }
-
-            if (* c == ':' || * c == '}')
-                c ++;
         }
         else
         {
@@ -888,7 +816,7 @@ static bool tuple_formatter_eval_do (TupleEvalContext * ctx,
             break;
 
         default:
-            tuple_error (ctx, "Unimplemented opcode %d!\n", curr->opcode);
+            /* should not be reached */
             return false;
         }
 
