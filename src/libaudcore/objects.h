@@ -196,13 +196,13 @@ public:
         other.m_size = 0;
     }
 
-    // only allowed for top string
+    // only allowed for top (or null) string
     ~StringBuf ();
 
-    // only allowed for top string
+    // only allowed for top (or null) string
     void resize (int size);
 
-    // only allowed for top two strings
+    // only allowed for top two strings (or when one string is null)
     void steal (StringBuf && other);
 
     int size () const

@@ -104,23 +104,36 @@ EXPORT StringBuf::~StringBuf ()
 
 EXPORT void StringBuf::steal (StringBuf && other)
 {
-    if (! other.m_data)
+    if (other.m_data)
     {
-        this->~StringBuf ();
-        stack = nullptr;
-        m_data = 0;
-        m_size = 0;
-        return;
+        if (m_data)
+        {
+            assert (m_data + m_size == other.m_data);
+            assert (other.m_data + other.m_size == stack->top);
+
+            m_size = other.m_size;
+            memmove (m_data, other.m_data, m_size);
+            stack->top = m_data + m_size;
+        }
+        else
+        {
+            stack = other.stack;
+            m_data = other.m_data;
+            m_size = other.m_size;
+        }
+
+        other.stack = nullptr;
+        other.m_data = 0;
+        other.m_size = 0;
     }
-
-    assert (m_data + m_size == other.m_data);
-    assert (other.m_data + other.m_size == stack->top);
-
-    m_size = other.m_size;
-    memmove (m_data, other.m_data, m_size);
-    stack->top = m_data + m_size;
-
-    other.stack = nullptr;
-    other.m_data = 0;
-    other.m_size = 0;
+    else
+    {
+        if (m_data)
+        {
+            this->~StringBuf ();
+            stack = nullptr;
+            m_data = 0;
+            m_size = 0;
+        }
+    }
 }

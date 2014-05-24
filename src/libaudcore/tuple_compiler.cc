@@ -665,7 +665,7 @@ static bool tuple_formatter_eval_do (TupleEvalContext * ctx,
 
     while (curr)
     {
-        StringBuf tmps (0);
+        StringBuf tmps;
         const char * str = nullptr;
 
         switch (curr->opcode)
