@@ -27,7 +27,7 @@
 #include "objects.h"
 
 #ifndef MAP_ANONYMOUS
-    #define MAP_ANONYMOUS MAP_ANON
+#define MAP_ANONYMOUS MAP_ANON
 #endif
 
 struct StringStack
@@ -35,11 +35,14 @@ struct StringStack
     static constexpr int Size = 1048576;  // 1 MB
 
     char * top;
-    char buf[Size - sizeof (top)];
-
-    inline int avail (char * pos) const
-        { return buf + sizeof buf - pos; }
+    char buf[Size - sizeof top];
 };
+
+// adds one byte for null character and rounds up to word boundary
+static constexpr int align (int len)
+{
+    return (len + sizeof (void *)) & ~(sizeof (void *) - 1);
+}
 
 static pthread_key_t key;
 static pthread_once_t once = PTHREAD_ONCE_INIT;
@@ -85,7 +88,7 @@ EXPORT void StringBuf::resize (int len)
     }
     else
     {
-        if (m_data + m_len + 1 != stack->top)
+        if (m_data + align (m_len) != stack->top)
             throw std::bad_alloc ();
     }
 
@@ -99,7 +102,7 @@ EXPORT void StringBuf::resize (int len)
     }
     else
     {
-        stack->top = m_data + len + 1;
+        stack->top = m_data + align (len);
 
         if (stack->top - stack->buf > (int) sizeof stack->buf)
             throw std::bad_alloc ();
@@ -113,7 +116,7 @@ EXPORT StringBuf::~StringBuf ()
 {
     if (m_data)
     {
-        if (m_data + m_len + 1 != stack->top)
+        if (m_data + align (m_len) != stack->top)
             throw std::bad_alloc ();
 
         stack->top = m_data;
@@ -126,12 +129,13 @@ EXPORT void StringBuf::steal (StringBuf && other)
     {
         if (m_data)
         {
-            if (m_data + m_len + 1 != other.m_data || other.m_data + other.m_len + 1 != stack->top)
+            if (m_data + align (m_len) != other.m_data ||
+             other.m_data + align (other.m_len) != stack->top)
                 throw std::bad_alloc ();
 
             m_len = other.m_len;
             memmove (m_data, other.m_data, m_len + 1);
-            stack->top = m_data + m_len + 1;
+            stack->top = m_data + align (m_len);
         }
         else
         {
@@ -158,12 +162,12 @@ EXPORT void StringBuf::steal (StringBuf && other)
 
 EXPORT void StringBuf::combine (StringBuf && other)
 {
-    if (m_data + m_len + 1 != other.m_data || other.m_data + other.m_len + 1 != stack->top)
+    if (m_data + align (m_len) != other.m_data || other.m_data + align (other.m_len) != stack->top)
         throw std::bad_alloc ();
 
     memmove (m_data + m_len, other.m_data, other.m_len + 1);
     m_len += other.m_len;
-    stack->top --;
+    stack->top = m_data + align (m_len);
 
     other.stack = nullptr;
     other.m_data = nullptr;
