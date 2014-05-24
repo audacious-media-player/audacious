@@ -1,6 +1,7 @@
 /*
  * tuple_compiler.h
  * Copyright (c) 2007 Matti 'ccr' Hämäläinen
+ * Copyright (c) 2014 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -32,8 +33,7 @@ void tuple_evalctx_free(TupleEvalContext *ctx);
 
 void tuple_evalnode_free(TupleEvalNode *expr);
 
-TupleEvalNode *tuple_formatter_compile(TupleEvalContext *ctx, const char *expr);
-void tuple_formatter_eval (TupleEvalContext * ctx, TupleEvalNode * expr,
- const Tuple & tuple, GString * out);
+TupleEvalNode * tuple_formatter_compile (TupleEvalContext * ctx, const char * expr);
+StringBuf tuple_formatter_eval (TupleEvalContext * ctx, TupleEvalNode * expr, const Tuple & tuple);
 
 #endif /* LIBAUDCORE_TUPLE_COMPILER_H */

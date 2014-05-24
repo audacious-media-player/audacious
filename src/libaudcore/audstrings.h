@@ -30,6 +30,8 @@
 #include <libaudcore/index.h>
 #include <libaudcore/objects.h>
 
+int strlen_bounded (const char * s, int len = -1);
+
 StringBuf str_copy (const char * s, int len = -1);
 StringBuf str_concat (const std::initializer_list<const char *> & strings);
 void str_insert (StringBuf & str, int pos, const char * s, int len = -1);
@@ -64,7 +66,7 @@ StringBuf str_to_locale (const char * str, int len = -1);
 /* Requires: aud_init() */
 StringBuf str_to_utf8 (const char * str, int len = -1);
 
-void filename_normalize (char * filename);
+void filename_normalize (StringBuf & filename);
 
 StringBuf filename_build (const std::initializer_list<const char *> & elems);
 StringBuf filename_to_uri (const char * filename);

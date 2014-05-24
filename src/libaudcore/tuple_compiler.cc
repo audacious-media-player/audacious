@@ -1,7 +1,7 @@
 /*
  * tuple_compiler.c
  * Copyright (c) 2007 Matti 'ccr' Hämäläinen
- * Copyright (c) 2011-2013 John Lindgren
+ * Copyright (c) 2011-2014 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -650,7 +650,7 @@ static TupleValueType tf_get_var (char * * tmps, int * tmpi,
  * context and return resulting string.
  */
 static bool tuple_formatter_eval_do (TupleEvalContext * ctx,
- TupleEvalNode * expr, const Tuple & tuple, GString * out)
+ TupleEvalNode * expr, const Tuple & tuple, StringBuf & out)
 {
     TupleEvalNode * curr = expr;
     TupleEvalVar * var0, * var1;
@@ -665,13 +665,10 @@ static bool tuple_formatter_eval_do (TupleEvalContext * ctx,
 
     while (curr)
     {
-        StringBuf tmps;
-        const char * str = nullptr;
-
         switch (curr->opcode)
         {
         case OP_RAW:
-            str = curr->text;
+            str_insert (out, -1, curr->text);
             break;
 
         case OP_FIELD:
@@ -682,16 +679,15 @@ static bool tuple_formatter_eval_do (TupleEvalContext * ctx,
                 switch (var0->ctype)
                 {
                 case TUPLE_STRING:
-                    str = var0->fieldstr;
+                    str_insert (out, -1, var0->fieldstr);
                     break;
 
                 case TUPLE_INT:
-                    tmps.steal (int_to_str (var0->defvali));
-                    str = tmps;
+                    out.combine (int_to_str (var0->defvali));
                     break;
 
                 default:
-                    str = nullptr;
+                    break;
                 }
             }
 
@@ -814,18 +810,15 @@ static bool tuple_formatter_eval_do (TupleEvalContext * ctx,
             return false;
         }
 
-        if (str)
-            g_string_append (out, str);
-
         curr = curr->next;
     }
 
     return true;
 }
 
-void tuple_formatter_eval (TupleEvalContext * ctx, TupleEvalNode * expr,
- const Tuple & tuple, GString * out)
+StringBuf tuple_formatter_eval (TupleEvalContext * ctx, TupleEvalNode * expr, const Tuple & tuple)
 {
-    g_string_truncate (out, 0);
-    tuple_formatter_eval_do (ctx, expr, tuple, out);
+    StringBuf buf (0);
+    tuple_formatter_eval_do (ctx, expr, tuple, buf);
+    return buf;
 }

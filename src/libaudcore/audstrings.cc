@@ -66,14 +66,26 @@ static const char swap_case[256] =
 #define IS_LEGAL(c)  (uri_legal_table[(unsigned char) (c)])
 #define SWAP_CASE(c) (swap_case[(unsigned char) (c)])
 
+/* strlen() if <len> is negative, otherwise strnlen() */
+EXPORT int strlen_bounded (const char * s, int len)
+{
+    if (len < 0)
+        return strlen (s);
+
+    const char * nul = (const char *) memchr (s, 0, len);
+    if (nul)
+        return nul - s;
+
+    return len;
+}
+
 EXPORT StringBuf str_copy (const char * s, int len)
 {
     if (len < 0)
         len = strlen (s);
 
-    StringBuf str (len + 1);
-    strncpy (str, s, len);
-    str[len] = 0;
+    StringBuf str (len);
+    memcpy (str, s, len);
     return str;
 }
 
@@ -81,34 +93,34 @@ EXPORT StringBuf str_concat (const std::initializer_list<const char *> & strings
 {
     StringBuf str (-1);
     char * set = str;
-    int left = str.size ();
+    int left = str.len ();
 
     for (const char * s : strings)
     {
         int len = strlen (s);
-        assert (len < left);
+        assert (len <= left);
 
-        strcpy (set, s);
+        memcpy (set, s, len);
 
         set += len;
         left -= len;
     }
 
-    str.resize (set + 1 - str);
+    str.resize (set - str);
     return str;
 }
 
 EXPORT void str_insert (StringBuf & str, int pos, const char * s, int len)
 {
-    int len0 = strlen (str);
+    int len0 = str.len ();
 
     if (pos < 0)
         pos = len0;
     if (len < 0)
         len = strlen (s);
 
-    str.resize (len0 + len + 1);
-    memmove (str + pos + len, str + pos, len0 + 1 - pos);
+    str.resize (len0 + len);
+    memmove (str + pos + len, str + pos, len0 - pos);
     memcpy (str + pos, s, len);
 }
 
@@ -124,8 +136,8 @@ EXPORT StringBuf str_printf (const char * format, ...)
 EXPORT StringBuf str_vprintf (const char * format, va_list args)
 {
     StringBuf str (-1);
-    int len = vsnprintf (str, str.size (), format, args);
-    str.resize (len + 1);
+    int len = vsnprintf (str, str.len () + 1, format, args);
+    str.resize (len);
     return str;
 }
 
@@ -252,7 +264,7 @@ EXPORT const char * strstr_nocase_utf8 (const char * haystack, const char * need
 
 EXPORT StringBuf str_tolower_utf8 (const char * str)
 {
-    StringBuf buf (6 * strlen (str) + 1);
+    StringBuf buf (6 * strlen (str));
     const char * get = str;
     char * set = buf;
     gunichar c;
@@ -267,8 +279,7 @@ EXPORT StringBuf str_tolower_utf8 (const char * str)
         get = g_utf8_next_char (get);
     }
 
-    * set = 0;
-    buf.resize (set + 1 - buf);
+    buf.resize (set - buf);
     return buf;
 }
 
@@ -278,19 +289,14 @@ EXPORT void str_replace_char (char * string, char old_c, char new_c)
         * string ++ = new_c;
 }
 
-/* Percent-decodes up to <len> bytes of <str>.  If <len> is negative, decodes
- * all of <str>. */
+/* Percent-decodes <len> bytes of <str>.  If <len> is negative, decodes all of <str>. */
 
 EXPORT StringBuf str_decode_percent (const char * str, int len)
 {
-    const char * nul;
-
     if (len < 0)
         len = strlen (str);
-    else if ((nul = (const char *) memchr (str, 0, len)))
-        len = nul - str;
 
-    StringBuf buf (len + 1);
+    StringBuf buf (len);
     char * out = buf;
 
     while (1)
@@ -316,26 +322,18 @@ EXPORT StringBuf str_decode_percent (const char * str, int len)
     }
 
     memcpy (out, str, len);
-    out += len;
-    * out = 0;
-
-    buf.resize (out + 1 - buf);
+    buf.resize (out + len - buf);
     return buf;
 }
 
-/* Percent-encodes up to <len> bytes of <str>.  If <len> is negative, decodes
- * all of <str>. */
+/* Percent-encodes <len> bytes of <str>.  If <len> is negative, decodes all of <str>. */
 
 EXPORT StringBuf str_encode_percent (const char * str, int len)
 {
-    const char * nul;
-
     if (len < 0)
         len = strlen (str);
-    else if ((nul = (const char *) memchr (str, 0, len)))
-        len = nul - str;
 
-    StringBuf buf (3 * len + 1);
+    StringBuf buf (3 * len);
     char * out = buf;
 
     while (len --)
@@ -352,13 +350,11 @@ EXPORT StringBuf str_encode_percent (const char * str, int len)
         }
     }
 
-    * out = 0;
-
-    buf.resize (out + 1 - buf);
+    buf.resize (out - buf);
     return buf;
 }
 
-EXPORT void filename_normalize (char * filename)
+EXPORT void filename_normalize (StringBuf & filename)
 {
 #ifdef _WIN32
     /* convert slash to backslash on Windows */
@@ -366,49 +362,49 @@ EXPORT void filename_normalize (char * filename)
 #endif
 
     /* remove trailing slash */
-    int len = strlen (filename);
+    int len = filename.len ();
 #ifdef _WIN32
     if (len > 3 && filename[len - 1] == '\\') /* leave "C:\" */
 #else
     if (len > 1 && filename[len - 1] == '/') /* leave leading "/" */
 #endif
-        filename[len - 1] = 0;
+        filename.resize (len - 1);
 }
 
 EXPORT StringBuf filename_build (const std::initializer_list<const char *> & elems)
 {
     StringBuf str (-1);
     char * set = str;
-    int left = str.size ();
+    int left = str.len ();
 
     for (const char * s : elems)
     {
 #ifdef _WIN32
         if (set > str && set[-1] != '/' && set[-1] != '\\')
         {
-            assert (left > 1);
+            assert (left);
             * set ++ = '\\';
             left --;
         }
 #else
         if (set > str && set[-1] != '/')
         {
-            assert (left > 1);
+            assert (left);
             * set ++ = '/';
             left --;
         }
 #endif
 
         int len = strlen (s);
-        assert (len < left);
+        assert (len <= left);
 
-        strcpy (set, s);
+        memcpy (set, s, len);
 
         set += len;
         left -= len;
     }
 
-    str.resize (set + 1 - str);
+    str.resize (set - str);
     return str;
 }
 
@@ -708,29 +704,29 @@ EXPORT StringBuf index_to_str_list (const Index<String> & index, const char * se
 {
     StringBuf str (-1);
     char * set = str;
-    int left = str.size ();
+    int left = str.len ();
     int seplen = strlen (sep);
 
     for (const String & s : index)
     {
         int len = strlen (s);
-        assert (len + seplen < left);
+        assert (len + seplen <= left);
 
         if (set > str)
         {
-            strcpy (set, sep);
+            memcpy (set, sep, seplen);
 
             set += seplen;
             left -= seplen;
         }
 
-        strcpy (set, s);
+        memcpy (set, s, len);
 
         set += len;
         left -= len;
     }
 
-    str.resize (set + 1 - str);
+    str.resize (set - str);
     return str;
 }
 
@@ -776,8 +772,7 @@ EXPORT double str_to_double (const char * string)
     if (p)
     {
         char buf[7] = "000000";
-        const char * nul = (const char *) memchr (p + 1, 0, 6);
-        memcpy (buf, p + 1, nul ? nul - (p + 1) : 6);
+        memcpy (buf, p + 1, strlen_bounded (p + 1, 6));
         val += (double) str_to_int (buf) / 1000000;
     }
 
@@ -786,29 +781,27 @@ EXPORT double str_to_double (const char * string)
 
 EXPORT StringBuf int_to_str (int val)
 {
-    StringBuf buf (16);
-
-    char * set = buf;
-
-    if (val < 0)
-    {
-        * set ++ = '-';
+    bool neg = (val < 0);
+    if (neg)
         val = -val;
-    }
 
-    char * rev = buf + buf.size () - 1;
-    * rev = 0;
+    char buf[16];
+    char * rev = buf + sizeof buf;
 
-    while (rev > set)
+    while (rev > buf)
     {
         * (-- rev) = '0' + val % 10;
         if (! (val /= 10))
             break;
     }
 
-    while ((* set ++ = * rev ++));
+    if (neg && rev > buf)
+        * (-- rev) = '-';
 
-    return buf;
+    int len = buf + sizeof buf - rev;
+    StringBuf buf2 (len);
+    memcpy (buf2, rev, len);
+    return buf2;
 }
 
 EXPORT StringBuf double_to_str (double val)
@@ -828,13 +821,13 @@ EXPORT StringBuf double_to_str (double val)
 
     StringBuf buf = str_printf ("%s%d.%06d", neg ? "-" : "", i, f);
 
-    char * c = buf + strlen (buf);
-    while (* (c - 1) == '0')
+    char * c = buf + buf.len ();
+    while (c[-1] == '0')
         c --;
-    if (* (c - 1) == '.')
+    if (c[-1] == '.')
         c --;
-    * c = 0;
 
+    buf.resize (c - buf);
     return buf;
 }
 

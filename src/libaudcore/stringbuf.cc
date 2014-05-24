@@ -74,30 +74,35 @@ static StringStack * get_stack ()
     return stack;
 }
 
-EXPORT void StringBuf::resize (int size)
+EXPORT void StringBuf::resize (int len)
 {
     if (! stack)
     {
         stack = get_stack ();
         m_data = stack->top;
+        stack->top ++;
     }
 
-    assert (m_data + m_size == stack->top);
+    assert (m_data + m_len + 1 == stack->top);
 
-    if (size < 0)
-        size = stack->avail (m_data);
+    if (len < 0)
+    {
+        len = stack->avail (m_data) - 1;
+        assert (len >= 0);
+    }
     else
-        assert (size <= stack->avail (m_data));
+        assert (len < stack->avail (m_data));
 
-    m_size = size;
-    stack->top = m_data + size;
+    m_len = len;
+    m_data[len] = 0;
+    stack->top = m_data + len + 1;
 }
 
 EXPORT StringBuf::~StringBuf ()
 {
     if (m_data)
     {
-        assert (m_data + m_size == stack->top);
+        assert (m_data + m_len + 1 == stack->top);
         stack->top = m_data;
     }
 }
@@ -108,23 +113,23 @@ EXPORT void StringBuf::steal (StringBuf && other)
     {
         if (m_data)
         {
-            assert (m_data + m_size == other.m_data);
-            assert (other.m_data + other.m_size == stack->top);
+            assert (m_data + m_len + 1 == other.m_data);
+            assert (other.m_data + other.m_len + 1 == stack->top);
 
-            m_size = other.m_size;
-            memmove (m_data, other.m_data, m_size);
-            stack->top = m_data + m_size;
+            m_len = other.m_len;
+            memmove (m_data, other.m_data, m_len + 1);
+            stack->top = m_data + m_len + 1;
         }
         else
         {
             stack = other.stack;
             m_data = other.m_data;
-            m_size = other.m_size;
+            m_len = other.m_len;
         }
 
         other.stack = nullptr;
-        other.m_data = 0;
-        other.m_size = 0;
+        other.m_data = nullptr;
+        other.m_len = 0;
     }
     else
     {
@@ -132,8 +137,22 @@ EXPORT void StringBuf::steal (StringBuf && other)
         {
             this->~StringBuf ();
             stack = nullptr;
-            m_data = 0;
-            m_size = 0;
+            m_data = nullptr;
+            m_len = 0;
         }
     }
+}
+
+EXPORT void StringBuf::combine (StringBuf && other)
+{
+    assert (m_data + m_len + 1 == other.m_data);
+    assert (other.m_data + other.m_len + 1 == stack->top);
+
+    memmove (m_data + m_len, other.m_data, other.m_len + 1);
+    m_len += other.m_len;
+    stack->top --;
+
+    other.stack = nullptr;
+    other.m_data = nullptr;
+    other.m_len = 0;
 }

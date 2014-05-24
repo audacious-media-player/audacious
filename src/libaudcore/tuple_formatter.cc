@@ -69,11 +69,11 @@ EXPORT void tuple_formatter_free (TupleFormatter * formatter)
 
 EXPORT String tuple_format_title (TupleFormatter * formatter, const Tuple & tuple)
 {
-    tuple_formatter_eval (formatter->context, formatter->node, tuple, formatter->buf);
+    StringBuf str = tuple_formatter_eval (formatter->context, formatter->node, tuple);
     tuple_evalctx_reset (formatter->context);
 
-    if (formatter->buf->len)
-        return String (formatter->buf->str);
+    if (str[0])
+        return String (str);
 
     /* formatting failed, try fallbacks */
     static const int fallbacks[] = {FIELD_TITLE, FIELD_FILE_NAME};

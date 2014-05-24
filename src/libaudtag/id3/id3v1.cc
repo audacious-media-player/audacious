@@ -86,12 +86,13 @@ static bool_t id3v1_can_handle_file (VFSFile * file)
 static bool_t combine_string (Tuple & tuple, int field, const char * str1,
  int size1, const char * str2, int size2)
 {
-    StringBuf str = str_copy (str1, size1);
-    str_insert (str, -1, str2, size2);
+    StringBuf str = str_copy (str1, strlen_bounded (str1, size1));
+    str_insert (str, -1, str2, strlen_bounded (str2, size2));
 
     g_strchomp (str);
+    str.resize (strlen (str));
 
-    if (! str[0])
+    if (! str.len ())
         return FALSE;
 
     tuple.set_str (field, str);
@@ -114,7 +115,7 @@ static bool_t id3v1_read_tag (Tuple & tuple, VFSFile * file)
     combine_string (tuple, FIELD_ALBUM, tag.album, sizeof tag.album, ext.album, sizeof ext.album);
     combine_string (tuple, FIELD_COMMENT, tag.comment, sizeof tag.comment, NULL, 0);
 
-    StringBuf year = str_copy (tag.year, 4);
+    StringBuf year = str_copy (tag.year, strlen_bounded (tag.year, 4));
     if (atoi (year))
         tuple.set_int (FIELD_YEAR, atoi (year));
 

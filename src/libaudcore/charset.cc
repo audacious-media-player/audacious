@@ -50,10 +50,9 @@ EXPORT StringBuf str_convert (const char * str, int len, const char * from_chars
         len = strlen (str);
 
     StringBuf buf (-1);
-    assert (buf.size () > 0);
 
     size_t inbytesleft = len;
-    size_t outbytesleft = buf.size () - 1;
+    size_t outbytesleft = buf.len ();
     char * in = (char *) str;
     char * out = buf;
 
@@ -68,9 +67,7 @@ EXPORT StringBuf str_convert (const char * str, int len, const char * from_chars
     if (ret == (size_t) -1 || inbytesleft)
         return StringBuf ();
 
-    int outlen = buf.size () - 1 - outbytesleft;
-    buf[outlen] = 0;
-    buf.resize (outlen + 1);
+    buf.resize (buf.len () - outbytesleft);
     return buf;
 }
 

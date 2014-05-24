@@ -566,10 +566,10 @@ EXPORT String aud_drct_get_title (void)
     wait_until_ready ();
 
     StringBuf prefix = aud_get_bool (NULL, "show_numbers_in_pl") ?
-     str_printf ("%d. ", 1 + current_entry) : str_copy ("");
+     str_printf ("%d. ", 1 + current_entry) : StringBuf (0);
 
     StringBuf time = (current_length > 0) ? str_format_time (current_length) : StringBuf ();
-    StringBuf suffix = time ? str_concat ({" (", time, ")"}) : str_copy ("");
+    StringBuf suffix = time ? str_concat ({" (", time, ")"}) : StringBuf (0);
 
     return String (str_concat ({prefix, current_title, suffix}));
 }

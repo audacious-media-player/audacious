@@ -87,7 +87,7 @@ static StringBuf get_path_to_self (void)
 #ifdef HAVE_PROC_SELF_EXE
 
     StringBuf buf (-1);
-    int len = readlink ("/proc/self/exe", buf, buf.size ());
+    int len = readlink ("/proc/self/exe", buf, buf.len ());
 
     if (len < 0)
     {
@@ -95,17 +95,16 @@ static StringBuf get_path_to_self (void)
         return StringBuf ();
     }
 
-    assert (len < buf.size ());  // abort if out of memory
+    assert (len < buf.len ());  // abort if out of memory
 
-    buf[len] = 0;
-    buf.resize (len + 1);
+    buf.resize (len);
     return buf;
 
 #elif defined _WIN32
 
     StringBuf buf (-1);
     wchar_t * bufw = (wchar_t *) (char *) buf;
-    int sizew = buf.size () / sizeof (wchar_t);
+    int sizew = buf.len () / sizeof (wchar_t);
     int lenw = GetModuleFileNameW (NULL, bufw, sizew);
 
     if (! lenw)
@@ -117,18 +116,18 @@ static StringBuf get_path_to_self (void)
     assert (lenw < sizew);  // abort if out of memory
 
     buf.resize (lenw * sizeof (wchar_t));
-    buf.steal (str_convert (buf, buf.size (), UTF16_NATIVE, "UTF8"));
+    buf.steal (str_convert (buf, buf.len (), UTF16_NATIVE, "UTF8"));
     return buf;
 
 #elif defined __APPLE__
 
     StringBuf buf (-1);
-    uint32_t size = buf.size ();
+    uint32_t size = buf.len ();
     int ret = _NSGetExecutablePath (buf, & size);
 
     assert (! ret);  // abort if out of memory
 
-    buf.resize (strlen (buf) + 1);
+    buf.resize (strlen (buf));
     return buf;
 
 #else
@@ -182,18 +181,22 @@ static void set_default_paths (void)
 
 static void relocate_all_paths (void)
 {
-    char bindir[] = HARDCODE_BINDIR;
-    char datadir[] = HARDCODE_DATADIR;
-    char plugindir[] = HARDCODE_PLUGINDIR;
-    char localedir[] = HARDCODE_LOCALEDIR;
-    char desktopfile[] = HARDCODE_DESKTOPFILE;
-    char iconfile[] = HARDCODE_ICONFILE;
-
+    StringBuf bindir = str_copy (HARDCODE_BINDIR);
     filename_normalize (bindir);
+
+    StringBuf datadir = str_copy (HARDCODE_DATADIR);
     filename_normalize (datadir);
+
+    StringBuf plugindir = str_copy (HARDCODE_PLUGINDIR);
     filename_normalize (plugindir);
+
+    StringBuf localedir = str_copy (HARDCODE_LOCALEDIR);
     filename_normalize (localedir);
+
+    StringBuf desktopfile = str_copy (HARDCODE_DESKTOPFILE);
     filename_normalize (desktopfile);
+
+    StringBuf iconfile = str_copy (HARDCODE_ICONFILE);
     filename_normalize (iconfile);
 
     StringBuf from = str_copy (bindir);

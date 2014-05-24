@@ -155,8 +155,9 @@ struct StringStack;
 
 // Mutable string buffer, allocated on a stack to allow fast allocation.  The
 // price for this speed is that only the top string in the stack (i.e. the one
-// most recently allocated) can be resized or deleted.  Rules for the correct
-// use of StringBuf can be summarized as follows:
+// most recently allocated) can be resized or deleted.  The string is always
+// null-terminated (i.e. str[str.len ()] == 0).  Rules for the correct use of
+// StringBuf can be summarized as follows:
 //
 //   1. Always declare StringBufs within function or block scope, never at file
 //      or class scope.  Do not attempt to create a StringBuf with new or
@@ -165,6 +166,8 @@ struct StringStack;
 //      return value.  It is possible to create a second StringBuf and then
 //      transfer its contents to the first with steal(), but doing so carries
 //      a performance penalty.
+//   3. Do not truncate the StringBuf by inserting null characters manually;
+//      instead, use resize().
 
 class StringBuf
 {
@@ -172,28 +175,28 @@ public:
     constexpr StringBuf () :
         stack (nullptr),
         m_data (nullptr),
-        m_size (0) {}
+        m_len (0) {}
 
-    // A size of -1 means to use all available space.  This can be useful when
-    // the final size of the string is not known in advance, but keep in mind
+    // A length of -1 means to use all available space.  This can be useful when
+    // the final length of the string is not known in advance, but keep in mind
     // that you will not be able to create any further StringBufs until you call
     // resize().
-    explicit StringBuf (int size) :
+    explicit StringBuf (int len) :
         stack (nullptr),
         m_data (nullptr),
-        m_size (0)
+        m_len (0)
     {
-        resize (size);
+        resize (len);
     }
 
     StringBuf (StringBuf && other) :
         stack (other.stack),
         m_data (other.m_data),
-        m_size (other.m_size)
+        m_len (other.m_len)
     {
         other.stack = nullptr;
         other.m_data = nullptr;
-        other.m_size = 0;
+        other.m_len = 0;
     }
 
     // only allowed for top (or null) string
@@ -205,8 +208,11 @@ public:
     // only allowed for top two strings (or when one string is null)
     void steal (StringBuf && other);
 
-    int size () const
-        { return m_size; }
+    // only allowed for top two strings
+    void combine (StringBuf && other);
+
+    int len () const
+        { return m_len; }
 
     operator char * ()
         { return m_data; }
@@ -214,7 +220,7 @@ public:
 private:
     StringStack * stack;
     char * m_data;
-    int m_size;
+    int m_len;
 };
 
 #endif // LIBAUDCORE_OBJECTS_H
