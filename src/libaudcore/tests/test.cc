@@ -64,6 +64,8 @@ static void test_tuple_formats (void)
     test_tuple_format ("${invalid}", tuple, "Song Title");
     test_tuple_format ("${}", tuple, "Song Title");
     test_tuple_format ("\\$\\{\\}", tuple, "${}");
+    test_tuple_format ("\\\0" "a", tuple, "Song Title");
+    test_tuple_format ("{}", tuple, "Song Title");
 
     /* integer variable tests */
     test_tuple_format ("${year}", tuple, "Song Title");

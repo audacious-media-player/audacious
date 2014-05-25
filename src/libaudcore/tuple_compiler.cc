@@ -412,15 +412,28 @@ bool TupleCompiler::compile_expression (Index<Node> & nodes, int & level,
                 c ++;
             }
         }
+        else if (* c == '{' || * c == '}')
+        {
+            tuple_error ("Unexpected '%c' at '%s'.\n", * c, c);
+            return false;
+        }
         else
         {
             /* Parse raw/literal text */
             int i = 0;
 
-            while (* c != '\0' && * c != '$' && * c != '%' && * c != '}' && i < (MAX_STR - 1))
+            while (* c && * c != '$' && * c != '{' && * c != '}' && i < (MAX_STR - 1))
             {
                 if (* c == '\\')
+                {
                     c ++;
+
+                    if (! * c)
+                    {
+                        tuple_error ("Incomplete escaped character.\n");
+                        return false;
+                    }
+                }
 
                 tmps1[i ++] = * c ++;
             }
