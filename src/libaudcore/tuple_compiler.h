@@ -21,19 +21,30 @@
 #ifndef LIBAUDCORE_TUPLE_COMPILER_H
 #define LIBAUDCORE_TUPLE_COMPILER_H
 
-#include <glib.h>
-#include <libaudcore/tuple.h>
+#include "index.h"
+#include "tuple.h"
 
-typedef GArray TupleEvalContext;
-struct TupleEvalNode;
+class TupleCompiler
+{
+public:
+    TupleCompiler ();
+    ~TupleCompiler ();
 
-TupleEvalContext * tuple_evalctx_new(void);
-void tuple_evalctx_reset(TupleEvalContext *ctx);
-void tuple_evalctx_free(TupleEvalContext *ctx);
+    TupleCompiler (const TupleCompiler &) = delete;
+    void operator= (const TupleCompiler &) = delete;
 
-void tuple_evalnode_free(TupleEvalNode *expr);
+    bool compile (const char * expr);
+    StringBuf evaluate (const Tuple & tuple) const;
 
-TupleEvalNode * tuple_formatter_compile (TupleEvalContext * ctx, const char * expr);
-StringBuf tuple_formatter_eval (TupleEvalContext * ctx, TupleEvalNode * expr, const Tuple & tuple);
+private:
+    enum class Op;
+    struct Node;
+
+    bool parse_construct (Node & node, const char * item, const char * & c, int & level, Op opcode);
+    bool compile_expression (Index<Node> & nodes, int & level, const char * & expression);
+    void eval_expression (const Index<Node> & nodes, const Tuple & tuple, StringBuf & out) const;
+
+    Index<Node> root_nodes;
+};
 
 #endif /* LIBAUDCORE_TUPLE_COMPILER_H */

@@ -17,8 +17,6 @@
  * the use of this software.
  */
 
-#include <glib.h>
-
 #include "tuple.h"
 #include "tuple_compiler.h"
 
@@ -42,35 +40,24 @@
  */
 
 struct TupleFormatter {
-    TupleEvalContext * context;
-    TupleEvalNode * node;
-    GString * buf;
+    TupleCompiler context;
 };
 
 EXPORT TupleFormatter * tuple_formatter_new (const char * format)
 {
-    TupleFormatter * formatter = g_slice_new (TupleFormatter);
-
-    formatter->context = tuple_evalctx_new ();
-    formatter->node = tuple_formatter_compile (formatter->context, format);
-    formatter->buf = g_string_sized_new (255);
-
+    TupleFormatter * formatter = new TupleFormatter;
+    formatter->context.compile (format);
     return formatter;
 }
 
 EXPORT void tuple_formatter_free (TupleFormatter * formatter)
 {
-    tuple_evalctx_free (formatter->context);
-    tuple_evalnode_free (formatter->node);
-    g_string_free (formatter->buf, TRUE);
-
-    g_slice_free (TupleFormatter, formatter);
+    delete formatter;
 }
 
 EXPORT String tuple_format_title (TupleFormatter * formatter, const Tuple & tuple)
 {
-    StringBuf str = tuple_formatter_eval (formatter->context, formatter->node, tuple);
-    tuple_evalctx_reset (formatter->context);
+    StringBuf str = formatter->context.evaluate (tuple);
 
     if (str[0])
         return String (str);
