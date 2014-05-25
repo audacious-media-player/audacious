@@ -53,8 +53,7 @@ struct Variable
 
 enum class TupleCompiler::Op {
     Invalid = 0,
-    Text,            /* plain text */
-    Field,           /* a field/variable */
+    Var,
     Exists,
     Equal,
     Unequal,
@@ -69,7 +68,6 @@ struct TupleCompiler::Node
 {
     Op opcode;               /* operator */
     Variable var1, var2;     /* variables */
-    String text;             /* raw text, if any (Op::Text) */
     Index<Node> children;    /* children of this node */
 };
 
@@ -379,7 +377,7 @@ bool TupleCompiler::compile_expression (Index<Node> & nodes, const char * & expr
 
                 /* I HAS A FIELD - A field. You has it. */
                 Node & node = nodes.append ();
-                node.opcode = Op::Field;
+                node.opcode = Op::Var;
 
                 if (! node.var1.set (tmps, false))
                     return false;
@@ -427,8 +425,9 @@ bool TupleCompiler::compile_expression (Index<Node> & nodes, const char * & expr
             buf.resize (set - buf);
 
             Node & node = nodes.append ();
-            node.opcode = Op::Text;
-            node.text = String (buf);
+            node.opcode = Op::Var;
+            node.var1.type = Variable::Text;
+            node.var1.text = String (buf);
         }
     }
 
@@ -469,11 +468,7 @@ void TupleCompiler::eval_expression (const Index<Node> & nodes,
     {
         switch (node.opcode)
         {
-        case Op::Text:
-            str_insert (out, -1, node.text);
-            break;
-
-        case Op::Field:
+        case Op::Var:
             switch (node.var1.get (tuple, tmps0, tmpi0))
             {
             case TUPLE_STRING:
