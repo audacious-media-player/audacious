@@ -87,6 +87,7 @@ static void test_tuple_formats (void)
     /* existence tests */
     test_tuple_format ("x${?invalid:Field Exists}", tuple, "Song Title");
     test_tuple_format ("x${?subsong-id:Field Exists}", tuple, "xField Exists");
+    test_tuple_format ("x${?subsong-id:${invalid}}", tuple, "Song Title");
     test_tuple_format ("x${?subsong-id:(${subsong-id})}", tuple, "x(3)");
     test_tuple_format ("x${?track-number:Field Exists}", tuple, "x");
     test_tuple_format ("x${?title:Field Exists}", tuple, "xField Exists");
@@ -140,6 +141,7 @@ static void test_tuple_formats (void)
     test_tuple_format ("x${(invalid)}", tuple, "Song Title");
     test_tuple_format ("x${(empty)?invalid:Empty}", tuple, "Song Title");
     test_tuple_format ("x${(empty)?subsong-id:Empty}", tuple, "x");
+    test_tuple_format ("x${(empty)?subsong-id:${invalid}}", tuple, "Song Title");
     test_tuple_format ("x${(empty)?year:Empty}", tuple, "x");
     test_tuple_format ("x${(empty)?track-number:Empty}", tuple, "xEmpty");
     test_tuple_format ("x${(empty)?title:Empty}", tuple, "x");
