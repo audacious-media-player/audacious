@@ -76,7 +76,7 @@ public:
     void iterate (FoundFunc func, void * state);
 
 private:
-    static constexpr int InitialSize = 16;
+    static constexpr unsigned InitialSize = 16;
 
     void resize (unsigned new_size);
 
