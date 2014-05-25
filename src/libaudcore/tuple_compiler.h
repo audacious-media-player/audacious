@@ -40,8 +40,8 @@ private:
     enum class Op;
     struct Node;
 
-    bool parse_construct (Node & node, const char * item, const char * & c, int & level, Op opcode);
-    bool compile_expression (Index<Node> & nodes, int & level, const char * & expression);
+    bool parse_construct (Node & node, const char * item, const char * & c, Op opcode);
+    bool compile_expression (Index<Node> & nodes, const char * & expression);
     void eval_expression (const Index<Node> & nodes, const Tuple & tuple, StringBuf & out) const;
 
     Index<Node> root_nodes;

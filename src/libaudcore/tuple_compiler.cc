@@ -206,8 +206,7 @@ static StringBuf get_item (const char * & str, char endch, bool & literal, const
     return buf;
 }
 
-bool TupleCompiler::parse_construct (Node & node, const char * item,
- const char * & c, int & level, Op opcode)
+bool TupleCompiler::parse_construct (Node & node, const char * item, const char * & c, Op opcode)
 {
     bool literal1 = true, literal2 = true;
 
@@ -227,34 +226,25 @@ bool TupleCompiler::parse_construct (Node & node, const char * item,
     if (! node.var2.set (tmps2, literal2))
         return false;
 
-    return compile_expression (node.children, level, c);
+    return compile_expression (node.children, c);
 }
 
 /* Compile format expression into Node tree. */
-bool TupleCompiler::compile_expression (Index<Node> & nodes, int & level,
- const char * & expression)
+bool TupleCompiler::compile_expression (Index<Node> & nodes, const char * & expression)
 {
     const char * c = expression, * item;
-    bool literal, end = false;
+    bool literal;
 
-    level ++;
-
-    while (* c != '\0' && ! end)
+    while (* c && * c != '}')
     {
-        if (* c == '}')
-        {
-            c ++;
-            level --;
-            end = true;
-        }
-        else if (* c == '$')
+        if (* c == '$')
         {
             /* Expression? */
             item = c ++;
 
             if (* c != '{')
             {
-                tuple_error ("Expected '${', found '%s'.\n", c - 1);
+                tuple_error ("Expected '${' at '%s'.\n", c - 1);
                 return false;
             }
 
@@ -279,7 +269,7 @@ bool TupleCompiler::compile_expression (Index<Node> & nodes, int & level,
                 if (! node.var1.set (tmps, false))
                     return false;
 
-                if (! compile_expression (node.children, level, c))
+                if (! compile_expression (node.children, c))
                     return false;
 
                 break;
@@ -289,14 +279,14 @@ bool TupleCompiler::compile_expression (Index<Node> & nodes, int & level,
 
                 if (* c != '=')
                 {
-                    tuple_error ("Expected '==', found '%s'.\n", c - 1);
+                    tuple_error ("Expected '==' at '%s'.\n", c - 1);
                     return false;
                 }
 
                 c ++;
 
                 /* Equals? */
-                if (! parse_construct (nodes.append (), item, c, level, Op::Equal))
+                if (! parse_construct (nodes.append (), item, c, Op::Equal))
                     return false;
 
                 break;
@@ -306,13 +296,13 @@ bool TupleCompiler::compile_expression (Index<Node> & nodes, int & level,
 
                 if (* c != '=')
                 {
-                    tuple_error ("Expected '!=', found '%s'.\n", c - 1);
+                    tuple_error ("Expected '!=' at '%s'.\n", c - 1);
                     return false;
                 }
 
                 c ++;
 
-                if (! parse_construct (nodes.append (), item, c, level, Op::Unequal))
+                if (! parse_construct (nodes.append (), item, c, Op::Unequal))
                     return false;
 
                 break;
@@ -328,7 +318,7 @@ bool TupleCompiler::compile_expression (Index<Node> & nodes, int & level,
                 else
                     opcode = Op::Less;
 
-                if (! parse_construct (nodes.append (), item, c, level, opcode))
+                if (! parse_construct (nodes.append (), item, c, opcode))
                     return false;
 
                 break;
@@ -344,7 +334,7 @@ bool TupleCompiler::compile_expression (Index<Node> & nodes, int & level,
                 else
                     opcode = Op::Greater;
 
-                if (! parse_construct (nodes.append (), item, c, level, opcode))
+                if (! parse_construct (nodes.append (), item, c, opcode))
                     return false;
 
                 break;
@@ -355,7 +345,7 @@ bool TupleCompiler::compile_expression (Index<Node> & nodes, int & level,
 
                 if (strncmp (c, "empty)?", 7))
                 {
-                    tuple_error ("Expected '(empty)?', found '%s'.\n", c - 1);
+                    tuple_error ("Expected '(empty)?' at '%s'.\n", c - 1);
                     return false;
                 }
 
@@ -372,7 +362,7 @@ bool TupleCompiler::compile_expression (Index<Node> & nodes, int & level,
                 if (! node.var1.set (tmps, false))
                     return false;
 
-                if (! compile_expression (node.children, level, c))
+                if (! compile_expression (node.children, c))
                     return false;
 
                 break;
@@ -385,6 +375,8 @@ bool TupleCompiler::compile_expression (Index<Node> & nodes, int & level,
                 if (! tmps)
                     return false;
 
+                c --;
+
                 /* I HAS A FIELD - A field. You has it. */
                 Node & node = nodes.append ();
                 node.opcode = Op::Field;
@@ -392,8 +384,16 @@ bool TupleCompiler::compile_expression (Index<Node> & nodes, int & level,
                 if (! node.var1.set (tmps, false))
                     return false;
             }
+
+            if (* c != '}')
+            {
+                tuple_error ("Expected '}' at '%s'.\n", c);
+                return false;
+            }
+
+            c ++;
         }
-        else if (* c == '{' || * c == '}')
+        else if (* c == '{')
         {
             tuple_error ("Unexpected '%c' at '%s'.\n", * c, c);
             return false;
@@ -432,28 +432,21 @@ bool TupleCompiler::compile_expression (Index<Node> & nodes, int & level,
         }
     }
 
-    if (level <= 0)
-    {
-        tuple_error ("Syntax error! Uneven/unmatched nesting of elements in '%s'!\n", c);
-        return false;
-    }
-
     expression = c;
     return true;
 }
 
 bool TupleCompiler::compile (const char * expr)
 {
-    int level = 0;
-    const char * tmpexpr = expr;
+    const char * c = expr;
     Index<Node> nodes;
 
-    if (! compile_expression (nodes, level, tmpexpr))
+    if (! compile_expression (nodes, c))
         return false;
 
-    if (level != 1)
+    if (* c)
     {
-        tuple_error ("Syntax error! Uneven/unmatched nesting of elements! (%d)\n", level);
+        tuple_error ("Unexpected '%c' at '%s'.\n", * c, c);
         return false;
     }
 
@@ -574,7 +567,6 @@ void TupleCompiler::eval_expression (const Index<Node> & nodes,
 
         default:
             g_warn_if_reached ();
-            break;
         }
     }
 }

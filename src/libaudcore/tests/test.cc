@@ -86,6 +86,7 @@ static void test_tuple_formats (void)
 
     /* existence tests */
     test_tuple_format ("x${?invalid:Field Exists}", tuple, "Song Title");
+    test_tuple_format ("x${?subsong-id:Field Exists", tuple, "Song Title");
     test_tuple_format ("x${?subsong-id:Field Exists}", tuple, "xField Exists");
     test_tuple_format ("x${?subsong-id:${invalid}}", tuple, "Song Title");
     test_tuple_format ("x${?subsong-id:(${subsong-id})}", tuple, "x(3)");
