@@ -66,11 +66,11 @@ struct TupleEvalNode
 struct TupleEvalVar
 {
     char * name;
-    TupleEvalType type;      /* Type of variable, see VAR_* */
+    TupleEvalType type;            /* Type of variable, see VAR_* */
     int defvali;
-    TupleValueType ctype;    /* Type of constant/def value */
+    TupleValueType ctype;          /* Type of constant/def value */
 
-    int fieldidx;                    /* if >= 0: Index # of "pre-defined" Tuple fields */
+    int fieldidx;                  /* Index # of "pre-defined" Tuple fields */
     bool fieldread, fieldvalid;
     char * fieldstr;
 };
@@ -576,8 +576,7 @@ TupleEvalNode * tuple_formatter_compile (TupleEvalContext * ctx, const char * ex
 /* Fetch a tuple field value.  Return true if found. */
 static bool tf_get_fieldval (TupleEvalVar * var, const Tuple & tuple)
 {
-    if (var->type != TUPLE_VAR_FIELD || var->fieldidx < 0)
-        return false;
+    g_return_val_if_fail (var->type == TUPLE_VAR_FIELD, false);
 
     if (var->fieldread)
         return var->fieldvalid;
@@ -621,8 +620,8 @@ static TupleValueType tf_get_var (char * * tmps, int * tmpi,
             * tmpi = var->defvali;
             break;
 
-        default: /* Cannot happen */
-            break;
+        default:
+            g_warn_if_reached ();
         }
 
         type = var->ctype;
@@ -649,7 +648,7 @@ static TupleValueType tf_get_var (char * * tmps, int * tmpi,
 /* Evaluate tuple in given TupleEval expression in given
  * context and return resulting string.
  */
-static bool tuple_formatter_eval_do (TupleEvalContext * ctx,
+static void tuple_formatter_eval_do (TupleEvalContext * ctx,
  TupleEvalNode * expr, const Tuple & tuple, StringBuf & out)
 {
     TupleEvalNode * curr = expr;
@@ -659,9 +658,6 @@ static bool tuple_formatter_eval_do (TupleEvalContext * ctx,
     char * tmps0, * tmps1;
     bool result;
     int resulti;
-
-    if (! expr)
-        return false;
 
     while (curr)
     {
@@ -687,7 +683,7 @@ static bool tuple_formatter_eval_do (TupleEvalContext * ctx,
                     break;
 
                 default:
-                    break;
+                    g_warn_if_reached ();
                 }
             }
 
@@ -750,44 +746,30 @@ static bool tuple_formatter_eval_do (TupleEvalContext * ctx,
                     break;
 
                 default:
-                    result = false;
+                    g_warn_if_reached ();
                 }
             }
 
-            if (result && ! tuple_formatter_eval_do (ctx, curr->children, tuple, out))
-                return false;
+            if (result)
+                tuple_formatter_eval_do (ctx, curr->children, tuple, out);
 
             break;
 
         case OP_EXISTS:
             if (tf_get_fieldval (GET_VAR (ctx, curr->var[0]), tuple))
-            {
-                if (! tuple_formatter_eval_do (ctx, curr->children, tuple, out))
-                    return false;
-            }
+                tuple_formatter_eval_do (ctx, curr->children, tuple, out);
 
             break;
 
         case OP_IS_EMPTY:
-            var0 = GET_VAR (ctx, curr->var[0]);
-
-            if (! tf_get_fieldval (var0, tuple))
-            {
-                if (! tuple_formatter_eval_do (ctx, curr->children, tuple, out))
-                    return false;
-            }
+            if (! tf_get_fieldval (GET_VAR (ctx, curr->var[0]), tuple))
+                tuple_formatter_eval_do (ctx, curr->children, tuple, out);
 
             break;
-
-        default:
-            /* should not be reached */
-            return false;
         }
 
         curr = curr->next;
     }
-
-    return true;
 }
 
 StringBuf tuple_formatter_eval (TupleEvalContext * ctx, TupleEvalNode * expr, const Tuple & tuple)
