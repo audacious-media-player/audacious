@@ -36,7 +36,7 @@
  *   - ${?field:expr}: evaluates expr if field exists
  *   - ${==field,field:expr}: evaluates expr if both fields are the same
  *   - ${!=field,field:expr}: evaluates expr if both fields are not the same
- *   - ${(empty)?field:expr}: evaluates expr if field is empty or does not exist
+ *   - ${(empty)?field:expr}: evaluates expr if field does not exist
  *
  * everything else is treated as raw text.
  */

@@ -656,7 +656,7 @@ static bool tuple_formatter_eval_do (TupleEvalContext * ctx,
     TupleEvalVar * var0, * var1;
     TupleValueType type0, type1;
     int tmpi0, tmpi1;
-    char * tmps0, * tmps1, * tmps2;
+    char * tmps0, * tmps1;
     bool result;
     int resulti;
 
@@ -771,37 +771,11 @@ static bool tuple_formatter_eval_do (TupleEvalContext * ctx,
         case OP_IS_EMPTY:
             var0 = GET_VAR (ctx, curr->var[0]);
 
-            if (tf_get_fieldval (var0, tuple))
+            if (! tf_get_fieldval (var0, tuple))
             {
-                switch (var0->ctype)
-                {
-                case TUPLE_INT:
-                    result = (var0->defvali == 0);
-                    break;
-
-                case TUPLE_STRING:
-                    result = true;
-                    tmps2 = var0->fieldstr;
-
-                    while (result && tmps2 && *tmps2 != '\0')
-                    {
-                        if (g_ascii_isspace (* tmps2))
-                            tmps2 ++;
-                        else
-                            result = false;
-                    }
-
-                    break;
-
-                default:
-                    result = true;
-                }
+                if (! tuple_formatter_eval_do (ctx, curr->children, tuple, out))
+                    return false;
             }
-            else
-                result = true;
-
-            if (result && ! tuple_formatter_eval_do (ctx, curr->children, tuple, out))
-                return false;
 
             break;
 

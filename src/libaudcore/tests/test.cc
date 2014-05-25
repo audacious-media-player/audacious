@@ -134,14 +134,14 @@ static void test_tuple_formats (void)
 
     /* emptiness tests */
     tuple.set_int (FIELD_YEAR, 0);
-    tuple.set_str (FIELD_ARTIST, " \t\n");
+    tuple.set_str (FIELD_ARTIST, "");
     test_tuple_format ("x${(invalid)}", tuple, "Song Title");
     test_tuple_format ("x${(empty)?invalid:Empty}", tuple, "Song Title");
     test_tuple_format ("x${(empty)?subsong-id:Empty}", tuple, "x");
-    test_tuple_format ("x${(empty)?year:Empty}", tuple, "xEmpty");
+    test_tuple_format ("x${(empty)?year:Empty}", tuple, "x");
     test_tuple_format ("x${(empty)?track-number:Empty}", tuple, "xEmpty");
     test_tuple_format ("x${(empty)?title:Empty}", tuple, "x");
-    test_tuple_format ("x${(empty)?artist:Empty}", tuple, "xEmpty");
+    test_tuple_format ("x${(empty)?artist:Empty}", tuple, "x");
     test_tuple_format ("x${(empty)?album:Empty}", tuple, "xEmpty");
     test_tuple_format ("x${(empty)?\"Literal\":Empty}", tuple, "Song Title");
 }
