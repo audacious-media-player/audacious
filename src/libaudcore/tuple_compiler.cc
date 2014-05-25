@@ -23,12 +23,12 @@
 #include <stdio.h>
 #include <string.h>
 
+#include <new>
 #include <glib.h>
 
 #include "audstrings.h"
 #include "tuple_compiler.h"
 
-#define MAX_STR     256
 #define MAX_VARS    4
 
 #define tuple_error(...) fprintf (stderr, "Tuple compiler: " __VA_ARGS__)
@@ -141,98 +141,83 @@ TupleValueType Variable::get (const Tuple & tuple, String & tmps, int & tmpi) co
 TupleCompiler::TupleCompiler () {}
 TupleCompiler::~TupleCompiler () {}
 
-static bool get_item (const char * & str, char * buf, int max, char endch,
- bool & literal, const char * item)
+static StringBuf get_item (const char * & str, char endch, bool & literal, const char * item)
 {
-    int i = 0;
     const char * s = str;
-    char tmpendch;
+
+    StringBuf buf (-1);
+    char * set = buf;
+    char * stop = buf + buf.len ();
 
     if (* s == '"')
     {
         if (! literal)
         {
-            tuple_error ("Literal string value not allowed in '%s'.\n", item);
-            return false;
+            tuple_error ("Unexpected string literal at '%s'.\n", s);
+            return StringBuf ();
         }
 
         s ++;
-        literal = true;
-        tmpendch = '"';
     }
     else
-    {
         literal = false;
-        tmpendch = endch;
-    }
 
-    if (! literal)
+    if (literal)
     {
-        while (* s != '\0' && * s != tmpendch &&
-         (g_ascii_isalnum (* s) || * s == '-') && i < (max - 1))
-            buf[i ++] = * s ++;
-
-        if (* s != tmpendch && * s != '}' && ! g_ascii_isalnum (* s) && * s != '-')
-        {
-            tuple_error ("Invalid field '%s' in '%s'.\n", str, item);
-            return false;
-        }
-
-        if (* s != tmpendch)
-        {
-            tuple_error ("Expected '%c' in '%s'.\n", tmpendch, item);
-            return false;
-        }
-    }
-    else
-    {
-        while (* s != '\0' && * s != tmpendch && i < (max - 1))
+        while (* s != '"')
         {
             if (* s == '\\')
                 s ++;
 
-            buf[i ++] = * s ++;
-        }
-    }
+            if (! * s)
+            {
+                tuple_error ("Unterminated string literal.\n");
+                return StringBuf ();
+            }
 
-    buf[i] = '\0';
+            if (set == stop)
+                throw std::bad_alloc ();
 
-    if (literal)
-    {
-        if (* s != tmpendch)
-        {
-            tuple_error ("Expected literal string end ('%c') in '%s'.\n", tmpendch, item);
-            return false;
+            * set ++ = * s ++;
         }
 
         s ++;
     }
+    else
+    {
+        while (g_ascii_isalnum (* s) || * s == '-')
+        {
+            if (set == stop)
+                throw std::bad_alloc ();
+
+            * set ++ = * s ++;
+        }
+    }
 
     if (* s != endch)
     {
-        tuple_error ("Expected '%c' in '%s'\n", endch, item);
-        return false;
+        tuple_error ("Expected '%c' at '%s'.\n", endch, s);
+        return StringBuf ();
     }
 
-    str = s;
-    return true;
+    str = s + 1;
+
+    buf.resize (set - buf);
+    return buf;
 }
 
 bool TupleCompiler::parse_construct (Node & node, const char * item,
  const char * & c, int & level, Op opcode)
 {
-    char tmps1[MAX_STR], tmps2[MAX_STR];
     bool literal1 = true, literal2 = true;
 
-    if (! get_item (c, tmps1, MAX_STR, ',', literal1, item))
+    StringBuf tmps1 = get_item (c, ',', literal1, item);
+    if (! tmps1)
         return false;
 
-    c ++;
-
-    if (! get_item (c, tmps2, MAX_STR, ':', literal2, item))
+    StringBuf tmps2 = get_item (c, ':', literal2, item);
+    if (! tmps2)
         return false;
-
-    c ++;
 
     node.opcode = opcode;
 
@@ -250,7 +235,6 @@ bool TupleCompiler::compile_expression (Index<Node> & nodes, int & level,
  const char * & expression)
 {
     const char * c = expression, * item;
-    char tmps1[MAX_STR];
     bool literal, end = false;
 
     level ++;
@@ -285,15 +269,14 @@ bool TupleCompiler::compile_expression (Index<Node> & nodes, int & level,
                 /* Exists? */
                 literal = false;
 
-                if (! get_item (c, tmps1, MAX_STR, ':', literal, item))
+                StringBuf tmps = get_item (c, ':', literal, item);
+                if (! tmps)
                     return false;
-
-                c ++;
 
                 Node & node = nodes.append ();
                 node.opcode = Op::Exists;
 
-                if (! node.var1.set (tmps1, false))
+                if (! node.var1.set (tmps, false))
                     return false;
 
                 if (! compile_expression (node.children, level, c))
@@ -379,15 +362,14 @@ bool TupleCompiler::compile_expression (Index<Node> & nodes, int & level,
                 c += 7;
                 literal = false;
 
-                if (! get_item (c, tmps1, MAX_STR, ':', literal, item))
+                StringBuf tmps = get_item (c, ':', literal, item);
+                if (! tmps)
                     return false;
-
-                c ++;
 
                 Node & node = nodes.append ();
                 node.opcode = Op::Empty;
 
-                if (! node.var1.set (tmps1, false))
+                if (! node.var1.set (tmps, false))
                     return false;
 
                 if (! compile_expression (node.children, level, c))
@@ -399,17 +381,16 @@ bool TupleCompiler::compile_expression (Index<Node> & nodes, int & level,
                 /* Get expression content */
                 literal = false;
 
-                if (! get_item (c, tmps1, MAX_STR, '}', literal, item))
+                StringBuf tmps = get_item (c, '}', literal, item);
+                if (! tmps)
                     return false;
 
                 /* I HAS A FIELD - A field. You has it. */
                 Node & node = nodes.append ();
                 node.opcode = Op::Field;
 
-                if (! node.var1.set (tmps1, false))
+                if (! node.var1.set (tmps, false))
                     return false;
-
-                c ++;
             }
         }
         else if (* c == '{' || * c == '}')
@@ -420,9 +401,11 @@ bool TupleCompiler::compile_expression (Index<Node> & nodes, int & level,
         else
         {
             /* Parse raw/literal text */
-            int i = 0;
+            StringBuf buf (-1);
+            char * set = buf;
+            char * stop = buf + buf.len ();
 
-            while (* c && * c != '$' && * c != '{' && * c != '}' && i < (MAX_STR - 1))
+            while (* c && * c != '$' && * c != '{' && * c != '}')
             {
                 if (* c == '\\')
                 {
@@ -435,14 +418,17 @@ bool TupleCompiler::compile_expression (Index<Node> & nodes, int & level,
                     }
                 }
 
-                tmps1[i ++] = * c ++;
+                if (set == stop)
+                    throw std::bad_alloc ();
+
+                * set ++ = * c ++;
             }
 
-            tmps1[i] = '\0';
+            buf.resize (set - buf);
 
             Node & node = nodes.append ();
             node.opcode = Op::Text;
-            node.text = String (tmps1);
+            node.text = String (buf);
         }
     }
 
