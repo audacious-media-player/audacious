@@ -88,8 +88,13 @@ bool Variable::set (const char * name, bool literal)
     else
     {
         type = Field;
-        if ((field = Tuple::field_by_name (name)) < 0)
+        field = Tuple::field_by_name (name);
+
+        if (field < 0)
+        {
+            tuple_error ("Invalid variable '%s'.\n", name);
             return false;
+        }
     }
 
     return true;
@@ -137,7 +142,7 @@ TupleCompiler::TupleCompiler () {}
 TupleCompiler::~TupleCompiler () {}
 
 static bool get_item (const char * & str, char * buf, int max, char endch,
- bool & literal, const char * errstr, const char * item)
+ bool & literal, const char * item)
 {
     int i = 0;
     const char * s = str;
@@ -205,7 +210,7 @@ static bool get_item (const char * & str, char * buf, int max, char endch,
 
     if (* s != endch)
     {
-        tuple_error ("Expected '%c' after %s in '%s'\n", endch, errstr, item);
+        tuple_error ("Expected '%c' in '%s'\n", endch, item);
         return false;
     }
 
@@ -219,12 +224,12 @@ bool TupleCompiler::parse_construct (Node & node, const char * item,
     char tmps1[MAX_STR], tmps2[MAX_STR];
     bool literal1 = true, literal2 = true;
 
-    if (! get_item (c, tmps1, MAX_STR, ',', literal1, "tag1", item))
+    if (! get_item (c, tmps1, MAX_STR, ',', literal1, item))
         return false;
 
     c ++;
 
-    if (! get_item (c, tmps2, MAX_STR, ':', literal2, "tag2", item))
+    if (! get_item (c, tmps2, MAX_STR, ':', literal2, item))
         return false;
 
     c ++;
@@ -232,16 +237,10 @@ bool TupleCompiler::parse_construct (Node & node, const char * item,
     node.opcode = opcode;
 
     if (! node.var1.set (tmps1, literal1))
-    {
-        tuple_error ("Invalid variable '%s' in '%s'.\n", tmps1, item);
         return false;
-    }
 
     if (! node.var2.set (tmps2, literal2))
-    {
-        tuple_error ("Invalid variable '%s' in '%s'.\n", tmps2, item);
         return false;
-    }
 
     return compile_expression (node.children, level, c);
 }
@@ -269,158 +268,149 @@ bool TupleCompiler::compile_expression (Index<Node> & nodes, int & level,
             /* Expression? */
             item = c ++;
 
-            if (* c == '{')
+            if (* c != '{')
             {
-                Op opcode;
-                const char * expr = ++ c;
-
-                switch (* c)
-                {
-                case '?':
-                    c ++;
-                    /* Exists? */
-                    literal = false;
-
-                    if (get_item (c, tmps1, MAX_STR, ':', literal, "tag", item))
-                    {
-                        c ++;
-
-                        Node & node = nodes.append ();
-                        node.opcode = Op::Exists;
-
-                        if (! node.var1.set (tmps1, false))
-                        {
-                            tuple_error ("Invalid variable '%s' in '%s'.\n", tmps1, expr);
-                            return false;
-                        }
-
-                        if (! compile_expression (node.children, level, c))
-                            return false;
-                    }
-                    else
-                        return false;
-
-                    break;
-
-                case '=':
-                    c ++;
-
-                    if (* c != '=')
-                        return false;
-
-                    c ++;
-
-                    /* Equals? */
-                    if (! parse_construct (nodes.append (), item, c, level, Op::Equal))
-                        return false;
-
-                    break;
-
-                case '!':
-                    c ++;
-
-                    if (* c != '=')
-                        return false;
-
-                    c ++;
-
-                    if (! parse_construct (nodes.append (), item, c, level, Op::Unequal))
-                        return false;
-
-                    break;
-
-                case '<':
-                    c ++;
-
-                    if (* c == '=')
-                    {
-                        opcode = Op::LessEqual;
-                        c ++;
-                    }
-                    else
-                        opcode = Op::Less;
-
-                    if (! parse_construct (nodes.append (), item, c, level, opcode))
-                        return false;
-
-                    break;
-
-                case '>':
-                    c ++;
-
-                    if (* c == '=')
-                    {
-                        opcode = Op::GreaterEqual;
-                        c ++;
-                    }
-                    else
-                        opcode = Op::Greater;
-
-                    if (! parse_construct (nodes.append (), item, c, level, opcode))
-                        return false;
-
-                    break;
-
-                case '(':
-                    c ++;
-
-                    if (! strncmp (c, "empty)?", 7))
-                    {
-                        c += 7;
-                        literal = false;
-
-                        if (get_item (c, tmps1, MAX_STR, ':', literal, "tag", item))
-                        {
-                            c ++;
-
-                            Node & node = nodes.append ();
-                            node.opcode = Op::Empty;
-
-                            if (! node.var1.set (tmps1, false))
-                            {
-                                tuple_error ("Invalid variable '%s' in '%s'.\n", tmps1, expr);
-                                return false;
-                            }
-
-                            if (! compile_expression (node.children, level, c))
-                                return false;
-                        }
-                        else
-                            return false;
-                    }
-                    else
-                        return false;
-
-                    break;
-
-                default:
-                    /* Get expression content */
-                    literal = false;
-
-                    if (get_item (c, tmps1, MAX_STR, '}', literal, "field", item))
-                    {
-                        /* I HAS A FIELD - A field. You has it. */
-                        Node & node = nodes.append ();
-                        node.opcode = Op::Field;
-
-                        if (! node.var1.set (tmps1, false))
-                        {
-                            tuple_error ("Invalid variable '%s' in '%s'.\n", tmps1, expr);
-                            return false;
-                        }
-
-                        c ++;
-                    }
-                    else
-                        return false;
-                }
-            }
-            else
-            {
-                tuple_error ("Expected '{', got '%c' in '%s'.\n", * c, c);
+                tuple_error ("Expected '${', found '%s'.\n", c - 1);
                 return false;
             }
 
+            Op opcode;
+            c ++;
+
+            switch (* c)
+            {
+            case '?':
+            {
+                c ++;
+                /* Exists? */
+                literal = false;
+
+                if (! get_item (c, tmps1, MAX_STR, ':', literal, item))
+                    return false;
+
+                c ++;
+
+                Node & node = nodes.append ();
+                node.opcode = Op::Exists;
+
+                if (! node.var1.set (tmps1, false))
+                    return false;
+
+                if (! compile_expression (node.children, level, c))
+                    return false;
+
+                break;
+            }
+            case '=':
+                c ++;
+
+                if (* c != '=')
+                {
+                    tuple_error ("Expected '==', found '%s'.\n", c - 1);
+                    return false;
+                }
+
+                c ++;
+
+                /* Equals? */
+                if (! parse_construct (nodes.append (), item, c, level, Op::Equal))
+                    return false;
+
+                break;
+
+            case '!':
+                c ++;
+
+                if (* c != '=')
+                {
+                    tuple_error ("Expected '!=', found '%s'.\n", c - 1);
+                    return false;
+                }
+
+                c ++;
+
+                if (! parse_construct (nodes.append (), item, c, level, Op::Unequal))
+                    return false;
+
+                break;
+
+            case '<':
+                c ++;
+
+                if (* c == '=')
+                {
+                    opcode = Op::LessEqual;
+                    c ++;
+                }
+                else
+                    opcode = Op::Less;
+
+                if (! parse_construct (nodes.append (), item, c, level, opcode))
+                    return false;
+
+                break;
+
+            case '>':
+                c ++;
+
+                if (* c == '=')
+                {
+                    opcode = Op::GreaterEqual;
+                    c ++;
+                }
+                else
+                    opcode = Op::Greater;
+
+                if (! parse_construct (nodes.append (), item, c, level, opcode))
+                    return false;
+
+                break;
+
+            case '(':
+            {
+                c ++;
+
+                if (strncmp (c, "empty)?", 7))
+                {
+                    tuple_error ("Expected '(empty)?', found '%s'.\n", c - 1);
+                    return false;
+                }
+
+                c += 7;
+                literal = false;
+
+                if (! get_item (c, tmps1, MAX_STR, ':', literal, item))
+                    return false;
+
+                c ++;
+
+                Node & node = nodes.append ();
+                node.opcode = Op::Empty;
+
+                if (! node.var1.set (tmps1, false))
+                    return false;
+
+                if (! compile_expression (node.children, level, c))
+                    return false;
+
+                break;
+            }
+            default:
+                /* Get expression content */
+                literal = false;
+
+                if (! get_item (c, tmps1, MAX_STR, '}', literal, item))
+                    return false;
+
+                /* I HAS A FIELD - A field. You has it. */
+                Node & node = nodes.append ();
+                node.opcode = Op::Field;
+
+                if (! node.var1.set (tmps1, false))
+                    return false;
+
+                c ++;
+            }
         }
         else
         {
