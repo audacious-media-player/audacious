@@ -234,7 +234,11 @@ static bool_t tc_get_item(TupleEvalContext *ctx,
     }
   } else {
     while (*s != '\0' && *s != tmpendch && i < (max - 1)) {
-      if (*s == '\\') s++;
+      if (*s == '\\') {
+        s++;
+        if (*s == '\0')
+          break;
+      }
       buf[i++] = *(s++);
     }
   }
@@ -487,7 +491,11 @@ static TupleEvalNode *tuple_compiler_pass1(int *level, TupleEvalContext *ctx, co
       /* Parse raw/literal text */
       gssize i = 0;
       while (*c != '\0' && *c != '$' && *c != '%' && *c != '}' && i < (MAX_STR - 1)) {
-        if (*c == '\\') c++;
+        if (*c == '\\') {
+          c++;
+          if (*c == '\0')
+            break;
+        }
         tmps1[i++] = *(c++);
       }
       tmps1[i] = '\0';
