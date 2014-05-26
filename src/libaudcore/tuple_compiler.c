@@ -365,23 +365,7 @@ static TupleEvalNode *tuple_compiler_pass1(int *level, TupleEvalContext *ctx, co
             break;
 
           case '=': c++;
-            if (*c != '=') {
-              /* Definition */
-              literal = FALSE;
-              if (tc_get_item(ctx, &c, tmps1, MAX_STR, ',', &literal, "variable", item)) {
-                c++;
-                if (*c == '"') {
-                  /* String */
-                  c++;
-                } else if (g_ascii_isdigit(*c)) {
-                  /* Integer */
-                }
-
-                tuple_error(ctx, "Definitions are not yet supported!\n");
-                goto ret_error;
-              } else
-                goto ret_error;
-            } else {
+            if (*c == '=') {
               c++;
               /* Equals? */
               if (!tc_parse_construct(ctx, &res, item, &c, level, OP_EQUALS))
@@ -390,7 +374,7 @@ static TupleEvalNode *tuple_compiler_pass1(int *level, TupleEvalContext *ctx, co
             break;
 
           case '!': c++;
-            if (*c != '=') goto ext_expression;
+            if (*c != '=') goto ret_error;
             c++;
             if (!tc_parse_construct(ctx, &res, item, &c, level, OP_NOT_EQUALS))
               goto ret_error;
@@ -435,11 +419,10 @@ static TupleEvalNode *tuple_compiler_pass1(int *level, TupleEvalContext *ctx, co
               } else
                 goto ret_error;
             } else
-              goto ext_expression;
+              goto ret_error;
             break;
 
           default:
-          ext_expression:
             /* Get expression content */
             c = expr;
             literal = FALSE;
@@ -463,34 +446,10 @@ static TupleEvalNode *tuple_compiler_pass1(int *level, TupleEvalContext *ctx, co
         tuple_error(ctx, "Expected '{', got '%c' in '%s'.\n", *c, c);
         goto ret_error;
       }
-
-    } else if (*c == '%') {
-      /* Function? */
-      item = c++;
-      if (*c == '{') {
-        gssize i = 0;
-        c++;
-
-        while (*c != '\0' && (g_ascii_isalnum(*c) || *c == '-') && *c != '}' && *c != ':' && i < (MAX_STR - 1))
-          tmps1[i++] = *(c++);
-        tmps1[i] = '\0';
-
-        if (*c == ':') {
-          c++;
-        } else if (*c == '}') {
-          c++;
-        } else if (*c == '\0') {
-          tuple_error(ctx, "Expected '}' or function arguments in '%s'\n", item);
-          goto ret_error;
-        }
-      } else {
-        tuple_error(ctx, "Expected '{', got '%c' in '%s'.\n", *c, c);
-        goto ret_error;
-      }
     } else {
       /* Parse raw/literal text */
       gssize i = 0;
-      while (*c != '\0' && *c != '$' && *c != '%' && *c != '}' && i < (MAX_STR - 1)) {
+      while (*c != '\0' && *c != '$' && *c != '}' && i < (MAX_STR - 1)) {
         if (*c == '\\') {
           c++;
           if (*c == '\0')
