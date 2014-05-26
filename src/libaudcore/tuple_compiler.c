@@ -365,12 +365,11 @@ static TupleEvalNode *tuple_compiler_pass1(int *level, TupleEvalContext *ctx, co
             break;
 
           case '=': c++;
-            if (*c == '=') {
-              c++;
-              /* Equals? */
-              if (!tc_parse_construct(ctx, &res, item, &c, level, OP_EQUALS))
-                goto ret_error;
-            }
+            if (*c != '=') goto ret_error;
+            c++;
+            /* Equals? */
+            if (!tc_parse_construct(ctx, &res, item, &c, level, OP_EQUALS))
+              goto ret_error;
             break;
 
           case '!': c++;
