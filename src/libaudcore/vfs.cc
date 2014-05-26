@@ -20,7 +20,8 @@
 
 #include "vfs.h"
 
-#include <cinttypes>
+#define __STDC_FORMAT_MACROS
+#include <inttypes.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/stat.h>
