@@ -18,11 +18,30 @@
  * the use of this software.
  */
 
+/*
+ * the tuple formatter:
+ *
+ * this is a data-driven meta-language.
+ *
+ * language constructs follow the following basic rules:
+ *   - begin with ${
+ *   - end with }
+ *
+ * language constructs:
+ *   - ${field}: prints a field
+ *   - ${?field:expr}: evaluates expr if field exists
+ *   - ${==field,field:expr}: evaluates expr if both fields are the same
+ *   - ${!=field,field:expr}: evaluates expr if both fields are not the same
+ *   - ${(empty)?field:expr}: evaluates expr if field does not exist
+ *
+ * everything else is treated as raw text.
+ */
+
 #ifndef LIBAUDCORE_TUPLE_COMPILER_H
 #define LIBAUDCORE_TUPLE_COMPILER_H
 
-#include "index.h"
-#include "tuple.h"
+#include <libaudcore/index.h>
+#include <libaudcore/tuple.h>
 
 class TupleCompiler
 {
@@ -33,7 +52,8 @@ public:
     ~TupleCompiler ();
 
     bool compile (const char * expr);
-    StringBuf evaluate (const Tuple & tuple) const;
+
+    String evaluate (const Tuple & tuple) const;
 
 private:
     Index<Node> root_nodes;

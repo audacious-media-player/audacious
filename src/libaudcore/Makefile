@@ -37,8 +37,7 @@ SRCS = adder.cc \
        strpool.cc \
        tinylock.cc \
        tuple.cc \
-       tuple_compiler.cc \
-       tuple_formatter.cc \
+       tuple-compiler.cc \
        util.cc \
        vfs.cc \
        vfs_async.cc \
@@ -69,6 +68,7 @@ INCLUDES = audio.h \
            runtime.h \
            tinylock.h \
            tuple.h \
+           tuple-compiler.h \
            vfs.h \
            vfs_async.h
 

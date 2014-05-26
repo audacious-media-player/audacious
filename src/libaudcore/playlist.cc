@@ -40,6 +40,7 @@
 #include "plugins.h"
 #include "scanner.h"
 #include "tuple.h"
+#include "tuple-compiler.h"
 
 enum {RESUME_STOP, RESUME_PLAY, RESUME_PAUSE};
 
@@ -153,7 +154,7 @@ static bool_t next_song_locked (Playlist * playlist, bool_t repeat, int hint);
 static void playlist_reformat_titles (void);
 static void playlist_trigger_scan (void);
 
-static TupleFormatter * title_formatter;
+static SmartPtr<TupleCompiler> title_formatter;
 
 static void entry_set_tuple_real (Entry * entry, Tuple && tuple)
 {
@@ -174,7 +175,7 @@ static void entry_set_tuple_real (Entry * entry, Tuple && tuple)
     }
     else
     {
-        entry->formatted = tuple_format_title (title_formatter, entry->tuple);
+        entry->formatted = title_formatter->evaluate (entry->tuple);
         entry->length = entry->tuple.get_int (FIELD_LENGTH);
         if (entry->length < 0)
             entry->length = 0;
@@ -605,6 +606,8 @@ void playlist_init (void)
     update_level = 0;
     scan_playlist = scan_row = 0;
 
+    title_formatter = new TupleCompiler;
+
     LEAVE;
 
     /* initialize title formatter */
@@ -637,8 +640,7 @@ void playlist_end (void)
     playlists.clear ();
     unique_id_table.clear ();
 
-    tuple_formatter_free (title_formatter);
-    title_formatter = NULL;
+    title_formatter = nullptr;
 
     LEAVE;
 }
@@ -1620,18 +1622,15 @@ static void playlist_reformat_titles (void)
 {
     ENTER;
 
-    if (title_formatter)
-        tuple_formatter_free (title_formatter);
-
     String format = aud_get_str (NULL, "generic_title_format");
-    title_formatter = tuple_formatter_new (format);
+    title_formatter->compile (format);
 
     for (auto & playlist : playlists)
     {
         for (auto & entry : playlist->entries)
         {
             if (entry->tuple)
-                entry->formatted = tuple_format_title (title_formatter, entry->tuple);
+                entry->formatted = title_formatter->evaluate (entry->tuple);
             else
                 entry->formatted = String ();
         }

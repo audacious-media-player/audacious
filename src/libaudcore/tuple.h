@@ -175,19 +175,6 @@ private:
     TupleData * data;
 };
 
-struct TupleFormatter;
-
-/* Creates a tuple formatter object for the given format.  The syntax of
- * <format> is documented in tuple_formatter.c. */
-TupleFormatter * tuple_formatter_new (const char * format);
-
-/* Destroys a tuple formatter object. */
-void tuple_formatter_free (TupleFormatter * formatter);
-
-/* Generates a title string for <tuple> using the given formatter object.  Never
- * returns NULL, but may return an empty string. */
-String tuple_format_title (TupleFormatter * formatter, const Tuple & tuple);
-
 /* somewhat out of place here */
 struct PluginHandle;
 struct PlaylistAddItem {

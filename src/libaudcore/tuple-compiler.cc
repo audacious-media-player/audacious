@@ -26,7 +26,7 @@
 #include <glib.h>
 
 #include "audstrings.h"
-#include "tuple_compiler.h"
+#include "tuple-compiler.h"
 
 #define tuple_error(...) fprintf (stderr, "Tuple compiler: " __VA_ARGS__)
 
@@ -519,9 +519,23 @@ static void eval_expression (const Index<Node> & nodes, const Tuple & tuple, Str
     }
 }
 
-StringBuf TupleCompiler::evaluate (const Tuple & tuple) const
+String TupleCompiler::evaluate (const Tuple & tuple) const
 {
     StringBuf buf (0);
     eval_expression (root_nodes, tuple, buf);
-    return buf;
+
+    if (buf[0])
+        return String (buf);
+
+    /* formatting failed, try fallbacks */
+    static const int fallbacks[] = {FIELD_TITLE, FIELD_FILE_NAME};
+
+    for (unsigned i = 0; i < ARRAY_LEN (fallbacks); i ++)
+    {
+        String title = tuple.get_str (fallbacks[i]);
+        if (title)
+            return title;
+    }
+
+    return String ("");
 }
