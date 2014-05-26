@@ -232,6 +232,8 @@ static bool compile_expression (Index<Node> & nodes, const char * & expression)
 
     while (* c && * c != '}')
     {
+        Node & node = nodes.append ();
+
         if (* c == '$')
         {
             /* Expression? */
@@ -242,8 +244,6 @@ static bool compile_expression (Index<Node> & nodes, const char * & expression)
             }
 
             c += 2;
-
-            Node & node = nodes.append ();
 
             switch (* c)
             {
@@ -373,7 +373,6 @@ static bool compile_expression (Index<Node> & nodes, const char * & expression)
 
             buf.resize (set - buf);
 
-            Node & node = nodes.append ();
             node.op = Op::Var;
             node.var1.type = Variable::Text;
             node.var1.text = String (buf);
