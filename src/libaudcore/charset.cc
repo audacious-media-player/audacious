@@ -54,7 +54,7 @@ EXPORT StringBuf str_convert (const char * str, int len, const char * from_chars
 
     size_t inbytesleft = len;
     size_t outbytesleft = buf.len ();
-    char * in = (char *) str;
+    ICONV_CONST char * in = (ICONV_CONST char *) str;
     char * out = buf;
 
     errno = 0;

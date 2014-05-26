@@ -109,14 +109,14 @@ public:
         IndexBase () {}
 
     void clear ()
-        { IndexBase::clear (erase_func); }
+        { IndexBase::clear (erase_func ()); }
     ~Index ()
         { clear (); }
 
     Index (Index && b) :
         IndexBase (std::move (b)) {}
     void operator= (Index && b)
-        { steal (std::move (b), erase_func); }
+        { steal (std::move (b), erase_func ()); }
 
     T * begin ()
         { return (T *) IndexBase::begin (); }
@@ -138,14 +138,15 @@ public:
     void insert (int pos, int len)
         { IndexBase::insert (raw (pos), raw (len)); }
     void remove (int pos, int len)
-        { IndexBase::remove (raw (pos), raw (len), erase_func); }
+        { IndexBase::remove (raw (pos), raw (len), erase_func ()); }
     void erase (int pos, int len)
-        { IndexBase::erase (raw (pos), raw (len), erase_func); }
+        { IndexBase::erase (raw (pos), raw (len), erase_func ()); }
     void shift (int from, int to, int len)
-        { IndexBase::shift (raw (from), raw (to), raw (len), erase_func); }
+        { IndexBase::shift (raw (from), raw (to), raw (len), erase_func ()); }
 
     void move_from (Index<T> & b, int from, int to, int len, bool expand, bool collapse)
-        { IndexBase::move_from (b, raw (from), raw (to), raw (len), expand, collapse, erase_func); }
+        { IndexBase::move_from (b, raw (from), raw (to), raw (len), expand,
+           collapse, erase_func ()); }
 
     void sort (CompareFunc compare, void * userdata)
     {
@@ -183,7 +184,8 @@ private:
             (* iter ++).~T ();
     }
 
-    static constexpr EraseFunc erase_func = std::is_trivial<T>::value ? nullptr : erase_objects;
+    static constexpr EraseFunc erase_func ()
+        { return std::is_trivial<T>::value ? nullptr : erase_objects; }
 
     static int compare_wrapper (const void * a, const void * b, void * userdata)
     {
