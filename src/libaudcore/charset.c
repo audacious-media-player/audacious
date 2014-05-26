@@ -50,7 +50,7 @@ EXPORT char * str_convert (const char * str, int len, const char * from_charset,
 
     size_t inbytes = len;
     size_t outbytes = maxlen;
-    char * in = (char *) str;
+    ICONV_CONST char * in = (ICONV_CONST char *) str;
     char * out = buf;
 
     if (iconv (conv, & in, & inbytes, & out, & outbytes) != (size_t) -1 && ! inbytes)
