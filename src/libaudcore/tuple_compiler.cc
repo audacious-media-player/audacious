@@ -18,7 +18,6 @@
  * the use of this software.
  */
 
-#include <stdarg.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -28,8 +27,6 @@
 
 #include "audstrings.h"
 #include "tuple_compiler.h"
-
-#define MAX_VARS    4
 
 #define tuple_error(...) fprintf (stderr, "Tuple compiler: " __VA_ARGS__)
 
@@ -51,7 +48,7 @@ struct Variable
     TupleValueType get (const Tuple & tuple, String & tmps, int & tmpi) const;
 };
 
-enum class TupleCompiler::Op {
+enum class Op {
     Invalid = 0,
     Var,
     Exists,
@@ -64,12 +61,13 @@ enum class TupleCompiler::Op {
     Empty
 };
 
-struct TupleCompiler::Node
-{
-    Op opcode;               /* operator */
-    Variable var1, var2;     /* variables */
-    Index<Node> children;    /* children of this node */
+struct TupleCompiler::Node {
+    Op op;
+    Variable var1, var2;
+    Index<Node> children;
 };
+
+typedef TupleCompiler::Node Node;
 
 bool Variable::set (const char * name, bool literal)
 {
@@ -139,7 +137,7 @@ TupleValueType Variable::get (const Tuple & tuple, String & tmps, int & tmpi) co
 TupleCompiler::TupleCompiler () {}
 TupleCompiler::~TupleCompiler () {}
 
-static StringBuf get_item (const char * & str, char endch, bool & literal, const char * item)
+static StringBuf get_item (const char * & str, char endch, bool & literal)
 {
     const char * s = str;
 
@@ -204,19 +202,19 @@ static StringBuf get_item (const char * & str, char endch, bool & literal, const
     return buf;
 }
 
-bool TupleCompiler::parse_construct (Node & node, const char * item, const char * & c, Op opcode)
+static bool compile_expression (Index<Node> & nodes, const char * & expression);
+
+static bool parse_construct (Node & node, const char * & c)
 {
     bool literal1 = true, literal2 = true;
 
-    StringBuf tmps1 = get_item (c, ',', literal1, item);
+    StringBuf tmps1 = get_item (c, ',', literal1);
     if (! tmps1)
         return false;
 
-    StringBuf tmps2 = get_item (c, ':', literal2, item);
+    StringBuf tmps2 = get_item (c, ':', literal2);
     if (! tmps2)
         return false;
-
-    node.opcode = opcode;
 
     if (! node.var1.set (tmps1, literal1))
         return false;
@@ -228,41 +226,51 @@ bool TupleCompiler::parse_construct (Node & node, const char * item, const char 
 }
 
 /* Compile format expression into Node tree. */
-bool TupleCompiler::compile_expression (Index<Node> & nodes, const char * & expression)
+static bool compile_expression (Index<Node> & nodes, const char * & expression)
 {
-    const char * c = expression, * item;
-    bool literal;
+    const char * c = expression;
 
     while (* c && * c != '}')
     {
         if (* c == '$')
         {
             /* Expression? */
-            item = c ++;
-
-            if (* c != '{')
+            if (c[1] != '{')
             {
-                tuple_error ("Expected '${' at '%s'.\n", c - 1);
+                tuple_error ("Expected '${' at '%s'.\n", c);
                 return false;
             }
 
-            Op opcode;
-            c ++;
+            c += 2;
+
+            Node & node = nodes.append ();
 
             switch (* c)
             {
             case '?':
-            {
-                c ++;
-                /* Exists? */
-                literal = false;
+            case '(':
+              {
+                if (* c == '?')
+                {
+                    node.op = Op::Exists;
+                    c ++;
+                }
+                else
+                {
+                    if (strncmp (c, "(empty)?", 8))
+                    {
+                        tuple_error ("Expected '(empty)?' at '%s'.\n", c);
+                        return false;
+                    }
 
-                StringBuf tmps = get_item (c, ':', literal, item);
+                    node.op = Op::Empty;
+                    c += 8;
+                }
+
+                bool literal = false;
+                StringBuf tmps = get_item (c, ':', literal);
                 if (! tmps)
                     return false;
-
-                Node & node = nodes.append ();
-                node.opcode = Op::Exists;
 
                 if (! node.var1.set (tmps, false))
                     return false;
@@ -271,116 +279,57 @@ bool TupleCompiler::compile_expression (Index<Node> & nodes, const char * & expr
                     return false;
 
                 break;
-            }
+              }
+
             case '=':
-                c ++;
-
-                if (* c != '=')
-                {
-                    tuple_error ("Expected '==' at '%s'.\n", c - 1);
-                    return false;
-                }
-
-                c ++;
-
-                /* Equals? */
-                if (! parse_construct (nodes.append (), item, c, Op::Equal))
-                    return false;
-
-                break;
-
             case '!':
-                c ++;
+                node.op = (* c == '=') ? Op::Equal : Op::Unequal;
 
-                if (* c != '=')
+                if (c[1] != '=')
                 {
-                    tuple_error ("Expected '!=' at '%s'.\n", c - 1);
+                    tuple_error ("Expected '%c=' at '%s'.\n", c[0], c);
                     return false;
                 }
 
-                c ++;
+                c += 2;
 
-                if (! parse_construct (nodes.append (), item, c, Op::Unequal))
+                if (! parse_construct (node, c))
                     return false;
 
                 break;
 
             case '<':
-                c ++;
-
-                if (* c == '=')
-                {
-                    opcode = Op::LessEqual;
-                    c ++;
-                }
-                else
-                    opcode = Op::Less;
-
-                if (! parse_construct (nodes.append (), item, c, opcode))
-                    return false;
-
-                break;
-
             case '>':
-                c ++;
-
-                if (* c == '=')
+                if (c[1] == '=')
                 {
-                    opcode = Op::GreaterEqual;
-                    c ++;
+                    node.op = (* c == '<') ? Op::LessEqual : Op::GreaterEqual;
+                    c += 2;
                 }
                 else
-                    opcode = Op::Greater;
-
-                if (! parse_construct (nodes.append (), item, c, opcode))
-                    return false;
-
-                break;
-
-            case '(':
-            {
-                c ++;
-
-                if (strncmp (c, "empty)?", 7))
                 {
-                    tuple_error ("Expected '(empty)?' at '%s'.\n", c - 1);
-                    return false;
+                    node.op = (* c == '<') ? Op::Less : Op::Greater;
+                    c ++;
                 }
 
-                c += 7;
-                literal = false;
-
-                StringBuf tmps = get_item (c, ':', literal, item);
-                if (! tmps)
-                    return false;
-
-                Node & node = nodes.append ();
-                node.opcode = Op::Empty;
-
-                if (! node.var1.set (tmps, false))
-                    return false;
-
-                if (! compile_expression (node.children, c))
+                if (! parse_construct (node, c))
                     return false;
 
                 break;
-            }
-            default:
-                /* Get expression content */
-                literal = false;
 
-                StringBuf tmps = get_item (c, '}', literal, item);
+            default:
+              {
+                bool literal = false;
+                StringBuf tmps = get_item (c, '}', literal);
                 if (! tmps)
                     return false;
 
                 c --;
 
-                /* I HAS A FIELD - A field. You has it. */
-                Node & node = nodes.append ();
-                node.opcode = Op::Var;
+                node.op = Op::Var;
 
                 if (! node.var1.set (tmps, false))
                     return false;
+              }
             }
 
             if (* c != '}')
@@ -425,7 +374,7 @@ bool TupleCompiler::compile_expression (Index<Node> & nodes, const char * & expr
             buf.resize (set - buf);
 
             Node & node = nodes.append ();
-            node.opcode = Op::Var;
+            node.op = Op::Var;
             node.var1.type = Variable::Text;
             node.var1.text = String (buf);
         }
@@ -455,28 +404,25 @@ bool TupleCompiler::compile (const char * expr)
 
 /* Evaluate tuple in given TupleEval expression in given
  * context and return resulting string. */
-void TupleCompiler::eval_expression (const Index<Node> & nodes,
- const Tuple & tuple, StringBuf & out) const
+static void eval_expression (const Index<Node> & nodes, const Tuple & tuple, StringBuf & out)
 {
-    TupleValueType type0, type1;
-    String tmps0, tmps1;
-    int tmpi0 = 0, tmpi1 = 0;
-    bool result;
-    int resulti;
-
     for (const Node & node : nodes)
     {
-        switch (node.opcode)
+        switch (node.op)
         {
         case Op::Var:
-            switch (node.var1.get (tuple, tmps0, tmpi0))
+          {
+            String tmps;
+            int tmpi;
+
+            switch (node.var1.get (tuple, tmps, tmpi))
             {
             case TUPLE_STRING:
-                str_insert (out, -1, tmps0);
+                str_insert (out, -1, tmps);
                 break;
 
             case TUPLE_INT:
-                out.combine (int_to_str (tmpi0));
+                out.combine (int_to_str (tmpi));
                 break;
 
             default:
@@ -484,6 +430,7 @@ void TupleCompiler::eval_expression (const Index<Node> & nodes,
             }
 
             break;
+          }
 
         case Op::Equal:
         case Op::Unequal:
@@ -491,28 +438,34 @@ void TupleCompiler::eval_expression (const Index<Node> & nodes,
         case Op::LessEqual:
         case Op::Greater:
         case Op::GreaterEqual:
-            type0 = node.var1.get (tuple, tmps0, tmpi0);
-            type1 = node.var2.get (tuple, tmps1, tmpi1);
-            result = false;
+          {
+            bool result = false;
+            String tmps1, tmps2;
+            int tmpi1 = 0, tmpi2 = 0;
 
-            if (type0 != TUPLE_UNKNOWN && type1 != TUPLE_UNKNOWN)
+            TupleValueType type1 = node.var1.get (tuple, tmps1, tmpi1);
+            TupleValueType type2 = node.var2.get (tuple, tmps2, tmpi2);
+
+            if (type1 != TUPLE_UNKNOWN && type2 != TUPLE_UNKNOWN)
             {
-                if (type0 == type1)
+                int resulti;
+
+                if (type1 == type2)
                 {
-                    if (type0 == TUPLE_STRING)
-                        resulti = strcmp (tmps0, tmps1);
+                    if (type1 == TUPLE_STRING)
+                        resulti = strcmp (tmps1, tmps2);
                     else
-                        resulti = tmpi0 - tmpi1;
+                        resulti = tmpi1 - tmpi2;
                 }
                 else
                 {
-                    if (type0 == TUPLE_INT)
-                        resulti = tmpi0 - atoi (tmps1);
+                    if (type1 == TUPLE_INT)
+                        resulti = tmpi1 - atoi (tmps2);
                     else
-                        resulti = atoi (tmps0) - tmpi1;
+                        resulti = atoi (tmps1) - tmpi2;
                 }
 
-                switch (node.opcode)
+                switch (node.op)
                 {
                 case Op::Equal:
                     result = (resulti == 0);
@@ -547,6 +500,7 @@ void TupleCompiler::eval_expression (const Index<Node> & nodes,
                 eval_expression (node.children, tuple, out);
 
             break;
+          }
 
         case Op::Exists:
             if (node.var1.exists (tuple))

@@ -27,23 +27,15 @@
 class TupleCompiler
 {
 public:
+    struct Node;
+
     TupleCompiler ();
     ~TupleCompiler ();
-
-    TupleCompiler (const TupleCompiler &) = delete;
-    void operator= (const TupleCompiler &) = delete;
 
     bool compile (const char * expr);
     StringBuf evaluate (const Tuple & tuple) const;
 
 private:
-    enum class Op;
-    struct Node;
-
-    bool parse_construct (Node & node, const char * item, const char * & c, Op opcode);
-    bool compile_expression (Index<Node> & nodes, const char * & expression);
-    void eval_expression (const Index<Node> & nodes, const Tuple & tuple, StringBuf & out) const;
-
     Index<Node> root_nodes;
 };
 
