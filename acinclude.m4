@@ -66,6 +66,7 @@ if test "x$GCC" = "xyes"; then
     CFLAGS="$CFLAGS -std=gnu99 -ffast-math -Wall -pipe"
     if test "x$HAVE_DARWIN" = "xyes"; then
         CXXFLAGS="$CXXFLAGS -stdlib=libc++ -std=gnu++11 -ffast-math -Wall -pipe"
+        LDFLAGS="$LDFLAGS -lc++"
     else
         CXXFLAGS="$CXXFLAGS -std=gnu++11 -ffast-math -Wall -pipe"
     fi
