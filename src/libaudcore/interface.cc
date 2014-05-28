@@ -24,6 +24,7 @@
 
 #include "drct.h"
 #include "hook.h"
+#include "mainloop.h"
 #include "plugin.h"
 #include "plugins.h"
 #include "runtime.h"
@@ -37,7 +38,6 @@ struct MenuItem {
 static PluginHandle * current_plugin = NULL;
 static PluginHandle * next_plugin = NULL;
 
-static GMainLoop * mainloop = NULL;
 static IfacePlugin * current_interface = NULL;
 
 static GList * menu_items[AUD_MENU_COUNT]; /* of MenuItem */
@@ -163,18 +163,10 @@ bool_t iface_plugin_set_current (PluginHandle * plugin)
     next_plugin = plugin;
 
     /* restart main loop, if running */
-    if (current_interface || mainloop)
+    if (current_interface)
         aud_quit ();
 
     return TRUE;
-}
-
-static void run_glib_mainloop (void)
-{
-    mainloop = g_main_loop_new (NULL, FALSE);
-    g_main_loop_run (mainloop);
-    g_main_loop_unref (mainloop);
-    mainloop = NULL;
 }
 
 static void run_iface_plugins (void)
@@ -191,7 +183,7 @@ static void run_iface_plugins (void)
         if (PLUGIN_HAS_FUNC (current_interface, run))
             current_interface->run ();
         else
-            run_glib_mainloop ();
+            mainloop_run ();
 
         /* call before unloading interface */
         hook_call ("config save", NULL);
@@ -204,7 +196,7 @@ void interface_run (void)
 {
     if (aud_get_headless_mode ())
     {
-        run_glib_mainloop ();
+        mainloop_run ();
 
         /* call before shutting down */
         hook_call ("config save", NULL);
@@ -218,10 +210,7 @@ EXPORT void aud_quit (void)
     if (current_interface && PLUGIN_HAS_FUNC (current_interface, quit))
         current_interface->quit ();
     else
-    {
-        g_return_if_fail (mainloop);
-        g_main_loop_quit (mainloop);
-    }
+        mainloop_quit ();
 }
 
 EXPORT void aud_plugin_menu_add (int id, void (* func) (void), const char * name, const char * icon)

@@ -29,6 +29,7 @@
 #include "hook.h"
 #include "i18n.h"
 #include "interface.h"
+#include "mainloop.h"
 #include "output.h"
 #include "playlist-internal.h"
 #include "plugin.h"
@@ -36,7 +37,7 @@
 #include "runtime.h"
 
 static pthread_t playback_thread_handle;
-static int end_source = 0;
+static QueuedFunc end_queue;
 
 static pthread_mutex_t ready_mutex = PTHREAD_MUTEX_INITIALIZER;
 static pthread_cond_t ready_cond = PTHREAD_COND_INITIALIZER;
@@ -212,11 +213,7 @@ static void playback_cleanup (void)
     event_queue_cancel ("info change", NULL);
     event_queue_cancel ("title change", NULL);
 
-    if (end_source)
-    {
-        g_source_remove (end_source);
-        end_source = 0;
-    }
+    end_queue.cancel ();
 
     /* level 1 data cleanup */
     playing = FALSE;
@@ -285,9 +282,10 @@ static void do_next (int playlist)
     }
 }
 
-static bool_t end_cb (void * unused)
+static void end_cb (void * unused)
 {
-    g_return_val_if_fail (playing, FALSE);
+    if (! playing)
+        return;
 
     if (! playback_error)
         song_finished = TRUE;
@@ -322,8 +320,6 @@ static bool_t end_cb (void * unused)
         else
             do_stop (playlist);
     }
-
-    return FALSE;
 }
 
 static bool_t open_file (void)
@@ -390,7 +386,7 @@ DONE:
     if (! ready_flag)
         set_ready ();
 
-    end_source = g_timeout_add (0, end_cb, NULL);
+    end_queue.queue (end_cb, NULL);
     return NULL;
 }
 
