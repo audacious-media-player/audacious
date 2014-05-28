@@ -34,6 +34,7 @@ public:
 
     void queue (Func func, void * data);
     void cancel ();
+    bool queued ();
 
     // implementation detail, do not call
     void run ();
@@ -52,6 +53,7 @@ public:
 
     void start (int interval_ms, Func func, void * data);
     void stop ();
+    bool running ();
 
     // implementation detail, do not call
     void run ();
@@ -65,5 +67,6 @@ private:
 
 void mainloop_run ();
 void mainloop_quit ();
+bool mainloop_running ();
 
 #endif // LIBAUDCORE_MAINLOOP_H

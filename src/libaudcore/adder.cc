@@ -97,7 +97,8 @@ static void status_update (const char * filename, int found)
     snprintf (status_path, sizeof status_path, "%s", filename);
     status_count = found;
 
-    status_timer.start (250, status_cb, NULL);
+    if (! status_timer.running ())
+        status_timer.start (250, status_cb, NULL);
 
     pthread_mutex_unlock (& mutex);
 }
@@ -365,7 +366,8 @@ static void * add_worker (void * unused)
 
         add_results = g_list_append (add_results, result);
 
-        add_timer.start (0, add_finish, NULL);
+        if (! add_timer.running ())
+            add_timer.start (0, add_finish, NULL);
     }
 
     add_thread_exited = TRUE;

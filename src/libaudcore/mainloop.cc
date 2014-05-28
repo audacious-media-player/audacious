@@ -118,6 +118,11 @@ void QueuedFunc::cancel ()
     tiny_unlock (& lock);
 }
 
+bool QueuedFunc::queued ()
+{
+    return stored_func;
+}
+
 void QueuedFunc::run ()
 {
     tiny_lock (& lock);
@@ -174,6 +179,11 @@ void TimedFunc::stop ()
     tiny_unlock (& lock);
 }
 
+bool TimedFunc::running ()
+{
+    return impl;
+}
+
 void TimedFunc::run ()
 {
     tiny_lock (& lock);
@@ -205,6 +215,11 @@ void mainloop_quit ()
     app->quit ();
 }
 
+bool mainloop_running ()
+{
+    return app;
+}
+
 #else // ! USE_QT
 
 static GMainLoop * mainloop;
@@ -220,6 +235,11 @@ void mainloop_run ()
 void mainloop_quit ()
 {
     g_main_loop_quit (mainloop);
+}
+
+bool mainloop_running ()
+{
+    return g_main_loop_is_running (mainloop);
 }
 
 #endif // ! USE_QT

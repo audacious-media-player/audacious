@@ -163,7 +163,7 @@ bool_t iface_plugin_set_current (PluginHandle * plugin)
     next_plugin = plugin;
 
     /* restart main loop, if running */
-    if (current_interface)
+    if (current_interface || mainloop_running ())
         aud_quit ();
 
     return TRUE;

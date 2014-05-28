@@ -135,7 +135,7 @@ static Playlist * active_playlist = NULL;
 static Playlist * playing_playlist = NULL;
 static int resume_playlist = -1;
 
-static QueuedFunc update_queue;
+static QueuedFunc queued_update;
 static int update_level;
 
 struct ScanItem {
@@ -304,7 +304,7 @@ static void update (void * unused)
     int level = update_level;
     update_level = 0;
 
-    update_queue.cancel ();
+    queued_update.cancel ();
 
     LEAVE;
 
@@ -343,7 +343,8 @@ static void queue_update (int level, Playlist * p, int at, int count)
 
     update_level = MAX (update_level, level);
 
-    update_queue.queue (update, NULL);
+    if (! queued_update.queued ())
+        queued_update.queue (update, NULL);
 }
 
 EXPORT bool_t aud_playlist_update_pending (void)
@@ -624,7 +625,7 @@ void playlist_end (void)
 
     ENTER;
 
-    update_queue.cancel ();
+    queued_update.cancel ();
 
     active_playlist = playing_playlist = NULL;
     resume_playlist = -1;
@@ -2217,7 +2218,7 @@ void playlist_load_state (void)
 
     update_level = 0;
 
-    update_queue.cancel ();
+    queued_update.cancel ();
 
     LEAVE;
 }
