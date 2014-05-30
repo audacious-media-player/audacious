@@ -213,7 +213,7 @@ static void playback_cleanup (void)
     event_queue_cancel ("info change", NULL);
     event_queue_cancel ("title change", NULL);
 
-    end_queue.cancel ();
+    end_queue.stop ();
 
     /* level 1 data cleanup */
     playing = FALSE;

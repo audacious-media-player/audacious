@@ -48,7 +48,7 @@ static VisNode * vis_list = NULL;
 static VisNode * vis_list_tail = NULL;
 static VisNode * vis_pool = NULL;
 static QueuedFunc queued_clear;
-static TimedFunc send_timer;
+static QueuedFunc send_timer;
 
 static VisNode * alloc_node_locked (int channels)
 {
@@ -167,8 +167,7 @@ static void flush_locked (void)
         g_free (node);
     }
 
-    if (! queued_clear.queued ())
-        queued_clear.queue (send_clear, NULL);
+    queued_clear.queue (send_clear, NULL);
 }
 
 void vis_runner_flush (void)
@@ -185,8 +184,7 @@ static void start_stop_locked (bool_t new_playing, bool_t new_paused)
     active = playing && enabled;
 
     send_timer.stop ();
-
-    queued_clear.cancel ();
+    queued_clear.stop ();
 
     if (! active)
         flush_locked ();

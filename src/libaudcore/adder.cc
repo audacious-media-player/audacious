@@ -63,8 +63,8 @@ static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 static bool_t add_thread_started = FALSE;
 static bool_t add_thread_exited = FALSE;
 static pthread_t add_thread;
-static TimedFunc add_timer;
-static TimedFunc status_timer;
+static QueuedFunc add_timer;
+static QueuedFunc status_timer;
 static char status_path[512];
 static int status_count;
 

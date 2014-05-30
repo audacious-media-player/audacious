@@ -326,7 +326,7 @@ EXPORT void aud_run (void)
 {
     start_plugins_two ();
 
-    static TimedFunc autosave;
+    static QueuedFunc autosave;
     autosave.start (AUTOSAVE_INTERVAL, do_autosave, NULL);
 
     /* calls "config save" before returning */

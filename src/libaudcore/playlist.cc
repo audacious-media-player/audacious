@@ -304,7 +304,7 @@ static void update (void * unused)
     int level = update_level;
     update_level = 0;
 
-    queued_update.cancel ();
+    queued_update.stop ();
 
     LEAVE;
 
@@ -343,8 +343,7 @@ static void queue_update (int level, Playlist * p, int at, int count)
 
     update_level = MAX (update_level, level);
 
-    if (! queued_update.queued ())
-        queued_update.queue (update, NULL);
+    queued_update.queue (update, NULL);
 }
 
 EXPORT bool_t aud_playlist_update_pending (void)
@@ -625,7 +624,7 @@ void playlist_end (void)
 
     ENTER;
 
-    queued_update.cancel ();
+    queued_update.stop ();
 
     active_playlist = playing_playlist = NULL;
     resume_playlist = -1;
@@ -2218,7 +2217,7 @@ void playlist_load_state (void)
 
     update_level = 0;
 
-    queued_update.cancel ();
+    queued_update.stop ();
 
     LEAVE;
 }

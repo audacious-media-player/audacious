@@ -24,45 +24,22 @@
 #ifndef LIBAUDCORE_MAINLOOP_H
 #define LIBAUDCORE_MAINLOOP_H
 
-#include "tinylock.h"
-
 // all instances must be declared static
 class QueuedFunc
 {
+    friend struct QueuedFuncRunner;
+
 public:
     typedef void (* Func) (void * data);
 
     void queue (Func func, void * data);
-    void cancel ();
-    bool queued ();
-
-    // implementation detail, do not call
-    void run ();
-
-private:
-    TinyLock lock;
-    Func stored_func;
-    void * stored_data;
-};
-
-// all instances must be declared static
-class TimedFunc
-{
-public:
-    typedef void (* Func) (void * data);
-
     void start (int interval_ms, Func func, void * data);
     void stop ();
     bool running ();
 
-    // implementation detail, do not call
-    void run ();
-
 private:
-    TinyLock lock;
-    Func stored_func;
-    void * stored_data;
-    void * impl;
+    int serial;
+    bool _running;
 };
 
 void mainloop_run ();

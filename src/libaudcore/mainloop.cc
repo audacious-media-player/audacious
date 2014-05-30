@@ -17,7 +17,26 @@
  * the use of this software.
  */
 
+#include <pthread.h>
+
 #include "mainloop.h"
+
+struct QueuedFuncRunner
+{
+    QueuedFunc * queued;
+    QueuedFunc::Func func;
+    void * data;
+    int serial;
+
+    bool run ()
+    {
+        if (__sync_add_and_fetch (& queued->serial, 0) != serial)
+            return false;
+
+        func (data);
+        return true;
+    }
+};
 
 #ifdef USE_QT
 
@@ -26,35 +45,34 @@
 class QueuedFuncEvent : public QEvent
 {
 public:
-    QueuedFuncEvent (QueuedFunc * func) :
+    QueuedFuncEvent (const QueuedFuncRunner & runner) :
         QEvent (User),
-        func (func) {}
+        runner (runner) {}
 
     void run ()
-        { func->run (); }
+        { runner.run (); }
 
 private:
-    QueuedFunc * func;
+    QueuedFuncRunner runner;
 };
 
-class QueuedFuncReceiver : public QObject
+class QueuedFuncRouter : public QObject
 {
 protected:
     void customEvent (QEvent * event)
         { dynamic_cast<QueuedFuncEvent *> (event)->run (); }
 };
 
-static QueuedFuncReceiver queued_receiver;
+static QueuedFuncRouter router;
 
-class TimedFuncReceiver : public QObject
+class QueuedFuncTimer : public QObject
 {
 public:
-    TimedFuncReceiver (int interval_ms, TimedFunc * func) :
+    QueuedFuncTimer (int interval_ms, const QueuedFuncRunner & runner) :
         interval_ms (interval_ms),
-        func (func)
+        runner (runner)
     {
-        // tell Qt to process events for this object in the main thread
-        moveToThread (queued_receiver.thread ());
+        moveToThread (router.thread ());  // main thread
 
         // The timer cannot be started until QCoreApplication is instantiated.
         // Send ourselves an event and wait till it comes back, then start the timer.
@@ -64,13 +82,35 @@ public:
 protected:
     void customEvent (QEvent * event)
         { startTimer (interval_ms); }
+
     void timerEvent (QTimerEvent * event)
-        { func->run (); }
+    {
+        if (! runner.run ())
+            deleteLater ();
+    }
 
 private:
     int interval_ms;
-    TimedFunc * func;
+    QueuedFuncRunner runner;
 };
+
+static void ADD_QUEUED (const QueuedFuncRunner & r)
+    { QCoreApplication::postEvent (& router, new QueuedFuncEvent (r), Qt::HighEventPriority); }
+static void ADD_TIMED (int i, const QueuedFuncRunner & r)
+    { new QueuedFuncTimer (i, r); }
+
+typedef QCoreApplication MainLoop;
+
+static QCoreApplication * MAINLOOP_NEW ()
+{
+    int dummy_argc = 0;
+    return new QCoreApplication (dummy_argc, nullptr);
+}
+
+#define MAINLOOP_RUN(m)      (m)->exec ()
+#define MAINLOOP_QUIT(m)     (m)->quit ()
+#define MAINLOOP_FREE(m)     delete (m)
+#define MAINLOOP_RUNNING(m)  (m)->instance ()
 
 #else // ! USE_QT
 
@@ -78,168 +118,94 @@ private:
 
 static int queued_wrapper (void * ptr)
 {
-    (* (QueuedFunc *) ptr).run ();
-    return G_SOURCE_REMOVE;
+    auto runner = (QueuedFuncRunner *) ptr;
+    runner->run ();
+    delete runner;
+    return false;
 }
 
 static int timed_wrapper (void * ptr)
 {
-    (* (TimedFunc *) ptr).run ();
-    return G_SOURCE_CONTINUE;
+    auto runner = (QueuedFuncRunner *) ptr;
+    if (runner->run ())
+        return true;
+
+    delete runner;
+    return false;
 }
+
+static void ADD_QUEUED (const QueuedFuncRunner & r)
+    { g_idle_add_full (G_PRIORITY_HIGH, queued_wrapper, new QueuedFuncRunner (r), nullptr); }
+static void ADD_TIMED (int i, const QueuedFuncRunner & r)
+    { g_timeout_add (i, timed_wrapper, new QueuedFuncRunner (r)); }
+
+typedef GMainLoop MainLoop;
+
+#define MAINLOOP_NEW()       g_main_loop_new (nullptr, true)
+#define MAINLOOP_RUN(m)      g_main_loop_run (m)
+#define MAINLOOP_QUIT(m)     g_main_loop_quit (m)
+#define MAINLOOP_FREE(m)     g_main_loop_unref (m)
+#define MAINLOOP_RUNNING(m)  g_main_loop_is_running (m)
 
 #endif // ! USE_QT
 
 void QueuedFunc::queue (Func func, void * data)
 {
-    tiny_lock (& lock);
-
-    if (! stored_func)
-#ifdef USE_QT
-        QCoreApplication::postEvent (& queued_receiver,
-         new QueuedFuncEvent (this), Qt::HighEventPriority);
-#else
-        g_idle_add_full (G_PRIORITY_HIGH, queued_wrapper, this, nullptr);
-#endif
-
-    stored_func = func;
-    stored_data = data;
-
-    tiny_unlock (& lock);
+    int new_serial = __sync_add_and_fetch (& serial, 1);
+    ADD_QUEUED ({this, func, data, new_serial});
 }
 
-void QueuedFunc::cancel ()
+void QueuedFunc::start (int interval_ms, Func func, void * data)
 {
-    tiny_lock (& lock);
-
-    stored_func = nullptr;
-    stored_data = nullptr;
-
-    tiny_unlock (& lock);
+    _running = true;
+    int new_serial = __sync_add_and_fetch (& serial, 1);
+    ADD_TIMED (interval_ms, {this, func, data, new_serial});
 }
 
-bool QueuedFunc::queued ()
+void QueuedFunc::stop ()
 {
-    return stored_func;
+    __sync_add_and_fetch (& serial, 1);
+    _running = false;
 }
 
-void QueuedFunc::run ()
+bool QueuedFunc::running ()
 {
-    tiny_lock (& lock);
-
-    Func func = stored_func;
-    void * data = stored_data;
-    stored_func = nullptr;
-    stored_data = nullptr;
-
-    tiny_unlock (& lock);
-
-    if (func)
-        func (data);
+    return _running;
 }
 
-void TimedFunc::start (int interval_ms, Func func, void * data)
-{
-    tiny_lock (& lock);
-
-#ifdef USE_QT
-    if (impl)
-        delete (TimedFuncReceiver *) impl;
-
-    impl = new TimedFuncReceiver (interval_ms, this);
-#else
-    if (impl)
-        g_source_remove (GPOINTER_TO_INT (impl));
-
-    impl = GINT_TO_POINTER (g_timeout_add (interval_ms, timed_wrapper, this));
-#endif
-
-    stored_func = func;
-    stored_data = data;
-
-    tiny_unlock (& lock);
-}
-
-void TimedFunc::stop ()
-{
-    tiny_lock (& lock);
-
-    if (impl)
-#ifdef USE_QT
-        delete (TimedFuncReceiver *) impl;
-#else
-        g_source_remove (GPOINTER_TO_INT (impl));
-#endif
-
-    impl = nullptr;
-
-    stored_func = nullptr;
-    stored_data = nullptr;
-
-    tiny_unlock (& lock);
-}
-
-bool TimedFunc::running ()
-{
-    return impl;
-}
-
-void TimedFunc::run ()
-{
-    tiny_lock (& lock);
-
-    Func func = stored_func;
-    void * data = stored_data;
-
-    tiny_unlock (& lock);
-
-    if (func)
-        func (data);
-}
-
-#ifdef USE_QT
-
-static QCoreApplication * app;
+static MainLoop * mainloop;
+static pthread_mutex_t mainloop_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 void mainloop_run ()
 {
-    int dummy_argc = 0;
-    app = new QCoreApplication (dummy_argc, nullptr);
-    app->exec ();
-    delete app;
-    app = nullptr;
+    pthread_mutex_lock (& mainloop_mutex);
+
+    if (! mainloop)
+    {
+        mainloop = MAINLOOP_NEW ();
+        pthread_mutex_unlock (& mainloop_mutex);
+
+        MAINLOOP_RUN (mainloop);
+
+        pthread_mutex_lock (& mainloop_mutex);
+        MAINLOOP_FREE (mainloop);
+        mainloop = nullptr;
+    }
+
+    pthread_mutex_unlock (& mainloop_mutex);
 }
 
 void mainloop_quit ()
 {
-    app->quit ();
+    pthread_mutex_lock (& mainloop_mutex);
+
+    if (mainloop)
+        MAINLOOP_QUIT (mainloop);
+
+    pthread_mutex_unlock (& mainloop_mutex);
 }
 
 bool mainloop_running ()
 {
-    return app;
+    return MAINLOOP_RUNNING (mainloop);
 }
-
-#else // ! USE_QT
-
-static GMainLoop * mainloop;
-
-void mainloop_run ()
-{
-    mainloop = g_main_loop_new (nullptr, true);
-    g_main_loop_run (mainloop);
-    g_main_loop_unref (mainloop);
-    mainloop = nullptr;
-}
-
-void mainloop_quit ()
-{
-    g_main_loop_quit (mainloop);
-}
-
-bool mainloop_running ()
-{
-    return g_main_loop_is_running (mainloop);
-}
-
-#endif // ! USE_QT

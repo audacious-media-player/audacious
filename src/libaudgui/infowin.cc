@@ -68,7 +68,7 @@ static struct {
 static char * current_file = NULL;
 static PluginHandle * current_decoder = NULL;
 static bool_t can_write = FALSE;
-static int timeout_source = 0;
+static QueuedFunc timeout;
 
 /* This is by no means intended to be a complete list.  If it is not short, it
  * is useless: scrolling through ten pages of dropdown list is more work than
@@ -176,23 +176,18 @@ static void entry_changed (GtkEditable * editable, void * unused)
         gtk_widget_set_sensitive (widgets.apply, TRUE);
 }
 
-static bool_t ministatus_timeout_proc (void)
+static void ministatus_timeout_proc (void * unused)
 {
     gtk_label_set_text ((GtkLabel *) widgets.ministatus, NULL);
 
-    timeout_source = 0;
-    return FALSE;
+    timeout.stop ();
 }
 
 static void ministatus_display_message (const char * text)
 {
     gtk_label_set_text ((GtkLabel *) widgets.ministatus, text);
 
-    if (timeout_source)
-        g_source_remove (timeout_source);
-
-    timeout_source = g_timeout_add (AUDGUI_STATUS_TIMEOUT, (GSourceFunc)
-     ministatus_timeout_proc, NULL);
+    timeout.start (AUDGUI_STATUS_TIMEOUT, ministatus_timeout_proc, NULL);
 }
 
 static void infowin_update_tuple (void * unused)
@@ -255,11 +250,7 @@ static void infowin_destroyed (void)
 {
     hook_dissociate ("art ready", (HookFunction) infowin_display_image);
 
-    if (timeout_source)
-    {
-        g_source_remove (timeout_source);
-        timeout_source = 0;
-    }
+    timeout.stop ();
 
     memset (& widgets, 0, sizeof widgets);
 
