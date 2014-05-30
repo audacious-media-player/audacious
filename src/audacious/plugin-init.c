@@ -95,8 +95,9 @@ static void start_single (int type)
 
     if ((p = table[type].u.s.probe ()) == NULL)
     {
-        fprintf (stderr, "FATAL: No %s plugin found.\n", table[type].name);
-        exit (EXIT_FAILURE);
+        fprintf (stderr, "FATAL: No %s plugin found.\n"
+         "(Did you forget to install audacious-plugins?)\n", table[type].name);
+        abort ();
     }
 
     AUDDBG ("Starting %s.\n", plugin_get_name (p));
@@ -105,8 +106,7 @@ static void start_single (int type)
     if (! table[type].u.s.set_current (p))
     {
         fprintf (stderr, "FATAL: %s failed to start.\n", plugin_get_name (p));
-        plugin_set_enabled (p, FALSE);
-        exit (EXIT_FAILURE);
+        abort ();
     }
 }
 
@@ -239,8 +239,7 @@ static bool_t enable_single (int type, PluginHandle * p)
         return FALSE;
 
     fprintf (stderr, "FATAL: %s failed to start.\n", plugin_get_name (old));
-    plugin_set_enabled (old, FALSE);
-    exit (EXIT_FAILURE);
+    abort ();
 }
 
 static bool_t enable_multi (int type, PluginHandle * p, bool_t enable)
