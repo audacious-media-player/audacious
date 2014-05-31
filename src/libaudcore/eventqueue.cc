@@ -1,6 +1,6 @@
 /*
  * eventqueue.c
- * Copyright 2011 John Lindgren
+ * Copyright 2011-2014 John Lindgren, Michał Lipski
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -23,37 +23,46 @@
 #include <pthread.h>
 #include <string.h>
 
+#include "mainloop.h"
 #include "objects.h"
 
 struct Event {
     String name;
     void * data;
     void (* destroy) (void *);
-    int source;
 };
 
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 static GList * events;
+static QueuedFunc queued_events;
 
-static bool_t event_execute (Event * event)
+static void events_execute (void * unused)
 {
-    pthread_mutex_lock (& mutex);
+    while (1)
+    {
+        pthread_mutex_lock (& mutex);
 
-    g_source_remove (event->source);
-    events = g_list_remove (events, event);
+        Event * event = (Event *) g_list_nth_data (events, 0);
+        if (! event)
+        {
+            pthread_mutex_unlock (& mutex);
+            return;
+        }
 
-    pthread_mutex_unlock (& mutex);
+        events = g_list_remove (events, event);
 
-    hook_call (event->name, event->data);
+        pthread_mutex_unlock (& mutex);
 
-    if (event->destroy)
-        event->destroy (event->data);
+        hook_call (event->name, event->data);
 
-    delete event;
-    return FALSE;
+        if (event->destroy)
+            event->destroy (event->data);
+
+        delete event;
+    }
 }
 
-EXPORT void event_queue_full (int time, const char * name, void * data, void (* destroy) (void *))
+EXPORT void event_queue_full (const char * name, void * data, void (* destroy) (void *))
 {
     Event * event = new Event ();
 
@@ -63,7 +72,7 @@ EXPORT void event_queue_full (int time, const char * name, void * data, void (* 
 
     pthread_mutex_lock (& mutex);
 
-    event->source = g_timeout_add (time, (GSourceFunc) event_execute, event);
+    queued_events.queue (events_execute, NULL);
     events = g_list_prepend (events, event);
 
     pthread_mutex_unlock (& mutex);
@@ -81,7 +90,6 @@ EXPORT void event_queue_cancel (const char * name, void * data)
 
         if (! strcmp (event->name, name) && (! data || event->data == data))
         {
-            g_source_remove (event->source);
             events = g_list_delete_link (events, node);
 
             if (event->destroy)
@@ -106,7 +114,6 @@ EXPORT void event_queue_cancel_all (void)
         Event * event = (Event *) node->data;
         GList * next = node->next;
 
-        g_source_remove (event->source);
         events = g_list_delete_link (events, node);
 
         if (event->destroy)
