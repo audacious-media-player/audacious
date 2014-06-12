@@ -132,7 +132,8 @@ static void start_single (int type)
 
     if ((p = table[type].f.s.probe ()) == NULL)
     {
-        fprintf (stderr, "FATAL: No %s plugin found.\n", table[type].name);
+        fprintf (stderr, "FATAL: No %s plugin found.\n"
+         "(Did you forget to install audacious-plugins?)\n", table[type].name);
         abort ();
     }
 
