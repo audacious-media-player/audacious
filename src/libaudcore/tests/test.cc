@@ -18,6 +18,7 @@
  */
 
 #include "tuple.h"
+#include "tuple-compiler.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -31,9 +32,9 @@ String aud_get_str (const char *, const char *)
 
 static void test_tuple_format (const char * format, const Tuple & tuple, const char * expected)
 {
-    TupleFormatter * formatter = tuple_formatter_new (format);
-    String result = tuple_format_title (formatter, tuple);
-    tuple_formatter_free (formatter);
+    TupleCompiler compiler;
+    compiler.compile (format);
+    String result = compiler.evaluate (tuple);
 
     if (strcmp (result, expected))
     {
