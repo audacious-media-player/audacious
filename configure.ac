@@ -143,6 +143,8 @@ if test $USE_QT = yes ; then
 fi
 
 AC_SUBST(USE_QT)
+AC_SUBST(QT_CFLAGS)
+AC_SUBST(QT_LIBS)
 
 dnl Valgrind analysis support
 dnl =========================
