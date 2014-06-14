@@ -72,7 +72,9 @@ EXPORT void event_queue_full (const char * name, void * data, void (* destroy) (
 
     pthread_mutex_lock (& mutex);
 
-    queued_events.queue (events_execute, NULL);
+    if (! events)
+        queued_events.queue (events_execute, NULL);
+
     events = g_list_prepend (events, event);
 
     pthread_mutex_unlock (& mutex);

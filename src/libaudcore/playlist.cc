@@ -304,8 +304,6 @@ static void update (void * unused)
     int level = update_level;
     update_level = 0;
 
-    queued_update.stop ();
-
     LEAVE;
 
     hook_call ("playlist update", GINT_TO_POINTER (level));
@@ -341,9 +339,10 @@ static void queue_update (int level, Playlist * p, int at, int count)
         }
     }
 
-    update_level = MAX (update_level, level);
+    if (! update_level)
+        queued_update.queue (update, NULL);
 
-    queued_update.queue (update, NULL);
+    update_level = MAX (update_level, level);
 }
 
 EXPORT bool_t aud_playlist_update_pending (void)
@@ -2215,9 +2214,8 @@ void playlist_load_state (void)
         playlist->last_update = Update ();
     }
 
-    update_level = 0;
-
     queued_update.stop ();
+    update_level = 0;
 
     LEAVE;
 }

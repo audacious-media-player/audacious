@@ -54,6 +54,7 @@ vfs_async_file_get_contents_worker(void * data)
 
     vfs_file_get_contents(tr->filename, &tr->buf, &tr->size);
 
+    // FIXME: cancels any previously queued result
     queued_trampoline.queue (vfs_async_file_get_contents_trampoline, tr);
 
     return NULL;

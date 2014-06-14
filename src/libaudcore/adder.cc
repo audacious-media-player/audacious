@@ -63,7 +63,7 @@ static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 static bool_t add_thread_started = FALSE;
 static bool_t add_thread_exited = FALSE;
 static pthread_t add_thread;
-static QueuedFunc add_timer;
+static QueuedFunc queued_add;
 static QueuedFunc status_timer;
 static char status_path[512];
 static int status_count;
@@ -322,8 +322,6 @@ static void add_finish (void * unused)
         delete result;
     }
 
-    add_timer.stop ();
-
     if (add_thread_exited)
     {
         stop_thread_locked ();
@@ -364,10 +362,10 @@ static void * add_worker (void * unused)
         pthread_mutex_lock (& mutex);
         current_playlist_id = -1;
 
-        add_results = g_list_append (add_results, result);
+        if (! add_results)
+            queued_add.queue (add_finish, NULL);
 
-        if (! add_timer.running ())
-            add_timer.start (0, add_finish, NULL);
+        add_results = g_list_append (add_results, result);
     }
 
     add_thread_exited = TRUE;
@@ -394,7 +392,7 @@ void adder_cleanup (void)
     g_list_free (add_results);
     add_results = NULL;
 
-    add_timer.stop ();
+    queued_add.stop ();
 
     pthread_mutex_unlock (& mutex);
 }
