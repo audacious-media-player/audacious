@@ -125,23 +125,6 @@ else
 	PKG_CHECK_MODULES(GIO, gio-2.0 >= 2.32 gio-unix-2.0 >= 2.32)
 fi
 
-dnl Qt support
-dnl ==========
-
-AC_ARG_ENABLE(qt,
- AS_HELP_STRING(--enable-qt, [Enable Qt support (default=disabled)]),
- USE_QT=$enableval, USE_QT=no)
-
-if test $USE_QT = yes ; then
-    PKG_CHECK_MODULES([QT], [Qt5Core])
-    AC_DEFINE(USE_QT, 1, [Define if Qt support enabled])
-
-    # needed if Qt was built with -reduce-relocations
-    QT_CFLAGS="$QT_CFLAGS -fPIC"
-fi
-
-AC_SUBST(USE_QT)
-
 AC_SUBST(GLIB_CFLAGS)
 AC_SUBST(GLIB_LIBS)
 AC_SUBST(GIO_CFLAGS)
