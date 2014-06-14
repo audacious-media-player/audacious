@@ -110,7 +110,6 @@ static QCoreApplication * MAINLOOP_NEW ()
 #define MAINLOOP_RUN(m)      (m)->exec ()
 #define MAINLOOP_QUIT(m)     (m)->quit ()
 #define MAINLOOP_FREE(m)     delete (m)
-#define MAINLOOP_RUNNING(m)  (m)->instance ()
 
 #else // ! USE_QT
 
@@ -145,7 +144,6 @@ typedef GMainLoop MainLoop;
 #define MAINLOOP_RUN(m)      g_main_loop_run (m)
 #define MAINLOOP_QUIT(m)     g_main_loop_quit (m)
 #define MAINLOOP_FREE(m)     g_main_loop_unref (m)
-#define MAINLOOP_RUNNING(m)  g_main_loop_is_running (m)
 
 #endif // ! USE_QT
 
@@ -203,9 +201,4 @@ void mainloop_quit ()
         MAINLOOP_QUIT (mainloop);
 
     pthread_mutex_unlock (& mainloop_mutex);
-}
-
-bool mainloop_running ()
-{
-    return MAINLOOP_RUNNING (mainloop);
 }
