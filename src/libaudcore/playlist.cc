@@ -35,6 +35,7 @@
 #include "i18n.h"
 #include "interface.h"
 #include "internal.h"
+#include "mainloop.h"
 #include "multihash.h"
 #include "objects.h"
 #include "plugins.h"
@@ -134,7 +135,8 @@ static Playlist * active_playlist = NULL;
 static Playlist * playing_playlist = NULL;
 static int resume_playlist = -1;
 
-static int update_source = 0, update_level;
+static QueuedFunc queued_update;
+static int update_level;
 
 struct ScanItem {
     Playlist * playlist;
@@ -289,7 +291,7 @@ static Entry * lookup_entry (Playlist * p, int i)
     return (i >= 0 && i < p->entries.len ()) ? p->entries[i].get () : NULL;
 }
 
-static bool_t update (void * unused)
+static void update (void * unused)
 {
     ENTER;
 
@@ -302,16 +304,11 @@ static bool_t update (void * unused)
     int level = update_level;
     update_level = 0;
 
-    if (update_source)
-    {
-        g_source_remove (update_source);
-        update_source = 0;
-    }
+    queued_update.stop ();
 
     LEAVE;
 
     hook_call ("playlist update", GINT_TO_POINTER (level));
-    return FALSE;
 }
 
 static void queue_update (int level, Playlist * p, int at, int count)
@@ -346,8 +343,7 @@ static void queue_update (int level, Playlist * p, int at, int count)
 
     update_level = MAX (update_level, level);
 
-    if (! update_source)
-        update_source = g_idle_add_full (G_PRIORITY_HIGH, update, NULL, NULL);
+    queued_update.queue (update, NULL);
 }
 
 EXPORT bool_t aud_playlist_update_pending (void)
@@ -628,11 +624,7 @@ void playlist_end (void)
 
     ENTER;
 
-    if (update_source)
-    {
-        g_source_remove (update_source);
-        update_source = 0;
-    }
+    queued_update.stop ();
 
     active_playlist = playing_playlist = NULL;
     resume_playlist = -1;
@@ -2225,11 +2217,7 @@ void playlist_load_state (void)
 
     update_level = 0;
 
-    if (update_source)
-    {
-        g_source_remove (update_source);
-        update_source = 0;
-    }
+    queued_update.stop ();
 
     LEAVE;
 }

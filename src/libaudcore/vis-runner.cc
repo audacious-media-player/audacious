@@ -26,6 +26,7 @@
 
 #include <glib.h>
 
+#include "mainloop.h"
 #include "output.h"
 
 #define INTERVAL 30 /* milliseconds */
@@ -46,7 +47,8 @@ static int current_frames;
 static VisNode * vis_list = NULL;
 static VisNode * vis_list_tail = NULL;
 static VisNode * vis_pool = NULL;
-static int send_source = 0, clear_source = 0;
+static QueuedFunc queued_clear;
+static QueuedFunc send_timer;
 
 static VisNode * alloc_node_locked (int channels)
 {
@@ -97,17 +99,17 @@ static VisNode * pop_node_locked (void)
     return node;
 }
 
-static bool_t send_audio (void * unused)
+static void send_audio (void * unused)
 {
     /* call before locking mutex to avoid deadlock */
     int outputted = output_get_raw_time ();
 
     pthread_mutex_lock (& mutex);
 
-    if (! send_source)
+    if (! send_timer.running ())
     {
         pthread_mutex_unlock (& mutex);
-        return FALSE;
+        return;
     }
 
     VisNode * vis_node = NULL;
@@ -130,26 +132,18 @@ static bool_t send_audio (void * unused)
     pthread_mutex_unlock (& mutex);
 
     if (! vis_node)
-        return TRUE;
+        return;
 
     vis_send_audio (vis_node->data, vis_node->channels);
 
     pthread_mutex_lock (& mutex);
     free_node_locked (vis_node);
     pthread_mutex_unlock (& mutex);
-
-    return TRUE;
 }
 
-static bool_t send_clear (void * unused)
+static void send_clear (void * unused)
 {
-    pthread_mutex_lock (& mutex);
-    clear_source = 0;
-    pthread_mutex_unlock (& mutex);
-
     vis_send_clear ();
-
-    return FALSE;
 }
 
 static void flush_locked (void)
@@ -173,8 +167,7 @@ static void flush_locked (void)
         g_free (node);
     }
 
-    if (! clear_source)
-        clear_source = g_timeout_add (0, send_clear, NULL);
+    queued_clear.queue (send_clear, NULL);
 }
 
 void vis_runner_flush (void)
@@ -190,22 +183,13 @@ static void start_stop_locked (bool_t new_playing, bool_t new_paused)
     paused = new_paused;
     active = playing && enabled;
 
-    if (send_source)
-    {
-        g_source_remove (send_source);
-        send_source = 0;
-    }
-
-    if (clear_source)
-    {
-        g_source_remove (clear_source);
-        clear_source = 0;
-    }
+    send_timer.stop ();
+    queued_clear.stop ();
 
     if (! active)
         flush_locked ();
     else if (! paused)
-        send_source = g_timeout_add (INTERVAL, send_audio, NULL);
+        send_timer.start (INTERVAL, send_audio, NULL);
 }
 
 void vis_runner_start_stop (bool_t new_playing, bool_t new_paused)

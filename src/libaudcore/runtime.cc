@@ -40,11 +40,12 @@
 #include "drct.h"
 #include "hook.h"
 #include "internal.h"
+#include "mainloop.h"
 #include "playlist-internal.h"
 #include "plugins-internal.h"
 #include "scanner.h"
 
-#define AUTOSAVE_INTERVAL 300 /* seconds */
+#define AUTOSAVE_INTERVAL 300000 /* milliseconds, autosave every 5 minutes */
 
 #ifdef WORDS_BIGENDIAN
 #define UTF16_NATIVE "UTF-16BE"
@@ -314,24 +315,24 @@ EXPORT void aud_init (void)
     load_playlists ();
 }
 
-static bool_t do_autosave (void)
+static void do_autosave (void * unused)
 {
     hook_call ("config save", NULL);
     save_playlists (FALSE);
     config_save ();
-    return TRUE;
 }
 
 EXPORT void aud_run (void)
 {
     start_plugins_two ();
 
-    int save_source = g_timeout_add_seconds (AUTOSAVE_INTERVAL, (GSourceFunc) do_autosave, NULL);
+    static QueuedFunc autosave;
+    autosave.start (AUTOSAVE_INTERVAL, do_autosave, NULL);
 
     /* calls "config save" before returning */
     interface_run ();
 
-    g_source_remove (save_source);
+    autosave.stop ();
 
     stop_plugins_two ();
 }

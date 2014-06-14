@@ -30,6 +30,7 @@
 #include "drct.h"
 #include "hook.h"
 #include "i18n.h"
+#include "mainloop.h"
 #include "plugins-internal.h"
 #include "probe.h"
 #include "runtime.h"
@@ -62,13 +63,12 @@ static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 static bool_t add_thread_started = FALSE;
 static bool_t add_thread_exited = FALSE;
 static pthread_t add_thread;
-static int add_source = 0;
-
-static int status_source = 0;
+static QueuedFunc add_timer;
+static QueuedFunc status_timer;
 static char status_path[512];
 static int status_count;
 
-static bool_t status_cb (void * unused)
+static void status_cb (void * unused)
 {
     pthread_mutex_lock (& mutex);
 
@@ -88,7 +88,6 @@ static bool_t status_cb (void * unused)
     }
 
     pthread_mutex_unlock (& mutex);
-    return TRUE;
 }
 
 static void status_update (const char * filename, int found)
@@ -98,19 +97,15 @@ static void status_update (const char * filename, int found)
     snprintf (status_path, sizeof status_path, "%s", filename);
     status_count = found;
 
-    if (! status_source)
-        status_source = g_timeout_add (250, status_cb, NULL);
+    if (! status_timer.running ())
+        status_timer.start (250, status_cb, NULL);
 
     pthread_mutex_unlock (& mutex);
 }
 
 static void status_done_locked (void)
 {
-    if (status_source)
-    {
-        g_source_remove (status_source);
-        status_source = 0;
-    }
+    status_timer.stop ();
 
     if (aud_get_headless_mode ())
         printf ("\n");
@@ -286,7 +281,7 @@ static void stop_thread_locked (void)
     }
 }
 
-static bool_t add_finish (void * unused)
+static void add_finish (void * unused)
 {
     pthread_mutex_lock (& mutex);
 
@@ -327,11 +322,7 @@ static bool_t add_finish (void * unused)
         delete result;
     }
 
-    if (add_source)
-    {
-        g_source_remove (add_source);
-        add_source = 0;
-    }
+    add_timer.stop ();
 
     if (add_thread_exited)
     {
@@ -342,7 +333,6 @@ static bool_t add_finish (void * unused)
     pthread_mutex_unlock (& mutex);
 
     hook_call ("playlist add complete", NULL);
-    return G_SOURCE_REMOVE;
 }
 
 static void * add_worker (void * unused)
@@ -376,8 +366,8 @@ static void * add_worker (void * unused)
 
         add_results = g_list_append (add_results, result);
 
-        if (! add_source)
-            add_source = g_timeout_add (0, add_finish, NULL);
+        if (! add_timer.running ())
+            add_timer.start (0, add_finish, NULL);
     }
 
     add_thread_exited = TRUE;
@@ -404,11 +394,7 @@ void adder_cleanup (void)
     g_list_free (add_results);
     add_results = NULL;
 
-    if (add_source)
-    {
-        g_source_remove (add_source);
-        add_source = 0;
-    }
+    add_timer.stop ();
 
     pthread_mutex_unlock (& mutex);
 }
