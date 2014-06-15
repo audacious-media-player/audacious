@@ -37,6 +37,11 @@ protected:
 
     void insert_after (ListNode * prev, ListNode * node);
     void remove (ListNode * node);
+
+    static ListNode * prev (ListNode * node)
+        { return node->prev; }
+    static ListNode * next (ListNode * node)
+        { return node->next; }
 };
 
 template<class C>
@@ -49,9 +54,9 @@ public:
         { return (C *) ListBase::tail; }
 
     static C * prev (C * node)
-        { return (C *) node->prev; }
+        { return (C *) ListBase::prev (node); }
     static C * next (C * node)
-        { return (C *) node->next; }
+        { return (C *) ListBase::next (node); }
 
     void insert_after (C * prev, C * node)
         { ListBase::insert_after (prev, node); }
