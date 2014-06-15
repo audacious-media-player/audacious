@@ -24,80 +24,36 @@
 #include <stdint.h>
 #include <string.h>
 
-#include <glib.h>
-
+#include "list.h"
 #include "mainloop.h"
 #include "output.h"
 
 #define INTERVAL 30 /* milliseconds */
 #define FRAMES_PER_NODE 512
 
-struct VisNode {
-    VisNode * next;
-    int channels;
+struct VisNode : public ListNode
+{
+    explicit VisNode (int channels) :
+        channels (channels),
+        data (new float[channels * FRAMES_PER_NODE]) {}
+
+    ~VisNode ()
+        { delete[] data; }
+
+    const int channels;
     int time;
-    float data[1];  // variable size
+    float * data;
 };
 
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 static bool_t enabled = FALSE;
 static bool_t playing = FALSE, paused = FALSE, active = FALSE;
-static VisNode * current_node = NULL;
+static VisNode * current_node = nullptr;
 static int current_frames;
-static VisNode * vis_list = NULL;
-static VisNode * vis_list_tail = NULL;
-static VisNode * vis_pool = NULL;
+static List<VisNode> vis_list;
+static List<VisNode> vis_pool;
 static QueuedFunc queued_clear;
 static QueuedFunc send_timer;
-
-static VisNode * alloc_node_locked (int channels)
-{
-    VisNode * node;
-
-    if (vis_pool)
-    {
-        node = vis_pool;
-        assert (node->channels == channels);
-        vis_pool = node->next;
-    }
-    else
-    {
-        node = (VisNode *) g_malloc (offsetof (VisNode, data) +
-         sizeof (float) * channels * FRAMES_PER_NODE);
-        node->channels = channels;
-    }
-
-    node->next = NULL;
-    return node;
-}
-
-static void free_node_locked (VisNode * node)
-{
-    node->next = vis_pool;
-    vis_pool = node;
-}
-
-static void push_node_locked (VisNode * node)
-{
-    if (vis_list)
-        vis_list_tail->next = node;
-    else
-        vis_list = node;
-
-    vis_list_tail = node;
-}
-
-static VisNode * pop_node_locked (void)
-{
-    VisNode * node = vis_list;
-    vis_list = node->next;
-    node->next = NULL;
-
-    if (vis_list_tail == node)
-        vis_list_tail = NULL;
-
-    return node;
-}
 
 static void send_audio (void * unused)
 {
@@ -112,32 +68,34 @@ static void send_audio (void * unused)
         return;
     }
 
-    VisNode * vis_node = NULL;
+    VisNode * node = nullptr;
+    VisNode * next;
 
-    while (vis_list)
+    while ((next = vis_list.head ()))
     {
         /* If we are considering a node, stop searching and use it if it is the
          * most recent (that is, the next one is in the future).  Otherwise,
          * consider the next node if it is not in the future by more than the
          * length of an interval. */
-        if (vis_list->time > outputted + (vis_node ? 0 : INTERVAL))
+        if (next->time > outputted + (node ? 0 : INTERVAL))
             break;
 
-        if (vis_node)
-            free_node_locked (vis_node);
+        if (node)
+            vis_pool.prepend (node);
 
-        vis_node = pop_node_locked ();
+        node = next;
+        vis_list.remove (node);
     }
 
     pthread_mutex_unlock (& mutex);
 
-    if (! vis_node)
+    if (! node)
         return;
 
-    vis_send_audio (vis_node->data, vis_node->channels);
+    vis_send_audio (node->data, node->channels);
 
     pthread_mutex_lock (& mutex);
-    free_node_locked (vis_node);
+    vis_pool.prepend (node);
     pthread_mutex_unlock (& mutex);
 }
 
@@ -148,26 +106,24 @@ static void send_clear (void * unused)
 
 static void flush_locked (void)
 {
-    g_free (current_node);
-    current_node = NULL;
+    delete current_node;
+    current_node = nullptr;
 
-    while (vis_list)
+    VisNode * node;
+
+    while ((node = vis_list.head ()))
     {
-        VisNode * node = vis_list;
-        vis_list = node->next;
-        g_free (node);
+        vis_list.remove (node);
+        delete node;
     }
 
-    vis_list_tail = NULL;
-
-    while (vis_pool)
+    while ((node = vis_pool.head ()))
     {
-        VisNode * node = vis_pool;
-        vis_pool = node->next;
-        g_free (node);
+        vis_pool.remove (node);
+        delete node;
     }
 
-    queued_clear.queue (send_clear, NULL);
+    queued_clear.queue (send_clear, nullptr);
 }
 
 void vis_runner_flush (void)
@@ -189,7 +145,7 @@ static void start_stop_locked (bool_t new_playing, bool_t new_paused)
     if (! active)
         flush_locked ();
     else if (! paused)
-        send_timer.start (INTERVAL, send_audio, NULL);
+        send_timer.start (INTERVAL, send_audio, nullptr);
 }
 
 void vis_runner_start_stop (bool_t new_playing, bool_t new_paused)
@@ -231,8 +187,9 @@ void vis_runner_pass_audio (int time, float * data, int samples, int
              * queue, we are at the beginning of the song or had an underrun,
              * and we want to copy the earliest audio data we have. */
 
-            if (vis_list_tail)
-                node_time = vis_list_tail->time + INTERVAL;
+            VisNode * tail = vis_list.tail ();
+            if (tail)
+                node_time = tail->time + INTERVAL;
 
             at = channels * (int) ((int64_t) (node_time - time) * rate / 1000);
 
@@ -241,7 +198,16 @@ void vis_runner_pass_audio (int time, float * data, int samples, int
             if (at >= samples)
                 break;
 
-            current_node = alloc_node_locked (channels);
+            current_node = vis_pool.head ();
+
+            if (current_node)
+            {
+                assert (current_node->channels == channels);
+                vis_pool.remove (current_node);
+            }
+            else
+                current_node = new VisNode (channels);
+
             current_node->time = node_time;
             current_frames = 0;
         }
@@ -258,8 +224,8 @@ void vis_runner_pass_audio (int time, float * data, int samples, int
         if (current_frames < FRAMES_PER_NODE)
             break;
 
-        push_node_locked (current_node);
-        current_node = NULL;
+        vis_list.append (current_node);
+        current_node = nullptr;
     }
 
     pthread_mutex_unlock (& mutex);
