@@ -32,11 +32,14 @@ private:
 class ListBase
 {
 protected:
+    typedef void (* DestroyFunc) (ListNode *);
+
     ListNode * head = nullptr;
     ListNode * tail = nullptr;
 
     void insert_after (ListNode * prev, ListNode * node);
     void remove (ListNode * node);
+    void clear (DestroyFunc destroy);
 
     static ListNode * prev (ListNode * node)
         { return node->prev; }
@@ -67,6 +70,13 @@ public:
         { insert_after (nullptr, node); }
     void append (C * node)
         { insert_after (tail (), node); }
+
+    void clear ()
+    {
+        auto destroy = [] (ListNode * node)
+            { delete (C *) node; };
+        ListBase::clear (destroy);
+    }
 };
 
 #endif // LIBAUDCORE_LIST_H

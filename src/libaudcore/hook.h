@@ -36,10 +36,12 @@ void hook_dissociate_full (const char * name, HookFunction func, void * user);
 /* Triggers the hook <name>. */
 void hook_call (const char * name, void * data);
 
+typedef void (* EventDestroyFunc) (void * data);
+
 /* Schedules a call of the hook <name> from the program's main loop, to be
  * executed in <time> milliseconds.  If <destroy> is not NULL, it will be called
  * on <data> after the hook is called. */
-void event_queue_full (const char * name, void * data, void (* destroy) (void *));
+void event_queue_full (const char * name, void * data, EventDestroyFunc destroy);
 
 #define event_queue(n, d) event_queue_full (n, d, NULL)
 

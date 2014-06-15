@@ -109,19 +109,8 @@ static void flush_locked (void)
     delete current_node;
     current_node = nullptr;
 
-    VisNode * node;
-
-    while ((node = vis_list.head ()))
-    {
-        vis_list.remove (node);
-        delete node;
-    }
-
-    while ((node = vis_pool.head ()))
-    {
-        vis_pool.remove (node);
-        delete node;
-    }
+    vis_list.clear ();
+    vis_pool.clear ();
 
     queued_clear.queue (send_clear, nullptr);
 }

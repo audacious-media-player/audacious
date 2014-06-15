@@ -61,3 +61,17 @@ EXPORT void ListBase::remove (ListNode * node)
     else
         tail = prev;
 }
+
+EXPORT void ListBase::clear (DestroyFunc destroy)
+{
+    ListNode * node = head;
+    while (node)
+    {
+        ListNode * next = node->next;
+        destroy (node);
+        node = next;
+    }
+
+    head = nullptr;
+    tail = nullptr;
+}

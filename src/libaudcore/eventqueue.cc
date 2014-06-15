@@ -31,6 +31,17 @@ struct Event : public ListNode
     String name;
     void * data;
     void (* destroy) (void *);
+
+    Event (const char * name, void * data, EventDestroyFunc destroy) :
+        name (name),
+        data (data),
+        destroy (destroy) {}
+
+    ~Event ()
+    {
+        if (destroy)
+            destroy (data);
+    }
 };
 
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -56,27 +67,18 @@ static void events_execute (void * unused)
 
         hook_call (event->name, event->data);
 
-        if (event->destroy)
-            event->destroy (event->data);
-
         delete event;
     }
 }
 
-EXPORT void event_queue_full (const char * name, void * data, void (* destroy) (void *))
+EXPORT void event_queue_full (const char * name, void * data, EventDestroyFunc destroy)
 {
-    Event * event = new Event ();
-
-    event->name = String (name);
-    event->data = data;
-    event->destroy = destroy;
-
     pthread_mutex_lock (& mutex);
 
     if (! events.head ())
         queued_events.queue (events_execute, NULL);
 
-    events.append (event);
+    events.append (new Event (name, data, destroy));
 
     pthread_mutex_unlock (& mutex);
 }
@@ -93,10 +95,6 @@ EXPORT void event_queue_cancel (const char * name, void * data)
         if (! strcmp (event->name, name) && (! data || event->data == data))
         {
             events.remove (event);
-
-            if (event->destroy)
-                event->destroy (event->data);
-
             delete event;
         }
 
@@ -109,19 +107,6 @@ EXPORT void event_queue_cancel (const char * name, void * data)
 EXPORT void event_queue_cancel_all (void)
 {
     pthread_mutex_lock (& mutex);
-
-    Event * event = events.head ();
-    while (event)
-    {
-        Event * next = events.next (event);
-        events.remove (event);
-
-        if (event->destroy)
-            event->destroy (event->data);
-
-        delete event;
-        event = next;
-    }
-
+    events.clear ();
     pthread_mutex_unlock (& mutex);
 }
