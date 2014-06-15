@@ -19,21 +19,22 @@
 
 #include "hook.h"
 
-#include <glib.h>
 #include <pthread.h>
 #include <string.h>
 
+#include "list.h"
 #include "mainloop.h"
 #include "objects.h"
 
-struct Event {
+struct Event : public ListNode
+{
     String name;
     void * data;
     void (* destroy) (void *);
 };
 
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-static GList * events;
+static List<Event> events;
 static QueuedFunc queued_events;
 
 static void events_execute (void * unused)
@@ -42,14 +43,14 @@ static void events_execute (void * unused)
     {
         pthread_mutex_lock (& mutex);
 
-        Event * event = (Event *) g_list_nth_data (events, 0);
+        Event * event = events.head ();
         if (! event)
         {
             pthread_mutex_unlock (& mutex);
             return;
         }
 
-        events = g_list_remove (events, event);
+        events.remove (event);
 
         pthread_mutex_unlock (& mutex);
 
@@ -72,10 +73,10 @@ EXPORT void event_queue_full (const char * name, void * data, void (* destroy) (
 
     pthread_mutex_lock (& mutex);
 
-    if (! events)
+    if (! events.head ())
         queued_events.queue (events_execute, NULL);
 
-    events = g_list_prepend (events, event);
+    events.append (event);
 
     pthread_mutex_unlock (& mutex);
 }
@@ -84,15 +85,14 @@ EXPORT void event_queue_cancel (const char * name, void * data)
 {
     pthread_mutex_lock (& mutex);
 
-    GList * node = events;
-    while (node)
+    Event * event = events.head ();
+    while (event)
     {
-        Event * event = (Event *) node->data;
-        GList * next = node->next;
+        Event * next = events.next (event);
 
         if (! strcmp (event->name, name) && (! data || event->data == data))
         {
-            events = g_list_delete_link (events, node);
+            events.remove (event);
 
             if (event->destroy)
                 event->destroy (event->data);
@@ -100,7 +100,7 @@ EXPORT void event_queue_cancel (const char * name, void * data)
             delete event;
         }
 
-        node = next;
+        event = next;
     }
 
     pthread_mutex_unlock (& mutex);
@@ -110,20 +110,17 @@ EXPORT void event_queue_cancel_all (void)
 {
     pthread_mutex_lock (& mutex);
 
-    GList * node = events;
-    while (node)
+    Event * event = events.head ();
+    while (event)
     {
-        Event * event = (Event *) node->data;
-        GList * next = node->next;
-
-        events = g_list_delete_link (events, node);
+        Event * next = events.next (event);
+        events.remove (event);
 
         if (event->destroy)
             event->destroy (event->data);
 
         delete event;
-
-        node = next;
+        event = next;
     }
 
     pthread_mutex_unlock (& mutex);
