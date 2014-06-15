@@ -20,6 +20,7 @@ SRCS = adder.cc \
        index.cc \
        inifile.cc \
        interface.cc \
+       list.cc \
        mainloop.cc \
        multihash.cc \
        output.cc \
@@ -58,6 +59,7 @@ INCLUDES = audio.h \
            inifile.h \
            input.h \
            interface.h \
+           list.h \
            multihash.h \
            objects.h \
            playlist.h \
