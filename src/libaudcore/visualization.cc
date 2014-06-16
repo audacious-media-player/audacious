@@ -27,40 +27,46 @@
 #include "plugins.h"
 #include "runtime.h"
 
-static GList * vis_funcs[AUD_VIS_TYPES];
+static Index<VisFunc> vis_funcs[AUD_VIS_TYPES];
 
-static int running = FALSE;
+static int running = false;
 
 EXPORT void aud_vis_func_add (int type, VisFunc func)
 {
     g_return_if_fail (type >= 0 && type < AUD_VIS_TYPES);
-    vis_funcs[type] = g_list_prepend (vis_funcs[type], (void *) func);
 
-    vis_runner_enable (TRUE);
+    vis_funcs[type].append (func);
+    vis_runner_enable (true);
 }
 
 EXPORT void aud_vis_func_remove (VisFunc func)
 {
-    bool_t disable = TRUE;
+    bool disable = true;
 
-    for (int i = 0; i < AUD_VIS_TYPES; i ++)
+    for (int type = 0; type < AUD_VIS_TYPES; type ++)
     {
-        vis_funcs[i] = g_list_remove_all (vis_funcs[i], (void *) func);
-        if (vis_funcs[i])
-            disable = FALSE;
+        Index<VisFunc> & list = vis_funcs[type];
+
+        for (int i = 0; i < list.len ();)
+        {
+            if (list[i] == func)
+                list.remove (i, 1);
+            else
+                i ++;
+        }
+
+        if (list.len ())
+            disable = false;
     }
 
     if (disable)
-        vis_runner_enable (FALSE);
+        vis_runner_enable (false);
 }
 
 void vis_send_clear (void)
 {
-    for (GList * node = vis_funcs[AUD_VIS_TYPE_CLEAR]; node; node = node->next)
-    {
-        void (* func) (void) = (void (*) (void)) node->data;
-        func ();
-    }
+    for (VisFunc func : vis_funcs[AUD_VIS_TYPE_CLEAR])
+        ((VisClearFunc) func) ();
 }
 
 static void pcm_to_mono (const float * data, float * mono, int channels)
@@ -83,35 +89,26 @@ void vis_send_audio (const float * data, int channels)
     float mono[512];
     float freq[256];
 
-    if (vis_funcs[AUD_VIS_TYPE_MONO_PCM] || vis_funcs[AUD_VIS_TYPE_FREQ])
+    if (vis_funcs[AUD_VIS_TYPE_MONO_PCM].len () || vis_funcs[AUD_VIS_TYPE_FREQ].len ())
         pcm_to_mono (data, mono, channels);
-    if (vis_funcs[AUD_VIS_TYPE_FREQ])
+    if (vis_funcs[AUD_VIS_TYPE_FREQ].len ())
         calc_freq (mono, freq);
 
-    for (GList * node = vis_funcs[AUD_VIS_TYPE_MONO_PCM]; node; node = node->next)
-    {
-        void (* func) (const float *) = (void (*) (const float *)) node->data;
-        func (mono);
-    }
+    for (VisFunc func : vis_funcs[AUD_VIS_TYPE_MONO_PCM])
+        ((VisMonoPCMFunc) func) (mono);
 
-    for (GList * node = vis_funcs[AUD_VIS_TYPE_MULTI_PCM]; node; node = node->next)
-    {
-        void (* func) (const float *, int) = (void (*) (const float *, int)) node->data;
-        func (data, channels);
-    }
+    for (VisFunc func : vis_funcs[AUD_VIS_TYPE_MULTI_PCM])
+        ((VisMultiPCMFunc) func) (data, channels);
 
-    for (GList * node = vis_funcs[AUD_VIS_TYPE_FREQ]; node; node = node->next)
-    {
-        void (* func) (const float *) = (void (*) (const float *)) node->data;
-        func (freq);
-    }
+    for (VisFunc func : vis_funcs[AUD_VIS_TYPE_FREQ])
+        ((VisFreqFunc) func) (freq);
 }
 
 static bool_t vis_load (PluginHandle * plugin, void * unused)
 {
     AUDDBG ("Activating %s.\n", aud_plugin_get_name (plugin));
     VisPlugin * header = (VisPlugin *) aud_plugin_get_header (plugin);
-    g_return_val_if_fail (header, FALSE);
+    g_return_val_if_fail (header, false);
 
     if (PLUGIN_HAS_FUNC (header, clear))
         aud_vis_func_add (AUD_VIS_TYPE_CLEAR, (VisFunc) header->clear);
@@ -122,14 +119,14 @@ static bool_t vis_load (PluginHandle * plugin, void * unused)
     if (PLUGIN_HAS_FUNC (header, render_freq))
         aud_vis_func_add (AUD_VIS_TYPE_FREQ, (VisFunc) header->render_freq);
 
-    return TRUE;
+    return true;
 }
 
 static bool_t vis_unload (PluginHandle * plugin, void * unused)
 {
     AUDDBG ("Deactivating %s.\n", aud_plugin_get_name (plugin));
     VisPlugin * header = (VisPlugin *) aud_plugin_get_header (plugin);
-    g_return_val_if_fail (header, FALSE);
+    g_return_val_if_fail (header, false);
 
     if (PLUGIN_HAS_FUNC (header, clear))
         aud_vis_func_remove ((VisFunc) header->clear);
@@ -143,10 +140,10 @@ static bool_t vis_unload (PluginHandle * plugin, void * unused)
     if (PLUGIN_HAS_FUNC (header, clear))
         header->clear ();
 
-    return TRUE;
+    return true;
 }
 
-void vis_activate (bool_t activate)
+void vis_activate (bool activate)
 {
     if (! activate == ! running)
         return;
@@ -159,18 +156,18 @@ void vis_activate (bool_t activate)
     running = activate;
 }
 
-bool_t vis_plugin_start (PluginHandle * plugin)
+bool vis_plugin_start (PluginHandle * plugin)
 {
     VisPlugin * vp = (VisPlugin *) aud_plugin_get_header (plugin);
-    g_return_val_if_fail (vp, FALSE);
+    g_return_val_if_fail (vp, false);
 
     if (vp->init != NULL && ! vp->init ())
-        return FALSE;
+        return false;
 
     if (running)
         vis_load (plugin, NULL);
 
-    return TRUE;
+    return true;
 }
 
 void vis_plugin_stop (PluginHandle * plugin)

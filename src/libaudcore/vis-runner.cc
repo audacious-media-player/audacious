@@ -46,8 +46,8 @@ struct VisNode : public ListNode
 };
 
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-static bool_t enabled = FALSE;
-static bool_t playing = FALSE, paused = FALSE, active = FALSE;
+static bool enabled = false;
+static bool playing = false, paused = false, active = false;
 static VisNode * current_node = nullptr;
 static int current_frames;
 static List<VisNode> vis_list;
@@ -122,7 +122,7 @@ void vis_runner_flush (void)
     pthread_mutex_unlock (& mutex);
 }
 
-static void start_stop_locked (bool_t new_playing, bool_t new_paused)
+static void start_stop_locked (bool new_playing, bool new_paused)
 {
     playing = new_playing;
     paused = new_paused;
@@ -137,7 +137,7 @@ static void start_stop_locked (bool_t new_playing, bool_t new_paused)
         send_timer.start (INTERVAL, send_audio, nullptr);
 }
 
-void vis_runner_start_stop (bool_t new_playing, bool_t new_paused)
+void vis_runner_start_stop (bool new_playing, bool new_paused)
 {
     pthread_mutex_lock (& mutex);
     start_stop_locked (new_playing, new_paused);
@@ -220,7 +220,7 @@ void vis_runner_pass_audio (int time, float * data, int samples, int
     pthread_mutex_unlock (& mutex);
 }
 
-void vis_runner_enable (bool_t enable)
+void vis_runner_enable (bool enable)
 {
     pthread_mutex_lock (& mutex);
     enabled = enable;

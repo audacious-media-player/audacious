@@ -35,11 +35,11 @@
 #include "runtime.h"
 #include "tuple.h"
 
-bool_t dir_foreach (const char * path, DirForeachFunc func, void * user)
+bool dir_foreach (const char * path, DirForeachFunc func, void * user)
 {
     GDir * dir = g_dir_open (path, 0, NULL);
     if (! dir)
-        return FALSE;
+        return false;
 
     const char * name;
     while ((name = g_dir_read_name (dir)))
@@ -49,7 +49,7 @@ bool_t dir_foreach (const char * path, DirForeachFunc func, void * user)
     }
 
     g_dir_close (dir);
-    return TRUE;
+    return true;
 }
 
 String write_temp_file (void * data, int64_t len)

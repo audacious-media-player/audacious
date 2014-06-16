@@ -25,7 +25,7 @@
 #include "index.h"
 #include "objects.h"
 
-typedef bool_t (* DirForeachFunc) (const char * path, const char * basename, void * user);
+typedef bool (* DirForeachFunc) (const char * path, const char * basename, void * user);
 
 /* adder.c */
 void adder_cleanup (void);
@@ -53,7 +53,7 @@ void effect_flush (void);
 void effect_finish (float * * data, int * samples);
 int effect_adjust_delay (int delay);
 
-bool_t effect_plugin_start (PluginHandle * plugin);
+bool effect_plugin_start (PluginHandle * plugin);
 void effect_plugin_stop (PluginHandle * plugin);
 
 /* equalizer.c */
@@ -68,7 +68,7 @@ void calc_freq (const float data[512], float freq[256]);
 /* interface.c */
 PluginHandle * iface_plugin_probe (void);
 PluginHandle * iface_plugin_get_current (void);
-bool_t iface_plugin_set_current (PluginHandle * plugin);
+bool iface_plugin_set_current (PluginHandle * plugin);
 
 void interface_run (void);
 
@@ -81,7 +81,7 @@ void playback_stop (void);
 VFSFile * probe_buffer_new (const char * filename);
 
 /* util.c */
-bool_t dir_foreach (const char * path, DirForeachFunc func, void * user_data);
+bool dir_foreach (const char * path, DirForeachFunc func, void * user_data);
 String write_temp_file (void * data, int64_t len);
 
 void describe_song (const char * filename, const Tuple & tuple, String & title,
@@ -91,17 +91,17 @@ const char * last_path_element (const char * path);
 unsigned int32_hash (unsigned val);
 
 /* vis-runner.c */
-void vis_runner_start_stop (bool_t playing, bool_t paused);
+void vis_runner_start_stop (bool playing, bool paused);
 void vis_runner_pass_audio (int time, float * data, int samples, int channels, int rate);
 void vis_runner_flush (void);
-void vis_runner_enable (bool_t enable);
+void vis_runner_enable (bool enable);
 
 /* visualization.c */
-void vis_activate (bool_t activate);
+void vis_activate (bool activate);
 void vis_send_clear (void);
 void vis_send_audio (const float * data, int channels);
 
-bool_t vis_plugin_start (PluginHandle * plugin);
+bool vis_plugin_start (PluginHandle * plugin);
 void vis_plugin_stop (PluginHandle * plugin);
 
 #endif

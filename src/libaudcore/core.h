@@ -74,6 +74,11 @@ struct PlaylistAddItem;
 class Tuple;
 struct VFSFile;
 
+typedef void (* VisClearFunc) (void);
+typedef void (* VisMonoPCMFunc) (const float * pcm);
+typedef void (* VisMultiPCMFunc) (const float * pcm, int channels);
+typedef void (* VisFreqFunc) (const float * freq);
+
 /* STRING POOL */
 
 /* If the pool contains a copy of <str>, increments its reference count.

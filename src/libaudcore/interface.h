@@ -30,13 +30,13 @@ enum {
  AUD_MENU_COUNT};
 
 enum {
- AUD_VIS_TYPE_CLEAR,        /* like VisPlugin::clear() */
- AUD_VIS_TYPE_MONO_PCM,     /* like VisPlugin::render_mono_pcm() */
- AUD_VIS_TYPE_MULTI_PCM,    /* like VisPlugin::render_multi_pcm() */
- AUD_VIS_TYPE_FREQ,         /* like VisPlugin::render_freq() */
+ AUD_VIS_TYPE_CLEAR,        /* for VisClearFunc */
+ AUD_VIS_TYPE_MONO_PCM,     /* for VisMonoPCMFunc */
+ AUD_VIS_TYPE_MULTI_PCM,    /* for VisMultiPCMFunc */
+ AUD_VIS_TYPE_FREQ,         /* for VisFreqFunc */
  AUD_VIS_TYPES};
 
-/* generic type; see VisPlugin for actual function types */
+/* generic type */
 typedef void (* VisFunc) (void);
 
 void aud_ui_show (bool_t show);

@@ -23,42 +23,43 @@
 #include <glib.h>
 
 #include "drct.h"
+#include "list.h"
 #include "plugin.h"
 #include "plugins.h"
 #include "runtime.h"
 
-struct RunningEffect {
+struct Effect : public ListNode
+{
     PluginHandle * plugin;
     EffectPlugin * header;
     int channels_returned, rate_returned;
-    bool_t remove_flag;
+    bool remove_flag;
 };
 
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-static GList * running_effects = NULL; /* (RunningEffect *) */
+static List<Effect> effects;
 static int input_channels, input_rate;
 
 struct EffectStartState {
     int * channels, * rate;
 };
 
-static bool_t effect_start_cb (PluginHandle * plugin, EffectStartState * state)
+static bool effect_start_cb (PluginHandle * plugin, EffectStartState * state)
 {
     AUDDBG ("Starting %s at %d channels, %d Hz.\n", aud_plugin_get_name (plugin),
      * state->channels, * state->rate);
     EffectPlugin * header = (EffectPlugin *) aud_plugin_get_header (plugin);
-    g_return_val_if_fail (header != NULL, TRUE);
+    g_return_val_if_fail (header, true);
     header->start (state->channels, state->rate);
 
-    RunningEffect * effect = g_slice_new (RunningEffect);
+    Effect * effect = new Effect ();
     effect->plugin = plugin;
     effect->header = header;
     effect->channels_returned = * state->channels;
     effect->rate_returned = * state->rate;
-    effect->remove_flag = FALSE;
 
-    running_effects = g_list_prepend (running_effects, effect);
-    return TRUE;
+    effects.append (effect);
+    return true;
 }
 
 void effect_start (int * channels, int * rate)
@@ -67,48 +68,40 @@ void effect_start (int * channels, int * rate)
 
     AUDDBG ("Starting effects.\n");
 
-    for (GList * node = running_effects; node; node = node->next)
-        g_slice_free (RunningEffect, node->data);
-
-    g_list_free (running_effects);
-    running_effects = NULL;
+    effects.clear ();
 
     input_channels = * channels;
     input_rate = * rate;
 
     EffectStartState state = {channels, rate};
     aud_plugin_for_enabled (PLUGIN_TYPE_EFFECT, (PluginForEachFunc) effect_start_cb, & state);
-    running_effects = g_list_reverse (running_effects);
 
     pthread_mutex_unlock (& mutex);
-}
-
-struct EffectProcessState {
-    float * * data;
-    int * samples;
-};
-
-static void effect_process_cb (RunningEffect * effect, EffectProcessState * state)
-{
-    if (effect->remove_flag)
-    {
-        /* call finish twice to completely drain buffers */
-        effect->header->finish (state->data, state->samples);
-        effect->header->finish (state->data, state->samples);
-
-        running_effects = g_list_remove (running_effects, effect);
-        g_slice_free (RunningEffect, effect);
-    }
-    else
-        effect->header->process (state->data, state->samples);
 }
 
 void effect_process (float * * data, int * samples)
 {
     pthread_mutex_lock (& mutex);
 
-    EffectProcessState state = {data, samples};
-    g_list_foreach (running_effects, (GFunc) effect_process_cb, & state);
+    Effect * e = effects.head ();
+    while (e)
+    {
+        Effect * next = effects.next (e);
+
+        if (e->remove_flag)
+        {
+            /* call finish twice to completely drain buffers */
+            e->header->finish (data, samples);
+            e->header->finish (data, samples);
+
+            effects.remove (e);
+            delete e;
+        }
+        else
+            e->header->process (data, samples);
+
+        e = next;
+    }
 
     pthread_mutex_unlock (& mutex);
 }
@@ -117,10 +110,10 @@ void effect_flush (void)
 {
     pthread_mutex_lock (& mutex);
 
-    for (GList * node = running_effects; node != NULL; node = node->next)
+    for (Effect * e = effects.head (); e; e = effects.next (e))
     {
-        if (PLUGIN_HAS_FUNC (((RunningEffect *) node->data)->header, flush))
-            ((RunningEffect *) node->data)->header->flush ();
+        if (PLUGIN_HAS_FUNC (e->header, flush))
+            e->header->flush ();
     }
 
     pthread_mutex_unlock (& mutex);
@@ -130,8 +123,8 @@ void effect_finish (float * * data, int * samples)
 {
     pthread_mutex_lock (& mutex);
 
-    for (GList * node = running_effects; node != NULL; node = node->next)
-        ((RunningEffect *) node->data)->header->finish (data, samples);
+    for (Effect * e = effects.head (); e; e = effects.next (e))
+        e->header->finish (data, samples);
 
     pthread_mutex_unlock (& mutex);
 }
@@ -140,44 +133,44 @@ int effect_adjust_delay (int delay)
 {
     pthread_mutex_lock (& mutex);
 
-    for (GList * node = g_list_last (running_effects); node != NULL; node = node->prev)
+    for (Effect * e = effects.tail (); e; e = effects.prev (e))
     {
-        if (PLUGIN_HAS_FUNC (((RunningEffect *) node->data)->header, adjust_delay))
-            delay = ((RunningEffect *) node->data)->header->adjust_delay (delay);
+        if (PLUGIN_HAS_FUNC (e->header, adjust_delay))
+            delay = e->header->adjust_delay (delay);
     }
 
     pthread_mutex_unlock (& mutex);
     return delay;
 }
 
-static int effect_find_cb (RunningEffect * effect, PluginHandle * plugin)
-{
-    return (effect->plugin == plugin) ? 0 : -1;
-}
-
-static int effect_compare (RunningEffect * a, RunningEffect * b)
-{
-    return aud_plugin_compare (a->plugin, b->plugin);
-}
-
 static void effect_insert (PluginHandle * plugin, EffectPlugin * header)
 {
-    if (g_list_find_custom (running_effects, plugin, (GCompareFunc) effect_find_cb))
-        return;
+    Effect * prev = nullptr;
+
+    for (Effect * e = effects.head (); e; e = effects.next (e))
+    {
+        if (e->plugin == plugin)
+        {
+            e->remove_flag = false;
+            return;
+        }
+
+        if (aud_plugin_compare (e->plugin, plugin) > 0)
+            break;
+
+        prev = e;
+    }
 
     AUDDBG ("Adding %s without reset.\n", aud_plugin_get_name (plugin));
-    RunningEffect * effect = g_slice_new (RunningEffect);
+    Effect * effect = new Effect ();
     effect->plugin = plugin;
     effect->header = header;
-    effect->remove_flag = FALSE;
 
-    running_effects = g_list_insert_sorted (running_effects, effect, (GCompareFunc) effect_compare);
-    GList * node = g_list_find (running_effects, effect);
+    effects.insert_after (prev, effect);
 
     int channels, rate;
-    if (node->prev != NULL)
+    if (prev)
     {
-        RunningEffect * prev = (RunningEffect *) node->prev->data;
         AUDDBG ("Added %s after %s.\n", aud_plugin_get_name (plugin),
          aud_plugin_get_name (prev->plugin));
         channels = prev->channels_returned;
@@ -198,16 +191,18 @@ static void effect_insert (PluginHandle * plugin, EffectPlugin * header)
 
 static void effect_remove (PluginHandle * plugin)
 {
-    GList * node = g_list_find_custom (running_effects, plugin, (GCompareFunc) effect_find_cb);
-    if (! node)
-        return;
-
-    AUDDBG ("Removing %s without reset.\n", aud_plugin_get_name (plugin));
-    ((RunningEffect *) node->data)->remove_flag = TRUE;
+    for (Effect * e = effects.head (); e; e = effects.next (e))
+    {
+        if (e->plugin == plugin)
+        {
+            AUDDBG ("Removing %s without reset.\n", aud_plugin_get_name (plugin));
+            e->remove_flag = true;
+            return;
+        }
+    }
 }
 
-static void effect_enable (PluginHandle * plugin, EffectPlugin * ep, bool_t
- enable)
+static void effect_enable (PluginHandle * plugin, EffectPlugin * ep, bool enable)
 {
     if (ep->preserves_format)
     {
@@ -227,16 +222,16 @@ static void effect_enable (PluginHandle * plugin, EffectPlugin * ep, bool_t
     }
 }
 
-bool_t effect_plugin_start (PluginHandle * plugin)
+bool effect_plugin_start (PluginHandle * plugin)
 {
     if (aud_drct_get_playing ())
     {
         EffectPlugin * ep = (EffectPlugin *) aud_plugin_get_header (plugin);
-        g_return_val_if_fail (ep != NULL, FALSE);
-        effect_enable (plugin, ep, TRUE);
+        g_return_val_if_fail (ep, false);
+        effect_enable (plugin, ep, true);
     }
 
-    return TRUE;
+    return true;
 }
 
 void effect_plugin_stop (PluginHandle * plugin)
@@ -244,7 +239,7 @@ void effect_plugin_stop (PluginHandle * plugin)
     if (aud_drct_get_playing ())
     {
         EffectPlugin * ep = (EffectPlugin *) aud_plugin_get_header (plugin);
-        g_return_if_fail (ep != NULL);
-        effect_enable (plugin, ep, FALSE);
+        g_return_if_fail (ep);
+        effect_enable (plugin, ep, false);
     }
 }
