@@ -50,7 +50,6 @@ struct LoadedModule {
 };
 
 static Index<LoadedModule> loaded_modules;
-static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
 Plugin * plugin_load (const char * filename)
 {
@@ -99,34 +98,27 @@ Plugin * plugin_load (const char * filename)
         }
     }
 
-    pthread_mutex_lock (& mutex);
     loaded_modules.append ({header, module});
-    pthread_mutex_unlock (& mutex);
 
     return header;
 }
 
-static void plugin2_unload (LoadedModule * loaded)
+static void plugin_unload (LoadedModule & loaded)
 {
-    Plugin * header = loaded->header;
-
-    switch (header->type)
+    switch (loaded.header->type)
     {
     case PLUGIN_TYPE_TRANSPORT:
     case PLUGIN_TYPE_PLAYLIST:
     case PLUGIN_TYPE_INPUT:
     case PLUGIN_TYPE_EFFECT:
-        if (PLUGIN_HAS_FUNC (header, cleanup))
-            header->cleanup ();
+        if (PLUGIN_HAS_FUNC (loaded.header, cleanup))
+            loaded.header->cleanup ();
         break;
     }
 
-    pthread_mutex_lock (& mutex);
 #ifndef VALGRIND_FRIENDLY
-    g_module_close (loaded->module);
+    g_module_close (loaded.module);
 #endif
-    g_slice_free (LoadedModule, loaded);
-    pthread_mutex_unlock (& mutex);
 }
 
 /******************************************************************/
@@ -171,8 +163,8 @@ void plugin_system_cleanup (void)
 {
     plugin_registry_save ();
 
-    for (LoadedModule & module : loaded_modules)
-        plugin2_unload (& module);
+    for (LoadedModule & loaded : loaded_modules)
+        plugin_unload (loaded);
 
     loaded_modules.clear ();
 }

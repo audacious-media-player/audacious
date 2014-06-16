@@ -17,13 +17,6 @@
  * the use of this software.
  */
 
-/* While the registry is being built (during early startup) or destroyed (during
- * late shutdown), the registry_locked flag will be set.  Once this flag is
- * cleared, the registry will not be modified and can be read by concurrent
- * threads.  The one change that can happen during this time is that a plugin is
- * loaded; hence the mutex must be locked before checking that a plugin is
- * loaded and while loading it. */
-
 #include "plugins-internal.h"
 
 #include <pthread.h>
@@ -112,7 +105,6 @@ typedef Index<PluginPtr> PluginList;
 
 static PluginList plugins[PLUGIN_TYPES];
 
-static bool registry_locked = true;
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
 static FILE * open_registry_file (const char * mode)
@@ -185,8 +177,6 @@ void plugin_registry_save (void)
     }
 
     fclose (handle);
-
-    registry_locked = true;
 }
 
 static char parse_key[512];
@@ -329,7 +319,7 @@ void plugin_registry_load (void)
 {
     FILE * handle = open_registry_file ("r");
     if (! handle)
-        goto UNLOCK;
+        return;
 
     parse_next (handle);
 
@@ -344,8 +334,6 @@ void plugin_registry_load (void)
 
 ERR:
     fclose (handle);
-UNLOCK:
-    registry_locked = false;
 }
 
 EXPORT int aud_plugin_compare (PluginHandle * a, PluginHandle * b)
@@ -390,8 +378,6 @@ void plugin_registry_prune (void)
 
         list.sort (compare_cb, nullptr);
     }
-
-    registry_locked = true;
 }
 
 EXPORT PluginHandle * aud_plugin_lookup (const char * path)
