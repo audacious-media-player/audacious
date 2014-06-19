@@ -32,6 +32,7 @@
 
 #include "audstrings.h"
 #include "hook.h"
+#include "mainloop.h"
 #include "multihash.h"
 #include "playlist-internal.h"
 #include "scanner.h"
@@ -57,7 +58,7 @@ static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
 static SimpleHash<String, ArtItem> art_items;
 static String current_ref;
-static int send_source;
+static QueuedFunc queued_requests;
 
 static void get_queued_cb (const String & key, ArtItem & item, void * list)
 {
@@ -75,17 +76,13 @@ static Index<String> get_queued ()
 
     art_items.iterate (get_queued_cb, & queued);
 
-    if (send_source)
-    {
-        g_source_remove (send_source);
-        send_source = 0;
-    }
+    queued_requests.stop ();
 
     pthread_mutex_unlock (& mutex);
     return queued;
 }
 
-static int send_requests (void * unused)
+static void send_requests (void * unused)
 {
     Index<String> queued = get_queued ();
 
@@ -105,8 +102,6 @@ static int send_requests (void * unused)
         else
             aud_art_unref (file); /* release temporary reference */
     }
-
-    return G_SOURCE_REMOVE;
 }
 
 static void request_callback (ScanRequest * request)
@@ -121,8 +116,7 @@ static void request_callback (ScanRequest * request)
     item->art_file = scan_request_get_image_file (request);
     item->flag = FLAG_DONE;
 
-    if (! send_source)
-        send_source = g_idle_add (send_requests, NULL);
+    queued_requests.queue (send_requests, NULL);
 
     pthread_mutex_unlock (& mutex);
 }

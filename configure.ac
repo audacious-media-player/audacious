@@ -127,6 +127,25 @@ fi
 
 AC_SUBST(USE_DBUS)
 
+dnl Qt support
+dnl ==========
+
+AC_ARG_ENABLE(qt,
+ AS_HELP_STRING(--enable-qt, [Enable Qt support (default=disabled)]),
+ USE_QT=$enableval, USE_QT=no)
+
+if test $USE_QT = yes ; then
+    PKG_CHECK_MODULES([QT], [Qt5Core])
+    AC_DEFINE(USE_QT, 1, [Define if Qt support enabled])
+
+    # needed if Qt was built with -reduce-relocations
+    QT_CFLAGS="$QT_CFLAGS -fPIC"
+fi
+
+AC_SUBST(USE_QT)
+AC_SUBST(QT_CFLAGS)
+AC_SUBST(QT_LIBS)
+
 dnl Valgrind analysis support
 dnl =========================
 
@@ -183,5 +202,6 @@ echo ""
 echo "  Automatic character code detection:     $USE_CHARDET"
 echo "  D-Bus support:                          $USE_DBUS"
 echo "  GTK+ support:                           $USE_GTK"
+echo "  Qt support:                             $USE_QT"
 echo "  Valgrind analysis support:              $enable_valgrind"
 echo ""

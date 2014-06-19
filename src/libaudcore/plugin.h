@@ -326,16 +326,16 @@ struct VisPlugin
     PLUGIN_COMMON_FIELDS
 
     /* reset internal state and clear display */
-    void (* clear) (void);
+    VisClearFunc clear;
 
     /* 512 frames of a single-channel PCM signal */
-    void (* render_mono_pcm) (const float * pcm);
+    VisMonoPCMFunc render_mono_pcm;
 
     /* 512 frames of an interleaved multi-channel PCM signal */
-    void (* render_multi_pcm) (const float * pcm, int channels);
+    VisMultiPCMFunc render_multi_pcm;
 
     /* intensity of frequencies 1/512, 2/512, ..., 256/512 of sample rate */
-    void (* render_freq) (const float * freq);
+    VisFreqFunc render_freq;
 
     /* GtkWidget * (* get_widget) (void); */
     void * (* get_widget) (void);

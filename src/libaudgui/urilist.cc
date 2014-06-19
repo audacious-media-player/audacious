@@ -30,7 +30,7 @@
 
 static String check_uri (const char * name)
 {
-    if (strstr (name, "://"))
+    if (! strstr (name, "://"))
     {
         StringBuf uri = filename_to_uri (name);
         if (uri)

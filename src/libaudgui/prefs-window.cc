@@ -321,6 +321,9 @@ static GArray * fill_plugin_combo (int type)
 
 static void change_category (int category)
 {
+    if (aud_get_headless_mode () && category > CATEGORY_APPEARANCE)
+        category --;
+
     GtkTreeSelection * selection = gtk_tree_view_get_selection ((GtkTreeView *) category_treeview);
     GtkTreePath * path = gtk_tree_path_new_from_indices (category, -1);
     gtk_tree_selection_select_path (selection, path);
@@ -413,8 +416,10 @@ static void fill_category_list (GtkTreeView * treeview, GtkNotebook * notebook)
 
     for (unsigned i = 0; i < ARRAY_LEN (categories); i ++)
     {
-        GtkTreeIter iter;
+        if (i == CATEGORY_APPEARANCE && aud_get_headless_mode ())
+            continue;
 
+        GtkTreeIter iter;
         gtk_list_store_append (store, & iter);
         gtk_list_store_set (store, & iter, CATEGORY_VIEW_COL_NAME,
          gettext (categories[i].name), -1);
@@ -746,7 +751,9 @@ static void create_prefs_window (void)
     gtk_notebook_set_show_tabs ((GtkNotebook *) category_notebook, FALSE);
     gtk_notebook_set_show_border ((GtkNotebook *) category_notebook, FALSE);
 
-    create_appearance_category ();
+    if (! aud_get_headless_mode ())
+        create_appearance_category ();
+
     create_audio_category ();
     create_connectivity_category ();
     create_playlist_category ();

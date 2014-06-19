@@ -46,14 +46,14 @@ static pthread_mutex_t mutex_minor = PTHREAD_MUTEX_INITIALIZER;
 
 /* State variables.  State changes that are allowed between LOCK_MINOR and
  * UNLOCK_MINOR (all others must take place between LOCK_ALL and UNLOCK_ALL):
- * s_paused -> TRUE or FALSE, s_aborted -> TRUE, s_resetting -> TRUE */
+ * s_paused -> true or false, s_aborted -> true, s_resetting -> true */
 
-static bool_t s_input; /* input plugin connected */
-static bool_t s_output; /* output plugin connected */
-static bool_t s_gain; /* replay gain info set */
-static bool_t s_paused; /* paused */
-static bool_t s_aborted; /* writes aborted */
-static bool_t s_resetting; /* resetting output system */
+static bool s_input; /* input plugin connected */
+static bool s_output; /* output plugin connected */
+static bool s_gain; /* replay gain info set */
+static bool s_paused; /* paused */
+static bool s_aborted; /* writes aborted */
+static bool s_resetting; /* resetting output system */
 
 static OutputPlugin * cop;
 static int seek_time;
@@ -62,7 +62,7 @@ static int out_format, out_channels, out_rate;
 static int64_t in_frames, out_frames;
 static ReplayGainInfo gain_info;
 
-static bool_t change_op;
+static bool change_op;
 static OutputPlugin * new_op;
 
 static void * buffer1, * buffer2;
@@ -75,7 +75,7 @@ static inline int MS2FR (int64_t ms, int r)
 
 static inline int get_format (void)
 {
-    switch (aud_get_int (NULL, "output_bit_depth"))
+    switch (aud_get_int (0, "output_bit_depth"))
     {
         case 16: return FMT_S16_NE;
         case 24: return FMT_S24_NE;
@@ -104,12 +104,12 @@ static void cleanup_output (void)
         LOCK_MINOR;
     }
 
-    s_output = FALSE;
+    s_output = false;
 
     g_free (buffer1);
     g_free (buffer2);
-    buffer1 = NULL;
-    buffer2 = NULL;
+    buffer1 = nullptr;
+    buffer2 = nullptr;
     buffer1_size = 0;
     buffer2_size = 0;
 
@@ -117,7 +117,7 @@ static void cleanup_output (void)
         cop->close_audio ();
 
     effect_flush ();
-    vis_runner_start_stop (FALSE, FALSE);
+    vis_runner_start_stop (false, false);
 }
 
 /* assumes LOCK_ALL, s_output */
@@ -126,7 +126,7 @@ static void apply_pause (void)
     if (PLUGIN_HAS_FUNC (cop, pause))
         cop->pause (s_paused);
 
-    vis_runner_start_stop (TRUE, s_paused);
+    vis_runner_start_stop (true, s_paused);
 }
 
 /* assumes LOCK_ALL, s_input */
@@ -149,7 +149,7 @@ static void setup_output (void)
     if (! cop || ! PLUGIN_HAS_FUNC (cop, open_audio) || ! cop->open_audio (format, rate, channels))
         return;
 
-    s_output = TRUE;
+    s_output = true;
 
     out_format = format;
     out_channels = channels;
@@ -174,16 +174,16 @@ static void flush_output (void)
 
 static void apply_replay_gain (float * data, int samples)
 {
-    if (! aud_get_bool (NULL, "enable_replay_gain"))
+    if (! aud_get_bool (0, "enable_replay_gain"))
         return;
 
-    float factor = powf (10, aud_get_double (NULL, "replay_gain_preamp") / 20);
+    float factor = powf (10, aud_get_double (0, "replay_gain_preamp") / 20);
 
     if (s_gain)
     {
         float peak;
 
-        if (aud_get_bool (NULL, "replay_gain_album"))
+        if (aud_get_bool (0, "replay_gain_album"))
         {
             factor *= powf (10, gain_info.album_gain / 20);
             peak = gain_info.album_peak;
@@ -194,11 +194,11 @@ static void apply_replay_gain (float * data, int samples)
             peak = gain_info.track_peak;
         }
 
-        if (aud_get_bool (NULL, "enable_clipping_prevention") && peak * factor > 1)
+        if (aud_get_bool (0, "enable_clipping_prevention") && peak * factor > 1)
             factor = 1 / peak;
     }
     else
-        factor *= powf (10, aud_get_double (NULL, "default_gain") / 20);
+        factor *= powf (10, aud_get_double (0, "default_gain") / 20);
 
     if (factor < 0.99 || factor > 1.01)
         audio_amplify (data, 1, samples, & factor);
@@ -206,11 +206,11 @@ static void apply_replay_gain (float * data, int samples)
 
 static void apply_software_volume (float * data, int channels, int samples)
 {
-    if (! aud_get_bool (NULL, "software_volume_control"))
+    if (! aud_get_bool (0, "software_volume_control"))
         return;
 
-    int l = aud_get_int (NULL, "sw_volume_left");
-    int r = aud_get_int (NULL, "sw_volume_right");
+    int l = aud_get_int (0, "sw_volume_left");
+    int r = aud_get_int (0, "sw_volume_right");
 
     if (l == 100 && r == 100)
         return;
@@ -243,7 +243,7 @@ static void write_output_raw (float * data, int samples)
     eq_filter (data, samples);
     apply_software_volume (data, out_channels, samples);
 
-    if (aud_get_bool (NULL, "soft_clipping"))
+    if (aud_get_bool (0, "soft_clipping"))
         audio_soft_clip (data, samples);
 
     void * out_data = data;
@@ -257,7 +257,7 @@ static void write_output_raw (float * data, int samples)
 
     while (! (s_aborted || s_resetting))
     {
-        bool_t blocking = ! PLUGIN_HAS_FUNC (cop, buffer_free);
+        bool blocking = ! PLUGIN_HAS_FUNC (cop, buffer_free);
         int ready;
 
         if (blocking)
@@ -292,9 +292,9 @@ static void write_output_raw (float * data, int samples)
 }
 
 /* assumes LOCK_ALL, s_input, s_output */
-static bool_t write_output (void * data, int size, int stop_time)
+static bool write_output (void * data, int size, int stop_time)
 {
-    bool_t stopped = FALSE;
+    bool stopped = false;
 
     int64_t cur_frame = in_frames;
     int samples = size / FMT_SIZEOF (in_format);
@@ -310,7 +310,7 @@ static bool_t write_output (void * data, int size, int stop_time)
         if (samples >= samples_left)
         {
             samples = samples_left;
-            stopped = TRUE;
+            stopped = true;
         }
     }
 
@@ -335,30 +335,30 @@ static bool_t write_output (void * data, int size, int stop_time)
 /* assumes LOCK_ALL, s_output */
 static void finish_effects (void)
 {
-    float * data = NULL;
+    float * data = nullptr;
     int samples = 0;
 
     effect_finish (& data, & samples);
     write_output_raw (data, samples);
 }
 
-bool_t output_open_audio (int format, int rate, int channels)
+bool output_open_audio (int format, int rate, int channels)
 {
     /* prevent division by zero */
     if (rate < 1 || channels < 1 || channels > AUD_MAX_CHANNELS)
-        return FALSE;
+        return false;
 
     LOCK_ALL;
 
     if (s_output && s_paused)
     {
         flush_output ();
-        s_paused = FALSE;
+        s_paused = false;
         apply_pause ();
     }
 
-    s_input = TRUE;
-    s_gain = s_paused = s_aborted = FALSE;
+    s_input = true;
+    s_gain = s_paused = s_aborted = false;
     seek_time = 0;
 
     in_format = format;
@@ -369,7 +369,7 @@ bool_t output_open_audio (int format, int rate, int channels)
     setup_output ();
 
     UNLOCK_ALL;
-    return TRUE;
+    return true;
 }
 
 void output_set_replaygain_info (const ReplayGainInfo * info)
@@ -379,7 +379,7 @@ void output_set_replaygain_info (const ReplayGainInfo * info)
     if (s_input)
     {
         memcpy (& gain_info, info, sizeof (ReplayGainInfo));
-        s_gain = TRUE;
+        s_gain = true;
 
         AUDDBG ("Replay Gain info:\n");
         AUDDBG (" album gain: %f dB\n", info->album_gain);
@@ -391,11 +391,11 @@ void output_set_replaygain_info (const ReplayGainInfo * info)
     UNLOCK_ALL;
 }
 
-/* returns FALSE if stop_time is reached */
-bool_t output_write_audio (void * data, int size, int stop_time)
+/* returns false if stop_time is reached */
+bool output_write_audio (void * data, int size, int stop_time)
 {
     LOCK_ALL;
-    bool_t good = FALSE;
+    bool good = false;
 
     if (s_input)
     {
@@ -419,7 +419,7 @@ void output_abort_write (void)
 
     if (s_input)
     {
-        s_aborted = TRUE;
+        s_aborted = true;
 
         if (s_output)
             flush_output ();
@@ -428,7 +428,7 @@ void output_abort_write (void)
     UNLOCK_MINOR;
 }
 
-void output_pause (bool_t pause)
+void output_pause (bool pause)
 {
     LOCK_MINOR;
 
@@ -461,7 +461,7 @@ void output_set_time (int time)
 
     if (s_input)
     {
-        s_aborted = FALSE;
+        s_aborted = false;
         seek_time = time;
         in_frames = 0;
     }
@@ -469,10 +469,10 @@ void output_set_time (int time)
     UNLOCK_ALL;
 }
 
-bool_t output_is_open (void)
+bool output_is_open (void)
 {
     LOCK_MINOR;
-    bool_t is_open = s_input;
+    bool is_open = s_input;
     UNLOCK_MINOR;
     return is_open;
 }
@@ -514,7 +514,7 @@ void output_close_audio (void)
 
     if (s_input)
     {
-        s_input = FALSE;
+        s_input = false;
 
         if (s_output && ! (s_paused || s_aborted || s_resetting))
             finish_effects (); /* first time for end of song */
@@ -540,7 +540,7 @@ EXPORT void aud_output_reset (int type)
 {
     LOCK_MINOR;
 
-    s_resetting = TRUE;
+    s_resetting = true;
 
     if (s_output)
         flush_output ();
@@ -560,13 +560,13 @@ EXPORT void aud_output_reset (int type)
             cop = new_op;
 
         if (cop && PLUGIN_HAS_FUNC (cop, init) && ! cop->init ())
-            cop = NULL;
+            cop = nullptr;
     }
 
     if (s_input)
         setup_output ();
 
-    s_resetting = FALSE;
+    s_resetting = false;
 
     UNLOCK_ALL;
 }
@@ -577,10 +577,10 @@ void output_get_volume (int * left, int * right)
 
     * left = * right = 0;
 
-    if (aud_get_bool (NULL, "software_volume_control"))
+    if (aud_get_bool (0, "software_volume_control"))
     {
-        * left = aud_get_int (NULL, "sw_volume_left");
-        * right = aud_get_int (NULL, "sw_volume_right");
+        * left = aud_get_int (0, "sw_volume_left");
+        * right = aud_get_int (0, "sw_volume_right");
     }
     else if (cop && PLUGIN_HAS_FUNC (cop, get_volume))
         cop->get_volume (left, right);
@@ -592,10 +592,10 @@ void output_set_volume (int left, int right)
 {
     LOCK_MINOR;
 
-    if (aud_get_bool (NULL, "software_volume_control"))
+    if (aud_get_bool (0, "software_volume_control"))
     {
-        aud_set_int (NULL, "sw_volume_left", left);
-        aud_set_int (NULL, "sw_volume_right", right);
+        aud_set_int (0, "sw_volume_left", left);
+        aud_set_int (0, "sw_volume_right", right);
     }
     else if (cop && PLUGIN_HAS_FUNC (cop, set_volume))
         cop->set_volume (left, right);
@@ -603,41 +603,41 @@ void output_set_volume (int left, int right)
     UNLOCK_MINOR;
 }
 
-static bool_t probe_cb (PluginHandle * p, PluginHandle * * pp)
+static bool probe_cb (PluginHandle * p, PluginHandle * * pp)
 {
     OutputPlugin * op = (OutputPlugin *) aud_plugin_get_header (p);
 
     if (! op || (PLUGIN_HAS_FUNC (op, init) && ! op->init ()))
-        return TRUE; /* keep searching */
+        return true; /* keep searching */
 
     if (PLUGIN_HAS_FUNC (op, cleanup))
         op->cleanup ();
 
     * pp = p;
-    return FALSE; /* stop searching */
+    return false; /* stop searching */
 }
 
 PluginHandle * output_plugin_probe (void)
 {
-    PluginHandle * p = NULL;
+    PluginHandle * p = nullptr;
     aud_plugin_for_each (PLUGIN_TYPE_OUTPUT, (PluginForEachFunc) probe_cb, & p);
     return p;
 }
 
 PluginHandle * output_plugin_get_current (void)
 {
-    return cop ? aud_plugin_by_header (cop) : NULL;
+    return cop ? aud_plugin_by_header (cop) : nullptr;
 }
 
-bool_t output_plugin_set_current (PluginHandle * plugin)
+bool output_plugin_set_current (PluginHandle * plugin)
 {
-    change_op = TRUE;
-    new_op = plugin ? (OutputPlugin *) aud_plugin_get_header (plugin) : NULL;
+    change_op = true;
+    new_op = plugin ? (OutputPlugin *) aud_plugin_get_header (plugin) : nullptr;
     aud_output_reset (OUTPUT_RESET_HARD);
 
-    bool_t success = (cop == new_op);
-    change_op = FALSE;
-    new_op = NULL;
+    bool success = (cop == new_op);
+    change_op = false;
+    new_op = nullptr;
 
     return success;
 }

@@ -20,6 +20,7 @@
 #include <glib.h>
 #include <pthread.h>
 
+#include "mainloop.h"
 #include "vfs_async.h"
 
 struct VFSAsyncTrampoline {
@@ -32,7 +33,9 @@ struct VFSAsyncTrampoline {
     VFSConsumer cons_f;
 };
 
-bool_t
+static QueuedFunc queued_trampoline;
+
+void
 vfs_async_file_get_contents_trampoline(void * data)
 {
     VFSAsyncTrampoline *tr = (VFSAsyncTrampoline *) data;
@@ -42,8 +45,6 @@ vfs_async_file_get_contents_trampoline(void * data)
     tr->cons_f(tr->buf, tr->size, tr->userdata);
 
     delete tr;
-
-    return FALSE;
 }
 
 void *
@@ -53,7 +54,8 @@ vfs_async_file_get_contents_worker(void * data)
 
     vfs_file_get_contents(tr->filename, &tr->buf, &tr->size);
 
-    g_idle_add_full(G_PRIORITY_HIGH_IDLE, vfs_async_file_get_contents_trampoline, tr, NULL);
+    // FIXME: cancels any previously queued result
+    queued_trampoline.queue (vfs_async_file_get_contents_trampoline, tr);
 
     return NULL;
 }

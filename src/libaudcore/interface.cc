@@ -24,6 +24,7 @@
 
 #include "drct.h"
 #include "hook.h"
+#include "mainloop.h"
 #include "plugin.h"
 #include "plugins.h"
 #include "runtime.h"
@@ -34,13 +35,12 @@ struct MenuItem {
     void (* func) (void);
 };
 
-static PluginHandle * current_plugin = NULL;
-static PluginHandle * next_plugin = NULL;
+static PluginHandle * current_plugin;
+static PluginHandle * next_plugin;
 
-static GMainLoop * mainloop = NULL;
-static IfacePlugin * current_interface = NULL;
+static IfacePlugin * current_interface;
 
-static GList * menu_items[AUD_MENU_COUNT]; /* of MenuItem */
+static Index<MenuItem> menu_items[AUD_MENU_COUNT];
 
 static void add_menu_items (void)
 {
@@ -49,11 +49,8 @@ static void add_menu_items (void)
 
     for (int id = 0; id < AUD_MENU_COUNT; id ++)
     {
-        for (GList * node = menu_items[id]; node; node = node->next)
-        {
-            MenuItem * item = (MenuItem *) node->data;
-            current_interface->plugin_menu_add (id, item->func, item->name, item->icon);
-        }
+        for (MenuItem & item : menu_items[id])
+            current_interface->plugin_menu_add (id, item.func, item.name, item.icon);
     }
 }
 
@@ -64,33 +61,30 @@ static void remove_menu_items (void)
 
     for (int id = 0; id < AUD_MENU_COUNT; id ++)
     {
-        for (GList * node = menu_items[id]; node; node = node->next)
-        {
-            MenuItem * item = (MenuItem *) node->data;
-            current_interface->plugin_menu_remove (id, item->func);
-        }
+        for (MenuItem & item : menu_items[id])
+            current_interface->plugin_menu_remove (id, item.func);
     }
 }
 
-static bool_t interface_load (PluginHandle * plugin)
+static bool interface_load (PluginHandle * plugin)
 {
     IfacePlugin * i = (IfacePlugin *) aud_plugin_get_header (plugin);
-    g_return_val_if_fail (i, FALSE);
+    g_return_val_if_fail (i, false);
 
     AUDDBG ("Loading %s.\n", aud_plugin_get_name (plugin));
 
     if (PLUGIN_HAS_FUNC (i, init) && ! i->init ())
-        return FALSE;
+        return false;
 
     current_plugin = plugin;
     current_interface = i;
 
     add_menu_items ();
 
-    if (PLUGIN_HAS_FUNC (current_interface, show) && aud_get_bool (NULL, "show_interface"))
-        current_interface->show (TRUE);
+    if (PLUGIN_HAS_FUNC (current_interface, show) && aud_get_bool (0, "show_interface"))
+        current_interface->show (true);
 
-    return TRUE;
+    return true;
 }
 
 static void interface_unload (void)
@@ -99,16 +93,16 @@ static void interface_unload (void)
 
     AUDDBG ("Unloading %s.\n", aud_plugin_get_name (current_plugin));
 
-    if (PLUGIN_HAS_FUNC (current_interface, show) && aud_get_bool (NULL, "show_interface"))
-        current_interface->show (FALSE);
+    if (PLUGIN_HAS_FUNC (current_interface, show) && aud_get_bool (0, "show_interface"))
+        current_interface->show (false);
 
     remove_menu_items ();
 
     if (PLUGIN_HAS_FUNC (current_interface, cleanup))
         current_interface->cleanup ();
 
-    current_plugin = NULL;
-    current_interface = NULL;
+    current_plugin = nullptr;
+    current_interface = nullptr;
 }
 
 EXPORT void aud_ui_show (bool_t show)
@@ -116,7 +110,7 @@ EXPORT void aud_ui_show (bool_t show)
     if (! current_interface)
         return;
 
-    aud_set_bool (NULL, "show_interface", show);
+    aud_set_bool (0, "show_interface", show);
 
     if (PLUGIN_HAS_FUNC (current_interface, show))
         current_interface->show (show);
@@ -127,9 +121,9 @@ EXPORT void aud_ui_show (bool_t show)
 EXPORT bool_t aud_ui_is_shown (void)
 {
     if (! current_interface)
-        return FALSE;
+        return false;
 
-    return aud_get_bool (NULL, "show_interface");
+    return aud_get_bool (0, "show_interface");
 }
 
 EXPORT void aud_ui_show_error (const char * message)
@@ -137,18 +131,18 @@ EXPORT void aud_ui_show_error (const char * message)
     if (aud_get_headless_mode ())
         fprintf (stderr, "ERROR: %s\n", message);
     else
-        event_queue_full (0, "ui show error", str_get (message), (GDestroyNotify) str_unref);
+        event_queue_full ("ui show error", str_get (message), (GDestroyNotify) str_unref);
 }
 
 static bool_t probe_cb (PluginHandle * p, PluginHandle * * pp)
 {
     * pp = p;  /* just pick the first one */
-    return FALSE;
+    return false;
 }
 
 PluginHandle * iface_plugin_probe (void)
 {
-    PluginHandle * p = NULL;
+    PluginHandle * p = nullptr;
     aud_plugin_for_each (PLUGIN_TYPE_IFACE, (PluginForEachFunc) probe_cb, & p);
     return p;
 }
@@ -158,43 +152,34 @@ PluginHandle * iface_plugin_get_current (void)
     return current_plugin;
 }
 
-bool_t iface_plugin_set_current (PluginHandle * plugin)
+bool iface_plugin_set_current (PluginHandle * plugin)
 {
     next_plugin = plugin;
 
     /* restart main loop, if running */
-    if (current_interface || mainloop)
-        aud_quit ();
+    aud_quit ();
 
-    return TRUE;
-}
-
-static void run_glib_mainloop (void)
-{
-    mainloop = g_main_loop_new (NULL, FALSE);
-    g_main_loop_run (mainloop);
-    g_main_loop_unref (mainloop);
-    mainloop = NULL;
+    return true;
 }
 
 static void run_iface_plugins (void)
 {
-    vis_activate (aud_get_bool (NULL, "show_interface"));
+    vis_activate (aud_get_bool (0, "show_interface"));
 
     while (next_plugin)
     {
         if (! interface_load (next_plugin))
             return;
 
-        next_plugin = NULL;
+        next_plugin = nullptr;
 
         if (PLUGIN_HAS_FUNC (current_interface, run))
             current_interface->run ();
         else
-            run_glib_mainloop ();
+            mainloop_run ();
 
         /* call before unloading interface */
-        hook_call ("config save", NULL);
+        hook_call ("config save", nullptr);
 
         interface_unload ();
     }
@@ -204,10 +189,10 @@ void interface_run (void)
 {
     if (aud_get_headless_mode ())
     {
-        run_glib_mainloop ();
+        mainloop_run ();
 
         /* call before shutting down */
-        hook_call ("config save", NULL);
+        hook_call ("config save", nullptr);
     }
     else
         run_iface_plugins ();
@@ -218,22 +203,14 @@ EXPORT void aud_quit (void)
     if (current_interface && PLUGIN_HAS_FUNC (current_interface, quit))
         current_interface->quit ();
     else
-    {
-        g_return_if_fail (mainloop);
-        g_main_loop_quit (mainloop);
-    }
+        mainloop_quit ();
 }
 
 EXPORT void aud_plugin_menu_add (int id, void (* func) (void), const char * name, const char * icon)
 {
     g_return_if_fail (id >= 0 && id < AUD_MENU_COUNT);
 
-    MenuItem * item = g_slice_new (MenuItem);
-    item->name = name;
-    item->icon = icon;
-    item->func = func;
-
-    menu_items[id] = g_list_append (menu_items[id], item);
+    menu_items[id].append ({name, icon, func});
 
     if (current_interface && PLUGIN_HAS_FUNC (current_interface, plugin_menu_add))
         current_interface->plugin_menu_add (id, func, name, icon);
@@ -246,17 +223,14 @@ EXPORT void aud_plugin_menu_remove (int id, void (* func) (void))
     if (current_interface && PLUGIN_HAS_FUNC (current_interface, plugin_menu_remove))
         current_interface->plugin_menu_remove (id, func);
 
-    GList * next;
-    for (GList * node = menu_items[id]; node; node = next)
-    {
-        MenuItem * item = (MenuItem *) node->data;
-        next = node->next;
+    Index<MenuItem> & list = menu_items[id];
 
-        if (item->func == func)
-        {
-            menu_items[id] = g_list_delete_link (menu_items[id], node);
-            g_slice_free (MenuItem, item);
-        }
+    for (int i = 0; i < list.len ();)
+    {
+        if (list[i].func == func)
+            list.remove (i, 1);
+        else
+            i ++;
     }
 }
 

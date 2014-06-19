@@ -35,11 +35,11 @@
 #include "runtime.h"
 #include "tuple.h"
 
-bool_t dir_foreach (const char * path, DirForeachFunc func, void * user)
+bool dir_foreach (const char * path, DirForeachFunc func, void * user)
 {
     GDir * dir = g_dir_open (path, 0, NULL);
     if (! dir)
-        return FALSE;
+        return false;
 
     const char * name;
     while ((name = g_dir_read_name (dir)))
@@ -49,7 +49,7 @@ bool_t dir_foreach (const char * path, DirForeachFunc func, void * user)
     }
 
     g_dir_close (dir);
-    return TRUE;
+    return true;
 }
 
 String write_temp_file (void * data, int64_t len)
@@ -219,9 +219,6 @@ static String str_get_decoded (char * str)
 void describe_song (const char * name, const Tuple & tuple, String & title,
  String & artist, String & album)
 {
-    /* Common folder names to skip */
-    static const char * const skip_list[] = {"music"};
-
     title = get_nonblank_field (tuple, FIELD_TITLE);
     artist = get_nonblank_field (tuple, FIELD_ARTIST);
     album = get_nonblank_field (tuple, FIELD_ALBUM);
@@ -235,17 +232,23 @@ void describe_song (const char * name, const Tuple & tuple, String & title,
         if (! filename)
             return;
 
+        // fill in song info from folder path
         char * base, * first, * second;
         split_filename (skip_top_folders (filename), & base, & first, & second);
 
         if (! title)
             title = String (base);
 
-        for (const char * skip : skip_list)
+        // skip common strings and avoid duplicates
+        for (auto skip : (const char *[]) {"music", artist, album})
         {
-            if (first && ! g_ascii_strcasecmp (first, skip))
-                first = NULL;
-            if (second && ! g_ascii_strcasecmp (second, skip))
+            if (first && skip && ! g_ascii_strcasecmp (first, skip))
+            {
+                first = second;
+                second = NULL;
+            }
+
+            if (second && skip && ! g_ascii_strcasecmp (second, skip))
                 second = NULL;
         }
 

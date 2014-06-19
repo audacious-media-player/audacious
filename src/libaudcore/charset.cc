@@ -60,7 +60,7 @@ EXPORT StringBuf str_convert (const char * str, int len, const char * from_chars
     errno = 0;
     size_t ret = iconv (conv, & in, & inbytesleft, & out, & outbytesleft);
 
-    if (ret == (size_t) -1 && errno != E2BIG)
+    if (ret == (size_t) -1 && errno == E2BIG)
         throw std::bad_alloc ();
 
     iconv_close (conv);

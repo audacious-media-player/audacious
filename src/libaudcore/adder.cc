@@ -30,45 +30,47 @@
 #include "drct.h"
 #include "hook.h"
 #include "i18n.h"
+#include "list.h"
+#include "mainloop.h"
 #include "plugins-internal.h"
 #include "probe.h"
 #include "runtime.h"
 #include "tuple.h"
 #include "vfs.h"
 
-struct AddTask
+struct AddTask : public ListNode
 {
     int playlist_id, at;
-    bool_t play;
+    bool play;
     Index<PlaylistAddItem> items;
     PlaylistFilterFunc filter;
     void * user;
 };
 
-struct AddResult {
+struct AddResult : public ListNode
+{
     int playlist_id, at;
-    bool_t play;
+    bool play;
     String title;
     Index<PlaylistAddItem> items;
 };
 
 static void * add_worker (void * unused);
 
-static GList * add_tasks = NULL;
-static GList * add_results = NULL;
+static List<AddTask> add_tasks;
+static List<AddResult> add_results;
 static int current_playlist_id = -1;
 
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-static bool_t add_thread_started = FALSE;
-static bool_t add_thread_exited = FALSE;
+static bool add_thread_started = false;
+static bool add_thread_exited = false;
 static pthread_t add_thread;
-static int add_source = 0;
-
-static int status_source = 0;
+static QueuedFunc queued_add;
+static QueuedFunc status_timer;
 static char status_path[512];
 static int status_count;
 
-static bool_t status_cb (void * unused)
+static void status_cb (void * unused)
 {
     pthread_mutex_lock (& mutex);
 
@@ -88,7 +90,6 @@ static bool_t status_cb (void * unused)
     }
 
     pthread_mutex_unlock (& mutex);
-    return TRUE;
 }
 
 static void status_update (const char * filename, int found)
@@ -98,29 +99,25 @@ static void status_update (const char * filename, int found)
     snprintf (status_path, sizeof status_path, "%s", filename);
     status_count = found;
 
-    if (! status_source)
-        status_source = g_timeout_add (250, status_cb, NULL);
+    if (! status_timer.running ())
+        status_timer.start (250, status_cb, nullptr);
 
     pthread_mutex_unlock (& mutex);
 }
 
 static void status_done_locked (void)
 {
-    if (status_source)
-    {
-        g_source_remove (status_source);
-        status_source = 0;
-    }
+    status_timer.stop ();
 
     if (aud_get_headless_mode ())
         printf ("\n");
     else
-        hook_call ("ui hide progress", NULL);
+        hook_call ("ui hide progress", nullptr);
 }
 
 static void add_file (const String & filename, Tuple && tuple,
  PluginHandle * decoder, PlaylistFilterFunc filter, void * user,
- AddResult * result, bool_t validate)
+ AddResult * result, bool validate)
 {
     g_return_if_fail (filename);
 
@@ -131,7 +128,7 @@ static void add_file (const String & filename, Tuple && tuple,
 
     if (! tuple && ! decoder)
     {
-        decoder = aud_file_find_decoder (filename, TRUE);
+        decoder = aud_file_find_decoder (filename, true);
         if (validate && ! decoder)
             return;
     }
@@ -147,7 +144,7 @@ static void add_file (const String & filename, Tuple && tuple,
         {
             String subname = String (str_printf ("%s?%d",
              (const char *) filename, tuple.get_nth_subtune (sub)));
-            add_file (subname, Tuple (), decoder, filter, user, result, FALSE);
+            add_file (subname, Tuple (), decoder, filter, user, result, false);
         }
 
         return;
@@ -162,7 +159,7 @@ static int compare_wrapper (const String & a, const String & b, void *)
 }
 
 static void add_folder (const String & filename, PlaylistFilterFunc filter,
- void * user, AddResult * result, bool_t is_single)
+ void * user, AddResult * result, bool is_single)
 {
     Index<String> files;
     GDir * folder;
@@ -178,7 +175,7 @@ static void add_folder (const String & filename, PlaylistFilterFunc filter,
     if (! path)
         return;
 
-    if (! (folder = g_dir_open (path, 0, NULL)))
+    if (! (folder = g_dir_open (path, 0, nullptr)))
         return;
 
     const char * name;
@@ -208,19 +205,19 @@ static void add_folder (const String & filename, PlaylistFilterFunc filter,
         {
             StringBuf item_name = filename_to_uri (filepath);
             if (item_name)
-                add_file (String (item_name), Tuple (), NULL, filter, user, result, TRUE);
+                add_file (String (item_name), Tuple (), nullptr, filter, user, result, true);
         }
         else if (S_ISDIR (info.st_mode))
         {
             StringBuf item_name = filename_to_uri (filepath);
             if (item_name)
-                add_folder (String (item_name), filter, user, result, FALSE);
+                add_folder (String (item_name), filter, user, result, false);
         }
     }
 }
 
 static void add_playlist (const String & filename, PlaylistFilterFunc filter,
- void * user, AddResult * result, bool_t is_single)
+ void * user, AddResult * result, bool is_single)
 {
     g_return_if_fail (filename);
 
@@ -239,22 +236,22 @@ static void add_playlist (const String & filename, PlaylistFilterFunc filter,
         result->title = title;
 
     for (auto & item : items)
-        add_file (item.filename, std::move (item.tuple), NULL, filter, user, result, FALSE);
+        add_file (item.filename, std::move (item.tuple), nullptr, filter, user, result, false);
 }
 
 static void add_generic (const String & filename, Tuple && tuple,
- PlaylistFilterFunc filter, void * user, AddResult * result, bool_t is_single)
+ PlaylistFilterFunc filter, void * user, AddResult * result, bool is_single)
 {
     g_return_if_fail (filename);
 
     if (tuple)
-        add_file (filename, std::move (tuple), NULL, filter, user, result, FALSE);
+        add_file (filename, std::move (tuple), nullptr, filter, user, result, false);
     else if (vfs_file_test (filename, G_FILE_TEST_IS_DIR))
         add_folder (filename, filter, user, result, is_single);
     else if (aud_filename_is_playlist (filename))
         add_playlist (filename, filter, user, result, is_single);
     else
-        add_file (filename, Tuple (), NULL, filter, user, result, FALSE);
+        add_file (filename, Tuple (), nullptr, filter, user, result, false);
 }
 
 static void start_thread_locked (void)
@@ -262,15 +259,15 @@ static void start_thread_locked (void)
     if (add_thread_exited)
     {
         pthread_mutex_unlock (& mutex);
-        pthread_join (add_thread, NULL);
+        pthread_join (add_thread, nullptr);
         pthread_mutex_lock (& mutex);
     }
 
     if (! add_thread_started || add_thread_exited)
     {
-        pthread_create (& add_thread, NULL, add_worker, NULL);
-        add_thread_started = TRUE;
-        add_thread_exited = FALSE;
+        pthread_create (& add_thread, nullptr, add_worker, nullptr);
+        add_thread_started = true;
+        add_thread_exited = false;
     }
 }
 
@@ -279,21 +276,21 @@ static void stop_thread_locked (void)
     if (add_thread_started)
     {
         pthread_mutex_unlock (& mutex);
-        pthread_join (add_thread, NULL);
+        pthread_join (add_thread, nullptr);
         pthread_mutex_lock (& mutex);
-        add_thread_started = FALSE;
-        add_thread_exited = FALSE;
+        add_thread_started = false;
+        add_thread_exited = false;
     }
 }
 
-static bool_t add_finish (void * unused)
+static void add_finish (void * unused)
 {
     pthread_mutex_lock (& mutex);
 
-    while (add_results)
+    AddResult * result;
+    while ((result = add_results.head ()))
     {
-        AddResult * result = (AddResult *) add_results->data;
-        add_results = g_list_delete_link (add_results, add_results);
+        add_results.remove (result);
 
         int playlist, count;
 
@@ -317,7 +314,7 @@ static bool_t add_finish (void * unused)
 
         if (result->play && aud_playlist_entry_count (playlist) > count)
         {
-            if (! aud_get_bool (NULL, "shuffle"))
+            if (! aud_get_bool (0, "shuffle"))
                 aud_playlist_set_position (playlist, result->at);
 
             aud_drct_play_playlist (playlist);
@@ -325,12 +322,6 @@ static bool_t add_finish (void * unused)
 
     FREE:
         delete result;
-    }
-
-    if (add_source)
-    {
-        g_source_remove (add_source);
-        add_source = 0;
     }
 
     if (add_thread_exited)
@@ -341,18 +332,17 @@ static bool_t add_finish (void * unused)
 
     pthread_mutex_unlock (& mutex);
 
-    hook_call ("playlist add complete", NULL);
-    return G_SOURCE_REMOVE;
+    hook_call ("playlist add complete", nullptr);
 }
 
 static void * add_worker (void * unused)
 {
     pthread_mutex_lock (& mutex);
 
-    while (add_tasks)
+    AddTask * task;
+    while ((task = add_tasks.head ()))
     {
-        AddTask * task = (AddTask *) add_tasks->data;
-        add_tasks = g_list_delete_link (add_tasks, add_tasks);
+        add_tasks.remove (task);
 
         current_playlist_id = task->playlist_id;
         pthread_mutex_unlock (& mutex);
@@ -363,7 +353,7 @@ static void * add_worker (void * unused)
         result->at = task->at;
         result->play = task->play;
 
-        bool_t is_single = (task->items.len () == 1);
+        bool is_single = (task->items.len () == 1);
 
         for (auto & item : task->items)
             add_generic (item.filename, std::move (item.tuple), task->filter,
@@ -374,41 +364,29 @@ static void * add_worker (void * unused)
         pthread_mutex_lock (& mutex);
         current_playlist_id = -1;
 
-        add_results = g_list_append (add_results, result);
+        if (! add_results.head ())
+            queued_add.queue (add_finish, nullptr);
 
-        if (! add_source)
-            add_source = g_timeout_add (0, add_finish, NULL);
+        add_results.append (result);
     }
 
-    add_thread_exited = TRUE;
+    add_thread_exited = true;
     pthread_mutex_unlock (& mutex);
-    return NULL;
+    return nullptr;
 }
 
 void adder_cleanup (void)
 {
     pthread_mutex_lock (& mutex);
 
-    for (GList * node = add_tasks; node; node = node->next)
-        delete ((AddTask *) node->data);
-
-    g_list_free (add_tasks);
-    add_tasks = NULL;
+    add_tasks.clear ();
 
     stop_thread_locked ();
     status_done_locked ();
 
-    for (GList * node = add_results; node; node = node->next)
-        delete ((AddResult *) node->data);
+    add_results.clear ();
 
-    g_list_free (add_results);
-    add_results = NULL;
-
-    if (add_source)
-    {
-        g_source_remove (add_source);
-        add_source = 0;
-    }
+    queued_add.stop ();
 
     pthread_mutex_unlock (& mutex);
 }
@@ -425,7 +403,7 @@ EXPORT void aud_playlist_entry_insert (int playlist, int at,
 EXPORT void aud_playlist_entry_insert_batch (int playlist, int at,
  Index<PlaylistAddItem> && items, bool_t play)
 {
-    aud_playlist_entry_insert_filtered (playlist, at, std::move (items), NULL, NULL, play);
+    aud_playlist_entry_insert_filtered (playlist, at, std::move (items), nullptr, nullptr, play);
 }
 
 EXPORT void aud_playlist_entry_insert_filtered (int playlist, int at,
@@ -446,7 +424,7 @@ EXPORT void aud_playlist_entry_insert_filtered (int playlist, int at,
     task->filter = filter;
     task->user = user;
 
-    add_tasks = g_list_append (add_tasks, task);
+    add_tasks.append (task);
     start_thread_locked ();
 
     pthread_mutex_unlock (& mutex);
@@ -460,31 +438,31 @@ EXPORT bool_t aud_playlist_add_in_progress (int playlist)
     {
         int playlist_id = aud_playlist_get_unique_id (playlist);
 
-        for (GList * node = add_tasks; node; node = node->next)
+        for (AddTask * task = add_tasks.head (); task; task = add_tasks.next (task))
         {
-            if (((AddTask *) node->data)->playlist_id == playlist_id)
+            if (task->playlist_id == playlist_id)
                 goto YES;
         }
 
         if (current_playlist_id == playlist_id)
             goto YES;
 
-        for (GList * node = add_results; node; node = node->next)
+        for (AddResult * result = add_results.head (); result; result = add_results.next (result))
         {
-            if (((AddResult *) node->data)->playlist_id == playlist_id)
+            if (result->playlist_id == playlist_id)
                 goto YES;
         }
     }
     else
     {
-        if (add_tasks || current_playlist_id >= 0 || add_results)
+        if (add_tasks.head () || current_playlist_id >= 0 || add_results.head ())
             goto YES;
     }
 
     pthread_mutex_unlock (& mutex);
-    return FALSE;
+    return false;
 
 YES:
     pthread_mutex_unlock (& mutex);
-    return TRUE;
+    return true;
 }

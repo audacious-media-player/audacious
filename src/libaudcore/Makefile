@@ -20,6 +20,8 @@ SRCS = adder.cc \
        index.cc \
        inifile.cc \
        interface.cc \
+       list.cc \
+       mainloop.cc \
        multihash.cc \
        output.cc \
        playback.cc \
@@ -57,6 +59,7 @@ INCLUDES = audio.h \
            inifile.h \
            input.h \
            interface.h \
+           list.h \
            multihash.h \
            objects.h \
            playlist.h \
@@ -83,6 +86,7 @@ CPPFLAGS := -I.. -I../.. \
             ${GLIB_CFLAGS} \
             ${GMODULE_CFLAGS} \
             ${LIBGUESS_CFLAGS} \
+            ${QT_CFLAGS} \
             -DHARDCODE_BINDIR=\"${bindir}\" \
             -DHARDCODE_DATADIR=\"${datadir}/audacious\" \
             -DHARDCODE_PLUGINDIR=\"${plugindir}\" \
@@ -95,4 +99,5 @@ CFLAGS += ${LIB_CFLAGS}
 LIBS += -lm \
         ${GLIB_LIBS} \
         ${GMODULE_LIBS} \
-        ${LIBGUESS_LIBS}
+        ${LIBGUESS_LIBS} \
+        ${QT_LIBS}
