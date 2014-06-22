@@ -218,7 +218,7 @@ static void button_destroy (GtkWidget * b)
 
 GtkWidget * plugin_view_new (int type)
 {
-    GtkWidget * vbox = gtk_vbox_new (FALSE, 6);
+    GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
     gtk_container_set_border_width ((GtkContainer *) vbox, 6);
 
     GtkWidget * scrolled = gtk_scrolled_window_new (NULL, NULL);
@@ -235,7 +235,7 @@ GtkWidget * plugin_view_new (int type)
      (type));
     g_signal_connect (tree, "destroy", (GCallback) list_destroy, NULL);
 
-    GtkWidget * hbox = gtk_hbox_new (FALSE, 6);
+    GtkWidget * hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  6);
     gtk_box_pack_start ((GtkBox *) vbox, hbox, FALSE, FALSE, 0);
 
     GtkWidget * config = audgui_button_new (_("_Settings"),

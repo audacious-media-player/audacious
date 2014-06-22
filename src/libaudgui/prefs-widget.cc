@@ -417,16 +417,13 @@ static void fill_grid (GtkWidget * grid, const PreferencesWidget * elements,
         }
 
         if (widget_left)
-            gtk_table_attach ((GtkTable *) grid, widget_left, 0, 1, i, i + 1,
-             GTK_FILL, GTK_FILL, 0, 0);
+            gtk_grid_attach ((GtkGrid *) grid, widget_left, 0, i, 1, 1);
 
         if (widget_middle)
-            gtk_table_attach ((GtkTable *) grid, widget_middle, 1, 2, i, i + 1,
-             GTK_FILL, GTK_FILL, 0, 0);
+            gtk_grid_attach ((GtkGrid *) grid, widget_middle, 1, i, 1, 1);
 
         if (widget_right)
-            gtk_table_attach ((GtkTable *) grid, widget_right, 2, 3, i, i + 1,
-             GTK_FILL, GTK_FILL, 0, 0);
+            gtk_grid_attach ((GtkGrid *) grid, widget_right, 2, i, 1, 1);
     }
 }
 
@@ -447,7 +444,7 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
         {
             if (! child_box)
             {
-                child_box = gtk_vbox_new (FALSE, 0);
+                child_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
                 g_object_set_data ((GObject *) widget, "child", child_box);
 
                 GtkWidget * alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
@@ -490,7 +487,7 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
 
                 if (icon)
                 {
-                    widget = gtk_hbox_new (FALSE, 6);
+                    widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
                     gtk_box_pack_start ((GtkBox *) widget, icon, FALSE, FALSE, 0);
                     gtk_box_pack_start ((GtkBox *) widget, label, FALSE, FALSE, 0);
                 }
@@ -509,7 +506,7 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
 
             case WIDGET_SPIN_BTN:
             {
-                widget = gtk_hbox_new (FALSE, 6);
+                widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 
                 GtkWidget * label_pre = NULL, * spin_btn = NULL, * label_past = NULL;
                 create_spin_button (& widgets[i], & label_pre, & spin_btn, & label_past, domain);
@@ -532,7 +529,7 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
 
             case WIDGET_FONT_BTN:
             {
-                widget = gtk_hbox_new (FALSE, 6);
+                widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 
                 GtkWidget * font_btn = NULL;
                 create_font_btn (& widgets[i], & label, & font_btn, domain);
@@ -546,9 +543,9 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
             }
 
             case WIDGET_TABLE:
-                widget = gtk_table_new (0, 0, FALSE);
-                gtk_table_set_col_spacings ((GtkTable *) widget, 6);
-                gtk_table_set_row_spacings ((GtkTable *) widget, 6);
+                widget = gtk_grid_new ();
+                gtk_grid_set_column_spacing ((GtkGrid *) widget, 6);
+                gtk_grid_set_row_spacing ((GtkGrid *) widget, 6);
 
                 fill_grid (widget, widgets[i].data.table.elem, widgets[i].data.table.rows, domain);
 
@@ -556,7 +553,7 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
 
             case WIDGET_ENTRY:
             {
-                widget = gtk_hbox_new (FALSE, 6);
+                widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 
                 GtkWidget * entry = NULL;
                 create_entry (& widgets[i], & label, & entry, domain);
@@ -564,14 +561,14 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
                 if (label)
                     gtk_box_pack_start ((GtkBox *) widget, label, FALSE, FALSE, 0);
                 if (entry)
-                    gtk_box_pack_start ((GtkBox *) widget, entry, FALSE, FALSE, 0);
+                    gtk_box_pack_start ((GtkBox *) widget, entry, TRUE, TRUE, 0);
 
                 break;
             }
 
             case WIDGET_COMBO_BOX:
             {
-                widget = gtk_hbox_new (FALSE, 6);
+                widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 
                 GtkWidget * combo = NULL;
                 create_cbox (& widgets[i], & label, & combo, domain);
@@ -586,9 +583,9 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
 
             case WIDGET_BOX:
                 if (widgets[i].data.box.horizontal)
-                    widget = gtk_hbox_new (FALSE, 6);
+                    widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
                 else
-                    widget = gtk_vbox_new (FALSE, 0);
+                    widget = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
 
                 audgui_create_widgets_with_domain (widget,
                  widgets[i].data.box.elem, widgets[i].data.box.n_elem, domain);
@@ -609,7 +606,7 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
 
                 for (int j = 0; j < widgets[i].data.notebook.n_tabs; j ++)
                 {
-                    GtkWidget * vbox = gtk_vbox_new (FALSE, 0);
+                    GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
                     gtk_container_set_border_width ((GtkContainer *) vbox, 6);
 
                     audgui_create_widgets_with_domain (vbox,
@@ -626,8 +623,8 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
             case WIDGET_SEPARATOR:
                 gtk_alignment_set_padding ((GtkAlignment *) alignment, 6, 6, 0, 0);
 
-                widget = widgets[i].data.separator.horizontal ?
-                 gtk_hseparator_new () : gtk_vseparator_new ();
+                widget = gtk_separator_new (widgets[i].data.separator.horizontal
+                 ? GTK_ORIENTATION_HORIZONTAL : GTK_ORIENTATION_VERTICAL);
                 break;
 
             default:

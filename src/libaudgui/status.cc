@@ -37,7 +37,7 @@ static void create_progress_window (void)
     gtk_window_set_resizable ((GtkWindow *) progress_window, FALSE);
     gtk_container_set_border_width ((GtkContainer *) progress_window, 6);
 
-    GtkWidget * vbox = gtk_vbox_new (FALSE, 6);
+    GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
     gtk_container_add ((GtkContainer *) progress_window, vbox);
 
     progress_label = gtk_label_new (NULL);

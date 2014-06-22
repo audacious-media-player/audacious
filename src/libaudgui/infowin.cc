@@ -274,10 +274,11 @@ static void add_entry (GtkWidget * grid, const char * title, GtkWidget * entry,
 {
     GtkWidget * label = small_label_new (title);
 
-    gtk_table_attach ((GtkTable *) grid, label, x, x + span, y, y + 1,
-     GTK_FILL, GTK_FILL, 0, 0);
-    gtk_table_attach ((GtkTable *) grid, entry, x, x + span, y + 1, y + 2,
-     GTK_FILL, GTK_FILL, 0, 0);
+    if (y > 0)
+        gtk_widget_set_margin_top (label, 6);
+
+    gtk_grid_attach ((GtkGrid *) grid, label, x, y, span, 1);
+    gtk_grid_attach ((GtkGrid *) grid, entry, x, y + 1, span, 1);
 
     g_signal_connect (entry, "changed", (GCallback) entry_changed, NULL);
 }
@@ -290,44 +291,41 @@ static GtkWidget * create_infowin (void)
     gtk_window_set_type_hint ((GtkWindow *) infowin,
      GDK_WINDOW_TYPE_HINT_DIALOG);
 
-    GtkWidget * main_grid = gtk_table_new (0, 0, FALSE);
-    gtk_table_set_col_spacings ((GtkTable *) main_grid, 6);
-    gtk_table_set_row_spacings ((GtkTable *) main_grid, 6);
+    GtkWidget * main_grid = gtk_grid_new ();
+    gtk_grid_set_column_spacing ((GtkGrid *) main_grid, 6);
+    gtk_grid_set_row_spacing ((GtkGrid *) main_grid, 6);
     gtk_container_add ((GtkContainer *) infowin, main_grid);
 
     widgets.image = audgui_scaled_image_new (NULL);
-    gtk_table_attach_defaults ((GtkTable *) main_grid, widgets.image, 0, 1, 0, 1);
+    gtk_widget_set_hexpand (widgets.image, TRUE);
+    gtk_widget_set_vexpand (widgets.image, TRUE);
+    gtk_grid_attach ((GtkGrid *) main_grid, widgets.image, 0, 0, 1, 1);
 
     widgets.location = gtk_label_new ("");
-    gtk_widget_set_size_request (widgets.location, 200, -1);
+    gtk_label_set_max_width_chars ((GtkLabel *) widgets.location, 40);
     gtk_label_set_line_wrap ((GtkLabel *) widgets.location, TRUE);
     gtk_label_set_line_wrap_mode ((GtkLabel *) widgets.location, PANGO_WRAP_WORD_CHAR);
     gtk_label_set_selectable ((GtkLabel *) widgets.location, TRUE);
-    gtk_table_attach ((GtkTable *) main_grid, widgets.location, 0, 1, 1, 2,
-     GTK_FILL, GTK_FILL, 0, 0);
+    gtk_grid_attach ((GtkGrid *) main_grid, widgets.location, 0, 1, 1, 1);
 
-    GtkWidget * codec_grid = gtk_table_new (0, 0, FALSE);
-    gtk_table_set_row_spacings ((GtkTable *) codec_grid, 2);
-    gtk_table_set_col_spacings ((GtkTable *) codec_grid, 12);
-    gtk_table_attach ((GtkTable *) main_grid, codec_grid, 0, 1, 2, 3,
-     GTK_FILL, GTK_FILL, 0, 0);
+    GtkWidget * codec_grid = gtk_grid_new ();
+    gtk_grid_set_row_spacing ((GtkGrid *) codec_grid, 3);
+    gtk_grid_set_column_spacing ((GtkGrid *) codec_grid, 12);
+    gtk_grid_attach ((GtkGrid *) main_grid, codec_grid, 0, 2, 1, 1);
 
     for (int row = 0; row < CODEC_ITEMS; row ++)
     {
         GtkWidget * label = small_label_new (_(codec_labels[row]));
-        gtk_table_attach ((GtkTable *) codec_grid, label, 0, 1, row, row + 1,
-         GTK_FILL, GTK_FILL, 0, 0);
+        gtk_grid_attach ((GtkGrid *) codec_grid, label, 0, row, 1, 1);
 
         widgets.codec[row] = small_label_new (NULL);
-        gtk_table_attach ((GtkTable *) codec_grid, widgets.codec[row], 1, 2, row, row + 1,
-         GTK_FILL, GTK_FILL, 0, 0);
+        gtk_grid_attach ((GtkGrid *) codec_grid, widgets.codec[row], 1, row, 1, 1);
     }
 
-    GtkWidget * grid = gtk_table_new (0, 0, FALSE);
-    gtk_table_set_row_spacings ((GtkTable *) grid, 2);
-    gtk_table_set_col_spacings ((GtkTable *) grid, 6);
-    gtk_table_attach ((GtkTable *) main_grid, grid, 1, 2, 0, 3,
-     GTK_FILL, GTK_FILL, 0, 0);
+    GtkWidget * grid = gtk_grid_new ();
+    gtk_grid_set_column_homogeneous ((GtkGrid *) grid, TRUE);
+    gtk_grid_set_column_spacing ((GtkGrid *) grid, 6);
+    gtk_grid_attach ((GtkGrid *) main_grid, grid, 1, 0, 1, 3);
 
     widgets.title = gtk_entry_new ();
     add_entry (grid, _("Title"), widgets.title, 0, 0, 2);
@@ -351,9 +349,8 @@ static GtkWidget * create_infowin (void)
     widgets.track = gtk_entry_new ();
     add_entry (grid, _("Track Number"), widgets.track, 1, 10, 1);
 
-    GtkWidget * bottom_hbox = gtk_hbox_new (FALSE, 6);
-    gtk_table_attach ((GtkTable *) main_grid, bottom_hbox, 0, 2, 3, 4,
-     GTK_FILL, GTK_FILL, 0, 0);
+    GtkWidget * bottom_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+    gtk_grid_attach ((GtkGrid *) main_grid, bottom_hbox, 0, 3, 2, 1);
 
     widgets.ministatus = small_label_new (NULL);
     gtk_box_pack_start ((GtkBox *) bottom_hbox, widgets.ministatus, TRUE, TRUE, 0);

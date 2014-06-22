@@ -180,7 +180,7 @@ EXPORT void audgui_show_plugin_prefs (PluginHandle * plugin)
     }
 
     GtkWidget * content = gtk_dialog_get_content_area ((GtkDialog *) window);
-    GtkWidget * box = gtk_vbox_new (FALSE, 0);
+    GtkWidget * box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
     audgui_create_widgets_with_domain (box, p->widgets, p->n_widgets, header->domain);
     gtk_box_pack_start ((GtkBox *) content, box, TRUE, TRUE, 0);
 

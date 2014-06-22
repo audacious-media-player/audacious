@@ -98,7 +98,7 @@ static GtkWidget * create_filebrowser (bool_t open)
     gtk_window_set_default_size(GTK_WINDOW(window), 700, 450);
     gtk_container_set_border_width(GTK_CONTAINER(window), 10);
 
-    GtkWidget * vbox = gtk_vbox_new (FALSE, 0);
+    GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
     gtk_container_add(GTK_CONTAINER(window), vbox);
 
     GtkWidget * chooser = gtk_file_chooser_widget_new(GTK_FILE_CHOOSER_ACTION_OPEN);
@@ -110,7 +110,7 @@ static GtkWidget * create_filebrowser (bool_t open)
 
     gtk_box_pack_start(GTK_BOX(vbox), chooser, TRUE, TRUE, 3);
 
-    GtkWidget * hbox = gtk_hbox_new (FALSE, 0);
+    GtkWidget * hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
     gtk_box_pack_end(GTK_BOX(vbox), hbox, FALSE, FALSE, 3);
 
     GtkWidget * toggle = gtk_check_button_new_with_mnemonic (toggle_text);
@@ -118,7 +118,7 @@ static GtkWidget * create_filebrowser (bool_t open)
     g_signal_connect (toggle, "toggled", (GCallback) toggled_cb, (void *) option);
     gtk_box_pack_start(GTK_BOX(hbox), toggle, TRUE, TRUE, 3);
 
-    GtkWidget * bbox = gtk_hbutton_box_new ();
+    GtkWidget * bbox = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
     gtk_button_box_set_layout(GTK_BUTTON_BOX(bbox), GTK_BUTTONBOX_END);
     gtk_box_set_spacing(GTK_BOX(bbox), 6);
     gtk_box_pack_end(GTK_BOX(hbox), bbox, TRUE, TRUE, 3);

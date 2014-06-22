@@ -384,7 +384,7 @@ static bool_t autoscroll (GtkWidget * widget)
     ListModel * model = (ListModel *) gtk_tree_view_get_model
      ((GtkTreeView *) widget);
 
-    GtkAdjustment * adj = gtk_tree_view_get_vadjustment ((GtkTreeView *) widget);
+    GtkAdjustment * adj = gtk_scrollable_get_vadjustment ((GtkScrollable *) widget);
     if (! adj)
         return FALSE;
 
@@ -450,7 +450,7 @@ static bool_t drag_motion (GtkWidget * widget, GdkDragContext * context,
 
     int height;
     gdk_window_get_geometry (gtk_tree_view_get_bin_window ((GtkTreeView *)
-     widget), NULL, NULL, NULL, & height, NULL);
+     widget), NULL, NULL, NULL, & height);
     gtk_tree_view_convert_widget_to_bin_window_coords ((GtkTreeView *) widget,
      x, y, & x, & y);
 
@@ -526,6 +526,10 @@ static void drag_data_received (GtkWidget * widget, GdkDragContext * context, in
 
 static void destroy_cb (GtkWidget * list, ListModel * model)
 {
+    /* workaround for Gnome bug #679291 */
+    g_signal_handlers_disconnect_matched (list, G_SIGNAL_MATCH_DATA, 0, 0, NULL,
+     NULL, model);
+
     stop_autoscroll (model);
     g_list_free (model->column_types);
     g_object_unref (model);

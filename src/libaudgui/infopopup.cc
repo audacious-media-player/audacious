@@ -102,10 +102,8 @@ static void infopopup_add_category (GtkWidget * grid, int position,
     gtk_label_set_markup ((GtkLabel *) * header, markup);
     g_free (markup);
 
-    gtk_table_attach ((GtkTable *) grid, * header, 0, 1, position, position + 1,
-     GTK_FILL, GTK_FILL, 0, 0);
-    gtk_table_attach ((GtkTable *) grid, * label, 1, 2, position, position + 1,
-     GTK_FILL, GTK_FILL, 0, 0);
+    gtk_grid_attach ((GtkGrid *) grid, * header, 0, position, 1, 1);
+    gtk_grid_attach ((GtkGrid *) grid, * label, 1, position, 1, 1);
 }
 
 static void infopopup_destroyed (void)
@@ -131,15 +129,15 @@ static GtkWidget * infopopup_create (void)
     gtk_window_set_decorated ((GtkWindow *) infopopup, FALSE);
     gtk_container_set_border_width ((GtkContainer *) infopopup, 4);
 
-    GtkWidget * hbox = gtk_hbox_new (FALSE, 6);
+    GtkWidget * hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  6);
     gtk_container_add ((GtkContainer *) infopopup, hbox);
 
     widgets.image = gtk_image_new ();
     gtk_widget_set_size_request (widgets.image, IMAGE_SIZE, IMAGE_SIZE);
     gtk_box_pack_start ((GtkBox *) hbox, widgets.image, FALSE, FALSE, 0);
 
-    GtkWidget * grid = gtk_table_new (0, 0, FALSE);
-    gtk_table_set_col_spacings ((GtkTable *) grid, 6);
+    GtkWidget * grid = gtk_grid_new ();
+    gtk_grid_set_column_spacing ((GtkGrid *) grid, 6);
     gtk_box_pack_start ((GtkBox *) hbox, grid, TRUE, TRUE, 0);
 
     infopopup_add_category (grid, 0, _("Title"), & widgets.title_header, & widgets.title_label);
@@ -152,10 +150,10 @@ static GtkWidget * infopopup_create (void)
 
     /* track progress */
     widgets.progress = gtk_progress_bar_new ();
+    gtk_widget_set_margin_top (widgets.progress, 6);
+    gtk_progress_bar_set_show_text ((GtkProgressBar *) widgets.progress, TRUE);
     gtk_progress_bar_set_text ((GtkProgressBar *) widgets.progress, "");
-    gtk_table_set_row_spacing ((GtkTable *) grid, 6, 4);
-    gtk_table_attach ((GtkTable *) grid, widgets.progress, 0, 2, 7, 8,
-     GTK_FILL, GTK_FILL, 0, 0);
+    gtk_grid_attach ((GtkGrid *) grid, widgets.progress, 0, 7, 2, 1);
 
     /* do not show the track progress */
     gtk_widget_set_no_show_all (widgets.progress, TRUE);

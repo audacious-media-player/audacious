@@ -63,13 +63,14 @@ static void slider_moved (GtkRange * slider, void * unused)
 
 static GtkWidget * create_slider (const char * name, int band, GtkWidget * hbox)
 {
-    GtkWidget * vbox = gtk_vbox_new (FALSE, 6);
+    GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
 
     GtkWidget * label = gtk_label_new (name);
     gtk_label_set_angle ((GtkLabel *) label, 90);
     gtk_box_pack_start ((GtkBox *) vbox, label, TRUE, FALSE, 0);
 
-    GtkWidget * slider = gtk_vscale_new_with_range (-AUD_EQ_MAX_GAIN, AUD_EQ_MAX_GAIN, 1);
+    GtkWidget * slider = gtk_scale_new_with_range (GTK_ORIENTATION_VERTICAL,
+     -AUD_EQ_MAX_GAIN, AUD_EQ_MAX_GAIN, 1);
     gtk_scale_set_draw_value ((GtkScale *) slider, TRUE);
     gtk_scale_set_value_pos ((GtkScale *) slider, GTK_POS_BOTTOM);
     gtk_range_set_inverted ((GtkRange *) slider, TRUE);
@@ -127,18 +128,19 @@ static GtkWidget * create_window (void)
     gtk_container_set_border_width ((GtkContainer *) window, 6);
     audgui_destroy_on_escape (window);
 
-    GtkWidget * vbox = gtk_vbox_new (FALSE, 6);
+    GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
     gtk_container_add ((GtkContainer *) window, vbox);
 
     gtk_box_pack_start ((GtkBox *) vbox, create_on_off (), FALSE, FALSE, 0);
 
-    GtkWidget * hbox = gtk_hbox_new (FALSE, 6);
+    GtkWidget * hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  6);
     gtk_box_pack_start ((GtkBox *) vbox, hbox, FALSE, FALSE, 0);
 
     GtkWidget * preamp = create_slider (_("Preamp"), -1, hbox);
     g_object_set_data ((GObject *) window, "preamp", preamp);
 
-    gtk_box_pack_start ((GtkBox *) hbox, gtk_vseparator_new (), FALSE, FALSE, 0);
+    gtk_box_pack_start ((GtkBox *) hbox,
+     gtk_separator_new (GTK_ORIENTATION_VERTICAL), FALSE, FALSE, 0);
 
     for (int i = 0; i < AUD_EQ_NBANDS; i ++)
     {

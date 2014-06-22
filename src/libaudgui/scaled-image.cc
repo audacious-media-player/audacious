@@ -59,7 +59,7 @@ static GdkPixbuf * get_scaled (GtkWidget * widget, int maxwidth, int maxheight)
     return scaled;
 }
 
-static int expose_cb (GtkWidget * widget, GdkEventExpose * event)
+static bool_t draw_cb (GtkWidget * widget, cairo_t * cr)
 {
     GdkRectangle rect;
     gtk_widget_get_allocation (widget, & rect);
@@ -70,11 +70,8 @@ static int expose_cb (GtkWidget * widget, GdkEventExpose * event)
     {
         int x = (rect.width - gdk_pixbuf_get_width (scaled)) / 2;
         int y = (rect.height - gdk_pixbuf_get_height (scaled)) / 2;
-
-        cairo_t * cr = gdk_cairo_create (gtk_widget_get_window (widget));
         gdk_cairo_set_source_pixbuf (cr, scaled, x, y);
         cairo_paint (cr);
-        cairo_destroy (cr);
     }
 
     return TRUE;
@@ -107,7 +104,7 @@ EXPORT GtkWidget * audgui_scaled_image_new (GdkPixbuf * pixbuf)
 {
     GtkWidget * widget = gtk_drawing_area_new ();
 
-    g_signal_connect (widget, "expose-event", (GCallback) expose_cb, NULL);
+    g_signal_connect (widget, "draw", (GCallback) draw_cb, NULL);
     g_signal_connect (widget, "destroy", (GCallback) destroy_cb, NULL);
 
     audgui_scaled_image_set (widget, pixbuf);

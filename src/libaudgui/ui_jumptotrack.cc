@@ -236,7 +236,7 @@ static GtkWidget * create_window (void)
     gtk_container_set_border_width(GTK_CONTAINER(jump_to_track_win), 10);
     gtk_window_set_default_size(GTK_WINDOW(jump_to_track_win), 600, 500);
 
-    GtkWidget * vbox = gtk_vbox_new (FALSE, 6);
+    GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 5);
     gtk_container_add(GTK_CONTAINER(jump_to_track_win), vbox);
 
     treeview = audgui_list_new (& callbacks, NULL, 0);
@@ -249,7 +249,7 @@ static GtkWidget * create_window (void)
      "changed", (GCallback) selection_changed, NULL);
     g_signal_connect (treeview, "row-activated", (GCallback) do_jump, NULL);
 
-    GtkWidget * hbox = gtk_hbox_new (FALSE, 6);
+    GtkWidget * hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 3);
 
     /* filter box */
@@ -271,7 +271,7 @@ static GtkWidget * create_window (void)
                                         GTK_SHADOW_IN);
     gtk_box_pack_start(GTK_BOX(vbox), scrollwin, TRUE, TRUE, 0);
 
-    GtkWidget * bbox = gtk_hbutton_box_new ();
+    GtkWidget * bbox = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
     gtk_button_box_set_layout(GTK_BUTTON_BOX(bbox), GTK_BUTTONBOX_END);
     gtk_box_set_spacing(GTK_BOX(bbox), 4);
     gtk_box_pack_start(GTK_BOX(vbox), bbox, FALSE, FALSE, 0);
