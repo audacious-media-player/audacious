@@ -46,6 +46,8 @@ static GtkWidget * create_credits_notebook (const char * credits, const char * l
 
         GtkWidget * scrolled = gtk_scrolled_window_new (NULL, NULL);
         gtk_widget_set_size_request (scrolled, -1, 200);
+        gtk_scrolled_window_set_policy ((GtkScrolledWindow *) scrolled,
+         GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 
         GtkTextBuffer * buffer = gtk_text_buffer_new (NULL);
         gtk_text_buffer_set_text (buffer, text[i], -1);
@@ -73,7 +75,7 @@ static GtkWidget * create_about_window (void)
 
     audgui_destroy_on_escape (about_window);
 
-    GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+    GtkWidget * vbox = gtk_vbox_new (FALSE, 6);
     gtk_container_add ((GtkContainer *) about_window, vbox);
 
     StringBuf logo_path = filename_build ({data_dir, "images", "about-logo.png"});
@@ -85,9 +87,11 @@ static GtkWidget * create_about_window (void)
     gtk_label_set_justify ((GtkLabel *) label, GTK_JUSTIFY_CENTER);
     gtk_box_pack_start ((GtkBox *) vbox, label, FALSE, FALSE, 0);
 
+    GtkWidget * align = gtk_alignment_new (0.5, 0.5, 0, 0);
+    gtk_box_pack_start ((GtkBox *) vbox, align, FALSE, FALSE, 0);
+
     GtkWidget * button = gtk_link_button_new (website);
-    gtk_widget_set_halign (button, GTK_ALIGN_CENTER);
-    gtk_box_pack_start ((GtkBox *) vbox, button, FALSE, FALSE, 0);
+    gtk_container_add ((GtkContainer *) align, button);
 
     char * credits, * license;
 

@@ -384,7 +384,7 @@ static bool_t autoscroll (GtkWidget * widget)
     ListModel * model = (ListModel *) gtk_tree_view_get_model
      ((GtkTreeView *) widget);
 
-    GtkAdjustment * adj = gtk_scrollable_get_vadjustment ((GtkScrollable *) widget);
+    GtkAdjustment * adj = gtk_tree_view_get_vadjustment ((GtkTreeView *) widget);
     if (! adj)
         return FALSE;
 
@@ -450,7 +450,7 @@ static bool_t drag_motion (GtkWidget * widget, GdkDragContext * context,
 
     int height;
     gdk_window_get_geometry (gtk_tree_view_get_bin_window ((GtkTreeView *)
-     widget), NULL, NULL, NULL, & height);
+     widget), NULL, NULL, NULL, & height, NULL);
     gtk_tree_view_convert_widget_to_bin_window_coords ((GtkTreeView *) widget,
      x, y, & x, & y);
 
@@ -526,10 +526,6 @@ static void drag_data_received (GtkWidget * widget, GdkDragContext * context, in
 
 static void destroy_cb (GtkWidget * list, ListModel * model)
 {
-    /* workaround for Gnome bug #679291 */
-    g_signal_handlers_disconnect_matched (list, G_SIGNAL_MATCH_DATA, 0, 0, NULL,
-     NULL, model);
-
     stop_autoscroll (model);
     g_list_free (model->column_types);
     g_object_unref (model);
@@ -683,7 +679,9 @@ EXPORT void audgui_list_add_column (GtkWidget * list, const char * title,
     {
         gtk_tree_view_column_set_min_width (tree_column,
          width * model->charwidth + model->charwidth / 2 + padding);
-        g_object_set ((GObject *) renderer, "xalign", (float) 1, NULL);
+
+        if (width < 10)
+            g_object_set ((GObject *) renderer, "xalign", (float) 1, NULL);
     }
 
     gtk_tree_view_append_column ((GtkTreeView *) list, tree_column);

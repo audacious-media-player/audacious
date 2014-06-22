@@ -1,6 +1,6 @@
 /*
  * prefs-window.c
- * Copyright 2006-2012 William Pitcock, Tomasz Moń, Michael Färber, and
+ * Copyright 2006-2014 William Pitcock, Tomasz Moń, Michael Färber, and
  *                     John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
@@ -240,6 +240,9 @@ static const PreferencesWidget chardet_elements[] = {
         {VALUE_STRING, 0, 0, "chardet_fallback"})
 };
 
+static void send_title_change (void);
+static void * create_titlestring_table (void);
+
 static const PreferencesWidget playlist_page_widgets[] = {
     WidgetLabel (N_("<b>Behavior</b>")),
     WidgetCheck (N_("Continue playback on startup"),
@@ -255,7 +258,13 @@ static const PreferencesWidget playlist_page_widgets[] = {
     WidgetLabel (N_("<b>Compatibility</b>")),
     WidgetCheck (N_("Interpret \\ (backward slash) as a folder delimiter"),
         {VALUE_BOOLEAN, 0, 0, "convert_backslash"}),
-    WidgetTable ({chardet_elements, ARRAY_LEN (chardet_elements)})
+    WidgetTable ({chardet_elements, ARRAY_LEN (chardet_elements)}),
+    WidgetLabel (N_("<b>Song Display</b>")),
+    WidgetCheck (N_("Show song numbers"),
+        {VALUE_BOOLEAN, 0, 0, "show_numbers_in_pl", send_title_change}),
+    WidgetCheck (N_("Show leading zeroes (02:00 instead of 2:00)"),
+        {VALUE_BOOLEAN, 0, 0, "leading_zero", send_title_change}),
+    WidgetCustom (create_titlestring_table)
 };
 
 static const PreferencesWidget song_info_page_widgets[] = {
@@ -342,6 +351,11 @@ static void category_changed (GtkTreeSelection * selection)
         gtk_notebook_set_current_page ((GtkNotebook *) category_notebook, category);
         gtk_tree_path_free (path);
     }
+}
+
+static void send_title_change (void)
+{
+    hook_call ("title change", NULL);
 }
 
 static void titlestring_tag_menu_cb (GtkMenuItem * menuitem, void * data)
@@ -457,18 +471,6 @@ static GtkWidget * create_titlestring_tag_menu (void)
     return titlestring_tag_menu;
 }
 
-static void show_numbers_cb (GtkToggleButton * numbers, void * unused)
-{
-    aud_set_bool (NULL, "show_numbers_in_pl", gtk_toggle_button_get_active (numbers));
-    hook_call ("title change", NULL);
-}
-
-static void leading_zero_cb (GtkToggleButton * leading)
-{
-    aud_set_bool (NULL, "leading_zero", gtk_toggle_button_get_active (leading));
-    hook_call ("title change", NULL);
-}
-
 static void create_titlestring_widgets (GtkWidget * * cbox, GtkWidget * * entry)
 {
     * cbox = gtk_combo_box_text_new ();
@@ -486,73 +488,31 @@ static void create_titlestring_widgets (GtkWidget * * cbox, GtkWidget * * entry)
     g_signal_connect (* entry, "changed", (GCallback) on_titlestring_entry_changed, * cbox);
 }
 
-static void create_playlist_category (void)
+static void * create_titlestring_table (void)
 {
-    GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-    gtk_container_add ((GtkContainer *) category_notebook, vbox);
+    GtkWidget * grid = gtk_table_new (0, 0, FALSE);
+    gtk_table_set_row_spacings ((GtkTable *) grid, 6);
+    gtk_table_set_col_spacings ((GtkTable *) grid, 6);
 
-    audgui_create_widgets (vbox, playlist_page_widgets, ARRAY_LEN (playlist_page_widgets));
-
-    GtkWidget * alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start ((GtkBox *) vbox, alignment, FALSE, FALSE, 0);
-    gtk_alignment_set_padding ((GtkAlignment *) alignment, 12, 3, 0, 0);
-
-    GtkWidget * label = gtk_label_new (_("<b>Song Display</b>"));
-    gtk_container_add ((GtkContainer *) alignment, label);
-    gtk_label_set_use_markup ((GtkLabel *) label, TRUE);
-    gtk_misc_set_alignment ((GtkMisc *) label, 0, 0.5);
-
-    GtkWidget * numbers_alignment = gtk_alignment_new (0, 0, 0, 0);
-    gtk_alignment_set_padding ((GtkAlignment *) numbers_alignment, 0, 0, 12, 0);
-    gtk_box_pack_start ((GtkBox *) vbox, numbers_alignment, 0, 0, 3);
-
-    GtkWidget * numbers = gtk_check_button_new_with_label (_("Show song numbers"));
-    gtk_toggle_button_set_active ((GtkToggleButton *) numbers,
-     aud_get_bool (NULL, "show_numbers_in_pl"));
-    g_signal_connect (numbers, "toggled", (GCallback) show_numbers_cb, 0);
-    gtk_container_add ((GtkContainer *) numbers_alignment, numbers);
-
-    numbers_alignment = gtk_alignment_new (0, 0, 0, 0);
-    gtk_alignment_set_padding ((GtkAlignment *) numbers_alignment, 0, 0, 12, 0);
-    gtk_box_pack_start ((GtkBox *) vbox, numbers_alignment, 0, 0, 3);
-
-    numbers = gtk_check_button_new_with_label (
-     _("Show leading zeroes (02:00 instead of 2:00)"));
-    gtk_toggle_button_set_active ((GtkToggleButton *) numbers, aud_get_bool (NULL, "leading_zero"));
-    g_signal_connect (numbers, "toggled", (GCallback) leading_zero_cb, 0);
-    gtk_container_add ((GtkContainer *) numbers_alignment, numbers);
-
-    alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start ((GtkBox *) vbox, alignment, FALSE, FALSE, 0);
-    gtk_alignment_set_padding ((GtkAlignment *) alignment, 0, 0, 12, 0);
-
-    GtkWidget * grid = gtk_grid_new ();
-    gtk_container_add ((GtkContainer *) alignment, grid);
-    gtk_grid_set_row_spacing ((GtkGrid *) grid, 4);
-    gtk_grid_set_column_spacing ((GtkGrid *) grid, 12);
-
-    label = gtk_label_new (_("Title format:"));
-    gtk_grid_attach ((GtkGrid *) grid, label, 0, 0, 1, 1);
-    gtk_label_set_justify ((GtkLabel *) label, GTK_JUSTIFY_RIGHT);
+    GtkWidget * label = gtk_label_new (_("Title format:"));
     gtk_misc_set_alignment ((GtkMisc *) label, 1, 0.5);
+    gtk_table_attach ((GtkTable *) grid, label, 0, 1, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
 
     label = gtk_label_new (_("Custom string:"));
-    gtk_grid_attach ((GtkGrid *) grid, label, 0, 1, 1, 1);
-    gtk_label_set_justify ((GtkLabel *) label, GTK_JUSTIFY_RIGHT);
     gtk_misc_set_alignment ((GtkMisc *) label, 1, 0.5);
+    gtk_table_attach ((GtkTable *) grid, label, 0, 1, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
 
     GtkWidget * titlestring_cbox;
     create_titlestring_widgets (& titlestring_cbox, & titlestring_entry);
-    gtk_widget_set_hexpand (titlestring_cbox, TRUE);
-    gtk_widget_set_hexpand (titlestring_entry, TRUE);
-    gtk_grid_attach ((GtkGrid *) grid, titlestring_cbox, 1, 0, 1, 1);
-    gtk_grid_attach ((GtkGrid *) grid, titlestring_entry, 1, 1, 1, 1);
+    gtk_table_attach_defaults ((GtkTable *) grid, titlestring_cbox, 1, 2, 0, 1);
+    gtk_table_attach_defaults ((GtkTable *) grid, titlestring_entry, 1, 2, 1, 2);
 
     GtkWidget * titlestring_help_button = gtk_button_new ();
     gtk_widget_set_can_focus (titlestring_help_button, FALSE);
     gtk_button_set_focus_on_click ((GtkButton *) titlestring_help_button, FALSE);
     gtk_button_set_relief ((GtkButton *) titlestring_help_button, GTK_RELIEF_HALF);
-    gtk_grid_attach ((GtkGrid *) grid, titlestring_help_button, 2, 1, 1, 1);
+    gtk_table_attach ((GtkTable *) grid, titlestring_help_button, 2, 3, 1, 2,
+     GTK_FILL, GTK_FILL, 0, 0);
 
     GtkWidget * titlestring_tag_menu = create_titlestring_tag_menu ();
 
@@ -561,11 +521,20 @@ static void create_playlist_category (void)
 
     GtkWidget * image = gtk_image_new_from_icon_name ("list-add", GTK_ICON_SIZE_BUTTON);
     gtk_container_add ((GtkContainer *) titlestring_help_button, image);
+
+    return grid;
+}
+
+static void create_playlist_category (void)
+{
+    GtkWidget * vbox = gtk_vbox_new (FALSE, 0);
+    gtk_container_add ((GtkContainer *) category_notebook, vbox);
+    audgui_create_widgets (vbox, playlist_page_widgets, ARRAY_LEN (playlist_page_widgets));
 }
 
 static void create_song_info_category (void)
 {
-    GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+    GtkWidget * vbox = gtk_vbox_new (FALSE, 0);
     gtk_container_add ((GtkContainer *) category_notebook, vbox);
     audgui_create_widgets (vbox, song_info_page_widgets, ARRAY_LEN (song_info_page_widgets));
 }
@@ -597,14 +566,14 @@ static const ComboBoxElements * iface_combo_fill (int * n_elements)
 
 static void * iface_create_prefs_box (void)
 {
-    iface_prefs_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+    iface_prefs_box = gtk_vbox_new (FALSE, 0);
     iface_fill_prefs_box ();
     return iface_prefs_box;
 }
 
 static void create_appearance_category (void)
 {
-    GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+    GtkWidget * vbox = gtk_vbox_new (FALSE, 0);
     gtk_container_add ((GtkContainer *) category_notebook, vbox);
     audgui_create_widgets (vbox, appearance_page_widgets, ARRAY_LEN (appearance_page_widgets));
 }
@@ -670,17 +639,17 @@ static void * output_create_about_button (void)
 
 static void create_audio_category (void)
 {
-    GtkWidget * audio_page_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+    GtkWidget * audio_page_vbox = gtk_vbox_new (FALSE, 0);
     audgui_create_widgets (audio_page_vbox, audio_page_widgets, ARRAY_LEN (audio_page_widgets));
     gtk_container_add ((GtkContainer *) category_notebook, audio_page_vbox);
 }
 
 static void create_connectivity_category (void)
 {
-    GtkWidget * connectivity_page_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+    GtkWidget * connectivity_page_vbox = gtk_vbox_new (FALSE, 0);
     gtk_container_add ((GtkContainer *) category_notebook, connectivity_page_vbox);
 
-    GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+    GtkWidget * vbox = gtk_vbox_new (FALSE, 0);
     gtk_box_pack_start ((GtkBox *) connectivity_page_vbox, vbox, TRUE, TRUE, 0);
 
     audgui_create_widgets (vbox, connectivity_page_widgets, ARRAY_LEN (connectivity_page_widgets));
@@ -727,10 +696,10 @@ static void create_prefs_window (void)
     gtk_window_set_title ((GtkWindow *) prefswin, _("Audacious Settings"));
     gtk_window_set_default_size ((GtkWindow *) prefswin, 680, 400);
 
-    GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+    GtkWidget * vbox = gtk_vbox_new (FALSE, 0);
     gtk_container_add ((GtkContainer *) prefswin, vbox);
 
-    GtkWidget * hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  8);
+    GtkWidget * hbox = gtk_hbox_new (FALSE, 6);
     gtk_box_pack_start ((GtkBox *) vbox, hbox, TRUE, TRUE, 0);
 
     GtkWidget * scrolledwindow = gtk_scrolled_window_new (NULL, NULL);
@@ -760,17 +729,17 @@ static void create_prefs_window (void)
     create_song_info_category ();
     create_plugin_category ();
 
-    GtkWidget * hseparator = gtk_separator_new (GTK_ORIENTATION_HORIZONTAL);
+    GtkWidget * hseparator = gtk_hseparator_new ();
     gtk_box_pack_start ((GtkBox *) vbox, hseparator, FALSE, FALSE, 6);
 
-    hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  0);
+    hbox = gtk_hbox_new (FALSE, 0);
     gtk_box_pack_start ((GtkBox *) vbox, hbox, FALSE, FALSE, 0);
 
     GtkWidget * audversionlabel = gtk_label_new (aud_version_string);
     gtk_box_pack_start ((GtkBox *) hbox, audversionlabel, FALSE, FALSE, 0);
     gtk_label_set_use_markup ((GtkLabel *) audversionlabel, TRUE);
 
-    GtkWidget * prefswin_button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
+    GtkWidget * prefswin_button_box = gtk_hbutton_box_new ();
     gtk_box_pack_start ((GtkBox *) hbox, prefswin_button_box, TRUE, TRUE, 0);
     gtk_button_box_set_layout ((GtkButtonBox *) prefswin_button_box, GTK_BUTTONBOX_END);
     gtk_box_set_spacing ((GtkBox *) prefswin_button_box, 6);

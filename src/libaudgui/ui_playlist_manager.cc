@@ -222,7 +222,7 @@ static GtkWidget * create_playlist_manager (void)
     g_signal_connect (playman_win, "destroy", (GCallback) destroy_cb, NULL);
     audgui_destroy_on_escape (playman_win);
 
-    GtkWidget * playman_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+    GtkWidget * playman_vbox = gtk_vbox_new (FALSE, 6);
     gtk_container_add ((GtkContainer *) playman_win, playman_vbox);
 
     /* ListView */
@@ -245,7 +245,7 @@ static GtkWidget * create_playlist_manager (void)
     gtk_box_pack_start ((GtkBox *) playman_vbox, playman_pl_lv_sw, TRUE, TRUE, 0);
 
     /* ButtonBox */
-    GtkWidget * playman_button_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+    GtkWidget * playman_button_hbox = gtk_hbox_new (FALSE, 6);
     GtkWidget * new_button = audgui_button_new (_("_New"), "document-new", new_cb, NULL);
     GtkWidget * delete_button = audgui_button_new (_("_Remove"), "edit-delete", delete_cb, NULL);
     GtkWidget * rename_button = audgui_button_new (_("Ren_ame"), "insert-text", rename_cb, NULL);
@@ -258,7 +258,7 @@ static GtkWidget * create_playlist_manager (void)
     gtk_container_add ((GtkContainer *) playman_vbox, playman_button_hbox);
 
     /* CheckButton */
-    GtkWidget * hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+    GtkWidget * hbox = gtk_hbox_new (FALSE, 6);
     gtk_box_pack_start ((GtkBox *) playman_vbox, hbox, FALSE, FALSE, 0);
     GtkWidget * check_button = gtk_check_button_new_with_mnemonic
      (_("_Close dialog on activating playlist"));
