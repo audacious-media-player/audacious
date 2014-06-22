@@ -517,7 +517,7 @@ void plugin_register (const char * path, int timestamp)
         if (! header)
             return;
 
-        plugin = new PluginHandle (str_get (path), true, true, timestamp, header->type, header);
+        plugin = new PluginHandle (path, true, true, timestamp, header->type, header);
         plugins[plugin->type].append (PluginPtr (plugin));
 
         plugin_get_info (plugin, true);
