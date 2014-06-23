@@ -165,6 +165,17 @@ public:
     void append (T && val)
         { append () = std::move (val); }
 
+    int find (const T & val)
+    {
+        for (const T * iter = begin (); iter != end (); iter ++)
+        {
+            if (* iter == val)
+                return iter - begin ();
+        }
+
+        return -1;
+    }
+
 private:
     struct CompareData {
         CompareFunc compare;

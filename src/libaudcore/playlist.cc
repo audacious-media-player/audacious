@@ -35,6 +35,7 @@
 #include "i18n.h"
 #include "interface.h"
 #include "internal.h"
+#include "list.h"
 #include "mainloop.h"
 #include "multihash.h"
 #include "objects.h"
@@ -111,7 +112,7 @@ struct Playlist {
     Entry * position, * focus;
     int selected_count;
     int last_shuffle_num;
-    GList * queued;
+    Index<Entry *> queued;
     int64_t total_length, selected_length;
     bool_t scanning, scan_ending;
     Update next_update, last_update;
@@ -138,14 +139,15 @@ static int resume_playlist = -1;
 static QueuedFunc queued_update;
 static int update_level;
 
-struct ScanItem {
+struct ScanItem : public ListNode
+{
     Playlist * playlist;
     Entry * entry;
     ScanRequest * request;
 };
 
 static int scan_playlist, scan_row;
-static GList * scan_list = NULL;
+static List<ScanItem> scan_list;
 
 static void scan_finish (ScanRequest * request);
 static void scan_cancel (Entry * entry);
@@ -250,7 +252,6 @@ Playlist::Playlist (int id) :
     focus (NULL),
     selected_count (0),
     last_shuffle_num (0),
-    queued (NULL),
     total_length (0),
     selected_length (0),
     scanning (FALSE),
@@ -266,7 +267,6 @@ Playlist::Playlist (int id) :
 Playlist::~Playlist ()
 {
     unique_id_table.add (unique_id, nullptr);
-    g_list_free (queued);
 }
 
 static void number_playlists (int at, int length)
@@ -388,40 +388,37 @@ EXPORT bool_t aud_playlist_scan_in_progress (int playlist_num)
     }
 }
 
-static GList * scan_list_find_playlist (Playlist * playlist)
+static ScanItem * scan_list_find_playlist (Playlist * playlist)
 {
-    for (GList * node = scan_list; node; node = node->next)
+    for (ScanItem * item = scan_list.head (); item; item = scan_list.next (item))
     {
-        ScanItem * item = (ScanItem *) node->data;
         if (item->playlist == playlist)
-            return node;
+            return item;
     }
 
-    return NULL;
+    return nullptr;
 }
 
-static GList * scan_list_find_entry (Entry * entry)
+static ScanItem * scan_list_find_entry (Entry * entry)
 {
-    for (GList * node = scan_list; node; node = node->next)
+    for (ScanItem * item = scan_list.head (); item; item = scan_list.next (item))
     {
-        ScanItem * item = (ScanItem *) node->data;
         if (item->entry == entry)
-            return node;
+            return item;
     }
 
-    return NULL;
+    return nullptr;
 }
 
-static GList * scan_list_find_request (ScanRequest * request)
+static ScanItem * scan_list_find_request (ScanRequest * request)
 {
-    for (GList * node = scan_list; node; node = node->next)
+    for (ScanItem * item = scan_list.head (); item; item = scan_list.next (item))
     {
-        ScanItem * item = (ScanItem *) node->data;
         if (item->request == request)
-            return node;
+            return item;
     }
 
-    return NULL;
+    return nullptr;
 }
 
 static void scan_queue_entry (Playlist * playlist, Entry * entry)
@@ -430,11 +427,11 @@ static void scan_queue_entry (Playlist * playlist, Entry * entry)
     if (! entry->tuple)
         flags |= SCAN_TUPLE;
 
-    ScanItem * item = g_slice_new (ScanItem);
+    ScanItem * item = new ScanItem;
     item->playlist = playlist;
     item->entry = entry;
     item->request = scan_request (entry->filename, flags, entry->decoder, scan_finish);
-    scan_list = g_list_prepend (scan_list, item);
+    scan_list.append (item);
 }
 
 static void scan_check_complete (Playlist * playlist)
@@ -480,10 +477,18 @@ static bool_t scan_queue_next_entry (void)
 
 static void scan_schedule (void)
 {
-    while (g_list_length (scan_list) < SCAN_THREADS)
+    int scheduled = 0;
+
+    for (ScanItem * item = scan_list.head (); item; item = scan_list.next (item))
     {
-        if (! scan_queue_next_entry ())
-            break;
+        if (++ scheduled >= SCAN_THREADS)
+            return;
+    }
+
+    while (scan_queue_next_entry ())
+    {
+        if (++ scheduled >= SCAN_THREADS)
+            return;
     }
 }
 
@@ -491,16 +496,15 @@ static void scan_finish (ScanRequest * request)
 {
     ENTER;
 
-    GList * node = scan_list_find_request (request);
-    if (! node)
+    ScanItem * item = scan_list_find_request (request);
+    if (! item)
         RETURN ();
 
-    ScanItem * item = (ScanItem *) node->data;
     Playlist * playlist = item->playlist;
     Entry * entry = item->entry;
 
-    scan_list = g_list_delete_link (scan_list, node);
-    g_slice_free (ScanItem, item);
+    scan_list.remove (item);
+    delete item;
 
     if (! entry->decoder)
         entry->decoder = scan_request_get_decoder (request);
@@ -528,13 +532,12 @@ static void scan_finish (ScanRequest * request)
 
 static void scan_cancel (Entry * entry)
 {
-    GList * node = scan_list_find_entry (entry);
-    if (! node)
+    ScanItem * item = scan_list_find_entry (entry);
+    if (! item)
         return;
 
-    ScanItem * item = (ScanItem *) node->data;
-    scan_list = g_list_delete_link (scan_list, node);
-    g_slice_free (ScanItem, item);
+    scan_list.remove (item);
+    delete (item);
 }
 
 static void scan_restart (void)
@@ -1001,7 +1004,7 @@ EXPORT void aud_playlist_entry_delete (int playlist_num, int at, int number)
         Entry * entry = playlist->entries [at + count].get ();
 
         if (entry->queued)
-            playlist->queued = g_list_remove (playlist->queued, entry);
+            playlist->queued.remove (playlist->queued.find (entry), 1);
 
         if (entry->selected)
         {
@@ -1348,7 +1351,7 @@ EXPORT void aud_playlist_delete_selected (int playlist_num)
         if (entry->selected)
         {
             if (entry->queued)
-                playlist->queued = g_list_remove (playlist->queued, entry);
+                playlist->queued.remove (playlist->queued.find (entry), 1);
 
             playlist->total_length -= entry->length;
             after = 0;
@@ -1704,7 +1707,7 @@ EXPORT int64_t aud_playlist_get_selected_length (int playlist_num)
 EXPORT int aud_playlist_queue_count (int playlist_num)
 {
     ENTER_GET_PLAYLIST (0);
-    int count = g_list_length (playlist->queued);
+    int count = playlist->queued.len ();
     RETURN (count);
 }
 
@@ -1712,13 +1715,16 @@ EXPORT void aud_playlist_queue_insert (int playlist_num, int at, int entry_num)
 {
     ENTER_GET_ENTRY ();
 
-    if (entry->queued)
+    if (entry->queued || at > playlist->queued.len ())
         RETURN ();
 
     if (at < 0)
-        playlist->queued = g_list_append (playlist->queued, entry);
+        playlist->queued.append (entry);
     else
-        playlist->queued = g_list_insert (playlist->queued, entry, at);
+    {
+        playlist->queued.insert (at, 1);
+        playlist->queued[at] = entry;
+    }
 
     entry->queued = TRUE;
 
@@ -1730,6 +1736,10 @@ EXPORT void aud_playlist_queue_insert_selected (int playlist_num, int at)
 {
     ENTER_GET_PLAYLIST ();
 
+    if (at > playlist->queued.len ())
+        RETURN ();
+
+    Index<Entry *> add;
     int first = playlist->entries.len ();
     int last = 0;
 
@@ -1738,15 +1748,13 @@ EXPORT void aud_playlist_queue_insert_selected (int playlist_num, int at)
         if (! entry->selected || entry->queued)
             continue;
 
-        if (at < 0)
-            playlist->queued = g_list_append (playlist->queued, entry.get ());
-        else
-            playlist->queued = g_list_insert (playlist->queued, entry.get (), at ++);
-
+        add.append (entry.get ());
         entry->queued = TRUE;
         first = MIN (first, entry->number);
         last = entry->number;
     }
+
+    playlist->queued.move_from (add, 0, at, -1, true, true);
 
     if (first < playlist->entries.len ())
         queue_update (PLAYLIST_UPDATE_SELECTION, playlist, first, last + 1 - first);
@@ -1758,8 +1766,9 @@ EXPORT int aud_playlist_queue_get_entry (int playlist_num, int at)
 {
     ENTER_GET_PLAYLIST (-1);
 
-    GList * node = g_list_nth (playlist->queued, at);
-    int entry_num = node ? ((Entry *) node->data)->number : -1;
+    int entry_num = -1;
+    if (at >= 0 && at < playlist->queued.len ())
+        entry_num = playlist->queued[at]->number;
 
     RETURN (entry_num);
 }
@@ -1767,7 +1776,7 @@ EXPORT int aud_playlist_queue_get_entry (int playlist_num, int at)
 EXPORT int aud_playlist_queue_find_entry (int playlist_num, int entry_num)
 {
     ENTER_GET_ENTRY (-1);
-    int pos = entry->queued ? g_list_index (playlist->queued, entry) : -1;
+    int pos = entry->queued ? playlist->queued.find (entry) : -1;
     RETURN (pos);
 }
 
@@ -1775,39 +1784,22 @@ EXPORT void aud_playlist_queue_delete (int playlist_num, int at, int number)
 {
     ENTER_GET_PLAYLIST ();
 
+    if (at < 0 || number < 0 || at + number > playlist->queued.len ())
+        RETURN ();
+
     int entries = playlist->entries.len ();
     int first = entries, last = 0;
 
-    if (at == 0)
+    for (int i = at; i < at + number; i ++)
     {
-        while (playlist->queued && number --)
-        {
-            Entry * entry = (Entry *) playlist->queued->data;
-            entry->queued = FALSE;
-            first = MIN (first, entry->number);
-            last = entry->number;
-
-            playlist->queued = g_list_delete_link (playlist->queued, playlist->queued);
-        }
-    }
-    else
-    {
-        GList * anchor = g_list_nth (playlist->queued, at - 1);
-        if (! anchor)
-            goto DONE;
-
-        while (anchor->next && number --)
-        {
-            Entry * entry = (Entry *) anchor->next->data;
-            entry->queued = FALSE;
-            first = MIN (first, entry->number);
-            last = entry->number;
-
-            playlist->queued = g_list_delete_link (playlist->queued, anchor->next);
-        }
+        Entry * entry = playlist->queued[i];
+        entry->queued = FALSE;
+        first = MIN (first, entry->number);
+        last = entry->number;
     }
 
-DONE:
+    playlist->queued.remove (at, number);
+
     if (first < entries)
         queue_update (PLAYLIST_UPDATE_SELECTION, playlist, first, last + 1 - first);
 
@@ -1821,20 +1813,19 @@ EXPORT void aud_playlist_queue_delete_selected (int playlist_num)
     int entries = playlist->entries.len ();
     int first = entries, last = 0;
 
-    for (GList * node = playlist->queued; node; )
+    for (int i = 0; i < playlist->queued.len ();)
     {
-        GList * next = node->next;
-        Entry * entry = (Entry *) node->data;
+        Entry * entry = playlist->queued[i];
 
         if (entry->selected)
         {
+            playlist->queued.remove (i, 1);
             entry->queued = FALSE;
-            playlist->queued = g_list_delete_link (playlist->queued, node);
             first = MIN (first, entry->number);
             last = entry->number;
         }
-
-        node = next;
+        else
+            i ++;
     }
 
     if (first < entries)
@@ -1947,10 +1938,10 @@ static bool_t next_song_locked (Playlist * playlist, bool_t repeat, int hint)
     if (! entries)
         return FALSE;
 
-    if (playlist->queued)
+    if (playlist->queued.len ())
     {
-        set_position (playlist, (Entry *) playlist->queued->data, TRUE);
-        playlist->queued = g_list_remove (playlist->queued, playlist->position);
+        set_position (playlist, playlist->queued[0], TRUE);
+        playlist->queued.remove (0, 1);
         playlist->position->queued = FALSE;
     }
     else if (aud_get_bool (NULL, "shuffle"))
