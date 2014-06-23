@@ -1,5 +1,5 @@
 /*
- * eventqueue.c
+ * eventqueue.cc
  * Copyright 2011-2014 John Lindgren, Michał Lipski
  *
  * Redistribution and use in source and binary forms, with or without
@@ -48,27 +48,24 @@ static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 static List<Event> events;
 static QueuedFunc queued_events;
 
-static void events_execute (void * unused)
+static void events_execute (void *)
 {
-    while (1)
+    pthread_mutex_lock (& mutex);
+
+    Event * event;
+    while ((event = events.head ()))
     {
-        pthread_mutex_lock (& mutex);
-
-        Event * event = events.head ();
-        if (! event)
-        {
-            pthread_mutex_unlock (& mutex);
-            return;
-        }
-
         events.remove (event);
 
         pthread_mutex_unlock (& mutex);
 
         hook_call (event->name, event->data);
-
         delete event;
+
+        pthread_mutex_lock (& mutex);
     }
+
+    pthread_mutex_unlock (& mutex);
 }
 
 EXPORT void event_queue_full (const char * name, void * data, EventDestroyFunc destroy)
