@@ -147,34 +147,29 @@ typedef GMainLoop MainLoop;
 
 #endif // ! USE_QT
 
-void QueuedFunc::queue (Func func, void * data)
+EXPORT void QueuedFunc::queue (Func func, void * data)
 {
     int new_serial = __sync_add_and_fetch (& serial, 1);
     ADD_QUEUED ({this, func, data, new_serial});
 }
 
-void QueuedFunc::start (int interval_ms, Func func, void * data)
+EXPORT void QueuedFunc::start (int interval_ms, Func func, void * data)
 {
     _running = true;
     int new_serial = __sync_add_and_fetch (& serial, 1);
     ADD_TIMED (interval_ms, {this, func, data, new_serial});
 }
 
-void QueuedFunc::stop ()
+EXPORT void QueuedFunc::stop ()
 {
     __sync_add_and_fetch (& serial, 1);
     _running = false;
 }
 
-bool QueuedFunc::running ()
-{
-    return _running;
-}
-
 static MainLoop * mainloop;
 static pthread_mutex_t mainloop_mutex = PTHREAD_MUTEX_INITIALIZER;
 
-void mainloop_run ()
+EXPORT void mainloop_run ()
 {
     pthread_mutex_lock (& mainloop_mutex);
 
@@ -193,7 +188,7 @@ void mainloop_run ()
     pthread_mutex_unlock (& mainloop_mutex);
 }
 
-void mainloop_quit ()
+EXPORT void mainloop_quit ()
 {
     pthread_mutex_lock (& mainloop_mutex);
 

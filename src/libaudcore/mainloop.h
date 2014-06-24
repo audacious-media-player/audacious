@@ -35,7 +35,9 @@ public:
     void queue (Func func, void * data);
     void start (int interval_ms, Func func, void * data);
     void stop ();
-    bool running ();
+
+    bool running ()
+        { return _running; }
 
 private:
     int serial;
@@ -44,6 +46,5 @@ private:
 
 void mainloop_run ();
 void mainloop_quit ();
-bool mainloop_running ();
 
 #endif // LIBAUDCORE_MAINLOOP_H
