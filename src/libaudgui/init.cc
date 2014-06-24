@@ -67,7 +67,7 @@ static gboolean configure_cb (GtkWidget * window, GdkEventConfigure * event, con
         aud_set_str ("audgui", name, int_array_to_str (pos, 4));
     }
 
-    return FALSE;
+    return false;
 }
 
 void audgui_show_unique_window (int id, GtkWidget * widget)
@@ -100,13 +100,13 @@ void audgui_show_unique_window (int id, GtkWidget * widget)
 
 bool audgui_reshow_unique_window (int id)
 {
-    g_return_val_if_fail (id >= 0 && id < AUDGUI_NUM_UNIQUE_WINDOWS, FALSE);
+    g_return_val_if_fail (id >= 0 && id < AUDGUI_NUM_UNIQUE_WINDOWS, false);
 
     if (! windows[id])
-        return FALSE;
+        return false;
 
     gtk_window_present ((GtkWindow *) windows[id]);
-    return TRUE;
+    return true;
 }
 
 void audgui_hide_unique_window (int id)

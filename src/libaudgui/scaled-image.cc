@@ -77,7 +77,7 @@ static int expose_cb (GtkWidget * widget, GdkEventExpose * event)
         cairo_destroy (cr);
     }
 
-    return TRUE;
+    return true;
 }
 
 EXPORT void audgui_scaled_image_set (GtkWidget * widget, GdkPixbuf * pixbuf)

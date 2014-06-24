@@ -81,7 +81,7 @@ static gboolean list_watcher (PluginHandle * p, Node * n)
     gtk_tree_model_get_iter (n->model, & iter, n->path);
     gtk_list_store_set ((GtkListStore *) n->model, & iter, PVIEW_COL_ENABLED,
      aud_plugin_get_enabled (n->p), -1);
-    return TRUE;
+    return true;
 }
 
 static gboolean fill_cb (PluginHandle * p, GtkTreeModel * model)
@@ -100,7 +100,7 @@ static gboolean fill_cb (PluginHandle * p, GtkTreeModel * model)
 
     aud_plugin_add_watch (p, (PluginForEachFunc) list_watcher, n);
 
-    return TRUE;
+    return true;
 }
 
 static void list_fill (GtkTreeView * tree, void * type)
@@ -111,23 +111,23 @@ static void list_fill (GtkTreeView * tree, void * type)
 
     GtkTreeViewColumn * col = gtk_tree_view_column_new ();
     gtk_tree_view_column_set_sizing (col, GTK_TREE_VIEW_COLUMN_GROW_ONLY);
-    gtk_tree_view_column_set_resizable (col, FALSE);
+    gtk_tree_view_column_set_resizable (col, false);
     gtk_tree_view_append_column (tree, col);
 
     GtkCellRenderer * rend = gtk_cell_renderer_toggle_new ();
     g_signal_connect (rend, "toggled", (GCallback) do_enable, model);
-    gtk_tree_view_column_pack_start (col, rend, FALSE);
+    gtk_tree_view_column_pack_start (col, rend, false);
     gtk_tree_view_column_set_attributes (col, rend, "active", PVIEW_COL_ENABLED,
      nullptr);
 
     col = gtk_tree_view_column_new ();
     gtk_tree_view_column_set_sizing (col, GTK_TREE_VIEW_COLUMN_FIXED);
-    gtk_tree_view_column_set_expand (col, TRUE);
-    gtk_tree_view_column_set_resizable (col, FALSE);
+    gtk_tree_view_column_set_expand (col, true);
+    gtk_tree_view_column_set_resizable (col, false);
     gtk_tree_view_append_column (tree, col);
 
     rend = gtk_cell_renderer_text_new ();
-    gtk_tree_view_column_pack_start (col, rend, FALSE);
+    gtk_tree_view_column_pack_start (col, rend, false);
     gtk_tree_view_column_set_attributes (col, rend, "text", PVIEW_COL_NAME, nullptr);
 
     aud_plugin_for_each (GPOINTER_TO_INT (type), (PluginForEachFunc) fill_cb, model);
@@ -161,13 +161,13 @@ static void list_destroy (GtkTreeView * tree)
 static gboolean config_watcher (PluginHandle * p, GtkWidget * config)
 {
     gtk_widget_set_sensitive (config, aud_plugin_has_configure (p) && aud_plugin_get_enabled (p));
-    return TRUE;
+    return true;
 }
 
 static gboolean about_watcher (PluginHandle * p, GtkWidget * about)
 {
     gtk_widget_set_sensitive (about, aud_plugin_has_about (p) && aud_plugin_get_enabled (p));
-    return TRUE;
+    return true;
 }
 
 static void button_update (GtkTreeView * tree, GtkWidget * b)
@@ -188,7 +188,7 @@ static void button_update (GtkTreeView * tree, GtkWidget * b)
         aud_plugin_add_watch (p, watcher, b);
     }
     else
-        gtk_widget_set_sensitive (b, FALSE);
+        gtk_widget_set_sensitive (b, false);
 }
 
 static void do_config (void * tree)
@@ -218,11 +218,11 @@ static void button_destroy (GtkWidget * b)
 
 GtkWidget * plugin_view_new (int type)
 {
-    GtkWidget * vbox = gtk_vbox_new (FALSE, 6);
+    GtkWidget * vbox = gtk_vbox_new (false, 6);
     gtk_container_set_border_width ((GtkContainer *) vbox, 6);
 
     GtkWidget * scrolled = gtk_scrolled_window_new (nullptr, nullptr);
-    gtk_box_pack_start ((GtkBox *) vbox, scrolled, TRUE, TRUE, 0);
+    gtk_box_pack_start ((GtkBox *) vbox, scrolled, true, true, 0);
     gtk_scrolled_window_set_policy ((GtkScrolledWindow *) scrolled,
      GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
     gtk_scrolled_window_set_shadow_type ((GtkScrolledWindow *) scrolled,
@@ -230,25 +230,25 @@ GtkWidget * plugin_view_new (int type)
 
     GtkWidget * tree = gtk_tree_view_new ();
     gtk_container_add ((GtkContainer *) scrolled, tree);
-    gtk_tree_view_set_headers_visible ((GtkTreeView *) tree, FALSE);
+    gtk_tree_view_set_headers_visible ((GtkTreeView *) tree, false);
     g_signal_connect (tree, "realize", (GCallback) list_fill, GINT_TO_POINTER
      (type));
     g_signal_connect (tree, "destroy", (GCallback) list_destroy, nullptr);
 
-    GtkWidget * hbox = gtk_hbox_new (FALSE, 6);
-    gtk_box_pack_start ((GtkBox *) vbox, hbox, FALSE, FALSE, 0);
+    GtkWidget * hbox = gtk_hbox_new (false, 6);
+    gtk_box_pack_start ((GtkBox *) vbox, hbox, false, false, 0);
 
     GtkWidget * config = audgui_button_new (_("_Settings"),
      "preferences-system", do_config, tree);
-    gtk_box_pack_start ((GtkBox *) hbox, config, FALSE, FALSE, 0);
-    gtk_widget_set_sensitive (config, FALSE);
+    gtk_box_pack_start ((GtkBox *) hbox, config, false, false, 0);
+    gtk_widget_set_sensitive (config, false);
     g_object_set_data ((GObject *) config, "watcher", (void *) config_watcher);
     g_signal_connect (tree, "cursor-changed", (GCallback) button_update, config);
     g_signal_connect (config, "destroy", (GCallback) button_destroy, nullptr);
 
     GtkWidget * about = audgui_button_new (_("_About"), "help-about", do_about, tree);
-    gtk_box_pack_start ((GtkBox *) hbox, about, FALSE, FALSE, 0);
-    gtk_widget_set_sensitive (about, FALSE);
+    gtk_box_pack_start ((GtkBox *) hbox, about, false, false, 0);
+    gtk_widget_set_sensitive (about, false);
     g_object_set_data ((GObject *) about, "watcher", (void *) about_watcher);
     g_signal_connect (tree, "cursor-changed", (GCallback) button_update, about);
     g_signal_connect (about, "destroy", (GCallback) button_destroy, nullptr);

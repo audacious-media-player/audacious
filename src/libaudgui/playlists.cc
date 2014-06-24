@@ -70,7 +70,7 @@ static void finish_job (void * data)
         else
         {
             aud_playlist_entry_delete (list, 0, aud_playlist_entry_count (list));
-            aud_playlist_entry_insert (list, 0, job->filename, Tuple (), FALSE);
+            aud_playlist_entry_insert (list, 0, job->filename, Tuple (), false);
         }
     }
 
@@ -143,7 +143,7 @@ static void create_selector (ImportExportJob * job, const char * filename, const
     gtk_dialog_add_action_widget ((GtkDialog *) job->selector, button2, GTK_RESPONSE_NONE);
     gtk_dialog_add_action_widget ((GtkDialog *) job->selector, button1, GTK_RESPONSE_NONE);
 
-    gtk_widget_set_can_default (button1, TRUE);
+    gtk_widget_set_can_default (button1, true);
     gtk_widget_grab_default (button1);
 
     g_signal_connect_swapped (job->selector, "destroy", (GCallback) cleanup_job, job);
@@ -170,10 +170,10 @@ static GtkWidget * start_job (gboolean save)
 
 EXPORT void audgui_import_playlist (void)
 {
-    audgui_show_unique_window (AUDGUI_PLAYLIST_IMPORT_WINDOW, start_job (FALSE));
+    audgui_show_unique_window (AUDGUI_PLAYLIST_IMPORT_WINDOW, start_job (false));
 }
 
 EXPORT void audgui_export_playlist (void)
 {
-    audgui_show_unique_window (AUDGUI_PLAYLIST_EXPORT_WINDOW, start_job (TRUE));
+    audgui_show_unique_window (AUDGUI_PLAYLIST_EXPORT_WINDOW, start_job (true));
 }

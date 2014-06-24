@@ -86,7 +86,7 @@ static gboolean infopopup_progress_cb (void * unused)
     else
         gtk_widget_hide (widgets.progress);
 
-    return TRUE;
+    return true;
 }
 
 static void infopopup_add_category (GtkWidget * grid, int position,
@@ -128,19 +128,19 @@ static GtkWidget * infopopup_create (void)
 {
     GtkWidget * infopopup = gtk_window_new (GTK_WINDOW_POPUP);
     gtk_window_set_type_hint ((GtkWindow *) infopopup, GDK_WINDOW_TYPE_HINT_TOOLTIP);
-    gtk_window_set_decorated ((GtkWindow *) infopopup, FALSE);
+    gtk_window_set_decorated ((GtkWindow *) infopopup, false);
     gtk_container_set_border_width ((GtkContainer *) infopopup, 4);
 
-    GtkWidget * hbox = gtk_hbox_new (FALSE, 6);
+    GtkWidget * hbox = gtk_hbox_new (false, 6);
     gtk_container_add ((GtkContainer *) infopopup, hbox);
 
     widgets.image = gtk_image_new ();
     gtk_widget_set_size_request (widgets.image, IMAGE_SIZE, IMAGE_SIZE);
-    gtk_box_pack_start ((GtkBox *) hbox, widgets.image, FALSE, FALSE, 0);
+    gtk_box_pack_start ((GtkBox *) hbox, widgets.image, false, false, 0);
 
-    GtkWidget * grid = gtk_table_new (0, 0, FALSE);
+    GtkWidget * grid = gtk_table_new (0, 0, false);
     gtk_table_set_col_spacings ((GtkTable *) grid, 6);
-    gtk_box_pack_start ((GtkBox *) hbox, grid, TRUE, TRUE, 0);
+    gtk_box_pack_start ((GtkBox *) hbox, grid, true, true, 0);
 
     infopopup_add_category (grid, 0, _("Title"), & widgets.title_header, & widgets.title_label);
     infopopup_add_category (grid, 1, _("Artist"), & widgets.artist_header, & widgets.artist_label);
@@ -158,7 +158,7 @@ static GtkWidget * infopopup_create (void)
      GTK_FILL, GTK_FILL, 0, 0);
 
     /* do not show the track progress */
-    gtk_widget_set_no_show_all (widgets.progress, TRUE);
+    gtk_widget_set_no_show_all (widgets.progress, true);
 
     return infopopup;
 }
@@ -262,8 +262,8 @@ static void infopopup_show (const char * filename, const Tuple & tuple,
 EXPORT void audgui_infopopup_show (int playlist, int entry)
 {
     String filename = aud_playlist_entry_get_filename (playlist, entry);
-    String title = aud_playlist_entry_get_title (playlist, entry, FALSE);
-    Tuple tuple = aud_playlist_entry_get_tuple (playlist, entry, FALSE);
+    String title = aud_playlist_entry_get_title (playlist, entry, false);
+    Tuple tuple = aud_playlist_entry_get_tuple (playlist, entry, false);
 
     if (filename && title && tuple)
         infopopup_show (filename, tuple, title);

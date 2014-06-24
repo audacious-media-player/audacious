@@ -67,7 +67,7 @@ static struct {
 
 static char * current_file = nullptr;
 static PluginHandle * current_decoder = nullptr;
-static gboolean can_write = FALSE;
+static gboolean can_write = false;
 static int timeout_source = 0;
 
 /* This is by no means intended to be a complete list.  If it is not short, it
@@ -173,7 +173,7 @@ static void set_field_int_from_entry (Tuple & tuple, int fieldn, GtkWidget *
 static void entry_changed (GtkEditable * editable, void * unused)
 {
     if (can_write)
-        gtk_widget_set_sensitive (widgets.apply, TRUE);
+        gtk_widget_set_sensitive (widgets.apply, true);
 }
 
 static gboolean ministatus_timeout_proc (void)
@@ -181,7 +181,7 @@ static gboolean ministatus_timeout_proc (void)
     gtk_label_set_text ((GtkLabel *) widgets.ministatus, nullptr);
 
     timeout_source = 0;
-    return FALSE;
+    return false;
 }
 
 static void ministatus_display_message (const char * text)
@@ -212,7 +212,7 @@ static void infowin_update_tuple (void * unused)
     if (aud_file_write_tuple (current_file, current_decoder, tuple))
     {
         ministatus_display_message (_("Save successful"));
-        gtk_widget_set_sensitive (widgets.apply, FALSE);
+        gtk_widget_set_sensitive (widgets.apply, false);
     }
     else
         ministatus_display_message (_("Save error"));
@@ -232,7 +232,7 @@ static gboolean genre_fill (GtkWidget * combo)
         gtk_combo_box_text_append_text ((GtkComboBoxText *) combo, (const char *) node->data);
 
     g_list_free (list);
-    return FALSE;
+    return false;
 }
 
 static void infowin_display_image (const char * filename)
@@ -266,7 +266,7 @@ static void infowin_destroyed (void)
     str_unref (current_file);
     current_file = nullptr;
     current_decoder = nullptr;
-    can_write = FALSE;
+    can_write = false;
 }
 
 static void add_entry (GtkWidget * grid, const char * title, GtkWidget * entry,
@@ -290,7 +290,7 @@ static GtkWidget * create_infowin (void)
     gtk_window_set_type_hint ((GtkWindow *) infowin,
      GDK_WINDOW_TYPE_HINT_DIALOG);
 
-    GtkWidget * main_grid = gtk_table_new (0, 0, FALSE);
+    GtkWidget * main_grid = gtk_table_new (0, 0, false);
     gtk_table_set_col_spacings ((GtkTable *) main_grid, 6);
     gtk_table_set_row_spacings ((GtkTable *) main_grid, 6);
     gtk_container_add ((GtkContainer *) infowin, main_grid);
@@ -300,13 +300,13 @@ static GtkWidget * create_infowin (void)
 
     widgets.location = gtk_label_new ("");
     gtk_widget_set_size_request (widgets.location, 200, -1);
-    gtk_label_set_line_wrap ((GtkLabel *) widgets.location, TRUE);
+    gtk_label_set_line_wrap ((GtkLabel *) widgets.location, true);
     gtk_label_set_line_wrap_mode ((GtkLabel *) widgets.location, PANGO_WRAP_WORD_CHAR);
-    gtk_label_set_selectable ((GtkLabel *) widgets.location, TRUE);
+    gtk_label_set_selectable ((GtkLabel *) widgets.location, true);
     gtk_table_attach ((GtkTable *) main_grid, widgets.location, 0, 1, 1, 2,
      GTK_FILL, GTK_FILL, 0, 0);
 
-    GtkWidget * codec_grid = gtk_table_new (0, 0, FALSE);
+    GtkWidget * codec_grid = gtk_table_new (0, 0, false);
     gtk_table_set_row_spacings ((GtkTable *) codec_grid, 2);
     gtk_table_set_col_spacings ((GtkTable *) codec_grid, 12);
     gtk_table_attach ((GtkTable *) main_grid, codec_grid, 0, 1, 2, 3,
@@ -323,7 +323,7 @@ static GtkWidget * create_infowin (void)
          GTK_FILL, GTK_FILL, 0, 0);
     }
 
-    GtkWidget * grid = gtk_table_new (0, 0, FALSE);
+    GtkWidget * grid = gtk_table_new (0, 0, false);
     gtk_table_set_row_spacings ((GtkTable *) grid, 2);
     gtk_table_set_col_spacings ((GtkTable *) grid, 6);
     gtk_table_attach ((GtkTable *) main_grid, grid, 1, 2, 0, 3,
@@ -351,12 +351,12 @@ static GtkWidget * create_infowin (void)
     widgets.track = gtk_entry_new ();
     add_entry (grid, _("Track Number"), widgets.track, 1, 10, 1);
 
-    GtkWidget * bottom_hbox = gtk_hbox_new (FALSE, 6);
+    GtkWidget * bottom_hbox = gtk_hbox_new (false, 6);
     gtk_table_attach ((GtkTable *) main_grid, bottom_hbox, 0, 2, 3, 4,
      GTK_FILL, GTK_FILL, 0, 0);
 
     widgets.ministatus = small_label_new (nullptr);
-    gtk_box_pack_start ((GtkBox *) bottom_hbox, widgets.ministatus, TRUE, TRUE, 0);
+    gtk_box_pack_start ((GtkBox *) bottom_hbox, widgets.ministatus, true, true, 0);
 
     widgets.apply = audgui_button_new (_("_Save"), "document-save",
      (AudguiCallback) infowin_update_tuple, nullptr);
@@ -364,8 +364,8 @@ static GtkWidget * create_infowin (void)
     GtkWidget * close_button = audgui_button_new (_("_Close"), "window-close",
      (AudguiCallback) audgui_infowin_hide, nullptr);
 
-    gtk_box_pack_end ((GtkBox *) bottom_hbox, close_button, FALSE, FALSE, 0);
-    gtk_box_pack_end ((GtkBox *) bottom_hbox, widgets.apply, FALSE, FALSE, 0);
+    gtk_box_pack_end ((GtkBox *) bottom_hbox, close_button, false, false, 0);
+    gtk_box_pack_end ((GtkBox *) bottom_hbox, widgets.apply, false, false, 0);
 
     audgui_destroy_on_escape (infowin);
     g_signal_connect (infowin, "destroy", (GCallback) infowin_destroyed, nullptr);
@@ -417,7 +417,7 @@ static void infowin_show (int list, int entry, const char * filename,
     infowin_display_image (filename);
 
     /* nothing has been changed yet */
-    gtk_widget_set_sensitive (widgets.apply, FALSE);
+    gtk_widget_set_sensitive (widgets.apply, false);
 
     audgui_show_unique_window (AUDGUI_INFO_WINDOW, infowin);
 }
@@ -427,11 +427,11 @@ EXPORT void audgui_infowin_show (int playlist, int entry)
     String filename = aud_playlist_entry_get_filename (playlist, entry);
     g_return_if_fail (filename != nullptr);
 
-    PluginHandle * decoder = aud_playlist_entry_get_decoder (playlist, entry, FALSE);
+    PluginHandle * decoder = aud_playlist_entry_get_decoder (playlist, entry, false);
 
     if (decoder && ! aud_custom_infowin (filename, decoder))
     {
-        Tuple tuple = aud_playlist_entry_get_tuple (playlist, entry, FALSE);
+        Tuple tuple = aud_playlist_entry_get_tuple (playlist, entry, false);
 
         if (tuple)
             infowin_show (playlist, entry, filename, tuple, decoder,

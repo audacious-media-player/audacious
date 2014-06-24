@@ -60,10 +60,10 @@ static gboolean escape_destroy_cb (GtkWidget * widget, GdkEventKey * event)
     if (event->keyval == GDK_KEY_Escape)
     {
         gtk_widget_destroy (widget);
-        return TRUE;
+        return true;
     }
 
-    return FALSE;
+    return false;
 }
 
 EXPORT void audgui_destroy_on_escape (GtkWidget * widget)
@@ -104,7 +104,7 @@ EXPORT GtkWidget * audgui_dialog_new (GtkMessageType type, const char * title,
     gtk_dialog_add_action_widget ((GtkDialog *) dialog, button1, GTK_RESPONSE_NONE);
     g_signal_connect_swapped (button1, "clicked", (GCallback) gtk_widget_destroy, dialog);
 
-    gtk_widget_set_can_default (button1, TRUE);
+    gtk_widget_set_can_default (button1, true);
     gtk_widget_grab_default (button1);
 
     return dialog;
@@ -113,7 +113,7 @@ EXPORT GtkWidget * audgui_dialog_new (GtkMessageType type, const char * title,
 EXPORT void audgui_dialog_add_widget (GtkWidget * dialog, GtkWidget * widget)
 {
     GtkWidget * box = gtk_message_dialog_get_message_area ((GtkMessageDialog *) dialog);
-    gtk_box_pack_start ((GtkBox *) box, widget, FALSE, FALSE, 0);
+    gtk_box_pack_start ((GtkBox *) box, widget, false, false, 0);
 }
 
 EXPORT void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,

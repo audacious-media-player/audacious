@@ -59,7 +59,7 @@ static GtkWidget * create_url_opener (gboolean open)
 
     GtkWidget * combo = gtk_combo_box_text_new_with_entry ();
     GtkWidget * entry = gtk_bin_get_child ((GtkBin *) combo);
-    gtk_entry_set_activates_default ((GtkEntry *) entry, TRUE);
+    gtk_entry_set_activates_default ((GtkEntry *) entry, true);
 
     for (int i = 0;; i++)
     {

@@ -43,7 +43,7 @@ EXPORT void audgui_jump_to_time (void)
         return;
 
     GtkWidget * entry = gtk_entry_new ();
-    gtk_entry_set_activates_default ((GtkEntry *) entry, TRUE);
+    gtk_entry_set_activates_default ((GtkEntry *) entry, true);
 
     GtkWidget * button1 = audgui_button_new (_("_Jump"), "go-jump", jump_cb, entry);
     GtkWidget * button2 = audgui_button_new (_("_Cancel"), "process-stop", nullptr, nullptr);

@@ -98,30 +98,30 @@ static GtkWidget * create_filebrowser (gboolean open)
     gtk_window_set_default_size(GTK_WINDOW(window), 700, 450);
     gtk_container_set_border_width(GTK_CONTAINER(window), 10);
 
-    GtkWidget * vbox = gtk_vbox_new (FALSE, 0);
+    GtkWidget * vbox = gtk_vbox_new (false, 0);
     gtk_container_add(GTK_CONTAINER(window), vbox);
 
     GtkWidget * chooser = gtk_file_chooser_widget_new(GTK_FILE_CHOOSER_ACTION_OPEN);
-    gtk_file_chooser_set_select_multiple(GTK_FILE_CHOOSER(chooser), TRUE);
+    gtk_file_chooser_set_select_multiple(GTK_FILE_CHOOSER(chooser), true);
 
     String path = aud_get_str ("audgui", "filesel_path");
     if (path[0])
         gtk_file_chooser_set_current_folder ((GtkFileChooser *) chooser, path);
 
-    gtk_box_pack_start(GTK_BOX(vbox), chooser, TRUE, TRUE, 3);
+    gtk_box_pack_start(GTK_BOX(vbox), chooser, true, true, 3);
 
-    GtkWidget * hbox = gtk_hbox_new (FALSE, 0);
-    gtk_box_pack_end(GTK_BOX(vbox), hbox, FALSE, FALSE, 3);
+    GtkWidget * hbox = gtk_hbox_new (false, 0);
+    gtk_box_pack_end(GTK_BOX(vbox), hbox, false, false, 3);
 
     GtkWidget * toggle = gtk_check_button_new_with_mnemonic (toggle_text);
     gtk_toggle_button_set_active ((GtkToggleButton *) toggle, aud_get_bool ("audgui", option));
     g_signal_connect (toggle, "toggled", (GCallback) toggled_cb, (void *) option);
-    gtk_box_pack_start(GTK_BOX(hbox), toggle, TRUE, TRUE, 3);
+    gtk_box_pack_start(GTK_BOX(hbox), toggle, true, true, 3);
 
     GtkWidget * bbox = gtk_hbutton_box_new ();
     gtk_button_box_set_layout(GTK_BUTTON_BOX(bbox), GTK_BUTTONBOX_END);
     gtk_box_set_spacing(GTK_BOX(bbox), 6);
-    gtk_box_pack_end(GTK_BOX(hbox), bbox, TRUE, TRUE, 3);
+    gtk_box_pack_end(GTK_BOX(hbox), bbox, true, true, 3);
 
     GtkWidget * action_button = audgui_button_new (verb, icon, open_cb, chooser);
     GtkWidget * close_button = audgui_button_new (_("_Close"), "window-close",
@@ -130,7 +130,7 @@ static GtkWidget * create_filebrowser (gboolean open)
     gtk_container_add(GTK_CONTAINER(bbox), close_button);
     gtk_container_add(GTK_CONTAINER(bbox), action_button);
 
-    gtk_widget_set_can_default (action_button, TRUE);
+    gtk_widget_set_can_default (action_button, true);
     gtk_widget_grab_default (action_button);
 
     g_object_set_data ((GObject *) chooser, "toggle-button", toggle);

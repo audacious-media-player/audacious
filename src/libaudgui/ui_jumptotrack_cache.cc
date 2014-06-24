@@ -73,16 +73,16 @@ static gboolean
 ui_jump_to_track_match(const char * song, GSList *regex_list)
 {
     if ( song == nullptr )
-        return FALSE;
+        return false;
 
     for ( ; regex_list ; regex_list = g_slist_next(regex_list) )
     {
         GRegex * regex = (GRegex *) regex_list->data;
         if (! g_regex_match (regex, song, (GRegexMatchFlags) 0, nullptr))
-            return FALSE;
+            return false;
     }
 
-    return TRUE;
+    return true;
 }
 
 /**

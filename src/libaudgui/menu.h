@@ -68,7 +68,7 @@ constexpr AudguiMenuItem MenuSub (const char * name, const char * icon,
     { return {name, icon, 0, (GdkModifierType) 0, 0, 0, 0, 0, 0, 0, get_sub}; }
 
 constexpr AudguiMenuItem MenuSep ()
-    { return {0, 0, 0, (GdkModifierType) 0, 0, 0, 0, 0, 0, 0, 0, TRUE}; }
+    { return {0, 0, 0, (GdkModifierType) 0, 0, 0, 0, 0, 0, 0, 0, true}; }
 
 /* use nullptr for domain to skip translation */
 GtkWidget * audgui_menu_item_new_with_domain (const AudguiMenuItem * item,

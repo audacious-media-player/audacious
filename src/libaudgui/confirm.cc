@@ -79,7 +79,7 @@ EXPORT void audgui_show_playlist_rename (int playlist)
 {
     GtkWidget * entry = gtk_entry_new ();
     gtk_entry_set_text ((GtkEntry *) entry, aud_playlist_get_title (playlist));
-    gtk_entry_set_activates_default ((GtkEntry *) entry, TRUE);
+    gtk_entry_set_activates_default ((GtkEntry *) entry, true);
 
     int id = aud_playlist_get_unique_id (playlist);
     g_object_set_data ((GObject *) entry, "playlist-id", GINT_TO_POINTER (id));

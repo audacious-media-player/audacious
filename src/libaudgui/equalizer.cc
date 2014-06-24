@@ -63,23 +63,23 @@ static void slider_moved (GtkRange * slider, void * unused)
 
 static GtkWidget * create_slider (const char * name, int band, GtkWidget * hbox)
 {
-    GtkWidget * vbox = gtk_vbox_new (FALSE, 6);
+    GtkWidget * vbox = gtk_vbox_new (false, 6);
 
     GtkWidget * label = gtk_label_new (name);
     gtk_label_set_angle ((GtkLabel *) label, 90);
-    gtk_box_pack_start ((GtkBox *) vbox, label, TRUE, FALSE, 0);
+    gtk_box_pack_start ((GtkBox *) vbox, label, true, false, 0);
 
     GtkWidget * slider = gtk_vscale_new_with_range (-AUD_EQ_MAX_GAIN, AUD_EQ_MAX_GAIN, 1);
-    gtk_scale_set_draw_value ((GtkScale *) slider, TRUE);
+    gtk_scale_set_draw_value ((GtkScale *) slider, true);
     gtk_scale_set_value_pos ((GtkScale *) slider, GTK_POS_BOTTOM);
-    gtk_range_set_inverted ((GtkRange *) slider, TRUE);
+    gtk_range_set_inverted ((GtkRange *) slider, true);
     gtk_widget_set_size_request (slider, -1, 120);
 
     g_object_set_data ((GObject *) slider, "band", GINT_TO_POINTER (band));
     g_signal_connect ((GObject *) slider, "value-changed", (GCallback) slider_moved, nullptr);
 
-    gtk_box_pack_start ((GtkBox *) vbox, slider, FALSE, FALSE, 0);
-    gtk_box_pack_start ((GtkBox *) hbox, vbox, FALSE, FALSE, 0);
+    gtk_box_pack_start ((GtkBox *) vbox, slider, false, false, 0);
+    gtk_box_pack_start ((GtkBox *) hbox, vbox, false, false, 0);
 
     return slider;
 }
@@ -123,22 +123,22 @@ static GtkWidget * create_window (void)
     GtkWidget * window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title ((GtkWindow *) window, _("Equalizer"));
     gtk_window_set_type_hint ((GtkWindow *) window, GDK_WINDOW_TYPE_HINT_DIALOG);
-    gtk_window_set_resizable ((GtkWindow *) window, FALSE);
+    gtk_window_set_resizable ((GtkWindow *) window, false);
     gtk_container_set_border_width ((GtkContainer *) window, 6);
     audgui_destroy_on_escape (window);
 
-    GtkWidget * vbox = gtk_vbox_new (FALSE, 6);
+    GtkWidget * vbox = gtk_vbox_new (false, 6);
     gtk_container_add ((GtkContainer *) window, vbox);
 
-    gtk_box_pack_start ((GtkBox *) vbox, create_on_off (), FALSE, FALSE, 0);
+    gtk_box_pack_start ((GtkBox *) vbox, create_on_off (), false, false, 0);
 
-    GtkWidget * hbox = gtk_hbox_new (FALSE, 6);
-    gtk_box_pack_start ((GtkBox *) vbox, hbox, FALSE, FALSE, 0);
+    GtkWidget * hbox = gtk_hbox_new (false, 6);
+    gtk_box_pack_start ((GtkBox *) vbox, hbox, false, false, 0);
 
     GtkWidget * preamp = create_slider (_("Preamp"), -1, hbox);
     g_object_set_data ((GObject *) window, "preamp", preamp);
 
-    gtk_box_pack_start ((GtkBox *) hbox, gtk_vseparator_new (), FALSE, FALSE, 0);
+    gtk_box_pack_start ((GtkBox *) hbox, gtk_vseparator_new (), false, false, 0);
 
     for (int i = 0; i < AUD_EQ_NBANDS; i ++)
     {

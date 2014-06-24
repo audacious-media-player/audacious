@@ -68,7 +68,7 @@ EXPORT void audgui_urilist_open (const char * list)
 
 EXPORT void audgui_urilist_insert (int playlist, int at, const char * list)
 {
-    aud_playlist_entry_insert_batch (playlist, at, urilist_to_index (list), FALSE);
+    aud_playlist_entry_insert_batch (playlist, at, urilist_to_index (list), false);
 }
 
 EXPORT char * audgui_urilist_create_from_selected (int playlist)

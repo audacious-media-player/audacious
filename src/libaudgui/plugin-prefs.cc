@@ -59,7 +59,7 @@ static void destroy_cb (GtkWidget * window, PluginHandle * plugin)
 static bool watch_cb (PluginHandle * plugin, void * window)
 {
     if (aud_plugin_get_enabled (plugin))
-        return TRUE;
+        return true;
 
     GList * * list = & about_windows;
     GList * node = g_list_find (* list, window);
@@ -68,7 +68,7 @@ static bool watch_cb (PluginHandle * plugin, void * window)
     {
         list = & config_windows;
         node = g_list_find (* list, window);
-        g_return_val_if_fail (node, FALSE);
+        g_return_val_if_fail (node, false);
     }
 
     g_signal_handlers_disconnect_by_func (window, (void *) destroy_cb, plugin);
@@ -76,7 +76,7 @@ static bool watch_cb (PluginHandle * plugin, void * window)
 
     * list = g_list_delete_link (* list, node);
 
-    return FALSE;
+    return false;
 }
 
 EXPORT void audgui_show_plugin_about (PluginHandle * plugin)
@@ -180,9 +180,9 @@ EXPORT void audgui_show_plugin_prefs (PluginHandle * plugin)
     }
 
     GtkWidget * content = gtk_dialog_get_content_area ((GtkDialog *) window);
-    GtkWidget * box = gtk_vbox_new (FALSE, 0);
+    GtkWidget * box = gtk_vbox_new (false, 0);
     audgui_create_widgets_with_domain (box, p->widgets, p->n_widgets, header->domain);
-    gtk_box_pack_start ((GtkBox *) content, box, TRUE, TRUE, 0);
+    gtk_box_pack_start ((GtkBox *) content, box, true, true, 0);
 
     g_signal_connect (window, "response", (GCallback) response_cb, (void *) p);
     g_signal_connect (window, "destroy", (GCallback) cleanup_cb, (void *) p);

@@ -44,7 +44,7 @@ static void get_value (void * user, int row, int column, GValue * value)
         g_value_set_int (value, 1 + entry);
         break;
     case COLUMN_TITLE:;
-        g_value_set_string (value, aud_playlist_entry_get_title (list, entry, TRUE));
+        g_value_set_string (value, aud_playlist_entry_get_title (list, entry, true));
         break;
     }
 }
@@ -72,7 +72,7 @@ static void select_all (void * user, bool selected)
 
 static void shift_rows (void * user, int row, int before)
 {
-    GArray * shift = g_array_new (FALSE, FALSE, sizeof (int));
+    GArray * shift = g_array_new (false, false, sizeof (int));
     int list = aud_playlist_get_active ();
     int count = aud_playlist_queue_count (list);
 
@@ -94,7 +94,7 @@ static void shift_rows (void * user, int row, int before)
     for (unsigned i = 0; i < shift->len; i ++)
         aud_playlist_queue_insert (list, before + i, g_array_index (shift, int, i));
 
-    g_array_free (shift, TRUE);
+    g_array_free (shift, true);
 }
 
 static const AudguiListCallbacks callbacks = {
@@ -119,7 +119,7 @@ static void remove_selected (void * unused)
         if (aud_playlist_entry_get_selected (list, entry))
         {
             aud_playlist_queue_delete (list, i, 1);
-            aud_playlist_entry_set_selected (list, entry, FALSE);
+            aud_playlist_entry_set_selected (list, entry, false);
             count --;
         }
         else
@@ -156,15 +156,15 @@ static void destroy_cb (void)
 static gboolean keypress_cb (GtkWidget * widget, GdkEventKey * event)
 {
     if (event->keyval == GDK_KEY_A && (event->state & GDK_CONTROL_MASK))
-        select_all (nullptr, TRUE);
+        select_all (nullptr, true);
     else if (event->keyval == GDK_KEY_Delete)
         remove_selected (nullptr);
     else if (event->keyval == GDK_KEY_Escape)
         gtk_widget_destroy (widget);
     else
-        return FALSE;
+        return false;
 
-    return TRUE;
+    return true;
 }
 
 static GtkWidget * create_queue_manager (void)
@@ -177,11 +177,11 @@ static GtkWidget * create_queue_manager (void)
 
     GtkWidget * scrolled = gtk_scrolled_window_new (nullptr, nullptr);
     gtk_scrolled_window_set_shadow_type ((GtkScrolledWindow *) scrolled, GTK_SHADOW_IN);
-    gtk_box_pack_start ((GtkBox *) vbox, scrolled, TRUE, TRUE, 0);
+    gtk_box_pack_start ((GtkBox *) vbox, scrolled, true, true, 0);
 
     int count = aud_playlist_queue_count (aud_playlist_get_active ());
     GtkWidget * qm_list = audgui_list_new (& callbacks, nullptr, count);
-    gtk_tree_view_set_headers_visible ((GtkTreeView *) qm_list, FALSE);
+    gtk_tree_view_set_headers_visible ((GtkTreeView *) qm_list, false);
     audgui_list_add_column (qm_list, nullptr, 0, G_TYPE_INT, 7);
     audgui_list_add_column (qm_list, nullptr, 1, G_TYPE_STRING, -1);
     gtk_container_add ((GtkContainer *) scrolled, qm_list);
