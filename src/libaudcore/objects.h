@@ -20,7 +20,6 @@
 #ifndef LIBAUDCORE_OBJECTS_H
 #define LIBAUDCORE_OBJECTS_H
 
-#include <cstddef>
 #include <libaudcore/core.h>
 
 // Smart pointer.  Deletes object pointed to when the pointer goes out of scope.
@@ -126,7 +125,7 @@ public:
     explicit String (const char * str) :
         raw (str_get (str)) {}
 
-    String (std::nullptr_t) = delete;
+    String (decltype (nullptr)) = delete;
 
     operator const char * () const
         { return raw; }
