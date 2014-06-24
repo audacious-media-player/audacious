@@ -213,10 +213,6 @@ Entry::Entry (PlaylistAddItem && item) :
     number (-1),
     filename (item.filename),
     decoder (item.decoder),
-    formatted (nullptr),
-    title (nullptr),
-    artist (nullptr),
-    album (nullptr),
     length (0),
     failed (false),
     selected (false),
@@ -245,7 +241,6 @@ static int new_unique_id (int preferred)
 Playlist::Playlist (int id) :
     number (-1),
     unique_id (new_unique_id (id)),
-    filename (nullptr),
     title (_(default_title)),
     modified (true),
     position (nullptr),

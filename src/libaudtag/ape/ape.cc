@@ -357,7 +357,7 @@ static bool write_string_item (const Tuple & tuple, int field, VFSFile *
 {
     String value = tuple.get_str (field);
 
-    if (value == nullptr)
+    if (! value)
         return true;
 
     bool success = ape_write_item (handle, key, value, written_length);
