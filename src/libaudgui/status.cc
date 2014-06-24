@@ -40,13 +40,13 @@ static void create_progress_window (void)
     GtkWidget * vbox = gtk_vbox_new (FALSE, 6);
     gtk_container_add ((GtkContainer *) progress_window, vbox);
 
-    progress_label = gtk_label_new (NULL);
+    progress_label = gtk_label_new (nullptr);
     gtk_label_set_width_chars ((GtkLabel *) progress_label, 40);
     gtk_label_set_max_width_chars ((GtkLabel *) progress_label, 40);
     gtk_label_set_ellipsize ((GtkLabel *) progress_label, PANGO_ELLIPSIZE_MIDDLE);
     gtk_box_pack_start ((GtkBox *) vbox, progress_label, FALSE, FALSE, 0);
 
-    progress_label_2 = gtk_label_new (NULL);
+    progress_label_2 = gtk_label_new (nullptr);
     gtk_label_set_width_chars ((GtkLabel *) progress_label_2, 40);
     gtk_label_set_max_width_chars ((GtkLabel *) progress_label_2, 40);
     gtk_label_set_ellipsize ((GtkLabel *) progress_label, PANGO_ELLIPSIZE_MIDDLE);
@@ -87,10 +87,10 @@ static void show_error (void * data, void * user)
 
 void status_init (void)
 {
-    hook_associate ("ui show progress", show_progress, NULL);
-    hook_associate ("ui show progress 2", show_progress_2, NULL);
-    hook_associate ("ui hide progress", hide_progress, NULL);
-    hook_associate ("ui show error", show_error, NULL);
+    hook_associate ("ui show progress", show_progress, nullptr);
+    hook_associate ("ui show progress 2", show_progress_2, nullptr);
+    hook_associate ("ui hide progress", hide_progress, nullptr);
+    hook_associate ("ui show error", show_error, nullptr);
 }
 
 void status_cleanup (void)

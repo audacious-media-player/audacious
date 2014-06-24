@@ -48,7 +48,7 @@ static const float CF[AUD_EQ_NBANDS] = {31.25, 62.5, 125, 250, 500, 1000, 2000,
  4000, 8000, 16000};
 
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-static bool_t active;
+static bool active;
 static int channels, rate;
 static float a[AUD_EQ_NBANDS][2]; /* A weights */
 static float b[AUD_EQ_NBANDS][2]; /* B weights */
@@ -155,21 +155,21 @@ static void eq_update (void *data, void *user)
 {
     pthread_mutex_lock (& mutex);
 
-    active = aud_get_bool (NULL, "equalizer_active");
+    active = aud_get_bool (nullptr, "equalizer_active");
 
     double values[AUD_EQ_NBANDS];
     aud_eq_get_bands (values);
-    eq_set_bands_real (aud_get_double (NULL, "equalizer_preamp"), values);
+    eq_set_bands_real (aud_get_double (nullptr, "equalizer_preamp"), values);
 
     pthread_mutex_unlock (& mutex);
 }
 
 void eq_init (void)
 {
-    eq_update (NULL, NULL);
-    hook_associate ("set equalizer_active", eq_update, NULL);
-    hook_associate ("set equalizer_preamp", eq_update, NULL);
-    hook_associate ("set equalizer_bands", eq_update, NULL);
+    eq_update (nullptr, nullptr);
+    hook_associate ("set equalizer_active", eq_update, nullptr);
+    hook_associate ("set equalizer_preamp", eq_update, nullptr);
+    hook_associate ("set equalizer_bands", eq_update, nullptr);
 }
 
 void eq_cleanup (void)
@@ -182,13 +182,13 @@ void eq_cleanup (void)
 EXPORT void aud_eq_set_bands (const double *values)
 {
     StringBuf string = double_array_to_str (values, AUD_EQ_NBANDS);
-    aud_set_str (NULL, "equalizer_bands", string);
+    aud_set_str (nullptr, "equalizer_bands", string);
 }
 
 EXPORT void aud_eq_get_bands (double *values)
 {
     memset (values, 0, sizeof (double) * AUD_EQ_NBANDS);
-    String string = aud_get_str (NULL, "equalizer_bands");
+    String string = aud_get_str (nullptr, "equalizer_bands");
     str_to_double_array (string, values, AUD_EQ_NBANDS);
 }
 

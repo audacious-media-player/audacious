@@ -44,12 +44,12 @@ static GtkWidget * create_credits_notebook (const char * credits, const char * l
     {
         GtkWidget * label = gtk_label_new (titles[i]);
 
-        GtkWidget * scrolled = gtk_scrolled_window_new (NULL, NULL);
+        GtkWidget * scrolled = gtk_scrolled_window_new (nullptr, nullptr);
         gtk_widget_set_size_request (scrolled, -1, 200);
         gtk_scrolled_window_set_policy ((GtkScrolledWindow *) scrolled,
          GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 
-        GtkTextBuffer * buffer = gtk_text_buffer_new (NULL);
+        GtkTextBuffer * buffer = gtk_text_buffer_new (nullptr);
         gtk_text_buffer_set_text (buffer, text[i], -1);
         GtkWidget * text = gtk_text_view_new_with_buffer (buffer);
         gtk_text_view_set_editable ((GtkTextView *) text, FALSE);
@@ -82,7 +82,7 @@ static GtkWidget * create_about_window (void)
     GtkWidget * image = gtk_image_new_from_file (logo_path);
     gtk_box_pack_start ((GtkBox *) vbox, image, FALSE, FALSE, 0);
 
-    GtkWidget * label = gtk_label_new (NULL);
+    GtkWidget * label = gtk_label_new (nullptr);
     gtk_label_set_markup ((GtkLabel *) label, about_text);
     gtk_label_set_justify ((GtkLabel *) label, GTK_JUSTIFY_CENTER);
     gtk_box_pack_start ((GtkBox *) vbox, label, FALSE, FALSE, 0);
@@ -96,11 +96,11 @@ static GtkWidget * create_about_window (void)
     char * credits, * license;
 
     StringBuf credits_path = filename_build ({data_dir, "AUTHORS"});
-    if (! g_file_get_contents (credits_path, & credits, NULL, NULL))
+    if (! g_file_get_contents (credits_path, & credits, nullptr, nullptr))
         credits = g_strdup_printf ("Unable to load %s; check your installation.", (const char *) credits_path);
 
     StringBuf license_path = filename_build ({data_dir, "COPYING"});
-    if (! g_file_get_contents (license_path, & license, NULL, NULL))
+    if (! g_file_get_contents (license_path, & license, nullptr, nullptr))
         license = g_strdup_printf ("Unable to load %s; check your installation.", (const char *) license_path);
 
     g_strchomp (credits);

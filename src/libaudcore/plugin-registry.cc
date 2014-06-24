@@ -613,17 +613,17 @@ EXPORT const char * aud_plugin_get_name (PluginHandle * plugin)
     return dgettext (plugin->domain, plugin->name);
 }
 
-EXPORT bool_t aud_plugin_has_about (PluginHandle * plugin)
+EXPORT bool aud_plugin_has_about (PluginHandle * plugin)
 {
     return plugin->has_about;
 }
 
-EXPORT bool_t aud_plugin_has_configure (PluginHandle * plugin)
+EXPORT bool aud_plugin_has_configure (PluginHandle * plugin)
 {
     return plugin->has_configure;
 }
 
-EXPORT bool_t aud_plugin_get_enabled (PluginHandle * plugin)
+EXPORT bool aud_plugin_get_enabled (PluginHandle * plugin)
 {
     return plugin->enabled;
 }

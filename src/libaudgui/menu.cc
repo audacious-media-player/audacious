@@ -38,7 +38,7 @@ static GtkWidget * image_menu_item_new (const char * text, const char * icon)
 
 static void toggled_cb (GtkCheckMenuItem * check, const AudguiMenuItem * item)
 {
-    bool_t on = gtk_check_menu_item_get_active (check);
+    gboolean on = gtk_check_menu_item_get_active (check);
 
     if (aud_get_bool (item->csect, item->cname) == on)
         return;
@@ -66,12 +66,12 @@ EXPORT GtkWidget * audgui_menu_item_new_with_domain
  (const AudguiMenuItem * item, GtkAccelGroup * accel, const char * domain)
 {
     const char * name = domain ? dgettext (domain, item->name) : item->name;
-    GtkWidget * widget = NULL;
+    GtkWidget * widget = nullptr;
 
     if (name && item->func && ! item->cname) /* normal widget */
     {
         widget = image_menu_item_new (name, item->icon);
-        g_signal_connect (widget, "activate", item->func, NULL);
+        g_signal_connect (widget, "activate", item->func, nullptr);
     }
     else if (name && item->cname) /* toggle widget */
     {

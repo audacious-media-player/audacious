@@ -47,7 +47,7 @@ static struct {
     GtkWidget * progress;
 } widgets;
 
-static char * current_file = NULL;
+static char * current_file = nullptr;
 static int progress_source = 0;
 
 static void infopopup_display_image (const char * filename)
@@ -64,7 +64,7 @@ static void infopopup_display_image (const char * filename)
     g_object_unref (pb);
 }
 
-static bool_t infopopup_progress_cb (void * unused)
+static gboolean infopopup_progress_cb (void * unused)
 {
     String filename;
     int length = 0, time = 0;
@@ -76,7 +76,7 @@ static bool_t infopopup_progress_cb (void * unused)
         time = aud_drct_get_time ();
     }
 
-    if (aud_get_bool (NULL, "filepopup_showprogressbar") && filename &&
+    if (aud_get_bool (nullptr, "filepopup_showprogressbar") && filename &&
      current_file && ! strcmp (filename, current_file) && length > 0)
     {
         gtk_progress_bar_set_fraction ((GtkProgressBar *) widgets.progress, time / (float) length);
@@ -92,8 +92,8 @@ static bool_t infopopup_progress_cb (void * unused)
 static void infopopup_add_category (GtkWidget * grid, int position,
  const char * text, GtkWidget * * header, GtkWidget * * label)
 {
-    * header = gtk_label_new (NULL);
-    * label = gtk_label_new (NULL);
+    * header = gtk_label_new (nullptr);
+    * label = gtk_label_new (nullptr);
 
     gtk_misc_set_alignment ((GtkMisc *) * header, 0, 0.5);
     gtk_misc_set_alignment ((GtkMisc *) * label, 0, 0.5);
@@ -121,7 +121,7 @@ static void infopopup_destroyed (void)
     memset (& widgets, 0, sizeof widgets);
 
     str_unref (current_file);
-    current_file = NULL;
+    current_file = nullptr;
 }
 
 static GtkWidget * infopopup_create (void)
@@ -211,7 +211,7 @@ static void infopopup_move_to_mouse (GtkWidget * infopopup)
 {
     int x, y, h, w;
 
-    audgui_get_mouse_coords (NULL, & x, & y);
+    audgui_get_mouse_coords (nullptr, & x, & y);
     gtk_window_get_size ((GtkWindow *) infopopup, & w, & h);
 
     /* If we show the popup right under the cursor, the underlying window gets
@@ -242,17 +242,17 @@ static void infopopup_show (const char * filename, const Tuple & tuple,
     infopopup_set_fields (tuple, title);
     infopopup_display_image (filename);
 
-    hook_associate ("art ready", (HookFunction) infopopup_display_image, NULL);
+    hook_associate ("art ready", (HookFunction) infopopup_display_image, nullptr);
 
-    g_signal_connect (infopopup, "destroy", (GCallback) infopopup_destroyed, NULL);
+    g_signal_connect (infopopup, "destroy", (GCallback) infopopup_destroyed, nullptr);
 
     /* start a timer that updates a progress bar if the tooltip
        is shown for the song that is being currently played */
     if (! progress_source)
-        progress_source = g_timeout_add (500, infopopup_progress_cb, NULL);
+        progress_source = g_timeout_add (500, infopopup_progress_cb, nullptr);
 
     /* immediately run the callback once to update progressbar status */
-    infopopup_progress_cb (NULL);
+    infopopup_progress_cb (nullptr);
 
     infopopup_move_to_mouse (infopopup);
 

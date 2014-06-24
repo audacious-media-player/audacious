@@ -150,7 +150,7 @@ static bool read_frame (VFSFile * handle, int max_size, int version,
     }
 
     if (hdrsz > (unsigned) max_size || hdrsz == 0)
-        return FALSE;
+        return false;
 
     AUDDBG ("Found frame:\n");
     AUDDBG (" key = %.3s\n", header.key);
@@ -183,7 +183,7 @@ static int get_frame_id (const char * key)
     return -1;
 }
 
-static bool_t id3v22_can_handle_file (VFSFile * handle)
+static bool id3v22_can_handle_file (VFSFile * handle)
 {
     int version, header_size, data_size;
     bool syncsafe;
@@ -193,7 +193,7 @@ static bool_t id3v22_can_handle_file (VFSFile * handle)
      & data_size);
 }
 
-static bool_t id3v22_read_tag (Tuple & tuple, VFSFile * handle)
+static bool id3v22_read_tag (Tuple & tuple, VFSFile * handle)
 {
     int version, header_size, data_size;
     bool syncsafe;
@@ -268,7 +268,7 @@ static bool_t id3v22_read_tag (Tuple & tuple, VFSFile * handle)
     return true;
 }
 
-static bool_t id3v22_read_image (VFSFile * handle, void * * image_data, int64_t * image_size)
+static bool id3v22_read_image (VFSFile * handle, void * * image_data, int64_t * image_size)
 {
     int version, header_size, data_size, parsed;
     bool syncsafe;

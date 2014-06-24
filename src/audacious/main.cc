@@ -39,12 +39,12 @@
 #include "util.h"
 
 static struct {
-    bool_t help, version;
-    bool_t play, pause, play_pause, stop, fwd, rew;
-    bool_t enqueue, enqueue_to_temp;
-    bool_t mainwin, show_jump_box;
-    bool_t headless, quit_after_play;
-    bool_t verbose;
+    bool help, version;
+    bool play, pause, play_pause, stop, fwd, rew;
+    bool enqueue, enqueue_to_temp;
+    bool mainwin, show_jump_box;
+    bool headless, quit_after_play;
+    bool verbose;
 } options;
 
 static Index<PlaylistAddItem> filenames;
@@ -52,7 +52,7 @@ static Index<PlaylistAddItem> filenames;
 static const struct {
     const char * long_arg;
     char short_arg;
-    bool_t * value;
+    bool * value;
     const char * desc;
 } arg_map[] = {
     {"help", 'h', & options.help, N_("Show command-line help")},
@@ -72,10 +72,10 @@ static const struct {
     {"verbose", 'V', & options.verbose, N_("Print debugging messages")},
 };
 
-static bool_t parse_options (int argc, char * * argv)
+static bool parse_options (int argc, char * * argv)
 {
     char * cur = g_get_current_dir ();
-    bool_t success = TRUE;
+    bool success = true;
 
 #ifdef _WIN32
     Index<String> args = get_argv_utf8 ();
@@ -111,7 +111,7 @@ static bool_t parse_options (int argc, char * * argv)
             {
                 if (! strcmp (arg + 2, arg_map[i].long_arg))
                 {
-                    * arg_map[i].value = TRUE;
+                    * arg_map[i].value = true;
                     break;
                 }
             }
@@ -119,7 +119,7 @@ static bool_t parse_options (int argc, char * * argv)
             if (i == ARRAY_LEN (arg_map))
             {
                 fprintf (stderr, _("Unknown option: %s\n"), arg);
-                success = FALSE;
+                success = false;
                 goto OUT;
             }
         }
@@ -133,7 +133,7 @@ static bool_t parse_options (int argc, char * * argv)
                 {
                     if (arg[c] == arg_map[i].short_arg)
                     {
-                        * arg_map[i].value = TRUE;
+                        * arg_map[i].value = true;
                         break;
                     }
                 }
@@ -141,7 +141,7 @@ static bool_t parse_options (int argc, char * * argv)
                 if (i == ARRAY_LEN (arg_map))
                 {
                     fprintf (stderr, _("Unknown option: -%c\n"), arg[c]);
-                    success = FALSE;
+                    success = false;
                     goto OUT;
                 }
             }
@@ -173,20 +173,20 @@ static void print_help (void)
 #ifdef USE_DBUS
 static void do_remote (void)
 {
-    GDBusConnection * bus = NULL;
-    ObjAudacious * obj = NULL;
-    GError * error = NULL;
-    char * version = NULL;
+    GDBusConnection * bus = nullptr;
+    ObjAudacious * obj = nullptr;
+    GError * error = nullptr;
+    char * version = nullptr;
 
-    if (! (bus = g_bus_get_sync (G_BUS_TYPE_SESSION, NULL, & error)))
+    if (! (bus = g_bus_get_sync (G_BUS_TYPE_SESSION, nullptr, & error)))
         goto ERR;
 
     if (! (obj = obj_audacious_proxy_new_sync (bus, (GDBusProxyFlags) 0,
-     "org.atheme.audacious", "/org/atheme/audacious", NULL, & error)))
+     "org.atheme.audacious", "/org/atheme/audacious", nullptr, & error)))
         goto ERR;
 
     /* check whether remote is running */
-    obj_audacious_call_version_sync (obj, & version, NULL, NULL);
+    obj_audacious_call_version_sync (obj, & version, nullptr, nullptr);
 
     if (! version)
         goto DONE;
@@ -197,7 +197,7 @@ static void do_remote (void)
     if (! (filenames.len () || options.play || options.pause ||
      options.play_pause || options.stop || options.rew || options.fwd ||
      options.show_jump_box || options.mainwin))
-        options.mainwin = TRUE;
+        options.mainwin = true;
 
     if (filenames.len ())
     {
@@ -207,34 +207,34 @@ static void do_remote (void)
         for (int i = 0; i < n_filenames; i ++)
             list[i] = filenames[i].filename;
 
-        list[n_filenames] = NULL;
+        list[n_filenames] = nullptr;
 
         if (options.enqueue_to_temp)
-            obj_audacious_call_open_list_to_temp_sync (obj, list, NULL, NULL);
+            obj_audacious_call_open_list_to_temp_sync (obj, list, nullptr, nullptr);
         else if (options.enqueue)
-            obj_audacious_call_add_list_sync (obj, list, NULL, NULL);
+            obj_audacious_call_add_list_sync (obj, list, nullptr, nullptr);
         else
-            obj_audacious_call_open_list_sync (obj, list, NULL, NULL);
+            obj_audacious_call_open_list_sync (obj, list, nullptr, nullptr);
 
         g_free (list);
     }
 
     if (options.play)
-        obj_audacious_call_play_sync (obj, NULL, NULL);
+        obj_audacious_call_play_sync (obj, nullptr, nullptr);
     if (options.pause)
-        obj_audacious_call_pause_sync (obj, NULL, NULL);
+        obj_audacious_call_pause_sync (obj, nullptr, nullptr);
     if (options.play_pause)
-        obj_audacious_call_play_pause_sync (obj, NULL, NULL);
+        obj_audacious_call_play_pause_sync (obj, nullptr, nullptr);
     if (options.stop)
-        obj_audacious_call_stop_sync (obj, NULL, NULL);
+        obj_audacious_call_stop_sync (obj, nullptr, nullptr);
     if (options.rew)
-        obj_audacious_call_reverse_sync (obj, NULL, NULL);
+        obj_audacious_call_reverse_sync (obj, nullptr, nullptr);
     if (options.fwd)
-        obj_audacious_call_advance_sync (obj, NULL, NULL);
+        obj_audacious_call_advance_sync (obj, nullptr, nullptr);
     if (options.show_jump_box)
-        obj_audacious_call_show_jtf_box_sync (obj, TRUE, NULL, NULL);
+        obj_audacious_call_show_jtf_box_sync (obj, true, nullptr, nullptr);
     if (options.mainwin)
-        obj_audacious_call_show_main_win_sync (obj, TRUE, NULL, NULL);
+        obj_audacious_call_show_main_win_sync (obj, true, nullptr, nullptr);
 
     g_free (version);
     g_object_unref (obj);
@@ -255,21 +255,21 @@ DONE:
 
 static void do_commands (void)
 {
-    bool_t resume = aud_get_bool (NULL, "resume_playback_on_startup");
+    bool resume = aud_get_bool (nullptr, "resume_playback_on_startup");
 
     if (filenames.len ())
     {
         if (options.enqueue_to_temp)
         {
             aud_drct_pl_open_temp_list (std::move (filenames));
-            resume = FALSE;
+            resume = false;
         }
         else if (options.enqueue)
             aud_drct_pl_add_list (std::move (filenames), -1);
         else
         {
             aud_drct_pl_open_list (std::move (filenames));
-            resume = FALSE;
+            resume = false;
         }
     }
 
@@ -287,7 +287,7 @@ static void do_commands (void)
     if (options.show_jump_box && ! options.headless)
         aud_ui_show_jump_to_song ();
     if (options.mainwin && ! options.headless)
-        aud_ui_show (TRUE);
+        aud_ui_show (true);
 }
 
 static void main_cleanup (void)
@@ -299,7 +299,7 @@ static void main_cleanup (void)
     strpool_shutdown ();
 }
 
-static bool_t check_should_quit (void)
+static bool check_should_quit (void)
 {
     return options.quit_after_play && ! aud_drct_get_playing () &&
      ! aud_playlist_add_in_progress (-1);
@@ -365,9 +365,9 @@ int main (int argc, char * * argv)
     if (check_should_quit ())
         goto QUIT;
 
-    hook_associate ("playback stop", (HookFunction) maybe_quit, NULL);
-    hook_associate ("playlist add complete", (HookFunction) maybe_quit, NULL);
-    hook_associate ("quit", (HookFunction) aud_quit, NULL);
+    hook_associate ("playback stop", (HookFunction) maybe_quit, nullptr);
+    hook_associate ("playlist add complete", (HookFunction) maybe_quit, nullptr);
+    hook_associate ("quit", (HookFunction) aud_quit, nullptr);
 
     aud_run ();
 

@@ -73,7 +73,7 @@ EXPORT void event_queue_full (const char * name, void * data, EventDestroyFunc d
     pthread_mutex_lock (& mutex);
 
     if (! events.head ())
-        queued_events.queue (events_execute, NULL);
+        queued_events.queue (events_execute, nullptr);
 
     events.append (new Event (name, data, destroy));
 

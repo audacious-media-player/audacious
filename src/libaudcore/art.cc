@@ -116,7 +116,7 @@ static void request_callback (ScanRequest * request)
     item->art_file = scan_request_get_image_file (request);
     item->flag = FLAG_DONE;
 
-    queued_requests.queue (send_requests, NULL);
+    queued_requests.queue (send_requests, nullptr);
 
     pthread_mutex_unlock (& mutex);
 }
@@ -136,10 +136,10 @@ static ArtItem * art_item_get (const String & file)
         item = art_items.add (file, ArtItem ());
         item->refcount = 1; /* temporary reference */
 
-        scan_request (file, SCAN_IMAGE, NULL, request_callback);
+        scan_request (file, SCAN_IMAGE, nullptr, request_callback);
     }
 
-    return NULL;
+    return nullptr;
 }
 
 static void art_item_unref (const String & file, ArtItem * item)
@@ -171,8 +171,8 @@ static void release_current (void)
 
 void art_init (void)
 {
-    hook_associate ("playlist position", (HookFunction) release_current, NULL);
-    hook_associate ("playlist set playing", (HookFunction) release_current, NULL);
+    hook_associate ("playlist position", (HookFunction) release_current, nullptr);
+    hook_associate ("playlist set playing", (HookFunction) release_current, nullptr);
 }
 
 void art_cleanup (void)
@@ -191,7 +191,7 @@ void art_cleanup (void)
 
 EXPORT void aud_art_request_data (const char * file, const void * * data, int64_t * len)
 {
-    * data = NULL;
+    * data = nullptr;
     * len = 0;
 
     pthread_mutex_lock (& mutex);
@@ -219,7 +219,7 @@ UNLOCK:
 
 EXPORT const char * aud_art_request_file (const char * file)
 {
-    const char * art_file = NULL;
+    const char * art_file = nullptr;
     pthread_mutex_lock (& mutex);
 
     String key (file);

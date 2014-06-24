@@ -46,13 +46,13 @@ static void * memchr16 (const void * mem, int16_t chr, int len)
         len -= 2;
     }
 
-    return NULL;
+    return nullptr;
 }
 
 static void id3_strnlen (const char * data, int size, int encoding,
  int * bytes_without_nul, int * bytes_with_nul)
 {
-    bool_t is16 = (encoding == ID3_ENCODING_UTF16 || encoding == ID3_ENCODING_UTF16_BE);
+    bool is16 = (encoding == ID3_ENCODING_UTF16 || encoding == ID3_ENCODING_UTF16_BE);
     char * nul = is16 ? (char *) memchr16 (data, 0, size) : (char *) memchr (data, 0, size);
 
     if (nul)
@@ -152,7 +152,7 @@ void id3_decode_comment (Tuple & tuple, const char * data, int size)
         tuple.set_str (FIELD_COMMENT, value);
 }
 
-static bool_t decode_rva_block (const char * * _data, int * _size,
+static bool decode_rva_block (const char * * _data, int * _size,
  int * channel, int * adjustment, int * adjustment_unit, int * peak,
  int * peak_unit)
 {
@@ -161,7 +161,7 @@ static bool_t decode_rva_block (const char * * _data, int * _size,
     int peak_bits;
 
     if (size < 4)
-        return FALSE;
+        return false;
 
     * channel = data[0];
     * adjustment = (char) data[1]; /* first byte is signed */
@@ -181,7 +181,7 @@ static bool_t decode_rva_block (const char * * _data, int * _size,
         int count;
 
         if (bytes > size)
-            return FALSE;
+            return false;
 
         * peak = 0;
         * peak_unit = 1 << peak_bits;
@@ -202,7 +202,7 @@ static bool_t decode_rva_block (const char * * _data, int * _size,
 
     * _data = data;
     * _size = size;
-    return TRUE;
+    return true;
 }
 
 void id3_decode_rva (Tuple & tuple, const char * data, int size)
@@ -210,7 +210,7 @@ void id3_decode_rva (Tuple & tuple, const char * data, int size)
     const char * domain;
     int channel, adjustment, adjustment_unit, peak, peak_unit;
 
-    if (memchr (data, 0, size) == NULL)
+    if (memchr (data, 0, size) == nullptr)
         return;
 
     domain = data;
@@ -260,12 +260,12 @@ void id3_decode_rva (Tuple & tuple, const char * data, int size)
     }
 }
 
-bool_t id3_decode_picture (const char * data, int size, int * type,
+bool id3_decode_picture (const char * data, int size, int * type,
  void * * image_data, int64_t * image_size)
 {
     const char * nul;
     if (size < 2 || ! (nul = (char *) memchr (data + 1, 0, size - 2)))
-        return FALSE;
+        return false;
 
     const char * body = nul + 2;
     int body_size = data + size - body;
@@ -283,5 +283,5 @@ bool_t id3_decode_picture (const char * data, int size, int * type,
     AUDDBG ("Picture: mime = %s, type = %d, desc = %s, size = %d.\n", mime,
      * type, (const char *) desc, (int) * image_size);
 
-    return TRUE;
+    return true;
 }

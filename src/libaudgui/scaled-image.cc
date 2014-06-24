@@ -24,7 +24,7 @@ static GdkPixbuf * get_scaled (GtkWidget * widget, int maxwidth, int maxheight)
     GdkPixbuf * unscaled = (GdkPixbuf *) g_object_get_data ((GObject *) widget, "pixbuf-unscaled");
 
     if (! unscaled)
-        return NULL;
+        return nullptr;
 
     int width = gdk_pixbuf_get_width (unscaled);
     int height = gdk_pixbuf_get_height (unscaled);
@@ -93,22 +93,22 @@ EXPORT void audgui_scaled_image_set (GtkWidget * widget, GdkPixbuf * pixbuf)
         g_object_ref (pixbuf);
 
     g_object_set_data ((GObject *) widget, "pixbuf-unscaled", pixbuf);
-    g_object_set_data ((GObject *) widget, "pixbuf-scaled", NULL);
+    g_object_set_data ((GObject *) widget, "pixbuf-scaled", nullptr);
 
     gtk_widget_queue_draw (widget);
 }
 
 static void destroy_cb (GtkWidget * widget)
 {
-    audgui_scaled_image_set (widget, NULL);
+    audgui_scaled_image_set (widget, nullptr);
 }
 
 EXPORT GtkWidget * audgui_scaled_image_new (GdkPixbuf * pixbuf)
 {
     GtkWidget * widget = gtk_drawing_area_new ();
 
-    g_signal_connect (widget, "expose-event", (GCallback) expose_cb, NULL);
-    g_signal_connect (widget, "destroy", (GCallback) destroy_cb, NULL);
+    g_signal_connect (widget, "expose-event", (GCallback) expose_cb, nullptr);
+    g_signal_connect (widget, "destroy", (GCallback) destroy_cb, nullptr);
 
     audgui_scaled_image_set (widget, pixbuf);
 

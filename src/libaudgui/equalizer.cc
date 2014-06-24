@@ -31,22 +31,22 @@
 
 static void on_off_cb (GtkToggleButton * on_off, void * unused)
 {
-    aud_set_bool (NULL, "equalizer_active", gtk_toggle_button_get_active (on_off));
+    aud_set_bool (nullptr, "equalizer_active", gtk_toggle_button_get_active (on_off));
 }
 
 static void on_off_update (void * unused, GtkWidget * on_off)
 {
     gtk_toggle_button_set_active ((GtkToggleButton *) on_off, aud_get_bool
-     (NULL, "equalizer_active"));
+     (nullptr, "equalizer_active"));
 }
 
 static GtkWidget * create_on_off (void)
 {
     GtkWidget * on_off = gtk_check_button_new_with_mnemonic (_("_Enable"));
-    g_signal_connect ((GObject *) on_off, "toggled", (GCallback) on_off_cb, NULL);
+    g_signal_connect ((GObject *) on_off, "toggled", (GCallback) on_off_cb, nullptr);
     hook_associate ("set equalizer_active", (HookFunction) on_off_update, on_off);
 
-    on_off_update (NULL, on_off);
+    on_off_update (nullptr, on_off);
     return on_off;
 }
 
@@ -56,7 +56,7 @@ static void slider_moved (GtkRange * slider, void * unused)
     double value = round (gtk_range_get_value (slider));
 
     if (band == -1)
-        aud_set_double (NULL, "equalizer_preamp", value);
+        aud_set_double (nullptr, "equalizer_preamp", value);
     else
         aud_eq_set_band (band, value);
 }
@@ -76,7 +76,7 @@ static GtkWidget * create_slider (const char * name, int band, GtkWidget * hbox)
     gtk_widget_set_size_request (slider, -1, 120);
 
     g_object_set_data ((GObject *) slider, "band", GINT_TO_POINTER (band));
-    g_signal_connect ((GObject *) slider, "value-changed", (GCallback) slider_moved, NULL);
+    g_signal_connect ((GObject *) slider, "value-changed", (GCallback) slider_moved, nullptr);
 
     gtk_box_pack_start ((GtkBox *) vbox, slider, FALSE, FALSE, 0);
     gtk_box_pack_start ((GtkBox *) hbox, vbox, FALSE, FALSE, 0);
@@ -86,15 +86,15 @@ static GtkWidget * create_slider (const char * name, int band, GtkWidget * hbox)
 
 static void set_slider (GtkWidget * slider, double value)
 {
-    g_signal_handlers_block_by_func (slider, (void *) slider_moved, NULL);
+    g_signal_handlers_block_by_func (slider, (void *) slider_moved, nullptr);
     gtk_range_set_value ((GtkRange *) slider, round (value));
-    g_signal_handlers_unblock_by_func (slider, (void *) slider_moved, NULL);
+    g_signal_handlers_unblock_by_func (slider, (void *) slider_moved, nullptr);
 }
 
 static void update_sliders (void * unused, GtkWidget * window)
 {
     GtkWidget * preamp = (GtkWidget *) g_object_get_data ((GObject *) window, "preamp");
-    set_slider (preamp, aud_get_double (NULL, "equalizer_preamp"));
+    set_slider (preamp, aud_get_double (nullptr, "equalizer_preamp"));
 
     double values[AUD_EQ_NBANDS];
     aud_eq_get_bands (values);
@@ -147,12 +147,12 @@ static GtkWidget * create_window (void)
         g_object_set_data ((GObject *) window, slider_id, slider);
     }
 
-    update_sliders (NULL, window);
+    update_sliders (nullptr, window);
 
     hook_associate ("set equalizer_preamp", (HookFunction) update_sliders, window);
     hook_associate ("set equalizer_bands", (HookFunction) update_sliders, window);
 
-    g_signal_connect (window, "destroy", (GCallback) destroy_cb, NULL);
+    g_signal_connect (window, "destroy", (GCallback) destroy_cb, nullptr);
 
     return window;
 }

@@ -48,7 +48,7 @@ ScanRequest * scan_request (const char * filename, int flags,
     request->decoder = decoder;
     request->callback = callback;
 
-    g_thread_pool_push (pool, request, NULL);
+    g_thread_pool_push (pool, request, nullptr);
 
     return request;
 }
@@ -58,7 +58,7 @@ static void scan_worker (void * data, void * unused)
     ScanRequest * request = (ScanRequest *) data;
 
     if (! request->decoder)
-        request->decoder = aud_file_find_decoder (request->filename, FALSE);
+        request->decoder = aud_file_find_decoder (request->filename, false);
 
     if (request->decoder && (request->flags & SCAN_TUPLE))
         request->tuple = aud_file_read_tuple (request->filename, request->decoder);
@@ -98,7 +98,7 @@ void scan_request_get_image_data (ScanRequest * request, void * * data, int64_t 
 {
     * data = request->image_data;
     * len = request->image_len;
-    request->image_data = NULL;
+    request->image_data = nullptr;
     request->image_len = 0;
 }
 
@@ -109,10 +109,10 @@ String scan_request_get_image_file (ScanRequest * request)
 
 void scanner_init (void)
 {
-    pool = g_thread_pool_new (scan_worker, NULL, SCAN_THREADS, FALSE, NULL);
+    pool = g_thread_pool_new (scan_worker, nullptr, SCAN_THREADS, false, nullptr);
 }
 
 void scanner_cleanup (void)
 {
-    g_thread_pool_free (pool, FALSE, TRUE);
+    g_thread_pool_free (pool, false, true);
 }

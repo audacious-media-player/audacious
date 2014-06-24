@@ -42,21 +42,21 @@
 static GSList*
 ui_jump_to_track_cache_regex_list_create(const char* keyword)
 {
-    GSList *regex_list = NULL;
-    char **words = NULL;
+    GSList *regex_list = nullptr;
+    char **words = nullptr;
     int i = -1;
     /* Chop the key string into ' '-separated key regex-pattern strings */
     words = g_strsplit(keyword, " ", 0);
 
     /* create a list of regex using the regex-pattern strings */
-    while ( words[++i] != NULL )
+    while ( words[++i] != nullptr )
     {
         // Ignore empty words.
         if (words[i][0] == 0) {
             continue;
         }
 
-        GRegex * regex = g_regex_new (words[i], G_REGEX_CASELESS, (GRegexMatchFlags) 0, NULL);
+        GRegex * regex = g_regex_new (words[i], G_REGEX_CASELESS, (GRegexMatchFlags) 0, nullptr);
         if (regex)
             regex_list = g_slist_append (regex_list, regex);
     }
@@ -69,16 +69,16 @@ ui_jump_to_track_cache_regex_list_create(const char* keyword)
 /**
  * Checks if 'song' matches all regular expressions in 'regex_list'.
  */
-static bool_t
+static gboolean
 ui_jump_to_track_match(const char * song, GSList *regex_list)
 {
-    if ( song == NULL )
+    if ( song == nullptr )
         return FALSE;
 
     for ( ; regex_list ; regex_list = g_slist_next(regex_list) )
     {
         GRegex * regex = (GRegex *) regex_list->data;
-        if (! g_regex_match (regex, song, (GRegexMatchFlags) 0, NULL))
+        if (! g_regex_match (regex, song, (GRegexMatchFlags) 0, nullptr))
             return FALSE;
     }
 

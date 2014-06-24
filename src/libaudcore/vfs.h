@@ -62,7 +62,7 @@ struct VFSConstructor {
     /** A function pointer which points to a ftell implementation. */
     int64_t (* vfs_ftell_impl) (VFSFile * file);
     /** A function pointer which points to a feof implementation. */
-    bool_t (* vfs_feof_impl) (VFSFile * file);
+    bool (* vfs_feof_impl) (VFSFile * file);
     /** A function pointer which points to a ftruncate implementation. */
     int (* vfs_ftruncate_impl) (VFSFile * file, int64_t length);
     /** A function pointer which points to a fsize implementation. */
@@ -94,7 +94,7 @@ int vfs_getc (VFSFile * stream) WARN_RETURN;
 int vfs_ungetc (int c, VFSFile * stream) WARN_RETURN;
 char * vfs_fgets (char * s, int n, VFSFile * stream) WARN_RETURN;
 int vfs_fputs (const char * s, VFSFile * stream) WARN_RETURN;
-bool_t vfs_feof (VFSFile * file) WARN_RETURN;
+bool vfs_feof (VFSFile * file) WARN_RETURN;
 int vfs_fprintf (VFSFile * stream, char const * format, ...) __attribute__
  ((__format__ (__printf__, 2, 3)));
 
@@ -103,13 +103,13 @@ int64_t vfs_ftell (VFSFile * file) WARN_RETURN;
 int64_t vfs_fsize (VFSFile * file) WARN_RETURN;
 int vfs_ftruncate (VFSFile * file, int64_t length) WARN_RETURN;
 
-bool_t vfs_is_streaming (VFSFile * file) WARN_RETURN;
+bool vfs_is_streaming (VFSFile * file) WARN_RETURN;
 
 String vfs_get_metadata (VFSFile * file, const char * field) WARN_RETURN;
 
-bool_t vfs_file_test (const char * path, int test) WARN_RETURN;
-bool_t vfs_is_writeable (const char * path) WARN_RETURN;
-bool_t vfs_is_remote (const char * path) WARN_RETURN;
+bool vfs_file_test (const char * path, int test) WARN_RETURN;
+bool vfs_is_writeable (const char * path) WARN_RETURN;
+bool vfs_is_remote (const char * path) WARN_RETURN;
 
 void vfs_file_read_all (VFSFile * file, void * * buf, int64_t * size);
 void vfs_file_get_contents (const char * filename, void * * buf, int64_t * size);

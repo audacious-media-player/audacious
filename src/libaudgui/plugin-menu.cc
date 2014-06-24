@@ -42,7 +42,7 @@ static const AudguiMenuItem main_items[] = {
 
 static void add_to_menu (GtkWidget * menu, const AudguiMenuItem * item)
 {
-    GtkWidget * widget = audgui_menu_item_new_with_domain (item, NULL, NULL);
+    GtkWidget * widget = audgui_menu_item_new_with_domain (item, nullptr, nullptr);
     g_object_set_data ((GObject *) widget, "func", (void *) item->func);
     gtk_widget_show (widget);
     gtk_menu_shell_append ((GtkMenuShell *) menu, widget);
@@ -50,7 +50,7 @@ static void add_to_menu (GtkWidget * menu, const AudguiMenuItem * item)
 
 EXPORT GtkWidget * audgui_get_plugin_menu (int id)
 {
-    g_return_val_if_fail (id >= 0 && id < AUD_MENU_COUNT, NULL);
+    g_return_val_if_fail (id >= 0 && id < AUD_MENU_COUNT, nullptr);
 
     if (! menus[id])
     {
@@ -59,7 +59,7 @@ EXPORT GtkWidget * audgui_get_plugin_menu (int id)
          gtk_widget_destroyed, & menus[id]);
 
         if (id == AUD_MENU_MAIN)
-            audgui_menu_init (menus[id], main_items, ARRAY_LEN (main_items), NULL);
+            audgui_menu_init (menus[id], main_items, ARRAY_LEN (main_items), nullptr);
 
         for (GList * node = items[id]; node; node = node->next)
             add_to_menu (menus[id], (const AudguiMenuItem *) node->data);

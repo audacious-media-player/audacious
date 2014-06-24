@@ -39,14 +39,14 @@ enum {
 /* generic type */
 typedef void (* VisFunc) (void);
 
-void aud_ui_show (bool_t show);
-bool_t aud_ui_is_shown (void);
+void aud_ui_show (bool show);
+bool aud_ui_is_shown (void);
 
 void aud_ui_show_error (const char * message);  /* thread-safe */
 
 void aud_ui_show_about_window (void);
 void aud_ui_hide_about_window (void);
-void aud_ui_show_filebrowser (bool_t open);
+void aud_ui_show_filebrowser (bool open);
 void aud_ui_hide_filebrowser (void);
 void aud_ui_show_jump_to_song (void);
 void aud_ui_hide_jump_to_song (void);

@@ -84,12 +84,12 @@ EXPORT char * audgui_urilist_create_from_selected (int playlist)
             continue;
 
         String name = aud_playlist_entry_get_filename (playlist, count);
-        g_return_val_if_fail (name != NULL, NULL);
+        g_return_val_if_fail (name != nullptr, nullptr);
         space += strlen (name) + 1;
     }
 
     if (! space)
-        return NULL;
+        return nullptr;
 
     buffer = g_new (char, space);
     set = buffer;
@@ -100,9 +100,9 @@ EXPORT char * audgui_urilist_create_from_selected (int playlist)
             continue;
 
         String name = aud_playlist_entry_get_filename (playlist, count);
-        g_return_val_if_fail (name != NULL, NULL);
+        g_return_val_if_fail (name != nullptr, nullptr);
         length = strlen (name);
-        g_return_val_if_fail (length + 1 <= space, NULL);
+        g_return_val_if_fail (length + 1 <= space, nullptr);
         memcpy (set, name, length);
         set += length;
         * set ++ = '\n';

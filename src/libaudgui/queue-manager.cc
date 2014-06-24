@@ -49,19 +49,19 @@ static void get_value (void * user, int row, int column, GValue * value)
     }
 }
 
-static bool_t get_selected (void * user, int row)
+static bool get_selected (void * user, int row)
 {
     int list = aud_playlist_get_active ();
     return aud_playlist_entry_get_selected (list, aud_playlist_queue_get_entry (list, row));
 }
 
-static void set_selected (void * user, int row, bool_t selected)
+static void set_selected (void * user, int row, bool selected)
 {
     int list = aud_playlist_get_active ();
     aud_playlist_entry_set_selected (list, aud_playlist_queue_get_entry (list, row), selected);
 }
 
-static void select_all (void * user, bool_t selected)
+static void select_all (void * user, bool selected)
 {
     int list = aud_playlist_get_active ();
     int count = aud_playlist_queue_count (list);
@@ -153,12 +153,12 @@ static void destroy_cb (void)
     hook_dissociate ("playlist update", update_hook);
 }
 
-static bool_t keypress_cb (GtkWidget * widget, GdkEventKey * event)
+static gboolean keypress_cb (GtkWidget * widget, GdkEventKey * event)
 {
     if (event->keyval == GDK_KEY_A && (event->state & GDK_CONTROL_MASK))
-        select_all (NULL, TRUE);
+        select_all (nullptr, TRUE);
     else if (event->keyval == GDK_KEY_Delete)
-        remove_selected (NULL);
+        remove_selected (nullptr);
     else if (event->keyval == GDK_KEY_Escape)
         gtk_widget_destroy (widget);
     else
@@ -175,18 +175,18 @@ static GtkWidget * create_queue_manager (void)
 
     GtkWidget * vbox = gtk_dialog_get_content_area ((GtkDialog *) qm_win);
 
-    GtkWidget * scrolled = gtk_scrolled_window_new (NULL, NULL);
+    GtkWidget * scrolled = gtk_scrolled_window_new (nullptr, nullptr);
     gtk_scrolled_window_set_shadow_type ((GtkScrolledWindow *) scrolled, GTK_SHADOW_IN);
     gtk_box_pack_start ((GtkBox *) vbox, scrolled, TRUE, TRUE, 0);
 
     int count = aud_playlist_queue_count (aud_playlist_get_active ());
-    GtkWidget * qm_list = audgui_list_new (& callbacks, NULL, count);
+    GtkWidget * qm_list = audgui_list_new (& callbacks, nullptr, count);
     gtk_tree_view_set_headers_visible ((GtkTreeView *) qm_list, FALSE);
-    audgui_list_add_column (qm_list, NULL, 0, G_TYPE_INT, 7);
-    audgui_list_add_column (qm_list, NULL, 1, G_TYPE_STRING, -1);
+    audgui_list_add_column (qm_list, nullptr, 0, G_TYPE_INT, 7);
+    audgui_list_add_column (qm_list, nullptr, 1, G_TYPE_STRING, -1);
     gtk_container_add ((GtkContainer *) scrolled, qm_list);
 
-    GtkWidget * button1 = audgui_button_new (_("_Unqueue"), "list-remove", remove_selected, NULL);
+    GtkWidget * button1 = audgui_button_new (_("_Unqueue"), "list-remove", remove_selected, nullptr);
     GtkWidget * button2 = audgui_button_new (_("_Close"), "window-close",
      (AudguiCallback) gtk_widget_destroy, qm_win);
 
@@ -196,8 +196,8 @@ static GtkWidget * create_queue_manager (void)
     hook_associate ("playlist activate", update_hook, qm_list);
     hook_associate ("playlist update", update_hook, qm_list);
 
-    g_signal_connect (qm_win, "destroy", (GCallback) destroy_cb, NULL);
-    g_signal_connect (qm_win, "key-press-event", (GCallback) keypress_cb, NULL);
+    g_signal_connect (qm_win, "destroy", (GCallback) destroy_cb, nullptr);
+    g_signal_connect (qm_win, "key-press-event", (GCallback) keypress_cb, nullptr);
 
     return qm_win;
 }

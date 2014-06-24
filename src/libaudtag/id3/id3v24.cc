@@ -453,7 +453,7 @@ static void decode_private_info (Tuple & tuple, const unsigned char * data, int 
     if (!strncmp(text, "WM/", 3))
     {
         char *separator = strchr(text, 0);
-        if (separator == NULL)
+        if (separator == nullptr)
             goto DONE;
 
         char * value = separator + 1;
@@ -573,7 +573,7 @@ static void add_frameFromTupleInt (const Tuple & tuple, int field, int id3_field
     add_text_frame (id3_field, int_to_str (tuple.get_int (field)), dict);
 }
 
-static bool_t id3v24_can_handle_file (VFSFile * handle)
+static bool id3v24_can_handle_file (VFSFile * handle)
 {
     int version, header_size, data_size, footer_size;
     bool syncsafe;
@@ -583,7 +583,7 @@ static bool_t id3v24_can_handle_file (VFSFile * handle)
      & data_size, & footer_size);
 }
 
-static bool_t id3v24_read_tag (Tuple & tuple, VFSFile * handle)
+static bool id3v24_read_tag (Tuple & tuple, VFSFile * handle)
 {
     int version, header_size, data_size, footer_size;
     bool syncsafe;
@@ -657,7 +657,7 @@ static bool_t id3v24_read_tag (Tuple & tuple, VFSFile * handle)
     return true;
 }
 
-static bool_t id3v24_read_image (VFSFile * handle, void * * image_data, int64_t * image_size)
+static bool id3v24_read_image (VFSFile * handle, void * * image_data, int64_t * image_size)
 {
     int version, header_size, data_size, footer_size, parsed;
     bool syncsafe;
@@ -697,7 +697,7 @@ static bool_t id3v24_read_image (VFSFile * handle, void * * image_data, int64_t 
     return found;
 }
 
-static bool_t id3v24_write_tag (const Tuple & tuple, VFSFile * f)
+static bool id3v24_write_tag (const Tuple & tuple, VFSFile * f)
 {
     int version = 3;
     int header_size, data_size, footer_size;

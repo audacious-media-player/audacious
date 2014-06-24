@@ -23,12 +23,12 @@
 #include <stdint.h>
 #include <libaudcore/core.h>
 
-void audgui_show_add_url_window(bool_t open);
+void audgui_show_add_url_window(bool open);
 
 void audgui_jump_to_track(void);
 void audgui_jump_to_track_hide(void);
 
-void audgui_run_filebrowser(bool_t open);
+void audgui_run_filebrowser(bool open);
 void audgui_hide_filebrowser(void);
 
 /* about.c */

@@ -35,7 +35,7 @@ static int find_cb (GtkWidget * window, PluginHandle * plugin)
     return (g_object_get_data ((GObject *) window, "plugin-id") != plugin);
 }
 
-static bool_t watch_cb (PluginHandle * plugin, void * window);
+static bool watch_cb (PluginHandle * plugin, void * window);
 
 /* window destroyed before plugin disabled */
 static void destroy_cb (GtkWidget * window, PluginHandle * plugin)
@@ -46,7 +46,7 @@ static void destroy_cb (GtkWidget * window, PluginHandle * plugin)
     if (! node)
     {
         list = & about_windows;
-        node = g_list_find (* list, NULL);  /* set to NULL by audgui_simple_message() */
+        node = g_list_find (* list, nullptr);  /* set to nullptr by audgui_simple_message() */
         g_return_if_fail (node);
     }
 
@@ -56,7 +56,7 @@ static void destroy_cb (GtkWidget * window, PluginHandle * plugin)
 }
 
 /* plugin disabled before window destroyed */
-static bool_t watch_cb (PluginHandle * plugin, void * window)
+static bool watch_cb (PluginHandle * plugin, void * window)
 {
     if (aud_plugin_get_enabled (plugin))
         return TRUE;
@@ -109,7 +109,7 @@ EXPORT void audgui_show_plugin_about (PluginHandle * plugin)
         text = dgettext (header->domain, text);
     }
 
-    about_windows = node = g_list_prepend (about_windows, NULL);
+    about_windows = node = g_list_prepend (about_windows, nullptr);
 
     audgui_simple_message ((GtkWidget * *) & node->data, GTK_MESSAGE_INFO,
      str_printf (_("About %s"), name), text);
@@ -168,14 +168,14 @@ EXPORT void audgui_show_plugin_prefs (PluginHandle * plugin)
 
     if (p->apply)
     {
-        GtkWidget * button1 = audgui_button_new (_("_Set"), "system-run", NULL, NULL);
-        GtkWidget * button2 = audgui_button_new (_("_Cancel"), "process-stop", NULL, NULL);
+        GtkWidget * button1 = audgui_button_new (_("_Set"), "system-run", nullptr, nullptr);
+        GtkWidget * button2 = audgui_button_new (_("_Cancel"), "process-stop", nullptr, nullptr);
         gtk_dialog_add_action_widget ((GtkDialog *) window, button2, GTK_RESPONSE_CANCEL);
         gtk_dialog_add_action_widget ((GtkDialog *) window, button1, GTK_RESPONSE_OK);
     }
     else
     {
-        GtkWidget * button = audgui_button_new (_("_Close"), "window-close", NULL, NULL);
+        GtkWidget * button = audgui_button_new (_("_Close"), "window-close", nullptr, nullptr);
         gtk_dialog_add_action_widget ((GtkDialog *) window, button, GTK_RESPONSE_CLOSE);
     }
 
@@ -198,6 +198,6 @@ EXPORT void audgui_show_plugin_prefs (PluginHandle * plugin)
 
 void plugin_prefs_cleanup (void)
 {
-    g_list_foreach (about_windows, (GFunc) gtk_widget_destroy, NULL);
-    g_list_foreach (config_windows, (GFunc) gtk_widget_destroy, NULL);
+    g_list_foreach (about_windows, (GFunc) gtk_widget_destroy, nullptr);
+    g_list_foreach (config_windows, (GFunc) gtk_widget_destroy, nullptr);
 }

@@ -41,7 +41,7 @@ tag_module_t * find_tag_module (VFSFile * fd, int new_type)
         if (vfs_fseek(fd, 0, SEEK_SET))
         {
             AUDDBG("not a seekable file\n");
-            return NULL;
+            return nullptr;
         }
 
         if (modules[i]->can_handle_file (fd))
@@ -62,5 +62,5 @@ tag_module_t * find_tag_module (VFSFile * fd, int new_type)
     }
 
     AUDDBG("no module found\n");
-    return NULL;
+    return nullptr;
 }

@@ -50,7 +50,7 @@ struct LocalFile {
 static void * local_fopen (const char * uri, const char * mode)
 {
     StringBuf path = uri_to_filename (uri);
-    g_return_val_if_fail (path, NULL);
+    g_return_val_if_fail (path, nullptr);
 
     const char * suffix = "";
 
@@ -69,7 +69,7 @@ static void * local_fopen (const char * uri, const char * mode)
     if (! stream)
     {
         perror (path);
-        return NULL;
+        return nullptr;
     }
 
     LocalFile * local = new LocalFile ();
@@ -164,7 +164,7 @@ static int64_t local_ftell (VFSFile * file)
     return ftello (local->stream);
 }
 
-static bool_t local_feof (VFSFile * file)
+static bool local_feof (VFSFile * file)
 {
     LocalFile * local = (LocalFile *) vfs_get_handle (file);
     return feof (local->stream);

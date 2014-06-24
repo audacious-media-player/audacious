@@ -30,7 +30,7 @@
 static void open_cb (void * entry)
 {
     const char * text = gtk_entry_get_text ((GtkEntry *) entry);
-    bool_t open = GPOINTER_TO_INT (g_object_get_data ((GObject *) entry, "open"));
+    gboolean open = GPOINTER_TO_INT (g_object_get_data ((GObject *) entry, "open"));
 
     if (open)
         aud_drct_pl_open (text);
@@ -40,7 +40,7 @@ static void open_cb (void * entry)
     aud_history_add (text);
 }
 
-static GtkWidget * create_url_opener (bool_t open)
+static GtkWidget * create_url_opener (gboolean open)
 {
     const char * title, * verb, * icon;
 
@@ -73,7 +73,7 @@ static GtkWidget * create_url_opener (bool_t open)
     g_object_set_data ((GObject *) entry, "open", GINT_TO_POINTER (open));
 
     GtkWidget * button1 = audgui_button_new (verb, icon, open_cb, entry);
-    GtkWidget * button2 = audgui_button_new (_("_Cancel"), "process-stop", NULL, NULL);
+    GtkWidget * button2 = audgui_button_new (_("_Cancel"), "process-stop", nullptr, nullptr);
 
     GtkWidget * dialog = audgui_dialog_new (GTK_MESSAGE_OTHER, title,
      _("Enter URL:"), button1, button2);
@@ -83,7 +83,7 @@ static GtkWidget * create_url_opener (bool_t open)
     return dialog;
 }
 
-EXPORT void audgui_show_add_url_window (bool_t open)
+EXPORT void audgui_show_add_url_window (bool open)
 {
     audgui_show_unique_window (AUDGUI_URL_OPENER_WINDOW, create_url_opener (open));
 }

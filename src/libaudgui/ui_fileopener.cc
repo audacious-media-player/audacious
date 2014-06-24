@@ -44,7 +44,7 @@ static void open_cb (void * data)
 {
     GtkWidget * chooser = (GtkWidget *) data;
     Index<PlaylistAddItem> files = get_files (chooser);
-    bool_t open = GPOINTER_TO_INT (g_object_get_data ((GObject *) chooser, "do-open"));
+    gboolean open = GPOINTER_TO_INT (g_object_get_data ((GObject *) chooser, "do-open"));
 
     if (open)
         aud_drct_pl_open_list (std::move (files));
@@ -71,7 +71,7 @@ static void toggled_cb (GtkToggleButton * toggle, void * option)
     aud_set_bool ("audgui", (const char *) option, gtk_toggle_button_get_active (toggle));
 }
 
-static GtkWidget * create_filebrowser (bool_t open)
+static GtkWidget * create_filebrowser (gboolean open)
 {
     const char * window_title, * verb, * icon, * toggle_text, * option;
 
@@ -125,7 +125,7 @@ static GtkWidget * create_filebrowser (bool_t open)
 
     GtkWidget * action_button = audgui_button_new (verb, icon, open_cb, chooser);
     GtkWidget * close_button = audgui_button_new (_("_Close"), "window-close",
-     (AudguiCallback) audgui_hide_filebrowser, NULL);
+     (AudguiCallback) audgui_hide_filebrowser, nullptr);
 
     gtk_container_add(GTK_CONTAINER(bbox), close_button);
     gtk_container_add(GTK_CONTAINER(bbox), action_button);
@@ -136,15 +136,15 @@ static GtkWidget * create_filebrowser (bool_t open)
     g_object_set_data ((GObject *) chooser, "toggle-button", toggle);
     g_object_set_data ((GObject *) chooser, "do-open", GINT_TO_POINTER (open));
 
-    g_signal_connect (chooser, "file-activated", (GCallback) open_cb, NULL);
-    g_signal_connect (chooser, "destroy", (GCallback) destroy_cb, NULL);
+    g_signal_connect (chooser, "file-activated", (GCallback) open_cb, nullptr);
+    g_signal_connect (chooser, "destroy", (GCallback) destroy_cb, nullptr);
 
     audgui_destroy_on_escape (window);
 
     return window;
 }
 
-EXPORT void audgui_run_filebrowser (bool_t open)
+EXPORT void audgui_run_filebrowser (bool open)
 {
     audgui_show_unique_window (AUDGUI_FILEBROWSER_WINDOW, create_filebrowser (open));
 }

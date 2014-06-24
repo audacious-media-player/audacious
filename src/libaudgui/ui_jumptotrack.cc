@@ -38,7 +38,7 @@ static void activate_cb (void * data, void * user);
 static JumpToTrackCache cache;
 static const KeywordMatches * search_matches;
 static GtkWidget * treeview, * filter_entry, * queue_button;
-static bool_t watching = FALSE;
+static gboolean watching = FALSE;
 
 static void destroy_cb (void)
 {
@@ -51,7 +51,7 @@ static void destroy_cb (void)
 
     cache.clear ();
 
-    search_matches = NULL;
+    search_matches = nullptr;
 }
 
 static int get_selected_entry (void)
@@ -62,7 +62,7 @@ static int get_selected_entry (void)
     GtkTreeSelection * selection = gtk_tree_view_get_selection ((GtkTreeView *) treeview);
     GtkTreeIter iter;
 
-    if (! gtk_tree_selection_get_selected (selection, NULL, & iter))
+    if (! gtk_tree_selection_get_selected (selection, nullptr, & iter))
         return -1;
 
     GtkTreePath * path = gtk_tree_model_get_path (model, & iter);
@@ -129,7 +129,7 @@ static void selection_changed (void)
     update_queue_button (get_selected_entry ());
 }
 
-static bool_t keypress_cb (GtkWidget * widget, GdkEventKey * event)
+static gboolean keypress_cb (GtkWidget * widget, GdkEventKey * event)
 {
     if (event->keyval == GDK_KEY_Escape)
     {
@@ -164,7 +164,7 @@ static void update_cb (void * data, void * user)
 
     GtkTreeModel * model;
     GtkTreeIter iter;
-    GtkTreePath * path = NULL;
+    GtkTreePath * path = nullptr;
 
     if (GPOINTER_TO_INT (data) <= PLAYLIST_UPDATE_SELECTION)
         return;
@@ -179,18 +179,18 @@ static void update_cb (void * data, void * user)
 
     fill_list ();
 
-    if (path != NULL)
+    if (path != nullptr)
     {
         gtk_tree_selection_select_path (gtk_tree_view_get_selection
          ((GtkTreeView *) treeview), path);
-        gtk_tree_view_scroll_to_cell ((GtkTreeView *) treeview, path, NULL, TRUE, 0.5, 0);
+        gtk_tree_view_scroll_to_cell ((GtkTreeView *) treeview, path, nullptr, TRUE, 0.5, 0);
         gtk_tree_path_free (path);
     }
 }
 
 static void activate_cb (void * data, void * user)
 {
-    update_cb (GINT_TO_POINTER (PLAYLIST_UPDATE_STRUCTURE), NULL);
+    update_cb (GINT_TO_POINTER (PLAYLIST_UPDATE_STRUCTURE), nullptr);
 }
 
 static void toggle_button_cb (GtkToggleButton * toggle)
@@ -230,8 +230,8 @@ static GtkWidget * create_window (void)
 
     gtk_window_set_title(GTK_WINDOW(jump_to_track_win), _("Jump to Song"));
 
-    g_signal_connect (jump_to_track_win, "key_press_event", (GCallback) keypress_cb, NULL);
-    g_signal_connect (jump_to_track_win, "destroy", (GCallback) destroy_cb, NULL);
+    g_signal_connect (jump_to_track_win, "key_press_event", (GCallback) keypress_cb, nullptr);
+    g_signal_connect (jump_to_track_win, "destroy", (GCallback) destroy_cb, nullptr);
 
     gtk_container_set_border_width(GTK_CONTAINER(jump_to_track_win), 10);
     gtk_window_set_default_size(GTK_WINDOW(jump_to_track_win), 600, 500);
@@ -239,15 +239,15 @@ static GtkWidget * create_window (void)
     GtkWidget * vbox = gtk_vbox_new (FALSE, 6);
     gtk_container_add(GTK_CONTAINER(jump_to_track_win), vbox);
 
-    treeview = audgui_list_new (& callbacks, NULL, 0);
+    treeview = audgui_list_new (& callbacks, nullptr, 0);
     gtk_tree_view_set_headers_visible ((GtkTreeView *) treeview, FALSE);
 
-    audgui_list_add_column (treeview, NULL, 0, G_TYPE_INT, 7);
-    audgui_list_add_column (treeview, NULL, 1, G_TYPE_STRING, -1);
+    audgui_list_add_column (treeview, nullptr, 0, G_TYPE_INT, 7);
+    audgui_list_add_column (treeview, nullptr, 1, G_TYPE_STRING, -1);
 
     g_signal_connect (gtk_tree_view_get_selection ((GtkTreeView *) treeview),
-     "changed", (GCallback) selection_changed, NULL);
-    g_signal_connect (treeview, "row-activated", (GCallback) do_jump, NULL);
+     "changed", (GCallback) selection_changed, nullptr);
+    g_signal_connect (treeview, "row-activated", (GCallback) do_jump, nullptr);
 
     GtkWidget * hbox = gtk_hbox_new (FALSE, 6);
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 3);
@@ -259,11 +259,11 @@ static GtkWidget * create_window (void)
 
     filter_entry = gtk_entry_new ();
     gtk_label_set_mnemonic_widget ((GtkLabel *) search_label, filter_entry);
-    g_signal_connect (filter_entry, "changed", (GCallback) fill_list, NULL);
+    g_signal_connect (filter_entry, "changed", (GCallback) fill_list, nullptr);
     gtk_entry_set_activates_default ((GtkEntry *) filter_entry, TRUE);
     gtk_box_pack_start ((GtkBox *) hbox, filter_entry, TRUE, TRUE, 0);
 
-    GtkWidget * scrollwin = gtk_scrolled_window_new (NULL, NULL);
+    GtkWidget * scrollwin = gtk_scrolled_window_new (nullptr, nullptr);
     gtk_container_add(GTK_CONTAINER(scrollwin), treeview);
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrollwin),
                                    GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
@@ -281,14 +281,14 @@ static GtkWidget * create_window (void)
     gtk_toggle_button_set_active ((GtkToggleButton *) toggle, aud_get_bool
      ("audgui", "close_jtf_dialog"));
     gtk_box_pack_start(GTK_BOX(bbox), toggle, FALSE, FALSE, 0);
-    g_signal_connect (toggle, "clicked", (GCallback) toggle_button_cb, NULL);
+    g_signal_connect (toggle, "clicked", (GCallback) toggle_button_cb, nullptr);
 
     /* queue button */
-    queue_button = audgui_button_new (_("_Queue"), NULL, do_queue, NULL);
+    queue_button = audgui_button_new (_("_Queue"), nullptr, do_queue, nullptr);
     gtk_box_pack_start ((GtkBox *) bbox, queue_button, FALSE, FALSE, 0);
 
     /* jump button */
-    GtkWidget * jump = audgui_button_new (_("_Jump"), "go-jump", do_jump, NULL);
+    GtkWidget * jump = audgui_button_new (_("_Jump"), "go-jump", do_jump, nullptr);
     gtk_box_pack_start(GTK_BOX(bbox), jump, FALSE, FALSE, 0);
 
     gtk_widget_set_can_default(jump, TRUE);
@@ -296,7 +296,7 @@ static GtkWidget * create_window (void)
 
     /* close button */
     GtkWidget * close = audgui_button_new (_("_Close"), "window-close",
-     (AudguiCallback) audgui_jump_to_track_hide, NULL);
+     (AudguiCallback) audgui_jump_to_track_hide, nullptr);
     gtk_box_pack_start(GTK_BOX(bbox), close, FALSE, FALSE, 0);
 
     return jump_to_track_win;
@@ -312,8 +312,8 @@ EXPORT void audgui_jump_to_track (void)
     if (! watching)
     {
         fill_list ();
-        hook_associate ("playlist update", update_cb, NULL);
-        hook_associate ("playlist activate", activate_cb, NULL);
+        hook_associate ("playlist update", update_cb, nullptr);
+        hook_associate ("playlist activate", activate_cb, nullptr);
         watching = TRUE;
     }
 

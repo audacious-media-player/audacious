@@ -75,7 +75,7 @@
  * Since 3.2, Audacious implements a basic messaging system between plugins.
  * Messages are sent using aud_plugin_send_message() and received through the
  * take_message() method specified in the header of the receiving plugin.
- * Plugins that do not need to receive messages can set take_message() to NULL.
+ * Plugins that do not need to receive messages can set take_message() to nullptr.
  *
  * Each message includes a code indicating the type of message, a pointer to
  * some data, and a value indicating the size of that data. What the message
@@ -100,7 +100,7 @@
     const char * domain; /* for gettext */ \
     const char * about_text; \
     const PluginPreferences * prefs; \
-    bool_t (* init) (void); \
+    bool (* init) (void); \
     void (* cleanup) (void); \
     int (* take_message) (const char * code, const void * data, int size); \
     void (* about) (void); /* use about_text instead if possible */ \
@@ -140,14 +140,14 @@ struct PlaylistPlugin
      * file: VFS handle of playlist file (in, read-only file, not seekable)
      * title: title of playlist (out)
      * items: playlist entries (out) */
-    bool_t (* load) (const char * path, VFSFile * file, String & title,
+    bool (* load) (const char * path, VFSFile * file, String & title,
      Index<PlaylistAddItem> & items);
 
     /* path: URI of playlist file (in)
      * file: VFS handle of playlist file (in, write-only file, not seekable)
      * title: title of playlist (in)
      * items: playlist entries (in) */
-    bool_t (* save) (const char * path, VFSFile * file, const char * title,
+    bool (* save) (const char * path, VFSFile * file, const char * title,
      const Index<PlaylistAddItem> & items);
 };
 
@@ -167,18 +167,18 @@ struct OutputPlugin
     /* Begins playback of a PCM stream.  <format> is one of the FMT_*
      * enumeration values defined in libaudcore/audio.h.  Returns nonzero on
      * success. */
-    bool_t (* open_audio) (int format, int rate, int chans);
+    bool (* open_audio) (int format, int rate, int chans);
 
     /* Ends playback.  Any buffered audio data is discarded. */
     void (* close_audio) (void);
 
     /* Returns how many bytes of data may be passed to a following write_audio()
-     * call.  NULL if the plugin supports only blocking writes (not recommended). */
+     * call.  nullptr if the plugin supports only blocking writes (not recommended). */
     int (* buffer_free) (void);
 
     /* Waits until buffer_free() will return a size greater than zero.
      * output_time(), pause(), and flush() may be called meanwhile; if flush()
-     * is called, period_wait() should return immediately.  NULL if the plugin
+     * is called, period_wait() should return immediately.  nullptr if the plugin
      * supports only blocking writes (not recommended). */
     void (* period_wait) (void);
 
@@ -194,7 +194,7 @@ struct OutputPlugin
 
     /* Pauses the stream if <p> is nonzero; otherwise unpauses it.
      * write_audio() will not be called while the stream is paused. */
-    void (* pause) (bool_t p);
+    void (* pause) (bool p);
 
     /* Discards any buffered audio data and sets the time counter (in
      * milliseconds) of data written. */
@@ -203,7 +203,7 @@ struct OutputPlugin
     /* Whether close_audio() and open_audio() must always be called between
      * songs, even if the audio format is the same.  Note that this defeats
      * gapless playback. */
-    bool_t force_reopen;
+    bool force_reopen;
 };
 
 struct EffectPlugin
@@ -243,7 +243,7 @@ struct EffectPlugin
 
     /* If the effect does not change the number of channels or the sampling
      * rate, it can be enabled and disabled more smoothly. */
-    bool_t preserves_format;
+    bool preserves_format;
 };
 
 struct InputPlugin
@@ -267,19 +267,19 @@ struct InputPlugin
      * 3. When one of the songs is played, Audacious opens the file and calls
      * play() with a file name modified in this way.
      */
-    bool_t have_subtune;
+    bool have_subtune;
 
-    /* Pointer to an array (terminated with NULL) of file extensions associated
+    /* Pointer to an array (terminated with nullptr) of file extensions associated
      * with file types the plugin can handle. */
     const char * const * extensions;
-    /* Pointer to an array (terminated with NULL) of MIME types the plugin can
+    /* Pointer to an array (terminated with nullptr) of MIME types the plugin can
      * handle. */
     const char * const * mimes;
 
-    /* Pointer to an array (terminated with NULL) of custom URI schemes the
+    /* Pointer to an array (terminated with nullptr) of custom URI schemes the
      * plugin supports.  Plugins using custom URI schemes are expected to
      * handle their own I/O.  Hence, any VFSFile pointers passed to play(),
-     * probe_for_tuple(), etc. will be NULL. */
+     * probe_for_tuple(), etc. will be nullptr. */
     const char * const * schemes;
 
     /* How quickly the plugin should be tried in searching for a plugin to
@@ -287,22 +287,22 @@ struct InputPlugin
      * with priority 0 are tried first, 10 last. */
     int priority;
 
-    /* Returns TRUE if the plugin can handle the file. */
-    bool_t (* is_our_file_from_vfs) (const char * filename, VFSFile * file);
+    /* Returns true if the plugin can handle the file. */
+    bool (* is_our_file_from_vfs) (const char * filename, VFSFile * file);
 
     /* Reads metadata from the file. */
     Tuple (* probe_for_tuple) (const char * filename, VFSFile * file);
 
-    /* Plays the file.  Returns FALSE on error.  Also see input-api.h. */
-    bool_t (* play) (const char * filename, VFSFile * file);
+    /* Plays the file.  Returns false on error.  Also see input-api.h. */
+    bool (* play) (const char * filename, VFSFile * file);
 
-    /* Optional.  Writes metadata to the file, returning FALSE on error. */
-    bool_t (* update_song_tuple) (const char * filename, VFSFile * file, const Tuple & tuple);
+    /* Optional.  Writes metadata to the file, returning false on error. */
+    bool (* update_song_tuple) (const char * filename, VFSFile * file, const Tuple & tuple);
 
     /* Optional.  Reads an album art image (JPEG or PNG data) from the file.
      * Returns a pointer to the data along with its size in bytes.  The returned
-     * data will be freed when no longer needed.  Returns FALSE on error. */
-    bool_t (* get_song_image) (const char * filename, VFSFile * file,
+     * data will be freed when no longer needed.  Returns false on error. */
+    bool (* get_song_image) (const char * filename, VFSFile * file,
      void * * data, int64_t * size);
 
     /* Optional.  Displays a window showing info about the file.  In general,
@@ -315,7 +315,7 @@ struct GeneralPlugin
 {
     PLUGIN_COMMON_FIELDS
 
-    bool_t enabled_by_default;
+    bool enabled_by_default;
 
     /* GtkWidget * (* get_widget) (void); */
     void * (* get_widget) (void);
@@ -345,13 +345,13 @@ struct IfacePlugin
 {
     PLUGIN_COMMON_FIELDS
 
-    void (* show) (bool_t show);
+    void (* show) (bool show);
     void (* run) (void);
     void (* quit) (void);
 
     void (* show_about_window) (void);
     void (* hide_about_window) (void);
-    void (* show_filebrowser) (bool_t open);
+    void (* show_filebrowser) (bool open);
     void (* hide_filebrowser) (void);
     void (* show_jump_to_song) (void);
     void (* hide_jump_to_song) (void);

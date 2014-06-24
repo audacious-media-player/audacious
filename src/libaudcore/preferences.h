@@ -67,7 +67,7 @@ struct WidgetVTable {
 
 struct WidgetVLabel {
     const char * stock_id;
-    bool_t single_line; /* FALSE to enable line wrap */
+    bool single_line; /* false to enable line wrap */
 };
 
 struct WidgetVFonts {
@@ -75,7 +75,7 @@ struct WidgetVFonts {
 };
 
 struct WidgetVEntry {
-    bool_t password;
+    bool password;
 };
 
 struct WidgetVCombo {
@@ -91,8 +91,8 @@ struct WidgetVBox {
     const PreferencesWidget * elem;
     int n_elem;
 
-    bool_t horizontal;  /* FALSE gives vertical, TRUE gives horizontal aligment of child widgets */
-    bool_t frame;       /* whether to draw frame around box */
+    bool horizontal;  /* false gives vertical, true gives horizontal aligment of child widgets */
+    bool frame;       /* whether to draw frame around box */
 };
 
 struct NotebookTab {
@@ -107,7 +107,7 @@ struct WidgetVNotebook {
 };
 
 struct WidgetVSeparator {
-    bool_t horizontal;  /* FALSE gives vertical, TRUE gives horizontal separator */
+    bool horizontal;  /* false gives vertical, true gives horizontal separator */
 };
 
 union WidgetVariant {
@@ -145,9 +145,9 @@ struct PreferencesWidget {
     WidgetType type;          /* widget type */
     const char * label;       /* widget title (for SPIN_BTN it's text left to widget) */
     void * cfg;               /* connected config value */
-    void (* callback) (void); /* this func will be called after value change, can be NULL */
-    const char * tooltip;     /* widget tooltip, can be NULL */
-    bool_t child;
+    void (* callback) (void); /* this func will be called after value change, can be nullptr */
+    const char * tooltip;     /* widget tooltip, can be nullptr */
+    bool child;
     ValueType cfg_type;       /* connected value type */
     const char * csect;       /* config file section */
     const char * cname;       /* config file key name */

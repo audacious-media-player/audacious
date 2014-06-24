@@ -58,14 +58,14 @@ EXPORT int vfs_fputc(int c, VFSFile *stream)
  * @param s A buffer to put the string in.
  * @param n The amount of characters to read.
  * @param stream A #VFSFile object representing the stream.
- * @return The string on success, or NULL.
+ * @return The string on success, or nullptr.
  */
 EXPORT char *vfs_fgets(char *s, int n, VFSFile *stream)
 {
     int c;
     char *p;
 
-    if (n <= 0) return NULL;
+    if (n <= 0) return nullptr;
 
     p = s;
 
@@ -82,7 +82,7 @@ EXPORT char *vfs_fgets(char *s, int n, VFSFile *stream)
         return s;
     }
 
-    return NULL;
+    return nullptr;
 }
 
 /**
@@ -134,7 +134,7 @@ EXPORT int vfs_fprintf(VFSFile *stream, char const *format, ...)
 
 EXPORT void vfs_file_read_all (VFSFile * file, void * * bufp, int64_t * sizep)
 {
-    char * buf = NULL;
+    char * buf = nullptr;
     int64_t size = vfs_fsize (file);
 
     if (size >= 0)
@@ -184,7 +184,7 @@ EXPORT void vfs_file_read_all (VFSFile * file, void * * bufp, int64_t * sizep)
  */
 EXPORT void vfs_file_get_contents (const char * filename, void * * buf, int64_t * size)
 {
-    * buf = NULL;
+    * buf = nullptr;
     if (size)
         * size = 0;
 

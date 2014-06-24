@@ -184,23 +184,23 @@ uint32_t syncsafe32 (uint32_t x)
      0xfe00000) << 3);
 }
 
-bool_t open_temp_file_for (TempFile * temp, VFSFile * file)
+bool open_temp_file_for (TempFile * temp, VFSFile * file)
 {
     StringBuf tempname = filename_build ({g_get_tmp_dir (), "audacious-temp-XXXXXX"});
 
     temp->fd = g_mkstemp (tempname);
     if (temp->fd < 0)
-        return FALSE;
+        return false;
 
     temp->name = String (tempname);
 
-    return TRUE;
+    return true;
 }
 
-bool_t copy_region_to_temp_file (TempFile * temp, VFSFile * file, int64_t offset, int64_t size)
+bool copy_region_to_temp_file (TempFile * temp, VFSFile * file, int64_t offset, int64_t size)
 {
     if (vfs_fseek (file, offset, SEEK_SET) < 0)
-        return FALSE;
+        return false;
 
     char buf[16384];
 
@@ -212,7 +212,7 @@ bool_t copy_region_to_temp_file (TempFile * temp, VFSFile * file, int64_t offset
         {
             readsize = MIN (size, (int64_t) sizeof buf);
             if (vfs_fread (buf, 1, readsize, file) != readsize)
-                return FALSE;
+                return false;
 
             size -= readsize;
         }
@@ -229,25 +229,25 @@ bool_t copy_region_to_temp_file (TempFile * temp, VFSFile * file, int64_t offset
         {
             int64_t writesize = write (temp->fd, buf + written, readsize - written);
             if (writesize <= 0)
-                return FALSE;
+                return false;
 
             written += writesize;
         }
     }
 
-    return TRUE;
+    return true;
 }
 
-bool_t replace_with_temp_file (TempFile * temp, VFSFile * file)
+bool replace_with_temp_file (TempFile * temp, VFSFile * file)
 {
     if (lseek (temp->fd, 0, SEEK_SET) < 0)
-        return FALSE;
+        return false;
 
     if (vfs_fseek (file, 0, SEEK_SET) < 0)
-        return FALSE;
+        return false;
 
     if (vfs_ftruncate (file, 0) < 0)
-        return FALSE;
+        return false;
 
     char buf[16384];
 
@@ -255,17 +255,17 @@ bool_t replace_with_temp_file (TempFile * temp, VFSFile * file)
     {
         int64_t readsize = read (temp->fd, buf, sizeof buf);
         if (readsize < 0)
-            return FALSE;
+            return false;
 
         if (readsize == 0)
             break;
 
         if (vfs_fwrite (buf, 1, readsize, file) != readsize)
-            return FALSE;
+            return false;
     }
 
     close (temp->fd);
     g_unlink (temp->name);
 
-    return TRUE;
+    return true;
 }

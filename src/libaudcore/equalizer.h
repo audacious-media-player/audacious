@@ -38,13 +38,13 @@ void aud_eq_set_band (int band, double value);
 double aud_eq_get_band (int band);
 
 Index<EqualizerPreset> aud_eq_read_presets (const char * basename);
-bool_t aud_eq_write_presets (const Index<EqualizerPreset> & list, const char * basename);
+bool aud_eq_write_presets (const Index<EqualizerPreset> & list, const char * basename);
 
 /* note: legacy code! these are local filenames, not URIs */
-bool_t aud_load_preset_file (EqualizerPreset & preset, const char * filename);
-bool_t aud_save_preset_file (const EqualizerPreset & preset, const char * filename);
+bool aud_load_preset_file (EqualizerPreset & preset, const char * filename);
+bool aud_save_preset_file (const EqualizerPreset & preset, const char * filename);
 
 Index<EqualizerPreset> aud_import_winamp_presets (VFSFile * file);
-bool_t aud_export_winamp_preset (const EqualizerPreset & preset, VFSFile * file);
+bool aud_export_winamp_preset (const EqualizerPreset & preset, VFSFile * file);
 
 #endif /* LIBAUDCORE_EQUALIZER_H */
