@@ -38,7 +38,7 @@ EXPORT int audgui_get_digit_width (GtkWidget * widget)
     PangoFontDescription * desc = pango_font_description_new ();
     pango_font_description_set_weight (desc, PANGO_WEIGHT_BOLD);
     pango_layout_set_font_description (layout, desc);
-    pango_layout_get_pixel_size (layout, & width, NULL);
+    pango_layout_get_pixel_size (layout, & width, nullptr);
     pango_font_description_free (desc);
     g_object_unref (layout);
     return (width + 9) / 10;
@@ -56,7 +56,7 @@ EXPORT void audgui_get_mouse_coords (GtkWidget * widget, int * x, int * y)
         GdkDeviceManager * manager = gdk_display_get_device_manager (display);
         GdkDevice * device = gdk_device_manager_get_client_pointer (manager);
 
-        gdk_window_get_device_position (window, device, & xwin, & ywin, NULL);
+        gdk_window_get_device_position (window, device, & xwin, & ywin, nullptr);
         gtk_widget_get_allocation (widget, & alloc);
 
         * x = xwin - alloc.x;
@@ -67,24 +67,24 @@ EXPORT void audgui_get_mouse_coords (GtkWidget * widget, int * x, int * y)
         GdkDisplay * display = gdk_display_get_default ();
         GdkDeviceManager * manager = gdk_display_get_device_manager (display);
         GdkDevice * device = gdk_device_manager_get_client_pointer (manager);
-        gdk_device_get_position (device, NULL, x, y);
+        gdk_device_get_position (device, nullptr, x, y);
     }
 }
 
-static bool_t escape_destroy_cb (GtkWidget * widget, GdkEventKey * event)
+static gboolean escape_destroy_cb (GtkWidget * widget, GdkEventKey * event)
 {
     if (event->keyval == GDK_KEY_Escape)
     {
         gtk_widget_destroy (widget);
-        return TRUE;
+        return true;
     }
 
-    return FALSE;
+    return false;
 }
 
 EXPORT void audgui_destroy_on_escape (GtkWidget * widget)
 {
-    g_signal_connect (widget, "key-press-event", (GCallback) escape_destroy_cb, NULL);
+    g_signal_connect (widget, "key-press-event", (GCallback) escape_destroy_cb, nullptr);
 }
 
 EXPORT GtkWidget * audgui_button_new (const char * text, const char * icon,
@@ -123,7 +123,7 @@ static const char * icon_for_message_type (GtkMessageType type)
 EXPORT GtkWidget * audgui_dialog_new (GtkMessageType type, const char * title,
  const char * text, GtkWidget * button1, GtkWidget * button2)
 {
-    GtkWidget * dialog = gtk_message_dialog_new (NULL, (GtkDialogFlags) 0, type,
+    GtkWidget * dialog = gtk_message_dialog_new (nullptr, (GtkDialogFlags) 0, type,
      GTK_BUTTONS_NONE, "%s", text);
     gtk_window_set_title ((GtkWindow *) dialog, title);
 
@@ -143,7 +143,7 @@ EXPORT GtkWidget * audgui_dialog_new (GtkMessageType type, const char * title,
     gtk_dialog_add_action_widget ((GtkDialog *) dialog, button1, GTK_RESPONSE_NONE);
     g_signal_connect_swapped (button1, "clicked", (GCallback) gtk_widget_destroy, dialog);
 
-    gtk_widget_set_can_default (button1, TRUE);
+    gtk_widget_set_can_default (button1, true);
     gtk_widget_grab_default (button1);
 
     return dialog;
@@ -154,7 +154,7 @@ EXPORT GtkWidget * audgui_dialog_new (GtkMessageType type, const char * title,
 EXPORT void audgui_dialog_add_widget (GtkWidget * dialog, GtkWidget * widget)
 {
     GtkWidget * box = gtk_message_dialog_get_message_area ((GtkMessageDialog *) dialog);
-    gtk_box_pack_start ((GtkBox *) box, widget, FALSE, FALSE, 0);
+    gtk_box_pack_start ((GtkBox *) box, widget, false, false, 0);
 }
 
 EXPORT void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
@@ -164,8 +164,8 @@ EXPORT void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
 
     if (* widget)
     {
-        const char * old = NULL;
-        g_object_get ((GObject *) * widget, "text", & old, NULL);
+        const char * old = nullptr;
+        g_object_get ((GObject *) * widget, "text", & old, nullptr);
         g_return_if_fail (old);
 
         int messages = GPOINTER_TO_INT (g_object_get_data ((GObject *) * widget, "messages"));
@@ -175,7 +175,7 @@ EXPORT void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
         if (! strstr (old, text))
         {
             StringBuf both = str_concat ({old, "\n", text});
-            g_object_set ((GObject *) * widget, "text", (const char *) both, NULL);
+            g_object_set ((GObject *) * widget, "text", (const char *) both, nullptr);
             g_object_set_data ((GObject *) * widget, "messages", GINT_TO_POINTER (messages + 1));
         }
 
@@ -183,8 +183,8 @@ EXPORT void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
     }
     else
     {
-        GtkWidget * button = audgui_button_new (_("_Close"), "window-close", NULL, NULL);
-        * widget = audgui_dialog_new (type, title, text, button, NULL);
+        GtkWidget * button = audgui_button_new (_("_Close"), "window-close", nullptr, nullptr);
+        * widget = audgui_dialog_new (type, title, text, button, nullptr);
 
         g_object_set_data ((GObject *) * widget, "messages", GINT_TO_POINTER (1));
         g_signal_connect (* widget, "destroy", (GCallback) gtk_widget_destroyed, widget);

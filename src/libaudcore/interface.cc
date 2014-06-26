@@ -105,7 +105,7 @@ static void interface_unload (void)
     current_interface = nullptr;
 }
 
-EXPORT void aud_ui_show (bool_t show)
+EXPORT void aud_ui_show (bool show)
 {
     if (! current_interface)
         return;
@@ -118,7 +118,7 @@ EXPORT void aud_ui_show (bool_t show)
     vis_activate (show);
 }
 
-EXPORT bool_t aud_ui_is_shown (void)
+EXPORT bool aud_ui_is_shown (void)
 {
     if (! current_interface)
         return false;
@@ -134,7 +134,7 @@ EXPORT void aud_ui_show_error (const char * message)
         event_queue_full ("ui show error", str_get (message), (GDestroyNotify) str_unref);
 }
 
-static bool_t probe_cb (PluginHandle * p, PluginHandle * * pp)
+static bool probe_cb (PluginHandle * p, PluginHandle * * pp)
 {
     * pp = p;  /* just pick the first one */
     return false;
@@ -246,7 +246,7 @@ EXPORT void aud_ui_hide_about_window (void)
         current_interface->hide_about_window ();
 }
 
-EXPORT void aud_ui_show_filebrowser (bool_t open)
+EXPORT void aud_ui_show_filebrowser (bool open)
 {
     if (current_interface && PLUGIN_HAS_FUNC (current_interface, show_filebrowser))
         current_interface->show_filebrowser (open);

@@ -87,7 +87,7 @@ EXPORT StringBuf str_from_locale (const char * str, int len)
     if (g_get_charset (& charset))
     {
         /* locale is UTF-8 */
-        if (! g_utf8_validate (str, len, NULL))
+        if (! g_utf8_validate (str, len, nullptr))
         {
             whine_locale (str, len, "from", "UTF-8");
             return StringBuf ();
@@ -181,7 +181,7 @@ static StringBuf convert_to_utf8_locked (const char * str, int len)
 EXPORT StringBuf str_to_utf8 (const char * str, int len)
 {
     /* check whether already UTF-8 */
-    if (g_utf8_validate (str, len, NULL))
+    if (g_utf8_validate (str, len, nullptr))
         return str_copy (str, len);
 
     tiny_lock_read (& settings_lock);
@@ -192,18 +192,18 @@ EXPORT StringBuf str_to_utf8 (const char * str, int len)
 
 static void chardet_update (void)
 {
-    String region = aud_get_str (NULL, "chardet_detector");
-    String fallbacks = aud_get_str (NULL, "chardet_fallback");
+    String region = aud_get_str (nullptr, "chardet_detector");
+    String fallbacks = aud_get_str (nullptr, "chardet_fallback");
 
-    set_charsets (region[0] ? (const char *) region : NULL, fallbacks);
+    set_charsets (region[0] ? (const char *) region : nullptr, fallbacks);
 }
 
 void chardet_init (void)
 {
     chardet_update ();
 
-    hook_associate ("set chardet_detector", (HookFunction) chardet_update, NULL);
-    hook_associate ("set chardet_fallback", (HookFunction) chardet_update, NULL);
+    hook_associate ("set chardet_detector", (HookFunction) chardet_update, nullptr);
+    hook_associate ("set chardet_fallback", (HookFunction) chardet_update, nullptr);
 }
 
 void chardet_cleanup (void)
@@ -211,5 +211,5 @@ void chardet_cleanup (void)
     hook_dissociate ("set chardet_detector", (HookFunction) chardet_update);
     hook_dissociate ("set chardet_fallback", (HookFunction) chardet_update);
 
-    set_charsets (NULL, NULL);
+    set_charsets (nullptr, nullptr);
 }

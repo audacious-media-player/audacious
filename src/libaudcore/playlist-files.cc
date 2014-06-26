@@ -32,8 +32,8 @@ struct PlaylistData {
     const char * filename;
     String title;
     Index<PlaylistAddItem> items;
-    bool_t plugin_found;
-    bool_t success;
+    bool plugin_found;
+    bool success;
 };
 
 static void plugin_for_filename (const char * filename, PluginForEachFunc func, void * data)
@@ -43,32 +43,32 @@ static void plugin_for_filename (const char * filename, PluginForEachFunc func, 
         playlist_plugin_for_ext (ext, func, data);
 }
 
-static bool_t plugin_found_cb (PluginHandle * plugin, void * data)
+static bool plugin_found_cb (PluginHandle * plugin, void * data)
 {
     * (PluginHandle * *) data = plugin;
-    return FALSE; /* stop when first plugin is found */
+    return false; /* stop when first plugin is found */
 }
 
-EXPORT bool_t aud_filename_is_playlist (const char * filename)
+EXPORT bool aud_filename_is_playlist (const char * filename)
 {
-    PluginHandle * plugin = NULL;
+    PluginHandle * plugin = nullptr;
     plugin_for_filename (filename, plugin_found_cb, & plugin);
-    return (plugin != NULL);
+    return (plugin != nullptr);
 }
 
-static bool_t playlist_load_cb (PluginHandle * plugin, void * data_)
+static bool playlist_load_cb (PluginHandle * plugin, void * data_)
 {
     PlaylistData * data = (PlaylistData *) data_;
 
     PlaylistPlugin * pp = (PlaylistPlugin *) aud_plugin_get_header (plugin);
     if (! pp || ! PLUGIN_HAS_FUNC (pp, load))
-        return TRUE; /* try another plugin */
+        return true; /* try another plugin */
 
-    data->plugin_found = TRUE;
+    data->plugin_found = true;
 
     VFSFile * file = vfs_fopen (data->filename, "r");
     if (! file)
-        return FALSE; /* stop if we can't open file */
+        return false; /* stop if we can't open file */
 
     data->success = pp->load (data->filename, file, data->title, data->items);
 
@@ -76,7 +76,7 @@ static bool_t playlist_load_cb (PluginHandle * plugin, void * data_)
     return ! data->success; /* stop when playlist is loaded */
 }
 
-bool_t playlist_load (const char * filename, String & title, Index<PlaylistAddItem> & items)
+bool playlist_load (const char * filename, String & title, Index<PlaylistAddItem> & items)
 {
     PlaylistData data = {
         filename
@@ -89,50 +89,50 @@ bool_t playlist_load (const char * filename, String & title, Index<PlaylistAddIt
         aud_ui_show_error (str_printf (_("Cannot load %s: unsupported file extension."), filename));
 
     if (! data.success)
-        return FALSE;
+        return false;
 
     title = std::move (data.title);
     items = std::move (data.items);
-    return TRUE;
+    return true;
 }
 
-bool_t playlist_insert_playlist_raw (int list, int at, const char * filename)
+bool playlist_insert_playlist_raw (int list, int at, const char * filename)
 {
     String title;
     Index<PlaylistAddItem> items;
 
     if (! playlist_load (filename, title, items))
-        return FALSE;
+        return false;
 
     if (title && ! aud_playlist_entry_count (list))
         aud_playlist_set_title (list, title);
 
     playlist_entry_insert_batch_raw (list, at, std::move (items));
 
-    return TRUE;
+    return true;
 }
 
-static bool_t playlist_save_cb (PluginHandle * plugin, void * data_)
+static bool playlist_save_cb (PluginHandle * plugin, void * data_)
 {
     PlaylistData * data = (PlaylistData *) data_;
 
     PlaylistPlugin * pp = (PlaylistPlugin *) aud_plugin_get_header (plugin);
     if (! pp || ! PLUGIN_HAS_FUNC (pp, save))
-        return TRUE; /* try another plugin */
+        return true; /* try another plugin */
 
-    data->plugin_found = TRUE;
+    data->plugin_found = true;
 
     VFSFile * file = vfs_fopen (data->filename, "w");
     if (! file)
-        return FALSE; /* stop if we can't open file */
+        return false; /* stop if we can't open file */
 
     data->success = pp->save (data->filename, file, data->title, data->items);
 
     vfs_fclose (file);
-    return FALSE; /* stop after first attempt (successful or not) */
+    return false; /* stop after first attempt (successful or not) */
 }
 
-EXPORT bool_t aud_playlist_save (int list, const char * filename)
+EXPORT bool aud_playlist_save (int list, const char * filename)
 {
     PlaylistData data = {
         filename,
@@ -140,7 +140,7 @@ EXPORT bool_t aud_playlist_save (int list, const char * filename)
     };
 
     int entries = aud_playlist_entry_count (list);
-    bool_t fast = aud_get_bool (NULL, "metadata_on_play");
+    bool fast = aud_get_bool (nullptr, "metadata_on_play");
 
     data.items.insert (0, entries);
 

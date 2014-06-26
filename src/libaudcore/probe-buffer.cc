@@ -101,14 +101,14 @@ static int64_t probe_buffer_ftell (VFSFile * file)
     return ((ProbeBuffer *) vfs_get_handle (file))->at;
 }
 
-static bool_t probe_buffer_feof (VFSFile * file)
+static bool probe_buffer_feof (VFSFile * file)
 {
     ProbeBuffer * p = (ProbeBuffer *) vfs_get_handle (file);
 
     if (p->at < p->filled)
-        return FALSE;
+        return false;
     if (p->at == sizeof p->buffer)
-        return TRUE;
+        return true;
 
     return vfs_feof (p->file);
 }
@@ -133,7 +133,7 @@ static String probe_buffer_get_metadata (VFSFile * file, const char * field)
 
 static const VFSConstructor probe_buffer_table =
 {
-    NULL,
+    nullptr,
     probe_buffer_fclose,
     probe_buffer_fread,
     probe_buffer_fwrite,
@@ -150,7 +150,7 @@ VFSFile * probe_buffer_new (const char * filename)
     VFSFile * file = vfs_fopen (filename, "r");
 
     if (! file)
-        return NULL;
+        return nullptr;
 
     ProbeBuffer * p = g_new (ProbeBuffer, 1);
     p->file = file;

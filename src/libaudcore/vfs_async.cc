@@ -1,6 +1,6 @@
 /*
- * vfs_async.c
- * Copyright 2010-2012 William Pitcock and John Lindgren
+ * vfs_async.cc
+ * Copyright 2010-2014 William Pitcock and John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -20,54 +20,76 @@
 #include <glib.h>
 #include <pthread.h>
 
+#include "list.h"
 #include "mainloop.h"
+#include "vfs.h"
 #include "vfs_async.h"
 
-struct VFSAsyncTrampoline {
-    String filename;
-    void *buf;
-    int64_t size;
-    pthread_t thread;
-    void * userdata;
+struct QueuedData : public ListNode
+{
+    const String filename;
+    const VFSConsumer cons_f;
+    void * const user;
 
-    VFSConsumer cons_f;
+    pthread_t thread;
+
+    void * buf;
+    int64_t size;
+
+    QueuedData (const char * filename, VFSConsumer cons_f, void * user) :
+        filename (filename),
+        cons_f (cons_f),
+        user (user),
+        buf (nullptr),
+        size (0) {}
+
+    ~QueuedData ()
+        { g_free (buf); }
 };
 
-static QueuedFunc queued_trampoline;
+static QueuedFunc queued_func;
+static List<QueuedData> queue;
+static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
-void
-vfs_async_file_get_contents_trampoline(void * data)
+static void send_data (void *)
 {
-    VFSAsyncTrampoline *tr = (VFSAsyncTrampoline *) data;
+    pthread_mutex_lock (& mutex);
 
-    pthread_join (tr->thread, NULL);
+    QueuedData * data;
+    while ((data = queue.head ()))
+    {
+        queue.remove (data);
 
-    tr->cons_f(tr->buf, tr->size, tr->userdata);
+        pthread_mutex_unlock (& mutex);
 
-    delete tr;
+        pthread_join (data->thread, nullptr);
+        data->cons_f (data->filename, data->buf, data->size, data->user);
+        delete data;
+
+        pthread_mutex_lock (& mutex);
+    }
+
+    pthread_mutex_unlock (& mutex);
 }
 
-void *
-vfs_async_file_get_contents_worker(void * data)
+static void * read_worker (void * data0)
 {
-    VFSAsyncTrampoline *tr = (VFSAsyncTrampoline *) data;
+    auto data = (QueuedData *) data0;
+    vfs_file_get_contents (data->filename, & data->buf, & data->size);
 
-    vfs_file_get_contents(tr->filename, &tr->buf, &tr->size);
+    pthread_mutex_lock (& mutex);
 
-    // FIXME: cancels any previously queued result
-    queued_trampoline.queue (vfs_async_file_get_contents_trampoline, tr);
+    if (! queue.head ())
+        queued_func.queue (send_data, nullptr);
 
-    return NULL;
+    queue.append (data);
+
+    pthread_mutex_unlock (& mutex);
+    return nullptr;
 }
 
-EXPORT void
-vfs_async_file_get_contents(const char *filename, VFSConsumer cons_f, void * userdata)
+EXPORT void vfs_async_file_get_contents (const char * filename, VFSConsumer cons_f, void * user)
 {
-    VFSAsyncTrampoline * tr = new VFSAsyncTrampoline ();
-
-    tr->filename = String (filename);
-    tr->cons_f = cons_f;
-    tr->userdata = userdata;
-
-    pthread_create (& tr->thread, NULL, vfs_async_file_get_contents_worker, tr);
+    auto data = new QueuedData (filename, cons_f, user);
+    pthread_create (& data->thread, nullptr, read_worker, data);
 }

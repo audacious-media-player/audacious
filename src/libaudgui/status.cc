@@ -34,23 +34,23 @@ static void create_progress_window (void)
     progress_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
     gtk_window_set_type_hint ((GtkWindow *) progress_window, GDK_WINDOW_TYPE_HINT_DIALOG);
     gtk_window_set_title ((GtkWindow *) progress_window, _("Working ..."));
-    gtk_window_set_resizable ((GtkWindow *) progress_window, FALSE);
+    gtk_window_set_resizable ((GtkWindow *) progress_window, false);
     gtk_container_set_border_width ((GtkContainer *) progress_window, 6);
 
     GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
     gtk_container_add ((GtkContainer *) progress_window, vbox);
 
-    progress_label = gtk_label_new (NULL);
+    progress_label = gtk_label_new (nullptr);
     gtk_label_set_width_chars ((GtkLabel *) progress_label, 40);
     gtk_label_set_max_width_chars ((GtkLabel *) progress_label, 40);
     gtk_label_set_ellipsize ((GtkLabel *) progress_label, PANGO_ELLIPSIZE_MIDDLE);
-    gtk_box_pack_start ((GtkBox *) vbox, progress_label, FALSE, FALSE, 0);
+    gtk_box_pack_start ((GtkBox *) vbox, progress_label, false, false, 0);
 
-    progress_label_2 = gtk_label_new (NULL);
+    progress_label_2 = gtk_label_new (nullptr);
     gtk_label_set_width_chars ((GtkLabel *) progress_label_2, 40);
     gtk_label_set_max_width_chars ((GtkLabel *) progress_label_2, 40);
     gtk_label_set_ellipsize ((GtkLabel *) progress_label, PANGO_ELLIPSIZE_MIDDLE);
-    gtk_box_pack_start ((GtkBox *) vbox, progress_label_2, FALSE, FALSE, 0);
+    gtk_box_pack_start ((GtkBox *) vbox, progress_label_2, false, false, 0);
 
     gtk_widget_show_all (progress_window);
 
@@ -87,10 +87,10 @@ static void show_error (void * data, void * user)
 
 void status_init (void)
 {
-    hook_associate ("ui show progress", show_progress, NULL);
-    hook_associate ("ui show progress 2", show_progress_2, NULL);
-    hook_associate ("ui hide progress", hide_progress, NULL);
-    hook_associate ("ui show error", show_error, NULL);
+    hook_associate ("ui show progress", show_progress, nullptr);
+    hook_associate ("ui show progress 2", show_progress_2, nullptr);
+    hook_associate ("ui hide progress", hide_progress, nullptr);
+    hook_associate ("ui show error", show_error, nullptr);
 }
 
 void status_cleanup (void)

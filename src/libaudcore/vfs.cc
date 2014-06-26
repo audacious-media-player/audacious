@@ -55,7 +55,7 @@ struct VFSFile {
  * vfs_prepare must be called from the main thread to look up any needed
  * transports beforehand. */
 
-static const VFSConstructor * (* lookup_func) (const char * scheme) = NULL;
+static const VFSConstructor * (* lookup_func) (const char * scheme) = nullptr;
 
 EXPORT void vfs_set_lookup_func (const VFSConstructor * (* func) (const char * scheme))
 {
@@ -123,9 +123,9 @@ EXPORT VFSFile *
 vfs_fopen(const char * path,
           const char * mode)
 {
-    g_return_val_if_fail (path && mode, NULL);
+    g_return_val_if_fail (path && mode, nullptr);
 
-    const VFSConstructor * vtable = NULL;
+    const VFSConstructor * vtable = nullptr;
 
     if (! strncmp (path, "file://", 7))
         vtable = & vfs_local_vtable;
@@ -136,23 +136,23 @@ vfs_fopen(const char * path,
         if (! s)
         {
             fprintf (stderr, "Invalid URI: %s\n", path);
-            return NULL;
+            return nullptr;
         }
 
         StringBuf scheme = str_copy (path, s - path);
 
         if (! (vtable = lookup_func (scheme)))
-            return NULL;
+            return nullptr;
     }
 
-    const gchar * sub;
-    uri_parse (path, NULL, NULL, & sub, NULL);
+    const char * sub;
+    uri_parse (path, nullptr, nullptr, & sub, nullptr);
 
     StringBuf buf = str_copy (path, sub - path);
 
     void * handle = vtable->vfs_fopen_impl (buf, mode);
     if (! handle)
-        return NULL;
+        return nullptr;
 
     VFSFile * file = vfs_new (path, vtable, handle);
 
@@ -320,14 +320,14 @@ vfs_ftell(VFSFile * file)
  * Returns whether or not the VFS stream has reached EOF.
  *
  * @param file #VFSFile object that represents the VFS stream.
- * @return On success, whether or not the VFS stream is at EOF. Otherwise, FALSE.
+ * @return On success, whether or not the VFS stream is at EOF. Otherwise, false.
  */
-EXPORT bool_t
+EXPORT bool
 vfs_feof(VFSFile * file)
 {
-    g_return_val_if_fail (file && file->sig == VFS_SIG, TRUE);
+    g_return_val_if_fail (file && file->sig == VFS_SIG, true);
 
-    bool_t eof = file->base->vfs_feof_impl (file);
+    bool eof = file->base->vfs_feof_impl (file);
 
     if (aud_get_verbose_mode ())
         logger ("VFS: <%p> eof = %s\n", file, eof ? "yes" : "no");
@@ -375,7 +375,7 @@ EXPORT int64_t vfs_fsize (VFSFile * file)
  *
  * @param file #VFSFile object that represents the VFS stream.
  * @param field The string constant field name to get.
- * @return On success, a copy of the value of the field. Otherwise, NULL.
+ * @return On success, a copy of the value of the field. Otherwise, nullptr.
  */
 EXPORT String
 vfs_get_metadata(VFSFile * file, const char * field)
@@ -394,22 +394,22 @@ vfs_get_metadata(VFSFile * file, const char * field)
  * @param test A GFileTest to run.
  * @return The result of g_file_test().
  */
-EXPORT bool_t
+EXPORT bool
 vfs_file_test(const char * path, int test)
 {
     if (strncmp (path, "file://", 7))
-        return FALSE; /* only local files are handled */
+        return false; /* only local files are handled */
 
     StringBuf path2 = uri_to_filename (path);
     if (! path2)
-        return FALSE;
+        return false;
 
 #ifdef S_ISLNK
     if (test & VFS_IS_SYMLINK)
     {
         GStatBuf st;
         if (g_lstat (path2, & st) < 0)
-            return FALSE;
+            return false;
 
         if (S_ISLNK (st.st_mode))
             test &= ~VFS_IS_SYMLINK;
@@ -420,7 +420,7 @@ vfs_file_test(const char * path, int test)
     {
         GStatBuf st;
         if (g_stat (path2, & st) < 0)
-            return FALSE;
+            return false;
 
         if (S_ISREG (st.st_mode))
             test &= ~VFS_IS_REGULAR;
@@ -439,16 +439,16 @@ vfs_file_test(const char * path, int test)
  * Tests if a file is writeable.
  *
  * @param path A path to test.
- * @return TRUE if the file is writeable, otherwise FALSE.
+ * @return true if the file is writeable, otherwise false.
  */
-EXPORT bool_t
+EXPORT bool
 vfs_is_writeable(const char * path)
 {
     GStatBuf info;
     StringBuf realfn = uri_to_filename (path);
 
     if (! realfn || g_stat (realfn, & info) < 0)
-        return FALSE;
+        return false;
 
     return (info.st_mode & S_IWUSR);
 }
@@ -457,20 +457,20 @@ vfs_is_writeable(const char * path)
  * Tests if a path is remote uri.
  *
  * @param path A path to test.
- * @return TRUE if the file is remote, otherwise FALSE.
+ * @return true if the file is remote, otherwise false.
  */
-EXPORT bool_t vfs_is_remote (const char * path)
+EXPORT bool vfs_is_remote (const char * path)
 {
-    return strncmp (path, "file://", 7) ? TRUE : FALSE;
+    return strncmp (path, "file://", 7) ? true : false;
 }
 
 /**
  * Tests if a file is associated to streaming.
  *
  * @param file A #VFSFile object to test.
- * @return TRUE if the file is streaming, otherwise FALSE.
+ * @return true if the file is streaming, otherwise false.
  */
-EXPORT bool_t vfs_is_streaming (VFSFile * file)
+EXPORT bool vfs_is_streaming (VFSFile * file)
 {
     return (vfs_fsize (file) < 0);
 }

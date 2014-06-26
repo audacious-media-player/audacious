@@ -517,7 +517,7 @@ void plugin_register (const char * path, int timestamp)
         if (! header)
             return;
 
-        plugin = new PluginHandle (str_get (path), true, true, timestamp, header->type, header);
+        plugin = new PluginHandle (path, true, true, timestamp, header->type, header);
         plugins[plugin->type].append (PluginPtr (plugin));
 
         plugin_get_info (plugin, true);
@@ -613,17 +613,17 @@ EXPORT const char * aud_plugin_get_name (PluginHandle * plugin)
     return dgettext (plugin->domain, plugin->name);
 }
 
-EXPORT bool_t aud_plugin_has_about (PluginHandle * plugin)
+EXPORT bool aud_plugin_has_about (PluginHandle * plugin)
 {
     return plugin->has_about;
 }
 
-EXPORT bool_t aud_plugin_has_configure (PluginHandle * plugin)
+EXPORT bool aud_plugin_has_configure (PluginHandle * plugin)
 {
     return plugin->has_configure;
 }
 
-EXPORT bool_t aud_plugin_get_enabled (PluginHandle * plugin)
+EXPORT bool aud_plugin_get_enabled (PluginHandle * plugin)
 {
     return plugin->enabled;
 }

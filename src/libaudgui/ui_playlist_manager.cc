@@ -36,7 +36,7 @@ static void activate_row (void * user, int row);
 
 static void play_cb (void * unused)
 {
-    activate_row (NULL, aud_playlist_get_active ());
+    activate_row (nullptr, aud_playlist_get_active ());
 }
 
 static void rename_cb (void * unused)
@@ -70,18 +70,18 @@ static void get_value (void * user, int row, int column, GValue * value)
     }
 }
 
-static bool_t get_selected (void * user, int row)
+static bool get_selected (void * user, int row)
 {
     return (row == aud_playlist_get_active ());
 }
 
-static void set_selected (void * user, int row, bool_t selected)
+static void set_selected (void * user, int row, bool selected)
 {
     if (selected)
         aud_playlist_set_active (row);
 }
 
-static void select_all (void * user, bool_t selected)
+static void select_all (void * user, bool selected)
 {
 }
 
@@ -112,33 +112,33 @@ static const AudguiListCallbacks callbacks = {
     shift_rows
 };
 
-static bool_t search_cb (GtkTreeModel * model, int column, const char * key,
+static gboolean search_cb (GtkTreeModel * model, int column, const char * key,
  GtkTreeIter * iter, void * user)
 {
     GtkTreePath * path = gtk_tree_model_get_path (model, iter);
-    g_return_val_if_fail (path, TRUE);
+    g_return_val_if_fail (path, true);
     int row = gtk_tree_path_get_indices (path)[0];
     gtk_tree_path_free (path);
 
     String title = aud_playlist_get_title (row);
-    g_return_val_if_fail (title, TRUE);
+    g_return_val_if_fail (title, true);
 
     Index<String> keys = str_list_to_index (key, " ");
 
     if (! keys.len ())
-        return TRUE;  /* not matched */
+        return true;  /* not matched */
 
     for (const String & key : keys)
     {
         if (! strstr_nocase_utf8 (title, key))
-            return TRUE;  /* not matched */
+            return true;  /* not matched */
     }
 
-    return FALSE;  /* matched */
+    return false;  /* matched */
 }
 
-static bool_t position_changed = FALSE;
-static bool_t playlist_activated = FALSE;
+static gboolean position_changed = false;
+static gboolean playlist_activated = false;
 
 static void update_hook (void * data, void * list_)
 {
@@ -154,8 +154,8 @@ static void update_hook (void * data, void * list_)
         else if (rows > old_rows)
             audgui_list_insert_rows (list, old_rows, rows - old_rows);
 
-        position_changed = TRUE;
-        playlist_activated = TRUE;
+        position_changed = true;
+        playlist_activated = true;
     }
 
     if (GPOINTER_TO_INT (data) >= PLAYLIST_UPDATE_METADATA)
@@ -165,13 +165,13 @@ static void update_hook (void * data, void * list_)
     {
         audgui_list_set_focus (list, aud_playlist_get_active ());
         audgui_list_update_selection (list, 0, rows);
-        playlist_activated = FALSE;
+        playlist_activated = false;
     }
 
     if (position_changed)
     {
         audgui_list_set_highlight (list, aud_playlist_get_playing ());
-        position_changed = FALSE;
+        position_changed = false;
     }
 }
 
@@ -180,7 +180,7 @@ static void activate_hook (void * data, void * list_)
     GtkWidget * list = (GtkWidget *) list_;
 
     if (aud_playlist_update_pending ())
-        playlist_activated = TRUE;
+        playlist_activated = true;
     else
     {
         audgui_list_set_focus (list, aud_playlist_get_active ());
@@ -193,7 +193,7 @@ static void position_hook (void * data, void * list_)
     GtkWidget * list = (GtkWidget *) list_;
 
     if (aud_playlist_update_pending ())
-        position_changed = TRUE;
+        position_changed = true;
     else
         audgui_list_set_highlight (list, aud_playlist_get_playing ());
 }
@@ -219,24 +219,24 @@ static GtkWidget * create_playlist_manager (void)
     gtk_container_set_border_width ((GtkContainer *) playman_win, 6);
     gtk_widget_set_size_request (playman_win, 400, 250);
 
-    g_signal_connect (playman_win, "destroy", (GCallback) destroy_cb, NULL);
+    g_signal_connect (playman_win, "destroy", (GCallback) destroy_cb, nullptr);
     audgui_destroy_on_escape (playman_win);
 
     GtkWidget * playman_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
     gtk_container_add ((GtkContainer *) playman_win, playman_vbox);
 
     /* ListView */
-    GtkWidget * playman_pl_lv = audgui_list_new (& callbacks, NULL, aud_playlist_count ());
+    GtkWidget * playman_pl_lv = audgui_list_new (& callbacks, nullptr, aud_playlist_count ());
     audgui_list_add_column (playman_pl_lv, _("Title"), 0, G_TYPE_STRING, -1);
     audgui_list_add_column (playman_pl_lv, _("Entries"), 1, G_TYPE_INT, 7);
     audgui_list_set_highlight (playman_pl_lv, aud_playlist_get_playing ());
     gtk_tree_view_set_search_equal_func ((GtkTreeView *) playman_pl_lv,
-     search_cb, NULL, NULL);
+     search_cb, nullptr, nullptr);
     hook_associate ("playlist update", update_hook, playman_pl_lv);
     hook_associate ("playlist activate", activate_hook, playman_pl_lv);
     hook_associate ("playlist set playing", position_hook, playman_pl_lv);
 
-    GtkWidget * playman_pl_lv_sw = gtk_scrolled_window_new (NULL, NULL);
+    GtkWidget * playman_pl_lv_sw = gtk_scrolled_window_new (nullptr, nullptr);
     gtk_scrolled_window_set_shadow_type ((GtkScrolledWindow *) playman_pl_lv_sw,
      GTK_SHADOW_IN);
     gtk_scrolled_window_set_policy ((GtkScrolledWindow *) playman_pl_lv_sw,
@@ -246,26 +246,26 @@ static GtkWidget * create_playlist_manager (void)
 
     /* ButtonBox */
     GtkWidget * playman_button_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-    GtkWidget * new_button = audgui_button_new (_("_New"), "document-new", new_cb, NULL);
-    GtkWidget * delete_button = audgui_button_new (_("_Remove"), "edit-delete", delete_cb, NULL);
-    GtkWidget * rename_button = audgui_button_new (_("Ren_ame"), "insert-text", rename_cb, NULL);
-    GtkWidget * play_button = audgui_button_new (_("_Play"), "media-playback-start", play_cb, NULL);
+    GtkWidget * new_button = audgui_button_new (_("_New"), "document-new", new_cb, nullptr);
+    GtkWidget * delete_button = audgui_button_new (_("_Remove"), "edit-delete", delete_cb, nullptr);
+    GtkWidget * rename_button = audgui_button_new (_("Ren_ame"), "insert-text", rename_cb, nullptr);
+    GtkWidget * play_button = audgui_button_new (_("_Play"), "media-playback-start", play_cb, nullptr);
 
     gtk_container_add ((GtkContainer *) playman_button_hbox, new_button);
     gtk_container_add ((GtkContainer *) playman_button_hbox, delete_button);
-    gtk_box_pack_end ((GtkBox *) playman_button_hbox, play_button, FALSE, FALSE, 0);
-    gtk_box_pack_end ((GtkBox *) playman_button_hbox, rename_button, FALSE, FALSE, 0);
+    gtk_box_pack_end ((GtkBox *) playman_button_hbox, play_button, false, false, 0);
+    gtk_box_pack_end ((GtkBox *) playman_button_hbox, rename_button, false, false, 0);
     gtk_container_add ((GtkContainer *) playman_vbox, playman_button_hbox);
 
     /* CheckButton */
     GtkWidget * hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-    gtk_box_pack_start ((GtkBox *) playman_vbox, hbox, FALSE, FALSE, 0);
+    gtk_box_pack_start ((GtkBox *) playman_vbox, hbox, false, false, 0);
     GtkWidget * check_button = gtk_check_button_new_with_mnemonic
      (_("_Close dialog on activating playlist"));
-    gtk_box_pack_start ((GtkBox *) hbox, check_button, FALSE, FALSE, 0);
+    gtk_box_pack_start ((GtkBox *) hbox, check_button, false, false, 0);
     gtk_toggle_button_set_active ((GtkToggleButton *) check_button, aud_get_bool
      ("audgui", "playlist_manager_close_on_activate"));
-    g_signal_connect (check_button, "toggled", (GCallback) close_on_activate_cb, NULL);
+    g_signal_connect (check_button, "toggled", (GCallback) close_on_activate_cb, nullptr);
 
     return playman_win;
 }

@@ -392,7 +392,7 @@ void adder_cleanup (void)
 }
 
 EXPORT void aud_playlist_entry_insert (int playlist, int at,
- const char * filename, Tuple && tuple, bool_t play)
+ const char * filename, Tuple && tuple, bool play)
 {
     Index<PlaylistAddItem> items;
     items.append ({String (filename), std::move (tuple)});
@@ -401,14 +401,14 @@ EXPORT void aud_playlist_entry_insert (int playlist, int at,
 }
 
 EXPORT void aud_playlist_entry_insert_batch (int playlist, int at,
- Index<PlaylistAddItem> && items, bool_t play)
+ Index<PlaylistAddItem> && items, bool play)
 {
     aud_playlist_entry_insert_filtered (playlist, at, std::move (items), nullptr, nullptr, play);
 }
 
 EXPORT void aud_playlist_entry_insert_filtered (int playlist, int at,
  Index<PlaylistAddItem> && items, PlaylistFilterFunc filter, void * user,
- bool_t play)
+ bool play)
 {
     int playlist_id = aud_playlist_get_unique_id (playlist);
     g_return_if_fail (playlist_id >= 0);
@@ -430,7 +430,7 @@ EXPORT void aud_playlist_entry_insert_filtered (int playlist, int at,
     pthread_mutex_unlock (& mutex);
 }
 
-EXPORT bool_t aud_playlist_add_in_progress (int playlist)
+EXPORT bool aud_playlist_add_in_progress (int playlist)
 {
     pthread_mutex_lock (& mutex);
 

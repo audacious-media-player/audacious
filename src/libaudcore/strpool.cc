@@ -41,7 +41,7 @@ struct StrNode {
 EXPORT char * str_get (const char * str)
 {
     if (! str)
-        return NULL;
+        return nullptr;
 
     StrNode * node = (StrNode *) g_malloc (NODE_SIZE_FOR (str));
     node->magic = '@';
@@ -54,7 +54,7 @@ EXPORT char * str_get (const char * str)
 EXPORT char * str_ref (const char * str)
 {
     if (! str)
-        return NULL;
+        return nullptr;
 
     StrNode * node = NODE_OF (str);
     assert (node->magic == '@');
@@ -87,7 +87,7 @@ EXPORT unsigned str_hash (const char * str)
     return str_calc_hash (str);
 }
 
-EXPORT bool_t str_equal (const char * str1, const char * str2)
+EXPORT bool str_equal (const char * str1, const char * str2)
 {
     assert (! str1 || NODE_OF (str1)->magic == '@');
     assert (! str2 || NODE_OF (str2)->magic == '@');
@@ -147,9 +147,9 @@ static bool ref_cb (MultiHash::Node * node_, void * state)
 EXPORT char * str_get (const char * str)
 {
     if (! str)
-        return NULL;
+        return nullptr;
 
-    char * ret = NULL;
+    char * ret = nullptr;
     strpool_table.lookup (str, str_calc_hash (str), add_cb, ref_cb, & ret);
     return ret;
 }
@@ -157,7 +157,7 @@ EXPORT char * str_get (const char * str)
 EXPORT char * str_ref (const char * str)
 {
     if (! str)
-        return NULL;
+        return nullptr;
 
     StrNode * node = NODE_OF (str);
     assert (node->magic == '@');
@@ -198,8 +198,8 @@ EXPORT void str_unref (char * str)
         }
         else
         {
-            int status = strpool_table.lookup (node->str, node->base.hash, NULL,
-             remove_cb, NULL);
+            int status = strpool_table.lookup (node->str, node->base.hash, nullptr,
+             remove_cb, nullptr);
 
             assert (status & MultiHash::Found);
             if (status & MultiHash::Removed)
@@ -216,7 +216,7 @@ static bool leak_cb (MultiHash::Node * node, void * state)
 
 EXPORT void strpool_shutdown (void)
 {
-    strpool_table.iterate (leak_cb, NULL);
+    strpool_table.iterate (leak_cb, nullptr);
 }
 
 EXPORT unsigned str_hash (const char * str)
@@ -231,7 +231,7 @@ EXPORT unsigned str_hash (const char * str)
 }
 
 
-EXPORT bool_t str_equal (const char * str1, const char * str2)
+EXPORT bool str_equal (const char * str1, const char * str2)
 {
     assert (! str1 || NODE_OF (str1)->magic == '@');
     assert (! str2 || NODE_OF (str2)->magic == '@');

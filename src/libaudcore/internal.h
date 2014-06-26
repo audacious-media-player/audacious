@@ -74,7 +74,7 @@ void interface_run (void);
 
 /* playback.c */
 /* do not call these; use aud_drct_play/stop() instead */
-void playback_play (int seek_time, bool_t pause);
+void playback_play (int seek_time, bool pause);
 void playback_stop (void);
 
 /* probe-buffer.c */

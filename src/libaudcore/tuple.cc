@@ -58,7 +58,7 @@ struct TupleData {
     Index<TupleVal> vals;  // ordered list of field values
 
     int *subtunes;                 /**< Array of int containing subtune index numbers.
-                                         Can be NULL if indexing is linear or if
+                                         Can be nullptr if indexing is linear or if
                                          there are no subtunes. */
     int nsubtunes;                 /**< Number of subtunes, if any. Values greater than 0
                                          mean that there are subtunes and #subtunes array
@@ -179,7 +179,7 @@ EXPORT int Tuple::field_by_name (const char * name)
 
 EXPORT const char * Tuple::field_get_name (int field)
 {
-    g_return_val_if_fail (VALID_FIELD (field), NULL);
+    g_return_val_if_fail (VALID_FIELD (field), nullptr);
     return tuple_fields[field].name;
 }
 

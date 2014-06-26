@@ -53,7 +53,7 @@ EXPORT void inifile_parse (VFSFile * file,
 
     char * pos = buf;
     int len = 0;
-    bool_t eof = FALSE;
+    bool eof = false;
 
     while (1)
     {
@@ -74,7 +74,7 @@ EXPORT void inifile_parse (VFSFile * file,
             len += vfs_fread (buf + len, 1, size - 1 - len, file);
 
             if (len < size - 1)
-                eof = TRUE;
+                eof = true;
 
             newline = (char *) memchr (pos, '\n', len);
         }
@@ -124,12 +124,12 @@ EXPORT void inifile_parse (VFSFile * file,
     }
 }
 
-EXPORT bool_t inifile_write_heading (VFSFile * file, const char * heading)
+EXPORT bool inifile_write_heading (VFSFile * file, const char * heading)
 {
     return (vfs_fputs (str_concat ({"\n[", heading, "]\n"}), file) >= 0);
 }
 
-EXPORT bool_t inifile_write_entry (VFSFile * file, const char * key, const char * value)
+EXPORT bool inifile_write_entry (VFSFile * file, const char * key, const char * value)
 {
     return (vfs_fputs (str_concat ({key, "=", value, "\n"}), file) >= 0);
 }

@@ -125,6 +125,8 @@ public:
     explicit String (const char * str) :
         raw (str_get (str)) {}
 
+    String (decltype (nullptr)) = delete;
+
     operator const char * () const
         { return raw; }
 

@@ -40,7 +40,7 @@ enum {
 };
 
 void audgui_show_unique_window (int id, GtkWidget * widget);
-bool_t audgui_reshow_unique_window (int id);
+bool audgui_reshow_unique_window (int id);
 void audgui_hide_unique_window (int id);
 
 /* pixbufs.c */

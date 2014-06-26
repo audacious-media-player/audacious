@@ -59,27 +59,27 @@
 #define DIRMODE (S_IRWXU)
 #endif
 
-static bool_t headless_mode;
-static bool_t verbose_mode;
+static bool headless_mode;
+static bool verbose_mode;
 
 static String aud_paths[AUD_PATH_COUNT];
 
-EXPORT void aud_set_headless_mode (bool_t headless)
+EXPORT void aud_set_headless_mode (bool headless)
 {
     headless_mode = headless;
 }
 
-EXPORT bool_t aud_get_headless_mode (void)
+EXPORT bool aud_get_headless_mode (void)
 {
     return headless_mode;
 }
 
-EXPORT void aud_set_verbose_mode (bool_t verbose)
+EXPORT void aud_set_verbose_mode (bool verbose)
 {
     verbose_mode = verbose;
 }
 
-EXPORT bool_t aud_get_verbose_mode (void)
+EXPORT bool aud_get_verbose_mode (void)
 {
     return verbose_mode;
 }
@@ -108,7 +108,7 @@ static StringBuf get_path_to_self (void)
     StringBuf buf (-1);
     wchar_t * bufw = (wchar_t *) (char *) buf;
     int sizew = buf.len () / sizeof (wchar_t);
-    int lenw = GetModuleFileNameW (NULL, bufw, sizew);
+    int lenw = GetModuleFileNameW (nullptr, bufw, sizew);
 
     if (! lenw)
     {
@@ -266,10 +266,10 @@ EXPORT void aud_init_paths (void)
 
 #ifdef _WIN32
     /* set some UNIX-style environment variables */
-    g_setenv ("HOME", g_get_home_dir (), TRUE);
-    g_setenv ("XDG_CONFIG_HOME", xdg_config_home, TRUE);
-    g_setenv ("XDG_DATA_HOME", g_get_user_data_dir (), TRUE);
-    g_setenv ("XDG_CACHE_HOME", g_get_user_cache_dir (), TRUE);
+    g_setenv ("HOME", g_get_home_dir (), true);
+    g_setenv ("XDG_CONFIG_HOME", xdg_config_home, true);
+    g_setenv ("XDG_DATA_HOME", g_get_user_data_dir (), true);
+    g_setenv ("XDG_CACHE_HOME", g_get_user_cache_dir (), true);
 #endif
 }
 
@@ -281,7 +281,7 @@ EXPORT void aud_cleanup_paths (void)
 
 EXPORT const char * aud_get_path (int id)
 {
-    g_return_val_if_fail (id >= 0 && id < AUD_PATH_COUNT, NULL);
+    g_return_val_if_fail (id >= 0 && id < AUD_PATH_COUNT, nullptr);
     return aud_paths[id];
 }
 
@@ -317,8 +317,8 @@ EXPORT void aud_init (void)
 
 static void do_autosave (void * unused)
 {
-    hook_call ("config save", NULL);
-    save_playlists (FALSE);
+    hook_call ("config save", nullptr);
+    save_playlists (false);
     config_save ();
 }
 
@@ -327,7 +327,7 @@ EXPORT void aud_run (void)
     start_plugins_two ();
 
     static QueuedFunc autosave;
-    autosave.start (AUTOSAVE_INTERVAL, do_autosave, NULL);
+    autosave.start (AUTOSAVE_INTERVAL, do_autosave, nullptr);
 
     /* calls "config save" before returning */
     interface_run ();
@@ -339,7 +339,7 @@ EXPORT void aud_run (void)
 
 EXPORT void aud_cleanup (void)
 {
-    save_playlists (TRUE);
+    save_playlists (true);
 
     if (aud_drct_get_playing ())
         aud_drct_stop ();

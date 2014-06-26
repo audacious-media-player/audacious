@@ -28,24 +28,24 @@
 
 /* HELPERS */
 
-static bool_t widget_get_bool (const PreferencesWidget * widget)
+static gboolean widget_get_bool (const PreferencesWidget * widget)
 {
-    g_return_val_if_fail (widget->cfg_type == VALUE_BOOLEAN, FALSE);
+    g_return_val_if_fail (widget->cfg_type == VALUE_BOOLEAN, false);
 
     if (widget->cfg)
-        return * (bool_t *) widget->cfg;
+        return * (gboolean *) widget->cfg;
     else if (widget->cname)
         return aud_get_bool (widget->csect, widget->cname);
     else
-        return FALSE;
+        return false;
 }
 
-static void widget_set_bool (const PreferencesWidget * widget, bool_t value)
+static void widget_set_bool (const PreferencesWidget * widget, gboolean value)
 {
     g_return_if_fail (widget->cfg_type == VALUE_BOOLEAN);
 
     if (widget->cfg)
-        * (bool_t *) widget->cfg = value;
+        * (gboolean *) widget->cfg = value;
     else if (widget->cname)
         aud_set_bool (widget->csect, widget->cname, value);
 
@@ -135,7 +135,7 @@ static void widget_set_string (const PreferencesWidget * widget, const char * va
 
 static void on_toggle_button_toggled (GtkToggleButton * button, const PreferencesWidget * widget)
 {
-    bool_t active = gtk_toggle_button_get_active (button);
+    gboolean active = gtk_toggle_button_get_active (button);
     widget_set_bool (widget, active);
 
     GtkWidget * child = (GtkWidget *) g_object_get_data ((GObject *) button, "child");
@@ -161,10 +161,10 @@ static void create_label (const PreferencesWidget * widget, GtkWidget * * label,
         * icon = gtk_image_new_from_icon_name (widget->data.label.stock_id, GTK_ICON_SIZE_BUTTON);
 
     * label = gtk_label_new_with_mnemonic (dgettext (domain, widget->label));
-    gtk_label_set_use_markup ((GtkLabel *) * label, TRUE);
+    gtk_label_set_use_markup ((GtkLabel *) * label, true);
 
-    if (widget->data.label.single_line == FALSE)
-        gtk_label_set_line_wrap ((GtkLabel *) * label, TRUE);
+    if (widget->data.label.single_line == false)
+        gtk_label_set_line_wrap ((GtkLabel *) * label, true);
 
     gtk_misc_set_alignment ((GtkMisc *) * label, 0, 0.5);
 }
@@ -183,7 +183,7 @@ static void init_radio_button (GtkWidget * button, const PreferencesWidget * wid
         return;
 
     if (widget_get_int (widget) == widget->data.radio_btn.value)
-        gtk_toggle_button_set_active ((GtkToggleButton *) button, TRUE);
+        gtk_toggle_button_set_active ((GtkToggleButton *) button, true);
 
     g_signal_connect (button, "toggled", (GCallback) on_radio_button_toggled, (void *) widget);
 }
@@ -244,8 +244,8 @@ void create_font_btn (const PreferencesWidget * widget, GtkWidget * * label,
  GtkWidget * * font_btn, const char * domain)
 {
     * font_btn = gtk_font_button_new ();
-    gtk_font_button_set_use_font ((GtkFontButton *) * font_btn, TRUE);
-    gtk_font_button_set_use_size ((GtkFontButton *) * font_btn, TRUE);
+    gtk_font_button_set_use_font ((GtkFontButton *) * font_btn, true);
+    gtk_font_button_set_use_size ((GtkFontButton *) * font_btn, true);
 
     if (widget->label)
     {
@@ -387,7 +387,7 @@ static void fill_grid (GtkWidget * grid, const PreferencesWidget * elements,
 {
     for (int i = 0; i < n_elements; i ++)
     {
-        GtkWidget * widget_left = NULL, * widget_middle = NULL, * widget_right = NULL;
+        GtkWidget * widget_left = nullptr, * widget_middle = nullptr, * widget_right = nullptr;
 
         switch (elements[i].type)
         {
@@ -433,12 +433,12 @@ static void fill_grid (GtkWidget * grid, const PreferencesWidget * elements,
 void audgui_create_widgets_with_domain (GtkWidget * box,
  const PreferencesWidget * widgets, int n_widgets, const char * domain)
 {
-    GtkWidget * widget = NULL, * child_box = NULL;
-    GSList * radio_btn_group = NULL;
+    GtkWidget * widget = nullptr, * child_box = nullptr;
+    GSList * radio_btn_group = nullptr;
 
     for (int i = 0; i < n_widgets; i ++)
     {
-        GtkWidget * label = NULL;
+        GtkWidget * label = nullptr;
 
         if (widget && widgets[i].child)
         {
@@ -448,7 +448,7 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
                 g_object_set_data ((GObject *) widget, "child", child_box);
 
                 GtkWidget * alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
-                gtk_box_pack_start ((GtkBox *) box, alignment, FALSE, FALSE, 0);
+                gtk_box_pack_start ((GtkBox *) box, alignment, false, false, 0);
                 gtk_alignment_set_padding ((GtkAlignment *) alignment, 0, 0, 12, 0);
                 gtk_container_add ((GtkContainer *) alignment, child_box);
 
@@ -458,16 +458,16 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
             }
         }
         else
-            child_box = NULL;
+            child_box = nullptr;
 
         GtkWidget * alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
         gtk_alignment_set_padding ((GtkAlignment *) alignment, 6, 0, 12, 0);
-        gtk_box_pack_start ((GtkBox *) (child_box ? child_box : box), alignment, FALSE, FALSE, 0);
+        gtk_box_pack_start ((GtkBox *) (child_box ? child_box : box), alignment, false, false, 0);
 
-        widget = NULL;
+        widget = nullptr;
 
         if (radio_btn_group && widgets[i].type != WIDGET_RADIO_BTN)
-            radio_btn_group = NULL;
+            radio_btn_group = nullptr;
 
         switch (widgets[i].type)
         {
@@ -482,14 +482,14 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
                     gtk_alignment_set_padding ((GtkAlignment *) alignment,
                      (i == 0) ? 0 : 12, 0, 0, 0);
 
-                GtkWidget * icon = NULL;
+                GtkWidget * icon = nullptr;
                 create_label (& widgets[i], & label, & icon, domain);
 
                 if (icon)
                 {
                     widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-                    gtk_box_pack_start ((GtkBox *) widget, icon, FALSE, FALSE, 0);
-                    gtk_box_pack_start ((GtkBox *) widget, label, FALSE, FALSE, 0);
+                    gtk_box_pack_start ((GtkBox *) widget, icon, false, false, 0);
+                    gtk_box_pack_start ((GtkBox *) widget, label, false, false, 0);
                 }
                 else
                     widget = label;
@@ -508,15 +508,15 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
             {
                 widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 
-                GtkWidget * label_pre = NULL, * spin_btn = NULL, * label_past = NULL;
+                GtkWidget * label_pre = nullptr, * spin_btn = nullptr, * label_past = nullptr;
                 create_spin_button (& widgets[i], & label_pre, & spin_btn, & label_past, domain);
 
                 if (label_pre)
-                    gtk_box_pack_start ((GtkBox *) widget, label_pre, FALSE, FALSE, 0);
+                    gtk_box_pack_start ((GtkBox *) widget, label_pre, false, false, 0);
                 if (spin_btn)
-                    gtk_box_pack_start ((GtkBox *) widget, spin_btn, FALSE, FALSE, 0);
+                    gtk_box_pack_start ((GtkBox *) widget, spin_btn, false, false, 0);
                 if (label_past)
-                    gtk_box_pack_start ((GtkBox *) widget, label_past, FALSE, FALSE, 0);
+                    gtk_box_pack_start ((GtkBox *) widget, label_past, false, false, 0);
 
                 break;
             }
@@ -531,13 +531,13 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
             {
                 widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 
-                GtkWidget * font_btn = NULL;
+                GtkWidget * font_btn = nullptr;
                 create_font_btn (& widgets[i], & label, & font_btn, domain);
 
                 if (label)
-                    gtk_box_pack_start ((GtkBox *) widget, label, FALSE, FALSE, 0);
+                    gtk_box_pack_start ((GtkBox *) widget, label, false, false, 0);
                 if (font_btn)
-                    gtk_box_pack_start ((GtkBox *) widget, font_btn, FALSE, FALSE, 0);
+                    gtk_box_pack_start ((GtkBox *) widget, font_btn, false, false, 0);
 
                 break;
             }
@@ -555,13 +555,13 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
             {
                 widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 
-                GtkWidget * entry = NULL;
+                GtkWidget * entry = nullptr;
                 create_entry (& widgets[i], & label, & entry, domain);
 
                 if (label)
-                    gtk_box_pack_start ((GtkBox *) widget, label, FALSE, FALSE, 0);
+                    gtk_box_pack_start ((GtkBox *) widget, label, false, false, 0);
                 if (entry)
-                    gtk_box_pack_start ((GtkBox *) widget, entry, TRUE, TRUE, 0);
+                    gtk_box_pack_start ((GtkBox *) widget, entry, false, false, 0);
 
                 break;
             }
@@ -570,13 +570,13 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
             {
                 widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 
-                GtkWidget * combo = NULL;
+                GtkWidget * combo = nullptr;
                 create_cbox (& widgets[i], & label, & combo, domain);
 
                 if (label)
-                    gtk_box_pack_start ((GtkBox *) widget, label, FALSE, FALSE, 0);
+                    gtk_box_pack_start ((GtkBox *) widget, label, false, false, 0);
                 if (combo)
-                    gtk_box_pack_start ((GtkBox *) widget, combo, FALSE, FALSE, 0);
+                    gtk_box_pack_start ((GtkBox *) widget, combo, false, false, 0);
 
                 break;
             }

@@ -56,7 +56,7 @@ enum {
  PLAYLIST_SORT_LENGTH,
  PLAYLIST_SORT_SCHEMES};
 
-typedef bool_t (* PlaylistFilterFunc) (const char * filename, void * user);
+typedef bool (* PlaylistFilterFunc) (const char * filename, void * user);
 typedef int (* PlaylistStringCompareFunc) (const char * a, const char * b);
 typedef int (* PlaylistTupleCompareFunc) (const Tuple & a, const Tuple & b);
 
@@ -137,7 +137,7 @@ int aud_playlist_entry_count (int playlist);
 
 /* Adds a song file, playlist file, or folder to a playlist before the entry
  * numbered <at>.  If <at> is negative or equal to the number of entries, the
- * item is added after the last entry.  <tuple> may be NULL, in which case
+ * item is added after the last entry.  <tuple> may be nullptr, in which case
  * Audacious will attempt to read metadata from the song file.  If <play> is
  * nonzero, Audacious will begin playback of the items once they have been
  * added.
@@ -146,12 +146,12 @@ int aud_playlist_entry_count (int playlist);
  * return before the process is complete.  Hence, the caller must not assume
  * that there will be new entries in the playlist immediately. */
 void aud_playlist_entry_insert (int playlist, int at, const char * filename,
- Tuple && tuple, bool_t play);
+ Tuple && tuple, bool play);
 
 /* Similar to playlist_entry_insert, adds multiple song files, playlist files,
  * or folders to a playlist. */
 void aud_playlist_entry_insert_batch (int playlist, int at,
- Index<PlaylistAddItem> && items, bool_t play);
+ Index<PlaylistAddItem> && items, bool play);
 
 /* Similar to playlist_entry_insert_batch, but allows the caller to prevent some
  * items from being added by returning false from the <filter> callback.  Useful
@@ -160,7 +160,7 @@ void aud_playlist_entry_insert_batch (int playlist, int at,
  * is an additional, untyped pointer passed to the callback. */
 void aud_playlist_entry_insert_filtered (int playlist, int at,
  Index<PlaylistAddItem> && items, PlaylistFilterFunc filter, void * user,
- bool_t play);
+ bool play);
 
 /* Removes a contiguous block of <number> entries starting from the one numbered
  * <at> from a playlist.  If necessary, the playback position is moved elsewhere
@@ -170,33 +170,33 @@ void aud_playlist_entry_delete (int playlist, int at, int number);
 /* Returns the filename of an entry. */
 String aud_playlist_entry_get_filename (int playlist, int entry);
 
-/* Returns a handle to the decoder plugin associated with an entry, or NULL if
- * none can be found.  If <fast> is nonzero, returns NULL if no decoder plugin
+/* Returns a handle to the decoder plugin associated with an entry, or nullptr if
+ * none can be found.  If <fast> is nonzero, returns nullptr if no decoder plugin
  * has yet been found. */
-PluginHandle * aud_playlist_entry_get_decoder (int playlist, int entry, bool_t fast);
+PluginHandle * aud_playlist_entry_get_decoder (int playlist, int entry, bool fast);
 
-/* Returns the tuple associated with an entry, or NULL if one is not available.
- * If <fast> is nonzero, returns NULL if metadata for the entry has not yet been
+/* Returns the tuple associated with an entry, or nullptr if one is not available.
+ * If <fast> is nonzero, returns nullptr if metadata for the entry has not yet been
  * read from the song file. */
-Tuple aud_playlist_entry_get_tuple (int playlist, int entry, bool_t fast);
+Tuple aud_playlist_entry_get_tuple (int playlist, int entry, bool fast);
 
 /* Returns a formatted title string for an entry.  This may include information
  * such as the filename, song title, and/or artist.  If <fast> is nonzero,
  * returns a "best guess" based on the entry's filename if metadata for the
  * entry has not yet been read. */
-String aud_playlist_entry_get_title (int playlist, int entry, bool_t fast);
+String aud_playlist_entry_get_title (int playlist, int entry, bool fast);
 
 /* Returns three strings (title, artist, and album) describing an entry.  If
  * <fast> is nonzero, returns a "best guess" based on the entry's filename if
- * metadata for the entry has not yet been read.  The caller may pass NULL for
- * any values that are not needed; NULL may also be returned for any values that
+ * metadata for the entry has not yet been read.  The caller may pass nullptr for
+ * any values that are not needed; nullptr may also be returned for any values that
  * are not available. */
 void aud_playlist_entry_describe (int playlist, int entry, String & title,
- String & artist, String & album, bool_t fast);
+ String & artist, String & album, bool fast);
 
 /* Returns the length in milliseconds of an entry, or -1 if the length is not
  * known.  <fast> is as in playlist_entry_get_tuple(). */
-int aud_playlist_entry_get_length (int playlist, int entry, bool_t fast);
+int aud_playlist_entry_get_length (int playlist, int entry, bool fast);
 
 /* Moves the playback position to the beginning of the entry at <position>.  If
  * <position> is -1, unsets the playback position.  If <playlist> is the
@@ -214,16 +214,16 @@ void aud_playlist_set_focus (int playlist, int entry);
 int aud_playlist_get_focus (int playlist);
 
 /* Sets whether an entry is selected. */
-void aud_playlist_entry_set_selected (int playlist, int entry, bool_t selected);
+void aud_playlist_entry_set_selected (int playlist, int entry, bool selected);
 
 /* Returns whether an entry is selected. */
-bool_t aud_playlist_entry_get_selected (int playlist, int entry);
+bool aud_playlist_entry_get_selected (int playlist, int entry);
 
 /* Returns the number of selected entries in a playlist. */
 int aud_playlist_selected_count (int playlist);
 
 /* Selects all (or none) of the entries in a playlist. */
-void aud_playlist_select_all (int playlist, bool_t selected);
+void aud_playlist_select_all (int playlist, bool selected);
 
 /* Moves a selected entry within a playlist by an offset of <distance> entries.
  * Other selected entries are gathered around it.  Returns the offset by which
@@ -325,7 +325,7 @@ void aud_playlist_queue_delete_selected (int playlist);
 
 /* Returns nonzero if a "playlist update" hook call is pending.  If called from
  * within the hook, the current hook call is not considered pending. */
-bool_t aud_playlist_update_pending (void);
+bool aud_playlist_update_pending (void);
 
 /* May be called within the "playlist update" hook to determine the update level
  * and number of entries changed in a playlist.  Returns the update level for
@@ -337,11 +337,11 @@ int aud_playlist_updated_range (int playlist, int * at, int * count);
 
 /* Returns nonzero if entries are being added to a playlist in the background.
  * If <playlist> is -1, checks all playlists. */
-bool_t aud_playlist_add_in_progress (int playlist);
+bool aud_playlist_add_in_progress (int playlist);
 
 /* Returns nonzero if entries in a playlist are being scanned for metadata in
  * the background.  If <playlist> is -1, checks all playlists. */
-bool_t aud_playlist_scan_in_progress (int playlist);
+bool aud_playlist_scan_in_progress (int playlist);
 
 /* --- PLAYLIST UTILITY API --- */
 
@@ -369,10 +369,10 @@ void aud_playlist_remove_failed (int playlist);
 void aud_playlist_select_by_patterns (int playlist, const Tuple & patterns);
 
 /* Returns nonzero if <filename> refers to a playlist file. */
-bool_t aud_filename_is_playlist (const char * filename);
+bool aud_filename_is_playlist (const char * filename);
 
 /* Saves the entries in a playlist to a playlist file.  The format of the file
  * is determined from the file extension.  Returns nonzero on success. */
-bool_t aud_playlist_save (int playlist, const char * filename);
+bool aud_playlist_save (int playlist, const char * filename);
 
 #endif

@@ -39,9 +39,9 @@ struct ListModel {
     int rows, highlight;
     int columns;
     GList * column_types;
-    bool_t frozen, blocked;
-    bool_t dragging;
-    bool_t clicked_row, receive_row;
+    gboolean frozen, blocked;
+    gboolean dragging;
+    gboolean clicked_row, receive_row;
     int scroll_source, scroll_speed;
 };
 
@@ -69,21 +69,21 @@ static GType list_model_get_column_type (GtkTreeModel * _model, int column)
      RESERVED_COLUMNS));
 }
 
-static bool_t list_model_get_iter (GtkTreeModel * model, GtkTreeIter * iter,
+static gboolean list_model_get_iter (GtkTreeModel * model, GtkTreeIter * iter,
  GtkTreePath * path)
 {
     int row = gtk_tree_path_get_indices (path)[0];
     if (row < 0 || row >= ((ListModel *) model)->rows)
-        return FALSE;
+        return false;
     iter->user_data = GINT_TO_POINTER (row);
-    return TRUE;
+    return true;
 }
 
 static GtkTreePath * list_model_get_path (GtkTreeModel * model,
  GtkTreeIter * iter)
 {
     int row = GPOINTER_TO_INT (iter->user_data);
-    g_return_val_if_fail (row >= 0 && row < ((ListModel *) model)->rows, NULL);
+    g_return_val_if_fail (row >= 0 && row < ((ListModel *) model)->rows, nullptr);
     return gtk_tree_path_new_from_indices (row, -1);
 }
 
@@ -108,30 +108,30 @@ static void list_model_get_value (GtkTreeModel * _model, GtkTreeIter * iter,
     model->cbs->get_value (model->user, row, column - RESERVED_COLUMNS, value);
 }
 
-static bool_t list_model_iter_next (GtkTreeModel * _model, GtkTreeIter * iter)
+static gboolean list_model_iter_next (GtkTreeModel * _model, GtkTreeIter * iter)
 {
     ListModel * model = (ListModel *) _model;
     int row = GPOINTER_TO_INT (iter->user_data);
-    g_return_val_if_fail (row >= 0 && row < model->rows, FALSE);
+    g_return_val_if_fail (row >= 0 && row < model->rows, false);
     if (row + 1 >= model->rows)
-        return FALSE;
+        return false;
     iter->user_data = GINT_TO_POINTER (row + 1);
-    return TRUE;
+    return true;
 }
 
-static bool_t list_model_iter_children (GtkTreeModel * model,
+static gboolean list_model_iter_children (GtkTreeModel * model,
  GtkTreeIter * iter, GtkTreeIter * parent)
 {
     if (parent || ((ListModel *) model)->rows < 1)
-        return FALSE;
+        return false;
     iter->user_data = GINT_TO_POINTER (0);
-    return TRUE;
+    return true;
 }
 
-static bool_t list_model_iter_has_child (GtkTreeModel * model,
+static gboolean list_model_iter_has_child (GtkTreeModel * model,
  GtkTreeIter * iter)
 {
-    return FALSE;
+    return false;
 }
 
 static int list_model_iter_n_children (GtkTreeModel * model, GtkTreeIter * iter)
@@ -139,19 +139,19 @@ static int list_model_iter_n_children (GtkTreeModel * model, GtkTreeIter * iter)
     return iter ? 0 : ((ListModel *) model)->rows;
 }
 
-static bool_t list_model_iter_nth_child (GtkTreeModel * model,
+static gboolean list_model_iter_nth_child (GtkTreeModel * model,
  GtkTreeIter * iter, GtkTreeIter * parent, int n)
 {
     if (parent || n < 0 || n >= ((ListModel *) model)->rows)
-        return FALSE;
+        return false;
     iter->user_data = GINT_TO_POINTER (n);
-    return TRUE;
+    return true;
 }
 
-static bool_t list_model_iter_parent (GtkTreeModel * model,
+static gboolean list_model_iter_parent (GtkTreeModel * model,
  GtkTreeIter * iter, GtkTreeIter * child)
 {
-    return FALSE;
+    return false;
 }
 
 static void iface_init (GtkTreeModelIface * iface)
@@ -180,7 +180,7 @@ static GType list_model_get_type (void)
     if (type == G_TYPE_INVALID)
     {
         type = g_type_register_static_simple (G_TYPE_OBJECT, "AudguiListModel",
-         sizeof (GObjectClass), NULL, sizeof (ListModel), NULL, (GTypeFlags) 0);
+         sizeof (GObjectClass), nullptr, sizeof (ListModel), nullptr, (GTypeFlags) 0);
         g_type_add_interface_static (type, GTK_TYPE_TREE_MODEL, & iface_info);
     }
     return type;
@@ -188,8 +188,8 @@ static GType list_model_get_type (void)
 
 /* ==== CALLBACKS ==== */
 
-static bool_t select_allow_cb (GtkTreeSelection * sel, GtkTreeModel * model,
- GtkTreePath * path, bool_t was, void * user)
+static gboolean select_allow_cb (GtkTreeSelection * sel, GtkTreeModel * model,
+ GtkTreePath * path, gboolean was, void * user)
 {
     return ! ((ListModel *) model)->frozen;
 }
@@ -200,15 +200,15 @@ static void select_row_cb (GtkTreeModel * _model, GtkTreePath * path,
     ListModel * model = (ListModel *) _model;
     int row = gtk_tree_path_get_indices (path)[0];
     g_return_if_fail (row >= 0 && row < model->rows);
-    model->cbs->set_selected (model->user, row, TRUE);
+    model->cbs->set_selected (model->user, row, true);
 }
 
 static void select_cb (GtkTreeSelection * sel, ListModel * model)
 {
     if (model->blocked)
         return;
-    model->cbs->select_all (model->user, FALSE);
-    gtk_tree_selection_selected_foreach (sel, select_row_cb, NULL);
+    model->cbs->select_all (model->user, false);
+    gtk_tree_selection_selected_foreach (sel, select_row_cb, nullptr);
 }
 
 static void focus_cb (GtkTreeView * tree, ListModel * model)
@@ -226,12 +226,12 @@ static void activate_cb (GtkTreeView * tree, GtkTreePath * path,
     model->cbs->activate_row (model->user, row);
 }
 
-static bool_t button_press_cb (GtkWidget * widget, GdkEventButton * event,
+static gboolean button_press_cb (GtkWidget * widget, GdkEventButton * event,
  ListModel * model)
 {
-    GtkTreePath * path = NULL;
+    GtkTreePath * path = nullptr;
     gtk_tree_view_get_path_at_pos ((GtkTreeView *) widget, event->x, event->y,
-     & path, NULL, NULL, NULL);
+     & path, nullptr, nullptr, nullptr);
 
     if (event->type == GDK_BUTTON_PRESS && event->button == 3
      && MODEL_HAS_CB (model, right_click))
@@ -241,16 +241,16 @@ static bool_t button_press_cb (GtkWidget * widget, GdkEventButton * event,
         if (path)
         {
             if (PATH_IS_SELECTED (widget, path))
-                model->frozen = TRUE;
-            gtk_tree_view_set_cursor ((GtkTreeView *) widget, path, NULL, FALSE);
-            model->frozen = FALSE;
+                model->frozen = true;
+            gtk_tree_view_set_cursor ((GtkTreeView *) widget, path, nullptr, false);
+            model->frozen = false;
         }
 
         model->cbs->right_click (model->user, event);
 
         if (path)
             gtk_tree_path_free (path);
-        return TRUE;
+        return true;
     }
 
     /* Only allow GTK to select this row if it is not already selected.  If we
@@ -260,7 +260,7 @@ static bool_t button_press_cb (GtkWidget * widget, GdkEventButton * event,
     if (event->type == GDK_BUTTON_PRESS && event->button == 1 && ! (event->state
      & (GDK_SHIFT_MASK | GDK_CONTROL_MASK)) && path && PATH_IS_SELECTED (widget,
      path))
-        model->frozen = TRUE;
+        model->frozen = true;
 
     if (path)
         model->clicked_row = gtk_tree_path_get_indices (path)[0];
@@ -269,10 +269,10 @@ static bool_t button_press_cb (GtkWidget * widget, GdkEventButton * event,
 
     if (path)
         gtk_tree_path_free (path);
-    return FALSE;
+    return false;
 }
 
-static bool_t button_release_cb (GtkWidget * widget, GdkEventButton * event,
+static gboolean button_release_cb (GtkWidget * widget, GdkEventButton * event,
  ListModel * model)
 {
     /* If button_press_cb set "frozen", and we were not dragging, we need to
@@ -280,26 +280,26 @@ static bool_t button_release_cb (GtkWidget * widget, GdkEventButton * event,
     if (model->frozen && model->clicked_row >= 0 && model->clicked_row <
      model->rows)
     {
-        model->frozen = FALSE;
+        model->frozen = false;
         GtkTreePath * path = gtk_tree_path_new_from_indices (model->clicked_row,
          -1);
-        gtk_tree_view_set_cursor ((GtkTreeView *) widget, path, NULL, FALSE);
+        gtk_tree_view_set_cursor ((GtkTreeView *) widget, path, nullptr, false);
         gtk_tree_path_free (path);
     }
 
-    return FALSE;
+    return false;
 }
 
-static bool_t key_press_cb (GtkWidget * widget, GdkEventKey * event, ListModel * model)
+static gboolean key_press_cb (GtkWidget * widget, GdkEventKey * event, ListModel * model)
 {
     /* GTK thinks the spacebar should activate a row; I (jlindgren) disagree */
     if (event->keyval == ' ' && ! (event->state & GDK_CONTROL_MASK))
-        return TRUE;
+        return true;
 
-    return FALSE;
+    return false;
 }
 
-static bool_t motion_notify_cb (GtkWidget * widget, GdkEventMotion * event, ListModel * model)
+static gboolean motion_notify_cb (GtkWidget * widget, GdkEventMotion * event, ListModel * model)
 {
     if (MODEL_HAS_CB (model, mouse_motion))
     {
@@ -311,10 +311,10 @@ static bool_t motion_notify_cb (GtkWidget * widget, GdkEventMotion * event, List
         model->cbs->mouse_motion (model->user, event, row);
     }
 
-    return FALSE;
+    return false;
 }
 
-static bool_t leave_notify_cb (GtkWidget * widget, GdkEventMotion * event, ListModel * model)
+static gboolean leave_notify_cb (GtkWidget * widget, GdkEventMotion * event, ListModel * model)
 {
     if (MODEL_HAS_CB (model, mouse_leave))
     {
@@ -326,7 +326,7 @@ static bool_t leave_notify_cb (GtkWidget * widget, GdkEventMotion * event, ListM
         model->cbs->mouse_leave (model->user, event, row);
     }
 
-    return FALSE;
+    return false;
 }
 
 /* ==== DRAG AND DROP ==== */
@@ -336,7 +336,7 @@ static void drag_begin (GtkWidget * widget, GdkDragContext * context,
 {
     g_signal_stop_emission_by_name (widget, "drag-begin");
 
-    model->dragging = TRUE;
+    model->dragging = true;
 }
 
 static void drag_end (GtkWidget * widget, GdkDragContext * context,
@@ -344,7 +344,7 @@ static void drag_end (GtkWidget * widget, GdkDragContext * context,
 {
     g_signal_stop_emission_by_name (widget, "drag-end");
 
-    model->dragging = FALSE;
+    model->dragging = false;
     model->clicked_row = -1;
 }
 
@@ -353,10 +353,10 @@ static void drag_data_get (GtkWidget * widget, GdkDragContext * context,
 {
     g_signal_stop_emission_by_name (widget, "drag-data-get");
 
-    void * data = NULL;
+    void * data = nullptr;
     int length = 0;
     model->cbs->get_data (model->user, & data, & length);
-    gtk_selection_data_set (sel, gdk_atom_intern (model->cbs->data_type, FALSE),
+    gtk_selection_data_set (sel, gdk_atom_intern (model->cbs->data_type, false),
      8, (const unsigned char *) data, length);
     g_free (data);
 }
@@ -379,14 +379,14 @@ static void stop_autoscroll (ListModel * model)
     model->scroll_speed = 0;
 }
 
-static bool_t autoscroll (GtkWidget * widget)
+static gboolean autoscroll (GtkWidget * widget)
 {
     ListModel * model = (ListModel *) gtk_tree_view_get_model
      ((GtkTreeView *) widget);
 
     GtkAdjustment * adj = gtk_scrollable_get_vadjustment ((GtkScrollable *) widget);
     if (! adj)
-        return FALSE;
+        return false;
 
     int pos = gtk_adjustment_get_value (adj) + model->scroll_speed;
     int clamped = CLAMP (pos, 0, gtk_adjustment_get_upper (adj) -
@@ -394,14 +394,14 @@ static bool_t autoscroll (GtkWidget * widget)
     gtk_adjustment_set_value (adj, clamped);
 
     if (clamped != pos) /* reached top or bottom? */
-        return FALSE;
+        return false;
 
     if (model->scroll_speed > 0)
         model->scroll_speed = MIN (model->scroll_speed + 2, 100);
     else
         model->scroll_speed = MAX (model->scroll_speed - 2, -100);
 
-    return TRUE;
+    return true;
 }
 
 static void start_autoscroll (ListModel * model, GtkWidget * widget, int speed)
@@ -413,21 +413,21 @@ static void start_autoscroll (ListModel * model, GtkWidget * widget, int speed)
     model->scroll_speed = speed;
 }
 
-static bool_t drag_motion (GtkWidget * widget, GdkDragContext * context,
+static gboolean drag_motion (GtkWidget * widget, GdkDragContext * context,
  int x, int y, unsigned int time, ListModel * model)
 {
     g_signal_stop_emission_by_name (widget, "drag-motion");
 
     /* If button_press_cb preserved a multiple selection, tell button_release_cb
      * not to clear it. */
-    model->frozen = FALSE;
+    model->frozen = false;
 
     if (model->dragging && MODEL_HAS_CB (model, shift_rows)) /* dragging within same list */
         gdk_drag_status (context, GDK_ACTION_MOVE, time);
     else if (MODEL_HAS_CB (model, data_type)) /* cross-widget dragging */
         gdk_drag_status (context, GDK_ACTION_COPY, time);
     else
-        return FALSE;
+        return false;
 
     if (model->rows > 0)
     {
@@ -450,7 +450,7 @@ static bool_t drag_motion (GtkWidget * widget, GdkDragContext * context,
 
     int height;
     gdk_window_get_geometry (gtk_tree_view_get_bin_window ((GtkTreeView *)
-     widget), NULL, NULL, NULL, & height);
+     widget), nullptr, nullptr, nullptr, & height);
     gtk_tree_view_convert_widget_to_bin_window_coords ((GtkTreeView *) widget,
      x, y, & x, & y);
 
@@ -463,7 +463,7 @@ static bool_t drag_motion (GtkWidget * widget, GdkDragContext * context,
     else
         stop_autoscroll (model);
 
-    return TRUE;
+    return true;
 }
 
 static void drag_leave (GtkWidget * widget, GdkDragContext * context,
@@ -471,16 +471,16 @@ static void drag_leave (GtkWidget * widget, GdkDragContext * context,
 {
     g_signal_stop_emission_by_name (widget, "drag-leave");
 
-    gtk_tree_view_set_drag_dest_row ((GtkTreeView *) widget, NULL, (GtkTreeViewDropPosition) 0);
+    gtk_tree_view_set_drag_dest_row ((GtkTreeView *) widget, nullptr, (GtkTreeViewDropPosition) 0);
     stop_autoscroll (model);
 }
 
-static bool_t drag_drop (GtkWidget * widget, GdkDragContext * context, int x,
+static gboolean drag_drop (GtkWidget * widget, GdkDragContext * context, int x,
  int y, unsigned int time, ListModel * model)
 {
     g_signal_stop_emission_by_name (widget, "drag-drop");
 
-    bool_t success = TRUE;
+    gboolean success = true;
     int row = calc_drop_row (model, widget, x, y);
 
     if (model->dragging && MODEL_HAS_CB (model, shift_rows)) /* dragging within same list */
@@ -488,21 +488,21 @@ static bool_t drag_drop (GtkWidget * widget, GdkDragContext * context, int x,
         if (model->clicked_row >= 0 && model->clicked_row < model->rows)
             model->cbs->shift_rows (model->user, model->clicked_row, row);
         else
-            success = FALSE;
+            success = false;
     }
     else if (MODEL_HAS_CB (model, data_type)) /* cross-widget dragging */
     {
         model->receive_row = row;
         gtk_drag_get_data (widget, context, gdk_atom_intern
-         (model->cbs->data_type, FALSE), time);
+         (model->cbs->data_type, false), time);
     }
     else
-        success = FALSE;
+        success = false;
 
-    gtk_drag_finish (context, success, FALSE, time);
-    gtk_tree_view_set_drag_dest_row ((GtkTreeView *) widget, NULL, (GtkTreeViewDropPosition) 0);
+    gtk_drag_finish (context, success, false, time);
+    gtk_tree_view_set_drag_dest_row ((GtkTreeView *) widget, nullptr, (GtkTreeViewDropPosition) 0);
     stop_autoscroll (model);
-    return TRUE;
+    return true;
 }
 
 static void drag_data_received (GtkWidget * widget, GdkDragContext * context, int x,
@@ -538,7 +538,7 @@ static void destroy_cb (GtkWidget * list, ListModel * model)
 static void update_selection (GtkWidget * list, ListModel * model, int at,
  int rows)
 {
-    model->blocked = TRUE;
+    model->blocked = true;
     GtkTreeSelection * sel = gtk_tree_view_get_selection ((GtkTreeView *) list);
 
     for (int i = at; i < at + rows; i ++)
@@ -550,32 +550,32 @@ static void update_selection (GtkWidget * list, ListModel * model, int at,
             gtk_tree_selection_unselect_iter (sel, & iter);
     }
 
-    model->blocked = FALSE;
+    model->blocked = false;
 }
 
 EXPORT GtkWidget * audgui_list_new_real (const AudguiListCallbacks * cbs, int cbs_size,
  void * user, int rows)
 {
-    g_return_val_if_fail (cbs->get_value, NULL);
+    g_return_val_if_fail (cbs->get_value, nullptr);
 
-    ListModel * model = (ListModel *) g_object_new (list_model_get_type (), NULL);
+    ListModel * model = (ListModel *) g_object_new (list_model_get_type (), nullptr);
     model->cbs = cbs;
     model->cbs_size = cbs_size;
     model->user = user;
     model->rows = rows;
     model->highlight = -1;
     model->columns = RESERVED_COLUMNS;
-    model->column_types = NULL;
-    model->frozen = FALSE;
-    model->blocked = FALSE;
-    model->dragging = FALSE;
+    model->column_types = nullptr;
+    model->frozen = false;
+    model->blocked = false;
+    model->dragging = false;
     model->clicked_row = -1;
     model->receive_row = -1;
     model->scroll_source = 0;
     model->scroll_speed = 0;
 
     GtkWidget * list = gtk_tree_view_new_with_model ((GtkTreeModel *) model);
-    gtk_tree_view_set_fixed_height_mode ((GtkTreeView *) list, TRUE);
+    gtk_tree_view_set_fixed_height_mode ((GtkTreeView *) list, true);
     g_signal_connect (list, "destroy", (GCallback) destroy_cb, model);
 
     model->charwidth = audgui_get_digit_width (list);
@@ -586,7 +586,7 @@ EXPORT GtkWidget * audgui_list_new_real (const AudguiListCallbacks * cbs, int cb
         GtkTreeSelection * sel = gtk_tree_view_get_selection
          ((GtkTreeView *) list);
         gtk_tree_selection_set_mode (sel, GTK_SELECTION_MULTIPLE);
-        gtk_tree_selection_set_select_function (sel, select_allow_cb, NULL, NULL);
+        gtk_tree_selection_set_select_function (sel, select_allow_cb, nullptr, nullptr);
         g_signal_connect (sel, "changed", (GCallback) select_cb, model);
 
         update_selection (list, model, 0, rows);
@@ -604,7 +604,7 @@ EXPORT GtkWidget * audgui_list_new_real (const AudguiListCallbacks * cbs, int cb
     g_signal_connect (list, "motion-notify-event", (GCallback) motion_notify_cb, model);
     g_signal_connect (list, "leave-notify-event", (GCallback) leave_notify_cb, model);
 
-    bool_t supports_drag = FALSE;
+    gboolean supports_drag = false;
 
     if (MODEL_HAS_CB (model, data_type) && MODEL_HAS_CB (model, get_data) &&
      MODEL_HAS_CB (model, receive_data))
@@ -620,13 +620,13 @@ EXPORT GtkWidget * audgui_list_new_real (const AudguiListCallbacks * cbs, int cb
         g_signal_connect (list, "drag-data-received", (GCallback)
          drag_data_received, model);
 
-        supports_drag = TRUE;
+        supports_drag = true;
     }
     else if (MODEL_HAS_CB (model, shift_rows))
     {
-        gtk_drag_source_set (list, GDK_BUTTON1_MASK, NULL, 0, GDK_ACTION_COPY);
-        gtk_drag_dest_set (list, (GtkDestDefaults) 0, NULL, 0, GDK_ACTION_COPY);
-        supports_drag = TRUE;
+        gtk_drag_source_set (list, GDK_BUTTON1_MASK, nullptr, 0, GDK_ACTION_COPY);
+        gtk_drag_dest_set (list, (GtkDestDefaults) 0, nullptr, 0, GDK_ACTION_COPY);
+        supports_drag = true;
     }
 
     if (supports_drag)
@@ -662,22 +662,22 @@ EXPORT void audgui_list_add_column (GtkWidget * list, const char * title,
     GtkCellRenderer * renderer = gtk_cell_renderer_text_new ();
     GtkTreeViewColumn * tree_column = gtk_tree_view_column_new_with_attributes
      (title, renderer, "text", RESERVED_COLUMNS + column, "weight",
-     HIGHLIGHT_COLUMN, NULL);
+     HIGHLIGHT_COLUMN, nullptr);
     gtk_tree_view_column_set_sizing (tree_column, GTK_TREE_VIEW_COLUMN_FIXED);
-    gtk_tree_view_column_set_resizable (tree_column, TRUE);
+    gtk_tree_view_column_set_resizable (tree_column, true);
 
     int pad1, pad2, pad3;
-    gtk_widget_style_get (list, "horizontal-separator", & pad1, "focus-line-width", & pad2, NULL);
-    gtk_cell_renderer_get_padding (renderer, & pad3, NULL);
+    gtk_widget_style_get (list, "horizontal-separator", & pad1, "focus-line-width", & pad2, nullptr);
+    gtk_cell_renderer_get_padding (renderer, & pad3, nullptr);
     int padding = pad1 + 2 * pad2 + 2 * pad3;
 
     if (width < 1)
     {
         gtk_tree_view_column_set_min_width (tree_column,
          6 * model->charwidth + model->charwidth / 2 + padding);
-        gtk_tree_view_column_set_expand (tree_column, TRUE);
-        g_object_set ((GObject *) renderer, "ellipsize-set", TRUE, "ellipsize",
-         PANGO_ELLIPSIZE_END, NULL);
+        gtk_tree_view_column_set_expand (tree_column, true);
+        g_object_set ((GObject *) renderer, "ellipsize-set", true, "ellipsize",
+         PANGO_ELLIPSIZE_END, nullptr);
     }
     else
     {
@@ -685,7 +685,7 @@ EXPORT void audgui_list_add_column (GtkWidget * list, const char * title,
          width * model->charwidth + model->charwidth / 2 + padding);
 
         if (width < 10)
-            g_object_set ((GObject *) renderer, "xalign", (float) 1, NULL);
+            g_object_set ((GObject *) renderer, "xalign", (float) 1, nullptr);
     }
 
     gtk_tree_view_append_column ((GtkTreeView *) list, tree_column);
@@ -739,8 +739,8 @@ EXPORT void audgui_list_update_rows (GtkWidget * list, int at, int rows)
 
 static void move_cursor_away (GtkWidget * list, ListModel * model, int at, int rows)
 {
-    GtkTreePath * path = NULL;
-    gtk_tree_view_get_cursor ((GtkTreeView *) list, & path, NULL);
+    GtkTreePath * path = nullptr;
+    gtk_tree_view_get_cursor ((GtkTreeView *) list, & path, nullptr);
 
     if (! path)
         return;
@@ -762,7 +762,7 @@ static void move_cursor_away (GtkWidget * list, ListModel * model, int at, int r
     else
         path = gtk_tree_path_new ();
 
-    gtk_tree_view_set_cursor ((GtkTreeView *) list, path, NULL, FALSE);
+    gtk_tree_view_set_cursor ((GtkTreeView *) list, path, nullptr, false);
     gtk_tree_path_free (path);
 }
 
@@ -778,8 +778,8 @@ EXPORT void audgui_list_delete_rows (GtkWidget * list, int at, int rows)
     else if (model->highlight >= at)
         model->highlight = -1;
 
-    model->frozen = TRUE;
-    model->blocked = TRUE;
+    model->frozen = true;
+    model->blocked = true;
 
     /* prevent a warning when GTK+ tries to move the cursor to a deleted row */
     move_cursor_away (list, model, at, rows);
@@ -791,8 +791,8 @@ EXPORT void audgui_list_delete_rows (GtkWidget * list, int at, int rows)
 
     gtk_tree_path_free (path);
 
-    model->frozen = FALSE;
-    model->blocked = FALSE;
+    model->frozen = false;
+    model->blocked = false;
 }
 
 EXPORT void audgui_list_update_selection (GtkWidget * list, int at, int rows)
@@ -830,8 +830,8 @@ EXPORT void audgui_list_set_highlight (GtkWidget * list, int row)
 
 EXPORT int audgui_list_get_focus (GtkWidget * list)
 {
-    GtkTreePath * path = NULL;
-    gtk_tree_view_get_cursor ((GtkTreeView *) list, & path, NULL);
+    GtkTreePath * path = nullptr;
+    gtk_tree_view_get_cursor ((GtkTreeView *) list, & path, nullptr);
 
     if (! path)
         return -1;
@@ -851,25 +851,25 @@ EXPORT void audgui_list_set_focus (GtkWidget * list, int row)
     if (row < 0 || row == audgui_list_get_focus (list))
         return;
 
-    model->frozen = TRUE;
-    model->blocked = TRUE;
+    model->frozen = true;
+    model->blocked = true;
 
     GtkTreePath * path = gtk_tree_path_new_from_indices (row, -1);
-    gtk_tree_view_set_cursor ((GtkTreeView *) list, path, NULL, FALSE);
-    gtk_tree_view_scroll_to_cell ((GtkTreeView *) list, path, NULL, FALSE, 0, 0);
+    gtk_tree_view_set_cursor ((GtkTreeView *) list, path, nullptr, false);
+    gtk_tree_view_scroll_to_cell ((GtkTreeView *) list, path, nullptr, false, 0, 0);
     gtk_tree_path_free (path);
 
-    model->frozen = FALSE;
-    model->blocked = FALSE;
+    model->frozen = false;
+    model->blocked = false;
 }
 
 EXPORT int audgui_list_row_at_point (GtkWidget * list, int x, int y)
 {
     ListModel * model = (ListModel *) gtk_tree_view_get_model ((GtkTreeView *) list);
 
-    GtkTreePath * path = NULL;
+    GtkTreePath * path = nullptr;
     gtk_tree_view_convert_widget_to_bin_window_coords ((GtkTreeView *) list, x, y, & x, & y);
-    gtk_tree_view_get_path_at_pos ((GtkTreeView *) list, x, y, & path, NULL, NULL, NULL);
+    gtk_tree_view_get_path_at_pos ((GtkTreeView *) list, x, y, & path, nullptr, nullptr, nullptr);
 
     if (! path)
         return -1;
@@ -885,9 +885,9 @@ EXPORT int audgui_list_row_at_point_rounded (GtkWidget * list, int x, int y)
 {
     ListModel * model = (ListModel *) gtk_tree_view_get_model ((GtkTreeView *) list);
 
-    GtkTreePath * path = NULL;
+    GtkTreePath * path = nullptr;
     gtk_tree_view_convert_widget_to_bin_window_coords ((GtkTreeView *) list, x, y, & x, & y);
-    gtk_tree_view_get_path_at_pos ((GtkTreeView *) list, x, y, & path, NULL, NULL, NULL);
+    gtk_tree_view_get_path_at_pos ((GtkTreeView *) list, x, y, & path, nullptr, nullptr, nullptr);
 
     if (! path)
         return -1;
@@ -896,7 +896,7 @@ EXPORT int audgui_list_row_at_point_rounded (GtkWidget * list, int x, int y)
     g_return_val_if_fail (row >= 0 && row < model->rows, -1);
 
     GdkRectangle rect;
-    gtk_tree_view_get_background_area ((GtkTreeView *) list, path, NULL, & rect);
+    gtk_tree_view_get_background_area ((GtkTreeView *) list, path, nullptr, & rect);
     if (y > rect.y + rect.height / 2)
         row ++;
 

@@ -35,13 +35,13 @@ static const char * const audgui_defaults[] = {
  "close_jtf_dialog", "TRUE",
  "playlist_manager_close_on_activate", "FALSE",
  "remember_jtf_entry", "TRUE",
- NULL};
+ nullptr};
 
 static const char * const window_names[AUDGUI_NUM_UNIQUE_WINDOWS] = {
  "about_win",
  "equalizer_win",
  "filebrowser_win",
- NULL, /* infopopup position is not saved */
+ nullptr, /* infopopup position is not saved */
  "info_win",
  "jump_to_time_win",
  "jump_to_track_win",
@@ -56,7 +56,7 @@ static int init_count = 0;
 
 static GtkWidget * windows[AUDGUI_NUM_UNIQUE_WINDOWS];
 
-static bool_t configure_cb (GtkWidget * window, GdkEventConfigure * event, const char * name)
+static gboolean configure_cb (GtkWidget * window, GdkEventConfigure * event, const char * name)
 {
     if (gtk_widget_get_visible (window))
     {
@@ -67,7 +67,7 @@ static bool_t configure_cb (GtkWidget * window, GdkEventConfigure * event, const
         aud_set_str ("audgui", name, int_array_to_str (pos, 4));
     }
 
-    return FALSE;
+    return false;
 }
 
 void audgui_show_unique_window (int id, GtkWidget * widget)
@@ -98,15 +98,15 @@ void audgui_show_unique_window (int id, GtkWidget * widget)
     gtk_widget_show_all (widget);
 }
 
-bool_t audgui_reshow_unique_window (int id)
+bool audgui_reshow_unique_window (int id)
 {
-    g_return_val_if_fail (id >= 0 && id < AUDGUI_NUM_UNIQUE_WINDOWS, FALSE);
+    g_return_val_if_fail (id >= 0 && id < AUDGUI_NUM_UNIQUE_WINDOWS, false);
 
     if (! windows[id])
-        return FALSE;
+        return false;
 
     gtk_window_present ((GtkWindow *) windows[id]);
-    return TRUE;
+    return true;
 }
 
 void audgui_hide_unique_window (int id)
@@ -133,14 +133,14 @@ EXPORT void audgui_init (void)
     if (init_count ++)
         return;
 
-    gtk_init (NULL, NULL);
+    gtk_init (nullptr, nullptr);
 
     aud_config_set_defaults ("audgui", audgui_defaults);
 
     status_init ();
 
-    hook_associate ("playlist set playing", playlist_set_playing_cb, NULL);
-    hook_associate ("playlist position", playlist_position_cb, NULL);
+    hook_associate ("playlist set playing", playlist_set_playing_cb, nullptr);
+    hook_associate ("playlist position", playlist_position_cb, nullptr);
 
 #ifndef _WIN32
     gtk_window_set_default_icon_name ("audacious");

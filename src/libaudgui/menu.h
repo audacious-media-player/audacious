@@ -47,7 +47,7 @@ struct AudguiMenuItem {
     GtkWidget * (* get_sub) (void);
 
     /* for separators */
-    bool_t sep;
+    bool sep;
 };
 
 constexpr AudguiMenuItem MenuCommand (const char * name, const char * icon,
@@ -68,9 +68,9 @@ constexpr AudguiMenuItem MenuSub (const char * name, const char * icon,
     { return {name, icon, 0, (GdkModifierType) 0, 0, 0, 0, 0, 0, 0, get_sub}; }
 
 constexpr AudguiMenuItem MenuSep ()
-    { return {0, 0, 0, (GdkModifierType) 0, 0, 0, 0, 0, 0, 0, 0, TRUE}; }
+    { return {0, 0, 0, (GdkModifierType) 0, 0, 0, 0, 0, 0, 0, 0, true}; }
 
-/* use NULL for domain to skip translation */
+/* use nullptr for domain to skip translation */
 GtkWidget * audgui_menu_item_new_with_domain (const AudguiMenuItem * item,
  GtkAccelGroup * accel, const char * domain);
 

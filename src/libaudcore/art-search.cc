@@ -31,18 +31,18 @@ struct SearchParams {
     Index<String> include, exclude;
 };
 
-static bool_t has_front_cover_extension (const char * name)
+static bool has_front_cover_extension (const char * name)
 {
     const char * ext = strrchr (name, '.');
     if (! ext)
-        return FALSE;
+        return false;
 
     return ! g_ascii_strcasecmp (ext, ".jpg") ||
      ! g_ascii_strcasecmp (ext, ".jpeg") || ! g_ascii_strcasecmp (ext, ".png");
 }
 
-static bool_t cover_name_filter (const char * name,
- const Index<String> & keywords, bool_t ret_on_empty)
+static bool cover_name_filter (const char * name,
+ const Index<String> & keywords, bool ret_on_empty)
 {
     if (! keywords.len ())
         return ret_on_empty;
@@ -50,21 +50,21 @@ static bool_t cover_name_filter (const char * name,
     for (const String & keyword : keywords)
     {
         if (strstr_nocase (name, keyword))
-            return TRUE;
+            return true;
     }
 
-    return FALSE;
+    return false;
 }
 
-static bool_t is_file_image (const char * imgfile, const char * file_name)
+static bool is_file_image (const char * imgfile, const char * file_name)
 {
     const char * imgfile_ext = strrchr (imgfile, '.');
     if (! imgfile_ext)
-        return FALSE;
+        return false;
 
     const char * file_name_ext = strrchr (file_name, '.');
     if (! file_name_ext)
-        return FALSE;
+        return false;
 
     size_t imgfile_len = imgfile_ext - imgfile;
     size_t file_name_len = file_name_ext - file_name;
@@ -75,13 +75,13 @@ static bool_t is_file_image (const char * imgfile, const char * file_name)
 static String fileinfo_recursive_get_image (const char * path,
  const SearchParams * params, int depth)
 {
-    GDir * d = g_dir_open (path, 0, NULL);
+    GDir * d = g_dir_open (path, 0, nullptr);
     if (! d)
         return String ();
 
     const char * name;
 
-    if (aud_get_bool (NULL, "use_file_cover") && ! depth)
+    if (aud_get_bool (nullptr, "use_file_cover") && ! depth)
     {
         /* Look for images matching file name */
         while ((name = g_dir_read_name (d)))
@@ -107,8 +107,8 @@ static String fileinfo_recursive_get_image (const char * path,
 
         if (! g_file_test (newpath, G_FILE_TEST_IS_DIR) &&
          has_front_cover_extension (name) &&
-         cover_name_filter (name, params->include, TRUE) &&
-         ! cover_name_filter (name, params->exclude, FALSE))
+         cover_name_filter (name, params->include, true) &&
+         ! cover_name_filter (name, params->exclude, false))
         {
             g_dir_close (d);
             return String (newpath);
@@ -117,7 +117,7 @@ static String fileinfo_recursive_get_image (const char * path,
 
     g_dir_rewind (d);
 
-    if (aud_get_bool (NULL, "recurse_for_cover") && depth < aud_get_int (NULL, "recurse_for_cover_depth"))
+    if (aud_get_bool (nullptr, "recurse_for_cover") && depth < aud_get_int (nullptr, "recurse_for_cover_depth"))
     {
         /* Descend into directories recursively. */
         while ((name = g_dir_read_name (d)))
@@ -151,8 +151,8 @@ String art_search (const char * filename)
     if (! base)
         return String ();
 
-    String include = aud_get_str (NULL, "cover_name_include");
-    String exclude = aud_get_str (NULL, "cover_name_exclude");
+    String include = aud_get_str (nullptr, "cover_name_include");
+    String exclude = aud_get_str (nullptr, "cover_name_exclude");
 
     SearchParams params = {
         base,

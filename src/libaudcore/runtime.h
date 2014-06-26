@@ -47,11 +47,11 @@ void aud_cleanup_paths (void);
 
 const char * aud_get_path (int id);
 
-void aud_set_headless_mode (bool_t headless);
-bool_t aud_get_headless_mode (void);
+void aud_set_headless_mode (bool headless);
+bool aud_get_headless_mode (void);
 
-void aud_set_verbose_mode (bool_t verbose);
-bool_t aud_get_verbose_mode (void);
+void aud_set_verbose_mode (bool verbose);
+bool aud_get_verbose_mode (void);
 
 #define AUDDBG(...) do { \
     if (aud_get_verbose_mode ()) { \
@@ -67,8 +67,8 @@ void aud_config_set_defaults (const char * section, const char * const * entries
 
 void aud_set_str (const char * section, const char * name, const char * value);
 String aud_get_str (const char * section, const char * name);
-void aud_set_bool (const char * section, const char * name, bool_t value);
-bool_t aud_get_bool (const char * section, const char * name);
+void aud_set_bool (const char * section, const char * name, bool value);
+bool aud_get_bool (const char * section, const char * name);
 void aud_set_int (const char * section, const char * name, int value);
 int aud_get_int (const char * section, const char * name);
 void aud_set_double (const char * section, const char * name, double value);

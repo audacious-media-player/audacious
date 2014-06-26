@@ -39,8 +39,8 @@ void str_insert (StringBuf & str, int pos, const char * s, int len = -1);
 StringBuf str_printf (const char * format, ...) __attribute__ ((__format__ (__printf__, 1, 2)));
 StringBuf str_vprintf (const char * format, va_list args);
 
-bool_t str_has_prefix_nocase (const char * str, const char * prefix);
-bool_t str_has_suffix_nocase (const char * str, const char * suffix);
+bool str_has_prefix_nocase (const char * str, const char * prefix);
+bool str_has_suffix_nocase (const char * str, const char * suffix);
 
 unsigned str_calc_hash (const char * str);
 
@@ -91,9 +91,9 @@ double str_to_double (const char * string);
 StringBuf int_to_str (int val);
 StringBuf double_to_str (double val);
 
-bool_t str_to_int_array (const char * string, int * array, int count);
+bool str_to_int_array (const char * string, int * array, int count);
 StringBuf int_array_to_str (const int * array, int count);
-bool_t str_to_double_array (const char * string, double * array, int count);
+bool str_to_double_array (const char * string, double * array, int count);
 StringBuf double_array_to_str (const double * array, int count);
 
 /* Requires: aud_init() */

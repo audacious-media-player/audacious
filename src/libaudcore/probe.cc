@@ -33,51 +33,51 @@
 struct ProbeState {
     const char * filename;
     VFSFile * handle;
-    bool_t failed;
+    bool failed;
     PluginHandle * plugin;
 };
 
-static bool_t check_opened (ProbeState * state)
+static bool check_opened (ProbeState * state)
 {
-    if (state->handle != NULL)
-        return TRUE;
+    if (state->handle != nullptr)
+        return true;
     if (state->failed)
-        return FALSE;
+        return false;
 
     AUDDBG ("Opening %s.\n", state->filename);
     state->handle = probe_buffer_new (state->filename);
 
-    if (state->handle != NULL)
-        return TRUE;
+    if (state->handle != nullptr)
+        return true;
 
     AUDDBG ("FAILED.\n");
-    state->failed = TRUE;
-    return FALSE;
+    state->failed = true;
+    return false;
 }
 
-static bool_t probe_func (PluginHandle * plugin, ProbeState * state)
+static bool probe_func (PluginHandle * plugin, ProbeState * state)
 {
     AUDDBG ("Trying %s.\n", aud_plugin_get_name (plugin));
     InputPlugin * decoder = (InputPlugin *) aud_plugin_get_header (plugin);
-    if (decoder == NULL)
-        return TRUE;
+    if (decoder == nullptr)
+        return true;
 
-    if (decoder->is_our_file_from_vfs != NULL)
+    if (decoder->is_our_file_from_vfs != nullptr)
     {
         if (! check_opened (state))
-            return FALSE;
+            return false;
 
         if (decoder->is_our_file_from_vfs (state->filename, state->handle))
         {
             state->plugin = plugin;
-            return FALSE;
+            return false;
         }
 
         if (vfs_fseek (state->handle, 0, SEEK_SET) < 0)
-            return FALSE;
+            return false;
     }
 
-    return TRUE;
+    return true;
 }
 
 /* Optimization: If we have found plugins with a key match, assume that at least
@@ -92,26 +92,26 @@ static bool_t probe_func (PluginHandle * plugin, ProbeState * state)
  *    similarly that the plugin passed in this call is the last one.
  */
 
-static bool_t probe_func_fast (PluginHandle * plugin, ProbeState * state)
+static bool probe_func_fast (PluginHandle * plugin, ProbeState * state)
 {
-    if (state->plugin != NULL)
+    if (state->plugin != nullptr)
     {
         PluginHandle * prev = state->plugin;
-        state->plugin = NULL;
+        state->plugin = nullptr;
 
         if (! probe_func (prev, state))
-            return FALSE;
+            return false;
     }
 
     AUDDBG ("Guessing %s.\n", aud_plugin_get_name (plugin));
     state->plugin = plugin;
-    return TRUE;
+    return true;
 }
 
 static void probe_by_scheme (ProbeState * state)
 {
     const char * s = strstr (state->filename, "://");
-    if (s == NULL)
+    if (s == nullptr)
         return;
 
     AUDDBG ("Probing by scheme.\n");
@@ -149,38 +149,38 @@ static void probe_by_content (ProbeState * state)
     aud_plugin_for_enabled (PLUGIN_TYPE_INPUT, (PluginForEachFunc) probe_func, state);
 }
 
-EXPORT PluginHandle * aud_file_find_decoder (const char * filename, bool_t fast)
+EXPORT PluginHandle * aud_file_find_decoder (const char * filename, bool fast)
 {
     ProbeState state;
 
     AUDDBG ("Probing %s.\n", filename);
-    state.plugin = NULL;
+    state.plugin = nullptr;
     state.filename = filename;
-    state.handle = NULL;
-    state.failed = FALSE;
+    state.handle = nullptr;
+    state.failed = false;
 
     probe_by_scheme (& state);
 
-    if (state.plugin != NULL)
+    if (state.plugin != nullptr)
         goto DONE;
 
     probe_by_extension (& state);
 
-    if (state.plugin != NULL || fast)
+    if (state.plugin != nullptr || fast)
         goto DONE;
 
     probe_by_mime (& state);
 
-    if (state.plugin != NULL)
+    if (state.plugin != nullptr)
         goto DONE;
 
     probe_by_content (& state);
 
 DONE:
-    if (state.handle != NULL)
+    if (state.handle != nullptr)
         vfs_fclose (state.handle);
 
-    if (state.plugin != NULL)
+    if (state.plugin != nullptr)
         AUDDBG ("Probe succeeded: %s\n", aud_plugin_get_name (state.plugin));
     else
         AUDDBG ("Probe failed.\n");
@@ -188,15 +188,15 @@ DONE:
     return state.plugin;
 }
 
-static bool_t open_file (const char * filename, InputPlugin * ip,
+static bool open_file (const char * filename, InputPlugin * ip,
  const char * mode, VFSFile * * handle)
 {
     /* no need to open a handle for custom URI schemes */
     if (ip->schemes && ip->schemes[0])
-        return TRUE;
+        return true;
 
     * handle = vfs_fopen (filename, mode);
-    return (* handle != NULL);
+    return (* handle != nullptr);
 }
 
 EXPORT Tuple aud_file_read_tuple (const char * filename, PluginHandle * decoder)
@@ -205,7 +205,7 @@ EXPORT Tuple aud_file_read_tuple (const char * filename, PluginHandle * decoder)
     g_return_val_if_fail (ip, Tuple ());
     g_return_val_if_fail (ip->probe_for_tuple, Tuple ());
 
-    VFSFile * handle = NULL;
+    VFSFile * handle = nullptr;
     if (! open_file (filename, ip, "r", & handle))
         return Tuple ();
 
@@ -217,24 +217,24 @@ EXPORT Tuple aud_file_read_tuple (const char * filename, PluginHandle * decoder)
     return tuple;
 }
 
-EXPORT bool_t aud_file_read_image (const char * filename,
+EXPORT bool aud_file_read_image (const char * filename,
  PluginHandle * decoder, void * * data, int64_t * size)
 {
-    * data = NULL;
+    * data = nullptr;
     * size = 0;
 
     if (! input_plugin_has_images (decoder))
-        return FALSE;
+        return false;
 
     InputPlugin * ip = (InputPlugin *) aud_plugin_get_header (decoder);
-    g_return_val_if_fail (ip, FALSE);
-    g_return_val_if_fail (ip->get_song_image, FALSE);
+    g_return_val_if_fail (ip, false);
+    g_return_val_if_fail (ip->get_song_image, false);
 
-    VFSFile * handle = NULL;
+    VFSFile * handle = nullptr;
     if (! open_file (filename, ip, "r", & handle))
-        return FALSE;
+        return false;
 
-    bool_t success = ip->get_song_image (filename, handle, data, size);
+    bool success = ip->get_song_image (filename, handle, data, size);
 
     if (handle)
         vfs_fclose (handle);
@@ -242,23 +242,23 @@ EXPORT bool_t aud_file_read_image (const char * filename,
     return success;
 }
 
-EXPORT bool_t aud_file_can_write_tuple (const char * filename, PluginHandle * decoder)
+EXPORT bool aud_file_can_write_tuple (const char * filename, PluginHandle * decoder)
 {
     return input_plugin_can_write_tuple (decoder);
 }
 
-EXPORT bool_t aud_file_write_tuple (const char * filename,
+EXPORT bool aud_file_write_tuple (const char * filename,
  PluginHandle * decoder, const Tuple & tuple)
 {
     InputPlugin * ip = (InputPlugin *) aud_plugin_get_header (decoder);
-    g_return_val_if_fail (ip, FALSE);
-    g_return_val_if_fail (ip->update_song_tuple, FALSE);
+    g_return_val_if_fail (ip, false);
+    g_return_val_if_fail (ip->update_song_tuple, false);
 
-    VFSFile * handle = NULL;
+    VFSFile * handle = nullptr;
     if (! open_file (filename, ip, "r+", & handle))
-        return FALSE;
+        return false;
 
-    bool_t success = ip->update_song_tuple (filename, handle, tuple);
+    bool success = ip->update_song_tuple (filename, handle, tuple);
 
     if (handle)
         vfs_fclose (handle);
@@ -269,15 +269,15 @@ EXPORT bool_t aud_file_write_tuple (const char * filename,
     return success;
 }
 
-EXPORT bool_t aud_custom_infowin (const char * filename, PluginHandle * decoder)
+EXPORT bool aud_custom_infowin (const char * filename, PluginHandle * decoder)
 {
     if (! input_plugin_has_infowin (decoder))
-        return FALSE;
+        return false;
 
     InputPlugin * ip = (InputPlugin *) aud_plugin_get_header (decoder);
-    g_return_val_if_fail (ip, FALSE);
-    g_return_val_if_fail (ip->file_info_box, FALSE);
+    g_return_val_if_fail (ip, false);
+    g_return_val_if_fail (ip->file_info_box, false);
 
     ip->file_info_box (filename);
-    return TRUE;
+    return true;
 }

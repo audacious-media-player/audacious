@@ -94,7 +94,7 @@ static const char * const core_defaults[] = {
  "metadata_on_play", "FALSE",
  "show_numbers_in_pl", "FALSE",
 
- NULL};
+ nullptr};
 
 enum OpType {
     OP_IS_DEFAULT,
@@ -162,7 +162,7 @@ static MultiHash::Node * add_cb (const void * data, void * state)
     {
     case OP_IS_DEFAULT:
         op->result = ! op->value[0]; /* empty string is default */
-        return NULL;
+        return nullptr;
 
     case OP_SET:
         op->result = true;
@@ -178,7 +178,7 @@ static MultiHash::Node * add_cb (const void * data, void * state)
     }
 
     default:
-        return NULL;
+        return nullptr;
     }
 }
 
@@ -261,7 +261,7 @@ void config_load (void)
         }
     }
 
-    aud_config_set_defaults (NULL, core_defaults);
+    aud_config_set_defaults (nullptr, core_defaults);
 }
 
 static bool add_to_save_list (MultiHash::Node * node0, void * state0)
@@ -297,7 +297,7 @@ void config_save (void)
 
     if (file)
     {
-        const char * current_heading = NULL;
+        const char * current_heading = nullptr;
 
         for (const ConfigItem & item : state.list)
         {
@@ -349,7 +349,7 @@ EXPORT void aud_set_str (const char * section, const char * name, const char * v
     bool changed = config_op_run (& op, & config);
 
     if (changed && ! section)
-        event_queue (str_concat ({"set ", name}), NULL);
+        event_queue (str_concat ({"set ", name}), nullptr);
 }
 
 EXPORT String aud_get_str (const char * section, const char * name)
@@ -365,12 +365,12 @@ EXPORT String aud_get_str (const char * section, const char * name)
     return op.value ? op.value : String ("");
 }
 
-EXPORT void aud_set_bool (const char * section, const char * name, bool_t value)
+EXPORT void aud_set_bool (const char * section, const char * name, bool value)
 {
     aud_set_str (section, name, value ? "TRUE" : "FALSE");
 }
 
-EXPORT bool_t aud_get_bool (const char * section, const char * name)
+EXPORT bool aud_get_bool (const char * section, const char * name)
 {
     return ! strcmp (aud_get_str (section, name), "TRUE");
 }

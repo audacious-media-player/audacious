@@ -22,18 +22,6 @@
 
 /* COMMON MACROS */
 
-#undef NULL
-#define NULL nullptr
-
-/* "bool_t" means "int" for compatibility with GLib */
-#undef bool_t
-#define bool_t int
-
-#undef FALSE
-#define FALSE ((bool_t) 0)
-#undef TRUE
-#define TRUE ((bool_t) 1)
-
 #undef MIN
 #define MIN(a,b) ((a) < (b) ? (a) : (b))
 #undef MAX
@@ -84,29 +72,29 @@ typedef void (* VisFreqFunc) (const float * freq);
 /* If the pool contains a copy of <str>, increments its reference count.
  * Otherwise, adds a copy of <str> to the pool with a reference count of one.
  * In either case, returns the copy.  Because this copy may be shared by other
- * parts of the code, it should not be modified.  If <str> is NULL, simply
- * returns NULL with no side effects. */
+ * parts of the code, it should not be modified.  If <str> is nullptr, simply
+ * returns nullptr with no side effects. */
 char * str_get (const char * str);
 
 /* Increments the reference count of <str>, where <str> is the address of a
  * string already in the pool.  Faster than calling str_get() a second time.
- * Returns <str> for convenience.  If <str> is NULL, simply returns NULL with no
+ * Returns <str> for convenience.  If <str> is nullptr, simply returns nullptr with no
  * side effects. */
 char * str_ref (const char * str);
 
 /* Decrements the reference count of <str>, where <str> is the address of a
  * string in the pool.  If the reference count drops to zero, releases the
- * memory used by <str>.   If <str> is NULL, simply returns NULL with no side
+ * memory used by <str>.   If <str> is nullptr, simply returns nullptr with no side
  * effects. */
 void str_unref (char * str);
 
-/* Returns the cached hash value of a pooled string (or 0 for NULL). */
+/* Returns the cached hash value of a pooled string (or 0 for nullptr). */
 unsigned str_hash (const char * str);
 
 /* Checks whether two pooled strings are equal.  Since the pool never contains
  * duplicate strings, this is a simple pointer comparison and thus much faster
- * than strcmp().  NULL is considered equal to NULL but not equal to any string. */
-bool_t str_equal (const char * str1, const char * str2);
+ * than strcmp().  nullptr is considered equal to nullptr but not equal to any string. */
+bool str_equal (const char * str1, const char * str2);
 
 /* Releases all memory used by the string pool.  If strings remain in the pool,
  * a warning may be printed to stderr in order to reveal memory leaks. */

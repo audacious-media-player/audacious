@@ -60,6 +60,7 @@ INCLUDES = audio.h \
            input.h \
            interface.h \
            list.h \
+           mainloop.h \
            multihash.h \
            objects.h \
            playlist.h \

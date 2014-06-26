@@ -44,7 +44,7 @@ static void open_cb (void * data)
 {
     GtkWidget * chooser = (GtkWidget *) data;
     Index<PlaylistAddItem> files = get_files (chooser);
-    bool_t open = GPOINTER_TO_INT (g_object_get_data ((GObject *) chooser, "do-open"));
+    gboolean open = GPOINTER_TO_INT (g_object_get_data ((GObject *) chooser, "do-open"));
 
     if (open)
         aud_drct_pl_open_list (std::move (files));
@@ -71,7 +71,7 @@ static void toggled_cb (GtkToggleButton * toggle, void * option)
     aud_set_bool ("audgui", (const char *) option, gtk_toggle_button_get_active (toggle));
 }
 
-static GtkWidget * create_filebrowser (bool_t open)
+static GtkWidget * create_filebrowser (gboolean open)
 {
     const char * window_title, * verb, * icon, * toggle_text, * option;
 
@@ -102,49 +102,49 @@ static GtkWidget * create_filebrowser (bool_t open)
     gtk_container_add(GTK_CONTAINER(window), vbox);
 
     GtkWidget * chooser = gtk_file_chooser_widget_new(GTK_FILE_CHOOSER_ACTION_OPEN);
-    gtk_file_chooser_set_select_multiple(GTK_FILE_CHOOSER(chooser), TRUE);
+    gtk_file_chooser_set_select_multiple(GTK_FILE_CHOOSER(chooser), true);
 
     String path = aud_get_str ("audgui", "filesel_path");
     if (path[0])
         gtk_file_chooser_set_current_folder ((GtkFileChooser *) chooser, path);
 
-    gtk_box_pack_start(GTK_BOX(vbox), chooser, TRUE, TRUE, 3);
+    gtk_box_pack_start(GTK_BOX(vbox), chooser, true, true, 3);
 
     GtkWidget * hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-    gtk_box_pack_end(GTK_BOX(vbox), hbox, FALSE, FALSE, 3);
+    gtk_box_pack_end(GTK_BOX(vbox), hbox, false, false, 3);
 
     GtkWidget * toggle = gtk_check_button_new_with_mnemonic (toggle_text);
     gtk_toggle_button_set_active ((GtkToggleButton *) toggle, aud_get_bool ("audgui", option));
     g_signal_connect (toggle, "toggled", (GCallback) toggled_cb, (void *) option);
-    gtk_box_pack_start(GTK_BOX(hbox), toggle, TRUE, TRUE, 3);
+    gtk_box_pack_start(GTK_BOX(hbox), toggle, true, true, 3);
 
     GtkWidget * bbox = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
     gtk_button_box_set_layout(GTK_BUTTON_BOX(bbox), GTK_BUTTONBOX_END);
     gtk_box_set_spacing(GTK_BOX(bbox), 6);
-    gtk_box_pack_end(GTK_BOX(hbox), bbox, TRUE, TRUE, 3);
+    gtk_box_pack_end(GTK_BOX(hbox), bbox, true, true, 3);
 
     GtkWidget * action_button = audgui_button_new (verb, icon, open_cb, chooser);
     GtkWidget * close_button = audgui_button_new (_("_Close"), "window-close",
-     (AudguiCallback) audgui_hide_filebrowser, NULL);
+     (AudguiCallback) audgui_hide_filebrowser, nullptr);
 
     gtk_container_add(GTK_CONTAINER(bbox), close_button);
     gtk_container_add(GTK_CONTAINER(bbox), action_button);
 
-    gtk_widget_set_can_default (action_button, TRUE);
+    gtk_widget_set_can_default (action_button, true);
     gtk_widget_grab_default (action_button);
 
     g_object_set_data ((GObject *) chooser, "toggle-button", toggle);
     g_object_set_data ((GObject *) chooser, "do-open", GINT_TO_POINTER (open));
 
-    g_signal_connect (chooser, "file-activated", (GCallback) open_cb, NULL);
-    g_signal_connect (chooser, "destroy", (GCallback) destroy_cb, NULL);
+    g_signal_connect (chooser, "file-activated", (GCallback) open_cb, nullptr);
+    g_signal_connect (chooser, "destroy", (GCallback) destroy_cb, nullptr);
 
     audgui_destroy_on_escape (window);
 
     return window;
 }
 
-EXPORT void audgui_run_filebrowser (bool_t open)
+EXPORT void audgui_run_filebrowser (bool open)
 {
     audgui_show_unique_window (AUDGUI_FILEBROWSER_WINDOW, create_filebrowser (open));
 }
