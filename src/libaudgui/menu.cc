@@ -23,25 +23,6 @@
 #include <libaudcore/i18n.h>
 #include <libaudcore/runtime.h>
 
-/* we still use GtkImageMenuItem until there is a good alternative */
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
-static GtkWidget * image_menu_item_new (const char * text, const char * icon)
-{
-    GtkWidget * widget = gtk_image_menu_item_new_with_mnemonic (text);
-
-    if (icon)
-    {
-        GtkWidget * image = gtk_image_new_from_icon_name (icon, GTK_ICON_SIZE_MENU);
-        gtk_image_menu_item_set_image ((GtkImageMenuItem *) widget, image);
-    }
-
-    return widget;
-}
-
-#pragma GCC diagnostic pop
-
 static void toggled_cb (GtkCheckMenuItem * check, const AudguiMenuItem * item)
 {
     gboolean on = gtk_check_menu_item_get_active (check);
@@ -76,7 +57,7 @@ EXPORT GtkWidget * audgui_menu_item_new_with_domain
 
     if (name && item->func && ! item->cname) /* normal widget */
     {
-        widget = image_menu_item_new (name, item->icon);
+        widget = gtk_menu_item_new_with_mnemonic (name);
         g_signal_connect (widget, "activate", item->func, nullptr);
     }
     else if (name && item->cname) /* toggle widget */
@@ -95,7 +76,7 @@ EXPORT GtkWidget * audgui_menu_item_new_with_domain
     }
     else if (name && (item->items || item->get_sub)) /* submenu */
     {
-        widget = image_menu_item_new (name, item->icon);
+        widget = gtk_menu_item_new_with_mnemonic (name);
 
         GtkWidget * sub;
 

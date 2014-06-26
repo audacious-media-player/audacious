@@ -104,35 +104,12 @@ EXPORT GtkWidget * audgui_button_new (const char * text, const char * icon,
     return button;
 }
 
-static const char * icon_for_message_type (GtkMessageType type)
-{
-    switch (type)
-    {
-        case GTK_MESSAGE_INFO: return "dialog-information";
-        case GTK_MESSAGE_WARNING: return "dialog-warning";
-        case GTK_MESSAGE_QUESTION: return "dialog-question";
-        case GTK_MESSAGE_ERROR: return "dialog-error";
-        default: return NULL;
-    }
-}
-
-/* style choices should not be enforced by deprecating API functions */
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 EXPORT GtkWidget * audgui_dialog_new (GtkMessageType type, const char * title,
  const char * text, GtkWidget * button1, GtkWidget * button2)
 {
     GtkWidget * dialog = gtk_message_dialog_new (nullptr, (GtkDialogFlags) 0, type,
      GTK_BUTTONS_NONE, "%s", text);
     gtk_window_set_title ((GtkWindow *) dialog, title);
-
-    const char * icon = icon_for_message_type (type);
-    if (icon)
-    {
-        GtkWidget * image = gtk_image_new_from_icon_name (icon, GTK_ICON_SIZE_DIALOG);
-        gtk_message_dialog_set_image ((GtkMessageDialog *) dialog, image);
-    }
 
     if (button2)
     {
@@ -148,8 +125,6 @@ EXPORT GtkWidget * audgui_dialog_new (GtkMessageType type, const char * title,
 
     return dialog;
 }
-
-#pragma GCC diagnostic pop
 
 EXPORT void audgui_dialog_add_widget (GtkWidget * dialog, GtkWidget * widget)
 {
