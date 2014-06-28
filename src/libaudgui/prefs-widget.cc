@@ -28,107 +28,104 @@
 
 /* HELPERS */
 
-static gboolean widget_get_bool (const PreferencesWidget * widget)
+static bool widget_get_bool (const PreferencesWidget * widget)
 {
-    g_return_val_if_fail (widget->cfg_type == VALUE_BOOLEAN, false);
+    g_return_val_if_fail (widget->cfg.type == WidgetConfig::Bool, false);
 
-    if (widget->cfg)
-        return * (gboolean *) widget->cfg;
-    else if (widget->cname)
-        return aud_get_bool (widget->csect, widget->cname);
+    if (widget->cfg.value)
+        return * (bool *) widget->cfg.value;
+    else if (widget->cfg.name)
+        return aud_get_bool (widget->cfg.section, widget->cfg.name);
     else
         return false;
 }
 
-static void widget_set_bool (const PreferencesWidget * widget, gboolean value)
+static void widget_set_bool (const PreferencesWidget * widget, bool value)
 {
-    g_return_if_fail (widget->cfg_type == VALUE_BOOLEAN);
+    g_return_if_fail (widget->cfg.type == WidgetConfig::Bool);
 
-    if (widget->cfg)
-        * (gboolean *) widget->cfg = value;
-    else if (widget->cname)
-        aud_set_bool (widget->csect, widget->cname, value);
+    if (widget->cfg.value)
+        * (bool *) widget->cfg.value = value;
+    else if (widget->cfg.name)
+        aud_set_bool (widget->cfg.section, widget->cfg.name, value);
 
-    if (widget->callback)
-        widget->callback ();
+    if (widget->cfg.callback)
+        widget->cfg.callback ();
 }
 
 static int widget_get_int (const PreferencesWidget * widget)
 {
-    g_return_val_if_fail (widget->cfg_type == VALUE_INT, 0);
+    g_return_val_if_fail (widget->cfg.type == WidgetConfig::Int, 0);
 
-    if (widget->cfg)
-        return * (int *) widget->cfg;
-    else if (widget->cname)
-        return aud_get_int (widget->csect, widget->cname);
+    if (widget->cfg.value)
+        return * (int *) widget->cfg.value;
+    else if (widget->cfg.name)
+        return aud_get_int (widget->cfg.section, widget->cfg.name);
     else
         return 0;
 }
 
 static void widget_set_int (const PreferencesWidget * widget, int value)
 {
-    g_return_if_fail (widget->cfg_type == VALUE_INT);
+    g_return_if_fail (widget->cfg.type == WidgetConfig::Int);
 
-    if (widget->cfg)
-        * (int *) widget->cfg = value;
-    else if (widget->cname)
-        aud_set_int (widget->csect, widget->cname, value);
+    if (widget->cfg.value)
+        * (int *) widget->cfg.value = value;
+    else if (widget->cfg.name)
+        aud_set_int (widget->cfg.section, widget->cfg.name, value);
 
-    if (widget->callback)
-        widget->callback ();
+    if (widget->cfg.callback)
+        widget->cfg.callback ();
 }
 
 static double widget_get_double (const PreferencesWidget * widget)
 {
-    g_return_val_if_fail (widget->cfg_type == VALUE_FLOAT, 0);
+    g_return_val_if_fail (widget->cfg.type == WidgetConfig::Float, 0);
 
-    if (widget->cfg)
-        return * (float *) widget->cfg;
-    else if (widget->cname)
-        return aud_get_double (widget->csect, widget->cname);
+    if (widget->cfg.value)
+        return * (double *) widget->cfg.value;
+    else if (widget->cfg.name)
+        return aud_get_double (widget->cfg.section, widget->cfg.name);
     else
         return 0;
 }
 
 static void widget_set_double (const PreferencesWidget * widget, double value)
 {
-    g_return_if_fail (widget->cfg_type == VALUE_FLOAT);
+    g_return_if_fail (widget->cfg.type == WidgetConfig::Float);
 
-    if (widget->cfg)
-        * (float *) widget->cfg = value;
-    else if (widget->cname)
-        aud_set_double (widget->csect, widget->cname, value);
+    if (widget->cfg.value)
+        * (double *) widget->cfg.value = value;
+    else if (widget->cfg.name)
+        aud_set_double (widget->cfg.section, widget->cfg.name, value);
 
-    if (widget->callback)
-        widget->callback ();
+    if (widget->cfg.callback)
+        widget->cfg.callback ();
 }
 
 static String widget_get_string (const PreferencesWidget * widget)
 {
-    g_return_val_if_fail (widget->cfg_type == VALUE_STRING, String ());
+    g_return_val_if_fail (widget->cfg.type == WidgetConfig::String, String ());
 
-    if (widget->cfg)
-        return String (* (char * *) widget->cfg);
-    else if (widget->cname)
-        return aud_get_str (widget->csect, widget->cname);
+    if (widget->cfg.value)
+        return * (String *) widget->cfg.value;
+    else if (widget->cfg.name)
+        return aud_get_str (widget->cfg.section, widget->cfg.name);
     else
         return String ();
 }
 
 static void widget_set_string (const PreferencesWidget * widget, const char * value)
 {
-    g_return_if_fail (widget->cfg_type == VALUE_STRING);
+    g_return_if_fail (widget->cfg.type == WidgetConfig::String);
 
-    if (widget->cfg)
-    {
-        g_free (* (char * *) widget->cfg);
-        * (char * *) widget->cfg = g_strdup (value);
-    }
-    else if (widget->cname)
-        aud_set_str (widget->csect, widget->cname, value);
+    if (widget->cfg.value)
+        * (String *) widget->cfg.value = String (value);
+    else if (widget->cfg.name)
+        aud_set_str (widget->cfg.section, widget->cfg.name, value);
 
-    if (widget->callback)
-        widget->callback ();
+    if (widget->cfg.callback)
+        widget->cfg.callback ();
 }
 
 /* WIDGET_CHK_BTN */
@@ -145,9 +142,6 @@ static void on_toggle_button_toggled (GtkToggleButton * button, const Preference
 
 static void init_toggle_button (GtkWidget * button, const PreferencesWidget * widget)
 {
-    if (widget->cfg_type != VALUE_BOOLEAN)
-        return;
-
     gtk_toggle_button_set_active ((GtkToggleButton *) button, widget_get_bool (widget));
     g_signal_connect (button, "toggled", (GCallback) on_toggle_button_toggled, (void *) widget);
 }
@@ -179,9 +173,6 @@ static void on_radio_button_toggled (GtkWidget * button, const PreferencesWidget
 
 static void init_radio_button (GtkWidget * button, const PreferencesWidget * widget)
 {
-    if (widget->cfg_type != VALUE_INT)
-        return;
-
     if (widget_get_int (widget) == widget->data.radio_btn.value)
         gtk_toggle_button_set_active ((GtkToggleButton *) button, true);
 
@@ -214,21 +205,22 @@ static void create_spin_button (const PreferencesWidget * widget,
     if (widget->data.spin_btn.right_label)
         * label_past = gtk_label_new (dgettext (domain, widget->data.spin_btn.right_label));
 
-    switch (widget->cfg_type)
+    switch (widget->cfg.type)
     {
-    case VALUE_INT:
+    case WidgetConfig::Int:
         gtk_spin_button_set_value ((GtkSpinButton *) * spin_btn, widget_get_int (widget));
         g_signal_connect (* spin_btn, "value_changed", (GCallback)
          on_spin_btn_changed_int, (void *) widget);
         break;
 
-    case VALUE_FLOAT:
+    case WidgetConfig::Float:
         gtk_spin_button_set_value ((GtkSpinButton *) * spin_btn, widget_get_double (widget));
         g_signal_connect (* spin_btn, "value_changed", (GCallback)
          on_spin_btn_changed_float, (void *) widget);
         break;
 
     default:
+        g_warn_if_reached ();
         break;
     }
 }
@@ -286,14 +278,11 @@ static void create_entry (const PreferencesWidget * widget, GtkWidget * * label,
     if (widget->tooltip)
         gtk_widget_set_tooltip_text (* entry, dgettext (domain, widget->tooltip));
 
-    if (widget->cfg_type == VALUE_STRING)
-    {
-        String value = widget_get_string (widget);
-        if (value)
-            gtk_entry_set_text ((GtkEntry *) * entry, value);
+    String value = widget_get_string (widget);
+    if (value)
+        gtk_entry_set_text ((GtkEntry *) * entry, value);
 
-        g_signal_connect (* entry, "changed", (GCallback) on_entry_changed, (void *) widget);
-    }
+    g_signal_connect (* entry, "changed", (GCallback) on_entry_changed, (void *) widget);
 }
 
 /* WIDGET_COMBO_BOX */
@@ -328,9 +317,9 @@ static void fill_cbox (GtkWidget * combobox, const PreferencesWidget * widget, c
         gtk_combo_box_text_append_text ((GtkComboBoxText *) combobox,
          dgettext (domain, elements[i].label));
 
-    switch (widget->cfg_type)
+    switch (widget->cfg.type)
     {
-    case VALUE_INT:
+    case WidgetConfig::Int:
     {
         int ivalue = widget_get_int (widget);
 
@@ -347,7 +336,7 @@ static void fill_cbox (GtkWidget * combobox, const PreferencesWidget * widget, c
         break;
     }
 
-    case VALUE_STRING:
+    case WidgetConfig::String:
     {
         String value = widget_get_string (widget);
 
@@ -365,6 +354,7 @@ static void fill_cbox (GtkWidget * combobox, const PreferencesWidget * widget, c
     }
 
     default:
+        g_warn_if_reached ();
         break;
     }
 }
@@ -391,24 +381,24 @@ static void fill_grid (GtkWidget * grid, const PreferencesWidget * elements,
 
         switch (elements[i].type)
         {
-            case WIDGET_SPIN_BTN:
+            case PreferencesWidget::SpinButton:
                 create_spin_button (& elements[i], & widget_left,
                  & widget_middle, & widget_right, domain);
                 break;
 
-            case WIDGET_LABEL:
+            case PreferencesWidget::Label:
                 create_label (& elements[i], & widget_middle, & widget_left, domain);
                 break;
 
-            case WIDGET_FONT_BTN:
+            case PreferencesWidget::FontButton:
                 create_font_btn (& elements[i], & widget_left, & widget_middle, domain);
                 break;
 
-            case WIDGET_ENTRY:
+            case PreferencesWidget::Entry:
                 create_entry (& elements[i], & widget_left, & widget_middle, domain);
                 break;
 
-            case WIDGET_COMBO_BOX:
+            case PreferencesWidget::ComboBox:
                 create_cbox (& elements[i], & widget_left, & widget_middle, domain);
                 break;
 
@@ -466,17 +456,17 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
 
         widget = nullptr;
 
-        if (radio_btn_group && widgets[i].type != WIDGET_RADIO_BTN)
+        if (radio_btn_group && widgets[i].type != PreferencesWidget::RadioButton)
             radio_btn_group = nullptr;
 
         switch (widgets[i].type)
         {
-            case WIDGET_CHK_BTN:
+            case PreferencesWidget::CheckButton:
                 widget = gtk_check_button_new_with_mnemonic (dgettext (domain, widgets[i].label));
                 init_toggle_button (widget, & widgets[i]);
                 break;
 
-            case WIDGET_LABEL:
+            case PreferencesWidget::Label:
             {
                 if (strstr (widgets[i].label, "<b>"))
                     gtk_alignment_set_padding ((GtkAlignment *) alignment,
@@ -497,14 +487,14 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
                 break;
             }
 
-            case WIDGET_RADIO_BTN:
+            case PreferencesWidget::RadioButton:
                 widget = gtk_radio_button_new_with_mnemonic (radio_btn_group,
                  dgettext (domain, widgets[i].label));
                 radio_btn_group = gtk_radio_button_get_group ((GtkRadioButton *) widget);
                 init_radio_button (widget, & widgets[i]);
                 break;
 
-            case WIDGET_SPIN_BTN:
+            case PreferencesWidget::SpinButton:
             {
                 widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 
@@ -521,13 +511,13 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
                 break;
             }
 
-            case WIDGET_CUSTOM:
+            case PreferencesWidget::Custom:
                 if (widgets[i].data.populate)
                     widget = (GtkWidget *) widgets[i].data.populate ();
 
                 break;
 
-            case WIDGET_FONT_BTN:
+            case PreferencesWidget::FontButton:
             {
                 widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 
@@ -542,7 +532,7 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
                 break;
             }
 
-            case WIDGET_TABLE:
+            case PreferencesWidget::Table:
                 widget = gtk_grid_new ();
                 gtk_grid_set_column_spacing ((GtkGrid *) widget, 6);
                 gtk_grid_set_row_spacing ((GtkGrid *) widget, 6);
@@ -551,7 +541,7 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
 
                 break;
 
-            case WIDGET_ENTRY:
+            case PreferencesWidget::Entry:
             {
                 widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 
@@ -566,7 +556,7 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
                 break;
             }
 
-            case WIDGET_COMBO_BOX:
+            case PreferencesWidget::ComboBox:
             {
                 widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 
@@ -581,7 +571,7 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
                 break;
             }
 
-            case WIDGET_BOX:
+            case PreferencesWidget::Box:
                 if (widgets[i].data.box.horizontal)
                     widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
                 else
@@ -599,7 +589,7 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
 
                 break;
 
-            case WIDGET_NOTEBOOK:
+            case PreferencesWidget::Notebook:
                 gtk_alignment_set_padding ((GtkAlignment *) alignment, 0, 0, 0, 0);
 
                 widget = gtk_notebook_new ();
@@ -620,7 +610,7 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
 
                 break;
 
-            case WIDGET_SEPARATOR:
+            case PreferencesWidget::Separator:
                 gtk_alignment_set_padding ((GtkAlignment *) alignment, 6, 6, 0, 0);
 
                 widget = gtk_separator_new (widgets[i].data.separator.horizontal
@@ -640,7 +630,7 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
 
             gtk_container_add ((GtkContainer *) alignment, widget);
 
-            if (widgets[i].tooltip && widgets[i].type != WIDGET_SPIN_BTN)
+            if (widgets[i].tooltip && widgets[i].type != PreferencesWidget::SpinButton)
                 gtk_widget_set_tooltip_text (widget, dgettext (domain,
                  widgets[i].tooltip));
         }
