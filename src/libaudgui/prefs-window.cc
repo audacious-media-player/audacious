@@ -145,7 +145,7 @@ static void * iface_create_prefs_box (void);
 static const PreferencesWidget appearance_page_widgets[] = {
     WidgetLabel (N_("<b>Interface Settings</b>")),
     WidgetCombo (N_("Interface plugin:"),
-        WidgetConfig ({VALUE_INT, & iface_combo_selected, 0, 0, iface_combo_changed}),
+        WidgetInt (iface_combo_selected, iface_combo_changed),
         WidgetVCombo ({0, 0, iface_combo_fill})),
     WidgetCustom (iface_create_prefs_box)
 };
@@ -163,7 +163,7 @@ static void output_bit_depth_changed (void);
 
 static const PreferencesWidget output_combo_widgets[] = {
     WidgetCombo (N_("Output plugin:"),
-        {VALUE_INT, & output_combo_selected, 0, 0, output_combo_changed},
+        WidgetInt (output_combo_selected, output_combo_changed),
         {0, 0, output_combo_fill}),
     WidgetCustom (output_create_config_button),
     WidgetCustom (output_create_about_button)
@@ -173,59 +173,59 @@ static const PreferencesWidget audio_page_widgets[] = {
     WidgetLabel (N_("<b>Output Settings</b>")),
     WidgetBox ({output_combo_widgets, ARRAY_LEN (output_combo_widgets), true}),
     WidgetCombo (N_("Bit depth:"),
-        {VALUE_INT, 0, 0, "output_bit_depth", output_bit_depth_changed},
+        WidgetInt (0, "output_bit_depth", output_bit_depth_changed),
         {bitdepth_elements, ARRAY_LEN (bitdepth_elements)}),
     WidgetSpin (N_("Buffer size:"),
-        {VALUE_INT, 0, 0, "output_buffer_size"},
+        WidgetInt (0, "output_buffer_size"),
         {100, 10000, 1000, N_("ms")}),
     WidgetCheck (N_("Soft clipping"),
-        {VALUE_BOOLEAN, 0, 0, "soft_clipping"}),
+        WidgetBool (0, "soft_clipping")),
     WidgetCheck (N_("Use software volume control (not recommended)"),
-        {VALUE_BOOLEAN, 0, 0, "software_volume_control"}),
+        WidgetBool (0, "software_volume_control")),
     WidgetLabel (N_("<b>Replay Gain</b>")),
     WidgetCheck (N_("Enable Replay Gain"),
-        {VALUE_BOOLEAN, 0, 0, "enable_replay_gain"}),
+        WidgetBool (0, "enable_replay_gain")),
     WidgetCheck (N_("Album mode"),
-        {VALUE_BOOLEAN, 0, 0, "replay_gain_album"},
+        WidgetBool (0, "replay_gain_album"),
         WIDGET_CHILD),
     WidgetCheck (N_("Prevent clipping (recommended)"),
-        {VALUE_BOOLEAN, 0, 0, "enable_clipping_prevention"},
+        WidgetBool (0, "enable_clipping_prevention"),
         WIDGET_CHILD),
     WidgetLabel (N_("<b>Adjust Levels</b>"),
         WIDGET_CHILD),
     WidgetSpin (N_("Amplify all files:"),
-        {VALUE_FLOAT, 0, 0, "replay_gain_preamp"},
+        WidgetFloat (0, "replay_gain_preamp"),
         {-15, 15, 0.1, N_("dB")},
         WIDGET_CHILD),
     WidgetSpin (N_("Amplify untagged files:"),
-        {VALUE_FLOAT, 0, 0, "default_gain"},
+        WidgetFloat (0, "default_gain"),
         {-15, 15, 0.1, N_("dB")},
         WIDGET_CHILD)
 };
 
 static const PreferencesWidget proxy_host_port_elements[] = {
     WidgetEntry (N_("Proxy hostname:"),
-        {VALUE_STRING, 0, 0, "proxy_host"}),
+        WidgetString (0, "proxy_host")),
     WidgetEntry (N_("Proxy port:"),
-        {VALUE_STRING, 0, 0, "proxy_port"})
+        WidgetString (0, "proxy_port"))
 };
 
 static const PreferencesWidget proxy_auth_elements[] = {
     WidgetEntry (N_("Proxy username:"),
-        {VALUE_STRING, 0, 0, "proxy_user"}),
+        WidgetString (0, "proxy_user")),
     WidgetEntry (N_("Proxy password:"),
-        {VALUE_STRING, 0, 0, "proxy_pass"},
+        WidgetString (0, "proxy_pass"),
         {true})
 };
 
 static const PreferencesWidget connectivity_page_widgets[] = {
     WidgetLabel (N_("<b>Proxy Configuration</b>")),
     WidgetCheck (N_("Enable proxy usage"),
-        {VALUE_BOOLEAN, 0, 0, "use_proxy"}),
+        WidgetBool (0, "use_proxy")),
     WidgetTable ({proxy_host_port_elements, ARRAY_LEN (proxy_host_port_elements)},
         WIDGET_CHILD),
     WidgetCheck (N_("Use authentication with proxy"),
-        {VALUE_BOOLEAN, 0, 0, "use_proxy_auth"}),
+        WidgetBool (0, "use_proxy_auth")),
     WidgetTable ({proxy_auth_elements, ARRAY_LEN (proxy_auth_elements)},
         WIDGET_CHILD)
 };
@@ -233,11 +233,11 @@ static const PreferencesWidget connectivity_page_widgets[] = {
 static const PreferencesWidget chardet_elements[] = {
 #ifdef USE_CHARDET
     WidgetCombo (N_("Auto character encoding detector for:"),
-        {VALUE_STRING, 0, 0, "chardet_detector"},
+        WidgetString (0, "chardet_detector"),
         {chardet_detector_presets, ARRAY_LEN (chardet_detector_presets)}),
 #endif
     WidgetEntry (N_("Fallback character encodings:"),
-        {VALUE_STRING, 0, 0, "chardet_fallback"})
+        WidgetString (0, "chardet_fallback"))
 };
 
 static void send_title_change (void);
@@ -246,50 +246,50 @@ static void * create_titlestring_table (void);
 static const PreferencesWidget playlist_page_widgets[] = {
     WidgetLabel (N_("<b>Behavior</b>")),
     WidgetCheck (N_("Continue playback on startup"),
-        {VALUE_BOOLEAN, 0, 0, "resume_playback_on_startup"}),
+        WidgetBool (0, "resume_playback_on_startup")),
     WidgetCheck (N_("Advance when the current song is deleted"),
-        {VALUE_BOOLEAN, 0, 0, "advance_on_delete"}),
+        WidgetBool (0, "advance_on_delete")),
     WidgetCheck (N_("Clear the playlist when opening files"),
-        {VALUE_BOOLEAN, 0, 0, "clear_playlist"}),
+        WidgetBool (0, "clear_playlist")),
     WidgetCheck (N_("Open files in a temporary playlist"),
-        {VALUE_BOOLEAN, 0, 0, "open_to_temporary"}),
+        WidgetBool (0, "open_to_temporary")),
     WidgetCheck (N_("Do not load metadata for songs until played"),
-        {VALUE_BOOLEAN, 0, 0, "metadata_on_play"}),
+        WidgetBool (0, "metadata_on_play")),
     WidgetLabel (N_("<b>Compatibility</b>")),
     WidgetCheck (N_("Interpret \\ (backward slash) as a folder delimiter"),
-        {VALUE_BOOLEAN, 0, 0, "convert_backslash"}),
+        WidgetBool (0, "convert_backslash")),
     WidgetTable ({chardet_elements, ARRAY_LEN (chardet_elements)}),
     WidgetLabel (N_("<b>Song Display</b>")),
     WidgetCheck (N_("Show song numbers"),
-        {VALUE_BOOLEAN, 0, 0, "show_numbers_in_pl", send_title_change}),
+        WidgetBool (0, "show_numbers_in_pl", send_title_change)),
     WidgetCheck (N_("Show leading zeroes (02:00 instead of 2:00)"),
-        {VALUE_BOOLEAN, 0, 0, "leading_zero", send_title_change}),
+        WidgetBool (0, "leading_zero", send_title_change)),
     WidgetCustom (create_titlestring_table)
 };
 
 static const PreferencesWidget song_info_page_widgets[] = {
     WidgetLabel (N_("<b>Album Art</b>")),
     WidgetLabel (N_("Search for images matching these words (comma-separated):")),
-    WidgetEntry (0, {VALUE_STRING, 0, 0, "cover_name_include"}),
+    WidgetEntry (0, WidgetString (0, "cover_name_include")),
     WidgetLabel (N_("Exclude images matching these words (comma-separated):")),
-    WidgetEntry (0, {VALUE_STRING, 0, 0, "cover_name_exclude"}),
+    WidgetEntry (0, WidgetString (0, "cover_name_exclude")),
     WidgetCheck (N_("Search for images matching song file name"),
-        {VALUE_BOOLEAN, 0, 0, "use_file_cover"}),
+        WidgetBool (0, "use_file_cover")),
     WidgetCheck (N_("Search recursively"),
-        {VALUE_BOOLEAN, 0, 0, "recurse_for_cover"}),
+        WidgetBool (0, "recurse_for_cover")),
     WidgetSpin (N_("Search depth:"),
-        {VALUE_INT, 0, 0, "recurse_for_cover_depth"},
+        WidgetInt (0, "recurse_for_cover_depth"),
         {0, 100, 1},
         WIDGET_CHILD),
     WidgetLabel (N_("<b>Popup Information</b>")),
     WidgetCheck (N_("Show popup information"),
-        {VALUE_BOOLEAN, 0, 0, "show_filepopup_for_tuple"}),
+        WidgetBool (0, "show_filepopup_for_tuple")),
     WidgetSpin (N_("Popup delay (tenths of a second):"),
-        {VALUE_INT, 0, 0, "filepopup_delay"},
+        WidgetInt (0, "filepopup_delay"),
         {0, 100, 1},
         WIDGET_CHILD),
     WidgetCheck (N_("Show time scale for current song"),
-        {VALUE_BOOLEAN, 0, 0, "filepopup_showprogressbar"},
+        WidgetBool (0, "filepopup_showprogressbar"),
         WIDGET_CHILD)
 };
 
