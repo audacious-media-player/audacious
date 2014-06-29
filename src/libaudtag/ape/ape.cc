@@ -365,7 +365,7 @@ struct APETagModule : audtag::TagModule {
     }
 
   public:
-    static bool ape_is_our_file (VFSFile * handle)
+    bool can_handle_file (VFSFile * handle)
     {
 	APEHeader header;
 	int start, length, data_start, data_length;
@@ -374,7 +374,7 @@ struct APETagModule : audtag::TagModule {
 	 & data_length);
     }
 
-    static bool ape_read_tag (Tuple & tuple, VFSFile * handle)
+    bool read_tag (Tuple & tuple, VFSFile * handle)
     {
 	Index<ValuePair> list = ape_read_items (handle);
 
@@ -407,7 +407,7 @@ struct APETagModule : audtag::TagModule {
 	return true;
     }
 
-    static bool ape_write_tag (const Tuple & tuple, VFSFile * handle)
+    bool write_tag (const Tuple & tuple, VFSFile * handle)
     {
 	Index<ValuePair> list = ape_read_items (handle);
 	APEHeader header;
