@@ -100,7 +100,6 @@ namespace audtag {
     {
         AUDDBG ("%s: write_tag() not implemented.\n", this->m_name.c_str());
         return false;
->>>>>>> audtag: C++ object system conversion
     }
 };
 
