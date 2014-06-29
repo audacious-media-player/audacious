@@ -25,6 +25,11 @@
 #include "index.h"
 #include "objects.h"
 
+struct Plugin;
+struct PluginHandle;
+struct VFSFile;
+class Tuple;
+
 typedef bool (* DirForeachFunc) (const char * path, const char * basename, void * user);
 
 /* adder.c */

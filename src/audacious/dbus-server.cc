@@ -746,8 +746,8 @@ void dbus_server_init (void)
 
     skeleton = (GDBusInterfaceSkeleton *) obj_audacious_skeleton_new ();
 
-    for (unsigned i = 0; i < ARRAY_LEN (handlers); i ++)
-        g_signal_connect (skeleton, handlers[i].signal, handlers[i].callback, nullptr);
+    for (auto & handler : handlers)
+        g_signal_connect (skeleton, handler.signal, handler.callback, nullptr);
 
     if (! g_dbus_interface_skeleton_export (skeleton, bus, "/org/atheme/audacious", & error))
         goto ERROR;

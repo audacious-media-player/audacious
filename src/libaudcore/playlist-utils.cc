@@ -223,16 +223,13 @@ EXPORT void aud_playlist_remove_failed (int playlist)
 
 EXPORT void aud_playlist_select_by_patterns (int playlist, const Tuple & patterns)
 {
-    const int fields[] = {FIELD_TITLE, FIELD_ALBUM, FIELD_ARTIST,
-     FIELD_FILE_NAME};
-
     int entries = aud_playlist_entry_count (playlist);
 
     aud_playlist_select_all (playlist, true);
 
-    for (unsigned field = 0; field < ARRAY_LEN (fields); field ++)
+    for (int field : {FIELD_TITLE, FIELD_ALBUM, FIELD_ARTIST, FIELD_FILE_NAME})
     {
-        String pattern = patterns.get_str (fields[field]);
+        String pattern = patterns.get_str (field);
         GRegex * regex;
 
         if (! pattern || ! pattern[0] || ! (regex = g_regex_new (pattern,
@@ -245,7 +242,7 @@ EXPORT void aud_playlist_select_by_patterns (int playlist, const Tuple & pattern
                 continue;
 
             Tuple tuple = aud_playlist_entry_get_tuple (playlist, entry, false);
-            String string = tuple.get_str (fields[field]);
+            String string = tuple.get_str (field);
 
             if (! string || ! g_regex_match (regex, string, (GRegexMatchFlags) 0, nullptr))
                 aud_playlist_entry_set_selected (playlist, entry, false);

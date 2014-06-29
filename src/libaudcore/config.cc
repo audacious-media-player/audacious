@@ -135,7 +135,7 @@ struct SaveState {
 
 static int item_compare (const ConfigItem & a, const ConfigItem & b, void *)
 {
-    if (str_equal (a.section, b.section))
+    if (a.section == b.section)
         return strcmp (a.key, b.key);
     else
         return strcmp (a.section, b.section);
@@ -297,11 +297,11 @@ void config_save (void)
 
     if (file)
     {
-        const char * current_heading = nullptr;
+        String current_heading;
 
         for (const ConfigItem & item : state.list)
         {
-            if (! str_equal (item.section, current_heading))
+            if (item.section != current_heading)
             {
                 inifile_write_heading (file, item.section);
                 current_heading = item.section;

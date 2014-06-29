@@ -20,7 +20,7 @@
 #ifndef LIBAUDCORE_INPUT_H
 #define LIBAUDCORE_INPUT_H
 
-#include <libaudcore/core.h>
+#include <libaudcore/tuple.h>
 
 /* These functions are to be used only from the play() function of an input plugin. */
 

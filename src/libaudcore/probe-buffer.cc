@@ -61,7 +61,7 @@ static int64_t probe_buffer_fread (void * buffer, int64_t size, int64_t count,
     ProbeBuffer * p = (ProbeBuffer *) vfs_get_handle (file);
 
     increase_buffer (p, p->at + size * count);
-    int readed = (size > 0) ? MIN (count, (p->filled - p->at) / size) : 0;
+    int readed = (size > 0) ? aud::min (count, (p->filled - p->at) / size) : 0;
     memcpy (buffer, p->buffer + p->at, size * readed);
 
     p->at += size * readed;
@@ -123,7 +123,7 @@ static int64_t probe_buffer_fsize (VFSFile * file)
     ProbeBuffer * p = (ProbeBuffer *) vfs_get_handle (file);
 
     int64_t size = vfs_fsize (p->file);
-    return MIN (size, (int64_t) sizeof p->buffer);
+    return aud::min (size, (int64_t) sizeof p->buffer);
 }
 
 static String probe_buffer_get_metadata (VFSFile * file, const char * field)

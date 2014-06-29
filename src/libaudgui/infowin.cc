@@ -65,7 +65,7 @@ static struct {
     GtkWidget * ministatus;
 } widgets;
 
-static char * current_file = nullptr;
+static String current_file;
 static PluginHandle * current_decoder = nullptr;
 static gboolean can_write = false;
 static int timeout_source = 0;
@@ -223,8 +223,8 @@ static gboolean genre_fill (GtkWidget * combo)
     GList * list = nullptr;
     GList * node;
 
-    for (unsigned i = 0; i < ARRAY_LEN (genre_table); i ++)
-        list = g_list_prepend (list, _(genre_table[i]));
+    for (const char * genre : genre_table)
+        list = g_list_prepend (list, _(genre));
 
     list = g_list_sort (list, (GCompareFunc) strcmp);
 
@@ -263,8 +263,7 @@ static void infowin_destroyed (void)
 
     memset (& widgets, 0, sizeof widgets);
 
-    str_unref (current_file);
-    current_file = nullptr;
+    current_file = String ();
     current_decoder = nullptr;
     can_write = false;
 }
@@ -382,8 +381,7 @@ static void infowin_show (int list, int entry, const char * filename,
 
     GtkWidget * infowin = create_infowin ();
 
-    str_unref (current_file);
-    current_file = str_get (filename);
+    current_file = String (filename);
     current_decoder = decoder;
     can_write = updating_enabled;
 

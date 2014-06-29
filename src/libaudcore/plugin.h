@@ -23,8 +23,11 @@
 
 #include <libaudcore/audio.h>
 #include <libaudcore/index.h>
+#include <libaudcore/plugins.h>
 #include <libaudcore/tuple.h>
 #include <libaudcore/vfs.h>
+
+struct PluginPreferences;
 
 /* "Magic" bytes identifying an Audacious plugin header. */
 #define _AUD_PLUGIN_MAGIC ((int) 0x8EAC8DE2)
@@ -326,16 +329,16 @@ struct VisPlugin
     PLUGIN_COMMON_FIELDS
 
     /* reset internal state and clear display */
-    VisClearFunc clear;
+    void (* clear) (void);
 
     /* 512 frames of a single-channel PCM signal */
-    VisMonoPCMFunc render_mono_pcm;
+    void (* render_mono_pcm) (const float * pcm);
 
     /* 512 frames of an interleaved multi-channel PCM signal */
-    VisMultiPCMFunc render_multi_pcm;
+    void (* render_multi_pcm) (const float * pcm, int channels);
 
     /* intensity of frequencies 1/512, 2/512, ..., 256/512 of sample rate */
-    VisFreqFunc render_freq;
+    void (* render_freq) (const float * freq);
 
     /* GtkWidget * (* get_widget) (void); */
     void * (* get_widget) (void);

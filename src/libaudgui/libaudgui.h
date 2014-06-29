@@ -21,7 +21,8 @@
 #define LIBAUDGUI_H
 
 #include <stdint.h>
-#include <libaudcore/core.h>
+
+struct PluginHandle;
 
 void audgui_show_add_url_window(bool open);
 

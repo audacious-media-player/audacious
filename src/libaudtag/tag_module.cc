@@ -36,7 +36,7 @@ static tag_module_t * const modules[] = {& id3v24, & id3v22, & ape, & id3v1};
 
 tag_module_t * find_tag_module (VFSFile * fd, int new_type)
 {
-    for (unsigned i = 0; i < ARRAY_LEN (modules); i ++)
+    for (tag_module_t * module : modules)
     {
         if (vfs_fseek(fd, 0, SEEK_SET))
         {
@@ -44,20 +44,20 @@ tag_module_t * find_tag_module (VFSFile * fd, int new_type)
             return nullptr;
         }
 
-        if (modules[i]->can_handle_file (fd))
+        if (module->can_handle_file (fd))
         {
-            AUDDBG ("Module %s accepted file.\n", modules[i]->name);
-            return modules[i];
+            AUDDBG ("Module %s accepted file.\n", module->name);
+            return module;
         }
     }
 
     /* No existing tag; see if we can create a new one. */
     if (new_type != TAG_TYPE_NONE)
     {
-        for (unsigned i = 0; i < ARRAY_LEN (modules); i ++)
+        for (tag_module_t * module : modules)
         {
-            if (modules[i]->type == new_type)
-                return modules[i];
+            if (module->type == new_type)
+                return module;
         }
     }
 

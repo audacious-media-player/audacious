@@ -23,7 +23,6 @@
 /* okay to use without audgui_init() */
 
 #include <gtk/gtk.h>
-#include <libaudcore/core.h>
 
 /* New callbacks should be added to the end of this struct.  The
  * audgui_list_new() macro tells us the size of the callback struct as it was

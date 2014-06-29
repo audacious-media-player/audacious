@@ -131,7 +131,8 @@ EXPORT void aud_ui_show_error (const char * message)
     if (aud_get_headless_mode ())
         fprintf (stderr, "ERROR: %s\n", message);
     else
-        event_queue_full ("ui show error", str_get (message), (GDestroyNotify) str_unref);
+        event_queue_full ("ui show error", String::raw_get (message),
+         (GDestroyNotify) String::raw_unref);
 }
 
 static bool probe_cb (PluginHandle * p, PluginHandle * * pp)

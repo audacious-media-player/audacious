@@ -87,7 +87,7 @@ EXPORT GtkWidget * audgui_menu_item_new_with_domain
             g_signal_connect (widget, "destroy", (GCallback) unhook_cb, (void *) item);
         }
     }
-    else if (name && (item->items || item->get_sub)) /* submenu */
+    else if (name && (item->items.len || item->get_sub)) /* submenu */
     {
         widget = image_menu_item_new (name, item->icon);
 
@@ -98,7 +98,7 @@ EXPORT GtkWidget * audgui_menu_item_new_with_domain
         else
         {
             sub = gtk_menu_new ();
-            audgui_menu_init_with_domain (sub, item->items, item->n_items, accel, domain);
+            audgui_menu_init_with_domain (sub, item->items, accel, domain);
         }
 
         gtk_menu_item_set_submenu ((GtkMenuItem *) widget, sub);
@@ -114,12 +114,12 @@ EXPORT GtkWidget * audgui_menu_item_new_with_domain
 }
 
 EXPORT void audgui_menu_init_with_domain (GtkWidget * shell,
- const AudguiMenuItem * items, int n_items, GtkAccelGroup * accel,
+ ArrayRef<const AudguiMenuItem> items, GtkAccelGroup * accel,
  const char * domain)
 {
-    for (int i = 0; i < n_items; i ++)
+    for (const AudguiMenuItem & item : items)
     {
-        GtkWidget * widget = audgui_menu_item_new_with_domain (& items[i], accel, domain);
+        GtkWidget * widget = audgui_menu_item_new_with_domain (& item, accel, domain);
         if (! widget)
             continue;
 

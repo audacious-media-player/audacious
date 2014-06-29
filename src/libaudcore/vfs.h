@@ -38,6 +38,8 @@
 #define VFS_IS_EXECUTABLE (1 << 3)
 #define VFS_EXISTS        (1 << 4)
 
+struct VFSFile;
+
 /**
  * @struct VFSConstructor
  * #VFSConstructor objects contain the base vtables used for extrapolating

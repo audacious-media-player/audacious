@@ -20,7 +20,7 @@
 #ifndef LIBAUDCORE_PREFERENCES_H
 #define LIBAUDCORE_PREFERENCES_H
 
-class String;
+#include <libaudcore/objects.h>
 
 struct PreferencesWidget;
 
@@ -39,8 +39,7 @@ struct WidgetVSpin {
 };
 
 struct WidgetVTable {
-    const PreferencesWidget * elem;
-    int rows;
+    ArrayRef<const PreferencesWidget> widgets;
 };
 
 struct WidgetVLabel {
@@ -58,16 +57,14 @@ struct WidgetVEntry {
 
 struct WidgetVCombo {
     /* static init */
-    const ComboBoxElements * elements;
-    int n_elements;
+    ArrayRef<const ComboBoxElements> elems;
 
     /* runtime init */
-    const ComboBoxElements * (* fill) (int * n_elements);
+    ArrayRef<const ComboBoxElements> (* fill) ();
 };
 
 struct WidgetVBox {
-    const PreferencesWidget * elem;
-    int n_elem;
+    ArrayRef<const PreferencesWidget> widgets;
 
     bool horizontal;  /* false gives vertical, true gives horizontal aligment of child widgets */
     bool frame;       /* whether to draw frame around box */
@@ -75,13 +72,11 @@ struct WidgetVBox {
 
 struct NotebookTab {
     const char * name;
-    const PreferencesWidget * widgets;
-    int n_widgets;
+    ArrayRef<const PreferencesWidget> widgets;
 };
 
 struct WidgetVNotebook {
-    const NotebookTab * tabs;
-    int n_tabs;
+    ArrayRef<const NotebookTab> tabs;
 };
 
 struct WidgetVSeparator {
@@ -251,8 +246,7 @@ constexpr const PreferencesWidget WidgetCustom (void * (* populate) (void))
     { return {PreferencesWidget::Custom, 0, 0, 0, WidgetConfig (), populate}; }
 
 struct PluginPreferences {
-    const PreferencesWidget * widgets;
-    int n_widgets;
+    ArrayRef<const PreferencesWidget> widgets;
 
     void (* init) (void);
     void (* apply) (void);

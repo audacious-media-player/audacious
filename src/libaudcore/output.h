@@ -20,7 +20,6 @@
 #ifndef LIBAUDCORE_OUTPUT_H
 #define LIBAUDCORE_OUTPUT_H
 
-#include <libaudcore/core.h>
 #include <libaudcore/input.h>
 
 bool output_open_audio (int format, int rate, int channels);

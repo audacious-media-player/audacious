@@ -139,7 +139,7 @@ EXPORT void vfs_file_read_all (VFSFile * file, void * * bufp, int64_t * sizep)
 
     if (size >= 0)
     {
-        size = MIN (size, SSIZE_MAX - 1);
+        size = aud::min (size, SSIZE_MAX - 1);
         buf = g_new (char, size + 1);
         size = vfs_fread (buf, 1, size, file);
     }

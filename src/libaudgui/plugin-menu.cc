@@ -21,6 +21,7 @@
 
 #include <libaudcore/i18n.h>
 #include <libaudcore/interface.h>
+#include <libaudcore/plugins.h>
 
 #include "internal.h"
 #include "libaudgui.h"
@@ -59,7 +60,7 @@ EXPORT GtkWidget * audgui_get_plugin_menu (int id)
          gtk_widget_destroyed, & menus[id]);
 
         if (id == AUD_MENU_MAIN)
-            audgui_menu_init (menus[id], main_items, ARRAY_LEN (main_items), nullptr);
+            audgui_menu_init (menus[id], main_items, nullptr);
 
         for (GList * node = items[id]; node; node = node->next)
             add_to_menu (menus[id], (const AudguiMenuItem *) node->data);

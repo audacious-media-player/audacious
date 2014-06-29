@@ -23,7 +23,7 @@
 #include <stdint.h>
 
 #include <libaudcore/index.h>
-#include <libaudcore/objects.h>
+#include <libaudcore/tuple.h>
 
 /* The values which can be passed (packed into a pointer) to the "playlist
  * update" hook.  PLAYLIST_UPDATE_SELECTION means that entries have been

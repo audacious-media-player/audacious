@@ -20,8 +20,6 @@
 #ifndef LIBAUDCORE_INTERFACE_H
 #define LIBAUDCORE_INTERFACE_H
 
-#include <libaudcore/core.h>
-
 enum {
  AUD_MENU_MAIN,
  AUD_MENU_PLAYLIST,
@@ -35,6 +33,11 @@ enum {
  AUD_VIS_TYPE_MULTI_PCM,    /* for VisMultiPCMFunc */
  AUD_VIS_TYPE_FREQ,         /* for VisFreqFunc */
  AUD_VIS_TYPES};
+
+typedef void (* VisClearFunc) (void);
+typedef void (* VisMonoPCMFunc) (const float * pcm);
+typedef void (* VisMultiPCMFunc) (const float * pcm, int channels);
+typedef void (* VisFreqFunc) (const float * freq);
 
 /* generic type */
 typedef void (* VisFunc) (void);

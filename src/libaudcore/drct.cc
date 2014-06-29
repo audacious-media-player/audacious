@@ -37,7 +37,7 @@ EXPORT void aud_drct_play (void)
         {
             int a, b;
             aud_drct_get_ab_repeat (& a, & b);
-            aud_drct_seek (MAX (a, 0));
+            aud_drct_seek (aud::max (a, 0));
         }
     }
     else
@@ -74,14 +74,14 @@ EXPORT void aud_drct_get_volume_main (int * volume)
 {
     int left, right;
     aud_drct_get_volume (& left, & right);
-    * volume = MAX (left, right);
+    * volume = aud::max (left, right);
 }
 
 EXPORT void aud_drct_set_volume_main (int volume)
 {
     int left, right, current;
     aud_drct_get_volume (& left, & right);
-    current = MAX (left, right);
+    current = aud::max (left, right);
 
     if (current > 0)
         aud_drct_set_volume (volume * left / current, volume * right / current);

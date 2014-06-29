@@ -20,6 +20,8 @@
 #include <stddef.h>
 #include <gtk/gtk.h>
 
+#include <libaudcore/objects.h>
+
 #include "libaudgui-gtk.h"
 #include "list.h"
 
@@ -389,7 +391,7 @@ static gboolean autoscroll (GtkWidget * widget)
         return false;
 
     int pos = gtk_adjustment_get_value (adj) + model->scroll_speed;
-    int clamped = CLAMP (pos, 0, gtk_adjustment_get_upper (adj) -
+    int clamped = aud::clamp<int> (pos, 0, gtk_adjustment_get_upper (adj) -
      gtk_adjustment_get_page_size (adj));
     gtk_adjustment_set_value (adj, clamped);
 
@@ -397,9 +399,9 @@ static gboolean autoscroll (GtkWidget * widget)
         return false;
 
     if (model->scroll_speed > 0)
-        model->scroll_speed = MIN (model->scroll_speed + 2, 100);
+        model->scroll_speed = aud::min (model->scroll_speed + 2, 100);
     else
-        model->scroll_speed = MAX (model->scroll_speed - 2, -100);
+        model->scroll_speed = aud::max (model->scroll_speed - 2, -100);
 
     return true;
 }
@@ -454,7 +456,7 @@ static gboolean drag_motion (GtkWidget * widget, GdkDragContext * context,
     gtk_tree_view_convert_widget_to_bin_window_coords ((GtkTreeView *) widget,
      x, y, & x, & y);
 
-    int hotspot = MIN (height / 4, 24);
+    int hotspot = aud::min (height / 4, 24);
 
     if (y >= 0 && y < hotspot)
         start_autoscroll (model, widget, -2);

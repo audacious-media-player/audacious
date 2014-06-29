@@ -29,7 +29,7 @@
 
 const char *convert_numericgenre_to_text(int numericgenre)
 {
-    const struct
+    static const struct
     {
         int numericgenre;
         const char *genre;
@@ -163,10 +163,10 @@ const char *convert_numericgenre_to_text(int numericgenre)
         {GENRE_EURO_HOUSE, "Euro-House"},
     };
 
-    for (unsigned count = 0; count < ARRAY_LEN (table); count++)
+    for (auto & pair : table)
     {
-        if (table[count].numericgenre == numericgenre)
-            return table[count].genre;
+        if (pair.numericgenre == numericgenre)
+            return pair.genre;
     }
 
     return "Unknown";
@@ -210,7 +210,7 @@ bool copy_region_to_temp_file (TempFile * temp, VFSFile * file, int64_t offset, 
 
         if (size > 0)
         {
-            readsize = MIN (size, (int64_t) sizeof buf);
+            readsize = aud::min (size, (int64_t) sizeof buf);
             if (vfs_fread (buf, 1, readsize, file) != readsize)
                 return false;
 

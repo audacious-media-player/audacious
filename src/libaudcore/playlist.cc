@@ -322,9 +322,9 @@ static void queue_update (int level, Playlist * p, int at, int count)
 
         if (p->next_update.level)
         {
-            p->next_update.level = MAX (p->next_update.level, level);
-            p->next_update.before = MIN (p->next_update.before, at);
-            p->next_update.after = MIN (p->next_update.after, p->entries.len () - at - count);
+            p->next_update.level = aud::max (p->next_update.level, level);
+            p->next_update.before = aud::min (p->next_update.before, at);
+            p->next_update.after = aud::min (p->next_update.after, p->entries.len () - at - count);
         }
         else
         {
@@ -337,7 +337,7 @@ static void queue_update (int level, Playlist * p, int at, int count)
     if (! update_level)
         queued_update.queue (update, nullptr);
 
-    update_level = MAX (update_level, level);
+    update_level = aud::max (update_level, level);
 }
 
 EXPORT bool aud_playlist_update_pending (void)
@@ -709,7 +709,7 @@ EXPORT void aud_playlist_delete (int playlist_num)
 
     if (playlist == active_playlist)
     {
-        int active_num = MIN (playlist_num, playlists.len () - 1);
+        int active_num = aud::min (playlist_num, playlists.len () - 1);
         active_playlist = playlists[active_num].get ();
     }
 
@@ -1119,16 +1119,16 @@ EXPORT void aud_playlist_set_focus (int playlist_num, int entry_num)
 
     if (playlist->focus)
     {
-        first = MIN (first, playlist->focus->number);
-        last = MAX (last, playlist->focus->number);
+        first = aud::min (first, playlist->focus->number);
+        last = aud::max (last, playlist->focus->number);
     }
 
     playlist->focus = lookup_entry (playlist, entry_num);
 
     if (playlist->focus)
     {
-        first = MIN (first, playlist->focus->number);
-        last = MAX (last, playlist->focus->number);
+        first = aud::min (first, playlist->focus->number);
+        last = aud::max (last, playlist->focus->number);
     }
 
     if (first <= last)
@@ -1195,7 +1195,7 @@ EXPORT void aud_playlist_select_all (int playlist_num, bool selected)
         if ((selected && ! entry->selected) || (entry->selected && ! selected))
         {
             entry->selected = selected;
-            first = MIN (first, entry->number);
+            first = aud::min (first, entry->number);
             last = entry->number;
         }
     }
@@ -1745,7 +1745,7 @@ EXPORT void aud_playlist_queue_insert_selected (int playlist_num, int at)
 
         add.append (entry.get ());
         entry->queued = true;
-        first = MIN (first, entry->number);
+        first = aud::min (first, entry->number);
         last = entry->number;
     }
 
@@ -1789,7 +1789,7 @@ EXPORT void aud_playlist_queue_delete (int playlist_num, int at, int number)
     {
         Entry * entry = playlist->queued[i];
         entry->queued = false;
-        first = MIN (first, entry->number);
+        first = aud::min (first, entry->number);
         last = entry->number;
     }
 
@@ -1816,7 +1816,7 @@ EXPORT void aud_playlist_queue_delete_selected (int playlist_num)
         {
             playlist->queued.remove (i, 1);
             entry->queued = false;
-            first = MIN (first, entry->number);
+            first = aud::min (first, entry->number);
             last = entry->number;
         }
         else
