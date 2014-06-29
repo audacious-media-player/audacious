@@ -135,7 +135,7 @@ EXPORT int vfs_fprintf(VFSFile *stream, char const *format, ...)
 EXPORT void vfs_file_read_all (VFSFile * file, void * * bufp, int64_t * sizep)
 {
     char * buf = nullptr;
-    int64_t size = vfs_fsize (file);
+    ssize_t size = vfs_fsize (file);
 
     if (size >= 0)
     {
