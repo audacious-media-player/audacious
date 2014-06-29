@@ -29,85 +29,87 @@
 #include "tag_module.h"
 #include "util.h"
 
-bool tag_verbose = false;
+namespace audtag {
 
-EXPORT void tag_set_verbose (bool verbose)
-{
-    tag_verbose = verbose;
-}
+    static bool tag_verbose = false;
 
-/* The tuple's file-related attributes are already set */
-
-EXPORT bool tag_tuple_read (Tuple & tuple, VFSFile * handle)
-{
-    tag_module_t * module = find_tag_module (handle, TAG_TYPE_NONE);
-
-    if (! module || ! module->read_tag)
+    EXPORT void set_verbose (bool verbose)
     {
-        AUDDBG ("read_tag() not supported for %s\n", vfs_get_filename (handle));
-        return false;
+        tag_verbose = verbose;
     }
 
-    return module->read_tag (tuple, handle);
-}
-
-EXPORT bool tag_image_read (VFSFile * handle, void * * data, int64_t * size)
-{
-    tag_module_t * module = find_tag_module (handle, TAG_TYPE_NONE);
-
-    if (! module || ! module->read_image)
+    /* The tuple's file-related attributes are already set */
+    EXPORT bool tuple_read (Tuple & tuple, VFSFile * handle)
     {
-        AUDDBG ("read_image() not supported for %s\n", vfs_get_filename (handle));
-        return false;
+        TagModule * module = find_tag_module (handle, TAG_TYPE_NONE);
+
+        if (! module)
+        {
+            AUDDBG ("read_tag() not supported for %s\n", vfs_get_filename (handle));
+            return false;
+        }
+
+        return module->read_tag (tuple, handle);
     }
 
-    return module->read_image (handle, data, size);
-}
-
-EXPORT bool tag_tuple_write (const Tuple & tuple, VFSFile * handle, int new_type)
-{
-    tag_module_t * module = find_tag_module (handle, new_type);
-
-    if (! module || ! module->write_tag)
+    EXPORT bool image_read (VFSFile * handle, void * * data, int64_t * size)
     {
-        AUDDBG ("write_tag() not supported for %s\n", vfs_get_filename (handle));
-        return false;
+        TagModule * module = find_tag_module (handle, TAG_TYPE_NONE);
+
+        if (! module)
+        {
+            AUDDBG ("read_image() not supported for %s\n", vfs_get_filename (handle));
+            return false;
+        }
+
+        return module->read_image (handle, data, size);
     }
 
-    return module->write_tag (tuple, handle);
-}
-
-EXPORT bool tag_update_stream_metadata (Tuple & tuple, VFSFile * handle)
-{
-    bool updated = false;
-    int value;
-
-    String old = tuple.get_str (FIELD_TITLE);
-    String val = vfs_get_metadata (handle, "track-name");
-
-    if (val && (! old || strcmp (old, val)))
+    EXPORT bool tuple_write (const Tuple & tuple, VFSFile * handle, int new_type)
     {
-        tuple.set_str (FIELD_TITLE, val);
-        updated = true;
+        TagModule * module = find_tag_module (handle, new_type);
+
+        if (! module)
+        {
+            AUDDBG ("write_tag() not supported for %s\n", vfs_get_filename (handle));
+            return false;
+        }
+
+        return module->write_tag (tuple, handle);
     }
 
-    old = tuple.get_str (FIELD_ARTIST);
-    val = vfs_get_metadata (handle, "stream-name");
-
-    if (val && (! old || strcmp (old, val)))
+    EXPORT bool tag_update_stream_metadata (Tuple & tuple, VFSFile * handle)
     {
-        tuple.set_str (FIELD_ARTIST, val);
-        updated = true;
+        bool updated = false;
+        int value;
+
+        String old = tuple.get_str (FIELD_TITLE);
+        String val = vfs_get_metadata (handle, "track-name");
+
+        if (val && (! old || strcmp (old, val)))
+        {
+            tuple.set_str (FIELD_TITLE, val);
+            updated = true;
+        }
+
+        old = tuple.get_str (FIELD_ARTIST);
+        val = vfs_get_metadata (handle, "stream-name");
+
+        if (val && (! old || strcmp (old, val)))
+        {
+            tuple.set_str (FIELD_ARTIST, val);
+            updated = true;
+        }
+
+        val = vfs_get_metadata (handle, "content-bitrate");
+        value = val ? atoi (val) / 1000 : 0;
+
+        if (value && value != tuple.get_int (FIELD_BITRATE))
+        {
+            tuple.set_int (FIELD_BITRATE, value);
+            updated = true;
+        }
+
+        return updated;
     }
-
-    val = vfs_get_metadata (handle, "content-bitrate");
-    value = val ? atoi (val) / 1000 : 0;
-
-    if (value && value != tuple.get_int (FIELD_BITRATE))
-    {
-        tuple.set_int (FIELD_BITRATE, value);
-        updated = true;
-    }
-
-    return updated;
-}
+};

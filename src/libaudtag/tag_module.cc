@@ -17,6 +17,8 @@
  * the use of this software.
  */
 
+#include <vector>
+
 #include <glib.h>
 #include <stdio.h>
 
@@ -27,40 +29,78 @@
 #include "audtag.h"
 #include "util.h"
 #include "tag_module.h"
-#include "id3/id3v1.h"
-#include "id3/id3v22.h"
-#include "id3/id3v24.h"
-#include "ape/ape.h"
 
-static tag_module_t * const modules[] = {& id3v24, & id3v22, & ape, & id3v1};
+namespace audtag {
+    static std::vector<TagModule> modules;
 
-tag_module_t * find_tag_module (VFSFile * fd, int new_type)
-{
-    for (tag_module_t * module : modules)
+    TagModule * find_tag_module (VFSFile * fd, int new_type)
     {
-        if (vfs_fseek(fd, 0, SEEK_SET))
+        for (auto &mod : modules)
         {
-            AUDDBG("not a seekable file\n");
-            return nullptr;
+            if (vfs_fseek(fd, 0, SEEK_SET))
+            {
+                AUDDBG("not a seekable file\n");
+                return nullptr;
+            }
+
+            if (mod.can_handle_file (fd))
+            {
+                AUDDBG ("Module %s accepted file.\n", mod.m_name.c_str());
+                return &mod;
+            }
         }
 
-        if (module->can_handle_file (fd))
+        /* No existing tag; see if we can create a new one. */
+        if (new_type != TAG_TYPE_NONE)
         {
-            AUDDBG ("Module %s accepted file.\n", module->name);
-            return module;
+            for (auto &mod : modules)
+            {
+                if (mod.m_type == new_type)
+                    return &mod;
+            }
         }
+
+        AUDDBG("no module found\n");
+        return nullptr;
     }
 
-    /* No existing tag; see if we can create a new one. */
-    if (new_type != TAG_TYPE_NONE)
+    /******************************************************************************************************************/
+
+    TagModule::TagModule (const char *name, int type) :
+        m_name(name), m_type(type)
     {
-        for (tag_module_t * module : modules)
-        {
-            if (module->type == new_type)
-                return module;
-        }
+        modules.push_back(*this);
     }
 
-    AUDDBG("no module found\n");
-    return nullptr;
-}
+    TagModule::~TagModule ()
+    {
+        // modules.erase(*this);
+    }
+
+    bool TagModule::can_handle_file (VFSFile * handle)
+    {
+        AUDDBG("Module %s does not support %s (no probing function implemented).\n", this->m_name.c_str(),
+               vfs_get_filename(handle));
+        return false;
+    }
+
+    bool TagModule::read_image (VFSFile * handle, void * * data, int64_t * size)
+    {
+        AUDDBG("Module %s does not support images.\n", this->m_name.c_str());
+        return false;
+    }
+
+    bool TagModule::read_tag (Tuple & tuple, VFSFile * handle)
+    {
+        AUDDBG ("%s: read_tag() not implemented.\n", this->m_name.c_str());
+        return false;
+    }
+
+    bool TagModule::write_tag (Tuple const & tuple, VFSFile * handle)
+    {
+        AUDDBG ("%s: write_tag() not implemented.\n", this->m_name.c_str());
+        return false;
+>>>>>>> audtag: C++ object system conversion
+    }
+};
+
