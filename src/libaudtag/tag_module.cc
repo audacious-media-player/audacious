@@ -31,11 +31,11 @@
 #include "tag_module.h"
 
 namespace audtag {
-    static std::vector<TagModule> modules;
+    static std::vector<TagModule *> modules;
 
     TagModule * find_tag_module (VFSFile * fd, int new_type)
     {
-        for (auto &mod : modules)
+        for (auto mod : modules)
         {
             if (vfs_fseek(fd, 0, SEEK_SET))
             {
@@ -43,20 +43,20 @@ namespace audtag {
                 return nullptr;
             }
 
-            if (mod.can_handle_file (fd))
+            if (mod->can_handle_file (fd))
             {
-                AUDDBG ("Module %s accepted file.\n", mod.m_name.c_str());
-                return &mod;
+                AUDDBG ("Module %s accepted file.\n", mod->m_name.c_str());
+                return mod;
             }
         }
 
         /* No existing tag; see if we can create a new one. */
         if (new_type != TAG_TYPE_NONE)
         {
-            for (auto &mod : modules)
+            for (auto mod : modules)
             {
-                if (mod.m_type == new_type)
-                    return &mod;
+                if (mod->m_type == new_type)
+                    return mod;
             }
         }
 
@@ -69,7 +69,7 @@ namespace audtag {
     TagModule::TagModule (const char *name, int type) :
         m_name(name), m_type(type)
     {
-        modules.push_back(*this);
+        modules.push_back(this);
     }
 
     TagModule::~TagModule ()
