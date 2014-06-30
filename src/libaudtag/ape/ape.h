@@ -1,6 +1,6 @@
 /*
- * audtag.h
- * Copyright 2009-2011 Paula Stanciu and John Lindgren
+ * ape.h
+ * Copyright 2010 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -17,26 +17,13 @@
  * the use of this software.
  */
 
-#ifndef AUDTAG_H
-#define AUDTAG_H
+#ifndef AUDTAG_APE_H
+#define AUDTAG_APE_H
 
-#include <libaudcore/tuple.h>
-#include <libaudcore/vfs.h>
+#include "../audtag.h"
+#include "../tag_module.h"
+#include "../util.h"
 
-enum
-{
-    TAG_TYPE_NONE = 0,
-    TAG_TYPE_APE,
-    TAG_TYPE_ID3V2
-};
+extern tag_module_t ape;
 
-bool tag_tuple_read (Tuple & tuple, VFSFile *fd);
-bool tag_image_read (VFSFile * handle, void * * data, int64_t * size);
-
-/* new_type specifies the type of tag (see the TAG_TYPE_* enum) that should be
- * written if the file does not have any existing tag. */
-bool tag_tuple_write (const Tuple & tuple, VFSFile * handle, int new_type);
-
-bool tag_update_stream_metadata (Tuple & tuple, VFSFile * handle);
-
-#endif /* AUDTAG_H */
+#endif

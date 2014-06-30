@@ -29,6 +29,8 @@
 #include "../tag_module.h"
 #include "../util.h"
 
+#include "id3v1.h"
+
 #pragma pack(push)
 #pragma pack(1)
 
@@ -55,81 +57,80 @@ struct ID3v1Ext {
 
 #pragma pack(pop)
 
-struct ID3v1TagModule : audtag::TagModule {
-    ID3v1TagModule(const char *n, int t) : audtag::TagModule(n, t) { };
+static bool read_id3v1_tag (VFSFile * file, ID3v1Tag * tag)
+{
+    if (vfs_fseek (file, -sizeof (ID3v1Tag), SEEK_END) < 0)
+        return false;
+    if (vfs_fread (tag, 1, sizeof (ID3v1Tag), file) != sizeof (ID3v1Tag))
+        return false;
 
-  private:
-    static bool read_id3v1_tag (VFSFile * file, ID3v1Tag * tag)
-    {
-	if (vfs_fseek (file, -sizeof (ID3v1Tag), SEEK_END) < 0)
-	    return false;
-	if (vfs_fread (tag, 1, sizeof (ID3v1Tag), file) != sizeof (ID3v1Tag))
-	    return false;
+    return ! strncmp (tag->header, "TAG", 3);
+}
 
-	return ! strncmp (tag->header, "TAG", 3);
-    }
+static bool read_id3v1_ext (VFSFile * file, ID3v1Ext * ext)
+{
+    if (vfs_fseek (file, -(sizeof (ID3v1Ext) + sizeof (ID3v1Tag)), SEEK_END) < 0)
+        return false;
+    if (vfs_fread (ext, 1, sizeof (ID3v1Ext), file) != sizeof (ID3v1Ext))
+        return false;
 
-    static bool read_id3v1_ext (VFSFile * file, ID3v1Ext * ext)
-    {
-	if (vfs_fseek (file, -(sizeof (ID3v1Ext) + sizeof (ID3v1Tag)), SEEK_END) < 0)
-	    return false;
-	if (vfs_fread (ext, 1, sizeof (ID3v1Ext), file) != sizeof (ID3v1Ext))
-	    return false;
+    return ! strncmp (ext->header, "TAG+", 4);
+}
 
-	return ! strncmp (ext->header, "TAG+", 4);
-    }
+static bool id3v1_can_handle_file (VFSFile * file)
+{
+    ID3v1Tag tag;
+    return read_id3v1_tag (file, & tag);
+}
 
-    static bool combine_string (Tuple & tuple, int field, const char * str1,
-     int size1, const char * str2, int size2)
-    {
-	StringBuf str = str_copy (str1, strlen_bounded (str1, size1));
-	str_insert (str, -1, str2, strlen_bounded (str2, size2));
+static bool combine_string (Tuple & tuple, int field, const char * str1,
+ int size1, const char * str2, int size2)
+{
+    StringBuf str = str_copy (str1, strlen_bounded (str1, size1));
+    str_insert (str, -1, str2, strlen_bounded (str2, size2));
 
-	g_strchomp (str);
-	str.resize (strlen (str));
+    g_strchomp (str);
+    str.resize (strlen (str));
 
-	if (! str.len ())
-	    return false;
+    if (! str.len ())
+        return false;
 
-	tuple.set_str (field, str);
-	return true;
-    }
+    tuple.set_str (field, str);
+    return true;
+}
 
-  public:
-    bool can_handle_file (VFSFile * file)
-    {
-	ID3v1Tag tag;
-	return read_id3v1_tag (file, & tag);
-    }
+static bool id3v1_read_tag (Tuple & tuple, VFSFile * file)
+{
+    ID3v1Tag tag;
+    ID3v1Ext ext;
 
-    bool read_tag (Tuple & tuple, VFSFile * file)
-    {
-	ID3v1Tag tag;
-	ID3v1Ext ext;
+    if (! read_id3v1_tag (file, & tag))
+        return false;
 
-	if (! read_id3v1_tag (file, & tag))
-	    return false;
+    if (! read_id3v1_ext (file, & ext))
+        memset (& ext, 0, sizeof (ID3v1Ext));
 
-	if (! read_id3v1_ext (file, & ext))
-	    memset (& ext, 0, sizeof (ID3v1Ext));
+    combine_string (tuple, FIELD_TITLE, tag.title, sizeof tag.title, ext.title, sizeof ext.title);
+    combine_string (tuple, FIELD_ARTIST, tag.artist, sizeof tag.artist, ext.artist, sizeof ext.artist);
+    combine_string (tuple, FIELD_ALBUM, tag.album, sizeof tag.album, ext.album, sizeof ext.album);
+    combine_string (tuple, FIELD_COMMENT, tag.comment, sizeof tag.comment, nullptr, 0);
 
-	combine_string (tuple, FIELD_TITLE, tag.title, sizeof tag.title, ext.title, sizeof ext.title);
-	combine_string (tuple, FIELD_ARTIST, tag.artist, sizeof tag.artist, ext.artist, sizeof ext.artist);
-	combine_string (tuple, FIELD_ALBUM, tag.album, sizeof tag.album, ext.album, sizeof ext.album);
-	combine_string (tuple, FIELD_COMMENT, tag.comment, sizeof tag.comment, nullptr, 0);
+    StringBuf year = str_copy (tag.year, strlen_bounded (tag.year, 4));
+    if (atoi (year))
+        tuple.set_int (FIELD_YEAR, atoi (year));
 
-	StringBuf year = str_copy (tag.year, strlen_bounded (tag.year, 4));
-	if (atoi (year))
-	    tuple.set_int (FIELD_YEAR, atoi (year));
+    if (! tag.comment[28] && tag.comment[29])
+        tuple.set_int (FIELD_TRACK_NUMBER, (unsigned char) tag.comment[29]);
 
-	if (! tag.comment[28] && tag.comment[29])
-	    tuple.set_int (FIELD_TRACK_NUMBER, (unsigned char) tag.comment[29]);
+    if (! combine_string (tuple, FIELD_GENRE, ext.genre, sizeof ext.genre, nullptr, 0))
+        tuple.set_str (FIELD_GENRE, convert_numericgenre_to_text (tag.genre));
 
-	if (! combine_string (tuple, FIELD_GENRE, ext.genre, sizeof ext.genre, nullptr, 0))
-	    tuple.set_str (FIELD_GENRE, convert_numericgenre_to_text (tag.genre));
+    return true;
+}
 
-	return true;
-    }
+tag_module_t id3v1 = {
+    "ID3v1",
+    TAG_TYPE_NONE,
+    id3v1_can_handle_file,
+    id3v1_read_tag,
 };
-
-ID3v1TagModule m_tag_id3v1("id3v1", TAG_TYPE_NONE);

@@ -29,8 +29,7 @@
 #include <libaudcore/runtime.h>
 
 #include "id3-common.h"
-#include "../audtag.h"
-#include "../tag_module.h"
+#include "id3v22.h"
 #include "../util.h"
 
 enum
@@ -79,239 +78,242 @@ struct GenericFrame : public Index<char> {
 #define ID3_HEADER_SYNCSAFE             0x40
 #define ID3_HEADER_COMPRESSED           0x20
 
-struct ID3v22TagModule : audtag::TagModule {
-    ID3v22TagModule(const char *n, int t) : audtag::TagModule(n, t) { };
+static bool validate_header (ID3v2Header * header)
+{
+    if (memcmp (header->magic, "ID3", 3))
+        return false;
 
-  private:
-    static bool validate_header (ID3v2Header * header)
+    if ((header->version != 2))
+        return false;
+
+    header->size = unsyncsafe32 (FROM_BE32 (header->size));
+
+    AUDDBG ("Found ID3v2 header:\n");
+    AUDDBG (" magic = %.3s\n", header->magic);
+    AUDDBG (" version = %d\n", (int) header->version);
+    AUDDBG (" revision = %d\n", (int) header->revision);
+    AUDDBG (" flags = %x\n", (int) header->flags);
+    AUDDBG (" size = %d\n", (int) header->size);
+    return true;
+}
+
+static bool read_header (VFSFile * handle, int * version, bool *
+ syncsafe, int64_t * offset, int * header_size, int * data_size)
+{
+    ID3v2Header header;
+
+    if (vfs_fseek (handle, 0, SEEK_SET))
+        return false;
+
+    if (vfs_fread (& header, 1, sizeof (ID3v2Header), handle) != sizeof
+     (ID3v2Header))
+        return false;
+
+    if (validate_header (& header))
     {
-	if (memcmp (header->magic, "ID3", 3))
-	    return false;
+        * offset = 0;
+        * version = header.version;
+        * header_size = sizeof (ID3v2Header);
+        * data_size = header.size;
+    }
+    else
+        return false;
 
-	if ((header->version != 2))
-	    return false;
+    * syncsafe = (header.flags & ID3_HEADER_SYNCSAFE) ? true : false;
 
-	header->size = unsyncsafe32 (FROM_BE32 (header->size));
+    AUDDBG ("Offset = %d, header size = %d, data size = %d\n",
+     (int) * offset, * header_size, * data_size);
 
-	AUDDBG ("Found ID3v2 header:\n");
-	AUDDBG (" magic = %.3s\n", header->magic);
-	AUDDBG (" version = %d\n", (int) header->version);
-	AUDDBG (" revision = %d\n", (int) header->revision);
-	AUDDBG (" flags = %x\n", (int) header->flags);
-	AUDDBG (" size = %d\n", (int) header->size);
-	return true;
+    return true;
+}
+
+static bool read_frame (VFSFile * handle, int max_size, int version,
+ bool syncsafe, int * frame_size, GenericFrame & frame)
+{
+    ID3v2FrameHeader header;
+    uint32_t hdrsz = 0;
+
+    if ((max_size -= sizeof (ID3v2FrameHeader)) < 0)
+        return false;
+
+    if (vfs_fread (& header, 1, sizeof (ID3v2FrameHeader), handle) != sizeof
+     (ID3v2FrameHeader))
+        return false;
+
+    if (! header.key[0]) /* padding */
+        return false;
+
+    for (int i = 0; i < 3; i++)
+    {
+        hdrsz |= (uint32_t) header.size[i] << ((2 - i) * 8);
+        AUDDBG ("header.size[%d] = %d hdrsz %d slot %d\n", i, header.size[i], hdrsz, 2 - i);
     }
 
-    static bool read_header (VFSFile * handle, int * version, bool *
-     syncsafe, int64_t * offset, int * header_size, int * data_size)
+    if (hdrsz > (unsigned) max_size || hdrsz == 0)
+        return false;
+
+    AUDDBG ("Found frame:\n");
+    AUDDBG (" key = %.3s\n", header.key);
+    AUDDBG (" size = %d\n", (int) hdrsz);
+
+    * frame_size = sizeof (ID3v2FrameHeader) + hdrsz;
+
+    frame.key = String (str_copy (header.key, 3));
+    frame.clear ();
+    frame.insert (0, hdrsz);
+
+    if (vfs_fread (& frame[0], 1, frame.len (), handle) != frame.len ())
+        return false;
+
+    AUDDBG ("Data size = %d.\n", frame.len ());
+    return true;
+}
+
+
+static int get_frame_id (const char * key)
+{
+    int id;
+
+    for (id = 0; id < ID3_TAGS_NO; id ++)
     {
-	ID3v2Header header;
-
-	if (vfs_fseek (handle, 0, SEEK_SET))
-	    return false;
-
-	if (vfs_fread (& header, 1, sizeof (ID3v2Header), handle) != sizeof
-	 (ID3v2Header))
-	    return false;
-
-	if (validate_header (& header))
-	{
-	    * offset = 0;
-	    * version = header.version;
-	    * header_size = sizeof (ID3v2Header);
-	    * data_size = header.size;
-	}
-	else
-	    return false;
-
-	* syncsafe = (header.flags & ID3_HEADER_SYNCSAFE) ? true : false;
-
-	AUDDBG ("Offset = %d, header size = %d, data size = %d\n",
-	 (int) * offset, * header_size, * data_size);
-
-	return true;
+        if (! strcmp (key, id3_frames[id]))
+            return id;
     }
 
-    static bool read_frame (VFSFile * handle, int max_size, int version,
-     bool syncsafe, int * frame_size, GenericFrame & frame)
+    return -1;
+}
+
+static bool id3v22_can_handle_file (VFSFile * handle)
+{
+    int version, header_size, data_size;
+    bool syncsafe;
+    int64_t offset;
+
+    return read_header (handle, & version, & syncsafe, & offset, & header_size,
+     & data_size);
+}
+
+static bool id3v22_read_tag (Tuple & tuple, VFSFile * handle)
+{
+    int version, header_size, data_size;
+    bool syncsafe;
+    int64_t offset;
+    int pos;
+
+    if (! read_header (handle, & version, & syncsafe, & offset, & header_size,
+     & data_size))
+        return false;
+
+    AUDDBG ("Reading tags from %i bytes of ID3 data in %s\n", data_size,
+     vfs_get_filename (handle));
+
+    for (pos = 0; pos < data_size; )
     {
-	ID3v2FrameHeader header;
-	uint32_t hdrsz = 0;
+        int frame_size;
+        GenericFrame frame;
 
-	if ((max_size -= sizeof (ID3v2FrameHeader)) < 0)
-	    return false;
+        if (! read_frame (handle, data_size - pos, version, syncsafe, & frame_size, frame))
+        {
+            AUDDBG("read_frame failed at pos %i\n", pos);
+            break;
+        }
 
-	if (vfs_fread (& header, 1, sizeof (ID3v2FrameHeader), handle) != sizeof
-	 (ID3v2FrameHeader))
-	    return false;
+        switch (get_frame_id (frame.key))
+        {
+          case ID3_ALBUM:
+            id3_associate_string (tuple, FIELD_ALBUM, & frame[0], frame.len ());
+            break;
+          case ID3_TITLE:
+            id3_associate_string (tuple, FIELD_TITLE, & frame[0], frame.len ());
+            break;
+          case ID3_COMPOSER:
+            id3_associate_string (tuple, FIELD_COMPOSER, & frame[0], frame.len ());
+            break;
+          case ID3_COPYRIGHT:
+            id3_associate_string (tuple, FIELD_COPYRIGHT, & frame[0], frame.len ());
+            break;
+          case ID3_DATE:
+            id3_associate_string (tuple, FIELD_DATE, & frame[0], frame.len ());
+            break;
+          case ID3_LENGTH:
+            id3_associate_int (tuple, FIELD_LENGTH, & frame[0], frame.len ());
+            break;
+          case ID3_FUCKO_ARTIST:
+          case ID3_ARTIST:
+            id3_associate_string (tuple, FIELD_ARTIST, & frame[0], frame.len ());
+            break;
+          case ID3_TRACKNR:
+            id3_associate_int (tuple, FIELD_TRACK_NUMBER, & frame[0], frame.len ());
+            break;
+          case ID3_YEAR:
+            id3_associate_int (tuple, FIELD_YEAR, & frame[0], frame.len ());
+            break;
+          case ID3_GENRE:
+            id3_decode_genre (tuple, & frame[0], frame.len ());
+            break;
+          case ID3_COMMENT:
+            id3_decode_comment (tuple, & frame[0], frame.len ());
+            break;
+          case ID3_RVA:
+            id3_decode_rva (tuple, & frame[0], frame.len ());
+            break;
+          default:
+            AUDDBG ("Ignoring unsupported ID3 frame %s.\n", (const char *) frame.key);
+            break;
+        }
 
-	if (! header.key[0]) /* padding */
-	    return false;
-
-	for (int i = 0; i < 3; i++)
-	{
-	    hdrsz |= (uint32_t) header.size[i] << ((2 - i) * 8);
-	    AUDDBG ("header.size[%d] = %d hdrsz %d slot %d\n", i, header.size[i], hdrsz, 2 - i);
-	}
-
-	if (hdrsz > (unsigned) max_size || hdrsz == 0)
-	    return false;
-
-	AUDDBG ("Found frame:\n");
-	AUDDBG (" key = %.3s\n", header.key);
-	AUDDBG (" size = %d\n", (int) hdrsz);
-
-	* frame_size = sizeof (ID3v2FrameHeader) + hdrsz;
-
-	frame.key = String (str_copy (header.key, 3));
-	frame.clear ();
-	frame.insert (0, hdrsz);
-
-	if (vfs_fread (& frame[0], 1, frame.len (), handle) != frame.len ())
-	    return false;
-
-	AUDDBG ("Data size = %d.\n", frame.len ());
-	return true;
+        pos += frame_size;
     }
 
-    static int get_frame_id (const char * key)
+    return true;
+}
+
+static bool id3v22_read_image (VFSFile * handle, void * * image_data, int64_t * image_size)
+{
+    int version, header_size, data_size, parsed;
+    bool syncsafe;
+    int64_t offset;
+    bool found = false;
+
+    if (! read_header (handle, & version, & syncsafe, & offset, & header_size,
+     & data_size))
+        return false;
+
+    for (parsed = 0; parsed < data_size && ! found; )
     {
-	int id;
+        int frame_size, type;
+        GenericFrame frame;
 
-	for (id = 0; id < ID3_TAGS_NO; id ++)
-	{
-	    if (! strcmp (key, id3_frames[id]))
-		return id;
-	}
+        if (! read_frame (handle, data_size - parsed, version, syncsafe,
+         & frame_size, frame))
+            break;
 
-	return -1;
+        if (! strcmp (frame.key, "PIC") && id3_decode_picture (& frame[0],
+         frame.len (), & type, image_data, image_size))
+        {
+            if (type == 3) /* album cover */
+                found = true;
+            else if (type == 0) /* iTunes */
+                found = true;
+            else if (* image_data)
+            {
+                g_free (* image_data);
+                * image_data = nullptr;
+            }
+        }
+
+        parsed += frame_size;
     }
 
- public:
-    bool can_handle_file (VFSFile * handle)
-    {
-	int version, header_size, data_size;
-	bool syncsafe;
-	int64_t offset;
+    return found;
+}
 
-	return read_header (handle, & version, & syncsafe, & offset, & header_size,
-	 & data_size);
-    }
-
-    bool read_tag (Tuple & tuple, VFSFile * handle)
-    {
-	int version, header_size, data_size;
-	bool syncsafe;
-	int64_t offset;
-	int pos;
-
-	if (! read_header (handle, & version, & syncsafe, & offset, & header_size,
-	 & data_size))
-	    return false;
-
-	AUDDBG ("Reading tags from %i bytes of ID3 data in %s\n", data_size,
-	 vfs_get_filename (handle));
-
-	for (pos = 0; pos < data_size; )
-	{
-	    int frame_size;
-	    GenericFrame frame;
-
-	    if (! read_frame (handle, data_size - pos, version, syncsafe, & frame_size, frame))
-	    {
-		AUDDBG("read_frame failed at pos %i\n", pos);
-		break;
-	    }
-
-	    switch (get_frame_id (frame.key))
-	    {
-	      case ID3_ALBUM:
-		id3_associate_string (tuple, FIELD_ALBUM, & frame[0], frame.len ());
-		break;
-	      case ID3_TITLE:
-		id3_associate_string (tuple, FIELD_TITLE, & frame[0], frame.len ());
-		break;
-	      case ID3_COMPOSER:
-		id3_associate_string (tuple, FIELD_COMPOSER, & frame[0], frame.len ());
-		break;
-	      case ID3_COPYRIGHT:
-		id3_associate_string (tuple, FIELD_COPYRIGHT, & frame[0], frame.len ());
-		break;
-	      case ID3_DATE:
-		id3_associate_string (tuple, FIELD_DATE, & frame[0], frame.len ());
-		break;
-	      case ID3_LENGTH:
-		id3_associate_int (tuple, FIELD_LENGTH, & frame[0], frame.len ());
-		break;
-	      case ID3_FUCKO_ARTIST:
-	      case ID3_ARTIST:
-		id3_associate_string (tuple, FIELD_ARTIST, & frame[0], frame.len ());
-		break;
-	      case ID3_TRACKNR:
-		id3_associate_int (tuple, FIELD_TRACK_NUMBER, & frame[0], frame.len ());
-		break;
-	      case ID3_YEAR:
-		id3_associate_int (tuple, FIELD_YEAR, & frame[0], frame.len ());
-		break;
-	      case ID3_GENRE:
-		id3_decode_genre (tuple, & frame[0], frame.len ());
-		break;
-	      case ID3_COMMENT:
-		id3_decode_comment (tuple, & frame[0], frame.len ());
-		break;
-	      case ID3_RVA:
-		id3_decode_rva (tuple, & frame[0], frame.len ());
-		break;
-	      default:
-		AUDDBG ("Ignoring unsupported ID3 frame %s.\n", (const char *) frame.key);
-		break;
-	    }
-
-	    pos += frame_size;
-	}
-
-	return true;
-    }
-
-    bool read_image (VFSFile * handle, void * * image_data, int64_t * image_size)
-    {
-	int version, header_size, data_size, parsed;
-	bool syncsafe;
-	int64_t offset;
-	bool found = false;
-
-	if (! read_header (handle, & version, & syncsafe, & offset, & header_size,
-	 & data_size))
-	    return false;
-
-	for (parsed = 0; parsed < data_size && ! found; )
-	{
-	    int frame_size, type;
-	    GenericFrame frame;
-
-	    if (! read_frame (handle, data_size - parsed, version, syncsafe,
-	     & frame_size, frame))
-		break;
-
-	    if (! strcmp (frame.key, "PIC") && id3_decode_picture (& frame[0],
-	     frame.len (), & type, image_data, image_size))
-	    {
-		if (type == 3) /* album cover */
-		    found = true;
-		else if (type == 0) /* iTunes */
-		    found = true;
-		else if (* image_data)
-		{
-		    g_free (* image_data);
-		    * image_data = nullptr;
-		}
-	    }
-
-	    parsed += frame_size;
-	}
-
-	return found;
-    }
+tag_module_t id3v22 =
+{
+    "ID3v2.2",
+    TAG_TYPE_NONE,
+    id3v22_can_handle_file,
+    id3v22_read_tag,
+    id3v22_read_image,
+    nullptr
 };
-
-ID3v22TagModule m_tag_id3v22("ID3v2.2", TAG_TYPE_NONE);
