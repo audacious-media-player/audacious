@@ -34,10 +34,10 @@ namespace audtag {
         TagModule (const char *n, int t);
         ~TagModule ();
 
-        bool can_handle_file (VFSFile *fd);
-        bool read_tag (Tuple & tuple, VFSFile * handle);
-        bool read_image (VFSFile * handle, void * * data, int64_t * size);
-        bool write_tag (const Tuple & tuple, VFSFile * handle);
+        virtual bool can_handle_file (VFSFile *fd);
+        virtual bool read_tag (Tuple & tuple, VFSFile * handle);
+        virtual bool read_image (VFSFile * handle, void * * data, int64_t * size);
+        virtual bool write_tag (const Tuple & tuple, VFSFile * handle);
     };
 
     TagModule * find_tag_module (VFSFile * handle, int new_type);
