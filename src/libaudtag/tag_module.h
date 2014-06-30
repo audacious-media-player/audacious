@@ -27,12 +27,13 @@
 
 namespace audtag {
     class TagModule {
-    public:
-        std::string m_name;
-        int m_type; /* set to TAG_TYPE_NONE if the module cannot create new tags */
-
+      protected:
         TagModule (const char *n, int t);
         ~TagModule ();
+
+      public:
+        std::string m_name;
+        int m_type; /* set to TAG_TYPE_NONE if the module cannot create new tags */
 
         virtual bool can_handle_file (VFSFile *fd);
         virtual bool read_tag (Tuple & tuple, VFSFile * handle);
