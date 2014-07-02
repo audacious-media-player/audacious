@@ -39,7 +39,7 @@ static ID3v24TagModule id3v24;
 
 static TagModule * const modules[] = {& id3v24, & id3v22, & ape, & id3v1};
 
-TagModule * find_tag_module (VFSFile * fd, int new_type)
+TagModule * find_tag_module (VFSFile * fd, TagType new_type)
 {
     for (TagModule * module : modules)
     {
@@ -57,7 +57,7 @@ TagModule * find_tag_module (VFSFile * fd, int new_type)
     }
 
     /* No existing tag; see if we can create a new one. */
-    if (new_type != audtag::TAG_TYPE_NONE)
+    if (new_type != TagType::None)
     {
         for (TagModule * module : modules)
         {

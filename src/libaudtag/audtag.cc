@@ -35,7 +35,7 @@ namespace audtag {
 
 EXPORT bool tuple_read (Tuple & tuple, VFSFile * handle)
 {
-    TagModule * module = find_tag_module (handle, TAG_TYPE_NONE);
+    TagModule * module = find_tag_module (handle, TagType::None);
 
     if (! module)
     {
@@ -48,7 +48,7 @@ EXPORT bool tuple_read (Tuple & tuple, VFSFile * handle)
 
 EXPORT bool image_read (VFSFile * handle, void * * data, int64_t * size)
 {
-    TagModule * module = find_tag_module (handle, TAG_TYPE_NONE);
+    TagModule * module = find_tag_module (handle, TagType::None);
 
     if (! module)
     {
@@ -59,7 +59,7 @@ EXPORT bool image_read (VFSFile * handle, void * * data, int64_t * size)
     return module->read_image (handle, data, size);
 }
 
-EXPORT bool tuple_write (const Tuple & tuple, VFSFile * handle, int new_type)
+EXPORT bool tuple_write (const Tuple & tuple, VFSFile * handle, TagType new_type)
 {
     TagModule * module = find_tag_module (handle, new_type);
 

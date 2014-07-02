@@ -27,7 +27,7 @@ namespace audtag {
 
 struct TagModule {
     const char *m_name;
-    int m_type; /* set to TAG_TYPE_NONE if the module cannot create new tags */
+    TagType m_type; /* set to None if the module cannot create new tags */
 
     virtual bool can_handle_file (VFSFile *fd);
     virtual bool read_tag (Tuple & tuple, VFSFile * handle);
@@ -35,10 +35,10 @@ struct TagModule {
     virtual bool write_tag (const Tuple & tuple, VFSFile * handle);
 
 protected:
-    TagModule(const char *name, int type) : m_name(name), m_type(type) { };
+    TagModule(const char *name, TagType type) : m_name(name), m_type(type) { };
 };
 
-TagModule * find_tag_module (VFSFile * handle, int new_type);
+TagModule * find_tag_module (VFSFile * handle, TagType new_type);
 
 }
 
