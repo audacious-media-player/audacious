@@ -47,8 +47,8 @@ static void setup_builtin_modules ()
 
     modules.append (& m_builtin_id3v24);
     modules.append (& m_builtin_id3v22);
-    modules.append (& m_builtin_id3v1);
     modules.append (& m_builtin_ape);
+    modules.append (& m_builtin_id3v1);
 
     init_builtin_modules = true;
 }
