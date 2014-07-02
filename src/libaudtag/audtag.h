@@ -23,6 +23,8 @@
 #include <libaudcore/tuple.h>
 #include <libaudcore/vfs.h>
 
+namespace audtag {
+
 enum
 {
     TAG_TYPE_NONE = 0,
@@ -30,13 +32,16 @@ enum
     TAG_TYPE_ID3V2
 };
 
-bool tag_tuple_read (Tuple & tuple, VFSFile *fd);
-bool tag_image_read (VFSFile * handle, void * * data, int64_t * size);
+bool tuple_read (Tuple & tuple, VFSFile *fd);
+bool image_read (VFSFile * handle, void * * data, int64_t * size);
 
 /* new_type specifies the type of tag (see the TAG_TYPE_* enum) that should be
  * written if the file does not have any existing tag. */
-bool tag_tuple_write (const Tuple & tuple, VFSFile * handle, int new_type);
+bool tuple_write (const Tuple & tuple, VFSFile * handle, int new_type);
 
+}
+
+/* XXX: streams don't have tags? maybe we should move this to VFS layer. */
 bool tag_update_stream_metadata (Tuple & tuple, VFSFile * handle);
 
 #endif /* AUDTAG_H */
