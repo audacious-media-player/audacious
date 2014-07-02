@@ -29,13 +29,6 @@
 #include "tag_module.h"
 #include "util.h"
 
-bool tag_verbose = false;
-
-EXPORT void tag_set_verbose (bool verbose)
-{
-    tag_verbose = verbose;
-}
-
 /* The tuple's file-related attributes are already set */
 
 EXPORT bool tag_tuple_read (Tuple & tuple, VFSFile * handle)
