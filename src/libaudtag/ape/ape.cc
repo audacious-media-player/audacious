@@ -467,9 +467,9 @@ static bool ape_write_tag (const Tuple & tuple, VFSFile * handle)
 tag_module_t ape =
 {
     "APE",
-    TAG_TYPE_APE,
+    audtag::TAG_TYPE_APE,
     ape_is_our_file,
     ape_read_tag,
-    0,  // read_image
+    nullptr,  // read_image
     ape_write_tag
 };

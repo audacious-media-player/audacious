@@ -52,7 +52,7 @@ tag_module_t * find_tag_module (VFSFile * fd, int new_type)
     }
 
     /* No existing tag; see if we can create a new one. */
-    if (new_type != TAG_TYPE_NONE)
+    if (new_type != audtag::TAG_TYPE_NONE)
     {
         for (tag_module_t * module : modules)
         {

@@ -31,7 +31,9 @@
 
 /* The tuple's file-related attributes are already set */
 
-EXPORT bool tag_tuple_read (Tuple & tuple, VFSFile * handle)
+namespace audtag {
+
+EXPORT bool tuple_read (Tuple & tuple, VFSFile * handle)
 {
     tag_module_t * module = find_tag_module (handle, TAG_TYPE_NONE);
 
@@ -44,7 +46,7 @@ EXPORT bool tag_tuple_read (Tuple & tuple, VFSFile * handle)
     return module->read_tag (tuple, handle);
 }
 
-EXPORT bool tag_image_read (VFSFile * handle, void * * data, int64_t * size)
+EXPORT bool image_read (VFSFile * handle, void * * data, int64_t * size)
 {
     tag_module_t * module = find_tag_module (handle, TAG_TYPE_NONE);
 
@@ -57,7 +59,7 @@ EXPORT bool tag_image_read (VFSFile * handle, void * * data, int64_t * size)
     return module->read_image (handle, data, size);
 }
 
-EXPORT bool tag_tuple_write (const Tuple & tuple, VFSFile * handle, int new_type)
+EXPORT bool tuple_write (const Tuple & tuple, VFSFile * handle, int new_type)
 {
     tag_module_t * module = find_tag_module (handle, new_type);
 
@@ -70,6 +72,9 @@ EXPORT bool tag_tuple_write (const Tuple & tuple, VFSFile * handle, int new_type
     return module->write_tag (tuple, handle);
 }
 
+}
+
+/* XXX: move to libaudcore? */
 EXPORT bool tag_update_stream_metadata (Tuple & tuple, VFSFile * handle)
 {
     bool updated = false;

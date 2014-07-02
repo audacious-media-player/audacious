@@ -753,7 +753,7 @@ static bool id3v24_write_tag (const Tuple & tuple, VFSFile * f)
 tag_module_t id3v24 =
 {
     "ID3v2.3/4",
-    TAG_TYPE_ID3V2,
+    audtag::TAG_TYPE_ID3V2,
     id3v24_can_handle_file,
     id3v24_read_tag,
     id3v24_read_image,

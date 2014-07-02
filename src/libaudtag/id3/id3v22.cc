@@ -311,7 +311,7 @@ static bool id3v22_read_image (VFSFile * handle, void * * image_data, int64_t * 
 tag_module_t id3v22 =
 {
     "ID3v2.2",
-    TAG_TYPE_NONE,
+    audtag::TAG_TYPE_NONE,
     id3v22_can_handle_file,
     id3v22_read_tag,
     id3v22_read_image,

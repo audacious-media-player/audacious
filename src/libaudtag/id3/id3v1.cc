@@ -130,7 +130,7 @@ static bool id3v1_read_tag (Tuple & tuple, VFSFile * file)
 
 tag_module_t id3v1 = {
     "ID3v1",
-    TAG_TYPE_NONE,
+    audtag::TAG_TYPE_NONE,
     id3v1_can_handle_file,
     id3v1_read_tag,
 };
