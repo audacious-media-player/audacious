@@ -17,12 +17,12 @@
  * the use of this software.
  */
 
-#include <stdint.h>
 #include <math.h>
+#include <stdint.h>
 
 #define WANT_AUD_BSWAP
 #include "audio.h"
-#include "core.h"
+#include "objects.h"
 
 #define INTERLACE_LOOP(TYPE) \
 for (int c = 0; c < channels; c ++) \
@@ -86,7 +86,7 @@ static void NAME (const float * in, TYPE * out, int samples) \
     while (in < end) \
     { \
         double f = (* in ++) * (RANGE + 1.0); \
-        * out ++ = SWAP (OFFSET + (TYPE) round (CLAMP (f, -RANGE - 1, RANGE))); \
+        * out ++ = SWAP (OFFSET + (TYPE) round (aud::clamp<double> (f, -RANGE - 1, RANGE))); \
     } \
 }
 
@@ -127,7 +127,7 @@ TO_INT_LOOP (to_u32be, int32_t, TO_BE32, 0x80000000, 0x7fffffff)
 typedef void (* FromFunc) (const void * in, float * out, int samples);
 typedef void (* ToFunc) (const float * in, void * out, int samples);
 
-struct
+static const struct
 {
     int format;
     FromFunc from;
@@ -155,11 +155,11 @@ convert_table [] =
 
 EXPORT void audio_from_int (const void * in, int format, float * out, int samples)
 {
-    for (unsigned entry = 0; entry < ARRAY_LEN (convert_table); entry ++)
+    for (auto & conv : convert_table)
     {
-        if (convert_table[entry].format == format)
+        if (conv.format == format)
         {
-            convert_table[entry].from (in, out, samples);
+            conv.from (in, out, samples);
             return;
         }
     }
@@ -167,11 +167,11 @@ EXPORT void audio_from_int (const void * in, int format, float * out, int sample
 
 EXPORT void audio_to_int (const float * in, void * out, int format, int samples)
 {
-    for (unsigned entry = 0; entry < ARRAY_LEN (convert_table); entry ++)
+    for (auto & conv : convert_table)
     {
-        if (convert_table[entry].format == format)
+        if (conv.format == format)
         {
-            convert_table[entry].to (in, out, samples);
+            conv.to (in, out, samples);
             return;
         }
     }

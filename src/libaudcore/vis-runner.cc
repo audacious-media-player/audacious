@@ -206,7 +206,7 @@ void vis_runner_pass_audio (int time, float * data, int samples, int
          * wait for more data to be passed in the next call.  If we do fill the
          * node, we loop and start building a new one. */
 
-        int copy = MIN (samples - at, channels * (FRAMES_PER_NODE - current_frames));
+        int copy = aud::min (samples - at, channels * (FRAMES_PER_NODE - current_frames));
         memcpy (current_node->data + channels * current_frames, data + at, sizeof (float) * copy);
         current_frames += copy / channels;
 

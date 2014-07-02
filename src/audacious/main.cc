@@ -105,18 +105,19 @@ static bool parse_options (int argc, char * * argv)
         }
         else if (arg[1] == '-')  /* long option */
         {
-            unsigned i;
+            bool found = false;
 
-            for (i = 0; i < ARRAY_LEN (arg_map); i ++)
+            for (auto & arg_info : arg_map)
             {
-                if (! strcmp (arg + 2, arg_map[i].long_arg))
+                if (! strcmp (arg + 2, arg_info.long_arg))
                 {
-                    * arg_map[i].value = true;
+                    * arg_info.value = true;
+                    found = true;
                     break;
                 }
             }
 
-            if (i == ARRAY_LEN (arg_map))
+            if (! found)
             {
                 fprintf (stderr, _("Unknown option: %s\n"), arg);
                 success = false;
@@ -127,18 +128,19 @@ static bool parse_options (int argc, char * * argv)
         {
             for (int c = 1; arg[c]; c ++)
             {
-                unsigned i;
+                bool found = false;
 
-                for (i = 0; i < ARRAY_LEN (arg_map); i ++)
+                for (auto & arg_info : arg_map)
                 {
-                    if (arg[c] == arg_map[i].short_arg)
+                    if (arg[c] == arg_info.short_arg)
                     {
-                        * arg_map[i].value = true;
+                        * arg_info.value = true;
+                        found = true;
                         break;
                     }
                 }
 
-                if (i == ARRAY_LEN (arg_map))
+                if (! found)
                 {
                     fprintf (stderr, _("Unknown option: -%c\n"), arg[c]);
                     success = false;
@@ -162,10 +164,10 @@ static void print_help (void)
 
     fprintf (stderr, _("Usage: audacious [OPTION] ... [FILE] ...\n\n"));
 
-    for (unsigned i = 0; i < ARRAY_LEN (arg_map); i ++)
-        fprintf (stderr, "  -%c, --%s%.*s%s\n", arg_map[i].short_arg,
-         arg_map[i].long_arg, (int) (20 - strlen (arg_map[i].long_arg)), pad,
-         _(arg_map[i].desc));
+    for (auto & arg_info : arg_map)
+        fprintf (stderr, "  -%c, --%s%.*s%s\n", arg_info.short_arg,
+         arg_info.long_arg, (int) (20 - strlen (arg_info.long_arg)), pad,
+         _(arg_info.desc));
 
     fprintf (stderr, "\n");
 }
@@ -296,7 +298,7 @@ static void main_cleanup (void)
 
     filenames.clear ();
 
-    strpool_shutdown ();
+    String::check_all_destroyed ();
 }
 
 static bool check_should_quit (void)

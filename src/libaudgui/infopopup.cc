@@ -47,7 +47,7 @@ static struct {
     GtkWidget * progress;
 } widgets;
 
-static char * current_file = nullptr;
+static String current_file;
 static int progress_source = 0;
 
 static void infopopup_display_image (const char * filename)
@@ -118,8 +118,7 @@ static void infopopup_destroyed (void)
 
     memset (& widgets, 0, sizeof widgets);
 
-    str_unref (current_file);
-    current_file = nullptr;
+    current_file = String ();
 }
 
 static GtkWidget * infopopup_create (void)
@@ -233,8 +232,7 @@ static void infopopup_show (const char * filename, const Tuple & tuple,
 {
     audgui_hide_unique_window (AUDGUI_INFOPOPUP_WINDOW);
 
-    str_unref (current_file);
-    current_file = str_get (filename);
+    current_file = String (filename);
 
     GtkWidget * infopopup = infopopup_create ();
     infopopup_set_fields (tuple, title);

@@ -29,8 +29,7 @@
 #include <libaudcore/audstrings.h>
 #include <libaudcore/runtime.h>
 #include <libaudcore/vfs.h>
-
-#include "ape.h"
+#include <libaudtag/builtin.h>
 
 #pragma pack(push) /* must be byte-aligned */
 #pragma pack(1)
@@ -51,6 +50,8 @@ struct ValuePair {
 #define APE_FLAG_HAS_HEADER (1 << 31)
 #define APE_FLAG_HAS_NO_FOOTER (1 << 30)
 #define APE_FLAG_IS_HEADER (1 << 29)
+
+namespace audtag {
 
 static bool ape_read_header (VFSFile * handle, APEHeader * header)
 {
@@ -161,7 +162,7 @@ static bool ape_find_header (VFSFile * handle, APEHeader * header,
     return true;
 }
 
-static bool ape_is_our_file (VFSFile * handle)
+bool APETagModule::can_handle_file (VFSFile * handle)
 {
     APEHeader header;
     int start, length, data_start, data_length;
@@ -294,7 +295,7 @@ static void set_gain_info (Tuple & tuple, int field, int unit_field,
     tuple.set_int (field, value);
 }
 
-static bool ape_read_tag (Tuple & tuple, VFSFile * handle)
+bool APETagModule::read_tag (Tuple & tuple, VFSFile * handle)
 {
     Index<ValuePair> list = ape_read_items (handle);
 
@@ -400,7 +401,7 @@ static bool write_header (int data_length, int items, bool is_header,
      (APEHeader);
 }
 
-static bool ape_write_tag (const Tuple & tuple, VFSFile * handle)
+bool APETagModule::write_tag (const Tuple & tuple, VFSFile * handle)
 {
     Index<ValuePair> list = ape_read_items (handle);
     APEHeader header;
@@ -464,12 +465,4 @@ static bool ape_write_tag (const Tuple & tuple, VFSFile * handle)
     return true;
 }
 
-tag_module_t ape =
-{
-    "APE",
-    TAG_TYPE_APE,
-    ape_is_our_file,
-    ape_read_tag,
-    0,  // read_image
-    ape_write_tag
-};
+}

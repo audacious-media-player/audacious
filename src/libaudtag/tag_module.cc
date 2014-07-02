@@ -23,20 +23,25 @@
 #include <libaudcore/runtime.h>
 #include <libaudcore/tuple.h>
 #include <libaudcore/vfs.h>
+#include <libaudcore/index.h>
 
 #include "audtag.h"
 #include "util.h"
 #include "tag_module.h"
-#include "id3/id3v1.h"
-#include "id3/id3v22.h"
-#include "id3/id3v24.h"
-#include "ape/ape.h"
+#include "builtin.h"
 
-static tag_module_t * const modules[] = {& id3v24, & id3v22, & ape, & id3v1};
+namespace audtag {
 
-tag_module_t * find_tag_module (VFSFile * fd, int new_type)
+static APETagModule ape;
+static ID3v1TagModule id3v1;
+static ID3v22TagModule id3v22;
+static ID3v24TagModule id3v24;
+
+static TagModule * const modules[] = {& id3v24, & id3v22, & ape, & id3v1};
+
+TagModule * find_tag_module (VFSFile * fd, TagType new_type)
 {
-    for (unsigned i = 0; i < ARRAY_LEN (modules); i ++)
+    for (TagModule * module : modules)
     {
         if (vfs_fseek(fd, 0, SEEK_SET))
         {
@@ -44,23 +49,53 @@ tag_module_t * find_tag_module (VFSFile * fd, int new_type)
             return nullptr;
         }
 
-        if (modules[i]->can_handle_file (fd))
+        if (module->can_handle_file (fd))
         {
-            AUDDBG ("Module %s accepted file.\n", modules[i]->name);
-            return modules[i];
+            AUDDBG ("Module %s accepted file.\n", module->m_name);
+            return module;
         }
     }
 
     /* No existing tag; see if we can create a new one. */
-    if (new_type != TAG_TYPE_NONE)
+    if (new_type != TagType::None)
     {
-        for (unsigned i = 0; i < ARRAY_LEN (modules); i ++)
+        for (TagModule * module : modules)
         {
-            if (modules[i]->type == new_type)
-                return modules[i];
+            if (module->m_type == new_type)
+                return module;
         }
     }
 
     AUDDBG("no module found\n");
     return nullptr;
+}
+
+/**************************************************************************************************************
+ * tag module object management                                                                               *
+ **************************************************************************************************************/
+bool TagModule::can_handle_file (VFSFile * handle)
+{
+    AUDDBG("Module %s does not support %s (no probing function implemented).\n", m_name,
+           vfs_get_filename(handle));
+    return false;
+}
+
+bool TagModule::read_image (VFSFile * handle, void * * data, int64_t * size)
+{
+    AUDDBG("Module %s does not support images.\n", m_name);
+    return false;
+}
+
+bool TagModule::read_tag (Tuple & tuple, VFSFile * handle)
+{
+    AUDDBG ("%s: read_tag() not implemented.\n", m_name);
+    return false;
+}
+
+bool TagModule::write_tag (Tuple const & tuple, VFSFile * handle)
+{
+    AUDDBG ("%s: write_tag() not implemented.\n", m_name);
+    return false;
+}
+
 }

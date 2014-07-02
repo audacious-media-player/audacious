@@ -23,6 +23,8 @@
 #include <libaudcore/index.h>
 #include <libaudcore/objects.h>
 
+struct VFSFile;
+
 #define AUD_EQ_NBANDS 10
 #define AUD_EQ_MAX_GAIN 12
 

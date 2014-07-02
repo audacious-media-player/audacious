@@ -20,6 +20,8 @@
 #include <stddef.h>
 #include <gtk/gtk.h>
 
+#include <libaudcore/objects.h>
+
 #include "libaudgui-gtk.h"
 #include "list.h"
 
@@ -389,7 +391,7 @@ static gboolean autoscroll (GtkWidget * widget)
         return false;
 
     int pos = gtk_adjustment_get_value (adj) + model->scroll_speed;
-    int clamped = CLAMP (pos, 0, gtk_adjustment_get_upper (adj) -
+    int clamped = aud::clamp<int> (pos, 0, gtk_adjustment_get_upper (adj) -
      gtk_adjustment_get_page_size (adj));
     gtk_adjustment_set_value (adj, clamped);
 
@@ -397,9 +399,9 @@ static gboolean autoscroll (GtkWidget * widget)
         return false;
 
     if (model->scroll_speed > 0)
-        model->scroll_speed = MIN (model->scroll_speed + 2, 100);
+        model->scroll_speed = aud::min (model->scroll_speed + 2, 100);
     else
-        model->scroll_speed = MAX (model->scroll_speed - 2, -100);
+        model->scroll_speed = aud::max (model->scroll_speed - 2, -100);
 
     return true;
 }
@@ -454,7 +456,7 @@ static gboolean drag_motion (GtkWidget * widget, GdkDragContext * context,
     gtk_tree_view_convert_widget_to_bin_window_coords ((GtkTreeView *) widget,
      x, y, & x, & y);
 
-    int hotspot = MIN (height / 4, 24);
+    int hotspot = aud::min (height / 4, 24);
 
     if (y >= 0 && y < hotspot)
         start_autoscroll (model, widget, -2);
@@ -753,15 +755,13 @@ static void move_cursor_away (GtkWidget * list, ListModel * model, int at, int r
         return;
 
     if (at + rows < model->rows)
-        row = at + rows;
+        row = at + rows;        // move to following row
+    else if (at > 0)
+        row = at - 1;           // move to row before
     else
-        row = at - 1;
+        row = model->rows - 1;  // move to last row to be deleted
 
-    if (row >= 0)
-        path = gtk_tree_path_new_from_indices (row, -1);
-    else
-        path = gtk_tree_path_new ();
-
+    path = gtk_tree_path_new_from_indices (row, -1);
     gtk_tree_view_set_cursor ((GtkTreeView *) list, path, nullptr, false);
     gtk_tree_path_free (path);
 }
@@ -772,6 +772,9 @@ EXPORT void audgui_list_delete_rows (GtkWidget * list, int at, int rows)
      ((GtkTreeView *) list);
     g_return_if_fail (at >= 0 && rows >= 0 && at + rows <= model->rows);
 
+    /* prevent a warning when GTK+ tries to move the cursor to a deleted row */
+    move_cursor_away (list, model, at, rows);
+
     model->rows -= rows;
     if (model->highlight >= at + rows)
         model->highlight -= rows;
@@ -780,9 +783,6 @@ EXPORT void audgui_list_delete_rows (GtkWidget * list, int at, int rows)
 
     model->frozen = true;
     model->blocked = true;
-
-    /* prevent a warning when GTK+ tries to move the cursor to a deleted row */
-    move_cursor_away (list, model, at, rows);
 
     GtkTreePath * path = gtk_tree_path_new_from_indices (at, -1);
 

@@ -29,20 +29,15 @@
 #include "tag_module.h"
 #include "util.h"
 
-bool tag_verbose = false;
-
-EXPORT void tag_set_verbose (bool verbose)
-{
-    tag_verbose = verbose;
-}
-
 /* The tuple's file-related attributes are already set */
 
-EXPORT bool tag_tuple_read (Tuple & tuple, VFSFile * handle)
-{
-    tag_module_t * module = find_tag_module (handle, TAG_TYPE_NONE);
+namespace audtag {
 
-    if (! module || ! module->read_tag)
+EXPORT bool tuple_read (Tuple & tuple, VFSFile * handle)
+{
+    TagModule * module = find_tag_module (handle, TagType::None);
+
+    if (! module)
     {
         AUDDBG ("read_tag() not supported for %s\n", vfs_get_filename (handle));
         return false;
@@ -51,11 +46,11 @@ EXPORT bool tag_tuple_read (Tuple & tuple, VFSFile * handle)
     return module->read_tag (tuple, handle);
 }
 
-EXPORT bool tag_image_read (VFSFile * handle, void * * data, int64_t * size)
+EXPORT bool image_read (VFSFile * handle, void * * data, int64_t * size)
 {
-    tag_module_t * module = find_tag_module (handle, TAG_TYPE_NONE);
+    TagModule * module = find_tag_module (handle, TagType::None);
 
-    if (! module || ! module->read_image)
+    if (! module)
     {
         AUDDBG ("read_image() not supported for %s\n", vfs_get_filename (handle));
         return false;
@@ -64,11 +59,11 @@ EXPORT bool tag_image_read (VFSFile * handle, void * * data, int64_t * size)
     return module->read_image (handle, data, size);
 }
 
-EXPORT bool tag_tuple_write (const Tuple & tuple, VFSFile * handle, int new_type)
+EXPORT bool tuple_write (const Tuple & tuple, VFSFile * handle, TagType new_type)
 {
-    tag_module_t * module = find_tag_module (handle, new_type);
+    TagModule * module = find_tag_module (handle, new_type);
 
-    if (! module || ! module->write_tag)
+    if (! module)
     {
         AUDDBG ("write_tag() not supported for %s\n", vfs_get_filename (handle));
         return false;
@@ -77,6 +72,9 @@ EXPORT bool tag_tuple_write (const Tuple & tuple, VFSFile * handle, int new_type
     return module->write_tag (tuple, handle);
 }
 
+}
+
+/* XXX: move to libaudcore? */
 EXPORT bool tag_update_stream_metadata (Tuple & tuple, VFSFile * handle)
 {
     bool updated = false;

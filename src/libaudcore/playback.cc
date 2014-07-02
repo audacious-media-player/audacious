@@ -108,7 +108,7 @@ static bool update_from_playlist (void)
     String title = playback_entry_get_title ();
     int length = playback_entry_get_length ();
 
-    if (entry == current_entry && str_equal (title, current_title) && length == current_length)
+    if (entry == current_entry && title == current_title && length == current_length)
         return false;
 
     current_entry = entry;
@@ -363,7 +363,7 @@ static void * playback_thread (void * unused)
         {
             time_offset = tuple.get_int (FIELD_SEGMENT_START);
             if (time_offset)
-                seek_request = time_offset + MAX (seek_request, 0);
+                seek_request = time_offset + aud::max (seek_request, 0);
         }
 
         if (tuple.get_value_type (FIELD_SEGMENT_END) == TUPLE_INT)
@@ -435,7 +435,7 @@ EXPORT void aud_drct_seek (int time)
 
     pthread_mutex_lock (& control_mutex);
 
-    seek_request = time_offset + CLAMP (time, 0, current_length);
+    seek_request = time_offset + aud::clamp (time, 0, current_length);
     output_abort_write ();
 
     pthread_mutex_unlock (& control_mutex);
@@ -483,7 +483,7 @@ EXPORT void aud_input_write_audio (void * data, int length)
         if (! output_write_audio (data, length, b))
         {
             pthread_mutex_lock (& control_mutex);
-            seek_request = MAX (repeat_a, time_offset);
+            seek_request = aud::max (repeat_a, time_offset);
             pthread_mutex_unlock (& control_mutex);
         }
     }
@@ -595,7 +595,7 @@ EXPORT void aud_drct_get_volume (int * l, int * r)
 
 EXPORT void aud_drct_set_volume (int l, int r)
 {
-    output_set_volume (CLAMP (l, 0, 100), CLAMP (r, 0, 100));
+    output_set_volume (aud::clamp (l, 0, 100), aud::clamp (r, 0, 100));
 }
 
 EXPORT void aud_drct_set_ab_repeat (int a, int b)
@@ -620,7 +620,7 @@ EXPORT void aud_drct_set_ab_repeat (int a, int b)
 
     if (b != -1 && output_get_time () >= b)
     {
-        seek_request = MAX (a, time_offset);
+        seek_request = aud::max (a, time_offset);
         output_abort_write ();
     }
 

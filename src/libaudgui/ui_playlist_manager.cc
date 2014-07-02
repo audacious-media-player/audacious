@@ -251,11 +251,11 @@ static GtkWidget * create_playlist_manager (void)
     GtkWidget * rename_button = audgui_button_new (_("Ren_ame"), "insert-text", rename_cb, nullptr);
     GtkWidget * play_button = audgui_button_new (_("_Play"), "media-playback-start", play_cb, nullptr);
 
-    gtk_container_add ((GtkContainer *) playman_button_hbox, new_button);
-    gtk_container_add ((GtkContainer *) playman_button_hbox, delete_button);
+    gtk_box_pack_start ((GtkBox *) playman_button_hbox, new_button, false, false, 0);
+    gtk_box_pack_start ((GtkBox *) playman_button_hbox, delete_button, false, false, 0);
     gtk_box_pack_end ((GtkBox *) playman_button_hbox, play_button, false, false, 0);
     gtk_box_pack_end ((GtkBox *) playman_button_hbox, rename_button, false, false, 0);
-    gtk_container_add ((GtkContainer *) playman_vbox, playman_button_hbox);
+    gtk_box_pack_start ((GtkBox *) playman_vbox, playman_button_hbox, false, false, 0);
 
     /* CheckButton */
     GtkWidget * hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);

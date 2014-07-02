@@ -305,17 +305,16 @@ static void on_cbox_changed_string (GtkComboBox * combobox, const PreferencesWid
 
 static void fill_cbox (GtkWidget * combobox, const PreferencesWidget * widget, const char * domain)
 {
-    const ComboBoxElements * elements = widget->data.combo.elements;
-    int n_elements = widget->data.combo.n_elements;
+    ArrayRef<const ComboBoxElements> elems = widget->data.combo.elems;
 
     if (widget->data.combo.fill)
-        elements = widget->data.combo.fill (& n_elements);
+        elems = widget->data.combo.fill ();
 
-    g_object_set_data ((GObject *) combobox, "comboboxelements", (void *) elements);
+    g_object_set_data ((GObject *) combobox, "comboboxelements", (void *) elems.data);
 
-    for (int i = 0; i < n_elements; i ++)
+    for (const ComboBoxElements & elem : elems)
         gtk_combo_box_text_append_text ((GtkComboBoxText *) combobox,
-         dgettext (domain, elements[i].label));
+         dgettext (domain, elem.label));
 
     switch (widget->cfg.type)
     {
@@ -323,9 +322,9 @@ static void fill_cbox (GtkWidget * combobox, const PreferencesWidget * widget, c
     {
         int ivalue = widget_get_int (widget);
 
-        for (int i = 0; i < n_elements; i++)
+        for (int i = 0; i < elems.len; i++)
         {
-            if (GPOINTER_TO_INT (elements[i].value) == ivalue)
+            if (GPOINTER_TO_INT (elems.data[i].value) == ivalue)
             {
                 gtk_combo_box_set_active ((GtkComboBox *) combobox, i);
                 break;
@@ -340,9 +339,9 @@ static void fill_cbox (GtkWidget * combobox, const PreferencesWidget * widget, c
     {
         String value = widget_get_string (widget);
 
-        for(int i = 0; i < n_elements; i++)
+        for (int i = 0; i < elems.len; i++)
         {
-            if (value && ! strcmp ((const char *) elements[i].value, value))
+            if (value && ! strcmp ((const char *) elems.data[i].value, value))
             {
                 gtk_combo_box_set_active ((GtkComboBox *) combobox, i);
                 break;
@@ -372,39 +371,41 @@ static void create_cbox (const PreferencesWidget * widget, GtkWidget * * label,
 
 /* WIDGET_TABLE */
 
-static void fill_grid (GtkWidget * grid, const PreferencesWidget * elements,
- int n_elements, const char * domain)
+static void fill_grid (GtkWidget * grid,
+ ArrayRef<const PreferencesWidget> widgets, const char * domain)
 {
-    for (int i = 0; i < n_elements; i ++)
+    for (const PreferencesWidget & w : widgets)
     {
         GtkWidget * widget_left = nullptr, * widget_middle = nullptr, * widget_right = nullptr;
 
-        switch (elements[i].type)
+        switch (w.type)
         {
             case PreferencesWidget::SpinButton:
-                create_spin_button (& elements[i], & widget_left,
+                create_spin_button (& w, & widget_left,
                  & widget_middle, & widget_right, domain);
                 break;
 
             case PreferencesWidget::Label:
-                create_label (& elements[i], & widget_middle, & widget_left, domain);
+                create_label (& w, & widget_middle, & widget_left, domain);
                 break;
 
             case PreferencesWidget::FontButton:
-                create_font_btn (& elements[i], & widget_left, & widget_middle, domain);
+                create_font_btn (& w, & widget_left, & widget_middle, domain);
                 break;
 
             case PreferencesWidget::Entry:
-                create_entry (& elements[i], & widget_left, & widget_middle, domain);
+                create_entry (& w, & widget_left, & widget_middle, domain);
                 break;
 
             case PreferencesWidget::ComboBox:
-                create_cbox (& elements[i], & widget_left, & widget_middle, domain);
+                create_cbox (& w, & widget_left, & widget_middle, domain);
                 break;
 
             default:
                 break;
         }
+
+        int i = & w - widgets.data;
 
         if (widget_left)
             gtk_grid_attach ((GtkGrid *) grid, widget_left, 0, i, 1, 1);
@@ -421,16 +422,16 @@ static void fill_grid (GtkWidget * grid, const PreferencesWidget * elements,
 
 /* box: a GtkBox */
 void audgui_create_widgets_with_domain (GtkWidget * box,
- const PreferencesWidget * widgets, int n_widgets, const char * domain)
+ ArrayRef<const PreferencesWidget> widgets, const char * domain)
 {
     GtkWidget * widget = nullptr, * child_box = nullptr;
     GSList * radio_btn_group = nullptr;
 
-    for (int i = 0; i < n_widgets; i ++)
+    for (const PreferencesWidget & w : widgets)
     {
         GtkWidget * label = nullptr;
 
-        if (widget && widgets[i].child)
+        if (widget && w.child)
         {
             if (! child_box)
             {
@@ -456,24 +457,24 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
 
         widget = nullptr;
 
-        if (radio_btn_group && widgets[i].type != PreferencesWidget::RadioButton)
+        if (radio_btn_group && w.type != PreferencesWidget::RadioButton)
             radio_btn_group = nullptr;
 
-        switch (widgets[i].type)
+        switch (w.type)
         {
             case PreferencesWidget::CheckButton:
-                widget = gtk_check_button_new_with_mnemonic (dgettext (domain, widgets[i].label));
-                init_toggle_button (widget, & widgets[i]);
+                widget = gtk_check_button_new_with_mnemonic (dgettext (domain, w.label));
+                init_toggle_button (widget, & w);
                 break;
 
             case PreferencesWidget::Label:
             {
-                if (strstr (widgets[i].label, "<b>"))
+                if (strstr (w.label, "<b>"))
                     gtk_alignment_set_padding ((GtkAlignment *) alignment,
-                     (i == 0) ? 0 : 12, 0, 0, 0);
+                     (& w == widgets.data) ? 0 : 12, 0, 0, 0);
 
                 GtkWidget * icon = nullptr;
-                create_label (& widgets[i], & label, & icon, domain);
+                create_label (& w, & label, & icon, domain);
 
                 if (icon)
                 {
@@ -489,9 +490,9 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
 
             case PreferencesWidget::RadioButton:
                 widget = gtk_radio_button_new_with_mnemonic (radio_btn_group,
-                 dgettext (domain, widgets[i].label));
+                 dgettext (domain, w.label));
                 radio_btn_group = gtk_radio_button_get_group ((GtkRadioButton *) widget);
-                init_radio_button (widget, & widgets[i]);
+                init_radio_button (widget, & w);
                 break;
 
             case PreferencesWidget::SpinButton:
@@ -499,7 +500,7 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
                 widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 
                 GtkWidget * label_pre = nullptr, * spin_btn = nullptr, * label_past = nullptr;
-                create_spin_button (& widgets[i], & label_pre, & spin_btn, & label_past, domain);
+                create_spin_button (& w, & label_pre, & spin_btn, & label_past, domain);
 
                 if (label_pre)
                     gtk_box_pack_start ((GtkBox *) widget, label_pre, false, false, 0);
@@ -512,8 +513,8 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
             }
 
             case PreferencesWidget::Custom:
-                if (widgets[i].data.populate)
-                    widget = (GtkWidget *) widgets[i].data.populate ();
+                if (w.data.populate)
+                    widget = (GtkWidget *) w.data.populate ();
 
                 break;
 
@@ -522,7 +523,7 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
                 widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 
                 GtkWidget * font_btn = nullptr;
-                create_font_btn (& widgets[i], & label, & font_btn, domain);
+                create_font_btn (& w, & label, & font_btn, domain);
 
                 if (label)
                     gtk_box_pack_start ((GtkBox *) widget, label, false, false, 0);
@@ -537,7 +538,7 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
                 gtk_grid_set_column_spacing ((GtkGrid *) widget, 6);
                 gtk_grid_set_row_spacing ((GtkGrid *) widget, 6);
 
-                fill_grid (widget, widgets[i].data.table.elem, widgets[i].data.table.rows, domain);
+                fill_grid (widget, w.data.table.widgets, domain);
 
                 break;
 
@@ -546,7 +547,7 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
                 widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 
                 GtkWidget * entry = nullptr;
-                create_entry (& widgets[i], & label, & entry, domain);
+                create_entry (& w, & label, & entry, domain);
 
                 if (label)
                     gtk_box_pack_start ((GtkBox *) widget, label, false, false, 0);
@@ -561,7 +562,7 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
                 widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 
                 GtkWidget * combo = nullptr;
-                create_cbox (& widgets[i], & label, & combo, domain);
+                create_cbox (& w, & label, & combo, domain);
 
                 if (label)
                     gtk_box_pack_start ((GtkBox *) widget, label, false, false, 0);
@@ -572,17 +573,16 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
             }
 
             case PreferencesWidget::Box:
-                if (widgets[i].data.box.horizontal)
+                if (w.data.box.horizontal)
                     widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
                 else
                     widget = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
 
-                audgui_create_widgets_with_domain (widget,
-                 widgets[i].data.box.elem, widgets[i].data.box.n_elem, domain);
+                audgui_create_widgets_with_domain (widget, w.data.box.widgets, domain);
 
-                if (widgets[i].data.box.frame)
+                if (w.data.box.frame)
                 {
-                    GtkWidget * frame = gtk_frame_new (dgettext (domain, widgets[i].label));
+                    GtkWidget * frame = gtk_frame_new (dgettext (domain, w.label));
                     gtk_container_add ((GtkContainer *) frame, widget);
                     widget = frame;
                 }
@@ -594,18 +594,15 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
 
                 widget = gtk_notebook_new ();
 
-                for (int j = 0; j < widgets[i].data.notebook.n_tabs; j ++)
+                for (const NotebookTab & tab : w.data.notebook.tabs)
                 {
                     GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
                     gtk_container_set_border_width ((GtkContainer *) vbox, 6);
 
-                    audgui_create_widgets_with_domain (vbox,
-                     widgets[i].data.notebook.tabs[j].widgets,
-                     widgets[i].data.notebook.tabs[j].n_widgets, domain);
+                    audgui_create_widgets_with_domain (vbox, tab.widgets, domain);
 
                     gtk_notebook_append_page ((GtkNotebook *) widget, vbox,
-                     gtk_label_new (dgettext (domain,
-                     widgets[i].data.notebook.tabs[j].name)));
+                     gtk_label_new (dgettext (domain, tab.name)));
                 }
 
                 break;
@@ -613,7 +610,7 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
             case PreferencesWidget::Separator:
                 gtk_alignment_set_padding ((GtkAlignment *) alignment, 6, 6, 0, 0);
 
-                widget = gtk_separator_new (widgets[i].data.separator.horizontal
+                widget = gtk_separator_new (w.data.separator.horizontal
                  ? GTK_ORIENTATION_HORIZONTAL : GTK_ORIENTATION_VERTICAL);
                 break;
 
@@ -630,9 +627,9 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
 
             gtk_container_add ((GtkContainer *) alignment, widget);
 
-            if (widgets[i].tooltip && widgets[i].type != PreferencesWidget::SpinButton)
+            if (w.tooltip && w.type != PreferencesWidget::SpinButton)
                 gtk_widget_set_tooltip_text (widget, dgettext (domain,
-                 widgets[i].tooltip));
+                 w.tooltip));
         }
     }
 }

@@ -20,7 +20,54 @@
 #ifndef LIBAUDCORE_OBJECTS_H
 #define LIBAUDCORE_OBJECTS_H
 
-#include <libaudcore/core.h>
+// Utility functions.
+
+namespace aud {
+
+template<class T>
+constexpr T min (T a, T b)
+    { return a < b ? a : b; }
+
+template<class T>
+constexpr T max (T a, T b)
+    { return a > b ? a : b; }
+
+template<class T>
+constexpr T clamp (T x, T low, T high)
+    { return min (max (x, low), high); }
+
+template<class T, int N>
+constexpr int n_elems(const T (&) [N])
+    { return N; }
+
+} // namespace aud
+
+// Stores array pointer together with deduced array length.
+
+template<class T>
+struct ArrayRef
+{
+    const T * data;
+    int len;
+
+    constexpr ArrayRef (decltype (nullptr) = nullptr) :
+        data (nullptr),
+        len (0) {}
+
+    template<int N>
+    constexpr ArrayRef (const T (& array) [N]) :
+        data (array),
+        len (N) {}
+
+    constexpr ArrayRef (const T * data, int len) :
+        data (data),
+        len (len) {}
+
+    const T * begin () const
+        { return data; }
+    const T * end () const
+        { return data + len; }
+};
 
 // Smart pointer.  Deletes object pointed to when the pointer goes out of scope.
 
@@ -79,8 +126,7 @@ private:
     T * ptr;
 };
 
-// Wrapper class for a string stored in the string pool.  Use this instead of
-// str_get() and str_unref() wherever possible.
+// Wrapper class for a string stored in the string pool.
 
 class String
 {
@@ -89,17 +135,17 @@ public:
         raw (nullptr) {}
 
     ~String ()
-        { str_unref (raw); }
+        { raw_unref (raw); }
 
     String (const String & b) :
-        raw (str_ref (b.raw)) {}
+        raw (raw_ref (b.raw)) {}
 
     void operator= (const String & b)
     {
         if (this != & b)
         {
-            str_unref (raw);
-            raw = str_ref (b.raw);
+            raw_unref (raw);
+            raw = raw_ref (b.raw);
         }
     }
 
@@ -113,17 +159,17 @@ public:
     {
         if (this != & b)
         {
-            str_unref (raw);
+            raw_unref (raw);
             raw = b.raw;
             b.raw = nullptr;
         }
     }
 
     bool operator== (const String & b) const
-        { return str_equal (raw, b.raw); }
+        { return raw_equal (raw, b.raw); }
 
     explicit String (const char * str) :
-        raw (str_get (str)) {}
+        raw (raw_get (str)) {}
 
     String (decltype (nullptr)) = delete;
 
@@ -131,23 +177,34 @@ public:
         { return raw; }
 
     unsigned hash () const
-        { return str_hash (raw); }
+        { return raw_hash (raw); }
 
-    // please don't use
-    static String from_c (char * str)
+    // raw interface
+    // avoid using where possible
+
+    static String from_raw (char * str)
     {
         String s;
         s.raw = str;
         return s;
     }
 
-    // please don't use
-    char * to_c ()
+    char * to_raw ()
     {
         char * str = raw;
         raw = nullptr;
         return str;
     }
+
+    static char * raw_get (const char * str);
+    static char * raw_ref (const char * str);
+    static void raw_unref (char * str);
+    static unsigned raw_hash (const char * str);
+    static bool raw_equal (const char * str1, const char * str2);
+
+    // to be called on shutdown
+    // warns if any String objects still exist
+    static void check_all_destroyed ();
 
 private:
     char * raw;

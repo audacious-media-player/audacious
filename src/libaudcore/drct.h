@@ -21,7 +21,7 @@
 #define LIBAUDCORE_DRCT_H
 
 #include <libaudcore/index.h>
-#include <libaudcore/objects.h>
+#include <libaudcore/tuple.h>
 
 /* CAUTION: These functions are not thread safe. */
 

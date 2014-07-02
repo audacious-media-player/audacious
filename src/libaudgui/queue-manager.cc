@@ -135,8 +135,8 @@ static void update_hook (void * data, void * user)
     int newrows = aud_playlist_queue_count (aud_playlist_get_active ());
     int focus = audgui_list_get_focus (qm_list);
 
-    audgui_list_update_rows (qm_list, 0, MIN (oldrows, newrows));
-    audgui_list_update_selection (qm_list, 0, MIN (oldrows, newrows));
+    audgui_list_update_rows (qm_list, 0, aud::min (oldrows, newrows));
+    audgui_list_update_selection (qm_list, 0, aud::min (oldrows, newrows));
 
     if (newrows > oldrows)
         audgui_list_insert_rows (qm_list, oldrows, newrows - oldrows);

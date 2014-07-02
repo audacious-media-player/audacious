@@ -24,12 +24,7 @@
 #include <glib.h>
 
 #include <libaudcore/audstrings.h>
-
-#include "../audtag.h"
-#include "../tag_module.h"
-#include "../util.h"
-
-#include "id3v1.h"
+#include <libaudtag/builtin.h>
 
 #pragma pack(push)
 #pragma pack(1)
@@ -57,6 +52,8 @@ struct ID3v1Ext {
 
 #pragma pack(pop)
 
+namespace audtag {
+
 static bool read_id3v1_tag (VFSFile * file, ID3v1Tag * tag)
 {
     if (vfs_fseek (file, -sizeof (ID3v1Tag), SEEK_END) < 0)
@@ -77,7 +74,7 @@ static bool read_id3v1_ext (VFSFile * file, ID3v1Ext * ext)
     return ! strncmp (ext->header, "TAG+", 4);
 }
 
-static bool id3v1_can_handle_file (VFSFile * file)
+bool ID3v1TagModule::can_handle_file (VFSFile * file)
 {
     ID3v1Tag tag;
     return read_id3v1_tag (file, & tag);
@@ -99,7 +96,7 @@ static bool combine_string (Tuple & tuple, int field, const char * str1,
     return true;
 }
 
-static bool id3v1_read_tag (Tuple & tuple, VFSFile * file)
+bool ID3v1TagModule::read_tag (Tuple & tuple, VFSFile * file)
 {
     ID3v1Tag tag;
     ID3v1Ext ext;
@@ -128,9 +125,4 @@ static bool id3v1_read_tag (Tuple & tuple, VFSFile * file)
     return true;
 }
 
-tag_module_t id3v1 = {
-    "ID3v1",
-    TAG_TYPE_NONE,
-    id3v1_can_handle_file,
-    id3v1_read_tag,
-};
+}

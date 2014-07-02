@@ -20,7 +20,19 @@
 #ifndef LIBAUDCORE_PLUGINS_H
 #define LIBAUDCORE_PLUGINS_H
 
-#include <libaudcore/core.h>
+enum {
+    PLUGIN_TYPE_TRANSPORT,
+    PLUGIN_TYPE_PLAYLIST,
+    PLUGIN_TYPE_INPUT,
+    PLUGIN_TYPE_EFFECT,
+    PLUGIN_TYPE_OUTPUT,
+    PLUGIN_TYPE_VIS,
+    PLUGIN_TYPE_GENERAL,
+    PLUGIN_TYPE_IFACE,
+    PLUGIN_TYPES
+};
+
+struct PluginHandle;
 
 /* CAUTION: These functions are not thread safe. */
 

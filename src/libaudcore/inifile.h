@@ -20,7 +20,7 @@
 #ifndef LIBAUDCORE_INIFILE_H
 #define LIBAUDCORE_INIFILE_H
 
-#include <libaudcore/core.h>
+struct VFSFile;
 
 void inifile_parse (VFSFile * file,
  void (* handle_heading) (const char * heading, void * data),

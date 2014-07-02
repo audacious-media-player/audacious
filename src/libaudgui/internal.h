@@ -21,7 +21,6 @@
 #define AUDGUI_INTERNAL_H
 
 #include <gtk/gtk.h>
-#include <libaudcore/core.h>
 
 enum {
     AUDGUI_ABOUT_WINDOW,

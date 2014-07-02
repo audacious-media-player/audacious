@@ -22,6 +22,8 @@
 
 #include "plugins.h"
 
+struct Plugin;
+
 enum {
  INPUT_KEY_SCHEME,
  INPUT_KEY_EXTENSION,

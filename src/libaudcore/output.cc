@@ -227,7 +227,7 @@ static void apply_software_volume (float * data, int channels, int samples)
     else
     {
         for (int c = 0; c < channels; c ++)
-            factors[c] = MAX (lfactor, rfactor);
+            factors[c] = aud::max (lfactor, rfactor);
     }
 
     audio_amplify (data, channels, samples / channels, factors);
@@ -265,7 +265,7 @@ static void write_output_raw (float * data, int samples)
         else
             ready = cop->buffer_free () / FMT_SIZEOF (out_format);
 
-        ready = MIN (ready, samples);
+        ready = aud::min (ready, samples);
 
         if (PLUGIN_HAS_FUNC (cop, write_audio))
         {
@@ -305,7 +305,7 @@ static bool write_output (void * data, int size, int stop_time)
     if (stop_time != -1)
     {
         int64_t frames_left = MS2FR (stop_time - seek_time, in_rate) - cur_frame;
-        int64_t samples_left = in_channels * MAX (0, frames_left);
+        int64_t samples_left = in_channels * aud::max ((int64_t) 0, frames_left);
 
         if (samples >= samples_left)
         {
@@ -489,7 +489,7 @@ int output_get_time (void)
 
         delay = effect_adjust_delay (delay);
         time = FR2MS (in_frames, in_rate);
-        time = seek_time + MAX (time - delay, 0);
+        time = seek_time + aud::max (time - delay, 0);
     }
 
     UNLOCK_MINOR;
