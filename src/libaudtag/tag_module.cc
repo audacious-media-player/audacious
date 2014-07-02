@@ -32,32 +32,15 @@
 
 namespace audtag {
 
-static Index<TagModule *> modules;
-static bool init_builtin_modules = false;
+static APETagModule ape;
+static ID3v1TagModule id3v1;
+static ID3v22TagModule id3v22;
+static ID3v24TagModule id3v24;
 
-static void setup_builtin_modules ()
-{
-    if (init_builtin_modules)
-        return;
-
-    static APETagModule m_builtin_ape;
-    static ID3v1TagModule m_builtin_id3v1;
-    static ID3v22TagModule m_builtin_id3v22;
-    static ID3v24TagModule m_builtin_id3v24;
-
-    modules.append (& m_builtin_id3v24);
-    modules.append (& m_builtin_id3v22);
-    modules.append (& m_builtin_ape);
-    modules.append (& m_builtin_id3v1);
-
-    init_builtin_modules = true;
-}
+static TagModule * const modules[] = {& id3v24, & id3v22, & ape, & id3v1};
 
 TagModule * find_tag_module (VFSFile * fd, int new_type)
 {
-    if (! init_builtin_modules)
-        setup_builtin_modules();
-
     for (TagModule * module : modules)
     {
         if (vfs_fseek(fd, 0, SEEK_SET))
@@ -92,26 +75,26 @@ TagModule * find_tag_module (VFSFile * fd, int new_type)
  **************************************************************************************************************/
 bool TagModule::can_handle_file (VFSFile * handle)
 {
-    AUDDBG("Module %s does not support %s (no probing function implemented).\n", this->m_name,
+    AUDDBG("Module %s does not support %s (no probing function implemented).\n", m_name,
            vfs_get_filename(handle));
     return false;
 }
 
 bool TagModule::read_image (VFSFile * handle, void * * data, int64_t * size)
 {
-    AUDDBG("Module %s does not support images.\n", this->m_name);
+    AUDDBG("Module %s does not support images.\n", m_name);
     return false;
 }
 
 bool TagModule::read_tag (Tuple & tuple, VFSFile * handle)
 {
-    AUDDBG ("%s: read_tag() not implemented.\n", this->m_name);
+    AUDDBG ("%s: read_tag() not implemented.\n", m_name);
     return false;
 }
 
 bool TagModule::write_tag (Tuple const & tuple, VFSFile * handle)
 {
-    AUDDBG ("%s: write_tag() not implemented.\n", this->m_name);
+    AUDDBG ("%s: write_tag() not implemented.\n", m_name);
     return false;
 }
 
