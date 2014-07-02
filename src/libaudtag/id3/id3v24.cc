@@ -29,10 +29,9 @@
 #include <libaudcore/audstrings.h>
 #include <libaudcore/multihash.h>
 #include <libaudcore/runtime.h>
+#include <libaudtag/builtin.h>
 
 #include "id3-common.h"
-#include "id3v24.h"
-#include "../util.h"
 
 enum
 {
@@ -111,6 +110,8 @@ typedef SimpleHash<String, FrameList> FrameDict;
 #define ID3_FRAME_ENCRYPTED   0x0004
 #define ID3_FRAME_SYNCSAFE    0x0002
 #define ID3_FRAME_HAS_LENGTH  0x0001
+
+namespace audtag {
 
 static bool skip_extended_header_3 (VFSFile * handle, int * _size)
 {
@@ -573,7 +574,7 @@ static void add_frameFromTupleInt (const Tuple & tuple, int field, int id3_field
     add_text_frame (id3_field, int_to_str (tuple.get_int (field)), dict);
 }
 
-static bool id3v24_can_handle_file (VFSFile * handle)
+bool ID3v24TagModule::can_handle_file (VFSFile * handle)
 {
     int version, header_size, data_size, footer_size;
     bool syncsafe;
@@ -583,7 +584,7 @@ static bool id3v24_can_handle_file (VFSFile * handle)
      & data_size, & footer_size);
 }
 
-static bool id3v24_read_tag (Tuple & tuple, VFSFile * handle)
+bool ID3v24TagModule::read_tag (Tuple & tuple, VFSFile * handle)
 {
     int version, header_size, data_size, footer_size;
     bool syncsafe;
@@ -657,7 +658,7 @@ static bool id3v24_read_tag (Tuple & tuple, VFSFile * handle)
     return true;
 }
 
-static bool id3v24_read_image (VFSFile * handle, void * * image_data, int64_t * image_size)
+bool ID3v24TagModule::read_image (VFSFile * handle, void * * image_data, int64_t * image_size)
 {
     int version, header_size, data_size, footer_size, parsed;
     bool syncsafe;
@@ -697,7 +698,7 @@ static bool id3v24_read_image (VFSFile * handle, void * * image_data, int64_t * 
     return found;
 }
 
-static bool id3v24_write_tag (const Tuple & tuple, VFSFile * f)
+bool ID3v24TagModule::write_tag (const Tuple & tuple, VFSFile * f)
 {
     int version = 3;
     int header_size, data_size, footer_size;
@@ -750,12 +751,4 @@ static bool id3v24_write_tag (const Tuple & tuple, VFSFile * f)
     return true;
 }
 
-tag_module_t id3v24 =
-{
-    "ID3v2.3/4",
-    audtag::TAG_TYPE_ID3V2,
-    id3v24_can_handle_file,
-    id3v24_read_tag,
-    id3v24_read_image,
-    id3v24_write_tag,
-};
+}
