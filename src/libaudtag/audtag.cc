@@ -73,39 +73,3 @@ EXPORT bool tuple_write (const Tuple & tuple, VFSFile * handle, TagType new_type
 }
 
 }
-
-/* XXX: move to libaudcore? */
-EXPORT bool tag_update_stream_metadata (Tuple & tuple, VFSFile * handle)
-{
-    bool updated = false;
-    int value;
-
-    String old = tuple.get_str (FIELD_TITLE);
-    String val = vfs_get_metadata (handle, "track-name");
-
-    if (val && (! old || strcmp (old, val)))
-    {
-        tuple.set_str (FIELD_TITLE, val);
-        updated = true;
-    }
-
-    old = tuple.get_str (FIELD_ARTIST);
-    val = vfs_get_metadata (handle, "stream-name");
-
-    if (val && (! old || strcmp (old, val)))
-    {
-        tuple.set_str (FIELD_ARTIST, val);
-        updated = true;
-    }
-
-    val = vfs_get_metadata (handle, "content-bitrate");
-    value = val ? atoi (val) / 1000 : 0;
-
-    if (value && value != tuple.get_int (FIELD_BITRATE))
-    {
-        tuple.set_int (FIELD_BITRATE, value);
-        updated = true;
-    }
-
-    return updated;
-}

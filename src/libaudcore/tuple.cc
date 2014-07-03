@@ -27,6 +27,7 @@
 #include "audstrings.h"
 #include "i18n.h"
 #include "tuple.h"
+#include "vfs.h"
 
 #if TUPLE_FIELDS > 64
 #error The current tuple implementation is limited to 64 fields
@@ -455,4 +456,37 @@ EXPORT int Tuple::get_nth_subtune (int n) const
         return -1;
 
     return data->subtunes ? data->subtunes[n] : 1 + n;
+}
+
+EXPORT bool Tuple::fetch_stream_info (VFSFile * stream)
+{
+    bool updated = false;
+    int value;
+
+    String val = vfs_get_metadata (stream, "track-name");
+
+    if (val && val != get_str (FIELD_TITLE))
+    {
+        set_str (FIELD_TITLE, val);
+        updated = true;
+    }
+
+    val = vfs_get_metadata (stream, "stream-name");
+
+    if (val && val != get_str (FIELD_ARTIST))
+    {
+        set_str (FIELD_ARTIST, val);
+        updated = true;
+    }
+
+    val = vfs_get_metadata (stream, "content-bitrate");
+    value = val ? atoi (val) / 1000 : 0;
+
+    if (value && value != get_int (FIELD_BITRATE))
+    {
+        set_int (FIELD_BITRATE, value);
+        updated = true;
+    }
+
+    return updated;
 }
