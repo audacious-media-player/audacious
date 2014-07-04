@@ -603,27 +603,6 @@ void output_set_volume (int left, int right)
     UNLOCK_MINOR;
 }
 
-static bool probe_cb (PluginHandle * p, PluginHandle * * pp)
-{
-    OutputPlugin * op = (OutputPlugin *) aud_plugin_get_header (p);
-
-    if (! op || (PLUGIN_HAS_FUNC (op, init) && ! op->init ()))
-        return true; /* keep searching */
-
-    if (PLUGIN_HAS_FUNC (op, cleanup))
-        op->cleanup ();
-
-    * pp = p;
-    return false; /* stop searching */
-}
-
-PluginHandle * output_plugin_probe (void)
-{
-    PluginHandle * p = nullptr;
-    aud_plugin_for_each (PLUGIN_TYPE_OUTPUT, (PluginForEachFunc) probe_cb, & p);
-    return p;
-}
-
 PluginHandle * output_plugin_get_current (void)
 {
     return cop ? aud_plugin_by_header (cop) : nullptr;

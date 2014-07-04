@@ -550,8 +550,6 @@ static int iface_combo_changed_finish (void *)
     iface_fill_prefs_box ();
     gtk_widget_show_all (iface_prefs_box);
 
-    gtk_window_present ((GtkWindow *) prefswin);
-
     audgui_cleanup ();
 
     return G_SOURCE_REMOVE;
@@ -568,7 +566,7 @@ static void iface_combo_changed (void)
     aud_plugin_enable (aud_plugin_by_index (PLUGIN_TYPE_IFACE, iface_combo_selected), true);
 
     /* now wait till we have restarted into the new main loop */
-    g_idle_add (iface_combo_changed_finish, nullptr);
+    g_idle_add_full (G_PRIORITY_HIGH, iface_combo_changed_finish, nullptr, nullptr);
 }
 
 static ArrayRef<const ComboBoxElements> iface_combo_fill ()

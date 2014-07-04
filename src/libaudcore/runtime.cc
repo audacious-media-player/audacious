@@ -62,6 +62,12 @@
 static bool headless_mode;
 static bool verbose_mode;
 
+#if defined(USE_QT) && ! defined(USE_GTK)
+static MainloopType mainloop_type = MainloopType::Qt;
+#else
+static MainloopType mainloop_type = MainloopType::GLib;
+#endif
+
 static String aud_paths[(int) AudPath::n_paths];
 
 static constexpr String & aud_path (AudPath id)
@@ -72,7 +78,7 @@ EXPORT void aud_set_headless_mode (bool headless)
     headless_mode = headless;
 }
 
-EXPORT bool aud_get_headless_mode (void)
+EXPORT bool aud_get_headless_mode ()
 {
     return headless_mode;
 }
@@ -82,12 +88,22 @@ EXPORT void aud_set_verbose_mode (bool verbose)
     verbose_mode = verbose;
 }
 
-EXPORT bool aud_get_verbose_mode (void)
+EXPORT bool aud_get_verbose_mode ()
 {
     return verbose_mode;
 }
 
-static StringBuf get_path_to_self (void)
+EXPORT void aud_set_mainloop_type (MainloopType type)
+{
+    mainloop_type = type;
+}
+
+EXPORT MainloopType aud_get_mainloop_type ()
+{
+    return mainloop_type;
+}
+
+static StringBuf get_path_to_self ()
 {
 #ifdef HAVE_PROC_SELF_EXE
 
@@ -176,7 +192,7 @@ static String relocate_path (const char * path, const char * from, const char * 
     return String (str_printf ("%.*s%s", newlen, to, path + oldlen));
 }
 
-static void set_default_paths (void)
+static void set_default_paths ()
 {
     aud_path (AudPath::BinDir) = String (HARDCODE_BINDIR);
     aud_path (AudPath::DataDir) = String (HARDCODE_DATADIR);
@@ -186,7 +202,7 @@ static void set_default_paths (void)
     aud_path (AudPath::IconFile) = String (HARDCODE_ICONFILE);
 }
 
-static void relocate_all_paths (void)
+static void relocate_all_paths ()
 {
     StringBuf bindir = str_copy (HARDCODE_BINDIR);
     filename_normalize (bindir);
@@ -253,7 +269,7 @@ static void relocate_all_paths (void)
     aud_path (AudPath::IconFile) = relocate_path (iconfile, from, to);
 }
 
-EXPORT void aud_init_paths (void)
+EXPORT void aud_init_paths ()
 {
     relocate_all_paths ();
 
@@ -276,7 +292,7 @@ EXPORT void aud_init_paths (void)
 #endif
 }
 
-EXPORT void aud_cleanup_paths (void)
+EXPORT void aud_cleanup_paths ()
 {
     for (String & path : aud_paths)
         path = String ();
@@ -287,7 +303,7 @@ EXPORT const char * aud_get_path (AudPath id)
     return aud_path (id);
 }
 
-EXPORT void aud_init_i18n (void)
+EXPORT void aud_init_i18n ()
 {
     const char * localedir = aud_get_path (AudPath::LocaleDir);
 
@@ -299,7 +315,7 @@ EXPORT void aud_init_i18n (void)
     textdomain (PACKAGE);
 }
 
-EXPORT void aud_init (void)
+EXPORT void aud_init ()
 {
     g_thread_pool_set_max_idle_time (100);
 
@@ -317,14 +333,14 @@ EXPORT void aud_init (void)
     load_playlists ();
 }
 
-static void do_autosave (void * unused)
+static void do_autosave (void *)
 {
     hook_call ("config save", nullptr);
     save_playlists (false);
     config_save ();
 }
 
-EXPORT void aud_run (void)
+EXPORT void aud_run ()
 {
     start_plugins_two ();
 
@@ -339,7 +355,7 @@ EXPORT void aud_run (void)
     stop_plugins_two ();
 }
 
-EXPORT void aud_cleanup (void)
+EXPORT void aud_cleanup ()
 {
     save_playlists (true);
 
