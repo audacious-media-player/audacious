@@ -501,7 +501,7 @@ EXPORT void uri_parse (const char * uri, const char * * base_p, const char * * e
     else
         sub = end;
 
-    if ((c = (char *) memrchr (base, '.', sub - base)))
+    if ((c = strrchr (base, '.')) && c < sub)
         ext = c;
     else
         ext = sub;
