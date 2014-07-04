@@ -35,7 +35,7 @@ EXPORT GdkPixbuf * audgui_pixbuf_fallback (void)
 
     if (! fallback)
         fallback = gdk_pixbuf_new_from_file (filename_build
-         ({aud_get_path (AUD_PATH_DATA_DIR), "images", "album.png"}), nullptr);
+         ({aud_get_path (AudPath::DataDir), "images", "album.png"}), nullptr);
 
     if (fallback)
         g_object_ref ((GObject *) fallback);

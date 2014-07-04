@@ -117,7 +117,7 @@ static StringBuf get_basename (const char * path)
 
 static FILE * open_registry_file (const char * mode)
 {
-    StringBuf path = filename_build ({aud_get_path (AUD_PATH_USER_DIR), FILENAME});
+    StringBuf path = filename_build ({aud_get_path (AudPath::UserDir), FILENAME});
     return g_fopen (path, mode);
 }
 

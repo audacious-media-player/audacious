@@ -536,7 +536,7 @@ void output_drain (void)
     UNLOCK_ALL;
 }
 
-EXPORT void aud_output_reset (int type)
+EXPORT void aud_output_reset (OutputReset type)
 {
     LOCK_MINOR;
 
@@ -548,10 +548,10 @@ EXPORT void aud_output_reset (int type)
     UNLOCK_MINOR;
     LOCK_ALL;
 
-    if (s_output && type != OUTPUT_RESET_EFFECTS_ONLY)
+    if (s_output && type != OutputReset::EffectsOnly)
         cleanup_output ();
 
-    if (type == OUTPUT_RESET_HARD)
+    if (type == OutputReset::ResetPlugin)
     {
         if (cop && PLUGIN_HAS_FUNC (cop, cleanup))
             cop->cleanup ();
@@ -633,7 +633,7 @@ bool output_plugin_set_current (PluginHandle * plugin)
 {
     change_op = true;
     new_op = plugin ? (OutputPlugin *) aud_plugin_get_header (plugin) : nullptr;
-    aud_output_reset (OUTPUT_RESET_HARD);
+    aud_output_reset (OutputReset::EffectsOnly);
 
     bool success = (cop == new_op);
     change_op = false;

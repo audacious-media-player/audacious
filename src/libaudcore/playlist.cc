@@ -2068,7 +2068,7 @@ void playlist_save_state (void)
 
     ENTER;
 
-    const char * user_dir = aud_get_path (AUD_PATH_USER_DIR);
+    const char * user_dir = aud_get_path (AudPath::UserDir);
     StringBuf path = filename_build ({user_dir, STATE_FILE});
 
     FILE * handle = g_fopen (path, "w");
@@ -2138,7 +2138,7 @@ void playlist_load_state (void)
     ENTER;
     int playlist_num;
 
-    const char * user_dir = aud_get_path (AUD_PATH_USER_DIR);
+    const char * user_dir = aud_get_path (AudPath::UserDir);
     StringBuf path = filename_build ({user_dir, STATE_FILE});
 
     FILE * handle = g_fopen (path, "r");

@@ -24,28 +24,29 @@
 
 #include "objects.h"
 
-enum {
-    AUD_PATH_BIN_DIR,
-    AUD_PATH_DATA_DIR,
-    AUD_PATH_PLUGIN_DIR,
-    AUD_PATH_LOCALE_DIR,
-    AUD_PATH_DESKTOP_FILE,
-    AUD_PATH_ICON_FILE,
-    AUD_PATH_USER_DIR,
-    AUD_PATH_PLAYLISTS_DIR,
-    AUD_PATH_COUNT
+enum class AudPath
+{
+    BinDir,
+    DataDir,
+    PluginDir,
+    LocaleDir,
+    DesktopFile,
+    IconFile,
+    UserDir,
+    PlaylistDir,
+    n_paths
 };
 
-enum {
-    OUTPUT_RESET_EFFECTS_ONLY,
-    OUTPUT_RESET_SOFT,
-    OUTPUT_RESET_HARD
+enum class OutputReset {
+    EffectsOnly,
+    ReopenStream,
+    ResetPlugin
 };
 
 void aud_init_paths (void);
 void aud_cleanup_paths (void);
 
-const char * aud_get_path (int id);
+const char * aud_get_path (AudPath id);
 
 void aud_set_headless_mode (bool headless);
 bool aud_get_headless_mode (void);
@@ -83,6 +84,6 @@ void aud_cleanup (void);
 String aud_history_get (int entry);
 void aud_history_add (const char * path);
 
-void aud_output_reset (int type);
+void aud_output_reset (OutputReset type);
 
 #endif

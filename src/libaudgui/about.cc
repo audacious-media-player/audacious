@@ -66,7 +66,7 @@ static GtkWidget * create_credits_notebook (const char * credits, const char * l
 
 static GtkWidget * create_about_window (void)
 {
-    const char * data_dir = aud_get_path (AUD_PATH_DATA_DIR);
+    const char * data_dir = aud_get_path (AudPath::DataDir);
 
     GtkWidget * about_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title ((GtkWindow *) about_window, _("About Audacious"));
