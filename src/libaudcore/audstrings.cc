@@ -501,10 +501,8 @@ EXPORT void uri_parse (const char * uri, const char * * base_p, const char * * e
     else
         sub = end;
 
-    StringBuf buf = str_copy (base, sub - base);
-
-    if ((c = strrchr (buf, '.')))
-        ext = base + (c - buf);
+    if ((c = (char *) memrchr (base, '.', sub - base)))
+        ext = c;
     else
         ext = sub;
 

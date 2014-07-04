@@ -28,6 +28,8 @@
 
 #include <libaudcore/objects.h>
 
+struct VFSFile;
+
 /** Ordered enum for basic #Tuple fields.
  * @sa TupleBasicType
  */
@@ -170,6 +172,10 @@ public:
 
     /* Returns the <n>th member of the subtune array. */
     int get_nth_subtune (int n) const;
+
+    /* Set various fields based on the ICY metadata of <stream>.  Returns true
+     * if any fields were changed. */
+    bool fetch_stream_info (VFSFile * stream);
 
 private:
     TupleData * data;

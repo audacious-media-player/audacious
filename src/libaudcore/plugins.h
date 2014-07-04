@@ -45,8 +45,7 @@ int aud_plugin_send_message (PluginHandle * plugin, const char * code, const voi
 void /*GtkWidget*/ * aud_plugin_get_widget (PluginHandle * plugin);
 
 int aud_plugin_get_type (PluginHandle * plugin);
-const char * aud_plugin_get_filename (PluginHandle * plugin);
-PluginHandle * aud_plugin_lookup (const char * filename);
+const char * aud_plugin_get_basename (PluginHandle * plugin);
 PluginHandle * aud_plugin_lookup_basename (const char * basename);
 
 const void * aud_plugin_get_header (PluginHandle * plugin);
