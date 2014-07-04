@@ -42,8 +42,8 @@ struct PluginWatch {
 
 struct PluginHandle
 {
-    String path;
-    bool confirmed, loaded;
+    String basename, path;
+    bool loaded;
     int timestamp, type;
     Plugin * header;
     String name, domain;
@@ -61,10 +61,10 @@ struct PluginHandle
     Index<String> keys[INPUT_KEYS];
     int has_images, has_subtunes, can_write_tuple, has_infowin;
 
-    PluginHandle (const char * path, bool confirmed, bool loaded, int timestamp,
-     int type, Plugin * header) :
+    PluginHandle (const char * basename, const char * path, bool loaded,
+     int timestamp, int type, Plugin * header) :
+        basename (basename),
         path (path),
-        confirmed (confirmed),
         loaded (loaded),
         timestamp (timestamp),
         type (type),
@@ -106,6 +106,14 @@ typedef Index<PluginPtr> PluginList;
 static PluginList plugins[PLUGIN_TYPES];
 
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+
+static StringBuf get_basename (const char * path)
+{
+    const char * slash = strrchr (path, G_DIR_SEPARATOR);
+    const char * dot = slash ? strrchr (slash + 1, '.') : nullptr;
+
+    return dot ? str_copy (slash + 1, dot - (slash + 1)) : StringBuf ();
+}
 
 static FILE * open_registry_file (const char * mode)
 {
@@ -277,13 +285,17 @@ static bool plugin_parse (FILE * handle)
     if (! path)
         return false;
 
+    StringBuf basename = get_basename (path);
+    if (! basename)
+        return false;
+
     parse_next (handle);
 
     int timestamp;
     if (! parse_integer ("stamp", & timestamp))
         return false;
 
-    PluginHandle * plugin = new PluginHandle (path, false, false, timestamp, type, nullptr);
+    PluginHandle * plugin = new PluginHandle (basename, String (), false, timestamp, type, nullptr);
     plugins[type].append (PluginPtr (plugin));
 
     parse_next (handle);
@@ -367,31 +379,17 @@ void plugin_registry_prune (void)
         {
             PluginPtr & plugin = list[i];
 
-            if (plugin->confirmed)
+            if (plugin->path)
                 i ++;
             else
             {
-                AUDDBG ("Plugin not found: %s\n", (const char *) plugin->path);
+                AUDDBG ("Plugin not found: %s\n", (const char *) plugin->basename);
                 list.remove (i, 1);
             }
         }
 
         list.sort (compare_cb, nullptr);
     }
-}
-
-EXPORT PluginHandle * aud_plugin_lookup (const char * path)
-{
-    for (int t = 0; t < PLUGIN_TYPES; t ++)
-    {
-        for (PluginPtr & plugin : plugins[t])
-        {
-            if (! strcmp (plugin->path, path))
-                return plugin.get ();
-        }
-    }
-
-    return nullptr;
 }
 
 /* Note: If there are multiple plugins with the same basename, this returns only
@@ -402,10 +400,7 @@ EXPORT PluginHandle * aud_plugin_lookup_basename (const char * basename)
     {
         for (PluginPtr & plugin : plugins[t])
         {
-            const char * slash = strrchr (plugin->path, G_DIR_SEPARATOR);
-            const char * dot = slash ? strrchr (slash + 1, '.') : nullptr;
-
-            if (dot && ! strncmp (slash + 1, basename, dot - (slash + 1)))
+            if (! strcmp (plugin->basename, basename))
                 return plugin.get ();
         }
     }
@@ -489,12 +484,16 @@ static void plugin_get_info (PluginHandle * plugin, bool is_new)
 
 void plugin_register (const char * path, int timestamp)
 {
-    PluginHandle * plugin = aud_plugin_lookup (path);
+    StringBuf basename = get_basename (path);
+    if (! basename)
+        return;
+
+    PluginHandle * plugin = aud_plugin_lookup_basename (basename);
 
     if (plugin)
     {
         AUDDBG ("Register plugin: %s\n", path);
-        plugin->confirmed = true;
+        plugin->path = String (path);
 
         if (plugin->timestamp != timestamp)
         {
@@ -517,7 +516,7 @@ void plugin_register (const char * path, int timestamp)
         if (! header)
             return;
 
-        plugin = new PluginHandle (path, true, true, timestamp, header->type, header);
+        plugin = new PluginHandle (basename, path, true, timestamp, header->type, header);
         plugins[plugin->type].append (PluginPtr (plugin));
 
         plugin_get_info (plugin, true);
@@ -529,9 +528,9 @@ EXPORT int aud_plugin_get_type (PluginHandle * plugin)
     return plugin->type;
 }
 
-EXPORT const char * aud_plugin_get_filename (PluginHandle * plugin)
+EXPORT const char * aud_plugin_get_basename (PluginHandle * plugin)
 {
-    return plugin->path;
+    return plugin->basename;
 }
 
 EXPORT const void * aud_plugin_get_header (PluginHandle * plugin)
