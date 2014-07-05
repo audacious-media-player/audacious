@@ -164,9 +164,13 @@ static int effect_compare (RunningEffect * a, RunningEffect * b)
 
 static void effect_insert (PluginHandle * plugin, EffectPlugin * header)
 {
-    if (g_list_find_custom (running_effects, plugin, (GCompareFunc)
-     effect_find_cb) != NULL)
+    GList * node = g_list_find_custom (running_effects, plugin, (GCompareFunc) effect_find_cb);
+
+    if (node)
+    {
+        ((RunningEffect *) node->data)->remove_flag = FALSE;
         return;
+    }
 
     AUDDBG ("Adding %s without reset.\n", plugin_get_name (plugin));
     RunningEffect * effect = g_slice_new (RunningEffect);
@@ -176,7 +180,7 @@ static void effect_insert (PluginHandle * plugin, EffectPlugin * header)
 
     running_effects = g_list_insert_sorted (running_effects, effect,
      (GCompareFunc) effect_compare);
-    GList * node = g_list_find (running_effects, effect);
+    node = g_list_find (running_effects, effect);
 
     int channels, rate;
     if (node->prev != NULL)
