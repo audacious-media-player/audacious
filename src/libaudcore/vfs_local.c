@@ -202,20 +202,30 @@ static int64_t local_fsize (VFSFile * file)
 {
     LocalFile * local = vfs_get_handle (file);
 
-    if (local->cached_size >= 0)
-        return local->cached_size;
+    if (local->cached_size < 0)
+    {
+        int64_t saved_pos = ftello (local->stream);
+        if (ftello < 0)
+            goto ERR;
 
-    int64_t saved_pos = ftello (local->stream);
+        if (local_fseek (file, 0, SEEK_END) < 0)
+            goto ERR;
 
-    if (local_fseek (file, 0, SEEK_END) < 0)
-        return -1;
+        int64_t length = ftello (local->stream);
+        if (length < 0)
+            goto ERR;
 
-    int64_t length = ftello (local->stream);
+        if (local_fseek (file, saved_pos, SEEK_SET) < 0)
+            goto ERR;
 
-    if (local_fseek (file, saved_pos, SEEK_SET) < 0)
-        return -1;
+        local->cached_size = length;
+    }
 
-    return length;
+    return local->cached_size;
+
+ERR:
+    perror (local->path);
+    return -1;
 }
 
 VFSConstructor vfs_local_vtable = {
