@@ -76,7 +76,7 @@ void audtool_whine_tuple_fields (void)
 
     g_printerr ("         ");
 
-    while (tmp && * tmp)
+    while (* tmp)
     {
         col += g_utf8_strlen (* tmp, -1);
 
