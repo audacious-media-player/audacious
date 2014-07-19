@@ -24,34 +24,42 @@
 
 #include "objects.h"
 
-enum {
-    AUD_PATH_BIN_DIR,
-    AUD_PATH_DATA_DIR,
-    AUD_PATH_PLUGIN_DIR,
-    AUD_PATH_LOCALE_DIR,
-    AUD_PATH_DESKTOP_FILE,
-    AUD_PATH_ICON_FILE,
-    AUD_PATH_USER_DIR,
-    AUD_PATH_PLAYLISTS_DIR,
-    AUD_PATH_COUNT
+enum class AudPath {
+    BinDir,
+    DataDir,
+    PluginDir,
+    LocaleDir,
+    DesktopFile,
+    IconFile,
+    UserDir,
+    PlaylistDir,
+    n_paths
 };
 
-enum {
-    OUTPUT_RESET_EFFECTS_ONLY,
-    OUTPUT_RESET_SOFT,
-    OUTPUT_RESET_HARD
+enum class MainloopType {
+    GLib,
+    Qt
 };
 
-void aud_init_paths (void);
-void aud_cleanup_paths (void);
+enum class OutputReset {
+    EffectsOnly,
+    ReopenStream,
+    ResetPlugin
+};
 
-const char * aud_get_path (int id);
+void aud_init_paths ();
+void aud_cleanup_paths ();
+
+const char * aud_get_path (AudPath id);
 
 void aud_set_headless_mode (bool headless);
-bool aud_get_headless_mode (void);
+bool aud_get_headless_mode ();
 
 void aud_set_verbose_mode (bool verbose);
-bool aud_get_verbose_mode (void);
+bool aud_get_verbose_mode ();
+
+void aud_set_mainloop_type (MainloopType type);
+MainloopType aud_get_mainloop_type ();
 
 #define AUDDBG(...) do { \
     if (aud_get_verbose_mode ()) { \
@@ -61,7 +69,7 @@ bool aud_get_verbose_mode (void);
 } while (0)
 
 /* Requires: aud_init_paths() */
-void aud_init_i18n (void);
+void aud_init_i18n ();
 
 void aud_config_set_defaults (const char * section, const char * const * entries);
 
@@ -74,15 +82,15 @@ int aud_get_int (const char * section, const char * name);
 void aud_set_double (const char * section, const char * name, double value);
 double aud_get_double (const char * section, const char * name);
 
-void aud_init (void);
-void aud_resume (void);
-void aud_run (void);
-void aud_quit (void);
-void aud_cleanup (void);
+void aud_init ();
+void aud_resume ();
+void aud_run ();
+void aud_quit ();
+void aud_cleanup ();
 
 String aud_history_get (int entry);
 void aud_history_add (const char * path);
 
-void aud_output_reset (int type);
+void aud_output_reset (OutputReset type);
 
 #endif

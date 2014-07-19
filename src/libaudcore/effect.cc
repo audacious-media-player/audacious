@@ -218,7 +218,7 @@ static void effect_enable (PluginHandle * plugin, EffectPlugin * ep, bool enable
     else
     {
         AUDDBG ("Reset to add/remove %s.\n", aud_plugin_get_name (plugin));
-        aud_output_reset (OUTPUT_RESET_EFFECTS_ONLY);
+        aud_output_reset (OutputReset::EffectsOnly);
     }
 }
 

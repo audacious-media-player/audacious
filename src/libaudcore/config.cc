@@ -246,7 +246,7 @@ static void load_entry (const char * key, const char * value, void * data)
 
 void config_load (void)
 {
-    StringBuf path = filename_to_uri (aud_get_path (AUD_PATH_USER_DIR));
+    StringBuf path = filename_to_uri (aud_get_path (AudPath::UserDir));
     str_insert (path, -1, "/config");
 
     if (vfs_file_test (path, VFS_EXISTS))
@@ -290,7 +290,7 @@ void config_save (void)
     config.iterate (add_to_save_list, & state);
     state.list.sort (item_compare, nullptr);
 
-    StringBuf path = filename_to_uri (aud_get_path (AUD_PATH_USER_DIR));
+    StringBuf path = filename_to_uri (aud_get_path (AudPath::UserDir));
     str_insert (path, -1, "/config");
 
     VFSFile * file = vfs_fopen (path, "w");

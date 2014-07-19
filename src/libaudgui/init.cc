@@ -17,6 +17,7 @@
  * the use of this software.
  */
 
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -130,6 +131,8 @@ static void playlist_position_cb (void * list, void * unused)
 
 EXPORT void audgui_init (void)
 {
+    assert (aud_get_mainloop_type () == MainloopType::GLib);
+
     if (init_count ++)
         return;
 

@@ -34,11 +34,11 @@ EXPORT Index<EqualizerPreset> aud_eq_read_presets (const char * basename)
     Index<EqualizerPreset> list;
 
     GKeyFile * rcfile = g_key_file_new ();
-    StringBuf filename = filename_build ({aud_get_path (AUD_PATH_USER_DIR), basename});
+    StringBuf filename = filename_build ({aud_get_path (AudPath::UserDir), basename});
 
     if (! g_key_file_load_from_file (rcfile, filename, G_KEY_FILE_NONE, nullptr))
     {
-        StringBuf filename2 = filename_build ({aud_get_path (AUD_PATH_DATA_DIR), basename});
+        StringBuf filename2 = filename_build ({aud_get_path (AudPath::DataDir), basename});
 
         if (! g_key_file_load_from_file (rcfile, filename2, G_KEY_FILE_NONE, nullptr))
         {
@@ -87,7 +87,7 @@ EXPORT bool aud_eq_write_presets (const Index<EqualizerPreset> & list, const cha
     size_t len;
     char * data = g_key_file_to_data (rcfile, & len, nullptr);
 
-    StringBuf filename = filename_build ({aud_get_path (AUD_PATH_USER_DIR), basename});
+    StringBuf filename = filename_build ({aud_get_path (AudPath::UserDir), basename});
     bool success = g_file_set_contents (filename, data, len, nullptr);
 
     g_key_file_free (rcfile);

@@ -739,41 +739,11 @@ EXPORT void audgui_list_update_rows (GtkWidget * list, int at, int rows)
     gtk_tree_path_free (path);
 }
 
-static void move_cursor_away (GtkWidget * list, ListModel * model, int at, int rows)
-{
-    GtkTreePath * path = nullptr;
-    gtk_tree_view_get_cursor ((GtkTreeView *) list, & path, nullptr);
-
-    if (! path)
-        return;
-
-    int row = gtk_tree_path_get_indices (path)[0];
-
-    gtk_tree_path_free (path);
-
-    if (row < at || row >= at + rows)
-        return;
-
-    if (at + rows < model->rows)
-        row = at + rows;        // move to following row
-    else if (at > 0)
-        row = at - 1;           // move to row before
-    else
-        row = model->rows - 1;  // move to last row to be deleted
-
-    path = gtk_tree_path_new_from_indices (row, -1);
-    gtk_tree_view_set_cursor ((GtkTreeView *) list, path, nullptr, false);
-    gtk_tree_path_free (path);
-}
-
 EXPORT void audgui_list_delete_rows (GtkWidget * list, int at, int rows)
 {
     ListModel * model = (ListModel *) gtk_tree_view_get_model
      ((GtkTreeView *) list);
     g_return_if_fail (at >= 0 && rows >= 0 && at + rows <= model->rows);
-
-    /* prevent a warning when GTK+ tries to move the cursor to a deleted row */
-    move_cursor_away (list, model, at, rows);
 
     model->rows -= rows;
     if (model->highlight >= at + rows)
@@ -784,6 +754,23 @@ EXPORT void audgui_list_delete_rows (GtkWidget * list, int at, int rows)
     model->frozen = true;
     model->blocked = true;
 
+    int focus = audgui_list_get_focus (list);
+
+    // first delete rows after cursor so it does not get moved to one of them
+    if (focus >= at && focus + 1 < at + rows)
+    {
+        GtkTreePath * path = gtk_tree_path_new_from_indices (focus + 1, -1);
+
+        while (focus + 1 < at + rows)
+        {
+            gtk_tree_model_row_deleted ((GtkTreeModel *) model, path);
+            rows --;
+        }
+
+        gtk_tree_path_free (path);
+    }
+
+    // now delete rows preceding cursor and finally cursor row itself
     GtkTreePath * path = gtk_tree_path_new_from_indices (at, -1);
 
     while (rows --)

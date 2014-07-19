@@ -255,16 +255,16 @@ EXPORT void aud_playlist_select_by_patterns (int playlist, const Tuple & pattern
 static StringBuf make_playlist_path (int playlist)
 {
     if (! playlist)
-        return filename_build ({aud_get_path (AUD_PATH_USER_DIR), "playlist.xspf"});
+        return filename_build ({aud_get_path (AudPath::UserDir), "playlist.xspf"});
 
     StringBuf name = str_printf ("playlist_%02d.xspf", 1 + playlist);
-    name.steal (filename_build ({aud_get_path (AUD_PATH_USER_DIR), name}));
+    name.steal (filename_build ({aud_get_path (AudPath::UserDir), name}));
     return name;
 }
 
 static void load_playlists_real (void)
 {
-    const char * folder = aud_get_path (AUD_PATH_PLAYLISTS_DIR);
+    const char * folder = aud_get_path (AudPath::PlaylistDir);
 
     /* old (v3.1 and earlier) naming scheme */
 
@@ -322,7 +322,7 @@ DONE:
 static void save_playlists_real (void)
 {
     int lists = aud_playlist_count ();
-    const char * folder = aud_get_path (AUD_PATH_PLAYLISTS_DIR);
+    const char * folder = aud_get_path (AudPath::PlaylistDir);
 
     /* save playlists */
 

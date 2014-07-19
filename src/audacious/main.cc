@@ -45,6 +45,7 @@ static struct {
     bool mainwin, show_jump_box;
     bool headless, quit_after_play;
     bool verbose;
+    bool qt;
 } options;
 
 static Index<PlaylistAddItem> filenames;
@@ -70,6 +71,9 @@ static const struct {
     {"headless", 'H', & options.headless, N_("Start without a graphical interface")},
     {"quit-after-play", 'q', & options.quit_after_play, N_("Quit on playback stop")},
     {"verbose", 'V', & options.verbose, N_("Print debugging messages")},
+#if defined(USE_QT) && defined(USE_GTK)
+    {"qt", 'Q', & options.qt, N_("Run in Qt mode")},
+#endif
 };
 
 static bool parse_options (int argc, char * * argv)
@@ -152,6 +156,9 @@ static bool parse_options (int argc, char * * argv)
 
     aud_set_headless_mode (options.headless);
     aud_set_verbose_mode (options.verbose);
+
+    if (options.qt)
+        aud_set_mainloop_type (MainloopType::Qt);
 
 OUT:
     g_free (cur);

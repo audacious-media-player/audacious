@@ -425,7 +425,7 @@ static void fill_category_list (GtkTreeView * treeview, GtkNotebook * notebook)
      GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_INT);
     gtk_tree_view_set_model (treeview, (GtkTreeModel *) store);
 
-    const char * data_dir = aud_get_path (AUD_PATH_DATA_DIR);
+    const char * data_dir = aud_get_path (AudPath::DataDir);
 
     for (const Category & category : categories)
     {
@@ -553,8 +553,6 @@ static int iface_combo_changed_finish (void *)
     iface_fill_prefs_box ();
     gtk_widget_show_all (iface_prefs_box);
 
-    gtk_window_present ((GtkWindow *) prefswin);
-
     audgui_cleanup ();
 
     return G_SOURCE_REMOVE;
@@ -571,7 +569,7 @@ static void iface_combo_changed (void)
     aud_plugin_enable (aud_plugin_by_index (PLUGIN_TYPE_IFACE, iface_combo_selected), true);
 
     /* now wait till we have restarted into the new main loop */
-    g_idle_add (iface_combo_changed_finish, nullptr);
+    g_idle_add_full (G_PRIORITY_HIGH, iface_combo_changed_finish, nullptr, nullptr);
 }
 
 static ArrayRef<const ComboBoxElements> iface_combo_fill ()
@@ -623,7 +621,7 @@ static ArrayRef<const ComboBoxElements> output_combo_fill ()
 
 static void output_bit_depth_changed (void)
 {
-    aud_output_reset (OUTPUT_RESET_SOFT);
+    aud_output_reset (OutputReset::ReopenStream);
 }
 
 static void output_do_config (void * unused)

@@ -536,7 +536,7 @@ void output_drain (void)
     UNLOCK_ALL;
 }
 
-EXPORT void aud_output_reset (int type)
+EXPORT void aud_output_reset (OutputReset type)
 {
     LOCK_MINOR;
 
@@ -548,10 +548,10 @@ EXPORT void aud_output_reset (int type)
     UNLOCK_MINOR;
     LOCK_ALL;
 
-    if (s_output && type != OUTPUT_RESET_EFFECTS_ONLY)
+    if (s_output && type != OutputReset::EffectsOnly)
         cleanup_output ();
 
-    if (type == OUTPUT_RESET_HARD)
+    if (type == OutputReset::ResetPlugin)
     {
         if (cop && PLUGIN_HAS_FUNC (cop, cleanup))
             cop->cleanup ();
@@ -603,27 +603,6 @@ void output_set_volume (int left, int right)
     UNLOCK_MINOR;
 }
 
-static bool probe_cb (PluginHandle * p, PluginHandle * * pp)
-{
-    OutputPlugin * op = (OutputPlugin *) aud_plugin_get_header (p);
-
-    if (! op || (PLUGIN_HAS_FUNC (op, init) && ! op->init ()))
-        return true; /* keep searching */
-
-    if (PLUGIN_HAS_FUNC (op, cleanup))
-        op->cleanup ();
-
-    * pp = p;
-    return false; /* stop searching */
-}
-
-PluginHandle * output_plugin_probe (void)
-{
-    PluginHandle * p = nullptr;
-    aud_plugin_for_each (PLUGIN_TYPE_OUTPUT, (PluginForEachFunc) probe_cb, & p);
-    return p;
-}
-
 PluginHandle * output_plugin_get_current (void)
 {
     return cop ? aud_plugin_by_header (cop) : nullptr;
@@ -633,7 +612,7 @@ bool output_plugin_set_current (PluginHandle * plugin)
 {
     change_op = true;
     new_op = plugin ? (OutputPlugin *) aud_plugin_get_header (plugin) : nullptr;
-    aud_output_reset (OUTPUT_RESET_HARD);
+    aud_output_reset (OutputReset::ResetPlugin);
 
     bool success = (cop == new_op);
     change_op = false;
