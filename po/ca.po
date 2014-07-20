@@ -3,9 +3,10 @@
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
+# Catalanoic <catalanoic@gmail.com>, 2014
 # Ernest Adrogué <eadrogue@gmx.net>, 2007-2008
-# frangor <frangor@frangor.info>, 2013
-# frangor <frangor@frangor.info>, 2013
+# Francesc Gordillo i Cortínez <frangor@frangor.info>, 2013
+# Francesc Gordillo i Cortínez <frangor@frangor.info>, 2013
 # Jordi Amenós <>, 2011
 # Juanma Hernández <juanmah@gmail.com>, 2012
 # Juanma Hernández <juanmah@gmail.com>, 2012
@@ -13,9 +14,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-04-21 22:48+0200\n"
-"PO-Revision-Date: 2014-04-04 07:08+0000\n"
-"Last-Translator: Radioactiveman <thomas-lange2@gmx.de>\n"
+"POT-Creation-Date: 2014-07-20 15:58+0200\n"
+"PO-Revision-Date: 2014-04-29 17:51+0000\n"
+"Last-Translator: Catalanoic <catalanoic@gmail.com>\n"
 "Language-Team: Catalan (http://www.transifex.com/projects/p/audacious/"
 "language/ca/)\n"
 "Language: ca\n"
@@ -48,7 +49,7 @@ msgstr ""
 
 #: src/audacious/main.c:70
 msgid "Show command-line help"
-msgstr ""
+msgstr "Mostra l'ajuda de la línia de comandes"
 
 #: src/audacious/main.c:71
 msgid "Show version"
@@ -56,11 +57,11 @@ msgstr "Mostra la versió"
 
 #: src/audacious/main.c:72
 msgid "Start playback"
-msgstr ""
+msgstr "Inicia reproducció"
 
 #: src/audacious/main.c:73
 msgid "Pause playback"
-msgstr ""
+msgstr "Pausa reproducció"
 
 #: src/audacious/main.c:74
 msgid "Pause if playing, play otherwise"
@@ -68,15 +69,15 @@ msgstr "Fa una pausa, o bé reprèn la reproducció"
 
 #: src/audacious/main.c:75
 msgid "Stop playback"
-msgstr ""
+msgstr "Atura reproducció"
 
 #: src/audacious/main.c:76
 msgid "Skip to previous song"
-msgstr ""
+msgstr "Salta a la cançó anterior"
 
 #: src/audacious/main.c:77
 msgid "Skip to next song"
-msgstr ""
+msgstr "Salta a la següent cançó"
 
 #: src/audacious/main.c:78
 msgid "Add files to the playlist"
@@ -84,7 +85,7 @@ msgstr "Afegir arxius a la llista de reproducció"
 
 #: src/audacious/main.c:79
 msgid "Add files to a temporary playlist"
-msgstr ""
+msgstr "Afegeix fitxers a una llista de reproducció temporal"
 
 #: src/audacious/main.c:80
 msgid "Display the main window"
@@ -169,29 +170,29 @@ msgstr ""
 
 #: src/audacious/plugin-preferences.c:99
 msgid "_Set"
-msgstr ""
+msgstr "_Configura"
 
 #: src/audacious/plugin-preferences.c:100 src/libaudgui/confirm.c:57
 #: src/libaudgui/confirm.c:90 src/libaudgui/jump-to-time.c:49
 #: src/libaudgui/playlists.c:89 src/libaudgui/playlists.c:142
 #: src/libaudgui/url-opener.c:71
 msgid "_Cancel"
-msgstr ""
+msgstr "_Cancel·la"
 
 #: src/audacious/plugin-preferences.c:106 src/audacious/ui_preferences.c:763
 #: src/libaudgui/infowin.c:370 src/libaudgui/queue-manager.c:189
 #: src/libaudgui/ui_fileopener.c:127 src/libaudgui/ui_jumptotrack.c:312
-#: src/libaudgui/util.c:161
+#: src/libaudgui/util.c:186
 msgid "_Close"
-msgstr ""
+msgstr "_Tanca"
 
 #: src/audacious/plugin-view.c:242 src/audacious/ui_preferences.c:641
 msgid "_Settings"
-msgstr ""
+msgstr "_Opcions"
 
 #: src/audacious/plugin-view.c:250 src/audacious/ui_preferences.c:652
 msgid "_About"
-msgstr ""
+msgstr "_Quant"
 
 #: src/audacious/ui_plugin_menu.c:37
 msgid "_Plugins ..."
@@ -199,7 +200,7 @@ msgstr ""
 
 #: src/audacious/ui_preferences.c:82
 msgid "Appearance"
-msgstr ""
+msgstr "Aparença"
 
 #: src/audacious/ui_preferences.c:83
 msgid "Audio"
@@ -578,7 +579,7 @@ msgstr "Cadena personalitzada:"
 
 #: src/audacious/ui_preferences.c:714
 msgid "Audacious Settings"
-msgstr ""
+msgstr "Opcions de l'Audacious"
 
 #: src/audacious/util.c:112
 #, c-format
@@ -1043,7 +1044,7 @@ msgstr "Afegir URL"
 msgid "Enter URL:"
 msgstr "Introdueix URL:"
 
-#: src/libaudgui/util.c:148
+#: src/libaudgui/util.c:173
 msgid ""
 "\n"
 "(Further messages have been hidden.)"

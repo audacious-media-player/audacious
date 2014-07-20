@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-04-21 22:48+0200\n"
+"POT-Creation-Date: 2014-07-20 15:58+0200\n"
 "PO-Revision-Date: 2014-04-06 22:26+0000\n"
 "Last-Translator: Jorge A. García Sosa <jagsmd@gmail.com>\n"
 "Language-Team: Spanish (Mexico) (http://www.transifex.com/projects/p/"
@@ -175,7 +175,7 @@ msgstr "_Cancelar"
 #: src/audacious/plugin-preferences.c:106 src/audacious/ui_preferences.c:763
 #: src/libaudgui/infowin.c:370 src/libaudgui/queue-manager.c:189
 #: src/libaudgui/ui_fileopener.c:127 src/libaudgui/ui_jumptotrack.c:312
-#: src/libaudgui/util.c:161
+#: src/libaudgui/util.c:186
 msgid "_Close"
 msgstr "_Cerrar"
 
@@ -1030,7 +1030,7 @@ msgstr "Agregar URL"
 msgid "Enter URL:"
 msgstr "Ingresa URL:"
 
-#: src/libaudgui/util.c:148
+#: src/libaudgui/util.c:173
 msgid ""
 "\n"
 "(Further messages have been hidden.)"

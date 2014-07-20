@@ -5,22 +5,22 @@
 # Translators:
 # 		ChoSeongWoo <syn333@gmail.com>, 2008
 # ChoSeongWoo <syn333@gmail.com>, 2008
-# Darkcircle <darkcircle.0426@gmail.com>, 2012-2014
-# natird <dritan86@gmail.com>, 2012
+# Seong-ho Cho <darkcircle.0426@gmail.com>, 2012-2014
+# natird zoto <dritan86@gmail.com>, 2012
 #       Jaegeum Choe <baedaron@hananet.net>, 2001
 #       Man-Yong Lee <yong@linuxkorea.co.kr>, 2000
-# natird <dritan86@gmail.com>, 2012
-# natird <dritan86@gmail.com>, 2012
+# natird zoto <dritan86@gmail.com>, 2012
+# natird zoto <dritan86@gmail.com>, 2012
 #       Sang-Jin Hwang <accel@accellinux.org>, 1999
-# Darkcircle <darkcircle.0426@gmail.com>, 2012
-# Darkcircle <darkcircle.0426@gmail.com>, 2012-2013
+# Seong-ho Cho <darkcircle.0426@gmail.com>, 2012
+# Seong-ho Cho <darkcircle.0426@gmail.com>, 2012-2014
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-04-21 22:48+0200\n"
-"PO-Revision-Date: 2014-03-15 22:38+0000\n"
-"Last-Translator: Radioactiveman <thomas-lange2@gmx.de>\n"
+"POT-Creation-Date: 2014-07-20 15:58+0200\n"
+"PO-Revision-Date: 2014-05-11 15:17+0000\n"
+"Last-Translator: Seong-ho Cho <darkcircle.0426@gmail.com>\n"
 "Language-Team: Korean (http://www.transifex.com/projects/p/audacious/"
 "language/ko/)\n"
 "Language: ko\n"
@@ -163,12 +163,10 @@ msgstr ""
 "다."
 
 #: src/audacious/plugin-preferences.c:55
-#, fuzzy
 msgid "About"
 msgstr "정보"
 
 #: src/audacious/plugin-preferences.c:94
-#, fuzzy
 msgid "Settings"
 msgstr "설정"
 
@@ -186,7 +184,7 @@ msgstr "취소(_C)"
 #: src/audacious/plugin-preferences.c:106 src/audacious/ui_preferences.c:763
 #: src/libaudgui/infowin.c:370 src/libaudgui/queue-manager.c:189
 #: src/libaudgui/ui_fileopener.c:127 src/libaudgui/ui_jumptotrack.c:312
-#: src/libaudgui/util.c:161
+#: src/libaudgui/util.c:186
 msgid "_Close"
 msgstr "닫기(_C)"
 
@@ -638,7 +636,7 @@ msgstr "다시 묻지 않음(_D)"
 
 #: src/libaudgui/confirm.c:89
 msgid "_Rename"
-msgstr ""
+msgstr "이름 바꾸기(_R)"
 
 #: src/libaudgui/confirm.c:93
 msgid "Rename Playlist"
@@ -925,7 +923,7 @@ msgstr "%s을(를) 덮어쓰시겠습니까?"
 
 #: src/libaudgui/playlists.c:88
 msgid "_Overwrite"
-msgstr ""
+msgstr "덮어쓰기(_O)"
 
 #: src/libaudgui/playlists.c:92
 msgid "Confirm Overwrite"
@@ -937,7 +935,7 @@ msgstr "재생 목록 내보내기"
 
 #: src/libaudgui/playlists.c:122
 msgid "_Export"
-msgstr ""
+msgstr "내보내기(_E)"
 
 #: src/libaudgui/playlists.c:128
 msgid "Import Playlist"
@@ -945,7 +943,7 @@ msgstr "재생 목록 가져오기"
 
 #: src/libaudgui/playlists.c:129
 msgid "_Import"
-msgstr ""
+msgstr "가져오기(_I)"
 
 #: src/libaudgui/queue-manager.c:172
 msgid "Queue Manager"
@@ -1040,13 +1038,10 @@ msgstr "URL 추가"
 msgid "Enter URL:"
 msgstr "URL 입력:"
 
-#: src/libaudgui/util.c:148
+#: src/libaudgui/util.c:173
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
 msgstr ""
 "\n"
 "(이하 메시지는 숨겨져 있습니다.)"
-
-#~ msgid "_Remember"
-#~ msgstr "기억(_R)"

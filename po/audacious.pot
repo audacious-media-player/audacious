@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-04-21 23:13+0200\n"
+"POT-Creation-Date: 2014-07-20 16:13+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -170,7 +170,7 @@ msgstr ""
 #: src/audacious/plugin-preferences.c:106 src/audacious/ui_preferences.c:763
 #: src/libaudgui/infowin.c:370 src/libaudgui/queue-manager.c:189
 #: src/libaudgui/ui_fileopener.c:127 src/libaudgui/ui_jumptotrack.c:312
-#: src/libaudgui/util.c:161
+#: src/libaudgui/util.c:186
 msgid "_Close"
 msgstr ""
 
@@ -1025,7 +1025,7 @@ msgstr ""
 msgid "Enter URL:"
 msgstr ""
 
-#: src/libaudgui/util.c:148
+#: src/libaudgui/util.c:173
 msgid ""
 "\n"
 "(Further messages have been hidden.)"

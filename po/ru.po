@@ -6,6 +6,7 @@
 # Alexander Orlov <alxorlov@pochta.ru>, 2007
 # dane <alpi_bel@mail.ru>, 2014
 # michurin <a.michurin@gmail.com>, 2011
+# Andrei Stepanov, 2014
 # Someonefree <drag-sasha@mail.ru>, 2014
 # Eugene Paskevich <eugene@raptor.kiev.ua>, 2010
 # Eugene Zagidullin <e.asphyx@gmail.com>, 2007
@@ -25,14 +26,14 @@
 # serg0 <sergo@bk.ru>, 2010
 # serg0 <sergo@bk.ru>, 2010
 # StreamThreaedr <kvantarium@gmail.com>, 2012
-# lav <lav@etersoft.ru>, 2007
+# Vitaly Lipatov <lav@etersoft.ru>, 2007
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-04-21 22:48+0200\n"
-"PO-Revision-Date: 2014-04-04 19:44+0000\n"
-"Last-Translator: arinov <i.arinov@iht.kz>\n"
+"POT-Creation-Date: 2014-07-20 15:58+0200\n"
+"PO-Revision-Date: 2014-04-23 10:50+0000\n"
+"Last-Translator: Andrei Stepanov\n"
 "Language-Team: Russian (http://www.transifex.com/projects/p/audacious/"
 "language/ru/)\n"
 "Language: ru\n"
@@ -56,7 +57,7 @@ msgstr[2] "Найдено %d файлов"
 
 #: src/audacious/adder.c:386 src/audacious/playlist-new.c:97
 msgid "New Playlist"
-msgstr "Новый список воспроизведения"
+msgstr "Новый плейлист"
 
 #: src/audacious/interface.c:93
 msgid "Error"
@@ -96,7 +97,7 @@ msgstr "пропустить следующую песню"
 
 #: src/audacious/main.c:78
 msgid "Add files to the playlist"
-msgstr "Добавить файлы в список воспроизведения"
+msgstr "Добавить файлы в плейлист"
 
 #: src/audacious/main.c:79
 msgid "Add files to a temporary playlist"
@@ -137,7 +138,7 @@ msgstr "Неизвестная опция :%c\n"
 msgid ""
 "Usage: audacious [OPTION] ... [FILE] ...\n"
 "\n"
-msgstr "Пример:audacious[ опция].....[файл]...\n"
+msgstr "Пример: audacious [ОПЦИЯ].....[ФАЙЛ]...\n"
 
 #: src/audacious/main.c:601
 msgid "Audacious"
@@ -197,7 +198,7 @@ msgstr "Закончить"
 #: src/audacious/plugin-preferences.c:106 src/audacious/ui_preferences.c:763
 #: src/libaudgui/infowin.c:370 src/libaudgui/queue-manager.c:189
 #: src/libaudgui/ui_fileopener.c:127 src/libaudgui/ui_jumptotrack.c:312
-#: src/libaudgui/util.c:161
+#: src/libaudgui/util.c:186
 msgid "_Close"
 msgstr "Закрыть"
 
@@ -211,11 +212,11 @@ msgstr "_О"
 
 #: src/audacious/ui_plugin_menu.c:37
 msgid "_Plugins ..."
-msgstr "_Плагины..."
+msgstr "_Плагины ..."
 
 #: src/audacious/ui_preferences.c:82
 msgid "Appearance"
-msgstr "Начать воспроизведение"
+msgstr "Внешний вид"
 
 #: src/audacious/ui_preferences.c:83
 msgid "Audio"
@@ -227,15 +228,15 @@ msgstr "Сеть"
 
 #: src/audacious/ui_preferences.c:85 src/audacious/ui_preferences.c:95
 msgid "Playlist"
-msgstr "Список воспроизведения"
+msgstr "Плейлист"
 
 #: src/audacious/ui_preferences.c:86 src/libaudgui/infowin.c:299
 msgid "Song Info"
-msgstr "Сведения о композиции"
+msgstr "Информация о песне"
 
 #: src/audacious/ui_preferences.c:87
 msgid "Plugins"
-msgstr "Надстройки"
+msgstr "Плагины"
 
 #: src/audacious/ui_preferences.c:91
 msgid "General"
@@ -364,15 +365,15 @@ msgstr "Плавающая точка"
 
 #: src/audacious/ui_preferences.c:147
 msgid "<b>Interface Settings</b>"
-msgstr "<b>Настройки Интерфейса<b>"
+msgstr "<b>Настройки интерфейса</b>"
 
 #: src/audacious/ui_preferences.c:148
 msgid "Interface plugin:"
-msgstr "Интерфейс плагина:"
+msgstr "Плагин интерфейса:"
 
 #: src/audacious/ui_preferences.c:165
 msgid "Output plugin:"
-msgstr "Надстройка вывода:"
+msgstr "Плагин вывода:"
 
 #: src/audacious/ui_preferences.c:172
 msgid "<b>Output Settings</b>"
@@ -593,7 +594,7 @@ msgstr "Задать формат:"
 
 #: src/audacious/ui_preferences.c:714
 msgid "Audacious Settings"
-msgstr "Аудациос Настройки"
+msgstr "Настройки Audacious"
 
 #: src/audacious/util.c:112
 #, c-format
@@ -631,7 +632,7 @@ msgstr "Лицензия"
 
 #: src/libaudgui/about.c:69
 msgid "About Audacious"
-msgstr "Сведения Audacious"
+msgstr "Об Audacious"
 
 #: src/libaudgui/confirm.c:51
 #, c-format
@@ -732,7 +733,7 @@ msgstr "Качество:"
 
 #: src/libaudgui/infowin.c:48
 msgid "Bitrate:"
-msgstr "битрейт:"
+msgstr "Битрейт:"
 
 #: src/libaudgui/infowin.c:76
 msgid "Acid Jazz"
@@ -1054,7 +1055,7 @@ msgstr "Добавить веб-ссылку"
 msgid "Enter URL:"
 msgstr "Введите веб-ссылку:"
 
-#: src/libaudgui/util.c:148
+#: src/libaudgui/util.c:173
 msgid ""
 "\n"
 "(Further messages have been hidden.)"

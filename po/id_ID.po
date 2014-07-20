@@ -15,20 +15,20 @@
 # ivanzulfikar <ivan.zulf.ikar@gmail.com>, 2014
 # ivanzulfikar <ivan.zulf.ikar@gmail.com>, 2014
 # Mohamad Hasan Al Banna, 2012
-# Mohamad Hasan Al Banna, 2012
+# Hasan Al Banna, 2012
 # Rahman Aftian <>, 2012
-# Rahman Yusri Aftian <aftian@yahoo.com>, 2012
+# Rahman Yusri Aftian <aftian@yahoo.com>, 2012,2014
 #  <sakrasemangat@gmail.com>, 2012
 #  <samsul@kplibanyumas.org>, 2012
-# Mohamad Hasan Al Banna, 2012
-# yoza1404 <yoza1404@gmail.com>, 2012
-# yoza1404 <yoza1404@gmail.com>, 2012
+# Hasan Al Banna, 2012
+# Yoza Aprilio <yoza1404@gmail.com>, 2012
+# Yoza Aprilio <yoza1404@gmail.com>, 2012
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-04-21 22:48+0200\n"
-"PO-Revision-Date: 2014-04-09 08:45+0000\n"
+"POT-Creation-Date: 2014-07-20 15:58+0200\n"
+"PO-Revision-Date: 2014-06-29 06:02+0000\n"
 "Last-Translator: Rahman Yusri Aftian <aftian@yahoo.com>\n"
 "Language-Team: Indonesian (Indonesia) (http://www.transifex.com/projects/p/"
 "audacious/language/id_ID/)\n"
@@ -58,7 +58,7 @@ msgstr "Galat"
 
 #: src/audacious/main.c:70
 msgid "Show command-line help"
-msgstr ""
+msgstr "Tampilkan bantuan perintah-garis"
 
 #: src/audacious/main.c:71
 msgid "Show version"
@@ -66,11 +66,11 @@ msgstr "Tampilkan versi"
 
 #: src/audacious/main.c:72
 msgid "Start playback"
-msgstr ""
+msgstr "Mulai Pemutaran"
 
 #: src/audacious/main.c:73
 msgid "Pause playback"
-msgstr ""
+msgstr "Berhenti sebentar pemutara"
 
 #: src/audacious/main.c:74
 msgid "Pause if playing, play otherwise"
@@ -78,15 +78,15 @@ msgstr "Jeda lagu saat dimainkan, putar lagu jika sedang jeda"
 
 #: src/audacious/main.c:75
 msgid "Stop playback"
-msgstr ""
+msgstr "Stop pemutaran"
 
 #: src/audacious/main.c:76
 msgid "Skip to previous song"
-msgstr ""
+msgstr "Loncat ke lagu sebelumnya"
 
 #: src/audacious/main.c:77
 msgid "Skip to next song"
-msgstr ""
+msgstr "Loncat ke lagu berikutnya"
 
 #: src/audacious/main.c:78
 msgid "Add files to the playlist"
@@ -94,7 +94,7 @@ msgstr "Tambah berkas ke dalam daftar lagu"
 
 #: src/audacious/main.c:79
 msgid "Add files to a temporary playlist"
-msgstr ""
+msgstr "Tambah berkas ke daftar putar sementara"
 
 #: src/audacious/main.c:80
 msgid "Display the main window"
@@ -102,11 +102,11 @@ msgstr "Tampilkan jendela utama"
 
 #: src/audacious/main.c:81
 msgid "Display the jump-to-song window"
-msgstr ""
+msgstr "Display cendela loncat-ke-lagu"
 
 #: src/audacious/main.c:82
 msgid "Start without a graphical interface"
-msgstr ""
+msgstr "Mulai tanpa tampilan grafis"
 
 #: src/audacious/main.c:83
 msgid "Quit on playback stop"
@@ -119,12 +119,12 @@ msgstr "Cetak pesan debug"
 #: src/audacious/main.c:269
 #, c-format
 msgid "Unknown option: %s\n"
-msgstr ""
+msgstr "Opsi tidak dikenal: %s\n"
 
 #: src/audacious/main.c:291
 #, c-format
 msgid "Unknown option: -%c\n"
-msgstr ""
+msgstr "Opsi tidak dikenal: -%c\n"
 
 #: src/audacious/main.c:314
 #, c-format
@@ -132,6 +132,8 @@ msgid ""
 "Usage: audacious [OPTION] ... [FILE] ...\n"
 "\n"
 msgstr ""
+"Menggunakan: audacious [OPSI] ... [BERKAS] ...\n"
+"\n"
 
 #: src/audacious/main.c:601
 msgid "Audacious"
@@ -150,12 +152,12 @@ msgstr "%s tidak dapat dibuka."
 #: src/audacious/playlist-files.c:95
 #, c-format
 msgid "Cannot load %s: unsupported file extension."
-msgstr ""
+msgstr "Tidak dapat meload %s: ekstensi berkas tidak didukung."
 
 #: src/audacious/playlist-files.c:185
 #, c-format
 msgid "Cannot save %s: unsupported file extension."
-msgstr ""
+msgstr "Tidak dapat menyimpan %s: ekstensi berkas tidak didukung."
 
 #: src/audacious/playlist-new.c:98
 msgid "Now Playing"
@@ -179,25 +181,25 @@ msgstr "Pengaturan"
 
 #: src/audacious/plugin-preferences.c:99
 msgid "_Set"
-msgstr ""
+msgstr "_Set"
 
 #: src/audacious/plugin-preferences.c:100 src/libaudgui/confirm.c:57
 #: src/libaudgui/confirm.c:90 src/libaudgui/jump-to-time.c:49
 #: src/libaudgui/playlists.c:89 src/libaudgui/playlists.c:142
 #: src/libaudgui/url-opener.c:71
 msgid "_Cancel"
-msgstr ""
+msgstr "_Batal"
 
 #: src/audacious/plugin-preferences.c:106 src/audacious/ui_preferences.c:763
 #: src/libaudgui/infowin.c:370 src/libaudgui/queue-manager.c:189
 #: src/libaudgui/ui_fileopener.c:127 src/libaudgui/ui_jumptotrack.c:312
-#: src/libaudgui/util.c:161
+#: src/libaudgui/util.c:186
 msgid "_Close"
-msgstr ""
+msgstr "_Keluar"
 
 #: src/audacious/plugin-view.c:242 src/audacious/ui_preferences.c:641
 msgid "_Settings"
-msgstr ""
+msgstr "_Settings"
 
 #: src/audacious/plugin-view.c:250 src/audacious/ui_preferences.c:652
 msgid "_About"
@@ -205,11 +207,11 @@ msgstr "Tent_ang"
 
 #: src/audacious/ui_plugin_menu.c:37
 msgid "_Plugins ..."
-msgstr ""
+msgstr "_Plugins ..."
 
 #: src/audacious/ui_preferences.c:82
 msgid "Appearance"
-msgstr ""
+msgstr "Penampilan"
 
 #: src/audacious/ui_preferences.c:83
 msgid "Audio"
@@ -358,11 +360,11 @@ msgstr "Titik mengambang"
 
 #: src/audacious/ui_preferences.c:147
 msgid "<b>Interface Settings</b>"
-msgstr ""
+msgstr "<b>Seting Penampilan</b>"
 
 #: src/audacious/ui_preferences.c:148
 msgid "Interface plugin:"
-msgstr ""
+msgstr "Plugin Penampilan"
 
 #: src/audacious/ui_preferences.c:165
 msgid "Output plugin:"
@@ -394,7 +396,7 @@ msgstr "Gunakan pengatur volume (tidak direkomendasikan)"
 
 #: src/audacious/ui_preferences.c:185
 msgid "<b>Replay Gain</b>"
-msgstr "<b><i>Replay Gain</i></b>"
+msgstr "<b><i>Putar Lagi</i></b>"
 
 #: src/audacious/ui_preferences.c:186
 msgid "Enable Replay Gain"
@@ -589,7 +591,7 @@ msgstr "Rangkaian kata gubahan:"
 
 #: src/audacious/ui_preferences.c:714
 msgid "Audacious Settings"
-msgstr ""
+msgstr "Seting Audacious"
 
 #: src/audacious/util.c:112
 #, c-format
@@ -630,19 +632,19 @@ msgstr "Tentang Audacious"
 #: src/libaudgui/confirm.c:51
 #, c-format
 msgid "Do you want to permanently remove “%s”?"
-msgstr ""
+msgstr "Apakah kamu mau menghapus dengan permanen “%s”?"
 
 #: src/libaudgui/confirm.c:55 src/libaudgui/ui_playlist_manager.c:255
 msgid "_Remove"
-msgstr ""
+msgstr "_Hapus"
 
 #: src/libaudgui/confirm.c:60
 msgid "Remove Playlist"
-msgstr ""
+msgstr "Hapus Daftar Putar"
 
 #: src/libaudgui/confirm.c:62
 msgid "_Don’t ask again"
-msgstr ""
+msgstr "_Jangan tanya lagi"
 
 #: src/libaudgui/confirm.c:89
 msgid "_Rename"
@@ -654,7 +656,7 @@ msgstr "Ganti Nama Daftar Lagu"
 
 #: src/libaudgui/confirm.c:93
 msgid "What would you like to call this playlist?"
-msgstr ""
+msgstr "Apakah anda suka dan memanggil daftar putar ini?"
 
 #: src/libaudgui/equalizer.c:44
 msgid "_Enable"
@@ -718,15 +720,15 @@ msgstr "Panjang"
 
 #: src/libaudgui/infowin.c:46
 msgid "Format:"
-msgstr ""
+msgstr "Format"
 
 #: src/libaudgui/infowin.c:47
 msgid "Quality:"
-msgstr ""
+msgstr "Kualitas"
 
 #: src/libaudgui/infowin.c:48
 msgid "Bitrate:"
-msgstr ""
+msgstr "Bitrate:"
 
 #: src/libaudgui/infowin.c:76
 msgid "Acid Jazz"
@@ -886,19 +888,19 @@ msgstr "Trip-hop"
 
 #: src/libaudgui/infowin.c:220
 msgid "Save successful"
-msgstr ""
+msgstr "Penyimpanan berhasil"
 
 #: src/libaudgui/infowin.c:224
 msgid "Save error"
-msgstr ""
+msgstr "Penyimpanan galat"
 
 #: src/libaudgui/infowin.c:359
 msgid "Track Number"
-msgstr ""
+msgstr "Nomor Trek"
 
 #: src/libaudgui/infowin.c:367
 msgid "_Save"
-msgstr ""
+msgstr "_Simpan"
 
 #: src/libaudgui/infowin.c:418
 #, c-format
@@ -907,7 +909,7 @@ msgstr "%d Kb/s"
 
 #: src/libaudgui/infowin.c:423
 msgid "N/A"
-msgstr ""
+msgstr "N/A"
 
 #: src/libaudgui/infowin.c:453
 #, c-format
@@ -916,7 +918,7 @@ msgstr "Tidak ada info yang tersedia untuk %s.⏎\n"
 
 #: src/libaudgui/jump-to-time.c:48 src/libaudgui/ui_jumptotrack.c:305
 msgid "_Jump"
-msgstr ""
+msgstr "_Lompat"
 
 #: src/libaudgui/jump-to-time.c:52
 msgid "Jump to Time"
@@ -933,11 +935,11 @@ msgstr "Menimpa %s?"
 
 #: src/libaudgui/playlists.c:88
 msgid "_Overwrite"
-msgstr ""
+msgstr "_Timpa"
 
 #: src/libaudgui/playlists.c:92
 msgid "Confirm Overwrite"
-msgstr ""
+msgstr "Konformasi Penimpaan"
 
 #: src/libaudgui/playlists.c:121
 msgid "Export Playlist"
@@ -945,7 +947,7 @@ msgstr "Ekspor Daftar Main"
 
 #: src/libaudgui/playlists.c:122
 msgid "_Export"
-msgstr ""
+msgstr "_Ekspor"
 
 #: src/libaudgui/playlists.c:128
 msgid "Import Playlist"
@@ -953,7 +955,7 @@ msgstr "Impor Daftar Main"
 
 #: src/libaudgui/playlists.c:129
 msgid "_Import"
-msgstr ""
+msgstr "_Impor"
 
 #: src/libaudgui/queue-manager.c:172
 msgid "Queue Manager"
@@ -961,7 +963,7 @@ msgstr "Manajer Antrian"
 
 #: src/libaudgui/queue-manager.c:188
 msgid "_Unqueue"
-msgstr ""
+msgstr "_Unqueue"
 
 #: src/libaudgui/ui_fileopener.c:79
 msgid "Open Files"
@@ -969,11 +971,11 @@ msgstr "Buka Berkas"
 
 #: src/libaudgui/ui_fileopener.c:80 src/libaudgui/url-opener.c:50
 msgid "_Open"
-msgstr ""
+msgstr "B_uka"
 
 #: src/libaudgui/ui_fileopener.c:82
 msgid "Close _dialog on open"
-msgstr ""
+msgstr "Tutup _dialog buka"
 
 #: src/libaudgui/ui_fileopener.c:87
 msgid "Add Files"
@@ -981,11 +983,11 @@ msgstr "Tambah Berkas"
 
 #: src/libaudgui/ui_fileopener.c:88 src/libaudgui/url-opener.c:56
 msgid "_Add"
-msgstr ""
+msgstr "_Tambah"
 
 #: src/libaudgui/ui_fileopener.c:90
 msgid "Close _dialog on add"
-msgstr ""
+msgstr "Tutup _dialog buka"
 
 #: src/libaudgui/ui_jumptotrack.c:101 src/libaudgui/ui_jumptotrack.c:109
 #: src/libaudgui/ui_jumptotrack.c:301
@@ -1010,7 +1012,7 @@ msgstr "_Filter:"
 
 #: src/libaudgui/ui_jumptotrack.c:294
 msgid "C_lose on jump"
-msgstr ""
+msgstr "Ke_luar loncat"
 
 #: src/libaudgui/ui_playlist_manager.c:223
 msgid "Playlist Manager"
@@ -1022,15 +1024,15 @@ msgstr "Masukan"
 
 #: src/libaudgui/ui_playlist_manager.c:254
 msgid "_New"
-msgstr ""
+msgstr "_Baru"
 
 #: src/libaudgui/ui_playlist_manager.c:256
 msgid "Ren_ame"
-msgstr ""
+msgstr "Ganti N_ama"
 
 #: src/libaudgui/ui_playlist_manager.c:257
 msgid "_Play"
-msgstr ""
+msgstr "_Putar"
 
 #: src/libaudgui/ui_playlist_manager.c:269
 msgid "_Close dialog on activating playlist"
@@ -1048,7 +1050,7 @@ msgstr "Tambah URL"
 msgid "Enter URL:"
 msgstr "Masukkan URL:"
 
-#: src/libaudgui/util.c:148
+#: src/libaudgui/util.c:173
 msgid ""
 "\n"
 "(Further messages have been hidden.)"

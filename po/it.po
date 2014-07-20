@@ -6,8 +6,8 @@
 # Alessio D'Ascanio <g3ntaro@gmail.com>, 2004
 # Diego 'Flameeyes' Pettenò <flameeyes@gentoo.org>, 2006
 # Diego 'Flameeyes' Pettenò <flameeyes@gmail.com>, 2007
-# Federico.Torsello <federico421@hotmail.it>, 2013
-# Federico.Torsello <federico421@hotmail.it>, 2013
+# Federico <federico421@hotmail.it>, 2013
+# Federico <federico421@hotmail.it>, 2013
 # Gaetano Ingrasciotta <gaetanoingrasciotta@gmail.com>, 2012
 # Gaetano Ingrasciotta <gaetanoingrasciotta@gmail.com>, 2012
 # Giuseppe D. B. <giuped@gmail.com>, 2012
@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-04-21 22:48+0200\n"
+"POT-Creation-Date: 2014-07-20 15:58+0200\n"
 "PO-Revision-Date: 2014-04-08 15:45+0000\n"
 "Last-Translator: Nicola Manini <nicola.manini@fisica.unimi.it>\n"
 "Language-Team: Italian (http://www.transifex.com/projects/p/audacious/"
@@ -188,7 +188,7 @@ msgstr "_Annulla"
 #: src/audacious/plugin-preferences.c:106 src/audacious/ui_preferences.c:763
 #: src/libaudgui/infowin.c:370 src/libaudgui/queue-manager.c:189
 #: src/libaudgui/ui_fileopener.c:127 src/libaudgui/ui_jumptotrack.c:312
-#: src/libaudgui/util.c:161
+#: src/libaudgui/util.c:186
 msgid "_Close"
 msgstr "_Chiudi"
 
@@ -1044,7 +1044,7 @@ msgstr "Aggiungi URL"
 msgid "Enter URL:"
 msgstr "Inserisci URL:"
 
-#: src/libaudgui/util.c:148
+#: src/libaudgui/util.c:173
 msgid ""
 "\n"
 "(Further messages have been hidden.)"

@@ -3,19 +3,19 @@
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
-# Alain-Olivier  Breysse, 2012-2013
+# yahoe.001, 2012-2013
 # Oxayotl <jagw40k@free.fr>, 2013-2014
 # Oxayotl <jagw40k@free.fr>, 2011-2012
 # Oxayotl <jagw40k@free.fr>, 2011
 # Oxayotl <jagw40k@free.fr>, 2013
-# Alain-Olivier  Breysse, 2013-2014
+# yahoe.001, 2013-2014
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-04-21 22:48+0200\n"
-"PO-Revision-Date: 2014-04-04 12:52+0000\n"
-"Last-Translator: Alain-Olivier  Breysse\n"
+"POT-Creation-Date: 2014-07-20 15:58+0200\n"
+"PO-Revision-Date: 2014-04-23 16:58+0000\n"
+"Last-Translator: yahoe.001\n"
 "Language-Team: French (http://www.transifex.com/projects/p/audacious/"
 "language/fr/)\n"
 "Language: fr\n"
@@ -26,7 +26,7 @@ msgstr ""
 
 #: src/audacious/adder.c:76
 msgid "Searching ..."
-msgstr "Recherche ..."
+msgstr "Recherche..."
 
 #: src/audacious/adder.c:104
 #, c-format
@@ -119,7 +119,7 @@ msgid ""
 "Usage: audacious [OPTION] ... [FILE] ...\n"
 "\n"
 msgstr ""
-"Utilisation : audacious [OPTION] ... [FICHIER] ...\n"
+"Utilisation : audacious [OPTION] ... [FICHIER]...\n"
 "\n"
 
 #: src/audacious/main.c:601
@@ -181,7 +181,7 @@ msgstr "_Annuler"
 #: src/audacious/plugin-preferences.c:106 src/audacious/ui_preferences.c:763
 #: src/libaudgui/infowin.c:370 src/libaudgui/queue-manager.c:189
 #: src/libaudgui/ui_fileopener.c:127 src/libaudgui/ui_jumptotrack.c:312
-#: src/libaudgui/util.c:161
+#: src/libaudgui/util.c:186
 msgid "_Close"
 msgstr "_Fermer"
 
@@ -946,7 +946,7 @@ msgstr "_Importer"
 
 #: src/libaudgui/queue-manager.c:172
 msgid "Queue Manager"
-msgstr "Gestionnaire de file d'attente"
+msgstr "Gestionnaire de la file d'attente"
 
 #: src/libaudgui/queue-manager.c:188
 msgid "_Unqueue"
@@ -1011,7 +1011,7 @@ msgstr "Entrées"
 
 #: src/libaudgui/ui_playlist_manager.c:254
 msgid "_New"
-msgstr "_Nouveau"
+msgstr "_Nouvelle"
 
 #: src/libaudgui/ui_playlist_manager.c:256
 msgid "Ren_ame"
@@ -1037,7 +1037,7 @@ msgstr "Ajouter l'URL"
 msgid "Enter URL:"
 msgstr "Saisir l'URL :"
 
-#: src/libaudgui/util.c:148
+#: src/libaudgui/util.c:173
 msgid ""
 "\n"
 "(Further messages have been hidden.)"

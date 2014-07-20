@@ -3,9 +3,9 @@
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
-# breaker loc <breaker9loc@gmail.com>, 2014
+# Elusiv_man <breaker9loc@gmail.com>, 2014
 # Kiril Kirilov (Cybercop) <acybecop_montana@abv.bg>, 2012
-# cybercop <cybercop_montana@abv.bg>, 2014
+# Kiril Kirilov <cybercop_montana@abv.bg>, 2014
 # Pandi3a <pandi3a@gmail.com>, 2012
 # Pandi3a <pandi3a@gmail.com>, 2012
 # Георги Пацев <>, 2012
@@ -15,9 +15,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-04-21 22:48+0200\n"
+"POT-Creation-Date: 2014-07-20 15:58+0200\n"
 "PO-Revision-Date: 2014-04-06 13:28+0000\n"
-"Last-Translator: cybercop <cybercop_montana@abv.bg>\n"
+"Last-Translator: Kiril Kirilov <cybercop_montana@abv.bg>\n"
 "Language-Team: Bulgarian (http://www.transifex.com/projects/p/audacious/"
 "language/bg/)\n"
 "Language: bg\n"
@@ -180,7 +180,7 @@ msgstr "_Отказ"
 #: src/audacious/plugin-preferences.c:106 src/audacious/ui_preferences.c:763
 #: src/libaudgui/infowin.c:370 src/libaudgui/queue-manager.c:189
 #: src/libaudgui/ui_fileopener.c:127 src/libaudgui/ui_jumptotrack.c:312
-#: src/libaudgui/util.c:161
+#: src/libaudgui/util.c:186
 msgid "_Close"
 msgstr "_Затваряне"
 
@@ -1037,7 +1037,7 @@ msgstr "Добавяне на интернет адрес"
 msgid "Enter URL:"
 msgstr "Въвеждане на интернет адрес:"
 
-#: src/libaudgui/util.c:148
+#: src/libaudgui/util.c:173
 msgid ""
 "\n"
 "(Further messages have been hidden.)"

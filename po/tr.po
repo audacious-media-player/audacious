@@ -3,32 +3,32 @@
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
-# 80s <onder.y@msn.com>, 2013
+# Önder Yıldırım <onder.y@msn.com>, 2013
 # aamet <aaydin159@gmail.com>, 2012
 # aamet <aaydin159@gmail.com>, 2012
 # Imnune <alikoc@hush.ai>, 2012
 # Ali Orhun Akkirman <the.alorak@gmail.com>, 2013
 # hsngrms <dead-bodies-everywhere@hotmail.com>, 2012
-# emfi <emrefirat93@gmail.com>, 2013
-# emfi <emrefirat93@gmail.com>, 2013
+# Emre FIRAT <emrefirat93@gmail.com>, 2013
+# Emre FIRAT <emrefirat93@gmail.com>, 2013
 # hsngrms <dead-bodies-everywhere@hotmail.com>, 2012
 # Imnune <alikoc@hush.ai>, 2012
-# kodadiirem <kodadiirem@gmail.com>, 2013
+# irem harmancı <kodadiirem@gmail.com>, 2013
 # maruf1 <turk.etna@gmail.com>, 2013
 # Murat Senel <muratasenel@gmail.com>, 2007
 # Murat Şenel <muratasenel@gmail.com>, 2007
-# nicotine <zekeriya.cihan@gmail.com>, 2013
+# Zekeriya Cihan <zekeriya.cihan@gmail.com>, 2013
 # tarkan255 <t.oguzman@hotmail.com>, 2012
-# Tayyip <m.tayyib.yel@gmail.com>, 2013
+# M. Tayyip Yel <m.tayyib.yel@gmail.com>, 2013
 # tarkan255 <t.oguzman@hotmail.com>, 2012
-# volkangezer <volkangezer@gmail.com>, 2014
+# Volkan Gezer <volkangezer@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-04-21 22:48+0200\n"
+"POT-Creation-Date: 2014-07-20 15:58+0200\n"
 "PO-Revision-Date: 2014-04-04 12:43+0000\n"
-"Last-Translator: volkangezer <volkangezer@gmail.com>\n"
+"Last-Translator: Volkan Gezer <volkangezer@gmail.com>\n"
 "Language-Team: Turkish (http://www.transifex.com/projects/p/audacious/"
 "language/tr/)\n"
 "Language: tr\n"
@@ -193,7 +193,7 @@ msgstr "_İptal"
 #: src/audacious/plugin-preferences.c:106 src/audacious/ui_preferences.c:763
 #: src/libaudgui/infowin.c:370 src/libaudgui/queue-manager.c:189
 #: src/libaudgui/ui_fileopener.c:127 src/libaudgui/ui_jumptotrack.c:312
-#: src/libaudgui/util.c:161
+#: src/libaudgui/util.c:186
 msgid "_Close"
 msgstr "_Kapat"
 
@@ -1048,7 +1048,7 @@ msgstr "Bağlantı Ekle"
 msgid "Enter URL:"
 msgstr "URL gir :"
 
-#: src/libaudgui/util.c:148
+#: src/libaudgui/util.c:173
 msgid ""
 "\n"
 "(Further messages have been hidden.)"

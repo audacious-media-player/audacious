@@ -5,16 +5,16 @@
 # Translators:
 # antiparvos <marcoslansgarza@gmail.com>, 2014
 # antiparvos <marcoslansgarza@gmail.com>, 2013
-# mbouzada <mbouzada@gmail.com>, 2013
-# mbouzada <mbouzada@gmail.com>, 2012
-# mbouzada <mbouzada@gmail.com>, 2012,2014
+# Miguel Anxo Bouzada <mbouzada@gmail.com>, 2013
+# Miguel Anxo Bouzada <mbouzada@gmail.com>, 2012
+# Miguel Anxo Bouzada <mbouzada@gmail.com>, 2012,2014
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-04-21 22:48+0200\n"
+"POT-Creation-Date: 2014-07-20 15:58+0200\n"
 "PO-Revision-Date: 2014-04-12 06:56+0000\n"
-"Last-Translator: mbouzada <mbouzada@gmail.com>\n"
+"Last-Translator: Miguel Anxo Bouzada <mbouzada@gmail.com>\n"
 "Language-Team: Galician (http://www.transifex.com/projects/p/audacious/"
 "language/gl/)\n"
 "Language: gl\n"
@@ -179,7 +179,7 @@ msgstr "_Cancelar"
 #: src/audacious/plugin-preferences.c:106 src/audacious/ui_preferences.c:763
 #: src/libaudgui/infowin.c:370 src/libaudgui/queue-manager.c:189
 #: src/libaudgui/ui_fileopener.c:127 src/libaudgui/ui_jumptotrack.c:312
-#: src/libaudgui/util.c:161
+#: src/libaudgui/util.c:186
 msgid "_Close"
 msgstr "_Pechar"
 
@@ -1038,7 +1038,7 @@ msgstr "Engadir un URL"
 msgid "Enter URL:"
 msgstr "Introduza o URL:"
 
-#: src/libaudgui/util.c:148
+#: src/libaudgui/util.c:173
 msgid ""
 "\n"
 "(Further messages have been hidden.)"

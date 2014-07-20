@@ -4,15 +4,15 @@
 #
 # Translators:
 # Ruei-Yuan Lu <RueiYuan.Lu@gmail.com>, 2011
-# Wai Hon Law <whhone@gmail.com>, 2013
-# Wai Hon Law <whhone@gmail.com>, 2013
+# whhone <whhone@gmail.com>, 2013
+# whhone <whhone@gmail.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-04-21 22:48+0200\n"
+"POT-Creation-Date: 2014-07-20 15:58+0200\n"
 "PO-Revision-Date: 2014-04-06 06:19+0000\n"
-"Last-Translator: 瑞元 盧 <rueiyuan.lu@gmail.com>\n"
+"Last-Translator: Ruei-Yuan Lu <rueiyuan.lu@gmail.com>\n"
 "Language-Team: Chinese (Taiwan) (http://www.transifex.com/projects/p/"
 "audacious/language/zh_TW/)\n"
 "Language: zh_TW\n"
@@ -172,7 +172,7 @@ msgstr "取消(_C)"
 #: src/audacious/plugin-preferences.c:106 src/audacious/ui_preferences.c:763
 #: src/libaudgui/infowin.c:370 src/libaudgui/queue-manager.c:189
 #: src/libaudgui/ui_fileopener.c:127 src/libaudgui/ui_jumptotrack.c:312
-#: src/libaudgui/util.c:161
+#: src/libaudgui/util.c:186
 msgid "_Close"
 msgstr "關閉(_C)"
 
@@ -1026,7 +1026,7 @@ msgstr "加入網址"
 msgid "Enter URL:"
 msgstr "請輸入網址："
 
-#: src/libaudgui/util.c:148
+#: src/libaudgui/util.c:173
 msgid ""
 "\n"
 "(Further messages have been hidden.)"

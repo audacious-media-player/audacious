@@ -3,17 +3,17 @@
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
-# CH <259095+transifex@gmail.com>, 2012
+# Chris <259095+transifex@gmail.com>, 2012
 # Bartosz Kosiorek <gang65@poczta.onet.pl>, 2003
-# CH <259095+transifex@gmail.com>, 2012
+# Chris <259095+transifex@gmail.com>, 2012
 # felikstayson <felikstayson@o2.pl>, 2012
 # felikstayson <felikstayson@o2.pl>, 2012
 # GNOME PL Team <translators@gnome.pl>, 2004
 # Grzegorz Kowal <g_kowal@poczta.onet.pl>, 2000-2001
 # mkkot <marcin2006@gmail.com>, 2013
-# mgrvnwald <marco@mgrvnwald.com>, 2013
-# mgrvnwald <marco@mgrvnwald.com>, 2013
-# mgrvnwald <marco@mgrvnwald.com>, 2013
+# Marco Oliver Grunwald <marco@mgrvnwald.com>, 2013
+# Marco Oliver Grunwald <marco@mgrvnwald.com>, 2013
+# Marco Oliver Grunwald <marco@mgrvnwald.com>, 2013
 # mkkot <marcin2006@gmail.com>, 2013-2014
 # Piotr Sokół <psokol@jabster.pl>, 2012
 # Szymon Weihs <sz.weihs@gmail.com>, 2011
@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-04-21 22:48+0200\n"
+"POT-Creation-Date: 2014-07-20 15:58+0200\n"
 "PO-Revision-Date: 2014-04-04 08:03+0000\n"
 "Last-Translator: mkkot <marcin2006@gmail.com>\n"
 "Language-Team: Polish (http://www.transifex.com/projects/p/audacious/"
@@ -190,7 +190,7 @@ msgstr "_Anuluj"
 #: src/audacious/plugin-preferences.c:106 src/audacious/ui_preferences.c:763
 #: src/libaudgui/infowin.c:370 src/libaudgui/queue-manager.c:189
 #: src/libaudgui/ui_fileopener.c:127 src/libaudgui/ui_jumptotrack.c:312
-#: src/libaudgui/util.c:161
+#: src/libaudgui/util.c:186
 msgid "_Close"
 msgstr "_Zamknij"
 
@@ -1046,7 +1046,7 @@ msgstr "Dodaj adres URL"
 msgid "Enter URL:"
 msgstr "Wprowadź URL:"
 
-#: src/libaudgui/util.c:148
+#: src/libaudgui/util.c:173
 msgid ""
 "\n"
 "(Further messages have been hidden.)"

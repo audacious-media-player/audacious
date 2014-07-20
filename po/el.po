@@ -8,14 +8,14 @@
 # Marinos Zak <marinoszak@gmail.com>, 2012
 # Stathis Kamperis <ekamperi@auth.gr>, 2006
 # Γιάννης Ανθυμίδης <yannanth@gmail.com>, 2011
-# Γιάννης Ανθυμίδης <yannanth@gmail.com>, 2011-2013
+# Γιάννης Ανθυμίδης <yannanth@gmail.com>, 2011-2014
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-04-21 22:48+0200\n"
-"PO-Revision-Date: 2014-04-04 07:08+0000\n"
-"Last-Translator: Radioactiveman <thomas-lange2@gmx.de>\n"
+"POT-Creation-Date: 2014-07-20 15:58+0200\n"
+"PO-Revision-Date: 2014-05-05 11:44+0000\n"
+"Last-Translator: Γιάννης Ανθυμίδης <yannanth@gmail.com>\n"
 "Language-Team: Greek (http://www.transifex.com/projects/p/audacious/language/"
 "el/)\n"
 "Language: el\n"
@@ -41,11 +41,11 @@ msgstr "Νέα Λίστα Αναπαραγωγής"
 
 #: src/audacious/interface.c:93
 msgid "Error"
-msgstr ""
+msgstr "Σφάλμα"
 
 #: src/audacious/main.c:70
 msgid "Show command-line help"
-msgstr ""
+msgstr "Προβολή βοήθειας  για τη γραμμή εντολών"
 
 #: src/audacious/main.c:71
 msgid "Show version"
@@ -53,11 +53,11 @@ msgstr "Εμφάνιση έκδοσης"
 
 #: src/audacious/main.c:72
 msgid "Start playback"
-msgstr ""
+msgstr "Έναρξη αναπαραγωγής"
 
 #: src/audacious/main.c:73
 msgid "Pause playback"
-msgstr ""
+msgstr "Παύση αναπαραγωγής"
 
 #: src/audacious/main.c:74
 msgid "Pause if playing, play otherwise"
@@ -65,15 +65,15 @@ msgstr "Παύση αν παίζει, αλλιώς αναπαραγωγή"
 
 #: src/audacious/main.c:75
 msgid "Stop playback"
-msgstr ""
+msgstr "Διακοπή αναπαραγωγής"
 
 #: src/audacious/main.c:76
 msgid "Skip to previous song"
-msgstr ""
+msgstr "Μετάβαση στο προηγούμενο κομμάτι"
 
 #: src/audacious/main.c:77
 msgid "Skip to next song"
-msgstr ""
+msgstr "Μετάβαση στο επόμενο κομμάτι"
 
 #: src/audacious/main.c:78
 msgid "Add files to the playlist"
@@ -106,12 +106,12 @@ msgstr "Προβολή μηνυμάτων εντοπισμού σφαλμάτω�
 #: src/audacious/main.c:269
 #, c-format
 msgid "Unknown option: %s\n"
-msgstr ""
+msgstr "Άγνωστη επιλογή: %s\n"
 
 #: src/audacious/main.c:291
 #, c-format
 msgid "Unknown option: -%c\n"
-msgstr ""
+msgstr "Άγνωστη επιλογή: -%c\n"
 
 #: src/audacious/main.c:314
 #, c-format
@@ -158,11 +158,11 @@ msgstr ""
 
 #: src/audacious/plugin-preferences.c:55
 msgid "About"
-msgstr ""
+msgstr "Περί"
 
 #: src/audacious/plugin-preferences.c:94
 msgid "Settings"
-msgstr ""
+msgstr "Ρυθμίσεις"
 
 #: src/audacious/plugin-preferences.c:99
 msgid "_Set"
@@ -173,30 +173,30 @@ msgstr ""
 #: src/libaudgui/playlists.c:89 src/libaudgui/playlists.c:142
 #: src/libaudgui/url-opener.c:71
 msgid "_Cancel"
-msgstr ""
+msgstr "Ά_κυρο"
 
 #: src/audacious/plugin-preferences.c:106 src/audacious/ui_preferences.c:763
 #: src/libaudgui/infowin.c:370 src/libaudgui/queue-manager.c:189
 #: src/libaudgui/ui_fileopener.c:127 src/libaudgui/ui_jumptotrack.c:312
-#: src/libaudgui/util.c:161
+#: src/libaudgui/util.c:186
 msgid "_Close"
-msgstr ""
+msgstr "_Κλείσιμο"
 
 #: src/audacious/plugin-view.c:242 src/audacious/ui_preferences.c:641
 msgid "_Settings"
-msgstr ""
+msgstr "_Ρυθμίσεις"
 
 #: src/audacious/plugin-view.c:250 src/audacious/ui_preferences.c:652
 msgid "_About"
-msgstr ""
+msgstr "_Περί"
 
 #: src/audacious/ui_plugin_menu.c:37
 msgid "_Plugins ..."
-msgstr ""
+msgstr "Π_ρόσθετα ..."
 
 #: src/audacious/ui_preferences.c:82
 msgid "Appearance"
-msgstr ""
+msgstr "Εμφάνιση"
 
 #: src/audacious/ui_preferences.c:83
 msgid "Audio"
@@ -345,11 +345,11 @@ msgstr "Κινητή υποδιαστολή"
 
 #: src/audacious/ui_preferences.c:147
 msgid "<b>Interface Settings</b>"
-msgstr ""
+msgstr "<b>Ρυθμίσεις Διεπαφής</b>"
 
 #: src/audacious/ui_preferences.c:148
 msgid "Interface plugin:"
-msgstr ""
+msgstr "Πρόσθετο διεπαφής:"
 
 #: src/audacious/ui_preferences.c:165
 msgid "Output plugin:"
@@ -577,7 +577,7 @@ msgstr "Προσαρμοσμένο αλφαριθμητικό:"
 
 #: src/audacious/ui_preferences.c:714
 msgid "Audacious Settings"
-msgstr ""
+msgstr "Ρυθμίσεις Audacious"
 
 #: src/audacious/util.c:112
 #, c-format
@@ -619,15 +619,15 @@ msgstr "Σχετικά με το Audacious"
 #: src/libaudgui/confirm.c:51
 #, c-format
 msgid "Do you want to permanently remove “%s”?"
-msgstr ""
+msgstr "Θέλετε να αφαιρέσετε τη λίστα «%s» για πάντα;"
 
 #: src/libaudgui/confirm.c:55 src/libaudgui/ui_playlist_manager.c:255
 msgid "_Remove"
-msgstr ""
+msgstr "Α_φαίρεση"
 
 #: src/libaudgui/confirm.c:60
 msgid "Remove Playlist"
-msgstr ""
+msgstr "Αφαίρεση Λίστας"
 
 #: src/libaudgui/confirm.c:62
 msgid "_Don’t ask again"
@@ -635,7 +635,7 @@ msgstr ""
 
 #: src/libaudgui/confirm.c:89
 msgid "_Rename"
-msgstr ""
+msgstr "_Μετονομασία"
 
 #: src/libaudgui/confirm.c:93
 msgid "Rename Playlist"
@@ -707,11 +707,11 @@ msgstr "Μήκος"
 
 #: src/libaudgui/infowin.c:46
 msgid "Format:"
-msgstr ""
+msgstr "Μορφή:"
 
 #: src/libaudgui/infowin.c:47
 msgid "Quality:"
-msgstr ""
+msgstr "Ποιότητα:"
 
 #: src/libaudgui/infowin.c:48
 msgid "Bitrate:"
@@ -922,7 +922,7 @@ msgstr "Να γίνει αντικατάσταση του %s;"
 
 #: src/libaudgui/playlists.c:88
 msgid "_Overwrite"
-msgstr ""
+msgstr "_Αντικατάσταση"
 
 #: src/libaudgui/playlists.c:92
 msgid "Confirm Overwrite"
@@ -934,7 +934,7 @@ msgstr "Εξαγωγή Λίστας Τραγουδιών"
 
 #: src/libaudgui/playlists.c:122
 msgid "_Export"
-msgstr ""
+msgstr "Ε_ξαγωγή"
 
 #: src/libaudgui/playlists.c:128
 msgid "Import Playlist"
@@ -942,7 +942,7 @@ msgstr "Εισαγωγή Λίστας Τραγουδιών"
 
 #: src/libaudgui/playlists.c:129
 msgid "_Import"
-msgstr ""
+msgstr "_Είσαγωγη"
 
 #: src/libaudgui/queue-manager.c:172
 msgid "Queue Manager"
@@ -1011,15 +1011,15 @@ msgstr "Καταχωρήσεις"
 
 #: src/libaudgui/ui_playlist_manager.c:254
 msgid "_New"
-msgstr ""
+msgstr "_Νέα"
 
 #: src/libaudgui/ui_playlist_manager.c:256
 msgid "Ren_ame"
-msgstr ""
+msgstr "_Μετονομασία"
 
 #: src/libaudgui/ui_playlist_manager.c:257
 msgid "_Play"
-msgstr ""
+msgstr "_Αναπαραγωγή"
 
 #: src/libaudgui/ui_playlist_manager.c:269
 msgid "_Close dialog on activating playlist"
@@ -1037,7 +1037,7 @@ msgstr "Προσθήκη διεύθυνσης URL"
 msgid "Enter URL:"
 msgstr "Εισαγωγή URL:"
 
-#: src/libaudgui/util.c:148
+#: src/libaudgui/util.c:173
 msgid ""
 "\n"
 "(Further messages have been hidden.)"

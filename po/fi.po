@@ -4,9 +4,10 @@
 #
 # Translators:
 # Elias Julkunen <elias.julkunen@gmail.com>, 2011
-# Jaergenoth <jstuomisto@gmail.com>, 2013
-# Jaergenoth <jstuomisto@gmail.com>, 2013
-# Jaergenoth <jstuomisto@gmail.com>, 2013
+# J. S. Tuomisto <jstuomisto@gmail.com>, 2013
+# Jiri Grönroos <jiri.gronroos@iki.fi>, 2014
+# J. S. Tuomisto <jstuomisto@gmail.com>, 2013
+# J. S. Tuomisto <jstuomisto@gmail.com>, 2013
 # Matti Hämäläinen, 2008
 # Pauli Virtanen <pauli.virtanen@hut.fi>, 2004
 # Tuomas Lähteenmäki <lahtis@gmail.com>, 2012
@@ -14,9 +15,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-04-21 22:48+0200\n"
-"PO-Revision-Date: 2014-04-04 07:08+0000\n"
-"Last-Translator: Radioactiveman <thomas-lange2@gmx.de>\n"
+"POT-Creation-Date: 2014-07-20 15:58+0200\n"
+"PO-Revision-Date: 2014-04-24 18:14+0000\n"
+"Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
 "Language-Team: Finnish (http://www.transifex.com/projects/p/audacious/"
 "language/fi/)\n"
 "Language: fi\n"
@@ -42,11 +43,11 @@ msgstr "Uusi soittolista"
 
 #: src/audacious/interface.c:93
 msgid "Error"
-msgstr ""
+msgstr "Virhe"
 
 #: src/audacious/main.c:70
 msgid "Show command-line help"
-msgstr ""
+msgstr "Näytä komentorivin ohje"
 
 #: src/audacious/main.c:71
 msgid "Show version"
@@ -54,11 +55,11 @@ msgstr "Näytä versio"
 
 #: src/audacious/main.c:72
 msgid "Start playback"
-msgstr ""
+msgstr "Aloita toisto"
 
 #: src/audacious/main.c:73
 msgid "Pause playback"
-msgstr ""
+msgstr "Keskeytä toisto"
 
 #: src/audacious/main.c:74
 msgid "Pause if playing, play otherwise"
@@ -66,15 +67,15 @@ msgstr "Keskeytä jos kappale soi, muutoin jatka soittamista"
 
 #: src/audacious/main.c:75
 msgid "Stop playback"
-msgstr ""
+msgstr "Pysäytä toisto"
 
 #: src/audacious/main.c:76
 msgid "Skip to previous song"
-msgstr ""
+msgstr "Siirry edelliseen kappaleeseen"
 
 #: src/audacious/main.c:77
 msgid "Skip to next song"
-msgstr ""
+msgstr "Siirry seuraavaan kappaleeseen"
 
 #: src/audacious/main.c:78
 msgid "Add files to the playlist"
@@ -82,7 +83,7 @@ msgstr "Lisää tiedostoja soittolistaan"
 
 #: src/audacious/main.c:79
 msgid "Add files to a temporary playlist"
-msgstr ""
+msgstr "Lisää tiedostoja väliaikaiselle soittolistalle"
 
 #: src/audacious/main.c:80
 msgid "Display the main window"
@@ -90,11 +91,11 @@ msgstr "Näytä pääikkuna"
 
 #: src/audacious/main.c:81
 msgid "Display the jump-to-song window"
-msgstr ""
+msgstr "Näytä \"siirry kappaleeseen\"-ikkuna"
 
 #: src/audacious/main.c:82
 msgid "Start without a graphical interface"
-msgstr ""
+msgstr "Käynnistä ilman graafista käyttöliittymää"
 
 #: src/audacious/main.c:83
 msgid "Quit on playback stop"
@@ -107,12 +108,12 @@ msgstr "Näytä virheenjäljitysviestit"
 #: src/audacious/main.c:269
 #, c-format
 msgid "Unknown option: %s\n"
-msgstr ""
+msgstr "Tuntematon valinta: %s\n"
 
 #: src/audacious/main.c:291
 #, c-format
 msgid "Unknown option: -%c\n"
-msgstr ""
+msgstr "Tuntematon valinta: -%c\n"
 
 #: src/audacious/main.c:314
 #, c-format
@@ -120,6 +121,8 @@ msgid ""
 "Usage: audacious [OPTION] ... [FILE] ...\n"
 "\n"
 msgstr ""
+"Käyttö: audacious [VALINTA] ... [TIEDOSTO] ...\n"
+"\n"
 
 #: src/audacious/main.c:601
 msgid "Audacious"
@@ -138,12 +141,12 @@ msgstr "Ei voida avata %s."
 #: src/audacious/playlist-files.c:95
 #, c-format
 msgid "Cannot load %s: unsupported file extension."
-msgstr ""
+msgstr "Kohteen %s lataaminen epäonnistui: tiedostopääte ei ole tuettu."
 
 #: src/audacious/playlist-files.c:185
 #, c-format
 msgid "Cannot save %s: unsupported file extension."
-msgstr ""
+msgstr "Kohteen %s tallentaminen epäonnistui: tiedostopääte ei ole tuettu."
 
 #: src/audacious/playlist-new.c:98
 msgid "Now Playing"
@@ -159,45 +162,45 @@ msgstr ""
 
 #: src/audacious/plugin-preferences.c:55
 msgid "About"
-msgstr ""
+msgstr "Tietoja"
 
 #: src/audacious/plugin-preferences.c:94
 msgid "Settings"
-msgstr ""
+msgstr "Asetukset"
 
 #: src/audacious/plugin-preferences.c:99
 msgid "_Set"
-msgstr ""
+msgstr "_Aseta"
 
 #: src/audacious/plugin-preferences.c:100 src/libaudgui/confirm.c:57
 #: src/libaudgui/confirm.c:90 src/libaudgui/jump-to-time.c:49
 #: src/libaudgui/playlists.c:89 src/libaudgui/playlists.c:142
 #: src/libaudgui/url-opener.c:71
 msgid "_Cancel"
-msgstr ""
+msgstr "_Peru"
 
 #: src/audacious/plugin-preferences.c:106 src/audacious/ui_preferences.c:763
 #: src/libaudgui/infowin.c:370 src/libaudgui/queue-manager.c:189
 #: src/libaudgui/ui_fileopener.c:127 src/libaudgui/ui_jumptotrack.c:312
-#: src/libaudgui/util.c:161
+#: src/libaudgui/util.c:186
 msgid "_Close"
-msgstr ""
+msgstr "_Sulje"
 
 #: src/audacious/plugin-view.c:242 src/audacious/ui_preferences.c:641
 msgid "_Settings"
-msgstr ""
+msgstr "_Asetukset"
 
 #: src/audacious/plugin-view.c:250 src/audacious/ui_preferences.c:652
 msgid "_About"
-msgstr ""
+msgstr "_Tietoja"
 
 #: src/audacious/ui_plugin_menu.c:37
 msgid "_Plugins ..."
-msgstr ""
+msgstr "_Liitännäiset..."
 
 #: src/audacious/ui_preferences.c:82
 msgid "Appearance"
-msgstr ""
+msgstr "Ulkoasu"
 
 #: src/audacious/ui_preferences.c:83
 msgid "Audio"
@@ -346,11 +349,11 @@ msgstr "Liukuluku"
 
 #: src/audacious/ui_preferences.c:147
 msgid "<b>Interface Settings</b>"
-msgstr ""
+msgstr "<b>Käyttöliittymän asetukset</b>"
 
 #: src/audacious/ui_preferences.c:148
 msgid "Interface plugin:"
-msgstr ""
+msgstr "Käyttöliittymän liitännäinen:"
 
 #: src/audacious/ui_preferences.c:165
 msgid "Output plugin:"
@@ -574,7 +577,7 @@ msgstr "Muu merkkijono:"
 
 #: src/audacious/ui_preferences.c:714
 msgid "Audacious Settings"
-msgstr ""
+msgstr "Audaciouksen asetukset"
 
 #: src/audacious/util.c:112
 #, c-format
@@ -584,7 +587,7 @@ msgstr "Hakemiston (%s) luominen epäonnistui: %s\n"
 #: src/libaudcore/audstrings.c:385
 #, c-format
 msgid "Audio CD, track %s"
-msgstr "Ääni-CD, raita %s"
+msgstr "Ääni-CD, kappale %s"
 
 #: src/libaudcore/tuple.c:442
 msgid "Mono"
@@ -616,23 +619,23 @@ msgstr "Tietoja Audaciouksesta"
 #: src/libaudgui/confirm.c:51
 #, c-format
 msgid "Do you want to permanently remove “%s”?"
-msgstr ""
+msgstr "Haluastko poistaa kohteen “%s” pysyvästi?"
 
 #: src/libaudgui/confirm.c:55 src/libaudgui/ui_playlist_manager.c:255
 msgid "_Remove"
-msgstr ""
+msgstr "_Poista"
 
 #: src/libaudgui/confirm.c:60
 msgid "Remove Playlist"
-msgstr ""
+msgstr "Poista soittolista"
 
 #: src/libaudgui/confirm.c:62
 msgid "_Don’t ask again"
-msgstr ""
+msgstr "_Älä kysy uudelleen"
 
 #: src/libaudgui/confirm.c:89
 msgid "_Rename"
-msgstr ""
+msgstr "_Nimeä uudelleen"
 
 #: src/libaudgui/confirm.c:93
 msgid "Rename Playlist"
@@ -640,7 +643,7 @@ msgstr "Nimeä soittolista uudelleen"
 
 #: src/libaudgui/confirm.c:93
 msgid "What would you like to call this playlist?"
-msgstr ""
+msgstr "Minkä nimen haluat antaa tälle soittolistalle?"
 
 #: src/libaudgui/equalizer.c:44
 msgid "_Enable"
@@ -696,7 +699,7 @@ msgstr "Esivahvistus"
 
 #: src/libaudgui/infopopup.c:155
 msgid "Track"
-msgstr "Raita"
+msgstr "Kappale"
 
 #: src/libaudgui/infopopup.c:156
 msgid "Length"
@@ -704,15 +707,15 @@ msgstr "Kesto"
 
 #: src/libaudgui/infowin.c:46
 msgid "Format:"
-msgstr ""
+msgstr "Muoto:"
 
 #: src/libaudgui/infowin.c:47
 msgid "Quality:"
-msgstr ""
+msgstr "Laatu:"
 
 #: src/libaudgui/infowin.c:48
 msgid "Bitrate:"
-msgstr ""
+msgstr "Bittinopeus:"
 
 #: src/libaudgui/infowin.c:76
 msgid "Acid Jazz"
@@ -872,19 +875,19 @@ msgstr "Trip-hop"
 
 #: src/libaudgui/infowin.c:220
 msgid "Save successful"
-msgstr ""
+msgstr "Tallennus onnistui"
 
 #: src/libaudgui/infowin.c:224
 msgid "Save error"
-msgstr ""
+msgstr "Virhe tallennettaessa"
 
 #: src/libaudgui/infowin.c:359
 msgid "Track Number"
-msgstr ""
+msgstr "Kappaleen numero"
 
 #: src/libaudgui/infowin.c:367
 msgid "_Save"
-msgstr ""
+msgstr "_Tallenna"
 
 #: src/libaudgui/infowin.c:418
 #, c-format
@@ -893,7 +896,7 @@ msgstr "%d kb/s"
 
 #: src/libaudgui/infowin.c:423
 msgid "N/A"
-msgstr ""
+msgstr "-"
 
 #: src/libaudgui/infowin.c:453
 #, c-format
@@ -902,7 +905,7 @@ msgstr "Tietoja ei ole saatavilla aiheesta %s.\n"
 
 #: src/libaudgui/jump-to-time.c:48 src/libaudgui/ui_jumptotrack.c:305
 msgid "_Jump"
-msgstr ""
+msgstr "Sii_rry"
 
 #: src/libaudgui/jump-to-time.c:52
 msgid "Jump to Time"
@@ -919,11 +922,11 @@ msgstr "Ylikirjoita %s?"
 
 #: src/libaudgui/playlists.c:88
 msgid "_Overwrite"
-msgstr ""
+msgstr "_Korvaa"
 
 #: src/libaudgui/playlists.c:92
 msgid "Confirm Overwrite"
-msgstr ""
+msgstr "Vahvista korvaaminen"
 
 #: src/libaudgui/playlists.c:121
 msgid "Export Playlist"
@@ -931,7 +934,7 @@ msgstr "Vie soittolista"
 
 #: src/libaudgui/playlists.c:122
 msgid "_Export"
-msgstr ""
+msgstr "_Vie"
 
 #: src/libaudgui/playlists.c:128
 msgid "Import Playlist"
@@ -939,7 +942,7 @@ msgstr "Tuo soittolista"
 
 #: src/libaudgui/playlists.c:129
 msgid "_Import"
-msgstr ""
+msgstr "_Tuo"
 
 #: src/libaudgui/queue-manager.c:172
 msgid "Queue Manager"
@@ -947,7 +950,7 @@ msgstr "Jonomanageri"
 
 #: src/libaudgui/queue-manager.c:188
 msgid "_Unqueue"
-msgstr ""
+msgstr "_Poista jonosta"
 
 #: src/libaudgui/ui_fileopener.c:79
 msgid "Open Files"
@@ -955,11 +958,11 @@ msgstr "Avaa tiedostoja"
 
 #: src/libaudgui/ui_fileopener.c:80 src/libaudgui/url-opener.c:50
 msgid "_Open"
-msgstr ""
+msgstr "_Avaa"
 
 #: src/libaudgui/ui_fileopener.c:82
 msgid "Close _dialog on open"
-msgstr ""
+msgstr "S_ulje ikkuna avatessa"
 
 #: src/libaudgui/ui_fileopener.c:87
 msgid "Add Files"
@@ -967,11 +970,11 @@ msgstr "Lisää tiedostoja"
 
 #: src/libaudgui/ui_fileopener.c:88 src/libaudgui/url-opener.c:56
 msgid "_Add"
-msgstr ""
+msgstr "_Lisää"
 
 #: src/libaudgui/ui_fileopener.c:90
 msgid "Close _dialog on add"
-msgstr ""
+msgstr "Sul_je ikkuna lisättäessä"
 
 #: src/libaudgui/ui_jumptotrack.c:101 src/libaudgui/ui_jumptotrack.c:109
 #: src/libaudgui/ui_jumptotrack.c:301
@@ -996,7 +999,7 @@ msgstr "_Suodatin:"
 
 #: src/libaudgui/ui_jumptotrack.c:294
 msgid "C_lose on jump"
-msgstr ""
+msgstr "S_ulje siirryttäessä"
 
 #: src/libaudgui/ui_playlist_manager.c:223
 msgid "Playlist Manager"
@@ -1008,15 +1011,15 @@ msgstr "Nimikkeitä"
 
 #: src/libaudgui/ui_playlist_manager.c:254
 msgid "_New"
-msgstr ""
+msgstr "_Uusi"
 
 #: src/libaudgui/ui_playlist_manager.c:256
 msgid "Ren_ame"
-msgstr ""
+msgstr "N_imeä uudelleen"
 
 #: src/libaudgui/ui_playlist_manager.c:257
 msgid "_Play"
-msgstr ""
+msgstr "_Toista"
 
 #: src/libaudgui/ui_playlist_manager.c:269
 msgid "_Close dialog on activating playlist"
@@ -1034,7 +1037,7 @@ msgstr "Lisää URL-osoite"
 msgid "Enter URL:"
 msgstr "Linkki:"
 
-#: src/libaudgui/util.c:148
+#: src/libaudgui/util.c:173
 msgid ""
 "\n"
 "(Further messages have been hidden.)"

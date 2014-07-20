@@ -3,18 +3,19 @@
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
-# szaboferee <szaboferee@gmail.com>, 2013
+# Ferenc Szabo <szaboferee@gmail.com>, 2013
+# fyghter04 <fyghter@mail.com>, 2014
 # Laszlo Dvornik <dvornik@gnome.hu>, 2006
 # Péter Polonkai <polesz@nedudu.hu>, 2010
 # Péter Polonkai <polesz@nedudu.hu>, 2010-2012
-# szaboferee <szaboferee@gmail.com>, 2013
+# Ferenc Szabo <szaboferee@gmail.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-04-21 22:51+0200\n"
-"PO-Revision-Date: 2014-04-04 07:08+0000\n"
-"Last-Translator: Radioactiveman <thomas-lange2@gmx.de>\n"
+"POT-Creation-Date: 2014-07-20 15:58+0200\n"
+"PO-Revision-Date: 2014-07-12 09:15+0000\n"
+"Last-Translator: fyghter04 <fyghter@mail.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/projects/p/audacious/"
 "language/hu/)\n"
 "Language: hu\n"
@@ -40,7 +41,7 @@ msgstr "Új lejátszólista"
 
 #: src/audacious/interface.c:93
 msgid "Error"
-msgstr ""
+msgstr "Hiba"
 
 #: src/audacious/main.c:70
 msgid "Show command-line help"
@@ -52,11 +53,11 @@ msgstr "Verzió mutatása"
 
 #: src/audacious/main.c:72
 msgid "Start playback"
-msgstr ""
+msgstr "Lejátszás indítása"
 
 #: src/audacious/main.c:73
 msgid "Pause playback"
-msgstr ""
+msgstr "Lejátszás szüneteltetése"
 
 #: src/audacious/main.c:74
 msgid "Pause if playing, play otherwise"
@@ -64,15 +65,15 @@ msgstr "Lejátszás esetén szüneteltetés, különben lejátszás"
 
 #: src/audacious/main.c:75
 msgid "Stop playback"
-msgstr ""
+msgstr "Lejátszás megállítása"
 
 #: src/audacious/main.c:76
 msgid "Skip to previous song"
-msgstr ""
+msgstr "Ugrás az előző számhoz"
 
 #: src/audacious/main.c:77
 msgid "Skip to next song"
-msgstr ""
+msgstr "Ugrás a következő számhoz"
 
 #: src/audacious/main.c:78
 msgid "Add files to the playlist"
@@ -80,7 +81,7 @@ msgstr "Fájlok hozzáadása a lejátszó listához"
 
 #: src/audacious/main.c:79
 msgid "Add files to a temporary playlist"
-msgstr ""
+msgstr "Fájlok hozzáadása egy ideiglenes lejátszólistához"
 
 #: src/audacious/main.c:80
 msgid "Display the main window"
@@ -92,7 +93,7 @@ msgstr ""
 
 #: src/audacious/main.c:82
 msgid "Start without a graphical interface"
-msgstr ""
+msgstr "Indítás grafikus felület nélkül"
 
 #: src/audacious/main.c:83
 msgid "Quit on playback stop"
@@ -105,12 +106,12 @@ msgstr "Hibakereső üzenetek kiírása"
 #: src/audacious/main.c:269
 #, c-format
 msgid "Unknown option: %s\n"
-msgstr ""
+msgstr "Ismeretlen paraméter: %s\n"
 
 #: src/audacious/main.c:291
 #, c-format
 msgid "Unknown option: -%c\n"
-msgstr ""
+msgstr "Ismeretlen paraméter: -%c\n"
 
 #: src/audacious/main.c:314
 #, c-format
@@ -118,6 +119,8 @@ msgid ""
 "Usage: audacious [OPTION] ... [FILE] ...\n"
 "\n"
 msgstr ""
+"Használat: audacious [PARAMÉTER] ... [FÁJL] ...\n"
+"\n"
 
 #: src/audacious/main.c:601
 msgid "Audacious"
@@ -136,12 +139,12 @@ msgstr "%s-t nem lehet megnyitni."
 #: src/audacious/playlist-files.c:95
 #, c-format
 msgid "Cannot load %s: unsupported file extension."
-msgstr ""
+msgstr "%s -t nem lehet betölteni: a fájlkiterjesztés nem támogatott."
 
 #: src/audacious/playlist-files.c:185
 #, c-format
 msgid "Cannot save %s: unsupported file extension."
-msgstr ""
+msgstr "%s nem menthető: a formátum nem támogatott."
 
 #: src/audacious/playlist-new.c:98
 msgid "Now Playing"
@@ -157,11 +160,11 @@ msgstr ""
 
 #: src/audacious/plugin-preferences.c:55
 msgid "About"
-msgstr ""
+msgstr "Névjegy"
 
 #: src/audacious/plugin-preferences.c:94
 msgid "Settings"
-msgstr ""
+msgstr "Beállítások"
 
 #: src/audacious/plugin-preferences.c:99
 msgid "_Set"
@@ -177,7 +180,7 @@ msgstr ""
 #: src/audacious/plugin-preferences.c:106 src/audacious/ui_preferences.c:763
 #: src/libaudgui/infowin.c:370 src/libaudgui/queue-manager.c:189
 #: src/libaudgui/ui_fileopener.c:127 src/libaudgui/ui_jumptotrack.c:312
-#: src/libaudgui/util.c:161
+#: src/libaudgui/util.c:186
 msgid "_Close"
 msgstr ""
 
@@ -195,7 +198,7 @@ msgstr ""
 
 #: src/audacious/ui_preferences.c:82
 msgid "Appearance"
-msgstr ""
+msgstr "Megjelenés"
 
 #: src/audacious/ui_preferences.c:83
 msgid "Audio"
@@ -344,7 +347,7 @@ msgstr "Lebegőpontos"
 
 #: src/audacious/ui_preferences.c:147
 msgid "<b>Interface Settings</b>"
-msgstr ""
+msgstr "<b>Felület beállításai</b>"
 
 #: src/audacious/ui_preferences.c:148
 msgid "Interface plugin:"
@@ -534,11 +537,11 @@ msgstr "ELŐADÓ - ALBUM - CÍM"
 
 #: src/audacious/ui_preferences.c:283
 msgid "ARTIST - ALBUM - TRACK. TITLE"
-msgstr "ELŐADÓ - ALBUM - SÁV. CÍM"
+msgstr "ELŐADÓ - ALBUM - SZÁM. CÍM"
 
 #: src/audacious/ui_preferences.c:284
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
-msgstr "ELŐADÓ [ ALBUM] - SÁV. CÍM"
+msgstr "ELŐADÓ [ ALBUM] - SZÁM. CÍM"
 
 #: src/audacious/ui_preferences.c:285
 msgid "ALBUM - TITLE"
@@ -616,23 +619,23 @@ msgstr "Audacious névjegye"
 #: src/libaudgui/confirm.c:51
 #, c-format
 msgid "Do you want to permanently remove “%s”?"
-msgstr ""
+msgstr "Biztos, hogy véglegesen törli ezt: \"%s\"?"
 
 #: src/libaudgui/confirm.c:55 src/libaudgui/ui_playlist_manager.c:255
 msgid "_Remove"
-msgstr ""
+msgstr "_Eltávolítás"
 
 #: src/libaudgui/confirm.c:60
 msgid "Remove Playlist"
-msgstr ""
+msgstr "Lejátszólista törlése"
 
 #: src/libaudgui/confirm.c:62
 msgid "_Don’t ask again"
-msgstr ""
+msgstr "_Ne kérdezze többször"
 
 #: src/libaudgui/confirm.c:89
 msgid "_Rename"
-msgstr ""
+msgstr "_Átnevezés"
 
 #: src/libaudgui/confirm.c:93
 msgid "Rename Playlist"
@@ -640,7 +643,7 @@ msgstr "Lejátszólista átnevezése"
 
 #: src/libaudgui/confirm.c:93
 msgid "What would you like to call this playlist?"
-msgstr ""
+msgstr "Mi legyen a lejátszólista neve?"
 
 #: src/libaudgui/equalizer.c:44
 msgid "_Enable"
@@ -704,15 +707,15 @@ msgstr "Hossz"
 
 #: src/libaudgui/infowin.c:46
 msgid "Format:"
-msgstr ""
+msgstr "Formátum:"
 
 #: src/libaudgui/infowin.c:47
 msgid "Quality:"
-msgstr ""
+msgstr "Minőség:"
 
 #: src/libaudgui/infowin.c:48
 msgid "Bitrate:"
-msgstr ""
+msgstr "Bitráta:"
 
 #: src/libaudgui/infowin.c:76
 msgid "Acid Jazz"
@@ -872,19 +875,19 @@ msgstr "Trip-hop"
 
 #: src/libaudgui/infowin.c:220
 msgid "Save successful"
-msgstr ""
+msgstr "Sikeres mentés"
 
 #: src/libaudgui/infowin.c:224
 msgid "Save error"
-msgstr ""
+msgstr "Sikertelen mentés"
 
 #: src/libaudgui/infowin.c:359
 msgid "Track Number"
-msgstr ""
+msgstr "Sorszám"
 
 #: src/libaudgui/infowin.c:367
 msgid "_Save"
-msgstr ""
+msgstr "_Mentés"
 
 #: src/libaudgui/infowin.c:418
 #, c-format
@@ -893,16 +896,16 @@ msgstr "%d kb/s"
 
 #: src/libaudgui/infowin.c:423
 msgid "N/A"
-msgstr ""
+msgstr "N/A"
 
 #: src/libaudgui/infowin.c:453
 #, c-format
 msgid "No info available for %s.\n"
-msgstr "Nincs ehhez információ %s.\n"
+msgstr "Nincs ehhez információ: %s.\n"
 
 #: src/libaudgui/jump-to-time.c:48 src/libaudgui/ui_jumptotrack.c:305
 msgid "_Jump"
-msgstr ""
+msgstr "_Ugrás"
 
 #: src/libaudgui/jump-to-time.c:52
 msgid "Jump to Time"
@@ -919,11 +922,11 @@ msgstr "Felülírja %s?"
 
 #: src/libaudgui/playlists.c:88
 msgid "_Overwrite"
-msgstr ""
+msgstr "_Felülírás"
 
 #: src/libaudgui/playlists.c:92
 msgid "Confirm Overwrite"
-msgstr ""
+msgstr "Felülírás megerősítése"
 
 #: src/libaudgui/playlists.c:121
 msgid "Export Playlist"
@@ -931,7 +934,7 @@ msgstr "Lejátszólista exportálása"
 
 #: src/libaudgui/playlists.c:122
 msgid "_Export"
-msgstr ""
+msgstr "_Exportálás"
 
 #: src/libaudgui/playlists.c:128
 msgid "Import Playlist"
@@ -939,7 +942,7 @@ msgstr "Lejátszólista importálása"
 
 #: src/libaudgui/playlists.c:129
 msgid "_Import"
-msgstr ""
+msgstr "_Importálás"
 
 #: src/libaudgui/queue-manager.c:172
 msgid "Queue Manager"
@@ -947,7 +950,7 @@ msgstr "Várakozási sor menedzser"
 
 #: src/libaudgui/queue-manager.c:188
 msgid "_Unqueue"
-msgstr ""
+msgstr "_Kiszedés a sorból"
 
 #: src/libaudgui/ui_fileopener.c:79
 msgid "Open Files"
@@ -955,7 +958,7 @@ msgstr "Fájlok megnyitása"
 
 #: src/libaudgui/ui_fileopener.c:80 src/libaudgui/url-opener.c:50
 msgid "_Open"
-msgstr ""
+msgstr "_Megnyitás"
 
 #: src/libaudgui/ui_fileopener.c:82
 msgid "Close _dialog on open"
@@ -967,7 +970,7 @@ msgstr "Fájlok hozzáadása"
 
 #: src/libaudgui/ui_fileopener.c:88 src/libaudgui/url-opener.c:56
 msgid "_Add"
-msgstr ""
+msgstr "_Hozzáadás"
 
 #: src/libaudgui/ui_fileopener.c:90
 msgid "Close _dialog on add"
@@ -1008,7 +1011,7 @@ msgstr "Elemek"
 
 #: src/libaudgui/ui_playlist_manager.c:254
 msgid "_New"
-msgstr ""
+msgstr "_Új"
 
 #: src/libaudgui/ui_playlist_manager.c:256
 msgid "Ren_ame"
@@ -1016,7 +1019,7 @@ msgstr ""
 
 #: src/libaudgui/ui_playlist_manager.c:257
 msgid "_Play"
-msgstr ""
+msgstr "_Lejátszás"
 
 #: src/libaudgui/ui_playlist_manager.c:269
 msgid "_Close dialog on activating playlist"
@@ -1034,7 +1037,7 @@ msgstr "URL hozzáadása"
 msgid "Enter URL:"
 msgstr "URL megadása:"
 
-#: src/libaudgui/util.c:148
+#: src/libaudgui/util.c:173
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
