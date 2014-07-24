@@ -2,8 +2,9 @@ SHARED_LIB = ${LIB_PREFIX}audqt${LIB_SUFFIX}
 LIB_MAJOR = 0
 LIB_MINOR = 0
 
-SRCS = about.cc \
-       about.moc
+SRCS = about.cc			\
+       about.moc		\
+       util.cc
 
 INCLUDES = libaudqt.h
 

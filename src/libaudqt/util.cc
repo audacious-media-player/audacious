@@ -1,5 +1,5 @@
 /*
- * libaudqt.h
+ * util.cc
  * Copyright 2014 William Pitcock
  *
  * Redistribution and use in source and binary forms, with or without
@@ -17,17 +17,30 @@
  * the use of this software.
  */
 
-#ifndef LIBAUDQT_H
-#define LIBAUDQT_H
+#include <QtGui>
+#include <QtWidgets>
+
+#include <libaudcore/audstrings.h>
+#include <libaudcore/i18n.h>
+#include <libaudcore/runtime.h>
+
+#include "libaudqt.h"
 
 namespace audqt {
 
-void aboutwindow_show ();
-void aboutwindow_hide ();
+/* the goal is to force a window to come to the front on any qt platform */
+EXPORT void window_bring_to_front (QWidget * window)
+{
+    window->show();
 
-void window_bring_to_front (QWidget * win);
+    Qt::WindowStates state = window->windowState();
+
+    state &= ~Qt::WindowMinimized;
+    state |= Qt::WindowActive;
+
+    window->setWindowState (state);
+    window->raise ();
+    window->activateWindow ();
+}
 
 };
-
-#endif
-

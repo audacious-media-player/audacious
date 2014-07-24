@@ -98,7 +98,7 @@ EXPORT void aboutwindow_show ()
     if (!m_aboutwin)
         m_aboutwin = new AboutWindow;
 
-    m_aboutwin->show ();
+    window_bring_to_front (m_aboutwin);
 }
 
 EXPORT void aboutwindow_hide ()
