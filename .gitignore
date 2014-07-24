@@ -28,3 +28,4 @@ src/libaudcore/tinylock.h
 *.patch
 *.diff
 *.dylib
+*.moc
