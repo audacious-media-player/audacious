@@ -36,15 +36,14 @@ void AboutWindow::buildCreditsNotebook ()
 {
     const char * data_dir = aud_get_path (AudPath::DataDir);
 
-    char * credits_path = strdup (filename_build ({data_dir, "AUTHORS"}));
-    char * license_path = strdup (filename_build ({data_dir, "COPYING"}));
-
     const char * titles[2] = {_("Credits"), _("License")};
-    const char * paths[2] = {credits_path, license_path};
+    const char * filenames[2] = {"AUTHORS", "COPYING"};
 
     for (int i = 0; i < 2; i++)
     {
-        QFile f(paths[i]);
+        char * path = filename_build({data_dir, filenames[i]});
+
+        QFile f(path);
         if (!f.open (QIODevice::ReadOnly))
             continue;
 
@@ -56,9 +55,6 @@ void AboutWindow::buildCreditsNotebook ()
 
         f.close();
     }
-
-    free (credits_path);
-    free (license_path);
 }
 
 AboutWindow::AboutWindow (QWidget * parent) : QDialog (parent)
