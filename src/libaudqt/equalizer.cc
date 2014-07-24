@@ -55,6 +55,7 @@ EqualizerWindow::EqualizerWindow (QWidget * parent) : QDialog (parent)
     m_layout.addWidget (& m_slider_container);
 
     setLayout (& m_layout);
+    setWindowTitle (_("Equalizer"));
 
     connect (& m_onoff_checkbox, &QCheckBox::stateChanged, this, &EqualizerWindow::onoffStateChanged);
     onoffUpdate (nullptr, this);
