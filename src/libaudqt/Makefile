@@ -4,6 +4,8 @@ LIB_MINOR = 0
 
 SRCS = about.cc			\
        about.moc		\
+       equalizer.cc		\
+       equalizer.moc		\
        util.cc
 
 INCLUDES = libaudqt.h

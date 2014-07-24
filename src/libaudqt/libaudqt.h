@@ -22,9 +22,15 @@
 
 namespace audqt {
 
+/* about.cc */
 void aboutwindow_show ();
 void aboutwindow_hide ();
 
+/* equalizer.cc */
+void equalizer_show ();
+void equalizer_hide ();
+
+/* util.cc */
 void window_bring_to_front (QWidget * win);
 
 };
