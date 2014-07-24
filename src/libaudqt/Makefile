@@ -2,9 +2,10 @@ SHARED_LIB = ${LIB_PREFIX}audqt${LIB_SUFFIX}
 LIB_MAJOR = 0
 LIB_MINOR = 0
 
-SRCS = 
+SRCS = about.cc \
+       about.moc
 
-INCLUDES = 
+INCLUDES = libaudqt.h
 
 include ../../buildsys.mk
 include ../../extra.mk
@@ -25,3 +26,6 @@ LIBS := -L../libaudcore -laudcore \
         ${LIBS} -lm \
 	${GLIB_LIBS} \
         ${QT_LIBS}
+
+%.moc: %.h
+	moc $< -o $@
