@@ -31,7 +31,7 @@ void equalizer_show ();
 void equalizer_hide ();
 
 /* fileopener.cc */
-void fileopener_show (bool add = false);
+void fileopener_show (bool add);
 
 /* util.cc */
 void window_bring_to_front (QWidget * win);
