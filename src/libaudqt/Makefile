@@ -6,6 +6,7 @@ SRCS = about.cc			\
        about.moc		\
        equalizer.cc		\
        equalizer.moc		\
+       fileopener.cc		\
        util.cc
 
 INCLUDES = libaudqt.h
