@@ -41,9 +41,7 @@ void AboutWindow::buildCreditsNotebook ()
 
     for (int i = 0; i < 2; i++)
     {
-        char * path = filename_build({data_dir, filenames[i]});
-
-        QFile f(path);
+        QFile f (QString (filename_build ({data_dir, filenames[i]})));
         if (!f.open (QIODevice::ReadOnly))
             continue;
 
