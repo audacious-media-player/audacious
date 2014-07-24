@@ -1,5 +1,5 @@
 /*
- * libaudqt.h
+ * about.cc
  * Copyright 2014 William Pitcock
  *
  * Redistribution and use in source and binary forms, with or without
@@ -17,23 +17,38 @@
  * the use of this software.
  */
 
-#ifndef LIBAUDQT_H
-#define LIBAUDQT_H
+#include <QtGui>
+#include <QtWidgets>
+
+#include <libaudcore/audstrings.h>
+#include <libaudcore/i18n.h>
+#include <libaudcore/runtime.h>
+
+#include "libaudqt.h"
+
+#ifndef LIBAUDQT_ABOUT_H
+#define LIBAUDQT_ABOUT_H
 
 namespace audqt {
 
-/* about.cc */
-void aboutwindow_show ();
-void aboutwindow_hide ();
+class AboutWindow : public QDialog {
 
-/* equalizer.cc */
-void equalizer_show ();
-void equalizer_hide ();
+    Q_OBJECT
 
-/* util.cc */
-void window_bring_to_front (QWidget * win);
+private:
+    QVBoxLayout m_layout;
+    QTabWidget m_tabs;
+    QLabel m_logo;
+    QLabel m_about_text;
+    QPlainTextEdit *m_textedits[2];
+
+    void buildCreditsNotebook ();
+
+public:
+    AboutWindow (QWidget * parent = 0);
+    ~AboutWindow ();
+};
 
 };
 
 #endif
-
