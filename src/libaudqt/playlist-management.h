@@ -1,5 +1,5 @@
 /*
- * libaudqt.h
+ * playlist-management.h
  * Copyright 2014 William Pitcock
  *
  * Redistribution and use in source and binary forms, with or without
@@ -17,30 +17,44 @@
  * the use of this software.
  */
 
-#ifndef LIBAUDQT_H
-#define LIBAUDQT_H
+#include <QtGui>
+#include <QtWidgets>
+
+#include <libaudcore/audstrings.h>
+#include <libaudcore/i18n.h>
+#include <libaudcore/runtime.h>
+
+#include "libaudqt.h"
+
+#ifndef LIBAUDQT_PLAYLIST_MANAGEMENT_H
+#define LIBAUDQT_PLAYLIST_MANAGEMENT_H
 
 namespace audqt {
 
-/* about.cc */
-void aboutwindow_show ();
-void aboutwindow_hide ();
+class PlaylistDeleteDialog : public QDialog {
+    Q_OBJECT
 
-/* playlist-management.cc */
-void playlist_confirm_delete (int playlist);
-void playlist_confirm_rename (int playlist);
+public:
+    PlaylistDeleteDialog(int playlist, QWidget * parent = 0);
+    ~PlaylistDeleteDialog();
 
-/* equalizer.cc */
-void equalizer_show ();
-void equalizer_hide ();
+public slots:
+    void acceptedTrigger ();
 
-/* fileopener.cc */
-void fileopener_show (bool add);
+private:
+    int m_playlist_uniqid;
 
-/* util.cc */
-void window_bring_to_front (QWidget * win);
+    QLabel m_prompt;
 
+    QPushButton m_remove;
+    QPushButton m_cancel;
+
+    QCheckBox m_skip_prompt;
+
+    QVBoxLayout m_layout;
+    QDialogButtonBox m_buttonbox;
 };
 
-#endif
+}
 
+#endif

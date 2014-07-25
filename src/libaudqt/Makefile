@@ -7,6 +7,8 @@ SRCS = about.cc			\
        equalizer.cc		\
        equalizer.moc		\
        fileopener.cc		\
+       playlist-management.cc	\
+       playlist-management.moc	\
        util.cc
 
 INCLUDES = libaudqt.h
