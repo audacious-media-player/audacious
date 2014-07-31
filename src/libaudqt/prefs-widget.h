@@ -59,6 +59,25 @@ private:
     void set (bool);
 };
 
+/* label, no get or set functions needed. */
+class LabelWidget {
+public:
+    LabelWidget (const PreferencesWidget * parent) :
+        m_parent (parent)
+    {
+    }
+
+    QWidget * widget ();
+
+private:
+    const PreferencesWidget * m_parent;
+
+    QWidget m_container;
+    QHBoxLayout m_layout;
+    QLabel m_label_pixmap;
+    QLabel m_label_text;
+};
+
 };
 
 #endif

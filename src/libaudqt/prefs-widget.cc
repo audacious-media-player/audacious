@@ -70,4 +70,21 @@ void BooleanWidget::set (bool value)
         m_parent->cfg.callback ();
 }
 
+/* label */
+QWidget * LabelWidget::widget ()
+{
+    m_label_text.setText (m_parent->label);
+    m_label_text.setToolTip (m_parent->tooltip);
+
+    if (m_parent->data.label.stock_id)
+    {
+        AUDDBG ("stock icons are not yet implemented on qt\n");
+    }
+
+    m_layout.addWidget (& m_label_text);
+    m_container.setLayout (& m_layout);
+
+    return & m_container;
+}
+
 };
