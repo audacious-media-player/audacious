@@ -9,6 +9,7 @@ SRCS = about.cc			\
        fileopener.cc		\
        playlist-management.cc	\
        playlist-management.moc	\
+       prefs-widget.cc		\
        util.cc
 
 INCLUDES = libaudqt.h
