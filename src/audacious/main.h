@@ -22,9 +22,16 @@
 
 /* dbus-server.c */
 #ifdef USE_DBUS
-bool dbus_server_register (void);
-void dbus_server_init (void);
+
+enum class StartupType {
+    Server,
+    Client,
+    Unknown
+};
+
+StartupType dbus_server_init (void);
 void dbus_server_cleanup (void);
+
 #endif
 
 /* signals.c */

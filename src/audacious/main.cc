@@ -187,7 +187,7 @@ static void do_remote (void)
     GError * error = nullptr;
 
     /* check whether this is the first instance */
-    if (dbus_server_register ())
+    if (dbus_server_init () != StartupType::Client)
         return;
 
     if (! (bus = g_bus_get_sync (G_BUS_TYPE_SESSION, nullptr, & error)))
@@ -247,8 +247,11 @@ static void do_remote (void)
     exit (EXIT_SUCCESS);
 
 ERR:
-    fprintf (stderr, "D-Bus error: %s\n", error->message);
-    g_error_free (error);
+    if (error)
+    {
+        fprintf (stderr, "D-Bus error: %s\n", error->message);
+        g_error_free (error);
+    }
 }
 #endif
 
@@ -356,10 +359,6 @@ int main (int argc, char * * argv)
     aud_init ();
 
     do_commands ();
-
-#ifdef USE_DBUS
-    dbus_server_init ();
-#endif
 
     if (check_should_quit ())
         goto QUIT;

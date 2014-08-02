@@ -753,23 +753,11 @@ static void name_lost (GDBusConnection *, const char *, void *)
     g_main_loop_quit (mainloop);
 }
 
-bool dbus_server_register (void)
-{
-    owner_id = g_bus_own_name (G_BUS_TYPE_SESSION, "org.atheme.audacious",
-     (GBusNameOwnerFlags) 0, nullptr, name_acquired, name_lost, nullptr, nullptr);
-
-    mainloop = g_main_loop_new (nullptr, true);
-    g_main_loop_run (mainloop);
-    g_main_loop_unref (mainloop);
-    mainloop = nullptr;
-
-    return owner_id != 0;
-}
-
-void dbus_server_init (void)
+StartupType dbus_server_init (void)
 {
     GError * error = nullptr;
     GDBusConnection * bus = g_bus_get_sync (G_BUS_TYPE_SESSION, nullptr, & error);
+    GMainContext * context;
 
     if (! bus)
         goto ERROR;
@@ -782,7 +770,25 @@ void dbus_server_init (void)
     if (! g_dbus_interface_skeleton_export (skeleton, bus, "/org/atheme/audacious", & error))
         goto ERROR;
 
-    return;
+    context = g_main_context_new ();
+    g_main_context_push_thread_default (context);
+
+    owner_id = g_bus_own_name (G_BUS_TYPE_SESSION, "org.atheme.audacious",
+     (GBusNameOwnerFlags) 0, nullptr, name_acquired, name_lost, nullptr, nullptr);
+
+    mainloop = g_main_loop_new (context, true);
+    g_main_loop_run (mainloop);
+    g_main_loop_unref (mainloop);
+    mainloop = nullptr;
+
+    g_main_context_pop_thread_default (context);
+    g_main_context_unref (context);
+
+    if (owner_id)
+        return StartupType::Server;
+
+    dbus_server_cleanup ();
+    return StartupType::Client;
 
 ERROR:
     if (error)
@@ -790,6 +796,9 @@ ERROR:
         fprintf (stderr, "D-Bus error: %s\n", error->message);
         g_error_free (error);
     }
+
+    dbus_server_cleanup ();
+    return StartupType::Unknown;
 }
 
 void dbus_server_cleanup (void)
