@@ -185,7 +185,6 @@ static void do_remote (void)
     GDBusConnection * bus = nullptr;
     ObjAudacious * obj = nullptr;
     GError * error = nullptr;
-    char * version = nullptr;
 
     /* check whether this is the first instance */
     if (dbus_server_register ())
@@ -243,7 +242,6 @@ static void do_remote (void)
     if (options.mainwin)
         obj_audacious_call_show_main_win_sync (obj, true, nullptr, nullptr);
 
-    g_free (version);
     g_object_unref (obj);
 
     exit (EXIT_SUCCESS);
