@@ -731,7 +731,40 @@ handlers[] =
     {"handle-volume", (GCallback) do_volume}
 };
 
+static GMainLoop * mainloop = nullptr;
+static unsigned owner_id = 0;
+
 static GDBusInterfaceSkeleton * skeleton = nullptr;
+
+static void name_acquired (GDBusConnection *, const char *, void *)
+{
+    AUDDBG ("Owned D-Bus name (org.atheme.audacious) on session bus.\n");
+
+    g_main_loop_quit (mainloop);
+}
+
+static void name_lost (GDBusConnection *, const char *, void *)
+{
+    AUDDBG ("Owning D-Bus name (org.atheme.audacious) failed, already taken?\n");
+
+    g_bus_unown_name (owner_id);
+    owner_id = 0;
+
+    g_main_loop_quit (mainloop);
+}
+
+bool dbus_server_register (void)
+{
+    owner_id = g_bus_own_name (G_BUS_TYPE_SESSION, "org.atheme.audacious",
+     (GBusNameOwnerFlags) 0, nullptr, name_acquired, name_lost, nullptr, nullptr);
+
+    mainloop = g_main_loop_new (nullptr, true);
+    g_main_loop_run (mainloop);
+    g_main_loop_unref (mainloop);
+    mainloop = nullptr;
+
+    return owner_id != 0;
+}
 
 void dbus_server_init (void)
 {
@@ -740,9 +773,6 @@ void dbus_server_init (void)
 
     if (! bus)
         goto ERROR;
-
-    g_bus_own_name_on_connection (bus, "org.atheme.audacious",
-     (GBusNameOwnerFlags) 0, nullptr, nullptr, nullptr, nullptr);
 
     skeleton = (GDBusInterfaceSkeleton *) obj_audacious_skeleton_new ();
 
@@ -764,6 +794,12 @@ ERROR:
 
 void dbus_server_cleanup (void)
 {
+    if (owner_id)
+    {
+        g_bus_unown_name (owner_id);
+        owner_id = 0;
+    }
+
     if (skeleton)
     {
         g_object_unref (skeleton);
