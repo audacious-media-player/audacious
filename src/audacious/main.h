@@ -34,9 +34,16 @@ void art_cleanup (void);
 
 /* dbus-server.c */
 #ifdef USE_DBUS
-bool_t dbus_server_register (void);
-void dbus_server_init (void);
+
+enum {
+    STARTUP_TYPE_SERVER,
+    STARTUP_TYPE_CLIENT,
+    STARTUP_TYPE_UNKNOWN
+};
+
+int dbus_server_init (void);
 void dbus_server_cleanup (void);
+
 #endif
 
 /* chardet.c */

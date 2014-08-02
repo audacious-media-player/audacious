@@ -334,7 +334,7 @@ static void do_remote (void)
     GError * error = NULL;
 
     /* check whether this is the first instance */
-    if (dbus_server_register ())
+    if (dbus_server_init () != STARTUP_TYPE_CLIENT)
         return;
 
     if (! (bus = g_bus_get_sync (G_BUS_TYPE_SESSION, NULL, & error)))
@@ -394,8 +394,11 @@ static void do_remote (void)
     exit (EXIT_SUCCESS);
 
 ERR:
-    fprintf (stderr, "D-Bus error: %s\n", error->message);
-    g_error_free (error);
+    if (error)
+    {
+        fprintf (stderr, "D-Bus error: %s\n", error->message);
+        g_error_free (error);
+    }
 }
 #endif
 
@@ -507,10 +510,6 @@ static void init_two (void)
 
     AUDDBG ("Loading highlevel plugins.\n");
     start_plugins_two ();
-
-#ifdef USE_DBUS
-    dbus_server_init ();
-#endif
 }
 
 static void shut_down (void)
