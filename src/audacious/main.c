@@ -333,6 +333,10 @@ static void do_remote (void)
     ObjAudacious * obj = NULL;
     GError * error = NULL;
 
+    /* check whether this is the first instance */
+    if (dbus_server_register ())
+        return;
+
     if (! (bus = g_bus_get_sync (G_BUS_TYPE_SESSION, NULL, & error)))
         goto ERR;
 
@@ -340,14 +344,7 @@ static void do_remote (void)
      "/org/atheme/audacious", NULL, & error)))
         goto ERR;
 
-    /* check whether remote is running */
-    char * version = NULL;
-    obj_audacious_call_version_sync (obj, & version, NULL, NULL);
-
-    if (! version)
-        goto DONE;
-
-    AUDDBG ("Connected to remote version %s.\n", version);
+    AUDDBG ("Connected to remote session.\n");
 
     /* if no command line options, then present running instance */
     if (! (filenames || options.play || options.pause || options.play_pause ||
@@ -392,7 +389,6 @@ static void do_remote (void)
     if (options.mainwin)
         obj_audacious_call_show_main_win_sync (obj, TRUE, NULL, NULL);
 
-    g_free (version);
     g_object_unref (obj);
 
     exit (EXIT_SUCCESS);
@@ -400,12 +396,6 @@ static void do_remote (void)
 ERR:
     fprintf (stderr, "D-Bus error: %s\n", error->message);
     g_error_free (error);
-
-DONE:
-    if (obj)
-        g_object_unref (obj);
-
-    return;
 }
 #endif
 

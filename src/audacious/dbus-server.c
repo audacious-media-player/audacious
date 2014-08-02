@@ -22,6 +22,7 @@
 #include <libaudgui/libaudgui.h>
 
 #include "aud-dbus.h"
+#include "debug.h"
 #include "drct.h"
 #include "main.h"
 #include "misc.h"
@@ -739,7 +740,40 @@ handlers[] =
     {"handle-volume", (GCallback) do_volume}
 };
 
+static GMainLoop * mainloop = NULL;
+static unsigned owner_id = 0;
+
 static GDBusInterfaceSkeleton * skeleton = NULL;
+
+static void name_acquired (GDBusConnection * conn, const char * name, void * unused)
+{
+    AUDDBG ("Owned D-Bus name (org.atheme.audacious) on session bus.\n");
+
+    g_main_loop_quit (mainloop);
+}
+
+static void name_lost (GDBusConnection * conn, const char * name, void * unused)
+{
+    AUDDBG ("Owning D-Bus name (org.atheme.audacious) failed, already taken?\n");
+
+    g_bus_unown_name (owner_id);
+    owner_id = 0;
+
+    g_main_loop_quit (mainloop);
+}
+
+bool_t dbus_server_register (void)
+{
+    owner_id = g_bus_own_name (G_BUS_TYPE_SESSION, "org.atheme.audacious",
+     (GBusNameOwnerFlags) 0, NULL, name_acquired, name_lost, NULL, NULL);
+
+    mainloop = g_main_loop_new (NULL, TRUE);
+    g_main_loop_run (mainloop);
+    g_main_loop_unref (mainloop);
+    mainloop = NULL;
+
+    return owner_id != 0;
+}
 
 void dbus_server_init (void)
 {
@@ -748,8 +782,6 @@ void dbus_server_init (void)
 
     if (! bus)
         goto ERROR;
-
-    g_bus_own_name_on_connection (bus, "org.atheme.audacious", 0, NULL, NULL, NULL, NULL);
 
     skeleton = (GDBusInterfaceSkeleton *) obj_audacious_skeleton_new ();
 
@@ -771,6 +803,12 @@ ERROR:
 
 void dbus_server_cleanup (void)
 {
+    if (owner_id)
+    {
+        g_bus_unown_name (owner_id);
+        owner_id = 0;
+    }
+
     if (skeleton)
     {
         g_object_unref (skeleton);

@@ -34,6 +34,7 @@ void art_cleanup (void);
 
 /* dbus-server.c */
 #ifdef USE_DBUS
+bool_t dbus_server_register (void);
 void dbus_server_init (void);
 void dbus_server_cleanup (void);
 #endif
