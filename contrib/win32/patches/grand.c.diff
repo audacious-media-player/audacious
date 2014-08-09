@@ -1,0 +1,59 @@
+--- grand.c.0	2014-02-22 10:29:07 -0500
++++ grand.c	2014-08-09 09:52:24 -0400
+@@ -35,7 +35,6 @@
+  */
+ 
+ #include "config.h"
+-#define _CRT_RAND_S
+ 
+ #include <math.h>
+ #include <errno.h>
+@@ -55,7 +54,7 @@
+ #endif
+ 
+ #ifdef G_OS_WIN32
+-#include <stdlib.h>
++#include <process.h>		/* For getpid() */
+ #endif
+ 
+ /**
+@@ -217,9 +216,9 @@
+ g_rand_new (void)
+ {
+   guint32 seed[4];
++  GTimeVal now;
+ #ifdef G_OS_UNIX
+   static gboolean dev_urandom_exists = TRUE;
+-  GTimeVal now;
+ 
+   if (dev_urandom_exists)
+     {
+@@ -251,6 +250,9 @@
+       else
+ 	dev_urandom_exists = FALSE;
+     }
++#else
++  static gboolean dev_urandom_exists = FALSE;
++#endif
+ 
+   if (!dev_urandom_exists)
+     {  
+@@ -258,14 +260,12 @@
+       seed[0] = now.tv_sec;
+       seed[1] = now.tv_usec;
+       seed[2] = getpid ();
++#ifdef G_OS_UNIX
+       seed[3] = getppid ();
+-    }
+-#else /* G_OS_WIN32 */
+-  gint i;
+-
+-  for (i = 0; i < G_N_ELEMENTS (seed); i++)
+-    rand_s (&seed[i]);
++#else
++      seed[3] = 0;
+ #endif
++    }
+ 
+   return g_rand_new_with_seed_array (seed, 4);
+ }

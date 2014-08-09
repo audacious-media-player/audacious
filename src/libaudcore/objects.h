@@ -20,6 +20,11 @@
 #ifndef LIBAUDCORE_OBJECTS_H
 #define LIBAUDCORE_OBJECTS_H
 
+#ifdef _WIN32
+#undef min
+#undef max
+#endif
+
 // Utility functions.
 
 namespace aud {
