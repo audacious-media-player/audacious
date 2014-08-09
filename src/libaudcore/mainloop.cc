@@ -17,9 +17,12 @@
  * the use of this software.
  */
 
-#include <pthread.h>
-
 #include "mainloop.h"
+
+#include <pthread.h>
+#include <glib.h>
+
+#include "runtime.h"
 
 struct QueuedFuncRunner
 {
@@ -94,26 +97,9 @@ private:
     QueuedFuncRunner runner;
 };
 
-static void ADD_QUEUED (const QueuedFuncRunner & r)
-    { QCoreApplication::postEvent (& router, new QueuedFuncEvent (r), Qt::HighEventPriority); }
-static void ADD_TIMED (int i, const QueuedFuncRunner & r)
-    { new QueuedFuncTimer (i, r); }
+static QCoreApplication * qt_mainloop;
 
-typedef QCoreApplication MainLoop;
-
-static QCoreApplication * MAINLOOP_NEW ()
-{
-    int dummy_argc = 0;
-    return new QCoreApplication (dummy_argc, nullptr);
-}
-
-#define MAINLOOP_RUN(m)      (m)->exec ()
-#define MAINLOOP_QUIT(m)     (m)->quit ()
-#define MAINLOOP_FREE(m)     delete (m)
-
-#else // ! USE_QT
-
-#include <glib.h>
+#endif // USE_QT
 
 static int queued_wrapper (void * ptr)
 {
@@ -133,72 +119,100 @@ static int timed_wrapper (void * ptr)
     return false;
 }
 
-static void ADD_QUEUED (const QueuedFuncRunner & r)
-    { g_idle_add_full (G_PRIORITY_HIGH, queued_wrapper, new QueuedFuncRunner (r), nullptr); }
-static void ADD_TIMED (int i, const QueuedFuncRunner & r)
-    { g_timeout_add (i, timed_wrapper, new QueuedFuncRunner (r)); }
+static GMainLoop * glib_mainloop;
 
-typedef GMainLoop MainLoop;
-
-#define MAINLOOP_NEW()       g_main_loop_new (nullptr, true)
-#define MAINLOOP_RUN(m)      g_main_loop_run (m)
-#define MAINLOOP_QUIT(m)     g_main_loop_quit (m)
-#define MAINLOOP_FREE(m)     g_main_loop_unref (m)
-
-#endif // ! USE_QT
-
-void QueuedFunc::queue (Func func, void * data)
+EXPORT void QueuedFunc::queue (Func func, void * data)
 {
     int new_serial = __sync_add_and_fetch (& serial, 1);
-    ADD_QUEUED ({this, func, data, new_serial});
+
+#ifdef USE_QT
+    if (aud_get_mainloop_type () == MainloopType::Qt)
+        QCoreApplication::postEvent (& router,
+         new QueuedFuncEvent ({this, func, data, new_serial}),
+         Qt::HighEventPriority);
+    else
+#endif
+        g_idle_add_full (G_PRIORITY_HIGH, queued_wrapper,
+         new QueuedFuncRunner ({this, func, data, new_serial}), nullptr);
 }
 
-void QueuedFunc::start (int interval_ms, Func func, void * data)
+EXPORT void QueuedFunc::start (int interval_ms, Func func, void * data)
 {
     _running = true;
     int new_serial = __sync_add_and_fetch (& serial, 1);
-    ADD_TIMED (interval_ms, {this, func, data, new_serial});
+
+#ifdef USE_QT
+    if (aud_get_mainloop_type () == MainloopType::Qt)
+        new QueuedFuncTimer (interval_ms, {this, func, data, new_serial});
+    else
+#endif
+        g_timeout_add (interval_ms, timed_wrapper,
+         new QueuedFuncRunner ({this, func, data, new_serial}));
 }
 
-void QueuedFunc::stop ()
+EXPORT void QueuedFunc::stop ()
 {
     __sync_add_and_fetch (& serial, 1);
     _running = false;
 }
 
-bool QueuedFunc::running ()
-{
-    return _running;
-}
-
-static MainLoop * mainloop;
 static pthread_mutex_t mainloop_mutex = PTHREAD_MUTEX_INITIALIZER;
 
-void mainloop_run ()
+EXPORT void mainloop_run ()
 {
     pthread_mutex_lock (& mainloop_mutex);
 
-    if (! mainloop)
+#ifdef USE_QT
+    if (aud_get_mainloop_type () == MainloopType::Qt)
     {
-        mainloop = MAINLOOP_NEW ();
-        pthread_mutex_unlock (& mainloop_mutex);
+        if (! qt_mainloop)
+        {
+            int dummy_argc = 0;
+            qt_mainloop = new QCoreApplication (dummy_argc, nullptr);
+            pthread_mutex_unlock (& mainloop_mutex);
 
-        MAINLOOP_RUN (mainloop);
+            qt_mainloop->exec ();
 
-        pthread_mutex_lock (& mainloop_mutex);
-        MAINLOOP_FREE (mainloop);
-        mainloop = nullptr;
+            pthread_mutex_lock (& mainloop_mutex);
+            delete qt_mainloop;
+            qt_mainloop = nullptr;
+        }
+    }
+    else
+#endif
+    {
+        if (! glib_mainloop)
+        {
+            glib_mainloop = g_main_loop_new (nullptr, true);
+            pthread_mutex_unlock (& mainloop_mutex);
+
+            g_main_loop_run (glib_mainloop);
+
+            pthread_mutex_lock (& mainloop_mutex);
+            g_main_loop_unref (glib_mainloop);
+            glib_mainloop = nullptr;
+        }
     }
 
     pthread_mutex_unlock (& mainloop_mutex);
 }
 
-void mainloop_quit ()
+EXPORT void mainloop_quit ()
 {
     pthread_mutex_lock (& mainloop_mutex);
 
-    if (mainloop)
-        MAINLOOP_QUIT (mainloop);
+#ifdef USE_QT
+    if (aud_get_mainloop_type () == MainloopType::Qt)
+    {
+        if (qt_mainloop)
+            qt_mainloop->quit ();
+    }
+    else
+#endif
+    {
+        if (glib_mainloop)
+            g_main_loop_quit (glib_mainloop);
+    }
 
     pthread_mutex_unlock (& mainloop_mutex);
 }

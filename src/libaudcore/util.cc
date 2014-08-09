@@ -37,7 +37,7 @@
 
 bool dir_foreach (const char * path, DirForeachFunc func, void * user)
 {
-    GDir * dir = g_dir_open (path, 0, NULL);
+    GDir * dir = g_dir_open (path, 0, nullptr);
     if (! dir)
         return false;
 
@@ -126,15 +126,15 @@ static char * skip_top_folders (char * name)
 
 /* Divides a filename into the base name, the lowest folder, and the
  * second lowest folder.  The string passed will be modified, and the strings
- * returned will use the same memory.  May return NULL for <first> and <second>.
+ * returned will use the same memory.  May return nullptr for <first> and <second>.
  * Examples:
  *     "a/b/c/d/e.mp3" -> "e", "d",  "c"
- *     "d/e.mp3"       -> "e", "d",  NULL
- *     "e.mp3"         -> "e", NULL, NULL */
+ *     "d/e.mp3"       -> "e", "d",  nullptr
+ *     "e.mp3"         -> "e", nullptr, nullptr */
 
 static void split_filename (char * name, char * * base, char * * first, char * * second)
 {
-    * first = * second = NULL;
+    * first = * second = nullptr;
 
     char * c;
 
@@ -172,7 +172,7 @@ DONE:
 
 /* Separates the domain name from an internet URI.  The string passed will be
  * modified, and the string returned will share the same memory.  May return
- * NULL.  Examples:
+ * nullptr.  Examples:
  *     "http://some.domain.org/folder/file.mp3" -> "some.domain.org"
  *     "http://some.stream.fm:8000"             -> "some.stream.fm" */
 
@@ -185,7 +185,7 @@ static char * stream_name (char * name)
     else if (! strncmp (name, "mms://", 6))
         name += 6;
     else
-        return NULL;
+        return nullptr;
 
     char * c;
 
@@ -214,7 +214,7 @@ static String str_get_decoded (char * str)
 }
 
 /* Derives best guesses of title, artist, and album from a file name (URI) and
- * tuple (which may be NULL).  The returned strings are stringpooled or NULL. */
+ * tuple (which may be nullptr).  The returned strings are stringpooled or nullptr. */
 
 void describe_song (const char * name, const Tuple & tuple, String & title,
  String & artist, String & album)
@@ -245,11 +245,11 @@ void describe_song (const char * name, const Tuple & tuple, String & title,
             if (first && skip && ! g_ascii_strcasecmp (first, skip))
             {
                 first = second;
-                second = NULL;
+                second = nullptr;
             }
 
             if (second && skip && ! g_ascii_strcasecmp (second, skip))
-                second = NULL;
+                second = nullptr;
         }
 
         if (first)
@@ -286,7 +286,7 @@ void describe_song (const char * name, const Tuple & tuple, String & title,
 const char * last_path_element (const char * path)
 {
     const char * slash = strrchr (path, G_DIR_SEPARATOR);
-    return (slash && slash[1]) ? slash + 1 : NULL;
+    return (slash && slash[1]) ? slash + 1 : nullptr;
 }
 
 /* Thomas Wang's 32-bit mix function.  See:

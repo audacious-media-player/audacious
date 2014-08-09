@@ -23,7 +23,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <algorithm>
+#include "objects.h"
 
 #include <glib.h>
 
@@ -103,7 +103,7 @@ EXPORT void IndexBase::shift (int from, int to, int len, EraseFunc erase_func)
     assert (from >= 0 && from + len <= m_len);
     assert (to >= 0 && to + len <= m_len);
 
-    int erase_len = std::min (len, abs (to - from));
+    int erase_len = aud::min (len, abs (to - from));
 
     if (erase_func)
     {

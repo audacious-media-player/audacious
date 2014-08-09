@@ -33,9 +33,9 @@ static void * signal_thread (void * data)
     int signal;
 
     while (! sigwait (& signal_set, & signal))
-        event_queue ("quit", NULL);
+        event_queue ("quit", nullptr);
 
-    return NULL;
+    return nullptr;
 }
 
 /* Must be called before any threads are created. */
@@ -47,13 +47,13 @@ void signals_init_one (void)
     sigaddset (& signal_set, SIGQUIT);
     sigaddset (& signal_set, SIGTERM);
 
-    sigprocmask (SIG_BLOCK, & signal_set, NULL);
+    sigprocmask (SIG_BLOCK, & signal_set, nullptr);
 }
 
 void signals_init_two (void)
 {
     pthread_t thread;
-    pthread_create (& thread, NULL, signal_thread, NULL);
+    pthread_create (& thread, nullptr, signal_thread, nullptr);
 }
 
 #endif /* HAVE_SIGWAIT */

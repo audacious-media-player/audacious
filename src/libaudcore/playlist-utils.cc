@@ -37,7 +37,7 @@ static const char * get_basename (const char * filename)
 {
     const char * slash = strrchr (filename, '/');
 
-    return (slash == NULL) ? filename : slash + 1;
+    return (slash == nullptr) ? filename : slash + 1;
 }
 
 static int filename_compare_basename (const char * a, const char * b)
@@ -137,21 +137,21 @@ static const PlaylistStringCompareFunc title_comparisons[] = {
 
 EXPORT void aud_playlist_sort_by_scheme (int playlist, int scheme)
 {
-    if (filename_comparisons[scheme] != NULL)
+    if (filename_comparisons[scheme] != nullptr)
         aud_playlist_sort_by_filename (playlist, filename_comparisons[scheme]);
-    else if (tuple_comparisons[scheme] != NULL)
+    else if (tuple_comparisons[scheme] != nullptr)
         aud_playlist_sort_by_tuple (playlist, tuple_comparisons[scheme]);
-    else if (title_comparisons[scheme] != NULL)
+    else if (title_comparisons[scheme] != nullptr)
         aud_playlist_sort_by_title (playlist, title_comparisons[scheme]);
 }
 
 EXPORT void aud_playlist_sort_selected_by_scheme (int playlist, int scheme)
 {
-    if (filename_comparisons[scheme] != NULL)
+    if (filename_comparisons[scheme] != nullptr)
         aud_playlist_sort_selected_by_filename (playlist, filename_comparisons[scheme]);
-    else if (tuple_comparisons[scheme] != NULL)
+    else if (tuple_comparisons[scheme] != nullptr)
         aud_playlist_sort_selected_by_tuple (playlist, tuple_comparisons[scheme]);
-    else if (title_comparisons[scheme] != NULL)
+    else if (title_comparisons[scheme] != nullptr)
         aud_playlist_sort_selected_by_title (playlist, title_comparisons[scheme]);
 }
 
@@ -162,9 +162,9 @@ EXPORT void aud_playlist_remove_duplicates_by_scheme (int playlist, int scheme)
     if (entries < 1)
         return;
 
-    aud_playlist_select_all (playlist, FALSE);
+    aud_playlist_select_all (playlist, false);
 
-    if (filename_comparisons[scheme] != NULL)
+    if (filename_comparisons[scheme] != nullptr)
     {
         PlaylistStringCompareFunc compare = filename_comparisons[scheme];
 
@@ -176,24 +176,24 @@ EXPORT void aud_playlist_remove_duplicates_by_scheme (int playlist, int scheme)
             String current = aud_playlist_entry_get_filename (playlist, count);
 
             if (compare (last, current) == 0)
-                aud_playlist_entry_set_selected (playlist, count, TRUE);
+                aud_playlist_entry_set_selected (playlist, count, true);
 
             last = current;
         }
     }
-    else if (tuple_comparisons[scheme] != NULL)
+    else if (tuple_comparisons[scheme] != nullptr)
     {
         PlaylistTupleCompareFunc compare = tuple_comparisons[scheme];
 
         aud_playlist_sort_by_tuple (playlist, compare);
-        Tuple last = aud_playlist_entry_get_tuple (playlist, 0, FALSE);
+        Tuple last = aud_playlist_entry_get_tuple (playlist, 0, false);
 
         for (int count = 1; count < entries; count ++)
         {
-            Tuple current = aud_playlist_entry_get_tuple (playlist, count, FALSE);
+            Tuple current = aud_playlist_entry_get_tuple (playlist, count, false);
 
             if (last && current && compare (last, current) == 0)
-                aud_playlist_entry_set_selected (playlist, count, TRUE);
+                aud_playlist_entry_set_selected (playlist, count, true);
 
             last = std::move (current);
         }
@@ -207,7 +207,7 @@ EXPORT void aud_playlist_remove_failed (int playlist)
     int entries = aud_playlist_entry_count (playlist);
     int count;
 
-    aud_playlist_select_all (playlist, FALSE);
+    aud_playlist_select_all (playlist, false);
 
     for (count = 0; count < entries; count ++)
     {
@@ -215,7 +215,7 @@ EXPORT void aud_playlist_remove_failed (int playlist)
 
         /* vfs_file_test() only works for file:// URIs currently */
         if (! strncmp (filename, "file://", 7) && ! vfs_file_test (filename, G_FILE_TEST_EXISTS))
-            aud_playlist_entry_set_selected (playlist, count, TRUE);
+            aud_playlist_entry_set_selected (playlist, count, true);
     }
 
     aud_playlist_delete_selected (playlist);
@@ -223,20 +223,17 @@ EXPORT void aud_playlist_remove_failed (int playlist)
 
 EXPORT void aud_playlist_select_by_patterns (int playlist, const Tuple & patterns)
 {
-    const int fields[] = {FIELD_TITLE, FIELD_ALBUM, FIELD_ARTIST,
-     FIELD_FILE_NAME};
-
     int entries = aud_playlist_entry_count (playlist);
 
-    aud_playlist_select_all (playlist, TRUE);
+    aud_playlist_select_all (playlist, true);
 
-    for (unsigned field = 0; field < ARRAY_LEN (fields); field ++)
+    for (int field : {FIELD_TITLE, FIELD_ALBUM, FIELD_ARTIST, FIELD_FILE_NAME})
     {
-        String pattern = patterns.get_str (fields[field]);
+        String pattern = patterns.get_str (field);
         GRegex * regex;
 
         if (! pattern || ! pattern[0] || ! (regex = g_regex_new (pattern,
-         G_REGEX_CASELESS, (GRegexMatchFlags) 0, NULL)))
+         G_REGEX_CASELESS, (GRegexMatchFlags) 0, nullptr)))
             continue;
 
         for (int entry = 0; entry < entries; entry ++)
@@ -244,11 +241,11 @@ EXPORT void aud_playlist_select_by_patterns (int playlist, const Tuple & pattern
             if (! aud_playlist_entry_get_selected (playlist, entry))
                 continue;
 
-            Tuple tuple = aud_playlist_entry_get_tuple (playlist, entry, FALSE);
-            String string = tuple.get_str (fields[field]);
+            Tuple tuple = aud_playlist_entry_get_tuple (playlist, entry, false);
+            String string = tuple.get_str (field);
 
-            if (! string || ! g_regex_match (regex, string, (GRegexMatchFlags) 0, NULL))
-                aud_playlist_entry_set_selected (playlist, entry, FALSE);
+            if (! string || ! g_regex_match (regex, string, (GRegexMatchFlags) 0, nullptr))
+                aud_playlist_entry_set_selected (playlist, entry, false);
         }
 
         g_regex_unref (regex);
@@ -258,16 +255,16 @@ EXPORT void aud_playlist_select_by_patterns (int playlist, const Tuple & pattern
 static StringBuf make_playlist_path (int playlist)
 {
     if (! playlist)
-        return filename_build ({aud_get_path (AUD_PATH_USER_DIR), "playlist.xspf"});
+        return filename_build ({aud_get_path (AudPath::UserDir), "playlist.xspf"});
 
     StringBuf name = str_printf ("playlist_%02d.xspf", 1 + playlist);
-    name.steal (filename_build ({aud_get_path (AUD_PATH_USER_DIR), name}));
+    name.steal (filename_build ({aud_get_path (AudPath::UserDir), name}));
     return name;
 }
 
 static void load_playlists_real (void)
 {
-    const char * folder = aud_get_path (AUD_PATH_PLAYLISTS_DIR);
+    const char * folder = aud_get_path (AudPath::PlaylistDir);
 
     /* old (v3.1 and earlier) naming scheme */
 
@@ -280,7 +277,7 @@ static void load_playlists_real (void)
 
         aud_playlist_insert (count);
         playlist_insert_playlist_raw (count, 0, filename_to_uri (path));
-        playlist_set_modified (count, TRUE);
+        playlist_set_modified (count, true);
     }
 
     /* unique ID-based naming scheme */
@@ -289,7 +286,7 @@ static void load_playlists_real (void)
     char * order_string;
     Index<String> order;
 
-    g_file_get_contents (order_path, & order_string, NULL, NULL);
+    g_file_get_contents (order_path, & order_string, nullptr, nullptr);
     if (! order_string)
         goto DONE;
 
@@ -309,10 +306,10 @@ static void load_playlists_real (void)
 
         playlist_insert_with_id (count + i, atoi (number));
         playlist_insert_playlist_raw (count + i, 0, filename_to_uri (path));
-        playlist_set_modified (count + i, FALSE);
+        playlist_set_modified (count + i, false);
 
         if (g_str_has_suffix (path, ".xspf"))
-            playlist_set_modified (count + i, TRUE);
+            playlist_set_modified (count + i, true);
     }
 
 DONE:
@@ -325,7 +322,7 @@ DONE:
 static void save_playlists_real (void)
 {
     int lists = aud_playlist_count ();
-    const char * folder = aud_get_path (AUD_PATH_PLAYLISTS_DIR);
+    const char * folder = aud_get_path (AudPath::PlaylistDir);
 
     /* save playlists */
 
@@ -342,7 +339,7 @@ static void save_playlists_real (void)
         {
             StringBuf path = filename_build ({folder, name});
             aud_playlist_save (i, filename_to_uri (path));
-            playlist_set_modified (i, FALSE);
+            playlist_set_modified (i, false);
         }
 
         order.append (String (number));
@@ -353,11 +350,11 @@ static void save_playlists_real (void)
     StringBuf order_path = filename_build ({folder, "order"});
 
     char * old_order_string;
-    g_file_get_contents (order_path, & old_order_string, NULL, NULL);
+    g_file_get_contents (order_path, & old_order_string, nullptr, nullptr);
 
     if (! old_order_string || strcmp (old_order_string, order_string))
     {
-        GError * error = NULL;
+        GError * error = nullptr;
         if (! g_file_set_contents (order_path, order_string, -1, & error))
         {
             fprintf (stderr, "Cannot write to %s: %s\n", (const char *) order_path, error->message);
@@ -371,7 +368,7 @@ static void save_playlists_real (void)
 
     g_unlink (make_playlist_path (0));
 
-    GDir * dir = g_dir_open (folder, 0, NULL);
+    GDir * dir = g_dir_open (folder, 0, nullptr);
     if (! dir)
         return;
 
@@ -388,19 +385,19 @@ static void save_playlists_real (void)
     g_dir_close (dir);
 }
 
-static bool_t hooks_added, state_changed;
+static bool hooks_added, state_changed;
 
 static void update_cb (void * data, void * user)
 {
     if (GPOINTER_TO_INT (data) < PLAYLIST_UPDATE_METADATA)
         return;
 
-    state_changed = TRUE;
+    state_changed = true;
 }
 
 static void state_cb (void * data, void * user)
 {
-    state_changed = TRUE;
+    state_changed = true;
 }
 
 void load_playlists (void)
@@ -408,19 +405,19 @@ void load_playlists (void)
     load_playlists_real ();
     playlist_load_state ();
 
-    state_changed = FALSE;
+    state_changed = false;
 
     if (! hooks_added)
     {
-        hook_associate ("playlist update", update_cb, NULL);
-        hook_associate ("playlist activate", state_cb, NULL);
-        hook_associate ("playlist position", state_cb, NULL);
+        hook_associate ("playlist update", update_cb, nullptr);
+        hook_associate ("playlist activate", state_cb, nullptr);
+        hook_associate ("playlist position", state_cb, nullptr);
 
-        hooks_added = TRUE;
+        hooks_added = true;
     }
 }
 
-void save_playlists (bool_t exiting)
+void save_playlists (bool exiting)
 {
     save_playlists_real ();
 
@@ -428,7 +425,7 @@ void save_playlists (bool_t exiting)
     if (state_changed || exiting)
     {
         playlist_save_state ();
-        state_changed = FALSE;
+        state_changed = false;
     }
 
     if (exiting && hooks_added)
@@ -437,6 +434,6 @@ void save_playlists (bool_t exiting)
         hook_dissociate ("playlist activate", state_cb);
         hook_dissociate ("playlist position", state_cb);
 
-        hooks_added = FALSE;
+        hooks_added = false;
     }
 }

@@ -27,16 +27,16 @@ void playlist_init (void);
 void playlist_end (void);
 
 void playlist_insert_with_id (int at, int id);
-void playlist_set_modified (int playlist, bool_t modified);
-bool_t playlist_get_modified (int playlist);
+void playlist_set_modified (int playlist, bool modified);
+bool playlist_get_modified (int playlist);
 
 void playlist_load_state (void);
 void playlist_save_state (void);
 
 void playlist_entry_insert_batch_raw (int playlist, int at, Index<PlaylistAddItem> && items);
 
-bool_t playlist_prev_song (int playlist);
-bool_t playlist_next_song (int playlist, bool_t repeat);
+bool playlist_prev_song (int playlist);
+bool playlist_next_song (int playlist, bool repeat);
 
 int playback_entry_get_position (void);
 String playback_entry_get_filename (void);
@@ -48,11 +48,11 @@ int playback_entry_get_length (void);
 void playback_entry_set_tuple (Tuple && tuple);
 
 /* playlist-files.c */
-bool_t playlist_load (const char * filename, String & title, Index<PlaylistAddItem> & items);
-bool_t playlist_insert_playlist_raw (int list, int at, const char * filename);
+bool playlist_load (const char * filename, String & title, Index<PlaylistAddItem> & items);
+bool playlist_insert_playlist_raw (int list, int at, const char * filename);
 
 /* playlist-utils.c */
 void load_playlists (void);
-void save_playlists (bool_t exiting);
+void save_playlists (bool exiting);
 
 #endif

@@ -22,9 +22,12 @@
 
 #include <stdint.h>
 #include <gtk/gtk.h>
-#include <libaudcore/core.h>
 
-#define audgui_create_widgets(b, w, a) audgui_create_widgets_with_domain (b, w, a, PACKAGE)
+#include <libaudcore/objects.h>
+
+#define audgui_create_widgets(b, w) audgui_create_widgets_with_domain (b, w, PACKAGE)
+
+struct PreferencesWidget;
 
 typedef void (* AudguiCallback) (void * data);
 
@@ -40,7 +43,7 @@ GtkWidget * audgui_get_plugin_menu (int id);
 
 /* prefs-widget.c */
 void audgui_create_widgets_with_domain (GtkWidget * box,
- const PreferencesWidget * widgets, int n_widgets, const char * domain);
+ ArrayRef<const PreferencesWidget> widgets, const char * domain);
 
 /* scaled-image.c -- okay to use without audgui_init() */
 GtkWidget * audgui_scaled_image_new (GdkPixbuf * pixbuf);

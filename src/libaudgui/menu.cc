@@ -23,10 +23,6 @@
 #include <libaudcore/i18n.h>
 #include <libaudcore/runtime.h>
 
-/* we still use GtkImageMenuItem until there is a good alternative */
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 static GtkWidget * image_menu_item_new (const char * text, const char * icon)
 {
     GtkWidget * widget = gtk_image_menu_item_new_with_mnemonic (text);
@@ -40,11 +36,9 @@ static GtkWidget * image_menu_item_new (const char * text, const char * icon)
     return widget;
 }
 
-#pragma GCC diagnostic pop
-
 static void toggled_cb (GtkCheckMenuItem * check, const AudguiMenuItem * item)
 {
-    bool_t on = gtk_check_menu_item_get_active (check);
+    gboolean on = gtk_check_menu_item_get_active (check);
 
     if (aud_get_bool (item->csect, item->cname) == on)
         return;
@@ -72,12 +66,12 @@ EXPORT GtkWidget * audgui_menu_item_new_with_domain
  (const AudguiMenuItem * item, GtkAccelGroup * accel, const char * domain)
 {
     const char * name = domain ? dgettext (domain, item->name) : item->name;
-    GtkWidget * widget = NULL;
+    GtkWidget * widget = nullptr;
 
     if (name && item->func && ! item->cname) /* normal widget */
     {
         widget = image_menu_item_new (name, item->icon);
-        g_signal_connect (widget, "activate", item->func, NULL);
+        g_signal_connect (widget, "activate", item->func, nullptr);
     }
     else if (name && item->cname) /* toggle widget */
     {
@@ -93,7 +87,7 @@ EXPORT GtkWidget * audgui_menu_item_new_with_domain
             g_signal_connect (widget, "destroy", (GCallback) unhook_cb, (void *) item);
         }
     }
-    else if (name && (item->items || item->get_sub)) /* submenu */
+    else if (name && (item->items.len || item->get_sub)) /* submenu */
     {
         widget = image_menu_item_new (name, item->icon);
 
@@ -104,7 +98,7 @@ EXPORT GtkWidget * audgui_menu_item_new_with_domain
         else
         {
             sub = gtk_menu_new ();
-            audgui_menu_init_with_domain (sub, item->items, item->n_items, accel, domain);
+            audgui_menu_init_with_domain (sub, item->items, accel, domain);
         }
 
         gtk_menu_item_set_submenu ((GtkMenuItem *) widget, sub);
@@ -120,12 +114,12 @@ EXPORT GtkWidget * audgui_menu_item_new_with_domain
 }
 
 EXPORT void audgui_menu_init_with_domain (GtkWidget * shell,
- const AudguiMenuItem * items, int n_items, GtkAccelGroup * accel,
+ ArrayRef<const AudguiMenuItem> items, GtkAccelGroup * accel,
  const char * domain)
 {
-    for (int i = 0; i < n_items; i ++)
+    for (const AudguiMenuItem & item : items)
     {
-        GtkWidget * widget = audgui_menu_item_new_with_domain (& items[i], accel, domain);
+        GtkWidget * widget = audgui_menu_item_new_with_domain (& item, accel, domain);
         if (! widget)
             continue;
 

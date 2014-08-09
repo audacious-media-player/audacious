@@ -104,7 +104,7 @@ void vis_send_audio (const float * data, int channels)
         ((VisFreqFunc) func) (freq);
 }
 
-static bool_t vis_load (PluginHandle * plugin, void * unused)
+static bool vis_load (PluginHandle * plugin, void * unused)
 {
     AUDDBG ("Activating %s.\n", aud_plugin_get_name (plugin));
     VisPlugin * header = (VisPlugin *) aud_plugin_get_header (plugin);
@@ -122,7 +122,7 @@ static bool_t vis_load (PluginHandle * plugin, void * unused)
     return true;
 }
 
-static bool_t vis_unload (PluginHandle * plugin, void * unused)
+static bool vis_unload (PluginHandle * plugin, void * unused)
 {
     AUDDBG ("Deactivating %s.\n", aud_plugin_get_name (plugin));
     VisPlugin * header = (VisPlugin *) aud_plugin_get_header (plugin);
@@ -149,9 +149,9 @@ void vis_activate (bool activate)
         return;
 
     if (activate)
-        aud_plugin_for_enabled (PLUGIN_TYPE_VIS, vis_load, NULL);
+        aud_plugin_for_enabled (PLUGIN_TYPE_VIS, vis_load, nullptr);
     else
-        aud_plugin_for_enabled (PLUGIN_TYPE_VIS, vis_unload, NULL);
+        aud_plugin_for_enabled (PLUGIN_TYPE_VIS, vis_unload, nullptr);
 
     running = activate;
 }
@@ -161,11 +161,11 @@ bool vis_plugin_start (PluginHandle * plugin)
     VisPlugin * vp = (VisPlugin *) aud_plugin_get_header (plugin);
     g_return_val_if_fail (vp, false);
 
-    if (vp->init != NULL && ! vp->init ())
+    if (vp->init != nullptr && ! vp->init ())
         return false;
 
     if (running)
-        vis_load (plugin, NULL);
+        vis_load (plugin, nullptr);
 
     return true;
 }
@@ -176,7 +176,7 @@ void vis_plugin_stop (PluginHandle * plugin)
     g_return_if_fail (vp);
 
     if (running)
-        vis_unload (plugin, NULL);
+        vis_unload (plugin, nullptr);
 
     if (vp->cleanup)
         vp->cleanup ();

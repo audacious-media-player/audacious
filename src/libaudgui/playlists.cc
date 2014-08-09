@@ -31,7 +31,7 @@
 #include "libaudgui-gtk.h"
 
 struct ImportExportJob {
-    bool_t save;
+    gboolean save;
     int list_id;
     char * filename;
     GtkWidget * selector, * confirm;
@@ -70,7 +70,7 @@ static void finish_job (void * data)
         else
         {
             aud_playlist_entry_delete (list, 0, aud_playlist_entry_count (list));
-            aud_playlist_entry_insert (list, 0, job->filename, Tuple (), FALSE);
+            aud_playlist_entry_insert (list, 0, job->filename, Tuple (), false);
         }
     }
 
@@ -83,7 +83,7 @@ static void confirm_overwrite (ImportExportJob * job)
         gtk_widget_destroy (job->confirm);
 
     GtkWidget * button1 = audgui_button_new (_("_Overwrite"), "document-save", finish_job, job);
-    GtkWidget * button2 = audgui_button_new (_("_Cancel"), "process-stop", NULL, NULL);
+    GtkWidget * button2 = audgui_button_new (_("_Cancel"), "process-stop", nullptr, nullptr);
 
     job->confirm = audgui_dialog_new (GTK_MESSAGE_QUESTION,
      _("Confirm Overwrite"), str_printf (_("Overwrite %s?"), job->filename),
@@ -129,7 +129,7 @@ static void create_selector (ImportExportJob * job, const char * filename, const
         action = GTK_FILE_CHOOSER_ACTION_OPEN;
     }
 
-    job->selector = gtk_file_chooser_dialog_new (title, NULL, action, NULL, NULL);
+    job->selector = gtk_file_chooser_dialog_new (title, nullptr, action, nullptr, nullptr);
 
     if (filename)
         gtk_file_chooser_set_uri ((GtkFileChooser *) job->selector, filename);
@@ -143,7 +143,7 @@ static void create_selector (ImportExportJob * job, const char * filename, const
     gtk_dialog_add_action_widget ((GtkDialog *) job->selector, button2, GTK_RESPONSE_NONE);
     gtk_dialog_add_action_widget ((GtkDialog *) job->selector, button1, GTK_RESPONSE_NONE);
 
-    gtk_widget_set_can_default (button1, TRUE);
+    gtk_widget_set_can_default (button1, true);
     gtk_widget_grab_default (button1);
 
     g_signal_connect_swapped (job->selector, "destroy", (GCallback) cleanup_job, job);
@@ -151,7 +151,7 @@ static void create_selector (ImportExportJob * job, const char * filename, const
     gtk_widget_show_all (job->selector);
 }
 
-static GtkWidget * start_job (bool_t save)
+static GtkWidget * start_job (gboolean save)
 {
     int list = aud_playlist_get_active ();
 
@@ -163,17 +163,17 @@ static GtkWidget * start_job (bool_t save)
     job->save = save;
     job->list_id = aud_playlist_get_unique_id (list);
 
-    create_selector (job, filename, folder[0] ? (const char *) folder : NULL);
+    create_selector (job, filename, folder[0] ? (const char *) folder : nullptr);
 
     return job->selector;
 }
 
 EXPORT void audgui_import_playlist (void)
 {
-    audgui_show_unique_window (AUDGUI_PLAYLIST_IMPORT_WINDOW, start_job (FALSE));
+    audgui_show_unique_window (AUDGUI_PLAYLIST_IMPORT_WINDOW, start_job (false));
 }
 
 EXPORT void audgui_export_playlist (void)
 {
-    audgui_show_unique_window (AUDGUI_PLAYLIST_EXPORT_WINDOW, start_job (TRUE));
+    audgui_show_unique_window (AUDGUI_PLAYLIST_EXPORT_WINDOW, start_job (true));
 }

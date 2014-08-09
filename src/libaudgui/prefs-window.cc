@@ -1,6 +1,6 @@
 /*
  * prefs-window.c
- * Copyright 2006-2012 William Pitcock, Tomasz Moń, Michael Färber, and
+ * Copyright 2006-2014 William Pitcock, Tomasz Moń, Michael Färber, and
  *                     John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
@@ -134,28 +134,28 @@ static const ComboBoxElements bitdepth_elements[] = {
     { GINT_TO_POINTER  (0), N_("Floating point") }
 };
 
-static GArray * iface_combo_elements;
+static Index<ComboBoxElements> iface_combo_elements;
 static int iface_combo_selected;
 static GtkWidget * iface_prefs_box;
 
-static const ComboBoxElements * iface_combo_fill (int * n_elements);
+static ArrayRef<const ComboBoxElements> iface_combo_fill ();
 static void iface_combo_changed (void);
 static void * iface_create_prefs_box (void);
 
 static const PreferencesWidget appearance_page_widgets[] = {
     WidgetLabel (N_("<b>Interface Settings</b>")),
     WidgetCombo (N_("Interface plugin:"),
-        WidgetConfig ({VALUE_INT, & iface_combo_selected, 0, 0, iface_combo_changed}),
-        WidgetVCombo ({0, 0, iface_combo_fill})),
+        WidgetInt (iface_combo_selected, iface_combo_changed),
+        {0, iface_combo_fill}),
     WidgetCustom (iface_create_prefs_box)
 };
 
-static GArray * output_combo_elements;
+static Index<ComboBoxElements> output_combo_elements;
 static int output_combo_selected;
 static GtkWidget * output_config_button;
 static GtkWidget * output_about_button;
 
-static const ComboBoxElements * output_combo_fill (int * n_elements);
+static ArrayRef<const ComboBoxElements> output_combo_fill ();
 static void output_combo_changed (void);
 static void * output_create_config_button (void);
 static void * output_create_about_button (void);
@@ -163,124 +163,133 @@ static void output_bit_depth_changed (void);
 
 static const PreferencesWidget output_combo_widgets[] = {
     WidgetCombo (N_("Output plugin:"),
-        {VALUE_INT, & output_combo_selected, 0, 0, output_combo_changed},
-        {0, 0, output_combo_fill}),
+        WidgetInt (output_combo_selected, output_combo_changed),
+        {0, output_combo_fill}),
     WidgetCustom (output_create_config_button),
     WidgetCustom (output_create_about_button)
 };
 
 static const PreferencesWidget audio_page_widgets[] = {
     WidgetLabel (N_("<b>Output Settings</b>")),
-    WidgetBox ({output_combo_widgets, ARRAY_LEN (output_combo_widgets), TRUE}),
+    WidgetBox ({{output_combo_widgets}, true}),
     WidgetCombo (N_("Bit depth:"),
-        {VALUE_INT, 0, 0, "output_bit_depth", output_bit_depth_changed},
-        {bitdepth_elements, ARRAY_LEN (bitdepth_elements)}),
+        WidgetInt (0, "output_bit_depth", output_bit_depth_changed),
+        {{bitdepth_elements}}),
     WidgetSpin (N_("Buffer size:"),
-        {VALUE_INT, 0, 0, "output_buffer_size"},
+        WidgetInt (0, "output_buffer_size"),
         {100, 10000, 1000, N_("ms")}),
     WidgetCheck (N_("Soft clipping"),
-        {VALUE_BOOLEAN, 0, 0, "soft_clipping"}),
+        WidgetBool (0, "soft_clipping")),
     WidgetCheck (N_("Use software volume control (not recommended)"),
-        {VALUE_BOOLEAN, 0, 0, "software_volume_control"}),
+        WidgetBool (0, "software_volume_control")),
     WidgetLabel (N_("<b>Replay Gain</b>")),
     WidgetCheck (N_("Enable Replay Gain"),
-        {VALUE_BOOLEAN, 0, 0, "enable_replay_gain"}),
+        WidgetBool (0, "enable_replay_gain")),
     WidgetCheck (N_("Album mode"),
-        {VALUE_BOOLEAN, 0, 0, "replay_gain_album"},
+        WidgetBool (0, "replay_gain_album"),
         WIDGET_CHILD),
     WidgetCheck (N_("Prevent clipping (recommended)"),
-        {VALUE_BOOLEAN, 0, 0, "enable_clipping_prevention"},
+        WidgetBool (0, "enable_clipping_prevention"),
         WIDGET_CHILD),
     WidgetLabel (N_("<b>Adjust Levels</b>"),
         WIDGET_CHILD),
     WidgetSpin (N_("Amplify all files:"),
-        {VALUE_FLOAT, 0, 0, "replay_gain_preamp"},
+        WidgetFloat (0, "replay_gain_preamp"),
         {-15, 15, 0.1, N_("dB")},
         WIDGET_CHILD),
     WidgetSpin (N_("Amplify untagged files:"),
-        {VALUE_FLOAT, 0, 0, "default_gain"},
+        WidgetFloat (0, "default_gain"),
         {-15, 15, 0.1, N_("dB")},
         WIDGET_CHILD)
 };
 
 static const PreferencesWidget proxy_host_port_elements[] = {
     WidgetEntry (N_("Proxy hostname:"),
-        {VALUE_STRING, 0, 0, "proxy_host"}),
+        WidgetString (0, "proxy_host")),
     WidgetEntry (N_("Proxy port:"),
-        {VALUE_STRING, 0, 0, "proxy_port"})
+        WidgetString (0, "proxy_port"))
 };
 
 static const PreferencesWidget proxy_auth_elements[] = {
     WidgetEntry (N_("Proxy username:"),
-        {VALUE_STRING, 0, 0, "proxy_user"}),
+        WidgetString (0, "proxy_user")),
     WidgetEntry (N_("Proxy password:"),
-        {VALUE_STRING, 0, 0, "proxy_pass"},
+        WidgetString (0, "proxy_pass"),
         {true})
 };
 
 static const PreferencesWidget connectivity_page_widgets[] = {
     WidgetLabel (N_("<b>Proxy Configuration</b>")),
     WidgetCheck (N_("Enable proxy usage"),
-        {VALUE_BOOLEAN, 0, 0, "use_proxy"}),
-    WidgetTable ({proxy_host_port_elements, ARRAY_LEN (proxy_host_port_elements)},
+        WidgetBool (0, "use_proxy")),
+    WidgetTable ({{proxy_host_port_elements}},
         WIDGET_CHILD),
     WidgetCheck (N_("Use authentication with proxy"),
-        {VALUE_BOOLEAN, 0, 0, "use_proxy_auth"}),
-    WidgetTable ({proxy_auth_elements, ARRAY_LEN (proxy_auth_elements)},
+        WidgetBool (0, "use_proxy_auth")),
+    WidgetTable ({{proxy_auth_elements}},
         WIDGET_CHILD)
 };
 
 static const PreferencesWidget chardet_elements[] = {
 #ifdef USE_CHARDET
     WidgetCombo (N_("Auto character encoding detector for:"),
-        {VALUE_STRING, 0, 0, "chardet_detector"},
-        {chardet_detector_presets, ARRAY_LEN (chardet_detector_presets)}),
+        WidgetString (0, "chardet_detector"),
+        {{chardet_detector_presets}}),
 #endif
     WidgetEntry (N_("Fallback character encodings:"),
-        {VALUE_STRING, 0, 0, "chardet_fallback"})
+        WidgetString (0, "chardet_fallback"))
 };
+
+static void send_title_change (void);
+static void * create_titlestring_table (void);
 
 static const PreferencesWidget playlist_page_widgets[] = {
     WidgetLabel (N_("<b>Behavior</b>")),
     WidgetCheck (N_("Continue playback on startup"),
-        {VALUE_BOOLEAN, 0, 0, "resume_playback_on_startup"}),
+        WidgetBool (0, "resume_playback_on_startup")),
     WidgetCheck (N_("Advance when the current song is deleted"),
-        {VALUE_BOOLEAN, 0, 0, "advance_on_delete"}),
+        WidgetBool (0, "advance_on_delete")),
     WidgetCheck (N_("Clear the playlist when opening files"),
-        {VALUE_BOOLEAN, 0, 0, "clear_playlist"}),
+        WidgetBool (0, "clear_playlist")),
     WidgetCheck (N_("Open files in a temporary playlist"),
-        {VALUE_BOOLEAN, 0, 0, "open_to_temporary"}),
+        WidgetBool (0, "open_to_temporary")),
     WidgetCheck (N_("Do not load metadata for songs until played"),
-        {VALUE_BOOLEAN, 0, 0, "metadata_on_play"}),
+        WidgetBool (0, "metadata_on_play")),
     WidgetLabel (N_("<b>Compatibility</b>")),
     WidgetCheck (N_("Interpret \\ (backward slash) as a folder delimiter"),
-        {VALUE_BOOLEAN, 0, 0, "convert_backslash"}),
-    WidgetTable ({chardet_elements, ARRAY_LEN (chardet_elements)})
+        WidgetBool (0, "convert_backslash")),
+    WidgetTable ({{chardet_elements}}),
+    WidgetLabel (N_("<b>Song Display</b>")),
+    WidgetCheck (N_("Show song numbers"),
+        WidgetBool (0, "show_numbers_in_pl", send_title_change)),
+    WidgetCheck (N_("Show leading zeroes (02:00 instead of 2:00)"),
+        WidgetBool (0, "leading_zero", send_title_change)),
+    WidgetCustom (create_titlestring_table)
 };
 
 static const PreferencesWidget song_info_page_widgets[] = {
     WidgetLabel (N_("<b>Album Art</b>")),
     WidgetLabel (N_("Search for images matching these words (comma-separated):")),
-    WidgetEntry (0, {VALUE_STRING, 0, 0, "cover_name_include"}),
+    WidgetEntry (0, WidgetString (0, "cover_name_include")),
     WidgetLabel (N_("Exclude images matching these words (comma-separated):")),
-    WidgetEntry (0, {VALUE_STRING, 0, 0, "cover_name_exclude"}),
+    WidgetEntry (0, WidgetString (0, "cover_name_exclude")),
     WidgetCheck (N_("Search for images matching song file name"),
-        {VALUE_BOOLEAN, 0, 0, "use_file_cover"}),
+        WidgetBool (0, "use_file_cover")),
     WidgetCheck (N_("Search recursively"),
-        {VALUE_BOOLEAN, 0, 0, "recurse_for_cover"}),
+        WidgetBool (0, "recurse_for_cover")),
     WidgetSpin (N_("Search depth:"),
-        {VALUE_INT, 0, 0, "recurse_for_cover_depth"},
+        WidgetInt (0, "recurse_for_cover_depth"),
         {0, 100, 1},
         WIDGET_CHILD),
     WidgetLabel (N_("<b>Popup Information</b>")),
     WidgetCheck (N_("Show popup information"),
-        {VALUE_BOOLEAN, 0, 0, "show_filepopup_for_tuple"}),
+        WidgetBool (0, "show_filepopup_for_tuple")),
     WidgetSpin (N_("Popup delay (tenths of a second):"),
-        {VALUE_INT, 0, 0, "filepopup_delay"},
+        WidgetInt (0, "filepopup_delay"),
         {0, 100, 1},
         WIDGET_CHILD),
     WidgetCheck (N_("Show time scale for current song"),
-        {VALUE_BOOLEAN, 0, 0, "filepopup_showprogressbar"},
+        WidgetBool (0, "filepopup_showprogressbar"),
         WIDGET_CHILD)
 };
 
@@ -304,19 +313,18 @@ static const char * const titlestring_preset_names[TITLESTRING_NPRESETS] = {
     N_("ALBUM - TITLE")
 };
 
-static GArray * fill_plugin_combo (int type)
+static Index<ComboBoxElements> fill_plugin_combo (int type)
 {
-    GArray * array = g_array_new (FALSE, FALSE, sizeof (ComboBoxElements));
-    g_array_set_size (array, aud_plugin_count (type));
+    Index<ComboBoxElements> elems;
+    elems.insert (0, aud_plugin_count (type));
 
-    for (unsigned i = 0; i < array->len; i ++)
+    for (int i = 0; i < elems.len (); i ++)
     {
-        ComboBoxElements * elem = & g_array_index (array, ComboBoxElements, i);
-        elem->label = aud_plugin_get_name (aud_plugin_by_index (type, i));
-        elem->value = GINT_TO_POINTER (i);
+        elems[i].label = aud_plugin_get_name (aud_plugin_by_index (type, i));
+        elems[i].value = GINT_TO_POINTER (i);
     }
 
-    return array;
+    return elems;
 }
 
 static void change_category (int category)
@@ -344,23 +352,28 @@ static void category_changed (GtkTreeSelection * selection)
     }
 }
 
+static void send_title_change (void)
+{
+    hook_call ("title change", nullptr);
+}
+
 static void titlestring_tag_menu_cb (GtkMenuItem * menuitem, void * data)
 {
     const char * separator = " - ";
-    int item = GPOINTER_TO_INT (data);
+    auto tag = (const TitleFieldTag *) data;
     int pos = gtk_editable_get_position ((GtkEditable *) titlestring_entry);
 
     /* insert separator as needed */
     if (gtk_entry_get_text ((GtkEntry *) titlestring_entry)[0])
         gtk_editable_insert_text ((GtkEditable *) titlestring_entry, separator, -1, & pos);
 
-    gtk_editable_insert_text ((GtkEditable *) titlestring_entry, _(title_field_tags[item].tag), -1, & pos);
+    gtk_editable_insert_text ((GtkEditable *) titlestring_entry, _(tag->tag), -1, & pos);
     gtk_editable_set_position ((GtkEditable *) titlestring_entry, pos);
 }
 
 static void on_titlestring_help_button_clicked (GtkButton * button, void * menu)
 {
-    gtk_menu_popup ((GtkMenu *) menu, NULL, NULL, NULL, NULL, 0, GDK_CURRENT_TIME);
+    gtk_menu_popup ((GtkMenu *) menu, nullptr, nullptr, nullptr, nullptr, 0, GDK_CURRENT_TIME);
 }
 
 static void update_titlestring_cbox (GtkComboBox * cbox, const char * format)
@@ -379,7 +392,7 @@ static void update_titlestring_cbox (GtkComboBox * cbox, const char * format)
 static void on_titlestring_entry_changed (GtkEntry * entry, GtkComboBox * cbox)
 {
     const char * format = gtk_entry_get_text (entry);
-    aud_set_str (NULL, "generic_title_format", format);
+    aud_set_str (nullptr, "generic_title_format", format);
     update_titlestring_cbox (cbox, format);
 }
 
@@ -398,34 +411,34 @@ static void fill_category_list (GtkTreeView * treeview, GtkNotebook * notebook)
     gtk_tree_view_column_set_spacing (column, 2);
 
     GtkCellRenderer * renderer = gtk_cell_renderer_pixbuf_new ();
-    gtk_tree_view_column_pack_start (column, renderer, FALSE);
-    gtk_tree_view_column_set_attributes (column, renderer, "pixbuf", 0, NULL);
+    gtk_tree_view_column_pack_start (column, renderer, false);
+    gtk_tree_view_column_set_attributes (column, renderer, "pixbuf", 0, nullptr);
 
     renderer = gtk_cell_renderer_text_new ();
-    gtk_tree_view_column_pack_start (column, renderer, FALSE);
-    gtk_tree_view_column_set_attributes (column, renderer, "text", 1, NULL);
+    gtk_tree_view_column_pack_start (column, renderer, false);
+    gtk_tree_view_column_set_attributes (column, renderer, "text", 1, nullptr);
 
     g_object_set ((GObject *) renderer, "wrap-width", 96, "wrap-mode",
-     PANGO_WRAP_WORD_CHAR, NULL);
+     PANGO_WRAP_WORD_CHAR, nullptr);
 
     GtkListStore * store = gtk_list_store_new (CATEGORY_VIEW_N_COLS,
      GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_INT);
     gtk_tree_view_set_model (treeview, (GtkTreeModel *) store);
 
-    const char * data_dir = aud_get_path (AUD_PATH_DATA_DIR);
+    const char * data_dir = aud_get_path (AudPath::DataDir);
 
-    for (unsigned i = 0; i < ARRAY_LEN (categories); i ++)
+    for (const Category & category : categories)
     {
-        if (i == CATEGORY_APPEARANCE && aud_get_headless_mode ())
+        if (& category == & categories[CATEGORY_APPEARANCE] && aud_get_headless_mode ())
             continue;
 
         GtkTreeIter iter;
         gtk_list_store_append (store, & iter);
         gtk_list_store_set (store, & iter, CATEGORY_VIEW_COL_NAME,
-         gettext (categories[i].name), -1);
+         gettext (category.name), -1);
 
-        StringBuf path = filename_build ({data_dir, "images", categories[i].icon_path});
-        GdkPixbuf * img = gdk_pixbuf_new_from_file (path, NULL);
+        StringBuf path = filename_build ({data_dir, "images", category.icon_path});
+        GdkPixbuf * img = gdk_pixbuf_new_from_file (path, nullptr);
 
         if (img)
         {
@@ -437,36 +450,24 @@ static void fill_category_list (GtkTreeView * treeview, GtkNotebook * notebook)
     g_object_unref (store);
 
     GtkTreeSelection * selection = gtk_tree_view_get_selection (treeview);
-    g_signal_connect (selection, "changed", (GCallback) category_changed, NULL);
+    g_signal_connect (selection, "changed", (GCallback) category_changed, nullptr);
 }
 
 static GtkWidget * create_titlestring_tag_menu (void)
 {
     GtkWidget * titlestring_tag_menu = gtk_menu_new ();
 
-    for (unsigned i = 0; i < ARRAY_LEN (title_field_tags); i ++)
+    for (const TitleFieldTag & tag : title_field_tags)
     {
-        GtkWidget * menu_item = gtk_menu_item_new_with_label (_(title_field_tags[i].name));
+        GtkWidget * menu_item = gtk_menu_item_new_with_label (_(tag.name));
         gtk_menu_shell_append ((GtkMenuShell *) titlestring_tag_menu, menu_item);
-        g_signal_connect(menu_item, "activate",
-         (GCallback) titlestring_tag_menu_cb, GINT_TO_POINTER (i));
-    };
+        g_signal_connect (menu_item, "activate",
+         (GCallback) titlestring_tag_menu_cb, (void *) & tag);
+    }
 
     gtk_widget_show_all (titlestring_tag_menu);
 
     return titlestring_tag_menu;
-}
-
-static void show_numbers_cb (GtkToggleButton * numbers, void * unused)
-{
-    aud_set_bool (NULL, "show_numbers_in_pl", gtk_toggle_button_get_active (numbers));
-    hook_call ("title change", NULL);
-}
-
-static void leading_zero_cb (GtkToggleButton * leading)
-{
-    aud_set_bool (NULL, "leading_zero", gtk_toggle_button_get_active (leading));
-    hook_call ("title change", NULL);
 }
 
 static void create_titlestring_widgets (GtkWidget * * cbox, GtkWidget * * entry)
@@ -478,7 +479,7 @@ static void create_titlestring_widgets (GtkWidget * * cbox, GtkWidget * * entry)
 
     * entry = gtk_entry_new ();
 
-    String format = aud_get_str (NULL, "generic_title_format");
+    String format = aud_get_str (nullptr, "generic_title_format");
     update_titlestring_cbox ((GtkComboBox *) * cbox, format);
     gtk_entry_set_text ((GtkEntry *) * entry, format);
 
@@ -486,73 +487,31 @@ static void create_titlestring_widgets (GtkWidget * * cbox, GtkWidget * * entry)
     g_signal_connect (* entry, "changed", (GCallback) on_titlestring_entry_changed, * cbox);
 }
 
-static void create_playlist_category (void)
+static void * create_titlestring_table (void)
 {
-    GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-    gtk_container_add ((GtkContainer *) category_notebook, vbox);
+    GtkWidget * grid = gtk_table_new (0, 0, false);
+    gtk_table_set_row_spacings ((GtkTable *) grid, 6);
+    gtk_table_set_col_spacings ((GtkTable *) grid, 6);
 
-    audgui_create_widgets (vbox, playlist_page_widgets, ARRAY_LEN (playlist_page_widgets));
-
-    GtkWidget * alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start ((GtkBox *) vbox, alignment, FALSE, FALSE, 0);
-    gtk_alignment_set_padding ((GtkAlignment *) alignment, 12, 3, 0, 0);
-
-    GtkWidget * label = gtk_label_new (_("<b>Song Display</b>"));
-    gtk_container_add ((GtkContainer *) alignment, label);
-    gtk_label_set_use_markup ((GtkLabel *) label, TRUE);
-    gtk_misc_set_alignment ((GtkMisc *) label, 0, 0.5);
-
-    GtkWidget * numbers_alignment = gtk_alignment_new (0, 0, 0, 0);
-    gtk_alignment_set_padding ((GtkAlignment *) numbers_alignment, 0, 0, 12, 0);
-    gtk_box_pack_start ((GtkBox *) vbox, numbers_alignment, 0, 0, 3);
-
-    GtkWidget * numbers = gtk_check_button_new_with_label (_("Show song numbers"));
-    gtk_toggle_button_set_active ((GtkToggleButton *) numbers,
-     aud_get_bool (NULL, "show_numbers_in_pl"));
-    g_signal_connect (numbers, "toggled", (GCallback) show_numbers_cb, 0);
-    gtk_container_add ((GtkContainer *) numbers_alignment, numbers);
-
-    numbers_alignment = gtk_alignment_new (0, 0, 0, 0);
-    gtk_alignment_set_padding ((GtkAlignment *) numbers_alignment, 0, 0, 12, 0);
-    gtk_box_pack_start ((GtkBox *) vbox, numbers_alignment, 0, 0, 3);
-
-    numbers = gtk_check_button_new_with_label (
-     _("Show leading zeroes (02:00 instead of 2:00)"));
-    gtk_toggle_button_set_active ((GtkToggleButton *) numbers, aud_get_bool (NULL, "leading_zero"));
-    g_signal_connect (numbers, "toggled", (GCallback) leading_zero_cb, 0);
-    gtk_container_add ((GtkContainer *) numbers_alignment, numbers);
-
-    alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
-    gtk_box_pack_start ((GtkBox *) vbox, alignment, FALSE, FALSE, 0);
-    gtk_alignment_set_padding ((GtkAlignment *) alignment, 0, 0, 12, 0);
-
-    GtkWidget * grid = gtk_grid_new ();
-    gtk_container_add ((GtkContainer *) alignment, grid);
-    gtk_grid_set_row_spacing ((GtkGrid *) grid, 4);
-    gtk_grid_set_column_spacing ((GtkGrid *) grid, 12);
-
-    label = gtk_label_new (_("Title format:"));
-    gtk_grid_attach ((GtkGrid *) grid, label, 0, 0, 1, 1);
-    gtk_label_set_justify ((GtkLabel *) label, GTK_JUSTIFY_RIGHT);
+    GtkWidget * label = gtk_label_new (_("Title format:"));
     gtk_misc_set_alignment ((GtkMisc *) label, 1, 0.5);
+    gtk_table_attach ((GtkTable *) grid, label, 0, 1, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
 
     label = gtk_label_new (_("Custom string:"));
-    gtk_grid_attach ((GtkGrid *) grid, label, 0, 1, 1, 1);
-    gtk_label_set_justify ((GtkLabel *) label, GTK_JUSTIFY_RIGHT);
     gtk_misc_set_alignment ((GtkMisc *) label, 1, 0.5);
+    gtk_table_attach ((GtkTable *) grid, label, 0, 1, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
 
     GtkWidget * titlestring_cbox;
     create_titlestring_widgets (& titlestring_cbox, & titlestring_entry);
-    gtk_widget_set_hexpand (titlestring_cbox, TRUE);
-    gtk_widget_set_hexpand (titlestring_entry, TRUE);
-    gtk_grid_attach ((GtkGrid *) grid, titlestring_cbox, 1, 0, 1, 1);
-    gtk_grid_attach ((GtkGrid *) grid, titlestring_entry, 1, 1, 1, 1);
+    gtk_table_attach_defaults ((GtkTable *) grid, titlestring_cbox, 1, 2, 0, 1);
+    gtk_table_attach_defaults ((GtkTable *) grid, titlestring_entry, 1, 2, 1, 2);
 
     GtkWidget * titlestring_help_button = gtk_button_new ();
-    gtk_widget_set_can_focus (titlestring_help_button, FALSE);
-    gtk_button_set_focus_on_click ((GtkButton *) titlestring_help_button, FALSE);
+    gtk_widget_set_can_focus (titlestring_help_button, false);
+    gtk_button_set_focus_on_click ((GtkButton *) titlestring_help_button, false);
     gtk_button_set_relief ((GtkButton *) titlestring_help_button, GTK_RELIEF_HALF);
-    gtk_grid_attach ((GtkGrid *) grid, titlestring_help_button, 2, 1, 1, 1);
+    gtk_table_attach ((GtkTable *) grid, titlestring_help_button, 2, 3, 1, 2,
+     GTK_FILL, GTK_FILL, 0, 0);
 
     GtkWidget * titlestring_tag_menu = create_titlestring_tag_menu ();
 
@@ -561,80 +520,105 @@ static void create_playlist_category (void)
 
     GtkWidget * image = gtk_image_new_from_icon_name ("list-add", GTK_ICON_SIZE_BUTTON);
     gtk_container_add ((GtkContainer *) titlestring_help_button, image);
+
+    return grid;
+}
+
+static void create_playlist_category (void)
+{
+    GtkWidget * vbox = gtk_vbox_new (false, 0);
+    gtk_container_add ((GtkContainer *) category_notebook, vbox);
+    audgui_create_widgets (vbox, playlist_page_widgets);
 }
 
 static void create_song_info_category (void)
 {
-    GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+    GtkWidget * vbox = gtk_vbox_new (false, 0);
     gtk_container_add ((GtkContainer *) category_notebook, vbox);
-    audgui_create_widgets (vbox, song_info_page_widgets, ARRAY_LEN (song_info_page_widgets));
+    audgui_create_widgets (vbox, song_info_page_widgets);
 }
 
 static void iface_fill_prefs_box (void)
 {
     Plugin * header = (Plugin *) aud_plugin_get_header (aud_plugin_get_current (PLUGIN_TYPE_IFACE));
     if (header && header->prefs)
-        audgui_create_widgets_with_domain (iface_prefs_box,
-         header->prefs->widgets, header->prefs->n_widgets, header->domain);
+        audgui_create_widgets_with_domain (iface_prefs_box, header->prefs->widgets, header->domain);
+}
+
+static int iface_combo_changed_finish (void *)
+{
+    iface_fill_prefs_box ();
+    gtk_widget_show_all (iface_prefs_box);
+
+    audgui_cleanup ();
+
+    return G_SOURCE_REMOVE;
 }
 
 static void iface_combo_changed (void)
 {
-    aud_plugin_enable (aud_plugin_by_index (PLUGIN_TYPE_IFACE, iface_combo_selected), TRUE);
+    /* prevent audgui from being shut down during the switch */
+    audgui_init ();
+
+    gtk_container_foreach ((GtkContainer *) iface_prefs_box,
+     (GtkCallback) gtk_widget_destroy, nullptr);
+
+    aud_plugin_enable (aud_plugin_by_index (PLUGIN_TYPE_IFACE, iface_combo_selected), true);
+
+    /* now wait till we have restarted into the new main loop */
+    g_idle_add_full (G_PRIORITY_HIGH, iface_combo_changed_finish, nullptr, nullptr);
 }
 
-static const ComboBoxElements * iface_combo_fill (int * n_elements)
+static ArrayRef<const ComboBoxElements> iface_combo_fill ()
 {
-    if (! iface_combo_elements)
+    if (! iface_combo_elements.len ())
     {
         iface_combo_elements = fill_plugin_combo (PLUGIN_TYPE_IFACE);
         iface_combo_selected = aud_plugin_get_index (aud_plugin_get_current (PLUGIN_TYPE_IFACE));
     }
 
-    * n_elements = iface_combo_elements->len;
-    return (const ComboBoxElements *) iface_combo_elements->data;
+    return {iface_combo_elements.begin (), iface_combo_elements.len ()};
 }
 
 static void * iface_create_prefs_box (void)
 {
-    iface_prefs_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+    iface_prefs_box = gtk_vbox_new (false, 0);
     iface_fill_prefs_box ();
     return iface_prefs_box;
 }
 
 static void create_appearance_category (void)
 {
-    GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+    GtkWidget * vbox = gtk_vbox_new (false, 0);
     gtk_container_add ((GtkContainer *) category_notebook, vbox);
-    audgui_create_widgets (vbox, appearance_page_widgets, ARRAY_LEN (appearance_page_widgets));
+    audgui_create_widgets (vbox, appearance_page_widgets);
 }
 
 static void output_combo_changed (void)
 {
     PluginHandle * plugin = aud_plugin_by_index (PLUGIN_TYPE_OUTPUT, output_combo_selected);
 
-    if (aud_plugin_enable (plugin, TRUE))
+    if (aud_plugin_enable (plugin, true))
     {
         gtk_widget_set_sensitive (output_config_button, aud_plugin_has_configure (plugin));
         gtk_widget_set_sensitive (output_about_button, aud_plugin_has_about (plugin));
     }
 }
 
-static const ComboBoxElements * output_combo_fill (int * n_elements)
+static ArrayRef<const ComboBoxElements> output_combo_fill ()
 {
-    if (! output_combo_elements)
+    if (! output_combo_elements.len ())
     {
         output_combo_elements = fill_plugin_combo (PLUGIN_TYPE_OUTPUT);
         output_combo_selected = aud_plugin_get_index (aud_plugin_get_current (PLUGIN_TYPE_OUTPUT));
     }
 
-    * n_elements = output_combo_elements->len;
-    return (const ComboBoxElements *) output_combo_elements->data;
+    return {output_combo_elements.begin (), output_combo_elements.len ()};
 }
 
 static void output_bit_depth_changed (void)
 {
-    aud_output_reset (OUTPUT_RESET_SOFT);
+    aud_output_reset (OutputReset::ReopenStream);
 }
 
 static void output_do_config (void * unused)
@@ -649,10 +633,10 @@ static void output_do_about (void * unused)
 
 static void * output_create_config_button (void)
 {
-    bool_t enabled = aud_plugin_has_configure (aud_plugin_get_current (PLUGIN_TYPE_OUTPUT));
+    gboolean enabled = aud_plugin_has_configure (aud_plugin_get_current (PLUGIN_TYPE_OUTPUT));
 
     output_config_button = audgui_button_new (_("_Settings"),
-     "preferences-system", output_do_config, NULL);
+     "preferences-system", output_do_config, nullptr);
     gtk_widget_set_sensitive (output_config_button, enabled);
 
     return output_config_button;
@@ -660,9 +644,9 @@ static void * output_create_config_button (void)
 
 static void * output_create_about_button (void)
 {
-    bool_t enabled = aud_plugin_has_about (aud_plugin_get_current (PLUGIN_TYPE_OUTPUT));
+    gboolean enabled = aud_plugin_has_about (aud_plugin_get_current (PLUGIN_TYPE_OUTPUT));
 
-    output_about_button = audgui_button_new (_("_About"), "help-about", output_do_about, NULL);
+    output_about_button = audgui_button_new (_("_About"), "help-about", output_do_about, nullptr);
     gtk_widget_set_sensitive (output_about_button, enabled);
 
     return output_about_button;
@@ -670,20 +654,20 @@ static void * output_create_about_button (void)
 
 static void create_audio_category (void)
 {
-    GtkWidget * audio_page_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-    audgui_create_widgets (audio_page_vbox, audio_page_widgets, ARRAY_LEN (audio_page_widgets));
+    GtkWidget * audio_page_vbox = gtk_vbox_new (false, 0);
+    audgui_create_widgets (audio_page_vbox, audio_page_widgets);
     gtk_container_add ((GtkContainer *) category_notebook, audio_page_vbox);
 }
 
 static void create_connectivity_category (void)
 {
-    GtkWidget * connectivity_page_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+    GtkWidget * connectivity_page_vbox = gtk_vbox_new (false, 0);
     gtk_container_add ((GtkContainer *) category_notebook, connectivity_page_vbox);
 
-    GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-    gtk_box_pack_start ((GtkBox *) connectivity_page_vbox, vbox, TRUE, TRUE, 0);
+    GtkWidget * vbox = gtk_vbox_new (false, 0);
+    gtk_box_pack_start ((GtkBox *) connectivity_page_vbox, vbox, true, true, 0);
 
-    audgui_create_widgets (vbox, connectivity_page_widgets, ARRAY_LEN (connectivity_page_widgets));
+    audgui_create_widgets (vbox, connectivity_page_widgets);
 }
 
 static void create_plugin_category (void)
@@ -691,32 +675,20 @@ static void create_plugin_category (void)
     plugin_notebook = gtk_notebook_new ();
     gtk_container_add ((GtkContainer *) category_notebook, plugin_notebook);
 
-    for (unsigned i = 0; i < ARRAY_LEN (plugin_categories); i ++)
-    {
-        const PluginCategory * cat = & plugin_categories[i];
+    for (const PluginCategory & category : plugin_categories)
         gtk_notebook_append_page ((GtkNotebook *) plugin_notebook,
-         plugin_view_new (cat->type), gtk_label_new (_(cat->name)));
-    }
+         plugin_view_new (category.type), gtk_label_new (_(category.name)));
 }
 
 static void destroy_cb (void)
 {
-    prefswin = NULL;
-    category_treeview = NULL;
-    category_notebook = NULL;
-    titlestring_entry = NULL;
+    prefswin = nullptr;
+    category_treeview = nullptr;
+    category_notebook = nullptr;
+    titlestring_entry = nullptr;
 
-    if (iface_combo_elements)
-    {
-        g_array_free (iface_combo_elements, TRUE);
-        iface_combo_elements = NULL;
-    }
-
-    if (output_combo_elements)
-    {
-        g_array_free (output_combo_elements, TRUE);
-        output_combo_elements = NULL;
-    }
+    iface_combo_elements.clear ();
+    output_combo_elements.clear ();
 }
 
 static void create_prefs_window (void)
@@ -727,14 +699,14 @@ static void create_prefs_window (void)
     gtk_window_set_title ((GtkWindow *) prefswin, _("Audacious Settings"));
     gtk_window_set_default_size ((GtkWindow *) prefswin, 680, 400);
 
-    GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+    GtkWidget * vbox = gtk_vbox_new (false, 0);
     gtk_container_add ((GtkContainer *) prefswin, vbox);
 
-    GtkWidget * hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  8);
-    gtk_box_pack_start ((GtkBox *) vbox, hbox, TRUE, TRUE, 0);
+    GtkWidget * hbox = gtk_hbox_new (false, 6);
+    gtk_box_pack_start ((GtkBox *) vbox, hbox, true, true, 0);
 
-    GtkWidget * scrolledwindow = gtk_scrolled_window_new (NULL, NULL);
-    gtk_box_pack_start ((GtkBox *) hbox, scrolledwindow, FALSE, FALSE, 0);
+    GtkWidget * scrolledwindow = gtk_scrolled_window_new (nullptr, nullptr);
+    gtk_box_pack_start ((GtkBox *) hbox, scrolledwindow, false, false, 0);
     gtk_scrolled_window_set_policy ((GtkScrolledWindow *) scrolledwindow,
      GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
     gtk_scrolled_window_set_shadow_type ((GtkScrolledWindow *) scrolledwindow, GTK_SHADOW_IN);
@@ -742,14 +714,14 @@ static void create_prefs_window (void)
     category_treeview = gtk_tree_view_new ();
     gtk_container_add ((GtkContainer *) scrolledwindow, category_treeview);
     gtk_widget_set_size_request (scrolledwindow, 168, -1);
-    gtk_tree_view_set_headers_visible ((GtkTreeView *) category_treeview, FALSE);
+    gtk_tree_view_set_headers_visible ((GtkTreeView *) category_treeview, false);
 
     category_notebook = gtk_notebook_new ();
-    gtk_box_pack_start ((GtkBox *) hbox, category_notebook, TRUE, TRUE, 0);
+    gtk_box_pack_start ((GtkBox *) hbox, category_notebook, true, true, 0);
 
-    gtk_widget_set_can_focus (category_notebook, FALSE);
-    gtk_notebook_set_show_tabs ((GtkNotebook *) category_notebook, FALSE);
-    gtk_notebook_set_show_border ((GtkNotebook *) category_notebook, FALSE);
+    gtk_widget_set_can_focus (category_notebook, false);
+    gtk_notebook_set_show_tabs ((GtkNotebook *) category_notebook, false);
+    gtk_notebook_set_show_border ((GtkNotebook *) category_notebook, false);
 
     if (! aud_get_headless_mode ())
         create_appearance_category ();
@@ -760,31 +732,31 @@ static void create_prefs_window (void)
     create_song_info_category ();
     create_plugin_category ();
 
-    GtkWidget * hseparator = gtk_separator_new (GTK_ORIENTATION_HORIZONTAL);
-    gtk_box_pack_start ((GtkBox *) vbox, hseparator, FALSE, FALSE, 6);
+    GtkWidget * hseparator = gtk_hseparator_new ();
+    gtk_box_pack_start ((GtkBox *) vbox, hseparator, false, false, 6);
 
-    hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  0);
-    gtk_box_pack_start ((GtkBox *) vbox, hbox, FALSE, FALSE, 0);
+    hbox = gtk_hbox_new (false, 0);
+    gtk_box_pack_start ((GtkBox *) vbox, hbox, false, false, 0);
 
     GtkWidget * audversionlabel = gtk_label_new (aud_version_string);
-    gtk_box_pack_start ((GtkBox *) hbox, audversionlabel, FALSE, FALSE, 0);
-    gtk_label_set_use_markup ((GtkLabel *) audversionlabel, TRUE);
+    gtk_box_pack_start ((GtkBox *) hbox, audversionlabel, false, false, 0);
+    gtk_label_set_use_markup ((GtkLabel *) audversionlabel, true);
 
-    GtkWidget * prefswin_button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
-    gtk_box_pack_start ((GtkBox *) hbox, prefswin_button_box, TRUE, TRUE, 0);
+    GtkWidget * prefswin_button_box = gtk_hbutton_box_new ();
+    gtk_box_pack_start ((GtkBox *) hbox, prefswin_button_box, true, true, 0);
     gtk_button_box_set_layout ((GtkButtonBox *) prefswin_button_box, GTK_BUTTONBOX_END);
     gtk_box_set_spacing ((GtkBox *) prefswin_button_box, 6);
 
     GtkWidget * close = audgui_button_new (_("_Close"), "window-close",
      (AudguiCallback) gtk_widget_destroy, prefswin);
     gtk_container_add ((GtkContainer *) prefswin_button_box, close);
-    gtk_widget_set_can_default (close, TRUE);
+    gtk_widget_set_can_default (close, true);
 
     fill_category_list ((GtkTreeView *) category_treeview, (GtkNotebook *) category_notebook);
 
     gtk_widget_show_all (vbox);
 
-    g_signal_connect (prefswin, "destroy", (GCallback) destroy_cb, NULL);
+    g_signal_connect (prefswin, "destroy", (GCallback) destroy_cb, nullptr);
 
     audgui_destroy_on_escape (prefswin);
 }
@@ -812,10 +784,11 @@ EXPORT void audgui_show_prefs_for_plugin_type (int type)
     {
         change_category (CATEGORY_PLUGINS);
 
-        for (unsigned i = 0; i < ARRAY_LEN (plugin_categories); i ++)
+        for (const PluginCategory & category : plugin_categories)
         {
-            if (plugin_categories[i].type == type)
-                gtk_notebook_set_current_page ((GtkNotebook *) plugin_notebook, i);
+            if (category.type == type)
+                gtk_notebook_set_current_page ((GtkNotebook *) plugin_notebook,
+                 & category - plugin_categories);
         }
     }
 

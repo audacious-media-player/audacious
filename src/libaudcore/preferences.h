@@ -20,31 +20,9 @@
 #ifndef LIBAUDCORE_PREFERENCES_H
 #define LIBAUDCORE_PREFERENCES_H
 
-#include <libaudcore/core.h>
+#include <libaudcore/objects.h>
 
-enum WidgetType {
-    WIDGET_NONE,
-    WIDGET_CHK_BTN,
-    WIDGET_LABEL,
-    WIDGET_RADIO_BTN,
-    WIDGET_SPIN_BTN,
-    WIDGET_CUSTOM,           /* 'custom' widget, you hand back the widget you want to add --nenolod */
-    WIDGET_FONT_BTN,
-    WIDGET_TABLE,
-    WIDGET_ENTRY,
-    WIDGET_COMBO_BOX,
-    WIDGET_BOX,
-    WIDGET_NOTEBOOK,
-    WIDGET_SEPARATOR,
-};
-
-enum ValueType {
-    VALUE_INT,
-    VALUE_FLOAT,
-    VALUE_BOOLEAN,
-    VALUE_STRING,
-    VALUE_NULL,
-};
+struct PreferencesWidget;
 
 struct ComboBoxElements {
     const void * value;
@@ -61,13 +39,12 @@ struct WidgetVSpin {
 };
 
 struct WidgetVTable {
-    const PreferencesWidget * elem;
-    int rows;
+    ArrayRef<const PreferencesWidget> widgets;
 };
 
 struct WidgetVLabel {
     const char * stock_id;
-    bool_t single_line; /* FALSE to enable line wrap */
+    bool single_line; /* false to enable line wrap */
 };
 
 struct WidgetVFonts {
@@ -75,39 +52,35 @@ struct WidgetVFonts {
 };
 
 struct WidgetVEntry {
-    bool_t password;
+    bool password;
 };
 
 struct WidgetVCombo {
     /* static init */
-    const ComboBoxElements * elements;
-    int n_elements;
+    ArrayRef<const ComboBoxElements> elems;
 
     /* runtime init */
-    const ComboBoxElements * (* fill) (int * n_elements);
+    ArrayRef<const ComboBoxElements> (* fill) ();
 };
 
 struct WidgetVBox {
-    const PreferencesWidget * elem;
-    int n_elem;
+    ArrayRef<const PreferencesWidget> widgets;
 
-    bool_t horizontal;  /* FALSE gives vertical, TRUE gives horizontal aligment of child widgets */
-    bool_t frame;       /* whether to draw frame around box */
+    bool horizontal;  /* false gives vertical, true gives horizontal aligment of child widgets */
+    bool frame;       /* whether to draw frame around box */
 };
 
 struct NotebookTab {
     const char * name;
-    const PreferencesWidget * widgets;
-    int n_widgets;
+    ArrayRef<const PreferencesWidget> widgets;
 };
 
 struct WidgetVNotebook {
-    const NotebookTab * tabs;
-    int n_tabs;
+    ArrayRef<const NotebookTab> tabs;
 };
 
 struct WidgetVSeparator {
-    bool_t horizontal;  /* FALSE gives vertical, TRUE gives horizontal separator */
+    bool horizontal;  /* false gives vertical, true gives horizontal separator */
 };
 
 union WidgetVariant {
@@ -141,25 +114,79 @@ union WidgetVariant {
     constexpr WidgetVariant (void * (* populate) (void) = 0) : populate (populate) {}
 };
 
-struct PreferencesWidget {
-    WidgetType type;          /* widget type */
-    const char * label;       /* widget title (for SPIN_BTN it's text left to widget) */
-    void * cfg;               /* connected config value */
-    void (* callback) (void); /* this func will be called after value change, can be NULL */
-    const char * tooltip;     /* widget tooltip, can be NULL */
-    bool_t child;
-    ValueType cfg_type;       /* connected value type */
-    const char * csect;       /* config file section */
-    const char * cname;       /* config file key name */
+struct WidgetConfig
+{
+    enum Type {
+        None,
+        Bool,
+        Int,
+        Float,
+        String
+    };
 
-    WidgetVariant data;
-};
-
-struct WidgetConfig {
-    ValueType type;
+    Type type;
     void * value;
     const char * section, * name;
     void (* callback) (void);
+
+    constexpr WidgetConfig () :
+        type (None),
+        value (nullptr),
+        section (nullptr),
+        name (nullptr),
+        callback (nullptr) {}
+
+    constexpr WidgetConfig (Type type, void * value, const char * section,
+     const char * name, void (* callback) (void)) :
+        type (type),
+        value (value),
+        section (section),
+        name (name),
+        callback (callback) {}
+};
+
+constexpr WidgetConfig WidgetBool (bool & value, void (* callback) (void) = nullptr)
+    { return WidgetConfig (WidgetConfig::Bool, (void *) & value, 0, 0, callback); }
+constexpr WidgetConfig WidgetInt (int & value, void (* callback) (void) = nullptr)
+    { return WidgetConfig (WidgetConfig::Int, (void *) & value, 0, 0, callback); }
+constexpr WidgetConfig WidgetFloat (double & value, void (* callback) (void) = nullptr)
+    { return WidgetConfig (WidgetConfig::Float, (void *) & value, 0, 0, callback); }
+constexpr WidgetConfig WidgetString (String & value, void (* callback) (void) = nullptr)
+    { return WidgetConfig (WidgetConfig::String, (void *) & value, 0, 0, callback); }
+
+constexpr WidgetConfig WidgetBool (const char * section, const char * name, void (* callback) (void) = nullptr)
+    { return WidgetConfig (WidgetConfig::Bool, 0, section, name, callback); }
+constexpr WidgetConfig WidgetInt (const char * section, const char * name, void (* callback) (void) = nullptr)
+    { return WidgetConfig (WidgetConfig::Int, 0, section, name, callback); }
+constexpr WidgetConfig WidgetFloat (const char * section, const char * name, void (* callback) (void) = nullptr)
+    { return WidgetConfig (WidgetConfig::Float, 0, section, name, callback); }
+constexpr WidgetConfig WidgetString (const char * section, const char * name, void (* callback) (void) = nullptr)
+    { return WidgetConfig (WidgetConfig::String, 0, section, name, callback); }
+
+struct PreferencesWidget
+{
+    enum Type {
+        Label,
+        CheckButton,
+        RadioButton,
+        SpinButton,
+        Entry,
+        ComboBox,
+        FontButton,
+        Box,
+        Table,
+        Notebook,
+        Separator,
+        Custom
+    };
+
+    Type type;
+    const char * label;       /* widget title (for SPIN_BTN it's text left to widget) */
+    const char * tooltip;     /* widget tooltip, can be nullptr */
+    bool child;
+
+    WidgetConfig cfg;
+    WidgetVariant data;
 };
 
 enum WidgetIsChild {
@@ -167,57 +194,59 @@ enum WidgetIsChild {
     WIDGET_CHILD
 };
 
-constexpr const PreferencesWidget WidgetLabel (const char * label, WidgetIsChild child = WIDGET_NOT_CHILD)
-    { return {WIDGET_LABEL, label, 0, 0, 0, (child == WIDGET_CHILD)}; }
-
-constexpr const PreferencesWidget WidgetCheck (const char * label, WidgetConfig cfg,
+constexpr const PreferencesWidget WidgetLabel (const char * label,
  WidgetIsChild child = WIDGET_NOT_CHILD)
-    { return {WIDGET_CHK_BTN, label, cfg.value, cfg.callback, 0,
-       (child == WIDGET_CHILD), cfg.type, cfg.section, cfg.name}; }
+    { return {PreferencesWidget::Label, label, 0, (child == WIDGET_CHILD)}; }
 
-constexpr const PreferencesWidget WidgetRadio (const char * label, WidgetConfig cfg,
- WidgetVRadio radio, WidgetIsChild child = WIDGET_NOT_CHILD)
-    { return {WIDGET_RADIO_BTN, label, cfg.value, cfg.callback, 0,
-       (child == WIDGET_CHILD), cfg.type, cfg.section, cfg.name, radio}; }
+constexpr const PreferencesWidget WidgetCheck (const char * label,
+ WidgetConfig cfg, WidgetIsChild child = WIDGET_NOT_CHILD)
+    { return {PreferencesWidget::CheckButton, label, 0,
+       (child == WIDGET_CHILD), cfg}; }
 
-constexpr const PreferencesWidget WidgetSpin (const char * label, WidgetConfig cfg,
- WidgetVSpin spin, WidgetIsChild child = WIDGET_NOT_CHILD)
-    { return {WIDGET_SPIN_BTN, label, cfg.value, cfg.callback, 0,
-       (child == WIDGET_CHILD), cfg.type, cfg.section, cfg.name, spin}; }
+constexpr const PreferencesWidget WidgetRadio (const char * label,
+ WidgetConfig cfg, WidgetVRadio radio, WidgetIsChild child = WIDGET_NOT_CHILD)
+    { return {PreferencesWidget::RadioButton, label, 0,
+       (child == WIDGET_CHILD), cfg, radio}; }
 
-constexpr const PreferencesWidget WidgetEntry (const char * label, WidgetConfig cfg,
- WidgetVEntry entry = WidgetVEntry(), WidgetIsChild child = WIDGET_NOT_CHILD)
-    { return {WIDGET_ENTRY, label, cfg.value, cfg.callback, 0,
-       (child == WIDGET_CHILD), cfg.type, cfg.section, cfg.name, entry}; }
+constexpr const PreferencesWidget WidgetSpin (const char * label,
+ WidgetConfig cfg, WidgetVSpin spin, WidgetIsChild child = WIDGET_NOT_CHILD)
+    { return {PreferencesWidget::SpinButton, label, 0,
+       (child == WIDGET_CHILD), cfg, spin}; }
 
-constexpr const PreferencesWidget WidgetCombo (const char * label, WidgetConfig cfg,
- WidgetVCombo combo, WidgetIsChild child = WIDGET_NOT_CHILD)
-    { return {WIDGET_COMBO_BOX, label, cfg.value, cfg.callback, 0,
-       (child == WIDGET_CHILD), cfg.type, cfg.section, cfg.name, combo}; }
+constexpr const PreferencesWidget WidgetEntry (const char * label,
+ WidgetConfig cfg, WidgetVEntry entry = WidgetVEntry(),
+ WidgetIsChild child = WIDGET_NOT_CHILD)
+    { return {PreferencesWidget::Entry, label, 0,
+       (child == WIDGET_CHILD), cfg, entry}; }
 
-constexpr const PreferencesWidget WidgetFonts (const char * label, WidgetConfig cfg,
- WidgetVFonts fonts, WidgetIsChild child = WIDGET_NOT_CHILD)
-    { return {WIDGET_FONT_BTN, label, cfg.value, cfg.callback, 0,
-       (child == WIDGET_CHILD), cfg.type, cfg.section, cfg.name, fonts}; }
+constexpr const PreferencesWidget WidgetCombo (const char * label,
+ WidgetConfig cfg, WidgetVCombo combo, WidgetIsChild child = WIDGET_NOT_CHILD)
+    { return {PreferencesWidget::ComboBox, label, 0,
+       (child == WIDGET_CHILD), cfg, combo}; }
+
+constexpr const PreferencesWidget WidgetFonts (const char * label,
+ WidgetConfig cfg, WidgetVFonts fonts, WidgetIsChild child = WIDGET_NOT_CHILD)
+    { return {PreferencesWidget::FontButton, label, 0,
+       (child == WIDGET_CHILD), cfg, fonts}; }
 
 constexpr const PreferencesWidget WidgetBox (WidgetVBox box, WidgetIsChild child = WIDGET_NOT_CHILD)
-    { return {WIDGET_BOX, 0, 0, 0, 0, (child == WIDGET_CHILD), VALUE_NULL, 0, 0, box}; }
+    { return {PreferencesWidget::Box, 0, 0, (child == WIDGET_CHILD), WidgetConfig (), box}; }
 
-constexpr const PreferencesWidget WidgetTable (WidgetVTable table, WidgetIsChild child = WIDGET_NOT_CHILD)
-    { return {WIDGET_TABLE, 0, 0, 0, 0, (child == WIDGET_CHILD), VALUE_NULL, 0, 0, table}; }
+constexpr const PreferencesWidget WidgetTable (WidgetVTable table,
+ WidgetIsChild child = WIDGET_NOT_CHILD)
+    { return {PreferencesWidget::Table, 0, 0, (child == WIDGET_CHILD), WidgetConfig (), table}; }
 
 constexpr const PreferencesWidget WidgetNotebook (WidgetVNotebook notebook)
-    { return {WIDGET_NOTEBOOK, 0, 0, 0, 0, 0, VALUE_NULL, 0, 0, notebook}; }
+    { return {PreferencesWidget::Notebook, 0, 0, 0, WidgetConfig (), notebook}; }
 
 constexpr const PreferencesWidget WidgetSeparator (WidgetVSeparator separator = WidgetVSeparator ())
-    { return {WIDGET_SEPARATOR, 0, 0, 0, 0, 0, VALUE_NULL, 0, 0, separator}; }
+    { return {PreferencesWidget::Separator, 0, 0, 0, WidgetConfig (), separator}; }
 
 constexpr const PreferencesWidget WidgetCustom (void * (* populate) (void))
-    { return {WIDGET_CUSTOM, 0, 0, 0, 0, 0, VALUE_NULL, 0, 0, populate}; }
+    { return {PreferencesWidget::Custom, 0, 0, 0, WidgetConfig (), populate}; }
 
 struct PluginPreferences {
-    const PreferencesWidget * widgets;
-    int n_widgets;
+    ArrayRef<const PreferencesWidget> widgets;
 
     void (* init) (void);
     void (* apply) (void);

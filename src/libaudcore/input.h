@@ -20,7 +20,7 @@
 #ifndef LIBAUDCORE_INPUT_H
 #define LIBAUDCORE_INPUT_H
 
-#include <libaudcore/core.h>
+#include <libaudcore/tuple.h>
 
 /* These functions are to be used only from the play() function of an input plugin. */
 
@@ -32,8 +32,8 @@ struct ReplayGainInfo {
 };
 
 /* Prepares the output system for playback in the specified format.  Returns
- * TRUE on success, FALSE if the selected format is not supported. */
-bool_t aud_input_open_audio (int format, int rate, int channels);
+ * true on success, false if the selected format is not supported. */
+bool aud_input_open_audio (int format, int rate, int channels);
 
 /* Informs the output system of replay gain values for the current song so
  * that volume levels can be adjusted accordingly, if the user so desires.
@@ -61,8 +61,8 @@ void aud_input_set_tuple (Tuple && tuple);
 void aud_input_set_bitrate (int bitrate);
 
 /* Checks whether playback is to be stopped.  The play() function should poll
- * check_stop() periodically and return as soon as check_stop() returns TRUE. */
-bool_t aud_input_check_stop (void);
+ * check_stop() periodically and return as soon as check_stop() returns true. */
+bool aud_input_check_stop (void);
 
 /* Checks whether a seek has been requested.  If so, discards any buffered audio
  * and returns the position to seek to, in milliseconds.  Otherwise, returns -1. */

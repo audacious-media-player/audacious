@@ -1,6 +1,6 @@
 /*
- * id3v24.h
- * Copyright 2010 John Lindgren
+ * about.cc
+ * Copyright 2014 William Pitcock
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -17,13 +17,38 @@
  * the use of this software.
  */
 
-#ifndef AUDTAG_ID3V2_H
-#define AUDTAG_ID3V2_H
+#include <QtGui>
+#include <QtWidgets>
 
-#include "../audtag.h"
-#include "../tag_module.h"
-#include "../util.h"
+#include <libaudcore/audstrings.h>
+#include <libaudcore/i18n.h>
+#include <libaudcore/runtime.h>
 
-extern tag_module_t id3v24;
+#include "libaudqt.h"
+
+#ifndef LIBAUDQT_ABOUT_H
+#define LIBAUDQT_ABOUT_H
+
+namespace audqt {
+
+class AboutWindow : public QDialog {
+
+    Q_OBJECT
+
+private:
+    QVBoxLayout m_layout;
+    QTabWidget m_tabs;
+    QLabel m_logo;
+    QLabel m_about_text;
+    QPlainTextEdit *m_textedits[2];
+
+    void buildCreditsNotebook ();
+
+public:
+    AboutWindow (QWidget * parent = 0);
+    ~AboutWindow ();
+};
+
+};
 
 #endif

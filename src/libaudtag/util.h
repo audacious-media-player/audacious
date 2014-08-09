@@ -162,8 +162,8 @@ struct TempFile {
     int fd;
 };
 
-bool_t open_temp_file_for (TempFile * temp, VFSFile * file);
-bool_t copy_region_to_temp_file (TempFile * temp, VFSFile * file, int64_t offset, int64_t size);
-bool_t replace_with_temp_file (TempFile * temp, VFSFile * file);
+bool open_temp_file_for (TempFile * temp, VFSFile * file);
+bool copy_region_to_temp_file (TempFile * temp, VFSFile * file, int64_t offset, int64_t size);
+bool replace_with_temp_file (TempFile * temp, VFSFile * file);
 
 #endif /* TAGUTIL_H */

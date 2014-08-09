@@ -44,14 +44,16 @@ static GtkWidget * create_credits_notebook (const char * credits, const char * l
     {
         GtkWidget * label = gtk_label_new (titles[i]);
 
-        GtkWidget * scrolled = gtk_scrolled_window_new (NULL, NULL);
+        GtkWidget * scrolled = gtk_scrolled_window_new (nullptr, nullptr);
         gtk_widget_set_size_request (scrolled, -1, 200);
+        gtk_scrolled_window_set_policy ((GtkScrolledWindow *) scrolled,
+         GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 
-        GtkTextBuffer * buffer = gtk_text_buffer_new (NULL);
+        GtkTextBuffer * buffer = gtk_text_buffer_new (nullptr);
         gtk_text_buffer_set_text (buffer, text[i], -1);
         GtkWidget * text = gtk_text_view_new_with_buffer (buffer);
-        gtk_text_view_set_editable ((GtkTextView *) text, FALSE);
-        gtk_text_view_set_cursor_visible ((GtkTextView *) text, FALSE);
+        gtk_text_view_set_editable ((GtkTextView *) text, false);
+        gtk_text_view_set_cursor_visible ((GtkTextView *) text, false);
         gtk_text_view_set_left_margin ((GtkTextView *) text, 6);
         gtk_text_view_set_right_margin ((GtkTextView *) text, 6);
         gtk_container_add ((GtkContainer *) scrolled, text);
@@ -64,39 +66,41 @@ static GtkWidget * create_credits_notebook (const char * credits, const char * l
 
 static GtkWidget * create_about_window (void)
 {
-    const char * data_dir = aud_get_path (AUD_PATH_DATA_DIR);
+    const char * data_dir = aud_get_path (AudPath::DataDir);
 
     GtkWidget * about_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title ((GtkWindow *) about_window, _("About Audacious"));
-    gtk_window_set_resizable ((GtkWindow *) about_window, FALSE);
+    gtk_window_set_resizable ((GtkWindow *) about_window, false);
     gtk_container_set_border_width ((GtkContainer *) about_window, 3);
 
     audgui_destroy_on_escape (about_window);
 
-    GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+    GtkWidget * vbox = gtk_vbox_new (false, 6);
     gtk_container_add ((GtkContainer *) about_window, vbox);
 
     StringBuf logo_path = filename_build ({data_dir, "images", "about-logo.png"});
     GtkWidget * image = gtk_image_new_from_file (logo_path);
-    gtk_box_pack_start ((GtkBox *) vbox, image, FALSE, FALSE, 0);
+    gtk_box_pack_start ((GtkBox *) vbox, image, false, false, 0);
 
-    GtkWidget * label = gtk_label_new (NULL);
+    GtkWidget * label = gtk_label_new (nullptr);
     gtk_label_set_markup ((GtkLabel *) label, about_text);
     gtk_label_set_justify ((GtkLabel *) label, GTK_JUSTIFY_CENTER);
-    gtk_box_pack_start ((GtkBox *) vbox, label, FALSE, FALSE, 0);
+    gtk_box_pack_start ((GtkBox *) vbox, label, false, false, 0);
+
+    GtkWidget * align = gtk_alignment_new (0.5, 0.5, 0, 0);
+    gtk_box_pack_start ((GtkBox *) vbox, align, false, false, 0);
 
     GtkWidget * button = gtk_link_button_new (website);
-    gtk_widget_set_halign (button, GTK_ALIGN_CENTER);
-    gtk_box_pack_start ((GtkBox *) vbox, button, FALSE, FALSE, 0);
+    gtk_container_add ((GtkContainer *) align, button);
 
     char * credits, * license;
 
     StringBuf credits_path = filename_build ({data_dir, "AUTHORS"});
-    if (! g_file_get_contents (credits_path, & credits, NULL, NULL))
+    if (! g_file_get_contents (credits_path, & credits, nullptr, nullptr))
         credits = g_strdup_printf ("Unable to load %s; check your installation.", (const char *) credits_path);
 
     StringBuf license_path = filename_build ({data_dir, "COPYING"});
-    if (! g_file_get_contents (license_path, & license, NULL, NULL))
+    if (! g_file_get_contents (license_path, & license, nullptr, nullptr))
         license = g_strdup_printf ("Unable to load %s; check your installation.", (const char *) license_path);
 
     g_strchomp (credits);
@@ -104,7 +108,7 @@ static GtkWidget * create_about_window (void)
 
     GtkWidget * notebook = create_credits_notebook (credits, license);
     gtk_widget_set_size_request (notebook, 600, 250);
-    gtk_box_pack_start ((GtkBox *) vbox, notebook, TRUE, TRUE, 0);
+    gtk_box_pack_start ((GtkBox *) vbox, notebook, true, true, 0);
 
     g_free (credits);
     g_free (license);

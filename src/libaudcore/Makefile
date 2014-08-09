@@ -50,7 +50,6 @@ SRCS = adder.cc \
 
 INCLUDES = audio.h \
            audstrings.h \
-           core.h \
            drct.h \
            equalizer.h \
            hook.h \
@@ -60,6 +59,7 @@ INCLUDES = audio.h \
            input.h \
            interface.h \
            list.h \
+           mainloop.h \
            multihash.h \
            objects.h \
            playlist.h \

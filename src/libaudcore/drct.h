@@ -21,7 +21,7 @@
 #define LIBAUDCORE_DRCT_H
 
 #include <libaudcore/index.h>
-#include <libaudcore/objects.h>
+#include <libaudcore/tuple.h>
 
 /* CAUTION: These functions are not thread safe. */
 
@@ -32,9 +32,9 @@ void aud_drct_play_pause (void);
 void aud_drct_play_playlist (int playlist);
 void aud_drct_pause (void);
 void aud_drct_stop (void);
-bool_t aud_drct_get_playing (void);
-bool_t aud_drct_get_ready (void);
-bool_t aud_drct_get_paused (void);
+bool aud_drct_get_playing (void);
+bool aud_drct_get_ready (void);
+bool aud_drct_get_paused (void);
 String aud_drct_get_filename (void);
 String aud_drct_get_title (void);
 void aud_drct_get_info (int * bitrate, int * samplerate, int * channels);

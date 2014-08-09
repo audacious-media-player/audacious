@@ -59,32 +59,51 @@
 #define DIRMODE (S_IRWXU)
 #endif
 
-static bool_t headless_mode;
-static bool_t verbose_mode;
+static bool headless_mode;
+static bool verbose_mode;
 
-static String aud_paths[AUD_PATH_COUNT];
+#if defined(USE_QT) && ! defined(USE_GTK)
+static MainloopType mainloop_type = MainloopType::Qt;
+#else
+static MainloopType mainloop_type = MainloopType::GLib;
+#endif
 
-EXPORT void aud_set_headless_mode (bool_t headless)
+static String aud_paths[(int) AudPath::n_paths];
+
+static constexpr String & aud_path (AudPath id)
+    { return aud_paths[(int) id]; }
+
+EXPORT void aud_set_headless_mode (bool headless)
 {
     headless_mode = headless;
 }
 
-EXPORT bool_t aud_get_headless_mode (void)
+EXPORT bool aud_get_headless_mode ()
 {
     return headless_mode;
 }
 
-EXPORT void aud_set_verbose_mode (bool_t verbose)
+EXPORT void aud_set_verbose_mode (bool verbose)
 {
     verbose_mode = verbose;
 }
 
-EXPORT bool_t aud_get_verbose_mode (void)
+EXPORT bool aud_get_verbose_mode ()
 {
     return verbose_mode;
 }
 
-static StringBuf get_path_to_self (void)
+EXPORT void aud_set_mainloop_type (MainloopType type)
+{
+    mainloop_type = type;
+}
+
+EXPORT MainloopType aud_get_mainloop_type ()
+{
+    return mainloop_type;
+}
+
+static StringBuf get_path_to_self ()
 {
 #ifdef HAVE_PROC_SELF_EXE
 
@@ -108,7 +127,7 @@ static StringBuf get_path_to_self (void)
     StringBuf buf (-1);
     wchar_t * bufw = (wchar_t *) (char *) buf;
     int sizew = buf.len () / sizeof (wchar_t);
-    int lenw = GetModuleFileNameW (NULL, bufw, sizew);
+    int lenw = GetModuleFileNameW (nullptr, bufw, sizew);
 
     if (! lenw)
     {
@@ -173,17 +192,17 @@ static String relocate_path (const char * path, const char * from, const char * 
     return String (str_printf ("%.*s%s", newlen, to, path + oldlen));
 }
 
-static void set_default_paths (void)
+static void set_default_paths ()
 {
-    aud_paths[AUD_PATH_BIN_DIR] = String (HARDCODE_BINDIR);
-    aud_paths[AUD_PATH_DATA_DIR] = String (HARDCODE_DATADIR);
-    aud_paths[AUD_PATH_PLUGIN_DIR] = String (HARDCODE_PLUGINDIR);
-    aud_paths[AUD_PATH_LOCALE_DIR] = String (HARDCODE_LOCALEDIR);
-    aud_paths[AUD_PATH_DESKTOP_FILE] = String (HARDCODE_DESKTOPFILE);
-    aud_paths[AUD_PATH_ICON_FILE] = String (HARDCODE_ICONFILE);
+    aud_path (AudPath::BinDir) = String (HARDCODE_BINDIR);
+    aud_path (AudPath::DataDir) = String (HARDCODE_DATADIR);
+    aud_path (AudPath::PluginDir) = String (HARDCODE_PLUGINDIR);
+    aud_path (AudPath::LocaleDir) = String (HARDCODE_LOCALEDIR);
+    aud_path (AudPath::DesktopFile) = String (HARDCODE_DESKTOPFILE);
+    aud_path (AudPath::IconFile) = String (HARDCODE_ICONFILE);
 }
 
-static void relocate_all_paths (void)
+static void relocate_all_paths ()
 {
     StringBuf bindir = str_copy (HARDCODE_BINDIR);
     filename_normalize (bindir);
@@ -242,52 +261,51 @@ static void relocate_all_paths (void)
     }
 
     /* replace old prefix with new one in each path */
-    aud_paths[AUD_PATH_BIN_DIR] = relocate_path (bindir, from, to);
-    aud_paths[AUD_PATH_DATA_DIR] = relocate_path (datadir, from, to);
-    aud_paths[AUD_PATH_PLUGIN_DIR] = relocate_path (plugindir, from, to);
-    aud_paths[AUD_PATH_LOCALE_DIR] = relocate_path (localedir, from, to);
-    aud_paths[AUD_PATH_DESKTOP_FILE] = relocate_path (desktopfile, from, to);
-    aud_paths[AUD_PATH_ICON_FILE] = relocate_path (iconfile, from, to);
+    aud_path (AudPath::BinDir) = relocate_path (bindir, from, to);
+    aud_path (AudPath::DataDir) = relocate_path (datadir, from, to);
+    aud_path (AudPath::PluginDir) = relocate_path (plugindir, from, to);
+    aud_path (AudPath::LocaleDir) = relocate_path (localedir, from, to);
+    aud_path (AudPath::DesktopFile) = relocate_path (desktopfile, from, to);
+    aud_path (AudPath::IconFile) = relocate_path (iconfile, from, to);
 }
 
-EXPORT void aud_init_paths (void)
+EXPORT void aud_init_paths ()
 {
     relocate_all_paths ();
 
     const char * xdg_config_home = g_get_user_config_dir ();
 
-    aud_paths[AUD_PATH_USER_DIR] = String (filename_build ({xdg_config_home, "audacious"}));
-    aud_paths[AUD_PATH_PLAYLISTS_DIR] = String (filename_build
-     ({aud_paths[AUD_PATH_USER_DIR], "playlists"}));
+    aud_path (AudPath::UserDir) = String (filename_build ({xdg_config_home, "audacious"}));
+    aud_path (AudPath::PlaylistDir) = String (filename_build
+     ({aud_path (AudPath::UserDir), "playlists"}));
 
     /* create ~/.config/audacious/playlists */
-    if (g_mkdir_with_parents (aud_paths[AUD_PATH_PLAYLISTS_DIR], DIRMODE) < 0)
-        perror (aud_paths[AUD_PATH_PLAYLISTS_DIR]);
+    if (g_mkdir_with_parents (aud_path (AudPath::PlaylistDir), DIRMODE) < 0)
+        perror (aud_path (AudPath::PlaylistDir));
 
 #ifdef _WIN32
     /* set some UNIX-style environment variables */
-    g_setenv ("HOME", g_get_home_dir (), TRUE);
-    g_setenv ("XDG_CONFIG_HOME", xdg_config_home, TRUE);
-    g_setenv ("XDG_DATA_HOME", g_get_user_data_dir (), TRUE);
-    g_setenv ("XDG_CACHE_HOME", g_get_user_cache_dir (), TRUE);
+    g_setenv ("HOME", g_get_home_dir (), true);
+    g_setenv ("XDG_CONFIG_HOME", xdg_config_home, true);
+    g_setenv ("XDG_DATA_HOME", g_get_user_data_dir (), true);
+    g_setenv ("XDG_CACHE_HOME", g_get_user_cache_dir (), true);
 #endif
 }
 
-EXPORT void aud_cleanup_paths (void)
+EXPORT void aud_cleanup_paths ()
 {
     for (String & path : aud_paths)
         path = String ();
 }
 
-EXPORT const char * aud_get_path (int id)
+EXPORT const char * aud_get_path (AudPath id)
 {
-    g_return_val_if_fail (id >= 0 && id < AUD_PATH_COUNT, NULL);
-    return aud_paths[id];
+    return aud_path (id);
 }
 
-EXPORT void aud_init_i18n (void)
+EXPORT void aud_init_i18n ()
 {
-    const char * localedir = aud_get_path (AUD_PATH_LOCALE_DIR);
+    const char * localedir = aud_get_path (AudPath::LocaleDir);
 
     setlocale (LC_ALL, "");
     bindtextdomain (PACKAGE, localedir);
@@ -297,7 +315,7 @@ EXPORT void aud_init_i18n (void)
     textdomain (PACKAGE);
 }
 
-EXPORT void aud_init (void)
+EXPORT void aud_init ()
 {
     g_thread_pool_set_max_idle_time (100);
 
@@ -315,19 +333,19 @@ EXPORT void aud_init (void)
     load_playlists ();
 }
 
-static void do_autosave (void * unused)
+static void do_autosave (void *)
 {
-    hook_call ("config save", NULL);
-    save_playlists (FALSE);
+    hook_call ("config save", nullptr);
+    save_playlists (false);
     config_save ();
 }
 
-EXPORT void aud_run (void)
+EXPORT void aud_run ()
 {
     start_plugins_two ();
 
     static QueuedFunc autosave;
-    autosave.start (AUTOSAVE_INTERVAL, do_autosave, NULL);
+    autosave.start (AUTOSAVE_INTERVAL, do_autosave, nullptr);
 
     /* calls "config save" before returning */
     interface_run ();
@@ -337,9 +355,9 @@ EXPORT void aud_run (void)
     stop_plugins_two ();
 }
 
-EXPORT void aud_cleanup (void)
+EXPORT void aud_cleanup ()
 {
-    save_playlists (TRUE);
+    save_playlists (true);
 
     if (aud_drct_get_playing ())
         aud_drct_stop ();

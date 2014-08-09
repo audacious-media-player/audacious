@@ -25,10 +25,12 @@
 #include <string.h>
 
 /* stubs */
-bool_t aud_get_bool (const char *, const char *)
+bool aud_get_bool (const char *, const char *)
     { return false; }
 String aud_get_str (const char *, const char *)
     { return String (""); }
+String vfs_get_metadata (VFSFile *, const char *)
+    { return String (); }
 
 static void test_tuple_format (const char * format, const Tuple & tuple, const char * expected)
 {

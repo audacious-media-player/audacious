@@ -50,7 +50,7 @@ struct LocalFile {
 static void * local_fopen (const char * uri, const char * mode)
 {
     StringBuf path = uri_to_filename (uri);
-    g_return_val_if_fail (path, NULL);
+    g_return_val_if_fail (path, nullptr);
 
     const char * suffix = "";
 
@@ -69,7 +69,7 @@ static void * local_fopen (const char * uri, const char * mode)
     if (! stream)
     {
         perror (path);
-        return NULL;
+        return nullptr;
     }
 
     LocalFile * local = new LocalFile ();
@@ -164,7 +164,7 @@ static int64_t local_ftell (VFSFile * file)
     return ftello (local->stream);
 }
 
-static bool_t local_feof (VFSFile * file)
+static bool local_feof (VFSFile * file)
 {
     LocalFile * local = (LocalFile *) vfs_get_handle (file);
     return feof (local->stream);
@@ -200,20 +200,30 @@ static int64_t local_fsize (VFSFile * file)
 {
     LocalFile * local = (LocalFile *) vfs_get_handle (file);
 
-    if (local->cached_size >= 0)
-        return local->cached_size;
+    if (local->cached_size < 0)
+    {
+        int64_t saved_pos = ftello (local->stream);
+        if (ftello < 0)
+            goto ERR;
 
-    int64_t saved_pos = ftello (local->stream);
+        if (local_fseek (file, 0, SEEK_END) < 0)
+            goto ERR;
 
-    if (local_fseek (file, 0, SEEK_END) < 0)
-        return -1;
+        int64_t length = ftello (local->stream);
+        if (length < 0)
+            goto ERR;
 
-    int64_t length = ftello (local->stream);
+        if (local_fseek (file, saved_pos, SEEK_SET) < 0)
+            goto ERR;
 
-    if (local_fseek (file, saved_pos, SEEK_SET) < 0)
-        return -1;
+        local->cached_size = length;
+    }
 
-    return length;
+    return local->cached_size;
+
+ERR:
+    perror (local->path);
+    return -1;
 }
 
 const VFSConstructor vfs_local_vtable = {

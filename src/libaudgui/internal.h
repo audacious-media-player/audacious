@@ -21,7 +21,6 @@
 #define AUDGUI_INTERNAL_H
 
 #include <gtk/gtk.h>
-#include <libaudcore/core.h>
 
 enum {
     AUDGUI_ABOUT_WINDOW,
@@ -40,7 +39,7 @@ enum {
 };
 
 void audgui_show_unique_window (int id, GtkWidget * widget);
-bool_t audgui_reshow_unique_window (int id);
+bool audgui_reshow_unique_window (int id);
 void audgui_hide_unique_window (int id);
 
 /* pixbufs.c */

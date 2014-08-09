@@ -25,21 +25,20 @@
 #include "audstrings.h"
 #include "vfs.h"
 
-static char * strskip (char * str)
+static char * strskip (char * str, char * end)
 {
-    while (g_ascii_isspace (* str))
+    while (str < end && g_ascii_isspace (* str))
         str ++;
 
     return str;
 }
 
-static char * strtrim (char * str)
+static char * strtrim (char * str, char * end)
 {
-    int len = strlen (str);
+    while (end > str && g_ascii_isspace (end[-1]))
+        end --;
 
-    while (len && g_ascii_isspace(str[len - 1]))
-        str[-- len] = 0;
-
+    * end = 0;
     return str;
 }
 
@@ -53,7 +52,7 @@ EXPORT void inifile_parse (VFSFile * file,
 
     char * pos = buf;
     int len = 0;
-    bool_t eof = FALSE;
+    bool eof = false;
 
     while (1)
     {
@@ -74,46 +73,35 @@ EXPORT void inifile_parse (VFSFile * file,
             len += vfs_fread (buf + len, 1, size - 1 - len, file);
 
             if (len < size - 1)
-                eof = TRUE;
+                eof = true;
 
             newline = (char *) memchr (pos, '\n', len);
         }
 
-        if (newline)
-            * newline = 0;
-        else
-            pos[len] = 0;
+        char * end = newline ? newline : pos + len;
+        char * start = strskip (pos, end);
+        char * sep;
 
-        char * start = strskip (pos);
-
-        switch (* start)
+        if (start < end)
         {
-        case 0:
-        case '#':
-        case ';':
-            break;
-
-        case '[':
-        {
-            char * end = strchr (start + 1, ']');
-            if (! end)
+            switch (* start)
+            {
+            case '#':
+            case ';':
                 break;
 
-            * end = 0;
-            handle_heading (strtrim (strskip (start + 1)), data);
-            break;
-        }
+            case '[':
+                if ((end = (char *) memchr (start, ']', end - start)))
+                    handle_heading (strtrim (strskip (start + 1, end), end), data);
 
-        default:
-        {
-            char * sep = strchr (start, '=');
-            if (! sep)
                 break;
 
-            * sep = 0;
-            handle_entry (strtrim (start), strtrim (strskip (sep + 1)), data);
-            break;
-        }
+            default:
+                if ((sep = (char *) memchr (start, '=', end - start)))
+                    handle_entry (strtrim (start, sep), strtrim (strskip (sep + 1, end), end), data);
+
+                break;
+            }
         }
 
         if (! newline)
@@ -124,12 +112,12 @@ EXPORT void inifile_parse (VFSFile * file,
     }
 }
 
-EXPORT bool_t inifile_write_heading (VFSFile * file, const char * heading)
+EXPORT bool inifile_write_heading (VFSFile * file, const char * heading)
 {
     return (vfs_fputs (str_concat ({"\n[", heading, "]\n"}), file) >= 0);
 }
 
-EXPORT bool_t inifile_write_entry (VFSFile * file, const char * key, const char * value)
+EXPORT bool inifile_write_entry (VFSFile * file, const char * key, const char * value)
 {
     return (vfs_fputs (str_concat ({key, "=", value, "\n"}), file) >= 0);
 }

@@ -23,15 +23,23 @@
 #include "libaudcore/tuple.h"
 #include "libaudcore/vfs.h"
 
-struct tag_module_t {
-    const char * name;
-    int type; /* set to TAG_TYPE_NONE if the module cannot create new tags */
-    bool_t (* can_handle_file) (VFSFile *fd);
-    bool_t (* read_tag) (Tuple & tuple, VFSFile * handle);
-    bool_t (* read_image) (VFSFile * handle, void * * data, int64_t * size);
-    bool_t (* write_tag) (const Tuple & tuple, VFSFile * handle);
+namespace audtag {
+
+struct TagModule {
+    const char *m_name;
+    TagType m_type; /* set to None if the module cannot create new tags */
+
+    virtual bool can_handle_file (VFSFile *fd);
+    virtual bool read_tag (Tuple & tuple, VFSFile * handle);
+    virtual bool read_image (VFSFile * handle, void * * data, int64_t * size);
+    virtual bool write_tag (const Tuple & tuple, VFSFile * handle);
+
+protected:
+    TagModule(const char *name, TagType type) : m_name(name), m_type(type) { };
 };
 
-tag_module_t * find_tag_module (VFSFile * handle, int new_type);
+TagModule * find_tag_module (VFSFile * handle, TagType new_type);
+
+}
 
 #endif /* TAG_MODULE_H */

@@ -1,0 +1,11 @@
+--- gdk-pixbuf/gdk-pixbuf-io.c.0	2014-07-19 14:54:26 -0400
++++ gdk-pixbuf/gdk-pixbuf-io.c	2014-07-19 14:54:38 -0400
+@@ -340,7 +340,7 @@
+       strncmp (*path, GDK_PIXBUF_PREFIX "\\", strlen (GDK_PIXBUF_PREFIX "\\")) == 0)
+     {
+           gchar *tem = NULL;
+-      if (strlen(*path) > 5 && strncmp (*path - 5, ".libs", 5) == 0)
++      if (strlen(*path) > 5 && strncmp (*path, ".libs", 5) == 0)
+         {
+           /* We are being run from inside the build tree, and shouldn't mess about. */
+           return;

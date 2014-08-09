@@ -23,7 +23,7 @@
 /* okay to use without audgui_init() */
 
 #include <gtk/gtk.h>
-#include <libaudcore/core.h>
+#include <libaudcore/objects.h>
 
 struct AudguiMenuItem {
     const char * name;
@@ -40,14 +40,13 @@ struct AudguiMenuItem {
     const char * hook;
 
     /* for submenus */
-    const AudguiMenuItem * items;
-    int n_items;
+    ArrayRef<const AudguiMenuItem> items;
 
     /* for custom submenus */
     GtkWidget * (* get_sub) (void);
 
     /* for separators */
-    bool_t sep;
+    bool sep;
 };
 
 constexpr AudguiMenuItem MenuCommand (const char * name, const char * icon,
@@ -60,25 +59,25 @@ constexpr AudguiMenuItem MenuToggle (const char * name, const char * icon,
     { return {name, icon, key, mod, func, csect, cname, hook}; }
 
 constexpr AudguiMenuItem MenuSub (const char * name, const char * icon,
- const AudguiMenuItem * items, int n_items)
-    { return {name, icon, 0, (GdkModifierType) 0, 0, 0, 0, 0, items, n_items}; }
+ ArrayRef<const AudguiMenuItem> items)
+    { return {name, icon, 0, (GdkModifierType) 0, 0, 0, 0, 0, items}; }
 
 constexpr AudguiMenuItem MenuSub (const char * name, const char * icon,
  GtkWidget * (* get_sub) (void))
-    { return {name, icon, 0, (GdkModifierType) 0, 0, 0, 0, 0, 0, 0, get_sub}; }
+    { return {name, icon, 0, (GdkModifierType) 0, 0, 0, 0, 0, 0, get_sub}; }
 
 constexpr AudguiMenuItem MenuSep ()
-    { return {0, 0, 0, (GdkModifierType) 0, 0, 0, 0, 0, 0, 0, 0, TRUE}; }
+    { return {0, 0, 0, (GdkModifierType) 0, 0, 0, 0, 0, 0, 0, true}; }
 
-/* use NULL for domain to skip translation */
+/* use nullptr for domain to skip translation */
 GtkWidget * audgui_menu_item_new_with_domain (const AudguiMenuItem * item,
  GtkAccelGroup * accel, const char * domain);
 
 void audgui_menu_init_with_domain (GtkWidget * shell,
- const AudguiMenuItem * items, int n_items, GtkAccelGroup * accel,
+ ArrayRef<const AudguiMenuItem> items, GtkAccelGroup * accel,
  const char * domain);
 
 #define audgui_menu_item_new(i, a) audgui_menu_item_new_with_domain (i, a, PACKAGE)
-#define audgui_menu_init(s, i, n, a) audgui_menu_init_with_domain (s, i, n, a, PACKAGE)
+#define audgui_menu_init(s, i, a) audgui_menu_init_with_domain (s, i, a, PACKAGE)
 
 #endif /* AUDGUI_MENU_H */

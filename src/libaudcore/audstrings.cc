@@ -143,18 +143,18 @@ EXPORT StringBuf str_vprintf (const char * format, va_list args)
     return str;
 }
 
-EXPORT bool_t str_has_prefix_nocase (const char * str, const char * prefix)
+EXPORT bool str_has_prefix_nocase (const char * str, const char * prefix)
 {
     return ! g_ascii_strncasecmp (str, prefix, strlen (prefix));
 }
 
-EXPORT bool_t str_has_suffix_nocase (const char * str, const char * suffix)
+EXPORT bool str_has_suffix_nocase (const char * str, const char * suffix)
 {
     int len1 = strlen (str);
     int len2 = strlen (suffix);
 
     if (len2 > len1)
-        return FALSE;
+        return false;
 
     return ! g_ascii_strcasecmp (str + len1 - len2, suffix);
 }
@@ -225,7 +225,7 @@ EXPORT const char * strstr_nocase (const char * haystack, const char * needle)
             if (! b) /* all of needle matched */
                 return (char *) haystack;
             if (! a) /* end of haystack reached */
-                return NULL;
+                return nullptr;
 
             if (a != b && a != SWAP_CASE (b))
                 break;
@@ -250,7 +250,7 @@ EXPORT const char * strstr_nocase_utf8 (const char * haystack, const char * need
             if (! b) /* all of needle matched */
                 return (char *) haystack;
             if (! a) /* end of haystack reached */
-                return NULL;
+                return nullptr;
 
             if (a != b && (a < 128 ? (gunichar) SWAP_CASE (a) != b :
              g_unichar_tolower (a) != g_unichar_tolower (b)))
@@ -501,10 +501,8 @@ EXPORT void uri_parse (const char * uri, const char * * base_p, const char * * e
     else
         sub = end;
 
-    StringBuf buf = str_copy (base, sub - base);
-
-    if ((c = strrchr (buf, '.')))
-        ext = base + (c - buf);
+    if ((c = strrchr (base, '.')) && c < sub)
+        ext = c;
     else
         ext = sub;
 
@@ -521,7 +519,7 @@ EXPORT void uri_parse (const char * uri, const char * * base_p, const char * * e
 EXPORT StringBuf uri_get_extension (const char * uri)
 {
     const char * ext;
-    uri_parse (uri, NULL, & ext, NULL, NULL);
+    uri_parse (uri, nullptr, & ext, nullptr, nullptr);
 
     if (ext[0] != '.')
         return StringBuf ();
@@ -563,7 +561,7 @@ EXPORT StringBuf uri_construct (const char * path, const char * reference)
     if (! buf)
         return buf;
 
-    if (aud_get_bool (NULL, "convert_backslash"))
+    if (aud_get_bool (nullptr, "convert_backslash"))
         str_replace_char (buf, '\\', '/');
 
     buf.steal (str_encode_percent (buf));
@@ -573,13 +571,13 @@ EXPORT StringBuf uri_construct (const char * path, const char * reference)
 
 /* Like strcasecmp, but orders numbers correctly (2 before 10). */
 /* Non-ASCII characters are treated exactly as is. */
-/* Handles NULL gracefully. */
+/* Handles nullptr gracefully. */
 
 EXPORT int str_compare (const char * ap, const char * bp)
 {
-    if (ap == NULL)
-        return (bp == NULL) ? 0 : -1;
-    if (bp == NULL)
+    if (ap == nullptr)
+        return (bp == nullptr) ? 0 : -1;
+    if (bp == nullptr)
         return 1;
 
     unsigned char a = * ap ++, b = * bp ++;
@@ -621,9 +619,9 @@ EXPORT int str_compare (const char * ap, const char * bp)
 
 EXPORT int str_compare_encoded (const char * ap, const char * bp)
 {
-    if (ap == NULL)
-        return (bp == NULL) ? 0 : -1;
-    if (bp == NULL)
+    if (ap == nullptr)
+        return (bp == nullptr) ? 0 : -1;
+    if (bp == nullptr)
         return 1;
 
     unsigned char a = * ap ++, b = * bp ++;
@@ -680,7 +678,7 @@ EXPORT Index<String> str_list_to_index (const char * list, const char * delims)
         dmap[(unsigned char) (* delims)] = 1;
 
     Index<String> index;
-    const char * word = NULL;
+    const char * word = nullptr;
 
     for (; * list; list ++)
     {
@@ -689,7 +687,7 @@ EXPORT Index<String> str_list_to_index (const char * list, const char * delims)
             if (word)
             {
                 index.append (String (str_copy (word, list - word)));
-                word = NULL;
+                word = nullptr;
             }
         }
         else
@@ -755,7 +753,7 @@ EXPORT StringBuf index_to_str_list (const Index<String> & index, const char * se
 
 EXPORT int str_to_int (const char * string)
 {
-    bool_t neg = (string[0] == '-');
+    bool neg = (string[0] == '-');
     if (neg)
         string ++;
 
@@ -770,7 +768,7 @@ EXPORT int str_to_int (const char * string)
 
 EXPORT double str_to_double (const char * string)
 {
-    bool_t neg = (string[0] == '-');
+    bool neg = (string[0] == '-');
     if (neg)
         string ++;
 
@@ -814,7 +812,7 @@ EXPORT StringBuf int_to_str (int val)
 
 EXPORT StringBuf double_to_str (double val)
 {
-    bool_t neg = (val < 0);
+    bool neg = (val < 0);
     if (neg)
         val = -val;
 
@@ -839,17 +837,17 @@ EXPORT StringBuf double_to_str (double val)
     return buf;
 }
 
-EXPORT bool_t str_to_int_array (const char * string, int * array, int count)
+EXPORT bool str_to_int_array (const char * string, int * array, int count)
 {
     Index<String> index = str_list_to_index (string, ", ");
 
     if (index.len () != count)
-        return FALSE;
+        return false;
 
     for (int i = 0; i < count; i ++)
         array[i] = str_to_int (index[i]);
 
-    return TRUE;
+    return true;
 }
 
 EXPORT StringBuf int_array_to_str (const int * array, int count)
@@ -862,17 +860,17 @@ EXPORT StringBuf int_array_to_str (const int * array, int count)
     return index_to_str_list (index, ",");
 }
 
-EXPORT bool_t str_to_double_array (const char * string, double * array, int count)
+EXPORT bool str_to_double_array (const char * string, double * array, int count)
 {
     Index<String> index = str_list_to_index (string, ", ");
 
     if (index.len () != count)
-        return FALSE;
+        return false;
 
     for (int i = 0; i < count; i ++)
         array[i] = str_to_double (index[i]);
 
-    return TRUE;
+    return true;
 }
 
 EXPORT StringBuf double_array_to_str (const double * array, int count)
@@ -895,7 +893,7 @@ EXPORT StringBuf str_format_time (int64_t milliseconds)
         return str_printf ("%d:%02d:%02d", hours, minutes, seconds);
     else
     {
-        bool_t zero = aud_get_bool (NULL, "leading_zero");
+        bool zero = aud_get_bool (nullptr, "leading_zero");
         return str_printf (zero ? "%02d:%02d" : "%d:%02d", minutes, seconds);
     }
 }

@@ -23,7 +23,6 @@
 /* okay to use without audgui_init() */
 
 #include <gtk/gtk.h>
-#include <libaudcore/core.h>
 
 /* New callbacks should be added to the end of this struct.  The
  * audgui_list_new() macro tells us the size of the callback struct as it was
@@ -34,9 +33,9 @@ struct AudguiListCallbacks {
     void (* get_value) (void * user, int row, int column, GValue * value);
 
     /* selection (optional) */
-    bool_t (* get_selected) (void * user, int row);
-    void (* set_selected) (void * user, int row, bool_t selected);
-    void (* select_all) (void * user, bool_t selected);
+    bool (* get_selected) (void * user, int row);
+    void (* set_selected) (void * user, int row, bool selected);
+    void (* select_all) (void * user, bool selected);
 
     void (* activate_row) (void * user, int row); /* optional */
     void (* right_click) (void * user, GdkEventButton * event); /* optional */

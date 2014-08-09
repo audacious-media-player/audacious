@@ -1,6 +1,6 @@
 /*
- * ape.h
- * Copyright 2010 John Lindgren
+ * util.cc
+ * Copyright 2014 William Pitcock
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -17,13 +17,30 @@
  * the use of this software.
  */
 
-#ifndef AUDTAG_APE_H
-#define AUDTAG_APE_H
+#include <QtGui>
+#include <QtWidgets>
 
-#include "../audtag.h"
-#include "../tag_module.h"
-#include "../util.h"
+#include <libaudcore/audstrings.h>
+#include <libaudcore/i18n.h>
+#include <libaudcore/runtime.h>
 
-extern tag_module_t ape;
+#include "libaudqt.h"
 
-#endif
+namespace audqt {
+
+/* the goal is to force a window to come to the front on any qt platform */
+EXPORT void window_bring_to_front (QWidget * window)
+{
+    window->show();
+
+    Qt::WindowStates state = window->windowState();
+
+    state &= ~Qt::WindowMinimized;
+    state |= Qt::WindowActive;
+
+    window->setWindowState (state);
+    window->raise ();
+    window->activateWindow ();
+}
+
+};

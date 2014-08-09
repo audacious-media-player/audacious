@@ -27,10 +27,9 @@
 #include <libaudcore/audio.h>
 #include <libaudcore/audstrings.h>
 #include <libaudcore/runtime.h>
+#include <libaudtag/builtin.h>
 
 #include "id3-common.h"
-#include "id3v22.h"
-#include "../util.h"
 
 enum
 {
@@ -77,6 +76,8 @@ struct GenericFrame : public Index<char> {
 
 #define ID3_HEADER_SYNCSAFE             0x40
 #define ID3_HEADER_COMPRESSED           0x20
+
+namespace audtag {
 
 static bool validate_header (ID3v2Header * header)
 {
@@ -150,7 +151,7 @@ static bool read_frame (VFSFile * handle, int max_size, int version,
     }
 
     if (hdrsz > (unsigned) max_size || hdrsz == 0)
-        return FALSE;
+        return false;
 
     AUDDBG ("Found frame:\n");
     AUDDBG (" key = %.3s\n", header.key);
@@ -183,7 +184,7 @@ static int get_frame_id (const char * key)
     return -1;
 }
 
-static bool_t id3v22_can_handle_file (VFSFile * handle)
+bool ID3v22TagModule::can_handle_file (VFSFile * handle)
 {
     int version, header_size, data_size;
     bool syncsafe;
@@ -193,7 +194,7 @@ static bool_t id3v22_can_handle_file (VFSFile * handle)
      & data_size);
 }
 
-static bool_t id3v22_read_tag (Tuple & tuple, VFSFile * handle)
+bool ID3v22TagModule::read_tag (Tuple & tuple, VFSFile * handle)
 {
     int version, header_size, data_size;
     bool syncsafe;
@@ -268,7 +269,7 @@ static bool_t id3v22_read_tag (Tuple & tuple, VFSFile * handle)
     return true;
 }
 
-static bool_t id3v22_read_image (VFSFile * handle, void * * image_data, int64_t * image_size)
+bool ID3v22TagModule::read_image (VFSFile * handle, void * * image_data, int64_t * image_size)
 {
     int version, header_size, data_size, parsed;
     bool syncsafe;
@@ -308,12 +309,4 @@ static bool_t id3v22_read_image (VFSFile * handle, void * * image_data, int64_t 
     return found;
 }
 
-tag_module_t id3v22 =
-{
-    "ID3v2.2",
-    TAG_TYPE_NONE,
-    id3v22_can_handle_file,
-    id3v22_read_tag,
-    id3v22_read_image,
-    nullptr
-};
+}

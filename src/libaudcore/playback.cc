@@ -45,19 +45,19 @@ static pthread_cond_t ready_cond = PTHREAD_COND_INITIALIZER;
 static pthread_mutex_t control_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 /* level 1 data (persists to end of song) */
-static bool_t playing = FALSE;
+static bool playing = false;
 static int time_offset = 0;
 static int stop_time = -1;
-static bool_t paused = FALSE;
-static bool_t ready_flag = FALSE;
-static bool_t playback_error = FALSE;
-static bool_t song_finished = FALSE;
+static bool paused = false;
+static bool ready_flag = false;
+static bool playback_error = false;
+static bool song_finished = false;
 
 static int seek_request = -1; /* under control_mutex */
 static int repeat_a = -1; /* under control_mutex */
 
 static volatile int repeat_b = -1; /* atomic */
-static volatile int stop_flag = FALSE; /* atomic */
+static volatile int stop_flag = false; /* atomic */
 
 static int current_bitrate = -1, current_samplerate = -1, current_channels = -1;
 
@@ -66,15 +66,15 @@ static String current_filename;
 static String current_title;
 static int current_length = -1;
 
-static InputPlugin * current_decoder = NULL;
-static VFSFile * current_file = NULL;
+static InputPlugin * current_decoder = nullptr;
+static VFSFile * current_file = nullptr;
 static ReplayGainInfo current_gain;
 
 /* level 2 data (persists to end of playlist) */
-static bool_t stopped = TRUE;
+static bool stopped = true;
 static int failed_entries = 0;
 
-/* clears gain info if tuple == NULL */
+/* clears gain info if tuple == nullptr */
 static void read_gain_from_tuple (const Tuple & tuple)
 {
     memset (& current_gain, 0, sizeof current_gain);
@@ -102,28 +102,28 @@ static void read_gain_from_tuple (const Tuple & tuple)
     }
 }
 
-static bool_t update_from_playlist (void)
+static bool update_from_playlist (void)
 {
     int entry = playback_entry_get_position ();
     String title = playback_entry_get_title ();
     int length = playback_entry_get_length ();
 
-    if (entry == current_entry && str_equal (title, current_title) && length == current_length)
-        return FALSE;
+    if (entry == current_entry && title == current_title && length == current_length)
+        return false;
 
     current_entry = entry;
     current_title = title;
     current_length = length;
-    return TRUE;
+    return true;
 }
 
-EXPORT bool_t aud_drct_get_ready (void)
+EXPORT bool aud_drct_get_ready (void)
 {
     if (! playing)
-        return FALSE;
+        return false;
 
     pthread_mutex_lock (& ready_mutex);
-    bool_t ready = ready_flag;
+    bool ready = ready_flag;
     pthread_mutex_unlock (& ready_mutex);
     return ready;
 }
@@ -135,8 +135,8 @@ static void set_ready (void)
     pthread_mutex_lock (& ready_mutex);
 
     update_from_playlist ();
-    event_queue ("playback ready", NULL);
-    ready_flag = TRUE;
+    event_queue ("playback ready", nullptr);
+    ready_flag = true;
 
     pthread_cond_signal (& ready_cond);
     pthread_mutex_unlock (& ready_mutex);
@@ -162,7 +162,7 @@ static void update_cb (void * hook_data, void * user_data)
         return;
 
     if (update_from_playlist ())
-        event_queue ("title change", NULL);
+        event_queue ("title change", nullptr);
 }
 
 EXPORT int aud_drct_get_time (void)
@@ -187,9 +187,9 @@ EXPORT void aud_drct_pause (void)
     output_pause (paused);
 
     if (paused)
-        hook_call ("playback pause", NULL);
+        hook_call ("playback pause", nullptr);
     else
-        hook_call ("playback unpause", NULL);
+        hook_call ("playback unpause", nullptr);
 }
 
 static void playback_cleanup (void)
@@ -199,36 +199,36 @@ static void playback_cleanup (void)
 
     if (! song_finished)
     {
-        g_atomic_int_set (& stop_flag, TRUE);
+        g_atomic_int_set (& stop_flag, true);
         output_abort_write ();
     }
 
-    pthread_join (playback_thread_handle, NULL);
+    pthread_join (playback_thread_handle, nullptr);
     output_close_audio ();
 
     hook_dissociate ("playlist update", update_cb);
 
-    event_queue_cancel ("playback ready", NULL);
-    event_queue_cancel ("playback seek", NULL);
-    event_queue_cancel ("info change", NULL);
-    event_queue_cancel ("title change", NULL);
+    event_queue_cancel ("playback ready", nullptr);
+    event_queue_cancel ("playback seek", nullptr);
+    event_queue_cancel ("info change", nullptr);
+    event_queue_cancel ("title change", nullptr);
 
     end_queue.stop ();
 
     /* level 1 data cleanup */
-    playing = FALSE;
+    playing = false;
     time_offset = 0;
     stop_time = -1;
-    paused = FALSE;
-    ready_flag = FALSE;
-    playback_error = FALSE;
-    song_finished = FALSE;
+    paused = false;
+    ready_flag = false;
+    playback_error = false;
+    song_finished = false;
 
     seek_request = -1;
     repeat_a = -1;
 
     g_atomic_int_set (& repeat_b, -1);
-    g_atomic_int_set (& stop_flag, FALSE);
+    g_atomic_int_set (& stop_flag, false);
 
     current_bitrate = current_samplerate = current_channels = -1;
 
@@ -237,17 +237,17 @@ static void playback_cleanup (void)
     current_title = String ();
     current_length = -1;
 
-    current_decoder = NULL;
+    current_decoder = nullptr;
 
     if (current_file)
     {
         vfs_fclose (current_file);
-        current_file = NULL;
+        current_file = nullptr;
     }
 
     read_gain_from_tuple (Tuple ());
 
-    aud_set_bool (NULL, "stop_after_current_song", FALSE);
+    aud_set_bool (nullptr, "stop_after_current_song", false);
 }
 
 void playback_stop (void)
@@ -261,10 +261,10 @@ void playback_stop (void)
     output_drain ();
 
     /* level 2 data cleanup */
-    stopped = TRUE;
+    stopped = true;
     failed_entries = 0;
 
-    hook_call ("playback stop", NULL);
+    hook_call ("playback stop", nullptr);
 }
 
 static void do_stop (int playlist)
@@ -275,10 +275,10 @@ static void do_stop (int playlist)
 
 static void do_next (int playlist)
 {
-    if (! playlist_next_song (playlist, aud_get_bool (NULL, "repeat")))
+    if (! playlist_next_song (playlist, aud_get_bool (nullptr, "repeat")))
     {
         aud_playlist_set_position (playlist, -1);
-        hook_call ("playlist end reached", NULL);
+        hook_call ("playlist end reached", nullptr);
     }
 }
 
@@ -288,9 +288,9 @@ static void end_cb (void * unused)
         return;
 
     if (! playback_error)
-        song_finished = TRUE;
+        song_finished = true;
 
-    hook_call ("playback end", NULL);
+    hook_call ("playback end", nullptr);
 
     if (playback_error)
         failed_entries ++;
@@ -299,17 +299,17 @@ static void end_cb (void * unused)
 
     int playlist = aud_playlist_get_playing ();
 
-    if (aud_get_bool (NULL, "stop_after_current_song"))
+    if (aud_get_bool (nullptr, "stop_after_current_song"))
     {
         do_stop (playlist);
 
-        if (! aud_get_bool (NULL, "no_playlist_advance"))
+        if (! aud_get_bool (nullptr, "no_playlist_advance"))
             do_next (playlist);
     }
-    else if (aud_get_bool (NULL, "no_playlist_advance"))
+    else if (aud_get_bool (nullptr, "no_playlist_advance"))
     {
-        if (aud_get_bool (NULL, "repeat") && ! failed_entries)
-            playback_play (0, FALSE);
+        if (aud_get_bool (nullptr, "repeat") && ! failed_entries)
+            playback_play (0, false);
         else
             do_stop (playlist);
     }
@@ -322,14 +322,14 @@ static void end_cb (void * unused)
     }
 }
 
-static bool_t open_file (void)
+static bool open_file (void)
 {
     /* no need to open a handle for custom URI schemes */
     if (current_decoder->schemes && current_decoder->schemes[0])
-        return TRUE;
+        return true;
 
     current_file = vfs_fopen (current_filename, "r");
-    return (current_file != NULL);
+    return (current_file != nullptr);
 }
 
 static void * playback_thread (void * unused)
@@ -340,13 +340,13 @@ static void * playback_thread (void * unused)
     if (! current_decoder)
     {
         PluginHandle * p = playback_entry_get_decoder ();
-        current_decoder = p ? (InputPlugin *) aud_plugin_get_header (p) : NULL;
+        current_decoder = p ? (InputPlugin *) aud_plugin_get_header (p) : nullptr;
 
         if (! current_decoder)
         {
             aud_ui_show_error (str_printf (_("No decoder found for %s."),
              (const char *) current_filename));
-            playback_error = TRUE;
+            playback_error = true;
             goto DONE;
         }
     }
@@ -363,7 +363,7 @@ static void * playback_thread (void * unused)
         {
             time_offset = tuple.get_int (FIELD_SEGMENT_START);
             if (time_offset)
-                seek_request = time_offset + MAX (seek_request, 0);
+                seek_request = time_offset + aud::max (seek_request, 0);
         }
 
         if (tuple.get_value_type (FIELD_SEGMENT_END) == TUPLE_INT)
@@ -376,7 +376,7 @@ static void * playback_thread (void * unused)
     {
         aud_ui_show_error (str_printf (_("%s could not be opened."),
          (const char *) current_filename));
-        playback_error = TRUE;
+        playback_error = true;
         goto DONE;
     }
 
@@ -386,11 +386,11 @@ DONE:
     if (! ready_flag)
         set_ready ();
 
-    end_queue.queue (end_cb, NULL);
-    return NULL;
+    end_queue.queue (end_cb, nullptr);
+    return nullptr;
 }
 
-void playback_play (int seek_time, bool_t pause)
+void playback_play (int seek_time, bool pause)
 {
     String new_filename = playback_entry_get_filename ();
     g_return_if_fail (new_filename);
@@ -400,25 +400,25 @@ void playback_play (int seek_time, bool_t pause)
 
     current_filename = new_filename;
 
-    playing = TRUE;
+    playing = true;
     paused = pause;
 
     seek_request = (seek_time > 0) ? seek_time : -1;
 
-    stopped = FALSE;
+    stopped = false;
 
-    hook_associate ("playlist update", update_cb, NULL);
-    pthread_create (& playback_thread_handle, NULL, playback_thread, NULL);
+    hook_associate ("playlist update", update_cb, nullptr);
+    pthread_create (& playback_thread_handle, nullptr, playback_thread, nullptr);
 
-    hook_call ("playback begin", NULL);
+    hook_call ("playback begin", nullptr);
 }
 
-EXPORT bool_t aud_drct_get_playing (void)
+EXPORT bool aud_drct_get_playing (void)
 {
     return playing;
 }
 
-EXPORT bool_t aud_drct_get_paused (void)
+EXPORT bool aud_drct_get_paused (void)
 {
     return paused;
 }
@@ -435,31 +435,31 @@ EXPORT void aud_drct_seek (int time)
 
     pthread_mutex_lock (& control_mutex);
 
-    seek_request = time_offset + CLAMP (time, 0, current_length);
+    seek_request = time_offset + aud::clamp (time, 0, current_length);
     output_abort_write ();
 
     pthread_mutex_unlock (& control_mutex);
 }
 
-EXPORT bool_t aud_input_open_audio (int format, int rate, int channels)
+EXPORT bool aud_input_open_audio (int format, int rate, int channels)
 {
-    g_return_val_if_fail (playing, FALSE);
+    g_return_val_if_fail (playing, false);
 
     if (! output_open_audio (format, rate, channels))
-        return FALSE;
+        return false;
 
     output_set_replaygain_info (& current_gain);
 
     if (paused)
-        output_pause (TRUE);
+        output_pause (true);
 
     current_samplerate = rate;
     current_channels = channels;
 
     if (ready_flag)
-        event_queue ("info change", NULL);
+        event_queue ("info change", nullptr);
 
-    return TRUE;
+    return true;
 }
 
 EXPORT void aud_input_set_gain (const ReplayGainInfo * info)
@@ -483,14 +483,14 @@ EXPORT void aud_input_write_audio (void * data, int length)
         if (! output_write_audio (data, length, b))
         {
             pthread_mutex_lock (& control_mutex);
-            seek_request = MAX (repeat_a, time_offset);
+            seek_request = aud::max (repeat_a, time_offset);
             pthread_mutex_unlock (& control_mutex);
         }
     }
     else
     {
         if (! output_write_audio (data, length, stop_time))
-            g_atomic_int_set (& stop_flag, TRUE);
+            g_atomic_int_set (& stop_flag, true);
     }
 }
 
@@ -518,12 +518,12 @@ EXPORT void aud_input_set_bitrate (int bitrate)
     current_bitrate = bitrate;
 
     if (ready_flag)
-        event_queue ("info change", NULL);
+        event_queue ("info change", nullptr);
 }
 
-EXPORT bool_t aud_input_check_stop (void)
+EXPORT bool aud_input_check_stop (void)
 {
-    g_return_val_if_fail (playing, TRUE);
+    g_return_val_if_fail (playing, true);
     return g_atomic_int_get (& stop_flag);
 }
 
@@ -539,7 +539,7 @@ EXPORT int aud_input_check_seek (void)
         output_set_time (seek);
         seek_request = -1;
 
-        event_queue ("playback seek", NULL);
+        event_queue ("playback seek", nullptr);
     }
 
     pthread_mutex_unlock (& control_mutex);
@@ -561,7 +561,7 @@ EXPORT String aud_drct_get_title (void)
 
     wait_until_ready ();
 
-    StringBuf prefix = aud_get_bool (NULL, "show_numbers_in_pl") ?
+    StringBuf prefix = aud_get_bool (nullptr, "show_numbers_in_pl") ?
      str_printf ("%d. ", 1 + current_entry) : StringBuf (0);
 
     StringBuf time = (current_length > 0) ? str_format_time (current_length) : StringBuf ();
@@ -595,7 +595,7 @@ EXPORT void aud_drct_get_volume (int * l, int * r)
 
 EXPORT void aud_drct_set_volume (int l, int r)
 {
-    output_set_volume (CLAMP (l, 0, 100), CLAMP (r, 0, 100));
+    output_set_volume (aud::clamp (l, 0, 100), aud::clamp (r, 0, 100));
 }
 
 EXPORT void aud_drct_set_ab_repeat (int a, int b)
@@ -620,7 +620,7 @@ EXPORT void aud_drct_set_ab_repeat (int a, int b)
 
     if (b != -1 && output_get_time () >= b)
     {
-        seek_request = MAX (a, time_offset);
+        seek_request = aud::max (a, time_offset);
         output_abort_write ();
     }
 

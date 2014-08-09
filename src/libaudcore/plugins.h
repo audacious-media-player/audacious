@@ -20,21 +20,32 @@
 #ifndef LIBAUDCORE_PLUGINS_H
 #define LIBAUDCORE_PLUGINS_H
 
-#include <libaudcore/core.h>
+enum {
+    PLUGIN_TYPE_TRANSPORT,
+    PLUGIN_TYPE_PLAYLIST,
+    PLUGIN_TYPE_INPUT,
+    PLUGIN_TYPE_EFFECT,
+    PLUGIN_TYPE_OUTPUT,
+    PLUGIN_TYPE_VIS,
+    PLUGIN_TYPE_GENERAL,
+    PLUGIN_TYPE_IFACE,
+    PLUGIN_TYPES
+};
+
+struct PluginHandle;
 
 /* CAUTION: These functions are not thread safe. */
 
-/* returns TRUE to call again for the next plugin, FALSE to stop */
-typedef bool_t (* PluginForEachFunc) (PluginHandle * plugin, void * data);
+/* returns true to call again for the next plugin, false to stop */
+typedef bool (* PluginForEachFunc) (PluginHandle * plugin, void * data);
 
 PluginHandle * aud_plugin_get_current (int type);
-bool_t aud_plugin_enable (PluginHandle * plugin, bool_t enable);
+bool aud_plugin_enable (PluginHandle * plugin, bool enable);
 int aud_plugin_send_message (PluginHandle * plugin, const char * code, const void * data, int size);
 void /*GtkWidget*/ * aud_plugin_get_widget (PluginHandle * plugin);
 
 int aud_plugin_get_type (PluginHandle * plugin);
-const char * aud_plugin_get_filename (PluginHandle * plugin);
-PluginHandle * aud_plugin_lookup (const char * filename);
+const char * aud_plugin_get_basename (PluginHandle * plugin);
 PluginHandle * aud_plugin_lookup_basename (const char * basename);
 
 const void * aud_plugin_get_header (PluginHandle * plugin);
@@ -47,12 +58,12 @@ PluginHandle * aud_plugin_by_index (int type, int index);
 int aud_plugin_compare (PluginHandle * a, PluginHandle * b);
 void aud_plugin_for_each (int type, PluginForEachFunc func, void * data);
 
-bool_t aud_plugin_get_enabled (PluginHandle * plugin);
+bool aud_plugin_get_enabled (PluginHandle * plugin);
 void aud_plugin_for_enabled (int type, PluginForEachFunc func, void * data);
 
 const char * aud_plugin_get_name (PluginHandle * plugin);
-bool_t aud_plugin_has_about (PluginHandle * plugin);
-bool_t aud_plugin_has_configure (PluginHandle * plugin);
+bool aud_plugin_has_about (PluginHandle * plugin);
+bool aud_plugin_has_configure (PluginHandle * plugin);
 
 void aud_plugin_add_watch (PluginHandle * plugin, PluginForEachFunc func, void * data);
 void aud_plugin_remove_watch (PluginHandle * plugin, PluginForEachFunc func, void * data);

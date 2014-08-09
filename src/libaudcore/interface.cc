@@ -76,7 +76,6 @@ static bool interface_load (PluginHandle * plugin)
     if (PLUGIN_HAS_FUNC (i, init) && ! i->init ())
         return false;
 
-    current_plugin = plugin;
     current_interface = i;
 
     add_menu_items ();
@@ -89,7 +88,7 @@ static bool interface_load (PluginHandle * plugin)
 
 static void interface_unload (void)
 {
-    g_return_if_fail (current_plugin && current_interface);
+    g_return_if_fail (current_interface);
 
     AUDDBG ("Unloading %s.\n", aud_plugin_get_name (current_plugin));
 
@@ -101,11 +100,10 @@ static void interface_unload (void)
     if (PLUGIN_HAS_FUNC (current_interface, cleanup))
         current_interface->cleanup ();
 
-    current_plugin = nullptr;
     current_interface = nullptr;
 }
 
-EXPORT void aud_ui_show (bool_t show)
+EXPORT void aud_ui_show (bool show)
 {
     if (! current_interface)
         return;
@@ -118,7 +116,7 @@ EXPORT void aud_ui_show (bool_t show)
     vis_activate (show);
 }
 
-EXPORT bool_t aud_ui_is_shown (void)
+EXPORT bool aud_ui_is_shown (void)
 {
     if (! current_interface)
         return false;
@@ -131,20 +129,8 @@ EXPORT void aud_ui_show_error (const char * message)
     if (aud_get_headless_mode ())
         fprintf (stderr, "ERROR: %s\n", message);
     else
-        event_queue_full ("ui show error", str_get (message), (GDestroyNotify) str_unref);
-}
-
-static bool_t probe_cb (PluginHandle * p, PluginHandle * * pp)
-{
-    * pp = p;  /* just pick the first one */
-    return false;
-}
-
-PluginHandle * iface_plugin_probe (void)
-{
-    PluginHandle * p = nullptr;
-    aud_plugin_for_each (PLUGIN_TYPE_IFACE, (PluginForEachFunc) probe_cb, & p);
-    return p;
+        event_queue_full ("ui show error", String::raw_get (message),
+         (GDestroyNotify) String::raw_unref);
 }
 
 PluginHandle * iface_plugin_get_current (void)
@@ -154,35 +140,22 @@ PluginHandle * iface_plugin_get_current (void)
 
 bool iface_plugin_set_current (PluginHandle * plugin)
 {
-    next_plugin = plugin;
-
-    /* restart main loop, if running */
-    aud_quit ();
-
-    return true;
-}
-
-static void run_iface_plugins (void)
-{
-    vis_activate (aud_get_bool (0, "show_interface"));
-
-    while (next_plugin)
+    if (current_interface)
     {
-        if (! interface_load (next_plugin))
-            return;
+        // queue up interface switch
+        next_plugin = plugin;
 
-        next_plugin = nullptr;
+        // restart main loop
+        aud_quit ();
 
-        if (PLUGIN_HAS_FUNC (current_interface, run))
-            current_interface->run ();
-        else
-            mainloop_run ();
-
-        /* call before unloading interface */
-        hook_call ("config save", nullptr);
-
-        interface_unload ();
+        return true;
     }
+
+    if (! interface_load (plugin))
+        return false;
+
+    current_plugin = plugin;
+    return true;
 }
 
 void interface_run (void)
@@ -191,11 +164,33 @@ void interface_run (void)
     {
         mainloop_run ();
 
-        /* call before shutting down */
+        // call before shutting down
         hook_call ("config save", nullptr);
     }
     else
-        run_iface_plugins ();
+    {
+        vis_activate (aud_get_bool (0, "show_interface"));
+
+        while (current_interface)
+        {
+            if (PLUGIN_HAS_FUNC (current_interface, run))
+                current_interface->run ();
+            else
+                mainloop_run ();
+
+            // call before unloading interface
+            hook_call ("config save", nullptr);
+
+            interface_unload ();
+
+            if (next_plugin)
+            {
+                // handle queued interface switch
+                aud_plugin_enable (next_plugin, true);
+                next_plugin = nullptr;
+            }
+        }
+    }
 }
 
 EXPORT void aud_quit (void)
@@ -246,7 +241,7 @@ EXPORT void aud_ui_hide_about_window (void)
         current_interface->hide_about_window ();
 }
 
-EXPORT void aud_ui_show_filebrowser (bool_t open)
+EXPORT void aud_ui_show_filebrowser (bool open)
 {
     if (current_interface && PLUGIN_HAS_FUNC (current_interface, show_filebrowser))
         current_interface->show_filebrowser (open);

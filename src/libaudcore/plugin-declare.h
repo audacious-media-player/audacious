@@ -23,25 +23,25 @@
 #define AUD_PLUGIN_DOMAIN PACKAGE
 #endif
 #ifndef AUD_PLUGIN_ABOUT
-#define AUD_PLUGIN_ABOUT NULL
+#define AUD_PLUGIN_ABOUT nullptr
 #endif
 #ifndef AUD_PLUGIN_PREFS
-#define AUD_PLUGIN_PREFS NULL
+#define AUD_PLUGIN_PREFS nullptr
 #endif
 #ifndef AUD_PLUGIN_INIT
-#define AUD_PLUGIN_INIT NULL
+#define AUD_PLUGIN_INIT nullptr
 #endif
 #ifndef AUD_PLUGIN_CLEANUP
-#define AUD_PLUGIN_CLEANUP NULL
+#define AUD_PLUGIN_CLEANUP nullptr
 #endif
 #ifndef AUD_PLUGIN_TAKE_MESSAGE
-#define AUD_PLUGIN_TAKE_MESSAGE NULL
+#define AUD_PLUGIN_TAKE_MESSAGE nullptr
 #endif
 #ifndef AUD_PLUGIN_ABOUTWIN
-#define AUD_PLUGIN_ABOUTWIN NULL
+#define AUD_PLUGIN_ABOUTWIN nullptr
 #endif
 #ifndef AUD_PLUGIN_CONFIGWIN
-#define AUD_PLUGIN_CONFIGWIN NULL
+#define AUD_PLUGIN_CONFIGWIN nullptr
 #endif
 
 #ifdef AUD_DECLARE_TRANSPORT
@@ -59,10 +59,10 @@ AUD_TRANSPORT_PLUGIN (
     AUD_PLUGIN_TAKE_MESSAGE,
     AUD_PLUGIN_ABOUTWIN,
     AUD_PLUGIN_CONFIGWIN,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
+    nullptr,
+    nullptr,
+    nullptr,
+    nullptr,
     AUD_TRANSPORT_SCHEMES,
     AUD_TRANSPORT_VTABLE
 )
@@ -75,7 +75,7 @@ AUD_TRANSPORT_PLUGIN (
  *           AUD_PLAYLIST_LOAD */
 
 #ifndef AUD_PLAYLIST_SAVE
-#define AUD_PLAYLIST_SAVE NULL
+#define AUD_PLAYLIST_SAVE nullptr
 #endif
 
 AUD_PLAYLIST_PLUGIN (
@@ -88,10 +88,10 @@ AUD_PLAYLIST_PLUGIN (
     AUD_PLUGIN_TAKE_MESSAGE,
     AUD_PLUGIN_ABOUTWIN,
     AUD_PLUGIN_CONFIGWIN,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
+    nullptr,
+    nullptr,
+    nullptr,
+    nullptr,
     AUD_PLAYLIST_EXTS,
     AUD_PLAYLIST_LOAD,
     AUD_PLAYLIST_SAVE
@@ -102,16 +102,16 @@ AUD_PLAYLIST_PLUGIN (
 #ifdef AUD_DECLARE_INPUT
 
 #ifndef AUD_INPUT_SUBTUNES
-#define AUD_INPUT_SUBTUNES FALSE
+#define AUD_INPUT_SUBTUNES false
 #endif
 #ifndef AUD_INPUT_EXTS
-#define AUD_INPUT_EXTS NULL
+#define AUD_INPUT_EXTS nullptr
 #endif
 #ifndef AUD_INPUT_MIMES
-#define AUD_INPUT_MIMES NULL
+#define AUD_INPUT_MIMES nullptr
 #endif
 #ifndef AUD_INPUT_SCHEMES
-#define AUD_INPUT_SCHEMES NULL
+#define AUD_INPUT_SCHEMES nullptr
 #endif
 #ifndef AUD_INPUT_PRIORITY
 #define AUD_INPUT_PRIORITY 0
@@ -122,13 +122,13 @@ AUD_PLAYLIST_PLUGIN (
  *           AUD_INPUT_PLAY */
 
 #ifndef AUD_INPUT_WRITE_TUPLE
-#define AUD_INPUT_WRITE_TUPLE NULL
+#define AUD_INPUT_WRITE_TUPLE nullptr
 #endif
 #ifndef AUD_INPUT_READ_IMAGE
-#define AUD_INPUT_READ_IMAGE NULL
+#define AUD_INPUT_READ_IMAGE nullptr
 #endif
 #ifndef AUD_INPUT_INFOWIN
-#define AUD_INPUT_INFOWIN NULL
+#define AUD_INPUT_INFOWIN nullptr
 #endif
 
 AUD_INPUT_PLUGIN (
@@ -141,10 +141,10 @@ AUD_INPUT_PLUGIN (
     AUD_PLUGIN_TAKE_MESSAGE,
     AUD_PLUGIN_ABOUTWIN,
     AUD_PLUGIN_CONFIGWIN,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
+    nullptr,
+    nullptr,
+    nullptr,
+    nullptr,
     AUD_INPUT_SUBTUNES,
     AUD_INPUT_EXTS,
     AUD_INPUT_MIMES,
@@ -163,25 +163,25 @@ AUD_INPUT_PLUGIN (
 #ifdef AUD_DECLARE_EFFECT
 
 #ifndef AUD_EFFECT_START
-#define AUD_EFFECT_START NULL
+#define AUD_EFFECT_START nullptr
 #endif
 
 /* Required: AUD_EFFECT_PROCESS */
 
 #ifndef AUD_EFFECT_FLUSH
-#define AUD_EFFECT_FLUSH NULL
+#define AUD_EFFECT_FLUSH nullptr
 #endif
 #ifndef AUD_EFFECT_FINISH
-#define AUD_EFFECT_FINISH NULL
+#define AUD_EFFECT_FINISH nullptr
 #endif
 #ifndef AUD_EFFECT_ADJ_DELAY
-#define AUD_EFFECT_ADJ_DELAY NULL
+#define AUD_EFFECT_ADJ_DELAY nullptr
 #endif
 #ifndef AUD_EFFECT_ORDER
 #define AUD_EFFECT_ORDER 0
 #endif
 #ifndef AUD_EFFECT_SAME_FMT
-#define AUD_EFFECT_SAME_FMT FALSE
+#define AUD_EFFECT_SAME_FMT false
 #endif
 
 AUD_EFFECT_PLUGIN (
@@ -194,10 +194,10 @@ AUD_EFFECT_PLUGIN (
     AUD_PLUGIN_TAKE_MESSAGE,
     AUD_PLUGIN_ABOUTWIN,
     AUD_PLUGIN_CONFIGWIN,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
+    nullptr,
+    nullptr,
+    nullptr,
+    nullptr,
     AUD_EFFECT_START,
     AUD_EFFECT_PROCESS,
     AUD_EFFECT_FLUSH,
@@ -215,10 +215,10 @@ AUD_EFFECT_PLUGIN (
 #define AUD_OUTPUT_PRIORITY 0
 #endif
 #ifndef AUD_OUTPUT_GET_VOLUME
-#define AUD_OUTPUT_GET_VOLUME NULL
+#define AUD_OUTPUT_GET_VOLUME nullptr
 #endif
 #ifndef AUD_OUTPUT_SET_VOLUME
-#define AUD_OUTPUT_SET_VOLUME NULL
+#define AUD_OUTPUT_SET_VOLUME nullptr
 #endif
 
 /* Required: AUD_OUTPUT_OPEN
@@ -232,7 +232,7 @@ AUD_EFFECT_PLUGIN (
  *           AUD_OUTPUT_FLUSH */
 
 #ifndef AUD_OUTPUT_REOPEN
-#define AUD_OUTPUT_REOPEN FALSE
+#define AUD_OUTPUT_REOPEN false
 #endif
 
 AUD_OUTPUT_PLUGIN (
@@ -245,10 +245,10 @@ AUD_OUTPUT_PLUGIN (
     AUD_PLUGIN_TAKE_MESSAGE,
     AUD_PLUGIN_ABOUTWIN,
     AUD_PLUGIN_CONFIGWIN,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
+    nullptr,
+    nullptr,
+    nullptr,
+    nullptr,
     AUD_OUTPUT_PRIORITY,
     AUD_OUTPUT_GET_VOLUME,
     AUD_OUTPUT_SET_VOLUME,
@@ -271,16 +271,16 @@ AUD_OUTPUT_PLUGIN (
 /* Required: AUD_VIS_CLEAR */
 
 #ifndef AUD_VIS_RENDER_MONO
-#define AUD_VIS_RENDER_MONO NULL
+#define AUD_VIS_RENDER_MONO nullptr
 #endif
 #ifndef AUD_VIS_RENDER_MULTI
-#define AUD_VIS_RENDER_MULTI NULL
+#define AUD_VIS_RENDER_MULTI nullptr
 #endif
 #ifndef AUD_VIS_RENDER_FREQ
-#define AUD_VIS_RENDER_FREQ NULL
+#define AUD_VIS_RENDER_FREQ nullptr
 #endif
 #ifndef AUD_VIS_GET_WIDGET
-#define AUD_VIS_GET_WIDGET NULL
+#define AUD_VIS_GET_WIDGET nullptr
 #endif
 
 AUD_VIS_PLUGIN (
@@ -293,10 +293,10 @@ AUD_VIS_PLUGIN (
     AUD_PLUGIN_TAKE_MESSAGE,
     AUD_PLUGIN_ABOUTWIN,
     AUD_PLUGIN_CONFIGWIN,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
+    nullptr,
+    nullptr,
+    nullptr,
+    nullptr,
     AUD_VIS_CLEAR,
     AUD_VIS_RENDER_MONO,
     AUD_VIS_RENDER_MULTI,
@@ -309,10 +309,10 @@ AUD_VIS_PLUGIN (
 #ifdef AUD_DECLARE_GENERAL
 
 #ifndef AUD_GENERAL_AUTO_ENABLE
-#define AUD_GENERAL_AUTO_ENABLE  FALSE
+#define AUD_GENERAL_AUTO_ENABLE  false
 #endif
 #ifndef AUD_GENERAL_GET_WIDGET
-#define AUD_GENERAL_GET_WIDGET  NULL
+#define AUD_GENERAL_GET_WIDGET  nullptr
 #endif
 
 AUD_GENERAL_PLUGIN (
@@ -325,10 +325,10 @@ AUD_GENERAL_PLUGIN (
     AUD_PLUGIN_TAKE_MESSAGE,
     AUD_PLUGIN_ABOUTWIN,
     AUD_PLUGIN_CONFIGWIN,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
+    nullptr,
+    nullptr,
+    nullptr,
+    nullptr,
     AUD_GENERAL_AUTO_ENABLE,
     AUD_GENERAL_GET_WIDGET
 )
@@ -342,43 +342,43 @@ AUD_GENERAL_PLUGIN (
  *           AUD_IFACE_QUIT */
 
 #ifndef AUD_IFACE_SHOW_ABOUT
-#define AUD_IFACE_SHOW_ABOUT NULL
+#define AUD_IFACE_SHOW_ABOUT nullptr
 #endif
 
 #ifndef AUD_IFACE_HIDE_ABOUT
-#define AUD_IFACE_HIDE_ABOUT NULL
+#define AUD_IFACE_HIDE_ABOUT nullptr
 #endif
 
 #ifndef AUD_IFACE_SHOW_FILEBROWSER
-#define AUD_IFACE_SHOW_FILEBROWSER NULL
+#define AUD_IFACE_SHOW_FILEBROWSER nullptr
 #endif
 
 #ifndef AUD_IFACE_HIDE_FILEBROWSER
-#define AUD_IFACE_HIDE_FILEBROWSER NULL
+#define AUD_IFACE_HIDE_FILEBROWSER nullptr
 #endif
 
 #ifndef AUD_IFACE_SHOW_JUMP_TO_SONG
-#define AUD_IFACE_SHOW_JUMP_TO_SONG NULL
+#define AUD_IFACE_SHOW_JUMP_TO_SONG nullptr
 #endif
 
 #ifndef AUD_IFACE_HIDE_JUMP_TO_SONG
-#define AUD_IFACE_HIDE_JUMP_TO_SONG NULL
+#define AUD_IFACE_HIDE_JUMP_TO_SONG nullptr
 #endif
 
 #ifndef AUD_IFACE_SHOW_SETTINGS
-#define AUD_IFACE_SHOW_SETTINGS NULL
+#define AUD_IFACE_SHOW_SETTINGS nullptr
 #endif
 
 #ifndef AUD_IFACE_HIDE_SETTINGS
-#define AUD_IFACE_HIDE_SETTINGS NULL
+#define AUD_IFACE_HIDE_SETTINGS nullptr
 #endif
 
 #ifndef AUD_IFACE_MENU_ADD
-#define AUD_IFACE_MENU_ADD NULL
+#define AUD_IFACE_MENU_ADD nullptr
 #endif
 
 #ifndef AUD_IFACE_MENU_REMOVE
-#define AUD_IFACE_MENU_REMOVE NULL
+#define AUD_IFACE_MENU_REMOVE nullptr
 #endif
 
 AUD_IFACE_PLUGIN (
@@ -391,10 +391,10 @@ AUD_IFACE_PLUGIN (
     AUD_PLUGIN_TAKE_MESSAGE,
     AUD_PLUGIN_ABOUTWIN,
     AUD_PLUGIN_CONFIGWIN,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
+    nullptr,
+    nullptr,
+    nullptr,
+    nullptr,
     AUD_IFACE_SHOW,
     AUD_IFACE_RUN,
     AUD_IFACE_QUIT,

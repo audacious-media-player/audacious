@@ -1,6 +1,6 @@
 /*
- * id3v1.h
- * Copyright 2010 Tony Vroon
+ * libaudqt.h
+ * Copyright 2014 William Pitcock
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -17,11 +17,30 @@
  * the use of this software.
  */
 
-#ifndef ID3V1_H
-#define ID3V1_H
+#ifndef LIBAUDQT_H
+#define LIBAUDQT_H
 
-#include "../tag_module.h"
+namespace audqt {
 
-extern tag_module_t id3v1;
+/* about.cc */
+void aboutwindow_show ();
+void aboutwindow_hide ();
+
+/* playlist-management.cc */
+void playlist_confirm_delete (int playlist);
+void playlist_confirm_rename (int playlist);
+
+/* equalizer.cc */
+void equalizer_show ();
+void equalizer_hide ();
+
+/* fileopener.cc */
+void fileopener_show (bool add);
+
+/* util.cc */
+void window_bring_to_front (QWidget * win);
+
+};
 
 #endif
+

@@ -528,11 +528,9 @@ String TupleCompiler::evaluate (const Tuple & tuple) const
         return String (buf);
 
     /* formatting failed, try fallbacks */
-    static const int fallbacks[] = {FIELD_TITLE, FIELD_FILE_NAME};
-
-    for (unsigned i = 0; i < ARRAY_LEN (fallbacks); i ++)
+    for (int fallback : {FIELD_TITLE, FIELD_FILE_NAME})
     {
-        String title = tuple.get_str (fallbacks[i]);
+        String title = tuple.get_str (fallback);
         if (title)
             return title;
     }

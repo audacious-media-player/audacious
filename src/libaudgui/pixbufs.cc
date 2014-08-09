@@ -31,11 +31,11 @@ static GdkPixbuf * current_pixbuf;
 
 EXPORT GdkPixbuf * audgui_pixbuf_fallback (void)
 {
-    static GdkPixbuf * fallback = NULL;
+    static GdkPixbuf * fallback = nullptr;
 
     if (! fallback)
         fallback = gdk_pixbuf_new_from_file (filename_build
-         ({aud_get_path (AUD_PATH_DATA_DIR), "images", "album.png"}), NULL);
+         ({aud_get_path (AudPath::DataDir), "images", "album.png"}), nullptr);
 
     if (fallback)
         g_object_ref ((GObject *) fallback);
@@ -48,7 +48,7 @@ void audgui_pixbuf_uncache (void)
     if (current_pixbuf)
     {
         g_object_unref ((GObject *) current_pixbuf);
-        current_pixbuf = NULL;
+        current_pixbuf = nullptr;
     }
 }
 
@@ -88,7 +88,7 @@ EXPORT GdkPixbuf * audgui_pixbuf_request (const char * filename)
 
     aud_art_request_data (filename, & data, & size);
     if (! data)
-        return NULL;
+        return nullptr;
 
     GdkPixbuf * p = audgui_pixbuf_from_data (data, size);
 
@@ -103,7 +103,7 @@ EXPORT GdkPixbuf * audgui_pixbuf_request_current (void)
         int list = aud_playlist_get_playing ();
         int entry = aud_playlist_get_position (list);
         if (entry < 0)
-            return NULL;
+            return nullptr;
 
         String filename = aud_playlist_entry_get_filename (list, entry);
         current_pixbuf = audgui_pixbuf_request (filename);
@@ -117,9 +117,9 @@ EXPORT GdkPixbuf * audgui_pixbuf_request_current (void)
 
 EXPORT GdkPixbuf * audgui_pixbuf_from_data (const void * data, int64_t size)
 {
-    GdkPixbuf * pixbuf = NULL;
+    GdkPixbuf * pixbuf = nullptr;
     GdkPixbufLoader * loader = gdk_pixbuf_loader_new ();
-    GError * error = NULL;
+    GError * error = nullptr;
 
     if (gdk_pixbuf_loader_write (loader, (const unsigned char *) data, size,
      & error) && gdk_pixbuf_loader_close (loader, & error))

@@ -60,7 +60,6 @@ struct MultiFuncs
 
 struct SingleFuncs
 {
-    PluginHandle * (* probe) (void);
     PluginHandle * (* get_current) (void);
     bool (* set_current) (PluginHandle * plugin);
 };
@@ -87,19 +86,17 @@ struct PluginParams
 };
 
 static const PluginParams table[PLUGIN_TYPES] = {
-    PluginParams ("transport", MultiFuncs ({NULL, NULL})),
-    PluginParams ("playlist", MultiFuncs ({NULL, NULL})),
-    PluginParams ("input", MultiFuncs ({NULL, NULL})),
+    PluginParams ("transport", MultiFuncs ({nullptr, nullptr})),
+    PluginParams ("playlist", MultiFuncs ({nullptr, nullptr})),
+    PluginParams ("input", MultiFuncs ({nullptr, nullptr})),
     PluginParams ("effect", MultiFuncs ({effect_plugin_start, effect_plugin_stop})),
-    PluginParams ("output", SingleFuncs ({output_plugin_probe,
-     output_plugin_get_current, output_plugin_set_current})),
+    PluginParams ("output", SingleFuncs ({output_plugin_get_current, output_plugin_set_current})),
     PluginParams ("visualization", MultiFuncs ({vis_plugin_start, vis_plugin_stop})),
     PluginParams ("general", MultiFuncs ({general_plugin_start, general_plugin_stop})),
-    PluginParams ("interface", SingleFuncs ({iface_plugin_probe,
-     iface_plugin_get_current, iface_plugin_set_current}))
+    PluginParams ("interface", SingleFuncs ({iface_plugin_get_current, iface_plugin_set_current}))
 };
 
-static bool_t find_enabled_cb (PluginHandle * p, void * pp)
+static bool find_enabled_cb (PluginHandle * p, void * pp)
 {
     * (PluginHandle * *) pp = p;
     return false;
@@ -107,16 +104,33 @@ static bool_t find_enabled_cb (PluginHandle * p, void * pp)
 
 static PluginHandle * find_enabled (int type)
 {
-    PluginHandle * p = NULL;
+    PluginHandle * p = nullptr;
     aud_plugin_for_enabled (type, find_enabled_cb, & p);
     return p;
+}
+
+static bool probe_cb (PluginHandle * p, PluginHandle * * pp)
+{
+    int type = aud_plugin_get_type (p);
+
+    AUDDBG ("Trying to start %s.\n", aud_plugin_get_name (p));
+
+    if (! table[type].f.s.set_current (p))
+    {
+        AUDDBG ("%s failed to start.\n", aud_plugin_get_name (p));
+        return true; /* keep searching */
+    }
+
+    * pp = p;
+    plugin_set_enabled (p, true);
+    return false; /* stop searching */
 }
 
 static void start_single (int type)
 {
     PluginHandle * p;
 
-    if ((p = find_enabled (type)) != NULL)
+    if ((p = find_enabled (type)) != nullptr)
     {
         AUDDBG ("Starting selected %s plugin %s.\n", table[type].name,
          aud_plugin_get_name (p));
@@ -129,25 +143,17 @@ static void start_single (int type)
     }
 
     AUDDBG ("Probing for %s plugin.\n", table[type].name);
+    aud_plugin_for_each (type, (PluginForEachFunc) probe_cb, & p);
 
-    if ((p = table[type].f.s.probe ()) == NULL)
+    if (! p)
     {
         fprintf (stderr, "FATAL: No %s plugin found.\n"
          "(Did you forget to install audacious-plugins?)\n", table[type].name);
         abort ();
     }
-
-    AUDDBG ("Starting %s.\n", aud_plugin_get_name (p));
-    plugin_set_enabled (p, true);
-
-    if (! table[type].f.s.set_current (p))
-    {
-        fprintf (stderr, "FATAL: %s failed to start.\n", aud_plugin_get_name (p));
-        abort ();
-    }
 }
 
-static bool_t start_multi_cb (PluginHandle * p, void * type)
+static bool start_multi_cb (PluginHandle * p, void * type)
 {
     AUDDBG ("Starting %s.\n", aud_plugin_get_name (p));
 
@@ -179,10 +185,10 @@ static const VFSConstructor * lookup_transport (const char * scheme)
 {
     PluginHandle * plugin = transport_plugin_for_scheme (scheme);
     if (! plugin)
-        return NULL;
+        return nullptr;
 
     TransportPlugin * tp = (TransportPlugin *) aud_plugin_get_header (plugin);
-    return tp ? tp->vtable : NULL;
+    return tp ? tp->vtable : nullptr;
 }
 
 void start_plugins_one (void)
@@ -200,7 +206,7 @@ void start_plugins_two (void)
         start_plugins (i);
 }
 
-static bool_t stop_multi_cb (PluginHandle * p, void * type)
+static bool stop_multi_cb (PluginHandle * p, void * type)
 {
     AUDDBG ("Shutting down %s.\n", aud_plugin_get_name (p));
     table[GPOINTER_TO_INT (type)].f.m.stop (p);
@@ -217,7 +223,7 @@ static void stop_plugins (int type)
     {
         AUDDBG ("Shutting down %s.\n", aud_plugin_get_name
          (table[type].f.s.get_current ()));
-        table[type].f.s.set_current (NULL);
+        table[type].f.s.set_current (nullptr);
     }
     else
     {
@@ -237,13 +243,13 @@ void stop_plugins_one (void)
     for (int i = PLUGIN_TYPE_GENERAL - 1; i >= 0; i --)
         stop_plugins (i);
 
-    vfs_set_lookup_func (NULL);
+    vfs_set_lookup_func (nullptr);
     plugin_system_cleanup ();
 }
 
 EXPORT PluginHandle * aud_plugin_get_current (int type)
 {
-    g_return_val_if_fail (table[type].is_single, NULL);
+    g_return_val_if_fail (table[type].is_single, nullptr);
     return table[type].f.s.get_current ();
 }
 
@@ -253,16 +259,21 @@ static bool enable_single (int type, PluginHandle * p)
 
     AUDDBG ("Switching from %s to %s.\n", aud_plugin_get_name (old),
      aud_plugin_get_name (p));
-    plugin_set_enabled (old, false);
-    plugin_set_enabled (p, true);
 
     if (table[type].f.s.set_current (p))
+    {
+        // check that the switch was not queued for later
+        if (table[type].f.s.get_current () == p)
+        {
+            plugin_set_enabled (old, false);
+            plugin_set_enabled (p, true);
+        }
+
         return true;
+    }
 
     fprintf (stderr, "%s failed to start; falling back to %s.\n",
      aud_plugin_get_name (p), aud_plugin_get_name (old));
-    plugin_set_enabled (p, false);
-    plugin_set_enabled (old, true);
 
     if (table[type].f.s.set_current (old))
         return false;
@@ -274,22 +285,24 @@ static bool enable_single (int type, PluginHandle * p)
 static bool enable_multi (int type, PluginHandle * p, bool enable)
 {
     AUDDBG ("%sabling %s.\n", enable ? "En" : "Dis", aud_plugin_get_name (p));
-    plugin_set_enabled (p, enable);
 
     if (enable)
     {
         if (table[type].f.m.start && ! table[type].f.m.start (p))
         {
             fprintf (stderr, "%s failed to start.\n", aud_plugin_get_name (p));
-            plugin_set_enabled (p, false);
             return false;
         }
+
+        plugin_set_enabled (p, true);
 
         if (type == PLUGIN_TYPE_VIS || type == PLUGIN_TYPE_GENERAL)
             hook_call ("dock plugin enabled", p);
     }
     else
     {
+        plugin_set_enabled (p, false);
+
         if (type == PLUGIN_TYPE_VIS || type == PLUGIN_TYPE_GENERAL)
             hook_call ("dock plugin disabled", p);
 
@@ -300,7 +313,7 @@ static bool enable_multi (int type, PluginHandle * p, bool enable)
     return true;
 }
 
-EXPORT bool_t aud_plugin_enable (PluginHandle * plugin, bool_t enable)
+EXPORT bool aud_plugin_enable (PluginHandle * plugin, bool enable)
 {
     if (! enable == ! aud_plugin_get_enabled (plugin))
         return true;
@@ -332,13 +345,13 @@ EXPORT int aud_plugin_send_message (PluginHandle * plugin, const char * code, co
 
 EXPORT void * aud_plugin_get_widget (PluginHandle * plugin)
 {
-    g_return_val_if_fail (aud_plugin_get_enabled (plugin), NULL);
+    g_return_val_if_fail (aud_plugin_get_enabled (plugin), nullptr);
     int type = aud_plugin_get_type (plugin);
 
     if (type == PLUGIN_TYPE_GENERAL)
     {
         GeneralPlugin * gp = (GeneralPlugin *) aud_plugin_get_header (plugin);
-        g_return_val_if_fail (gp != NULL, NULL);
+        g_return_val_if_fail (gp != nullptr, nullptr);
 
         if (PLUGIN_HAS_FUNC (gp, get_widget))
             return gp->get_widget ();
@@ -347,11 +360,11 @@ EXPORT void * aud_plugin_get_widget (PluginHandle * plugin)
     if (type == PLUGIN_TYPE_VIS)
     {
         VisPlugin * vp = (VisPlugin *) aud_plugin_get_header (plugin);
-        g_return_val_if_fail (vp != NULL, NULL);
+        g_return_val_if_fail (vp != nullptr, nullptr);
 
         if (PLUGIN_HAS_FUNC (vp, get_widget))
             return vp->get_widget ();
     }
 
-    return NULL;
+    return nullptr;
 }

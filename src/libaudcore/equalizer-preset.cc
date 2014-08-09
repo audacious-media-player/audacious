@@ -34,13 +34,13 @@ EXPORT Index<EqualizerPreset> aud_eq_read_presets (const char * basename)
     Index<EqualizerPreset> list;
 
     GKeyFile * rcfile = g_key_file_new ();
-    StringBuf filename = filename_build ({aud_get_path (AUD_PATH_USER_DIR), basename});
+    StringBuf filename = filename_build ({aud_get_path (AudPath::UserDir), basename});
 
-    if (! g_key_file_load_from_file (rcfile, filename, G_KEY_FILE_NONE, NULL))
+    if (! g_key_file_load_from_file (rcfile, filename, G_KEY_FILE_NONE, nullptr))
     {
-        StringBuf filename2 = filename_build ({aud_get_path (AUD_PATH_DATA_DIR), basename});
+        StringBuf filename2 = filename_build ({aud_get_path (AudPath::DataDir), basename});
 
-        if (! g_key_file_load_from_file (rcfile, filename2, G_KEY_FILE_NONE, NULL))
+        if (! g_key_file_load_from_file (rcfile, filename2, G_KEY_FILE_NONE, nullptr))
         {
             g_key_file_free (rcfile);
             return list;
@@ -49,17 +49,17 @@ EXPORT Index<EqualizerPreset> aud_eq_read_presets (const char * basename)
 
     for (int p = 0;; p ++)
     {
-        char * name = g_key_file_get_string (rcfile, "Presets", str_printf ("Preset%d", p), NULL);
+        char * name = g_key_file_get_string (rcfile, "Presets", str_printf ("Preset%d", p), nullptr);
         if (! name)
             break;
 
         EqualizerPreset & preset = list.append ();
 
         preset.name = String (name);
-        preset.preamp = g_key_file_get_double (rcfile, name, "Preamp", NULL);
+        preset.preamp = g_key_file_get_double (rcfile, name, "Preamp", nullptr);
 
         for (int i = 0; i < AUD_EQ_NBANDS; i++)
-            preset.bands[i] = g_key_file_get_double (rcfile, name, str_printf ("Band%d", i), NULL);
+            preset.bands[i] = g_key_file_get_double (rcfile, name, str_printf ("Band%d", i), nullptr);
 
         g_free (name);
     }
@@ -69,7 +69,7 @@ EXPORT Index<EqualizerPreset> aud_eq_read_presets (const char * basename)
     return list;
 }
 
-EXPORT bool_t aud_eq_write_presets (const Index<EqualizerPreset> & list, const char * basename)
+EXPORT bool aud_eq_write_presets (const Index<EqualizerPreset> & list, const char * basename)
 {
     GKeyFile * rcfile = g_key_file_new ();
 
@@ -85,10 +85,10 @@ EXPORT bool_t aud_eq_write_presets (const Index<EqualizerPreset> & list, const c
     }
 
     size_t len;
-    char * data = g_key_file_to_data (rcfile, & len, NULL);
+    char * data = g_key_file_to_data (rcfile, & len, nullptr);
 
-    StringBuf filename = filename_build ({aud_get_path (AUD_PATH_USER_DIR), basename});
-    bool_t success = g_file_set_contents (filename, data, len, NULL);
+    StringBuf filename = filename_build ({aud_get_path (AudPath::UserDir), basename});
+    bool success = g_file_set_contents (filename, data, len, nullptr);
 
     g_key_file_free (rcfile);
     g_free (data);
@@ -135,18 +135,18 @@ EXPORT Index<EqualizerPreset> aud_import_winamp_presets (VFSFile * file)
     return list;
 }
 
-EXPORT bool_t aud_export_winamp_preset (const EqualizerPreset & preset, VFSFile * file)
+EXPORT bool aud_export_winamp_preset (const EqualizerPreset & preset, VFSFile * file)
 {
     char name[257];
     char bands[11];
 
     if (vfs_fwrite ("Winamp EQ library file v1.1\x1a!--", 1, 31, file) != 31)
-        return FALSE;
+        return false;
 
     strncpy (name, preset.name, 257);
 
     if (vfs_fwrite (name, 1, 257, file) != 257)
-        return FALSE;
+        return false;
 
     for (int i = 0; i < AUD_EQ_NBANDS; i ++)
         bands[i] = TO_WINAMP_VAL (preset.bands[i]);
@@ -154,12 +154,12 @@ EXPORT bool_t aud_export_winamp_preset (const EqualizerPreset & preset, VFSFile 
     bands[10] = TO_WINAMP_VAL (preset.preamp);
 
     if (vfs_fwrite (bands, 1, 11, file) != 11)
-        return FALSE;
+        return false;
 
-    return TRUE;
+    return true;
 }
 
-EXPORT bool_t aud_save_preset_file (const EqualizerPreset & preset, const char * filename)
+EXPORT bool aud_save_preset_file (const EqualizerPreset & preset, const char * filename)
 {
     GKeyFile * rcfile = g_key_file_new ();
 
@@ -170,10 +170,10 @@ EXPORT bool_t aud_save_preset_file (const EqualizerPreset & preset, const char *
          str_printf ("Band%d", i), preset.bands[i]);
 
     size_t len;
-    char * data = g_key_file_to_data (rcfile, & len, NULL);
+    char * data = g_key_file_to_data (rcfile, & len, nullptr);
 
     VFSFile * file = vfs_fopen (filename, "w");
-    bool_t success = FALSE;
+    bool success = false;
 
     if (file)
     {
@@ -187,24 +187,24 @@ EXPORT bool_t aud_save_preset_file (const EqualizerPreset & preset, const char *
     return success;
 }
 
-EXPORT bool_t aud_load_preset_file (EqualizerPreset & preset, const char * filename)
+EXPORT bool aud_load_preset_file (EqualizerPreset & preset, const char * filename)
 {
     GKeyFile * rcfile = g_key_file_new ();
 
-    if (! g_key_file_load_from_file (rcfile, filename, G_KEY_FILE_NONE, NULL))
+    if (! g_key_file_load_from_file (rcfile, filename, G_KEY_FILE_NONE, nullptr))
     {
         g_key_file_free (rcfile);
-        return FALSE;
+        return false;
     }
 
     preset.name = String ("");
-    preset.preamp = g_key_file_get_double (rcfile, "Equalizer preset", "Preamp", NULL);
+    preset.preamp = g_key_file_get_double (rcfile, "Equalizer preset", "Preamp", nullptr);
 
     for (int i = 0; i < AUD_EQ_NBANDS; i ++)
         preset.bands[i] = g_key_file_get_double (rcfile, "Equalizer preset",
-         str_printf ("Band%d", i), NULL);
+         str_printf ("Band%d", i), nullptr);
 
     g_key_file_free (rcfile);
 
-    return TRUE;
+    return true;
 }
