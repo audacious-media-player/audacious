@@ -87,4 +87,86 @@ QWidget * LabelWidget::widget ()
     return & m_container;
 }
 
+/* integer (spinbox) */
+QWidget * IntegerWidget::widget ()
+{
+    m_spinner.setPrefix (m_parent->label);
+    m_spinner.setRange ((int) m_parent->data.spin_btn.min, (int) m_parent->data.spin_btn.max);
+    m_spinner.setSingleStep ((int) m_parent->data.spin_btn.step);
+    m_spinner.setValue (get ());
+
+    if (m_parent->data.spin_btn.right_label)
+        m_spinner.setSuffix (m_parent->data.spin_btn.right_label);
+
+    return & m_spinner;
+}
+
+int IntegerWidget::get ()
+{
+    if (! m_parent)
+        return 0;
+
+    if (m_parent->cfg.value)
+        return * (int *) m_parent->cfg.value;
+    else if (m_parent->cfg.name)
+        return aud_get_int (m_parent->cfg.section, m_parent->cfg.name);
+    else
+        return 0;
+}
+
+void IntegerWidget::set (int value)
+{
+    if (! m_parent || m_parent->cfg.type != WidgetConfig::Int)
+        return;
+
+    if (m_parent->cfg.value)
+        * (int *) m_parent->cfg.value = value;
+    else if (m_parent->cfg.name)
+        aud_set_int (m_parent->cfg.section, m_parent->cfg.name, value);
+
+    if (m_parent->cfg.callback)
+        m_parent->cfg.callback ();
+}
+
+/* double (spinbox) */
+QWidget * DoubleWidget::widget ()
+{
+    m_spinner.setPrefix (m_parent->label);
+    m_spinner.setRange (m_parent->data.spin_btn.min, m_parent->data.spin_btn.max);
+    m_spinner.setSingleStep (m_parent->data.spin_btn.step);
+    m_spinner.setValue (get ());
+
+    if (m_parent->data.spin_btn.right_label)
+        m_spinner.setSuffix (m_parent->data.spin_btn.right_label);
+
+    return & m_spinner;
+}
+
+double DoubleWidget::get ()
+{
+    if (! m_parent)
+        return 0;
+
+    if (m_parent->cfg.value)
+        return * (double *) m_parent->cfg.value;
+    else if (m_parent->cfg.name)
+        return aud_get_double (m_parent->cfg.section, m_parent->cfg.name);
+    else
+        return 0.0;
+}
+
+void DoubleWidget::set (double value)
+{
+    if (! m_parent || m_parent->cfg.type != WidgetConfig::Float)
+        return;
+
+    if (m_parent->cfg.value)
+        * (double *) m_parent->cfg.value = value;
+    else if (m_parent->cfg.name)
+        aud_set_double (m_parent->cfg.section, m_parent->cfg.name, value);
+
+    if (m_parent->cfg.callback)
+        m_parent->cfg.callback ();
+}
+
 };

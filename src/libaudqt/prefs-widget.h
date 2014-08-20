@@ -78,6 +78,42 @@ private:
     QLabel m_label_text;
 };
 
+/* integer widget (spinner) */
+class IntegerWidget {
+public:
+    IntegerWidget (const PreferencesWidget * parent) :
+        m_parent (parent)
+    {
+    }
+
+    QWidget * widget ();
+
+private:
+    const PreferencesWidget * m_parent;
+    QSpinBox m_spinner;
+
+    int get ();
+    void set (int);
+};
+
+/* double widget (spinner) */
+class DoubleWidget {
+public:
+    DoubleWidget (const PreferencesWidget * parent) :
+        m_parent (parent)
+    {
+    }
+
+    QWidget * widget ();
+
+private:
+    const PreferencesWidget * m_parent;
+    QDoubleSpinBox m_spinner;
+
+    double get ();
+    void set (double);
+};
+
 };
 
 #endif
