@@ -114,6 +114,27 @@ private:
     void set (double);
 };
 
+/* string widget (lineedit) */
+class StringWidget {
+public:
+    StringWidget (const PreferencesWidget * parent) :
+        m_parent (parent)
+    {
+    }
+
+    virtual QWidget * widget ();
+
+private:
+    const PreferencesWidget * m_parent;
+    QWidget m_container;
+    QLineEdit m_lineedit;
+    QLabel m_label;
+    QHBoxLayout m_layout;
+
+    String get ();
+    void set (const char *);
+};
+
 };
 
 #endif

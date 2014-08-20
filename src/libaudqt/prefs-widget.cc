@@ -189,4 +189,55 @@ void DoubleWidget::set (double value)
         m_parent->cfg.callback ();
 }
 
+/* string (lineedit) */
+QWidget * StringWidget::widget ()
+{
+    if (m_parent->label)
+    {
+        m_label.setText (m_parent->label);
+        m_layout.addWidget (& m_label);
+    }
+
+    if (m_parent->data.entry.password)
+        m_lineedit.setEchoMode (QLineEdit::Password);
+
+    String value = get ();
+    m_lineedit.setText ((const char *) value);
+    m_layout.addWidget (&m_lineedit);
+
+    m_container.setLayout (& m_layout);
+
+    if (m_parent->tooltip)
+        m_container.setToolTip (m_parent->tooltip);
+
+    return & m_container;
+}
+
+String StringWidget::get ()
+{
+    if (! m_parent)
+        return String ();
+
+    if (m_parent->cfg.value)
+        return * (String *) m_parent->cfg.value;
+    else if (m_parent->cfg.name)
+        return aud_get_str (m_parent->cfg.section, m_parent->cfg.name);
+    else
+        return String ();
+}
+
+void StringWidget::set (const char * value)
+{
+    if (! m_parent || m_parent->cfg.type != WidgetConfig::String)
+        return;
+
+    if (m_parent->cfg.value)
+        * (String *) m_parent->cfg.value = String (value);
+    else if (m_parent->cfg.name)
+        aud_set_str (m_parent->cfg.section, m_parent->cfg.name, value);
+
+    if (m_parent->cfg.callback)
+        m_parent->cfg.callback ();
+}
+
 };
