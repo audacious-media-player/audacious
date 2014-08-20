@@ -19,6 +19,7 @@
 
 #include <QtCore>
 #include <QtGui>
+#include <QtWidgets>
 
 #include <libaudcore/i18n.h>
 #include <libaudcore/preferences.h>
@@ -98,6 +99,18 @@ QWidget * IntegerWidget::widget ()
     if (m_parent->data.spin_btn.right_label)
         m_spinner.setSuffix (m_parent->data.spin_btn.right_label);
 
+    /*
+     * Qt has two different valueChanged signals for spin boxes.  So we have to do an explicit
+     * cast to the type of the correct valueChanged signal.  Unfortunately Qt wants us to use
+     * a C++ style cast here.  And really, I wouldn't know how to do this type of cast using a C-style
+     * cast anyway.   --kaniini.
+     */
+    QObject::connect (& m_spinner,
+                      static_cast <void (QSpinBox::*) (int)> (& QSpinBox::valueChanged),
+                      [=] (int value) {
+        set (value);
+    });
+
     return & m_spinner;
 }
 
@@ -138,6 +151,13 @@ QWidget * DoubleWidget::widget ()
 
     if (m_parent->data.spin_btn.right_label)
         m_spinner.setSuffix (m_parent->data.spin_btn.right_label);
+
+    /* an explanation of this crime against humanity is above in IntegerWidget::widget().  --kaniini. */
+    QObject::connect (& m_spinner,
+                      static_cast <void (QDoubleSpinBox::*) (double)> (& QDoubleSpinBox::valueChanged),
+                      [=] (double value) {
+        set (value);
+    });
 
     return & m_spinner;
 }
