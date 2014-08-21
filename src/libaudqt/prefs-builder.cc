@@ -114,6 +114,12 @@ void prefs_populate (QLayout * layout, ArrayRef<const PreferencesWidget> widgets
             layout->addWidget (nw->widget ());
             break;
         }
+        case PreferencesWidget::Separator: {
+            QFrame * f = new QFrame;
+            f->setFrameShape (w.data.separator.horizontal ? QFrame::HLine : QFrame::VLine);
+            layout->addWidget (f);
+            break;
+        }
 
         /* stub handler */
         default:
