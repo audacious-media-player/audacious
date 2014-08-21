@@ -43,4 +43,9 @@ EXPORT void window_bring_to_front (QWidget * window)
     window->activateWindow ();
 }
 
+EXPORT void simple_message (const char * title, const char * text)
+{
+    QMessageBox (QMessageBox::NoIcon, title, text, QMessageBox::Ok).exec();
+}
+
 };
