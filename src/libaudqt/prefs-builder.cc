@@ -32,6 +32,8 @@ namespace audqt {
 
 void prefs_populate (QLayout * layout, ArrayRef<const PreferencesWidget> widgets, const char * domain)
 {
+    QButtonGroup * radio_btn_group = nullptr;
+
     if (! layout)
     {
         AUDDBG("prefs_populate was passed a null layout!\n");
@@ -40,6 +42,9 @@ void prefs_populate (QLayout * layout, ArrayRef<const PreferencesWidget> widgets
 
     for (const PreferencesWidget & w : widgets)
     {
+        if (radio_btn_group && w.type != PreferencesWidget::RadioButton)
+            radio_btn_group = nullptr;
+
         switch (w.type)
         {
         case PreferencesWidget::CheckButton: {
@@ -76,8 +81,11 @@ void prefs_populate (QLayout * layout, ArrayRef<const PreferencesWidget> widgets
             break;
         }
         case PreferencesWidget::RadioButton: {
-            /* XXX: unimplemented */
-            AUDDBG("radio buttons are unimplemented\n");
+            if (! radio_btn_group)
+                radio_btn_group = new QButtonGroup;
+
+            RadioButtonWidget * rw = new RadioButtonWidget (& w);
+            layout->addWidget (rw->widget (radio_btn_group));
             break;
         }
         case PreferencesWidget::FontButton: {

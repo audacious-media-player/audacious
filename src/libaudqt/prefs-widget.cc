@@ -89,6 +89,52 @@ QWidget * LabelWidget::widget ()
     return & m_container;
 }
 
+/* integer (radio button) */
+QWidget * RadioButtonWidget::widget (QButtonGroup * btn_group)
+{
+    if (btn_group)
+        btn_group->addButton (& m_widget, m_parent->data.radio_btn.value);
+
+    m_widget.setText (m_parent->label);
+    m_widget.setToolTip (m_parent->tooltip);
+
+    QObject::connect (& m_widget, &QAbstractButton::clicked, [=] (bool checked) {
+        if (! checked)
+            return;
+
+        set (m_parent->data.radio_btn.value);
+    });
+
+    return & m_widget;
+}
+
+int RadioButtonWidget::get ()
+{
+    if (! m_parent)
+        return 0;
+
+    if (m_parent->cfg.value)
+        return * (int *) m_parent->cfg.value;
+    else if (m_parent->cfg.name)
+        return aud_get_int (m_parent->cfg.section, m_parent->cfg.name);
+    else
+        return 0;
+}
+
+void RadioButtonWidget::set (int value)
+{
+    if (! m_parent || m_parent->cfg.type != WidgetConfig::Int)
+        return;
+
+    if (m_parent->cfg.value)
+        * (int *) m_parent->cfg.value = value;
+    else if (m_parent->cfg.name)
+        aud_set_int (m_parent->cfg.section, m_parent->cfg.name, value);
+
+    if (m_parent->cfg.callback)
+        m_parent->cfg.callback ();
+}
+
 /* integer (spinbox) */
 QWidget * IntegerWidget::widget ()
 {

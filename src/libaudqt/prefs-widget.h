@@ -100,6 +100,24 @@ private:
     void set (int);
 };
 
+/* integer widget (radio button) */
+class RadioButtonWidget {
+public:
+    RadioButtonWidget (const PreferencesWidget * parent) :
+        m_parent (parent)
+    {
+    }
+
+    QWidget * widget (QButtonGroup * btn_group = nullptr);
+
+private:
+    const PreferencesWidget * m_parent;
+    QRadioButton m_widget;
+
+    int get ();
+    void set (int);
+};
+
 /* double widget (spinner) */
 class DoubleWidget {
 public:
