@@ -11,6 +11,7 @@ SRCS = about.cc			\
        playlist-management.moc	\
        prefs-builder.cc		\
        prefs-widget.cc		\
+       prefs-window.cc		\
        util.cc
 
 INCLUDES = libaudqt.h
