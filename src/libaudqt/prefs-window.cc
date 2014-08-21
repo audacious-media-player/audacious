@@ -441,20 +441,20 @@ static void create_plugin_category (QTabWidget * parent)
 
 static void create_prefs_window ()
 {
-    static QVBoxLayout m_vbox;
-    static QTabWidget category_notebook;
+    QVBoxLayout * m_vbox = new QVBoxLayout;
+    QTabWidget * category_notebook = new QTabWidget;
 
     m_prefswin = new QWidget;
     m_prefswin->setWindowTitle (_("Audacious Settings"));
-    m_prefswin->setLayout (& m_vbox);
+    m_prefswin->setLayout (m_vbox);
 
-    m_vbox.addWidget (& category_notebook);
+    m_vbox->addWidget (category_notebook);
 
-    create_audio_category (& category_notebook);
-    create_connectivity_category (& category_notebook);
-    create_playlist_category (& category_notebook);
-    create_song_info_category (& category_notebook);
-    create_plugin_category (& category_notebook);
+    create_audio_category (category_notebook);
+    create_connectivity_category (category_notebook);
+    create_playlist_category (category_notebook);
+    create_song_info_category (category_notebook);
+    create_plugin_category (category_notebook);
 }
 
 EXPORT void prefswin_show ()
