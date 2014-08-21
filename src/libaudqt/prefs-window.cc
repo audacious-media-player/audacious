@@ -422,6 +422,8 @@ static void create_plugin_category_page (int category_id, const char * category_
             return;
 
         AUDDBG ("plugin %s: settings\n", aud_plugin_get_name (ph));
+
+        plugin_prefs (ph);
     });
 }
 
