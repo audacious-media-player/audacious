@@ -406,6 +406,8 @@ static void create_plugin_category_page (int category_id, const char * category_
             return;
 
         AUDDBG ("plugin %s: about\n", aud_plugin_get_name (ph));
+
+        plugin_about (ph);
     });
 
     QObject::connect (settings_btn, &QAbstractButton::clicked, [=] (bool) {

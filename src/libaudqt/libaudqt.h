@@ -27,6 +27,8 @@
 #include <libaudcore/i18n.h>
 #include <libaudcore/preferences.h>
 #include <libaudcore/runtime.h>
+#include <libaudcore/plugin.h>
+#include <libaudcore/plugins.h>
 
 namespace audqt {
 
@@ -51,6 +53,10 @@ void simple_message (const char * title, const char * text);
 
 /* prefs-builder.cc */
 void prefs_populate (QLayout * layout, ArrayRef<const PreferencesWidget> widgets, const char * domain);
+
+/* prefs-plugin.cc */
+void plugin_about (PluginHandle * ph);
+void plugin_prefs (PluginHandle * ph);
 
 /* prefs-window.cc */
 void prefswin_show ();

@@ -10,6 +10,7 @@ SRCS = about.cc			\
        playlist-management.cc	\
        playlist-management.moc	\
        prefs-builder.cc		\
+       prefs-plugin.cc          \
        prefs-widget.cc		\
        prefs-window.cc		\
        prefs-pluginlist-model.cc  \

@@ -45,7 +45,23 @@ EXPORT void window_bring_to_front (QWidget * window)
 
 EXPORT void simple_message (const char * title, const char * text)
 {
-    QMessageBox (QMessageBox::NoIcon, title, text, QMessageBox::Ok).exec();
+    QDialog msgbox;
+    QVBoxLayout vbox;
+    QLabel label;
+    QDialogButtonBox bbox;
+
+    label.setText (text);
+    bbox.setStandardButtons (QDialogButtonBox::Ok);
+
+    QObject::connect (& bbox, &QDialogButtonBox::accepted, & msgbox, &QDialog::accept);
+
+    vbox.addWidget (& label);
+    vbox.addWidget (& bbox);
+
+    msgbox.setWindowTitle (title);
+
+    msgbox.setLayout (& vbox);
+    msgbox.exec ();
 }
 
 };
