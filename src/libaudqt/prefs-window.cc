@@ -104,24 +104,28 @@ static const ComboBoxElements bitdepth_elements[] = {
     { INT_TO_POINTER  (0), N_("Floating point") }
 };
 
-#ifdef XXX_NOTYET
 static Index<ComboBoxElements> output_combo_elements;
 static int output_combo_selected;
-static QWidget * output_config_button;
-static QWidget * output_about_button;
+static QPushButton * output_config_button;
+static QPushButton * output_about_button;
 
 static ArrayRef<const ComboBoxElements> output_combo_fill ();
 static void output_combo_changed (void);
 static void * output_create_config_button (void);
 static void * output_create_about_button (void);
-#endif
 static void output_bit_depth_changed (void);
+
+static const PreferencesWidget output_combo_widgets[] = {
+    WidgetCombo (N_("Output plugin:"),
+        WidgetInt (output_combo_selected, output_combo_changed),
+        {0, output_combo_fill}),
+    WidgetCustom (output_create_config_button),
+    WidgetCustom (output_create_about_button)
+};
 
 static const PreferencesWidget audio_page_widgets[] = {
     WidgetLabel (N_("<b>Output Settings</b>")),
-#ifdef XXX_NOTYET
     WidgetBox ({{output_combo_widgets}, true}),
-#endif
     WidgetCombo (N_("Bit depth:"),
         WidgetInt (0, "output_bit_depth", output_bit_depth_changed),
         {{bitdepth_elements}}),
@@ -283,6 +287,56 @@ static Index<ComboBoxElements> fill_plugin_combo (int type)
 static void send_title_change (void)
 {
     hook_call ("title change", nullptr);
+}
+
+static void output_combo_changed (void)
+{
+    PluginHandle * plugin = aud_plugin_by_index (PLUGIN_TYPE_OUTPUT, output_combo_selected);
+
+    if (aud_plugin_enable (plugin, true))
+    {
+        output_config_button->setEnabled (aud_plugin_has_configure (plugin));
+        output_about_button->setEnabled (aud_plugin_has_about (plugin));
+    }
+}
+
+static void * output_create_config_button (void)
+{
+    bool enabled = aud_plugin_has_configure (aud_plugin_get_current (PLUGIN_TYPE_OUTPUT));
+
+    output_config_button = new QPushButton (_("_Settings"));
+    output_config_button->setEnabled (enabled);
+
+    QObject::connect (output_config_button, &QAbstractButton::clicked, [=] (bool) {
+        plugin_prefs (aud_plugin_get_current (PLUGIN_TYPE_OUTPUT));
+    });
+
+    return output_config_button;
+}
+
+static void * output_create_about_button (void)
+{
+    bool enabled = aud_plugin_has_about (aud_plugin_get_current (PLUGIN_TYPE_OUTPUT));
+
+    output_about_button = new QPushButton (_("_About"));
+    output_about_button->setEnabled (enabled);
+
+    QObject::connect (output_about_button, &QAbstractButton::clicked, [=] (bool) {
+        plugin_about (aud_plugin_get_current (PLUGIN_TYPE_OUTPUT));
+    });
+
+    return output_about_button;
+}
+
+static ArrayRef<const ComboBoxElements> output_combo_fill ()
+{
+    if (! output_combo_elements.len ())
+    {
+        output_combo_elements = fill_plugin_combo (PLUGIN_TYPE_OUTPUT);
+        output_combo_selected = aud_plugin_get_index (aud_plugin_get_current (PLUGIN_TYPE_OUTPUT));
+    }
+
+    return {output_combo_elements.begin (), output_combo_elements.len ()};
 }
 
 static void output_bit_depth_changed (void)
