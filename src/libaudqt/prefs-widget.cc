@@ -240,4 +240,17 @@ void StringWidget::set (const char * value)
         m_parent->cfg.callback ();
 }
 
+/* layout widgets */
+QWidget * BoxWidget::widget ()
+{
+    QLayout * l = m_parent->data.box.horizontal ?
+                  (QLayout *) & m_hbox_layout : (QLayout *) & m_vbox_layout;
+
+    prefs_populate (l, m_parent->data.box.widgets, nullptr);
+
+    m_container.setLayout (l);
+
+    return & m_container;
+}
+
 };

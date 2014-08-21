@@ -135,6 +135,24 @@ private:
     void set (const char *);
 };
 
+/* box container widget */
+class BoxWidget {
+public:
+    BoxWidget (const PreferencesWidget * parent) :
+        m_parent (parent)
+    {
+    }
+
+    QWidget * widget ();
+
+private:
+    const PreferencesWidget * m_parent;
+
+    QWidget m_container;
+    QHBoxLayout m_hbox_layout;
+    QVBoxLayout m_vbox_layout;
+};
+
 };
 
 #endif

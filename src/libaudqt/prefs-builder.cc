@@ -97,6 +97,15 @@ void prefs_populate (QLayout * layout, ArrayRef<const PreferencesWidget> widgets
             }
             break;
         }
+
+        /* layout widgets follow */
+        case PreferencesWidget::Box: {
+            BoxWidget * bw = new BoxWidget (& w);
+            layout->addWidget (bw->widget ());
+            break;
+        }
+
+        /* stub handler */
         default:
             AUDDBG("invoked stub handler for PreferencesWidget type %d\n", w.type);
             break;
