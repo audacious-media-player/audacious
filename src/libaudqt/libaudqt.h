@@ -20,6 +20,10 @@
 #ifndef LIBAUDQT_H
 #define LIBAUDQT_H
 
+#include <QtCore>
+#include <QtGui>
+#include <QtWidgets>
+
 #include <libaudcore/i18n.h>
 #include <libaudcore/preferences.h>
 #include <libaudcore/runtime.h>
