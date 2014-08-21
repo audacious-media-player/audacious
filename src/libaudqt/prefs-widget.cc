@@ -253,4 +253,15 @@ QWidget * BoxWidget::widget ()
     return & m_container;
 }
 
+QWidget * TableWidget::widget ()
+{
+    AUDDBG("TableWidget::widget is a stub\n");
+
+    prefs_populate (& m_layout, m_parent->data.table.widgets, nullptr);
+
+    m_container.setLayout (& m_layout);
+
+    return & m_container;
+}
+
 };

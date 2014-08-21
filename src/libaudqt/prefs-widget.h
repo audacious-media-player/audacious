@@ -153,6 +153,23 @@ private:
     QVBoxLayout m_vbox_layout;
 };
 
+/* table container widget */
+class TableWidget {
+public:
+    TableWidget (const PreferencesWidget * parent) :
+        m_parent (parent)
+    {
+    }
+
+    QWidget * widget ();
+
+private:
+    const PreferencesWidget * m_parent;
+
+    QWidget m_container;
+    QVBoxLayout m_layout;
+};
+
 };
 
 #endif
