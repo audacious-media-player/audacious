@@ -104,6 +104,22 @@ static const ComboBoxElements bitdepth_elements[] = {
     { INT_TO_POINTER  (0), N_("Floating point") }
 };
 
+static Index<ComboBoxElements> iface_combo_elements;
+static int iface_combo_selected;
+static QWidget * iface_prefs_box;
+
+static ArrayRef<const ComboBoxElements> iface_combo_fill ();
+static void iface_combo_changed (void);
+static void * iface_create_prefs_box (void);
+
+static const PreferencesWidget appearance_page_widgets[] = {
+    WidgetLabel (N_("<b>Interface Settings</b>")),
+    WidgetCombo (N_("Interface plugin:"),
+        WidgetInt (iface_combo_selected, iface_combo_changed),
+        {0, iface_combo_fill}),
+    WidgetCustom (iface_create_prefs_box)
+};
+
 static Index<ComboBoxElements> output_combo_elements;
 static int output_combo_selected;
 static QPushButton * output_config_button;
@@ -289,6 +305,64 @@ static void send_title_change (void)
     hook_call ("title change", nullptr);
 }
 
+static void iface_fill_prefs_box (void)
+{
+    Plugin * header = (Plugin *) aud_plugin_get_header (aud_plugin_get_current (PLUGIN_TYPE_IFACE));
+    if (header && header->prefs)
+    {
+        QVBoxLayout * vbox = new QVBoxLayout;
+
+        prefs_populate (vbox, header->prefs->widgets, header->domain);
+        iface_prefs_box->setLayout (vbox);
+    }
+}
+
+#ifdef XXX_NOTYET
+static int iface_combo_changed_finish (void *)
+{
+    iface_fill_prefs_box ();
+    gtk_widget_show_all (iface_prefs_box);
+
+    audgui_cleanup ();
+
+    return G_SOURCE_REMOVE;
+}
+#endif
+
+static void iface_combo_changed (void)
+{
+#ifdef XXX_NOTYET
+    /* prevent audgui from being shut down during the switch */
+    audgui_init ();
+
+    gtk_container_foreach ((GtkContainer *) iface_prefs_box,
+     (GtkCallback) gtk_widget_destroy, nullptr);
+
+    aud_plugin_enable (aud_plugin_by_index (PLUGIN_TYPE_IFACE, iface_combo_selected), true);
+
+    /* now wait till we have restarted into the new main loop */
+    g_idle_add_full (G_PRIORITY_HIGH, iface_combo_changed_finish, nullptr, nullptr);
+#endif
+}
+
+static ArrayRef<const ComboBoxElements> iface_combo_fill ()
+{
+    if (! iface_combo_elements.len ())
+    {
+        iface_combo_elements = fill_plugin_combo (PLUGIN_TYPE_IFACE);
+        iface_combo_selected = aud_plugin_get_index (aud_plugin_get_current (PLUGIN_TYPE_IFACE));
+    }
+
+    return {iface_combo_elements.begin (), iface_combo_elements.len ()};
+}
+
+static void * iface_create_prefs_box (void)
+{
+    iface_prefs_box = new QWidget;
+    iface_fill_prefs_box ();
+    return iface_prefs_box;
+}
+
 static void output_combo_changed (void)
 {
     PluginHandle * plugin = aud_plugin_by_index (PLUGIN_TYPE_OUTPUT, output_combo_selected);
@@ -342,6 +416,17 @@ static ArrayRef<const ComboBoxElements> output_combo_fill ()
 static void output_bit_depth_changed (void)
 {
     aud_output_reset (OutputReset::ReopenStream);
+}
+
+static void create_appearance_category (QTabWidget * category_notebook)
+{
+    QWidget * w = new QWidget;
+    QVBoxLayout * vbox = new QVBoxLayout;
+
+    prefs_populate (vbox, appearance_page_widgets, nullptr);
+
+    w->setLayout (vbox);
+    category_notebook->addTab (w, "Appearance");
 }
 
 static void create_audio_category (QTabWidget * category_notebook)
@@ -504,6 +589,7 @@ static void create_prefs_window ()
 
     m_vbox->addWidget (category_notebook);
 
+    create_appearance_category (category_notebook);
     create_audio_category (category_notebook);
     create_connectivity_category (category_notebook);
     create_playlist_category (category_notebook);
