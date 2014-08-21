@@ -68,6 +68,7 @@ void prefs_populate (QLayout * layout, ArrayRef<const PreferencesWidget> widgets
                 AUDDBG("encountered unhandled configuration type %d for PreferencesWidget::SpinButton\n", w.cfg.type);
                 break;
             }
+            break;
         }
         case PreferencesWidget::Entry: {
             StringWidget * sw = new StringWidget (& w);

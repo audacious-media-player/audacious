@@ -91,13 +91,19 @@ QWidget * LabelWidget::widget ()
 /* integer (spinbox) */
 QWidget * IntegerWidget::widget ()
 {
-    m_spinner.setPrefix (m_parent->label);
+    m_label_pre.setText (m_parent->label);
+    m_layout.addWidget (& m_label_pre);
+
     m_spinner.setRange ((int) m_parent->data.spin_btn.min, (int) m_parent->data.spin_btn.max);
     m_spinner.setSingleStep ((int) m_parent->data.spin_btn.step);
     m_spinner.setValue (get ());
+    m_layout.addWidget (& m_spinner);
 
     if (m_parent->data.spin_btn.right_label)
-        m_spinner.setSuffix (m_parent->data.spin_btn.right_label);
+    {
+        m_label_post.setText (m_parent->data.spin_btn.right_label);
+        m_layout.addWidget (& m_label_post);
+    }
 
     /*
      * Qt has two different valueChanged signals for spin boxes.  So we have to do an explicit
@@ -111,7 +117,9 @@ QWidget * IntegerWidget::widget ()
         set (value);
     });
 
-    return & m_spinner;
+    m_container.setLayout (& m_layout);
+
+    return & m_container;
 }
 
 int IntegerWidget::get ()
@@ -144,13 +152,19 @@ void IntegerWidget::set (int value)
 /* double (spinbox) */
 QWidget * DoubleWidget::widget ()
 {
-    m_spinner.setPrefix (m_parent->label);
+    m_label_pre.setText (m_parent->label);
+    m_layout.addWidget (& m_label_pre);
+
     m_spinner.setRange (m_parent->data.spin_btn.min, m_parent->data.spin_btn.max);
     m_spinner.setSingleStep (m_parent->data.spin_btn.step);
     m_spinner.setValue (get ());
+    m_layout.addWidget (& m_spinner);
 
     if (m_parent->data.spin_btn.right_label)
-        m_spinner.setSuffix (m_parent->data.spin_btn.right_label);
+    {
+        m_label_post.setText (m_parent->data.spin_btn.right_label);
+        m_layout.addWidget (& m_label_post);
+    }
 
     /* an explanation of this crime against humanity is above in IntegerWidget::widget().  --kaniini. */
     QObject::connect (& m_spinner,
@@ -159,7 +173,9 @@ QWidget * DoubleWidget::widget ()
         set (value);
     });
 
-    return & m_spinner;
+    m_container.setLayout (& m_layout);
+
+    return & m_container;
 }
 
 double DoubleWidget::get ()

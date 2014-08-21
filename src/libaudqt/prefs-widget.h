@@ -91,6 +91,10 @@ public:
 private:
     const PreferencesWidget * m_parent;
     QSpinBox m_spinner;
+    QLabel m_label_post;
+    QLabel m_label_pre;
+    QWidget m_container;
+    QHBoxLayout m_layout;
 
     int get ();
     void set (int);
@@ -109,6 +113,10 @@ public:
 private:
     const PreferencesWidget * m_parent;
     QDoubleSpinBox m_spinner;
+    QLabel m_label_post;
+    QLabel m_label_pre;
+    QWidget m_container;
+    QHBoxLayout m_layout;
 
     double get ();
     void set (double);
