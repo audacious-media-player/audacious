@@ -42,7 +42,7 @@
 
 namespace audqt {
 
-static QWidget * m_prefswin = nullptr;
+static QDialog * m_prefswin = nullptr;
 
 struct PluginCategory {
     int type;
@@ -444,7 +444,7 @@ static void create_prefs_window ()
     QVBoxLayout * m_vbox = new QVBoxLayout;
     QTabWidget * category_notebook = new QTabWidget;
 
-    m_prefswin = new QWidget;
+    m_prefswin = new QDialog;
     m_prefswin->setWindowTitle (_("Audacious Settings"));
     m_prefswin->setLayout (m_vbox);
 
@@ -455,6 +455,11 @@ static void create_prefs_window ()
     create_playlist_category (category_notebook);
     create_song_info_category (category_notebook);
     create_plugin_category (category_notebook);
+
+    QDialogButtonBox * bbox = new QDialogButtonBox (QDialogButtonBox::Close);
+    m_vbox->addWidget (bbox);
+
+    QObject::connect (bbox, &QDialogButtonBox::rejected, m_prefswin, &QWidget::hide);
 }
 
 EXPORT void prefswin_show ()
