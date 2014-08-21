@@ -94,8 +94,8 @@ void prefs_populate (QLayout * layout, ArrayRef<const PreferencesWidget> widgets
             break;
         }
         case PreferencesWidget::ComboBox: {
-            /* XXX: unimplemented */
-            AUDDBG("combo boxes are unimplemented\n");
+            ComboBoxWidget * cw = new ComboBoxWidget (& w);
+            layout->addWidget (cw->widget ());
             break;
         }
         case PreferencesWidget::Custom: {

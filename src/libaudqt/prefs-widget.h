@@ -161,6 +161,32 @@ private:
     void set (const char *);
 };
 
+/* combo box (string or int) */
+class ComboBoxWidget {
+public:
+    ComboBoxWidget (const PreferencesWidget * parent) :
+        m_parent (parent)
+    {
+    }
+
+    virtual QWidget * widget ();
+
+private:
+    const PreferencesWidget * m_parent;
+    QWidget m_container;
+    QComboBox m_combobox;
+    QLabel m_label;
+    QHBoxLayout m_layout;
+
+    String get_str ();
+    int get_int ();
+
+    void set_str (const char *);
+    void set_int (int);
+
+    void fill ();
+};
+
 /* box container widget */
 class BoxWidget {
 public:

@@ -309,6 +309,156 @@ void StringWidget::set (const char * value)
         m_parent->cfg.callback ();
 }
 
+/* combo box widget (string or int) */
+QWidget * ComboBoxWidget::widget ()
+{
+    m_layout.setContentsMargins (0, 0, 0, 0);
+
+    if (m_parent->label)
+    {
+        m_label.setText (m_parent->label);
+        m_layout.addWidget (& m_label);
+    }
+
+    m_layout.addWidget (&m_combobox);
+    m_container.setLayout (& m_layout);
+
+    if (m_parent->tooltip)
+        m_container.setToolTip (m_parent->tooltip);
+
+    fill ();
+
+    QObject::connect (& m_combobox,
+                      static_cast <void (QComboBox::*) (int)> (&QComboBox::currentIndexChanged),
+                      [=] (int idx) {
+        QVariant data = m_combobox.itemData (idx);
+
+        switch (m_parent->cfg.type) {
+        case WidgetConfig::Int:
+            set_int (data.toInt ());
+            break;
+        case WidgetConfig::String:
+            set_str (data.toString ().toUtf8 ());
+            break;
+        default:
+            AUDDBG("unhandled configuration type %d in ComboBoxWidget::currentIndexChanged functor\n", m_parent->cfg.type);
+            break;
+        }
+    });
+
+    return & m_container;
+}
+
+String ComboBoxWidget::get_str ()
+{
+    if (! m_parent)
+        return String ();
+
+    if (m_parent->cfg.value)
+        return * (String *) m_parent->cfg.value;
+    else if (m_parent->cfg.name)
+        return aud_get_str (m_parent->cfg.section, m_parent->cfg.name);
+    else
+        return String ();
+}
+
+void ComboBoxWidget::set_str (const char * value)
+{
+    if (! m_parent || m_parent->cfg.type != WidgetConfig::String)
+        return;
+
+    if (m_parent->cfg.value)
+        * (String *) m_parent->cfg.value = String (value);
+    else if (m_parent->cfg.name)
+        aud_set_str (m_parent->cfg.section, m_parent->cfg.name, value);
+
+    if (m_parent->cfg.callback)
+        m_parent->cfg.callback ();
+}
+
+int ComboBoxWidget::get_int ()
+{
+    if (! m_parent)
+        return 0;
+
+    if (m_parent->cfg.value)
+        return * (int *) m_parent->cfg.value;
+    else if (m_parent->cfg.name)
+        return aud_get_int (m_parent->cfg.section, m_parent->cfg.name);
+    else
+        return 0;
+}
+
+void ComboBoxWidget::set_int (int value)
+{
+    if (! m_parent || m_parent->cfg.type != WidgetConfig::Int)
+        return;
+
+    if (m_parent->cfg.value)
+        * (int *) m_parent->cfg.value = value;
+    else if (m_parent->cfg.name)
+        aud_set_int (m_parent->cfg.section, m_parent->cfg.name, value);
+
+    if (m_parent->cfg.callback)
+        m_parent->cfg.callback ();
+}
+
+void ComboBoxWidget::fill ()
+{
+    ArrayRef<const ComboBoxElements> elems = m_parent->data.combo.elems;
+
+    if (m_parent->data.combo.fill)
+        elems = m_parent->data.combo.fill ();
+
+    switch (m_parent->cfg.type) {
+    case WidgetConfig::Int:
+        for (const ComboBoxElements & elem : elems)
+            m_combobox.addItem (elem.label, (int) ((intptr_t) elem.value));
+        break;
+    case WidgetConfig::String:
+        for (const ComboBoxElements & elem : elems)
+            m_combobox.addItem (elem.label, QString ((const char *) elem.value));
+        break;
+    default:
+        AUDDBG("unhandled configuration type %d for ComboBoxWidget::fill()\n", m_parent->cfg.type);
+        return;
+    }
+
+    /* set selected index */
+    switch (m_parent->cfg.type) {
+    case WidgetConfig::Int: {
+        int ivalue = get_int ();
+
+        for (int i = 0; i < elems.len; i++)
+        {
+            if ((int) ((intptr_t) elems.data[i].value) == ivalue)
+            {
+                m_combobox.setCurrentIndex (i);
+                break;
+            }
+        }
+
+        break;
+    }
+    case WidgetConfig::String: {
+        String value = get_str ();
+
+        for (int i = 0; i < elems.len; i++)
+        {
+            if (value && ! strcmp ((const char *) elems.data[i].value, value))
+            {
+                m_combobox.setCurrentIndex (i);
+                break;
+            }
+        }
+
+        break;
+    }
+    default:
+        break;
+    }
+}
+
 /* layout widgets */
 QWidget * BoxWidget::widget ()
 {
