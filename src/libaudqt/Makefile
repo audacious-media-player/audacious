@@ -12,6 +12,8 @@ SRCS = about.cc			\
        prefs-builder.cc		\
        prefs-widget.cc		\
        prefs-window.cc		\
+       prefs-pluginlist-model.cc  \
+       prefs-pluginlist-model.moc \
        util.cc
 
 INCLUDES = libaudqt.h
