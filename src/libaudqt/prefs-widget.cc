@@ -82,6 +82,7 @@ QWidget * LabelWidget::widget ()
         AUDDBG ("stock icons are not yet implemented on qt\n");
     }
 
+    m_layout.setContentsMargins (0, 0, 0, 0);
     m_layout.addWidget (& m_label_text);
     m_container.setLayout (& m_layout);
 
@@ -91,6 +92,8 @@ QWidget * LabelWidget::widget ()
 /* integer (spinbox) */
 QWidget * IntegerWidget::widget ()
 {
+    m_layout.setContentsMargins (0, 0, 0, 0);
+
     m_label_pre.setText (m_parent->label);
     m_layout.addWidget (& m_label_pre);
 
@@ -152,6 +155,8 @@ void IntegerWidget::set (int value)
 /* double (spinbox) */
 QWidget * DoubleWidget::widget ()
 {
+    m_layout.setContentsMargins (0, 0, 0, 0);
+
     m_label_pre.setText (m_parent->label);
     m_layout.addWidget (& m_label_pre);
 
@@ -208,6 +213,8 @@ void DoubleWidget::set (double value)
 /* string (lineedit) */
 QWidget * StringWidget::widget ()
 {
+    m_layout.setContentsMargins (0, 0, 0, 0);
+
     if (m_parent->label)
     {
         m_label.setText (m_parent->label);
