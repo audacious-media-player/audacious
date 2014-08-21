@@ -42,6 +42,61 @@ void prefs_populate (QLayout * layout, ArrayRef<const PreferencesWidget> widgets
     {
         switch (w.type)
         {
+        case PreferencesWidget::CheckButton: {
+            BooleanWidget * bw = new BooleanWidget (& w);
+            layout->addWidget (bw->widget ());
+            break;
+        }
+        case PreferencesWidget::Label: {
+            LabelWidget * lw = new LabelWidget (& w);
+            layout->addWidget (lw->widget ());
+            break;
+        }
+        case PreferencesWidget::SpinButton: {
+            switch (w.cfg.type) {
+            case WidgetConfig::Int: {
+                IntegerWidget * iw = new IntegerWidget (& w);
+                layout->addWidget (iw->widget ());
+                break;
+            }
+            case WidgetConfig::Float: {
+                DoubleWidget * dw = new DoubleWidget (& w);
+                layout->addWidget (dw->widget ());
+                break;
+            }
+            default:
+                AUDDBG("encountered unhandled configuration type %d for PreferencesWidget::SpinButton\n", w.cfg.type);
+                break;
+            }
+        }
+        case PreferencesWidget::Entry: {
+            StringWidget * sw = new StringWidget (& w);
+            layout->addWidget (sw->widget ());
+            break;
+        }
+        case PreferencesWidget::RadioButton: {
+            /* XXX: unimplemented */
+            AUDDBG("radio buttons are unimplemented\n");
+            break;
+        }
+        case PreferencesWidget::FontButton: {
+            /* XXX: unimplemented */
+            AUDDBG("font buttons are unimplemented\n");
+            break;
+        }
+        case PreferencesWidget::ComboBox: {
+            /* XXX: unimplemented */
+            AUDDBG("combo boxes are unimplemented\n");
+            break;
+        }
+        case PreferencesWidget::Custom: {
+            if (w.data.populate)
+            {
+                QWidget * wid = (QWidget *) w.data.populate ();
+                layout->addWidget (wid);
+            }
+            break;
+        }
         default:
             AUDDBG("invoked stub handler for PreferencesWidget type %d\n", w.type);
             break;
