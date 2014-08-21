@@ -264,4 +264,21 @@ QWidget * TableWidget::widget ()
     return & m_container;
 }
 
+QWidget * NotebookWidget::widget ()
+{
+    for (const NotebookTab & tab : m_parent->data.notebook.tabs)
+    {
+        QWidget * w = new QWidget;
+        QVBoxLayout * vbox = new QVBoxLayout;
+
+        w->setLayout (vbox);
+
+        prefs_populate (vbox, tab.widgets, nullptr);
+
+        m_container.addTab (w, tab.name);
+    }
+
+    return & m_container;
+}
+
 };

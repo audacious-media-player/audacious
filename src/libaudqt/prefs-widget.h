@@ -170,6 +170,22 @@ private:
     QVBoxLayout m_layout;
 };
 
+/* notebook widget */
+class NotebookWidget {
+public:
+    NotebookWidget (const PreferencesWidget * parent) :
+        m_parent (parent)
+    {
+    }
+
+    QWidget * widget ();
+
+private:
+    const PreferencesWidget * m_parent;
+
+    QTabWidget m_container;
+};
+
 };
 
 #endif

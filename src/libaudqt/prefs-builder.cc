@@ -104,6 +104,16 @@ void prefs_populate (QLayout * layout, ArrayRef<const PreferencesWidget> widgets
             layout->addWidget (bw->widget ());
             break;
         }
+        case PreferencesWidget::Table: {
+            TableWidget * tw = new TableWidget (& w);
+            layout->addWidget (tw->widget ());
+            break;
+        }
+        case PreferencesWidget::Notebook: {
+            NotebookWidget * nw = new NotebookWidget (& w);
+            layout->addWidget (nw->widget ());
+            break;
+        }
 
         /* stub handler */
         default:
