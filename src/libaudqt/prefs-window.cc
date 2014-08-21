@@ -343,7 +343,6 @@ static void create_prefs_window ()
 
     m_prefswin = new QWidget;
     m_prefswin->setWindowTitle (_("Audacious Settings"));
-    m_prefswin->resize (640, 480);
     m_prefswin->setLayout (& m_vbox);
 
     m_vbox.addWidget (& category_notebook);
