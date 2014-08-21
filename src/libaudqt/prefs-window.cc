@@ -34,6 +34,7 @@
 #include <libaudcore/runtime.h>
 
 #include "libaudqt.h"
+#include "prefs-pluginlist-model.h"
 
 #ifdef USE_CHARDET
 #include <libguess.h>
@@ -336,6 +337,35 @@ static void create_song_info_category (QTabWidget * category_notebook)
     category_notebook->addTab (song_info_page, "Song Info");
 }
 
+static void create_plugin_category_page (int category_id, const char * category_name, QTabWidget * parent)
+{
+    QWidget * w = new QWidget;
+    QVBoxLayout * vbox = new QVBoxLayout;
+
+    w->setLayout (vbox);
+    parent->addTab (w, category_name);
+
+    QTreeView * view = new QTreeView;
+    PluginListModel * plm = new PluginListModel (0, category_id);
+
+    view->setModel (plm);
+    view->header ()->hide ();
+
+    vbox->addWidget (view);
+}
+
+static void create_plugin_category (QTabWidget * parent)
+{
+    QTabWidget * child = new QTabWidget;
+
+    for (const PluginCategory & w : plugin_categories)
+    {
+        create_plugin_category_page (w.type, w.name, child);
+    }
+
+    parent->addTab (child, "Plugins");
+}
+
 static void create_prefs_window ()
 {
     static QVBoxLayout m_vbox;
@@ -351,6 +381,7 @@ static void create_prefs_window ()
     create_connectivity_category (& category_notebook);
     create_playlist_category (& category_notebook);
     create_song_info_category (& category_notebook);
+    create_plugin_category (& category_notebook);
 }
 
 EXPORT void prefswin_show ()

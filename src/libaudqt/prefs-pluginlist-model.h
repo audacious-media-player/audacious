@@ -30,12 +30,6 @@
 
 namespace audqt {
 
-enum {
-    PLUGINLIST_ENABLED,
-    PLUGINLIST_NAME,
-    PLUGINLIST_COLS,
-};
-
 class PluginListModel : public QAbstractListModel
 {
     Q_OBJECT
@@ -43,10 +37,14 @@ class PluginListModel : public QAbstractListModel
 public:
     PluginListModel (QObject * parent = 0, int category_id = -1);
     ~PluginListModel ();
+
     int rowCount (const QModelIndex & parent = QModelIndex ()) const;
     int columnCount (const QModelIndex & parent = QModelIndex ()) const;
     QVariant data (const QModelIndex & index, int role = Qt::DisplayRole) const;
     QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
+    bool setData (const QModelIndex &index, const QVariant &value, int role = Qt::DisplayRole);
+    Qt::ItemFlags flags (const QModelIndex & parent = QModelIndex ()) const;
+
     bool insertRows (int row, int count, const QModelIndex & parent = QModelIndex ());
     bool removeRows (int row, int count, const QModelIndex & parent = QModelIndex ());
     void updateRows (int row, int count);

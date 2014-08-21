@@ -50,46 +50,49 @@ int PluginListModel::rowCount (const QModelIndex & parent) const
 
 int PluginListModel::columnCount (const QModelIndex & parent) const
 {
-    return PLUGINLIST_COLS;
+    return 1;
 }
 
 QVariant PluginListModel::headerData (int section, Qt::Orientation orientation, int role) const
 {
-    static const char * col_names [PLUGINLIST_COLS] = {
-        "Enabled",
-        "Name",
-    };
-
-    if (role == Qt::DisplayRole)
-        return QString (col_names [section]);
-
     return QVariant ();
 }
 
 QVariant PluginListModel::data (const QModelIndex &index, int role) const
 {
-    PluginHandle * ph = nullptr;
+    PluginHandle * ph = aud_plugin_by_index (m_category_id, index.row ());
 
     switch (role)
     {
     case Qt::DisplayRole:
-        ph = aud_plugin_by_index (m_category_id, index.row ());
+        return QString (aud_plugin_get_name (ph));
 
-        switch (index.column ())
-        {
-        case PLUGINLIST_ENABLED:
-            return QString ();
-        case PLUGINLIST_NAME:
-            return QString (aud_plugin_get_name (ph));
-        }
-
-        break;
+    case Qt::CheckStateRole:
+        return aud_plugin_get_enabled (ph) ? Qt::Checked : Qt::Unchecked;
 
     default:
         break;
     }
 
     return QVariant ();
+}
+
+bool PluginListModel::setData (const QModelIndex &index, const QVariant &value, int role)
+{
+    PluginHandle * ph = aud_plugin_by_index (m_category_id, index.row ());
+
+    if (role == Qt::CheckStateRole)
+    {
+        aud_plugin_enable (ph, value.toUInt() != Qt::Unchecked);
+    }
+
+    emit dataChanged (index, index);
+    return true;
+}
+
+Qt::ItemFlags PluginListModel::flags (const QModelIndex & index) const
+{
+    return (Qt::ItemIsSelectable | Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
 }
 
 bool PluginListModel::insertRows (int row, int count, const QModelIndex & parent)
