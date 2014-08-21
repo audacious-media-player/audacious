@@ -9,6 +9,7 @@ SRCS = about.cc			\
        fileopener.cc		\
        playlist-management.cc	\
        playlist-management.moc	\
+       prefs-builder.cc		\
        prefs-widget.cc		\
        util.cc
 

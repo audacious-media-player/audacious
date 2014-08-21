@@ -1,6 +1,6 @@
 /*
- * libaudqt.h
- * Copyright 2014 William Pitcock
+ * prefs-builder.cc
+ * Copyright 2014 William Pitcock and John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -17,37 +17,37 @@
  * the use of this software.
  */
 
-#ifndef LIBAUDQT_H
-#define LIBAUDQT_H
+#include <QtCore>
+#include <QtGui>
+#include <QtWidgets>
 
 #include <libaudcore/i18n.h>
 #include <libaudcore/preferences.h>
 #include <libaudcore/runtime.h>
 
+#include "libaudqt.h"
+#include "prefs-widget.h"
+
 namespace audqt {
 
-/* about.cc */
-void aboutwindow_show ();
-void aboutwindow_hide ();
+void prefs_populate (QLayout * layout, ArrayRef<const PreferencesWidget> widgets, const char * domain)
+{
+    if (! layout)
+    {
+        AUDDBG("prefs_populate was passed a null layout!\n");
+        return;
+    }
 
-/* playlist-management.cc */
-void playlist_confirm_delete (int playlist);
-void playlist_confirm_rename (int playlist);
-
-/* equalizer.cc */
-void equalizer_show ();
-void equalizer_hide ();
-
-/* fileopener.cc */
-void fileopener_show (bool add);
-
-/* util.cc */
-void window_bring_to_front (QWidget * win);
-
-/* prefs-builder.cc */
-void prefs_populate (QLayout * layout, ArrayRef<const PreferencesWidget> widgets, const char * domain);
+    for (const PreferencesWidget & w : widgets)
+    {
+        switch (w.type)
+        {
+        default:
+            AUDDBG("invoked stub handler for PreferencesWidget type %d\n", w.type);
+            break;
+        }
+    }
+}
 
 };
-
-#endif
 
