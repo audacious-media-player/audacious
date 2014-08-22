@@ -49,7 +49,8 @@ void fileopener_show (bool add);
 
 /* util.cc */
 void window_bring_to_front (QWidget * win);
-void simple_message (const char * title, const char * text);
+void simple_message (const char * title, const char * text, const char * domain = nullptr);
+const char * translate_str (const char * str, const char * domain = nullptr);
 
 /* prefs-builder.cc */
 void prefs_populate (QLayout * layout, ArrayRef<const PreferencesWidget> widgets, const char * domain);

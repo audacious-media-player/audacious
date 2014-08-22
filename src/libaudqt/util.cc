@@ -43,14 +43,14 @@ EXPORT void window_bring_to_front (QWidget * window)
     window->activateWindow ();
 }
 
-EXPORT void simple_message (const char * title, const char * text)
+EXPORT void simple_message (const char * title, const char * text, const char * domain)
 {
     QDialog msgbox;
     QVBoxLayout vbox;
     QLabel label;
     QDialogButtonBox bbox;
 
-    label.setText (text);
+    label.setText (translate_str (text, domain));
     bbox.setStandardButtons (QDialogButtonBox::Ok);
 
     QObject::connect (& bbox, &QDialogButtonBox::accepted, & msgbox, &QDialog::accept);
@@ -62,6 +62,44 @@ EXPORT void simple_message (const char * title, const char * text)
 
     msgbox.setLayout (& vbox);
     msgbox.exec ();
+}
+
+/* translate gtk+ accelerators and also handle dgettext() */
+EXPORT const char * translate_str (const char * str, const char * domain)
+{
+    const char * src = str;
+
+    if (domain)
+        src = dgettext (domain, src);
+
+    size_t bufsize = strlen (src) + 1;
+    char buf [bufsize];
+
+    memset (buf, 0, bufsize);
+    memcpy (buf, src, bufsize);
+
+    /* translate the gtk+ accelerator (_) into a qt accelerator (&), so we don't break the
+     * translations.
+     *
+     * the translation rules are: if sentence begins with _ then translate, otherwise only
+     * translate if the previous character is a space.  the backtrack is safe as the first
+     * condition will match if we're at the beginning.
+     *
+     *    --kaniini
+     */
+    for (char *it = buf; *it; it++)
+    {
+        if (*it == '_')
+        {
+            if (it == buf || *(it - 1) == ' ')
+            {
+                *it = '&';
+                break;
+            }
+        }
+    }
+
+    return String (buf);
 }
 
 };
