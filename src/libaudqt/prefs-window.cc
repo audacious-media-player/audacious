@@ -447,6 +447,9 @@ static void create_appearance_category (QStackedWidget * category_notebook)
     QWidget * w = new QWidget;
     QVBoxLayout * vbox = new QVBoxLayout;
 
+    vbox->setContentsMargins (0, 0, 0, 0);
+    vbox->setSpacing (0);
+    vbox->setMargin (0);
     prefs_populate (vbox, appearance_page_widgets, nullptr);
 
     w->setLayout (vbox);
@@ -458,9 +461,12 @@ static void create_audio_category (QStackedWidget * category_notebook)
     QWidget * audio_page = new QWidget;
     QVBoxLayout * audio_page_vbox = new QVBoxLayout;
 
-    audio_page->setLayout (audio_page_vbox);
+    audio_page_vbox->setContentsMargins (0, 0, 0, 0);
+    audio_page_vbox->setSpacing (0);
+    audio_page_vbox->setMargin (0);
     prefs_populate (audio_page_vbox, audio_page_widgets, nullptr);
 
+    audio_page->setLayout (audio_page_vbox);
     category_notebook->addWidget (audio_page);
 }
 
@@ -469,10 +475,12 @@ static void create_connectivity_category (QStackedWidget * category_notebook)
     QWidget * connectivity_page = new QWidget;
     QVBoxLayout * connectivity_page_vbox = new QVBoxLayout;
 
-    connectivity_page->setLayout (connectivity_page_vbox);
-
+    connectivity_page_vbox->setContentsMargins (0, 0, 0, 0);
+    connectivity_page_vbox->setSpacing (0);
+    connectivity_page_vbox->setMargin (0);
     prefs_populate (connectivity_page_vbox, connectivity_page_widgets, nullptr);
 
+    connectivity_page->setLayout (connectivity_page_vbox);
     category_notebook->addWidget (connectivity_page);
 }
 
@@ -481,10 +489,12 @@ static void create_playlist_category (QStackedWidget * category_notebook)
     QWidget * playlist_page = new QWidget;
     QVBoxLayout * playlist_page_vbox = new QVBoxLayout;
 
-    playlist_page->setLayout (playlist_page_vbox);
-
+    playlist_page_vbox->setContentsMargins (0, 0, 0, 0);
+    playlist_page_vbox->setSpacing (0);
+    playlist_page_vbox->setMargin (0);
     prefs_populate (playlist_page_vbox, playlist_page_widgets, nullptr);
 
+    playlist_page->setLayout (playlist_page_vbox);
     category_notebook->addWidget (playlist_page);
 }
 
@@ -493,10 +503,12 @@ static void create_song_info_category (QStackedWidget * category_notebook)
     QWidget * song_info_page = new QWidget;
     QVBoxLayout * song_info_page_vbox = new QVBoxLayout;
 
-    song_info_page->setLayout (song_info_page_vbox);
-
+    song_info_page_vbox->setContentsMargins (0, 0, 0, 0);
+    song_info_page_vbox->setSpacing (0);
+    song_info_page_vbox->setMargin (0);
     prefs_populate (song_info_page_vbox, song_info_page_widgets, nullptr);
 
+    song_info_page->setLayout (song_info_page_vbox);
     category_notebook->addWidget (song_info_page);
 }
 
