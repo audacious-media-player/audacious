@@ -67,6 +67,9 @@ EXPORT void simple_message (const char * title, const char * text, const char * 
 /* translate gtk+ accelerators and also handle dgettext() */
 EXPORT const char * translate_str (const char * str, const char * domain)
 {
+    if (! str)
+        return nullptr;
+
     const char * src = str;
 
     if (domain)
