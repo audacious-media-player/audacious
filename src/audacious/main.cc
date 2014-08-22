@@ -186,6 +186,10 @@ static void do_remote (void)
     ObjAudacious * obj = nullptr;
     GError * error = nullptr;
 
+#if ! GLIB_CHECK_VERSION (2, 36, 0)
+    g_type_init ();
+#endif
+
     /* check whether this is the first instance */
     if (dbus_server_init () != StartupType::Client)
         return;
@@ -323,10 +327,6 @@ int main (int argc, char * * argv)
 
     aud_init_paths ();
     aud_init_i18n ();
-
-#if ! GLIB_CHECK_VERSION (2, 36, 0)
-    g_type_init ();
-#endif
 
     if (! parse_options (argc, argv))
     {
