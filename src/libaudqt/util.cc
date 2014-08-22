@@ -102,7 +102,7 @@ EXPORT const char * translate_str (const char * str, const char * domain)
         }
     }
 
-    return String (buf);
+    return String ().raw_get (buf);
 }
 
 };
