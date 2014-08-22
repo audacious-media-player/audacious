@@ -33,8 +33,8 @@ namespace audqt {
 /* boolean widget (checkbox) */
 QWidget * BooleanWidget::widget ()
 {
-    m_widget.setText (m_parent->label);
-    m_widget.setToolTip (m_parent->tooltip);
+    m_widget.setText (translate_str (m_parent->label, m_domain));
+    m_widget.setToolTip (translate_str (m_parent->tooltip, m_domain));
     m_widget.setCheckState (get () ? Qt::Checked : Qt::Unchecked);
 
     QObject::connect (& m_widget, &QCheckBox::stateChanged, [=] (int state) {
@@ -74,8 +74,8 @@ void BooleanWidget::set (bool value)
 /* label */
 QWidget * LabelWidget::widget ()
 {
-    m_label_text.setText (m_parent->label);
-    m_label_text.setToolTip (m_parent->tooltip);
+    m_label_text.setText (translate_str (m_parent->label, m_domain));
+    m_label_text.setToolTip (translate_str (m_parent->tooltip, m_domain));
 
     if (m_parent->data.label.stock_id)
     {
@@ -95,8 +95,8 @@ QWidget * RadioButtonWidget::widget (QButtonGroup * btn_group)
     if (btn_group)
         btn_group->addButton (& m_widget, m_parent->data.radio_btn.value);
 
-    m_widget.setText (m_parent->label);
-    m_widget.setToolTip (m_parent->tooltip);
+    m_widget.setText (translate_str (m_parent->label, m_domain));
+    m_widget.setToolTip (translate_str (m_parent->tooltip, m_domain));
 
     QObject::connect (& m_widget, &QAbstractButton::clicked, [=] (bool checked) {
         if (! checked)
@@ -140,7 +140,7 @@ QWidget * IntegerWidget::widget ()
 {
     m_layout.setContentsMargins (0, 0, 0, 0);
 
-    m_label_pre.setText (m_parent->label);
+    m_label_pre.setText (translate_str (m_parent->label, m_domain));
     m_layout.addWidget (& m_label_pre);
 
     m_spinner.setRange ((int) m_parent->data.spin_btn.min, (int) m_parent->data.spin_btn.max);
@@ -150,7 +150,7 @@ QWidget * IntegerWidget::widget ()
 
     if (m_parent->data.spin_btn.right_label)
     {
-        m_label_post.setText (m_parent->data.spin_btn.right_label);
+        m_label_post.setText (translate_str (m_parent->data.spin_btn.right_label, m_domain));
         m_layout.addWidget (& m_label_post);
     }
 
@@ -203,7 +203,7 @@ QWidget * DoubleWidget::widget ()
 {
     m_layout.setContentsMargins (0, 0, 0, 0);
 
-    m_label_pre.setText (m_parent->label);
+    m_label_pre.setText (translate_str (m_parent->label, m_domain));
     m_layout.addWidget (& m_label_pre);
 
     m_spinner.setRange (m_parent->data.spin_btn.min, m_parent->data.spin_btn.max);
@@ -213,7 +213,7 @@ QWidget * DoubleWidget::widget ()
 
     if (m_parent->data.spin_btn.right_label)
     {
-        m_label_post.setText (m_parent->data.spin_btn.right_label);
+        m_label_post.setText (translate_str (m_parent->data.spin_btn.right_label, m_domain));
         m_layout.addWidget (& m_label_post);
     }
 
@@ -263,7 +263,7 @@ QWidget * StringWidget::widget ()
 
     if (m_parent->label)
     {
-        m_label.setText (m_parent->label);
+        m_label.setText (translate_str (m_parent->label, m_domain));
         m_layout.addWidget (& m_label);
     }
 
@@ -277,7 +277,7 @@ QWidget * StringWidget::widget ()
     m_container.setLayout (& m_layout);
 
     if (m_parent->tooltip)
-        m_container.setToolTip (m_parent->tooltip);
+        m_container.setToolTip (translate_str (m_parent->tooltip, m_domain));
 
     return & m_container;
 }
@@ -316,7 +316,7 @@ QWidget * ComboBoxWidget::widget ()
 
     if (m_parent->label)
     {
-        m_label.setText (m_parent->label);
+        m_label.setText (translate_str (m_parent->label, m_domain));
         m_layout.addWidget (& m_label);
     }
 
@@ -324,7 +324,7 @@ QWidget * ComboBoxWidget::widget ()
     m_container.setLayout (& m_layout);
 
     if (m_parent->tooltip)
-        m_container.setToolTip (m_parent->tooltip);
+        m_container.setToolTip (translate_str (m_parent->tooltip, m_domain));
 
     fill ();
 
@@ -466,7 +466,7 @@ QWidget * BoxWidget::widget ()
                   (QLayout *) & m_hbox_layout : (QLayout *) & m_vbox_layout;
 
     l->setContentsMargins (0, 0, 0, 0);
-    prefs_populate (l, m_parent->data.box.widgets, nullptr);
+    prefs_populate (l, m_parent->data.box.widgets, m_domain);
 
     m_container.setLayout (l);
 
@@ -477,7 +477,7 @@ QWidget * TableWidget::widget ()
 {
     AUDDBG("TableWidget::widget is a stub\n");
 
-    prefs_populate (& m_layout, m_parent->data.table.widgets, nullptr);
+    prefs_populate (& m_layout, m_parent->data.table.widgets, m_domain);
 
     m_container.setLayout (& m_layout);
 
@@ -495,7 +495,7 @@ QWidget * NotebookWidget::widget ()
 
         prefs_populate (vbox, tab.widgets, nullptr);
 
-        m_container.addTab (w, tab.name);
+        m_container.addTab (w, translate_str (tab.name, m_domain));
     }
 
     return & m_container;

@@ -44,8 +44,8 @@ namespace audqt {
 /* boolean widget (checkbox) */
 class BooleanWidget {
 public:
-    BooleanWidget (const PreferencesWidget * parent) :
-        m_parent (parent)
+    BooleanWidget (const PreferencesWidget * parent, const char * domain = nullptr) :
+        m_parent (parent), m_domain (domain)
     {
     }
 
@@ -53,6 +53,7 @@ public:
 
 private:
     const PreferencesWidget * m_parent;
+    const char * m_domain;
     QCheckBox m_widget;
 
     bool get ();
@@ -62,8 +63,8 @@ private:
 /* label, no get or set functions needed. */
 class LabelWidget {
 public:
-    LabelWidget (const PreferencesWidget * parent) :
-        m_parent (parent)
+    LabelWidget (const PreferencesWidget * parent, const char * domain = nullptr) :
+        m_parent (parent), m_domain (domain)
     {
     }
 
@@ -71,6 +72,7 @@ public:
 
 private:
     const PreferencesWidget * m_parent;
+    const char * m_domain;
 
     QWidget m_container;
     QHBoxLayout m_layout;
@@ -81,8 +83,8 @@ private:
 /* integer widget (spinner) */
 class IntegerWidget {
 public:
-    IntegerWidget (const PreferencesWidget * parent) :
-        m_parent (parent)
+    IntegerWidget (const PreferencesWidget * parent, const char * domain = nullptr) :
+        m_parent (parent), m_domain (domain)
     {
     }
 
@@ -90,6 +92,8 @@ public:
 
 private:
     const PreferencesWidget * m_parent;
+    const char * m_domain;
+
     QSpinBox m_spinner;
     QLabel m_label_post;
     QLabel m_label_pre;
@@ -103,8 +107,8 @@ private:
 /* integer widget (radio button) */
 class RadioButtonWidget {
 public:
-    RadioButtonWidget (const PreferencesWidget * parent) :
-        m_parent (parent)
+    RadioButtonWidget (const PreferencesWidget * parent, const char * domain = nullptr) :
+        m_parent (parent), m_domain (domain)
     {
     }
 
@@ -112,6 +116,8 @@ public:
 
 private:
     const PreferencesWidget * m_parent;
+    const char * m_domain;
+
     QRadioButton m_widget;
 
     int get ();
@@ -121,8 +127,8 @@ private:
 /* double widget (spinner) */
 class DoubleWidget {
 public:
-    DoubleWidget (const PreferencesWidget * parent) :
-        m_parent (parent)
+    DoubleWidget (const PreferencesWidget * parent, const char * domain = nullptr) :
+        m_parent (parent), m_domain (domain)
     {
     }
 
@@ -130,6 +136,8 @@ public:
 
 private:
     const PreferencesWidget * m_parent;
+    const char * m_domain;
+
     QDoubleSpinBox m_spinner;
     QLabel m_label_post;
     QLabel m_label_pre;
@@ -143,8 +151,8 @@ private:
 /* string widget (lineedit) */
 class StringWidget {
 public:
-    StringWidget (const PreferencesWidget * parent) :
-        m_parent (parent)
+    StringWidget (const PreferencesWidget * parent, const char * domain = nullptr) :
+        m_parent (parent), m_domain (domain)
     {
     }
 
@@ -152,6 +160,8 @@ public:
 
 private:
     const PreferencesWidget * m_parent;
+    const char * m_domain;
+
     QWidget m_container;
     QLineEdit m_lineedit;
     QLabel m_label;
@@ -164,8 +174,8 @@ private:
 /* combo box (string or int) */
 class ComboBoxWidget {
 public:
-    ComboBoxWidget (const PreferencesWidget * parent) :
-        m_parent (parent)
+    ComboBoxWidget (const PreferencesWidget * parent, const char * domain = nullptr) :
+        m_parent (parent), m_domain (domain)
     {
     }
 
@@ -173,6 +183,8 @@ public:
 
 private:
     const PreferencesWidget * m_parent;
+    const char * m_domain;
+
     QWidget m_container;
     QComboBox m_combobox;
     QLabel m_label;
@@ -190,8 +202,8 @@ private:
 /* box container widget */
 class BoxWidget {
 public:
-    BoxWidget (const PreferencesWidget * parent) :
-        m_parent (parent)
+    BoxWidget (const PreferencesWidget * parent, const char * domain = nullptr) :
+        m_parent (parent), m_domain (domain)
     {
     }
 
@@ -199,6 +211,7 @@ public:
 
 private:
     const PreferencesWidget * m_parent;
+    const char * m_domain;
 
     QWidget m_container;
     QHBoxLayout m_hbox_layout;
@@ -208,8 +221,8 @@ private:
 /* table container widget */
 class TableWidget {
 public:
-    TableWidget (const PreferencesWidget * parent) :
-        m_parent (parent)
+    TableWidget (const PreferencesWidget * parent, const char * domain = nullptr) :
+        m_parent (parent), m_domain (domain)
     {
     }
 
@@ -217,6 +230,7 @@ public:
 
 private:
     const PreferencesWidget * m_parent;
+    const char * m_domain;
 
     QWidget m_container;
     QVBoxLayout m_layout;
@@ -225,8 +239,8 @@ private:
 /* notebook widget */
 class NotebookWidget {
 public:
-    NotebookWidget (const PreferencesWidget * parent) :
-        m_parent (parent)
+    NotebookWidget (const PreferencesWidget * parent, const char * domain = nullptr) :
+        m_parent (parent), m_domain (domain)
     {
     }
 
@@ -234,6 +248,7 @@ public:
 
 private:
     const PreferencesWidget * m_parent;
+    const char * m_domain;
 
     QTabWidget m_container;
 };
