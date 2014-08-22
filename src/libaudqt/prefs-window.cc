@@ -44,6 +44,11 @@ namespace audqt {
 
 static QDialog * m_prefswin = nullptr;
 
+struct Category {
+    const char * icon_path;
+    const char * name;
+};
+
 struct PluginCategory {
     int type;
     const char * name;
@@ -52,6 +57,25 @@ struct PluginCategory {
 struct TitleFieldTag {
     const char * name;
     const char * tag;
+};
+
+enum {
+    CATEGORY_APPEARANCE = 0,
+    CATEGORY_AUDIO,
+    CATEGORY_NETWORK,
+    CATEGORY_PLAYLIST,
+    CATEGORY_SONG_INFO,
+    CATEGORY_PLUGINS,
+    CATEGORY_COUNT
+};
+
+static const Category categories[] = {
+    { "appearance.png", N_("Appearance") },
+    { "audio.png", N_("Audio") },
+    { "connectivity.png", N_("Network") },
+    { "playlist.png", N_("Playlist")} ,
+    { "info.png", N_("Song Info") },
+    { "plugins.png", N_("Plugins") }
 };
 
 static const PluginCategory plugin_categories[] = {
@@ -418,7 +442,7 @@ static void output_bit_depth_changed (void)
     aud_output_reset (OutputReset::ReopenStream);
 }
 
-static void create_appearance_category (QTabWidget * category_notebook)
+static void create_appearance_category (QStackedWidget * category_notebook)
 {
     QWidget * w = new QWidget;
     QVBoxLayout * vbox = new QVBoxLayout;
@@ -426,10 +450,10 @@ static void create_appearance_category (QTabWidget * category_notebook)
     prefs_populate (vbox, appearance_page_widgets, nullptr);
 
     w->setLayout (vbox);
-    category_notebook->addTab (w, "Appearance");
+    category_notebook->addWidget (w);
 }
 
-static void create_audio_category (QTabWidget * category_notebook)
+static void create_audio_category (QStackedWidget * category_notebook)
 {
     QWidget * audio_page = new QWidget;
     QVBoxLayout * audio_page_vbox = new QVBoxLayout;
@@ -437,10 +461,10 @@ static void create_audio_category (QTabWidget * category_notebook)
     audio_page->setLayout (audio_page_vbox);
     prefs_populate (audio_page_vbox, audio_page_widgets, nullptr);
 
-    category_notebook->addTab (audio_page, "Audio");
+    category_notebook->addWidget (audio_page);
 }
 
-static void create_connectivity_category (QTabWidget * category_notebook)
+static void create_connectivity_category (QStackedWidget * category_notebook)
 {
     QWidget * connectivity_page = new QWidget;
     QVBoxLayout * connectivity_page_vbox = new QVBoxLayout;
@@ -449,10 +473,10 @@ static void create_connectivity_category (QTabWidget * category_notebook)
 
     prefs_populate (connectivity_page_vbox, connectivity_page_widgets, nullptr);
 
-    category_notebook->addTab (connectivity_page, "Connectivity");
+    category_notebook->addWidget (connectivity_page);
 }
 
-static void create_playlist_category (QTabWidget * category_notebook)
+static void create_playlist_category (QStackedWidget * category_notebook)
 {
     QWidget * playlist_page = new QWidget;
     QVBoxLayout * playlist_page_vbox = new QVBoxLayout;
@@ -461,10 +485,10 @@ static void create_playlist_category (QTabWidget * category_notebook)
 
     prefs_populate (playlist_page_vbox, playlist_page_widgets, nullptr);
 
-    category_notebook->addTab (playlist_page, "Playlist");
+    category_notebook->addWidget (playlist_page);
 }
 
-static void create_song_info_category (QTabWidget * category_notebook)
+static void create_song_info_category (QStackedWidget * category_notebook)
 {
     QWidget * song_info_page = new QWidget;
     QVBoxLayout * song_info_page_vbox = new QVBoxLayout;
@@ -473,7 +497,7 @@ static void create_song_info_category (QTabWidget * category_notebook)
 
     prefs_populate (song_info_page_vbox, song_info_page_widgets, nullptr);
 
-    category_notebook->addTab (song_info_page, "Song Info");
+    category_notebook->addWidget (song_info_page);
 }
 
 static void about_btn_watch (QPushButton * btn, PluginHandle * ph)
@@ -566,7 +590,7 @@ static void create_plugin_category_page (int category_id, const char * category_
     });
 }
 
-static void create_plugin_category (QTabWidget * parent)
+static void create_plugin_category (QStackedWidget * parent)
 {
     QTabWidget * child = new QTabWidget;
 
@@ -575,19 +599,32 @@ static void create_plugin_category (QTabWidget * parent)
         create_plugin_category_page (w.type, w.name, child);
     }
 
-    parent->addTab (child, "Plugins");
+    parent->addWidget (child);
 }
 
 static void create_prefs_window ()
 {
-    QVBoxLayout * m_vbox = new QVBoxLayout;
-    QTabWidget * category_notebook = new QTabWidget;
+    QVBoxLayout * vbox_parent = new QVBoxLayout;
+    QToolBar * toolbar = new QToolBar;
 
     m_prefswin = new QDialog;
     m_prefswin->setWindowTitle (_("Audacious Settings"));
-    m_prefswin->setLayout (m_vbox);
+    m_prefswin->setLayout (vbox_parent);
 
-    m_vbox->addWidget (category_notebook);
+    vbox_parent->setSpacing (0);
+    vbox_parent->setMargin (0);
+    vbox_parent->setContentsMargins (0, 0, 0, 0);
+    vbox_parent->addWidget (toolbar);
+
+    QWidget * child = new QWidget;
+    QVBoxLayout * child_vbox = new QVBoxLayout;
+
+    vbox_parent->addWidget (child);
+
+    child->setLayout (child_vbox);
+
+    QStackedWidget * category_notebook = new QStackedWidget;
+    child_vbox->addWidget (category_notebook);
 
     create_appearance_category (category_notebook);
     create_audio_category (category_notebook);
@@ -597,9 +634,29 @@ static void create_prefs_window ()
     create_plugin_category (category_notebook);
 
     QDialogButtonBox * bbox = new QDialogButtonBox (QDialogButtonBox::Close);
-    m_vbox->addWidget (bbox);
+    child_vbox->addWidget (bbox);
 
     QObject::connect (bbox, &QDialogButtonBox::rejected, m_prefswin, &QWidget::hide);
+
+    toolbar->setToolButtonStyle (Qt::ToolButtonTextUnderIcon);
+
+    QSignalMapper * mapper = new QSignalMapper;
+    const char * data_dir = aud_get_path (AudPath::DataDir);
+
+    QObject::connect (mapper, static_cast <void (QSignalMapper::*)(int)>(&QSignalMapper::mapped),
+                      category_notebook, static_cast <void (QStackedWidget::*)(int)>(&QStackedWidget::setCurrentIndex));
+
+    for (int i = 0; i < CATEGORY_COUNT; i++)
+    {
+        QIcon ico (QString (filename_build ({data_dir, "images", categories[i].icon_path})));
+        QAction * a = new QAction (ico, translate_str (categories[i].name), nullptr);
+
+        toolbar->addAction (a);
+
+        mapper->setMapping (a, i);
+
+        QObject::connect (a, &QAction::triggered, mapper, static_cast <void (QSignalMapper::*)()>(&QSignalMapper::map));
+    }
 }
 
 EXPORT void prefswin_show ()
