@@ -75,11 +75,7 @@ EXPORT const char * translate_str (const char * str, const char * domain)
     if (domain)
         src = dgettext (domain, src);
 
-    size_t bufsize = strlen (src) + 1;
-    char buf [bufsize];
-
-    memset (buf, 0, bufsize);
-    memcpy (buf, src, bufsize);
+    StringBuf buf (strlen (src) + 1);
 
     /* translate the gtk+ accelerator (_) into a qt accelerator (&), so we don't break the
      * translations.
@@ -90,19 +86,25 @@ EXPORT const char * translate_str (const char * str, const char * domain)
      *
      *    --kaniini
      */
-    for (char *it = buf; *it; it++)
+    char * it = buf;
+    const char * rit = src;
+
+    for (; * rit; it++, rit++)
     {
-        if (*it == '_')
+        if (*rit == '_')
         {
-            if (it == buf || *(it - 1) == ' ')
-            {
+            if (rit == src || *(rit - 1) == ' ')
                 *it = '&';
-                break;
-            }
+            else
+                *it = *rit;
         }
+        else
+            *it = *rit;
     }
 
-    return String ().raw_get (buf);
+    *it = 0;
+
+    return buf;
 }
 
 };
