@@ -75,7 +75,7 @@ EXPORT const char * translate_str (const char * str, const char * domain)
     if (domain)
         src = dgettext (domain, src);
 
-    StringBuf buf (strlen (src) + 1);
+    StringBuf buf (strlen (src));
 
     /* translate the gtk+ accelerator (_) into a qt accelerator (&), so we don't break the
      * translations.
@@ -101,8 +101,6 @@ EXPORT const char * translate_str (const char * str, const char * domain)
         else
             *it = *rit;
     }
-
-    *it = 0;
 
     return buf;
 }
