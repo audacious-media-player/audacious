@@ -39,13 +39,20 @@ namespace audqt {
 
 class PluginMenuItem {
 public:
-    PluginMenuItem (const char * name, const char * icon, void (* func) (void), const char * domain = nullptr) :
+    PluginMenuItem (const char * name, const char * icon, void (* func) (void), const char * domain = nullptr, bool sep = false) :
         m_func (func),
         m_name (name),
         m_icon (icon),
-        m_domain (domain)
+        m_domain (domain),
+        m_sep (sep)
     {
-        m_action = new QAction (translate_str (m_name, m_domain), nullptr);
+        if (! m_sep)
+            m_action = new QAction (translate_str (m_name, m_domain), nullptr);
+        else
+        {
+            m_action = new QAction (nullptr);
+            m_action->setSeparator (true);
+        }
 
         if (m_func)
             QObject::connect (m_action, &QAction::triggered, m_func);
@@ -72,17 +79,42 @@ private:
     const char * m_name;
     const char * m_icon;
     const char * m_domain;
+    bool m_sep;
 };
 
 static Index <PluginMenuItem *> items [AUD_MENU_COUNT];
 static QMenu * menus [AUD_MENU_COUNT];
+
+static Index <PluginMenuItem *> default_menu_items;
+
+static void show_prefs (void)
+{
+    prefswin_show_plugin_page (PLUGIN_TYPE_GENERAL);
+}
+
+static void init_default_menu_items (void)
+{
+    PluginMenuItem * prefs = new PluginMenuItem (N_("Plugins ..."), nullptr, show_prefs);
+    PluginMenuItem * sep = new PluginMenuItem (nullptr, nullptr, nullptr, nullptr, true);
+
+    default_menu_items.append (prefs);
+    default_menu_items.append (sep);
+}
 
 EXPORT QMenu * menu_get_by_id (int id)
 {
     if (menus[id])
         return menus[id];
 
-    menus[id] = new QMenu;
+    if (! default_menu_items.len ())
+        init_default_menu_items ();
+
+    menus[id] = new QMenu (translate_str ("Services"));
+
+    for (const PluginMenuItem * it : default_menu_items)
+    {
+        it->add_to_menu (menus[id]);
+    }
 
     for (const PluginMenuItem * it : items[id])
     {
