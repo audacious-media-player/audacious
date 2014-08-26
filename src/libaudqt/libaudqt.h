@@ -52,6 +52,11 @@ void window_bring_to_front (QWidget * win);
 void simple_message (const char * title, const char * text, const char * domain = nullptr);
 const char * translate_str (const char * str, const char * domain = nullptr);
 
+/* plugin-menu.cc */
+QMenu * menu_get_by_id (int id);
+void menu_add (int id, void (* func) (void), const char * name, const char * icon, const char * domain);
+void menu_remove (int id, void (* func) (void));
+
 /* prefs-builder.cc */
 void prefs_populate (QLayout * layout, ArrayRef<const PreferencesWidget> widgets, const char * domain);
 
