@@ -602,17 +602,21 @@ static void create_plugin_category_page (int category_id, const char * category_
     });
 }
 
+static QTabWidget * plugin_tabs = nullptr;
+
 static void create_plugin_category (QStackedWidget * parent)
 {
-    QTabWidget * child = new QTabWidget;
+    plugin_tabs = new QTabWidget;
 
     for (const PluginCategory & w : plugin_categories)
     {
-        create_plugin_category_page (w.type, w.name, child);
+        create_plugin_category_page (w.type, w.name, plugin_tabs);
     }
 
-    parent->addWidget (child);
+    parent->addWidget (plugin_tabs);
 }
+
+static QStackedWidget * category_notebook = nullptr;
 
 static void create_prefs_window ()
 {
@@ -635,7 +639,7 @@ static void create_prefs_window ()
 
     child->setLayout (child_vbox);
 
-    QStackedWidget * category_notebook = new QStackedWidget;
+    category_notebook = new QStackedWidget;
     child_vbox->addWidget (category_notebook);
 
     create_appearance_category (category_notebook);
@@ -685,6 +689,43 @@ EXPORT void prefswin_hide ()
         return;
 
     m_prefswin->hide ();
+}
+
+EXPORT void prefswin_show_page (int id, bool show)
+{
+    if (id < 0 || id > CATEGORY_COUNT)
+        return;
+
+    if (! m_prefswin)
+        create_prefs_window ();
+
+    category_notebook->setCurrentIndex (id);
+
+    if (show)
+        window_bring_to_front (m_prefswin);
+}
+
+EXPORT void prefswin_show_plugin_page (int type)
+{
+    if (! m_prefswin)
+        create_prefs_window ();
+
+    if (type == PLUGIN_TYPE_IFACE)
+        return prefswin_show_page (CATEGORY_APPEARANCE);
+    else if (type == PLUGIN_TYPE_OUTPUT)
+        return prefswin_show_page (CATEGORY_AUDIO);
+    else
+    {
+        prefswin_show_page (CATEGORY_PLUGINS, false);
+
+        for (const PluginCategory & category : plugin_categories)
+        {
+            if (category.type == type)
+                plugin_tabs->setCurrentIndex (& category - plugin_categories);
+        }
+
+        window_bring_to_front (m_prefswin);
+    }
 }
 
 };

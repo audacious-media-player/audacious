@@ -67,6 +67,8 @@ void plugin_prefs (PluginHandle * ph);
 /* prefs-window.cc */
 void prefswin_show ();
 void prefswin_hide ();
+void prefswin_show_page (int id, bool show = true);
+void prefswin_show_plugin_page (int type);
 
 };
 
