@@ -290,41 +290,39 @@ static void create_entry (const PreferencesWidget * widget, GtkWidget * * label,
 static void on_cbox_changed_int (GtkComboBox * combobox, const PreferencesWidget * widget)
 {
     int position = gtk_combo_box_get_active (combobox);
-    const ComboBoxElements * elements = (const ComboBoxElements *)
-     g_object_get_data ((GObject *) combobox, "comboboxelements");
-    widget_set_int (widget, GPOINTER_TO_INT (elements[position].value));
+    auto items = (const ComboItem *) g_object_get_data ((GObject *) combobox, "comboitems");
+    widget_set_int (widget, items[position].num);
 }
 
 static void on_cbox_changed_string (GtkComboBox * combobox, const PreferencesWidget * widget)
 {
     int position = gtk_combo_box_get_active (combobox);
-    const ComboBoxElements * elements = (const ComboBoxElements *)
-     g_object_get_data ((GObject *) combobox, "comboboxelements");
-    widget_set_string (widget, (const char *) elements[position].value);
+    auto items = (const ComboItem *) g_object_get_data ((GObject *) combobox, "comboitems");
+    widget_set_string (widget, items[position].str);
 }
 
 static void fill_cbox (GtkWidget * combobox, const PreferencesWidget * widget, const char * domain)
 {
-    ArrayRef<const ComboBoxElements> elems = widget->data.combo.elems;
+    ArrayRef<const ComboItem> items = widget->data.combo.elems;
 
     if (widget->data.combo.fill)
-        elems = widget->data.combo.fill ();
+        items = widget->data.combo.fill ();
 
-    g_object_set_data ((GObject *) combobox, "comboboxelements", (void *) elems.data);
+    g_object_set_data ((GObject *) combobox, "comboitems", (void *) items.data);
 
-    for (const ComboBoxElements & elem : elems)
+    for (const ComboItem & item : items)
         gtk_combo_box_text_append_text ((GtkComboBoxText *) combobox,
-         dgettext (domain, elem.label));
+         dgettext (domain, item.label));
 
     switch (widget->cfg.type)
     {
     case WidgetConfig::Int:
     {
-        int ivalue = widget_get_int (widget);
+        int num = widget_get_int (widget);
 
-        for (int i = 0; i < elems.len; i++)
+        for (int i = 0; i < items.len; i++)
         {
-            if (GPOINTER_TO_INT (elems.data[i].value) == ivalue)
+            if (items.data[i].num == num)
             {
                 gtk_combo_box_set_active ((GtkComboBox *) combobox, i);
                 break;
@@ -337,11 +335,11 @@ static void fill_cbox (GtkWidget * combobox, const PreferencesWidget * widget, c
 
     case WidgetConfig::String:
     {
-        String value = widget_get_string (widget);
+        String str = widget_get_string (widget);
 
-        for (int i = 0; i < elems.len; i++)
+        for (int i = 0; i < items.len; i++)
         {
-            if (value && ! strcmp ((const char *) elems.data[i].value, value))
+            if (str && ! strcmp (items.data[i].str, str))
             {
                 gtk_combo_box_set_active ((GtkComboBox *) combobox, i);
                 break;

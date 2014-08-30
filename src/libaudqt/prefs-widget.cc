@@ -405,19 +405,19 @@ void ComboBoxWidget::set_int (int value)
 
 void ComboBoxWidget::fill ()
 {
-    ArrayRef<const ComboBoxElements> elems = m_parent->data.combo.elems;
+    ArrayRef<const ComboItem> items = m_parent->data.combo.elems;
 
     if (m_parent->data.combo.fill)
-        elems = m_parent->data.combo.fill ();
+        items = m_parent->data.combo.fill ();
 
     switch (m_parent->cfg.type) {
     case WidgetConfig::Int:
-        for (const ComboBoxElements & elem : elems)
-            m_combobox.addItem (elem.label, (int) ((intptr_t) elem.value));
+        for (const ComboItem & item : items)
+            m_combobox.addItem (item.label, item.num);
         break;
     case WidgetConfig::String:
-        for (const ComboBoxElements & elem : elems)
-            m_combobox.addItem (elem.label, QString ((const char *) elem.value));
+        for (const ComboItem & item : items)
+            m_combobox.addItem (item.label, item.str);
         break;
     default:
         AUDDBG("unhandled configuration type %d for ComboBoxWidget::fill()\n", m_parent->cfg.type);
@@ -427,11 +427,11 @@ void ComboBoxWidget::fill ()
     /* set selected index */
     switch (m_parent->cfg.type) {
     case WidgetConfig::Int: {
-        int ivalue = get_int ();
+        int num = get_int ();
 
-        for (int i = 0; i < elems.len; i++)
+        for (int i = 0; i < items.len; i++)
         {
-            if ((int) ((intptr_t) elems.data[i].value) == ivalue)
+            if (items.data[i].num == num)
             {
                 m_combobox.setCurrentIndex (i);
                 break;
@@ -441,11 +441,11 @@ void ComboBoxWidget::fill ()
         break;
     }
     case WidgetConfig::String: {
-        String value = get_str ();
+        String str = get_str ();
 
-        for (int i = 0; i < elems.len; i++)
+        for (int i = 0; i < items.len; i++)
         {
-            if (value && ! strcmp ((const char *) elems.data[i].value, value))
+            if (str && ! strcmp (items.data[i].str, str))
             {
                 m_combobox.setCurrentIndex (i);
                 break;

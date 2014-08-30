@@ -103,36 +103,34 @@ static const TitleFieldTag title_field_tags[] = {
 };
 
 #ifdef USE_CHARDET
-static const ComboBoxElements chardet_detector_presets[] = {
-    { "", N_("None")},
-    { GUESS_REGION_AR, N_("Arabic") },
-    { GUESS_REGION_BL, N_("Baltic") },
-    { GUESS_REGION_CN, N_("Chinese") },
-    { GUESS_REGION_GR, N_("Greek") },
-    { GUESS_REGION_HW, N_("Hebrew") },
-    { GUESS_REGION_JP, N_("Japanese") },
-    { GUESS_REGION_KR, N_("Korean") },
-    { GUESS_REGION_PL, N_("Polish") },
-    { GUESS_REGION_RU, N_("Russian") },
-    { GUESS_REGION_TW, N_("Taiwanese") },
-    { GUESS_REGION_TR, N_("Turkish") }
+static const ComboItem chardet_detector_presets[] = {
+    ComboItem (N_("None"), ""),
+    ComboItem (N_("Arabic"), GUESS_REGION_AR),
+    ComboItem (N_("Baltic"), GUESS_REGION_BL),
+    ComboItem (N_("Chinese"), GUESS_REGION_CN),
+    ComboItem (N_("Greek"), GUESS_REGION_GR),
+    ComboItem (N_("Hebrew"), GUESS_REGION_HW),
+    ComboItem (N_("Japanese"), GUESS_REGION_JP),
+    ComboItem (N_("Korean"), GUESS_REGION_KR),
+    ComboItem (N_("Polish"), GUESS_REGION_PL),
+    ComboItem (N_("Russian"), GUESS_REGION_RU),
+    ComboItem (N_("Taiwanese"), GUESS_REGION_TW),
+    ComboItem (N_("Turkish"), GUESS_REGION_TR)
 };
 #endif
 
-#define INT_TO_POINTER(i) ((void *) ((intptr_t) i))
-
-static const ComboBoxElements bitdepth_elements[] = {
-    { INT_TO_POINTER (16), "16" },
-    { INT_TO_POINTER (24), "24" },
-    { INT_TO_POINTER (32), "32" },
-    { INT_TO_POINTER  (0), N_("Floating point") }
+static const ComboItem bitdepth_elements[] = {
+    ComboItem ("16", 16),
+    ComboItem ("24", 24),
+    ComboItem ("32", 32),
+    ComboItem (N_("Floating point"), 0)
 };
 
-static Index<ComboBoxElements> iface_combo_elements;
+static Index<ComboItem> iface_combo_elements;
 static int iface_combo_selected;
 static QWidget * iface_prefs_box;
 
-static ArrayRef<const ComboBoxElements> iface_combo_fill ();
+static ArrayRef<const ComboItem> iface_combo_fill ();
 static void iface_combo_changed (void);
 static void * iface_create_prefs_box (void);
 
@@ -144,12 +142,12 @@ static const PreferencesWidget appearance_page_widgets[] = {
     WidgetCustomQt (iface_create_prefs_box)
 };
 
-static Index<ComboBoxElements> output_combo_elements;
+static Index<ComboItem> output_combo_elements;
 static int output_combo_selected;
 static QPushButton * output_config_button;
 static QPushButton * output_about_button;
 
-static ArrayRef<const ComboBoxElements> output_combo_fill ();
+static ArrayRef<const ComboItem> output_combo_fill ();
 static void output_combo_changed (void);
 static void * output_create_config_button (void);
 static void * output_create_about_button (void);
@@ -310,16 +308,13 @@ static const char * const titlestring_preset_names[TITLESTRING_NPRESETS] = {
     N_("ALBUM - TITLE")
 };
 
-static Index<ComboBoxElements> fill_plugin_combo (int type)
+static Index<ComboItem> fill_plugin_combo (int type)
 {
-    Index<ComboBoxElements> elems;
+    Index<ComboItem> elems;
     elems.insert (0, aud_plugin_count (type));
 
     for (int i = 0; i < elems.len (); i ++)
-    {
-        elems[i].label = aud_plugin_get_name (aud_plugin_by_index (type, i));
-        elems[i].value = INT_TO_POINTER (i);
-    }
+        elems[i] = ComboItem (aud_plugin_get_name (aud_plugin_by_index (type, i)), i);
 
     return elems;
 }
@@ -369,7 +364,7 @@ static void iface_combo_changed (void)
 #endif
 }
 
-static ArrayRef<const ComboBoxElements> iface_combo_fill ()
+static ArrayRef<const ComboItem> iface_combo_fill ()
 {
     if (! iface_combo_elements.len ())
     {
@@ -426,7 +421,7 @@ static void * output_create_about_button (void)
     return output_about_button;
 }
 
-static ArrayRef<const ComboBoxElements> output_combo_fill ()
+static ArrayRef<const ComboItem> output_combo_fill ()
 {
     if (! output_combo_elements.len ())
     {
