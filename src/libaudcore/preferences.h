@@ -1,6 +1,6 @@
 /*
  * preferences.h
- * Copyright 2007-2012 Tomasz Moń, William Pitcock, and John Lindgren
+ * Copyright 2007-2014 Tomasz Moń, William Pitcock, and John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -137,43 +137,59 @@ struct WidgetConfig
     };
 
     Type type;
+
+    /* pointer to immediate value */
     void * value;
+    /* identifier for configuration value */
     const char * section, * name;
+    /* called when value is changed  */
     void (* callback) (void);
+    /* widget updates when this hook is called */
+    const char * hook;
 
     constexpr WidgetConfig () :
         type (None),
         value (nullptr),
         section (nullptr),
         name (nullptr),
-        callback (nullptr) {}
+        callback (nullptr),
+        hook (nullptr) {}
 
     constexpr WidgetConfig (Type type, void * value, const char * section,
-     const char * name, void (* callback) (void)) :
+     const char * name, void (* callback) (void), const char * hook) :
         type (type),
         value (value),
         section (section),
         name (name),
-        callback (callback) {}
+        callback (callback),
+        hook (hook) {}
 };
 
-constexpr WidgetConfig WidgetBool (bool & value, void (* callback) (void) = nullptr)
-    { return WidgetConfig (WidgetConfig::Bool, (void *) & value, 0, 0, callback); }
-constexpr WidgetConfig WidgetInt (int & value, void (* callback) (void) = nullptr)
-    { return WidgetConfig (WidgetConfig::Int, (void *) & value, 0, 0, callback); }
-constexpr WidgetConfig WidgetFloat (double & value, void (* callback) (void) = nullptr)
-    { return WidgetConfig (WidgetConfig::Float, (void *) & value, 0, 0, callback); }
-constexpr WidgetConfig WidgetString (String & value, void (* callback) (void) = nullptr)
-    { return WidgetConfig (WidgetConfig::String, (void *) & value, 0, 0, callback); }
+constexpr WidgetConfig WidgetBool (bool & value,
+ void (* callback) (void) = nullptr, const char * hook = nullptr)
+    { return WidgetConfig (WidgetConfig::Bool, (void *) & value, 0, 0, callback, hook); }
+constexpr WidgetConfig WidgetInt (int & value,
+ void (* callback) (void) = nullptr, const char * hook = nullptr)
+    { return WidgetConfig (WidgetConfig::Int, (void *) & value, 0, 0, callback, hook); }
+constexpr WidgetConfig WidgetFloat (double & value,
+ void (* callback) (void) = nullptr, const char * hook = nullptr)
+    { return WidgetConfig (WidgetConfig::Float, (void *) & value, 0, 0, callback, hook); }
+constexpr WidgetConfig WidgetString (String & value,
+ void (* callback) (void) = nullptr, const char * hook = nullptr)
+    { return WidgetConfig (WidgetConfig::String, (void *) & value, 0, 0, callback, hook); }
 
-constexpr WidgetConfig WidgetBool (const char * section, const char * name, void (* callback) (void) = nullptr)
-    { return WidgetConfig (WidgetConfig::Bool, 0, section, name, callback); }
-constexpr WidgetConfig WidgetInt (const char * section, const char * name, void (* callback) (void) = nullptr)
-    { return WidgetConfig (WidgetConfig::Int, 0, section, name, callback); }
-constexpr WidgetConfig WidgetFloat (const char * section, const char * name, void (* callback) (void) = nullptr)
-    { return WidgetConfig (WidgetConfig::Float, 0, section, name, callback); }
-constexpr WidgetConfig WidgetString (const char * section, const char * name, void (* callback) (void) = nullptr)
-    { return WidgetConfig (WidgetConfig::String, 0, section, name, callback); }
+constexpr WidgetConfig WidgetBool (const char * section, const char * name,
+ void (* callback) (void) = nullptr, const char * hook = nullptr)
+    { return WidgetConfig (WidgetConfig::Bool, 0, section, name, callback, hook); }
+constexpr WidgetConfig WidgetInt (const char * section, const char * name,
+ void (* callback) (void) = nullptr, const char * hook = nullptr)
+    { return WidgetConfig (WidgetConfig::Int, 0, section, name, callback, hook); }
+constexpr WidgetConfig WidgetFloat (const char * section, const char * name,
+ void (* callback) (void) = nullptr, const char * hook = nullptr)
+    { return WidgetConfig (WidgetConfig::Float, 0, section, name, callback, hook); }
+constexpr WidgetConfig WidgetString (const char * section, const char * name,
+ void (* callback) (void) = nullptr, const char * hook = nullptr)
+    { return WidgetConfig (WidgetConfig::String, 0, section, name, callback, hook); }
 
 struct PreferencesWidget
 {

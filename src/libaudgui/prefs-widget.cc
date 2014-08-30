@@ -1,6 +1,6 @@
 /*
  * prefs-widget.c
- * Copyright 2007-2012 Tomasz Moń, William Pitcock, and John Lindgren
+ * Copyright 2007-2014 Tomasz Moń, William Pitcock, and John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -21,6 +21,7 @@
 #include <gtk/gtk.h>
 
 #include <libaudcore/audstrings.h>
+#include <libaudcore/hook.h>
 #include <libaudcore/i18n.h>
 #include <libaudcore/preferences.h>
 #include <libaudcore/runtime.h>
@@ -129,22 +130,149 @@ static void widget_set_string (const PreferencesWidget * widget, const char * va
         widget->cfg.callback ();
 }
 
-/* WIDGET_CHK_BTN */
-
-static void on_toggle_button_toggled (GtkToggleButton * button, const PreferencesWidget * widget)
+static void widget_changed (GtkWidget * widget, const PreferencesWidget * w)
 {
-    gboolean active = gtk_toggle_button_get_active (button);
-    widget_set_bool (widget, active);
+    switch (w->type)
+    {
+    case PreferencesWidget::CheckButton:
+    {
+        gboolean set = gtk_toggle_button_get_active ((GtkToggleButton *) widget);
+        widget_set_bool (w, set);
 
-    GtkWidget * child = (GtkWidget *) g_object_get_data ((GObject *) button, "child");
-    if (child)
-        gtk_widget_set_sensitive (child, active);
+        auto child = (GtkWidget *) g_object_get_data ((GObject *) widget, "child");
+        if (child)
+            gtk_widget_set_sensitive (child, set);
+
+        break;
+    }
+
+    case PreferencesWidget::RadioButton:
+        if (gtk_toggle_button_get_active ((GtkToggleButton *) widget))
+            widget_set_int (w, w->data.radio_btn.value);
+
+        break;
+
+    case PreferencesWidget::SpinButton:
+        if (w->cfg.type == WidgetConfig::Int)
+            widget_set_int (w, gtk_spin_button_get_value_as_int ((GtkSpinButton *) widget));
+        else if (w->cfg.type == WidgetConfig::Float)
+            widget_set_double (w, gtk_spin_button_get_value ((GtkSpinButton *) widget));
+
+        break;
+
+    case PreferencesWidget::FontButton:
+        widget_set_string (w, gtk_font_button_get_font_name ((GtkFontButton *) widget));
+        break;
+
+    case PreferencesWidget::Entry:
+        widget_set_string (w, gtk_entry_get_text ((GtkEntry *) widget));
+        break;
+
+    case PreferencesWidget::ComboBox:
+    {
+        auto items = (const ComboItem *) g_object_get_data ((GObject *) widget, "comboitems");
+        int idx = gtk_combo_box_get_active ((GtkComboBox *) widget);
+
+        if (w->cfg.type == WidgetConfig::Int)
+            widget_set_int (w, items[idx].num);
+        else if (w->cfg.type == WidgetConfig::String)
+            widget_set_string (w, items[idx].str);
+
+        break;
+    }
+
+    default:
+        break;
+    }
 }
 
-static void init_toggle_button (GtkWidget * button, const PreferencesWidget * widget)
+static void combobox_update (GtkWidget * combobox, const PreferencesWidget * widget);
+
+static void widget_update (void * unused, void * widget)
 {
-    gtk_toggle_button_set_active ((GtkToggleButton *) button, widget_get_bool (widget));
-    g_signal_connect (button, "toggled", (GCallback) on_toggle_button_toggled, (void *) widget);
+    auto w = (const PreferencesWidget *) g_object_get_data ((GObject *) widget, "prefswidget");
+
+    g_signal_handlers_block_by_func (widget, (void *) widget_changed, (void *) w);
+
+    switch (w->type)
+    {
+    case PreferencesWidget::CheckButton:
+        gtk_toggle_button_set_active ((GtkToggleButton *) widget, widget_get_bool (w));
+        break;
+
+    case PreferencesWidget::RadioButton:
+        if (widget_get_int (w) == w->data.radio_btn.value)
+            gtk_toggle_button_set_active ((GtkToggleButton *) widget, true);
+
+        break;
+
+    case PreferencesWidget::SpinButton:
+        if (w->cfg.type == WidgetConfig::Int)
+            gtk_spin_button_set_value ((GtkSpinButton *) widget, widget_get_int (w));
+        else if (w->cfg.type == WidgetConfig::Float)
+            gtk_spin_button_set_value ((GtkSpinButton *) widget, widget_get_double (w));
+
+        break;
+
+    case PreferencesWidget::FontButton:
+        gtk_font_button_set_font_name ((GtkFontButton *) widget, widget_get_string (w));
+        break;
+
+    case PreferencesWidget::Entry:
+        gtk_entry_set_text ((GtkEntry *) widget, widget_get_string (w));
+        break;
+
+    case PreferencesWidget::ComboBox:
+        combobox_update ((GtkWidget *) widget, w);
+        break;
+
+    default:
+        break;
+    }
+
+    g_signal_handlers_unblock_by_func (widget, (void *) widget_changed, (void *) w);
+}
+
+static void widget_unhook (GtkWidget * widget, const PreferencesWidget * w)
+{
+    hook_dissociate_full (w->cfg.hook, widget_update, widget);
+}
+
+static void widget_init (GtkWidget * widget, const PreferencesWidget * w)
+{
+    g_object_set_data ((GObject *) widget, "prefswidget", (void *) w);
+
+    widget_update (nullptr, widget);
+
+    switch (w->type)
+    {
+    case PreferencesWidget::CheckButton:
+    case PreferencesWidget::RadioButton:
+        g_signal_connect (widget, "toggled", (GCallback) widget_changed, (void *) w);
+        break;
+
+    case PreferencesWidget::SpinButton:
+        g_signal_connect (widget, "value_changed", (GCallback) widget_changed, (void *) w);
+        break;
+
+    case PreferencesWidget::FontButton:
+        g_signal_connect (widget, "font_set", (GCallback) widget_changed, (void *) w);
+        break;
+
+    case PreferencesWidget::Entry:
+    case PreferencesWidget::ComboBox:
+        g_signal_connect (widget, "changed", (GCallback) widget_changed, (void *) w);
+        break;
+
+    default:
+        break;
+    }
+
+    if (w->cfg.hook)
+    {
+        hook_associate (w->cfg.hook, widget_update, widget);
+        g_signal_connect (widget, "destroy", (GCallback) widget_unhook, (void *) w);
+    }
 }
 
 /* WIDGET_LABEL */
@@ -164,33 +292,7 @@ static void create_label (const PreferencesWidget * widget, GtkWidget * * label,
     gtk_misc_set_alignment ((GtkMisc *) * label, 0, 0.5);
 }
 
-/* WIDGET_RADIO_BTN */
-
-static void on_radio_button_toggled (GtkWidget * button, const PreferencesWidget * widget)
-{
-    if (gtk_toggle_button_get_active ((GtkToggleButton *) button))
-        widget_set_int (widget, widget->data.radio_btn.value);
-}
-
-static void init_radio_button (GtkWidget * button, const PreferencesWidget * widget)
-{
-    if (widget_get_int (widget) == widget->data.radio_btn.value)
-        gtk_toggle_button_set_active ((GtkToggleButton *) button, true);
-
-    g_signal_connect (button, "toggled", (GCallback) on_radio_button_toggled, (void *) widget);
-}
-
 /* WIDGET_SPIN_BTN */
-
-static void on_spin_btn_changed_int (GtkSpinButton * button, const PreferencesWidget * widget)
-{
-    widget_set_int (widget, gtk_spin_button_get_value_as_int (button));
-}
-
-static void on_spin_btn_changed_float (GtkSpinButton * button, const PreferencesWidget * widget)
-{
-    widget_set_double (widget, gtk_spin_button_get_value (button));
-}
 
 static void create_spin_button (const PreferencesWidget * widget,
  GtkWidget * * label_pre, GtkWidget * * spin_btn, GtkWidget * * label_past,
@@ -206,32 +308,10 @@ static void create_spin_button (const PreferencesWidget * widget,
     if (widget->data.spin_btn.right_label)
         * label_past = gtk_label_new (dgettext (domain, widget->data.spin_btn.right_label));
 
-    switch (widget->cfg.type)
-    {
-    case WidgetConfig::Int:
-        gtk_spin_button_set_value ((GtkSpinButton *) * spin_btn, widget_get_int (widget));
-        g_signal_connect (* spin_btn, "value_changed", (GCallback)
-         on_spin_btn_changed_int, (void *) widget);
-        break;
-
-    case WidgetConfig::Float:
-        gtk_spin_button_set_value ((GtkSpinButton *) * spin_btn, widget_get_double (widget));
-        g_signal_connect (* spin_btn, "value_changed", (GCallback)
-         on_spin_btn_changed_float, (void *) widget);
-        break;
-
-    default:
-        g_warn_if_reached ();
-        break;
-    }
+    widget_init (* spin_btn, widget);
 }
 
 /* WIDGET_FONT_BTN */
-
-static void on_font_btn_font_set (GtkFontButton * button, const PreferencesWidget * widget)
-{
-    widget_set_string (widget, gtk_font_button_get_font_name (button));
-}
 
 void create_font_btn (const PreferencesWidget * widget, GtkWidget * * label,
  GtkWidget * * font_btn, const char * domain)
@@ -250,19 +330,10 @@ void create_font_btn (const PreferencesWidget * widget, GtkWidget * * label,
         gtk_font_button_set_title ((GtkFontButton *) * font_btn,
          dgettext (domain, widget->data.font_btn.title));
 
-    String name = widget_get_string (widget);
-    if (name)
-        gtk_font_button_set_font_name ((GtkFontButton *) * font_btn, name);
-
-    g_signal_connect (* font_btn, "font_set", (GCallback) on_font_btn_font_set, (void *) widget);
+    widget_init (* font_btn, widget);
 }
 
 /* WIDGET_ENTRY */
-
-static void on_entry_changed (GtkEntry * entry, const PreferencesWidget * widget)
-{
-    widget_set_string (widget, gtk_entry_get_text (entry));
-}
 
 static void create_entry (const PreferencesWidget * widget, GtkWidget * * label,
  GtkWidget * * entry, const char * domain)
@@ -279,49 +350,33 @@ static void create_entry (const PreferencesWidget * widget, GtkWidget * * label,
     if (widget->tooltip)
         gtk_widget_set_tooltip_text (* entry, dgettext (domain, widget->tooltip));
 
-    String value = widget_get_string (widget);
-    if (value)
-        gtk_entry_set_text ((GtkEntry *) * entry, value);
-
-    g_signal_connect (* entry, "changed", (GCallback) on_entry_changed, (void *) widget);
+    widget_init (* entry, widget);
 }
 
 /* WIDGET_COMBO_BOX */
 
-static void on_cbox_changed_int (GtkComboBox * combobox, const PreferencesWidget * widget)
+static void combobox_update (GtkWidget * combobox, const PreferencesWidget * widget)
 {
-    int position = gtk_combo_box_get_active (combobox);
-    auto items = (const ComboItem *) g_object_get_data ((GObject *) combobox, "comboitems");
-    widget_set_int (widget, items[position].num);
-}
+    auto domain = (const char *) g_object_get_data ((GObject *) combobox, "combodomain");
 
-static void on_cbox_changed_string (GtkComboBox * combobox, const PreferencesWidget * widget)
-{
-    int position = gtk_combo_box_get_active (combobox);
-    auto items = (const ComboItem *) g_object_get_data ((GObject *) combobox, "comboitems");
-    widget_set_string (widget, items[position].str);
-}
-
-static void fill_cbox (GtkWidget * combobox, const PreferencesWidget * widget, const char * domain)
-{
     ArrayRef<const ComboItem> items = widget->data.combo.elems;
-
     if (widget->data.combo.fill)
         items = widget->data.combo.fill ();
 
     g_object_set_data ((GObject *) combobox, "comboitems", (void *) items.data);
 
+    /* no gtk_combo_box_text_clear()? */
+    gtk_list_store_clear ((GtkListStore *) gtk_combo_box_get_model ((GtkComboBox *) combobox));
+
     for (const ComboItem & item : items)
         gtk_combo_box_text_append_text ((GtkComboBoxText *) combobox,
          dgettext (domain, item.label));
 
-    switch (widget->cfg.type)
-    {
-    case WidgetConfig::Int:
+    if (widget->cfg.type == WidgetConfig::Int)
     {
         int num = widget_get_int (widget);
 
-        for (int i = 0; i < items.len; i++)
+        for (int i = 0; i < items.len; i ++)
         {
             if (items.data[i].num == num)
             {
@@ -329,16 +384,12 @@ static void fill_cbox (GtkWidget * combobox, const PreferencesWidget * widget, c
                 break;
             }
         }
-
-        g_signal_connect (combobox, "changed", (GCallback) on_cbox_changed_int, (void *) widget);
-        break;
     }
-
-    case WidgetConfig::String:
+    else if (widget->cfg.type == WidgetConfig::String)
     {
         String str = widget_get_string (widget);
 
-        for (int i = 0; i < items.len; i++)
+        for (int i = 0; i < items.len; i ++)
         {
             if (! strcmp_safe (items.data[i].str, str))
             {
@@ -346,14 +397,6 @@ static void fill_cbox (GtkWidget * combobox, const PreferencesWidget * widget, c
                 break;
             }
         }
-
-        g_signal_connect (combobox, "changed", (GCallback) on_cbox_changed_string, (void *) widget);
-        break;
-    }
-
-    default:
-        g_warn_if_reached ();
-        break;
     }
 }
 
@@ -365,7 +408,8 @@ static void create_cbox (const PreferencesWidget * widget, GtkWidget * * label,
     if (widget->label)
         * label = gtk_label_new (dgettext (domain, widget->label));
 
-    fill_cbox (* combobox, widget, domain);
+    g_object_set_data ((GObject *) * combobox, "combodomain", (void *) domain);
+    widget_init (* combobox, widget);
 }
 
 /* WIDGET_TABLE */
@@ -466,7 +510,7 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
         {
             case PreferencesWidget::CheckButton:
                 widget = gtk_check_button_new_with_mnemonic (dgettext (domain, w.label));
-                init_toggle_button (widget, & w);
+                widget_init (widget, & w);
                 break;
 
             case PreferencesWidget::Label:
@@ -494,7 +538,7 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
                 widget = gtk_radio_button_new_with_mnemonic (radio_btn_group,
                  dgettext (domain, w.label));
                 radio_btn_group = gtk_radio_button_get_group ((GtkRadioButton *) widget);
-                init_radio_button (widget, & w);
+                widget_init (widget, & w);
                 break;
 
             case PreferencesWidget::SpinButton:
