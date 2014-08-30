@@ -236,7 +236,7 @@ static const PreferencesWidget chardet_elements[] = {
 
 
 static void send_title_change (void);
-static void * create_titlestring_table (void);
+// static void * create_titlestring_table (void);
 
 static const PreferencesWidget playlist_page_widgets[] = {
     WidgetLabel (N_("<b>Behavior</b>")),
