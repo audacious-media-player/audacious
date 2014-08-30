@@ -98,7 +98,7 @@ void prefs_populate (QLayout * layout, ArrayRef<const PreferencesWidget> widgets
             layout->addWidget (cw->widget ());
             break;
         }
-        case PreferencesWidget::Custom: {
+        case PreferencesWidget::CustomQt: {
             if (w.data.populate)
             {
                 QWidget * wid = (QWidget *) w.data.populate ();

@@ -141,7 +141,7 @@ static const PreferencesWidget appearance_page_widgets[] = {
     WidgetCombo (N_("Interface plugin:"),
         WidgetInt (iface_combo_selected, iface_combo_changed),
         {0, iface_combo_fill}),
-    WidgetCustom (iface_create_prefs_box)
+    WidgetCustomQt (iface_create_prefs_box)
 };
 
 static Index<ComboBoxElements> output_combo_elements;
@@ -159,8 +159,8 @@ static const PreferencesWidget output_combo_widgets[] = {
     WidgetCombo (N_("Output plugin:"),
         WidgetInt (output_combo_selected, output_combo_changed),
         {0, output_combo_fill}),
-    WidgetCustom (output_create_config_button),
-    WidgetCustom (output_create_about_button)
+    WidgetCustomQt (output_create_config_button),
+    WidgetCustomQt (output_create_about_button)
 };
 
 static const PreferencesWidget audio_page_widgets[] = {
@@ -260,7 +260,7 @@ static const PreferencesWidget playlist_page_widgets[] = {
     WidgetCheck (N_("Show leading zeroes (02:00 instead of 2:00)"),
         WidgetBool (0, "leading_zero", send_title_change)),
 #ifdef XXX_NOTYET
-    WidgetCustom (create_titlestring_table)
+    WidgetCustomQt (create_titlestring_table)
 #endif
 };
 

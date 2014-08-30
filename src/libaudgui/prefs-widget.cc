@@ -515,7 +515,7 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
                 break;
             }
 
-            case PreferencesWidget::Custom:
+            case PreferencesWidget::CustomGTK:
                 if (w.data.populate)
                     widget = (GtkWidget *) w.data.populate ();
 

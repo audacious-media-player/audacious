@@ -95,8 +95,9 @@ union WidgetVariant {
     struct WidgetVNotebook notebook;
     struct WidgetVSeparator separator;
 
-    /* for WIDGET_CUSTOM */
+    /* for custom GTK or Qt widgets */
     /* GtkWidget * (* populate) (void); */
+    /* QWidget * (* populate) (void); */
     void * (* populate) (void);
 
     constexpr WidgetVariant (WidgetVRadio radio) : radio_btn (radio) {}
@@ -177,7 +178,8 @@ struct PreferencesWidget
         Table,
         Notebook,
         Separator,
-        Custom
+        CustomGTK,
+        CustomQt
     };
 
     Type type;
@@ -242,8 +244,11 @@ constexpr const PreferencesWidget WidgetNotebook (WidgetVNotebook notebook)
 constexpr const PreferencesWidget WidgetSeparator (WidgetVSeparator separator = WidgetVSeparator ())
     { return {PreferencesWidget::Separator, 0, 0, 0, WidgetConfig (), separator}; }
 
-constexpr const PreferencesWidget WidgetCustom (void * (* populate) (void))
-    { return {PreferencesWidget::Custom, 0, 0, 0, WidgetConfig (), populate}; }
+constexpr const PreferencesWidget WidgetCustomGTK (void * (* populate) (void))
+    { return {PreferencesWidget::CustomGTK, 0, 0, 0, WidgetConfig (), populate}; }
+
+constexpr const PreferencesWidget WidgetCustomQt (void * (* populate) (void))
+    { return {PreferencesWidget::CustomQt, 0, 0, 0, WidgetConfig (), populate}; }
 
 struct PluginPreferences {
     ArrayRef<const PreferencesWidget> widgets;
