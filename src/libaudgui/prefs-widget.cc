@@ -20,6 +20,7 @@
 #include <string.h>
 #include <gtk/gtk.h>
 
+#include <libaudcore/audstrings.h>
 #include <libaudcore/i18n.h>
 #include <libaudcore/preferences.h>
 #include <libaudcore/runtime.h>
@@ -339,7 +340,7 @@ static void fill_cbox (GtkWidget * combobox, const PreferencesWidget * widget, c
 
         for (int i = 0; i < items.len; i++)
         {
-            if (str && ! strcmp (items.data[i].str, str))
+            if (! strcmp_safe (items.data[i].str, str))
             {
                 gtk_combo_box_set_active ((GtkComboBox *) combobox, i);
                 break;

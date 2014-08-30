@@ -21,6 +21,7 @@
 #include <QtGui>
 #include <QtWidgets>
 
+#include <libaudcore/audstrings.h>
 #include <libaudcore/i18n.h>
 #include <libaudcore/preferences.h>
 #include <libaudcore/runtime.h>
@@ -445,7 +446,7 @@ void ComboBoxWidget::fill ()
 
         for (int i = 0; i < items.len; i++)
         {
-            if (str && ! strcmp (items.data[i].str, str))
+            if (! strcmp_safe (items.data[i].str, str))
             {
                 m_combobox.setCurrentIndex (i);
                 break;
