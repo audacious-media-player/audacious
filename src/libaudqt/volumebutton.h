@@ -31,11 +31,12 @@
 
 namespace audqt {
 
-class VolumeButton : public QToolButton {
+class EXPORT VolumeButton : public QToolButton {
     Q_OBJECT
 
 public:
     VolumeButton (QWidget * parent = nullptr, int min = 0, int max = 100);
+    void setValue (int value);
 
 signals:
     void valueChanged (int value);

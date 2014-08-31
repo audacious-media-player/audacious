@@ -30,19 +30,19 @@
 
 namespace audqt {
 
-EXPORT VolumeButton::VolumeButton (QWidget * parent, int min, int max) :
+VolumeButton::VolumeButton (QWidget * parent, int min, int max) :
     QToolButton (parent)
 {
     setIcon (QIcon::fromTheme ("audio-volume-high"));
 
-    m_slider = new QSlider (Qt::Vertical, this);
+    m_slider = new QSlider (Qt::Vertical);
     m_slider->setRange (min, max);
 
     m_layout = new QVBoxLayout (this);
     m_layout->setContentsMargins (6, 6, 6, 6);
     m_layout->addWidget (m_slider);
 
-    m_container = new QWidget (this);
+    m_container = new QWidget;
     m_container->setLayout (m_layout);
 
     connect (this, &QAbstractButton::clicked, this, &VolumeButton::showSlider);
@@ -54,7 +54,8 @@ void VolumeButton::showSlider ()
 {
     m_container->setWindowFlags (Qt::Popup);
     m_container->move (mapToGlobal (m_container->geometry ().topLeft ()));
-    m_container->show ();
+
+    window_bring_to_front (m_container);
 }
 
 void VolumeButton::handleValueChange (int value)
@@ -62,6 +63,11 @@ void VolumeButton::handleValueChange (int value)
     AUDDBG ("volume changed, %d\n", value);
 
     emit valueChanged (value);
+}
+
+void VolumeButton::setValue (int value)
+{
+    m_slider->setValue (value);
 }
 
 }
