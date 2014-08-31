@@ -280,15 +280,9 @@ static void widget_init (GtkWidget * widget, const PreferencesWidget * w)
 static void create_label (const PreferencesWidget * widget, GtkWidget * * label,
  GtkWidget * * icon, const char * domain)
 {
-    if (widget->data.label.stock_id)
-        * icon = gtk_image_new_from_icon_name (widget->data.label.stock_id, GTK_ICON_SIZE_BUTTON);
-
     * label = gtk_label_new_with_mnemonic (dgettext (domain, widget->label));
     gtk_label_set_use_markup ((GtkLabel *) * label, true);
-
-    if (widget->data.label.single_line == false)
-        gtk_label_set_line_wrap ((GtkLabel *) * label, true);
-
+    gtk_label_set_line_wrap ((GtkLabel *) * label, true);
     gtk_misc_set_alignment ((GtkMisc *) * label, 0, 0.5);
 }
 
@@ -301,9 +295,6 @@ static void create_spin_button (const PreferencesWidget * widget,
     * label_pre = gtk_label_new (dgettext (domain, widget->label));
     * spin_btn = gtk_spin_button_new_with_range (widget->data.spin_btn.min,
      widget->data.spin_btn.max, widget->data.spin_btn.step);
-
-    if (widget->tooltip)
-        gtk_widget_set_tooltip_text (* spin_btn, dgettext (domain, widget->tooltip));
 
     if (widget->data.spin_btn.right_label)
         * label_past = gtk_label_new (dgettext (domain, widget->data.spin_btn.right_label));
@@ -346,9 +337,6 @@ static void create_entry (const PreferencesWidget * widget, GtkWidget * * label,
         * label = gtk_label_new (dgettext (domain, widget->label));
         gtk_misc_set_alignment ((GtkMisc *) * label, 1, 0.5);
     }
-
-    if (widget->tooltip)
-        gtk_widget_set_tooltip_text (* entry, dgettext (domain, widget->tooltip));
 
     widget_init (* entry, widget);
 }
@@ -672,10 +660,6 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
                 gtk_alignment_set_padding ((GtkAlignment *) alignment, 0, 0, 0, 0);
 
             gtk_container_add ((GtkContainer *) alignment, widget);
-
-            if (w.tooltip && w.type != PreferencesWidget::SpinButton)
-                gtk_widget_set_tooltip_text (widget, dgettext (domain,
-                 w.tooltip));
         }
     }
 }

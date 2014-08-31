@@ -53,11 +53,6 @@ struct WidgetVTable {
     ArrayRef<const PreferencesWidget> widgets;
 };
 
-struct WidgetVLabel {
-    const char * stock_id;
-    bool single_line; /* false to enable line wrap */
-};
-
 struct WidgetVFonts {
     const char * title;
 };
@@ -98,7 +93,6 @@ union WidgetVariant {
     struct WidgetVRadio radio_btn;
     struct WidgetVSpin spin_btn;
     struct WidgetVTable table;
-    struct WidgetVLabel label;
     struct WidgetVFonts font_btn;
     struct WidgetVEntry entry;
     struct WidgetVCombo combo;
@@ -114,7 +108,6 @@ union WidgetVariant {
     constexpr WidgetVariant (WidgetVRadio radio) : radio_btn (radio) {}
     constexpr WidgetVariant (WidgetVSpin spin) : spin_btn (spin) {}
     constexpr WidgetVariant (WidgetVTable table) : table (table) {}
-    constexpr WidgetVariant (WidgetVLabel label) : label (label) {}
     constexpr WidgetVariant (WidgetVFonts fonts) : font_btn (fonts) {}
     constexpr WidgetVariant (WidgetVEntry entry) : entry (entry) {}
     constexpr WidgetVariant (WidgetVCombo combo) : combo (combo) {}
@@ -211,7 +204,6 @@ struct PreferencesWidget
 
     Type type;
     const char * label;       /* widget title (for SPIN_BTN it's text left to widget) */
-    const char * tooltip;     /* widget tooltip, can be nullptr */
     bool child;
 
     WidgetConfig cfg;
@@ -225,57 +217,57 @@ enum WidgetIsChild {
 
 constexpr PreferencesWidget WidgetLabel (const char * label,
  WidgetIsChild child = WIDGET_NOT_CHILD)
-    { return {PreferencesWidget::Label, label, 0, (child == WIDGET_CHILD)}; }
+    { return {PreferencesWidget::Label, label, (child == WIDGET_CHILD)}; }
 
 constexpr PreferencesWidget WidgetCheck (const char * label,
  WidgetConfig cfg, WidgetIsChild child = WIDGET_NOT_CHILD)
-    { return {PreferencesWidget::CheckButton, label, 0,
+    { return {PreferencesWidget::CheckButton, label,
        (child == WIDGET_CHILD), cfg}; }
 
 constexpr PreferencesWidget WidgetRadio (const char * label,
  WidgetConfig cfg, WidgetVRadio radio, WidgetIsChild child = WIDGET_NOT_CHILD)
-    { return {PreferencesWidget::RadioButton, label, 0,
+    { return {PreferencesWidget::RadioButton, label,
        (child == WIDGET_CHILD), cfg, radio}; }
 
 constexpr PreferencesWidget WidgetSpin (const char * label,
  WidgetConfig cfg, WidgetVSpin spin, WidgetIsChild child = WIDGET_NOT_CHILD)
-    { return {PreferencesWidget::SpinButton, label, 0,
+    { return {PreferencesWidget::SpinButton, label,
        (child == WIDGET_CHILD), cfg, spin}; }
 
 constexpr PreferencesWidget WidgetEntry (const char * label,
  WidgetConfig cfg, WidgetVEntry entry = WidgetVEntry(),
  WidgetIsChild child = WIDGET_NOT_CHILD)
-    { return {PreferencesWidget::Entry, label, 0,
+    { return {PreferencesWidget::Entry, label,
        (child == WIDGET_CHILD), cfg, entry}; }
 
 constexpr PreferencesWidget WidgetCombo (const char * label,
  WidgetConfig cfg, WidgetVCombo combo, WidgetIsChild child = WIDGET_NOT_CHILD)
-    { return {PreferencesWidget::ComboBox, label, 0,
+    { return {PreferencesWidget::ComboBox, label,
        (child == WIDGET_CHILD), cfg, combo}; }
 
 constexpr PreferencesWidget WidgetFonts (const char * label,
  WidgetConfig cfg, WidgetVFonts fonts, WidgetIsChild child = WIDGET_NOT_CHILD)
-    { return {PreferencesWidget::FontButton, label, 0,
+    { return {PreferencesWidget::FontButton, label,
        (child == WIDGET_CHILD), cfg, fonts}; }
 
 constexpr PreferencesWidget WidgetBox (WidgetVBox box, WidgetIsChild child = WIDGET_NOT_CHILD)
-    { return {PreferencesWidget::Box, 0, 0, (child == WIDGET_CHILD), WidgetConfig (), box}; }
+    { return {PreferencesWidget::Box, 0, (child == WIDGET_CHILD), WidgetConfig (), box}; }
 
 constexpr PreferencesWidget WidgetTable (WidgetVTable table,
  WidgetIsChild child = WIDGET_NOT_CHILD)
-    { return {PreferencesWidget::Table, 0, 0, (child == WIDGET_CHILD), WidgetConfig (), table}; }
+    { return {PreferencesWidget::Table, 0, (child == WIDGET_CHILD), WidgetConfig (), table}; }
 
 constexpr PreferencesWidget WidgetNotebook (WidgetVNotebook notebook)
-    { return {PreferencesWidget::Notebook, 0, 0, 0, WidgetConfig (), notebook}; }
+    { return {PreferencesWidget::Notebook, 0, 0, WidgetConfig (), notebook}; }
 
 constexpr PreferencesWidget WidgetSeparator (WidgetVSeparator separator = WidgetVSeparator ())
-    { return {PreferencesWidget::Separator, 0, 0, 0, WidgetConfig (), separator}; }
+    { return {PreferencesWidget::Separator, 0, 0, WidgetConfig (), separator}; }
 
 constexpr PreferencesWidget WidgetCustomGTK (void * (* populate) (void))
-    { return {PreferencesWidget::CustomGTK, 0, 0, 0, WidgetConfig (), populate}; }
+    { return {PreferencesWidget::CustomGTK, 0, 0, WidgetConfig (), populate}; }
 
 constexpr PreferencesWidget WidgetCustomQt (void * (* populate) (void))
-    { return {PreferencesWidget::CustomQt, 0, 0, 0, WidgetConfig (), populate}; }
+    { return {PreferencesWidget::CustomQt, 0, 0, WidgetConfig (), populate}; }
 
 struct PluginPreferences {
     ArrayRef<const PreferencesWidget> widgets;

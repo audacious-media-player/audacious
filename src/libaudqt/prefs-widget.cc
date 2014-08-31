@@ -35,7 +35,6 @@ namespace audqt {
 QWidget * BooleanWidget::widget ()
 {
     m_widget.setText (translate_str (m_parent->label, m_domain));
-    m_widget.setToolTip (translate_str (m_parent->tooltip, m_domain));
     m_widget.setCheckState (get () ? Qt::Checked : Qt::Unchecked);
 
     QObject::connect (& m_widget, &QCheckBox::stateChanged, [=] (int state) {
@@ -76,13 +75,6 @@ void BooleanWidget::set (bool value)
 QWidget * LabelWidget::widget ()
 {
     m_label_text.setText (translate_str (m_parent->label, m_domain));
-    m_label_text.setToolTip (translate_str (m_parent->tooltip, m_domain));
-
-    if (m_parent->data.label.stock_id)
-    {
-        AUDDBG ("stock icons are not yet implemented on qt\n");
-    }
-
     m_layout.setContentsMargins (0, 0, 0, 0);
     m_layout.addWidget (& m_label_text);
     m_container.setLayout (& m_layout);
@@ -97,7 +89,6 @@ QWidget * RadioButtonWidget::widget (QButtonGroup * btn_group)
         btn_group->addButton (& m_widget, m_parent->data.radio_btn.value);
 
     m_widget.setText (translate_str (m_parent->label, m_domain));
-    m_widget.setToolTip (translate_str (m_parent->tooltip, m_domain));
 
     QObject::connect (& m_widget, &QAbstractButton::clicked, [=] (bool checked) {
         if (! checked)
@@ -277,9 +268,6 @@ QWidget * StringWidget::widget ()
 
     m_container.setLayout (& m_layout);
 
-    if (m_parent->tooltip)
-        m_container.setToolTip (translate_str (m_parent->tooltip, m_domain));
-
     return & m_container;
 }
 
@@ -323,9 +311,6 @@ QWidget * ComboBoxWidget::widget ()
 
     m_layout.addWidget (&m_combobox);
     m_container.setLayout (& m_layout);
-
-    if (m_parent->tooltip)
-        m_container.setToolTip (translate_str (m_parent->tooltip, m_domain));
 
     fill ();
 
