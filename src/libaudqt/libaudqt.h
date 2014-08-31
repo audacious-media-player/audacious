@@ -30,6 +30,8 @@
 #include <libaudcore/plugin.h>
 #include <libaudcore/plugins.h>
 
+#include <libaudqt/volumebutton.h>
+
 namespace audqt {
 
 /* about.cc */

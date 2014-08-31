@@ -16,9 +16,11 @@ SRCS = about.cc			\
        prefs-window.cc		\
        prefs-pluginlist-model.cc  \
        prefs-pluginlist-model.moc \
-       util.cc
+       util.cc                  \
+       volumebutton.cc		\
+       volumebutton.moc
 
-INCLUDES = libaudqt.h
+INCLUDES = libaudqt.h volumebutton.h
 
 include ../../buildsys.mk
 include ../../extra.mk
