@@ -496,6 +496,11 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
 
         switch (w.type)
         {
+            case PreferencesWidget::Button:
+                widget = audgui_button_new (dgettext (domain, w.label),
+                 w.data.button.icon, (AudguiCallback) w.data.button.callback, nullptr);
+                break;
+
             case PreferencesWidget::CheckButton:
                 widget = gtk_check_button_new_with_mnemonic (dgettext (domain, w.label));
                 widget_init (widget, & w);
