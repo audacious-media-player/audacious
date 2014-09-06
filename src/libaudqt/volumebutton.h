@@ -1,6 +1,6 @@
 /*
- * main.h
- * Copyright 2011-2013 John Lindgren
+ * volumebutton.h
+ * Copyright 2014 William Pitcock
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -17,27 +17,40 @@
  * the use of this software.
  */
 
-#ifndef _AUDACIOUS_MAIN_H
-#define _AUDACIOUS_MAIN_H
+#include <QtGui>
+#include <QtWidgets>
 
-/* dbus-server.c */
-#ifdef USE_DBUS
+#include <libaudcore/audstrings.h>
+#include <libaudcore/i18n.h>
+#include <libaudcore/runtime.h>
 
-enum class StartupType {
-    Server,
-    Client,
-    Unknown
+#include "libaudqt.h"
+
+#ifndef LIBAUDQT_VOLUMEBUTTON_H
+#define LIBAUDQT_VOLUMEBUTTON_H
+
+namespace audqt {
+
+class EXPORT VolumeButton : public QToolButton {
+    Q_OBJECT
+
+public:
+    VolumeButton (QWidget * parent = nullptr, int min = 0, int max = 100);
+    void setValue (int value);
+
+signals:
+    void valueChanged (int value);
+
+public slots:
+    void showSlider ();
+    void handleValueChange (int value);
+
+private:
+    QSlider * m_slider;
+    QWidget * m_container;
+    QVBoxLayout * m_layout;
 };
 
-StartupType dbus_server_init (void);
-void dbus_server_cleanup (void);
-
-#endif
-
-/* signals.c */
-#ifdef HAVE_SIGWAIT
-void signals_init_one (void);
-void signals_init_two (void);
-#endif
+}
 
 #endif

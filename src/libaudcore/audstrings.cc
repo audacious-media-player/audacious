@@ -67,6 +67,17 @@ static const char swap_case[256] =
 #define IS_LEGAL(c)  (uri_legal_table[(unsigned char) (c)])
 #define SWAP_CASE(c) (swap_case[(unsigned char) (c)])
 
+/* strcmp() that handles nullptr safely */
+EXPORT int strcmp_safe (const char * a, const char * b)
+{
+    if (a == nullptr)
+        return (b == nullptr) ? 0 : -1;
+    if (b == nullptr)
+        return 1;
+
+    return strcmp (a, b);
+}
+
 /* strlen() if <len> is negative, otherwise strnlen() */
 EXPORT int strlen_bounded (const char * s, int len)
 {

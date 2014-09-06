@@ -73,6 +73,18 @@ if test "x$GCC" = "xyes"; then
     AUD_CHECK_CFLAGS(-Wtype-limits)
 fi
 
+dnl On Mac, check for Objective-C and -C++ compilers
+dnl ================================================
+
+if test "x$HAVE_DARWIN" = "xyes"; then
+    AC_PROG_OBJC
+    AC_PROG_OBJCPP
+    AC_PROG_OBJCXX
+    AC_PROG_OBJCXXCPP
+
+    OBJCXXFLAGS="$OBJCXXFLAGS -stdlib=libc++ -std=c++11"
+fi
+
 dnl Enable "-Wl,-z,defs" only on Linux
 dnl ==================================
 if test $HAVE_LINUX = yes ; then
@@ -133,5 +145,24 @@ AC_SUBST(GMODULE_CFLAGS)
 AC_SUBST(GMODULE_LIBS)
 AC_SUBST(GTK_CFLAGS)
 AC_SUBST(GTK_LIBS)
+
+dnl Qt support
+dnl ==========
+
+AC_ARG_ENABLE(qt,
+ AS_HELP_STRING(--enable-qt, [Enable Qt support (default=disabled)]),
+ USE_QT=$enableval, USE_QT=no)
+
+if test $USE_QT = yes ; then
+    PKG_CHECK_MODULES([QT], [Qt5Core Qt5Gui Qt5Widgets])
+    AC_DEFINE(USE_QT, 1, [Define if Qt support enabled])
+
+    # needed if Qt was built with -reduce-relocations
+    QT_CFLAGS="$QT_CFLAGS -fPIC"
+fi
+
+AC_SUBST(USE_QT)
+AC_SUBST(QT_CFLAGS)
+AC_SUBST(QT_LIBS)
 
 ])

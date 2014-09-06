@@ -1,6 +1,6 @@
 /*
- * main.h
- * Copyright 2011-2013 John Lindgren
+ * about.cc
+ * Copyright 2014 William Pitcock
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -17,27 +17,38 @@
  * the use of this software.
  */
 
-#ifndef _AUDACIOUS_MAIN_H
-#define _AUDACIOUS_MAIN_H
+#include <QtGui>
+#include <QtWidgets>
 
-/* dbus-server.c */
-#ifdef USE_DBUS
+#include <libaudcore/audstrings.h>
+#include <libaudcore/i18n.h>
+#include <libaudcore/runtime.h>
 
-enum class StartupType {
-    Server,
-    Client,
-    Unknown
+#include "libaudqt.h"
+
+#ifndef LIBAUDQT_ABOUT_H
+#define LIBAUDQT_ABOUT_H
+
+namespace audqt {
+
+class AboutWindow : public QDialog {
+
+    Q_OBJECT
+
+private:
+    QVBoxLayout m_layout;
+    QTabWidget m_tabs;
+    QLabel m_logo;
+    QLabel m_about_text;
+    QPlainTextEdit *m_textedits[2];
+
+    void buildCreditsNotebook ();
+
+public:
+    AboutWindow (QWidget * parent = 0);
+    ~AboutWindow ();
 };
 
-StartupType dbus_server_init (void);
-void dbus_server_cleanup (void);
-
-#endif
-
-/* signals.c */
-#ifdef HAVE_SIGWAIT
-void signals_init_one (void);
-void signals_init_two (void);
-#endif
+};
 
 #endif

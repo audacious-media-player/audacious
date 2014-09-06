@@ -128,7 +128,7 @@ static void add_file (const String & filename, Tuple && tuple,
 
     if (! tuple && ! decoder)
     {
-        decoder = aud_file_find_decoder (filename, true);
+        decoder = aud_file_find_decoder (filename, ! aud_get_bool (nullptr, "slow_probe"));
         if (validate && ! decoder)
             return;
     }

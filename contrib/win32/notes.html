@@ -58,8 +58,8 @@ mingw-get upgrade mingw32-w32api=3.17-2</tt></p></blockquote>
 <h3>Install libpng</h3>
 
 <p>Download and unzip to <tt>C:\libpng</tt>:<br>
-<a href="http://sourceforge.net/projects/libpng/files/libpng16/1.6.8/libpng-1.6.8.tar.xz/download">
-<tt>http://sourceforge.net/projects/libpng/files/libpng16/1.6.8/libpng-1.6.8.tar.xz/download</tt></a></p>
+<a href="http://sourceforge.net/projects/libpng/files/libpng16/1.6.12/libpng-1.6.12.tar.xz/download">
+<tt>http://sourceforge.net/projects/libpng/files/libpng16/1.6.12/libpng-1.6.12.tar.xz/download</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libpng<br>
@@ -94,11 +94,11 @@ make install</tt></p></blockquote>
 <h3>Install GLib</h3>
 
 <p>Download and unzip to <tt>C:\glib</tt>:<br>
-<a href="http://ftp.gnome.org/pub/GNOME/sources/glib/2.38/glib-2.38.2.tar.xz">
-<tt>http://ftp.gnome.org/pub/GNOME/sources/glib/2.38/glib-2.38.2.tar.xz</tt></a></p>
+<a href="http://ftp.gnome.org/pub/GNOME/sources/glib/2.40/glib-2.40.0.tar.xz">
+<tt>http://ftp.gnome.org/pub/GNOME/sources/glib/2.40/glib-2.40.0.tar.xz</tt></a></p>
 
-<p>Apply the patch <tt>gdbus-codegen.in.diff</tt> to <tt>C:\glib\gio\gdbus-2.0\codegen\gdbus-codegen.in</tt>.<br>
-Apply the patch <tt>ggettext.diff</tt> to <tt>C:\glib\glib\ggettext.c</tt>.</p>
+<p>Apply the patch <tt>ggettext.c.diff</tt> to <tt>C:\glib\glib\ggettext.c</tt>.<br>
+Apply the patch <tt>grand.c.diff</tt> to <tt>C:\glib\glib\grand.c</tt>.</p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/glib<br>
@@ -123,8 +123,8 @@ make install</tt></p></blockquote>
 <h3>Install pixman</h3>
 
 <p>Download and unzip to <tt>C:\pixman</tt>:<br>
-<a href="http://cairographics.org/releases/pixman-0.32.4.tar.gz">
-<tt>http://cairographics.org/releases/pixman-0.32.4.tar.gz</tt></a></p>
+<a href="http://cairographics.org/releases/pixman-0.32.6.tar.gz">
+<tt>http://cairographics.org/releases/pixman-0.32.6.tar.gz</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/pixman<br>
@@ -159,8 +159,8 @@ make install</tt></p></blockquote>
 <h3>Install gdk-pixbuf</h3>
 
 <p>Download and unzip to <tt>C:\gdk-pixbuf</tt>:<br>
-<a href="http://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/2.30/gdk-pixbuf-2.30.3.tar.xz">
-<tt>http://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/2.30/gdk-pixbuf-2.30.3.tar.xz</tt></a></p>
+<a href="http://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/2.30/gdk-pixbuf-2.30.8.tar.xz">
+<tt>http://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/2.30/gdk-pixbuf-2.30.8.tar.xz</tt></a></p>
 
 <p>Apply the patch <tt>gdk-pixbuf-io.c.diff</tt> to <tt>C:\gdk-pixbuf\gdk-pixbuf\gdk-pixbuf-io.c</tt>.</p>
 
@@ -173,8 +173,8 @@ make install</tt></p></blockquote>
 <h3>Install ATK</h3>
 
 <p>Download and unzip to <tt>C:\atk</tt>:<br>
-<a href="http://ftp.gnome.org/pub/gnome/sources/atk/2.10/atk-2.10.0.tar.xz">
-<tt>http://ftp.gnome.org/pub/gnome/sources/atk/2.10/atk-2.10.0.tar.xz</tt></a></p>
+<a href="http://ftp.gnome.org/pub/gnome/sources/atk/2.12/atk-2.12.0.tar.xz">
+<tt>http://ftp.gnome.org/pub/gnome/sources/atk/2.12/atk-2.12.0.tar.xz</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/atk<br>
@@ -185,22 +185,21 @@ make install</tt></p></blockquote>
 <h3>Install GTK+</h3>
 
 <p>Download and unzip to <tt>C:\gtksrc</tt>:<br>
-<a href="http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.8/gtk+-3.8.8.tar.xz">
-<tt>http://ftp.gnome.org/pub/GNOME/sources/gtk+/3.8/gtk+-3.8.8.tar.xz</tt></a></p>
+<a href="http://ftp.gnome.org/pub/GNOME/sources/gtk+/2.24/gtk+-2.24.24.tar.xz">
+<tt>http://ftp.gnome.org/pub/GNOME/sources/gtk+/2.24/gtk+-2.24.24.tar.xz</tt></a></p>
 
-<p>Apply the patch <tt>gtksettings.c.diff</tt> to <tt>C:\gtksrc\gtk\gtksettings.c</tt>.</p>
+<p>Apply the patch <tt>gtk-input-makefile.in.diff</tt> to <tt>C:\gtksrc\modules\input\Makefile.in</tt>.</p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/gtksrc<br>
-CFLAGS="-DHAVE_ISNAN -DHAVE_ISINF" ./configure --prefix=/C/GTK<br>
+./configure --prefix=/C/GTK<br>
 make<br>
 make install</tt></p></blockquote>
 
 <p><i>It may be necessary to run the MinGW shell with administrative privileges
 for GTK+ to build successfully.</i></p>
 
-<p>Copy <tt>settings.ini</tt> (accompanying this document) to
-<tt>C:\GTK\etc\gtk-3.0\settings.ini</tt>.
+<p>Copy <tt>gtkrc</tt> (accompanying this document) to <tt>C:\GTK\etc\gtk-2.0\gtkrc</tt>.
 
 <h3>Install intltool</h3>
 

@@ -1,0 +1,127 @@
+/*
+ * prefs-pluginlist-model.cc
+ * Copyright 2014 William Pitcock
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions, and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions, and the following disclaimer in the documentation
+ *    provided with the distribution.
+ *
+ * This software is provided "as is" and without any warranty, express or
+ * implied. In no event shall the authors be liable for any damages arising from
+ * the use of this software.
+ */
+
+#include <QtGui>
+#include <QtWidgets>
+#include <QAbstractTableModel>
+
+#include <libaudcore/i18n.h>
+#include <libaudcore/preferences.h>
+#include <libaudcore/runtime.h>
+#include <libaudcore/plugin.h>
+#include <libaudcore/plugins.h>
+
+#include "prefs-pluginlist-model.h"
+#include "prefs-pluginlist-model.moc"
+
+namespace audqt {
+
+PluginListModel::PluginListModel (QObject * parent, int category_id) : QAbstractListModel (parent),
+    m_category_id (category_id)
+{
+
+}
+
+PluginListModel::~PluginListModel ()
+{
+
+}
+
+int PluginListModel::rowCount (const QModelIndex & parent) const
+{
+    return aud_plugin_count (m_category_id);
+}
+
+int PluginListModel::columnCount (const QModelIndex & parent) const
+{
+    return 1;
+}
+
+QVariant PluginListModel::headerData (int section, Qt::Orientation orientation, int role) const
+{
+    return QVariant ();
+}
+
+QVariant PluginListModel::data (const QModelIndex &index, int role) const
+{
+    PluginHandle * ph = aud_plugin_by_index (m_category_id, index.row ());
+
+    switch (role)
+    {
+    case Qt::DisplayRole:
+        return QString (aud_plugin_get_name (ph));
+
+    case Qt::CheckStateRole:
+        return aud_plugin_get_enabled (ph) ? Qt::Checked : Qt::Unchecked;
+
+    default:
+        break;
+    }
+
+    return QVariant ();
+}
+
+bool PluginListModel::setData (const QModelIndex &index, const QVariant &value, int role)
+{
+    PluginHandle * ph = aud_plugin_by_index (m_category_id, index.row ());
+
+    if (role == Qt::CheckStateRole)
+    {
+        aud_plugin_enable (ph, value.toUInt() != Qt::Unchecked);
+    }
+
+    emit dataChanged (index, index);
+    return true;
+}
+
+Qt::ItemFlags PluginListModel::flags (const QModelIndex & index) const
+{
+    return (Qt::ItemIsSelectable | Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
+}
+
+bool PluginListModel::insertRows (int row, int count, const QModelIndex & parent)
+{
+    int last = row + count - 1;
+    beginInsertRows (parent, row, last);
+    endInsertRows ();
+    return true;
+}
+
+bool PluginListModel::removeRows (int row, int count, const QModelIndex & parent)
+{
+    int last = row + count - 1;
+    beginRemoveRows (parent, row, last);
+    endRemoveRows ();
+    return true;
+}
+
+void PluginListModel::updateRows (int row, int count)
+{
+    int bottom = row + count - 1;
+    auto topLeft = createIndex (row, 0);
+    auto bottomRight = createIndex (bottom, columnCount () - 1);
+    emit dataChanged (topLeft, bottomRight);
+}
+
+void PluginListModel::updateRow (int row)
+{
+    updateRows (row, 1);
+}
+
+};

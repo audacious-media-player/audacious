@@ -1,9 +1,13 @@
 include ../extra.mk
 
-ifeq ($(USE_GTK),yes)
-SUBDIRS := audacious libaudcore libaudgui libaudtag
-else
 SUBDIRS := audacious libaudcore libaudtag
+
+ifeq ($(USE_GTK),yes)
+SUBDIRS += libaudgui
+endif
+
+ifeq ($(USE_QT),yes)
+SUBDIRS += libaudqt
 endif
 
 ifeq ($(USE_DBUS),yes)
@@ -12,10 +16,15 @@ endif
 
 include ../buildsys.mk
 
+audacious: libaudcore
+libaudtag: libaudcore
+
 ifeq ($(USE_GTK),yes)
-audacious libaudgui libaudtag: libaudcore
-else
-audacious libaudtag: libaudcore
+libaudgui: libaudcore
+endif
+
+ifeq ($(USE_QT),yes)
+libaudqt: libaudcore
 endif
 
 ifeq ($(USE_DBUS),yes)

@@ -93,7 +93,7 @@ EXPORT bool String::raw_equal (const char * str1, const char * str2)
     assert (! str1 || NODE_OF (str1)->magic == '@');
     assert (! str2 || NODE_OF (str2)->magic == '@');
 
-    return ! g_strcmp0 (str1, str2);
+    return ! strcmp_safe (str1, str2);
 }
 
 EXPORT void String::check_all_destroyed ()

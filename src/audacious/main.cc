@@ -185,7 +185,14 @@ static void do_remote (void)
     GDBusConnection * bus = nullptr;
     ObjAudacious * obj = nullptr;
     GError * error = nullptr;
-    char * version = nullptr;
+
+#if ! GLIB_CHECK_VERSION (2, 36, 0)
+    g_type_init ();
+#endif
+
+    /* check whether this is the first instance */
+    if (dbus_server_init () != StartupType::Client)
+        return;
 
     if (! (bus = g_bus_get_sync (G_BUS_TYPE_SESSION, nullptr, & error)))
         goto ERR;
@@ -194,13 +201,7 @@ static void do_remote (void)
      "org.atheme.audacious", "/org/atheme/audacious", nullptr, & error)))
         goto ERR;
 
-    /* check whether remote is running */
-    obj_audacious_call_version_sync (obj, & version, nullptr, nullptr);
-
-    if (! version)
-        goto DONE;
-
-    AUDDBG ("Connected to remote version %s.\n", version);
+    AUDDBG ("Connected to remote session.\n");
 
     /* if no command line options, then present running instance */
     if (! (filenames.len () || options.play || options.pause ||
@@ -245,20 +246,16 @@ static void do_remote (void)
     if (options.mainwin)
         obj_audacious_call_show_main_win_sync (obj, true, nullptr, nullptr);
 
-    g_free (version);
     g_object_unref (obj);
 
     exit (EXIT_SUCCESS);
 
 ERR:
-    fprintf (stderr, "D-Bus error: %s\n", error->message);
-    g_error_free (error);
-
-DONE:
-    if (obj)
-        g_object_unref (obj);
-
-    return;
+    if (error)
+    {
+        fprintf (stderr, "D-Bus error: %s\n", error->message);
+        g_error_free (error);
+    }
 }
 #endif
 
@@ -331,10 +328,6 @@ int main (int argc, char * * argv)
     aud_init_paths ();
     aud_init_i18n ();
 
-#if ! GLIB_CHECK_VERSION (2, 36, 0)
-    g_type_init ();
-#endif
-
     if (! parse_options (argc, argv))
     {
         print_help ();
@@ -366,10 +359,6 @@ int main (int argc, char * * argv)
     aud_init ();
 
     do_commands ();
-
-#ifdef USE_DBUS
-    dbus_server_init ();
-#endif
 
     if (check_should_quit ())
         goto QUIT;
