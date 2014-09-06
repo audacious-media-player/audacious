@@ -18,10 +18,19 @@
  */
 
 #include "mainloop.h"
+#include "runtime.h"
 
 #include <assert.h>
 #include <pthread.h>
 #include <stdio.h>
+#include <string.h>
+
+static bool use_qt = false;
+
+MainloopType aud_get_mainloop_type ()
+{
+    return use_qt ? MainloopType::Qt : MainloopType::GLib;
+}
 
 static QueuedFunc counters[70];
 static QueuedFunc fast, slow;
@@ -77,8 +86,11 @@ static void * worker (void * data)
     return nullptr;
 }
 
-int main (void)
+int main (int argc, const char * * argv)
 {
+    if (argc >= 2 && ! strcmp (argv[1], "--qt"))
+        use_qt = true;
+
     main_thread = pthread_self ();
 
     for (int j = 0; j < 2; j ++)

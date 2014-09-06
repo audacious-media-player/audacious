@@ -1,4 +1,4 @@
-all: test test-mainloop-glib test-mainloop-qt
+all: test test-mainloop
 
 SRCS = ../audstrings.cc \
        ../charset.cc \
@@ -22,20 +22,17 @@ MAINLOOP_SRCS = ../mainloop.cc test-mainloop.cc
 test: ${SRCS}
 	g++ ${SRCS} ${FLAGS} -o test
 
-test-mainloop-glib: ${MAINLOOP_SRCS}
-	g++ ${MAINLOOP_SRCS} ${FLAGS} -o test-mainloop-glib
-
-test-mainloop-qt: ${MAINLOOP_SRCS}
+test-mainloop: ${MAINLOOP_SRCS}
 	g++ ${MAINLOOP_SRCS} ${FLAGS} -DUSE_QT -fPIC \
 	$(shell pkg-config --cflags --libs Qt5Core) \
-	-o test-mainloop-qt
+	-o test-mainloop
 
 cov: all
 	rm -f *.gcda
 	./test
-	./test-mainloop-glib
-	./test-mainloop-qt
+	./test-mainloop
+	./test-mainloop --qt
 	gcov --object-directory . ${SRCS} ${MAINLOOP_SRCS}
 
 clean:
-	rm -f test test-mainloop-glib test-mainloop-qt *.gcno *.gcda *.gcov
+	rm -f test test-mainloop test-mainloop *.gcno *.gcda *.gcov
