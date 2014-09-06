@@ -27,6 +27,7 @@ VolumeButton::VolumeButton (QWidget * parent) :
     QToolButton (parent)
 {
     setIcon (QIcon::fromTheme ("audio-volume-medium"));
+    setFocusPolicy (Qt::NoFocus);
 
     m_slider = new QSlider (Qt::Vertical, this);
     m_slider->setRange (0, 100);
