@@ -93,6 +93,7 @@ static const char * const core_defaults[] = {
  "leading_zero", "FALSE",
  "metadata_on_play", "FALSE",
  "show_numbers_in_pl", "FALSE",
+ "slow_probe", "FALSE",
 
  nullptr};
 
