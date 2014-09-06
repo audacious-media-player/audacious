@@ -404,7 +404,12 @@ vfs_file_test(const char * path, int test)
     if (strncmp (path, "file://", 7))
         return FALSE; /* only local files are handled */
 
-    char * path2 = uri_to_filename (path);
+    const char * sub;
+    uri_parse (path, NULL, NULL, & sub, NULL);
+
+    SNCOPY (no_sub, path, sub - path);
+
+    char * path2 = uri_to_filename (no_sub);
     if (! path2)
         return FALSE;
 
