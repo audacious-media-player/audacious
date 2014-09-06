@@ -33,7 +33,7 @@ namespace audqt {
 VolumeButton::VolumeButton (QWidget * parent, int min, int max) :
     QToolButton (parent)
 {
-    setIcon (QIcon::fromTheme ("audio-volume-high"));
+    setIcon (QIcon::fromTheme ("audio-volume-medium"));
 
     m_slider = new QSlider (Qt::Vertical);
     m_slider->setRange (min, max);
@@ -53,7 +53,7 @@ VolumeButton::VolumeButton (QWidget * parent, int min, int max) :
 void VolumeButton::showSlider ()
 {
     m_container->setWindowFlags (Qt::Popup);
-    m_container->move (mapToGlobal (m_container->geometry ().topLeft ()));
+    m_container->move (mapToGlobal (QPoint (0, 0)));
 
     window_bring_to_front (m_container);
 }
