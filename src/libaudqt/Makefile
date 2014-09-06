@@ -17,8 +17,7 @@ SRCS = about.cc			\
        prefs-pluginlist-model.cc  \
        prefs-pluginlist-model.moc \
        util.cc                  \
-       volumebutton.cc		\
-       volumebutton.moc
+       volumebutton.cc
 
 INCLUDES = libaudqt.h volumebutton.h
 
@@ -31,7 +30,6 @@ LD = ${CXX}
 
 CPPFLAGS := -I.. -I../.. \
             ${CPPFLAGS} \
-            ${GLIB_CFLAGS} \
             ${QT_CFLAGS} \
             ${LIBGUESS_CFLAGS}
 
@@ -39,7 +37,6 @@ CFLAGS += ${LIB_CFLAGS}
 
 LIBS := -L../libaudcore -laudcore \
         ${LIBS} -lm \
-	${GLIB_LIBS} \
         ${QT_LIBS}
 
 %.moc: %.h

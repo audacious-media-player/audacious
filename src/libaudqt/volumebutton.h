@@ -17,38 +17,23 @@
  * the use of this software.
  */
 
-#include <QtGui>
-#include <QtWidgets>
-
-#include <libaudcore/audstrings.h>
-#include <libaudcore/i18n.h>
-#include <libaudcore/runtime.h>
-
-#include "libaudqt.h"
-
 #ifndef LIBAUDQT_VOLUMEBUTTON_H
 #define LIBAUDQT_VOLUMEBUTTON_H
 
+#include <QtWidgets>
+
 namespace audqt {
 
-class EXPORT VolumeButton : public QToolButton {
-    Q_OBJECT
-
+class EXPORT VolumeButton : public QToolButton
+{
 public:
-    VolumeButton (QWidget * parent = nullptr, int min = 0, int max = 100);
-    void setValue (int value);
-
-signals:
-    void valueChanged (int value);
-
-public slots:
-    void showSlider ();
-    void handleValueChange (int value);
+    VolumeButton (QWidget * parent = nullptr);
 
 private:
+    void showSlider ();
+
     QSlider * m_slider;
     QWidget * m_container;
-    QVBoxLayout * m_layout;
 };
 
 }
