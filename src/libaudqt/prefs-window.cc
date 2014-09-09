@@ -258,8 +258,13 @@ static const PreferencesWidget playlist_page_widgets[] = {
     WidgetCheck (N_("Show leading zeroes (02:00 instead of 2:00)"),
         WidgetBool (0, "leading_zero", send_title_change)),
 #ifdef XXX_NOTYET
-    WidgetCustomQt (create_titlestring_table)
+    WidgetCustomQt (create_titlestring_table),
 #endif
+    WidgetLabel (N_("<b>Advanced</b>")),
+    WidgetCheck (N_("Do not load metadata for songs until played"),
+        WidgetBool (0, "metadata_on_play")),
+    WidgetCheck (N_("Probe content of files with no recognized filename extension"),
+        WidgetBool (0, "slow_probe"))
 };
 
 static const PreferencesWidget song_info_page_widgets[] = {
