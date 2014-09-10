@@ -61,7 +61,6 @@ bool aud_get_verbose_mode ();
 void aud_set_mainloop_type (MainloopType type);
 MainloopType aud_get_mainloop_type ();
 
-/* logger.cc */
 enum class LogLevel {
     Debug,
     Info,
@@ -72,6 +71,8 @@ enum class LogLevel {
 typedef void (* aud_log_handler_t) (LogLevel level, const char * file, unsigned int line, const char * function, const char * message);
 
 void aud_logger_subscribe (aud_log_handler_t hdl);
+void aud_logger_unsubscribe (aud_log_handler_t hdl);
+void aud_logger_shutdown (void);
 void aud_logger_log (LogLevel level, const char * file, unsigned int line, const char * function, const char * format, ...);
 void aud_logger_stdio (LogLevel level, const char * filename, unsigned int line, const char * function, const char * message);
 const char * aud_logger_get_level_name (LogLevel level);

@@ -376,6 +376,9 @@ EXPORT void aud_cleanup ()
 
     config_save ();
     config_cleanup ();
+
+    /* at this point, we're going to exit.  shut down the logger. */
+    aud_logger_shutdown ();
 }
 
 static Index<aud_log_handler_t> log_handlers;
@@ -383,6 +386,21 @@ static Index<aud_log_handler_t> log_handlers;
 EXPORT void aud_logger_subscribe (aud_log_handler_t hdl)
 {
     log_handlers.append (hdl);
+}
+
+EXPORT void aud_logger_unsubscribe (aud_log_handler_t hdl)
+{
+    int idx = log_handlers.find (hdl);
+
+    if (idx == -1)
+        return;
+
+    log_handlers.remove (idx, 1);
+}
+
+EXPORT void aud_logger_shutdown (void)
+{
+    log_handlers.clear ();
 }
 
 static void aud_logger_broadcast (LogLevel level, const char * filename, unsigned int line, const char * function, const char * message)
