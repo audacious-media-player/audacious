@@ -62,33 +62,6 @@ EXPORT void vfs_set_lookup_func (const VFSConstructor * (* func) (const char * s
     lookup_func = func;
 }
 
-static void logger (const char * format, ...)
-{
-    static char last[256] = "";
-    static int repeated = 0;
-
-    char buf[256];
-
-    va_list args;
-    va_start (args, format);
-    vsnprintf (buf, sizeof buf, format, args);
-    va_end (args);
-
-    if (! strcmp (buf, last))
-        repeated ++;
-    else
-    {
-        if (repeated)
-        {
-            printf ("VFS: (last message repeated %d times)\n", repeated);
-            repeated = 0;
-        }
-
-        fputs (buf, stdout);
-        strcpy (last, buf);
-    }
-}
-
 EXPORT VFSFile * vfs_new (const char * path, const VFSConstructor * vtable, void * handle)
 {
     VFSFile * file = new VFSFile ();
@@ -156,8 +129,7 @@ vfs_fopen(const char * path,
 
     VFSFile * file = vfs_new (path, vtable, handle);
 
-    if (aud_get_verbose_mode ())
-        logger ("VFS: <%p> open (mode %s) %s\n", file, mode, path);
+    AUDDBG ("VFS: <%p> open (mode %s) %s\n", file, mode, path);
 
     return file;
 }
@@ -173,8 +145,7 @@ vfs_fclose(VFSFile * file)
 {
     g_return_val_if_fail (file && file->sig == VFS_SIG, -1);
 
-    if (aud_get_verbose_mode ())
-        logger ("VFS: <%p> close\n", file);
+    AUDDBG ("VFS: <%p> close\n", file);
 
     int ret = 0;
 
@@ -201,8 +172,7 @@ EXPORT int64_t vfs_fread (void * ptr, int64_t size, int64_t nmemb, VFSFile * fil
 
     int64_t readed = file->base->vfs_fread_impl (ptr, size, nmemb, file);
 
-/*    if (aud_get_verbose_mode ())
-        logger ("VFS: <%p> read %"PRId64" elements of size %"PRId64" = "
+/*  AUDDBG ("VFS: <%p> read %"PRId64" elements of size %"PRId64" = "
          "%"PRId64"\n", file, nmemb, size, readed); */
 
     return readed;
@@ -223,8 +193,7 @@ EXPORT int64_t vfs_fwrite (const void * ptr, int64_t size, int64_t nmemb, VFSFil
 
     int64_t written = file->base->vfs_fwrite_impl (ptr, size, nmemb, file);
 
-    if (aud_get_verbose_mode ())
-        logger ("VFS: <%p> write %" PRId64 " elements of size %" PRId64 " = "
+    AUDDBG ("VFS: <%p> write %" PRId64 " elements of size %" PRId64 " = "
          "%" PRId64 "\n", file, nmemb, size, written);
 
     return written;
@@ -283,16 +252,14 @@ vfs_fseek(VFSFile * file,
 {
     g_return_val_if_fail (file && file->sig == VFS_SIG, -1);
 
-    if (aud_get_verbose_mode ())
-        logger ("VFS: <%p> seek to %" PRId64 " from %s\n", file, offset,
+    AUDDBG ("VFS: <%p> seek to %" PRId64 " from %s\n", file, offset,
          whence == SEEK_CUR ? "current" : whence == SEEK_SET ? "beginning" :
          whence == SEEK_END ? "end" : "invalid");
 
     if (! file->base->vfs_fseek_impl (file, offset, whence))
         return 0;
 
-    if (aud_get_verbose_mode ())
-        logger ("VFS: <%p> seek failed!\n", file);
+    AUDDBG ("VFS: <%p> seek failed!\n", file);
 
     return -1;
 }
@@ -310,8 +277,7 @@ vfs_ftell(VFSFile * file)
 
     int64_t told = file->base->vfs_ftell_impl (file);
 
-    if (aud_get_verbose_mode ())
-        logger ("VFS: <%p> tell = %" PRId64 "\n", file, told);
+    AUDDBG ("VFS: <%p> tell = %" PRId64 "\n", file, told);
 
     return told;
 }
@@ -329,8 +295,7 @@ vfs_feof(VFSFile * file)
 
     bool eof = file->base->vfs_feof_impl (file);
 
-    if (aud_get_verbose_mode ())
-        logger ("VFS: <%p> eof = %s\n", file, eof ? "yes" : "no");
+    AUDDBG ("VFS: <%p> eof = %s\n", file, eof ? "yes" : "no");
 
     return eof;
 }
@@ -346,8 +311,7 @@ EXPORT int vfs_ftruncate (VFSFile * file, int64_t length)
 {
     g_return_val_if_fail (file && file->sig == VFS_SIG, -1);
 
-    if (aud_get_verbose_mode ())
-        logger ("VFS: <%p> truncate to %" PRId64 "\n", file, length);
+    AUDDBG ("VFS: <%p> truncate to %" PRId64 "\n", file, length);
 
     return file->base->vfs_ftruncate_impl(file, length);
 }
@@ -364,8 +328,7 @@ EXPORT int64_t vfs_fsize (VFSFile * file)
 
     int64_t size = file->base->vfs_fsize_impl (file);
 
-    if (aud_get_verbose_mode ())
-        logger ("VFS: <%p> size = %" PRId64 "\n", file, size);
+    AUDDBG ("VFS: <%p> size = %" PRId64 "\n", file, size);
 
     return size;
 }
