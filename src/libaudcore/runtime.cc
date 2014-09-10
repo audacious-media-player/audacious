@@ -377,3 +377,72 @@ EXPORT void aud_cleanup ()
     config_save ();
     config_cleanup ();
 }
+
+static Index<aud_log_handler_t> log_handlers;
+
+EXPORT void aud_logger_subscribe (aud_log_handler_t hdl)
+{
+    log_handlers.append (hdl);
+}
+
+static void aud_logger_broadcast (LogLevel level, const char * filename, unsigned int line, const char * function, const char * message)
+{
+    for (aud_log_handler_t hdl : log_handlers)
+        hdl (level, filename, line, function, message);
+}
+
+EXPORT void aud_logger_log (LogLevel level, const char * filename, unsigned int line, const char * function, const char * format, ...)
+{
+    static char last[256] = "";
+    static int repeated = 0;
+
+    char buf[256];
+
+    va_list args;
+    va_start (args, format);
+    vsnprintf (buf, sizeof buf, format, args);
+    va_end (args);
+
+    if (! strcmp (buf, last))
+        repeated ++;
+    else
+    {
+        if (repeated)
+        {
+            char repeat_buf[256];
+            snprintf (repeat_buf, sizeof repeat_buf, "(last message repeated %d times)", repeated);
+
+            repeated = 0;
+
+            aud_logger_broadcast (level, __FILE__, __LINE__, __FUNCTION__, repeat_buf);
+        }
+
+        aud_logger_broadcast (level, filename, line, function, buf);
+        strcpy (last, buf);
+    }
+}
+
+EXPORT const char * aud_logger_get_level_name (LogLevel level)
+{
+    switch (level)
+    {
+    case LogLevel::Debug:
+        return "DEBUG";
+    case LogLevel::Info:
+        return "INFO";
+    case LogLevel::Warning:
+        return "WARNING";
+    case LogLevel::Error:
+        return "ERROR";
+    };
+
+    return "UNKNOWN";
+}
+
+EXPORT void aud_logger_stdio (LogLevel level, const char * filename, unsigned int line, const char * function, const char * message)
+{
+    if (! aud_get_verbose_mode ())
+        return;
+
+    printf ("%7s: %20s:%-5d %30s: %s", aud_logger_get_level_name (level), filename, line, function, message);
+}

@@ -321,6 +321,8 @@ int main (int argc, char * * argv)
 {
     atexit (main_cleanup);
 
+    aud_logger_subscribe (aud_logger_stdio);
+
 #ifdef HAVE_SIGWAIT
     signals_init_one ();
 #endif
