@@ -117,7 +117,7 @@ EXPORT void log (Level level, const char * file, int line, const char * func,
 
         for (const HandlerData & h : handlers)
         {
-            if (level >= h.level);
+            if (level >= h.level)
                 h.handler (level, file, line, func, message);
         }
     }
