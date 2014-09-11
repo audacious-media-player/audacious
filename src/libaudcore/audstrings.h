@@ -29,6 +29,7 @@
 #include <libaudcore/objects.h>
 
 int strcmp_safe (const char * a, const char * b);
+int strcmp_nocase (const char * a, const char * b);
 int strlen_bounded (const char * s, int len = -1);
 
 StringBuf str_copy (const char * s, int len = -1);

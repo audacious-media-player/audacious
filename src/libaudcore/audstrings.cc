@@ -70,12 +70,23 @@ static const char swap_case[256] =
 /* strcmp() that handles nullptr safely */
 EXPORT int strcmp_safe (const char * a, const char * b)
 {
-    if (a == nullptr)
-        return (b == nullptr) ? 0 : -1;
-    if (b == nullptr)
+    if (! a)
+        return b ? -1 : 0;
+    if (! b)
         return 1;
 
     return strcmp (a, b);
+}
+
+/* ASCII version of strcasecmp, also handles nullptr safely */
+EXPORT int strcmp_nocase (const char * a, const char * b)
+{
+    if (! a)
+        return b ? -1 : 0;
+    if (! b)
+        return 1;
+
+    return g_ascii_strcasecmp (a, b);
 }
 
 /* strlen() if <len> is negative, otherwise strnlen() */
@@ -586,9 +597,9 @@ EXPORT StringBuf uri_construct (const char * path, const char * reference)
 
 EXPORT int str_compare (const char * ap, const char * bp)
 {
-    if (ap == nullptr)
-        return (bp == nullptr) ? 0 : -1;
-    if (bp == nullptr)
+    if (! ap)
+        return bp ? -1 : 0;
+    if (! bp)
         return 1;
 
     unsigned char a = * ap ++, b = * bp ++;
@@ -630,9 +641,9 @@ EXPORT int str_compare (const char * ap, const char * bp)
 
 EXPORT int str_compare_encoded (const char * ap, const char * bp)
 {
-    if (ap == nullptr)
-        return (bp == nullptr) ? 0 : -1;
-    if (bp == nullptr)
+    if (! ap)
+        return bp ? -1 : 0;
+    if (! bp)
         return 1;
 
     unsigned char a = * ap ++, b = * bp ++;
