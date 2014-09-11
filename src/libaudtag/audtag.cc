@@ -39,7 +39,7 @@ EXPORT bool tuple_read (Tuple & tuple, VFSFile * handle)
 
     if (! module)
     {
-        AUDDBG ("read_tag() not supported for %s\n", vfs_get_filename (handle));
+        AUDINFO ("read_tag() not supported for %s\n", vfs_get_filename (handle));
         return false;
     }
 
@@ -52,7 +52,7 @@ EXPORT bool image_read (VFSFile * handle, void * * data, int64_t * size)
 
     if (! module)
     {
-        AUDDBG ("read_image() not supported for %s\n", vfs_get_filename (handle));
+        AUDINFO ("read_image() not supported for %s\n", vfs_get_filename (handle));
         return false;
     }
 
@@ -65,7 +65,7 @@ EXPORT bool tuple_write (const Tuple & tuple, VFSFile * handle, TagType new_type
 
     if (! module)
     {
-        AUDDBG ("write_tag() not supported for %s\n", vfs_get_filename (handle));
+        AUDINFO ("write_tag() not supported for %s\n", vfs_get_filename (handle));
         return false;
     }
 

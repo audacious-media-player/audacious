@@ -19,7 +19,6 @@
  */
 
 #include <glib.h>
-#include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
@@ -400,31 +399,28 @@ EXPORT void Tuple::set_filename (const char * filename)
         set_int (FIELD_SUBSONG_ID, isub);
 }
 
-#define APPEND(b, ...) snprintf (b + strlen (b), sizeof b - strlen (b), __VA_ARGS__)
-
 EXPORT void Tuple::set_format (const char * format, int chans, int rate, int brate)
 {
     if (format)
         set_str (FIELD_CODEC, format);
 
-    char buf[32];
-    buf[0] = 0;
+    StringBuf buf;
 
     if (chans > 0)
     {
         if (chans == 1)
-            APPEND (buf, _("Mono"));
+            str_insert (buf, -1, _("Mono"));
         else if (chans == 2)
-            APPEND (buf, _("Stereo"));
+            str_insert (buf, -1, _("Stereo"));
         else
-            APPEND (buf, dngettext (PACKAGE, "%d channel", "%d channels", chans), chans);
+            buf.combine (str_printf (dngettext (PACKAGE, "%d channel", "%d channels", chans), chans));
 
         if (rate > 0)
-            APPEND (buf, ", ");
+            str_insert (buf, -1, ", ");
     }
 
     if (rate > 0)
-        APPEND (buf, "%d kHz", rate / 1000);
+        buf.combine (str_printf ("%d kHz", rate / 1000));
 
     if (buf[0])
         set_str (FIELD_QUALITY, buf);

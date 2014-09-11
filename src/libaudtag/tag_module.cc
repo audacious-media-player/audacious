@@ -18,7 +18,6 @@
  */
 
 #include <glib.h>
-#include <stdio.h>
 
 #include <libaudcore/runtime.h>
 #include <libaudcore/tuple.h>
@@ -43,7 +42,7 @@ TagModule * find_tag_module (VFSFile * fd, TagType new_type)
 {
     for (TagModule * module : modules)
     {
-        if (vfs_fseek(fd, 0, SEEK_SET))
+        if (vfs_fseek(fd, 0, VFS_SEEK_SET))
         {
             AUDDBG("not a seekable file\n");
             return nullptr;

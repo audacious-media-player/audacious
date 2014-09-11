@@ -18,7 +18,6 @@
  * the use of this software.
  */
 
-#include <stdio.h>
 #include <string.h>
 
 #include <glib.h>
@@ -39,14 +38,14 @@
  *
  * @param c A character to write to the stream.
  * @param stream A #VFSFile object representing the stream.
- * @return The character on success, or EOF.
+ * @return The character on success, or -1.
  */
 EXPORT int vfs_fputc(int c, VFSFile *stream)
 {
     unsigned char uc = (unsigned char) c;
 
     if (!vfs_fwrite(&uc, 1, 1, stream)) {
-        return EOF;
+        return -1;
     }
 
     return uc;
@@ -70,12 +69,10 @@ EXPORT char *vfs_fgets(char *s, int n, VFSFile *stream)
     p = s;
 
     while (--n) {
-        if ((c = vfs_getc(stream))== EOF) {
+        if ((c = vfs_getc(stream)) < 0)
             break;
-        }
-        if ((*p++ = c) == '\n') {
+        if ((*p++ = c) == '\n')
             break;
-        }
     }
     if (p > s) {
         *p = 0;
@@ -96,7 +93,7 @@ EXPORT int vfs_fputs(const char *s, VFSFile *stream)
 {
     int64_t n = strlen(s);
 
-    return ((vfs_fwrite(s, 1, n, stream) == n) ? n : EOF);
+    return ((vfs_fwrite(s, 1, n, stream) == n) ? n : -1);
 }
 
 /**

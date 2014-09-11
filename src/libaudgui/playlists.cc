@@ -103,7 +103,7 @@ static void check_overwrite (void * data)
     if (! job->filename)
         return;
 
-    if (job->save && vfs_file_test (job->filename, G_FILE_TEST_EXISTS))
+    if (job->save && vfs_file_test (job->filename, VFS_EXISTS))
         confirm_overwrite (job);
     else
         finish_job (data);

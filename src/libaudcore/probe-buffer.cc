@@ -19,9 +19,7 @@
 
 #include "internal.h"
 
-#include <stdio.h>
 #include <string.h>
-
 #include <glib.h>
 
 #include "vfs.h"
@@ -74,14 +72,14 @@ static int64_t probe_buffer_fwrite (const void * data, int64_t size, int64_t cou
     return 0; /* not allowed */
 }
 
-static int probe_buffer_fseek (VFSFile * file, int64_t offset, int whence)
+static int probe_buffer_fseek (VFSFile * file, int64_t offset, VFSSeekType whence)
 {
     ProbeBuffer * p = (ProbeBuffer *) vfs_get_handle (file);
 
-    if (whence == SEEK_END)
+    if (whence == VFS_SEEK_END)
         return -1; /* not allowed */
 
-    if (whence == SEEK_CUR)
+    if (whence == VFS_SEEK_CUR)
         offset += p->at;
 
     if (offset < 0 || offset > (int64_t) sizeof p->buffer)

@@ -18,7 +18,6 @@
  */
 
 #include <assert.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -27,6 +26,7 @@
 #include "audstrings.h"
 #include "multihash.h"
 #include "objects.h"
+#include "runtime.h"
 
 #ifdef VALGRIND_FRIENDLY
 
@@ -224,7 +224,7 @@ EXPORT void String::raw_unref (char * str)
 
 static bool leak_cb (MultiHash::Node * node, void * state)
 {
-    fprintf (stderr, "String leaked: %s\n", ((StrNode *) node)->str);
+    AUDWARN ("String leaked: %s\n", ((StrNode *) node)->str);
     return false;
 }
 

@@ -17,7 +17,6 @@
  * the use of this software.
  */
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -56,7 +55,7 @@ namespace audtag {
 
 static bool read_id3v1_tag (VFSFile * file, ID3v1Tag * tag)
 {
-    if (vfs_fseek (file, -sizeof (ID3v1Tag), SEEK_END) < 0)
+    if (vfs_fseek (file, -sizeof (ID3v1Tag), VFS_SEEK_END) < 0)
         return false;
     if (vfs_fread (tag, 1, sizeof (ID3v1Tag), file) != sizeof (ID3v1Tag))
         return false;
@@ -66,7 +65,7 @@ static bool read_id3v1_tag (VFSFile * file, ID3v1Tag * tag)
 
 static bool read_id3v1_ext (VFSFile * file, ID3v1Ext * ext)
 {
-    if (vfs_fseek (file, -(sizeof (ID3v1Ext) + sizeof (ID3v1Tag)), SEEK_END) < 0)
+    if (vfs_fseek (file, -(sizeof (ID3v1Ext) + sizeof (ID3v1Tag)), VFS_SEEK_END) < 0)
         return false;
     if (vfs_fread (ext, 1, sizeof (ID3v1Ext), file) != sizeof (ID3v1Ext))
         return false;

@@ -17,7 +17,6 @@
  * the use of this software.
  */
 
-#include <stdio.h>
 #include <unistd.h>
 
 #include <glib.h>
@@ -199,7 +198,7 @@ bool open_temp_file_for (TempFile * temp, VFSFile * file)
 
 bool copy_region_to_temp_file (TempFile * temp, VFSFile * file, int64_t offset, int64_t size)
 {
-    if (vfs_fseek (file, offset, SEEK_SET) < 0)
+    if (vfs_fseek (file, offset, VFS_SEEK_SET) < 0)
         return false;
 
     char buf[16384];
@@ -243,7 +242,7 @@ bool replace_with_temp_file (TempFile * temp, VFSFile * file)
     if (lseek (temp->fd, 0, SEEK_SET) < 0)
         return false;
 
-    if (vfs_fseek (file, 0, SEEK_SET) < 0)
+    if (vfs_fseek (file, 0, VFS_SEEK_SET) < 0)
         return false;
 
     if (vfs_ftruncate (file, 0) < 0)

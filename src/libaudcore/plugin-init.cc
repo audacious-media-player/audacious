@@ -20,7 +20,6 @@
 #include "plugins-internal.h"
 
 #include <errno.h>
-#include <stdio.h>
 #include <stdlib.h>
 
 #include <glib.h>
@@ -113,11 +112,11 @@ static bool probe_cb (PluginHandle * p, PluginHandle * * pp)
 {
     int type = aud_plugin_get_type (p);
 
-    AUDDBG ("Trying to start %s.\n", aud_plugin_get_name (p));
+    AUDINFO ("Trying to start %s.\n", aud_plugin_get_name (p));
 
     if (! table[type].f.s.set_current (p))
     {
-        AUDDBG ("%s failed to start.\n", aud_plugin_get_name (p));
+        AUDWARN ("%s failed to start.\n", aud_plugin_get_name (p));
         return true; /* keep searching */
     }
 
@@ -132,22 +131,22 @@ static void start_single (int type)
 
     if ((p = find_enabled (type)) != nullptr)
     {
-        AUDDBG ("Starting selected %s plugin %s.\n", table[type].name,
+        AUDINFO ("Starting selected %s plugin %s.\n", table[type].name,
          aud_plugin_get_name (p));
 
         if (table[type].f.s.set_current (p))
             return;
 
-        AUDDBG ("%s failed to start.\n", aud_plugin_get_name (p));
+        AUDWARN ("%s failed to start.\n", aud_plugin_get_name (p));
         plugin_set_enabled (p, false);
     }
 
-    AUDDBG ("Probing for %s plugin.\n", table[type].name);
+    AUDINFO ("Probing for %s plugin.\n", table[type].name);
     aud_plugin_for_each (type, (PluginForEachFunc) probe_cb, & p);
 
     if (! p)
     {
-        fprintf (stderr, "FATAL: No %s plugin found.\n"
+        AUDERR ("No %s plugin found.\n"
          "(Did you forget to install audacious-plugins?)\n", table[type].name);
         abort ();
     }
@@ -155,11 +154,11 @@ static void start_single (int type)
 
 static bool start_multi_cb (PluginHandle * p, void * type)
 {
-    AUDDBG ("Starting %s.\n", aud_plugin_get_name (p));
+    AUDINFO ("Starting %s.\n", aud_plugin_get_name (p));
 
     if (! table[GPOINTER_TO_INT (type)].f.m.start (p))
     {
-        AUDDBG ("%s failed to start; disabling.\n", aud_plugin_get_name (p));
+        AUDWARN ("%s failed to start; disabling.\n", aud_plugin_get_name (p));
         plugin_set_enabled (p, false);
     }
 
@@ -208,7 +207,7 @@ void start_plugins_two (void)
 
 static bool stop_multi_cb (PluginHandle * p, void * type)
 {
-    AUDDBG ("Shutting down %s.\n", aud_plugin_get_name (p));
+    AUDINFO ("Shutting down %s.\n", aud_plugin_get_name (p));
     table[GPOINTER_TO_INT (type)].f.m.stop (p);
     return true;
 }
@@ -221,7 +220,7 @@ static void stop_plugins (int type)
 
     if (table[type].is_single)
     {
-        AUDDBG ("Shutting down %s.\n", aud_plugin_get_name
+        AUDINFO ("Shutting down %s.\n", aud_plugin_get_name
          (table[type].f.s.get_current ()));
         table[type].f.s.set_current (nullptr);
     }
@@ -257,7 +256,7 @@ static bool enable_single (int type, PluginHandle * p)
 {
     PluginHandle * old = table[type].f.s.get_current ();
 
-    AUDDBG ("Switching from %s to %s.\n", aud_plugin_get_name (old),
+    AUDINFO ("Switching from %s to %s.\n", aud_plugin_get_name (old),
      aud_plugin_get_name (p));
 
     if (table[type].f.s.set_current (p))
@@ -272,25 +271,25 @@ static bool enable_single (int type, PluginHandle * p)
         return true;
     }
 
-    fprintf (stderr, "%s failed to start; falling back to %s.\n",
+    AUDERR ("%s failed to start; falling back to %s.\n",
      aud_plugin_get_name (p), aud_plugin_get_name (old));
 
     if (table[type].f.s.set_current (old))
         return false;
 
-    fprintf (stderr, "FATAL: %s failed to start.\n", aud_plugin_get_name (old));
+    AUDERR ("%s failed to start.\n", aud_plugin_get_name (old));
     abort ();
 }
 
 static bool enable_multi (int type, PluginHandle * p, bool enable)
 {
-    AUDDBG ("%sabling %s.\n", enable ? "En" : "Dis", aud_plugin_get_name (p));
+    AUDINFO ("%sabling %s.\n", enable ? "En" : "Dis", aud_plugin_get_name (p));
 
     if (enable)
     {
         if (table[type].f.m.start && ! table[type].f.m.start (p))
         {
-            fprintf (stderr, "%s failed to start.\n", aud_plugin_get_name (p));
+            AUDERR ("%s failed to start.\n", aud_plugin_get_name (p));
             return false;
         }
 

@@ -22,7 +22,6 @@
 
 #define __STDC_FORMAT_MACROS
 #include <inttypes.h>
-#include <stdio.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -108,14 +107,17 @@ vfs_fopen(const char * path,
 
         if (! s)
         {
-            fprintf (stderr, "Invalid URI: %s\n", path);
+            AUDERR ("Invalid URI: %s\n", path);
             return nullptr;
         }
 
         StringBuf scheme = str_copy (path, s - path);
 
         if (! (vtable = lookup_func (scheme)))
+        {
+            AUDERR ("Unknown URI scheme: %s://", (const char *) scheme);
             return nullptr;
+        }
     }
 
     const char * sub;
@@ -129,7 +131,7 @@ vfs_fopen(const char * path,
 
     VFSFile * file = vfs_new (path, vtable, handle);
 
-    AUDDBG ("VFS: <%p> open (mode %s) %s\n", file, mode, path);
+    AUDINFO ("<%p> open (mode %s) %s\n", file, mode, path);
 
     return file;
 }
@@ -145,7 +147,7 @@ vfs_fclose(VFSFile * file)
 {
     g_return_val_if_fail (file && file->sig == VFS_SIG, -1);
 
-    AUDDBG ("VFS: <%p> close\n", file);
+    AUDINFO ("<%p> close\n", file);
 
     int ret = 0;
 
@@ -172,8 +174,8 @@ EXPORT int64_t vfs_fread (void * ptr, int64_t size, int64_t nmemb, VFSFile * fil
 
     int64_t readed = file->base->vfs_fread_impl (ptr, size, nmemb, file);
 
-/*  AUDDBG ("VFS: <%p> read %"PRId64" elements of size %"PRId64" = "
-         "%"PRId64"\n", file, nmemb, size, readed); */
+    AUDDBG ("<%p> read %" PRId64 " elements of size %" PRId64 " = %" PRId64 "\n",
+     file, nmemb, size, readed);
 
     return readed;
 }
@@ -193,8 +195,8 @@ EXPORT int64_t vfs_fwrite (const void * ptr, int64_t size, int64_t nmemb, VFSFil
 
     int64_t written = file->base->vfs_fwrite_impl (ptr, size, nmemb, file);
 
-    AUDDBG ("VFS: <%p> write %" PRId64 " elements of size %" PRId64 " = "
-         "%" PRId64 "\n", file, nmemb, size, written);
+    AUDDBG ("<%p> write %" PRId64 " elements of size %" PRId64 " = %" PRId64 "\n",
+     file, nmemb, size, written);
 
     return written;
 }
@@ -203,7 +205,7 @@ EXPORT int64_t vfs_fwrite (const void * ptr, int64_t size, int64_t nmemb, VFSFil
  * Reads a character from a VFS stream.
  *
  * @param file #VFSFile object that represents the VFS stream.
- * @return On success, a character. Otherwise, EOF.
+ * @return On success, a character. Otherwise, -1.
  */
 EXPORT int
 vfs_getc(VFSFile *file)
@@ -211,7 +213,7 @@ vfs_getc(VFSFile *file)
     unsigned char c;
 
     if (vfs_fread (& c, 1, 1, file) != 1)
-        return EOF;
+        return -1;
 
     return c;
 }
@@ -226,7 +228,7 @@ vfs_getc(VFSFile *file)
 EXPORT int
 vfs_ungetc(int c, VFSFile *file)
 {
-    if (vfs_fseek (file, -1, SEEK_CUR) < 0)
+    if (vfs_fseek (file, -1, VFS_SEEK_CUR) < 0)
         return EOF;
 
     return c;
@@ -248,18 +250,18 @@ vfs_ungetc(int c, VFSFile *file)
 EXPORT int
 vfs_fseek(VFSFile * file,
           int64_t offset,
-          int whence)
+          VFSSeekType whence)
 {
     g_return_val_if_fail (file && file->sig == VFS_SIG, -1);
 
-    AUDDBG ("VFS: <%p> seek to %" PRId64 " from %s\n", file, offset,
+    AUDDBG ("<%p> seek to %" PRId64 " from %s\n", file, offset,
          whence == SEEK_CUR ? "current" : whence == SEEK_SET ? "beginning" :
          whence == SEEK_END ? "end" : "invalid");
 
     if (! file->base->vfs_fseek_impl (file, offset, whence))
         return 0;
 
-    AUDDBG ("VFS: <%p> seek failed!\n", file);
+    AUDDBG ("<%p> seek failed!\n", file);
 
     return -1;
 }
@@ -277,7 +279,7 @@ vfs_ftell(VFSFile * file)
 
     int64_t told = file->base->vfs_ftell_impl (file);
 
-    AUDDBG ("VFS: <%p> tell = %" PRId64 "\n", file, told);
+    AUDDBG ("<%p> tell = %" PRId64 "\n", file, told);
 
     return told;
 }
@@ -295,7 +297,7 @@ vfs_feof(VFSFile * file)
 
     bool eof = file->base->vfs_feof_impl (file);
 
-    AUDDBG ("VFS: <%p> eof = %s\n", file, eof ? "yes" : "no");
+    AUDDBG ("<%p> eof = %s\n", file, eof ? "yes" : "no");
 
     return eof;
 }
@@ -311,7 +313,7 @@ EXPORT int vfs_ftruncate (VFSFile * file, int64_t length)
 {
     g_return_val_if_fail (file && file->sig == VFS_SIG, -1);
 
-    AUDDBG ("VFS: <%p> truncate to %" PRId64 "\n", file, length);
+    AUDDBG ("<%p> truncate to %" PRId64 "\n", file, length);
 
     return file->base->vfs_ftruncate_impl(file, length);
 }
@@ -328,7 +330,7 @@ EXPORT int64_t vfs_fsize (VFSFile * file)
 
     int64_t size = file->base->vfs_fsize_impl (file);
 
-    AUDDBG ("VFS: <%p> size = %" PRId64 "\n", file, size);
+    AUDDBG ("<%p> size = %" PRId64 "\n", file, size);
 
     return size;
 }
@@ -358,7 +360,7 @@ vfs_get_metadata(VFSFile * file, const char * field)
  * @return The result of g_file_test().
  */
 EXPORT bool
-vfs_file_test(const char * path, int test)
+vfs_file_test(const char * path, VFSFileTest test)
 {
     if (strncmp (path, "file://", 7))
         return false; /* only local files are handled */
@@ -380,7 +382,7 @@ vfs_file_test(const char * path, int test)
             return false;
 
         if (S_ISLNK (st.st_mode))
-            test &= ~VFS_IS_SYMLINK;
+            test = (VFSFileTest) (test & ~VFS_IS_SYMLINK);
     }
 #endif
 
@@ -391,13 +393,13 @@ vfs_file_test(const char * path, int test)
             return false;
 
         if (S_ISREG (st.st_mode))
-            test &= ~VFS_IS_REGULAR;
+            test = (VFSFileTest) (test & ~VFS_IS_REGULAR);
         if (S_ISDIR (st.st_mode))
-            test &= ~VFS_IS_DIR;
+            test = (VFSFileTest) (test & ~VFS_IS_DIR);
         if (st.st_mode & S_IXUSR)
-            test &= ~VFS_IS_EXECUTABLE;
+            test = (VFSFileTest) (test & ~VFS_IS_EXECUTABLE);
 
-        test &= ~VFS_EXISTS;
+        test = (VFSFileTest) (test & ~VFS_EXISTS);
     }
 
     return ! test;

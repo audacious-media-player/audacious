@@ -19,7 +19,6 @@
 
 #include "playlist-internal.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -214,7 +213,7 @@ EXPORT void aud_playlist_remove_failed (int playlist)
         String filename = aud_playlist_entry_get_filename (playlist, count);
 
         /* vfs_file_test() only works for file:// URIs currently */
-        if (! strncmp (filename, "file://", 7) && ! vfs_file_test (filename, G_FILE_TEST_EXISTS))
+        if (! strncmp (filename, "file://", 7) && ! vfs_file_test (filename, VFS_EXISTS))
             aud_playlist_entry_set_selected (playlist, count, true);
     }
 
@@ -357,7 +356,7 @@ static void save_playlists_real (void)
         GError * error = nullptr;
         if (! g_file_set_contents (order_path, order_string, -1, & error))
         {
-            fprintf (stderr, "Cannot write to %s: %s\n", (const char *) order_path, error->message);
+            AUDERR ("Cannot write to %s: %s\n", (const char *) order_path, error->message);
             g_error_free (error);
         }
     }

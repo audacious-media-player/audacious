@@ -141,13 +141,18 @@ static void setup_output (void)
 
     if (s_output && format == out_format && channels == out_channels && rate ==
      out_rate && ! PLUGIN_HAS_FUNC (cop, force_reopen))
+    {
+        AUDINFO ("Reusing output stream, format %d, %d channels, %d Hz.\n", format, channels, rate);
         return;
+    }
 
     if (s_output)
         cleanup_output ();
 
     if (! cop || ! PLUGIN_HAS_FUNC (cop, open_audio) || ! cop->open_audio (format, rate, channels))
         return;
+
+    AUDINFO ("Opened output stream, format %d, %d channels, %d Hz.\n", format, channels, rate);
 
     s_output = true;
 
@@ -381,11 +386,11 @@ void output_set_replaygain_info (const ReplayGainInfo * info)
         memcpy (& gain_info, info, sizeof (ReplayGainInfo));
         s_gain = true;
 
-        AUDDBG ("Replay Gain info:\n");
-        AUDDBG (" album gain: %f dB\n", info->album_gain);
-        AUDDBG (" album peak: %f\n", info->album_peak);
-        AUDDBG (" track gain: %f dB\n", info->track_gain);
-        AUDDBG (" track peak: %f\n", info->track_peak);
+        AUDINFO ("Replay Gain info:\n");
+        AUDINFO (" album gain: %f dB\n", info->album_gain);
+        AUDINFO (" album peak: %f\n", info->album_peak);
+        AUDINFO (" track gain: %f dB\n", info->track_gain);
+        AUDINFO (" track peak: %f\n", info->track_peak);
     }
 
     UNLOCK_ALL;

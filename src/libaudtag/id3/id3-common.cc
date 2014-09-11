@@ -19,7 +19,6 @@
 
 #include "id3-common.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 

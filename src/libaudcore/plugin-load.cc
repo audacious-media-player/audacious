@@ -53,15 +53,14 @@ static Index<LoadedModule> loaded_modules;
 
 Plugin * plugin_load (const char * filename)
 {
-    AUDDBG ("Loading plugin: %s.\n", filename);
+    AUDINFO ("Loading plugin: %s.\n", filename);
 
     GModule * module = g_module_open (filename,
      (GModuleFlags) (G_MODULE_BIND_LAZY | G_MODULE_BIND_LOCAL));
 
     if (! module)
     {
-        fprintf (stderr, " *** ERROR: %s could not be loaded: %s\n", filename,
-         g_module_error ());
+        AUDERR ("%s could not be loaded: %s\n", filename, g_module_error ());
         return nullptr;
     }
 
@@ -71,7 +70,7 @@ Plugin * plugin_load (const char * filename)
 
     if (! header || header->magic != _AUD_PLUGIN_MAGIC)
     {
-        fprintf (stderr, " *** ERROR: %s is not a valid Audacious plugin.\n", filename);
+        AUDERR ("%s is not a valid Audacious plugin.\n", filename);
         g_module_close (module);
         return nullptr;
     }
@@ -79,8 +78,7 @@ Plugin * plugin_load (const char * filename)
     if (header->version < _AUD_PLUGIN_VERSION_MIN ||
         header->version > _AUD_PLUGIN_VERSION)
     {
-        fprintf (stderr, " *** ERROR: %s is not compatible with this version "
-         "of Audacious.\n", filename);
+        AUDERR ("%s is not compatible with this version of Audacious.\n", filename);
         g_module_close (module);
         return nullptr;
     }
@@ -92,7 +90,7 @@ Plugin * plugin_load (const char * filename)
     {
         if (PLUGIN_HAS_FUNC (header, init) && ! header->init ())
         {
-            fprintf (stderr, " *** ERROR: %s failed to initialize.\n", filename);
+            AUDERR ("%s failed to initialize.\n", filename);
             g_module_close (module);
             return nullptr;
         }
@@ -131,7 +129,7 @@ static bool scan_plugin_func (const char * path, const char * basename, void * d
     GStatBuf st;
     if (g_stat (path, & st) < 0)
     {
-        fprintf (stderr, "Unable to stat %s: %s\n", path, strerror (errno));
+        AUDERR ("Unable to stat %s: %s\n", path, strerror (errno));
         return false;
     }
 

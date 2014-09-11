@@ -106,7 +106,7 @@ void vis_send_audio (const float * data, int channels)
 
 static bool vis_load (PluginHandle * plugin, void * unused)
 {
-    AUDDBG ("Activating %s.\n", aud_plugin_get_name (plugin));
+    AUDINFO ("Activating %s.\n", aud_plugin_get_name (plugin));
     VisPlugin * header = (VisPlugin *) aud_plugin_get_header (plugin);
     g_return_val_if_fail (header, false);
 
@@ -124,7 +124,7 @@ static bool vis_load (PluginHandle * plugin, void * unused)
 
 static bool vis_unload (PluginHandle * plugin, void * unused)
 {
-    AUDDBG ("Deactivating %s.\n", aud_plugin_get_name (plugin));
+    AUDINFO ("Deactivating %s.\n", aud_plugin_get_name (plugin));
     VisPlugin * header = (VisPlugin *) aud_plugin_get_header (plugin);
     g_return_val_if_fail (header, false);
 

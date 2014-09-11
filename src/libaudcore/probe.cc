@@ -20,7 +20,6 @@
 #include "probe.h"
 
 #include <glib.h>
-#include <stdio.h>
 #include <string.h>
 
 #include "audstrings.h"
@@ -50,14 +49,15 @@ static bool check_opened (ProbeState * state)
     if (state->handle != nullptr)
         return true;
 
-    AUDDBG ("FAILED.\n");
+    AUDWARN ("Failed to open %s.\n", state->filename);
     state->failed = true;
     return false;
 }
 
 static bool probe_func (PluginHandle * plugin, ProbeState * state)
 {
-    AUDDBG ("Trying %s.\n", aud_plugin_get_name (plugin));
+    AUDINFO ("Trying input plugin %s.\n", aud_plugin_get_name (plugin));
+
     InputPlugin * decoder = (InputPlugin *) aud_plugin_get_header (plugin);
     if (decoder == nullptr)
         return true;
@@ -73,7 +73,7 @@ static bool probe_func (PluginHandle * plugin, ProbeState * state)
             return false;
         }
 
-        if (vfs_fseek (state->handle, 0, SEEK_SET) < 0)
+        if (vfs_fseek (state->handle, 0, VFS_SEEK_SET) < 0)
             return false;
     }
 
@@ -103,7 +103,7 @@ static bool probe_func_fast (PluginHandle * plugin, ProbeState * state)
             return false;
     }
 
-    AUDDBG ("Guessing %s.\n", aud_plugin_get_name (plugin));
+    AUDDBG ("Guessing input plugin %s.\n", aud_plugin_get_name (plugin));
     state->plugin = plugin;
     return true;
 }
@@ -153,7 +153,7 @@ EXPORT PluginHandle * aud_file_find_decoder (const char * filename, bool fast)
 {
     ProbeState state;
 
-    AUDDBG ("Probing %s.\n", filename);
+    AUDINFO ("Probing %s.\n", filename);
     state.plugin = nullptr;
     state.filename = filename;
     state.handle = nullptr;
@@ -181,9 +181,9 @@ DONE:
         vfs_fclose (state.handle);
 
     if (state.plugin != nullptr)
-        AUDDBG ("Probe succeeded: %s\n", aud_plugin_get_name (state.plugin));
+        AUDINFO ("Probe succeeded: %s\n", aud_plugin_get_name (state.plugin));
     else
-        AUDDBG ("Probe failed.\n");
+        AUDINFO ("Probe failed.\n");
 
     return state.plugin;
 }

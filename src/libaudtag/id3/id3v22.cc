@@ -19,7 +19,6 @@
  */
 
 #include <glib.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -103,7 +102,7 @@ static bool read_header (VFSFile * handle, int * version, bool *
 {
     ID3v2Header header;
 
-    if (vfs_fseek (handle, 0, SEEK_SET))
+    if (vfs_fseek (handle, 0, VFS_SEEK_SET))
         return false;
 
     if (vfs_fread (& header, 1, sizeof (ID3v2Header), handle) != sizeof

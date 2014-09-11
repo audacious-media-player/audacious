@@ -117,7 +117,7 @@ EXPORT Index<EqualizerPreset> aud_import_winamp_presets (VFSFile * file)
     {
         preset_name[180] = 0; /* protect against buffer overflow */
 
-        if (vfs_fseek (file, 77, SEEK_CUR)) /* unknown crap --asphyx */
+        if (vfs_fseek (file, 77, VFS_SEEK_CUR)) /* unknown crap --asphyx */
             break;
 
         if (vfs_fread (bands, 1, 11, file) != 11)

@@ -351,7 +351,7 @@ static void drag_end (GtkWidget * widget, GdkDragContext * context,
 }
 
 static void drag_data_get (GtkWidget * widget, GdkDragContext * context,
- GtkSelectionData * sel, unsigned int info, unsigned int time, ListModel * model)
+ GtkSelectionData * sel, unsigned info, unsigned time, ListModel * model)
 {
     g_signal_stop_emission_by_name (widget, "drag-data-get");
 
@@ -416,7 +416,7 @@ static void start_autoscroll (ListModel * model, GtkWidget * widget, int speed)
 }
 
 static gboolean drag_motion (GtkWidget * widget, GdkDragContext * context,
- int x, int y, unsigned int time, ListModel * model)
+ int x, int y, unsigned time, ListModel * model)
 {
     g_signal_stop_emission_by_name (widget, "drag-motion");
 
@@ -469,7 +469,7 @@ static gboolean drag_motion (GtkWidget * widget, GdkDragContext * context,
 }
 
 static void drag_leave (GtkWidget * widget, GdkDragContext * context,
- unsigned int time, ListModel * model)
+ unsigned time, ListModel * model)
 {
     g_signal_stop_emission_by_name (widget, "drag-leave");
 
@@ -478,7 +478,7 @@ static void drag_leave (GtkWidget * widget, GdkDragContext * context,
 }
 
 static gboolean drag_drop (GtkWidget * widget, GdkDragContext * context, int x,
- int y, unsigned int time, ListModel * model)
+ int y, unsigned time, ListModel * model)
 {
     g_signal_stop_emission_by_name (widget, "drag-drop");
 
@@ -508,7 +508,7 @@ static gboolean drag_drop (GtkWidget * widget, GdkDragContext * context, int x,
 }
 
 static void drag_data_received (GtkWidget * widget, GdkDragContext * context, int x,
- int y, GtkSelectionData * sel, unsigned int info, unsigned int time, ListModel * model)
+ int y, GtkSelectionData * sel, unsigned info, unsigned time, ListModel * model)
 {
     g_signal_stop_emission_by_name (widget, "drag-data-received");
 

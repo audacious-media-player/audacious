@@ -71,7 +71,7 @@ static bool interface_load (PluginHandle * plugin)
     IfacePlugin * i = (IfacePlugin *) aud_plugin_get_header (plugin);
     g_return_val_if_fail (i, false);
 
-    AUDDBG ("Loading %s.\n", aud_plugin_get_name (plugin));
+    AUDINFO ("Loading %s.\n", aud_plugin_get_name (plugin));
 
     if (PLUGIN_HAS_FUNC (i, init) && ! i->init ())
         return false;
@@ -90,7 +90,7 @@ static void interface_unload (void)
 {
     g_return_if_fail (current_interface);
 
-    AUDDBG ("Unloading %s.\n", aud_plugin_get_name (current_plugin));
+    AUDINFO ("Unloading %s.\n", aud_plugin_get_name (current_plugin));
 
     if (PLUGIN_HAS_FUNC (current_interface, show) && aud_get_bool (0, "show_interface"))
         current_interface->show (false);
@@ -127,7 +127,7 @@ EXPORT bool aud_ui_is_shown (void)
 EXPORT void aud_ui_show_error (const char * message)
 {
     if (aud_get_headless_mode ())
-        fprintf (stderr, "ERROR: %s\n", message);
+        AUDERR ("%s\n", message);
     else
         event_queue_full ("ui show error", String::raw_get (message),
          (GDestroyNotify) String::raw_unref);

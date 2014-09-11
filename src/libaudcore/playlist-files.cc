@@ -60,6 +60,8 @@ static bool playlist_load_cb (PluginHandle * plugin, void * data_)
 {
     PlaylistData * data = (PlaylistData *) data_;
 
+    AUDINFO ("Trying playlist plugin %s.\n", aud_plugin_get_name (plugin));
+
     PlaylistPlugin * pp = (PlaylistPlugin *) aud_plugin_get_header (plugin);
     if (! pp || ! PLUGIN_HAS_FUNC (pp, load))
         return true; /* try another plugin */
@@ -82,7 +84,7 @@ bool playlist_load (const char * filename, String & title, Index<PlaylistAddItem
         filename
     };
 
-    AUDDBG ("Loading playlist %s.\n", filename);
+    AUDINFO ("Loading playlist %s.\n", filename);
     plugin_for_filename (filename, playlist_load_cb, & data);
 
     if (! data.plugin_found)
@@ -150,7 +152,7 @@ EXPORT bool aud_playlist_save (int list, const char * filename)
         data.items[i].tuple = aud_playlist_entry_get_tuple (list, i, fast);
     }
 
-    AUDDBG ("Saving playlist %s.\n", filename);
+    AUDINFO ("Saving playlist %s.\n", filename);
     plugin_for_filename (filename, playlist_save_cb, & data);
 
     if (! data.plugin_found)

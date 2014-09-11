@@ -129,7 +129,7 @@ EXPORT GdkPixbuf * audgui_pixbuf_from_data (const void * data, int64_t size)
     }
     else
     {
-        AUDDBG ("error while loading pixbuf: %s\n", error->message);
+        AUDWARN ("While loading pixbuf: %s\n", error->message);
         g_error_free (error);
     }
 

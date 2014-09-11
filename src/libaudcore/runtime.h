@@ -20,9 +20,7 @@
 #ifndef LIBAUDCORE_RUNTIME_H
 #define LIBAUDCORE_RUNTIME_H
 
-#include <stdio.h>
-
-#include "objects.h"
+#include <libaudcore/objects.h>
 
 enum class AudPath {
     BinDir,
@@ -47,6 +45,31 @@ enum class OutputReset {
     ResetPlugin
 };
 
+namespace audlog
+{
+    enum Level {
+        Debug,
+        Info,
+        Warning,
+        Error
+    };
+
+    typedef void (* Handler) (Level level, const char * file, int line,
+     const char * func, const char * message);
+
+    void set_stderr_level (Level level);
+    void subscribe (Handler handler, Level level);
+    void unsubscribe (Handler handler);
+
+    void log (Level level, const char * file, int line, const char * func,
+     const char * format, ...);
+}
+
+#define AUDERR(...) do { audlog::log (audlog::Error, __FILE__, __LINE__, __FUNCTION__, __VA_ARGS__); } while (0)
+#define AUDWARN(...) do { audlog::log (audlog::Warning, __FILE__, __LINE__, __FUNCTION__, __VA_ARGS__); } while (0)
+#define AUDINFO(...) do { audlog::log (audlog::Info, __FILE__, __LINE__, __FUNCTION__, __VA_ARGS__); } while (0)
+#define AUDDBG(...) do { audlog::log (audlog::Debug, __FILE__, __LINE__, __FUNCTION__, __VA_ARGS__); } while (0)
+
 void aud_init_paths ();
 void aud_cleanup_paths ();
 
@@ -55,31 +78,8 @@ const char * aud_get_path (AudPath id);
 void aud_set_headless_mode (bool headless);
 bool aud_get_headless_mode ();
 
-void aud_set_verbose_mode (bool verbose);
-bool aud_get_verbose_mode ();
-
 void aud_set_mainloop_type (MainloopType type);
 MainloopType aud_get_mainloop_type ();
-
-enum class LogLevel {
-    Debug,
-    Info,
-    Warning,
-    Error
-};
-
-typedef void (* aud_log_handler_t) (LogLevel level, const char * file, unsigned int line, const char * function, const char * message);
-
-void aud_logger_subscribe (aud_log_handler_t hdl);
-void aud_logger_unsubscribe (aud_log_handler_t hdl);
-void aud_logger_shutdown (void);
-void aud_logger_log (LogLevel level, const char * file, unsigned int line, const char * function, const char * format, ...);
-void aud_logger_stdio (LogLevel level, const char * filename, unsigned int line, const char * function, const char * message);
-const char * aud_logger_get_level_name (LogLevel level);
-
-#define AUDDBG(...) do { \
-    aud_logger_log (LogLevel::Debug, __FILE__, __LINE__, __FUNCTION__, __VA_ARGS__); \
-} while (0)
 
 /* Requires: aud_init_paths() */
 void aud_init_i18n ();

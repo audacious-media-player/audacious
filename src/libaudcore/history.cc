@@ -20,6 +20,8 @@
 #include "audstrings.h"
 #include "runtime.h"
 
+#include <string.h>
+
 #define MAX_ENTRIES 30
 
 EXPORT String aud_history_get (int entry)

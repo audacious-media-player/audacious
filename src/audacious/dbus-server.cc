@@ -17,8 +17,6 @@
  * the use of this software.
  */
 
-#include <stdio.h>
-
 #include <libaudcore/drct.h>
 #include <libaudcore/equalizer.h>
 #include <libaudcore/interface.h>
@@ -738,14 +736,14 @@ static GDBusInterfaceSkeleton * skeleton = nullptr;
 
 static void name_acquired (GDBusConnection *, const char *, void *)
 {
-    AUDDBG ("Owned D-Bus name (org.atheme.audacious) on session bus.\n");
+    AUDINFO ("Owned D-Bus name (org.atheme.audacious) on session bus.\n");
 
     g_main_loop_quit (mainloop);
 }
 
 static void name_lost (GDBusConnection *, const char *, void *)
 {
-    AUDDBG ("Owning D-Bus name (org.atheme.audacious) failed, already taken?\n");
+    AUDINFO ("Owning D-Bus name (org.atheme.audacious) failed, already taken?\n");
 
     g_bus_unown_name (owner_id);
     owner_id = 0;
@@ -793,7 +791,7 @@ StartupType dbus_server_init (void)
 ERROR:
     if (error)
     {
-        fprintf (stderr, "D-Bus error: %s\n", error->message);
+        AUDERR ("D-Bus error: %s\n", error->message);
         g_error_free (error);
     }
 

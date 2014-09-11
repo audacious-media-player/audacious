@@ -17,6 +17,7 @@
  * the use of this software.
  */
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -39,13 +40,13 @@
 #include "util.h"
 
 static struct {
-    bool help, version;
-    bool play, pause, play_pause, stop, fwd, rew;
-    bool enqueue, enqueue_to_temp;
-    bool mainwin, show_jump_box;
-    bool headless, quit_after_play;
-    bool verbose;
-    bool qt;
+    int help, version;
+    int play, pause, play_pause, stop, fwd, rew;
+    int enqueue, enqueue_to_temp;
+    int mainwin, show_jump_box;
+    int headless, quit_after_play;
+    int verbose;
+    int qt;
 } options;
 
 static Index<PlaylistAddItem> filenames;
@@ -53,7 +54,7 @@ static Index<PlaylistAddItem> filenames;
 static const struct {
     const char * long_arg;
     char short_arg;
-    bool * value;
+    int * value;
     const char * desc;
 } arg_map[] = {
     {"help", 'h', & options.help, N_("Show command-line help")},
@@ -70,7 +71,7 @@ static const struct {
     {"show-jump-box", 'j', & options.show_jump_box, N_("Display the jump-to-song window")},
     {"headless", 'H', & options.headless, N_("Start without a graphical interface")},
     {"quit-after-play", 'q', & options.quit_after_play, N_("Quit on playback stop")},
-    {"verbose", 'V', & options.verbose, N_("Print debugging messages")},
+    {"verbose", 'V', & options.verbose, N_("Print debugging messages (may be used twice)")},
 #if defined(USE_QT) && defined(USE_GTK)
     {"qt", 'Q', & options.qt, N_("Run in Qt mode")},
 #endif
@@ -115,7 +116,7 @@ static bool parse_options (int argc, char * * argv)
             {
                 if (! strcmp (arg + 2, arg_info.long_arg))
                 {
-                    * arg_info.value = true;
+                    (* arg_info.value) ++;
                     found = true;
                     break;
                 }
@@ -138,7 +139,7 @@ static bool parse_options (int argc, char * * argv)
                 {
                     if (arg[c] == arg_info.short_arg)
                     {
-                        * arg_info.value = true;
+                        (* arg_info.value) ++;
                         found = true;
                         break;
                     }
@@ -155,7 +156,11 @@ static bool parse_options (int argc, char * * argv)
     }
 
     aud_set_headless_mode (options.headless);
-    aud_set_verbose_mode (options.verbose);
+
+    if (options.verbose >= 2)
+        audlog::set_stderr_level (audlog::Debug);
+    else if (options.verbose)
+        audlog::set_stderr_level (audlog::Info);
 
     if (options.qt)
         aud_set_mainloop_type (MainloopType::Qt);
@@ -201,7 +206,7 @@ static void do_remote (void)
      "org.atheme.audacious", "/org/atheme/audacious", nullptr, & error)))
         goto ERR;
 
-    AUDDBG ("Connected to remote session.\n");
+    AUDINFO ("Connected to remote session.\n");
 
     /* if no command line options, then present running instance */
     if (! (filenames.len () || options.play || options.pause ||
@@ -253,7 +258,7 @@ static void do_remote (void)
 ERR:
     if (error)
     {
-        fprintf (stderr, "D-Bus error: %s\n", error->message);
+        AUDERR ("D-Bus error: %s\n", error->message);
         g_error_free (error);
     }
 }
@@ -321,8 +326,6 @@ int main (int argc, char * * argv)
 {
     atexit (main_cleanup);
 
-    aud_logger_subscribe (aud_logger_stdio);
-
 #ifdef HAVE_SIGWAIT
     signals_init_one ();
 #endif
@@ -352,7 +355,7 @@ int main (int argc, char * * argv)
     do_remote (); /* may exit */
 #endif
 
-    AUDDBG ("No remote session; starting up.\n");
+    AUDINFO ("No remote session; starting up.\n");
 
 #ifdef HAVE_SIGWAIT
     signals_init_two ();

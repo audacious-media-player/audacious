@@ -59,7 +59,7 @@ String write_temp_file (void * data, int64_t len)
     int handle = g_mkstemp (name);
     if (handle < 0)
     {
-        fprintf (stderr, "Error creating temporary file: %s\n", strerror (errno));
+        AUDERR ("Error creating temporary file: %s\n", strerror (errno));
         return String ();
     }
 
@@ -68,7 +68,7 @@ String write_temp_file (void * data, int64_t len)
         int64_t written = write (handle, data, len);
         if (written < 0)
         {
-            fprintf (stderr, "Error writing %s: %s\n", (const char *) name, strerror (errno));
+            AUDERR ("Error writing %s: %s\n", (const char *) name, strerror (errno));
             close (handle);
             return String ();
         }
@@ -79,7 +79,7 @@ String write_temp_file (void * data, int64_t len)
 
     if (close (handle) < 0)
     {
-        fprintf (stderr, "Error closing %s: %s\n", (const char *) name, strerror (errno));
+        AUDERR ("Error closing %s: %s\n", (const char *) name, strerror (errno));
         return String ();
     }
 

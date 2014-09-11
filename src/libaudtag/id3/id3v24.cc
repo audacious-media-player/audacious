@@ -19,7 +19,6 @@
  */
 
 #include <glib.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
@@ -124,7 +123,7 @@ static bool skip_extended_header_3 (VFSFile * handle, int * _size)
 
     AUDDBG ("Found v2.3 extended header, size = %d.\n", (int) size);
 
-    if (vfs_fseek (handle, size, SEEK_CUR))
+    if (vfs_fseek (handle, size, VFS_SEEK_CUR))
         return false;
 
     * _size = 4 + size;
@@ -142,7 +141,7 @@ static bool skip_extended_header_4 (VFSFile * handle, int * _size)
 
     AUDDBG ("Found v2.4 extended header, size = %d.\n", (int) size);
 
-    if (vfs_fseek (handle, size - 4, SEEK_CUR))
+    if (vfs_fseek (handle, size - 4, VFS_SEEK_CUR))
         return false;
 
     * _size = size;
@@ -174,7 +173,7 @@ static bool read_header (VFSFile * handle, int * version, bool *
 {
     ID3v2Header header, footer;
 
-    if (vfs_fseek (handle, 0, SEEK_SET))
+    if (vfs_fseek (handle, 0, VFS_SEEK_SET))
         return false;
 
     if (vfs_fread (& header, 1, sizeof (ID3v2Header), handle) != sizeof
@@ -190,7 +189,7 @@ static bool read_header (VFSFile * handle, int * version, bool *
 
         if (header.flags & ID3_HEADER_HAS_FOOTER)
         {
-            if (vfs_fseek (handle, header.size, SEEK_CUR))
+            if (vfs_fseek (handle, header.size, VFS_SEEK_CUR))
                 return false;
 
             if (vfs_fread (& footer, 1, sizeof (ID3v2Header), handle) != sizeof
@@ -200,7 +199,7 @@ static bool read_header (VFSFile * handle, int * version, bool *
             if (! validate_header (& footer, true))
                 return false;
 
-            if (vfs_fseek (handle, sizeof (ID3v2Header), SEEK_SET))
+            if (vfs_fseek (handle, sizeof (ID3v2Header), VFS_SEEK_SET))
                 return false;
 
             * footer_size = sizeof (ID3v2Header);
@@ -215,7 +214,7 @@ static bool read_header (VFSFile * handle, int * version, bool *
         if (end < 0)
             return false;
 
-        if (vfs_fseek (handle, end - sizeof (ID3v2Header), SEEK_SET))
+        if (vfs_fseek (handle, end - sizeof (ID3v2Header), VFS_SEEK_SET))
             return false;
 
         if (vfs_fread (& footer, 1, sizeof (ID3v2Header), handle) != sizeof
@@ -231,7 +230,7 @@ static bool read_header (VFSFile * handle, int * version, bool *
         * data_size = footer.size;
         * footer_size = sizeof (ID3v2Header);
 
-        if (vfs_fseek (handle, * offset, SEEK_SET))
+        if (vfs_fseek (handle, * offset, VFS_SEEK_SET))
             return false;
 
         if (vfs_fread (& header, 1, sizeof (ID3v2Header), handle) != sizeof
@@ -326,7 +325,7 @@ static bool read_frame (VFSFile * handle, int max_size, int version,
     if (header.flags & ID3_FRAME_HAS_LENGTH)
         skip += 4;
 
-    if ((skip > 0 && vfs_fseek (handle, skip, SEEK_CUR)) || skip >= header.size)
+    if ((skip > 0 && vfs_fseek (handle, skip, VFS_SEEK_CUR)) || skip >= header.size)
         return false;
 
     * frame_size = sizeof (ID3v2FrameHeader) + header.size;

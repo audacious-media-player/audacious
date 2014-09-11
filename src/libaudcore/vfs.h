@@ -31,12 +31,39 @@
 
 #include <libaudcore/objects.h>
 
-/* equivalent to G_FILE_TEST_XXX */
-#define VFS_IS_REGULAR    (1 << 0)
-#define VFS_IS_SYMLINK    (1 << 1)
-#define VFS_IS_DIR        (1 << 2)
-#define VFS_IS_EXECUTABLE (1 << 3)
-#define VFS_EXISTS        (1 << 4)
+enum VFSFileTest {
+    VFS_IS_REGULAR    = (1 << 0),
+    VFS_IS_SYMLINK    = (1 << 1),
+    VFS_IS_DIR        = (1 << 2),
+    VFS_IS_EXECUTABLE = (1 << 3),
+    VFS_EXISTS        = (1 << 4)
+};
+
+enum VFSSeekType {
+    VFS_SEEK_SET = 0,
+    VFS_SEEK_CUR = 1,
+    VFS_SEEK_END = 2
+};
+
+#ifdef WANT_VFS_STDIO_COMPAT
+
+#include <stdio.h>
+
+constexpr int from_vfs_seek_type (VFSSeekType whence)
+{
+    return (whence == VFS_SEEK_SET) ? SEEK_SET :
+           (whence == VFS_SEEK_CUR) ? SEEK_CUR :
+           (whence == VFS_SEEK_END) ? SEEK_END : -1;
+}
+
+constexpr VFSSeekType to_vfs_seek_type (int whence)
+{
+    return (whence == SEEK_SET) ? VFS_SEEK_SET :
+           (whence == SEEK_CUR) ? VFS_SEEK_CUR :
+           (whence == SEEK_END) ? VFS_SEEK_END : (VFSSeekType) -1;
+}
+
+#endif // WANT_VFS_STDIO_COMPAT
 
 struct VFSFile;
 
@@ -53,14 +80,12 @@ struct VFSConstructor {
     int (* vfs_fclose_impl) (VFSFile * file);
 
     /** A function pointer which points to a fread implementation. */
-    int64_t (* vfs_fread_impl) (void * ptr, int64_t size, int64_t nmemb, VFSFile *
-     file);
+    int64_t (* vfs_fread_impl) (void * ptr, int64_t size, int64_t nmemb, VFSFile * file);
     /** A function pointer which points to a fwrite implementation. */
-    int64_t (* vfs_fwrite_impl) (const void * ptr, int64_t size, int64_t nmemb,
-     VFSFile * file);
+    int64_t (* vfs_fwrite_impl) (const void * ptr, int64_t size, int64_t nmemb, VFSFile * file);
 
     /** A function pointer which points to a fseek implementation. */
-    int (* vfs_fseek_impl) (VFSFile * file, int64_t offset, int whence);
+    int (* vfs_fseek_impl) (VFSFile * file, int64_t offset, VFSSeekType whence);
     /** A function pointer which points to a ftell implementation. */
     int64_t (* vfs_ftell_impl) (VFSFile * file);
     /** A function pointer which points to a feof implementation. */
@@ -100,7 +125,7 @@ bool vfs_feof (VFSFile * file) WARN_RETURN;
 int vfs_fprintf (VFSFile * stream, char const * format, ...) __attribute__
  ((__format__ (__printf__, 2, 3)));
 
-int vfs_fseek (VFSFile * file, int64_t offset, int whence) WARN_RETURN;
+int vfs_fseek (VFSFile * file, int64_t offset, VFSSeekType whence) WARN_RETURN;
 int64_t vfs_ftell (VFSFile * file) WARN_RETURN;
 int64_t vfs_fsize (VFSFile * file) WARN_RETURN;
 int vfs_ftruncate (VFSFile * file, int64_t length) WARN_RETURN;
@@ -109,7 +134,7 @@ bool vfs_is_streaming (VFSFile * file) WARN_RETURN;
 
 String vfs_get_metadata (VFSFile * file, const char * field) WARN_RETURN;
 
-bool vfs_file_test (const char * path, int test) WARN_RETURN;
+bool vfs_file_test (const char * path, VFSFileTest test) WARN_RETURN;
 bool vfs_is_writeable (const char * path) WARN_RETURN;
 bool vfs_is_remote (const char * path) WARN_RETURN;
 

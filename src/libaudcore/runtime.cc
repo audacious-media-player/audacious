@@ -19,8 +19,10 @@
 
 #include "runtime.h"
 
+#include <errno.h>
 #include <locale.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/stat.h>
 #include <unistd.h>
 
@@ -60,7 +62,6 @@
 #endif
 
 static bool headless_mode;
-static bool verbose_mode;
 
 #if defined(USE_QT) && ! defined(USE_GTK)
 static MainloopType mainloop_type = MainloopType::Qt;
@@ -83,16 +84,6 @@ EXPORT bool aud_get_headless_mode ()
     return headless_mode;
 }
 
-EXPORT void aud_set_verbose_mode (bool verbose)
-{
-    verbose_mode = verbose;
-}
-
-EXPORT bool aud_get_verbose_mode ()
-{
-    return verbose_mode;
-}
-
 EXPORT void aud_set_mainloop_type (MainloopType type)
 {
     mainloop_type = type;
@@ -112,7 +103,7 @@ static StringBuf get_path_to_self ()
 
     if (len < 0)
     {
-        perror ("/proc/self/exe");
+        AUDERR ("Failed to read /proc/self/exe: %s\n", strerror (errno));
         return StringBuf ();
     }
 
@@ -131,7 +122,7 @@ static StringBuf get_path_to_self ()
 
     if (! lenw)
     {
-        fprintf (stderr, "GetModuleFileName failed.\n");
+        AUDERR ("GetModuleFileName failed.\n");
         return StringBuf ();
     }
 
@@ -281,7 +272,8 @@ EXPORT void aud_init_paths ()
 
     /* create ~/.config/audacious/playlists */
     if (g_mkdir_with_parents (aud_path (AudPath::PlaylistDir), DIRMODE) < 0)
-        perror (aud_path (AudPath::PlaylistDir));
+        AUDERR ("Failed to create %s: %s\n",
+         (const char *) aud_path (AudPath::PlaylistDir), strerror (errno));
 
 #ifdef _WIN32
     /* set some UNIX-style environment variables */
@@ -376,91 +368,4 @@ EXPORT void aud_cleanup ()
 
     config_save ();
     config_cleanup ();
-
-    /* at this point, we're going to exit.  shut down the logger. */
-    aud_logger_shutdown ();
-}
-
-static Index<aud_log_handler_t> log_handlers;
-
-EXPORT void aud_logger_subscribe (aud_log_handler_t hdl)
-{
-    log_handlers.append (hdl);
-}
-
-EXPORT void aud_logger_unsubscribe (aud_log_handler_t hdl)
-{
-    int idx = log_handlers.find (hdl);
-
-    if (idx == -1)
-        return;
-
-    log_handlers.remove (idx, 1);
-}
-
-EXPORT void aud_logger_shutdown (void)
-{
-    log_handlers.clear ();
-}
-
-static void aud_logger_broadcast (LogLevel level, const char * filename, unsigned int line, const char * function, const char * message)
-{
-    for (aud_log_handler_t hdl : log_handlers)
-        hdl (level, filename, line, function, message);
-}
-
-EXPORT void aud_logger_log (LogLevel level, const char * filename, unsigned int line, const char * function, const char * format, ...)
-{
-    static char last[256] = "";
-    static int repeated = 0;
-
-    char buf[256];
-
-    va_list args;
-    va_start (args, format);
-    vsnprintf (buf, sizeof buf, format, args);
-    va_end (args);
-
-    if (! strcmp (buf, last))
-        repeated ++;
-    else
-    {
-        if (repeated)
-        {
-            char repeat_buf[256];
-            snprintf (repeat_buf, sizeof repeat_buf, "(last message repeated %d times)", repeated);
-
-            repeated = 0;
-
-            aud_logger_broadcast (level, __FILE__, __LINE__, __FUNCTION__, repeat_buf);
-        }
-
-        aud_logger_broadcast (level, filename, line, function, buf);
-        strcpy (last, buf);
-    }
-}
-
-EXPORT const char * aud_logger_get_level_name (LogLevel level)
-{
-    switch (level)
-    {
-    case LogLevel::Debug:
-        return "DEBUG";
-    case LogLevel::Info:
-        return "INFO";
-    case LogLevel::Warning:
-        return "WARNING";
-    case LogLevel::Error:
-        return "ERROR";
-    };
-
-    return "UNKNOWN";
-}
-
-EXPORT void aud_logger_stdio (LogLevel level, const char * filename, unsigned int line, const char * function, const char * message)
-{
-    if (! aud_get_verbose_mode ())
-        return;
-
-    printf ("%7s: %20s:%-5d %30s: %s", aud_logger_get_level_name (level), filename, line, function, message);
 }

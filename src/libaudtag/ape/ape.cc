@@ -22,7 +22,6 @@
  */
 
 #include <glib.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -77,7 +76,7 @@ static bool ape_find_header (VFSFile * handle, APEHeader * header,
 {
     APEHeader secondary;
 
-    if (vfs_fseek (handle, 0, SEEK_SET))
+    if (vfs_fseek (handle, 0, VFS_SEEK_SET))
         return false;
 
     if (ape_read_header (handle, header))
@@ -92,18 +91,18 @@ static bool ape_find_header (VFSFile * handle, APEHeader * header,
 
         if (! (header->flags & APE_FLAG_HAS_HEADER) || ! (header->flags & APE_FLAG_IS_HEADER))
         {
-            AUDDBG ("Invalid header flags (%u).\n", (unsigned int) header->flags);
+            AUDWARN ("Invalid header flags (%u).\n", (unsigned) header->flags);
             return false;
         }
 
         if (! (header->flags & APE_FLAG_HAS_NO_FOOTER))
         {
-            if (vfs_fseek (handle, header->length, SEEK_CUR))
+            if (vfs_fseek (handle, header->length, VFS_SEEK_CUR))
                 return false;
 
             if (! ape_read_header (handle, & secondary))
             {
-                AUDDBG ("Expected footer, but found none.\n");
+                AUDWARN ("Expected footer, but found none.\n");
                 return false;
             }
 
@@ -113,13 +112,13 @@ static bool ape_find_header (VFSFile * handle, APEHeader * header,
         return true;
     }
 
-    if (vfs_fseek (handle, -(int) sizeof (APEHeader), SEEK_END))
+    if (vfs_fseek (handle, -(int) sizeof (APEHeader), VFS_SEEK_END))
         return false;
 
     if (! ape_read_header (handle, header))
     {
         /* APE tag may be followed by an ID3v1 tag */
-        if (vfs_fseek (handle, -128 - (int) sizeof (APEHeader), SEEK_END))
+        if (vfs_fseek (handle, -128 - (int) sizeof (APEHeader), VFS_SEEK_END))
             return false;
 
         if (! ape_read_header (handle, header))
@@ -140,13 +139,13 @@ static bool ape_find_header (VFSFile * handle, APEHeader * header,
 
     if ((header->flags & APE_FLAG_HAS_NO_FOOTER) || (header->flags & APE_FLAG_IS_HEADER))
     {
-        AUDDBG ("Invalid footer flags (%u).\n", (unsigned) header->flags);
+        AUDWARN ("Invalid footer flags (%u).\n", (unsigned) header->flags);
         return false;
     }
 
     if (header->flags & APE_FLAG_HAS_HEADER)
     {
-        if (vfs_fseek (handle, -(int) header->length - sizeof (APEHeader), SEEK_CUR))
+        if (vfs_fseek (handle, -(int) header->length - sizeof (APEHeader), VFS_SEEK_CUR))
             return false;
 
         if (! ape_read_header (handle, & secondary))
@@ -178,7 +177,7 @@ static bool ape_read_item (void * * data, int length, ValuePair & pair)
 
     if (length < 8)
     {
-        AUDDBG ("Expected item, but only %d bytes remain in tag.\n", length);
+        AUDWARN ("Expected item, but only %d bytes remain in tag.\n", length);
         return false;
     }
 
@@ -186,7 +185,7 @@ static bool ape_read_item (void * * data, int length, ValuePair & pair)
 
     if (value == nullptr)
     {
-        AUDDBG ("Unterminated item key (max length = %d).\n", length - 8);
+        AUDWARN ("Unterminated item key (max length = %d).\n", length - 8);
         return false;
     }
 
@@ -194,7 +193,7 @@ static bool ape_read_item (void * * data, int length, ValuePair & pair)
 
     if (header[0] > (unsigned) ((char *) (* data) + length - value))
     {
-        AUDDBG ("Item value of length %d, but only %d bytes remain in tag.\n",
+        AUDWARN ("Item value of length %d, but only %d bytes remain in tag.\n",
          (int) header[0], (int) ((char *) (* data) + length - value));
         return false;
     }
@@ -218,7 +217,7 @@ static Index<ValuePair> ape_read_items (VFSFile * handle)
      & data_length))
         return list;
 
-    if (vfs_fseek (handle, data_start, SEEK_SET))
+    if (vfs_fseek (handle, data_start, VFS_SEEK_SET))
         return list;
 
     data = g_malloc (data_length);
@@ -412,7 +411,7 @@ bool APETagModule::write_tag (const Tuple & tuple, VFSFile * handle)
     {
         if (start + length != vfs_fsize (handle))
         {
-            AUDDBG ("Writing tags is only supported at end of file.\n");
+            AUDERR ("Writing tags is only supported at end of file.\n");
             return false;
         }
 
@@ -427,7 +426,7 @@ bool APETagModule::write_tag (const Tuple & tuple, VFSFile * handle)
             return false;
     }
 
-    if (vfs_fseek (handle, start, SEEK_SET) || ! write_header (0, 0, true, handle))
+    if (vfs_fseek (handle, start, VFS_SEEK_SET) || ! write_header (0, 0, true, handle))
         return false;
 
     length = 0;
@@ -459,7 +458,7 @@ bool APETagModule::write_tag (const Tuple & tuple, VFSFile * handle)
     AUDDBG ("Wrote %d items, %d bytes.\n", items, length);
 
     if (! write_header (length, items, false, handle) || vfs_fseek (handle,
-     start, SEEK_SET) || ! write_header (length, items, true, handle))
+     start, VFS_SEEK_SET) || ! write_header (length, items, true, handle))
         return false;
 
     return true;

@@ -46,7 +46,7 @@ struct EffectStartState {
 
 static bool effect_start_cb (PluginHandle * plugin, EffectStartState * state)
 {
-    AUDDBG ("Starting %s at %d channels, %d Hz.\n", aud_plugin_get_name (plugin),
+    AUDINFO ("Starting %s at %d channels, %d Hz.\n", aud_plugin_get_name (plugin),
      * state->channels, * state->rate);
     EffectPlugin * header = (EffectPlugin *) aud_plugin_get_header (plugin);
     g_return_val_if_fail (header, true);
@@ -183,7 +183,7 @@ static void effect_insert (PluginHandle * plugin, EffectPlugin * header)
         rate = input_rate;
     }
 
-    AUDDBG ("Starting %s at %d channels, %d Hz.\n", aud_plugin_get_name (plugin), channels, rate);
+    AUDINFO ("Starting %s at %d channels, %d Hz.\n", aud_plugin_get_name (plugin), channels, rate);
     header->start (& channels, & rate);
     effect->channels_returned = channels;
     effect->rate_returned = rate;

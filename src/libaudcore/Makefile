@@ -21,6 +21,7 @@ SRCS = adder.cc \
        inifile.cc \
        interface.cc \
        list.cc \
+       logger.cc \
        mainloop.cc \
        multihash.cc \
        output.cc \

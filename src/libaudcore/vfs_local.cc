@@ -17,10 +17,10 @@
  * the use of this software.
  */
 
+#define WANT_VFS_STDIO_COMPAT
 #include "vfs_local.h"
 
 #include <errno.h>
-#include <stdio.h>
 #include <string.h>
 #include <unistd.h>
 
@@ -28,11 +28,14 @@
 #include <glib/gstdio.h>
 
 #include "audstrings.h"
+#include "runtime.h"
 
 #ifdef _WIN32
 #define fseeko fseeko64
 #define ftello ftello64
 #endif
+
+#define perror(s) AUDERR ("%s: %s\n", (const char *) (s), strerror (errno))
 
 enum LocalOp {
     OP_NONE,
@@ -144,11 +147,11 @@ static int64_t local_fwrite (const void * ptr, int64_t size, int64_t nitems, VFS
     return result;
 }
 
-static int local_fseek (VFSFile * file, int64_t offset, int whence)
+static int local_fseek (VFSFile * file, int64_t offset, VFSSeekType whence)
 {
     LocalFile * local = (LocalFile *) vfs_get_handle (file);
 
-    int result = fseeko (local->stream, offset, whence);
+    int result = fseeko (local->stream, offset, from_vfs_seek_type (whence));
     if (result < 0)
         perror (local->path);
 
@@ -206,14 +209,14 @@ static int64_t local_fsize (VFSFile * file)
         if (ftello < 0)
             goto ERR;
 
-        if (local_fseek (file, 0, SEEK_END) < 0)
+        if (local_fseek (file, 0, VFS_SEEK_END) < 0)
             goto ERR;
 
         int64_t length = ftello (local->stream);
         if (length < 0)
             goto ERR;
 
-        if (local_fseek (file, saved_pos, SEEK_SET) < 0)
+        if (local_fseek (file, saved_pos, VFS_SEEK_SET) < 0)
             goto ERR;
 
         local->cached_size = length;

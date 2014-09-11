@@ -20,7 +20,6 @@
 #include "plugins-internal.h"
 
 #include <pthread.h>
-#include <stdio.h>
 #include <string.h>
 
 #include <glib.h>
@@ -383,7 +382,7 @@ void plugin_registry_prune (void)
                 i ++;
             else
             {
-                AUDDBG ("Plugin not found: %s\n", (const char *) plugin->basename);
+                AUDINFO ("Plugin not found: %s\n", (const char *) plugin->basename);
                 list.remove (i, 1);
             }
         }
@@ -492,12 +491,12 @@ void plugin_register (const char * path, int timestamp)
 
     if (plugin)
     {
-        AUDDBG ("Register plugin: %s\n", path);
+        AUDINFO ("Register plugin: %s\n", path);
         plugin->path = String (path);
 
         if (plugin->timestamp != timestamp)
         {
-            AUDDBG ("Rescan plugin: %s\n", path);
+            AUDINFO ("Rescan plugin: %s\n", path);
             Plugin * header = plugin_load (path);
             if (! header || header->type != plugin->type)
                 return;
@@ -511,7 +510,7 @@ void plugin_register (const char * path, int timestamp)
     }
     else
     {
-        AUDDBG ("New plugin: %s\n", path);
+        AUDINFO ("New plugin: %s\n", path);
         Plugin * header = plugin_load (path);
         if (! header)
             return;
