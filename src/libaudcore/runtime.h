@@ -63,6 +63,8 @@ namespace audlog
 
     void log (Level level, const char * file, int line, const char * func,
      const char * format, ...);
+
+    const char * get_level_name (Level level);
 }
 
 #define AUDERR(...) do { audlog::log (audlog::Error, __FILE__, __LINE__, __FUNCTION__, __VA_ARGS__); } while (0)

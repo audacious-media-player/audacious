@@ -86,7 +86,7 @@ EXPORT void unsubscribe (Handler handler)
     tiny_unlock_write (& lock);
 }
 
-static const char * get_level_name (Level level)
+EXPORT const char * get_level_name (Level level)
 {
     switch (level)
     {
