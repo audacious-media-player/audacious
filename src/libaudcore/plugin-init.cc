@@ -180,20 +180,20 @@ static void start_plugins (int type)
     }
 }
 
-static const VFSConstructor * lookup_transport (const char * scheme)
+static VFSFile::OpenFunc lookup_transport (const char * scheme)
 {
     PluginHandle * plugin = transport_plugin_for_scheme (scheme);
     if (! plugin)
         return nullptr;
 
     TransportPlugin * tp = (TransportPlugin *) aud_plugin_get_header (plugin);
-    return tp ? tp->vtable : nullptr;
+    return tp ? tp->fopen_impl : nullptr;
 }
 
 void start_plugins_one (void)
 {
     plugin_system_init ();
-    vfs_set_lookup_func (lookup_transport);
+    VFSFile::set_lookup_func (lookup_transport);
 
     for (int i = 0; i < PLUGIN_TYPE_GENERAL; i ++)
         start_plugins (i);
@@ -242,7 +242,7 @@ void stop_plugins_one (void)
     for (int i = PLUGIN_TYPE_GENERAL - 1; i >= 0; i --)
         stop_plugins (i);
 
-    vfs_set_lookup_func (nullptr);
+    VFSFile::set_lookup_func (nullptr);
     plugin_system_cleanup ();
 }
 

@@ -126,9 +126,8 @@ struct TransportPlugin
      *     (array terminated with null pointer) */
     const char * const * schemes;
 
-    /* file operation implementations
-     *     (struct of function pointers, may contain null pointers) */
-    const VFSConstructor * vtable;
+    /* fopen() implementation */
+    VFSFile * (* fopen_impl) (const char * filename, const char * mode);
 };
 
 struct PlaylistPlugin

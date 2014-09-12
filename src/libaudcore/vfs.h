@@ -65,84 +65,100 @@ constexpr VFSSeekType to_vfs_seek_type (int whence)
 
 #endif // WANT_VFS_STDIO_COMPAT
 
-struct VFSFile;
+class VFSFile
+{
+public:
+    static VFSFile * fopen (const char * filename, const char * mode);
 
-/**
- * @struct VFSConstructor
- * #VFSConstructor objects contain the base vtables used for extrapolating
- * a VFS stream. #VFSConstructor objects should be considered %virtual in
- * nature. VFS base vtables are registered via vfs_register_transport().
- */
-struct VFSConstructor {
-    /** A function pointer which points to a fopen implementation. */
-    void * (* vfs_fopen_impl) (const char * filename, const char * mode);
-    /** A function pointer which points to a fclose implementation. */
-    int (* vfs_fclose_impl) (VFSFile * file);
+    virtual ~VFSFile () {}
 
-    /** A function pointer which points to a fread implementation. */
-    int64_t (* vfs_fread_impl) (void * ptr, int64_t size, int64_t nmemb, VFSFile * file);
-    /** A function pointer which points to a fwrite implementation. */
-    int64_t (* vfs_fwrite_impl) (const void * ptr, int64_t size, int64_t nmemb, VFSFile * file);
+    const char * filename () const
+        { return m_filename; }
 
-    /** A function pointer which points to a fseek implementation. */
-    int (* vfs_fseek_impl) (VFSFile * file, int64_t offset, VFSSeekType whence);
-    /** A function pointer which points to a ftell implementation. */
-    int64_t (* vfs_ftell_impl) (VFSFile * file);
-    /** A function pointer which points to a feof implementation. */
-    bool (* vfs_feof_impl) (VFSFile * file);
-    /** A function pointer which points to a ftruncate implementation. */
-    int (* vfs_ftruncate_impl) (VFSFile * file, int64_t length);
-    /** A function pointer which points to a fsize implementation. */
-    int64_t (* vfs_fsize_impl) (VFSFile * file);
+    int64_t fread (void * ptr, int64_t size, int64_t nmemb) __attribute__ ((warn_unused_result));
+    int fseek (int64_t offset, VFSSeekType whence) __attribute__ ((warn_unused_result));
 
-    /** A function pointer which points to a (stream) metadata fetching implementation. */
-    String (* vfs_get_metadata_impl) (VFSFile * file, const char * field);
+    int64_t ftell ();
+    int64_t fsize ();
+    bool feof ();
+
+    int64_t fwrite (const void * ptr, int64_t size, int64_t nmemb) __attribute__ ((warn_unused_result));
+    int ftruncate (int64_t length) __attribute__ ((warn_unused_result));
+    int fflush () __attribute__ ((warn_unused_result));
+
+    String get_metadata (const char * field);
+
+    /* for internal use only */
+    typedef VFSFile * (* OpenFunc) (const char * filename, const char * mode);
+    typedef OpenFunc (* LookupFunc) (const char * scheme);
+
+    static void set_lookup_func (LookupFunc func);
+
+protected:
+    VFSFile (const char * filename) :
+        m_filename (filename) {}
+
+    VFSFile (const VFSFile &) = delete;
+    void operator= (const VFSFile &) = delete;
+
+    virtual int64_t fread_impl (void * ptr, int64_t size, int64_t nmemb) = 0;
+    virtual int fseek_impl (int64_t offset, VFSSeekType whence) = 0;
+
+    virtual int64_t ftell_impl () = 0;
+    virtual int64_t fsize_impl () = 0;
+    virtual bool feof_impl () = 0;
+
+    virtual int64_t fwrite_impl (const void * ptr, int64_t size, int64_t nmemb) = 0;
+    virtual int ftruncate_impl (int64_t length) = 0;
+    virtual int fflush_impl () = 0;
+
+    virtual String get_metadata_impl (const char * field) { return String (); }
+
+private:
+    const String m_filename;
 };
 
-#ifdef __GNUC__
-#define WARN_RETURN __attribute__ ((warn_unused_result))
-#else
-#define WARN_RETURN
-#endif
+/* old-style function wrappers */
+static inline const char * vfs_get_filename (VFSFile * file)
+    { return file->filename (); }
 
-VFSFile * vfs_new (const char * path, const VFSConstructor * vtable, void * handle) WARN_RETURN;
-const char * vfs_get_filename (VFSFile * file) WARN_RETURN;
-void * vfs_get_handle (VFSFile * file) WARN_RETURN;
+static inline VFSFile * vfs_fopen (const char * path, const char * mode)
+    { return VFSFile::fopen (path, mode); }
+static inline int vfs_fclose (VFSFile * file)
+    { int ret = file->fflush (); delete file; return ret; }
 
-VFSFile * vfs_fopen (const char * path, const char * mode) WARN_RETURN;
-int vfs_fclose (VFSFile * file);
+static inline int64_t vfs_fread (void * ptr, int64_t size, int64_t nmemb, VFSFile * file)
+    { return file->fread (ptr, size, nmemb); }
+static inline int64_t vfs_fwrite (const void * ptr, int64_t size, int64_t nmemb, VFSFile * file)
+    { return file->fwrite (ptr, size, nmemb); }
+static inline int vfs_fseek (VFSFile * file, int64_t offset, VFSSeekType whence)
+    { return file->fseek (offset, whence); }
+static inline int64_t vfs_ftell (VFSFile * file)
+    { return file->ftell (); }
+static inline int64_t vfs_fsize (VFSFile * file)
+    { return file->fsize (); }
+static inline bool vfs_feof (VFSFile * file)
+    { return file->feof (); }
+static inline int vfs_ftruncate (VFSFile * file, int64_t length)
+    { return file->ftruncate (length); }
+static inline String vfs_get_metadata (VFSFile * file, const char * field)
+    { return file->get_metadata (field); }
 
-int64_t vfs_fread (void * ptr, int64_t size, int64_t nmemb, VFSFile * file)
- WARN_RETURN;
-int64_t vfs_fwrite (const void * ptr, int64_t size, int64_t nmemb, VFSFile * file)
- WARN_RETURN;
-
-int vfs_getc (VFSFile * stream) WARN_RETURN;
-int vfs_ungetc (int c, VFSFile * stream) WARN_RETURN;
-char * vfs_fgets (char * s, int n, VFSFile * stream) WARN_RETURN;
-int vfs_fputs (const char * s, VFSFile * stream) WARN_RETURN;
-bool vfs_feof (VFSFile * file) WARN_RETURN;
+/* utility functions */
+int vfs_getc (VFSFile * stream);
+int vfs_ungetc (int c, VFSFile * stream);
+char * vfs_fgets (char * s, int n, VFSFile * stream);
+int vfs_fputs (const char * s, VFSFile * stream);
 int vfs_fprintf (VFSFile * stream, char const * format, ...) __attribute__
  ((__format__ (__printf__, 2, 3)));
 
-int vfs_fseek (VFSFile * file, int64_t offset, VFSSeekType whence) WARN_RETURN;
-int64_t vfs_ftell (VFSFile * file) WARN_RETURN;
-int64_t vfs_fsize (VFSFile * file) WARN_RETURN;
-int vfs_ftruncate (VFSFile * file, int64_t length) WARN_RETURN;
+bool vfs_is_streaming (VFSFile * file);
 
-bool vfs_is_streaming (VFSFile * file) WARN_RETURN;
-
-String vfs_get_metadata (VFSFile * file, const char * field) WARN_RETURN;
-
-bool vfs_file_test (const char * path, VFSFileTest test) WARN_RETURN;
-bool vfs_is_writeable (const char * path) WARN_RETURN;
-bool vfs_is_remote (const char * path) WARN_RETURN;
+bool vfs_file_test (const char * path, VFSFileTest test);
+bool vfs_is_writeable (const char * path);
+bool vfs_is_remote (const char * path);
 
 void vfs_file_read_all (VFSFile * file, void * * buf, int64_t * size);
 void vfs_file_get_contents (const char * filename, void * * buf, int64_t * size);
-
-void vfs_set_lookup_func (const VFSConstructor * (* func) (const char * scheme));
-
-#undef WARN_RETURN
 
 #endif /* LIBAUDCORE_VFS_H */

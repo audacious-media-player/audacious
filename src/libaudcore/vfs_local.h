@@ -22,6 +22,6 @@
 
 #include "vfs.h"
 
-extern const VFSConstructor vfs_local_vtable;
+VFSFile * vfs_local_fopen (const char * uri, const char * mode);
 
 #endif /* LIBAUDCORE_VFS_LOCAL_H */
