@@ -27,7 +27,7 @@
 
 struct Plugin;
 struct PluginHandle;
-struct VFSFile;
+class VFSFile;
 class Tuple;
 
 typedef bool (* DirForeachFunc) (const char * path, const char * basename, void * user);

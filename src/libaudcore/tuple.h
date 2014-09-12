@@ -28,7 +28,7 @@
 
 #include <libaudcore/objects.h>
 
-struct VFSFile;
+class VFSFile;
 
 /** Ordered enum for basic #Tuple fields.
  * @sa TupleBasicType
