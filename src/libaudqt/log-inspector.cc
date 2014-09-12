@@ -132,7 +132,7 @@ void LogEntryModel::updateRow (int row)
 }
 
 /* log entry inspector */
-class LogEntryInspector : public QWidget
+class LogEntryInspector : public QDialog
 {
 public:
     LogEntryInspector (QWidget * parent = nullptr);
@@ -152,7 +152,7 @@ private:
 };
 
 LogEntryInspector::LogEntryInspector (QWidget * parent) :
-    QWidget (parent)
+    QDialog (parent)
 {
     setWindowTitle (translate_str ("Log Inspector"));
     setLayout (& m_layout);
