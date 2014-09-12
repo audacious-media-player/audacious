@@ -48,10 +48,7 @@ struct _VFSFile {
 };
 
 /* Audacious core provides us with a function that looks up a VFS transport for
- * a given URI scheme.  Since this function will load plugins as needed, it can
- * only be called from the main thread.  When VFS is used from parallel threads,
- * vfs_prepare must be called from the main thread to look up any needed
- * transports beforehand. */
+ * a given URI scheme.  This function will load plugins as needed. */
 
 static VFSConstructor * (* lookup_func) (const char * scheme) = NULL;
 
