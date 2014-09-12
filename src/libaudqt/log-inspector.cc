@@ -148,6 +148,12 @@ private:
     LogEntryModel * m_model;
     QTreeView * m_view;
 
+    QWidget m_bottom_container;
+    QHBoxLayout m_bottom_layout;
+
+    QComboBox m_level_combobox;
+    QLabel m_level_label;
+
     void setLogLevel (audlog::Level level);
 };
 
@@ -161,11 +167,30 @@ LogEntryInspector::LogEntryInspector (QWidget * parent) :
     m_view = new QTreeView (this);
     m_view->setModel (m_model);
 
-    setLogLevel (audlog::Info);
-
     m_layout.addWidget (m_view);
 
+    m_bottom_layout.setContentsMargins (0, 0, 0, 0);
+
+    m_level_label.setText (_("Log Level:"));
+    m_bottom_layout.addWidget (& m_level_label);
+
+    m_level_combobox.addItem (_("Debug"), audlog::Debug);
+    m_level_combobox.addItem (_("Info"), audlog::Info);
+    m_level_combobox.addItem (_("Warning"), audlog::Warning);
+    m_level_combobox.addItem (_("Error"), audlog::Error);
+
+    QObject::connect (& m_level_combobox,
+                      static_cast <void (QComboBox::*) (int)> (&QComboBox::currentIndexChanged),
+                      [=] (int idx) { setLogLevel ((audlog::Level) idx); });
+
+    m_bottom_layout.addWidget (& m_level_combobox);
+
+    m_bottom_container.setLayout (& m_bottom_layout);
+    m_layout.addWidget (& m_bottom_container);
+
     resize (800, 350);
+
+    setLogLevel (audlog::Info);
 }
 
 LogEntryInspector::~LogEntryInspector ()
@@ -203,6 +228,8 @@ void LogEntryInspector::setLogLevel (audlog::Level level)
 
     audlog::unsubscribe (log_handler);
     audlog::subscribe (log_handler, level);
+
+    m_level_combobox.setCurrentIndex (m_level);
 }
 
 void LogEntryInspector::pop ()
