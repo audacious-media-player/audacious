@@ -205,7 +205,7 @@ static int64_t local_fsize (VFSFile * file)
     if (local->cached_size < 0)
     {
         int64_t saved_pos = ftello (local->stream);
-        if (ftello < 0)
+        if (saved_pos < 0)
             goto ERR;
 
         if (local_fseek (file, 0, SEEK_END) < 0)
