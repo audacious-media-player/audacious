@@ -103,7 +103,7 @@ static int64_t local_fread (void * ptr, int64_t size, int64_t nitems, VFSFile * 
 
     if (local->last_op == OP_WRITE)
     {
-        if (fseeko (local->stream, 0, SEEK_CUR) < 0)  /* flush buffers */
+        if (fflush (local->stream) < 0)
         {
             perror (local->path);
             return 0;
@@ -127,7 +127,7 @@ static int64_t local_fwrite (const void * ptr, int64_t size, int64_t nitems, VFS
 
     if (local->last_op == OP_READ)
     {
-        if (fseeko (local->stream, 0, SEEK_CUR) < 0)  /* flush buffers */
+        if (fflush (local->stream) < 0)
         {
             perror (local->path);
             return 0;
@@ -178,10 +178,10 @@ static int local_ftruncate (VFSFile * file, int64_t length)
 
     if (local->last_op != OP_NONE)
     {
-        if (fseeko (local->stream, 0, SEEK_CUR) < 0)  /* flush buffers */
+        if (fflush (local->stream) < 0)
         {
             perror (local->path);
-            return 0;
+            return -1;
         }
     }
 
