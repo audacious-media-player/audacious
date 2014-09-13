@@ -598,7 +598,7 @@ void playlist_init (void)
     update_level = 0;
     scan_playlist = scan_row = 0;
 
-    title_formatter = new TupleCompiler;
+    title_formatter.capture (new TupleCompiler);
 
     LEAVE;
 
@@ -628,7 +628,7 @@ void playlist_end (void)
     playlists.clear ();
     unique_id_table.clear ();
 
-    title_formatter = nullptr;
+    title_formatter.clear ();
 
     LEAVE;
 }
@@ -648,7 +648,7 @@ void playlist_insert_with_id (int at, int id)
         at = playlists.len ();
 
     playlists.insert (at, 1);
-    playlists[at] = SmartPtr<Playlist> (new Playlist (id));
+    playlists[at].capture (new Playlist (id));
 
     number_playlists (at, playlists.len () - at);
 
@@ -702,7 +702,7 @@ EXPORT void aud_playlist_delete (int playlist_num)
     playlists.remove (playlist_num, 1);
 
     if (! playlists.len ())
-        playlists.append (SmartPtr<Playlist> (new Playlist (-1)));
+        playlists.append (SmartNew<Playlist> (-1));
 
     number_playlists (playlist_num, playlists.len () - playlist_num);
 
@@ -947,7 +947,7 @@ void playlist_entry_insert_batch_raw (int playlist_num, int at, Index<PlaylistAd
     for (auto & item : items)
     {
         Entry * entry = new Entry (std::move (item));
-        playlist->entries[i ++] = SmartPtr<Entry> (entry);
+        playlist->entries[i ++].capture (entry);
         playlist->total_length += entry->length;
     }
 

@@ -20,6 +20,8 @@
 #ifndef LIBAUDCORE_OBJECTS_H
 #define LIBAUDCORE_OBJECTS_H
 
+#include <utility>
+
 #ifdef _WIN32
 #undef min
 #undef max
@@ -80,13 +82,20 @@ template<class T>
 class SmartPtr
 {
 public:
-    constexpr SmartPtr (T * ptr = nullptr) :
+    explicit constexpr SmartPtr (T * ptr = nullptr) :
         ptr (ptr) {}
 
     ~SmartPtr ()
+        { delete ptr; }
+
+    void capture (T * ptr2)
     {
         delete ptr;
+        ptr = ptr2;
     }
+
+    void clear ()
+        { capture (nullptr); }
 
     SmartPtr (SmartPtr && b) :
         ptr (b.ptr)
@@ -98,8 +107,7 @@ public:
     {
         if (this != & b)
         {
-            delete ptr;
-            ptr = b.ptr;
+            capture (b.ptr);
             b.ptr = nullptr;
         }
     }
@@ -130,6 +138,10 @@ public:
 private:
     T * ptr;
 };
+
+template<typename T, typename ... Args>
+SmartPtr<T> SmartNew (Args && ... args)
+    { return SmartPtr<T> (new T (std::forward<Args> (args) ...)); }
 
 // Wrapper class for a string stored in the string pool.
 
