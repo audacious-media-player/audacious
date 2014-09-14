@@ -1,5 +1,5 @@
 dnl Add $1 to CFLAGS and CXXFLAGS if supported
-dnl ------------------------------------------
+dnl ==========================================
 
 AC_DEFUN([AUD_CHECK_CFLAGS],[
     AC_MSG_CHECKING([whether the C/C++ compiler supports $1])
@@ -13,6 +13,24 @@ AC_DEFUN([AUD_CHECK_CFLAGS],[
         AC_MSG_RESULT(no)
         CFLAGS="$OLDCFLAGS"
     ])
+])
+
+dnl Add $1 to CXXFLAGS if supported
+dnl ===============================
+
+AC_DEFUN([AUD_CHECK_CXXFLAGS],[
+    AC_MSG_CHECKING([whether the C++ compiler supports $1])
+    AC_LANG_PUSH([C++])
+    OLDCXXFLAGS="$CXXFLAGS"
+    CXXFLAGS="$CXXFLAGS $1 -Werror"
+    AC_COMPILE_IFELSE([AC_LANG_PROGRAM([],[return 0;])],[
+        AC_MSG_RESULT(yes)
+        CXXFLAGS="$OLDCXXFLAGS $1"
+    ],[
+        AC_MSG_RESULT(no)
+        CXXFLAGS="$OLDCXXFLAGS"
+    ])
+    AC_LANG_POP([C++])
 ])
 
 
@@ -71,6 +89,7 @@ if test "x$GCC" = "xyes"; then
         CXXFLAGS="$CXXFLAGS -std=gnu++11 -ffast-math -Wall -pipe"
     fi
     AUD_CHECK_CFLAGS(-Wtype-limits)
+    AUD_CHECK_CXXFLAGS(-Woverloaded-virtual)
 fi
 
 dnl On Mac, check for Objective-C and -C++ compilers
