@@ -20,17 +20,17 @@
 #ifndef LIBAUDCORE_PROBE_H
 #define LIBAUDCORE_PROBE_H
 
-#include <stdint.h>
+#include <libaudcore/index.h>
 
 struct PluginHandle;
 class Tuple;
 
 /* Gets album art for <file> (the URI of a song file) as JPEG or PNG data.  If
- * the album art is not yet loaded, sets <data> to nullptr and begins to load the
- * album art in the background.  On completion, the "art ready" hook is called,
- * with <file> as a parameter.  The "current art ready" hook is also called if
- * <file> is the currently playing song. */
-void aud_art_request_data (const char * file, const void * * data, int64_t * len);
+ * the album art is not yet loaded, returns nullptr and begins to load the album
+ * art in the background.  On completion, the "art ready" hook is called, with
+ * <file> as a parameter.  The "current art ready" hook is also called if <file>
+ * is the currently playing song. */
+const Index<char> * aud_art_request_data (const char * file);
 
 /* Similar to art_request_data() but returns the URI of an image file.
  * (A temporary file will be created if necessary.) */
@@ -41,8 +41,7 @@ void aud_art_unref (const char * file);
 
 PluginHandle * aud_file_find_decoder (const char * filename, bool fast);
 Tuple aud_file_read_tuple (const char * filename, PluginHandle * decoder);
-bool aud_file_read_image (const char * filename, PluginHandle * decoder,
- void * * data, int64_t * size);
+Index<char> aud_file_read_image (const char * filename, PluginHandle * decoder);
 bool aud_file_can_write_tuple (const char * filename, PluginHandle * decoder);
 bool aud_file_write_tuple (const char * filename, PluginHandle * decoder, const Tuple & tuple);
 bool aud_custom_infowin (const char * filename, PluginHandle * decoder);

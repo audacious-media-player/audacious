@@ -20,7 +20,7 @@
 #ifndef LIBAUDGUI_H
 #define LIBAUDGUI_H
 
-#include <stdint.h>
+#include <libaudcore/objects.h>
 
 struct PluginHandle;
 
@@ -87,6 +87,6 @@ void audgui_playlist_manager (void);
 /* urilist.c */
 void audgui_urilist_open (const char * list);
 void audgui_urilist_insert (int playlist, int position, const char * list);
-char * audgui_urilist_create_from_selected (int playlist);
+StringBuf audgui_urilist_create_from_selected (int playlist);
 
 #endif /* LIBAUDGUI_H */

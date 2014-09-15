@@ -68,25 +68,25 @@ static const char swap_case[256] =
 #define SWAP_CASE(c) (swap_case[(unsigned char) (c)])
 
 /* strcmp() that handles nullptr safely */
-EXPORT int strcmp_safe (const char * a, const char * b)
+EXPORT int strcmp_safe (const char * a, const char * b, int len)
 {
     if (! a)
         return b ? -1 : 0;
     if (! b)
         return 1;
 
-    return strcmp (a, b);
+    return len < 0 ? strcmp (a, b) : strncmp (a, b, len);
 }
 
 /* ASCII version of strcasecmp, also handles nullptr safely */
-EXPORT int strcmp_nocase (const char * a, const char * b)
+EXPORT int strcmp_nocase (const char * a, const char * b, int len)
 {
     if (! a)
         return b ? -1 : 0;
     if (! b)
         return 1;
 
-    return g_ascii_strcasecmp (a, b);
+    return len < 0 ? g_ascii_strcasecmp (a, b) : g_ascii_strncasecmp (a, b, len);
 }
 
 /* strlen() if <len> is negative, otherwise strnlen() */

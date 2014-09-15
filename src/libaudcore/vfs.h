@@ -29,6 +29,7 @@
 
 #include <stdint.h>
 
+#include <libaudcore/index.h>
 #include <libaudcore/objects.h>
 
 enum VFSFileTest {
@@ -158,7 +159,7 @@ bool vfs_file_test (const char * path, VFSFileTest test);
 bool vfs_is_writeable (const char * path);
 bool vfs_is_remote (const char * path);
 
-void vfs_file_read_all (VFSFile * file, void * * buf, int64_t * size);
-void vfs_file_get_contents (const char * filename, void * * buf, int64_t * size);
+Index<char> vfs_file_read_all (VFSFile * file);
+Index<char> vfs_file_get_contents (const char * filename);
 
 #endif /* LIBAUDCORE_VFS_H */

@@ -19,7 +19,7 @@
 
 #include "scanner.h"
 
-#include <glib.h>
+#include <glib.h>  /* for GThreadPool */
 
 #include "internal.h"
 #include "probe.h"
@@ -31,8 +31,7 @@ struct ScanRequest {
     PluginHandle * decoder;
     ScanCallback callback;
     Tuple tuple;
-    void * image_data;
-    int64_t image_len;
+    Index<char> image_data;
     String image_file;
 };
 
@@ -53,7 +52,7 @@ ScanRequest * scan_request (const char * filename, int flags,
     return request;
 }
 
-static void scan_worker (void * data, void * unused)
+static void scan_worker (void * data, void *)
 {
     ScanRequest * request = (ScanRequest *) data;
 
@@ -65,16 +64,13 @@ static void scan_worker (void * data, void * unused)
 
     if (request->decoder && (request->flags & SCAN_IMAGE))
     {
-        aud_file_read_image (request->filename, request->decoder,
-         & request->image_data, & request->image_len);
+        request->image_data = aud_file_read_image (request->filename, request->decoder);
 
-        if (! request->image_data)
+        if (! request->image_data.len ())
             request->image_file = art_search (request->filename);
     }
 
     request->callback (request);
-
-    g_free (request->image_data);
 
     delete request;
 }
@@ -94,12 +90,9 @@ Tuple scan_request_get_tuple (ScanRequest * request)
     return std::move (request->tuple);
 }
 
-void scan_request_get_image_data (ScanRequest * request, void * * data, int64_t * len)
+Index<char> scan_request_get_image_data (ScanRequest * request)
 {
-    * data = request->image_data;
-    * len = request->image_len;
-    request->image_data = nullptr;
-    request->image_len = 0;
+    return std::move (request->image_data);
 }
 
 String scan_request_get_image_file (ScanRequest * request)
@@ -107,12 +100,12 @@ String scan_request_get_image_file (ScanRequest * request)
     return request->image_file;
 }
 
-void scanner_init (void)
+void scanner_init ()
 {
     pool = g_thread_pool_new (scan_worker, nullptr, SCAN_THREADS, false, nullptr);
 }
 
-void scanner_cleanup (void)
+void scanner_cleanup ()
 {
     g_thread_pool_free (pool, false, true);
 }

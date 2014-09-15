@@ -70,6 +70,7 @@ INCLUDES = audio.h \
            preferences.h \
            probe.h \
            runtime.h \
+           templates.h \
            tinylock.h \
            tuple.h \
            vfs.h \

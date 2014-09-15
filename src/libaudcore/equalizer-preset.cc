@@ -23,7 +23,7 @@
 #include <math.h>
 #include <string.h>
 
-#include <glib.h>
+#include <glib.h>  /* for GKeyFile */
 
 #include "audstrings.h"
 #include "runtime.h"
@@ -53,9 +53,7 @@ EXPORT Index<EqualizerPreset> aud_eq_read_presets (const char * basename)
         if (! name)
             break;
 
-        EqualizerPreset & preset = list.append ();
-
-        preset.name = String (name);
+        EqualizerPreset & preset = list.append (String (name));
         preset.preamp = g_key_file_get_double (rcfile, name, "Preamp", nullptr);
 
         for (int i = 0; i < AUD_EQ_NBANDS; i++)
@@ -123,9 +121,7 @@ EXPORT Index<EqualizerPreset> aud_import_winamp_presets (VFSFile * file)
         if (vfs_fread (bands, 1, 11, file) != 11)
             break;
 
-        EqualizerPreset & preset = list.append ();
-
-        preset.name = String (preset_name);
+        EqualizerPreset & preset = list.append (String (preset_name));
         preset.preamp = FROM_WINAMP_VAL (bands[10]);
 
         for (int i = 0; i < AUD_EQ_NBANDS; i ++)

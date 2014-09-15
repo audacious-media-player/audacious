@@ -17,12 +17,10 @@
  * the use of this software.
  */
 
-#include <glib.h>
-
+#include <libaudcore/index.h>
 #include <libaudcore/runtime.h>
 #include <libaudcore/tuple.h>
 #include <libaudcore/vfs.h>
-#include <libaudcore/index.h>
 
 #include "audtag.h"
 #include "util.h"
@@ -79,10 +77,10 @@ bool TagModule::can_handle_file (VFSFile * handle)
     return false;
 }
 
-bool TagModule::read_image (VFSFile * handle, void * * data, int64_t * size)
+Index<char> TagModule::read_image (VFSFile * handle)
 {
     AUDDBG("Module %s does not support images.\n", m_name);
-    return false;
+    return Index<char> ();
 }
 
 bool TagModule::read_tag (Tuple & tuple, VFSFile * handle)

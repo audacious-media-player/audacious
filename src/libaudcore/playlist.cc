@@ -25,7 +25,6 @@
 #include <string.h>
 #include <time.h>
 
-#include <glib.h>
 #include <glib/gstdio.h>
 
 #include "audstrings.h"
@@ -81,7 +80,8 @@ private:
 };
 
 struct Update {
-    int level, before, after;
+    PlaylistUpdateLevel level;
+    int before, after;
 };
 
 struct Entry {
@@ -136,7 +136,7 @@ static Playlist * playing_playlist = nullptr;
 static int resume_playlist = -1;
 
 static QueuedFunc queued_update;
-static int update_level;
+static PlaylistUpdateLevel update_level;
 
 struct ScanItem : public ListNode
 {
@@ -285,7 +285,7 @@ static Entry * lookup_entry (Playlist * p, int i)
     return (i >= 0 && i < p->entries.len ()) ? p->entries[i].get () : nullptr;
 }
 
-static void update (void * unused)
+static void update (void *)
 {
     ENTER;
 
@@ -295,15 +295,15 @@ static void update (void * unused)
         p->next_update = Update ();
     }
 
-    int level = update_level;
-    update_level = 0;
+    PlaylistUpdateLevel level = update_level;
+    update_level = PLAYLIST_UPDATE_NONE;
 
     LEAVE;
 
-    hook_call ("playlist update", GINT_TO_POINTER (level));
+    hook_call ("playlist update", level);
 }
 
-static void queue_update (int level, Playlist * p, int at, int count)
+static void queue_update (PlaylistUpdateLevel level, Playlist * p, int at, int count)
 {
     if (p)
     {
@@ -346,13 +346,13 @@ EXPORT bool aud_playlist_update_pending (void)
     RETURN (pending);
 }
 
-EXPORT int aud_playlist_updated_range (int playlist_num, int * at, int * count)
+EXPORT PlaylistUpdateLevel aud_playlist_updated_range (int playlist_num, int * at, int * count)
 {
     ENTER_GET_PLAYLIST (0);
 
     Update * u = & playlist->last_update;
 
-    int level = u->level;
+    PlaylistUpdateLevel level = u->level;
     * at = u->before;
     * count = playlist->entries.len () - u->before - u->after;
 

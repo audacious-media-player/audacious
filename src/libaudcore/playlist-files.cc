@@ -19,8 +19,6 @@
 
 #include "playlist-internal.h"
 
-#include <glib.h>
-
 #include "audstrings.h"
 #include "i18n.h"
 #include "interface.h"

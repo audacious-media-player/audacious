@@ -18,10 +18,11 @@
  * the use of this software.
  */
 
-#include <glib.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+
+#include <glib.h>  /* for g_utf8_to_utf16 */
 
 #define WANT_AUD_BSWAP
 #include <libaudcore/audio.h>
@@ -657,44 +658,32 @@ bool ID3v24TagModule::read_tag (Tuple & tuple, VFSFile * handle)
     return true;
 }
 
-bool ID3v24TagModule::read_image (VFSFile * handle, void * * image_data, int64_t * image_size)
+Index<char> ID3v24TagModule::read_image (VFSFile * handle)
 {
+    Index<char> buf;
     int version, header_size, data_size, footer_size, parsed;
     bool syncsafe;
     int64_t offset;
-    bool found = false;
 
     if (! read_header (handle, & version, & syncsafe, & offset, & header_size,
      & data_size, & footer_size))
-        return false;
+        return buf;
 
-    for (parsed = 0; parsed < data_size && ! found; )
+    for (parsed = 0; parsed < data_size && ! buf.len (); )
     {
-        int frame_size, type;
+        int frame_size;
         GenericFrame frame;
 
-        if (! read_frame (handle, data_size - parsed, version, syncsafe,
-         & frame_size, frame))
+        if (! read_frame (handle, data_size - parsed, version, syncsafe, & frame_size, frame))
             break;
 
-        if (! strcmp (frame.key, "APIC") && id3_decode_picture (& frame[0],
-         frame.len (), & type, image_data, image_size))
-        {
-            if (type == 3) /* album cover */
-                found = true;
-            else if (type == 0) /* iTunes */
-                found = true;
-            else if (* image_data)
-            {
-                g_free (* image_data);
-                * image_data = nullptr;
-            }
-        }
+        if (! strcmp (frame.key, "APIC"))
+            buf = id3_decode_picture (& frame[0], frame.len ());
 
         parsed += frame_size;
     }
 
-    return found;
+    return buf;
 }
 
 bool ID3v24TagModule::write_tag (const Tuple & tuple, VFSFile * f)

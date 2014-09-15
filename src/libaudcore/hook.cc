@@ -60,7 +60,7 @@ EXPORT void hook_associate (const char * name, HookFunction func, void * user)
     if (! list)
         list = hooks.add (key, HookList ());
 
-    list->items.append ({func, user});
+    list->items.append (func, user);
 
     pthread_mutex_unlock (& mutex);
 }

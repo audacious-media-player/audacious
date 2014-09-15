@@ -25,7 +25,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <glib.h>
+#include <glib.h>  /* for g_usleep */
 
 #include "equalizer.h"
 #include "internal.h"
@@ -65,8 +65,7 @@ static ReplayGainInfo gain_info;
 static bool change_op;
 static OutputPlugin * new_op;
 
-static void * buffer1, * buffer2;
-static int buffer1_size, buffer2_size;
+static Index<char> buffer1, buffer2;
 
 static inline int FR2MS (int64_t f, int r)
  { return (f > 0) ? (f * 1000 + r / 2) / r : (f * 1000 - r / 2) / r; }
@@ -84,14 +83,10 @@ static inline int get_format (void)
     }
 }
 
-static void ensure_buffer (void * * buffer, int * size, int newsize)
+static void ensure_buffer (Index<char> & buffer, int newsize)
 {
-    if (newsize > * size)
-    {
-        g_free (* buffer);
-        * buffer = g_malloc (newsize);
-        * size = newsize;
-    }
+    if (newsize > buffer.len ())
+        buffer.insert (-1, newsize - buffer.len ());
 }
 
 /* assumes LOCK_ALL, s_output */
@@ -106,12 +101,8 @@ static void cleanup_output (void)
 
     s_output = false;
 
-    g_free (buffer1);
-    g_free (buffer2);
-    buffer1 = nullptr;
-    buffer2 = nullptr;
-    buffer1_size = 0;
-    buffer2_size = 0;
+    buffer1.clear ();
+    buffer2.clear ();
 
     if (PLUGIN_HAS_FUNC (cop, close_audio))
         cop->close_audio ();
@@ -255,9 +246,9 @@ static void write_output_raw (float * data, int samples)
 
     if (out_format != FMT_FLOAT)
     {
-        ensure_buffer (& buffer2, & buffer2_size, FMT_SIZEOF (out_format) * samples);
-        audio_to_int (data, buffer2, out_format, samples);
-        out_data = buffer2;
+        ensure_buffer (buffer2, FMT_SIZEOF (out_format) * samples);
+        audio_to_int (data, buffer2.begin (), out_format, samples);
+        out_data = buffer2.begin ();
     }
 
     while (! (s_aborted || s_resetting))
@@ -324,9 +315,9 @@ static bool write_output (void * data, int size, int stop_time)
 
     if (in_format != FMT_FLOAT)
     {
-        ensure_buffer (& buffer1, & buffer1_size, sizeof (float) * samples);
-        audio_from_int (data, in_format, (float *) buffer1, samples);
-        data = buffer1;
+        ensure_buffer (buffer1, sizeof (float) * samples);
+        audio_from_int (data, in_format, (float *) buffer1.begin (), samples);
+        data = buffer1.begin ();
     }
 
     float * fdata = (float *) data;

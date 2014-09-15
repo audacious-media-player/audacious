@@ -21,7 +21,7 @@
 #include "input.h"
 #include "internal.h"
 
-#include <glib.h>
+#include <assert.h>
 #include <pthread.h>
 #include <string.h>
 
@@ -55,9 +55,9 @@ static bool song_finished = false;
 
 static int seek_request = -1; /* under control_mutex */
 static int repeat_a = -1; /* under control_mutex */
+static int repeat_b = -1; /* under control_mutex */
 
-static volatile int repeat_b = -1; /* atomic */
-static volatile int stop_flag = false; /* atomic */
+static bool stop_flag = false; /* atomic */
 
 static int current_bitrate = -1, current_samplerate = -1, current_channels = -1;
 
@@ -130,7 +130,7 @@ EXPORT bool aud_drct_get_ready (void)
 
 static void set_ready (void)
 {
-    g_return_if_fail (playing);
+    assert (playing);
 
     pthread_mutex_lock (& ready_mutex);
 
@@ -144,7 +144,7 @@ static void set_ready (void)
 
 static void wait_until_ready (void)
 {
-    g_return_if_fail (playing);
+    assert (playing);
     pthread_mutex_lock (& ready_mutex);
 
     /* on restart, we still have to wait, but presumably not long */
@@ -154,11 +154,11 @@ static void wait_until_ready (void)
     pthread_mutex_unlock (& ready_mutex);
 }
 
-static void update_cb (void * hook_data, void * user_data)
+static void update_cb (void * hook_data, void *)
 {
-    g_return_if_fail (playing);
+    assert (playing);
 
-    if (GPOINTER_TO_INT (hook_data) < PLAYLIST_UPDATE_METADATA || ! aud_drct_get_ready ())
+    if (hook_data < PLAYLIST_UPDATE_METADATA || ! aud_drct_get_ready ())
         return;
 
     if (update_from_playlist ())
@@ -194,12 +194,12 @@ EXPORT void aud_drct_pause (void)
 
 static void playback_cleanup (void)
 {
-    g_return_if_fail (playing);
+    assert (playing);
     wait_until_ready ();
 
     if (! song_finished)
     {
-        g_atomic_int_set (& stop_flag, true);
+        __sync_bool_compare_and_swap (& stop_flag, false, true);
         output_abort_write ();
     }
 
@@ -226,9 +226,8 @@ static void playback_cleanup (void)
 
     seek_request = -1;
     repeat_a = -1;
-
-    g_atomic_int_set (& repeat_b, -1);
-    g_atomic_int_set (& stop_flag, false);
+    repeat_b = -1;
+    stop_flag = false;
 
     current_bitrate = current_samplerate = current_channels = -1;
 
@@ -332,7 +331,7 @@ static bool open_file (void)
     return (current_file != nullptr);
 }
 
-static void * playback_thread (void * unused)
+static void * playback_thread (void *)
 {
     Tuple tuple;
     int length;
@@ -393,7 +392,12 @@ DONE:
 void playback_play (int seek_time, bool pause)
 {
     String new_filename = playback_entry_get_filename ();
-    g_return_if_fail (new_filename);
+
+    if (! new_filename)
+    {
+        AUDWARN ("Nothing to play!");
+        return;
+    }
 
     if (playing)
         playback_cleanup ();
@@ -443,7 +447,7 @@ EXPORT void aud_drct_seek (int time)
 
 EXPORT bool aud_input_open_audio (int format, int rate, int channels)
 {
-    g_return_val_if_fail (playing, false);
+    assert (playing);
 
     if (! output_open_audio (format, rate, channels))
         return false;
@@ -464,57 +468,59 @@ EXPORT bool aud_input_open_audio (int format, int rate, int channels)
 
 EXPORT void aud_input_set_gain (const ReplayGainInfo * info)
 {
-    g_return_if_fail (playing);
+    assert (playing);
     memcpy (& current_gain, info, sizeof current_gain);
     output_set_replaygain_info (& current_gain);
 }
 
 EXPORT void aud_input_write_audio (void * data, int length)
 {
-    g_return_if_fail (playing);
+    assert (playing);
 
     if (! ready_flag)
         set_ready ();
 
-    int b = g_atomic_int_get (& repeat_b);
+    pthread_mutex_lock (& control_mutex);
+    int a = repeat_a, b = repeat_b;
+    pthread_mutex_unlock (& control_mutex);
 
     if (b >= 0)
     {
         if (! output_write_audio (data, length, b))
         {
             pthread_mutex_lock (& control_mutex);
-            seek_request = aud::max (repeat_a, time_offset);
+            seek_request = aud::max (a, time_offset);
             pthread_mutex_unlock (& control_mutex);
         }
     }
     else
     {
         if (! output_write_audio (data, length, stop_time))
-            g_atomic_int_set (& stop_flag, true);
+            __sync_bool_compare_and_swap (& stop_flag, false, true);
     }
 }
 
 EXPORT int aud_input_written_time (void)
 {
-    g_return_val_if_fail (playing, -1);
+    assert (playing);
     return output_written_time ();
 }
 
 EXPORT Tuple aud_input_get_tuple (void)
 {
-    g_return_val_if_fail (playing, Tuple ());
+    assert (playing);
     return playback_entry_get_tuple ();
 }
 
 EXPORT void aud_input_set_tuple (Tuple && tuple)
 {
-    g_return_if_fail (playing);
+    assert (playing);
     playback_entry_set_tuple (std::move (tuple));
 }
 
 EXPORT void aud_input_set_bitrate (int bitrate)
 {
-    g_return_if_fail (playing);
+    assert (playing);
     current_bitrate = bitrate;
 
     if (ready_flag)
@@ -523,13 +529,13 @@ EXPORT void aud_input_set_bitrate (int bitrate)
 
 EXPORT bool aud_input_check_stop (void)
 {
-    g_return_val_if_fail (playing, true);
-    return g_atomic_int_get (& stop_flag);
+    assert (playing);
+    return __sync_fetch_and_add (& stop_flag, 0);
 }
 
 EXPORT int aud_input_check_seek (void)
 {
-    g_return_val_if_fail (playing, -1);
+    assert (playing);
 
     pthread_mutex_lock (& control_mutex);
     int seek = seek_request;
@@ -616,7 +622,7 @@ EXPORT void aud_drct_set_ab_repeat (int a, int b)
     pthread_mutex_lock (& control_mutex);
 
     repeat_a = a;
-    g_atomic_int_set (& repeat_b, b);
+    repeat_b = b;
 
     if (b != -1 && output_get_time () >= b)
     {

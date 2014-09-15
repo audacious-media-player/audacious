@@ -21,10 +21,12 @@
  * - Support updating files that have their tag at the beginning?
  */
 
-#include <glib.h>
+#include <limits.h>
 #include <stdlib.h>
 #include <string.h>
 
+#define WANT_AUD_BSWAP
+#include <libaudcore/audio.h>
 #include <libaudcore/audstrings.h>
 #include <libaudcore/runtime.h>
 #include <libaudcore/vfs.h>
@@ -60,10 +62,10 @@ static bool ape_read_header (VFSFile * handle, APEHeader * header)
     if (strncmp (header->magic, "APETAGEX", 8))
         return false;
 
-    header->version = GUINT32_FROM_LE (header->version);
-    header->length = GUINT32_FROM_LE (header->length);
-    header->items = GUINT32_FROM_LE (header->items);
-    header->flags = GUINT32_FROM_LE (header->flags);
+    header->version = FROM_LE32 (header->version);
+    header->length = FROM_LE32 (header->length);
+    header->items = FROM_LE32 (header->items);
+    header->flags = FROM_LE32 (header->flags);
 
     if (header->length < sizeof (APEHeader))
         return false;
@@ -170,40 +172,39 @@ bool APETagModule::can_handle_file (VFSFile * handle)
      & data_length);
 }
 
-static bool ape_read_item (void * * data, int length, ValuePair & pair)
+/* returns start of next item or nullptr */
+static const char * ape_read_item (const char * data, int length, ValuePair & pair)
 {
-    uint32_t * header = (uint32_t *) * data;
-    char * value;
+    auto header = (const uint32_t *) data;
+    const char * value;
 
     if (length < 8)
     {
         AUDWARN ("Expected item, but only %d bytes remain in tag.\n", length);
-        return false;
+        return nullptr;
     }
 
-    value = (char *) memchr ((char *) (* data) + 8, 0, length - 8);
+    value = (const char *) memchr (data + 8, 0, length - 8);
 
-    if (value == nullptr)
+    if (! value)
     {
         AUDWARN ("Unterminated item key (max length = %d).\n", length - 8);
-        return false;
+        return nullptr;
     }
 
     value ++;
 
-    if (header[0] > (unsigned) ((char *) (* data) + length - value))
+    if (header[0] > (unsigned) (data + length - value))
     {
         AUDWARN ("Item value of length %d, but only %d bytes remain in tag.\n",
-         (int) header[0], (int) ((char *) (* data) + length - value));
-        return false;
+         (int) header[0], (int) (data + length - value));
+        return nullptr;
     }
 
-    pair.key = String ((char *) (* data) + 8);
+    pair.key = String (data + 8);
     pair.value = String (str_copy (value, header[0]));
 
-    * data = value + header[0];
-
-    return true;
+    return value + header[0];
 }
 
 static Index<ValuePair> ape_read_items (VFSFile * handle)
@@ -211,37 +212,32 @@ static Index<ValuePair> ape_read_items (VFSFile * handle)
     Index<ValuePair> list;
     APEHeader header;
     int start, length, data_start, data_length;
-    void * data, * item;
 
-    if (! ape_find_header (handle, & header, & start, & length, & data_start,
-     & data_length))
+    if (! ape_find_header (handle, & header, & start, & length, & data_start, & data_length))
         return list;
 
     if (vfs_fseek (handle, data_start, VFS_SEEK_SET))
         return list;
 
-    data = g_malloc (data_length);
+    Index<char> data;
+    data.insert (0, data_length);
 
-    if (vfs_fread (data, 1, data_length, handle) != data_length)
-    {
-        g_free (data);
+    if (vfs_fread (data.begin (), 1, data_length, handle) != data_length)
         return list;
-    }
 
     AUDDBG ("Reading %d items:\n", header.items);
-    item = data;
+    const char * item = data.begin ();
 
     while (header.items --)
     {
         ValuePair pair;
-        if (! ape_read_item (& item, (char *) data + data_length - (char *) item, pair))
+        if (! (item = ape_read_item (item, data.end () - item, pair)))
             break;
 
         AUDDBG ("Read: %s = %s.\n", (const char *) pair.key, (const char *) pair.value);
         list.append (std::move (pair));
     }
 
-    g_free (data);
     return list;
 }
 
@@ -268,7 +264,7 @@ static void parse_gain_text (const char * text, int * value, int * unit)
     {
         text ++;
 
-        while (* text >= '0' && * text <= '9' && * value < G_MAXINT / 10)
+        while (* text >= '0' && * text <= '9' && * value < INT_MAX / 10)
         {
             * value = * value * 10 + (* text - '0');
             * unit = * unit * 10;
@@ -314,13 +310,13 @@ bool APETagModule::read_tag (Tuple & tuple, VFSFile * handle)
             tuple.set_int (FIELD_TRACK_NUMBER, atoi (pair.value));
         else if (! strcmp (pair.key, "Year"))
             tuple.set_int (FIELD_YEAR, atoi (pair.value));
-        else if (! g_ascii_strcasecmp (pair.key, "REPLAYGAIN_TRACK_GAIN"))
+        else if (! strcmp_nocase (pair.key, "REPLAYGAIN_TRACK_GAIN"))
             set_gain_info (tuple, FIELD_GAIN_TRACK_GAIN, FIELD_GAIN_GAIN_UNIT, pair.value);
-        else if (! g_ascii_strcasecmp (pair.key, "REPLAYGAIN_TRACK_PEAK"))
+        else if (! strcmp_nocase (pair.key, "REPLAYGAIN_TRACK_PEAK"))
             set_gain_info (tuple, FIELD_GAIN_TRACK_PEAK, FIELD_GAIN_PEAK_UNIT, pair.value);
-        else if (! g_ascii_strcasecmp (pair.key, "REPLAYGAIN_ALBUM_GAIN"))
+        else if (! strcmp_nocase (pair.key, "REPLAYGAIN_ALBUM_GAIN"))
             set_gain_info (tuple, FIELD_GAIN_ALBUM_GAIN, FIELD_GAIN_GAIN_UNIT, pair.value);
-        else if (! g_ascii_strcasecmp (pair.key, "REPLAYGAIN_ALBUM_PEAK"))
+        else if (! strcmp_nocase (pair.key, "REPLAYGAIN_ALBUM_PEAK"))
             set_gain_info (tuple, FIELD_GAIN_ALBUM_PEAK, FIELD_GAIN_PEAK_UNIT, pair.value);
     }
 
@@ -336,7 +332,7 @@ static bool ape_write_item (VFSFile * handle, const char * key,
 
     AUDDBG ("Write: %s = %s.\n", key, value);
 
-    header[0] = GUINT32_TO_LE (value_len);
+    header[0] = TO_LE32 (value_len);
     header[1] = 0;
 
     if (vfs_fwrite (header, 1, 8, handle) != 8)
@@ -389,11 +385,11 @@ static bool write_header (int data_length, int items, bool is_header,
     APEHeader header;
 
     memcpy (header.magic, "APETAGEX", 8);
-    header.version = GUINT32_TO_LE (2000);
-    header.length = GUINT32_TO_LE (data_length + sizeof (APEHeader));
-    header.items = GUINT32_TO_LE (items);
-    header.flags = is_header ? GUINT32_TO_LE (APE_FLAG_HAS_HEADER |
-     APE_FLAG_IS_HEADER) : GUINT32_TO_LE (APE_FLAG_HAS_HEADER);
+    header.version = TO_LE32 (2000);
+    header.length = TO_LE32 (data_length + sizeof (APEHeader));
+    header.items = TO_LE32 (items);
+    header.flags = is_header ? TO_LE32 (APE_FLAG_HAS_HEADER |
+     APE_FLAG_IS_HEADER) : TO_LE32 (APE_FLAG_HAS_HEADER);
     header.reserved = 0;
 
     return vfs_fwrite (& header, 1, sizeof (APEHeader), handle) == sizeof

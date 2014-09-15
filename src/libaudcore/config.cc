@@ -20,7 +20,7 @@
 #include "runtime.h"
 #include "internal.h"
 
-#include <glib.h>
+#include <assert.h>
 #include <string.h>
 
 #include "audstrings.h"
@@ -239,7 +239,8 @@ static void load_heading (const char * section, void * data)
 static void load_entry (const char * key, const char * value, void * data)
 {
     LoadState * state = (LoadState *) data;
-    g_return_if_fail (state->section);
+    if (! state->section)
+        return;
 
     ConfigOp op = {OP_SET_NO_FLAG, state->section, key, String (value)};
     config_op_run (& op, & config);
@@ -270,11 +271,7 @@ static bool add_to_save_list (MultiHash::Node * node0, void * state0)
     ConfigNode * node = (ConfigNode *) node0;
     SaveState * state = (SaveState *) state0;
 
-    ConfigItem & item = state->list.append ();
-
-    item.section = node->item.section;
-    item.key = node->item.key;
-    item.value = node->item.value;
+    state->list.append (node->item);
 
     modified = false;
 
@@ -341,7 +338,7 @@ void config_cleanup (void)
 
 EXPORT void aud_set_str (const char * section, const char * name, const char * value)
 {
-    g_return_if_fail (name && value);
+    assert (name && value);
 
     ConfigOp op = {OP_IS_DEFAULT, section ? section : DEFAULT_SECTION, name, String (value)};
     bool is_default = config_op_run (& op, & defaults);
@@ -355,7 +352,7 @@ EXPORT void aud_set_str (const char * section, const char * name, const char * v
 
 EXPORT String aud_get_str (const char * section, const char * name)
 {
-    g_return_val_if_fail (name, String ());
+    assert (name);
 
     ConfigOp op = {OP_GET, section ? section : DEFAULT_SECTION, name};
     config_op_run (& op, & config);

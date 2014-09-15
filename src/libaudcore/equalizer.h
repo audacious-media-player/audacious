@@ -34,8 +34,8 @@ struct EqualizerPreset {
     float bands[AUD_EQ_NBANDS];
 };
 
-void aud_eq_set_bands (const double * values);
-void aud_eq_get_bands (double * values);
+void aud_eq_set_bands (const double values[AUD_EQ_NBANDS]);
+void aud_eq_get_bands (double values[AUD_EQ_NBANDS]);
 void aud_eq_set_band (int band, double value);
 double aud_eq_get_band (int band);
 

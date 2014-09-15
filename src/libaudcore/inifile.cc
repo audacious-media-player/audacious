@@ -20,7 +20,8 @@
 #include "inifile.h"
 
 #include <string.h>
-#include <glib.h>
+
+#include <glib.h>  /* for g_ascii_isspace */
 
 #include "audstrings.h"
 #include "vfs.h"

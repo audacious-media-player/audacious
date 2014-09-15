@@ -302,10 +302,8 @@ struct InputPlugin
     bool (* update_song_tuple) (const char * filename, VFSFile * file, const Tuple & tuple);
 
     /* Optional.  Reads an album art image (JPEG or PNG data) from the file.
-     * Returns a pointer to the data along with its size in bytes.  The returned
-     * data will be freed when no longer needed.  Returns false on error. */
-    bool (* get_song_image) (const char * filename, VFSFile * file,
-     void * * data, int64_t * size);
+     * Returns an empty buffer on error. */
+    Index<char> (* get_song_image) (const char * filename, VFSFile * file);
 
     /* Optional.  Displays a window showing info about the file.  In general,
      * this function should be avoided since Audacious already provides a file

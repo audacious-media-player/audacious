@@ -22,7 +22,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <glib.h>
 #include <glib/gstdio.h>
 
 #include "audstrings.h"
@@ -386,9 +385,9 @@ static void save_playlists_real (void)
 
 static bool hooks_added, state_changed;
 
-static void update_cb (void * data, void * user)
+static void update_cb (void * data, void *)
 {
-    if (GPOINTER_TO_INT (data) < PLAYLIST_UPDATE_METADATA)
+    if (data < PLAYLIST_UPDATE_METADATA)
         return;
 
     state_changed = true;

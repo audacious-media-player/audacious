@@ -19,8 +19,9 @@
 
 #include "internal.h"
 
-#include <glib.h>
 #include <string.h>
+
+#include <glib.h>  /* for g_dir_open, g_file_test */
 
 #include "audstrings.h"
 #include "index.h"
@@ -37,8 +38,8 @@ static bool has_front_cover_extension (const char * name)
     if (! ext)
         return false;
 
-    return ! g_ascii_strcasecmp (ext, ".jpg") ||
-     ! g_ascii_strcasecmp (ext, ".jpeg") || ! g_ascii_strcasecmp (ext, ".png");
+    return ! strcmp_nocase (ext, ".jpg") || ! strcmp_nocase (ext, ".jpeg") ||
+     ! strcmp_nocase (ext, ".png");
 }
 
 static bool cover_name_filter (const char * name,
@@ -69,7 +70,7 @@ static bool is_file_image (const char * imgfile, const char * file_name)
     size_t imgfile_len = imgfile_ext - imgfile;
     size_t file_name_len = file_name_ext - file_name;
 
-    return imgfile_len == file_name_len && ! g_ascii_strncasecmp (imgfile, file_name, imgfile_len);
+    return imgfile_len == file_name_len && ! strcmp_nocase (imgfile, file_name, imgfile_len);
 }
 
 static String fileinfo_recursive_get_image (const char * path,

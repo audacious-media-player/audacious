@@ -25,7 +25,6 @@
 #include <string.h>
 #include <sys/stat.h>
 
-#include <glib.h>
 #include <glib/gstdio.h>
 #include <gmodule.h>
 
@@ -96,7 +95,7 @@ Plugin * plugin_load (const char * filename)
         }
     }
 
-    loaded_modules.append ({header, module});
+    loaded_modules.append (header, module);
 
     return header;
 }

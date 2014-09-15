@@ -17,17 +17,10 @@
  * the use of this software.
  */
 
-#include <stdlib.h>
-#include <string.h>
-
-#include <glib.h>
-
 #include <libaudcore/runtime.h>
-#include <libaudcore/tuple.h>
 
 #include "audtag.h"
 #include "tag_module.h"
-#include "util.h"
 
 /* The tuple's file-related attributes are already set */
 
@@ -46,17 +39,17 @@ EXPORT bool tuple_read (Tuple & tuple, VFSFile * handle)
     return module->read_tag (tuple, handle);
 }
 
-EXPORT bool image_read (VFSFile * handle, void * * data, int64_t * size)
+EXPORT Index<char> image_read (VFSFile * handle)
 {
     TagModule * module = find_tag_module (handle, TagType::None);
 
     if (! module)
     {
         AUDINFO ("read_image() not supported for %s\n", vfs_get_filename (handle));
-        return false;
+        return Index<char> ();
     }
 
-    return module->read_image (handle, data, size);
+    return module->read_image (handle);
 }
 
 EXPORT bool tuple_write (const Tuple & tuple, VFSFile * handle, TagType new_type)

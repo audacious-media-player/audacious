@@ -55,7 +55,7 @@ EXPORT void subscribe (Handler handler, Level level)
 {
     tiny_lock_write (& lock);
 
-    handlers.append ({handler, level});
+    handlers.append (handler, level);
 
     if (level < min_level)
         min_level = level;

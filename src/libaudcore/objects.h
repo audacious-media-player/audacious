@@ -20,34 +20,7 @@
 #ifndef LIBAUDCORE_OBJECTS_H
 #define LIBAUDCORE_OBJECTS_H
 
-#include <utility>
-
-#ifdef _WIN32
-#undef min
-#undef max
-#endif
-
-// Utility functions.
-
-namespace aud {
-
-template<class T>
-constexpr T min (T a, T b)
-    { return a < b ? a : b; }
-
-template<class T>
-constexpr T max (T a, T b)
-    { return a > b ? a : b; }
-
-template<class T>
-constexpr T clamp (T x, T low, T high)
-    { return min (max (x, low), high); }
-
-template<class T, int N>
-constexpr int n_elems(const T (&) [N])
-    { return N; }
-
-} // namespace aud
+#include <libaudcore/templates.h>
 
 // Stores array pointer together with deduced array length.
 
@@ -103,13 +76,14 @@ public:
         b.ptr = nullptr;
     }
 
-    void operator= (SmartPtr && b)
+    SmartPtr & operator= (SmartPtr && b)
     {
         if (this != & b)
         {
             capture (b.ptr);
             b.ptr = nullptr;
         }
+        return * this;
     }
 
     explicit operator bool () const
@@ -141,7 +115,10 @@ private:
 
 template<typename T, typename ... Args>
 SmartPtr<T> SmartNew (Args && ... args)
-    { return SmartPtr<T> (new T (std::forward<Args> (args) ...)); }
+{
+    return SmartPtr<T> (aud::construct<T>::make (operator new (sizeof (T)),
+     std::forward<Args> (args) ...));
+}
 
 // Wrapper class for a string stored in the string pool.
 
@@ -157,13 +134,14 @@ public:
     String (const String & b) :
         raw (raw_ref (b.raw)) {}
 
-    void operator= (const String & b)
+    String & operator= (const String & b)
     {
         if (this != & b)
         {
             raw_unref (raw);
             raw = raw_ref (b.raw);
         }
+        return * this;
     }
 
     String (String && b) :
@@ -172,7 +150,7 @@ public:
         b.raw = nullptr;
     }
 
-    void operator= (String && b)
+    String & operator= (String && b)
     {
         if (this != & b)
         {
@@ -180,6 +158,7 @@ public:
             raw = b.raw;
             b.raw = nullptr;
         }
+        return * this;
     }
 
     bool operator== (const String & b) const

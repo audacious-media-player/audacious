@@ -20,8 +20,7 @@
 #ifndef LIBAUDCORE_SCANNER_H
 #define LIBAUDCORE_SCANNER_H
 
-#include <stdint.h>
-
+#include "index.h"
 #include "tuple.h"
 
 #define SCAN_TUPLE (1 << 0)
@@ -39,10 +38,10 @@ ScanRequest * scan_request (const char * filename, int flags,
 String scan_request_get_filename (ScanRequest * request);
 PluginHandle * scan_request_get_decoder (ScanRequest * request);
 Tuple scan_request_get_tuple (ScanRequest * request);
-void scan_request_get_image_data (ScanRequest * request, void * * data, int64_t * len);
+Index<char> scan_request_get_image_data (ScanRequest * request);
 String scan_request_get_image_file (ScanRequest * request);
 
-void scanner_init (void);
-void scanner_cleanup (void);
+void scanner_init ();
+void scanner_cleanup ();
 
 #endif

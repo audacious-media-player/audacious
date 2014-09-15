@@ -22,8 +22,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <glib.h>
-
 #include <libaudcore/audstrings.h>
 #include <libaudcore/runtime.h>
 
@@ -242,14 +240,14 @@ void id3_decode_rva (Tuple & tuple, const char * data, int size)
                 tuple.set_int (FIELD_GAIN_PEAK_UNIT, peak_unit);
         }
 
-        if (! g_ascii_strcasecmp (domain, "album"))
+        if (! strcmp_nocase (domain, "album"))
         {
             tuple.set_int (FIELD_GAIN_ALBUM_GAIN, adjustment);
 
             if (peak_unit)
                 tuple.set_int (FIELD_GAIN_ALBUM_PEAK, peak);
         }
-        else if (! g_ascii_strcasecmp (domain, "track"))
+        else if (! strcmp_nocase (domain, "track"))
         {
             tuple.set_int (FIELD_GAIN_TRACK_GAIN, adjustment);
 
@@ -259,12 +257,15 @@ void id3_decode_rva (Tuple & tuple, const char * data, int size)
     }
 }
 
-bool id3_decode_picture (const char * data, int size, int * type,
- void * * image_data, int64_t * image_size)
+Index<char> id3_decode_picture (const char * data, int size)
 {
+    Index<char> buf;
+
     const char * nul;
     if (size < 2 || ! (nul = (char *) memchr (data + 1, 0, size - 2)))
-        return false;
+        return buf;
+
+    int type = nul[1];
 
     const char * body = nul + 2;
     int body_size = data + size - body;
@@ -275,12 +276,13 @@ bool id3_decode_picture (const char * data, int size, int * type,
     const char * mime = data + 1;
     StringBuf desc = id3_convert (body, before_nul2, data[0]);
 
-    * type = nul[1];
-    * image_size = body_size - after_nul2;
-    * image_data = g_memdup (body + after_nul2, * image_size);
+    int image_size = body_size - after_nul2;
 
     AUDDBG ("Picture: mime = %s, type = %d, desc = %s, size = %d.\n", mime,
-     * type, (const char *) desc, (int) * image_size);
+     type, (const char *) desc, image_size);
 
-    return true;
+    if (type == 3 || type == 0)  /* album cover or iTunes */
+        buf.insert (body + after_nul2, 0, image_size);
+
+    return buf;
 }

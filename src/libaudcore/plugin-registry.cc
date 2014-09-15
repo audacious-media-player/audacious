@@ -19,10 +19,10 @@
 
 #include "plugins-internal.h"
 
+#include <errno.h>
 #include <pthread.h>
 #include <string.h>
 
-#include <glib.h>
 #include <glib/gstdio.h>
 
 #include "audstrings.h"
@@ -79,7 +79,10 @@ struct PluginHandle
         has_infowin (false) {}
 
     ~PluginHandle ()
-        { g_warn_if_fail (! watches.len ()); }
+    {
+        if (watches.len ())
+            AUDWARN ("Plugin watch count not zero at exit!\n");
+    }
 };
 
 static const char * plugin_type_names[PLUGIN_TYPES] = {
@@ -117,7 +120,12 @@ static StringBuf get_basename (const char * path)
 static FILE * open_registry_file (const char * mode)
 {
     StringBuf path = filename_build ({aud_get_path (AudPath::UserDir), FILENAME});
-    return g_fopen (path, mode);
+    FILE * handle = g_fopen (path, mode);
+
+    if (! handle)
+        AUDWARN ("%s: %s\n", (const char *) path, strerror (errno));
+
+    return handle;
 }
 
 static void transport_plugin_save (PluginHandle * plugin, FILE * handle)
@@ -171,7 +179,8 @@ static void plugin_save (PluginHandle * plugin, FILE * handle)
 void plugin_registry_save (void)
 {
     FILE * handle = open_registry_file ("w");
-    g_return_if_fail (handle);
+    if (! handle)
+        return;
 
     fprintf (handle, "format %d\n", FORMAT);
 
@@ -660,7 +669,7 @@ EXPORT void aud_plugin_for_enabled (int type, PluginForEachFunc func, void * dat
 
 EXPORT void aud_plugin_add_watch (PluginHandle * plugin, PluginForEachFunc func, void * data)
 {
-    plugin->watches.append ({func, data});
+    plugin->watches.append (func, data);
 }
 
 EXPORT void aud_plugin_remove_watch (PluginHandle * plugin, PluginForEachFunc func, void * data)
@@ -704,7 +713,7 @@ void playlist_plugin_for_ext (const char * ext, PluginForEachFunc func, void * d
 
         for (String & e : plugin->exts)
         {
-            if (! g_ascii_strcasecmp (e, ext))
+            if (! strcmp_nocase (e, ext))
             {
                 if (! func (plugin.get (), data))
                     return;
@@ -726,7 +735,7 @@ void input_plugin_for_key (int key, const char * value, PluginForEachFunc func, 
 
         for (String & s : plugin->keys[key])
         {
-            if (! g_ascii_strcasecmp (s, value))
+            if (! strcmp_nocase (s, value))
             {
                 if (! func (plugin.get (), data))
                     return;

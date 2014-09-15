@@ -19,10 +19,9 @@
 
 #include "plugins-internal.h"
 
+#include <assert.h>
 #include <errno.h>
 #include <stdlib.h>
-
-#include <glib.h>
 
 #include "hook.h"
 #include "interface.h"
@@ -33,8 +32,9 @@
 
 static bool general_plugin_start (PluginHandle * plugin)
 {
-    GeneralPlugin * gp = (GeneralPlugin *) aud_plugin_get_header (plugin);
-    g_return_val_if_fail (gp, false);
+    auto gp = (GeneralPlugin *) aud_plugin_get_header (plugin);
+    if (! gp)
+        return false;
 
     if (gp->init && ! gp->init ())
         return false;
@@ -45,7 +45,8 @@ static bool general_plugin_start (PluginHandle * plugin)
 void general_plugin_stop (PluginHandle * plugin)
 {
     GeneralPlugin * gp = (GeneralPlugin *) aud_plugin_get_header (plugin);
-    g_return_if_fail (gp);
+    if (! gp)
+        return;
 
     if (gp->cleanup)
         gp->cleanup ();
@@ -152,11 +153,11 @@ static void start_single (int type)
     }
 }
 
-static bool start_multi_cb (PluginHandle * p, void * type)
+static bool start_multi_cb (PluginHandle * p, void * data)
 {
     AUDINFO ("Starting %s.\n", aud_plugin_get_name (p));
 
-    if (! table[GPOINTER_TO_INT (type)].f.m.start (p))
+    if (! ((PluginParams *) data)->f.m.start (p))
     {
         AUDWARN ("%s failed to start; disabling.\n", aud_plugin_get_name (p));
         plugin_set_enabled (p, false);
@@ -176,7 +177,7 @@ static void start_plugins (int type)
     else
     {
         if (table[type].f.m.start)
-            aud_plugin_for_enabled (type, start_multi_cb, GINT_TO_POINTER (type));
+            aud_plugin_for_enabled (type, start_multi_cb, (void *) & table[type]);
     }
 }
 
@@ -205,10 +206,10 @@ void start_plugins_two (void)
         start_plugins (i);
 }
 
-static bool stop_multi_cb (PluginHandle * p, void * type)
+static bool stop_multi_cb (PluginHandle * p, void * data)
 {
     AUDINFO ("Shutting down %s.\n", aud_plugin_get_name (p));
-    table[GPOINTER_TO_INT (type)].f.m.stop (p);
+    ((PluginParams *) data)->f.m.stop (p);
     return true;
 }
 
@@ -227,7 +228,7 @@ static void stop_plugins (int type)
     else
     {
         if (table[type].f.m.stop)
-            aud_plugin_for_enabled (type, stop_multi_cb, GINT_TO_POINTER (type));
+            aud_plugin_for_enabled (type, stop_multi_cb, (void *) & table[type]);
     }
 }
 
@@ -248,7 +249,7 @@ void stop_plugins_one (void)
 
 EXPORT PluginHandle * aud_plugin_get_current (int type)
 {
-    g_return_val_if_fail (table[type].is_single, nullptr);
+    assert (table[type].is_single);
     return table[type].f.s.get_current ();
 }
 
@@ -321,7 +322,7 @@ EXPORT bool aud_plugin_enable (PluginHandle * plugin, bool enable)
 
     if (table[type].is_single)
     {
-        g_return_val_if_fail (enable, false);
+        assert (enable);
         return enable_single (type, plugin);
     }
 
@@ -344,24 +345,22 @@ EXPORT int aud_plugin_send_message (PluginHandle * plugin, const char * code, co
 
 EXPORT void * aud_plugin_get_widget (PluginHandle * plugin)
 {
-    g_return_val_if_fail (aud_plugin_get_enabled (plugin), nullptr);
+    if (! aud_plugin_get_enabled (plugin))
+        return nullptr;
+
     int type = aud_plugin_get_type (plugin);
 
     if (type == PLUGIN_TYPE_GENERAL)
     {
-        GeneralPlugin * gp = (GeneralPlugin *) aud_plugin_get_header (plugin);
-        g_return_val_if_fail (gp != nullptr, nullptr);
-
-        if (PLUGIN_HAS_FUNC (gp, get_widget))
+        auto gp = (GeneralPlugin *) aud_plugin_get_header (plugin);
+        if (gp && PLUGIN_HAS_FUNC (gp, get_widget))
             return gp->get_widget ();
     }
 
     if (type == PLUGIN_TYPE_VIS)
     {
-        VisPlugin * vp = (VisPlugin *) aud_plugin_get_header (plugin);
-        g_return_val_if_fail (vp != nullptr, nullptr);
-
-        if (PLUGIN_HAS_FUNC (vp, get_widget))
+        auto vp = (VisPlugin *) aud_plugin_get_header (plugin);
+        if (vp && PLUGIN_HAS_FUNC (vp, get_widget))
             return vp->get_widget ();
     }
 

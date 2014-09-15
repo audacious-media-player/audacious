@@ -23,23 +23,23 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "objects.h"
+#include <glib.h>  /* for g_qsort_with_data */
 
-#include <glib.h>
+#include "objects.h"
 
 EXPORT void IndexBase::clear (EraseFunc erase_func)
 {
     if (erase_func)
         erase_func (m_data, m_len);
-    memset (m_data, 0, m_len);
-    g_free (m_data);
+
+    free (m_data);
 
     m_data = nullptr;
     m_len = 0;
     m_size = 0;
 }
 
-EXPORT void IndexBase::insert (int pos, int len)
+EXPORT void * IndexBase::insert (int pos, int len)
 {
     assert (pos <= m_len);
     assert (len >= 0);
@@ -50,23 +50,48 @@ EXPORT void IndexBase::insert (int pos, int len)
     if (m_size < m_len + len)
     {
         /* never allocate less than 16 bytes */
-        if (m_size < 16)
-            m_size = 16;
+        int new_size = aud::max (m_size, 16);
 
         /* next try 4/3 current size, biased toward multiples of 4 */
-        if (m_size < m_len + len)
-            m_size = (m_size + 2) / 3 * 4;
+        if (new_size < m_len + len)
+            new_size = (new_size + 2) / 3 * 4;
 
         /* use requested size if still too small */
-        if (m_size < m_len + len)
-            m_size = m_len + len;
+        if (new_size < m_len + len)
+            new_size = m_len + len;
 
-        m_data = g_realloc (m_data, m_size);
+        void * new_data = realloc (m_data, new_size);
+        if (! new_data)
+            throw std::bad_alloc ();  /* nothing changed yet */
+
+        m_data = new_data;
+        m_size = new_size;
     }
 
     memmove ((char *) m_data + pos + len, (char *) m_data + pos, m_len - pos);
-    memset ((char *) m_data + pos, 0, len);
     m_len += len;
+
+    return (char *) m_data + pos;
+}
+
+EXPORT void IndexBase::insert (int pos, int len, FillFunc fill_func)
+{
+    void * to = insert (pos, len);
+
+    if (fill_func)
+        fill_func (to, len);
+    else
+        memset (to, 0, len);
+}
+
+EXPORT void IndexBase::insert (const void * from, int pos, int len, CopyFunc copy_func)
+{
+    void * to = insert (pos, len);
+
+    if (copy_func)
+        copy_func (from, to, len);
+    else
+        memcpy (to, from, len);
 }
 
 EXPORT void IndexBase::remove (int pos, int len, EraseFunc erase_func)

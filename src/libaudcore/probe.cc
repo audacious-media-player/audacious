@@ -19,7 +19,6 @@
 
 #include "probe.h"
 
-#include <glib.h>
 #include <string.h>
 
 #include "audstrings.h"
@@ -202,8 +201,8 @@ static bool open_file (const char * filename, InputPlugin * ip,
 EXPORT Tuple aud_file_read_tuple (const char * filename, PluginHandle * decoder)
 {
     InputPlugin * ip = (InputPlugin *) aud_plugin_get_header (decoder);
-    g_return_val_if_fail (ip, Tuple ());
-    g_return_val_if_fail (ip->probe_for_tuple, Tuple ());
+    if (! ip || ! ip->probe_for_tuple)
+        return Tuple ();
 
     VFSFile * handle = nullptr;
     if (! open_file (filename, ip, "r", & handle))
@@ -217,29 +216,27 @@ EXPORT Tuple aud_file_read_tuple (const char * filename, PluginHandle * decoder)
     return tuple;
 }
 
-EXPORT bool aud_file_read_image (const char * filename,
- PluginHandle * decoder, void * * data, int64_t * size)
+EXPORT Index<char> aud_file_read_image (const char * filename, PluginHandle * decoder)
 {
-    * data = nullptr;
-    * size = 0;
+    Index<char> buf;
 
     if (! input_plugin_has_images (decoder))
-        return false;
+        return buf;
 
     InputPlugin * ip = (InputPlugin *) aud_plugin_get_header (decoder);
-    g_return_val_if_fail (ip, false);
-    g_return_val_if_fail (ip->get_song_image, false);
+    if (! ip || ! ip->get_song_image)
+        return buf;
 
     VFSFile * handle = nullptr;
     if (! open_file (filename, ip, "r", & handle))
-        return false;
+        return buf;
 
-    bool success = ip->get_song_image (filename, handle, data, size);
+    buf = ip->get_song_image (filename, handle);
 
     if (handle)
         vfs_fclose (handle);
 
-    return success;
+    return buf;
 }
 
 EXPORT bool aud_file_can_write_tuple (const char * filename, PluginHandle * decoder)
@@ -251,8 +248,8 @@ EXPORT bool aud_file_write_tuple (const char * filename,
  PluginHandle * decoder, const Tuple & tuple)
 {
     InputPlugin * ip = (InputPlugin *) aud_plugin_get_header (decoder);
-    g_return_val_if_fail (ip, false);
-    g_return_val_if_fail (ip->update_song_tuple, false);
+    if (! ip || ! ip->update_song_tuple)
+        return false;
 
     VFSFile * handle = nullptr;
     if (! open_file (filename, ip, "r+", & handle))
@@ -275,8 +272,8 @@ EXPORT bool aud_custom_infowin (const char * filename, PluginHandle * decoder)
         return false;
 
     InputPlugin * ip = (InputPlugin *) aud_plugin_get_header (decoder);
-    g_return_val_if_fail (ip, false);
-    g_return_val_if_fail (ip->file_info_box, false);
+    if (! ip || ! ip->file_info_box)
+        return false;
 
     ip->file_info_box (filename);
     return true;

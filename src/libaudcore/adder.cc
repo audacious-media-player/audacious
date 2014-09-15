@@ -150,7 +150,7 @@ static void add_file (const String & filename, Tuple && tuple,
         return;
     }
 
-    result->items.append ({filename, std::move (tuple), decoder});
+    result->items.append (filename, std::move (tuple), decoder);
 }
 
 static int compare_wrapper (const String & a, const String & b, void *)
@@ -395,7 +395,7 @@ EXPORT void aud_playlist_entry_insert (int playlist, int at,
  const char * filename, Tuple && tuple, bool play)
 {
     Index<PlaylistAddItem> items;
-    items.append ({String (filename), std::move (tuple)});
+    items.append (String (filename), std::move (tuple));
 
     aud_playlist_entry_insert_batch (playlist, at, std::move (items), play);
 }

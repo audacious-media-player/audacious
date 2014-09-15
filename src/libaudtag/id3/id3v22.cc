@@ -18,7 +18,6 @@
  * the use of this software.
  */
 
-#include <glib.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -268,44 +267,32 @@ bool ID3v22TagModule::read_tag (Tuple & tuple, VFSFile * handle)
     return true;
 }
 
-bool ID3v22TagModule::read_image (VFSFile * handle, void * * image_data, int64_t * image_size)
+Index<char> ID3v22TagModule::read_image (VFSFile * handle)
 {
     int version, header_size, data_size, parsed;
     bool syncsafe;
     int64_t offset;
-    bool found = false;
+    Index<char> buf;
 
     if (! read_header (handle, & version, & syncsafe, & offset, & header_size,
      & data_size))
-        return false;
+        return buf;
 
-    for (parsed = 0; parsed < data_size && ! found; )
+    for (parsed = 0; parsed < data_size && ! buf.len (); )
     {
-        int frame_size, type;
+        int frame_size;
         GenericFrame frame;
 
-        if (! read_frame (handle, data_size - parsed, version, syncsafe,
-         & frame_size, frame))
+        if (! read_frame (handle, data_size - parsed, version, syncsafe, & frame_size, frame))
             break;
 
-        if (! strcmp (frame.key, "PIC") && id3_decode_picture (& frame[0],
-         frame.len (), & type, image_data, image_size))
-        {
-            if (type == 3) /* album cover */
-                found = true;
-            else if (type == 0) /* iTunes */
-                found = true;
-            else if (* image_data)
-            {
-                g_free (* image_data);
-                * image_data = nullptr;
-            }
-        }
+        if (! strcmp (frame.key, "PIC"))
+            buf = id3_decode_picture (& frame[0], frame.len ());
 
         parsed += frame_size;
     }
 
-    return found;
+    return buf;
 }
 
 }

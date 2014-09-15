@@ -21,7 +21,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <glib.h>
+#include <glib.h>  /* for g_get_current_dir, g_path_is_absolute */
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/drct.h>
@@ -106,7 +106,7 @@ static bool parse_options (int argc, char * * argv)
                 uri = String (filename_to_uri (filename_build ({cur, arg})));
 
             if (uri)
-                filenames.append ({uri});
+                filenames.append (uri);
         }
         else if (arg[1] == '-')  /* long option */
         {
@@ -216,22 +216,19 @@ static void do_remote (void)
 
     if (filenames.len ())
     {
-        int n_filenames = filenames.len ();
-        const char * * list = g_new (const char *, n_filenames + 1);
+        Index<const char *> list;
 
-        for (int i = 0; i < n_filenames; i ++)
-            list[i] = filenames[i].filename;
+        for (auto & item : filenames)
+            list.append (item.filename);
 
-        list[n_filenames] = nullptr;
+        list.append (nullptr);
 
         if (options.enqueue_to_temp)
-            obj_audacious_call_open_list_to_temp_sync (obj, list, nullptr, nullptr);
+            obj_audacious_call_open_list_to_temp_sync (obj, list.begin (), nullptr, nullptr);
         else if (options.enqueue)
-            obj_audacious_call_add_list_sync (obj, list, nullptr, nullptr);
+            obj_audacious_call_add_list_sync (obj, list.begin (), nullptr, nullptr);
         else
-            obj_audacious_call_open_list_sync (obj, list, nullptr, nullptr);
-
-        g_free (list);
+            obj_audacious_call_open_list_sync (obj, list.begin (), nullptr, nullptr);
     }
 
     if (options.play)

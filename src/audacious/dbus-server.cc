@@ -40,7 +40,7 @@ static Index<PlaylistAddItem> strv_to_index (const char * const * strv)
 {
     Index<PlaylistAddItem> index;
     while (* strv)
-        index.append ({String (* strv ++)});
+        index.append (String (* strv ++));
 
     return index;
 }

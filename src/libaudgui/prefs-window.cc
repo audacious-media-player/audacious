@@ -319,10 +319,10 @@ static const char * const titlestring_preset_names[TITLESTRING_NPRESETS] = {
 static Index<ComboItem> fill_plugin_combo (int type)
 {
     Index<ComboItem> elems;
-    elems.insert (0, aud_plugin_count (type));
+    int count = aud_plugin_count (type);
 
-    for (int i = 0; i < elems.len (); i ++)
-        elems[i] = ComboItem (aud_plugin_get_name (aud_plugin_by_index (type, i)), i);
+    for (int i = 0; i < count; i ++)
+        elems.append (aud_plugin_get_name (aud_plugin_by_index (type, i)), i);
 
     return elems;
 }

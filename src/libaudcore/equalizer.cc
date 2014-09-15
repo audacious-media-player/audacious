@@ -26,7 +26,7 @@
 #include "equalizer.h"
 #include "internal.h"
 
-#include <glib.h>
+#include <assert.h>
 #include <math.h>
 #include <pthread.h>
 #include <string.h>
@@ -179,13 +179,13 @@ void eq_cleanup (void)
     hook_dissociate ("set equalizer_bands", eq_update);
 }
 
-EXPORT void aud_eq_set_bands (const double *values)
+EXPORT void aud_eq_set_bands (const double values[AUD_EQ_NBANDS])
 {
     StringBuf string = double_array_to_str (values, AUD_EQ_NBANDS);
     aud_set_str (nullptr, "equalizer_bands", string);
 }
 
-EXPORT void aud_eq_get_bands (double *values)
+EXPORT void aud_eq_get_bands (double values[AUD_EQ_NBANDS])
 {
     memset (values, 0, sizeof (double) * AUD_EQ_NBANDS);
     String string = aud_get_str (nullptr, "equalizer_bands");
@@ -194,7 +194,8 @@ EXPORT void aud_eq_get_bands (double *values)
 
 EXPORT void aud_eq_set_band (int band, double value)
 {
-    g_return_if_fail (band >= 0 && band < AUD_EQ_NBANDS);
+    assert (band >= 0 && band < AUD_EQ_NBANDS);
+
     double values[AUD_EQ_NBANDS];
     aud_eq_get_bands (values);
     values[band] = value;
@@ -203,7 +204,8 @@ EXPORT void aud_eq_set_band (int band, double value)
 
 EXPORT double aud_eq_get_band (int band)
 {
-    g_return_val_if_fail (band >= 0 && band < AUD_EQ_NBANDS, 0);
+    assert (band >= 0 && band < AUD_EQ_NBANDS);
+
     double values[AUD_EQ_NBANDS];
     aud_eq_get_bands (values);
     return values[band];

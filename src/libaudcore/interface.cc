@@ -20,7 +20,7 @@
 #include "interface.h"
 #include "internal.h"
 
-#include <glib.h>
+#include <assert.h>
 
 #include "drct.h"
 #include "hook.h"
@@ -68,8 +68,9 @@ static void remove_menu_items (void)
 
 static bool interface_load (PluginHandle * plugin)
 {
-    IfacePlugin * i = (IfacePlugin *) aud_plugin_get_header (plugin);
-    g_return_val_if_fail (i, false);
+    auto i = (IfacePlugin *) aud_plugin_get_header (plugin);
+    if (! i)
+        return false;
 
     AUDINFO ("Loading %s.\n", aud_plugin_get_name (plugin));
 
@@ -88,8 +89,6 @@ static bool interface_load (PluginHandle * plugin)
 
 static void interface_unload (void)
 {
-    g_return_if_fail (current_interface);
-
     AUDINFO ("Unloading %s.\n", aud_plugin_get_name (current_plugin));
 
     if (PLUGIN_HAS_FUNC (current_interface, show) && aud_get_bool (0, "show_interface"))
@@ -130,7 +129,7 @@ EXPORT void aud_ui_show_error (const char * message)
         AUDERR ("%s\n", message);
     else
         event_queue_full ("ui show error", String::raw_get (message),
-         (GDestroyNotify) String::raw_unref);
+         (EventDestroyFunc) String::raw_unref);
 }
 
 PluginHandle * iface_plugin_get_current (void)
@@ -203,9 +202,9 @@ EXPORT void aud_quit (void)
 
 EXPORT void aud_plugin_menu_add (int id, void (* func) (void), const char * name, const char * icon)
 {
-    g_return_if_fail (id >= 0 && id < AUD_MENU_COUNT);
+    assert (id >= 0 && id < AUD_MENU_COUNT);
 
-    menu_items[id].append ({name, icon, func});
+    menu_items[id].append (name, icon, func);
 
     if (current_interface && PLUGIN_HAS_FUNC (current_interface, plugin_menu_add))
         current_interface->plugin_menu_add (id, func, name, icon);
@@ -213,7 +212,7 @@ EXPORT void aud_plugin_menu_add (int id, void (* func) (void), const char * name
 
 EXPORT void aud_plugin_menu_remove (int id, void (* func) (void))
 {
-    g_return_if_fail (id >= 0 && id < AUD_MENU_COUNT);
+    assert (id >= 0 && id < AUD_MENU_COUNT);
 
     if (current_interface && PLUGIN_HAS_FUNC (current_interface, plugin_menu_remove))
         current_interface->plugin_menu_remove (id, func);

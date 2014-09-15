@@ -83,14 +83,11 @@ EXPORT void audgui_pixbuf_scale_within (GdkPixbuf * * pixbuf, int size)
 
 EXPORT GdkPixbuf * audgui_pixbuf_request (const char * filename)
 {
-    const void * data;
-    int64_t size;
-
-    aud_art_request_data (filename, & data, & size);
+    const Index<char> * data = aud_art_request_data (filename);
     if (! data)
         return nullptr;
 
-    GdkPixbuf * p = audgui_pixbuf_from_data (data, size);
+    GdkPixbuf * p = audgui_pixbuf_from_data (data->begin (), data->len ());
 
     aud_art_unref (filename);
     return p;

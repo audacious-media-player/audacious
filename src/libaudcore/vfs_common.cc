@@ -20,8 +20,6 @@
 
 #include <string.h>
 
-#include <glib.h>
-
 #include "audstrings.h"
 #include "vfs.h"
 
@@ -129,45 +127,43 @@ EXPORT int vfs_fprintf(VFSFile *stream, char const *format, ...)
     return rv;
 }
 
-EXPORT void vfs_file_read_all (VFSFile * file, void * * bufp, int64_t * sizep)
+EXPORT Index<char> vfs_file_read_all (VFSFile * file)
 {
-    char * buf = nullptr;
-    int64_t size = vfs_fsize (file);
+    constexpr int maxbuf = 16777216;
+    constexpr int pagesize = 4096;
+
+    Index<char> buf;
+    int64_t size = file->fsize ();
 
     if (size >= 0)
     {
-        size = aud::min (size, (int64_t) SSIZE_MAX - 1);
-        buf = g_new (char, size + 1);
-        size = vfs_fread (buf, 1, size, file);
+        buf.insert (0, aud::min (size, (int64_t) maxbuf));
+        size = file->fread (buf.begin (), 1, buf.len ());
     }
     else
     {
         size = 0;
 
-        ssize_t bufsize = 4096;
-        buf = g_new (char, bufsize);
+        buf.insert (0, pagesize);
 
-        ssize_t readsize;
-        while ((readsize = vfs_fread (buf + size, 1, bufsize - 1 - size, file)))
+        int64_t readsize;
+        while ((readsize = file->fread (& buf[size], 1, buf.len () - size)))
         {
             size += readsize;
 
-            if (size == bufsize - 1)
+            if (size == buf.len ())
             {
-                if (bufsize > SSIZE_MAX - 4096)
+                if (buf.len () > maxbuf - pagesize)
                     break;
 
-                bufsize += 4096;
-                buf = g_renew (char, buf, bufsize);
+                buf.insert (-1, pagesize);
             }
         }
     }
 
-    buf[size] = 0; // nul-terminate
+    buf.remove (size, -1);
 
-    * bufp = buf;
-    if (sizep)
-        * sizep = size;
+    return buf;
 }
 
 /**
@@ -179,16 +175,14 @@ EXPORT void vfs_file_read_all (VFSFile * file, void * * bufp, int64_t * sizep)
  * @param size Pointer to gsize variable that will hold the amount of
  * read data e.g. filesize.
  */
-EXPORT void vfs_file_get_contents (const char * filename, void * * buf, int64_t * size)
+EXPORT Index<char> vfs_file_get_contents(const char * filename)
 {
-    * buf = nullptr;
-    if (size)
-        * size = 0;
+    Index<char> buf;
+    VFSFile * file = VFSFile::fopen (filename, "r");
 
-    VFSFile * file = vfs_fopen (filename, "r");
-    if (! file)
-        return;
+    if (file)
+        buf = vfs_file_read_all (file);
 
-    vfs_file_read_all (file, buf, size);
-    vfs_fclose (file);
+    delete file;
+    return buf;
 }

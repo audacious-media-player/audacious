@@ -38,7 +38,7 @@ struct ID3v22TagModule : TagModule {
 
     bool can_handle_file (VFSFile *fd);
     bool read_tag (Tuple & tuple, VFSFile * file);
-    bool read_image (VFSFile * handle, void * * image_data, int64_t * image_size);
+    Index<char> read_image (VFSFile * handle);
 };
 
 struct ID3v24TagModule : TagModule {
@@ -46,7 +46,7 @@ struct ID3v24TagModule : TagModule {
 
     bool can_handle_file (VFSFile *fd);
     bool read_tag (Tuple & tuple, VFSFile * file);
-    bool read_image (VFSFile * handle, void * * image_data, int64_t * image_size);
+    Index<char> read_image (VFSFile * handle);
     bool write_tag (const Tuple & tuple, VFSFile * f);
 };
 

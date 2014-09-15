@@ -24,6 +24,8 @@
 
 #include <gtk/gtk.h>
 
+#include <libaudcore/index.h>
+
 /* New callbacks should be added to the end of this struct.  The
  * audgui_list_new() macro tells us the size of the callback struct as it was
  * defined when the caller code was compiled, allowing us to expand the struct
@@ -42,10 +44,9 @@ struct AudguiListCallbacks {
     void (* shift_rows) (void * user, int row, int before); /* optional */
 
     /* cross-widget drag and drop (optional) */
-    /* the list will handle free()ing data returned by get_data() */
     const char * data_type;
-    void (* get_data) (void * user, void * * data, int * length);
-    void (* receive_data) (void * user, int row, const void * data, int length);
+    Index<char> (* get_data) (void * user);
+    void (* receive_data) (void * user, int row, const char * data, int len);
 
     void (* mouse_motion) (void * user, GdkEventMotion * event, int row); /* optional */
     void (* mouse_leave) (void * user, GdkEventMotion * event, int row); /* optional */

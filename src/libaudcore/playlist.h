@@ -25,18 +25,19 @@
 #include <libaudcore/index.h>
 #include <libaudcore/tuple.h>
 
-/* The values which can be passed (packed into a pointer) to the "playlist
- * update" hook.  PLAYLIST_UPDATE_SELECTION means that entries have been
- * selected or unselected, or that entries have been added to or removed from
- * the queue.  PLAYLIST_UPDATE_METADATA means that new metadata has been read
- * for some entries, or that the title or filename of a playlist has changed,
- * and implies PLAYLIST_UPDATE_SELECTION.  PLAYLIST_UPDATE_STRUCTURE covers any
- * change not listed under the other types, and implies both
- * PLAYLIST_UPDATE_SELECTION and PLAYLIST_UPDATE_METADATA. */
-enum {
- PLAYLIST_UPDATE_SELECTION = 1,
- PLAYLIST_UPDATE_METADATA,
- PLAYLIST_UPDATE_STRUCTURE};
+/* The values which can be passed to the "playlist update" hook.
+ * PLAYLIST_UPDATE_SELECTION means that entries have been selected or
+ * unselected, or that entries have been added to or removed from the queue.
+ * PLAYLIST_UPDATE_METADATA means that new metadata has been read for some
+ * entries, or that the title or filename of a playlist has changed, and implies
+ * PLAYLIST_UPDATE_SELECTION.  PLAYLIST_UPDATE_STRUCTURE covers any change not
+ * listed under the other types, and implies both PLAYLIST_UPDATE_SELECTION and
+ * PLAYLIST_UPDATE_METADATA. */
+typedef void * PlaylistUpdateLevel;
+#define PLAYLIST_UPDATE_NONE ((PlaylistUpdateLevel) 0)
+#define PLAYLIST_UPDATE_SELECTION ((PlaylistUpdateLevel) 1)
+#define PLAYLIST_UPDATE_METADATA ((PlaylistUpdateLevel) 2)
+#define PLAYLIST_UPDATE_STRUCTURE ((PlaylistUpdateLevel) 3)
 
 /* The values which can be passed to playlist_sort_by_scheme(),
  * playlist_sort_selected_by_scheme(), and
@@ -333,7 +334,7 @@ bool aud_playlist_update_pending (void);
  * number of contiguous entries to be updated in <count>.  Note that entries may
  * have been added or removed within this range.  If no entries in the playlist
  * have changed, returns zero. */
-int aud_playlist_updated_range (int playlist, int * at, int * count);
+PlaylistUpdateLevel aud_playlist_updated_range (int playlist, int * at, int * count);
 
 /* Returns nonzero if entries are being added to a playlist in the background.
  * If <playlist> is -1, checks all playlists. */

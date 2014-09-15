@@ -174,7 +174,7 @@ static String relocate_path (const char * path, const char * from, const char * 
         newlen --;
 
 #ifdef _WIN32
-    if (g_ascii_strncasecmp (path, from, oldlen) || (path[oldlen] && path[oldlen] != G_DIR_SEPARATOR))
+    if (strcmp_nocase (path, from, oldlen) || (path[oldlen] && path[oldlen] != G_DIR_SEPARATOR))
 #else
     if (strncmp (path, from, oldlen) || (path[oldlen] && path[oldlen] != G_DIR_SEPARATOR))
 #endif
@@ -242,7 +242,7 @@ static void relocate_all_paths ()
     while ((a = (char *) last_path_element (from)) &&
      (b = (char *) last_path_element (to)) &&
 #ifdef _WIN32
-     ! g_ascii_strcasecmp (a, b))
+     ! strcmp_nocase (a, b))
 #else
      ! strcmp (a, b))
 #endif

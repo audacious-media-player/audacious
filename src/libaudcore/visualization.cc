@@ -20,7 +20,7 @@
 #include "interface.h"
 #include "internal.h"
 
-#include <glib.h>
+#include <assert.h>
 #include <string.h>
 
 #include "plugin.h"
@@ -33,7 +33,7 @@ static int running = false;
 
 EXPORT void aud_vis_func_add (int type, VisFunc func)
 {
-    g_return_if_fail (type >= 0 && type < AUD_VIS_TYPES);
+    assert (type >= 0 && type < AUD_VIS_TYPES);
 
     vis_funcs[type].append (func);
     vis_runner_enable (true);
@@ -104,11 +104,12 @@ void vis_send_audio (const float * data, int channels)
         ((VisFreqFunc) func) (freq);
 }
 
-static bool vis_load (PluginHandle * plugin, void * unused)
+static bool vis_load (PluginHandle * plugin, void *)
 {
     AUDINFO ("Activating %s.\n", aud_plugin_get_name (plugin));
     VisPlugin * header = (VisPlugin *) aud_plugin_get_header (plugin);
-    g_return_val_if_fail (header, false);
+    if (! header)
+        return false;
 
     if (PLUGIN_HAS_FUNC (header, clear))
         aud_vis_func_add (AUD_VIS_TYPE_CLEAR, (VisFunc) header->clear);
@@ -122,11 +123,12 @@ static bool vis_load (PluginHandle * plugin, void * unused)
     return true;
 }
 
-static bool vis_unload (PluginHandle * plugin, void * unused)
+static bool vis_unload (PluginHandle * plugin, void *)
 {
     AUDINFO ("Deactivating %s.\n", aud_plugin_get_name (plugin));
     VisPlugin * header = (VisPlugin *) aud_plugin_get_header (plugin);
-    g_return_val_if_fail (header, false);
+    if (! header)
+        return false;
 
     if (PLUGIN_HAS_FUNC (header, clear))
         aud_vis_func_remove ((VisFunc) header->clear);
@@ -159,7 +161,8 @@ void vis_activate (bool activate)
 bool vis_plugin_start (PluginHandle * plugin)
 {
     VisPlugin * vp = (VisPlugin *) aud_plugin_get_header (plugin);
-    g_return_val_if_fail (vp, false);
+    if (! vp)
+        return false;
 
     if (vp->init != nullptr && ! vp->init ())
         return false;
@@ -173,7 +176,8 @@ bool vis_plugin_start (PluginHandle * plugin)
 void vis_plugin_stop (PluginHandle * plugin)
 {
     VisPlugin * vp = (VisPlugin *) aud_plugin_get_header (plugin);
-    g_return_if_fail (vp);
+    if (! vp)
+        return;
 
     if (running)
         vis_unload (plugin, nullptr);

@@ -20,7 +20,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <glib.h>
+#include <glib.h>  /* for g_strchomp */
 
 #include <libaudcore/audstrings.h>
 #include <libaudtag/builtin.h>

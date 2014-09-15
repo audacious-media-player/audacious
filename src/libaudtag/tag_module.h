@@ -31,7 +31,7 @@ struct TagModule {
 
     virtual bool can_handle_file (VFSFile *fd);
     virtual bool read_tag (Tuple & tuple, VFSFile * handle);
-    virtual bool read_image (VFSFile * handle, void * * data, int64_t * size);
+    virtual Index<char> read_image (VFSFile * handle);
     virtual bool write_tag (const Tuple & tuple, VFSFile * handle);
 
 protected:

@@ -20,7 +20,6 @@
 #include "internal.h"
 
 #include <pthread.h>
-#include <glib.h>
 
 #include "drct.h"
 #include "list.h"
@@ -48,8 +47,11 @@ static bool effect_start_cb (PluginHandle * plugin, EffectStartState * state)
 {
     AUDINFO ("Starting %s at %d channels, %d Hz.\n", aud_plugin_get_name (plugin),
      * state->channels, * state->rate);
+
     EffectPlugin * header = (EffectPlugin *) aud_plugin_get_header (plugin);
-    g_return_val_if_fail (header, true);
+    if (! header || ! header->start)
+        return true;
+
     header->start (state->channels, state->rate);
 
     Effect * effect = new Effect ();
@@ -227,7 +229,9 @@ bool effect_plugin_start (PluginHandle * plugin)
     if (aud_drct_get_playing ())
     {
         EffectPlugin * ep = (EffectPlugin *) aud_plugin_get_header (plugin);
-        g_return_val_if_fail (ep, false);
+        if (! ep)
+            return false;
+
         effect_enable (plugin, ep, true);
     }
 
@@ -239,7 +243,9 @@ void effect_plugin_stop (PluginHandle * plugin)
     if (aud_drct_get_playing ())
     {
         EffectPlugin * ep = (EffectPlugin *) aud_plugin_get_header (plugin);
-        g_return_if_fail (ep);
+        if (! ep)
+            return;
+
         effect_enable (plugin, ep, false);
     }
 }

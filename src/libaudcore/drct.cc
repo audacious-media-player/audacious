@@ -161,7 +161,7 @@ static void add_list (Index<PlaylistAddItem> && items, int at, bool to_temp, boo
 EXPORT void aud_drct_pl_add (const char * filename, int at)
 {
     Index<PlaylistAddItem> items;
-    items.append ({String (filename)});
+    items.append (String (filename));
     add_list (std::move (items), at, false, false);
 }
 
@@ -173,7 +173,7 @@ EXPORT void aud_drct_pl_add_list (Index<PlaylistAddItem> && items, int at)
 EXPORT void aud_drct_pl_open (const char * filename)
 {
     Index<PlaylistAddItem> items;
-    items.append ({String (filename)});
+    items.append (String (filename));
     add_list (std::move (items), -1, aud_get_bool (nullptr, "open_to_temporary"), true);
 }
 
@@ -185,7 +185,7 @@ EXPORT void aud_drct_pl_open_list (Index<PlaylistAddItem> && items)
 EXPORT void aud_drct_pl_open_temp (const char * filename)
 {
     Index<PlaylistAddItem> items;
-    items.append ({String (filename)});
+    items.append (String (filename));
     add_list (std::move (items), -1, true, true);
 }
 

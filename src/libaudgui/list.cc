@@ -355,12 +355,9 @@ static void drag_data_get (GtkWidget * widget, GdkDragContext * context,
 {
     g_signal_stop_emission_by_name (widget, "drag-data-get");
 
-    void * data = nullptr;
-    int length = 0;
-    model->cbs->get_data (model->user, & data, & length);
+    Index<char> data = model->cbs->get_data (model->user);
     gtk_selection_data_set (sel, gdk_atom_intern (model->cbs->data_type, false),
-     8, (const unsigned char *) data, length);
-    g_free (data);
+     8, (const unsigned char *) data.begin (), data.len ());
 }
 
 static int calc_drop_row (ListModel * model, GtkWidget * widget, int x, int y)
@@ -515,7 +512,7 @@ static void drag_data_received (GtkWidget * widget, GdkDragContext * context, in
     g_return_if_fail (model->receive_row >= 0 && model->receive_row <=
      model->rows);
 
-    const unsigned char * data = gtk_selection_data_get_data (sel);
+    auto data = (const char *) gtk_selection_data_get_data (sel);
     int length = gtk_selection_data_get_length (sel);
 
     if (data && length)

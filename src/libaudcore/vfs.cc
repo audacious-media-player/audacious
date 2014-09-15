@@ -21,13 +21,13 @@
 #include "vfs.h"
 
 #define __STDC_FORMAT_MACROS
+#include <assert.h>
 #include <inttypes.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
 
-#include <glib.h>
 #include <glib/gstdio.h>
 
 #include "audstrings.h"
@@ -54,7 +54,7 @@ EXPORT void VFSFile::set_lookup_func (LookupFunc func)
  */
 EXPORT VFSFile * VFSFile::fopen (const char * path, const char * mode)
 {
-    g_return_val_if_fail (path && mode, nullptr);
+    assert (path && mode);
 
     OpenFunc fopen_impl = nullptr;
 

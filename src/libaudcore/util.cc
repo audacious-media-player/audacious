@@ -29,7 +29,7 @@
 #include <windows.h>
 #endif
 
-#include <glib.h>
+#include <glib/gstdio.h>
 
 #include "audstrings.h"
 #include "runtime.h"
@@ -107,7 +107,7 @@ static char * skip_top_folders (char * name)
     }
 
 #ifdef _WIN32
-    if (! g_ascii_strncasecmp (name, home, len) && name[len] == '\\')
+    if (! strcmp_nocase (name, home, len) && name[len] == '\\')
 #else
     if (! strncmp (name, home, len) && name[len] == '/')
 #endif
@@ -242,13 +242,13 @@ void describe_song (const char * name, const Tuple & tuple, String & title,
         // skip common strings and avoid duplicates
         for (auto skip : (const char *[]) {"music", artist, album})
         {
-            if (first && skip && ! g_ascii_strcasecmp (first, skip))
+            if (first && skip && ! strcmp_nocase (first, skip))
             {
                 first = second;
                 second = nullptr;
             }
 
-            if (second && skip && ! g_ascii_strcasecmp (second, skip))
+            if (second && skip && ! strcmp_nocase (second, skip))
                 second = nullptr;
         }
 
