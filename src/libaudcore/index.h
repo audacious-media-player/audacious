@@ -82,15 +82,15 @@ public:
     int len () const
         { return m_len; }
 
-    void * insert (int pos, int len);
+    void * insert (int pos, int len);  // no fill
     void insert (int pos, int len, FillFunc fill_func);
     void insert (const void * from, int pos, int len, CopyFunc copy_func);
     void remove (int pos, int len, EraseFunc erase_func);
-    void erase (int pos, int len, EraseFunc erase_func);
-    void shift (int from, int to, int len, EraseFunc erase_func);
+    void erase (int pos, int len, FillFunc fill_func, EraseFunc erase_func);
+    void shift (int from, int to, int len, FillFunc fill_func, EraseFunc erase_func);
 
     void move_from (IndexBase & b, int from, int to, int len, bool expand,
-     bool collapse, EraseFunc erase_func);
+     bool collapse, FillFunc fill_func, EraseFunc erase_func);
 
     void sort (CompareFunc compare, int elemsize, void * userdata);
 
@@ -142,13 +142,13 @@ public:
     void remove (int pos, int len)
         { IndexBase::remove (raw (pos), raw (len), erase_func ()); }
     void erase (int pos, int len)
-        { IndexBase::erase (raw (pos), raw (len), erase_func ()); }
+        { IndexBase::erase (raw (pos), raw (len), fill_func (), erase_func ()); }
     void shift (int from, int to, int len)
-        { IndexBase::shift (raw (from), raw (to), raw (len), erase_func ()); }
+        { IndexBase::shift (raw (from), raw (to), raw (len), fill_func (), erase_func ()); }
 
     void move_from (Index<T> & b, int from, int to, int len, bool expand, bool collapse)
         { IndexBase::move_from (b, raw (from), raw (to), raw (len), expand,
-           collapse, erase_func ()); }
+           collapse, fill_func (), erase_func ()); }
 
     template<typename ... Args>
     T & append (Args && ... args)
