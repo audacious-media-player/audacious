@@ -92,7 +92,7 @@ public:
 class VFSFile
 {
 public:
-    constexpr VFSFile () {}
+    VFSFile () {}
 
     VFSFile (const char * filename, VFSImpl * impl) :
         m_filename (filename),
