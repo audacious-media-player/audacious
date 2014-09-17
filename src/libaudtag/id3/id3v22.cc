@@ -96,15 +96,15 @@ static bool validate_header (ID3v2Header * header)
     return true;
 }
 
-static bool read_header (VFSFile * handle, int * version, bool *
+static bool read_header (VFSFile & handle, int * version, bool *
  syncsafe, int64_t * offset, int * header_size, int * data_size)
 {
     ID3v2Header header;
 
-    if (vfs_fseek (handle, 0, VFS_SEEK_SET))
+    if (handle.fseek (0, VFS_SEEK_SET))
         return false;
 
-    if (vfs_fread (& header, 1, sizeof (ID3v2Header), handle) != sizeof
+    if (handle.fread (& header, 1, sizeof (ID3v2Header)) != sizeof
      (ID3v2Header))
         return false;
 
@@ -126,7 +126,7 @@ static bool read_header (VFSFile * handle, int * version, bool *
     return true;
 }
 
-static bool read_frame (VFSFile * handle, int max_size, int version,
+static bool read_frame (VFSFile & handle, int max_size, int version,
  bool syncsafe, int * frame_size, GenericFrame & frame)
 {
     ID3v2FrameHeader header;
@@ -135,7 +135,7 @@ static bool read_frame (VFSFile * handle, int max_size, int version,
     if ((max_size -= sizeof (ID3v2FrameHeader)) < 0)
         return false;
 
-    if (vfs_fread (& header, 1, sizeof (ID3v2FrameHeader), handle) != sizeof
+    if (handle.fread (& header, 1, sizeof (ID3v2FrameHeader)) != sizeof
      (ID3v2FrameHeader))
         return false;
 
@@ -161,7 +161,7 @@ static bool read_frame (VFSFile * handle, int max_size, int version,
     frame.clear ();
     frame.insert (0, hdrsz);
 
-    if (vfs_fread (& frame[0], 1, frame.len (), handle) != frame.len ())
+    if (handle.fread (& frame[0], 1, frame.len ()) != frame.len ())
         return false;
 
     AUDDBG ("Data size = %d.\n", frame.len ());
@@ -182,7 +182,7 @@ static int get_frame_id (const char * key)
     return -1;
 }
 
-bool ID3v22TagModule::can_handle_file (VFSFile * handle)
+bool ID3v22TagModule::can_handle_file (VFSFile & handle)
 {
     int version, header_size, data_size;
     bool syncsafe;
@@ -192,7 +192,7 @@ bool ID3v22TagModule::can_handle_file (VFSFile * handle)
      & data_size);
 }
 
-bool ID3v22TagModule::read_tag (Tuple & tuple, VFSFile * handle)
+bool ID3v22TagModule::read_tag (Tuple & tuple, VFSFile & handle)
 {
     int version, header_size, data_size;
     bool syncsafe;
@@ -204,7 +204,7 @@ bool ID3v22TagModule::read_tag (Tuple & tuple, VFSFile * handle)
         return false;
 
     AUDDBG ("Reading tags from %i bytes of ID3 data in %s\n", data_size,
-     vfs_get_filename (handle));
+     handle.filename ());
 
     for (pos = 0; pos < data_size; )
     {
@@ -267,7 +267,7 @@ bool ID3v22TagModule::read_tag (Tuple & tuple, VFSFile * handle)
     return true;
 }
 
-Index<char> ID3v22TagModule::read_image (VFSFile * handle)
+Index<char> ID3v22TagModule::read_image (VFSFile & handle)
 {
     int version, header_size, data_size, parsed;
     bool syncsafe;

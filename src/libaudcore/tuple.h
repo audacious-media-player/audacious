@@ -175,7 +175,7 @@ public:
 
     /* Set various fields based on the ICY metadata of <stream>.  Returns true
      * if any fields were changed. */
-    bool fetch_stream_info (VFSFile * stream);
+    bool fetch_stream_info (VFSFile & stream);
 
 private:
     TupleData * data;

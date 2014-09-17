@@ -67,7 +67,7 @@ static String current_title;
 static int current_length = -1;
 
 static InputPlugin * current_decoder = nullptr;
-static VFSFile * current_file = nullptr;
+static VFSFile current_file;
 static ReplayGainInfo current_gain;
 
 /* level 2 data (persists to end of playlist) */
@@ -237,12 +237,7 @@ static void playback_cleanup (void)
     current_length = -1;
 
     current_decoder = nullptr;
-
-    if (current_file)
-    {
-        vfs_fclose (current_file);
-        current_file = nullptr;
-    }
+    current_file = VFSFile ();
 
     read_gain_from_tuple (Tuple ());
 
@@ -327,8 +322,8 @@ static bool open_file (void)
     if (current_decoder->schemes && current_decoder->schemes[0])
         return true;
 
-    current_file = vfs_fopen (current_filename, "r");
-    return (current_file != nullptr);
+    current_file = VFSFile (current_filename, "r");
+    return (bool) current_file;
 }
 
 static void * playback_thread (void *)

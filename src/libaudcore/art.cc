@@ -199,7 +199,11 @@ EXPORT const Index<char> * aud_art_request_data (const char * file)
 
     /* load data from external image file */
     if (! item->data.len () && item->art_file)
-        item->data = vfs_file_get_contents (item->art_file);
+    {
+        VFSFile file (item->art_file, "r");
+        if (file)
+            item->data = file.read_all ();
+    }
 
     if (item->data.len ())
         data = & item->data;

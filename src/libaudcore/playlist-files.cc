@@ -66,13 +66,12 @@ static bool playlist_load_cb (PluginHandle * plugin, void * data_)
 
     data->plugin_found = true;
 
-    VFSFile * file = vfs_fopen (data->filename, "r");
+    VFSFile file (data->filename, "r");
     if (! file)
         return false; /* stop if we can't open file */
 
     data->success = pp->load (data->filename, file, data->title, data->items);
 
-    vfs_fclose (file);
     return ! data->success; /* stop when playlist is loaded */
 }
 
@@ -122,13 +121,13 @@ static bool playlist_save_cb (PluginHandle * plugin, void * data_)
 
     data->plugin_found = true;
 
-    VFSFile * file = vfs_fopen (data->filename, "w");
+    VFSFile file (data->filename, "w");
     if (! file)
         return false; /* stop if we can't open file */
 
-    data->success = pp->save (data->filename, file, data->title, data->items);
+    data->success = pp->save (data->filename, file, data->title, data->items) &&
+     file.fflush () == 0;
 
-    vfs_fclose (file);
     return false; /* stop after first attempt (successful or not) */
 }
 

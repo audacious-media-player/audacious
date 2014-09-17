@@ -251,15 +251,14 @@ void config_load (void)
     StringBuf path = filename_to_uri (aud_get_path (AudPath::UserDir));
     str_insert (path, -1, "/config");
 
-    if (vfs_file_test (path, VFS_EXISTS))
+    if (VFSFile::test_file (path, VFS_EXISTS))
     {
-        VFSFile * file = vfs_fopen (path, "r");
+        VFSFile file (path, "r");
 
         if (file)
         {
             LoadState state = LoadState ();
             inifile_parse (file, load_heading, load_entry, & state);
-            vfs_fclose (file);
         }
     }
 
@@ -291,25 +290,33 @@ void config_save (void)
     StringBuf path = filename_to_uri (aud_get_path (AudPath::UserDir));
     str_insert (path, -1, "/config");
 
-    VFSFile * file = vfs_fopen (path, "w");
+    String current_heading;
 
-    if (file)
+    VFSFile file (path, "w");
+    if (! file)
+        goto FAILED;
+
+    for (const ConfigItem & item : state.list)
     {
-        String current_heading;
-
-        for (const ConfigItem & item : state.list)
+        if (item.section != current_heading)
         {
-            if (item.section != current_heading)
-            {
-                inifile_write_heading (file, item.section);
-                current_heading = item.section;
-            }
+            if (! inifile_write_heading (file, item.section))
+                goto FAILED;
 
-            inifile_write_entry (file, item.key, item.value);
+            current_heading = item.section;
         }
 
-        vfs_fclose (file);
+        if (! inifile_write_entry (file, item.key, item.value))
+            goto FAILED;
     }
+
+    if (file.fflush () < 0)
+        goto FAILED;
+
+    return;
+
+FAILED:
+    AUDWARN ("Error saving configuration.\n");
 }
 
 EXPORT void aud_config_set_defaults (const char * section, const char * const * entries)

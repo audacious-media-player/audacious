@@ -43,7 +43,7 @@ static char * strtrim (char * str, char * end)
     return str;
 }
 
-EXPORT void inifile_parse (VFSFile * file,
+EXPORT void inifile_parse (VFSFile & file,
  void (* handle_heading) (const char * heading, void * data),
  void (* handle_entry) (const char * key, const char * value, void * data),
  void * data)
@@ -71,7 +71,7 @@ EXPORT void inifile_parse (VFSFile * file,
                 pos = buf;
             }
 
-            len += vfs_fread (buf + len, 1, size - 1 - len, file);
+            len += file.fread (buf + len, 1, size - 1 - len);
 
             if (len < size - 1)
                 eof = true;
@@ -113,12 +113,14 @@ EXPORT void inifile_parse (VFSFile * file,
     }
 }
 
-EXPORT bool inifile_write_heading (VFSFile * file, const char * heading)
+EXPORT bool inifile_write_heading (VFSFile & file, const char * heading)
 {
-    return (vfs_fputs (str_concat ({"\n[", heading, "]\n"}), file) >= 0);
+    StringBuf line = str_concat ({"\n[", heading, "]\n"});
+    return (file.fwrite (line, 1, line.len ()) == line.len ());
 }
 
-EXPORT bool inifile_write_entry (VFSFile * file, const char * key, const char * value)
+EXPORT bool inifile_write_entry (VFSFile & file, const char * key, const char * value)
 {
-    return (vfs_fputs (str_concat ({key, "=", value, "\n"}), file) >= 0);
+    StringBuf line = str_concat ({key, "=", value, "\n"});
+    return (file.fwrite (line, 1, line.len ()) == line.len ());
 }

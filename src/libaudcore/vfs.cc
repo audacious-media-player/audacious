@@ -126,39 +126,6 @@ EXPORT int64_t VFSFile::fwrite (const void * ptr, int64_t size, int64_t nmemb)
 }
 
 /**
- * Reads a character from a VFS stream.
- *
- * @param file #VFSFile object that represents the VFS stream.
- * @return On success, a character. Otherwise, -1.
- */
-EXPORT int
-vfs_getc(VFSFile *file)
-{
-    unsigned char c;
-
-    if (vfs_fread (& c, 1, 1, file) != 1)
-        return -1;
-
-    return c;
-}
-
-/**
- * Pushes a character back to the VFS stream.
- *
- * @param c The character to push back.
- * @param file #VFSFile object that represents the VFS stream.
- * @return On success, 0. Otherwise, EOF.
- */
-EXPORT int
-vfs_ungetc(int c, VFSFile *file)
-{
-    if (vfs_fseek (file, -1, VFS_SEEK_CUR) < 0)
-        return EOF;
-
-    return c;
-}
-
-/**
  * Performs a seek in given VFS stream. Standard C-style values
  * of whence can be used to indicate desired action.
  *
@@ -273,6 +240,45 @@ EXPORT String VFSFile::get_metadata (const char * field)
     return m_impl->get_metadata (field);
 }
 
+EXPORT Index<char> VFSFile::read_all ()
+{
+    constexpr int maxbuf = 16777216;
+    constexpr int pagesize = 4096;
+
+    Index<char> buf;
+    int64_t size = fsize ();
+
+    if (size >= 0)
+    {
+        buf.insert (0, aud::min (size, (int64_t) maxbuf));
+        size = fread (buf.begin (), 1, buf.len ());
+    }
+    else
+    {
+        size = 0;
+
+        buf.insert (0, pagesize);
+
+        int64_t readsize;
+        while ((readsize = fread (& buf[size], 1, buf.len () - size)))
+        {
+            size += readsize;
+
+            if (size == buf.len ())
+            {
+                if (buf.len () > maxbuf - pagesize)
+                    break;
+
+                buf.insert (-1, pagesize);
+            }
+        }
+    }
+
+    buf.remove (size, -1);
+
+    return buf;
+}
+
 /**
  * Wrapper for g_file_test().
  *
@@ -280,8 +286,7 @@ EXPORT String VFSFile::get_metadata (const char * field)
  * @param test A GFileTest to run.
  * @return The result of g_file_test().
  */
-EXPORT bool
-vfs_file_test(const char * path, VFSFileTest test)
+EXPORT bool VFSFile::test_file (const char * path, VFSFileTest test)
 {
     if (strncmp (path, "file://", 7))
         return false; /* only local files are handled */
@@ -324,44 +329,4 @@ vfs_file_test(const char * path, VFSFileTest test)
     }
 
     return ! test;
-}
-
-/**
- * Tests if a file is writeable.
- *
- * @param path A path to test.
- * @return true if the file is writeable, otherwise false.
- */
-EXPORT bool
-vfs_is_writeable(const char * path)
-{
-    GStatBuf info;
-    StringBuf realfn = uri_to_filename (path);
-
-    if (! realfn || g_stat (realfn, & info) < 0)
-        return false;
-
-    return (info.st_mode & S_IWUSR);
-}
-
-/**
- * Tests if a path is remote uri.
- *
- * @param path A path to test.
- * @return true if the file is remote, otherwise false.
- */
-EXPORT bool vfs_is_remote (const char * path)
-{
-    return strncmp (path, "file://", 7) ? true : false;
-}
-
-/**
- * Tests if a file is associated to streaming.
- *
- * @param file A #VFSFile object to test.
- * @return true if the file is streaming, otherwise false.
- */
-EXPORT bool vfs_is_streaming (VFSFile * file)
-{
-    return (vfs_fsize (file) < 0);
 }

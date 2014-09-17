@@ -99,7 +99,7 @@ EXPORT bool aud_eq_write_presets (const Index<EqualizerPreset> & list, const cha
 #define FROM_WINAMP_VAL(x)  ((31.5 - (x)) * (12.0 / 31.5))
 #define TO_WINAMP_VAL(x)  (round (31.5 - (x) * (31.5 / 12.0)))
 
-EXPORT Index<EqualizerPreset> aud_import_winamp_presets (VFSFile * file)
+EXPORT Index<EqualizerPreset> aud_import_winamp_presets (VFSFile & file)
 {
     char header[31];
     char bands[11];
@@ -107,18 +107,18 @@ EXPORT Index<EqualizerPreset> aud_import_winamp_presets (VFSFile * file)
 
     Index<EqualizerPreset> list;
 
-    if (vfs_fread (header, 1, sizeof header, file) != sizeof header ||
+    if (file.fread (header, 1, sizeof header) != sizeof header ||
      strncmp (header, "Winamp EQ library file v1.1", 27))
         return list;
 
-    while (vfs_fread (preset_name, 1, 180, file) == 180)
+    while (file.fread (preset_name, 1, 180) == 180)
     {
         preset_name[180] = 0; /* protect against buffer overflow */
 
-        if (vfs_fseek (file, 77, VFS_SEEK_CUR)) /* unknown crap --asphyx */
+        if (file.fseek (77, VFS_SEEK_CUR)) /* unknown crap --asphyx */
             break;
 
-        if (vfs_fread (bands, 1, 11, file) != 11)
+        if (file.fread (bands, 1, 11) != 11)
             break;
 
         EqualizerPreset & preset = list.append (String (preset_name));
@@ -131,17 +131,17 @@ EXPORT Index<EqualizerPreset> aud_import_winamp_presets (VFSFile * file)
     return list;
 }
 
-EXPORT bool aud_export_winamp_preset (const EqualizerPreset & preset, VFSFile * file)
+EXPORT bool aud_export_winamp_preset (const EqualizerPreset & preset, VFSFile & file)
 {
     char name[257];
     char bands[11];
 
-    if (vfs_fwrite ("Winamp EQ library file v1.1\x1a!--", 1, 31, file) != 31)
+    if (file.fwrite ("Winamp EQ library file v1.1\x1a!--", 1, 31) != 31)
         return false;
 
     strncpy (name, preset.name, 257);
 
-    if (vfs_fwrite (name, 1, 257, file) != 257)
+    if (file.fwrite (name, 1, 257) != 257)
         return false;
 
     for (int i = 0; i < AUD_EQ_NBANDS; i ++)
@@ -149,13 +149,13 @@ EXPORT bool aud_export_winamp_preset (const EqualizerPreset & preset, VFSFile * 
 
     bands[10] = TO_WINAMP_VAL (preset.preamp);
 
-    if (vfs_fwrite (bands, 1, 11, file) != 11)
+    if (file.fwrite (bands, 1, 11) != 11)
         return false;
 
     return true;
 }
 
-EXPORT bool aud_save_preset_file (const EqualizerPreset & preset, const char * filename)
+EXPORT bool aud_save_preset_file (const EqualizerPreset & preset, VFSFile & file)
 {
     GKeyFile * rcfile = g_key_file_new ();
 
@@ -168,14 +168,7 @@ EXPORT bool aud_save_preset_file (const EqualizerPreset & preset, const char * f
     size_t len;
     char * data = g_key_file_to_data (rcfile, & len, nullptr);
 
-    VFSFile * file = vfs_fopen (filename, "w");
-    bool success = false;
-
-    if (file)
-    {
-        success = (vfs_fwrite (data, 1, len, file) == (int64_t) len);
-        vfs_fclose (file);
-    }
+    bool success = (file.fwrite (data, 1, len) == (int64_t) len);
 
     g_key_file_free (rcfile);
     g_free (data);
@@ -183,11 +176,14 @@ EXPORT bool aud_save_preset_file (const EqualizerPreset & preset, const char * f
     return success;
 }
 
-EXPORT bool aud_load_preset_file (EqualizerPreset & preset, const char * filename)
+EXPORT bool aud_load_preset_file (EqualizerPreset & preset, VFSFile & file)
 {
     GKeyFile * rcfile = g_key_file_new ();
 
-    if (! g_key_file_load_from_file (rcfile, filename, G_KEY_FILE_NONE, nullptr))
+    Index<char> data = file.read_all ();
+
+    if (! data.len () || ! g_key_file_load_from_data (rcfile, data.begin (),
+     data.len (), G_KEY_FILE_NONE, nullptr))
     {
         g_key_file_free (rcfile);
         return false;

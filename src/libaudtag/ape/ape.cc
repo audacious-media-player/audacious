@@ -54,9 +54,9 @@ struct ValuePair {
 
 namespace audtag {
 
-static bool ape_read_header (VFSFile * handle, APEHeader * header)
+static bool ape_read_header (VFSFile & handle, APEHeader * header)
 {
-    if (vfs_fread (header, 1, sizeof (APEHeader), handle) != sizeof (APEHeader))
+    if (handle.fread (header, 1, sizeof (APEHeader)) != sizeof (APEHeader))
         return false;
 
     if (strncmp (header->magic, "APETAGEX", 8))
@@ -73,12 +73,12 @@ static bool ape_read_header (VFSFile * handle, APEHeader * header)
     return true;
 }
 
-static bool ape_find_header (VFSFile * handle, APEHeader * header,
+static bool ape_find_header (VFSFile & handle, APEHeader * header,
  int * start, int * length, int * data_start, int * data_length)
 {
     APEHeader secondary;
 
-    if (vfs_fseek (handle, 0, VFS_SEEK_SET))
+    if (handle.fseek (0, VFS_SEEK_SET))
         return false;
 
     if (ape_read_header (handle, header))
@@ -99,7 +99,7 @@ static bool ape_find_header (VFSFile * handle, APEHeader * header,
 
         if (! (header->flags & APE_FLAG_HAS_NO_FOOTER))
         {
-            if (vfs_fseek (handle, header->length, VFS_SEEK_CUR))
+            if (handle.fseek (header->length, VFS_SEEK_CUR))
                 return false;
 
             if (! ape_read_header (handle, & secondary))
@@ -114,13 +114,13 @@ static bool ape_find_header (VFSFile * handle, APEHeader * header,
         return true;
     }
 
-    if (vfs_fseek (handle, -(int) sizeof (APEHeader), VFS_SEEK_END))
+    if (handle.fseek (-(int) sizeof (APEHeader), VFS_SEEK_END))
         return false;
 
     if (! ape_read_header (handle, header))
     {
         /* APE tag may be followed by an ID3v1 tag */
-        if (vfs_fseek (handle, -128 - (int) sizeof (APEHeader), VFS_SEEK_END))
+        if (handle.fseek (-128 - (int) sizeof (APEHeader), VFS_SEEK_END))
             return false;
 
         if (! ape_read_header (handle, header))
@@ -131,12 +131,12 @@ static bool ape_find_header (VFSFile * handle, APEHeader * header,
     }
 
     AUDDBG ("Found footer at %d, length = %d, version = %d.\n",
-     (int) vfs_ftell (handle) - (int) sizeof (APEHeader), (int) header->length,
+     (int) handle.ftell () - (int) sizeof (APEHeader), (int) header->length,
      (int) header->version);
 
-    * start = vfs_ftell (handle) - header->length;
+    * start = handle.ftell () - header->length;
     * length = header->length;
-    * data_start = vfs_ftell (handle) - header->length;
+    * data_start = handle.ftell () - header->length;
     * data_length = header->length - sizeof (APEHeader);
 
     if ((header->flags & APE_FLAG_HAS_NO_FOOTER) || (header->flags & APE_FLAG_IS_HEADER))
@@ -147,7 +147,7 @@ static bool ape_find_header (VFSFile * handle, APEHeader * header,
 
     if (header->flags & APE_FLAG_HAS_HEADER)
     {
-        if (vfs_fseek (handle, -(int) header->length - sizeof (APEHeader), VFS_SEEK_CUR))
+        if (handle.fseek (-(int) header->length - sizeof (APEHeader), VFS_SEEK_CUR))
             return false;
 
         if (! ape_read_header (handle, & secondary))
@@ -163,7 +163,7 @@ static bool ape_find_header (VFSFile * handle, APEHeader * header,
     return true;
 }
 
-bool APETagModule::can_handle_file (VFSFile * handle)
+bool APETagModule::can_handle_file (VFSFile & handle)
 {
     APEHeader header;
     int start, length, data_start, data_length;
@@ -207,7 +207,7 @@ static const char * ape_read_item (const char * data, int length, ValuePair & pa
     return value + header[0];
 }
 
-static Index<ValuePair> ape_read_items (VFSFile * handle)
+static Index<ValuePair> ape_read_items (VFSFile & handle)
 {
     Index<ValuePair> list;
     APEHeader header;
@@ -216,13 +216,13 @@ static Index<ValuePair> ape_read_items (VFSFile * handle)
     if (! ape_find_header (handle, & header, & start, & length, & data_start, & data_length))
         return list;
 
-    if (vfs_fseek (handle, data_start, VFS_SEEK_SET))
+    if (handle.fseek (data_start, VFS_SEEK_SET))
         return list;
 
     Index<char> data;
     data.insert (0, data_length);
 
-    if (vfs_fread (data.begin (), 1, data_length, handle) != data_length)
+    if (handle.fread (data.begin (), 1, data_length) != data_length)
         return list;
 
     AUDDBG ("Reading %d items:\n", header.items);
@@ -290,7 +290,7 @@ static void set_gain_info (Tuple & tuple, int field, int unit_field,
     tuple.set_int (field, value);
 }
 
-bool APETagModule::read_tag (Tuple & tuple, VFSFile * handle)
+bool APETagModule::read_tag (Tuple & tuple, VFSFile & handle)
 {
     Index<ValuePair> list = ape_read_items (handle);
 
@@ -323,7 +323,7 @@ bool APETagModule::read_tag (Tuple & tuple, VFSFile * handle)
     return true;
 }
 
-static bool ape_write_item (VFSFile * handle, const char * key,
+static bool ape_write_item (VFSFile & handle, const char * key,
  const char * value, int * written_length)
 {
     int key_len = strlen (key) + 1;
@@ -335,20 +335,20 @@ static bool ape_write_item (VFSFile * handle, const char * key,
     header[0] = TO_LE32 (value_len);
     header[1] = 0;
 
-    if (vfs_fwrite (header, 1, 8, handle) != 8)
+    if (handle.fwrite (header, 1, 8) != 8)
         return false;
 
-    if (vfs_fwrite (key, 1, key_len, handle) != key_len)
+    if (handle.fwrite (key, 1, key_len) != key_len)
         return false;
 
-    if (vfs_fwrite (value, 1, value_len, handle) != value_len)
+    if (handle.fwrite (value, 1, value_len) != value_len)
         return false;
 
     * written_length += 8 + key_len + value_len;
     return true;
 }
 
-static bool write_string_item (const Tuple & tuple, int field, VFSFile *
+static bool write_string_item (const Tuple & tuple, int field, VFSFile &
  handle, const char * key, int * written_length, int * written_items)
 {
     String value = tuple.get_str (field);
@@ -364,7 +364,7 @@ static bool write_string_item (const Tuple & tuple, int field, VFSFile *
     return success;
 }
 
-static bool write_integer_item (const Tuple & tuple, int field, VFSFile *
+static bool write_integer_item (const Tuple & tuple, int field, VFSFile &
  handle, const char * key, int * written_length, int * written_items)
 {
     int value = tuple.get_int (field);
@@ -380,7 +380,7 @@ static bool write_integer_item (const Tuple & tuple, int field, VFSFile *
 }
 
 static bool write_header (int data_length, int items, bool is_header,
- VFSFile * handle)
+ VFSFile & handle)
 {
     APEHeader header;
 
@@ -392,37 +392,35 @@ static bool write_header (int data_length, int items, bool is_header,
      APE_FLAG_IS_HEADER) : TO_LE32 (APE_FLAG_HAS_HEADER);
     header.reserved = 0;
 
-    return vfs_fwrite (& header, 1, sizeof (APEHeader), handle) == sizeof
-     (APEHeader);
+    return handle.fwrite (& header, 1, sizeof (APEHeader)) == sizeof (APEHeader);
 }
 
-bool APETagModule::write_tag (const Tuple & tuple, VFSFile * handle)
+bool APETagModule::write_tag (const Tuple & tuple, VFSFile & handle)
 {
     Index<ValuePair> list = ape_read_items (handle);
     APEHeader header;
     int start, length, data_start, data_length, items;
 
-    if (ape_find_header (handle, & header, & start, & length, & data_start,
-     & data_length))
+    if (ape_find_header (handle, & header, & start, & length, & data_start, & data_length))
     {
-        if (start + length != vfs_fsize (handle))
+        if (start + length != handle.fsize ())
         {
             AUDERR ("Writing tags is only supported at end of file.\n");
             return false;
         }
 
-        if (vfs_ftruncate (handle, start))
+        if (handle.ftruncate (start))
             return false;
     }
     else
     {
-        start = vfs_fsize (handle);
+        start = handle.fsize ();
 
         if (start < 0)
             return false;
     }
 
-    if (vfs_fseek (handle, start, VFS_SEEK_SET) || ! write_header (0, 0, true, handle))
+    if (handle.fseek (start, VFS_SEEK_SET) || ! write_header (0, 0, true, handle))
         return false;
 
     length = 0;
@@ -453,8 +451,13 @@ bool APETagModule::write_tag (const Tuple & tuple, VFSFile * handle)
 
     AUDDBG ("Wrote %d items, %d bytes.\n", items, length);
 
-    if (! write_header (length, items, false, handle) || vfs_fseek (handle,
-     start, VFS_SEEK_SET) || ! write_header (length, items, true, handle))
+    if (! write_header (length, items, false, handle))
+        return false;
+
+    if (handle.fseek (start, VFS_SEEK_SET) < 0)
+        return false;
+
+    if (! write_header (length, items, true, handle))
         return false;
 
     return true;

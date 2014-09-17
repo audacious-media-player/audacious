@@ -44,7 +44,6 @@ SRCS = adder.cc \
        util.cc \
        vfs.cc \
        vfs_async.cc \
-       vfs_common.cc \
        vfs_local.cc \
        vis-runner.cc \
        visualization.cc

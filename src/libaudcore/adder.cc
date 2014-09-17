@@ -246,7 +246,7 @@ static void add_generic (const String & filename, Tuple && tuple,
 
     if (tuple)
         add_file (filename, std::move (tuple), nullptr, filter, user, result, false);
-    else if (vfs_file_test (filename, VFS_IS_DIR))
+    else if (VFSFile::test_file (filename, VFS_IS_DIR))
         add_folder (filename, filter, user, result, is_single);
     else if (aud_filename_is_playlist (filename))
         add_playlist (filename, filter, user, result, is_single);

@@ -142,14 +142,14 @@ struct PlaylistPlugin
      * file: VFS handle of playlist file (in, read-only file, not seekable)
      * title: title of playlist (out)
      * items: playlist entries (out) */
-    bool (* load) (const char * path, VFSFile * file, String & title,
+    bool (* load) (const char * path, VFSFile & file, String & title,
      Index<PlaylistAddItem> & items);
 
     /* path: URI of playlist file (in)
      * file: VFS handle of playlist file (in, write-only file, not seekable)
      * title: title of playlist (in)
      * items: playlist entries (in) */
-    bool (* save) (const char * path, VFSFile * file, const char * title,
+    bool (* save) (const char * path, VFSFile & file, const char * title,
      const Index<PlaylistAddItem> & items);
 };
 
@@ -290,20 +290,20 @@ struct InputPlugin
     int priority;
 
     /* Returns true if the plugin can handle the file. */
-    bool (* is_our_file_from_vfs) (const char * filename, VFSFile * file);
+    bool (* is_our_file_from_vfs) (const char * filename, VFSFile & file);
 
     /* Reads metadata from the file. */
-    Tuple (* probe_for_tuple) (const char * filename, VFSFile * file);
+    Tuple (* probe_for_tuple) (const char * filename, VFSFile & file);
 
     /* Plays the file.  Returns false on error.  Also see input-api.h. */
-    bool (* play) (const char * filename, VFSFile * file);
+    bool (* play) (const char * filename, VFSFile & file);
 
     /* Optional.  Writes metadata to the file, returning false on error. */
-    bool (* update_song_tuple) (const char * filename, VFSFile * file, const Tuple & tuple);
+    bool (* update_song_tuple) (const char * filename, VFSFile & file, const Tuple & tuple);
 
     /* Optional.  Reads an album art image (JPEG or PNG data) from the file.
      * Returns an empty buffer on error. */
-    Index<char> (* get_song_image) (const char * filename, VFSFile * file);
+    Index<char> (* get_song_image) (const char * filename, VFSFile & file);
 
     /* Optional.  Displays a window showing info about the file.  In general,
      * this function should be avoided since Audacious already provides a file

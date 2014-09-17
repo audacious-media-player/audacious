@@ -68,7 +68,10 @@ static void send_data (void *)
 static void * read_worker (void * data0)
 {
     auto data = (QueuedData *) data0;
-    data->buf = vfs_file_get_contents (data->filename);
+
+    VFSFile file (data->filename, "r");
+    if (file)
+        data->buf = file.read_all ();
 
     pthread_mutex_lock (& mutex);
 

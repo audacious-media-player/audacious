@@ -212,7 +212,7 @@ EXPORT void aud_playlist_remove_failed (int playlist)
         String filename = aud_playlist_entry_get_filename (playlist, count);
 
         /* vfs_file_test() only works for file:// URIs currently */
-        if (! strncmp (filename, "file://", 7) && ! vfs_file_test (filename, VFS_EXISTS))
+        if (! strncmp (filename, "file://", 7) && ! VFSFile::test_file (filename, VFS_EXISTS))
             aud_playlist_entry_set_selected (playlist, count, true);
     }
 

@@ -468,12 +468,12 @@ EXPORT int Tuple::get_nth_subtune (int n) const
     return data->subtunes ? data->subtunes[n] : 1 + n;
 }
 
-EXPORT bool Tuple::fetch_stream_info (VFSFile * stream)
+EXPORT bool Tuple::fetch_stream_info (VFSFile & stream)
 {
     bool updated = false;
     int value;
 
-    String val = vfs_get_metadata (stream, "track-name");
+    String val = stream.get_metadata ("track-name");
 
     if (val && val != get_str (FIELD_TITLE))
     {
@@ -481,7 +481,7 @@ EXPORT bool Tuple::fetch_stream_info (VFSFile * stream)
         updated = true;
     }
 
-    val = vfs_get_metadata (stream, "stream-name");
+    val = stream.get_metadata ("stream-name");
 
     if (val && val != get_str (FIELD_ARTIST))
     {
@@ -489,7 +489,7 @@ EXPORT bool Tuple::fetch_stream_info (VFSFile * stream)
         updated = true;
     }
 
-    val = vfs_get_metadata (stream, "content-bitrate");
+    val = stream.get_metadata ("content-bitrate");
     value = val ? atoi (val) / 1000 : 0;
 
     if (value && value != get_int (FIELD_BITRATE))

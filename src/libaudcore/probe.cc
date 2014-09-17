@@ -66,7 +66,7 @@ static bool probe_func (PluginHandle * plugin, ProbeState * state)
         if (! check_opened (state))
             return false;
 
-        if (decoder->is_our_file_from_vfs (state->filename, & state->handle))
+        if (decoder->is_our_file_from_vfs (state->filename, state->handle))
         {
             state->plugin = plugin;
             return false;
@@ -181,14 +181,14 @@ DONE:
 }
 
 static bool open_file (const char * filename, InputPlugin * ip,
- const char * mode, VFSFile * * handle)
+ const char * mode, VFSFile & handle)
 {
     /* no need to open a handle for custom URI schemes */
     if (ip->schemes && ip->schemes[0])
         return true;
 
-    * handle = vfs_fopen (filename, mode);
-    return (* handle != nullptr);
+    handle = VFSFile (filename, mode);
+    return (bool) handle;
 }
 
 EXPORT Tuple aud_file_read_tuple (const char * filename, PluginHandle * decoder)
@@ -197,39 +197,27 @@ EXPORT Tuple aud_file_read_tuple (const char * filename, PluginHandle * decoder)
     if (! ip || ! ip->probe_for_tuple)
         return Tuple ();
 
-    VFSFile * handle = nullptr;
-    if (! open_file (filename, ip, "r", & handle))
+    VFSFile handle;
+    if (! open_file (filename, ip, "r", handle))
         return Tuple ();
 
-    Tuple tuple = ip->probe_for_tuple (filename, handle);
-
-    if (handle)
-        vfs_fclose (handle);
-
-    return tuple;
+    return ip->probe_for_tuple (filename, handle);
 }
 
 EXPORT Index<char> aud_file_read_image (const char * filename, PluginHandle * decoder)
 {
-    Index<char> buf;
-
     if (! input_plugin_has_images (decoder))
-        return buf;
+        return Index<char> ();
 
     InputPlugin * ip = (InputPlugin *) aud_plugin_get_header (decoder);
     if (! ip || ! ip->get_song_image)
-        return buf;
+        return Index<char> ();
 
-    VFSFile * handle = nullptr;
-    if (! open_file (filename, ip, "r", & handle))
-        return buf;
+    VFSFile handle;
+    if (! open_file (filename, ip, "r", handle))
+        return Index<char> ();
 
-    buf = ip->get_song_image (filename, handle);
-
-    if (handle)
-        vfs_fclose (handle);
-
-    return buf;
+    return ip->get_song_image (filename, handle);
 }
 
 EXPORT bool aud_file_can_write_tuple (const char * filename, PluginHandle * decoder)
@@ -244,14 +232,12 @@ EXPORT bool aud_file_write_tuple (const char * filename,
     if (! ip || ! ip->update_song_tuple)
         return false;
 
-    VFSFile * handle = nullptr;
-    if (! open_file (filename, ip, "r+", & handle))
+    VFSFile handle;
+    if (! open_file (filename, ip, "r+", handle))
         return false;
 
-    bool success = ip->update_song_tuple (filename, handle, tuple);
-
-    if (handle)
-        vfs_fclose (handle);
+    bool success = ip->update_song_tuple (filename, handle, tuple) &&
+     (! handle || handle.fflush () == 0);
 
     if (success)
         aud_playlist_rescan_file (filename);

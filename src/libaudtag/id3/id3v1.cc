@@ -53,27 +53,27 @@ struct ID3v1Ext {
 
 namespace audtag {
 
-static bool read_id3v1_tag (VFSFile * file, ID3v1Tag * tag)
+static bool read_id3v1_tag (VFSFile & file, ID3v1Tag * tag)
 {
-    if (vfs_fseek (file, -sizeof (ID3v1Tag), VFS_SEEK_END) < 0)
+    if (file.fseek (-sizeof (ID3v1Tag), VFS_SEEK_END) < 0)
         return false;
-    if (vfs_fread (tag, 1, sizeof (ID3v1Tag), file) != sizeof (ID3v1Tag))
+    if (file.fread (tag, 1, sizeof (ID3v1Tag)) != sizeof (ID3v1Tag))
         return false;
 
     return ! strncmp (tag->header, "TAG", 3);
 }
 
-static bool read_id3v1_ext (VFSFile * file, ID3v1Ext * ext)
+static bool read_id3v1_ext (VFSFile & file, ID3v1Ext * ext)
 {
-    if (vfs_fseek (file, -(sizeof (ID3v1Ext) + sizeof (ID3v1Tag)), VFS_SEEK_END) < 0)
+    if (file.fseek (-(sizeof (ID3v1Ext) + sizeof (ID3v1Tag)), VFS_SEEK_END) < 0)
         return false;
-    if (vfs_fread (ext, 1, sizeof (ID3v1Ext), file) != sizeof (ID3v1Ext))
+    if (file.fread (ext, 1, sizeof (ID3v1Ext)) != sizeof (ID3v1Ext))
         return false;
 
     return ! strncmp (ext->header, "TAG+", 4);
 }
 
-bool ID3v1TagModule::can_handle_file (VFSFile * file)
+bool ID3v1TagModule::can_handle_file (VFSFile & file)
 {
     ID3v1Tag tag;
     return read_id3v1_tag (file, & tag);
@@ -95,7 +95,7 @@ static bool combine_string (Tuple & tuple, int field, const char * str1,
     return true;
 }
 
-bool ID3v1TagModule::read_tag (Tuple & tuple, VFSFile * file)
+bool ID3v1TagModule::read_tag (Tuple & tuple, VFSFile & file)
 {
     ID3v1Tag tag;
     ID3v1Ext ext;

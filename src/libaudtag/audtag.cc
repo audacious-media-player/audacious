@@ -26,39 +26,39 @@
 
 namespace audtag {
 
-EXPORT bool tuple_read (Tuple & tuple, VFSFile * handle)
+EXPORT bool tuple_read (Tuple & tuple, VFSFile & handle)
 {
     TagModule * module = find_tag_module (handle, TagType::None);
 
     if (! module)
     {
-        AUDINFO ("read_tag() not supported for %s\n", vfs_get_filename (handle));
+        AUDINFO ("read_tag() not supported for %s\n", handle.filename ());
         return false;
     }
 
     return module->read_tag (tuple, handle);
 }
 
-EXPORT Index<char> image_read (VFSFile * handle)
+EXPORT Index<char> image_read (VFSFile & handle)
 {
     TagModule * module = find_tag_module (handle, TagType::None);
 
     if (! module)
     {
-        AUDINFO ("read_image() not supported for %s\n", vfs_get_filename (handle));
+        AUDINFO ("read_image() not supported for %s\n", handle.filename ());
         return Index<char> ();
     }
 
     return module->read_image (handle);
 }
 
-EXPORT bool tuple_write (const Tuple & tuple, VFSFile * handle, TagType new_type)
+EXPORT bool tuple_write (const Tuple & tuple, VFSFile & handle, TagType new_type)
 {
     TagModule * module = find_tag_module (handle, new_type);
 
     if (! module)
     {
-        AUDINFO ("write_tag() not supported for %s\n", vfs_get_filename (handle));
+        AUDINFO ("write_tag() not supported for %s\n", handle.filename ());
         return false;
     }
 
