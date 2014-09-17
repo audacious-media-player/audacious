@@ -56,6 +56,7 @@ enum {
     FIELD_PERFORMER,
     FIELD_COPYRIGHT,
     FIELD_DATE,
+    FIELD_MBID,         /**< MusicBrainz identifer for the song */
 
     FIELD_SUBSONG_ID,   /**< Index number of subsong/tune */
     FIELD_SUBSONG_NUM,  /**< Total number of subsongs in the file */
