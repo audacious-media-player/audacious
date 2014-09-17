@@ -177,12 +177,6 @@ EXPORT Index<char> vfs_file_read_all (VFSFile * file)
  */
 EXPORT Index<char> vfs_file_get_contents(const char * filename)
 {
-    Index<char> buf;
-    VFSFile * file = VFSFile::fopen (filename, "r");
-
-    if (file)
-        buf = vfs_file_read_all (file);
-
-    delete file;
-    return buf;
+    VFSFile file (filename, "r");
+    return file ? vfs_file_read_all (& file) : Index<char> ();
 }

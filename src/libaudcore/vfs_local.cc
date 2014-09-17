@@ -42,11 +42,10 @@ enum LocalOp {
     OP_WRITE
 };
 
-class LocalFile : public VFSFile
+class LocalFile : public VFSImpl
 {
 public:
-    LocalFile (const char * uri, const char * path, FILE * stream) :
-        VFSFile (uri),
+    LocalFile (const char * path, FILE * stream) :
         m_path (path),
         m_stream (stream),
         m_cached_size (-1),
@@ -55,16 +54,16 @@ public:
     ~LocalFile ();
 
 protected:
-    int64_t fread_impl (void * ptr, int64_t size, int64_t nmemb);
-    int fseek_impl (int64_t offset, VFSSeekType whence);
+    int64_t fread (void * ptr, int64_t size, int64_t nmemb);
+    int fseek (int64_t offset, VFSSeekType whence);
 
-    int64_t ftell_impl ();
-    int64_t fsize_impl ();
-    bool feof_impl ();
+    int64_t ftell ();
+    int64_t fsize ();
+    bool feof ();
 
-    int64_t fwrite_impl (const void * ptr, int64_t size, int64_t nmemb);
-    int ftruncate_impl (int64_t length);
-    int fflush_impl ();
+    int64_t fwrite (const void * ptr, int64_t size, int64_t nmemb);
+    int ftruncate (int64_t length);
+    int fflush ();
 
 private:
     String m_path;
@@ -73,7 +72,7 @@ private:
     LocalOp m_last_op;
 };
 
-VFSFile * vfs_local_fopen (const char * uri, const char * mode)
+VFSImpl * vfs_local_fopen (const char * uri, const char * mode)
 {
     StringBuf path = uri_to_filename (uri);
     g_return_val_if_fail (path, nullptr);
@@ -98,7 +97,7 @@ VFSFile * vfs_local_fopen (const char * uri, const char * mode)
         return nullptr;
     }
 
-    return new LocalFile (uri, path, stream);
+    return new LocalFile (path, stream);
 }
 
 LocalFile::~LocalFile ()
@@ -107,7 +106,7 @@ LocalFile::~LocalFile ()
         perror (m_path);
 }
 
-int64_t LocalFile::fread_impl (void * ptr, int64_t size, int64_t nitems)
+int64_t LocalFile::fread (void * ptr, int64_t size, int64_t nitems)
 {
     if (m_last_op == OP_WRITE)
     {
@@ -129,7 +128,7 @@ int64_t LocalFile::fread_impl (void * ptr, int64_t size, int64_t nitems)
     return result;
 }
 
-int64_t LocalFile::fwrite_impl (const void * ptr, int64_t size, int64_t nitems)
+int64_t LocalFile::fwrite (const void * ptr, int64_t size, int64_t nitems)
 {
     if (m_last_op == OP_READ)
     {
@@ -152,7 +151,7 @@ int64_t LocalFile::fwrite_impl (const void * ptr, int64_t size, int64_t nitems)
     return result;
 }
 
-int LocalFile::fseek_impl (int64_t offset, VFSSeekType whence)
+int LocalFile::fseek (int64_t offset, VFSSeekType whence)
 {
     int result = fseeko (m_stream, offset, from_vfs_seek_type (whence));
     if (result < 0)
@@ -164,17 +163,17 @@ int LocalFile::fseek_impl (int64_t offset, VFSSeekType whence)
     return result;
 }
 
-int64_t LocalFile::ftell_impl ()
+int64_t LocalFile::ftell ()
 {
     return ftello (m_stream);
 }
 
-bool LocalFile::feof_impl ()
+bool LocalFile::feof ()
 {
     return ::feof (m_stream);
 }
 
-int LocalFile::ftruncate_impl (int64_t length)
+int LocalFile::ftruncate (int64_t length)
 {
     if (m_last_op != OP_NONE)
     {
@@ -198,7 +197,7 @@ int LocalFile::ftruncate_impl (int64_t length)
     return result;
 }
 
-int LocalFile::fflush_impl ()
+int LocalFile::fflush ()
 {
     if (m_last_op != OP_WRITE)
         return 0;
@@ -213,7 +212,7 @@ int LocalFile::fflush_impl ()
     return result;
 }
 
-int64_t LocalFile::fsize_impl ()
+int64_t LocalFile::fsize ()
 {
     if (m_cached_size < 0)
     {
@@ -221,14 +220,14 @@ int64_t LocalFile::fsize_impl ()
         if (saved_pos < 0)
             goto ERR;
 
-        if (fseek_impl (0, VFS_SEEK_END) < 0)
+        if (fseek (0, VFS_SEEK_END) < 0)
             goto ERR;
 
         int64_t length = ftello (m_stream);
         if (length < 0)
             goto ERR;
 
-        if (fseek_impl (saved_pos, VFS_SEEK_SET) < 0)
+        if (fseek (saved_pos, VFS_SEEK_SET) < 0)
             goto ERR;
 
         m_cached_size = length;

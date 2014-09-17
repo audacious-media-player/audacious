@@ -30,14 +30,14 @@
 
 struct ProbeState {
     const char * filename;
-    VFSFile * handle;
+    VFSFile handle;
     bool failed;
     PluginHandle * plugin;
 };
 
 static bool check_opened (ProbeState * state)
 {
-    if (state->handle != nullptr)
+    if (state->handle)
         return true;
     if (state->failed)
         return false;
@@ -45,7 +45,7 @@ static bool check_opened (ProbeState * state)
     AUDDBG ("Opening %s.\n", state->filename);
     state->handle = probe_buffer_new (state->filename);
 
-    if (state->handle != nullptr)
+    if (state->handle)
         return true;
 
     AUDWARN ("Failed to open %s.\n", state->filename);
@@ -61,18 +61,18 @@ static bool probe_func (PluginHandle * plugin, ProbeState * state)
     if (decoder == nullptr)
         return true;
 
-    if (decoder->is_our_file_from_vfs != nullptr)
+    if (decoder->is_our_file_from_vfs)
     {
         if (! check_opened (state))
             return false;
 
-        if (decoder->is_our_file_from_vfs (state->filename, state->handle))
+        if (decoder->is_our_file_from_vfs (state->filename, & state->handle))
         {
             state->plugin = plugin;
             return false;
         }
 
-        if (vfs_fseek (state->handle, 0, VFS_SEEK_SET) < 0)
+        if (state->handle.fseek (0, VFS_SEEK_SET) < 0)
             return false;
     }
 
@@ -93,7 +93,7 @@ static bool probe_func (PluginHandle * plugin, ProbeState * state)
 
 static bool probe_func_fast (PluginHandle * plugin, ProbeState * state)
 {
-    if (state->plugin != nullptr)
+    if (state->plugin)
     {
         PluginHandle * prev = state->plugin;
         state->plugin = nullptr;
@@ -133,7 +133,7 @@ static void probe_by_mime (ProbeState * state)
     if (! check_opened (state))
         return;
 
-    String mime = vfs_get_metadata (state->handle, "content-type");
+    String mime = state->handle.get_metadata ("content-type");
     if (! mime)
         return;
 
@@ -150,36 +150,29 @@ static void probe_by_content (ProbeState * state)
 
 EXPORT PluginHandle * aud_file_find_decoder (const char * filename, bool fast)
 {
-    ProbeState state;
+    ProbeState state = {filename};
 
     AUDINFO ("Probing %s.\n", filename);
-    state.plugin = nullptr;
-    state.filename = filename;
-    state.handle = nullptr;
-    state.failed = false;
 
     probe_by_scheme (& state);
 
-    if (state.plugin != nullptr)
+    if (state.plugin)
         goto DONE;
 
     probe_by_extension (& state);
 
-    if (state.plugin != nullptr || fast)
+    if (state.plugin || fast)
         goto DONE;
 
     probe_by_mime (& state);
 
-    if (state.plugin != nullptr)
+    if (state.plugin)
         goto DONE;
 
     probe_by_content (& state);
 
 DONE:
-    if (state.handle != nullptr)
-        vfs_fclose (state.handle);
-
-    if (state.plugin != nullptr)
+    if (state.plugin)
         AUDINFO ("Probe succeeded: %s\n", aud_plugin_get_name (state.plugin));
     else
         AUDINFO ("Probe failed.\n");

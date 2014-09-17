@@ -83,7 +83,7 @@ void playback_play (int seek_time, bool pause);
 void playback_stop (void);
 
 /* probe-buffer.c */
-VFSFile * probe_buffer_new (const char * filename);
+VFSFile probe_buffer_new (const char * filename);
 
 /* util.c */
 bool dir_foreach (const char * path, DirForeachFunc func, void * user_data);

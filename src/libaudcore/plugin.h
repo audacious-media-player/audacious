@@ -127,7 +127,7 @@ struct TransportPlugin
     const char * const * schemes;
 
     /* fopen() implementation */
-    VFSFile * (* fopen_impl) (const char * filename, const char * mode);
+    VFSImpl * (* fopen_impl) (const char * filename, const char * mode);
 };
 
 struct PlaylistPlugin

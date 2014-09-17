@@ -25,36 +25,31 @@
 
 #define BUFSIZE (256 * 1024)
 
-class ProbeBuffer : public VFSFile
+class ProbeBuffer : public VFSImpl
 {
 public:
-    ProbeBuffer (VFSFile * file) :
-        VFSFile (file->filename ()),
-        m_file (file),
+    ProbeBuffer (VFSFile && file) :
+        m_file (std::move (file)),
         m_filled (0),
         m_at (0) {}
 
-    ~ProbeBuffer ()
-        { delete m_file; }
+    int64_t fread (void * ptr, int64_t size, int64_t nmemb);
+    int fseek (int64_t offset, VFSSeekType whence);
 
-protected:
-    int64_t fread_impl (void * ptr, int64_t size, int64_t nmemb);
-    int fseek_impl (int64_t offset, VFSSeekType whence);
+    int64_t ftell ();
+    int64_t fsize ();
+    bool feof ();
 
-    int64_t ftell_impl ();
-    int64_t fsize_impl ();
-    bool feof_impl ();
+    int64_t fwrite (const void * ptr, int64_t size, int64_t nmemb);
+    int ftruncate (int64_t length);
+    int fflush ();
 
-    int64_t fwrite_impl (const void * ptr, int64_t size, int64_t nmemb);
-    int ftruncate_impl (int64_t length);
-    int fflush_impl ();
-
-    String get_metadata_impl (const char * field);
+    String get_metadata (const char * field);
 
 private:
     void increase_buffer (int64_t size);
 
-    VFSFile * m_file;
+    VFSFile m_file;
     int m_filled, m_at;
     unsigned char m_buffer[BUFSIZE];
 };
@@ -67,10 +62,10 @@ void ProbeBuffer::increase_buffer (int64_t size)
         size = (int64_t) sizeof m_buffer;
 
     if (m_filled < size)
-        m_filled += m_file->fread (m_buffer + m_filled, 1, size - m_filled);
+        m_filled += m_file.fread (m_buffer + m_filled, 1, size - m_filled);
 }
 
-int64_t ProbeBuffer::fread_impl (void * buffer, int64_t size, int64_t count)
+int64_t ProbeBuffer::fread (void * buffer, int64_t size, int64_t count)
 {
     increase_buffer (m_at + size * count);
     int readed = (size > 0) ? aud::min (count, (m_filled - m_at) / size) : 0;
@@ -80,12 +75,12 @@ int64_t ProbeBuffer::fread_impl (void * buffer, int64_t size, int64_t count)
     return readed;
 }
 
-int64_t ProbeBuffer::fwrite_impl (const void * data, int64_t size, int64_t count)
+int64_t ProbeBuffer::fwrite (const void * data, int64_t size, int64_t count)
 {
     return 0; /* not allowed */
 }
 
-int ProbeBuffer::fseek_impl (int64_t offset, VFSSeekType whence)
+int ProbeBuffer::fseek (int64_t offset, VFSSeekType whence)
 {
     if (whence == VFS_SEEK_END)
         return -1; /* not allowed */
@@ -105,44 +100,44 @@ int ProbeBuffer::fseek_impl (int64_t offset, VFSSeekType whence)
     return 0;
 }
 
-int64_t ProbeBuffer::ftell_impl ()
+int64_t ProbeBuffer::ftell ()
 {
     return m_at;
 }
 
-bool ProbeBuffer::feof_impl ()
+bool ProbeBuffer::feof ()
 {
     if (m_at < m_filled)
         return false;
     if (m_at == sizeof m_buffer)
         return true;
 
-    return m_file->feof ();
+    return m_file.feof ();
 }
 
-int ProbeBuffer::ftruncate_impl (int64_t size)
+int ProbeBuffer::ftruncate (int64_t size)
 {
     return -1; /* not allowed */
 }
 
-int ProbeBuffer::fflush_impl ()
+int ProbeBuffer::fflush ()
 {
     return 0; /* no-op */
 }
 
-int64_t ProbeBuffer::fsize_impl ()
+int64_t ProbeBuffer::fsize ()
 {
-    int64_t size = m_file->fsize ();
+    int64_t size = m_file.fsize ();
     return aud::min (size, (int64_t) sizeof m_buffer);
 }
 
-String ProbeBuffer::get_metadata_impl (const char * field)
+String ProbeBuffer::get_metadata (const char * field)
 {
-    return m_file->get_metadata (field);
+    return m_file.get_metadata (field);
 }
 
-VFSFile * probe_buffer_new (const char * filename)
+VFSFile probe_buffer_new (const char * filename)
 {
-    VFSFile * file = VFSFile::fopen (filename, "r");
-    return file ? new ProbeBuffer (file) : nullptr;
+    VFSFile file (filename, "r");
+    return file ? VFSFile (filename, new ProbeBuffer (std::move (file))) : VFSFile ();
 }
