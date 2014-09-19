@@ -22,7 +22,7 @@
 
 #include <libaudcore/index.h>
 
-struct PluginHandle;
+class PluginHandle;
 class Tuple;
 
 /* Gets album art for <file> (the URI of a song file) as JPEG or PNG data.  If

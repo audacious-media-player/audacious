@@ -39,8 +39,9 @@ struct PluginWatch {
     void * data;
 };
 
-struct PluginHandle
+class PluginHandle
 {
+public:
     String basename, path;
     bool loaded;
     int timestamp, type;

@@ -34,7 +34,7 @@ enum {
     PLUGIN_TYPES
 };
 
-struct PluginHandle;
+class PluginHandle;
 
 /* CAUTION: These functions are not thread safe. */
 

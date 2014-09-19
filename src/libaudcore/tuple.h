@@ -183,7 +183,7 @@ private:
 };
 
 /* somewhat out of place here */
-struct PluginHandle;
+class PluginHandle;
 struct PlaylistAddItem {
     String filename;
     Tuple tuple;
