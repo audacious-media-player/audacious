@@ -4,6 +4,7 @@ LIB_MINOR = 0
 
 SRCS = about.cc			\
        about.moc		\
+       art.cc                   \
        equalizer.cc		\
        equalizer.moc		\
        fileopener.cc		\

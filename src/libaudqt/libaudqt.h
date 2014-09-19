@@ -80,6 +80,9 @@ void prefswin_show_plugin_page (int type);
 void log_inspector_show ();
 void log_inspector_hide ();
 
+/* art.cc */
+QImage art_request (const char * filename);
+
 }
 
 #endif
