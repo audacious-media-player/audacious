@@ -250,13 +250,16 @@ static bool enable_single (int type, PluginHandle * p)
     AUDINFO ("Switching from %s to %s.\n", aud_plugin_get_name (old),
      aud_plugin_get_name (p));
 
+    plugin_set_enabled (old, false);
+    plugin_set_enabled (p, true);
+
     if (table[type].f.s.set_current (p))
     {
         // check that the switch was not queued for later
-        if (table[type].f.s.get_current () == p)
+        if (table[type].f.s.get_current () == old)
         {
-            plugin_set_enabled (old, false);
-            plugin_set_enabled (p, true);
+            plugin_set_enabled (p, false);
+            plugin_set_enabled (old, true);
         }
 
         return true;
@@ -264,6 +267,9 @@ static bool enable_single (int type, PluginHandle * p)
 
     AUDERR ("%s failed to start; falling back to %s.\n",
      aud_plugin_get_name (p), aud_plugin_get_name (old));
+
+    plugin_set_enabled (p, false);
+    plugin_set_enabled (old, true);
 
     if (table[type].f.s.set_current (old))
         return false;
@@ -278,13 +284,14 @@ static bool enable_multi (int type, PluginHandle * p, bool enable)
 
     if (enable)
     {
+        plugin_set_enabled (p, true);
+
         if (table[type].f.m.start && ! table[type].f.m.start (p))
         {
             AUDERR ("%s failed to start.\n", aud_plugin_get_name (p));
+            plugin_set_enabled (p, false);
             return false;
         }
-
-        plugin_set_enabled (p, true);
 
         if (type == PLUGIN_TYPE_VIS || type == PLUGIN_TYPE_GENERAL)
             hook_call ("dock plugin enabled", p);
