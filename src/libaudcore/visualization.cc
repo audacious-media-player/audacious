@@ -104,7 +104,7 @@ void vis_send_audio (const float * data, int channels)
         ((VisFreqFunc) func) (freq);
 }
 
-static bool vis_load (PluginHandle * plugin, void *)
+static bool vis_load (PluginHandle * plugin)
 {
     AUDINFO ("Activating %s.\n", aud_plugin_get_name (plugin));
     VisPlugin * header = (VisPlugin *) aud_plugin_get_header (plugin);
@@ -123,12 +123,12 @@ static bool vis_load (PluginHandle * plugin, void *)
     return true;
 }
 
-static bool vis_unload (PluginHandle * plugin, void *)
+static void vis_unload (PluginHandle * plugin)
 {
     AUDINFO ("Deactivating %s.\n", aud_plugin_get_name (plugin));
     VisPlugin * header = (VisPlugin *) aud_plugin_get_header (plugin);
     if (! header)
-        return false;
+        return;
 
     if (PLUGIN_HAS_FUNC (header, clear))
         aud_vis_func_remove ((VisFunc) header->clear);
@@ -141,8 +141,6 @@ static bool vis_unload (PluginHandle * plugin, void *)
 
     if (PLUGIN_HAS_FUNC (header, clear))
         header->clear ();
-
-    return true;
 }
 
 void vis_activate (bool activate)
@@ -150,10 +148,16 @@ void vis_activate (bool activate)
     if (! activate == ! running)
         return;
 
-    if (activate)
-        aud_plugin_for_enabled (PLUGIN_TYPE_VIS, vis_load, nullptr);
-    else
-        aud_plugin_for_enabled (PLUGIN_TYPE_VIS, vis_unload, nullptr);
+    for (PluginHandle * plugin : aud_plugin_list (PLUGIN_TYPE_VIS))
+    {
+        if (! aud_plugin_get_enabled (plugin))
+            continue;
+
+        if (activate)
+            vis_load (plugin);
+        else
+            vis_unload (plugin);
+    }
 
     running = activate;
 }
@@ -164,11 +168,11 @@ bool vis_plugin_start (PluginHandle * plugin)
     if (! vp)
         return false;
 
-    if (vp->init != nullptr && ! vp->init ())
+    if (vp->init && ! vp->init ())
         return false;
 
     if (running)
-        vis_load (plugin, nullptr);
+        vis_load (plugin);
 
     return true;
 }
@@ -180,7 +184,7 @@ void vis_plugin_stop (PluginHandle * plugin)
         return;
 
     if (running)
-        vis_unload (plugin, nullptr);
+        vis_unload (plugin);
 
     if (vp->cleanup)
         vp->cleanup ();

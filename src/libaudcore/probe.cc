@@ -28,156 +28,95 @@
 #include "plugins-internal.h"
 #include "runtime.h"
 
-struct ProbeState {
-    const char * filename;
-    VFSFile handle;
-    bool failed;
-    PluginHandle * plugin;
-};
-
-static bool check_opened (ProbeState * state)
-{
-    if (state->handle)
-        return true;
-    if (state->failed)
-        return false;
-
-    AUDDBG ("Opening %s.\n", state->filename);
-    state->handle = probe_buffer_new (state->filename);
-
-    if (state->handle)
-        return true;
-
-    AUDWARN ("Failed to open %s.\n", state->filename);
-    state->failed = true;
-    return false;
-}
-
-static bool probe_func (PluginHandle * plugin, ProbeState * state)
-{
-    AUDINFO ("Trying input plugin %s.\n", aud_plugin_get_name (plugin));
-
-    InputPlugin * decoder = (InputPlugin *) aud_plugin_get_header (plugin);
-    if (decoder == nullptr)
-        return true;
-
-    if (decoder->is_our_file_from_vfs)
-    {
-        if (! check_opened (state))
-            return false;
-
-        if (decoder->is_our_file_from_vfs (state->filename, state->handle))
-        {
-            state->plugin = plugin;
-            return false;
-        }
-
-        if (state->handle.fseek (0, VFS_SEEK_SET) < 0)
-            return false;
-    }
-
-    return true;
-}
-
-/* Optimization: If we have found plugins with a key match, assume that at least
- * one of them will succeed.  This means that we need not check the very last
- * plugin.  (If there is only one, we do not need to check it at all.)  This is
- * implemented as follows:
- *
- * 1. On the first call, assume until further notice the plugin passed is the
- *    last one and will therefore succeed.
- * 2. On a subsequent call, think twice and probe the plugin we assumed would
- *    succeed.  If it does in fact succeed, then we are done.  If not, assume
- *    similarly that the plugin passed in this call is the last one.
- */
-
-static bool probe_func_fast (PluginHandle * plugin, ProbeState * state)
-{
-    if (state->plugin)
-    {
-        PluginHandle * prev = state->plugin;
-        state->plugin = nullptr;
-
-        if (! probe_func (prev, state))
-            return false;
-    }
-
-    AUDDBG ("Guessing input plugin %s.\n", aud_plugin_get_name (plugin));
-    state->plugin = plugin;
-    return true;
-}
-
-static void probe_by_scheme (ProbeState * state)
-{
-    const char * s = strstr (state->filename, "://");
-    if (s == nullptr)
-        return;
-
-    AUDDBG ("Probing by scheme.\n");
-    StringBuf buf = str_copy (state->filename, s - state->filename);
-    input_plugin_for_key (INPUT_KEY_SCHEME, buf, (PluginForEachFunc) probe_func_fast, state);
-}
-
-static void probe_by_extension (ProbeState * state)
-{
-    StringBuf buf = uri_get_extension (state->filename);
-    if (! buf)
-        return;
-
-    AUDDBG ("Probing by extension.\n");
-    input_plugin_for_key (INPUT_KEY_EXTENSION, buf, (PluginForEachFunc) probe_func_fast, state);
-}
-
-static void probe_by_mime (ProbeState * state)
-{
-    if (! check_opened (state))
-        return;
-
-    String mime = state->handle.get_metadata ("content-type");
-    if (! mime)
-        return;
-
-    AUDDBG ("Probing by MIME type.\n");
-    input_plugin_for_key (INPUT_KEY_MIME, mime, (PluginForEachFunc)
-     probe_func_fast, state);
-}
-
-static void probe_by_content (ProbeState * state)
-{
-    AUDDBG ("Probing by content.\n");
-    aud_plugin_for_enabled (PLUGIN_TYPE_INPUT, (PluginForEachFunc) probe_func, state);
-}
-
 EXPORT PluginHandle * aud_file_find_decoder (const char * filename, bool fast)
 {
-    ProbeState state = {filename};
-
     AUDINFO ("Probing %s.\n", filename);
 
-    probe_by_scheme (& state);
+    auto & list = aud_plugin_list (PLUGIN_TYPE_INPUT);
 
-    if (state.plugin)
-        goto DONE;
+    StringBuf scheme = uri_get_scheme (filename);
+    StringBuf ext = uri_get_extension (filename);
+    Index<PluginHandle *> ext_matches;
 
-    probe_by_extension (& state);
+    for (PluginHandle * plugin : list)
+    {
+        if (! aud_plugin_get_enabled (plugin))
+            continue;
 
-    if (state.plugin || fast)
-        goto DONE;
+        if (scheme && input_plugin_has_key (plugin, INPUT_KEY_SCHEME, scheme))
+        {
+            AUDINFO ("Matched %s by URI scheme.\n", aud_plugin_get_name (plugin));
+            return plugin;
+        }
 
-    probe_by_mime (& state);
+        if (ext && input_plugin_has_key (plugin, INPUT_KEY_EXTENSION, ext))
+            ext_matches.append (plugin);
+    }
 
-    if (state.plugin)
-        goto DONE;
+    if (ext_matches.len () == 1)
+    {
+        AUDDBG ("Matched %s by extension.\n", aud_plugin_get_name (ext_matches[0]));
+        return ext_matches[0];
+    }
 
-    probe_by_content (& state);
+    AUDDBG ("Matched %d plugins by extension.\n", ext_matches.len ());
 
-DONE:
-    if (state.plugin)
-        AUDINFO ("Probe succeeded: %s\n", aud_plugin_get_name (state.plugin));
-    else
-        AUDINFO ("Probe failed.\n");
+    if (fast && ! ext_matches.len ())
+        return nullptr;
 
-    return state.plugin;
+    AUDDBG ("Opening %s.\n", filename);
+
+    VFSFile file (probe_buffer_new (filename));
+    if (! file)
+    {
+        AUDINFO ("Open failed.\n");
+        return nullptr;
+    }
+
+    String mime = file.get_metadata ("content-type");
+
+    if (mime)
+    {
+        for (PluginHandle * plugin : (ext_matches.len () ? ext_matches : list))
+        {
+            if (! aud_plugin_get_enabled (plugin))
+                continue;
+
+            if (input_plugin_has_key (plugin, INPUT_KEY_MIME, mime))
+            {
+                AUDINFO ("Matched %s by MIME type %s.\n",
+                 aud_plugin_get_name (plugin), (const char *) mime);
+                return plugin;
+            }
+        }
+    }
+
+    for (PluginHandle * plugin : (ext_matches.len () ? ext_matches : list))
+    {
+        if (! aud_plugin_get_enabled (plugin))
+            continue;
+
+        AUDINFO ("Trying %s.\n", aud_plugin_get_name (plugin));
+
+        InputPlugin * ip = (InputPlugin *) aud_plugin_get_header (plugin);
+        if (! ip || ! ip->is_our_file_from_vfs)
+            continue;
+
+        if (ip->is_our_file_from_vfs (filename, file))
+        {
+            AUDINFO ("Matched %s by content.\n", aud_plugin_get_name (plugin));
+            return plugin;
+        }
+
+        if (file.fseek (0, VFS_SEEK_SET) != 0)
+        {
+            AUDINFO ("Seek failed.\n");
+            return nullptr;
+        }
+    }
+
+    AUDINFO ("No plugins matched.\n");
+    return nullptr;
 }
 
 static bool open_file (const char * filename, InputPlugin * ip,

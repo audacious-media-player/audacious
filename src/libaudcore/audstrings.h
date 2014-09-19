@@ -75,6 +75,8 @@ StringBuf uri_to_display (const char * uri);
 
 void uri_parse (const char * uri, const char * * base_p, const char * * ext_p,
  const char * * sub_p, int * isub_p);
+
+StringBuf uri_get_scheme (const char * uri);
 StringBuf uri_get_extension (const char * uri);
 
 /* Requires: aud_init() */

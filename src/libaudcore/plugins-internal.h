@@ -49,9 +49,9 @@ void plugin_registry_save (void);
 void plugin_register (const char * path, int timestamp);
 void plugin_set_enabled (PluginHandle * plugin, bool enabled);
 
-PluginHandle * transport_plugin_for_scheme (const char * scheme);
-void playlist_plugin_for_ext (const char * ext, PluginForEachFunc func, void * data);
-void input_plugin_for_key (int key, const char * value, PluginForEachFunc func, void * data);
+bool transport_plugin_has_scheme (PluginHandle * plugin, const char * scheme);
+bool playlist_plugin_has_ext (PluginHandle * plugin, const char * ext);
+bool input_plugin_has_key (PluginHandle * plugin, int key, const char * value);
 bool input_plugin_has_images (PluginHandle * plugin);
 bool input_plugin_has_subtunes (PluginHandle * plugin);
 bool input_plugin_can_write_tuple (PluginHandle * plugin);

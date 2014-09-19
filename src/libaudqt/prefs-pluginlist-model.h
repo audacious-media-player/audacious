@@ -22,11 +22,14 @@
 #include <QAbstractTableModel>
 
 #include <libaudcore/i18n.h>
+#include <libaudcore/index.h>
 #include <libaudcore/preferences.h>
 #include <libaudcore/runtime.h>
 
 #ifndef PREFS_PLUGINLIST_MODEL_H
 #define PREFS_PLUGINLIST_MODEL_H
+
+class PluginHandle;
 
 namespace audqt {
 
@@ -35,7 +38,7 @@ class PluginListModel : public QAbstractListModel
     Q_OBJECT
 
 public:
-    PluginListModel (QObject * parent = 0, int category_id = -1);
+    PluginListModel (QObject * parent, int category_id);
     ~PluginListModel ();
 
     int rowCount (const QModelIndex & parent = QModelIndex ()) const;
@@ -51,9 +54,9 @@ public:
     void updateRow (int row);
 
 private:
-    int m_category_id;
+    const Index<PluginHandle *> & m_list;
 };
 
-};
+}
 
 #endif

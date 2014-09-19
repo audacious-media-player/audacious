@@ -253,6 +253,6 @@ private:
     QTabWidget m_container;
 };
 
-};
+}
 
 #endif

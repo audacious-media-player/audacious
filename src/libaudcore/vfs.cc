@@ -59,15 +59,13 @@ EXPORT VFSFile::VFSFile (const char * filename, const char * mode)
         fopen_impl = vfs_local_fopen;
     else
     {
-        const char * s = strstr (filename, "://");
+        StringBuf scheme = uri_get_scheme (filename);
 
-        if (! s)
+        if (! scheme)
         {
             AUDERR ("Invalid URI: %s\n", filename);
             return;
         }
-
-        StringBuf scheme = str_copy (filename, s - filename);
 
         if (! (fopen_impl = lookup_func (scheme)))
         {

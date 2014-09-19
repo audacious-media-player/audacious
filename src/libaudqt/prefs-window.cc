@@ -316,10 +316,10 @@ static const char * const titlestring_preset_names[TITLESTRING_NPRESETS] = {
 static Index<ComboItem> fill_plugin_combo (int type)
 {
     Index<ComboItem> elems;
-    int count = aud_plugin_count (type);
+    int i = 0;
 
-    for (int i = 0; i < count; i ++)
-        elems.append (aud_plugin_get_name (aud_plugin_by_index (type, i)), i);
+    for (PluginHandle * plugin : aud_plugin_list (type))
+        elems.append (aud_plugin_get_name (plugin), i ++);
 
     return elems;
 }
@@ -374,7 +374,8 @@ static ArrayRef<const ComboItem> iface_combo_fill ()
     if (! iface_combo_elements.len ())
     {
         iface_combo_elements = fill_plugin_combo (PLUGIN_TYPE_IFACE);
-        iface_combo_selected = aud_plugin_get_index (aud_plugin_get_current (PLUGIN_TYPE_IFACE));
+        iface_combo_selected = aud_plugin_list (PLUGIN_TYPE_IFACE)
+         .find (aud_plugin_get_current (PLUGIN_TYPE_IFACE));
     }
 
     return {iface_combo_elements.begin (), iface_combo_elements.len ()};
@@ -389,7 +390,7 @@ static void * iface_create_prefs_box (void)
 
 static void output_combo_changed (void)
 {
-    PluginHandle * plugin = aud_plugin_by_index (PLUGIN_TYPE_OUTPUT, output_combo_selected);
+    PluginHandle * plugin = aud_plugin_list (PLUGIN_TYPE_OUTPUT)[output_combo_selected];
 
     if (aud_plugin_enable (plugin, true))
     {
@@ -431,7 +432,8 @@ static ArrayRef<const ComboItem> output_combo_fill ()
     if (! output_combo_elements.len ())
     {
         output_combo_elements = fill_plugin_combo (PLUGIN_TYPE_OUTPUT);
-        output_combo_selected = aud_plugin_get_index (aud_plugin_get_current (PLUGIN_TYPE_OUTPUT));
+        output_combo_selected = aud_plugin_list (PLUGIN_TYPE_OUTPUT)
+         .find (aud_plugin_get_current (PLUGIN_TYPE_OUTPUT));
     }
 
     return {output_combo_elements.begin (), output_combo_elements.len ()};
@@ -557,16 +559,15 @@ static void create_plugin_category_page (int category_id, const char * category_
         if (selected.length () < 1)
             return;
 
+        auto & list = aud_plugin_list (category_id);
         int idx = selected.indexes () [0].row ();
-        PluginHandle * ph = aud_plugin_by_index (category_id, idx);
-
-        if (! ph)
+        if (idx < 0 || idx >= list.len ())
             return;
 
-        AUDDBG ("plugin %s selected\n", aud_plugin_get_name (ph));
+        AUDDBG ("plugin %s selected\n", aud_plugin_get_name (list[idx]));
 
-        about_btn_watch (about_btn, ph);
-        settings_btn_watch (settings_btn, ph);
+        about_btn_watch (about_btn, list[idx]);
+        settings_btn_watch (settings_btn, list[idx]);
     });
 
     QObject::connect (about_btn, &QAbstractButton::clicked, [=] (bool) {
@@ -574,15 +575,14 @@ static void create_plugin_category_page (int category_id, const char * category_
         if (selected.length () < 1)
             return;
 
+        auto & list = aud_plugin_list (category_id);
         int idx = selected.indexes () [0].row ();
-        PluginHandle * ph = aud_plugin_by_index (category_id, idx);
-
-        if (! ph)
+        if (idx < 0 || idx >= list.len ())
             return;
 
-        AUDDBG ("plugin %s: about\n", aud_plugin_get_name (ph));
+        AUDDBG ("plugin %s: about\n", aud_plugin_get_name (list[idx]));
 
-        plugin_about (ph);
+        plugin_about (list[idx]);
     });
 
     QObject::connect (settings_btn, &QAbstractButton::clicked, [=] (bool) {
@@ -590,15 +590,14 @@ static void create_plugin_category_page (int category_id, const char * category_
         if (selected.length () < 1)
             return;
 
+        auto & list = aud_plugin_list (category_id);
         int idx = selected.indexes () [0].row ();
-        PluginHandle * ph = aud_plugin_by_index (category_id, idx);
-
-        if (! ph)
+        if (idx < 0 || idx >= list.len ())
             return;
 
-        AUDDBG ("plugin %s: settings\n", aud_plugin_get_name (ph));
+        AUDDBG ("plugin %s: settings\n", aud_plugin_get_name (list[idx]));
 
-        plugin_prefs (ph);
+        plugin_prefs (list[idx]);
     });
 }
 

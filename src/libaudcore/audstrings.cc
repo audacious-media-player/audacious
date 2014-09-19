@@ -538,6 +538,12 @@ EXPORT void uri_parse (const char * uri, const char * * base_p, const char * * e
         * isub_p = isub;
 }
 
+EXPORT StringBuf uri_get_scheme (const char * uri)
+{
+    const char * delim = strstr (uri, "://");
+    return delim ? str_copy (uri, delim - uri) : StringBuf ();
+}
+
 EXPORT StringBuf uri_get_extension (const char * uri)
 {
     const char * ext;

@@ -96,42 +96,13 @@ static const PluginParams table[PLUGIN_TYPES] = {
     PluginParams ("interface", SingleFuncs ({iface_plugin_get_current, iface_plugin_set_current}))
 };
 
-static bool find_enabled_cb (PluginHandle * p, void * pp)
-{
-    * (PluginHandle * *) pp = p;
-    return false;
-}
-
-static PluginHandle * find_enabled (int type)
-{
-    PluginHandle * p = nullptr;
-    aud_plugin_for_enabled (type, find_enabled_cb, & p);
-    return p;
-}
-
-static bool probe_cb (PluginHandle * p, PluginHandle * * pp)
-{
-    int type = aud_plugin_get_type (p);
-
-    AUDINFO ("Trying to start %s.\n", aud_plugin_get_name (p));
-
-    if (! table[type].f.s.set_current (p))
-    {
-        AUDWARN ("%s failed to start.\n", aud_plugin_get_name (p));
-        return true; /* keep searching */
-    }
-
-    * pp = p;
-    plugin_set_enabled (p, true);
-    return false; /* stop searching */
-}
-
 static void start_single (int type)
 {
-    PluginHandle * p;
-
-    if ((p = find_enabled (type)) != nullptr)
+    for (PluginHandle * p : aud_plugin_list (type))
     {
+        if (! aud_plugin_get_enabled (p))
+            continue;
+
         AUDINFO ("Starting selected %s plugin %s.\n", table[type].name,
          aud_plugin_get_name (p));
 
@@ -140,30 +111,45 @@ static void start_single (int type)
 
         AUDWARN ("%s failed to start.\n", aud_plugin_get_name (p));
         plugin_set_enabled (p, false);
+        break;
     }
 
     AUDINFO ("Probing for %s plugin.\n", table[type].name);
-    aud_plugin_for_each (type, (PluginForEachFunc) probe_cb, & p);
 
-    if (! p)
+    for (PluginHandle * p : aud_plugin_list (type))
     {
-        AUDERR ("No %s plugin found.\n"
-         "(Did you forget to install audacious-plugins?)\n", table[type].name);
-        abort ();
+        AUDINFO ("Trying to start %s.\n", aud_plugin_get_name (p));
+
+        if (! table[type].f.s.set_current (p))
+        {
+            AUDWARN ("%s failed to start.\n", aud_plugin_get_name (p));
+            continue;
+        }
+
+        plugin_set_enabled (p, true);
+        return;
     }
+
+    AUDERR ("No %s plugin found.\n"
+     "(Did you forget to install audacious-plugins?)\n", table[type].name);
+    abort ();
 }
 
-static bool start_multi_cb (PluginHandle * p, void * data)
+static void start_multi (int type)
 {
-    AUDINFO ("Starting %s.\n", aud_plugin_get_name (p));
-
-    if (! ((PluginParams *) data)->f.m.start (p))
+    for (PluginHandle * p : aud_plugin_list (type))
     {
-        AUDWARN ("%s failed to start; disabling.\n", aud_plugin_get_name (p));
-        plugin_set_enabled (p, false);
-    }
+        if (! aud_plugin_get_enabled (p))
+            continue;
 
-    return true;
+        AUDINFO ("Starting %s.\n", aud_plugin_get_name (p));
+
+        if (! table[type].f.m.start (p))
+        {
+            AUDWARN ("%s failed to start; disabling.\n", aud_plugin_get_name (p));
+            plugin_set_enabled (p, false);
+        }
+    }
 }
 
 static void start_plugins (int type)
@@ -174,21 +160,26 @@ static void start_plugins (int type)
 
     if (table[type].is_single)
         start_single (type);
-    else
-    {
-        if (table[type].f.m.start)
-            aud_plugin_for_enabled (type, start_multi_cb, (void *) & table[type]);
-    }
+    else if (table[type].f.m.start)
+        start_multi (type);
 }
 
 static VFSFile::OpenFunc lookup_transport (const char * scheme)
 {
-    PluginHandle * plugin = transport_plugin_for_scheme (scheme);
-    if (! plugin)
-        return nullptr;
+    for (PluginHandle * plugin : aud_plugin_list (PLUGIN_TYPE_TRANSPORT))
+    {
+        if (! aud_plugin_get_enabled (plugin))
+            continue;
 
-    TransportPlugin * tp = (TransportPlugin *) aud_plugin_get_header (plugin);
-    return tp ? tp->fopen_impl : nullptr;
+        if (transport_plugin_has_scheme (plugin, scheme))
+        {
+            TransportPlugin * tp = (TransportPlugin *) aud_plugin_get_header (plugin);
+            if (tp && tp->fopen_impl)
+                return tp->fopen_impl;
+        }
+    }
+
+    return nullptr;
 }
 
 void start_plugins_one (void)
@@ -206,13 +197,6 @@ void start_plugins_two (void)
         start_plugins (i);
 }
 
-static bool stop_multi_cb (PluginHandle * p, void * data)
-{
-    AUDINFO ("Shutting down %s.\n", aud_plugin_get_name (p));
-    ((PluginParams *) data)->f.m.stop (p);
-    return true;
-}
-
 static void stop_plugins (int type)
 {
     /* interface plugin is already shut down */
@@ -225,10 +209,16 @@ static void stop_plugins (int type)
          (table[type].f.s.get_current ()));
         table[type].f.s.set_current (nullptr);
     }
-    else
+    else if (table[type].f.m.stop)
     {
-        if (table[type].f.m.stop)
-            aud_plugin_for_enabled (type, stop_multi_cb, (void *) & table[type]);
+        for (PluginHandle * p : aud_plugin_list (type))
+        {
+            if (aud_plugin_get_enabled (p))
+            {
+                AUDINFO ("Shutting down %s.\n", aud_plugin_get_name (p));
+                table[type].f.m.stop (p);
+            }
+        }
     }
 }
 

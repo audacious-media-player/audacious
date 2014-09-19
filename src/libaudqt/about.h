@@ -49,6 +49,6 @@ public:
     ~AboutWindow ();
 };
 
-};
+}
 
 #endif
