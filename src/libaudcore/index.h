@@ -157,7 +157,7 @@ public:
          std::forward<Args> (args) ...);
     }
 
-    int find (const T & val)
+    int find (const T & val) const
     {
         for (const T * iter = begin (); iter != end (); iter ++)
         {
