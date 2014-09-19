@@ -83,6 +83,11 @@ void log_inspector_hide ();
 /* art.cc */
 QImage art_request (const char * filename);
 
+/* infowin.cc */
+void infowin_show (int playlist, int entry);
+void infowin_show_current ();
+void infowin_hide ();
+
 }
 
 #endif
