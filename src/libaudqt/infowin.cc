@@ -20,6 +20,7 @@
 
 #include <QtGui>
 #include <QtWidgets>
+#include <QAbstractTableModel>
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/playlist.h>
@@ -27,10 +28,25 @@
 #include <libaudcore/runtime.h>
 #include <libaudcore/interface.h>
 #include <libaudcore/tuple.h>
+#include <libaudcore/hook.h>
 
 #include <libaudqt/libaudqt.h>
 
 namespace audqt {
+
+class InfoModel : public QAbstractTableModel {
+public:
+    InfoModel (QObject * parent = nullptr);
+
+    int rowCount (const QModelIndex & parent = QModelIndex()) const;
+    int columnCount (const QModelIndex & parent = QModelIndex()) const;
+    QVariant data (const QModelIndex & index, int role = Qt::DisplayRole) const;
+
+    void setTuple (const Tuple & tuple);
+
+private:
+    Tuple m_tuple;
+};
 
 class InfoWindow : public QDialog {
 public:
@@ -44,33 +60,96 @@ public:
 private:
     QHBoxLayout m_layout;
     QLabel m_image;
+    QTreeView m_treeview;
+    InfoModel m_model;
 };
+
+static InfoWindow * m_infowin = nullptr;
+
+static void infowin_display_image_async (const char * filename, InfoWindow * infowin)
+{
+    infowin->displayImage (filename);
+}
 
 InfoWindow::InfoWindow (QWidget * parent) : QDialog (parent)
 {
     m_layout.addWidget (& m_image);
+    m_layout.addWidget (& m_treeview);
     setLayout (& m_layout);
     setWindowTitle (_("Track Information"));
+
+    hook_associate ("art ready", (HookFunction) infowin_display_image_async, this);
+
+    m_treeview.setModel (& m_model);
+    m_treeview.header ()->hide ();
 }
 
 InfoWindow::~InfoWindow ()
 {
+    hook_dissociate ("art ready", (HookFunction) infowin_display_image_async);
 }
 
 void InfoWindow::fillInfo (int playlist, int entry, const char * filename, const Tuple & tuple,
  PluginHandle * decoder, bool updating_enabled)
 {
     displayImage (filename);
+    m_model.setTuple (tuple);
 }
 
 void InfoWindow::displayImage (const char * filename)
 {
-    QImage img = art_request (filename).scaled (128, 128, Qt::KeepAspectRatio);
+    QImage img = art_request (filename).scaled (256, 256, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
     m_image.setPixmap (QPixmap::fromImage (img));
 }
 
-static InfoWindow * m_infowin = nullptr;
+InfoModel::InfoModel (QObject * parent) : QAbstractTableModel (parent)
+{
+}
+
+int InfoModel::rowCount (const QModelIndex & parent) const
+{
+    return TUPLE_FIELDS;
+}
+
+int InfoModel::columnCount (const QModelIndex & parent) const
+{
+    return 2;
+}
+
+QVariant InfoModel::data (const QModelIndex & index, int role) const
+{
+    if (role != Qt::DisplayRole)
+        return QVariant ();
+
+    if (index.column () == 0)
+        return Tuple::field_get_name (index.row ());
+    else if (index.column () == 1 && m_tuple)
+    {
+        auto t = Tuple::field_get_type (index.row ());
+
+        if (t == TUPLE_STRING)
+        {
+            const char * res = m_tuple.get_str (index.row ());
+            if (res)
+                return QString (strdup (res));
+        }
+        else if (t == TUPLE_INT)
+        {
+            int res = m_tuple.get_int (index.row ());
+            if (res == -1)
+                return QVariant ();
+            return res;
+        }
+    }
+
+    return QVariant ();
+}
+
+void InfoModel::setTuple (const Tuple & tuple)
+{
+    m_tuple = tuple.ref ();
+}
 
 EXPORT void infowin_show (int playlist, int entry)
 {
@@ -92,6 +171,8 @@ EXPORT void infowin_show (int playlist, int entry)
     else
         aud_ui_show_error (str_printf (_("No info available for %s.\n"),
             (const char *) filename));
+
+    m_infowin->resize (700, 300);
 
     window_bring_to_front (m_infowin);
 }

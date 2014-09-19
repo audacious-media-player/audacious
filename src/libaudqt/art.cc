@@ -34,7 +34,10 @@ EXPORT QImage art_request (const char * filename)
     const Index<char> * data = aud_art_request_data (filename);
 
     if (! data)
+    {
+        AUDINFO ("no album art for %s.\n", filename);
         return QImage ();
+    }
 
     QImage img = QImage::fromData ((const uchar *) data->begin (), data->len ());
 
