@@ -267,7 +267,7 @@ TupleData::TupleData (const TupleData & other) :
         if (other.setmask & BIT (f))
         {
             if (FIELD_TYPE (f) == TUPLE_STRING)
-                set->str = get->str;
+                new (& set->str) String (get->str);
             else
                 set->x = get->x;
 
