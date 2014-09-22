@@ -31,6 +31,18 @@
 
 namespace audqt {
 
+/* button */
+QWidget * ButtonWidget::widget ()
+{
+    m_widget.setText (translate_str (m_parent->label, m_domain));
+
+    QObject::connect (& m_widget, &QPushButton::clicked, [=] () {
+        m_parent->data.button.callback ();
+    });
+
+    return & m_widget;
+}
+
 /* boolean widget (checkbox) */
 QWidget * BooleanWidget::widget ()
 {
