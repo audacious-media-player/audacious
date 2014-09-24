@@ -621,7 +621,7 @@ bool ID3v24TagModule::read_tag (Tuple & tuple, VFSFile & handle)
             id3_associate_string (tuple, FIELD_DATE, & frame[0], frame.len ());
             break;
           case ID3_LENGTH:
-            id3_associate_int (tuple, FIELD_LENGTH, & frame[0], frame.len ());
+            id3_associate_length (tuple, & frame[0], frame.len ());
             break;
           case ID3_ARTIST:
             id3_associate_string (tuple, FIELD_ARTIST, & frame[0], frame.len ());

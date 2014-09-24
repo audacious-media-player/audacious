@@ -111,6 +111,22 @@ void id3_associate_int (Tuple & tuple, int field, const char * data, int size)
     }
 }
 
+void id3_associate_length (Tuple & tuple, const char * data, int size)
+{
+    StringBuf text = id3_decode_text (data, size);
+    int decoder_length = tuple.get_int (FIELD_LENGTH);
+    int tlen_length;
+
+    AUDDBG ("Length, decoder length: %i, tag length: %s.\n", decoder_length, (const char *) text);
+
+    if (text && (tlen_length = atoi (text)))
+    {
+        if (decoder_length <= 0 ||
+            (tlen_length > (decoder_length / 2) && tlen_length < (decoder_length * 2)))
+            tuple.set_int (FIELD_LENGTH, tlen_length);
+    }
+}
+
 void id3_decode_genre (Tuple & tuple, const char * data, int size)
 {
     StringBuf text = id3_decode_text (data, size);
