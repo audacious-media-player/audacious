@@ -73,7 +73,9 @@ public:
     Qt::ItemFlags flags (const QModelIndex & index) const;
 
     void setTupleData (const Tuple & tuple, String filename, PluginHandle * plugin);
+    bool updateFile () const;
 
+private:
     Tuple m_tuple;
     String m_filename;
     PluginHandle * m_plugin;
@@ -149,6 +151,14 @@ int InfoModel::rowCount (const QModelIndex & parent) const
 int InfoModel::columnCount (const QModelIndex & parent) const
 {
     return 2;
+}
+
+bool InfoModel::updateFile () const
+{
+    Tuple t = m_tuple.ref ();
+    t.set_filename (m_filename);
+
+    return aud_file_write_tuple (m_filename, m_plugin, t);
 }
 
 bool InfoModel::setData (const QModelIndex & index, const QVariant & value, int role)
