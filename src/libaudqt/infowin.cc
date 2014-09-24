@@ -34,6 +34,34 @@
 
 namespace audqt {
 
+struct TupleFieldMap {
+    const char * name;
+    int field;
+    bool editable;
+};
+const TupleFieldMap tuple_field_map[] = {
+    {N_("Metadata"),		-1,				false},
+    {N_("Artist"),		FIELD_ARTIST,			true},
+    {N_("Album"),		FIELD_ALBUM,			true},
+    {N_("Title"),		FIELD_TITLE,			true},
+    {N_("Track Number"),	FIELD_TRACK_NUMBER,		true},
+    {N_("Genre"),		FIELD_GENRE,			true},
+    {N_("Comment"),		FIELD_COMMENT,			true},
+    {N_("Song Artist"),		FIELD_SONG_ARTIST,		true},
+    {N_("Composer"),		FIELD_COMPOSER,			true},
+    {N_("Performer"),		FIELD_PERFORMER,		true},
+    {N_("Recording Year"),	FIELD_YEAR,			true},
+    {N_("Recording Date"),	FIELD_DATE,			true},
+
+    {"",			-1,				false},
+    {N_("Technical"),		-1,				false},
+    {N_("Length"),		FIELD_LENGTH,			false},
+    {N_("MIME Type"),		FIELD_MIMETYPE,			false},
+    {N_("Codec"),		FIELD_CODEC,			false},
+    {N_("Quality"),		FIELD_QUALITY,			false},
+    {N_("Bitrate"),		FIELD_BITRATE,			false},
+};
+
 class InfoModel : public QAbstractTableModel {
 public:
     InfoModel (QObject * parent = nullptr);
@@ -41,6 +69,7 @@ public:
     int rowCount (const QModelIndex & parent = QModelIndex()) const;
     int columnCount (const QModelIndex & parent = QModelIndex()) const;
     QVariant data (const QModelIndex & index, int role = Qt::DisplayRole) const;
+    Qt::ItemFlags flags (const QModelIndex & index) const;
 
     void setTuple (const Tuple & tuple);
 
@@ -82,6 +111,8 @@ InfoWindow::InfoWindow (QWidget * parent) : QDialog (parent)
 
     m_treeview.setModel (& m_model);
     m_treeview.header ()->hide ();
+    m_treeview.setEditTriggers (QAbstractItemView::SelectedClicked);
+    m_treeview.setIndentation (0);
 }
 
 InfoWindow::~InfoWindow ()
@@ -109,7 +140,8 @@ InfoModel::InfoModel (QObject * parent) : QAbstractTableModel (parent)
 
 int InfoModel::rowCount (const QModelIndex & parent) const
 {
-    return TUPLE_FIELDS;
+    auto r = ArrayRef<TupleFieldMap> (tuple_field_map);
+    return r.len;
 }
 
 int InfoModel::columnCount (const QModelIndex & parent) const
@@ -119,31 +151,63 @@ int InfoModel::columnCount (const QModelIndex & parent) const
 
 QVariant InfoModel::data (const QModelIndex & index, int role) const
 {
-    if (role != Qt::DisplayRole)
-        return QVariant ();
+    int field_id = tuple_field_map [index.row ()].field;
 
-    if (index.column () == 0)
-        return Tuple::field_get_name (index.row ());
-    else if (index.column () == 1 && m_tuple)
+    if (role == Qt::DisplayRole)
     {
-        auto t = Tuple::field_get_type (index.row ());
-
-        if (t == TUPLE_STRING)
+        if (index.column () == 0)
+            return translate_str (tuple_field_map [index.row ()].name);
+        else if (index.column () == 1 && m_tuple)
         {
-            const char * res = m_tuple.get_str (index.row ());
-            if (res)
-                return QString (strdup (res));
-        }
-        else if (t == TUPLE_INT)
-        {
-            int res = m_tuple.get_int (index.row ());
-            if (res == -1)
+            if (field_id == -1)
                 return QVariant ();
-            return res;
+
+            auto t = Tuple::field_get_type (field_id);
+
+            if (t == TUPLE_STRING)
+            {
+                const char * res = m_tuple.get_str (field_id);
+                if (res)
+                    return QString (res);
+            }
+            else if (t == TUPLE_INT)
+            {
+                int res = m_tuple.get_int (field_id);
+                if (res == -1)
+                    return QVariant ();
+                return res;
+            }
         }
+    }
+    else if (role == Qt::FontRole)
+    {
+        if (field_id == -1)
+        {
+            QFont f;
+            f.setBold (true);
+            return f;
+        }
+        return QVariant ();
     }
 
     return QVariant ();
+}
+
+Qt::ItemFlags InfoModel::flags (const QModelIndex & index) const
+{
+    if (index.column () == 1)
+    {
+        auto & t = tuple_field_map [index.row ()];
+
+        if (t.field == -1)
+            return Qt::ItemNeverHasChildren;
+        else if (t.editable)
+            return Qt::ItemIsSelectable | Qt::ItemIsEditable | Qt::ItemIsEnabled;
+
+        return Qt::ItemIsEnabled;
+    }
+
+    return Qt::ItemNeverHasChildren;
 }
 
 void InfoModel::setTuple (const Tuple & tuple)
