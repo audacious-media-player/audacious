@@ -69,12 +69,14 @@ public:
     int rowCount (const QModelIndex & parent = QModelIndex()) const;
     int columnCount (const QModelIndex & parent = QModelIndex()) const;
     QVariant data (const QModelIndex & index, int role = Qt::DisplayRole) const;
+    bool setData (const QModelIndex & index, const QVariant & value, int role = Qt::EditRole);
     Qt::ItemFlags flags (const QModelIndex & index) const;
 
-    void setTuple (const Tuple & tuple);
+    void setTupleData (const Tuple & tuple, String filename, PluginHandle * plugin);
 
-private:
     Tuple m_tuple;
+    String m_filename;
+    PluginHandle * m_plugin;
 };
 
 class InfoWindow : public QDialog {
@@ -124,7 +126,7 @@ void InfoWindow::fillInfo (int playlist, int entry, const char * filename, const
  PluginHandle * decoder, bool updating_enabled)
 {
     displayImage (filename);
-    m_model.setTuple (tuple);
+    m_model.setTupleData (tuple, String (filename), decoder);
 }
 
 void InfoWindow::displayImage (const char * filename)
@@ -149,11 +151,37 @@ int InfoModel::columnCount (const QModelIndex & parent) const
     return 2;
 }
 
+bool InfoModel::setData (const QModelIndex & index, const QVariant & value, int role)
+{
+    if (role != Qt::EditRole)
+        return false;
+
+    int field_id = tuple_field_map [index.row ()].field;
+    if (field_id == -1)
+        return false;
+
+    auto t = Tuple::field_get_type (field_id);
+    if (t == TUPLE_STRING)
+    {
+        m_tuple.set_str (field_id, value.toString ().toLocal8Bit ());
+        emit dataChanged (index, index, {role});
+        return true;
+    }
+    else if (t == TUPLE_INT)
+    {
+        m_tuple.set_int (field_id, value.toInt ());
+        emit dataChanged (index, index, {role});
+        return true;
+    }
+
+    return false;
+}
+
 QVariant InfoModel::data (const QModelIndex & index, int role) const
 {
     int field_id = tuple_field_map [index.row ()].field;
 
-    if (role == Qt::DisplayRole)
+    if (role == Qt::DisplayRole || role == Qt::EditRole)
     {
         if (index.column () == 0)
             return translate_str (tuple_field_map [index.row ()].name);
@@ -210,9 +238,11 @@ Qt::ItemFlags InfoModel::flags (const QModelIndex & index) const
     return Qt::ItemNeverHasChildren;
 }
 
-void InfoModel::setTuple (const Tuple & tuple)
+void InfoModel::setTupleData (const Tuple & tuple, String filename, PluginHandle * plugin)
 {
     m_tuple = tuple.ref ();
+    m_filename = filename;
+    m_plugin = plugin;
 }
 
 EXPORT void infowin_show (int playlist, int entry)
