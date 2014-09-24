@@ -92,10 +92,12 @@ public:
     void displayImage (const char * filename);
 
 private:
-    QHBoxLayout m_layout;
+    QHBoxLayout m_hbox;
+    QVBoxLayout m_vbox;
     QLabel m_image;
     QTreeView m_treeview;
     InfoModel m_model;
+    QDialogButtonBox m_buttonbox;
 };
 
 static InfoWindow * m_infowin = nullptr;
@@ -107,9 +109,12 @@ static void infowin_display_image_async (const char * filename, InfoWindow * inf
 
 InfoWindow::InfoWindow (QWidget * parent) : QDialog (parent)
 {
-    m_layout.addWidget (& m_image);
-    m_layout.addWidget (& m_treeview);
-    setLayout (& m_layout);
+    m_hbox.addWidget (& m_image);
+    m_hbox.addWidget (& m_treeview);
+    m_vbox.addLayout (& m_hbox);
+    m_vbox.addWidget (& m_buttonbox);
+
+    setLayout (& m_vbox);
     setWindowTitle (_("Track Information"));
 
     hook_associate ("art ready", (HookFunction) infowin_display_image_async, this);
@@ -118,6 +123,15 @@ InfoWindow::InfoWindow (QWidget * parent) : QDialog (parent)
     m_treeview.header ()->hide ();
     m_treeview.setEditTriggers (QAbstractItemView::SelectedClicked);
     m_treeview.setIndentation (0);
+
+    m_buttonbox.setStandardButtons (QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+
+    QObject::connect (& m_buttonbox, &QDialogButtonBox::accepted, [=] () {
+        m_model.updateFile ();
+        hide ();
+    });
+
+    QObject::connect (& m_buttonbox, &QDialogButtonBox::rejected, this, &QDialog::close);
 }
 
 InfoWindow::~InfoWindow ()
