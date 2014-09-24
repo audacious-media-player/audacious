@@ -79,6 +79,7 @@ private:
     Tuple m_tuple;
     String m_filename;
     PluginHandle * m_plugin;
+    bool m_dirty;
 };
 
 class InfoWindow : public QDialog {
@@ -155,6 +156,9 @@ int InfoModel::columnCount (const QModelIndex & parent) const
 
 bool InfoModel::updateFile () const
 {
+    if (! m_dirty)
+        return true;
+
     Tuple t = m_tuple.ref ();
     t.set_filename (m_filename);
 
@@ -169,6 +173,8 @@ bool InfoModel::setData (const QModelIndex & index, const QVariant & value, int 
     int field_id = tuple_field_map [index.row ()].field;
     if (field_id == -1)
         return false;
+
+    m_dirty = true;
 
     auto t = Tuple::field_get_type (field_id);
     if (t == TUPLE_STRING)
@@ -253,6 +259,7 @@ void InfoModel::setTupleData (const Tuple & tuple, String filename, PluginHandle
     m_tuple = tuple.ref ();
     m_filename = filename;
     m_plugin = plugin;
+    m_dirty = false;
 }
 
 EXPORT void infowin_show (int playlist, int entry)
