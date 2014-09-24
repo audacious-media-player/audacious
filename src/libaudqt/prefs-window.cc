@@ -537,6 +537,7 @@ static void create_plugin_category_page (int category_id, const char * category_
     QTreeView * view = new QTreeView;
     PluginListModel * plm = new PluginListModel (0, category_id);
 
+    view->setIndentation (0);
     view->setModel (plm);
     view->header ()->hide ();
 
