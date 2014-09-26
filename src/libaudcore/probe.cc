@@ -99,10 +99,10 @@ EXPORT PluginHandle * aud_file_find_decoder (const char * filename, bool fast)
         AUDINFO ("Trying %s.\n", aud_plugin_get_name (plugin));
 
         InputPlugin * ip = (InputPlugin *) aud_plugin_get_header (plugin);
-        if (! ip || ! ip->is_our_file_from_vfs)
+        if (! ip)
             continue;
 
-        if (ip->is_our_file_from_vfs (filename, file))
+        if (ip->is_our_file (filename, file))
         {
             AUDINFO ("Matched %s by content.\n", aud_plugin_get_name (plugin));
             return plugin;
@@ -123,7 +123,7 @@ static bool open_file (const char * filename, InputPlugin * ip,
  const char * mode, VFSFile & handle)
 {
     /* no need to open a handle for custom URI schemes */
-    if (ip->schemes && ip->schemes[0])
+    if (ip->input_info.schemes.len)
         return true;
 
     handle = VFSFile (filename, mode);
@@ -133,30 +133,27 @@ static bool open_file (const char * filename, InputPlugin * ip,
 EXPORT Tuple aud_file_read_tuple (const char * filename, PluginHandle * decoder)
 {
     InputPlugin * ip = (InputPlugin *) aud_plugin_get_header (decoder);
-    if (! ip || ! ip->probe_for_tuple)
+    if (! ip)
         return Tuple ();
 
     VFSFile handle;
     if (! open_file (filename, ip, "r", handle))
         return Tuple ();
 
-    return ip->probe_for_tuple (filename, handle);
+    return ip->read_tuple (filename, handle);
 }
 
 EXPORT Index<char> aud_file_read_image (const char * filename, PluginHandle * decoder)
 {
-    if (! input_plugin_has_images (decoder))
-        return Index<char> ();
-
     InputPlugin * ip = (InputPlugin *) aud_plugin_get_header (decoder);
-    if (! ip || ! ip->get_song_image)
+    if (! ip)
         return Index<char> ();
 
     VFSFile handle;
     if (! open_file (filename, ip, "r", handle))
         return Index<char> ();
 
-    return ip->get_song_image (filename, handle);
+    return ip->read_image (filename, handle);
 }
 
 EXPORT bool aud_file_can_write_tuple (const char * filename, PluginHandle * decoder)
@@ -168,14 +165,14 @@ EXPORT bool aud_file_write_tuple (const char * filename,
  PluginHandle * decoder, const Tuple & tuple)
 {
     InputPlugin * ip = (InputPlugin *) aud_plugin_get_header (decoder);
-    if (! ip || ! ip->update_song_tuple)
+    if (! ip)
         return false;
 
     VFSFile handle;
     if (! open_file (filename, ip, "r+", handle))
         return false;
 
-    bool success = ip->update_song_tuple (filename, handle, tuple) &&
+    bool success = ip->write_tuple (filename, handle, tuple) &&
      (! handle || handle.fflush () == 0);
 
     if (success)
@@ -186,13 +183,13 @@ EXPORT bool aud_file_write_tuple (const char * filename,
 
 EXPORT bool aud_custom_infowin (const char * filename, PluginHandle * decoder)
 {
-    if (! input_plugin_has_infowin (decoder))
-        return false;
-
     InputPlugin * ip = (InputPlugin *) aud_plugin_get_header (decoder);
-    if (! ip || ! ip->file_info_box)
+    if (! ip)
         return false;
 
-    ip->file_info_box (filename);
-    return true;
+    VFSFile handle;
+    if (! open_file (filename, ip, "r", handle))
+        return false;
+
+    return ip->file_info_box (filename, handle);
 }

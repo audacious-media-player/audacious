@@ -43,7 +43,8 @@ bool aud_plugin_get_enabled (PluginHandle * plugin);
 bool aud_plugin_enable (PluginHandle * plugin, bool enable);
 
 int aud_plugin_send_message (PluginHandle * plugin, const char * code, const void * data, int size);
-void /*GtkWidget*/ * aud_plugin_get_widget (PluginHandle * plugin);
+void * aud_plugin_get_gtk_widget (PluginHandle * plugin);  // returns (GtkWidget *)
+void * aud_plugin_get_qt_widget (PluginHandle * plugin);  // return (QWidget *)
 
 int aud_plugin_get_type (PluginHandle * plugin);
 const char * aud_plugin_get_basename (PluginHandle * plugin);

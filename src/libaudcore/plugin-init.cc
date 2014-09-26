@@ -20,7 +20,6 @@
 #include "plugins-internal.h"
 
 #include <assert.h>
-#include <errno.h>
 #include <stdlib.h>
 
 #include "hook.h"
@@ -33,22 +32,13 @@
 static bool general_plugin_start (PluginHandle * plugin)
 {
     auto gp = (GeneralPlugin *) aud_plugin_get_header (plugin);
-    if (! gp)
-        return false;
-
-    if (gp->init && ! gp->init ())
-        return false;
-
-    return true;
+    return gp && gp->init ();
 }
 
 void general_plugin_stop (PluginHandle * plugin)
 {
     GeneralPlugin * gp = (GeneralPlugin *) aud_plugin_get_header (plugin);
-    if (! gp)
-        return;
-
-    if (gp->cleanup)
+    if (gp)
         gp->cleanup ();
 }
 
@@ -174,7 +164,7 @@ static VFSFile::OpenFunc lookup_transport (const char * scheme)
         if (transport_plugin_has_scheme (plugin, scheme))
         {
             TransportPlugin * tp = (TransportPlugin *) aud_plugin_get_header (plugin);
-            if (tp && tp->fopen_impl)
+            if (tp)
                 return tp->fopen_impl;
         }
     }
@@ -331,35 +321,37 @@ EXPORT bool aud_plugin_enable (PluginHandle * plugin, bool enable)
 EXPORT int aud_plugin_send_message (PluginHandle * plugin, const char * code, const void * data, int size)
 {
     if (! aud_plugin_get_enabled (plugin))
-        return ENOSYS;
+        return -1;
 
     Plugin * header = (Plugin *) aud_plugin_get_header (plugin);
-    if (! header || ! PLUGIN_HAS_FUNC (header, take_message))
-        return ENOSYS;
+    if (! header)
+        return -1;
 
     return header->take_message (code, data, size);
 }
 
-EXPORT void * aud_plugin_get_widget (PluginHandle * plugin)
+EXPORT void * aud_plugin_get_gtk_widget (PluginHandle * plugin)
 {
     if (! aud_plugin_get_enabled (plugin))
         return nullptr;
 
     int type = aud_plugin_get_type (plugin);
+    if (type != PLUGIN_TYPE_GENERAL && type != PLUGIN_TYPE_VIS)
+        return nullptr;
 
-    if (type == PLUGIN_TYPE_GENERAL)
-    {
-        auto gp = (GeneralPlugin *) aud_plugin_get_header (plugin);
-        if (gp && PLUGIN_HAS_FUNC (gp, get_widget))
-            return gp->get_widget ();
-    }
+    auto dp = (DockablePlugin *) aud_plugin_get_header (plugin);
+    return dp ? dp->get_gtk_widget () : nullptr;
+}
 
-    if (type == PLUGIN_TYPE_VIS)
-    {
-        auto vp = (VisPlugin *) aud_plugin_get_header (plugin);
-        if (vp && PLUGIN_HAS_FUNC (vp, get_widget))
-            return vp->get_widget ();
-    }
+EXPORT void * aud_plugin_get_qt_widget (PluginHandle * plugin)
+{
+    if (! aud_plugin_get_enabled (plugin))
+        return nullptr;
 
-    return nullptr;
+    int type = aud_plugin_get_type (plugin);
+    if (type != PLUGIN_TYPE_GENERAL && type != PLUGIN_TYPE_VIS)
+        return nullptr;
+
+    auto dp = (DockablePlugin *) aud_plugin_get_header (plugin);
+    return dp ? dp->get_qt_widget () : nullptr;
 }

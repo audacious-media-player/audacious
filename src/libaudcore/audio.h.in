@@ -30,6 +30,10 @@ enum {
  FMT_S24_LE, FMT_S24_BE, FMT_U24_LE, FMT_U24_BE,
  FMT_S32_LE, FMT_S32_BE, FMT_U32_LE, FMT_U32_BE};
 
+struct StereoVolume {
+    int left, right;
+};
+
 #ifdef WANT_AUD_BSWAP
 
 #include <stdint.h>

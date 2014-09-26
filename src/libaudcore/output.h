@@ -36,9 +36,6 @@ int output_get_raw_time (void);
 void output_close_audio (void);
 void output_drain (void);
 
-void output_get_volume (int * left, int * right);
-void output_set_volume (int left, int right);
-
 PluginHandle * output_plugin_get_current (void);
 bool output_plugin_set_current (PluginHandle * plugin);
 

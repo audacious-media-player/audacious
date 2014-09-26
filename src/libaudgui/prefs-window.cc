@@ -541,8 +541,9 @@ static void create_song_info_category (void)
 static void iface_fill_prefs_box (void)
 {
     Plugin * header = (Plugin *) aud_plugin_get_header (aud_plugin_get_current (PLUGIN_TYPE_IFACE));
-    if (header && header->prefs)
-        audgui_create_widgets_with_domain (iface_prefs_box, header->prefs->widgets, header->domain);
+    if (header && header->info.prefs)
+        audgui_create_widgets_with_domain (iface_prefs_box,
+         header->info.prefs->widgets, header->info.domain);
 }
 
 static int iface_combo_changed_finish (void *)

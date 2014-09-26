@@ -58,7 +58,7 @@ bool playlist_load (const char * filename, String & title, Index<PlaylistAddItem
             AUDINFO ("Trying playlist plugin %s.\n", aud_plugin_get_name (plugin));
 
             PlaylistPlugin * pp = (PlaylistPlugin *) aud_plugin_get_header (plugin);
-            if (! pp || ! PLUGIN_HAS_FUNC (pp, load))
+            if (! pp)
                 continue;
 
             VFSFile file (filename, "r");
@@ -122,7 +122,7 @@ EXPORT bool aud_playlist_save (int list, const char * filename)
                 continue;
 
             PlaylistPlugin * pp = (PlaylistPlugin *) aud_plugin_get_header (plugin);
-            if (! pp || ! PLUGIN_HAS_FUNC (pp, save))
+            if (! pp || ! pp->can_save)
                 continue;
 
             VFSFile file (filename, "w");

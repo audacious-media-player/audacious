@@ -45,10 +45,7 @@ VolumeButton::VolumeButton (QWidget * parent) :
 
 void VolumeButton::showSlider ()
 {
-    int value;
-    aud_drct_get_volume_main (& value);
-
-    m_slider->setValue (value);
+    m_slider->setValue (aud_drct_get_volume_main ());
 
     m_container->setWindowFlags (Qt::Popup);
     m_container->move (mapToGlobal (QPoint (0, 0)));

@@ -67,7 +67,7 @@ void effect_start (int * channels, int * rate)
          aud_plugin_get_name (plugin), * channels, * rate);
 
         EffectPlugin * header = (EffectPlugin *) aud_plugin_get_header (plugin);
-        if (! header || ! header->start)
+        if (! header)
             continue;
 
         header->start (channels, rate);
@@ -117,10 +117,7 @@ void effect_flush (void)
     pthread_mutex_lock (& mutex);
 
     for (Effect * e = effects.head (); e; e = effects.next (e))
-    {
-        if (PLUGIN_HAS_FUNC (e->header, flush))
-            e->header->flush ();
-    }
+        e->header->flush ();
 
     pthread_mutex_unlock (& mutex);
 }
@@ -140,10 +137,7 @@ int effect_adjust_delay (int delay)
     pthread_mutex_lock (& mutex);
 
     for (Effect * e = effects.tail (); e; e = effects.prev (e))
-    {
-        if (PLUGIN_HAS_FUNC (e->header, adjust_delay))
-            delay = e->header->adjust_delay (delay);
-    }
+        delay = e->header->adjust_delay (delay);
 
     pthread_mutex_unlock (& mutex);
     return delay;

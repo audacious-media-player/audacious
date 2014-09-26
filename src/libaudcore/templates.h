@@ -45,6 +45,10 @@ template<class T>
 constexpr T clamp (T x, T low, T high)
     { return min (max (x, low), high); }
 
+template<class T>
+constexpr T rescale (T x, T old_scale, T new_scale)
+    { return (x * new_scale + old_scale / 2) / old_scale; }
+
 template<class T, int N>
 constexpr int n_elems(const T (&) [N])
     { return N; }

@@ -52,9 +52,7 @@ void plugin_set_enabled (PluginHandle * plugin, bool enabled);
 bool transport_plugin_has_scheme (PluginHandle * plugin, const char * scheme);
 bool playlist_plugin_has_ext (PluginHandle * plugin, const char * ext);
 bool input_plugin_has_key (PluginHandle * plugin, int key, const char * value);
-bool input_plugin_has_images (PluginHandle * plugin);
 bool input_plugin_has_subtunes (PluginHandle * plugin);
 bool input_plugin_can_write_tuple (PluginHandle * plugin);
-bool input_plugin_has_infowin (PluginHandle * plugin);
 
 #endif

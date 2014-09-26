@@ -82,9 +82,7 @@ static gboolean do_auto_advance (Obj * obj, Invoc * invoc)
 
 static gboolean do_balance (Obj * obj, Invoc * invoc)
 {
-    int balance;
-    aud_drct_get_volume_balance (& balance);
-    FINISH2 (balance, balance);
+    FINISH2 (balance, aud_drct_get_volume_balance ());
     return true;
 }
 
@@ -432,7 +430,7 @@ static gboolean do_set_eq_preamp (Obj * obj, Invoc * invoc, double preamp)
 
 static gboolean do_set_volume (Obj * obj, Invoc * invoc, int vl, int vr)
 {
-    aud_drct_set_volume (vl, vr);
+    aud_drct_set_volume ({vl, vr});
     FINISH (set_volume);
     return true;
 }
@@ -639,9 +637,8 @@ static gboolean do_version (Obj * obj, Invoc * invoc)
 
 static gboolean do_volume (Obj * obj, Invoc * invoc)
 {
-    int left, right;
-    aud_drct_get_volume (& left, & right);
-    FINISH2 (volume, left, right);
+    StereoVolume volume = aud_drct_get_volume ();
+    FINISH2 (volume, volume.left, volume.right);
     return true;
 }
 

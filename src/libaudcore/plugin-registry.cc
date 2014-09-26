@@ -32,7 +32,7 @@
 #include "runtime.h"
 
 #define FILENAME "plugin-registry"
-#define FORMAT 8
+#define FORMAT 9
 
 struct PluginWatch {
     PluginWatchFunc func;
@@ -59,7 +59,7 @@ public:
 
     /* for input plugins */
     Index<String> keys[INPUT_KEYS];
-    int has_images, has_subtunes, can_write_tuple, has_infowin;
+    int has_subtunes, can_write_tuple;
 
     PluginHandle (const char * basename, const char * path, bool loaded,
      int timestamp, int type, Plugin * header) :
@@ -74,10 +74,8 @@ public:
         has_configure (false),
         enabled (type == PLUGIN_TYPE_TRANSPORT ||
          type == PLUGIN_TYPE_PLAYLIST || type == PLUGIN_TYPE_INPUT),
-        has_images (false),
         has_subtunes (false),
-        can_write_tuple (false),
-        has_infowin (false) {}
+        can_write_tuple (false) {}
 
     ~PluginHandle ()
     {
@@ -145,10 +143,8 @@ static void input_plugin_save (PluginHandle * plugin, FILE * handle)
             fprintf (handle, "%s %s\n", input_key_names[k], (const char *) key);
     }
 
-    fprintf (handle, "images %d\n", plugin->has_images);
     fprintf (handle, "subtunes %d\n", plugin->has_subtunes);
     fprintf (handle, "writes %d\n", plugin->can_write_tuple);
-    fprintf (handle, "infowin %d\n", plugin->has_infowin);
 }
 
 static void plugin_save (PluginHandle * plugin, FILE * handle)
@@ -268,13 +264,9 @@ static void input_plugin_parse (PluginHandle * plugin, FILE * handle)
         }
     }
 
-    if (parse_integer ("images", & plugin->has_images))
-        parse_next (handle);
     if (parse_integer ("subtunes", & plugin->has_subtunes))
         parse_next (handle);
     if (parse_integer ("writes", & plugin->can_write_tuple))
-        parse_next (handle);
-    if (parse_integer ("infowin", & plugin->has_infowin))
         parse_next (handle);
 }
 
@@ -418,62 +410,51 @@ static void plugin_get_info (PluginHandle * plugin, bool is_new)
 {
     Plugin * header = plugin->header;
 
-    plugin->name = String (header->name);
-    plugin->domain = PLUGIN_HAS_FUNC (header, domain) ? String (header->domain) : String ();
-    plugin->has_about = PLUGIN_HAS_FUNC (header, about) || PLUGIN_HAS_FUNC (header, about_text);
-    plugin->has_configure = PLUGIN_HAS_FUNC (header, configure) || PLUGIN_HAS_FUNC (header, prefs);
+    plugin->name = String (header->info.name);
+    plugin->domain = String (header->info.domain);
+    plugin->has_about = (bool) header->info.about;
+    plugin->has_configure = (bool) header->info.prefs;
 
     if (header->type == PLUGIN_TYPE_TRANSPORT)
     {
         TransportPlugin * tp = (TransportPlugin *) header;
 
         plugin->schemes.clear ();
-        for (int i = 0; tp->schemes[i]; i ++)
-            plugin->schemes.append (String (tp->schemes[i]));
+        for (const char * scheme : tp->schemes)
+            plugin->schemes.append (String (scheme));
     }
     else if (header->type == PLUGIN_TYPE_PLAYLIST)
     {
         PlaylistPlugin * pp = (PlaylistPlugin *) header;
 
         plugin->exts.clear ();
-        for (int i = 0; pp->extensions[i]; i ++)
-            plugin->exts.append (String (pp->extensions[i]));
+        for (const char * ext : pp->extensions)
+            plugin->exts.append (String (ext));
     }
     else if (header->type == PLUGIN_TYPE_INPUT)
     {
         InputPlugin * ip = (InputPlugin *) header;
-        plugin->priority = ip->priority;
+        plugin->priority = ip->input_info.priority;
 
         for (int key = 0; key < INPUT_KEYS; key ++)
             plugin->keys[key].clear ();
 
-        if (PLUGIN_HAS_FUNC (ip, extensions))
-        {
-            for (int i = 0; ip->extensions[i]; i ++)
-                plugin->keys[INPUT_KEY_EXTENSION].append (String (ip->extensions[i]));
-        }
+        for (const char * ext : ip->input_info.extensions)
+            plugin->keys[INPUT_KEY_EXTENSION].append (String (ext));
 
-        if (PLUGIN_HAS_FUNC (ip, mimes))
-        {
-            for (int i = 0; ip->mimes[i]; i ++)
-                plugin->keys[INPUT_KEY_MIME].append (String (ip->mimes[i]));
-        }
+        for (const char * mime : ip->input_info.mimes)
+            plugin->keys[INPUT_KEY_MIME].append (String (mime));
 
-        if (PLUGIN_HAS_FUNC (ip, schemes))
-        {
-            for (int i = 0; ip->schemes[i]; i ++)
-                plugin->keys[INPUT_KEY_SCHEME].append (String (ip->schemes[i]));
-        }
+        for (const char * scheme : ip->input_info.schemes)
+            plugin->keys[INPUT_KEY_SCHEME].append (String (scheme));
 
-        plugin->has_images = PLUGIN_HAS_FUNC (ip, get_song_image);
-        plugin->has_subtunes = ip->have_subtune;
-        plugin->can_write_tuple = PLUGIN_HAS_FUNC (ip, update_song_tuple);
-        plugin->has_infowin = PLUGIN_HAS_FUNC (ip, file_info_box);
+        plugin->has_subtunes = ip->input_info.has_subtunes;
+        plugin->can_write_tuple = ip->input_info.can_write_tuple;
     }
     else if (header->type == PLUGIN_TYPE_OUTPUT)
     {
         OutputPlugin * op = (OutputPlugin *) header;
-        plugin->priority = 10 - op->probe_priority;
+        plugin->priority = 10 - op->priority;
     }
     else if (header->type == PLUGIN_TYPE_EFFECT)
     {
@@ -681,12 +662,6 @@ bool input_plugin_has_key (PluginHandle * plugin, int key, const char * value)
     return false;
 }
 
-bool input_plugin_has_images (PluginHandle * plugin)
-{
-    g_return_val_if_fail (plugin->type == PLUGIN_TYPE_INPUT, false);
-    return plugin->has_images;
-}
-
 bool input_plugin_has_subtunes (PluginHandle * plugin)
 {
     g_return_val_if_fail (plugin->type == PLUGIN_TYPE_INPUT, false);
@@ -697,10 +672,4 @@ bool input_plugin_can_write_tuple (PluginHandle * plugin)
 {
     g_return_val_if_fail (plugin->type == PLUGIN_TYPE_INPUT, false);
     return plugin->can_write_tuple;
-}
-
-bool input_plugin_has_infowin (PluginHandle * plugin)
-{
-    g_return_val_if_fail (plugin->type == PLUGIN_TYPE_INPUT, false);
-    return plugin->has_infowin;
 }

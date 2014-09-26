@@ -21,18 +21,24 @@
 #define LIBAUDCORE_INTERFACE_H
 
 enum {
- AUD_MENU_MAIN,
- AUD_MENU_PLAYLIST,
- AUD_MENU_PLAYLIST_ADD,
- AUD_MENU_PLAYLIST_REMOVE,
- AUD_MENU_COUNT};
+    AUD_MENU_MAIN,
+    AUD_MENU_PLAYLIST,
+    AUD_MENU_PLAYLIST_ADD,
+    AUD_MENU_PLAYLIST_REMOVE,
+    AUD_MENU_COUNT
+};
 
+// this enum is also in plugin.h
+#ifndef _AUD_VIS_TYPE_DEFINED
+#define _AUD_VIS_TYPE_DEFINED
 enum {
- AUD_VIS_TYPE_CLEAR,        /* for VisClearFunc */
- AUD_VIS_TYPE_MONO_PCM,     /* for VisMonoPCMFunc */
- AUD_VIS_TYPE_MULTI_PCM,    /* for VisMultiPCMFunc */
- AUD_VIS_TYPE_FREQ,         /* for VisFreqFunc */
- AUD_VIS_TYPES};
+    AUD_VIS_TYPE_CLEAR,
+    AUD_VIS_TYPE_MONO_PCM,
+    AUD_VIS_TYPE_MULTI_PCM,
+    AUD_VIS_TYPE_FREQ,
+    AUD_VIS_TYPES
+};
+#endif
 
 typedef void (* VisClearFunc) (void);
 typedef void (* VisMonoPCMFunc) (const float * pcm);

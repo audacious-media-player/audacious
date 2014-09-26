@@ -17,6 +17,7 @@
  * the use of this software.
  */
 
+#include "drct.h"
 #include "output.h"
 #include "runtime.h"
 
@@ -92,7 +93,7 @@ static void ensure_buffer (Index<char> & buffer, int newsize)
 /* assumes LOCK_ALL, s_output */
 static void cleanup_output (void)
 {
-    if (! (s_paused || s_aborted) && PLUGIN_HAS_FUNC (cop, drain))
+    if (! s_paused && ! s_aborted)
     {
         UNLOCK_MINOR;
         cop->drain ();
@@ -104,9 +105,7 @@ static void cleanup_output (void)
     buffer1.clear ();
     buffer2.clear ();
 
-    if (PLUGIN_HAS_FUNC (cop, close_audio))
-        cop->close_audio ();
-
+    cop->close_audio ();
     effect_flush ();
     vis_runner_start_stop (false, false);
 }
@@ -114,9 +113,7 @@ static void cleanup_output (void)
 /* assumes LOCK_ALL, s_output */
 static void apply_pause (void)
 {
-    if (PLUGIN_HAS_FUNC (cop, pause))
-        cop->pause (s_paused);
-
+    cop->pause (s_paused);
     vis_runner_start_stop (true, s_paused);
 }
 
@@ -131,7 +128,7 @@ static void setup_output (void)
     eq_set_format (channels, rate);
 
     if (s_output && format == out_format && channels == out_channels && rate ==
-     out_rate && ! PLUGIN_HAS_FUNC (cop, force_reopen))
+     out_rate && ! cop->force_reopen)
     {
         AUDINFO ("Reusing output stream, format %d, %d channels, %d Hz.\n", format, channels, rate);
         return;
@@ -140,7 +137,7 @@ static void setup_output (void)
     if (s_output)
         cleanup_output ();
 
-    if (! cop || ! PLUGIN_HAS_FUNC (cop, open_audio) || ! cop->open_audio (format, rate, channels))
+    if (! cop || ! cop->open_audio (format, rate, channels))
         return;
 
     AUDINFO ("Opened output stream, format %d, %d channels, %d Hz.\n", format, channels, rate);
@@ -158,12 +155,8 @@ static void setup_output (void)
 /* assumes LOCK_MINOR, s_output */
 static void flush_output (void)
 {
-    if (PLUGIN_HAS_FUNC (cop, flush))
-    {
-        cop->flush (0);
-        out_frames = 0;
-    }
-
+    cop->flush (0);
+    out_frames = 0;
     effect_flush ();
     vis_runner_flush ();
 }
@@ -253,36 +246,17 @@ static void write_output_raw (float * data, int samples)
 
     while (! (s_aborted || s_resetting))
     {
-        bool blocking = ! PLUGIN_HAS_FUNC (cop, buffer_free);
-        int ready;
+        int ready = aud::min (cop->buffer_free () / (int) FMT_SIZEOF (out_format), samples);
 
-        if (blocking)
-            ready = out_channels * (out_rate / 50);
-        else
-            ready = cop->buffer_free () / FMT_SIZEOF (out_format);
-
-        ready = aud::min (ready, samples);
-
-        if (PLUGIN_HAS_FUNC (cop, write_audio))
-        {
-            cop->write_audio (out_data, FMT_SIZEOF (out_format) * ready);
-            out_data = (char *) out_data + FMT_SIZEOF (out_format) * ready;
-            samples -= ready;
-        }
+        cop->write_audio (out_data, FMT_SIZEOF (out_format) * ready);
+        out_data = (char *) out_data + FMT_SIZEOF (out_format) * ready;
+        samples -= ready;
 
         if (samples == 0)
             break;
 
         UNLOCK_MINOR;
-
-        if (! blocking)
-        {
-            if (PLUGIN_HAS_FUNC (cop, period_wait))
-                cop->period_wait ();
-            else
-                g_usleep (20000);
-        }
-
+        cop->period_wait ();
         LOCK_MINOR;
     }
 }
@@ -480,7 +454,7 @@ int output_get_time (void)
 
     if (s_input)
     {
-        if (s_output && PLUGIN_HAS_FUNC (cop, output_time))
+        if (s_output)
             delay = FR2MS (out_frames, out_rate) - cop->output_time ();
 
         delay = effect_adjust_delay (delay);
@@ -497,7 +471,7 @@ int output_get_raw_time (void)
     LOCK_MINOR;
     int time = 0;
 
-    if (s_output && PLUGIN_HAS_FUNC (cop, output_time))
+    if (s_output)
         time = cop->output_time ();
 
     UNLOCK_MINOR;
@@ -549,13 +523,13 @@ EXPORT void aud_output_reset (OutputReset type)
 
     if (type == OutputReset::ResetPlugin)
     {
-        if (cop && PLUGIN_HAS_FUNC (cop, cleanup))
+        if (cop)
             cop->cleanup ();
 
         if (change_op)
             cop = new_op;
 
-        if (cop && PLUGIN_HAS_FUNC (cop, init) && ! cop->init ())
+        if (cop && ! cop->init ())
             cop = nullptr;
     }
 
@@ -567,34 +541,34 @@ EXPORT void aud_output_reset (OutputReset type)
     UNLOCK_ALL;
 }
 
-void output_get_volume (int * left, int * right)
+EXPORT StereoVolume aud_drct_get_volume ()
 {
+    StereoVolume volume = {0, 0};
     LOCK_MINOR;
 
-    * left = * right = 0;
-
     if (aud_get_bool (0, "software_volume_control"))
-    {
-        * left = aud_get_int (0, "sw_volume_left");
-        * right = aud_get_int (0, "sw_volume_right");
-    }
-    else if (cop && PLUGIN_HAS_FUNC (cop, get_volume))
-        cop->get_volume (left, right);
+        volume = {aud_get_int (0, "sw_volume_left"), aud_get_int (0, "sw_volume_right")};
+    else if (cop)
+        volume = cop->get_volume ();
 
     UNLOCK_MINOR;
+    return volume;
 }
 
-void output_set_volume (int left, int right)
+EXPORT void aud_drct_set_volume (StereoVolume volume)
 {
     LOCK_MINOR;
 
+    volume.left = aud::clamp (volume.left, 0, 100);
+    volume.right = aud::clamp (volume.right, 0, 100);
+
     if (aud_get_bool (0, "software_volume_control"))
     {
-        aud_set_int (0, "sw_volume_left", left);
-        aud_set_int (0, "sw_volume_right", right);
+        aud_set_int (0, "sw_volume_left", volume.left);
+        aud_set_int (0, "sw_volume_right", volume.right);
     }
-    else if (cop && PLUGIN_HAS_FUNC (cop, set_volume))
-        cop->set_volume (left, right);
+    else if (cop)
+        cop->set_volume (volume);
 
     UNLOCK_MINOR;
 }

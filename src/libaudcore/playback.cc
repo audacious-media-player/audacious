@@ -319,7 +319,7 @@ static void end_cb (void * unused)
 static bool open_file (void)
 {
     /* no need to open a handle for custom URI schemes */
-    if (current_decoder->schemes && current_decoder->schemes[0])
+    if (current_decoder->input_info.schemes.len)
         return true;
 
     current_file = VFSFile (current_filename, "r");
@@ -587,16 +587,6 @@ EXPORT void aud_drct_get_info (int * bitrate, int * samplerate, int * channels)
     * bitrate = current_bitrate;
     * samplerate = current_samplerate;
     * channels = current_channels;
-}
-
-EXPORT void aud_drct_get_volume (int * l, int * r)
-{
-    output_get_volume (l, r);
-}
-
-EXPORT void aud_drct_set_volume (int l, int r)
-{
-    output_set_volume (aud::clamp (l, 0, 100), aud::clamp (r, 0, 100));
 }
 
 EXPORT void aud_drct_set_ab_repeat (int a, int b)

@@ -64,7 +64,7 @@ Plugin * plugin_load (const char * filename)
     }
 
     Plugin * header;
-    if (! g_module_symbol (module, "_aud_plugin_self", (void * *) & header))
+    if (! g_module_symbol (module, "aud_plugin_instance", (void * *) & header))
         header = nullptr;
 
     if (! header || header->magic != _AUD_PLUGIN_MAGIC)
@@ -87,7 +87,7 @@ Plugin * plugin_load (const char * filename)
         header->type == PLUGIN_TYPE_INPUT ||
         header->type == PLUGIN_TYPE_EFFECT)
     {
-        if (PLUGIN_HAS_FUNC (header, init) && ! header->init ())
+        if (! header->init ())
         {
             AUDERR ("%s failed to initialize.\n", filename);
             g_module_close (module);
@@ -108,8 +108,7 @@ static void plugin_unload (LoadedModule & loaded)
     case PLUGIN_TYPE_PLAYLIST:
     case PLUGIN_TYPE_INPUT:
     case PLUGIN_TYPE_EFFECT:
-        if (PLUGIN_HAS_FUNC (loaded.header, cleanup))
-            loaded.header->cleanup ();
+        loaded.header->cleanup ();
         break;
     }
 

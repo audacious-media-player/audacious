@@ -92,21 +92,15 @@ EXPORT void audgui_show_plugin_about (PluginHandle * plugin)
     Plugin * header = (Plugin *) aud_plugin_get_header (plugin);
     g_return_if_fail (header);
 
-    const char * name = header->name;
-    const char * text = header->about_text;
-
+    const char * name = header->info.name;
+    const char * text = header->info.about;
     if (! text)
-    {
-        /* deprecated method */
-        if (header->about)
-            header->about ();
         return;
-    }
 
-    if (header->domain)
+    if (header->info.domain)
     {
-        name = dgettext (header->domain, name);
-        text = dgettext (header->domain, text);
+        name = dgettext (header->info.domain, name);
+        text = dgettext (header->info.domain, text);
     }
 
     about_windows = node = g_list_prepend (about_windows, nullptr);
@@ -146,22 +140,16 @@ EXPORT void audgui_show_plugin_prefs (PluginHandle * plugin)
     Plugin * header = (Plugin *) aud_plugin_get_header (plugin);
     g_return_if_fail (header);
 
-    const PluginPreferences * p = header->prefs;
-
+    const PluginPreferences * p = header->info.prefs;
     if (! p)
-    {
-        /* deprecated method */
-        if (header->configure)
-            header->configure ();
         return;
-    }
 
     if (p->init)
         p->init ();
 
-    const char * name = header->name;
-    if (header->domain)
-        name = dgettext (header->domain, header->name);
+    const char * name = header->info.name;
+    if (header->info.domain)
+        name = dgettext (header->info.domain, name);
 
     GtkWidget * window = gtk_dialog_new ();
     gtk_window_set_title ((GtkWindow *) window, str_printf (_("%s Settings"), name));
@@ -181,7 +169,7 @@ EXPORT void audgui_show_plugin_prefs (PluginHandle * plugin)
 
     GtkWidget * content = gtk_dialog_get_content_area ((GtkDialog *) window);
     GtkWidget * box = gtk_vbox_new (false, 0);
-    audgui_create_widgets_with_domain (box, p->widgets, header->domain);
+    audgui_create_widgets_with_domain (box, p->widgets, header->info.domain);
     gtk_box_pack_start ((GtkBox *) content, box, true, true, 0);
 
     g_signal_connect (window, "response", (GCallback) response_cb, (void *) p);

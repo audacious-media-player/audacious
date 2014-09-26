@@ -22,7 +22,6 @@
 #define LIBAUDCORE_PLUGIN_H
 
 #include <libaudcore/audio.h>
-#include <libaudcore/index.h>
 #include <libaudcore/plugins.h>
 #include <libaudcore/tuple.h>
 #include <libaudcore/vfs.h>
@@ -94,143 +93,181 @@ struct PluginPreferences;
  * For the time being, aud_plugin_send_message() should only be called from the
  * program's main thread. */
 
-#define PLUGIN_COMMON_FIELDS \
-    int magic; /* checked against _AUD_PLUGIN_MAGIC */ \
-    int version; /* checked against _AUD_PLUGIN_VERSION */ \
-    int type; /* PLUGIN_TYPE_XXX */ \
-    int size; /* size in bytes of the struct */ \
-    const char * name; \
-    const char * domain; /* for gettext */ \
-    const char * about_text; \
-    const PluginPreferences * prefs; \
-    bool (* init) (void); \
-    void (* cleanup) (void); \
-    int (* take_message) (const char * code, const void * data, int size); \
-    void (* about) (void); /* use about_text instead if possible */ \
-    void (* configure) (void); /* use prefs instead if possible */ \
-    void * reserved1; \
-    void * reserved2; \
-    void * reserved3; \
-    void * reserved4;
+// this enum is also in interface.h
+#ifndef _AUD_VIS_TYPE_DEFINED
+#define _AUD_VIS_TYPE_DEFINED
+enum {
+    AUD_VIS_TYPE_CLEAR,
+    AUD_VIS_TYPE_MONO_PCM,
+    AUD_VIS_TYPE_MULTI_PCM,
+    AUD_VIS_TYPE_FREQ,
+    AUD_VIS_TYPES
+};
+#endif
 
-struct Plugin
-{
-    PLUGIN_COMMON_FIELDS
+struct PluginInfo {
+    const char * name;
+    const char * domain; // for gettext
+    const char * about;
+    const PluginPreferences * prefs;
 };
 
-struct TransportPlugin
+class Plugin
 {
-    PLUGIN_COMMON_FIELDS
+public:
+    Plugin (int type, PluginInfo info) :
+        type (type),
+        info (info) {}
 
-    /* supported URI schemes (without "://")
-     *     (array terminated with null pointer) */
-    const char * const * schemes;
+    const int magic = _AUD_PLUGIN_MAGIC;
+    const int version = _AUD_PLUGIN_VERSION;
+
+    const int type;  // see PLUGIN_TYPE_* enum
+    const PluginInfo info;
+
+    virtual bool init () { return true; }
+    virtual void cleanup () {}
+
+    virtual int take_message (const char * code, const void * data, int size) { return -1; }
+};
+
+class TransportPlugin : public Plugin
+{
+public:
+    TransportPlugin (const PluginInfo info,
+     const ArrayRef<const char *> schemes, VFSFile::OpenFunc fopen_impl) :
+        Plugin (PLUGIN_TYPE_TRANSPORT, info),
+        schemes (schemes),
+        fopen_impl (fopen_impl) {}
+
+    /* supported URI schemes (without "://") */
+    const ArrayRef<const char *> schemes;
 
     /* fopen() implementation */
-    VFSImpl * (* fopen_impl) (const char * filename, const char * mode);
+    const VFSFile::OpenFunc fopen_impl;
 };
 
-struct PlaylistPlugin
+class PlaylistPlugin : public Plugin
 {
-    PLUGIN_COMMON_FIELDS
+public:
+    PlaylistPlugin (const PluginInfo info, const ArrayRef<const char *> extensions, bool can_save) :
+        Plugin (PLUGIN_TYPE_PLAYLIST, info),
+        extensions (extensions),
+        can_save (can_save) {}
 
-    /* supported file extensions (without periods)
-     *     (array terminated with null pointer) */
-    const char * const * extensions;
+    /* supported file extensions (without periods) */
+    const ArrayRef<const char *> extensions;
+
+    /* true if the plugin can save playlists */
+    const bool can_save;
 
     /* path: URI of playlist file (in)
      * file: VFS handle of playlist file (in, read-only file, not seekable)
      * title: title of playlist (out)
      * items: playlist entries (out) */
-    bool (* load) (const char * path, VFSFile & file, String & title,
-     Index<PlaylistAddItem> & items);
+    virtual bool load (const char * path, VFSFile & file, String & title,
+     Index<PlaylistAddItem> & items) = 0;
 
     /* path: URI of playlist file (in)
      * file: VFS handle of playlist file (in, write-only file, not seekable)
      * title: title of playlist (in)
      * items: playlist entries (in) */
-    bool (* save) (const char * path, VFSFile & file, const char * title,
-     const Index<PlaylistAddItem> & items);
+    virtual bool save (const char * path, VFSFile & file, const char * title,
+     const Index<PlaylistAddItem> & items) { return false; }
 };
 
-struct OutputPlugin
+class OutputPlugin : public Plugin
 {
-    PLUGIN_COMMON_FIELDS
+public:
+    OutputPlugin (const PluginInfo info, int priority, bool force_reopen = false) :
+        Plugin (PLUGIN_TYPE_OUTPUT, info),
+        priority (priority),
+        force_reopen (force_reopen) {}
 
     /* During probing, plugins with higher priority (10 to 0) are tried first. */
-    int probe_priority;
-
-    /* Returns current volume for left and right channels (0 to 100). */
-    void (* get_volume) (int * l, int * r);
-
-    /* Changes volume for left and right channels (0 to 100). */
-    void (* set_volume) (int l, int r);
-
-    /* Begins playback of a PCM stream.  <format> is one of the FMT_*
-     * enumeration values defined in libaudcore/audio.h.  Returns nonzero on
-     * success. */
-    bool (* open_audio) (int format, int rate, int chans);
-
-    /* Ends playback.  Any buffered audio data is discarded. */
-    void (* close_audio) (void);
-
-    /* Returns how many bytes of data may be passed to a following write_audio()
-     * call.  nullptr if the plugin supports only blocking writes (not recommended). */
-    int (* buffer_free) (void);
-
-    /* Waits until buffer_free() will return a size greater than zero.
-     * output_time(), pause(), and flush() may be called meanwhile; if flush()
-     * is called, period_wait() should return immediately.  nullptr if the plugin
-     * supports only blocking writes (not recommended). */
-    void (* period_wait) (void);
-
-    /* Buffers <size> bytes of data, in the format given to open_audio(). */
-    void (* write_audio) (void * data, int size);
-
-    /* Waits until all buffered data has been heard by the user. */
-    void (* drain) (void);
-
-    /* Returns time count (in milliseconds) of how much data has been heard by
-     * the user. */
-    int (* output_time) (void);
-
-    /* Pauses the stream if <p> is nonzero; otherwise unpauses it.
-     * write_audio() will not be called while the stream is paused. */
-    void (* pause) (bool p);
-
-    /* Discards any buffered audio data and sets the time counter (in
-     * milliseconds) of data written. */
-    void (* flush) (int time);
+    const int priority;
 
     /* Whether close_audio() and open_audio() must always be called between
      * songs, even if the audio format is the same.  Note that this defeats
      * gapless playback. */
-    bool force_reopen;
+    const bool force_reopen;
+
+    /* Returns current volume for left and right channels (0 to 100). */
+    virtual StereoVolume get_volume () = 0;
+
+    /* Changes volume for left and right channels (0 to 100). */
+    virtual void set_volume (StereoVolume volume) = 0;
+
+    /* Begins playback of a PCM stream.  <format> is one of the FMT_*
+     * enumeration values defined in libaudcore/audio.h.  Returns true on
+     * success. */
+    virtual bool open_audio (int format, int rate, int chans) = 0;
+
+    /* Ends playback.  Any buffered audio data is discarded. */
+    virtual void close_audio () = 0;
+
+    /* Returns how many bytes of data may be passed to a following write_audio()
+     * call. */
+    virtual int buffer_free () = 0;
+
+    /* Waits until buffer_free() will return a size greater than zero.
+     * output_time(), pause(), and flush() may be called meanwhile; if flush()
+     * is called, period_wait() should return immediately. */
+    virtual void period_wait () = 0;
+
+    /* Buffers <size> bytes of data, in the format given to open_audio(). */
+    virtual void write_audio (void * data, int size) = 0;
+
+    /* Waits until all buffered data has been heard by the user. */
+    virtual void drain () = 0;
+
+    /* Returns time count (in milliseconds) of how much data has been heard by
+     * the user. */
+    virtual int output_time () = 0;
+
+    /* Pauses the stream if <p> is nonzero; otherwise unpauses it.
+     * write_audio() will not be called while the stream is paused. */
+    virtual void pause (bool p) = 0;
+
+    /* Discards any buffered audio data and sets the time counter (in
+     * milliseconds) of data written. */
+    virtual void flush (int time) = 0;
 };
 
-struct EffectPlugin
+class EffectPlugin : public Plugin
 {
-    PLUGIN_COMMON_FIELDS
+public:
+    EffectPlugin (const PluginInfo info, int order, bool preserves_format) :
+        Plugin (PLUGIN_TYPE_EFFECT, info),
+        order (order),
+        preserves_format (preserves_format) {}
+
+    /* Effects with lowest order (0 to 9) are applied first. */
+    const int order;
+
+    /* If the effect does not change the number of channels or the sampling
+     * rate, it can be enabled and disabled more smoothly. */
+    const bool preserves_format;
 
     /* All processing is done in floating point.  If the effect plugin wants to
      * change the channel count or sample rate, it can change the parameters
      * passed to start().  They cannot be changed in the middle of a song. */
-    void (* start) (int * channels, int * rate);
+    virtual void start (int * channels, int * rate) = 0;
 
     /* process() has two options: modify the samples in place and leave the data
      * pointer unchanged or copy them into a buffer of its own.  If it sets the
      * pointer to dynamically allocated memory, it is the plugin's job to free
      * that memory.  process() may return different lengths of audio than it is
      * passed, even a zero length. */
-    void (* process) (float * * data, int * samples);
+    virtual void process (float * * data, int * samples) = 0;
 
     /* Optional.  A seek is taking place; any buffers should be discarded. */
-    void (* flush) (void);
+    virtual void flush () {}
 
     /* Exactly like process() except that any buffers should be drained (i.e.
      * the data processed and returned).  finish() will be called a second time
      * at the end of the last song in the playlist. */
-    void (* finish) (float * * data, int * samples);
+    virtual void finish (float * * data, int * samples) = 0;
 
     /* Required only for plugins that change the time domain (e.g. a time
      * stretch) or use read-ahead buffering.  translate_delay() must do two
@@ -238,22 +275,18 @@ struct EffectPlugin
      * output time domain back to the input time domain; second, increase
      * <delay> by the size of the read-ahead buffer.  It should return the
      * adjusted delay. */
-    int (* adjust_delay) (int delay);
-
-    /* Effects with lowest order (0 to 9) are applied first. */
-    int order;
-
-    /* If the effect does not change the number of channels or the sampling
-     * rate, it can be enabled and disabled more smoothly. */
-    bool preserves_format;
+    virtual int adjust_delay (int delay) { return delay; }
 };
 
-struct InputPlugin
+struct InputPluginInfo
 {
-    PLUGIN_COMMON_FIELDS
+    /* How quickly the plugin should be tried in searching for a plugin to
+     * handle a file which could not be identified from its extension.  Plugins
+     * with priority 0 are tried first, 10 last. */
+    int priority;
 
-    /* Nonzero if the files handled by the plugin may contain more than one
-     * song.  When reading the tuple for such a file, the plugin should set the
+    /* True if the files handled by the plugin may contain more than one song.
+     * When reading the tuple for such a file, the plugin should set the
      * FIELD_SUBSONG_NUM field to the number of songs in the file.  For all
      * other files, the field should be left unset.
      *
@@ -269,119 +302,122 @@ struct InputPlugin
      * 3. When one of the songs is played, Audacious opens the file and calls
      * play() with a file name modified in this way.
      */
-    bool have_subtune;
+    bool has_subtunes;
 
-    /* Pointer to an array (terminated with nullptr) of file extensions associated
-     * with file types the plugin can handle. */
-    const char * const * extensions;
-    /* Pointer to an array (terminated with nullptr) of MIME types the plugin can
-     * handle. */
-    const char * const * mimes;
+    /* True if the plugin can write file tags. */
+    bool can_write_tuple;
 
-    /* Pointer to an array (terminated with nullptr) of custom URI schemes the
-     * plugin supports.  Plugins using custom URI schemes are expected to
-     * handle their own I/O.  Hence, any VFSFile pointers passed to play(),
-     * probe_for_tuple(), etc. will be nullptr. */
-    const char * const * schemes;
+    /* File extensions associated with file types the plugin can handle. */
+    ArrayRef<const char *> extensions;
 
-    /* How quickly the plugin should be tried in searching for a plugin to
-     * handle a file which could not be identified from its extension.  Plugins
-     * with priority 0 are tried first, 10 last. */
-    int priority;
+    /* MIME types the plugin can handle. */
+    ArrayRef<const char *> mimes;
+
+    /* Custom URI schemes the plugin supports.  Plugins using custom URI
+     * schemes are expected to handle their own I/O.  Hence, any VFSFile passed
+     * to play(), probe_for_tuple(), etc. will be null. */
+    ArrayRef<const char *> schemes;
+};
+
+class InputPlugin : public Plugin
+{
+public:
+    InputPlugin (PluginInfo info, InputPluginInfo input_info) :
+        Plugin (PLUGIN_TYPE_INPUT, info),
+        input_info (input_info) {}
+
+    const InputPluginInfo input_info;
 
     /* Returns true if the plugin can handle the file. */
-    bool (* is_our_file_from_vfs) (const char * filename, VFSFile & file);
+    virtual bool is_our_file (const char * filename, VFSFile & file) = 0;
 
     /* Reads metadata from the file. */
-    Tuple (* probe_for_tuple) (const char * filename, VFSFile & file);
+    virtual Tuple read_tuple (const char * filename, VFSFile & file) = 0;
 
     /* Plays the file.  Returns false on error.  Also see input-api.h. */
-    bool (* play) (const char * filename, VFSFile & file);
+    virtual bool play (const char * filename, VFSFile & file) = 0;
 
     /* Optional.  Writes metadata to the file, returning false on error. */
-    bool (* update_song_tuple) (const char * filename, VFSFile & file, const Tuple & tuple);
+    virtual bool write_tuple (const char * filename, VFSFile & file, const Tuple & tuple)
+        { return false; }
 
     /* Optional.  Reads an album art image (JPEG or PNG data) from the file.
      * Returns an empty buffer on error. */
-    Index<char> (* get_song_image) (const char * filename, VFSFile & file);
+    virtual Index<char> read_image (const char * filename, VFSFile & file)
+        { return Index<char> (); }
 
     /* Optional.  Displays a window showing info about the file.  In general,
      * this function should be avoided since Audacious already provides a file
      * info window. */
-    void (* file_info_box) (const char * filename);
+    virtual bool file_info_box (const char * filename, VFSFile & file)
+        { return false; }
 };
 
-struct GeneralPlugin
+class DockablePlugin : public Plugin
 {
-    PLUGIN_COMMON_FIELDS
+public:
+    DockablePlugin (int type, PluginInfo info) :
+        Plugin (type, info) {}
 
-    bool enabled_by_default;
+    /* GtkWidget * get_gtk_widget () */
+    virtual void * get_gtk_widget () { return nullptr; }
 
-    /* GtkWidget * (* get_widget) (void); */
-    void * (* get_widget) (void);
+    /* QWidget * get_qt_widget () */
+    virtual void * get_qt_widget () { return nullptr; }
 };
 
-struct VisPlugin
+class GeneralPlugin : public DockablePlugin
 {
-    PLUGIN_COMMON_FIELDS
+public:
+    GeneralPlugin (PluginInfo info, bool enabled_by_default) :
+        DockablePlugin (PLUGIN_TYPE_GENERAL, info),
+        enabled_by_default (enabled_by_default) {}
+
+    const bool enabled_by_default;
+};
+
+class VisPlugin : public DockablePlugin
+{
+public:
+    VisPlugin (PluginInfo info, int vis_type) :
+        DockablePlugin (PLUGIN_TYPE_VIS, info),
+        vis_type (vis_type) {}
+
+    const int vis_type;  // see AUD_VIS_TYPE_* enum
 
     /* reset internal state and clear display */
-    void (* clear) (void);
+    virtual void clear () = 0;
 
     /* 512 frames of a single-channel PCM signal */
-    void (* render_mono_pcm) (const float * pcm);
+    virtual void render_mono_pcm (const float * pcm) {}
 
     /* 512 frames of an interleaved multi-channel PCM signal */
-    void (* render_multi_pcm) (const float * pcm, int channels);
+    virtual void render_multi_pcm (const float * pcm, int channels) {}
 
     /* intensity of frequencies 1/512, 2/512, ..., 256/512 of sample rate */
-    void (* render_freq) (const float * freq);
-
-    /* GtkWidget * (* get_widget) (void); */
-    void * (* get_widget) (void);
+    virtual void render_freq (const float * freq) {}
 };
 
-struct IfacePlugin
+class IfacePlugin : public Plugin
 {
-    PLUGIN_COMMON_FIELDS
+public:
+    IfacePlugin (PluginInfo info) :
+        Plugin (PLUGIN_TYPE_IFACE, info) {}
 
-    void (* show) (bool show);
-    void (* run) (void);
-    void (* quit) (void);
+    virtual void show (bool show) = 0;
+    virtual void run () = 0;
+    virtual void quit () = 0;
 
-    void (* show_about_window) (void);
-    void (* hide_about_window) (void);
-    void (* show_filebrowser) (bool open);
-    void (* hide_filebrowser) (void);
-    void (* show_jump_to_song) (void);
-    void (* hide_jump_to_song) (void);
-    void (* show_prefs_window) (void);
-    void (* hide_prefs_window) (void);
-    void (* plugin_menu_add) (int id, void (* func) (void), const char * name, const char * icon);
-    void (* plugin_menu_remove) (int id, void (* func) (void));
+    virtual void show_about_window () = 0;
+    virtual void hide_about_window () = 0;
+    virtual void show_filebrowser (bool open) = 0;
+    virtual void hide_filebrowser () = 0;
+    virtual void show_jump_to_song () = 0;
+    virtual void hide_jump_to_song () = 0;
+    virtual void show_prefs_window () = 0;
+    virtual void hide_prefs_window () = 0;
+    virtual void plugin_menu_add (int id, void func (), const char * name, const char * icon) = 0;
+    virtual void plugin_menu_remove (int id, void func ()) = 0;
 };
-
-#undef PLUGIN_COMMON_FIELDS
-
-#define AUD_PLUGIN(stype, itype, ...) \
-extern "C" const stype _aud_plugin_self = { \
-    _AUD_PLUGIN_MAGIC, \
-    _AUD_PLUGIN_VERSION, \
-    itype, \
-    sizeof (stype), \
-    __VA_ARGS__ \
-};
-
-#define AUD_TRANSPORT_PLUGIN(...) AUD_PLUGIN (TransportPlugin, PLUGIN_TYPE_TRANSPORT, __VA_ARGS__)
-#define AUD_PLAYLIST_PLUGIN(...) AUD_PLUGIN (PlaylistPlugin, PLUGIN_TYPE_PLAYLIST, __VA_ARGS__)
-#define AUD_INPUT_PLUGIN(...) AUD_PLUGIN (InputPlugin, PLUGIN_TYPE_INPUT, __VA_ARGS__)
-#define AUD_EFFECT_PLUGIN(...) AUD_PLUGIN (EffectPlugin, PLUGIN_TYPE_EFFECT, __VA_ARGS__)
-#define AUD_OUTPUT_PLUGIN(...) AUD_PLUGIN (OutputPlugin, PLUGIN_TYPE_OUTPUT, __VA_ARGS__)
-#define AUD_VIS_PLUGIN(...) AUD_PLUGIN (VisPlugin, PLUGIN_TYPE_VIS, __VA_ARGS__)
-#define AUD_GENERAL_PLUGIN(...) AUD_PLUGIN (GeneralPlugin, PLUGIN_TYPE_GENERAL, __VA_ARGS__)
-#define AUD_IFACE_PLUGIN(...) AUD_PLUGIN (IfacePlugin, PLUGIN_TYPE_IFACE, __VA_ARGS__)
-
-#define PLUGIN_HAS_FUNC(p, func) \
- ((p)->size > (char *) & (p)->func - (char *) (p) && (p)->func)
 
 #endif

@@ -70,52 +70,46 @@ EXPORT void aud_drct_stop (void)
 
 /* --- VOLUME CONTROL --- */
 
-EXPORT void aud_drct_get_volume_main (int * volume)
+EXPORT int aud_drct_get_volume_main ()
 {
-    int left, right;
-    aud_drct_get_volume (& left, & right);
-    * volume = aud::max (left, right);
+    StereoVolume volume = aud_drct_get_volume ();
+    return aud::max (volume.left, volume.right);
 }
 
 EXPORT void aud_drct_set_volume_main (int volume)
 {
-    int left, right, current;
-    aud_drct_get_volume (& left, & right);
-    current = aud::max (left, right);
+    StereoVolume old = aud_drct_get_volume ();
+    int main = aud::max (old.left, old.right);
 
-    if (current > 0)
-        aud_drct_set_volume (volume * left / current, volume * right / current);
+    if (main > 0)
+        aud_drct_set_volume ({
+            aud::rescale (old.left, main, volume),
+            aud::rescale (old.right, main, volume)
+        });
     else
-        aud_drct_set_volume (volume, volume);
+        aud_drct_set_volume ({volume, volume});
 }
 
-EXPORT void aud_drct_get_volume_balance (int * balance)
+EXPORT int aud_drct_get_volume_balance ()
 {
-    int left, right;
-    aud_drct_get_volume (& left, & right);
+    StereoVolume volume = aud_drct_get_volume ();
 
-    if (left == right)
-        * balance = 0;
-    else if (left > right)
-        * balance = -100 + right * 100 / left;
+    if (volume.left == volume.right)
+        return 0;
+    else if (volume.left > volume.right)
+        return -100 + aud::rescale (volume.right, volume.left, 100);
     else
-        * balance = 100 - left * 100 / right;
+        return 100 - aud::rescale (volume.left, volume.right, 100);
 }
 
 EXPORT void aud_drct_set_volume_balance (int balance)
 {
-    int left, right;
-    aud_drct_get_volume_main (& left);
+    int main = aud_drct_get_volume_main ();
 
     if (balance < 0)
-        right = left * (100 + balance) / 100;
+        aud_drct_set_volume ({main, aud::rescale (main, 100, 100 + balance)});
     else
-    {
-        right = left;
-        left = right * (100 - balance) / 100;
-    }
-
-    aud_drct_set_volume (left, right);
+        aud_drct_set_volume ({aud::rescale (main, 100, 100 - balance), main});
 }
 
 /* --- PLAYLIST CONTROL --- */

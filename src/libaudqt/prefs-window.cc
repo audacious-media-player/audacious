@@ -332,11 +332,11 @@ static void send_title_change (void)
 static void iface_fill_prefs_box (void)
 {
     Plugin * header = (Plugin *) aud_plugin_get_header (aud_plugin_get_current (PLUGIN_TYPE_IFACE));
-    if (header && header->prefs)
+    if (header && header->info.prefs)
     {
         QVBoxLayout * vbox = new QVBoxLayout;
 
-        prefs_populate (vbox, header->prefs->widgets, header->domain);
+        prefs_populate (vbox, header->info.prefs->widgets, header->info.domain);
         iface_prefs_box->setLayout (vbox);
     }
 }
