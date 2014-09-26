@@ -113,7 +113,7 @@ private:
     T * ptr;
 };
 
-template<typename T, typename ... Args>
+template<class T, class ... Args>
 SmartPtr<T> SmartNew (Args && ... args)
 {
     return SmartPtr<T> (aud::construct<T>::make (operator new (sizeof (T)),

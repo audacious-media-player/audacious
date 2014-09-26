@@ -46,11 +46,23 @@ constexpr T clamp (T x, T low, T high)
     { return min (max (x, low), high); }
 
 template<class T>
+constexpr T abs (T x)
+    { return x < 0 ? -x : x; }
+
+template<class T>
+constexpr T chsign (T x, T s)
+    { return (x < 0) ^ (s < 0) ? -x : x; }
+
+template<class T>
+constexpr T rdiv (T x, T y)
+    { return (x + chsign (y / 2, x)) / y; }
+
+template<class T>
 constexpr T rescale (T x, T old_scale, T new_scale)
-    { return (x * new_scale + old_scale / 2) / old_scale; }
+    { return rdiv (x * new_scale, old_scale); }
 
 template<class T, int N>
-constexpr int n_elems(const T (&) [N])
+constexpr int n_elems (const T (&) [N])
     { return N; }
 
 // This is a replacement for std::allocator::construct, also supporting
@@ -58,25 +70,25 @@ constexpr int n_elems(const T (&) [N])
 //     http://cplusplus.github.io/LWG/lwg-active.html#2089
 
 // class constructor proxy
-template<typename T, bool aggregate>
+template<class T, bool aggregate>
 struct construct_base {
-    template<typename ... Args>
+    template<class ... Args>
     static T * make (void * loc, Args && ... args)
         { return new (loc) T (std::forward<Args> (args) ...); }
 };
 
 // aggregate constructor proxy
-template<typename T>
+template<class T>
 struct construct_base<T, true> {
-    template<typename ... Args>
+    template<class ... Args>
     static T * make (void * loc, Args && ... args)
         { return new (loc) T {std::forward<Args> (args) ...}; }
 };
 
 // generic constructor proxy
-template<typename T>
+template<class T>
 struct construct {
-    template<typename ... Args>
+    template<class ... Args>
     static T * make (void * loc, Args && ... args)
     {
         constexpr bool aggregate = ! std::is_constructible<T, Args && ...>::value;

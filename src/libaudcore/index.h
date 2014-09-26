@@ -150,7 +150,7 @@ public:
         { IndexBase::move_from (b, raw (from), raw (to), raw (len), expand,
            collapse, fill_func (), erase_func ()); }
 
-    template<typename ... Args>
+    template<class ... Args>
     T & append (Args && ... args)
     {
         return * aud::construct<T>::make (IndexBase::insert (-1, sizeof (T)),
