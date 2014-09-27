@@ -268,7 +268,8 @@ public:
     /* Exactly like process() except that any buffers should be drained (i.e.
      * the data processed and returned).  finish() will be called a second time
      * at the end of the last song in the playlist. */
-    virtual void finish (float * * data, int * samples) = 0;
+    virtual void finish (float * * data, int * samples)
+        { process (data, samples); }
 
     /* Required only for plugins that change the time domain (e.g. a time
      * stretch) or use read-ahead buffering.  translate_delay() must do two
@@ -276,7 +277,8 @@ public:
      * output time domain back to the input time domain; second, increase
      * <delay> by the size of the read-ahead buffer.  It should return the
      * adjusted delay. */
-    virtual int adjust_delay (int delay) { return delay; }
+    virtual int adjust_delay (int delay)
+        { return delay; }
 };
 
 struct InputPluginInfo
