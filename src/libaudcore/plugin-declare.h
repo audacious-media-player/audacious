@@ -46,7 +46,7 @@ constexpr ArrayRef<const char *> to_str_array (decltype (nullptr))
 class TransportPluginInstance : public TransportPlugin
 {
 public:
-    const PluginInfo info = {
+    static constexpr PluginInfo info = {
         AUD_PLUGIN_NAME,
         AUD_PLUGIN_DOMAIN,
         AUD_PLUGIN_ABOUT,
@@ -79,7 +79,7 @@ TransportPluginInstance aud_plugin_instance;
 class PlaylistPluginInstance : public PlaylistPlugin
 {
 public:
-    const PluginInfo info = {
+    static constexpr PluginInfo info = {
         AUD_PLUGIN_NAME,
         AUD_PLUGIN_DOMAIN,
         AUD_PLUGIN_ABOUT,
@@ -143,14 +143,14 @@ PlaylistPluginInstance aud_plugin_instance;
 class InputPluginInstance : public InputPlugin
 {
 public:
-    const PluginInfo info = {
+    static constexpr PluginInfo info = {
         AUD_PLUGIN_NAME,
         AUD_PLUGIN_DOMAIN,
         AUD_PLUGIN_ABOUT,
         AUD_PLUGIN_PREFS
     };
 
-    const InputPluginInfo input_info = {
+    static constexpr InputPluginInfo input_info = {
         AUD_INPUT_PRIORITY,
         AUD_INPUT_SUBTUNES,
 #ifdef AUD_INPUT_WRITE_TUPLE
@@ -220,7 +220,7 @@ InputPluginInstance aud_plugin_instance;
 class EffectPluginInstance : public EffectPlugin
 {
 public:
-    const PluginInfo info = {
+    static constexpr PluginInfo info = {
         AUD_PLUGIN_NAME,
         AUD_PLUGIN_DOMAIN,
         AUD_PLUGIN_ABOUT,
@@ -281,7 +281,7 @@ EffectPluginInstance aud_plugin_instance;
 class OutputPluginInstance : public OutputPlugin
 {
 public:
-    const PluginInfo info = {
+    static constexpr PluginInfo info = {
         AUD_PLUGIN_NAME,
         AUD_PLUGIN_DOMAIN,
         AUD_PLUGIN_ABOUT,
@@ -366,7 +366,7 @@ OutputPluginInstance aud_plugin_instance;
 class VisPluginInstance : public VisPlugin
 {
 public:
-    const PluginInfo info = {
+    static constexpr PluginInfo info = {
         AUD_PLUGIN_NAME,
         AUD_PLUGIN_DOMAIN,
         AUD_PLUGIN_ABOUT,
@@ -435,7 +435,7 @@ VisPluginInstance aud_plugin_instance;
 class GeneralPluginInstance : public GeneralPlugin
 {
 public:
-    const PluginInfo info = {
+    static constexpr PluginInfo info = {
         AUD_PLUGIN_NAME,
         AUD_PLUGIN_DOMAIN,
         AUD_PLUGIN_ABOUT,
@@ -473,7 +473,7 @@ GeneralPluginInstance aud_plugin_instance;
 class IfacePluginInstance : public IfacePlugin
 {
 public:
-    const PluginInfo info = {
+    static constexpr PluginInfo info = {
         AUD_PLUGIN_NAME,
         AUD_PLUGIN_DOMAIN,
         AUD_PLUGIN_ABOUT,
