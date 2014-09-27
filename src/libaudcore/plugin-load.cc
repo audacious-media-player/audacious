@@ -25,7 +25,6 @@
 #include <string.h>
 #include <sys/stat.h>
 
-#include <glib.h>
 #include <glib/gstdio.h>
 #include <gmodule.h>
 
@@ -53,25 +52,24 @@ static Index<LoadedModule> loaded_modules;
 
 Plugin * plugin_load (const char * filename)
 {
-    AUDDBG ("Loading plugin: %s.\n", filename);
+    AUDINFO ("Loading plugin: %s.\n", filename);
 
     GModule * module = g_module_open (filename,
      (GModuleFlags) (G_MODULE_BIND_LAZY | G_MODULE_BIND_LOCAL));
 
     if (! module)
     {
-        fprintf (stderr, " *** ERROR: %s could not be loaded: %s\n", filename,
-         g_module_error ());
+        AUDERR ("%s could not be loaded: %s\n", filename, g_module_error ());
         return nullptr;
     }
 
     Plugin * header;
-    if (! g_module_symbol (module, "_aud_plugin_self", (void * *) & header))
+    if (! g_module_symbol (module, "aud_plugin_instance", (void * *) & header))
         header = nullptr;
 
     if (! header || header->magic != _AUD_PLUGIN_MAGIC)
     {
-        fprintf (stderr, " *** ERROR: %s is not a valid Audacious plugin.\n", filename);
+        AUDERR ("%s is not a valid Audacious plugin.\n", filename);
         g_module_close (module);
         return nullptr;
     }
@@ -79,8 +77,7 @@ Plugin * plugin_load (const char * filename)
     if (header->version < _AUD_PLUGIN_VERSION_MIN ||
         header->version > _AUD_PLUGIN_VERSION)
     {
-        fprintf (stderr, " *** ERROR: %s is not compatible with this version "
-         "of Audacious.\n", filename);
+        AUDERR ("%s is not compatible with this version of Audacious.\n", filename);
         g_module_close (module);
         return nullptr;
     }
@@ -90,15 +87,15 @@ Plugin * plugin_load (const char * filename)
         header->type == PLUGIN_TYPE_INPUT ||
         header->type == PLUGIN_TYPE_EFFECT)
     {
-        if (PLUGIN_HAS_FUNC (header, init) && ! header->init ())
+        if (! header->init ())
         {
-            fprintf (stderr, " *** ERROR: %s failed to initialize.\n", filename);
+            AUDERR ("%s failed to initialize.\n", filename);
             g_module_close (module);
             return nullptr;
         }
     }
 
-    loaded_modules.append ({header, module});
+    loaded_modules.append (header, module);
 
     return header;
 }
@@ -111,8 +108,7 @@ static void plugin_unload (LoadedModule & loaded)
     case PLUGIN_TYPE_PLAYLIST:
     case PLUGIN_TYPE_INPUT:
     case PLUGIN_TYPE_EFFECT:
-        if (PLUGIN_HAS_FUNC (loaded.header, cleanup))
-            loaded.header->cleanup ();
+        loaded.header->cleanup ();
         break;
     }
 
@@ -131,7 +127,7 @@ static bool scan_plugin_func (const char * path, const char * basename, void * d
     GStatBuf st;
     if (g_stat (path, & st) < 0)
     {
-        fprintf (stderr, "Unable to stat %s: %s\n", path, strerror (errno));
+        AUDERR ("Unable to stat %s: %s\n", path, strerror (errno));
         return false;
     }
 
@@ -146,7 +142,7 @@ static void scan_plugins (const char * path)
     dir_foreach (path, scan_plugin_func, nullptr);
 }
 
-void plugin_system_init (void)
+void plugin_system_init ()
 {
     assert (g_module_supported ());
 
@@ -159,7 +155,7 @@ void plugin_system_init (void)
     plugin_registry_prune ();
 }
 
-void plugin_system_cleanup (void)
+void plugin_system_cleanup ()
 {
     plugin_registry_save ();
 

@@ -18,11 +18,11 @@
  * the use of this software.
  */
 
-#include <glib.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+
+#include <glib.h>  /* for g_utf8_to_utf16 */
 
 #define WANT_AUD_BSWAP
 #include <libaudcore/audio.h>
@@ -113,36 +113,36 @@ typedef SimpleHash<String, FrameList> FrameDict;
 
 namespace audtag {
 
-static bool skip_extended_header_3 (VFSFile * handle, int * _size)
+static bool skip_extended_header_3 (VFSFile & handle, int * _size)
 {
     uint32_t size;
 
-    if (vfs_fread (& size, 1, 4, handle) != 4)
+    if (handle.fread (& size, 1, 4) != 4)
         return false;
 
     size = FROM_BE32 (size);
 
     AUDDBG ("Found v2.3 extended header, size = %d.\n", (int) size);
 
-    if (vfs_fseek (handle, size, SEEK_CUR))
+    if (handle.fseek (size, VFS_SEEK_CUR))
         return false;
 
     * _size = 4 + size;
     return true;
 }
 
-static bool skip_extended_header_4 (VFSFile * handle, int * _size)
+static bool skip_extended_header_4 (VFSFile & handle, int * _size)
 {
     uint32_t size;
 
-    if (vfs_fread (& size, 1, 4, handle) != 4)
+    if (handle.fread (& size, 1, 4) != 4)
         return false;
 
     size = unsyncsafe32 (FROM_BE32 (size));
 
     AUDDBG ("Found v2.4 extended header, size = %d.\n", (int) size);
 
-    if (vfs_fseek (handle, size - 4, SEEK_CUR))
+    if (handle.fseek (size - 4, VFS_SEEK_CUR))
         return false;
 
     * _size = size;
@@ -168,16 +168,16 @@ static bool validate_header (ID3v2Header * header, bool is_footer)
     return true;
 }
 
-static bool read_header (VFSFile * handle, int * version, bool *
+static bool read_header (VFSFile & handle, int * version, bool *
  syncsafe, int64_t * offset, int * header_size, int * data_size, int *
  footer_size)
 {
     ID3v2Header header, footer;
 
-    if (vfs_fseek (handle, 0, SEEK_SET))
+    if (handle.fseek (0, VFS_SEEK_SET))
         return false;
 
-    if (vfs_fread (& header, 1, sizeof (ID3v2Header), handle) != sizeof
+    if (handle.fread (& header, 1, sizeof (ID3v2Header)) != sizeof
      (ID3v2Header))
         return false;
 
@@ -190,17 +190,17 @@ static bool read_header (VFSFile * handle, int * version, bool *
 
         if (header.flags & ID3_HEADER_HAS_FOOTER)
         {
-            if (vfs_fseek (handle, header.size, SEEK_CUR))
+            if (handle.fseek (header.size, VFS_SEEK_CUR))
                 return false;
 
-            if (vfs_fread (& footer, 1, sizeof (ID3v2Header), handle) != sizeof
+            if (handle.fread (& footer, 1, sizeof (ID3v2Header)) != sizeof
              (ID3v2Header))
                 return false;
 
             if (! validate_header (& footer, true))
                 return false;
 
-            if (vfs_fseek (handle, sizeof (ID3v2Header), SEEK_SET))
+            if (handle.fseek (sizeof (ID3v2Header), VFS_SEEK_SET))
                 return false;
 
             * footer_size = sizeof (ID3v2Header);
@@ -210,15 +210,15 @@ static bool read_header (VFSFile * handle, int * version, bool *
     }
     else
     {
-        int64_t end = vfs_fsize (handle);
+        int64_t end = handle.fsize ();
 
         if (end < 0)
             return false;
 
-        if (vfs_fseek (handle, end - sizeof (ID3v2Header), SEEK_SET))
+        if (handle.fseek (end - sizeof (ID3v2Header), VFS_SEEK_SET))
             return false;
 
-        if (vfs_fread (& footer, 1, sizeof (ID3v2Header), handle) != sizeof
+        if (handle.fread (& footer, 1, sizeof (ID3v2Header)) != sizeof
          (ID3v2Header))
             return false;
 
@@ -231,10 +231,10 @@ static bool read_header (VFSFile * handle, int * version, bool *
         * data_size = footer.size;
         * footer_size = sizeof (ID3v2Header);
 
-        if (vfs_fseek (handle, * offset, SEEK_SET))
+        if (handle.fseek (* offset, VFS_SEEK_SET))
             return false;
 
-        if (vfs_fread (& header, 1, sizeof (ID3v2Header), handle) != sizeof
+        if (handle.fread (& header, 1, sizeof (ID3v2Header)) != sizeof
          (ID3v2Header))
             return false;
 
@@ -288,7 +288,7 @@ static void unsyncsafe (GenericFrame & frame)
     frame.remove (set - & frame[0], -1);
 }
 
-static bool read_frame (VFSFile * handle, int max_size, int version,
+static bool read_frame (VFSFile & handle, int max_size, int version,
  bool syncsafe, int * frame_size, GenericFrame & frame)
 {
     ID3v2FrameHeader header;
@@ -297,7 +297,7 @@ static bool read_frame (VFSFile * handle, int max_size, int version,
     if ((max_size -= sizeof (ID3v2FrameHeader)) < 0)
         return false;
 
-    if (vfs_fread (& header, 1, sizeof (ID3v2FrameHeader), handle) != sizeof
+    if (handle.fread (& header, 1, sizeof (ID3v2FrameHeader)) != sizeof
      (ID3v2FrameHeader))
         return false;
 
@@ -326,7 +326,7 @@ static bool read_frame (VFSFile * handle, int max_size, int version,
     if (header.flags & ID3_FRAME_HAS_LENGTH)
         skip += 4;
 
-    if ((skip > 0 && vfs_fseek (handle, skip, SEEK_CUR)) || skip >= header.size)
+    if ((skip > 0 && handle.fseek (skip, VFS_SEEK_CUR)) || skip >= header.size)
         return false;
 
     * frame_size = sizeof (ID3v2FrameHeader) + header.size;
@@ -335,7 +335,7 @@ static bool read_frame (VFSFile * handle, int max_size, int version,
     frame.clear ();
     frame.insert (0, header.size - skip);
 
-    if (vfs_fread (& frame[0], 1, frame.len (), handle) != frame.len ())
+    if (handle.fread (& frame[0], 1, frame.len ()) != frame.len ())
         return false;
 
     if (syncsafe || (header.flags & ID3_FRAME_SYNCSAFE))
@@ -345,7 +345,7 @@ static bool read_frame (VFSFile * handle, int max_size, int version,
     return true;
 }
 
-static void read_all_frames (VFSFile * handle, int version, bool syncsafe,
+static void read_all_frames (VFSFile & handle, int version, bool syncsafe,
  int data_size, FrameDict & dict)
 {
     int pos;
@@ -574,7 +574,7 @@ static void add_frameFromTupleInt (const Tuple & tuple, int field, int id3_field
     add_text_frame (id3_field, int_to_str (tuple.get_int (field)), dict);
 }
 
-bool ID3v24TagModule::can_handle_file (VFSFile * handle)
+bool ID3v24TagModule::can_handle_file (VFSFile & handle)
 {
     int version, header_size, data_size, footer_size;
     bool syncsafe;
@@ -584,7 +584,7 @@ bool ID3v24TagModule::can_handle_file (VFSFile * handle)
      & data_size, & footer_size);
 }
 
-bool ID3v24TagModule::read_tag (Tuple & tuple, VFSFile * handle)
+bool ID3v24TagModule::read_tag (Tuple & tuple, VFSFile & handle)
 {
     int version, header_size, data_size, footer_size;
     bool syncsafe;
@@ -621,7 +621,7 @@ bool ID3v24TagModule::read_tag (Tuple & tuple, VFSFile * handle)
             id3_associate_string (tuple, FIELD_DATE, & frame[0], frame.len ());
             break;
           case ID3_LENGTH:
-            id3_associate_int (tuple, FIELD_LENGTH, & frame[0], frame.len ());
+            id3_associate_length (tuple, & frame[0], frame.len ());
             break;
           case ID3_ARTIST:
             id3_associate_string (tuple, FIELD_ARTIST, & frame[0], frame.len ());
@@ -658,47 +658,35 @@ bool ID3v24TagModule::read_tag (Tuple & tuple, VFSFile * handle)
     return true;
 }
 
-bool ID3v24TagModule::read_image (VFSFile * handle, void * * image_data, int64_t * image_size)
+Index<char> ID3v24TagModule::read_image (VFSFile & handle)
 {
+    Index<char> buf;
     int version, header_size, data_size, footer_size, parsed;
     bool syncsafe;
     int64_t offset;
-    bool found = false;
 
     if (! read_header (handle, & version, & syncsafe, & offset, & header_size,
      & data_size, & footer_size))
-        return false;
+        return buf;
 
-    for (parsed = 0; parsed < data_size && ! found; )
+    for (parsed = 0; parsed < data_size && ! buf.len (); )
     {
-        int frame_size, type;
+        int frame_size;
         GenericFrame frame;
 
-        if (! read_frame (handle, data_size - parsed, version, syncsafe,
-         & frame_size, frame))
+        if (! read_frame (handle, data_size - parsed, version, syncsafe, & frame_size, frame))
             break;
 
-        if (! strcmp (frame.key, "APIC") && id3_decode_picture (& frame[0],
-         frame.len (), & type, image_data, image_size))
-        {
-            if (type == 3) /* album cover */
-                found = true;
-            else if (type == 0) /* iTunes */
-                found = true;
-            else if (* image_data)
-            {
-                g_free (* image_data);
-                * image_data = nullptr;
-            }
-        }
+        if (! strcmp (frame.key, "APIC"))
+            buf = id3_decode_picture (& frame[0], frame.len ());
 
         parsed += frame_size;
     }
 
-    return found;
+    return buf;
 }
 
-bool ID3v24TagModule::write_tag (const Tuple & tuple, VFSFile * f)
+bool ID3v24TagModule::write_tag (const Tuple & tuple, VFSFile & f)
 {
     int version = 3;
     int header_size, data_size, footer_size;

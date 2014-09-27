@@ -1,6 +1,6 @@
 /*
- * id3-common.h
- * Copyright 2013 John Lindgren
+ * art.cc
+ * Copyright 2014 William Pitcock
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -17,19 +17,34 @@
  * the use of this software.
  */
 
-#ifndef AUDTAG_ID3_COMMON_H
-#define AUDTAG_ID3_COMMON_H
+#include <QtGui>
+#include <QtWidgets>
 
-#include <libaudcore/index.h>
-#include <libaudcore/tuple.h>
+#include <libaudcore/audstrings.h>
+#include <libaudcore/playlist.h>
+#include <libaudcore/probe.h>
+#include <libaudcore/runtime.h>
 
-void id3_associate_string (Tuple & tuple, int field, const char * data, int size);
-void id3_associate_int (Tuple & tuple, int field, const char * data, int size);
-void id3_associate_length (Tuple & tuple, const char * data, int size);
-void id3_decode_genre (Tuple & tuple, const char * data, int size);
-void id3_decode_comment (Tuple & tuple, const char * data, int size);
-void id3_decode_rva (Tuple & tuple, const char * data, int size);
+#include <libaudqt/libaudqt.h>
 
-Index<char> id3_decode_picture (const char * data, int size);
+namespace audqt {
 
-#endif
+EXPORT QImage art_request (const char * filename)
+{
+    const Index<char> * data = aud_art_request_data (filename);
+
+    if (! data)
+    {
+        AUDINFO ("no album art for %s.\n", filename);
+        return QImage ();
+    }
+
+    QImage img = QImage::fromData ((const uchar *) data->begin (), data->len ());
+
+    aud_art_unref (filename);
+
+    return img;
+}
+
+}
+

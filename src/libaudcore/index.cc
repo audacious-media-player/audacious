@@ -23,23 +23,35 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <glib.h>  /* for g_qsort_with_data */
+
 #include "objects.h"
 
-#include <glib.h>
+static void do_fill (void * data, int len, IndexBase::FillFunc fill_func)
+{
+    if (fill_func)
+        fill_func (data, len);
+    else
+        memset (data, 0, len);
+}
+
+static void do_erase (void * data, int len, IndexBase::EraseFunc erase_func)
+{
+    if (erase_func)
+        erase_func (data, len);
+}
 
 EXPORT void IndexBase::clear (EraseFunc erase_func)
 {
-    if (erase_func)
-        erase_func (m_data, m_len);
-    memset (m_data, 0, m_len);
-    g_free (m_data);
+    do_erase (m_data, m_len, erase_func);
+    free (m_data);
 
     m_data = nullptr;
     m_len = 0;
     m_size = 0;
 }
 
-EXPORT void IndexBase::insert (int pos, int len)
+EXPORT void * IndexBase::insert (int pos, int len)
 {
     assert (pos <= m_len);
     assert (len >= 0);
@@ -50,23 +62,48 @@ EXPORT void IndexBase::insert (int pos, int len)
     if (m_size < m_len + len)
     {
         /* never allocate less than 16 bytes */
-        if (m_size < 16)
-            m_size = 16;
+        int new_size = aud::max (m_size, 16);
 
         /* next try 4/3 current size, biased toward multiples of 4 */
-        if (m_size < m_len + len)
-            m_size = (m_size + 2) / 3 * 4;
+        if (new_size < m_len + len)
+            new_size = (new_size + 2) / 3 * 4;
 
         /* use requested size if still too small */
-        if (m_size < m_len + len)
-            m_size = m_len + len;
+        if (new_size < m_len + len)
+            new_size = m_len + len;
 
-        m_data = g_realloc (m_data, m_size);
+        void * new_data = realloc (m_data, new_size);
+        if (! new_data)
+            throw std::bad_alloc ();  /* nothing changed yet */
+
+        m_data = new_data;
+        m_size = new_size;
     }
 
     memmove ((char *) m_data + pos + len, (char *) m_data + pos, m_len - pos);
-    memset ((char *) m_data + pos, 0, len);
     m_len += len;
+
+    return (char *) m_data + pos;
+}
+
+EXPORT void IndexBase::insert (int pos, int len, FillFunc fill_func)
+{
+    void * to = insert (pos, len);
+
+    if (fill_func)
+        fill_func (to, len);
+    else
+        memset (to, 0, len);
+}
+
+EXPORT void IndexBase::insert (const void * from, int pos, int len, CopyFunc copy_func)
+{
+    void * to = insert (pos, len);
+
+    if (copy_func)
+        copy_func (from, to, len);
+    else
+        memcpy (to, from, len);
 }
 
 EXPORT void IndexBase::remove (int pos, int len, EraseFunc erase_func)
@@ -77,14 +114,12 @@ EXPORT void IndexBase::remove (int pos, int len, EraseFunc erase_func)
     if (len < 0)
         len = m_len - pos;  /* remove all following */
 
-    if (erase_func)
-        erase_func ((char *) m_data + pos, len);
+    do_erase ((char *) m_data + pos, len, erase_func);
     memmove ((char *) m_data + pos, (char *) m_data + pos + len, m_len - pos - len);
-    memset ((char *) m_data + m_len - len, 0, len);
     m_len -= len;
 }
 
-EXPORT void IndexBase::erase (int pos, int len, EraseFunc erase_func)
+EXPORT void IndexBase::erase (int pos, int len, FillFunc fill_func, EraseFunc erase_func)
 {
     assert (pos >= 0 && pos <= m_len);
     assert (len <= m_len - pos);
@@ -92,12 +127,11 @@ EXPORT void IndexBase::erase (int pos, int len, EraseFunc erase_func)
     if (len < 0)
         len = m_len - pos;  /* erase all following */
 
-    if (erase_func)
-        erase_func ((char *) m_data + pos, len);
-    memset ((char *) m_data + pos, 0, len);
+    do_erase ((char *) m_data + pos, len, erase_func);
+    do_fill ((char *) m_data + pos, len, fill_func);
 }
 
-EXPORT void IndexBase::shift (int from, int to, int len, EraseFunc erase_func)
+EXPORT void IndexBase::shift (int from, int to, int len, FillFunc fill_func, EraseFunc erase_func)
 {
     assert (len >= 0 && len <= m_len);
     assert (from >= 0 && from + len <= m_len);
@@ -105,24 +139,21 @@ EXPORT void IndexBase::shift (int from, int to, int len, EraseFunc erase_func)
 
     int erase_len = aud::min (len, abs (to - from));
 
-    if (erase_func)
-    {
-        if (to < from)
-            erase_func ((char *) m_data + to, erase_len);
-        else
-            erase_func ((char *) m_data + to + len - erase_len, erase_len);
-    }
+    if (to < from)
+        do_erase ((char *) m_data + to, erase_len, erase_func);
+    else
+        do_erase ((char *) m_data + to + len - erase_len, erase_len, erase_func);
 
     memmove ((char *) m_data + to, (char *) m_data + from, len);
 
     if (to < from)
-        memset ((char *) m_data + from + len - erase_len, 0, erase_len);
+        do_fill ((char *) m_data + from + len - erase_len, erase_len, fill_func);
     else
-        memset ((char *) m_data + from, 0, erase_len);
+        do_fill ((char *) m_data + from, erase_len, fill_func);
 }
 
 EXPORT void IndexBase::move_from (IndexBase & b, int from, int to, int len,
- bool expand, bool collapse, EraseFunc erase_func)
+ bool expand, bool collapse, FillFunc fill_func, EraseFunc erase_func)
 {
     assert (this != & b);
     assert (from >= 0 && from <= b.m_len);
@@ -142,7 +173,7 @@ EXPORT void IndexBase::move_from (IndexBase & b, int from, int to, int len,
     else
     {
         assert (to >= 0 && to <= m_len - len);
-        erase (to, len, erase_func);
+        do_erase ((char *) m_data + to, len, erase_func);
     }
 
     memcpy ((char *) m_data + to, (char *) b.m_data + from, len);
@@ -150,11 +181,10 @@ EXPORT void IndexBase::move_from (IndexBase & b, int from, int to, int len,
     if (collapse)
     {
         memmove ((char *) b.m_data + from, (char *) b.m_data + from + len, b.m_len - from - len);
-        memset ((char *) b.m_data + b.m_len - len, 0, len);
         b.m_len -= len;
     }
     else
-        memset ((char *) b.m_data + from, 0, len);
+        do_fill ((char *) b.m_data + from, len, fill_func);
 }
 
 EXPORT void IndexBase::sort (CompareFunc compare, int elemsize, void * userdata)

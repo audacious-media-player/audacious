@@ -17,17 +17,17 @@
  * the use of this software.
  */
 
-#include <glib.h>
+#include "ui_jumptotrack_cache.h"
 
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
 
+#include <glib.h>  /* for GRegex */
+
 #include <libaudcore/audstrings.h>
 #include <libaudcore/playlist.h>
 #include <libaudcore/runtime.h>
-
-#include "ui_jumptotrack_cache.h"
 
 /**
  * Creates an regular expression list usable in searches from search keyword.
@@ -39,29 +39,24 @@
  * Regular expressions in list are formed by splitting the 'keyword' to words
  * by splitting the keyword string with space character.
  */
-static GSList*
-ui_jump_to_track_cache_regex_list_create(const char* keyword)
+Index<GRegex *> ui_jump_to_track_cache_regex_list_create (const char * keyword)
 {
-    GSList *regex_list = nullptr;
-    char **words = nullptr;
-    int i = -1;
+    Index<GRegex *> regex_list;
+
     /* Chop the key string into ' '-separated key regex-pattern strings */
-    words = g_strsplit(keyword, " ", 0);
+    Index<String> words = str_list_to_index (keyword, " ");
 
     /* create a list of regex using the regex-pattern strings */
-    while ( words[++i] != nullptr )
+    for (const char * word : words)
     {
         // Ignore empty words.
-        if (words[i][0] == 0) {
+        if (! word[0])
             continue;
-        }
 
-        GRegex * regex = g_regex_new (words[i], G_REGEX_CASELESS, (GRegexMatchFlags) 0, nullptr);
+        GRegex * regex = g_regex_new (word, G_REGEX_CASELESS, (GRegexMatchFlags) 0, nullptr);
         if (regex)
-            regex_list = g_slist_append (regex_list, regex);
+            regex_list.append (regex);
     }
-
-    g_strfreev(words);
 
     return regex_list;
 }
@@ -69,16 +64,14 @@ ui_jump_to_track_cache_regex_list_create(const char* keyword)
 /**
  * Checks if 'song' matches all regular expressions in 'regex_list'.
  */
-static gboolean
-ui_jump_to_track_match(const char * song, GSList *regex_list)
+static bool ui_jump_to_track_match (const char * name, Index<GRegex *> & regex_list)
 {
-    if ( song == nullptr )
+    if (! name)
         return false;
 
-    for ( ; regex_list ; regex_list = g_slist_next(regex_list) )
+    for (GRegex * regex : regex_list)
     {
-        GRegex * regex = (GRegex *) regex_list->data;
-        if (! g_regex_match (regex, song, (GRegexMatchFlags) 0, nullptr))
+        if (! g_regex_match (regex, name, (GRegexMatchFlags) 0, nullptr))
             return false;
     }
 
@@ -98,13 +91,13 @@ ui_jump_to_track_match(const char * song, GSList *regex_list)
 const KeywordMatches * JumpToTrackCache::search_within
  (const KeywordMatches * subset, const char * keyword)
 {
-    GSList* regex_list = ui_jump_to_track_cache_regex_list_create(keyword);
+    Index<GRegex *> regex_list = ui_jump_to_track_cache_regex_list_create (keyword);
 
     KeywordMatches * k = add (String (keyword), KeywordMatches ());
 
     for (const KeywordMatch & item : * subset)
     {
-        if (! regex_list ||
+        if (! regex_list.len () ||
          ui_jump_to_track_match (item.title, regex_list) ||
          ui_jump_to_track_match (item.artist, regex_list) ||
          ui_jump_to_track_match (item.album, regex_list) ||
@@ -112,7 +105,8 @@ const KeywordMatches * JumpToTrackCache::search_within
             k->append (item);
     }
 
-    g_slist_free_full (regex_list, (GDestroyNotify) g_regex_unref);
+    for (GRegex * regex : regex_list)
+        g_regex_unref (regex);
 
     return k;
 }

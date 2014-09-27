@@ -47,7 +47,7 @@ EXPORT void fileopener_show (bool add = false)
     {
         Index<PlaylistAddItem> files;
         Q_FOREACH (QUrl url, dialog.selectedUrls ())
-            files.append ({ String(url.toEncoded ().constData ()) });
+            files.append (String(url.toEncoded ().constData ()));
         if (add)
             aud_drct_pl_add_list (std::move (files), -1);
         else

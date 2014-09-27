@@ -22,7 +22,7 @@
 
 #include "plugins.h"
 
-struct Plugin;
+class Plugin;
 
 enum {
  INPUT_KEY_SCHEME,
@@ -31,30 +31,28 @@ enum {
  INPUT_KEYS};
 
 /* plugin-init.c */
-void start_plugins_one (void);
-void start_plugins_two (void);
-void stop_plugins_two (void);
-void stop_plugins_one (void);
+void start_plugins_one ();
+void start_plugins_two ();
+void stop_plugins_two ();
+void stop_plugins_one ();
 
 /* plugin-load.c */
-void plugin_system_init (void);
-void plugin_system_cleanup (void);
+void plugin_system_init ();
+void plugin_system_cleanup ();
 Plugin * plugin_load (const char * path);
 
 /* plugin-registry.c */
-void plugin_registry_load (void);
-void plugin_registry_prune (void);
-void plugin_registry_save (void);
+void plugin_registry_load ();
+void plugin_registry_prune ();
+void plugin_registry_save ();
 
 void plugin_register (const char * path, int timestamp);
 void plugin_set_enabled (PluginHandle * plugin, bool enabled);
 
-PluginHandle * transport_plugin_for_scheme (const char * scheme);
-void playlist_plugin_for_ext (const char * ext, PluginForEachFunc func, void * data);
-void input_plugin_for_key (int key, const char * value, PluginForEachFunc func, void * data);
-bool input_plugin_has_images (PluginHandle * plugin);
+bool transport_plugin_has_scheme (PluginHandle * plugin, const char * scheme);
+bool playlist_plugin_has_ext (PluginHandle * plugin, const char * ext);
+bool input_plugin_has_key (PluginHandle * plugin, int key, const char * value);
 bool input_plugin_has_subtunes (PluginHandle * plugin);
 bool input_plugin_can_write_tuple (PluginHandle * plugin);
-bool input_plugin_has_infowin (PluginHandle * plugin);
 
 #endif

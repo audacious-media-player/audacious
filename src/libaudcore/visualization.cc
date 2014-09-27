@@ -20,7 +20,7 @@
 #include "interface.h"
 #include "internal.h"
 
-#include <glib.h>
+#include <assert.h>
 #include <string.h>
 
 #include "plugin.h"
@@ -28,38 +28,39 @@
 #include "runtime.h"
 
 static Index<VisFunc> vis_funcs[AUD_VIS_TYPES];
+static Index<VisPlugin *> vis_plugins[AUD_VIS_TYPES];
 
 static int running = false;
+static int num_enabled = 0;
 
 EXPORT void aud_vis_func_add (int type, VisFunc func)
 {
-    g_return_if_fail (type >= 0 && type < AUD_VIS_TYPES);
-
+    assert (type >= 0 && type < AUD_VIS_TYPES);
     vis_funcs[type].append (func);
-    vis_runner_enable (true);
+
+    num_enabled ++;
+    if (num_enabled == 1)
+        vis_runner_enable (true);
 }
 
 EXPORT void aud_vis_func_remove (VisFunc func)
 {
-    bool disable = true;
+    int num_disabled = 0;
+
+    auto is_match = [&] (VisFunc func2)
+    {
+        if (func2 != func)
+            return false;
+
+        num_disabled ++;
+        return true;
+    };
 
     for (int type = 0; type < AUD_VIS_TYPES; type ++)
-    {
-        Index<VisFunc> & list = vis_funcs[type];
+        vis_funcs[type].remove_if (is_match);
 
-        for (int i = 0; i < list.len ();)
-        {
-            if (list[i] == func)
-                list.remove (i, 1);
-            else
-                i ++;
-        }
-
-        if (list.len ())
-            disable = false;
-    }
-
-    if (disable)
+    num_enabled -= num_disabled;
+    if (! num_enabled)
         vis_runner_enable (false);
 }
 
@@ -86,61 +87,76 @@ static void pcm_to_mono (const float * data, float * mono, int channels)
 
 void vis_send_audio (const float * data, int channels)
 {
+    auto is_active = [] (int type)
+        { return vis_funcs[type].len () || vis_plugins[type].len (); };
+
     float mono[512];
     float freq[256];
 
-    if (vis_funcs[AUD_VIS_TYPE_MONO_PCM].len () || vis_funcs[AUD_VIS_TYPE_FREQ].len ())
+    if (is_active (AUD_VIS_TYPE_MONO_PCM) || is_active (AUD_VIS_TYPE_FREQ))
         pcm_to_mono (data, mono, channels);
-    if (vis_funcs[AUD_VIS_TYPE_FREQ].len ())
+    if (is_active (AUD_VIS_TYPE_FREQ))
         calc_freq (mono, freq);
 
     for (VisFunc func : vis_funcs[AUD_VIS_TYPE_MONO_PCM])
         ((VisMonoPCMFunc) func) (mono);
+    for (VisPlugin * vp : vis_plugins[AUD_VIS_TYPE_MONO_PCM])
+        vp->render_mono_pcm (mono);
 
     for (VisFunc func : vis_funcs[AUD_VIS_TYPE_MULTI_PCM])
         ((VisMultiPCMFunc) func) (data, channels);
+    for (VisPlugin * vp : vis_plugins[AUD_VIS_TYPE_MULTI_PCM])
+        vp->render_multi_pcm (data, channels);
 
     for (VisFunc func : vis_funcs[AUD_VIS_TYPE_FREQ])
         ((VisFreqFunc) func) (freq);
+    for (VisPlugin * vp : vis_plugins[AUD_VIS_TYPE_FREQ])
+        vp->render_freq (freq);
 }
 
-static bool vis_load (PluginHandle * plugin, void * unused)
+static bool vis_load (PluginHandle * plugin)
 {
-    AUDDBG ("Activating %s.\n", aud_plugin_get_name (plugin));
+    AUDINFO ("Activating %s.\n", aud_plugin_get_name (plugin));
     VisPlugin * header = (VisPlugin *) aud_plugin_get_header (plugin);
-    g_return_val_if_fail (header, false);
+    if (! header)
+        return false;
 
-    if (PLUGIN_HAS_FUNC (header, clear))
-        aud_vis_func_add (AUD_VIS_TYPE_CLEAR, (VisFunc) header->clear);
-    if (PLUGIN_HAS_FUNC (header, render_mono_pcm))
-        aud_vis_func_add (AUD_VIS_TYPE_MONO_PCM, (VisFunc) header->render_mono_pcm);
-    if (PLUGIN_HAS_FUNC (header, render_multi_pcm))
-        aud_vis_func_add (AUD_VIS_TYPE_MULTI_PCM, (VisFunc) header->render_multi_pcm);
-    if (PLUGIN_HAS_FUNC (header, render_freq))
-        aud_vis_func_add (AUD_VIS_TYPE_FREQ, (VisFunc) header->render_freq);
+    assert (header->vis_type >= 0 && header->vis_type < AUD_VIS_TYPES);
+    vis_plugins[header->vis_type].append (header);
+
+    num_enabled ++;
+    if (num_enabled == 1)
+        vis_runner_enable (true);
 
     return true;
 }
 
-static bool vis_unload (PluginHandle * plugin, void * unused)
+static void vis_unload (PluginHandle * plugin)
 {
-    AUDDBG ("Deactivating %s.\n", aud_plugin_get_name (plugin));
+    AUDINFO ("Deactivating %s.\n", aud_plugin_get_name (plugin));
     VisPlugin * header = (VisPlugin *) aud_plugin_get_header (plugin);
-    g_return_val_if_fail (header, false);
+    if (! header)
+        return;
 
-    if (PLUGIN_HAS_FUNC (header, clear))
-        aud_vis_func_remove ((VisFunc) header->clear);
-    if (PLUGIN_HAS_FUNC (header, render_mono_pcm))
-        aud_vis_func_remove ((VisFunc) header->render_mono_pcm);
-    if (PLUGIN_HAS_FUNC (header, render_multi_pcm))
-        aud_vis_func_remove ((VisFunc) header->render_multi_pcm);
-    if (PLUGIN_HAS_FUNC (header, render_freq))
-        aud_vis_func_remove ((VisFunc) header->render_freq);
+    header->clear ();
 
-    if (PLUGIN_HAS_FUNC (header, clear))
-        header->clear ();
+    int num_disabled = 0;
 
-    return true;
+    auto is_match = [&] (VisPlugin * header2)
+    {
+        if (header2 != header)
+            return false;
+
+        num_disabled ++;
+        return true;
+    };
+
+    assert (header->vis_type >= 0 && header->vis_type < AUD_VIS_TYPES);
+    vis_plugins[header->vis_type].remove_if (is_match);
+
+    num_enabled -= num_disabled;
+    if (! num_enabled)
+        vis_runner_enable (false);
 }
 
 void vis_activate (bool activate)
@@ -148,10 +164,16 @@ void vis_activate (bool activate)
     if (! activate == ! running)
         return;
 
-    if (activate)
-        aud_plugin_for_enabled (PLUGIN_TYPE_VIS, vis_load, nullptr);
-    else
-        aud_plugin_for_enabled (PLUGIN_TYPE_VIS, vis_unload, nullptr);
+    for (PluginHandle * plugin : aud_plugin_list (PLUGIN_TYPE_VIS))
+    {
+        if (! aud_plugin_get_enabled (plugin))
+            continue;
+
+        if (activate)
+            vis_load (plugin);
+        else
+            vis_unload (plugin);
+    }
 
     running = activate;
 }
@@ -159,13 +181,11 @@ void vis_activate (bool activate)
 bool vis_plugin_start (PluginHandle * plugin)
 {
     VisPlugin * vp = (VisPlugin *) aud_plugin_get_header (plugin);
-    g_return_val_if_fail (vp, false);
-
-    if (vp->init != nullptr && ! vp->init ())
+    if (! vp || ! vp->init ())
         return false;
 
     if (running)
-        vis_load (plugin, nullptr);
+        vis_load (plugin);
 
     return true;
 }
@@ -173,11 +193,11 @@ bool vis_plugin_start (PluginHandle * plugin)
 void vis_plugin_stop (PluginHandle * plugin)
 {
     VisPlugin * vp = (VisPlugin *) aud_plugin_get_header (plugin);
-    g_return_if_fail (vp);
+    if (! vp)
+        return;
 
     if (running)
-        vis_unload (plugin, nullptr);
+        vis_unload (plugin);
 
-    if (vp->cleanup)
-        vp->cleanup ();
+    vp->cleanup ();
 }

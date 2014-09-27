@@ -1,5 +1,5 @@
 /*
- * prefs-pluginlist-model.h
+ * log-inspector.h
  * Copyright 2014 William Pitcock
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,41 +22,43 @@
 #include <QAbstractTableModel>
 
 #include <libaudcore/i18n.h>
-#include <libaudcore/index.h>
 #include <libaudcore/preferences.h>
 #include <libaudcore/runtime.h>
+#include <libaudcore/index.h>
 
-#ifndef PREFS_PLUGINLIST_MODEL_H
-#define PREFS_PLUGINLIST_MODEL_H
-
-class PluginHandle;
+#ifndef LIBAUDQT_LOG_INSPECTOR_H
+#define LIBAUDQT_LOG_INSPECTOR_H
 
 namespace audqt {
 
-class PluginListModel : public QAbstractListModel
+struct LogEntry
+{
+    audlog::Level level;
+    const char * filename;
+    unsigned int line;
+    const char * function;
+    char * message;
+};
+
+class LogEntryModel : public QAbstractListModel
 {
     Q_OBJECT
 
 public:
-    PluginListModel (QObject * parent, int category_id);
-    ~PluginListModel ();
+    LogEntryModel (QObject * parent = 0);
+    ~LogEntryModel ();
 
     int rowCount (const QModelIndex & parent = QModelIndex ()) const;
     int columnCount (const QModelIndex & parent = QModelIndex ()) const;
     QVariant data (const QModelIndex & index, int role = Qt::DisplayRole) const;
     QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
-    bool setData (const QModelIndex &index, const QVariant &value, int role = Qt::DisplayRole);
-    Qt::ItemFlags flags (const QModelIndex & parent = QModelIndex ()) const;
 
     bool insertRows (int row, int count, const QModelIndex & parent = QModelIndex ());
     bool removeRows (int row, int count, const QModelIndex & parent = QModelIndex ());
     void updateRows (int row, int count);
     void updateRow (int row);
-
-private:
-    const Index<PluginHandle *> & m_list;
 };
 
-}
+};
 
 #endif

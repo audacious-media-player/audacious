@@ -1,5 +1,5 @@
 /*
- * about.cc
+ * iface.h
  * Copyright 2014 William Pitcock
  *
  * Redistribution and use in source and binary forms, with or without
@@ -21,32 +21,33 @@
 #include <QtWidgets>
 
 #include <libaudcore/audstrings.h>
+#include <libaudcore/equalizer.h>
 #include <libaudcore/i18n.h>
 #include <libaudcore/runtime.h>
+#include <libaudcore/plugin.h>
 
-#include "libaudqt.h"
+#include <libaudqt/libaudqt.h>
 
-#ifndef LIBAUDQT_ABOUT_H
-#define LIBAUDQT_ABOUT_H
+#ifndef LIBAUDQT_IFACE_H
+#define LIBAUDQT_IFACE_H
 
 namespace audqt {
 
-class AboutWindow : public QDialog {
-
-    Q_OBJECT
-
-private:
-    QVBoxLayout m_layout;
-    QTabWidget m_tabs;
-    QLabel m_logo;
-    QLabel m_about_text;
-    QPlainTextEdit *m_textedits[2];
-
-    void buildCreditsNotebook ();
-
+class QtIfacePlugin : public IfacePlugin
+{
 public:
-    AboutWindow (QWidget * parent = 0);
-    ~AboutWindow ();
+    constexpr QtIfacePlugin (PluginInfo info) : IfacePlugin (info) {};
+
+    void show_about_window () { aboutwindow_show (); };
+    void hide_about_window () { aboutwindow_hide (); };
+    void show_filebrowser (bool open) { fileopener_show (open); }
+    void hide_filebrowser () {}
+    void show_jump_to_song () {}
+    void hide_jump_to_song () {}
+    void show_prefs_window () { prefswin_show (); }
+    void hide_prefs_window () { prefswin_hide (); }
+    void plugin_menu_add (int id, void func (), const char * name, const char * icon) {}
+    void plugin_menu_remove (int id, void func ()) {}
 };
 
 }

@@ -22,7 +22,6 @@
 
 #include <errno.h>
 #include <iconv.h>
-#include <stdio.h>
 #include <string.h>
 
 #include <new>
@@ -75,9 +74,9 @@ EXPORT StringBuf str_convert (const char * str, int len, const char * from_chars
 static void whine_locale (const char * str, int len, const char * dir, const char * charset)
 {
     if (len < 0)
-        fprintf (stderr, "Cannot convert %s locale (%s): %s\n", dir, charset, str);
+        AUDWARN ("Cannot convert %s locale (%s): %s\n", dir, charset, str);
     else
-        fprintf (stderr, "Cannot convert %s locale (%s): %.*s\n", dir, charset, len, str);
+        AUDWARN ("Cannot convert %s locale (%s): %.*s\n", dir, charset, len, str);
 }
 
 EXPORT StringBuf str_from_locale (const char * str, int len)

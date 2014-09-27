@@ -33,7 +33,7 @@
 namespace audqt {
 
 PluginListModel::PluginListModel (QObject * parent, int category_id) : QAbstractListModel (parent),
-    m_category_id (category_id)
+    m_list (aud_plugin_list (category_id))
 {
 
 }
@@ -45,7 +45,7 @@ PluginListModel::~PluginListModel ()
 
 int PluginListModel::rowCount (const QModelIndex & parent) const
 {
-    return aud_plugin_count (m_category_id);
+    return m_list.len ();
 }
 
 int PluginListModel::columnCount (const QModelIndex & parent) const
@@ -60,15 +60,17 @@ QVariant PluginListModel::headerData (int section, Qt::Orientation orientation, 
 
 QVariant PluginListModel::data (const QModelIndex &index, int role) const
 {
-    PluginHandle * ph = aud_plugin_by_index (m_category_id, index.row ());
+    int row = index.row ();
+    if (row < 0 || row >= m_list.len ())
+        return QVariant ();
 
     switch (role)
     {
     case Qt::DisplayRole:
-        return QString (aud_plugin_get_name (ph));
+        return QString (aud_plugin_get_name (m_list[row]));
 
     case Qt::CheckStateRole:
-        return aud_plugin_get_enabled (ph) ? Qt::Checked : Qt::Unchecked;
+        return aud_plugin_get_enabled (m_list[row]) ? Qt::Checked : Qt::Unchecked;
 
     default:
         break;
@@ -79,11 +81,13 @@ QVariant PluginListModel::data (const QModelIndex &index, int role) const
 
 bool PluginListModel::setData (const QModelIndex &index, const QVariant &value, int role)
 {
-    PluginHandle * ph = aud_plugin_by_index (m_category_id, index.row ());
+    int row = index.row ();
+    if (row < 0 || row >= m_list.len ())
+        return false;
 
     if (role == Qt::CheckStateRole)
     {
-        aud_plugin_enable (ph, value.toUInt() != Qt::Unchecked);
+        aud_plugin_enable (m_list[row], value.toUInt() != Qt::Unchecked);
     }
 
     emit dataChanged (index, index);

@@ -23,27 +23,27 @@
 #include "playlist.h"
 
 /* playlist.c */
-void playlist_init (void);
-void playlist_end (void);
+void playlist_init ();
+void playlist_end ();
 
 void playlist_insert_with_id (int at, int id);
 void playlist_set_modified (int playlist, bool modified);
 bool playlist_get_modified (int playlist);
 
-void playlist_load_state (void);
-void playlist_save_state (void);
+void playlist_load_state ();
+void playlist_save_state ();
 
 void playlist_entry_insert_batch_raw (int playlist, int at, Index<PlaylistAddItem> && items);
 
 bool playlist_prev_song (int playlist);
 bool playlist_next_song (int playlist, bool repeat);
 
-int playback_entry_get_position (void);
-String playback_entry_get_filename (void);
-PluginHandle * playback_entry_get_decoder (void);
-Tuple playback_entry_get_tuple (void);
-String playback_entry_get_title (void);
-int playback_entry_get_length (void);
+int playback_entry_get_position ();
+String playback_entry_get_filename ();
+PluginHandle * playback_entry_get_decoder (String * error = nullptr);
+Tuple playback_entry_get_tuple (String * error = nullptr);
+String playback_entry_get_title ();
+int playback_entry_get_length ();
 
 void playback_entry_set_tuple (Tuple && tuple);
 
@@ -52,7 +52,7 @@ bool playlist_load (const char * filename, String & title, Index<PlaylistAddItem
 bool playlist_insert_playlist_raw (int list, int at, const char * filename);
 
 /* playlist-utils.c */
-void load_playlists (void);
+void load_playlists ();
 void save_playlists (bool exiting);
 
 #endif

@@ -20,24 +20,22 @@
 #ifndef LIBAUDCORE_INDEX_H
 #define LIBAUDCORE_INDEX_H
 
-#include <type_traits>
-#include <utility>
+#include <libaudcore/templates.h>
 
 /*
  * Index is a lightweight list class similar to std::vector, but with the
  * following differences:
  *  - The base implementation is type-agnostic, so it only needs to be compiled
  *    once.  Type-safety is provided by a thin template subclass.
- *  - Insertion of new objects into the list initializes them to zero; no
- *    constructors are called.  Be careful to use only objects that can handle
- *    this.
  *  - Objects are moved in memory without calling any assignment operator.
- *    Again, be careful to use only objects that can handle this.
+ *    Be careful to use only objects that can handle this.
  */
 
 class IndexBase
 {
 public:
+    typedef void (* FillFunc) (void * data, int len);
+    typedef void (* CopyFunc) (const void * from, void * to, int len);
     typedef void (* EraseFunc) (void * data, int len);
     typedef int (* CompareFunc) (const void * a, const void * b, void * userdata);
 
@@ -84,13 +82,15 @@ public:
     int len () const
         { return m_len; }
 
-    void insert (int pos, int len);
+    void * insert (int pos, int len);  // no fill
+    void insert (int pos, int len, FillFunc fill_func);
+    void insert (const void * from, int pos, int len, CopyFunc copy_func);
     void remove (int pos, int len, EraseFunc erase_func);
-    void erase (int pos, int len, EraseFunc erase_func);
-    void shift (int from, int to, int len, EraseFunc erase_func);
+    void erase (int pos, int len, FillFunc fill_func, EraseFunc erase_func);
+    void shift (int from, int to, int len, FillFunc fill_func, EraseFunc erase_func);
 
     void move_from (IndexBase & b, int from, int to, int len, bool expand,
-     bool collapse, EraseFunc erase_func);
+     bool collapse, FillFunc fill_func, EraseFunc erase_func);
 
     void sort (CompareFunc compare, int elemsize, void * userdata);
 
@@ -136,36 +136,28 @@ public:
         { return begin ()[i]; }
 
     void insert (int pos, int len)
-        { IndexBase::insert (raw (pos), raw (len)); }
+        { IndexBase::insert (raw (pos), raw (len), fill_func ()); }
+    void insert (const T * from, int pos, int len)
+        { IndexBase::insert (from, raw (pos), raw (len), copy_func ()); }
     void remove (int pos, int len)
         { IndexBase::remove (raw (pos), raw (len), erase_func ()); }
     void erase (int pos, int len)
-        { IndexBase::erase (raw (pos), raw (len), erase_func ()); }
+        { IndexBase::erase (raw (pos), raw (len), fill_func (), erase_func ()); }
     void shift (int from, int to, int len)
-        { IndexBase::shift (raw (from), raw (to), raw (len), erase_func ()); }
+        { IndexBase::shift (raw (from), raw (to), raw (len), fill_func (), erase_func ()); }
 
     void move_from (Index<T> & b, int from, int to, int len, bool expand, bool collapse)
         { IndexBase::move_from (b, raw (from), raw (to), raw (len), expand,
-           collapse, erase_func ()); }
+           collapse, fill_func (), erase_func ()); }
 
-    void sort (CompareFunc compare, void * userdata)
+    template<class ... Args>
+    T & append (Args && ... args)
     {
-        const CompareData data = {compare, userdata};
-        IndexBase::sort (compare_wrapper, sizeof (T), (void *) & data);
+        return * aud::construct<T>::make (IndexBase::insert (-1, sizeof (T)),
+         std::forward<Args> (args) ...);
     }
 
-    T & append ()
-    {
-        insert (-1, 1);
-        return end ()[-1];
-    }
-
-    void append (const T & val)
-        { append () = val; }
-    void append (T && val)
-        { append () = std::move (val); }
-
-    int find (const T & val)
+    int find (const T & val) const
     {
         for (const T * iter = begin (); iter != end (); iter ++)
         {
@@ -176,32 +168,74 @@ public:
         return -1;
     }
 
-private:
-    struct CompareData {
-        CompareFunc compare;
-        void * userdata;
-    };
+    template<class F>
+    void remove_if (F func)
+    {
+        T * iter = begin ();
+        while (iter != end ())
+        {
+            if (func (* iter))
+                remove (iter - begin (), 1);
+            else
+                iter ++;
+        }
+    }
 
+    void sort (CompareFunc compare, void * userdata)
+    {
+        struct state_t {
+            CompareFunc compare;
+            void * userdata;
+        };
+
+        auto wrapper = [] (const void * a, const void * b, void * userdata) -> int
+        {
+            auto state = (const state_t *) userdata;
+            return state->compare (* (const T *) a, * (const T *) b, state->userdata);
+        };
+
+        const state_t state = {compare, userdata};
+        IndexBase::sort (wrapper, sizeof (T), (void *) & state);
+    }
+
+private:
     static constexpr int raw (int len)
         { return len * sizeof (T); }
     static constexpr int cooked (int len)
         { return len / sizeof (T); }
 
-    static void erase_objects (void * data, int len)
+    static constexpr FillFunc fill_func ()
     {
-        T * iter = (T *) data;
-        T * end = (T *) ((char *) data + len);
-        while (iter < end)
-            (* iter ++).~T ();
+        return std::is_trivial<T>::value ? (FillFunc) nullptr : [] (void * data, int len)
+        {
+            T * iter = (T *) data;
+            T * end = (T *) ((char *) data + len);
+            while (iter < end)
+                new (iter ++) T ();
+        };
+    }
+
+    static constexpr CopyFunc copy_func ()
+    {
+        return std::is_trivial<T>::value ? (CopyFunc) nullptr : [] (const void * from, void * to, int len)
+        {
+            const T * src = (const T *) from;
+            T * dest = (T *) to;
+            T * end = (T *) ((char *) to + len);
+            while (dest < end)
+                new (dest ++) T (* src ++);
+        };
     }
 
     static constexpr EraseFunc erase_func ()
-        { return std::is_trivial<T>::value ? nullptr : erase_objects; }
-
-    static int compare_wrapper (const void * a, const void * b, void * userdata)
     {
-        const CompareData & data = * (const CompareData *) userdata;
-        return data.compare (* (const T *) a, * (const T *) b, data.userdata);
+        return std::is_trivial<T>::value ? (EraseFunc) nullptr : [] (void * data, int len)
+        {
+            T * iter = (T *) data;
+            T * end = (T *) ((char *) data + len);
+            while (iter < end)
+                (* iter ++).~T ();
+        };
     }
 };
 

@@ -135,7 +135,12 @@ EXPORT void audgui_dialog_add_widget (GtkWidget * dialog, GtkWidget * widget)
 EXPORT void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
  const char * title, const char * text)
 {
-    AUDDBG ("%s\n", text);
+    if (type == GTK_MESSAGE_ERROR)
+        AUDERR ("%s\n", text);
+    else if (type == GTK_MESSAGE_WARNING)
+        AUDWARN ("%s\n", text);
+    else if (type == GTK_MESSAGE_INFO)
+        AUDINFO ("%s\n", text);
 
     if (* widget)
     {

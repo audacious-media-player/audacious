@@ -22,93 +22,26 @@
 
 #define __STDC_FORMAT_MACROS
 #include <inttypes.h>
-#include <stdio.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
 
-#include <glib.h>
 #include <glib/gstdio.h>
 
 #include "audstrings.h"
+#include "i18n.h"
 #include "runtime.h"
 #include "vfs_local.h"
 
-#define VFS_SIG ('V' | ('F' << 8) | ('S' << 16))
-
-/**
- * @struct VFSFile
- * #VFSFile objects describe an opened VFS stream, basically being
- * similar in purpose as stdio FILE
- */
-struct VFSFile {
-    String uri;               /**< The URI of the stream */
-    const VFSConstructor * base;    /**< The base vtable used for VFS functions */
-    void * handle;            /**< Opaque data used by the transport plugins */
-    int sig;                  /**< Used to detect invalid or twice-closed objects */
-};
-
 /* Audacious core provides us with a function that looks up a VFS transport for
- * a given URI scheme.  Since this function will load plugins as needed, it can
- * only be called from the main thread.  When VFS is used from parallel threads,
- * vfs_prepare must be called from the main thread to look up any needed
- * transports beforehand. */
+ * a given URI scheme.  This function will load plugins as needed. */
 
-static const VFSConstructor * (* lookup_func) (const char * scheme) = nullptr;
+static VFSFile::LookupFunc lookup_func;
 
-EXPORT void vfs_set_lookup_func (const VFSConstructor * (* func) (const char * scheme))
+EXPORT void VFSFile::set_lookup_func (LookupFunc func)
 {
     lookup_func = func;
-}
-
-static void logger (const char * format, ...)
-{
-    static char last[256] = "";
-    static int repeated = 0;
-
-    char buf[256];
-
-    va_list args;
-    va_start (args, format);
-    vsnprintf (buf, sizeof buf, format, args);
-    va_end (args);
-
-    if (! strcmp (buf, last))
-        repeated ++;
-    else
-    {
-        if (repeated)
-        {
-            printf ("VFS: (last message repeated %d times)\n", repeated);
-            repeated = 0;
-        }
-
-        fputs (buf, stdout);
-        strcpy (last, buf);
-    }
-}
-
-EXPORT VFSFile * vfs_new (const char * path, const VFSConstructor * vtable, void * handle)
-{
-    VFSFile * file = new VFSFile ();
-
-    file->uri = String (path);
-    file->base = vtable;
-    file->handle = handle;
-    file->sig = VFS_SIG;
-
-    return file;
-}
-
-EXPORT const char * vfs_get_filename (VFSFile * file)
-{
-    return file->uri;
-}
-
-EXPORT void * vfs_get_handle (VFSFile * file)
-{
-    return file->handle;
 }
 
 /**
@@ -119,71 +52,40 @@ EXPORT void * vfs_get_handle (VFSFile * file)
  * @param mode The preferred access privileges (not guaranteed).
  * @return On success, a #VFSFile object representing the stream.
  */
-EXPORT VFSFile *
-vfs_fopen(const char * path,
-          const char * mode)
+EXPORT VFSFile::VFSFile (const char * filename, const char * mode)
 {
-    g_return_val_if_fail (path && mode, nullptr);
+    OpenFunc fopen_impl;
 
-    const VFSConstructor * vtable = nullptr;
-
-    if (! strncmp (path, "file://", 7))
-        vtable = & vfs_local_vtable;
+    if (! strncmp (filename, "file://", 7))
+        fopen_impl = vfs_local_fopen;
     else
     {
-        const char * s = strstr (path, "://");
+        StringBuf scheme = uri_get_scheme (filename);
 
-        if (! s)
+        if (! scheme)
         {
-            fprintf (stderr, "Invalid URI: %s\n", path);
-            return nullptr;
+            AUDERR ("Invalid URI: %s\n", filename);
+            m_error = String (_("Invalid URI"));
+            return;
         }
 
-        StringBuf scheme = str_copy (path, s - path);
-
-        if (! (vtable = lookup_func (scheme)))
-            return nullptr;
+        if (! (fopen_impl = lookup_func (scheme)))
+        {
+            AUDERR ("Unknown URI scheme: %s://", (const char *) scheme);
+            m_error = String (_("Unknown URI scheme"));
+            return;
+        }
     }
 
     const char * sub;
-    uri_parse (path, nullptr, nullptr, & sub, nullptr);
+    uri_parse (filename, nullptr, nullptr, & sub, nullptr);
 
-    StringBuf buf = str_copy (path, sub - path);
+    m_impl.capture (fopen_impl (str_copy (filename, sub - filename), mode, m_error));
+    if (! m_impl)
+        return;
 
-    void * handle = vtable->vfs_fopen_impl (buf, mode);
-    if (! handle)
-        return nullptr;
-
-    VFSFile * file = vfs_new (path, vtable, handle);
-
-    if (aud_get_verbose_mode ())
-        logger ("VFS: <%p> open (mode %s) %s\n", file, mode, path);
-
-    return file;
-}
-
-/**
- * Closes a VFS stream and destroys a #VFSFile object.
- *
- * @param file A #VFSFile object to destroy.
- * @return -1 on failure, 0 on success.
- */
-EXPORT int
-vfs_fclose(VFSFile * file)
-{
-    g_return_val_if_fail (file && file->sig == VFS_SIG, -1);
-
-    if (aud_get_verbose_mode ())
-        logger ("VFS: <%p> close\n", file);
-
-    int ret = 0;
-
-    if (file->base->vfs_fclose_impl(file) != 0)
-        ret = -1;
-
-    delete file;
-
-    return ret;
+    AUDINFO ("<%p> open (mode %s) %s\n", m_impl.get (), mode, filename);
+    m_filename = String (filename);
 }
 
 /**
@@ -195,15 +97,12 @@ vfs_fclose(VFSFile * file)
  * @param file #VFSFile object that represents the VFS stream.
  * @return The number of elements succesfully read.
  */
-EXPORT int64_t vfs_fread (void * ptr, int64_t size, int64_t nmemb, VFSFile * file)
+EXPORT int64_t VFSFile::fread (void * ptr, int64_t size, int64_t nmemb)
 {
-    g_return_val_if_fail (file && file->sig == VFS_SIG, 0);
+    int64_t readed = m_impl->fread (ptr, size, nmemb);
 
-    int64_t readed = file->base->vfs_fread_impl (ptr, size, nmemb, file);
-
-/*    if (aud_get_verbose_mode ())
-        logger ("VFS: <%p> read %"PRId64" elements of size %"PRId64" = "
-         "%"PRId64"\n", file, nmemb, size, readed); */
+    AUDDBG ("<%p> read %" PRId64 " elements of size %" PRId64 " = %" PRId64 "\n",
+     this, nmemb, size, readed);
 
     return readed;
 }
@@ -217,50 +116,14 @@ EXPORT int64_t vfs_fread (void * ptr, int64_t size, int64_t nmemb, VFSFile * fil
  * @param file #VFSFile object that represents the VFS stream.
  * @return The number of elements succesfully written.
  */
-EXPORT int64_t vfs_fwrite (const void * ptr, int64_t size, int64_t nmemb, VFSFile * file)
+EXPORT int64_t VFSFile::fwrite (const void * ptr, int64_t size, int64_t nmemb)
 {
-    g_return_val_if_fail (file && file->sig == VFS_SIG, 0);
+    int64_t written = m_impl->fwrite (ptr, size, nmemb);
 
-    int64_t written = file->base->vfs_fwrite_impl (ptr, size, nmemb, file);
-
-    if (aud_get_verbose_mode ())
-        logger ("VFS: <%p> write %" PRId64 " elements of size %" PRId64 " = "
-         "%" PRId64 "\n", file, nmemb, size, written);
+    AUDDBG ("<%p> write %" PRId64 " elements of size %" PRId64 " = %" PRId64 "\n",
+     m_impl.get (), nmemb, size, written);
 
     return written;
-}
-
-/**
- * Reads a character from a VFS stream.
- *
- * @param file #VFSFile object that represents the VFS stream.
- * @return On success, a character. Otherwise, EOF.
- */
-EXPORT int
-vfs_getc(VFSFile *file)
-{
-    unsigned char c;
-
-    if (vfs_fread (& c, 1, 1, file) != 1)
-        return EOF;
-
-    return c;
-}
-
-/**
- * Pushes a character back to the VFS stream.
- *
- * @param c The character to push back.
- * @param file #VFSFile object that represents the VFS stream.
- * @return On success, 0. Otherwise, EOF.
- */
-EXPORT int
-vfs_ungetc(int c, VFSFile *file)
-{
-    if (vfs_fseek (file, -1, SEEK_CUR) < 0)
-        return EOF;
-
-    return c;
 }
 
 /**
@@ -276,23 +139,16 @@ vfs_ungetc(int c, VFSFile *file)
  * @param whence Type of the seek: SEEK_CUR, SEEK_SET or SEEK_END.
  * @return On success, 0. Otherwise, -1.
  */
-EXPORT int
-vfs_fseek(VFSFile * file,
-          int64_t offset,
-          int whence)
+EXPORT int VFSFile::fseek (int64_t offset, VFSSeekType whence)
 {
-    g_return_val_if_fail (file && file->sig == VFS_SIG, -1);
-
-    if (aud_get_verbose_mode ())
-        logger ("VFS: <%p> seek to %" PRId64 " from %s\n", file, offset,
+    AUDDBG ("<%p> seek to %" PRId64 " from %s\n", m_impl.get (), offset,
          whence == SEEK_CUR ? "current" : whence == SEEK_SET ? "beginning" :
          whence == SEEK_END ? "end" : "invalid");
 
-    if (! file->base->vfs_fseek_impl (file, offset, whence))
+    if (! m_impl->fseek (offset, whence))
         return 0;
 
-    if (aud_get_verbose_mode ())
-        logger ("VFS: <%p> seek failed!\n", file);
+    AUDDBG ("<%p> seek failed!\n", m_impl.get ());
 
     return -1;
 }
@@ -303,15 +159,11 @@ vfs_fseek(VFSFile * file,
  * @param file #VFSFile object that represents the VFS stream.
  * @return On success, the current position. Otherwise, -1.
  */
-EXPORT int64_t
-vfs_ftell(VFSFile * file)
+EXPORT int64_t VFSFile::ftell ()
 {
-    g_return_val_if_fail (file && file->sig == VFS_SIG, -1);
+    int64_t told = m_impl->ftell ();
 
-    int64_t told = file->base->vfs_ftell_impl (file);
-
-    if (aud_get_verbose_mode ())
-        logger ("VFS: <%p> tell = %" PRId64 "\n", file, told);
+    AUDDBG ("<%p> tell = %" PRId64 "\n", m_impl.get (), told);
 
     return told;
 }
@@ -322,15 +174,11 @@ vfs_ftell(VFSFile * file)
  * @param file #VFSFile object that represents the VFS stream.
  * @return On success, whether or not the VFS stream is at EOF. Otherwise, false.
  */
-EXPORT bool
-vfs_feof(VFSFile * file)
+EXPORT bool VFSFile::feof ()
 {
-    g_return_val_if_fail (file && file->sig == VFS_SIG, true);
+    bool eof = m_impl->feof ();
 
-    bool eof = file->base->vfs_feof_impl (file);
-
-    if (aud_get_verbose_mode ())
-        logger ("VFS: <%p> eof = %s\n", file, eof ? "yes" : "no");
+    AUDDBG ("<%p> eof = %s\n", m_impl.get (), eof ? "yes" : "no");
 
     return eof;
 }
@@ -342,14 +190,28 @@ vfs_feof(VFSFile * file)
  * @param length The length to truncate at.
  * @return On success, 0. Otherwise, -1.
  */
-EXPORT int vfs_ftruncate (VFSFile * file, int64_t length)
+EXPORT int VFSFile::ftruncate (int64_t length)
 {
-    g_return_val_if_fail (file && file->sig == VFS_SIG, -1);
+    AUDDBG ("<%p> truncate to %" PRId64 "\n", m_impl.get (), length);
 
-    if (aud_get_verbose_mode ())
-        logger ("VFS: <%p> truncate to %" PRId64 "\n", file, length);
+    if (! m_impl->ftruncate (length))
+        return 0;
 
-    return file->base->vfs_ftruncate_impl(file, length);
+    AUDDBG ("<%p> truncate failed!\n", m_impl.get ());
+
+    return -1;
+}
+
+EXPORT int VFSFile::fflush ()
+{
+    AUDDBG ("<%p> flush\n", m_impl.get ());
+
+    if (! m_impl->fflush ())
+        return 0;
+
+    AUDDBG ("<%p> flush failed!\n", m_impl.get ());
+
+    return -1;
 }
 
 /**
@@ -358,14 +220,11 @@ EXPORT int vfs_ftruncate (VFSFile * file, int64_t length)
  * @param file #VFSFile object that represents the VFS stream.
  * @return On success, the size of the file in bytes. Otherwise, -1.
  */
-EXPORT int64_t vfs_fsize (VFSFile * file)
+EXPORT int64_t VFSFile::fsize ()
 {
-    g_return_val_if_fail (file && file->sig == VFS_SIG, -1);
+    int64_t size = m_impl->fsize ();
 
-    int64_t size = file->base->vfs_fsize_impl (file);
-
-    if (aud_get_verbose_mode ())
-        logger ("VFS: <%p> size = %" PRId64 "\n", file, size);
+    AUDDBG ("<%p> size = %" PRId64 "\n", m_impl.get (), size);
 
     return size;
 }
@@ -377,14 +236,48 @@ EXPORT int64_t vfs_fsize (VFSFile * file)
  * @param field The string constant field name to get.
  * @return On success, a copy of the value of the field. Otherwise, nullptr.
  */
-EXPORT String
-vfs_get_metadata(VFSFile * file, const char * field)
+EXPORT String VFSFile::get_metadata (const char * field)
 {
-    g_return_val_if_fail (file && file->sig == VFS_SIG, String ());
+    return m_impl->get_metadata (field);
+}
 
-    if (file->base->vfs_get_metadata_impl)
-        return file->base->vfs_get_metadata_impl(file, field);
-    return String ();
+EXPORT Index<char> VFSFile::read_all ()
+{
+    constexpr int maxbuf = 16777216;
+    constexpr int pagesize = 4096;
+
+    Index<char> buf;
+    int64_t size = fsize ();
+
+    if (size >= 0)
+    {
+        buf.insert (0, aud::min (size, (int64_t) maxbuf));
+        size = fread (buf.begin (), 1, buf.len ());
+    }
+    else
+    {
+        size = 0;
+
+        buf.insert (0, pagesize);
+
+        int64_t readsize;
+        while ((readsize = fread (& buf[size], 1, buf.len () - size)))
+        {
+            size += readsize;
+
+            if (size == buf.len ())
+            {
+                if (buf.len () > maxbuf - pagesize)
+                    break;
+
+                buf.insert (-1, pagesize);
+            }
+        }
+    }
+
+    buf.remove (size, -1);
+
+    return buf;
 }
 
 /**
@@ -394,8 +287,7 @@ vfs_get_metadata(VFSFile * file, const char * field)
  * @param test A GFileTest to run.
  * @return The result of g_file_test().
  */
-EXPORT bool
-vfs_file_test(const char * path, int test)
+EXPORT bool VFSFile::test_file (const char * path, VFSFileTest test)
 {
     if (strncmp (path, "file://", 7))
         return false; /* only local files are handled */
@@ -417,7 +309,7 @@ vfs_file_test(const char * path, int test)
             return false;
 
         if (S_ISLNK (st.st_mode))
-            test &= ~VFS_IS_SYMLINK;
+            test = (VFSFileTest) (test & ~VFS_IS_SYMLINK);
     }
 #endif
 
@@ -428,54 +320,14 @@ vfs_file_test(const char * path, int test)
             return false;
 
         if (S_ISREG (st.st_mode))
-            test &= ~VFS_IS_REGULAR;
+            test = (VFSFileTest) (test & ~VFS_IS_REGULAR);
         if (S_ISDIR (st.st_mode))
-            test &= ~VFS_IS_DIR;
+            test = (VFSFileTest) (test & ~VFS_IS_DIR);
         if (st.st_mode & S_IXUSR)
-            test &= ~VFS_IS_EXECUTABLE;
+            test = (VFSFileTest) (test & ~VFS_IS_EXECUTABLE);
 
-        test &= ~VFS_EXISTS;
+        test = (VFSFileTest) (test & ~VFS_EXISTS);
     }
 
     return ! test;
-}
-
-/**
- * Tests if a file is writeable.
- *
- * @param path A path to test.
- * @return true if the file is writeable, otherwise false.
- */
-EXPORT bool
-vfs_is_writeable(const char * path)
-{
-    GStatBuf info;
-    StringBuf realfn = uri_to_filename (path);
-
-    if (! realfn || g_stat (realfn, & info) < 0)
-        return false;
-
-    return (info.st_mode & S_IWUSR);
-}
-
-/**
- * Tests if a path is remote uri.
- *
- * @param path A path to test.
- * @return true if the file is remote, otherwise false.
- */
-EXPORT bool vfs_is_remote (const char * path)
-{
-    return strncmp (path, "file://", 7) ? true : false;
-}
-
-/**
- * Tests if a file is associated to streaming.
- *
- * @param file A #VFSFile object to test.
- * @return true if the file is streaming, otherwise false.
- */
-EXPORT bool vfs_is_streaming (VFSFile * file)
-{
-    return (vfs_fsize (file) < 0);
 }

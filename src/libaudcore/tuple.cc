@@ -18,11 +18,12 @@
  * the use of this software.
  */
 
-#include <glib.h>
-#include <stdio.h>
+#include <assert.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include <glib.h>  /* for g_utf8_validate */
 
 #include "audstrings.h"
 #include "i18n.h"
@@ -33,7 +34,7 @@
 #error The current tuple implementation is limited to 64 fields
 #endif
 
-#define BLOCK_VALS 4
+#define BIT(i) ((uint64_t) 1 << (i))
 
 struct TupleBasicType {
     const char *name;
@@ -54,7 +55,8 @@ union TupleVal
  * Structure for holding and passing around miscellaneous track
  * metadata. This is not the same as a playlist entry, though.
  */
-struct TupleData {
+struct TupleData
+{
     uint64_t setmask;      // which fields are present
     Index<TupleVal> vals;  // ordered list of field values
 
@@ -66,12 +68,21 @@ struct TupleData {
                                          may be set. */
 
     int refcount;
+
+    TupleData ();
+    ~TupleData ();
+
+    TupleData (const TupleData & other);
+    void operator= (const TupleData & other) = delete;
+
+    TupleVal * lookup (int field, bool add, bool remove);
+    void set_subtunes (int nsubs, const int * subs);
+
+    static TupleData * ref (TupleData * tuple);
+    static void unref (TupleData * tuple);
+
+    static TupleData * copy_on_write (TupleData * tuple);
 };
-
-#define BIT(i) ((uint64_t) 1 << (i))
-
-#define LOCK(t) tiny_lock ((TinyLock *) & t->lock)
-#define UNLOCK(t) tiny_unlock ((TinyLock *) & t->lock)
 
 /** Ordered table of basic #Tuple field names and their #TupleValueType.
  */
@@ -97,6 +108,7 @@ static const TupleBasicType tuple_fields[TUPLE_FIELDS] = {
     { "performer",      TUPLE_STRING },
     { "copyright",      TUPLE_STRING },
     { "date",           TUPLE_STRING },
+    { "mbid",           TUPLE_STRING },
 
     { "subsong-id",     TUPLE_INT },
     { "subsong-num",    TUPLE_INT },
@@ -140,6 +152,7 @@ static const FieldDictEntry field_dict[TUPLE_FIELDS] = {
  {"gain-track-peak", FIELD_GAIN_TRACK_PEAK},
  {"genre", FIELD_GENRE},
  {"length", FIELD_LENGTH},
+ {"mbid", FIELD_MBID},
  {"mime-type", FIELD_MIMETYPE},
  {"performer", FIELD_PERFORMER},
  {"quality", FIELD_QUALITY},
@@ -180,67 +193,81 @@ EXPORT int Tuple::field_by_name (const char * name)
 
 EXPORT const char * Tuple::field_get_name (int field)
 {
-    g_return_val_if_fail (VALID_FIELD (field), nullptr);
+    assert (VALID_FIELD (field));
     return tuple_fields[field].name;
 }
 
 EXPORT TupleValueType Tuple::field_get_type (int field)
 {
-    g_return_val_if_fail (VALID_FIELD (field), TUPLE_UNKNOWN);
+    assert (VALID_FIELD (field));
     return tuple_fields[field].type;
 }
 
-static TupleVal * lookup_val (TupleData * tuple, int field, bool add, bool remove)
+TupleVal * TupleData::lookup (int field, bool add, bool remove)
 {
     /* calculate number of preceding fields */
-    int pos = bitcount (tuple->setmask & (BIT (field) - 1));
+    int pos = bitcount (setmask & (BIT (field) - 1));
 
-    if ((tuple->setmask & BIT (field)))
+    if ((setmask & BIT (field)))
     {
+        if ((add || remove) && FIELD_TYPE (field) == TUPLE_STRING)
+            vals[pos].str.~String ();
+
         if (remove)
         {
-            if (FIELD_TYPE (field) == TUPLE_STRING)
-                tuple->vals[pos].str.~String ();
-
-            tuple->setmask &= ~BIT (field);
-            tuple->vals.remove (pos, 1);
+            setmask &= ~BIT (field);
+            vals.remove (pos, 1);
             return nullptr;
         }
 
-        return & tuple->vals[pos];
+        return & vals[pos];
     }
 
     if (! add)
         return nullptr;
 
-    tuple->setmask |= BIT (field);
-    tuple->vals.insert (pos, 1);
-    return & tuple->vals[pos];
+    setmask |= BIT (field);
+    vals.insert (pos, 1);
+    return & vals[pos];
 }
 
-static TupleData * tuple_new ()
+void TupleData::set_subtunes (int nsubs, const int * subs)
 {
-    TupleData * tuple = g_slice_new0 (TupleData);
-    tuple->refcount = 1;
-    return tuple;
+    nsubtunes = nsubs;
+
+    delete subtunes;
+    subtunes = nullptr;
+
+    if (subs)
+    {
+        subtunes = new int[nsubs];
+        memcpy (subtunes, subs, sizeof (int) * nsubs);
+    }
 }
 
-static TupleData * tuple_copy (const TupleData * old)
+TupleData::TupleData () :
+    setmask (0),
+    subtunes (nullptr),
+    nsubtunes (0),
+    refcount (1) {}
+
+TupleData::TupleData (const TupleData & other) :
+    setmask (other.setmask),
+    subtunes (nullptr),
+    nsubtunes (0),
+    refcount (1)
 {
-    TupleData * tuple = tuple_new ();
+    vals.insert (0, other.vals.len ());
 
-    tuple->setmask = old->setmask;
-    tuple->vals.insert (0, old->vals.len ());
-
-    auto get = old->vals.begin ();
-    auto set = tuple->vals.begin ();
+    auto get = other.vals.begin ();
+    auto set = vals.begin ();
 
     for (int f = 0; f < TUPLE_FIELDS; f ++)
     {
-        if (old->setmask & BIT (f))
+        if (other.setmask & BIT (f))
         {
             if (FIELD_TYPE (f) == TUPLE_STRING)
-                set->str = get->str;
+                new (& set->str) String (get->str);
             else
                 set->x = get->x;
 
@@ -249,21 +276,16 @@ static TupleData * tuple_copy (const TupleData * old)
         }
     }
 
-    tuple->nsubtunes = old->nsubtunes;
-
-    if (old->subtunes)
-        tuple->subtunes = (int *) g_memdup (old->subtunes, sizeof (int) * old->nsubtunes);
-
-    return tuple;
+    set_subtunes (other.nsubtunes, other.subtunes);
 }
 
-static void tuple_destroy (TupleData * tuple)
+TupleData::~TupleData ()
 {
-    auto iter = tuple->vals.begin ();
+    auto iter = vals.begin ();
 
     for (int f = 0; f < TUPLE_FIELDS; f ++)
     {
-        if (tuple->setmask & BIT (f))
+        if (setmask & BIT (f))
         {
             if (FIELD_TYPE (f) == TUPLE_STRING)
                 iter->str.~String ();
@@ -272,13 +294,10 @@ static void tuple_destroy (TupleData * tuple)
         }
     }
 
-    tuple->vals.clear ();
-
-    g_free (tuple->subtunes);
-    g_slice_free (TupleData, tuple);
+    delete[] subtunes;
 }
 
-static TupleData * tuple_ref (TupleData * tuple)
+TupleData * TupleData::ref (TupleData * tuple)
 {
     if (tuple)
         __sync_fetch_and_add (& tuple->refcount, 1);
@@ -286,67 +305,67 @@ static TupleData * tuple_ref (TupleData * tuple)
     return tuple;
 }
 
-static void tuple_unref (TupleData * tuple)
+void TupleData::unref (TupleData * tuple)
 {
     if (tuple && ! __sync_sub_and_fetch (& tuple->refcount, 1))
-        tuple_destroy (tuple);
+        delete tuple;
 }
 
-static TupleData * tuple_get_writable (TupleData * tuple)
+TupleData * TupleData::copy_on_write (TupleData * tuple)
 {
     if (! tuple)
-        return tuple_new ();
+        return new TupleData;
 
     if (__sync_fetch_and_add (& tuple->refcount, 0) == 1)
         return tuple;
 
-    TupleData * copy = tuple_copy (tuple);
-    tuple_unref (tuple);
+    TupleData * copy = new TupleData (* tuple);
+    unref (tuple);
     return copy;
 }
 
 EXPORT Tuple::~Tuple ()
 {
-    tuple_unref (data);
+    TupleData::unref (data);
 }
 
 EXPORT Tuple Tuple::ref () const
 {
     Tuple tuple;
-    tuple.data = tuple_ref (data);
+    tuple.data = TupleData::ref (data);
     return tuple;
 }
 
 EXPORT TupleValueType Tuple::get_value_type (int field) const
 {
-    g_return_val_if_fail (VALID_FIELD (field), TUPLE_UNKNOWN);
+    assert (VALID_FIELD (field));
 
-    TupleVal * val = data ? lookup_val (data, field, false, false) : nullptr;
+    TupleVal * val = data ? data->lookup (field, false, false) : nullptr;
     return val ? FIELD_TYPE (field) : TUPLE_UNKNOWN;
 }
 
 EXPORT int Tuple::get_int (int field) const
 {
-    g_return_val_if_fail (VALID_FIELD (field) && FIELD_TYPE (field) == TUPLE_INT, -1);
+    assert (VALID_FIELD (field) && FIELD_TYPE (field) == TUPLE_INT);
 
-    TupleVal * val = data ? lookup_val (data, field, false, false) : nullptr;
+    TupleVal * val = data ? data->lookup (field, false, false) : nullptr;
     return val ? val->x : -1;
 }
 
 EXPORT String Tuple::get_str (int field) const
 {
-    g_return_val_if_fail (VALID_FIELD (field) && FIELD_TYPE (field) == TUPLE_STRING, String ());
+    assert (VALID_FIELD (field) && FIELD_TYPE (field) == TUPLE_STRING);
 
-    TupleVal * val = data ? lookup_val (data, field, false, false) : nullptr;
+    TupleVal * val = data ? data->lookup (field, false, false) : nullptr;
     return val ? val->str : String ();
 }
 
 EXPORT void Tuple::set_int (int field, int x)
 {
-    g_return_if_fail (VALID_FIELD (field) && FIELD_TYPE (field) == TUPLE_INT);
+    assert (VALID_FIELD (field) && FIELD_TYPE (field) == TUPLE_INT);
 
-    data = tuple_get_writable (data);
-    TupleVal * val = lookup_val (data, field, true, false);
+    data = TupleData::copy_on_write (data);
+    TupleVal * val = data->lookup (field, true, false);
     val->x = x;
 }
 
@@ -358,33 +377,35 @@ EXPORT void Tuple::set_str (int field, const char * str)
         return;
     }
 
-    g_return_if_fail (VALID_FIELD (field) && FIELD_TYPE (field) == TUPLE_STRING);
+    assert (VALID_FIELD (field) && FIELD_TYPE (field) == TUPLE_STRING);
 
-    data = tuple_get_writable (data);
-    TupleVal * val = lookup_val (data, field, true, false);
+    data = TupleData::copy_on_write (data);
+    TupleVal * val = data->lookup (field, true, false);
 
     if (g_utf8_validate (str, -1, nullptr))
-        val->str = String (str);
+        new (& val->str) String (str);
     else
     {
         StringBuf utf8 = str_to_utf8 (str);
-        val->str = String (utf8 ? (const char *) utf8 : "(character encoding error)");
+        new (& val->str) String (utf8 ? (const char *) utf8 : "(character encoding error)");
     }
 }
 
 EXPORT void Tuple::unset (int field)
 {
-    g_return_if_fail (VALID_FIELD (field));
+    assert (VALID_FIELD (field));
 
     if (! data)
         return;
 
-    data = tuple_get_writable (data);
-    lookup_val (data, field, false, true);
+    data = TupleData::copy_on_write (data);
+    data->lookup (field, false, true);
 }
 
 EXPORT void Tuple::set_filename (const char * filename)
 {
+    assert (filename);
+
     const char * base, * ext, * sub;
     int isub;
 
@@ -400,31 +421,28 @@ EXPORT void Tuple::set_filename (const char * filename)
         set_int (FIELD_SUBSONG_ID, isub);
 }
 
-#define APPEND(b, ...) snprintf (b + strlen (b), sizeof b - strlen (b), __VA_ARGS__)
-
 EXPORT void Tuple::set_format (const char * format, int chans, int rate, int brate)
 {
     if (format)
         set_str (FIELD_CODEC, format);
 
-    char buf[32];
-    buf[0] = 0;
+    StringBuf buf;
 
     if (chans > 0)
     {
         if (chans == 1)
-            APPEND (buf, _("Mono"));
+            str_insert (buf, -1, _("Mono"));
         else if (chans == 2)
-            APPEND (buf, _("Stereo"));
+            str_insert (buf, -1, _("Stereo"));
         else
-            APPEND (buf, dngettext (PACKAGE, "%d channel", "%d channels", chans), chans);
+            buf.combine (str_printf (dngettext (PACKAGE, "%d channel", "%d channels", chans), chans));
 
         if (rate > 0)
-            APPEND (buf, ", ");
+            str_insert (buf, -1, ", ");
     }
 
     if (rate > 0)
-        APPEND (buf, "%d kHz", rate / 1000);
+        buf.combine (str_printf ("%d kHz", rate / 1000));
 
     if (buf[0])
         set_str (FIELD_QUALITY, buf);
@@ -435,14 +453,8 @@ EXPORT void Tuple::set_format (const char * format, int chans, int rate, int bra
 
 EXPORT void Tuple::set_subtunes (int n_subtunes, const int * subtunes)
 {
-    data = tuple_get_writable (data);
-
-    g_free (data->subtunes);
-    data->subtunes = nullptr;
-
-    data->nsubtunes = n_subtunes;
-    if (subtunes)
-        data->subtunes = (int *) g_memdup (subtunes, sizeof (int) * n_subtunes);
+    data = TupleData::copy_on_write (data);
+    data->set_subtunes (n_subtunes, subtunes);
 }
 
 EXPORT int Tuple::get_n_subtunes () const
@@ -458,12 +470,12 @@ EXPORT int Tuple::get_nth_subtune (int n) const
     return data->subtunes ? data->subtunes[n] : 1 + n;
 }
 
-EXPORT bool Tuple::fetch_stream_info (VFSFile * stream)
+EXPORT bool Tuple::fetch_stream_info (VFSFile & stream)
 {
     bool updated = false;
     int value;
 
-    String val = vfs_get_metadata (stream, "track-name");
+    String val = stream.get_metadata ("track-name");
 
     if (val && val != get_str (FIELD_TITLE))
     {
@@ -471,7 +483,7 @@ EXPORT bool Tuple::fetch_stream_info (VFSFile * stream)
         updated = true;
     }
 
-    val = vfs_get_metadata (stream, "stream-name");
+    val = stream.get_metadata ("stream-name");
 
     if (val && val != get_str (FIELD_ARTIST))
     {
@@ -479,7 +491,7 @@ EXPORT bool Tuple::fetch_stream_info (VFSFile * stream)
         updated = true;
     }
 
-    val = vfs_get_metadata (stream, "content-bitrate");
+    val = stream.get_metadata ("content-bitrate");
     value = val ? atoi (val) / 1000 : 0;
 
     if (value && value != get_int (FIELD_BITRATE))

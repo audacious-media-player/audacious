@@ -34,7 +34,7 @@ static Index<PlaylistAddItem> get_files (GtkWidget * chooser)
     GSList * list = gtk_file_chooser_get_uris ((GtkFileChooser *) chooser);
 
     for (GSList * node = list; node; node = node->next)
-        index.append ({String ((const char *) node->data)});
+        index.append (String ((const char *) node->data));
 
     g_slist_free_full (list, g_free);
     return index;

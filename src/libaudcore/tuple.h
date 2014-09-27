@@ -28,7 +28,7 @@
 
 #include <libaudcore/objects.h>
 
-struct VFSFile;
+class VFSFile;
 
 /** Ordered enum for basic #Tuple fields.
  * @sa TupleBasicType
@@ -56,6 +56,7 @@ enum {
     FIELD_PERFORMER,
     FIELD_COPYRIGHT,
     FIELD_DATE,
+    FIELD_MBID,         /**< MusicBrainz identifer for the song */
 
     FIELD_SUBSONG_ID,   /**< Index number of subsong/tune */
     FIELD_SUBSONG_NUM,  /**< Total number of subsongs in the file */
@@ -110,7 +111,7 @@ public:
         b.data = nullptr;
     }
 
-    void operator= (Tuple && b)
+    Tuple & operator= (Tuple && b)
     {
         if (this != & b)
         {
@@ -118,6 +119,7 @@ public:
             data = b.data;
             b.data = nullptr;
         }
+        return * this;
     }
 
     explicit operator bool () const
@@ -175,14 +177,14 @@ public:
 
     /* Set various fields based on the ICY metadata of <stream>.  Returns true
      * if any fields were changed. */
-    bool fetch_stream_info (VFSFile * stream);
+    bool fetch_stream_info (VFSFile & stream);
 
 private:
     TupleData * data;
 };
 
 /* somewhat out of place here */
-struct PluginHandle;
+class PluginHandle;
 struct PlaylistAddItem {
     String filename;
     Tuple tuple;

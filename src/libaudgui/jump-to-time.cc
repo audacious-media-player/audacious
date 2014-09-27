@@ -17,7 +17,6 @@
  * the use of this software.
  */
 
-#include <stdio.h>
 #include <gtk/gtk.h>
 
 #include <libaudcore/audstrings.h>

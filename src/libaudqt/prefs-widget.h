@@ -41,6 +41,22 @@ namespace audqt {
  * layout manager or shown or whatever.
  */
 
+/* button widget */
+class ButtonWidget {
+public:
+    ButtonWidget (const PreferencesWidget * parent, const char * domain = nullptr) :
+        m_parent (parent), m_domain (domain)
+    {
+    }
+
+    QWidget * widget ();
+
+private:
+    const PreferencesWidget * m_parent;
+    const char * m_domain;
+    QPushButton m_widget;
+};
+
 /* boolean widget (checkbox) */
 class BooleanWidget {
 public:
@@ -253,6 +269,6 @@ private:
     QTabWidget m_container;
 };
 
-};
+}
 
 #endif

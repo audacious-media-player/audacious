@@ -4,9 +4,13 @@ LIB_MINOR = 0
 
 SRCS = about.cc			\
        about.moc		\
+       art.cc                   \
        equalizer.cc		\
        equalizer.moc		\
        fileopener.cc		\
+       infowin.cc		\
+       log-inspector.cc         \
+       log-inspector.moc        \
        playlist-management.cc	\
        playlist-management.moc	\
        plugin-menu.cc		\
@@ -17,10 +21,9 @@ SRCS = about.cc			\
        prefs-pluginlist-model.cc  \
        prefs-pluginlist-model.moc \
        util.cc                  \
-       volumebutton.cc		\
-       volumebutton.moc
+       volumebutton.cc
 
-INCLUDES = libaudqt.h volumebutton.h
+INCLUDES = libaudqt.h iface.h volumebutton.h
 
 include ../../buildsys.mk
 include ../../extra.mk
@@ -31,7 +34,6 @@ LD = ${CXX}
 
 CPPFLAGS := -I.. -I../.. \
             ${CPPFLAGS} \
-            ${GLIB_CFLAGS} \
             ${QT_CFLAGS} \
             ${LIBGUESS_CFLAGS}
 
@@ -39,7 +41,6 @@ CFLAGS += ${LIB_CFLAGS}
 
 LIBS := -L../libaudcore -laudcore \
         ${LIBS} -lm \
-	${GLIB_LIBS} \
         ${QT_LIBS}
 
 %.moc: %.h

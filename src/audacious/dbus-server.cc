@@ -17,8 +17,6 @@
  * the use of this software.
  */
 
-#include <stdio.h>
-
 #include <libaudcore/drct.h>
 #include <libaudcore/equalizer.h>
 #include <libaudcore/interface.h>
@@ -42,7 +40,7 @@ static Index<PlaylistAddItem> strv_to_index (const char * const * strv)
 {
     Index<PlaylistAddItem> index;
     while (* strv)
-        index.append ({String (* strv ++)});
+        index.append (String (* strv ++));
 
     return index;
 }
@@ -84,9 +82,7 @@ static gboolean do_auto_advance (Obj * obj, Invoc * invoc)
 
 static gboolean do_balance (Obj * obj, Invoc * invoc)
 {
-    int balance;
-    aud_drct_get_volume_balance (& balance);
-    FINISH2 (balance, balance);
+    FINISH2 (balance, aud_drct_get_volume_balance ());
     return true;
 }
 
@@ -434,7 +430,7 @@ static gboolean do_set_eq_preamp (Obj * obj, Invoc * invoc, double preamp)
 
 static gboolean do_set_volume (Obj * obj, Invoc * invoc, int vl, int vr)
 {
-    aud_drct_set_volume (vl, vr);
+    aud_drct_set_volume ({vl, vr});
     FINISH (set_volume);
     return true;
 }
@@ -641,9 +637,8 @@ static gboolean do_version (Obj * obj, Invoc * invoc)
 
 static gboolean do_volume (Obj * obj, Invoc * invoc)
 {
-    int left, right;
-    aud_drct_get_volume (& left, & right);
-    FINISH2 (volume, left, right);
+    StereoVolume volume = aud_drct_get_volume ();
+    FINISH2 (volume, volume.left, volume.right);
     return true;
 }
 
@@ -738,14 +733,14 @@ static GDBusInterfaceSkeleton * skeleton = nullptr;
 
 static void name_acquired (GDBusConnection *, const char *, void *)
 {
-    AUDDBG ("Owned D-Bus name (org.atheme.audacious) on session bus.\n");
+    AUDINFO ("Owned D-Bus name (org.atheme.audacious) on session bus.\n");
 
     g_main_loop_quit (mainloop);
 }
 
 static void name_lost (GDBusConnection *, const char *, void *)
 {
-    AUDDBG ("Owning D-Bus name (org.atheme.audacious) failed, already taken?\n");
+    AUDINFO ("Owning D-Bus name (org.atheme.audacious) failed, already taken?\n");
 
     g_bus_unown_name (owner_id);
     owner_id = 0;
@@ -793,7 +788,7 @@ StartupType dbus_server_init (void)
 ERROR:
     if (error)
     {
-        fprintf (stderr, "D-Bus error: %s\n", error->message);
+        AUDERR ("D-Bus error: %s\n", error->message);
         g_error_free (error);
     }
 

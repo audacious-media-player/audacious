@@ -27,7 +27,6 @@
 #include <string.h>
 #include <unistd.h>
 
-#include <glib.h>
 #include <glib/gstdio.h>
 
 #include "audstrings.h"
@@ -35,6 +34,7 @@
 #include "mainloop.h"
 #include "multihash.h"
 #include "playlist-internal.h"
+#include "runtime.h"
 #include "scanner.h"
 #include "vfs.h"
 
@@ -46,8 +46,7 @@ struct ArtItem {
     int flag;
 
     /* album art as JPEG or PNG data */
-    void * data;
-    int64_t len;
+    Index<char> data;
 
     /* album art as (possibly a temporary) file */
     String art_file;
@@ -108,12 +107,11 @@ static void request_callback (ScanRequest * request)
 {
     pthread_mutex_lock (& mutex);
 
-    String file = scan_request_get_filename (request);
-    ArtItem * item = art_items.lookup (file);
+    ArtItem * item = art_items.lookup (request->filename);
     assert (item && ! item->flag);
 
-    scan_request_get_image_data (request, & item->data, & item->len);
-    item->art_file = scan_request_get_image_file (request);
+    item->data = std::move (request->image_data);
+    item->art_file = std::move (request->image_file);
     item->flag = FLAG_DONE;
 
     queued_requests.queue (send_requests, nullptr);
@@ -136,7 +134,7 @@ static ArtItem * art_item_get (const String & file)
         item = art_items.add (file, ArtItem ());
         item->refcount = 1; /* temporary reference */
 
-        scan_request (file, SCAN_IMAGE, nullptr, request_callback);
+        scanner_request (new ScanRequest (file, SCAN_IMAGE, request_callback));
     }
 
     return nullptr;
@@ -153,8 +151,6 @@ static void art_item_unref (const String & file, ArtItem * item)
             if (local)
                 g_unlink (local);
         }
-
-        g_free (item->data);
 
         art_items.remove (file);
     }
@@ -186,14 +182,13 @@ void art_cleanup (void)
 
     release_current ();
 
-    g_warn_if_fail (! art_items.n_items ());
+    if (art_items.n_items ())
+        AUDWARN ("Album art reference count not zero at exit!\n");
 }
 
-EXPORT void aud_art_request_data (const char * file, const void * * data, int64_t * len)
+EXPORT const Index<char> * aud_art_request_data (const char * file)
 {
-    * data = nullptr;
-    * len = 0;
-
+    const Index<char> * data = nullptr;
     pthread_mutex_lock (& mutex);
 
     String key (file);
@@ -202,19 +197,21 @@ EXPORT void aud_art_request_data (const char * file, const void * * data, int64_
         goto UNLOCK;
 
     /* load data from external image file */
-    if (! item->data && item->art_file)
-        vfs_file_get_contents (item->art_file, & item->data, & item->len);
-
-    if (item->data)
+    if (! item->data.len () && item->art_file)
     {
-        * data = item->data;
-        * len = item->len;
+        VFSFile file (item->art_file, "r");
+        if (file)
+            item->data = file.read_all ();
     }
+
+    if (item->data.len ())
+        data = & item->data;
     else
         art_item_unref (key, item);
 
 UNLOCK:
     pthread_mutex_unlock (& mutex);
+    return data;
 }
 
 EXPORT const char * aud_art_request_file (const char * file)
@@ -228,9 +225,9 @@ EXPORT const char * aud_art_request_file (const char * file)
         goto UNLOCK;
 
     /* save data to temporary file */
-    if (item->data && ! item->art_file)
+    if (item->data.len () && ! item->art_file)
     {
-        String local = write_temp_file (item->data, item->len);
+        String local = write_temp_file (item->data.begin (), item->data.len ());
         if (local)
         {
             item->art_file = String (filename_to_uri (local));

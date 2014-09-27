@@ -29,7 +29,7 @@
 #include <windows.h>
 #endif
 
-#include <glib.h>
+#include <glib/gstdio.h>
 
 #include "audstrings.h"
 #include "runtime.h"
@@ -59,7 +59,7 @@ String write_temp_file (void * data, int64_t len)
     int handle = g_mkstemp (name);
     if (handle < 0)
     {
-        fprintf (stderr, "Error creating temporary file: %s\n", strerror (errno));
+        AUDERR ("Error creating temporary file: %s\n", strerror (errno));
         return String ();
     }
 
@@ -68,7 +68,7 @@ String write_temp_file (void * data, int64_t len)
         int64_t written = write (handle, data, len);
         if (written < 0)
         {
-            fprintf (stderr, "Error writing %s: %s\n", (const char *) name, strerror (errno));
+            AUDERR ("Error writing %s: %s\n", (const char *) name, strerror (errno));
             close (handle);
             return String ();
         }
@@ -79,7 +79,7 @@ String write_temp_file (void * data, int64_t len)
 
     if (close (handle) < 0)
     {
-        fprintf (stderr, "Error closing %s: %s\n", (const char *) name, strerror (errno));
+        AUDERR ("Error closing %s: %s\n", (const char *) name, strerror (errno));
         return String ();
     }
 
@@ -107,7 +107,7 @@ static char * skip_top_folders (char * name)
     }
 
 #ifdef _WIN32
-    if (! g_ascii_strncasecmp (name, home, len) && name[len] == '\\')
+    if (! strcmp_nocase (name, home, len) && name[len] == '\\')
 #else
     if (! strncmp (name, home, len) && name[len] == '/')
 #endif
@@ -242,13 +242,13 @@ void describe_song (const char * name, const Tuple & tuple, String & title,
         // skip common strings and avoid duplicates
         for (auto skip : (const char *[]) {"music", artist, album})
         {
-            if (first && skip && ! g_ascii_strcasecmp (first, skip))
+            if (first && skip && ! strcmp_nocase (first, skip))
             {
                 first = second;
                 second = nullptr;
             }
 
-            if (second && skip && ! g_ascii_strcasecmp (second, skip))
+            if (second && skip && ! strcmp_nocase (second, skip))
                 second = nullptr;
         }
 
@@ -283,10 +283,32 @@ void describe_song (const char * name, const Tuple & tuple, String & title,
     }
 }
 
+bool same_basename (const char * a, const char * b)
+{
+    const char * dot_a = strrchr (a, '.');
+    const char * dot_b = strrchr (b, '.');
+    int len_a = dot_a ? dot_a - a : strlen (a);
+    int len_b = dot_b ? dot_b - b : strlen (b);
+
+    return len_a == len_b && ! strcmp_nocase (a, b, len_a);
+}
+
 const char * last_path_element (const char * path)
 {
     const char * slash = strrchr (path, G_DIR_SEPARATOR);
     return (slash && slash[1]) ? slash + 1 : nullptr;
+}
+
+void cut_path_element (char * path, int pos)
+{
+#ifdef _WIN32
+    if (pos > 3)
+#else
+    if (pos > 1)
+#endif
+        path[pos - 1] = 0; /* overwrite slash */
+    else
+        path[pos] = 0; /* leave [drive letter and] leading slash */
 }
 
 /* Thomas Wang's 32-bit mix function.  See:

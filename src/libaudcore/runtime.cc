@@ -19,8 +19,10 @@
 
 #include "runtime.h"
 
+#include <errno.h>
 #include <locale.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/stat.h>
 #include <unistd.h>
 
@@ -60,7 +62,6 @@
 #endif
 
 static bool headless_mode;
-static bool verbose_mode;
 
 #if defined(USE_QT) && ! defined(USE_GTK)
 static MainloopType mainloop_type = MainloopType::Qt;
@@ -83,16 +84,6 @@ EXPORT bool aud_get_headless_mode ()
     return headless_mode;
 }
 
-EXPORT void aud_set_verbose_mode (bool verbose)
-{
-    verbose_mode = verbose;
-}
-
-EXPORT bool aud_get_verbose_mode ()
-{
-    return verbose_mode;
-}
-
 EXPORT void aud_set_mainloop_type (MainloopType type)
 {
     mainloop_type = type;
@@ -112,7 +103,7 @@ static StringBuf get_path_to_self ()
 
     if (len < 0)
     {
-        perror ("/proc/self/exe");
+        AUDERR ("Failed to read /proc/self/exe: %s\n", strerror (errno));
         return StringBuf ();
     }
 
@@ -131,7 +122,7 @@ static StringBuf get_path_to_self ()
 
     if (! lenw)
     {
-        fprintf (stderr, "GetModuleFileName failed.\n");
+        AUDERR ("GetModuleFileName failed.\n");
         return StringBuf ();
     }
 
@@ -160,18 +151,6 @@ static StringBuf get_path_to_self ()
 #endif
 }
 
-static void cut_path_element (char * path, char * elem)
-{
-#ifdef _WIN32
-    if (elem > path + 3)
-#else
-    if (elem > path + 1)
-#endif
-        elem[-1] = 0; /* overwrite slash */
-    else
-        elem[0] = 0; /* leave [drive letter and] leading slash */
-}
-
 static String relocate_path (const char * path, const char * from, const char * to)
 {
     int oldlen = strlen (from);
@@ -183,7 +162,7 @@ static String relocate_path (const char * path, const char * from, const char * 
         newlen --;
 
 #ifdef _WIN32
-    if (g_ascii_strncasecmp (path, from, oldlen) || (path[oldlen] && path[oldlen] != G_DIR_SEPARATOR))
+    if (strcmp_nocase (path, from, oldlen) || (path[oldlen] && path[oldlen] != G_DIR_SEPARATOR))
 #else
     if (strncmp (path, from, oldlen) || (path[oldlen] && path[oldlen] != G_DIR_SEPARATOR))
 #endif
@@ -235,7 +214,7 @@ static void relocate_all_paths ()
 
     filename_normalize (to);
 
-    char * base = (char *) last_path_element (to);
+    const char * base = last_path_element (to);
 
     if (! base)
     {
@@ -243,21 +222,21 @@ static void relocate_all_paths ()
         return;
     }
 
-    cut_path_element (to, base);
+    cut_path_element (to, base - to);
 
     /* trim trailing path elements common to old and new paths */
     /* at the end, the old and new installation prefixes are left */
-    char * a, * b;
-    while ((a = (char *) last_path_element (from)) &&
-     (b = (char *) last_path_element (to)) &&
+    const char * a, * b;
+    while ((a = last_path_element (from)) &&
+     (b = last_path_element (to)) &&
 #ifdef _WIN32
-     ! g_ascii_strcasecmp (a, b))
+     ! strcmp_nocase (a, b))
 #else
      ! strcmp (a, b))
 #endif
     {
-        cut_path_element (from, a);
-        cut_path_element (to, b);
+        cut_path_element (from, a - from);
+        cut_path_element (to, b - to);
     }
 
     /* replace old prefix with new one in each path */
@@ -281,7 +260,8 @@ EXPORT void aud_init_paths ()
 
     /* create ~/.config/audacious/playlists */
     if (g_mkdir_with_parents (aud_path (AudPath::PlaylistDir), DIRMODE) < 0)
-        perror (aud_path (AudPath::PlaylistDir));
+        AUDERR ("Failed to create %s: %s\n",
+         (const char *) aud_path (AudPath::PlaylistDir), strerror (errno));
 
 #ifdef _WIN32
     /* set some UNIX-style environment variables */

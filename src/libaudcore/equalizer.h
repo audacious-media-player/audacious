@@ -23,7 +23,7 @@
 #include <libaudcore/index.h>
 #include <libaudcore/objects.h>
 
-struct VFSFile;
+class VFSFile;
 
 #define AUD_EQ_NBANDS 10
 #define AUD_EQ_MAX_GAIN 12
@@ -34,19 +34,18 @@ struct EqualizerPreset {
     float bands[AUD_EQ_NBANDS];
 };
 
-void aud_eq_set_bands (const double * values);
-void aud_eq_get_bands (double * values);
+void aud_eq_set_bands (const double values[AUD_EQ_NBANDS]);
+void aud_eq_get_bands (double values[AUD_EQ_NBANDS]);
 void aud_eq_set_band (int band, double value);
 double aud_eq_get_band (int band);
 
 Index<EqualizerPreset> aud_eq_read_presets (const char * basename);
 bool aud_eq_write_presets (const Index<EqualizerPreset> & list, const char * basename);
 
-/* note: legacy code! these are local filenames, not URIs */
-bool aud_load_preset_file (EqualizerPreset & preset, const char * filename);
-bool aud_save_preset_file (const EqualizerPreset & preset, const char * filename);
+bool aud_load_preset_file (EqualizerPreset & preset, VFSFile & file);
+bool aud_save_preset_file (const EqualizerPreset & preset, VFSFile & file);
 
-Index<EqualizerPreset> aud_import_winamp_presets (VFSFile * file);
-bool aud_export_winamp_preset (const EqualizerPreset & preset, VFSFile * file);
+Index<EqualizerPreset> aud_import_winamp_presets (VFSFile & file);
+bool aud_export_winamp_preset (const EqualizerPreset & preset, VFSFile & file);
 
 #endif /* LIBAUDCORE_EQUALIZER_H */

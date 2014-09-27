@@ -32,8 +32,8 @@
 #include "list.h"
 #include "ui_jumptotrack_cache.h"
 
-static void update_cb (void * data, void * user);
-static void activate_cb (void * data, void * user);
+static void update_cb (void * level, void *);
+static void activate_cb (void * data, void *);
 
 static JumpToTrackCache cache;
 static const KeywordMatches * search_matches;
@@ -158,7 +158,7 @@ static void fill_list (void)
     }
 }
 
-static void update_cb (void * data, void * user)
+static void update_cb (void * level, void *)
 {
     g_return_if_fail (treeview);
 
@@ -166,13 +166,13 @@ static void update_cb (void * data, void * user)
     GtkTreeIter iter;
     GtkTreePath * path = nullptr;
 
-    if (GPOINTER_TO_INT (data) <= PLAYLIST_UPDATE_SELECTION)
+    if (level <= PLAYLIST_UPDATE_SELECTION)
         return;
 
     cache.clear ();
 
     /* If it's only a metadata update, save and restore the cursor position. */
-    if (GPOINTER_TO_INT (data) <= PLAYLIST_UPDATE_METADATA &&
+    if (level <= PLAYLIST_UPDATE_METADATA &&
      gtk_tree_selection_get_selected (gtk_tree_view_get_selection
      ((GtkTreeView *) treeview), & model, & iter))
         path = gtk_tree_model_get_path (model, & iter);
@@ -188,9 +188,9 @@ static void update_cb (void * data, void * user)
     }
 }
 
-static void activate_cb (void * data, void * user)
+static void activate_cb (void * data, void *)
 {
-    update_cb (GINT_TO_POINTER (PLAYLIST_UPDATE_STRUCTURE), nullptr);
+    update_cb (PLAYLIST_UPDATE_STRUCTURE, nullptr);
 }
 
 static void toggle_button_cb (GtkToggleButton * toggle)

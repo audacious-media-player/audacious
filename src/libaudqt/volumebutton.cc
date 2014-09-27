@@ -17,57 +17,40 @@
  * the use of this software.
  */
 
-#include <QtGui>
-#include <QtWidgets>
-
-#include <libaudcore/audstrings.h>
-#include <libaudcore/i18n.h>
-#include <libaudcore/runtime.h>
-
 #include "libaudqt.h"
-#include "volumebutton.h"
-#include "volumebutton.moc"
+
+#include <libaudcore/drct.h>
 
 namespace audqt {
 
-VolumeButton::VolumeButton (QWidget * parent, int min, int max) :
+VolumeButton::VolumeButton (QWidget * parent) :
     QToolButton (parent)
 {
-    setIcon (QIcon::fromTheme ("audio-volume-high"));
+    setIcon (QIcon::fromTheme ("audio-volume-medium"));
+    setFocusPolicy (Qt::NoFocus);
 
-    m_slider = new QSlider (Qt::Vertical);
-    m_slider->setRange (min, max);
+    m_slider = new QSlider (Qt::Vertical, this);
+    m_slider->setRange (0, 100);
 
-    m_layout = new QVBoxLayout (this);
-    m_layout->setContentsMargins (6, 6, 6, 6);
-    m_layout->addWidget (m_slider);
+    auto layout = new QVBoxLayout (this);
+    layout->setContentsMargins (6, 6, 6, 6);
+    layout->addWidget (m_slider);
 
     m_container = new QWidget;
-    m_container->setLayout (m_layout);
+    m_container->setLayout (layout);
 
-    connect (this, &QAbstractButton::clicked, this, &VolumeButton::showSlider);
-
-    connect (m_slider, &QAbstractSlider::valueChanged, this, &VolumeButton::handleValueChange);
+    connect (this, & QAbstractButton::clicked, this, & VolumeButton::showSlider);
+    connect (m_slider, & QAbstractSlider::sliderMoved, aud_drct_set_volume_main);
 }
 
 void VolumeButton::showSlider ()
 {
+    m_slider->setValue (aud_drct_get_volume_main ());
+
     m_container->setWindowFlags (Qt::Popup);
-    m_container->move (mapToGlobal (m_container->geometry ().topLeft ()));
+    m_container->move (mapToGlobal (QPoint (0, 0)));
 
     window_bring_to_front (m_container);
-}
-
-void VolumeButton::handleValueChange (int value)
-{
-    AUDDBG ("volume changed, %d\n", value);
-
-    emit valueChanged (value);
-}
-
-void VolumeButton::setValue (int value)
-{
-    m_slider->setValue (value);
 }
 
 }

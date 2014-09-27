@@ -17,7 +17,6 @@
  * the use of this software.
  */
 
-#include <glib.h>
 #include <pthread.h>
 
 #include "list.h"
@@ -33,18 +32,12 @@ struct QueuedData : public ListNode
 
     pthread_t thread;
 
-    void * buf;
-    int64_t size;
+    Index<char> buf;
 
     QueuedData (const char * filename, VFSConsumer cons_f, void * user) :
         filename (filename),
         cons_f (cons_f),
-        user (user),
-        buf (nullptr),
-        size (0) {}
-
-    ~QueuedData ()
-        { g_free (buf); }
+        user (user) {}
 };
 
 static QueuedFunc queued_func;
@@ -63,7 +56,7 @@ static void send_data (void *)
         pthread_mutex_unlock (& mutex);
 
         pthread_join (data->thread, nullptr);
-        data->cons_f (data->filename, data->buf, data->size, data->user);
+        data->cons_f (data->filename, data->buf, data->user);
         delete data;
 
         pthread_mutex_lock (& mutex);
@@ -75,7 +68,10 @@ static void send_data (void *)
 static void * read_worker (void * data0)
 {
     auto data = (QueuedData *) data0;
-    vfs_file_get_contents (data->filename, & data->buf, & data->size);
+
+    VFSFile file (data->filename, "r");
+    if (file)
+        data->buf = file.read_all ();
 
     pthread_mutex_lock (& mutex);
 

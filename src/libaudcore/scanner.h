@@ -20,8 +20,7 @@
 #ifndef LIBAUDCORE_SCANNER_H
 #define LIBAUDCORE_SCANNER_H
 
-#include <stdint.h>
-
+#include "index.h"
 #include "tuple.h"
 
 #define SCAN_TUPLE (1 << 0)
@@ -29,20 +28,31 @@
 
 #define SCAN_THREADS 2
 
-struct ScanRequest;
+struct ScanRequest
+{
+    typedef void (* Callback) (ScanRequest * request);
 
-typedef void (* ScanCallback) (ScanRequest * request);
+    ScanRequest (const char * filename, int flags, Callback callback,
+     PluginHandle * decoder = nullptr) :
+        filename (filename),
+        flags (flags),
+        callback (callback),
+        decoder (decoder) {}
 
-ScanRequest * scan_request (const char * filename, int flags,
- PluginHandle * decoder, ScanCallback callback);
+    const String filename;
+    const int flags;
+    const Callback callback;
 
-String scan_request_get_filename (ScanRequest * request);
-PluginHandle * scan_request_get_decoder (ScanRequest * request);
-Tuple scan_request_get_tuple (ScanRequest * request);
-void scan_request_get_image_data (ScanRequest * request, void * * data, int64_t * len);
-String scan_request_get_image_file (ScanRequest * request);
+    PluginHandle * decoder;
 
-void scanner_init (void);
-void scanner_cleanup (void);
+    Tuple tuple;
+    Index<char> image_data;
+    String image_file;
+    String error;
+};
+
+void scanner_init ();
+void scanner_request (ScanRequest * request);
+void scanner_cleanup ();
 
 #endif

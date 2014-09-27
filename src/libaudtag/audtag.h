@@ -32,12 +32,12 @@ enum class TagType
     ID3v2
 };
 
-bool tuple_read (Tuple & tuple, VFSFile *fd);
-bool image_read (VFSFile * handle, void * * data, int64_t * size);
+bool tuple_read (Tuple & tuple, VFSFile &fd);
+Index<char> image_read (VFSFile & handle);
 
 /* new_type specifies the type of tag (see the TagType enum) that should be
  * written if the file does not have any existing tag. */
-bool tuple_write (const Tuple & tuple, VFSFile * handle, TagType new_type);
+bool tuple_write (const Tuple & tuple, VFSFile & handle, TagType new_type);
 
 }
 

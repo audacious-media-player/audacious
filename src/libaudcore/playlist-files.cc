@@ -19,8 +19,6 @@
 
 #include "playlist-internal.h"
 
-#include <glib.h>
-
 #include "audstrings.h"
 #include "i18n.h"
 #include "interface.h"
@@ -28,72 +26,56 @@
 #include "plugins-internal.h"
 #include "runtime.h"
 
-struct PlaylistData {
-    const char * filename;
-    String title;
-    Index<PlaylistAddItem> items;
-    bool plugin_found;
-    bool success;
-};
-
-static void plugin_for_filename (const char * filename, PluginForEachFunc func, void * data)
-{
-    StringBuf ext = uri_get_extension (filename);
-    if (ext)
-        playlist_plugin_for_ext (ext, func, data);
-}
-
-static bool plugin_found_cb (PluginHandle * plugin, void * data)
-{
-    * (PluginHandle * *) data = plugin;
-    return false; /* stop when first plugin is found */
-}
-
 EXPORT bool aud_filename_is_playlist (const char * filename)
 {
-    PluginHandle * plugin = nullptr;
-    plugin_for_filename (filename, plugin_found_cb, & plugin);
-    return (plugin != nullptr);
-}
+    StringBuf ext = uri_get_extension (filename);
 
-static bool playlist_load_cb (PluginHandle * plugin, void * data_)
-{
-    PlaylistData * data = (PlaylistData *) data_;
+    if (ext)
+    {
+        for (PluginHandle * plugin : aud_plugin_list (PLUGIN_TYPE_PLAYLIST))
+        {
+            if (aud_plugin_get_enabled (plugin) && playlist_plugin_has_ext (plugin, ext))
+                return true;
+        }
+    }
 
-    PlaylistPlugin * pp = (PlaylistPlugin *) aud_plugin_get_header (plugin);
-    if (! pp || ! PLUGIN_HAS_FUNC (pp, load))
-        return true; /* try another plugin */
-
-    data->plugin_found = true;
-
-    VFSFile * file = vfs_fopen (data->filename, "r");
-    if (! file)
-        return false; /* stop if we can't open file */
-
-    data->success = pp->load (data->filename, file, data->title, data->items);
-
-    vfs_fclose (file);
-    return ! data->success; /* stop when playlist is loaded */
+    return false;
 }
 
 bool playlist_load (const char * filename, String & title, Index<PlaylistAddItem> & items)
 {
-    PlaylistData data = {
-        filename
-    };
+    AUDINFO ("Loading playlist %s.\n", filename);
 
-    AUDDBG ("Loading playlist %s.\n", filename);
-    plugin_for_filename (filename, playlist_load_cb, & data);
+    StringBuf ext = uri_get_extension (filename);
 
-    if (! data.plugin_found)
-        aud_ui_show_error (str_printf (_("Cannot load %s: unsupported file extension."), filename));
+    if (ext)
+    {
+        for (PluginHandle * plugin : aud_plugin_list (PLUGIN_TYPE_PLAYLIST))
+        {
+            if (! aud_plugin_get_enabled (plugin) || ! playlist_plugin_has_ext (plugin, ext))
+                continue;
 
-    if (! data.success)
-        return false;
+            AUDINFO ("Trying playlist plugin %s.\n", aud_plugin_get_name (plugin));
 
-    title = std::move (data.title);
-    items = std::move (data.items);
-    return true;
+            PlaylistPlugin * pp = (PlaylistPlugin *) aud_plugin_get_header (plugin);
+            if (! pp)
+                continue;
+
+            VFSFile file (filename, "r");
+            if (! file)
+                return false;
+
+            if (pp->load (filename, file, title, items))
+                return true;
+
+            title = String ();
+            items.clear ();
+        }
+    }
+
+    aud_ui_show_error (str_printf (_("Cannot load %s: unsupported file extension."), filename));
+
+    return false;
 }
 
 bool playlist_insert_playlist_raw (int list, int at, const char * filename)
@@ -112,49 +94,46 @@ bool playlist_insert_playlist_raw (int list, int at, const char * filename)
     return true;
 }
 
-static bool playlist_save_cb (PluginHandle * plugin, void * data_)
-{
-    PlaylistData * data = (PlaylistData *) data_;
-
-    PlaylistPlugin * pp = (PlaylistPlugin *) aud_plugin_get_header (plugin);
-    if (! pp || ! PLUGIN_HAS_FUNC (pp, save))
-        return true; /* try another plugin */
-
-    data->plugin_found = true;
-
-    VFSFile * file = vfs_fopen (data->filename, "w");
-    if (! file)
-        return false; /* stop if we can't open file */
-
-    data->success = pp->save (data->filename, file, data->title, data->items);
-
-    vfs_fclose (file);
-    return false; /* stop after first attempt (successful or not) */
-}
-
 EXPORT bool aud_playlist_save (int list, const char * filename)
 {
-    PlaylistData data = {
-        filename,
-        aud_playlist_get_title (list)
-    };
-
-    int entries = aud_playlist_entry_count (list);
+    String title = aud_playlist_get_title (list);
     bool fast = aud_get_bool (nullptr, "metadata_on_play");
 
-    data.items.insert (0, entries);
+    Index<PlaylistAddItem> items;
+    items.insert (0, aud_playlist_entry_count (list));
 
-    for (int i = 0; i < entries; i ++)
+    int i = 0;
+    for (PlaylistAddItem & item : items)
     {
-        data.items[i].filename = aud_playlist_entry_get_filename (list, i);
-        data.items[i].tuple = aud_playlist_entry_get_tuple (list, i, fast);
+        item.filename = aud_playlist_entry_get_filename (list, i);
+        item.tuple = aud_playlist_entry_get_tuple (list, i, fast);
+        i ++;
     }
 
-    AUDDBG ("Saving playlist %s.\n", filename);
-    plugin_for_filename (filename, playlist_save_cb, & data);
+    AUDINFO ("Saving playlist %s.\n", filename);
 
-    if (! data.plugin_found)
-        aud_ui_show_error (str_printf (_("Cannot save %s: unsupported file extension."), filename));
+    StringBuf ext = uri_get_extension (filename);
 
-    return data.success;
+    if (ext)
+    {
+        for (PluginHandle * plugin : aud_plugin_list (PLUGIN_TYPE_PLAYLIST))
+        {
+            if (! aud_plugin_get_enabled (plugin) || ! playlist_plugin_has_ext (plugin, ext))
+                continue;
+
+            PlaylistPlugin * pp = (PlaylistPlugin *) aud_plugin_get_header (plugin);
+            if (! pp || ! pp->can_save)
+                continue;
+
+            VFSFile file (filename, "w");
+            if (! file)
+                return false;
+
+            return pp->save (filename, file, title, items) && file.fflush () == 0;
+        }
+    }
+
+    aud_ui_show_error (str_printf (_("Cannot save %s: unsupported file extension."), filename));
+
+    return false;
 }

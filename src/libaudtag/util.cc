@@ -17,10 +17,8 @@
  * the use of this software.
  */
 
-#include <stdio.h>
 #include <unistd.h>
 
-#include <glib.h>
 #include <glib/gstdio.h>
 
 #include <libaudcore/audstrings.h>
@@ -184,7 +182,7 @@ uint32_t syncsafe32 (uint32_t x)
      0xfe00000) << 3);
 }
 
-bool open_temp_file_for (TempFile * temp, VFSFile * file)
+bool open_temp_file_for (TempFile * temp, VFSFile & file)
 {
     StringBuf tempname = filename_build ({g_get_tmp_dir (), "audacious-temp-XXXXXX"});
 
@@ -197,9 +195,9 @@ bool open_temp_file_for (TempFile * temp, VFSFile * file)
     return true;
 }
 
-bool copy_region_to_temp_file (TempFile * temp, VFSFile * file, int64_t offset, int64_t size)
+bool copy_region_to_temp_file (TempFile * temp, VFSFile & file, int64_t offset, int64_t size)
 {
-    if (vfs_fseek (file, offset, SEEK_SET) < 0)
+    if (file.fseek (offset, VFS_SEEK_SET) < 0)
         return false;
 
     char buf[16384];
@@ -211,7 +209,7 @@ bool copy_region_to_temp_file (TempFile * temp, VFSFile * file, int64_t offset, 
         if (size > 0)
         {
             readsize = aud::min (size, (int64_t) sizeof buf);
-            if (vfs_fread (buf, 1, readsize, file) != readsize)
+            if (file.fread (buf, 1, readsize) != readsize)
                 return false;
 
             size -= readsize;
@@ -219,7 +217,7 @@ bool copy_region_to_temp_file (TempFile * temp, VFSFile * file, int64_t offset, 
         else
         {
             /* negative size means copy to EOF */
-            readsize = vfs_fread (buf, 1, sizeof buf, file);
+            readsize = file.fread (buf, 1, sizeof buf);
             if (! readsize)
                 break;
         }
@@ -238,15 +236,15 @@ bool copy_region_to_temp_file (TempFile * temp, VFSFile * file, int64_t offset, 
     return true;
 }
 
-bool replace_with_temp_file (TempFile * temp, VFSFile * file)
+bool replace_with_temp_file (TempFile * temp, VFSFile & file)
 {
     if (lseek (temp->fd, 0, SEEK_SET) < 0)
         return false;
 
-    if (vfs_fseek (file, 0, SEEK_SET) < 0)
+    if (file.fseek (0, VFS_SEEK_SET) < 0)
         return false;
 
-    if (vfs_ftruncate (file, 0) < 0)
+    if (file.ftruncate (0) < 0)
         return false;
 
     char buf[16384];
@@ -260,7 +258,7 @@ bool replace_with_temp_file (TempFile * temp, VFSFile * file)
         if (readsize == 0)
             break;
 
-        if (vfs_fwrite (buf, 1, readsize, file) != readsize)
+        if (file.fwrite (buf, 1, readsize) != readsize)
             return false;
     }
 

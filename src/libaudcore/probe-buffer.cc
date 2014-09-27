@@ -19,143 +19,128 @@
 
 #include "internal.h"
 
-#include <stdio.h>
 #include <string.h>
-
-#include <glib.h>
 
 #include "vfs.h"
 
 #define BUFSIZE (256 * 1024)
 
-struct ProbeBuffer {
-    VFSFile * file;
-    int filled, at;
-    unsigned char buffer[BUFSIZE];
+class ProbeBuffer : public VFSImpl
+{
+public:
+    ProbeBuffer (VFSFile && file) :
+        m_file (std::move (file)),
+        m_filled (0),
+        m_at (0) {}
+
+    int64_t fread (void * ptr, int64_t size, int64_t nmemb);
+    int fseek (int64_t offset, VFSSeekType whence);
+
+    int64_t ftell ();
+    int64_t fsize ();
+    bool feof ();
+
+    int64_t fwrite (const void * ptr, int64_t size, int64_t nmemb);
+    int ftruncate (int64_t length);
+    int fflush ();
+
+    String get_metadata (const char * field);
+
+private:
+    void increase_buffer (int64_t size);
+
+    VFSFile m_file;
+    int m_filled, m_at;
+    unsigned char m_buffer[BUFSIZE];
 };
 
-static int probe_buffer_fclose (VFSFile * file)
-{
-    ProbeBuffer * p = (ProbeBuffer *) vfs_get_handle (file);
-
-    int ret = vfs_fclose (p->file);
-    g_free (p);
-    return ret;
-}
-
-static void increase_buffer (ProbeBuffer * p, int64_t size)
+void ProbeBuffer::increase_buffer (int64_t size)
 {
     size = (size + 0xFF) & ~0xFF;
 
-    if (size > (int64_t) sizeof p->buffer)
-        size = (int64_t) sizeof p->buffer;
+    if (size > (int64_t) sizeof m_buffer)
+        size = (int64_t) sizeof m_buffer;
 
-    if (p->filled < size)
-        p->filled += vfs_fread (p->buffer + p->filled, 1, size - p->filled,
-         p->file);
+    if (m_filled < size)
+        m_filled += m_file.fread (m_buffer + m_filled, 1, size - m_filled);
 }
 
-static int64_t probe_buffer_fread (void * buffer, int64_t size, int64_t count,
- VFSFile * file)
+int64_t ProbeBuffer::fread (void * buffer, int64_t size, int64_t count)
 {
-    ProbeBuffer * p = (ProbeBuffer *) vfs_get_handle (file);
+    increase_buffer (m_at + size * count);
+    int readed = (size > 0) ? aud::min (count, (m_filled - m_at) / size) : 0;
+    memcpy (buffer, m_buffer + m_at, size * readed);
 
-    increase_buffer (p, p->at + size * count);
-    int readed = (size > 0) ? aud::min (count, (p->filled - p->at) / size) : 0;
-    memcpy (buffer, p->buffer + p->at, size * readed);
-
-    p->at += size * readed;
+    m_at += size * readed;
     return readed;
 }
 
-static int64_t probe_buffer_fwrite (const void * data, int64_t size, int64_t count,
- VFSFile * file)
+int64_t ProbeBuffer::fwrite (const void * data, int64_t size, int64_t count)
 {
     return 0; /* not allowed */
 }
 
-static int probe_buffer_fseek (VFSFile * file, int64_t offset, int whence)
+int ProbeBuffer::fseek (int64_t offset, VFSSeekType whence)
 {
-    ProbeBuffer * p = (ProbeBuffer *) vfs_get_handle (file);
-
-    if (whence == SEEK_END)
+    if (whence == VFS_SEEK_END)
         return -1; /* not allowed */
 
-    if (whence == SEEK_CUR)
-        offset += p->at;
+    if (whence == VFS_SEEK_CUR)
+        offset += m_at;
 
-    if (offset < 0 || offset > (int64_t) sizeof p->buffer)
+    if (offset < 0 || offset > (int64_t) sizeof m_buffer)
         return -1;
 
-    increase_buffer (p, offset);
+    increase_buffer (offset);
 
-    if (offset > p->filled)
+    if (offset > m_filled)
         return -1;
 
-    p->at = offset;
+    m_at = offset;
     return 0;
 }
 
-static int64_t probe_buffer_ftell (VFSFile * file)
+int64_t ProbeBuffer::ftell ()
 {
-    return ((ProbeBuffer *) vfs_get_handle (file))->at;
+    return m_at;
 }
 
-static bool probe_buffer_feof (VFSFile * file)
+bool ProbeBuffer::feof ()
 {
-    ProbeBuffer * p = (ProbeBuffer *) vfs_get_handle (file);
-
-    if (p->at < p->filled)
+    if (m_at < m_filled)
         return false;
-    if (p->at == sizeof p->buffer)
+    if (m_at == sizeof m_buffer)
         return true;
 
-    return vfs_feof (p->file);
+    return m_file.feof ();
 }
 
-static int probe_buffer_ftruncate (VFSFile * file, int64_t size)
+int ProbeBuffer::ftruncate (int64_t size)
 {
     return -1; /* not allowed */
 }
 
-static int64_t probe_buffer_fsize (VFSFile * file)
+int ProbeBuffer::fflush ()
 {
-    ProbeBuffer * p = (ProbeBuffer *) vfs_get_handle (file);
-
-    int64_t size = vfs_fsize (p->file);
-    return aud::min (size, (int64_t) sizeof p->buffer);
+    return 0; /* no-op */
 }
 
-static String probe_buffer_get_metadata (VFSFile * file, const char * field)
+int64_t ProbeBuffer::fsize ()
 {
-    return vfs_get_metadata (((ProbeBuffer *) vfs_get_handle (file))->file, field);
+    int64_t size = m_file.fsize ();
+    return aud::min (size, (int64_t) sizeof m_buffer);
 }
 
-static const VFSConstructor probe_buffer_table =
+String ProbeBuffer::get_metadata (const char * field)
 {
-    nullptr,
-    probe_buffer_fclose,
-    probe_buffer_fread,
-    probe_buffer_fwrite,
-    probe_buffer_fseek,
-    probe_buffer_ftell,
-    probe_buffer_feof,
-    probe_buffer_ftruncate,
-    probe_buffer_fsize,
-    probe_buffer_get_metadata
-};
+    return m_file.get_metadata (field);
+}
 
-VFSFile * probe_buffer_new (const char * filename)
+VFSFile probe_buffer_new (const char * filename)
 {
-    VFSFile * file = vfs_fopen (filename, "r");
-
+    VFSFile file (filename, "r");
     if (! file)
-        return nullptr;
+        return file;  // preserve error message
 
-    ProbeBuffer * p = g_new (ProbeBuffer, 1);
-    p->file = file;
-    p->filled = 0;
-    p->at = 0;
-
-    return vfs_new (filename, & probe_buffer_table, p);
+    return VFSFile (filename, new ProbeBuffer (std::move (file)));
 }

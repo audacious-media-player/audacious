@@ -20,7 +20,6 @@
 #include "internal.h"
 
 #include <pthread.h>
-#include <glib.h>
 
 #include "drct.h"
 #include "list.h"
@@ -31,6 +30,7 @@
 struct Effect : public ListNode
 {
     PluginHandle * plugin;
+    int position;
     EffectPlugin * header;
     int channels_returned, rate_returned;
     bool remove_flag;
@@ -44,24 +44,6 @@ struct EffectStartState {
     int * channels, * rate;
 };
 
-static bool effect_start_cb (PluginHandle * plugin, EffectStartState * state)
-{
-    AUDDBG ("Starting %s at %d channels, %d Hz.\n", aud_plugin_get_name (plugin),
-     * state->channels, * state->rate);
-    EffectPlugin * header = (EffectPlugin *) aud_plugin_get_header (plugin);
-    g_return_val_if_fail (header, true);
-    header->start (state->channels, state->rate);
-
-    Effect * effect = new Effect ();
-    effect->plugin = plugin;
-    effect->header = header;
-    effect->channels_returned = * state->channels;
-    effect->rate_returned = * state->rate;
-
-    effects.append (effect);
-    return true;
-}
-
 void effect_start (int * channels, int * rate)
 {
     pthread_mutex_lock (& mutex);
@@ -73,8 +55,32 @@ void effect_start (int * channels, int * rate)
     input_channels = * channels;
     input_rate = * rate;
 
-    EffectStartState state = {channels, rate};
-    aud_plugin_for_enabled (PLUGIN_TYPE_EFFECT, (PluginForEachFunc) effect_start_cb, & state);
+    auto & list = aud_plugin_list (PLUGIN_TYPE_EFFECT);
+
+    for (int i = 0; i < list.len (); i ++)
+    {
+        PluginHandle * plugin = list[i];
+        if (! aud_plugin_get_enabled (plugin))
+            continue;
+
+        AUDINFO ("Starting %s at %d channels, %d Hz.\n",
+         aud_plugin_get_name (plugin), * channels, * rate);
+
+        EffectPlugin * header = (EffectPlugin *) aud_plugin_get_header (plugin);
+        if (! header)
+            continue;
+
+        header->start (channels, rate);
+
+        Effect * effect = new Effect ();
+        effect->plugin = plugin;
+        effect->position = i;
+        effect->header = header;
+        effect->channels_returned = * channels;
+        effect->rate_returned = * rate;
+
+        effects.append (effect);
+    }
 
     pthread_mutex_unlock (& mutex);
 }
@@ -111,10 +117,7 @@ void effect_flush (void)
     pthread_mutex_lock (& mutex);
 
     for (Effect * e = effects.head (); e; e = effects.next (e))
-    {
-        if (PLUGIN_HAS_FUNC (e->header, flush))
-            e->header->flush ();
-    }
+        e->header->flush ();
 
     pthread_mutex_unlock (& mutex);
 }
@@ -134,10 +137,7 @@ int effect_adjust_delay (int delay)
     pthread_mutex_lock (& mutex);
 
     for (Effect * e = effects.tail (); e; e = effects.prev (e))
-    {
-        if (PLUGIN_HAS_FUNC (e->header, adjust_delay))
-            delay = e->header->adjust_delay (delay);
-    }
+        delay = e->header->adjust_delay (delay);
 
     pthread_mutex_unlock (& mutex);
     return delay;
@@ -145,6 +145,8 @@ int effect_adjust_delay (int delay)
 
 static void effect_insert (PluginHandle * plugin, EffectPlugin * header)
 {
+    int position = aud_plugin_list (PLUGIN_TYPE_EFFECT).find (plugin);
+
     Effect * prev = nullptr;
 
     for (Effect * e = effects.head (); e; e = effects.next (e))
@@ -155,38 +157,40 @@ static void effect_insert (PluginHandle * plugin, EffectPlugin * header)
             return;
         }
 
-        if (aud_plugin_compare (e->plugin, plugin) > 0)
+        if (e->position > position)
             break;
 
         prev = e;
     }
 
     AUDDBG ("Adding %s without reset.\n", aud_plugin_get_name (plugin));
-    Effect * effect = new Effect ();
-    effect->plugin = plugin;
-    effect->header = header;
-
-    effects.insert_after (prev, effect);
 
     int channels, rate;
     if (prev)
     {
-        AUDDBG ("Added %s after %s.\n", aud_plugin_get_name (plugin),
+        AUDDBG ("Adding %s after %s.\n", aud_plugin_get_name (plugin),
          aud_plugin_get_name (prev->plugin));
         channels = prev->channels_returned;
         rate = prev->rate_returned;
     }
     else
     {
-        AUDDBG ("Added %s as first effect.\n", aud_plugin_get_name (plugin));
+        AUDDBG ("Adding %s as first effect.\n", aud_plugin_get_name (plugin));
         channels = input_channels;
         rate = input_rate;
     }
 
-    AUDDBG ("Starting %s at %d channels, %d Hz.\n", aud_plugin_get_name (plugin), channels, rate);
+    AUDINFO ("Starting %s at %d channels, %d Hz.\n", aud_plugin_get_name (plugin), channels, rate);
     header->start (& channels, & rate);
+
+    Effect * effect = new Effect ();
+    effect->plugin = plugin;
+    effect->position = position;
+    effect->header = header;
     effect->channels_returned = channels;
     effect->rate_returned = rate;
+
+    effects.insert_after (prev, effect);
 }
 
 static void effect_remove (PluginHandle * plugin)
@@ -227,7 +231,9 @@ bool effect_plugin_start (PluginHandle * plugin)
     if (aud_drct_get_playing ())
     {
         EffectPlugin * ep = (EffectPlugin *) aud_plugin_get_header (plugin);
-        g_return_val_if_fail (ep, false);
+        if (! ep)
+            return false;
+
         effect_enable (plugin, ep, true);
     }
 
@@ -239,7 +245,9 @@ void effect_plugin_stop (PluginHandle * plugin)
     if (aud_drct_get_playing ())
     {
         EffectPlugin * ep = (EffectPlugin *) aud_plugin_get_header (plugin);
-        g_return_if_fail (ep);
+        if (! ep)
+            return;
+
         effect_enable (plugin, ep, false);
     }
 }

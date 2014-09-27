@@ -351,16 +351,13 @@ static void drag_end (GtkWidget * widget, GdkDragContext * context,
 }
 
 static void drag_data_get (GtkWidget * widget, GdkDragContext * context,
- GtkSelectionData * sel, unsigned int info, unsigned int time, ListModel * model)
+ GtkSelectionData * sel, unsigned info, unsigned time, ListModel * model)
 {
     g_signal_stop_emission_by_name (widget, "drag-data-get");
 
-    void * data = nullptr;
-    int length = 0;
-    model->cbs->get_data (model->user, & data, & length);
+    Index<char> data = model->cbs->get_data (model->user);
     gtk_selection_data_set (sel, gdk_atom_intern (model->cbs->data_type, false),
-     8, (const unsigned char *) data, length);
-    g_free (data);
+     8, (const unsigned char *) data.begin (), data.len ());
 }
 
 static int calc_drop_row (ListModel * model, GtkWidget * widget, int x, int y)
@@ -416,7 +413,7 @@ static void start_autoscroll (ListModel * model, GtkWidget * widget, int speed)
 }
 
 static gboolean drag_motion (GtkWidget * widget, GdkDragContext * context,
- int x, int y, unsigned int time, ListModel * model)
+ int x, int y, unsigned time, ListModel * model)
 {
     g_signal_stop_emission_by_name (widget, "drag-motion");
 
@@ -469,7 +466,7 @@ static gboolean drag_motion (GtkWidget * widget, GdkDragContext * context,
 }
 
 static void drag_leave (GtkWidget * widget, GdkDragContext * context,
- unsigned int time, ListModel * model)
+ unsigned time, ListModel * model)
 {
     g_signal_stop_emission_by_name (widget, "drag-leave");
 
@@ -478,7 +475,7 @@ static void drag_leave (GtkWidget * widget, GdkDragContext * context,
 }
 
 static gboolean drag_drop (GtkWidget * widget, GdkDragContext * context, int x,
- int y, unsigned int time, ListModel * model)
+ int y, unsigned time, ListModel * model)
 {
     g_signal_stop_emission_by_name (widget, "drag-drop");
 
@@ -508,14 +505,14 @@ static gboolean drag_drop (GtkWidget * widget, GdkDragContext * context, int x,
 }
 
 static void drag_data_received (GtkWidget * widget, GdkDragContext * context, int x,
- int y, GtkSelectionData * sel, unsigned int info, unsigned int time, ListModel * model)
+ int y, GtkSelectionData * sel, unsigned info, unsigned time, ListModel * model)
 {
     g_signal_stop_emission_by_name (widget, "drag-data-received");
 
     g_return_if_fail (model->receive_row >= 0 && model->receive_row <=
      model->rows);
 
-    const unsigned char * data = gtk_selection_data_get_data (sel);
+    auto data = (const char *) gtk_selection_data_get_data (sel);
     int length = gtk_selection_data_get_length (sel);
 
     if (data && length)

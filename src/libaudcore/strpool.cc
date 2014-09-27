@@ -18,15 +18,14 @@
  */
 
 #include <assert.h>
-#include <stdio.h>
+#include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
-
-#include <glib.h>
 
 #include "audstrings.h"
 #include "multihash.h"
 #include "objects.h"
+#include "runtime.h"
 
 #ifdef VALGRIND_FRIENDLY
 
@@ -44,7 +43,10 @@ EXPORT char * String::raw_get (const char * str)
     if (! str)
         return nullptr;
 
-    StrNode * node = (StrNode *) g_malloc (NODE_SIZE_FOR (str));
+    StrNode * node = (StrNode *) malloc (NODE_SIZE_FOR (str));
+    if (! node)
+        throw std::bad_alloc ();
+
     node->magic = '@';
     node->hash = str_calc_hash (str);
 
@@ -74,7 +76,7 @@ EXPORT void String::raw_unref (char * str)
     assert (str_calc_hash (str) == node->hash);
 
     node->magic = 0;
-    g_free (node);
+    free (node);
 }
 
 EXPORT unsigned String::raw_hash (const char * str)
@@ -126,7 +128,10 @@ static MultiHash::Node * add_cb (const void * data_, void * state)
 {
     const char * data = (const char *) data_;
 
-    StrNode * node = (StrNode *) g_malloc (NODE_SIZE_FOR (data));
+    StrNode * node = (StrNode *) malloc (NODE_SIZE_FOR (data));
+    if (! node)
+        throw std::bad_alloc ();
+
     node->refs = 1;
     node->magic = '@';
     strcpy (node->str, data);
@@ -185,7 +190,7 @@ static bool remove_cb (MultiHash::Node * node_, void * state)
         return false;
 
     node->magic = 0;
-    g_free (node);
+    free (node);
     return true;
 }
 
@@ -224,7 +229,7 @@ EXPORT void String::raw_unref (char * str)
 
 static bool leak_cb (MultiHash::Node * node, void * state)
 {
-    fprintf (stderr, "String leaked: %s\n", ((StrNode *) node)->str);
+    AUDWARN ("String leaked: %s\n", ((StrNode *) node)->str);
     return false;
 }
 

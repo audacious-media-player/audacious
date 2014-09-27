@@ -87,7 +87,7 @@ static const PluginCategory plugin_categories[] = {
     { PLUGIN_TYPE_TRANSPORT, N_("Transport") }
 };
 
-static const TitleFieldTag title_field_tags[] = {
+/* static const TitleFieldTag title_field_tags[] = {
     { N_("Artist")     , "${artist}" },
     { N_("Album")      , "${album}" },
     { N_("Title")      , "${title}" },
@@ -100,7 +100,7 @@ static const TitleFieldTag title_field_tags[] = {
     { N_("Comment")    , "${comment}" },
     { N_("Codec")      , "${codec}" },
     { N_("Quality")    , "${quality}" }
-};
+}; */
 
 #ifdef USE_CHARDET
 static const ComboItem chardet_detector_presets[] = {
@@ -258,8 +258,13 @@ static const PreferencesWidget playlist_page_widgets[] = {
     WidgetCheck (N_("Show leading zeroes (02:00 instead of 2:00)"),
         WidgetBool (0, "leading_zero", send_title_change)),
 #ifdef XXX_NOTYET
-    WidgetCustomQt (create_titlestring_table)
+    WidgetCustomQt (create_titlestring_table),
 #endif
+    WidgetLabel (N_("<b>Advanced</b>")),
+    WidgetCheck (N_("Do not load metadata for songs until played"),
+        WidgetBool (0, "metadata_on_play")),
+    WidgetCheck (N_("Probe content of files with no recognized filename extension"),
+        WidgetBool (0, "slow_probe"))
 };
 
 static const PreferencesWidget song_info_page_widgets[] = {
@@ -288,7 +293,7 @@ static const PreferencesWidget song_info_page_widgets[] = {
         WIDGET_CHILD)
 };
 
-#define TITLESTRING_NPRESETS 6
+/* #define TITLESTRING_NPRESETS 6
 
 static const char * const titlestring_presets[TITLESTRING_NPRESETS] = {
     "${title}",
@@ -306,15 +311,15 @@ static const char * const titlestring_preset_names[TITLESTRING_NPRESETS] = {
     N_("ARTIST - ALBUM - TRACK. TITLE"),
     N_("ARTIST [ ALBUM ] - TRACK. TITLE"),
     N_("ALBUM - TITLE")
-};
+}; */
 
 static Index<ComboItem> fill_plugin_combo (int type)
 {
     Index<ComboItem> elems;
-    elems.insert (0, aud_plugin_count (type));
+    int i = 0;
 
-    for (int i = 0; i < elems.len (); i ++)
-        elems[i] = ComboItem (aud_plugin_get_name (aud_plugin_by_index (type, i)), i);
+    for (PluginHandle * plugin : aud_plugin_list (type))
+        elems.append (aud_plugin_get_name (plugin), i ++);
 
     return elems;
 }
@@ -327,11 +332,11 @@ static void send_title_change (void)
 static void iface_fill_prefs_box (void)
 {
     Plugin * header = (Plugin *) aud_plugin_get_header (aud_plugin_get_current (PLUGIN_TYPE_IFACE));
-    if (header && header->prefs)
+    if (header && header->info.prefs)
     {
         QVBoxLayout * vbox = new QVBoxLayout;
 
-        prefs_populate (vbox, header->prefs->widgets, header->domain);
+        prefs_populate (vbox, header->info.prefs->widgets, header->info.domain);
         iface_prefs_box->setLayout (vbox);
     }
 }
@@ -369,7 +374,8 @@ static ArrayRef<const ComboItem> iface_combo_fill ()
     if (! iface_combo_elements.len ())
     {
         iface_combo_elements = fill_plugin_combo (PLUGIN_TYPE_IFACE);
-        iface_combo_selected = aud_plugin_get_index (aud_plugin_get_current (PLUGIN_TYPE_IFACE));
+        iface_combo_selected = aud_plugin_list (PLUGIN_TYPE_IFACE)
+         .find (aud_plugin_get_current (PLUGIN_TYPE_IFACE));
     }
 
     return {iface_combo_elements.begin (), iface_combo_elements.len ()};
@@ -384,7 +390,7 @@ static void * iface_create_prefs_box (void)
 
 static void output_combo_changed (void)
 {
-    PluginHandle * plugin = aud_plugin_by_index (PLUGIN_TYPE_OUTPUT, output_combo_selected);
+    PluginHandle * plugin = aud_plugin_list (PLUGIN_TYPE_OUTPUT)[output_combo_selected];
 
     if (aud_plugin_enable (plugin, true))
     {
@@ -426,7 +432,8 @@ static ArrayRef<const ComboItem> output_combo_fill ()
     if (! output_combo_elements.len ())
     {
         output_combo_elements = fill_plugin_combo (PLUGIN_TYPE_OUTPUT);
-        output_combo_selected = aud_plugin_get_index (aud_plugin_get_current (PLUGIN_TYPE_OUTPUT));
+        output_combo_selected = aud_plugin_list (PLUGIN_TYPE_OUTPUT)
+         .find (aud_plugin_get_current (PLUGIN_TYPE_OUTPUT));
     }
 
     return {output_combo_elements.begin (), output_combo_elements.len ()};
@@ -530,6 +537,7 @@ static void create_plugin_category_page (int category_id, const char * category_
     QTreeView * view = new QTreeView;
     PluginListModel * plm = new PluginListModel (0, category_id);
 
+    view->setIndentation (0);
     view->setModel (plm);
     view->header ()->hide ();
 
@@ -552,16 +560,15 @@ static void create_plugin_category_page (int category_id, const char * category_
         if (selected.length () < 1)
             return;
 
+        auto & list = aud_plugin_list (category_id);
         int idx = selected.indexes () [0].row ();
-        PluginHandle * ph = aud_plugin_by_index (category_id, idx);
-
-        if (! ph)
+        if (idx < 0 || idx >= list.len ())
             return;
 
-        AUDDBG ("plugin %s selected\n", aud_plugin_get_name (ph));
+        AUDDBG ("plugin %s selected\n", aud_plugin_get_name (list[idx]));
 
-        about_btn_watch (about_btn, ph);
-        settings_btn_watch (settings_btn, ph);
+        about_btn_watch (about_btn, list[idx]);
+        settings_btn_watch (settings_btn, list[idx]);
     });
 
     QObject::connect (about_btn, &QAbstractButton::clicked, [=] (bool) {
@@ -569,15 +576,14 @@ static void create_plugin_category_page (int category_id, const char * category_
         if (selected.length () < 1)
             return;
 
+        auto & list = aud_plugin_list (category_id);
         int idx = selected.indexes () [0].row ();
-        PluginHandle * ph = aud_plugin_by_index (category_id, idx);
-
-        if (! ph)
+        if (idx < 0 || idx >= list.len ())
             return;
 
-        AUDDBG ("plugin %s: about\n", aud_plugin_get_name (ph));
+        AUDDBG ("plugin %s: about\n", aud_plugin_get_name (list[idx]));
 
-        plugin_about (ph);
+        plugin_about (list[idx]);
     });
 
     QObject::connect (settings_btn, &QAbstractButton::clicked, [=] (bool) {
@@ -585,15 +591,14 @@ static void create_plugin_category_page (int category_id, const char * category_
         if (selected.length () < 1)
             return;
 
+        auto & list = aud_plugin_list (category_id);
         int idx = selected.indexes () [0].row ();
-        PluginHandle * ph = aud_plugin_by_index (category_id, idx);
-
-        if (! ph)
+        if (idx < 0 || idx >= list.len ())
             return;
 
-        AUDDBG ("plugin %s: settings\n", aud_plugin_get_name (ph));
+        AUDDBG ("plugin %s: settings\n", aud_plugin_get_name (list[idx]));
 
-        plugin_prefs (ph);
+        plugin_prefs (list[idx]);
     });
 }
 

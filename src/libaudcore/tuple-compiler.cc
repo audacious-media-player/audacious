@@ -19,16 +19,14 @@
  */
 
 #include <stdlib.h>
-#include <stdio.h>
 #include <string.h>
 
 #include <new>
 #include <glib.h>
 
 #include "audstrings.h"
+#include "runtime.h"
 #include "tuple-compiler.h"
-
-#define tuple_error(...) fprintf (stderr, "Tuple compiler: " __VA_ARGS__)
 
 struct Variable
 {
@@ -88,7 +86,7 @@ bool Variable::set (const char * name, bool literal)
 
         if (field < 0)
         {
-            tuple_error ("Invalid variable '%s'.\n", name);
+            AUDWARN ("Invalid variable '%s'.\n", name);
             return false;
         }
     }
@@ -149,7 +147,7 @@ static StringBuf get_item (const char * & str, char endch, bool & literal)
     {
         if (! literal)
         {
-            tuple_error ("Unexpected string literal at '%s'.\n", s);
+            AUDWARN ("Unexpected string literal at '%s'.\n", s);
             return StringBuf ();
         }
 
@@ -167,7 +165,7 @@ static StringBuf get_item (const char * & str, char endch, bool & literal)
 
             if (! * s)
             {
-                tuple_error ("Unterminated string literal.\n");
+                AUDWARN ("Unterminated string literal.\n");
                 return StringBuf ();
             }
 
@@ -192,7 +190,7 @@ static StringBuf get_item (const char * & str, char endch, bool & literal)
 
     if (* s != endch)
     {
-        tuple_error ("Expected '%c' at '%s'.\n", endch, s);
+        AUDWARN ("Expected '%c' at '%s'.\n", endch, s);
         return StringBuf ();
     }
 
@@ -239,7 +237,7 @@ static bool compile_expression (Index<Node> & nodes, const char * & expression)
             /* Expression? */
             if (c[1] != '{')
             {
-                tuple_error ("Expected '${' at '%s'.\n", c);
+                AUDWARN ("Expected '${' at '%s'.\n", c);
                 return false;
             }
 
@@ -259,7 +257,7 @@ static bool compile_expression (Index<Node> & nodes, const char * & expression)
                 {
                     if (strncmp (c, "(empty)?", 8))
                     {
-                        tuple_error ("Expected '(empty)?' at '%s'.\n", c);
+                        AUDWARN ("Expected '(empty)?' at '%s'.\n", c);
                         return false;
                     }
 
@@ -287,7 +285,7 @@ static bool compile_expression (Index<Node> & nodes, const char * & expression)
 
                 if (c[1] != '=')
                 {
-                    tuple_error ("Expected '%c=' at '%s'.\n", c[0], c);
+                    AUDWARN ("Expected '%c=' at '%s'.\n", c[0], c);
                     return false;
                 }
 
@@ -334,7 +332,7 @@ static bool compile_expression (Index<Node> & nodes, const char * & expression)
 
             if (* c != '}')
             {
-                tuple_error ("Expected '}' at '%s'.\n", c);
+                AUDWARN ("Expected '}' at '%s'.\n", c);
                 return false;
             }
 
@@ -342,7 +340,7 @@ static bool compile_expression (Index<Node> & nodes, const char * & expression)
         }
         else if (* c == '{')
         {
-            tuple_error ("Unexpected '%c' at '%s'.\n", * c, c);
+            AUDWARN ("Unexpected '%c' at '%s'.\n", * c, c);
             return false;
         }
         else
@@ -360,7 +358,7 @@ static bool compile_expression (Index<Node> & nodes, const char * & expression)
 
                     if (! * c)
                     {
-                        tuple_error ("Incomplete escaped character.\n");
+                        AUDWARN ("Incomplete escaped character.\n");
                         return false;
                     }
                 }
@@ -393,7 +391,7 @@ bool TupleCompiler::compile (const char * expr)
 
     if (* c)
     {
-        tuple_error ("Unexpected '%c' at '%s'.\n", * c, c);
+        AUDWARN ("Unexpected '%c' at '%s'.\n", * c, c);
         return false;
     }
 

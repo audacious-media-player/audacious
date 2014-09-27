@@ -20,7 +20,7 @@
 #include "runtime.h"
 #include "internal.h"
 
-#include <glib.h>
+#include <assert.h>
 #include <string.h>
 
 #include "audstrings.h"
@@ -239,7 +239,8 @@ static void load_heading (const char * section, void * data)
 static void load_entry (const char * key, const char * value, void * data)
 {
     LoadState * state = (LoadState *) data;
-    g_return_if_fail (state->section);
+    if (! state->section)
+        return;
 
     ConfigOp op = {OP_SET_NO_FLAG, state->section, key, String (value)};
     config_op_run (& op, & config);
@@ -250,15 +251,14 @@ void config_load (void)
     StringBuf path = filename_to_uri (aud_get_path (AudPath::UserDir));
     str_insert (path, -1, "/config");
 
-    if (vfs_file_test (path, VFS_EXISTS))
+    if (VFSFile::test_file (path, VFS_EXISTS))
     {
-        VFSFile * file = vfs_fopen (path, "r");
+        VFSFile file (path, "r");
 
         if (file)
         {
             LoadState state = LoadState ();
             inifile_parse (file, load_heading, load_entry, & state);
-            vfs_fclose (file);
         }
     }
 
@@ -270,11 +270,7 @@ static bool add_to_save_list (MultiHash::Node * node0, void * state0)
     ConfigNode * node = (ConfigNode *) node0;
     SaveState * state = (SaveState *) state0;
 
-    ConfigItem & item = state->list.append ();
-
-    item.section = node->item.section;
-    item.key = node->item.key;
-    item.value = node->item.value;
+    state->list.append (node->item);
 
     modified = false;
 
@@ -294,25 +290,33 @@ void config_save (void)
     StringBuf path = filename_to_uri (aud_get_path (AudPath::UserDir));
     str_insert (path, -1, "/config");
 
-    VFSFile * file = vfs_fopen (path, "w");
+    String current_heading;
 
-    if (file)
+    VFSFile file (path, "w");
+    if (! file)
+        goto FAILED;
+
+    for (const ConfigItem & item : state.list)
     {
-        String current_heading;
-
-        for (const ConfigItem & item : state.list)
+        if (item.section != current_heading)
         {
-            if (item.section != current_heading)
-            {
-                inifile_write_heading (file, item.section);
-                current_heading = item.section;
-            }
+            if (! inifile_write_heading (file, item.section))
+                goto FAILED;
 
-            inifile_write_entry (file, item.key, item.value);
+            current_heading = item.section;
         }
 
-        vfs_fclose (file);
+        if (! inifile_write_entry (file, item.key, item.value))
+            goto FAILED;
     }
+
+    if (file.fflush () < 0)
+        goto FAILED;
+
+    return;
+
+FAILED:
+    AUDWARN ("Error saving configuration.\n");
 }
 
 EXPORT void aud_config_set_defaults (const char * section, const char * const * entries)
@@ -341,7 +345,7 @@ void config_cleanup (void)
 
 EXPORT void aud_set_str (const char * section, const char * name, const char * value)
 {
-    g_return_if_fail (name && value);
+    assert (name && value);
 
     ConfigOp op = {OP_IS_DEFAULT, section ? section : DEFAULT_SECTION, name, String (value)};
     bool is_default = config_op_run (& op, & defaults);
@@ -355,7 +359,7 @@ EXPORT void aud_set_str (const char * section, const char * name, const char * v
 
 EXPORT String aud_get_str (const char * section, const char * name)
 {
-    g_return_val_if_fail (name, String ());
+    assert (name);
 
     ConfigOp op = {OP_GET, section ? section : DEFAULT_SECTION, name};
     config_op_run (& op, & config);

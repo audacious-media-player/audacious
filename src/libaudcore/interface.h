@@ -21,43 +21,49 @@
 #define LIBAUDCORE_INTERFACE_H
 
 enum {
- AUD_MENU_MAIN,
- AUD_MENU_PLAYLIST,
- AUD_MENU_PLAYLIST_ADD,
- AUD_MENU_PLAYLIST_REMOVE,
- AUD_MENU_COUNT};
+    AUD_MENU_MAIN,
+    AUD_MENU_PLAYLIST,
+    AUD_MENU_PLAYLIST_ADD,
+    AUD_MENU_PLAYLIST_REMOVE,
+    AUD_MENU_COUNT
+};
 
+// this enum is also in plugin.h
+#ifndef _AUD_VIS_TYPE_DEFINED
+#define _AUD_VIS_TYPE_DEFINED
 enum {
- AUD_VIS_TYPE_CLEAR,        /* for VisClearFunc */
- AUD_VIS_TYPE_MONO_PCM,     /* for VisMonoPCMFunc */
- AUD_VIS_TYPE_MULTI_PCM,    /* for VisMultiPCMFunc */
- AUD_VIS_TYPE_FREQ,         /* for VisFreqFunc */
- AUD_VIS_TYPES};
+    AUD_VIS_TYPE_CLEAR,
+    AUD_VIS_TYPE_MONO_PCM,
+    AUD_VIS_TYPE_MULTI_PCM,
+    AUD_VIS_TYPE_FREQ,
+    AUD_VIS_TYPES
+};
+#endif
 
-typedef void (* VisClearFunc) (void);
+typedef void (* VisClearFunc) ();
 typedef void (* VisMonoPCMFunc) (const float * pcm);
 typedef void (* VisMultiPCMFunc) (const float * pcm, int channels);
 typedef void (* VisFreqFunc) (const float * freq);
 
 /* generic type */
-typedef void (* VisFunc) (void);
+typedef void (* VisFunc) ();
 
 void aud_ui_show (bool show);
-bool aud_ui_is_shown (void);
+bool aud_ui_is_shown ();
 
 void aud_ui_show_error (const char * message);  /* thread-safe */
 
-void aud_ui_show_about_window (void);
-void aud_ui_hide_about_window (void);
+void aud_ui_show_about_window ();
+void aud_ui_hide_about_window ();
 void aud_ui_show_filebrowser (bool open);
-void aud_ui_hide_filebrowser (void);
-void aud_ui_show_jump_to_song (void);
-void aud_ui_hide_jump_to_song (void);
-void aud_ui_show_prefs_window (void);
-void aud_ui_hide_prefs_window (void);
+void aud_ui_hide_filebrowser ();
+void aud_ui_show_jump_to_song ();
+void aud_ui_hide_jump_to_song ();
+void aud_ui_show_prefs_window ();
+void aud_ui_hide_prefs_window ();
 
-void aud_plugin_menu_add (int id, void (* func) (void), const char * name, const char * icon);
-void aud_plugin_menu_remove (int id, void (* func) (void));
+void aud_plugin_menu_add (int id, void (* func) (), const char * name, const char * icon);
+void aud_plugin_menu_remove (int id, void (* func) ());
 
 void aud_vis_func_add (int type, VisFunc func);
 void aud_vis_func_remove (VisFunc func);

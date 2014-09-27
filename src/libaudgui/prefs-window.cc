@@ -319,10 +319,10 @@ static const char * const titlestring_preset_names[TITLESTRING_NPRESETS] = {
 static Index<ComboItem> fill_plugin_combo (int type)
 {
     Index<ComboItem> elems;
-    elems.insert (0, aud_plugin_count (type));
+    int i = 0;
 
-    for (int i = 0; i < elems.len (); i ++)
-        elems[i] = ComboItem (aud_plugin_get_name (aud_plugin_by_index (type, i)), i);
+    for (PluginHandle * plugin : aud_plugin_list (type))
+        elems.append (aud_plugin_get_name (plugin), i ++);
 
     return elems;
 }
@@ -544,8 +544,9 @@ static void create_song_info_category (void)
 static void iface_fill_prefs_box (void)
 {
     Plugin * header = (Plugin *) aud_plugin_get_header (aud_plugin_get_current (PLUGIN_TYPE_IFACE));
-    if (header && header->prefs)
-        audgui_create_widgets_with_domain (iface_prefs_box, header->prefs->widgets, header->domain);
+    if (header && header->info.prefs)
+        audgui_create_widgets_with_domain (iface_prefs_box,
+         header->info.prefs->widgets, header->info.domain);
 }
 
 static int iface_combo_changed_finish (void *)
@@ -566,7 +567,7 @@ static void iface_combo_changed (void)
     gtk_container_foreach ((GtkContainer *) iface_prefs_box,
      (GtkCallback) gtk_widget_destroy, nullptr);
 
-    aud_plugin_enable (aud_plugin_by_index (PLUGIN_TYPE_IFACE, iface_combo_selected), true);
+    aud_plugin_enable (aud_plugin_list (PLUGIN_TYPE_IFACE)[iface_combo_selected], true);
 
     /* now wait till we have restarted into the new main loop */
     g_idle_add_full (G_PRIORITY_HIGH, iface_combo_changed_finish, nullptr, nullptr);
@@ -577,7 +578,8 @@ static ArrayRef<const ComboItem> iface_combo_fill ()
     if (! iface_combo_elements.len ())
     {
         iface_combo_elements = fill_plugin_combo (PLUGIN_TYPE_IFACE);
-        iface_combo_selected = aud_plugin_get_index (aud_plugin_get_current (PLUGIN_TYPE_IFACE));
+        iface_combo_selected = aud_plugin_list (PLUGIN_TYPE_IFACE).
+         find (aud_plugin_get_current (PLUGIN_TYPE_IFACE));
     }
 
     return {iface_combo_elements.begin (), iface_combo_elements.len ()};
@@ -599,7 +601,7 @@ static void create_appearance_category (void)
 
 static void output_combo_changed (void)
 {
-    PluginHandle * plugin = aud_plugin_by_index (PLUGIN_TYPE_OUTPUT, output_combo_selected);
+    PluginHandle * plugin = aud_plugin_list (PLUGIN_TYPE_OUTPUT)[output_combo_selected];
 
     if (aud_plugin_enable (plugin, true))
     {
@@ -613,7 +615,8 @@ static ArrayRef<const ComboItem> output_combo_fill ()
     if (! output_combo_elements.len ())
     {
         output_combo_elements = fill_plugin_combo (PLUGIN_TYPE_OUTPUT);
-        output_combo_selected = aud_plugin_get_index (aud_plugin_get_current (PLUGIN_TYPE_OUTPUT));
+        output_combo_selected = aud_plugin_list (PLUGIN_TYPE_OUTPUT)
+         .find (aud_plugin_get_current (PLUGIN_TYPE_OUTPUT));
     }
 
     return {output_combo_elements.begin (), output_combo_elements.len ()};

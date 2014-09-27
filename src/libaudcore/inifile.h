@@ -20,14 +20,16 @@
 #ifndef LIBAUDCORE_INIFILE_H
 #define LIBAUDCORE_INIFILE_H
 
-struct VFSFile;
+class VFSFile;
 
-void inifile_parse (VFSFile * file,
+void inifile_parse (VFSFile & file,
  void (* handle_heading) (const char * heading, void * data),
  void (* handle_entry) (const char * key, const char * value, void * data),
  void * data);
 
-bool inifile_write_heading (VFSFile * file, const char * heading);
-bool inifile_write_entry (VFSFile * file, const char * key, const char * value);
+bool inifile_write_heading (VFSFile & file, const char * heading)
+ __attribute__ ((warn_unused_result));
+bool inifile_write_entry (VFSFile & file, const char * key, const char * value)
+ __attribute__ ((warn_unused_result));
 
 #endif /* LIBAUDCORE_INIFILE_H */

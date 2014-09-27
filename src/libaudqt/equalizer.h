@@ -86,6 +86,6 @@ private:
     }
 };
 
-};
+}
 
 #endif

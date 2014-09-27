@@ -17,13 +17,10 @@
  * the use of this software.
  */
 
-#include <glib.h>
-#include <stdio.h>
-
+#include <libaudcore/index.h>
 #include <libaudcore/runtime.h>
 #include <libaudcore/tuple.h>
 #include <libaudcore/vfs.h>
-#include <libaudcore/index.h>
 
 #include "audtag.h"
 #include "util.h"
@@ -39,11 +36,11 @@ static ID3v24TagModule id3v24;
 
 static TagModule * const modules[] = {& id3v24, & id3v22, & ape, & id3v1};
 
-TagModule * find_tag_module (VFSFile * fd, TagType new_type)
+TagModule * find_tag_module (VFSFile & fd, TagType new_type)
 {
     for (TagModule * module : modules)
     {
-        if (vfs_fseek(fd, 0, SEEK_SET))
+        if (fd.fseek (0, VFS_SEEK_SET))
         {
             AUDDBG("not a seekable file\n");
             return nullptr;
@@ -73,26 +70,26 @@ TagModule * find_tag_module (VFSFile * fd, TagType new_type)
 /**************************************************************************************************************
  * tag module object management                                                                               *
  **************************************************************************************************************/
-bool TagModule::can_handle_file (VFSFile * handle)
+bool TagModule::can_handle_file (VFSFile & handle)
 {
     AUDDBG("Module %s does not support %s (no probing function implemented).\n", m_name,
-           vfs_get_filename(handle));
+           handle.filename ());
     return false;
 }
 
-bool TagModule::read_image (VFSFile * handle, void * * data, int64_t * size)
+Index<char> TagModule::read_image (VFSFile & handle)
 {
     AUDDBG("Module %s does not support images.\n", m_name);
-    return false;
+    return Index<char> ();
 }
 
-bool TagModule::read_tag (Tuple & tuple, VFSFile * handle)
+bool TagModule::read_tag (Tuple & tuple, VFSFile & handle)
 {
     AUDDBG ("%s: read_tag() not implemented.\n", m_name);
     return false;
 }
 
-bool TagModule::write_tag (Tuple const & tuple, VFSFile * handle)
+bool TagModule::write_tag (Tuple const & tuple, VFSFile & handle)
 {
     AUDDBG ("%s: write_tag() not implemented.\n", m_name);
     return false;

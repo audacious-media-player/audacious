@@ -18,7 +18,6 @@
  */
 
 #include <string.h>
-#include <glib.h>
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/drct.h>
@@ -54,7 +53,7 @@ static Index<PlaylistAddItem> urilist_to_index (const char * list)
         else
             next = end = strchr (list, 0);
 
-        index.append ({check_uri (str_copy (list, end - list))});
+        index.append (check_uri (str_copy (list, end - list)));
         list = next;
     }
 
@@ -71,44 +70,21 @@ EXPORT void audgui_urilist_insert (int playlist, int at, const char * list)
     aud_playlist_entry_insert_batch (playlist, at, urilist_to_index (list), false);
 }
 
-EXPORT char * audgui_urilist_create_from_selected (int playlist)
+EXPORT StringBuf audgui_urilist_create_from_selected (int playlist)
 {
+    StringBuf buf;
     int entries = aud_playlist_entry_count (playlist);
-    int space = 0;
-    int count, length;
-    char * buffer, * set;
 
-    for (count = 0; count < entries; count ++)
+    for (int count = 0; count < entries; count ++)
     {
-        if (! aud_playlist_entry_get_selected (playlist, count))
-            continue;
+        if (aud_playlist_entry_get_selected (playlist, count))
+        {
+            if (buf.len ())
+                str_insert (buf, -1, "\n");
 
-        String name = aud_playlist_entry_get_filename (playlist, count);
-        g_return_val_if_fail (name != nullptr, nullptr);
-        space += strlen (name) + 1;
+            str_insert (buf, -1, aud_playlist_entry_get_filename (playlist, count));
+        }
     }
 
-    if (! space)
-        return nullptr;
-
-    buffer = g_new (char, space);
-    set = buffer;
-
-    for (count = 0; count < entries; count ++)
-    {
-        if (! aud_playlist_entry_get_selected (playlist, count))
-            continue;
-
-        String name = aud_playlist_entry_get_filename (playlist, count);
-        g_return_val_if_fail (name != nullptr, nullptr);
-        length = strlen (name);
-        g_return_val_if_fail (length + 1 <= space, nullptr);
-        memcpy (set, name, length);
-        set += length;
-        * set ++ = '\n';
-        space -= length + 1;
-    }
-
-    * -- set = 0; /* last newline replaced with null */
-    return buffer;
+    return buf;
 }

@@ -25,9 +25,9 @@
 #include "index.h"
 #include "objects.h"
 
-struct Plugin;
-struct PluginHandle;
-struct VFSFile;
+class Plugin;
+class PluginHandle;
+class VFSFile;
 class Tuple;
 
 typedef bool (* DirForeachFunc) (const char * path, const char * basename, void * user);
@@ -83,7 +83,7 @@ void playback_play (int seek_time, bool pause);
 void playback_stop (void);
 
 /* probe-buffer.c */
-VFSFile * probe_buffer_new (const char * filename);
+VFSFile probe_buffer_new (const char * filename);
 
 /* util.c */
 bool dir_foreach (const char * path, DirForeachFunc func, void * user_data);
@@ -91,7 +91,10 @@ String write_temp_file (void * data, int64_t len);
 
 void describe_song (const char * filename, const Tuple & tuple, String & title,
  String & artist, String & album);
+
+bool same_basename (const char * a, const char * b);
 const char * last_path_element (const char * path);
+void cut_path_element (char * path, int pos);
 
 unsigned int32_hash (unsigned val);
 

@@ -19,11 +19,10 @@
 
 #include "plugins-internal.h"
 
+#include <errno.h>
 #include <pthread.h>
-#include <stdio.h>
 #include <string.h>
 
-#include <glib.h>
 #include <glib/gstdio.h>
 
 #include "audstrings.h"
@@ -33,15 +32,16 @@
 #include "runtime.h"
 
 #define FILENAME "plugin-registry"
-#define FORMAT 8
+#define FORMAT 9
 
 struct PluginWatch {
-    PluginForEachFunc func;
+    PluginWatchFunc func;
     void * data;
 };
 
-struct PluginHandle
+class PluginHandle
 {
+public:
     String basename, path;
     bool loaded;
     int timestamp, type;
@@ -59,7 +59,7 @@ struct PluginHandle
 
     /* for input plugins */
     Index<String> keys[INPUT_KEYS];
-    int has_images, has_subtunes, can_write_tuple, has_infowin;
+    int has_subtunes, can_write_tuple;
 
     PluginHandle (const char * basename, const char * path, bool loaded,
      int timestamp, int type, Plugin * header) :
@@ -74,13 +74,14 @@ struct PluginHandle
         has_configure (false),
         enabled (type == PLUGIN_TYPE_TRANSPORT ||
          type == PLUGIN_TYPE_PLAYLIST || type == PLUGIN_TYPE_INPUT),
-        has_images (false),
         has_subtunes (false),
-        can_write_tuple (false),
-        has_infowin (false) {}
+        can_write_tuple (false) {}
 
     ~PluginHandle ()
-        { g_warn_if_fail (! watches.len ()); }
+    {
+        if (watches.len ())
+            AUDWARN ("Plugin watch count not zero at exit!\n");
+    }
 };
 
 static const char * plugin_type_names[PLUGIN_TYPES] = {
@@ -100,11 +101,7 @@ static const char * input_key_names[INPUT_KEYS] = {
     "mime"
 };
 
-typedef SmartPtr<PluginHandle> PluginPtr;
-typedef Index<PluginPtr> PluginList;
-
-static PluginList plugins[PLUGIN_TYPES];
-
+static Index<PluginHandle *> plugins[PLUGIN_TYPES];
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
 static StringBuf get_basename (const char * path)
@@ -118,7 +115,12 @@ static StringBuf get_basename (const char * path)
 static FILE * open_registry_file (const char * mode)
 {
     StringBuf path = filename_build ({aud_get_path (AudPath::UserDir), FILENAME});
-    return g_fopen (path, mode);
+    FILE * handle = g_fopen (path, mode);
+
+    if (! handle)
+        AUDWARN ("%s: %s\n", (const char *) path, strerror (errno));
+
+    return handle;
 }
 
 static void transport_plugin_save (PluginHandle * plugin, FILE * handle)
@@ -141,10 +143,8 @@ static void input_plugin_save (PluginHandle * plugin, FILE * handle)
             fprintf (handle, "%s %s\n", input_key_names[k], (const char *) key);
     }
 
-    fprintf (handle, "images %d\n", plugin->has_images);
     fprintf (handle, "subtunes %d\n", plugin->has_subtunes);
     fprintf (handle, "writes %d\n", plugin->can_write_tuple);
-    fprintf (handle, "infowin %d\n", plugin->has_infowin);
 }
 
 static void plugin_save (PluginHandle * plugin, FILE * handle)
@@ -169,17 +169,21 @@ static void plugin_save (PluginHandle * plugin, FILE * handle)
         input_plugin_save (plugin, handle);
 }
 
-void plugin_registry_save (void)
+void plugin_registry_save ()
 {
     FILE * handle = open_registry_file ("w");
-    g_return_if_fail (handle);
+    if (! handle)
+        return;
 
     fprintf (handle, "format %d\n", FORMAT);
 
     for (int t = 0; t < PLUGIN_TYPES; t ++)
     {
-        for (PluginPtr & plugin : plugins[t])
-            plugin_save (plugin.get (), handle);
+        for (PluginHandle * plugin : plugins[t])
+        {
+            plugin_save (plugin, handle);
+            delete plugin;
+        }
 
         plugins[t].clear ();
     }
@@ -260,13 +264,9 @@ static void input_plugin_parse (PluginHandle * plugin, FILE * handle)
         }
     }
 
-    if (parse_integer ("images", & plugin->has_images))
-        parse_next (handle);
     if (parse_integer ("subtunes", & plugin->has_subtunes))
         parse_next (handle);
     if (parse_integer ("writes", & plugin->can_write_tuple))
-        parse_next (handle);
-    if (parse_integer ("infowin", & plugin->has_infowin))
         parse_next (handle);
 }
 
@@ -296,7 +296,7 @@ static bool plugin_parse (FILE * handle)
         return false;
 
     PluginHandle * plugin = new PluginHandle (basename, String (), false, timestamp, type, nullptr);
-    plugins[type].append (PluginPtr (plugin));
+    plugins[type].append (plugin);
 
     parse_next (handle);
 
@@ -327,7 +327,7 @@ static bool plugin_parse (FILE * handle)
     return true;
 }
 
-void plugin_registry_load (void)
+void plugin_registry_load ()
 {
     FILE * handle = open_registry_file ("r");
     if (! handle)
@@ -348,7 +348,7 @@ ERR:
     fclose (handle);
 }
 
-EXPORT int aud_plugin_compare (PluginHandle * a, PluginHandle * b)
+static int plugin_compare (PluginHandle * const & a, PluginHandle * const & b, void *)
 {
     if (a->type < b->type)
         return -1;
@@ -366,29 +366,22 @@ EXPORT int aud_plugin_compare (PluginHandle * a, PluginHandle * b)
     return str_compare (a->path, b->path);
 }
 
-void plugin_registry_prune (void)
+void plugin_registry_prune ()
 {
-    auto compare_cb = [] (const PluginPtr & a, const PluginPtr & b, void *) -> int
-        { return aud_plugin_compare ((PluginHandle *) a.get (), (PluginHandle *) b.get ()); };
+    auto check_not_found = [] (PluginHandle * plugin)
+    {
+        if (plugin->path)
+            return false;
+
+        AUDINFO ("Plugin not found: %s\n", (const char *) plugin->basename);
+        delete plugin;
+        return true;
+    };
 
     for (int t = 0; t < PLUGIN_TYPES; t ++)
     {
-        PluginList & list = plugins[t];
-
-        for (int i = 0; i < list.len ();)
-        {
-            PluginPtr & plugin = list[i];
-
-            if (plugin->path)
-                i ++;
-            else
-            {
-                AUDDBG ("Plugin not found: %s\n", (const char *) plugin->basename);
-                list.remove (i, 1);
-            }
-        }
-
-        list.sort (compare_cb, nullptr);
+        plugins[t].remove_if (check_not_found);
+        plugins[t].sort (plugin_compare, nullptr);
     }
 }
 
@@ -398,10 +391,10 @@ EXPORT PluginHandle * aud_plugin_lookup_basename (const char * basename)
 {
     for (int t = 0; t < PLUGIN_TYPES; t ++)
     {
-        for (PluginPtr & plugin : plugins[t])
+        for (PluginHandle * plugin : plugins[t])
         {
             if (! strcmp (plugin->basename, basename))
-                return plugin.get ();
+                return plugin;
         }
     }
 
@@ -412,62 +405,51 @@ static void plugin_get_info (PluginHandle * plugin, bool is_new)
 {
     Plugin * header = plugin->header;
 
-    plugin->name = String (header->name);
-    plugin->domain = PLUGIN_HAS_FUNC (header, domain) ? String (header->domain) : String ();
-    plugin->has_about = PLUGIN_HAS_FUNC (header, about) || PLUGIN_HAS_FUNC (header, about_text);
-    plugin->has_configure = PLUGIN_HAS_FUNC (header, configure) || PLUGIN_HAS_FUNC (header, prefs);
+    plugin->name = String (header->info.name);
+    plugin->domain = String (header->info.domain);
+    plugin->has_about = (bool) header->info.about;
+    plugin->has_configure = (bool) header->info.prefs;
 
     if (header->type == PLUGIN_TYPE_TRANSPORT)
     {
         TransportPlugin * tp = (TransportPlugin *) header;
 
         plugin->schemes.clear ();
-        for (int i = 0; tp->schemes[i]; i ++)
-            plugin->schemes.append (String (tp->schemes[i]));
+        for (const char * scheme : tp->schemes)
+            plugin->schemes.append (String (scheme));
     }
     else if (header->type == PLUGIN_TYPE_PLAYLIST)
     {
         PlaylistPlugin * pp = (PlaylistPlugin *) header;
 
         plugin->exts.clear ();
-        for (int i = 0; pp->extensions[i]; i ++)
-            plugin->exts.append (String (pp->extensions[i]));
+        for (const char * ext : pp->extensions)
+            plugin->exts.append (String (ext));
     }
     else if (header->type == PLUGIN_TYPE_INPUT)
     {
         InputPlugin * ip = (InputPlugin *) header;
-        plugin->priority = ip->priority;
+        plugin->priority = ip->input_info.priority;
 
         for (int key = 0; key < INPUT_KEYS; key ++)
             plugin->keys[key].clear ();
 
-        if (PLUGIN_HAS_FUNC (ip, extensions))
-        {
-            for (int i = 0; ip->extensions[i]; i ++)
-                plugin->keys[INPUT_KEY_EXTENSION].append (String (ip->extensions[i]));
-        }
+        for (const char * ext : ip->input_info.extensions)
+            plugin->keys[INPUT_KEY_EXTENSION].append (String (ext));
 
-        if (PLUGIN_HAS_FUNC (ip, mimes))
-        {
-            for (int i = 0; ip->mimes[i]; i ++)
-                plugin->keys[INPUT_KEY_MIME].append (String (ip->mimes[i]));
-        }
+        for (const char * mime : ip->input_info.mimes)
+            plugin->keys[INPUT_KEY_MIME].append (String (mime));
 
-        if (PLUGIN_HAS_FUNC (ip, schemes))
-        {
-            for (int i = 0; ip->schemes[i]; i ++)
-                plugin->keys[INPUT_KEY_SCHEME].append (String (ip->schemes[i]));
-        }
+        for (const char * scheme : ip->input_info.schemes)
+            plugin->keys[INPUT_KEY_SCHEME].append (String (scheme));
 
-        plugin->has_images = PLUGIN_HAS_FUNC (ip, get_song_image);
-        plugin->has_subtunes = ip->have_subtune;
-        plugin->can_write_tuple = PLUGIN_HAS_FUNC (ip, update_song_tuple);
-        plugin->has_infowin = PLUGIN_HAS_FUNC (ip, file_info_box);
+        plugin->has_subtunes = ip->input_info.has_subtunes;
+        plugin->can_write_tuple = ip->input_info.can_write_tuple;
     }
     else if (header->type == PLUGIN_TYPE_OUTPUT)
     {
         OutputPlugin * op = (OutputPlugin *) header;
-        plugin->priority = 10 - op->probe_priority;
+        plugin->priority = 10 - op->priority;
     }
     else if (header->type == PLUGIN_TYPE_EFFECT)
     {
@@ -492,12 +474,12 @@ void plugin_register (const char * path, int timestamp)
 
     if (plugin)
     {
-        AUDDBG ("Register plugin: %s\n", path);
+        AUDINFO ("Register plugin: %s\n", path);
         plugin->path = String (path);
 
         if (plugin->timestamp != timestamp)
         {
-            AUDDBG ("Rescan plugin: %s\n", path);
+            AUDINFO ("Rescan plugin: %s\n", path);
             Plugin * header = plugin_load (path);
             if (! header || header->type != plugin->type)
                 return;
@@ -511,13 +493,13 @@ void plugin_register (const char * path, int timestamp)
     }
     else
     {
-        AUDDBG ("New plugin: %s\n", path);
+        AUDINFO ("New plugin: %s\n", path);
         Plugin * header = plugin_load (path);
         if (! header)
             return;
 
         plugin = new PluginHandle (basename, path, true, timestamp, header->type, header);
-        plugins[plugin->type].append (PluginPtr (plugin));
+        plugins[plugin->type].append (plugin);
 
         plugin_get_info (plugin, true);
     }
@@ -556,55 +538,22 @@ EXPORT PluginHandle * aud_plugin_by_header (const void * header)
 {
     for (int t = 0; t < PLUGIN_TYPES; t ++)
     {
-        for (PluginPtr & plugin : plugins[t])
+        for (PluginHandle * plugin : plugins[t])
         {
             if (plugin->header == header)
-                return plugin.get ();
+                return plugin;
         }
     }
 
     return nullptr;
 }
 
-EXPORT int aud_plugin_count (int type)
+EXPORT const Index<PluginHandle *> & aud_plugin_list (int type)
 {
-    g_return_val_if_fail (type >= 0 && type < PLUGIN_TYPES, 0);
+    static const Index<PluginHandle *> empty_list;
+    g_return_val_if_fail (type >= 0 && type < PLUGIN_TYPES, empty_list);
 
-    return plugins[type].len ();
-}
-
-EXPORT int aud_plugin_get_index (PluginHandle * plugin)
-{
-    PluginList & list = plugins[plugin->type];
-
-    for (int i = 0; i < list.len (); i ++)
-    {
-        if (list[i].get () == plugin)
-            return i;
-    }
-
-    g_return_val_if_reached (-1);
-}
-
-EXPORT PluginHandle * aud_plugin_by_index (int type, int index)
-{
-    g_return_val_if_fail (type >= 0 && type < PLUGIN_TYPES, nullptr);
-
-    PluginList & list = plugins[type];
-    g_return_val_if_fail (index >= 0 && index < list.len (), nullptr);
-
-    return list[index].get ();
-}
-
-EXPORT void aud_plugin_for_each (int type, PluginForEachFunc func, void * data)
-{
-    g_return_if_fail (type >= 0 && type < PLUGIN_TYPES);
-
-    for (PluginPtr & plugin : plugins[type])
-    {
-        if (! func (plugin.get (), data))
-            return;
-    }
+    return plugins[type];
 }
 
 EXPORT const char * aud_plugin_get_name (PluginHandle * plugin)
@@ -629,17 +578,10 @@ EXPORT bool aud_plugin_get_enabled (PluginHandle * plugin)
 
 static void plugin_call_watches (PluginHandle * plugin)
 {
-    Index<PluginWatch> & watches = plugin->watches;
+    auto call_and_check_remove = [=] (const PluginWatch & watch)
+        { return ! watch.func (plugin, watch.data); };
 
-    for (int i = 0; i < watches.len ();)
-    {
-        PluginWatch & watch = watches[i];
-
-        if (watch.func (plugin, watch.data))
-            i ++;
-        else
-            watches.remove (i, 1);
-    }
+    plugin->watches.remove_if (call_and_check_remove);
 }
 
 void plugin_set_enabled (PluginHandle * plugin, bool enabled)
@@ -648,100 +590,57 @@ void plugin_set_enabled (PluginHandle * plugin, bool enabled)
     plugin_call_watches (plugin);
 }
 
-EXPORT void aud_plugin_for_enabled (int type, PluginForEachFunc func, void * data)
+EXPORT void aud_plugin_add_watch (PluginHandle * plugin, PluginWatchFunc func, void * data)
 {
-    g_return_if_fail (type >= 0 && type < PLUGIN_TYPES);
-
-    for (PluginPtr & plugin : plugins[type])
-    {
-        if (plugin->enabled && ! func (plugin.get (), data))
-            return;
-    }
+    plugin->watches.append (func, data);
 }
 
-EXPORT void aud_plugin_add_watch (PluginHandle * plugin, PluginForEachFunc func, void * data)
+EXPORT void aud_plugin_remove_watch (PluginHandle * plugin, PluginWatchFunc func, void * data)
 {
-    plugin->watches.append ({func, data});
+    auto is_match = [=] (const PluginWatch & watch)
+        { return watch.func == func && watch.data == data; };
+
+    plugin->watches.remove_if (is_match);
 }
 
-EXPORT void aud_plugin_remove_watch (PluginHandle * plugin, PluginForEachFunc func, void * data)
+bool transport_plugin_has_scheme (PluginHandle * plugin, const char * scheme)
 {
-    Index<PluginWatch> & watches = plugin->watches;
+    g_return_val_if_fail (plugin->type == PLUGIN_TYPE_TRANSPORT, false);
 
-    for (int i = 0; i < watches.len ();)
+    for (String & s : plugin->schemes)
     {
-        PluginWatch & watch = watches[i];
-
-        if (watch.func == func && watch.data == data)
-            watches.remove (i, 1);
-        else
-            i ++;
-    }
-}
-
-PluginHandle * transport_plugin_for_scheme (const char * scheme)
-{
-    for (PluginPtr & plugin : plugins[PLUGIN_TYPE_TRANSPORT])
-    {
-        if (! plugin->enabled)
-            continue;
-
-        for (String & s : plugin->schemes)
-        {
-            if (! strcmp (s, scheme))
-                return plugin.get ();
-        }
+        if (! strcmp (s, scheme))
+            return true;
     }
 
-    return nullptr;
+    return false;
 }
 
-void playlist_plugin_for_ext (const char * ext, PluginForEachFunc func, void * data)
+bool playlist_plugin_has_ext (PluginHandle * plugin, const char * ext)
 {
-    for (PluginPtr & plugin : plugins[PLUGIN_TYPE_PLAYLIST])
+    g_return_val_if_fail (plugin->type == PLUGIN_TYPE_PLAYLIST, false);
+
+    for (String & e : plugin->exts)
     {
-        if (! plugin->enabled)
-            continue;
-
-        for (String & e : plugin->exts)
-        {
-            if (! g_ascii_strcasecmp (e, ext))
-            {
-                if (! func (plugin.get (), data))
-                    return;
-
-                break;
-            }
-        }
+        if (! strcmp_nocase (e, ext))
+            return true;
     }
+
+    return false;
 }
 
-void input_plugin_for_key (int key, const char * value, PluginForEachFunc func, void * data)
-{
-    g_return_if_fail (key >= 0 && key < INPUT_KEYS);
-
-    for (PluginPtr & plugin : plugins[PLUGIN_TYPE_INPUT])
-    {
-        if (! plugin->enabled)
-            continue;
-
-        for (String & s : plugin->keys[key])
-        {
-            if (! g_ascii_strcasecmp (s, value))
-            {
-                if (! func (plugin.get (), data))
-                    return;
-
-                break;
-            }
-        }
-    }
-}
-
-bool input_plugin_has_images (PluginHandle * plugin)
+bool input_plugin_has_key (PluginHandle * plugin, int key, const char * value)
 {
     g_return_val_if_fail (plugin->type == PLUGIN_TYPE_INPUT, false);
-    return plugin->has_images;
+    g_return_val_if_fail (key >= 0 && key < INPUT_KEYS, false);
+
+    for (String & s : plugin->keys[key])
+    {
+        if (! strcmp_nocase (s, value))
+            return true;
+    }
+
+    return false;
 }
 
 bool input_plugin_has_subtunes (PluginHandle * plugin)
@@ -754,10 +653,4 @@ bool input_plugin_can_write_tuple (PluginHandle * plugin)
 {
     g_return_val_if_fail (plugin->type == PLUGIN_TYPE_INPUT, false);
     return plugin->can_write_tuple;
-}
-
-bool input_plugin_has_infowin (PluginHandle * plugin)
-{
-    g_return_val_if_fail (plugin->type == PLUGIN_TYPE_INPUT, false);
-    return plugin->has_infowin;
 }

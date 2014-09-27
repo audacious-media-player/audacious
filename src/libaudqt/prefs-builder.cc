@@ -47,6 +47,11 @@ void prefs_populate (QLayout * layout, ArrayRef<const PreferencesWidget> widgets
 
         switch (w.type)
         {
+        case PreferencesWidget::Button: {
+            ButtonWidget * bw = new ButtonWidget (& w);
+            layout->addWidget (bw->widget ());
+            break;
+        }
         case PreferencesWidget::CheckButton: {
             BooleanWidget * bw = new BooleanWidget (& w);
             layout->addWidget (bw->widget ());

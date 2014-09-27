@@ -20,6 +20,8 @@
 #ifndef LIBAUDCORE_PLUGINS_H
 #define LIBAUDCORE_PLUGINS_H
 
+#include <libaudcore/index.h>
+
 enum {
     PLUGIN_TYPE_TRANSPORT,
     PLUGIN_TYPE_PLAYLIST,
@@ -32,17 +34,17 @@ enum {
     PLUGIN_TYPES
 };
 
-struct PluginHandle;
+class PluginHandle;
 
 /* CAUTION: These functions are not thread safe. */
 
-/* returns true to call again for the next plugin, false to stop */
-typedef bool (* PluginForEachFunc) (PluginHandle * plugin, void * data);
-
 PluginHandle * aud_plugin_get_current (int type);
+bool aud_plugin_get_enabled (PluginHandle * plugin);
 bool aud_plugin_enable (PluginHandle * plugin, bool enable);
+
 int aud_plugin_send_message (PluginHandle * plugin, const char * code, const void * data, int size);
-void /*GtkWidget*/ * aud_plugin_get_widget (PluginHandle * plugin);
+void * aud_plugin_get_gtk_widget (PluginHandle * plugin);  // returns (GtkWidget *)
+void * aud_plugin_get_qt_widget (PluginHandle * plugin);  // return (QWidget *)
 
 int aud_plugin_get_type (PluginHandle * plugin);
 const char * aud_plugin_get_basename (PluginHandle * plugin);
@@ -51,21 +53,16 @@ PluginHandle * aud_plugin_lookup_basename (const char * basename);
 const void * aud_plugin_get_header (PluginHandle * plugin);
 PluginHandle * aud_plugin_by_header (const void * header);
 
-int aud_plugin_count (int type);
-int aud_plugin_get_index (PluginHandle * plugin);
-PluginHandle * aud_plugin_by_index (int type, int index);
-
-int aud_plugin_compare (PluginHandle * a, PluginHandle * b);
-void aud_plugin_for_each (int type, PluginForEachFunc func, void * data);
-
-bool aud_plugin_get_enabled (PluginHandle * plugin);
-void aud_plugin_for_enabled (int type, PluginForEachFunc func, void * data);
+const Index<PluginHandle *> & aud_plugin_list (int type);
 
 const char * aud_plugin_get_name (PluginHandle * plugin);
 bool aud_plugin_has_about (PluginHandle * plugin);
 bool aud_plugin_has_configure (PluginHandle * plugin);
 
-void aud_plugin_add_watch (PluginHandle * plugin, PluginForEachFunc func, void * data);
-void aud_plugin_remove_watch (PluginHandle * plugin, PluginForEachFunc func, void * data);
+/* returns true to continue watching, false to stop */
+typedef bool (* PluginWatchFunc) (PluginHandle * plugin, void * data);
+
+void aud_plugin_add_watch (PluginHandle * plugin, PluginWatchFunc func, void * data);
+void aud_plugin_remove_watch (PluginHandle * plugin, PluginWatchFunc func, void * data);
 
 #endif

@@ -20,6 +20,7 @@
 #ifndef LIBAUDCORE_DRCT_H
 #define LIBAUDCORE_DRCT_H
 
+#include <libaudcore/audio.h>
 #include <libaudcore/index.h>
 #include <libaudcore/tuple.h>
 
@@ -51,11 +52,11 @@ void aud_drct_get_ab_repeat (int * a, int * b);
 
 /* --- VOLUME CONTROL --- */
 
-void aud_drct_get_volume (int * left, int * right);
-void aud_drct_set_volume (int left, int right);
-void aud_drct_get_volume_main (int * volume);
+StereoVolume aud_drct_get_volume ();
+void aud_drct_set_volume (StereoVolume volume);
+int aud_drct_get_volume_main ();
 void aud_drct_set_volume_main (int volume);
-void aud_drct_get_volume_balance (int * balance);
+int aud_drct_get_volume_balance ();
 void aud_drct_set_volume_balance (int balance);
 
 /* --- PLAYLIST CONTROL --- */

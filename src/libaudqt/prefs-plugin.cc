@@ -43,17 +43,15 @@ EXPORT void plugin_about (PluginHandle * ph)
     if (! header)
         return;
 
-    const char * name = header->name;
-    const char * text = header->about_text;
-
-    /* Plugin::about() requires gtk+ and is deprecated anyway so we don't bother with it here. */
+    const char * name = header->info.name;
+    const char * text = header->info.about;
     if (! text)
         return;
 
-    if (header->domain)
+    if (header->info.domain)
     {
-        name = dgettext (header->domain, name);
-        text = dgettext (header->domain, text);
+        name = dgettext (header->info.domain, name);
+        text = dgettext (header->info.domain, text);
     }
 
     AUDDBG("name = %s\n", name);
@@ -93,7 +91,7 @@ EXPORT void plugin_prefs (PluginHandle * ph)
     if (! header)
         return;
 
-    const PluginPreferences * p = header->prefs;
+    const PluginPreferences * p = header->info.prefs;
     if (! p)
         return;
 
@@ -106,15 +104,15 @@ EXPORT void plugin_prefs (PluginHandle * ph)
     if (p->init)
         p->init ();
 
-    const char * name = header->name;
-    if (header->domain)
-        name = dgettext (header->domain, header->name);
+    const char * name = header->info.name;
+    if (header->info.domain)
+        name = dgettext (header->info.domain, name);
 
     cw->root->setWindowTitle ((const char *) str_printf(_("%s Settings"), name));
 
     QVBoxLayout * vbox = new QVBoxLayout;
 
-    prefs_populate (vbox, p->widgets, header->domain);
+    prefs_populate (vbox, p->widgets, header->info.domain);
 
     QDialogButtonBox * bbox = new QDialogButtonBox;
 

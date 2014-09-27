@@ -21,6 +21,7 @@ SRCS = adder.cc \
        inifile.cc \
        interface.cc \
        list.cc \
+       logger.cc \
        mainloop.cc \
        multihash.cc \
        output.cc \
@@ -43,7 +44,6 @@ SRCS = adder.cc \
        util.cc \
        vfs.cc \
        vfs_async.cc \
-       vfs_common.cc \
        vfs_local.cc \
        vis-runner.cc \
        visualization.cc
@@ -69,6 +69,7 @@ INCLUDES = audio.h \
            preferences.h \
            probe.h \
            runtime.h \
+           templates.h \
            tinylock.h \
            tuple.h \
            vfs.h \

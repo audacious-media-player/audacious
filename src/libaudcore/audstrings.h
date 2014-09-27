@@ -22,15 +22,14 @@
 
 #include <stdarg.h>
 #include <stdint.h>
-#include <stdio.h>
-#include <string.h>
 
 #include <initializer_list>
 
 #include <libaudcore/index.h>
 #include <libaudcore/objects.h>
 
-int strcmp_safe (const char * a, const char * b);
+int strcmp_safe (const char * a, const char * b, int len = -1);
+int strcmp_nocase (const char * a, const char * b, int len = -1);
 int strlen_bounded (const char * s, int len = -1);
 
 StringBuf str_copy (const char * s, int len = -1);
@@ -76,6 +75,8 @@ StringBuf uri_to_display (const char * uri);
 
 void uri_parse (const char * uri, const char * * base_p, const char * * ext_p,
  const char * * sub_p, int * isub_p);
+
+StringBuf uri_get_scheme (const char * uri);
 StringBuf uri_get_extension (const char * uri);
 
 /* Requires: aud_init() */

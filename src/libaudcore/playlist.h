@@ -25,18 +25,19 @@
 #include <libaudcore/index.h>
 #include <libaudcore/tuple.h>
 
-/* The values which can be passed (packed into a pointer) to the "playlist
- * update" hook.  PLAYLIST_UPDATE_SELECTION means that entries have been
- * selected or unselected, or that entries have been added to or removed from
- * the queue.  PLAYLIST_UPDATE_METADATA means that new metadata has been read
- * for some entries, or that the title or filename of a playlist has changed,
- * and implies PLAYLIST_UPDATE_SELECTION.  PLAYLIST_UPDATE_STRUCTURE covers any
- * change not listed under the other types, and implies both
- * PLAYLIST_UPDATE_SELECTION and PLAYLIST_UPDATE_METADATA. */
-enum {
- PLAYLIST_UPDATE_SELECTION = 1,
- PLAYLIST_UPDATE_METADATA,
- PLAYLIST_UPDATE_STRUCTURE};
+/* The values which can be passed to the "playlist update" hook.
+ * PLAYLIST_UPDATE_SELECTION means that entries have been selected or
+ * unselected, or that entries have been added to or removed from the queue.
+ * PLAYLIST_UPDATE_METADATA means that new metadata has been read for some
+ * entries, or that the title or filename of a playlist has changed, and implies
+ * PLAYLIST_UPDATE_SELECTION.  PLAYLIST_UPDATE_STRUCTURE covers any change not
+ * listed under the other types, and implies both PLAYLIST_UPDATE_SELECTION and
+ * PLAYLIST_UPDATE_METADATA. */
+typedef void * PlaylistUpdateLevel;
+#define PLAYLIST_UPDATE_NONE ((PlaylistUpdateLevel) 0)
+#define PLAYLIST_UPDATE_SELECTION ((PlaylistUpdateLevel) 1)
+#define PLAYLIST_UPDATE_METADATA ((PlaylistUpdateLevel) 2)
+#define PLAYLIST_UPDATE_STRUCTURE ((PlaylistUpdateLevel) 3)
 
 /* The values which can be passed to playlist_sort_by_scheme(),
  * playlist_sort_selected_by_scheme(), and
@@ -64,7 +65,7 @@ typedef int (* PlaylistTupleCompareFunc) (const Tuple & a, const Tuple & b);
 
 /* Returns the number of playlists currently open.  There will always be at
  * least one playlist open.  The playlists are numbered starting from zero. */
-int aud_playlist_count (void);
+int aud_playlist_count ();
 
 /* Adds a new playlist before the one numbered <at>.  If <at> is -1 or equal to
  * the number of playlists, adds a new playlist after the last one. */
@@ -109,7 +110,7 @@ String aud_playlist_get_title (int playlist);
 void aud_playlist_set_active (int playlist);
 
 /* Returns the number of the active playlist. */
-int aud_playlist_get_active (void);
+int aud_playlist_get_active ();
 
 /* Sets the currently playing playlist.  Starts playback, resuming from the
  * position last played if possible.  If <playlist> is -1 or if the requested
@@ -118,18 +119,18 @@ void aud_playlist_set_playing (int playlist);
 
 /* Returns the number of the currently playing playlist.  If no playlist is
  * playing, returns -1. */
-int aud_playlist_get_playing (void);
+int aud_playlist_get_playing ();
 
 /* Returns the number of a "blank" playlist.  The active playlist is returned if
  * it has the default title and has no entries; otherwise, a new playlist is
  * added and returned. */
-int aud_playlist_get_blank (void);
+int aud_playlist_get_blank ();
 
 /* Returns the number of the "temporary" playlist (which is no different from
  * any other playlist except in name).  If the playlist does not exist, a
  * "blank" playlist is obtained from playlist_get_blank() and is renamed to
  * become the temporary playlist. */
-int aud_playlist_get_temporary (void);
+int aud_playlist_get_temporary ();
 
 /* Returns the number of entries in a playlist.  The entries are numbered
  * starting from zero. */
@@ -139,7 +140,7 @@ int aud_playlist_entry_count (int playlist);
  * numbered <at>.  If <at> is negative or equal to the number of entries, the
  * item is added after the last entry.  <tuple> may be nullptr, in which case
  * Audacious will attempt to read metadata from the song file.  If <play> is
- * nonzero, Audacious will begin playback of the items once they have been
+ * true, Audacious will begin playback of the items once they have been
  * added.
  *
  * Because adding items to the playlist can be a slow process, this function may
@@ -155,9 +156,8 @@ void aud_playlist_entry_insert_batch (int playlist, int at,
 
 /* Similar to playlist_entry_insert_batch, but allows the caller to prevent some
  * items from being added by returning false from the <filter> callback.  Useful
- * for searching a folder and adding only new files to the playlist.  Filenames
- * passed to the callback can be used with str_ref(), str_equal(), etc.  <user>
- * is an additional, untyped pointer passed to the callback. */
+ * for searching a folder and adding only new files to the playlist.  <user> is
+ * an additional, untyped pointer passed to the callback. */
 void aud_playlist_entry_insert_filtered (int playlist, int at,
  Index<PlaylistAddItem> && items, PlaylistFilterFunc filter, void * user,
  bool play);
@@ -171,23 +171,25 @@ void aud_playlist_entry_delete (int playlist, int at, int number);
 String aud_playlist_entry_get_filename (int playlist, int entry);
 
 /* Returns a handle to the decoder plugin associated with an entry, or nullptr if
- * none can be found.  If <fast> is nonzero, returns nullptr if no decoder plugin
- * has yet been found. */
-PluginHandle * aud_playlist_entry_get_decoder (int playlist, int entry, bool fast);
+ * none can be found.  If <fast> is true, returns nullptr if no decoder plugin
+ * has yet been found.  On error, an error message is optionally returned. */
+PluginHandle * aud_playlist_entry_get_decoder (int playlist, int entry,
+ bool fast, String * error = nullptr);
 
 /* Returns the tuple associated with an entry, or nullptr if one is not available.
- * If <fast> is nonzero, returns nullptr if metadata for the entry has not yet been
- * read from the song file. */
-Tuple aud_playlist_entry_get_tuple (int playlist, int entry, bool fast);
+ * If <fast> is true, returns nullptr if metadata for the entry has not yet been
+ * read from the song file.  On error, an error message is optionally returned. */
+Tuple aud_playlist_entry_get_tuple (int playlist, int entry, bool fast,
+ String * error = nullptr);
 
 /* Returns a formatted title string for an entry.  This may include information
- * such as the filename, song title, and/or artist.  If <fast> is nonzero,
+ * such as the filename, song title, and/or artist.  If <fast> is true,
  * returns a "best guess" based on the entry's filename if metadata for the
  * entry has not yet been read. */
 String aud_playlist_entry_get_title (int playlist, int entry, bool fast);
 
 /* Returns three strings (title, artist, and album) describing an entry.  If
- * <fast> is nonzero, returns a "best guess" based on the entry's filename if
+ * <fast> is true, returns a "best guess" based on the entry's filename if
  * metadata for the entry has not yet been read.  The caller may pass nullptr for
  * any values that are not needed; nullptr may also be returned for any values that
  * are not available. */
@@ -323,9 +325,9 @@ void aud_playlist_queue_delete (int playlist, int at, int number);
 /* Removes the selected entries in a playlist from the queue, if they are in it. */
 void aud_playlist_queue_delete_selected (int playlist);
 
-/* Returns nonzero if a "playlist update" hook call is pending.  If called from
+/* Returns true if a "playlist update" hook call is pending.  If called from
  * within the hook, the current hook call is not considered pending. */
-bool aud_playlist_update_pending (void);
+bool aud_playlist_update_pending ();
 
 /* May be called within the "playlist update" hook to determine the update level
  * and number of entries changed in a playlist.  Returns the update level for
@@ -333,13 +335,13 @@ bool aud_playlist_update_pending (void);
  * number of contiguous entries to be updated in <count>.  Note that entries may
  * have been added or removed within this range.  If no entries in the playlist
  * have changed, returns zero. */
-int aud_playlist_updated_range (int playlist, int * at, int * count);
+PlaylistUpdateLevel aud_playlist_updated_range (int playlist, int * at, int * count);
 
-/* Returns nonzero if entries are being added to a playlist in the background.
+/* Returns true if entries are being added to a playlist in the background.
  * If <playlist> is -1, checks all playlists. */
 bool aud_playlist_add_in_progress (int playlist);
 
-/* Returns nonzero if entries in a playlist are being scanned for metadata in
+/* Returns true if entries in a playlist are being scanned for metadata in
  * the background.  If <playlist> is -1, checks all playlists. */
 bool aud_playlist_scan_in_progress (int playlist);
 
@@ -368,11 +370,11 @@ void aud_playlist_remove_failed (int playlist);
  * create a blank tuple and set its title field to "^A". */
 void aud_playlist_select_by_patterns (int playlist, const Tuple & patterns);
 
-/* Returns nonzero if <filename> refers to a playlist file. */
+/* Returns true if <filename> refers to a playlist file. */
 bool aud_filename_is_playlist (const char * filename);
 
 /* Saves the entries in a playlist to a playlist file.  The format of the file
- * is determined from the file extension.  Returns nonzero on success. */
+ * is determined from the file extension.  Returns true on success. */
 bool aud_playlist_save (int playlist, const char * filename);
 
 #endif
