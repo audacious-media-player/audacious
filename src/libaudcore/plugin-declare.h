@@ -163,7 +163,7 @@ public:
         to_str_array (AUD_INPUT_SCHEMES)
     };
 
-    InputPluginInstance () :
+    constexpr InputPluginInstance () :
         InputPlugin (info, input_info) {}
 
 #ifdef AUD_PLUGIN_INIT
@@ -227,7 +227,7 @@ public:
         AUD_PLUGIN_PREFS
     };
 
-    EffectPluginInstance () :
+    constexpr EffectPluginInstance () :
         EffectPlugin (info, AUD_EFFECT_ORDER, AUD_EFFECT_SAME_FMT) {}
 
 #ifdef AUD_PLUGIN_INIT
@@ -288,7 +288,7 @@ public:
         AUD_PLUGIN_PREFS
     };
 
-    OutputPluginInstance () :
+    constexpr OutputPluginInstance () :
         OutputPlugin (info, AUD_OUTPUT_PRIORITY, AUD_OUTPUT_REOPEN) {}
 
 #ifdef AUD_PLUGIN_INIT
@@ -373,7 +373,7 @@ public:
         AUD_PLUGIN_PREFS
     };
 
-    VisPluginInstance () :
+    constexpr VisPluginInstance () :
         VisPlugin (info,
 #ifdef AUD_VIS_RENDER_MONO
          AUD_VIS_TYPE_MONO_PCM
@@ -442,7 +442,7 @@ public:
         AUD_PLUGIN_PREFS
     };
 
-    GeneralPluginInstance () :
+    constexpr GeneralPluginInstance () :
         GeneralPlugin (info, AUD_GENERAL_AUTO_ENABLE) {}
 
 #ifdef AUD_PLUGIN_INIT
@@ -480,7 +480,7 @@ public:
         AUD_PLUGIN_PREFS
     };
 
-    IfacePluginInstance () :
+    constexpr IfacePluginInstance () :
         IfacePlugin (info) {}
 
 #ifdef AUD_PLUGIN_INIT

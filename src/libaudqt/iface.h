@@ -36,7 +36,7 @@ namespace audqt {
 class QtIfacePlugin : public IfacePlugin
 {
 public:
-    QtIfacePlugin (PluginInfo info) : IfacePlugin (info) {};
+    constexpr QtIfacePlugin (PluginInfo info) : IfacePlugin (info) {};
 
     void show_about_window () { aboutwindow_show (); };
     void hide_about_window () { aboutwindow_hide (); };

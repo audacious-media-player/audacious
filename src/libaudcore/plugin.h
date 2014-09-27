@@ -115,7 +115,7 @@ struct PluginInfo {
 class Plugin
 {
 public:
-    Plugin (int type, PluginInfo info) :
+    constexpr Plugin (int type, PluginInfo info) :
         type (type),
         info (info) {}
 
@@ -134,7 +134,7 @@ public:
 class TransportPlugin : public Plugin
 {
 public:
-    TransportPlugin (const PluginInfo info,
+    constexpr TransportPlugin (const PluginInfo info,
      const ArrayRef<const char *> schemes, VFSFile::OpenFunc fopen_impl) :
         Plugin (PLUGIN_TYPE_TRANSPORT, info),
         schemes (schemes),
@@ -150,7 +150,8 @@ public:
 class PlaylistPlugin : public Plugin
 {
 public:
-    PlaylistPlugin (const PluginInfo info, const ArrayRef<const char *> extensions, bool can_save) :
+    constexpr PlaylistPlugin (const PluginInfo info,
+     const ArrayRef<const char *> extensions, bool can_save) :
         Plugin (PLUGIN_TYPE_PLAYLIST, info),
         extensions (extensions),
         can_save (can_save) {}
@@ -179,7 +180,7 @@ public:
 class OutputPlugin : public Plugin
 {
 public:
-    OutputPlugin (const PluginInfo info, int priority, bool force_reopen = false) :
+    constexpr OutputPlugin (const PluginInfo info, int priority, bool force_reopen = false) :
         Plugin (PLUGIN_TYPE_OUTPUT, info),
         priority (priority),
         force_reopen (force_reopen) {}
@@ -237,7 +238,7 @@ public:
 class EffectPlugin : public Plugin
 {
 public:
-    EffectPlugin (const PluginInfo info, int order, bool preserves_format) :
+    constexpr EffectPlugin (const PluginInfo info, int order, bool preserves_format) :
         Plugin (PLUGIN_TYPE_EFFECT, info),
         order (order),
         preserves_format (preserves_format) {}
@@ -322,7 +323,7 @@ struct InputPluginInfo
 class InputPlugin : public Plugin
 {
 public:
-    InputPlugin (PluginInfo info, InputPluginInfo input_info) :
+    constexpr InputPlugin (PluginInfo info, InputPluginInfo input_info) :
         Plugin (PLUGIN_TYPE_INPUT, info),
         input_info (input_info) {}
 
@@ -356,7 +357,7 @@ public:
 class DockablePlugin : public Plugin
 {
 public:
-    DockablePlugin (int type, PluginInfo info) :
+    constexpr DockablePlugin (int type, PluginInfo info) :
         Plugin (type, info) {}
 
     /* GtkWidget * get_gtk_widget () */
@@ -369,7 +370,7 @@ public:
 class GeneralPlugin : public DockablePlugin
 {
 public:
-    GeneralPlugin (PluginInfo info, bool enabled_by_default) :
+    constexpr GeneralPlugin (PluginInfo info, bool enabled_by_default) :
         DockablePlugin (PLUGIN_TYPE_GENERAL, info),
         enabled_by_default (enabled_by_default) {}
 
@@ -379,7 +380,7 @@ public:
 class VisPlugin : public DockablePlugin
 {
 public:
-    VisPlugin (PluginInfo info, int vis_type) :
+    constexpr VisPlugin (PluginInfo info, int vis_type) :
         DockablePlugin (PLUGIN_TYPE_VIS, info),
         vis_type (vis_type) {}
 
@@ -401,7 +402,7 @@ public:
 class IfacePlugin : public Plugin
 {
 public:
-    IfacePlugin (PluginInfo info) :
+    constexpr IfacePlugin (PluginInfo info) :
         Plugin (PLUGIN_TYPE_IFACE, info) {}
 
     virtual void show (bool show) = 0;
