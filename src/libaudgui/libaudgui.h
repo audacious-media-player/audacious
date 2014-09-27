@@ -22,7 +22,7 @@
 
 #include <libaudcore/objects.h>
 
-struct PluginHandle;
+class PluginHandle;
 
 void audgui_show_add_url_window(bool open);
 

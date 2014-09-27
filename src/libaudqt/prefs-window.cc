@@ -87,7 +87,7 @@ static const PluginCategory plugin_categories[] = {
     { PLUGIN_TYPE_TRANSPORT, N_("Transport") }
 };
 
-static const TitleFieldTag title_field_tags[] = {
+/* static const TitleFieldTag title_field_tags[] = {
     { N_("Artist")     , "${artist}" },
     { N_("Album")      , "${album}" },
     { N_("Title")      , "${title}" },
@@ -100,7 +100,7 @@ static const TitleFieldTag title_field_tags[] = {
     { N_("Comment")    , "${comment}" },
     { N_("Codec")      , "${codec}" },
     { N_("Quality")    , "${quality}" }
-};
+}; */
 
 #ifdef USE_CHARDET
 static const ComboItem chardet_detector_presets[] = {
@@ -293,7 +293,7 @@ static const PreferencesWidget song_info_page_widgets[] = {
         WIDGET_CHILD)
 };
 
-#define TITLESTRING_NPRESETS 6
+/* #define TITLESTRING_NPRESETS 6
 
 static const char * const titlestring_presets[TITLESTRING_NPRESETS] = {
     "${title}",
@@ -311,7 +311,7 @@ static const char * const titlestring_preset_names[TITLESTRING_NPRESETS] = {
     N_("ARTIST - ALBUM - TRACK. TITLE"),
     N_("ARTIST [ ALBUM ] - TRACK. TITLE"),
     N_("ALBUM - TITLE")
-};
+}; */
 
 static Index<ComboItem> fill_plugin_combo (int type)
 {
