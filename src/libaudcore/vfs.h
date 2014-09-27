@@ -104,6 +104,8 @@ public:
         { return (bool) m_impl; }
     const char * filename () const
         { return m_filename; }
+    const char * error () const
+        { return m_error; }
 
     /* basic operations */
 
@@ -128,13 +130,13 @@ public:
 
     /* for internal use only */
 
-    typedef VFSImpl * (* OpenFunc) (const char * filename, const char * mode);
+    typedef VFSImpl * (* OpenFunc) (const char * filename, const char * mode, String & error);
     typedef OpenFunc (* LookupFunc) (const char * scheme);
 
     static void set_lookup_func (LookupFunc func);
 
 private:
-    String m_filename;
+    String m_filename, m_error;
     SmartPtr<VFSImpl> m_impl;
 };
 

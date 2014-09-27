@@ -27,6 +27,7 @@
 #include <glib/gstdio.h>
 
 #include "audstrings.h"
+#include "i18n.h"
 #include "runtime.h"
 
 #ifdef _WIN32
@@ -72,10 +73,15 @@ private:
     LocalOp m_last_op;
 };
 
-VFSImpl * vfs_local_fopen (const char * uri, const char * mode)
+VFSImpl * vfs_local_fopen (const char * uri, const char * mode, String & error)
 {
     StringBuf path = uri_to_filename (uri);
-    g_return_val_if_fail (path, nullptr);
+
+    if (! path)
+    {
+        error = String (_("Invalid filename"));
+        return nullptr;
+    }
 
     const char * suffix = "";
 
@@ -93,7 +99,9 @@ VFSImpl * vfs_local_fopen (const char * uri, const char * mode)
 
     if (! stream)
     {
+        int errsave = errno;
         perror (path);
+        error = String (strerror (errsave));
         return nullptr;
     }
 

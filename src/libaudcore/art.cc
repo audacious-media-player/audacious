@@ -107,12 +107,11 @@ static void request_callback (ScanRequest * request)
 {
     pthread_mutex_lock (& mutex);
 
-    String file = scan_request_get_filename (request);
-    ArtItem * item = art_items.lookup (file);
+    ArtItem * item = art_items.lookup (request->filename);
     assert (item && ! item->flag);
 
-    item->data = scan_request_get_image_data (request);
-    item->art_file = scan_request_get_image_file (request);
+    item->data = std::move (request->image_data);
+    item->art_file = std::move (request->image_file);
     item->flag = FLAG_DONE;
 
     queued_requests.queue (send_requests, nullptr);
@@ -135,7 +134,7 @@ static ArtItem * art_item_get (const String & file)
         item = art_items.add (file, ArtItem ());
         item->refcount = 1; /* temporary reference */
 
-        scan_request (file, SCAN_IMAGE, nullptr, request_callback);
+        scanner_request (new ScanRequest (file, SCAN_IMAGE, request_callback));
     }
 
     return nullptr;

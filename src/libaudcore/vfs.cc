@@ -30,6 +30,7 @@
 #include <glib/gstdio.h>
 
 #include "audstrings.h"
+#include "i18n.h"
 #include "runtime.h"
 #include "vfs_local.h"
 
@@ -64,12 +65,14 @@ EXPORT VFSFile::VFSFile (const char * filename, const char * mode)
         if (! scheme)
         {
             AUDERR ("Invalid URI: %s\n", filename);
+            m_error = String (_("Invalid URI"));
             return;
         }
 
         if (! (fopen_impl = lookup_func (scheme)))
         {
             AUDERR ("Unknown URI scheme: %s://", (const char *) scheme);
+            m_error = String (_("Unknown URI scheme"));
             return;
         }
     }
@@ -77,7 +80,7 @@ EXPORT VFSFile::VFSFile (const char * filename, const char * mode)
     const char * sub;
     uri_parse (filename, nullptr, nullptr, & sub, nullptr);
 
-    m_impl.capture (fopen_impl (str_copy (filename, sub - filename), mode));
+    m_impl.capture (fopen_impl (str_copy (filename, sub - filename), mode, m_error));
     if (! m_impl)
         return;
 

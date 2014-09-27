@@ -22,13 +22,14 @@
 #include <string.h>
 
 #include "audstrings.h"
+#include "i18n.h"
 #include "internal.h"
 #include "playlist.h"
 #include "plugin.h"
 #include "plugins-internal.h"
 #include "runtime.h"
 
-EXPORT PluginHandle * aud_file_find_decoder (const char * filename, bool fast)
+EXPORT PluginHandle * aud_file_find_decoder (const char * filename, bool fast, String * error)
 {
     AUDINFO ("Probing %s.\n", filename);
 
@@ -67,9 +68,13 @@ EXPORT PluginHandle * aud_file_find_decoder (const char * filename, bool fast)
     AUDDBG ("Opening %s.\n", filename);
 
     VFSFile file (probe_buffer_new (filename));
+
     if (! file)
     {
-        AUDINFO ("Open failed.\n");
+        if (error)
+            * error = String (file.error ());
+
+        AUDINFO ("Open failed: %s.\n", file.error ());
         return nullptr;
     }
 
@@ -110,37 +115,52 @@ EXPORT PluginHandle * aud_file_find_decoder (const char * filename, bool fast)
 
         if (file.fseek (0, VFS_SEEK_SET) != 0)
         {
+            if (error)
+                * error = String (_("Seek error"));
+
             AUDINFO ("Seek failed.\n");
             return nullptr;
         }
     }
+
+    if (error)
+        * error = String (_("File format not recognized"));
 
     AUDINFO ("No plugins matched.\n");
     return nullptr;
 }
 
 static bool open_file (const char * filename, InputPlugin * ip,
- const char * mode, VFSFile & handle)
+ const char * mode, VFSFile & handle, String * error = nullptr)
 {
     /* no need to open a handle for custom URI schemes */
     if (ip->input_info.schemes.len)
         return true;
 
     handle = VFSFile (filename, mode);
+    if (! handle && error)
+        * error = String (handle.error ());
+
     return (bool) handle;
 }
 
-EXPORT Tuple aud_file_read_tuple (const char * filename, PluginHandle * decoder)
+EXPORT Tuple aud_file_read_tuple (const char * filename, PluginHandle * decoder, String * error)
 {
     InputPlugin * ip = (InputPlugin *) aud_plugin_get_header (decoder);
+    if (! ip && error)
+        * error = String (_("Error loading plugin"));
     if (! ip)
         return Tuple ();
 
     VFSFile handle;
-    if (! open_file (filename, ip, "r", handle))
+    if (! open_file (filename, ip, "r", handle, error))
         return Tuple ();
 
-    return ip->read_tuple (filename, handle);
+    Tuple tuple = ip->read_tuple (filename, handle);
+    if (! tuple && error)
+        * error = String (_("Error reading metadata"));
+
+    return tuple;
 }
 
 EXPORT Index<char> aud_file_read_image (const char * filename, PluginHandle * decoder)

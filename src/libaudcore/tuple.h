@@ -111,7 +111,7 @@ public:
         b.data = nullptr;
     }
 
-    void operator= (Tuple && b)
+    Tuple & operator= (Tuple && b)
     {
         if (this != & b)
         {
@@ -119,6 +119,7 @@ public:
             data = b.data;
             b.data = nullptr;
         }
+        return * this;
     }
 
     explicit operator bool () const

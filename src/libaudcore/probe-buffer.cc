@@ -139,5 +139,8 @@ String ProbeBuffer::get_metadata (const char * field)
 VFSFile probe_buffer_new (const char * filename)
 {
     VFSFile file (filename, "r");
-    return file ? VFSFile (filename, new ProbeBuffer (std::move (file))) : VFSFile ();
+    if (! file)
+        return file;  // preserve error message
+
+    return VFSFile (filename, new ProbeBuffer (std::move (file)));
 }

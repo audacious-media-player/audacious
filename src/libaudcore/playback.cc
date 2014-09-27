@@ -316,36 +316,44 @@ static void end_cb (void * unused)
     }
 }
 
-static bool open_file (void)
+static bool open_file (String & error)
 {
     /* no need to open a handle for custom URI schemes */
     if (current_decoder->input_info.schemes.len)
         return true;
 
     current_file = VFSFile (current_filename, "r");
+    if (! current_file)
+        error = String (current_file.error ());
+
     return (bool) current_file;
 }
 
 static void * playback_thread (void *)
 {
+    String error;
     Tuple tuple;
     int length;
 
     if (! current_decoder)
     {
-        PluginHandle * p = playback_entry_get_decoder ();
-        current_decoder = p ? (InputPlugin *) aud_plugin_get_header (p) : nullptr;
+        PluginHandle * p = playback_entry_get_decoder (& error);
+        if (p && ! (current_decoder = (InputPlugin *) aud_plugin_get_header (p)))
+            error = String (_("Error loading plugin"));
 
         if (! current_decoder)
         {
-            aud_ui_show_error (str_printf (_("No decoder found for %s."),
-             (const char *) current_filename));
             playback_error = true;
             goto DONE;
         }
     }
 
-    tuple = playback_entry_get_tuple ();
+    if (! (tuple = playback_entry_get_tuple (& error)))
+    {
+        playback_error = true;
+        goto DONE;
+    }
+
     length = playback_entry_get_length ();
 
     if (length < 1)
@@ -366,10 +374,8 @@ static void * playback_thread (void *)
 
     read_gain_from_tuple (tuple);
 
-    if (! open_file ())
+    if (! open_file (error))
     {
-        aud_ui_show_error (str_printf (_("%s could not be opened."),
-         (const char *) current_filename));
         playback_error = true;
         goto DONE;
     }
@@ -377,6 +383,15 @@ static void * playback_thread (void *)
     playback_error = ! current_decoder->play (current_filename, current_file);
 
 DONE:
+    if (playback_error)
+    {
+        if (! error)
+            error = String (_("Unknown playback error"));
+
+        aud_ui_show_error (str_printf (_("Error opening %s:\n%s"),
+         (const char *) current_filename, (const char *) error));
+    }
+
     if (! ready_flag)
         set_ready ();
 

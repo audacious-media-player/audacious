@@ -21,6 +21,7 @@
 #define LIBAUDCORE_PROBE_H
 
 #include <libaudcore/index.h>
+#include <libaudcore/objects.h>
 
 class PluginHandle;
 class Tuple;
@@ -39,8 +40,8 @@ const char * aud_art_request_file (const char * file);
 /* Releases album art returned by art_request_data() or art_request_file(). */
 void aud_art_unref (const char * file);
 
-PluginHandle * aud_file_find_decoder (const char * filename, bool fast);
-Tuple aud_file_read_tuple (const char * filename, PluginHandle * decoder);
+PluginHandle * aud_file_find_decoder (const char * filename, bool fast, String * error = nullptr);
+Tuple aud_file_read_tuple (const char * filename, PluginHandle * decoder, String * error = nullptr);
 Index<char> aud_file_read_image (const char * filename, PluginHandle * decoder);
 bool aud_file_can_write_tuple (const char * filename, PluginHandle * decoder);
 bool aud_file_write_tuple (const char * filename, PluginHandle * decoder, const Tuple & tuple);
