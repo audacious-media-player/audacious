@@ -50,7 +50,7 @@ struct MultiFuncs
 
 struct SingleFuncs
 {
-    PluginHandle * (* get_current) (void);
+    PluginHandle * (* get_current) ();
     bool (* set_current) (PluginHandle * plugin);
 };
 
@@ -172,7 +172,7 @@ static VFSFile::OpenFunc lookup_transport (const char * scheme)
     return nullptr;
 }
 
-void start_plugins_one (void)
+void start_plugins_one ()
 {
     plugin_system_init ();
     VFSFile::set_lookup_func (lookup_transport);
@@ -181,7 +181,7 @@ void start_plugins_one (void)
         start_plugins (i);
 }
 
-void start_plugins_two (void)
+void start_plugins_two ()
 {
     for (int i = PLUGIN_TYPE_GENERAL; i < PLUGIN_TYPES; i ++)
         start_plugins (i);
@@ -212,13 +212,13 @@ static void stop_plugins (int type)
     }
 }
 
-void stop_plugins_two (void)
+void stop_plugins_two ()
 {
     for (int i = PLUGIN_TYPES - 1; i >= PLUGIN_TYPE_GENERAL; i --)
         stop_plugins (i);
 }
 
-void stop_plugins_one (void)
+void stop_plugins_one ()
 {
     for (int i = PLUGIN_TYPE_GENERAL - 1; i >= 0; i --)
         stop_plugins (i);

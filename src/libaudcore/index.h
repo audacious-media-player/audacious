@@ -168,6 +168,19 @@ public:
         return -1;
     }
 
+    template<class F>
+    void remove_if (F func)
+    {
+        T * iter = begin ();
+        while (iter != end ())
+        {
+            if (func (* iter))
+                remove (iter - begin (), 1);
+            else
+                iter ++;
+        }
+    }
+
     void sort (CompareFunc compare, void * userdata)
     {
         struct state_t {

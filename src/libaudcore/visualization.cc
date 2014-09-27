@@ -47,21 +47,17 @@ EXPORT void aud_vis_func_remove (VisFunc func)
 {
     int num_disabled = 0;
 
-    for (int type = 0; type < AUD_VIS_TYPES; type ++)
+    auto is_match = [&] (VisFunc func2)
     {
-        Index<VisFunc> & list = vis_funcs[type];
+        if (func2 != func)
+            return false;
 
-        for (int i = 0; i < list.len ();)
-        {
-            if (list[i] == func)
-            {
-                list.remove (i, 1);
-                num_disabled ++;
-            }
-            else
-                i ++;
-        }
-    }
+        num_disabled ++;
+        return true;
+    };
+
+    for (int type = 0; type < AUD_VIS_TYPES; type ++)
+        vis_funcs[type].remove_if (is_match);
 
     num_enabled -= num_disabled;
     if (! num_enabled)
@@ -144,21 +140,19 @@ static void vis_unload (PluginHandle * plugin)
 
     header->clear ();
 
-    assert (header->vis_type >= 0 && header->vis_type < AUD_VIS_TYPES);
-    Index<VisPlugin *> & list = vis_plugins[header->vis_type];
-
     int num_disabled = 0;
 
-    for (int i = 0; i < list.len ();)
+    auto is_match = [&] (VisPlugin * header2)
     {
-        if (list[i] == header)
-        {
-            list.remove (i, 1);
-            num_disabled ++;
-        }
-        else
-            i ++;
-    }
+        if (header2 != header)
+            return false;
+
+        num_disabled ++;
+        return true;
+    };
+
+    assert (header->vis_type >= 0 && header->vis_type < AUD_VIS_TYPES);
+    vis_plugins[header->vis_type].remove_if (is_match);
 
     num_enabled -= num_disabled;
     if (! num_enabled)

@@ -142,7 +142,7 @@ static void scan_plugins (const char * path)
     dir_foreach (path, scan_plugin_func, nullptr);
 }
 
-void plugin_system_init (void)
+void plugin_system_init ()
 {
     assert (g_module_supported ());
 
@@ -155,7 +155,7 @@ void plugin_system_init (void)
     plugin_registry_prune ();
 }
 
-void plugin_system_cleanup (void)
+void plugin_system_cleanup ()
 {
     plugin_registry_save ();
 

@@ -67,13 +67,10 @@ EXPORT void unsubscribe (Handler handler)
 {
     tiny_lock_write (& lock);
 
-    for (int i = 0; i < handlers.len ();)
-    {
-        if (handlers[i].handler == handler)
-            handlers.remove (i, 1);
-        else
-            i ++;
-    }
+    auto is_match = [=] (const HandlerData & data)
+        { return data.handler == handler; };
+
+    handlers.remove_if (is_match);
 
     min_level = stderr_level;
 

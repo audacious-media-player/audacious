@@ -37,14 +37,10 @@ struct HookList
 
     void compact ()
     {
-        int i = 0;
-        while (i < items.len ())
-        {
-            if (items[i].func)
-                i ++;
-            else
-                items.remove (i, 1);
-        }
+        auto is_empty = [] (const HookItem & item)
+            { return ! item.func; };
+
+        items.remove_if (is_empty);
     }
 };
 

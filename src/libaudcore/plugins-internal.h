@@ -31,20 +31,20 @@ enum {
  INPUT_KEYS};
 
 /* plugin-init.c */
-void start_plugins_one (void);
-void start_plugins_two (void);
-void stop_plugins_two (void);
-void stop_plugins_one (void);
+void start_plugins_one ();
+void start_plugins_two ();
+void stop_plugins_two ();
+void stop_plugins_one ();
 
 /* plugin-load.c */
-void plugin_system_init (void);
-void plugin_system_cleanup (void);
+void plugin_system_init ();
+void plugin_system_cleanup ();
 Plugin * plugin_load (const char * path);
 
 /* plugin-registry.c */
-void plugin_registry_load (void);
-void plugin_registry_prune (void);
-void plugin_registry_save (void);
+void plugin_registry_load ();
+void plugin_registry_prune ();
+void plugin_registry_save ();
 
 void plugin_register (const char * path, int timestamp);
 void plugin_set_enabled (PluginHandle * plugin, bool enabled);

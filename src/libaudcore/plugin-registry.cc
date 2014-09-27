@@ -169,7 +169,7 @@ static void plugin_save (PluginHandle * plugin, FILE * handle)
         input_plugin_save (plugin, handle);
 }
 
-void plugin_registry_save (void)
+void plugin_registry_save ()
 {
     FILE * handle = open_registry_file ("w");
     if (! handle)
@@ -327,7 +327,7 @@ static bool plugin_parse (FILE * handle)
     return true;
 }
 
-void plugin_registry_load (void)
+void plugin_registry_load ()
 {
     FILE * handle = open_registry_file ("r");
     if (! handle)
@@ -366,27 +366,22 @@ static int plugin_compare (PluginHandle * const & a, PluginHandle * const & b, v
     return str_compare (a->path, b->path);
 }
 
-void plugin_registry_prune (void)
+void plugin_registry_prune ()
 {
+    auto check_not_found = [] (PluginHandle * plugin)
+    {
+        if (plugin->path)
+            return false;
+
+        AUDINFO ("Plugin not found: %s\n", (const char *) plugin->basename);
+        delete plugin;
+        return true;
+    };
+
     for (int t = 0; t < PLUGIN_TYPES; t ++)
     {
-        auto & list = plugins[t];
-
-        for (int i = 0; i < list.len ();)
-        {
-            PluginHandle * plugin = list[i];
-
-            if (plugin->path)
-                i ++;
-            else
-            {
-                AUDINFO ("Plugin not found: %s\n", (const char *) plugin->basename);
-                list.remove (i, 1);
-                delete plugin;
-            }
-        }
-
-        list.sort (plugin_compare, nullptr);
+        plugins[t].remove_if (check_not_found);
+        plugins[t].sort (plugin_compare, nullptr);
     }
 }
 
@@ -583,17 +578,10 @@ EXPORT bool aud_plugin_get_enabled (PluginHandle * plugin)
 
 static void plugin_call_watches (PluginHandle * plugin)
 {
-    Index<PluginWatch> & watches = plugin->watches;
+    auto call_and_check_remove = [=] (const PluginWatch & watch)
+        { return ! watch.func (plugin, watch.data); };
 
-    for (int i = 0; i < watches.len ();)
-    {
-        PluginWatch & watch = watches[i];
-
-        if (watch.func (plugin, watch.data))
-            i ++;
-        else
-            watches.remove (i, 1);
-    }
+    plugin->watches.remove_if (call_and_check_remove);
 }
 
 void plugin_set_enabled (PluginHandle * plugin, bool enabled)
@@ -609,17 +597,10 @@ EXPORT void aud_plugin_add_watch (PluginHandle * plugin, PluginWatchFunc func, v
 
 EXPORT void aud_plugin_remove_watch (PluginHandle * plugin, PluginWatchFunc func, void * data)
 {
-    Index<PluginWatch> & watches = plugin->watches;
+    auto is_match = [=] (const PluginWatch & watch)
+        { return watch.func == func && watch.data == data; };
 
-    for (int i = 0; i < watches.len ();)
-    {
-        PluginWatch & watch = watches[i];
-
-        if (watch.func == func && watch.data == data)
-            watches.remove (i, 1);
-        else
-            i ++;
-    }
+    plugin->watches.remove_if (is_match);
 }
 
 bool transport_plugin_has_scheme (PluginHandle * plugin, const char * scheme)

@@ -32,7 +32,7 @@
 struct MenuItem {
     const char * name;
     const char * icon;
-    void (* func) (void);
+    void (* func) ();
 };
 
 static PluginHandle * current_plugin;
@@ -42,7 +42,7 @@ static IfacePlugin * current_interface;
 
 static Index<MenuItem> menu_items[AUD_MENU_COUNT];
 
-static void add_menu_items (void)
+static void add_menu_items ()
 {
     for (int id = 0; id < AUD_MENU_COUNT; id ++)
     {
@@ -51,7 +51,7 @@ static void add_menu_items (void)
     }
 }
 
-static void remove_menu_items (void)
+static void remove_menu_items ()
 {
     for (int id = 0; id < AUD_MENU_COUNT; id ++)
     {
@@ -81,7 +81,7 @@ static bool interface_load (PluginHandle * plugin)
     return true;
 }
 
-static void interface_unload (void)
+static void interface_unload ()
 {
     AUDINFO ("Unloading %s.\n", aud_plugin_get_name (current_plugin));
 
@@ -106,7 +106,7 @@ EXPORT void aud_ui_show (bool show)
     vis_activate (show);
 }
 
-EXPORT bool aud_ui_is_shown (void)
+EXPORT bool aud_ui_is_shown ()
 {
     if (! current_interface)
         return false;
@@ -123,7 +123,7 @@ EXPORT void aud_ui_show_error (const char * message)
          (EventDestroyFunc) String::raw_unref);
 }
 
-PluginHandle * iface_plugin_get_current (void)
+PluginHandle * iface_plugin_get_current ()
 {
     return current_plugin;
 }
@@ -148,7 +148,7 @@ bool iface_plugin_set_current (PluginHandle * plugin)
     return true;
 }
 
-void interface_run (void)
+void interface_run ()
 {
     if (aud_get_headless_mode ())
     {
@@ -180,7 +180,7 @@ void interface_run (void)
     }
 }
 
-EXPORT void aud_quit (void)
+EXPORT void aud_quit ()
 {
     if (current_interface)
         current_interface->quit ();
@@ -188,7 +188,7 @@ EXPORT void aud_quit (void)
         mainloop_quit ();
 }
 
-EXPORT void aud_plugin_menu_add (int id, void (* func) (void), const char * name, const char * icon)
+EXPORT void aud_plugin_menu_add (int id, void (* func) (), const char * name, const char * icon)
 {
     assert (id >= 0 && id < AUD_MENU_COUNT);
 
@@ -198,31 +198,26 @@ EXPORT void aud_plugin_menu_add (int id, void (* func) (void), const char * name
         current_interface->plugin_menu_add (id, func, name, icon);
 }
 
-EXPORT void aud_plugin_menu_remove (int id, void (* func) (void))
+EXPORT void aud_plugin_menu_remove (int id, void (* func) ())
 {
     assert (id >= 0 && id < AUD_MENU_COUNT);
 
     if (current_interface)
         current_interface->plugin_menu_remove (id, func);
 
-    Index<MenuItem> & list = menu_items[id];
+    auto is_match = [=] (const MenuItem & item)
+        { return item.func == func; };
 
-    for (int i = 0; i < list.len ();)
-    {
-        if (list[i].func == func)
-            list.remove (i, 1);
-        else
-            i ++;
-    }
+    menu_items[id].remove_if (is_match);
 }
 
-EXPORT void aud_ui_show_about_window (void)
+EXPORT void aud_ui_show_about_window ()
 {
     if (current_interface)
         current_interface->show_about_window ();
 }
 
-EXPORT void aud_ui_hide_about_window (void)
+EXPORT void aud_ui_hide_about_window ()
 {
     if (current_interface)
         current_interface->hide_about_window ();
@@ -234,31 +229,31 @@ EXPORT void aud_ui_show_filebrowser (bool open)
         current_interface->show_filebrowser (open);
 }
 
-EXPORT void aud_ui_hide_filebrowser (void)
+EXPORT void aud_ui_hide_filebrowser ()
 {
     if (current_interface)
         current_interface->hide_filebrowser ();
 }
 
-EXPORT void aud_ui_show_jump_to_song (void)
+EXPORT void aud_ui_show_jump_to_song ()
 {
     if (current_interface)
         current_interface->show_jump_to_song ();
 }
 
-EXPORT void aud_ui_hide_jump_to_song (void)
+EXPORT void aud_ui_hide_jump_to_song ()
 {
     if (current_interface)
         current_interface->hide_jump_to_song ();
 }
 
-EXPORT void aud_ui_show_prefs_window (void)
+EXPORT void aud_ui_show_prefs_window ()
 {
     if (current_interface)
         current_interface->show_prefs_window ();
 }
 
-EXPORT void aud_ui_hide_prefs_window (void)
+EXPORT void aud_ui_hide_prefs_window ()
 {
     if (current_interface)
         current_interface->hide_prefs_window ();
