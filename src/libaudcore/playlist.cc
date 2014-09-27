@@ -141,6 +141,11 @@ static PlaylistUpdateLevel update_level;
 
 struct ScanItem : public ListNode
 {
+    ScanItem (Playlist * playlist, Entry * entry, ScanRequest * request) :
+        playlist (playlist),
+        entry (entry),
+        request (request) {}
+
     Playlist * playlist;
     Entry * entry;
     ScanRequest * request;
@@ -425,7 +430,7 @@ static void scan_queue_entry (Playlist * playlist, Entry * entry)
     auto request = new ScanRequest (entry->filename, flags, scan_finish, entry->decoder);
     scanner_request (request);
 
-    scan_list.append (new ScanItem {playlist, entry, request});
+    scan_list.append (new ScanItem (playlist, entry, request));
 }
 
 static void scan_check_complete (Playlist * playlist)
