@@ -151,18 +151,6 @@ static StringBuf get_path_to_self ()
 #endif
 }
 
-static void cut_path_element (char * path, char * elem)
-{
-#ifdef _WIN32
-    if (elem > path + 3)
-#else
-    if (elem > path + 1)
-#endif
-        elem[-1] = 0; /* overwrite slash */
-    else
-        elem[0] = 0; /* leave [drive letter and] leading slash */
-}
-
 static String relocate_path (const char * path, const char * from, const char * to)
 {
     int oldlen = strlen (from);
@@ -226,7 +214,7 @@ static void relocate_all_paths ()
 
     filename_normalize (to);
 
-    char * base = (char *) last_path_element (to);
+    const char * base = last_path_element (to);
 
     if (! base)
     {
@@ -234,21 +222,21 @@ static void relocate_all_paths ()
         return;
     }
 
-    cut_path_element (to, base);
+    cut_path_element (to, base - to);
 
     /* trim trailing path elements common to old and new paths */
     /* at the end, the old and new installation prefixes are left */
-    char * a, * b;
-    while ((a = (char *) last_path_element (from)) &&
-     (b = (char *) last_path_element (to)) &&
+    const char * a, * b;
+    while ((a = last_path_element (from)) &&
+     (b = last_path_element (to)) &&
 #ifdef _WIN32
      ! strcmp_nocase (a, b))
 #else
      ! strcmp (a, b))
 #endif
     {
-        cut_path_element (from, a);
-        cut_path_element (to, b);
+        cut_path_element (from, a - from);
+        cut_path_element (to, b - to);
     }
 
     /* replace old prefix with new one in each path */

@@ -28,7 +28,7 @@
 #include "runtime.h"
 
 struct SearchParams {
-    const char * basename;
+    String filename;
     Index<String> include, exclude;
 };
 
@@ -57,22 +57,6 @@ static bool cover_name_filter (const char * name,
     return false;
 }
 
-static bool is_file_image (const char * imgfile, const char * file_name)
-{
-    const char * imgfile_ext = strrchr (imgfile, '.');
-    if (! imgfile_ext)
-        return false;
-
-    const char * file_name_ext = strrchr (file_name, '.');
-    if (! file_name_ext)
-        return false;
-
-    size_t imgfile_len = imgfile_ext - imgfile;
-    size_t file_name_len = file_name_ext - file_name;
-
-    return imgfile_len == file_name_len && ! strcmp_nocase (imgfile, file_name, imgfile_len);
-}
-
 static String fileinfo_recursive_get_image (const char * path,
  const SearchParams * params, int depth)
 {
@@ -91,7 +75,7 @@ static String fileinfo_recursive_get_image (const char * path,
 
             if (! g_file_test (newpath, G_FILE_TEST_IS_DIR) &&
              has_front_cover_extension (name) &&
-             is_file_image (name, params->basename))
+             same_basename (name, params->filename))
             {
                 g_dir_close (d);
                 return String (newpath);
@@ -148,22 +132,22 @@ String art_search (const char * filename)
     if (! local)
         return String ();
 
-    const char * base = last_path_element (local);
-    if (! base)
+    const char * elem = last_path_element (local);
+    if (! elem)
         return String ();
 
     String include = aud_get_str (nullptr, "cover_name_include");
     String exclude = aud_get_str (nullptr, "cover_name_exclude");
 
     SearchParams params = {
-        base,
+        String (elem),
         str_list_to_index (include, ", "),
         str_list_to_index (exclude, ", ")
     };
 
-    StringBuf path = str_copy (local, base - 1 - local);
+    cut_path_element (local, elem - local);
 
-    String image_local = fileinfo_recursive_get_image (path, & params, 0);
+    String image_local = fileinfo_recursive_get_image (local, & params, 0);
     if (! image_local)
         return String ();
 

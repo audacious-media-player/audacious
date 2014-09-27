@@ -91,7 +91,10 @@ String write_temp_file (void * data, int64_t len);
 
 void describe_song (const char * filename, const Tuple & tuple, String & title,
  String & artist, String & album);
+
+bool same_basename (const char * a, const char * b);
 const char * last_path_element (const char * path);
+void cut_path_element (char * path, int pos);
 
 unsigned int32_hash (unsigned val);
 

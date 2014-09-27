@@ -283,10 +283,32 @@ void describe_song (const char * name, const Tuple & tuple, String & title,
     }
 }
 
+bool same_basename (const char * a, const char * b)
+{
+    const char * dot_a = strrchr (a, '.');
+    const char * dot_b = strrchr (b, '.');
+    int len_a = dot_a ? dot_a - a : strlen (a);
+    int len_b = dot_b ? dot_b - b : strlen (b);
+
+    return len_a == len_b && ! strcmp_nocase (a, b, len_a);
+}
+
 const char * last_path_element (const char * path)
 {
     const char * slash = strrchr (path, G_DIR_SEPARATOR);
     return (slash && slash[1]) ? slash + 1 : nullptr;
+}
+
+void cut_path_element (char * path, int pos)
+{
+#ifdef _WIN32
+    if (pos > 3)
+#else
+    if (pos > 1)
+#endif
+        path[pos - 1] = 0; /* overwrite slash */
+    else
+        path[pos] = 0; /* leave [drive letter and] leading slash */
 }
 
 /* Thomas Wang's 32-bit mix function.  See:
