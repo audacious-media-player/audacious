@@ -25,7 +25,7 @@
 #include "index.h"
 #include "objects.h"
 
-struct Plugin;
+class Plugin;
 class PluginHandle;
 class VFSFile;
 class Tuple;

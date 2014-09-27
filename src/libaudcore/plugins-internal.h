@@ -22,7 +22,7 @@
 
 #include "plugins.h"
 
-struct Plugin;
+class Plugin;
 
 enum {
  INPUT_KEY_SCHEME,
