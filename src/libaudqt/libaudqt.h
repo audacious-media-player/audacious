@@ -30,10 +30,6 @@
 #include <libaudcore/plugin.h>
 #include <libaudcore/plugins.h>
 
-#ifndef EXPORT
-#define EXPORT
-#endif
-
 #include <libaudqt/volumebutton.h>
 
 namespace audqt {
