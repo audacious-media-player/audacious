@@ -584,7 +584,7 @@ bool output_plugin_set_current (PluginHandle * plugin)
     new_op = plugin ? (OutputPlugin *) aud_plugin_get_header (plugin) : nullptr;
     aud_output_reset (OutputReset::ResetPlugin);
 
-    bool success = (cop == new_op);
+    bool success = (! plugin || (new_op && cop == new_op));
     change_op = false;
     new_op = nullptr;
 
