@@ -634,7 +634,7 @@ bool_t output_plugin_set_current (PluginHandle * plugin)
     new_op = plugin ? plugin_get_header (plugin) : NULL;
     output_reset (OUTPUT_RESET_HARD);
 
-    bool_t success = (cop == new_op);
+    bool_t success = (! plugin || (new_op && cop == new_op));
     change_op = FALSE;
     new_op = NULL;
 
