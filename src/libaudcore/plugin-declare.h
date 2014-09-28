@@ -70,7 +70,7 @@ public:
 #endif
 };
 
-TransportPluginInstance aud_plugin_instance;
+EXPORT TransportPluginInstance aud_plugin_instance;
 
 #endif // AUD_DECLARE_TRANSPORT
 
@@ -118,7 +118,7 @@ public:
 #endif
 };
 
-PlaylistPluginInstance aud_plugin_instance;
+EXPORT PlaylistPluginInstance aud_plugin_instance;
 
 #endif // AUD_DECLARE_PLAYLIST
 
@@ -204,7 +204,7 @@ public:
 #endif
 };
 
-InputPluginInstance aud_plugin_instance;
+EXPORT InputPluginInstance aud_plugin_instance;
 
 #endif // AUD_DECLARE_INPUT
 
@@ -265,7 +265,7 @@ public:
 #endif
 };
 
-EffectPluginInstance aud_plugin_instance;
+EXPORT EffectPluginInstance aud_plugin_instance;
 
 #endif // AUD_DECLARE_EFFECT
 
@@ -357,7 +357,7 @@ public:
         { AUD_OUTPUT_FLUSH (time); }
 };
 
-OutputPluginInstance aud_plugin_instance;
+EXPORT OutputPluginInstance aud_plugin_instance;
 
 #endif // AUD_DECLARE_OUTPUT
 
@@ -422,7 +422,7 @@ public:
         { return AUD_VIS_GET_WIDGET (); }
 };
 
-VisPluginInstance aud_plugin_instance;
+EXPORT VisPluginInstance aud_plugin_instance;
 
 #endif // AUD_DECLARE_VIS
 
@@ -464,7 +464,7 @@ public:
 #endif
 };
 
-GeneralPluginInstance aud_plugin_instance;
+EXPORT GeneralPluginInstance aud_plugin_instance;
 
 #endif // AUD_DECLARE_GENERAL
 
@@ -525,6 +525,6 @@ public:
         { AUD_IFACE_MENU_REMOVE (id, func); }
 };
 
-IfacePluginInstance aud_plugin_instance;
+EXPORT IfacePluginInstance aud_plugin_instance;
 
 #endif // AUD_DECLARE_IFACE
