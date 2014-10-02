@@ -25,9 +25,7 @@
 
 #include <glib.h>  /* for g_qsort_with_data */
 
-#include "objects.h"
-
-static void do_fill (void * data, int len, IndexBase::FillFunc fill_func)
+static void do_fill (void * data, int len, aud::FillFunc fill_func)
 {
     if (fill_func)
         fill_func (data, len);
@@ -35,13 +33,13 @@ static void do_fill (void * data, int len, IndexBase::FillFunc fill_func)
         memset (data, 0, len);
 }
 
-static void do_erase (void * data, int len, IndexBase::EraseFunc erase_func)
+static void do_erase (void * data, int len, aud::EraseFunc erase_func)
 {
     if (erase_func)
         erase_func (data, len);
 }
 
-EXPORT void IndexBase::clear (EraseFunc erase_func)
+EXPORT void IndexBase::clear (aud::EraseFunc erase_func)
 {
     do_erase (m_data, m_len, erase_func);
     free (m_data);
@@ -86,7 +84,7 @@ EXPORT void * IndexBase::insert (int pos, int len)
     return (char *) m_data + pos;
 }
 
-EXPORT void IndexBase::insert (int pos, int len, FillFunc fill_func)
+EXPORT void IndexBase::insert (int pos, int len, aud::FillFunc fill_func)
 {
     void * to = insert (pos, len);
 
@@ -96,7 +94,7 @@ EXPORT void IndexBase::insert (int pos, int len, FillFunc fill_func)
         memset (to, 0, len);
 }
 
-EXPORT void IndexBase::insert (const void * from, int pos, int len, CopyFunc copy_func)
+EXPORT void IndexBase::insert (const void * from, int pos, int len, aud::CopyFunc copy_func)
 {
     void * to = insert (pos, len);
 
@@ -106,7 +104,7 @@ EXPORT void IndexBase::insert (const void * from, int pos, int len, CopyFunc cop
         memcpy (to, from, len);
 }
 
-EXPORT void IndexBase::remove (int pos, int len, EraseFunc erase_func)
+EXPORT void IndexBase::remove (int pos, int len, aud::EraseFunc erase_func)
 {
     assert (pos >= 0 && pos <= m_len);
     assert (len <= m_len - pos);
@@ -119,7 +117,7 @@ EXPORT void IndexBase::remove (int pos, int len, EraseFunc erase_func)
     m_len -= len;
 }
 
-EXPORT void IndexBase::erase (int pos, int len, FillFunc fill_func, EraseFunc erase_func)
+EXPORT void IndexBase::erase (int pos, int len, aud::FillFunc fill_func, aud::EraseFunc erase_func)
 {
     assert (pos >= 0 && pos <= m_len);
     assert (len <= m_len - pos);
@@ -131,7 +129,7 @@ EXPORT void IndexBase::erase (int pos, int len, FillFunc fill_func, EraseFunc er
     do_fill ((char *) m_data + pos, len, fill_func);
 }
 
-EXPORT void IndexBase::shift (int from, int to, int len, FillFunc fill_func, EraseFunc erase_func)
+EXPORT void IndexBase::shift (int from, int to, int len, aud::FillFunc fill_func, aud::EraseFunc erase_func)
 {
     assert (len >= 0 && len <= m_len);
     assert (from >= 0 && from + len <= m_len);
@@ -153,7 +151,7 @@ EXPORT void IndexBase::shift (int from, int to, int len, FillFunc fill_func, Era
 }
 
 EXPORT void IndexBase::move_from (IndexBase & b, int from, int to, int len,
- bool expand, bool collapse, FillFunc fill_func, EraseFunc erase_func)
+ bool expand, bool collapse, aud::FillFunc fill_func, aud::EraseFunc erase_func)
 {
     assert (this != & b);
     assert (from >= 0 && from <= b.m_len);

@@ -17,9 +17,13 @@
  * the use of this software.
  */
 
+#include "audstrings.h"
+#include "ringbuf.h"
 #include "tuple.h"
 #include "tuple-compiler.h"
+#include "vfs.h"
 
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -29,7 +33,7 @@ bool aud_get_bool (const char *, const char *)
     { return false; }
 String aud_get_str (const char *, const char *)
     { return String (""); }
-String vfs_get_metadata (VFSFile *, const char *)
+String VFSFile::get_metadata (const char *)
     { return String (); }
 
 static void test_tuple_format (const char * format, const Tuple & tuple, const char * expected)
@@ -47,7 +51,7 @@ static void test_tuple_format (const char * format, const Tuple & tuple, const c
     }
 }
 
-static void test_tuple_formats (void)
+static void test_tuple_formats ()
 {
     Tuple tuple;
 
@@ -154,9 +158,82 @@ static void test_tuple_formats (void)
     test_tuple_format ("x${(empty)?\"Literal\":Empty}", tuple, "Song Title");
 }
 
-int main (void)
+static void test_ringbuf ()
+{
+    String nums[10];
+    for (int i = 0; i < 10; i ++)
+        nums[i] = String (int_to_str (i));
+
+    RingBuf<String> ring;
+
+    ring.init (10);
+
+    for (int i = 0; i < 10; i ++)
+        assert (ring.push (nums[i]) == nums[i]);
+
+    for (int i = 0; i < 10; i ++)
+        assert (ring[i] == nums[i]);
+
+    for (int i = 0; i < 5; i ++)
+    {
+        assert (ring.head () == nums[i]);
+        ring.pop ();
+    }
+
+    for (int i = 5; i --; )
+        assert (ring.push (nums[i]) == nums[i]);
+
+    for (int i = 0; i < 5; i ++)
+    {
+        assert (ring.head () == nums[5 + i]);
+        ring.pop ();
+    }
+
+    for (int i = 0; i < 5; i ++)
+    {
+        assert (ring.head () == nums[4 - i]);
+        ring.pop ();
+    }
+
+    ring.copy_in (& nums[5], 5);
+    ring.copy_in (& nums[0], 5);
+
+    for (int i = 0; i < 5; i ++)
+    {
+        assert (ring.head () == nums[5 + i]);
+        ring.pop ();
+    }
+
+    for (int i = 0; i < 5; i ++)
+    {
+        assert (ring.head () == nums[i]);
+        ring.pop ();
+    }
+
+    ring.move_in (nums, 10);
+
+    for (int i = 0; i < 10; i ++)
+    {
+        assert (! nums[i]);
+        assert (ring[i] == String (int_to_str (i)));
+    }
+
+    ring.move_out (& nums[5], 5);
+    ring.move_out (& nums[0], 5);
+
+    for (int i = 0; i < 10; i ++)
+        assert (nums[i] == String (int_to_str ((5 + i) % 10)));
+
+    ring.move_in (nums, 10);
+    ring.discard ();
+
+    String::check_all_destroyed ();
+}
+
+int main ()
 {
     test_tuple_formats ();
+    test_ringbuf ();
 
     return 0;
 }
