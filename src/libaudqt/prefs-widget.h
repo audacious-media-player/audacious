@@ -23,6 +23,7 @@
 #include <libaudcore/i18n.h>
 #include <libaudcore/preferences.h>
 #include <libaudcore/runtime.h>
+#include <libaudcore/hook.h>
 
 #ifndef LIBAUDQT_PREFS_WIDGET_H
 #define LIBAUDQT_PREFS_WIDGET_H
@@ -41,34 +42,61 @@ namespace audqt {
  * layout manager or shown or whatever.
  */
 
+/* base class which provides plumbing for hooks. */
+class HookableWidget {
+public:
+    HookableWidget (const PreferencesWidget * parent) : m_parent (parent)
+    {
+        if (m_parent->cfg.hook)
+            hook_associate (m_parent->cfg.hook, HookableWidget::widget_update, this);
+    }
+
+    ~HookableWidget ()
+    {
+        if (m_parent->cfg.hook)
+            hook_dissociate (m_parent->cfg.hook, HookableWidget::widget_update);
+    }
+
+    static void widget_update (void * prefs, void * userdata)
+    {
+        HookableWidget * w = static_cast<HookableWidget *> (userdata);
+
+        if (w)
+            w->update ();
+    }
+
+    const PreferencesWidget * m_parent;
+
+    virtual void update () { };
+};
+
 /* button widget */
-class ButtonWidget {
+class ButtonWidget : HookableWidget {
 public:
     ButtonWidget (const PreferencesWidget * parent, const char * domain = nullptr) :
-        m_parent (parent), m_domain (domain)
+        HookableWidget (parent), m_domain (domain)
     {
     }
 
     QWidget * widget ();
 
 private:
-    const PreferencesWidget * m_parent;
     const char * m_domain;
     QPushButton m_widget;
 };
 
 /* boolean widget (checkbox) */
-class BooleanWidget {
+class BooleanWidget : HookableWidget {
 public:
     BooleanWidget (const PreferencesWidget * parent, const char * domain = nullptr) :
-        m_parent (parent), m_domain (domain)
+        HookableWidget (parent), m_domain (domain)
     {
     }
 
     QWidget * widget ();
+    void update ();
 
 private:
-    const PreferencesWidget * m_parent;
     const char * m_domain;
     QCheckBox m_widget;
 
@@ -77,17 +105,16 @@ private:
 };
 
 /* label, no get or set functions needed. */
-class LabelWidget {
+class LabelWidget : HookableWidget {
 public:
     LabelWidget (const PreferencesWidget * parent, const char * domain = nullptr) :
-        m_parent (parent), m_domain (domain)
+        HookableWidget (parent), m_domain (domain)
     {
     }
 
     QWidget * widget ();
 
 private:
-    const PreferencesWidget * m_parent;
     const char * m_domain;
 
     QWidget m_container;
@@ -97,17 +124,17 @@ private:
 };
 
 /* integer widget (spinner) */
-class IntegerWidget {
+class IntegerWidget : HookableWidget {
 public:
     IntegerWidget (const PreferencesWidget * parent, const char * domain = nullptr) :
-        m_parent (parent), m_domain (domain)
+        HookableWidget (parent), m_domain (domain)
     {
     }
 
     QWidget * widget ();
+    void update ();
 
 private:
-    const PreferencesWidget * m_parent;
     const char * m_domain;
 
     QSpinBox m_spinner;
@@ -121,17 +148,16 @@ private:
 };
 
 /* integer widget (radio button) */
-class RadioButtonWidget {
+class RadioButtonWidget : HookableWidget {
 public:
     RadioButtonWidget (const PreferencesWidget * parent, const char * domain = nullptr) :
-        m_parent (parent), m_domain (domain)
+        HookableWidget (parent), m_domain (domain)
     {
     }
 
     QWidget * widget (QButtonGroup * btn_group = nullptr);
 
 private:
-    const PreferencesWidget * m_parent;
     const char * m_domain;
 
     QRadioButton m_widget;
@@ -141,17 +167,17 @@ private:
 };
 
 /* double widget (spinner) */
-class DoubleWidget {
+class DoubleWidget : HookableWidget {
 public:
     DoubleWidget (const PreferencesWidget * parent, const char * domain = nullptr) :
-        m_parent (parent), m_domain (domain)
+        HookableWidget (parent), m_domain (domain)
     {
     }
 
     QWidget * widget ();
+    void update ();
 
 private:
-    const PreferencesWidget * m_parent;
     const char * m_domain;
 
     QDoubleSpinBox m_spinner;
@@ -165,17 +191,17 @@ private:
 };
 
 /* string widget (lineedit) */
-class StringWidget {
+class StringWidget : HookableWidget {
 public:
     StringWidget (const PreferencesWidget * parent, const char * domain = nullptr) :
-        m_parent (parent), m_domain (domain)
+        HookableWidget (parent), m_domain (domain)
     {
     }
 
     virtual QWidget * widget ();
+    void update ();
 
 private:
-    const PreferencesWidget * m_parent;
     const char * m_domain;
 
     QWidget m_container;
@@ -188,17 +214,17 @@ private:
 };
 
 /* combo box (string or int) */
-class ComboBoxWidget {
+class ComboBoxWidget : HookableWidget {
 public:
     ComboBoxWidget (const PreferencesWidget * parent, const char * domain = nullptr) :
-        m_parent (parent), m_domain (domain)
+        HookableWidget (parent), m_domain (domain)
     {
     }
 
     virtual QWidget * widget ();
+    void update ();
 
 private:
-    const PreferencesWidget * m_parent;
     const char * m_domain;
 
     QWidget m_container;
@@ -216,17 +242,16 @@ private:
 };
 
 /* box container widget */
-class BoxWidget {
+class BoxWidget : HookableWidget {
 public:
     BoxWidget (const PreferencesWidget * parent, const char * domain = nullptr) :
-        m_parent (parent), m_domain (domain)
+        HookableWidget (parent), m_domain (domain)
     {
     }
 
     QWidget * widget ();
 
 private:
-    const PreferencesWidget * m_parent;
     const char * m_domain;
 
     QWidget m_container;
@@ -235,17 +260,16 @@ private:
 };
 
 /* table container widget */
-class TableWidget {
+class TableWidget : HookableWidget {
 public:
     TableWidget (const PreferencesWidget * parent, const char * domain = nullptr) :
-        m_parent (parent), m_domain (domain)
+        HookableWidget (parent), m_domain (domain)
     {
     }
 
     QWidget * widget ();
 
 private:
-    const PreferencesWidget * m_parent;
     const char * m_domain;
 
     QWidget m_container;
@@ -253,17 +277,16 @@ private:
 };
 
 /* notebook widget */
-class NotebookWidget {
+class NotebookWidget : HookableWidget {
 public:
     NotebookWidget (const PreferencesWidget * parent, const char * domain = nullptr) :
-        m_parent (parent), m_domain (domain)
+        HookableWidget (parent), m_domain (domain)
     {
     }
 
     QWidget * widget ();
 
 private:
-    const PreferencesWidget * m_parent;
     const char * m_domain;
 
     QTabWidget m_container;
