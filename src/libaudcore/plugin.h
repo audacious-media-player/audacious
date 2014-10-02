@@ -228,7 +228,7 @@ public:
 
     /* Pauses the stream if <p> is nonzero; otherwise unpauses it.
      * write_audio() will not be called while the stream is paused. */
-    virtual void pause (bool p) = 0;
+    virtual void pause (bool pause) = 0;
 
     /* Discards any buffered audio data and sets the time counter (in
      * milliseconds) of data written. */

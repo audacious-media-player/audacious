@@ -26,8 +26,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <glib.h>  /* for g_usleep */
-
 #include "equalizer.h"
 #include "internal.h"
 #include "plugin.h"
@@ -55,6 +53,17 @@ static bool s_gain; /* replay gain info set */
 static bool s_paused; /* paused */
 static bool s_aborted; /* writes aborted */
 static bool s_resetting; /* resetting output system */
+
+/* Condition variable linked to LOCK_MINOR.
+ * The input thread will wait if the following is true:
+ *   ((! s_output || s_resetting) && ! s_aborted)
+ * Hence you must signal if you cause the inverse to be true:
+ *   ((s_output && ! s_resetting) || s_aborted) */
+
+static pthread_cond_t cond_minor = PTHREAD_COND_INITIALIZER;
+
+#define SIGNAL_MINOR pthread_cond_broadcast (& cond_minor)
+#define WAIT_MINOR pthread_cond_wait (& cond_minor, & mutex_minor)
 
 static OutputPlugin * cop;
 static int seek_time;
@@ -93,7 +102,7 @@ static void ensure_buffer (Index<char> & buffer, int newsize)
 /* assumes LOCK_ALL, s_output */
 static void cleanup_output (void)
 {
-    if (! s_paused && ! s_aborted)
+    if (! s_paused && ! s_aborted && ! s_resetting)
     {
         UNLOCK_MINOR;
         cop->drain ();
@@ -150,6 +159,9 @@ static void setup_output (void)
     out_frames = 0;
 
     apply_pause ();
+
+    if (! s_aborted && ! s_resetting)
+        SIGNAL_MINOR;
 }
 
 /* assumes LOCK_MINOR, s_output */
@@ -244,7 +256,7 @@ static void write_output_raw (float * data, int samples)
         out_data = buffer2.begin ();
     }
 
-    while (! (s_aborted || s_resetting))
+    while (! s_aborted && ! s_resetting)
     {
         int ready = aud::min (cop->buffer_free () / (int) FMT_SIZEOF (out_format), samples);
 
@@ -322,7 +334,9 @@ bool output_open_audio (int format, int rate, int channels)
 
     if (s_output && s_paused)
     {
-        flush_output ();
+        if (! s_aborted && ! s_resetting)
+            flush_output ();
+
         s_paused = false;
         apply_pause ();
     }
@@ -364,16 +378,18 @@ void output_set_replaygain_info (const ReplayGainInfo * info)
 /* returns false if stop_time is reached */
 bool output_write_audio (void * data, int size, int stop_time)
 {
+RETRY:
     LOCK_ALL;
     bool good = false;
 
     if (s_input)
     {
-        while ((! s_output || s_resetting) && ! s_aborted)
+        if ((! s_output || s_resetting) && ! s_aborted)
         {
-            UNLOCK_ALL;
-            g_usleep (20000);
-            LOCK_ALL;
+            UNLOCK_MAJOR;
+            WAIT_MINOR;
+            UNLOCK_MINOR;
+            goto RETRY;
         }
 
         good = write_output (data, size, stop_time);
@@ -387,12 +403,14 @@ void output_abort_write (void)
 {
     LOCK_MINOR;
 
-    if (s_input)
+    if (s_input && ! s_aborted)
     {
         s_aborted = true;
 
-        if (s_output)
+        if (s_output && ! s_resetting)
             flush_output ();
+        else
+            SIGNAL_MINOR;
     }
 
     UNLOCK_MINOR;
@@ -512,7 +530,7 @@ EXPORT void aud_output_reset (OutputReset type)
 
     s_resetting = true;
 
-    if (s_output)
+    if (s_output && ! s_aborted)
         flush_output ();
 
     UNLOCK_MINOR;
@@ -537,6 +555,9 @@ EXPORT void aud_output_reset (OutputReset type)
         setup_output ();
 
     s_resetting = false;
+
+    if (s_output && ! s_aborted)
+        SIGNAL_MINOR;
 
     UNLOCK_ALL;
 }
