@@ -77,11 +77,6 @@ static OutputPlugin * new_op;
 
 static Index<char> buffer1, buffer2;
 
-static inline int FR2MS (int64_t f, int r)
- { return (f > 0) ? (f * 1000 + r / 2) / r : (f * 1000 - r / 2) / r; }
-static inline int MS2FR (int64_t ms, int r)
- { return (ms > 0) ? (ms * r + 500) / 1000 : (ms * r - 500) / 1000; }
-
 static inline int get_format (void)
 {
     switch (aud_get_int (0, "output_bit_depth"))
@@ -237,8 +232,8 @@ static void apply_software_volume (float * data, int channels, int samples)
 /* assumes LOCK_ALL, s_output */
 static void write_output_raw (float * data, int samples)
 {
-    vis_runner_pass_audio (FR2MS (out_frames, out_rate), data, samples,
-     out_channels, out_rate);
+    int out_time = aud::rescale<int64_t> (out_frames, out_rate, 1000);
+    vis_runner_pass_audio (out_time, data, samples, out_channels, out_rate);
     out_frames += samples / out_channels;
 
     eq_filter (data, samples);
@@ -286,7 +281,7 @@ static bool write_output (void * data, int size, int stop_time)
 
     if (stop_time != -1)
     {
-        int64_t frames_left = MS2FR (stop_time - seek_time, in_rate) - cur_frame;
+        int64_t frames_left = aud::rescale<int64_t> (stop_time - seek_time, 1000, in_rate) - cur_frame;
         int64_t samples_left = in_channels * aud::max ((int64_t) 0, frames_left);
 
         if (samples >= samples_left)
@@ -437,7 +432,7 @@ int output_written_time (void)
     int time = 0;
 
     if (s_input)
-        time = seek_time + FR2MS (in_frames, in_rate);
+        time = seek_time + aud::rescale<int64_t> (in_frames, in_rate, 1000);
 
     UNLOCK_MINOR;
     return time;
@@ -473,10 +468,10 @@ int output_get_time (void)
     if (s_input)
     {
         if (s_output)
-            delay = FR2MS (out_frames, out_rate) - cop->output_time ();
+            delay = aud::rescale<int64_t> (out_frames, out_rate, 1000) - cop->output_time ();
 
         delay = effect_adjust_delay (delay);
-        time = FR2MS (in_frames, in_rate);
+        time = aud::rescale<int64_t> (in_frames, in_rate, 1000);
         time = seek_time + aud::max (time - delay, 0);
     }
 
