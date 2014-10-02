@@ -88,6 +88,8 @@ static const PluginParams table[PLUGIN_TYPES] = {
 
 static void start_single (int type)
 {
+    PluginHandle * skip = nullptr;
+
     for (PluginHandle * p : aud_plugin_list (type))
     {
         if (! aud_plugin_get_enabled (p))
@@ -101,6 +103,7 @@ static void start_single (int type)
 
         AUDWARN ("%s failed to start.\n", aud_plugin_get_name (p));
         plugin_set_enabled (p, false);
+        skip = p;
         break;
     }
 
@@ -108,6 +111,9 @@ static void start_single (int type)
 
     for (PluginHandle * p : aud_plugin_list (type))
     {
+        if (p == skip)
+            continue;
+
         AUDINFO ("Trying to start %s.\n", aud_plugin_get_name (p));
 
         if (! table[type].f.s.set_current (p))
