@@ -285,9 +285,6 @@ static bool write_output (void * data, int size, int stop_time)
         }
     }
 
-    if (s_aborted)
-        return ! stopped;
-
     if (in_format != FMT_FLOAT)
     {
         buffer1.enlarge (sizeof (float) * samples);
@@ -371,9 +368,9 @@ RETRY:
     LOCK_ALL;
     bool good = false;
 
-    if (s_input)
+    if (s_input && ! s_aborted)
     {
-        if ((! s_output || s_resetting) && ! s_aborted)
+        if (! s_output || s_resetting)
         {
             UNLOCK_MAJOR;
             WAIT_MINOR;
@@ -388,7 +385,7 @@ RETRY:
     return good;
 }
 
-void output_abort_write (void)
+void output_abort_write (int time)
 {
     LOCK_MINOR;
 
@@ -402,7 +399,23 @@ void output_abort_write (void)
             SIGNAL_MINOR;
     }
 
+    if (s_input)
+    {
+        seek_time = time;
+        in_frames = 0;
+    }
+
     UNLOCK_MINOR;
+}
+
+void output_resume_write (void)
+{
+    LOCK_ALL;
+
+    if (s_input)
+        s_aborted = false;
+
+    UNLOCK_ALL;
 }
 
 void output_pause (bool pause)
@@ -430,20 +443,6 @@ int output_written_time (void)
 
     UNLOCK_MINOR;
     return time;
-}
-
-void output_set_time (int time)
-{
-    LOCK_ALL;
-
-    if (s_input)
-    {
-        s_aborted = false;
-        seek_time = time;
-        in_frames = 0;
-    }
-
-    UNLOCK_ALL;
 }
 
 bool output_is_open (void)
