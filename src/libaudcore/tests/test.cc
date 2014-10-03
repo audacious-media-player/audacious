@@ -166,19 +166,35 @@ static void test_ringbuf ()
 
     RingBuf<String> ring;
 
-    ring.init (10);
+    ring.alloc (7);
 
-    for (int i = 0; i < 10; i ++)
+    for (int i = 0; i < 7; i ++)
         assert (ring.push (nums[i]) == nums[i]);
-
-    for (int i = 0; i < 10; i ++)
-        assert (ring[i] == nums[i]);
 
     for (int i = 0; i < 5; i ++)
     {
         assert (ring.head () == nums[i]);
         ring.pop ();
     }
+
+    for (int i = 7; i < 10; i ++)
+        assert (ring.push (nums[i]) == nums[i]);
+
+    assert (ring.size () == 7);
+    assert (ring.len () == 5);
+    assert (ring.linear () == 2);
+
+    ring.alloc (10);
+
+    for (int i = 0; i < 5; i ++)
+        assert (ring[i] == nums[5 + i]);
+
+    assert (ring.size () == 10);
+    assert (ring.len () == 5);
+    assert (ring.linear () == 2);
+
+    for (int i = 0; i < 5; i ++)
+        assert (ring[i] == nums[5 + i]);
 
     for (int i = 5; i --; )
         assert (ring.push (nums[i]) == nums[i]);

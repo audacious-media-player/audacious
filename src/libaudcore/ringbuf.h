@@ -87,7 +87,7 @@ public:
     void * at (int pos) const
         { return (char *) m_data + (m_offset + pos) % m_size; }
 
-    void init (int size, aud::EraseFunc erase_func);
+    void alloc (int size);
     void destroy (aud::EraseFunc erase_func);
 
     void add (int len);  // no fill
@@ -139,8 +139,8 @@ public:
     const T & operator[] (int i) const
         { return * (const T *) RingBufBase::at (raw (i)); }
 
-    void init (int size)
-        { RingBufBase::init (raw (size), aud::erase_func<T> ()); }
+    void alloc (int size)
+        { RingBufBase::alloc (raw (size)); }
     void destroy ()
         { RingBufBase::destroy (aud::erase_func<T> ()); }
 
