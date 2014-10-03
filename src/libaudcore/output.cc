@@ -88,12 +88,6 @@ static inline int get_format (void)
     }
 }
 
-static void ensure_buffer (Index<char> & buffer, int newsize)
-{
-    if (newsize > buffer.len ())
-        buffer.insert (-1, newsize - buffer.len ());
-}
-
 /* assumes LOCK_ALL, s_output */
 static void cleanup_output (void)
 {
@@ -246,7 +240,7 @@ static void write_output_raw (float * data, int samples)
 
     if (out_format != FMT_FLOAT)
     {
-        ensure_buffer (buffer2, FMT_SIZEOF (out_format) * samples);
+        buffer2.enlarge (FMT_SIZEOF (out_format) * samples);
         audio_to_int (data, buffer2.begin (), out_format, samples);
         out_data = buffer2.begin ();
     }
@@ -296,7 +290,7 @@ static bool write_output (void * data, int size, int stop_time)
 
     if (in_format != FMT_FLOAT)
     {
-        ensure_buffer (buffer1, sizeof (float) * samples);
+        buffer1.enlarge (sizeof (float) * samples);
         audio_from_int (data, in_format, (float *) buffer1.begin (), samples);
         data = buffer1.begin ();
     }

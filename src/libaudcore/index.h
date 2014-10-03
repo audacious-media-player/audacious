@@ -154,6 +154,12 @@ public:
          std::forward<Args> (args) ...);
     }
 
+    void enlarge (int size)
+    {
+        if (len () < size)
+            insert (-1, size - len ());
+    }
+
     int find (const T & val) const
     {
         for (const T * iter = begin (); iter != end (); iter ++)
