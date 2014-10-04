@@ -19,6 +19,7 @@
 
 #include <glib.h>
 #include <pthread.h>
+#include <string.h>
 
 #include "debug.h"
 #include "drct.h"
@@ -37,6 +38,7 @@ typedef struct {
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 static GList * running_effects = NULL; /* (RunningEffect *) */
 static int input_channels, input_rate;
+static float * prev_data;
 
 typedef struct {
     int * channels, * rate;
@@ -94,9 +96,29 @@ static void effect_process_cb (RunningEffect * effect, EffectProcessState *
 {
     if (effect->remove_flag)
     {
-        /* call finish twice to completely drain buffers */
         effect->header->finish (state->data, state->samples);
-        effect->header->finish (state->data, state->samples);
+
+        // simulate end-of-playlist call
+        // first save the current data
+        void * save_data = g_memdup (* state->data, * state->samples * sizeof (float));
+        int save_samples = * state->samples;
+
+        // now free the previous saved data (after the memdup)
+        g_free (prev_data);
+        prev_data = save_data;
+
+        float * new_data = NULL;
+        int new_samples = 0;
+
+        effect->header->finish (& new_data, & new_samples);
+
+        // combine the saved and new data
+        save_data = g_realloc (save_data, (save_samples + new_samples) * sizeof (float));
+        memcpy (save_data + save_samples, new_data, new_samples * sizeof (float));
+        save_samples += new_samples;
+
+        * state->data = save_data;
+        * state->samples = save_samples;
 
         running_effects = g_list_remove (running_effects, effect);
         g_slice_free (RunningEffect, effect);
@@ -108,6 +130,9 @@ static void effect_process_cb (RunningEffect * effect, EffectProcessState *
 void effect_process (float * * data, int * samples)
 {
     pthread_mutex_lock (& mutex);
+
+    g_free (prev_data);
+    prev_data = NULL;
 
     EffectProcessState state = {data, samples};
     g_list_foreach (running_effects, (GFunc) effect_process_cb, & state);
@@ -131,6 +156,9 @@ void effect_flush (void)
 void effect_finish (float * * data, int * samples)
 {
     pthread_mutex_lock (& mutex);
+
+    g_free (prev_data);
+    prev_data = NULL;
 
     for (GList * node = running_effects; node != NULL; node = node->next)
         ((RunningEffect *) node->data)->header->finish (data, samples);
