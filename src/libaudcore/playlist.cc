@@ -1392,7 +1392,7 @@ EXPORT void aud_playlist_reverse (int playlist_num)
     int entries = playlist->entries.len ();
 
     for (int i = 0; i < entries / 2; i ++)
-        playlist->entries[i].swap (playlist->entries[entries - 1 - i]);
+        std::swap (playlist->entries[i], playlist->entries[entries - 1 - i]);
 
     number_entries (playlist, 0, entries);
     queue_update (PLAYLIST_UPDATE_STRUCTURE, playlist, 0, entries);
@@ -1418,7 +1418,7 @@ EXPORT void aud_playlist_reverse_selected (int playlist_num)
         if (top >= bottom)
             break;
 
-        playlist->entries[top ++].swap (playlist->entries[bottom --]);
+        std::swap (playlist->entries[top ++], playlist->entries[bottom --]);
     }
 
     number_entries (playlist, 0, entries);
@@ -1433,7 +1433,7 @@ EXPORT void aud_playlist_randomize (int playlist_num)
     int entries = playlist->entries.len ();
 
     for (int i = 0; i < entries; i ++)
-        playlist->entries[i].swap (playlist->entries[rand () % entries]);
+        std::swap (playlist->entries[i], playlist->entries[rand () % entries]);
 
     number_entries (playlist, 0, entries);
     queue_update (PLAYLIST_UPDATE_STRUCTURE, playlist, 0, entries);
@@ -1460,7 +1460,7 @@ EXPORT void aud_playlist_randomize_selected (int playlist_num)
     {
         int a = selected[i]->number;
         int b = selected[rand () % n_selected]->number;
-        playlist->entries[a].swap (playlist->entries[b]);
+        std::swap (playlist->entries[a], playlist->entries[b]);
     }
 
     number_entries (playlist, 0, entries);

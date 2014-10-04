@@ -89,13 +89,6 @@ public:
     explicit operator bool () const
         { return (bool) ptr; }
 
-    void swap (SmartPtr & b)
-    {
-        T * temp = ptr;
-        ptr = b.ptr;
-        b.ptr = temp;
-    }
-
     T * get ()
         { return ptr; }
     const T * get () const
