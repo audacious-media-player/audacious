@@ -217,7 +217,7 @@ public:
     virtual void period_wait () = 0;
 
     /* Buffers <size> bytes of data, in the format given to open_audio(). */
-    virtual void write_audio (void * data, int size) = 0;
+    virtual void write_audio (const void * data, int size) = 0;
 
     /* Waits until all buffered data has been heard by the user. */
     virtual void drain () = 0;
@@ -253,14 +253,13 @@ public:
     /* All processing is done in floating point.  If the effect plugin wants to
      * change the channel count or sample rate, it can change the parameters
      * passed to start().  They cannot be changed in the middle of a song. */
-    virtual void start (int * channels, int * rate) = 0;
+    virtual void start (int & channels, int & rate) = 0;
 
-    /* process() has two options: modify the samples in place and leave the data
-     * pointer unchanged or copy them into a buffer of its own.  If it sets the
-     * pointer to dynamically allocated memory, it is the plugin's job to free
-     * that memory.  process() may return different lengths of audio than it is
-     * passed, even a zero length. */
-    virtual void process (float * * data, int * samples) = 0;
+    /* Performs effect processing.  process() may modify the audio samples in
+     * place and return a reference to the same buffer, or it may return a
+     * reference to an internal working buffer.  The number of output samples
+     * need not be the same as the number of input samples. */
+    virtual Index<float> & process (Index<float> & data) = 0;
 
     /* Optional.  A seek is taking place; any buffers should be discarded. */
     virtual void flush () {}
@@ -268,8 +267,8 @@ public:
     /* Exactly like process() except that any buffers should be drained (i.e.
      * the data processed and returned).  finish() will be called a second time
      * at the end of the last song in the playlist. */
-    virtual void finish (float * * data, int * samples)
-        { process (data, samples); }
+    virtual Index<float> & finish (Index<float> & data)
+        { return process (data); }
 
     /* Required only for plugins that change the time domain (e.g. a time
      * stretch) or use read-ahead buffering.  translate_delay() must do two

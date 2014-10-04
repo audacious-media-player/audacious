@@ -41,87 +41,6 @@ constexpr ArrayRef<const char *> to_str_array (decltype (nullptr))
 #warning AUD_PLUGIN_CONFIGWIN is deprecated!
 #endif
 
-#ifdef AUD_DECLARE_TRANSPORT
-
-class TransportPluginInstance : public TransportPlugin
-{
-public:
-    static constexpr PluginInfo info = {
-        AUD_PLUGIN_NAME,
-        AUD_PLUGIN_DOMAIN,
-        AUD_PLUGIN_ABOUT,
-        AUD_PLUGIN_PREFS
-    };
-
-    TransportPluginInstance () :
-        TransportPlugin (info, to_str_array (AUD_TRANSPORT_SCHEMES), AUD_TRANSPORT_FOPEN) {}
-
-#ifdef AUD_PLUGIN_INIT
-    bool init ()
-        { return AUD_PLUGIN_INIT (); }
-#endif
-#ifdef AUD_PLUGIN_CLEANUP
-    void cleanup ()
-        { AUD_PLUGIN_CLEANUP (); }
-#endif
-#ifdef AUD_PLUGIN_TAKE_MESSAGE
-    int take_message (const char * code, const void * data, int size)
-        { return AUD_PLUGIN_TAKE_MESSAGE (code, data, size); }
-#endif
-};
-
-EXPORT TransportPluginInstance aud_plugin_instance;
-
-#endif // AUD_DECLARE_TRANSPORT
-
-#ifdef AUD_DECLARE_PLAYLIST
-
-class PlaylistPluginInstance : public PlaylistPlugin
-{
-public:
-    static constexpr PluginInfo info = {
-        AUD_PLUGIN_NAME,
-        AUD_PLUGIN_DOMAIN,
-        AUD_PLUGIN_ABOUT,
-        AUD_PLUGIN_PREFS
-    };
-
-    PlaylistPluginInstance () :
-        PlaylistPlugin (info, to_str_array (AUD_PLAYLIST_EXTS),
-#ifdef AUD_PLAYLIST_SAVE
-         true) {}
-#else
-         false) {}
-#endif
-
-#ifdef AUD_PLUGIN_INIT
-    bool init ()
-        { return AUD_PLUGIN_INIT (); }
-#endif
-#ifdef AUD_PLUGIN_CLEANUP
-    void cleanup ()
-        { AUD_PLUGIN_CLEANUP (); }
-#endif
-#ifdef AUD_PLUGIN_TAKE_MESSAGE
-    int take_message (const char * code, const void * data, int size)
-        { return AUD_PLUGIN_TAKE_MESSAGE (code, data, size); }
-#endif
-
-    bool load (const char * path, VFSFile & file, String & title,
-     Index<PlaylistAddItem> & items)
-        { return AUD_PLAYLIST_LOAD (path, file, title, items); }
-
-#ifdef AUD_PLAYLIST_SAVE
-    bool save (const char * path, VFSFile & file, const char * title,
-     const Index<PlaylistAddItem> & items)
-        { return AUD_PLAYLIST_SAVE (path, file, title, items); }
-#endif
-};
-
-EXPORT PlaylistPluginInstance aud_plugin_instance;
-
-#endif // AUD_DECLARE_PLAYLIST
-
 #ifdef AUD_DECLARE_INPUT
 
 #ifndef AUD_INPUT_SUBTUNES
@@ -208,67 +127,6 @@ EXPORT InputPluginInstance aud_plugin_instance;
 
 #endif // AUD_DECLARE_INPUT
 
-#ifdef AUD_DECLARE_EFFECT
-
-#ifndef AUD_EFFECT_ORDER
-#define AUD_EFFECT_ORDER 0
-#endif
-#ifndef AUD_EFFECT_SAME_FMT
-#define AUD_EFFECT_SAME_FMT false
-#endif
-
-class EffectPluginInstance : public EffectPlugin
-{
-public:
-    static constexpr PluginInfo info = {
-        AUD_PLUGIN_NAME,
-        AUD_PLUGIN_DOMAIN,
-        AUD_PLUGIN_ABOUT,
-        AUD_PLUGIN_PREFS
-    };
-
-    constexpr EffectPluginInstance () :
-        EffectPlugin (info, AUD_EFFECT_ORDER, AUD_EFFECT_SAME_FMT) {}
-
-#ifdef AUD_PLUGIN_INIT
-    bool init ()
-        { return AUD_PLUGIN_INIT (); }
-#endif
-#ifdef AUD_PLUGIN_CLEANUP
-    void cleanup ()
-        { AUD_PLUGIN_CLEANUP (); }
-#endif
-#ifdef AUD_PLUGIN_TAKE_MESSAGE
-    int take_message (const char * code, const void * data, int size)
-        { return AUD_PLUGIN_TAKE_MESSAGE (code, data, size); }
-#endif
-
-#ifdef AUD_EFFECT_START
-    void start (int * channels, int * rate)
-        { AUD_EFFECT_START (channels, rate); }
-#endif
-
-    void process (float * * data, int * samples)
-        { AUD_EFFECT_PROCESS (data, samples); }
-
-#ifdef AUD_EFFECT_FLUSH
-    void flush ()
-        { AUD_EFFECT_FLUSH (); }
-#endif
-#ifdef AUD_EFFECT_FINISH
-    void finish (float * * data, int * samples)
-        { AUD_EFFECT_FINISH (data, samples); }
-#endif
-#ifdef AUD_EFFECT_ADJ_DELAY
-    int adjust_delay (int delay)
-        { return AUD_EFFECT_ADJ_DELAY (delay); }
-#endif
-};
-
-EXPORT EffectPluginInstance aud_plugin_instance;
-
-#endif // AUD_DECLARE_EFFECT
-
 #ifdef AUD_DECLARE_OUTPUT
 
 #ifndef AUD_OUTPUT_PRIORITY
@@ -340,7 +198,7 @@ public:
         if (ptr) ptr ();
     }
 
-    void write_audio (void * data, int size)
+    void write_audio (const void * data, int size)
         { AUD_OUTPUT_WRITE (data, size); }
 
     void drain ()
@@ -360,71 +218,6 @@ public:
 EXPORT OutputPluginInstance aud_plugin_instance;
 
 #endif // AUD_DECLARE_OUTPUT
-
-#ifdef AUD_DECLARE_VIS
-
-class VisPluginInstance : public VisPlugin
-{
-public:
-    static constexpr PluginInfo info = {
-        AUD_PLUGIN_NAME,
-        AUD_PLUGIN_DOMAIN,
-        AUD_PLUGIN_ABOUT,
-        AUD_PLUGIN_PREFS
-    };
-
-    constexpr VisPluginInstance () :
-        VisPlugin (info,
-#ifdef AUD_VIS_RENDER_MONO
-         AUD_VIS_TYPE_MONO_PCM
-#endif
-#ifdef AUD_VIS_RENDER_MULTI
-         AUD_VIS_TYPE_MULTI_PCM
-#endif
-#ifdef AUD_VIS_RENDER_FREQ
-         AUD_VIS_TYPE_FREQ
-#endif
-         ) {}
-
-#ifdef AUD_PLUGIN_INIT
-    bool init ()
-        { return AUD_PLUGIN_INIT (); }
-#endif
-#ifdef AUD_PLUGIN_CLEANUP
-    void cleanup ()
-        { AUD_PLUGIN_CLEANUP (); }
-#endif
-#ifdef AUD_PLUGIN_TAKE_MESSAGE
-    int take_message (const char * code, const void * data, int size)
-        { return AUD_PLUGIN_TAKE_MESSAGE (code, data, size); }
-#endif
-
-    void clear ()
-    {
-        void (* ptr) () = AUD_VIS_CLEAR;
-        if (ptr) ptr ();
-    }
-
-#ifdef AUD_VIS_RENDER_MONO
-    void render_mono_pcm (const float * pcm)
-        { AUD_VIS_RENDER_MONO (pcm); }
-#endif
-#ifdef AUD_VIS_RENDER_MULTI
-    void render_multi_pcm (const float * pcm, int channels)
-        { AUD_VIS_RENDER_MULTI (pcm, channels); }
-#endif
-#ifdef AUD_VIS_RENDER_FREQ
-    void render_freq (const float * freq)
-        { AUD_VIS_RENDER_FREQ (freq); }
-#endif
-
-    void * get_gtk_widget ()
-        { return AUD_VIS_GET_WIDGET (); }
-};
-
-EXPORT VisPluginInstance aud_plugin_instance;
-
-#endif // AUD_DECLARE_VIS
 
 #ifdef AUD_DECLARE_GENERAL
 
@@ -467,64 +260,3 @@ public:
 EXPORT GeneralPluginInstance aud_plugin_instance;
 
 #endif // AUD_DECLARE_GENERAL
-
-#ifdef AUD_DECLARE_IFACE
-
-class IfacePluginInstance : public IfacePlugin
-{
-public:
-    static constexpr PluginInfo info = {
-        AUD_PLUGIN_NAME,
-        AUD_PLUGIN_DOMAIN,
-        AUD_PLUGIN_ABOUT,
-        AUD_PLUGIN_PREFS
-    };
-
-    constexpr IfacePluginInstance () :
-        IfacePlugin (info) {}
-
-#ifdef AUD_PLUGIN_INIT
-    bool init ()
-        { return AUD_PLUGIN_INIT (); }
-#endif
-#ifdef AUD_PLUGIN_CLEANUP
-    void cleanup ()
-        { AUD_PLUGIN_CLEANUP (); }
-#endif
-#ifdef AUD_PLUGIN_TAKE_MESSAGE
-    int take_message (const char * code, const void * data, int size)
-        { return AUD_PLUGIN_TAKE_MESSAGE (code, data, size); }
-#endif
-
-    void show (bool show)
-        { AUD_IFACE_SHOW (show); }
-    void run ()
-        { AUD_IFACE_RUN (); }
-    void quit ()
-        { AUD_IFACE_QUIT (); }
-
-    void show_about_window ()
-        { AUD_IFACE_SHOW_ABOUT (); }
-    void hide_about_window ()
-        { AUD_IFACE_HIDE_ABOUT (); }
-    void show_filebrowser (bool open)
-        { AUD_IFACE_SHOW_FILEBROWSER (open); }
-    void hide_filebrowser ()
-        { AUD_IFACE_HIDE_FILEBROWSER (); }
-    void show_jump_to_song ()
-        { AUD_IFACE_SHOW_JUMP_TO_SONG (); }
-    void hide_jump_to_song ()
-        { AUD_IFACE_HIDE_JUMP_TO_SONG (); }
-    void show_prefs_window ()
-        { AUD_IFACE_SHOW_SETTINGS (); }
-    void hide_prefs_window ()
-        { AUD_IFACE_HIDE_SETTINGS (); }
-    void plugin_menu_add (int id, void func (), const char * name, const char * icon)
-        { AUD_IFACE_MENU_ADD (id, func, name, icon); }
-    void plugin_menu_remove (int id, void func ())
-        { AUD_IFACE_MENU_REMOVE (id, func); }
-};
-
-EXPORT IfacePluginInstance aud_plugin_instance;
-
-#endif // AUD_DECLARE_IFACE

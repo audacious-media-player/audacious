@@ -144,8 +144,7 @@ void vis_runner_start_stop (bool new_playing, bool new_paused)
     pthread_mutex_unlock (& mutex);
 }
 
-void vis_runner_pass_audio (int time, float * data, int samples, int
- channels, int rate)
+void vis_runner_pass_audio (int time, const Index<float> & data, int channels, int rate)
 {
     pthread_mutex_lock (& mutex);
 
@@ -184,7 +183,7 @@ void vis_runner_pass_audio (int time, float * data, int samples, int
 
             if (at < 0)
                 at = 0;
-            if (at >= samples)
+            if (at >= data.len ())
                 break;
 
             current_node = vis_pool.head ();
@@ -206,8 +205,8 @@ void vis_runner_pass_audio (int time, float * data, int samples, int
          * wait for more data to be passed in the next call.  If we do fill the
          * node, we loop and start building a new one. */
 
-        int copy = aud::min (samples - at, channels * (FRAMES_PER_NODE - current_frames));
-        memcpy (current_node->data + channels * current_frames, data + at, sizeof (float) * copy);
+        int copy = aud::min (data.len () - at, channels * (FRAMES_PER_NODE - current_frames));
+        memcpy (current_node->data + channels * current_frames, & data[at], sizeof (float) * copy);
         current_frames += copy / channels;
 
         if (current_frames < FRAMES_PER_NODE)

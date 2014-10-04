@@ -158,12 +158,6 @@ public:
          std::forward<Args> (args) ...);
     }
 
-    void enlarge (int size)
-    {
-        if (len () < size)
-            insert (-1, size - len ());
-    }
-
     int find (const T & val) const
     {
         for (const T * iter = begin (); iter != end (); iter ++)
@@ -203,6 +197,18 @@ public:
 
         const state_t state = {compare, userdata};
         IndexBase::sort (wrapper, sizeof (T), (void *) & state);
+    }
+
+    // for use of Index as a raw data buffer
+    // unlike insert(), does not zero-fill any added space
+    void resize (int size)
+    {
+        static_assert (std::is_trivial<T>::value, "for basic types only");
+        int diff = size - len ();
+        if (diff > 0)
+            IndexBase::insert (-1, raw (diff));
+        else if (diff < 0)
+            IndexBase::remove (raw (size), -1, nullptr);
     }
 
 private:

@@ -44,7 +44,7 @@ void aud_input_set_gain (const ReplayGainInfo * info);
  * the format passed to open_audio, and the length (in bytes) must be an
  * integral number of frames.  This function blocks until all the data has
  * been written (though it may not yet be heard by the user). */
-void aud_input_write_audio (void * data, int length);
+void aud_input_write_audio (const void * data, int length);
 
 /* Returns the time counter.  Note that this represents the amount of audio
  * data passed to the output system, not the amount actually heard by the

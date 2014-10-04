@@ -488,7 +488,7 @@ EXPORT void aud_input_set_gain (const ReplayGainInfo * info)
     output_set_replaygain_info (& current_gain);
 }
 
-EXPORT void aud_input_write_audio (void * data, int length)
+EXPORT void aud_input_write_audio (const void * data, int length)
 {
     assert (playing);
 

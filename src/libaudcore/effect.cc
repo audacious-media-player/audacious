@@ -40,11 +40,7 @@ static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 static List<Effect> effects;
 static int input_channels, input_rate;
 
-struct EffectStartState {
-    int * channels, * rate;
-};
-
-void effect_start (int * channels, int * rate)
+void effect_start (int & channels, int & rate)
 {
     pthread_mutex_lock (& mutex);
 
@@ -52,8 +48,8 @@ void effect_start (int * channels, int * rate)
 
     effects.clear ();
 
-    input_channels = * channels;
-    input_rate = * rate;
+    input_channels = channels;
+    input_rate = rate;
 
     auto & list = aud_plugin_list (PLUGIN_TYPE_EFFECT);
 
@@ -64,7 +60,7 @@ void effect_start (int * channels, int * rate)
             continue;
 
         AUDINFO ("Starting %s at %d channels, %d Hz.\n",
-         aud_plugin_get_name (plugin), * channels, * rate);
+         aud_plugin_get_name (plugin), channels, rate);
 
         EffectPlugin * header = (EffectPlugin *) aud_plugin_get_header (plugin);
         if (! header)
@@ -76,8 +72,8 @@ void effect_start (int * channels, int * rate)
         effect->plugin = plugin;
         effect->position = i;
         effect->header = header;
-        effect->channels_returned = * channels;
-        effect->rate_returned = * rate;
+        effect->channels_returned = channels;
+        effect->rate_returned = rate;
 
         effects.append (effect);
     }
@@ -85,8 +81,9 @@ void effect_start (int * channels, int * rate)
     pthread_mutex_unlock (& mutex);
 }
 
-void effect_process (float * * data, int * samples)
+Index<float> & effect_process (Index<float> & data)
 {
+    Index<float> * cur = & data;
     pthread_mutex_lock (& mutex);
 
     Effect * e = effects.head ();
@@ -96,20 +93,28 @@ void effect_process (float * * data, int * samples)
 
         if (e->remove_flag)
         {
-            /* call finish twice to completely drain buffers */
-            e->header->finish (data, samples);
-            e->header->finish (data, samples);
+            cur = & e->header->finish (* cur);
+
+            // simulate end-of-playlist call
+            // first save the current data
+            Index<float> save = std::move (* cur);
+            cur = & e->header->finish (* cur);
+
+            // combine the saved and new data
+            save.move_from (* cur, 0, -1, -1, true, true);
+            * cur = std::move (save);
 
             effects.remove (e);
             delete e;
         }
         else
-            e->header->process (data, samples);
+            cur = & e->header->process (* cur);
 
         e = next;
     }
 
     pthread_mutex_unlock (& mutex);
+    return * cur;
 }
 
 void effect_flush (void)
@@ -122,14 +127,16 @@ void effect_flush (void)
     pthread_mutex_unlock (& mutex);
 }
 
-void effect_finish (float * * data, int * samples)
+Index<float> & effect_finish (Index<float> & data)
 {
+    Index<float> * cur = & data;
     pthread_mutex_lock (& mutex);
 
     for (Effect * e = effects.head (); e; e = effects.next (e))
-        e->header->finish (data, samples);
+        cur = & e->header->finish (* cur);
 
     pthread_mutex_unlock (& mutex);
+    return * cur;
 }
 
 int effect_adjust_delay (int delay)
@@ -181,7 +188,7 @@ static void effect_insert (PluginHandle * plugin, EffectPlugin * header)
     }
 
     AUDINFO ("Starting %s at %d channels, %d Hz.\n", aud_plugin_get_name (plugin), channels, rate);
-    header->start (& channels, & rate);
+    header->start (channels, rate);
 
     Effect * effect = new Effect ();
     effect->plugin = plugin;

@@ -75,7 +75,8 @@ static ReplayGainInfo gain_info;
 static bool change_op;
 static OutputPlugin * new_op;
 
-static Index<char> buffer1, buffer2;
+static Index<float> buffer1;
+static Index<char> buffer2;
 
 static inline int get_format (void)
 {
@@ -122,7 +123,7 @@ static void setup_output (void)
     int channels = in_channels;
     int rate = in_rate;
 
-    effect_start (& channels, & rate);
+    effect_start (channels, rate);
     eq_set_format (channels, rate);
 
     if (s_output && format == out_format && channels == out_channels && rate ==
@@ -162,7 +163,7 @@ static void flush_output (void)
     vis_runner_flush ();
 }
 
-static void apply_replay_gain (float * data, int samples)
+static void apply_replay_gain (Index<float> & data)
 {
     if (! aud_get_bool (0, "enable_replay_gain"))
         return;
@@ -191,10 +192,10 @@ static void apply_replay_gain (float * data, int samples)
         factor *= powf (10, aud_get_double (0, "default_gain") / 20);
 
     if (factor < 0.99 || factor > 1.01)
-        audio_amplify (data, 1, samples, & factor);
+        audio_amplify (data.begin (), 1, data.len (), & factor);
 }
 
-static void apply_software_volume (float * data, int channels, int samples)
+static void apply_software_volume (Index<float> & data, int channels)
 {
     if (! aud_get_bool (0, "software_volume_control"))
         return;
@@ -220,40 +221,42 @@ static void apply_software_volume (float * data, int channels, int samples)
             factors[c] = aud::max (lfactor, rfactor);
     }
 
-    audio_amplify (data, channels, samples / channels, factors);
+    audio_amplify (data.begin (), channels, data.len () / channels, factors);
 }
 
 /* assumes LOCK_ALL, s_output */
-static void write_output_raw (float * data, int samples)
+static void write_output_raw (Index<float> & data)
 {
     int out_time = aud::rescale<int64_t> (out_frames, out_rate, 1000);
-    vis_runner_pass_audio (out_time, data, samples, out_channels, out_rate);
-    out_frames += samples / out_channels;
+    vis_runner_pass_audio (out_time, data, out_channels, out_rate);
+    out_frames += data.len () / out_channels;
 
-    eq_filter (data, samples);
-    apply_software_volume (data, out_channels, samples);
+    eq_filter (data.begin (), data.len ());
+    apply_software_volume (data, out_channels);
 
     if (aud_get_bool (0, "soft_clipping"))
-        audio_soft_clip (data, samples);
+        audio_soft_clip (data.begin (), data.len ());
 
-    void * out_data = data;
+    const void * out_data = data.begin ();
 
     if (out_format != FMT_FLOAT)
     {
-        buffer2.enlarge (FMT_SIZEOF (out_format) * samples);
-        audio_to_int (data, buffer2.begin (), out_format, samples);
+        buffer2.resize (FMT_SIZEOF (out_format) * data.len ());
+        audio_to_int (data.begin (), buffer2.begin (), out_format, data.len ());
         out_data = buffer2.begin ();
     }
 
+    int remain = data.len ();
+
     while (! s_aborted && ! s_resetting)
     {
-        int ready = aud::min (cop->buffer_free () / (int) FMT_SIZEOF (out_format), samples);
+        int ready = aud::min (cop->buffer_free () / (int) FMT_SIZEOF (out_format), remain);
 
         cop->write_audio (out_data, FMT_SIZEOF (out_format) * ready);
         out_data = (char *) out_data + FMT_SIZEOF (out_format) * ready;
-        samples -= ready;
+        remain -= ready;
 
-        if (samples == 0)
+        if (! remain)
             break;
 
         UNLOCK_MINOR;
@@ -263,7 +266,7 @@ static void write_output_raw (float * data, int samples)
 }
 
 /* assumes LOCK_ALL, s_input, s_output */
-static bool write_output (void * data, int size, int stop_time)
+static bool write_output (const void * data, int size, int stop_time)
 {
     bool stopped = false;
 
@@ -285,17 +288,15 @@ static bool write_output (void * data, int size, int stop_time)
         }
     }
 
-    if (in_format != FMT_FLOAT)
-    {
-        buffer1.enlarge (sizeof (float) * samples);
-        audio_from_int (data, in_format, (float *) buffer1.begin (), samples);
-        data = buffer1.begin ();
-    }
+    buffer1.resize (samples);
 
-    float * fdata = (float *) data;
-    apply_replay_gain (fdata, samples);
-    effect_process (& fdata, & samples);
-    write_output_raw (fdata, samples);
+    if (in_format == FMT_FLOAT)
+        memcpy (buffer1.begin (), data, sizeof (float) * samples);
+    else
+        audio_from_int (data, in_format, buffer1.begin (), samples);
+
+    apply_replay_gain (buffer1);
+    write_output_raw (effect_process (buffer1));
 
     return ! stopped;
 }
@@ -303,11 +304,8 @@ static bool write_output (void * data, int size, int stop_time)
 /* assumes LOCK_ALL, s_output */
 static void finish_effects (void)
 {
-    float * data = nullptr;
-    int samples = 0;
-
-    effect_finish (& data, & samples);
-    write_output_raw (data, samples);
+    buffer1.resize (0);
+    write_output_raw (effect_finish (buffer1));
 }
 
 bool output_open_audio (int format, int rate, int channels)
@@ -362,7 +360,7 @@ void output_set_replaygain_info (const ReplayGainInfo * info)
 }
 
 /* returns false if stop_time is reached */
-bool output_write_audio (void * data, int size, int stop_time)
+bool output_write_audio (const void * data, int size, int stop_time)
 {
 RETRY:
     LOCK_ALL;

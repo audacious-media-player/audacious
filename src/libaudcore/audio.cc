@@ -177,7 +177,7 @@ EXPORT void audio_to_int (const float * in, void * out, int format, int samples)
     }
 }
 
-EXPORT void audio_amplify (float * data, int channels, int frames, float * factors)
+EXPORT void audio_amplify (float * data, int channels, int frames, const float * factors)
 {
     float * end = data + channels * frames;
     int channel;
