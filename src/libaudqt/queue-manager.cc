@@ -71,6 +71,8 @@ QVariant QueueManagerModel::data (const QModelIndex & index, int role) const
         else
             return QString ((const char *) aud_playlist_entry_get_title (list, entry, true));
     }
+    else if (role == Qt::TextAlignmentRole && index.column () == 0)
+        return Qt::AlignRight;
 
     return QVariant ();
 }
@@ -113,6 +115,7 @@ QueueManagerDialog::QueueManagerDialog (QWidget * parent) : QDialog (parent)
     m_layout.addWidget (& m_treeview);
     m_layout.addWidget (& m_buttonbox);
 
+    m_treeview.setIndentation (0);
     m_treeview.setModel (& m_model);
     m_treeview.setSelectionMode (QAbstractItemView::ExtendedSelection);
     m_treeview.header ()->hide ();
