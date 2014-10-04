@@ -20,6 +20,7 @@ SRCS = about.cc			\
        prefs-window.cc		\
        prefs-pluginlist-model.cc  \
        prefs-pluginlist-model.moc \
+       queue-manager.cc		\
        util.cc                  \
        volumebutton.cc
 
