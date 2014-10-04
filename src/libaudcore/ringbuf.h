@@ -20,7 +20,7 @@
 #ifndef LIBAUDCORE_RINGBUF_H
 #define LIBAUDCORE_RINGBUF_H
 
-#include <libaudcore/templates.h>
+#include <libaudcore/index.h>
 
 /*
  * RingBuf is a lightweight ring buffer class, with the following properties:
@@ -98,6 +98,9 @@ public:
     void move_out (void * to, int len, aud::EraseFunc erase_func);
     void discard (int len, aud::EraseFunc erase_func);
 
+    void move_in (IndexBase & index, int from, int len);
+    void move_out (IndexBase & index, int to, int len);
+
 private:
     struct Areas {
         void * area1, * area2;
@@ -152,6 +155,11 @@ public:
         { RingBufBase::move_out (to, raw (len), aud::erase_func<T> ()); }
     void discard (int len = -1)
         { RingBufBase::discard (raw (len), aud::erase_func<T> ()); }
+
+    void move_in (Index<T> & index, int from, int len)
+        { RingBufBase::move_in (index.base (), raw (from), raw (len)); }
+    void move_out (Index<T> & index, int to, int len)
+        { RingBufBase::move_out (index.base (), raw (to), raw (len)); }
 
     template<class ... Args>
     T & push (Args && ... args)

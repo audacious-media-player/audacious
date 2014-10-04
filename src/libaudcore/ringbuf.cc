@@ -154,3 +154,26 @@ EXPORT void RingBufBase::discard (int len, aud::EraseFunc erase_func)
 
     remove (len);
 }
+
+EXPORT void RingBufBase::move_in (IndexBase & index, int from, int len)
+{
+    assert (from >= 0 && from <= index.len ());
+    assert (len <= index.len () - from);
+
+    if (len < 0)
+        len = index.len () - from;
+
+    move_in ((char *) index.begin () + from, len, nullptr);
+    index.remove (from, len, nullptr);
+}
+
+EXPORT void RingBufBase::move_out (IndexBase & index, int to, int len)
+{
+    assert (len <= m_len);
+
+    if (len < 0)
+        len = m_len;
+
+    void * ptr = index.insert (to, len);
+    move_out (ptr, len, nullptr);
+}

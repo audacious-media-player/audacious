@@ -105,6 +105,10 @@ public:
     constexpr Index () :
         IndexBase () {}
 
+    // use with care!
+    IndexBase & base ()
+        { return * this; }
+
     void clear ()
         { IndexBase::clear (aud::erase_func<T> ()); }
     ~Index ()

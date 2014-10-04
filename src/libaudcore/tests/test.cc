@@ -241,6 +241,21 @@ static void test_ringbuf ()
         assert (nums[i] == String (int_to_str ((5 + i) % 10)));
 
     ring.move_in (nums, 10);
+
+    Index<String> index;
+    ring.move_out (index, -1, 5);
+
+    assert (ring.len () == 5);
+    assert (index.len () == 5);
+
+    ring.move_in (index, 0, -1);
+
+    assert (ring.len () == 10);
+    assert (index.len () == 0);
+
+    for (int i = 0; i < 10; i ++)
+        assert (ring[i] == String (int_to_str (i)));
+
     ring.discard ();
 
     String::check_all_destroyed ();
