@@ -143,9 +143,13 @@ QueueManagerDialog::~QueueManagerDialog ()
     hook_dissociate ("playlist update", QueueManagerDialog::update_hook);
 }
 
-void QueueManagerDialog::update_hook (void *, void * user)
+void QueueManagerDialog::update_hook (void * type, void * user)
 {
     QueueManagerDialog * s = static_cast<QueueManagerDialog *> (user);
+
+    /* resetting the model due to selection updates causes breakage, so don't do it. */
+    if (type == PLAYLIST_UPDATE_SELECTION)
+        return;
 
     if (! s)
         return;
