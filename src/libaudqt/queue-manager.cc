@@ -33,7 +33,6 @@
 
 /*
  * TODO:
- *     - proper selection management in the model (a prerequisite for QueueManagerDialog::removeSelected to do anything)
  *     - shifting of selection entries
  */
 
@@ -123,6 +122,17 @@ QueueManagerDialog::QueueManagerDialog (QWidget * parent) : QDialog (parent)
 
     setLayout (& m_layout);
     setWindowTitle (_("Queue Manager"));
+
+    QItemSelectionModel * model = m_treeview.selectionModel ();
+    connect (model, &QItemSelectionModel::selectionChanged, [=] (const QItemSelection & selected, const QItemSelection & deselected) {
+        int list = aud_playlist_get_active ();
+
+        for (auto & index : selected.indexes ())
+            aud_playlist_entry_set_selected (list, aud_playlist_queue_get_entry (list, index.row ()), true);
+
+        for (auto & index : deselected.indexes ())
+            aud_playlist_entry_set_selected (list, aud_playlist_queue_get_entry (list, index.row ()), false);
+    });
 
     resize (500, 250);
 }
