@@ -464,7 +464,7 @@ EXPORT bool aud_input_open_audio (int format, int rate, int channels)
 {
     assert (playing);
 
-    if (! output_open_audio (format, rate, channels))
+    if (! output_open_audio (format, rate, channels, aud::max (0, seek_request)))
         return false;
 
     output_set_replaygain_info (& current_gain);

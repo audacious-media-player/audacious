@@ -308,7 +308,7 @@ static void finish_effects (void)
     write_output_raw (effect_finish (buffer1));
 }
 
-bool output_open_audio (int format, int rate, int channels)
+bool output_open_audio (int format, int rate, int channels, int start_time)
 {
     /* prevent division by zero */
     if (rate < 1 || channels < 1 || channels > AUD_MAX_CHANNELS)
@@ -327,7 +327,7 @@ bool output_open_audio (int format, int rate, int channels)
 
     s_input = true;
     s_gain = s_paused = s_aborted = false;
-    seek_time = 0;
+    seek_time = start_time;
 
     in_format = format;
     in_channels = channels;

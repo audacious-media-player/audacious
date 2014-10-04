@@ -22,7 +22,7 @@
 
 #include <libaudcore/input.h>
 
-bool output_open_audio (int format, int rate, int channels);
+bool output_open_audio (int format, int rate, int channels, int start_time);
 void output_set_replaygain_info (const ReplayGainInfo * info);
 bool output_write_audio (const void * data, int size, int stop_time);
 void output_abort_write (int time);
