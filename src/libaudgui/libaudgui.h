@@ -57,7 +57,6 @@ void audgui_infowin_hide (void);
 /* init.c */
 void audgui_init (void);
 void audgui_cleanup (void);
-void audgui_playlist_manager (void);
 
 /* jump-to-time.c */
 void audgui_jump_to_time (void);

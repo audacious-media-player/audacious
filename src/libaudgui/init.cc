@@ -166,17 +166,3 @@ EXPORT void audgui_cleanup (void)
     plugin_menu_cleanup ();
     plugin_prefs_cleanup ();
 }
-
-EXPORT void audgui_playlist_manager (void)
-{
-    PluginHandle * manager = aud_plugin_lookup_basename ("playlist-manager");
-
-    if (! manager)
-    {
-        AUDWARN ("Playlist manager plugin is not installed.\n");
-        return;
-    }
-
-    aud_plugin_enable (manager, true);
-    aud_plugin_send_message (manager, "grab focus", nullptr, 0);
-}
