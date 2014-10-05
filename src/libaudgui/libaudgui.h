@@ -57,6 +57,7 @@ void audgui_infowin_hide (void);
 /* init.c */
 void audgui_init (void);
 void audgui_cleanup (void);
+void audgui_playlist_manager (void);
 
 /* jump-to-time.c */
 void audgui_jump_to_time (void);
@@ -80,9 +81,6 @@ void audgui_hide_prefs_window (void);
 
 /* queue-manager.c */
 void audgui_queue_manager_show (void);
-
-/* ui_playlist_manager.c */
-void audgui_playlist_manager (void);
 
 /* urilist.c */
 void audgui_urilist_open (const char * list);

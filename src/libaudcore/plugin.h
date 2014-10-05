@@ -85,10 +85,10 @@ struct PluginPreferences;
  * is crucial that both plugins agree on the meaning of the message codes used.
  *
  * Once the message is sent, an integer error code is returned. If the receiving
- * plugin does not provide the take_message() method, ENOSYS is returned. If
+ * plugin does not provide the take_message() method, -1 is returned. If
  * take_message() does not recognize the message code, it should ignore the
- * message and return EINVAL. An error code of zero represents success. Other
- * error codes may be used with more specific meanings.
+ * message and return -1. An error code of zero represents success. Other error
+ * codes may be used with more specific meanings.
  *
  * For the time being, aud_plugin_send_message() should only be called from the
  * program's main thread. */

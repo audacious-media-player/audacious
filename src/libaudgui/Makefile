@@ -24,7 +24,6 @@ SRCS = about.cc \
        ui_fileopener.cc \
        ui_jumptotrack.cc \
        ui_jumptotrack_cache.cc \
-       ui_playlist_manager.cc \
        urilist.cc \
        url-opener.cc \
        util.cc

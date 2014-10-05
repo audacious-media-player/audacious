@@ -23,6 +23,7 @@
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
 #include <libaudcore/playlist.h>
+#include <libaudcore/plugins.h>
 #include <libaudcore/runtime.h>
 
 #include "internal.h"
@@ -33,7 +34,6 @@ static const char * const audgui_defaults[] = {
  "close_dialog_add", "FALSE",
  "close_dialog_open", "TRUE",
  "close_jtf_dialog", "TRUE",
- "playlist_manager_close_on_activate", "FALSE",
  "remember_jtf_entry", "TRUE",
  nullptr};
 
@@ -47,7 +47,6 @@ static const char * const window_names[AUDGUI_NUM_UNIQUE_WINDOWS] = {
  "jump_to_track_win",
  "playlist_export_win",
  "playlist_import_win",
- "playlist_manager_win",
  "queue_manager_win",
  "url_opener_win"
 };
@@ -166,4 +165,18 @@ EXPORT void audgui_cleanup (void)
 
     plugin_menu_cleanup ();
     plugin_prefs_cleanup ();
+}
+
+EXPORT void audgui_playlist_manager (void)
+{
+    PluginHandle * manager = aud_plugin_lookup_basename ("playlist-manager");
+
+    if (! manager)
+    {
+        AUDWARN ("Playlist manager plugin is not installed.\n");
+        return;
+    }
+
+    aud_plugin_enable (manager, true);
+    aud_plugin_send_message (manager, "grab focus", nullptr, 0);
 }
