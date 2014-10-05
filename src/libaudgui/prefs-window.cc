@@ -219,6 +219,10 @@ static const PreferencesWidget proxy_auth_elements[] = {
 };
 
 static const PreferencesWidget connectivity_page_widgets[] = {
+    WidgetLabel (N_("<b>Network Settings</b>")),
+    WidgetSpin (N_("Buffer size:"),
+        WidgetInt (0, "net_buffer_kb"),
+        {16, 1024, 16, N_("KiB")}),
     WidgetLabel (N_("<b>Proxy Configuration</b>")),
     WidgetCheck (N_("Enable proxy usage"),
         WidgetBool (0, "use_proxy")),

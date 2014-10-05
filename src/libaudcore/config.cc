@@ -60,6 +60,7 @@ static const char * const core_defaults[] = {
  "use_file_cover", "FALSE",
 
  /* network */
+ "net_buffer_kb", "128",
  "use_proxy", "FALSE",
  "use_proxy_auth", "FALSE",
 
