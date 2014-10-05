@@ -271,17 +271,12 @@ static void write_output_raw (Index<float> & data)
 /* assumes LOCK_ALL, s_input, s_output */
 static bool write_output (const void * data, int size, int stop_time)
 {
-    bool stopped = false;
-
-    int64_t cur_frame = in_frames;
     int samples = size / FMT_SIZEOF (in_format);
-
-    /* always update in_frames, whether we use all the decoded frames or not */
-    in_frames += samples / in_channels;
+    bool stopped = false;
 
     if (stop_time != -1)
     {
-        int64_t frames_left = aud::rescale<int64_t> (stop_time - seek_time, 1000, in_rate) - cur_frame;
+        int64_t frames_left = aud::rescale<int64_t> (stop_time - seek_time, 1000, in_rate) - in_frames;
         int64_t samples_left = in_channels * aud::max ((int64_t) 0, frames_left);
 
         if (samples >= samples_left)
@@ -290,6 +285,8 @@ static bool write_output (const void * data, int size, int stop_time)
             stopped = true;
         }
     }
+
+    in_frames += samples / in_channels;
 
     buffer1.resize (samples);
 
@@ -437,18 +434,6 @@ void output_pause (bool pause)
     }
 
     UNLOCK_MINOR;
-}
-
-int output_written_time ()
-{
-    LOCK_MINOR;
-    int time = 0;
-
-    if (s_input)
-        time = seek_time + aud::rescale<int64_t> (in_frames, in_rate, 1000);
-
-    UNLOCK_MINOR;
-    return time;
 }
 
 int output_get_time ()

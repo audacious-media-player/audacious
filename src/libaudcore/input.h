@@ -46,15 +46,6 @@ void aud_input_set_gain (const ReplayGainInfo * info);
  * been written (though it may not yet be heard by the user). */
 void aud_input_write_audio (const void * data, int length);
 
-/* Returns the time counter.  Note that this represents the amount of audio
- * data passed to the output system, not the amount actually heard by the
- * user.
- *
- * 5 Oct 2014: This function is broken.  The written time counter is now reset
- * from outside the playback thread during a seek; hence the input plugin cannot
- * expect a consistent value to be returned. */
-int aud_input_written_time (void) __attribute__((deprecated));
-
 /* Returns the current tuple for the stream. */
 Tuple aud_input_get_tuple (void);
 

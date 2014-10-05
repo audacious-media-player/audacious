@@ -28,7 +28,6 @@ bool output_write_audio (const void * data, int size, int stop_time);
 void output_flush (int time);
 void output_resume ();
 void output_pause (bool pause);
-int output_written_time ();
 
 int output_get_time ();
 int output_get_raw_time ();

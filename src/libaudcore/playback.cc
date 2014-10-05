@@ -517,12 +517,6 @@ EXPORT void aud_input_write_audio (const void * data, int length)
     }
 }
 
-EXPORT int aud_input_written_time (void)
-{
-    assert (playing);
-    return output_written_time ();
-}
-
 EXPORT Tuple aud_input_get_tuple (void)
 {
     assert (playing);
