@@ -261,13 +261,18 @@ public:
      * need not be the same as the number of input samples. */
     virtual Index<float> & process (Index<float> & data) = 0;
 
-    /* Optional.  A seek is taking place; any buffers should be discarded. */
-    virtual void flush () {}
+    /* Optional.  A seek is taking place; any buffers should be discarded.
+     * Unless the "force" flag is set, the plugin may choose to override the
+     * normal flush behavior and handle the flush itself (for example, to
+     * perform crossfading).  The flush() function should return false in this
+     * case to prevent flush() from being called in downstream effect plugins. */
+    virtual bool flush (bool force)
+        { return true; }
 
     /* Exactly like process() except that any buffers should be drained (i.e.
      * the data processed and returned).  finish() will be called a second time
      * at the end of the last song in the playlist. */
-    virtual Index<float> & finish (Index<float> & data)
+    virtual Index<float> & finish (Index<float> & data, bool end_of_playlist)
         { return process (data); }
 
     /* Required only for plugins that change the time domain (e.g. a time

@@ -45,20 +45,20 @@ static pthread_mutex_t mutex_minor = PTHREAD_MUTEX_INITIALIZER;
 
 /* State variables.  State changes that are allowed between LOCK_MINOR and
  * UNLOCK_MINOR (all others must take place between LOCK_ALL and UNLOCK_ALL):
- * s_paused -> true or false, s_aborted -> true, s_resetting -> true */
+ * s_paused -> true or false, s_flushed -> true, s_resetting -> true */
 
 static bool s_input; /* input plugin connected */
 static bool s_output; /* output plugin connected */
 static bool s_gain; /* replay gain info set */
 static bool s_paused; /* paused */
-static bool s_aborted; /* writes aborted */
+static bool s_flushed; /* flushed, writes ignored until resume */
 static bool s_resetting; /* resetting output system */
 
 /* Condition variable linked to LOCK_MINOR.
  * The input thread will wait if the following is true:
- *   ((! s_output || s_resetting) && ! s_aborted)
+ *   ((! s_output || s_resetting) && ! s_flushed)
  * Hence you must signal if you cause the inverse to be true:
- *   ((s_output && ! s_resetting) || s_aborted) */
+ *   ((s_output && ! s_resetting) || s_flushed) */
 
 static pthread_cond_t cond_minor = PTHREAD_COND_INITIALIZER;
 
@@ -78,7 +78,7 @@ static OutputPlugin * new_op;
 static Index<float> buffer1;
 static Index<char> buffer2;
 
-static inline int get_format (void)
+static inline int get_format ()
 {
     switch (aud_get_int (0, "output_bit_depth"))
     {
@@ -90,9 +90,9 @@ static inline int get_format (void)
 }
 
 /* assumes LOCK_ALL, s_output */
-static void cleanup_output (void)
+static void cleanup_output ()
 {
-    if (! s_paused && ! s_aborted && ! s_resetting)
+    if (! s_paused && ! s_flushed && ! s_resetting)
     {
         UNLOCK_MINOR;
         cop->drain ();
@@ -104,20 +104,20 @@ static void cleanup_output (void)
     buffer1.clear ();
     buffer2.clear ();
 
+    effect_flush (true);
     cop->close_audio ();
-    effect_flush ();
     vis_runner_start_stop (false, false);
 }
 
 /* assumes LOCK_ALL, s_output */
-static void apply_pause (void)
+static void apply_pause ()
 {
     cop->pause (s_paused);
     vis_runner_start_stop (true, s_paused);
 }
 
 /* assumes LOCK_ALL, s_input */
-static void setup_output (void)
+static void setup_output ()
 {
     int format = get_format ();
     int channels = in_channels;
@@ -150,17 +150,20 @@ static void setup_output (void)
 
     apply_pause ();
 
-    if (! s_aborted && ! s_resetting)
+    if (! s_flushed && ! s_resetting)
         SIGNAL_MINOR;
 }
 
 /* assumes LOCK_MINOR, s_output */
-static void flush_output (void)
+static bool flush_output (bool force)
 {
+    if (! effect_flush (force))
+        return false;
+
     cop->flush (0);
     out_frames = 0;
-    effect_flush ();
     vis_runner_flush ();
+    return true;
 }
 
 static void apply_replay_gain (Index<float> & data)
@@ -248,7 +251,7 @@ static void write_output_raw (Index<float> & data)
 
     int remain = data.len ();
 
-    while (! s_aborted && ! s_resetting)
+    while (! s_flushed && ! s_resetting)
     {
         int ready = aud::min (cop->buffer_free () / (int) FMT_SIZEOF (out_format), remain);
 
@@ -302,10 +305,10 @@ static bool write_output (const void * data, int size, int stop_time)
 }
 
 /* assumes LOCK_ALL, s_output */
-static void finish_effects (void)
+static void finish_effects (bool end_of_playlist)
 {
     buffer1.resize (0);
-    write_output_raw (effect_finish (buffer1));
+    write_output_raw (effect_finish (buffer1, end_of_playlist));
 }
 
 bool output_open_audio (int format, int rate, int channels, int start_time)
@@ -318,15 +321,15 @@ bool output_open_audio (int format, int rate, int channels, int start_time)
 
     if (s_output && s_paused)
     {
-        if (! s_aborted && ! s_resetting)
-            flush_output ();
+        if (! s_flushed && ! s_resetting)
+            flush_output (true);
 
         s_paused = false;
         apply_pause ();
     }
 
     s_input = true;
-    s_gain = s_paused = s_aborted = false;
+    s_gain = s_paused = s_flushed = false;
     seek_time = start_time;
 
     in_format = format;
@@ -366,7 +369,7 @@ RETRY:
     LOCK_ALL;
     bool good = false;
 
-    if (s_input && ! s_aborted)
+    if (s_input && ! s_flushed)
     {
         if (! s_output || s_resetting)
         {
@@ -383,16 +386,21 @@ RETRY:
     return good;
 }
 
-void output_abort_write (int time)
+void output_flush (int time)
 {
     LOCK_MINOR;
 
-    if (s_input && ! s_aborted)
+    if (s_input && ! s_flushed)
     {
-        s_aborted = true;
+        s_flushed = true;
 
         if (s_output && ! s_resetting)
-            flush_output ();
+        {
+            // allow effect plugins to prevent the flush, but
+            // always flush if paused to prevent locking up
+            if (! flush_output (s_paused))
+                s_flushed = false;
+        }
         else
             SIGNAL_MINOR;
     }
@@ -406,12 +414,12 @@ void output_abort_write (int time)
     UNLOCK_MINOR;
 }
 
-void output_resume_write (void)
+void output_resume ()
 {
     LOCK_ALL;
 
     if (s_input)
-        s_aborted = false;
+        s_flushed = false;
 
     UNLOCK_ALL;
 }
@@ -431,7 +439,7 @@ void output_pause (bool pause)
     UNLOCK_MINOR;
 }
 
-int output_written_time (void)
+int output_written_time ()
 {
     LOCK_MINOR;
     int time = 0;
@@ -443,15 +451,7 @@ int output_written_time (void)
     return time;
 }
 
-bool output_is_open (void)
-{
-    LOCK_MINOR;
-    bool is_open = s_input;
-    UNLOCK_MINOR;
-    return is_open;
-}
-
-int output_get_time (void)
+int output_get_time ()
 {
     LOCK_MINOR;
     int time = 0, delay = 0;
@@ -470,7 +470,7 @@ int output_get_time (void)
     return time;
 }
 
-int output_get_raw_time (void)
+int output_get_raw_time ()
 {
     LOCK_MINOR;
     int time = 0;
@@ -482,7 +482,7 @@ int output_get_raw_time (void)
     return time;
 }
 
-void output_close_audio (void)
+void output_close_audio ()
 {
     LOCK_ALL;
 
@@ -490,20 +490,20 @@ void output_close_audio (void)
     {
         s_input = false;
 
-        if (s_output && ! (s_paused || s_aborted || s_resetting))
-            finish_effects (); /* first time for end of song */
+        if (s_output && ! (s_paused || s_flushed || s_resetting))
+            finish_effects (false); /* first time for end of song */
     }
 
     UNLOCK_ALL;
 }
 
-void output_drain (void)
+void output_drain ()
 {
     LOCK_ALL;
 
     if (! s_input && s_output)
     {
-        finish_effects (); /* second time for end of playlist */
+        finish_effects (true); /* second time for end of playlist */
         cleanup_output ();
     }
 
@@ -516,8 +516,8 @@ EXPORT void aud_output_reset (OutputReset type)
 
     s_resetting = true;
 
-    if (s_output && ! s_aborted)
-        flush_output ();
+    if (s_output && ! s_flushed)
+        flush_output (true);
 
     UNLOCK_MINOR;
     LOCK_ALL;
@@ -542,7 +542,7 @@ EXPORT void aud_output_reset (OutputReset type)
 
     s_resetting = false;
 
-    if (s_output && ! s_aborted)
+    if (s_output && ! s_flushed)
         SIGNAL_MINOR;
 
     UNLOCK_ALL;
@@ -580,7 +580,7 @@ EXPORT void aud_drct_set_volume (StereoVolume volume)
     UNLOCK_MINOR;
 }
 
-PluginHandle * output_plugin_get_current (void)
+PluginHandle * output_plugin_get_current ()
 {
     return cop ? aud_plugin_by_header (cop) : nullptr;
 }

@@ -93,12 +93,12 @@ Index<float> & effect_process (Index<float> & data)
 
         if (e->remove_flag)
         {
-            cur = & e->header->finish (* cur);
+            cur = & e->header->finish (* cur, false);
 
             // simulate end-of-playlist call
             // first save the current data
             Index<float> save = std::move (* cur);
-            cur = & e->header->finish (* cur);
+            cur = & e->header->finish (* cur, true);
 
             // combine the saved and new data
             save.move_from (* cur, 0, -1, -1, true, true);
@@ -117,23 +117,31 @@ Index<float> & effect_process (Index<float> & data)
     return * cur;
 }
 
-void effect_flush (void)
+bool effect_flush (bool force)
 {
+    bool flushed = true;
     pthread_mutex_lock (& mutex);
 
     for (Effect * e = effects.head (); e; e = effects.next (e))
-        e->header->flush ();
+    {
+        if (! e->header->flush (force) && ! force)
+        {
+            flushed = false;
+            break;
+        }
+    }
 
     pthread_mutex_unlock (& mutex);
+    return flushed;
 }
 
-Index<float> & effect_finish (Index<float> & data)
+Index<float> & effect_finish (Index<float> & data, bool end_of_playlist)
 {
     Index<float> * cur = & data;
     pthread_mutex_lock (& mutex);
 
     for (Effect * e = effects.head (); e; e = effects.next (e))
-        cur = & e->header->finish (* cur);
+        cur = & e->header->finish (* cur, end_of_playlist);
 
     pthread_mutex_unlock (& mutex);
     return * cur;

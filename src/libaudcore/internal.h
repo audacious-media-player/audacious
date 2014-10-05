@@ -54,8 +54,8 @@ void config_cleanup (void);
 /* effect.c */
 void effect_start (int & channels, int & rate);
 Index<float> & effect_process (Index<float> & data);
-void effect_flush (void);
-Index<float> & effect_finish (Index<float> & data);
+bool effect_flush (bool force);
+Index<float> & effect_finish (Index<float> & data, bool end_of_playlist);
 int effect_adjust_delay (int delay);
 
 bool effect_plugin_start (PluginHandle * plugin);

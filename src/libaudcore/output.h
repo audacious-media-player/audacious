@@ -25,18 +25,17 @@
 bool output_open_audio (int format, int rate, int channels, int start_time);
 void output_set_replaygain_info (const ReplayGainInfo * info);
 bool output_write_audio (const void * data, int size, int stop_time);
-void output_abort_write (int time);
-void output_resume_write (void);
+void output_flush (int time);
+void output_resume ();
 void output_pause (bool pause);
-int output_written_time (void);
+int output_written_time ();
 
-bool output_is_open (void);
-int output_get_time (void);
-int output_get_raw_time (void);
-void output_close_audio (void);
-void output_drain (void);
+int output_get_time ();
+int output_get_raw_time ();
+void output_close_audio ();
+void output_drain ();
 
-PluginHandle * output_plugin_get_current (void);
+PluginHandle * output_plugin_get_current ();
 bool output_plugin_set_current (PluginHandle * plugin);
 
 #endif

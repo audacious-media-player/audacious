@@ -200,7 +200,7 @@ static void playback_cleanup (void)
     {
         pthread_mutex_lock (& control_mutex);
         stop_flag = true;
-        output_abort_write (0);
+        output_flush (0);
         pthread_mutex_unlock (& control_mutex);
     }
 
@@ -441,7 +441,7 @@ EXPORT bool aud_drct_get_paused (void)
 static void request_seek_locked (int time)
 {
     seek_request = time;
-    output_abort_write (time);
+    output_flush (time);
     event_queue ("playback seek", nullptr);
 }
 
@@ -559,7 +559,7 @@ EXPORT int aud_input_check_seek (void)
 
     if (seek != -1)
     {
-        output_resume_write ();
+        output_resume ();
         seek_request = -1;
     }
 
