@@ -9,6 +9,7 @@ SRCS = about.cc			\
        equalizer.moc		\
        fileopener.cc		\
        infowin.cc		\
+       info-widget.cc		\
        log-inspector.cc         \
        log-inspector.moc        \
        playlist-management.cc	\
