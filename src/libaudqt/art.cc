@@ -46,5 +46,16 @@ EXPORT QImage art_request (const char * filename)
     return img;
 }
 
+EXPORT QImage art_request_current ()
+{
+    int list = aud_playlist_get_playing ();
+    int entry = aud_playlist_get_position (list);
+    if (entry < 0)
+        return QImage ();
+
+    String filename = aud_playlist_entry_get_filename (list, entry);
+    return art_request (filename);
+}
+
 }
 
