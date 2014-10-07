@@ -63,7 +63,7 @@ const TupleFieldMap tuple_field_map[] = {
     {N_("Bitrate"),		FIELD_BITRATE,			false},
 };
 
-InfoWidget::InfoWidget (QWidget * parent) : QTreeView (parent)
+EXPORT InfoWidget::InfoWidget (QWidget * parent) : QTreeView (parent)
 {
     setModel (& m_model);
     header ()->hide ();
@@ -71,17 +71,17 @@ InfoWidget::InfoWidget (QWidget * parent) : QTreeView (parent)
     setIndentation (0);
 }
 
-InfoWidget::~InfoWidget ()
+EXPORT InfoWidget::~InfoWidget ()
 {
 }
 
-void InfoWidget::fillInfo (int playlist, int entry, const char * filename, const Tuple & tuple,
+EXPORT void InfoWidget::fillInfo (int playlist, int entry, const char * filename, const Tuple & tuple,
  PluginHandle * decoder, bool updating_enabled)
 {
     m_model.setTupleData (tuple, String (filename), decoder);
 }
 
-bool InfoWidget::updateFile ()
+EXPORT bool InfoWidget::updateFile ()
 {
     return m_model.updateFile ();
 }
