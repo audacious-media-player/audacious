@@ -71,6 +71,53 @@ EXPORT void audio_interlace (const void * const * in, int format, int channels,
     }
 }
 
+#define DEINTERLACE_LOOP(TYPE) \
+for (int c = 0; c < channels; c ++) \
+{ \
+    const TYPE * get = (const TYPE *) in + c; \
+    TYPE * set = (TYPE *) out[c]; \
+    TYPE * end = set + frames; \
+    while (set < end) \
+    { \
+        * set ++ = * get; \
+        get += channels; \
+    } \
+}
+
+EXPORT void audio_deinterlace (const void * in, int format, int channels,
+ void * const * out, int frames)
+{
+    switch (format)
+    {
+    case FMT_FLOAT:
+        DEINTERLACE_LOOP (float);
+        break;
+
+    case FMT_S8:
+    case FMT_U8:
+        DEINTERLACE_LOOP (int8_t);
+        break;
+
+    case FMT_S16_LE:
+    case FMT_S16_BE:
+    case FMT_U16_LE:
+    case FMT_U16_BE:
+        DEINTERLACE_LOOP (int16_t);
+        break;
+
+    case FMT_S24_LE:
+    case FMT_S24_BE:
+    case FMT_U24_LE:
+    case FMT_U24_BE:
+    case FMT_S32_LE:
+    case FMT_S32_BE:
+    case FMT_U32_LE:
+    case FMT_U32_BE:
+        DEINTERLACE_LOOP (int32_t);
+        break;
+    }
+}
+
 #define FROM_INT_LOOP(NAME, TYPE, SWAP, OFFSET, RANGE) \
 static void NAME (const TYPE * in, float * out, int samples) \
 { \
