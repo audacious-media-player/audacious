@@ -24,6 +24,8 @@
 #include "audio.h"
 #include "objects.h"
 
+#define SW_VOLUME_RANGE 40 /* decibels */
+
 #define INTERLACE_LOOP(TYPE) \
 for (int c = 0; c < channels; c ++) \
 { \
@@ -237,6 +239,36 @@ EXPORT void audio_amplify (float * data, int channels, int frames, const float *
             data ++;
         }
     }
+}
+
+EXPORT void audio_amplify (float * data, int channels, int frames, StereoVolume volume)
+{
+    if (channels < 1 || channels > AUD_MAX_CHANNELS)
+        return;
+
+    if (volume.left == 100 && volume.right == 100)
+        return;
+
+    float lfactor = 0, rfactor = 0;
+    float factors[AUD_MAX_CHANNELS];
+
+    if (volume.left > 0)
+        lfactor = powf (10, (float) SW_VOLUME_RANGE * (volume.left - 100) / 100 / 20);
+    if (volume.right > 0)
+        rfactor = powf (10, (float) SW_VOLUME_RANGE * (volume.right - 100) / 100 / 20);
+
+    if (channels == 2)
+    {
+        factors[0] = lfactor;
+        factors[1] = rfactor;
+    }
+    else
+    {
+        for (int c = 0; c < channels; c ++)
+            factors[c] = aud::max (lfactor, rfactor);
+    }
+
+    audio_amplify (data, channels, frames, factors);
 }
 
 /* linear approximation of y = sin(x) */

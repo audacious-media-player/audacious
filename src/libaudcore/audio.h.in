@@ -119,6 +119,7 @@ void audio_deinterlace (const void * in, int format, int channels, void * const 
 void audio_from_int (const void * in, int format, float * out, int samples);
 void audio_to_int (const float * in, void * out, int format, int samples);
 void audio_amplify (float * data, int channels, int frames, const float * factors);
+void audio_amplify (float * data, int channels, int frames, StereoVolume volume);
 void audio_soft_clip (float * data, int samples);
 
 #endif /* LIBAUDCORE_AUDIO_H */

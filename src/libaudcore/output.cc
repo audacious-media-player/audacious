@@ -31,8 +31,6 @@
 #include "plugin.h"
 #include "plugins.h"
 
-#define SW_VOLUME_RANGE 40 /* decibels */
-
 static pthread_mutex_t mutex_major = PTHREAD_MUTEX_INITIALIZER;
 static pthread_mutex_t mutex_minor = PTHREAD_MUTEX_INITIALIZER;
 
@@ -198,35 +196,6 @@ static void apply_replay_gain (Index<float> & data)
         audio_amplify (data.begin (), 1, data.len (), & factor);
 }
 
-static void apply_software_volume (Index<float> & data, int channels)
-{
-    if (! aud_get_bool (0, "software_volume_control"))
-        return;
-
-    int l = aud_get_int (0, "sw_volume_left");
-    int r = aud_get_int (0, "sw_volume_right");
-
-    if (l == 100 && r == 100)
-        return;
-
-    float lfactor = (l == 0) ? 0 : powf (10, (float) SW_VOLUME_RANGE * (l - 100) / 100 / 20);
-    float rfactor = (r == 0) ? 0 : powf (10, (float) SW_VOLUME_RANGE * (r - 100) / 100 / 20);
-    float factors[AUD_MAX_CHANNELS];
-
-    if (channels == 2)
-    {
-        factors[0] = lfactor;
-        factors[1] = rfactor;
-    }
-    else
-    {
-        for (int c = 0; c < channels; c ++)
-            factors[c] = aud::max (lfactor, rfactor);
-    }
-
-    audio_amplify (data.begin (), channels, data.len () / channels, factors);
-}
-
 /* assumes LOCK_ALL, s_output */
 static void write_output_raw (Index<float> & data)
 {
@@ -235,7 +204,12 @@ static void write_output_raw (Index<float> & data)
     out_frames += data.len () / out_channels;
 
     eq_filter (data.begin (), data.len ());
-    apply_software_volume (data, out_channels);
+
+    if (aud_get_bool (0, "software_volume_control"))
+    {
+        StereoVolume v = {aud_get_int (0, "sw_volume_left"), aud_get_int (0, "sw_volume_right")};
+        audio_amplify (data.begin (), out_channels, data.len () / out_channels, v);
+    }
 
     if (aud_get_bool (0, "soft_clipping"))
         audio_soft_clip (data.begin (), data.len ());
