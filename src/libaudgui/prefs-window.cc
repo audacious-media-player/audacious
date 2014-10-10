@@ -249,8 +249,11 @@ static void * create_titlestring_table (void);
 
 static const PreferencesWidget playlist_page_widgets[] = {
     WidgetLabel (N_("<b>Behavior</b>")),
-    WidgetCheck (N_("Continue playback on startup"),
+    WidgetCheck (N_("Resume playback on startup"),
         WidgetBool (0, "resume_playback_on_startup")),
+    WidgetCheck (N_("Pause instead of resuming immediately"),
+        WidgetBool (0, "always_resume_paused"),
+        WIDGET_CHILD),
     WidgetCheck (N_("Advance when the current song is deleted"),
         WidgetBool (0, "advance_on_delete")),
     WidgetCheck (N_("Clear the playlist when opening files"),

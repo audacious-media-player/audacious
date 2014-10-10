@@ -2223,5 +2223,8 @@ void playlist_load_state ()
 
 EXPORT void aud_resume ()
 {
+    if (aud_get_bool (nullptr, "always_resume_paused"))
+        resume_paused = true;
+
     aud_playlist_play (resume_playlist, resume_paused);
 }

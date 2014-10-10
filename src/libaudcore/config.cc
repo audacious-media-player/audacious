@@ -36,6 +36,7 @@ static const char * const core_defaults[] = {
 
  /* general */
  "advance_on_delete", "FALSE",
+ "always_resume_paused", "FALSE",
  "clear_playlist", "TRUE",
  "open_to_temporary", "TRUE",
  "resume_playback_on_startup", "FALSE",
