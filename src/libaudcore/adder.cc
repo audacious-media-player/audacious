@@ -27,7 +27,6 @@
 #include <glib/gstdio.h>
 
 #include "audstrings.h"
-#include "drct.h"
 #include "hook.h"
 #include "i18n.h"
 #include "list.h"
@@ -321,7 +320,7 @@ static void add_finish (void * unused)
             if (! aud_get_bool (0, "shuffle"))
                 aud_playlist_set_position (playlist, result->at);
 
-            aud_drct_play_playlist (playlist);
+            aud_playlist_play (playlist);
         }
 
     FREE:

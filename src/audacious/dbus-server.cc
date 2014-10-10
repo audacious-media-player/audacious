@@ -265,7 +265,7 @@ static gboolean do_play (Obj * obj, Invoc * invoc)
 
 static gboolean do_play_active_playlist (Obj * obj, Invoc * invoc)
 {
-    aud_drct_play_playlist (aud_playlist_get_active ());
+    aud_playlist_play (aud_playlist_get_active ());
     FINISH (play_active_playlist);
     return true;
 }

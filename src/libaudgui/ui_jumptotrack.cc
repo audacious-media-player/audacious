@@ -20,7 +20,6 @@
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
 
-#include <libaudcore/drct.h>
 #include <libaudcore/hook.h>
 #include <libaudcore/i18n.h>
 #include <libaudcore/playlist.h>
@@ -81,8 +80,7 @@ static void do_jump (void * unused)
 
     int playlist = aud_playlist_get_active ();
     aud_playlist_set_position (playlist, entry);
-    aud_playlist_set_playing (playlist);
-    aud_drct_play ();
+    aud_playlist_play (playlist);
 
     if (aud_get_bool ("audgui", "close_jtf_dialog"))
         audgui_jump_to_track_hide();

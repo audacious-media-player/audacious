@@ -264,7 +264,7 @@ void playback_stop (void)
 
 static void do_stop (int playlist)
 {
-    aud_playlist_set_playing (-1);
+    aud_playlist_play (-1);
     aud_playlist_set_position (playlist, aud_playlist_get_position (playlist));
 }
 

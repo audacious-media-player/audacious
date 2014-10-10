@@ -116,7 +116,6 @@ struct Playlist {
     int64_t total_length, selected_length;
     bool scanning, scan_ending;
     Update next_update, last_update;
-    bool resume_paused;
     int resume_time;
 };
 
@@ -135,6 +134,7 @@ static Index<SmartPtr<Playlist>> playlists;
 static Playlist * active_playlist = nullptr;
 static Playlist * playing_playlist = nullptr;
 static int resume_playlist = -1;
+static bool resume_paused = false;
 
 static QueuedFunc queued_update;
 static PlaylistUpdateLevel update_level;
@@ -258,7 +258,6 @@ Playlist::Playlist (int id) :
     scan_ending (false),
     next_update (),
     last_update (),
-    resume_paused (false),
     resume_time (0)
 {
     unique_id_table.add (unique_id, (Playlist *) this);
@@ -815,11 +814,10 @@ EXPORT int aud_playlist_get_active ()
     RETURN (list);
 }
 
-EXPORT void aud_playlist_set_playing (int playlist_num)
+EXPORT void aud_playlist_play (int playlist_num, bool paused)
 {
-    /* get playback state before locking playlists */
-    bool paused = aud_drct_get_paused ();
-    int time = aud_drct_get_time ();
+    /* get resume time before locking playlists */
+    int resume_time = aud_drct_get_time ();
 
     ENTER;
 
@@ -828,13 +826,18 @@ EXPORT void aud_playlist_set_playing (int playlist_num)
     bool position_changed = false;
 
     if (playlist == playing_playlist)
-        RETURN ();
+    {
+        LEAVE;
+
+        /* already playing, just need to pause/unpause */
+        if (aud_drct_get_paused () != paused)
+            aud_drct_pause ();
+
+        return;
+    }
 
     if (playing_playlist)
-    {
-        playing_playlist->resume_paused = paused;
-        playing_playlist->resume_time = time;
-    }
+        playing_playlist->resume_time = resume_time;
 
     /* is there anything to play? */
     if (playlist && ! playlist->position)
@@ -848,8 +851,7 @@ EXPORT void aud_playlist_set_playing (int playlist_num)
     if (playlist)
     {
         can_play = true;
-        paused = playlist->resume_paused;
-        time = playlist->resume_time;
+        resume_time = playlist->resume_time;
     }
 
     playing_playlist = playlist;
@@ -863,7 +865,7 @@ EXPORT void aud_playlist_set_playing (int playlist_num)
 
     /* start playback after unlocking playlists */
     if (can_play)
-        playback_play (time, paused);
+        playback_play (resume_time, paused);
     else
         playback_stop ();
 }
@@ -921,7 +923,7 @@ static void change_playback (bool can_play)
     if (can_play && aud_drct_get_playing ())
         playback_play (0, aud_drct_get_paused ());
     else
-        aud_playlist_set_playing (-1);
+        aud_playlist_play (-1);
 }
 
 EXPORT int aud_playlist_entry_count (int playlist_num)
@@ -2101,14 +2103,10 @@ void playlist_save_state ()
 
         fprintf (handle, "position %d\n", playlist->position ? playlist->position->number : -1);
 
-        if (playlist.get () == playing_playlist)
-        {
-            playlist->resume_paused = paused;
-            playlist->resume_time = time;
-        }
-
-        fprintf (handle, "resume-state %d\n", paused ? RESUME_PAUSE : RESUME_PLAY);
-        fprintf (handle, "resume-time %d\n", playlist->resume_time);
+        /* resume state is stored per-playlist for historical reasons */
+        bool is_playing = (playlist.get () == playing_playlist);
+        fprintf (handle, "resume-state %d\n", (is_playing && paused) ? RESUME_PAUSE : RESUME_PLAY);
+        fprintf (handle, "resume-time %d\n", is_playing ? time : playlist->resume_time);
     }
 
     fclose (handle);
@@ -2190,18 +2188,21 @@ void playlist_load_state ()
         if (position >= 0 && position < entries)
             set_position (playlist, playlist->entries [position].get (), true);
 
+        /* resume state is stored per-playlist for historical reasons */
         int resume_state = RESUME_PLAY;
         if (parse_integer ("resume-state", & resume_state))
             parse_next (handle);
 
-        playlist->resume_paused = (resume_state == RESUME_PAUSE);
+        if (playlist_num == resume_playlist)
+        {
+            if (resume_state == RESUME_STOP)
+                resume_playlist = -1;
+            if (resume_state == RESUME_PAUSE)
+                resume_paused = true;
+        }
 
         if (parse_integer ("resume-time", & playlist->resume_time))
             parse_next (handle);
-
-        /* compatibility with Audacious 3.3 */
-        if (playlist_num == resume_playlist && resume_state == RESUME_STOP)
-            resume_playlist = -1;
     }
 
     fclose (handle);
@@ -2222,5 +2223,5 @@ void playlist_load_state ()
 
 EXPORT void aud_resume ()
 {
-    aud_playlist_set_playing (resume_playlist);
+    aud_playlist_play (resume_playlist, resume_paused);
 }

@@ -30,7 +30,6 @@
 
 void aud_drct_play (void);
 void aud_drct_play_pause (void);
-void aud_drct_play_playlist (int playlist);
 void aud_drct_pause (void);
 void aud_drct_stop (void);
 bool aud_drct_get_playing (void);
