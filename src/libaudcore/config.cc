@@ -36,10 +36,10 @@ static const char * const core_defaults[] = {
 
  /* general */
  "advance_on_delete", "FALSE",
- "always_resume_paused", "FALSE",
+ "always_resume_paused", "TRUE",
  "clear_playlist", "TRUE",
  "open_to_temporary", "TRUE",
- "resume_playback_on_startup", "FALSE",
+ "resume_playback_on_startup", "TRUE",
  "show_interface", "TRUE",
 
  /* equalizer */
