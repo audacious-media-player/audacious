@@ -647,8 +647,6 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
                 break;
 
             case PreferencesWidget::Separator:
-                gtk_alignment_set_padding ((GtkAlignment *) alignment, 6, 6, 0, 0);
-
                 widget = w.data.separator.horizontal ?
                  gtk_hseparator_new () : gtk_vseparator_new ();
                 break;
