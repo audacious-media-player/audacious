@@ -503,12 +503,12 @@ static void * create_titlestring_table (void)
     GtkWidget * label = gtk_label_new (_("Title format:"));
     gtk_grid_attach ((GtkGrid *) grid, label, 0, 0, 1, 1);
     gtk_label_set_justify ((GtkLabel *) label, GTK_JUSTIFY_RIGHT);
-    gtk_misc_set_alignment ((GtkMisc *) label, 1, 0.5);
+    gtk_widget_set_halign (label, GTK_ALIGN_END);
 
     label = gtk_label_new (_("Custom string:"));
     gtk_grid_attach ((GtkGrid *) grid, label, 0, 1, 1, 1);
     gtk_label_set_justify ((GtkLabel *) label, GTK_JUSTIFY_RIGHT);
-    gtk_misc_set_alignment ((GtkMisc *) label, 1, 0.5);
+    gtk_widget_set_halign (label, GTK_ALIGN_END);
 
     GtkWidget * titlestring_cbox;
     create_titlestring_widgets (& titlestring_cbox, & titlestring_entry);

@@ -28,6 +28,10 @@
 
 #include "libaudgui-gtk.h"
 
+#if GTK_CHECK_VERSION (3, 12, 0)
+#define gtk_widget_set_margin_left gtk_widget_set_margin_start
+#endif
+
 /* HELPERS */
 
 static bool widget_get_bool (const PreferencesWidget * widget)
@@ -283,7 +287,7 @@ static void create_label (const PreferencesWidget * widget, GtkWidget * * label,
     * label = gtk_label_new_with_mnemonic (dgettext (domain, widget->label));
     gtk_label_set_use_markup ((GtkLabel *) * label, true);
     gtk_label_set_line_wrap ((GtkLabel *) * label, true);
-    gtk_misc_set_alignment ((GtkMisc *) * label, 0, 0.5);
+    gtk_widget_set_halign (* label, GTK_ALIGN_START);
 }
 
 /* WIDGET_SPIN_BTN */
@@ -314,7 +318,7 @@ void create_font_btn (const PreferencesWidget * widget, GtkWidget * * label,
     if (widget->label)
     {
         * label = gtk_label_new (dgettext (domain, widget->label));
-        gtk_misc_set_alignment ((GtkMisc *) * label, 1, 0.5);
+        gtk_widget_set_halign (* label, GTK_ALIGN_END);
     }
 
     if (widget->data.font_btn.title)
@@ -335,7 +339,7 @@ static void create_entry (const PreferencesWidget * widget, GtkWidget * * label,
     if (widget->label)
     {
         * label = gtk_label_new (dgettext (domain, widget->label));
-        gtk_misc_set_alignment ((GtkMisc *) * label, 1, 0.5);
+        gtk_widget_set_halign (* label, GTK_ALIGN_END);
     }
 
     widget_init (* entry, widget);
@@ -469,10 +473,8 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
                 child_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
                 g_object_set_data ((GObject *) widget, "child", child_box);
 
-                GtkWidget * alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
-                gtk_box_pack_start ((GtkBox *) box, alignment, false, false, 0);
-                gtk_alignment_set_padding ((GtkAlignment *) alignment, 0, 0, 12, 0);
-                gtk_container_add ((GtkContainer *) alignment, child_box);
+                gtk_widget_set_margin_left (child_box, 12);
+                gtk_box_pack_start ((GtkBox *) box, child_box, false, false, 0);
 
                 if (GTK_IS_TOGGLE_BUTTON (widget))
                     gtk_widget_set_sensitive (child_box,
@@ -482,14 +484,12 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
         else
             child_box = nullptr;
 
-        GtkWidget * alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
-        gtk_alignment_set_padding ((GtkAlignment *) alignment, 6, 0, 12, 0);
-        gtk_box_pack_start ((GtkBox *) (child_box ? child_box : box), alignment, false, false, 0);
-
         widget = nullptr;
 
         if (radio_btn_group && w.type != PreferencesWidget::RadioButton)
             radio_btn_group = nullptr;
+
+        int pad_left = 12, pad_top = 6;
 
         switch (w.type)
         {
@@ -505,10 +505,6 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
 
             case PreferencesWidget::Label:
             {
-                if (strstr (w.label, "<b>"))
-                    gtk_alignment_set_padding ((GtkAlignment *) alignment,
-                     (& w == widgets.data) ? 0 : 12, 0, 0, 0);
-
                 GtkWidget * icon = nullptr;
                 create_label (& w, & label, & icon, domain);
 
@@ -520,6 +516,9 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
                 }
                 else
                     widget = label;
+
+                if (strstr (w.label, "<b>"))
+                    pad_top = (& w == widgets.data) ? 0 : 12;
 
                 break;
             }
@@ -626,8 +625,6 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
                 break;
 
             case PreferencesWidget::Notebook:
-                gtk_alignment_set_padding ((GtkAlignment *) alignment, 0, 0, 0, 0);
-
                 widget = gtk_notebook_new ();
 
                 for (const NotebookTab & tab : w.data.notebook.tabs)
@@ -641,11 +638,11 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
                      gtk_label_new (dgettext (domain, tab.name)));
                 }
 
+                pad_top = 0;
+
                 break;
 
             case PreferencesWidget::Separator:
-                gtk_alignment_set_padding ((GtkAlignment *) alignment, 6, 6, 0, 0);
-
                 widget = gtk_separator_new (w.data.separator.horizontal
                  ? GTK_ORIENTATION_HORIZONTAL : GTK_ORIENTATION_VERTICAL);
                 break;
@@ -657,11 +654,14 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
         if (widget)
         {
             /* use uniform spacing for horizontal boxes */
-            if (gtk_orientable_get_orientation ((GtkOrientable *) box) ==
+            if (gtk_orientable_get_orientation ((GtkOrientable *) box) !=
              GTK_ORIENTATION_HORIZONTAL)
-                gtk_alignment_set_padding ((GtkAlignment *) alignment, 0, 0, 0, 0);
+            {
+                gtk_widget_set_margin_left (widget, pad_left);
+                gtk_widget_set_margin_top (widget, pad_top);
+            }
 
-            gtk_container_add ((GtkContainer *) alignment, widget);
+            gtk_box_pack_start ((GtkBox *) (child_box ? child_box : box), widget, false, false, 0);
         }
     }
 }
