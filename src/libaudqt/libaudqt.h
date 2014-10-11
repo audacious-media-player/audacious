@@ -30,10 +30,6 @@
 #include <libaudcore/plugin.h>
 #include <libaudcore/plugins.h>
 
-#ifndef EXPORT
-#define EXPORT
-#endif
-
 #include <libaudqt/volumebutton.h>
 
 namespace audqt {
@@ -82,11 +78,16 @@ void log_inspector_hide ();
 
 /* art.cc */
 QImage art_request (const char * filename);
+QImage art_request_current ();
 
 /* infowin.cc */
 void infowin_show (int playlist, int entry);
 void infowin_show_current ();
 void infowin_hide ();
+
+/* queue-manager.cc */
+void queue_manager_show ();
+void queue_manager_hide ();
 
 }
 

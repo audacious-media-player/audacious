@@ -81,9 +81,6 @@ void audgui_hide_prefs_window (void);
 /* queue-manager.c */
 void audgui_queue_manager_show (void);
 
-/* ui_playlist_manager.c */
-void audgui_playlist_manager (void);
-
 /* urilist.c */
 void audgui_urilist_open (const char * list);
 void audgui_urilist_insert (int playlist, int position, const char * list);

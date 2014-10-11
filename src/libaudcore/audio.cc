@@ -24,6 +24,8 @@
 #include "audio.h"
 #include "objects.h"
 
+#define SW_VOLUME_RANGE 40 /* decibels */
+
 #define INTERLACE_LOOP(TYPE) \
 for (int c = 0; c < channels; c ++) \
 { \
@@ -67,6 +69,53 @@ EXPORT void audio_interlace (const void * const * in, int format, int channels,
     case FMT_U32_LE:
     case FMT_U32_BE:
         INTERLACE_LOOP (int32_t);
+        break;
+    }
+}
+
+#define DEINTERLACE_LOOP(TYPE) \
+for (int c = 0; c < channels; c ++) \
+{ \
+    const TYPE * get = (const TYPE *) in + c; \
+    TYPE * set = (TYPE *) out[c]; \
+    TYPE * end = set + frames; \
+    while (set < end) \
+    { \
+        * set ++ = * get; \
+        get += channels; \
+    } \
+}
+
+EXPORT void audio_deinterlace (const void * in, int format, int channels,
+ void * const * out, int frames)
+{
+    switch (format)
+    {
+    case FMT_FLOAT:
+        DEINTERLACE_LOOP (float);
+        break;
+
+    case FMT_S8:
+    case FMT_U8:
+        DEINTERLACE_LOOP (int8_t);
+        break;
+
+    case FMT_S16_LE:
+    case FMT_S16_BE:
+    case FMT_U16_LE:
+    case FMT_U16_BE:
+        DEINTERLACE_LOOP (int16_t);
+        break;
+
+    case FMT_S24_LE:
+    case FMT_S24_BE:
+    case FMT_U24_LE:
+    case FMT_U24_BE:
+    case FMT_S32_LE:
+    case FMT_S32_BE:
+    case FMT_U32_LE:
+    case FMT_U32_BE:
+        DEINTERLACE_LOOP (int32_t);
         break;
     }
 }
@@ -177,7 +226,7 @@ EXPORT void audio_to_int (const float * in, void * out, int format, int samples)
     }
 }
 
-EXPORT void audio_amplify (float * data, int channels, int frames, float * factors)
+EXPORT void audio_amplify (float * data, int channels, int frames, const float * factors)
 {
     float * end = data + channels * frames;
     int channel;
@@ -190,6 +239,36 @@ EXPORT void audio_amplify (float * data, int channels, int frames, float * facto
             data ++;
         }
     }
+}
+
+EXPORT void audio_amplify (float * data, int channels, int frames, StereoVolume volume)
+{
+    if (channels < 1 || channels > AUD_MAX_CHANNELS)
+        return;
+
+    if (volume.left == 100 && volume.right == 100)
+        return;
+
+    float lfactor = 0, rfactor = 0;
+    float factors[AUD_MAX_CHANNELS];
+
+    if (volume.left > 0)
+        lfactor = powf (10, (float) SW_VOLUME_RANGE * (volume.left - 100) / 100 / 20);
+    if (volume.right > 0)
+        rfactor = powf (10, (float) SW_VOLUME_RANGE * (volume.right - 100) / 100 / 20);
+
+    if (channels == 2)
+    {
+        factors[0] = lfactor;
+        factors[1] = rfactor;
+    }
+    else
+    {
+        for (int c = 0; c < channels; c ++)
+            factors[c] = aud::max (lfactor, rfactor);
+    }
+
+    audio_amplify (data, channels, frames, factors);
 }
 
 /* linear approximation of y = sin(x) */

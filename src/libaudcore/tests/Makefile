@@ -4,7 +4,9 @@ SRCS = ../audstrings.cc \
        ../charset.cc \
        ../hook.cc \
        ../index.cc \
+       ../logger.cc \
        ../multihash.cc \
+       ../ringbuf.cc \
        ../stringbuf.cc \
        ../strpool.cc \
        ../tinylock.cc \

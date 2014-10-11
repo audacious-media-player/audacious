@@ -56,7 +56,7 @@ EXPORT PluginHandle * aud_file_find_decoder (const char * filename, bool fast, S
 
     if (ext_matches.len () == 1)
     {
-        AUDDBG ("Matched %s by extension.\n", aud_plugin_get_name (ext_matches[0]));
+        AUDINFO ("Matched %s by extension.\n", aud_plugin_get_name (ext_matches[0]));
         return ext_matches[0];
     }
 

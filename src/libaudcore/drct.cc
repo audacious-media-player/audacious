@@ -44,7 +44,7 @@ EXPORT void aud_drct_play (void)
     {
         int playlist = aud_playlist_get_active ();
         aud_playlist_set_position (playlist, aud_playlist_get_position (playlist));
-        aud_drct_play_playlist (playlist);
+        aud_playlist_play (playlist);
     }
 }
 
@@ -56,16 +56,9 @@ EXPORT void aud_drct_play_pause (void)
         aud_drct_play ();
 }
 
-EXPORT void aud_drct_play_playlist (int playlist)
-{
-    aud_playlist_set_playing (playlist);
-    if (aud_drct_get_paused ())
-        aud_drct_pause ();
-}
-
 EXPORT void aud_drct_stop (void)
 {
-    aud_playlist_set_playing (-1);
+    aud_playlist_play (-1);
 }
 
 /* --- VOLUME CONTROL --- */

@@ -56,8 +56,7 @@ static bool song_finished = false;
 static int seek_request = -1; /* under control_mutex */
 static int repeat_a = -1; /* under control_mutex */
 static int repeat_b = -1; /* under control_mutex */
-
-static bool stop_flag = false; /* atomic */
+static bool stop_flag = false; /* under control_mutex */
 
 static int current_bitrate = -1, current_samplerate = -1, current_channels = -1;
 
@@ -199,8 +198,10 @@ static void playback_cleanup (void)
 
     if (! song_finished)
     {
-        __sync_bool_compare_and_swap (& stop_flag, false, true);
-        output_abort_write ();
+        pthread_mutex_lock (& control_mutex);
+        stop_flag = true;
+        output_flush (0);
+        pthread_mutex_unlock (& control_mutex);
     }
 
     pthread_join (playback_thread_handle, nullptr);
@@ -263,7 +264,7 @@ void playback_stop (void)
 
 static void do_stop (int playlist)
 {
-    aud_playlist_set_playing (-1);
+    aud_playlist_play (-1);
     aud_playlist_set_position (playlist, aud_playlist_get_position (playlist));
 }
 
@@ -437,6 +438,13 @@ EXPORT bool aud_drct_get_paused (void)
     return paused;
 }
 
+static void request_seek_locked (int time)
+{
+    seek_request = time;
+    output_flush (time);
+    event_queue ("playback seek", nullptr);
+}
+
 EXPORT void aud_drct_seek (int time)
 {
     if (! playing)
@@ -448,10 +456,7 @@ EXPORT void aud_drct_seek (int time)
         return;
 
     pthread_mutex_lock (& control_mutex);
-
-    seek_request = time_offset + aud::clamp (time, 0, current_length);
-    output_abort_write ();
-
+    request_seek_locked (time_offset + aud::clamp (time, 0, current_length));
     pthread_mutex_unlock (& control_mutex);
 }
 
@@ -459,7 +464,7 @@ EXPORT bool aud_input_open_audio (int format, int rate, int channels)
 {
     assert (playing);
 
-    if (! output_open_audio (format, rate, channels))
+    if (! output_open_audio (format, rate, channels, aud::max (0, seek_request)))
         return false;
 
     output_set_replaygain_info (& current_gain);
@@ -483,7 +488,7 @@ EXPORT void aud_input_set_gain (const ReplayGainInfo * info)
     output_set_replaygain_info (& current_gain);
 }
 
-EXPORT void aud_input_write_audio (void * data, int length)
+EXPORT void aud_input_write_audio (const void * data, int length)
 {
     assert (playing);
 
@@ -494,26 +499,22 @@ EXPORT void aud_input_write_audio (void * data, int length)
     int a = repeat_a, b = repeat_b;
     pthread_mutex_unlock (& control_mutex);
 
-    if (b >= 0)
+    if (! output_write_audio (data, length, b >= 0 ? b : stop_time))
     {
-        if (! output_write_audio (data, length, b))
-        {
-            pthread_mutex_lock (& control_mutex);
-            seek_request = aud::max (a, time_offset);
-            pthread_mutex_unlock (& control_mutex);
-        }
-    }
-    else
-    {
-        if (! output_write_audio (data, length, stop_time))
-            __sync_bool_compare_and_swap (& stop_flag, false, true);
-    }
-}
+        pthread_mutex_lock (& control_mutex);
 
-EXPORT int aud_input_written_time (void)
-{
-    assert (playing);
-    return output_written_time ();
+        if (seek_request < 0 && ! stop_flag)
+        {
+            // When output_write_audio() returns false on its own, without a
+            // seek or stop request, we have reached the requested stop time.
+            if (b >= 0)
+                request_seek_locked (aud::max (a, time_offset));
+            else
+                stop_flag = true;
+        }
+
+        pthread_mutex_unlock (& control_mutex);
+    }
 }
 
 EXPORT Tuple aud_input_get_tuple (void)
@@ -552,10 +553,8 @@ EXPORT int aud_input_check_seek (void)
 
     if (seek != -1)
     {
-        output_set_time (seek);
+        output_resume ();
         seek_request = -1;
-
-        event_queue ("playback seek", nullptr);
     }
 
     pthread_mutex_unlock (& control_mutex);
@@ -625,10 +624,7 @@ EXPORT void aud_drct_set_ab_repeat (int a, int b)
     repeat_b = b;
 
     if (b != -1 && output_get_time () >= b)
-    {
-        seek_request = aud::max (a, time_offset);
-        output_abort_write ();
-    }
+        request_seek_locked (aud::max (a, time_offset));
 
     pthread_mutex_unlock (& control_mutex);
 }

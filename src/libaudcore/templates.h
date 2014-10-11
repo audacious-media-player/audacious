@@ -96,6 +96,50 @@ struct construct {
     }
 };
 
+// Functions for creating/copying/destroying objects en masse.
+// These will be nullptr for basic types (use memset/memcpy instead).
+
+typedef void (* FillFunc) (void * data, int len);
+typedef void (* CopyFunc) (const void * from, void * to, int len);
+typedef void (* EraseFunc) (void * data, int len);
+
+template<class T>
+static constexpr FillFunc fill_func ()
+{
+    return std::is_trivial<T>::value ? (FillFunc) nullptr :
+     [] (void * data, int len) {
+        T * iter = (T *) data;
+        T * end = (T *) ((char *) data + len);
+        while (iter < end)
+            new (iter ++) T ();
+    };
+}
+
+template<class T>
+static constexpr CopyFunc copy_func ()
+{
+    return std::is_trivial<T>::value ? (CopyFunc) nullptr :
+     [] (const void * from, void * to, int len) {
+        const T * src = (const T *) from;
+        T * dest = (T *) to;
+        T * end = (T *) ((char *) to + len);
+        while (dest < end)
+            new (dest ++) T (* src ++);
+    };
+}
+
+template<class T>
+static constexpr EraseFunc erase_func ()
+{
+    return std::is_trivial<T>::value ? (EraseFunc) nullptr :
+     [] (void * data, int len) {
+        T * iter = (T *) data;
+        T * end = (T *) ((char *) data + len);
+        while (iter < end)
+            (* iter ++).~T ();
+    };
+}
+
 } // namespace aud
 
 #endif // LIBAUDCORE_TEMPLATES_H

@@ -219,6 +219,10 @@ static const PreferencesWidget proxy_auth_elements[] = {
 };
 
 static const PreferencesWidget connectivity_page_widgets[] = {
+    WidgetLabel (N_("<b>Network Settings</b>")),
+    WidgetSpin (N_("Buffer size:"),
+        WidgetInt (0, "net_buffer_kb"),
+        {16, 1024, 16, N_("KiB")}),
     WidgetLabel (N_("<b>Proxy Configuration</b>")),
     WidgetCheck (N_("Enable proxy usage"),
         WidgetBool (0, "use_proxy")),
@@ -245,8 +249,11 @@ static void * create_titlestring_table (void);
 
 static const PreferencesWidget playlist_page_widgets[] = {
     WidgetLabel (N_("<b>Behavior</b>")),
-    WidgetCheck (N_("Continue playback on startup"),
+    WidgetCheck (N_("Resume playback on startup"),
         WidgetBool (0, "resume_playback_on_startup")),
+    WidgetCheck (N_("Pause instead of resuming immediately"),
+        WidgetBool (0, "always_resume_paused"),
+        WIDGET_CHILD),
     WidgetCheck (N_("Advance when the current song is deleted"),
         WidgetBool (0, "advance_on_delete")),
     WidgetCheck (N_("Clear the playlist when opening files"),

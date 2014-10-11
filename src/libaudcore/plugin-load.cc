@@ -54,8 +54,7 @@ Plugin * plugin_load (const char * filename)
 {
     AUDINFO ("Loading plugin: %s.\n", filename);
 
-    GModule * module = g_module_open (filename,
-     (GModuleFlags) (G_MODULE_BIND_LAZY | G_MODULE_BIND_LOCAL));
+    GModule * module = g_module_open (filename, G_MODULE_BIND_LOCAL);
 
     if (! module)
     {

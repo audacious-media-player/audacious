@@ -23,7 +23,7 @@
 
 namespace audqt {
 
-VolumeButton::VolumeButton (QWidget * parent) :
+EXPORT VolumeButton::VolumeButton (QWidget * parent) :
     QToolButton (parent)
 {
     setIcon (QIcon::fromTheme ("audio-volume-medium"));
@@ -43,7 +43,7 @@ VolumeButton::VolumeButton (QWidget * parent) :
     connect (m_slider, & QAbstractSlider::sliderMoved, aud_drct_set_volume_main);
 }
 
-void VolumeButton::showSlider ()
+EXPORT void VolumeButton::showSlider ()
 {
     m_slider->setValue (aud_drct_get_volume_main ());
 

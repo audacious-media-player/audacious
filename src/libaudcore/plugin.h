@@ -85,10 +85,10 @@ struct PluginPreferences;
  * is crucial that both plugins agree on the meaning of the message codes used.
  *
  * Once the message is sent, an integer error code is returned. If the receiving
- * plugin does not provide the take_message() method, ENOSYS is returned. If
+ * plugin does not provide the take_message() method, -1 is returned. If
  * take_message() does not recognize the message code, it should ignore the
- * message and return EINVAL. An error code of zero represents success. Other
- * error codes may be used with more specific meanings.
+ * message and return -1. An error code of zero represents success. Other error
+ * codes may be used with more specific meanings.
  *
  * For the time being, aud_plugin_send_message() should only be called from the
  * program's main thread. */
@@ -217,7 +217,7 @@ public:
     virtual void period_wait () = 0;
 
     /* Buffers <size> bytes of data, in the format given to open_audio(). */
-    virtual void write_audio (void * data, int size) = 0;
+    virtual void write_audio (const void * data, int size) = 0;
 
     /* Waits until all buffered data has been heard by the user. */
     virtual void drain () = 0;
@@ -228,7 +228,7 @@ public:
 
     /* Pauses the stream if <p> is nonzero; otherwise unpauses it.
      * write_audio() will not be called while the stream is paused. */
-    virtual void pause (bool p) = 0;
+    virtual void pause (bool pause) = 0;
 
     /* Discards any buffered audio data and sets the time counter (in
      * milliseconds) of data written. */
@@ -253,22 +253,27 @@ public:
     /* All processing is done in floating point.  If the effect plugin wants to
      * change the channel count or sample rate, it can change the parameters
      * passed to start().  They cannot be changed in the middle of a song. */
-    virtual void start (int * channels, int * rate) = 0;
+    virtual void start (int & channels, int & rate) = 0;
 
-    /* process() has two options: modify the samples in place and leave the data
-     * pointer unchanged or copy them into a buffer of its own.  If it sets the
-     * pointer to dynamically allocated memory, it is the plugin's job to free
-     * that memory.  process() may return different lengths of audio than it is
-     * passed, even a zero length. */
-    virtual void process (float * * data, int * samples) = 0;
+    /* Performs effect processing.  process() may modify the audio samples in
+     * place and return a reference to the same buffer, or it may return a
+     * reference to an internal working buffer.  The number of output samples
+     * need not be the same as the number of input samples. */
+    virtual Index<float> & process (Index<float> & data) = 0;
 
-    /* Optional.  A seek is taking place; any buffers should be discarded. */
-    virtual void flush () {}
+    /* Optional.  A seek is taking place; any buffers should be discarded.
+     * Unless the "force" flag is set, the plugin may choose to override the
+     * normal flush behavior and handle the flush itself (for example, to
+     * perform crossfading).  The flush() function should return false in this
+     * case to prevent flush() from being called in downstream effect plugins. */
+    virtual bool flush (bool force)
+        { return true; }
 
     /* Exactly like process() except that any buffers should be drained (i.e.
      * the data processed and returned).  finish() will be called a second time
      * at the end of the last song in the playlist. */
-    virtual void finish (float * * data, int * samples) = 0;
+    virtual Index<float> & finish (Index<float> & data, bool end_of_playlist)
+        { return process (data); }
 
     /* Required only for plugins that change the time domain (e.g. a time
      * stretch) or use read-ahead buffering.  translate_delay() must do two
@@ -276,7 +281,8 @@ public:
      * output time domain back to the input time domain; second, increase
      * <delay> by the size of the read-ahead buffer.  It should return the
      * adjusted delay. */
-    virtual int adjust_delay (int delay) { return delay; }
+    virtual int adjust_delay (int delay)
+        { return delay; }
 };
 
 struct InputPluginInfo

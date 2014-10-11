@@ -24,7 +24,7 @@
 
 namespace audqt {
 
-class EXPORT VolumeButton : public QToolButton
+class VolumeButton : public QToolButton
 {
 public:
     VolumeButton (QWidget * parent = nullptr);

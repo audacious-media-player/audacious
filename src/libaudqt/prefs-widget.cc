@@ -47,13 +47,19 @@ QWidget * ButtonWidget::widget ()
 QWidget * BooleanWidget::widget ()
 {
     m_widget.setText (translate_str (m_parent->label, m_domain));
-    m_widget.setCheckState (get () ? Qt::Checked : Qt::Unchecked);
 
     QObject::connect (& m_widget, &QCheckBox::stateChanged, [=] (int state) {
         set ((state != Qt::Unchecked));
     });
 
+    update ();
+
     return & m_widget;
+}
+
+void BooleanWidget::update ()
+{
+    m_widget.setCheckState (get () ? Qt::Checked : Qt::Unchecked);
 }
 
 bool BooleanWidget::get ()
@@ -147,9 +153,6 @@ QWidget * IntegerWidget::widget ()
     m_label_pre.setText (translate_str (m_parent->label, m_domain));
     m_layout.addWidget (& m_label_pre);
 
-    m_spinner.setRange ((int) m_parent->data.spin_btn.min, (int) m_parent->data.spin_btn.max);
-    m_spinner.setSingleStep ((int) m_parent->data.spin_btn.step);
-    m_spinner.setValue (get ());
     m_layout.addWidget (& m_spinner);
 
     if (m_parent->data.spin_btn.right_label)
@@ -172,7 +175,16 @@ QWidget * IntegerWidget::widget ()
 
     m_container.setLayout (& m_layout);
 
+    update ();
+
     return & m_container;
+}
+
+void IntegerWidget::update ()
+{
+    m_spinner.setRange ((int) m_parent->data.spin_btn.min, (int) m_parent->data.spin_btn.max);
+    m_spinner.setSingleStep ((int) m_parent->data.spin_btn.step);
+    m_spinner.setValue (get ());
 }
 
 int IntegerWidget::get ()
@@ -210,9 +222,6 @@ QWidget * DoubleWidget::widget ()
     m_label_pre.setText (translate_str (m_parent->label, m_domain));
     m_layout.addWidget (& m_label_pre);
 
-    m_spinner.setRange (m_parent->data.spin_btn.min, m_parent->data.spin_btn.max);
-    m_spinner.setSingleStep (m_parent->data.spin_btn.step);
-    m_spinner.setValue (get ());
     m_layout.addWidget (& m_spinner);
 
     if (m_parent->data.spin_btn.right_label)
@@ -230,7 +239,16 @@ QWidget * DoubleWidget::widget ()
 
     m_container.setLayout (& m_layout);
 
+    update ();
+
     return & m_container;
+}
+
+void DoubleWidget::update ()
+{
+    m_spinner.setRange (m_parent->data.spin_btn.min, m_parent->data.spin_btn.max);
+    m_spinner.setSingleStep (m_parent->data.spin_btn.step);
+    m_spinner.setValue (get ());
 }
 
 double DoubleWidget::get ()
@@ -271,16 +289,21 @@ QWidget * StringWidget::widget ()
         m_layout.addWidget (& m_label);
     }
 
+    m_layout.addWidget (&m_lineedit);
+    m_container.setLayout (& m_layout);
+
+    update ();
+
+    return & m_container;
+}
+
+void StringWidget::update ()
+{
     if (m_parent->data.entry.password)
         m_lineedit.setEchoMode (QLineEdit::Password);
 
     String value = get ();
     m_lineedit.setText ((const char *) value);
-    m_layout.addWidget (&m_lineedit);
-
-    m_container.setLayout (& m_layout);
-
-    return & m_container;
 }
 
 String StringWidget::get ()
@@ -421,6 +444,13 @@ void ComboBoxWidget::fill ()
         AUDDBG("unhandled configuration type %d for ComboBoxWidget::fill()\n", m_parent->cfg.type);
         return;
     }
+
+    update ();
+}
+
+void ComboBoxWidget::update ()
+{
+    ArrayRef<const ComboItem> items = m_parent->data.combo.elems;
 
     /* set selected index */
     switch (m_parent->cfg.type) {

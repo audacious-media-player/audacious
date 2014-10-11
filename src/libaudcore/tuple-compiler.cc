@@ -147,6 +147,7 @@ static StringBuf get_item (const char * & str, char endch, bool & literal)
     {
         if (! literal)
         {
+            buf.steal (StringBuf ());
             AUDWARN ("Unexpected string literal at '%s'.\n", s);
             return StringBuf ();
         }
@@ -165,6 +166,7 @@ static StringBuf get_item (const char * & str, char endch, bool & literal)
 
             if (! * s)
             {
+                buf.steal (StringBuf ());
                 AUDWARN ("Unterminated string literal.\n");
                 return StringBuf ();
             }
@@ -190,6 +192,7 @@ static StringBuf get_item (const char * & str, char endch, bool & literal)
 
     if (* s != endch)
     {
+        buf.steal (StringBuf ());
         AUDWARN ("Expected '%c' at '%s'.\n", endch, s);
         return StringBuf ();
     }
@@ -358,6 +361,7 @@ static bool compile_expression (Index<Node> & nodes, const char * & expression)
 
                     if (! * c)
                     {
+                        buf.steal (StringBuf ());
                         AUDWARN ("Incomplete escaped character.\n");
                         return false;
                     }

@@ -26,14 +26,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <glib.h>  /* for g_usleep */
-
 #include "equalizer.h"
 #include "internal.h"
 #include "plugin.h"
 #include "plugins.h"
-
-#define SW_VOLUME_RANGE 40 /* decibels */
 
 static pthread_mutex_t mutex_major = PTHREAD_MUTEX_INITIALIZER;
 static pthread_mutex_t mutex_minor = PTHREAD_MUTEX_INITIALIZER;
@@ -47,14 +43,25 @@ static pthread_mutex_t mutex_minor = PTHREAD_MUTEX_INITIALIZER;
 
 /* State variables.  State changes that are allowed between LOCK_MINOR and
  * UNLOCK_MINOR (all others must take place between LOCK_ALL and UNLOCK_ALL):
- * s_paused -> true or false, s_aborted -> true, s_resetting -> true */
+ * s_paused -> true or false, s_flushed -> true, s_resetting -> true */
 
 static bool s_input; /* input plugin connected */
 static bool s_output; /* output plugin connected */
 static bool s_gain; /* replay gain info set */
 static bool s_paused; /* paused */
-static bool s_aborted; /* writes aborted */
+static bool s_flushed; /* flushed, writes ignored until resume */
 static bool s_resetting; /* resetting output system */
+
+/* Condition variable linked to LOCK_MINOR.
+ * The input thread will wait if the following is true:
+ *   ((! s_output || s_resetting) && ! s_flushed)
+ * Hence you must signal if you cause the inverse to be true:
+ *   ((s_output && ! s_resetting) || s_flushed) */
+
+static pthread_cond_t cond_minor = PTHREAD_COND_INITIALIZER;
+
+#define SIGNAL_MINOR pthread_cond_broadcast (& cond_minor)
+#define WAIT_MINOR pthread_cond_wait (& cond_minor, & mutex_minor)
 
 static OutputPlugin * cop;
 static int seek_time;
@@ -66,14 +73,10 @@ static ReplayGainInfo gain_info;
 static bool change_op;
 static OutputPlugin * new_op;
 
-static Index<char> buffer1, buffer2;
+static Index<float> buffer1;
+static Index<char> buffer2;
 
-static inline int FR2MS (int64_t f, int r)
- { return (f > 0) ? (f * 1000 + r / 2) / r : (f * 1000 - r / 2) / r; }
-static inline int MS2FR (int64_t ms, int r)
- { return (ms > 0) ? (ms * r + 500) / 1000 : (ms * r - 500) / 1000; }
-
-static inline int get_format (void)
+static inline int get_format ()
 {
     switch (aud_get_int (0, "output_bit_depth"))
     {
@@ -84,16 +87,10 @@ static inline int get_format (void)
     }
 }
 
-static void ensure_buffer (Index<char> & buffer, int newsize)
-{
-    if (newsize > buffer.len ())
-        buffer.insert (-1, newsize - buffer.len ());
-}
-
 /* assumes LOCK_ALL, s_output */
-static void cleanup_output (void)
+static void cleanup_output ()
 {
-    if (! s_paused && ! s_aborted)
+    if (! s_paused && ! s_flushed && ! s_resetting)
     {
         UNLOCK_MINOR;
         cop->drain ();
@@ -105,26 +102,26 @@ static void cleanup_output (void)
     buffer1.clear ();
     buffer2.clear ();
 
+    effect_flush (true);
     cop->close_audio ();
-    effect_flush ();
     vis_runner_start_stop (false, false);
 }
 
 /* assumes LOCK_ALL, s_output */
-static void apply_pause (void)
+static void apply_pause ()
 {
     cop->pause (s_paused);
     vis_runner_start_stop (true, s_paused);
 }
 
 /* assumes LOCK_ALL, s_input */
-static void setup_output (void)
+static void setup_output ()
 {
     int format = get_format ();
     int channels = in_channels;
     int rate = in_rate;
 
-    effect_start (& channels, & rate);
+    effect_start (channels, rate);
     eq_set_format (channels, rate);
 
     if (s_output && format == out_format && channels == out_channels && rate ==
@@ -150,18 +147,24 @@ static void setup_output (void)
     out_frames = 0;
 
     apply_pause ();
+
+    if (! s_flushed && ! s_resetting)
+        SIGNAL_MINOR;
 }
 
 /* assumes LOCK_MINOR, s_output */
-static void flush_output (void)
+static bool flush_output (bool force)
 {
+    if (! effect_flush (force))
+        return false;
+
     cop->flush (0);
     out_frames = 0;
-    effect_flush ();
     vis_runner_flush ();
+    return true;
 }
 
-static void apply_replay_gain (float * data, int samples)
+static void apply_replay_gain (Index<float> & data)
 {
     if (! aud_get_bool (0, "enable_replay_gain"))
         return;
@@ -190,69 +193,47 @@ static void apply_replay_gain (float * data, int samples)
         factor *= powf (10, aud_get_double (0, "default_gain") / 20);
 
     if (factor < 0.99 || factor > 1.01)
-        audio_amplify (data, 1, samples, & factor);
-}
-
-static void apply_software_volume (float * data, int channels, int samples)
-{
-    if (! aud_get_bool (0, "software_volume_control"))
-        return;
-
-    int l = aud_get_int (0, "sw_volume_left");
-    int r = aud_get_int (0, "sw_volume_right");
-
-    if (l == 100 && r == 100)
-        return;
-
-    float lfactor = (l == 0) ? 0 : powf (10, (float) SW_VOLUME_RANGE * (l - 100) / 100 / 20);
-    float rfactor = (r == 0) ? 0 : powf (10, (float) SW_VOLUME_RANGE * (r - 100) / 100 / 20);
-    float factors[AUD_MAX_CHANNELS];
-
-    if (channels == 2)
-    {
-        factors[0] = lfactor;
-        factors[1] = rfactor;
-    }
-    else
-    {
-        for (int c = 0; c < channels; c ++)
-            factors[c] = aud::max (lfactor, rfactor);
-    }
-
-    audio_amplify (data, channels, samples / channels, factors);
+        audio_amplify (data.begin (), 1, data.len (), & factor);
 }
 
 /* assumes LOCK_ALL, s_output */
-static void write_output_raw (float * data, int samples)
+static void write_output_raw (Index<float> & data)
 {
-    vis_runner_pass_audio (FR2MS (out_frames, out_rate), data, samples,
-     out_channels, out_rate);
-    out_frames += samples / out_channels;
+    int out_time = aud::rescale<int64_t> (out_frames, out_rate, 1000);
+    vis_runner_pass_audio (out_time, data, out_channels, out_rate);
+    out_frames += data.len () / out_channels;
 
-    eq_filter (data, samples);
-    apply_software_volume (data, out_channels, samples);
+    eq_filter (data.begin (), data.len ());
+
+    if (aud_get_bool (0, "software_volume_control"))
+    {
+        StereoVolume v = {aud_get_int (0, "sw_volume_left"), aud_get_int (0, "sw_volume_right")};
+        audio_amplify (data.begin (), out_channels, data.len () / out_channels, v);
+    }
 
     if (aud_get_bool (0, "soft_clipping"))
-        audio_soft_clip (data, samples);
+        audio_soft_clip (data.begin (), data.len ());
 
-    void * out_data = data;
+    const void * out_data = data.begin ();
 
     if (out_format != FMT_FLOAT)
     {
-        ensure_buffer (buffer2, FMT_SIZEOF (out_format) * samples);
-        audio_to_int (data, buffer2.begin (), out_format, samples);
+        buffer2.resize (FMT_SIZEOF (out_format) * data.len ());
+        audio_to_int (data.begin (), buffer2.begin (), out_format, data.len ());
         out_data = buffer2.begin ();
     }
 
-    while (! (s_aborted || s_resetting))
+    int remain = data.len ();
+
+    while (! s_flushed && ! s_resetting)
     {
-        int ready = aud::min (cop->buffer_free () / (int) FMT_SIZEOF (out_format), samples);
+        int ready = aud::min (cop->buffer_free () / (int) FMT_SIZEOF (out_format), remain);
 
         cop->write_audio (out_data, FMT_SIZEOF (out_format) * ready);
         out_data = (char *) out_data + FMT_SIZEOF (out_format) * ready;
-        samples -= ready;
+        remain -= ready;
 
-        if (samples == 0)
+        if (! remain)
             break;
 
         UNLOCK_MINOR;
@@ -262,19 +243,14 @@ static void write_output_raw (float * data, int samples)
 }
 
 /* assumes LOCK_ALL, s_input, s_output */
-static bool write_output (void * data, int size, int stop_time)
+static bool write_output (const void * data, int size, int stop_time)
 {
-    bool stopped = false;
-
-    int64_t cur_frame = in_frames;
     int samples = size / FMT_SIZEOF (in_format);
-
-    /* always update in_frames, whether we use all the decoded frames or not */
-    in_frames += samples / in_channels;
+    bool stopped = false;
 
     if (stop_time != -1)
     {
-        int64_t frames_left = MS2FR (stop_time - seek_time, in_rate) - cur_frame;
+        int64_t frames_left = aud::rescale<int64_t> (stop_time - seek_time, 1000, in_rate) - in_frames;
         int64_t samples_left = in_channels * aud::max ((int64_t) 0, frames_left);
 
         if (samples >= samples_left)
@@ -284,35 +260,29 @@ static bool write_output (void * data, int size, int stop_time)
         }
     }
 
-    if (s_aborted)
-        return ! stopped;
+    in_frames += samples / in_channels;
 
-    if (in_format != FMT_FLOAT)
-    {
-        ensure_buffer (buffer1, sizeof (float) * samples);
-        audio_from_int (data, in_format, (float *) buffer1.begin (), samples);
-        data = buffer1.begin ();
-    }
+    buffer1.resize (samples);
 
-    float * fdata = (float *) data;
-    apply_replay_gain (fdata, samples);
-    effect_process (& fdata, & samples);
-    write_output_raw (fdata, samples);
+    if (in_format == FMT_FLOAT)
+        memcpy (buffer1.begin (), data, sizeof (float) * samples);
+    else
+        audio_from_int (data, in_format, buffer1.begin (), samples);
+
+    apply_replay_gain (buffer1);
+    write_output_raw (effect_process (buffer1));
 
     return ! stopped;
 }
 
 /* assumes LOCK_ALL, s_output */
-static void finish_effects (void)
+static void finish_effects (bool end_of_playlist)
 {
-    float * data = nullptr;
-    int samples = 0;
-
-    effect_finish (& data, & samples);
-    write_output_raw (data, samples);
+    buffer1.resize (0);
+    write_output_raw (effect_finish (buffer1, end_of_playlist));
 }
 
-bool output_open_audio (int format, int rate, int channels)
+bool output_open_audio (int format, int rate, int channels, int start_time)
 {
     /* prevent division by zero */
     if (rate < 1 || channels < 1 || channels > AUD_MAX_CHANNELS)
@@ -322,14 +292,16 @@ bool output_open_audio (int format, int rate, int channels)
 
     if (s_output && s_paused)
     {
-        flush_output ();
+        if (! s_flushed && ! s_resetting)
+            flush_output (true);
+
         s_paused = false;
         apply_pause ();
     }
 
     s_input = true;
-    s_gain = s_paused = s_aborted = false;
-    seek_time = 0;
+    s_gain = s_paused = s_flushed = false;
+    seek_time = start_time;
 
     in_format = format;
     in_channels = channels;
@@ -362,18 +334,20 @@ void output_set_replaygain_info (const ReplayGainInfo * info)
 }
 
 /* returns false if stop_time is reached */
-bool output_write_audio (void * data, int size, int stop_time)
+bool output_write_audio (const void * data, int size, int stop_time)
 {
+RETRY:
     LOCK_ALL;
     bool good = false;
 
-    if (s_input)
+    if (s_input && ! s_flushed)
     {
-        while ((! s_output || s_resetting) && ! s_aborted)
+        if (! s_output || s_resetting)
         {
-            UNLOCK_ALL;
-            g_usleep (20000);
-            LOCK_ALL;
+            UNLOCK_MAJOR;
+            WAIT_MINOR;
+            UNLOCK_MINOR;
+            goto RETRY;
         }
 
         good = write_output (data, size, stop_time);
@@ -383,19 +357,42 @@ bool output_write_audio (void * data, int size, int stop_time)
     return good;
 }
 
-void output_abort_write (void)
+void output_flush (int time)
 {
     LOCK_MINOR;
 
+    if (s_input && ! s_flushed)
+    {
+        s_flushed = true;
+
+        if (s_output && ! s_resetting)
+        {
+            // allow effect plugins to prevent the flush, but
+            // always flush if paused to prevent locking up
+            if (! flush_output (s_paused))
+                s_flushed = false;
+        }
+        else
+            SIGNAL_MINOR;
+    }
+
     if (s_input)
     {
-        s_aborted = true;
-
-        if (s_output)
-            flush_output ();
+        seek_time = time;
+        in_frames = 0;
     }
 
     UNLOCK_MINOR;
+}
+
+void output_resume ()
+{
+    LOCK_ALL;
+
+    if (s_input)
+        s_flushed = false;
+
+    UNLOCK_ALL;
 }
 
 void output_pause (bool pause)
@@ -413,41 +410,7 @@ void output_pause (bool pause)
     UNLOCK_MINOR;
 }
 
-int output_written_time (void)
-{
-    LOCK_MINOR;
-    int time = 0;
-
-    if (s_input)
-        time = seek_time + FR2MS (in_frames, in_rate);
-
-    UNLOCK_MINOR;
-    return time;
-}
-
-void output_set_time (int time)
-{
-    LOCK_ALL;
-
-    if (s_input)
-    {
-        s_aborted = false;
-        seek_time = time;
-        in_frames = 0;
-    }
-
-    UNLOCK_ALL;
-}
-
-bool output_is_open (void)
-{
-    LOCK_MINOR;
-    bool is_open = s_input;
-    UNLOCK_MINOR;
-    return is_open;
-}
-
-int output_get_time (void)
+int output_get_time ()
 {
     LOCK_MINOR;
     int time = 0, delay = 0;
@@ -455,10 +418,10 @@ int output_get_time (void)
     if (s_input)
     {
         if (s_output)
-            delay = FR2MS (out_frames, out_rate) - cop->output_time ();
+            delay = aud::rescale<int64_t> (out_frames, out_rate, 1000) - cop->output_time ();
 
         delay = effect_adjust_delay (delay);
-        time = FR2MS (in_frames, in_rate);
+        time = aud::rescale<int64_t> (in_frames, in_rate, 1000);
         time = seek_time + aud::max (time - delay, 0);
     }
 
@@ -466,7 +429,7 @@ int output_get_time (void)
     return time;
 }
 
-int output_get_raw_time (void)
+int output_get_raw_time ()
 {
     LOCK_MINOR;
     int time = 0;
@@ -478,7 +441,7 @@ int output_get_raw_time (void)
     return time;
 }
 
-void output_close_audio (void)
+void output_close_audio ()
 {
     LOCK_ALL;
 
@@ -486,20 +449,20 @@ void output_close_audio (void)
     {
         s_input = false;
 
-        if (s_output && ! (s_paused || s_aborted || s_resetting))
-            finish_effects (); /* first time for end of song */
+        if (s_output && ! (s_paused || s_flushed || s_resetting))
+            finish_effects (false); /* first time for end of song */
     }
 
     UNLOCK_ALL;
 }
 
-void output_drain (void)
+void output_drain ()
 {
     LOCK_ALL;
 
     if (! s_input && s_output)
     {
-        finish_effects (); /* second time for end of playlist */
+        finish_effects (true); /* second time for end of playlist */
         cleanup_output ();
     }
 
@@ -512,8 +475,8 @@ EXPORT void aud_output_reset (OutputReset type)
 
     s_resetting = true;
 
-    if (s_output)
-        flush_output ();
+    if (s_output && ! s_flushed)
+        flush_output (true);
 
     UNLOCK_MINOR;
     LOCK_ALL;
@@ -537,6 +500,9 @@ EXPORT void aud_output_reset (OutputReset type)
         setup_output ();
 
     s_resetting = false;
+
+    if (s_output && ! s_flushed)
+        SIGNAL_MINOR;
 
     UNLOCK_ALL;
 }
@@ -573,7 +539,7 @@ EXPORT void aud_drct_set_volume (StereoVolume volume)
     UNLOCK_MINOR;
 }
 
-PluginHandle * output_plugin_get_current (void)
+PluginHandle * output_plugin_get_current ()
 {
     return cop ? aud_plugin_by_header (cop) : nullptr;
 }
@@ -584,7 +550,7 @@ bool output_plugin_set_current (PluginHandle * plugin)
     new_op = plugin ? (OutputPlugin *) aud_plugin_get_header (plugin) : nullptr;
     aud_output_reset (OutputReset::ResetPlugin);
 
-    bool success = (cop == new_op);
+    bool success = (! plugin || (new_op && cop == new_op));
     change_op = false;
     new_op = nullptr;
 

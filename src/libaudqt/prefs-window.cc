@@ -87,7 +87,7 @@ static const PluginCategory plugin_categories[] = {
     { PLUGIN_TYPE_TRANSPORT, N_("Transport") }
 };
 
-/* static const TitleFieldTag title_field_tags[] = {
+static const TitleFieldTag title_field_tags[] = {
     { N_("Artist")     , "${artist}" },
     { N_("Album")      , "${album}" },
     { N_("Title")      , "${title}" },
@@ -100,7 +100,7 @@ static const PluginCategory plugin_categories[] = {
     { N_("Comment")    , "${comment}" },
     { N_("Codec")      , "${codec}" },
     { N_("Quality")    , "${quality}" }
-}; */
+};
 
 #ifdef USE_CHARDET
 static const ComboItem chardet_detector_presets[] = {
@@ -211,6 +211,10 @@ static const PreferencesWidget proxy_auth_elements[] = {
 };
 
 static const PreferencesWidget connectivity_page_widgets[] = {
+    WidgetLabel (N_("<b>Network Settings</b>")),
+    WidgetSpin (N_("Buffer size:"),
+        WidgetInt (0, "net_buffer_kb"),
+        {16, 1024, 16, N_("KiB")}),
     WidgetLabel (N_("<b>Proxy Configuration</b>")),
     WidgetCheck (N_("Enable proxy usage"),
         WidgetBool (0, "use_proxy")),
@@ -234,12 +238,15 @@ static const PreferencesWidget chardet_elements[] = {
 
 
 static void send_title_change (void);
-// static void * create_titlestring_table (void);
+static void * create_titlestring_table (void);
 
 static const PreferencesWidget playlist_page_widgets[] = {
     WidgetLabel (N_("<b>Behavior</b>")),
-    WidgetCheck (N_("Continue playback on startup"),
+    WidgetCheck (N_("Resume playback on startup"),
         WidgetBool (0, "resume_playback_on_startup")),
+    WidgetCheck (N_("Pause instead of resuming immediately"),
+        WidgetBool (0, "always_resume_paused"),
+        WIDGET_CHILD),
     WidgetCheck (N_("Advance when the current song is deleted"),
         WidgetBool (0, "advance_on_delete")),
     WidgetCheck (N_("Clear the playlist when opening files"),
@@ -257,9 +264,7 @@ static const PreferencesWidget playlist_page_widgets[] = {
         WidgetBool (0, "show_numbers_in_pl", send_title_change)),
     WidgetCheck (N_("Show leading zeroes (02:00 instead of 2:00)"),
         WidgetBool (0, "leading_zero", send_title_change)),
-#ifdef XXX_NOTYET
     WidgetCustomQt (create_titlestring_table),
-#endif
     WidgetLabel (N_("<b>Advanced</b>")),
     WidgetCheck (N_("Do not load metadata for songs until played"),
         WidgetBool (0, "metadata_on_play")),
@@ -293,7 +298,7 @@ static const PreferencesWidget song_info_page_widgets[] = {
         WIDGET_CHILD)
 };
 
-/* #define TITLESTRING_NPRESETS 6
+#define TITLESTRING_NPRESETS 6
 
 static const char * const titlestring_presets[TITLESTRING_NPRESETS] = {
     "${title}",
@@ -311,7 +316,74 @@ static const char * const titlestring_preset_names[TITLESTRING_NPRESETS] = {
     N_("ARTIST - ALBUM - TRACK. TITLE"),
     N_("ARTIST [ ALBUM ] - TRACK. TITLE"),
     N_("ALBUM - TITLE")
-}; */
+};
+
+static void * create_titlestring_table (void)
+{
+    QWidget * w = new QWidget;
+    QGridLayout * l = new QGridLayout (w);
+
+    QLabel * lbl = new QLabel (_("Title format:"), w);
+    l->addWidget (lbl, 0, 0);
+
+    QComboBox * cbox = new QComboBox (w);
+    l->addWidget (cbox, 0, 1);
+
+    for (int i = 0; i < TITLESTRING_NPRESETS; i++)
+        cbox->addItem (translate_str (titlestring_preset_names [i]), i);
+    cbox->addItem (_("Custom"), TITLESTRING_NPRESETS);
+    cbox->setCurrentIndex (TITLESTRING_NPRESETS);
+
+    lbl = new QLabel (_("Custom string:"), w);
+    l->addWidget (lbl, 1, 0);
+
+    QLineEdit * le = new QLineEdit (w);
+    l->addWidget (le, 1, 1);
+
+    w->setLayout (l);
+
+    String format = aud_get_str (nullptr, "generic_title_format");
+    le->setText ((const char *) format);
+    for (int i = 0; i < TITLESTRING_NPRESETS; i++)
+    {
+        if (! strcmp (titlestring_presets [i], format))
+        {
+            cbox->setCurrentIndex (i);
+        }
+    }
+
+    QObject::connect (le, &QLineEdit::textChanged, [=] (const QString & text) {
+        aud_set_str (nullptr, "generic_title_format", text.toLocal8Bit ().data ());
+        send_title_change ();
+    });
+
+    QObject::connect (cbox,
+                      static_cast <void (QComboBox::*) (int)> (&QComboBox::currentIndexChanged),
+                      [=] (int idx) {
+        if (idx < TITLESTRING_NPRESETS)
+            le->setText (titlestring_presets [idx]);
+    });
+
+    /* build menu */
+    QPushButton * btn_mnu = new QPushButton ("...", w);
+    l->addWidget (btn_mnu, 1, 2);
+
+    QMenu * mnu_fields = new QMenu (w);
+
+    for (auto & t : title_field_tags)
+    {
+        QAction * a = mnu_fields->addAction (t.name);
+        QObject::connect (a, &QAction::triggered, [=] () {
+            le->insert (t.tag);
+        });
+    }
+
+    QObject::connect (btn_mnu, &QAbstractButton::clicked, [=] () {
+        mnu_fields->popup (btn_mnu->mapToGlobal (QPoint (0, 0)));
+    });
+
+    return w;
+}
 
 static Index<ComboItem> fill_plugin_combo (int type)
 {

@@ -34,9 +34,6 @@
 class IndexBase
 {
 public:
-    typedef void (* FillFunc) (void * data, int len);
-    typedef void (* CopyFunc) (const void * from, void * to, int len);
-    typedef void (* EraseFunc) (void * data, int len);
     typedef int (* CompareFunc) (const void * a, const void * b, void * userdata);
 
     constexpr IndexBase () :
@@ -44,7 +41,7 @@ public:
         m_len (0),
         m_size (0) {}
 
-    void clear (EraseFunc erase_func);  // use as destructor
+    void clear (aud::EraseFunc erase_func);  // use as destructor
 
     IndexBase (IndexBase && b) :
         m_data (b.m_data),
@@ -56,7 +53,7 @@ public:
         b.m_size = 0;
     }
 
-    void steal (IndexBase && b, EraseFunc erase_func)
+    void steal (IndexBase && b, aud::EraseFunc erase_func)
     {
         if (this != & b)
         {
@@ -83,14 +80,14 @@ public:
         { return m_len; }
 
     void * insert (int pos, int len);  // no fill
-    void insert (int pos, int len, FillFunc fill_func);
-    void insert (const void * from, int pos, int len, CopyFunc copy_func);
-    void remove (int pos, int len, EraseFunc erase_func);
-    void erase (int pos, int len, FillFunc fill_func, EraseFunc erase_func);
-    void shift (int from, int to, int len, FillFunc fill_func, EraseFunc erase_func);
+    void insert (int pos, int len, aud::FillFunc fill_func);
+    void insert (const void * from, int pos, int len, aud::CopyFunc copy_func);
+    void remove (int pos, int len, aud::EraseFunc erase_func);
+    void erase (int pos, int len, aud::FillFunc fill_func, aud::EraseFunc erase_func);
+    void shift (int from, int to, int len, aud::FillFunc fill_func, aud::EraseFunc erase_func);
 
     void move_from (IndexBase & b, int from, int to, int len, bool expand,
-     bool collapse, FillFunc fill_func, EraseFunc erase_func);
+     bool collapse, aud::FillFunc fill_func, aud::EraseFunc erase_func);
 
     void sort (CompareFunc compare, int elemsize, void * userdata);
 
@@ -108,15 +105,19 @@ public:
     constexpr Index () :
         IndexBase () {}
 
+    // use with care!
+    IndexBase & base ()
+        { return * this; }
+
     void clear ()
-        { IndexBase::clear (erase_func ()); }
+        { IndexBase::clear (aud::erase_func<T> ()); }
     ~Index ()
         { clear (); }
 
     Index (Index && b) :
         IndexBase (std::move (b)) {}
     void operator= (Index && b)
-        { steal (std::move (b), erase_func ()); }
+        { steal (std::move (b), aud::erase_func<T> ()); }
 
     T * begin ()
         { return (T *) IndexBase::begin (); }
@@ -136,19 +137,19 @@ public:
         { return begin ()[i]; }
 
     void insert (int pos, int len)
-        { IndexBase::insert (raw (pos), raw (len), fill_func ()); }
+        { IndexBase::insert (raw (pos), raw (len), aud::fill_func<T> ()); }
     void insert (const T * from, int pos, int len)
-        { IndexBase::insert (from, raw (pos), raw (len), copy_func ()); }
+        { IndexBase::insert (from, raw (pos), raw (len), aud::copy_func<T> ()); }
     void remove (int pos, int len)
-        { IndexBase::remove (raw (pos), raw (len), erase_func ()); }
+        { IndexBase::remove (raw (pos), raw (len), aud::erase_func<T> ()); }
     void erase (int pos, int len)
-        { IndexBase::erase (raw (pos), raw (len), fill_func (), erase_func ()); }
+        { IndexBase::erase (raw (pos), raw (len), aud::fill_func<T> (), aud::erase_func<T> ()); }
     void shift (int from, int to, int len)
-        { IndexBase::shift (raw (from), raw (to), raw (len), fill_func (), erase_func ()); }
+        { IndexBase::shift (raw (from), raw (to), raw (len), aud::fill_func<T> (), aud::erase_func<T> ()); }
 
     void move_from (Index<T> & b, int from, int to, int len, bool expand, bool collapse)
         { IndexBase::move_from (b, raw (from), raw (to), raw (len), expand,
-           collapse, fill_func (), erase_func ()); }
+           collapse, aud::fill_func<T> (), aud::erase_func<T> ()); }
 
     template<class ... Args>
     T & append (Args && ... args)
@@ -198,45 +199,23 @@ public:
         IndexBase::sort (wrapper, sizeof (T), (void *) & state);
     }
 
+    // for use of Index as a raw data buffer
+    // unlike insert(), does not zero-fill any added space
+    void resize (int size)
+    {
+        static_assert (std::is_trivial<T>::value, "for basic types only");
+        int diff = size - len ();
+        if (diff > 0)
+            IndexBase::insert (-1, raw (diff));
+        else if (diff < 0)
+            IndexBase::remove (raw (size), -1, nullptr);
+    }
+
 private:
     static constexpr int raw (int len)
         { return len * sizeof (T); }
     static constexpr int cooked (int len)
         { return len / sizeof (T); }
-
-    static constexpr FillFunc fill_func ()
-    {
-        return std::is_trivial<T>::value ? (FillFunc) nullptr : [] (void * data, int len)
-        {
-            T * iter = (T *) data;
-            T * end = (T *) ((char *) data + len);
-            while (iter < end)
-                new (iter ++) T ();
-        };
-    }
-
-    static constexpr CopyFunc copy_func ()
-    {
-        return std::is_trivial<T>::value ? (CopyFunc) nullptr : [] (const void * from, void * to, int len)
-        {
-            const T * src = (const T *) from;
-            T * dest = (T *) to;
-            T * end = (T *) ((char *) to + len);
-            while (dest < end)
-                new (dest ++) T (* src ++);
-        };
-    }
-
-    static constexpr EraseFunc erase_func ()
-    {
-        return std::is_trivial<T>::value ? (EraseFunc) nullptr : [] (void * data, int len)
-        {
-            T * iter = (T *) data;
-            T * end = (T *) ((char *) data + len);
-            while (iter < end)
-                (* iter ++).~T ();
-        };
-    }
 };
 
 #endif // LIBAUDCORE_INDEX_H

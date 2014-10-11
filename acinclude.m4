@@ -116,6 +116,26 @@ if test $HAVE_MSWINDOWS = yes ; then
 	CFLAGS="$CFLAGS -march=i686"
 fi
 
+dnl Byte order
+dnl ==========
+AC_C_BIGENDIAN([BIGENDIAN=1], [BIGENDIAN=0],
+ [AC_MSG_ERROR([Unknown machine byte order])],
+ [AC_MSG_ERROR([Universal builds are not supported, sorry])])
+AC_SUBST([BIGENDIAN])
+
+dnl Prevent symbol collisions
+dnl =========================
+if test "x$HAVE_MSWINDOWS" = "xyes" ; then
+    EXPORT="__declspec(dllexport)"
+elif test "x$GCC" = "xyes" ; then
+    CFLAGS="$CFLAGS -fvisibility=hidden"
+    CXXFLAGS="$CXXFLAGS -fvisibility=hidden"
+    EXPORT="__attribute__((visibility(\"default\")))"
+else
+    AC_MSG_ERROR([Unknown syntax for EXPORT keyword])
+fi
+AC_DEFINE_UNQUOTED([EXPORT], [$EXPORT], [Define to compiler syntax for public symbols])
+
 dnl Checks for various programs
 dnl ===========================
 AC_PROG_LN_S

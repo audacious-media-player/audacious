@@ -68,6 +68,12 @@ void vis_send_clear (void)
 {
     for (VisFunc func : vis_funcs[AUD_VIS_TYPE_CLEAR])
         ((VisClearFunc) func) ();
+
+    for (int type = 0; type < AUD_VIS_TYPES; type ++)
+    {
+        for (VisPlugin * vp : vis_plugins[type])
+            vp->clear ();
+    }
 }
 
 static void pcm_to_mono (const float * data, float * mono, int channels)

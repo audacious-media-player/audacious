@@ -52,10 +52,10 @@ void config_save (void);
 void config_cleanup (void);
 
 /* effect.c */
-void effect_start (int * channels, int * rate);
-void effect_process (float * * data, int * samples);
-void effect_flush (void);
-void effect_finish (float * * data, int * samples);
+void effect_start (int & channels, int & rate);
+Index<float> & effect_process (Index<float> & data);
+bool effect_flush (bool force);
+Index<float> & effect_finish (Index<float> & data, bool end_of_playlist);
 int effect_adjust_delay (int delay);
 
 bool effect_plugin_start (PluginHandle * plugin);
@@ -100,7 +100,7 @@ unsigned int32_hash (unsigned val);
 
 /* vis-runner.c */
 void vis_runner_start_stop (bool playing, bool paused);
-void vis_runner_pass_audio (int time, float * data, int samples, int channels, int rate);
+void vis_runner_pass_audio (int time, const Index<float> & data, int channels, int rate);
 void vis_runner_flush (void);
 void vis_runner_enable (bool enable);
 

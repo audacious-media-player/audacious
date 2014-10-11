@@ -34,6 +34,7 @@ SRCS = adder.cc \
        plugin-registry.cc \
        probe.cc \
        probe-buffer.cc \
+       ringbuf.cc \
        runtime.cc \
        scanner.cc \
        stringbuf.cc \
@@ -68,6 +69,7 @@ INCLUDES = audio.h \
            plugins.h \
            preferences.h \
            probe.h \
+           ringbuf.h \
            runtime.h \
            templates.h \
            tinylock.h \
