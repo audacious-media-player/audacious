@@ -425,7 +425,7 @@ static void fill_category_list (GtkTreeView * treeview, GtkNotebook * notebook)
     gtk_tree_view_column_pack_start (column, renderer, false);
     gtk_tree_view_column_set_attributes (column, renderer, "text", 1, nullptr);
 
-    g_object_set ((GObject *) renderer, "wrap-width", 96, "wrap-mode",
+    g_object_set ((GObject *) renderer, "wrap-width", 106, "wrap-mode",
      PANGO_WRAP_WORD_CHAR, nullptr);
 
     GtkListStore * store = gtk_list_store_new (CATEGORY_VIEW_N_COLS,
