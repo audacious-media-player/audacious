@@ -36,7 +36,7 @@ static void directoryEntered (const QString & path)
 EXPORT void fileopener_show (bool add = false)
 {
     QFileDialog dialog (nullptr, add ? "Add Files" : "Open Files", QString (aud_get_str ("audgui", "filesel_path")));
-    dialog.setFileMode (QFileDialog::AnyFile);
+    dialog.setFileMode (QFileDialog::ExistingFiles);
 
     QObject::connect (&dialog, &QFileDialog::directoryEntered, directoryEntered);
 
