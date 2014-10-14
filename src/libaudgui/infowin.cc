@@ -127,7 +127,7 @@ static GtkWidget * small_label_new (const char * text)
 
     GtkWidget * label = gtk_label_new (text);
     gtk_label_set_attributes ((GtkLabel *) label, attrs);
-    gtk_misc_set_alignment ((GtkMisc *) label, 0, 0.5);
+    gtk_widget_set_halign (label, GTK_ALIGN_START);
 
     return label;
 }

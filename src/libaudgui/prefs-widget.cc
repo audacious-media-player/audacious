@@ -283,7 +283,7 @@ static void create_label (const PreferencesWidget * widget, GtkWidget * * label,
     * label = gtk_label_new_with_mnemonic (dgettext (domain, widget->label));
     gtk_label_set_use_markup ((GtkLabel *) * label, true);
     gtk_label_set_line_wrap ((GtkLabel *) * label, true);
-    gtk_misc_set_alignment ((GtkMisc *) * label, 0, 0.5);
+    gtk_widget_set_halign (* label, GTK_ALIGN_START);
 }
 
 /* WIDGET_SPIN_BTN */
@@ -314,7 +314,7 @@ void create_font_btn (const PreferencesWidget * widget, GtkWidget * * label,
     if (widget->label)
     {
         * label = gtk_label_new (dgettext (domain, widget->label));
-        gtk_misc_set_alignment ((GtkMisc *) * label, 1, 0.5);
+        gtk_widget_set_halign (* label, GTK_ALIGN_END);
     }
 
     if (widget->data.font_btn.title)
@@ -335,7 +335,7 @@ static void create_entry (const PreferencesWidget * widget, GtkWidget * * label,
     if (widget->label)
     {
         * label = gtk_label_new (dgettext (domain, widget->label));
-        gtk_misc_set_alignment ((GtkMisc *) * label, 1, 0.5);
+        gtk_widget_set_halign (* label, GTK_ALIGN_END);
     }
 
     widget_init (* entry, widget);
