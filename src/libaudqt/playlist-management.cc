@@ -37,10 +37,10 @@ PlaylistDeleteDialog::PlaylistDeleteDialog (int playlist, QWidget * parent) : QD
 
     m_prompt.setText (QString (translate_str (str_printf (_("Do you want to permanently remove “%s”?"),
      (const char *) aud_playlist_get_title (playlist)))));
-    m_skip_prompt.setText (translate_str (_("_Don't ask again")));
+    m_skip_prompt.setText (translate_str (_("_Don’t ask again")));
 
-    m_remove.setText (_("Remove"));
-    m_cancel.setText (_("Cancel"));
+    m_remove.setText (translate_str (_("_Remove")));
+    m_cancel.setText (translate_str (_("_Cancel")));
 
     m_buttonbox.addButton (& m_remove, QDialogButtonBox::AcceptRole);
     m_buttonbox.addButton (& m_cancel, QDialogButtonBox::RejectRole);

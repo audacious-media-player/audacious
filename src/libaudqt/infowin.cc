@@ -67,7 +67,7 @@ InfoWindow::InfoWindow (QWidget * parent) : QDialog (parent)
     m_vbox.addWidget (& m_buttonbox);
 
     setLayout (& m_vbox);
-    setWindowTitle (_("Track Information"));
+    setWindowTitle (_("Song Info"));
 
     hook_associate ("art ready", (HookFunction) infowin_display_image_async, this);
 
