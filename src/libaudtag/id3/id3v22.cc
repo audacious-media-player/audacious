@@ -38,6 +38,7 @@ enum
     ID3_DATE,
     ID3_LENGTH,
     ID3_ARTIST,
+    ID3_ALBUM_ARTIST,
     ID3_TRACKNR,
     ID3_YEAR,
     ID3_GENRE,
@@ -45,12 +46,26 @@ enum
     ID3_ENCODER,
     ID3_TXX,
     ID3_RVA,
-    ID3_FUCKO_ARTIST,
     ID3_TAGS_NO
 };
 
-static const char * id3_frames[ID3_TAGS_NO] = {"TAL", "TT2", "TCM", "TCR",
-"TDA", "TLE", "TPE", "TRK", "TYE", "TCO", "COM", "TSS", "TXX", "RVA", "TP1"};
+static const char * id3_frames[ID3_TAGS_NO] = {
+    "TAL",
+    "TT2",
+    "TCM",
+    "TCR",
+    "TDA",
+    "TLE",
+    "TP1",
+    "TP2",
+    "TRK",
+    "TYE",
+    "TCO",
+    "COM",
+    "TSS",
+    "TXX",
+    "RVA"
+};
 
 #pragma pack(push) /* must be byte-aligned */
 #pragma pack(1)
@@ -237,9 +252,11 @@ bool ID3v22TagModule::read_tag (Tuple & tuple, VFSFile & handle)
           case ID3_LENGTH:
             id3_associate_length (tuple, & frame[0], frame.len ());
             break;
-          case ID3_FUCKO_ARTIST:
           case ID3_ARTIST:
             id3_associate_string (tuple, FIELD_ARTIST, & frame[0], frame.len ());
+            break;
+          case ID3_ALBUM_ARTIST:
+            id3_associate_string (tuple, FIELD_ALBUM_ARTIST, & frame[0], frame.len ());
             break;
           case ID3_TRACKNR:
             id3_associate_int (tuple, FIELD_TRACK_NUMBER, & frame[0], frame.len ());

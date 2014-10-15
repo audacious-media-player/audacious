@@ -55,6 +55,7 @@ static struct {
     GtkWidget * title;
     GtkWidget * artist;
     GtkWidget * album;
+    GtkWidget * album_artist;
     GtkWidget * comment;
     GtkWidget * year;
     GtkWidget * track;
@@ -203,6 +204,7 @@ static void infowin_update_tuple (void * unused)
     set_field_str_from_entry (tuple, FIELD_TITLE, widgets.title);
     set_field_str_from_entry (tuple, FIELD_ARTIST, widgets.artist);
     set_field_str_from_entry (tuple, FIELD_ALBUM, widgets.album);
+    set_field_str_from_entry (tuple, FIELD_ALBUM_ARTIST, widgets.album_artist);
     set_field_str_from_entry (tuple, FIELD_COMMENT, widgets.comment);
     set_field_str_from_entry (tuple, FIELD_GENRE, gtk_bin_get_child ((GtkBin *)
      widgets.genre));
@@ -337,18 +339,21 @@ static GtkWidget * create_infowin (void)
     widgets.album = gtk_entry_new ();
     add_entry (grid, _("Album"), widgets.album, 0, 4, 2);
 
+    widgets.album_artist = gtk_entry_new ();
+    add_entry (grid, _("Album Artist"), widgets.album_artist, 0, 6, 2);
+
     widgets.comment = gtk_entry_new ();
-    add_entry (grid, _("Comment"), widgets.comment, 0, 6, 2);
+    add_entry (grid, _("Comment"), widgets.comment, 0, 8, 2);
 
     widgets.genre = gtk_combo_box_text_new_with_entry ();
-    add_entry (grid, _("Genre"), widgets.genre, 0, 8, 2);
+    add_entry (grid, _("Genre"), widgets.genre, 0, 10, 2);
     g_idle_add ((GSourceFunc) genre_fill, widgets.genre);
 
     widgets.year = gtk_entry_new ();
-    add_entry (grid, _("Year"), widgets.year, 0, 10, 1);
+    add_entry (grid, _("Year"), widgets.year, 0, 12, 1);
 
     widgets.track = gtk_entry_new ();
-    add_entry (grid, _("Track Number"), widgets.track, 1, 10, 1);
+    add_entry (grid, _("Track Number"), widgets.track, 1, 12, 1);
 
     GtkWidget * bottom_hbox = gtk_hbox_new (false, 6);
     gtk_table_attach ((GtkTable *) main_grid, bottom_hbox, 0, 2, 3, 4,
@@ -388,6 +393,7 @@ static void infowin_show (int list, int entry, const char * filename,
     set_entry_str_from_field (widgets.title, tuple, FIELD_TITLE, updating_enabled);
     set_entry_str_from_field (widgets.artist, tuple, FIELD_ARTIST, updating_enabled);
     set_entry_str_from_field (widgets.album, tuple, FIELD_ALBUM, updating_enabled);
+    set_entry_str_from_field (widgets.album_artist, tuple, FIELD_ALBUM_ARTIST, updating_enabled);
     set_entry_str_from_field (widgets.comment, tuple, FIELD_COMMENT, updating_enabled);
     set_entry_str_from_field (gtk_bin_get_child ((GtkBin *) widgets.genre),
      tuple, FIELD_GENRE, updating_enabled);

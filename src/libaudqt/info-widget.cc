@@ -48,7 +48,7 @@ const TupleFieldMap tuple_field_map[] = {
     {N_("Track Number"),	FIELD_TRACK_NUMBER,		true},
     {N_("Genre"),		FIELD_GENRE,			true},
     {N_("Comment"),		FIELD_COMMENT,			true},
-    {N_("Song Artist"),		FIELD_SONG_ARTIST,		true},
+    {N_("Album Artist"),	FIELD_ALBUM_ARTIST,		true},
     {N_("Composer"),		FIELD_COMPOSER,			true},
     {N_("Performer"),		FIELD_PERFORMER,		true},
     {N_("Recording Year"),	FIELD_YEAR,			true},

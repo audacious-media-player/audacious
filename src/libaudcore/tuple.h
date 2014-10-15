@@ -51,7 +51,7 @@ enum {
     FIELD_FILE_PATH,    /**< Path part of the location URI */
     FIELD_FILE_EXT,     /**< Filename extension part of the location URI */
 
-    FIELD_SONG_ARTIST,
+    FIELD_ALBUM_ARTIST,
     FIELD_COMPOSER,     /**< Composer of song, if different than artist. */
     FIELD_PERFORMER,
     FIELD_COPYRIGHT,

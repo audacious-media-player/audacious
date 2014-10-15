@@ -46,16 +46,18 @@ typedef void * PlaylistUpdateLevel;
  * "/" (forward slash).  PLAYLIST_SORT_DATE means the song's release date (not
  * the file's modification time). */
 enum {
- PLAYLIST_SORT_PATH,
- PLAYLIST_SORT_FILENAME,
- PLAYLIST_SORT_TITLE,
- PLAYLIST_SORT_ALBUM,
- PLAYLIST_SORT_ARTIST,
- PLAYLIST_SORT_DATE,
- PLAYLIST_SORT_TRACK,
- PLAYLIST_SORT_FORMATTED_TITLE,
- PLAYLIST_SORT_LENGTH,
- PLAYLIST_SORT_SCHEMES};
+    PLAYLIST_SORT_PATH,
+    PLAYLIST_SORT_FILENAME,
+    PLAYLIST_SORT_TITLE,
+    PLAYLIST_SORT_ALBUM,
+    PLAYLIST_SORT_ARTIST,
+    PLAYLIST_SORT_ALBUM_ARTIST,
+    PLAYLIST_SORT_DATE,
+    PLAYLIST_SORT_TRACK,
+    PLAYLIST_SORT_FORMATTED_TITLE,
+    PLAYLIST_SORT_LENGTH,
+    PLAYLIST_SORT_SCHEMES
+};
 
 typedef bool (* PlaylistFilterFunc) (const char * filename, void * user);
 typedef int (* PlaylistStringCompareFunc) (const char * a, const char * b);
