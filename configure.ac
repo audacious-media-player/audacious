@@ -22,6 +22,10 @@ AC_DEFINE_UNQUOTED(PLUGIN_SUFFIX, "$PLUGIN_SUFFIX", [Suffix for plugins])
 
 m4_ifdef([PKG_INSTALLDIR], [PKG_INSTALLDIR], AC_SUBST([pkgconfigdir], ${libdir}/pkgconfig))
 
+dnl Disable deprecation warnings
+dnl ============================
+CFLAGS="$CFLAGS -Wno-deprecated-declarations"
+
 dnl Byte order
 dnl ==========
 AC_C_BIGENDIAN([BIGENDIAN=1], [BIGENDIAN=0],
