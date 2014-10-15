@@ -3,6 +3,7 @@
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
+# corneliu.e <corneliueva@yahoo.com>, 2014
 # xyz32 <oanaradu32@yahoo.com>, 2013
 # Warui-chan <>, 2012
 # Warui-chan <>, 2012
@@ -11,9 +12,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-07-20 15:58+0200\n"
-"PO-Revision-Date: 2014-04-04 07:08+0000\n"
-"Last-Translator: Radioactiveman <thomas-lange2@gmx.de>\n"
+"POT-Creation-Date: 2014-10-15 21:33+0200\n"
+"PO-Revision-Date: 2014-08-09 19:19+0000\n"
+"Last-Translator: corneliu.e <corneliueva@yahoo.com>\n"
 "Language-Team: Romanian (http://www.transifex.com/projects/p/audacious/"
 "language/ro/)\n"
 "Language: ro\n"
@@ -25,7 +26,7 @@ msgstr ""
 
 #: src/audacious/adder.c:76
 msgid "Searching ..."
-msgstr "Cautare ..."
+msgstr "Căutare ..."
 
 #: src/audacious/adder.c:104
 #, c-format
@@ -33,15 +34,15 @@ msgid "%d file found"
 msgid_plural "%d files found"
 msgstr[0] "%d fisiere gasite"
 msgstr[1] "%d fisiere gasite"
-msgstr[2] "%d fisiere gasite"
+msgstr[2] "%d fișiere găsite"
 
 #: src/audacious/adder.c:386 src/audacious/playlist-new.c:97
 msgid "New Playlist"
-msgstr "Nouă Listă de redare"
+msgstr "Listă de redare nouă"
 
 #: src/audacious/interface.c:93
 msgid "Error"
-msgstr ""
+msgstr "Eroare"
 
 #: src/audacious/main.c:70
 msgid "Show command-line help"
@@ -49,39 +50,39 @@ msgstr ""
 
 #: src/audacious/main.c:71
 msgid "Show version"
-msgstr "Arata versiunea"
+msgstr "Arată versiunea"
 
 #: src/audacious/main.c:72
 msgid "Start playback"
-msgstr ""
+msgstr "Redă"
 
 #: src/audacious/main.c:73
 msgid "Pause playback"
-msgstr ""
+msgstr "Pauză"
 
 #: src/audacious/main.c:74
 msgid "Pause if playing, play otherwise"
-msgstr "Pauză daca se redă, redare altfel"
+msgstr "Pauză dacă se redă, redare altfel"
 
 #: src/audacious/main.c:75
 msgid "Stop playback"
-msgstr ""
+msgstr "Oprește redarea"
 
 #: src/audacious/main.c:76
 msgid "Skip to previous song"
-msgstr ""
+msgstr "Sari la melodia anterioară"
 
 #: src/audacious/main.c:77
 msgid "Skip to next song"
-msgstr ""
+msgstr "Sari la melodia următoare"
 
 #: src/audacious/main.c:78
 msgid "Add files to the playlist"
-msgstr "Adauga fisiere la lista de redare"
+msgstr "Adaugă fișiere la lista de redare"
 
 #: src/audacious/main.c:79
 msgid "Add files to a temporary playlist"
-msgstr ""
+msgstr "Adaugă fișiere la o listă de redare temporară"
 
 #: src/audacious/main.c:80
 msgid "Display the main window"
@@ -93,20 +94,20 @@ msgstr ""
 
 #: src/audacious/main.c:82
 msgid "Start without a graphical interface"
-msgstr ""
+msgstr "Pornește fără o interfață grafică"
 
 #: src/audacious/main.c:83
 msgid "Quit on playback stop"
-msgstr ""
+msgstr "Închidere la oprirea redării"
 
 #: src/audacious/main.c:84
 msgid "Print debugging messages"
-msgstr "Afișeaza mesajele de depanare"
+msgstr "Afișează mesajele de depanare"
 
 #: src/audacious/main.c:269
 #, c-format
 msgid "Unknown option: %s\n"
-msgstr ""
+msgstr "Opțiune necunoscută: %s\n"
 
 #: src/audacious/main.c:291
 #, c-format
@@ -120,29 +121,29 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/audacious/main.c:601
+#: src/audacious/main.c:590
 msgid "Audacious"
 msgstr "Audacious"
 
 #: src/audacious/playback.c:354
 #, c-format
 msgid "No decoder found for %s."
-msgstr "Nu sa găsit decodor pentru %s"
+msgstr "Nu s-a găsit decodor pentru %s"
 
 #: src/audacious/playback.c:387
 #, c-format
 msgid "%s could not be opened."
-msgstr ""
+msgstr "%s nu a putut fi deschis."
 
 #: src/audacious/playlist-files.c:95
 #, c-format
 msgid "Cannot load %s: unsupported file extension."
-msgstr ""
+msgstr "Nu se poate încărca %s: extensie de fișier nesuportată."
 
 #: src/audacious/playlist-files.c:185
 #, c-format
 msgid "Cannot save %s: unsupported file extension."
-msgstr ""
+msgstr "Nu se poate salva %s: extensie de fișier nesuportată."
 
 #: src/audacious/playlist-new.c:98
 msgid "Now Playing"
@@ -156,11 +157,11 @@ msgstr ""
 
 #: src/audacious/plugin-preferences.c:55
 msgid "About"
-msgstr ""
+msgstr "Despre"
 
 #: src/audacious/plugin-preferences.c:94
 msgid "Settings"
-msgstr ""
+msgstr "Setări"
 
 #: src/audacious/plugin-preferences.c:99
 msgid "_Set"
@@ -171,22 +172,22 @@ msgstr ""
 #: src/libaudgui/playlists.c:89 src/libaudgui/playlists.c:142
 #: src/libaudgui/url-opener.c:71
 msgid "_Cancel"
-msgstr ""
+msgstr "_Anulare"
 
 #: src/audacious/plugin-preferences.c:106 src/audacious/ui_preferences.c:763
 #: src/libaudgui/infowin.c:370 src/libaudgui/queue-manager.c:189
 #: src/libaudgui/ui_fileopener.c:127 src/libaudgui/ui_jumptotrack.c:312
 #: src/libaudgui/util.c:186
 msgid "_Close"
-msgstr ""
+msgstr "_Închidere"
 
 #: src/audacious/plugin-view.c:242 src/audacious/ui_preferences.c:641
 msgid "_Settings"
-msgstr ""
+msgstr "_Setări"
 
 #: src/audacious/plugin-view.c:250 src/audacious/ui_preferences.c:652
 msgid "_About"
-msgstr ""
+msgstr "_Despre"
 
 #: src/audacious/ui_plugin_menu.c:37
 msgid "_Plugins ..."
@@ -202,15 +203,15 @@ msgstr "Audio"
 
 #: src/audacious/ui_preferences.c:84
 msgid "Network"
-msgstr "Retea"
+msgstr "Rețea"
 
 #: src/audacious/ui_preferences.c:85 src/audacious/ui_preferences.c:95
 msgid "Playlist"
-msgstr "Playlist"
+msgstr "Listă de redare"
 
 #: src/audacious/ui_preferences.c:86 src/libaudgui/infowin.c:299
 msgid "Song Info"
-msgstr ""
+msgstr "Informații despre melodie"
 
 #: src/audacious/ui_preferences.c:87
 msgid "Plugins"
@@ -270,12 +271,12 @@ msgstr "Calea spre fișier"
 
 #: src/audacious/ui_preferences.c:107
 msgid "Date"
-msgstr "Data"
+msgstr "Dată"
 
 #: src/audacious/ui_preferences.c:108 src/libaudgui/infopopup.c:154
 #: src/libaudgui/infowin.c:356
 msgid "Year"
-msgstr "Anul"
+msgstr "An"
 
 #: src/audacious/ui_preferences.c:109 src/libaudgui/infowin.c:349
 msgid "Comment"
@@ -291,7 +292,7 @@ msgstr "Calitate"
 
 #: src/audacious/ui_preferences.c:116
 msgid "None"
-msgstr "Nici unul"
+msgstr "Niciunul"
 
 #: src/audacious/ui_preferences.c:117
 msgid "Arabic"
@@ -339,11 +340,11 @@ msgstr "Turcă"
 
 #: src/audacious/ui_preferences.c:135
 msgid "Floating point"
-msgstr ""
+msgstr "Virgulă mobilă"
 
 #: src/audacious/ui_preferences.c:147
 msgid "<b>Interface Settings</b>"
-msgstr ""
+msgstr "<b>Setări interfață</b>"
 
 #: src/audacious/ui_preferences.c:148
 msgid "Interface plugin:"
@@ -351,7 +352,7 @@ msgstr ""
 
 #: src/audacious/ui_preferences.c:165
 msgid "Output plugin:"
-msgstr "Plugin de iesire:"
+msgstr "Plugin de ieșire:"
 
 #: src/audacious/ui_preferences.c:172
 msgid "<b>Output Settings</b>"
@@ -383,7 +384,7 @@ msgstr "<b>Amplificare la redare</b>"
 
 #: src/audacious/ui_preferences.c:186
 msgid "Enable Replay Gain"
-msgstr "Activeaza amplificarea la redare"
+msgstr "Activează amplificarea la redare"
 
 #: src/audacious/ui_preferences.c:188
 msgid "Album mode"
@@ -415,15 +416,15 @@ msgstr "Adresa sau numele:"
 
 #: src/audacious/ui_preferences.c:202
 msgid "Proxy port:"
-msgstr "Port-ul:"
+msgstr "Portul pentru proxy:"
 
 #: src/audacious/ui_preferences.c:205
 msgid "Proxy username:"
-msgstr "Utilizator:"
+msgstr "Utilizator proxy:"
 
 #: src/audacious/ui_preferences.c:206
 msgid "Proxy password:"
-msgstr "Parolă:"
+msgstr "Parolă proxy:"
 
 #: src/audacious/ui_preferences.c:210
 msgid "<b>Proxy Configuration</b>"
@@ -463,7 +464,7 @@ msgstr "Golește lista de redare la deschiderea de noi fișiere"
 
 #: src/audacious/ui_preferences.c:236
 msgid "Open files in a temporary playlist"
-msgstr "Deschideti fisierele intr-o lista de redare temporara"
+msgstr "Deschide fișierele într-o listă de redare temporară"
 
 #: src/audacious/ui_preferences.c:238
 msgid "Do not load metadata for songs until played"
@@ -499,7 +500,7 @@ msgstr "Caută recursiv"
 
 #: src/audacious/ui_preferences.c:256
 msgid "Search depth:"
-msgstr ""
+msgstr "Adâncime de căutare:"
 
 #: src/audacious/ui_preferences.c:259
 msgid "<b>Popup Information</b>"
@@ -571,7 +572,7 @@ msgstr "Format specificat:"
 
 #: src/audacious/ui_preferences.c:714
 msgid "Audacious Settings"
-msgstr ""
+msgstr "Setări Audacious"
 
 #: src/audacious/util.c:112
 #, c-format
@@ -698,15 +699,15 @@ msgstr ""
 
 #: src/libaudgui/infopopup.c:156
 msgid "Length"
-msgstr ""
+msgstr "Lungime"
 
 #: src/libaudgui/infowin.c:46
 msgid "Format:"
-msgstr ""
+msgstr "Format:"
 
 #: src/libaudgui/infowin.c:47
 msgid "Quality:"
-msgstr ""
+msgstr "Calitate:"
 
 #: src/libaudgui/infowin.c:48
 msgid "Bitrate:"
@@ -738,7 +739,7 @@ msgstr "Blues"
 
 #: src/libaudgui/infowin.c:82
 msgid "Chamber Music"
-msgstr ""
+msgstr "Muzică de cameră"
 
 #: src/libaudgui/infowin.c:83
 msgid "Classical"
@@ -770,7 +771,7 @@ msgstr "Funk"
 
 #: src/libaudgui/infowin.c:90
 msgid "Gangsta Rap"
-msgstr ""
+msgstr "Gangsta Rap"
 
 #: src/libaudgui/infowin.c:91
 msgid "Gospel"
@@ -786,7 +787,7 @@ msgstr "Hard Rock"
 
 #: src/libaudgui/infowin.c:94
 msgid "Heavy Metal"
-msgstr ""
+msgstr "Heavy Metal"
 
 #: src/libaudgui/infowin.c:95
 msgid "Hip-hop"
@@ -870,11 +871,11 @@ msgstr "Trip-hop"
 
 #: src/libaudgui/infowin.c:220
 msgid "Save successful"
-msgstr ""
+msgstr "Salvare efectuată cu succes"
 
 #: src/libaudgui/infowin.c:224
 msgid "Save error"
-msgstr ""
+msgstr "Eroare la salvare"
 
 #: src/libaudgui/infowin.c:359
 msgid "Track Number"
@@ -891,7 +892,7 @@ msgstr "%d kb/s"
 
 #: src/libaudgui/infowin.c:423
 msgid "N/A"
-msgstr ""
+msgstr "N/A"
 
 #: src/libaudgui/infowin.c:453
 #, c-format
@@ -1006,7 +1007,7 @@ msgstr "Intrări"
 
 #: src/libaudgui/ui_playlist_manager.c:254
 msgid "_New"
-msgstr ""
+msgstr "_Nou"
 
 #: src/libaudgui/ui_playlist_manager.c:256
 msgid "Ren_ame"
@@ -1014,7 +1015,7 @@ msgstr ""
 
 #: src/libaudgui/ui_playlist_manager.c:257
 msgid "_Play"
-msgstr ""
+msgstr "_Redare"
 
 #: src/libaudgui/ui_playlist_manager.c:269
 msgid "_Close dialog on activating playlist"
@@ -1030,10 +1031,12 @@ msgstr "Adaugă URL"
 
 #: src/libaudgui/url-opener.c:74
 msgid "Enter URL:"
-msgstr ""
+msgstr "Introdu URL:"
 
 #: src/libaudgui/util.c:173
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
 msgstr ""
+"\n"
+"(Mesajele următoare au fost ascunse.)"

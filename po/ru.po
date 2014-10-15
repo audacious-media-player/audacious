@@ -31,7 +31,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-07-20 15:58+0200\n"
+"POT-Creation-Date: 2014-10-15 21:33+0200\n"
 "PO-Revision-Date: 2014-04-23 10:50+0000\n"
 "Last-Translator: Andrei Stepanov\n"
 "Language-Team: Russian (http://www.transifex.com/projects/p/audacious/"
@@ -140,7 +140,7 @@ msgid ""
 "\n"
 msgstr "Пример: audacious [ОПЦИЯ].....[ФАЙЛ]...\n"
 
-#: src/audacious/main.c:601
+#: src/audacious/main.c:590
 msgid "Audacious"
 msgstr "Audacious"
 

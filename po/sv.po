@@ -3,15 +3,16 @@
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
-# Bosse <bserrander@gmail.com>, 2013
+# Bo Serrander <bserrander@gmail.com>, 2013
+# Martin Jernberg <bittin@cafe8bitar.se>, 2014
 # Martin Persenius <martin@persenius.net>, 2004
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-07-20 15:58+0200\n"
-"PO-Revision-Date: 2014-04-04 07:08+0000\n"
-"Last-Translator: Radioactiveman <thomas-lange2@gmx.de>\n"
+"POT-Creation-Date: 2014-10-15 21:33+0200\n"
+"PO-Revision-Date: 2014-08-22 16:12+0000\n"
+"Last-Translator: Martin Jernberg <bittin@cafe8bitar.se>\n"
 "Language-Team: Swedish (http://www.transifex.com/projects/p/audacious/"
 "language/sv/)\n"
 "Language: sv\n"
@@ -28,8 +29,8 @@ msgstr "Söker..."
 #, c-format
 msgid "%d file found"
 msgid_plural "%d files found"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d fil funnen"
+msgstr[1] "%d filer funna"
 
 #: src/audacious/adder.c:386 src/audacious/playlist-new.c:97
 msgid "New Playlist"
@@ -37,7 +38,7 @@ msgstr "Ny spellista"
 
 #: src/audacious/interface.c:93
 msgid "Error"
-msgstr ""
+msgstr "Fel"
 
 #: src/audacious/main.c:70
 msgid "Show command-line help"
@@ -49,11 +50,11 @@ msgstr "Visa version"
 
 #: src/audacious/main.c:72
 msgid "Start playback"
-msgstr ""
+msgstr "Börja uppspelning "
 
 #: src/audacious/main.c:73
 msgid "Pause playback"
-msgstr ""
+msgstr "Pausa uppspelning "
 
 #: src/audacious/main.c:74
 msgid "Pause if playing, play otherwise"
@@ -61,15 +62,15 @@ msgstr "Pausa om spelandes, spela annars"
 
 #: src/audacious/main.c:75
 msgid "Stop playback"
-msgstr ""
+msgstr "Stoppa uppspelning "
 
 #: src/audacious/main.c:76
 msgid "Skip to previous song"
-msgstr ""
+msgstr "Byt till förra låten"
 
 #: src/audacious/main.c:77
 msgid "Skip to next song"
-msgstr ""
+msgstr "Byt till nästa låt"
 
 #: src/audacious/main.c:78
 msgid "Add files to the playlist"
@@ -77,7 +78,7 @@ msgstr "Lägg till filer i spellista"
 
 #: src/audacious/main.c:79
 msgid "Add files to a temporary playlist"
-msgstr ""
+msgstr "Lägg till nya filer i temporär spellista"
 
 #: src/audacious/main.c:80
 msgid "Display the main window"
@@ -89,15 +90,15 @@ msgstr ""
 
 #: src/audacious/main.c:82
 msgid "Start without a graphical interface"
-msgstr ""
+msgstr "Starta utan ett grafiskt interface"
 
 #: src/audacious/main.c:83
 msgid "Quit on playback stop"
-msgstr ""
+msgstr "Avsluta vid uppspelnings stopp"
 
 #: src/audacious/main.c:84
 msgid "Print debugging messages"
-msgstr ""
+msgstr "Skriv ut felsökningsmeddelanden"
 
 #: src/audacious/main.c:269
 #, c-format
@@ -114,9 +115,9 @@ msgstr ""
 msgid ""
 "Usage: audacious [OPTION] ... [FILE] ...\n"
 "\n"
-msgstr ""
+msgstr "Användning: audacious [OPTION] ... [FILE] ... \n"
 
-#: src/audacious/main.c:601
+#: src/audacious/main.c:590
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -128,7 +129,7 @@ msgstr "Kunde inte hitta dekoder för %s."
 #: src/audacious/playback.c:387
 #, c-format
 msgid "%s could not be opened."
-msgstr ""
+msgstr "%s kunde inte öppnas."
 
 #: src/audacious/playlist-files.c:95
 #, c-format
@@ -149,14 +150,16 @@ msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress "
 "(or has been disabled)."
 msgstr ""
+"Spellistan kan inte sorteras eftersom metadata scanning pågår fortfarande "
+"(eller har inaktiverats)."
 
 #: src/audacious/plugin-preferences.c:55
 msgid "About"
-msgstr ""
+msgstr "Om"
 
 #: src/audacious/plugin-preferences.c:94
 msgid "Settings"
-msgstr ""
+msgstr "Inställningar"
 
 #: src/audacious/plugin-preferences.c:99
 msgid "_Set"
@@ -167,30 +170,30 @@ msgstr ""
 #: src/libaudgui/playlists.c:89 src/libaudgui/playlists.c:142
 #: src/libaudgui/url-opener.c:71
 msgid "_Cancel"
-msgstr ""
+msgstr "_Avbryt"
 
 #: src/audacious/plugin-preferences.c:106 src/audacious/ui_preferences.c:763
 #: src/libaudgui/infowin.c:370 src/libaudgui/queue-manager.c:189
 #: src/libaudgui/ui_fileopener.c:127 src/libaudgui/ui_jumptotrack.c:312
 #: src/libaudgui/util.c:186
 msgid "_Close"
-msgstr ""
+msgstr "_Stäng"
 
 #: src/audacious/plugin-view.c:242 src/audacious/ui_preferences.c:641
 msgid "_Settings"
-msgstr ""
+msgstr "_Inställningar"
 
 #: src/audacious/plugin-view.c:250 src/audacious/ui_preferences.c:652
 msgid "_About"
-msgstr ""
+msgstr "_Om"
 
 #: src/audacious/ui_plugin_menu.c:37
 msgid "_Plugins ..."
-msgstr ""
+msgstr "_Plugins ..."
 
 #: src/audacious/ui_preferences.c:82
 msgid "Appearance"
-msgstr ""
+msgstr "Utseende"
 
 #: src/audacious/ui_preferences.c:83
 msgid "Audio"
@@ -339,11 +342,11 @@ msgstr "flyttal"
 
 #: src/audacious/ui_preferences.c:147
 msgid "<b>Interface Settings</b>"
-msgstr ""
+msgstr "<b> Interface Inställningar</b>"
 
 #: src/audacious/ui_preferences.c:148
 msgid "Interface plugin:"
-msgstr ""
+msgstr "Interface plugin:"
 
 #: src/audacious/ui_preferences.c:165
 msgid "Output plugin:"
@@ -367,19 +370,19 @@ msgstr "ms"
 
 #: src/audacious/ui_preferences.c:181
 msgid "Soft clipping"
-msgstr ""
+msgstr "Mjuk klippning"
 
 #: src/audacious/ui_preferences.c:183
 msgid "Use software volume control (not recommended)"
-msgstr ""
+msgstr "Använd programvaru volymkontroll (rekommenderas inte)"
 
 #: src/audacious/ui_preferences.c:185
 msgid "<b>Replay Gain</b>"
-msgstr ""
+msgstr "<b>Replay Gain</b>"
 
 #: src/audacious/ui_preferences.c:186
 msgid "Enable Replay Gain"
-msgstr ""
+msgstr "Aktivera ReplayGain"
 
 #: src/audacious/ui_preferences.c:188
 msgid "Album mode"
@@ -387,11 +390,11 @@ msgstr "Albumläge"
 
 #: src/audacious/ui_preferences.c:190
 msgid "Prevent clipping (recommended)"
-msgstr ""
+msgstr "Förhindra klippning (rekommenderas)"
 
 #: src/audacious/ui_preferences.c:192
 msgid "<b>Adjust Levels</b>"
-msgstr ""
+msgstr "<b> Justera nivåer </ b>"
 
 #: src/audacious/ui_preferences.c:193
 msgid "Amplify all files:"
@@ -407,11 +410,11 @@ msgstr ""
 
 #: src/audacious/ui_preferences.c:201
 msgid "Proxy hostname:"
-msgstr ""
+msgstr "Proxy hostname:"
 
 #: src/audacious/ui_preferences.c:202
 msgid "Proxy port:"
-msgstr ""
+msgstr "Proxy port:"
 
 #: src/audacious/ui_preferences.c:205
 msgid "Proxy username:"
@@ -435,31 +438,31 @@ msgstr "Använd autentisering med proxy"
 
 #: src/audacious/ui_preferences.c:221
 msgid "Auto character encoding detector for:"
-msgstr ""
+msgstr "Automatiskt teckenkodnings detektor för:"
 
 #: src/audacious/ui_preferences.c:225
 msgid "Fallback character encodings:"
-msgstr ""
+msgstr "Reserv teckenkodningar:"
 
 #: src/audacious/ui_preferences.c:229
 msgid "<b>Behavior</b>"
-msgstr ""
+msgstr "<b> Beteende </ b>"
 
 #: src/audacious/ui_preferences.c:230
 msgid "Continue playback on startup"
-msgstr ""
+msgstr "Fortsätt uppspelning vid uppstart"
 
 #: src/audacious/ui_preferences.c:232
 msgid "Advance when the current song is deleted"
-msgstr ""
+msgstr "Avancera när den aktuella låten tas bort"
 
 #: src/audacious/ui_preferences.c:234
 msgid "Clear the playlist when opening files"
-msgstr ""
+msgstr "Rensa spellistan när du öppnar filer"
 
 #: src/audacious/ui_preferences.c:236
 msgid "Open files in a temporary playlist"
-msgstr ""
+msgstr "Öppna filer i en temporär spellista"
 
 #: src/audacious/ui_preferences.c:238
 msgid "Do not load metadata for songs until played"
@@ -467,11 +470,11 @@ msgstr ""
 
 #: src/audacious/ui_preferences.c:241
 msgid "<b>Compatibility</b>"
-msgstr ""
+msgstr "<b>Kompabilitet</b>"
 
 #: src/audacious/ui_preferences.c:242
 msgid "Interpret \\ (backward slash) as a folder delimiter"
-msgstr ""
+msgstr "Tolka \\ (omvänt snedstreck) som en mapp avgränsare"
 
 #: src/audacious/ui_preferences.c:247
 msgid "<b>Album Art</b>"
@@ -499,7 +502,7 @@ msgstr "Sökdjup:"
 
 #: src/audacious/ui_preferences.c:259
 msgid "<b>Popup Information</b>"
-msgstr ""
+msgstr "<b>Popup Information</b>"
 
 #: src/audacious/ui_preferences.c:260
 msgid "Show popup information"
@@ -507,11 +510,11 @@ msgstr "Visa popup-information"
 
 #: src/audacious/ui_preferences.c:262
 msgid "Popup delay (tenths of a second):"
-msgstr ""
+msgstr "Popup fördröjning (tiondelar av en sekund):"
 
 #: src/audacious/ui_preferences.c:265
 msgid "Show time scale for current song"
-msgstr ""
+msgstr "Visa tidsskala för aktuell låt"
 
 #: src/audacious/ui_preferences.c:280
 msgid "TITLE"
@@ -551,11 +554,11 @@ msgstr ""
 
 #: src/audacious/ui_preferences.c:490
 msgid "Show song numbers"
-msgstr ""
+msgstr "Visa sång nummer"
 
 #: src/audacious/ui_preferences.c:501
 msgid "Show leading zeroes (02:00 instead of 2:00)"
-msgstr ""
+msgstr "Visa ledande nollor (02:00 istället för 02:00)"
 
 #: src/audacious/ui_preferences.c:515
 msgid "Title format:"
@@ -563,11 +566,11 @@ msgstr "Rubrikformat:"
 
 #: src/audacious/ui_preferences.c:520
 msgid "Custom string:"
-msgstr ""
+msgstr "Anpassad sträng:"
 
 #: src/audacious/ui_preferences.c:714
 msgid "Audacious Settings"
-msgstr ""
+msgstr "Audacious Inställningar"
 
 #: src/audacious/util.c:112
 #, c-format
@@ -591,8 +594,8 @@ msgstr "Stereo"
 #, c-format
 msgid "%d channel"
 msgid_plural "%d channels"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d kanal "
+msgstr[1] "%d kanaler"
 
 #: src/libaudgui/about.c:37
 msgid "Credits"
@@ -613,19 +616,19 @@ msgstr ""
 
 #: src/libaudgui/confirm.c:55 src/libaudgui/ui_playlist_manager.c:255
 msgid "_Remove"
-msgstr ""
+msgstr "_Ta Bort"
 
 #: src/libaudgui/confirm.c:60
 msgid "Remove Playlist"
-msgstr ""
+msgstr "Ta Bort Spellista"
 
 #: src/libaudgui/confirm.c:62
 msgid "_Don’t ask again"
-msgstr ""
+msgstr "_Fråga inte igen"
 
 #: src/libaudgui/confirm.c:89
 msgid "_Rename"
-msgstr ""
+msgstr "_Byt namn"
 
 #: src/libaudgui/confirm.c:93
 msgid "Rename Playlist"
@@ -633,7 +636,7 @@ msgstr "Döp om spellista"
 
 #: src/libaudgui/confirm.c:93
 msgid "What would you like to call this playlist?"
-msgstr ""
+msgstr "Vad vill du döpa denna spellista till?"
 
 #: src/libaudgui/equalizer.c:44
 msgid "_Enable"
@@ -697,15 +700,15 @@ msgstr "Längd"
 
 #: src/libaudgui/infowin.c:46
 msgid "Format:"
-msgstr ""
+msgstr "Format:"
 
 #: src/libaudgui/infowin.c:47
 msgid "Quality:"
-msgstr ""
+msgstr "Kvalite:"
 
 #: src/libaudgui/infowin.c:48
 msgid "Bitrate:"
-msgstr ""
+msgstr "Bitrate:"
 
 #: src/libaudgui/infowin.c:76
 msgid "Acid Jazz"
@@ -873,11 +876,11 @@ msgstr ""
 
 #: src/libaudgui/infowin.c:359
 msgid "Track Number"
-msgstr ""
+msgstr "Spår Nummer"
 
 #: src/libaudgui/infowin.c:367
 msgid "_Save"
-msgstr ""
+msgstr "_Spara"
 
 #: src/libaudgui/infowin.c:418
 #, c-format
@@ -886,7 +889,7 @@ msgstr "%d kb/s"
 
 #: src/libaudgui/infowin.c:423
 msgid "N/A"
-msgstr ""
+msgstr "N/A"
 
 #: src/libaudgui/infowin.c:453
 #, c-format
@@ -895,7 +898,7 @@ msgstr "Ingen information om %s.\n"
 
 #: src/libaudgui/jump-to-time.c:48 src/libaudgui/ui_jumptotrack.c:305
 msgid "_Jump"
-msgstr ""
+msgstr "_Hoppa"
 
 #: src/libaudgui/jump-to-time.c:52
 msgid "Jump to Time"
@@ -912,7 +915,7 @@ msgstr "Skriva över %s?"
 
 #: src/libaudgui/playlists.c:88
 msgid "_Overwrite"
-msgstr ""
+msgstr "_Skriv över"
 
 #: src/libaudgui/playlists.c:92
 msgid "Confirm Overwrite"
@@ -924,7 +927,7 @@ msgstr "Exportera spellista"
 
 #: src/libaudgui/playlists.c:122
 msgid "_Export"
-msgstr ""
+msgstr "_Exportera"
 
 #: src/libaudgui/playlists.c:128
 msgid "Import Playlist"
@@ -932,11 +935,11 @@ msgstr "Importera spellista"
 
 #: src/libaudgui/playlists.c:129
 msgid "_Import"
-msgstr ""
+msgstr "_Importera"
 
 #: src/libaudgui/queue-manager.c:172
 msgid "Queue Manager"
-msgstr ""
+msgstr "Köhanterare"
 
 #: src/libaudgui/queue-manager.c:188
 msgid "_Unqueue"
@@ -948,7 +951,7 @@ msgstr "Öppna filer"
 
 #: src/libaudgui/ui_fileopener.c:80 src/libaudgui/url-opener.c:50
 msgid "_Open"
-msgstr ""
+msgstr "_Öppna"
 
 #: src/libaudgui/ui_fileopener.c:82
 msgid "Close _dialog on open"
@@ -960,7 +963,7 @@ msgstr "Lägg till filer"
 
 #: src/libaudgui/ui_fileopener.c:88 src/libaudgui/url-opener.c:56
 msgid "_Add"
-msgstr ""
+msgstr "_Lägg till"
 
 #: src/libaudgui/ui_fileopener.c:90
 msgid "Close _dialog on add"
@@ -1001,15 +1004,15 @@ msgstr ""
 
 #: src/libaudgui/ui_playlist_manager.c:254
 msgid "_New"
-msgstr ""
+msgstr "_Ny"
 
 #: src/libaudgui/ui_playlist_manager.c:256
 msgid "Ren_ame"
-msgstr ""
+msgstr "_Döp Om"
 
 #: src/libaudgui/ui_playlist_manager.c:257
 msgid "_Play"
-msgstr ""
+msgstr "_Spela"
 
 #: src/libaudgui/ui_playlist_manager.c:269
 msgid "_Close dialog on activating playlist"
@@ -1032,3 +1035,5 @@ msgid ""
 "\n"
 "(Further messages have been hidden.)"
 msgstr ""
+"\n"
+"(Ytterligare meddelanden har dolts.)"

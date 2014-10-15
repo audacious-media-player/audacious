@@ -4,17 +4,19 @@
 #
 # Translators:
 # Chris <ppt23@lkj.hopto.org>, 2012
+# Chris <ppt23@lkj.hopto.org>, 2012
 # mschwendt <mschwendt@fedoraproject.org>, 2012
 # mschwendt <mschwendt@fedoraproject.org>, 2012
 # Chris <ppt23@lkj.hopto.org>, 2012
+# Thomas Lange <thomas-lange2@gmx.de>, 2011
 # Thomas Lange <thomas-lange2@gmx.de>, 2011
 # Thomas Lange <thomas-lange2@gmx.de>, 2011
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-07-20 15:58+0200\n"
-"PO-Revision-Date: 2014-04-14 19:43+0000\n"
+"POT-Creation-Date: 2014-10-15 21:33+0200\n"
+"PO-Revision-Date: 2014-09-02 19:18+0000\n"
 "Last-Translator: Thomas Lange <thomas-lange2@gmx.de>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/audacious/"
 "language/de/)\n"
@@ -122,7 +124,7 @@ msgstr ""
 "Aufruf: audacious [OPTION] ... [DATEI] ...\n"
 " \n"
 
-#: src/audacious/main.c:601
+#: src/audacious/main.c:590
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -517,7 +519,7 @@ msgstr "Popup-Informationen anzeigen"
 
 #: src/audacious/ui_preferences.c:262
 msgid "Popup delay (tenths of a second):"
-msgstr "PopUp-Verzögerung (Zehntel einer Sekunde):"
+msgstr "Popup-Verzögerung (Zehntel einer Sekunde):"
 
 #: src/audacious/ui_preferences.c:265
 msgid "Show time scale for current song"

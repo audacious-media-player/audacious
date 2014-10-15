@@ -11,13 +11,14 @@
 # fri, 2013
 # fri, 2012
 # Petr Písař <petr.pisar@atlas.cz>, 2007-2012
+# Petr Šimáček <petr.simacek@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-07-20 15:58+0200\n"
-"PO-Revision-Date: 2014-06-11 17:04+0000\n"
-"Last-Translator: hpsoft <liborsustr.ml@seznam.cz>\n"
+"POT-Creation-Date: 2014-10-15 21:33+0200\n"
+"PO-Revision-Date: 2014-09-11 08:12+0000\n"
+"Last-Translator: Petr Šimáček <petr.simacek@gmail.com>\n"
 "Language-Team: Czech (http://www.transifex.com/projects/p/audacious/language/"
 "cs/)\n"
 "Language: cs\n"
@@ -109,21 +110,21 @@ msgstr "Vypsat ladicí hlášky"
 #: src/audacious/main.c:269
 #, c-format
 msgid "Unknown option: %s\n"
-msgstr ""
+msgstr "Neznámá volba: %s\n"
 
 #: src/audacious/main.c:291
 #, c-format
 msgid "Unknown option: -%c\n"
-msgstr ""
+msgstr "Neznámá volba: -%c\n"
 
 #: src/audacious/main.c:314
 #, c-format
 msgid ""
 "Usage: audacious [OPTION] ... [FILE] ...\n"
 "\n"
-msgstr ""
+msgstr "Použití: audacious [OPTION] ... [FILE] ...\n"
 
-#: src/audacious/main.c:601
+#: src/audacious/main.c:590
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -950,7 +951,7 @@ msgstr "Správce fronty"
 
 #: src/libaudgui/queue-manager.c:188
 msgid "_Unqueue"
-msgstr ""
+msgstr "_Vyřadit z fronty"
 
 #: src/libaudgui/ui_fileopener.c:79
 msgid "Open Files"

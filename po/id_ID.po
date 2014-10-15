@@ -27,7 +27,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-07-20 15:58+0200\n"
+"POT-Creation-Date: 2014-10-15 21:33+0200\n"
 "PO-Revision-Date: 2014-06-29 06:02+0000\n"
 "Last-Translator: Rahman Yusri Aftian <aftian@yahoo.com>\n"
 "Language-Team: Indonesian (Indonesia) (http://www.transifex.com/projects/p/"
@@ -135,7 +135,7 @@ msgstr ""
 "Menggunakan: audacious [OPSI] ... [BERKAS] ...\n"
 "\n"
 
-#: src/audacious/main.c:601
+#: src/audacious/main.c:590
 msgid "Audacious"
 msgstr "Audacious"
 

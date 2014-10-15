@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-07-20 15:58+0200\n"
+"POT-Creation-Date: 2014-10-15 21:33+0200\n"
 "PO-Revision-Date: 2014-04-04 16:38+0000\n"
 "Last-Translator: hairy_latvian <einars8@gmail.com>\n"
 "Language-Team: Latvian (http://www.transifex.com/projects/p/audacious/"
@@ -119,7 +119,7 @@ msgid ""
 "\n"
 msgstr "Lietošana: audacious [OPCIJA] ... [FAILS] ...\n"
 
-#: src/audacious/main.c:601
+#: src/audacious/main.c:590
 msgid "Audacious"
 msgstr "Audacious"
 
