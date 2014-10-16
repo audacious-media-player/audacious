@@ -170,11 +170,11 @@ static bool_t decode_rva_block (const char * * _data, int * _size,
     if (size < 4)
         return FALSE;
 
-    * channel = data[0];
+    * channel = (unsigned char) data[0];
     * adjustment = (char) data[1]; /* first byte is signed */
-    * adjustment = (* adjustment << 8) | data[2];
+    * adjustment = (* adjustment << 8) | (unsigned char) data[2];
     * adjustment_unit = 512;
-    peak_bits = data[3];
+    peak_bits = (unsigned char) data[3];
 
     data += 4;
     size -= 4;
@@ -194,7 +194,7 @@ static bool_t decode_rva_block (const char * * _data, int * _size,
         * peak_unit = 1 << peak_bits;
 
         for (count = 0; count < bytes; count ++)
-            * peak = (* peak << 8) | data[count];
+            * peak = (* peak << 8) | (unsigned char) data[count];
 
         data += bytes;
         size -= count;
@@ -284,7 +284,7 @@ bool_t id3_decode_picture (const char * data, int size, int * type,
     const char * mime = data + 1;
     char * desc = id3_convert (body, before_nul2, data[0]);
 
-    * type = nul[1];
+    * type = (unsigned char) nul[1];
     * image_size = body_size - after_nul2;
     * image_data = g_memdup (body + after_nul2, * image_size);
 
