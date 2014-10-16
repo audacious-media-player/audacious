@@ -31,17 +31,23 @@
 
 #include "audstrings.h"
 #include "i18n.h"
+#include "plugin.h"
+#include "plugins-internal.h"
 #include "runtime.h"
 #include "vfs_local.h"
 
-/* Audacious core provides us with a function that looks up a VFS transport for
- * a given URI scheme.  This function will load plugins as needed. */
-
-static VFSFile::LookupFunc lookup_func;
-
-EXPORT void VFSFile::set_lookup_func (LookupFunc func)
+static TransportPlugin * lookup_transport (const char * scheme)
 {
-    lookup_func = func;
+    for (PluginHandle * plugin : aud_plugin_list (PLUGIN_TYPE_TRANSPORT))
+    {
+        if (! aud_plugin_get_enabled (plugin))
+            continue;
+
+        if (transport_plugin_has_scheme (plugin, scheme))
+            return (TransportPlugin *) aud_plugin_get_header (plugin);
+    }
+
+    return nullptr;
 }
 
 /**
@@ -54,33 +60,33 @@ EXPORT void VFSFile::set_lookup_func (LookupFunc func)
  */
 EXPORT VFSFile::VFSFile (const char * filename, const char * mode)
 {
-    OpenFunc fopen_impl;
+    StringBuf scheme = uri_get_scheme (filename);
+    if (! scheme)
+    {
+        AUDERR ("Invalid URI: %s\n", filename);
+        m_error = String (_("Invalid URI"));
+        return;
+    }
 
-    if (! strncmp (filename, "file://", 7))
-        fopen_impl = vfs_local_fopen;
+    const char * sub;
+    uri_parse (filename, nullptr, nullptr, & sub, nullptr);
+    StringBuf nosub = str_copy (filename, sub - filename);
+
+    if (! strcmp (scheme, "file"))
+        m_impl.capture (vfs_local_fopen (nosub, mode, m_error));
     else
     {
-        StringBuf scheme = uri_get_scheme (filename);
-
-        if (! scheme)
-        {
-            AUDERR ("Invalid URI: %s\n", filename);
-            m_error = String (_("Invalid URI"));
-            return;
-        }
-
-        if (! (fopen_impl = lookup_func (scheme)))
+        TransportPlugin * tp = lookup_transport (scheme);
+        if (! tp)
         {
             AUDERR ("Unknown URI scheme: %s://", (const char *) scheme);
             m_error = String (_("Unknown URI scheme"));
             return;
         }
+
+        m_impl.capture (tp->fopen (nosub, mode, m_error));
     }
 
-    const char * sub;
-    uri_parse (filename, nullptr, nullptr, & sub, nullptr);
-
-    m_impl.capture (fopen_impl (str_copy (filename, sub - filename), mode, m_error));
     if (! m_impl)
         return;
 

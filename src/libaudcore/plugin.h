@@ -135,16 +135,15 @@ class TransportPlugin : public Plugin
 {
 public:
     constexpr TransportPlugin (const PluginInfo info,
-     const ArrayRef<const char *> schemes, VFSFile::OpenFunc fopen_impl) :
+     const ArrayRef<const char *> schemes) :
         Plugin (PLUGIN_TYPE_TRANSPORT, info),
-        schemes (schemes),
-        fopen_impl (fopen_impl) {}
+        schemes (schemes) {}
 
     /* supported URI schemes (without "://") */
     const ArrayRef<const char *> schemes;
 
     /* fopen() implementation */
-    const VFSFile::OpenFunc fopen_impl;
+    virtual VFSImpl * fopen (const char * filename, const char * mode, String & error) = 0;
 };
 
 class PlaylistPlugin : public Plugin
