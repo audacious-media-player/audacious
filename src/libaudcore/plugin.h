@@ -206,17 +206,16 @@ public:
     /* Ends playback.  Any buffered audio data is discarded. */
     virtual void close_audio () = 0;
 
-    /* Returns how many bytes of data may be passed to a following write_audio()
-     * call. */
-    virtual int buffer_free () = 0;
-
-    /* Waits until buffer_free() will return a size greater than zero.
+    /* Waits until write_audio() will return a size greater than zero.
      * output_time(), pause(), and flush() may be called meanwhile; if flush()
      * is called, period_wait() should return immediately. */
     virtual void period_wait () = 0;
 
-    /* Buffers <size> bytes of data, in the format given to open_audio(). */
-    virtual void write_audio (const void * data, int size) = 0;
+    /* Writes up to <size> bytes of data, in the format given to open_audio().
+     * If there is not enough buffer space for all <size> bytes, writes only as
+     * many bytes as can be written immediately without blocking.  Returns the
+     * number of bytes actually written. */
+    virtual int write_audio (const void * data, int size) = 0;
 
     /* Waits until all buffered data has been heard by the user. */
     virtual void drain () = 0;

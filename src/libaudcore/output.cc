@@ -199,6 +199,9 @@ static void apply_replay_gain (Index<float> & data)
 /* assumes LOCK_ALL, s_output */
 static void write_output_raw (Index<float> & data)
 {
+    if (! data.len ())
+        return;
+
     int out_time = aud::rescale<int64_t> (out_frames, out_rate, 1000);
     vis_runner_pass_audio (out_time, data, out_channels, out_rate);
     out_frames += data.len () / out_channels;
@@ -223,17 +226,15 @@ static void write_output_raw (Index<float> & data)
         out_data = buffer2.begin ();
     }
 
-    int remain = data.len ();
+    int bytes_left = FMT_SIZEOF (out_format) * data.len ();
 
     while (! s_flushed && ! s_resetting)
     {
-        int ready = aud::min (cop->buffer_free () / (int) FMT_SIZEOF (out_format), remain);
+        int written = cop->write_audio (out_data, bytes_left);
+        out_data = (char *) out_data + written;
+        bytes_left -= written;
 
-        cop->write_audio (out_data, FMT_SIZEOF (out_format) * ready);
-        out_data = (char *) out_data + FMT_SIZEOF (out_format) * ready;
-        remain -= ready;
-
-        if (! remain)
+        if (! bytes_left)
             break;
 
         UNLOCK_MINOR;
