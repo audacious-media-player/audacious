@@ -220,17 +220,16 @@ public:
     /* Waits until all buffered data has been heard by the user. */
     virtual void drain () = 0;
 
-    /* Returns time count (in milliseconds) of how much data has been heard by
-     * the user. */
-    virtual int output_time () = 0;
+    /* Returns an estimate of how many milliseconds will pass before all the
+     * data passed to write_audio() has been heard by the user. */
+    virtual int get_delay () = 0;
 
     /* Pauses the stream if <p> is nonzero; otherwise unpauses it.
      * write_audio() will not be called while the stream is paused. */
     virtual void pause (bool pause) = 0;
 
-    /* Discards any buffered audio data and sets the time counter (in
-     * milliseconds) of data written. */
-    virtual void flush (int time) = 0;
+    /* Discards any buffered audio data. */
+    virtual void flush () = 0;
 };
 
 class EffectPlugin : public Plugin
