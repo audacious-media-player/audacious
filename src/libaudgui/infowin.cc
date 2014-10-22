@@ -438,6 +438,8 @@ static void infowin_show (int list, int entry, const char * filename,
     /* nothing has been changed yet */
     gtk_widget_set_sensitive (widgets.apply, false);
 
+    gtk_widget_grab_focus (widgets.title);
+
     if (! audgui_reshow_unique_window (AUDGUI_INFO_WINDOW))
         audgui_show_unique_window (AUDGUI_INFO_WINDOW, infowin);
 }
