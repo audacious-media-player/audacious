@@ -66,6 +66,8 @@ static struct {
     GtkWidget * ministatus;
 } widgets;
 
+static GtkWidget * infowin;
+static int current_playlist_id, current_entry;
 static String current_file;
 static PluginHandle * current_decoder = nullptr;
 static gboolean can_write = false;
@@ -171,13 +173,13 @@ static void set_field_int_from_entry (Tuple & tuple, int fieldn, GtkWidget *
         tuple.unset (fieldn);
 }
 
-static void entry_changed (GtkEditable * editable, void * unused)
+static void entry_changed (GtkEditable * editable)
 {
     if (can_write)
         gtk_widget_set_sensitive (widgets.apply, true);
 }
 
-static gboolean ministatus_timeout_proc (void)
+static gboolean ministatus_timeout_proc ()
 {
     gtk_label_set_text ((GtkLabel *) widgets.ministatus, nullptr);
 
@@ -196,7 +198,7 @@ static void ministatus_display_message (const char * text)
      ministatus_timeout_proc, nullptr);
 }
 
-static void infowin_update_tuple (void * unused)
+static void infowin_update_tuple ()
 {
     Tuple tuple;
     tuple.set_filename (current_file);
@@ -218,6 +220,16 @@ static void infowin_update_tuple (void * unused)
     }
     else
         ministatus_display_message (_("Save error"));
+}
+
+static void infowin_next ()
+{
+    int list = aud_playlist_by_unique_id (current_playlist_id);
+
+    if (list >= 0 && current_entry + 1 < aud_playlist_entry_count (list))
+        audgui_infowin_show (list, current_entry + 1);
+    else
+        audgui_infowin_hide ();
 }
 
 static gboolean genre_fill (GtkWidget * combo)
@@ -253,7 +265,7 @@ static void infowin_display_image (const char * filename)
     }
 }
 
-static void infowin_destroyed (void)
+static void infowin_destroyed ()
 {
     hook_dissociate ("art ready", (HookFunction) infowin_display_image);
 
@@ -265,9 +277,9 @@ static void infowin_destroyed (void)
 
     memset (& widgets, 0, sizeof widgets);
 
+    infowin = nullptr;
     current_file = String ();
     current_decoder = nullptr;
-    can_write = false;
 }
 
 static void add_entry (GtkWidget * grid, const char * title, GtkWidget * entry,
@@ -283,9 +295,9 @@ static void add_entry (GtkWidget * grid, const char * title, GtkWidget * entry,
     g_signal_connect (entry, "changed", (GCallback) entry_changed, nullptr);
 }
 
-static GtkWidget * create_infowin (void)
+static void create_infowin ()
 {
-    GtkWidget * infowin = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+    infowin = gtk_window_new (GTK_WINDOW_TOPLEVEL);
     gtk_container_set_border_width ((GtkContainer *) infowin, 6);
     gtk_window_set_title ((GtkWindow *) infowin, _("Song Info"));
     gtk_window_set_type_hint ((GtkWindow *) infowin,
@@ -368,24 +380,27 @@ static GtkWidget * create_infowin (void)
     GtkWidget * close_button = audgui_button_new (_("_Close"), "window-close",
      (AudguiCallback) audgui_infowin_hide, nullptr);
 
+    GtkWidget * next_button = audgui_button_new (_("_Next"), "go-next",
+     (AudguiCallback) infowin_next, nullptr);
+
     gtk_box_pack_end ((GtkBox *) bottom_hbox, close_button, false, false, 0);
+    gtk_box_pack_end ((GtkBox *) bottom_hbox, next_button, false, false, 0);
     gtk_box_pack_end ((GtkBox *) bottom_hbox, widgets.apply, false, false, 0);
 
     audgui_destroy_on_escape (infowin);
     g_signal_connect (infowin, "destroy", (GCallback) infowin_destroyed, nullptr);
 
     hook_associate ("art ready", (HookFunction) infowin_display_image, nullptr);
-
-    return infowin;
 }
 
 static void infowin_show (int list, int entry, const char * filename,
  const Tuple & tuple, PluginHandle * decoder, gboolean updating_enabled)
 {
-    audgui_hide_unique_window (AUDGUI_INFO_WINDOW);
+    if (! infowin)
+        create_infowin ();
 
-    GtkWidget * infowin = create_infowin ();
-
+    current_playlist_id = aud_playlist_get_unique_id (list);
+    current_entry = entry;
     current_file = String (filename);
     current_decoder = decoder;
     can_write = updating_enabled;
@@ -423,7 +438,8 @@ static void infowin_show (int list, int entry, const char * filename,
     /* nothing has been changed yet */
     gtk_widget_set_sensitive (widgets.apply, false);
 
-    audgui_show_unique_window (AUDGUI_INFO_WINDOW, infowin);
+    if (! audgui_reshow_unique_window (AUDGUI_INFO_WINDOW))
+        audgui_show_unique_window (AUDGUI_INFO_WINDOW, infowin);
 }
 
 EXPORT void audgui_infowin_show (int playlist, int entry)
@@ -447,7 +463,7 @@ EXPORT void audgui_infowin_show (int playlist, int entry)
          (const char *) filename, (const char *) error));
 }
 
-EXPORT void audgui_infowin_show_current (void)
+EXPORT void audgui_infowin_show_current ()
 {
     int playlist = aud_playlist_get_playing ();
     int position;
@@ -463,7 +479,7 @@ EXPORT void audgui_infowin_show_current (void)
     audgui_infowin_show (playlist, position);
 }
 
-EXPORT void audgui_infowin_hide (void)
+EXPORT void audgui_infowin_hide ()
 {
     audgui_hide_unique_window (AUDGUI_INFO_WINDOW);
 }
