@@ -106,6 +106,9 @@ static void infopopup_add_category (GtkWidget * grid, int position,
      GTK_FILL, GTK_FILL, 0, 0);
     gtk_table_attach ((GtkTable *) grid, * label, 1, 2, position, position + 1,
      GTK_FILL, GTK_FILL, 0, 0);
+
+    gtk_widget_set_no_show_all (* header, true);
+    gtk_widget_set_no_show_all (* label, true);
 }
 
 static void infopopup_destroyed (void)
