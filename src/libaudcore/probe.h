@@ -27,15 +27,16 @@ class PluginHandle;
 class Tuple;
 
 /* Gets album art for <file> (the URI of a song file) as JPEG or PNG data.  If
- * the album art is not yet loaded, returns nullptr and begins to load the album
- * art in the background.  On completion, the "art ready" hook is called, with
- * <file> as a parameter.  The "current art ready" hook is also called if <file>
- * is the currently playing song. */
-const Index<char> * aud_art_request_data (const char * file);
+ * the album art is not yet loaded, sets *queued to true, returns nullptr, and
+ * begins to load the album art in the background.  On completion, the "art
+ * ready" hook is called, with <file> as a parameter.  The "current art ready"
+ * hook is also called if <file> is the currently playing song.  If no album art
+ * could be loaded, sets *queued to false and returns nullptr. */
+const Index<char> * aud_art_request_data (const char * file, bool * queued = nullptr);
 
 /* Similar to art_request_data() but returns the URI of an image file.
  * (A temporary file will be created if necessary.) */
-const char * aud_art_request_file (const char * file);
+const char * aud_art_request_file (const char * file, bool * queued = nullptr);
 
 /* Releases album art returned by art_request_data() or art_request_file(). */
 void aud_art_unref (const char * file);

@@ -186,13 +186,17 @@ void art_cleanup (void)
         AUDWARN ("Album art reference count not zero at exit!\n");
 }
 
-EXPORT const Index<char> * aud_art_request_data (const char * file)
+EXPORT const Index<char> * aud_art_request_data (const char * file, bool * queued)
 {
     const Index<char> * data = nullptr;
     pthread_mutex_lock (& mutex);
 
     String key (file);
     ArtItem * item = art_item_get (key);
+
+    if (queued)
+        * queued = ! item;
+
     if (! item)
         goto UNLOCK;
 
@@ -214,13 +218,17 @@ UNLOCK:
     return data;
 }
 
-EXPORT const char * aud_art_request_file (const char * file)
+EXPORT const char * aud_art_request_file (const char * file, bool * queued)
 {
     const char * art_file = nullptr;
     pthread_mutex_lock (& mutex);
 
     String key (file);
     ArtItem * item = art_item_get (key);
+
+    if (queued)
+        * queued = ! item;
+
     if (! item)
         goto UNLOCK;
 

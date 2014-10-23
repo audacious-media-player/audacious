@@ -46,13 +46,30 @@ EXPORT int audgui_get_digit_width (GtkWidget * widget)
 
 EXPORT void audgui_get_mouse_coords (GtkWidget * widget, int * x, int * y)
 {
-    if (widget)
-        gtk_widget_get_pointer (widget, x, y);
-    else
+    gtk_widget_get_pointer (widget, x, y);
+}
+
+EXPORT void audgui_get_mouse_coords (GdkScreen * screen, int * x, int * y)
+{
+    gdk_display_get_pointer (gdk_screen_get_display (screen), nullptr, x, y, nullptr);
+}
+
+EXPORT void audgui_get_monitor_geometry (GdkScreen * screen, int x, int y, GdkRectangle * geom)
+{
+    int monitors = gdk_screen_get_n_monitors (screen);
+
+    for (int i = 0; i < monitors; i ++)
     {
-        GdkDisplay * display = gdk_display_get_default ();
-        gdk_display_get_pointer (display, nullptr, x, y, nullptr);
+        gdk_screen_get_monitor_geometry (screen, i, geom);
+        if (x >= geom->x && x < geom->x + geom->width && y >= geom->y && y < geom->y + geom->height)
+            return;
     }
+
+    /* fall back to entire screen */
+    geom->x = 0;
+    geom->y = 0;
+    geom->width = gdk_screen_get_width (screen);
+    geom->height = gdk_screen_get_height (screen);
 }
 
 static gboolean escape_destroy_cb (GtkWidget * widget, GdkEventKey * event)
