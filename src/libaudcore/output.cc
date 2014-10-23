@@ -67,7 +67,8 @@ static OutputPlugin * cop;
 static int seek_time;
 static int in_format, in_channels, in_rate;
 static int out_format, out_channels, out_rate;
-static int64_t in_frames, out_frames;
+static int out_bytes_per_sec, out_bytes_held;
+static int64_t in_frames, out_bytes_written;
 static ReplayGainInfo gain_info;
 
 static bool change_op;
@@ -144,7 +145,9 @@ static void setup_output ()
     out_format = format;
     out_channels = channels;
     out_rate = rate;
-    out_frames = 0;
+    out_bytes_per_sec = FMT_SIZEOF (format) * channels * rate;
+    out_bytes_held = 0;
+    out_bytes_written = 0;
 
     apply_pause ();
 
@@ -158,8 +161,10 @@ static bool flush_output (bool force)
     if (! effect_flush (force))
         return false;
 
-    cop->flush (0);
-    out_frames = 0;
+    out_bytes_held = 0;
+    out_bytes_written = 0;
+
+    cop->flush ();
     vis_runner_flush ();
     return true;
 }
@@ -199,9 +204,11 @@ static void apply_replay_gain (Index<float> & data)
 /* assumes LOCK_ALL, s_output */
 static void write_output_raw (Index<float> & data)
 {
-    int out_time = aud::rescale<int64_t> (out_frames, out_rate, 1000);
+    if (! data.len ())
+        return;
+
+    int out_time = aud::rescale<int64_t> (out_bytes_written, out_bytes_per_sec, 1000);
     vis_runner_pass_audio (out_time, data, out_channels, out_rate);
-    out_frames += data.len () / out_channels;
 
     eq_filter (data.begin (), data.len ());
 
@@ -223,17 +230,17 @@ static void write_output_raw (Index<float> & data)
         out_data = buffer2.begin ();
     }
 
-    int remain = data.len ();
+    out_bytes_held = FMT_SIZEOF (out_format) * data.len ();
 
     while (! s_flushed && ! s_resetting)
     {
-        int ready = aud::min (cop->buffer_free () / (int) FMT_SIZEOF (out_format), remain);
+        int written = cop->write_audio (out_data, out_bytes_held);
 
-        cop->write_audio (out_data, FMT_SIZEOF (out_format) * ready);
-        out_data = (char *) out_data + FMT_SIZEOF (out_format) * ready;
-        remain -= ready;
+        out_data = (char *) out_data + written;
+        out_bytes_held -= written;
+        out_bytes_written += written;
 
-        if (! remain)
+        if (! out_bytes_held)
             break;
 
         UNLOCK_MINOR;
@@ -363,17 +370,17 @@ void output_flush (int time)
 
     if (s_input && ! s_flushed)
     {
-        s_flushed = true;
-
         if (s_output && ! s_resetting)
         {
             // allow effect plugins to prevent the flush, but
             // always flush if paused to prevent locking up
-            if (! flush_output (s_paused))
-                s_flushed = false;
+            s_flushed = flush_output (s_paused);
         }
         else
+        {
+            s_flushed = true;
             SIGNAL_MINOR;
+        }
     }
 
     if (s_input)
@@ -418,7 +425,10 @@ int output_get_time ()
     if (s_input)
     {
         if (s_output)
-            delay = aud::rescale<int64_t> (out_frames, out_rate, 1000) - cop->output_time ();
+        {
+            delay = cop->get_delay ();
+            delay += aud::rescale<int64_t> (out_bytes_held, out_bytes_per_sec, 1000);
+        }
 
         delay = effect_adjust_delay (delay);
         time = aud::rescale<int64_t> (in_frames, in_rate, 1000);
@@ -435,7 +445,10 @@ int output_get_raw_time ()
     int time = 0;
 
     if (s_output)
-        time = cop->output_time ();
+    {
+        time = aud::rescale<int64_t> (out_bytes_written, out_bytes_per_sec, 1000);
+        time = aud::max (time - cop->get_delay (), 0);
+    }
 
     UNLOCK_MINOR;
     return time;

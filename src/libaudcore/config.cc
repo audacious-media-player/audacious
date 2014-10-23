@@ -54,7 +54,7 @@ static const char * const core_defaults[] = {
  "cover_name_exclude", "back",
  "cover_name_include", "album,cover,front,folder",
  "filepopup_delay", "5",
- "filepopup_showprogressbar", "TRUE",
+ "filepopup_showprogressbar", "FALSE",
  "recurse_for_cover", "FALSE",
  "recurse_for_cover_depth", "0",
  "show_filepopup_for_tuple", "TRUE",

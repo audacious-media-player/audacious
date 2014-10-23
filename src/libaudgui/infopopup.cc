@@ -35,6 +35,8 @@
 
 #define IMAGE_SIZE 96
 
+static void infopopup_move_to_mouse (GtkWidget * infopopup);
+
 static struct {
     GtkWidget * title_header, * title_label;
     GtkWidget * artist_header, * artist_label;
@@ -48,20 +50,33 @@ static struct {
 } widgets;
 
 static String current_file;
+static GtkWidget * infopopup_queued;
 static int progress_source = 0;
 
-static void infopopup_display_image (const char * filename)
+/* returns false if album art fetch was queued */
+static bool infopopup_display_image (const char * filename)
 {
-    if (! current_file || strcmp (filename, current_file))
-        return;
-
-    GdkPixbuf * pb = audgui_pixbuf_request (filename);
+    bool queued;
+    GdkPixbuf * pb = audgui_pixbuf_request (filename, & queued);
     if (! pb)
-        pb = audgui_pixbuf_fallback ();
+        return ! queued;
 
     audgui_pixbuf_scale_within (& pb, IMAGE_SIZE);
     gtk_image_set_from_pixbuf ((GtkImage *) widgets.image, pb);
+    gtk_widget_show (widgets.image);
+
     g_object_unref (pb);
+    return true;
+}
+
+static void infopopup_art_ready (const char * filename)
+{
+    if (! infopopup_queued || strcmp (filename, current_file))
+        return;
+
+    infopopup_display_image (filename);
+    audgui_show_unique_window (AUDGUI_INFOPOPUP_WINDOW, infopopup_queued);
+    infopopup_queued = nullptr;
 }
 
 static gboolean infopopup_progress_cb (void * unused)
@@ -95,7 +110,7 @@ static void infopopup_add_category (GtkWidget * grid, int position,
     * header = gtk_label_new (nullptr);
     * label = gtk_label_new (nullptr);
 
-    gtk_widget_set_halign (* header, GTK_ALIGN_START);
+    gtk_widget_set_halign (* header, GTK_ALIGN_END);
     gtk_widget_set_halign (* label, GTK_ALIGN_START);
 
     char * markup = g_markup_printf_escaped ("<span style=\"italic\">%s</span>", text);
@@ -104,11 +119,14 @@ static void infopopup_add_category (GtkWidget * grid, int position,
 
     gtk_grid_attach ((GtkGrid *) grid, * header, 0, position, 1, 1);
     gtk_grid_attach ((GtkGrid *) grid, * label, 1, position, 1, 1);
+
+    gtk_widget_set_no_show_all (* header, true);
+    gtk_widget_set_no_show_all (* label, true);
 }
 
 static void infopopup_destroyed (void)
 {
-    hook_dissociate ("art ready", (HookFunction) infopopup_display_image);
+    hook_dissociate ("art ready", (HookFunction) infopopup_art_ready);
 
     if (progress_source)
     {
@@ -119,6 +137,7 @@ static void infopopup_destroyed (void)
     memset (& widgets, 0, sizeof widgets);
 
     current_file = String ();
+    infopopup_queued = nullptr;
 }
 
 static GtkWidget * infopopup_create (void)
@@ -134,6 +153,7 @@ static GtkWidget * infopopup_create (void)
     widgets.image = gtk_image_new ();
     gtk_widget_set_size_request (widgets.image, IMAGE_SIZE, IMAGE_SIZE);
     gtk_box_pack_start ((GtkBox *) hbox, widgets.image, false, false, 0);
+    gtk_widget_set_no_show_all (widgets.image, true);
 
     GtkWidget * grid = gtk_grid_new ();
     gtk_grid_set_column_spacing ((GtkGrid *) grid, 6);
@@ -156,6 +176,8 @@ static GtkWidget * infopopup_create (void)
 
     /* do not show the track progress */
     gtk_widget_set_no_show_all (widgets.progress, true);
+
+    g_signal_connect (infopopup, "realize", (GCallback) infopopup_move_to_mouse, nullptr);
 
     return infopopup;
 }
@@ -206,20 +228,23 @@ static void infopopup_set_fields (const Tuple & tuple, const char * title)
 
 static void infopopup_move_to_mouse (GtkWidget * infopopup)
 {
+    GdkScreen * screen = gtk_widget_get_screen (infopopup);
+    GdkRectangle geom;
     int x, y, h, w;
 
-    audgui_get_mouse_coords (nullptr, & x, & y);
+    audgui_get_mouse_coords (screen, & x, & y);
+    audgui_get_monitor_geometry (screen, x, y, & geom);
     gtk_window_get_size ((GtkWindow *) infopopup, & w, & h);
 
     /* If we show the popup right under the cursor, the underlying window gets
      * a "leave-notify-event" and immediately hides the popup again.  So, we
      * offset the popup slightly. */
-    if (x + w > gdk_screen_width ())
+    if (x + w > geom.x + geom.width)
         x -= w + 3;
     else
         x += 3;
 
-    if (y + h > gdk_screen_height ())
+    if (y + h > geom.y + geom.height)
         y -= h + 3;
     else
         y += 3;
@@ -230,15 +255,14 @@ static void infopopup_move_to_mouse (GtkWidget * infopopup)
 static void infopopup_show (const char * filename, const Tuple & tuple,
  const char * title)
 {
-    audgui_hide_unique_window (AUDGUI_INFOPOPUP_WINDOW);
+    audgui_infopopup_hide ();
 
     current_file = String (filename);
 
     GtkWidget * infopopup = infopopup_create ();
     infopopup_set_fields (tuple, title);
-    infopopup_display_image (filename);
 
-    hook_associate ("art ready", (HookFunction) infopopup_display_image, nullptr);
+    hook_associate ("art ready", (HookFunction) infopopup_art_ready, nullptr);
 
     g_signal_connect (infopopup, "destroy", (GCallback) infopopup_destroyed, nullptr);
 
@@ -250,9 +274,10 @@ static void infopopup_show (const char * filename, const Tuple & tuple,
     /* immediately run the callback once to update progressbar status */
     infopopup_progress_cb (nullptr);
 
-    infopopup_move_to_mouse (infopopup);
-
-    audgui_show_unique_window (AUDGUI_INFOPOPUP_WINDOW, infopopup);
+    if (infopopup_display_image (filename))
+        audgui_show_unique_window (AUDGUI_INFOPOPUP_WINDOW, infopopup);
+    else
+        infopopup_queued = infopopup;
 }
 
 EXPORT void audgui_infopopup_show (int playlist, int entry)
@@ -281,4 +306,7 @@ EXPORT void audgui_infopopup_show_current (void)
 EXPORT void audgui_infopopup_hide (void)
 {
     audgui_hide_unique_window (AUDGUI_INFOPOPUP_WINDOW);
+
+    if (infopopup_queued)
+        gtk_widget_destroy (infopopup_queued);
 }

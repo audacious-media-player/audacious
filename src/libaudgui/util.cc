@@ -46,29 +46,45 @@ EXPORT int audgui_get_digit_width (GtkWidget * widget)
 
 EXPORT void audgui_get_mouse_coords (GtkWidget * widget, int * x, int * y)
 {
-    if (widget)
+    int xwin, ywin;
+    GdkRectangle alloc;
+
+    GdkWindow * window = gtk_widget_get_window (widget);
+    GdkDisplay * display = gdk_window_get_display (window);
+    GdkDeviceManager * manager = gdk_display_get_device_manager (display);
+    GdkDevice * device = gdk_device_manager_get_client_pointer (manager);
+
+    gdk_window_get_device_position (window, device, & xwin, & ywin, nullptr);
+    gtk_widget_get_allocation (widget, & alloc);
+
+    * x = xwin - alloc.x;
+    * y = ywin - alloc.y;
+}
+
+EXPORT void audgui_get_mouse_coords (GdkScreen * screen, int * x, int * y)
+{
+    GdkDisplay * display = gdk_screen_get_display (screen);
+    GdkDeviceManager * manager = gdk_display_get_device_manager (display);
+    GdkDevice * device = gdk_device_manager_get_client_pointer (manager);
+    gdk_device_get_position (device, nullptr, x, y);
+}
+
+EXPORT void audgui_get_monitor_geometry (GdkScreen * screen, int x, int y, GdkRectangle * geom)
+{
+    int monitors = gdk_screen_get_n_monitors (screen);
+
+    for (int i = 0; i < monitors; i ++)
     {
-        int xwin, ywin;
-        GdkRectangle alloc;
-
-        GdkWindow * window = gtk_widget_get_window (widget);
-        GdkDisplay * display = gdk_window_get_display (window);
-        GdkDeviceManager * manager = gdk_display_get_device_manager (display);
-        GdkDevice * device = gdk_device_manager_get_client_pointer (manager);
-
-        gdk_window_get_device_position (window, device, & xwin, & ywin, nullptr);
-        gtk_widget_get_allocation (widget, & alloc);
-
-        * x = xwin - alloc.x;
-        * y = ywin - alloc.y;
+        gdk_screen_get_monitor_geometry (screen, i, geom);
+        if (x >= geom->x && x < geom->x + geom->width && y >= geom->y && y < geom->y + geom->height)
+            return;
     }
-    else
-    {
-        GdkDisplay * display = gdk_display_get_default ();
-        GdkDeviceManager * manager = gdk_display_get_device_manager (display);
-        GdkDevice * device = gdk_device_manager_get_client_pointer (manager);
-        gdk_device_get_position (device, nullptr, x, y);
-    }
+
+    /* fall back to entire screen */
+    geom->x = 0;
+    geom->y = 0;
+    geom->width = gdk_screen_get_width (screen);
+    geom->height = gdk_screen_get_height (screen);
 }
 
 static gboolean escape_destroy_cb (GtkWidget * widget, GdkEventKey * event)

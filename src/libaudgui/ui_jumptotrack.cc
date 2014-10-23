@@ -269,33 +269,30 @@ static GtkWidget * create_window (void)
                                         GTK_SHADOW_IN);
     gtk_box_pack_start(GTK_BOX(vbox), scrollwin, true, true, 0);
 
-    GtkWidget * bbox = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
-    gtk_button_box_set_layout(GTK_BUTTON_BOX(bbox), GTK_BUTTONBOX_END);
-    gtk_box_set_spacing(GTK_BOX(bbox), 4);
-    gtk_box_pack_start(GTK_BOX(vbox), bbox, false, false, 0);
+    GtkWidget * bbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
+    gtk_box_pack_start ((GtkBox *) vbox, bbox, false, false, 0);
 
     /* close dialog toggle */
     GtkWidget * toggle = gtk_check_button_new_with_mnemonic (_("C_lose on jump"));
     gtk_toggle_button_set_active ((GtkToggleButton *) toggle, aud_get_bool
      ("audgui", "close_jtf_dialog"));
-    gtk_box_pack_start(GTK_BOX(bbox), toggle, false, false, 0);
+    gtk_box_pack_start ((GtkBox *) bbox, toggle, true, true, 0);
     g_signal_connect (toggle, "clicked", (GCallback) toggle_button_cb, nullptr);
-
-    /* queue button */
-    queue_button = audgui_button_new (_("_Queue"), nullptr, do_queue, nullptr);
-    gtk_box_pack_start ((GtkBox *) bbox, queue_button, false, false, 0);
-
-    /* jump button */
-    GtkWidget * jump = audgui_button_new (_("_Jump"), "go-jump", do_jump, nullptr);
-    gtk_box_pack_start(GTK_BOX(bbox), jump, false, false, 0);
-
-    gtk_widget_set_can_default(jump, true);
-    gtk_widget_grab_default(jump);
 
     /* close button */
     GtkWidget * close = audgui_button_new (_("_Close"), "window-close",
      (AudguiCallback) audgui_jump_to_track_hide, nullptr);
-    gtk_box_pack_start(GTK_BOX(bbox), close, false, false, 0);
+    gtk_box_pack_end ((GtkBox *) bbox, close, false, false, 0);
+
+    /* jump button */
+    GtkWidget * jump = audgui_button_new (_("_Jump"), "go-jump", do_jump, nullptr);
+    gtk_box_pack_end ((GtkBox *) bbox, jump, false, false, 0);
+    gtk_widget_set_can_default (jump, true);
+    gtk_widget_grab_default (jump);
+
+    /* queue button */
+    queue_button = audgui_button_new (_("_Queue"), nullptr, do_queue, nullptr);
+    gtk_box_pack_end ((GtkBox *) bbox, queue_button, false, false, 0);
 
     return jump_to_track_win;
 }

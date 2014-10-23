@@ -103,7 +103,7 @@ static const TupleBasicType tuple_fields[TUPLE_FIELDS] = {
     { "file-path",      TUPLE_STRING },
     { "file-ext",       TUPLE_STRING },
 
-    { "song-artist",    TUPLE_STRING },
+    { "album-artist",   TUPLE_STRING },
     { "composer",       TUPLE_STRING },
     { "performer",      TUPLE_STRING },
     { "copyright",      TUPLE_STRING },
@@ -134,6 +134,7 @@ struct FieldDictEntry {
 /* used for binary search, MUST be in alphabetical order */
 static const FieldDictEntry field_dict[TUPLE_FIELDS] = {
  {"album", FIELD_ALBUM},
+ {"album-artist", FIELD_ALBUM_ARTIST},
  {"artist", FIELD_ARTIST},
  {"bitrate", FIELD_BITRATE},
  {"codec", FIELD_CODEC},
@@ -158,7 +159,6 @@ static const FieldDictEntry field_dict[TUPLE_FIELDS] = {
  {"quality", FIELD_QUALITY},
  {"segment-end", FIELD_SEGMENT_END},
  {"segment-start", FIELD_SEGMENT_START},
- {"song-artist", FIELD_SONG_ARTIST},
  {"subsong-id", FIELD_SUBSONG_ID},
  {"subsong-num", FIELD_SUBSONG_NUM},
  {"title", FIELD_TITLE},

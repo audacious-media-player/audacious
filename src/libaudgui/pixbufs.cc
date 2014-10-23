@@ -81,9 +81,9 @@ EXPORT void audgui_pixbuf_scale_within (GdkPixbuf * * pixbuf, int size)
     * pixbuf = pixbuf2;
 }
 
-EXPORT GdkPixbuf * audgui_pixbuf_request (const char * filename)
+EXPORT GdkPixbuf * audgui_pixbuf_request (const char * filename, bool * queued)
 {
-    const Index<char> * data = aud_art_request_data (filename);
+    const Index<char> * data = aud_art_request_data (filename, queued);
     if (! data)
         return nullptr;
 
@@ -93,8 +93,11 @@ EXPORT GdkPixbuf * audgui_pixbuf_request (const char * filename)
     return p;
 }
 
-EXPORT GdkPixbuf * audgui_pixbuf_request_current (void)
+EXPORT GdkPixbuf * audgui_pixbuf_request_current (bool * queued)
 {
+    if (queued)
+        * queued = false;
+
     if (! current_pixbuf)
     {
         int list = aud_playlist_get_playing ();
@@ -103,7 +106,7 @@ EXPORT GdkPixbuf * audgui_pixbuf_request_current (void)
             return nullptr;
 
         String filename = aud_playlist_entry_get_filename (list, entry);
-        current_pixbuf = audgui_pixbuf_request (filename);
+        current_pixbuf = audgui_pixbuf_request (filename, queued);
     }
 
     if (current_pixbuf)

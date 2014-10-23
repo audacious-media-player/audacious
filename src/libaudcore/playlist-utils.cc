@@ -82,6 +82,11 @@ static int tuple_compare_artist (const Tuple & a, const Tuple & b)
     return tuple_compare_string (a, b, FIELD_ARTIST);
 }
 
+static int tuple_compare_album_artist (const Tuple & a, const Tuple & b)
+{
+    return tuple_compare_string (a, b, FIELD_ALBUM_ARTIST);
+}
+
 static int tuple_compare_date (const Tuple & a, const Tuple & b)
 {
     return tuple_compare_int (a, b, FIELD_YEAR);
@@ -103,6 +108,7 @@ static const PlaylistStringCompareFunc filename_comparisons[] = {
     nullptr,  // title
     nullptr,  // album
     nullptr,  // artist
+    nullptr,  // album artist
     nullptr,  // date
     nullptr,  // track
     nullptr,  // formatted title
@@ -115,6 +121,7 @@ static const PlaylistTupleCompareFunc tuple_comparisons[] = {
     tuple_compare_title,  // title
     tuple_compare_album,  // album
     tuple_compare_artist,  // artist
+    tuple_compare_album_artist,  // album artist
     tuple_compare_date,  // date
     tuple_compare_track,  // track
     nullptr,  // formatted title
@@ -127,6 +134,7 @@ static const PlaylistStringCompareFunc title_comparisons[] = {
     nullptr,  // title
     nullptr,  // album
     nullptr,  // artist
+    nullptr,  // album artist
     nullptr,  // date
     nullptr,  // track
     str_compare,  // formatted title

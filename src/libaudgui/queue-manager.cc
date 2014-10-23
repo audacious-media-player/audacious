@@ -30,8 +30,9 @@
 #include "list.h"
 
 enum {
- COLUMN_ENTRY,
- COLUMN_TITLE};
+    COLUMN_ENTRY,
+    COLUMN_TITLE
+};
 
 static void get_value (void * user, int row, int column, GValue * value)
 {
@@ -177,6 +178,8 @@ static GtkWidget * create_queue_manager (void)
 
     GtkWidget * scrolled = gtk_scrolled_window_new (nullptr, nullptr);
     gtk_scrolled_window_set_shadow_type ((GtkScrolledWindow *) scrolled, GTK_SHADOW_IN);
+    gtk_scrolled_window_set_policy ((GtkScrolledWindow *) scrolled,
+     GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
     gtk_box_pack_start ((GtkBox *) vbox, scrolled, true, true, 0);
 
     int count = aud_playlist_queue_count (aud_playlist_get_active ());

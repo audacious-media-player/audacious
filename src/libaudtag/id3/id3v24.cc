@@ -42,6 +42,7 @@ enum
     ID3_DATE,
     ID3_LENGTH,
     ID3_ARTIST,
+    ID3_ALBUM_ARTIST,
     ID3_TRACKNR,
     ID3_YEAR,
     ID3_GENRE,
@@ -54,9 +55,25 @@ enum
     ID3_TAGS_NO
 };
 
-static const char * id3_frames[ID3_TAGS_NO] = {"TALB", "TIT2", "TCOM", "TCOP",
- "TDAT", "TLEN", "TPE1", "TRCK", "TYER", "TCON", "COMM", "PRIV", "TSSE", "TDRC",
- "TXXX", "RVA2"};
+static const char * id3_frames[ID3_TAGS_NO] = {
+    "TALB",
+    "TIT2",
+    "TCOM",
+    "TCOP",
+    "TDAT",
+    "TLEN",
+    "TPE1",
+    "TPE2",
+    "TRCK",
+    "TYER",
+    "TCON",
+    "COMM",
+    "PRIV",
+    "TSSE",
+    "TDRC",
+    "TXXX",
+    "RVA2"
+};
 
 /*
 static const unsigned char PRIMARY_CLASS_MUSIC[16] = {0xBC, 0x7D, 0x60, 0xD1, 0x23,
@@ -626,6 +643,9 @@ bool ID3v24TagModule::read_tag (Tuple & tuple, VFSFile & handle)
           case ID3_ARTIST:
             id3_associate_string (tuple, FIELD_ARTIST, & frame[0], frame.len ());
             break;
+          case ID3_ALBUM_ARTIST:
+            id3_associate_string (tuple, FIELD_ALBUM_ARTIST, & frame[0], frame.len ());
+            break;
           case ID3_TRACKNR:
             id3_associate_int (tuple, FIELD_TRACK_NUMBER, & frame[0], frame.len ());
             break;
@@ -703,6 +723,7 @@ bool ID3v24TagModule::write_tag (const Tuple & tuple, VFSFile & f)
     add_frameFromTupleStr (tuple, FIELD_TITLE, ID3_TITLE, dict);
     add_frameFromTupleStr (tuple, FIELD_ARTIST, ID3_ARTIST, dict);
     add_frameFromTupleStr (tuple, FIELD_ALBUM, ID3_ALBUM, dict);
+    add_frameFromTupleStr (tuple, FIELD_ALBUM_ARTIST, ID3_ALBUM_ARTIST, dict);
     add_frameFromTupleInt (tuple, FIELD_YEAR, ID3_YEAR, dict);
     add_frameFromTupleInt (tuple, FIELD_TRACK_NUMBER, ID3_TRACKNR, dict);
     add_frameFromTupleStr (tuple, FIELD_GENRE, ID3_GENRE, dict);

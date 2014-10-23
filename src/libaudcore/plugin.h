@@ -135,16 +135,15 @@ class TransportPlugin : public Plugin
 {
 public:
     constexpr TransportPlugin (const PluginInfo info,
-     const ArrayRef<const char *> schemes, VFSFile::OpenFunc fopen_impl) :
+     const ArrayRef<const char *> schemes) :
         Plugin (PLUGIN_TYPE_TRANSPORT, info),
-        schemes (schemes),
-        fopen_impl (fopen_impl) {}
+        schemes (schemes) {}
 
     /* supported URI schemes (without "://") */
     const ArrayRef<const char *> schemes;
 
     /* fopen() implementation */
-    const VFSFile::OpenFunc fopen_impl;
+    virtual VFSImpl * fopen (const char * filename, const char * mode, String & error) = 0;
 };
 
 class PlaylistPlugin : public Plugin
@@ -207,32 +206,30 @@ public:
     /* Ends playback.  Any buffered audio data is discarded. */
     virtual void close_audio () = 0;
 
-    /* Returns how many bytes of data may be passed to a following write_audio()
-     * call. */
-    virtual int buffer_free () = 0;
-
-    /* Waits until buffer_free() will return a size greater than zero.
+    /* Waits until write_audio() will return a size greater than zero.
      * output_time(), pause(), and flush() may be called meanwhile; if flush()
      * is called, period_wait() should return immediately. */
     virtual void period_wait () = 0;
 
-    /* Buffers <size> bytes of data, in the format given to open_audio(). */
-    virtual void write_audio (const void * data, int size) = 0;
+    /* Writes up to <size> bytes of data, in the format given to open_audio().
+     * If there is not enough buffer space for all <size> bytes, writes only as
+     * many bytes as can be written immediately without blocking.  Returns the
+     * number of bytes actually written. */
+    virtual int write_audio (const void * data, int size) = 0;
 
     /* Waits until all buffered data has been heard by the user. */
     virtual void drain () = 0;
 
-    /* Returns time count (in milliseconds) of how much data has been heard by
-     * the user. */
-    virtual int output_time () = 0;
+    /* Returns an estimate of how many milliseconds will pass before all the
+     * data passed to write_audio() has been heard by the user. */
+    virtual int get_delay () = 0;
 
     /* Pauses the stream if <p> is nonzero; otherwise unpauses it.
      * write_audio() will not be called while the stream is paused. */
     virtual void pause (bool pause) = 0;
 
-    /* Discards any buffered audio data and sets the time counter (in
-     * milliseconds) of data written. */
-    virtual void flush (int time) = 0;
+    /* Discards any buffered audio data. */
+    virtual void flush () = 0;
 };
 
 class EffectPlugin : public Plugin
