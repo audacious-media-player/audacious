@@ -666,22 +666,15 @@ EXPORT void audgui_list_add_column (GtkWidget * list, const char * title,
     gtk_cell_renderer_get_padding (renderer, & pad3, nullptr);
     int padding = pad1 + 2 * pad2 + 2 * pad3;
 
-    if (width < 1)
-    {
-        gtk_tree_view_column_set_min_width (tree_column,
-         6 * model->charwidth + model->charwidth / 2 + padding);
-        gtk_tree_view_column_set_expand (tree_column, true);
-        g_object_set ((GObject *) renderer, "ellipsize-set", true, "ellipsize",
-         PANGO_ELLIPSIZE_END, nullptr);
-    }
-    else
-    {
+    if (width >= 0)
         gtk_tree_view_column_set_min_width (tree_column,
          width * model->charwidth + model->charwidth / 2 + padding);
 
-        if (width < 10)
-            g_object_set ((GObject *) renderer, "xalign", (float) 1, nullptr);
-    }
+    if (width >= 0 && width < 10)
+        g_object_set ((GObject *) renderer, "xalign", (float) 1, nullptr);
+    else
+        g_object_set ((GObject *) renderer, "ellipsize-set", true, "ellipsize",
+         PANGO_ELLIPSIZE_END, nullptr);
 
     gtk_tree_view_append_column ((GtkTreeView *) list, tree_column);
 }
