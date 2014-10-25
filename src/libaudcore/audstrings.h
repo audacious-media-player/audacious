@@ -35,6 +35,7 @@ int strlen_bounded (const char * s, int len = -1);
 StringBuf str_copy (const char * s, int len = -1);
 StringBuf str_concat (const std::initializer_list<const char *> & strings);
 void str_insert (StringBuf & str, int pos, const char * s, int len = -1);
+void str_delete (StringBuf & str, int pos, int len);
 
 StringBuf str_printf (const char * format, ...) __attribute__ ((__format__ (__printf__, 1, 2)));
 StringBuf str_vprintf (const char * format, va_list args);

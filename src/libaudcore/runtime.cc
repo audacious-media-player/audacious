@@ -309,6 +309,7 @@ EXPORT void aud_init ()
     start_plugins_one ();
 
     scanner_init ();
+    playlist_enable_scan (true);
 
     load_playlists ();
 }
@@ -343,6 +344,7 @@ EXPORT void aud_cleanup ()
         aud_drct_stop ();
 
     adder_cleanup ();
+    playlist_enable_scan (false);
     scanner_cleanup ();
 
     stop_plugins_one ();

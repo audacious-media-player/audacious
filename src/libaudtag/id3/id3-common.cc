@@ -86,7 +86,7 @@ static StringBuf id3_decode_text (const char * data, int size)
     return id3_convert ((const char *) data + 1, size - 1, data[0]);
 }
 
-void id3_associate_string (Tuple & tuple, int field, const char * data, int size)
+void id3_associate_string (Tuple & tuple, Tuple::Field field, const char * data, int size)
 {
     StringBuf text = id3_decode_text (data, size);
 
@@ -97,7 +97,7 @@ void id3_associate_string (Tuple & tuple, int field, const char * data, int size
     }
 }
 
-void id3_associate_int (Tuple & tuple, int field, const char * data, int size)
+void id3_associate_int (Tuple & tuple, Tuple::Field field, const char * data, int size)
 {
     StringBuf text = id3_decode_text (data, size);
 
@@ -114,7 +114,7 @@ void id3_associate_int (Tuple & tuple, int field, const char * data, int size)
 void id3_associate_length (Tuple & tuple, const char * data, int size)
 {
     StringBuf text = id3_decode_text (data, size);
-    int decoder_length = tuple.get_int (FIELD_LENGTH);
+    int decoder_length = tuple.get_int (Tuple::Length);
     int tlen_length;
 
     AUDDBG ("Length, decoder length: %i, tag length: %s.\n", decoder_length, (const char *) text);
@@ -123,7 +123,7 @@ void id3_associate_length (Tuple & tuple, const char * data, int size)
     {
         if (decoder_length <= 0 ||
             (tlen_length > (decoder_length / 2) && tlen_length < (decoder_length * 2)))
-            tuple.set_int (FIELD_LENGTH, tlen_length);
+            tuple.set_int (Tuple::Length, tlen_length);
     }
 }
 
@@ -141,9 +141,9 @@ void id3_decode_genre (Tuple & tuple, const char * data, int size)
         numericgenre = atoi (text);
 
     if (numericgenre > 0)
-        tuple.set_str (FIELD_GENRE, convert_numericgenre_to_text (numericgenre));
+        tuple.set_str (Tuple::Genre, convert_numericgenre_to_text (numericgenre));
     else
-        tuple.set_str (FIELD_GENRE, text);
+        tuple.set_str (Tuple::Genre, text);
 }
 
 void id3_decode_comment (Tuple & tuple, const char * data, int size)
@@ -162,7 +162,7 @@ void id3_decode_comment (Tuple & tuple, const char * data, int size)
      (const char *) type, (const char *) value);
 
     if (type && ! type[0] && value) /* blank type = actual comment */
-        tuple.set_str (FIELD_COMMENT, value);
+        tuple.set_str (Tuple::Comment, value);
 }
 
 static bool decode_rva_block (const char * * _data, int * _size,
@@ -242,33 +242,33 @@ void id3_decode_rva (Tuple & tuple, const char * data, int size)
         if (channel != 1) /* specific channel? */
             continue;
 
-        if (tuple.get_value_type (FIELD_GAIN_GAIN_UNIT) == TUPLE_INT)
+        if (tuple.get_value_type (Tuple::GainDivisor) == Tuple::Int)
             adjustment = adjustment * (int64_t) tuple.get_int
-             (FIELD_GAIN_GAIN_UNIT) / adjustment_unit;
+             (Tuple::GainDivisor) / adjustment_unit;
         else
-            tuple.set_int (FIELD_GAIN_GAIN_UNIT, adjustment_unit);
+            tuple.set_int (Tuple::GainDivisor, adjustment_unit);
 
         if (peak_unit)
         {
-            if (tuple.get_value_type (FIELD_GAIN_PEAK_UNIT) == TUPLE_INT)
-                peak = peak * (int64_t) tuple.get_int (FIELD_GAIN_PEAK_UNIT) / peak_unit;
+            if (tuple.get_value_type (Tuple::PeakDivisor) == Tuple::Int)
+                peak = peak * (int64_t) tuple.get_int (Tuple::PeakDivisor) / peak_unit;
             else
-                tuple.set_int (FIELD_GAIN_PEAK_UNIT, peak_unit);
+                tuple.set_int (Tuple::PeakDivisor, peak_unit);
         }
 
         if (! strcmp_nocase (domain, "album"))
         {
-            tuple.set_int (FIELD_GAIN_ALBUM_GAIN, adjustment);
+            tuple.set_int (Tuple::AlbumGain, adjustment);
 
             if (peak_unit)
-                tuple.set_int (FIELD_GAIN_ALBUM_PEAK, peak);
+                tuple.set_int (Tuple::AlbumPeak, peak);
         }
         else if (! strcmp_nocase (domain, "track"))
         {
-            tuple.set_int (FIELD_GAIN_TRACK_GAIN, adjustment);
+            tuple.set_int (Tuple::TrackGain, adjustment);
 
             if (peak_unit)
-                tuple.set_int (FIELD_GAIN_TRACK_PEAK, peak);
+                tuple.set_int (Tuple::TrackPeak, peak);
         }
     }
 }

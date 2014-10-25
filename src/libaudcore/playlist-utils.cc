@@ -34,8 +34,7 @@
 static const char * get_basename (const char * filename)
 {
     const char * slash = strrchr (filename, '/');
-
-    return (slash == nullptr) ? filename : slash + 1;
+    return slash ? slash + 1 : filename;
 }
 
 static int filename_compare_basename (const char * a, const char * b)
@@ -43,7 +42,7 @@ static int filename_compare_basename (const char * a, const char * b)
     return str_compare_encoded (get_basename (a), get_basename (b));
 }
 
-static int tuple_compare_string (const Tuple & a, const Tuple & b, int field)
+static int tuple_compare_string (const Tuple & a, const Tuple & b, Tuple::Field field)
 {
     String string_a = a.get_str (field);
     String string_b = b.get_str (field);
@@ -54,11 +53,11 @@ static int tuple_compare_string (const Tuple & a, const Tuple & b, int field)
     return (! string_b) ? 1 : str_compare (string_a, string_b);
 }
 
-static int tuple_compare_int (const Tuple & a, const Tuple & b, int field)
+static int tuple_compare_int (const Tuple & a, const Tuple & b, Tuple::Field field)
 {
-    if (a.get_value_type (field) != TUPLE_INT)
-        return (b.get_value_type (field) != TUPLE_INT) ? 0 : -1;
-    if (b.get_value_type (field) != TUPLE_INT)
+    if (a.get_value_type (field) != Tuple::Int)
+        return (b.get_value_type (field) != Tuple::Int) ? 0 : -1;
+    if (b.get_value_type (field) != Tuple::Int)
         return 1;
 
     int int_a = a.get_int (field);
@@ -69,37 +68,42 @@ static int tuple_compare_int (const Tuple & a, const Tuple & b, int field)
 
 static int tuple_compare_title (const Tuple & a, const Tuple & b)
 {
-    return tuple_compare_string (a, b, FIELD_TITLE);
+    return tuple_compare_string (a, b, Tuple::Title);
 }
 
 static int tuple_compare_album (const Tuple & a, const Tuple & b)
 {
-    return tuple_compare_string (a, b, FIELD_ALBUM);
+    return tuple_compare_string (a, b, Tuple::Album);
 }
 
 static int tuple_compare_artist (const Tuple & a, const Tuple & b)
 {
-    return tuple_compare_string (a, b, FIELD_ARTIST);
+    return tuple_compare_string (a, b, Tuple::Artist);
 }
 
 static int tuple_compare_album_artist (const Tuple & a, const Tuple & b)
 {
-    return tuple_compare_string (a, b, FIELD_ALBUM_ARTIST);
+    return tuple_compare_string (a, b, Tuple::AlbumArtist);
 }
 
 static int tuple_compare_date (const Tuple & a, const Tuple & b)
 {
-    return tuple_compare_int (a, b, FIELD_YEAR);
+    return tuple_compare_int (a, b, Tuple::Year);
 }
 
 static int tuple_compare_track (const Tuple & a, const Tuple & b)
 {
-    return tuple_compare_int (a, b, FIELD_TRACK_NUMBER);
+    return tuple_compare_int (a, b, Tuple::Track);
+}
+
+static int tuple_compare_formatted_title (const Tuple & a, const Tuple & b)
+{
+    return tuple_compare_string (a, b, Tuple::FormattedTitle);
 }
 
 static int tuple_compare_length (const Tuple & a, const Tuple & b)
 {
-    return tuple_compare_int (a, b, FIELD_LENGTH);
+    return tuple_compare_int (a, b, Tuple::Length);
 }
 
 static const PlaylistStringCompareFunc filename_comparisons[] = {
@@ -118,51 +122,38 @@ static const PlaylistStringCompareFunc filename_comparisons[] = {
 static const PlaylistTupleCompareFunc tuple_comparisons[] = {
     nullptr,  // path
     nullptr,  // filename
-    tuple_compare_title,  // title
-    tuple_compare_album,  // album
-    tuple_compare_artist,  // artist
-    tuple_compare_album_artist,  // album artist
-    tuple_compare_date,  // date
-    tuple_compare_track,  // track
-    nullptr,  // formatted title
-    tuple_compare_length  // length
+    tuple_compare_title,
+    tuple_compare_album,
+    tuple_compare_artist,
+    tuple_compare_album_artist,
+    tuple_compare_date,
+    tuple_compare_track,
+    tuple_compare_formatted_title,
+    tuple_compare_length
 };
 
-static const PlaylistStringCompareFunc title_comparisons[] = {
-    nullptr,  // path
-    nullptr,  // filename
-    nullptr,  // title
-    nullptr,  // album
-    nullptr,  // artist
-    nullptr,  // album artist
-    nullptr,  // date
-    nullptr,  // track
-    str_compare,  // formatted title
-    nullptr  // length
-};
+static_assert (aud::n_elems (filename_comparisons) == Playlist::n_sort_types &&
+ aud::n_elems (tuple_comparisons) == Playlist::n_sort_types,
+ "Update playlist comparison functions");
 
-EXPORT void aud_playlist_sort_by_scheme (int playlist, int scheme)
+EXPORT void aud_playlist_sort_by_scheme (int playlist, Playlist::SortType scheme)
 {
-    if (filename_comparisons[scheme] != nullptr)
+    if (filename_comparisons[scheme])
         aud_playlist_sort_by_filename (playlist, filename_comparisons[scheme]);
-    else if (tuple_comparisons[scheme] != nullptr)
+    else if (tuple_comparisons[scheme])
         aud_playlist_sort_by_tuple (playlist, tuple_comparisons[scheme]);
-    else if (title_comparisons[scheme] != nullptr)
-        aud_playlist_sort_by_title (playlist, title_comparisons[scheme]);
 }
 
-EXPORT void aud_playlist_sort_selected_by_scheme (int playlist, int scheme)
+EXPORT void aud_playlist_sort_selected_by_scheme (int playlist, Playlist::SortType scheme)
 {
-    if (filename_comparisons[scheme] != nullptr)
+    if (filename_comparisons[scheme])
         aud_playlist_sort_selected_by_filename (playlist, filename_comparisons[scheme]);
-    else if (tuple_comparisons[scheme] != nullptr)
+    else if (tuple_comparisons[scheme])
         aud_playlist_sort_selected_by_tuple (playlist, tuple_comparisons[scheme]);
-    else if (title_comparisons[scheme] != nullptr)
-        aud_playlist_sort_selected_by_title (playlist, title_comparisons[scheme]);
 }
 
 /* FIXME: this considers empty fields as duplicates */
-EXPORT void aud_playlist_remove_duplicates_by_scheme (int playlist, int scheme)
+EXPORT void aud_playlist_remove_duplicates_by_scheme (int playlist, Playlist::SortType scheme)
 {
     int entries = aud_playlist_entry_count (playlist);
     if (entries < 1)
@@ -170,7 +161,7 @@ EXPORT void aud_playlist_remove_duplicates_by_scheme (int playlist, int scheme)
 
     aud_playlist_select_all (playlist, false);
 
-    if (filename_comparisons[scheme] != nullptr)
+    if (filename_comparisons[scheme])
     {
         PlaylistStringCompareFunc compare = filename_comparisons[scheme];
 
@@ -187,16 +178,16 @@ EXPORT void aud_playlist_remove_duplicates_by_scheme (int playlist, int scheme)
             last = current;
         }
     }
-    else if (tuple_comparisons[scheme] != nullptr)
+    else if (tuple_comparisons[scheme])
     {
         PlaylistTupleCompareFunc compare = tuple_comparisons[scheme];
 
         aud_playlist_sort_by_tuple (playlist, compare);
-        Tuple last = aud_playlist_entry_get_tuple (playlist, 0, false);
+        Tuple last = aud_playlist_entry_get_tuple (playlist, 0);
 
         for (int count = 1; count < entries; count ++)
         {
-            Tuple current = aud_playlist_entry_get_tuple (playlist, count, false);
+            Tuple current = aud_playlist_entry_get_tuple (playlist, count);
 
             if (last && current && compare (last, current) == 0)
                 aud_playlist_entry_set_selected (playlist, count, true);
@@ -233,7 +224,7 @@ EXPORT void aud_playlist_select_by_patterns (int playlist, const Tuple & pattern
 
     aud_playlist_select_all (playlist, true);
 
-    for (int field : {FIELD_TITLE, FIELD_ALBUM, FIELD_ARTIST, FIELD_FILE_NAME})
+    for (Tuple::Field field : {Tuple::Title, Tuple::Album, Tuple::Artist, Tuple::Basename})
     {
         String pattern = patterns.get_str (field);
         GRegex * regex;
@@ -247,7 +238,7 @@ EXPORT void aud_playlist_select_by_patterns (int playlist, const Tuple & pattern
             if (! aud_playlist_entry_get_selected (playlist, entry))
                 continue;
 
-            Tuple tuple = aud_playlist_entry_get_tuple (playlist, entry, false);
+            Tuple tuple = aud_playlist_entry_get_tuple (playlist, entry);
             String string = tuple.get_str (field);
 
             if (! string || ! g_regex_match (regex, string, (GRegexMatchFlags) 0, nullptr))
@@ -344,7 +335,7 @@ static void save_playlists_real (void)
         if (playlist_get_modified (i))
         {
             StringBuf path = filename_build ({folder, name});
-            aud_playlist_save (i, filename_to_uri (path));
+            aud_playlist_save (i, filename_to_uri (path), Playlist::Nothing);
             playlist_set_modified (i, false);
         }
 

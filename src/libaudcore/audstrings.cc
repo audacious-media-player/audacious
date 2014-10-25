@@ -30,6 +30,7 @@
 
 #include "i18n.h"
 #include "index.h"
+#include "internal.h"
 #include "runtime.h"
 
 static const char ascii_to_hex[256] =
@@ -146,6 +147,13 @@ EXPORT void str_insert (StringBuf & str, int pos, const char * s, int len)
     str.resize (len0 + len);
     memmove (str + pos + len, str + pos, len0 - pos);
     memcpy (str + pos, s, len);
+}
+
+EXPORT void str_delete (StringBuf & str, int pos, int len)
+{
+    int after = str.len () - pos - len;
+    memmove (str + pos, str + pos + len, after);
+    str.resize (pos + after);
 }
 
 EXPORT StringBuf str_printf (const char * format, ...)
@@ -498,6 +506,15 @@ EXPORT StringBuf uri_to_display (const char * uri)
 #ifdef _WIN32
     str_replace_char (buf, '/', '\\');
 #endif
+
+    const char * home = get_home_utf8 ();
+    int homelen = strlen (home);
+
+    if (homelen && ! strncmp (buf, home, homelen) && buf[homelen] == G_DIR_SEPARATOR)
+    {
+        buf[0] = '~';
+        str_delete (buf, 1, homelen - 1);
+    }
 
     return buf;
 }

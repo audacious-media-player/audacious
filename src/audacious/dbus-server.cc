@@ -177,12 +177,12 @@ static gboolean do_get_playqueue_length (Obj * obj, Invoc * invoc)
 
 static gboolean do_get_tuple_fields (Obj * obj, Invoc * invoc)
 {
-    const char * fields[TUPLE_FIELDS + 1];
+    const char * fields[Tuple::n_fields + 1];
 
-    for (int i = 0; i < TUPLE_FIELDS; i ++)
-        fields[i] = Tuple::field_get_name (i);
+    for (auto f : Tuple::all_fields)
+        fields[f] = Tuple::field_get_name (f);
 
-    fields[TUPLE_FIELDS] = nullptr;
+    fields[Tuple::n_fields] = nullptr;
 
     FINISH2 (get_tuple_fields, fields);
     return true;
@@ -515,42 +515,45 @@ static gboolean do_song_filename (Obj * obj, Invoc * invoc, unsigned pos)
 
 static gboolean do_song_frames (Obj * obj, Invoc * invoc, unsigned pos)
 {
-    FINISH2 (song_frames, aud_playlist_entry_get_length (aud_playlist_get_active (), pos, false));
+    Tuple tuple = aud_playlist_entry_get_tuple (aud_playlist_get_active (), pos);
+    FINISH2 (song_frames, aud::max (0, tuple.get_int (Tuple::Length)));
     return true;
 }
 
 static gboolean do_song_length (Obj * obj, Invoc * invoc, unsigned pos)
 {
-    int length = aud_playlist_entry_get_length (aud_playlist_get_active (), pos, false);
-    FINISH2 (song_length, length >= 0 ? length / 1000 : -1);
+    Tuple tuple = aud_playlist_entry_get_tuple (aud_playlist_get_active (), pos);
+    int length = aud::max (0, tuple.get_int (Tuple::Length));
+    FINISH2 (song_length, length / 1000);
     return true;
 }
 
 static gboolean do_song_title (Obj * obj, Invoc * invoc, unsigned pos)
 {
-    String title = aud_playlist_entry_get_title (aud_playlist_get_active (), pos, false);
+    Tuple tuple = aud_playlist_entry_get_tuple (aud_playlist_get_active (), pos);
+    String title = tuple.get_str (Tuple::FormattedTitle);
     FINISH2 (song_title, title ? title : "");
     return true;
 }
 
 static gboolean do_song_tuple (Obj * obj, Invoc * invoc, unsigned pos, const char * key)
 {
-    int field = Tuple::field_by_name (key);
+    Tuple::Field field = Tuple::field_by_name (key);
     Tuple tuple;
     GVariant * var = nullptr;
 
     if (field >= 0)
-        tuple = aud_playlist_entry_get_tuple (aud_playlist_get_active (), pos, false);
+        tuple = aud_playlist_entry_get_tuple (aud_playlist_get_active (), pos);
 
     if (tuple)
     {
         switch (tuple.get_value_type (field))
         {
-        case TUPLE_STRING:
+        case Tuple::String:
             var = g_variant_new_string (tuple.get_str (field));
             break;
 
-        case TUPLE_INT:
+        case Tuple::Int:
             var = g_variant_new_int32 (tuple.get_int (field));
             break;
 

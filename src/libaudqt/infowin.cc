@@ -109,14 +109,18 @@ EXPORT void infowin_show (int playlist, int entry)
     if (! filename)
         return;
 
-    PluginHandle * decoder = aud_playlist_entry_get_decoder (playlist, entry, false);
+    PluginHandle * decoder = aud_playlist_entry_get_decoder (playlist, entry);
     if (! decoder)
         return;
 
-    Tuple tuple = aud_playlist_entry_get_tuple (playlist, entry, false);
+    Tuple tuple = aud_playlist_entry_get_tuple (playlist, entry);
+
     if (tuple)
+    {
+        tuple.delete_fallbacks ();
         m_infowin->fillInfo (playlist, entry, filename, tuple, decoder,
             aud_file_can_write_tuple (filename, decoder));
+    }
     else
         aud_ui_show_error (str_printf (_("No info available for %s.\n"),
             (const char *) filename));

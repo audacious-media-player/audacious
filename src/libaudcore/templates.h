@@ -65,6 +65,23 @@ template<class T, int N>
 constexpr int n_elems (const T (&) [N])
     { return N; }
 
+// Wrapper class allowing enumerations to be used in range-based for loops.
+
+template<class T, T first, T last>
+struct range {
+    struct iter {
+        T v;
+        T operator* ()
+            { return v; }
+        void operator++ ()
+            { v = (T) (v + 1); }
+        bool operator!= (iter other)
+            { return v != other.v; }
+    };
+    static iter begin () { return {first}; }
+    static iter end () { return {(T) (last + 1)}; }
+};
+
 // This is a replacement for std::allocator::construct, also supporting
 // aggregate initialization.  For background, see:
 //     http://cplusplus.github.io/LWG/lwg-active.html#2089

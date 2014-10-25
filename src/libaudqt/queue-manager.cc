@@ -69,7 +69,10 @@ QVariant QueueManagerModel::data (const QModelIndex & index, int role) const
         if (index.column () == 0)
             return entry;
         else
-            return QString ((const char *) aud_playlist_entry_get_title (list, entry, true));
+        {
+            Tuple tuple = aud_playlist_entry_get_tuple (list, entry, Playlist::Guess);
+            return QString ((const char *) tuple.get_str (Tuple::FormattedTitle));
+        }
     }
     else if (role == Qt::TextAlignmentRole && index.column () == 0)
         return Qt::AlignRight;

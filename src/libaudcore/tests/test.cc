@@ -35,13 +35,16 @@ String aud_get_str (const char *, const char *)
     { return String (""); }
 String VFSFile::get_metadata (const char *)
     { return String (); }
+const char * get_home_utf8 ()
+    { return "/home/user"; }
 
-static void test_tuple_format (const char * format, const Tuple & tuple, const char * expected)
+static void test_tuple_format (const char * format, Tuple & tuple, const char * expected)
 {
     TupleCompiler compiler;
     compiler.compile (format);
-    String result = compiler.evaluate (tuple);
+    compiler.format (tuple);
 
+    String result = tuple.get_str (Tuple::FormattedTitle);
     if (strcmp (result, expected))
     {
         printf ("For format [%s]\n", format);
@@ -59,7 +62,7 @@ static void test_tuple_formats ()
     test_tuple_format ("", tuple, "");
     tuple.set_filename ("http://Path%20To/File%20Name");
     test_tuple_format ("", tuple, "File Name");
-    tuple.set_str (FIELD_TITLE, "Song Title");
+    tuple.set_str (Tuple::Title, "Song Title");
     test_tuple_format ("", tuple, "Song Title");
 
     /* basic variable tests */
@@ -76,11 +79,11 @@ static void test_tuple_formats ()
 
     /* integer variable tests */
     test_tuple_format ("${year}", tuple, "Song Title");
-    tuple.set_int (FIELD_YEAR, -1);
+    tuple.set_int (Tuple::Year, -1);
     test_tuple_format ("${year}", tuple, "-1");
-    tuple.set_int (FIELD_YEAR, 0);
+    tuple.set_int (Tuple::Year, 0);
     test_tuple_format ("${year}", tuple, "0");
-    tuple.set_int (FIELD_YEAR, 1990);
+    tuple.set_int (Tuple::Year, 1990);
     test_tuple_format ("${year}", tuple, "1990");
 
     /* filename variable tests */
@@ -120,7 +123,7 @@ static void test_tuple_formats ()
     test_tuple_format ("x${==\"a\",title:Equal}", tuple, "x");
     test_tuple_format ("x${==title,\"Song Title\":Equal}", tuple, "xEqual");
     test_tuple_format ("x${==\"Song Title\",title:Equal}", tuple, "xEqual");
-    tuple.set_str (FIELD_ARTIST, "{}");
+    tuple.set_str (Tuple::Artist, "{}");
     test_tuple_format ("x${==artist,\"\\{\\}\":Equal}", tuple, "xEqual");
 
     /* inequality tests */
@@ -144,8 +147,8 @@ static void test_tuple_formats ()
     test_tuple_format ("x${<=year,1989:NotGreater}", tuple, "x");
 
     /* emptiness tests */
-    tuple.set_int (FIELD_YEAR, 0);
-    tuple.set_str (FIELD_ARTIST, "");
+    tuple.set_int (Tuple::Year, 0);
+    tuple.set_str (Tuple::Artist, "");
     test_tuple_format ("x${(invalid)}", tuple, "Song Title");
     test_tuple_format ("x${(empty)?invalid:Empty}", tuple, "Song Title");
     test_tuple_format ("x${(empty)?subsong-id:Empty}", tuple, "x");

@@ -30,16 +30,16 @@
 #include "tuple.h"
 #include "vfs.h"
 
-#if TUPLE_FIELDS > 64
-#error The current tuple implementation is limited to 64 fields
-#endif
+enum {
+    FallbackTitle = Tuple::n_fields,
+    FallbackArtist,
+    FallbackAlbum,
 
-#define BIT(i) ((uint64_t) 1 << (i))
-
-struct TupleBasicType {
-    const char *name;
-    TupleValueType type;
+    n_private_fields
 };
+
+static_assert (n_private_fields <= 64,
+ "The current tuple implementation is limited to 64 fields");
 
 union TupleVal
 {
@@ -75,98 +75,124 @@ struct TupleData
     TupleData (const TupleData & other);
     void operator= (const TupleData & other) = delete;
 
+    bool is_set (int field) const
+        { return (setmask & bitmask (field)); }
+
     TupleVal * lookup (int field, bool add, bool remove);
+    void set_int (int field, int x);
+    void set_str (int field, const char * str);
     void set_subtunes (int nsubs, const int * subs);
 
     static TupleData * ref (TupleData * tuple);
     static void unref (TupleData * tuple);
 
     static TupleData * copy_on_write (TupleData * tuple);
+
+private:
+    static constexpr uint64_t bitmask (int n)
+        { return (uint64_t) 1 << n; }
 };
 
-/** Ordered table of basic #Tuple field names and their #TupleValueType.
+/** Ordered table of basic #Tuple field names and their #ValueType.
  */
-static const TupleBasicType tuple_fields[TUPLE_FIELDS] = {
-    { "artist",         TUPLE_STRING },
-    { "title",          TUPLE_STRING },
-    { "album",          TUPLE_STRING },
-    { "comment",        TUPLE_STRING },
-    { "genre",          TUPLE_STRING },
+static const struct {
+    const char * name;
+    Tuple::ValueType type;
+    int fallback;
+} field_info[] = {
+    {"title", Tuple::String, FallbackTitle},
+    {"artist", Tuple::String, FallbackArtist},
+    {"album", Tuple::String, FallbackAlbum},
+    {"comment", Tuple::String, -1},
+    {"genre", Tuple::String, -1},
 
-    { "track-number",   TUPLE_INT },
-    { "length",         TUPLE_INT },
-    { "year",           TUPLE_INT },
-    { "quality",        TUPLE_STRING },
+    {"track-number", Tuple::Int, -1},
+    {"length", Tuple::Int, -1},
+    {"year", Tuple::Int, -1},
+    {"quality", Tuple::String, -1},
+    {"codec", Tuple::String, -1},
 
-    { "codec",          TUPLE_STRING },
-    { "file-name",      TUPLE_STRING },
-    { "file-path",      TUPLE_STRING },
-    { "file-ext",       TUPLE_STRING },
+    {"file-name", Tuple::String, -1},
+    {"file-path", Tuple::String, -1},
+    {"file-ext", Tuple::String, -1},
 
-    { "album-artist",   TUPLE_STRING },
-    { "composer",       TUPLE_STRING },
-    { "performer",      TUPLE_STRING },
-    { "copyright",      TUPLE_STRING },
-    { "date",           TUPLE_STRING },
-    { "mbid",           TUPLE_STRING },
+    {"album-artist", Tuple::String, -1},
+    {"composer", Tuple::String, -1},
+    {"performer", Tuple::String, -1},
+    {"copyright", Tuple::String, -1},
+    {"date", Tuple::String, -1},
+    {"mbid", Tuple::String, -1},
+    {"mime-type", Tuple::String, -1},
+    {"bitrate", Tuple::Int, -1},
 
-    { "subsong-id",     TUPLE_INT },
-    { "subsong-num",    TUPLE_INT },
-    { "mime-type",      TUPLE_STRING },
-    { "bitrate",        TUPLE_INT },
+    {"subsong-id", Tuple::Int, -1},
+    {"subsong-num", Tuple::Int, -1},
 
-    { "segment-start",  TUPLE_INT },
-    { "segment-end",    TUPLE_INT },
+    {"segment-start", Tuple::Int, -1},
+    {"segment-end", Tuple::Int, -1},
 
-    { "gain-album-gain", TUPLE_INT },
-    { "gain-album-peak", TUPLE_INT },
-    { "gain-track-gain", TUPLE_INT },
-    { "gain-track-peak", TUPLE_INT },
-    { "gain-gain-unit", TUPLE_INT },
-    { "gain-peak-unit", TUPLE_INT },
+    {"gain-album-gain", Tuple::Int, -1},
+    {"gain-album-peak", Tuple::Int, -1},
+    {"gain-track-gain", Tuple::Int, -1},
+    {"gain-track-peak", Tuple::Int, -1},
+    {"gain-gain-unit", Tuple::Int, -1},
+    {"gain-peak-unit", Tuple::Int, -1},
+
+    {"formatted-title", Tuple::String, -1},
+
+    /* fallbacks */
+    {nullptr, Tuple::String, -1},
+    {nullptr, Tuple::String, -1},
+    {nullptr, Tuple::String, -1},
 };
+
+static_assert (aud::n_elems (field_info) == n_private_fields, "Update field_data");
 
 struct FieldDictEntry {
     const char * name;
-    int field;
+    Tuple::Field field;
 };
 
 /* used for binary search, MUST be in alphabetical order */
-static const FieldDictEntry field_dict[TUPLE_FIELDS] = {
- {"album", FIELD_ALBUM},
- {"album-artist", FIELD_ALBUM_ARTIST},
- {"artist", FIELD_ARTIST},
- {"bitrate", FIELD_BITRATE},
- {"codec", FIELD_CODEC},
- {"comment", FIELD_COMMENT},
- {"composer", FIELD_COMPOSER},
- {"copyright", FIELD_COPYRIGHT},
- {"date", FIELD_DATE},
- {"file-ext", FIELD_FILE_EXT},
- {"file-name", FIELD_FILE_NAME},
- {"file-path", FIELD_FILE_PATH},
- {"gain-album-gain", FIELD_GAIN_ALBUM_GAIN},
- {"gain-album-peak", FIELD_GAIN_ALBUM_PEAK},
- {"gain-gain-unit", FIELD_GAIN_GAIN_UNIT},
- {"gain-peak-unit", FIELD_GAIN_PEAK_UNIT},
- {"gain-track-gain", FIELD_GAIN_TRACK_GAIN},
- {"gain-track-peak", FIELD_GAIN_TRACK_PEAK},
- {"genre", FIELD_GENRE},
- {"length", FIELD_LENGTH},
- {"mbid", FIELD_MBID},
- {"mime-type", FIELD_MIMETYPE},
- {"performer", FIELD_PERFORMER},
- {"quality", FIELD_QUALITY},
- {"segment-end", FIELD_SEGMENT_END},
- {"segment-start", FIELD_SEGMENT_START},
- {"subsong-id", FIELD_SUBSONG_ID},
- {"subsong-num", FIELD_SUBSONG_NUM},
- {"title", FIELD_TITLE},
- {"track-number", FIELD_TRACK_NUMBER},
- {"year", FIELD_YEAR}};
+static const FieldDictEntry field_dict[] = {
+    {"album", Tuple::Album},
+    {"album-artist", Tuple::AlbumArtist},
+    {"artist", Tuple::Artist},
+    {"bitrate", Tuple::Bitrate},
+    {"codec", Tuple::Codec},
+    {"comment", Tuple::Comment},
+    {"composer", Tuple::Composer},
+    {"copyright", Tuple::Copyright},
+    {"date", Tuple::Date},
+    {"file-ext", Tuple::Suffix},
+    {"file-name", Tuple::Basename},
+    {"file-path", Tuple::Path},
+    {"formatted-title", Tuple::FormattedTitle},
+    {"gain-album-gain", Tuple::AlbumGain},
+    {"gain-album-peak", Tuple::AlbumPeak},
+    {"gain-gain-unit", Tuple::GainDivisor},
+    {"gain-peak-unit", Tuple::PeakDivisor},
+    {"gain-track-gain", Tuple::TrackGain},
+    {"gain-track-peak", Tuple::TrackPeak},
+    {"genre", Tuple::Genre},
+    {"length", Tuple::Length},
+    {"mbid", Tuple::MusicBrainz},
+    {"mime-type", Tuple::MIMEType},
+    {"performer", Tuple::Performer},
+    {"quality", Tuple::Quality},
+    {"segment-end", Tuple::EndTime},
+    {"segment-start", Tuple::StartTime},
+    {"subsong-id", Tuple::Subtune},
+    {"subsong-num", Tuple::NumSubtunes},
+    {"title", Tuple::Title},
+    {"track-number", Tuple::Track},
+    {"year", Tuple::Year}
+};
 
-#define VALID_FIELD(f) ((f) >= 0 && (f) < TUPLE_FIELDS)
-#define FIELD_TYPE(f) (tuple_fields[f].type)
+static_assert (aud::n_elems (field_dict) == Tuple::n_fields, "Update field_dict");
+
+static constexpr bool is_valid_field (int field)
+    { return field > Tuple::Invalid && field < Tuple::n_fields; }
 
 static int bitcount (uint64_t x)
 {
@@ -182,40 +208,41 @@ static int field_dict_compare (const void * a, const void * b)
     return strcmp (((FieldDictEntry *) a)->name, ((FieldDictEntry *) b)->name);
 }
 
-EXPORT int Tuple::field_by_name (const char * name)
+EXPORT Tuple::Field Tuple::field_by_name (const char * name)
 {
-    FieldDictEntry find = {name, -1};
+    FieldDictEntry find = {name, Invalid};
     FieldDictEntry * found = (FieldDictEntry *) bsearch (& find, field_dict,
-     TUPLE_FIELDS, sizeof (FieldDictEntry), field_dict_compare);
+     n_fields, sizeof (FieldDictEntry), field_dict_compare);
 
-    return found ? found->field : -1;
+    return found ? found->field : Invalid;
 }
 
-EXPORT const char * Tuple::field_get_name (int field)
+EXPORT const char * Tuple::field_get_name (Field field)
 {
-    assert (VALID_FIELD (field));
-    return tuple_fields[field].name;
+    assert (is_valid_field (field));
+    return field_info[field].name;
 }
 
-EXPORT TupleValueType Tuple::field_get_type (int field)
+EXPORT Tuple::ValueType Tuple::field_get_type (Field field)
 {
-    assert (VALID_FIELD (field));
-    return tuple_fields[field].type;
+    assert (is_valid_field (field));
+    return field_info[field].type;
 }
 
 TupleVal * TupleData::lookup (int field, bool add, bool remove)
 {
     /* calculate number of preceding fields */
-    int pos = bitcount (setmask & (BIT (field) - 1));
+    const uint64_t mask = bitmask (field);
+    const int pos = bitcount (setmask & (mask - 1));
 
-    if ((setmask & BIT (field)))
+    if ((setmask & mask))
     {
-        if ((add || remove) && FIELD_TYPE (field) == TUPLE_STRING)
+        if ((add || remove) && field_info[field].type == Tuple::String)
             vals[pos].str.~String ();
 
         if (remove)
         {
-            setmask &= ~BIT (field);
+            setmask &= ~mask;
             vals.remove (pos, 1);
             return nullptr;
         }
@@ -223,12 +250,27 @@ TupleVal * TupleData::lookup (int field, bool add, bool remove)
         return & vals[pos];
     }
 
+    if (! (add || remove) && field_info[field].fallback >= 0)
+        return lookup (field_info[field].fallback, false, false);
+
     if (! add)
         return nullptr;
 
-    setmask |= BIT (field);
+    setmask |= mask;
     vals.insert (pos, 1);
     return & vals[pos];
+}
+
+void TupleData::set_int (int field, int x)
+{
+    TupleVal * val = lookup (field, true, false);
+    val->x = x;
+}
+
+void TupleData::set_str (int field, const char * str)
+{
+    TupleVal * val = lookup (field, true, false);
+    new (& val->str) String (str);
 }
 
 void TupleData::set_subtunes (int nsubs, const int * subs)
@@ -262,11 +304,11 @@ TupleData::TupleData (const TupleData & other) :
     auto get = other.vals.begin ();
     auto set = vals.begin ();
 
-    for (int f = 0; f < TUPLE_FIELDS; f ++)
+    for (int f = 0; f < n_private_fields; f ++)
     {
-        if (other.setmask & BIT (f))
+        if (other.setmask & bitmask (f))
         {
-            if (FIELD_TYPE (f) == TUPLE_STRING)
+            if (field_info[f].type == Tuple::String)
                 new (& set->str) String (get->str);
             else
                 set->x = get->x;
@@ -283,11 +325,11 @@ TupleData::~TupleData ()
 {
     auto iter = vals.begin ();
 
-    for (int f = 0; f < TUPLE_FIELDS; f ++)
+    for (int f = 0; f < n_private_fields; f ++)
     {
-        if (setmask & BIT (f))
+        if (setmask & bitmask (f))
         {
-            if (FIELD_TYPE (f) == TUPLE_STRING)
+            if (field_info[f].type == Tuple::String)
                 iter->str.~String ();
 
             iter ++;
@@ -336,64 +378,65 @@ EXPORT Tuple Tuple::ref () const
     return tuple;
 }
 
-EXPORT TupleValueType Tuple::get_value_type (int field) const
+EXPORT Tuple::ValueType Tuple::get_value_type (Field field) const
 {
-    assert (VALID_FIELD (field));
+    assert (is_valid_field (field));
 
-    TupleVal * val = data ? data->lookup (field, false, false) : nullptr;
-    return val ? FIELD_TYPE (field) : TUPLE_UNKNOWN;
+    const auto & info = field_info[field];
+    if (data && (data->is_set (field) || (info.fallback >= 0 && data->is_set (info.fallback))))
+        return info.type;
+
+    return Empty;
 }
 
-EXPORT int Tuple::get_int (int field) const
+EXPORT int Tuple::get_int (Field field) const
 {
-    assert (VALID_FIELD (field) && FIELD_TYPE (field) == TUPLE_INT);
+    assert (is_valid_field (field) && field_info[field].type == Int);
 
     TupleVal * val = data ? data->lookup (field, false, false) : nullptr;
     return val ? val->x : -1;
 }
 
-EXPORT String Tuple::get_str (int field) const
+EXPORT String Tuple::get_str (Field field) const
 {
-    assert (VALID_FIELD (field) && FIELD_TYPE (field) == TUPLE_STRING);
+    assert (is_valid_field (field) && field_info[field].type == String);
 
     TupleVal * val = data ? data->lookup (field, false, false) : nullptr;
-    return val ? val->str : String ();
+    return val ? val->str : ::String ();
 }
 
-EXPORT void Tuple::set_int (int field, int x)
+EXPORT void Tuple::set_int (Field field, int x)
 {
-    assert (VALID_FIELD (field) && FIELD_TYPE (field) == TUPLE_INT);
+    assert (is_valid_field (field) && field_info[field].type == Int);
 
     data = TupleData::copy_on_write (data);
-    TupleVal * val = data->lookup (field, true, false);
-    val->x = x;
+    data->set_int (field, x);
 }
 
-EXPORT void Tuple::set_str (int field, const char * str)
+EXPORT void Tuple::set_str (Field field, const char * str)
 {
+    assert (is_valid_field (field) && field_info[field].type == String);
+
     if (! str)
     {
         unset (field);
         return;
     }
 
-    assert (VALID_FIELD (field) && FIELD_TYPE (field) == TUPLE_STRING);
-
     data = TupleData::copy_on_write (data);
-    TupleVal * val = data->lookup (field, true, false);
 
     if (g_utf8_validate (str, -1, nullptr))
-        new (& val->str) String (str);
+        data->set_str (field, str);
     else
     {
         StringBuf utf8 = str_to_utf8 (str);
-        new (& val->str) String (utf8 ? (const char *) utf8 : "(character encoding error)");
+        data->set_str (field, utf8 ? (const char *) utf8 : "(character encoding error)");
     }
 }
 
-EXPORT void Tuple::unset (int field)
+EXPORT void Tuple::unset (Field field)
 {
-    assert (VALID_FIELD (field));
+    assert (is_valid_field (field));
 
     if (! data)
         return;
@@ -411,20 +454,23 @@ EXPORT void Tuple::set_filename (const char * filename)
 
     uri_parse (filename, & base, & ext, & sub, & isub);
 
-    set_str (FIELD_FILE_PATH, str_decode_percent (filename, base - filename));
-    set_str (FIELD_FILE_NAME, str_decode_percent (base, ext - base));
+    data = TupleData::copy_on_write (data);
 
-    if (ext < sub)
-        set_str (FIELD_FILE_EXT, str_decode_percent (ext + 1, sub - ext - 1));
+    if (base > filename)
+        data->set_str (Path, uri_to_display (str_copy (filename, base - filename)));
+    if (ext > base)
+        data->set_str (Basename, str_decode_percent (base, ext - base));
+    if (sub > ext + 1)
+        data->set_str (Suffix, str_decode_percent (ext + 1, sub - ext - 1));
 
     if (sub[0])
-        set_int (FIELD_SUBSONG_ID, isub);
+        data->set_int (Subtune, isub);
 }
 
 EXPORT void Tuple::set_format (const char * format, int chans, int rate, int brate)
 {
     if (format)
-        set_str (FIELD_CODEC, format);
+        set_str (Codec, format);
 
     StringBuf buf;
 
@@ -445,10 +491,10 @@ EXPORT void Tuple::set_format (const char * format, int chans, int rate, int bra
         buf.combine (str_printf ("%d kHz", rate / 1000));
 
     if (buf[0])
-        set_str (FIELD_QUALITY, buf);
+        set_str (Quality, buf);
 
     if (brate > 0)
-        set_int (FIELD_BITRATE, brate);
+        set_int (Bitrate, brate);
 }
 
 EXPORT void Tuple::set_subtunes (int n_subtunes, const int * subtunes)
@@ -475,30 +521,176 @@ EXPORT bool Tuple::fetch_stream_info (VFSFile & stream)
     bool updated = false;
     int value;
 
-    String val = stream.get_metadata ("track-name");
+    ::String val = stream.get_metadata ("track-name");
 
-    if (val && val != get_str (FIELD_TITLE))
+    if (val && val != get_str (Title))
     {
-        set_str (FIELD_TITLE, val);
+        set_str (Title, val);
         updated = true;
     }
 
     val = stream.get_metadata ("stream-name");
 
-    if (val && val != get_str (FIELD_ARTIST))
+    if (val && val != get_str (Artist))
     {
-        set_str (FIELD_ARTIST, val);
+        set_str (Artist, val);
         updated = true;
     }
 
     val = stream.get_metadata ("content-bitrate");
     value = val ? atoi (val) / 1000 : 0;
 
-    if (value && value != get_int (FIELD_BITRATE))
+    if (value && value != get_int (Bitrate))
     {
-        set_int (FIELD_BITRATE, value);
+        set_int (Bitrate, value);
         updated = true;
     }
 
     return updated;
+}
+
+/* Separates the lowest-level folder from a file path.  The string passed will
+ * be modified, and the string returned will use the same memory.  May return
+ * nullptr. */
+
+static char * split_folder (char * path)
+{
+    char * c;
+    while ((c = strrchr (path, G_DIR_SEPARATOR)))
+    {
+        * c = 0;
+        if (c[1])
+            return c + 1;
+    }
+
+    return path[0] ? path : nullptr;
+}
+
+/* Separates the domain name from an internet URI.  The string passed will be
+ * modified, and the string returned will share the same memory.  May return
+ * nullptr.  Examples:
+ *     "http://some.domain.org/folder/file.mp3" -> "some.domain.org"
+ *     "http://some.stream.fm:8000"             -> "some.stream.fm" */
+
+static char * domain_name (char * name)
+{
+    if (! strncmp (name, "http://", 7))
+        name += 7;
+    else if (! strncmp (name, "https://", 8))
+        name += 8;
+    else if (! strncmp (name, "mms://", 6))
+        name += 6;
+    else
+        return nullptr;
+
+    char * c;
+
+    if ((c = strchr (name, '/')))
+        * c = 0;
+    if ((c = strchr (name, ':')))
+        * c = 0;
+    if ((c = strchr (name, '?')))
+        * c = 0;
+
+    return name;
+}
+
+EXPORT void Tuple::generate_fallbacks ()
+{
+    if (! data)
+        return;
+
+    ::String title = get_str (Title);
+    ::String artist = get_str (Artist);
+    ::String album = get_str (Album);
+
+    if (title && artist && album)
+        return;
+
+    ::String filename = get_str (Basename);
+    ::String filepath = get_str (Path);
+    int subtune = get_int (Subtune);
+
+    data = TupleData::copy_on_write (data);
+
+    if (filepath && ! strcmp (filepath, "cdda://"))
+    {
+        // audio CD:
+        // use "Track N" as the title and "Audio CD" as the album
+
+        if (! title && subtune >= 0)
+            data->set_str (FallbackTitle, str_printf (_("Track %d"), subtune));
+        if (! album)
+            data->set_str (FallbackAlbum, _("Audio CD"));
+
+        return;
+    }
+
+    if (! title)
+        data->set_str (FallbackTitle, filename ? (const char *) filename : _("(unknown title)"));
+
+    if (! filepath)
+        return;
+
+    if (strstr (filepath, "://"))
+    {
+        // URL:
+        // use the domain name as the album
+
+        if (album)
+            return;
+
+        StringBuf buf = str_copy (filepath);
+        const char * domain = domain_name (buf);
+
+        if (domain)
+            data->set_str (FallbackAlbum, domain);
+    }
+    else
+    {
+        // local file:
+        // use the top two path elements as the artist and album
+
+        if (artist && album)
+            return;
+
+        StringBuf buf = str_copy (filepath);
+        char * first = split_folder (buf);
+        char * second = (first && first > buf) ? split_folder (buf) : nullptr;
+
+        // skip common strings and avoid duplicates
+        for (auto skip : (const char *[]) {"~", "music", artist, album})
+        {
+            if (first && skip && ! strcmp_nocase (first, skip))
+            {
+                first = second;
+                second = nullptr;
+            }
+
+            if (second && skip && ! strcmp_nocase (second, skip))
+                second = nullptr;
+        }
+
+        if (first)
+        {
+            if (second && ! artist && ! album)
+            {
+                data->set_str (FallbackArtist, second);
+                data->set_str (FallbackAlbum, first);
+            }
+            else
+                data->set_str (artist ? FallbackAlbum : FallbackArtist, first);
+        }
+    }
+}
+
+EXPORT void Tuple::delete_fallbacks ()
+{
+    if (! data)
+        return;
+
+    data = TupleData::copy_on_write (data);
+    data->lookup (FallbackTitle, false, true);
+    data->lookup (FallbackArtist, false, true);
+    data->lookup (FallbackAlbum, false, true);
 }

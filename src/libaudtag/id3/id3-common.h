@@ -23,8 +23,8 @@
 #include <libaudcore/index.h>
 #include <libaudcore/tuple.h>
 
-void id3_associate_string (Tuple & tuple, int field, const char * data, int size);
-void id3_associate_int (Tuple & tuple, int field, const char * data, int size);
+void id3_associate_string (Tuple & tuple, Tuple::Field field, const char * data, int size);
+void id3_associate_int (Tuple & tuple, Tuple::Field field, const char * data, int size);
 void id3_associate_length (Tuple & tuple, const char * data, int size);
 void id3_decode_genre (Tuple & tuple, const char * data, int size);
 void id3_decode_comment (Tuple & tuple, const char * data, int size);

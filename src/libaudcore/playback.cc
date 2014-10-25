@@ -81,12 +81,12 @@ static void read_gain_from_tuple (const Tuple & tuple)
     if (! tuple)
         return;
 
-    int album_gain = tuple.get_int (FIELD_GAIN_ALBUM_GAIN);
-    int album_peak = tuple.get_int (FIELD_GAIN_ALBUM_PEAK);
-    int track_gain = tuple.get_int (FIELD_GAIN_TRACK_GAIN);
-    int track_peak = tuple.get_int (FIELD_GAIN_TRACK_PEAK);
-    int gain_unit = tuple.get_int (FIELD_GAIN_GAIN_UNIT);
-    int peak_unit = tuple.get_int (FIELD_GAIN_PEAK_UNIT);
+    int album_gain = tuple.get_int (Tuple::AlbumGain);
+    int album_peak = tuple.get_int (Tuple::AlbumPeak);
+    int track_gain = tuple.get_int (Tuple::TrackGain);
+    int track_peak = tuple.get_int (Tuple::TrackPeak);
+    int gain_unit = tuple.get_int (Tuple::GainDivisor);
+    int peak_unit = tuple.get_int (Tuple::PeakDivisor);
 
     if (gain_unit)
     {
@@ -104,8 +104,9 @@ static void read_gain_from_tuple (const Tuple & tuple)
 static bool update_from_playlist (void)
 {
     int entry = playback_entry_get_position ();
-    String title = playback_entry_get_title ();
-    int length = playback_entry_get_length ();
+    Tuple tuple = playback_entry_get_tuple (true);
+    String title = tuple.get_str (Tuple::FormattedTitle);
+    int length = tuple.get_int (Tuple::Length);
 
     if (entry == current_entry && title == current_title && length == current_length)
         return false;
@@ -349,28 +350,28 @@ static void * playback_thread (void *)
         }
     }
 
-    if (! (tuple = playback_entry_get_tuple (& error)))
+    if (! (tuple = playback_entry_get_tuple (false, & error)))
     {
         playback_error = true;
         goto DONE;
     }
 
-    length = playback_entry_get_length ();
+    length = tuple.get_int (Tuple::Length);
 
     if (length < 1)
         seek_request = -1;
 
     if (tuple && length > 0)
     {
-        if (tuple.get_value_type (FIELD_SEGMENT_START) == TUPLE_INT)
+        if (tuple.get_value_type (Tuple::StartTime) == Tuple::Int)
         {
-            time_offset = tuple.get_int (FIELD_SEGMENT_START);
+            time_offset = tuple.get_int (Tuple::StartTime);
             if (time_offset)
                 seek_request = time_offset + aud::max (seek_request, 0);
         }
 
-        if (tuple.get_value_type (FIELD_SEGMENT_END) == TUPLE_INT)
-            stop_time = tuple.get_int (FIELD_SEGMENT_END);
+        if (tuple.get_value_type (Tuple::EndTime) == Tuple::Int)
+            stop_time = tuple.get_int (Tuple::EndTime);
     }
 
     read_gain_from_tuple (tuple);
@@ -520,7 +521,10 @@ EXPORT void aud_input_write_audio (const void * data, int length)
 EXPORT Tuple aud_input_get_tuple (void)
 {
     assert (playing);
-    return playback_entry_get_tuple ();
+
+    Tuple tuple = playback_entry_get_tuple (true);
+    tuple.delete_fallbacks ();
+    return tuple;
 }
 
 EXPORT void aud_input_set_tuple (Tuple && tuple)

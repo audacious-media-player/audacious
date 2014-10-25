@@ -79,8 +79,8 @@ bool ID3v1TagModule::can_handle_file (VFSFile & file)
     return read_id3v1_tag (file, & tag);
 }
 
-static bool combine_string (Tuple & tuple, int field, const char * str1,
- int size1, const char * str2, int size2)
+static bool combine_string (Tuple & tuple, Tuple::Field field,
+ const char * str1, int size1, const char * str2, int size2)
 {
     StringBuf str = str_copy (str1, strlen_bounded (str1, size1));
     str_insert (str, -1, str2, strlen_bounded (str2, size2));
@@ -106,20 +106,20 @@ bool ID3v1TagModule::read_tag (Tuple & tuple, VFSFile & file)
     if (! read_id3v1_ext (file, & ext))
         memset (& ext, 0, sizeof (ID3v1Ext));
 
-    combine_string (tuple, FIELD_TITLE, tag.title, sizeof tag.title, ext.title, sizeof ext.title);
-    combine_string (tuple, FIELD_ARTIST, tag.artist, sizeof tag.artist, ext.artist, sizeof ext.artist);
-    combine_string (tuple, FIELD_ALBUM, tag.album, sizeof tag.album, ext.album, sizeof ext.album);
-    combine_string (tuple, FIELD_COMMENT, tag.comment, sizeof tag.comment, nullptr, 0);
+    combine_string (tuple, Tuple::Title, tag.title, sizeof tag.title, ext.title, sizeof ext.title);
+    combine_string (tuple, Tuple::Artist, tag.artist, sizeof tag.artist, ext.artist, sizeof ext.artist);
+    combine_string (tuple, Tuple::Album, tag.album, sizeof tag.album, ext.album, sizeof ext.album);
+    combine_string (tuple, Tuple::Comment, tag.comment, sizeof tag.comment, nullptr, 0);
 
     StringBuf year = str_copy (tag.year, strlen_bounded (tag.year, 4));
     if (atoi (year))
-        tuple.set_int (FIELD_YEAR, atoi (year));
+        tuple.set_int (Tuple::Year, atoi (year));
 
     if (! tag.comment[28] && tag.comment[29])
-        tuple.set_int (FIELD_TRACK_NUMBER, (unsigned char) tag.comment[29]);
+        tuple.set_int (Tuple::Track, (unsigned char) tag.comment[29]);
 
-    if (! combine_string (tuple, FIELD_GENRE, ext.genre, sizeof ext.genre, nullptr, 0))
-        tuple.set_str (FIELD_GENRE, convert_numericgenre_to_text (tag.genre));
+    if (! combine_string (tuple, Tuple::Genre, ext.genre, sizeof ext.genre, nullptr, 0))
+        tuple.set_str (Tuple::Genre, convert_numericgenre_to_text (tag.genre));
 
     return true;
 }

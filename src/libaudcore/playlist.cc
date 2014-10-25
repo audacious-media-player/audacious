@@ -55,7 +55,7 @@ enum {RESUME_STOP, RESUME_PLAY, RESUME_PAUSE};
 } while (0)
 
 #define ENTER_GET_PLAYLIST(...) ENTER; \
-    Playlist * playlist = lookup_playlist (playlist_num); \
+    PlaylistData * playlist = lookup_playlist (playlist_num); \
     if (! playlist) \
         RETURN (__VA_ARGS__);
 
@@ -93,17 +93,16 @@ struct Entry {
     PluginHandle * decoder;
     Tuple tuple;
     String error;
-    String formatted, title, artist, album;
     int length;
-    bool failed;
+    bool scanned, failed;
     bool selected;
     int shuffle_num;
     bool queued;
 };
 
-struct Playlist {
-    Playlist (int id);
-    ~Playlist ();
+struct PlaylistData {
+    PlaylistData (int id);
+    ~PlaylistData ();
 
     int number, unique_id;
     String filename, title;
@@ -125,14 +124,14 @@ static const char * const temp_title = N_("Now Playing");
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 static pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
 
-/* The unique ID table contains pointers to Playlist for ID's in use and nullptr
+/* The unique ID table contains pointers to PlaylistData for ID's in use and nullptr
  * for "dead" (previously used and therefore unavailable) ID's. */
-static SimpleHash<UniqueID, Playlist *> unique_id_table;
+static SimpleHash<UniqueID, PlaylistData *> unique_id_table;
 static int next_unique_id = 1000;
 
-static Index<SmartPtr<Playlist>> playlists;
-static Playlist * active_playlist = nullptr;
-static Playlist * playing_playlist = nullptr;
+static Index<SmartPtr<PlaylistData>> playlists;
+static PlaylistData * active_playlist = nullptr;
+static PlaylistData * playing_playlist = nullptr;
 static int resume_playlist = -1;
 static bool resume_paused = false;
 
@@ -141,16 +140,17 @@ static PlaylistUpdateLevel update_level;
 
 struct ScanItem : public ListNode
 {
-    ScanItem (Playlist * playlist, Entry * entry, ScanRequest * request) :
+    ScanItem (PlaylistData * playlist, Entry * entry, ScanRequest * request) :
         playlist (playlist),
         entry (entry),
         request (request) {}
 
-    Playlist * playlist;
+    PlaylistData * playlist;
     Entry * entry;
     ScanRequest * request;
 };
 
+static bool scan_enabled;
 static int scan_playlist, scan_row;
 static List<ScanItem> scan_list;
 
@@ -158,7 +158,7 @@ static void scan_finish (ScanRequest * request);
 static void scan_cancel (Entry * entry);
 static void scan_restart ();
 
-static bool next_song_locked (Playlist * playlist, bool repeat, int hint);
+static bool next_song_locked (PlaylistData * playlist, bool repeat, int hint);
 
 static void playlist_reformat_titles ();
 static void playlist_trigger_scan ();
@@ -169,30 +169,24 @@ static void entry_set_tuple_real (Entry * entry, Tuple && tuple)
 {
     /* Hack: We cannot refresh segmented entries (since their info is read from
      * the cue sheet when it is first loaded), so leave them alone. -jlindgren */
-    if (entry->tuple.get_value_type (FIELD_SEGMENT_START) == TUPLE_INT)
+    if (entry->tuple.get_value_type (Tuple::StartTime) == Tuple::Int)
         return;
 
-    entry->tuple = std::move (tuple);
+    entry->scanned = (bool) tuple;
     entry->failed = false;
     entry->error = String ();
 
-    describe_song (entry->filename, entry->tuple, entry->title, entry->artist, entry->album);
+    if (! tuple)
+        tuple.set_filename (entry->filename);
 
-    if (! entry->tuple)
-    {
-        entry->formatted = String ();
-        entry->length = 0;
-    }
-    else
-    {
-        entry->formatted = title_formatter->evaluate (entry->tuple);
-        entry->length = entry->tuple.get_int (FIELD_LENGTH);
-        if (entry->length < 0)
-            entry->length = 0;
-    }
+    tuple.generate_fallbacks ();
+    title_formatter->format (tuple);
+
+    entry->length = aud::max (0, tuple.get_int (Tuple::Length));
+    entry->tuple = std::move (tuple);
 }
 
-static void entry_set_tuple (Playlist * playlist, Entry * entry, Tuple && tuple)
+static void entry_set_tuple (PlaylistData * playlist, Entry * entry, Tuple && tuple)
 {
     scan_cancel (entry);
 
@@ -207,9 +201,9 @@ static void entry_set_tuple (Playlist * playlist, Entry * entry, Tuple && tuple)
         playlist->selected_length += entry->length;
 }
 
-static void entry_set_failed (Playlist * playlist, Entry * entry, String && error)
+static void entry_set_failed (PlaylistData * playlist, Entry * entry, String && error)
 {
-    entry_set_tuple (playlist, entry, Tuple ());
+    entry->scanned = true;
     entry->failed = true;
     entry->error = std::move (error);
 }
@@ -219,6 +213,7 @@ Entry::Entry (PlaylistAddItem && item) :
     filename (item.filename),
     decoder (item.decoder),
     length (0),
+    scanned (false),
     failed (false),
     selected (false),
     shuffle_num (0),
@@ -243,7 +238,7 @@ static int new_unique_id (int preferred)
     return next_unique_id ++;
 }
 
-Playlist::Playlist (int id) :
+PlaylistData::PlaylistData (int id) :
     number (-1),
     unique_id (new_unique_id (id)),
     title (_(default_title)),
@@ -260,10 +255,10 @@ Playlist::Playlist (int id) :
     last_update (),
     resume_time (0)
 {
-    unique_id_table.add (unique_id, (Playlist *) this);
+    unique_id_table.add (unique_id, (PlaylistData *) this);
 }
 
-Playlist::~Playlist ()
+PlaylistData::~PlaylistData ()
 {
     unique_id_table.add (unique_id, nullptr);
 }
@@ -274,18 +269,18 @@ static void number_playlists (int at, int length)
         playlists[i]->number = i;
 }
 
-static Playlist * lookup_playlist (int i)
+static PlaylistData * lookup_playlist (int i)
 {
     return (i >= 0 && i < playlists.len ()) ? playlists[i].get () : nullptr;
 }
 
-static void number_entries (Playlist * p, int at, int length)
+static void number_entries (PlaylistData * p, int at, int length)
 {
     for (int i = at; i < at + length; i ++)
         p->entries[i]->number = i;
 }
 
-static Entry * lookup_entry (Playlist * p, int i)
+static Entry * lookup_entry (PlaylistData * p, int i)
 {
     return (i >= 0 && i < p->entries.len ()) ? p->entries[i].get () : nullptr;
 }
@@ -308,20 +303,16 @@ static void update (void *)
     hook_call ("playlist update", level);
 }
 
-static void queue_update (PlaylistUpdateLevel level, Playlist * p, int at, int count)
+static void queue_update (PlaylistUpdateLevel level, PlaylistData * p, int at, int count)
 {
     if (p)
     {
         if (level >= PLAYLIST_UPDATE_METADATA)
         {
             p->modified = true;
-
-            if (! aud_get_bool (nullptr, "metadata_on_play"))
-            {
-                p->scanning = true;
-                p->scan_ending = false;
-                scan_restart ();
-            }
+            p->scanning = true;
+            p->scan_ending = false;
+            scan_restart ();
         }
 
         if (p->next_update.level)
@@ -387,7 +378,7 @@ EXPORT bool aud_playlist_scan_in_progress (int playlist_num)
     }
 }
 
-static ScanItem * scan_list_find_playlist (Playlist * playlist)
+static ScanItem * scan_list_find_playlist (PlaylistData * playlist)
 {
     for (ScanItem * item = scan_list.head (); item; item = scan_list.next (item))
     {
@@ -420,19 +411,16 @@ static ScanItem * scan_list_find_request (ScanRequest * request)
     return nullptr;
 }
 
-static void scan_queue_entry (Playlist * playlist, Entry * entry)
+static void scan_queue_entry (PlaylistData * playlist, Entry * entry)
 {
-    int flags = 0;
-    if (! entry->tuple)
-        flags |= SCAN_TUPLE;
-
+    int flags = entry->scanned ? 0 : SCAN_TUPLE;
     auto request = new ScanRequest (entry->filename, flags, scan_finish, entry->decoder);
     scanner_request (request);
 
     scan_list.append (new ScanItem (playlist, entry, request));
 }
 
-static void scan_check_complete (Playlist * playlist)
+static void scan_check_complete (PlaylistData * playlist)
 {
     if (! playlist->scan_ending || scan_list_find_playlist (playlist))
         return;
@@ -444,9 +432,12 @@ static void scan_check_complete (Playlist * playlist)
 
 static bool scan_queue_next_entry ()
 {
+    if (! scan_enabled || aud_get_bool (nullptr, "metadata_on_play"))
+        return false;
+
     while (scan_playlist < playlists.len ())
     {
-        Playlist * playlist = playlists[scan_playlist].get ();
+        PlaylistData * playlist = playlists[scan_playlist].get ();
 
         if (playlist->scanning)
         {
@@ -454,7 +445,7 @@ static bool scan_queue_next_entry ()
             {
                 Entry * entry = playlist->entries[scan_row ++].get ();
 
-                if (! entry->tuple && ! scan_list_find_entry (entry))
+                if (! entry->scanned && ! scan_list_find_entry (entry))
                 {
                     scan_queue_entry (playlist, entry);
                     return true;
@@ -498,7 +489,7 @@ static void scan_finish (ScanRequest * request)
     if (! item)
         RETURN ();
 
-    Playlist * playlist = item->playlist;
+    PlaylistData * playlist = item->playlist;
     Entry * entry = item->entry;
 
     scan_list.remove (item);
@@ -507,13 +498,13 @@ static void scan_finish (ScanRequest * request)
     if (! entry->decoder)
         entry->decoder = request->decoder;
 
-    if (! entry->tuple && request->tuple)
+    if (! entry->scanned && request->tuple)
     {
         entry_set_tuple (playlist, entry, std::move (request->tuple));
         queue_update (PLAYLIST_UPDATE_METADATA, playlist, entry->number, 1);
     }
 
-    if (! entry->decoder || ! entry->tuple)
+    if (! entry->decoder || ! entry->scanned)
         entry_set_failed (playlist, entry, std::move (request->error));
 
     scan_check_complete (playlist);
@@ -547,13 +538,13 @@ static Entry * get_entry (int playlist_num, int entry_num,
 {
     while (1)
     {
-        Playlist * playlist = lookup_playlist (playlist_num);
+        PlaylistData * playlist = lookup_playlist (playlist_num);
         Entry * entry = playlist ? lookup_entry (playlist, entry_num) : nullptr;
 
         if (! entry || entry->failed)
             return entry;
 
-        if ((need_decoder && ! entry->decoder) || (need_tuple && ! entry->tuple))
+        if ((need_decoder && ! entry->decoder) || (need_tuple && ! entry->scanned))
         {
             if (! scan_list_find_entry (entry))
                 scan_queue_entry (playlist, entry);
@@ -576,7 +567,7 @@ static Entry * get_playback_entry (bool need_decoder, bool need_tuple)
         if (! entry || entry->failed)
             return entry;
 
-        if ((need_decoder && ! entry->decoder) || (need_tuple && ! entry->tuple))
+        if ((need_decoder && ! entry->decoder) || (need_tuple && ! entry->scanned))
         {
             if (! scan_list_find_entry (entry))
                 scan_queue_entry (playing_playlist, entry);
@@ -596,6 +587,7 @@ void playlist_init ()
     ENTER;
 
     update_level = 0;
+    scan_enabled = false;
     scan_playlist = scan_row = 0;
 
     title_formatter.capture (new TupleCompiler);
@@ -609,6 +601,21 @@ void playlist_init ()
     hook_associate ("set generic_title_format", (HookFunction) playlist_reformat_titles, nullptr);
     hook_associate ("set show_numbers_in_pl", (HookFunction) playlist_reformat_titles, nullptr);
     hook_associate ("set leading_zero", (HookFunction) playlist_reformat_titles, nullptr);
+}
+
+void playlist_enable_scan (bool enable)
+{
+    ENTER;
+
+    if (! enable)
+        scan_list.clear ();
+
+    scan_enabled = enable;
+
+    LEAVE;
+
+    if (enable)
+        playlist_trigger_scan ();
 }
 
 void playlist_end ()
@@ -648,7 +655,7 @@ void playlist_insert_with_id (int at, int id)
         at = playlists.len ();
 
     playlists.insert (at, 1);
-    playlists[at].capture (new Playlist (id));
+    playlists[at].capture (new PlaylistData (id));
 
     number_playlists (at, playlists.len () - at);
 
@@ -669,7 +676,7 @@ EXPORT void aud_playlist_reorder (int from, int to, int count)
      count > playlists.len () || count < 0)
         RETURN ();
 
-    Index<SmartPtr<Playlist>> displaced;
+    Index<SmartPtr<PlaylistData>> displaced;
 
     if (to < from)
         displaced.move_from (playlists, to, -1, from - to, true, false);
@@ -702,7 +709,7 @@ EXPORT void aud_playlist_delete (int playlist_num)
     playlists.remove (playlist_num, 1);
 
     if (! playlists.len ())
-        playlists.append (SmartNew<Playlist> (-1));
+        playlists.append (SmartNew<PlaylistData> (-1));
 
     number_playlists (playlist_num, playlists.len () - playlist_num);
 
@@ -733,7 +740,7 @@ EXPORT int aud_playlist_by_unique_id (int id)
 {
     ENTER;
 
-    Playlist * * ptr = unique_id_table.lookup (id);
+    PlaylistData * * ptr = unique_id_table.lookup (id);
     int num = (ptr && * ptr) ? (* ptr)->number : -1;
 
     RETURN (num);
@@ -821,7 +828,7 @@ EXPORT void aud_playlist_play (int playlist_num, bool paused)
 
     ENTER;
 
-    Playlist * playlist = lookup_playlist (playlist_num);
+    PlaylistData * playlist = lookup_playlist (playlist_num);
     bool can_play = false;
     bool position_changed = false;
 
@@ -907,7 +914,7 @@ EXPORT int aud_playlist_get_temporary ()
     return list;
 }
 
-static void set_position (Playlist * playlist, Entry * entry, bool update_shuffle)
+static void set_position (PlaylistData * playlist, Entry * entry, bool update_shuffle)
 {
     playlist->position = entry;
     playlist->resume_time = 0;
@@ -1035,11 +1042,13 @@ EXPORT String aud_playlist_entry_get_filename (int playlist_num, int entry_num)
 }
 
 EXPORT PluginHandle * aud_playlist_entry_get_decoder (int playlist_num,
- int entry_num, bool fast, String * error)
+ int entry_num, Playlist::GetMode mode, String * error)
 {
     ENTER;
 
-    Entry * entry = get_entry (playlist_num, entry_num, ! fast, false);
+    const bool wait = (mode == Playlist::Wait || mode == Playlist::WaitGuess);
+
+    Entry * entry = get_entry (playlist_num, entry_num, wait, false);
     PluginHandle * decoder = entry ? entry->decoder : nullptr;
 
     if (error)
@@ -1049,51 +1058,23 @@ EXPORT PluginHandle * aud_playlist_entry_get_decoder (int playlist_num,
 }
 
 EXPORT Tuple aud_playlist_entry_get_tuple (int playlist_num, int entry_num,
- bool fast, String * error)
+ Playlist::GetMode mode, String * error)
 {
     ENTER;
 
-    Entry * entry = get_entry (playlist_num, entry_num, false, ! fast);
-    Tuple tuple = entry->tuple.ref ();
+    const bool wait = (mode == Playlist::Wait || mode == Playlist::WaitGuess);
+    const bool guess = (mode == Playlist::Guess || mode == Playlist::WaitGuess);
+
+    Entry * entry = get_entry (playlist_num, entry_num, false, wait);
+
+    Tuple tuple;
+    if ((entry->scanned && ! entry->failed) || guess)
+        tuple = entry->tuple.ref ();
 
     if (error)
         * error = entry ? entry->error : String ();
 
     RETURN (tuple);
-}
-
-EXPORT String aud_playlist_entry_get_title (int playlist_num, int entry_num, bool fast)
-{
-    ENTER;
-
-    Entry * entry = get_entry (playlist_num, entry_num, false, ! fast);
-    String title = entry ? (entry->formatted ? entry->formatted : entry->title) : String ();
-
-    RETURN (title);
-}
-
-EXPORT void aud_playlist_entry_describe (int playlist_num, int entry_num,
- String & title, String & artist, String & album, bool fast)
-{
-    ENTER;
-
-    Entry * entry = get_entry (playlist_num, entry_num, false, ! fast);
-
-    title = entry ? entry->title : String ();
-    artist = entry ? entry->artist : String ();
-    album = entry ? entry->album : String ();
-
-    LEAVE;
-}
-
-EXPORT int aud_playlist_entry_get_length (int playlist_num, int entry_num, bool fast)
-{
-    ENTER;
-
-    Entry * entry = get_entry (playlist_num, entry_num, false, ! fast);
-    int length = entry ? entry->length : 0;
-
-    RETURN (length);
 }
 
 EXPORT void aud_playlist_set_position (int playlist_num, int entry_num)
@@ -1296,7 +1277,7 @@ EXPORT int aud_playlist_shift (int playlist_num, int entry_num, int distance)
     RETURN (shift);
 }
 
-static Entry * find_unselected_focus (Playlist * playlist)
+static Entry * find_unselected_focus (PlaylistData * playlist)
 {
     if (! playlist->focus || ! playlist->focus->selected)
         return playlist->focus;
@@ -1475,7 +1456,6 @@ enum {COMPARE_TYPE_FILENAME, COMPARE_TYPE_TUPLE, COMPARE_TYPE_TITLE};
 struct CompareData {
     PlaylistStringCompareFunc filename_compare;
     PlaylistTupleCompareFunc tuple_compare;
-    PlaylistStringCompareFunc title_compare;
 };
 
 static int compare_cb (const SmartPtr<Entry> & a, const SmartPtr<Entry> & b, void * _data)
@@ -1488,9 +1468,6 @@ static int compare_cb (const SmartPtr<Entry> & a, const SmartPtr<Entry> & b, voi
         diff = data->filename_compare (a->filename, b->filename);
     else if (data->tuple_compare)
         diff = data->tuple_compare (a->tuple, b->tuple);
-    else if (data->title_compare)
-        diff = data->title_compare (a->formatted ? a->formatted : a->filename,
-         b->formatted ? b->formatted : b->filename);
 
     if (diff)
         return diff;
@@ -1499,7 +1476,7 @@ static int compare_cb (const SmartPtr<Entry> & a, const SmartPtr<Entry> & b, voi
     return a->number - b->number;
 }
 
-static void sort (Playlist * playlist, CompareData * data)
+static void sort (PlaylistData * playlist, CompareData * data)
 {
     playlist->entries.sort (compare_cb, data);
     number_entries (playlist, 0, playlist->entries.len ());
@@ -1507,7 +1484,7 @@ static void sort (Playlist * playlist, CompareData * data)
     queue_update (PLAYLIST_UPDATE_STRUCTURE, playlist, 0, playlist->entries.len ());
 }
 
-static void sort_selected (Playlist * playlist, CompareData * data)
+static void sort_selected (PlaylistData * playlist, CompareData * data)
 {
     int entries = playlist->entries.len ();
 
@@ -1532,14 +1509,14 @@ static void sort_selected (Playlist * playlist, CompareData * data)
     queue_update (PLAYLIST_UPDATE_STRUCTURE, playlist, 0, entries);
 }
 
-static bool entries_are_scanned (Playlist * playlist, bool selected)
+static bool entries_are_scanned (PlaylistData * playlist, bool selected)
 {
     for (auto & entry : playlist->entries)
     {
         if (selected && ! entry->selected)
             continue;
 
-        if (! entry->tuple)
+        if (! entry->scanned)
         {
             aud_ui_show_error (_("The playlist cannot be sorted because "
              "metadata scanning is still in progress (or has been disabled)."));
@@ -1571,17 +1548,6 @@ EXPORT void aud_playlist_sort_by_tuple (int playlist_num, PlaylistTupleCompareFu
     LEAVE;
 }
 
-EXPORT void aud_playlist_sort_by_title (int playlist_num, PlaylistStringCompareFunc compare)
-{
-    ENTER_GET_PLAYLIST ();
-
-    CompareData data = {nullptr, nullptr, compare};
-    if (entries_are_scanned (playlist, false))
-        sort (playlist, & data);
-
-    LEAVE;
-}
-
 EXPORT void aud_playlist_sort_selected_by_filename (int playlist_num,
  PlaylistStringCompareFunc compare)
 {
@@ -1605,18 +1571,6 @@ EXPORT void aud_playlist_sort_selected_by_tuple (int playlist_num,
     LEAVE;
 }
 
-EXPORT void aud_playlist_sort_selected_by_title (int playlist_num,
- PlaylistStringCompareFunc compare)
-{
-    ENTER_GET_PLAYLIST ();
-
-    CompareData data = {nullptr, nullptr, compare};
-    if (entries_are_scanned (playlist, true))
-        sort_selected (playlist, & data);
-
-    LEAVE;
-}
-
 static void playlist_reformat_titles ()
 {
     ENTER;
@@ -1627,12 +1581,7 @@ static void playlist_reformat_titles ()
     for (auto & playlist : playlists)
     {
         for (auto & entry : playlist->entries)
-        {
-            if (entry->tuple)
-                entry->formatted = title_formatter->evaluate (entry->tuple);
-            else
-                entry->formatted = String ();
-        }
+            title_formatter->format (entry->tuple);
 
         queue_update (PLAYLIST_UPDATE_METADATA, playlist.get (), 0, playlist->entries.len ());
     }
@@ -1839,7 +1788,7 @@ EXPORT void aud_playlist_queue_delete_selected (int playlist_num)
     LEAVE;
 }
 
-static bool shuffle_prev (Playlist * playlist)
+static bool shuffle_prev (PlaylistData * playlist)
 {
     Entry * found = nullptr;
 
@@ -1886,7 +1835,7 @@ bool playlist_prev_song (int playlist_num)
     return true;
 }
 
-static bool shuffle_next (Playlist * playlist)
+static bool shuffle_next (PlaylistData * playlist)
 {
     int choice = 0;
     Entry * found = nullptr;
@@ -1929,7 +1878,7 @@ static bool shuffle_next (Playlist * playlist)
     return true;
 }
 
-static void shuffle_reset (Playlist * playlist)
+static void shuffle_reset (PlaylistData * playlist)
 {
     playlist->last_shuffle_num = 0;
 
@@ -1937,7 +1886,7 @@ static void shuffle_reset (Playlist * playlist)
         entry->shuffle_num = 0;
 }
 
-static bool next_song_locked (Playlist * playlist, bool repeat, int hint)
+static bool next_song_locked (PlaylistData * playlist, bool repeat, int hint)
 {
     int entries = playlist->entries.len ();
     if (! entries)
@@ -2017,6 +1966,7 @@ String playback_entry_get_filename ()
     RETURN (filename);
 }
 
+// the mode for this call is Playlist::Wait
 PluginHandle * playback_entry_get_decoder (String * error)
 {
     ENTER;
@@ -2030,37 +1980,21 @@ PluginHandle * playback_entry_get_decoder (String * error)
     RETURN (decoder);
 }
 
-Tuple playback_entry_get_tuple (String * error)
+// the mode for this call is Playlist::Wait or Playlist::WaitGuess
+Tuple playback_entry_get_tuple (bool guess, String * error)
 {
     ENTER;
 
     Entry * entry = get_playback_entry (false, true);
-    Tuple tuple = entry->tuple.ref ();
+
+    Tuple tuple;
+    if ((entry->scanned && ! entry->failed) || guess)
+        tuple = entry->tuple.ref ();
 
     if (error)
         * error = entry ? entry->error : String ();
 
     RETURN (tuple);
-}
-
-String playback_entry_get_title ()
-{
-    ENTER;
-
-    Entry * entry = get_playback_entry (false, true);
-    String title = entry ? (entry->formatted ? entry->formatted : entry->title) : String ();
-
-    RETURN (title);
-}
-
-int playback_entry_get_length ()
-{
-    ENTER;
-
-    Entry * entry = get_playback_entry (false, true);
-    int length = entry ? entry->length : 0;
-
-    RETURN (length);
 }
 
 void playback_entry_set_tuple (Tuple && tuple)
@@ -2172,7 +2106,7 @@ void playlist_load_state ()
     while (parse_integer ("playlist", & playlist_num) && playlist_num >= 0 &&
      playlist_num < playlists.len ())
     {
-        Playlist * playlist = playlists[playlist_num].get ();
+        PlaylistData * playlist = playlists[playlist_num].get ();
         int entries = playlist->entries.len ();
 
         parse_next (handle);

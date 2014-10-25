@@ -575,14 +575,16 @@ static void add_comment_frame (const char * text, FrameDict & dict)
     g_free (utf16);
 }
 
-static void add_frameFromTupleStr (const Tuple & tuple, int field, int id3_field, FrameDict & dict)
+static void add_frameFromTupleStr (const Tuple & tuple, Tuple::Field field,
+ int id3_field, FrameDict & dict)
 {
     add_text_frame (id3_field, tuple.get_str (field), dict);
 }
 
-static void add_frameFromTupleInt (const Tuple & tuple, int field, int id3_field, FrameDict & dict)
+static void add_frameFromTupleInt (const Tuple & tuple, Tuple::Field field,
+ int id3_field, FrameDict & dict)
 {
-    if (tuple.get_value_type (field) != TUPLE_INT)
+    if (tuple.get_value_type (field) != Tuple::Int)
     {
         remove_frame (id3_field, dict);
         return;
@@ -623,35 +625,35 @@ bool ID3v24TagModule::read_tag (Tuple & tuple, VFSFile & handle)
         switch (get_frame_id (frame.key))
         {
           case ID3_ALBUM:
-            id3_associate_string (tuple, FIELD_ALBUM, & frame[0], frame.len ());
+            id3_associate_string (tuple, Tuple::Album, & frame[0], frame.len ());
             break;
           case ID3_TITLE:
-            id3_associate_string (tuple, FIELD_TITLE, & frame[0], frame.len ());
+            id3_associate_string (tuple, Tuple::Title, & frame[0], frame.len ());
             break;
           case ID3_COMPOSER:
-            id3_associate_string (tuple, FIELD_COMPOSER, & frame[0], frame.len ());
+            id3_associate_string (tuple, Tuple::Composer, & frame[0], frame.len ());
             break;
           case ID3_COPYRIGHT:
-            id3_associate_string (tuple, FIELD_COPYRIGHT, & frame[0], frame.len ());
+            id3_associate_string (tuple, Tuple::Copyright, & frame[0], frame.len ());
             break;
           case ID3_DATE:
-            id3_associate_string (tuple, FIELD_DATE, & frame[0], frame.len ());
+            id3_associate_string (tuple, Tuple::Date, & frame[0], frame.len ());
             break;
           case ID3_LENGTH:
             id3_associate_length (tuple, & frame[0], frame.len ());
             break;
           case ID3_ARTIST:
-            id3_associate_string (tuple, FIELD_ARTIST, & frame[0], frame.len ());
+            id3_associate_string (tuple, Tuple::Artist, & frame[0], frame.len ());
             break;
           case ID3_ALBUM_ARTIST:
-            id3_associate_string (tuple, FIELD_ALBUM_ARTIST, & frame[0], frame.len ());
+            id3_associate_string (tuple, Tuple::AlbumArtist, & frame[0], frame.len ());
             break;
           case ID3_TRACKNR:
-            id3_associate_int (tuple, FIELD_TRACK_NUMBER, & frame[0], frame.len ());
+            id3_associate_int (tuple, Tuple::Track, & frame[0], frame.len ());
             break;
           case ID3_YEAR:
           case ID3_RECORDING_TIME:
-            id3_associate_int (tuple, FIELD_YEAR, & frame[0], frame.len ());
+            id3_associate_int (tuple, Tuple::Year, & frame[0], frame.len ());
             break;
           case ID3_GENRE:
             id3_decode_genre (tuple, & frame[0], frame.len ());
@@ -720,15 +722,15 @@ bool ID3v24TagModule::write_tag (const Tuple & tuple, VFSFile & f)
         read_all_frames (f, version, syncsafe, data_size, dict);
 
     //make the new frames from tuple and replace in the dictionary the old frames with the new ones
-    add_frameFromTupleStr (tuple, FIELD_TITLE, ID3_TITLE, dict);
-    add_frameFromTupleStr (tuple, FIELD_ARTIST, ID3_ARTIST, dict);
-    add_frameFromTupleStr (tuple, FIELD_ALBUM, ID3_ALBUM, dict);
-    add_frameFromTupleStr (tuple, FIELD_ALBUM_ARTIST, ID3_ALBUM_ARTIST, dict);
-    add_frameFromTupleInt (tuple, FIELD_YEAR, ID3_YEAR, dict);
-    add_frameFromTupleInt (tuple, FIELD_TRACK_NUMBER, ID3_TRACKNR, dict);
-    add_frameFromTupleStr (tuple, FIELD_GENRE, ID3_GENRE, dict);
+    add_frameFromTupleStr (tuple, Tuple::Title, ID3_TITLE, dict);
+    add_frameFromTupleStr (tuple, Tuple::Artist, ID3_ARTIST, dict);
+    add_frameFromTupleStr (tuple, Tuple::Album, ID3_ALBUM, dict);
+    add_frameFromTupleStr (tuple, Tuple::AlbumArtist, ID3_ALBUM_ARTIST, dict);
+    add_frameFromTupleInt (tuple, Tuple::Year, ID3_YEAR, dict);
+    add_frameFromTupleInt (tuple, Tuple::Track, ID3_TRACKNR, dict);
+    add_frameFromTupleStr (tuple, Tuple::Genre, ID3_GENRE, dict);
 
-    String comment = tuple.get_str (FIELD_COMMENT);
+    String comment = tuple.get_str (Tuple::Comment);
     add_comment_frame (comment, dict);
 
     /* location and size of non-tag data */

@@ -94,10 +94,9 @@ bool playlist_insert_playlist_raw (int list, int at, const char * filename)
     return true;
 }
 
-EXPORT bool aud_playlist_save (int list, const char * filename)
+EXPORT bool aud_playlist_save (int list, const char * filename, Playlist::GetMode mode)
 {
     String title = aud_playlist_get_title (list);
-    bool fast = aud_get_bool (nullptr, "metadata_on_play");
 
     Index<PlaylistAddItem> items;
     items.insert (0, aud_playlist_entry_count (list));
@@ -106,7 +105,7 @@ EXPORT bool aud_playlist_save (int list, const char * filename)
     for (PlaylistAddItem & item : items)
     {
         item.filename = aud_playlist_entry_get_filename (list, i);
-        item.tuple = aud_playlist_entry_get_tuple (list, i, fast);
+        item.tuple = aud_playlist_entry_get_tuple (list, i, mode);
         i ++;
     }
 
