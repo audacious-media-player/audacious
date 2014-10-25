@@ -78,6 +78,8 @@ struct TupleData
     bool is_set (int field) const
         { return (setmask & bitmask (field)); }
 
+    bool is_same (const TupleData & other);
+
     TupleVal * lookup (int field, bool add, bool remove);
     void set_int (int field, int x);
     void set_str (int field, const char * str);
@@ -339,6 +341,40 @@ TupleData::~TupleData ()
     delete[] subtunes;
 }
 
+bool TupleData::is_same (const TupleData & other)
+{
+    if (setmask != other.setmask || nsubtunes != other.nsubtunes ||
+     (! subtunes) != (! other.subtunes))
+        return false;
+
+    auto a = vals.begin ();
+    auto b = other.vals.begin ();
+
+    for (int f = 0; f < n_private_fields; f ++)
+    {
+        if (setmask & bitmask (f))
+        {
+            bool same;
+
+            if (field_info[f].type == Tuple::String)
+                same = (a->str == b->str);
+            else
+                same = (a->x = b->x);
+
+            if (! same)
+                return false;
+
+            a ++;
+            b ++;
+        }
+    }
+
+    if (subtunes && memcmp (subtunes, other.subtunes, sizeof (int) * nsubtunes))
+        return false;
+
+    return true;
+}
+
 TupleData * TupleData::ref (TupleData * tuple)
 {
     if (tuple)
@@ -369,6 +405,17 @@ TupleData * TupleData::copy_on_write (TupleData * tuple)
 EXPORT Tuple::~Tuple ()
 {
     TupleData::unref (data);
+}
+
+EXPORT bool Tuple::operator== (const Tuple & b) const
+{
+    if (data == b.data)
+        return true;
+
+    if (! data || ! b.data)
+        return false;
+
+    return data->is_same (* b.data);
 }
 
 EXPORT Tuple Tuple::ref () const

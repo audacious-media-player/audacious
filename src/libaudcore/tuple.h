@@ -127,6 +127,10 @@ public:
     explicit operator bool () const
         { return (bool) data; }
 
+    bool operator== (const Tuple & b) const;
+    bool operator!= (const Tuple & b) const
+        { return ! operator== (b); }
+
     Tuple ref () const;
 
     /* Returns the value type of a field if set, otherwise Empty. */
