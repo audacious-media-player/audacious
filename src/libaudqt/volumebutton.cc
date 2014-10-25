@@ -40,7 +40,7 @@ EXPORT VolumeButton::VolumeButton (QWidget * parent) :
     m_container->setLayout (layout);
 
     connect (this, & QAbstractButton::clicked, this, & VolumeButton::showSlider);
-    connect (m_slider, & QAbstractSlider::sliderMoved, aud_drct_set_volume_main);
+    connect (m_slider, & QAbstractSlider::valueChanged, aud_drct_set_volume_main);
 }
 
 EXPORT void VolumeButton::showSlider ()
