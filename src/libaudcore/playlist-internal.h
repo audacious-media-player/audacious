@@ -42,7 +42,7 @@ bool playlist_next_song (int playlist, bool repeat);
 int playback_entry_get_position ();
 String playback_entry_get_filename ();
 PluginHandle * playback_entry_get_decoder (String * error = nullptr);
-Tuple playback_entry_get_tuple (bool guess, String * error = nullptr);
+Tuple playback_entry_get_tuple (Playlist::GetMode mode, String * error = nullptr);
 
 void playback_entry_set_tuple (Tuple && tuple);
 

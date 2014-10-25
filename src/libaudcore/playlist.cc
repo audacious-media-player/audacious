@@ -2023,12 +2023,14 @@ PluginHandle * playback_entry_get_decoder (String * error)
     RETURN (decoder);
 }
 
-// the mode for this call is Playlist::Wait or Playlist::WaitGuess
-Tuple playback_entry_get_tuple (bool guess, String * error)
+Tuple playback_entry_get_tuple (Playlist::GetMode mode, String * error)
 {
     ENTER;
 
-    Entry * entry = get_playback_entry (false, true);
+    const bool wait = (mode == Playlist::Wait || mode == Playlist::WaitGuess);
+    const bool guess = (mode == Playlist::Guess || mode == Playlist::WaitGuess);
+
+    Entry * entry = get_playback_entry (false, wait);
 
     Tuple tuple;
     if ((entry->scanned && ! entry->failed) || guess)

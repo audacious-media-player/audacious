@@ -62,6 +62,7 @@ static int current_bitrate = -1, current_samplerate = -1, current_channels = -1;
 
 static int current_entry = -1;
 static String current_filename;
+static Tuple current_tuple;
 static String current_title;
 static int current_length = -1;
 
@@ -101,23 +102,33 @@ static void read_gain_from_tuple (const Tuple & tuple)
     }
 }
 
-static bool update_from_playlist (void)
+static void update_from_playlist ()
 {
+    // if we already read good data, do not overwrite it with a guess
+    Tuple tuple = playback_entry_get_tuple (current_tuple ? Playlist::Nothing : Playlist::Guess);
+
+    if (tuple && tuple != current_tuple)
+    {
+        current_tuple = std::move (tuple);
+        if (ready_flag)
+            event_queue ("tuple change", nullptr);
+    }
+
     int entry = playback_entry_get_position ();
-    Tuple tuple = playback_entry_get_tuple (true);
-    String title = tuple.get_str (Tuple::FormattedTitle);
-    int length = tuple.get_int (Tuple::Length);
+    String title = current_tuple.get_str (Tuple::FormattedTitle);
+    int length = current_tuple.get_int (Tuple::Length);
 
-    if (entry == current_entry && title == current_title && length == current_length)
-        return false;
-
-    current_entry = entry;
-    current_title = title;
-    current_length = length;
-    return true;
+    if (entry != current_entry || title != current_title || length != current_length)
+    {
+        current_entry = entry;
+        current_title = title;
+        current_length = length;
+        if (ready_flag)
+            event_queue ("title change", nullptr);
+    }
 }
 
-EXPORT bool aud_drct_get_ready (void)
+EXPORT bool aud_drct_get_ready ()
 {
     if (! playing)
         return false;
@@ -128,7 +139,7 @@ EXPORT bool aud_drct_get_ready (void)
     return ready;
 }
 
-static void set_ready (void)
+static void set_ready ()
 {
     assert (playing);
 
@@ -142,7 +153,7 @@ static void set_ready (void)
     pthread_mutex_unlock (& ready_mutex);
 }
 
-static void wait_until_ready (void)
+static void wait_until_ready ()
 {
     assert (playing);
     pthread_mutex_lock (& ready_mutex);
@@ -158,14 +169,11 @@ static void update_cb (void * hook_data, void *)
 {
     assert (playing);
 
-    if (hook_data < PLAYLIST_UPDATE_METADATA || ! aud_drct_get_ready ())
-        return;
-
-    if (update_from_playlist ())
-        event_queue ("title change", nullptr);
+    if (hook_data >= PLAYLIST_UPDATE_METADATA && aud_drct_get_ready ())
+        update_from_playlist ();
 }
 
-EXPORT int aud_drct_get_time (void)
+EXPORT int aud_drct_get_time ()
 {
     if (! playing)
         return 0;
@@ -175,7 +183,7 @@ EXPORT int aud_drct_get_time (void)
     return output_get_time () - time_offset;
 }
 
-EXPORT void aud_drct_pause (void)
+EXPORT void aud_drct_pause ()
 {
     if (! playing)
         return;
@@ -192,7 +200,7 @@ EXPORT void aud_drct_pause (void)
         hook_call ("playback unpause", nullptr);
 }
 
-static void playback_cleanup (void)
+static void playback_cleanup ()
 {
     assert (playing);
     wait_until_ready ();
@@ -214,6 +222,7 @@ static void playback_cleanup (void)
     event_queue_cancel ("playback seek", nullptr);
     event_queue_cancel ("info change", nullptr);
     event_queue_cancel ("title change", nullptr);
+    event_queue_cancel ("tuple change", nullptr);
 
     end_queue.stop ();
 
@@ -235,6 +244,7 @@ static void playback_cleanup (void)
 
     current_entry = -1;
     current_filename = String ();
+    current_tuple = Tuple ();
     current_title = String ();
     current_length = -1;
 
@@ -246,7 +256,7 @@ static void playback_cleanup (void)
     aud_set_bool (nullptr, "stop_after_current_song", false);
 }
 
-void playback_stop (void)
+void playback_stop ()
 {
     if (stopped)
         return;
@@ -350,7 +360,7 @@ static void * playback_thread (void *)
         }
     }
 
-    if (! (tuple = playback_entry_get_tuple (false, & error)))
+    if (! (tuple = playback_entry_get_tuple (Playlist::Wait, & error)))
     {
         playback_error = true;
         goto DONE;
@@ -381,6 +391,8 @@ static void * playback_thread (void *)
         playback_error = true;
         goto DONE;
     }
+
+    current_tuple = std::move (tuple);
 
     playback_error = ! current_decoder->play (current_filename, current_file);
 
@@ -429,12 +441,12 @@ void playback_play (int seek_time, bool pause)
     hook_call ("playback begin", nullptr);
 }
 
-EXPORT bool aud_drct_get_playing (void)
+EXPORT bool aud_drct_get_playing ()
 {
     return playing;
 }
 
-EXPORT bool aud_drct_get_paused (void)
+EXPORT bool aud_drct_get_paused ()
 {
     return paused;
 }
@@ -518,11 +530,11 @@ EXPORT void aud_input_write_audio (const void * data, int length)
     }
 }
 
-EXPORT Tuple aud_input_get_tuple (void)
+EXPORT Tuple aud_input_get_tuple ()
 {
     assert (playing);
 
-    Tuple tuple = playback_entry_get_tuple (true);
+    Tuple tuple = current_tuple.ref ();
     tuple.delete_fallbacks ();
     return tuple;
 }
@@ -542,13 +554,13 @@ EXPORT void aud_input_set_bitrate (int bitrate)
         event_queue ("info change", nullptr);
 }
 
-EXPORT bool aud_input_check_stop (void)
+EXPORT bool aud_input_check_stop ()
 {
     assert (playing);
     return __sync_fetch_and_add (& stop_flag, 0);
 }
 
-EXPORT int aud_input_check_seek (void)
+EXPORT int aud_input_check_seek ()
 {
     assert (playing);
 
@@ -565,15 +577,17 @@ EXPORT int aud_input_check_seek (void)
     return seek;
 }
 
-EXPORT String aud_drct_get_filename (void)
+EXPORT int aud_drct_get_position ()
 {
-    if (! playing)
-        return String ();
+    return playback_entry_get_position ();
+}
 
+EXPORT String aud_drct_get_filename ()
+{
     return current_filename;
 }
 
-EXPORT String aud_drct_get_title (void)
+EXPORT String aud_drct_get_title ()
 {
     if (! playing)
         return String ();
@@ -589,7 +603,15 @@ EXPORT String aud_drct_get_title (void)
     return String (str_concat ({prefix, current_title, suffix}));
 }
 
-EXPORT int aud_drct_get_length (void)
+EXPORT Tuple aud_drct_get_tuple ()
+{
+    if (playing)
+        wait_until_ready ();
+
+    return current_tuple.ref ();
+}
+
+EXPORT int aud_drct_get_length ()
 {
     if (playing)
         wait_until_ready ();
