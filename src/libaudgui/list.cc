@@ -385,7 +385,10 @@ static gboolean autoscroll (GtkWidget * widget)
 
     GtkAdjustment * adj = gtk_tree_view_get_vadjustment ((GtkTreeView *) widget);
     if (! adj)
+    {
+        stop_autoscroll (model);
         return false;
+    }
 
     int pos = gtk_adjustment_get_value (adj) + model->scroll_speed;
     int clamped = aud::clamp<int> (pos, 0, gtk_adjustment_get_upper (adj) -
@@ -393,7 +396,10 @@ static gboolean autoscroll (GtkWidget * widget)
     gtk_adjustment_set_value (adj, clamped);
 
     if (clamped != pos) /* reached top or bottom? */
+    {
+        stop_autoscroll (model);
         return false;
+    }
 
     if (model->scroll_speed > 0)
         model->scroll_speed = aud::min (model->scroll_speed + 2, 100);
