@@ -161,6 +161,8 @@ QWidget * IntegerWidget::widget ()
         m_layout.addWidget (& m_label_post);
     }
 
+    update ();
+
     /*
      * Qt has two different valueChanged signals for spin boxes.  So we have to do an explicit
      * cast to the type of the correct valueChanged signal.  Unfortunately Qt wants us to use
@@ -174,8 +176,6 @@ QWidget * IntegerWidget::widget ()
     });
 
     m_container.setLayout (& m_layout);
-
-    update ();
 
     return & m_container;
 }
@@ -230,6 +230,8 @@ QWidget * DoubleWidget::widget ()
         m_layout.addWidget (& m_label_post);
     }
 
+    update ();
+
     /* an explanation of this crime against humanity is above in IntegerWidget::widget().  --kaniini. */
     QObject::connect (& m_spinner,
                       static_cast <void (QDoubleSpinBox::*) (double)> (& QDoubleSpinBox::valueChanged),
@@ -238,8 +240,6 @@ QWidget * DoubleWidget::widget ()
     });
 
     m_container.setLayout (& m_layout);
-
-    update ();
 
     return & m_container;
 }
