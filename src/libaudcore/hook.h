@@ -52,4 +52,38 @@ void event_queue_cancel (const char * name, void * data);
 /* Cancels all pending hook calls. */
 void event_queue_cancel_all (void);
 
+/* Convenience wrapper for C++ classes.  Allows non-static member functions to
+ * be used as hook callbacks.  The HookReceiver should be made a member of the
+ * class in question so that hook_dissociate() is called automatically from the
+ * destructor. */
+template<class T>
+class HookReceiver
+{
+public:
+    HookReceiver (const char * hook, T * target, void (T::* func) ()) :
+        hook (hook),
+        target (target),
+        func (func)
+    {
+        hook_associate (hook, run, this);
+    }
+
+    ~HookReceiver ()
+        { hook_dissociate_full (hook, run, this); }
+
+    HookReceiver (const HookReceiver &) = delete;
+    void operator= (const HookReceiver &) = delete;
+
+private:
+    const char * const hook;
+    T * const target;
+    void (T::* const func) ();
+
+    static void run (void *, void * recv_)
+    {
+        auto recv = (HookReceiver *) recv_;
+        (recv->target->* recv->func) ();
+    }
+};
+
 #endif /* LIBAUDCORE_HOOK_H */
