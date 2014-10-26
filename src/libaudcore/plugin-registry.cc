@@ -117,7 +117,7 @@ static FILE * open_registry_file (const char * mode)
     StringBuf path = filename_build ({aud_get_path (AudPath::UserDir), FILENAME});
     FILE * handle = g_fopen (path, mode);
 
-    if (! handle)
+    if (! handle && errno != ENOENT)
         AUDWARN ("%s: %s\n", (const char *) path, strerror (errno));
 
     return handle;
