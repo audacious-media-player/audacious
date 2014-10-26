@@ -91,11 +91,11 @@ QVariant LogEntryModel::headerData (int section, Qt::Orientation orientation, in
     {
         switch (section)
         {
-            case LogEntryColumn::Level: return QString (translate_str ("Level"));
-            case LogEntryColumn::File: return QString (translate_str ("Filename"));
-            case LogEntryColumn::Line: return QString (translate_str ("Line"));
-            case LogEntryColumn::Function: return QString (translate_str ("Function"));
-            case LogEntryColumn::Message: return QString (translate_str ("Message"));
+            case LogEntryColumn::Level: return QString (_("Level"));
+            case LogEntryColumn::File: return QString (_("Filename"));
+            case LogEntryColumn::Line: return QString (_("Line"));
+            case LogEntryColumn::Function: return QString (_("Function"));
+            case LogEntryColumn::Message: return QString (_("Message"));
         }
     }
 
@@ -160,7 +160,7 @@ private:
 LogEntryInspector::LogEntryInspector (QWidget * parent) :
     QDialog (parent)
 {
-    setWindowTitle (translate_str ("Log Inspector"));
+    setWindowTitle (_("Log Inspector"));
     setLayout (& m_layout);
 
     m_model = new LogEntryModel (this);

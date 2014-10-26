@@ -106,8 +106,8 @@ private:
 
 QueueManagerDialog::QueueManagerDialog (QWidget * parent) : QDialog (parent)
 {
-    m_btn_unqueue.setText (translate_str (_("_Unqueue")));
-    m_btn_close.setText (translate_str (_("_Close")));
+    m_btn_unqueue.setText (translate_str (N_("_Unqueue")));
+    m_btn_close.setText (translate_str (N_("_Close")));
 
     connect (& m_btn_close, &QAbstractButton::clicked, this, &QWidget::hide);
     connect (& m_btn_unqueue, &QAbstractButton::clicked, this, &QueueManagerDialog::removeSelected);

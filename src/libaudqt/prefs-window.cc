@@ -475,7 +475,7 @@ static void * output_create_config_button (void)
 {
     bool enabled = aud_plugin_has_configure (aud_plugin_get_current (PLUGIN_TYPE_OUTPUT));
 
-    output_config_button = new QPushButton (translate_str (_("_Settings")));
+    output_config_button = new QPushButton (translate_str (N_("_Settings")));
     output_config_button->setEnabled (enabled);
 
     QObject::connect (output_config_button, &QAbstractButton::clicked, [=] (bool) {
@@ -489,7 +489,7 @@ static void * output_create_about_button (void)
 {
     bool enabled = aud_plugin_has_about (aud_plugin_get_current (PLUGIN_TYPE_OUTPUT));
 
-    output_about_button = new QPushButton (translate_str (_("_About")));
+    output_about_button = new QPushButton (translate_str (N_("_About")));
     output_about_button->setEnabled (enabled);
 
     QObject::connect (output_about_button, &QAbstractButton::clicked, [=] (bool) {
@@ -618,10 +618,10 @@ static void create_plugin_category_page (int category_id, const char * category_
     QDialogButtonBox * bbox = new QDialogButtonBox;
     vbox->addWidget (bbox);
 
-    QPushButton * about_btn = new QPushButton (translate_str (_("_About")));
+    QPushButton * about_btn = new QPushButton (translate_str (N_("_About")));
     about_btn->setEnabled (false);
 
-    QPushButton * settings_btn = new QPushButton (translate_str (_("_Settings")));
+    QPushButton * settings_btn = new QPushButton (translate_str (N_("_Settings")));
     settings_btn->setEnabled (false);
 
     bbox->addButton (about_btn, QDialogButtonBox::ActionRole);

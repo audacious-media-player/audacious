@@ -51,8 +51,13 @@ void fileopener_show (bool add);
 
 /* util.cc */
 void window_bring_to_front (QWidget * win);
-void simple_message (const char * title, const char * text, const char * domain = nullptr);
-QString translate_str (const char * str, const char * domain = nullptr);
+void simple_message (const char * title, const char * text);
+QString translate_str (const char * str, const char * domain);
+
+#ifdef PACKAGE
+static inline QString translate_str (const char * str)
+    { return translate_str (str, PACKAGE); }
+#endif
 
 /* plugin-menu.cc */
 QMenu * menu_get_by_id (int id);

@@ -48,7 +48,7 @@ EqualizerWindow::EqualizerWindow (QWidget * parent) : QDialog (parent)
     for (int i = 0; i < AUD_EQ_NBANDS; i++)
         createSlider (i, names[i]);
 
-    m_onoff_checkbox.setText (translate_str (_("_Enable")));
+    m_onoff_checkbox.setText (translate_str (N_("_Enable")));
     m_layout.addWidget (& m_onoff_checkbox);
 
     m_slider_container.setLayout (& m_slider_layout);

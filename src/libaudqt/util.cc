@@ -43,14 +43,14 @@ EXPORT void window_bring_to_front (QWidget * window)
     window->activateWindow ();
 }
 
-EXPORT void simple_message (const char * title, const char * text, const char * domain)
+EXPORT void simple_message (const char * title, const char * text)
 {
     QDialog msgbox;
     QVBoxLayout vbox;
     QLabel label;
     QDialogButtonBox bbox;
 
-    label.setText (translate_str (text, domain));
+    label.setText (text);
     bbox.setStandardButtons (QDialogButtonBox::Ok);
 
     QObject::connect (& bbox, &QDialogButtonBox::accepted, & msgbox, &QDialog::accept);
@@ -68,7 +68,7 @@ EXPORT void simple_message (const char * title, const char * text, const char * 
 EXPORT QString translate_str (const char * str, const char * domain)
 {
     /* translate the gtk+ accelerator (_) into a qt accelerator (&) */
-    return QString (dgettext (domain ? domain : PACKAGE, str)).replace ('_', '&');
+    return QString (dgettext (domain, str)).replace ('_', '&');
 }
 
 } // namespace audqt
