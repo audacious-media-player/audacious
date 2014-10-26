@@ -372,7 +372,7 @@ static void * create_titlestring_table (void)
 
     for (auto & t : title_field_tags)
     {
-        QAction * a = mnu_fields->addAction (t.name);
+        QAction * a = mnu_fields->addAction (_(t.name));
         QObject::connect (a, &QAction::triggered, [=] () {
             le->insert (t.tag);
         });
@@ -682,7 +682,7 @@ static void create_plugin_category (QStackedWidget * parent)
 
     for (const PluginCategory & w : plugin_categories)
     {
-        create_plugin_category_page (w.type, w.name, plugin_tabs);
+        create_plugin_category_page (w.type, _(w.name), plugin_tabs);
     }
 
     parent->addWidget (plugin_tabs);
