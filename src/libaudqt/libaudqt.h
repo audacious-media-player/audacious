@@ -52,7 +52,7 @@ void fileopener_show (bool add);
 /* util.cc */
 void window_bring_to_front (QWidget * win);
 void simple_message (const char * title, const char * text, const char * domain = nullptr);
-const char * translate_str (const char * str, const char * domain = nullptr);
+QString translate_str (const char * str, const char * domain = nullptr);
 
 /* plugin-menu.cc */
 QMenu * menu_get_by_id (int id);

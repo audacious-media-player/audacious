@@ -65,44 +65,10 @@ EXPORT void simple_message (const char * title, const char * text, const char * 
 }
 
 /* translate gtk+ accelerators and also handle dgettext() */
-EXPORT const char * translate_str (const char * str, const char * domain)
+EXPORT QString translate_str (const char * str, const char * domain)
 {
-    if (! str)
-        return nullptr;
-
-    const char * src = str;
-
-    if (domain)
-        src = dgettext (domain, src);
-
-    StringBuf buf (strlen (src));
-
-    /* translate the gtk+ accelerator (_) into a qt accelerator (&), so we don't break the
-     * translations.
-     *
-     * the translation rules are: if sentence begins with _ then translate, otherwise only
-     * translate if the previous character is a space.  the backtrack is safe as the first
-     * condition will match if we're at the beginning.
-     *
-     *    --kaniini
-     */
-    char * it = buf;
-    const char * rit = src;
-
-    for (; * rit; it++, rit++)
-    {
-        if (*rit == '_')
-        {
-            if (rit == src || *(rit - 1) == ' ')
-                *it = '&';
-            else
-                *it = *rit;
-        }
-        else
-            *it = *rit;
-    }
-
-    return buf;
+    /* translate the gtk+ accelerator (_) into a qt accelerator (&) */
+    return QString (dgettext (domain ? domain : PACKAGE, str)).replace ('_', '&');
 }
 
-};
+} // namespace audqt
