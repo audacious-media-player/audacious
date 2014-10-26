@@ -11,7 +11,6 @@ SRCS = about.cc			\
        log-inspector.cc         \
        log-inspector.moc        \
        playlist-management.cc	\
-       playlist-management.moc	\
        plugin-menu.cc		\
        prefs-builder.cc		\
        prefs-plugin.cc          \

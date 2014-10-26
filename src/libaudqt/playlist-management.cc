@@ -17,63 +17,61 @@
  * the use of this software.
  */
 
-#include <QtGui>
-#include <QtWidgets>
+#include "libaudqt.h"
+
+#include <QCheckBox>
+#include <QDialog>
+#include <QDialogButtonBox>
+#include <QLabel>
+#include <QPushButton>
+#include <QVBoxLayout>
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/i18n.h>
 #include <libaudcore/runtime.h>
 #include <libaudcore/playlist.h>
 
-#include "libaudqt.h"
-#include "playlist-management.h"
-#include "playlist-management.moc"
-
 namespace audqt {
 
-PlaylistDeleteDialog::PlaylistDeleteDialog (int playlist, QWidget * parent) : QDialog (parent)
+static QDialog * buildDeleteDialog (int playlist)
 {
-    m_playlist_uniqid = aud_playlist_get_unique_id (playlist);
+    auto dialog = new QDialog;
 
-    m_prompt.setText ((const char *) str_printf
+    auto prompt = new QLabel ((const char *) str_printf
      (_("Do you want to permanently remove “%s”?"),
-     (const char *) aud_playlist_get_title (playlist)));
+     (const char *) aud_playlist_get_title (playlist)), dialog);
 
-    m_skip_prompt.setText (translate_str (N_("_Don’t ask again")));
+    auto skip_prompt = new QCheckBox (translate_str (N_("_Don’t ask again")), dialog);
 
-    m_remove.setText (translate_str (N_("_Remove")));
-    m_cancel.setText (translate_str (N_("_Cancel")));
+    auto remove = new QPushButton (translate_str (N_("_Remove")), dialog);
+    auto cancel = new QPushButton (translate_str (N_("_Cancel")), dialog);
 
-    m_buttonbox.addButton (& m_remove, QDialogButtonBox::AcceptRole);
-    m_buttonbox.addButton (& m_cancel, QDialogButtonBox::RejectRole);
+    auto buttonbox = new QDialogButtonBox (dialog);
+    buttonbox->addButton (remove, QDialogButtonBox::AcceptRole);
+    buttonbox->addButton (cancel, QDialogButtonBox::RejectRole);
 
-    connect (& m_buttonbox, &QDialogButtonBox::accepted, this, &PlaylistDeleteDialog::acceptedTrigger);
-    connect (& m_buttonbox, &QDialogButtonBox::rejected, this, &QDialog::close);
+    int id = aud_playlist_get_unique_id (playlist);
+    QObject::connect (buttonbox, &QDialogButtonBox::accepted, [dialog, id] () {
+        int list = aud_playlist_by_unique_id (id);
+        if (list >= 0)
+            aud_playlist_delete (list);
+        dialog->close ();
+    });
 
-    connect (& m_skip_prompt, &QCheckBox::stateChanged, [=] (int state) {
+    QObject::connect (buttonbox, &QDialogButtonBox::rejected, dialog, &QDialog::close);
+
+    QObject::connect (skip_prompt, &QCheckBox::stateChanged, [] (int state) {
         aud_set_bool ("audgui", "no_confirm_playlist_delete", (state == Qt::Checked));
     });
 
-    m_layout.addWidget (& m_prompt);
-    m_layout.addWidget (& m_buttonbox);
-    m_layout.addWidget (& m_skip_prompt);
+    auto layout = new QVBoxLayout (dialog);
+    layout->addWidget (prompt);
+    layout->addWidget (buttonbox);
+    layout->addWidget (skip_prompt);
 
-    setLayout (& m_layout);
-    setWindowTitle (_("Remove Playlist"));
-}
+    dialog->setWindowTitle (_("Remove Playlist"));
 
-PlaylistDeleteDialog::~PlaylistDeleteDialog ()
-{
-}
-
-void PlaylistDeleteDialog::acceptedTrigger ()
-{
-    int list = aud_playlist_by_unique_id (m_playlist_uniqid);
-
-    if (list >= 0)
-        aud_playlist_delete (list);
-
-    close ();
+    return dialog;
 }
 
 EXPORT void playlist_confirm_delete (int playlist)
@@ -84,8 +82,9 @@ EXPORT void playlist_confirm_delete (int playlist)
         return;
     }
 
-    PlaylistDeleteDialog *d = new PlaylistDeleteDialog (playlist);
-    d->show ();
+    auto dialog = buildDeleteDialog (playlist);
+    dialog->setAttribute (Qt::WA_DeleteOnClose);
+    dialog->show ();
 }
 
-}
+} // namespace audqt
