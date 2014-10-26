@@ -85,24 +85,29 @@ static QDialog * buildAboutWindow ()
     return window;
 }
 
-static QDialog *s_aboutwin = nullptr;
+static QDialog * s_aboutwin = nullptr;
 
 namespace audqt {
 
 EXPORT void aboutwindow_show ()
 {
-    if (!s_aboutwin)
+    if (! s_aboutwin)
+    {
         s_aboutwin = buildAboutWindow ();
+        s_aboutwin->setAttribute (Qt::WA_DeleteOnClose);
+
+        QObject::connect (s_aboutwin, & QWidget::destroyed, [] () {
+            s_aboutwin = nullptr;
+        });
+    }
 
     window_bring_to_front (s_aboutwin);
 }
 
 EXPORT void aboutwindow_hide ()
 {
-    if (!s_aboutwin)
-        return;
-
-    s_aboutwin->hide ();
+    if (s_aboutwin)
+        delete s_aboutwin;
 }
 
-}
+} // namespace audqt
