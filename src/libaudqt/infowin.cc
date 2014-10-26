@@ -18,20 +18,23 @@
  * the use of this software.
  */
 
-#include <QtGui>
-#include <QtWidgets>
-#include <QAbstractTableModel>
+#include <QDialog>
+#include <QDialogButtonBox>
+#include <QHBoxLayout>
+#include <QImage>
+#include <QLabel>
+#include <QPixmap>
+#include <QVBoxLayout>
 
 #include <libaudcore/audstrings.h>
+#include <libaudcore/hook.h>
+#include <libaudcore/i18n.h>
+#include <libaudcore/interface.h>
 #include <libaudcore/playlist.h>
 #include <libaudcore/probe.h>
-#include <libaudcore/runtime.h>
-#include <libaudcore/interface.h>
-#include <libaudcore/tuple.h>
-#include <libaudcore/hook.h>
 
-#include <libaudqt/libaudqt.h>
-#include <libaudqt/info-widget.h>
+#include "info-widget.h"
+#include "libaudqt.h"
 
 namespace audqt {
 
@@ -154,4 +157,4 @@ EXPORT void infowin_hide ()
     m_infowin->hide ();
 }
 
-}
+} // namespace audqt

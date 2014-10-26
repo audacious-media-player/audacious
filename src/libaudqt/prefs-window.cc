@@ -18,11 +18,24 @@
  * the use of this software.
  */
 
-#include <QtCore>
-#include <QtGui>
-#include <QtWidgets>
-
-#include <string.h>
+#include <QAction>
+#include <QComboBox>
+#include <QDialog>
+#include <QDialogButtonBox>
+#include <QGridLayout>
+#include <QHeaderView>
+#include <QIcon>
+#include <QItemSelectionModel>
+#include <QLabel>
+#include <QLineEdit>
+#include <QMenu>
+#include <QPushButton>
+#include <QSignalMapper>
+#include <QStackedWidget>
+#include <QTabWidget>
+#include <QToolBar>
+#include <QTreeView>
+#include <QVBoxLayout>
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
@@ -801,4 +814,4 @@ EXPORT void prefswin_show_plugin_page (int type)
     }
 }
 
-};
+} // namespace audqt

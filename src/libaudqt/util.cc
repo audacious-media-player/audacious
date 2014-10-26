@@ -17,8 +17,10 @@
  * the use of this software.
  */
 
-#include <QtGui>
-#include <QtWidgets>
+#include <QDialog>
+#include <QDialogButtonBox>
+#include <QLabel>
+#include <QVBoxLayout>
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/i18n.h>

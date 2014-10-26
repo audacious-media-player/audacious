@@ -20,7 +20,9 @@
 #ifndef LIBAUDQT_VOLUMEBUTTON_H
 #define LIBAUDQT_VOLUMEBUTTON_H
 
-#include <QtWidgets>
+#include <QToolButton>
+
+class QSlider;
 
 namespace audqt {
 
@@ -36,6 +38,6 @@ private:
     QWidget * m_container;
 };
 
-}
+} // namespace audqt
 
 #endif

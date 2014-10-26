@@ -17,15 +17,11 @@
  * the use of this software.
  */
 
-#include <QtGui>
-#include <QtWidgets>
+#include <QImage>
 
-#include <libaudcore/audstrings.h>
 #include <libaudcore/playlist.h>
 #include <libaudcore/probe.h>
 #include <libaudcore/runtime.h>
-
-#include <libaudqt/libaudqt.h>
 
 namespace audqt {
 
@@ -57,5 +53,4 @@ EXPORT QImage art_request_current ()
     return art_request (filename);
 }
 
-}
-
+} // namespace audqt

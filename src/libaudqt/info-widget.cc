@@ -18,20 +18,13 @@
  * the use of this software.
  */
 
-#include <QtGui>
-#include <QtWidgets>
-#include <QAbstractTableModel>
+#include "info-widget.h"
+#include "libaudqt.h"
 
-#include <libaudcore/audstrings.h>
-#include <libaudcore/playlist.h>
+#include <QHeaderView>
+
+#include <libaudcore/i18n.h>
 #include <libaudcore/probe.h>
-#include <libaudcore/runtime.h>
-#include <libaudcore/interface.h>
-#include <libaudcore/tuple.h>
-#include <libaudcore/hook.h>
-
-#include <libaudqt/libaudqt.h>
-#include <libaudqt/info-widget.h>
 
 namespace audqt {
 
@@ -209,4 +202,4 @@ void InfoModel::setTupleData (const Tuple & tuple, String filename, PluginHandle
     m_dirty = false;
 }
 
-}
+} // namespace audqt

@@ -56,4 +56,4 @@ EXPORT void fileopener_show (bool add = false)
     }
 }
 
-}
+} // namespace audqt

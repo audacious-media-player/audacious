@@ -17,7 +17,12 @@
  * the use of this software.
  */
 
+#include "volumebutton.h"
 #include "libaudqt.h"
+
+#include <QIcon>
+#include <QSlider>
+#include <QVBoxLayout>
 
 #include <libaudcore/drct.h>
 
@@ -53,4 +58,4 @@ EXPORT void VolumeButton::showSlider ()
     window_bring_to_front (m_container);
 }
 
-}
+} // namespace audqt

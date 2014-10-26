@@ -20,17 +20,16 @@
 #ifndef LIBAUDQT_H
 #define LIBAUDQT_H
 
-#include <QtCore>
-#include <QtGui>
-#include <QtWidgets>
+#include <QString>
+#include <libaudcore/objects.h>
 
-#include <libaudcore/i18n.h>
-#include <libaudcore/preferences.h>
-#include <libaudcore/runtime.h>
-#include <libaudcore/plugin.h>
-#include <libaudcore/plugins.h>
+class QImage;
+class QLayout;
+class QMenu;
+class QWidget;
 
-#include <libaudqt/volumebutton.h>
+class PluginHandle;
+struct PreferencesWidget;
 
 namespace audqt {
 
@@ -94,7 +93,6 @@ void infowin_hide ();
 void queue_manager_show ();
 void queue_manager_hide ();
 
-}
+} // namespace audqt
 
 #endif
-

@@ -17,19 +17,21 @@
  * the use of this software.
  */
 
-#include <QtGui>
-#include <QtWidgets>
-#include <QAbstractTableModel>
+#include "libaudqt.h"
+
+#include <QAbstractListModel>
+#include <QDialog>
+#include <QDialogButtonBox>
+#include <QPushButton>
+#include <QHeaderView>
+#include <QItemSelectionModel>
+#include <QTreeView>
+#include <QVBoxLayout>
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/playlist.h>
-#include <libaudcore/probe.h>
-#include <libaudcore/runtime.h>
-#include <libaudcore/interface.h>
-#include <libaudcore/tuple.h>
 #include <libaudcore/hook.h>
-
-#include <libaudqt/libaudqt.h>
+#include <libaudcore/i18n.h>
 
 /*
  * TODO:
@@ -201,4 +203,4 @@ EXPORT void queue_manager_hide ()
     m_queuemgr->hide ();
 }
 
-}
+} // namespace audqt

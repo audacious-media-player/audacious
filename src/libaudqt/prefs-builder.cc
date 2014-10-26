@@ -17,16 +17,16 @@
  * the use of this software.
  */
 
-#include <QtCore>
-#include <QtGui>
-#include <QtWidgets>
+#include "libaudqt.h"
+#include "prefs-widget.h"
+
+#include <QButtonGroup>
+#include <QFrame>
+#include <QLayout>
 
 #include <libaudcore/i18n.h>
 #include <libaudcore/preferences.h>
 #include <libaudcore/runtime.h>
-
-#include "libaudqt.h"
-#include "prefs-widget.h"
 
 namespace audqt {
 
@@ -143,5 +143,4 @@ void prefs_populate (QLayout * layout, ArrayRef<const PreferencesWidget> widgets
     }
 }
 
-};
-
+} // namespace audqt

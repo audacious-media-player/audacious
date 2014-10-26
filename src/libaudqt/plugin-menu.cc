@@ -17,23 +17,16 @@
  * the use of this software.
  */
 
-#include <QtCore>
-#include <QtGui>
-#include <QtWidgets>
-
-#include <string.h>
-
-#include <libaudcore/audstrings.h>
-#include <libaudcore/hook.h>
-#include <libaudcore/i18n.h>
-#include <libaudcore/playlist.h>
-#include <libaudcore/plugin.h>
-#include <libaudcore/plugins.h>
-#include <libaudcore/preferences.h>
-#include <libaudcore/runtime.h>
-#include <libaudcore/interface.h>
-
 #include "libaudqt.h"
+
+#include <QAction>
+#include <QIcon>
+#include <QMenu>
+
+#include <libaudcore/i18n.h>
+#include <libaudcore/index.h>
+#include <libaudcore/interface.h>
+#include <libaudcore/plugins.h>
 
 namespace audqt {
 
@@ -153,4 +146,4 @@ EXPORT void menu_remove (int id, void (* func) (void))
     delete item;
 }
 
-};
+} // namespace audqt

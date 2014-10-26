@@ -17,17 +17,12 @@
  * the use of this software.
  */
 
-#include <QtCore>
-#include <QtGui>
-#include <QtWidgets>
+#include "prefs-widget.h"
+#include "libaudqt.h"
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/i18n.h>
-#include <libaudcore/preferences.h>
 #include <libaudcore/runtime.h>
-
-#include "libaudqt.h"
-#include "prefs-widget.h"
 
 namespace audqt {
 
@@ -529,4 +524,4 @@ QWidget * NotebookWidget::widget ()
     return & m_container;
 }
 
-};
+} // namespace audqt

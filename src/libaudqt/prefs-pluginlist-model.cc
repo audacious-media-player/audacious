@@ -17,18 +17,9 @@
  * the use of this software.
  */
 
-#include <QtGui>
-#include <QtWidgets>
-#include <QAbstractTableModel>
-
-#include <libaudcore/i18n.h>
-#include <libaudcore/preferences.h>
-#include <libaudcore/runtime.h>
-#include <libaudcore/plugin.h>
-#include <libaudcore/plugins.h>
-
 #include "prefs-pluginlist-model.h"
-#include "prefs-pluginlist-model.moc"
+
+#include <libaudcore/plugins.h>
 
 namespace audqt {
 
@@ -128,4 +119,4 @@ void PluginListModel::updateRow (int row)
     updateRows (row, 1);
 }
 
-};
+} // namespace audqt

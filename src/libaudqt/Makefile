@@ -9,7 +9,6 @@ SRCS = about.cc			\
        infowin.cc		\
        info-widget.cc		\
        log-inspector.cc         \
-       log-inspector.moc        \
        playlist-management.cc	\
        plugin-menu.cc		\
        prefs-builder.cc		\
@@ -17,7 +16,6 @@ SRCS = about.cc			\
        prefs-widget.cc		\
        prefs-window.cc		\
        prefs-pluginlist-model.cc  \
-       prefs-pluginlist-model.moc \
        queue-manager.cc		\
        util.cc                  \
        volumebutton.cc

@@ -17,18 +17,20 @@
  * the use of this software.
  */
 
-#include <QtGui>
-#include <QtWidgets>
-#include <QAbstractTableModel>
+#include "log-inspector.h"
+#include "libaudqt.h"
+
+#include <QComboBox>
+#include <QDialog>
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QVBoxLayout>
+#include <QTreeView>
+#include <QWidget>
 
 #include <libaudcore/i18n.h>
-#include <libaudcore/preferences.h>
+#include <libaudcore/index.h>
 #include <libaudcore/runtime.h>
-
-#include <libaudqt/libaudqt.h>
-
-#include "log-inspector.h"
-#include "log-inspector.moc"
 
 namespace audqt {
 
@@ -41,6 +43,15 @@ enum LogEntryColumn {
     Function,
     Message,
     Count
+};
+
+struct LogEntry
+{
+    audlog::Level level;
+    const char * filename;
+    unsigned int line;
+    const char * function;
+    char * message;
 };
 
 static Index<SmartPtr<LogEntry>> entries;
@@ -262,4 +273,4 @@ EXPORT void log_inspector_hide ()
     m_inspector->hide ();
 }
 
-}
+} // namespace audqt

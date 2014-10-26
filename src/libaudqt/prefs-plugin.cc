@@ -17,16 +17,12 @@
  * the use of this software.
  */
 
-#include <QtCore>
-#include <QtGui>
-#include <QtWidgets>
-
-#include <string.h>
+#include <QDialog>
+#include <QDialogButtonBox>
+#include <QVBoxLayout>
 
 #include <libaudcore/audstrings.h>
-#include <libaudcore/hook.h>
 #include <libaudcore/i18n.h>
-#include <libaudcore/playlist.h>
 #include <libaudcore/plugin.h>
 #include <libaudcore/plugins.h>
 #include <libaudcore/preferences.h>
@@ -142,4 +138,4 @@ EXPORT void plugin_prefs (PluginHandle * ph)
     window_bring_to_front (cw->root);
 }
 
-};
+} // namespace audqt

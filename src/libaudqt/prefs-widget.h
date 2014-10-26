@@ -17,12 +17,19 @@
  * the use of this software.
  */
 
-#include <QtGui>
-#include <QtWidgets>
+#include <QButtonGroup>
+#include <QCheckBox>
+#include <QComboBox>
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QRadioButton>
+#include <QSpinBox>
+#include <QTabWidget>
+#include <QVBoxLayout>
 
-#include <libaudcore/i18n.h>
 #include <libaudcore/preferences.h>
-#include <libaudcore/runtime.h>
 #include <libaudcore/hook.h>
 
 #ifndef LIBAUDQT_PREFS_WIDGET_H
@@ -292,6 +299,6 @@ private:
     QTabWidget m_container;
 };
 
-}
+} // namespace audqt
 
 #endif
