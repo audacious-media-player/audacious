@@ -20,6 +20,7 @@
 #include <QFileDialog>
 
 #include <libaudcore/drct.h>
+#include <libaudcore/i18n.h>
 #include <libaudcore/index.h>
 #include <libaudcore/runtime.h>
 #include <libaudcore/tuple.h>
