@@ -31,8 +31,8 @@ static void show_prefs (void)
 }
 
 MenuItem default_menu_items[] = {
-    MenuItemEntry (N_("Plugins ..."), show_prefs),
-    MenuItemSeparator (),
+    MenuCommand (N_("Plugins ..."), show_prefs),
+    MenuSep (),
 };
 
 EXPORT QMenu * menu_get_by_id (int id)
