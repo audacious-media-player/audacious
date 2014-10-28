@@ -25,6 +25,7 @@
 #include <QAction>
 #include <QIcon>
 #include <QMenu>
+#include <QMenuBar>
 
 #include <libaudcore/i18n.h>
 #include <libaudcore/index.h>
@@ -40,7 +41,7 @@ struct MenuItem {
     const char * m_icon;
     const char * m_domain;
     const char * m_shortcut;
-    void (* m_func) (void);
+    void (* m_func) ();
     bool m_sep;
 
     /* for toggle items */
@@ -55,6 +56,7 @@ struct MenuItem {
     QMenu * (* m_submenu) (void);
 
     void add_to_menu (QMenu * menu) const;
+    QAction * build_action (QWidget * parent = nullptr) const;
 
     static void hook_cb (void *, QAction * act);
 };

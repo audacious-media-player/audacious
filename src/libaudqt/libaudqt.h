@@ -26,6 +26,7 @@
 class QImage;
 class QLayout;
 class QMenu;
+class QMenuBar;
 class QWidget;
 
 class PluginHandle;
@@ -96,7 +97,8 @@ void queue_manager_show ();
 void queue_manager_hide ();
 
 /* menu.cc */
-QMenu * menu_build (const ArrayRef<const MenuItem> menu_items, QMenu * parent = nullptr);
+QMenu * menu_build (const ArrayRef<const MenuItem> menu_items, QWidget * parent = nullptr);
+void menubar_build (const ArrayRef<const MenuItem> menu_items, QMenuBar * parent);
 
 } // namespace audqt
 

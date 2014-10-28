@@ -22,9 +22,9 @@
 
 namespace audqt {
 
-void MenuItem::add_to_menu (QMenu * menu) const
+QAction * MenuItem::build_action (QWidget * parent) const
 {
-    QAction * act = new QAction (menu);
+    QAction * act = new QAction (parent);
 
     if (! m_sep)
     {
@@ -54,7 +54,7 @@ void MenuItem::add_to_menu (QMenu * menu) const
             QMenu * submenu = nullptr;
 
             if (m_items.len)
-                submenu = menu_build(m_items, menu);
+                submenu = menu_build (m_items, parent);
             else if (m_submenu)
                 submenu = m_submenu ();
 
@@ -73,7 +73,15 @@ void MenuItem::add_to_menu (QMenu * menu) const
     else
         act->setSeparator (true);
 
-    menu->addAction (act);
+    return act;
+}
+
+void MenuItem::add_to_menu (QMenu * menu) const
+{
+    QAction * act = build_action ();
+
+    if (act)
+        menu->addAction (act);
 }
 
 void MenuItem::hook_cb (void *, QAction * act)
@@ -81,7 +89,7 @@ void MenuItem::hook_cb (void *, QAction * act)
     AUDDBG ("implement me\n");
 }
 
-EXPORT QMenu * menu_build (const ArrayRef<const MenuItem> menu_items, QMenu * parent)
+EXPORT QMenu * menu_build (const ArrayRef<const MenuItem> menu_items, QWidget * parent)
 {
     QMenu * m = new QMenu (parent);
 
@@ -89,6 +97,17 @@ EXPORT QMenu * menu_build (const ArrayRef<const MenuItem> menu_items, QMenu * pa
         it.add_to_menu (m);
 
     return m;
+}
+
+EXPORT void menubar_build (const ArrayRef<const MenuItem> menu_items, QMenuBar * menubar)
+{
+    for (auto & it : menu_items)
+    {
+        QAction * act = it.build_action ();
+
+        if (act)
+            menubar->addAction (act);
+    }
 }
 
 } // namespace audqt
