@@ -25,35 +25,26 @@ namespace audqt {
 static Index <MenuItem *> items [AUD_MENU_COUNT];
 static QMenu * menus [AUD_MENU_COUNT];
 
-static Index <MenuItem *> default_menu_items;
-
 static void show_prefs (void)
 {
     prefswin_show_plugin_page (PLUGIN_TYPE_GENERAL);
 }
 
-static void init_default_menu_items (void)
-{
-    MenuItem * prefs = new MenuItem (N_("Plugins ..."), nullptr, show_prefs);
-    MenuItem * sep = new MenuItem (nullptr, nullptr, nullptr, nullptr, nullptr, true);
-
-    default_menu_items.append (prefs);
-    default_menu_items.append (sep);
-}
+MenuItem default_menu_items[] = {
+    MenuItemEntry (N_("Plugins ..."), show_prefs),
+    MenuItemSeparator (),
+};
 
 EXPORT QMenu * menu_get_by_id (int id)
 {
     if (menus[id])
         return menus[id];
 
-    if (! default_menu_items.len ())
-        init_default_menu_items ();
-
     menus[id] = new QMenu (translate_str ("Services"));
 
-    for (const MenuItem * it : default_menu_items)
+    for (auto & it : default_menu_items)
     {
-        it->add_to_menu (menus[id]);
+        it.add_to_menu (menus[id]);
     }
 
     for (const MenuItem * it : items[id])
@@ -66,7 +57,14 @@ EXPORT QMenu * menu_get_by_id (int id)
 
 EXPORT void menu_add (int id, void (* func) (void), const char * name, const char * icon, const char * domain)
 {
-    MenuItem * it = new MenuItem (name, icon, func, domain);
+    MenuItem * it = new MenuItem;
+
+    it->m_name = name;
+    it->m_icon = icon;
+    it->m_func = func;
+    it->m_domain = domain;
+    it->m_shortcut = nullptr;	/* XXX */
+    it->m_sep = false;
 
     items[id].append (it);
 

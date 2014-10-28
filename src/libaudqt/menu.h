@@ -33,23 +33,21 @@
 
 namespace audqt {
 
-class MenuItem {
-public:
-    MenuItem (const char * name, const char * icon, void (* func) (void), const char * shortcut = nullptr, const char * domain = nullptr, bool sep = false);
-    ~MenuItem ();
-
-    void add_to_menu (QMenu * menu) const;
-    void (* m_func) (void);
-
-private:
-    QAction * m_action;
-
+struct MenuItem {
     const char * m_name;
     const char * m_icon;
     const char * m_domain;
     const char * m_shortcut;
+    void (* m_func) (void);
     bool m_sep;
+
+    void add_to_menu (QMenu * menu) const;
 };
+
+constexpr MenuItem MenuItemSeparator ()
+    { return { nullptr, nullptr, nullptr, nullptr, nullptr, true }; }
+constexpr MenuItem MenuItemEntry (const char * name, void (* func) (void), const char * shortcut = nullptr, const char * icon = nullptr, const char * domain = nullptr)
+    { return { name, icon, domain, shortcut, func, false }; }
 
 } // namespace audqt
 

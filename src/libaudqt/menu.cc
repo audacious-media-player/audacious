@@ -22,40 +22,27 @@
 
 namespace audqt {
 
-MenuItem::MenuItem (const char * name, const char * icon, void (* func) (void), const char * shortcut, const char * domain, bool sep) :
-    m_func (func),
-    m_name (name),
-    m_icon (icon),
-    m_domain (domain),
-    m_shortcut (shortcut),
-    m_sep (sep)
-{
-    if (! m_sep)
-        m_action = new QAction (translate_str (m_name, m_domain), nullptr);
-    else
-    {
-        m_action = new QAction (nullptr);
-        m_action->setSeparator (true);
-    }
-
-    if (m_func)
-        QObject::connect (m_action, &QAction::triggered, m_func);
-
-    if (m_icon && QIcon::hasThemeIcon (m_icon))
-        m_action->setIcon (QIcon::fromTheme (m_icon));
-
-    if (m_shortcut)
-        m_action->setShortcut (QString (m_shortcut));
-}
-
-MenuItem::~MenuItem ()
-{
-    delete m_action;
-}
-
 void MenuItem::add_to_menu (QMenu * menu) const
 {
-    menu->addAction (m_action);
+    QAction * act = new QAction (menu);
+
+    if (! m_sep)
+    {
+        act->setText (translate_str (m_name, m_domain));
+
+        if (m_func)
+            QObject::connect (act, &QAction::triggered, m_func);
+
+        if (m_icon && QIcon::hasThemeIcon (m_icon))
+            act->setIcon (QIcon::fromTheme (m_icon));
+
+        if (m_shortcut)
+            act->setShortcut (QString (m_shortcut));
+    }
+    else
+        act->setSeparator (true);
+
+    menu->addAction (act);
 }
 
 } // namespace audqt
