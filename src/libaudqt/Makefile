@@ -9,6 +9,7 @@ SRCS = about.cc			\
        infowin.cc		\
        info-widget.cc		\
        log-inspector.cc         \
+       menu.cc			\
        playlist-management.cc	\
        plugin-menu.cc		\
        prefs-builder.cc		\
