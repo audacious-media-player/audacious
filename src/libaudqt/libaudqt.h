@@ -31,9 +31,9 @@ class QWidget;
 class PluginHandle;
 struct PreferencesWidget;
 
-struct MenuItem;
-
 namespace audqt {
+
+struct MenuItem;
 
 /* about.cc */
 void aboutwindow_show ();
@@ -96,7 +96,7 @@ void queue_manager_show ();
 void queue_manager_hide ();
 
 /* menu.cc */
-QMenu * menu_build (const ArrayRef<MenuItem> menu_items, QMenu * parent = nullptr);
+QMenu * menu_build (const ArrayRef<const MenuItem> menu_items, QMenu * parent = nullptr);
 
 } // namespace audqt
 

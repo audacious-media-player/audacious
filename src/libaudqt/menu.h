@@ -43,15 +43,20 @@ struct MenuItem {
     void (* m_func) (void);
     bool m_sep;
 
+    /* for toggle items */
     const char * m_csect;
     const char * m_cname;
     const char * m_chook;
 
+    /* for submenus */
+    const ArrayRef<const MenuItem> m_items;
+
+    /* for custom submenus */
+    QMenu * (* m_submenu) (void);
+
     void add_to_menu (QMenu * menu) const;
 
     static void hook_cb (void *, QAction * act);
-
-    QAction * m_act;
 };
 
 constexpr MenuItem MenuItemSeparator ()
@@ -59,6 +64,10 @@ constexpr MenuItem MenuItemSeparator ()
 constexpr MenuItem MenuItemEntry (const char * name, void (* func) (void), const char * shortcut = nullptr, const char * icon = nullptr, const char * domain = nullptr,
  const char * csect = nullptr, const char * cname = nullptr, const char * chook = nullptr)
     { return { name, icon, domain, shortcut, func, false, csect, cname, chook }; }
+constexpr MenuItem MenuItemSub (const char * name, const ArrayRef<const MenuItem> items, const char * icon = nullptr, const char * domain = nullptr)
+    { return { name, icon, domain, nullptr, nullptr, false, nullptr, nullptr, nullptr, items }; }
+constexpr MenuItem MenuItemSub (const char * name, QMenu * (* submenu) (void), const char * icon = nullptr, const char * domain = nullptr)
+    { return { name, icon, domain, nullptr, nullptr, false, nullptr, nullptr, nullptr, nullptr, submenu }; }
 
 } // namespace audqt
 

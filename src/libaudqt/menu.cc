@@ -49,6 +49,18 @@ void MenuItem::add_to_menu (QMenu * menu) const
             if (m_chook)
                 hook_associate (m_chook, (HookFunction) MenuItem::hook_cb, act);
         }
+        else if (m_items.len || m_submenu)
+        {
+            QMenu * submenu = nullptr;
+
+            if (m_items.len)
+                submenu = menu_build(m_items, menu);
+            else if (m_submenu)
+                submenu = m_submenu ();
+
+            if (submenu)
+                act->setMenu (submenu);
+        }
 
         if (m_icon && QIcon::hasThemeIcon (m_icon))
             act->setIcon (QIcon::fromTheme (m_icon));
@@ -67,7 +79,7 @@ void MenuItem::hook_cb (void *, QAction * act)
     AUDDBG ("implement me\n");
 }
 
-EXPORT QMenu * menu_build (const ArrayRef<MenuItem> menu_items, QMenu * parent)
+EXPORT QMenu * menu_build (const ArrayRef<const MenuItem> menu_items, QMenu * parent)
 {
     QMenu * m = new QMenu (parent);
 
