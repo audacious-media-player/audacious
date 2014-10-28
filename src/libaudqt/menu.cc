@@ -45,4 +45,14 @@ void MenuItem::add_to_menu (QMenu * menu) const
     menu->addAction (act);
 }
 
+EXPORT QMenu * menu_build (const ArrayRef<MenuItem> menu_items, QMenu * parent)
+{
+    QMenu * m = new QMenu (parent);
+
+    for (auto & it : menu_items)
+        it.add_to_menu (m);
+
+    return m;
+}
+
 } // namespace audqt
