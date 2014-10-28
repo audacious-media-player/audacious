@@ -32,6 +32,23 @@ void MenuItem::add_to_menu (QMenu * menu) const
 
         if (m_func)
             QObject::connect (act, &QAction::triggered, m_func);
+        else if (m_cname)
+        {
+            act->setChecked (aud_get_bool (m_csect, m_cname));
+
+            QObject::connect (act, &QAction::toggled, [=] (bool checked) {
+                if (aud_get_bool (m_csect, m_cname) == checked)
+                    return;
+
+                aud_set_bool (m_csect, m_cname, checked);
+
+                if (m_func)
+                    m_func ();
+            });
+
+            if (m_chook)
+                hook_associate (m_chook, (HookFunction) MenuItem::hook_cb, act);
+        }
 
         if (m_icon && QIcon::hasThemeIcon (m_icon))
             act->setIcon (QIcon::fromTheme (m_icon));
@@ -43,6 +60,11 @@ void MenuItem::add_to_menu (QMenu * menu) const
         act->setSeparator (true);
 
     menu->addAction (act);
+}
+
+void MenuItem::hook_cb (void *, QAction * act)
+{
+    AUDDBG ("implement me\n");
 }
 
 EXPORT QMenu * menu_build (const ArrayRef<MenuItem> menu_items, QMenu * parent)

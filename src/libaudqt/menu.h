@@ -30,6 +30,8 @@
 #include <libaudcore/index.h>
 #include <libaudcore/interface.h>
 #include <libaudcore/plugins.h>
+#include <libaudcore/runtime.h>
+#include <libaudcore/hook.h>
 
 namespace audqt {
 
@@ -41,13 +43,22 @@ struct MenuItem {
     void (* m_func) (void);
     bool m_sep;
 
+    const char * m_csect;
+    const char * m_cname;
+    const char * m_chook;
+
     void add_to_menu (QMenu * menu) const;
+
+    static void hook_cb (void *, QAction * act);
+
+    QAction * m_act;
 };
 
 constexpr MenuItem MenuItemSeparator ()
     { return { nullptr, nullptr, nullptr, nullptr, nullptr, true }; }
-constexpr MenuItem MenuItemEntry (const char * name, void (* func) (void), const char * shortcut = nullptr, const char * icon = nullptr, const char * domain = nullptr)
-    { return { name, icon, domain, shortcut, func, false }; }
+constexpr MenuItem MenuItemEntry (const char * name, void (* func) (void), const char * shortcut = nullptr, const char * icon = nullptr, const char * domain = nullptr,
+ const char * csect = nullptr, const char * cname = nullptr, const char * chook = nullptr)
+    { return { name, icon, domain, shortcut, func, false, csect, cname, chook }; }
 
 } // namespace audqt
 
