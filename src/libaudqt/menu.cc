@@ -62,8 +62,10 @@ void MenuItem::add_to_menu (QMenu * menu) const
                 act->setMenu (submenu);
         }
 
+#ifndef Q_OS_MAC
         if (m_icon && QIcon::hasThemeIcon (m_icon))
             act->setIcon (QIcon::fromTheme (m_icon));
+#endif
 
         if (m_shortcut)
             act->setShortcut (QString (m_shortcut));
