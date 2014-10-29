@@ -49,9 +49,6 @@ void event_queue_full (const char * name, void * data, EventDestroyFunc destroy)
  * all hook calls matching <name> are canceled. */
 void event_queue_cancel (const char * name, void * data);
 
-/* Cancels all pending hook calls. */
-void event_queue_cancel_all (void);
-
 /* Convenience wrapper for C++ classes.  Allows non-static member functions to
  * be used as hook callbacks.  The HookReceiver should be made a member of the
  * class in question so that hook_dissociate() is called automatically from the

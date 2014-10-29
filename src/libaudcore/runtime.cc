@@ -355,6 +355,7 @@ EXPORT void aud_cleanup ()
     playlist_end ();
 
     event_queue_cancel_all ();
+    hook_cleanup ();
 
     config_save ();
     config_cleanup ();
