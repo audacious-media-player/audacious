@@ -300,11 +300,9 @@ static void do_commands (void)
 
 static void main_cleanup (void)
 {
-    aud_cleanup_paths ();
-
     filenames.clear ();
-
-    String::check_all_destroyed ();
+    aud_cleanup_paths ();
+    aud_leak_check ();
 }
 
 static bool check_should_quit (void)

@@ -1,4 +1,4 @@
-/*
+﻿/*
  * index.h
  * Copyright 2014 John Lindgren
  *
@@ -58,12 +58,7 @@ public:
         if (this != & b)
         {
             clear (erase_func);
-            m_data = b.m_data;
-            m_len = b.m_len;
-            m_size = b.m_size;
-            b.m_data = nullptr;
-            b.m_len = 0;
-            b.m_size = 0;
+            new (this) IndexBase (std::move (b));
         }
     }
 
@@ -170,7 +165,7 @@ public:
     }
 
     template<class F>
-    void remove_if (F func)
+    void remove_if (F func, bool clear_if_empty = false)
     {
         T * iter = begin ();
         while (iter != end ())
@@ -180,6 +175,9 @@ public:
             else
                 iter ++;
         }
+
+        if (clear_if_empty && ! len ())
+            clear ();
     }
 
     void sort (CompareFunc compare, void * userdata)

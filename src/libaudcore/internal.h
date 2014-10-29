@@ -21,6 +21,7 @@
 #define LIBAUDCORE_INTERNAL_H
 
 #include <stdint.h>
+#include <sys/types.h>
 
 #include "index.h"
 #include "objects.h"
@@ -90,6 +91,12 @@ void playback_stop ();
 
 /* probe-buffer.cc */
 VFSFile probe_buffer_new (const char * filename);
+
+/* runtime.cc */
+extern size_t misc_bytes_allocated;
+
+/* strpool.cc */
+void string_leak_check ();
 
 /* util.cc */
 const char * get_home_utf8 ();

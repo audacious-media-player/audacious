@@ -18,6 +18,7 @@
  */
 
 #include "audstrings.h"
+#include "internal.h"
 #include "ringbuf.h"
 #include "tuple.h"
 #include "tuple-compiler.h"
@@ -37,6 +38,8 @@ String VFSFile::get_metadata (const char *)
     { return String (); }
 const char * get_home_utf8 ()
     { return "/home/user"; }
+
+size_t misc_bytes_allocated;
 
 static void test_tuple_format (const char * format, Tuple & tuple, const char * expected)
 {
@@ -261,7 +264,7 @@ static void test_ringbuf ()
 
     ring.discard ();
 
-    String::check_all_destroyed ();
+    string_leak_check ();
 }
 
 int main ()

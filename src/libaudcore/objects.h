@@ -191,10 +191,6 @@ public:
     static unsigned raw_hash (const char * str);
     static bool raw_equal (const char * str1, const char * str2);
 
-    // to be called on shutdown
-    // warns if any String objects still exist
-    static void check_all_destroyed ();
-
 private:
     char * raw;
 };

@@ -61,14 +61,7 @@ public:
         if (this != & b)
         {
             destroy (erase_func);
-            m_data = b.m_data;
-            m_size = b.m_size;
-            m_offset = b.m_offset;
-            m_len = b.m_len;
-            b.m_data = nullptr;
-            b.m_size = 0;
-            b.m_offset = 0;
-            b.m_len = 0;
+            new (this) RingBufBase (std::move (b));
         }
     }
 

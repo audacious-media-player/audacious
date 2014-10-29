@@ -57,7 +57,7 @@ EXPORT void aud_vis_func_remove (VisFunc func)
     };
 
     for (int type = 0; type < AUD_VIS_TYPES; type ++)
-        vis_funcs[type].remove_if (is_match);
+        vis_funcs[type].remove_if (is_match, true);
 
     num_enabled -= num_disabled;
     if (! num_enabled)
@@ -158,7 +158,7 @@ static void vis_unload (PluginHandle * plugin)
     };
 
     assert (header->vis_type >= 0 && header->vis_type < AUD_VIS_TYPES);
-    vis_plugins[header->vis_type].remove_if (is_match);
+    vis_plugins[header->vis_type].remove_if (is_match, true);
 
     num_enabled -= num_disabled;
     if (! num_enabled)

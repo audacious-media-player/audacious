@@ -70,7 +70,7 @@ EXPORT void unsubscribe (Handler handler)
     auto is_match = [=] (const HandlerData & data)
         { return data.handler == handler; };
 
-    handlers.remove_if (is_match);
+    handlers.remove_if (is_match, true);
 
     min_level = stderr_level;
 

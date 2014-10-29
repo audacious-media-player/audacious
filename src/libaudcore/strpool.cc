@@ -23,6 +23,7 @@
 #include <string.h>
 
 #include "audstrings.h"
+#include "internal.h"
 #include "multihash.h"
 #include "objects.h"
 #include "runtime.h"
@@ -233,7 +234,7 @@ static bool leak_cb (MultiHash::Node * node, void * state)
     return false;
 }
 
-EXPORT void String::check_all_destroyed ()
+void string_leak_check ()
 {
     strpool_table.iterate (leak_cb, nullptr);
 }
