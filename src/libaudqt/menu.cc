@@ -22,13 +22,13 @@
 
 namespace audqt {
 
-QAction * MenuItem::build_action (QWidget * parent) const
+QAction * MenuItem::build_action (const char * domain, QWidget * parent) const
 {
     QAction * act = new QAction (parent);
 
     if (! m_sep)
     {
-        act->setText (translate_str (m_name, m_domain));
+        act->setText (translate_str (m_name, domain ? domain : m_domain));
 
         if (m_func)
             QObject::connect (act, &QAction::triggered, m_func);
@@ -54,7 +54,7 @@ QAction * MenuItem::build_action (QWidget * parent) const
             QMenu * submenu = nullptr;
 
             if (m_items.len)
-                submenu = menu_build (m_items, parent);
+                submenu = menu_build (m_items, parent, domain);
             else if (m_submenu)
                 submenu = m_submenu ();
 
@@ -89,7 +89,7 @@ void MenuItem::hook_cb (void *, QAction * act)
     AUDDBG ("implement me\n");
 }
 
-EXPORT QMenu * menu_build (const ArrayRef<const MenuItem> menu_items, QWidget * parent)
+EXPORT QMenu * menu_build (const ArrayRef<const MenuItem> menu_items, QWidget * parent, const char * domain)
 {
     QMenu * m = new QMenu (parent);
 
@@ -99,7 +99,7 @@ EXPORT QMenu * menu_build (const ArrayRef<const MenuItem> menu_items, QWidget * 
     return m;
 }
 
-EXPORT void menubar_build (const ArrayRef<const MenuItem> menu_items, QMenuBar * menubar)
+EXPORT void menubar_build (const ArrayRef<const MenuItem> menu_items, QMenuBar * menubar, const char * domain)
 {
     for (auto & it : menu_items)
     {

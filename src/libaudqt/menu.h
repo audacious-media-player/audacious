@@ -56,7 +56,7 @@ struct MenuItem {
     QMenu * (* m_submenu) (void);
 
     void add_to_menu (QMenu * menu) const;
-    QAction * build_action (QWidget * parent = nullptr) const;
+    QAction * build_action (const char * domain = nullptr, QWidget * parent = nullptr) const;
 
     static void hook_cb (void *, QAction * act);
 };
