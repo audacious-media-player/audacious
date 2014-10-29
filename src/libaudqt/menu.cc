@@ -54,7 +54,7 @@ QAction * MenuItem::build_action (const char * domain, QWidget * parent) const
             QMenu * submenu = nullptr;
 
             if (m_items.len)
-                submenu = menu_build (m_items, parent, domain);
+                submenu = menu_build (m_items, domain, parent);
             else if (m_submenu)
                 submenu = m_submenu ();
 
@@ -89,7 +89,7 @@ void MenuItem::hook_cb (void *, QAction * act)
     AUDDBG ("implement me\n");
 }
 
-EXPORT QMenu * menu_build (const ArrayRef<const MenuItem> menu_items, QWidget * parent, const char * domain)
+EXPORT QMenu * menu_build (const ArrayRef<const MenuItem> menu_items, const char * domain, QWidget * parent)
 {
     QMenu * m = new QMenu (parent);
 
