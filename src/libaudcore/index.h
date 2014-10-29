@@ -1,4 +1,4 @@
-﻿/*
+/*
  * index.h
  * Copyright 2014 John Lindgren
  *
