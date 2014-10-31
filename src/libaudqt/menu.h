@@ -22,17 +22,12 @@
 #ifndef LIBAUDQT_MENU_H
 #define LIBAUDQT_MENU_H
 
-#include <QAction>
-#include <QIcon>
-#include <QMenu>
-#include <QMenuBar>
+#include <libaudcore/objects.h>
 
-#include <libaudcore/i18n.h>
-#include <libaudcore/index.h>
-#include <libaudcore/interface.h>
-#include <libaudcore/plugins.h>
-#include <libaudcore/runtime.h>
-#include <libaudcore/hook.h>
+class QAction;
+class QMenu;
+class QMenuBar;
+class QWidget;
 
 namespace audqt {
 
@@ -53,25 +48,35 @@ struct MenuItem {
     const ArrayRef<const MenuItem> m_items;
 
     /* for custom submenus */
-    QMenu * (* m_submenu) (void);
+    QMenu * (* m_submenu) ();
 
-    void add_to_menu (QMenu * menu) const;
-    QAction * build_action (const char * domain = nullptr, QWidget * parent = nullptr) const;
+    void add_to_menu (const char * domain, QMenu * menu) const;
+    QAction * build_action (const char * domain, QWidget * parent = nullptr) const;
 
     static void hook_cb (void *, QAction * act);
 };
 
-constexpr MenuItem MenuCommand (const char * name, void (* func) (void), const char * shortcut = nullptr, const char * icon = nullptr, const char * domain = nullptr)
+constexpr MenuItem MenuCommand (const char * name, void (* func) (), const char * shortcut = nullptr, const char * icon = nullptr, const char * domain = nullptr)
     { return { name, icon, domain, shortcut, func, false }; }
-constexpr MenuItem MenuToggle (const char * name, void (* func) (void) = nullptr, const char * shortcut = nullptr, const char * icon = nullptr, const char * domain = nullptr,
+constexpr MenuItem MenuToggle (const char * name, void (* func) () = nullptr, const char * shortcut = nullptr, const char * icon = nullptr, const char * domain = nullptr,
  const char * csect = nullptr, const char * cname = nullptr, const char * chook = nullptr)
     { return { name, icon, domain, shortcut, func, false, csect, cname, chook }; }
 constexpr MenuItem MenuSub (const char * name, const ArrayRef<const MenuItem> items, const char * icon = nullptr, const char * domain = nullptr)
     { return { name, icon, domain, nullptr, nullptr, false, nullptr, nullptr, nullptr, items }; }
-constexpr MenuItem MenuSub (const char * name, QMenu * (* submenu) (void), const char * icon = nullptr, const char * domain = nullptr)
+constexpr MenuItem MenuSub (const char * name, QMenu * (* submenu) (), const char * icon = nullptr, const char * domain = nullptr)
     { return { name, icon, domain, nullptr, nullptr, false, nullptr, nullptr, nullptr, nullptr, submenu }; }
 constexpr MenuItem MenuSep ()
     { return { nullptr, nullptr, nullptr, nullptr, nullptr, true }; }
+
+QMenu * menu_build (const ArrayRef<const MenuItem> menu_items, const char * domain, QWidget * parent = nullptr);
+void menubar_build (const ArrayRef<const MenuItem> menu_items, const char * domain, QMenuBar * parent);
+
+#ifdef PACKAGE
+static inline QMenu * menu_build (const ArrayRef<const MenuItem> menu_items, QWidget * parent = nullptr)
+    { return menu_build (menu_items, PACKAGE, parent); }
+static inline void menubar_build (const ArrayRef<const MenuItem> menu_items, QMenuBar * parent)
+    { menubar_build (menu_items, PACKAGE, parent); }
+#endif
 
 } // namespace audqt
 

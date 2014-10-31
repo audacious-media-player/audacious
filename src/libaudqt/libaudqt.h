@@ -96,17 +96,6 @@ void infowin_hide ();
 void queue_manager_show ();
 void queue_manager_hide ();
 
-/* menu.cc */
-QMenu * menu_build (const ArrayRef<const MenuItem> menu_items, const char * domain, QWidget * parent = nullptr);
-void menubar_build (const ArrayRef<const MenuItem> menu_items, QMenuBar * parent, const char * domain);
-
-#ifdef PACKAGE
-static inline QMenu * menu_build (const ArrayRef<const MenuItem> menu_items, QWidget * parent = nullptr)
-    { return menu_build (menu_items, PACKAGE, parent); }
-static inline void menubar_build (const ArrayRef<const MenuItem> menu_items, QMenuBar * parent)
-    { menubar_build (menu_items, parent, PACKAGE); }
-#endif
-
 } // namespace audqt
 
 #endif

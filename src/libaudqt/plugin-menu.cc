@@ -20,6 +20,12 @@
 #include "libaudqt.h"
 #include "libaudqt/menu.h"
 
+#include <QMenu>
+
+#include <libaudcore/i18n.h>
+#include <libaudcore/interface.h>
+#include <libaudcore/plugins.h>
+
 namespace audqt {
 
 static Index <MenuItem *> items [AUD_MENU_COUNT];
@@ -43,14 +49,10 @@ EXPORT QMenu * menu_get_by_id (int id)
     menus[id] = new QMenu (translate_str ("Services"));
 
     for (auto & it : default_menu_items)
-    {
-        it.add_to_menu (menus[id]);
-    }
+        it.add_to_menu (PACKAGE, menus[id]);
 
     for (const MenuItem * it : items[id])
-    {
-        it->add_to_menu (menus[id]);
-    }
+        it->add_to_menu (nullptr, menus[id]);
 
     return menus[id];
 }
@@ -69,7 +71,7 @@ EXPORT void menu_add (int id, void (* func) (void), const char * name, const cha
     items[id].append (it);
 
     if (menus[id])
-        it->add_to_menu (menus[id]);
+        it->add_to_menu (nullptr, menus[id]);
 }
 
 EXPORT void menu_remove (int id, void (* func) (void))

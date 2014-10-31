@@ -20,6 +20,14 @@
 #include "libaudqt.h"
 #include "libaudqt/menu.h"
 
+#include <QAction>
+#include <QIcon>
+#include <QMenu>
+#include <QMenuBar>
+
+#include <libaudcore/hook.h>
+#include <libaudcore/runtime.h>
+
 namespace audqt {
 
 QAction * MenuItem::build_action (const char * domain, QWidget * parent) const
@@ -76,9 +84,9 @@ QAction * MenuItem::build_action (const char * domain, QWidget * parent) const
     return act;
 }
 
-void MenuItem::add_to_menu (QMenu * menu) const
+void MenuItem::add_to_menu (const char * domain, QMenu * menu) const
 {
-    QAction * act = build_action ();
+    QAction * act = build_action (domain);
 
     if (act)
         menu->addAction (act);
@@ -94,16 +102,16 @@ EXPORT QMenu * menu_build (const ArrayRef<const MenuItem> menu_items, const char
     QMenu * m = new QMenu (parent);
 
     for (auto & it : menu_items)
-        it.add_to_menu (m);
+        it.add_to_menu (domain, m);
 
     return m;
 }
 
-EXPORT void menubar_build (const ArrayRef<const MenuItem> menu_items, QMenuBar * menubar, const char * domain)
+EXPORT void menubar_build (const ArrayRef<const MenuItem> menu_items, const char * domain, QMenuBar * menubar)
 {
     for (auto & it : menu_items)
     {
-        QAction * act = it.build_action ();
+        QAction * act = it.build_action (domain);
 
         if (act)
             menubar->addAction (act);
