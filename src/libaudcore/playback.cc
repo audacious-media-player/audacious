@@ -169,7 +169,8 @@ static void update_cb (void * hook_data, void *)
 {
     assert (playing);
 
-    if (hook_data >= PLAYLIST_UPDATE_METADATA && aud_drct_get_ready ())
+    auto level = aud::from_ptr<Playlist::Update> (hook_data);
+    if (level >= Playlist::Metadata && aud_drct_get_ready ())
         update_from_playlist ();
 }
 

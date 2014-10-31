@@ -89,7 +89,7 @@ private:
 };
 
 struct Update {
-    PlaylistUpdateLevel level;
+    Playlist::Update level;
     int before, after;
 };
 
@@ -149,7 +149,7 @@ static int resume_playlist = -1;
 static bool resume_paused = false;
 
 static QueuedFunc queued_update;
-static PlaylistUpdateLevel update_level;
+static Playlist::Update update_level;
 
 struct ScanItem : public ListNode
 {
@@ -308,19 +308,19 @@ static void update (void *)
         p->next_update = Update ();
     }
 
-    PlaylistUpdateLevel level = update_level;
-    update_level = PLAYLIST_UPDATE_NONE;
+    Playlist::Update level = update_level;
+    update_level = Playlist::NoUpdate;
 
     LEAVE;
 
-    hook_call ("playlist update", level);
+    hook_call ("playlist update", aud::to_ptr (level));
 }
 
-static void queue_update (PlaylistUpdateLevel level, PlaylistData * p, int at, int count)
+static void queue_update (Playlist::Update level, PlaylistData * p, int at, int count)
 {
     if (p)
     {
-        if (level >= PLAYLIST_UPDATE_METADATA)
+        if (level >= Playlist::Metadata)
         {
             p->modified = true;
             p->scanning = true;
@@ -355,13 +355,13 @@ EXPORT bool aud_playlist_update_pending ()
     RETURN (pending);
 }
 
-EXPORT PlaylistUpdateLevel aud_playlist_updated_range (int playlist_num, int * at, int * count)
+EXPORT Playlist::Update aud_playlist_updated_range (int playlist_num, int * at, int * count)
 {
-    ENTER_GET_PLAYLIST (0);
+    ENTER_GET_PLAYLIST (Playlist::NoUpdate);
 
     Update * u = & playlist->last_update;
 
-    PlaylistUpdateLevel level = u->level;
+    Playlist::Update level = u->level;
     * at = u->before;
     * count = playlist->entries.len () - u->before - u->after;
 
@@ -514,7 +514,7 @@ static void scan_finish (ScanRequest * request)
     if (! entry->scanned && request->tuple)
     {
         entry_set_tuple (playlist, entry, std::move (request->tuple));
-        queue_update (PLAYLIST_UPDATE_METADATA, playlist, entry->number, 1);
+        queue_update (Playlist::Metadata, playlist, entry->number, 1);
     }
 
     if (! entry->decoder || ! entry->scanned)
@@ -629,7 +629,7 @@ void playlist_init ()
 
     ENTER;
 
-    update_level = 0;
+    update_level = Playlist::NoUpdate;
     scan_enabled = false;
     scan_playlist = scan_row = 0;
 
@@ -702,7 +702,7 @@ void playlist_insert_with_id (int at, int id)
 
     number_playlists (at, playlists.len () - at);
 
-    queue_update (PLAYLIST_UPDATE_STRUCTURE, nullptr, 0, 0);
+    queue_update (Playlist::Structure, nullptr, 0, 0);
     LEAVE;
 }
 
@@ -739,7 +739,7 @@ EXPORT void aud_playlist_reorder (int from, int to, int count)
         number_playlists (from, to + count - from);
     }
 
-    queue_update (PLAYLIST_UPDATE_STRUCTURE, nullptr, 0, 0);
+    queue_update (Playlist::Structure, nullptr, 0, 0);
     LEAVE;
 }
 
@@ -765,7 +765,7 @@ EXPORT void aud_playlist_delete (int playlist_num)
     if (playlist == playing_playlist)
         playing_playlist = nullptr;
 
-    queue_update (PLAYLIST_UPDATE_STRUCTURE, nullptr, 0, 0);
+    queue_update (Playlist::Structure, nullptr, 0, 0);
     LEAVE;
 
     if (was_playing)
@@ -796,7 +796,7 @@ EXPORT void aud_playlist_set_filename (int playlist_num, const char * filename)
     playlist->filename = String (filename);
     playlist->modified = true;
 
-    queue_update (PLAYLIST_UPDATE_METADATA, nullptr, 0, 0);
+    queue_update (Playlist::Metadata, nullptr, 0, 0);
     LEAVE;
 }
 
@@ -814,7 +814,7 @@ EXPORT void aud_playlist_set_title (int playlist_num, const char * title)
     playlist->title = String (title);
     playlist->modified = true;
 
-    queue_update (PLAYLIST_UPDATE_METADATA, nullptr, 0, 0);
+    queue_update (Playlist::Metadata, nullptr, 0, 0);
     LEAVE;
 }
 
@@ -909,7 +909,7 @@ EXPORT void aud_playlist_play (int playlist_num, bool paused)
     LEAVE;
 
     if (position_changed)
-        hook_call ("playlist position", GINT_TO_POINTER (playlist_num));
+        hook_call ("playlist position", aud::to_ptr (playlist_num));
 
     hook_call ("playlist set playing", nullptr);
 
@@ -1008,7 +1008,7 @@ void playlist_entry_insert_batch_raw (int playlist_num, int at, Index<PlaylistAd
 
     number_entries (playlist, at, entries + number - at);
 
-    queue_update (PLAYLIST_UPDATE_STRUCTURE, playlist, at, number);
+    queue_update (Playlist::Structure, playlist, at, number);
     LEAVE;
 }
 
@@ -1068,11 +1068,11 @@ EXPORT void aud_playlist_entry_delete (int playlist_num, int at, int number)
     if (position_changed && aud_get_bool (nullptr, "advance_on_delete"))
         can_play = next_song_locked (playlist, aud_get_bool (nullptr, "repeat"), at);
 
-    queue_update (PLAYLIST_UPDATE_STRUCTURE, playlist, at, 0);
+    queue_update (Playlist::Structure, playlist, at, 0);
     LEAVE;
 
     if (position_changed)
-        hook_call ("playlist position", GINT_TO_POINTER (playlist_num));
+        hook_call ("playlist position", aud::to_ptr (playlist_num));
     if (was_playing)
         change_playback (can_play);
 }
@@ -1132,7 +1132,7 @@ EXPORT void aud_playlist_set_position (int playlist_num, int entry_num)
 
     LEAVE;
 
-    hook_call ("playlist position", GINT_TO_POINTER (playlist_num));
+    hook_call ("playlist position", aud::to_ptr (playlist_num));
     if (was_playing)
         change_playback (can_play);
 }
@@ -1166,7 +1166,7 @@ EXPORT void aud_playlist_set_focus (int playlist_num, int entry_num)
     }
 
     if (first <= last)
-        queue_update (PLAYLIST_UPDATE_SELECTION, playlist, first, last + 1 - first);
+        queue_update (Playlist::Selection, playlist, first, last + 1 - first);
 
     LEAVE;
 }
@@ -1199,7 +1199,7 @@ EXPORT void aud_playlist_entry_set_selected (int playlist_num, int entry_num,
         playlist->selected_length -= entry->length;
     }
 
-    queue_update (PLAYLIST_UPDATE_SELECTION, playlist, entry_num, 1);
+    queue_update (Playlist::Selection, playlist, entry_num, 1);
     LEAVE;
 }
 
@@ -1246,7 +1246,7 @@ EXPORT void aud_playlist_select_all (int playlist_num, bool selected)
     }
 
     if (first < entries)
-        queue_update (PLAYLIST_UPDATE_SELECTION, playlist, first, last + 1 - first);
+        queue_update (Playlist::Selection, playlist, first, last + 1 - first);
 
     LEAVE;
 }
@@ -1315,7 +1315,7 @@ EXPORT int aud_playlist_shift (int playlist_num, int entry_num, int distance)
     playlist->entries.move_from (temp, 0, top, bottom - top, false, true);
 
     number_entries (playlist, top, bottom - top);
-    queue_update (PLAYLIST_UPDATE_STRUCTURE, playlist, top, bottom - top);
+    queue_update (Playlist::Structure, playlist, top, bottom - top);
 
     RETURN (shift);
 }
@@ -1402,11 +1402,11 @@ EXPORT void aud_playlist_delete_selected (int playlist_num)
     if (position_changed && aud_get_bool (nullptr, "advance_on_delete"))
         can_play = next_song_locked (playlist, aud_get_bool (nullptr, "repeat"), entries - after);
 
-    queue_update (PLAYLIST_UPDATE_STRUCTURE, playlist, before, entries - after - before);
+    queue_update (Playlist::Structure, playlist, before, entries - after - before);
     LEAVE;
 
     if (position_changed)
-        hook_call ("playlist position", GINT_TO_POINTER (playlist_num));
+        hook_call ("playlist position", aud::to_ptr (playlist_num));
     if (was_playing)
         change_playback (can_play);
 }
@@ -1421,7 +1421,7 @@ EXPORT void aud_playlist_reverse (int playlist_num)
         std::swap (playlist->entries[i], playlist->entries[entries - 1 - i]);
 
     number_entries (playlist, 0, entries);
-    queue_update (PLAYLIST_UPDATE_STRUCTURE, playlist, 0, entries);
+    queue_update (Playlist::Structure, playlist, 0, entries);
     LEAVE;
 }
 
@@ -1448,7 +1448,7 @@ EXPORT void aud_playlist_reverse_selected (int playlist_num)
     }
 
     number_entries (playlist, 0, entries);
-    queue_update (PLAYLIST_UPDATE_STRUCTURE, playlist, 0, entries);
+    queue_update (Playlist::Structure, playlist, 0, entries);
     LEAVE;
 }
 
@@ -1462,7 +1462,7 @@ EXPORT void aud_playlist_randomize (int playlist_num)
         std::swap (playlist->entries[i], playlist->entries[rand () % entries]);
 
     number_entries (playlist, 0, entries);
-    queue_update (PLAYLIST_UPDATE_STRUCTURE, playlist, 0, entries);
+    queue_update (Playlist::Structure, playlist, 0, entries);
     LEAVE;
 }
 
@@ -1490,7 +1490,7 @@ EXPORT void aud_playlist_randomize_selected (int playlist_num)
     }
 
     number_entries (playlist, 0, entries);
-    queue_update (PLAYLIST_UPDATE_STRUCTURE, playlist, 0, entries);
+    queue_update (Playlist::Structure, playlist, 0, entries);
     LEAVE;
 }
 
@@ -1524,7 +1524,7 @@ static void sort (PlaylistData * playlist, CompareData * data)
     playlist->entries.sort (compare_cb, data);
     number_entries (playlist, 0, playlist->entries.len ());
 
-    queue_update (PLAYLIST_UPDATE_STRUCTURE, playlist, 0, playlist->entries.len ());
+    queue_update (Playlist::Structure, playlist, 0, playlist->entries.len ());
 }
 
 static void sort_selected (PlaylistData * playlist, CompareData * data)
@@ -1549,7 +1549,7 @@ static void sort_selected (PlaylistData * playlist, CompareData * data)
     }
 
     number_entries (playlist, 0, entries);
-    queue_update (PLAYLIST_UPDATE_STRUCTURE, playlist, 0, entries);
+    queue_update (Playlist::Structure, playlist, 0, entries);
 }
 
 static bool entries_are_scanned (PlaylistData * playlist, bool selected)
@@ -1626,7 +1626,7 @@ static void playlist_reformat_titles ()
         for (auto & entry : playlist->entries)
             title_formatter->format (entry->tuple);
 
-        queue_update (PLAYLIST_UPDATE_METADATA, playlist.get (), 0, playlist->entries.len ());
+        queue_update (Playlist::Metadata, playlist.get (), 0, playlist->entries.len ());
     }
 
     LEAVE;
@@ -1654,7 +1654,7 @@ static void playlist_rescan_real (int playlist_num, bool selected)
             entry_set_tuple (playlist, entry.get (), Tuple ());
     }
 
-    queue_update (PLAYLIST_UPDATE_METADATA, playlist, 0, playlist->entries.len ());
+    queue_update (Playlist::Metadata, playlist, 0, playlist->entries.len ());
     LEAVE;
 }
 
@@ -1679,7 +1679,7 @@ EXPORT void aud_playlist_rescan_file (const char * filename)
             if (! strcmp (entry->filename, filename))
             {
                 entry_set_tuple (playlist.get (), entry.get (), Tuple ());
-                queue_update (PLAYLIST_UPDATE_METADATA, playlist.get (), entry->number, 1);
+                queue_update (Playlist::Metadata, playlist.get (), entry->number, 1);
             }
         }
     }
@@ -1725,7 +1725,7 @@ EXPORT void aud_playlist_queue_insert (int playlist_num, int at, int entry_num)
 
     entry->queued = true;
 
-    queue_update (PLAYLIST_UPDATE_SELECTION, playlist, entry_num, 1);
+    queue_update (Playlist::Selection, playlist, entry_num, 1);
     LEAVE;
 }
 
@@ -1754,7 +1754,7 @@ EXPORT void aud_playlist_queue_insert_selected (int playlist_num, int at)
     playlist->queued.move_from (add, 0, at, -1, true, true);
 
     if (first < playlist->entries.len ())
-        queue_update (PLAYLIST_UPDATE_SELECTION, playlist, first, last + 1 - first);
+        queue_update (Playlist::Selection, playlist, first, last + 1 - first);
 
     LEAVE;
 }
@@ -1798,7 +1798,7 @@ EXPORT void aud_playlist_queue_delete (int playlist_num, int at, int number)
     playlist->queued.remove (at, number);
 
     if (first < entries)
-        queue_update (PLAYLIST_UPDATE_SELECTION, playlist, first, last + 1 - first);
+        queue_update (Playlist::Selection, playlist, first, last + 1 - first);
 
     LEAVE;
 }
@@ -1826,7 +1826,7 @@ EXPORT void aud_playlist_queue_delete_selected (int playlist_num)
     }
 
     if (first < entries)
-        queue_update (PLAYLIST_UPDATE_SELECTION, playlist, first, last + 1 - first);
+        queue_update (Playlist::Selection, playlist, first, last + 1 - first);
 
     LEAVE;
 }
@@ -1871,7 +1871,7 @@ bool playlist_prev_song (int playlist_num)
 
     LEAVE;
 
-    hook_call ("playlist position", GINT_TO_POINTER (playlist_num));
+    hook_call ("playlist position", aud::to_ptr (playlist_num));
     if (was_playing)
         change_playback (true);
 
@@ -1982,7 +1982,7 @@ bool playlist_next_song (int playlist_num, bool repeat)
 
     LEAVE;
 
-    hook_call ("playlist position", GINT_TO_POINTER (playlist_num));
+    hook_call ("playlist position", aud::to_ptr (playlist_num));
     if (was_playing)
         change_playback (true);
 
@@ -2051,7 +2051,7 @@ void playback_entry_set_tuple (Tuple && tuple)
     Entry * entry = playing_playlist->position;
     entry_set_tuple (playing_playlist, entry, std::move (tuple));
 
-    queue_update (PLAYLIST_UPDATE_METADATA, playing_playlist, entry->number, 1);
+    queue_update (Playlist::Metadata, playing_playlist, entry->number, 1);
     LEAVE;
 }
 
@@ -2195,7 +2195,7 @@ void playlist_load_state ()
     }
 
     queued_update.stop ();
-    update_level = 0;
+    update_level = Playlist::NoUpdate;
 
     LEAVE;
 }

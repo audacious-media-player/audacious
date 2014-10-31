@@ -123,7 +123,7 @@ static void playlist_set_playing_cb (void * unused, void * unused2)
 
 static void playlist_position_cb (void * list, void * unused)
 {
-    if (GPOINTER_TO_INT (list) == aud_playlist_get_playing ())
+    if (aud::from_ptr<int> (list) == aud_playlist_get_playing ())
         audgui_pixbuf_uncache ();
 }
 

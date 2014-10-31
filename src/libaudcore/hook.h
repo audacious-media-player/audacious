@@ -20,6 +20,8 @@
 #ifndef LIBAUDCORE_HOOK_H
 #define LIBAUDCORE_HOOK_H
 
+#include <libaudcore/templates.h>
+
 typedef void (* HookFunction) (void * data, void * user);
 
 /* Adds <func> to the list of functions to be called when the hook <name> is
@@ -79,7 +81,7 @@ private:
     static void run (void * d, void * recv_)
     {
         auto recv = (HookReceiver *) recv_;
-        (recv->target->* recv->func) ((D) d);
+        (recv->target->* recv->func) (aud::from_ptr<D> (d));
     }
 };
 

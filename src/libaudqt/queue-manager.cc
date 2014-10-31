@@ -91,7 +91,6 @@ void QueueManagerModel::reset ()
 class QueueManagerDialog : public QDialog {
 public:
     QueueManagerDialog (QWidget * parent = nullptr);
-    ~QueueManagerDialog ();
 
 private:
     QVBoxLayout m_layout;
@@ -101,12 +100,17 @@ private:
     QPushButton m_btn_close;
     QueueManagerModel m_model;
 
-    static void update_hook (void *, void * user);
-
+    void update (Playlist::Update level);
     void removeSelected ();
+
+    HookReceiver<QueueManagerDialog, Playlist::Update> update_hook;
+    HookReceiver<QueueManagerModel> activate_hook;
 };
 
-QueueManagerDialog::QueueManagerDialog (QWidget * parent) : QDialog (parent)
+QueueManagerDialog::QueueManagerDialog (QWidget * parent) :
+    QDialog (parent),
+    update_hook ("playlist update", this, & QueueManagerDialog::update),
+    activate_hook ("playlist activate", & m_model, & QueueManagerModel::reset)
 {
     m_btn_unqueue.setText (translate_str (N_("_Unqueue")));
     m_btn_close.setText (translate_str (N_("_Close")));
@@ -125,9 +129,6 @@ QueueManagerDialog::QueueManagerDialog (QWidget * parent) : QDialog (parent)
     m_treeview.setSelectionMode (QAbstractItemView::ExtendedSelection);
     m_treeview.header ()->hide ();
 
-    hook_associate ("playlist activate", QueueManagerDialog::update_hook, this);
-    hook_associate ("playlist update", QueueManagerDialog::update_hook, this);
-
     setLayout (& m_layout);
     setWindowTitle (_("Queue Manager"));
 
@@ -145,24 +146,11 @@ QueueManagerDialog::QueueManagerDialog (QWidget * parent) : QDialog (parent)
     resize (500, 250);
 }
 
-QueueManagerDialog::~QueueManagerDialog ()
+void QueueManagerDialog::update (Playlist::Update level)
 {
-    hook_dissociate ("playlist activate", QueueManagerDialog::update_hook);
-    hook_dissociate ("playlist update", QueueManagerDialog::update_hook);
-}
-
-void QueueManagerDialog::update_hook (void * type, void * user)
-{
-    QueueManagerDialog * s = static_cast<QueueManagerDialog *> (user);
-
     /* resetting the model due to selection updates causes breakage, so don't do it. */
-    if (type == PLAYLIST_UPDATE_SELECTION)
-        return;
-
-    if (! s)
-        return;
-
-    s->m_model.reset ();
+    if (level != Playlist::Selection)
+        m_model.reset ();
 }
 
 void QueueManagerDialog::removeSelected ()

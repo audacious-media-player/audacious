@@ -65,6 +65,24 @@ template<class T, int N>
 constexpr int n_elems (const T (&) [N])
     { return N; }
 
+// Storing various data in a void pointer.
+
+template<class T>
+inline void * to_ptr (T t)
+{
+    union { void * v; T t; } u = {nullptr};
+    static_assert (sizeof u == sizeof (void *), "Type cannot be stored in a pointer");
+    u.t = t; return u.v;
+}
+
+template<class T>
+inline T from_ptr (void * v)
+{
+    union { void * v; T t; } u = {v};
+    static_assert (sizeof u == sizeof (void *), "Type cannot be stored in a pointer");
+    return u.t;
+}
+
 // Wrapper class allowing enumerations to be used in range-based for loops.
 
 template<class T, T first, T last>

@@ -386,10 +386,9 @@ static bool hooks_added, state_changed;
 
 static void update_cb (void * data, void *)
 {
-    if (data < PLAYLIST_UPDATE_METADATA)
-        return;
-
-    state_changed = true;
+    auto level = aud::from_ptr<Playlist::Update> (data);
+    if (level >= Playlist::Metadata)
+        state_changed = true;
 }
 
 static void state_cb (void * data, void * user)
