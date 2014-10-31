@@ -53,8 +53,39 @@ void event_queue_cancel (const char * name, void * data);
  * be used as hook callbacks.  The HookReceiver should be made a member of the
  * class in question so that hook_dissociate() is called automatically from the
  * destructor. */
-template<class T>
+template<class T, class D = void>
 class HookReceiver
+{
+public:
+    HookReceiver (const char * hook, T * target, void (T::* func) (D)) :
+        hook (hook),
+        target (target),
+        func (func)
+    {
+        hook_associate (hook, run, this);
+    }
+
+    ~HookReceiver ()
+        { hook_dissociate_full (hook, run, this); }
+
+    HookReceiver (const HookReceiver &) = delete;
+    void operator= (const HookReceiver &) = delete;
+
+private:
+    const char * const hook;
+    T * const target;
+    void (T::* const func) (D);
+
+    static void run (void * d, void * recv_)
+    {
+        auto recv = (HookReceiver *) recv_;
+        (recv->target->* recv->func) ((D) d);
+    }
+};
+
+/* Partial specialization for data-less hooks. */
+template<class T>
+class HookReceiver<T, void>
 {
 public:
     HookReceiver (const char * hook, T * target, void (T::* func) ()) :
