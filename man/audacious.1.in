@@ -1,4 +1,4 @@
-.TH AUDACIOUS "1" "February 2014" "Version @PACKAGE_VERSION@" "Audacious"
+.TH AUDACIOUS "1" "November 2014" "Version @PACKAGE_VERSION@" "Audacious"
 
 .SH NAME
 audacious \- an advanced audio player.
@@ -84,79 +84,63 @@ Print version information and exit.
 
 .TP
 .I -V, --verbose
-Print debugging output while running.
+Print debugging output while running (may be used twice).
 
 .SH KEYBINDINGS
 .ta 24
-z	Previous song
+Control + Return	Play
 .br
-x	Play
+Space, Control + ,	Pause
 .br
-c, Space	Pause
+Control + .			Stop
 .br
-v	Stop
+Alt + Up			Previous song
 .br
-b	Next song
+Alt + Down			Next song
 .br
-Right arrow	Seek forward 5 seconds
+Right arrow			Seek forward (by default 5 seconds)
 .br
-Left arrow	Seek backward 5 seconds
+Left arrow			Seek backward (by default 5 seconds)
 .br
-Control + z	Go to beginning of playlist
+Escape				Scroll to current song
 .br
-Escape	Scroll to current song
-.br
-Control + a	Select all songs in playlist
+Control + a			Select all songs in playlist
 .br
 Shift + Control + a	Cancel selection
 .br
-+ (plus)	Increase volume 5 percent
+Control + + (plus)	Increase volume 5 percent
 .br
-- (minus)	Decrease volume 5 percent
+Control + - (minus)	Decrease volume 5 percent
 .br
-s	Toggle shuffle
+Control + s			Toggle shuffle
 .br
-r	Toggle repeat
+Control + r			Toggle repeat
 .br
-Control + n	Toggle advancing in playlist
+Control + n			Toggle advancing in playlist
 .br
-Control + m	Toggle stopping after current song
+Control + m			Toggle stopping after current song
 .br
-Control + e	Show elapsed time
+Control + e			Display Equalizer
 .br
-Control + r	Show time remaining
+Control + y			Display Search Tool
 .br
-Alt + e	Show/hide playlist
+Control + i			Display Song Information dialog
 .br
-Alt + g	Show/hide equalizer
+Control + k			Display Jump to Time dialog
 .br
-Control + o	Toggle windows always on top
+Control + j			Display Jump to Song dialog
 .br
-Control + s	Toggle windows on all workspaces
+Control + p			Display Playlist Manager dialog
 .br
-Control + w	Toggle rolling up main window
+Control + u			Display Queue Manager dialog
 .br
-Control + Alt + w	Toggle rolling up equalizer
+Control + o			Display Open Files dialog
 .br
-Shift + Control + w	Toggle rolling up playlist
+Shift + Control + o	Display Add Files dialog
 .br
-i	Display Song Information dialog
+Control + l			Display Open URL dialog
 .br
-Control + j	Display Jump to Time dialog
-.br
-j	Display Jump to Song dialog
-.br
-Control + f	Display Search dialog
-.br
-l	Display Open dialog
-.br
-f	Display Add dialog
-.br
-Control + l	Display Open Internet Address dialog
-.br
-Control + h	Display Add Internet Address dialog
-.br
-Control + p	Display Preferences dialog
+Shift + Control + l	Display Add URL dialog
 
 .SH FILES
 .TP
