@@ -30,6 +30,16 @@
 
 namespace audqt {
 
+EXPORT void cleanup ()
+{
+    aboutwindow_hide ();
+    equalizer_hide ();
+    infowin_hide ();
+    log_inspector_hide ();
+    prefswin_hide ();
+    queue_manager_hide ();
+}
+
 /* the goal is to force a window to come to the front on any qt platform */
 EXPORT void window_bring_to_front (QWidget * window)
 {

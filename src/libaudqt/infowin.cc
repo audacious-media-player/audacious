@@ -41,52 +41,39 @@ namespace audqt {
 class InfoWindow : public QDialog {
 public:
     InfoWindow (QWidget * parent = nullptr);
-    ~InfoWindow ();
 
     void fillInfo (int playlist, int entry, const char * filename, const Tuple & tuple,
      PluginHandle * decoder, bool updating_enabled);
     void displayImage (const char * filename);
 
+    HookReceiver<InfoWindow, const char *> art_hook =
+     {"art ready", this, & InfoWindow::displayImage};
+
 private:
-    QHBoxLayout m_hbox;
-    QVBoxLayout m_vbox;
     QLabel m_image;
     InfoWidget m_infowidget;
-    QDialogButtonBox m_buttonbox;
 };
-
-static InfoWindow * m_infowin = nullptr;
-
-static void infowin_display_image_async (const char * filename, InfoWindow * infowin)
-{
-    infowin->displayImage (filename);
-}
 
 InfoWindow::InfoWindow (QWidget * parent) : QDialog (parent)
 {
-    m_hbox.addWidget (& m_image);
-    m_hbox.addWidget (& m_infowidget);
-    m_vbox.addLayout (& m_hbox);
-    m_vbox.addWidget (& m_buttonbox);
-
-    setLayout (& m_vbox);
     setWindowTitle (_("Song Info"));
 
-    hook_associate ("art ready", (HookFunction) infowin_display_image_async, this);
+    auto hbox = new QHBoxLayout;
+    hbox->addWidget (& m_image);
+    hbox->addWidget (& m_infowidget);
 
-    m_buttonbox.setStandardButtons (QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    auto vbox = new QVBoxLayout (this);
+    vbox->addLayout (hbox);
 
-    QObject::connect (& m_buttonbox, &QDialogButtonBox::accepted, [=] () {
+    auto buttonbox = new QDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
+    vbox->addWidget (buttonbox);
+
+    QObject::connect (buttonbox, &QDialogButtonBox::accepted, [this] () {
         m_infowidget.updateFile ();
-        hide ();
+        deleteLater ();
     });
 
-    QObject::connect (& m_buttonbox, &QDialogButtonBox::rejected, this, &QDialog::close);
-}
-
-InfoWindow::~InfoWindow ()
-{
-    hook_dissociate ("art ready", (HookFunction) infowin_display_image_async);
+    QObject::connect (buttonbox, &QDialogButtonBox::rejected, this, &QObject::deleteLater);
 }
 
 void InfoWindow::fillInfo (int playlist, int entry, const char * filename, const Tuple & tuple,
@@ -103,10 +90,19 @@ void InfoWindow::displayImage (const char * filename)
     m_image.setPixmap (QPixmap::fromImage (img));
 }
 
+static InfoWindow * s_infowin = nullptr;
+
 EXPORT void infowin_show (int playlist, int entry)
 {
-    if (! m_infowin)
-        m_infowin = new InfoWindow;
+    if (! s_infowin)
+    {
+        s_infowin = new InfoWindow;
+        s_infowin->setAttribute (Qt::WA_DeleteOnClose);
+
+        QObject::connect (s_infowin, & QObject::destroyed, [] () {
+            s_infowin = nullptr;
+        });
+    }
 
     String filename = aud_playlist_entry_get_filename (playlist, entry);
     if (! filename)
@@ -121,16 +117,16 @@ EXPORT void infowin_show (int playlist, int entry)
     if (tuple)
     {
         tuple.delete_fallbacks ();
-        m_infowin->fillInfo (playlist, entry, filename, tuple, decoder,
+        s_infowin->fillInfo (playlist, entry, filename, tuple, decoder,
             aud_file_can_write_tuple (filename, decoder));
     }
     else
         aud_ui_show_error (str_printf (_("No info available for %s.\n"),
             (const char *) filename));
 
-    m_infowin->resize (700, 300);
+    s_infowin->resize (700, 300);
 
-    window_bring_to_front (m_infowin);
+    window_bring_to_front (s_infowin);
 }
 
 EXPORT void infowin_show_current ()
@@ -151,10 +147,7 @@ EXPORT void infowin_show_current ()
 
 EXPORT void infowin_hide ()
 {
-    if (! m_infowin)
-        return;
-
-    m_infowin->hide ();
+    delete s_infowin;
 }
 
 } // namespace audqt

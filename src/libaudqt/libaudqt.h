@@ -52,6 +52,7 @@ void equalizer_hide ();
 void fileopener_show (bool add);
 
 /* util.cc */
+void cleanup ();
 void window_bring_to_front (QWidget * win);
 void simple_message (const char * title, const char * text);
 QString translate_str (const char * str, const char * domain);

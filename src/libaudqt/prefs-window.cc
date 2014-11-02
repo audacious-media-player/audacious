@@ -55,8 +55,6 @@
 
 namespace audqt {
 
-static QDialog * m_prefswin = nullptr;
-
 struct Category {
     const char * icon_path;
     const char * name;
@@ -702,16 +700,22 @@ static void create_plugin_category (QStackedWidget * parent)
     parent->addWidget (plugin_tabs);
 }
 
-static QStackedWidget * category_notebook = nullptr;
+static QDialog * s_prefswin = nullptr;
+static QStackedWidget * s_category_notebook = nullptr;
 
 static void create_prefs_window ()
 {
     QVBoxLayout * vbox_parent = new QVBoxLayout;
     QToolBar * toolbar = new QToolBar;
 
-    m_prefswin = new QDialog;
-    m_prefswin->setWindowTitle (_("Audacious Settings"));
-    m_prefswin->setLayout (vbox_parent);
+    s_prefswin = new QDialog;
+    s_prefswin->setWindowTitle (_("Audacious Settings"));
+    s_prefswin->setLayout (vbox_parent);
+    s_prefswin->setAttribute (Qt::WA_DeleteOnClose);
+
+    QObject::connect (s_prefswin, & QObject::destroyed, [] () {
+        s_prefswin = nullptr;
+    });
 
     vbox_parent->setSpacing (0);
     vbox_parent->setMargin (0);
@@ -725,20 +729,20 @@ static void create_prefs_window ()
 
     child->setLayout (child_vbox);
 
-    category_notebook = new QStackedWidget;
-    child_vbox->addWidget (category_notebook);
+    s_category_notebook = new QStackedWidget;
+    child_vbox->addWidget (s_category_notebook);
 
-    create_appearance_category (category_notebook);
-    create_audio_category (category_notebook);
-    create_connectivity_category (category_notebook);
-    create_playlist_category (category_notebook);
-    create_song_info_category (category_notebook);
-    create_plugin_category (category_notebook);
+    create_appearance_category (s_category_notebook);
+    create_audio_category (s_category_notebook);
+    create_connectivity_category (s_category_notebook);
+    create_playlist_category (s_category_notebook);
+    create_song_info_category (s_category_notebook);
+    create_plugin_category (s_category_notebook);
 
     QDialogButtonBox * bbox = new QDialogButtonBox (QDialogButtonBox::Close);
     child_vbox->addWidget (bbox);
 
-    QObject::connect (bbox, &QDialogButtonBox::rejected, m_prefswin, &QWidget::hide);
+    QObject::connect (bbox, &QDialogButtonBox::rejected, s_prefswin, &QObject::deleteLater);
 
     toolbar->setToolButtonStyle (Qt::ToolButtonTextUnderIcon);
 
@@ -746,7 +750,7 @@ static void create_prefs_window ()
     const char * data_dir = aud_get_path (AudPath::DataDir);
 
     QObject::connect (mapper, static_cast <void (QSignalMapper::*)(int)>(&QSignalMapper::mapped),
-                      category_notebook, static_cast <void (QStackedWidget::*)(int)>(&QStackedWidget::setCurrentIndex));
+                      s_category_notebook, static_cast <void (QStackedWidget::*)(int)>(&QStackedWidget::setCurrentIndex));
 
     for (int i = 0; i < CATEGORY_COUNT; i++)
     {
@@ -763,18 +767,15 @@ static void create_prefs_window ()
 
 EXPORT void prefswin_show ()
 {
-    if (! m_prefswin)
+    if (! s_prefswin)
         create_prefs_window ();
 
-    window_bring_to_front (m_prefswin);
+    window_bring_to_front (s_prefswin);
 }
 
 EXPORT void prefswin_hide ()
 {
-    if (! m_prefswin)
-        return;
-
-    m_prefswin->hide ();
+    delete s_prefswin;
 }
 
 EXPORT void prefswin_show_page (int id, bool show)
@@ -782,18 +783,18 @@ EXPORT void prefswin_show_page (int id, bool show)
     if (id < 0 || id > CATEGORY_COUNT)
         return;
 
-    if (! m_prefswin)
+    if (! s_prefswin)
         create_prefs_window ();
 
-    category_notebook->setCurrentIndex (id);
+    s_category_notebook->setCurrentIndex (id);
 
     if (show)
-        window_bring_to_front (m_prefswin);
+        window_bring_to_front (s_prefswin);
 }
 
 EXPORT void prefswin_show_plugin_page (int type)
 {
-    if (! m_prefswin)
+    if (! s_prefswin)
         create_prefs_window ();
 
     if (type == PLUGIN_TYPE_IFACE)
@@ -810,7 +811,7 @@ EXPORT void prefswin_show_plugin_page (int type)
                 plugin_tabs->setCurrentIndex (& category - plugin_categories);
         }
 
-        window_bring_to_front (m_prefswin);
+        window_bring_to_front (s_prefswin);
     }
 }
 

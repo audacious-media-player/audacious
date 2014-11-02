@@ -153,7 +153,7 @@ EXPORT void equalizer_show (void)
         s_equalizer = new EqualizerWindow;
         s_equalizer->setAttribute (Qt::WA_DeleteOnClose);
 
-        QObject::connect (s_equalizer, & QWidget::destroyed, [] () {
+        QObject::connect (s_equalizer, & QObject::destroyed, [] () {
             s_equalizer = nullptr;
         });
     }

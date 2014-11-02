@@ -173,22 +173,26 @@ void QueueManagerDialog::removeSelected ()
     }
 }
 
-static QueueManagerDialog * m_queuemgr = nullptr;
+static QueueManagerDialog * s_queuemgr = nullptr;
 
 EXPORT void queue_manager_show ()
 {
-    if (! m_queuemgr)
-        m_queuemgr = new QueueManagerDialog;
+    if (! s_queuemgr)
+    {
+        s_queuemgr = new QueueManagerDialog;
+        s_queuemgr->setAttribute (Qt::WA_DeleteOnClose);
 
-    window_bring_to_front (m_queuemgr);
+        QObject::connect (s_queuemgr, & QObject::destroyed, [] () {
+            s_queuemgr = nullptr;
+        });
+    }
+
+    window_bring_to_front (s_queuemgr);
 }
 
 EXPORT void queue_manager_hide ()
 {
-    if (! m_queuemgr)
-        return;
-
-    m_queuemgr->hide ();
+    delete s_queuemgr;
 }
 
 } // namespace audqt

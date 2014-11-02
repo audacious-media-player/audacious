@@ -28,10 +28,10 @@ namespace audqt {
 class QtIfacePlugin : public IfacePlugin
 {
 public:
-    constexpr QtIfacePlugin (PluginInfo info) : IfacePlugin (info) {};
+    constexpr QtIfacePlugin (PluginInfo info) : IfacePlugin (info) {}
 
-    void show_about_window () { aboutwindow_show (); };
-    void hide_about_window () { aboutwindow_hide (); };
+    void show_about_window () { aboutwindow_show (); }
+    void hide_about_window () { aboutwindow_hide (); }
     void show_filebrowser (bool open) { fileopener_show (open); }
     void hide_filebrowser () {}
     void show_jump_to_song () {}

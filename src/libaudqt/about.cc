@@ -96,7 +96,7 @@ EXPORT void aboutwindow_show ()
         s_aboutwin = buildAboutWindow ();
         s_aboutwin->setAttribute (Qt::WA_DeleteOnClose);
 
-        QObject::connect (s_aboutwin, & QWidget::destroyed, [] () {
+        QObject::connect (s_aboutwin, & QObject::destroyed, [] () {
             s_aboutwin = nullptr;
         });
     }
