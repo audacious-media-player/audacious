@@ -64,6 +64,7 @@ static QDialog * buildAboutWindow ()
     const char about_text[] =
      "<big><b>Audacious " VERSION "</b></big><br>\n"
      "Copyright © 2001-2014 Audacious developers and others";
+    const char website[] = "http://audacious-media-player.org";
 
     auto window = new QDialog;
 
@@ -74,9 +75,15 @@ static QDialog * buildAboutWindow ()
     auto text = new QLabel (about_text, window);
     text->setAlignment (Qt::AlignHCenter);
 
+    auto anchor = QString (str_printf ("<a href='%s'>%s</a>", website, website));
+    auto link_label = new QLabel (anchor, window);
+    link_label->setAlignment (Qt::AlignHCenter);
+    link_label->setOpenExternalLinks (true);
+
     auto layout = new QVBoxLayout (window);
     layout->addWidget (logo);
     layout->addWidget (text);
+    layout->addWidget (link_label);
     layout->addWidget (buildCreditsNotebook (window));
 
     window->setWindowTitle (_("About Audacious"));
