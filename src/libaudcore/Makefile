@@ -32,6 +32,7 @@ SRCS = adder.cc \
        plugin-init.cc \
        plugin-load.cc \
        plugin-registry.cc \
+       preferences.cc \
        probe.cc \
        probe-buffer.cc \
        ringbuf.cc \

@@ -163,6 +163,15 @@ struct WidgetConfig
         name (name),
         callback (callback),
         hook (hook) {}
+
+    bool get_bool () const;
+    void set_bool (bool val) const;
+    int get_int () const;
+    void set_int (int val) const;
+    double get_float () const;
+    void set_float (double val) const;
+    ::String get_string () const;
+    void set_string (const char * val) const;
 };
 
 constexpr WidgetConfig WidgetBool (bool & value,
