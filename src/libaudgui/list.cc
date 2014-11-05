@@ -44,7 +44,7 @@ struct ListModel {
     bool resizable;
     bool frozen, blocked;
     bool dragging;
-    bool clicked_row, receive_row;
+    int clicked_row, receive_row;
     int scroll_source, scroll_speed;
 };
 
