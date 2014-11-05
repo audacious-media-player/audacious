@@ -37,14 +37,17 @@ EXPORT QPixmap art_request (const char * filename, unsigned int w, unsigned int 
         return QPixmap ();
     }
 
-    QImage img = QImage::fromData ((const uchar *) data->begin (), data->len ()).scaled (w, h, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    QImage img = QImage::fromData ((const uchar *) data->begin (), data->len ());
 
     aud_art_unref (filename);
 
-    QPixmap pm = QPixmap::fromImage (img);
+    if (! want_hidpi)
+        return QPixmap::fromImage (img.scaled (w, h, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
-    if (want_hidpi)
-        pm.setDevicePixelRatio (qApp->devicePixelRatio ());
+    qreal r = qApp->devicePixelRatio ();
+
+    QPixmap pm = QPixmap::fromImage (img.scaled (w * r, h * r, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    pm.setDevicePixelRatio (qApp->devicePixelRatio ());
 
     return pm;
 }
