@@ -47,7 +47,7 @@ EXPORT QPixmap art_request (const char * filename, unsigned int w, unsigned int 
     qreal r = qApp->devicePixelRatio ();
 
     QPixmap pm = QPixmap::fromImage (img.scaled (w * r, h * r, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-    pm.setDevicePixelRatio (qApp->devicePixelRatio ());
+    pm.setDevicePixelRatio (r);
 
     return pm;
 }
