@@ -1111,7 +1111,7 @@ EXPORT Tuple aud_playlist_entry_get_tuple (int playlist_num, int entry_num,
     Entry * entry = get_entry (playlist_num, entry_num, false, wait);
 
     Tuple tuple;
-    if ((entry->scanned && ! entry->failed) || guess)
+    if (entry && ((entry->scanned && ! entry->failed) || guess))
         tuple = entry->tuple.ref ();
 
     if (error)
@@ -2033,7 +2033,7 @@ Tuple playback_entry_get_tuple (Playlist::GetMode mode, String * error)
     Entry * entry = get_playback_entry (false, wait);
 
     Tuple tuple;
-    if ((entry->scanned && ! entry->failed) || guess)
+    if (entry && ((entry->scanned && ! entry->failed) || guess))
         tuple = entry->tuple.ref ();
 
     if (error)
