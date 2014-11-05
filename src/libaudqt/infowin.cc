@@ -85,9 +85,7 @@ void InfoWindow::fillInfo (int playlist, int entry, const char * filename, const
 
 void InfoWindow::displayImage (const char * filename)
 {
-    QImage img = art_request (filename).scaled (256, 256, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-
-    m_image.setPixmap (QPixmap::fromImage (img));
+    m_image.setPixmap (art_request (filename));
 }
 
 static InfoWindow * s_infowin = nullptr;

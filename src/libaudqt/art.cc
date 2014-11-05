@@ -17,6 +17,8 @@
  * the use of this software.
  */
 
+#include <QApplication>
+#include <QPixmap>
 #include <QImage>
 
 #include <libaudcore/playlist.h>
@@ -25,32 +27,37 @@
 
 namespace audqt {
 
-EXPORT QImage art_request (const char * filename)
+EXPORT QPixmap art_request (const char * filename, unsigned int w, unsigned int h, bool want_hidpi)
 {
     const Index<char> * data = aud_art_request_data (filename);
 
     if (! data)
     {
         AUDINFO ("no album art for %s.\n", filename);
-        return QImage ();
+        return QPixmap ();
     }
 
-    QImage img = QImage::fromData ((const uchar *) data->begin (), data->len ());
+    QImage img = QImage::fromData ((const uchar *) data->begin (), data->len ()).scaled (w, h, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
     aud_art_unref (filename);
 
-    return img;
+    QPixmap pm = QPixmap::fromImage (img);
+
+    if (want_hidpi)
+        pm.setDevicePixelRatio (qApp->devicePixelRatio ());
+
+    return pm;
 }
 
-EXPORT QImage art_request_current ()
+EXPORT QPixmap art_request_current (unsigned int w, unsigned int h, bool want_hidpi)
 {
     int list = aud_playlist_get_playing ();
     int entry = aud_playlist_get_position (list);
     if (entry < 0)
-        return QImage ();
+        return QPixmap ();
 
     String filename = aud_playlist_entry_get_filename (list, entry);
-    return art_request (filename);
+    return art_request (filename, w, h, want_hidpi);
 }
 
 } // namespace audqt
