@@ -20,7 +20,9 @@
 #include "volumebutton.h"
 #include "libaudqt.h"
 
+#include <QApplication>
 #include <QIcon>
+#include <QLabel>
 #include <QSlider>
 #include <QVBoxLayout>
 
@@ -31,31 +33,58 @@ namespace audqt {
 EXPORT VolumeButton::VolumeButton (QWidget * parent) :
     QToolButton (parent)
 {
-    setIcon (QIcon::fromTheme ("audio-volume-medium"));
     setFocusPolicy (Qt::NoFocus);
+
+    auto layout = new QVBoxLayout (this);
+    layout->setContentsMargins (6, 6, 6, 6);
 
     m_slider = new QSlider (Qt::Vertical, this);
     m_slider->setRange (0, 100);
 
-    auto layout = new QVBoxLayout (this);
-    layout->setContentsMargins (6, 6, 6, 6);
     layout->addWidget (m_slider);
 
     m_container = new QWidget;
     m_container->setLayout (layout);
 
+    updateVolume ();
+
     connect (this, & QAbstractButton::clicked, this, & VolumeButton::showSlider);
-    connect (m_slider, & QAbstractSlider::valueChanged, aud_drct_set_volume_main);
+    connect (m_slider, & QAbstractSlider::valueChanged, this, & VolumeButton::setVolume);
+}
+
+EXPORT void VolumeButton::updateIcon (int val)
+{
+    if (val == 0)
+        setIcon (QIcon::fromTheme ("audio-volume-off"));
+    else if (val > 0 && val < 35)
+        setIcon (QIcon::fromTheme ("audio-volume-low"));
+    else if (val >= 35 && val < 70)
+        setIcon (QIcon::fromTheme ("audio-volume-medium"));
+    else if (val >= 70)
+        setIcon (QIcon::fromTheme ("audio-volume-high"));
+}
+
+EXPORT void VolumeButton::updateVolume ()
+{
+    int val = aud_drct_get_volume_main ();
+    updateIcon (val);
+    m_slider->setValue (val);
 }
 
 EXPORT void VolumeButton::showSlider ()
 {
-    m_slider->setValue (aud_drct_get_volume_main ());
+    updateVolume ();
 
     m_container->setWindowFlags (Qt::Popup);
     m_container->move (mapToGlobal (QPoint (0, 0)));
 
     window_bring_to_front (m_container);
+}
+
+EXPORT void VolumeButton::setVolume (int val)
+{
+    aud_drct_set_volume_main (val);
+    updateIcon (val);
 }
 
 } // namespace audqt

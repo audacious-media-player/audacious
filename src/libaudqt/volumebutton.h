@@ -22,6 +22,7 @@
 
 #include <QToolButton>
 
+class QLabel;
 class QSlider;
 
 namespace audqt {
@@ -33,6 +34,9 @@ public:
 
 private:
     void showSlider ();
+    void updateIcon (int val);
+    void updateVolume ();
+    void setVolume (int val);
 
     QSlider * m_slider;
     QWidget * m_container;
