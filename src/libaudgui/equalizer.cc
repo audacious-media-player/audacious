@@ -43,7 +43,7 @@ static void on_off_update (void * unused, GtkWidget * on_off)
 static GtkWidget * create_on_off (void)
 {
     GtkWidget * on_off = gtk_check_button_new_with_mnemonic (_("_Enable"));
-    g_signal_connect ((GObject *) on_off, "toggled", (GCallback) on_off_cb, nullptr);
+    g_signal_connect (on_off, "toggled", (GCallback) on_off_cb, nullptr);
     hook_associate ("set equalizer_active", (HookFunction) on_off_update, on_off);
 
     on_off_update (nullptr, on_off);
@@ -76,7 +76,7 @@ static GtkWidget * create_slider (const char * name, int band, GtkWidget * hbox)
     gtk_widget_set_size_request (slider, -1, 120);
 
     g_object_set_data ((GObject *) slider, "band", GINT_TO_POINTER (band));
-    g_signal_connect ((GObject *) slider, "value-changed", (GCallback) slider_moved, nullptr);
+    g_signal_connect (slider, "value-changed", (GCallback) slider_moved, nullptr);
 
     gtk_box_pack_start ((GtkBox *) vbox, slider, false, false, 0);
     gtk_box_pack_start ((GtkBox *) hbox, vbox, false, false, 0);
