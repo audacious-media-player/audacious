@@ -136,41 +136,39 @@ static GtkWidget * small_label_new (const char * text)
 }
 
 static void set_entry_str_from_field (GtkWidget * widget, const Tuple & tuple,
- int fieldn, gboolean editable)
+ Tuple::Field field, gboolean editable)
 {
-    String text = tuple.get_str (fieldn);
+    String text = tuple.get_str (field);
     gtk_entry_set_text ((GtkEntry *) widget, text ? text : "");
     gtk_editable_set_editable ((GtkEditable *) widget, editable);
 }
 
 static void set_entry_int_from_field (GtkWidget * widget, const Tuple & tuple,
- int fieldn, gboolean editable)
+ Tuple::Field field, gboolean editable)
 {
-    int value = tuple.get_int (fieldn);
+    int value = tuple.get_int (field);
     gtk_entry_set_text ((GtkEntry *) widget, (value > 0) ? (const char *) int_to_str (value) : "");
     gtk_editable_set_editable ((GtkEditable *) widget, editable);
 }
 
-static void set_field_str_from_entry (Tuple & tuple, int fieldn, GtkWidget *
- widget)
+static void set_field_str_from_entry (Tuple & tuple, Tuple::Field field, GtkWidget * widget)
 {
     const char * text = gtk_entry_get_text ((GtkEntry *) widget);
 
     if (text[0])
-        tuple.set_str (fieldn, text);
+        tuple.set_str (field, text);
     else
-        tuple.unset (fieldn);
+        tuple.unset (field);
 }
 
-static void set_field_int_from_entry (Tuple & tuple, int fieldn, GtkWidget *
- widget)
+static void set_field_int_from_entry (Tuple & tuple, Tuple::Field field, GtkWidget * widget)
 {
     const char * text = gtk_entry_get_text ((GtkEntry *) widget);
 
     if (text[0])
-        tuple.set_int (fieldn, atoi (text));
+        tuple.set_int (field, atoi (text));
     else
-        tuple.unset (fieldn);
+        tuple.unset (field);
 }
 
 static void entry_changed (GtkEditable * editable)
@@ -203,15 +201,15 @@ static void infowin_update_tuple ()
     Tuple tuple;
     tuple.set_filename (current_file);
 
-    set_field_str_from_entry (tuple, FIELD_TITLE, widgets.title);
-    set_field_str_from_entry (tuple, FIELD_ARTIST, widgets.artist);
-    set_field_str_from_entry (tuple, FIELD_ALBUM, widgets.album);
-    set_field_str_from_entry (tuple, FIELD_ALBUM_ARTIST, widgets.album_artist);
-    set_field_str_from_entry (tuple, FIELD_COMMENT, widgets.comment);
-    set_field_str_from_entry (tuple, FIELD_GENRE, gtk_bin_get_child ((GtkBin *)
+    set_field_str_from_entry (tuple, Tuple::Title, widgets.title);
+    set_field_str_from_entry (tuple, Tuple::Artist, widgets.artist);
+    set_field_str_from_entry (tuple, Tuple::Album, widgets.album);
+    set_field_str_from_entry (tuple, Tuple::AlbumArtist, widgets.album_artist);
+    set_field_str_from_entry (tuple, Tuple::Comment, widgets.comment);
+    set_field_str_from_entry (tuple, Tuple::Genre, gtk_bin_get_child ((GtkBin *)
      widgets.genre));
-    set_field_int_from_entry (tuple, FIELD_YEAR, widgets.year);
-    set_field_int_from_entry (tuple, FIELD_TRACK_NUMBER, widgets.track);
+    set_field_int_from_entry (tuple, Tuple::Year, widgets.year);
+    set_field_int_from_entry (tuple, Tuple::Track, widgets.track);
 
     if (aud_file_write_tuple (current_file, current_decoder, tuple))
     {
@@ -402,27 +400,27 @@ static void infowin_show (int list, int entry, const char * filename,
     current_decoder = decoder;
     can_write = updating_enabled;
 
-    set_entry_str_from_field (widgets.title, tuple, FIELD_TITLE, updating_enabled);
-    set_entry_str_from_field (widgets.artist, tuple, FIELD_ARTIST, updating_enabled);
-    set_entry_str_from_field (widgets.album, tuple, FIELD_ALBUM, updating_enabled);
-    set_entry_str_from_field (widgets.album_artist, tuple, FIELD_ALBUM_ARTIST, updating_enabled);
-    set_entry_str_from_field (widgets.comment, tuple, FIELD_COMMENT, updating_enabled);
+    set_entry_str_from_field (widgets.title, tuple, Tuple::Title, updating_enabled);
+    set_entry_str_from_field (widgets.artist, tuple, Tuple::Artist, updating_enabled);
+    set_entry_str_from_field (widgets.album, tuple, Tuple::Album, updating_enabled);
+    set_entry_str_from_field (widgets.album_artist, tuple, Tuple::AlbumArtist, updating_enabled);
+    set_entry_str_from_field (widgets.comment, tuple, Tuple::Comment, updating_enabled);
     set_entry_str_from_field (gtk_bin_get_child ((GtkBin *) widgets.genre),
-     tuple, FIELD_GENRE, updating_enabled);
+     tuple, Tuple::Genre, updating_enabled);
 
     gtk_label_set_text ((GtkLabel *) widgets.location, uri_to_display (filename));
 
-    set_entry_int_from_field (widgets.year, tuple, FIELD_YEAR, updating_enabled);
-    set_entry_int_from_field (widgets.track, tuple, FIELD_TRACK_NUMBER, updating_enabled);
+    set_entry_int_from_field (widgets.year, tuple, Tuple::Year, updating_enabled);
+    set_entry_int_from_field (widgets.track, tuple, Tuple::Track, updating_enabled);
 
     String codec_values[CODEC_ITEMS];
 
-    codec_values[CODEC_FORMAT] = tuple.get_str (FIELD_CODEC);
-    codec_values[CODEC_QUALITY] = tuple.get_str (FIELD_QUALITY);
+    codec_values[CODEC_FORMAT] = tuple.get_str (Tuple::Codec);
+    codec_values[CODEC_QUALITY] = tuple.get_str (Tuple::Quality);
 
-    if (tuple.get_value_type (FIELD_BITRATE) == TUPLE_INT)
+    if (tuple.get_value_type (Tuple::Bitrate) == Tuple::Int)
         codec_values[CODEC_BITRATE] = String (str_printf (_("%d kb/s"),
-         tuple.get_int (FIELD_BITRATE)));
+         tuple.get_int (Tuple::Bitrate)));
 
     for (int row = 0; row < CODEC_ITEMS; row ++)
     {
@@ -447,14 +445,18 @@ EXPORT void audgui_infowin_show (int playlist, int entry)
     g_return_if_fail (filename != nullptr);
 
     String error;
-    PluginHandle * decoder = aud_playlist_entry_get_decoder (playlist, entry, false, & error);
+    PluginHandle * decoder = aud_playlist_entry_get_decoder (playlist, entry,
+     Playlist::Wait, & error);
 
     if (decoder && ! aud_custom_infowin (filename, decoder))
     {
-        Tuple tuple = aud_playlist_entry_get_tuple (playlist, entry, false, & error);
+        Tuple tuple = aud_playlist_entry_get_tuple (playlist, entry, Playlist::Wait, & error);
         if (tuple)
+        {
+            tuple.delete_fallbacks ();
             infowin_show (playlist, entry, filename, tuple, decoder,
              aud_file_can_write_tuple (filename, decoder));
+        }
     }
 
     if (error)

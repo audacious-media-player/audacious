@@ -17,27 +17,27 @@
  * the use of this software.
  */
 
-#include <QtGui>
-#include <QtWidgets>
+#include <QDialog>
+#include <QFile>
+#include <QLabel>
+#include <QPlainTextEdit>
+#include <QTabWidget>
+#include <QTextStream>
+#include <QVBoxLayout>
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/i18n.h>
 #include <libaudcore/runtime.h>
 
 #include "libaudqt.h"
-#include "about.h"
-#include "about.moc"
 
-namespace audqt {
-
-static AboutWindow *m_aboutwin = nullptr;
-
-void AboutWindow::buildCreditsNotebook ()
+static QTabWidget * buildCreditsNotebook (QWidget * parent)
 {
     const char * data_dir = aud_get_path (AudPath::DataDir);
-
     const char * titles[2] = {_("Credits"), _("License")};
     const char * filenames[2] = {"AUTHORS", "COPYING"};
+
+    auto tabs = new QTabWidget (parent);
 
     for (int i = 0; i < 2; i++)
     {
@@ -47,64 +47,74 @@ void AboutWindow::buildCreditsNotebook ()
 
         QTextStream in(&f);
 
-        m_textedits[i] = new QPlainTextEdit (in.readAll());
-        m_textedits[i]->setReadOnly (true);
-        m_tabs.addTab (m_textedits[i], titles[i]);
+        auto edit = new QPlainTextEdit (in.readAll(), parent);
+        edit->setReadOnly (true);
+        tabs->addTab (edit, titles[i]);
 
         f.close();
     }
+
+    return tabs;
 }
 
-AboutWindow::AboutWindow (QWidget * parent) : QDialog (parent)
+static QDialog * buildAboutWindow ()
 {
     const char * data_dir = aud_get_path (AudPath::DataDir);
     const char * logo_path = filename_build ({data_dir, "images", "about-logo.png"});
     const char about_text[] =
      "<big><b>Audacious " VERSION "</b></big><br>\n"
      "Copyright © 2001-2014 Audacious developers and others";
+    const char website[] = "http://audacious-media-player.org";
 
-    QPixmap pm (logo_path);
-    m_logo.setPixmap (pm);
-    m_logo.setAlignment (Qt::AlignHCenter);
+    auto window = new QDialog;
 
-    m_about_text.setText (about_text);
-    m_about_text.setAlignment (Qt::AlignHCenter);
+    auto logo = new QLabel (window);
+    logo->setPixmap (QPixmap (logo_path));
+    logo->setAlignment (Qt::AlignHCenter);
 
-    buildCreditsNotebook ();
+    auto text = new QLabel (about_text, window);
+    text->setAlignment (Qt::AlignHCenter);
 
-    m_layout.addWidget (& m_logo);
-    m_layout.addWidget (& m_about_text);
-    m_layout.addWidget (& m_tabs);
+    auto anchor = QString (str_printf ("<a href='%s'>%s</a>", website, website));
+    auto link_label = new QLabel (anchor, window);
+    link_label->setAlignment (Qt::AlignHCenter);
+    link_label->setOpenExternalLinks (true);
 
-    setLayout (& m_layout);
-    setWindowTitle (_("About Audacious"));
+    auto layout = new QVBoxLayout (window);
+    layout->addWidget (logo);
+    layout->addWidget (text);
+    layout->addWidget (link_label);
+    layout->addWidget (buildCreditsNotebook (window));
 
-    resize (640, 480);
+    window->setWindowTitle (_("About Audacious"));
+    window->resize (640, 480);
+
+    return window;
 }
 
-AboutWindow::~AboutWindow ()
-{
-    for (int i = 0; i < 2; i++)
-    {
-        if (m_textedits[i])
-            delete m_textedits[i];
-    }
-}
+static QDialog * s_aboutwin = nullptr;
+
+namespace audqt {
 
 EXPORT void aboutwindow_show ()
 {
-    if (!m_aboutwin)
-        m_aboutwin = new AboutWindow;
+    if (! s_aboutwin)
+    {
+        s_aboutwin = buildAboutWindow ();
+        s_aboutwin->setAttribute (Qt::WA_DeleteOnClose);
 
-    window_bring_to_front (m_aboutwin);
+        QObject::connect (s_aboutwin, & QObject::destroyed, [] () {
+            s_aboutwin = nullptr;
+        });
+    }
+
+    window_bring_to_front (s_aboutwin);
 }
 
 EXPORT void aboutwindow_hide ()
 {
-    if (!m_aboutwin)
-        return;
-
-    m_aboutwin->hide ();
+    if (s_aboutwin)
+        delete s_aboutwin;
 }
 
-};
+} // namespace audqt

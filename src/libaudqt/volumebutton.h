@@ -20,22 +20,29 @@
 #ifndef LIBAUDQT_VOLUMEBUTTON_H
 #define LIBAUDQT_VOLUMEBUTTON_H
 
-#include <QtWidgets>
+#include <QToolButton>
+
+class QSlider;
 
 namespace audqt {
 
 class VolumeButton : public QToolButton
 {
 public:
-    VolumeButton (QWidget * parent = nullptr);
+    VolumeButton (QWidget * parent);
 
 private:
+    void updateIcon (int val);
+    void updateVolume ();
     void showSlider ();
+    void setVolume (int val);
+
+    void wheelEvent (QWheelEvent * event);
 
     QSlider * m_slider;
     QWidget * m_container;
 };
 
-}
+} // namespace audqt
 
 #endif

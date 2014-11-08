@@ -20,6 +20,7 @@
 #include <QFileDialog>
 
 #include <libaudcore/drct.h>
+#include <libaudcore/i18n.h>
 #include <libaudcore/index.h>
 #include <libaudcore/runtime.h>
 #include <libaudcore/tuple.h>
@@ -35,7 +36,8 @@ static void directoryEntered (const QString & path)
 
 EXPORT void fileopener_show (bool add = false)
 {
-    QFileDialog dialog (nullptr, add ? "Add Files" : "Open Files", QString (aud_get_str ("audgui", "filesel_path")));
+    const QString caption = add ? _("Add Files") : _("Open Files");
+    QFileDialog dialog (nullptr, caption, QString (aud_get_str ("audgui", "filesel_path")));
     dialog.setFileMode (QFileDialog::AnyFile);
 
     QObject::connect (&dialog, &QFileDialog::directoryEntered, directoryEntered);
@@ -55,4 +57,4 @@ EXPORT void fileopener_show (bool add = false)
     }
 }
 
-}
+} // namespace audqt

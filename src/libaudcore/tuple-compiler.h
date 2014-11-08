@@ -52,8 +52,7 @@ public:
     ~TupleCompiler ();
 
     bool compile (const char * expr);
-
-    String evaluate (const Tuple & tuple) const;
+    void format (Tuple & tuple) const;
 
 private:
     Index<Node> root_nodes;

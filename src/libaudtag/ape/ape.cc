@@ -275,14 +275,14 @@ static void parse_gain_text (const char * text, int * value, int * unit)
     * value = * value * sign;
 }
 
-static void set_gain_info (Tuple & tuple, int field, int unit_field,
- const char * text)
+static void set_gain_info (Tuple & tuple, Tuple::Field field,
+ Tuple::Field unit_field, const char * text)
 {
     int value, unit;
 
     parse_gain_text (text, & value, & unit);
 
-    if (tuple.get_value_type (unit_field) == TUPLE_INT)
+    if (tuple.get_value_type (unit_field) == Tuple::Int)
         value = value * (int64_t) tuple.get_int (unit_field) / unit;
     else
         tuple.set_int (unit_field, unit);
@@ -297,27 +297,27 @@ bool APETagModule::read_tag (Tuple & tuple, VFSFile & handle)
     for (const ValuePair & pair : list)
     {
         if (! strcmp (pair.key, "Artist"))
-            tuple.set_str (FIELD_ARTIST, pair.value);
+            tuple.set_str (Tuple::Artist, pair.value);
         else if (! strcmp (pair.key, "Title"))
-            tuple.set_str (FIELD_TITLE, pair.value);
+            tuple.set_str (Tuple::Title, pair.value);
         else if (! strcmp (pair.key, "Album"))
-            tuple.set_str (FIELD_ALBUM, pair.value);
+            tuple.set_str (Tuple::Album, pair.value);
         else if (! strcmp (pair.key, "Comment"))
-            tuple.set_str (FIELD_COMMENT, pair.value);
+            tuple.set_str (Tuple::Comment, pair.value);
         else if (! strcmp (pair.key, "Genre"))
-            tuple.set_str (FIELD_GENRE, pair.value);
+            tuple.set_str (Tuple::Genre, pair.value);
         else if (! strcmp (pair.key, "Track"))
-            tuple.set_int (FIELD_TRACK_NUMBER, atoi (pair.value));
+            tuple.set_int (Tuple::Track, atoi (pair.value));
         else if (! strcmp (pair.key, "Year"))
-            tuple.set_int (FIELD_YEAR, atoi (pair.value));
+            tuple.set_int (Tuple::Year, atoi (pair.value));
         else if (! strcmp_nocase (pair.key, "REPLAYGAIN_TRACK_GAIN"))
-            set_gain_info (tuple, FIELD_GAIN_TRACK_GAIN, FIELD_GAIN_GAIN_UNIT, pair.value);
+            set_gain_info (tuple, Tuple::TrackGain, Tuple::GainDivisor, pair.value);
         else if (! strcmp_nocase (pair.key, "REPLAYGAIN_TRACK_PEAK"))
-            set_gain_info (tuple, FIELD_GAIN_TRACK_PEAK, FIELD_GAIN_PEAK_UNIT, pair.value);
+            set_gain_info (tuple, Tuple::TrackPeak, Tuple::PeakDivisor, pair.value);
         else if (! strcmp_nocase (pair.key, "REPLAYGAIN_ALBUM_GAIN"))
-            set_gain_info (tuple, FIELD_GAIN_ALBUM_GAIN, FIELD_GAIN_GAIN_UNIT, pair.value);
+            set_gain_info (tuple, Tuple::AlbumGain, Tuple::GainDivisor, pair.value);
         else if (! strcmp_nocase (pair.key, "REPLAYGAIN_ALBUM_PEAK"))
-            set_gain_info (tuple, FIELD_GAIN_ALBUM_PEAK, FIELD_GAIN_PEAK_UNIT, pair.value);
+            set_gain_info (tuple, Tuple::AlbumPeak, Tuple::PeakDivisor, pair.value);
     }
 
     return true;
@@ -348,8 +348,8 @@ static bool ape_write_item (VFSFile & handle, const char * key,
     return true;
 }
 
-static bool write_string_item (const Tuple & tuple, int field, VFSFile &
- handle, const char * key, int * written_length, int * written_items)
+static bool write_string_item (const Tuple & tuple, Tuple::Field field,
+ VFSFile & handle, const char * key, int * written_length, int * written_items)
 {
     String value = tuple.get_str (field);
 
@@ -364,8 +364,8 @@ static bool write_string_item (const Tuple & tuple, int field, VFSFile &
     return success;
 }
 
-static bool write_integer_item (const Tuple & tuple, int field, VFSFile &
- handle, const char * key, int * written_length, int * written_items)
+static bool write_integer_item (const Tuple & tuple, Tuple::Field field,
+ VFSFile & handle, const char * key, int * written_length, int * written_items)
 {
     int value = tuple.get_int (field);
 
@@ -426,13 +426,13 @@ bool APETagModule::write_tag (const Tuple & tuple, VFSFile & handle)
     length = 0;
     items = 0;
 
-    if (! write_string_item (tuple, FIELD_ARTIST, handle, "Artist", & length, & items) ||
-     ! write_string_item (tuple, FIELD_TITLE, handle, "Title", & length, & items) ||
-     ! write_string_item (tuple, FIELD_ALBUM, handle, "Album", & length, & items) ||
-     ! write_string_item (tuple, FIELD_COMMENT, handle, "Comment", & length, & items) ||
-     ! write_string_item (tuple, FIELD_GENRE, handle, "Genre", & length, & items) ||
-     ! write_integer_item (tuple, FIELD_TRACK_NUMBER, handle, "Track", & length, & items) ||
-     ! write_integer_item (tuple, FIELD_YEAR, handle, "Year", & length, & items))
+    if (! write_string_item (tuple, Tuple::Artist, handle, "Artist", & length, & items) ||
+     ! write_string_item (tuple, Tuple::Title, handle, "Title", & length, & items) ||
+     ! write_string_item (tuple, Tuple::Album, handle, "Album", & length, & items) ||
+     ! write_string_item (tuple, Tuple::Comment, handle, "Comment", & length, & items) ||
+     ! write_string_item (tuple, Tuple::Genre, handle, "Genre", & length, & items) ||
+     ! write_integer_item (tuple, Tuple::Track, handle, "Track", & length, & items) ||
+     ! write_integer_item (tuple, Tuple::Year, handle, "Year", & length, & items))
         return false;
 
     for (const ValuePair & pair : list)

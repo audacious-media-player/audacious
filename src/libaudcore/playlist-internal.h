@@ -24,6 +24,7 @@
 
 /* playlist.c */
 void playlist_init ();
+void playlist_enable_scan (bool enable);
 void playlist_end ();
 
 void playlist_insert_with_id (int at, int id);
@@ -41,9 +42,7 @@ bool playlist_next_song (int playlist, bool repeat);
 int playback_entry_get_position ();
 String playback_entry_get_filename ();
 PluginHandle * playback_entry_get_decoder (String * error = nullptr);
-Tuple playback_entry_get_tuple (String * error = nullptr);
-String playback_entry_get_title ();
-int playback_entry_get_length ();
+Tuple playback_entry_get_tuple (Playlist::GetMode mode, String * error = nullptr);
 
 void playback_entry_set_tuple (Tuple && tuple);
 

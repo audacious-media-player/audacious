@@ -39,11 +39,11 @@ struct Variable
 
     String text;
     int integer;
-    int field;
+    Tuple::Field field;
 
     bool set (const char * name, bool literal);
     bool exists (const Tuple & tuple) const;
-    TupleValueType get (const Tuple & tuple, String & tmps, int & tmpi) const;
+    Tuple::ValueType get (const Tuple & tuple, String & tmps, int & tmpi) const;
 };
 
 enum class Op {
@@ -97,38 +97,38 @@ bool Variable::set (const char * name, bool literal)
 bool Variable::exists (const Tuple & tuple) const
 {
     g_return_val_if_fail (type == Field, false);
-    return tuple.get_value_type (field) != TUPLE_UNKNOWN;
+    return tuple.get_value_type (field) != Tuple::Empty;
 }
 
-TupleValueType Variable::get (const Tuple & tuple, String & tmps, int & tmpi) const
+Tuple::ValueType Variable::get (const Tuple & tuple, String & tmps, int & tmpi) const
 {
     switch (type)
     {
     case Text:
         tmps = text;
-        return TUPLE_STRING;
+        return Tuple::String;
 
     case Integer:
         tmpi = integer;
-        return TUPLE_INT;
+        return Tuple::Int;
 
     case Field:
         switch (tuple.get_value_type (field))
         {
-        case TUPLE_STRING:
+        case Tuple::String:
             tmps = tuple.get_str (field);
-            return TUPLE_STRING;
+            return Tuple::String;
 
-        case TUPLE_INT:
+        case Tuple::Int:
             tmpi = tuple.get_int (field);
-            return TUPLE_INT;
+            return Tuple::Int;
 
         default:
-            return TUPLE_UNKNOWN;
+            return Tuple::Empty;
         }
 
     default:
-        g_return_val_if_reached (TUPLE_UNKNOWN);
+        g_return_val_if_reached (Tuple::Empty);
     }
 }
 
@@ -418,11 +418,11 @@ static void eval_expression (const Index<Node> & nodes, const Tuple & tuple, Str
 
             switch (node.var1.get (tuple, tmps, tmpi))
             {
-            case TUPLE_STRING:
+            case Tuple::String:
                 str_insert (out, -1, tmps);
                 break;
 
-            case TUPLE_INT:
+            case Tuple::Int:
                 out.combine (int_to_str (tmpi));
                 break;
 
@@ -444,23 +444,23 @@ static void eval_expression (const Index<Node> & nodes, const Tuple & tuple, Str
             String tmps1, tmps2;
             int tmpi1 = 0, tmpi2 = 0;
 
-            TupleValueType type1 = node.var1.get (tuple, tmps1, tmpi1);
-            TupleValueType type2 = node.var2.get (tuple, tmps2, tmpi2);
+            Tuple::ValueType type1 = node.var1.get (tuple, tmps1, tmpi1);
+            Tuple::ValueType type2 = node.var2.get (tuple, tmps2, tmpi2);
 
-            if (type1 != TUPLE_UNKNOWN && type2 != TUPLE_UNKNOWN)
+            if (type1 != Tuple::Empty && type2 != Tuple::Empty)
             {
                 int resulti;
 
                 if (type1 == type2)
                 {
-                    if (type1 == TUPLE_STRING)
+                    if (type1 == Tuple::String)
                         resulti = strcmp (tmps1, tmps2);
                     else
                         resulti = tmpi1 - tmpi2;
                 }
                 else
                 {
-                    if (type1 == TUPLE_INT)
+                    if (type1 == Tuple::Int)
                         resulti = tmpi1 - atoi (tmps2);
                     else
                         resulti = atoi (tmps1) - tmpi2;
@@ -521,21 +521,29 @@ static void eval_expression (const Index<Node> & nodes, const Tuple & tuple, Str
     }
 }
 
-String TupleCompiler::evaluate (const Tuple & tuple) const
+void TupleCompiler::format (Tuple & tuple) const
 {
+    tuple.unset (Tuple::FormattedTitle);  // prevent recursion
+
     StringBuf buf (0);
     eval_expression (root_nodes, tuple, buf);
 
     if (buf[0])
-        return String (buf);
+    {
+        tuple.set_str (Tuple::FormattedTitle, buf);
+        return;
+    }
 
     /* formatting failed, try fallbacks */
-    for (int fallback : {FIELD_TITLE, FIELD_FILE_NAME})
+    for (Tuple::Field fallback : {Tuple::Title, Tuple::Basename})
     {
         String title = tuple.get_str (fallback);
         if (title)
-            return title;
+        {
+            tuple.set_str (Tuple::FormattedTitle, title);
+            return;
+        }
     }
 
-    return String ("");
+    tuple.set_str (Tuple::FormattedTitle, "");
 }

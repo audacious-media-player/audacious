@@ -28,18 +28,34 @@
 
 /* --- PLAYBACK CONTROL --- */
 
-void aud_drct_play (void);
-void aud_drct_play_pause (void);
-void aud_drct_pause (void);
-void aud_drct_stop (void);
-bool aud_drct_get_playing (void);
-bool aud_drct_get_ready (void);
-bool aud_drct_get_paused (void);
-String aud_drct_get_filename (void);
-String aud_drct_get_title (void);
+void aud_drct_play ();
+void aud_drct_play_pause ();
+void aud_drct_pause ();
+void aud_drct_stop ();
+bool aud_drct_get_playing ();
+bool aud_drct_get_ready ();
+bool aud_drct_get_paused ();
+
+// returns entry number of playing song (zero-based)
+int aud_drct_get_position ();
+
+// returns filename of playing song
+String aud_drct_get_filename ();
+
+// returns formatted title of playing song
+// connect to the "title change" hook to be notified of changes
+String aud_drct_get_title ();
+
+// returns metadata of playing song
+// connect to the "tuple change" hook to be notified of changes
+Tuple aud_drct_get_tuple ();
+
+// returns some statistics of playing song
+// connect to the "info change" hook to be notified of changes
 void aud_drct_get_info (int * bitrate, int * samplerate, int * channels);
-int aud_drct_get_time (void);
-int aud_drct_get_length (void);
+
+int aud_drct_get_time ();
+int aud_drct_get_length ();
 void aud_drct_seek (int time);
 
 /* "A-B repeat": when playback reaches point B, it returns to point A (where A
@@ -64,8 +80,8 @@ void aud_drct_set_volume_balance (int balance);
  * drct_pl_open_temp_list() contain pooled strings to which the caller gives up
  * one reference.  The indexes themselves are freed by these functions. */
 
-void aud_drct_pl_next (void);
-void aud_drct_pl_prev (void);
+void aud_drct_pl_next ();
+void aud_drct_pl_prev ();
 
 void aud_drct_pl_add (const char * filename, int at);
 void aud_drct_pl_add_list (Index<PlaylistAddItem> && items, int at);

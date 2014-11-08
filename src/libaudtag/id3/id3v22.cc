@@ -235,34 +235,34 @@ bool ID3v22TagModule::read_tag (Tuple & tuple, VFSFile & handle)
         switch (get_frame_id (frame.key))
         {
           case ID3_ALBUM:
-            id3_associate_string (tuple, FIELD_ALBUM, & frame[0], frame.len ());
+            id3_associate_string (tuple, Tuple::Album, & frame[0], frame.len ());
             break;
           case ID3_TITLE:
-            id3_associate_string (tuple, FIELD_TITLE, & frame[0], frame.len ());
+            id3_associate_string (tuple, Tuple::Title, & frame[0], frame.len ());
             break;
           case ID3_COMPOSER:
-            id3_associate_string (tuple, FIELD_COMPOSER, & frame[0], frame.len ());
+            id3_associate_string (tuple, Tuple::Composer, & frame[0], frame.len ());
             break;
           case ID3_COPYRIGHT:
-            id3_associate_string (tuple, FIELD_COPYRIGHT, & frame[0], frame.len ());
+            id3_associate_string (tuple, Tuple::Copyright, & frame[0], frame.len ());
             break;
           case ID3_DATE:
-            id3_associate_string (tuple, FIELD_DATE, & frame[0], frame.len ());
+            id3_associate_string (tuple, Tuple::Date, & frame[0], frame.len ());
             break;
           case ID3_LENGTH:
             id3_associate_length (tuple, & frame[0], frame.len ());
             break;
           case ID3_ARTIST:
-            id3_associate_string (tuple, FIELD_ARTIST, & frame[0], frame.len ());
+            id3_associate_string (tuple, Tuple::Artist, & frame[0], frame.len ());
             break;
           case ID3_ALBUM_ARTIST:
-            id3_associate_string (tuple, FIELD_ALBUM_ARTIST, & frame[0], frame.len ());
+            id3_associate_string (tuple, Tuple::AlbumArtist, & frame[0], frame.len ());
             break;
           case ID3_TRACKNR:
-            id3_associate_int (tuple, FIELD_TRACK_NUMBER, & frame[0], frame.len ());
+            id3_associate_int (tuple, Tuple::Track, & frame[0], frame.len ());
             break;
           case ID3_YEAR:
-            id3_associate_int (tuple, FIELD_YEAR, & frame[0], frame.len ());
+            id3_associate_int (tuple, Tuple::Year, & frame[0], frame.len ());
             break;
           case ID3_GENRE:
             id3_decode_genre (tuple, & frame[0], frame.len ());

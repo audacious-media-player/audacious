@@ -17,128 +17,68 @@
  * the use of this software.
  */
 
-#include <QtCore>
-#include <QtGui>
-#include <QtWidgets>
-
-#include <string.h>
-
-#include <libaudcore/audstrings.h>
-#include <libaudcore/hook.h>
-#include <libaudcore/i18n.h>
-#include <libaudcore/playlist.h>
-#include <libaudcore/plugin.h>
-#include <libaudcore/plugins.h>
-#include <libaudcore/preferences.h>
-#include <libaudcore/runtime.h>
-#include <libaudcore/interface.h>
-
 #include "libaudqt.h"
+#include "libaudqt/menu.h"
+
+#include <QMenu>
+
+#include <libaudcore/i18n.h>
+#include <libaudcore/interface.h>
+#include <libaudcore/plugins.h>
 
 namespace audqt {
 
-class PluginMenuItem {
-public:
-    PluginMenuItem (const char * name, const char * icon, void (* func) (void), const char * domain = nullptr, bool sep = false) :
-        m_func (func),
-        m_name (name),
-        m_icon (icon),
-        m_domain (domain),
-        m_sep (sep)
-    {
-        if (! m_sep)
-            m_action = new QAction (translate_str (m_name, m_domain), nullptr);
-        else
-        {
-            m_action = new QAction (nullptr);
-            m_action->setSeparator (true);
-        }
-
-        if (m_func)
-            QObject::connect (m_action, &QAction::triggered, m_func);
-
-        if (m_icon && QIcon::hasThemeIcon (m_icon))
-            m_action->setIcon (QIcon::fromTheme (m_icon));
-    }
-
-    ~PluginMenuItem ()
-    {
-        delete m_action;
-    }
-
-    void add_to_menu (QMenu * menu) const
-    {
-        menu->addAction (m_action);
-    }
-
-    void (* m_func) (void);
-
-private:
-    QAction * m_action;
-
-    const char * m_name;
-    const char * m_icon;
-    const char * m_domain;
-    bool m_sep;
-};
-
-static Index <PluginMenuItem *> items [AUD_MENU_COUNT];
+static Index <MenuItem *> items [AUD_MENU_COUNT];
 static QMenu * menus [AUD_MENU_COUNT];
-
-static Index <PluginMenuItem *> default_menu_items;
 
 static void show_prefs (void)
 {
     prefswin_show_plugin_page (PLUGIN_TYPE_GENERAL);
 }
 
-static void init_default_menu_items (void)
-{
-    PluginMenuItem * prefs = new PluginMenuItem (N_("Plugins ..."), nullptr, show_prefs);
-    PluginMenuItem * sep = new PluginMenuItem (nullptr, nullptr, nullptr, nullptr, true);
-
-    default_menu_items.append (prefs);
-    default_menu_items.append (sep);
-}
+MenuItem default_menu_items[] = {
+    MenuCommand (N_("Plugins ..."), show_prefs),
+    MenuSep (),
+};
 
 EXPORT QMenu * menu_get_by_id (int id)
 {
     if (menus[id])
         return menus[id];
 
-    if (! default_menu_items.len ())
-        init_default_menu_items ();
-
     menus[id] = new QMenu (translate_str ("Services"));
 
-    for (const PluginMenuItem * it : default_menu_items)
-    {
-        it->add_to_menu (menus[id]);
-    }
+    for (auto & it : default_menu_items)
+        it.add_to_menu (PACKAGE, menus[id]);
 
-    for (const PluginMenuItem * it : items[id])
-    {
-        it->add_to_menu (menus[id]);
-    }
+    for (const MenuItem * it : items[id])
+        it->add_to_menu (nullptr, menus[id]);
 
     return menus[id];
 }
 
 EXPORT void menu_add (int id, void (* func) (void), const char * name, const char * icon, const char * domain)
 {
-    PluginMenuItem * it = new PluginMenuItem (name, icon, func, domain);
+    MenuItem * it = new MenuItem;
+
+    it->m_name = name;
+    it->m_icon = icon;
+    it->m_func = func;
+    it->m_domain = domain;
+    it->m_shortcut = nullptr;	/* XXX */
+    it->m_sep = false;
 
     items[id].append (it);
 
     if (menus[id])
-        it->add_to_menu (menus[id]);
+        it->add_to_menu (nullptr, menus[id]);
 }
 
 EXPORT void menu_remove (int id, void (* func) (void))
 {
-    PluginMenuItem * item = nullptr;
+    MenuItem * item = nullptr;
 
-    for (PluginMenuItem * it : items[id])
+    for (MenuItem * it : items[id])
     {
         if (it->m_func == func)
         {
@@ -153,4 +93,4 @@ EXPORT void menu_remove (int id, void (* func) (void))
     delete item;
 }
 
-};
+} // namespace audqt

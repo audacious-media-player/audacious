@@ -22,8 +22,10 @@
 #include <pthread.h>
 
 #include "index.h"
+#include "internal.h"
 #include "multihash.h"
 #include "objects.h"
+#include "runtime.h"
 
 struct HookItem {
     HookFunction func;
@@ -122,5 +124,18 @@ EXPORT void hook_call (const char * name, void * data)
     }
 
 DONE:
+    pthread_mutex_unlock (& mutex);
+}
+
+void leak_cb (const String & name, HookList & list, void *)
+{
+    AUDWARN ("Hook not disconnected: %s (%d)\n", (const char *) name, list.items.len ());
+}
+
+void hook_cleanup ()
+{
+    pthread_mutex_lock (& mutex);
+    hooks.iterate (leak_cb, nullptr);
+    hooks.clear ();
     pthread_mutex_unlock (& mutex);
 }

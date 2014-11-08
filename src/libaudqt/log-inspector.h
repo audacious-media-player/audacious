@@ -17,33 +17,15 @@
  * the use of this software.
  */
 
-#include <QtGui>
-#include <QtWidgets>
-#include <QAbstractTableModel>
-
-#include <libaudcore/i18n.h>
-#include <libaudcore/preferences.h>
-#include <libaudcore/runtime.h>
-#include <libaudcore/index.h>
+#include <QAbstractListModel>
 
 #ifndef LIBAUDQT_LOG_INSPECTOR_H
 #define LIBAUDQT_LOG_INSPECTOR_H
 
 namespace audqt {
 
-struct LogEntry
-{
-    audlog::Level level;
-    const char * filename;
-    unsigned int line;
-    const char * function;
-    char * message;
-};
-
 class LogEntryModel : public QAbstractListModel
 {
-    Q_OBJECT
-
 public:
     LogEntryModel (QObject * parent = 0);
     ~LogEntryModel ();
@@ -59,6 +41,6 @@ public:
     void updateRow (int row);
 };
 
-};
+} // namespace audqt
 
 #endif

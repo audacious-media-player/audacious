@@ -25,39 +25,50 @@
 #include <libaudcore/index.h>
 #include <libaudcore/tuple.h>
 
-/* The values which can be passed to the "playlist update" hook.
- * PLAYLIST_UPDATE_SELECTION means that entries have been selected or
- * unselected, or that entries have been added to or removed from the queue.
- * PLAYLIST_UPDATE_METADATA means that new metadata has been read for some
- * entries, or that the title or filename of a playlist has changed, and implies
- * PLAYLIST_UPDATE_SELECTION.  PLAYLIST_UPDATE_STRUCTURE covers any change not
- * listed under the other types, and implies both PLAYLIST_UPDATE_SELECTION and
- * PLAYLIST_UPDATE_METADATA. */
-typedef void * PlaylistUpdateLevel;
-#define PLAYLIST_UPDATE_NONE ((PlaylistUpdateLevel) 0)
-#define PLAYLIST_UPDATE_SELECTION ((PlaylistUpdateLevel) 1)
-#define PLAYLIST_UPDATE_METADATA ((PlaylistUpdateLevel) 2)
-#define PLAYLIST_UPDATE_STRUCTURE ((PlaylistUpdateLevel) 3)
+namespace Playlist {
+
+/* The values which can be passed to the "playlist update" hook.  Selection
+ * means that entries have been selected or unselected, or that entries have
+ * been added to or removed from the queue.  Metadata means that new metadata
+ * has been read for some entries, or that the title or filename of a playlist
+ * has changed, and implies Selection.  Structure covers any other change, and
+ * implies both Selection and Metadata. */
+enum Update {
+    NoUpdate = 0,
+    Selection,
+    Metadata,
+    Structure
+};
 
 /* The values which can be passed to playlist_sort_by_scheme(),
  * playlist_sort_selected_by_scheme(), and
- * playlist_remove_duplicates_by_scheme().  PLAYLIST_SORT_PATH means the entire
- * URI of a song file; PLAYLIST_SORT_FILENAME means the portion after the last
- * "/" (forward slash).  PLAYLIST_SORT_DATE means the song's release date (not
+ * playlist_remove_duplicates_by_scheme().  PlaylistSort::Path means the entire
+ * URI of a song file; PlaylistSort::Filename means the portion after the last
+ * "/" (forward slash).  PlaylistSort::Date means the song's release date (not
  * the file's modification time). */
-enum {
-    PLAYLIST_SORT_PATH,
-    PLAYLIST_SORT_FILENAME,
-    PLAYLIST_SORT_TITLE,
-    PLAYLIST_SORT_ALBUM,
-    PLAYLIST_SORT_ARTIST,
-    PLAYLIST_SORT_ALBUM_ARTIST,
-    PLAYLIST_SORT_DATE,
-    PLAYLIST_SORT_TRACK,
-    PLAYLIST_SORT_FORMATTED_TITLE,
-    PLAYLIST_SORT_LENGTH,
-    PLAYLIST_SORT_SCHEMES
+enum SortType {
+    Path,
+    Filename,
+    Title,
+    Album,
+    Artist,
+    AlbumArtist,
+    Date,
+    Track,
+    FormattedTitle,
+    Length,
+    n_sort_types
 };
+
+/* Possible behaviors for playlist_entry_get_{decoder, tuple}. */
+enum GetMode {
+    Nothing,   // immediately return nullptr or Tuple() if not yet scanned
+    Guess,     // immediately return a best guess if not yet scanned
+    Wait,      // wait for the entry to be scanned; return nullptr or Tuple() on failure
+    WaitGuess  // wait for the entry to be scanned; return a best guess on failure
+};
+
+} // namespace Playlist
 
 typedef bool (* PlaylistFilterFunc) (const char * filename, void * user);
 typedef int (* PlaylistStringCompareFunc) (const char * a, const char * b);
@@ -172,35 +183,18 @@ void aud_playlist_entry_delete (int playlist, int at, int number);
 /* Returns the filename of an entry. */
 String aud_playlist_entry_get_filename (int playlist, int entry);
 
-/* Returns a handle to the decoder plugin associated with an entry, or nullptr if
- * none can be found.  If <fast> is true, returns nullptr if no decoder plugin
- * has yet been found.  On error, an error message is optionally returned. */
+/* Returns a handle to the decoder plugin associated with an entry.  On error,
+ * or if the entry has not yet been scanned, returns nullptr according to
+ * <mode>.  On error, an error message is optionally returned. */
 PluginHandle * aud_playlist_entry_get_decoder (int playlist, int entry,
- bool fast, String * error = nullptr);
+ Playlist::GetMode mode = Playlist::WaitGuess, String * error = nullptr);
 
-/* Returns the tuple associated with an entry, or nullptr if one is not available.
- * If <fast> is true, returns nullptr if metadata for the entry has not yet been
- * read from the song file.  On error, an error message is optionally returned. */
-Tuple aud_playlist_entry_get_tuple (int playlist, int entry, bool fast,
- String * error = nullptr);
-
-/* Returns a formatted title string for an entry.  This may include information
- * such as the filename, song title, and/or artist.  If <fast> is true,
- * returns a "best guess" based on the entry's filename if metadata for the
- * entry has not yet been read. */
-String aud_playlist_entry_get_title (int playlist, int entry, bool fast);
-
-/* Returns three strings (title, artist, and album) describing an entry.  If
- * <fast> is true, returns a "best guess" based on the entry's filename if
- * metadata for the entry has not yet been read.  The caller may pass nullptr for
- * any values that are not needed; nullptr may also be returned for any values that
- * are not available. */
-void aud_playlist_entry_describe (int playlist, int entry, String & title,
- String & artist, String & album, bool fast);
-
-/* Returns the length in milliseconds of an entry, or -1 if the length is not
- * known.  <fast> is as in playlist_entry_get_tuple(). */
-int aud_playlist_entry_get_length (int playlist, int entry, bool fast);
+/* Returns the tuple associated with an entry.  On error, or if the entry has
+ * not yet been scanned, returns either a blank tuple or a tuple filled with
+ * "best guess" values, according to <mode>.  On error, an error message is
+ * optionally returned. */
+Tuple aud_playlist_entry_get_tuple (int playlist, int entry,
+ Playlist::GetMode mode = Playlist::WaitGuess, String * error = nullptr);
 
 /* Moves the playback position to the beginning of the entry at <position>.  If
  * <position> is -1, unsets the playback position.  If <playlist> is the
@@ -337,7 +331,7 @@ bool aud_playlist_update_pending ();
  * number of contiguous entries to be updated in <count>.  Note that entries may
  * have been added or removed within this range.  If no entries in the playlist
  * have changed, returns zero. */
-PlaylistUpdateLevel aud_playlist_updated_range (int playlist, int * at, int * count);
+Playlist::Update aud_playlist_updated_range (int playlist, int * at, int * count);
 
 /* Returns true if entries are being added to a playlist in the background.
  * If <playlist> is -1, checks all playlists. */
@@ -351,15 +345,15 @@ bool aud_playlist_scan_in_progress (int playlist);
 
 /* Sorts the entries in a playlist according to one of the schemes listed in
  * playlist.h. */
-void aud_playlist_sort_by_scheme (int playlist, int scheme);
+void aud_playlist_sort_by_scheme (int playlist, Playlist::SortType scheme);
 
 /* Sorts only the selected entries in a playlist according to one of those
  * schemes. */
-void aud_playlist_sort_selected_by_scheme (int playlist, int scheme);
+void aud_playlist_sort_selected_by_scheme (int playlist, Playlist::SortType scheme);
 
 /* Removes duplicate entries in a playlist according to one of those schemes.
  * As currently implemented, first sorts the playlist. */
-void aud_playlist_remove_duplicates_by_scheme (int playlist, int scheme);
+void aud_playlist_remove_duplicates_by_scheme (int playlist, Playlist::SortType scheme);
 
 /* Removes all entries referring to unavailable files in a playlist.  ("Remove
  * failed" is something of a misnomer for the current behavior.)  As currently
@@ -377,6 +371,6 @@ bool aud_filename_is_playlist (const char * filename);
 
 /* Saves the entries in a playlist to a playlist file.  The format of the file
  * is determined from the file extension.  Returns true on success. */
-bool aud_playlist_save (int playlist, const char * filename);
+bool aud_playlist_save (int playlist, const char * filename, Playlist::GetMode mode);
 
 #endif

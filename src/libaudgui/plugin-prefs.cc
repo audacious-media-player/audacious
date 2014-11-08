@@ -178,7 +178,7 @@ EXPORT void audgui_show_plugin_prefs (PluginHandle * plugin)
     gtk_widget_show_all (window);
 
     g_object_set_data ((GObject *) window, "plugin-id", plugin);
-    config_windows = node = g_list_prepend (config_windows, window);
+    config_windows = g_list_prepend (config_windows, window);
 
     g_signal_connect_after (window, "destroy", (GCallback) destroy_cb, plugin);
     aud_plugin_add_watch (plugin, watch_cb, window);

@@ -41,9 +41,10 @@ struct ListModel {
     int rows, highlight;
     int columns;
     GList * column_types;
-    gboolean frozen, blocked;
-    gboolean dragging;
-    gboolean clicked_row, receive_row;
+    bool resizable;
+    bool frozen, blocked;
+    bool dragging;
+    int clicked_row, receive_row;
     int scroll_source, scroll_speed;
 };
 
@@ -385,7 +386,10 @@ static gboolean autoscroll (GtkWidget * widget)
 
     GtkAdjustment * adj = gtk_scrollable_get_vadjustment ((GtkScrollable *) widget);
     if (! adj)
+    {
+        stop_autoscroll (model);
         return false;
+    }
 
     int pos = gtk_adjustment_get_value (adj) + model->scroll_speed;
     int clamped = aud::clamp<int> (pos, 0, gtk_adjustment_get_upper (adj) -
@@ -393,7 +397,10 @@ static gboolean autoscroll (GtkWidget * widget)
     gtk_adjustment_set_value (adj, clamped);
 
     if (clamped != pos) /* reached top or bottom? */
+    {
+        stop_autoscroll (model);
         return false;
+    }
 
     if (model->scroll_speed > 0)
         model->scroll_speed = aud::min (model->scroll_speed + 2, 100);
@@ -565,6 +572,7 @@ EXPORT GtkWidget * audgui_list_new_real (const AudguiListCallbacks * cbs, int cb
     model->highlight = -1;
     model->columns = RESERVED_COLUMNS;
     model->column_types = nullptr;
+    model->resizable = true;
     model->frozen = false;
     model->blocked = false;
     model->dragging = false;
@@ -663,29 +671,29 @@ EXPORT void audgui_list_add_column (GtkWidget * list, const char * title,
      (title, renderer, "text", RESERVED_COLUMNS + column, "weight",
      HIGHLIGHT_COLUMN, nullptr);
     gtk_tree_view_column_set_sizing (tree_column, GTK_TREE_VIEW_COLUMN_FIXED);
-    gtk_tree_view_column_set_resizable (tree_column, true);
 
     int pad1, pad2, pad3;
     gtk_widget_style_get (list, "horizontal-separator", & pad1, "focus-line-width", & pad2, nullptr);
     gtk_cell_renderer_get_padding (renderer, & pad3, nullptr);
     int padding = pad1 + 2 * pad2 + 2 * pad3;
 
-    if (width < 1)
+    if (width < 0)
     {
-        gtk_tree_view_column_set_min_width (tree_column,
-         6 * model->charwidth + model->charwidth / 2 + padding);
         gtk_tree_view_column_set_expand (tree_column, true);
-        g_object_set ((GObject *) renderer, "ellipsize-set", true, "ellipsize",
-         PANGO_ELLIPSIZE_END, nullptr);
+        model->resizable = false;  // columns to the right will not be resizable
     }
     else
     {
+        gtk_tree_view_column_set_resizable (tree_column, model->resizable);
         gtk_tree_view_column_set_min_width (tree_column,
          width * model->charwidth + model->charwidth / 2 + padding);
-
-        if (width < 10)
-            g_object_set ((GObject *) renderer, "xalign", (float) 1, nullptr);
     }
+
+    if (width >= 0 && width < 10)
+        g_object_set ((GObject *) renderer, "xalign", (float) 1, nullptr);
+    else
+        g_object_set ((GObject *) renderer, "ellipsize-set", true, "ellipsize",
+         PANGO_ELLIPSIZE_END, nullptr);
 
     gtk_tree_view_append_column ((GtkTreeView *) list, tree_column);
 }

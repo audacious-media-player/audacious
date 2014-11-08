@@ -17,8 +17,10 @@
  * the use of this software.
  */
 
-#include <QtGui>
-#include <QtWidgets>
+#include <QDialog>
+#include <QDialogButtonBox>
+#include <QLabel>
+#include <QVBoxLayout>
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/i18n.h>
@@ -27,6 +29,16 @@
 #include "libaudqt.h"
 
 namespace audqt {
+
+EXPORT void cleanup ()
+{
+    aboutwindow_hide ();
+    equalizer_hide ();
+    infowin_hide ();
+    log_inspector_hide ();
+    prefswin_hide ();
+    queue_manager_hide ();
+}
 
 /* the goal is to force a window to come to the front on any qt platform */
 EXPORT void window_bring_to_front (QWidget * window)
@@ -43,14 +55,14 @@ EXPORT void window_bring_to_front (QWidget * window)
     window->activateWindow ();
 }
 
-EXPORT void simple_message (const char * title, const char * text, const char * domain)
+EXPORT void simple_message (const char * title, const char * text)
 {
     QDialog msgbox;
     QVBoxLayout vbox;
     QLabel label;
     QDialogButtonBox bbox;
 
-    label.setText (translate_str (text, domain));
+    label.setText (text);
     bbox.setStandardButtons (QDialogButtonBox::Ok);
 
     QObject::connect (& bbox, &QDialogButtonBox::accepted, & msgbox, &QDialog::accept);
@@ -65,44 +77,10 @@ EXPORT void simple_message (const char * title, const char * text, const char * 
 }
 
 /* translate gtk+ accelerators and also handle dgettext() */
-EXPORT const char * translate_str (const char * str, const char * domain)
+EXPORT QString translate_str (const char * str, const char * domain)
 {
-    if (! str)
-        return nullptr;
-
-    const char * src = str;
-
-    if (domain)
-        src = dgettext (domain, src);
-
-    StringBuf buf (strlen (src));
-
-    /* translate the gtk+ accelerator (_) into a qt accelerator (&), so we don't break the
-     * translations.
-     *
-     * the translation rules are: if sentence begins with _ then translate, otherwise only
-     * translate if the previous character is a space.  the backtrack is safe as the first
-     * condition will match if we're at the beginning.
-     *
-     *    --kaniini
-     */
-    char * it = buf;
-    const char * rit = src;
-
-    for (; * rit; it++, rit++)
-    {
-        if (*rit == '_')
-        {
-            if (rit == src || *(rit - 1) == ' ')
-                *it = '&';
-            else
-                *it = *rit;
-        }
-        else
-            *it = *rit;
-    }
-
-    return buf;
+    /* translate the gtk+ accelerator (_) into a qt accelerator (&) */
+    return QString (dgettext (domain, str)).replace ('_', '&');
 }
 
-};
+} // namespace audqt

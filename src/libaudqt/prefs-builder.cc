@@ -17,16 +17,16 @@
  * the use of this software.
  */
 
-#include <QtCore>
-#include <QtGui>
-#include <QtWidgets>
+#include "libaudqt.h"
+#include "prefs-widget.h"
+
+#include <QButtonGroup>
+#include <QFrame>
+#include <QLayout>
 
 #include <libaudcore/i18n.h>
 #include <libaudcore/preferences.h>
 #include <libaudcore/runtime.h>
-
-#include "libaudqt.h"
-#include "prefs-widget.h"
 
 namespace audqt {
 
@@ -48,29 +48,29 @@ void prefs_populate (QLayout * layout, ArrayRef<const PreferencesWidget> widgets
         switch (w.type)
         {
         case PreferencesWidget::Button: {
-            ButtonWidget * bw = new ButtonWidget (& w);
+            ButtonWidget * bw = new ButtonWidget (& w, domain);
             layout->addWidget (bw->widget ());
             break;
         }
         case PreferencesWidget::CheckButton: {
-            BooleanWidget * bw = new BooleanWidget (& w);
+            BooleanWidget * bw = new BooleanWidget (& w, domain);
             layout->addWidget (bw->widget ());
             break;
         }
         case PreferencesWidget::Label: {
-            LabelWidget * lw = new LabelWidget (& w);
+            LabelWidget * lw = new LabelWidget (& w, domain);
             layout->addWidget (lw->widget ());
             break;
         }
         case PreferencesWidget::SpinButton: {
             switch (w.cfg.type) {
             case WidgetConfig::Int: {
-                IntegerWidget * iw = new IntegerWidget (& w);
+                IntegerWidget * iw = new IntegerWidget (& w, domain);
                 layout->addWidget (iw->widget ());
                 break;
             }
             case WidgetConfig::Float: {
-                DoubleWidget * dw = new DoubleWidget (& w);
+                DoubleWidget * dw = new DoubleWidget (& w, domain);
                 layout->addWidget (dw->widget ());
                 break;
             }
@@ -81,7 +81,7 @@ void prefs_populate (QLayout * layout, ArrayRef<const PreferencesWidget> widgets
             break;
         }
         case PreferencesWidget::Entry: {
-            StringWidget * sw = new StringWidget (& w);
+            StringWidget * sw = new StringWidget (& w, domain);
             layout->addWidget (sw->widget ());
             break;
         }
@@ -89,7 +89,7 @@ void prefs_populate (QLayout * layout, ArrayRef<const PreferencesWidget> widgets
             if (! radio_btn_group)
                 radio_btn_group = new QButtonGroup;
 
-            RadioButtonWidget * rw = new RadioButtonWidget (& w);
+            RadioButtonWidget * rw = new RadioButtonWidget (& w, domain);
             layout->addWidget (rw->widget (radio_btn_group));
             break;
         }
@@ -99,7 +99,7 @@ void prefs_populate (QLayout * layout, ArrayRef<const PreferencesWidget> widgets
             break;
         }
         case PreferencesWidget::ComboBox: {
-            ComboBoxWidget * cw = new ComboBoxWidget (& w);
+            ComboBoxWidget * cw = new ComboBoxWidget (& w, domain);
             layout->addWidget (cw->widget ());
             break;
         }
@@ -114,17 +114,17 @@ void prefs_populate (QLayout * layout, ArrayRef<const PreferencesWidget> widgets
 
         /* layout widgets follow */
         case PreferencesWidget::Box: {
-            BoxWidget * bw = new BoxWidget (& w);
+            BoxWidget * bw = new BoxWidget (& w, domain);
             layout->addWidget (bw->widget ());
             break;
         }
         case PreferencesWidget::Table: {
-            TableWidget * tw = new TableWidget (& w);
+            TableWidget * tw = new TableWidget (& w, domain);
             layout->addWidget (tw->widget ());
             break;
         }
         case PreferencesWidget::Notebook: {
-            NotebookWidget * nw = new NotebookWidget (& w);
+            NotebookWidget * nw = new NotebookWidget (& w, domain);
             layout->addWidget (nw->widget ());
             break;
         }
@@ -143,5 +143,4 @@ void prefs_populate (QLayout * layout, ArrayRef<const PreferencesWidget> widgets
     }
 }
 
-};
-
+} // namespace audqt

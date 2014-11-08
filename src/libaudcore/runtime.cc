@@ -61,6 +61,8 @@
 #define DIRMODE (S_IRWXU)
 #endif
 
+size_t misc_bytes_allocated;
+
 static bool headless_mode;
 
 #if defined(USE_QT) && ! defined(USE_GTK)
@@ -309,6 +311,7 @@ EXPORT void aud_init ()
     start_plugins_one ();
 
     scanner_init ();
+    playlist_enable_scan (true);
 
     load_playlists ();
 }
@@ -343,6 +346,7 @@ EXPORT void aud_cleanup ()
         aud_drct_stop ();
 
     adder_cleanup ();
+    playlist_enable_scan (false);
     scanner_cleanup ();
 
     stop_plugins_one ();
@@ -353,7 +357,16 @@ EXPORT void aud_cleanup ()
     playlist_end ();
 
     event_queue_cancel_all ();
+    hook_cleanup ();
 
     config_save ();
     config_cleanup ();
+}
+
+EXPORT void aud_leak_check ()
+{
+    string_leak_check ();
+
+    if (misc_bytes_allocated)
+        AUDWARN ("Bytes allocated at exit: %zd\n", misc_bytes_allocated);
 }

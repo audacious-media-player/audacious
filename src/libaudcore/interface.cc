@@ -208,7 +208,7 @@ EXPORT void aud_plugin_menu_remove (int id, void (* func) ())
     auto is_match = [=] (const MenuItem & item)
         { return item.func == func; };
 
-    menu_items[id].remove_if (is_match);
+    menu_items[id].remove_if (is_match, true);
 }
 
 EXPORT void aud_ui_show_about_window ()

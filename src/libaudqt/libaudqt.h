@@ -20,19 +20,21 @@
 #ifndef LIBAUDQT_H
 #define LIBAUDQT_H
 
-#include <QtCore>
-#include <QtGui>
-#include <QtWidgets>
+#include <QString>
+#include <libaudcore/objects.h>
 
-#include <libaudcore/i18n.h>
-#include <libaudcore/preferences.h>
-#include <libaudcore/runtime.h>
-#include <libaudcore/plugin.h>
-#include <libaudcore/plugins.h>
+class QPixmap;
+class QLayout;
+class QMenu;
+class QMenuBar;
+class QWidget;
 
-#include <libaudqt/volumebutton.h>
+class PluginHandle;
+struct PreferencesWidget;
 
 namespace audqt {
+
+struct MenuItem;
 
 /* about.cc */
 void aboutwindow_show ();
@@ -50,9 +52,15 @@ void equalizer_hide ();
 void fileopener_show (bool add);
 
 /* util.cc */
+void cleanup ();
 void window_bring_to_front (QWidget * win);
-void simple_message (const char * title, const char * text, const char * domain = nullptr);
-const char * translate_str (const char * str, const char * domain = nullptr);
+void simple_message (const char * title, const char * text);
+QString translate_str (const char * str, const char * domain);
+
+#ifdef PACKAGE
+static inline QString translate_str (const char * str)
+    { return translate_str (str, PACKAGE); }
+#endif
 
 /* plugin-menu.cc */
 QMenu * menu_get_by_id (int id);
@@ -77,8 +85,8 @@ void log_inspector_show ();
 void log_inspector_hide ();
 
 /* art.cc */
-QImage art_request (const char * filename);
-QImage art_request_current ();
+QPixmap art_request (const char * filename, unsigned int w = 256, unsigned int h = 256, bool want_hidpi = true);
+QPixmap art_request_current (unsigned int w = 256, unsigned int h = 256, bool want_hidpi = true);
 
 /* infowin.cc */
 void infowin_show (int playlist, int entry);
@@ -89,7 +97,6 @@ void infowin_hide ();
 void queue_manager_show ();
 void queue_manager_hide ();
 
-}
+} // namespace audqt
 
 #endif
-

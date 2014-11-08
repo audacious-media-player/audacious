@@ -130,8 +130,12 @@ void JumpToTrackCache::init ()
     {
         KeywordMatch & item = k[entry];
         item.entry = entry;
-        aud_playlist_entry_describe (playlist, entry, item.title, item.artist, item.album, true);
         item.path = String (uri_to_display (aud_playlist_entry_get_filename (playlist, entry)));
+
+        Tuple tuple = aud_playlist_entry_get_tuple (playlist, entry, Playlist::Guess);
+        item.title = tuple.get_str (Tuple::Title);
+        item.artist = tuple.get_str (Tuple::Artist);
+        item.album = tuple.get_str (Tuple::Album);
     }
 }
 

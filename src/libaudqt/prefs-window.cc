@@ -18,11 +18,24 @@
  * the use of this software.
  */
 
-#include <QtCore>
-#include <QtGui>
-#include <QtWidgets>
-
-#include <string.h>
+#include <QAction>
+#include <QComboBox>
+#include <QDialog>
+#include <QDialogButtonBox>
+#include <QGridLayout>
+#include <QHeaderView>
+#include <QIcon>
+#include <QItemSelectionModel>
+#include <QLabel>
+#include <QLineEdit>
+#include <QMenu>
+#include <QPushButton>
+#include <QSignalMapper>
+#include <QStackedWidget>
+#include <QTabWidget>
+#include <QToolBar>
+#include <QTreeView>
+#include <QVBoxLayout>
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
@@ -41,8 +54,6 @@
 #endif
 
 namespace audqt {
-
-static QDialog * m_prefswin = nullptr;
 
 struct Category {
     const char * icon_path;
@@ -365,14 +376,15 @@ static void * create_titlestring_table (void)
     });
 
     /* build menu */
-    QPushButton * btn_mnu = new QPushButton ("...", w);
+    QPushButton * btn_mnu = new QPushButton (w);
+    btn_mnu->setIcon (QIcon::fromTheme ("list-add"));
     l->addWidget (btn_mnu, 1, 2);
 
     QMenu * mnu_fields = new QMenu (w);
 
     for (auto & t : title_field_tags)
     {
-        QAction * a = mnu_fields->addAction (t.name);
+        QAction * a = mnu_fields->addAction (_(t.name));
         QObject::connect (a, &QAction::triggered, [=] () {
             le->insert (t.tag);
         });
@@ -475,7 +487,7 @@ static void * output_create_config_button (void)
 {
     bool enabled = aud_plugin_has_configure (aud_plugin_get_current (PLUGIN_TYPE_OUTPUT));
 
-    output_config_button = new QPushButton (translate_str (_("_Settings")));
+    output_config_button = new QPushButton (translate_str (N_("_Settings")));
     output_config_button->setEnabled (enabled);
 
     QObject::connect (output_config_button, &QAbstractButton::clicked, [=] (bool) {
@@ -489,7 +501,7 @@ static void * output_create_about_button (void)
 {
     bool enabled = aud_plugin_has_about (aud_plugin_get_current (PLUGIN_TYPE_OUTPUT));
 
-    output_about_button = new QPushButton (translate_str (_("_About")));
+    output_about_button = new QPushButton (translate_str (N_("_About")));
     output_about_button->setEnabled (enabled);
 
     QObject::connect (output_about_button, &QAbstractButton::clicked, [=] (bool) {
@@ -618,10 +630,10 @@ static void create_plugin_category_page (int category_id, const char * category_
     QDialogButtonBox * bbox = new QDialogButtonBox;
     vbox->addWidget (bbox);
 
-    QPushButton * about_btn = new QPushButton (translate_str (_("_About")));
+    QPushButton * about_btn = new QPushButton (translate_str (N_("_About")));
     about_btn->setEnabled (false);
 
-    QPushButton * settings_btn = new QPushButton (translate_str (_("_Settings")));
+    QPushButton * settings_btn = new QPushButton (translate_str (N_("_Settings")));
     settings_btn->setEnabled (false);
 
     bbox->addButton (about_btn, QDialogButtonBox::ActionRole);
@@ -682,22 +694,28 @@ static void create_plugin_category (QStackedWidget * parent)
 
     for (const PluginCategory & w : plugin_categories)
     {
-        create_plugin_category_page (w.type, w.name, plugin_tabs);
+        create_plugin_category_page (w.type, _(w.name), plugin_tabs);
     }
 
     parent->addWidget (plugin_tabs);
 }
 
-static QStackedWidget * category_notebook = nullptr;
+static QDialog * s_prefswin = nullptr;
+static QStackedWidget * s_category_notebook = nullptr;
 
 static void create_prefs_window ()
 {
     QVBoxLayout * vbox_parent = new QVBoxLayout;
     QToolBar * toolbar = new QToolBar;
 
-    m_prefswin = new QDialog;
-    m_prefswin->setWindowTitle (_("Audacious Settings"));
-    m_prefswin->setLayout (vbox_parent);
+    s_prefswin = new QDialog;
+    s_prefswin->setWindowTitle (_("Audacious Settings"));
+    s_prefswin->setLayout (vbox_parent);
+    s_prefswin->setAttribute (Qt::WA_DeleteOnClose);
+
+    QObject::connect (s_prefswin, & QObject::destroyed, [] () {
+        s_prefswin = nullptr;
+    });
 
     vbox_parent->setSpacing (0);
     vbox_parent->setMargin (0);
@@ -711,20 +729,20 @@ static void create_prefs_window ()
 
     child->setLayout (child_vbox);
 
-    category_notebook = new QStackedWidget;
-    child_vbox->addWidget (category_notebook);
+    s_category_notebook = new QStackedWidget;
+    child_vbox->addWidget (s_category_notebook);
 
-    create_appearance_category (category_notebook);
-    create_audio_category (category_notebook);
-    create_connectivity_category (category_notebook);
-    create_playlist_category (category_notebook);
-    create_song_info_category (category_notebook);
-    create_plugin_category (category_notebook);
+    create_appearance_category (s_category_notebook);
+    create_audio_category (s_category_notebook);
+    create_connectivity_category (s_category_notebook);
+    create_playlist_category (s_category_notebook);
+    create_song_info_category (s_category_notebook);
+    create_plugin_category (s_category_notebook);
 
     QDialogButtonBox * bbox = new QDialogButtonBox (QDialogButtonBox::Close);
     child_vbox->addWidget (bbox);
 
-    QObject::connect (bbox, &QDialogButtonBox::rejected, m_prefswin, &QWidget::hide);
+    QObject::connect (bbox, &QDialogButtonBox::rejected, s_prefswin, &QObject::deleteLater);
 
     toolbar->setToolButtonStyle (Qt::ToolButtonTextUnderIcon);
 
@@ -732,7 +750,7 @@ static void create_prefs_window ()
     const char * data_dir = aud_get_path (AudPath::DataDir);
 
     QObject::connect (mapper, static_cast <void (QSignalMapper::*)(int)>(&QSignalMapper::mapped),
-                      category_notebook, static_cast <void (QStackedWidget::*)(int)>(&QStackedWidget::setCurrentIndex));
+                      s_category_notebook, static_cast <void (QStackedWidget::*)(int)>(&QStackedWidget::setCurrentIndex));
 
     for (int i = 0; i < CATEGORY_COUNT; i++)
     {
@@ -749,18 +767,15 @@ static void create_prefs_window ()
 
 EXPORT void prefswin_show ()
 {
-    if (! m_prefswin)
+    if (! s_prefswin)
         create_prefs_window ();
 
-    window_bring_to_front (m_prefswin);
+    window_bring_to_front (s_prefswin);
 }
 
 EXPORT void prefswin_hide ()
 {
-    if (! m_prefswin)
-        return;
-
-    m_prefswin->hide ();
+    delete s_prefswin;
 }
 
 EXPORT void prefswin_show_page (int id, bool show)
@@ -768,18 +783,18 @@ EXPORT void prefswin_show_page (int id, bool show)
     if (id < 0 || id > CATEGORY_COUNT)
         return;
 
-    if (! m_prefswin)
+    if (! s_prefswin)
         create_prefs_window ();
 
-    category_notebook->setCurrentIndex (id);
+    s_category_notebook->setCurrentIndex (id);
 
     if (show)
-        window_bring_to_front (m_prefswin);
+        window_bring_to_front (s_prefswin);
 }
 
 EXPORT void prefswin_show_plugin_page (int type)
 {
-    if (! m_prefswin)
+    if (! s_prefswin)
         create_prefs_window ();
 
     if (type == PLUGIN_TYPE_IFACE)
@@ -796,8 +811,8 @@ EXPORT void prefswin_show_plugin_page (int type)
                 plugin_tabs->setCurrentIndex (& category - plugin_categories);
         }
 
-        window_bring_to_front (m_prefswin);
+        window_bring_to_front (s_prefswin);
     }
 }
 
-};
+} // namespace audqt

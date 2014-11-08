@@ -17,29 +17,21 @@
  * the use of this software.
  */
 
-#include <QtGui>
-#include <QtWidgets>
-
-#include <libaudcore/audstrings.h>
-#include <libaudcore/equalizer.h>
-#include <libaudcore/i18n.h>
-#include <libaudcore/runtime.h>
-#include <libaudcore/plugin.h>
-
-#include <libaudqt/libaudqt.h>
-
 #ifndef LIBAUDQT_IFACE_H
 #define LIBAUDQT_IFACE_H
+
+#include <libaudcore/plugin.h>
+#include <libaudqt/libaudqt.h>
 
 namespace audqt {
 
 class QtIfacePlugin : public IfacePlugin
 {
 public:
-    constexpr QtIfacePlugin (PluginInfo info) : IfacePlugin (info) {};
+    constexpr QtIfacePlugin (PluginInfo info) : IfacePlugin (info) {}
 
-    void show_about_window () { aboutwindow_show (); };
-    void hide_about_window () { aboutwindow_hide (); };
+    void show_about_window () { aboutwindow_show (); }
+    void hide_about_window () { aboutwindow_hide (); }
     void show_filebrowser (bool open) { fileopener_show (open); }
     void hide_filebrowser () {}
     void show_jump_to_song () {}
@@ -50,6 +42,6 @@ public:
     void plugin_menu_remove (int id, void func ()) {}
 };
 
-}
+} // namespace audqt
 
 #endif

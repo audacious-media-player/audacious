@@ -17,139 +17,153 @@
  * the use of this software.
  */
 
-#include <QtGui>
-#include <QtWidgets>
+#include <QCheckBox>
+#include <QDialog>
+#include <QFrame>
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QSlider>
+#include <QVBoxLayout>
 
-#include <libaudcore/audstrings.h>
 #include <libaudcore/equalizer.h>
 #include <libaudcore/hook.h>
 #include <libaudcore/i18n.h>
 #include <libaudcore/runtime.h>
 
 #include "libaudqt.h"
-#include "equalizer.h"
-#include "equalizer.moc"
 
-namespace audqt {
+class EqualizerSlider : public QWidget
+{
+public:
+    EqualizerSlider (const char * label, QWidget * parent);
+    QSlider slider;
+};
 
-EqualizerWindow::EqualizerWindow (QWidget * parent) : QDialog (parent)
+class EqualizerWindow : public QDialog
+{
+public:
+    EqualizerWindow ();
+
+private:
+    QCheckBox m_onoff_checkbox;
+    EqualizerSlider * m_preamp_slider;
+    EqualizerSlider * m_sliders[AUD_EQ_NBANDS];
+
+    HookReceiver<EqualizerWindow> activated;
+    HookReceiver<EqualizerWindow> preamp_changed;
+    HookReceiver<EqualizerWindow> bands_changed;
+
+    void updateActive ();
+    void updatePreamp ();
+    void updateBands ();
+};
+
+EqualizerWindow::EqualizerWindow () :
+    m_onoff_checkbox (audqt::translate_str (N_("_Enable"))),
+    activated ("set equalizer_active", this, & EqualizerWindow::updateActive),
+    preamp_changed ("set equalizer_preamp", this, & EqualizerWindow::updatePreamp),
+    bands_changed ("set equalizer_bands", this, & EqualizerWindow::updateBands)
 {
     const char * const names[AUD_EQ_NBANDS] = {N_("31 Hz"), N_("63 Hz"),
      N_("125 Hz"), N_("250 Hz"), N_("500 Hz"), N_("1 kHz"), N_("2 kHz"),
      N_("4 kHz"), N_("8 kHz"), N_("16 kHz")};
 
-    m_preamp_slider = new EqualizerSlider (-1, _("Preamp"));
-    m_slider_layout.addWidget (m_preamp_slider);
+    auto slider_container = new QWidget (this);
+    auto slider_layout = new QHBoxLayout (slider_container);
 
-    m_line.setFrameShape (QFrame::VLine);
-    m_line.setFrameShadow (QFrame::Sunken);
-    m_slider_layout.addWidget (& m_line);
+    m_preamp_slider = new EqualizerSlider (_("Preamp"), this);
+    slider_layout->addWidget (m_preamp_slider);
+
+    auto line = new QFrame (this);
+    line->setFrameShape (QFrame::VLine);
+    line->setFrameShadow (QFrame::Sunken);
+    slider_layout->addWidget (line);
 
     for (int i = 0; i < AUD_EQ_NBANDS; i++)
-        createSlider (i, names[i]);
+    {
+        m_sliders[i] = new EqualizerSlider (names[i], this);
+        slider_layout->addWidget (m_sliders[i]);
+    }
 
-    m_onoff_checkbox.setText (translate_str (_("_Enable")));
-    m_layout.addWidget (& m_onoff_checkbox);
+    auto layout = new QVBoxLayout (this);
+    layout->addWidget (& m_onoff_checkbox);
+    layout->addWidget (slider_container);
 
-    m_slider_container.setLayout (& m_slider_layout);
-    m_layout.addWidget (& m_slider_container);
-
-    setLayout (& m_layout);
     setWindowTitle (_("Equalizer"));
 
-    connect (& m_onoff_checkbox, &QCheckBox::stateChanged, this, &EqualizerWindow::onoffStateChanged);
-    onoffUpdate (nullptr, this);
+    updateActive ();
+    updatePreamp ();
+    updateBands ();
 
-    updateSliders ();
+    connect (& m_onoff_checkbox, & QCheckBox::stateChanged, [] (int state) {
+        aud_set_bool (nullptr, "equalizer_active", (state == Qt::Checked));
+    });
 
-    hook_associate ("set equalizer_active", (HookFunction) onoffUpdate, this);
-    hook_associate ("set equalizer_preamp", (HookFunction) updateSlidersProxy, this);
-    hook_associate ("set equalizer_bands", (HookFunction) updateSlidersProxy, this);
-}
+    connect (& m_preamp_slider->slider, & QSlider::valueChanged, [] (int value) {
+        aud_set_int (nullptr, "equalizer_preamp", value);
+    });
 
-EqualizerWindow::~EqualizerWindow ()
-{
     for (int i = 0; i < AUD_EQ_NBANDS; i++)
-        delete m_sliders[i];
-
-    hook_dissociate ("set equalizer_active", (HookFunction) onoffUpdate);
-    hook_dissociate ("set equalizer_preamp", (HookFunction) updateSlidersProxy);
-    hook_dissociate ("set equalizer_bands", (HookFunction) updateSlidersProxy);
+    {
+        connect (& m_sliders[i]->slider, & QSlider::valueChanged, [i] (int value) {
+            aud_eq_set_band (i, value);
+        });
+    }
 }
 
-void EqualizerWindow::createSlider (int idx, const char * label)
+void EqualizerWindow::updateActive ()
 {
-    m_sliders[idx] = new EqualizerSlider (idx, label);
-    m_slider_layout.addWidget (m_sliders[idx]);
+    bool active = aud_get_bool (nullptr, "equalizer_active");
+    m_onoff_checkbox.setCheckState (active ? Qt::Checked : Qt::Unchecked);
 }
 
-void EqualizerWindow::updateSliders ()
+void EqualizerWindow::updatePreamp ()
 {
-    m_preamp_slider->setValue (aud_get_int (nullptr, "equalizer_preamp"));
+    m_preamp_slider->slider.setValue (aud_get_int (nullptr, "equalizer_preamp"));
+}
 
+void EqualizerWindow::updateBands ()
+{
     double values[AUD_EQ_NBANDS];
     aud_eq_get_bands (values);
 
     for (int i = 0; i < AUD_EQ_NBANDS; i++)
-        m_sliders[i]->setValue (values[i]);
+        m_sliders[i]->slider.setValue (values[i]);
 }
 
-EqualizerSlider::EqualizerSlider (int band, const char * label, QWidget * parent) : QWidget (parent),
-    m_band (band), m_slider (new QSlider (Qt::Vertical)), m_label (new QLabel)
+EqualizerSlider::EqualizerSlider (const char * label, QWidget * parent) :
+    QWidget (parent),
+    slider (Qt::Vertical)
 {
-    m_slider->setRange (-AUD_EQ_MAX_GAIN, AUD_EQ_MAX_GAIN);
-    m_label->setText (label);
+    slider.setRange (-AUD_EQ_MAX_GAIN, AUD_EQ_MAX_GAIN);
 
-    m_layout.addWidget (m_slider);
-    m_layout.addWidget (m_label);
-
-    setLayout (& m_layout);
-
-    connect (m_slider, &QSlider::valueChanged, this, &EqualizerSlider::valueChangedTrigger);
+    auto layout = new QVBoxLayout (this);
+    layout->addWidget (& slider);
+    layout->addWidget (new QLabel (label, this));
 }
 
-void EqualizerWindow::onoffStateChanged (int state)
-{
-    aud_set_bool (nullptr, "equalizer_active", (state == Qt::Checked));
-}
+static EqualizerWindow * s_equalizer = nullptr;
 
-EqualizerSlider::~EqualizerSlider ()
-{
-    delete m_slider;
-    delete m_label;
-}
-
-void EqualizerSlider::valueChangedTrigger (int value)
-{
-    AUDDBG("value change, band %d, value %d\n", m_band, value);
-
-    if (m_band == -1)
-        aud_set_int (nullptr, "equalizer_preamp", value);
-    else
-        aud_eq_set_band (m_band, value);
-}
-
-void EqualizerSlider::setValue (int value)
-{
-    m_slider->setValue (value);
-}
-
-static EqualizerWindow * m_equalizer = nullptr;
+namespace audqt {
 
 EXPORT void equalizer_show (void)
 {
-    if (! m_equalizer)
-        m_equalizer = new EqualizerWindow;
+    if (! s_equalizer)
+    {
+        s_equalizer = new EqualizerWindow;
+        s_equalizer->setAttribute (Qt::WA_DeleteOnClose);
 
-    window_bring_to_front (m_equalizer);
+        QObject::connect (s_equalizer, & QObject::destroyed, [] () {
+            s_equalizer = nullptr;
+        });
+    }
+
+    window_bring_to_front (s_equalizer);
 }
 
 EXPORT void equalizer_hide (void)
 {
-    if (! m_equalizer)
-        return;
-
-    m_equalizer->hide ();
+    delete s_equalizer;
 }
 
-};
+} // namespace audqt

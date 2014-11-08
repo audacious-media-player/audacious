@@ -17,45 +17,50 @@
  * the use of this software.
  */
 
-#include <QtGui>
-#include <QtWidgets>
+#include <QApplication>
+#include <QPixmap>
+#include <QImage>
 
-#include <libaudcore/audstrings.h>
 #include <libaudcore/playlist.h>
 #include <libaudcore/probe.h>
 #include <libaudcore/runtime.h>
 
-#include <libaudqt/libaudqt.h>
-
 namespace audqt {
 
-EXPORT QImage art_request (const char * filename)
+EXPORT QPixmap art_request (const char * filename, unsigned int w, unsigned int h, bool want_hidpi)
 {
     const Index<char> * data = aud_art_request_data (filename);
 
     if (! data)
     {
         AUDINFO ("no album art for %s.\n", filename);
-        return QImage ();
+        return QPixmap ();
     }
 
     QImage img = QImage::fromData ((const uchar *) data->begin (), data->len ());
 
     aud_art_unref (filename);
 
-    return img;
+    if (! want_hidpi)
+        return QPixmap::fromImage (img.scaled (w, h, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+
+    qreal r = qApp->devicePixelRatio ();
+
+    QPixmap pm = QPixmap::fromImage (img.scaled (w * r, h * r, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    pm.setDevicePixelRatio (r);
+
+    return pm;
 }
 
-EXPORT QImage art_request_current ()
+EXPORT QPixmap art_request_current (unsigned int w, unsigned int h, bool want_hidpi)
 {
     int list = aud_playlist_get_playing ();
     int entry = aud_playlist_get_position (list);
     if (entry < 0)
-        return QImage ();
+        return QPixmap ();
 
     String filename = aud_playlist_entry_get_filename (list, entry);
-    return art_request (filename);
+    return art_request (filename, w, h, want_hidpi);
 }
 
-}
-
+} // namespace audqt

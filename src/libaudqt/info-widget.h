@@ -18,19 +18,12 @@
  * the use of this software.
  */
 
-#include <QtGui>
-#include <QtWidgets>
 #include <QAbstractTableModel>
+#include <QTreeView>
 
-#include <libaudcore/audstrings.h>
-#include <libaudcore/playlist.h>
-#include <libaudcore/probe.h>
-#include <libaudcore/runtime.h>
-#include <libaudcore/interface.h>
 #include <libaudcore/tuple.h>
-#include <libaudcore/hook.h>
 
-#include <libaudqt/libaudqt.h>
+class PluginHandle;
 
 namespace audqt {
 
@@ -67,4 +60,4 @@ private:
     InfoModel m_model;
 };
 
-}
+} // namespace audqt

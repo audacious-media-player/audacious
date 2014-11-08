@@ -17,18 +17,20 @@
  * the use of this software.
  */
 
-#include <QtGui>
-#include <QtWidgets>
-#include <QAbstractTableModel>
+#include "log-inspector.h"
+#include "libaudqt.h"
+
+#include <QComboBox>
+#include <QDialog>
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QVBoxLayout>
+#include <QTreeView>
+#include <QWidget>
 
 #include <libaudcore/i18n.h>
-#include <libaudcore/preferences.h>
+#include <libaudcore/index.h>
 #include <libaudcore/runtime.h>
-
-#include <libaudqt/libaudqt.h>
-
-#include "log-inspector.h"
-#include "log-inspector.moc"
 
 namespace audqt {
 
@@ -43,7 +45,19 @@ enum LogEntryColumn {
     Count
 };
 
+struct LogEntry
+{
+    audlog::Level level;
+    const char * filename;
+    unsigned int line;
+    const char * function;
+    char * message;
+};
+
 static Index<SmartPtr<LogEntry>> entries;
+
+static void log_handler (audlog::Level level, const char * file, int line,
+ const char * func, const char * message);
 
 /* log entry model */
 LogEntryModel::LogEntryModel (QObject * parent) : QAbstractListModel (parent)
@@ -91,11 +105,11 @@ QVariant LogEntryModel::headerData (int section, Qt::Orientation orientation, in
     {
         switch (section)
         {
-            case LogEntryColumn::Level: return QString (translate_str ("Level"));
-            case LogEntryColumn::File: return QString (translate_str ("Filename"));
-            case LogEntryColumn::Line: return QString (translate_str ("Line"));
-            case LogEntryColumn::Function: return QString (translate_str ("Function"));
-            case LogEntryColumn::Message: return QString (translate_str ("Message"));
+            case LogEntryColumn::Level: return QString (_("Level"));
+            case LogEntryColumn::File: return QString (_("Filename"));
+            case LogEntryColumn::Line: return QString (_("Line"));
+            case LogEntryColumn::Function: return QString (_("Function"));
+            case LogEntryColumn::Message: return QString (_("Message"));
         }
     }
 
@@ -160,7 +174,7 @@ private:
 LogEntryInspector::LogEntryInspector (QWidget * parent) :
     QDialog (parent)
 {
-    setWindowTitle (translate_str ("Log Inspector"));
+    setWindowTitle (_("Log Inspector"));
     setLayout (& m_layout);
 
     m_model = new LogEntryModel (this);
@@ -181,7 +195,7 @@ LogEntryInspector::LogEntryInspector (QWidget * parent) :
 
     QObject::connect (& m_level_combobox,
                       static_cast <void (QComboBox::*) (int)> (&QComboBox::currentIndexChanged),
-                      [=] (int idx) { setLogLevel ((audlog::Level) idx); });
+                      [this] (int idx) { setLogLevel ((audlog::Level) idx); });
 
     m_bottom_layout.addWidget (& m_level_combobox);
 
@@ -195,11 +209,13 @@ LogEntryInspector::LogEntryInspector (QWidget * parent) :
 
 LogEntryInspector::~LogEntryInspector ()
 {
+    audlog::unsubscribe (log_handler);
 }
 
-static LogEntryInspector * m_inspector = nullptr;
+static LogEntryInspector * s_inspector = nullptr;
 
-static void log_handler (audlog::Level level, const char * file, int line, const char * func, const char * message)
+static void log_handler (audlog::Level level, const char * file, int line,
+ const char * func, const char * message)
 {
     LogEntry * l = new LogEntry;
 
@@ -215,11 +231,11 @@ static void log_handler (audlog::Level level, const char * file, int line, const
 
     if (entries.len () > LOGENTRY_MAX)
     {
-        m_inspector->pop ();
+        s_inspector->pop ();
         entries.erase (0, 1);
     }
 
-    m_inspector->push ();
+    s_inspector->push ();
 }
 
 void LogEntryInspector::setLogLevel (audlog::Level level)
@@ -248,18 +264,22 @@ void LogEntryInspector::push ()
 
 EXPORT void log_inspector_show ()
 {
-    if (! m_inspector)
-        m_inspector = new LogEntryInspector;
+    if (! s_inspector)
+    {
+        s_inspector = new LogEntryInspector;
+        s_inspector->setAttribute (Qt::WA_DeleteOnClose);
 
-    window_bring_to_front (m_inspector);
+        QObject::connect (s_inspector, & QObject::destroyed, [] () {
+            s_inspector = nullptr;
+        });
+    }
+
+    window_bring_to_front (s_inspector);
 }
 
 EXPORT void log_inspector_hide ()
 {
-    if (! m_inspector)
-        return;
-
-    m_inspector->hide ();
+    delete s_inspector;
 }
 
-}
+} // namespace audqt

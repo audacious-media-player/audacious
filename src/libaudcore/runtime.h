@@ -103,6 +103,8 @@ void aud_run ();
 void aud_quit ();
 void aud_cleanup ();
 
+void aud_leak_check ();
+
 String aud_history_get (int entry);
 void aud_history_add (const char * path);
 

@@ -17,19 +17,21 @@
  * the use of this software.
  */
 
-#include <QtGui>
-#include <QtWidgets>
-#include <QAbstractTableModel>
+#include "libaudqt.h"
+
+#include <QAbstractListModel>
+#include <QDialog>
+#include <QDialogButtonBox>
+#include <QPushButton>
+#include <QHeaderView>
+#include <QItemSelectionModel>
+#include <QTreeView>
+#include <QVBoxLayout>
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/playlist.h>
-#include <libaudcore/probe.h>
-#include <libaudcore/runtime.h>
-#include <libaudcore/interface.h>
-#include <libaudcore/tuple.h>
 #include <libaudcore/hook.h>
-
-#include <libaudqt/libaudqt.h>
+#include <libaudcore/i18n.h>
 
 /*
  * TODO:
@@ -69,7 +71,10 @@ QVariant QueueManagerModel::data (const QModelIndex & index, int role) const
         if (index.column () == 0)
             return entry;
         else
-            return QString ((const char *) aud_playlist_entry_get_title (list, entry, true));
+        {
+            Tuple tuple = aud_playlist_entry_get_tuple (list, entry, Playlist::Guess);
+            return QString ((const char *) tuple.get_str (Tuple::FormattedTitle));
+        }
     }
     else if (role == Qt::TextAlignmentRole && index.column () == 0)
         return Qt::AlignRight;
@@ -86,7 +91,6 @@ void QueueManagerModel::reset ()
 class QueueManagerDialog : public QDialog {
 public:
     QueueManagerDialog (QWidget * parent = nullptr);
-    ~QueueManagerDialog ();
 
 private:
     QVBoxLayout m_layout;
@@ -96,15 +100,20 @@ private:
     QPushButton m_btn_close;
     QueueManagerModel m_model;
 
-    static void update_hook (void *, void * user);
-
+    void update (Playlist::Update level);
     void removeSelected ();
+
+    HookReceiver<QueueManagerDialog, Playlist::Update> update_hook;
+    HookReceiver<QueueManagerModel> activate_hook;
 };
 
-QueueManagerDialog::QueueManagerDialog (QWidget * parent) : QDialog (parent)
+QueueManagerDialog::QueueManagerDialog (QWidget * parent) :
+    QDialog (parent),
+    update_hook ("playlist update", this, & QueueManagerDialog::update),
+    activate_hook ("playlist activate", & m_model, & QueueManagerModel::reset)
 {
-    m_btn_unqueue.setText (translate_str (_("_Unqueue")));
-    m_btn_close.setText (translate_str (_("_Close")));
+    m_btn_unqueue.setText (translate_str (N_("_Unqueue")));
+    m_btn_close.setText (translate_str (N_("_Close")));
 
     connect (& m_btn_close, &QAbstractButton::clicked, this, &QWidget::hide);
     connect (& m_btn_unqueue, &QAbstractButton::clicked, this, &QueueManagerDialog::removeSelected);
@@ -119,9 +128,6 @@ QueueManagerDialog::QueueManagerDialog (QWidget * parent) : QDialog (parent)
     m_treeview.setModel (& m_model);
     m_treeview.setSelectionMode (QAbstractItemView::ExtendedSelection);
     m_treeview.header ()->hide ();
-
-    hook_associate ("playlist activate", QueueManagerDialog::update_hook, this);
-    hook_associate ("playlist update", QueueManagerDialog::update_hook, this);
 
     setLayout (& m_layout);
     setWindowTitle (_("Queue Manager"));
@@ -140,24 +146,11 @@ QueueManagerDialog::QueueManagerDialog (QWidget * parent) : QDialog (parent)
     resize (500, 250);
 }
 
-QueueManagerDialog::~QueueManagerDialog ()
+void QueueManagerDialog::update (Playlist::Update level)
 {
-    hook_dissociate ("playlist activate", QueueManagerDialog::update_hook);
-    hook_dissociate ("playlist update", QueueManagerDialog::update_hook);
-}
-
-void QueueManagerDialog::update_hook (void * type, void * user)
-{
-    QueueManagerDialog * s = static_cast<QueueManagerDialog *> (user);
-
     /* resetting the model due to selection updates causes breakage, so don't do it. */
-    if (type == PLAYLIST_UPDATE_SELECTION)
-        return;
-
-    if (! s)
-        return;
-
-    s->m_model.reset ();
+    if (level != Playlist::Selection)
+        m_model.reset ();
 }
 
 void QueueManagerDialog::removeSelected ()
@@ -180,22 +173,26 @@ void QueueManagerDialog::removeSelected ()
     }
 }
 
-static QueueManagerDialog * m_queuemgr = nullptr;
+static QueueManagerDialog * s_queuemgr = nullptr;
 
 EXPORT void queue_manager_show ()
 {
-    if (! m_queuemgr)
-        m_queuemgr = new QueueManagerDialog;
+    if (! s_queuemgr)
+    {
+        s_queuemgr = new QueueManagerDialog;
+        s_queuemgr->setAttribute (Qt::WA_DeleteOnClose);
 
-    window_bring_to_front (m_queuemgr);
+        QObject::connect (s_queuemgr, & QObject::destroyed, [] () {
+            s_queuemgr = nullptr;
+        });
+    }
+
+    window_bring_to_front (s_queuemgr);
 }
 
 EXPORT void queue_manager_hide ()
 {
-    if (! m_queuemgr)
-        return;
-
-    m_queuemgr->hide ();
+    delete s_queuemgr;
 }
 
-}
+} // namespace audqt

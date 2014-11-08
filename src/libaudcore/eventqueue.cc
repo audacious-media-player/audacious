@@ -22,6 +22,7 @@
 #include <pthread.h>
 #include <string.h>
 
+#include "internal.h"
 #include "list.h"
 #include "mainloop.h"
 #include "objects.h"
@@ -101,7 +102,7 @@ EXPORT void event_queue_cancel (const char * name, void * data)
     pthread_mutex_unlock (& mutex);
 }
 
-EXPORT void event_queue_cancel_all (void)
+void event_queue_cancel_all ()
 {
     pthread_mutex_lock (& mutex);
     events.clear ();

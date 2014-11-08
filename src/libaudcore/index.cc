@@ -18,6 +18,7 @@
  */
 
 #include "index.h"
+#include "internal.h"
 
 #include <assert.h>
 #include <stdlib.h>
@@ -41,6 +42,8 @@ static void do_erase (void * data, int len, aud::EraseFunc erase_func)
 
 EXPORT void IndexBase::clear (aud::EraseFunc erase_func)
 {
+    __sync_sub_and_fetch (& misc_bytes_allocated, m_size);
+
     do_erase (m_data, m_len, erase_func);
     free (m_data);
 
@@ -73,6 +76,8 @@ EXPORT void * IndexBase::insert (int pos, int len)
         void * new_data = realloc (m_data, new_size);
         if (! new_data)
             throw std::bad_alloc ();  /* nothing changed yet */
+
+        __sync_add_and_fetch (& misc_bytes_allocated, new_size - m_size);
 
         m_data = new_data;
         m_size = new_size;

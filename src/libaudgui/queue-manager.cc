@@ -45,7 +45,8 @@ static void get_value (void * user, int row, int column, GValue * value)
         g_value_set_int (value, 1 + entry);
         break;
     case COLUMN_TITLE:;
-        g_value_set_string (value, aud_playlist_entry_get_title (list, entry, true));
+        Tuple tuple = aud_playlist_entry_get_tuple (list, entry, Playlist::Guess);
+        g_value_set_string (value, tuple.get_str (Tuple::FormattedTitle));
         break;
     }
 }

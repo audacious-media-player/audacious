@@ -17,40 +17,88 @@
  * the use of this software.
  */
 
+#include "volumebutton.h"
 #include "libaudqt.h"
 
+#include <QIcon>
+#include <QSlider>
+#include <QVBoxLayout>
+#include <QWheelEvent>
+
 #include <libaudcore/drct.h>
+#include <libaudcore/audstrings.h>
 
 namespace audqt {
 
 EXPORT VolumeButton::VolumeButton (QWidget * parent) :
     QToolButton (parent)
 {
-    setIcon (QIcon::fromTheme ("audio-volume-medium"));
     setFocusPolicy (Qt::NoFocus);
+
+    auto layout = new QVBoxLayout (this);
+    layout->setContentsMargins (6, 6, 6, 6);
 
     m_slider = new QSlider (Qt::Vertical, this);
     m_slider->setRange (0, 100);
 
-    auto layout = new QVBoxLayout (this);
-    layout->setContentsMargins (6, 6, 6, 6);
     layout->addWidget (m_slider);
 
     m_container = new QWidget;
     m_container->setLayout (layout);
 
+    updateVolume ();
+
     connect (this, & QAbstractButton::clicked, this, & VolumeButton::showSlider);
-    connect (m_slider, & QAbstractSlider::sliderMoved, aud_drct_set_volume_main);
+    connect (m_slider, & QAbstractSlider::valueChanged, this, & VolumeButton::setVolume);
 }
 
-EXPORT void VolumeButton::showSlider ()
+void VolumeButton::updateIcon (int val)
 {
-    m_slider->setValue (aud_drct_get_volume_main ());
+    if (val == 0)
+        setIcon (QIcon::fromTheme ("audio-volume-off"));
+    else if (val > 0 && val < 35)
+        setIcon (QIcon::fromTheme ("audio-volume-low"));
+    else if (val >= 35 && val < 70)
+        setIcon (QIcon::fromTheme ("audio-volume-medium"));
+    else if (val >= 70)
+        setIcon (QIcon::fromTheme ("audio-volume-high"));
 
+    setToolTip (QString (str_printf ("%d %%", val)));
+}
+
+void VolumeButton::updateVolume ()
+{
+    int val = aud_drct_get_volume_main ();
+    updateIcon (val);
+    m_slider->setValue (val);
+}
+
+void VolumeButton::showSlider ()
+{
     m_container->setWindowFlags (Qt::Popup);
     m_container->move (mapToGlobal (QPoint (0, 0)));
 
     window_bring_to_front (m_container);
 }
 
+void VolumeButton::setVolume (int val)
+{
+    aud_drct_set_volume_main (val);
+    updateIcon (val);
 }
+
+void VolumeButton::wheelEvent (QWheelEvent * event)
+{
+    int val = m_slider->value ();
+    int y = event->angleDelta ().y ();
+
+    if (y < 0 && val > 0)
+        val--;
+    else if (y > 0 && val < 100)
+        val++;
+
+    setVolume (val);
+    m_slider->setValue (val);
+}
+
+} // namespace audqt

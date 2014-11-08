@@ -17,17 +17,11 @@
  * the use of this software.
  */
 
-#include <QtGui>
-#include <QtWidgets>
-#include <QAbstractTableModel>
-
-#include <libaudcore/i18n.h>
-#include <libaudcore/index.h>
-#include <libaudcore/preferences.h>
-#include <libaudcore/runtime.h>
-
 #ifndef PREFS_PLUGINLIST_MODEL_H
 #define PREFS_PLUGINLIST_MODEL_H
+
+#include <QAbstractListModel>
+#include <libaudcore/index.h>
 
 class PluginHandle;
 
@@ -35,8 +29,6 @@ namespace audqt {
 
 class PluginListModel : public QAbstractListModel
 {
-    Q_OBJECT
-
 public:
     PluginListModel (QObject * parent, int category_id);
     ~PluginListModel ();
@@ -57,6 +49,6 @@ private:
     const Index<PluginHandle *> & m_list;
 };
 
-}
+} // namespace audqt
 
 #endif

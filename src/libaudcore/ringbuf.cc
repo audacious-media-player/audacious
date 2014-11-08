@@ -18,6 +18,7 @@
  */
 
 #include "ringbuf.h"
+#include "internal.h"
 
 #include <assert.h>
 #include <stdlib.h>
@@ -47,6 +48,8 @@ EXPORT void RingBufBase::alloc (int size)
     if (! mem)
         throw std::bad_alloc ();  /* nothing changed yet */
 
+    __sync_add_and_fetch (& misc_bytes_allocated, size - m_size);
+
     int to_end = m_size - m_offset;
 
     m_data = mem;
@@ -64,6 +67,8 @@ EXPORT void RingBufBase::destroy (aud::EraseFunc erase_func)
 {
     if (! m_data)
         return;
+
+    __sync_sub_and_fetch (& misc_bytes_allocated, m_size);
 
     discard (-1, erase_func);
 

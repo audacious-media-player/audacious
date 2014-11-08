@@ -21,6 +21,7 @@
 #define LIBAUDCORE_INTERNAL_H
 
 #include <stdint.h>
+#include <sys/types.h>
 
 #include "index.h"
 #include "objects.h"
@@ -32,26 +33,26 @@ class Tuple;
 
 typedef bool (* DirForeachFunc) (const char * path, const char * basename, void * user);
 
-/* adder.c */
-void adder_cleanup (void);
+/* adder.cc */
+void adder_cleanup ();
 
-/* art.c */
-void art_init (void);
-void art_cleanup (void);
+/* art.cc */
+void art_init ();
+void art_cleanup ();
 
-/* art-search.c */
+/* art-search.cc */
 String art_search (const char * filename);
 
-/* charset.c */
-void chardet_init (void);
-void chardet_cleanup (void);
+/* charset.cc */
+void chardet_init ();
+void chardet_cleanup ();
 
-/* config.c */
-void config_load (void);
-void config_save (void);
-void config_cleanup (void);
+/* config.cc */
+void config_load ();
+void config_save ();
+void config_cleanup ();
 
-/* effect.c */
+/* effect.cc */
 void effect_start (int & channels, int & rate);
 Index<float> & effect_process (Index<float> & data);
 bool effect_flush (bool force);
@@ -61,36 +62,46 @@ int effect_adjust_delay (int delay);
 bool effect_plugin_start (PluginHandle * plugin);
 void effect_plugin_stop (PluginHandle * plugin);
 
-/* equalizer.c */
-void eq_init (void);
-void eq_cleanup (void);
+/* equalizer.cc */
+void eq_init ();
+void eq_cleanup ();
 void eq_set_format (int new_channels, int new_rate);
 void eq_filter (float * data, int samples);
 
-/* fft.c */
+/* eventqueue.cc */
+void event_queue_cancel_all ();
+
+/* fft.cc */
 void calc_freq (const float data[512], float freq[256]);
 
-/* interface.c */
-PluginHandle * iface_plugin_probe (void);
-PluginHandle * iface_plugin_get_current (void);
+/* hook.cc */
+void hook_cleanup ();
+
+/* interface.cc */
+PluginHandle * iface_plugin_probe ();
+PluginHandle * iface_plugin_get_current ();
 bool iface_plugin_set_current (PluginHandle * plugin);
 
-void interface_run (void);
+void interface_run ();
 
-/* playback.c */
+/* playback.cc */
 /* do not call these; use aud_drct_play/stop() instead */
 void playback_play (int seek_time, bool pause);
-void playback_stop (void);
+void playback_stop ();
 
-/* probe-buffer.c */
+/* probe-buffer.cc */
 VFSFile probe_buffer_new (const char * filename);
 
-/* util.c */
+/* runtime.cc */
+extern size_t misc_bytes_allocated;
+
+/* strpool.cc */
+void string_leak_check ();
+
+/* util.cc */
+const char * get_home_utf8 ();
 bool dir_foreach (const char * path, DirForeachFunc func, void * user_data);
 String write_temp_file (void * data, int64_t len);
-
-void describe_song (const char * filename, const Tuple & tuple, String & title,
- String & artist, String & album);
 
 bool same_basename (const char * a, const char * b);
 const char * last_path_element (const char * path);
@@ -98,15 +109,15 @@ void cut_path_element (char * path, int pos);
 
 unsigned int32_hash (unsigned val);
 
-/* vis-runner.c */
+/* vis-runner.cc */
 void vis_runner_start_stop (bool playing, bool paused);
 void vis_runner_pass_audio (int time, const Index<float> & data, int channels, int rate);
-void vis_runner_flush (void);
+void vis_runner_flush ();
 void vis_runner_enable (bool enable);
 
-/* visualization.c */
+/* visualization.cc */
 void vis_activate (bool activate);
-void vis_send_clear (void);
+void vis_send_clear ();
 void vis_send_audio (const float * data, int channels);
 
 bool vis_plugin_start (PluginHandle * plugin);
