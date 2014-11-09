@@ -73,7 +73,7 @@ bool playlist_load (const char * filename, String & title, Index<PlaylistAddItem
         }
     }
 
-    aud_ui_show_error (str_printf (_("Cannot load %s: unsupported file extension."), filename));
+    aud_ui_show_error (str_printf (_("Cannot load %s: unsupported file name extension."), filename));
 
     return false;
 }
@@ -132,7 +132,7 @@ EXPORT bool aud_playlist_save (int list, const char * filename, Playlist::GetMod
         }
     }
 
-    aud_ui_show_error (str_printf (_("Cannot save %s: unsupported file extension."), filename));
+    aud_ui_show_error (str_printf (_("Cannot save %s: unsupported file name extension."), filename));
 
     return false;
 }

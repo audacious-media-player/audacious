@@ -79,7 +79,7 @@ VFSImpl * vfs_local_fopen (const char * uri, const char * mode, String & error)
 
     if (! path)
     {
-        error = String (_("Invalid filename"));
+        error = String (_("Invalid file name"));
         return nullptr;
     }
 

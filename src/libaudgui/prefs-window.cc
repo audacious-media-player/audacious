@@ -99,10 +99,10 @@ static const TitleFieldTag title_field_tags[] = {
     { N_("Artist")     , "${artist}" },
     { N_("Album")      , "${album}" },
     { N_("Title")      , "${title}" },
-    { N_("Tracknumber"), "${track-number}" },
+    { N_("Track number"), "${track-number}" },
     { N_("Genre")      , "${genre}" },
-    { N_("Filename")   , "${file-name}" },
-    { N_("Filepath")   , "${file-path}" },
+    { N_("File name")   , "${file-name}" },
+    { N_("File path")   , "${file-path}" },
     { N_("Date")       , "${date}" },
     { N_("Year")       , "${year}" },
     { N_("Comment")    , "${comment}" },
@@ -273,7 +273,7 @@ static const PreferencesWidget playlist_page_widgets[] = {
     WidgetLabel (N_("<b>Advanced</b>")),
     WidgetCheck (N_("Do not load metadata for songs until played"),
         WidgetBool (0, "metadata_on_play")),
-    WidgetCheck (N_("Probe content of files with no recognized filename extension"),
+    WidgetCheck (N_("Probe content of files with no recognized file name extension"),
         WidgetBool (0, "slow_probe"))
 };
 
