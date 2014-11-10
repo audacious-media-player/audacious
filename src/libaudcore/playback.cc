@@ -128,6 +128,7 @@ static void update_from_playlist ()
     }
 }
 
+// TODO for 3.7: make this thread-safe
 EXPORT bool aud_drct_get_ready ()
 {
     if (! playing)
@@ -174,6 +175,7 @@ static void update_cb (void * hook_data, void *)
         update_from_playlist ();
 }
 
+// TODO for 3.7: make this thread-safe
 EXPORT int aud_drct_get_time ()
 {
     if (! playing)
@@ -442,11 +444,13 @@ void playback_play (int seek_time, bool pause)
     hook_call ("playback begin", nullptr);
 }
 
+// TODO for 3.7: make this thread-safe
 EXPORT bool aud_drct_get_playing ()
 {
     return playing;
 }
 
+// TODO for 3.7: make this thread-safe
 EXPORT bool aud_drct_get_paused ()
 {
     return paused;
@@ -478,6 +482,11 @@ EXPORT bool aud_input_open_audio (int format, int rate, int channels)
 {
     assert (playing);
 
+    // some output plugins (e.g. filewriter) call aud_drct_get_tuple();
+    // hence, to avoid a deadlock, set_ready() must precede output_open_audio()
+    if (! ready_flag)
+        set_ready ();
+
     if (! output_open_audio (format, rate, channels, aud::max (0, seek_request)))
         return false;
 
@@ -505,9 +514,6 @@ EXPORT void aud_input_set_gain (const ReplayGainInfo * info)
 EXPORT void aud_input_write_audio (const void * data, int length)
 {
     assert (playing);
-
-    if (! ready_flag)
-        set_ready ();
 
     pthread_mutex_lock (& control_mutex);
     int a = repeat_a, b = repeat_b;
@@ -578,16 +584,19 @@ EXPORT int aud_input_check_seek ()
     return seek;
 }
 
+// TODO for 3.7: make this thread-safe
 EXPORT int aud_drct_get_position ()
 {
     return playback_entry_get_position ();
 }
 
+// TODO for 3.7: make this thread-safe
 EXPORT String aud_drct_get_filename ()
 {
     return current_filename;
 }
 
+// TODO for 3.7: make this thread-safe
 EXPORT String aud_drct_get_title ()
 {
     if (! playing)
@@ -604,6 +613,7 @@ EXPORT String aud_drct_get_title ()
     return String (str_concat ({prefix, current_title, suffix}));
 }
 
+// TODO for 3.7: make this thread-safe
 EXPORT Tuple aud_drct_get_tuple ()
 {
     if (playing)
@@ -612,6 +622,7 @@ EXPORT Tuple aud_drct_get_tuple ()
     return current_tuple.ref ();
 }
 
+// TODO for 3.7: make this thread-safe
 EXPORT int aud_drct_get_length ()
 {
     if (playing)
@@ -620,6 +631,7 @@ EXPORT int aud_drct_get_length ()
     return current_length;
 }
 
+// TODO for 3.7: make this thread-safe
 EXPORT void aud_drct_get_info (int * bitrate, int * samplerate, int * channels)
 {
     if (playing)
@@ -656,6 +668,7 @@ EXPORT void aud_drct_set_ab_repeat (int a, int b)
     pthread_mutex_unlock (& control_mutex);
 }
 
+// TODO for 3.7: make this thread-safe
 EXPORT void aud_drct_get_ab_repeat (int * a, int * b)
 {
     * a = (playing && repeat_a != -1) ? repeat_a - time_offset : -1;

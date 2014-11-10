@@ -32,7 +32,10 @@ struct ReplayGainInfo {
 };
 
 /* Prepares the output system for playback in the specified format.  Returns
- * true on success, false if the selected format is not supported. */
+ * true on success, false if the selected format is not supported.  Also
+ * triggers the "playback ready" hook.  Hence, if you call aud_input_set_gain,
+ * aud_input_set_tuple, or aud_input_set_bitrate, consider doing so before
+ * calling aud_input_open_audio. */
 bool aud_input_open_audio (int format, int rate, int channels);
 
 /* Informs the output system of replay gain values for the current song so
