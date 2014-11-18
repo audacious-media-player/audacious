@@ -75,6 +75,7 @@ INCLUDES = audio.h \
            templates.h \
            tinylock.h \
            tuple.h \
+           visualizer.h \
            vfs.h \
            vfs_async.h
 

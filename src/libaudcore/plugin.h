@@ -24,6 +24,7 @@
 #include <libaudcore/audio.h>
 #include <libaudcore/plugins.h>
 #include <libaudcore/tuple.h>
+#include <libaudcore/visualizer.h>
 #include <libaudcore/vfs.h>
 
 struct PluginPreferences;
@@ -92,18 +93,6 @@ struct PluginPreferences;
  *
  * For the time being, aud_plugin_send_message() should only be called from the
  * program's main thread. */
-
-// this enum is also in interface.h
-#ifndef _AUD_VIS_TYPE_DEFINED
-#define _AUD_VIS_TYPE_DEFINED
-enum {
-    AUD_VIS_TYPE_CLEAR,
-    AUD_VIS_TYPE_MONO_PCM,
-    AUD_VIS_TYPE_MULTI_PCM,
-    AUD_VIS_TYPE_FREQ,
-    AUD_VIS_TYPES
-};
-#endif
 
 struct PluginInfo {
     const char * name;
@@ -397,26 +386,12 @@ public:
     const bool enabled_by_default;
 };
 
-class VisPlugin : public DockablePlugin
+class VisPlugin : public DockablePlugin, public Visualizer
 {
 public:
-    constexpr VisPlugin (PluginInfo info, int vis_type) :
+    constexpr VisPlugin (PluginInfo info, int type_mask) :
         DockablePlugin (PLUGIN_TYPE_VIS, info),
-        vis_type (vis_type) {}
-
-    const int vis_type;  // see AUD_VIS_TYPE_* enum
-
-    /* reset internal state and clear display */
-    virtual void clear () = 0;
-
-    /* 512 frames of a single-channel PCM signal */
-    virtual void render_mono_pcm (const float * pcm) {}
-
-    /* 512 frames of an interleaved multi-channel PCM signal */
-    virtual void render_multi_pcm (const float * pcm, int channels) {}
-
-    /* intensity of frequencies 1/512, 2/512, ..., 256/512 of sample rate */
-    virtual void render_freq (const float * freq) {}
+        Visualizer (type_mask) {}
 };
 
 class IfacePlugin : public Plugin

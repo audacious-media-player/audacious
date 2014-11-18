@@ -20,6 +20,8 @@
 #ifndef LIBAUDCORE_INTERFACE_H
 #define LIBAUDCORE_INTERFACE_H
 
+#include <libaudcore/visualizer.h>
+
 enum {
     AUD_MENU_MAIN,
     AUD_MENU_PLAYLIST,
@@ -27,26 +29,6 @@ enum {
     AUD_MENU_PLAYLIST_REMOVE,
     AUD_MENU_COUNT
 };
-
-// this enum is also in plugin.h
-#ifndef _AUD_VIS_TYPE_DEFINED
-#define _AUD_VIS_TYPE_DEFINED
-enum {
-    AUD_VIS_TYPE_CLEAR,
-    AUD_VIS_TYPE_MONO_PCM,
-    AUD_VIS_TYPE_MULTI_PCM,
-    AUD_VIS_TYPE_FREQ,
-    AUD_VIS_TYPES
-};
-#endif
-
-typedef void (* VisClearFunc) ();
-typedef void (* VisMonoPCMFunc) (const float * pcm);
-typedef void (* VisMultiPCMFunc) (const float * pcm, int channels);
-typedef void (* VisFreqFunc) (const float * freq);
-
-/* generic type */
-typedef void (* VisFunc) ();
 
 void aud_ui_show (bool show);
 bool aud_ui_is_shown ();
@@ -65,7 +47,7 @@ void aud_ui_hide_prefs_window ();
 void aud_plugin_menu_add (int id, void (* func) (), const char * name, const char * icon);
 void aud_plugin_menu_remove (int id, void (* func) ());
 
-void aud_vis_func_add (int type, VisFunc func);
-void aud_vis_func_remove (VisFunc func);
+void aud_visualizer_add (Visualizer * vis);
+void aud_visualizer_remove (Visualizer * vis);
 
 #endif
