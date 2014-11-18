@@ -25,9 +25,9 @@
 class Plugin;
 
 enum {
- INPUT_KEY_SCHEME,
  INPUT_KEY_EXTENSION,
  INPUT_KEY_MIME,
+ INPUT_KEY_SCHEME,
  INPUT_KEYS};
 
 /* plugin-init.c */

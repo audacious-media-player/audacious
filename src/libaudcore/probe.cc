@@ -134,7 +134,7 @@ static bool open_file (const char * filename, InputPlugin * ip,
  const char * mode, VFSFile & handle, String * error = nullptr)
 {
     /* no need to open a handle for custom URI schemes */
-    if (ip->input_info.schemes.len)
+    if (ip->input_info.keys[INPUT_KEY_SCHEME].len)
         return true;
 
     handle = VFSFile (filename, mode);

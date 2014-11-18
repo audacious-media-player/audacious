@@ -282,55 +282,72 @@ public:
         { return delay; }
 };
 
-struct InputPluginInfo
-{
-    /* How quickly the plugin should be tried in searching for a plugin to
-     * handle a file which could not be identified from its extension.  Plugins
-     * with priority 0 are tried first, 10 last. */
-    int priority;
-
-    /* True if the files handled by the plugin may contain more than one song.
-     * When reading the tuple for such a file, the plugin should set the
-     * FIELD_SUBSONG_NUM field to the number of songs in the file.  For all
-     * other files, the field should be left unset.
-     *
-     * Example:
-     * 1. User adds a file named "somefile.xxx" to the playlist.  Having
-     * determined that this plugin can handle the file, Audacious opens the file
-     * and calls probe_for_tuple().  probe_for_tuple() sees that there are 3
-     * songs in the file and sets FIELD_SUBSONG_NUM to 3.
-     * 2. For each song in the file, Audacious opens the file and calls
-     * probe_for_tuple() -- this time, however, a question mark and song number
-     * are appended to the file name passed: "somefile.sid?2" refers to the
-     * second song in the file "somefile.sid".
-     * 3. When one of the songs is played, Audacious opens the file and calls
-     * play() with a file name modified in this way.
-     */
-    bool has_subtunes;
-
-    /* True if the plugin can write file tags. */
-    bool can_write_tuple;
-
-    /* File extensions associated with file types the plugin can handle. */
-    ArrayRef<const char *> extensions;
-
-    /* MIME types the plugin can handle. */
-    ArrayRef<const char *> mimes;
-
-    /* Custom URI schemes the plugin supports.  Plugins using custom URI
-     * schemes are expected to handle their own I/O.  Hence, any VFSFile passed
-     * to play(), probe_for_tuple(), etc. will be null. */
-    ArrayRef<const char *> schemes;
-};
-
 class InputPlugin : public Plugin
 {
 public:
-    constexpr InputPlugin (PluginInfo info, InputPluginInfo input_info) :
+    enum {
+        /* Indicates that the plugin can write file tags */
+        FlagWritesTag = (1 << 0),
+
+        /* Indicates that files handled by the plugin may contain more than one
+         * song.  When reading the tuple for such a file, the plugin should set
+         * the FIELD_SUBSONG_NUM field to the number of songs in the file.  For
+         * all other files, the field should be left unset.
+         *
+         * Example:
+         * 1. User adds a file named "somefile.xxx" to the playlist.  Having
+         * determined that this plugin can handle the file, Audacious opens the
+         * file and calls probe_for_tuple().  probe_for_tuple() sees that there
+         * are 3 songs in the file and sets FIELD_SUBSONG_NUM to 3.
+         * 2. For each song in the file, Audacious opens the file and calls
+         * probe_for_tuple(); this time, however, a question mark and song
+         * number are appended to the file name passed: "somefile.sid?2" refers
+         * to the second song in the file "somefile.sid".
+         * 3. When one of the songs is played, Audacious opens the file and
+         * calls play() with a file name modified in this way. */
+        FlagSubtunes = (1 << 1)
+    };
+
+    struct InputInfo
+    {
+        typedef ArrayRef<const char *> List;
+
+        int flags, priority;
+        List keys[3];
+
+        constexpr InputInfo (int flags = 0) :
+            flags (flags), priority (0) {}
+
+        /* Associates file extensions with the plugin. */
+        constexpr InputInfo with_exts (List exts)
+            { return InputInfo (flags, priority, exts, keys[1], keys[2]); }
+
+        /* Associates MIME types with the plugin. */
+        constexpr InputInfo with_mimes (List mimes)
+            { return InputInfo (flags, priority, keys[0], mimes, keys[2]); }
+
+        /* Associates custom URI schemes with the plugin.  Plugins using custom
+         * URI schemes are expected to handle their own I/O.  Hence, any VFSFile
+         * passed to play(), read_tuple(), etc. will be null. */
+        constexpr InputInfo with_schemes (List schemes)
+            { return InputInfo (flags, priority, keys[0], keys[1], schemes); }
+
+        /* Sets how quickly the plugin should be tried in searching for a plugin
+         * to handle a file which could not be identified from its extension.
+         * Plugins with priority 0 are tried first, 10 last. */
+        constexpr InputInfo with_priority (int priority)
+            { return InputInfo (flags, priority, keys[0], keys[1], keys[2]); }
+
+    private:
+        constexpr InputInfo (int flags, int priority, List exts, List mimes, List schemes) :
+            flags (flags), priority (priority), keys {exts, mimes, schemes} {}
+    };
+
+    constexpr InputPlugin (PluginInfo info, InputInfo input_info) :
         Plugin (PLUGIN_TYPE_INPUT, info),
         input_info (input_info) {}
 
-    const InputPluginInfo input_info;
+    const InputInfo input_info;
 
     /* Returns true if the plugin can handle the file. */
     virtual bool is_our_file (const char * filename, VFSFile & file) = 0;

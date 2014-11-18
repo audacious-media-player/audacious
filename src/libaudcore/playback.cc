@@ -20,6 +20,7 @@
 #include "drct.h"
 #include "input.h"
 #include "internal.h"
+#include "plugins-internal.h"
 
 #include <assert.h>
 #include <pthread.h>
@@ -334,7 +335,7 @@ static void end_cb (void * unused)
 static bool open_file (String & error)
 {
     /* no need to open a handle for custom URI schemes */
-    if (current_decoder->input_info.schemes.len)
+    if (current_decoder->input_info.keys[INPUT_KEY_SCHEME].len)
         return true;
 
     current_file = VFSFile (current_filename, "r");

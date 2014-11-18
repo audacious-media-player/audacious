@@ -59,7 +59,7 @@ public:
 
     /* for input plugins */
     Index<String> keys[INPUT_KEYS];
-    int has_subtunes, can_write_tuple;
+    int has_subtunes, writes_tag;
 
     PluginHandle (const char * basename, const char * path, bool loaded,
      int timestamp, int type, Plugin * header) :
@@ -75,7 +75,7 @@ public:
         enabled (type == PLUGIN_TYPE_TRANSPORT ||
          type == PLUGIN_TYPE_PLAYLIST || type == PLUGIN_TYPE_INPUT),
         has_subtunes (false),
-        can_write_tuple (false) {}
+        writes_tag (false) {}
 
     ~PluginHandle ()
     {
@@ -144,7 +144,7 @@ static void input_plugin_save (PluginHandle * plugin, FILE * handle)
     }
 
     fprintf (handle, "subtunes %d\n", plugin->has_subtunes);
-    fprintf (handle, "writes %d\n", plugin->can_write_tuple);
+    fprintf (handle, "writes %d\n", plugin->writes_tag);
 }
 
 static void plugin_save (PluginHandle * plugin, FILE * handle)
@@ -266,7 +266,7 @@ static void input_plugin_parse (PluginHandle * plugin, FILE * handle)
 
     if (parse_integer ("subtunes", & plugin->has_subtunes))
         parse_next (handle);
-    if (parse_integer ("writes", & plugin->can_write_tuple))
+    if (parse_integer ("writes", & plugin->writes_tag))
         parse_next (handle);
 }
 
@@ -431,20 +431,15 @@ static void plugin_get_info (PluginHandle * plugin, bool is_new)
         InputPlugin * ip = (InputPlugin *) header;
         plugin->priority = ip->input_info.priority;
 
-        for (int key = 0; key < INPUT_KEYS; key ++)
-            plugin->keys[key].clear ();
+        for (int k = 0; k < INPUT_KEYS; k ++)
+        {
+            plugin->keys[k].clear ();
+            for (const char * key : ip->input_info.keys[k])
+                plugin->keys[k].append (String (key));
+        }
 
-        for (const char * ext : ip->input_info.extensions)
-            plugin->keys[INPUT_KEY_EXTENSION].append (String (ext));
-
-        for (const char * mime : ip->input_info.mimes)
-            plugin->keys[INPUT_KEY_MIME].append (String (mime));
-
-        for (const char * scheme : ip->input_info.schemes)
-            plugin->keys[INPUT_KEY_SCHEME].append (String (scheme));
-
-        plugin->has_subtunes = ip->input_info.has_subtunes;
-        plugin->can_write_tuple = ip->input_info.can_write_tuple;
+        plugin->has_subtunes = (ip->input_info.flags & InputPlugin::FlagSubtunes);
+        plugin->writes_tag = (ip->input_info.flags & InputPlugin::FlagWritesTag);
     }
     else if (header->type == PLUGIN_TYPE_OUTPUT)
     {
@@ -652,5 +647,5 @@ bool input_plugin_has_subtunes (PluginHandle * plugin)
 bool input_plugin_can_write_tuple (PluginHandle * plugin)
 {
     g_return_val_if_fail (plugin->type == PLUGIN_TYPE_INPUT, false);
-    return plugin->can_write_tuple;
+    return plugin->writes_tag;
 }

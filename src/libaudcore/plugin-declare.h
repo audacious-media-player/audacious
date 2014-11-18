@@ -21,9 +21,6 @@ template<int N>
 constexpr ArrayRef<const char *> to_str_array (const char * const (& array) [N])
     { return {array, N - 1}; }
 
-constexpr ArrayRef<const char *> to_str_array (decltype (nullptr))
-    { return {nullptr}; }
-
 #ifndef AUD_PLUGIN_DOMAIN
 #define AUD_PLUGIN_DOMAIN PACKAGE
 #endif
@@ -34,30 +31,7 @@ constexpr ArrayRef<const char *> to_str_array (decltype (nullptr))
 #define AUD_PLUGIN_PREFS nullptr
 #endif
 
-#ifdef AUD_PLUGIN_ABOUTWIN
-#warning AUD_PLUGIN_ABOUTWIN is deprecated!
-#endif
-#ifdef AUD_PLUGIN_CONFIGWIN
-#warning AUD_PLUGIN_CONFIGWIN is deprecated!
-#endif
-
 #ifdef AUD_DECLARE_INPUT
-
-#ifndef AUD_INPUT_SUBTUNES
-#define AUD_INPUT_SUBTUNES false
-#endif
-#ifndef AUD_INPUT_EXTS
-#define AUD_INPUT_EXTS nullptr
-#endif
-#ifndef AUD_INPUT_MIMES
-#define AUD_INPUT_MIMES nullptr
-#endif
-#ifndef AUD_INPUT_SCHEMES
-#define AUD_INPUT_SCHEMES nullptr
-#endif
-#ifndef AUD_INPUT_PRIORITY
-#define AUD_INPUT_PRIORITY 0
-#endif
 
 class InputPluginInstance : public InputPlugin
 {
@@ -69,18 +43,27 @@ public:
         AUD_PLUGIN_PREFS
     };
 
-    static constexpr InputPluginInfo input_info = {
-        AUD_INPUT_PRIORITY,
-        AUD_INPUT_SUBTUNES,
-#ifdef AUD_INPUT_WRITE_TUPLE
-        true,
-#else
-        false,
+    static constexpr auto input_info = InputInfo (
+#ifdef AUD_INPUT_SUBTUNES
+     FlagSubtunes |
 #endif
-        to_str_array (AUD_INPUT_EXTS),
-        to_str_array (AUD_INPUT_MIMES),
-        to_str_array (AUD_INPUT_SCHEMES)
-    };
+#ifdef AUD_INPUT_WRITE_TUPLE
+     FlagWritesTag |
+#endif
+     0)
+#ifdef AUD_INPUT_PRIORITY
+     .with_priority (AUD_INPUT_PRIORITY)
+#endif
+#ifdef AUD_INPUT_EXTS
+     .with_exts (to_str_array (AUD_INPUT_EXTS))
+#endif
+#ifdef AUD_INPUT_MIMES
+     .with_mimes (to_str_array (AUD_INPUT_MIMES))
+#endif
+#ifdef AUD_INPUT_SCHEMES
+     .with_schemes (to_str_array (AUD_INPUT_SCHEMES))
+#endif
+     ;
 
     constexpr InputPluginInstance () :
         InputPlugin (info, input_info) {}
@@ -126,137 +109,3 @@ public:
 EXPORT InputPluginInstance aud_plugin_instance;
 
 #endif // AUD_DECLARE_INPUT
-
-#ifdef AUD_DECLARE_OUTPUT
-
-#ifndef AUD_OUTPUT_PRIORITY
-#define AUD_OUTPUT_PRIORITY 0
-#endif
-#ifndef AUD_OUTPUT_REOPEN
-#define AUD_OUTPUT_REOPEN false
-#endif
-
-class OutputPluginInstance : public OutputPlugin
-{
-public:
-    static constexpr PluginInfo info = {
-        AUD_PLUGIN_NAME,
-        AUD_PLUGIN_DOMAIN,
-        AUD_PLUGIN_ABOUT,
-        AUD_PLUGIN_PREFS
-    };
-
-    constexpr OutputPluginInstance () :
-        OutputPlugin (info, AUD_OUTPUT_PRIORITY, AUD_OUTPUT_REOPEN) {}
-
-#ifdef AUD_PLUGIN_INIT
-    bool init ()
-        { return AUD_PLUGIN_INIT (); }
-#endif
-#ifdef AUD_PLUGIN_CLEANUP
-    void cleanup ()
-        { AUD_PLUGIN_CLEANUP (); }
-#endif
-#ifdef AUD_PLUGIN_TAKE_MESSAGE
-    int take_message (const char * code, const void * data, int size)
-        { return AUD_PLUGIN_TAKE_MESSAGE (code, data, size); }
-#endif
-
-#ifdef AUD_OUTPUT_GET_VOLUME
-    StereoVolume get_volume ()
-    {
-        StereoVolume volume = {0, 0};
-        AUD_OUTPUT_GET_VOLUME (& volume.left, & volume.right);
-        return volume;
-    }
-#else
-    StereoVolume get_volume ()
-        { return {0, 0}; }
-#endif
-
-#ifdef AUD_OUTPUT_SET_VOLUME
-    void set_volume (StereoVolume volume)
-        { AUD_OUTPUT_SET_VOLUME (volume.left, volume.right); }
-#else
-    void set_volume (StereoVolume volume) {}
-#endif
-
-    bool open_audio (int format, int rate, int chans)
-        { return AUD_OUTPUT_OPEN (format, rate, chans); }
-    void close_audio ()
-        { AUD_OUTPUT_CLOSE (); }
-
-    int buffer_free ()
-    {
-        int (* ptr) () = AUD_OUTPUT_GET_FREE;
-        return ptr ? ptr () : 44100;
-    }
-
-    void period_wait ()
-    {
-        void (* ptr) () = AUD_OUTPUT_WAIT_FREE;
-        if (ptr) ptr ();
-    }
-
-    void write_audio (const void * data, int size)
-        { AUD_OUTPUT_WRITE (data, size); }
-
-    void drain ()
-    {
-        void (* ptr) () = AUD_OUTPUT_DRAIN;
-        if (ptr) ptr ();
-    }
-
-    int output_time ()
-        { return AUD_OUTPUT_GET_TIME (); }
-    void pause (bool p)
-        { AUD_OUTPUT_PAUSE (p); }
-    void flush (int time)
-        { AUD_OUTPUT_FLUSH (time); }
-};
-
-EXPORT OutputPluginInstance aud_plugin_instance;
-
-#endif // AUD_DECLARE_OUTPUT
-
-#ifdef AUD_DECLARE_GENERAL
-
-#ifndef AUD_GENERAL_AUTO_ENABLE
-#define AUD_GENERAL_AUTO_ENABLE  false
-#endif
-
-class GeneralPluginInstance : public GeneralPlugin
-{
-public:
-    static constexpr PluginInfo info = {
-        AUD_PLUGIN_NAME,
-        AUD_PLUGIN_DOMAIN,
-        AUD_PLUGIN_ABOUT,
-        AUD_PLUGIN_PREFS
-    };
-
-    constexpr GeneralPluginInstance () :
-        GeneralPlugin (info, AUD_GENERAL_AUTO_ENABLE) {}
-
-#ifdef AUD_PLUGIN_INIT
-    bool init ()
-        { return AUD_PLUGIN_INIT (); }
-#endif
-#ifdef AUD_PLUGIN_CLEANUP
-    void cleanup ()
-        { AUD_PLUGIN_CLEANUP (); }
-#endif
-#ifdef AUD_PLUGIN_TAKE_MESSAGE
-    int take_message (const char * code, const void * data, int size)
-        { return AUD_PLUGIN_TAKE_MESSAGE (code, data, size); }
-#endif
-
-#ifdef AUD_GENERAL_GET_WIDGET
-    void * get_gtk_widget ()
-        { return AUD_GENERAL_GET_WIDGET (); }
-#endif
-};
-
-EXPORT GeneralPluginInstance aud_plugin_instance;
-
-#endif // AUD_DECLARE_GENERAL
