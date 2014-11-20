@@ -36,7 +36,7 @@ static void activate_cb (void * data, void *);
 
 static JumpToTrackCache cache;
 static const KeywordMatches * search_matches;
-static GtkWidget * treeview, * filter_entry, * queue_button;
+static GtkWidget * treeview, * filter_entry, * queue_button, * jump_button;
 static gboolean watching = false;
 
 static void destroy_cb (void)
@@ -83,7 +83,7 @@ static void do_jump (void * unused)
     aud_playlist_play (playlist);
 
     if (aud_get_bool ("audgui", "close_jtf_dialog"))
-        audgui_jump_to_track_hide();
+        audgui_jump_to_track_hide ();
 }
 
 static void update_queue_button (int entry)
@@ -124,7 +124,10 @@ static void do_queue (void * unused)
 
 static void selection_changed (void)
 {
-    update_queue_button (get_selected_entry ());
+    int entry = get_selected_entry ();
+    gtk_widget_set_sensitive (jump_button, entry >= 0);
+
+    update_queue_button (entry);
 }
 
 static gboolean keypress_cb (GtkWidget * widget, GdkEventKey * event)
@@ -281,16 +284,16 @@ static GtkWidget * create_window (void)
     gtk_box_pack_start ((GtkBox *) bbox, toggle, true, true, 0);
     g_signal_connect (toggle, "clicked", (GCallback) toggle_button_cb, nullptr);
 
+    /* jump button */
+    jump_button = audgui_button_new (_("_Jump"), "go-jump", do_jump, nullptr);
+    gtk_box_pack_end ((GtkBox *) bbox, jump_button, false, false, 0);
+    gtk_widget_set_can_default (jump_button, true);
+    gtk_widget_grab_default (jump_button);
+
     /* close button */
     GtkWidget * close = audgui_button_new (_("_Close"), "window-close",
      (AudguiCallback) audgui_jump_to_track_hide, nullptr);
     gtk_box_pack_end ((GtkBox *) bbox, close, false, false, 0);
-
-    /* jump button */
-    GtkWidget * jump = audgui_button_new (_("_Jump"), "go-jump", do_jump, nullptr);
-    gtk_box_pack_end ((GtkBox *) bbox, jump, false, false, 0);
-    gtk_widget_set_can_default (jump, true);
-    gtk_widget_grab_default (jump);
 
     /* queue button */
     queue_button = audgui_button_new (_("_Queue"), nullptr, do_queue, nullptr);
