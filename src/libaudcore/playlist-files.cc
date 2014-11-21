@@ -106,6 +106,7 @@ EXPORT bool aud_playlist_save (int list, const char * filename, Playlist::GetMod
     {
         item.filename = aud_playlist_entry_get_filename (list, i);
         item.tuple = aud_playlist_entry_get_tuple (list, i, mode);
+        item.tuple.delete_fallbacks ();
         i ++;
     }
 
