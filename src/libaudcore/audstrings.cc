@@ -388,17 +388,38 @@ EXPORT StringBuf str_encode_percent (const char * str, int len)
 
 EXPORT StringBuf filename_normalize (StringBuf && filename)
 {
+    int len;
+    char * s;
+
 #ifdef _WIN32
     /* convert slash to backslash on Windows */
     str_replace_char (filename, '/', '\\');
 #endif
 
+    /* remove current directory (".") elements */
+    while ((len = filename.len ()) >= 2 &&
+     (! strcmp ((s = filename + len - 2), G_DIR_SEPARATOR_S ".") ||
+     (s = strstr (filename, G_DIR_SEPARATOR_S "." G_DIR_SEPARATOR_S))))
+        str_delete (filename, s + 1 - filename, aud::min (s + 3, filename + len) - (s + 1));
+
+    /* remove parent directory ("..") elements */
+    while ((len = filename.len ()) >= 3 &&
+     (! strcmp ((s = filename + len - 3), G_DIR_SEPARATOR_S "..") ||
+     (s = strstr (filename, G_DIR_SEPARATOR_S ".." G_DIR_SEPARATOR_S))))
+    {
+        * s = 0;
+        char * s2 = strrchr (filename, G_DIR_SEPARATOR);
+        if (! s2)
+            * (s2 = s) = G_DIR_SEPARATOR;
+
+        str_delete (filename, s2 + 1 - filename, aud::min (s + 4, filename + len) - (s2 + 1));
+    }
+
     /* remove trailing slash */
-    int len = filename.len ();
 #ifdef _WIN32
-    if (len > 3 && filename[len - 1] == '\\') /* leave "C:\" */
+    if ((len = filename.len ()) > 3 && filename[len - 1] == '\\') /* leave "C:\" */
 #else
-    if (len > 1 && filename[len - 1] == '/') /* leave leading "/" */
+    if ((len = filename.len ()) > 1 && filename[len - 1] == '/') /* leave leading "/" */
 #endif
         filename.resize (len - 1);
 
@@ -525,10 +546,7 @@ EXPORT StringBuf uri_to_display (const char * uri)
         return buf;
 
     str_delete (buf, 0, URI_PREFIX_LEN);
-
-#ifdef _WIN32
-    str_replace_char (buf, '/', '\\');
-#endif
+    buf.steal (filename_normalize (std::move (buf)));
 
     const char * home = get_home_utf8 ();
     int homelen = home ? strlen (home) : 0;
