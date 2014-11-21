@@ -476,8 +476,8 @@ EXPORT void Tuple::set_str (Field field, const char * str)
         data->set_str (field, str);
     else
     {
-        StringBuf utf8 = str_to_utf8 (str);
-        data->set_str (field, utf8 ? (const char *) utf8 : "(character encoding error)");
+        StringBuf utf8 = str_to_utf8 (str, -1);
+        data->set_str (field, utf8 ? (const char *) utf8 : _("(character encoding error)"));
     }
 }
 
@@ -506,9 +506,9 @@ EXPORT void Tuple::set_filename (const char * filename)
     if (base > filename)
         data->set_str (Path, uri_to_display (str_copy (filename, base - filename)));
     if (ext > base)
-        data->set_str (Basename, str_decode_percent (base, ext - base));
+        data->set_str (Basename, str_to_utf8 (str_decode_percent (base, ext - base)));
     if (sub > ext + 1)
-        data->set_str (Suffix, str_decode_percent (ext + 1, sub - ext - 1));
+        data->set_str (Suffix, str_to_utf8 (str_decode_percent (ext + 1, sub - ext - 1)));
 
     if (sub[0])
         data->set_int (Subtune, isub);

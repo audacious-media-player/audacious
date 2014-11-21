@@ -386,7 +386,7 @@ EXPORT StringBuf str_encode_percent (const char * str, int len)
     return buf;
 }
 
-EXPORT void filename_normalize (StringBuf & filename)
+EXPORT StringBuf filename_normalize (StringBuf && filename)
 {
 #ifdef _WIN32
     /* convert slash to backslash on Windows */
@@ -401,6 +401,8 @@ EXPORT void filename_normalize (StringBuf & filename)
     if (len > 1 && filename[len - 1] == '/') /* leave leading "/" */
 #endif
         filename.resize (len - 1);
+
+    return std::move (filename);
 }
 
 EXPORT StringBuf filename_build (const std::initializer_list<const char *> & elems)
@@ -463,9 +465,16 @@ EXPORT StringBuf filename_to_uri (const char * name)
     StringBuf buf = str_copy (name);
     str_replace_char (buf, '\\', '/');
 #else
-    StringBuf buf = str_from_locale (name);
+    StringBuf buf;
+
+    /* convert from locale if:
+     * 1) system locale is not UTF-8, and
+     * 2) filename is not already valid UTF-8 */
+    if (! g_get_charset (nullptr) && ! g_utf8_validate (name, -1, nullptr))
+        buf.steal (str_from_locale (name));
+
     if (! buf)
-        return buf;
+        buf.steal (str_copy (name));
 #endif
 
     buf.steal (str_encode_percent (buf));
@@ -477,17 +486,27 @@ EXPORT StringBuf filename_to_uri (const char * name)
  * locale after percent-decoding (except on Windows, where filenames are assumed
  * to be UTF-8).  On Windows, strips the leading '/' and replaces '/' with '\'. */
 
-EXPORT StringBuf uri_to_filename (const char * uri)
+EXPORT StringBuf uri_to_filename (const char * uri, bool use_locale)
 {
     if (strncmp (uri, URI_PREFIX, URI_PREFIX_LEN))
         return StringBuf ();
 
     StringBuf buf = str_decode_percent (uri + URI_PREFIX_LEN);
-    filename_normalize (buf);
+
 #ifndef _WIN32
-    buf.steal (str_to_locale (buf));
+    /* convert to locale if:
+     * 1) use_locale flag was not set to false, and
+     * 2) system locale is not UTF-8, and
+     * 3) decoded URI is valid UTF-8 */
+    if (use_locale && ! g_get_charset (nullptr) && g_utf8_validate (buf, buf.len (), nullptr))
+    {
+        StringBuf locale = str_to_locale (buf);
+        if (locale)
+            buf.steal (std::move (locale));
+    }
 #endif
-    return buf;
+
+    return filename_normalize (std::move (buf));
 }
 
 /* Formats a URI for human-readable display.  Percent-decodes and, for file://
@@ -498,17 +517,21 @@ EXPORT StringBuf uri_to_display (const char * uri)
     if (! strncmp (uri, "cdda://?", 8))
         return str_printf (_("Audio CD, track %s"), uri + 8);
 
-    if (strncmp (uri, URI_PREFIX, URI_PREFIX_LEN))
-        return str_decode_percent (uri);
+    StringBuf buf = str_to_utf8 (str_decode_percent (uri));
+    if (! buf)
+        return str_copy (_("(character encoding error)"));
 
-    StringBuf buf = str_decode_percent (uri + URI_PREFIX_LEN);
+    if (strncmp (buf, URI_PREFIX, URI_PREFIX_LEN))
+        return buf;
+
+    str_delete (buf, 0, URI_PREFIX_LEN);
 
 #ifdef _WIN32
     str_replace_char (buf, '/', '\\');
 #endif
 
     const char * home = get_home_utf8 ();
-    int homelen = strlen (home);
+    int homelen = home ? strlen (home) : 0;
 
     if (homelen && ! strncmp (buf, home, homelen) && buf[homelen] == G_DIR_SEPARATOR)
     {

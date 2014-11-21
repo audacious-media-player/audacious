@@ -185,23 +185,12 @@ static void set_default_paths ()
 
 static void relocate_all_paths ()
 {
-    StringBuf bindir = str_copy (HARDCODE_BINDIR);
-    filename_normalize (bindir);
-
-    StringBuf datadir = str_copy (HARDCODE_DATADIR);
-    filename_normalize (datadir);
-
-    StringBuf plugindir = str_copy (HARDCODE_PLUGINDIR);
-    filename_normalize (plugindir);
-
-    StringBuf localedir = str_copy (HARDCODE_LOCALEDIR);
-    filename_normalize (localedir);
-
-    StringBuf desktopfile = str_copy (HARDCODE_DESKTOPFILE);
-    filename_normalize (desktopfile);
-
-    StringBuf iconfile = str_copy (HARDCODE_ICONFILE);
-    filename_normalize (iconfile);
+    StringBuf bindir = filename_normalize (str_copy (HARDCODE_BINDIR));
+    StringBuf datadir = filename_normalize (str_copy (HARDCODE_DATADIR));
+    StringBuf plugindir = filename_normalize (str_copy (HARDCODE_PLUGINDIR));
+    StringBuf localedir = filename_normalize (str_copy (HARDCODE_LOCALEDIR));
+    StringBuf desktopfile = filename_normalize (str_copy (HARDCODE_DESKTOPFILE));
+    StringBuf iconfile = filename_normalize (str_copy (HARDCODE_ICONFILE));
 
     StringBuf from = str_copy (bindir);
 
@@ -214,7 +203,7 @@ static void relocate_all_paths ()
         return;
     }
 
-    filename_normalize (to);
+    to.steal (filename_normalize (std::move (to)));
 
     const char * base = last_path_element (to);
 

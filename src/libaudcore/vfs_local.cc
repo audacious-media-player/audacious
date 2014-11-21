@@ -100,9 +100,23 @@ VFSImpl * vfs_local_fopen (const char * uri, const char * mode, String & error)
     if (! stream)
     {
         int errsave = errno;
-        perror (path);
-        error = String (strerror (errsave));
-        return nullptr;
+
+#ifndef _WIN32
+        if (errsave == ENOENT && ! g_get_charset (nullptr))
+        {
+            /* on a legacy system, try opening as UTF-8 */
+            StringBuf path2 = uri_to_filename (uri, false);
+            if (path2 && strcmp (path, path2))
+                stream = g_fopen (path2, mode2);
+        }
+#endif
+
+        if (! stream)
+        {
+            perror (path);
+            error = String (strerror (errsave));
+            return nullptr;
+        }
     }
 
     return new LocalFile (path, stream);
