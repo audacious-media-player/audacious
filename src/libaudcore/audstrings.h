@@ -53,6 +53,7 @@ static inline char * strstr_nocase (char * haystack, const char * needle)
 static inline char * strstr_nocase_utf8 (char * haystack, const char * needle)
     { return (char *) strstr_nocase_utf8 ((const char *) haystack, needle); }
 
+StringBuf str_tolower (const char * str);
 StringBuf str_tolower_utf8 (const char * str);
 
 void str_replace_char (char * string, char old_c, char new_c);

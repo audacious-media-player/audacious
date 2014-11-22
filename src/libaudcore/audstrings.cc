@@ -294,21 +294,31 @@ EXPORT const char * strstr_nocase_utf8 (const char * haystack, const char * need
     }
 }
 
+EXPORT StringBuf str_tolower (const char * str)
+{
+    StringBuf buf (strlen (str));
+    char * set = buf;
+
+    while (* str)
+        * set ++ = g_ascii_tolower (* str ++);
+
+    return buf;
+}
+
 EXPORT StringBuf str_tolower_utf8 (const char * str)
 {
     StringBuf buf (6 * strlen (str));
-    const char * get = str;
     char * set = buf;
     gunichar c;
 
-    while ((c = g_utf8_get_char (get)))
+    while ((c = g_utf8_get_char (str)))
     {
         if (c < 128)
             * set ++ = g_ascii_tolower (c);
         else
             set += g_unichar_to_utf8 (g_unichar_tolower (c), set);
 
-        get = g_utf8_next_char (get);
+        str = g_utf8_next_char (str);
     }
 
     buf.resize (set - buf);
