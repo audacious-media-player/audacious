@@ -434,8 +434,8 @@ static void plugin_get_info (PluginHandle * plugin, bool is_new)
         for (int k = 0; k < INPUT_KEYS; k ++)
         {
             plugin->keys[k].clear ();
-            for (const char * key : ip->input_info.keys[k])
-                plugin->keys[k].append (String (key));
+            for (auto key = ip->input_info.keys[k]; key && * key; key ++)
+                plugin->keys[k].append (String (* key));
         }
 
         plugin->has_subtunes = (ip->input_info.flags & InputPlugin::FlagSubtunes);

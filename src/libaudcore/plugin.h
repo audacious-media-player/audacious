@@ -299,13 +299,13 @@ public:
 
     struct InputInfo
     {
-        typedef ArrayRef<const char *> List;
+        typedef const char * const * List;
 
         int flags, priority;
         List keys[3];
 
         constexpr InputInfo (int flags = 0) :
-            flags (flags), priority (0) {}
+            flags (flags), priority (0), keys {} {}
 
         /* Associates file extensions with the plugin. */
         constexpr InputInfo with_exts (List exts)

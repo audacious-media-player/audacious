@@ -17,10 +17,6 @@
  * the use of this software.
  */
 
-template<int N>
-constexpr ArrayRef<const char *> to_str_array (const char * const (& array) [N])
-    { return {array, N - 1}; }
-
 #ifndef AUD_PLUGIN_DOMAIN
 #define AUD_PLUGIN_DOMAIN PACKAGE
 #endif
@@ -55,13 +51,13 @@ public:
      .with_priority (AUD_INPUT_PRIORITY)
 #endif
 #ifdef AUD_INPUT_EXTS
-     .with_exts (to_str_array (AUD_INPUT_EXTS))
+     .with_exts (AUD_INPUT_EXTS)
 #endif
 #ifdef AUD_INPUT_MIMES
-     .with_mimes (to_str_array (AUD_INPUT_MIMES))
+     .with_mimes (AUD_INPUT_MIMES)
 #endif
 #ifdef AUD_INPUT_SCHEMES
-     .with_schemes (to_str_array (AUD_INPUT_SCHEMES))
+     .with_schemes (AUD_INPUT_SCHEMES)
 #endif
      ;
 

@@ -335,7 +335,7 @@ static void end_cb (void * unused)
 static bool open_file (String & error)
 {
     /* no need to open a handle for custom URI schemes */
-    if (current_decoder->input_info.keys[INPUT_KEY_SCHEME].len)
+    if (current_decoder->input_info.keys[INPUT_KEY_SCHEME])
         return true;
 
     current_file = VFSFile (current_filename, "r");
