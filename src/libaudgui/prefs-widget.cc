@@ -300,12 +300,13 @@ static void create_cbox (const PreferencesWidget * widget, GtkWidget * * label,
 
 /* WIDGET_TABLE */
 
-static void fill_grid (GtkWidget * grid,
+static void fill_table (GtkWidget * table,
  ArrayRef<const PreferencesWidget> widgets, const char * domain)
 {
     for (const PreferencesWidget & w : widgets)
     {
         GtkWidget * widget_left = nullptr, * widget_middle = nullptr, * widget_right = nullptr;
+        GtkAttachOptions middle_policy = (GtkAttachOptions) (GTK_FILL);
 
         switch (w.type)
         {
@@ -320,14 +321,17 @@ static void fill_grid (GtkWidget * grid,
 
             case PreferencesWidget::FontButton:
                 create_font_btn (& w, & widget_left, & widget_middle, domain);
+                middle_policy = (GtkAttachOptions) (GTK_EXPAND | GTK_FILL);
                 break;
 
             case PreferencesWidget::Entry:
                 create_entry (& w, & widget_left, & widget_middle, domain);
+                middle_policy = (GtkAttachOptions) (GTK_EXPAND | GTK_FILL);
                 break;
 
             case PreferencesWidget::ComboBox:
                 create_cbox (& w, & widget_left, & widget_middle, domain);
+                middle_policy = (GtkAttachOptions) (GTK_EXPAND | GTK_FILL);
                 break;
 
             default:
@@ -337,15 +341,15 @@ static void fill_grid (GtkWidget * grid,
         int i = & w - widgets.data;
 
         if (widget_left)
-            gtk_table_attach ((GtkTable *) grid, widget_left, 0, 1, i, i + 1,
+            gtk_table_attach ((GtkTable *) table, widget_left, 0, 1, i, i + 1,
              GTK_FILL, GTK_FILL, 0, 0);
 
         if (widget_middle)
-            gtk_table_attach ((GtkTable *) grid, widget_middle, 1, 2, i, i + 1,
-             GTK_FILL, GTK_FILL, 0, 0);
+            gtk_table_attach ((GtkTable *) table, widget_middle, 1, 2, i, i + 1,
+             middle_policy, GTK_FILL, 0, 0);
 
         if (widget_right)
-            gtk_table_attach ((GtkTable *) grid, widget_right, 2, 3, i, i + 1,
+            gtk_table_attach ((GtkTable *) table, widget_right, 2, 3, i, i + 1,
              GTK_FILL, GTK_FILL, 0, 0);
     }
 }
@@ -475,7 +479,7 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
                 gtk_table_set_col_spacings ((GtkTable *) widget, 6);
                 gtk_table_set_row_spacings ((GtkTable *) widget, 6);
 
-                fill_grid (widget, w.data.table.widgets, domain);
+                fill_table (widget, w.data.table.widgets, domain);
 
                 break;
 
@@ -489,7 +493,7 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
                 if (label)
                     gtk_box_pack_start ((GtkBox *) widget, label, false, false, 0);
                 if (entry)
-                    gtk_box_pack_start ((GtkBox *) widget, entry, false, false, 0);
+                    gtk_box_pack_start ((GtkBox *) widget, entry, true, true, 0);
 
                 break;
             }
