@@ -121,6 +121,7 @@ static void add_file (const char * filename, Tuple && tuple,
     if (filter && ! filter (filename, user))
         return;
 
+    AUDINFO ("Adding file: %s\n", filename);
     status_update (filename, result->items.len ());
 
     if (! tuple && ! decoder)
@@ -153,6 +154,7 @@ static void add_playlist (const char * filename, PlaylistFilterFunc filter,
     if (filter && ! filter (filename, user))
         return;
 
+    AUDINFO ("Adding playlist: %s\n", filename);
     status_update (filename, result->items.len ());
 
     String title;
@@ -177,6 +179,7 @@ static void add_folder (const char * filename, PlaylistFilterFunc filter,
     if (filter && ! filter (filename, user))
         return;
 
+    AUDINFO ("Adding folder: %s\n", filename);
     status_update (filename, result->items.len ());
 
     StringBuf path = uri_to_filename (filename);
@@ -199,6 +202,8 @@ static void add_folder (const char * filename, PlaylistFilterFunc filter,
 
     for (const char * cuesheet : cuesheets)
     {
+        AUDINFO ("Found cuesheet: %s\n", cuesheet);
+
         auto is_match = [=] (const char * name)
             { return same_basename (name, cuesheet); };
 
