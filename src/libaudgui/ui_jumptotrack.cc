@@ -1,6 +1,6 @@
 /*
  * ui_jumptotrack.c
- * Copyright 2007-2012 Yoshiki Yazawa and John Lindgren
+ * Copyright 2007-2014 Yoshiki Yazawa, John Lindgren, and Thomas Lange
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -195,6 +195,11 @@ static void activate_cb (void * data, void *)
     update_cb (aud::to_ptr (Playlist::Structure), nullptr);
 }
 
+static void filter_icon_cb (GtkEntry * entry)
+{
+    gtk_entry_set_text (entry, "");
+}
+
 static void toggle_button_cb (GtkToggleButton * toggle)
 {
     aud_set_bool ("audgui", "close_jtf_dialog", gtk_toggle_button_get_active (toggle));
@@ -261,8 +266,11 @@ static GtkWidget * create_window (void)
     gtk_box_pack_start(GTK_BOX(hbox), search_label, false, false, 0);
 
     filter_entry = gtk_entry_new ();
+    gtk_entry_set_icon_from_icon_name ((GtkEntry *) filter_entry,
+     GTK_ENTRY_ICON_SECONDARY, "edit-clear");
     gtk_label_set_mnemonic_widget ((GtkLabel *) search_label, filter_entry);
     g_signal_connect (filter_entry, "changed", (GCallback) fill_list, nullptr);
+    g_signal_connect (filter_entry, "icon-press", (GCallback) filter_icon_cb, nullptr);
     gtk_entry_set_activates_default ((GtkEntry *) filter_entry, true);
     gtk_box_pack_start ((GtkBox *) hbox, filter_entry, true, true, 0);
 
