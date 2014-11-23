@@ -254,10 +254,11 @@ EXPORT Index<char> VFSFile::read_all ()
 
     Index<char> buf;
     int64_t size = fsize ();
+    int64_t pos = ftell ();
 
-    if (size >= 0)
+    if (size >= 0 && pos >= 0 && pos <= size)
     {
-        buf.insert (0, aud::min (size, (int64_t) maxbuf));
+        buf.insert (0, aud::min (size - pos, (int64_t) maxbuf));
         size = fread (buf.begin (), 1, buf.len ());
     }
     else
