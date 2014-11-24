@@ -237,11 +237,11 @@ void ComboBoxWidget::update ()
     switch (m_parent->cfg.type) {
     case WidgetConfig::Int:
         for (const ComboItem & item : items)
-            m_combobox->addItem (dgettext (m_domain, item.label), item.num);
+            m_combobox->addItem (translate_str (item.label, m_domain), item.num);
         break;
     case WidgetConfig::String:
         for (const ComboItem & item : items)
-            m_combobox->addItem (dgettext (m_domain, item.label), item.str);
+            m_combobox->addItem (translate_str (item.label, m_domain), item.str);
         break;
     default:
         break;
