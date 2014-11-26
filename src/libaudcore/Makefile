@@ -66,7 +66,6 @@ INCLUDES = audio.h \
            objects.h \
            playlist.h \
            plugin.h \
-           plugin-declare.h \
            plugins.h \
            preferences.h \
            probe.h \
