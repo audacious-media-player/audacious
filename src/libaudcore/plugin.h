@@ -361,6 +361,44 @@ public:
      * info window. */
     virtual bool file_info_box (const char * filename, VFSFile & file)
         { return false; }
+
+protected:
+    /* Prepares the output system for playback in the specified format.  Also
+     * triggers the "playback ready" hook.  Hence, if you call set_replay_gain,
+     * set_playback_tuple, or set_stream_bitrate, consider doing so before
+     * calling open_audio.  There is no return value.  If the requested audio
+     * format is not supported, write_audio() will do nothing and check_stop()
+     * will immediately return true. */
+    static void open_audio (int format, int rate, int channels);
+
+    /* Informs the output system of replay gain values for the current song so
+     * that volume levels can be adjusted accordingly, if the user so desires.
+     * This may be called at any time during playback should the values change. */
+    static void set_replay_gain (const ReplayGainInfo & info);
+
+    /* Passes audio data to the output system for playback.  The data must be in
+     * the format passed to open_audio(), and the length (in bytes) must be an
+     * integral number of frames.  This function blocks until all the data has
+     * been written (though it may not yet be heard by the user). */
+    static void write_audio (const void * data, int length);
+
+    /* Returns the current tuple for the stream. */
+    static Tuple get_playback_tuple ();
+
+    /* Updates the tuple for the stream. */
+    static void set_playback_tuple (Tuple && tuple);
+
+    /* Updates the displayed bitrate, in bits per second. */
+    static void set_stream_bitrate (int bitrate);
+
+    /* Checks whether playback is to be stopped.  The play() function should
+     * poll check_stop() periodically and return as soon as check_stop() returns
+     * true. */
+    static bool check_stop ();
+
+    /* Checks whether a seek has been requested.  If so, returns the position to
+     * seek to, in milliseconds.  Otherwise, returns -1. */
+    static int check_seek ();
 };
 
 class DockablePlugin : public Plugin

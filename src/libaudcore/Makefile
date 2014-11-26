@@ -58,7 +58,6 @@ INCLUDES = audio.h \
            i18n.h \
            index.h \
            inifile.h \
-           input.h \
            interface.h \
            list.h \
            mainloop.h \

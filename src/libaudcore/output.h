@@ -20,10 +20,10 @@
 #ifndef LIBAUDCORE_OUTPUT_H
 #define LIBAUDCORE_OUTPUT_H
 
-#include <libaudcore/input.h>
+#include <libaudcore/audio.h>
 
 bool output_open_audio (int format, int rate, int channels, int start_time);
-void output_set_replaygain_info (const ReplayGainInfo * info);
+void output_set_replay_gain (const ReplayGainInfo & info);
 bool output_write_audio (const void * data, int size, int stop_time);
 void output_flush (int time);
 void output_resume ();

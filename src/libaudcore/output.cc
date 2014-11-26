@@ -321,20 +321,20 @@ bool output_open_audio (int format, int rate, int channels, int start_time)
     return true;
 }
 
-void output_set_replaygain_info (const ReplayGainInfo * info)
+void output_set_replay_gain (const ReplayGainInfo & info)
 {
     LOCK_ALL;
 
     if (s_input)
     {
-        memcpy (& gain_info, info, sizeof (ReplayGainInfo));
+        gain_info = info;
         s_gain = true;
 
         AUDINFO ("Replay Gain info:\n");
-        AUDINFO (" album gain: %f dB\n", info->album_gain);
-        AUDINFO (" album peak: %f\n", info->album_peak);
-        AUDINFO (" track gain: %f dB\n", info->track_gain);
-        AUDINFO (" track peak: %f\n", info->track_peak);
+        AUDINFO (" album gain: %f dB\n", info.album_gain);
+        AUDINFO (" album peak: %f\n", info.album_peak);
+        AUDINFO (" track gain: %f dB\n", info.track_gain);
+        AUDINFO (" track peak: %f\n", info.track_peak);
     }
 
     UNLOCK_ALL;

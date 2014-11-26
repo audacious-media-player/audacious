@@ -18,13 +18,11 @@
  */
 
 #include "drct.h"
-#include "input.h"
 #include "internal.h"
 #include "plugins-internal.h"
 
 #include <assert.h>
 #include <pthread.h>
-#include <string.h>
 
 #include "audstrings.h"
 #include "hook.h"
@@ -78,7 +76,7 @@ static int failed_entries = 0;
 /* clears gain info if tuple == nullptr */
 static void read_gain_from_tuple (const Tuple & tuple)
 {
-    memset (& current_gain, 0, sizeof current_gain);
+    current_gain = ReplayGainInfo ();
 
     if (! tuple)
         return;
@@ -398,7 +396,8 @@ static void * playback_thread (void *)
 
     current_tuple = std::move (tuple);
 
-    playback_error = ! current_decoder->play (current_filename, current_file);
+    if (! current_decoder->play (current_filename, current_file))
+        playback_error = true;
 
 DONE:
     if (playback_error)
@@ -423,7 +422,7 @@ void playback_play (int seek_time, bool pause)
 
     if (! new_filename)
     {
-        AUDWARN ("Nothing to play!");
+        AUDERR ("Nothing to play!");
         return;
     }
 
@@ -479,7 +478,7 @@ EXPORT void aud_drct_seek (int time)
     pthread_mutex_unlock (& control_mutex);
 }
 
-EXPORT bool aud_input_open_audio (int format, int rate, int channels)
+EXPORT void InputPlugin::open_audio (int format, int rate, int channels)
 {
     assert (playing);
 
@@ -489,9 +488,16 @@ EXPORT bool aud_input_open_audio (int format, int rate, int channels)
         set_ready ();
 
     if (! output_open_audio (format, rate, channels, aud::max (0, seek_request)))
-        return false;
+    {
+        AUDERR ("Invalid audio format: %d, %d Hz, %d channels\n", format, rate, channels);
+        playback_error = true;
+        pthread_mutex_lock (& control_mutex);
+        stop_flag = true;
+        pthread_mutex_unlock (& control_mutex);
+        return;
+    }
 
-    output_set_replaygain_info (& current_gain);
+    output_set_replay_gain (current_gain);
 
     if (paused)
         output_pause (true);
@@ -501,18 +507,16 @@ EXPORT bool aud_input_open_audio (int format, int rate, int channels)
 
     if (ready_flag)
         event_queue ("info change", nullptr);
-
-    return true;
 }
 
-EXPORT void aud_input_set_gain (const ReplayGainInfo * info)
+EXPORT void InputPlugin::set_replay_gain (const ReplayGainInfo & info)
 {
     assert (playing);
-    memcpy (& current_gain, info, sizeof current_gain);
-    output_set_replaygain_info (& current_gain);
+    current_gain = info;
+    output_set_replay_gain (current_gain);
 }
 
-EXPORT void aud_input_write_audio (const void * data, int length)
+EXPORT void InputPlugin::write_audio (const void * data, int length)
 {
     assert (playing);
 
@@ -538,7 +542,7 @@ EXPORT void aud_input_write_audio (const void * data, int length)
     }
 }
 
-EXPORT Tuple aud_input_get_tuple ()
+EXPORT Tuple InputPlugin::get_playback_tuple ()
 {
     assert (playing);
 
@@ -547,13 +551,13 @@ EXPORT Tuple aud_input_get_tuple ()
     return tuple;
 }
 
-EXPORT void aud_input_set_tuple (Tuple && tuple)
+EXPORT void InputPlugin::set_playback_tuple (Tuple && tuple)
 {
     assert (playing);
     playback_entry_set_tuple (std::move (tuple));
 }
 
-EXPORT void aud_input_set_bitrate (int bitrate)
+EXPORT void InputPlugin::set_stream_bitrate (int bitrate)
 {
     assert (playing);
     current_bitrate = bitrate;
@@ -562,13 +566,16 @@ EXPORT void aud_input_set_bitrate (int bitrate)
         event_queue ("info change", nullptr);
 }
 
-EXPORT bool aud_input_check_stop ()
+EXPORT bool InputPlugin::check_stop ()
 {
     assert (playing);
-    return __sync_fetch_and_add (& stop_flag, 0);
+    pthread_mutex_lock (& control_mutex);
+    bool stopped = stop_flag;
+    pthread_mutex_unlock (& control_mutex);
+    return stopped;
 }
 
-EXPORT int aud_input_check_seek ()
+EXPORT int InputPlugin::check_seek ()
 {
     assert (playing);
 
