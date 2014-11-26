@@ -81,23 +81,23 @@ static void read_gain_from_tuple (const Tuple & tuple)
     if (! tuple)
         return;
 
-    int album_gain = tuple.get_int (Tuple::AlbumGain);
-    int album_peak = tuple.get_int (Tuple::AlbumPeak);
-    int track_gain = tuple.get_int (Tuple::TrackGain);
-    int track_peak = tuple.get_int (Tuple::TrackPeak);
     int gain_unit = tuple.get_int (Tuple::GainDivisor);
     int peak_unit = tuple.get_int (Tuple::PeakDivisor);
 
-    if (gain_unit)
+    if (gain_unit > 0)
     {
-        current_gain.album_gain = album_gain / (float) gain_unit;
-        current_gain.track_gain = track_gain / (float) gain_unit;
+        if (tuple.get_value_type (Tuple::AlbumGain) == Tuple::Int)
+            current_gain.album_gain = tuple.get_int (Tuple::AlbumGain) / (float) gain_unit;
+        if (tuple.get_value_type (Tuple::TrackGain) == Tuple::Int)
+            current_gain.track_gain = tuple.get_int (Tuple::TrackGain) / (float) gain_unit;
     }
 
-    if (peak_unit)
+    if (peak_unit > 0)
     {
-        current_gain.album_peak = album_peak / (float) peak_unit;
-        current_gain.track_peak = track_peak / (float) peak_unit;
+        if (tuple.get_value_type (Tuple::AlbumPeak) == Tuple::Int)
+            current_gain.album_peak = tuple.get_int (Tuple::AlbumPeak) / (float) peak_unit;
+        if (tuple.get_value_type (Tuple::TrackPeak) == Tuple::Int)
+            current_gain.track_peak = tuple.get_int (Tuple::TrackPeak) / (float) peak_unit;
     }
 }
 
