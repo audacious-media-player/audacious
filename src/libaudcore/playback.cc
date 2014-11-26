@@ -73,34 +73,6 @@ static ReplayGainInfo current_gain;
 static bool stopped = true;
 static int failed_entries = 0;
 
-/* clears gain info if tuple == nullptr */
-static void read_gain_from_tuple (const Tuple & tuple)
-{
-    current_gain = ReplayGainInfo ();
-
-    if (! tuple)
-        return;
-
-    int gain_unit = tuple.get_int (Tuple::GainDivisor);
-    int peak_unit = tuple.get_int (Tuple::PeakDivisor);
-
-    if (gain_unit > 0)
-    {
-        if (tuple.get_value_type (Tuple::AlbumGain) == Tuple::Int)
-            current_gain.album_gain = tuple.get_int (Tuple::AlbumGain) / (float) gain_unit;
-        if (tuple.get_value_type (Tuple::TrackGain) == Tuple::Int)
-            current_gain.track_gain = tuple.get_int (Tuple::TrackGain) / (float) gain_unit;
-    }
-
-    if (peak_unit > 0)
-    {
-        if (tuple.get_value_type (Tuple::AlbumPeak) == Tuple::Int)
-            current_gain.album_peak = tuple.get_int (Tuple::AlbumPeak) / (float) peak_unit;
-        if (tuple.get_value_type (Tuple::TrackPeak) == Tuple::Int)
-            current_gain.track_peak = tuple.get_int (Tuple::TrackPeak) / (float) peak_unit;
-    }
-}
-
 static void update_from_playlist ()
 {
     // if we already read good data, do not overwrite it with a guess
@@ -252,8 +224,7 @@ static void playback_cleanup ()
 
     current_decoder = nullptr;
     current_file = VFSFile ();
-
-    read_gain_from_tuple (Tuple ());
+    current_gain = ReplayGainInfo ();
 
     aud_set_bool (nullptr, "stop_after_current_song", false);
 }
@@ -386,15 +357,14 @@ static void * playback_thread (void *)
             stop_time = tuple.get_int (Tuple::EndTime);
     }
 
-    read_gain_from_tuple (tuple);
+    current_gain = tuple.get_replay_gain ();
+    current_tuple = std::move (tuple);
 
     if (! open_file (error))
     {
         playback_error = true;
         goto DONE;
     }
-
-    current_tuple = std::move (tuple);
 
     if (! current_decoder->play (current_filename, current_file))
         playback_error = true;

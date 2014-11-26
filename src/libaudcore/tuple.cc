@@ -25,6 +25,7 @@
 
 #include <glib.h>  /* for g_utf8_validate */
 
+#include "audio.h"
 #include "audstrings.h"
 #include "i18n.h"
 #include "tuple.h"
@@ -561,6 +562,35 @@ EXPORT int Tuple::get_nth_subtune (int n) const
         return -1;
 
     return data->subtunes ? data->subtunes[n] : 1 + n;
+}
+
+EXPORT ReplayGainInfo Tuple::get_replay_gain () const
+{
+    ReplayGainInfo gain {};
+
+    if (! data)
+        return gain;
+
+    int gain_unit = get_int (GainDivisor);
+    int peak_unit = get_int (PeakDivisor);
+
+    if (gain_unit > 0)
+    {
+        if (data->is_set (AlbumGain))
+            gain.album_gain = get_int (AlbumGain) / (float) gain_unit;
+        if (data->is_set (TrackGain))
+            gain.track_gain = get_int (TrackGain) / (float) gain_unit;
+    }
+
+    if (peak_unit > 0)
+    {
+        if (data->is_set (AlbumPeak))
+            gain.album_peak = get_int (AlbumPeak) / (float) peak_unit;
+        if (data->is_set (TrackPeak))
+            gain.track_peak = get_int (TrackPeak) / (float) peak_unit;
+    }
+
+    return gain;
 }
 
 EXPORT bool Tuple::fetch_stream_info (VFSFile & stream)
