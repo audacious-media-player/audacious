@@ -187,6 +187,10 @@ public:
     /* Changes volume for left and right channels (0 to 100). */
     virtual void set_volume (StereoVolume volume) = 0;
 
+    /* Sets information about the song being played.  This function will be
+     * called before open_audio(). */
+    virtual void set_info (const char * filename, const Tuple & tuple) {}
+
     /* Begins playback of a PCM stream.  <format> is one of the FMT_*
      * enumeration values defined in libaudcore/audio.h.  Returns true on
      * success. */

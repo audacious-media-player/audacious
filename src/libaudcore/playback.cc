@@ -481,7 +481,8 @@ EXPORT void InputPlugin::open_audio (int format, int rate, int channels)
     if (! lock_if (in_sync))
         return;
 
-    if (! output_open_audio (format, rate, channels, aud::max (0, pb_control.seek)))
+    if (! output_open_audio (pb_info.filename, pb_info.tuple, format, rate,
+     channels, aud::max (0, pb_control.seek)))
     {
         pb_info.error = true;
         pb_info.error_s = String (_("Invalid audio format"));

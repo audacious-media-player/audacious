@@ -65,6 +65,8 @@ static pthread_cond_t cond_minor = PTHREAD_COND_INITIALIZER;
 
 static OutputPlugin * cop;
 static int seek_time;
+static String in_filename;
+static Tuple in_tuple;
 static int in_format, in_channels, in_rate;
 static int out_format, out_channels, out_rate;
 static int out_bytes_per_sec, out_bytes_held;
@@ -135,7 +137,11 @@ static void setup_output ()
     if (s_output)
         cleanup_output ();
 
-    if (! cop || ! cop->open_audio (format, rate, channels))
+    if (! cop)
+        return;
+
+    cop->set_info (in_filename, in_tuple);
+    if (! cop->open_audio (format, rate, channels))
         return;
 
     AUDINFO ("Opened output stream, format %d, %d channels, %d Hz.\n", format, channels, rate);
@@ -289,7 +295,8 @@ static void finish_effects (bool end_of_playlist)
     write_output_raw (effect_finish (buffer1, end_of_playlist));
 }
 
-bool output_open_audio (int format, int rate, int channels, int start_time)
+bool output_open_audio (const String & filename, const Tuple & tuple,
+ int format, int rate, int channels, int start_time)
 {
     /* prevent division by zero */
     if (rate < 1 || channels < 1 || channels > AUD_MAX_CHANNELS)
@@ -310,6 +317,8 @@ bool output_open_audio (int format, int rate, int channels, int start_time)
     s_gain = s_paused = s_flushed = false;
     seek_time = start_time;
 
+    in_filename = filename;
+    in_tuple = tuple.ref ();
     in_format = format;
     in_channels = channels;
     in_rate = rate;
@@ -461,6 +470,8 @@ void output_close_audio ()
     if (s_input)
     {
         s_input = false;
+        in_filename = String ();
+        in_tuple = Tuple ();
 
         if (s_output && ! (s_paused || s_flushed || s_resetting))
             finish_effects (false); /* first time for end of song */

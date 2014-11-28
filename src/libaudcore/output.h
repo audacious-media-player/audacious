@@ -21,8 +21,12 @@
 #define LIBAUDCORE_OUTPUT_H
 
 #include <libaudcore/audio.h>
+#include <libaudcore/objects.h>
 
-bool output_open_audio (int format, int rate, int channels, int start_time);
+class Tuple;
+
+bool output_open_audio (const String & filename, const Tuple & tuple,
+ int format, int rate, int channels, int start_time);
 void output_set_replay_gain (const ReplayGainInfo & info);
 bool output_write_audio (const void * data, int size, int stop_time);
 void output_flush (int time, bool force = false);
