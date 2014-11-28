@@ -39,12 +39,8 @@ void playlist_entry_insert_batch_raw (int playlist, int at, Index<PlaylistAddIte
 bool playlist_prev_song (int playlist);
 bool playlist_next_song (int playlist, bool repeat);
 
-int playback_entry_get_position ();
-String playback_entry_get_filename ();
-PluginHandle * playback_entry_get_decoder (String * error = nullptr);
-Tuple playback_entry_get_tuple (Playlist::GetMode mode, String * error = nullptr);
-
-void playback_entry_set_tuple (Tuple && tuple);
+bool playback_entry_read (int serial, String & error);
+void playback_entry_set_tuple (int serial, Tuple && tuple);
 
 /* playlist-files.c */
 bool playlist_load (const char * filename, String & title, Index<PlaylistAddItem> & items);

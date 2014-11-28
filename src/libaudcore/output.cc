@@ -364,7 +364,7 @@ RETRY:
     return good;
 }
 
-void output_flush (int time)
+void output_flush (int time, bool force)
 {
     LOCK_MINOR;
 
@@ -374,7 +374,7 @@ void output_flush (int time)
         {
             // allow effect plugins to prevent the flush, but
             // always flush if paused to prevent locking up
-            s_flushed = flush_output (s_paused);
+            s_flushed = flush_output (s_paused || force);
         }
         else
         {

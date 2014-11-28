@@ -374,7 +374,7 @@ protected:
     /* Informs the output system of replay gain values for the current song so
      * that volume levels can be adjusted accordingly, if the user so desires.
      * This may be called at any time during playback should the values change. */
-    static void set_replay_gain (const ReplayGainInfo & info);
+    static void set_replay_gain (const ReplayGainInfo & gain);
 
     /* Passes audio data to the output system for playback.  The data must be in
      * the format passed to open_audio(), and the length (in bytes) must be an

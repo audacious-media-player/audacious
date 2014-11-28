@@ -38,6 +38,7 @@
 #include <QVBoxLayout>
 
 #include <libaudcore/audstrings.h>
+#include <libaudcore/drct.h>
 #include <libaudcore/hook.h>
 #include <libaudcore/i18n.h>
 #include <libaudcore/playlist.h>
@@ -365,7 +366,6 @@ static void * create_titlestring_table (void)
 
     QObject::connect (le, &QLineEdit::textChanged, [=] (const QString & text) {
         aud_set_str (nullptr, "generic_title_format", text.toLocal8Bit ().data ());
-        send_title_change ();
     });
 
     QObject::connect (cbox,
@@ -410,7 +410,8 @@ static Index<ComboItem> fill_plugin_combo (int type)
 
 static void send_title_change (void)
 {
-    hook_call ("title change", nullptr);
+    if (aud_drct_get_ready ())
+        hook_call ("title change", nullptr);
 }
 
 static void iface_fill_prefs_box (void)

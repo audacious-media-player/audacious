@@ -87,7 +87,11 @@ void interface_run ();
 /* playback.cc */
 /* do not call these; use aud_drct_play/stop() instead */
 void playback_play (int seek_time, bool pause);
-void playback_stop ();
+void playback_stop (bool exiting = false);
+
+bool playback_check_serial (int serial);
+bool playback_set_info (int entry, const String & filename,
+ PluginHandle * decoder, Tuple && tuple);
 
 /* probe-buffer.cc */
 VFSFile probe_buffer_new (const char * filename);

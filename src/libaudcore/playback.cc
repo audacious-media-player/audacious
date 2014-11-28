@@ -1,6 +1,6 @@
 /*
- * playback.c
- * Copyright 2009-2013 John Lindgren
+ * playback.cc
+ * Copyright 2009-2014 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -17,9 +17,25 @@
  * the use of this software.
  */
 
+/*
+ * Since Audacious 3.6, the playback thread is completely asynchronous; that is,
+ * the main thread never blocks waiting for the playback thread to process a
+ * play(), seek(), or stop() command.  As a result, the playback thread can lag
+ * behind the main/playlist thread, and the "current" song from the perspective
+ * of the playback thread may not be the same as the "current" song from the
+ * perspective of the main/playlist thread.  Therefore, some care is necessary
+ * to ensure that information generated in the playback thread is not applied to
+ * the wrong song.  To this end, separate serial numbers are maintained by each
+ * thread and compared when information crosses thread boundaries; if the serial
+ * numbers do not match, the information is generally discarded.
+ *
+ * Note that this file and playlist.cc each have their own mutex.  The one in
+ * playlist.cc is conceptually the "outer" mutex and must be locked first (in
+ * situations where both need to be locked) in order to avoid deadlock.
+ */
+
 #include "drct.h"
 #include "internal.h"
-#include "plugins-internal.h"
 
 #include <assert.h>
 #include <pthread.h>
@@ -33,622 +49,692 @@
 #include "playlist-internal.h"
 #include "plugin.h"
 #include "plugins.h"
+#include "plugins-internal.h"
 #include "runtime.h"
 
-static pthread_t playback_thread_handle;
+struct PlaybackState {
+    bool playing = false;
+    bool thread_running = false;
+    int control_serial = 0;
+    int playback_serial = 0;
+};
+
+struct PlaybackControl {
+    bool paused = false;
+    int seek = -1;
+    int repeat_a = -1;
+    int repeat_b = -1;
+};
+
+struct PlaybackInfo {
+    // set by playback_set_info
+    String filename;
+    PluginHandle * decoder = nullptr;
+    Tuple tuple;
+
+    int entry = -1;
+    String title;
+
+    // set by playback thread
+    int length = -1;
+    int time_offset = 0;
+    int stop_time = -1;
+
+    ReplayGainInfo gain {};
+
+    int bitrate = 0;
+    int samplerate = 0;
+    int channels = 0;
+
+    bool ready = false;
+    bool ended = false;
+    bool error = false;
+    String error_s;
+};
+
+static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+static pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
+
+static PlaybackState pb_state;
+static PlaybackControl pb_control;
+static PlaybackInfo pb_info;
+
 static QueuedFunc end_queue;
-
-static pthread_mutex_t ready_mutex = PTHREAD_MUTEX_INITIALIZER;
-static pthread_cond_t ready_cond = PTHREAD_COND_INITIALIZER;
-
-static pthread_mutex_t control_mutex = PTHREAD_MUTEX_INITIALIZER;
-
-/* level 1 data (persists to end of song) */
-static bool playing = false;
-static int time_offset = 0;
-static int stop_time = -1;
-static bool paused = false;
-static bool ready_flag = false;
-static bool playback_error = false;
 static bool song_finished = false;
-
-static int seek_request = -1; /* under control_mutex */
-static int repeat_a = -1; /* under control_mutex */
-static int repeat_b = -1; /* under control_mutex */
-static bool stop_flag = false; /* under control_mutex */
-
-static int current_bitrate = -1, current_samplerate = -1, current_channels = -1;
-
-static int current_entry = -1;
-static String current_filename;
-static Tuple current_tuple;
-static String current_title;
-static int current_length = -1;
-
-static InputPlugin * current_decoder = nullptr;
-static VFSFile current_file;
-static ReplayGainInfo current_gain;
-
-/* level 2 data (persists to end of playlist) */
-static bool stopped = true;
 static int failed_entries = 0;
 
-static void update_from_playlist ()
-{
-    // if we already read good data, do not overwrite it with a guess
-    Tuple tuple = playback_entry_get_tuple (current_tuple ? Playlist::Nothing : Playlist::Guess);
+static void lock ()
+    { pthread_mutex_lock (& mutex); }
+static void unlock ()
+    { pthread_mutex_unlock (& mutex); }
 
-    if (tuple && tuple != current_tuple)
+static bool lock_if (bool (* test) ())
+{
+    lock ();
+    if (test ())
+        return true;
+
+    unlock ();
+    return false;
+}
+
+// check that the playback thread is not lagging
+static bool in_sync ()
+    { return pb_state.playing && pb_state.control_serial == pb_state.playback_serial; }
+
+// check that the playback thread is not lagging and playback is "ready"
+static bool is_ready ()
+    { return in_sync () && pb_info.ready; }
+
+// called by playback_entry_set_tuple() to ensure that the tuple still applies
+// to the current song from the perspective of the main/playlist thread; the
+// check is necessary because playback_entry_set_tuple() is itself called from
+// the playback thread
+bool playback_check_serial (int serial)
+{
+    lock ();
+    bool okay = (pb_state.playing && pb_state.control_serial == serial);
+    unlock ();
+    return okay;
+}
+
+// called from the playlist to update the tuple for the current song
+bool playback_set_info (int entry, const String & filename, PluginHandle * decoder, Tuple && tuple)
+{
+    // do nothing if the playback thread is lagging behind;
+    // in that case, playback_set_info() will get called again anyway
+    if (! lock_if (in_sync))
+        return false;
+
+    if (! pb_info.filename)
+        pb_info.filename = filename;
+    if (! pb_info.decoder)
+        pb_info.decoder = decoder;
+
+    if (tuple && tuple != pb_info.tuple)
     {
-        current_tuple = std::move (tuple);
-        if (ready_flag)
+        pb_info.tuple = std::move (tuple);
+
+        // don't call "tuple change" before "playback ready"
+        if (is_ready ())
             event_queue ("tuple change", nullptr);
     }
 
-    int entry = playback_entry_get_position ();
-    String title = current_tuple.get_str (Tuple::FormattedTitle);
-    int length = current_tuple.get_int (Tuple::Length);
-
-    if (entry != current_entry || title != current_title || length != current_length)
+    String title = pb_info.tuple.get_str (Tuple::FormattedTitle);
+    if (entry != pb_info.entry || title != pb_info.title)
     {
-        current_entry = entry;
-        current_title = title;
-        current_length = length;
-        if (ready_flag)
+        pb_info.entry = entry;
+        pb_info.title = title;
+
+        // don't call "title change" before "playback ready"
+        if (is_ready ())
             event_queue ("title change", nullptr);
     }
+
+    unlock ();
+    return true;
 }
 
-// TODO for 3.7: make this thread-safe
-EXPORT bool aud_drct_get_ready ()
+// cleanup common to both playback_play() and playback_stop()
+static void playback_cleanup_locked ()
 {
-    if (! playing)
-        return false;
+    pb_state.playing = false;
+    pb_control = PlaybackControl ();
 
-    pthread_mutex_lock (& ready_mutex);
-    bool ready = ready_flag;
-    pthread_mutex_unlock (& ready_mutex);
-    return ready;
-}
-
-static void set_ready ()
-{
-    assert (playing);
-
-    pthread_mutex_lock (& ready_mutex);
-
-    update_from_playlist ();
-    event_queue ("playback ready", nullptr);
-    ready_flag = true;
-
-    pthread_cond_signal (& ready_cond);
-    pthread_mutex_unlock (& ready_mutex);
-}
-
-static void wait_until_ready ()
-{
-    assert (playing);
-    pthread_mutex_lock (& ready_mutex);
-
-    /* on restart, we still have to wait, but presumably not long */
-    while (! ready_flag)
-        pthread_cond_wait (& ready_cond, & ready_mutex);
-
-    pthread_mutex_unlock (& ready_mutex);
-}
-
-static void update_cb (void * hook_data, void *)
-{
-    assert (playing);
-
-    auto level = aud::from_ptr<Playlist::Update> (hook_data);
-    if (level >= Playlist::Metadata && aud_drct_get_ready ())
-        update_from_playlist ();
-}
-
-// TODO for 3.7: make this thread-safe
-EXPORT int aud_drct_get_time ()
-{
-    if (! playing)
-        return 0;
-
-    wait_until_ready ();
-
-    return output_get_time () - time_offset;
-}
-
-EXPORT void aud_drct_pause ()
-{
-    if (! playing)
-        return;
-
-    wait_until_ready ();
-
-    paused = ! paused;
-
-    output_pause (paused);
-
-    if (paused)
-        hook_call ("playback pause", nullptr);
-    else
-        hook_call ("playback unpause", nullptr);
-}
-
-static void playback_cleanup ()
-{
-    assert (playing);
-    wait_until_ready ();
-
+    // discard audio buffer if the song did not end on its own
     if (! song_finished)
-    {
-        pthread_mutex_lock (& control_mutex);
-        stop_flag = true;
         output_flush (0);
-        pthread_mutex_unlock (& control_mutex);
-    }
 
-    pthread_join (playback_thread_handle, nullptr);
-    output_close_audio ();
-
-    hook_dissociate ("playlist update", update_cb);
+    // miscellaneous cleanup
+    end_queue.stop ();
+    song_finished = false;
 
     event_queue_cancel ("playback ready", nullptr);
+    event_queue_cancel ("playback pause", nullptr);
+    event_queue_cancel ("playback unpause", nullptr);
     event_queue_cancel ("playback seek", nullptr);
     event_queue_cancel ("info change", nullptr);
     event_queue_cancel ("title change", nullptr);
     event_queue_cancel ("tuple change", nullptr);
-
-    end_queue.stop ();
-
-    /* level 1 data cleanup */
-    playing = false;
-    time_offset = 0;
-    stop_time = -1;
-    paused = false;
-    ready_flag = false;
-    playback_error = false;
-    song_finished = false;
-
-    seek_request = -1;
-    repeat_a = -1;
-    repeat_b = -1;
-    stop_flag = false;
-
-    current_bitrate = current_samplerate = current_channels = -1;
-
-    current_entry = -1;
-    current_filename = String ();
-    current_tuple = Tuple ();
-    current_title = String ();
-    current_length = -1;
-
-    current_decoder = nullptr;
-    current_file = VFSFile ();
-    current_gain = ReplayGainInfo ();
-
-    aud_set_bool (nullptr, "stop_after_current_song", false);
 }
 
-void playback_stop ()
+// main thread: stops playback when no more songs are to be played
+void playback_stop (bool exiting)
 {
-    if (stopped)
+    if (! pb_state.playing && ! exiting)
         return;
 
-    if (playing)
-        playback_cleanup ();
+    lock ();
 
-    output_drain ();
+    if (pb_state.playing)
+        playback_cleanup_locked ();
 
-    /* level 2 data cleanup */
-    stopped = true;
-    failed_entries = 0;
-
-    hook_call ("playback stop", nullptr);
-}
-
-static void do_stop (int playlist)
-{
-    aud_playlist_play (-1);
-    aud_playlist_set_position (playlist, aud_playlist_get_position (playlist));
-}
-
-static void do_next (int playlist)
-{
-    if (! playlist_next_song (playlist, aud_get_bool (nullptr, "repeat")))
+    if (pb_state.thread_running)
     {
-        aud_playlist_set_position (playlist, -1);
-        hook_call ("playlist end reached", nullptr);
+        // discard audio buffer if exiting
+        if (exiting)
+            output_flush (0, true);
+
+        // signal playback thread to drain audio buffer
+        pb_state.control_serial ++;
+        pthread_cond_broadcast (& cond);
+
+        // wait for playback thread to finish if exiting
+        while (exiting && pb_state.thread_running)
+            pthread_cond_wait (& cond, & mutex);
     }
+
+    unlock ();
+
+    // miscellaneous cleanup
+    failed_entries = 0;
 }
 
-static void end_cb (void * unused)
+// called from top-level event loop after playback finishes
+static void end_cb (void *)
 {
-    if (! playing)
-        return;
-
-    if (! playback_error)
-        song_finished = true;
-
+    song_finished = true;
     hook_call ("playback end", nullptr);
-
-    if (playback_error)
-        failed_entries ++;
-    else
-        failed_entries = 0;
 
     int playlist = aud_playlist_get_playing ();
 
+    auto do_stop = [playlist] ()
+    {
+        aud_playlist_play (-1);
+        aud_playlist_set_position (playlist, aud_playlist_get_position (playlist));
+    };
+
+    auto do_next = [playlist] ()
+    {
+        if (! playlist_next_song (playlist, aud_get_bool (nullptr, "repeat")))
+        {
+            aud_playlist_set_position (playlist, -1);
+            hook_call ("playlist end reached", nullptr);
+        }
+    };
+
     if (aud_get_bool (nullptr, "stop_after_current_song"))
     {
-        do_stop (playlist);
+        do_stop ();
 
         if (! aud_get_bool (nullptr, "no_playlist_advance"))
-            do_next (playlist);
+            do_next ();
     }
     else if (aud_get_bool (nullptr, "no_playlist_advance"))
     {
         if (aud_get_bool (nullptr, "repeat") && ! failed_entries)
             playback_play (0, false);
         else
-            do_stop (playlist);
+            do_stop ();
     }
     else
     {
         if (failed_entries < 10)
-            do_next (playlist);
+            do_next ();
         else
-            do_stop (playlist);
+            do_stop ();
     }
 }
 
-static bool open_file (String & error)
+// playback thread helper
+static void run_playback ()
 {
-    /* no need to open a handle for custom URI schemes */
-    if (current_decoder->input_info.keys[INPUT_KEY_SCHEME])
-        return true;
+    // due to mutex ordering, we cannot call into the playlist while locked;
+    // instead, playback_entry_read() calls back into playback_set_info()
+    if (! playback_entry_read (pb_state.playback_serial, pb_info.error_s))
+    {
+        pb_info.error = true;
+        return;
+    }
 
-    current_file = VFSFile (current_filename, "r");
-    if (! current_file)
-        error = String (current_file.error ());
+    lock ();
 
-    return (bool) current_file;
+    // playback_set_info() should always set this info
+    assert (pb_info.filename && pb_info.decoder && pb_info.tuple);
+
+    // get various other bits of info from the tuple
+    pb_info.length = pb_info.tuple.get_int (Tuple::Length);
+    pb_info.time_offset = aud::max (0, pb_info.tuple.get_int (Tuple::StartTime));
+    pb_info.stop_time = aud::max (-1, pb_info.tuple.get_int (Tuple::EndTime) - pb_info.time_offset);
+    pb_info.gain = pb_info.tuple.get_replay_gain ();
+
+    // force initial seek if we are playing a segmented track
+    if (pb_info.time_offset > 0 && pb_control.seek < 0)
+        pb_control.seek = 0;
+
+    unlock ();
+
+    InputPlugin * ip;
+    VFSFile file;
+
+    // load input plugin
+    if (! (ip = (InputPlugin *) aud_plugin_get_header (pb_info.decoder)))
+    {
+        pb_info.error = true;
+        pb_info.error_s = String (_("Error loading plugin"));
+        return;
+    }
+
+    // open file (not necessary for custom URI schemes)
+    if (! ip->input_info.keys[INPUT_KEY_SCHEME] && ! (file = VFSFile (pb_info.filename, "r")))
+    {
+        pb_info.error = true;
+        pb_info.error_s = String (file.error ());
+        return;
+    }
+
+    // hand off control to input plugin
+    if (! ip->play (pb_info.filename, file))
+        pb_info.error = true;
+
+    // close audio (no-op if it wasn't opened)
+    output_close_audio ();
 }
 
+// playback thread helper
+static void finish_playback_locked ()
+{
+    // record any playback error that occurred
+    if (pb_info.error)
+    {
+        failed_entries ++;
+        aud_ui_show_error (str_printf (_("Error opening %s:\n%s"),
+         (const char *) pb_info.filename, pb_info.error_s ?
+         (const char *) pb_info.error_s : _("Unknown playback error")));
+    }
+    else
+        failed_entries = 0;
+
+    // queue up function to start next song (or perform cleanup)
+    end_queue.queue (end_cb, nullptr);
+}
+
+// playback thread
 static void * playback_thread (void *)
 {
-    String error;
-    Tuple tuple;
-    int length;
+    lock ();
 
-    if (! current_decoder)
+    while (1)
     {
-        PluginHandle * p = playback_entry_get_decoder (& error);
-        if (p && ! (current_decoder = (InputPlugin *) aud_plugin_get_header (p)))
-            error = String (_("Error loading plugin"));
+        // wait for a command
+        while (pb_state.control_serial == pb_state.playback_serial)
+            pthread_cond_wait (& cond, & mutex);
 
-        if (! current_decoder)
+        // fetch the command (either "play" or "drain")
+        bool play = pb_state.playing;
+
+        // update playback thread serial number
+        pb_state.playback_serial = pb_state.control_serial;
+
+        unlock ();
+
+        if (play)
+            run_playback ();
+        else
+            output_drain ();
+
+        lock ();
+
+        if (play)
         {
-            playback_error = true;
-            goto DONE;
+            // don't report errors or queue next song if another command is pending
+            if (in_sync ())
+                finish_playback_locked ();
+
+            pb_info = PlaybackInfo ();
+        }
+        else
+        {
+            // quit if we did not receive a new command after draining
+            if (pb_state.control_serial == pb_state.playback_serial)
+                break;
         }
     }
 
-    if (! (tuple = playback_entry_get_tuple (Playlist::Wait, & error)))
-    {
-        playback_error = true;
-        goto DONE;
-    }
-
-    length = tuple.get_int (Tuple::Length);
-
-    if (length < 1)
-        seek_request = -1;
-
-    if (tuple && length > 0)
-    {
-        if (tuple.get_value_type (Tuple::StartTime) == Tuple::Int)
-        {
-            time_offset = tuple.get_int (Tuple::StartTime);
-            if (time_offset)
-                seek_request = time_offset + aud::max (seek_request, 0);
-        }
-
-        if (tuple.get_value_type (Tuple::EndTime) == Tuple::Int)
-            stop_time = tuple.get_int (Tuple::EndTime);
-    }
-
-    current_gain = tuple.get_replay_gain ();
-    current_tuple = std::move (tuple);
-
-    if (! open_file (error))
-    {
-        playback_error = true;
-        goto DONE;
-    }
-
-    if (! current_decoder->play (current_filename, current_file))
-        playback_error = true;
-
-DONE:
-    if (playback_error)
-    {
-        if (! error)
-            error = String (_("Unknown playback error"));
-
-        aud_ui_show_error (str_printf (_("Error opening %s:\n%s"),
-         (const char *) current_filename, (const char *) error));
-    }
-
-    if (! ready_flag)
-        set_ready ();
-
-    end_queue.queue (end_cb, nullptr);
+    // signal the main thread that we are quitting
+    pb_state.thread_running = false;
+    pthread_cond_broadcast (& cond);
+    unlock ();
     return nullptr;
 }
 
+// main thread: starts playback of a new song
 void playback_play (int seek_time, bool pause)
 {
-    String new_filename = playback_entry_get_filename ();
+    lock ();
 
-    if (! new_filename)
+    if (pb_state.playing)
+        playback_cleanup_locked ();
+
+    // set up "play" command
+    pb_state.playing = true;
+    pb_state.control_serial ++;
+    pb_control.paused = pause;
+    pb_control.seek = (seek_time > 0) ? seek_time : -1;
+
+    // start playback thread (or signal it if it's already running)
+    if (pb_state.thread_running)
+        pthread_cond_broadcast (& cond);
+    else
     {
-        AUDERR ("Nothing to play!");
-        return;
+        pthread_t thread;
+        pthread_create (& thread, nullptr, playback_thread, nullptr);
+        pthread_detach (thread);
+        pb_state.thread_running = true;
     }
 
-    if (playing)
-        playback_cleanup ();
-
-    current_filename = new_filename;
-
-    playing = true;
-    paused = pause;
-
-    seek_request = (seek_time > 0) ? seek_time : -1;
-
-    stopped = false;
-
-    hook_associate ("playlist update", update_cb, nullptr);
-    pthread_create (& playback_thread_handle, nullptr, playback_thread, nullptr);
-
-    hook_call ("playback begin", nullptr);
+    unlock ();
 }
 
-// TODO for 3.7: make this thread-safe
-EXPORT bool aud_drct_get_playing ()
+// main thread
+EXPORT void aud_drct_pause ()
 {
-    return playing;
+    if (! pb_state.playing)
+        return;
+
+    lock ();
+
+    // set up "pause" command whether ready or not;
+    // if not ready, it will take effect upon open_audio()
+    bool pause = ! pb_control.paused;
+    pb_control.paused = pause;
+
+    // apply pause immediately if ready
+    if (is_ready ())
+    {
+        output_pause (pause);
+        event_queue (pause ? "playback pause" : "playback unpause", nullptr);
+    }
+
+    unlock ();
 }
 
-// TODO for 3.7: make this thread-safe
-EXPORT bool aud_drct_get_paused ()
-{
-    return paused;
-}
-
+// helper, can be called from either main or playback thread
 static void request_seek_locked (int time)
 {
-    seek_request = time;
-    output_flush (time);
-    event_queue ("playback seek", nullptr);
+    // set up "seek" command whether ready or not;
+    // if not ready, it will take effect upon open_audio()
+    pb_control.seek = time;
+
+    // trigger seek immediately if ready
+    if (is_ready () && pb_info.length > 0)
+    {
+        output_flush (aud::clamp (time, 0, pb_info.length));
+        event_queue ("playback seek", nullptr);
+    }
 }
 
+// main thread
 EXPORT void aud_drct_seek (int time)
 {
-    if (! playing)
+    if (! pb_state.playing)
         return;
 
-    wait_until_ready ();
-
-    if (current_length < 1)
-        return;
-
-    pthread_mutex_lock (& control_mutex);
-    request_seek_locked (time_offset + aud::clamp (time, 0, current_length));
-    pthread_mutex_unlock (& control_mutex);
+    lock ();
+    request_seek_locked (time);
+    unlock ();
 }
 
 EXPORT void InputPlugin::open_audio (int format, int rate, int channels)
 {
-    assert (playing);
+    // don't open audio if playback thread is lagging
+    if (! lock_if (in_sync))
+        return;
 
-    // some output plugins (e.g. filewriter) call aud_drct_get_tuple();
-    // hence, to avoid a deadlock, set_ready() must precede output_open_audio()
-    if (! ready_flag)
-        set_ready ();
-
-    if (! output_open_audio (format, rate, channels, aud::max (0, seek_request)))
+    if (! output_open_audio (format, rate, channels, aud::max (0, pb_control.seek)))
     {
-        AUDERR ("Invalid audio format: %d, %d Hz, %d channels\n", format, rate, channels);
-        playback_error = true;
-        pthread_mutex_lock (& control_mutex);
-        stop_flag = true;
-        pthread_mutex_unlock (& control_mutex);
+        pb_info.error = true;
+        pb_info.error_s = String (_("Invalid audio format"));
+        unlock ();
         return;
     }
 
-    output_set_replay_gain (current_gain);
-
-    if (paused)
+    output_set_replay_gain (pb_info.gain);
+    if (pb_control.paused)
         output_pause (true);
 
-    current_samplerate = rate;
-    current_channels = channels;
+    pb_info.samplerate = rate;
+    pb_info.channels = channels;
 
-    if (ready_flag)
+    if (pb_info.ready)
         event_queue ("info change", nullptr);
+    else
+        event_queue ("playback ready", nullptr);
+
+    pb_info.ready = true;
+
+    unlock ();
 }
 
-EXPORT void InputPlugin::set_replay_gain (const ReplayGainInfo & info)
+EXPORT void InputPlugin::set_replay_gain (const ReplayGainInfo & gain)
 {
-    assert (playing);
-    current_gain = info;
-    output_set_replay_gain (current_gain);
+    lock ();
+    pb_info.gain = gain;
+
+    if (is_ready ())
+        output_set_replay_gain (gain);
+
+    unlock ();
 }
 
 EXPORT void InputPlugin::write_audio (const void * data, int length)
 {
-    assert (playing);
+    if (! lock_if (in_sync))
+        return;
 
-    pthread_mutex_lock (& control_mutex);
-    int a = repeat_a, b = repeat_b;
-    pthread_mutex_unlock (& control_mutex);
+    // fetch A-B repeat settings
+    int a = pb_control.repeat_a;
+    int b = pb_control.repeat_b;
 
-    if (! output_write_audio (data, length, b >= 0 ? b : stop_time))
+    unlock ();
+
+    // it's okay to call output_write_audio() even if we are no longer in sync,
+    // since it will return immediately if output_flush() has been called
+    int stop_time = (b >= 0) ? b : pb_info.stop_time;
+    if (output_write_audio (data, length, stop_time))
+        return;
+
+    if (! lock_if (in_sync))
+        return;
+
+    // if we are still in sync, then one of the following happened:
+    // 1. output_flush() was called due to a seek request
+    // 2. we've reached repeat point B
+    // 3. we've reached the end of a segmented track
+    if (pb_control.seek < 0)
     {
-        pthread_mutex_lock (& control_mutex);
-
-        if (seek_request < 0 && ! stop_flag)
-        {
-            // When output_write_audio() returns false on its own, without a
-            // seek or stop request, we have reached the requested stop time.
-            if (b >= 0)
-                request_seek_locked (aud::max (a, time_offset));
-            else
-                stop_flag = true;
-        }
-
-        pthread_mutex_unlock (& control_mutex);
+        if (b >= 0)
+            request_seek_locked (aud::max (0, a));
+        else
+            pb_info.ended = true;
     }
+
+    unlock ();
 }
 
 EXPORT Tuple InputPlugin::get_playback_tuple ()
 {
-    assert (playing);
+    lock ();
+    Tuple tuple = pb_info.tuple.ref ();
+    unlock ();
 
-    Tuple tuple = current_tuple.ref ();
+    // tuples passed to us from input plugins do not have fallback fields
+    // generated; for consistency, tuples passed back should not either
     tuple.delete_fallbacks ();
     return tuple;
 }
 
 EXPORT void InputPlugin::set_playback_tuple (Tuple && tuple)
 {
-    assert (playing);
-    playback_entry_set_tuple (std::move (tuple));
+    // due to mutex ordering, we cannot call into the playlist while locked;
+    // instead, playback_entry_set_tuple() calls back into first
+    // playback_check_serial() and then eventually playlist_set_info()
+    playback_entry_set_tuple (pb_state.playback_serial, std::move (tuple));
 }
 
 EXPORT void InputPlugin::set_stream_bitrate (int bitrate)
 {
-    assert (playing);
-    current_bitrate = bitrate;
+    lock ();
+    pb_info.bitrate = bitrate;
 
-    if (ready_flag)
+    if (is_ready ())
         event_queue ("info change", nullptr);
+
+    unlock ();
 }
 
 EXPORT bool InputPlugin::check_stop ()
 {
-    assert (playing);
-    pthread_mutex_lock (& control_mutex);
-    bool stopped = stop_flag;
-    pthread_mutex_unlock (& control_mutex);
-    return stopped;
+    lock ();
+    bool stop = ! is_ready () || pb_info.ended || pb_info.error;
+    unlock ();
+    return stop;
 }
 
 EXPORT int InputPlugin::check_seek ()
 {
-    assert (playing);
+    lock ();
+    int seek = -1;
 
-    pthread_mutex_lock (& control_mutex);
-    int seek = seek_request;
-
-    if (seek != -1)
+    if (is_ready () && pb_control.seek >= 0 && pb_info.length > 0)
     {
+        seek = pb_info.time_offset + aud::clamp (pb_control.seek, 0, pb_info.length);
+        pb_control.seek = -1;
         output_resume ();
-        seek_request = -1;
     }
 
-    pthread_mutex_unlock (& control_mutex);
+    unlock ();
     return seek;
 }
 
-// TODO for 3.7: make this thread-safe
+// thread-safe
+EXPORT bool aud_drct_get_playing ()
+{
+    lock ();
+    bool playing = pb_state.playing;
+    unlock ();
+    return playing;
+}
+
+// thread-safe
+EXPORT bool aud_drct_get_ready ()
+{
+    lock ();
+    bool ready = is_ready ();
+    unlock ();
+    return ready;
+}
+
+// thread-safe
+EXPORT bool aud_drct_get_paused ()
+{
+    lock ();
+    bool paused = pb_control.paused;
+    unlock ();
+    return paused;
+}
+
+// thread-safe
 EXPORT int aud_drct_get_position ()
 {
-    return playback_entry_get_position ();
+    lock ();
+    int entry = is_ready () ? pb_info.entry : -1;
+    unlock ();
+    return entry;
 }
 
-// TODO for 3.7: make this thread-safe
+// thread-safe
 EXPORT String aud_drct_get_filename ()
 {
-    return current_filename;
+    lock ();
+    String filename = is_ready () ? pb_info.filename : String ();
+    unlock ();
+    return filename;
 }
 
-// TODO for 3.7: make this thread-safe
+// thread-safe
 EXPORT String aud_drct_get_title ()
 {
-    if (! playing)
+    if (! lock_if (is_ready))
         return String ();
 
-    wait_until_ready ();
+    String title = pb_info.title;
+    int entry = pb_info.entry;
+    int length = pb_info.length;
+
+    unlock ();
 
     StringBuf prefix = aud_get_bool (nullptr, "show_numbers_in_pl") ?
-     str_printf ("%d. ", 1 + current_entry) : StringBuf (0);
+     str_printf ("%d. ", 1 + entry) : StringBuf (0);
 
-    StringBuf time = (current_length > 0) ? str_format_time (current_length) : StringBuf ();
+    StringBuf time = (length > 0) ? str_format_time (length) : StringBuf ();
     StringBuf suffix = time ? str_concat ({" (", time, ")"}) : StringBuf (0);
 
-    return String (str_concat ({prefix, current_title, suffix}));
+    return String (str_concat ({prefix, title, suffix}));
 }
 
-// TODO for 3.7: make this thread-safe
+// thread-safe
 EXPORT Tuple aud_drct_get_tuple ()
 {
-    if (playing)
-        wait_until_ready ();
-
-    return current_tuple.ref ();
+    lock ();
+    Tuple tuple = is_ready () ? pb_info.tuple.ref () : Tuple ();
+    unlock ();
+    return tuple;
 }
 
-// TODO for 3.7: make this thread-safe
+// thread-safe
+EXPORT void aud_drct_get_info (int & bitrate, int & samplerate, int & channels)
+{
+    lock ();
+
+    bool ready = is_ready ();
+    bitrate = ready ? pb_info.bitrate : 0;
+    samplerate = ready ? pb_info.samplerate : 0;
+    channels = ready ? pb_info.channels : 0;
+
+    unlock ();
+}
+
+// thread-safe
+EXPORT int aud_drct_get_time ()
+{
+    lock ();
+    int time = is_ready () ? output_get_time () : 0;
+    unlock ();
+    return time;
+}
+
+// thread-safe
 EXPORT int aud_drct_get_length ()
 {
-    if (playing)
-        wait_until_ready ();
-
-    return current_length;
+    lock ();
+    int length = is_ready () ? pb_info.length : -1;
+    unlock ();
+    return length;
 }
 
-// TODO for 3.7: make this thread-safe
-EXPORT void aud_drct_get_info (int * bitrate, int * samplerate, int * channels)
-{
-    if (playing)
-        wait_until_ready ();
-
-    * bitrate = current_bitrate;
-    * samplerate = current_samplerate;
-    * channels = current_channels;
-}
-
+// main thread
 EXPORT void aud_drct_set_ab_repeat (int a, int b)
 {
-    if (! playing)
+    if (! pb_state.playing)
         return;
 
-    wait_until_ready ();
+    lock ();
 
-    if (current_length < 1)
-        return;
+    pb_control.repeat_a = a;
+    pb_control.repeat_b = b;
 
-    if (a >= 0)
-        a += time_offset;
-    if (b >= 0)
-        b += time_offset;
+    if (b >= 0 && is_ready () && output_get_time () >= b)
+        request_seek_locked (aud::max (a, 0));
 
-    pthread_mutex_lock (& control_mutex);
-
-    repeat_a = a;
-    repeat_b = b;
-
-    if (b != -1 && output_get_time () >= b)
-        request_seek_locked (aud::max (a, time_offset));
-
-    pthread_mutex_unlock (& control_mutex);
+    unlock ();
 }
 
-// TODO for 3.7: make this thread-safe
-EXPORT void aud_drct_get_ab_repeat (int * a, int * b)
+// thread-safe
+EXPORT void aud_drct_get_ab_repeat (int & a, int & b)
 {
-    * a = (playing && repeat_a != -1) ? repeat_a - time_offset : -1;
-    * b = (playing && repeat_b != -1) ? repeat_b - time_offset : -1;
+    lock ();
+    a = pb_control.repeat_a;
+    b = pb_control.repeat_b;
+    unlock ();
 }

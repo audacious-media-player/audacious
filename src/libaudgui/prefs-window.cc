@@ -24,6 +24,7 @@
 #include <gtk/gtk.h>
 
 #include <libaudcore/audstrings.h>
+#include <libaudcore/drct.h>
 #include <libaudcore/hook.h>
 #include <libaudcore/i18n.h>
 #include <libaudcore/playlist.h>
@@ -361,7 +362,8 @@ static void category_changed (GtkTreeSelection * selection)
 
 static void send_title_change (void)
 {
-    hook_call ("title change", nullptr);
+    if (aud_drct_get_ready ())
+        hook_call ("title change", nullptr);
 }
 
 static void titlestring_tag_menu_cb (GtkMenuItem * menuitem, void * data)

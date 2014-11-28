@@ -331,8 +331,8 @@ EXPORT void aud_cleanup ()
 {
     save_playlists (true);
 
-    if (aud_drct_get_playing ())
-        aud_drct_stop ();
+    aud_playlist_play (-1);
+    playback_stop (true);
 
     adder_cleanup ();
     playlist_enable_scan (false);
