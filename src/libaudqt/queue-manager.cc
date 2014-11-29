@@ -103,14 +103,14 @@ private:
     void update (Playlist::Update level);
     void removeSelected ();
 
-    HookReceiver<QueueManagerDialog, Playlist::Update> update_hook;
-    HookReceiver<QueueManagerModel> activate_hook;
+    const HookReceiver<QueueManagerDialog, Playlist::Update>
+     update_hook {"playlist update", this, & QueueManagerDialog::update};
+    const HookReceiver<QueueManagerModel>
+     activate_hook {"playlist activate", & m_model, & QueueManagerModel::reset};
 };
 
 QueueManagerDialog::QueueManagerDialog (QWidget * parent) :
-    QDialog (parent),
-    update_hook ("playlist update", this, & QueueManagerDialog::update),
-    activate_hook ("playlist activate", & m_model, & QueueManagerModel::reset)
+    QDialog (parent)
 {
     m_btn_unqueue.setText (translate_str (N_("_Unqueue")));
     m_btn_close.setText (translate_str (N_("_Close")));

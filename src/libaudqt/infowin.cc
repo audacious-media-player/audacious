@@ -44,14 +44,15 @@ public:
 
     void fillInfo (int playlist, int entry, const char * filename, const Tuple & tuple,
      PluginHandle * decoder, bool updating_enabled);
-    void displayImage (const char * filename);
-
-    HookReceiver<InfoWindow, const char *> art_hook =
-     {"art ready", this, & InfoWindow::displayImage};
 
 private:
     QLabel m_image;
     InfoWidget m_infowidget;
+
+    void displayImage (const char * filename);
+
+    const HookReceiver<InfoWindow, const char *>
+     art_hook {"art ready", this, & InfoWindow::displayImage};
 };
 
 InfoWindow::InfoWindow (QWidget * parent) : QDialog (parent)
