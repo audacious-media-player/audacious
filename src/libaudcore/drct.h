@@ -76,10 +76,6 @@ void aud_drct_set_volume_balance (int balance);
 
 /* --- PLAYLIST CONTROL --- */
 
-/* The indexes passed to drct_pl_add_list(), drct_pl_open_list(), and
- * drct_pl_open_temp_list() contain pooled strings to which the caller gives up
- * one reference.  The indexes themselves are freed by these functions. */
-
 void aud_drct_pl_next ();
 void aud_drct_pl_prev ();
 
