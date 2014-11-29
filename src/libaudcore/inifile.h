@@ -22,10 +22,17 @@
 
 class VFSFile;
 
-void inifile_parse (VFSFile & file,
- void (* handle_heading) (const char * heading, void * data),
- void (* handle_entry) (const char * key, const char * value, void * data),
- void * data);
+class IniParser
+{
+public:
+    virtual ~IniParser () {}
+
+    void parse (VFSFile & file);
+
+protected:
+    virtual void handle_heading (const char * heading) = 0;
+    virtual void handle_entry (const char * key, const char * value) = 0;
+};
 
 bool inifile_write_heading (VFSFile & file, const char * heading)
  __attribute__ ((warn_unused_result));
