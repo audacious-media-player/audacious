@@ -133,7 +133,7 @@ static void widget_update (void * unused, void * widget)
 
 static void widget_unhook (GtkWidget * widget, const PreferencesWidget * w)
 {
-    hook_dissociate_full (w->cfg.hook, widget_update, widget);
+    hook_dissociate (w->cfg.hook, widget_update, widget);
 }
 
 static void widget_init (GtkWidget * widget, const PreferencesWidget * w)

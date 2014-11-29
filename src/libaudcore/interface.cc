@@ -119,7 +119,7 @@ EXPORT void aud_ui_show_error (const char * message)
     if (aud_get_headless_mode ())
         AUDERR ("%s\n", message);
     else
-        event_queue_full ("ui show error", String::raw_get (message),
+        event_queue ("ui show error", String::raw_get (message),
          (EventDestroyFunc) String::raw_unref);
 }
 

@@ -1,6 +1,6 @@
 /*
  * hook.h
- * Copyright 2011 John Lindgren
+ * Copyright 2011-2014 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -31,9 +31,7 @@ void hook_associate (const char * name, HookFunction func, void * user);
 /* Removes all instances matching <func> and <user> from the list of functions
  * to be called when the hook <name> is triggered.  If <user> is nullptr, all
  * instances matching <func> are removed. */
-void hook_dissociate_full (const char * name, HookFunction func, void * user);
-
-#define hook_dissociate(n, f) hook_dissociate_full (n, f, nullptr)
+void hook_dissociate (const char * name, HookFunction func, void * user = nullptr);
 
 /* Triggers the hook <name>. */
 void hook_call (const char * name, void * data);
@@ -43,9 +41,7 @@ typedef void (* EventDestroyFunc) (void * data);
 /* Schedules a call of the hook <name> from the program's main loop, to be
  * executed in <time> milliseconds.  If <destroy> is not nullptr, it will be called
  * on <data> after the hook is called. */
-void event_queue_full (const char * name, void * data, EventDestroyFunc destroy);
-
-#define event_queue(n, d) event_queue_full (n, d, nullptr)
+void event_queue (const char * name, void * data, EventDestroyFunc destroy = nullptr);
 
 /* Cancels pending hook calls matching <name> and <data>.  If <data> is nullptr,
  * all hook calls matching <name> are canceled. */
@@ -68,7 +64,7 @@ public:
     }
 
     ~HookReceiver ()
-        { hook_dissociate_full (hook, run, this); }
+        { hook_dissociate (hook, run, this); }
 
     HookReceiver (const HookReceiver &) = delete;
     void operator= (const HookReceiver &) = delete;
@@ -99,7 +95,7 @@ public:
     }
 
     ~HookReceiver ()
-        { hook_dissociate_full (hook, run, this); }
+        { hook_dissociate (hook, run, this); }
 
     HookReceiver (const HookReceiver &) = delete;
     void operator= (const HookReceiver &) = delete;

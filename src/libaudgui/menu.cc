@@ -59,7 +59,7 @@ static void hook_cb (void * data, GtkWidget * check)
 
 static void unhook_cb (GtkCheckMenuItem * check, const AudguiMenuItem * item)
 {
-    hook_dissociate_full (item->hook, (HookFunction) hook_cb, check);
+    hook_dissociate (item->hook, (HookFunction) hook_cb, check);
 }
 
 EXPORT GtkWidget * audgui_menu_item_new_with_domain
