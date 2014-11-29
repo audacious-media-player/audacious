@@ -253,19 +253,16 @@ static void end_cb (void *)
         }
     };
 
-    if (aud_get_bool (nullptr, "stop_after_current_song"))
+    if (aud_get_bool (nullptr, "no_playlist_advance"))
+    {
+        // we assume here that repeat is not enabled;
+        // single-song repeats are handled in run_playback()
+        do_stop ();
+    }
+    else if (aud_get_bool (nullptr, "stop_after_current_song"))
     {
         do_stop ();
-
-        if (! aud_get_bool (nullptr, "no_playlist_advance"))
-            do_next ();
-    }
-    else if (aud_get_bool (nullptr, "no_playlist_advance"))
-    {
-        if (aud_get_bool (nullptr, "repeat") && ! failed_entries)
-            playback_play (0, false);
-        else
-            do_stop ();
+        do_next ();
     }
     else
     {
@@ -273,6 +270,21 @@ static void end_cb (void *)
             do_next ();
         else
             do_stop ();
+    }
+}
+
+// helper, can be called from either main or playback thread
+static void request_seek_locked (int time)
+{
+    // set up "seek" command whether ready or not;
+    // if not ready, it will take effect upon open_audio()
+    pb_control.seek = time;
+
+    // trigger seek immediately if ready
+    if (is_ready () && pb_info.length > 0)
+    {
+        output_flush (aud::clamp (time, 0, pb_info.length));
+        event_queue ("playback seek", nullptr);
     }
 }
 
@@ -323,12 +335,40 @@ static void run_playback ()
         return;
     }
 
-    // hand off control to input plugin
-    if (! ip->play (pb_info.filename, file))
-        pb_info.error = true;
+    while (1)
+    {
+        // hand off control to input plugin
+        if (! ip->play (pb_info.filename, file))
+            pb_info.error = true;
 
-    // close audio (no-op if it wasn't opened)
-    output_close_audio ();
+        // close audio (no-op if it wasn't opened)
+        output_close_audio ();
+
+        if (pb_info.error || pb_info.length <= 0)
+            break;
+
+        if (! lock_if (in_sync))
+            break;
+
+        // check whether we need to repeat
+        pb_info.ended = (pb_control.repeat_a < 0 && ! (aud_get_bool (nullptr,
+         "repeat") && aud_get_bool (nullptr, "no_playlist_advance")));
+
+        if (! pb_info.ended)
+            request_seek_locked (aud::max (pb_control.repeat_a, 0));
+
+        unlock ();
+
+        if (pb_info.ended)
+            break;
+
+        // rewind file pointer before repeating
+        if (file.fseek (0, VFS_SEEK_SET) != 0)
+        {
+            pb_info.error = true;
+            break;
+        }
+    }
 }
 
 // playback thread helper
@@ -447,21 +487,6 @@ EXPORT void aud_drct_pause ()
     }
 
     unlock ();
-}
-
-// helper, can be called from either main or playback thread
-static void request_seek_locked (int time)
-{
-    // set up "seek" command whether ready or not;
-    // if not ready, it will take effect upon open_audio()
-    pb_control.seek = time;
-
-    // trigger seek immediately if ready
-    if (is_ready () && pb_info.length > 0)
-    {
-        output_flush (aud::clamp (time, 0, pb_info.length));
-        event_queue ("playback seek", nullptr);
-    }
 }
 
 // main thread
