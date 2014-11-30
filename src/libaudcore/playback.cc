@@ -196,6 +196,8 @@ static void playback_cleanup_locked ()
     event_queue_cancel ("info change", nullptr);
     event_queue_cancel ("title change", nullptr);
     event_queue_cancel ("tuple change", nullptr);
+
+    aud_set_bool (nullptr, "stop_after_current_song", false);
 }
 
 // main thread: stops playback when no more songs are to be played

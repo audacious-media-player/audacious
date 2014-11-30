@@ -1020,9 +1020,6 @@ static void call_playback_change_hooks (PlaybackChange change)
         hook_call ("playlist set playing", nullptr);
         hook_call ("playback stop", nullptr);
     }
-
-    if (change != NoChange)
-        aud_set_bool (nullptr, "stop_after_current_song", false);
 }
 
 EXPORT int aud_playlist_entry_count (int playlist_num)
