@@ -58,7 +58,7 @@ bool dir_foreach (const char * path, DirForeachFunc func, void * user)
     return true;
 }
 
-String write_temp_file (void * data, int64_t len)
+String write_temp_file (const void * data, int64_t len)
 {
     StringBuf name = filename_build ({g_get_tmp_dir (), "audacious-temp-XXXXXX"});
 
