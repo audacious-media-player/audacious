@@ -320,26 +320,26 @@ public:
             flags (flags), priority (0), keys {} {}
 
         /* Associates file extensions with the plugin. */
-        constexpr InputInfo with_exts (List exts)
+        constexpr InputInfo with_exts (List exts) const
             { return InputInfo (flags, priority,
               exts, keys[InputKey::MIME], keys[InputKey::Scheme]); }
 
         /* Associates MIME types with the plugin. */
-        constexpr InputInfo with_mimes (List mimes)
+        constexpr InputInfo with_mimes (List mimes) const
             { return InputInfo (flags, priority,
               keys[InputKey::Ext], mimes, keys[InputKey::Scheme]); }
 
         /* Associates custom URI schemes with the plugin.  Plugins using custom
          * URI schemes are expected to handle their own I/O.  Hence, any VFSFile
          * passed to play(), read_tuple(), etc. will be null. */
-        constexpr InputInfo with_schemes (List schemes)
+        constexpr InputInfo with_schemes (List schemes) const
             { return InputInfo (flags, priority,
               keys[InputKey::Ext], keys[InputKey::MIME], schemes); }
 
         /* Sets how quickly the plugin should be tried in searching for a plugin
          * to handle a file which could not be identified from its extension.
          * Plugins with priority 0 are tried first, 10 last. */
-        constexpr InputInfo with_priority (int priority)
+        constexpr InputInfo with_priority (int priority) const
             { return InputInfo (flags, priority,
               keys[InputKey::Ext], keys[InputKey::MIME], keys[InputKey::Scheme]); }
 
