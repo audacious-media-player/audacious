@@ -28,8 +28,8 @@
 
 namespace audqt {
 
-static Index <MenuItem *> items [AUD_MENU_COUNT];
-static QMenu * menus [AUD_MENU_COUNT];
+static aud::array<AudMenuID, Index<MenuItem *>> items;
+static aud::array<AudMenuID, QMenu *> menus;
 
 static void show_prefs (void)
 {
@@ -41,7 +41,7 @@ MenuItem default_menu_items[] = {
     MenuSep (),
 };
 
-EXPORT QMenu * menu_get_by_id (int id)
+EXPORT QMenu * menu_get_by_id (AudMenuID id)
 {
     if (menus[id])
         return menus[id];
@@ -57,7 +57,7 @@ EXPORT QMenu * menu_get_by_id (int id)
     return menus[id];
 }
 
-EXPORT void menu_add (int id, void (* func) (void), const char * name, const char * icon, const char * domain)
+EXPORT void menu_add (AudMenuID id, void (* func) (void), const char * name, const char * icon, const char * domain)
 {
     MenuItem * it = new MenuItem;
 
@@ -74,7 +74,7 @@ EXPORT void menu_add (int id, void (* func) (void), const char * name, const cha
         it->add_to_menu (nullptr, menus[id]);
 }
 
-EXPORT void menu_remove (int id, void (* func) (void))
+EXPORT void menu_remove (AudMenuID id, void (* func) (void))
 {
     MenuItem * item = nullptr;
 

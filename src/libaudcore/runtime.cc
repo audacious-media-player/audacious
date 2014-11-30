@@ -71,10 +71,7 @@ static MainloopType mainloop_type = MainloopType::Qt;
 static MainloopType mainloop_type = MainloopType::GLib;
 #endif
 
-static String aud_paths[(int) AudPath::n_paths];
-
-static constexpr String & aud_path (AudPath id)
-    { return aud_paths[(int) id]; }
+static aud::array<AudPath, String> aud_paths;
 
 EXPORT void aud_set_headless_mode (bool headless)
 {
@@ -175,12 +172,12 @@ static String relocate_path (const char * path, const char * from, const char * 
 
 static void set_default_paths ()
 {
-    aud_path (AudPath::BinDir) = String (HARDCODE_BINDIR);
-    aud_path (AudPath::DataDir) = String (HARDCODE_DATADIR);
-    aud_path (AudPath::PluginDir) = String (HARDCODE_PLUGINDIR);
-    aud_path (AudPath::LocaleDir) = String (HARDCODE_LOCALEDIR);
-    aud_path (AudPath::DesktopFile) = String (HARDCODE_DESKTOPFILE);
-    aud_path (AudPath::IconFile) = String (HARDCODE_ICONFILE);
+    aud_paths[AudPath::BinDir] = String (HARDCODE_BINDIR);
+    aud_paths[AudPath::DataDir] = String (HARDCODE_DATADIR);
+    aud_paths[AudPath::PluginDir] = String (HARDCODE_PLUGINDIR);
+    aud_paths[AudPath::LocaleDir] = String (HARDCODE_LOCALEDIR);
+    aud_paths[AudPath::DesktopFile] = String (HARDCODE_DESKTOPFILE);
+    aud_paths[AudPath::IconFile] = String (HARDCODE_ICONFILE);
 }
 
 static void relocate_all_paths ()
@@ -231,12 +228,12 @@ static void relocate_all_paths ()
     }
 
     /* replace old prefix with new one in each path */
-    aud_path (AudPath::BinDir) = relocate_path (bindir, from, to);
-    aud_path (AudPath::DataDir) = relocate_path (datadir, from, to);
-    aud_path (AudPath::PluginDir) = relocate_path (plugindir, from, to);
-    aud_path (AudPath::LocaleDir) = relocate_path (localedir, from, to);
-    aud_path (AudPath::DesktopFile) = relocate_path (desktopfile, from, to);
-    aud_path (AudPath::IconFile) = relocate_path (iconfile, from, to);
+    aud_paths[AudPath::BinDir] = relocate_path (bindir, from, to);
+    aud_paths[AudPath::DataDir] = relocate_path (datadir, from, to);
+    aud_paths[AudPath::PluginDir] = relocate_path (plugindir, from, to);
+    aud_paths[AudPath::LocaleDir] = relocate_path (localedir, from, to);
+    aud_paths[AudPath::DesktopFile] = relocate_path (desktopfile, from, to);
+    aud_paths[AudPath::IconFile] = relocate_path (iconfile, from, to);
 }
 
 EXPORT void aud_init_paths ()
@@ -245,14 +242,14 @@ EXPORT void aud_init_paths ()
 
     const char * xdg_config_home = g_get_user_config_dir ();
 
-    aud_path (AudPath::UserDir) = String (filename_build ({xdg_config_home, "audacious"}));
-    aud_path (AudPath::PlaylistDir) = String (filename_build
-     ({aud_path (AudPath::UserDir), "playlists"}));
+    aud_paths[AudPath::UserDir] = String (filename_build ({xdg_config_home, "audacious"}));
+    aud_paths[AudPath::PlaylistDir] = String (filename_build
+     ({aud_paths[AudPath::UserDir], "playlists"}));
 
     /* create ~/.config/audacious/playlists */
-    if (g_mkdir_with_parents (aud_path (AudPath::PlaylistDir), DIRMODE) < 0)
+    if (g_mkdir_with_parents (aud_paths[AudPath::PlaylistDir], DIRMODE) < 0)
         AUDERR ("Failed to create %s: %s\n",
-         (const char *) aud_path (AudPath::PlaylistDir), strerror (errno));
+         (const char *) aud_paths[AudPath::PlaylistDir], strerror (errno));
 
 #ifdef _WIN32
     /* set some UNIX-style environment variables */
@@ -271,7 +268,7 @@ EXPORT void aud_cleanup_paths ()
 
 EXPORT const char * aud_get_path (AudPath id)
 {
-    return aud_path (id);
+    return aud_paths[id];
 }
 
 EXPORT void aud_init_i18n ()

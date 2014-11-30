@@ -38,8 +38,8 @@ public:
     void hide_jump_to_song () {}
     void show_prefs_window () { prefswin_show (); }
     void hide_prefs_window () { prefswin_hide (); }
-    void plugin_menu_add (int id, void func (), const char * name, const char * icon) {}
-    void plugin_menu_remove (int id, void func ()) {}
+    void plugin_menu_add (AudMenuID id, void func (), const char * name, const char * icon) {}
+    void plugin_menu_remove (AudMenuID id, void func ()) {}
 };
 
 } // namespace audqt

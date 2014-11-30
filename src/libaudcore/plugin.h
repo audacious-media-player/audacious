@@ -27,6 +27,7 @@
 #include <libaudcore/visualizer.h>
 #include <libaudcore/vfs.h>
 
+enum class AudMenuID;
 struct PluginPreferences;
 
 /* "Magic" bytes identifying an Audacious plugin header. */
@@ -454,8 +455,8 @@ public:
     virtual void hide_jump_to_song () = 0;
     virtual void show_prefs_window () = 0;
     virtual void hide_prefs_window () = 0;
-    virtual void plugin_menu_add (int id, void func (), const char * name, const char * icon) = 0;
-    virtual void plugin_menu_remove (int id, void func ()) = 0;
+    virtual void plugin_menu_add (AudMenuID id, void func (), const char * name, const char * icon) = 0;
+    virtual void plugin_menu_remove (AudMenuID id, void func ()) = 0;
 };
 
 #endif

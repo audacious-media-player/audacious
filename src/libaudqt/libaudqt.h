@@ -29,6 +29,7 @@ class QMenu;
 class QMenuBar;
 class QWidget;
 
+enum class AudMenuID;
 class PluginHandle;
 struct PreferencesWidget;
 
@@ -63,9 +64,9 @@ static inline QString translate_str (const char * str)
 #endif
 
 /* plugin-menu.cc */
-QMenu * menu_get_by_id (int id);
-void menu_add (int id, void (* func) (void), const char * name, const char * icon, const char * domain);
-void menu_remove (int id, void (* func) (void));
+QMenu * menu_get_by_id (AudMenuID id);
+void menu_add (AudMenuID id, void (* func) (void), const char * name, const char * icon, const char * domain);
+void menu_remove (AudMenuID id, void (* func) (void));
 
 /* prefs-builder.cc */
 void prefs_populate (QLayout * layout, ArrayRef<const PreferencesWidget> widgets, const char * domain);

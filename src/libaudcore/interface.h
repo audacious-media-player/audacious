@@ -22,12 +22,12 @@
 
 #include <libaudcore/visualizer.h>
 
-enum {
-    AUD_MENU_MAIN,
-    AUD_MENU_PLAYLIST,
-    AUD_MENU_PLAYLIST_ADD,
-    AUD_MENU_PLAYLIST_REMOVE,
-    AUD_MENU_COUNT
+enum class AudMenuID {
+    Main,
+    Playlist,
+    PlaylistAdd,
+    PlaylistRemove,
+    count
 };
 
 void aud_ui_show (bool show);
@@ -44,8 +44,8 @@ void aud_ui_hide_jump_to_song ();
 void aud_ui_show_prefs_window ();
 void aud_ui_hide_prefs_window ();
 
-void aud_plugin_menu_add (int id, void (* func) (), const char * name, const char * icon);
-void aud_plugin_menu_remove (int id, void (* func) ());
+void aud_plugin_menu_add (AudMenuID id, void (* func) (), const char * name, const char * icon);
+void aud_plugin_menu_remove (AudMenuID id, void (* func) ());
 
 void aud_visualizer_add (Visualizer * vis);
 void aud_visualizer_remove (Visualizer * vis);

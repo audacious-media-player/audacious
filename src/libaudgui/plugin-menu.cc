@@ -28,8 +28,8 @@
 #include "libaudgui-gtk.h"
 #include "menu.h"
 
-static GList * items[AUD_MENU_COUNT]; /* of AudguiMenuItem */
-static GtkWidget * menus[AUD_MENU_COUNT];
+static aud::array<AudMenuID, GList *> items; /* of AudguiMenuItem */
+static aud::array<AudMenuID, GtkWidget *> menus;
 
 static void configure_plugins (void)
 {
@@ -49,17 +49,15 @@ static void add_to_menu (GtkWidget * menu, const AudguiMenuItem * item)
     gtk_menu_shell_append ((GtkMenuShell *) menu, widget);
 }
 
-EXPORT GtkWidget * audgui_get_plugin_menu (int id)
+EXPORT GtkWidget * audgui_get_plugin_menu (AudMenuID id)
 {
-    g_return_val_if_fail (id >= 0 && id < AUD_MENU_COUNT, nullptr);
-
     if (! menus[id])
     {
         menus[id] = gtk_menu_new ();
         g_signal_connect (menus[id], "destroy", (GCallback)
          gtk_widget_destroyed, & menus[id]);
 
-        if (id == AUD_MENU_MAIN)
+        if (id == AudMenuID::Main)
             audgui_menu_init (menus[id], main_items, nullptr);
 
         for (GList * node = items[id]; node; node = node->next)
@@ -69,11 +67,9 @@ EXPORT GtkWidget * audgui_get_plugin_menu (int id)
     return menus[id];
 }
 
-EXPORT void audgui_plugin_menu_add (int id, void (* func) (void),
+EXPORT void audgui_plugin_menu_add (AudMenuID id, void (* func) (void),
  const char * name, const char * icon)
 {
-    g_return_if_fail (id >= 0 && id < AUD_MENU_COUNT);
-
     AudguiMenuItem * item = g_slice_new0 (AudguiMenuItem);
     item->name = name;
     item->icon = icon;
@@ -91,10 +87,8 @@ static void remove_cb (GtkWidget * widget, void (* func) (void))
         gtk_widget_destroy (widget);
 }
 
-EXPORT void audgui_plugin_menu_remove (int id, void (* func) (void))
+EXPORT void audgui_plugin_menu_remove (AudMenuID id, void (* func) (void))
 {
-    g_return_if_fail (id >= 0 && id < AUD_MENU_COUNT);
-
     if (menus[id])
         gtk_container_foreach ((GtkContainer *) menus[id], (GtkCallback)
          remove_cb, (void *) func);
@@ -114,7 +108,7 @@ EXPORT void audgui_plugin_menu_remove (int id, void (* func) (void))
 
 void plugin_menu_cleanup (void)
 {
-    for (int id = 0; id < AUD_MENU_COUNT; id ++)
+    for (AudMenuID id : aud::range<AudMenuID> ())
     {
         g_warn_if_fail (! items[id]);
 

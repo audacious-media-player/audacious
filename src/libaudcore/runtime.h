@@ -31,7 +31,7 @@ enum class AudPath {
     IconFile,
     UserDir,
     PlaylistDir,
-    n_paths
+    count
 };
 
 enum class MainloopType {

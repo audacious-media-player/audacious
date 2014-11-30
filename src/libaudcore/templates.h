@@ -98,22 +98,46 @@ inline T from_ptr (void * v)
     return u.t;
 }
 
+// Wrapper class allowing enumerations to be used as array indexes;
+// the enumeration must begin with zero and have a "count" constant
+// ================================================================
+
+template<class T, class V>
+struct array {
+    constexpr V & operator[] (T t) const
+        { return vals[(int) t]; }
+    constexpr V * begin () const
+        { return vals; }
+    constexpr V * end () const
+        { return vals + (int) T::count; }
+    V & operator[] (T t)
+        { return vals[(int) t]; }
+    V * begin ()
+        { return vals; }
+    V * end ()
+        { return vals + (int) T::count; }
+private:
+    V vals[(int) T::count];
+};
+
 // Wrapper class allowing enumerations to be used in range-based for loops
 // =======================================================================
 
-template<class T, T first, T last>
+template<class T, T first = (T) 0, T last = (T) ((int) T::count - 1)>
 struct range {
     struct iter {
         T v;
-        T operator* ()
+        constexpr T operator* () const
             { return v; }
-        void operator++ ()
-            { v = (T) (v + 1); }
-        bool operator!= (iter other)
+        constexpr bool operator!= (iter other) const
             { return v != other.v; }
+        void operator++ ()
+            { v = (T) ((int) v + 1); }
     };
-    static iter begin () { return {first}; }
-    static iter end () { return {(T) (last + 1)}; }
+    static constexpr iter begin ()
+        { return {first}; }
+    static constexpr iter end ()
+        { return {(T) ((int) last + 1)}; }
 };
 
 // Replacement for std::allocator::construct, which also supports aggregate

@@ -22,6 +22,7 @@
 
 #include <libaudcore/objects.h>
 
+enum class AudMenuID;
 class PluginHandle;
 
 void audgui_show_add_url_window(bool open);
@@ -66,8 +67,8 @@ void audgui_import_playlist (void);
 void audgui_export_playlist (void);
 
 /* plugin-menu.c */
-void audgui_plugin_menu_add (int id, void (* func) (void), const char * name, const char * icon);
-void audgui_plugin_menu_remove (int id, void (* func) (void));
+void audgui_plugin_menu_add (AudMenuID id, void (* func) (void), const char * name, const char * icon);
+void audgui_plugin_menu_remove (AudMenuID id, void (* func) (void));
 
 /* plugin-prefs.c */
 void audgui_show_plugin_about (PluginHandle * plugin);
