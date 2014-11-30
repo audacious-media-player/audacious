@@ -278,11 +278,9 @@ static bool plugin_parse (FILE * handle)
 
     for (auto type2 : aud::range<PluginType> ())
     {
+        type = type2;
         if ((path = parse_string (plugin_type_names[type2])))
-        {
-            type = type2;
             break;
-        }
     }
 
     if (! path)
