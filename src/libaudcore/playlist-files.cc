@@ -32,7 +32,7 @@ EXPORT bool aud_filename_is_playlist (const char * filename)
 
     if (ext)
     {
-        for (PluginHandle * plugin : aud_plugin_list (PLUGIN_TYPE_PLAYLIST))
+        for (PluginHandle * plugin : aud_plugin_list (PluginType::Playlist))
         {
             if (aud_plugin_get_enabled (plugin) && playlist_plugin_has_ext (plugin, ext))
                 return true;
@@ -50,7 +50,7 @@ bool playlist_load (const char * filename, String & title, Index<PlaylistAddItem
 
     if (ext)
     {
-        for (PluginHandle * plugin : aud_plugin_list (PLUGIN_TYPE_PLAYLIST))
+        for (PluginHandle * plugin : aud_plugin_list (PluginType::Playlist))
         {
             if (! aud_plugin_get_enabled (plugin) || ! playlist_plugin_has_ext (plugin, ext))
                 continue;
@@ -116,7 +116,7 @@ EXPORT bool aud_playlist_save (int list, const char * filename, Playlist::GetMod
 
     if (ext)
     {
-        for (PluginHandle * plugin : aud_plugin_list (PLUGIN_TYPE_PLAYLIST))
+        for (PluginHandle * plugin : aud_plugin_list (PluginType::Playlist))
         {
             if (! aud_plugin_get_enabled (plugin) || ! playlist_plugin_has_ext (plugin, ext))
                 continue;

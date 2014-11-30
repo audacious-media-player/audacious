@@ -38,7 +38,7 @@
 
 static TransportPlugin * lookup_transport (const char * scheme)
 {
-    for (PluginHandle * plugin : aud_plugin_list (PLUGIN_TYPE_TRANSPORT))
+    for (PluginHandle * plugin : aud_plugin_list (PluginType::Transport))
     {
         if (! aud_plugin_get_enabled (plugin))
             continue;

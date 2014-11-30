@@ -23,6 +23,7 @@
 #include <libaudcore/objects.h>
 
 enum class AudMenuID;
+enum class PluginType;
 class PluginHandle;
 
 void audgui_show_add_url_window(bool open);
@@ -76,7 +77,7 @@ void audgui_show_plugin_prefs (PluginHandle * plugin);
 
 /* prefs-window.c */
 void audgui_show_prefs_window (void);
-void audgui_show_prefs_for_plugin_type (int type);
+void audgui_show_prefs_for_plugin_type (PluginType type);
 void audgui_hide_prefs_window (void);
 
 /* queue-manager.c */

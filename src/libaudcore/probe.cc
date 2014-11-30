@@ -33,7 +33,7 @@ EXPORT PluginHandle * aud_file_find_decoder (const char * filename, bool fast, S
 {
     AUDINFO ("Probing %s.\n", filename);
 
-    auto & list = aud_plugin_list (PLUGIN_TYPE_INPUT);
+    auto & list = aud_plugin_list (PluginType::Input);
 
     StringBuf scheme = uri_get_scheme (filename);
     StringBuf ext = uri_get_extension (filename);
@@ -44,13 +44,13 @@ EXPORT PluginHandle * aud_file_find_decoder (const char * filename, bool fast, S
         if (! aud_plugin_get_enabled (plugin))
             continue;
 
-        if (scheme && input_plugin_has_key (plugin, INPUT_KEY_SCHEME, scheme))
+        if (scheme && input_plugin_has_key (plugin, InputKey::Scheme, scheme))
         {
             AUDINFO ("Matched %s by URI scheme.\n", aud_plugin_get_name (plugin));
             return plugin;
         }
 
-        if (ext && input_plugin_has_key (plugin, INPUT_KEY_EXTENSION, ext))
+        if (ext && input_plugin_has_key (plugin, InputKey::Ext, ext))
             ext_matches.append (plugin);
     }
 
@@ -87,7 +87,7 @@ EXPORT PluginHandle * aud_file_find_decoder (const char * filename, bool fast, S
             if (! aud_plugin_get_enabled (plugin))
                 continue;
 
-            if (input_plugin_has_key (plugin, INPUT_KEY_MIME, mime))
+            if (input_plugin_has_key (plugin, InputKey::MIME, mime))
             {
                 AUDINFO ("Matched %s by MIME type %s.\n",
                  aud_plugin_get_name (plugin), (const char *) mime);
@@ -134,7 +134,7 @@ static bool open_file (const char * filename, InputPlugin * ip,
  const char * mode, VFSFile & handle, String * error = nullptr)
 {
     /* no need to open a handle for custom URI schemes */
-    if (ip->input_info.keys[INPUT_KEY_SCHEME])
+    if (ip->input_info.keys[InputKey::Scheme])
         return true;
 
     handle = VFSFile (filename, mode);

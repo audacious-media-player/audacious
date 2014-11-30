@@ -131,7 +131,7 @@ static void list_fill (GtkTreeView * tree, void * type)
     gtk_tree_view_column_pack_start (col, rend, false);
     gtk_tree_view_column_set_attributes (col, rend, "text", PVIEW_COL_NAME, nullptr);
 
-    for (PluginHandle * plugin : aud_plugin_list (GPOINTER_TO_INT (type)))
+    for (PluginHandle * plugin : aud_plugin_list (aud::from_ptr<PluginType> (type)))
         add_to_list (model, plugin);
 }
 
@@ -212,7 +212,7 @@ static void button_destroy (GtkWidget * b)
         aud_plugin_remove_watch (p, watcher, b);
 }
 
-GtkWidget * plugin_view_new (int type)
+GtkWidget * plugin_view_new (PluginType type)
 {
     GtkWidget * vbox = gtk_vbox_new (false, 6);
     gtk_container_set_border_width ((GtkContainer *) vbox, 6);
@@ -226,7 +226,7 @@ GtkWidget * plugin_view_new (int type)
     GtkWidget * tree = gtk_tree_view_new ();
     gtk_container_add ((GtkContainer *) scrolled, tree);
     gtk_tree_view_set_headers_visible ((GtkTreeView *) tree, false);
-    g_signal_connect (tree, "realize", (GCallback) list_fill, GINT_TO_POINTER (type));
+    g_signal_connect (tree, "realize", (GCallback) list_fill, aud::to_ptr (type));
     g_signal_connect (tree, "destroy", (GCallback) list_destroy, nullptr);
 
     GtkWidget * hbox = gtk_hbox_new (false, 6);

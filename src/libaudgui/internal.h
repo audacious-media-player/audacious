@@ -22,6 +22,8 @@
 
 #include <gtk/gtk.h>
 
+enum class PluginType;
+
 enum {
     AUDGUI_ABOUT_WINDOW,
     AUDGUI_EQUALIZER_WINDOW,
@@ -51,7 +53,7 @@ void plugin_menu_cleanup (void);
 void plugin_prefs_cleanup (void);
 
 /* plugin-view.c */
-GtkWidget * plugin_view_new (int type);
+GtkWidget * plugin_view_new (PluginType type);
 
 /* status.c */
 void status_init (void);

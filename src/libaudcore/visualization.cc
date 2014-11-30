@@ -140,7 +140,7 @@ void vis_activate (bool activate)
     if (! activate == ! running)
         return;
 
-    for (PluginHandle * plugin : aud_plugin_list (PLUGIN_TYPE_VIS))
+    for (PluginHandle * plugin : aud_plugin_list (PluginType::Vis))
     {
         if (! aud_plugin_get_enabled (plugin))
             continue;

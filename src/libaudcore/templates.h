@@ -103,12 +103,17 @@ inline T from_ptr (void * v)
 // ================================================================
 
 template<class T, class V>
-struct array {
-    constexpr V & operator[] (T t) const
+struct array
+{
+    template<class ... Args>
+    constexpr array (Args && ... args) :
+        vals { std::forward<Args> (args) ...} {}
+
+    constexpr const V & operator[] (T t) const
         { return vals[(int) t]; }
-    constexpr V * begin () const
+    constexpr const V * begin () const
         { return vals; }
-    constexpr V * end () const
+    constexpr const V * end () const
         { return vals + (int) T::count; }
     V & operator[] (T t)
         { return vals[(int) t]; }
@@ -116,6 +121,7 @@ struct array {
         { return vals; }
     V * end ()
         { return vals + (int) T::count; }
+
 private:
     V vals[(int) T::count];
 };
@@ -124,7 +130,8 @@ private:
 // =======================================================================
 
 template<class T, T first = (T) 0, T last = (T) ((int) T::count - 1)>
-struct range {
+struct range
+{
     struct iter {
         T v;
         constexpr T operator* () const
@@ -134,6 +141,7 @@ struct range {
         void operator++ ()
             { v = (T) ((int) v + 1); }
     };
+
     static constexpr iter begin ()
         { return {first}; }
     static constexpr iter end ()

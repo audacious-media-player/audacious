@@ -75,7 +75,7 @@ struct PluginParams
         name (name), is_single (true), f (single) {}
 };
 
-static const PluginParams table[PLUGIN_TYPES] = {
+static constexpr aud::array<PluginType, PluginParams> table = {
     PluginParams ("transport", MultiFuncs ({nullptr, nullptr})),
     PluginParams ("playlist", MultiFuncs ({nullptr, nullptr})),
     PluginParams ("input", MultiFuncs ({nullptr, nullptr})),
@@ -86,7 +86,7 @@ static const PluginParams table[PLUGIN_TYPES] = {
     PluginParams ("interface", SingleFuncs ({iface_plugin_get_current, iface_plugin_set_current}))
 };
 
-static void start_single (int type)
+static void start_single (PluginType type)
 {
     PluginHandle * skip = nullptr;
 
@@ -131,7 +131,7 @@ static void start_single (int type)
     abort ();
 }
 
-static void start_multi (int type)
+static void start_multi (PluginType type)
 {
     for (PluginHandle * p : aud_plugin_list (type))
     {
@@ -148,10 +148,10 @@ static void start_multi (int type)
     }
 }
 
-static void start_plugins (int type)
+static void start_plugins (PluginType type)
 {
     /* no interface plugin in headless mode */
-    if (type == PLUGIN_TYPE_IFACE && aud_get_headless_mode ())
+    if (type == PluginType::Iface && aud_get_headless_mode ())
         return;
 
     if (table[type].is_single)
@@ -164,22 +164,22 @@ void start_plugins_one ()
 {
     plugin_system_init ();
 
-    for (int i = 0; i < PLUGIN_TYPE_GENERAL; i ++)
-        start_plugins (i);
+    start_plugins (PluginType::Transport);
+    start_plugins (PluginType::Playlist);
+    start_plugins (PluginType::Input);
+    start_plugins (PluginType::Effect);
+    start_plugins (PluginType::Output);
 }
 
 void start_plugins_two ()
 {
-    for (int i = PLUGIN_TYPE_GENERAL; i < PLUGIN_TYPES; i ++)
-        start_plugins (i);
+    start_plugins (PluginType::Vis);
+    start_plugins (PluginType::General);
+    start_plugins (PluginType::Iface);
 }
 
-static void stop_plugins (int type)
+static void stop_plugins (PluginType type)
 {
-    /* interface plugin is already shut down */
-    if (type == PLUGIN_TYPE_IFACE)
-        return;
-
     if (table[type].is_single)
     {
         AUDINFO ("Shutting down %s.\n", aud_plugin_get_name
@@ -201,25 +201,29 @@ static void stop_plugins (int type)
 
 void stop_plugins_two ()
 {
-    for (int i = PLUGIN_TYPES - 1; i >= PLUGIN_TYPE_GENERAL; i --)
-        stop_plugins (i);
+    /* interface plugin is already shut down */
+    stop_plugins (PluginType::General);
+    stop_plugins (PluginType::Vis);
 }
 
 void stop_plugins_one ()
 {
-    for (int i = PLUGIN_TYPE_GENERAL - 1; i >= 0; i --)
-        stop_plugins (i);
+    stop_plugins (PluginType::Output);
+    stop_plugins (PluginType::Effect);
+    stop_plugins (PluginType::Input);
+    stop_plugins (PluginType::Playlist);
+    stop_plugins (PluginType::Transport);
 
     plugin_system_cleanup ();
 }
 
-EXPORT PluginHandle * aud_plugin_get_current (int type)
+EXPORT PluginHandle * aud_plugin_get_current (PluginType type)
 {
     assert (table[type].is_single);
     return table[type].f.s.get_current ();
 }
 
-static bool enable_single (int type, PluginHandle * p)
+static bool enable_single (PluginType type, PluginHandle * p)
 {
     PluginHandle * old = table[type].f.s.get_current ();
 
@@ -254,7 +258,7 @@ static bool enable_single (int type, PluginHandle * p)
     abort ();
 }
 
-static bool enable_multi (int type, PluginHandle * p, bool enable)
+static bool enable_multi (PluginType type, PluginHandle * p, bool enable)
 {
     AUDINFO ("%sabling %s.\n", enable ? "En" : "Dis", aud_plugin_get_name (p));
 
@@ -269,14 +273,14 @@ static bool enable_multi (int type, PluginHandle * p, bool enable)
             return false;
         }
 
-        if (type == PLUGIN_TYPE_VIS || type == PLUGIN_TYPE_GENERAL)
+        if (type == PluginType::Vis || type == PluginType::General)
             hook_call ("dock plugin enabled", p);
     }
     else
     {
         plugin_set_enabled (p, false);
 
-        if (type == PLUGIN_TYPE_VIS || type == PLUGIN_TYPE_GENERAL)
+        if (type == PluginType::Vis || type == PluginType::General)
             hook_call ("dock plugin disabled", p);
 
         if (table[type].f.m.stop)
@@ -291,7 +295,7 @@ EXPORT bool aud_plugin_enable (PluginHandle * plugin, bool enable)
     if (! enable == ! aud_plugin_get_enabled (plugin))
         return true;
 
-    int type = aud_plugin_get_type (plugin);
+    PluginType type = aud_plugin_get_type (plugin);
 
     if (table[type].is_single)
     {
@@ -321,8 +325,8 @@ EXPORT void * aud_plugin_get_gtk_widget (PluginHandle * plugin)
     if (! aud_plugin_get_enabled (plugin))
         return nullptr;
 
-    int type = aud_plugin_get_type (plugin);
-    if (type != PLUGIN_TYPE_GENERAL && type != PLUGIN_TYPE_VIS)
+    PluginType type = aud_plugin_get_type (plugin);
+    if (type != PluginType::General && type != PluginType::Vis)
         return nullptr;
 
     auto dp = (DockablePlugin *) aud_plugin_get_header (plugin);
@@ -334,8 +338,8 @@ EXPORT void * aud_plugin_get_qt_widget (PluginHandle * plugin)
     if (! aud_plugin_get_enabled (plugin))
         return nullptr;
 
-    int type = aud_plugin_get_type (plugin);
-    if (type != PLUGIN_TYPE_GENERAL && type != PLUGIN_TYPE_VIS)
+    PluginType type = aud_plugin_get_type (plugin);
+    if (type != PluginType::General && type != PluginType::Vis)
         return nullptr;
 
     auto dp = (DockablePlugin *) aud_plugin_get_header (plugin);

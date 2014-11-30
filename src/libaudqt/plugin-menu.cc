@@ -33,7 +33,7 @@ static aud::array<AudMenuID, QMenu *> menus;
 
 static void show_prefs (void)
 {
-    prefswin_show_plugin_page (PLUGIN_TYPE_GENERAL);
+    prefswin_show_plugin_page (PluginType::General);
 }
 
 MenuItem default_menu_items[] = {

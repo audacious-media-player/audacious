@@ -105,14 +105,14 @@ struct PluginInfo {
 class Plugin
 {
 public:
-    constexpr Plugin (int type, PluginInfo info) :
+    constexpr Plugin (PluginType type, PluginInfo info) :
         type (type),
         info (info) {}
 
     const int magic = _AUD_PLUGIN_MAGIC;
     const int version = _AUD_PLUGIN_VERSION;
 
-    const int type;  // see PLUGIN_TYPE_* enum
+    const PluginType type;
     const PluginInfo info;
 
     virtual bool init () { return true; }
@@ -126,7 +126,7 @@ class TransportPlugin : public Plugin
 public:
     constexpr TransportPlugin (const PluginInfo info,
      const ArrayRef<const char *> schemes) :
-        Plugin (PLUGIN_TYPE_TRANSPORT, info),
+        Plugin (PluginType::Transport, info),
         schemes (schemes) {}
 
     /* supported URI schemes (without "://") */
@@ -141,7 +141,7 @@ class PlaylistPlugin : public Plugin
 public:
     constexpr PlaylistPlugin (const PluginInfo info,
      const ArrayRef<const char *> extensions, bool can_save) :
-        Plugin (PLUGIN_TYPE_PLAYLIST, info),
+        Plugin (PluginType::Playlist, info),
         extensions (extensions),
         can_save (can_save) {}
 
@@ -170,7 +170,7 @@ class OutputPlugin : public Plugin
 {
 public:
     constexpr OutputPlugin (const PluginInfo info, int priority, bool force_reopen = false) :
-        Plugin (PLUGIN_TYPE_OUTPUT, info),
+        Plugin (PluginType::Output, info),
         priority (priority),
         force_reopen (force_reopen) {}
 
@@ -230,7 +230,7 @@ class EffectPlugin : public Plugin
 {
 public:
     constexpr EffectPlugin (const PluginInfo info, int order, bool preserves_format) :
-        Plugin (PLUGIN_TYPE_EFFECT, info),
+        Plugin (PluginType::Effect, info),
         order (order),
         preserves_format (preserves_format) {}
 
@@ -276,6 +276,13 @@ public:
         { return delay; }
 };
 
+enum class InputKey {
+    Ext,
+    MIME,
+    Scheme,
+    count
+};
+
 class InputPlugin : public Plugin
 {
 public:
@@ -307,30 +314,34 @@ public:
         typedef const char * const * List;
 
         int flags, priority;
-        List keys[3];
+        aud::array<InputKey, List> keys;
 
         constexpr InputInfo (int flags = 0) :
             flags (flags), priority (0), keys {} {}
 
         /* Associates file extensions with the plugin. */
         constexpr InputInfo with_exts (List exts)
-            { return InputInfo (flags, priority, exts, keys[1], keys[2]); }
+            { return InputInfo (flags, priority,
+              exts, keys[InputKey::MIME], keys[InputKey::Scheme]); }
 
         /* Associates MIME types with the plugin. */
         constexpr InputInfo with_mimes (List mimes)
-            { return InputInfo (flags, priority, keys[0], mimes, keys[2]); }
+            { return InputInfo (flags, priority,
+              keys[InputKey::Ext], mimes, keys[InputKey::Scheme]); }
 
         /* Associates custom URI schemes with the plugin.  Plugins using custom
          * URI schemes are expected to handle their own I/O.  Hence, any VFSFile
          * passed to play(), read_tuple(), etc. will be null. */
         constexpr InputInfo with_schemes (List schemes)
-            { return InputInfo (flags, priority, keys[0], keys[1], schemes); }
+            { return InputInfo (flags, priority,
+              keys[InputKey::Ext], keys[InputKey::MIME], schemes); }
 
         /* Sets how quickly the plugin should be tried in searching for a plugin
          * to handle a file which could not be identified from its extension.
          * Plugins with priority 0 are tried first, 10 last. */
         constexpr InputInfo with_priority (int priority)
-            { return InputInfo (flags, priority, keys[0], keys[1], keys[2]); }
+            { return InputInfo (flags, priority,
+              keys[InputKey::Ext], keys[InputKey::MIME], keys[InputKey::Scheme]); }
 
     private:
         constexpr InputInfo (int flags, int priority, List exts, List mimes, List schemes) :
@@ -338,7 +349,7 @@ public:
     };
 
     constexpr InputPlugin (PluginInfo info, InputInfo input_info) :
-        Plugin (PLUGIN_TYPE_INPUT, info),
+        Plugin (PluginType::Input, info),
         input_info (input_info) {}
 
     const InputInfo input_info;
@@ -409,7 +420,7 @@ protected:
 class DockablePlugin : public Plugin
 {
 public:
-    constexpr DockablePlugin (int type, PluginInfo info) :
+    constexpr DockablePlugin (PluginType type, PluginInfo info) :
         Plugin (type, info) {}
 
     /* GtkWidget * get_gtk_widget () */
@@ -423,7 +434,7 @@ class GeneralPlugin : public DockablePlugin
 {
 public:
     constexpr GeneralPlugin (PluginInfo info, bool enabled_by_default) :
-        DockablePlugin (PLUGIN_TYPE_GENERAL, info),
+        DockablePlugin (PluginType::General, info),
         enabled_by_default (enabled_by_default) {}
 
     const bool enabled_by_default;
@@ -433,7 +444,7 @@ class VisPlugin : public DockablePlugin, public Visualizer
 {
 public:
     constexpr VisPlugin (PluginInfo info, int type_mask) :
-        DockablePlugin (PLUGIN_TYPE_VIS, info),
+        DockablePlugin (PluginType::Vis, info),
         Visualizer (type_mask) {}
 };
 
@@ -441,7 +452,7 @@ class IfacePlugin : public Plugin
 {
 public:
     constexpr IfacePlugin (PluginInfo info) :
-        Plugin (PLUGIN_TYPE_IFACE, info) {}
+        Plugin (PluginType::Iface, info) {}
 
     virtual void show (bool show) = 0;
     virtual void run () = 0;

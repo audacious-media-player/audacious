@@ -33,7 +33,7 @@ static aud::array<AudMenuID, GtkWidget *> menus;
 
 static void configure_plugins (void)
 {
-    audgui_show_prefs_for_plugin_type (PLUGIN_TYPE_GENERAL);
+    audgui_show_prefs_for_plugin_type (PluginType::General);
 }
 
 static const AudguiMenuItem main_items[] = {
