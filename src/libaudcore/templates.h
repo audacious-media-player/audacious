@@ -105,9 +105,10 @@ inline T from_ptr (void * v)
 template<class T, class V>
 struct array
 {
+    // cannot use std::forward here; it is not constexpr until C++14
     template<class ... Args>
     constexpr array (Args && ... args) :
-        vals { std::forward<Args> (args) ...} {}
+        vals { static_cast<Args &&> (args) ...} {}
 
     constexpr const V & operator[] (T t) const
         { return vals[(int) t]; }
