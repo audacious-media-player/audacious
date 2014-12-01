@@ -107,16 +107,15 @@ struct Entry {
     Entry (PlaylistAddItem && item);
     ~Entry ();
 
-    int number;
     String filename;
     PluginHandle * decoder;
     Tuple tuple;
     String error;
+    int number;
     int length;
-    bool scanned, failed;
-    bool selected;
     int shuffle_num;
-    bool queued;
+    bool scanned, failed;
+    bool selected, queued;
 };
 
 struct PlaylistData {
@@ -232,14 +231,14 @@ static void entry_set_failed (PlaylistData * playlist, Entry * entry, String && 
 }
 
 Entry::Entry (PlaylistAddItem && item) :
-    number (-1),
     filename (item.filename),
     decoder (item.decoder),
+    number (-1),
     length (0),
+    shuffle_num (0),
     scanned (false),
     failed (false),
     selected (false),
-    shuffle_num (0),
     queued (false)
 {
     entry_set_tuple_real (this, std::move (item.tuple));
