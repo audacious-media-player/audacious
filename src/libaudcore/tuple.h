@@ -91,7 +91,7 @@ public:
         n_fields
     };
 
-    static constexpr auto all_fields = aud::range<Field, Title, FormattedTitle> ();
+    typedef aud::range<Field, Title, FormattedTitle> all_fields;
 
     enum ValueType {
         String,

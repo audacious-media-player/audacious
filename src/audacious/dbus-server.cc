@@ -179,7 +179,7 @@ static gboolean do_get_tuple_fields (Obj * obj, Invoc * invoc)
 {
     const char * fields[Tuple::n_fields + 1];
 
-    for (auto f : Tuple::all_fields)
+    for (auto f : Tuple::all_fields ())
         fields[f] = Tuple::field_get_name (f);
 
     fields[Tuple::n_fields] = nullptr;
