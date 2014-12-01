@@ -525,14 +525,14 @@ EXPORT void Tuple::set_format (const char * format, int chans, int rate, int bra
     if (chans > 0)
     {
         if (chans == 1)
-            str_insert (buf, -1, _("Mono"));
+            buf.insert (-1, _("Mono"));
         else if (chans == 2)
-            str_insert (buf, -1, _("Stereo"));
+            buf.insert (-1, _("Stereo"));
         else
             buf.combine (str_printf (dngettext (PACKAGE, "%d channel", "%d channels", chans), chans));
 
         if (rate > 0)
-            str_insert (buf, -1, ", ");
+            buf.insert (-1, ", ");
     }
 
     if (rate > 0)

@@ -249,7 +249,7 @@ private:
 void config_load (void)
 {
     StringBuf path = filename_to_uri (aud_get_path (AudPath::UserDir));
-    str_insert (path, -1, "/config");
+    path.insert (-1, "/config");
 
     if (VFSFile::test_file (path, VFS_EXISTS))
     {
@@ -284,7 +284,7 @@ void config_save (void)
     state.list.sort (item_compare, nullptr);
 
     StringBuf path = filename_to_uri (aud_get_path (AudPath::UserDir));
-    str_insert (path, -1, "/config");
+    path.insert (-1, "/config");
 
     String current_heading;
 

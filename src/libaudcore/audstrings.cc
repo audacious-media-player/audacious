@@ -135,27 +135,6 @@ EXPORT StringBuf str_concat (const std::initializer_list<const char *> & strings
     return str;
 }
 
-EXPORT void str_insert (StringBuf & str, int pos, const char * s, int len)
-{
-    int len0 = str.len ();
-
-    if (pos < 0)
-        pos = len0;
-    if (len < 0)
-        len = strlen (s);
-
-    str.resize (len0 + len);
-    memmove (str + pos + len, str + pos, len0 - pos);
-    memcpy (str + pos, s, len);
-}
-
-EXPORT void str_delete (StringBuf & str, int pos, int len)
-{
-    int after = str.len () - pos - len;
-    memmove (str + pos, str + pos + len, after);
-    str.resize (pos + after);
-}
-
 EXPORT StringBuf str_printf (const char * format, ...)
 {
     va_list args;
@@ -410,7 +389,7 @@ EXPORT StringBuf filename_normalize (StringBuf && filename)
     while ((len = filename.len ()) >= 2 &&
      (! strcmp ((s = filename + len - 2), G_DIR_SEPARATOR_S ".") ||
      (s = strstr (filename, G_DIR_SEPARATOR_S "." G_DIR_SEPARATOR_S))))
-        str_delete (filename, s + 1 - filename, aud::min (s + 3, filename + len) - (s + 1));
+        filename.remove (s + 1 - filename, aud::min (s + 3, filename + len) - (s + 1));
 
     /* remove parent directory ("..") elements */
     while ((len = filename.len ()) >= 3 &&
@@ -422,7 +401,7 @@ EXPORT StringBuf filename_normalize (StringBuf && filename)
         if (! s2)
             * (s2 = s) = G_DIR_SEPARATOR;
 
-        str_delete (filename, s2 + 1 - filename, aud::min (s + 4, filename + len) - (s2 + 1));
+        filename.remove (s2 + 1 - filename, aud::min (s + 4, filename + len) - (s2 + 1));
     }
 
     /* remove trailing slash */
@@ -509,7 +488,7 @@ EXPORT StringBuf filename_to_uri (const char * name)
 #endif
 
     buf.steal (str_encode_percent (buf));
-    str_insert (buf, 0, URI_PREFIX);
+    buf.insert (0, URI_PREFIX);
     return buf;
 }
 
@@ -555,7 +534,7 @@ EXPORT StringBuf uri_to_display (const char * uri)
     if (strncmp (buf, URI_PREFIX, URI_PREFIX_LEN))
         return buf;
 
-    str_delete (buf, 0, URI_PREFIX_LEN);
+    buf.remove (0, URI_PREFIX_LEN);
     buf.steal (filename_normalize (std::move (buf)));
 
     const char * home = get_home_utf8 ();
@@ -564,7 +543,7 @@ EXPORT StringBuf uri_to_display (const char * uri)
     if (homelen && ! strncmp (buf, home, homelen) && buf[homelen] == G_DIR_SEPARATOR)
     {
         buf[0] = '~';
-        str_delete (buf, 1, homelen - 1);
+        buf.remove (1, homelen - 1);
     }
 
     return buf;
@@ -661,7 +640,7 @@ EXPORT StringBuf uri_construct (const char * path, const char * reference)
         str_replace_char (buf, '\\', '/');
 
     buf.steal (str_encode_percent (buf));
-    str_insert (buf, 0, reference, slash + 1 - reference);
+    buf.insert (0, reference, slash + 1 - reference);
     return buf;
 }
 
