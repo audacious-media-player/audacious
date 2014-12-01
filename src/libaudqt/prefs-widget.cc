@@ -80,12 +80,20 @@ QWidget * RadioButtonWidget::widget (QButtonGroup * btn_group)
     if (btn_group)
         btn_group->addButton (m_radio, m_parent->data.radio_btn.value);
 
+    update ();
+
     QObject::connect (m_radio, & QAbstractButton::clicked, [this] (bool checked) {
         if (checked)
             m_parent->cfg.set_int (m_parent->data.radio_btn.value);
     });
 
     return m_radio;
+}
+
+void RadioButtonWidget::update ()
+{
+    if (m_parent->cfg.get_int () == m_parent->data.radio_btn.value)
+        m_radio->setChecked (true);
 }
 
 /* integer (spinbox) */
