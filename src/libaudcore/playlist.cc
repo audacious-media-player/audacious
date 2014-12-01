@@ -2041,12 +2041,10 @@ bool playback_entry_read (int serial, String & error)
     bool success = false;
     Entry * entry = get_playback_entry (serial);
 
-    if (entry)
+    if (entry && send_playback_info (entry))
     {
-        if (! entry->failed)
-            success = send_playback_info (entry);
-        else
-            error = entry->error;
+        success = ! entry->failed;
+        error = entry->error;
     }
 
     RETURN (success);
