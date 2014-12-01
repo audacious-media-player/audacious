@@ -21,11 +21,22 @@
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/drct.h>
+#include <libaudcore/mainloop.h>
+#include <libaudcore/multihash.h>
 #include <libaudcore/playlist.h>
 #include <libaudcore/tuple.h>
 #include <libaudcore/vfs.h>
 
 #include "libaudgui.h"
+
+static SimpleHash<String, Tuple> tuple_cache;
+static QueuedFunc cleanup_timer;
+
+void urilist_cleanup ()
+{
+    tuple_cache.clear ();
+    cleanup_timer.stop ();
+}
 
 static String check_uri (const char * name)
 {
@@ -53,7 +64,11 @@ static Index<PlaylistAddItem> urilist_to_index (const char * list)
         else
             next = end = strchr (list, 0);
 
-        index.append (check_uri (str_copy (list, end - list)));
+        String filename = check_uri (str_copy (list, end - list));
+        const Tuple * tuple = tuple_cache.lookup (filename);
+
+        index.append (filename, tuple ? tuple->ref () : Tuple ());
+
         list = next;
     }
 
@@ -83,9 +98,15 @@ EXPORT Index<char> audgui_urilist_create_from_selected (int playlist)
                 buf.append ('\n');
 
             String filename = aud_playlist_entry_get_filename (playlist, count);
+            Tuple tuple = aud_playlist_entry_get_tuple (playlist, count, Playlist::Nothing);
+
             buf.insert (filename, -1, strlen (filename));
+            if (tuple)
+                tuple_cache.add (filename, std::move (tuple));
         }
     }
+
+    cleanup_timer.start (30000, [] (void *) { urilist_cleanup (); }, nullptr);
 
     return buf;
 }

@@ -59,4 +59,7 @@ GtkWidget * plugin_view_new (PluginType type);
 void status_init (void);
 void status_cleanup (void);
 
+/* urilist.c */
+void urilist_cleanup (void);
+
 #endif /* AUDGUI_INTERNAL_H */
