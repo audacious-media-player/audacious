@@ -178,6 +178,7 @@ static List<ScanItem> scan_list;
 
 static void scan_finish (ScanRequest * request);
 static void scan_cancel (Entry * entry);
+static void scan_queue_playlist (PlaylistData * playlist);
 static void scan_restart ();
 
 static bool next_song_locked (PlaylistData * playlist, bool repeat, int hint);
@@ -337,15 +338,15 @@ static void queue_update (Playlist::Update level, PlaylistData * p, int at, int 
 {
     if (p)
     {
+        if (level == Playlist::Structure)
+            scan_queue_playlist (p);
+
         if (level >= Playlist::Metadata)
         {
             if (p == playing_playlist && p->position)
                 send_playback_info (p->position);
 
             p->modified = true;
-            p->scanning = true;
-            p->scan_ending = false;
-            scan_restart ();
         }
 
         if (p->next_update.level)
@@ -361,6 +362,9 @@ static void queue_update (Playlist::Update level, PlaylistData * p, int at, int 
             p->next_update.after = p->entries.len () - at - count;
         }
     }
+
+    if (level == Playlist::Structure)
+        scan_restart ();
 
     if (! update_level)
         queued_update.queue (update, nullptr);
@@ -556,6 +560,12 @@ static void scan_cancel (Entry * entry)
 
     scan_list.remove (item);
     delete (item);
+}
+
+static void scan_queue_playlist (PlaylistData * playlist)
+{
+    playlist->scanning = true;
+    playlist->scan_ending = false;
 }
 
 static void scan_restart ()
@@ -1685,7 +1695,7 @@ static void playlist_trigger_scan ()
     ENTER;
 
     for (auto & playlist : playlists)
-        playlist->scanning = true;
+        scan_queue_playlist (playlist.get ());
 
     scan_restart ();
 
@@ -1703,6 +1713,8 @@ static void playlist_rescan_real (int playlist_num, bool selected)
     }
 
     queue_update (Playlist::Metadata, playlist, 0, playlist->entries.len ());
+    scan_queue_playlist (playlist);
+    scan_restart ();
     LEAVE;
 }
 
@@ -1720,17 +1732,31 @@ EXPORT void aud_playlist_rescan_file (const char * filename)
 {
     ENTER;
 
+    bool restart = false;
+
     for (auto & playlist : playlists)
     {
+        bool queue = false;
+
         for (auto & entry : playlist->entries)
         {
             if (! strcmp (entry->filename, filename))
             {
                 entry_set_tuple (playlist.get (), entry.get (), Tuple ());
                 queue_update (Playlist::Metadata, playlist.get (), entry->number, 1);
+                queue = true;
             }
         }
+
+        if (queue)
+        {
+            scan_queue_playlist (playlist.get ());
+            restart = true;
+        }
     }
+
+    if (restart)
+        scan_restart ();
 
     LEAVE;
 }
