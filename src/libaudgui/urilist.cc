@@ -57,10 +57,12 @@ static Index<PlaylistAddItem> urilist_to_index (const char * list)
 
     while (list[0])
     {
-        if ((end = strstr (list, "\r\n")))
-            next = end + 2;
-        else if ((end = strchr (list, '\n')))
+        if ((end = strchr (list, '\n')))
+        {
             next = end + 1;
+            if (end > list && end[-1] == '\r')
+                end --;
+        }
         else
             next = end = strchr (list, 0);
 
