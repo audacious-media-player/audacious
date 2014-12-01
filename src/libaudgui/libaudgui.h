@@ -20,6 +20,7 @@
 #ifndef LIBAUDGUI_H
 #define LIBAUDGUI_H
 
+#include <libaudcore/index.h>
 #include <libaudcore/objects.h>
 
 enum class AudMenuID;
@@ -86,6 +87,6 @@ void audgui_queue_manager_show (void);
 /* urilist.c */
 void audgui_urilist_open (const char * list);
 void audgui_urilist_insert (int playlist, int position, const char * list);
-StringBuf audgui_urilist_create_from_selected (int playlist);
+Index<char> audgui_urilist_create_from_selected (int playlist);
 
 #endif /* LIBAUDGUI_H */

@@ -70,9 +70,9 @@ EXPORT void audgui_urilist_insert (int playlist, int at, const char * list)
     aud_playlist_entry_insert_batch (playlist, at, urilist_to_index (list), false);
 }
 
-EXPORT StringBuf audgui_urilist_create_from_selected (int playlist)
+EXPORT Index<char> audgui_urilist_create_from_selected (int playlist)
 {
-    StringBuf buf;
+    Index<char> buf;
     int entries = aud_playlist_entry_count (playlist);
 
     for (int count = 0; count < entries; count ++)
@@ -80,9 +80,10 @@ EXPORT StringBuf audgui_urilist_create_from_selected (int playlist)
         if (aud_playlist_entry_get_selected (playlist, count))
         {
             if (buf.len ())
-                str_insert (buf, -1, "\n");
+                buf.append ('\n');
 
-            str_insert (buf, -1, aud_playlist_entry_get_filename (playlist, count));
+            String filename = aud_playlist_entry_get_filename (playlist, count);
+            buf.insert (filename, -1, strlen (filename));
         }
     }
 
