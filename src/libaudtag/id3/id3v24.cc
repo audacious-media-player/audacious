@@ -288,21 +288,25 @@ static bool read_header (VFSFile & handle, int * version, bool *
 
 static void unsyncsafe (GenericFrame & frame)
 {
-    int size = frame.len ();
-    char * get = & frame[0], * set = & frame[0];
+    const char * get = frame.begin (), * end = frame.end ();
+    char * set = frame.begin ();
+    const char * c;
 
-    while (size --)
+    while ((c = (const char *) memchr (get, 0xff, end - get)))
     {
-        char c = * set ++ = * get ++;
+        c ++;
+        memmove (set, get, c - get);
+        set += c - get;
+        get = c;
 
-        if (c == (char) 0xff && size && ! get[0])
-        {
-            size --;
+        if (get < end && ! get[0])
             get ++;
-        }
     }
 
-    frame.remove (set - & frame[0], -1);
+    memmove (set, get, end - get);
+    set += end - get;
+
+    frame.remove (set - frame.begin (), -1);
 }
 
 static bool read_frame (VFSFile & handle, int max_size, int version,
