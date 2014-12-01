@@ -42,6 +42,7 @@ QAction * MenuItem::build_action (const char * domain, QWidget * parent) const
             QObject::connect (act, &QAction::triggered, m_func);
         else if (m_cname)
         {
+            act->setCheckable (true);
             act->setChecked (aud_get_bool (m_csect, m_cname));
 
             QObject::connect (act, &QAction::toggled, [=] (bool checked) {
