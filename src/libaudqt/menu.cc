@@ -55,8 +55,8 @@ QAction * MenuItem::build_action (const char * domain, QWidget * parent) const
                     m_func ();
             });
 
-            if (m_chook)
-                hook_associate (m_chook, (HookFunction) MenuItem::hook_cb, act);
+            //if (m_chook)
+                //hook_associate (m_chook, (HookFunction) MenuItem::hook_cb, act);
         }
         else if (m_items.len || m_submenu)
         {
