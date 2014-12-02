@@ -27,7 +27,7 @@ namespace audqt {
 class LogEntryModel : public QAbstractListModel
 {
 public:
-    LogEntryModel (QObject * parent = 0);
+    LogEntryModel (QObject * parent = nullptr);
     ~LogEntryModel ();
 
     int rowCount (const QModelIndex & parent = QModelIndex ()) const;

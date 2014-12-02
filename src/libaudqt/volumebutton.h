@@ -29,7 +29,7 @@ namespace audqt {
 class VolumeButton : public QToolButton
 {
 public:
-    VolumeButton (QWidget * parent);
+    VolumeButton (QWidget * parent = nullptr);
 
 private:
     void updateIcon (int val);
