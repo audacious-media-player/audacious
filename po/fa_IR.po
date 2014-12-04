@@ -6,17 +6,17 @@
 # John Lindgren <john.lindgren@aol.com>, 2012
 # mbg1991 <mbg1991@gmail.com>, 2012
 # mbg1991 <mbg1991@gmail.com>, 2012
-# misledlove <misled.love@yahoo.com>, 2013
-# misledlove <misled.love@yahoo.com>, 2013
+# Mohammad Rafigh <misled.love@yahoo.com>, 2013
+# Mohammad Rafigh <misled.love@yahoo.com>, 2013
 # Saeed Derakhshan <saeed.love@gmail.com>, 2012
 # vandu <vandusoft@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-03-23 21:24+0100\n"
-"PO-Revision-Date: 2014-03-15 22:38+0000\n"
-"Last-Translator: Radioactiveman <thomas-lange2@gmx.de>\n"
+"POT-Creation-Date: 2014-12-04 18:06+0100\n"
+"PO-Revision-Date: 2014-12-01 19:57+0000\n"
+"Last-Translator: Thomas Lange <thomas-lange2@gmx.de>\n"
 "Language-Team: Persian (Iran) (http://www.transifex.com/projects/p/audacious/"
 "language/fa_IR/)\n"
 "Language: fa_IR\n"
@@ -25,95 +25,81 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: src/audacious/adder.c:76
-msgid "Searching ..."
-msgstr "در حال جستجو..."
-
-#: src/audacious/adder.c:104
-#, c-format
-msgid "%d file found"
-msgid_plural "%d files found"
-msgstr[0] "‎%d فایل پیدا شد"
-
-#: src/audacious/adder.c:393 src/audacious/playlist-new.c:96
-msgid "New Playlist"
-msgstr "لیست پخش جدید"
-
-#: src/audacious/interface.c:93
-msgid "Error"
-msgstr "خطا"
-
-#: src/audacious/main.c:70
+#: src/audacious/main.cc:60
 msgid "Show command-line help"
 msgstr "نمایش راهنمای خط فرمان"
 
-#: src/audacious/main.c:71
+#: src/audacious/main.cc:61
 msgid "Show version"
 msgstr "نمایش نسخه"
 
-#: src/audacious/main.c:72
+#: src/audacious/main.cc:62
 msgid "Start playback"
 msgstr "شروع پخش"
 
-#: src/audacious/main.c:73
+#: src/audacious/main.cc:63
 msgid "Pause playback"
 msgstr "متوقف کردن پخش"
 
-#: src/audacious/main.c:74
+#: src/audacious/main.cc:64
 msgid "Pause if playing, play otherwise"
 msgstr "اگر فایل در حال پخش است آنرا متوقف، در غیر این‌صورت آنرا پخش کن"
 
-#: src/audacious/main.c:75
+#: src/audacious/main.cc:65
 msgid "Stop playback"
 msgstr "پایان دادن به پخش"
 
-#: src/audacious/main.c:76
+#: src/audacious/main.cc:66
 msgid "Skip to previous song"
 msgstr "رفتن به آهنگ قبلی"
 
-#: src/audacious/main.c:77
+#: src/audacious/main.cc:67
 msgid "Skip to next song"
 msgstr "رفتن به آهنگ بعدی"
 
-#: src/audacious/main.c:78
+#: src/audacious/main.cc:68
 msgid "Add files to the playlist"
 msgstr "اضافه کردن فایل به لیست پخش"
 
-#: src/audacious/main.c:79
+#: src/audacious/main.cc:69
 msgid "Add files to a temporary playlist"
 msgstr "اضافه کردن فایل‌ها به لیست پخش موقتی"
 
-#: src/audacious/main.c:80
+#: src/audacious/main.cc:70
 msgid "Display the main window"
 msgstr "نمایش پنجره اصلی"
 
-#: src/audacious/main.c:81
+#: src/audacious/main.cc:71
 msgid "Display the jump-to-song window"
 msgstr "پنجره پرش به آهنگ را نشان بده"
 
-#: src/audacious/main.c:82
+#: src/audacious/main.cc:72
 msgid "Start without a graphical interface"
 msgstr "شروع برنامه بدون رابط گرافیکی"
 
-#: src/audacious/main.c:83
+#: src/audacious/main.cc:73
 msgid "Quit on playback stop"
 msgstr "خروج در هنگام توقف پخش"
 
-#: src/audacious/main.c:84
-msgid "Print debugging messages"
-msgstr "چاپ پیام‌های اشکال‌زدایی"
+#: src/audacious/main.cc:74
+msgid "Print debugging messages (may be used twice)"
+msgstr ""
 
-#: src/audacious/main.c:264
+#: src/audacious/main.cc:76
+msgid "Run in Qt mode"
+msgstr ""
+
+#: src/audacious/main.cc:127
 #, c-format
 msgid "Unknown option: %s\n"
 msgstr "تنظیمات نامعلوم: ‎%s\n"
 
-#: src/audacious/main.c:285
+#: src/audacious/main.cc:150
 #, c-format
 msgid "Unknown option: -%c\n"
 msgstr "تنظیمات نامعلوم: ‎-%c\n"
 
-#: src/audacious/main.c:306
+#: src/audacious/main.cc:177
 #, c-format
 msgid ""
 "Usage: audacious [OPTION] ... [FILE] ...\n"
@@ -122,35 +108,53 @@ msgstr ""
 "نحوه استفاده: ‎audacious [OPTION] ... [FILE]‎\n"
 "\n"
 
-#: src/audacious/main.c:591
+#: src/audacious/main.cc:345
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/playback.c:354
+#: src/libaudcore/adder.cc:77
 #, c-format
-msgid "No decoder found for %s."
-msgstr "برای ‎%s دیکدری پیدا نشد."
+msgid "%d file found"
+msgid_plural "%d files found"
+msgstr[0] "‎%d فایل پیدا شد"
 
-#: src/audacious/playback.c:382
+#: src/libaudcore/adder.cc:317 src/libaudcore/playlist.cc:139
+msgid "New Playlist"
+msgstr "لیست پخش جدید"
+
+#: src/libaudcore/audstrings.cc:528
 #, c-format
-msgid "%s could not be opened."
-msgstr "‎%s نمی تواند باز شود."
+msgid "Audio CD, track %s"
+msgstr "سی‌دی صوتی،‌ آهنگ ‎%s"
 
-#: src/audacious/playlist-files.c:95
+#: src/libaudcore/audstrings.cc:532 src/libaudcore/tuple.cc:481
+msgid "(character encoding error)"
+msgstr ""
+
+#: src/libaudcore/playback.cc:328 src/libaudcore/probe.cc:151
+msgid "Error loading plugin"
+msgstr ""
+
+#: src/libaudcore/playback.cc:383 src/libaudgui/infowin.cc:496
 #, c-format
-msgid "Cannot load %s: unsupported file extension."
-msgstr "نمی‌توان ‎%s را بارگذاری کرد: پسوند فایل ناشناخته است."
+msgid ""
+"Error opening %s:\n"
+"%s"
+msgstr ""
 
-#: src/audacious/playlist-files.c:185
-#, c-format
-msgid "Cannot save %s: unsupported file extension."
-msgstr "نمی‌توان ‎%s را ذخیره کرد: پسوند فایل ناشناخته است."
+#: src/libaudcore/playback.cc:385
+msgid "Unknown playback error"
+msgstr ""
 
-#: src/audacious/playlist-new.c:97
+#: src/libaudcore/playback.cc:515
+msgid "Invalid audio format"
+msgstr ""
+
+#: src/libaudcore/playlist.cc:140
 msgid "Now Playing"
 msgstr "در حال پخش"
 
-#: src/audacious/playlist-new.c:1655
+#: src/libaudcore/playlist.cc:1622
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress "
 "(or has been disabled)."
@@ -158,887 +162,951 @@ msgstr ""
 "لیست پخش نمی‌تواند مرتب شود چون جستجوی متاداده‌ها همچنان در حال انجام است (یا "
 "غیر فعال شده است)."
 
-#: src/audacious/plugin-preferences.c:55
-msgid "About "
-msgstr "درباره"
-
-#: src/audacious/plugin-preferences.c:94
-msgid " Settings"
-msgstr "تنظیمات"
-
-#: src/audacious/plugin-preferences.c:99
-msgid "_Set"
-msgstr "_اعمال کردن"
-
-#: src/audacious/plugin-preferences.c:100 src/libaudgui/confirm.c:57
-#: src/libaudgui/confirm.c:90 src/libaudgui/jump-to-time.c:49
-#: src/libaudgui/playlists.c:89 src/libaudgui/playlists.c:142
-#: src/libaudgui/url-opener.c:71
-msgid "_Cancel"
-msgstr "_انصراف"
-
-#: src/audacious/plugin-preferences.c:106 src/audacious/ui_preferences.c:783
-#: src/libaudgui/infowin.c:370 src/libaudgui/queue-manager.c:189
-#: src/libaudgui/ui_fileopener.c:127 src/libaudgui/ui_jumptotrack.c:312
-#: src/libaudgui/util.c:161
-msgid "_Close"
-msgstr "_بستن"
-
-#: src/audacious/plugin-view.c:242 src/audacious/ui_preferences.c:661
-msgid "_Settings"
-msgstr "_تنظیمات"
-
-#: src/audacious/plugin-view.c:250 src/audacious/ui_preferences.c:672
-msgid "_About"
-msgstr "_درباره"
-
-#: src/audacious/ui_plugin_menu.c:37
-msgid "_Plugins ..."
-msgstr "_افزونه‌ها ..."
-
-#: src/audacious/ui_preferences.c:82
-msgid "Appearance"
-msgstr "شکل ظاهری برنامه"
-
-#: src/audacious/ui_preferences.c:83
-msgid "Audio"
-msgstr "صدا"
-
-#: src/audacious/ui_preferences.c:84
-msgid "Network"
-msgstr "شبکه"
-
-#: src/audacious/ui_preferences.c:85 src/audacious/ui_preferences.c:95
-msgid "Playlist"
-msgstr "لیست پخش"
-
-#: src/audacious/ui_preferences.c:86 src/libaudgui/infowin.c:299
-msgid "Song Info"
-msgstr "اطلاعات آهنگ"
-
-#: src/audacious/ui_preferences.c:87
-msgid "Plugins"
-msgstr "افزونه‌ها"
-
-#: src/audacious/ui_preferences.c:91
-msgid "General"
-msgstr "عمومی"
-
-#: src/audacious/ui_preferences.c:92
-msgid "Effect"
-msgstr "افکت"
-
-#: src/audacious/ui_preferences.c:93
-msgid "Visualization"
-msgstr "جلوه‌های تصویری"
-
-#: src/audacious/ui_preferences.c:94
-msgid "Input"
-msgstr "ورودی"
-
-#: src/audacious/ui_preferences.c:96
-msgid "Transport"
-msgstr "انتقال"
-
-#: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:151
-#: src/libaudgui/infowin.c:343
-msgid "Artist"
-msgstr "هنرمند"
-
-#: src/audacious/ui_preferences.c:101 src/libaudgui/infopopup.c:152
-#: src/libaudgui/infowin.c:346
-msgid "Album"
-msgstr "آلبوم"
-
-#: src/audacious/ui_preferences.c:102 src/libaudgui/infopopup.c:150
-#: src/libaudgui/infowin.c:340 src/libaudgui/ui_playlist_manager.c:235
-msgid "Title"
-msgstr "عنوان"
-
-#: src/audacious/ui_preferences.c:103
-msgid "Tracknumber"
-msgstr "شماره آهنگ"
-
-#: src/audacious/ui_preferences.c:104 src/libaudgui/infopopup.c:153
-#: src/libaudgui/infowin.c:352
-msgid "Genre"
-msgstr "سبک"
-
-#: src/audacious/ui_preferences.c:105
-msgid "Filename"
-msgstr "نام فایل"
-
-#: src/audacious/ui_preferences.c:106
-msgid "Filepath"
-msgstr "آدرس فایل"
-
-#: src/audacious/ui_preferences.c:107
-msgid "Date"
-msgstr "تاریخ انتشار"
-
-#: src/audacious/ui_preferences.c:108 src/libaudgui/infopopup.c:154
-#: src/libaudgui/infowin.c:356
-msgid "Year"
-msgstr "سال انتشار"
-
-#: src/audacious/ui_preferences.c:109 src/libaudgui/infowin.c:349
-msgid "Comment"
-msgstr "توضیحات"
-
-#: src/audacious/ui_preferences.c:110
-msgid "Codec"
-msgstr "کدک"
-
-#: src/audacious/ui_preferences.c:111
-msgid "Quality"
-msgstr "کیفیت"
-
-#: src/audacious/ui_preferences.c:116
-msgid "None"
-msgstr "هیچکدام"
-
-#: src/audacious/ui_preferences.c:117
-msgid "Arabic"
-msgstr "عربی"
-
-#: src/audacious/ui_preferences.c:118
-msgid "Baltic"
-msgstr "بالتیک"
-
-#: src/audacious/ui_preferences.c:119
-msgid "Chinese"
-msgstr "چینی"
-
-#: src/audacious/ui_preferences.c:120
-msgid "Greek"
-msgstr "یونانی"
-
-#: src/audacious/ui_preferences.c:121
-msgid "Hebrew"
-msgstr "عبری"
-
-#: src/audacious/ui_preferences.c:122
-msgid "Japanese"
-msgstr "ژاپنی"
-
-#: src/audacious/ui_preferences.c:123
-msgid "Korean"
-msgstr "کره‌ای"
-
-#: src/audacious/ui_preferences.c:124
-msgid "Polish"
-msgstr "لهستانی"
-
-#: src/audacious/ui_preferences.c:125
-msgid "Russian"
-msgstr "روسی"
-
-#: src/audacious/ui_preferences.c:126
-msgid "Taiwanese"
-msgstr "تایوانی"
-
-#: src/audacious/ui_preferences.c:127
-msgid "Turkish"
-msgstr "ترکی"
-
-#: src/audacious/ui_preferences.c:135
-msgid "Floating point"
-msgstr "ممیز شناور"
-
-#: src/audacious/ui_preferences.c:147
-msgid "<b>Interface Settings</b>"
-msgstr "<b>تنظیمات رابط</b>"
-
-#: src/audacious/ui_preferences.c:148
-msgid "Interface plugin:"
-msgstr "افزونه رابط:"
-
-#: src/audacious/ui_preferences.c:165
-msgid "Output plugin:"
-msgstr "افزونه خروجی:"
-
-#: src/audacious/ui_preferences.c:172
-msgid "<b>Output Settings</b>"
-msgstr "<b>تنظیمات خروجی</b>"
-
-#: src/audacious/ui_preferences.c:175
-msgid "Bit depth:"
-msgstr "عمق بیت:"
-
-#: src/audacious/ui_preferences.c:178
-msgid "Buffer size:"
-msgstr "اندازه بافر:"
-
-#: src/audacious/ui_preferences.c:180
-msgid "ms"
-msgstr "میلی ثانیه"
-
-#: src/audacious/ui_preferences.c:181
-msgid "Soft clipping"
-msgstr "کلیپ دادن نرم صدا"
-
-#: src/audacious/ui_preferences.c:183
-msgid "Use software volume control (not recommended)"
-msgstr "استفاده از کنترل صدای نرم‌افزاری (توصیه نمیشود)"
-
-#: src/audacious/ui_preferences.c:185
-msgid "<b>Replay Gain</b>"
-msgstr "<b>تقویت صدا</b>"
-
-#: src/audacious/ui_preferences.c:186
-msgid "Enable Replay Gain"
-msgstr "فعال کردن تقویت صدا"
-
-#: src/audacious/ui_preferences.c:188
-msgid "Album mode"
-msgstr "به ازای آلبوم"
-
-#: src/audacious/ui_preferences.c:190
-msgid "Prevent clipping (recommended)"
-msgstr "جلوگیری از کلیپ کردن صدا (پیشنهاد می شود)"
-
-#: src/audacious/ui_preferences.c:192
-msgid "<b>Adjust Levels</b>"
-msgstr "<b>تنظیم اندازه</b>"
-
-#: src/audacious/ui_preferences.c:193
-msgid "Amplify all files:"
-msgstr "تقویت صدای تمام فایل‌ها:"
-
-#: src/audacious/ui_preferences.c:195 src/audacious/ui_preferences.c:198
-msgid "dB"
-msgstr "دسیبل"
-
-#: src/audacious/ui_preferences.c:196
-msgid "Amplify untagged files:"
-msgstr "تقویت صدای فایل‌های  برچسب نخورده:"
-
-#: src/audacious/ui_preferences.c:201
-msgid "Proxy hostname:"
-msgstr "نام هاست پراکسی:"
-
-#: src/audacious/ui_preferences.c:202
-msgid "Proxy port:"
-msgstr "شماره پورت پراکسی:"
-
-#: src/audacious/ui_preferences.c:205
-msgid "Proxy username:"
-msgstr "نام کاربری پراکسی:"
-
-#: src/audacious/ui_preferences.c:206
-msgid "Proxy password:"
-msgstr "کلمه عبور پراکسی:"
-
-#: src/audacious/ui_preferences.c:210
-msgid "<b>Proxy Configuration</b>"
-msgstr "<b>تنظیمات پراکسی</b>"
-
-#: src/audacious/ui_preferences.c:211
-msgid "Enable proxy usage"
-msgstr "فعال کردن استفاده از پراکسی"
-
-#: src/audacious/ui_preferences.c:214
-msgid "Use authentication with proxy"
-msgstr "استفاده از تایید اعتبار با پروکسی"
-
-#: src/audacious/ui_preferences.c:221
-msgid "Auto character encoding detector for:"
-msgstr "تشخیص خودکار انکدینگ کاراکترها برای:"
-
-#: src/audacious/ui_preferences.c:225
-msgid "Fallback character encodings:"
-msgstr "انکدینگ کاراکترها در صورت وجود اشکال:"
-
-#: src/audacious/ui_preferences.c:229
-msgid "<b>Behavior</b>"
-msgstr "<b>وضعیت</b>"
-
-#: src/audacious/ui_preferences.c:230
-msgid "Continue playback on startup"
-msgstr "ادامه اجرای فایل‌ها هنگام شروع برنامه"
-
-#: src/audacious/ui_preferences.c:232
-msgid "Advance when the current song is deleted"
-msgstr "هنگامی که فایل در حال پخش پاک شد فایل بعدی را پخش کن"
-
-#: src/audacious/ui_preferences.c:234
-msgid "Clear the playlist when opening files"
-msgstr "پاک کردن لیست پخش هنگام باز کردن فایل جدید"
-
-#: src/audacious/ui_preferences.c:236
-msgid "Open files in a temporary playlist"
-msgstr "باز کردن فایل‌ها در لیست پخش موقتی"
-
-#: src/audacious/ui_preferences.c:238
-msgid "Do not load metadata for songs until played"
-msgstr "تا زمانی که آهنگ‌ها پخش نشده‌اند متاداده آنها را بارگذاری نکن"
-
-#: src/audacious/ui_preferences.c:241
-msgid "<b>Compatibility</b>"
-msgstr "<b>سازگاری</b>"
-
-#: src/audacious/ui_preferences.c:242
-msgid "Interpret \\ (backward slash) as a folder delimiter"
-msgstr "\\ (backward slash) را به عنوان جداکننده پوشه‌ها تفسیر کن"
-
-#: src/audacious/ui_preferences.c:247
-msgid "<b>Album Art</b>"
-msgstr "<b>تصویر آلبوم</b>"
-
-#: src/audacious/ui_preferences.c:248
-msgid "Search for images matching these words (comma-separated):"
-msgstr ""
-"جستجو برای تصاویری که با این کلمات مطابقت داشته باشند (کلمات را با کاما از "
-"هم جدا کنید):"
-
-#: src/audacious/ui_preferences.c:250
-msgid "Exclude images matching these words (comma-separated):"
-msgstr ""
-"درنظر نگرفتن تصاویری که با این کلمات مطابقت داشته باشند (کلمات را با کاما از "
-"هم جدا کنید):"
-
-#: src/audacious/ui_preferences.c:252
-msgid "Search for images matching song file name"
-msgstr "جستجو برای تصاویری که با نام آهنگ مطابقت داشته باشند"
-
-#: src/audacious/ui_preferences.c:254
-msgid "Search recursively"
-msgstr "جستجوی بازگشتی"
-
-#: src/audacious/ui_preferences.c:256
-msgid "Search depth:"
-msgstr "عمق جستجو:"
-
-#: src/audacious/ui_preferences.c:259
-msgid "<b>Popup Information</b>"
-msgstr "<b>اطلاعات پنجره بازشو</b>"
-
-#: src/audacious/ui_preferences.c:260
-msgid "Show popup information"
-msgstr "نمایش پنجره بازشوی اطلاعات"
-
-#: src/audacious/ui_preferences.c:262
-msgid "Popup delay (tenths of a second):"
-msgstr "تاخیر پنجره بازشو (براساس دهم ثانیه):"
-
-#: src/audacious/ui_preferences.c:265
-msgid "Show time scale for current song"
-msgstr "نمایش مقیاس زمان برای آهنگ جاری"
-
-#: src/audacious/ui_preferences.c:280
-msgid "TITLE"
-msgstr "عنوان"
-
-#: src/audacious/ui_preferences.c:281
-msgid "ARTIST - TITLE"
-msgstr "هنرمند - عنوان"
-
-#: src/audacious/ui_preferences.c:282
-msgid "ARTIST - ALBUM - TITLE"
-msgstr "هنرمند - آلبوم - عنوان"
-
-#: src/audacious/ui_preferences.c:283
-msgid "ARTIST - ALBUM - TRACK. TITLE"
-msgstr "هنرمند - آلبوم - شماره آهنگ. عنوان"
-
-#: src/audacious/ui_preferences.c:284
-msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
-msgstr "هنرمند [ آلبوم ] - شماره آهنگ. عنوان"
-
-#: src/audacious/ui_preferences.c:285
-msgid "ALBUM - TITLE"
-msgstr "آلبوم - عنوان"
-
-#: src/audacious/ui_preferences.c:386
-msgid "Category"
-msgstr "دسته‌بندی"
-
-#: src/audacious/ui_preferences.c:468
-msgid "Custom"
-msgstr "شخصی"
-
-#: src/audacious/ui_preferences.c:492
-msgid "<b>Song Display</b>"
-msgstr "<b>نمایش آهنگ</b>"
-
-#: src/audacious/ui_preferences.c:501
-msgid "Show song numbers"
-msgstr "نمایش شماره آهنگ‌ها"
-
-#: src/audacious/ui_preferences.c:512
-msgid "Show leading zeroes (02:00 instead of 2:00)"
-msgstr "صفرهای پیشین را نمایش بده (02:00 به جای 2:00)"
-
-#: src/audacious/ui_preferences.c:526
-msgid "Title format:"
-msgstr "فرمت عنوان:"
-
-#: src/audacious/ui_preferences.c:531
-msgid "Custom string:"
-msgstr "رشته شخصی:"
-
-#: src/audacious/ui_preferences.c:734
-msgid "Audacious Settings"
-msgstr "تنظیمات Audacious"
-
-#: src/audacious/util.c:117
+#: src/libaudcore/playlist-files.cc:76
 #, c-format
-msgid "Could not create directory (%s): %s\n"
-msgstr "پوشه (‎%s) را نمی‌توان ایجاد کرد: ‎%s\n"
+msgid "Cannot load %s: unsupported file name extension."
+msgstr ""
 
-#: src/libaudcore/audstrings.c:382
+#: src/libaudcore/playlist-files.cc:136
 #, c-format
-msgid "Audio CD, track %s"
-msgstr "سی‌دی صوتی،‌ آهنگ ‎%s"
+msgid "Cannot save %s: unsupported file name extension."
+msgstr ""
 
-#: src/libaudcore/tuple.c:442
+#: src/libaudcore/probe.cc:119
+msgid "Seek error"
+msgstr ""
+
+#: src/libaudcore/probe.cc:127
+msgid "File format not recognized"
+msgstr ""
+
+#: src/libaudcore/probe.cc:161
+msgid "Error reading metadata"
+msgstr ""
+
+#: src/libaudcore/tuple.cc:528
 msgid "Mono"
 msgstr "تک‌کاناله"
 
-#: src/libaudcore/tuple.c:444
+#: src/libaudcore/tuple.cc:530
 msgid "Stereo"
 msgstr "دوکاناله"
 
-#: src/libaudcore/tuple.c:446
+#: src/libaudcore/tuple.cc:532
 #, c-format
 msgid "%d channel"
 msgid_plural "%d channels"
 msgstr[0] "‎%d کانال"
 
-#: src/libaudgui/about.c:37
+#: src/libaudcore/tuple.cc:699
+#, c-format
+msgid "Track %d"
+msgstr ""
+
+#: src/libaudcore/tuple.cc:701
+msgid "Audio CD"
+msgstr ""
+
+#: src/libaudcore/tuple.cc:707
+msgid "(unknown title)"
+msgstr ""
+
+#: src/libaudcore/vfs.cc:67
+msgid "Invalid URI"
+msgstr ""
+
+#: src/libaudcore/vfs.cc:83
+msgid "Unknown URI scheme"
+msgstr ""
+
+#: src/libaudcore/vfs_local.cc:82
+msgid "Invalid file name"
+msgstr ""
+
+#: src/libaudgui/about.cc:38 src/libaudqt/about.cc:37
 msgid "Credits"
 msgstr "تولیدکنندگان"
 
-#: src/libaudgui/about.c:37
+#: src/libaudgui/about.cc:38 src/libaudqt/about.cc:37
 msgid "License"
 msgstr "لایسنس"
 
-#: src/libaudgui/about.c:69
+#: src/libaudgui/about.cc:72 src/libaudqt/about.cc:89
 msgid "About Audacious"
 msgstr "درباره Audaciuos"
 
-#: src/libaudgui/confirm.c:51
+#: src/libaudgui/confirm.cc:51 src/libaudqt/playlist-management.cc:41
 #, c-format
 msgid "Do you want to permanently remove “%s”?"
 msgstr "آیا می‌خواهید \"‎%s\" را برای همیشه حذف کنید؟"
 
-#: src/libaudgui/confirm.c:55 src/libaudgui/ui_playlist_manager.c:255
+#: src/libaudgui/confirm.cc:55 src/libaudqt/playlist-management.cc:46
 msgid "_Remove"
 msgstr "_حذف"
 
-#: src/libaudgui/confirm.c:60
+#: src/libaudgui/confirm.cc:57 src/libaudgui/confirm.cc:88
+#: src/libaudgui/jump-to-time.cc:48 src/libaudgui/playlists.cc:90
+#: src/libaudgui/playlists.cc:144 src/libaudgui/plugin-prefs.cc:160
+#: src/libaudgui/url-opener.cc:76 src/libaudqt/playlist-management.cc:47
+msgid "_Cancel"
+msgstr "_انصراف"
+
+#: src/libaudgui/confirm.cc:60 src/libaudqt/playlist-management.cc:72
 msgid "Remove Playlist"
 msgstr "حذف لیست پخش"
 
-#: src/libaudgui/confirm.c:62
+#: src/libaudgui/confirm.cc:62 src/libaudqt/playlist-management.cc:44
 msgid "_Don’t ask again"
 msgstr "_دوباره نپرس"
 
-#: src/libaudgui/confirm.c:89
+#: src/libaudgui/confirm.cc:87
 msgid "_Rename"
 msgstr ""
 
-#: src/libaudgui/confirm.c:93
+#: src/libaudgui/confirm.cc:91
 msgid "Rename Playlist"
 msgstr "تغییر نام لیست پخش"
 
-#: src/libaudgui/confirm.c:93
+#: src/libaudgui/confirm.cc:91
 msgid "What would you like to call this playlist?"
 msgstr "چه نامی را برای لیست پخش جاری انتخاب می‌کنید؟"
 
-#: src/libaudgui/equalizer.c:44
+#: src/libaudgui/equalizer.cc:45 src/libaudqt/equalizer.cc:63
 msgid "_Enable"
 msgstr "ـفعال کردن"
 
-#: src/libaudgui/equalizer.c:119
+#: src/libaudgui/equalizer.cc:119 src/libaudqt/equalizer.cc:65
 msgid "31 Hz"
 msgstr "31 هرتز"
 
-#: src/libaudgui/equalizer.c:119
+#: src/libaudgui/equalizer.cc:119 src/libaudqt/equalizer.cc:65
 msgid "63 Hz"
 msgstr "63‌ هرتز"
 
-#: src/libaudgui/equalizer.c:120
+#: src/libaudgui/equalizer.cc:120 src/libaudqt/equalizer.cc:66
 msgid "125 Hz"
 msgstr "125 هرتز"
 
-#: src/libaudgui/equalizer.c:120
+#: src/libaudgui/equalizer.cc:120 src/libaudqt/equalizer.cc:66
 msgid "250 Hz"
 msgstr "250 هرتز"
 
-#: src/libaudgui/equalizer.c:120
+#: src/libaudgui/equalizer.cc:120 src/libaudqt/equalizer.cc:66
 msgid "500 Hz"
 msgstr "500 هرتز"
 
-#: src/libaudgui/equalizer.c:120
+#: src/libaudgui/equalizer.cc:120 src/libaudqt/equalizer.cc:66
 msgid "1 kHz"
 msgstr "1 کیلوهرتز"
 
-#: src/libaudgui/equalizer.c:120
+#: src/libaudgui/equalizer.cc:120 src/libaudqt/equalizer.cc:66
 msgid "2 kHz"
 msgstr "2 کیلوهرتز"
 
-#: src/libaudgui/equalizer.c:121
+#: src/libaudgui/equalizer.cc:121 src/libaudqt/equalizer.cc:67
 msgid "4 kHz"
 msgstr "4 کیلوهرتز"
 
-#: src/libaudgui/equalizer.c:121
+#: src/libaudgui/equalizer.cc:121 src/libaudqt/equalizer.cc:67
 msgid "8 kHz"
 msgstr "8 کیلوهرتز"
 
-#: src/libaudgui/equalizer.c:121
+#: src/libaudgui/equalizer.cc:121 src/libaudqt/equalizer.cc:67
 msgid "16 kHz"
 msgstr "16 کیلوهرتز"
 
-#: src/libaudgui/equalizer.c:124
+#: src/libaudgui/equalizer.cc:124 src/libaudqt/equalizer.cc:90
 msgid "Equalizer"
 msgstr "اکولایزر"
 
-#: src/libaudgui/equalizer.c:138
+#: src/libaudgui/equalizer.cc:138 src/libaudqt/equalizer.cc:72
 msgid "Preamp"
 msgstr "پیش‌تقویت‌کننده"
 
-#: src/libaudgui/infopopup.c:155
+#: src/libaudgui/infopopup.cc:200 src/libaudgui/infowin.cc:360
+#: src/libaudgui/prefs-window.cc:102 src/libaudqt/info-widget.cc:40
+#: src/libaudqt/prefs-window.cc:105
+msgid "Title"
+msgstr "عنوان"
+
+#: src/libaudgui/infopopup.cc:201 src/libaudgui/infowin.cc:363
+#: src/libaudgui/prefs-window.cc:100 src/libaudqt/info-widget.cc:38
+#: src/libaudqt/prefs-window.cc:103
+msgid "Artist"
+msgstr "هنرمند"
+
+#: src/libaudgui/infopopup.cc:202 src/libaudgui/infowin.cc:366
+#: src/libaudgui/prefs-window.cc:101 src/libaudqt/info-widget.cc:39
+#: src/libaudqt/prefs-window.cc:104
+msgid "Album"
+msgstr "آلبوم"
+
+#: src/libaudgui/infopopup.cc:203 src/libaudgui/infowin.cc:375
+#: src/libaudgui/prefs-window.cc:104 src/libaudqt/info-widget.cc:42
+#: src/libaudqt/prefs-window.cc:107
+msgid "Genre"
+msgstr "سبک"
+
+#: src/libaudgui/infopopup.cc:204 src/libaudgui/infowin.cc:379
+#: src/libaudgui/prefs-window.cc:108 src/libaudqt/prefs-window.cc:111
+msgid "Year"
+msgstr "سال انتشار"
+
+#: src/libaudgui/infopopup.cc:205
 msgid "Track"
 msgstr "آهنگ"
 
-#: src/libaudgui/infopopup.c:156
+#: src/libaudgui/infopopup.cc:206 src/libaudqt/info-widget.cc:52
 msgid "Length"
 msgstr "مدت زمان"
 
-#: src/libaudgui/infowin.c:46
+#: src/libaudgui/infowin.cc:49
 msgid "Format:"
 msgstr "فرمت:"
 
-#: src/libaudgui/infowin.c:47
+#: src/libaudgui/infowin.cc:50
 msgid "Quality:"
 msgstr "کیفیت:"
 
-#: src/libaudgui/infowin.c:48
+#: src/libaudgui/infowin.cc:51
 msgid "Bitrate:"
 msgstr "نرخ بیت:"
 
-#: src/libaudgui/infowin.c:76
+#: src/libaudgui/infowin.cc:83
 msgid "Acid Jazz"
 msgstr "اسید جاز"
 
-#: src/libaudgui/infowin.c:77
+#: src/libaudgui/infowin.cc:84
 msgid "Acid Rock"
 msgstr "اسید راک"
 
-#: src/libaudgui/infowin.c:78
+#: src/libaudgui/infowin.cc:85
 msgid "Ambient"
 msgstr "امبینت"
 
-#: src/libaudgui/infowin.c:79
+#: src/libaudgui/infowin.cc:86
 msgid "Bebop"
 msgstr "بیباپ"
 
-#: src/libaudgui/infowin.c:80
+#: src/libaudgui/infowin.cc:87
 msgid "Bluegrass"
 msgstr "بلوگرس"
 
-#: src/libaudgui/infowin.c:81
+#: src/libaudgui/infowin.cc:88
 msgid "Blues"
 msgstr "بلوز"
 
-#: src/libaudgui/infowin.c:82
+#: src/libaudgui/infowin.cc:89
 msgid "Chamber Music"
 msgstr "موسیقی خواب"
 
-#: src/libaudgui/infowin.c:83
+#: src/libaudgui/infowin.cc:90
 msgid "Classical"
 msgstr "کلاسیک"
 
-#: src/libaudgui/infowin.c:84
+#: src/libaudgui/infowin.cc:91
 msgid "Country"
 msgstr "کانتری"
 
-#: src/libaudgui/infowin.c:85
+#: src/libaudgui/infowin.cc:92
 msgid "Death Metal"
 msgstr "دت متال"
 
-#: src/libaudgui/infowin.c:86
+#: src/libaudgui/infowin.cc:93
 msgid "Disco"
 msgstr "دیسکو"
 
-#: src/libaudgui/infowin.c:87
+#: src/libaudgui/infowin.cc:94
 msgid "Easy Listening"
 msgstr "موسیقی آرام"
 
-#: src/libaudgui/infowin.c:88
+#: src/libaudgui/infowin.cc:95
 msgid "Folk"
 msgstr "فولک"
 
-#: src/libaudgui/infowin.c:89
+#: src/libaudgui/infowin.cc:96
 msgid "Funk"
 msgstr "فانک"
 
-#: src/libaudgui/infowin.c:90
+#: src/libaudgui/infowin.cc:97
 msgid "Gangsta Rap"
 msgstr "رپ گانگستری"
 
-#: src/libaudgui/infowin.c:91
+#: src/libaudgui/infowin.cc:98
 msgid "Gospel"
 msgstr "گاسپل"
 
-#: src/libaudgui/infowin.c:92
+#: src/libaudgui/infowin.cc:99
 msgid "Grunge"
 msgstr "گرانج"
 
-#: src/libaudgui/infowin.c:93
+#: src/libaudgui/infowin.cc:100
 msgid "Hard Rock"
 msgstr "هارد راک"
 
-#: src/libaudgui/infowin.c:94
+#: src/libaudgui/infowin.cc:101
 msgid "Heavy Metal"
 msgstr "هوی متال"
 
-#: src/libaudgui/infowin.c:95
+#: src/libaudgui/infowin.cc:102
 msgid "Hip-hop"
 msgstr "هیپ-هاپ"
 
-#: src/libaudgui/infowin.c:96
+#: src/libaudgui/infowin.cc:103
 msgid "House"
 msgstr "هاوس"
 
-#: src/libaudgui/infowin.c:97
+#: src/libaudgui/infowin.cc:104
 msgid "Jazz"
 msgstr "جاز"
 
-#: src/libaudgui/infowin.c:98
+#: src/libaudgui/infowin.cc:105
 msgid "Jungle"
 msgstr "جنگل"
 
-#: src/libaudgui/infowin.c:99
+#: src/libaudgui/infowin.cc:106
 msgid "Metal"
 msgstr "متال"
 
-#: src/libaudgui/infowin.c:100
+#: src/libaudgui/infowin.cc:107
 msgid "New Age"
 msgstr "عصر جدید"
 
-#: src/libaudgui/infowin.c:101
+#: src/libaudgui/infowin.cc:108
 msgid "New Wave"
 msgstr "موج جدید"
 
-#: src/libaudgui/infowin.c:102
+#: src/libaudgui/infowin.cc:109
 msgid "Noise"
 msgstr "نویز"
 
-#: src/libaudgui/infowin.c:103
+#: src/libaudgui/infowin.cc:110
 msgid "Pop"
 msgstr "پاپ"
 
-#: src/libaudgui/infowin.c:104
+#: src/libaudgui/infowin.cc:111
 msgid "Punk Rock"
 msgstr "پانک راک"
 
-#: src/libaudgui/infowin.c:105
+#: src/libaudgui/infowin.cc:112
 msgid "Rap"
 msgstr "رپ"
 
-#: src/libaudgui/infowin.c:106
+#: src/libaudgui/infowin.cc:113
 msgid "Reggae"
 msgstr "رگه"
 
-#: src/libaudgui/infowin.c:107
+#: src/libaudgui/infowin.cc:114
 msgid "Rock"
 msgstr "راک"
 
-#: src/libaudgui/infowin.c:108
+#: src/libaudgui/infowin.cc:115
 msgid "Rock and Roll"
 msgstr "راک اند رول"
 
-#: src/libaudgui/infowin.c:109
+#: src/libaudgui/infowin.cc:116
 msgid "Rhythm and Blues"
 msgstr "ریتم اند بلوز"
 
-#: src/libaudgui/infowin.c:110
+#: src/libaudgui/infowin.cc:117
 msgid "Ska"
 msgstr "اسکا"
 
-#: src/libaudgui/infowin.c:111
+#: src/libaudgui/infowin.cc:118
 msgid "Soul"
 msgstr "سول"
 
-#: src/libaudgui/infowin.c:112
+#: src/libaudgui/infowin.cc:119
 msgid "Swing"
 msgstr "سوینگ"
 
-#: src/libaudgui/infowin.c:113
+#: src/libaudgui/infowin.cc:120
 msgid "Techno"
 msgstr "تکنو"
 
-#: src/libaudgui/infowin.c:114
+#: src/libaudgui/infowin.cc:121
 msgid "Trip-hop"
 msgstr "تریپ-هاپ"
 
-#: src/libaudgui/infowin.c:220
+#: src/libaudgui/infowin.cc:227
 msgid "Save successful"
 msgstr "ذخیره با موفقیت"
 
-#: src/libaudgui/infowin.c:224
+#: src/libaudgui/infowin.cc:231
 msgid "Save error"
 msgstr "خطا در ذخیره‌سازی"
 
-#: src/libaudgui/infowin.c:359
+#: src/libaudgui/infowin.cc:316 src/libaudgui/prefs-window.cc:86
+#: src/libaudqt/infowin.cc:61 src/libaudqt/prefs-window.cc:89
+msgid "Song Info"
+msgstr "اطلاعات آهنگ"
+
+#: src/libaudgui/infowin.cc:369 src/libaudqt/info-widget.cc:44
+msgid "Album Artist"
+msgstr ""
+
+#: src/libaudgui/infowin.cc:372 src/libaudgui/prefs-window.cc:109
+#: src/libaudqt/info-widget.cc:43 src/libaudqt/prefs-window.cc:112
+msgid "Comment"
+msgstr "توضیحات"
+
+#: src/libaudgui/infowin.cc:382 src/libaudqt/info-widget.cc:41
 msgid "Track Number"
 msgstr "شماره آهنگ"
 
-#: src/libaudgui/infowin.c:367
+#: src/libaudgui/infowin.cc:389
+msgid "Clea_r fields when moving to next song"
+msgstr ""
+
+#: src/libaudgui/infowin.cc:403
 msgid "_Save"
 msgstr "_ذخیره"
 
-#: src/libaudgui/infowin.c:418
+#: src/libaudgui/infowin.cc:406 src/libaudgui/plugin-prefs.cc:166
+#: src/libaudgui/prefs-window.cc:762 src/libaudgui/queue-manager.cc:194
+#: src/libaudgui/ui_fileopener.cc:127 src/libaudgui/ui_jumptotrack.cc:302
+#: src/libaudgui/util.cc:167 src/libaudqt/queue-manager.cc:116
+msgid "_Close"
+msgstr "_بستن"
+
+#: src/libaudgui/infowin.cc:409
+msgid "_Next"
+msgstr ""
+
+#: src/libaudgui/infowin.cc:455
 #, c-format
 msgid "%d kb/s"
 msgstr "‎%d کیلوبیت/ثانیه"
 
-#: src/libaudgui/infowin.c:423
+#: src/libaudgui/infowin.cc:460
 msgid "N/A"
 msgstr "نامعلوم"
 
-#: src/libaudgui/infowin.c:453
-#, c-format
-msgid "No info available for %s.\n"
-msgstr "اطلاعاتی برای ‎%s در دسترس نیست.\n"
-
-#: src/libaudgui/jump-to-time.c:48 src/libaudgui/ui_jumptotrack.c:305
+#: src/libaudgui/jump-to-time.cc:47 src/libaudgui/ui_jumptotrack.cc:296
 msgid "_Jump"
 msgstr "_پرش"
 
-#: src/libaudgui/jump-to-time.c:52
+#: src/libaudgui/jump-to-time.cc:51
 msgid "Jump to Time"
 msgstr "پرش به زمان"
 
-#: src/libaudgui/jump-to-time.c:52
+#: src/libaudgui/jump-to-time.cc:51
 msgid "Enter time (minutes:seconds):"
 msgstr "زمان را وارد کنید (دقیقه:ثانیه):"
 
-#: src/libaudgui/playlists.c:86
+#: src/libaudgui/playlists.cc:89
+msgid "_Overwrite"
+msgstr ""
+
+#: src/libaudgui/playlists.cc:93
+msgid "Confirm Overwrite"
+msgstr "تایید بازنویسی"
+
+#: src/libaudgui/playlists.cc:93
 #, c-format
 msgid "Overwrite %s?"
 msgstr "باز نویسی بر روی ‎%s انجام شود؟"
 
-#: src/libaudgui/playlists.c:88
-msgid "_Overwrite"
-msgstr ""
-
-#: src/libaudgui/playlists.c:92
-msgid "Confirm Overwrite"
-msgstr "تایید بازنویسی"
-
-#: src/libaudgui/playlists.c:121
+#: src/libaudgui/playlists.cc:123
 msgid "Export Playlist"
 msgstr "خروجی گرفتن از لیست پخش"
 
-#: src/libaudgui/playlists.c:122
+#: src/libaudgui/playlists.cc:124
 msgid "_Export"
 msgstr ""
 
-#: src/libaudgui/playlists.c:128
+#: src/libaudgui/playlists.cc:130
 msgid "Import Playlist"
 msgstr "وارد کردن لیست پخش"
 
-#: src/libaudgui/playlists.c:129
+#: src/libaudgui/playlists.cc:131
 msgid "_Import"
 msgstr ""
 
-#: src/libaudgui/queue-manager.c:172
+#: src/libaudgui/plugin-menu.cc:40
+msgid "_Plugins ..."
+msgstr "_افزونه‌ها ..."
+
+#: src/libaudgui/plugin-prefs.cc:109 src/libaudqt/prefs-plugin.cc:55
+#, c-format
+msgid "About %s"
+msgstr ""
+
+#: src/libaudgui/plugin-prefs.cc:155 src/libaudqt/prefs-plugin.cc:107
+#, c-format
+msgid "%s Settings"
+msgstr ""
+
+#: src/libaudgui/plugin-prefs.cc:159
+msgid "_Set"
+msgstr "_اعمال کردن"
+
+#: src/libaudgui/plugin-view.cc:235 src/libaudgui/prefs-window.cc:650
+#: src/libaudqt/prefs-window.cc:491 src/libaudqt/prefs-window.cc:637
+msgid "_Settings"
+msgstr "_تنظیمات"
+
+#: src/libaudgui/plugin-view.cc:242 src/libaudgui/prefs-window.cc:661
+#: src/libaudqt/prefs-window.cc:505 src/libaudqt/prefs-window.cc:634
+msgid "_About"
+msgstr "_درباره"
+
+#: src/libaudgui/prefs-window.cc:82 src/libaudqt/prefs-window.cc:85
+msgid "Appearance"
+msgstr "شکل ظاهری برنامه"
+
+#: src/libaudgui/prefs-window.cc:83 src/libaudqt/prefs-window.cc:86
+msgid "Audio"
+msgstr "صدا"
+
+#: src/libaudgui/prefs-window.cc:84 src/libaudqt/prefs-window.cc:87
+msgid "Network"
+msgstr "شبکه"
+
+#: src/libaudgui/prefs-window.cc:85 src/libaudgui/prefs-window.cc:95
+#: src/libaudqt/prefs-window.cc:88 src/libaudqt/prefs-window.cc:98
+msgid "Playlist"
+msgstr "لیست پخش"
+
+#: src/libaudgui/prefs-window.cc:87 src/libaudqt/prefs-window.cc:90
+msgid "Plugins"
+msgstr "افزونه‌ها"
+
+#: src/libaudgui/prefs-window.cc:91 src/libaudqt/prefs-window.cc:94
+msgid "General"
+msgstr "عمومی"
+
+#: src/libaudgui/prefs-window.cc:92 src/libaudqt/prefs-window.cc:95
+msgid "Effect"
+msgstr "افکت"
+
+#: src/libaudgui/prefs-window.cc:93 src/libaudqt/prefs-window.cc:96
+msgid "Visualization"
+msgstr "جلوه‌های تصویری"
+
+#: src/libaudgui/prefs-window.cc:94 src/libaudqt/prefs-window.cc:97
+msgid "Input"
+msgstr "ورودی"
+
+#: src/libaudgui/prefs-window.cc:96 src/libaudqt/prefs-window.cc:99
+msgid "Transport"
+msgstr "انتقال"
+
+#: src/libaudgui/prefs-window.cc:103 src/libaudqt/prefs-window.cc:106
+msgid "Track number"
+msgstr ""
+
+#: src/libaudgui/prefs-window.cc:105 src/libaudqt/prefs-window.cc:108
+msgid "File name"
+msgstr ""
+
+#: src/libaudgui/prefs-window.cc:106 src/libaudqt/prefs-window.cc:109
+msgid "File path"
+msgstr ""
+
+#: src/libaudgui/prefs-window.cc:107 src/libaudqt/prefs-window.cc:110
+msgid "Date"
+msgstr "تاریخ انتشار"
+
+#: src/libaudgui/prefs-window.cc:110 src/libaudqt/info-widget.cc:54
+#: src/libaudqt/prefs-window.cc:113
+msgid "Codec"
+msgstr "کدک"
+
+#: src/libaudgui/prefs-window.cc:111 src/libaudqt/info-widget.cc:55
+#: src/libaudqt/prefs-window.cc:114
+msgid "Quality"
+msgstr "کیفیت"
+
+#: src/libaudgui/prefs-window.cc:116 src/libaudqt/prefs-window.cc:119
+msgid "None"
+msgstr "هیچکدام"
+
+#: src/libaudgui/prefs-window.cc:117 src/libaudqt/prefs-window.cc:120
+msgid "Arabic"
+msgstr "عربی"
+
+#: src/libaudgui/prefs-window.cc:118 src/libaudqt/prefs-window.cc:121
+msgid "Baltic"
+msgstr "بالتیک"
+
+#: src/libaudgui/prefs-window.cc:119 src/libaudqt/prefs-window.cc:122
+msgid "Chinese"
+msgstr "چینی"
+
+#: src/libaudgui/prefs-window.cc:120 src/libaudqt/prefs-window.cc:123
+msgid "Greek"
+msgstr "یونانی"
+
+#: src/libaudgui/prefs-window.cc:121 src/libaudqt/prefs-window.cc:124
+msgid "Hebrew"
+msgstr "عبری"
+
+#: src/libaudgui/prefs-window.cc:122 src/libaudqt/prefs-window.cc:125
+msgid "Japanese"
+msgstr "ژاپنی"
+
+#: src/libaudgui/prefs-window.cc:123 src/libaudqt/prefs-window.cc:126
+msgid "Korean"
+msgstr "کره‌ای"
+
+#: src/libaudgui/prefs-window.cc:124 src/libaudqt/prefs-window.cc:127
+msgid "Polish"
+msgstr "لهستانی"
+
+#: src/libaudgui/prefs-window.cc:125 src/libaudqt/prefs-window.cc:128
+msgid "Russian"
+msgstr "روسی"
+
+#: src/libaudgui/prefs-window.cc:126 src/libaudqt/prefs-window.cc:129
+msgid "Taiwanese"
+msgstr "تایوانی"
+
+#: src/libaudgui/prefs-window.cc:127 src/libaudqt/prefs-window.cc:130
+msgid "Turkish"
+msgstr "ترکی"
+
+#: src/libaudgui/prefs-window.cc:135 src/libaudqt/prefs-window.cc:138
+msgid "Floating point"
+msgstr "ممیز شناور"
+
+#: src/libaudgui/prefs-window.cc:147 src/libaudqt/prefs-window.cc:150
+msgid "<b>Interface Settings</b>"
+msgstr "<b>تنظیمات رابط</b>"
+
+#: src/libaudgui/prefs-window.cc:148 src/libaudqt/prefs-window.cc:151
+msgid "Interface plugin:"
+msgstr "افزونه رابط:"
+
+#: src/libaudgui/prefs-window.cc:166 src/libaudqt/prefs-window.cc:169
+msgid "Output plugin:"
+msgstr "افزونه خروجی:"
+
+#: src/libaudgui/prefs-window.cc:174 src/libaudqt/prefs-window.cc:177
+msgid "<b>Output Settings</b>"
+msgstr "<b>تنظیمات خروجی</b>"
+
+#: src/libaudgui/prefs-window.cc:176 src/libaudqt/prefs-window.cc:179
+msgid "Bit depth:"
+msgstr "عمق بیت:"
+
+#: src/libaudgui/prefs-window.cc:179 src/libaudgui/prefs-window.cc:224
+#: src/libaudqt/prefs-window.cc:182 src/libaudqt/prefs-window.cc:227
+msgid "Buffer size:"
+msgstr "اندازه بافر:"
+
+#: src/libaudgui/prefs-window.cc:181 src/libaudqt/prefs-window.cc:184
+msgid "ms"
+msgstr "میلی ثانیه"
+
+#: src/libaudgui/prefs-window.cc:182 src/libaudqt/prefs-window.cc:185
+msgid "Soft clipping"
+msgstr "کلیپ دادن نرم صدا"
+
+#: src/libaudgui/prefs-window.cc:184 src/libaudqt/prefs-window.cc:187
+msgid "Use software volume control (not recommended)"
+msgstr "استفاده از کنترل صدای نرم‌افزاری (توصیه نمیشود)"
+
+#: src/libaudgui/prefs-window.cc:186 src/libaudqt/prefs-window.cc:189
+msgid "<b>Replay Gain</b>"
+msgstr "<b>تقویت صدا</b>"
+
+#: src/libaudgui/prefs-window.cc:187 src/libaudqt/prefs-window.cc:190
+msgid "Enable Replay Gain"
+msgstr "فعال کردن تقویت صدا"
+
+#: src/libaudgui/prefs-window.cc:189 src/libaudqt/prefs-window.cc:192
+msgid "Album mode"
+msgstr "به ازای آلبوم"
+
+#: src/libaudgui/prefs-window.cc:192 src/libaudqt/prefs-window.cc:195
+msgid "Prevent clipping (recommended)"
+msgstr "جلوگیری از کلیپ کردن صدا (پیشنهاد می شود)"
+
+#: src/libaudgui/prefs-window.cc:195 src/libaudqt/prefs-window.cc:198
+msgid "<b>Adjust Levels</b>"
+msgstr "<b>تنظیم اندازه</b>"
+
+#: src/libaudgui/prefs-window.cc:197 src/libaudqt/prefs-window.cc:200
+msgid "Amplify all files:"
+msgstr "تقویت صدای تمام فایل‌ها:"
+
+#: src/libaudgui/prefs-window.cc:199 src/libaudgui/prefs-window.cc:203
+#: src/libaudqt/prefs-window.cc:202 src/libaudqt/prefs-window.cc:206
+msgid "dB"
+msgstr "دسیبل"
+
+#: src/libaudgui/prefs-window.cc:201 src/libaudqt/prefs-window.cc:204
+msgid "Amplify untagged files:"
+msgstr "تقویت صدای فایل‌های  برچسب نخورده:"
+
+#: src/libaudgui/prefs-window.cc:208 src/libaudqt/prefs-window.cc:211
+msgid "Proxy hostname:"
+msgstr "نام هاست پراکسی:"
+
+#: src/libaudgui/prefs-window.cc:210 src/libaudqt/prefs-window.cc:213
+msgid "Proxy port:"
+msgstr "شماره پورت پراکسی:"
+
+#: src/libaudgui/prefs-window.cc:215 src/libaudqt/prefs-window.cc:218
+msgid "Proxy username:"
+msgstr "نام کاربری پراکسی:"
+
+#: src/libaudgui/prefs-window.cc:217 src/libaudqt/prefs-window.cc:220
+msgid "Proxy password:"
+msgstr "کلمه عبور پراکسی:"
+
+#: src/libaudgui/prefs-window.cc:223 src/libaudqt/prefs-window.cc:226
+msgid "<b>Network Settings</b>"
+msgstr ""
+
+#: src/libaudgui/prefs-window.cc:226 src/libaudqt/prefs-window.cc:229
+msgid "KiB"
+msgstr ""
+
+#: src/libaudgui/prefs-window.cc:227 src/libaudqt/prefs-window.cc:230
+msgid "<b>Proxy Configuration</b>"
+msgstr "<b>تنظیمات پراکسی</b>"
+
+#: src/libaudgui/prefs-window.cc:228 src/libaudqt/prefs-window.cc:231
+msgid "Enable proxy usage"
+msgstr "فعال کردن استفاده از پراکسی"
+
+#: src/libaudgui/prefs-window.cc:232 src/libaudqt/prefs-window.cc:235
+msgid "Use authentication with proxy"
+msgstr "استفاده از تایید اعتبار با پروکسی"
+
+#: src/libaudgui/prefs-window.cc:240 src/libaudqt/prefs-window.cc:243
+msgid "Auto character encoding detector for:"
+msgstr "تشخیص خودکار انکدینگ کاراکترها برای:"
+
+#: src/libaudgui/prefs-window.cc:244 src/libaudqt/prefs-window.cc:247
+msgid "Fallback character encodings:"
+msgstr "انکدینگ کاراکترها در صورت وجود اشکال:"
+
+#: src/libaudgui/prefs-window.cc:252 src/libaudqt/prefs-window.cc:256
+msgid "<b>Behavior</b>"
+msgstr "<b>وضعیت</b>"
+
+#: src/libaudgui/prefs-window.cc:253 src/libaudqt/prefs-window.cc:257
+msgid "Resume playback on startup"
+msgstr ""
+
+#: src/libaudgui/prefs-window.cc:255 src/libaudqt/prefs-window.cc:259
+msgid "Pause instead of resuming immediately"
+msgstr ""
+
+#: src/libaudgui/prefs-window.cc:258 src/libaudqt/prefs-window.cc:262
+msgid "Advance when the current song is deleted"
+msgstr "هنگامی که فایل در حال پخش پاک شد فایل بعدی را پخش کن"
+
+#: src/libaudgui/prefs-window.cc:260 src/libaudqt/prefs-window.cc:264
+msgid "Clear the playlist when opening files"
+msgstr "پاک کردن لیست پخش هنگام باز کردن فایل جدید"
+
+#: src/libaudgui/prefs-window.cc:262 src/libaudqt/prefs-window.cc:266
+msgid "Open files in a temporary playlist"
+msgstr "باز کردن فایل‌ها در لیست پخش موقتی"
+
+#: src/libaudgui/prefs-window.cc:264 src/libaudqt/prefs-window.cc:270
+msgid "<b>Compatibility</b>"
+msgstr "<b>سازگاری</b>"
+
+#: src/libaudgui/prefs-window.cc:265 src/libaudqt/prefs-window.cc:271
+msgid "Interpret \\ (backward slash) as a folder delimiter"
+msgstr "\\ (backward slash) را به عنوان جداکننده پوشه‌ها تفسیر کن"
+
+#: src/libaudgui/prefs-window.cc:268 src/libaudqt/prefs-window.cc:274
+msgid "<b>Song Display</b>"
+msgstr "<b>نمایش آهنگ</b>"
+
+#: src/libaudgui/prefs-window.cc:269 src/libaudqt/prefs-window.cc:275
+msgid "Show song numbers"
+msgstr "نمایش شماره آهنگ‌ها"
+
+#: src/libaudgui/prefs-window.cc:271 src/libaudqt/prefs-window.cc:277
+msgid "Show leading zeroes (02:00 instead of 2:00)"
+msgstr "صفرهای پیشین را نمایش بده (02:00 به جای 2:00)"
+
+#: src/libaudgui/prefs-window.cc:274 src/libaudqt/prefs-window.cc:280
+msgid "<b>Advanced</b>"
+msgstr ""
+
+#: src/libaudgui/prefs-window.cc:275 src/libaudqt/prefs-window.cc:268
+#: src/libaudqt/prefs-window.cc:281
+msgid "Do not load metadata for songs until played"
+msgstr "تا زمانی که آهنگ‌ها پخش نشده‌اند متاداده آنها را بارگذاری نکن"
+
+#: src/libaudgui/prefs-window.cc:277 src/libaudqt/prefs-window.cc:283
+msgid "Probe content of files with no recognized file name extension"
+msgstr ""
+
+#: src/libaudgui/prefs-window.cc:282 src/libaudqt/prefs-window.cc:288
+msgid "<b>Album Art</b>"
+msgstr "<b>تصویر آلبوم</b>"
+
+#: src/libaudgui/prefs-window.cc:283 src/libaudqt/prefs-window.cc:289
+msgid "Search for images matching these words (comma-separated):"
+msgstr ""
+"جستجو برای تصاویری که با این کلمات مطابقت داشته باشند (کلمات را با کاما از "
+"هم جدا کنید):"
+
+#: src/libaudgui/prefs-window.cc:285 src/libaudqt/prefs-window.cc:291
+msgid "Exclude images matching these words (comma-separated):"
+msgstr ""
+"درنظر نگرفتن تصاویری که با این کلمات مطابقت داشته باشند (کلمات را با کاما از "
+"هم جدا کنید):"
+
+#: src/libaudgui/prefs-window.cc:287 src/libaudqt/prefs-window.cc:293
+msgid "Search for images matching song file name"
+msgstr "جستجو برای تصاویری که با نام آهنگ مطابقت داشته باشند"
+
+#: src/libaudgui/prefs-window.cc:289 src/libaudqt/prefs-window.cc:295
+msgid "Search recursively"
+msgstr "جستجوی بازگشتی"
+
+#: src/libaudgui/prefs-window.cc:291 src/libaudqt/prefs-window.cc:297
+msgid "Search depth:"
+msgstr "عمق جستجو:"
+
+#: src/libaudgui/prefs-window.cc:295 src/libaudqt/prefs-window.cc:301
+msgid "<b>Popup Information</b>"
+msgstr "<b>اطلاعات پنجره بازشو</b>"
+
+#: src/libaudgui/prefs-window.cc:296 src/libaudqt/prefs-window.cc:302
+msgid "Show popup information"
+msgstr "نمایش پنجره بازشوی اطلاعات"
+
+#: src/libaudgui/prefs-window.cc:298 src/libaudqt/prefs-window.cc:304
+msgid "Popup delay (tenths of a second):"
+msgstr "تاخیر پنجره بازشو (براساس دهم ثانیه):"
+
+#: src/libaudgui/prefs-window.cc:302 src/libaudqt/prefs-window.cc:308
+msgid "Show time scale for current song"
+msgstr "نمایش مقیاس زمان برای آهنگ جاری"
+
+#: src/libaudgui/prefs-window.cc:319 src/libaudqt/prefs-window.cc:325
+msgid "TITLE"
+msgstr "عنوان"
+
+#: src/libaudgui/prefs-window.cc:320 src/libaudqt/prefs-window.cc:326
+msgid "ARTIST - TITLE"
+msgstr "هنرمند - عنوان"
+
+#: src/libaudgui/prefs-window.cc:321 src/libaudqt/prefs-window.cc:327
+msgid "ARTIST - ALBUM - TITLE"
+msgstr "هنرمند - آلبوم - عنوان"
+
+#: src/libaudgui/prefs-window.cc:322 src/libaudqt/prefs-window.cc:328
+msgid "ARTIST - ALBUM - TRACK. TITLE"
+msgstr "هنرمند - آلبوم - شماره آهنگ. عنوان"
+
+#: src/libaudgui/prefs-window.cc:323 src/libaudqt/prefs-window.cc:329
+msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
+msgstr "هنرمند [ آلبوم ] - شماره آهنگ. عنوان"
+
+#: src/libaudgui/prefs-window.cc:324 src/libaudqt/prefs-window.cc:330
+msgid "ALBUM - TITLE"
+msgstr "آلبوم - عنوان"
+
+#: src/libaudgui/prefs-window.cc:418
+msgid "Category"
+msgstr "دسته‌بندی"
+
+#: src/libaudgui/prefs-window.cc:487 src/libaudqt/prefs-window.cc:346
+msgid "Custom"
+msgstr "شخصی"
+
+#: src/libaudgui/prefs-window.cc:505 src/libaudqt/prefs-window.cc:338
+msgid "Title format:"
+msgstr "فرمت عنوان:"
+
+#: src/libaudgui/prefs-window.cc:509 src/libaudqt/prefs-window.cc:349
+msgid "Custom string:"
+msgstr "رشته شخصی:"
+
+#: src/libaudgui/prefs-window.cc:711 src/libaudqt/prefs-window.cc:713
+msgid "Audacious Settings"
+msgstr "تنظیمات Audacious"
+
+#: src/libaudgui/queue-manager.cc:175 src/libaudqt/queue-manager.cc:133
 msgid "Queue Manager"
 msgstr "مدیر صف"
 
-#: src/libaudgui/queue-manager.c:188
+#: src/libaudgui/queue-manager.cc:193 src/libaudqt/queue-manager.cc:115
 msgid "_Unqueue"
 msgstr "_خارج کردن از صف"
 
-#: src/libaudgui/ui_fileopener.c:79
+#: src/libaudgui/status.cc:36
+msgid "Working ..."
+msgstr ""
+
+#: src/libaudgui/status.cc:85 src/libaudqt/log-inspector.cc:192
+msgid "Error"
+msgstr "خطا"
+
+#: src/libaudgui/ui_fileopener.cc:80 src/libaudqt/fileopener.cc:39
 msgid "Open Files"
 msgstr "باز کردن فایل‌ها"
 
-#: src/libaudgui/ui_fileopener.c:80 src/libaudgui/url-opener.c:50
+#: src/libaudgui/ui_fileopener.cc:81 src/libaudgui/url-opener.cc:50
 msgid "_Open"
 msgstr "_باز کردن"
 
-#: src/libaudgui/ui_fileopener.c:82
+#: src/libaudgui/ui_fileopener.cc:83
 msgid "Close _dialog on open"
 msgstr "بستن _پنجره پیغام بعد از باز کردن"
 
-#: src/libaudgui/ui_fileopener.c:87
+#: src/libaudgui/ui_fileopener.cc:88 src/libaudqt/fileopener.cc:39
 msgid "Add Files"
 msgstr "اضافه کردن فایل‌ها"
 
-#: src/libaudgui/ui_fileopener.c:88 src/libaudgui/url-opener.c:56
+#: src/libaudgui/ui_fileopener.cc:89 src/libaudgui/url-opener.cc:56
 msgid "_Add"
 msgstr "_اضافه کردن"
 
-#: src/libaudgui/ui_fileopener.c:90
+#: src/libaudgui/ui_fileopener.cc:91
 msgid "Close _dialog on add"
 msgstr "بستن _پنجره پیغام بعد از اضافه کردن"
 
-#: src/libaudgui/ui_jumptotrack.c:101 src/libaudgui/ui_jumptotrack.c:109
-#: src/libaudgui/ui_jumptotrack.c:301
+#: src/libaudgui/ui_jumptotrack.cc:95 src/libaudgui/ui_jumptotrack.cc:103
+#: src/libaudgui/ui_jumptotrack.cc:307
 msgid "_Queue"
 msgstr "_صف"
 
-#: src/libaudgui/ui_jumptotrack.c:107
+#: src/libaudgui/ui_jumptotrack.cc:101
 msgid "Un_queue"
 msgstr "خارج کردن از_صف"
 
-#: src/libaudgui/ui_jumptotrack.c:245
+#: src/libaudgui/ui_jumptotrack.cc:239
 msgid "Jump to Song"
 msgstr "پرش به آهنگ"
 
-#: src/libaudgui/ui_jumptotrack.c:270
+#: src/libaudgui/ui_jumptotrack.cc:264
 msgid "Filter: "
 msgstr "فیلتر:"
 
-#: src/libaudgui/ui_jumptotrack.c:271
+#: src/libaudgui/ui_jumptotrack.cc:265
 msgid "_Filter:"
 msgstr "ـفیلتر:"
 
-#: src/libaudgui/ui_jumptotrack.c:294
+#: src/libaudgui/ui_jumptotrack.cc:289
 msgid "C_lose on jump"
 msgstr "ب_ستن هنگام پرش"
 
-#: src/libaudgui/ui_playlist_manager.c:223
-msgid "Playlist Manager"
-msgstr "مدیریت لیست پخش"
-
-#: src/libaudgui/ui_playlist_manager.c:236
-msgid "Entries"
-msgstr "داده‌ها"
-
-#: src/libaudgui/ui_playlist_manager.c:254
-msgid "_New"
-msgstr "_جدید"
-
-#: src/libaudgui/ui_playlist_manager.c:256
-msgid "Ren_ame"
-msgstr "تغییر_نام"
-
-#: src/libaudgui/ui_playlist_manager.c:257
-msgid "_Play"
-msgstr "_پخش"
-
-#: src/libaudgui/ui_playlist_manager.c:269
-msgid "_Close dialog on activating playlist"
-msgstr "_پنجره پیغام را در هنگام فعال شدن لیست پخش ببند"
-
-#: src/libaudgui/url-opener.c:49
+#: src/libaudgui/url-opener.cc:49
 msgid "Open URL"
 msgstr "بازکردن آدرس اینترنتی"
 
-#: src/libaudgui/url-opener.c:55
+#: src/libaudgui/url-opener.cc:55
 msgid "Add URL"
 msgstr "اضافه کردن آدرس اینترنتی"
 
-#: src/libaudgui/url-opener.c:74
+#: src/libaudgui/url-opener.cc:79
 msgid "Enter URL:"
 msgstr "آدرس اینترنتی را وارد کنید:"
 
-#: src/libaudgui/util.c:148
+#: src/libaudgui/util.cc:154
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
@@ -1046,5 +1114,83 @@ msgstr ""
 "\n"
 "(پیام‌های بیشتر مخفی شده‌اند.)"
 
-#~ msgid "_Remember"
-#~ msgstr "_به‌خاطرسپاری"
+#: src/libaudqt/info-widget.cc:37
+msgid "Metadata"
+msgstr ""
+
+#: src/libaudqt/info-widget.cc:45
+msgid "Composer"
+msgstr ""
+
+#: src/libaudqt/info-widget.cc:46
+msgid "Performer"
+msgstr ""
+
+#: src/libaudqt/info-widget.cc:47
+msgid "Recording Year"
+msgstr ""
+
+#: src/libaudqt/info-widget.cc:48
+msgid "Recording Date"
+msgstr ""
+
+#: src/libaudqt/info-widget.cc:51
+msgid "Technical"
+msgstr ""
+
+#: src/libaudqt/info-widget.cc:53
+msgid "MIME Type"
+msgstr ""
+
+#: src/libaudqt/info-widget.cc:56
+msgid "Bitrate"
+msgstr ""
+
+#: src/libaudqt/infowin.cc:126
+#, c-format
+msgid "No info available for %s.\n"
+msgstr "اطلاعاتی برای ‎%s در دسترس نیست.\n"
+
+#: src/libaudqt/log-inspector.cc:106
+msgid "Level"
+msgstr ""
+
+#: src/libaudqt/log-inspector.cc:107
+msgid "Filename"
+msgstr "نام فایل"
+
+#: src/libaudqt/log-inspector.cc:108
+msgid "Line"
+msgstr ""
+
+#: src/libaudqt/log-inspector.cc:109
+msgid "Function"
+msgstr ""
+
+#: src/libaudqt/log-inspector.cc:110
+msgid "Message"
+msgstr ""
+
+#: src/libaudqt/log-inspector.cc:175
+msgid "Log Inspector"
+msgstr ""
+
+#: src/libaudqt/log-inspector.cc:186
+msgid "Log Level:"
+msgstr ""
+
+#: src/libaudqt/log-inspector.cc:189
+msgid "Debug"
+msgstr ""
+
+#: src/libaudqt/log-inspector.cc:190
+msgid "Info"
+msgstr ""
+
+#: src/libaudqt/log-inspector.cc:191
+msgid "Warning"
+msgstr ""
+
+#: src/libaudqt/plugin-menu.cc:40
+msgid "Plugins ..."
+msgstr ""

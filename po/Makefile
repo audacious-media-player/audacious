@@ -27,6 +27,7 @@ LOCALES = ast.po \
 	  fi.po \
 	  fr.po \
 	  gl.po \
+	  he.po \
 	  hu.po \
 	  id_ID.po \
 	  it.po \
@@ -49,6 +50,7 @@ LOCALES = ast.po \
 	  sr@latin.po \
 	  sr.po \
 	  sr_RS.po \
+	  sv.po \
 	  ta.po \
 	  tr.po \
 	  uk.po \

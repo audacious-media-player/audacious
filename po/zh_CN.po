@@ -5,17 +5,19 @@
 # Translators:
 # Chasye <chasye@gmail.com>, 2010
 # JeffBai <jeffbaichina@members.fsf.org>, 2014
+# JeffBai <jeffbaichina@members.fsf.org>, 2014
 # Luke <runningwaterpro@gmail.com>, 2012
+# Michael Jay Tong <michaeljayt@gmail.com>, 2014
 # Luke <runningwaterpro@gmail.com>, 2012
-# min zhang <zm1990s@gmail.com>, 2013-2014
-# min zhang <zm1990s@gmail.com>, 2013
+# zhangmin <zm1990s@gmail.com>, 2013-2014
+# zhangmin <zm1990s@gmail.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-03-23 21:24+0100\n"
-"PO-Revision-Date: 2014-03-16 03:52+0000\n"
-"Last-Translator: min zhang <zm1990s@gmail.com>\n"
+"POT-Creation-Date: 2014-12-04 18:06+0100\n"
+"PO-Revision-Date: 2014-12-01 19:57+0000\n"
+"Last-Translator: Thomas Lange <thomas-lange2@gmx.de>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/projects/p/"
 "audacious/language/zh_CN/)\n"
 "Language: zh_CN\n"
@@ -24,1012 +26,1082 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: src/audacious/adder.c:76
-msgid "Searching ..."
-msgstr "搜索中..."
-
-#: src/audacious/adder.c:104
-#, c-format
-msgid "%d file found"
-msgid_plural "%d files found"
-msgstr[0] "找到%d个文件"
-
-#: src/audacious/adder.c:393 src/audacious/playlist-new.c:96
-msgid "New Playlist"
-msgstr "新建播放列表"
-
-#: src/audacious/interface.c:93
-msgid "Error"
-msgstr "错误"
-
-#: src/audacious/main.c:70
+#: src/audacious/main.cc:60
 msgid "Show command-line help"
 msgstr "显示命令行帮助"
 
-#: src/audacious/main.c:71
+#: src/audacious/main.cc:61
 msgid "Show version"
 msgstr "显示版本信息"
 
-#: src/audacious/main.c:72
+#: src/audacious/main.cc:62
 msgid "Start playback"
 msgstr "开始回放"
 
-#: src/audacious/main.c:73
+#: src/audacious/main.cc:63
 msgid "Pause playback"
 msgstr "暂停回放"
 
-#: src/audacious/main.c:74
+#: src/audacious/main.cc:64
 msgid "Pause if playing, play otherwise"
 msgstr "暂停/播放"
 
-#: src/audacious/main.c:75
+#: src/audacious/main.cc:65
 msgid "Stop playback"
 msgstr "停止回放"
 
-#: src/audacious/main.c:76
+#: src/audacious/main.cc:66
 msgid "Skip to previous song"
 msgstr "跳回上一曲目"
 
-#: src/audacious/main.c:77
+#: src/audacious/main.cc:67
 msgid "Skip to next song"
 msgstr "跳至下一曲目"
 
-#: src/audacious/main.c:78
+#: src/audacious/main.cc:68
 msgid "Add files to the playlist"
 msgstr "添加文件到播放列表"
 
-#: src/audacious/main.c:79
+#: src/audacious/main.cc:69
 msgid "Add files to a temporary playlist"
 msgstr "添加文件到一个临时播放列表"
 
-#: src/audacious/main.c:80
+#: src/audacious/main.cc:70
 msgid "Display the main window"
 msgstr "显示主界面"
 
-#: src/audacious/main.c:81
+#: src/audacious/main.cc:71
 msgid "Display the jump-to-song window"
 msgstr "显示曲目选择窗口"
 
-#: src/audacious/main.c:82
+#: src/audacious/main.cc:72
 msgid "Start without a graphical interface"
 msgstr "不启动图形界面"
 
-#: src/audacious/main.c:83
+#: src/audacious/main.cc:73
 msgid "Quit on playback stop"
 msgstr "停止播放时退出"
 
-#: src/audacious/main.c:84
-msgid "Print debugging messages"
-msgstr "输出调试信息"
+#: src/audacious/main.cc:74
+msgid "Print debugging messages (may be used twice)"
+msgstr "打印调试信息 （或许需要使用两次）"
 
-#: src/audacious/main.c:264
+#: src/audacious/main.cc:76
+msgid "Run in Qt mode"
+msgstr "以 Qt 模式运行"
+
+#: src/audacious/main.cc:127
 #, c-format
 msgid "Unknown option: %s\n"
 msgstr "未知选项: %s\n"
 
-#: src/audacious/main.c:285
+#: src/audacious/main.cc:150
 #, c-format
 msgid "Unknown option: -%c\n"
 msgstr "未知选项: -%c\n"
 
-#: src/audacious/main.c:306
+#: src/audacious/main.cc:177
 #, c-format
 msgid ""
 "Usage: audacious [OPTION] ... [FILE] ...\n"
 "\n"
 msgstr "用法: audacious [选项] ... [文件] ...\n"
 
-#: src/audacious/main.c:591
+#: src/audacious/main.cc:345
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/playback.c:354
+#: src/libaudcore/adder.cc:77
 #, c-format
-msgid "No decoder found for %s."
-msgstr "未能为 %s 找到解码器。"
+msgid "%d file found"
+msgid_plural "%d files found"
+msgstr[0] "找到%d个文件"
 
-#: src/audacious/playback.c:382
+#: src/libaudcore/adder.cc:317 src/libaudcore/playlist.cc:139
+msgid "New Playlist"
+msgstr "新建播放列表"
+
+#: src/libaudcore/audstrings.cc:528
 #, c-format
-msgid "%s could not be opened."
-msgstr "%s 不能打开。"
+msgid "Audio CD, track %s"
+msgstr "音频CD, 音轨 %s"
 
-#: src/audacious/playlist-files.c:95
+#: src/libaudcore/audstrings.cc:532 src/libaudcore/tuple.cc:481
+msgid "(character encoding error)"
+msgstr ""
+
+#: src/libaudcore/playback.cc:328 src/libaudcore/probe.cc:151
+msgid "Error loading plugin"
+msgstr "加载插件出错"
+
+#: src/libaudcore/playback.cc:383 src/libaudgui/infowin.cc:496
 #, c-format
-msgid "Cannot load %s: unsupported file extension."
-msgstr "无法载入 %s: 不被支持的文件后缀。"
+msgid ""
+"Error opening %s:\n"
+"%s"
+msgstr ""
+"打开 %s 时错误：\n"
+"%s"
 
-#: src/audacious/playlist-files.c:185
-#, c-format
-msgid "Cannot save %s: unsupported file extension."
-msgstr "无法保存 %s: 不被支持的文件后缀"
+#: src/libaudcore/playback.cc:385
+msgid "Unknown playback error"
+msgstr "未知播放错误"
 
-#: src/audacious/playlist-new.c:97
+#: src/libaudcore/playback.cc:515
+msgid "Invalid audio format"
+msgstr ""
+
+#: src/libaudcore/playlist.cc:140
 msgid "Now Playing"
 msgstr "正在播放"
 
-#: src/audacious/playlist-new.c:1655
+#: src/libaudcore/playlist.cc:1622
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress "
 "(or has been disabled)."
 msgstr "因正在扫描歌曲信息, 播放列表暂时无法保存."
 
-#: src/audacious/plugin-preferences.c:55
-msgid "About "
-msgstr "关于"
-
-#: src/audacious/plugin-preferences.c:94
-msgid " Settings"
-msgstr "设置"
-
-#: src/audacious/plugin-preferences.c:99
-msgid "_Set"
-msgstr "设置 (&S)"
-
-#: src/audacious/plugin-preferences.c:100 src/libaudgui/confirm.c:57
-#: src/libaudgui/confirm.c:90 src/libaudgui/jump-to-time.c:49
-#: src/libaudgui/playlists.c:89 src/libaudgui/playlists.c:142
-#: src/libaudgui/url-opener.c:71
-msgid "_Cancel"
-msgstr "取消 (&C)"
-
-#: src/audacious/plugin-preferences.c:106 src/audacious/ui_preferences.c:783
-#: src/libaudgui/infowin.c:370 src/libaudgui/queue-manager.c:189
-#: src/libaudgui/ui_fileopener.c:127 src/libaudgui/ui_jumptotrack.c:312
-#: src/libaudgui/util.c:161
-msgid "_Close"
-msgstr "关闭 (&C)"
-
-#: src/audacious/plugin-view.c:242 src/audacious/ui_preferences.c:661
-msgid "_Settings"
-msgstr "设置 (&S)"
-
-#: src/audacious/plugin-view.c:250 src/audacious/ui_preferences.c:672
-msgid "_About"
-msgstr "关于 (&A)"
-
-#: src/audacious/ui_plugin_menu.c:37
-msgid "_Plugins ..."
-msgstr "插件... (&P)"
-
-#: src/audacious/ui_preferences.c:82
-msgid "Appearance"
-msgstr "外观"
-
-#: src/audacious/ui_preferences.c:83
-msgid "Audio"
-msgstr "音频"
-
-#: src/audacious/ui_preferences.c:84
-msgid "Network"
-msgstr "网络"
-
-#: src/audacious/ui_preferences.c:85 src/audacious/ui_preferences.c:95
-msgid "Playlist"
-msgstr "播放列表"
-
-#: src/audacious/ui_preferences.c:86 src/libaudgui/infowin.c:299
-msgid "Song Info"
-msgstr "歌曲信息"
-
-#: src/audacious/ui_preferences.c:87
-msgid "Plugins"
-msgstr "插件"
-
-#: src/audacious/ui_preferences.c:91
-msgid "General"
-msgstr "一般"
-
-#: src/audacious/ui_preferences.c:92
-msgid "Effect"
-msgstr "音效"
-
-#: src/audacious/ui_preferences.c:93
-msgid "Visualization"
-msgstr "虚拟效果"
-
-#: src/audacious/ui_preferences.c:94
-msgid "Input"
-msgstr "输入"
-
-#: src/audacious/ui_preferences.c:96
-msgid "Transport"
-msgstr "传输"
-
-#: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:151
-#: src/libaudgui/infowin.c:343
-msgid "Artist"
-msgstr "艺术家"
-
-#: src/audacious/ui_preferences.c:101 src/libaudgui/infopopup.c:152
-#: src/libaudgui/infowin.c:346
-msgid "Album"
-msgstr "专辑"
-
-#: src/audacious/ui_preferences.c:102 src/libaudgui/infopopup.c:150
-#: src/libaudgui/infowin.c:340 src/libaudgui/ui_playlist_manager.c:235
-msgid "Title"
-msgstr "标题"
-
-#: src/audacious/ui_preferences.c:103
-msgid "Tracknumber"
-msgstr "音轨序号"
-
-#: src/audacious/ui_preferences.c:104 src/libaudgui/infopopup.c:153
-#: src/libaudgui/infowin.c:352
-msgid "Genre"
-msgstr "风格"
-
-#: src/audacious/ui_preferences.c:105
-msgid "Filename"
-msgstr "文件名"
-
-#: src/audacious/ui_preferences.c:106
-msgid "Filepath"
-msgstr "路径"
-
-#: src/audacious/ui_preferences.c:107
-msgid "Date"
-msgstr "时间"
-
-#: src/audacious/ui_preferences.c:108 src/libaudgui/infopopup.c:154
-#: src/libaudgui/infowin.c:356
-msgid "Year"
-msgstr "年份"
-
-#: src/audacious/ui_preferences.c:109 src/libaudgui/infowin.c:349
-msgid "Comment"
-msgstr "备注"
-
-#: src/audacious/ui_preferences.c:110
-msgid "Codec"
-msgstr "编码"
-
-#: src/audacious/ui_preferences.c:111
-msgid "Quality"
-msgstr "音质"
-
-#: src/audacious/ui_preferences.c:116
-msgid "None"
-msgstr "无"
-
-#: src/audacious/ui_preferences.c:117
-msgid "Arabic"
-msgstr "阿拉伯语"
-
-#: src/audacious/ui_preferences.c:118
-msgid "Baltic"
-msgstr "波罗的语"
-
-#: src/audacious/ui_preferences.c:119
-msgid "Chinese"
-msgstr "汉语"
-
-#: src/audacious/ui_preferences.c:120
-msgid "Greek"
-msgstr "希腊语"
-
-#: src/audacious/ui_preferences.c:121
-msgid "Hebrew"
-msgstr "希伯来语"
-
-#: src/audacious/ui_preferences.c:122
-msgid "Japanese"
-msgstr "日语"
-
-#: src/audacious/ui_preferences.c:123
-msgid "Korean"
-msgstr "韩语"
-
-#: src/audacious/ui_preferences.c:124
-msgid "Polish"
-msgstr "波兰语"
-
-#: src/audacious/ui_preferences.c:125
-msgid "Russian"
-msgstr "俄语"
-
-#: src/audacious/ui_preferences.c:126
-msgid "Taiwanese"
-msgstr "台语"
-
-#: src/audacious/ui_preferences.c:127
-msgid "Turkish"
-msgstr "土耳其语"
-
-#: src/audacious/ui_preferences.c:135
-msgid "Floating point"
-msgstr "浮点"
-
-#: src/audacious/ui_preferences.c:147
-msgid "<b>Interface Settings</b>"
-msgstr "<b>界面设置</b>"
-
-#: src/audacious/ui_preferences.c:148
-msgid "Interface plugin:"
-msgstr "界面插件: "
-
-#: src/audacious/ui_preferences.c:165
-msgid "Output plugin:"
-msgstr "输出插件："
-
-#: src/audacious/ui_preferences.c:172
-msgid "<b>Output Settings</b>"
-msgstr "<b>输出设置</b>"
-
-#: src/audacious/ui_preferences.c:175
-msgid "Bit depth:"
-msgstr "位深："
-
-#: src/audacious/ui_preferences.c:178
-msgid "Buffer size:"
-msgstr "缓冲大小："
-
-#: src/audacious/ui_preferences.c:180
-msgid "ms"
-msgstr "毫秒"
-
-#: src/audacious/ui_preferences.c:181
-msgid "Soft clipping"
-msgstr "柔性剪峰"
-
-#: src/audacious/ui_preferences.c:183
-msgid "Use software volume control (not recommended)"
-msgstr "使用软音量控制（非建议）"
-
-#: src/audacious/ui_preferences.c:185
-msgid "<b>Replay Gain</b>"
-msgstr "<b>回放增益</b>"
-
-#: src/audacious/ui_preferences.c:186
-msgid "Enable Replay Gain"
-msgstr "启用回放增益"
-
-#: src/audacious/ui_preferences.c:188
-msgid "Album mode"
-msgstr "专辑模式"
-
-#: src/audacious/ui_preferences.c:190
-msgid "Prevent clipping (recommended)"
-msgstr "避免爆音（推荐）"
-
-#: src/audacious/ui_preferences.c:192
-msgid "<b>Adjust Levels</b>"
-msgstr "<b>调整幅度</b>"
-
-#: src/audacious/ui_preferences.c:193
-msgid "Amplify all files:"
-msgstr "应用到文件："
-
-#: src/audacious/ui_preferences.c:195 src/audacious/ui_preferences.c:198
-msgid "dB"
-msgstr "dB"
-
-#: src/audacious/ui_preferences.c:196
-msgid "Amplify untagged files:"
-msgstr "应用到无标签文件："
-
-#: src/audacious/ui_preferences.c:201
-msgid "Proxy hostname:"
-msgstr "主机地址："
-
-#: src/audacious/ui_preferences.c:202
-msgid "Proxy port:"
-msgstr "连接端口："
-
-#: src/audacious/ui_preferences.c:205
-msgid "Proxy username:"
-msgstr "认证用户："
-
-#: src/audacious/ui_preferences.c:206
-msgid "Proxy password:"
-msgstr "认证密码："
-
-#: src/audacious/ui_preferences.c:210
-msgid "<b>Proxy Configuration</b>"
-msgstr "<b>代理服务器设置</b>"
-
-#: src/audacious/ui_preferences.c:211
-msgid "Enable proxy usage"
-msgstr "启用代理服务器"
-
-#: src/audacious/ui_preferences.c:214
-msgid "Use authentication with proxy"
-msgstr "代理服务器要求认证"
-
-#: src/audacious/ui_preferences.c:221
-msgid "Auto character encoding detector for:"
-msgstr "自动检测下列编码："
-
-#: src/audacious/ui_preferences.c:225
-msgid "Fallback character encodings:"
-msgstr "备用字符编码："
-
-#: src/audacious/ui_preferences.c:229
-msgid "<b>Behavior</b>"
-msgstr "<b>行为</b>"
-
-#: src/audacious/ui_preferences.c:230
-msgid "Continue playback on startup"
-msgstr "启动时恢复播放"
-
-#: src/audacious/ui_preferences.c:232
-msgid "Advance when the current song is deleted"
-msgstr "歌曲播放中被删除则播放下一首"
-
-#: src/audacious/ui_preferences.c:234
-msgid "Clear the playlist when opening files"
-msgstr "打开文件时清空当前播放列表"
-
-#: src/audacious/ui_preferences.c:236
-msgid "Open files in a temporary playlist"
-msgstr "在临时播放列表打开文件"
-
-#: src/audacious/ui_preferences.c:238
-msgid "Do not load metadata for songs until played"
-msgstr "未播放时切勿加载元数据"
-
-#: src/audacious/ui_preferences.c:241
-msgid "<b>Compatibility</b>"
-msgstr "<b>兼容性</b>"
-
-#: src/audacious/ui_preferences.c:242
-msgid "Interpret \\ (backward slash) as a folder delimiter"
-msgstr "说明 \\(反斜杠)作为一个文件夹分隔符"
-
-#: src/audacious/ui_preferences.c:247
-msgid "<b>Album Art</b>"
-msgstr "<b>专辑封面</b>"
-
-#: src/audacious/ui_preferences.c:248
-msgid "Search for images matching these words (comma-separated):"
-msgstr "搜索匹配以下词语的图片(用逗号分隔)："
-
-#: src/audacious/ui_preferences.c:250
-msgid "Exclude images matching these words (comma-separated):"
-msgstr "排除匹配以下词语的图片(用逗号分隔)："
-
-#: src/audacious/ui_preferences.c:252
-msgid "Search for images matching song file name"
-msgstr "搜索匹配歌曲文件名的图片"
-
-#: src/audacious/ui_preferences.c:254
-msgid "Search recursively"
-msgstr "递归搜索"
-
-#: src/audacious/ui_preferences.c:256
-msgid "Search depth:"
-msgstr "搜索深度："
-
-#: src/audacious/ui_preferences.c:259
-msgid "<b>Popup Information</b>"
-msgstr "<b>弹出信息</b>"
-
-#: src/audacious/ui_preferences.c:260
-msgid "Show popup information"
-msgstr "显示弹出信息"
-
-#: src/audacious/ui_preferences.c:262
-msgid "Popup delay (tenths of a second):"
-msgstr "弹出延迟 (十分之一秒):"
-
-#: src/audacious/ui_preferences.c:265
-msgid "Show time scale for current song"
-msgstr "停止播放"
-
-#: src/audacious/ui_preferences.c:280
-msgid "TITLE"
-msgstr "标题"
-
-#: src/audacious/ui_preferences.c:281
-msgid "ARTIST - TITLE"
-msgstr "艺术家 - 标题"
-
-#: src/audacious/ui_preferences.c:282
-msgid "ARTIST - ALBUM - TITLE"
-msgstr "艺术家 - 专辑 - 标题"
-
-#: src/audacious/ui_preferences.c:283
-msgid "ARTIST - ALBUM - TRACK. TITLE"
-msgstr "艺术家 - 专辑 - 曲目号. 标题"
-
-#: src/audacious/ui_preferences.c:284
-msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
-msgstr "艺术家 [专辑] - 曲目号. 标题"
-
-#: src/audacious/ui_preferences.c:285
-msgid "ALBUM - TITLE"
-msgstr "专辑 - 标题"
-
-#: src/audacious/ui_preferences.c:386
-msgid "Category"
-msgstr "分类"
-
-#: src/audacious/ui_preferences.c:468
-msgid "Custom"
-msgstr "自定义"
-
-#: src/audacious/ui_preferences.c:492
-msgid "<b>Song Display</b>"
-msgstr "<b>歌曲显示</b>"
-
-#: src/audacious/ui_preferences.c:501
-msgid "Show song numbers"
-msgstr "显示歌曲序号"
-
-#: src/audacious/ui_preferences.c:512
-msgid "Show leading zeroes (02:00 instead of 2:00)"
-msgstr "显示时间前的0（如：显示2:00为02:00）"
-
-#: src/audacious/ui_preferences.c:526
-msgid "Title format:"
-msgstr "标题样式："
-
-#: src/audacious/ui_preferences.c:531
-msgid "Custom string:"
-msgstr "自定字符："
-
-#: src/audacious/ui_preferences.c:734
-msgid "Audacious Settings"
-msgstr "Audacious 设置"
-
-#: src/audacious/util.c:117
+#: src/libaudcore/playlist-files.cc:76
 #, c-format
-msgid "Could not create directory (%s): %s\n"
-msgstr "无法创建目录(%s)：%s\n"
+msgid "Cannot load %s: unsupported file name extension."
+msgstr "无法载入 %s: 不支持的文件扩展名。"
 
-#: src/libaudcore/audstrings.c:382
+#: src/libaudcore/playlist-files.cc:136
 #, c-format
-msgid "Audio CD, track %s"
-msgstr "音频CD, 音轨 %s"
+msgid "Cannot save %s: unsupported file name extension."
+msgstr "无法保存 %s: 不支持的文件扩展名。"
 
-#: src/libaudcore/tuple.c:442
+#: src/libaudcore/probe.cc:119
+msgid "Seek error"
+msgstr "定位错误"
+
+#: src/libaudcore/probe.cc:127
+msgid "File format not recognized"
+msgstr "不识别文件格式"
+
+#: src/libaudcore/probe.cc:161
+msgid "Error reading metadata"
+msgstr "读取元数据时出错"
+
+#: src/libaudcore/tuple.cc:528
 msgid "Mono"
 msgstr "单声道"
 
-#: src/libaudcore/tuple.c:444
+#: src/libaudcore/tuple.cc:530
 msgid "Stereo"
 msgstr "立体声"
 
-#: src/libaudcore/tuple.c:446
+#: src/libaudcore/tuple.cc:532
 #, c-format
 msgid "%d channel"
 msgid_plural "%d channels"
 msgstr[0] "%d声道"
 
-#: src/libaudgui/about.c:37
+#: src/libaudcore/tuple.cc:699
+#, c-format
+msgid "Track %d"
+msgstr "音轨 %d"
+
+#: src/libaudcore/tuple.cc:701
+msgid "Audio CD"
+msgstr "音频CD"
+
+#: src/libaudcore/tuple.cc:707
+msgid "(unknown title)"
+msgstr "(未知标题)"
+
+#: src/libaudcore/vfs.cc:67
+msgid "Invalid URI"
+msgstr "未知 URI"
+
+#: src/libaudcore/vfs.cc:83
+msgid "Unknown URI scheme"
+msgstr "未知 URI 图表"
+
+#: src/libaudcore/vfs_local.cc:82
+msgid "Invalid file name"
+msgstr "无效的文件名"
+
+#: src/libaudgui/about.cc:38 src/libaudqt/about.cc:37
 msgid "Credits"
 msgstr "特别鸣谢"
 
-#: src/libaudgui/about.c:37
+#: src/libaudgui/about.cc:38 src/libaudqt/about.cc:37
 msgid "License"
 msgstr "许可"
 
-#: src/libaudgui/about.c:69
+#: src/libaudgui/about.cc:72 src/libaudqt/about.cc:89
 msgid "About Audacious"
 msgstr "关于Audacious"
 
-#: src/libaudgui/confirm.c:51
+#: src/libaudgui/confirm.cc:51 src/libaudqt/playlist-management.cc:41
 #, c-format
 msgid "Do you want to permanently remove “%s”?"
 msgstr "你希望完全删除 \"%s\" 吗？"
 
-#: src/libaudgui/confirm.c:55 src/libaudgui/ui_playlist_manager.c:255
+#: src/libaudgui/confirm.cc:55 src/libaudqt/playlist-management.cc:46
 msgid "_Remove"
 msgstr "移除 （&R)"
 
-#: src/libaudgui/confirm.c:60
+#: src/libaudgui/confirm.cc:57 src/libaudgui/confirm.cc:88
+#: src/libaudgui/jump-to-time.cc:48 src/libaudgui/playlists.cc:90
+#: src/libaudgui/playlists.cc:144 src/libaudgui/plugin-prefs.cc:160
+#: src/libaudgui/url-opener.cc:76 src/libaudqt/playlist-management.cc:47
+msgid "_Cancel"
+msgstr "取消 (&C)"
+
+#: src/libaudgui/confirm.cc:60 src/libaudqt/playlist-management.cc:72
 msgid "Remove Playlist"
 msgstr "移除播放列表"
 
-#: src/libaudgui/confirm.c:62
+#: src/libaudgui/confirm.cc:62 src/libaudqt/playlist-management.cc:44
 msgid "_Don’t ask again"
 msgstr "不再询问 (&D)"
 
-#: src/libaudgui/confirm.c:89
+#: src/libaudgui/confirm.cc:87
 msgid "_Rename"
 msgstr "重命名(_R)"
 
-#: src/libaudgui/confirm.c:93
+#: src/libaudgui/confirm.cc:91
 msgid "Rename Playlist"
 msgstr "重命名播放列表"
 
-#: src/libaudgui/confirm.c:93
+#: src/libaudgui/confirm.cc:91
 msgid "What would you like to call this playlist?"
 msgstr "你希望如何称呼这个播放列表？"
 
-#: src/libaudgui/equalizer.c:44
+#: src/libaudgui/equalizer.cc:45 src/libaudqt/equalizer.cc:63
 msgid "_Enable"
 msgstr "启用(_E)"
 
-#: src/libaudgui/equalizer.c:119
+#: src/libaudgui/equalizer.cc:119 src/libaudqt/equalizer.cc:65
 msgid "31 Hz"
 msgstr "31 Hz"
 
-#: src/libaudgui/equalizer.c:119
+#: src/libaudgui/equalizer.cc:119 src/libaudqt/equalizer.cc:65
 msgid "63 Hz"
 msgstr "63 Hz"
 
-#: src/libaudgui/equalizer.c:120
+#: src/libaudgui/equalizer.cc:120 src/libaudqt/equalizer.cc:66
 msgid "125 Hz"
 msgstr "125 Hz"
 
-#: src/libaudgui/equalizer.c:120
+#: src/libaudgui/equalizer.cc:120 src/libaudqt/equalizer.cc:66
 msgid "250 Hz"
 msgstr "250 Hz"
 
-#: src/libaudgui/equalizer.c:120
+#: src/libaudgui/equalizer.cc:120 src/libaudqt/equalizer.cc:66
 msgid "500 Hz"
 msgstr "500 Hz"
 
-#: src/libaudgui/equalizer.c:120
+#: src/libaudgui/equalizer.cc:120 src/libaudqt/equalizer.cc:66
 msgid "1 kHz"
 msgstr "1 kHz"
 
-#: src/libaudgui/equalizer.c:120
+#: src/libaudgui/equalizer.cc:120 src/libaudqt/equalizer.cc:66
 msgid "2 kHz"
 msgstr "2 kHz"
 
-#: src/libaudgui/equalizer.c:121
+#: src/libaudgui/equalizer.cc:121 src/libaudqt/equalizer.cc:67
 msgid "4 kHz"
 msgstr "4 kHz"
 
-#: src/libaudgui/equalizer.c:121
+#: src/libaudgui/equalizer.cc:121 src/libaudqt/equalizer.cc:67
 msgid "8 kHz"
 msgstr "加载"
 
-#: src/libaudgui/equalizer.c:121
+#: src/libaudgui/equalizer.cc:121 src/libaudqt/equalizer.cc:67
 msgid "16 kHz"
 msgstr "16 kHz"
 
-#: src/libaudgui/equalizer.c:124
+#: src/libaudgui/equalizer.cc:124 src/libaudqt/equalizer.cc:90
 msgid "Equalizer"
 msgstr "均衡器"
 
-#: src/libaudgui/equalizer.c:138
+#: src/libaudgui/equalizer.cc:138 src/libaudqt/equalizer.cc:72
 msgid "Preamp"
 msgstr "前置放大器"
 
-#: src/libaudgui/infopopup.c:155
+#: src/libaudgui/infopopup.cc:200 src/libaudgui/infowin.cc:360
+#: src/libaudgui/prefs-window.cc:102 src/libaudqt/info-widget.cc:40
+#: src/libaudqt/prefs-window.cc:105
+msgid "Title"
+msgstr "标题"
+
+#: src/libaudgui/infopopup.cc:201 src/libaudgui/infowin.cc:363
+#: src/libaudgui/prefs-window.cc:100 src/libaudqt/info-widget.cc:38
+#: src/libaudqt/prefs-window.cc:103
+msgid "Artist"
+msgstr "艺术家"
+
+#: src/libaudgui/infopopup.cc:202 src/libaudgui/infowin.cc:366
+#: src/libaudgui/prefs-window.cc:101 src/libaudqt/info-widget.cc:39
+#: src/libaudqt/prefs-window.cc:104
+msgid "Album"
+msgstr "专辑"
+
+#: src/libaudgui/infopopup.cc:203 src/libaudgui/infowin.cc:375
+#: src/libaudgui/prefs-window.cc:104 src/libaudqt/info-widget.cc:42
+#: src/libaudqt/prefs-window.cc:107
+msgid "Genre"
+msgstr "风格"
+
+#: src/libaudgui/infopopup.cc:204 src/libaudgui/infowin.cc:379
+#: src/libaudgui/prefs-window.cc:108 src/libaudqt/prefs-window.cc:111
+msgid "Year"
+msgstr "年份"
+
+#: src/libaudgui/infopopup.cc:205
 msgid "Track"
 msgstr "音轨"
 
-#: src/libaudgui/infopopup.c:156
+#: src/libaudgui/infopopup.cc:206 src/libaudqt/info-widget.cc:52
 msgid "Length"
 msgstr "长度"
 
-#: src/libaudgui/infowin.c:46
+#: src/libaudgui/infowin.cc:49
 msgid "Format:"
 msgstr "格式: "
 
-#: src/libaudgui/infowin.c:47
+#: src/libaudgui/infowin.cc:50
 msgid "Quality:"
 msgstr "音质: "
 
-#: src/libaudgui/infowin.c:48
+#: src/libaudgui/infowin.cc:51
 msgid "Bitrate:"
 msgstr "比特率: "
 
-#: src/libaudgui/infowin.c:76
+#: src/libaudgui/infowin.cc:83
 msgid "Acid Jazz"
 msgstr "迷幻爵士乐"
 
-#: src/libaudgui/infowin.c:77
+#: src/libaudgui/infowin.cc:84
 msgid "Acid Rock"
 msgstr "酸性摇滚"
 
-#: src/libaudgui/infowin.c:78
+#: src/libaudgui/infowin.cc:85
 msgid "Ambient"
 msgstr "氛围音乐"
 
-#: src/libaudgui/infowin.c:79
+#: src/libaudgui/infowin.cc:86
 msgid "Bebop"
 msgstr "比波普爵士乐"
 
-#: src/libaudgui/infowin.c:80
+#: src/libaudgui/infowin.cc:87
 msgid "Bluegrass"
 msgstr "蓝草音乐"
 
-#: src/libaudgui/infowin.c:81
+#: src/libaudgui/infowin.cc:88
 msgid "Blues"
 msgstr "蓝调"
 
-#: src/libaudgui/infowin.c:82
+#: src/libaudgui/infowin.cc:89
 msgid "Chamber Music"
 msgstr "室内音乐"
 
-#: src/libaudgui/infowin.c:83
+#: src/libaudgui/infowin.cc:90
 msgid "Classical"
 msgstr "古典"
 
-#: src/libaudgui/infowin.c:84
+#: src/libaudgui/infowin.cc:91
 msgid "Country"
 msgstr "乡村音乐"
 
-#: src/libaudgui/infowin.c:85
+#: src/libaudgui/infowin.cc:92
 msgid "Death Metal"
 msgstr "死亡金属"
 
-#: src/libaudgui/infowin.c:86
+#: src/libaudgui/infowin.cc:93
 msgid "Disco"
 msgstr "迪斯科"
 
-#: src/libaudgui/infowin.c:87
+#: src/libaudgui/infowin.cc:94
 msgid "Easy Listening"
 msgstr "轻音乐"
 
-#: src/libaudgui/infowin.c:88
+#: src/libaudgui/infowin.cc:95
 msgid "Folk"
 msgstr "民谣"
 
-#: src/libaudgui/infowin.c:89
+#: src/libaudgui/infowin.cc:96
 msgid "Funk"
 msgstr "放克"
 
-#: src/libaudgui/infowin.c:90
+#: src/libaudgui/infowin.cc:97
 msgid "Gangsta Rap"
 msgstr "匪帮说唱"
 
-#: src/libaudgui/infowin.c:91
+#: src/libaudgui/infowin.cc:98
 msgid "Gospel"
 msgstr "福音音乐"
 
-#: src/libaudgui/infowin.c:92
+#: src/libaudgui/infowin.cc:99
 msgid "Grunge"
 msgstr "垃圾摇滚"
 
-#: src/libaudgui/infowin.c:93
+#: src/libaudgui/infowin.cc:100
 msgid "Hard Rock"
 msgstr "硬摇滚"
 
-#: src/libaudgui/infowin.c:94
+#: src/libaudgui/infowin.cc:101
 msgid "Heavy Metal"
 msgstr "重金属"
 
-#: src/libaudgui/infowin.c:95
+#: src/libaudgui/infowin.cc:102
 msgid "Hip-hop"
 msgstr "嘻哈音乐"
 
-#: src/libaudgui/infowin.c:96
+#: src/libaudgui/infowin.cc:103
 msgid "House"
 msgstr " 浩室舞曲"
 
-#: src/libaudgui/infowin.c:97
+#: src/libaudgui/infowin.cc:104
 msgid "Jazz"
 msgstr "爵士"
 
-#: src/libaudgui/infowin.c:98
+#: src/libaudgui/infowin.cc:105
 msgid "Jungle"
 msgstr "丛林音乐"
 
-#: src/libaudgui/infowin.c:99
+#: src/libaudgui/infowin.cc:106
 msgid "Metal"
 msgstr "金属"
 
-#: src/libaudgui/infowin.c:100
+#: src/libaudgui/infowin.cc:107
 msgid "New Age"
 msgstr "新世纪"
 
-#: src/libaudgui/infowin.c:101
+#: src/libaudgui/infowin.cc:108
 msgid "New Wave"
 msgstr "新浪潮"
 
-#: src/libaudgui/infowin.c:102
+#: src/libaudgui/infowin.cc:109
 msgid "Noise"
 msgstr "噪音音乐"
 
-#: src/libaudgui/infowin.c:103
+#: src/libaudgui/infowin.cc:110
 msgid "Pop"
 msgstr "流行"
 
-#: src/libaudgui/infowin.c:104
+#: src/libaudgui/infowin.cc:111
 msgid "Punk Rock"
 msgstr "朋克摇滚乐"
 
-#: src/libaudgui/infowin.c:105
+#: src/libaudgui/infowin.cc:112
 msgid "Rap"
 msgstr "说唱"
 
-#: src/libaudgui/infowin.c:106
+#: src/libaudgui/infowin.cc:113
 msgid "Reggae"
 msgstr "雷盖舞曲"
 
-#: src/libaudgui/infowin.c:107
+#: src/libaudgui/infowin.cc:114
 msgid "Rock"
 msgstr "摇滚"
 
-#: src/libaudgui/infowin.c:108
+#: src/libaudgui/infowin.cc:115
 msgid "Rock and Roll"
 msgstr "摇滚乐"
 
-#: src/libaudgui/infowin.c:109
+#: src/libaudgui/infowin.cc:116
 msgid "Rhythm and Blues"
 msgstr "节奏布鲁斯音乐"
 
-#: src/libaudgui/infowin.c:110
+#: src/libaudgui/infowin.cc:117
 msgid "Ska"
 msgstr "斯卡"
 
-#: src/libaudgui/infowin.c:111
+#: src/libaudgui/infowin.cc:118
 msgid "Soul"
 msgstr "灵魂乐"
 
-#: src/libaudgui/infowin.c:112
+#: src/libaudgui/infowin.cc:119
 msgid "Swing"
 msgstr " 摇摆乐"
 
-#: src/libaudgui/infowin.c:113
+#: src/libaudgui/infowin.cc:120
 msgid "Techno"
 msgstr " 电子舞曲"
 
-#: src/libaudgui/infowin.c:114
+#: src/libaudgui/infowin.cc:121
 msgid "Trip-hop"
 msgstr "神游舞曲"
 
-#: src/libaudgui/infowin.c:220
+#: src/libaudgui/infowin.cc:227
 msgid "Save successful"
 msgstr "保存成功"
 
-#: src/libaudgui/infowin.c:224
+#: src/libaudgui/infowin.cc:231
 msgid "Save error"
 msgstr "保存出错"
 
-#: src/libaudgui/infowin.c:359
+#: src/libaudgui/infowin.cc:316 src/libaudgui/prefs-window.cc:86
+#: src/libaudqt/infowin.cc:61 src/libaudqt/prefs-window.cc:89
+msgid "Song Info"
+msgstr "歌曲信息"
+
+#: src/libaudgui/infowin.cc:369 src/libaudqt/info-widget.cc:44
+msgid "Album Artist"
+msgstr "专辑艺术家"
+
+#: src/libaudgui/infowin.cc:372 src/libaudgui/prefs-window.cc:109
+#: src/libaudqt/info-widget.cc:43 src/libaudqt/prefs-window.cc:112
+msgid "Comment"
+msgstr "备注"
+
+#: src/libaudgui/infowin.cc:382 src/libaudqt/info-widget.cc:41
 msgid "Track Number"
 msgstr "音轨序号"
 
-#: src/libaudgui/infowin.c:367
+#: src/libaudgui/infowin.cc:389
+msgid "Clea_r fields when moving to next song"
+msgstr ""
+
+#: src/libaudgui/infowin.cc:403
 msgid "_Save"
 msgstr "保存 (&S)"
 
-#: src/libaudgui/infowin.c:418
+#: src/libaudgui/infowin.cc:406 src/libaudgui/plugin-prefs.cc:166
+#: src/libaudgui/prefs-window.cc:762 src/libaudgui/queue-manager.cc:194
+#: src/libaudgui/ui_fileopener.cc:127 src/libaudgui/ui_jumptotrack.cc:302
+#: src/libaudgui/util.cc:167 src/libaudqt/queue-manager.cc:116
+msgid "_Close"
+msgstr "关闭 (&C)"
+
+#: src/libaudgui/infowin.cc:409
+msgid "_Next"
+msgstr "下一首(_N)"
+
+#: src/libaudgui/infowin.cc:455
 #, c-format
 msgid "%d kb/s"
 msgstr "%d kb/s"
 
-#: src/libaudgui/infowin.c:423
+#: src/libaudgui/infowin.cc:460
 msgid "N/A"
 msgstr "不可用"
 
-#: src/libaudgui/infowin.c:453
-#, c-format
-msgid "No info available for %s.\n"
-msgstr "未找到与‘%s’相关信息。\n"
-
-#: src/libaudgui/jump-to-time.c:48 src/libaudgui/ui_jumptotrack.c:305
+#: src/libaudgui/jump-to-time.cc:47 src/libaudgui/ui_jumptotrack.cc:296
 msgid "_Jump"
 msgstr "跳至 (&J)"
 
-#: src/libaudgui/jump-to-time.c:52
+#: src/libaudgui/jump-to-time.cc:51
 msgid "Jump to Time"
 msgstr "跳到时间"
 
-#: src/libaudgui/jump-to-time.c:52
+#: src/libaudgui/jump-to-time.cc:51
 msgid "Enter time (minutes:seconds):"
 msgstr "输入时间 (分:秒):"
 
-#: src/libaudgui/playlists.c:86
+#: src/libaudgui/playlists.cc:89
+msgid "_Overwrite"
+msgstr "覆盖(O)"
+
+#: src/libaudgui/playlists.cc:93
+msgid "Confirm Overwrite"
+msgstr "确定覆盖"
+
+#: src/libaudgui/playlists.cc:93
 #, c-format
 msgid "Overwrite %s?"
 msgstr "是否覆盖 %s？"
 
-#: src/libaudgui/playlists.c:88
-msgid "_Overwrite"
-msgstr "覆盖(O)"
-
-#: src/libaudgui/playlists.c:92
-msgid "Confirm Overwrite"
-msgstr "确定覆盖"
-
-#: src/libaudgui/playlists.c:121
+#: src/libaudgui/playlists.cc:123
 msgid "Export Playlist"
 msgstr "导出播放列表"
 
-#: src/libaudgui/playlists.c:122
+#: src/libaudgui/playlists.cc:124
 msgid "_Export"
 msgstr "导出(E)"
 
-#: src/libaudgui/playlists.c:128
+#: src/libaudgui/playlists.cc:130
 msgid "Import Playlist"
 msgstr "导入播放列表"
 
-#: src/libaudgui/playlists.c:129
+#: src/libaudgui/playlists.cc:131
 msgid "_Import"
 msgstr "导入(I)"
 
-#: src/libaudgui/queue-manager.c:172
+#: src/libaudgui/plugin-menu.cc:40
+msgid "_Plugins ..."
+msgstr "插件... (&P)"
+
+#: src/libaudgui/plugin-prefs.cc:109 src/libaudqt/prefs-plugin.cc:55
+#, c-format
+msgid "About %s"
+msgstr "关于 %s"
+
+#: src/libaudgui/plugin-prefs.cc:155 src/libaudqt/prefs-plugin.cc:107
+#, c-format
+msgid "%s Settings"
+msgstr "%s 设置"
+
+#: src/libaudgui/plugin-prefs.cc:159
+msgid "_Set"
+msgstr "设置 (&S)"
+
+#: src/libaudgui/plugin-view.cc:235 src/libaudgui/prefs-window.cc:650
+#: src/libaudqt/prefs-window.cc:491 src/libaudqt/prefs-window.cc:637
+msgid "_Settings"
+msgstr "设置 (&S)"
+
+#: src/libaudgui/plugin-view.cc:242 src/libaudgui/prefs-window.cc:661
+#: src/libaudqt/prefs-window.cc:505 src/libaudqt/prefs-window.cc:634
+msgid "_About"
+msgstr "关于 (&A)"
+
+#: src/libaudgui/prefs-window.cc:82 src/libaudqt/prefs-window.cc:85
+msgid "Appearance"
+msgstr "外观"
+
+#: src/libaudgui/prefs-window.cc:83 src/libaudqt/prefs-window.cc:86
+msgid "Audio"
+msgstr "音频"
+
+#: src/libaudgui/prefs-window.cc:84 src/libaudqt/prefs-window.cc:87
+msgid "Network"
+msgstr "网络"
+
+#: src/libaudgui/prefs-window.cc:85 src/libaudgui/prefs-window.cc:95
+#: src/libaudqt/prefs-window.cc:88 src/libaudqt/prefs-window.cc:98
+msgid "Playlist"
+msgstr "播放列表"
+
+#: src/libaudgui/prefs-window.cc:87 src/libaudqt/prefs-window.cc:90
+msgid "Plugins"
+msgstr "插件"
+
+#: src/libaudgui/prefs-window.cc:91 src/libaudqt/prefs-window.cc:94
+msgid "General"
+msgstr "一般"
+
+#: src/libaudgui/prefs-window.cc:92 src/libaudqt/prefs-window.cc:95
+msgid "Effect"
+msgstr "音效"
+
+#: src/libaudgui/prefs-window.cc:93 src/libaudqt/prefs-window.cc:96
+msgid "Visualization"
+msgstr "虚拟效果"
+
+#: src/libaudgui/prefs-window.cc:94 src/libaudqt/prefs-window.cc:97
+msgid "Input"
+msgstr "输入"
+
+#: src/libaudgui/prefs-window.cc:96 src/libaudqt/prefs-window.cc:99
+msgid "Transport"
+msgstr "传输"
+
+#: src/libaudgui/prefs-window.cc:103 src/libaudqt/prefs-window.cc:106
+msgid "Track number"
+msgstr "音轨序号"
+
+#: src/libaudgui/prefs-window.cc:105 src/libaudqt/prefs-window.cc:108
+msgid "File name"
+msgstr "文件名"
+
+#: src/libaudgui/prefs-window.cc:106 src/libaudqt/prefs-window.cc:109
+msgid "File path"
+msgstr "文件路径"
+
+#: src/libaudgui/prefs-window.cc:107 src/libaudqt/prefs-window.cc:110
+msgid "Date"
+msgstr "时间"
+
+#: src/libaudgui/prefs-window.cc:110 src/libaudqt/info-widget.cc:54
+#: src/libaudqt/prefs-window.cc:113
+msgid "Codec"
+msgstr "编码"
+
+#: src/libaudgui/prefs-window.cc:111 src/libaudqt/info-widget.cc:55
+#: src/libaudqt/prefs-window.cc:114
+msgid "Quality"
+msgstr "音质"
+
+#: src/libaudgui/prefs-window.cc:116 src/libaudqt/prefs-window.cc:119
+msgid "None"
+msgstr "无"
+
+#: src/libaudgui/prefs-window.cc:117 src/libaudqt/prefs-window.cc:120
+msgid "Arabic"
+msgstr "阿拉伯语"
+
+#: src/libaudgui/prefs-window.cc:118 src/libaudqt/prefs-window.cc:121
+msgid "Baltic"
+msgstr "波罗的语"
+
+#: src/libaudgui/prefs-window.cc:119 src/libaudqt/prefs-window.cc:122
+msgid "Chinese"
+msgstr "汉语"
+
+#: src/libaudgui/prefs-window.cc:120 src/libaudqt/prefs-window.cc:123
+msgid "Greek"
+msgstr "希腊语"
+
+#: src/libaudgui/prefs-window.cc:121 src/libaudqt/prefs-window.cc:124
+msgid "Hebrew"
+msgstr "希伯来语"
+
+#: src/libaudgui/prefs-window.cc:122 src/libaudqt/prefs-window.cc:125
+msgid "Japanese"
+msgstr "日语"
+
+#: src/libaudgui/prefs-window.cc:123 src/libaudqt/prefs-window.cc:126
+msgid "Korean"
+msgstr "韩语"
+
+#: src/libaudgui/prefs-window.cc:124 src/libaudqt/prefs-window.cc:127
+msgid "Polish"
+msgstr "波兰语"
+
+#: src/libaudgui/prefs-window.cc:125 src/libaudqt/prefs-window.cc:128
+msgid "Russian"
+msgstr "俄语"
+
+#: src/libaudgui/prefs-window.cc:126 src/libaudqt/prefs-window.cc:129
+msgid "Taiwanese"
+msgstr "台语"
+
+#: src/libaudgui/prefs-window.cc:127 src/libaudqt/prefs-window.cc:130
+msgid "Turkish"
+msgstr "土耳其语"
+
+#: src/libaudgui/prefs-window.cc:135 src/libaudqt/prefs-window.cc:138
+msgid "Floating point"
+msgstr "浮点"
+
+#: src/libaudgui/prefs-window.cc:147 src/libaudqt/prefs-window.cc:150
+msgid "<b>Interface Settings</b>"
+msgstr "<b>界面设置</b>"
+
+#: src/libaudgui/prefs-window.cc:148 src/libaudqt/prefs-window.cc:151
+msgid "Interface plugin:"
+msgstr "界面插件: "
+
+#: src/libaudgui/prefs-window.cc:166 src/libaudqt/prefs-window.cc:169
+msgid "Output plugin:"
+msgstr "输出插件："
+
+#: src/libaudgui/prefs-window.cc:174 src/libaudqt/prefs-window.cc:177
+msgid "<b>Output Settings</b>"
+msgstr "<b>输出设置</b>"
+
+#: src/libaudgui/prefs-window.cc:176 src/libaudqt/prefs-window.cc:179
+msgid "Bit depth:"
+msgstr "位深："
+
+#: src/libaudgui/prefs-window.cc:179 src/libaudgui/prefs-window.cc:224
+#: src/libaudqt/prefs-window.cc:182 src/libaudqt/prefs-window.cc:227
+msgid "Buffer size:"
+msgstr "缓冲大小："
+
+#: src/libaudgui/prefs-window.cc:181 src/libaudqt/prefs-window.cc:184
+msgid "ms"
+msgstr "毫秒"
+
+#: src/libaudgui/prefs-window.cc:182 src/libaudqt/prefs-window.cc:185
+msgid "Soft clipping"
+msgstr "柔性剪峰"
+
+#: src/libaudgui/prefs-window.cc:184 src/libaudqt/prefs-window.cc:187
+msgid "Use software volume control (not recommended)"
+msgstr "使用软音量控制（非建议）"
+
+#: src/libaudgui/prefs-window.cc:186 src/libaudqt/prefs-window.cc:189
+msgid "<b>Replay Gain</b>"
+msgstr "<b>回放增益</b>"
+
+#: src/libaudgui/prefs-window.cc:187 src/libaudqt/prefs-window.cc:190
+msgid "Enable Replay Gain"
+msgstr "启用回放增益"
+
+#: src/libaudgui/prefs-window.cc:189 src/libaudqt/prefs-window.cc:192
+msgid "Album mode"
+msgstr "专辑模式"
+
+#: src/libaudgui/prefs-window.cc:192 src/libaudqt/prefs-window.cc:195
+msgid "Prevent clipping (recommended)"
+msgstr "避免爆音（推荐）"
+
+#: src/libaudgui/prefs-window.cc:195 src/libaudqt/prefs-window.cc:198
+msgid "<b>Adjust Levels</b>"
+msgstr "<b>调整幅度</b>"
+
+#: src/libaudgui/prefs-window.cc:197 src/libaudqt/prefs-window.cc:200
+msgid "Amplify all files:"
+msgstr "应用到文件："
+
+#: src/libaudgui/prefs-window.cc:199 src/libaudgui/prefs-window.cc:203
+#: src/libaudqt/prefs-window.cc:202 src/libaudqt/prefs-window.cc:206
+msgid "dB"
+msgstr "dB"
+
+#: src/libaudgui/prefs-window.cc:201 src/libaudqt/prefs-window.cc:204
+msgid "Amplify untagged files:"
+msgstr "应用到无标签文件："
+
+#: src/libaudgui/prefs-window.cc:208 src/libaudqt/prefs-window.cc:211
+msgid "Proxy hostname:"
+msgstr "主机地址："
+
+#: src/libaudgui/prefs-window.cc:210 src/libaudqt/prefs-window.cc:213
+msgid "Proxy port:"
+msgstr "连接端口："
+
+#: src/libaudgui/prefs-window.cc:215 src/libaudqt/prefs-window.cc:218
+msgid "Proxy username:"
+msgstr "认证用户："
+
+#: src/libaudgui/prefs-window.cc:217 src/libaudqt/prefs-window.cc:220
+msgid "Proxy password:"
+msgstr "认证密码："
+
+#: src/libaudgui/prefs-window.cc:223 src/libaudqt/prefs-window.cc:226
+msgid "<b>Network Settings</b>"
+msgstr "<b>网络设置</b>"
+
+#: src/libaudgui/prefs-window.cc:226 src/libaudqt/prefs-window.cc:229
+msgid "KiB"
+msgstr "KB"
+
+#: src/libaudgui/prefs-window.cc:227 src/libaudqt/prefs-window.cc:230
+msgid "<b>Proxy Configuration</b>"
+msgstr "<b>代理服务器设置</b>"
+
+#: src/libaudgui/prefs-window.cc:228 src/libaudqt/prefs-window.cc:231
+msgid "Enable proxy usage"
+msgstr "启用代理服务器"
+
+#: src/libaudgui/prefs-window.cc:232 src/libaudqt/prefs-window.cc:235
+msgid "Use authentication with proxy"
+msgstr "代理服务器要求认证"
+
+#: src/libaudgui/prefs-window.cc:240 src/libaudqt/prefs-window.cc:243
+msgid "Auto character encoding detector for:"
+msgstr "自动检测下列编码："
+
+#: src/libaudgui/prefs-window.cc:244 src/libaudqt/prefs-window.cc:247
+msgid "Fallback character encodings:"
+msgstr "备用字符编码："
+
+#: src/libaudgui/prefs-window.cc:252 src/libaudqt/prefs-window.cc:256
+msgid "<b>Behavior</b>"
+msgstr "<b>行为</b>"
+
+#: src/libaudgui/prefs-window.cc:253 src/libaudqt/prefs-window.cc:257
+msgid "Resume playback on startup"
+msgstr "启动时恢复播放"
+
+#: src/libaudgui/prefs-window.cc:255 src/libaudqt/prefs-window.cc:259
+msgid "Pause instead of resuming immediately"
+msgstr "立刻暂停，而不是继续播放"
+
+#: src/libaudgui/prefs-window.cc:258 src/libaudqt/prefs-window.cc:262
+msgid "Advance when the current song is deleted"
+msgstr "歌曲播放中被删除则播放下一首"
+
+#: src/libaudgui/prefs-window.cc:260 src/libaudqt/prefs-window.cc:264
+msgid "Clear the playlist when opening files"
+msgstr "打开文件时清空当前播放列表"
+
+#: src/libaudgui/prefs-window.cc:262 src/libaudqt/prefs-window.cc:266
+msgid "Open files in a temporary playlist"
+msgstr "在临时播放列表打开文件"
+
+#: src/libaudgui/prefs-window.cc:264 src/libaudqt/prefs-window.cc:270
+msgid "<b>Compatibility</b>"
+msgstr "<b>兼容性</b>"
+
+#: src/libaudgui/prefs-window.cc:265 src/libaudqt/prefs-window.cc:271
+msgid "Interpret \\ (backward slash) as a folder delimiter"
+msgstr "说明 \\(反斜杠)作为一个文件夹分隔符"
+
+#: src/libaudgui/prefs-window.cc:268 src/libaudqt/prefs-window.cc:274
+msgid "<b>Song Display</b>"
+msgstr "<b>歌曲显示</b>"
+
+#: src/libaudgui/prefs-window.cc:269 src/libaudqt/prefs-window.cc:275
+msgid "Show song numbers"
+msgstr "显示歌曲序号"
+
+#: src/libaudgui/prefs-window.cc:271 src/libaudqt/prefs-window.cc:277
+msgid "Show leading zeroes (02:00 instead of 2:00)"
+msgstr "显示时间前的0（如：显示2:00为02:00）"
+
+#: src/libaudgui/prefs-window.cc:274 src/libaudqt/prefs-window.cc:280
+msgid "<b>Advanced</b>"
+msgstr "<b>高级</b>"
+
+#: src/libaudgui/prefs-window.cc:275 src/libaudqt/prefs-window.cc:268
+#: src/libaudqt/prefs-window.cc:281
+msgid "Do not load metadata for songs until played"
+msgstr "未播放时切勿加载元数据"
+
+#: src/libaudgui/prefs-window.cc:277 src/libaudqt/prefs-window.cc:283
+msgid "Probe content of files with no recognized file name extension"
+msgstr "待检测文件包含不能识别的文件扩展名"
+
+#: src/libaudgui/prefs-window.cc:282 src/libaudqt/prefs-window.cc:288
+msgid "<b>Album Art</b>"
+msgstr "<b>专辑封面</b>"
+
+#: src/libaudgui/prefs-window.cc:283 src/libaudqt/prefs-window.cc:289
+msgid "Search for images matching these words (comma-separated):"
+msgstr "搜索匹配以下词语的图片(用逗号分隔)："
+
+#: src/libaudgui/prefs-window.cc:285 src/libaudqt/prefs-window.cc:291
+msgid "Exclude images matching these words (comma-separated):"
+msgstr "排除匹配以下词语的图片(用逗号分隔)："
+
+#: src/libaudgui/prefs-window.cc:287 src/libaudqt/prefs-window.cc:293
+msgid "Search for images matching song file name"
+msgstr "搜索匹配歌曲文件名的图片"
+
+#: src/libaudgui/prefs-window.cc:289 src/libaudqt/prefs-window.cc:295
+msgid "Search recursively"
+msgstr "递归搜索"
+
+#: src/libaudgui/prefs-window.cc:291 src/libaudqt/prefs-window.cc:297
+msgid "Search depth:"
+msgstr "搜索深度："
+
+#: src/libaudgui/prefs-window.cc:295 src/libaudqt/prefs-window.cc:301
+msgid "<b>Popup Information</b>"
+msgstr "<b>弹出信息</b>"
+
+#: src/libaudgui/prefs-window.cc:296 src/libaudqt/prefs-window.cc:302
+msgid "Show popup information"
+msgstr "显示弹出信息"
+
+#: src/libaudgui/prefs-window.cc:298 src/libaudqt/prefs-window.cc:304
+msgid "Popup delay (tenths of a second):"
+msgstr "弹出延迟 (十分之一秒):"
+
+#: src/libaudgui/prefs-window.cc:302 src/libaudqt/prefs-window.cc:308
+msgid "Show time scale for current song"
+msgstr "停止播放"
+
+#: src/libaudgui/prefs-window.cc:319 src/libaudqt/prefs-window.cc:325
+msgid "TITLE"
+msgstr "标题"
+
+#: src/libaudgui/prefs-window.cc:320 src/libaudqt/prefs-window.cc:326
+msgid "ARTIST - TITLE"
+msgstr "艺术家 - 标题"
+
+#: src/libaudgui/prefs-window.cc:321 src/libaudqt/prefs-window.cc:327
+msgid "ARTIST - ALBUM - TITLE"
+msgstr "艺术家 - 专辑 - 标题"
+
+#: src/libaudgui/prefs-window.cc:322 src/libaudqt/prefs-window.cc:328
+msgid "ARTIST - ALBUM - TRACK. TITLE"
+msgstr "艺术家 - 专辑 - 曲目号. 标题"
+
+#: src/libaudgui/prefs-window.cc:323 src/libaudqt/prefs-window.cc:329
+msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
+msgstr "艺术家 [专辑] - 曲目号. 标题"
+
+#: src/libaudgui/prefs-window.cc:324 src/libaudqt/prefs-window.cc:330
+msgid "ALBUM - TITLE"
+msgstr "专辑 - 标题"
+
+#: src/libaudgui/prefs-window.cc:418
+msgid "Category"
+msgstr "分类"
+
+#: src/libaudgui/prefs-window.cc:487 src/libaudqt/prefs-window.cc:346
+msgid "Custom"
+msgstr "自定义"
+
+#: src/libaudgui/prefs-window.cc:505 src/libaudqt/prefs-window.cc:338
+msgid "Title format:"
+msgstr "标题样式："
+
+#: src/libaudgui/prefs-window.cc:509 src/libaudqt/prefs-window.cc:349
+msgid "Custom string:"
+msgstr "自定字符："
+
+#: src/libaudgui/prefs-window.cc:711 src/libaudqt/prefs-window.cc:713
+msgid "Audacious Settings"
+msgstr "Audacious 设置"
+
+#: src/libaudgui/queue-manager.cc:175 src/libaudqt/queue-manager.cc:133
 msgid "Queue Manager"
 msgstr "队列管理器"
 
-#: src/libaudgui/queue-manager.c:188
+#: src/libaudgui/queue-manager.cc:193 src/libaudqt/queue-manager.cc:115
 msgid "_Unqueue"
 msgstr "从队列移除 (&U)"
 
-#: src/libaudgui/ui_fileopener.c:79
+#: src/libaudgui/status.cc:36
+msgid "Working ..."
+msgstr "进行中..."
+
+#: src/libaudgui/status.cc:85 src/libaudqt/log-inspector.cc:192
+msgid "Error"
+msgstr "错误"
+
+#: src/libaudgui/ui_fileopener.cc:80 src/libaudqt/fileopener.cc:39
 msgid "Open Files"
 msgstr "打开文件"
 
-#: src/libaudgui/ui_fileopener.c:80 src/libaudgui/url-opener.c:50
+#: src/libaudgui/ui_fileopener.cc:81 src/libaudgui/url-opener.cc:50
 msgid "_Open"
 msgstr "打开 (&O)"
 
-#: src/libaudgui/ui_fileopener.c:82
+#: src/libaudgui/ui_fileopener.cc:83
 msgid "Close _dialog on open"
 msgstr "打开时关闭对话框 (&D)"
 
-#: src/libaudgui/ui_fileopener.c:87
+#: src/libaudgui/ui_fileopener.cc:88 src/libaudqt/fileopener.cc:39
 msgid "Add Files"
 msgstr "添加文件"
 
-#: src/libaudgui/ui_fileopener.c:88 src/libaudgui/url-opener.c:56
+#: src/libaudgui/ui_fileopener.cc:89 src/libaudgui/url-opener.cc:56
 msgid "_Add"
 msgstr "添加 (&A)"
 
-#: src/libaudgui/ui_fileopener.c:90
+#: src/libaudgui/ui_fileopener.cc:91
 msgid "Close _dialog on add"
 msgstr "添加时关闭对话框 (&D)"
 
-#: src/libaudgui/ui_jumptotrack.c:101 src/libaudgui/ui_jumptotrack.c:109
-#: src/libaudgui/ui_jumptotrack.c:301
+#: src/libaudgui/ui_jumptotrack.cc:95 src/libaudgui/ui_jumptotrack.cc:103
+#: src/libaudgui/ui_jumptotrack.cc:307
 msgid "_Queue"
 msgstr "入队(_Q)"
 
-#: src/libaudgui/ui_jumptotrack.c:107
+#: src/libaudgui/ui_jumptotrack.cc:101
 msgid "Un_queue"
 msgstr "出列(_q)"
 
-#: src/libaudgui/ui_jumptotrack.c:245
+#: src/libaudgui/ui_jumptotrack.cc:239
 msgid "Jump to Song"
 msgstr "跳到歌曲"
 
-#: src/libaudgui/ui_jumptotrack.c:270
+#: src/libaudgui/ui_jumptotrack.cc:264
 msgid "Filter: "
 msgstr "过滤器："
 
-#: src/libaudgui/ui_jumptotrack.c:271
+#: src/libaudgui/ui_jumptotrack.cc:265
 msgid "_Filter:"
 msgstr "过滤器(_F)："
 
-#: src/libaudgui/ui_jumptotrack.c:294
+#: src/libaudgui/ui_jumptotrack.cc:289
 msgid "C_lose on jump"
 msgstr "跳转时关闭 (&C)"
 
-#: src/libaudgui/ui_playlist_manager.c:223
-msgid "Playlist Manager"
-msgstr "播放列表管理器"
-
-#: src/libaudgui/ui_playlist_manager.c:236
-msgid "Entries"
-msgstr "条目"
-
-#: src/libaudgui/ui_playlist_manager.c:254
-msgid "_New"
-msgstr "新建 (&N)"
-
-#: src/libaudgui/ui_playlist_manager.c:256
-msgid "Ren_ame"
-msgstr "重命名 (&A)"
-
-#: src/libaudgui/ui_playlist_manager.c:257
-msgid "_Play"
-msgstr "播放 (&P)"
-
-#: src/libaudgui/ui_playlist_manager.c:269
-msgid "_Close dialog on activating playlist"
-msgstr "激活播放列表时关闭对话框(_C)"
-
-#: src/libaudgui/url-opener.c:49
+#: src/libaudgui/url-opener.cc:49
 msgid "Open URL"
 msgstr "打开URL"
 
-#: src/libaudgui/url-opener.c:55
+#: src/libaudgui/url-opener.cc:55
 msgid "Add URL"
 msgstr "添加URL"
 
-#: src/libaudgui/url-opener.c:74
+#: src/libaudgui/url-opener.cc:79
 msgid "Enter URL:"
 msgstr "输入地址"
 
-#: src/libaudgui/util.c:148
+#: src/libaudgui/util.cc:154
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
@@ -1037,5 +1109,83 @@ msgstr ""
 "\n"
 "（详细信息已隐藏。）"
 
-#~ msgid "_Remember"
-#~ msgstr "记住 (&R)"
+#: src/libaudqt/info-widget.cc:37
+msgid "Metadata"
+msgstr "元数据"
+
+#: src/libaudqt/info-widget.cc:45
+msgid "Composer"
+msgstr "作曲"
+
+#: src/libaudqt/info-widget.cc:46
+msgid "Performer"
+msgstr "演奏"
+
+#: src/libaudqt/info-widget.cc:47
+msgid "Recording Year"
+msgstr "录制年代"
+
+#: src/libaudqt/info-widget.cc:48
+msgid "Recording Date"
+msgstr "录制日期"
+
+#: src/libaudqt/info-widget.cc:51
+msgid "Technical"
+msgstr "技术员"
+
+#: src/libaudqt/info-widget.cc:53
+msgid "MIME Type"
+msgstr "媒体类型"
+
+#: src/libaudqt/info-widget.cc:56
+msgid "Bitrate"
+msgstr "比特率"
+
+#: src/libaudqt/infowin.cc:126
+#, c-format
+msgid "No info available for %s.\n"
+msgstr "未找到与‘%s’相关信息。\n"
+
+#: src/libaudqt/log-inspector.cc:106
+msgid "Level"
+msgstr "级别"
+
+#: src/libaudqt/log-inspector.cc:107
+msgid "Filename"
+msgstr "文件名"
+
+#: src/libaudqt/log-inspector.cc:108
+msgid "Line"
+msgstr "线路"
+
+#: src/libaudqt/log-inspector.cc:109
+msgid "Function"
+msgstr "功能"
+
+#: src/libaudqt/log-inspector.cc:110
+msgid "Message"
+msgstr "消息"
+
+#: src/libaudqt/log-inspector.cc:175
+msgid "Log Inspector"
+msgstr "日志监视器"
+
+#: src/libaudqt/log-inspector.cc:186
+msgid "Log Level:"
+msgstr "日志级别："
+
+#: src/libaudqt/log-inspector.cc:189
+msgid "Debug"
+msgstr "调试"
+
+#: src/libaudqt/log-inspector.cc:190
+msgid "Info"
+msgstr "信息"
+
+#: src/libaudqt/log-inspector.cc:191
+msgid "Warning"
+msgstr "警告"
+
+#: src/libaudqt/plugin-menu.cc:40
+msgid "Plugins ..."
+msgstr "插件 ..."
