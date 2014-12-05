@@ -128,10 +128,6 @@ struct ConfigOp {
     bool result;
 };
 
-struct LoadState {
-    String section;
-};
-
 struct SaveState {
     Index<ConfigItem> list;
 };
@@ -232,36 +228,34 @@ static bool config_op_run (ConfigOp * op, MultiHash * table)
     return op->result;
 }
 
-static void load_heading (const char * section, void * data)
+class ConfigParser : public IniParser
 {
-    LoadState * state = (LoadState *) data;
-    state->section = String (section);
-}
+private:
+    String section;
 
-static void load_entry (const char * key, const char * value, void * data)
-{
-    LoadState * state = (LoadState *) data;
-    if (! state->section)
-        return;
+    void handle_heading (const char * heading)
+        { section = String (heading); }
 
-    ConfigOp op = {OP_SET_NO_FLAG, state->section, key, String (value)};
-    config_op_run (& op, & config);
-}
+    void handle_entry (const char * key, const char * value)
+    {
+        if (! section)
+            return;
+
+        ConfigOp op = {OP_SET_NO_FLAG, section, key, String (value)};
+        config_op_run (& op, & config);
+    }
+};
 
 void config_load (void)
 {
     StringBuf path = filename_to_uri (aud_get_path (AudPath::UserDir));
-    str_insert (path, -1, "/config");
+    path.insert (-1, "/config");
 
     if (VFSFile::test_file (path, VFS_EXISTS))
     {
         VFSFile file (path, "r");
-
         if (file)
-        {
-            LoadState state = LoadState ();
-            inifile_parse (file, load_heading, load_entry, & state);
-        }
+            ConfigParser ().parse (file);
     }
 
     aud_config_set_defaults (nullptr, core_defaults);
@@ -290,7 +284,7 @@ void config_save (void)
     state.list.sort (item_compare, nullptr);
 
     StringBuf path = filename_to_uri (aud_get_path (AudPath::UserDir));
-    str_insert (path, -1, "/config");
+    path.insert (-1, "/config");
 
     String current_heading;
 

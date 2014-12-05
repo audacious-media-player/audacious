@@ -152,9 +152,6 @@ Default playlist usually loaded on startup.
 .TP
 ~/.local/share/audacious/Skins, @datarootdir@/audacious/Skins
 Default location(s) where Audacious should look for skin files.
-.TP
-~/.local/share/audacious/Plugins
-Location of user-installed plugins.
 .SH ENVIRONMENT
 .TP 12
 .B SKINSDIR

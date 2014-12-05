@@ -23,7 +23,7 @@
 
 namespace audqt {
 
-PluginListModel::PluginListModel (QObject * parent, int category_id) : QAbstractListModel (parent),
+PluginListModel::PluginListModel (QObject * parent, PluginType category_id) : QAbstractListModel (parent),
     m_list (aud_plugin_list (category_id))
 {
 

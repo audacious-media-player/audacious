@@ -51,7 +51,7 @@ void effect_start (int & channels, int & rate)
     input_channels = channels;
     input_rate = rate;
 
-    auto & list = aud_plugin_list (PLUGIN_TYPE_EFFECT);
+    auto & list = aud_plugin_list (PluginType::Effect);
 
     for (int i = 0; i < list.len (); i ++)
     {
@@ -160,7 +160,7 @@ int effect_adjust_delay (int delay)
 
 static void effect_insert (PluginHandle * plugin, EffectPlugin * header)
 {
-    int position = aud_plugin_list (PLUGIN_TYPE_EFFECT).find (plugin);
+    int position = aud_plugin_list (PluginType::Effect).find (plugin);
 
     Effect * prev = nullptr;
 

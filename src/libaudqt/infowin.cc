@@ -44,14 +44,16 @@ public:
 
     void fillInfo (int playlist, int entry, const char * filename, const Tuple & tuple,
      PluginHandle * decoder, bool updating_enabled);
-    void displayImage (const char * filename);
-
-    HookReceiver<InfoWindow, const char *> art_hook =
-     {"art ready", this, & InfoWindow::displayImage};
 
 private:
+    String m_filename;
     QLabel m_image;
     InfoWidget m_infowidget;
+
+    void displayImage (const char * filename);
+
+    const HookReceiver<InfoWindow, const char *>
+     art_hook {"art ready", this, & InfoWindow::displayImage};
 };
 
 InfoWindow::InfoWindow (QWidget * parent) : QDialog (parent)
@@ -79,13 +81,15 @@ InfoWindow::InfoWindow (QWidget * parent) : QDialog (parent)
 void InfoWindow::fillInfo (int playlist, int entry, const char * filename, const Tuple & tuple,
  PluginHandle * decoder, bool updating_enabled)
 {
+    m_filename = String (filename);
     displayImage (filename);
     m_infowidget.fillInfo (playlist, entry, filename, tuple, decoder, updating_enabled);
 }
 
 void InfoWindow::displayImage (const char * filename)
 {
-    m_image.setPixmap (art_request (filename));
+    if (! strcmp_safe (filename, m_filename))
+        m_image.setPixmap (art_request (filename));
 }
 
 static InfoWindow * s_infowin = nullptr;

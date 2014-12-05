@@ -40,12 +40,12 @@ EXPORT void cleanup ()
     queue_manager_hide ();
 }
 
-/* the goal is to force a window to come to the front on any qt platform */
+/* the goal is to force a window to come to the front on any Qt platform */
 EXPORT void window_bring_to_front (QWidget * window)
 {
-    window->show();
+    window->show ();
 
-    Qt::WindowStates state = window->windowState();
+    Qt::WindowStates state = window->windowState ();
 
     state &= ~Qt::WindowMinimized;
     state |= Qt::WindowActive;
@@ -63,23 +63,25 @@ EXPORT void simple_message (const char * title, const char * text)
     QDialogButtonBox bbox;
 
     label.setText (text);
-    bbox.setStandardButtons (QDialogButtonBox::Ok);
+    label.setTextInteractionFlags (Qt::TextSelectableByMouse);
 
-    QObject::connect (& bbox, &QDialogButtonBox::accepted, & msgbox, &QDialog::accept);
+    bbox.setStandardButtons (QDialogButtonBox::Close);
 
+    QObject::connect (& bbox, & QDialogButtonBox::rejected, & msgbox, & QDialog::reject);
+
+    vbox.setSizeConstraint (QLayout::SetFixedSize);
     vbox.addWidget (& label);
     vbox.addWidget (& bbox);
 
     msgbox.setWindowTitle (title);
-
     msgbox.setLayout (& vbox);
     msgbox.exec ();
 }
 
-/* translate gtk+ accelerators and also handle dgettext() */
+/* translate GTK+ accelerators and also handle dgettext() */
 EXPORT QString translate_str (const char * str, const char * domain)
 {
-    /* translate the gtk+ accelerator (_) into a qt accelerator (&) */
+    /* translate the GTK+ accelerator (_) into a Qt accelerator (&) */
     return QString (dgettext (domain, str)).replace ('_', '&');
 }
 

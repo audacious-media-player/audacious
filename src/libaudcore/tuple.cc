@@ -25,6 +25,7 @@
 
 #include <glib.h>  /* for g_utf8_validate */
 
+#include "audio.h"
 #include "audstrings.h"
 #include "i18n.h"
 #include "tuple.h"
@@ -476,8 +477,8 @@ EXPORT void Tuple::set_str (Field field, const char * str)
         data->set_str (field, str);
     else
     {
-        StringBuf utf8 = str_to_utf8 (str);
-        data->set_str (field, utf8 ? (const char *) utf8 : "(character encoding error)");
+        StringBuf utf8 = str_to_utf8 (str, -1);
+        data->set_str (field, utf8 ? (const char *) utf8 : _("(character encoding error)"));
     }
 }
 
@@ -506,9 +507,9 @@ EXPORT void Tuple::set_filename (const char * filename)
     if (base > filename)
         data->set_str (Path, uri_to_display (str_copy (filename, base - filename)));
     if (ext > base)
-        data->set_str (Basename, str_decode_percent (base, ext - base));
+        data->set_str (Basename, str_to_utf8 (str_decode_percent (base, ext - base)));
     if (sub > ext + 1)
-        data->set_str (Suffix, str_decode_percent (ext + 1, sub - ext - 1));
+        data->set_str (Suffix, str_to_utf8 (str_decode_percent (ext + 1, sub - ext - 1)));
 
     if (sub[0])
         data->set_int (Subtune, isub);
@@ -524,14 +525,14 @@ EXPORT void Tuple::set_format (const char * format, int chans, int rate, int bra
     if (chans > 0)
     {
         if (chans == 1)
-            str_insert (buf, -1, _("Mono"));
+            buf.insert (-1, _("Mono"));
         else if (chans == 2)
-            str_insert (buf, -1, _("Stereo"));
+            buf.insert (-1, _("Stereo"));
         else
             buf.combine (str_printf (dngettext (PACKAGE, "%d channel", "%d channels", chans), chans));
 
         if (rate > 0)
-            str_insert (buf, -1, ", ");
+            buf.insert (-1, ", ");
     }
 
     if (rate > 0)
@@ -561,6 +562,35 @@ EXPORT int Tuple::get_nth_subtune (int n) const
         return -1;
 
     return data->subtunes ? data->subtunes[n] : 1 + n;
+}
+
+EXPORT ReplayGainInfo Tuple::get_replay_gain () const
+{
+    ReplayGainInfo gain {};
+
+    if (! data)
+        return gain;
+
+    int gain_unit = get_int (GainDivisor);
+    int peak_unit = get_int (PeakDivisor);
+
+    if (gain_unit > 0)
+    {
+        if (data->is_set (AlbumGain))
+            gain.album_gain = get_int (AlbumGain) / (float) gain_unit;
+        if (data->is_set (TrackGain))
+            gain.track_gain = get_int (TrackGain) / (float) gain_unit;
+    }
+
+    if (peak_unit > 0)
+    {
+        if (data->is_set (AlbumPeak))
+            gain.album_peak = get_int (AlbumPeak) / (float) peak_unit;
+        if (data->is_set (TrackPeak))
+            gain.track_peak = get_int (TrackPeak) / (float) peak_unit;
+    }
+
+    return gain;
 }
 
 EXPORT bool Tuple::fetch_stream_info (VFSFile & stream)

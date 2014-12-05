@@ -24,6 +24,7 @@
 #include <gtk/gtk.h>
 
 #include <libaudcore/audstrings.h>
+#include <libaudcore/drct.h>
 #include <libaudcore/hook.h>
 #include <libaudcore/i18n.h>
 #include <libaudcore/playlist.h>
@@ -52,7 +53,7 @@ struct Category {
 };
 
 struct PluginCategory {
-    int type;
+    PluginType type;
     const char * name;
 };
 
@@ -87,22 +88,22 @@ static const Category categories[] = {
 };
 
 static const PluginCategory plugin_categories[] = {
-    { PLUGIN_TYPE_GENERAL, N_("General") },
-    { PLUGIN_TYPE_EFFECT, N_("Effect") },
-    { PLUGIN_TYPE_VIS, N_("Visualization") },
-    { PLUGIN_TYPE_INPUT, N_("Input") },
-    { PLUGIN_TYPE_PLAYLIST, N_("Playlist") },
-    { PLUGIN_TYPE_TRANSPORT, N_("Transport") }
+    { PluginType::General, N_("General") },
+    { PluginType::Effect, N_("Effect") },
+    { PluginType::Vis, N_("Visualization") },
+    { PluginType::Input, N_("Input") },
+    { PluginType::Playlist, N_("Playlist") },
+    { PluginType::Transport, N_("Transport") }
 };
 
 static const TitleFieldTag title_field_tags[] = {
     { N_("Artist")     , "${artist}" },
     { N_("Album")      , "${album}" },
     { N_("Title")      , "${title}" },
-    { N_("Tracknumber"), "${track-number}" },
+    { N_("Track number"), "${track-number}" },
     { N_("Genre")      , "${genre}" },
-    { N_("Filename")   , "${file-name}" },
-    { N_("Filepath")   , "${file-path}" },
+    { N_("File name")   , "${file-name}" },
+    { N_("File path")   , "${file-path}" },
     { N_("Date")       , "${date}" },
     { N_("Year")       , "${year}" },
     { N_("Comment")    , "${comment}" },
@@ -273,7 +274,7 @@ static const PreferencesWidget playlist_page_widgets[] = {
     WidgetLabel (N_("<b>Advanced</b>")),
     WidgetCheck (N_("Do not load metadata for songs until played"),
         WidgetBool (0, "metadata_on_play")),
-    WidgetCheck (N_("Probe content of files with no recognized filename extension"),
+    WidgetCheck (N_("Probe content of files with no recognized file name extension"),
         WidgetBool (0, "slow_probe"))
 };
 
@@ -323,7 +324,7 @@ static const char * const titlestring_preset_names[TITLESTRING_NPRESETS] = {
     N_("ALBUM - TITLE")
 };
 
-static Index<ComboItem> fill_plugin_combo (int type)
+static Index<ComboItem> fill_plugin_combo (PluginType type)
 {
     Index<ComboItem> elems;
     int i = 0;
@@ -361,7 +362,8 @@ static void category_changed (GtkTreeSelection * selection)
 
 static void send_title_change (void)
 {
-    hook_call ("title change", nullptr);
+    if (aud_drct_get_ready ())
+        hook_call ("title change", nullptr);
 }
 
 static void titlestring_tag_menu_cb (GtkMenuItem * menuitem, void * data)
@@ -550,7 +552,7 @@ static void create_song_info_category (void)
 
 static void iface_fill_prefs_box (void)
 {
-    Plugin * header = (Plugin *) aud_plugin_get_header (aud_plugin_get_current (PLUGIN_TYPE_IFACE));
+    Plugin * header = (Plugin *) aud_plugin_get_header (aud_plugin_get_current (PluginType::Iface));
     if (header && header->info.prefs)
         audgui_create_widgets_with_domain (iface_prefs_box,
          header->info.prefs->widgets, header->info.domain);
@@ -574,7 +576,7 @@ static void iface_combo_changed (void)
     gtk_container_foreach ((GtkContainer *) iface_prefs_box,
      (GtkCallback) gtk_widget_destroy, nullptr);
 
-    aud_plugin_enable (aud_plugin_list (PLUGIN_TYPE_IFACE)[iface_combo_selected], true);
+    aud_plugin_enable (aud_plugin_list (PluginType::Iface)[iface_combo_selected], true);
 
     /* now wait till we have restarted into the new main loop */
     g_idle_add_full (G_PRIORITY_HIGH, iface_combo_changed_finish, nullptr, nullptr);
@@ -584,9 +586,9 @@ static ArrayRef<const ComboItem> iface_combo_fill ()
 {
     if (! iface_combo_elements.len ())
     {
-        iface_combo_elements = fill_plugin_combo (PLUGIN_TYPE_IFACE);
-        iface_combo_selected = aud_plugin_list (PLUGIN_TYPE_IFACE).
-         find (aud_plugin_get_current (PLUGIN_TYPE_IFACE));
+        iface_combo_elements = fill_plugin_combo (PluginType::Iface);
+        iface_combo_selected = aud_plugin_list (PluginType::Iface).
+         find (aud_plugin_get_current (PluginType::Iface));
     }
 
     return {iface_combo_elements.begin (), iface_combo_elements.len ()};
@@ -608,7 +610,7 @@ static void create_appearance_category (void)
 
 static void output_combo_changed (void)
 {
-    PluginHandle * plugin = aud_plugin_list (PLUGIN_TYPE_OUTPUT)[output_combo_selected];
+    PluginHandle * plugin = aud_plugin_list (PluginType::Output)[output_combo_selected];
 
     if (aud_plugin_enable (plugin, true))
     {
@@ -621,9 +623,9 @@ static ArrayRef<const ComboItem> output_combo_fill ()
 {
     if (! output_combo_elements.len ())
     {
-        output_combo_elements = fill_plugin_combo (PLUGIN_TYPE_OUTPUT);
-        output_combo_selected = aud_plugin_list (PLUGIN_TYPE_OUTPUT)
-         .find (aud_plugin_get_current (PLUGIN_TYPE_OUTPUT));
+        output_combo_elements = fill_plugin_combo (PluginType::Output);
+        output_combo_selected = aud_plugin_list (PluginType::Output)
+         .find (aud_plugin_get_current (PluginType::Output));
     }
 
     return {output_combo_elements.begin (), output_combo_elements.len ()};
@@ -636,17 +638,17 @@ static void output_bit_depth_changed (void)
 
 static void output_do_config (void * unused)
 {
-    audgui_show_plugin_prefs (aud_plugin_get_current (PLUGIN_TYPE_OUTPUT));
+    audgui_show_plugin_prefs (aud_plugin_get_current (PluginType::Output));
 }
 
 static void output_do_about (void * unused)
 {
-    audgui_show_plugin_about (aud_plugin_get_current (PLUGIN_TYPE_OUTPUT));
+    audgui_show_plugin_about (aud_plugin_get_current (PluginType::Output));
 }
 
 static void * output_create_config_button (void)
 {
-    gboolean enabled = aud_plugin_has_configure (aud_plugin_get_current (PLUGIN_TYPE_OUTPUT));
+    gboolean enabled = aud_plugin_has_configure (aud_plugin_get_current (PluginType::Output));
 
     output_config_button = audgui_button_new (_("_Settings"),
      "preferences-system", output_do_config, nullptr);
@@ -657,7 +659,7 @@ static void * output_create_config_button (void)
 
 static void * output_create_about_button (void)
 {
-    gboolean enabled = aud_plugin_has_about (aud_plugin_get_current (PLUGIN_TYPE_OUTPUT));
+    gboolean enabled = aud_plugin_has_about (aud_plugin_get_current (PluginType::Output));
 
     output_about_button = audgui_button_new (_("_About"), "help-about", output_do_about, nullptr);
     gtk_widget_set_sensitive (output_about_button, enabled);
@@ -784,14 +786,14 @@ EXPORT void audgui_show_prefs_window (void)
     gtk_window_present ((GtkWindow *) prefswin);
 }
 
-EXPORT void audgui_show_prefs_for_plugin_type (int type)
+EXPORT void audgui_show_prefs_for_plugin_type (PluginType type)
 {
     if (! prefswin)
         create_prefs_window ();
 
-    if (type == PLUGIN_TYPE_IFACE)
+    if (type == PluginType::Iface)
         change_category (CATEGORY_APPEARANCE);
-    else if (type == PLUGIN_TYPE_OUTPUT)
+    else if (type == PluginType::Output)
         change_category (CATEGORY_AUDIO);
     else
     {

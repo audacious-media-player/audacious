@@ -43,10 +43,7 @@ static char * strtrim (char * str, char * end)
     return str;
 }
 
-EXPORT void inifile_parse (VFSFile & file,
- void (* handle_heading) (const char * heading, void * data),
- void (* handle_entry) (const char * key, const char * value, void * data),
- void * data)
+EXPORT void IniParser::parse (VFSFile & file)
 {
     int size = 512;
     StringBuf buf (size);
@@ -93,13 +90,13 @@ EXPORT void inifile_parse (VFSFile & file,
 
             case '[':
                 if ((end = (char *) memchr (start, ']', end - start)))
-                    handle_heading (strtrim (strskip (start + 1, end), end), data);
+                    handle_heading (strtrim (strskip (start + 1, end), end));
 
                 break;
 
             default:
                 if ((sep = (char *) memchr (start, '=', end - start)))
-                    handle_entry (strtrim (start, sep), strtrim (strskip (sep + 1, end), end), data);
+                    handle_entry (strtrim (start, sep), strtrim (strskip (sep + 1, end), end));
 
                 break;
             }

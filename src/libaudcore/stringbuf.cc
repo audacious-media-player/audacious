@@ -200,3 +200,24 @@ EXPORT void StringBuf::combine (StringBuf && other)
     other.m_data = nullptr;
     other.m_len = 0;
 }
+
+EXPORT void StringBuf::insert (int pos, const char * s, int len)
+{
+    int len0 = m_len;
+
+    if (pos < 0)
+        pos = len0;
+    if (len < 0)
+        len = strlen (s);
+
+    resize (len0 + len);
+    memmove (m_data + pos + len, m_data + pos, len0 - pos);
+    memcpy (m_data + pos, s, len);
+}
+
+EXPORT void StringBuf::remove (int pos, int len)
+{
+    int after = m_len - pos - len;
+    memmove (m_data + pos, m_data + pos + len, after);
+    resize (pos + after);
+}

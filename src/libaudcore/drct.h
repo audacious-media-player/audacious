@@ -52,7 +52,7 @@ Tuple aud_drct_get_tuple ();
 
 // returns some statistics of playing song
 // connect to the "info change" hook to be notified of changes
-void aud_drct_get_info (int * bitrate, int * samplerate, int * channels);
+void aud_drct_get_info (int & bitrate, int & samplerate, int & channels);
 
 int aud_drct_get_time ();
 int aud_drct_get_length ();
@@ -63,7 +63,7 @@ void aud_drct_seek (int time);
  * the song (for A) or the end of the song (for B).  A-B repeat is disabled
  * entirely by setting both A and B to -1. */
 void aud_drct_set_ab_repeat (int a, int b);
-void aud_drct_get_ab_repeat (int * a, int * b);
+void aud_drct_get_ab_repeat (int & a, int & b);
 
 /* --- VOLUME CONTROL --- */
 
@@ -75,10 +75,6 @@ int aud_drct_get_volume_balance ();
 void aud_drct_set_volume_balance (int balance);
 
 /* --- PLAYLIST CONTROL --- */
-
-/* The indexes passed to drct_pl_add_list(), drct_pl_open_list(), and
- * drct_pl_open_temp_list() contain pooled strings to which the caller gives up
- * one reference.  The indexes themselves are freed by these functions. */
 
 void aud_drct_pl_next ();
 void aud_drct_pl_prev ();

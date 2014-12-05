@@ -44,7 +44,8 @@ class PluginHandle
 public:
     String basename, path;
     bool loaded;
-    int timestamp, type;
+    int timestamp;
+    PluginType type;
     Plugin * header;
     String name, domain;
     int priority;
@@ -58,11 +59,11 @@ public:
     Index<String> exts;
 
     /* for input plugins */
-    Index<String> keys[INPUT_KEYS];
-    int has_subtunes, can_write_tuple;
+    aud::array<InputKey, Index<String>> keys;
+    int has_subtunes, writes_tag;
 
     PluginHandle (const char * basename, const char * path, bool loaded,
-     int timestamp, int type, Plugin * header) :
+     int timestamp, PluginType type, Plugin * header) :
         basename (basename),
         path (path),
         loaded (loaded),
@@ -72,10 +73,10 @@ public:
         priority (0),
         has_about (false),
         has_configure (false),
-        enabled (type == PLUGIN_TYPE_TRANSPORT ||
-         type == PLUGIN_TYPE_PLAYLIST || type == PLUGIN_TYPE_INPUT),
+        enabled (type == PluginType::Transport ||
+         type == PluginType::Playlist || type == PluginType::Input),
         has_subtunes (false),
-        can_write_tuple (false) {}
+        writes_tag (false) {}
 
     ~PluginHandle ()
     {
@@ -84,7 +85,7 @@ public:
     }
 };
 
-static const char * plugin_type_names[PLUGIN_TYPES] = {
+static constexpr aud::array<PluginType, const char *> plugin_type_names = {
     "transport",
     "playlist",
     "input",
@@ -95,13 +96,13 @@ static const char * plugin_type_names[PLUGIN_TYPES] = {
     "iface"
 };
 
-static const char * input_key_names[INPUT_KEYS] = {
+static constexpr aud::array<InputKey, const char *> input_key_names = {
     "scheme",
     "ext",
     "mime"
 };
 
-static Index<PluginHandle *> plugins[PLUGIN_TYPES];
+static aud::array<PluginType, Index<PluginHandle *>> plugins;
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
 static StringBuf get_basename (const char * path)
@@ -137,14 +138,14 @@ static void playlist_plugin_save (PluginHandle * plugin, FILE * handle)
 
 static void input_plugin_save (PluginHandle * plugin, FILE * handle)
 {
-    for (int k = 0; k < INPUT_KEYS; k ++)
+    for (auto k : aud::range<InputKey> ())
     {
         for (const String & key : plugin->keys[k])
             fprintf (handle, "%s %s\n", input_key_names[k], (const char *) key);
     }
 
     fprintf (handle, "subtunes %d\n", plugin->has_subtunes);
-    fprintf (handle, "writes %d\n", plugin->can_write_tuple);
+    fprintf (handle, "writes %d\n", plugin->writes_tag);
 }
 
 static void plugin_save (PluginHandle * plugin, FILE * handle)
@@ -161,11 +162,11 @@ static void plugin_save (PluginHandle * plugin, FILE * handle)
     fprintf (handle, "config %d\n", plugin->has_configure);
     fprintf (handle, "enabled %d\n", plugin->enabled);
 
-    if (plugin->type == PLUGIN_TYPE_TRANSPORT)
+    if (plugin->type == PluginType::Transport)
         transport_plugin_save (plugin, handle);
-    else if (plugin->type == PLUGIN_TYPE_PLAYLIST)
+    else if (plugin->type == PluginType::Playlist)
         playlist_plugin_save (plugin, handle);
-    else if (plugin->type == PLUGIN_TYPE_INPUT)
+    else if (plugin->type == PluginType::Input)
         input_plugin_save (plugin, handle);
 }
 
@@ -177,15 +178,15 @@ void plugin_registry_save ()
 
     fprintf (handle, "format %d\n", FORMAT);
 
-    for (int t = 0; t < PLUGIN_TYPES; t ++)
+    for (auto & list : plugins)
     {
-        for (PluginHandle * plugin : plugins[t])
+        for (PluginHandle * plugin : list)
         {
             plugin_save (plugin, handle);
             delete plugin;
         }
 
-        plugins[t].clear ();
+        list.clear ();
     }
 
     fclose (handle);
@@ -251,7 +252,7 @@ static void playlist_plugin_parse (PluginHandle * plugin, FILE * handle)
 
 static void input_plugin_parse (PluginHandle * plugin, FILE * handle)
 {
-    for (int key = 0; key < INPUT_KEYS; key ++)
+    for (auto key : aud::range<InputKey> ())
     {
         while (1)
         {
@@ -266,19 +267,19 @@ static void input_plugin_parse (PluginHandle * plugin, FILE * handle)
 
     if (parse_integer ("subtunes", & plugin->has_subtunes))
         parse_next (handle);
-    if (parse_integer ("writes", & plugin->can_write_tuple))
+    if (parse_integer ("writes", & plugin->writes_tag))
         parse_next (handle);
 }
 
 static bool plugin_parse (FILE * handle)
 {
-    int type;
+    PluginType type;
     String path;
 
-    for (type = 0; type < PLUGIN_TYPES; type ++)
+    for (auto type2 : aud::range<PluginType> ())
     {
-        path = parse_string (plugin_type_names[type]);
-        if (path)
+        type = type2;
+        if ((path = parse_string (plugin_type_names[type2])))
             break;
     }
 
@@ -317,11 +318,11 @@ static bool plugin_parse (FILE * handle)
     if (parse_integer ("enabled", & plugin->enabled))
         parse_next (handle);
 
-    if (type == PLUGIN_TYPE_TRANSPORT)
+    if (type == PluginType::Transport)
         transport_plugin_parse (plugin, handle);
-    else if (type == PLUGIN_TYPE_PLAYLIST)
+    else if (type == PluginType::Playlist)
         playlist_plugin_parse (plugin, handle);
-    else if (type == PLUGIN_TYPE_INPUT)
+    else if (type == PluginType::Input)
         input_plugin_parse (plugin, handle);
 
     return true;
@@ -378,10 +379,10 @@ void plugin_registry_prune ()
         return true;
     };
 
-    for (int t = 0; t < PLUGIN_TYPES; t ++)
+    for (auto & list : plugins)
     {
-        plugins[t].remove_if (check_not_found);
-        plugins[t].sort (plugin_compare, nullptr);
+        list.remove_if (check_not_found);
+        list.sort (plugin_compare, nullptr);
     }
 }
 
@@ -389,9 +390,9 @@ void plugin_registry_prune ()
  * one of them.  Different plugins should be given different basenames. */
 EXPORT PluginHandle * aud_plugin_lookup_basename (const char * basename)
 {
-    for (int t = 0; t < PLUGIN_TYPES; t ++)
+    for (auto & list : plugins)
     {
-        for (PluginHandle * plugin : plugins[t])
+        for (PluginHandle * plugin : list)
         {
             if (! strcmp (plugin->basename, basename))
                 return plugin;
@@ -410,7 +411,7 @@ static void plugin_get_info (PluginHandle * plugin, bool is_new)
     plugin->has_about = (bool) header->info.about;
     plugin->has_configure = (bool) header->info.prefs;
 
-    if (header->type == PLUGIN_TYPE_TRANSPORT)
+    if (header->type == PluginType::Transport)
     {
         TransportPlugin * tp = (TransportPlugin *) header;
 
@@ -418,7 +419,7 @@ static void plugin_get_info (PluginHandle * plugin, bool is_new)
         for (const char * scheme : tp->schemes)
             plugin->schemes.append (String (scheme));
     }
-    else if (header->type == PLUGIN_TYPE_PLAYLIST)
+    else if (header->type == PluginType::Playlist)
     {
         PlaylistPlugin * pp = (PlaylistPlugin *) header;
 
@@ -426,37 +427,32 @@ static void plugin_get_info (PluginHandle * plugin, bool is_new)
         for (const char * ext : pp->extensions)
             plugin->exts.append (String (ext));
     }
-    else if (header->type == PLUGIN_TYPE_INPUT)
+    else if (header->type == PluginType::Input)
     {
         InputPlugin * ip = (InputPlugin *) header;
         plugin->priority = ip->input_info.priority;
 
-        for (int key = 0; key < INPUT_KEYS; key ++)
-            plugin->keys[key].clear ();
+        for (auto k : aud::range<InputKey> ())
+        {
+            plugin->keys[k].clear ();
+            for (auto key = ip->input_info.keys[k]; key && * key; key ++)
+                plugin->keys[k].append (String (* key));
+        }
 
-        for (const char * ext : ip->input_info.extensions)
-            plugin->keys[INPUT_KEY_EXTENSION].append (String (ext));
-
-        for (const char * mime : ip->input_info.mimes)
-            plugin->keys[INPUT_KEY_MIME].append (String (mime));
-
-        for (const char * scheme : ip->input_info.schemes)
-            plugin->keys[INPUT_KEY_SCHEME].append (String (scheme));
-
-        plugin->has_subtunes = ip->input_info.has_subtunes;
-        plugin->can_write_tuple = ip->input_info.can_write_tuple;
+        plugin->has_subtunes = (ip->input_info.flags & InputPlugin::FlagSubtunes);
+        plugin->writes_tag = (ip->input_info.flags & InputPlugin::FlagWritesTag);
     }
-    else if (header->type == PLUGIN_TYPE_OUTPUT)
+    else if (header->type == PluginType::Output)
     {
         OutputPlugin * op = (OutputPlugin *) header;
         plugin->priority = 10 - op->priority;
     }
-    else if (header->type == PLUGIN_TYPE_EFFECT)
+    else if (header->type == PluginType::Effect)
     {
         EffectPlugin * ep = (EffectPlugin *) header;
         plugin->priority = ep->order;
     }
-    else if (header->type == PLUGIN_TYPE_GENERAL)
+    else if (header->type == PluginType::General)
     {
         GeneralPlugin * gp = (GeneralPlugin *) header;
         if (is_new)
@@ -505,7 +501,7 @@ void plugin_register (const char * path, int timestamp)
     }
 }
 
-EXPORT int aud_plugin_get_type (PluginHandle * plugin)
+EXPORT PluginType aud_plugin_get_type (PluginHandle * plugin)
 {
     return plugin->type;
 }
@@ -536,9 +532,9 @@ DONE:
 
 EXPORT PluginHandle * aud_plugin_by_header (const void * header)
 {
-    for (int t = 0; t < PLUGIN_TYPES; t ++)
+    for (auto & list : plugins)
     {
-        for (PluginHandle * plugin : plugins[t])
+        for (PluginHandle * plugin : list)
         {
             if (plugin->header == header)
                 return plugin;
@@ -548,11 +544,8 @@ EXPORT PluginHandle * aud_plugin_by_header (const void * header)
     return nullptr;
 }
 
-EXPORT const Index<PluginHandle *> & aud_plugin_list (int type)
+EXPORT const Index<PluginHandle *> & aud_plugin_list (PluginType type)
 {
-    static const Index<PluginHandle *> empty_list;
-    g_return_val_if_fail (type >= 0 && type < PLUGIN_TYPES, empty_list);
-
     return plugins[type];
 }
 
@@ -605,7 +598,7 @@ EXPORT void aud_plugin_remove_watch (PluginHandle * plugin, PluginWatchFunc func
 
 bool transport_plugin_has_scheme (PluginHandle * plugin, const char * scheme)
 {
-    g_return_val_if_fail (plugin->type == PLUGIN_TYPE_TRANSPORT, false);
+    g_return_val_if_fail (plugin->type == PluginType::Transport, false);
 
     for (String & s : plugin->schemes)
     {
@@ -618,7 +611,7 @@ bool transport_plugin_has_scheme (PluginHandle * plugin, const char * scheme)
 
 bool playlist_plugin_has_ext (PluginHandle * plugin, const char * ext)
 {
-    g_return_val_if_fail (plugin->type == PLUGIN_TYPE_PLAYLIST, false);
+    g_return_val_if_fail (plugin->type == PluginType::Playlist, false);
 
     for (String & e : plugin->exts)
     {
@@ -629,10 +622,9 @@ bool playlist_plugin_has_ext (PluginHandle * plugin, const char * ext)
     return false;
 }
 
-bool input_plugin_has_key (PluginHandle * plugin, int key, const char * value)
+bool input_plugin_has_key (PluginHandle * plugin, InputKey key, const char * value)
 {
-    g_return_val_if_fail (plugin->type == PLUGIN_TYPE_INPUT, false);
-    g_return_val_if_fail (key >= 0 && key < INPUT_KEYS, false);
+    g_return_val_if_fail (plugin->type == PluginType::Input, false);
 
     for (String & s : plugin->keys[key])
     {
@@ -645,12 +637,12 @@ bool input_plugin_has_key (PluginHandle * plugin, int key, const char * value)
 
 bool input_plugin_has_subtunes (PluginHandle * plugin)
 {
-    g_return_val_if_fail (plugin->type == PLUGIN_TYPE_INPUT, false);
+    g_return_val_if_fail (plugin->type == PluginType::Input, false);
     return plugin->has_subtunes;
 }
 
 bool input_plugin_can_write_tuple (PluginHandle * plugin)
 {
-    g_return_val_if_fail (plugin->type == PLUGIN_TYPE_INPUT, false);
-    return plugin->can_write_tuple;
+    g_return_val_if_fail (plugin->type == PluginType::Input, false);
+    return plugin->writes_tag;
 }

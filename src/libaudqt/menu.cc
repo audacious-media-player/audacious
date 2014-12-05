@@ -42,6 +42,7 @@ QAction * MenuItem::build_action (const char * domain, QWidget * parent) const
             QObject::connect (act, &QAction::triggered, m_func);
         else if (m_cname)
         {
+            act->setCheckable (true);
             act->setChecked (aud_get_bool (m_csect, m_cname));
 
             QObject::connect (act, &QAction::toggled, [=] (bool checked) {
@@ -54,8 +55,8 @@ QAction * MenuItem::build_action (const char * domain, QWidget * parent) const
                     m_func ();
             });
 
-            if (m_chook)
-                hook_associate (m_chook, (HookFunction) MenuItem::hook_cb, act);
+            //if (m_chook)
+                //hook_associate (m_chook, (HookFunction) MenuItem::hook_cb, act);
         }
         else if (m_items.len || m_submenu)
         {

@@ -40,11 +40,11 @@ static PluginHandle * next_plugin;
 
 static IfacePlugin * current_interface;
 
-static Index<MenuItem> menu_items[AUD_MENU_COUNT];
+static aud::array<AudMenuID, Index<MenuItem>> menu_items;
 
 static void add_menu_items ()
 {
-    for (int id = 0; id < AUD_MENU_COUNT; id ++)
+    for (AudMenuID id : aud::range<AudMenuID> ())
     {
         for (MenuItem & item : menu_items[id])
             current_interface->plugin_menu_add (id, item.func, item.name, item.icon);
@@ -53,7 +53,7 @@ static void add_menu_items ()
 
 static void remove_menu_items ()
 {
-    for (int id = 0; id < AUD_MENU_COUNT; id ++)
+    for (AudMenuID id : aud::range<AudMenuID> ())
     {
         for (MenuItem & item : menu_items[id])
             current_interface->plugin_menu_remove (id, item.func);
@@ -119,7 +119,7 @@ EXPORT void aud_ui_show_error (const char * message)
     if (aud_get_headless_mode ())
         AUDERR ("%s\n", message);
     else
-        event_queue_full ("ui show error", String::raw_get (message),
+        event_queue ("ui show error", String::raw_get (message),
          (EventDestroyFunc) String::raw_unref);
 }
 
@@ -188,20 +188,16 @@ EXPORT void aud_quit ()
         mainloop_quit ();
 }
 
-EXPORT void aud_plugin_menu_add (int id, void (* func) (), const char * name, const char * icon)
+EXPORT void aud_plugin_menu_add (AudMenuID id, void (* func) (), const char * name, const char * icon)
 {
-    assert (id >= 0 && id < AUD_MENU_COUNT);
-
     menu_items[id].append (name, icon, func);
 
     if (current_interface)
         current_interface->plugin_menu_add (id, func, name, icon);
 }
 
-EXPORT void aud_plugin_menu_remove (int id, void (* func) ())
+EXPORT void aud_plugin_menu_remove (AudMenuID id, void (* func) ())
 {
-    assert (id >= 0 && id < AUD_MENU_COUNT);
-
     if (current_interface)
         current_interface->plugin_menu_remove (id, func);
 

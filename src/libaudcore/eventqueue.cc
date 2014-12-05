@@ -69,7 +69,7 @@ static void events_execute (void *)
     pthread_mutex_unlock (& mutex);
 }
 
-EXPORT void event_queue_full (const char * name, void * data, EventDestroyFunc destroy)
+EXPORT void event_queue (const char * name, void * data, EventDestroyFunc destroy)
 {
     pthread_mutex_lock (& mutex);
 

@@ -83,7 +83,7 @@ static bool combine_string (Tuple & tuple, Tuple::Field field,
  const char * str1, int size1, const char * str2, int size2)
 {
     StringBuf str = str_copy (str1, strlen_bounded (str1, size1));
-    str_insert (str, -1, str2, strlen_bounded (str2, size2));
+    str.insert (-1, str2, strlen_bounded (str2, size2));
 
     g_strchomp (str);
     str.resize (strlen (str));

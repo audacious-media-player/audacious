@@ -24,8 +24,10 @@
 #include <libaudcore/audio.h>
 #include <libaudcore/plugins.h>
 #include <libaudcore/tuple.h>
+#include <libaudcore/visualizer.h>
 #include <libaudcore/vfs.h>
 
+enum class AudMenuID;
 struct PluginPreferences;
 
 /* "Magic" bytes identifying an Audacious plugin header. */
@@ -93,18 +95,6 @@ struct PluginPreferences;
  * For the time being, aud_plugin_send_message() should only be called from the
  * program's main thread. */
 
-// this enum is also in interface.h
-#ifndef _AUD_VIS_TYPE_DEFINED
-#define _AUD_VIS_TYPE_DEFINED
-enum {
-    AUD_VIS_TYPE_CLEAR,
-    AUD_VIS_TYPE_MONO_PCM,
-    AUD_VIS_TYPE_MULTI_PCM,
-    AUD_VIS_TYPE_FREQ,
-    AUD_VIS_TYPES
-};
-#endif
-
 struct PluginInfo {
     const char * name;
     const char * domain; // for gettext
@@ -115,14 +105,14 @@ struct PluginInfo {
 class Plugin
 {
 public:
-    constexpr Plugin (int type, PluginInfo info) :
+    constexpr Plugin (PluginType type, PluginInfo info) :
         type (type),
         info (info) {}
 
     const int magic = _AUD_PLUGIN_MAGIC;
     const int version = _AUD_PLUGIN_VERSION;
 
-    const int type;  // see PLUGIN_TYPE_* enum
+    const PluginType type;
     const PluginInfo info;
 
     virtual bool init () { return true; }
@@ -136,7 +126,7 @@ class TransportPlugin : public Plugin
 public:
     constexpr TransportPlugin (const PluginInfo info,
      const ArrayRef<const char *> schemes) :
-        Plugin (PLUGIN_TYPE_TRANSPORT, info),
+        Plugin (PluginType::Transport, info),
         schemes (schemes) {}
 
     /* supported URI schemes (without "://") */
@@ -151,7 +141,7 @@ class PlaylistPlugin : public Plugin
 public:
     constexpr PlaylistPlugin (const PluginInfo info,
      const ArrayRef<const char *> extensions, bool can_save) :
-        Plugin (PLUGIN_TYPE_PLAYLIST, info),
+        Plugin (PluginType::Playlist, info),
         extensions (extensions),
         can_save (can_save) {}
 
@@ -180,7 +170,7 @@ class OutputPlugin : public Plugin
 {
 public:
     constexpr OutputPlugin (const PluginInfo info, int priority, bool force_reopen = false) :
-        Plugin (PLUGIN_TYPE_OUTPUT, info),
+        Plugin (PluginType::Output, info),
         priority (priority),
         force_reopen (force_reopen) {}
 
@@ -197,6 +187,10 @@ public:
 
     /* Changes volume for left and right channels (0 to 100). */
     virtual void set_volume (StereoVolume volume) = 0;
+
+    /* Sets information about the song being played.  This function will be
+     * called before open_audio(). */
+    virtual void set_info (const char * filename, const Tuple & tuple) {}
 
     /* Begins playback of a PCM stream.  <format> is one of the FMT_*
      * enumeration values defined in libaudcore/audio.h.  Returns true on
@@ -236,7 +230,7 @@ class EffectPlugin : public Plugin
 {
 public:
     constexpr EffectPlugin (const PluginInfo info, int order, bool preserves_format) :
-        Plugin (PLUGIN_TYPE_EFFECT, info),
+        Plugin (PluginType::Effect, info),
         order (order),
         preserves_format (preserves_format) {}
 
@@ -282,55 +276,83 @@ public:
         { return delay; }
 };
 
-struct InputPluginInfo
-{
-    /* How quickly the plugin should be tried in searching for a plugin to
-     * handle a file which could not be identified from its extension.  Plugins
-     * with priority 0 are tried first, 10 last. */
-    int priority;
-
-    /* True if the files handled by the plugin may contain more than one song.
-     * When reading the tuple for such a file, the plugin should set the
-     * FIELD_SUBSONG_NUM field to the number of songs in the file.  For all
-     * other files, the field should be left unset.
-     *
-     * Example:
-     * 1. User adds a file named "somefile.xxx" to the playlist.  Having
-     * determined that this plugin can handle the file, Audacious opens the file
-     * and calls probe_for_tuple().  probe_for_tuple() sees that there are 3
-     * songs in the file and sets FIELD_SUBSONG_NUM to 3.
-     * 2. For each song in the file, Audacious opens the file and calls
-     * probe_for_tuple() -- this time, however, a question mark and song number
-     * are appended to the file name passed: "somefile.sid?2" refers to the
-     * second song in the file "somefile.sid".
-     * 3. When one of the songs is played, Audacious opens the file and calls
-     * play() with a file name modified in this way.
-     */
-    bool has_subtunes;
-
-    /* True if the plugin can write file tags. */
-    bool can_write_tuple;
-
-    /* File extensions associated with file types the plugin can handle. */
-    ArrayRef<const char *> extensions;
-
-    /* MIME types the plugin can handle. */
-    ArrayRef<const char *> mimes;
-
-    /* Custom URI schemes the plugin supports.  Plugins using custom URI
-     * schemes are expected to handle their own I/O.  Hence, any VFSFile passed
-     * to play(), probe_for_tuple(), etc. will be null. */
-    ArrayRef<const char *> schemes;
+enum class InputKey {
+    Ext,
+    MIME,
+    Scheme,
+    count
 };
 
 class InputPlugin : public Plugin
 {
 public:
-    constexpr InputPlugin (PluginInfo info, InputPluginInfo input_info) :
-        Plugin (PLUGIN_TYPE_INPUT, info),
+    enum {
+        /* Indicates that the plugin can write file tags */
+        FlagWritesTag = (1 << 0),
+
+        /* Indicates that files handled by the plugin may contain more than one
+         * song.  When reading the tuple for such a file, the plugin should set
+         * the FIELD_SUBSONG_NUM field to the number of songs in the file.  For
+         * all other files, the field should be left unset.
+         *
+         * Example:
+         * 1. User adds a file named "somefile.xxx" to the playlist.  Having
+         * determined that this plugin can handle the file, Audacious opens the
+         * file and calls probe_for_tuple().  probe_for_tuple() sees that there
+         * are 3 songs in the file and sets FIELD_SUBSONG_NUM to 3.
+         * 2. For each song in the file, Audacious opens the file and calls
+         * probe_for_tuple(); this time, however, a question mark and song
+         * number are appended to the file name passed: "somefile.sid?2" refers
+         * to the second song in the file "somefile.sid".
+         * 3. When one of the songs is played, Audacious opens the file and
+         * calls play() with a file name modified in this way. */
+        FlagSubtunes = (1 << 1)
+    };
+
+    struct InputInfo
+    {
+        typedef const char * const * List;
+
+        int flags, priority;
+        aud::array<InputKey, List> keys;
+
+        constexpr InputInfo (int flags = 0) :
+            flags (flags), priority (0), keys {} {}
+
+        /* Associates file extensions with the plugin. */
+        constexpr InputInfo with_exts (List exts) const
+            { return InputInfo (flags, priority,
+              exts, keys[InputKey::MIME], keys[InputKey::Scheme]); }
+
+        /* Associates MIME types with the plugin. */
+        constexpr InputInfo with_mimes (List mimes) const
+            { return InputInfo (flags, priority,
+              keys[InputKey::Ext], mimes, keys[InputKey::Scheme]); }
+
+        /* Associates custom URI schemes with the plugin.  Plugins using custom
+         * URI schemes are expected to handle their own I/O.  Hence, any VFSFile
+         * passed to play(), read_tuple(), etc. will be null. */
+        constexpr InputInfo with_schemes (List schemes) const
+            { return InputInfo (flags, priority,
+              keys[InputKey::Ext], keys[InputKey::MIME], schemes); }
+
+        /* Sets how quickly the plugin should be tried in searching for a plugin
+         * to handle a file which could not be identified from its extension.
+         * Plugins with priority 0 are tried first, 10 last. */
+        constexpr InputInfo with_priority (int priority) const
+            { return InputInfo (flags, priority,
+              keys[InputKey::Ext], keys[InputKey::MIME], keys[InputKey::Scheme]); }
+
+    private:
+        constexpr InputInfo (int flags, int priority, List exts, List mimes, List schemes) :
+            flags (flags), priority (priority), keys {exts, mimes, schemes} {}
+    };
+
+    constexpr InputPlugin (PluginInfo info, InputInfo input_info) :
+        Plugin (PluginType::Input, info),
         input_info (input_info) {}
 
-    const InputPluginInfo input_info;
+    const InputInfo input_info;
 
     /* Returns true if the plugin can handle the file. */
     virtual bool is_our_file (const char * filename, VFSFile & file) = 0;
@@ -355,12 +377,50 @@ public:
      * info window. */
     virtual bool file_info_box (const char * filename, VFSFile & file)
         { return false; }
+
+protected:
+    /* Prepares the output system for playback in the specified format.  Also
+     * triggers the "playback ready" hook.  Hence, if you call set_replay_gain,
+     * set_playback_tuple, or set_stream_bitrate, consider doing so before
+     * calling open_audio.  There is no return value.  If the requested audio
+     * format is not supported, write_audio() will do nothing and check_stop()
+     * will immediately return true. */
+    static void open_audio (int format, int rate, int channels);
+
+    /* Informs the output system of replay gain values for the current song so
+     * that volume levels can be adjusted accordingly, if the user so desires.
+     * This may be called at any time during playback should the values change. */
+    static void set_replay_gain (const ReplayGainInfo & gain);
+
+    /* Passes audio data to the output system for playback.  The data must be in
+     * the format passed to open_audio(), and the length (in bytes) must be an
+     * integral number of frames.  This function blocks until all the data has
+     * been written (though it may not yet be heard by the user). */
+    static void write_audio (const void * data, int length);
+
+    /* Returns the current tuple for the stream. */
+    static Tuple get_playback_tuple ();
+
+    /* Updates the tuple for the stream. */
+    static void set_playback_tuple (Tuple && tuple);
+
+    /* Updates the displayed bitrate, in bits per second. */
+    static void set_stream_bitrate (int bitrate);
+
+    /* Checks whether playback is to be stopped.  The play() function should
+     * poll check_stop() periodically and return as soon as check_stop() returns
+     * true. */
+    static bool check_stop ();
+
+    /* Checks whether a seek has been requested.  If so, returns the position to
+     * seek to, in milliseconds.  Otherwise, returns -1. */
+    static int check_seek ();
 };
 
 class DockablePlugin : public Plugin
 {
 public:
-    constexpr DockablePlugin (int type, PluginInfo info) :
+    constexpr DockablePlugin (PluginType type, PluginInfo info) :
         Plugin (type, info) {}
 
     /* GtkWidget * get_gtk_widget () */
@@ -374,39 +434,25 @@ class GeneralPlugin : public DockablePlugin
 {
 public:
     constexpr GeneralPlugin (PluginInfo info, bool enabled_by_default) :
-        DockablePlugin (PLUGIN_TYPE_GENERAL, info),
+        DockablePlugin (PluginType::General, info),
         enabled_by_default (enabled_by_default) {}
 
     const bool enabled_by_default;
 };
 
-class VisPlugin : public DockablePlugin
+class VisPlugin : public DockablePlugin, public Visualizer
 {
 public:
-    constexpr VisPlugin (PluginInfo info, int vis_type) :
-        DockablePlugin (PLUGIN_TYPE_VIS, info),
-        vis_type (vis_type) {}
-
-    const int vis_type;  // see AUD_VIS_TYPE_* enum
-
-    /* reset internal state and clear display */
-    virtual void clear () = 0;
-
-    /* 512 frames of a single-channel PCM signal */
-    virtual void render_mono_pcm (const float * pcm) {}
-
-    /* 512 frames of an interleaved multi-channel PCM signal */
-    virtual void render_multi_pcm (const float * pcm, int channels) {}
-
-    /* intensity of frequencies 1/512, 2/512, ..., 256/512 of sample rate */
-    virtual void render_freq (const float * freq) {}
+    constexpr VisPlugin (PluginInfo info, int type_mask) :
+        DockablePlugin (PluginType::Vis, info),
+        Visualizer (type_mask) {}
 };
 
 class IfacePlugin : public Plugin
 {
 public:
     constexpr IfacePlugin (PluginInfo info) :
-        Plugin (PLUGIN_TYPE_IFACE, info) {}
+        Plugin (PluginType::Iface, info) {}
 
     virtual void show (bool show) = 0;
     virtual void run () = 0;
@@ -420,8 +466,8 @@ public:
     virtual void hide_jump_to_song () = 0;
     virtual void show_prefs_window () = 0;
     virtual void hide_prefs_window () = 0;
-    virtual void plugin_menu_add (int id, void func (), const char * name, const char * icon) = 0;
-    virtual void plugin_menu_remove (int id, void func ()) = 0;
+    virtual void plugin_menu_add (AudMenuID id, void func (), const char * name, const char * icon) = 0;
+    virtual void plugin_menu_remove (AudMenuID id, void func ()) = 0;
 };
 
 #endif

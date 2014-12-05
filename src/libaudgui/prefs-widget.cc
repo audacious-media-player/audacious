@@ -137,7 +137,7 @@ static void widget_update (void * unused, void * widget)
 
 static void widget_unhook (GtkWidget * widget, const PreferencesWidget * w)
 {
-    hook_dissociate_full (w->cfg.hook, widget_update, widget);
+    hook_dissociate (w->cfg.hook, widget_update, widget);
 }
 
 static void widget_init (GtkWidget * widget, const PreferencesWidget * w)
@@ -304,7 +304,7 @@ static void create_cbox (const PreferencesWidget * widget, GtkWidget * * label,
 
 /* WIDGET_TABLE */
 
-static void fill_grid (GtkWidget * grid,
+static void fill_table (GtkWidget * table,
  ArrayRef<const PreferencesWidget> widgets, const char * domain)
 {
     for (const PreferencesWidget & w : widgets)
@@ -341,13 +341,13 @@ static void fill_grid (GtkWidget * grid,
         int i = & w - widgets.data;
 
         if (widget_left)
-            gtk_grid_attach ((GtkGrid *) grid, widget_left, 0, i, 1, 1);
+            gtk_grid_attach ((GtkGrid *) table, widget_left, 0, i, 1, 1);
 
         if (widget_middle)
-            gtk_grid_attach ((GtkGrid *) grid, widget_middle, 1, i, 1, 1);
+            gtk_grid_attach ((GtkGrid *) table, widget_middle, 1, i, 1, 1);
 
         if (widget_right)
-            gtk_grid_attach ((GtkGrid *) grid, widget_right, 2, i, 1, 1);
+            gtk_grid_attach ((GtkGrid *) table, widget_right, 2, i, 1, 1);
     }
 }
 
@@ -471,7 +471,7 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
                 gtk_grid_set_column_spacing ((GtkGrid *) widget, 6);
                 gtk_grid_set_row_spacing ((GtkGrid *) widget, 6);
 
-                fill_grid (widget, w.data.table.widgets, domain);
+                fill_table (widget, w.data.table.widgets, domain);
 
                 break;
 
@@ -485,7 +485,7 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
                 if (label)
                     gtk_box_pack_start ((GtkBox *) widget, label, false, false, 0);
                 if (entry)
-                    gtk_box_pack_start ((GtkBox *) widget, entry, false, false, 0);
+                    gtk_box_pack_start ((GtkBox *) widget, entry, true, true, 0);
 
                 break;
             }

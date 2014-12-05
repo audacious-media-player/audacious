@@ -31,41 +31,56 @@
 
 namespace aud {
 
-// Utility functions.
+// Utility functions
+// =================
 
+// minimum of two numbers
 template<class T>
 constexpr T min (T a, T b)
     { return a < b ? a : b; }
 
+// maximum of two numbers
 template<class T>
 constexpr T max (T a, T b)
     { return a > b ? a : b; }
 
+// make sure a number is within the given range
 template<class T>
 constexpr T clamp (T x, T low, T high)
     { return min (max (x, low), high); }
 
+// absolute value
 template<class T>
 constexpr T abs (T x)
     { return x < 0 ? -x : x; }
 
+// change the sign of x to the sign of s
 template<class T>
 constexpr T chsign (T x, T s)
     { return (x < 0) ^ (s < 0) ? -x : x; }
 
+// integer division with rounding
 template<class T>
 constexpr T rdiv (T x, T y)
     { return (x + chsign (y / 2, x)) / y; }
 
+// convert integer from one scale to another, with rounding
 template<class T>
 constexpr T rescale (T x, T old_scale, T new_scale)
     { return rdiv (x * new_scale, old_scale); }
 
+// number of characters needed to represent an integer (including minus sign)
+template<class T>
+constexpr T n_digits (T x)
+    { return x < 0 ? 1 + n_digits (-x) : x < 10 ? 1 : 1 + n_digits (x / 10); }
+
+// number of elements in an array
 template<class T, int N>
 constexpr int n_elems (const T (&) [N])
     { return N; }
 
-// Storing various data in a void pointer.
+// Casts for storing various data in a void pointer
+// ================================================
 
 template<class T>
 inline void * to_ptr (T t)
@@ -83,26 +98,61 @@ inline T from_ptr (void * v)
     return u.t;
 }
 
-// Wrapper class allowing enumerations to be used in range-based for loops.
+// Wrapper class allowing enumerations to be used as array indexes;
+// the enumeration must begin with zero and have a "count" constant
+// ================================================================
 
-template<class T, T first, T last>
-struct range {
-    struct iter {
-        T v;
-        T operator* ()
-            { return v; }
-        void operator++ ()
-            { v = (T) (v + 1); }
-        bool operator!= (iter other)
-            { return v != other.v; }
-    };
-    static iter begin () { return {first}; }
-    static iter end () { return {(T) (last + 1)}; }
+template<class T, class V>
+struct array
+{
+    // cannot use std::forward here; it is not constexpr until C++14
+    template<class ... Args>
+    constexpr array (Args && ... args) :
+        vals { static_cast<Args &&> (args) ...} {}
+
+    constexpr const V & operator[] (T t) const
+        { return vals[(int) t]; }
+    constexpr const V * begin () const
+        { return vals; }
+    constexpr const V * end () const
+        { return vals + (int) T::count; }
+    V & operator[] (T t)
+        { return vals[(int) t]; }
+    V * begin ()
+        { return vals; }
+    V * end ()
+        { return vals + (int) T::count; }
+
+private:
+    V vals[(int) T::count];
 };
 
-// This is a replacement for std::allocator::construct, also supporting
-// aggregate initialization.  For background, see:
+// Wrapper class allowing enumerations to be used in range-based for loops
+// =======================================================================
+
+template<class T, T first = (T) 0, T last = (T) ((int) T::count - 1)>
+struct range
+{
+    struct iter {
+        T v;
+        constexpr T operator* () const
+            { return v; }
+        constexpr bool operator!= (iter other) const
+            { return v != other.v; }
+        void operator++ ()
+            { v = (T) ((int) v + 1); }
+    };
+
+    static constexpr iter begin ()
+        { return {first}; }
+    static constexpr iter end ()
+        { return {(T) ((int) last + 1)}; }
+};
+
+// Replacement for std::allocator::construct, which also supports aggregate
+// initialization.  For background, see:
 //     http://cplusplus.github.io/LWG/lwg-active.html#2089
+// ========================================================================
 
 // class constructor proxy
 template<class T, bool aggregate>
@@ -131,8 +181,57 @@ struct construct {
     }
 };
 
-// Functions for creating/copying/destroying objects en masse.
-// These will be nullptr for basic types (use memset/memcpy instead).
+// Convert an integer constant to a string at compile-time; can be used for
+// #defines, enums, constexpr calculations, etc.
+// ========================================================================
+
+// "metaprogramming" string type: each different string is a unique type
+template<char... args>
+struct metastring {
+    char data[sizeof... (args) + 1] = {args..., '\0'};
+};
+
+// recursive number-printing template, general case (three or more digits)
+template<int size, int x, char... args>
+struct numeric_builder {
+    typedef typename numeric_builder<size - 1, x / 10, '0' + abs (x) % 10, args...>::type type;
+};
+
+// special case for two digits; minus sign is handled here
+template<int x, char... args>
+struct numeric_builder<2, x, args...> {
+    typedef metastring<x < 0 ? '-' : '0' + x / 10, '0' + abs (x) % 10, args...> type;
+};
+
+// special case for one digit (positive numbers only)
+template<int x, char... args>
+struct numeric_builder<1, x, args...> {
+    typedef metastring<'0' + x, args...> type;
+};
+
+// convenience wrapper for numeric_builder
+template<int x>
+class numeric_string
+{
+private:
+    // generate a unique string type representing this number
+    typedef typename numeric_builder<n_digits (x), x>::type type;
+
+    // declare a static string of that type (instantiated later at file scope)
+    static constexpr type value {};
+
+public:
+    // pointer to the instantiated string
+    static constexpr const char * str = value.data;
+};
+
+// instantiate numeric_string::value as needed for different numbers
+template<int x>
+constexpr typename numeric_string<x>::type numeric_string<x>::value;
+
+// Functions for creating/copying/destroying objects en masse;
+// these will be nullptr for basic types (use memset/memcpy instead)
+// =================================================================
 
 typedef void (* FillFunc) (void * data, int len);
 typedef void (* CopyFunc) (const void * from, void * to, int len);

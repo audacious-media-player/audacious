@@ -58,7 +58,6 @@ INCLUDES = audio.h \
            i18n.h \
            index.h \
            inifile.h \
-           input.h \
            interface.h \
            list.h \
            mainloop.h \
@@ -66,7 +65,6 @@ INCLUDES = audio.h \
            objects.h \
            playlist.h \
            plugin.h \
-           plugin-declare.h \
            plugins.h \
            preferences.h \
            probe.h \
@@ -75,6 +73,7 @@ INCLUDES = audio.h \
            templates.h \
            tinylock.h \
            tuple.h \
+           visualizer.h \
            vfs.h \
            vfs_async.h
 

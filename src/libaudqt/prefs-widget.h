@@ -118,6 +118,7 @@ public:
         HookableWidget (parent, domain) {}
 
     QWidget * widget (QButtonGroup * btn_group = nullptr);
+    void update ();
 
 private:
     QRadioButton * m_radio;

@@ -38,6 +38,7 @@
 #include <QVBoxLayout>
 
 #include <libaudcore/audstrings.h>
+#include <libaudcore/drct.h>
 #include <libaudcore/hook.h>
 #include <libaudcore/i18n.h>
 #include <libaudcore/playlist.h>
@@ -61,7 +62,7 @@ struct Category {
 };
 
 struct PluginCategory {
-    int type;
+    PluginType type;
     const char * name;
 };
 
@@ -90,22 +91,22 @@ static const Category categories[] = {
 };
 
 static const PluginCategory plugin_categories[] = {
-    { PLUGIN_TYPE_GENERAL, N_("General") },
-    { PLUGIN_TYPE_EFFECT, N_("Effect") },
-    { PLUGIN_TYPE_VIS, N_("Visualization") },
-    { PLUGIN_TYPE_INPUT, N_("Input") },
-    { PLUGIN_TYPE_PLAYLIST, N_("Playlist") },
-    { PLUGIN_TYPE_TRANSPORT, N_("Transport") }
+    { PluginType::General, N_("General") },
+    { PluginType::Effect, N_("Effect") },
+    { PluginType::Vis, N_("Visualization") },
+    { PluginType::Input, N_("Input") },
+    { PluginType::Playlist, N_("Playlist") },
+    { PluginType::Transport, N_("Transport") }
 };
 
 static const TitleFieldTag title_field_tags[] = {
     { N_("Artist")     , "${artist}" },
     { N_("Album")      , "${album}" },
     { N_("Title")      , "${title}" },
-    { N_("Tracknumber"), "${track-number}" },
+    { N_("Track number"), "${track-number}" },
     { N_("Genre")      , "${genre}" },
-    { N_("Filename")   , "${file-name}" },
-    { N_("Filepath")   , "${file-path}" },
+    { N_("File name")   , "${file-name}" },
+    { N_("File path")   , "${file-path}" },
     { N_("Date")       , "${date}" },
     { N_("Year")       , "${year}" },
     { N_("Comment")    , "${comment}" },
@@ -279,7 +280,7 @@ static const PreferencesWidget playlist_page_widgets[] = {
     WidgetLabel (N_("<b>Advanced</b>")),
     WidgetCheck (N_("Do not load metadata for songs until played"),
         WidgetBool (0, "metadata_on_play")),
-    WidgetCheck (N_("Probe content of files with no recognized filename extension"),
+    WidgetCheck (N_("Probe content of files with no recognized file name extension"),
         WidgetBool (0, "slow_probe"))
 };
 
@@ -365,7 +366,6 @@ static void * create_titlestring_table (void)
 
     QObject::connect (le, &QLineEdit::textChanged, [=] (const QString & text) {
         aud_set_str (nullptr, "generic_title_format", text.toLocal8Bit ().data ());
-        send_title_change ();
     });
 
     QObject::connect (cbox,
@@ -397,7 +397,7 @@ static void * create_titlestring_table (void)
     return w;
 }
 
-static Index<ComboItem> fill_plugin_combo (int type)
+static Index<ComboItem> fill_plugin_combo (PluginType type)
 {
     Index<ComboItem> elems;
     int i = 0;
@@ -410,12 +410,13 @@ static Index<ComboItem> fill_plugin_combo (int type)
 
 static void send_title_change (void)
 {
-    hook_call ("title change", nullptr);
+    if (aud_drct_get_ready ())
+        hook_call ("title change", nullptr);
 }
 
 static void iface_fill_prefs_box (void)
 {
-    Plugin * header = (Plugin *) aud_plugin_get_header (aud_plugin_get_current (PLUGIN_TYPE_IFACE));
+    Plugin * header = (Plugin *) aud_plugin_get_header (aud_plugin_get_current (PluginType::Iface));
     if (header && header->info.prefs)
     {
         QVBoxLayout * vbox = new QVBoxLayout;
@@ -446,7 +447,7 @@ static void iface_combo_changed (void)
     gtk_container_foreach ((GtkContainer *) iface_prefs_box,
      (GtkCallback) gtk_widget_destroy, nullptr);
 
-    aud_plugin_enable (aud_plugin_by_index (PLUGIN_TYPE_IFACE, iface_combo_selected), true);
+    aud_plugin_enable (aud_plugin_by_index (PluginType::Iface, iface_combo_selected), true);
 
     /* now wait till we have restarted into the new main loop */
     g_idle_add_full (G_PRIORITY_HIGH, iface_combo_changed_finish, nullptr, nullptr);
@@ -457,9 +458,9 @@ static ArrayRef<const ComboItem> iface_combo_fill ()
 {
     if (! iface_combo_elements.len ())
     {
-        iface_combo_elements = fill_plugin_combo (PLUGIN_TYPE_IFACE);
-        iface_combo_selected = aud_plugin_list (PLUGIN_TYPE_IFACE)
-         .find (aud_plugin_get_current (PLUGIN_TYPE_IFACE));
+        iface_combo_elements = fill_plugin_combo (PluginType::Iface);
+        iface_combo_selected = aud_plugin_list (PluginType::Iface)
+         .find (aud_plugin_get_current (PluginType::Iface));
     }
 
     return {iface_combo_elements.begin (), iface_combo_elements.len ()};
@@ -474,7 +475,7 @@ static void * iface_create_prefs_box (void)
 
 static void output_combo_changed (void)
 {
-    PluginHandle * plugin = aud_plugin_list (PLUGIN_TYPE_OUTPUT)[output_combo_selected];
+    PluginHandle * plugin = aud_plugin_list (PluginType::Output)[output_combo_selected];
 
     if (aud_plugin_enable (plugin, true))
     {
@@ -485,13 +486,13 @@ static void output_combo_changed (void)
 
 static void * output_create_config_button (void)
 {
-    bool enabled = aud_plugin_has_configure (aud_plugin_get_current (PLUGIN_TYPE_OUTPUT));
+    bool enabled = aud_plugin_has_configure (aud_plugin_get_current (PluginType::Output));
 
     output_config_button = new QPushButton (translate_str (N_("_Settings")));
     output_config_button->setEnabled (enabled);
 
     QObject::connect (output_config_button, &QAbstractButton::clicked, [=] (bool) {
-        plugin_prefs (aud_plugin_get_current (PLUGIN_TYPE_OUTPUT));
+        plugin_prefs (aud_plugin_get_current (PluginType::Output));
     });
 
     return output_config_button;
@@ -499,13 +500,13 @@ static void * output_create_config_button (void)
 
 static void * output_create_about_button (void)
 {
-    bool enabled = aud_plugin_has_about (aud_plugin_get_current (PLUGIN_TYPE_OUTPUT));
+    bool enabled = aud_plugin_has_about (aud_plugin_get_current (PluginType::Output));
 
     output_about_button = new QPushButton (translate_str (N_("_About")));
     output_about_button->setEnabled (enabled);
 
     QObject::connect (output_about_button, &QAbstractButton::clicked, [=] (bool) {
-        plugin_about (aud_plugin_get_current (PLUGIN_TYPE_OUTPUT));
+        plugin_about (aud_plugin_get_current (PluginType::Output));
     });
 
     return output_about_button;
@@ -515,9 +516,9 @@ static ArrayRef<const ComboItem> output_combo_fill ()
 {
     if (! output_combo_elements.len ())
     {
-        output_combo_elements = fill_plugin_combo (PLUGIN_TYPE_OUTPUT);
-        output_combo_selected = aud_plugin_list (PLUGIN_TYPE_OUTPUT)
-         .find (aud_plugin_get_current (PLUGIN_TYPE_OUTPUT));
+        output_combo_elements = fill_plugin_combo (PluginType::Output);
+        output_combo_selected = aud_plugin_list (PluginType::Output)
+         .find (aud_plugin_get_current (PluginType::Output));
     }
 
     return {output_combo_elements.begin (), output_combo_elements.len ()};
@@ -610,7 +611,7 @@ static void settings_btn_watch (QPushButton * btn, PluginHandle * ph)
     btn->setEnabled (enabled);
 }
 
-static void create_plugin_category_page (int category_id, const char * category_name, QTabWidget * parent)
+static void create_plugin_category_page (PluginType category_id, const char * category_name, QTabWidget * parent)
 {
     QWidget * w = new QWidget;
     QVBoxLayout * vbox = new QVBoxLayout;
@@ -792,14 +793,14 @@ EXPORT void prefswin_show_page (int id, bool show)
         window_bring_to_front (s_prefswin);
 }
 
-EXPORT void prefswin_show_plugin_page (int type)
+EXPORT void prefswin_show_plugin_page (PluginType type)
 {
     if (! s_prefswin)
         create_prefs_window ();
 
-    if (type == PLUGIN_TYPE_IFACE)
+    if (type == PluginType::Iface)
         return prefswin_show_page (CATEGORY_APPEARANCE);
-    else if (type == PLUGIN_TYPE_OUTPUT)
+    else if (type == PluginType::Output)
         return prefswin_show_page (CATEGORY_AUDIO);
     else
     {

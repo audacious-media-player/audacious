@@ -63,7 +63,7 @@ EXPORT void hook_associate (const char * name, HookFunction func, void * user)
     pthread_mutex_unlock (& mutex);
 }
 
-EXPORT void hook_dissociate_full (const char * name, HookFunction func, void * user)
+EXPORT void hook_dissociate (const char * name, HookFunction func, void * user)
 {
     pthread_mutex_lock (& mutex);
 

@@ -31,6 +31,7 @@
 #include "libaudgui-gtk.h"
 
 static const char * const audgui_defaults[] = {
+ "clear_song_fields", "TRUE",
  "close_dialog_add", "FALSE",
  "close_dialog_open", "TRUE",
  "close_jtf_dialog", "TRUE",
@@ -166,4 +167,5 @@ EXPORT void audgui_cleanup (void)
 
     plugin_menu_cleanup ();
     plugin_prefs_cleanup ();
+    urilist_cleanup ();
 }

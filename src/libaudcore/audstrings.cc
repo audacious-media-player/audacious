@@ -135,27 +135,6 @@ EXPORT StringBuf str_concat (const std::initializer_list<const char *> & strings
     return str;
 }
 
-EXPORT void str_insert (StringBuf & str, int pos, const char * s, int len)
-{
-    int len0 = str.len ();
-
-    if (pos < 0)
-        pos = len0;
-    if (len < 0)
-        len = strlen (s);
-
-    str.resize (len0 + len);
-    memmove (str + pos + len, str + pos, len0 - pos);
-    memcpy (str + pos, s, len);
-}
-
-EXPORT void str_delete (StringBuf & str, int pos, int len)
-{
-    int after = str.len () - pos - len;
-    memmove (str + pos, str + pos + len, after);
-    str.resize (pos + after);
-}
-
 EXPORT StringBuf str_printf (const char * format, ...)
 {
     va_list args;
@@ -294,21 +273,31 @@ EXPORT const char * strstr_nocase_utf8 (const char * haystack, const char * need
     }
 }
 
+EXPORT StringBuf str_tolower (const char * str)
+{
+    StringBuf buf (strlen (str));
+    char * set = buf;
+
+    while (* str)
+        * set ++ = g_ascii_tolower (* str ++);
+
+    return buf;
+}
+
 EXPORT StringBuf str_tolower_utf8 (const char * str)
 {
     StringBuf buf (6 * strlen (str));
-    const char * get = str;
     char * set = buf;
     gunichar c;
 
-    while ((c = g_utf8_get_char (get)))
+    while ((c = g_utf8_get_char (str)))
     {
         if (c < 128)
             * set ++ = g_ascii_tolower (c);
         else
             set += g_unichar_to_utf8 (g_unichar_tolower (c), set);
 
-        get = g_utf8_next_char (get);
+        str = g_utf8_next_char (str);
     }
 
     buf.resize (set - buf);
@@ -386,21 +375,44 @@ EXPORT StringBuf str_encode_percent (const char * str, int len)
     return buf;
 }
 
-EXPORT void filename_normalize (StringBuf & filename)
+EXPORT StringBuf filename_normalize (StringBuf && filename)
 {
+    int len;
+    char * s;
+
 #ifdef _WIN32
     /* convert slash to backslash on Windows */
     str_replace_char (filename, '/', '\\');
 #endif
 
+    /* remove current directory (".") elements */
+    while ((len = filename.len ()) >= 2 &&
+     (! strcmp ((s = filename + len - 2), G_DIR_SEPARATOR_S ".") ||
+     (s = strstr (filename, G_DIR_SEPARATOR_S "." G_DIR_SEPARATOR_S))))
+        filename.remove (s + 1 - filename, aud::min (s + 3, filename + len) - (s + 1));
+
+    /* remove parent directory ("..") elements */
+    while ((len = filename.len ()) >= 3 &&
+     (! strcmp ((s = filename + len - 3), G_DIR_SEPARATOR_S "..") ||
+     (s = strstr (filename, G_DIR_SEPARATOR_S ".." G_DIR_SEPARATOR_S))))
+    {
+        * s = 0;
+        char * s2 = strrchr (filename, G_DIR_SEPARATOR);
+        if (! s2)
+            * (s2 = s) = G_DIR_SEPARATOR;
+
+        filename.remove (s2 + 1 - filename, aud::min (s + 4, filename + len) - (s2 + 1));
+    }
+
     /* remove trailing slash */
-    int len = filename.len ();
 #ifdef _WIN32
-    if (len > 3 && filename[len - 1] == '\\') /* leave "C:\" */
+    if ((len = filename.len ()) > 3 && filename[len - 1] == '\\') /* leave "C:\" */
 #else
-    if (len > 1 && filename[len - 1] == '/') /* leave leading "/" */
+    if ((len = filename.len ()) > 1 && filename[len - 1] == '/') /* leave leading "/" */
 #endif
         filename.resize (len - 1);
+
+    return std::move (filename);
 }
 
 EXPORT StringBuf filename_build (const std::initializer_list<const char *> & elems)
@@ -463,13 +475,20 @@ EXPORT StringBuf filename_to_uri (const char * name)
     StringBuf buf = str_copy (name);
     str_replace_char (buf, '\\', '/');
 #else
-    StringBuf buf = str_from_locale (name);
+    StringBuf buf;
+
+    /* convert from locale if:
+     * 1) system locale is not UTF-8, and
+     * 2) filename is not already valid UTF-8 */
+    if (! g_get_charset (nullptr) && ! g_utf8_validate (name, -1, nullptr))
+        buf.steal (str_from_locale (name));
+
     if (! buf)
-        return buf;
+        buf.steal (str_copy (name));
 #endif
 
     buf.steal (str_encode_percent (buf));
-    str_insert (buf, 0, URI_PREFIX);
+    buf.insert (0, URI_PREFIX);
     return buf;
 }
 
@@ -477,17 +496,27 @@ EXPORT StringBuf filename_to_uri (const char * name)
  * locale after percent-decoding (except on Windows, where filenames are assumed
  * to be UTF-8).  On Windows, strips the leading '/' and replaces '/' with '\'. */
 
-EXPORT StringBuf uri_to_filename (const char * uri)
+EXPORT StringBuf uri_to_filename (const char * uri, bool use_locale)
 {
     if (strncmp (uri, URI_PREFIX, URI_PREFIX_LEN))
         return StringBuf ();
 
     StringBuf buf = str_decode_percent (uri + URI_PREFIX_LEN);
-    filename_normalize (buf);
+
 #ifndef _WIN32
-    buf.steal (str_to_locale (buf));
+    /* convert to locale if:
+     * 1) use_locale flag was not set to false, and
+     * 2) system locale is not UTF-8, and
+     * 3) decoded URI is valid UTF-8 */
+    if (use_locale && ! g_get_charset (nullptr) && g_utf8_validate (buf, buf.len (), nullptr))
+    {
+        StringBuf locale = str_to_locale (buf);
+        if (locale)
+            buf.steal (std::move (locale));
+    }
 #endif
-    return buf;
+
+    return filename_normalize (std::move (buf));
 }
 
 /* Formats a URI for human-readable display.  Percent-decodes and, for file://
@@ -498,22 +527,23 @@ EXPORT StringBuf uri_to_display (const char * uri)
     if (! strncmp (uri, "cdda://?", 8))
         return str_printf (_("Audio CD, track %s"), uri + 8);
 
-    if (strncmp (uri, URI_PREFIX, URI_PREFIX_LEN))
-        return str_decode_percent (uri);
+    StringBuf buf = str_to_utf8 (str_decode_percent (uri));
+    if (! buf)
+        return str_copy (_("(character encoding error)"));
 
-    StringBuf buf = str_decode_percent (uri + URI_PREFIX_LEN);
+    if (strncmp (buf, URI_PREFIX, URI_PREFIX_LEN))
+        return buf;
 
-#ifdef _WIN32
-    str_replace_char (buf, '/', '\\');
-#endif
+    buf.remove (0, URI_PREFIX_LEN);
+    buf.steal (filename_normalize (std::move (buf)));
 
     const char * home = get_home_utf8 ();
-    int homelen = strlen (home);
+    int homelen = home ? strlen (home) : 0;
 
     if (homelen && ! strncmp (buf, home, homelen) && buf[homelen] == G_DIR_SEPARATOR)
     {
         buf[0] = '~';
-        str_delete (buf, 1, homelen - 1);
+        buf.remove (1, homelen - 1);
     }
 
     return buf;
@@ -610,7 +640,7 @@ EXPORT StringBuf uri_construct (const char * path, const char * reference)
         str_replace_char (buf, '\\', '/');
 
     buf.steal (str_encode_percent (buf));
-    str_insert (buf, 0, reference, slash + 1 - reference);
+    buf.insert (0, reference, slash + 1 - reference);
     return buf;
 }
 

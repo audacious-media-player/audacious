@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-03-23 21:24+0100\n"
-"PO-Revision-Date: 2014-03-16 12:55+0000\n"
+"POT-Creation-Date: 2014-12-04 18:06+0100\n"
+"PO-Revision-Date: 2014-12-02 07:45+0000\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish (http://www.transifex.com/projects/p/audacious/"
 "language/da/)\n"
@@ -19,131 +19,137 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/audacious/adder.c:76
-msgid "Searching ..."
-msgstr "Søger ..."
-
-#: src/audacious/adder.c:104
-#, c-format
-msgid "%d file found"
-msgid_plural "%d files found"
-msgstr[0] "%d fil fundet"
-msgstr[1] "%d filer fundet"
-
-#: src/audacious/adder.c:393 src/audacious/playlist-new.c:96
-msgid "New Playlist"
-msgstr "Ny afspilningsliste"
-
-#: src/audacious/interface.c:93
-msgid "Error"
-msgstr "Fejl"
-
-#: src/audacious/main.c:70
+#: src/audacious/main.cc:60
 msgid "Show command-line help"
 msgstr "Vis hjælp for kommandolinjen"
 
-#: src/audacious/main.c:71
+#: src/audacious/main.cc:61
 msgid "Show version"
 msgstr "Vis version"
 
-#: src/audacious/main.c:72
+#: src/audacious/main.cc:62
 msgid "Start playback"
 msgstr "Start afspilning"
 
-#: src/audacious/main.c:73
+#: src/audacious/main.cc:63
 msgid "Pause playback"
 msgstr "Sæt afspilning på pause"
 
-#: src/audacious/main.c:74
+#: src/audacious/main.cc:64
 msgid "Pause if playing, play otherwise"
 msgstr "Sæt på pause hvis der afspilles, ellers afspilles der"
 
-#: src/audacious/main.c:75
+#: src/audacious/main.cc:65
 msgid "Stop playback"
 msgstr "Stop afspilning"
 
-#: src/audacious/main.c:76
+#: src/audacious/main.cc:66
 msgid "Skip to previous song"
 msgstr "Gå til forrige sang"
 
-#: src/audacious/main.c:77
+#: src/audacious/main.cc:67
 msgid "Skip to next song"
 msgstr "Gå til næste sang"
 
-#: src/audacious/main.c:78
+#: src/audacious/main.cc:68
 msgid "Add files to the playlist"
 msgstr "Tilføj filer til afspilningslisten"
 
-#: src/audacious/main.c:79
+#: src/audacious/main.cc:69
 msgid "Add files to a temporary playlist"
 msgstr "Tilføj filer til en midlertidig afspilningsliste"
 
-#: src/audacious/main.c:80
+#: src/audacious/main.cc:70
 msgid "Display the main window"
 msgstr "Vis hovedvinduet"
 
-#: src/audacious/main.c:81
+#: src/audacious/main.cc:71
 msgid "Display the jump-to-song window"
 msgstr "Vis hop til sang-vinduet"
 
-#: src/audacious/main.c:82
+#: src/audacious/main.cc:72
 msgid "Start without a graphical interface"
 msgstr "Start uden en grafisk grænseflade"
 
-#: src/audacious/main.c:83
+#: src/audacious/main.cc:73
 msgid "Quit on playback stop"
 msgstr "Afslut når afspilning stopper"
 
-#: src/audacious/main.c:84
-msgid "Print debugging messages"
-msgstr "Udskriv fejlsøgningsbeskeder"
+#: src/audacious/main.cc:74
+msgid "Print debugging messages (may be used twice)"
+msgstr "Udskriv fejlsøgningsbeskeder (kan bruges to gange)"
 
-#: src/audacious/main.c:264
+#: src/audacious/main.cc:76
+msgid "Run in Qt mode"
+msgstr "Kør i Qt-tilstand"
+
+#: src/audacious/main.cc:127
 #, c-format
 msgid "Unknown option: %s\n"
 msgstr "Ukendt indstilling: %s\n"
 
-#: src/audacious/main.c:285
+#: src/audacious/main.cc:150
 #, c-format
 msgid "Unknown option: -%c\n"
 msgstr "Ukendt indstilling: -%c\n"
 
-#: src/audacious/main.c:306
+#: src/audacious/main.cc:177
 #, c-format
 msgid ""
 "Usage: audacious [OPTION] ... [FILE] ...\n"
 "\n"
 msgstr "Brug: audacious [TILVALG] ... [FIL] ...\n"
 
-#: src/audacious/main.c:591
+#: src/audacious/main.cc:345
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/playback.c:354
+#: src/libaudcore/adder.cc:77
 #, c-format
-msgid "No decoder found for %s."
-msgstr "Ingen afkoder fundet for %s."
+msgid "%d file found"
+msgid_plural "%d files found"
+msgstr[0] "%d fil fundet"
+msgstr[1] "%d filer fundet"
 
-#: src/audacious/playback.c:382
+#: src/libaudcore/adder.cc:317 src/libaudcore/playlist.cc:139
+msgid "New Playlist"
+msgstr "Ny afspilningsliste"
+
+#: src/libaudcore/audstrings.cc:528
 #, c-format
-msgid "%s could not be opened."
-msgstr "%s kunne ikke åbnes."
+msgid "Audio CD, track %s"
+msgstr "Lyd-cd, nummer %s"
 
-#: src/audacious/playlist-files.c:95
+#: src/libaudcore/audstrings.cc:532 src/libaudcore/tuple.cc:481
+msgid "(character encoding error)"
+msgstr "(tegnkodningsfejl)"
+
+#: src/libaudcore/playback.cc:328 src/libaudcore/probe.cc:151
+msgid "Error loading plugin"
+msgstr "Der opstod en fejl ved indlæsning af udvidelsesmodul"
+
+#: src/libaudcore/playback.cc:383 src/libaudgui/infowin.cc:496
 #, c-format
-msgid "Cannot load %s: unsupported file extension."
-msgstr "Kan ikke indlæse %s: filendelsen er ikke understøttet."
+msgid ""
+"Error opening %s:\n"
+"%s"
+msgstr ""
+"Fejl under åbning af %s:\n"
+"%s"
 
-#: src/audacious/playlist-files.c:185
-#, c-format
-msgid "Cannot save %s: unsupported file extension."
-msgstr "Kan ikke gemme %s: filendelsen er ikke understøttet."
+#: src/libaudcore/playback.cc:385
+msgid "Unknown playback error"
+msgstr "Ukendt afspilningsfejl"
 
-#: src/audacious/playlist-new.c:97
+#: src/libaudcore/playback.cc:515
+msgid "Invalid audio format"
+msgstr "Ugyldigt lydformat"
+
+#: src/libaudcore/playlist.cc:140
 msgid "Now Playing"
 msgstr "Spiller nu"
 
-#: src/audacious/playlist-new.c:1655
+#: src/libaudcore/playlist.cc:1622
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress "
 "(or has been disabled)."
@@ -151,884 +157,948 @@ msgstr ""
 "Afspilningslisten kan ikke sorteres da skanning af metadataene stadig er i "
 "gang (eller er blevet deaktiveret)."
 
-#: src/audacious/plugin-preferences.c:55
-msgid "About "
-msgstr "Om"
-
-#: src/audacious/plugin-preferences.c:94
-msgid " Settings"
-msgstr "Indstillinger"
-
-#: src/audacious/plugin-preferences.c:99
-msgid "_Set"
-msgstr "_Angiv"
-
-#: src/audacious/plugin-preferences.c:100 src/libaudgui/confirm.c:57
-#: src/libaudgui/confirm.c:90 src/libaudgui/jump-to-time.c:49
-#: src/libaudgui/playlists.c:89 src/libaudgui/playlists.c:142
-#: src/libaudgui/url-opener.c:71
-msgid "_Cancel"
-msgstr "_Afbryd"
-
-#: src/audacious/plugin-preferences.c:106 src/audacious/ui_preferences.c:783
-#: src/libaudgui/infowin.c:370 src/libaudgui/queue-manager.c:189
-#: src/libaudgui/ui_fileopener.c:127 src/libaudgui/ui_jumptotrack.c:312
-#: src/libaudgui/util.c:161
-msgid "_Close"
-msgstr "_Luk"
-
-#: src/audacious/plugin-view.c:242 src/audacious/ui_preferences.c:661
-msgid "_Settings"
-msgstr "_Indstillinger"
-
-#: src/audacious/plugin-view.c:250 src/audacious/ui_preferences.c:672
-msgid "_About"
-msgstr "_Om"
-
-#: src/audacious/ui_plugin_menu.c:37
-msgid "_Plugins ..."
-msgstr "_Udvidelsesmoduler ..."
-
-#: src/audacious/ui_preferences.c:82
-msgid "Appearance"
-msgstr "Fremtoning"
-
-#: src/audacious/ui_preferences.c:83
-msgid "Audio"
-msgstr "Lyd"
-
-#: src/audacious/ui_preferences.c:84
-msgid "Network"
-msgstr "Netværk"
-
-#: src/audacious/ui_preferences.c:85 src/audacious/ui_preferences.c:95
-msgid "Playlist"
-msgstr "Afspilningsliste"
-
-#: src/audacious/ui_preferences.c:86 src/libaudgui/infowin.c:299
-msgid "Song Info"
-msgstr "Sanginformation"
-
-#: src/audacious/ui_preferences.c:87
-msgid "Plugins"
-msgstr "Udvidelsesmoduler"
-
-#: src/audacious/ui_preferences.c:91
-msgid "General"
-msgstr "Generelt"
-
-#: src/audacious/ui_preferences.c:92
-msgid "Effect"
-msgstr "Effekt"
-
-#: src/audacious/ui_preferences.c:93
-msgid "Visualization"
-msgstr "Visualisering"
-
-#: src/audacious/ui_preferences.c:94
-msgid "Input"
-msgstr "Lydindgang"
-
-#: src/audacious/ui_preferences.c:96
-msgid "Transport"
-msgstr "Transport:"
-
-#: src/audacious/ui_preferences.c:100 src/libaudgui/infopopup.c:151
-#: src/libaudgui/infowin.c:343
-msgid "Artist"
-msgstr "Kunstner"
-
-#: src/audacious/ui_preferences.c:101 src/libaudgui/infopopup.c:152
-#: src/libaudgui/infowin.c:346
-msgid "Album"
-msgstr "Album"
-
-#: src/audacious/ui_preferences.c:102 src/libaudgui/infopopup.c:150
-#: src/libaudgui/infowin.c:340 src/libaudgui/ui_playlist_manager.c:235
-msgid "Title"
-msgstr "Titel"
-
-#: src/audacious/ui_preferences.c:103
-msgid "Tracknumber"
-msgstr "Rækkefølge for nummeret"
-
-#: src/audacious/ui_preferences.c:104 src/libaudgui/infopopup.c:153
-#: src/libaudgui/infowin.c:352
-msgid "Genre"
-msgstr "Genre"
-
-#: src/audacious/ui_preferences.c:105
-msgid "Filename"
-msgstr "Filnavn"
-
-#: src/audacious/ui_preferences.c:106
-msgid "Filepath"
-msgstr "Filsti"
-
-#: src/audacious/ui_preferences.c:107
-msgid "Date"
-msgstr "Dato"
-
-#: src/audacious/ui_preferences.c:108 src/libaudgui/infopopup.c:154
-#: src/libaudgui/infowin.c:356
-msgid "Year"
-msgstr "År"
-
-#: src/audacious/ui_preferences.c:109 src/libaudgui/infowin.c:349
-msgid "Comment"
-msgstr "Kommentar"
-
-#: src/audacious/ui_preferences.c:110
-msgid "Codec"
-msgstr "Codec"
-
-#: src/audacious/ui_preferences.c:111
-msgid "Quality"
-msgstr "Kvalitet"
-
-#: src/audacious/ui_preferences.c:116
-msgid "None"
-msgstr "Ingen"
-
-#: src/audacious/ui_preferences.c:117
-msgid "Arabic"
-msgstr "Arabisk"
-
-#: src/audacious/ui_preferences.c:118
-msgid "Baltic"
-msgstr "Baltisk"
-
-#: src/audacious/ui_preferences.c:119
-msgid "Chinese"
-msgstr "Kinesisk"
-
-#: src/audacious/ui_preferences.c:120
-msgid "Greek"
-msgstr "Græsk"
-
-#: src/audacious/ui_preferences.c:121
-msgid "Hebrew"
-msgstr "Hebraisk"
-
-#: src/audacious/ui_preferences.c:122
-msgid "Japanese"
-msgstr "Japansk"
-
-#: src/audacious/ui_preferences.c:123
-msgid "Korean"
-msgstr "Koreansk"
-
-#: src/audacious/ui_preferences.c:124
-msgid "Polish"
-msgstr "Polsk"
-
-#: src/audacious/ui_preferences.c:125
-msgid "Russian"
-msgstr "Russisk"
-
-#: src/audacious/ui_preferences.c:126
-msgid "Taiwanese"
-msgstr "Taiwanesisk"
-
-#: src/audacious/ui_preferences.c:127
-msgid "Turkish"
-msgstr "Tyrkisk"
-
-#: src/audacious/ui_preferences.c:135
-msgid "Floating point"
-msgstr "Decimaltal"
-
-#: src/audacious/ui_preferences.c:147
-msgid "<b>Interface Settings</b>"
-msgstr "<b>Indstillinger for grænseflade</b>"
-
-#: src/audacious/ui_preferences.c:148
-msgid "Interface plugin:"
-msgstr "Udvidelsesmodul for grænseflade:"
-
-#: src/audacious/ui_preferences.c:165
-msgid "Output plugin:"
-msgstr "Udvidelsesmodul for lydudgang:"
-
-#: src/audacious/ui_preferences.c:172
-msgid "<b>Output Settings</b>"
-msgstr "<b>Indstillinger for lydudgang</b>"
-
-#: src/audacious/ui_preferences.c:175
-msgid "Bit depth:"
-msgstr "Bit-dybde"
-
-#: src/audacious/ui_preferences.c:178
-msgid "Buffer size:"
-msgstr "Butterstørrelse:"
-
-#: src/audacious/ui_preferences.c:180
-msgid "ms"
-msgstr "ms"
-
-#: src/audacious/ui_preferences.c:181
-msgid "Soft clipping"
-msgstr "Blød beskæring"
-
-#: src/audacious/ui_preferences.c:183
-msgid "Use software volume control (not recommended)"
-msgstr "Brug programmets styring af lydstyrken (anbefales ikke)"
-
-#: src/audacious/ui_preferences.c:185
-msgid "<b>Replay Gain</b>"
-msgstr "<b>Afspilningsforstærkning</b>"
-
-#: src/audacious/ui_preferences.c:186
-msgid "Enable Replay Gain"
-msgstr "Aktiver forstærkning af afspilning"
-
-#: src/audacious/ui_preferences.c:188
-msgid "Album mode"
-msgstr "Albumtilstand"
-
-#: src/audacious/ui_preferences.c:190
-msgid "Prevent clipping (recommended)"
-msgstr "Forhindr kliklyde (anbefales)"
-
-#: src/audacious/ui_preferences.c:192
-msgid "<b>Adjust Levels</b>"
-msgstr "<b>Juster niveauer</b>"
-
-#: src/audacious/ui_preferences.c:193
-msgid "Amplify all files:"
-msgstr "Forstærk alle filer:"
-
-#: src/audacious/ui_preferences.c:195 src/audacious/ui_preferences.c:198
-msgid "dB"
-msgstr "dB"
-
-#: src/audacious/ui_preferences.c:196
-msgid "Amplify untagged files:"
-msgstr "Forstærk umærkede filer:"
-
-#: src/audacious/ui_preferences.c:201
-msgid "Proxy hostname:"
-msgstr "Proxyværtsnavn:"
-
-#: src/audacious/ui_preferences.c:202
-msgid "Proxy port:"
-msgstr "Proxyport:"
-
-#: src/audacious/ui_preferences.c:205
-msgid "Proxy username:"
-msgstr "Proxybrugernavn:"
-
-#: src/audacious/ui_preferences.c:206
-msgid "Proxy password:"
-msgstr "Proxyadgangskode:"
-
-#: src/audacious/ui_preferences.c:210
-msgid "<b>Proxy Configuration</b>"
-msgstr "<b>Proxykonfiguration</b>"
-
-#: src/audacious/ui_preferences.c:211
-msgid "Enable proxy usage"
-msgstr "Aktiver brug af proxy"
-
-#: src/audacious/ui_preferences.c:214
-msgid "Use authentication with proxy"
-msgstr "Brug godkendelse med proxy"
-
-#: src/audacious/ui_preferences.c:221
-msgid "Auto character encoding detector for:"
-msgstr "Automatisk tegnkodningsdetektor for"
-
-#: src/audacious/ui_preferences.c:225
-msgid "Fallback character encodings:"
-msgstr "Reservetegnkodninger:"
-
-#: src/audacious/ui_preferences.c:229
-msgid "<b>Behavior</b>"
-msgstr "<b>Opførsel</b>"
-
-#: src/audacious/ui_preferences.c:230
-msgid "Continue playback on startup"
-msgstr "Fortsæt afspilning ved opstart"
-
-#: src/audacious/ui_preferences.c:232
-msgid "Advance when the current song is deleted"
-msgstr "Gå videre når den nuværende sang slettes"
-
-#: src/audacious/ui_preferences.c:234
-msgid "Clear the playlist when opening files"
-msgstr "Ryd afspilningslisten når der åbnes filer"
-
-#: src/audacious/ui_preferences.c:236
-msgid "Open files in a temporary playlist"
-msgstr "Åbn filer i midlertidig afspilningsliste"
-
-#: src/audacious/ui_preferences.c:238
-msgid "Do not load metadata for songs until played"
-msgstr "Indlæs ikke metadata for sange før de afspilles"
-
-#: src/audacious/ui_preferences.c:241
-msgid "<b>Compatibility</b>"
-msgstr "<b>Kompatibilitet</b>"
-
-#: src/audacious/ui_preferences.c:242
-msgid "Interpret \\ (backward slash) as a folder delimiter"
-msgstr "Fortolk \\ (baglæns skråstreg) som en mappeafgrænser"
-
-#: src/audacious/ui_preferences.c:247
-msgid "<b>Album Art</b>"
-msgstr "<b>Omslag</b>"
-
-#: src/audacious/ui_preferences.c:248
-msgid "Search for images matching these words (comma-separated):"
-msgstr "Søg efter billeder der matcher disse ord (kommaadskilt):"
-
-#: src/audacious/ui_preferences.c:250
-msgid "Exclude images matching these words (comma-separated):"
-msgstr "Ekskulder billeder der matcher disse ord (kommaadskilt):"
-
-#: src/audacious/ui_preferences.c:252
-msgid "Search for images matching song file name"
-msgstr "Søg efter billeder der matcher filnavn for sangen"
-
-#: src/audacious/ui_preferences.c:254
-msgid "Search recursively"
-msgstr "Søg rekursivt"
-
-#: src/audacious/ui_preferences.c:256
-msgid "Search depth:"
-msgstr "Søgedybde:"
-
-#: src/audacious/ui_preferences.c:259
-msgid "<b>Popup Information</b>"
-msgstr "<b>Pop op-information</b>"
-
-#: src/audacious/ui_preferences.c:260
-msgid "Show popup information"
-msgstr "Vis pop op-information"
-
-#: src/audacious/ui_preferences.c:262
-msgid "Popup delay (tenths of a second):"
-msgstr "Pop op-forsinkelse (tiendedele af et sekund):"
-
-#: src/audacious/ui_preferences.c:265
-msgid "Show time scale for current song"
-msgstr "Vis tidsskala for nuværende sang"
-
-#: src/audacious/ui_preferences.c:280
-msgid "TITLE"
-msgstr "TITEL"
-
-#: src/audacious/ui_preferences.c:281
-msgid "ARTIST - TITLE"
-msgstr "KUNSTNER - TITEL"
-
-#: src/audacious/ui_preferences.c:282
-msgid "ARTIST - ALBUM - TITLE"
-msgstr "KUNSTNER - ALBUM - TITEL"
-
-#: src/audacious/ui_preferences.c:283
-msgid "ARTIST - ALBUM - TRACK. TITLE"
-msgstr "KUNSTNER - ALBUM - NUMMER. TITEL"
-
-#: src/audacious/ui_preferences.c:284
-msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
-msgstr "KUNSTNER [ ALBUM ] - NUMMER. TITEL"
-
-#: src/audacious/ui_preferences.c:285
-msgid "ALBUM - TITLE"
-msgstr "ALBUM - TITEL"
-
-#: src/audacious/ui_preferences.c:386
-msgid "Category"
-msgstr "Kategori"
-
-#: src/audacious/ui_preferences.c:468
-msgid "Custom"
-msgstr "Tilpasset"
-
-#: src/audacious/ui_preferences.c:492
-msgid "<b>Song Display</b>"
-msgstr "<b>Sangvisning</b>"
-
-#: src/audacious/ui_preferences.c:501
-msgid "Show song numbers"
-msgstr "Vis sangenes numre"
-
-#: src/audacious/ui_preferences.c:512
-msgid "Show leading zeroes (02:00 instead of 2:00)"
-msgstr "Vis foranstillede nuller (02:00 i stedet for 2:00)"
-
-#: src/audacious/ui_preferences.c:526
-msgid "Title format:"
-msgstr "Titelformat:"
-
-#: src/audacious/ui_preferences.c:531
-msgid "Custom string:"
-msgstr "Tilpasset streng:"
-
-#: src/audacious/ui_preferences.c:734
-msgid "Audacious Settings"
-msgstr "Indstillinger for Audacious"
-
-#: src/audacious/util.c:117
+#: src/libaudcore/playlist-files.cc:76
 #, c-format
-msgid "Could not create directory (%s): %s\n"
-msgstr "Kunne ikke oprette mappe (%s): %s\n"
+msgid "Cannot load %s: unsupported file name extension."
+msgstr "Kan ikke indlæse %s: navnet på filendelsen er ikke understøttet."
 
-#: src/libaudcore/audstrings.c:382
+#: src/libaudcore/playlist-files.cc:136
 #, c-format
-msgid "Audio CD, track %s"
-msgstr "Lyd-cd, nummer %s"
+msgid "Cannot save %s: unsupported file name extension."
+msgstr "Kan ikke gemme %s: navnet på filendelsen er ikke understøttet."
 
-#: src/libaudcore/tuple.c:442
+#: src/libaudcore/probe.cc:119
+msgid "Seek error"
+msgstr "Søgefejl"
+
+#: src/libaudcore/probe.cc:127
+msgid "File format not recognized"
+msgstr "Filformatet blev ikke genkendt"
+
+#: src/libaudcore/probe.cc:161
+msgid "Error reading metadata"
+msgstr "Der opstod en fejl under læsning af metadata"
+
+#: src/libaudcore/tuple.cc:528
 msgid "Mono"
 msgstr "Mono"
 
-#: src/libaudcore/tuple.c:444
+#: src/libaudcore/tuple.cc:530
 msgid "Stereo"
 msgstr "Stereo"
 
-#: src/libaudcore/tuple.c:446
+#: src/libaudcore/tuple.cc:532
 #, c-format
 msgid "%d channel"
 msgid_plural "%d channels"
 msgstr[0] "%d kanal"
 msgstr[1] "%d kanaler"
 
-#: src/libaudgui/about.c:37
+#: src/libaudcore/tuple.cc:699
+#, c-format
+msgid "Track %d"
+msgstr "Spor %d"
+
+#: src/libaudcore/tuple.cc:701
+msgid "Audio CD"
+msgstr "Lyd-cd"
+
+#: src/libaudcore/tuple.cc:707
+msgid "(unknown title)"
+msgstr "(ukendt titel)"
+
+#: src/libaudcore/vfs.cc:67
+msgid "Invalid URI"
+msgstr "Ugyldig URI"
+
+#: src/libaudcore/vfs.cc:83
+msgid "Unknown URI scheme"
+msgstr "Ukendt URI-skema"
+
+#: src/libaudcore/vfs_local.cc:82
+msgid "Invalid file name"
+msgstr "Ugyldigt filnavn"
+
+#: src/libaudgui/about.cc:38 src/libaudqt/about.cc:37
 msgid "Credits"
 msgstr "Rulletekster"
 
-#: src/libaudgui/about.c:37
+#: src/libaudgui/about.cc:38 src/libaudqt/about.cc:37
 msgid "License"
 msgstr "Licens"
 
-#: src/libaudgui/about.c:69
+#: src/libaudgui/about.cc:72 src/libaudqt/about.cc:89
 msgid "About Audacious"
 msgstr "Om Audacious"
 
-#: src/libaudgui/confirm.c:51
+#: src/libaudgui/confirm.cc:51 src/libaudqt/playlist-management.cc:41
 #, c-format
 msgid "Do you want to permanently remove “%s”?"
 msgstr "Ønsker du permanent at fjerne »%s«?"
 
-#: src/libaudgui/confirm.c:55 src/libaudgui/ui_playlist_manager.c:255
+#: src/libaudgui/confirm.cc:55 src/libaudqt/playlist-management.cc:46
 msgid "_Remove"
 msgstr "_Fjern"
 
-#: src/libaudgui/confirm.c:60
+#: src/libaudgui/confirm.cc:57 src/libaudgui/confirm.cc:88
+#: src/libaudgui/jump-to-time.cc:48 src/libaudgui/playlists.cc:90
+#: src/libaudgui/playlists.cc:144 src/libaudgui/plugin-prefs.cc:160
+#: src/libaudgui/url-opener.cc:76 src/libaudqt/playlist-management.cc:47
+msgid "_Cancel"
+msgstr "_Afbryd"
+
+#: src/libaudgui/confirm.cc:60 src/libaudqt/playlist-management.cc:72
 msgid "Remove Playlist"
 msgstr "Fjern afspilningsliste"
 
-#: src/libaudgui/confirm.c:62
+#: src/libaudgui/confirm.cc:62 src/libaudqt/playlist-management.cc:44
 msgid "_Don’t ask again"
 msgstr "_Spørg ikke igen"
 
-#: src/libaudgui/confirm.c:89
+#: src/libaudgui/confirm.cc:87
 msgid "_Rename"
 msgstr "_Omdøb"
 
-#: src/libaudgui/confirm.c:93
+#: src/libaudgui/confirm.cc:91
 msgid "Rename Playlist"
 msgstr "Omdøb afspilningsliste"
 
-#: src/libaudgui/confirm.c:93
+#: src/libaudgui/confirm.cc:91
 msgid "What would you like to call this playlist?"
 msgstr "Hvad ønsker du at kalde denne afspilningsliste?"
 
-#: src/libaudgui/equalizer.c:44
+#: src/libaudgui/equalizer.cc:45 src/libaudqt/equalizer.cc:63
 msgid "_Enable"
 msgstr "_Aktiver"
 
-#: src/libaudgui/equalizer.c:119
+#: src/libaudgui/equalizer.cc:119 src/libaudqt/equalizer.cc:65
 msgid "31 Hz"
 msgstr "31 Hz"
 
-#: src/libaudgui/equalizer.c:119
+#: src/libaudgui/equalizer.cc:119 src/libaudqt/equalizer.cc:65
 msgid "63 Hz"
 msgstr "63 Hz"
 
-#: src/libaudgui/equalizer.c:120
+#: src/libaudgui/equalizer.cc:120 src/libaudqt/equalizer.cc:66
 msgid "125 Hz"
 msgstr "125 Hz"
 
-#: src/libaudgui/equalizer.c:120
+#: src/libaudgui/equalizer.cc:120 src/libaudqt/equalizer.cc:66
 msgid "250 Hz"
 msgstr "250 Hz"
 
-#: src/libaudgui/equalizer.c:120
+#: src/libaudgui/equalizer.cc:120 src/libaudqt/equalizer.cc:66
 msgid "500 Hz"
 msgstr "500 Hz"
 
-#: src/libaudgui/equalizer.c:120
+#: src/libaudgui/equalizer.cc:120 src/libaudqt/equalizer.cc:66
 msgid "1 kHz"
 msgstr "1 kHz"
 
-#: src/libaudgui/equalizer.c:120
+#: src/libaudgui/equalizer.cc:120 src/libaudqt/equalizer.cc:66
 msgid "2 kHz"
 msgstr "2 kHz"
 
-#: src/libaudgui/equalizer.c:121
+#: src/libaudgui/equalizer.cc:121 src/libaudqt/equalizer.cc:67
 msgid "4 kHz"
 msgstr "4 kHz"
 
-#: src/libaudgui/equalizer.c:121
+#: src/libaudgui/equalizer.cc:121 src/libaudqt/equalizer.cc:67
 msgid "8 kHz"
 msgstr "8 kHz"
 
-#: src/libaudgui/equalizer.c:121
+#: src/libaudgui/equalizer.cc:121 src/libaudqt/equalizer.cc:67
 msgid "16 kHz"
 msgstr "16 kHz"
 
-#: src/libaudgui/equalizer.c:124
+#: src/libaudgui/equalizer.cc:124 src/libaudqt/equalizer.cc:90
 msgid "Equalizer"
 msgstr "Equalizer"
 
-#: src/libaudgui/equalizer.c:138
+#: src/libaudgui/equalizer.cc:138 src/libaudqt/equalizer.cc:72
 msgid "Preamp"
 msgstr "Preamp"
 
-#: src/libaudgui/infopopup.c:155
+#: src/libaudgui/infopopup.cc:200 src/libaudgui/infowin.cc:360
+#: src/libaudgui/prefs-window.cc:102 src/libaudqt/info-widget.cc:40
+#: src/libaudqt/prefs-window.cc:105
+msgid "Title"
+msgstr "Titel"
+
+#: src/libaudgui/infopopup.cc:201 src/libaudgui/infowin.cc:363
+#: src/libaudgui/prefs-window.cc:100 src/libaudqt/info-widget.cc:38
+#: src/libaudqt/prefs-window.cc:103
+msgid "Artist"
+msgstr "Kunstner"
+
+#: src/libaudgui/infopopup.cc:202 src/libaudgui/infowin.cc:366
+#: src/libaudgui/prefs-window.cc:101 src/libaudqt/info-widget.cc:39
+#: src/libaudqt/prefs-window.cc:104
+msgid "Album"
+msgstr "Album"
+
+#: src/libaudgui/infopopup.cc:203 src/libaudgui/infowin.cc:375
+#: src/libaudgui/prefs-window.cc:104 src/libaudqt/info-widget.cc:42
+#: src/libaudqt/prefs-window.cc:107
+msgid "Genre"
+msgstr "Genre"
+
+#: src/libaudgui/infopopup.cc:204 src/libaudgui/infowin.cc:379
+#: src/libaudgui/prefs-window.cc:108 src/libaudqt/prefs-window.cc:111
+msgid "Year"
+msgstr "År"
+
+#: src/libaudgui/infopopup.cc:205
 msgid "Track"
 msgstr "Nummer"
 
-#: src/libaudgui/infopopup.c:156
+#: src/libaudgui/infopopup.cc:206 src/libaudqt/info-widget.cc:52
 msgid "Length"
 msgstr "Længde"
 
-#: src/libaudgui/infowin.c:46
+#: src/libaudgui/infowin.cc:49
 msgid "Format:"
 msgstr "Format:"
 
-#: src/libaudgui/infowin.c:47
+#: src/libaudgui/infowin.cc:50
 msgid "Quality:"
 msgstr "Kvalitet:"
 
-#: src/libaudgui/infowin.c:48
+#: src/libaudgui/infowin.cc:51
 msgid "Bitrate:"
 msgstr "Bithastighed:"
 
-#: src/libaudgui/infowin.c:76
+#: src/libaudgui/infowin.cc:83
 msgid "Acid Jazz"
 msgstr "Acid Jazz"
 
-#: src/libaudgui/infowin.c:77
+#: src/libaudgui/infowin.cc:84
 msgid "Acid Rock"
 msgstr "Acid Rock"
 
-#: src/libaudgui/infowin.c:78
+#: src/libaudgui/infowin.cc:85
 msgid "Ambient"
 msgstr "Ambient"
 
-#: src/libaudgui/infowin.c:79
+#: src/libaudgui/infowin.cc:86
 msgid "Bebop"
 msgstr "Bebop"
 
-#: src/libaudgui/infowin.c:80
+#: src/libaudgui/infowin.cc:87
 msgid "Bluegrass"
 msgstr "Bluegrass"
 
-#: src/libaudgui/infowin.c:81
+#: src/libaudgui/infowin.cc:88
 msgid "Blues"
 msgstr "Blues"
 
-#: src/libaudgui/infowin.c:82
+#: src/libaudgui/infowin.cc:89
 msgid "Chamber Music"
 msgstr "Kammermusik"
 
-#: src/libaudgui/infowin.c:83
+#: src/libaudgui/infowin.cc:90
 msgid "Classical"
 msgstr "Klassisk"
 
-#: src/libaudgui/infowin.c:84
+#: src/libaudgui/infowin.cc:91
 msgid "Country"
 msgstr "Country"
 
-#: src/libaudgui/infowin.c:85
+#: src/libaudgui/infowin.cc:92
 msgid "Death Metal"
 msgstr "Dødsmetal"
 
-#: src/libaudgui/infowin.c:86
+#: src/libaudgui/infowin.cc:93
 msgid "Disco"
 msgstr "Disko"
 
-#: src/libaudgui/infowin.c:87
+#: src/libaudgui/infowin.cc:94
 msgid "Easy Listening"
 msgstr "Blød pop"
 
-#: src/libaudgui/infowin.c:88
+#: src/libaudgui/infowin.cc:95
 msgid "Folk"
 msgstr "Folk"
 
-#: src/libaudgui/infowin.c:89
+#: src/libaudgui/infowin.cc:96
 msgid "Funk"
 msgstr "Funk"
 
-#: src/libaudgui/infowin.c:90
+#: src/libaudgui/infowin.cc:97
 msgid "Gangsta Rap"
 msgstr "Gangsterrap"
 
-#: src/libaudgui/infowin.c:91
+#: src/libaudgui/infowin.cc:98
 msgid "Gospel"
 msgstr "Gospel"
 
-#: src/libaudgui/infowin.c:92
+#: src/libaudgui/infowin.cc:99
 msgid "Grunge"
 msgstr "Grunge"
 
-#: src/libaudgui/infowin.c:93
+#: src/libaudgui/infowin.cc:100
 msgid "Hard Rock"
 msgstr "Hård rock"
 
-#: src/libaudgui/infowin.c:94
+#: src/libaudgui/infowin.cc:101
 msgid "Heavy Metal"
 msgstr "Heavymetal"
 
-#: src/libaudgui/infowin.c:95
+#: src/libaudgui/infowin.cc:102
 msgid "Hip-hop"
 msgstr "Hip-hop"
 
-#: src/libaudgui/infowin.c:96
+#: src/libaudgui/infowin.cc:103
 msgid "House"
 msgstr "House"
 
-#: src/libaudgui/infowin.c:97
+#: src/libaudgui/infowin.cc:104
 msgid "Jazz"
 msgstr "Jazz"
 
-#: src/libaudgui/infowin.c:98
+#: src/libaudgui/infowin.cc:105
 msgid "Jungle"
 msgstr "Jungle"
 
-#: src/libaudgui/infowin.c:99
+#: src/libaudgui/infowin.cc:106
 msgid "Metal"
 msgstr "Metal"
 
-#: src/libaudgui/infowin.c:100
+#: src/libaudgui/infowin.cc:107
 msgid "New Age"
 msgstr "New Age"
 
-#: src/libaudgui/infowin.c:101
+#: src/libaudgui/infowin.cc:108
 msgid "New Wave"
 msgstr "New Wave"
 
-#: src/libaudgui/infowin.c:102
+#: src/libaudgui/infowin.cc:109
 msgid "Noise"
 msgstr "Larm"
 
-#: src/libaudgui/infowin.c:103
+#: src/libaudgui/infowin.cc:110
 msgid "Pop"
 msgstr "Pop"
 
-#: src/libaudgui/infowin.c:104
+#: src/libaudgui/infowin.cc:111
 msgid "Punk Rock"
 msgstr "Punk rock"
 
-#: src/libaudgui/infowin.c:105
+#: src/libaudgui/infowin.cc:112
 msgid "Rap"
 msgstr "Rap"
 
-#: src/libaudgui/infowin.c:106
+#: src/libaudgui/infowin.cc:113
 msgid "Reggae"
 msgstr "Reggae"
 
-#: src/libaudgui/infowin.c:107
+#: src/libaudgui/infowin.cc:114
 msgid "Rock"
 msgstr "Rock"
 
-#: src/libaudgui/infowin.c:108
+#: src/libaudgui/infowin.cc:115
 msgid "Rock and Roll"
 msgstr "Rock og rul"
 
-#: src/libaudgui/infowin.c:109
+#: src/libaudgui/infowin.cc:116
 msgid "Rhythm and Blues"
 msgstr "Rytme og blues"
 
-#: src/libaudgui/infowin.c:110
+#: src/libaudgui/infowin.cc:117
 msgid "Ska"
 msgstr "Ska"
 
-#: src/libaudgui/infowin.c:111
+#: src/libaudgui/infowin.cc:118
 msgid "Soul"
 msgstr "Soul"
 
-#: src/libaudgui/infowin.c:112
+#: src/libaudgui/infowin.cc:119
 msgid "Swing"
 msgstr "Swing"
 
-#: src/libaudgui/infowin.c:113
+#: src/libaudgui/infowin.cc:120
 msgid "Techno"
 msgstr "Tekno"
 
-#: src/libaudgui/infowin.c:114
+#: src/libaudgui/infowin.cc:121
 msgid "Trip-hop"
 msgstr "Trip-hop"
 
-#: src/libaudgui/infowin.c:220
+#: src/libaudgui/infowin.cc:227
 msgid "Save successful"
 msgstr "Gemt med succes"
 
-#: src/libaudgui/infowin.c:224
+#: src/libaudgui/infowin.cc:231
 msgid "Save error"
 msgstr "Fejl under gemning"
 
-#: src/libaudgui/infowin.c:359
+#: src/libaudgui/infowin.cc:316 src/libaudgui/prefs-window.cc:86
+#: src/libaudqt/infowin.cc:61 src/libaudqt/prefs-window.cc:89
+msgid "Song Info"
+msgstr "Sanginformation"
+
+#: src/libaudgui/infowin.cc:369 src/libaudqt/info-widget.cc:44
+msgid "Album Artist"
+msgstr "Kunstner"
+
+#: src/libaudgui/infowin.cc:372 src/libaudgui/prefs-window.cc:109
+#: src/libaudqt/info-widget.cc:43 src/libaudqt/prefs-window.cc:112
+msgid "Comment"
+msgstr "Kommentar"
+
+#: src/libaudgui/infowin.cc:382 src/libaudqt/info-widget.cc:41
 msgid "Track Number"
 msgstr "Rækkefølge"
 
-#: src/libaudgui/infowin.c:367
+#: src/libaudgui/infowin.cc:389
+msgid "Clea_r fields when moving to next song"
+msgstr "_Ryd felter når der gås til næste sang"
+
+#: src/libaudgui/infowin.cc:403
 msgid "_Save"
 msgstr "_Gem"
 
-#: src/libaudgui/infowin.c:418
+#: src/libaudgui/infowin.cc:406 src/libaudgui/plugin-prefs.cc:166
+#: src/libaudgui/prefs-window.cc:762 src/libaudgui/queue-manager.cc:194
+#: src/libaudgui/ui_fileopener.cc:127 src/libaudgui/ui_jumptotrack.cc:302
+#: src/libaudgui/util.cc:167 src/libaudqt/queue-manager.cc:116
+msgid "_Close"
+msgstr "_Luk"
+
+#: src/libaudgui/infowin.cc:409
+msgid "_Next"
+msgstr "_Næste"
+
+#: src/libaudgui/infowin.cc:455
 #, c-format
 msgid "%d kb/s"
 msgstr "%d kb/s"
 
-#: src/libaudgui/infowin.c:423
+#: src/libaudgui/infowin.cc:460
 msgid "N/A"
 msgstr "-"
 
-#: src/libaudgui/infowin.c:453
-#, c-format
-msgid "No info available for %s.\n"
-msgstr "Ingen information tilgængelig for %s.\n"
-
-#: src/libaudgui/jump-to-time.c:48 src/libaudgui/ui_jumptotrack.c:305
+#: src/libaudgui/jump-to-time.cc:47 src/libaudgui/ui_jumptotrack.cc:296
 msgid "_Jump"
 msgstr "_Hop"
 
-#: src/libaudgui/jump-to-time.c:52
+#: src/libaudgui/jump-to-time.cc:51
 msgid "Jump to Time"
 msgstr "Hop til tid"
 
-#: src/libaudgui/jump-to-time.c:52
+#: src/libaudgui/jump-to-time.cc:51
 msgid "Enter time (minutes:seconds):"
 msgstr "Indtast tid (minutter:sekunder):"
 
-#: src/libaudgui/playlists.c:86
+#: src/libaudgui/playlists.cc:89
+msgid "_Overwrite"
+msgstr "_Overskriv"
+
+#: src/libaudgui/playlists.cc:93
+msgid "Confirm Overwrite"
+msgstr "Bekræft overskriv"
+
+#: src/libaudgui/playlists.cc:93
 #, c-format
 msgid "Overwrite %s?"
 msgstr "Overskriv %s?"
 
-#: src/libaudgui/playlists.c:88
-msgid "_Overwrite"
-msgstr "_Overskriv"
-
-#: src/libaudgui/playlists.c:92
-msgid "Confirm Overwrite"
-msgstr "Bekræft overskriv"
-
-#: src/libaudgui/playlists.c:121
+#: src/libaudgui/playlists.cc:123
 msgid "Export Playlist"
 msgstr "Eksporter afspilningsliste"
 
-#: src/libaudgui/playlists.c:122
+#: src/libaudgui/playlists.cc:124
 msgid "_Export"
 msgstr "_Eksporter"
 
-#: src/libaudgui/playlists.c:128
+#: src/libaudgui/playlists.cc:130
 msgid "Import Playlist"
 msgstr "Importer afspilningsliste"
 
-#: src/libaudgui/playlists.c:129
+#: src/libaudgui/playlists.cc:131
 msgid "_Import"
 msgstr "_Importer"
 
-#: src/libaudgui/queue-manager.c:172
+#: src/libaudgui/plugin-menu.cc:40
+msgid "_Plugins ..."
+msgstr "_Udvidelsesmoduler ..."
+
+#: src/libaudgui/plugin-prefs.cc:109 src/libaudqt/prefs-plugin.cc:55
+#, c-format
+msgid "About %s"
+msgstr "Om %s"
+
+#: src/libaudgui/plugin-prefs.cc:155 src/libaudqt/prefs-plugin.cc:107
+#, c-format
+msgid "%s Settings"
+msgstr "%s-indstillinger"
+
+#: src/libaudgui/plugin-prefs.cc:159
+msgid "_Set"
+msgstr "_Angiv"
+
+#: src/libaudgui/plugin-view.cc:235 src/libaudgui/prefs-window.cc:650
+#: src/libaudqt/prefs-window.cc:491 src/libaudqt/prefs-window.cc:637
+msgid "_Settings"
+msgstr "_Indstillinger"
+
+#: src/libaudgui/plugin-view.cc:242 src/libaudgui/prefs-window.cc:661
+#: src/libaudqt/prefs-window.cc:505 src/libaudqt/prefs-window.cc:634
+msgid "_About"
+msgstr "_Om"
+
+#: src/libaudgui/prefs-window.cc:82 src/libaudqt/prefs-window.cc:85
+msgid "Appearance"
+msgstr "Fremtoning"
+
+#: src/libaudgui/prefs-window.cc:83 src/libaudqt/prefs-window.cc:86
+msgid "Audio"
+msgstr "Lyd"
+
+#: src/libaudgui/prefs-window.cc:84 src/libaudqt/prefs-window.cc:87
+msgid "Network"
+msgstr "Netværk"
+
+#: src/libaudgui/prefs-window.cc:85 src/libaudgui/prefs-window.cc:95
+#: src/libaudqt/prefs-window.cc:88 src/libaudqt/prefs-window.cc:98
+msgid "Playlist"
+msgstr "Afspilningsliste"
+
+#: src/libaudgui/prefs-window.cc:87 src/libaudqt/prefs-window.cc:90
+msgid "Plugins"
+msgstr "Udvidelsesmoduler"
+
+#: src/libaudgui/prefs-window.cc:91 src/libaudqt/prefs-window.cc:94
+msgid "General"
+msgstr "Generelt"
+
+#: src/libaudgui/prefs-window.cc:92 src/libaudqt/prefs-window.cc:95
+msgid "Effect"
+msgstr "Effekt"
+
+#: src/libaudgui/prefs-window.cc:93 src/libaudqt/prefs-window.cc:96
+msgid "Visualization"
+msgstr "Visualisering"
+
+#: src/libaudgui/prefs-window.cc:94 src/libaudqt/prefs-window.cc:97
+msgid "Input"
+msgstr "Lydindgang"
+
+#: src/libaudgui/prefs-window.cc:96 src/libaudqt/prefs-window.cc:99
+msgid "Transport"
+msgstr "Transport:"
+
+#: src/libaudgui/prefs-window.cc:103 src/libaudqt/prefs-window.cc:106
+msgid "Track number"
+msgstr "Rækkefølge"
+
+#: src/libaudgui/prefs-window.cc:105 src/libaudqt/prefs-window.cc:108
+msgid "File name"
+msgstr "Filnavn"
+
+#: src/libaudgui/prefs-window.cc:106 src/libaudqt/prefs-window.cc:109
+msgid "File path"
+msgstr "Filsti"
+
+#: src/libaudgui/prefs-window.cc:107 src/libaudqt/prefs-window.cc:110
+msgid "Date"
+msgstr "Dato"
+
+#: src/libaudgui/prefs-window.cc:110 src/libaudqt/info-widget.cc:54
+#: src/libaudqt/prefs-window.cc:113
+msgid "Codec"
+msgstr "Codec"
+
+#: src/libaudgui/prefs-window.cc:111 src/libaudqt/info-widget.cc:55
+#: src/libaudqt/prefs-window.cc:114
+msgid "Quality"
+msgstr "Kvalitet"
+
+#: src/libaudgui/prefs-window.cc:116 src/libaudqt/prefs-window.cc:119
+msgid "None"
+msgstr "Ingen"
+
+#: src/libaudgui/prefs-window.cc:117 src/libaudqt/prefs-window.cc:120
+msgid "Arabic"
+msgstr "Arabisk"
+
+#: src/libaudgui/prefs-window.cc:118 src/libaudqt/prefs-window.cc:121
+msgid "Baltic"
+msgstr "Baltisk"
+
+#: src/libaudgui/prefs-window.cc:119 src/libaudqt/prefs-window.cc:122
+msgid "Chinese"
+msgstr "Kinesisk"
+
+#: src/libaudgui/prefs-window.cc:120 src/libaudqt/prefs-window.cc:123
+msgid "Greek"
+msgstr "Græsk"
+
+#: src/libaudgui/prefs-window.cc:121 src/libaudqt/prefs-window.cc:124
+msgid "Hebrew"
+msgstr "Hebraisk"
+
+#: src/libaudgui/prefs-window.cc:122 src/libaudqt/prefs-window.cc:125
+msgid "Japanese"
+msgstr "Japansk"
+
+#: src/libaudgui/prefs-window.cc:123 src/libaudqt/prefs-window.cc:126
+msgid "Korean"
+msgstr "Koreansk"
+
+#: src/libaudgui/prefs-window.cc:124 src/libaudqt/prefs-window.cc:127
+msgid "Polish"
+msgstr "Polsk"
+
+#: src/libaudgui/prefs-window.cc:125 src/libaudqt/prefs-window.cc:128
+msgid "Russian"
+msgstr "Russisk"
+
+#: src/libaudgui/prefs-window.cc:126 src/libaudqt/prefs-window.cc:129
+msgid "Taiwanese"
+msgstr "Taiwanesisk"
+
+#: src/libaudgui/prefs-window.cc:127 src/libaudqt/prefs-window.cc:130
+msgid "Turkish"
+msgstr "Tyrkisk"
+
+#: src/libaudgui/prefs-window.cc:135 src/libaudqt/prefs-window.cc:138
+msgid "Floating point"
+msgstr "Decimaltal"
+
+#: src/libaudgui/prefs-window.cc:147 src/libaudqt/prefs-window.cc:150
+msgid "<b>Interface Settings</b>"
+msgstr "<b>Indstillinger for grænseflade</b>"
+
+#: src/libaudgui/prefs-window.cc:148 src/libaudqt/prefs-window.cc:151
+msgid "Interface plugin:"
+msgstr "Udvidelsesmodul for grænseflade:"
+
+#: src/libaudgui/prefs-window.cc:166 src/libaudqt/prefs-window.cc:169
+msgid "Output plugin:"
+msgstr "Udvidelsesmodul for lydudgang:"
+
+#: src/libaudgui/prefs-window.cc:174 src/libaudqt/prefs-window.cc:177
+msgid "<b>Output Settings</b>"
+msgstr "<b>Indstillinger for lydudgang</b>"
+
+#: src/libaudgui/prefs-window.cc:176 src/libaudqt/prefs-window.cc:179
+msgid "Bit depth:"
+msgstr "Bit-dybde"
+
+#: src/libaudgui/prefs-window.cc:179 src/libaudgui/prefs-window.cc:224
+#: src/libaudqt/prefs-window.cc:182 src/libaudqt/prefs-window.cc:227
+msgid "Buffer size:"
+msgstr "Butterstørrelse:"
+
+#: src/libaudgui/prefs-window.cc:181 src/libaudqt/prefs-window.cc:184
+msgid "ms"
+msgstr "ms"
+
+#: src/libaudgui/prefs-window.cc:182 src/libaudqt/prefs-window.cc:185
+msgid "Soft clipping"
+msgstr "Blød beskæring"
+
+#: src/libaudgui/prefs-window.cc:184 src/libaudqt/prefs-window.cc:187
+msgid "Use software volume control (not recommended)"
+msgstr "Brug programmets styring af lydstyrken (anbefales ikke)"
+
+#: src/libaudgui/prefs-window.cc:186 src/libaudqt/prefs-window.cc:189
+msgid "<b>Replay Gain</b>"
+msgstr "<b>Afspilningsforstærkning</b>"
+
+#: src/libaudgui/prefs-window.cc:187 src/libaudqt/prefs-window.cc:190
+msgid "Enable Replay Gain"
+msgstr "Aktiver forstærkning af afspilning"
+
+#: src/libaudgui/prefs-window.cc:189 src/libaudqt/prefs-window.cc:192
+msgid "Album mode"
+msgstr "Albumtilstand"
+
+#: src/libaudgui/prefs-window.cc:192 src/libaudqt/prefs-window.cc:195
+msgid "Prevent clipping (recommended)"
+msgstr "Forhindr kliklyde (anbefales)"
+
+#: src/libaudgui/prefs-window.cc:195 src/libaudqt/prefs-window.cc:198
+msgid "<b>Adjust Levels</b>"
+msgstr "<b>Juster niveauer</b>"
+
+#: src/libaudgui/prefs-window.cc:197 src/libaudqt/prefs-window.cc:200
+msgid "Amplify all files:"
+msgstr "Forstærk alle filer:"
+
+#: src/libaudgui/prefs-window.cc:199 src/libaudgui/prefs-window.cc:203
+#: src/libaudqt/prefs-window.cc:202 src/libaudqt/prefs-window.cc:206
+msgid "dB"
+msgstr "dB"
+
+#: src/libaudgui/prefs-window.cc:201 src/libaudqt/prefs-window.cc:204
+msgid "Amplify untagged files:"
+msgstr "Forstærk umærkede filer:"
+
+#: src/libaudgui/prefs-window.cc:208 src/libaudqt/prefs-window.cc:211
+msgid "Proxy hostname:"
+msgstr "Proxyværtsnavn:"
+
+#: src/libaudgui/prefs-window.cc:210 src/libaudqt/prefs-window.cc:213
+msgid "Proxy port:"
+msgstr "Proxyport:"
+
+#: src/libaudgui/prefs-window.cc:215 src/libaudqt/prefs-window.cc:218
+msgid "Proxy username:"
+msgstr "Proxybrugernavn:"
+
+#: src/libaudgui/prefs-window.cc:217 src/libaudqt/prefs-window.cc:220
+msgid "Proxy password:"
+msgstr "Proxyadgangskode:"
+
+#: src/libaudgui/prefs-window.cc:223 src/libaudqt/prefs-window.cc:226
+msgid "<b>Network Settings</b>"
+msgstr "<b>Netværksindstillinger</b>"
+
+#: src/libaudgui/prefs-window.cc:226 src/libaudqt/prefs-window.cc:229
+msgid "KiB"
+msgstr "KiB"
+
+#: src/libaudgui/prefs-window.cc:227 src/libaudqt/prefs-window.cc:230
+msgid "<b>Proxy Configuration</b>"
+msgstr "<b>Proxykonfiguration</b>"
+
+#: src/libaudgui/prefs-window.cc:228 src/libaudqt/prefs-window.cc:231
+msgid "Enable proxy usage"
+msgstr "Aktiver brug af proxy"
+
+#: src/libaudgui/prefs-window.cc:232 src/libaudqt/prefs-window.cc:235
+msgid "Use authentication with proxy"
+msgstr "Brug godkendelse med proxy"
+
+#: src/libaudgui/prefs-window.cc:240 src/libaudqt/prefs-window.cc:243
+msgid "Auto character encoding detector for:"
+msgstr "Automatisk tegnkodningsdetektor for"
+
+#: src/libaudgui/prefs-window.cc:244 src/libaudqt/prefs-window.cc:247
+msgid "Fallback character encodings:"
+msgstr "Reservetegnkodninger:"
+
+#: src/libaudgui/prefs-window.cc:252 src/libaudqt/prefs-window.cc:256
+msgid "<b>Behavior</b>"
+msgstr "<b>Opførsel</b>"
+
+#: src/libaudgui/prefs-window.cc:253 src/libaudqt/prefs-window.cc:257
+msgid "Resume playback on startup"
+msgstr "Genoptag afspilning ved opstart"
+
+#: src/libaudgui/prefs-window.cc:255 src/libaudqt/prefs-window.cc:259
+msgid "Pause instead of resuming immediately"
+msgstr "Pause i stedet for at genoptage øjeblikkeligt"
+
+#: src/libaudgui/prefs-window.cc:258 src/libaudqt/prefs-window.cc:262
+msgid "Advance when the current song is deleted"
+msgstr "Gå videre når den nuværende sang slettes"
+
+#: src/libaudgui/prefs-window.cc:260 src/libaudqt/prefs-window.cc:264
+msgid "Clear the playlist when opening files"
+msgstr "Ryd afspilningslisten når der åbnes filer"
+
+#: src/libaudgui/prefs-window.cc:262 src/libaudqt/prefs-window.cc:266
+msgid "Open files in a temporary playlist"
+msgstr "Åbn filer i midlertidig afspilningsliste"
+
+#: src/libaudgui/prefs-window.cc:264 src/libaudqt/prefs-window.cc:270
+msgid "<b>Compatibility</b>"
+msgstr "<b>Kompatibilitet</b>"
+
+#: src/libaudgui/prefs-window.cc:265 src/libaudqt/prefs-window.cc:271
+msgid "Interpret \\ (backward slash) as a folder delimiter"
+msgstr "Fortolk \\ (baglæns skråstreg) som en mappeafgrænser"
+
+#: src/libaudgui/prefs-window.cc:268 src/libaudqt/prefs-window.cc:274
+msgid "<b>Song Display</b>"
+msgstr "<b>Sangvisning</b>"
+
+#: src/libaudgui/prefs-window.cc:269 src/libaudqt/prefs-window.cc:275
+msgid "Show song numbers"
+msgstr "Vis sangenes numre"
+
+#: src/libaudgui/prefs-window.cc:271 src/libaudqt/prefs-window.cc:277
+msgid "Show leading zeroes (02:00 instead of 2:00)"
+msgstr "Vis foranstillede nuller (02:00 i stedet for 2:00)"
+
+#: src/libaudgui/prefs-window.cc:274 src/libaudqt/prefs-window.cc:280
+msgid "<b>Advanced</b>"
+msgstr "<b>Avanceret</b>"
+
+#: src/libaudgui/prefs-window.cc:275 src/libaudqt/prefs-window.cc:268
+#: src/libaudqt/prefs-window.cc:281
+msgid "Do not load metadata for songs until played"
+msgstr "Indlæs ikke metadata for sange før de afspilles"
+
+#: src/libaudgui/prefs-window.cc:277 src/libaudqt/prefs-window.cc:283
+msgid "Probe content of files with no recognized file name extension"
+msgstr "Undersøg indholdet af filer uden et genkendt navn på filendelserne"
+
+#: src/libaudgui/prefs-window.cc:282 src/libaudqt/prefs-window.cc:288
+msgid "<b>Album Art</b>"
+msgstr "<b>Omslag</b>"
+
+#: src/libaudgui/prefs-window.cc:283 src/libaudqt/prefs-window.cc:289
+msgid "Search for images matching these words (comma-separated):"
+msgstr "Søg efter billeder der matcher disse ord (kommaadskilt):"
+
+#: src/libaudgui/prefs-window.cc:285 src/libaudqt/prefs-window.cc:291
+msgid "Exclude images matching these words (comma-separated):"
+msgstr "Ekskulder billeder der matcher disse ord (kommaadskilt):"
+
+#: src/libaudgui/prefs-window.cc:287 src/libaudqt/prefs-window.cc:293
+msgid "Search for images matching song file name"
+msgstr "Søg efter billeder der matcher filnavn for sangen"
+
+#: src/libaudgui/prefs-window.cc:289 src/libaudqt/prefs-window.cc:295
+msgid "Search recursively"
+msgstr "Søg rekursivt"
+
+#: src/libaudgui/prefs-window.cc:291 src/libaudqt/prefs-window.cc:297
+msgid "Search depth:"
+msgstr "Søgedybde:"
+
+#: src/libaudgui/prefs-window.cc:295 src/libaudqt/prefs-window.cc:301
+msgid "<b>Popup Information</b>"
+msgstr "<b>Pop op-information</b>"
+
+#: src/libaudgui/prefs-window.cc:296 src/libaudqt/prefs-window.cc:302
+msgid "Show popup information"
+msgstr "Vis pop op-information"
+
+#: src/libaudgui/prefs-window.cc:298 src/libaudqt/prefs-window.cc:304
+msgid "Popup delay (tenths of a second):"
+msgstr "Pop op-forsinkelse (tiendedele af et sekund):"
+
+#: src/libaudgui/prefs-window.cc:302 src/libaudqt/prefs-window.cc:308
+msgid "Show time scale for current song"
+msgstr "Vis tidsskala for nuværende sang"
+
+#: src/libaudgui/prefs-window.cc:319 src/libaudqt/prefs-window.cc:325
+msgid "TITLE"
+msgstr "TITEL"
+
+#: src/libaudgui/prefs-window.cc:320 src/libaudqt/prefs-window.cc:326
+msgid "ARTIST - TITLE"
+msgstr "KUNSTNER - TITEL"
+
+#: src/libaudgui/prefs-window.cc:321 src/libaudqt/prefs-window.cc:327
+msgid "ARTIST - ALBUM - TITLE"
+msgstr "KUNSTNER - ALBUM - TITEL"
+
+#: src/libaudgui/prefs-window.cc:322 src/libaudqt/prefs-window.cc:328
+msgid "ARTIST - ALBUM - TRACK. TITLE"
+msgstr "KUNSTNER - ALBUM - NUMMER. TITEL"
+
+#: src/libaudgui/prefs-window.cc:323 src/libaudqt/prefs-window.cc:329
+msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
+msgstr "KUNSTNER [ ALBUM ] - NUMMER. TITEL"
+
+#: src/libaudgui/prefs-window.cc:324 src/libaudqt/prefs-window.cc:330
+msgid "ALBUM - TITLE"
+msgstr "ALBUM - TITEL"
+
+#: src/libaudgui/prefs-window.cc:418
+msgid "Category"
+msgstr "Kategori"
+
+#: src/libaudgui/prefs-window.cc:487 src/libaudqt/prefs-window.cc:346
+msgid "Custom"
+msgstr "Tilpasset"
+
+#: src/libaudgui/prefs-window.cc:505 src/libaudqt/prefs-window.cc:338
+msgid "Title format:"
+msgstr "Titelformat:"
+
+#: src/libaudgui/prefs-window.cc:509 src/libaudqt/prefs-window.cc:349
+msgid "Custom string:"
+msgstr "Tilpasset streng:"
+
+#: src/libaudgui/prefs-window.cc:711 src/libaudqt/prefs-window.cc:713
+msgid "Audacious Settings"
+msgstr "Indstillinger for Audacious"
+
+#: src/libaudgui/queue-manager.cc:175 src/libaudqt/queue-manager.cc:133
 msgid "Queue Manager"
 msgstr "Håndtering af køer"
 
-#: src/libaudgui/queue-manager.c:188
+#: src/libaudgui/queue-manager.cc:193 src/libaudqt/queue-manager.cc:115
 msgid "_Unqueue"
 msgstr "_Fjern fra kø"
 
-#: src/libaudgui/ui_fileopener.c:79
+#: src/libaudgui/status.cc:36
+msgid "Working ..."
+msgstr "Arbejder ..."
+
+#: src/libaudgui/status.cc:85 src/libaudqt/log-inspector.cc:192
+msgid "Error"
+msgstr "Fejl"
+
+#: src/libaudgui/ui_fileopener.cc:80 src/libaudqt/fileopener.cc:39
 msgid "Open Files"
 msgstr "Åbn filer"
 
-#: src/libaudgui/ui_fileopener.c:80 src/libaudgui/url-opener.c:50
+#: src/libaudgui/ui_fileopener.cc:81 src/libaudgui/url-opener.cc:50
 msgid "_Open"
 msgstr "_Åbn"
 
-#: src/libaudgui/ui_fileopener.c:82
+#: src/libaudgui/ui_fileopener.cc:83
 msgid "Close _dialog on open"
 msgstr "Luk _dialog ved åbn"
 
-#: src/libaudgui/ui_fileopener.c:87
+#: src/libaudgui/ui_fileopener.cc:88 src/libaudqt/fileopener.cc:39
 msgid "Add Files"
 msgstr "Tilføj filer"
 
-#: src/libaudgui/ui_fileopener.c:88 src/libaudgui/url-opener.c:56
+#: src/libaudgui/ui_fileopener.cc:89 src/libaudgui/url-opener.cc:56
 msgid "_Add"
 msgstr "_Tilføj"
 
-#: src/libaudgui/ui_fileopener.c:90
+#: src/libaudgui/ui_fileopener.cc:91
 msgid "Close _dialog on add"
 msgstr "Luk _dialog ved tilføj"
 
-#: src/libaudgui/ui_jumptotrack.c:101 src/libaudgui/ui_jumptotrack.c:109
-#: src/libaudgui/ui_jumptotrack.c:301
+#: src/libaudgui/ui_jumptotrack.cc:95 src/libaudgui/ui_jumptotrack.cc:103
+#: src/libaudgui/ui_jumptotrack.cc:307
 msgid "_Queue"
 msgstr "_Sæt i kø"
 
-#: src/libaudgui/ui_jumptotrack.c:107
+#: src/libaudgui/ui_jumptotrack.cc:101
 msgid "Un_queue"
 msgstr "_Fjern fra kø"
 
-#: src/libaudgui/ui_jumptotrack.c:245
+#: src/libaudgui/ui_jumptotrack.cc:239
 msgid "Jump to Song"
 msgstr "Hop til sang"
 
-#: src/libaudgui/ui_jumptotrack.c:270
+#: src/libaudgui/ui_jumptotrack.cc:264
 msgid "Filter: "
 msgstr "Filter:"
 
-#: src/libaudgui/ui_jumptotrack.c:271
+#: src/libaudgui/ui_jumptotrack.cc:265
 msgid "_Filter:"
 msgstr "_Filter:"
 
-#: src/libaudgui/ui_jumptotrack.c:294
+#: src/libaudgui/ui_jumptotrack.cc:289
 msgid "C_lose on jump"
 msgstr "_Luk ved hop"
 
-#: src/libaudgui/ui_playlist_manager.c:223
-msgid "Playlist Manager"
-msgstr "Håndtering af afspilningslister"
-
-#: src/libaudgui/ui_playlist_manager.c:236
-msgid "Entries"
-msgstr "Poster"
-
-#: src/libaudgui/ui_playlist_manager.c:254
-msgid "_New"
-msgstr "_Ny"
-
-#: src/libaudgui/ui_playlist_manager.c:256
-msgid "Ren_ame"
-msgstr "_Omdøb"
-
-#: src/libaudgui/ui_playlist_manager.c:257
-msgid "_Play"
-msgstr "_Afspil"
-
-#: src/libaudgui/ui_playlist_manager.c:269
-msgid "_Close dialog on activating playlist"
-msgstr "_Luk dialog ved aktivering af afspilningsliste"
-
-#: src/libaudgui/url-opener.c:49
+#: src/libaudgui/url-opener.cc:49
 msgid "Open URL"
 msgstr "Åbn adresse"
 
-#: src/libaudgui/url-opener.c:55
+#: src/libaudgui/url-opener.cc:55
 msgid "Add URL"
 msgstr "Tilføj adresse"
 
-#: src/libaudgui/url-opener.c:74
+#: src/libaudgui/url-opener.cc:79
 msgid "Enter URL:"
 msgstr "Indtast adresse:"
 
-#: src/libaudgui/util.c:148
+#: src/libaudgui/util.cc:154
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
@@ -1036,5 +1106,83 @@ msgstr ""
 "\n"
 "(Yderligere beskeder er blevet skjult)."
 
-#~ msgid "_Remember"
-#~ msgstr "_Husk"
+#: src/libaudqt/info-widget.cc:37
+msgid "Metadata"
+msgstr "Metadata"
+
+#: src/libaudqt/info-widget.cc:45
+msgid "Composer"
+msgstr "Komponist"
+
+#: src/libaudqt/info-widget.cc:46
+msgid "Performer"
+msgstr "Artist"
+
+#: src/libaudqt/info-widget.cc:47
+msgid "Recording Year"
+msgstr "Optagelsesår"
+
+#: src/libaudqt/info-widget.cc:48
+msgid "Recording Date"
+msgstr "Optagelsesdato"
+
+#: src/libaudqt/info-widget.cc:51
+msgid "Technical"
+msgstr "Teknisk"
+
+#: src/libaudqt/info-widget.cc:53
+msgid "MIME Type"
+msgstr "MIME-type"
+
+#: src/libaudqt/info-widget.cc:56
+msgid "Bitrate"
+msgstr "Bithastighed"
+
+#: src/libaudqt/infowin.cc:126
+#, c-format
+msgid "No info available for %s.\n"
+msgstr "Ingen information tilgængelig for %s.\n"
+
+#: src/libaudqt/log-inspector.cc:106
+msgid "Level"
+msgstr "Niveau"
+
+#: src/libaudqt/log-inspector.cc:107
+msgid "Filename"
+msgstr "Filnavn"
+
+#: src/libaudqt/log-inspector.cc:108
+msgid "Line"
+msgstr "Linje"
+
+#: src/libaudqt/log-inspector.cc:109
+msgid "Function"
+msgstr "Funktion"
+
+#: src/libaudqt/log-inspector.cc:110
+msgid "Message"
+msgstr "Besked"
+
+#: src/libaudqt/log-inspector.cc:175
+msgid "Log Inspector"
+msgstr "Loginspektør"
+
+#: src/libaudqt/log-inspector.cc:186
+msgid "Log Level:"
+msgstr "Logniveau:"
+
+#: src/libaudqt/log-inspector.cc:189
+msgid "Debug"
+msgstr "Fejlsøg"
+
+#: src/libaudqt/log-inspector.cc:190
+msgid "Info"
+msgstr "Info"
+
+#: src/libaudqt/log-inspector.cc:191
+msgid "Warning"
+msgstr "Advarsel"
+
+#: src/libaudqt/plugin-menu.cc:40
+msgid "Plugins ..."
+msgstr "Udvidelsesmoduler ..."

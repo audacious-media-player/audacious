@@ -72,11 +72,11 @@ public:
         { insert_after (tail (), node); }
 
     void clear ()
-    {
-        auto destroy = [] (ListNode * node)
-            { delete (C *) node; };
-        ListBase::clear (destroy);
-    }
+        { ListBase::clear (destroy); }
+
+private:
+    static void destroy (ListNode * node)
+        { delete (C *) node; }
 };
 
 #endif // LIBAUDCORE_LIST_H

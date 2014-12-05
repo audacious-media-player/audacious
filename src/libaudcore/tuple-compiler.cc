@@ -419,7 +419,7 @@ static void eval_expression (const Index<Node> & nodes, const Tuple & tuple, Str
             switch (node.var1.get (tuple, tmps, tmpi))
             {
             case Tuple::String:
-                str_insert (out, -1, tmps);
+                out.insert (-1, tmps);
                 break;
 
             case Tuple::Int:

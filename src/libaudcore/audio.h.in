@@ -30,6 +30,13 @@ enum {
  FMT_S24_LE, FMT_S24_BE, FMT_U24_LE, FMT_U24_BE,
  FMT_S32_LE, FMT_S32_BE, FMT_U32_LE, FMT_U32_BE};
 
+struct ReplayGainInfo {
+    float track_gain; /* dB */
+    float track_peak; /* 0-1 */
+    float album_gain; /* dB */
+    float album_peak; /* 0-1 */
+};
+
 struct StereoVolume {
     int left, right;
 };

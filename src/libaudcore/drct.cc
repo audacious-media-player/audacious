@@ -36,7 +36,7 @@ EXPORT void aud_drct_play (void)
         else
         {
             int a, b;
-            aud_drct_get_ab_repeat (& a, & b);
+            aud_drct_get_ab_repeat (a, b);
             aud_drct_seek (aud::max (a, 0));
         }
     }

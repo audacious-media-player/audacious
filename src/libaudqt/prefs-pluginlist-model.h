@@ -23,6 +23,7 @@
 #include <QAbstractListModel>
 #include <libaudcore/index.h>
 
+enum class PluginType;
 class PluginHandle;
 
 namespace audqt {
@@ -30,7 +31,7 @@ namespace audqt {
 class PluginListModel : public QAbstractListModel
 {
 public:
-    PluginListModel (QObject * parent, int category_id);
+    PluginListModel (QObject * parent, PluginType category_id);
     ~PluginListModel ();
 
     int rowCount (const QModelIndex & parent = QModelIndex ()) const;

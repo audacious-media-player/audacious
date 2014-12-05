@@ -20,60 +20,50 @@
 #include "interface.h"
 #include "internal.h"
 
-#include <assert.h>
 #include <string.h>
 
 #include "plugin.h"
 #include "plugins.h"
 #include "runtime.h"
 
-static Index<VisFunc> vis_funcs[AUD_VIS_TYPES];
-static Index<VisPlugin *> vis_plugins[AUD_VIS_TYPES];
+static Index<Visualizer *> visualizers;
 
 static int running = false;
 static int num_enabled = 0;
 
-EXPORT void aud_vis_func_add (int type, VisFunc func)
+EXPORT void aud_visualizer_add (Visualizer * vis)
 {
-    assert (type >= 0 && type < AUD_VIS_TYPES);
-    vis_funcs[type].append (func);
+    visualizers.append (vis);
 
     num_enabled ++;
     if (num_enabled == 1)
         vis_runner_enable (true);
 }
 
-EXPORT void aud_vis_func_remove (VisFunc func)
+EXPORT void aud_visualizer_remove (Visualizer * vis)
 {
     int num_disabled = 0;
 
-    auto is_match = [&] (VisFunc func2)
+    auto is_match = [&] (Visualizer * vis2)
     {
-        if (func2 != func)
+        if (vis2 != vis)
             return false;
 
         num_disabled ++;
         return true;
     };
 
-    for (int type = 0; type < AUD_VIS_TYPES; type ++)
-        vis_funcs[type].remove_if (is_match, true);
+    visualizers.remove_if (is_match, true);
 
     num_enabled -= num_disabled;
     if (! num_enabled)
         vis_runner_enable (false);
 }
 
-void vis_send_clear (void)
+void vis_send_clear ()
 {
-    for (VisFunc func : vis_funcs[AUD_VIS_TYPE_CLEAR])
-        ((VisClearFunc) func) ();
-
-    for (int type = 0; type < AUD_VIS_TYPES; type ++)
-    {
-        for (VisPlugin * vp : vis_plugins[type])
-            vp->clear ();
-    }
+    for (Visualizer * vis : visualizers)
+        vis->clear ();
 }
 
 static void pcm_to_mono (const float * data, float * mono, int channels)
@@ -93,31 +83,34 @@ static void pcm_to_mono (const float * data, float * mono, int channels)
 
 void vis_send_audio (const float * data, int channels)
 {
-    auto is_active = [] (int type)
-        { return vis_funcs[type].len () || vis_plugins[type].len (); };
+    auto is_active = [] (int type_mask)
+    {
+        for (Visualizer * vis : visualizers)
+        {
+            if ((vis->type_mask & type_mask))
+                return true;
+        }
+
+        return false;
+    };
 
     float mono[512];
     float freq[256];
 
-    if (is_active (AUD_VIS_TYPE_MONO_PCM) || is_active (AUD_VIS_TYPE_FREQ))
+    if (is_active (Visualizer::MonoPCM | Visualizer::Freq))
         pcm_to_mono (data, mono, channels);
-    if (is_active (AUD_VIS_TYPE_FREQ))
+    if (is_active (Visualizer::Freq))
         calc_freq (mono, freq);
 
-    for (VisFunc func : vis_funcs[AUD_VIS_TYPE_MONO_PCM])
-        ((VisMonoPCMFunc) func) (mono);
-    for (VisPlugin * vp : vis_plugins[AUD_VIS_TYPE_MONO_PCM])
-        vp->render_mono_pcm (mono);
-
-    for (VisFunc func : vis_funcs[AUD_VIS_TYPE_MULTI_PCM])
-        ((VisMultiPCMFunc) func) (data, channels);
-    for (VisPlugin * vp : vis_plugins[AUD_VIS_TYPE_MULTI_PCM])
-        vp->render_multi_pcm (data, channels);
-
-    for (VisFunc func : vis_funcs[AUD_VIS_TYPE_FREQ])
-        ((VisFreqFunc) func) (freq);
-    for (VisPlugin * vp : vis_plugins[AUD_VIS_TYPE_FREQ])
-        vp->render_freq (freq);
+    for (Visualizer * vis : visualizers)
+    {
+        if ((vis->type_mask & Visualizer::MonoPCM))
+            vis->render_mono_pcm (mono);
+        if ((vis->type_mask & Visualizer::MultiPCM))
+            vis->render_multi_pcm (data, channels);
+        if ((vis->type_mask & Visualizer::Freq))
+            vis->render_freq (freq);
+    }
 }
 
 static bool vis_load (PluginHandle * plugin)
@@ -127,13 +120,7 @@ static bool vis_load (PluginHandle * plugin)
     if (! header)
         return false;
 
-    assert (header->vis_type >= 0 && header->vis_type < AUD_VIS_TYPES);
-    vis_plugins[header->vis_type].append (header);
-
-    num_enabled ++;
-    if (num_enabled == 1)
-        vis_runner_enable (true);
-
+    aud_visualizer_add (header);
     return true;
 }
 
@@ -145,24 +132,7 @@ static void vis_unload (PluginHandle * plugin)
         return;
 
     header->clear ();
-
-    int num_disabled = 0;
-
-    auto is_match = [&] (VisPlugin * header2)
-    {
-        if (header2 != header)
-            return false;
-
-        num_disabled ++;
-        return true;
-    };
-
-    assert (header->vis_type >= 0 && header->vis_type < AUD_VIS_TYPES);
-    vis_plugins[header->vis_type].remove_if (is_match, true);
-
-    num_enabled -= num_disabled;
-    if (! num_enabled)
-        vis_runner_enable (false);
+    aud_visualizer_remove (header);
 }
 
 void vis_activate (bool activate)
@@ -170,7 +140,7 @@ void vis_activate (bool activate)
     if (! activate == ! running)
         return;
 
-    for (PluginHandle * plugin : aud_plugin_list (PLUGIN_TYPE_VIS))
+    for (PluginHandle * plugin : aud_plugin_list (PluginType::Vis))
     {
         if (! aud_plugin_get_enabled (plugin))
             continue;

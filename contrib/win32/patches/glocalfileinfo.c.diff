@@ -1,0 +1,48 @@
+From 868976ebfbe3974c18f21b9402623dd5123a4c07 Mon Sep 17 00:00:00 2001
+From: Matthias Clasen <mclasen@redhat.com>
+Date: Fri, 20 Jun 2014 20:54:47 -0400
+Subject: [PATCH] Return folder as icon for directories
+
+'folder' is the name of the folder icon in the incon naming spec,
+and the Adwaita icon theme doesn't include an inode-directory icon.
+This fixes folders appearing as generic file in the file chooser.
+
+https://bugzilla.gnome.org/show_bug.cgi?id=731996
+---
+ gio/glocalfileinfo.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/gio/glocalfileinfo.c b/gio/glocalfileinfo.c
+index 52e3df1..71ba728 100644
+--- a/gio/glocalfileinfo.c
++++ b/gio/glocalfileinfo.c
+@@ -1581,6 +1581,7 @@ _g_local_file_info_get_nostat (GFileInfo              *info,
+ 
+ static const char *
+ get_icon_name (const char *path,
++               const char *content_type,
+                gboolean    use_symbolic,
+                gboolean   *with_fallbacks_out)
+ {
+@@ -1625,6 +1626,10 @@ get_icon_name (const char *path,
+     {
+       name = use_symbolic ? "folder-videos-symbolic" : "folder-videos";
+     }
++  else if (g_strcmp0 (content_type, "inode/directory") == 0)
++    {
++      name = use_symbolic ? "folder-symbolic" : "folder";
++    }
+   else
+     {
+       name = NULL;
+@@ -1645,7 +1650,7 @@ get_icon (const char *path,
+   const char *icon_name;
+   gboolean with_fallbacks;
+ 
+-  icon_name = get_icon_name (path, use_symbolic, &with_fallbacks);
++  icon_name = get_icon_name (path, content_type, use_symbolic, &with_fallbacks);
+   if (icon_name != NULL)
+     {
+       if (with_fallbacks)
+-- 
+2.0.0

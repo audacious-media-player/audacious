@@ -29,6 +29,7 @@
 #include <libaudcore/interface.h>
 #include <libaudcore/playlist.h>
 #include <libaudcore/probe.h>
+#include <libaudcore/runtime.h>
 #include <libaudcore/tuple.h>
 
 #include "internal.h"
@@ -63,6 +64,7 @@ static struct {
     GtkWidget * image;
     GtkWidget * codec[3];
     GtkWidget * apply;
+    GtkWidget * clear;
     GtkWidget * ministatus;
 } widgets;
 
@@ -70,7 +72,7 @@ static GtkWidget * infowin;
 static int current_playlist_id, current_entry;
 static String current_file;
 static PluginHandle * current_decoder = nullptr;
-static gboolean can_write = false;
+static bool can_write = false;
 static int timeout_source = 0;
 
 /* This is by no means intended to be a complete list.  If it is not short, it
@@ -136,17 +138,23 @@ static GtkWidget * small_label_new (const char * text)
 }
 
 static void set_entry_str_from_field (GtkWidget * widget, const Tuple & tuple,
- Tuple::Field field, gboolean editable)
+ Tuple::Field field, bool editable, bool clear)
 {
     String text = tuple.get_str (field);
+    if (! text && ! clear)
+        return;
+
     gtk_entry_set_text ((GtkEntry *) widget, text ? text : "");
     gtk_editable_set_editable ((GtkEditable *) widget, editable);
 }
 
 static void set_entry_int_from_field (GtkWidget * widget, const Tuple & tuple,
- Tuple::Field field, gboolean editable)
+ Tuple::Field field, bool editable, bool clear)
 {
     int value = tuple.get_int (field);
+    if (value <= 0 && ! clear)
+        return;
+
     gtk_entry_set_text ((GtkEntry *) widget, (value > 0) ? (const char *) int_to_str (value) : "");
     gtk_editable_set_editable ((GtkEditable *) widget, editable);
 }
@@ -179,15 +187,18 @@ static void entry_changed (GtkEditable * editable)
 
 static gboolean ministatus_timeout_proc ()
 {
-    gtk_label_set_text ((GtkLabel *) widgets.ministatus, nullptr);
+    gtk_widget_hide (widgets.ministatus);
+    gtk_widget_show (widgets.clear);
 
     timeout_source = 0;
-    return false;
+    return G_SOURCE_REMOVE;
 }
 
 static void ministatus_display_message (const char * text)
 {
     gtk_label_set_text ((GtkLabel *) widgets.ministatus, text);
+    gtk_widget_hide (widgets.clear);
+    gtk_widget_show (widgets.ministatus);
 
     if (timeout_source)
         g_source_remove (timeout_source);
@@ -244,7 +255,12 @@ static gboolean genre_fill (GtkWidget * combo)
         gtk_combo_box_text_append_text ((GtkComboBoxText *) combo, (const char *) node->data);
 
     g_list_free (list);
-    return false;
+    return G_SOURCE_REMOVE;
+}
+
+static void clear_toggled (GtkToggleButton * toggle)
+{
+    aud_set_bool ("audgui", "clear_song_fields", gtk_toggle_button_get_active (toggle));
 }
 
 static void infowin_display_image (const char * filename)
@@ -366,7 +382,19 @@ static void create_infowin ()
     GtkWidget * bottom_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
     gtk_grid_attach ((GtkGrid *) main_grid, bottom_hbox, 0, 3, 2, 1);
 
+    widgets.clear = gtk_check_button_new_with_mnemonic
+     (_("Clea_r fields when moving to next song"));
+
+    gtk_toggle_button_set_active ((GtkToggleButton *) widgets.clear,
+     aud_get_bool ("audgui", "clear_song_fields"));
+    g_signal_connect (widgets.clear, "toggled", (GCallback) clear_toggled, nullptr);
+
+    gtk_widget_set_no_show_all (widgets.clear, true);
+    gtk_widget_show (widgets.clear);
+    gtk_box_pack_start ((GtkBox *) bottom_hbox, widgets.clear, false, false, 0);
+
     widgets.ministatus = small_label_new (nullptr);
+    gtk_widget_set_no_show_all (widgets.ministatus, true);
     gtk_box_pack_start ((GtkBox *) bottom_hbox, widgets.ministatus, true, true, 0);
 
     widgets.apply = audgui_button_new (_("_Save"), "document-save",
@@ -389,7 +417,7 @@ static void create_infowin ()
 }
 
 static void infowin_show (int list, int entry, const char * filename,
- const Tuple & tuple, PluginHandle * decoder, gboolean updating_enabled)
+ const Tuple & tuple, PluginHandle * decoder, bool writable)
 {
     if (! infowin)
         create_infowin ();
@@ -398,20 +426,22 @@ static void infowin_show (int list, int entry, const char * filename,
     current_entry = entry;
     current_file = String (filename);
     current_decoder = decoder;
-    can_write = updating_enabled;
+    can_write = writable;
 
-    set_entry_str_from_field (widgets.title, tuple, Tuple::Title, updating_enabled);
-    set_entry_str_from_field (widgets.artist, tuple, Tuple::Artist, updating_enabled);
-    set_entry_str_from_field (widgets.album, tuple, Tuple::Album, updating_enabled);
-    set_entry_str_from_field (widgets.album_artist, tuple, Tuple::AlbumArtist, updating_enabled);
-    set_entry_str_from_field (widgets.comment, tuple, Tuple::Comment, updating_enabled);
+    bool clear = aud_get_bool ("audgui", "clear_song_fields");
+
+    set_entry_str_from_field (widgets.title, tuple, Tuple::Title, writable, clear);
+    set_entry_str_from_field (widgets.artist, tuple, Tuple::Artist, writable, clear);
+    set_entry_str_from_field (widgets.album, tuple, Tuple::Album, writable, clear);
+    set_entry_str_from_field (widgets.album_artist, tuple, Tuple::AlbumArtist, writable, clear);
+    set_entry_str_from_field (widgets.comment, tuple, Tuple::Comment, writable, clear);
     set_entry_str_from_field (gtk_bin_get_child ((GtkBin *) widgets.genre),
-     tuple, Tuple::Genre, updating_enabled);
+     tuple, Tuple::Genre, writable, clear);
 
     gtk_label_set_text ((GtkLabel *) widgets.location, uri_to_display (filename));
 
-    set_entry_int_from_field (widgets.year, tuple, Tuple::Year, updating_enabled);
-    set_entry_int_from_field (widgets.track, tuple, Tuple::Track, updating_enabled);
+    set_entry_int_from_field (widgets.year, tuple, Tuple::Year, writable, clear);
+    set_entry_int_from_field (widgets.track, tuple, Tuple::Track, writable, clear);
 
     String codec_values[CODEC_ITEMS];
 

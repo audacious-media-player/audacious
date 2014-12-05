@@ -27,6 +27,7 @@
 
 #define audgui_create_widgets(b, w) audgui_create_widgets_with_domain (b, w, PACKAGE)
 
+enum class AudMenuID;
 struct PreferencesWidget;
 
 typedef void (* AudguiCallback) (void * data);
@@ -39,7 +40,7 @@ GdkPixbuf * audgui_pixbuf_request (const char * filename, bool * queued = nullpt
 GdkPixbuf * audgui_pixbuf_request_current (bool * queued = nullptr);
 
 /* plugin-menu.c */
-GtkWidget * audgui_get_plugin_menu (int id);
+GtkWidget * audgui_get_plugin_menu (AudMenuID id);
 
 /* prefs-widget.c */
 void audgui_create_widgets_with_domain (GtkWidget * box,

@@ -87,7 +87,11 @@ void interface_run ();
 /* playback.cc */
 /* do not call these; use aud_drct_play/stop() instead */
 void playback_play (int seek_time, bool pause);
-void playback_stop ();
+void playback_stop (bool exiting = false);
+
+bool playback_check_serial (int serial);
+bool playback_set_info (int entry, const String & filename,
+ PluginHandle * decoder, Tuple && tuple);
 
 /* probe-buffer.cc */
 VFSFile probe_buffer_new (const char * filename);
@@ -101,7 +105,7 @@ void string_leak_check ();
 /* util.cc */
 const char * get_home_utf8 ();
 bool dir_foreach (const char * path, DirForeachFunc func, void * user_data);
-String write_temp_file (void * data, int64_t len);
+String write_temp_file (const void * data, int64_t len);
 
 bool same_basename (const char * a, const char * b);
 const char * last_path_element (const char * path);

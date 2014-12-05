@@ -28,6 +28,7 @@
 
 #include <libaudcore/objects.h>
 
+struct ReplayGainInfo;
 struct TupleData;
 class VFSFile;
 
@@ -90,7 +91,7 @@ public:
         n_fields
     };
 
-    static constexpr auto all_fields = aud::range<Field, Title, FormattedTitle> ();
+    typedef aud::range<Field, Title, FormattedTitle> all_fields;
 
     enum ValueType {
         String,
@@ -179,6 +180,9 @@ public:
 
     /* Returns the <n>th member of the subtune array. */
     int get_nth_subtune (int n) const;
+
+    /* Fills ReplayGainInfo struct from various fields. */
+    ReplayGainInfo get_replay_gain () const;
 
     /* Set various fields based on the ICY metadata of <stream>.  Returns true
      * if any fields were changed. */

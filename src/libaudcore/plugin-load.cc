@@ -81,10 +81,10 @@ Plugin * plugin_load (const char * filename)
         return nullptr;
     }
 
-    if (header->type == PLUGIN_TYPE_TRANSPORT ||
-        header->type == PLUGIN_TYPE_PLAYLIST ||
-        header->type == PLUGIN_TYPE_INPUT ||
-        header->type == PLUGIN_TYPE_EFFECT)
+    if (header->type == PluginType::Transport ||
+        header->type == PluginType::Playlist ||
+        header->type == PluginType::Input ||
+        header->type == PluginType::Effect)
     {
         if (! header->init ())
         {
@@ -101,14 +101,12 @@ Plugin * plugin_load (const char * filename)
 
 static void plugin_unload (LoadedModule & loaded)
 {
-    switch (loaded.header->type)
+    if (loaded.header->type == PluginType::Transport ||
+        loaded.header->type == PluginType::Playlist ||
+        loaded.header->type == PluginType::Input ||
+        loaded.header->type == PluginType::Effect)
     {
-    case PLUGIN_TYPE_TRANSPORT:
-    case PLUGIN_TYPE_PLAYLIST:
-    case PLUGIN_TYPE_INPUT:
-    case PLUGIN_TYPE_EFFECT:
         loaded.header->cleanup ();
-        break;
     }
 
 #ifndef VALGRIND_FRIENDLY

@@ -22,13 +22,8 @@
 
 #include "plugins.h"
 
+enum class InputKey;
 class Plugin;
-
-enum {
- INPUT_KEY_SCHEME,
- INPUT_KEY_EXTENSION,
- INPUT_KEY_MIME,
- INPUT_KEYS};
 
 /* plugin-init.c */
 void start_plugins_one ();
@@ -51,7 +46,7 @@ void plugin_set_enabled (PluginHandle * plugin, bool enabled);
 
 bool transport_plugin_has_scheme (PluginHandle * plugin, const char * scheme);
 bool playlist_plugin_has_ext (PluginHandle * plugin, const char * ext);
-bool input_plugin_has_key (PluginHandle * plugin, int key, const char * value);
+bool input_plugin_has_key (PluginHandle * plugin, InputKey key, const char * value);
 bool input_plugin_has_subtunes (PluginHandle * plugin);
 bool input_plugin_can_write_tuple (PluginHandle * plugin);
 

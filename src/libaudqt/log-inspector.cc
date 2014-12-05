@@ -82,9 +82,8 @@ QVariant LogEntryModel::data (const QModelIndex & index, int role) const
 {
     auto & e = entries [index.row ()];
 
-    switch (role)
+    if (e && role == Qt::DisplayRole)
     {
-    case Qt::DisplayRole:
         switch (index.column ())
         {
             case LogEntryColumn::Level: return QString (audlog::get_level_name (e->level));
@@ -93,7 +92,6 @@ QVariant LogEntryModel::data (const QModelIndex & index, int role) const
             case LogEntryColumn::Function: return QString (e->function);
             case LogEntryColumn::Message: return QString (e->message);
         }
-        break;
     }
 
     return QVariant ();

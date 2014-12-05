@@ -164,7 +164,7 @@ static gboolean do_get_eq_preamp (Obj * obj, Invoc * invoc)
 static gboolean do_get_info (Obj * obj, Invoc * invoc)
 {
     int bitrate, samplerate, channels;
-    aud_drct_get_info (& bitrate, & samplerate, & channels);
+    aud_drct_get_info (bitrate, samplerate, channels);
     FINISH2 (get_info, bitrate, samplerate, channels);
     return true;
 }
@@ -179,7 +179,7 @@ static gboolean do_get_tuple_fields (Obj * obj, Invoc * invoc)
 {
     const char * fields[Tuple::n_fields + 1];
 
-    for (auto f : Tuple::all_fields)
+    for (auto f : Tuple::all_fields ())
         fields[f] = Tuple::field_get_name (f);
 
     fields[Tuple::n_fields] = nullptr;
@@ -191,7 +191,7 @@ static gboolean do_get_tuple_fields (Obj * obj, Invoc * invoc)
 static gboolean do_info (Obj * obj, Invoc * invoc)
 {
     int bitrate, samplerate, channels;
-    aud_drct_get_info (& bitrate, & samplerate, & channels);
+    aud_drct_get_info (bitrate, samplerate, channels);
     FINISH2 (info, bitrate, samplerate, channels);
     return true;
 }

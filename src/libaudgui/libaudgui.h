@@ -20,8 +20,11 @@
 #ifndef LIBAUDGUI_H
 #define LIBAUDGUI_H
 
+#include <libaudcore/index.h>
 #include <libaudcore/objects.h>
 
+enum class AudMenuID;
+enum class PluginType;
 class PluginHandle;
 
 void audgui_show_add_url_window(bool open);
@@ -66,8 +69,8 @@ void audgui_import_playlist (void);
 void audgui_export_playlist (void);
 
 /* plugin-menu.c */
-void audgui_plugin_menu_add (int id, void (* func) (void), const char * name, const char * icon);
-void audgui_plugin_menu_remove (int id, void (* func) (void));
+void audgui_plugin_menu_add (AudMenuID id, void (* func) (void), const char * name, const char * icon);
+void audgui_plugin_menu_remove (AudMenuID id, void (* func) (void));
 
 /* plugin-prefs.c */
 void audgui_show_plugin_about (PluginHandle * plugin);
@@ -75,7 +78,7 @@ void audgui_show_plugin_prefs (PluginHandle * plugin);
 
 /* prefs-window.c */
 void audgui_show_prefs_window (void);
-void audgui_show_prefs_for_plugin_type (int type);
+void audgui_show_prefs_for_plugin_type (PluginType type);
 void audgui_hide_prefs_window (void);
 
 /* queue-manager.c */
@@ -84,6 +87,6 @@ void audgui_queue_manager_show (void);
 /* urilist.c */
 void audgui_urilist_open (const char * list);
 void audgui_urilist_insert (int playlist, int position, const char * list);
-StringBuf audgui_urilist_create_from_selected (int playlist);
+Index<char> audgui_urilist_create_from_selected (int playlist);
 
 #endif /* LIBAUDGUI_H */

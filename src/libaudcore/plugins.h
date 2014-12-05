@@ -22,23 +22,23 @@
 
 #include <libaudcore/index.h>
 
-enum {
-    PLUGIN_TYPE_TRANSPORT,
-    PLUGIN_TYPE_PLAYLIST,
-    PLUGIN_TYPE_INPUT,
-    PLUGIN_TYPE_EFFECT,
-    PLUGIN_TYPE_OUTPUT,
-    PLUGIN_TYPE_VIS,
-    PLUGIN_TYPE_GENERAL,
-    PLUGIN_TYPE_IFACE,
-    PLUGIN_TYPES
+enum class PluginType {
+    Transport,
+    Playlist,
+    Input,
+    Effect,
+    Output,
+    Vis,
+    General,
+    Iface,
+    count
 };
 
 class PluginHandle;
 
 /* CAUTION: These functions are not thread safe. */
 
-PluginHandle * aud_plugin_get_current (int type);
+PluginHandle * aud_plugin_get_current (PluginType type);
 bool aud_plugin_get_enabled (PluginHandle * plugin);
 bool aud_plugin_enable (PluginHandle * plugin, bool enable);
 
@@ -46,14 +46,14 @@ int aud_plugin_send_message (PluginHandle * plugin, const char * code, const voi
 void * aud_plugin_get_gtk_widget (PluginHandle * plugin);  // returns (GtkWidget *)
 void * aud_plugin_get_qt_widget (PluginHandle * plugin);  // return (QWidget *)
 
-int aud_plugin_get_type (PluginHandle * plugin);
+PluginType aud_plugin_get_type (PluginHandle * plugin);
 const char * aud_plugin_get_basename (PluginHandle * plugin);
 PluginHandle * aud_plugin_lookup_basename (const char * basename);
 
 const void * aud_plugin_get_header (PluginHandle * plugin);
 PluginHandle * aud_plugin_by_header (const void * header);
 
-const Index<PluginHandle *> & aud_plugin_list (int type);
+const Index<PluginHandle *> & aud_plugin_list (PluginType type);
 
 const char * aud_plugin_get_name (PluginHandle * plugin);
 bool aud_plugin_has_about (PluginHandle * plugin);

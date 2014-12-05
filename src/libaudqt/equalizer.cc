@@ -49,20 +49,18 @@ private:
     EqualizerSlider * m_preamp_slider;
     EqualizerSlider * m_sliders[AUD_EQ_NBANDS];
 
-    HookReceiver<EqualizerWindow> activated;
-    HookReceiver<EqualizerWindow> preamp_changed;
-    HookReceiver<EqualizerWindow> bands_changed;
-
     void updateActive ();
     void updatePreamp ();
     void updateBands ();
+
+    const HookReceiver<EqualizerWindow>
+     hook1 {"set equalizer_active", this, & EqualizerWindow::updateActive},
+     hook2 {"set equalizer_preamp", this, & EqualizerWindow::updatePreamp},
+     hook3 {"set equalizer_bands", this, & EqualizerWindow::updateBands};
 };
 
 EqualizerWindow::EqualizerWindow () :
-    m_onoff_checkbox (audqt::translate_str (N_("_Enable"))),
-    activated ("set equalizer_active", this, & EqualizerWindow::updateActive),
-    preamp_changed ("set equalizer_preamp", this, & EqualizerWindow::updatePreamp),
-    bands_changed ("set equalizer_bands", this, & EqualizerWindow::updateBands)
+    m_onoff_checkbox (audqt::translate_str (N_("_Enable")))
 {
     const char * const names[AUD_EQ_NBANDS] = {N_("31 Hz"), N_("63 Hz"),
      N_("125 Hz"), N_("250 Hz"), N_("500 Hz"), N_("1 kHz"), N_("2 kHz"),

@@ -33,7 +33,7 @@
 #include "hook.h"
 #include "mainloop.h"
 #include "multihash.h"
-#include "playlist-internal.h"
+#include "playlist.h"
 #include "runtime.h"
 #include "scanner.h"
 #include "vfs.h"
@@ -81,13 +81,17 @@ static Index<String> get_queued ()
     return queued;
 }
 
-static void send_requests (void * unused)
+static void send_requests (void *)
 {
     Index<String> queued = get_queued ();
 
     String current_wanted;
     if (! current_ref)
-        current_wanted = playback_entry_get_filename ();
+    {
+        int playlist = aud_playlist_get_playing ();
+        int entry = aud_playlist_get_position (playlist);
+        current_wanted = aud_playlist_entry_get_filename (playlist, entry);
+    }
 
     for (const String & file : queued)
     {

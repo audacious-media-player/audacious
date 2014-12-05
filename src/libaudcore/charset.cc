@@ -189,6 +189,18 @@ EXPORT StringBuf str_to_utf8 (const char * str, int len)
     return utf8;
 }
 
+EXPORT StringBuf str_to_utf8 (StringBuf && str)
+{
+    /* check whether already UTF-8 */
+    if (g_utf8_validate (str, str.len (), nullptr))
+        return std::move (str);
+
+    tiny_lock_read (& settings_lock);
+    str.steal (convert_to_utf8_locked (str, str.len ()));
+    tiny_unlock_read (& settings_lock);
+    return std::move (str);
+}
+
 static void chardet_update (void)
 {
     String region = aud_get_str (nullptr, "chardet_detector");

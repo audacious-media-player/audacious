@@ -32,7 +32,7 @@ EXPORT bool aud_filename_is_playlist (const char * filename)
 
     if (ext)
     {
-        for (PluginHandle * plugin : aud_plugin_list (PLUGIN_TYPE_PLAYLIST))
+        for (PluginHandle * plugin : aud_plugin_list (PluginType::Playlist))
         {
             if (aud_plugin_get_enabled (plugin) && playlist_plugin_has_ext (plugin, ext))
                 return true;
@@ -50,7 +50,7 @@ bool playlist_load (const char * filename, String & title, Index<PlaylistAddItem
 
     if (ext)
     {
-        for (PluginHandle * plugin : aud_plugin_list (PLUGIN_TYPE_PLAYLIST))
+        for (PluginHandle * plugin : aud_plugin_list (PluginType::Playlist))
         {
             if (! aud_plugin_get_enabled (plugin) || ! playlist_plugin_has_ext (plugin, ext))
                 continue;
@@ -73,7 +73,7 @@ bool playlist_load (const char * filename, String & title, Index<PlaylistAddItem
         }
     }
 
-    aud_ui_show_error (str_printf (_("Cannot load %s: unsupported file extension."), filename));
+    aud_ui_show_error (str_printf (_("Cannot load %s: unsupported file name extension."), filename));
 
     return false;
 }
@@ -106,6 +106,7 @@ EXPORT bool aud_playlist_save (int list, const char * filename, Playlist::GetMod
     {
         item.filename = aud_playlist_entry_get_filename (list, i);
         item.tuple = aud_playlist_entry_get_tuple (list, i, mode);
+        item.tuple.delete_fallbacks ();
         i ++;
     }
 
@@ -115,7 +116,7 @@ EXPORT bool aud_playlist_save (int list, const char * filename, Playlist::GetMod
 
     if (ext)
     {
-        for (PluginHandle * plugin : aud_plugin_list (PLUGIN_TYPE_PLAYLIST))
+        for (PluginHandle * plugin : aud_plugin_list (PluginType::Playlist))
         {
             if (! aud_plugin_get_enabled (plugin) || ! playlist_plugin_has_ext (plugin, ext))
                 continue;
@@ -132,7 +133,7 @@ EXPORT bool aud_playlist_save (int list, const char * filename, Playlist::GetMod
         }
     }
 
-    aud_ui_show_error (str_printf (_("Cannot save %s: unsupported file extension."), filename));
+    aud_ui_show_error (str_printf (_("Cannot save %s: unsupported file name extension."), filename));
 
     return false;
 }

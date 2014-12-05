@@ -80,12 +80,20 @@ QWidget * RadioButtonWidget::widget (QButtonGroup * btn_group)
     if (btn_group)
         btn_group->addButton (m_radio, m_parent->data.radio_btn.value);
 
+    update ();
+
     QObject::connect (m_radio, & QAbstractButton::clicked, [this] (bool checked) {
         if (checked)
             m_parent->cfg.set_int (m_parent->data.radio_btn.value);
     });
 
     return m_radio;
+}
+
+void RadioButtonWidget::update ()
+{
+    if (m_parent->cfg.get_int () == m_parent->data.radio_btn.value)
+        m_radio->setChecked (true);
 }
 
 /* integer (spinbox) */
@@ -237,11 +245,11 @@ void ComboBoxWidget::update ()
     switch (m_parent->cfg.type) {
     case WidgetConfig::Int:
         for (const ComboItem & item : items)
-            m_combobox->addItem (item.label, item.num);
+            m_combobox->addItem (translate_str (item.label, m_domain), item.num);
         break;
     case WidgetConfig::String:
         for (const ComboItem & item : items)
-            m_combobox->addItem (item.label, item.str);
+            m_combobox->addItem (translate_str (item.label, m_domain), item.str);
         break;
     default:
         break;

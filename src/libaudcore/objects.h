@@ -248,6 +248,8 @@ public:
 
     // only allowed for top (or null) string
     void resize (int size);
+    void insert (int pos, const char * s, int len = -1);
+    void remove (int pos, int len);
 
     // only allowed for top two strings (or when one string is null)
     void steal (StringBuf && other);

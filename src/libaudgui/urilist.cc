@@ -21,11 +21,22 @@
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/drct.h>
+#include <libaudcore/mainloop.h>
+#include <libaudcore/multihash.h>
 #include <libaudcore/playlist.h>
 #include <libaudcore/tuple.h>
 #include <libaudcore/vfs.h>
 
 #include "libaudgui.h"
+
+static SimpleHash<String, Tuple> tuple_cache;
+static QueuedFunc cleanup_timer;
+
+void urilist_cleanup ()
+{
+    tuple_cache.clear ();
+    cleanup_timer.stop ();
+}
 
 static String check_uri (const char * name)
 {
@@ -46,14 +57,20 @@ static Index<PlaylistAddItem> urilist_to_index (const char * list)
 
     while (list[0])
     {
-        if ((end = strstr (list, "\r\n")))
-            next = end + 2;
-        else if ((end = strchr (list, '\n')))
+        if ((end = strchr (list, '\n')))
+        {
             next = end + 1;
+            if (end > list && end[-1] == '\r')
+                end --;
+        }
         else
             next = end = strchr (list, 0);
 
-        index.append (check_uri (str_copy (list, end - list)));
+        String filename = check_uri (str_copy (list, end - list));
+        const Tuple * tuple = tuple_cache.lookup (filename);
+
+        index.append (filename, tuple ? tuple->ref () : Tuple ());
+
         list = next;
     }
 
@@ -70,9 +87,9 @@ EXPORT void audgui_urilist_insert (int playlist, int at, const char * list)
     aud_playlist_entry_insert_batch (playlist, at, urilist_to_index (list), false);
 }
 
-EXPORT StringBuf audgui_urilist_create_from_selected (int playlist)
+EXPORT Index<char> audgui_urilist_create_from_selected (int playlist)
 {
-    StringBuf buf;
+    Index<char> buf;
     int entries = aud_playlist_entry_count (playlist);
 
     for (int count = 0; count < entries; count ++)
@@ -80,11 +97,18 @@ EXPORT StringBuf audgui_urilist_create_from_selected (int playlist)
         if (aud_playlist_entry_get_selected (playlist, count))
         {
             if (buf.len ())
-                str_insert (buf, -1, "\n");
+                buf.append ('\n');
 
-            str_insert (buf, -1, aud_playlist_entry_get_filename (playlist, count));
+            String filename = aud_playlist_entry_get_filename (playlist, count);
+            Tuple tuple = aud_playlist_entry_get_tuple (playlist, count, Playlist::Nothing);
+
+            buf.insert (filename, -1, strlen (filename));
+            if (tuple)
+                tuple_cache.add (filename, std::move (tuple));
         }
     }
+
+    cleanup_timer.start (30000, [] (void *) { urilist_cleanup (); }, nullptr);
 
     return buf;
 }
