@@ -731,7 +731,14 @@ EXPORT void Tuple::generate_fallbacks ()
         if (artist && album)
             return;
 
-        StringBuf buf = str_copy (filepath);
+        StringBuf buf;
+#ifdef _WIN32
+        if (filepath[0] && filepath[1] == ':' && filepath[2] == '\\')
+            buf.steal (str_copy (filepath + 3));
+        else
+#endif
+            buf.steal (str_copy (filepath));
+
         char * first = split_folder (buf);
         char * second = (first && first > buf) ? split_folder (buf) : nullptr;
 
