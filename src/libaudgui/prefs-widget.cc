@@ -210,6 +210,8 @@ void create_font_btn (const PreferencesWidget * widget, GtkWidget * * label,
  GtkWidget * * font_btn, const char * domain)
 {
     * font_btn = gtk_font_button_new ();
+    gtk_widget_set_hexpand (* font_btn, true);
+
     gtk_font_button_set_use_font ((GtkFontButton *) * font_btn, true);
     gtk_font_button_set_use_size ((GtkFontButton *) * font_btn, true);
 
@@ -232,6 +234,7 @@ static void create_entry (const PreferencesWidget * widget, GtkWidget * * label,
  GtkWidget * * entry, const char * domain)
 {
     * entry = gtk_entry_new ();
+    gtk_widget_set_hexpand (* entry, true);
     gtk_entry_set_visibility ((GtkEntry *) * entry, ! widget->data.entry.password);
 
     if (widget->label)
