@@ -27,14 +27,6 @@ enum class AudMenuID;
 enum class PluginType;
 class PluginHandle;
 
-void audgui_show_add_url_window(bool open);
-
-void audgui_jump_to_track(void);
-void audgui_jump_to_track_hide(void);
-
-void audgui_run_filebrowser(bool open);
-void audgui_hide_filebrowser(void);
-
 /* about.c */
 void audgui_show_about_window (void);
 void audgui_hide_about_window (void);
@@ -52,6 +44,10 @@ void audgui_infopopup_show (int playlist, int entry);
 void audgui_infopopup_show_current (void);
 void audgui_infopopup_hide (void);
 
+/* file-opener.c */
+void audgui_run_filebrowser (bool open);
+void audgui_hide_filebrowser (void);
+
 /* infowin.c */
 void audgui_infowin_show (int playlist, int entry);
 void audgui_infowin_show_current (void);
@@ -63,6 +59,10 @@ void audgui_cleanup (void);
 
 /* jump-to-time.c */
 void audgui_jump_to_time (void);
+
+/* jump-to-track.c */
+void audgui_jump_to_track (void);
+void audgui_jump_to_track_hide (void);
 
 /* playlists.c */
 void audgui_import_playlist (void);
@@ -88,5 +88,8 @@ void audgui_queue_manager_show (void);
 void audgui_urilist_open (const char * list);
 void audgui_urilist_insert (int playlist, int position, const char * list);
 Index<char> audgui_urilist_create_from_selected (int playlist);
+
+/* url-opener.c */
+void audgui_show_add_url_window (bool open);
 
 #endif /* LIBAUDGUI_H */

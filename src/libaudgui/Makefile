@@ -5,10 +5,13 @@ LIB_MINOR = 0
 SRCS = about.cc \
        confirm.cc \
        equalizer.cc \
+       file-opener.cc \
        infopopup.cc \
        infowin.cc \
        init.cc \
        jump-to-time.cc \
+       jump-to-track.cc \
+       jump-to-track-cache.cc \
        list.cc \
        menu.cc \
        pixbufs.cc \
@@ -21,9 +24,6 @@ SRCS = about.cc \
        queue-manager.cc \
        scaled-image.cc \
        status.cc \
-       ui_fileopener.cc \
-       ui_jumptotrack.cc \
-       ui_jumptotrack_cache.cc \
        urilist.cc \
        url-opener.cc \
        util.cc

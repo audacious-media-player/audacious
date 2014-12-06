@@ -1,5 +1,5 @@
 /*
- * ui_fileopener.c
+ * file-opener.c
  * Copyright 2007-2013 Michael Färber and John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without

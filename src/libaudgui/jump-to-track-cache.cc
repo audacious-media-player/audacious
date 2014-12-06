@@ -1,5 +1,5 @@
 /*
- * ui_jumptotrack_cache.c
+ * jump-to-track-cache.c
  * Copyright 2008-2014 Jussi Judin and John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
@@ -17,7 +17,7 @@
  * the use of this software.
  */
 
-#include "ui_jumptotrack_cache.h"
+#include "jump-to-track-cache.h"
 
 #include <stdlib.h>
 #include <string.h>

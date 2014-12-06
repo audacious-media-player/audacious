@@ -1,5 +1,5 @@
 /*
- * ui_jumptotrack.c
+ * jump-to-track.c
  * Copyright 2007-2014 Yoshiki Yazawa, John Lindgren, and Thomas Lange
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,7 +29,7 @@
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
 #include "list.h"
-#include "ui_jumptotrack_cache.h"
+#include "jump-to-track-cache.h"
 
 static void update_cb (void * data, void *);
 static void activate_cb (void * data, void *);
