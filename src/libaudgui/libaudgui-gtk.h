@@ -34,7 +34,7 @@ typedef void (* AudguiCallback) (void * data);
 
 /* pixbufs.c */
 GdkPixbuf * audgui_pixbuf_from_data (const void * data, int64_t size);
-GdkPixbuf * audgui_pixbuf_fallback (void);
+GdkPixbuf * audgui_pixbuf_fallback ();
 void audgui_pixbuf_scale_within (GdkPixbuf * * pixbuf, int size);
 GdkPixbuf * audgui_pixbuf_request (const char * filename, bool * queued = nullptr);
 GdkPixbuf * audgui_pixbuf_request_current (bool * queued = nullptr);

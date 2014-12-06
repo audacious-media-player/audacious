@@ -31,7 +31,7 @@
 static aud::array<AudMenuID, GList *> items; /* of AudguiMenuItem */
 static aud::array<AudMenuID, GtkWidget *> menus;
 
-static void configure_plugins (void)
+static void configure_plugins ()
 {
     audgui_show_prefs_for_plugin_type (PluginType::General);
 }
@@ -106,7 +106,7 @@ EXPORT void audgui_plugin_menu_remove (AudMenuID id, void (* func) (void))
     }
 }
 
-void plugin_menu_cleanup (void)
+void plugin_menu_cleanup ()
 {
     for (AudMenuID id : aud::range<AudMenuID> ())
     {

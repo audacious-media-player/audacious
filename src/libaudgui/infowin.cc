@@ -1,5 +1,5 @@
 /*
- * libaudgui/infowin.c
+ * infowin.c
  * Copyright 2006-2013 William Pitcock, Tomasz Moń, Eugene Zagidullin,
  *                     John Lindgren, and Thomas Lange
  *

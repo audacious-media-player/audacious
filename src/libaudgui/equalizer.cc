@@ -29,18 +29,18 @@
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
 
-static void on_off_cb (GtkToggleButton * on_off, void * unused)
+static void on_off_cb (GtkToggleButton * on_off)
 {
     aud_set_bool (nullptr, "equalizer_active", gtk_toggle_button_get_active (on_off));
 }
 
-static void on_off_update (void * unused, GtkWidget * on_off)
+static void on_off_update (void *, GtkWidget * on_off)
 {
     gtk_toggle_button_set_active ((GtkToggleButton *) on_off, aud_get_bool
      (nullptr, "equalizer_active"));
 }
 
-static GtkWidget * create_on_off (void)
+static GtkWidget * create_on_off ()
 {
     GtkWidget * on_off = gtk_check_button_new_with_mnemonic (_("_Enable"));
     g_signal_connect (on_off, "toggled", (GCallback) on_off_cb, nullptr);
@@ -50,7 +50,7 @@ static GtkWidget * create_on_off (void)
     return on_off;
 }
 
-static void slider_moved (GtkRange * slider, void * unused)
+static void slider_moved (GtkRange * slider)
 {
     int band = GPOINTER_TO_INT (g_object_get_data ((GObject *) slider, "band"));
     double value = round (gtk_range_get_value (slider));
@@ -91,7 +91,7 @@ static void set_slider (GtkWidget * slider, double value)
     g_signal_handlers_unblock_by_func (slider, (void *) slider_moved, nullptr);
 }
 
-static void update_sliders (void * unused, GtkWidget * window)
+static void update_sliders (void *, GtkWidget * window)
 {
     GtkWidget * preamp = (GtkWidget *) g_object_get_data ((GObject *) window, "preamp");
     set_slider (preamp, aud_get_double (nullptr, "equalizer_preamp"));
@@ -107,14 +107,14 @@ static void update_sliders (void * unused, GtkWidget * window)
     }
 }
 
-static void destroy_cb (void)
+static void destroy_cb ()
 {
     hook_dissociate ("set equalizer_active", (HookFunction) on_off_update);
     hook_dissociate ("set equalizer_bands", (HookFunction) update_sliders);
     hook_dissociate ("set equalizer_preamp", (HookFunction) update_sliders);
 }
 
-static GtkWidget * create_window (void)
+static GtkWidget * create_window ()
 {
     const char * const names[AUD_EQ_NBANDS] = {N_("31 Hz"), N_("63 Hz"),
      N_("125 Hz"), N_("250 Hz"), N_("500 Hz"), N_("1 kHz"), N_("2 kHz"),
@@ -157,13 +157,13 @@ static GtkWidget * create_window (void)
     return window;
 }
 
-EXPORT void audgui_show_equalizer_window (void)
+EXPORT void audgui_show_equalizer_window ()
 {
     if (! audgui_reshow_unique_window (AUDGUI_EQUALIZER_WINDOW))
         audgui_show_unique_window (AUDGUI_EQUALIZER_WINDOW, create_window ());
 }
 
-EXPORT void audgui_hide_equalizer_window (void)
+EXPORT void audgui_hide_equalizer_window ()
 {
     audgui_hide_unique_window (AUDGUI_EQUALIZER_WINDOW);
 }

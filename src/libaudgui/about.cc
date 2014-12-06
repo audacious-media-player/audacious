@@ -64,7 +64,7 @@ static GtkWidget * create_credits_notebook (const char * credits, const char * l
     return notebook;
 }
 
-static GtkWidget * create_about_window (void)
+static GtkWidget * create_about_window ()
 {
     const char * data_dir = aud_get_path (AudPath::DataDir);
 
@@ -116,13 +116,13 @@ static GtkWidget * create_about_window (void)
     return about_window;
 }
 
-EXPORT void audgui_show_about_window (void)
+EXPORT void audgui_show_about_window ()
 {
     if (! audgui_reshow_unique_window (AUDGUI_ABOUT_WINDOW))
         audgui_show_unique_window (AUDGUI_ABOUT_WINDOW, create_about_window ());
 }
 
-EXPORT void audgui_hide_about_window (void)
+EXPORT void audgui_hide_about_window ()
 {
     audgui_hide_unique_window (AUDGUI_ABOUT_WINDOW);
 }

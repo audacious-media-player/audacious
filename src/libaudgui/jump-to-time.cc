@@ -36,7 +36,7 @@ static void jump_cb (void * entry)
         aud_drct_seek ((minutes * 60 + seconds) * 1000);
 }
 
-EXPORT void audgui_jump_to_time (void)
+EXPORT void audgui_jump_to_time ()
 {
     if (audgui_reshow_unique_window (AUDGUI_JUMP_TO_TIME_WINDOW))
         return;

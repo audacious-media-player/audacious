@@ -40,7 +40,7 @@ static void open_cb (void * entry)
     aud_history_add (text);
 }
 
-static GtkWidget * create_url_opener (gboolean open)
+static GtkWidget * create_url_opener (bool open)
 {
     const char * title, * verb, * icon;
 

@@ -31,25 +31,26 @@
 #include "libaudgui-gtk.h"
 
 static const char * const audgui_defaults[] = {
- "clear_song_fields", "TRUE",
- "close_dialog_add", "FALSE",
- "close_dialog_open", "TRUE",
- "close_jtf_dialog", "TRUE",
- "remember_jtf_entry", "TRUE",
- nullptr};
+    "clear_song_fields", "TRUE",
+    "close_dialog_add", "FALSE",
+    "close_dialog_open", "TRUE",
+    "close_jtf_dialog", "TRUE",
+    "remember_jtf_entry", "TRUE",
+    nullptr
+};
 
 static const char * const window_names[AUDGUI_NUM_UNIQUE_WINDOWS] = {
- "about_win",
- "equalizer_win",
- "filebrowser_win",
- nullptr, /* infopopup position is not saved */
- "info_win",
- "jump_to_time_win",
- "jump_to_track_win",
- "playlist_export_win",
- "playlist_import_win",
- "queue_manager_win",
- "url_opener_win"
+    "about_win",
+    "equalizer_win",
+    "filebrowser_win",
+    nullptr, /* infopopup position is not saved */
+    "info_win",
+    "jump_to_time_win",
+    "jump_to_track_win",
+    "playlist_export_win",
+    "playlist_import_win",
+    "queue_manager_win",
+    "url_opener_win"
 };
 
 static int init_count = 0;
@@ -117,18 +118,18 @@ void audgui_hide_unique_window (int id)
         gtk_widget_destroy (windows[id]);
 }
 
-static void playlist_set_playing_cb (void * unused, void * unused2)
+static void playlist_set_playing_cb (void *, void *)
 {
     audgui_pixbuf_uncache ();
 }
 
-static void playlist_position_cb (void * list, void * unused)
+static void playlist_position_cb (void * list, void *)
 {
     if (aud::from_ptr<int> (list) == aud_playlist_get_playing ())
         audgui_pixbuf_uncache ();
 }
 
-EXPORT void audgui_init (void)
+EXPORT void audgui_init ()
 {
     assert (aud_get_mainloop_type () == MainloopType::GLib);
 
@@ -149,7 +150,7 @@ EXPORT void audgui_init (void)
 #endif
 }
 
-EXPORT void audgui_cleanup (void)
+EXPORT void audgui_cleanup ()
 {
     if (-- init_count)
         return;

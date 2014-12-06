@@ -29,7 +29,7 @@
 
 static GdkPixbuf * current_pixbuf;
 
-EXPORT GdkPixbuf * audgui_pixbuf_fallback (void)
+EXPORT GdkPixbuf * audgui_pixbuf_fallback ()
 {
     static GdkPixbuf * fallback = nullptr;
 
@@ -43,7 +43,7 @@ EXPORT GdkPixbuf * audgui_pixbuf_fallback (void)
     return fallback;
 }
 
-void audgui_pixbuf_uncache (void)
+void audgui_pixbuf_uncache ()
 {
     if (current_pixbuf)
     {

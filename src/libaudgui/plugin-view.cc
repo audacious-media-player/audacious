@@ -28,10 +28,10 @@
 #include "libaudgui-gtk.h"
 
 enum {
- PVIEW_COL_NODE,
- PVIEW_COL_ENABLED,
- PVIEW_COL_NAME,
- PVIEW_COLS
+    PVIEW_COL_NODE,
+    PVIEW_COL_ENABLED,
+    PVIEW_COL_NAME,
+    PVIEW_COLS
 };
 
 struct Node {

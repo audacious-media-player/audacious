@@ -37,9 +37,9 @@ static void activate_cb (void * data, void *);
 static JumpToTrackCache cache;
 static const KeywordMatches * search_matches;
 static GtkWidget * treeview, * filter_entry, * queue_button, * jump_button;
-static gboolean watching = false;
+static bool watching = false;
 
-static void destroy_cb (void)
+static void destroy_cb ()
 {
     if (watching)
     {
@@ -53,7 +53,7 @@ static void destroy_cb (void)
     search_matches = nullptr;
 }
 
-static int get_selected_entry (void)
+static int get_selected_entry ()
 {
     g_return_val_if_fail (treeview && search_matches, -1);
 
@@ -72,7 +72,7 @@ static int get_selected_entry (void)
     return (* search_matches)[row].entry;
 }
 
-static void do_jump (void * unused)
+static void do_jump (void *)
 {
     int entry = get_selected_entry ();
     if (entry < 0)
@@ -106,7 +106,7 @@ static void update_queue_button (int entry)
     }
 }
 
-static void do_queue (void * unused)
+static void do_queue (void *)
 {
     int playlist = aud_playlist_get_active ();
     int entry = get_selected_entry ();
@@ -122,7 +122,7 @@ static void do_queue (void * unused)
     update_queue_button (entry);
 }
 
-static void selection_changed (void)
+static void selection_changed ()
 {
     int entry = get_selected_entry ();
     gtk_widget_set_sensitive (jump_button, entry >= 0);
@@ -134,14 +134,14 @@ static gboolean keypress_cb (GtkWidget * widget, GdkEventKey * event)
 {
     if (event->keyval == GDK_KEY_Escape)
     {
-        audgui_jump_to_track_hide();
+        audgui_jump_to_track_hide ();
         return true;
     }
 
     return false;
 }
 
-static void fill_list (void)
+static void fill_list ()
 {
     g_return_if_fail (treeview && filter_entry);
 
@@ -230,22 +230,21 @@ static const AudguiListCallbacks callbacks = {
     list_get_value
 };
 
-static GtkWidget * create_window (void)
+static GtkWidget * create_window ()
 {
-    GtkWidget * jump_to_track_win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_type_hint(GTK_WINDOW(jump_to_track_win),
-                             GDK_WINDOW_TYPE_HINT_DIALOG);
+    GtkWidget * jump_to_track_win = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_type_hint ((GtkWindow *) jump_to_track_win, GDK_WINDOW_TYPE_HINT_DIALOG);
 
-    gtk_window_set_title(GTK_WINDOW(jump_to_track_win), _("Jump to Song"));
+    gtk_window_set_title ((GtkWindow *) jump_to_track_win, _("Jump to Song"));
 
     g_signal_connect (jump_to_track_win, "key_press_event", (GCallback) keypress_cb, nullptr);
     g_signal_connect (jump_to_track_win, "destroy", (GCallback) destroy_cb, nullptr);
 
-    gtk_container_set_border_width(GTK_CONTAINER(jump_to_track_win), 10);
-    gtk_window_set_default_size(GTK_WINDOW(jump_to_track_win), 600, 500);
+    gtk_container_set_border_width ((GtkContainer *) jump_to_track_win, 10);
+    gtk_window_set_default_size ((GtkWindow *) jump_to_track_win, 600, 500);
 
     GtkWidget * vbox = gtk_vbox_new (false, 6);
-    gtk_container_add(GTK_CONTAINER(jump_to_track_win), vbox);
+    gtk_container_add ((GtkContainer *) jump_to_track_win, vbox);
 
     treeview = audgui_list_new (& callbacks, nullptr, 0);
     gtk_tree_view_set_headers_visible ((GtkTreeView *) treeview, false);
@@ -258,12 +257,12 @@ static GtkWidget * create_window (void)
     g_signal_connect (treeview, "row-activated", (GCallback) do_jump, nullptr);
 
     GtkWidget * hbox = gtk_hbox_new (false, 6);
-    gtk_box_pack_start(GTK_BOX(vbox), hbox, false, false, 3);
+    gtk_box_pack_start ((GtkBox *) vbox, hbox, false, false, 3);
 
     /* filter box */
     GtkWidget * search_label = gtk_label_new (_("Filter: "));
-    gtk_label_set_markup_with_mnemonic(GTK_LABEL(search_label), _("_Filter:"));
-    gtk_box_pack_start(GTK_BOX(hbox), search_label, false, false, 0);
+    gtk_label_set_markup_with_mnemonic ((GtkLabel *) search_label, _("_Filter:"));
+    gtk_box_pack_start ((GtkBox *) hbox, search_label, false, false, 0);
 
     filter_entry = gtk_entry_new ();
     gtk_entry_set_icon_from_icon_name ((GtkEntry *) filter_entry,
@@ -275,12 +274,11 @@ static GtkWidget * create_window (void)
     gtk_box_pack_start ((GtkBox *) hbox, filter_entry, true, true, 0);
 
     GtkWidget * scrollwin = gtk_scrolled_window_new (nullptr, nullptr);
-    gtk_container_add(GTK_CONTAINER(scrollwin), treeview);
-    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrollwin),
-                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-    gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scrollwin),
-                                        GTK_SHADOW_IN);
-    gtk_box_pack_start(GTK_BOX(vbox), scrollwin, true, true, 0);
+    gtk_container_add ((GtkContainer *) scrollwin, treeview);
+    gtk_scrolled_window_set_policy ((GtkScrolledWindow *) scrollwin,
+     GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+    gtk_scrolled_window_set_shadow_type ((GtkScrolledWindow *) scrollwin, GTK_SHADOW_IN);
+    gtk_box_pack_start ((GtkBox *) vbox, scrollwin, true, true, 0);
 
     GtkWidget * bbox = gtk_hbox_new (false, 4);
     gtk_box_pack_start ((GtkBox *) vbox, bbox, false, false, 0);
@@ -310,7 +308,7 @@ static GtkWidget * create_window (void)
     return jump_to_track_win;
 }
 
-EXPORT void audgui_jump_to_track (void)
+EXPORT void audgui_jump_to_track ()
 {
     if (audgui_reshow_unique_window (AUDGUI_JUMP_TO_TRACK_WINDOW))
         return;
@@ -330,7 +328,7 @@ EXPORT void audgui_jump_to_track (void)
     audgui_show_unique_window (AUDGUI_JUMP_TO_TRACK_WINDOW, jump_to_track_win);
 }
 
-EXPORT void audgui_jump_to_track_hide (void)
+EXPORT void audgui_jump_to_track_hide ()
 {
     audgui_hide_unique_window (AUDGUI_JUMP_TO_TRACK_WINDOW);
 }

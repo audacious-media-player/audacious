@@ -28,45 +28,45 @@ enum class PluginType;
 class PluginHandle;
 
 /* about.c */
-void audgui_show_about_window (void);
-void audgui_hide_about_window (void);
+void audgui_show_about_window ();
+void audgui_hide_about_window ();
 
 /* confirm.c */
 void audgui_confirm_playlist_delete (int playlist);
 void audgui_show_playlist_rename (int playlist);
 
 /* equalizer.c */
-void audgui_show_equalizer_window (void);
-void audgui_hide_equalizer_window (void);
+void audgui_show_equalizer_window ();
+void audgui_hide_equalizer_window ();
 
 /* infopopup.c */
 void audgui_infopopup_show (int playlist, int entry);
-void audgui_infopopup_show_current (void);
-void audgui_infopopup_hide (void);
+void audgui_infopopup_show_current ();
+void audgui_infopopup_hide ();
 
 /* file-opener.c */
 void audgui_run_filebrowser (bool open);
-void audgui_hide_filebrowser (void);
+void audgui_hide_filebrowser ();
 
 /* infowin.c */
 void audgui_infowin_show (int playlist, int entry);
-void audgui_infowin_show_current (void);
-void audgui_infowin_hide (void);
+void audgui_infowin_show_current ();
+void audgui_infowin_hide ();
 
 /* init.c */
-void audgui_init (void);
-void audgui_cleanup (void);
+void audgui_init ();
+void audgui_cleanup ();
 
 /* jump-to-time.c */
-void audgui_jump_to_time (void);
+void audgui_jump_to_time ();
 
 /* jump-to-track.c */
-void audgui_jump_to_track (void);
-void audgui_jump_to_track_hide (void);
+void audgui_jump_to_track ();
+void audgui_jump_to_track_hide ();
 
 /* playlists.c */
-void audgui_import_playlist (void);
-void audgui_export_playlist (void);
+void audgui_import_playlist ();
+void audgui_export_playlist ();
 
 /* plugin-menu.c */
 void audgui_plugin_menu_add (AudMenuID id, void (* func) (void), const char * name, const char * icon);
@@ -77,12 +77,12 @@ void audgui_show_plugin_about (PluginHandle * plugin);
 void audgui_show_plugin_prefs (PluginHandle * plugin);
 
 /* prefs-window.c */
-void audgui_show_prefs_window (void);
+void audgui_show_prefs_window ();
 void audgui_show_prefs_for_plugin_type (PluginType type);
-void audgui_hide_prefs_window (void);
+void audgui_hide_prefs_window ();
 
 /* queue-manager.c */
-void audgui_queue_manager_show (void);
+void audgui_queue_manager_show ();
 
 /* urilist.c */
 void audgui_urilist_open (const char * list);

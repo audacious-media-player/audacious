@@ -29,7 +29,7 @@ static GtkWidget * progress_window;
 static GtkWidget * progress_label, * progress_label_2;
 static GtkWidget * error_window;
 
-static void create_progress_window (void)
+static void create_progress_window ()
 {
     progress_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
     gtk_window_set_type_hint ((GtkWindow *) progress_window, GDK_WINDOW_TYPE_HINT_DIALOG);
@@ -85,7 +85,7 @@ static void show_error (void * data, void * user)
     audgui_simple_message (& error_window, GTK_MESSAGE_ERROR, _("Error"), (const char *) data);
 }
 
-void status_init (void)
+void status_init ()
 {
     hook_associate ("ui show progress", show_progress, nullptr);
     hook_associate ("ui show progress 2", show_progress_2, nullptr);
@@ -93,7 +93,7 @@ void status_init (void)
     hook_associate ("ui show error", show_error, nullptr);
 }
 
-void status_cleanup (void)
+void status_cleanup ()
 {
     hook_dissociate ("ui show progress", show_progress);
     hook_dissociate ("ui show progress 2", show_progress_2);
