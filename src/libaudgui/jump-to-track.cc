@@ -280,30 +280,35 @@ static GtkWidget * create_window ()
     gtk_scrolled_window_set_shadow_type ((GtkScrolledWindow *) scrollwin, GTK_SHADOW_IN);
     gtk_box_pack_start ((GtkBox *) vbox, scrollwin, true, true, 0);
 
-    GtkWidget * bbox = gtk_hbox_new (false, 4);
-    gtk_box_pack_start ((GtkBox *) vbox, bbox, false, false, 0);
+    GtkWidget * hbox2 = gtk_hbox_new (false, 0);
+    gtk_box_pack_end ((GtkBox *) vbox, hbox2, false, false, 0);
+
+    GtkWidget * bbox = gtk_hbutton_box_new ();
+    gtk_button_box_set_layout ((GtkButtonBox *) bbox, GTK_BUTTONBOX_END);
+    gtk_box_set_spacing ((GtkBox *) bbox, 6);
+    gtk_box_pack_end ((GtkBox *) hbox2, bbox, true, true, 0);
 
     /* close dialog toggle */
     GtkWidget * toggle = gtk_check_button_new_with_mnemonic (_("C_lose on jump"));
     gtk_toggle_button_set_active ((GtkToggleButton *) toggle, aud_get_bool
      ("audgui", "close_jtf_dialog"));
-    gtk_box_pack_start ((GtkBox *) bbox, toggle, true, true, 0);
+    gtk_container_add ((GtkContainer *) hbox2, toggle);
     g_signal_connect (toggle, "clicked", (GCallback) toggle_button_cb, nullptr);
 
-    /* jump button */
-    jump_button = audgui_button_new (_("_Jump"), "go-jump", do_jump, nullptr);
-    gtk_box_pack_end ((GtkBox *) bbox, jump_button, false, false, 0);
-    gtk_widget_set_can_default (jump_button, true);
-    gtk_widget_grab_default (jump_button);
+    /* queue button */
+    queue_button = audgui_button_new (_("_Queue"), nullptr, do_queue, nullptr);
+    gtk_container_add ((GtkContainer *) bbox, queue_button);
 
     /* close button */
     GtkWidget * close = audgui_button_new (_("_Close"), "window-close",
      (AudguiCallback) audgui_jump_to_track_hide, nullptr);
-    gtk_box_pack_end ((GtkBox *) bbox, close, false, false, 0);
+    gtk_container_add ((GtkContainer *) bbox, close);
 
-    /* queue button */
-    queue_button = audgui_button_new (_("_Queue"), nullptr, do_queue, nullptr);
-    gtk_box_pack_end ((GtkBox *) bbox, queue_button, false, false, 0);
+    /* jump button */
+    jump_button = audgui_button_new (_("_Jump"), "go-jump", do_jump, nullptr);
+    gtk_container_add ((GtkContainer *) bbox, jump_button);
+    gtk_widget_set_can_default (jump_button, true);
+    gtk_widget_grab_default (jump_button);
 
     return jump_to_track_win;
 }
