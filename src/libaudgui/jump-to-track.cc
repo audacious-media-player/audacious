@@ -286,7 +286,11 @@ static GtkWidget * create_window ()
     GtkWidget * bbox = gtk_hbutton_box_new ();
     gtk_button_box_set_layout ((GtkButtonBox *) bbox, GTK_BUTTONBOX_END);
     gtk_box_set_spacing ((GtkBox *) bbox, 6);
-    gtk_box_pack_end ((GtkBox *) hbox2, bbox, true, true, 6);
+
+    GtkWidget * alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
+    gtk_alignment_set_padding ((GtkAlignment *) alignment, 0, 0, 6, 0);
+    gtk_container_add ((GtkContainer *) alignment, bbox);
+    gtk_box_pack_end ((GtkBox *) hbox2, alignment, true, true, 0);
 
     /* close dialog toggle */
     GtkWidget * toggle = gtk_check_button_new_with_mnemonic (_("C_lose on jump"));
