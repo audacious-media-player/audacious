@@ -66,8 +66,8 @@ static QDialog * buildDeleteDialog (int playlist)
 
     auto layout = new QVBoxLayout (dialog);
     layout->addWidget (prompt);
-    layout->addWidget (buttonbox);
     layout->addWidget (skip_prompt);
+    layout->addWidget (buttonbox);
 
     dialog->setWindowTitle (_("Remove Playlist"));
 
