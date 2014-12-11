@@ -286,7 +286,7 @@ static GtkWidget * create_window ()
     GtkWidget * bbox = gtk_hbutton_box_new ();
     gtk_button_box_set_layout ((GtkButtonBox *) bbox, GTK_BUTTONBOX_END);
     gtk_box_set_spacing ((GtkBox *) bbox, 6);
-    gtk_box_pack_end ((GtkBox *) hbox2, bbox, true, true, 0);
+    gtk_box_pack_end ((GtkBox *) hbox2, bbox, true, true, 6);
 
     /* close dialog toggle */
     GtkWidget * toggle = gtk_check_button_new_with_mnemonic (_("C_lose on jump"));
