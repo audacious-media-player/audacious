@@ -116,12 +116,12 @@ static GtkWidget * create_filebrowser (gboolean open)
     GtkWidget * toggle = gtk_check_button_new_with_mnemonic (toggle_text);
     gtk_toggle_button_set_active ((GtkToggleButton *) toggle, aud_get_bool ("audgui", option));
     g_signal_connect (toggle, "toggled", (GCallback) toggled_cb, (void *) option);
-    gtk_box_pack_start ((GtkBox *) hbox, toggle, true, true, 3);
+    gtk_box_pack_start ((GtkBox *) hbox, toggle, true, true, 0);
 
     GtkWidget * bbox = gtk_hbutton_box_new ();
     gtk_button_box_set_layout ((GtkButtonBox *) bbox, GTK_BUTTONBOX_END);
     gtk_box_set_spacing ((GtkBox *) bbox, 6);
-    gtk_box_pack_end ((GtkBox *) hbox, bbox, true, true, 3);
+    gtk_box_pack_end ((GtkBox *) hbox, bbox, true, true, 0);
 
     GtkWidget * action_button = audgui_button_new (verb, icon, open_cb, chooser);
     GtkWidget * close_button = audgui_button_new (_("_Close"), "window-close",
