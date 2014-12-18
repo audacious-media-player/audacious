@@ -483,10 +483,9 @@ EXPORT void aud_drct_pause ()
 
     // apply pause immediately if ready
     if (is_ready ())
-    {
         output_pause (pause);
-        event_queue (pause ? "playback pause" : "playback unpause", nullptr);
-    }
+
+    event_queue (pause ? "playback pause" : "playback unpause", nullptr);
 
     unlock ();
 }
