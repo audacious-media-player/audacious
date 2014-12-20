@@ -40,16 +40,16 @@ EXPORT void fileopener_show (bool add = false)
     QFileDialog dialog (nullptr, caption, QString (aud_get_str ("audgui", "filesel_path")));
     dialog.setFileMode (QFileDialog::AnyFile);
 
-    QObject::connect (&dialog, &QFileDialog::directoryEntered, directoryEntered);
+    QObject::connect (& dialog, & QFileDialog::directoryEntered, directoryEntered);
 
     if (add)
-        dialog.setLabelText (QFileDialog::Accept, "Add");
+        dialog.setLabelText (QFileDialog::Accept, _("Add"));
 
     if (dialog.exec ())
     {
         Index<PlaylistAddItem> files;
         Q_FOREACH (QUrl url, dialog.selectedUrls ())
-            files.append (String(url.toEncoded ().constData ()));
+            files.append (String (url.toEncoded ().constData ()));
         if (add)
             aud_drct_pl_add_list (std::move (files), -1);
         else
