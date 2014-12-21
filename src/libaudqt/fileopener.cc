@@ -21,40 +21,68 @@
 
 #include <libaudcore/drct.h>
 #include <libaudcore/i18n.h>
-#include <libaudcore/index.h>
 #include <libaudcore/runtime.h>
-#include <libaudcore/tuple.h>
 
 #include <libaudqt/libaudqt.h>
 
 namespace audqt {
 
-static void directoryEntered (const QString & path)
+static aud::array<FileMode, QFileDialog *> s_dialogs;
+
+EXPORT void fileopener_show (FileMode mode)
 {
-    aud_set_str ("audgui", "filesel_path", path.toUtf8 ().constData ());
-}
+    QFileDialog * & dialog = s_dialogs[mode];
 
-EXPORT void fileopener_show (bool add = false)
-{
-    const QString caption = add ? _("Add Files") : _("Open Files");
-    QFileDialog dialog (nullptr, caption, QString (aud_get_str ("audgui", "filesel_path")));
-    dialog.setFileMode (QFileDialog::AnyFile);
-
-    QObject::connect (& dialog, & QFileDialog::directoryEntered, directoryEntered);
-
-    if (add)
-        dialog.setLabelText (QFileDialog::Accept, _("Add"));
-
-    if (dialog.exec ())
+    if (! dialog)
     {
-        Index<PlaylistAddItem> files;
-        Q_FOREACH (QUrl url, dialog.selectedUrls ())
-            files.append (String (url.toEncoded ().constData ()));
-        if (add)
-            aud_drct_pl_add_list (std::move (files), -1);
-        else
-            aud_drct_pl_open_list (std::move (files));
+        static constexpr aud::array<FileMode, const char *> titles {
+            N_("Open Files"),
+            N_("Open Folder"),
+            N_("Add Files"),
+            N_("Add Folder")
+        };
+
+        static constexpr aud::array<FileMode, const char *> labels {
+            N_("Open"),
+            N_("Open"),
+            N_("Add"),
+            N_("Add")
+        };
+
+        static constexpr aud::array<FileMode, QFileDialog::FileMode> modes {
+            QFileDialog::ExistingFiles,
+            QFileDialog::Directory,
+            QFileDialog::ExistingFiles,
+            QFileDialog::Directory
+        };
+
+        String path = aud_get_str ("audgui", "filesel_path");
+        dialog = new QFileDialog (nullptr, _(titles[mode]), QString (path));
+
+        dialog->setAttribute (Qt::WA_DeleteOnClose);
+        dialog->setFileMode (modes[mode]);
+        dialog->setLabelText (QFileDialog::Accept, _(labels[mode]));
+
+        QObject::connect (dialog, & QFileDialog::directoryEntered, [] (const QString & path)
+            { aud_set_str ("audgui", "filesel_path", path.toUtf8 ().constData ()); });
+
+        QObject::connect (dialog, & QFileDialog::accepted, [dialog, mode] ()
+        {
+            Index<PlaylistAddItem> files;
+            for (const QUrl & url : dialog->selectedUrls ())
+                files.append (String (url.toEncoded ().constData ()));
+
+            if (mode == FileMode::Add || mode == FileMode::AddFolder)
+                aud_drct_pl_add_list (std::move (files), -1);
+            else
+                aud_drct_pl_open_list (std::move (files));
+        });
+
+        QObject::connect (dialog, & QObject::destroyed, [& dialog] ()
+            { dialog = nullptr; });
     }
+
+    window_bring_to_front (dialog);
 }
 
 } // namespace audqt

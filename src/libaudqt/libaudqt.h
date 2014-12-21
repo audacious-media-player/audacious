@@ -36,6 +36,14 @@ struct PreferencesWidget;
 
 namespace audqt {
 
+enum class FileMode {
+    Open,
+    OpenFolder,
+    Add,
+    AddFolder,
+    count
+};
+
 struct MenuItem;
 
 /* about.cc */
@@ -51,7 +59,7 @@ void equalizer_show ();
 void equalizer_hide ();
 
 /* fileopener.cc */
-void fileopener_show (bool add);
+void fileopener_show (FileMode mode);
 
 /* util.cc */
 void cleanup ();
