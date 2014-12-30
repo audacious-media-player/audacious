@@ -583,6 +583,11 @@ void plugin_set_enabled (PluginHandle * plugin, bool enabled)
     plugin_call_watches (plugin);
 }
 
+void plugin_set_failed (PluginHandle * plugin)
+{
+    plugin->header = nullptr;
+}
+
 EXPORT void aud_plugin_add_watch (PluginHandle * plugin, PluginWatchFunc func, void * data)
 {
     plugin->watches.append (func, data);

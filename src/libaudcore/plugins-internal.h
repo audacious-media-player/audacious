@@ -43,6 +43,7 @@ void plugin_registry_save ();
 
 void plugin_register (const char * path, int timestamp);
 void plugin_set_enabled (PluginHandle * plugin, bool enabled);
+void plugin_set_failed (PluginHandle * plugin);
 
 bool transport_plugin_has_scheme (PluginHandle * plugin, const char * scheme);
 bool playlist_plugin_has_ext (PluginHandle * plugin, const char * ext);
