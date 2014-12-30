@@ -372,11 +372,20 @@ static void queue_update (Playlist::Update level, PlaylistData * p, int at, int 
     update_level = aud::max (update_level, level);
 }
 
-EXPORT bool aud_playlist_update_pending ()
+EXPORT bool aud_playlist_update_pending (int playlist_num)
 {
-    ENTER;
-    bool pending = update_level ? true : false;
-    RETURN (pending);
+    if (playlist_num >= 0)
+    {
+        ENTER_GET_PLAYLIST (false);
+        bool pending = playlist->next_update.level ? true : false;
+        RETURN (pending);
+    }
+    else
+    {
+        ENTER;
+        bool pending = update_level ? true : false;
+        RETURN (pending);
+    }
 }
 
 EXPORT Playlist::Update aud_playlist_updated_range (int playlist_num, int * at, int * count)

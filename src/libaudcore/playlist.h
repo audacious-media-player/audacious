@@ -321,9 +321,10 @@ void aud_playlist_queue_delete (int playlist, int at, int number);
 /* Removes the selected entries in a playlist from the queue, if they are in it. */
 void aud_playlist_queue_delete_selected (int playlist);
 
-/* Returns true if a "playlist update" hook call is pending.  If called from
- * within the hook, the current hook call is not considered pending. */
-bool aud_playlist_update_pending ();
+/* Returns true if a "playlist update" hook call is pending for the given
+ * playlist (or for any playlist, if <playlist> is -1).  If called from within
+ * the hook, the current hook call is not considered pending. */
+bool aud_playlist_update_pending (int playlist = -1);
 
 /* May be called within the "playlist update" hook to determine the update level
  * and number of entries changed in a playlist.  Returns the update level for
