@@ -167,7 +167,7 @@ static void update_cb (void * data, void *)
     GtkTreeIter iter;
     GtkTreePath * path = nullptr;
 
-    auto level = aud::from_ptr<Playlist::Update> (data);
+    auto level = aud::from_ptr<Playlist::UpdateLevel> (data);
     if (level <= Playlist::Selection)
         return;
 
