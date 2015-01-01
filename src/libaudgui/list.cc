@@ -25,7 +25,10 @@
 #include "libaudgui-gtk.h"
 #include "list.h"
 
-enum {HIGHLIGHT_COLUMN, RESERVED_COLUMNS};
+enum {
+    HIGHLIGHT_COLUMN,
+    RESERVED_COLUMNS
+};
 
 #define MODEL_HAS_CB(m, cb) \
  ((m)->cbs_size > (int) offsetof (AudguiListCallbacks, cb) && (m)->cbs->cb)
@@ -177,7 +180,7 @@ static const GInterfaceInfo iface_info = {
     (GInterfaceInitFunc) iface_init
 };
 
-static GType list_model_get_type (void)
+static GType list_model_get_type ()
 {
     static GType type = G_TYPE_INVALID;
     if (type == G_TYPE_INVALID)
@@ -284,8 +287,7 @@ static gboolean button_release_cb (GtkWidget * widget, GdkEventButton * event,
      model->rows)
     {
         model->frozen = false;
-        GtkTreePath * path = gtk_tree_path_new_from_indices (model->clicked_row,
-         -1);
+        GtkTreePath * path = gtk_tree_path_new_from_indices (model->clicked_row, -1);
         gtk_tree_view_set_cursor ((GtkTreeView *) widget, path, nullptr, false);
         gtk_tree_path_free (path);
     }
@@ -622,8 +624,7 @@ EXPORT GtkWidget * audgui_list_new_real (const AudguiListCallbacks * cbs, int cb
          GDK_ACTION_COPY);
         gtk_drag_dest_set (list, (GtkDestDefaults) 0, & target, 1, GDK_ACTION_COPY);
 
-        g_signal_connect (list, "drag-data-get", (GCallback) drag_data_get,
-         model);
+        g_signal_connect (list, "drag-data-get", (GCallback) drag_data_get, model);
         g_signal_connect (list, "drag-data-received", (GCallback)
          drag_data_received, model);
 

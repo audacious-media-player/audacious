@@ -102,6 +102,7 @@ static void start_single (PluginType type)
             return;
 
         AUDWARN ("%s failed to start.\n", aud_plugin_get_name (p));
+        plugin_set_failed (p);
         plugin_set_enabled (p, false);
         skip = p;
         break;
@@ -119,6 +120,7 @@ static void start_single (PluginType type)
         if (! table[type].f.s.set_current (p))
         {
             AUDWARN ("%s failed to start.\n", aud_plugin_get_name (p));
+            plugin_set_failed (p);
             continue;
         }
 
@@ -142,8 +144,8 @@ static void start_multi (PluginType type)
 
         if (! table[type].f.m.start (p))
         {
-            AUDWARN ("%s failed to start; disabling.\n", aud_plugin_get_name (p));
-            plugin_set_enabled (p, false);
+            AUDWARN ("%s failed to start.\n", aud_plugin_get_name (p));
+            plugin_set_failed (p);
         }
     }
 }
@@ -248,6 +250,7 @@ static bool enable_single (PluginType type, PluginHandle * p)
     AUDERR ("%s failed to start; falling back to %s.\n",
      aud_plugin_get_name (p), aud_plugin_get_name (old));
 
+    plugin_set_failed (p);
     plugin_set_enabled (p, false);
     plugin_set_enabled (old, true);
 
@@ -269,6 +272,7 @@ static bool enable_multi (PluginType type, PluginHandle * p, bool enable)
         if (table[type].f.m.start && ! table[type].f.m.start (p))
         {
             AUDERR ("%s failed to start.\n", aud_plugin_get_name (p));
+            plugin_set_failed (p);
             plugin_set_enabled (p, false);
             return false;
         }

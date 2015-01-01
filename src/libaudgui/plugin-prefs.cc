@@ -184,7 +184,7 @@ EXPORT void audgui_show_plugin_prefs (PluginHandle * plugin)
     aud_plugin_add_watch (plugin, watch_cb, window);
 }
 
-void plugin_prefs_cleanup (void)
+void plugin_prefs_cleanup ()
 {
     g_list_foreach (about_windows, (GFunc) gtk_widget_destroy, nullptr);
     g_list_foreach (config_windows, (GFunc) gtk_widget_destroy, nullptr);

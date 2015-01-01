@@ -100,10 +100,10 @@ private:
     QPushButton m_btn_close;
     QueueManagerModel m_model;
 
-    void update (Playlist::Update level);
+    void update (Playlist::UpdateLevel level);
     void removeSelected ();
 
-    const HookReceiver<QueueManagerDialog, Playlist::Update>
+    const HookReceiver<QueueManagerDialog, Playlist::UpdateLevel>
      update_hook {"playlist update", this, & QueueManagerDialog::update};
     const HookReceiver<QueueManagerModel>
      activate_hook {"playlist activate", & m_model, & QueueManagerModel::reset};
@@ -146,7 +146,7 @@ QueueManagerDialog::QueueManagerDialog (QWidget * parent) :
     resize (500, 250);
 }
 
-void QueueManagerDialog::update (Playlist::Update level)
+void QueueManagerDialog::update (Playlist::UpdateLevel level)
 {
     /* resetting the model due to selection updates causes breakage, so don't do it. */
     if (level != Playlist::Selection)

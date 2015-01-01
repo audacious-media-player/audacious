@@ -90,7 +90,7 @@ static void widget_changed (GtkWidget * widget, const PreferencesWidget * w)
 
 static void combobox_update (GtkWidget * combobox, const PreferencesWidget * widget);
 
-static void widget_update (void * unused, void * widget)
+static void widget_update (void *, void * widget)
 {
     auto w = (const PreferencesWidget *) g_object_get_data ((GObject *) widget, "prefswidget");
 

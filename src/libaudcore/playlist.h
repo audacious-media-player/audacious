@@ -33,11 +33,18 @@ namespace Playlist {
  * has been read for some entries, or that the title or filename of a playlist
  * has changed, and implies Selection.  Structure covers any other change, and
  * implies both Selection and Metadata. */
-enum Update {
+enum UpdateLevel {
     NoUpdate = 0,
     Selection,
     Metadata,
     Structure
+};
+
+struct Update {
+    UpdateLevel level;   // type of update
+    int before;          // number of unaffected entries at playlist start
+    int after;           // number of unaffected entries at playlist end
+    bool queue_changed;  // true if entries have been added to/removed from queue
 };
 
 /* The values which can be passed to playlist_sort_by_scheme(),
@@ -321,17 +328,14 @@ void aud_playlist_queue_delete (int playlist, int at, int number);
 /* Removes the selected entries in a playlist from the queue, if they are in it. */
 void aud_playlist_queue_delete_selected (int playlist);
 
-/* Returns true if a "playlist update" hook call is pending.  If called from
- * within the hook, the current hook call is not considered pending. */
-bool aud_playlist_update_pending ();
+/* Returns true if a "playlist update" hook call is pending for the given
+ * playlist (or for any playlist, if <playlist> is -1).  If called from within
+ * the hook, the current hook call is not considered pending. */
+bool aud_playlist_update_pending (int playlist = -1);
 
 /* May be called within the "playlist update" hook to determine the update level
- * and number of entries changed in a playlist.  Returns the update level for
- * the playlist, storing the number of the first entry changed in <at> and the
- * number of contiguous entries to be updated in <count>.  Note that entries may
- * have been added or removed within this range.  If no entries in the playlist
- * have changed, returns zero. */
-Playlist::Update aud_playlist_updated_range (int playlist, int * at, int * count);
+ * and number of entries changed in a playlist. */
+Playlist::Update aud_playlist_update_detail (int playlist);
 
 /* Returns true if entries are being added to a playlist in the background.
  * If <playlist> is -1, checks all playlists. */

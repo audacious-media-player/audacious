@@ -109,7 +109,7 @@ static const AudguiListCallbacks callbacks = {
     shift_rows
 };
 
-static void remove_selected (void * unused)
+static void remove_selected (void *)
 {
     int list = aud_playlist_get_active ();
     int count = aud_playlist_queue_count (list);
@@ -149,7 +149,7 @@ static void update_hook (void * data, void * user)
         audgui_list_set_focus (qm_list, newrows - 1);
 }
 
-static void destroy_cb (void)
+static void destroy_cb ()
 {
     hook_dissociate ("playlist activate", update_hook);
     hook_dissociate ("playlist update", update_hook);
@@ -169,7 +169,7 @@ static gboolean keypress_cb (GtkWidget * widget, GdkEventKey * event)
     return true;
 }
 
-static GtkWidget * create_queue_manager (void)
+static GtkWidget * create_queue_manager ()
 {
     GtkWidget * qm_win = gtk_dialog_new ();
     gtk_window_set_title ((GtkWindow *) qm_win, _("Queue Manager"));
@@ -206,7 +206,7 @@ static GtkWidget * create_queue_manager (void)
     return qm_win;
 }
 
-EXPORT void audgui_queue_manager_show (void)
+EXPORT void audgui_queue_manager_show ()
 {
     if (! audgui_reshow_unique_window (AUDGUI_QUEUE_MANAGER_WINDOW))
         audgui_show_unique_window (AUDGUI_QUEUE_MANAGER_WINDOW, create_queue_manager ());

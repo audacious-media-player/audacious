@@ -44,22 +44,22 @@ bool audgui_reshow_unique_window (int id);
 void audgui_hide_unique_window (int id);
 
 /* pixbufs.c */
-void audgui_pixbuf_uncache (void);
+void audgui_pixbuf_uncache ();
 
 /* plugin-menu.c */
-void plugin_menu_cleanup (void);
+void plugin_menu_cleanup ();
 
 /* plugin-prefs.c */
-void plugin_prefs_cleanup (void);
+void plugin_prefs_cleanup ();
 
 /* plugin-view.c */
 GtkWidget * plugin_view_new (PluginType type);
 
 /* status.c */
-void status_init (void);
-void status_cleanup (void);
+void status_init ();
+void status_cleanup ();
 
 /* urilist.c */
-void urilist_cleanup (void);
+void urilist_cleanup ();
 
 #endif /* AUDGUI_INTERNAL_H */

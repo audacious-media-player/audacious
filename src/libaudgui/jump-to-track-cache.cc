@@ -1,5 +1,5 @@
 /*
- * ui_jumptotrack_cache.c
+ * jump-to-track-cache.c
  * Copyright 2008-2014 Jussi Judin and John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
@@ -17,7 +17,7 @@
  * the use of this software.
  */
 
-#include "ui_jumptotrack_cache.h"
+#include "jump-to-track-cache.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -39,7 +39,7 @@
  * Regular expressions in list are formed by splitting the 'keyword' to words
  * by splitting the keyword string with space character.
  */
-Index<GRegex *> ui_jump_to_track_cache_regex_list_create (const char * keyword)
+Index<GRegex *> jump_to_track_cache_regex_list_create (const char * keyword)
 {
     Index<GRegex *> regex_list;
 
@@ -64,7 +64,7 @@ Index<GRegex *> ui_jump_to_track_cache_regex_list_create (const char * keyword)
 /**
  * Checks if 'song' matches all regular expressions in 'regex_list'.
  */
-static bool ui_jump_to_track_match (const char * name, Index<GRegex *> & regex_list)
+static bool jump_to_track_match (const char * name, Index<GRegex *> & regex_list)
 {
     if (! name)
         return false;
@@ -91,17 +91,17 @@ static bool ui_jump_to_track_match (const char * name, Index<GRegex *> & regex_l
 const KeywordMatches * JumpToTrackCache::search_within
  (const KeywordMatches * subset, const char * keyword)
 {
-    Index<GRegex *> regex_list = ui_jump_to_track_cache_regex_list_create (keyword);
+    Index<GRegex *> regex_list = jump_to_track_cache_regex_list_create (keyword);
 
     KeywordMatches * k = add (String (keyword), KeywordMatches ());
 
     for (const KeywordMatch & item : * subset)
     {
         if (! regex_list.len () ||
-         ui_jump_to_track_match (item.title, regex_list) ||
-         ui_jump_to_track_match (item.artist, regex_list) ||
-         ui_jump_to_track_match (item.album, regex_list) ||
-         ui_jump_to_track_match (item.path, regex_list))
+         jump_to_track_match (item.title, regex_list) ||
+         jump_to_track_match (item.artist, regex_list) ||
+         jump_to_track_match (item.album, regex_list) ||
+         jump_to_track_match (item.path, regex_list))
             k->append (item);
     }
 

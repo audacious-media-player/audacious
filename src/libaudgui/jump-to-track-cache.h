@@ -1,5 +1,5 @@
 /*
- * ui_jumptotrack_cache.h
+ * jump-to-track-cache.h
  * Copyright 2008 Jussi Judin
  *
  * Redistribution and use in source and binary forms, with or without
@@ -17,8 +17,8 @@
  * the use of this software.
  */
 
-#ifndef LIBAUDGUI_UI_JUMPTOTRACK_CACHE_H
-#define LIBAUDGUI_UI_JUMPTOTRACK_CACHE_H
+#ifndef LIBAUDGUI_JUMPTOTRACK_CACHE_H
+#define LIBAUDGUI_JUMPTOTRACK_CACHE_H
 
 #include <libaudcore/index.h>
 #include <libaudcore/multihash.h>

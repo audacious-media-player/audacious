@@ -5,6 +5,7 @@ DISTCLEAN = audacious.pc buildsys.mk config.h config.log config.status extra.mk
 DATA = AUTHORS \
        COPYING \
        images/about-logo.png \
+       images/about-logo.svg \
        images/album.png \
        images/appearance.png \
        images/audio.png \

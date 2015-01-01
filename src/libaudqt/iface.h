@@ -32,7 +32,7 @@ public:
 
     void show_about_window () { aboutwindow_show (); }
     void hide_about_window () { aboutwindow_hide (); }
-    void show_filebrowser (bool open) { fileopener_show (open); }
+    void show_filebrowser (bool open) { fileopener_show (open ? FileMode::Open : FileMode::Add); }
     void hide_filebrowser () {}
     void show_jump_to_song () {}
     void hide_jump_to_song () {}

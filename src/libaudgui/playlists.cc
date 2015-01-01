@@ -31,7 +31,7 @@
 #include "libaudgui-gtk.h"
 
 struct ImportExportJob {
-    gboolean save;
+    bool save;
     int list_id;
     char * filename;
     GtkWidget * selector, * confirm;
@@ -155,7 +155,7 @@ static void create_selector (ImportExportJob * job, const char * filename, const
     gtk_widget_show_all (job->selector);
 }
 
-static GtkWidget * start_job (gboolean save)
+static GtkWidget * start_job (bool save)
 {
     int list = aud_playlist_get_active ();
 
@@ -172,12 +172,12 @@ static GtkWidget * start_job (gboolean save)
     return job->selector;
 }
 
-EXPORT void audgui_import_playlist (void)
+EXPORT void audgui_import_playlist ()
 {
     audgui_show_unique_window (AUDGUI_PLAYLIST_IMPORT_WINDOW, start_job (false));
 }
 
-EXPORT void audgui_export_playlist (void)
+EXPORT void audgui_export_playlist ()
 {
     audgui_show_unique_window (AUDGUI_PLAYLIST_EXPORT_WINDOW, start_job (true));
 }

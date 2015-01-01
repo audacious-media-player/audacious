@@ -1,5 +1,5 @@
 /*
- * ui_fileopener.c
+ * file-opener.c
  * Copyright 2007-2013 Michael Färber and John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
@@ -92,43 +92,43 @@ static GtkWidget * create_filebrowser (gboolean open)
         option = "close_dialog_add";
     }
 
-    GtkWidget * window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_type_hint (GTK_WINDOW (window), GDK_WINDOW_TYPE_HINT_DIALOG);
-    gtk_window_set_title(GTK_WINDOW(window), window_title);
-    gtk_window_set_default_size(GTK_WINDOW(window), 700, 450);
-    gtk_container_set_border_width(GTK_CONTAINER(window), 10);
+    GtkWidget * window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_type_hint ((GtkWindow *) window, GDK_WINDOW_TYPE_HINT_DIALOG);
+    gtk_window_set_title ((GtkWindow *) window, window_title);
+    gtk_window_set_default_size ((GtkWindow *) window, 700, 450);
+    gtk_container_set_border_width ((GtkContainer *) window, 10);
 
     GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-    gtk_container_add(GTK_CONTAINER(window), vbox);
+    gtk_container_add ((GtkContainer *) window, vbox);
 
-    GtkWidget * chooser = gtk_file_chooser_widget_new(GTK_FILE_CHOOSER_ACTION_OPEN);
-    gtk_file_chooser_set_select_multiple(GTK_FILE_CHOOSER(chooser), true);
+    GtkWidget * chooser = gtk_file_chooser_widget_new (GTK_FILE_CHOOSER_ACTION_OPEN);
+    gtk_file_chooser_set_select_multiple ((GtkFileChooser *) chooser, true);
 
     String path = aud_get_str ("audgui", "filesel_path");
     if (path[0])
         gtk_file_chooser_set_current_folder ((GtkFileChooser *) chooser, path);
 
-    gtk_box_pack_start(GTK_BOX(vbox), chooser, true, true, 3);
+    gtk_box_pack_start ((GtkBox *) vbox, chooser, true, true, 3);
 
     GtkWidget * hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-    gtk_box_pack_end(GTK_BOX(vbox), hbox, false, false, 3);
+    gtk_box_pack_end ((GtkBox *) vbox, hbox, false, false, 3);
 
     GtkWidget * toggle = gtk_check_button_new_with_mnemonic (toggle_text);
     gtk_toggle_button_set_active ((GtkToggleButton *) toggle, aud_get_bool ("audgui", option));
     g_signal_connect (toggle, "toggled", (GCallback) toggled_cb, (void *) option);
-    gtk_box_pack_start(GTK_BOX(hbox), toggle, true, true, 3);
+    gtk_box_pack_start ((GtkBox *) hbox, toggle, true, true, 0);
 
     GtkWidget * bbox = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
-    gtk_button_box_set_layout(GTK_BUTTON_BOX(bbox), GTK_BUTTONBOX_END);
-    gtk_box_set_spacing(GTK_BOX(bbox), 6);
-    gtk_box_pack_end(GTK_BOX(hbox), bbox, true, true, 3);
+    gtk_button_box_set_layout ((GtkButtonBox *) bbox, GTK_BUTTONBOX_END);
+    gtk_box_set_spacing ((GtkBox *) bbox, 6);
+    gtk_box_pack_end ((GtkBox *) hbox, bbox, true, true, 0);
 
     GtkWidget * action_button = audgui_button_new (verb, icon, open_cb, chooser);
     GtkWidget * close_button = audgui_button_new (_("_Close"), "window-close",
      (AudguiCallback) audgui_hide_filebrowser, nullptr);
 
-    gtk_container_add(GTK_CONTAINER(bbox), close_button);
-    gtk_container_add(GTK_CONTAINER(bbox), action_button);
+    gtk_container_add ((GtkContainer *) bbox, close_button);
+    gtk_container_add ((GtkContainer *) bbox, action_button);
 
     gtk_widget_set_can_default (action_button, true);
     gtk_widget_grab_default (action_button);
@@ -149,7 +149,7 @@ EXPORT void audgui_run_filebrowser (bool open)
     audgui_show_unique_window (AUDGUI_FILEBROWSER_WINDOW, create_filebrowser (open));
 }
 
-EXPORT void audgui_hide_filebrowser (void)
+EXPORT void audgui_hide_filebrowser ()
 {
     audgui_hide_unique_window (AUDGUI_FILEBROWSER_WINDOW);
 }

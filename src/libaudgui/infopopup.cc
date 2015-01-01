@@ -79,7 +79,7 @@ static void infopopup_art_ready (const char * filename)
     infopopup_queued = nullptr;
 }
 
-static gboolean infopopup_progress_cb (void * unused)
+static gboolean infopopup_progress_cb (void *)
 {
     String filename;
     int length = 0, time = 0;
@@ -124,7 +124,7 @@ static void infopopup_add_category (GtkWidget * grid, int position,
     gtk_widget_set_no_show_all (* label, true);
 }
 
-static void infopopup_destroyed (void)
+static void infopopup_destroyed ()
 {
     hook_dissociate ("art ready", (HookFunction) infopopup_art_ready);
 
@@ -140,7 +140,7 @@ static void infopopup_destroyed (void)
     infopopup_queued = nullptr;
 }
 
-static GtkWidget * infopopup_create (void)
+static GtkWidget * infopopup_create ()
 {
     GtkWidget * infopopup = gtk_window_new (GTK_WINDOW_POPUP);
     gtk_window_set_type_hint ((GtkWindow *) infopopup, GDK_WINDOW_TYPE_HINT_TOOLTIP);
@@ -284,7 +284,7 @@ EXPORT void audgui_infopopup_show (int playlist, int entry)
         infopopup_show (filename, tuple);
 }
 
-EXPORT void audgui_infopopup_show_current (void)
+EXPORT void audgui_infopopup_show_current ()
 {
     int playlist = aud_playlist_get_playing ();
     if (playlist < 0)
@@ -297,7 +297,7 @@ EXPORT void audgui_infopopup_show_current (void)
     audgui_infopopup_show (playlist, position);
 }
 
-EXPORT void audgui_infopopup_hide (void)
+EXPORT void audgui_infopopup_hide ()
 {
     audgui_hide_unique_window (AUDGUI_INFOPOPUP_WINDOW);
 
