@@ -107,6 +107,9 @@ struct Entry {
     Entry (PlaylistAddItem && item);
     ~Entry ();
 
+    void set_tuple (Tuple && new_tuple);
+    void set_failed (String && new_error);
+
     String filename;
     PluginHandle * decoder;
     Tuple tuple;
@@ -121,6 +124,8 @@ struct Entry {
 struct PlaylistData {
     PlaylistData (int id);
     ~PlaylistData ();
+
+    void set_entry_tuple (Entry * entry, Tuple && tuple);
 
     int number, unique_id;
     String filename, title;
@@ -188,47 +193,47 @@ static void playlist_trigger_scan ();
 
 static SmartPtr<TupleCompiler> title_formatter;
 
-static void entry_set_tuple_real (Entry * entry, Tuple && tuple)
+void Entry::set_tuple (Tuple && new_tuple)
 {
     /* Hack: We cannot refresh segmented entries (since their info is read from
      * the cue sheet when it is first loaded), so leave them alone. -jlindgren */
-    if (entry->tuple.get_value_type (Tuple::StartTime) == Tuple::Int)
+    if (tuple.get_value_type (Tuple::StartTime) == Tuple::Int)
         return;
 
-    entry->scanned = (bool) tuple;
-    entry->failed = false;
-    entry->error = String ();
+    scanned = (bool) new_tuple;
+    failed = false;
+    error = String ();
 
-    if (! tuple)
-        tuple.set_filename (entry->filename);
+    if (! new_tuple)
+        new_tuple.set_filename (filename);
 
-    tuple.generate_fallbacks ();
-    title_formatter->format (tuple);
+    new_tuple.generate_fallbacks ();
+    title_formatter->format (new_tuple);
 
-    entry->length = aud::max (0, tuple.get_int (Tuple::Length));
-    entry->tuple = std::move (tuple);
+    length = aud::max (0, new_tuple.get_int (Tuple::Length));
+    tuple = std::move (new_tuple);
 }
 
-static void entry_set_tuple (PlaylistData * playlist, Entry * entry, Tuple && tuple)
+void PlaylistData::set_entry_tuple (Entry * entry, Tuple && tuple)
 {
     scan_cancel (entry);
 
-    playlist->total_length -= entry->length;
+    total_length -= entry->length;
     if (entry->selected)
-        playlist->selected_length -= entry->length;
+        selected_length -= entry->length;
 
-    entry_set_tuple_real (entry, std::move (tuple));
+    entry->set_tuple (std::move (tuple));
 
-    playlist->total_length += entry->length;
+    total_length += entry->length;
     if (entry->selected)
-        playlist->selected_length += entry->length;
+        selected_length += entry->length;
 }
 
-static void entry_set_failed (PlaylistData * playlist, Entry * entry, String && error)
+void Entry::set_failed (String && new_error)
 {
-    entry->scanned = true;
-    entry->failed = true;
-    entry->error = std::move (error);
+    scanned = true;
+    failed = true;
+    error = std::move (new_error);
 }
 
 Entry::Entry (PlaylistAddItem && item) :
@@ -242,7 +247,7 @@ Entry::Entry (PlaylistAddItem && item) :
     selected (false),
     queued (false)
 {
-    entry_set_tuple_real (this, std::move (item.tuple));
+    set_tuple (std::move (item.tuple));
 }
 
 Entry::~Entry ()
@@ -546,12 +551,12 @@ static void scan_finish (ScanRequest * request)
 
     if (! entry->scanned && request->tuple)
     {
-        entry_set_tuple (playlist, entry, std::move (request->tuple));
+        playlist->set_entry_tuple (entry, std::move (request->tuple));
         queue_update (Playlist::Metadata, playlist, entry->number, 1);
     }
 
     if (! entry->decoder || ! entry->scanned)
-        entry_set_failed (playlist, entry, std::move (request->error));
+        entry->set_failed (std::move (request->error));
 
     scan_check_complete (playlist);
     scan_schedule ();
@@ -1718,7 +1723,7 @@ static void playlist_rescan_real (int playlist_num, bool selected)
     for (auto & entry : playlist->entries)
     {
         if (! selected || entry->selected)
-            entry_set_tuple (playlist, entry.get (), Tuple ());
+            playlist->set_entry_tuple (entry.get (), Tuple ());
     }
 
     queue_update (Playlist::Metadata, playlist, 0, playlist->entries.len ());
@@ -1751,7 +1756,7 @@ EXPORT void aud_playlist_rescan_file (const char * filename)
         {
             if (! strcmp (entry->filename, filename))
             {
-                entry_set_tuple (playlist.get (), entry.get (), Tuple ());
+                playlist->set_entry_tuple (entry.get (), Tuple ());
                 queue_update (Playlist::Metadata, playlist.get (), entry->number, 1);
                 queue = true;
             }
@@ -2092,7 +2097,7 @@ void playback_entry_set_tuple (int serial, Tuple && tuple)
         RETURN ();
 
     Entry * entry = playlist->position;
-    entry_set_tuple (playlist, entry, std::move (tuple));
+    playlist->set_entry_tuple (entry, std::move (tuple));
 
     queue_update (Playlist::Metadata, playlist, entry->number, 1);
     LEAVE;
