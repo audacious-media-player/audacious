@@ -41,9 +41,10 @@ enum UpdateLevel {
 };
 
 struct Update {
-    UpdateLevel level;  // type of update
-    int before;         // number of unaffected entries at playlist start
-    int after;          // number of unaffected entries at playlist end
+    UpdateLevel level;   // type of update
+    int before;          // number of unaffected entries at playlist start
+    int after;           // number of unaffected entries at playlist end
+    bool queue_changed;  // true if entries have been added to/removed from queue
 };
 
 /* The values which can be passed to playlist_sort_by_scheme(),
