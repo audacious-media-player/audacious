@@ -730,12 +730,13 @@ void playlist_insert_with_id (int at, int id)
     if (at < 0 || at > playlists.len ())
         at = playlists.len ();
 
+    auto playlist = new PlaylistData (id);
     playlists.insert (at, 1);
-    playlists[at].capture (new PlaylistData (id));
+    playlists[at].capture (playlist);
 
     number_playlists (at, playlists.len () - at);
 
-    queue_update (Structure, nullptr, 0, 0);
+    queue_update (Structure, playlist, 0, 0);
     LEAVE;
 }
 
