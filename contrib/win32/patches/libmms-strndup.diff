@@ -1,0 +1,44 @@
+diff -ur libmms-0.6.4-orig/configure.in libmms-0.6.4/configure.in
+--- libmms-0.6.4-orig/configure.in	2014-04-08 23:15:23 -0400
++++ libmms-0.6.4/configure.in	2015-01-02 13:03:49 -0500
+@@ -14,6 +14,7 @@
+ 
+ dnl Checks for header files.
+ AC_CHECK_HEADERS([sys/socket.h netinet/in.h netdb.h windows.h winsock2.h])
++AC_CHECK_FUNCS([strndup])
+ 
+ case $host in
+     *beos*)
+diff -ur libmms-0.6.4-orig/src/uri.c libmms-0.6.4/src/uri.c
+--- libmms-0.6.4-orig/src/uri.c	2014-04-02 10:22:58 -0400
++++ libmms-0.6.4/src/uri.c	2015-01-02 13:07:13 -0500
+@@ -125,6 +125,29 @@
+ #define ISSPACE(C) (((C) >= 9 && (C) <= 13) || (C) == ' ')
+ 
+ 
++/* Implement the strndup function.
++   Copyright (C) 2005 Free Software Foundation, Inc.
++   Written by Kaveh R. Ghazi <ghazi@caip.rutgers.edu>. */
++#ifndef HAVE_STRNDUP
++char *
++strndup (const char *s, size_t n)
++{
++  char *result;
++  size_t len = strlen (s);
++
++  if (n < len)
++    len = n;
++
++  result = (char *) malloc (len + 1);
++  if (!result)
++    return 0;
++
++  result[len] = '\0';
++  return (char *) memcpy (result, s, len);
++}
++#endif
++
++
+ static int split_user_passwd(const char* in, char** user, char** passwd)
+ {
+   char *pass, *tmp = g_strdup(in);
