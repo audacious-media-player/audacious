@@ -27,10 +27,7 @@
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
 
-static const char about_text[] =
- "<big><b>Audacious " VERSION "</b></big>\n"
- "Copyright © 2001-2014 Audacious developers and others";
-
+static const char about_text[] = "<big><b>Audacious " VERSION "</b></big>\n" COPYRIGHT;
 static const char website[] = "http://audacious-media-player.org";
 
 static GtkWidget * create_credits_notebook (const char * credits, const char * license)
