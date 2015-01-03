@@ -95,7 +95,7 @@ CPPFLAGS := -I.. -I../.. \
             -DHARDCODE_PLUGINDIR=\"${plugindir}\" \
             -DHARDCODE_LOCALEDIR=\"${localedir}\" \
             -DHARDCODE_DESKTOPFILE=\"${datarootdir}/applications/audacious.desktop\" \
-            -DHARDCODE_ICONFILE=\"${datarootdir}/icons/hicolor/scalable/apps/audacious.svg\"
+            -DHARDCODE_ICONFILE=\"${datarootdir}/icons/hicolor/48x48/apps/audacious.png\"
 
 CFLAGS += ${LIB_CFLAGS}
 

@@ -61,10 +61,8 @@ static QDialog * buildAboutWindow ()
 {
     const char * data_dir = aud_get_path (AudPath::DataDir);
     const char * logo_path = filename_build ({data_dir, "images", "about-logo.png"});
-    const char about_text[] =
-     "<big><b>Audacious " VERSION "</b></big><br>\n"
-     "Copyright © 2001-2014 Audacious developers and others";
-    const char website[] = "http://audacious-media-player.org";
+    const char * about_text = "<big><b>Audacious " VERSION "</b></big><br>" COPYRIGHT;
+    const char * website = "http://audacious-media-player.org";
 
     auto window = new QDialog;
 
