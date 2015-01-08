@@ -19,6 +19,7 @@
 
 #include "prefs-pluginlist-model.h"
 
+#include <QIcon>
 #include <libaudcore/plugins.h>
 
 namespace audqt {
@@ -41,7 +42,7 @@ int PluginListModel::rowCount (const QModelIndex & parent) const
 
 int PluginListModel::columnCount (const QModelIndex & parent) const
 {
-    return 1;
+    return NumColumns;
 }
 
 QVariant PluginListModel::headerData (int section, Qt::Orientation orientation, int role) const
@@ -55,16 +56,31 @@ QVariant PluginListModel::data (const QModelIndex &index, int role) const
     if (row < 0 || row >= m_list.len ())
         return QVariant ();
 
-    switch (role)
+    PluginHandle * p = m_list[row];
+    bool enabled = aud_plugin_get_enabled (p);
+
+    switch (index.column ())
     {
-    case Qt::DisplayRole:
-        return QString (aud_plugin_get_name (m_list[row]));
+    case NameColumn:
+        if (role == Qt::DisplayRole)
+            return QString (aud_plugin_get_name (p));
+        if (role == Qt::CheckStateRole)
+            return enabled ? Qt::Checked : Qt::Unchecked;
 
-    case Qt::CheckStateRole:
-        return aud_plugin_get_enabled (m_list[row]) ? Qt::Checked : Qt::Unchecked;
-
-    default:
         break;
+
+    case AboutColumn:
+        if (role == Qt::DecorationRole && enabled && aud_plugin_has_about (p))
+            return QIcon::fromTheme ("dialog-information");
+
+        break;
+
+    case SettingsColumn:
+        if (role == Qt::DecorationRole && enabled && aud_plugin_has_configure (p))
+            return QIcon::fromTheme ("preferences-system");
+
+        break;
+
     }
 
     return QVariant ();
@@ -81,7 +97,7 @@ bool PluginListModel::setData (const QModelIndex &index, const QVariant &value, 
         aud_plugin_enable (m_list[row], value.toUInt() != Qt::Unchecked);
     }
 
-    emit dataChanged (index, index);
+    emit dataChanged (index, index.sibling (index.row (), NumColumns - 1));
     return true;
 }
 

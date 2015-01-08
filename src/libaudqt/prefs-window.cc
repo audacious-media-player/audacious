@@ -599,91 +599,39 @@ static void create_song_info_category (QStackedWidget * category_notebook)
     category_notebook->addWidget (song_info_page);
 }
 
-static void about_btn_watch (QPushButton * btn, PluginHandle * ph)
-{
-    bool enabled = (aud_plugin_has_about (ph) && aud_plugin_get_enabled (ph));
-    btn->setEnabled (enabled);
-}
-
-static void settings_btn_watch (QPushButton * btn, PluginHandle * ph)
-{
-    bool enabled = (aud_plugin_has_configure (ph) && aud_plugin_get_enabled (ph));
-    btn->setEnabled (enabled);
-}
-
 static void create_plugin_category_page (PluginType category_id, const char * category_name, QTabWidget * parent)
 {
-    QWidget * w = new QWidget;
-    QVBoxLayout * vbox = new QVBoxLayout;
-
-    w->setLayout (vbox);
-    parent->addTab (w, category_name);
-
     QTreeView * view = new QTreeView;
-    PluginListModel * plm = new PluginListModel (0, category_id);
+    QHeaderView * header = view->header ();
 
     view->setIndentation (0);
-    view->setModel (plm);
-    view->header ()->hide ();
+    view->setModel (new PluginListModel (nullptr, category_id));
+    view->setSelectionMode (view->NoSelection);
 
-    vbox->addWidget (view);
+    header->hide ();
+    header->setSectionResizeMode (header->ResizeToContents);
+    header->setStretchLastSection (false);
 
-    QDialogButtonBox * bbox = new QDialogButtonBox;
-    vbox->addWidget (bbox);
+    parent->addTab (view, category_name);
 
-    QPushButton * about_btn = new QPushButton (translate_str (N_("_About")));
-    about_btn->setEnabled (false);
-
-    QPushButton * settings_btn = new QPushButton (translate_str (N_("_Settings")));
-    settings_btn->setEnabled (false);
-
-    bbox->addButton (about_btn, QDialogButtonBox::ActionRole);
-    bbox->addButton (settings_btn, QDialogButtonBox::ActionRole);
-
-    QItemSelectionModel * model = view->selectionModel ();
-    QObject::connect (model, &QItemSelectionModel::selectionChanged, [=] (const QItemSelection & selected, const QItemSelection & deselected) {
-        if (selected.length () < 1)
-            return;
-
+    QObject::connect (view, & QAbstractItemView::clicked,
+     [category_id] (const QModelIndex & index)
+    {
+        int row = index.row ();
         auto & list = aud_plugin_list (category_id);
-        int idx = selected.indexes () [0].row ();
-        if (idx < 0 || idx >= list.len ())
+
+        if (row < 0 || row >= list.len () || ! aud_plugin_get_enabled (list[row]))
             return;
 
-        AUDDBG ("plugin %s selected\n", aud_plugin_get_name (list[idx]));
-
-        about_btn_watch (about_btn, list[idx]);
-        settings_btn_watch (settings_btn, list[idx]);
-    });
-
-    QObject::connect (about_btn, &QAbstractButton::clicked, [=] (bool) {
-        const QItemSelection & selected = model->selection ();
-        if (selected.length () < 1)
-            return;
-
-        auto & list = aud_plugin_list (category_id);
-        int idx = selected.indexes () [0].row ();
-        if (idx < 0 || idx >= list.len ())
-            return;
-
-        AUDDBG ("plugin %s: about\n", aud_plugin_get_name (list[idx]));
-
-        plugin_about (list[idx]);
-    });
-
-    QObject::connect (settings_btn, &QAbstractButton::clicked, [=] (bool) {
-        const QItemSelection & selected = model->selection ();
-        if (selected.length () < 1)
-            return;
-
-        auto & list = aud_plugin_list (category_id);
-        int idx = selected.indexes () [0].row ();
-        if (idx < 0 || idx >= list.len ())
-            return;
-
-        AUDDBG ("plugin %s: settings\n", aud_plugin_get_name (list[idx]));
-
-        plugin_prefs (list[idx]);
+        switch (index.column ())
+        {
+            case PluginListModel::AboutColumn:
+                plugin_about (list[row]);
+                break;
+            case PluginListModel::SettingsColumn:
+                plugin_prefs (list[row]);
+                break;
+        }
     });
 }
 
