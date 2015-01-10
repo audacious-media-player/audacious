@@ -47,54 +47,54 @@ MenuAction::MenuAction (const MenuItem & item, const char * domain, QWidget * pa
     QAction (parent),
     m_item (item)
 {
-    if (item.m_sep)
+    if (item.sep)
     {
         setSeparator (true);
         return;
     }
 
-    setText (translate_str (item.m_name, domain ? domain : item.m_domain));
+    setText (translate_str (item.text.name, domain));
 
-    if (item.m_func)
-        QObject::connect (this, & QAction::triggered, item.m_func);
-    else if (item.m_cname)
+    if (item.func)
+        QObject::connect (this, & QAction::triggered, item.func);
+    else if (item.cfg.name)
     {
         setCheckable (true);
-        setChecked (aud_get_bool (item.m_csect, item.m_cname));
+        setChecked (aud_get_bool (item.cfg.sect, item.cfg.name));
 
         QObject::connect (this, & QAction::toggled, this, & MenuAction::toggle);
 
-        if (item.m_chook)
-            m_hook.capture (new HookReceiver<MenuAction> (item.m_chook, this, & MenuAction::update));
+        if (item.cfg.hook)
+            m_hook.capture (new HookReceiver<MenuAction> (item.cfg.hook, this, & MenuAction::update));
     }
-    else if (item.m_items.len)
-        setMenu (menu_build (item.m_items, domain, parent));
-    else if (item.m_submenu)
-        setMenu (item.m_submenu ());
+    else if (item.items.len)
+        setMenu (menu_build (item.items, domain, parent));
+    else if (item.submenu)
+        setMenu (item.submenu ());
 
 #ifndef Q_OS_MAC
-    if (item.m_icon && QIcon::hasThemeIcon (item.m_icon))
-        setIcon (QIcon::fromTheme (item.m_icon));
+    if (item.text.icon && QIcon::hasThemeIcon (item.text.icon))
+        setIcon (QIcon::fromTheme (item.text.icon));
 #endif
 
-    if (item.m_shortcut)
-        setShortcut (QString (item.m_shortcut));
+    if (item.text.shortcut)
+        setShortcut (QString (item.text.shortcut));
 }
 
 void MenuAction::toggle (bool checked)
 {
-    if (aud_get_bool (m_item.m_csect, m_item.m_cname) != checked)
+    if (aud_get_bool (m_item.cfg.sect, m_item.cfg.name) != checked)
     {
-        aud_set_bool (m_item.m_csect, m_item.m_cname, checked);
+        aud_set_bool (m_item.cfg.sect, m_item.cfg.name, checked);
 
-        if (m_item.m_func)
-            m_item.m_func ();
+        if (m_item.func)
+            m_item.func ();
     }
 }
 
 void MenuAction::update ()
 {
-    setChecked (aud_get_bool (m_item.m_csect, m_item.m_cname));
+    setChecked (aud_get_bool (m_item.cfg.sect, m_item.cfg.name));
 }
 
 EXPORT QAction * menu_action (const MenuItem & menu_item, const char * domain, QWidget * parent)
@@ -102,7 +102,7 @@ EXPORT QAction * menu_action (const MenuItem & menu_item, const char * domain, Q
     return new MenuAction (menu_item, domain, parent);
 }
 
-EXPORT QMenu * menu_build (const ArrayRef<const MenuItem> menu_items, const char * domain, QWidget * parent)
+EXPORT QMenu * menu_build (ArrayRef<MenuItem> menu_items, const char * domain, QWidget * parent)
 {
     QMenu * m = new QMenu (parent);
 
@@ -112,10 +112,14 @@ EXPORT QMenu * menu_build (const ArrayRef<const MenuItem> menu_items, const char
     return m;
 }
 
-EXPORT void menubar_build (const ArrayRef<const MenuItem> menu_items, const char * domain, QMenuBar * menubar)
+EXPORT QMenuBar * menubar_build (ArrayRef<MenuItem> menu_items, const char * domain, QWidget * parent)
 {
+    QMenuBar * m = new QMenuBar (parent);
+
     for (auto & it : menu_items)
-        menubar->addAction (new MenuAction (it, domain, menubar));
+        m->addAction (new MenuAction (it, domain, m));
+
+    return m;
 }
 
 } // namespace audqt

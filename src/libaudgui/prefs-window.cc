@@ -139,7 +139,7 @@ static Index<ComboItem> iface_combo_elements;
 static int iface_combo_selected;
 static GtkWidget * iface_prefs_box;
 
-static ArrayRef<const ComboItem> iface_combo_fill ();
+static ArrayRef<ComboItem> iface_combo_fill ();
 static void iface_combo_changed ();
 static void * iface_create_prefs_box ();
 
@@ -156,7 +156,7 @@ static int output_combo_selected;
 static GtkWidget * output_config_button;
 static GtkWidget * output_about_button;
 
-static ArrayRef<const ComboItem> output_combo_fill ();
+static ArrayRef<ComboItem> output_combo_fill ();
 static void output_combo_changed ();
 static void * output_create_config_button ();
 static void * output_create_about_button ();
@@ -579,7 +579,7 @@ static void iface_combo_changed ()
     g_idle_add_full (G_PRIORITY_HIGH, iface_combo_changed_finish, nullptr, nullptr);
 }
 
-static ArrayRef<const ComboItem> iface_combo_fill ()
+static ArrayRef<ComboItem> iface_combo_fill ()
 {
     if (! iface_combo_elements.len ())
     {
@@ -616,7 +616,7 @@ static void output_combo_changed ()
     }
 }
 
-static ArrayRef<const ComboItem> output_combo_fill ()
+static ArrayRef<ComboItem> output_combo_fill ()
 {
     if (! output_combo_elements.len ())
     {

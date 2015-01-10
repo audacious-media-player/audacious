@@ -28,7 +28,7 @@
 
 namespace audqt {
 
-static aud::array<AudMenuID, Index<MenuItem *>> items;
+static aud::array<AudMenuID, Index<SmartPtr<MenuItem>>> items;
 static aud::array<AudMenuID, QMenu *> menus;
 
 static void show_prefs (void)
@@ -37,7 +37,7 @@ static void show_prefs (void)
 }
 
 MenuItem default_menu_items[] = {
-    MenuCommand (N_("Plugins ..."), show_prefs),
+    MenuCommand ({N_("Plugins ...")}, show_prefs),
     MenuSep (),
 };
 
@@ -48,49 +48,31 @@ EXPORT QMenu * menu_get_by_id (AudMenuID id)
 
     menus[id] = new QMenu (translate_str ("Services"));
 
-    for (auto & it : default_menu_items)
-        menus[id]->addAction (menu_action (it, PACKAGE, menus[id]));
+    for (auto & item : default_menu_items)
+        menus[id]->addAction (menu_action (item, PACKAGE, menus[id]));
 
-    for (const MenuItem * it : items[id])
-        menus[id]->addAction (menu_action (* it, nullptr, menus[id]));
+    for (auto & item : items[id])
+        menus[id]->addAction (menu_action (* item, nullptr, menus[id]));
 
     return menus[id];
 }
 
-EXPORT void menu_add (AudMenuID id, void (* func) (void), const char * name, const char * icon, const char * domain)
+EXPORT void menu_add (AudMenuID id, void (* func) (void), const char * name, const char * icon)
 {
-    MenuItem * it = new MenuItem;
-
-    it->m_name = name;
-    it->m_icon = icon;
-    it->m_func = func;
-    it->m_domain = domain;
-    it->m_shortcut = nullptr;	/* XXX */
-    it->m_sep = false;
-
-    items[id].append (it);
+    MenuItem * item = new MenuItem (MenuCommand ({name, icon}, func));
+    items[id].append (item);
 
     if (menus[id])
-        menus[id]->addAction (menu_action (* it, nullptr, menus[id]));
+        menus[id]->addAction (menu_action (* item, nullptr, menus[id]));
 }
 
 EXPORT void menu_remove (AudMenuID id, void (* func) (void))
 {
-    MenuItem * item = nullptr;
+    // FIXME: remove the QAction
+    auto is_match = [func] (SmartPtr<MenuItem> & item)
+        { return item->func == func; };
 
-    for (MenuItem * it : items[id])
-    {
-        if (it->m_func == func)
-        {
-            item = it;
-            break;
-        }
-    }
-
-    if (! item)
-        return;
-
-    delete item;
+    items[id].remove_if (is_match, true);
 }
 
 } // namespace audqt

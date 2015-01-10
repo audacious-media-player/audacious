@@ -30,7 +30,7 @@
 
 namespace audqt {
 
-void prefs_populate (QLayout * layout, ArrayRef<const PreferencesWidget> widgets, const char * domain)
+void prefs_populate (QLayout * layout, ArrayRef<PreferencesWidget> widgets, const char * domain)
 {
     QButtonGroup * radio_btn_group = nullptr;
 

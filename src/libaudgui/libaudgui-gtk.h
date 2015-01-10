@@ -44,7 +44,7 @@ GtkWidget * audgui_get_plugin_menu (AudMenuID id);
 
 /* prefs-widget.c */
 void audgui_create_widgets_with_domain (GtkWidget * box,
- ArrayRef<const PreferencesWidget> widgets, const char * domain);
+ ArrayRef<PreferencesWidget> widgets, const char * domain);
 
 /* scaled-image.c -- okay to use without audgui_init() */
 GtkWidget * audgui_scaled_image_new (GdkPixbuf * pixbuf);

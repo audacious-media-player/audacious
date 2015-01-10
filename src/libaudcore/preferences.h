@@ -55,7 +55,7 @@ struct WidgetVSpin {
 };
 
 struct WidgetVTable {
-    ArrayRef<const PreferencesWidget> widgets;
+    ArrayRef<PreferencesWidget> widgets;
 };
 
 struct WidgetVFonts {
@@ -68,26 +68,26 @@ struct WidgetVEntry {
 
 struct WidgetVCombo {
     /* static init */
-    ArrayRef<const ComboItem> elems;
+    ArrayRef<ComboItem> elems;
 
     /* runtime init */
-    ArrayRef<const ComboItem> (* fill) ();
+    ArrayRef<ComboItem> (* fill) ();
 };
 
 struct WidgetVBox {
-    ArrayRef<const PreferencesWidget> widgets;
+    ArrayRef<PreferencesWidget> widgets;
 
-    bool horizontal;  /* false gives vertical, true gives horizontal aligment of child widgets */
+    bool horizontal;  /* false gives vertical, true gives horizontal alignment of child widgets */
     bool frame;       /* whether to draw frame around box */
 };
 
 struct NotebookTab {
     const char * name;
-    ArrayRef<const PreferencesWidget> widgets;
+    ArrayRef<PreferencesWidget> widgets;
 };
 
 struct WidgetVNotebook {
-    ArrayRef<const NotebookTab> tabs;
+    ArrayRef<NotebookTab> tabs;
 };
 
 struct WidgetVSeparator {
@@ -291,7 +291,7 @@ constexpr PreferencesWidget WidgetCustomQt (void * (* populate) (void))
     { return {PreferencesWidget::CustomQt, 0, 0, {}, populate}; }
 
 struct PluginPreferences {
-    ArrayRef<const PreferencesWidget> widgets;
+    ArrayRef<PreferencesWidget> widgets;
 
     void (* init) (void);
     void (* apply) (void);

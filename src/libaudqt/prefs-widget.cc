@@ -234,7 +234,7 @@ QWidget * ComboBoxWidget::widget ()
 
 void ComboBoxWidget::update ()
 {
-    ArrayRef<const ComboItem> items = m_parent->data.combo.elems;
+    ArrayRef<ComboItem> items = m_parent->data.combo.elems;
 
     if (m_parent->data.combo.fill)
         items = m_parent->data.combo.fill ();

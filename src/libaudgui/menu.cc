@@ -114,7 +114,7 @@ EXPORT GtkWidget * audgui_menu_item_new_with_domain
 }
 
 EXPORT void audgui_menu_init_with_domain (GtkWidget * shell,
- ArrayRef<const AudguiMenuItem> items, GtkAccelGroup * accel,
+ ArrayRef<AudguiMenuItem> items, GtkAccelGroup * accel,
  const char * domain)
 {
     for (const AudguiMenuItem & item : items)

@@ -245,7 +245,7 @@ static void combobox_update (GtkWidget * combobox, const PreferencesWidget * wid
 {
     auto domain = (const char *) g_object_get_data ((GObject *) combobox, "combodomain");
 
-    ArrayRef<const ComboItem> items = widget->data.combo.elems;
+    ArrayRef<ComboItem> items = widget->data.combo.elems;
     if (widget->data.combo.fill)
         items = widget->data.combo.fill ();
 
@@ -301,7 +301,7 @@ static void create_cbox (const PreferencesWidget * widget, GtkWidget * * label,
 /* WIDGET_TABLE */
 
 static void fill_table (GtkWidget * table,
- ArrayRef<const PreferencesWidget> widgets, const char * domain)
+ ArrayRef<PreferencesWidget> widgets, const char * domain)
 {
     for (const PreferencesWidget & w : widgets)
     {
@@ -358,7 +358,7 @@ static void fill_table (GtkWidget * table,
 
 /* box: a GtkBox */
 void audgui_create_widgets_with_domain (GtkWidget * box,
- ArrayRef<const PreferencesWidget> widgets, const char * domain)
+ ArrayRef<PreferencesWidget> widgets, const char * domain)
 {
     GtkWidget * widget = nullptr, * child_box = nullptr;
     GSList * radio_btn_group = nullptr;

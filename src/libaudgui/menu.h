@@ -40,7 +40,7 @@ struct AudguiMenuItem {
     const char * hook;
 
     /* for submenus */
-    ArrayRef<const AudguiMenuItem> items;
+    ArrayRef<AudguiMenuItem> items;
 
     /* for custom submenus */
     GtkWidget * (* get_sub) (void);
@@ -59,7 +59,7 @@ constexpr AudguiMenuItem MenuToggle (const char * name, const char * icon,
     { return {name, icon, key, mod, func, csect, cname, hook}; }
 
 constexpr AudguiMenuItem MenuSub (const char * name, const char * icon,
- ArrayRef<const AudguiMenuItem> items)
+ ArrayRef<AudguiMenuItem> items)
     { return {name, icon, 0, (GdkModifierType) 0, 0, 0, 0, 0, items}; }
 
 constexpr AudguiMenuItem MenuSub (const char * name, const char * icon,
@@ -74,7 +74,7 @@ GtkWidget * audgui_menu_item_new_with_domain (const AudguiMenuItem * item,
  GtkAccelGroup * accel, const char * domain);
 
 void audgui_menu_init_with_domain (GtkWidget * shell,
- ArrayRef<const AudguiMenuItem> items, GtkAccelGroup * accel,
+ ArrayRef<AudguiMenuItem> items, GtkAccelGroup * accel,
  const char * domain);
 
 #define audgui_menu_item_new(i, a) audgui_menu_item_new_with_domain (i, a, PACKAGE)
