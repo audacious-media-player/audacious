@@ -49,10 +49,10 @@ EXPORT QMenu * menu_get_by_id (AudMenuID id)
     menus[id] = new QMenu (translate_str ("Services"));
 
     for (auto & it : default_menu_items)
-        it.add_to_menu (PACKAGE, menus[id]);
+        menus[id]->addAction (menu_action (it, PACKAGE, menus[id]));
 
     for (const MenuItem * it : items[id])
-        it->add_to_menu (nullptr, menus[id]);
+        menus[id]->addAction (menu_action (* it, nullptr, menus[id]));
 
     return menus[id];
 }
@@ -71,7 +71,7 @@ EXPORT void menu_add (AudMenuID id, void (* func) (void), const char * name, con
     items[id].append (it);
 
     if (menus[id])
-        it->add_to_menu (nullptr, menus[id]);
+        menus[id]->addAction (menu_action (* it, nullptr, menus[id]));
 }
 
 EXPORT void menu_remove (AudMenuID id, void (* func) (void))
