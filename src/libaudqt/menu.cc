@@ -30,72 +30,76 @@
 
 namespace audqt {
 
-QAction * MenuItem::build_action (const char * domain, QWidget * parent) const
+class MenuAction : public QAction
 {
-    QAction * act = new QAction (parent);
+public:
+    MenuAction (const MenuItem & item, const char * domain, QWidget * parent);
 
-    if (! m_sep)
+private:
+    void toggle (bool checked);
+    void update ();
+
+    const MenuItem & m_item;
+    SmartPtr<HookReceiver<MenuAction>> m_hook;
+};
+
+MenuAction::MenuAction (const MenuItem & item, const char * domain, QWidget * parent) :
+    QAction (parent),
+    m_item (item)
+{
+    if (item.m_sep)
     {
-        act->setText (translate_str (m_name, domain ? domain : m_domain));
+        setSeparator (true);
+        return;
+    }
 
-        if (m_func)
-            QObject::connect (act, &QAction::triggered, m_func);
-        else if (m_cname)
-        {
-            act->setCheckable (true);
-            act->setChecked (aud_get_bool (m_csect, m_cname));
+    setText (translate_str (item.m_name, domain ? domain : item.m_domain));
 
-            QObject::connect (act, &QAction::toggled, [=] (bool checked) {
-                if (aud_get_bool (m_csect, m_cname) == checked)
-                    return;
+    if (item.m_func)
+        QObject::connect (this, & QAction::triggered, item.m_func);
+    else if (item.m_cname)
+    {
+        setCheckable (true);
+        setChecked (aud_get_bool (item.m_csect, item.m_cname));
 
-                aud_set_bool (m_csect, m_cname, checked);
+        QObject::connect (this, & QAction::toggled, this, & MenuAction::toggle);
 
-                if (m_func)
-                    m_func ();
-            });
-
-            //if (m_chook)
-                //hook_associate (m_chook, (HookFunction) MenuItem::hook_cb, act);
-        }
-        else if (m_items.len || m_submenu)
-        {
-            QMenu * submenu = nullptr;
-
-            if (m_items.len)
-                submenu = menu_build (m_items, domain, parent);
-            else if (m_submenu)
-                submenu = m_submenu ();
-
-            if (submenu)
-                act->setMenu (submenu);
-        }
+        if (item.m_chook)
+            m_hook.capture (new HookReceiver<MenuAction> (item.m_chook, this, & MenuAction::update));
+    }
+    else if (item.m_items.len)
+        setMenu (menu_build (item.m_items, domain, parent));
+    else if (item.m_submenu)
+        setMenu (item.m_submenu ());
 
 #ifndef Q_OS_MAC
-        if (m_icon && QIcon::hasThemeIcon (m_icon))
-            act->setIcon (QIcon::fromTheme (m_icon));
+    if (item.m_icon && QIcon::hasThemeIcon (item.m_icon))
+        setIcon (QIcon::fromTheme (item.m_icon));
 #endif
 
-        if (m_shortcut)
-            act->setShortcut (QString (m_shortcut));
+    if (item.m_shortcut)
+        setShortcut (QString (item.m_shortcut));
+}
+
+void MenuAction::toggle (bool checked)
+{
+    if (aud_get_bool (m_item.m_csect, m_item.m_cname) != checked)
+    {
+        aud_set_bool (m_item.m_csect, m_item.m_cname, checked);
+
+        if (m_item.m_func)
+            m_item.m_func ();
     }
-    else
-        act->setSeparator (true);
-
-    return act;
 }
 
-void MenuItem::add_to_menu (const char * domain, QMenu * menu) const
+void MenuAction::update ()
 {
-    QAction * act = build_action (domain);
-
-    if (act)
-        menu->addAction (act);
+    setChecked (aud_get_bool (m_item.m_csect, m_item.m_cname));
 }
 
-void MenuItem::hook_cb (void *, QAction * act)
+EXPORT QAction * menu_action (const MenuItem & menu_item, const char * domain, QWidget * parent)
 {
-    AUDDBG ("implement me\n");
+    return new MenuAction (menu_item, domain, parent);
 }
 
 EXPORT QMenu * menu_build (const ArrayRef<const MenuItem> menu_items, const char * domain, QWidget * parent)
@@ -103,7 +107,7 @@ EXPORT QMenu * menu_build (const ArrayRef<const MenuItem> menu_items, const char
     QMenu * m = new QMenu (parent);
 
     for (auto & it : menu_items)
-        it.add_to_menu (domain, m);
+        m->addAction (new MenuAction (it, domain, m));
 
     return m;
 }
@@ -111,12 +115,7 @@ EXPORT QMenu * menu_build (const ArrayRef<const MenuItem> menu_items, const char
 EXPORT void menubar_build (const ArrayRef<const MenuItem> menu_items, const char * domain, QMenuBar * menubar)
 {
     for (auto & it : menu_items)
-    {
-        QAction * act = it.build_action (domain);
-
-        if (act)
-            menubar->addAction (act);
-    }
+        menubar->addAction (new MenuAction (it, domain, menubar));
 }
 
 } // namespace audqt

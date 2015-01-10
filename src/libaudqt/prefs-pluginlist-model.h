@@ -31,6 +31,13 @@ namespace audqt {
 class PluginListModel : public QAbstractListModel
 {
 public:
+    enum {
+        NameColumn,
+        AboutColumn,
+        SettingsColumn,
+        NumColumns
+    };
+
     PluginListModel (QObject * parent, PluginType category_id);
     ~PluginListModel ();
 

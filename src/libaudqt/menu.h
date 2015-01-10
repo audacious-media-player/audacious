@@ -49,11 +49,6 @@ struct MenuItem {
 
     /* for custom submenus */
     QMenu * (* m_submenu) ();
-
-    void add_to_menu (const char * domain, QMenu * menu) const;
-    QAction * build_action (const char * domain, QWidget * parent = nullptr) const;
-
-    static void hook_cb (void *, QAction * act);
 };
 
 constexpr MenuItem MenuCommand (const char * name, void (* func) (), const char * shortcut = nullptr, const char * icon = nullptr, const char * domain = nullptr)
@@ -68,6 +63,7 @@ constexpr MenuItem MenuSub (const char * name, QMenu * (* submenu) (), const cha
 constexpr MenuItem MenuSep ()
     { return { nullptr, nullptr, nullptr, nullptr, nullptr, true }; }
 
+QAction * menu_action (const MenuItem & menu_item, const char * domain, QWidget * parent = nullptr);
 QMenu * menu_build (const ArrayRef<const MenuItem> menu_items, const char * domain, QWidget * parent = nullptr);
 void menubar_build (const ArrayRef<const MenuItem> menu_items, const char * domain, QMenuBar * parent);
 
