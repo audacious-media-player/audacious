@@ -39,19 +39,19 @@ static QTabWidget * buildCreditsNotebook (QWidget * parent)
 
     auto tabs = new QTabWidget (parent);
 
-    for (int i = 0; i < 2; i++)
+    for (int i = 0; i < 2; i ++)
     {
         QFile f (QString (filename_build ({data_dir, filenames[i]})));
-        if (!f.open (QIODevice::ReadOnly))
+        if (! f.open (QIODevice::ReadOnly))
             continue;
 
-        QTextStream in(&f);
+        QTextStream in (& f);
 
-        auto edit = new QPlainTextEdit (in.readAll(), parent);
+        auto edit = new QPlainTextEdit (in.readAll ().trimmed (), parent);
         edit->setReadOnly (true);
         tabs->addTab (edit, titles[i]);
 
-        f.close();
+        f.close ();
     }
 
     return tabs;
@@ -76,6 +76,7 @@ static QDialog * buildAboutWindow ()
     auto anchor = QString (str_printf ("<a href='%s'>%s</a>", website, website));
     auto link_label = new QLabel (anchor, window);
     link_label->setAlignment (Qt::AlignHCenter);
+    link_label->setContentsMargins (0, 5, 0, 0);
     link_label->setOpenExternalLinks (true);
 
     auto layout = new QVBoxLayout (window);
@@ -85,7 +86,7 @@ static QDialog * buildAboutWindow ()
     layout->addWidget (buildCreditsNotebook (window));
 
     window->setWindowTitle (_("About Audacious"));
-    window->resize (640, 480);
+    window->setFixedSize (590, 450);
 
     return window;
 }
