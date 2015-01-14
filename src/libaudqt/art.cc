@@ -21,6 +21,7 @@
 #include <QPixmap>
 #include <QImage>
 
+#include <libaudcore/audstrings.h>
 #include <libaudcore/playlist.h>
 #include <libaudcore/probe.h>
 #include <libaudcore/runtime.h>
@@ -33,8 +34,10 @@ EXPORT QPixmap art_request (const char * filename, unsigned int w, unsigned int 
 
     if (! data)
     {
-        AUDINFO ("no album art for %s.\n", filename);
-        return QPixmap ();
+        QString fallback = QString (filename_build
+         ({aud_get_path (AudPath::DataDir), "images", "album.png"}));
+
+        return QPixmap (fallback);
     }
 
     QImage img = QImage::fromData ((const uchar *) data->begin (), data->len ());
