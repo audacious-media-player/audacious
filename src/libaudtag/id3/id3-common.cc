@@ -83,7 +83,9 @@ static StringBuf id3_decode_text (const char * data, int size)
     if (size < 1)
         return StringBuf ();
 
-    return id3_convert ((const char *) data + 1, size - 1, data[0]);
+    int real_size;
+    id3_strnlen (data + 1, size - 1, data[0], & real_size, nullptr);
+    return id3_convert (data + 1, real_size, data[0]);
 }
 
 void id3_associate_string (Tuple & tuple, Tuple::Field field, const char * data, int size)
