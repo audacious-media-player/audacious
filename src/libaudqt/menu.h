@@ -29,50 +29,66 @@ class QMenu;
 class QMenuBar;
 class QWidget;
 
+enum class AudMenuID;
+
 namespace audqt {
 
-struct MenuItem {
-    const char * m_name;
-    const char * m_icon;
-    const char * m_domain;
-    const char * m_shortcut;
-    void (* m_func) ();
-    bool m_sep;
-
-    /* for toggle items */
-    const char * m_csect;
-    const char * m_cname;
-    const char * m_chook;
-
-    /* for submenus */
-    const ArrayRef<const MenuItem> m_items;
-
-    /* for custom submenus */
-    QMenu * (* m_submenu) ();
+struct MenuItemText {
+    const char * name;
+    const char * icon;
+    const char * shortcut;
 };
 
-constexpr MenuItem MenuCommand (const char * name, void (* func) (), const char * shortcut = nullptr, const char * icon = nullptr, const char * domain = nullptr)
-    { return { name, icon, domain, shortcut, func, false }; }
-constexpr MenuItem MenuToggle (const char * name, void (* func) () = nullptr, const char * shortcut = nullptr, const char * icon = nullptr, const char * domain = nullptr,
- const char * csect = nullptr, const char * cname = nullptr, const char * chook = nullptr)
-    { return { name, icon, domain, shortcut, func, false, csect, cname, chook }; }
-constexpr MenuItem MenuSub (const char * name, const ArrayRef<const MenuItem> items, const char * icon = nullptr, const char * domain = nullptr)
-    { return { name, icon, domain, nullptr, nullptr, false, nullptr, nullptr, nullptr, items }; }
-constexpr MenuItem MenuSub (const char * name, QMenu * (* submenu) (), const char * icon = nullptr, const char * domain = nullptr)
-    { return { name, icon, domain, nullptr, nullptr, false, nullptr, nullptr, nullptr, nullptr, submenu }; }
-constexpr MenuItem MenuSep ()
-    { return { nullptr, nullptr, nullptr, nullptr, nullptr, true }; }
+struct MenuItemConfig {
+    const char * sect;
+    const char * name;
+    const char * hook;
+};
 
+struct MenuItem {
+    MenuItemText text;
+    void (* func) ();
+
+    /* for toggle items */
+    MenuItemConfig cfg;
+
+    /* for submenus */
+    ArrayRef<MenuItem> items;
+
+    /* for custom submenus */
+    QMenu * (* submenu) ();
+
+    /* for separators */
+    bool sep;
+};
+
+constexpr MenuItem MenuCommand (MenuItemText text, void (* func) ())
+    { return {text, func}; }
+constexpr MenuItem MenuToggle (MenuItemText text, MenuItemConfig cfg, void (* func) () = nullptr)
+    { return {text, func, cfg}; }
+constexpr MenuItem MenuSub (MenuItemText text, ArrayRef<MenuItem> items)
+    { return {text, nullptr, {}, items}; }
+constexpr MenuItem MenuSub (MenuItemText text, QMenu * (* submenu) ())
+    { return {text, nullptr, {}, nullptr, submenu}; }
+constexpr MenuItem MenuSep ()
+    { return {{}, nullptr, {}, nullptr, nullptr, true}; }
+
+/* menu.cc */
 QAction * menu_action (const MenuItem & menu_item, const char * domain, QWidget * parent = nullptr);
-QMenu * menu_build (const ArrayRef<const MenuItem> menu_items, const char * domain, QWidget * parent = nullptr);
-void menubar_build (const ArrayRef<const MenuItem> menu_items, const char * domain, QMenuBar * parent);
+QMenu * menu_build (ArrayRef<MenuItem> menu_items, const char * domain, QWidget * parent = nullptr);
+QMenuBar * menubar_build (ArrayRef<MenuItem> menu_items, const char * domain, QWidget * parent = nullptr);
 
 #ifdef PACKAGE
-static inline QMenu * menu_build (const ArrayRef<const MenuItem> menu_items, QWidget * parent = nullptr)
+static inline QMenu * menu_build (ArrayRef<MenuItem> menu_items, QWidget * parent = nullptr)
     { return menu_build (menu_items, PACKAGE, parent); }
-static inline void menubar_build (const ArrayRef<const MenuItem> menu_items, QMenuBar * parent)
-    { menubar_build (menu_items, PACKAGE, parent); }
+static inline QMenuBar * menubar_build (ArrayRef<MenuItem> menu_items, QWidget * parent = nullptr)
+    { return menubar_build (menu_items, PACKAGE, parent); }
 #endif
+
+/* plugin-menu.cc */
+QMenu * menu_get_by_id (AudMenuID id);
+void menu_add (AudMenuID id, void (* func) (void), const char * name, const char * icon);
+void menu_remove (AudMenuID id, void (* func) (void));
 
 } // namespace audqt
 

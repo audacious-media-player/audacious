@@ -23,13 +23,10 @@
 #include <QString>
 #include <libaudcore/objects.h>
 
+class QBoxLayout;
 class QPixmap;
-class QLayout;
-class QMenu;
-class QMenuBar;
 class QWidget;
 
-enum class AudMenuID;
 enum class PluginType;
 class PluginHandle;
 struct PreferencesWidget;
@@ -72,13 +69,8 @@ static inline QString translate_str (const char * str)
     { return translate_str (str, PACKAGE); }
 #endif
 
-/* plugin-menu.cc */
-QMenu * menu_get_by_id (AudMenuID id);
-void menu_add (AudMenuID id, void (* func) (void), const char * name, const char * icon, const char * domain);
-void menu_remove (AudMenuID id, void (* func) (void));
-
 /* prefs-builder.cc */
-void prefs_populate (QLayout * layout, ArrayRef<const PreferencesWidget> widgets, const char * domain);
+void prefs_populate (QBoxLayout * layout, ArrayRef<PreferencesWidget> widgets, const char * domain);
 
 /* prefs-plugin.cc */
 void plugin_about (PluginHandle * ph);

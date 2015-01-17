@@ -30,15 +30,9 @@
 
 namespace audqt {
 
-void prefs_populate (QLayout * layout, ArrayRef<const PreferencesWidget> widgets, const char * domain)
+void prefs_populate (QBoxLayout * layout, ArrayRef<PreferencesWidget> widgets, const char * domain)
 {
     QButtonGroup * radio_btn_group = nullptr;
-
-    if (! layout)
-    {
-        AUDDBG("prefs_populate was passed a null layout!\n");
-        return;
-    }
 
     for (const PreferencesWidget & w : widgets)
     {
@@ -141,6 +135,8 @@ void prefs_populate (QLayout * layout, ArrayRef<const PreferencesWidget> widgets
             break;
         }
     }
+
+    layout->addStretch (1);
 }
 
 } // namespace audqt

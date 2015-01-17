@@ -106,8 +106,9 @@ EXPORT void plugin_prefs (PluginHandle * ph)
 
     cw->root->setWindowTitle ((const char *) str_printf(_("%s Settings"), name));
 
-    QVBoxLayout * vbox = new QVBoxLayout;
+    QVBoxLayout * vbox = new QVBoxLayout (cw->root);
 
+    vbox->setSpacing (4);
     prefs_populate (vbox, p->widgets, header->info.domain);
 
     QDialogButtonBox * bbox = new QDialogButtonBox;
@@ -133,7 +134,6 @@ EXPORT void plugin_prefs (PluginHandle * ph)
     }
 
     vbox->addWidget (bbox);
-    cw->root->setLayout (vbox);
 
     window_bring_to_front (cw->root);
 }

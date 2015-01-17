@@ -61,6 +61,7 @@ enum SortType {
     Artist,
     AlbumArtist,
     Date,
+    Genre,
     Track,
     FormattedTitle,
     Length,
