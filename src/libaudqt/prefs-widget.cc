@@ -103,7 +103,10 @@ QWidget * IntegerWidget::widget ()
     auto layout = new QHBoxLayout (container);
 
     layout->setContentsMargins (0, 0, 0, 0);
-    layout->addWidget (new QLabel (translate_str (m_parent->label, m_domain)));
+    layout->setSpacing (4);
+
+    if (m_parent->label)
+        layout->addWidget (new QLabel (translate_str (m_parent->label, m_domain)));
 
     m_spinner = new QSpinBox;
     layout->addWidget (m_spinner);
@@ -111,6 +114,8 @@ QWidget * IntegerWidget::widget ()
     if (m_parent->data.spin_btn.right_label)
         layout->addWidget (new QLabel (translate_str
          (m_parent->data.spin_btn.right_label, m_domain)));
+
+    layout->addStretch (1);
 
     update ();
 
@@ -140,7 +145,10 @@ QWidget * DoubleWidget::widget ()
     auto layout = new QHBoxLayout (container);
 
     layout->setContentsMargins (0, 0, 0, 0);
-    layout->addWidget (new QLabel (translate_str (m_parent->label, m_domain)));
+    layout->setSpacing (4);
+
+    if (m_parent->label)
+        layout->addWidget (new QLabel (translate_str (m_parent->label, m_domain)));
 
     m_spinner = new QDoubleSpinBox;
     layout->addWidget (m_spinner);
@@ -148,6 +156,8 @@ QWidget * DoubleWidget::widget ()
     if (m_parent->data.spin_btn.right_label)
         layout->addWidget (new QLabel (translate_str
          (m_parent->data.spin_btn.right_label, m_domain)));
+
+    layout->addStretch (1);
 
     update ();
 
@@ -173,6 +183,7 @@ QWidget * StringWidget::widget ()
     auto layout = new QHBoxLayout (container);
 
     layout->setContentsMargins (0, 0, 0, 0);
+    layout->setSpacing (4);
 
     if (m_parent->label)
         layout->addWidget (new QLabel (translate_str (m_parent->label, m_domain)));
@@ -181,7 +192,7 @@ QWidget * StringWidget::widget ()
     if (m_parent->data.entry.password)
         m_lineedit->setEchoMode (QLineEdit::Password);
 
-    layout->addWidget (m_lineedit);
+    layout->addWidget (m_lineedit, 1);
 
     update ();
 
@@ -204,12 +215,14 @@ QWidget * ComboBoxWidget::widget ()
     auto layout = new QHBoxLayout (container);
 
     layout->setContentsMargins (0, 0, 0, 0);
+    layout->setSpacing (4);
 
     if (m_parent->label)
         layout->addWidget (new QLabel (translate_str (m_parent->label, m_domain)));
 
     m_combobox = new QComboBox;
     layout->addWidget (m_combobox);
+    layout->addStretch (1);
 
     update ();
 
@@ -295,13 +308,14 @@ QWidget * BoxWidget::widget ()
 {
     auto container = new QWidget;
 
-    QLayout * layout;
+    QBoxLayout * layout;
     if (m_parent->data.box.horizontal)
         layout = new QHBoxLayout (container);
     else
         layout = new QVBoxLayout (container);
 
     layout->setContentsMargins (0, 0, 0, 0);
+    layout->setSpacing (4);
     prefs_populate (layout, m_parent->data.box.widgets, m_domain);
 
     return container;
@@ -313,6 +327,8 @@ QWidget * TableWidget::widget ()
     auto container = new QWidget;
     auto layout = new QVBoxLayout (container);
 
+    layout->setContentsMargins (0, 0, 0, 0);
+    layout->setSpacing (4);
     prefs_populate (layout, m_parent->data.table.widgets, m_domain);
 
     return container;
@@ -327,7 +343,10 @@ QWidget * NotebookWidget::widget ()
         auto widget = new QWidget (tabs);
         auto layout = new QVBoxLayout (widget);
 
+        layout->setContentsMargins (0, 0, 0, 0);
+        layout->setSpacing (4);
         prefs_populate (layout, tab.widgets, nullptr);
+
         tabs->addTab (widget, translate_str (tab.name, m_domain));
     }
 

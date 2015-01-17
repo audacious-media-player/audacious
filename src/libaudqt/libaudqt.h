@@ -23,8 +23,8 @@
 #include <QString>
 #include <libaudcore/objects.h>
 
+class QBoxLayout;
 class QPixmap;
-class QLayout;
 class QWidget;
 
 enum class PluginType;
@@ -70,7 +70,7 @@ static inline QString translate_str (const char * str)
 #endif
 
 /* prefs-builder.cc */
-void prefs_populate (QLayout * layout, ArrayRef<PreferencesWidget> widgets, const char * domain);
+void prefs_populate (QBoxLayout * layout, ArrayRef<PreferencesWidget> widgets, const char * domain);
 
 /* prefs-plugin.cc */
 void plugin_about (PluginHandle * ph);

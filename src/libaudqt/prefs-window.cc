@@ -352,8 +352,6 @@ static void * create_titlestring_table (void)
     QLineEdit * le = new QLineEdit (w);
     l->addWidget (le, 1, 1);
 
-    w->setLayout (l);
-
     String format = aud_get_str (nullptr, "generic_title_format");
     le->setText ((const char *) format);
     for (int i = 0; i < TITLESTRING_NPRESETS; i++)
@@ -419,10 +417,11 @@ static void iface_fill_prefs_box (void)
     Plugin * header = (Plugin *) aud_plugin_get_header (aud_plugin_get_current (PluginType::Iface));
     if (header && header->info.prefs)
     {
-        QVBoxLayout * vbox = new QVBoxLayout;
+        QVBoxLayout * vbox = new QVBoxLayout (iface_prefs_box);
 
+        vbox->setContentsMargins (0, 0, 0, 0);
+        vbox->setSpacing (4);
         prefs_populate (vbox, header->info.prefs->widgets, header->info.domain);
-        iface_prefs_box->setLayout (vbox);
     }
 }
 
@@ -532,14 +531,12 @@ static void output_bit_depth_changed (void)
 static void create_appearance_category (QStackedWidget * category_notebook)
 {
     QWidget * w = new QWidget;
-    QVBoxLayout * vbox = new QVBoxLayout;
+    QVBoxLayout * vbox = new QVBoxLayout (w);
 
     vbox->setContentsMargins (0, 0, 0, 0);
-    vbox->setSpacing (0);
-    vbox->setMargin (0);
+    vbox->setSpacing (4);
     prefs_populate (vbox, appearance_page_widgets, nullptr);
 
-    w->setLayout (vbox);
     category_notebook->addWidget (w);
 }
 
@@ -549,8 +546,7 @@ static void create_audio_category (QStackedWidget * category_notebook)
     QVBoxLayout * audio_page_vbox = new QVBoxLayout;
 
     audio_page_vbox->setContentsMargins (0, 0, 0, 0);
-    audio_page_vbox->setSpacing (0);
-    audio_page_vbox->setMargin (0);
+    audio_page_vbox->setSpacing (4);
     prefs_populate (audio_page_vbox, audio_page_widgets, nullptr);
 
     audio_page->setLayout (audio_page_vbox);
@@ -560,42 +556,36 @@ static void create_audio_category (QStackedWidget * category_notebook)
 static void create_connectivity_category (QStackedWidget * category_notebook)
 {
     QWidget * connectivity_page = new QWidget;
-    QVBoxLayout * connectivity_page_vbox = new QVBoxLayout;
+    QVBoxLayout * connectivity_page_vbox = new QVBoxLayout (connectivity_page);
 
     connectivity_page_vbox->setContentsMargins (0, 0, 0, 0);
-    connectivity_page_vbox->setSpacing (0);
-    connectivity_page_vbox->setMargin (0);
+    connectivity_page_vbox->setSpacing (4);
     prefs_populate (connectivity_page_vbox, connectivity_page_widgets, nullptr);
 
-    connectivity_page->setLayout (connectivity_page_vbox);
     category_notebook->addWidget (connectivity_page);
 }
 
 static void create_playlist_category (QStackedWidget * category_notebook)
 {
     QWidget * playlist_page = new QWidget;
-    QVBoxLayout * playlist_page_vbox = new QVBoxLayout;
+    QVBoxLayout * playlist_page_vbox = new QVBoxLayout (playlist_page);
 
     playlist_page_vbox->setContentsMargins (0, 0, 0, 0);
-    playlist_page_vbox->setSpacing (0);
-    playlist_page_vbox->setMargin (0);
+    playlist_page_vbox->setSpacing (4);
     prefs_populate (playlist_page_vbox, playlist_page_widgets, nullptr);
 
-    playlist_page->setLayout (playlist_page_vbox);
     category_notebook->addWidget (playlist_page);
 }
 
 static void create_song_info_category (QStackedWidget * category_notebook)
 {
     QWidget * song_info_page = new QWidget;
-    QVBoxLayout * song_info_page_vbox = new QVBoxLayout;
+    QVBoxLayout * song_info_page_vbox = new QVBoxLayout (song_info_page);
 
     song_info_page_vbox->setContentsMargins (0, 0, 0, 0);
-    song_info_page_vbox->setSpacing (0);
-    song_info_page_vbox->setMargin (0);
+    song_info_page_vbox->setSpacing (4);
     prefs_populate (song_info_page_vbox, song_info_page_widgets, nullptr);
 
-    song_info_page->setLayout (song_info_page_vbox);
     category_notebook->addWidget (song_info_page);
 }
 
@@ -654,29 +644,26 @@ static QStackedWidget * s_category_notebook = nullptr;
 
 static void create_prefs_window ()
 {
-    QVBoxLayout * vbox_parent = new QVBoxLayout;
-    QToolBar * toolbar = new QToolBar;
-
     s_prefswin = new QDialog;
     s_prefswin->setWindowTitle (_("Audacious Settings"));
-    s_prefswin->setLayout (vbox_parent);
     s_prefswin->setAttribute (Qt::WA_DeleteOnClose);
 
     QObject::connect (s_prefswin, & QObject::destroyed, [] () {
         s_prefswin = nullptr;
     });
 
+    QVBoxLayout * vbox_parent = new QVBoxLayout (s_prefswin);
+
     vbox_parent->setSpacing (0);
-    vbox_parent->setMargin (0);
     vbox_parent->setContentsMargins (0, 0, 0, 0);
+
+    QToolBar * toolbar = new QToolBar;
+    toolbar->setToolButtonStyle (Qt::ToolButtonTextUnderIcon);
     vbox_parent->addWidget (toolbar);
 
     QWidget * child = new QWidget;
-    QVBoxLayout * child_vbox = new QVBoxLayout;
-
+    QVBoxLayout * child_vbox = new QVBoxLayout (child);
     vbox_parent->addWidget (child);
-
-    child->setLayout (child_vbox);
 
     s_category_notebook = new QStackedWidget;
     child_vbox->addWidget (s_category_notebook);
@@ -692,8 +679,6 @@ static void create_prefs_window ()
     child_vbox->addWidget (bbox);
 
     QObject::connect (bbox, &QDialogButtonBox::rejected, s_prefswin, &QObject::deleteLater);
-
-    toolbar->setToolButtonStyle (Qt::ToolButtonTextUnderIcon);
 
     QSignalMapper * mapper = new QSignalMapper;
     const char * data_dir = aud_get_path (AudPath::DataDir);
