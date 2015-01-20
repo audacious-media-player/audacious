@@ -27,7 +27,7 @@
 
 struct AudguiMenuItem {
     const char * name;
-    const char * icon;  /* ignored in GTK3 branch */
+    const char * icon;
     unsigned key;
     GdkModifierType mod;
 
