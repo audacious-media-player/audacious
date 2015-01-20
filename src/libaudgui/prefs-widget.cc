@@ -258,8 +258,7 @@ static void combobox_update (GtkWidget * combobox, const PreferencesWidget * wid
 
     g_object_set_data ((GObject *) combobox, "comboitems", (void *) items.data);
 
-    /* no gtk_combo_box_text_clear()? */
-    gtk_list_store_clear ((GtkListStore *) gtk_combo_box_get_model ((GtkComboBox *) combobox));
+    gtk_combo_box_text_remove_all ((GtkComboBoxText *) combobox);
 
     for (const ComboItem & item : items)
         gtk_combo_box_text_append_text ((GtkComboBoxText *) combobox,
