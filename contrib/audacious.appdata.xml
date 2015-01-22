@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+  <id type="desktop">audacious.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <name>Audacious</name>
+  <summary>Lightweight audio player</summary>
+  <description>
+    <p>
+      Audacious is an open source audio player. Originally a descendant of XMMS,
+      Audacious plays your music how you want it, without stealing away your
+      computer’s resources from other tasks.
+    </p>
+    <p>
+      Drag and drop folders and individual song files, search for artists and
+      albums in your entire music library, or create and edit your own custom
+      playlists. Listen to CD’s or stream music from the Internet. Tweak the
+      sound with the graphical equalizer or experiment with LADSPA
+      effects. Enjoy the modern GTK-themed interface or change things up with
+      Winamp Classic skins. Use the plugins included with Audacious to fetch
+      lyrics for your music, to set an alarm in the morning, and more.
+    </p>
+  </description>
+  <url type="homepage">http://audacious-media-player.org</url>
+  <screenshots>
+    <screenshot type="default">http://audacious-media-player.org/images/gtk-interface.png</screenshot>
+    <screenshot>http://audacious-media-player.org/images/winamp-interface.png</screenshot>
+    <screenshot>http://audacious-media-player.org/images/settings-window.png</screenshot>
+  </screenshots>
+</component>
