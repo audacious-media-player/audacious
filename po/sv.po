@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-12-04 18:06+0100\n"
-"PO-Revision-Date: 2014-12-01 19:57+0000\n"
+"POT-Creation-Date: 2015-01-24 13:09+0100\n"
+"PO-Revision-Date: 2014-12-22 12:38+0000\n"
 "Last-Translator: Thomas Lange <thomas-lange2@gmx.de>\n"
 "Language-Team: Swedish (http://www.transifex.com/projects/p/audacious/"
 "language/sv/)\n"
@@ -114,7 +114,7 @@ msgid_plural "%d files found"
 msgstr[0] "%d fil funnen"
 msgstr[1] "%d filer funna"
 
-#: src/libaudcore/adder.cc:317 src/libaudcore/playlist.cc:139
+#: src/libaudcore/adder.cc:317 src/libaudcore/playlist.cc:141
 msgid "New Playlist"
 msgstr "Ny spellista"
 
@@ -144,15 +144,15 @@ msgstr ""
 msgid "Unknown playback error"
 msgstr "Okänt uppspelningsfel"
 
-#: src/libaudcore/playback.cc:515
+#: src/libaudcore/playback.cc:514
 msgid "Invalid audio format"
 msgstr ""
 
-#: src/libaudcore/playlist.cc:140
+#: src/libaudcore/playlist.cc:142
 msgid "Now Playing"
 msgstr "Spelar nu"
 
-#: src/libaudcore/playlist.cc:1622
+#: src/libaudcore/playlist.cc:1638
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress "
 "(or has been disabled)."
@@ -222,15 +222,15 @@ msgstr "Okänt URI-schema"
 msgid "Invalid file name"
 msgstr ""
 
-#: src/libaudgui/about.cc:38 src/libaudqt/about.cc:37
+#: src/libaudgui/about.cc:35 src/libaudqt/about.cc:37
 msgid "Credits"
 msgstr "Lista över medverkande"
 
-#: src/libaudgui/about.cc:38 src/libaudqt/about.cc:37
+#: src/libaudgui/about.cc:35 src/libaudqt/about.cc:37
 msgid "License"
 msgstr "Licens"
 
-#: src/libaudgui/about.cc:72 src/libaudqt/about.cc:89
+#: src/libaudgui/about.cc:69 src/libaudqt/about.cc:88
 msgid "About Audacious"
 msgstr "Om Audacious"
 
@@ -321,6 +321,37 @@ msgstr "Equalizer"
 #: src/libaudgui/equalizer.cc:138 src/libaudqt/equalizer.cc:72
 msgid "Preamp"
 msgstr "Preamp"
+
+#: src/libaudgui/file-opener.cc:80 src/libaudqt/fileopener.cc:39
+msgid "Open Files"
+msgstr "Öppna filer"
+
+#: src/libaudgui/file-opener.cc:81 src/libaudgui/url-opener.cc:50
+msgid "_Open"
+msgstr "_Öppna"
+
+#: src/libaudgui/file-opener.cc:83
+msgid "Close _dialog on open"
+msgstr "Stäng _dialogfönstret vid öppning"
+
+#: src/libaudgui/file-opener.cc:88 src/libaudqt/fileopener.cc:41
+msgid "Add Files"
+msgstr "Lägg till filer"
+
+#: src/libaudgui/file-opener.cc:89 src/libaudgui/url-opener.cc:56
+msgid "_Add"
+msgstr "_Lägg till"
+
+#: src/libaudgui/file-opener.cc:91
+msgid "Close _dialog on add"
+msgstr "Stäng _dialogfönstret vid addera"
+
+#: src/libaudgui/file-opener.cc:127 src/libaudgui/infowin.cc:406
+#: src/libaudgui/jump-to-track.cc:307 src/libaudgui/plugin-prefs.cc:166
+#: src/libaudgui/prefs-window.cc:762 src/libaudgui/queue-manager.cc:194
+#: src/libaudgui/util.cc:167 src/libaudqt/queue-manager.cc:116
+msgid "_Close"
+msgstr "_Stäng"
 
 #: src/libaudgui/infopopup.cc:200 src/libaudgui/infowin.cc:360
 #: src/libaudgui/prefs-window.cc:102 src/libaudqt/info-widget.cc:40
@@ -561,13 +592,6 @@ msgstr ""
 msgid "_Save"
 msgstr "_Spara"
 
-#: src/libaudgui/infowin.cc:406 src/libaudgui/plugin-prefs.cc:166
-#: src/libaudgui/prefs-window.cc:762 src/libaudgui/queue-manager.cc:194
-#: src/libaudgui/ui_fileopener.cc:127 src/libaudgui/ui_jumptotrack.cc:302
-#: src/libaudgui/util.cc:167 src/libaudqt/queue-manager.cc:116
-msgid "_Close"
-msgstr "_Stäng"
-
 #: src/libaudgui/infowin.cc:409
 msgid "_Next"
 msgstr ""
@@ -581,7 +605,7 @@ msgstr "%d kb/s"
 msgid "N/A"
 msgstr "N/A"
 
-#: src/libaudgui/jump-to-time.cc:47 src/libaudgui/ui_jumptotrack.cc:296
+#: src/libaudgui/jump-to-time.cc:47 src/libaudgui/jump-to-track.cc:312
 msgid "_Jump"
 msgstr "_Hoppa"
 
@@ -592,6 +616,31 @@ msgstr "Hoppa till tid"
 #: src/libaudgui/jump-to-time.cc:51
 msgid "Enter time (minutes:seconds):"
 msgstr "Ange tid (minuter:sekunder):"
+
+#: src/libaudgui/jump-to-track.cc:95 src/libaudgui/jump-to-track.cc:103
+#: src/libaudgui/jump-to-track.cc:303
+msgid "_Queue"
+msgstr "_Kö"
+
+#: src/libaudgui/jump-to-track.cc:101
+msgid "Un_queue"
+msgstr "Ta _bort från kö"
+
+#: src/libaudgui/jump-to-track.cc:238
+msgid "Jump to Song"
+msgstr "Hoppa till låt"
+
+#: src/libaudgui/jump-to-track.cc:263
+msgid "Filter: "
+msgstr "Filter:"
+
+#: src/libaudgui/jump-to-track.cc:264
+msgid "_Filter:"
+msgstr "_Filter:"
+
+#: src/libaudgui/jump-to-track.cc:296
+msgid "C_lose on jump"
+msgstr "S_täng vid hopp"
 
 #: src/libaudgui/playlists.cc:89
 msgid "_Overwrite"
@@ -641,12 +690,12 @@ msgid "_Set"
 msgstr "_Ställ in"
 
 #: src/libaudgui/plugin-view.cc:235 src/libaudgui/prefs-window.cc:650
-#: src/libaudqt/prefs-window.cc:491 src/libaudqt/prefs-window.cc:637
+#: src/libaudqt/prefs-window.cc:490
 msgid "_Settings"
 msgstr "_Inställningar"
 
 #: src/libaudgui/plugin-view.cc:242 src/libaudgui/prefs-window.cc:661
-#: src/libaudqt/prefs-window.cc:505 src/libaudqt/prefs-window.cc:634
+#: src/libaudqt/prefs-window.cc:504
 msgid "_About"
 msgstr "_Om"
 
@@ -1020,7 +1069,7 @@ msgstr "Rubrikformat:"
 msgid "Custom string:"
 msgstr "Anpassad sträng:"
 
-#: src/libaudgui/prefs-window.cc:711 src/libaudqt/prefs-window.cc:713
+#: src/libaudgui/prefs-window.cc:711 src/libaudqt/prefs-window.cc:648
 msgid "Audacious Settings"
 msgstr "Audacious Inställningar"
 
@@ -1039,55 +1088,6 @@ msgstr "Arbetar ..."
 #: src/libaudgui/status.cc:85 src/libaudqt/log-inspector.cc:192
 msgid "Error"
 msgstr "Fel"
-
-#: src/libaudgui/ui_fileopener.cc:80 src/libaudqt/fileopener.cc:39
-msgid "Open Files"
-msgstr "Öppna filer"
-
-#: src/libaudgui/ui_fileopener.cc:81 src/libaudgui/url-opener.cc:50
-msgid "_Open"
-msgstr "_Öppna"
-
-#: src/libaudgui/ui_fileopener.cc:83
-msgid "Close _dialog on open"
-msgstr "Stäng _dialogfönstret vid öppning"
-
-#: src/libaudgui/ui_fileopener.cc:88 src/libaudqt/fileopener.cc:39
-msgid "Add Files"
-msgstr "Lägg till filer"
-
-#: src/libaudgui/ui_fileopener.cc:89 src/libaudgui/url-opener.cc:56
-msgid "_Add"
-msgstr "_Lägg till"
-
-#: src/libaudgui/ui_fileopener.cc:91
-msgid "Close _dialog on add"
-msgstr "Stäng _dialogfönstret vid addera"
-
-#: src/libaudgui/ui_jumptotrack.cc:95 src/libaudgui/ui_jumptotrack.cc:103
-#: src/libaudgui/ui_jumptotrack.cc:307
-msgid "_Queue"
-msgstr "_Kö"
-
-#: src/libaudgui/ui_jumptotrack.cc:101
-msgid "Un_queue"
-msgstr "Ta _bort från kö"
-
-#: src/libaudgui/ui_jumptotrack.cc:239
-msgid "Jump to Song"
-msgstr "Hoppa till låt"
-
-#: src/libaudgui/ui_jumptotrack.cc:264
-msgid "Filter: "
-msgstr "Filter:"
-
-#: src/libaudgui/ui_jumptotrack.cc:265
-msgid "_Filter:"
-msgstr "_Filter:"
-
-#: src/libaudgui/ui_jumptotrack.cc:289
-msgid "C_lose on jump"
-msgstr "S_täng vid hopp"
 
 #: src/libaudgui/url-opener.cc:49
 msgid "Open URL"
@@ -1108,6 +1108,22 @@ msgid ""
 msgstr ""
 "\n"
 "(Ytterligare meddelanden har dolts.)"
+
+#: src/libaudqt/fileopener.cc:40
+msgid "Open Folder"
+msgstr ""
+
+#: src/libaudqt/fileopener.cc:42
+msgid "Add Folder"
+msgstr ""
+
+#: src/libaudqt/fileopener.cc:46 src/libaudqt/fileopener.cc:47
+msgid "Open"
+msgstr ""
+
+#: src/libaudqt/fileopener.cc:48 src/libaudqt/fileopener.cc:49
+msgid "Add"
+msgstr ""
 
 #: src/libaudqt/info-widget.cc:37
 msgid "Metadata"

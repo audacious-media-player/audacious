@@ -5,6 +5,8 @@
 # Translators:
 # Bjorn Roesbeke <inbox@bjornroesbeke.be>, 2012-2013
 # Dennis Klomp <c_klomp@epu-forum.net>, 2012
+# dragnadh <dragnadh@gmail.com>, 2015
+# Farioko <fabianbakkum@hotmail.com>, 2014
 # Farioko <fabianbakkum@hotmail.com>, 2014
 # Glennz <glenn_de_groot@hotmail.com>, 2012
 # Glennz <glenn_de_groot@hotmail.com>, 2012
@@ -12,9 +14,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-12-04 18:06+0100\n"
-"PO-Revision-Date: 2014-12-01 19:57+0000\n"
-"Last-Translator: Thomas Lange <thomas-lange2@gmx.de>\n"
+"POT-Creation-Date: 2015-01-24 13:09+0100\n"
+"PO-Revision-Date: 2015-01-18 00:13+0000\n"
+"Last-Translator: dragnadh <dragnadh@gmail.com>\n"
 "Language-Team: Dutch (http://www.transifex.com/projects/p/audacious/language/"
 "nl/)\n"
 "Language: nl\n"
@@ -81,11 +83,11 @@ msgstr "Sluit bij stoppen met afspelen"
 
 #: src/audacious/main.cc:74
 msgid "Print debugging messages (may be used twice)"
-msgstr ""
+msgstr "Toon debug berichten (kan tweemaal gebruikt worden)"
 
 #: src/audacious/main.cc:76
 msgid "Run in Qt mode"
-msgstr ""
+msgstr "Draaien in Qt modus"
 
 #: src/audacious/main.cc:127
 #, c-format
@@ -117,7 +119,7 @@ msgid_plural "%d files found"
 msgstr[0] "%d bestanden gevonden"
 msgstr[1] "%d bestanden gevonden"
 
-#: src/libaudcore/adder.cc:317 src/libaudcore/playlist.cc:139
+#: src/libaudcore/adder.cc:317 src/libaudcore/playlist.cc:141
 msgid "New Playlist"
 msgstr "Nieuwe afspeellijst"
 
@@ -128,11 +130,11 @@ msgstr "Audio CD, nummer %s"
 
 #: src/libaudcore/audstrings.cc:532 src/libaudcore/tuple.cc:481
 msgid "(character encoding error)"
-msgstr ""
+msgstr "(tekencodering fout)"
 
 #: src/libaudcore/playback.cc:328 src/libaudcore/probe.cc:151
 msgid "Error loading plugin"
-msgstr ""
+msgstr "Fout bij het laden van de plugin"
 
 #: src/libaudcore/playback.cc:383 src/libaudgui/infowin.cc:496
 #, c-format
@@ -140,20 +142,22 @@ msgid ""
 "Error opening %s:\n"
 "%s"
 msgstr ""
+"Fout bij het openen van %s:\n"
+"%s"
 
 #: src/libaudcore/playback.cc:385
 msgid "Unknown playback error"
-msgstr ""
+msgstr "Onbekende playback fout"
 
-#: src/libaudcore/playback.cc:515
+#: src/libaudcore/playback.cc:514
 msgid "Invalid audio format"
-msgstr ""
+msgstr "Ongeldige audioformaat"
 
-#: src/libaudcore/playlist.cc:140
+#: src/libaudcore/playlist.cc:142
 msgid "Now Playing"
 msgstr "Nu aan het afspelen"
 
-#: src/libaudcore/playlist.cc:1622
+#: src/libaudcore/playlist.cc:1638
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress "
 "(or has been disabled)."
@@ -164,24 +168,24 @@ msgstr ""
 #: src/libaudcore/playlist-files.cc:76
 #, c-format
 msgid "Cannot load %s: unsupported file name extension."
-msgstr ""
+msgstr "Kan %s niet laden: niet ondersteunde bestandsnaamextensie"
 
 #: src/libaudcore/playlist-files.cc:136
 #, c-format
 msgid "Cannot save %s: unsupported file name extension."
-msgstr ""
+msgstr "kan %s opslaan: niet ondersteunde bestandsnaamextensie"
 
 #: src/libaudcore/probe.cc:119
 msgid "Seek error"
-msgstr ""
+msgstr "Zoek fouten"
 
 #: src/libaudcore/probe.cc:127
 msgid "File format not recognized"
-msgstr ""
+msgstr "Bestandsformaat niet herkend"
 
 #: src/libaudcore/probe.cc:161
 msgid "Error reading metadata"
-msgstr ""
+msgstr "Fout bij lezen metadata"
 
 #: src/libaudcore/tuple.cc:528
 msgid "Mono"
@@ -201,37 +205,37 @@ msgstr[1] "%d kanalen"
 #: src/libaudcore/tuple.cc:699
 #, c-format
 msgid "Track %d"
-msgstr ""
+msgstr "Nummer %d"
 
 #: src/libaudcore/tuple.cc:701
 msgid "Audio CD"
-msgstr ""
+msgstr "Audio CD"
 
 #: src/libaudcore/tuple.cc:707
 msgid "(unknown title)"
-msgstr ""
+msgstr "(Onbekende titel)"
 
 #: src/libaudcore/vfs.cc:67
 msgid "Invalid URI"
-msgstr ""
+msgstr "Ongeldige URI"
 
 #: src/libaudcore/vfs.cc:83
 msgid "Unknown URI scheme"
-msgstr ""
+msgstr "Onbekende URI schema"
 
 #: src/libaudcore/vfs_local.cc:82
 msgid "Invalid file name"
-msgstr ""
+msgstr "Bestandsnaam ongeldig"
 
-#: src/libaudgui/about.cc:38 src/libaudqt/about.cc:37
+#: src/libaudgui/about.cc:35 src/libaudqt/about.cc:37
 msgid "Credits"
 msgstr "Met dank aan"
 
-#: src/libaudgui/about.cc:38 src/libaudqt/about.cc:37
+#: src/libaudgui/about.cc:35 src/libaudqt/about.cc:37
 msgid "License"
 msgstr "Licentie"
 
-#: src/libaudgui/about.cc:72 src/libaudqt/about.cc:89
+#: src/libaudgui/about.cc:69 src/libaudqt/about.cc:88
 msgid "About Audacious"
 msgstr "Over Audacious"
 
@@ -322,6 +326,37 @@ msgstr "Equalizer"
 #: src/libaudgui/equalizer.cc:138 src/libaudqt/equalizer.cc:72
 msgid "Preamp"
 msgstr "Voorversterker"
+
+#: src/libaudgui/file-opener.cc:80 src/libaudqt/fileopener.cc:39
+msgid "Open Files"
+msgstr "Bestanden openen"
+
+#: src/libaudgui/file-opener.cc:81 src/libaudgui/url-opener.cc:50
+msgid "_Open"
+msgstr "_Openen"
+
+#: src/libaudgui/file-opener.cc:83
+msgid "Close _dialog on open"
+msgstr "Sluit het _venster bij openen"
+
+#: src/libaudgui/file-opener.cc:88 src/libaudqt/fileopener.cc:41
+msgid "Add Files"
+msgstr "Bestanden toevoegen"
+
+#: src/libaudgui/file-opener.cc:89 src/libaudgui/url-opener.cc:56
+msgid "_Add"
+msgstr "_Toevoegen"
+
+#: src/libaudgui/file-opener.cc:91
+msgid "Close _dialog on add"
+msgstr "Sluit _venster bij toevoegen"
+
+#: src/libaudgui/file-opener.cc:127 src/libaudgui/infowin.cc:406
+#: src/libaudgui/jump-to-track.cc:307 src/libaudgui/plugin-prefs.cc:166
+#: src/libaudgui/prefs-window.cc:762 src/libaudgui/queue-manager.cc:194
+#: src/libaudgui/util.cc:167 src/libaudqt/queue-manager.cc:116
+msgid "_Close"
+msgstr "_Sluiten"
 
 #: src/libaudgui/infopopup.cc:200 src/libaudgui/infowin.cc:360
 #: src/libaudgui/prefs-window.cc:102 src/libaudqt/info-widget.cc:40
@@ -543,7 +578,7 @@ msgstr "Lied informatie"
 
 #: src/libaudgui/infowin.cc:369 src/libaudqt/info-widget.cc:44
 msgid "Album Artist"
-msgstr ""
+msgstr "Album Artiest"
 
 #: src/libaudgui/infowin.cc:372 src/libaudgui/prefs-window.cc:109
 #: src/libaudqt/info-widget.cc:43 src/libaudqt/prefs-window.cc:112
@@ -562,16 +597,9 @@ msgstr ""
 msgid "_Save"
 msgstr "_Opslaan"
 
-#: src/libaudgui/infowin.cc:406 src/libaudgui/plugin-prefs.cc:166
-#: src/libaudgui/prefs-window.cc:762 src/libaudgui/queue-manager.cc:194
-#: src/libaudgui/ui_fileopener.cc:127 src/libaudgui/ui_jumptotrack.cc:302
-#: src/libaudgui/util.cc:167 src/libaudqt/queue-manager.cc:116
-msgid "_Close"
-msgstr "_Sluiten"
-
 #: src/libaudgui/infowin.cc:409
 msgid "_Next"
-msgstr ""
+msgstr "_Volgende"
 
 #: src/libaudgui/infowin.cc:455
 #, c-format
@@ -582,7 +610,7 @@ msgstr "%d kb/s"
 msgid "N/A"
 msgstr "n.v.t."
 
-#: src/libaudgui/jump-to-time.cc:47 src/libaudgui/ui_jumptotrack.cc:296
+#: src/libaudgui/jump-to-time.cc:47 src/libaudgui/jump-to-track.cc:312
 msgid "_Jump"
 msgstr "_Spring"
 
@@ -593,6 +621,31 @@ msgstr "Ga naar tijd"
 #: src/libaudgui/jump-to-time.cc:51
 msgid "Enter time (minutes:seconds):"
 msgstr "Voer tijd in (minuten:seconden):"
+
+#: src/libaudgui/jump-to-track.cc:95 src/libaudgui/jump-to-track.cc:103
+#: src/libaudgui/jump-to-track.cc:303
+msgid "_Queue"
+msgstr "_In wachtrij plaatsen"
+
+#: src/libaudgui/jump-to-track.cc:101
+msgid "Un_queue"
+msgstr "_Uit wachtrij verwijderen"
+
+#: src/libaudgui/jump-to-track.cc:238
+msgid "Jump to Song"
+msgstr "Ga naar lied"
+
+#: src/libaudgui/jump-to-track.cc:263
+msgid "Filter: "
+msgstr "Filter: "
+
+#: src/libaudgui/jump-to-track.cc:264
+msgid "_Filter:"
+msgstr "_Filter:"
+
+#: src/libaudgui/jump-to-track.cc:296
+msgid "C_lose on jump"
+msgstr "S_luiten bij springen"
 
 #: src/libaudgui/playlists.cc:89
 msgid "_Overwrite"
@@ -630,24 +683,24 @@ msgstr "_Invoegtoepassingen ..."
 #: src/libaudgui/plugin-prefs.cc:109 src/libaudqt/prefs-plugin.cc:55
 #, c-format
 msgid "About %s"
-msgstr ""
+msgstr "Over %s"
 
 #: src/libaudgui/plugin-prefs.cc:155 src/libaudqt/prefs-plugin.cc:107
 #, c-format
 msgid "%s Settings"
-msgstr ""
+msgstr "%s Instellingen"
 
 #: src/libaudgui/plugin-prefs.cc:159
 msgid "_Set"
 msgstr "_Ingesteld"
 
 #: src/libaudgui/plugin-view.cc:235 src/libaudgui/prefs-window.cc:650
-#: src/libaudqt/prefs-window.cc:491 src/libaudqt/prefs-window.cc:637
+#: src/libaudqt/prefs-window.cc:490
 msgid "_Settings"
 msgstr "_Instellingen"
 
 #: src/libaudgui/plugin-view.cc:242 src/libaudgui/prefs-window.cc:661
-#: src/libaudqt/prefs-window.cc:505 src/libaudqt/prefs-window.cc:634
+#: src/libaudqt/prefs-window.cc:504
 msgid "_About"
 msgstr "_Over"
 
@@ -694,15 +747,15 @@ msgstr "Transport"
 
 #: src/libaudgui/prefs-window.cc:103 src/libaudqt/prefs-window.cc:106
 msgid "Track number"
-msgstr ""
+msgstr "Track nummer"
 
 #: src/libaudgui/prefs-window.cc:105 src/libaudqt/prefs-window.cc:108
 msgid "File name"
-msgstr ""
+msgstr "Bestandsnaam"
 
 #: src/libaudgui/prefs-window.cc:106 src/libaudqt/prefs-window.cc:109
 msgid "File path"
-msgstr ""
+msgstr "Bestandspad"
 
 #: src/libaudgui/prefs-window.cc:107 src/libaudqt/prefs-window.cc:110
 msgid "Date"
@@ -858,11 +911,11 @@ msgstr "Proxy-wachtwoord:"
 
 #: src/libaudgui/prefs-window.cc:223 src/libaudqt/prefs-window.cc:226
 msgid "<b>Network Settings</b>"
-msgstr ""
+msgstr "<b>Netwerk Instellingen</b>"
 
 #: src/libaudgui/prefs-window.cc:226 src/libaudqt/prefs-window.cc:229
 msgid "KiB"
-msgstr ""
+msgstr "KiB"
 
 #: src/libaudgui/prefs-window.cc:227 src/libaudqt/prefs-window.cc:230
 msgid "<b>Proxy Configuration</b>"
@@ -890,11 +943,11 @@ msgstr "<b>Gedrag</b>"
 
 #: src/libaudgui/prefs-window.cc:253 src/libaudqt/prefs-window.cc:257
 msgid "Resume playback on startup"
-msgstr ""
+msgstr "Hervatten bij het opstarten"
 
 #: src/libaudgui/prefs-window.cc:255 src/libaudqt/prefs-window.cc:259
 msgid "Pause instead of resuming immediately"
-msgstr ""
+msgstr "Pauzeer in plaats van onmiddellijk hervatten"
 
 #: src/libaudgui/prefs-window.cc:258 src/libaudqt/prefs-window.cc:262
 msgid "Advance when the current song is deleted"
@@ -932,7 +985,7 @@ msgstr "Toon leidende nullen (02:00 in plaats van 2:00)"
 
 #: src/libaudgui/prefs-window.cc:274 src/libaudqt/prefs-window.cc:280
 msgid "<b>Advanced</b>"
-msgstr ""
+msgstr "<b>Geavanceerd</b>"
 
 #: src/libaudgui/prefs-window.cc:275 src/libaudqt/prefs-window.cc:268
 #: src/libaudqt/prefs-window.cc:281
@@ -941,7 +994,7 @@ msgstr "Laad metadata voor gegevens niet tot ze afgespeeld worden"
 
 #: src/libaudgui/prefs-window.cc:277 src/libaudqt/prefs-window.cc:283
 msgid "Probe content of files with no recognized file name extension"
-msgstr ""
+msgstr "Onderzoek inhoud van bestanden met geen erkende bestandsextensie"
 
 #: src/libaudgui/prefs-window.cc:282 src/libaudqt/prefs-window.cc:288
 msgid "<b>Album Art</b>"
@@ -1026,7 +1079,7 @@ msgstr "Titelformaat:"
 msgid "Custom string:"
 msgstr "Handmatige instelling:"
 
-#: src/libaudgui/prefs-window.cc:711 src/libaudqt/prefs-window.cc:713
+#: src/libaudgui/prefs-window.cc:711 src/libaudqt/prefs-window.cc:648
 msgid "Audacious Settings"
 msgstr "Audacious Instellingen"
 
@@ -1040,60 +1093,11 @@ msgstr "_Verwijder van wachtrij"
 
 #: src/libaudgui/status.cc:36
 msgid "Working ..."
-msgstr ""
+msgstr "Werken ..."
 
 #: src/libaudgui/status.cc:85 src/libaudqt/log-inspector.cc:192
 msgid "Error"
 msgstr "Fout"
-
-#: src/libaudgui/ui_fileopener.cc:80 src/libaudqt/fileopener.cc:39
-msgid "Open Files"
-msgstr "Bestanden openen"
-
-#: src/libaudgui/ui_fileopener.cc:81 src/libaudgui/url-opener.cc:50
-msgid "_Open"
-msgstr "_Openen"
-
-#: src/libaudgui/ui_fileopener.cc:83
-msgid "Close _dialog on open"
-msgstr "Sluit het _venster bij openen"
-
-#: src/libaudgui/ui_fileopener.cc:88 src/libaudqt/fileopener.cc:39
-msgid "Add Files"
-msgstr "Bestanden toevoegen"
-
-#: src/libaudgui/ui_fileopener.cc:89 src/libaudgui/url-opener.cc:56
-msgid "_Add"
-msgstr "_Toevoegen"
-
-#: src/libaudgui/ui_fileopener.cc:91
-msgid "Close _dialog on add"
-msgstr "Sluit _venster bij toevoegen"
-
-#: src/libaudgui/ui_jumptotrack.cc:95 src/libaudgui/ui_jumptotrack.cc:103
-#: src/libaudgui/ui_jumptotrack.cc:307
-msgid "_Queue"
-msgstr "_In wachtrij plaatsen"
-
-#: src/libaudgui/ui_jumptotrack.cc:101
-msgid "Un_queue"
-msgstr "_Uit wachtrij verwijderen"
-
-#: src/libaudgui/ui_jumptotrack.cc:239
-msgid "Jump to Song"
-msgstr "Ga naar lied"
-
-#: src/libaudgui/ui_jumptotrack.cc:264
-msgid "Filter: "
-msgstr "Filter: "
-
-#: src/libaudgui/ui_jumptotrack.cc:265
-msgid "_Filter:"
-msgstr "_Filter:"
-
-#: src/libaudgui/ui_jumptotrack.cc:289
-msgid "C_lose on jump"
-msgstr "S_luiten bij springen"
 
 #: src/libaudgui/url-opener.cc:49
 msgid "Open URL"
@@ -1115,37 +1119,53 @@ msgstr ""
 "\n"
 "(Verdere berichten werden verborgen.)"
 
+#: src/libaudqt/fileopener.cc:40
+msgid "Open Folder"
+msgstr "Map Openen"
+
+#: src/libaudqt/fileopener.cc:42
+msgid "Add Folder"
+msgstr "Map Toevoegen"
+
+#: src/libaudqt/fileopener.cc:46 src/libaudqt/fileopener.cc:47
+msgid "Open"
+msgstr "Openen"
+
+#: src/libaudqt/fileopener.cc:48 src/libaudqt/fileopener.cc:49
+msgid "Add"
+msgstr "Toevoegen"
+
 #: src/libaudqt/info-widget.cc:37
 msgid "Metadata"
-msgstr ""
+msgstr "Metadata"
 
 #: src/libaudqt/info-widget.cc:45
 msgid "Composer"
-msgstr ""
+msgstr "Componist"
 
 #: src/libaudqt/info-widget.cc:46
 msgid "Performer"
-msgstr ""
+msgstr "Performer"
 
 #: src/libaudqt/info-widget.cc:47
 msgid "Recording Year"
-msgstr ""
+msgstr "Opname Jaar"
 
 #: src/libaudqt/info-widget.cc:48
 msgid "Recording Date"
-msgstr ""
+msgstr "Opname Datum"
 
 #: src/libaudqt/info-widget.cc:51
 msgid "Technical"
-msgstr ""
+msgstr "Technische"
 
 #: src/libaudqt/info-widget.cc:53
 msgid "MIME Type"
-msgstr ""
+msgstr "MIME Type"
 
 #: src/libaudqt/info-widget.cc:56
 msgid "Bitrate"
-msgstr ""
+msgstr "Bitrate"
 
 #: src/libaudqt/infowin.cc:126
 #, c-format
@@ -1154,7 +1174,7 @@ msgstr "Geen informatie beschikbaar voor %s.\n"
 
 #: src/libaudqt/log-inspector.cc:106
 msgid "Level"
-msgstr ""
+msgstr "Level"
 
 #: src/libaudqt/log-inspector.cc:107
 msgid "Filename"
@@ -1162,36 +1182,36 @@ msgstr "Bestandsnaam"
 
 #: src/libaudqt/log-inspector.cc:108
 msgid "Line"
-msgstr ""
+msgstr "Lijn"
 
 #: src/libaudqt/log-inspector.cc:109
 msgid "Function"
-msgstr ""
+msgstr "Functie"
 
 #: src/libaudqt/log-inspector.cc:110
 msgid "Message"
-msgstr ""
+msgstr "Bericht"
 
 #: src/libaudqt/log-inspector.cc:175
 msgid "Log Inspector"
-msgstr ""
+msgstr "Logboek Inspecteur"
 
 #: src/libaudqt/log-inspector.cc:186
 msgid "Log Level:"
-msgstr ""
+msgstr "Log Level:"
 
 #: src/libaudqt/log-inspector.cc:189
 msgid "Debug"
-msgstr ""
+msgstr "Debug"
 
 #: src/libaudqt/log-inspector.cc:190
 msgid "Info"
-msgstr ""
+msgstr "Informatie"
 
 #: src/libaudqt/log-inspector.cc:191
 msgid "Warning"
-msgstr ""
+msgstr "Waarschuwing"
 
 #: src/libaudqt/plugin-menu.cc:40
 msgid "Plugins ..."
-msgstr ""
+msgstr "Plugins ..."

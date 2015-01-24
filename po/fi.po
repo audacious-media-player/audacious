@@ -5,7 +5,7 @@
 # Translators:
 # Elias Julkunen <elias.julkunen@gmail.com>, 2011
 # J. S. Tuomisto <jstuomisto@gmail.com>, 2013
-# Jiri Grönroos <jiri.gronroos@iki.fi>, 2014
+# Jiri Grönroos <jiri.gronroos@iki.fi>, 2014-2015
 # J. S. Tuomisto <jstuomisto@gmail.com>, 2013
 # J. S. Tuomisto <jstuomisto@gmail.com>, 2013
 # Matti Hämäläinen, 2008
@@ -15,9 +15,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-12-04 18:06+0100\n"
-"PO-Revision-Date: 2014-12-01 19:57+0000\n"
-"Last-Translator: Thomas Lange <thomas-lange2@gmx.de>\n"
+"POT-Creation-Date: 2015-01-24 13:09+0100\n"
+"PO-Revision-Date: 2015-01-13 06:55+0000\n"
+"Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
 "Language-Team: Finnish (http://www.transifex.com/projects/p/audacious/"
 "language/fi/)\n"
 "Language: fi\n"
@@ -120,7 +120,7 @@ msgid_plural "%d files found"
 msgstr[0] "%d tiedosto löytyi"
 msgstr[1] "%d tiedostoa löytyi"
 
-#: src/libaudcore/adder.cc:317 src/libaudcore/playlist.cc:139
+#: src/libaudcore/adder.cc:317 src/libaudcore/playlist.cc:141
 msgid "New Playlist"
 msgstr "Uusi soittolista"
 
@@ -131,7 +131,7 @@ msgstr "Ääni-CD, kappale %s"
 
 #: src/libaudcore/audstrings.cc:532 src/libaudcore/tuple.cc:481
 msgid "(character encoding error)"
-msgstr ""
+msgstr "(merkistökoodausvirhe)"
 
 #: src/libaudcore/playback.cc:328 src/libaudcore/probe.cc:151
 msgid "Error loading plugin"
@@ -150,15 +150,15 @@ msgstr ""
 msgid "Unknown playback error"
 msgstr "Tuntematon toistovirhe"
 
-#: src/libaudcore/playback.cc:515
+#: src/libaudcore/playback.cc:514
 msgid "Invalid audio format"
-msgstr ""
+msgstr "Virheellinen äänimuoto"
 
-#: src/libaudcore/playlist.cc:140
+#: src/libaudcore/playlist.cc:142
 msgid "Now Playing"
 msgstr "Soi nyt"
 
-#: src/libaudcore/playlist.cc:1622
+#: src/libaudcore/playlist.cc:1638
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress "
 "(or has been disabled)."
@@ -206,11 +206,11 @@ msgstr[1] "%d kanavaa"
 #: src/libaudcore/tuple.cc:699
 #, c-format
 msgid "Track %d"
-msgstr ""
+msgstr "Kappale %d"
 
 #: src/libaudcore/tuple.cc:701
 msgid "Audio CD"
-msgstr ""
+msgstr "Ääni-CD"
 
 #: src/libaudcore/tuple.cc:707
 msgid "(unknown title)"
@@ -226,17 +226,17 @@ msgstr ""
 
 #: src/libaudcore/vfs_local.cc:82
 msgid "Invalid file name"
-msgstr ""
+msgstr "Virheellinen tiedostonimi"
 
-#: src/libaudgui/about.cc:38 src/libaudqt/about.cc:37
+#: src/libaudgui/about.cc:35 src/libaudqt/about.cc:37
 msgid "Credits"
 msgstr "Tekijät"
 
-#: src/libaudgui/about.cc:38 src/libaudqt/about.cc:37
+#: src/libaudgui/about.cc:35 src/libaudqt/about.cc:37
 msgid "License"
 msgstr "Lisenssi"
 
-#: src/libaudgui/about.cc:72 src/libaudqt/about.cc:89
+#: src/libaudgui/about.cc:69 src/libaudqt/about.cc:88
 msgid "About Audacious"
 msgstr "Tietoja Audaciouksesta"
 
@@ -327,6 +327,37 @@ msgstr "Taajuuskorjain"
 #: src/libaudgui/equalizer.cc:138 src/libaudqt/equalizer.cc:72
 msgid "Preamp"
 msgstr "Esivahvistus"
+
+#: src/libaudgui/file-opener.cc:80 src/libaudqt/fileopener.cc:39
+msgid "Open Files"
+msgstr "Avaa tiedostoja"
+
+#: src/libaudgui/file-opener.cc:81 src/libaudgui/url-opener.cc:50
+msgid "_Open"
+msgstr "_Avaa"
+
+#: src/libaudgui/file-opener.cc:83
+msgid "Close _dialog on open"
+msgstr "S_ulje ikkuna avatessa"
+
+#: src/libaudgui/file-opener.cc:88 src/libaudqt/fileopener.cc:41
+msgid "Add Files"
+msgstr "Lisää tiedostoja"
+
+#: src/libaudgui/file-opener.cc:89 src/libaudgui/url-opener.cc:56
+msgid "_Add"
+msgstr "_Lisää"
+
+#: src/libaudgui/file-opener.cc:91
+msgid "Close _dialog on add"
+msgstr "Sul_je ikkuna lisättäessä"
+
+#: src/libaudgui/file-opener.cc:127 src/libaudgui/infowin.cc:406
+#: src/libaudgui/jump-to-track.cc:307 src/libaudgui/plugin-prefs.cc:166
+#: src/libaudgui/prefs-window.cc:762 src/libaudgui/queue-manager.cc:194
+#: src/libaudgui/util.cc:167 src/libaudqt/queue-manager.cc:116
+msgid "_Close"
+msgstr "_Sulje"
 
 #: src/libaudgui/infopopup.cc:200 src/libaudgui/infowin.cc:360
 #: src/libaudgui/prefs-window.cc:102 src/libaudqt/info-widget.cc:40
@@ -548,7 +579,7 @@ msgstr "Kappaleen tiedot"
 
 #: src/libaudgui/infowin.cc:369 src/libaudqt/info-widget.cc:44
 msgid "Album Artist"
-msgstr ""
+msgstr "Albumi / esittäjä"
 
 #: src/libaudgui/infowin.cc:372 src/libaudgui/prefs-window.cc:109
 #: src/libaudqt/info-widget.cc:43 src/libaudqt/prefs-window.cc:112
@@ -561,22 +592,15 @@ msgstr "Kappaleen numero"
 
 #: src/libaudgui/infowin.cc:389
 msgid "Clea_r fields when moving to next song"
-msgstr ""
+msgstr "T_yhjennä kentät seuraavaan kappaleeseen siirryttäessä"
 
 #: src/libaudgui/infowin.cc:403
 msgid "_Save"
 msgstr "_Tallenna"
 
-#: src/libaudgui/infowin.cc:406 src/libaudgui/plugin-prefs.cc:166
-#: src/libaudgui/prefs-window.cc:762 src/libaudgui/queue-manager.cc:194
-#: src/libaudgui/ui_fileopener.cc:127 src/libaudgui/ui_jumptotrack.cc:302
-#: src/libaudgui/util.cc:167 src/libaudqt/queue-manager.cc:116
-msgid "_Close"
-msgstr "_Sulje"
-
 #: src/libaudgui/infowin.cc:409
 msgid "_Next"
-msgstr ""
+msgstr "_Seuraava"
 
 #: src/libaudgui/infowin.cc:455
 #, c-format
@@ -587,7 +611,7 @@ msgstr "%d kb/s"
 msgid "N/A"
 msgstr "-"
 
-#: src/libaudgui/jump-to-time.cc:47 src/libaudgui/ui_jumptotrack.cc:296
+#: src/libaudgui/jump-to-time.cc:47 src/libaudgui/jump-to-track.cc:312
 msgid "_Jump"
 msgstr "Sii_rry"
 
@@ -598,6 +622,31 @@ msgstr "Hyppää aikaan"
 #: src/libaudgui/jump-to-time.cc:51
 msgid "Enter time (minutes:seconds):"
 msgstr "Syötä aika (minuutit:sekunnit):"
+
+#: src/libaudgui/jump-to-track.cc:95 src/libaudgui/jump-to-track.cc:103
+#: src/libaudgui/jump-to-track.cc:303
+msgid "_Queue"
+msgstr "_Lisää jonoon"
+
+#: src/libaudgui/jump-to-track.cc:101
+msgid "Un_queue"
+msgstr "_Poista jonosta"
+
+#: src/libaudgui/jump-to-track.cc:238
+msgid "Jump to Song"
+msgstr "Hyppää kappaleeseen"
+
+#: src/libaudgui/jump-to-track.cc:263
+msgid "Filter: "
+msgstr "Suodatin: "
+
+#: src/libaudgui/jump-to-track.cc:264
+msgid "_Filter:"
+msgstr "_Suodatin:"
+
+#: src/libaudgui/jump-to-track.cc:296
+msgid "C_lose on jump"
+msgstr "S_ulje siirryttäessä"
 
 #: src/libaudgui/playlists.cc:89
 msgid "_Overwrite"
@@ -647,12 +696,12 @@ msgid "_Set"
 msgstr "_Aseta"
 
 #: src/libaudgui/plugin-view.cc:235 src/libaudgui/prefs-window.cc:650
-#: src/libaudqt/prefs-window.cc:491 src/libaudqt/prefs-window.cc:637
+#: src/libaudqt/prefs-window.cc:490
 msgid "_Settings"
 msgstr "_Asetukset"
 
 #: src/libaudgui/plugin-view.cc:242 src/libaudgui/prefs-window.cc:661
-#: src/libaudqt/prefs-window.cc:505 src/libaudqt/prefs-window.cc:634
+#: src/libaudqt/prefs-window.cc:504
 msgid "_About"
 msgstr "_Tietoja"
 
@@ -699,15 +748,15 @@ msgstr "Siirtokanavat"
 
 #: src/libaudgui/prefs-window.cc:103 src/libaudqt/prefs-window.cc:106
 msgid "Track number"
-msgstr ""
+msgstr "Kappalenumero"
 
 #: src/libaudgui/prefs-window.cc:105 src/libaudqt/prefs-window.cc:108
 msgid "File name"
-msgstr ""
+msgstr "Tiedostonimi"
 
 #: src/libaudgui/prefs-window.cc:106 src/libaudqt/prefs-window.cc:109
 msgid "File path"
-msgstr ""
+msgstr "Tiedoston polku"
 
 #: src/libaudgui/prefs-window.cc:107 src/libaudqt/prefs-window.cc:110
 msgid "Date"
@@ -944,11 +993,11 @@ msgstr "Älä lataa metatietoja kun kappaletta soitetaan"
 
 #: src/libaudgui/prefs-window.cc:277 src/libaudqt/prefs-window.cc:283
 msgid "Probe content of files with no recognized file name extension"
-msgstr ""
+msgstr "Tutki tuntemattomien tiedostopäätteiden omaavien tiedostojen sisältö"
 
 #: src/libaudgui/prefs-window.cc:282 src/libaudqt/prefs-window.cc:288
 msgid "<b>Album Art</b>"
-msgstr "<b>Levynkansi</b>"
+msgstr "<b>Albumikansi</b>"
 
 #: src/libaudgui/prefs-window.cc:283 src/libaudqt/prefs-window.cc:289
 msgid "Search for images matching these words (comma-separated):"
@@ -1026,7 +1075,7 @@ msgstr "Nimikkeen muoto:"
 msgid "Custom string:"
 msgstr "Muu merkkijono:"
 
-#: src/libaudgui/prefs-window.cc:711 src/libaudqt/prefs-window.cc:713
+#: src/libaudgui/prefs-window.cc:711 src/libaudqt/prefs-window.cc:648
 msgid "Audacious Settings"
 msgstr "Audaciouksen asetukset"
 
@@ -1045,55 +1094,6 @@ msgstr "Työskennellään..."
 #: src/libaudgui/status.cc:85 src/libaudqt/log-inspector.cc:192
 msgid "Error"
 msgstr "Virhe"
-
-#: src/libaudgui/ui_fileopener.cc:80 src/libaudqt/fileopener.cc:39
-msgid "Open Files"
-msgstr "Avaa tiedostoja"
-
-#: src/libaudgui/ui_fileopener.cc:81 src/libaudgui/url-opener.cc:50
-msgid "_Open"
-msgstr "_Avaa"
-
-#: src/libaudgui/ui_fileopener.cc:83
-msgid "Close _dialog on open"
-msgstr "S_ulje ikkuna avatessa"
-
-#: src/libaudgui/ui_fileopener.cc:88 src/libaudqt/fileopener.cc:39
-msgid "Add Files"
-msgstr "Lisää tiedostoja"
-
-#: src/libaudgui/ui_fileopener.cc:89 src/libaudgui/url-opener.cc:56
-msgid "_Add"
-msgstr "_Lisää"
-
-#: src/libaudgui/ui_fileopener.cc:91
-msgid "Close _dialog on add"
-msgstr "Sul_je ikkuna lisättäessä"
-
-#: src/libaudgui/ui_jumptotrack.cc:95 src/libaudgui/ui_jumptotrack.cc:103
-#: src/libaudgui/ui_jumptotrack.cc:307
-msgid "_Queue"
-msgstr "_Lisää jonoon"
-
-#: src/libaudgui/ui_jumptotrack.cc:101
-msgid "Un_queue"
-msgstr "_Poista jonosta"
-
-#: src/libaudgui/ui_jumptotrack.cc:239
-msgid "Jump to Song"
-msgstr "Hyppää kappaleeseen"
-
-#: src/libaudgui/ui_jumptotrack.cc:264
-msgid "Filter: "
-msgstr "Suodatin: "
-
-#: src/libaudgui/ui_jumptotrack.cc:265
-msgid "_Filter:"
-msgstr "_Suodatin:"
-
-#: src/libaudgui/ui_jumptotrack.cc:289
-msgid "C_lose on jump"
-msgstr "S_ulje siirryttäessä"
 
 #: src/libaudgui/url-opener.cc:49
 msgid "Open URL"
@@ -1114,6 +1114,22 @@ msgid ""
 msgstr ""
 "\n"
 "(Seuraavat viestit ovat piilotettu.)"
+
+#: src/libaudqt/fileopener.cc:40
+msgid "Open Folder"
+msgstr "Avaa kansio"
+
+#: src/libaudqt/fileopener.cc:42
+msgid "Add Folder"
+msgstr "Lisää kansio"
+
+#: src/libaudqt/fileopener.cc:46 src/libaudqt/fileopener.cc:47
+msgid "Open"
+msgstr "Avaa"
+
+#: src/libaudqt/fileopener.cc:48 src/libaudqt/fileopener.cc:49
+msgid "Add"
+msgstr "Lisää"
 
 #: src/libaudqt/info-widget.cc:37
 msgid "Metadata"
@@ -1170,7 +1186,7 @@ msgstr ""
 
 #: src/libaudqt/log-inspector.cc:110
 msgid "Message"
-msgstr ""
+msgstr "Viesti"
 
 #: src/libaudqt/log-inspector.cc:175
 msgid "Log Inspector"

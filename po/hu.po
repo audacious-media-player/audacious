@@ -5,6 +5,7 @@
 # Translators:
 # Ferenc Szabo <szaboferee@gmail.com>, 2013
 # fyghter04 <fyghter@mail.com>, 2014
+# fyghter04 <fyghter@mail.com>, 2014
 # Laszlo Dvornik <dvornik@gnome.hu>, 2006
 # Péter Polonkai <polesz@nedudu.hu>, 2010
 # Péter Polonkai <polesz@nedudu.hu>, 2010-2012,2014
@@ -13,9 +14,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-12-04 18:06+0100\n"
-"PO-Revision-Date: 2014-12-02 19:12+0000\n"
-"Last-Translator: Péter Polonkai <polesz@nedudu.hu>\n"
+"POT-Creation-Date: 2015-01-24 13:09+0100\n"
+"PO-Revision-Date: 2014-12-22 12:38+0000\n"
+"Last-Translator: Thomas Lange <thomas-lange2@gmx.de>\n"
 "Language-Team: Hungarian (http://www.transifex.com/projects/p/audacious/"
 "language/hu/)\n"
 "Language: hu\n"
@@ -118,7 +119,7 @@ msgid_plural "%d files found"
 msgstr[0] "%d fájl található"
 msgstr[1] "%d fájl található"
 
-#: src/libaudcore/adder.cc:317 src/libaudcore/playlist.cc:139
+#: src/libaudcore/adder.cc:317 src/libaudcore/playlist.cc:141
 msgid "New Playlist"
 msgstr "Új lejátszólista"
 
@@ -148,15 +149,15 @@ msgstr ""
 msgid "Unknown playback error"
 msgstr "Ismeretlen lejátszási hiba"
 
-#: src/libaudcore/playback.cc:515
+#: src/libaudcore/playback.cc:514
 msgid "Invalid audio format"
 msgstr "Érvénytelen audio formátum"
 
-#: src/libaudcore/playlist.cc:140
+#: src/libaudcore/playlist.cc:142
 msgid "Now Playing"
 msgstr "Most játszott"
 
-#: src/libaudcore/playlist.cc:1622
+#: src/libaudcore/playlist.cc:1638
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress "
 "(or has been disabled)."
@@ -226,15 +227,15 @@ msgstr "Ismeretlen URI séma"
 msgid "Invalid file name"
 msgstr "Érvénytelen fájlnév"
 
-#: src/libaudgui/about.cc:38 src/libaudqt/about.cc:37
+#: src/libaudgui/about.cc:35 src/libaudqt/about.cc:37
 msgid "Credits"
 msgstr "Köszönet"
 
-#: src/libaudgui/about.cc:38 src/libaudqt/about.cc:37
+#: src/libaudgui/about.cc:35 src/libaudqt/about.cc:37
 msgid "License"
 msgstr "Licenc"
 
-#: src/libaudgui/about.cc:72 src/libaudqt/about.cc:89
+#: src/libaudgui/about.cc:69 src/libaudqt/about.cc:88
 msgid "About Audacious"
 msgstr "Audacious névjegye"
 
@@ -325,6 +326,37 @@ msgstr "Equalizer"
 #: src/libaudgui/equalizer.cc:138 src/libaudqt/equalizer.cc:72
 msgid "Preamp"
 msgstr "Preamp"
+
+#: src/libaudgui/file-opener.cc:80 src/libaudqt/fileopener.cc:39
+msgid "Open Files"
+msgstr "Fájlok megnyitása"
+
+#: src/libaudgui/file-opener.cc:81 src/libaudgui/url-opener.cc:50
+msgid "_Open"
+msgstr "_Megnyitás"
+
+#: src/libaudgui/file-opener.cc:83
+msgid "Close _dialog on open"
+msgstr "Párbeszé_dablak bezárása megnyitás után"
+
+#: src/libaudgui/file-opener.cc:88 src/libaudqt/fileopener.cc:41
+msgid "Add Files"
+msgstr "Fájlok hozzáadása"
+
+#: src/libaudgui/file-opener.cc:89 src/libaudgui/url-opener.cc:56
+msgid "_Add"
+msgstr "_Hozzáadás"
+
+#: src/libaudgui/file-opener.cc:91
+msgid "Close _dialog on add"
+msgstr "Párbeszé_dablak bezárása hozzáadás után"
+
+#: src/libaudgui/file-opener.cc:127 src/libaudgui/infowin.cc:406
+#: src/libaudgui/jump-to-track.cc:307 src/libaudgui/plugin-prefs.cc:166
+#: src/libaudgui/prefs-window.cc:762 src/libaudgui/queue-manager.cc:194
+#: src/libaudgui/util.cc:167 src/libaudqt/queue-manager.cc:116
+msgid "_Close"
+msgstr "_Bezár"
 
 #: src/libaudgui/infopopup.cc:200 src/libaudgui/infowin.cc:360
 #: src/libaudgui/prefs-window.cc:102 src/libaudqt/info-widget.cc:40
@@ -565,13 +597,6 @@ msgstr "Mezők tö_rlése ha a következő dalra megy"
 msgid "_Save"
 msgstr "_Mentés"
 
-#: src/libaudgui/infowin.cc:406 src/libaudgui/plugin-prefs.cc:166
-#: src/libaudgui/prefs-window.cc:762 src/libaudgui/queue-manager.cc:194
-#: src/libaudgui/ui_fileopener.cc:127 src/libaudgui/ui_jumptotrack.cc:302
-#: src/libaudgui/util.cc:167 src/libaudqt/queue-manager.cc:116
-msgid "_Close"
-msgstr "_Bezár"
-
 #: src/libaudgui/infowin.cc:409
 msgid "_Next"
 msgstr "_Következő"
@@ -585,7 +610,7 @@ msgstr "%d kb/s"
 msgid "N/A"
 msgstr "N/A"
 
-#: src/libaudgui/jump-to-time.cc:47 src/libaudgui/ui_jumptotrack.cc:296
+#: src/libaudgui/jump-to-time.cc:47 src/libaudgui/jump-to-track.cc:312
 msgid "_Jump"
 msgstr "_Ugrás"
 
@@ -596,6 +621,31 @@ msgstr "Ugrás időpontra"
 #: src/libaudgui/jump-to-time.cc:51
 msgid "Enter time (minutes:seconds):"
 msgstr "Idő megadása (perc:másodperc):"
+
+#: src/libaudgui/jump-to-track.cc:95 src/libaudgui/jump-to-track.cc:103
+#: src/libaudgui/jump-to-track.cc:303
+msgid "_Queue"
+msgstr "_Sorba állítás"
+
+#: src/libaudgui/jump-to-track.cc:101
+msgid "Un_queue"
+msgstr "_Kiszedés a sorból"
+
+#: src/libaudgui/jump-to-track.cc:238
+msgid "Jump to Song"
+msgstr "Ugrás a számra"
+
+#: src/libaudgui/jump-to-track.cc:263
+msgid "Filter: "
+msgstr "Szűrő: "
+
+#: src/libaudgui/jump-to-track.cc:264
+msgid "_Filter:"
+msgstr "_Szűrő: "
+
+#: src/libaudgui/jump-to-track.cc:296
+msgid "C_lose on jump"
+msgstr "Bezárás _ugrás után"
 
 #: src/libaudgui/playlists.cc:89
 msgid "_Overwrite"
@@ -645,12 +695,12 @@ msgid "_Set"
 msgstr "_Beállít"
 
 #: src/libaudgui/plugin-view.cc:235 src/libaudgui/prefs-window.cc:650
-#: src/libaudqt/prefs-window.cc:491 src/libaudqt/prefs-window.cc:637
+#: src/libaudqt/prefs-window.cc:490
 msgid "_Settings"
 msgstr "_Beállítások"
 
 #: src/libaudgui/plugin-view.cc:242 src/libaudgui/prefs-window.cc:661
-#: src/libaudqt/prefs-window.cc:505 src/libaudqt/prefs-window.cc:634
+#: src/libaudqt/prefs-window.cc:504
 msgid "_About"
 msgstr "_Névjegy"
 
@@ -1026,7 +1076,7 @@ msgstr "Címformátum:"
 msgid "Custom string:"
 msgstr "Egyéni karakterlánc:"
 
-#: src/libaudgui/prefs-window.cc:711 src/libaudqt/prefs-window.cc:713
+#: src/libaudgui/prefs-window.cc:711 src/libaudqt/prefs-window.cc:648
 msgid "Audacious Settings"
 msgstr "Audacious beállításai"
 
@@ -1045,55 +1095,6 @@ msgstr "Dolgozom ..."
 #: src/libaudgui/status.cc:85 src/libaudqt/log-inspector.cc:192
 msgid "Error"
 msgstr "Hiba"
-
-#: src/libaudgui/ui_fileopener.cc:80 src/libaudqt/fileopener.cc:39
-msgid "Open Files"
-msgstr "Fájlok megnyitása"
-
-#: src/libaudgui/ui_fileopener.cc:81 src/libaudgui/url-opener.cc:50
-msgid "_Open"
-msgstr "_Megnyitás"
-
-#: src/libaudgui/ui_fileopener.cc:83
-msgid "Close _dialog on open"
-msgstr "Párbeszé_dablak bezárása megnyitás után"
-
-#: src/libaudgui/ui_fileopener.cc:88 src/libaudqt/fileopener.cc:39
-msgid "Add Files"
-msgstr "Fájlok hozzáadása"
-
-#: src/libaudgui/ui_fileopener.cc:89 src/libaudgui/url-opener.cc:56
-msgid "_Add"
-msgstr "_Hozzáadás"
-
-#: src/libaudgui/ui_fileopener.cc:91
-msgid "Close _dialog on add"
-msgstr "Párbeszé_dablak bezárása hozzáadás után"
-
-#: src/libaudgui/ui_jumptotrack.cc:95 src/libaudgui/ui_jumptotrack.cc:103
-#: src/libaudgui/ui_jumptotrack.cc:307
-msgid "_Queue"
-msgstr "_Sorba állítás"
-
-#: src/libaudgui/ui_jumptotrack.cc:101
-msgid "Un_queue"
-msgstr "_Kiszedés a sorból"
-
-#: src/libaudgui/ui_jumptotrack.cc:239
-msgid "Jump to Song"
-msgstr "Ugrás a számra"
-
-#: src/libaudgui/ui_jumptotrack.cc:264
-msgid "Filter: "
-msgstr "Szűrő: "
-
-#: src/libaudgui/ui_jumptotrack.cc:265
-msgid "_Filter:"
-msgstr "_Szűrő: "
-
-#: src/libaudgui/ui_jumptotrack.cc:289
-msgid "C_lose on jump"
-msgstr "Bezárás _ugrás után"
 
 #: src/libaudgui/url-opener.cc:49
 msgid "Open URL"
@@ -1114,6 +1115,22 @@ msgid ""
 msgstr ""
 "\n"
 "(További üzenetek el vannak rejtve.)"
+
+#: src/libaudqt/fileopener.cc:40
+msgid "Open Folder"
+msgstr ""
+
+#: src/libaudqt/fileopener.cc:42
+msgid "Add Folder"
+msgstr ""
+
+#: src/libaudqt/fileopener.cc:46 src/libaudqt/fileopener.cc:47
+msgid "Open"
+msgstr ""
+
+#: src/libaudqt/fileopener.cc:48 src/libaudqt/fileopener.cc:49
+msgid "Add"
+msgstr ""
 
 #: src/libaudqt/info-widget.cc:37
 msgid "Metadata"

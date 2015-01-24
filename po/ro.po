@@ -4,6 +4,7 @@
 #
 # Translators:
 # corneliu.e <corneliueva@yahoo.com>, 2014
+# corneliu.e <corneliueva@yahoo.com>, 2014
 # Emil Ungurean <emil.ungurean@gmail.com>, 2014
 # xyz32 <oanaradu32@yahoo.com>, 2013
 # Warui-chan <>, 2012
@@ -13,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-12-04 18:06+0100\n"
-"PO-Revision-Date: 2014-12-01 19:57+0000\n"
+"POT-Creation-Date: 2015-01-24 13:09+0100\n"
+"PO-Revision-Date: 2014-12-22 12:38+0000\n"
 "Last-Translator: Thomas Lange <thomas-lange2@gmx.de>\n"
 "Language-Team: Romanian (http://www.transifex.com/projects/p/audacious/"
 "language/ro/)\n"
@@ -118,7 +119,7 @@ msgstr[0] "%d fisiere gasite"
 msgstr[1] "%d fisiere gasite"
 msgstr[2] "%d fișiere găsite"
 
-#: src/libaudcore/adder.cc:317 src/libaudcore/playlist.cc:139
+#: src/libaudcore/adder.cc:317 src/libaudcore/playlist.cc:141
 msgid "New Playlist"
 msgstr "Listă de redare nouă"
 
@@ -148,15 +149,15 @@ msgstr ""
 msgid "Unknown playback error"
 msgstr "Eroare necunoscută de redare"
 
-#: src/libaudcore/playback.cc:515
+#: src/libaudcore/playback.cc:514
 msgid "Invalid audio format"
 msgstr ""
 
-#: src/libaudcore/playlist.cc:140
+#: src/libaudcore/playlist.cc:142
 msgid "Now Playing"
 msgstr ""
 
-#: src/libaudcore/playlist.cc:1622
+#: src/libaudcore/playlist.cc:1638
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress "
 "(or has been disabled)."
@@ -225,15 +226,15 @@ msgstr ""
 msgid "Invalid file name"
 msgstr ""
 
-#: src/libaudgui/about.cc:38 src/libaudqt/about.cc:37
+#: src/libaudgui/about.cc:35 src/libaudqt/about.cc:37
 msgid "Credits"
 msgstr "Credite"
 
-#: src/libaudgui/about.cc:38 src/libaudqt/about.cc:37
+#: src/libaudgui/about.cc:35 src/libaudqt/about.cc:37
 msgid "License"
 msgstr "Licență"
 
-#: src/libaudgui/about.cc:72 src/libaudqt/about.cc:89
+#: src/libaudgui/about.cc:69 src/libaudqt/about.cc:88
 msgid "About Audacious"
 msgstr "Despre Audacious"
 
@@ -324,6 +325,37 @@ msgstr "Egalizator"
 #: src/libaudgui/equalizer.cc:138 src/libaudqt/equalizer.cc:72
 msgid "Preamp"
 msgstr ""
+
+#: src/libaudgui/file-opener.cc:80 src/libaudqt/fileopener.cc:39
+msgid "Open Files"
+msgstr "Deschide Fișiere"
+
+#: src/libaudgui/file-opener.cc:81 src/libaudgui/url-opener.cc:50
+msgid "_Open"
+msgstr "_Deschide"
+
+#: src/libaudgui/file-opener.cc:83
+msgid "Close _dialog on open"
+msgstr ""
+
+#: src/libaudgui/file-opener.cc:88 src/libaudqt/fileopener.cc:41
+msgid "Add Files"
+msgstr "Adaugă Fișiere"
+
+#: src/libaudgui/file-opener.cc:89 src/libaudgui/url-opener.cc:56
+msgid "_Add"
+msgstr "_Adaugă"
+
+#: src/libaudgui/file-opener.cc:91
+msgid "Close _dialog on add"
+msgstr ""
+
+#: src/libaudgui/file-opener.cc:127 src/libaudgui/infowin.cc:406
+#: src/libaudgui/jump-to-track.cc:307 src/libaudgui/plugin-prefs.cc:166
+#: src/libaudgui/prefs-window.cc:762 src/libaudgui/queue-manager.cc:194
+#: src/libaudgui/util.cc:167 src/libaudqt/queue-manager.cc:116
+msgid "_Close"
+msgstr "_Închidere"
 
 #: src/libaudgui/infopopup.cc:200 src/libaudgui/infowin.cc:360
 #: src/libaudgui/prefs-window.cc:102 src/libaudqt/info-widget.cc:40
@@ -564,13 +596,6 @@ msgstr ""
 msgid "_Save"
 msgstr "_Salvează"
 
-#: src/libaudgui/infowin.cc:406 src/libaudgui/plugin-prefs.cc:166
-#: src/libaudgui/prefs-window.cc:762 src/libaudgui/queue-manager.cc:194
-#: src/libaudgui/ui_fileopener.cc:127 src/libaudgui/ui_jumptotrack.cc:302
-#: src/libaudgui/util.cc:167 src/libaudqt/queue-manager.cc:116
-msgid "_Close"
-msgstr "_Închidere"
-
 #: src/libaudgui/infowin.cc:409
 msgid "_Next"
 msgstr "_Următorul"
@@ -584,7 +609,7 @@ msgstr "%d kb/s"
 msgid "N/A"
 msgstr "N/A"
 
-#: src/libaudgui/jump-to-time.cc:47 src/libaudgui/ui_jumptotrack.cc:296
+#: src/libaudgui/jump-to-time.cc:47 src/libaudgui/jump-to-track.cc:312
 msgid "_Jump"
 msgstr "_Sari"
 
@@ -595,6 +620,31 @@ msgstr "Sari la Timp"
 #: src/libaudgui/jump-to-time.cc:51
 msgid "Enter time (minutes:seconds):"
 msgstr "Introdu timp (minute:secunde):"
+
+#: src/libaudgui/jump-to-track.cc:95 src/libaudgui/jump-to-track.cc:103
+#: src/libaudgui/jump-to-track.cc:303
+msgid "_Queue"
+msgstr "_Adaugă la coadă"
+
+#: src/libaudgui/jump-to-track.cc:101
+msgid "Un_queue"
+msgstr "Scoate din coadă"
+
+#: src/libaudgui/jump-to-track.cc:238
+msgid "Jump to Song"
+msgstr "Sari la Melodie"
+
+#: src/libaudgui/jump-to-track.cc:263
+msgid "Filter: "
+msgstr "Filtru: "
+
+#: src/libaudgui/jump-to-track.cc:264
+msgid "_Filter:"
+msgstr "_Filtru:"
+
+#: src/libaudgui/jump-to-track.cc:296
+msgid "C_lose on jump"
+msgstr ""
 
 #: src/libaudgui/playlists.cc:89
 msgid "_Overwrite"
@@ -644,12 +694,12 @@ msgid "_Set"
 msgstr "_Stabileşte"
 
 #: src/libaudgui/plugin-view.cc:235 src/libaudgui/prefs-window.cc:650
-#: src/libaudqt/prefs-window.cc:491 src/libaudqt/prefs-window.cc:637
+#: src/libaudqt/prefs-window.cc:490
 msgid "_Settings"
 msgstr "_Setări"
 
 #: src/libaudgui/plugin-view.cc:242 src/libaudgui/prefs-window.cc:661
-#: src/libaudqt/prefs-window.cc:505 src/libaudqt/prefs-window.cc:634
+#: src/libaudqt/prefs-window.cc:504
 msgid "_About"
 msgstr "_Despre"
 
@@ -1023,7 +1073,7 @@ msgstr "Formatul titlului:"
 msgid "Custom string:"
 msgstr "Format specificat:"
 
-#: src/libaudgui/prefs-window.cc:711 src/libaudqt/prefs-window.cc:713
+#: src/libaudgui/prefs-window.cc:711 src/libaudqt/prefs-window.cc:648
 msgid "Audacious Settings"
 msgstr "Setări Audacious"
 
@@ -1042,55 +1092,6 @@ msgstr ""
 #: src/libaudgui/status.cc:85 src/libaudqt/log-inspector.cc:192
 msgid "Error"
 msgstr "Eroare"
-
-#: src/libaudgui/ui_fileopener.cc:80 src/libaudqt/fileopener.cc:39
-msgid "Open Files"
-msgstr "Deschide Fișiere"
-
-#: src/libaudgui/ui_fileopener.cc:81 src/libaudgui/url-opener.cc:50
-msgid "_Open"
-msgstr "_Deschide"
-
-#: src/libaudgui/ui_fileopener.cc:83
-msgid "Close _dialog on open"
-msgstr ""
-
-#: src/libaudgui/ui_fileopener.cc:88 src/libaudqt/fileopener.cc:39
-msgid "Add Files"
-msgstr "Adaugă Fișiere"
-
-#: src/libaudgui/ui_fileopener.cc:89 src/libaudgui/url-opener.cc:56
-msgid "_Add"
-msgstr "_Adaugă"
-
-#: src/libaudgui/ui_fileopener.cc:91
-msgid "Close _dialog on add"
-msgstr ""
-
-#: src/libaudgui/ui_jumptotrack.cc:95 src/libaudgui/ui_jumptotrack.cc:103
-#: src/libaudgui/ui_jumptotrack.cc:307
-msgid "_Queue"
-msgstr "_Adaugă la coadă"
-
-#: src/libaudgui/ui_jumptotrack.cc:101
-msgid "Un_queue"
-msgstr "Scoate din coadă"
-
-#: src/libaudgui/ui_jumptotrack.cc:239
-msgid "Jump to Song"
-msgstr "Sari la Melodie"
-
-#: src/libaudgui/ui_jumptotrack.cc:264
-msgid "Filter: "
-msgstr "Filtru: "
-
-#: src/libaudgui/ui_jumptotrack.cc:265
-msgid "_Filter:"
-msgstr "_Filtru:"
-
-#: src/libaudgui/ui_jumptotrack.cc:289
-msgid "C_lose on jump"
-msgstr ""
 
 #: src/libaudgui/url-opener.cc:49
 msgid "Open URL"
@@ -1111,6 +1112,22 @@ msgid ""
 msgstr ""
 "\n"
 "(Mesajele următoare au fost ascunse.)"
+
+#: src/libaudqt/fileopener.cc:40
+msgid "Open Folder"
+msgstr ""
+
+#: src/libaudqt/fileopener.cc:42
+msgid "Add Folder"
+msgstr ""
+
+#: src/libaudqt/fileopener.cc:46 src/libaudqt/fileopener.cc:47
+msgid "Open"
+msgstr ""
+
+#: src/libaudqt/fileopener.cc:48 src/libaudqt/fileopener.cc:49
+msgid "Add"
+msgstr ""
 
 #: src/libaudqt/info-widget.cc:37
 msgid "Metadata"

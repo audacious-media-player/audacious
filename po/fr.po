@@ -7,14 +7,14 @@
 # Oxayotl <jagw40k@free.fr>, 2013-2014
 # Oxayotl <jagw40k@free.fr>, 2011-2012
 # Oxayotl <jagw40k@free.fr>, 2011
-# Oxayotl <jagw40k@free.fr>, 2013
+# Oxayotl <jagw40k@free.fr>, 2011,2013
 # yahoe.001, 2013-2014
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-12-04 18:06+0100\n"
-"PO-Revision-Date: 2014-12-03 12:37+0000\n"
+"POT-Creation-Date: 2015-01-24 13:09+0100\n"
+"PO-Revision-Date: 2014-12-22 17:20+0000\n"
 "Last-Translator: yahoe.001\n"
 "Language-Team: French (http://www.transifex.com/projects/p/audacious/"
 "language/fr/)\n"
@@ -50,7 +50,7 @@ msgstr "Arrêter la lecture"
 
 #: src/audacious/main.cc:66
 msgid "Skip to previous song"
-msgstr "Passer au morceau précédent "
+msgstr "Passer au morceau précédent"
 
 #: src/audacious/main.cc:67
 msgid "Skip to next song"
@@ -78,7 +78,7 @@ msgstr "Démarrer sans interface graphique"
 
 #: src/audacious/main.cc:73
 msgid "Quit on playback stop"
-msgstr "Quitter à la fin de la lecture"
+msgstr "Quitter à l'arrêt de la lecture"
 
 #: src/audacious/main.cc:74
 msgid "Print debugging messages (may be used twice)"
@@ -118,7 +118,7 @@ msgid_plural "%d files found"
 msgstr[0] "%d fichier trouvé"
 msgstr[1] "%d fichiers trouvés"
 
-#: src/libaudcore/adder.cc:317 src/libaudcore/playlist.cc:139
+#: src/libaudcore/adder.cc:317 src/libaudcore/playlist.cc:141
 msgid "New Playlist"
 msgstr "Nouvelle liste de lecture"
 
@@ -148,21 +148,21 @@ msgstr ""
 msgid "Unknown playback error"
 msgstr "Erreur de lecture inconnue"
 
-#: src/libaudcore/playback.cc:515
+#: src/libaudcore/playback.cc:514
 msgid "Invalid audio format"
 msgstr "Format audio invalide"
 
-#: src/libaudcore/playlist.cc:140
+#: src/libaudcore/playlist.cc:142
 msgid "Now Playing"
 msgstr "Lecture en cours"
 
-#: src/libaudcore/playlist.cc:1622
+#: src/libaudcore/playlist.cc:1638
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress "
 "(or has been disabled)."
 msgstr ""
 "La liste de lecture ne peut pas être triée car le balayage des métadonnées "
-"est en cours (ou a été désactivé)."
+"est encore en cours (ou a été désactivé)."
 
 #: src/libaudcore/playlist-files.cc:76
 #, c-format
@@ -229,15 +229,15 @@ msgstr "Modèle d'URI inconnu"
 msgid "Invalid file name"
 msgstr "Nom de fichier invalide"
 
-#: src/libaudgui/about.cc:38 src/libaudqt/about.cc:37
+#: src/libaudgui/about.cc:35 src/libaudqt/about.cc:37
 msgid "Credits"
 msgstr "Crédits"
 
-#: src/libaudgui/about.cc:38 src/libaudqt/about.cc:37
+#: src/libaudgui/about.cc:35 src/libaudqt/about.cc:37
 msgid "License"
 msgstr "Licence"
 
-#: src/libaudgui/about.cc:72 src/libaudqt/about.cc:89
+#: src/libaudgui/about.cc:69 src/libaudqt/about.cc:88
 msgid "About Audacious"
 msgstr "À propos d'Audacious"
 
@@ -248,7 +248,7 @@ msgstr "Voulez-vous enlever « %s » de façon permanente ?"
 
 #: src/libaudgui/confirm.cc:55 src/libaudqt/playlist-management.cc:46
 msgid "_Remove"
-msgstr "En_lever"
+msgstr "Enleve_r"
 
 #: src/libaudgui/confirm.cc:57 src/libaudgui/confirm.cc:88
 #: src/libaudgui/jump-to-time.cc:48 src/libaudgui/playlists.cc:90
@@ -263,7 +263,7 @@ msgstr "Enlever la liste de lecture"
 
 #: src/libaudgui/confirm.cc:62 src/libaudqt/playlist-management.cc:44
 msgid "_Don’t ask again"
-msgstr "_Ne plus demander"
+msgstr "Ne plus _demander"
 
 #: src/libaudgui/confirm.cc:87
 msgid "_Rename"
@@ -279,7 +279,7 @@ msgstr "Comment voulez-vous appeler cette liste de lecture ?"
 
 #: src/libaudgui/equalizer.cc:45 src/libaudqt/equalizer.cc:63
 msgid "_Enable"
-msgstr "_Activer"
+msgstr "Activ_er"
 
 #: src/libaudgui/equalizer.cc:119 src/libaudqt/equalizer.cc:65
 msgid "31 Hz"
@@ -328,6 +328,37 @@ msgstr "Égaliseur"
 #: src/libaudgui/equalizer.cc:138 src/libaudqt/equalizer.cc:72
 msgid "Preamp"
 msgstr "Préampli"
+
+#: src/libaudgui/file-opener.cc:80 src/libaudqt/fileopener.cc:39
+msgid "Open Files"
+msgstr "Ouvrir des fichiers"
+
+#: src/libaudgui/file-opener.cc:81 src/libaudgui/url-opener.cc:50
+msgid "_Open"
+msgstr "_Ouvrir"
+
+#: src/libaudgui/file-opener.cc:83
+msgid "Close _dialog on open"
+msgstr "Fermer la _fenêtre de dialogue à l'ouverture"
+
+#: src/libaudgui/file-opener.cc:88 src/libaudqt/fileopener.cc:41
+msgid "Add Files"
+msgstr "Ajouter des fichiers"
+
+#: src/libaudgui/file-opener.cc:89 src/libaudgui/url-opener.cc:56
+msgid "_Add"
+msgstr "_Ajouter"
+
+#: src/libaudgui/file-opener.cc:91
+msgid "Close _dialog on add"
+msgstr "Fermer la fenêtre de _dialogue lors de l'ajout"
+
+#: src/libaudgui/file-opener.cc:127 src/libaudgui/infowin.cc:406
+#: src/libaudgui/jump-to-track.cc:307 src/libaudgui/plugin-prefs.cc:166
+#: src/libaudgui/prefs-window.cc:762 src/libaudgui/queue-manager.cc:194
+#: src/libaudgui/util.cc:167 src/libaudqt/queue-manager.cc:116
+msgid "_Close"
+msgstr "_Fermer"
 
 #: src/libaudgui/infopopup.cc:200 src/libaudgui/infowin.cc:360
 #: src/libaudgui/prefs-window.cc:102 src/libaudqt/info-widget.cc:40
@@ -380,15 +411,15 @@ msgstr "Débit binaire :"
 
 #: src/libaudgui/infowin.cc:83
 msgid "Acid Jazz"
-msgstr "Acid Jazz"
+msgstr "Acid jazz"
 
 #: src/libaudgui/infowin.cc:84
 msgid "Acid Rock"
-msgstr "Acid Rock"
+msgstr "Acid rock"
 
 #: src/libaudgui/infowin.cc:85
 msgid "Ambient"
-msgstr "Ambient"
+msgstr "Ambiant"
 
 #: src/libaudgui/infowin.cc:86
 msgid "Bebop"
@@ -448,7 +479,7 @@ msgstr "Grunge"
 
 #: src/libaudgui/infowin.cc:100
 msgid "Hard Rock"
-msgstr "Hard Rock"
+msgstr "Hard rock"
 
 #: src/libaudgui/infowin.cc:101
 msgid "Heavy Metal"
@@ -492,7 +523,7 @@ msgstr "Pop"
 
 #: src/libaudgui/infowin.cc:111
 msgid "Punk Rock"
-msgstr "Punk Rock"
+msgstr "Punk rock"
 
 #: src/libaudgui/infowin.cc:112
 msgid "Rap"
@@ -568,13 +599,6 @@ msgstr "Efface_r les champs en passant au morceau suivant"
 msgid "_Save"
 msgstr "_Enregistrer"
 
-#: src/libaudgui/infowin.cc:406 src/libaudgui/plugin-prefs.cc:166
-#: src/libaudgui/prefs-window.cc:762 src/libaudgui/queue-manager.cc:194
-#: src/libaudgui/ui_fileopener.cc:127 src/libaudgui/ui_jumptotrack.cc:302
-#: src/libaudgui/util.cc:167 src/libaudqt/queue-manager.cc:116
-msgid "_Close"
-msgstr "_Fermer"
-
 #: src/libaudgui/infowin.cc:409
 msgid "_Next"
 msgstr "Suiva_nt"
@@ -588,17 +612,42 @@ msgstr "%d kb/s"
 msgid "N/A"
 msgstr "N/D"
 
-#: src/libaudgui/jump-to-time.cc:47 src/libaudgui/ui_jumptotrack.cc:296
+#: src/libaudgui/jump-to-time.cc:47 src/libaudgui/jump-to-track.cc:312
 msgid "_Jump"
 msgstr "Sa_ut"
 
 #: src/libaudgui/jump-to-time.cc:51
 msgid "Jump to Time"
-msgstr "Sauter vers la position"
+msgstr "Sauter à la positon (temps)"
 
 #: src/libaudgui/jump-to-time.cc:51
 msgid "Enter time (minutes:seconds):"
-msgstr "Saisir un temps (minutes:secondes) :"
+msgstr "Saisir une position (minutes:secondes) :"
+
+#: src/libaudgui/jump-to-track.cc:95 src/libaudgui/jump-to-track.cc:103
+#: src/libaudgui/jump-to-track.cc:303
+msgid "_Queue"
+msgstr "_Mettre dans la file"
+
+#: src/libaudgui/jump-to-track.cc:101
+msgid "Un_queue"
+msgstr "_Retirer de la file"
+
+#: src/libaudgui/jump-to-track.cc:238
+msgid "Jump to Song"
+msgstr "Sauter au morceau"
+
+#: src/libaudgui/jump-to-track.cc:263
+msgid "Filter: "
+msgstr "Filtre :"
+
+#: src/libaudgui/jump-to-track.cc:264
+msgid "_Filter:"
+msgstr "_Filtre :"
+
+#: src/libaudgui/jump-to-track.cc:296
+msgid "C_lose on jump"
+msgstr "Fermer _lors du saut"
 
 #: src/libaudgui/playlists.cc:89
 msgid "_Overwrite"
@@ -648,14 +697,14 @@ msgid "_Set"
 msgstr "_Définir"
 
 #: src/libaudgui/plugin-view.cc:235 src/libaudgui/prefs-window.cc:650
-#: src/libaudqt/prefs-window.cc:491 src/libaudqt/prefs-window.cc:637
+#: src/libaudqt/prefs-window.cc:490
 msgid "_Settings"
 msgstr "_Paramètres"
 
 #: src/libaudgui/plugin-view.cc:242 src/libaudgui/prefs-window.cc:661
-#: src/libaudqt/prefs-window.cc:505 src/libaudqt/prefs-window.cc:634
+#: src/libaudqt/prefs-window.cc:504
 msgid "_About"
-msgstr "À p_ropos de"
+msgstr "À p_ropos de..."
 
 #: src/libaudgui/prefs-window.cc:82 src/libaudqt/prefs-window.cc:85
 msgid "Appearance"
@@ -684,7 +733,7 @@ msgstr "Général"
 
 #: src/libaudgui/prefs-window.cc:92 src/libaudqt/prefs-window.cc:95
 msgid "Effect"
-msgstr "Effets audio"
+msgstr "Effets"
 
 #: src/libaudgui/prefs-window.cc:93 src/libaudqt/prefs-window.cc:96
 msgid "Visualization"
@@ -696,7 +745,7 @@ msgstr "Entrée"
 
 #: src/libaudgui/prefs-window.cc:96 src/libaudqt/prefs-window.cc:99
 msgid "Transport"
-msgstr "Accès aux fichiers"
+msgstr "Transport"
 
 #: src/libaudgui/prefs-window.cc:103 src/libaudqt/prefs-window.cc:106
 msgid "Track number"
@@ -726,7 +775,7 @@ msgstr "Qualité"
 
 #: src/libaudgui/prefs-window.cc:116 src/libaudqt/prefs-window.cc:119
 msgid "None"
-msgstr "Aucune langue"
+msgstr "Aucune"
 
 #: src/libaudgui/prefs-window.cc:117 src/libaudqt/prefs-window.cc:120
 msgid "Arabic"
@@ -786,7 +835,7 @@ msgstr "Greffon d'interface :"
 
 #: src/libaudgui/prefs-window.cc:166 src/libaudqt/prefs-window.cc:169
 msgid "Output plugin:"
-msgstr "Module de sortie"
+msgstr "Greffon de sortie :"
 
 #: src/libaudgui/prefs-window.cc:174 src/libaudqt/prefs-window.cc:177
 msgid "<b>Output Settings</b>"
@@ -811,11 +860,11 @@ msgstr "Écrêtage logiciel"
 
 #: src/libaudgui/prefs-window.cc:184 src/libaudqt/prefs-window.cc:187
 msgid "Use software volume control (not recommended)"
-msgstr "Utiliser un contrôle logiciel du volume (non recommandé)"
+msgstr "Utiliser le contrôle logiciel du volume (non recommandé)"
 
 #: src/libaudgui/prefs-window.cc:186 src/libaudqt/prefs-window.cc:189
 msgid "<b>Replay Gain</b>"
-msgstr "<b>Replay Gain</b>"
+msgstr "<b>Correction ReplayGain</b>"
 
 #: src/libaudgui/prefs-window.cc:187 src/libaudqt/prefs-window.cc:190
 msgid "Enable Replay Gain"
@@ -831,7 +880,7 @@ msgstr "Éviter l'écrêtage (recommandé)"
 
 #: src/libaudgui/prefs-window.cc:195 src/libaudqt/prefs-window.cc:198
 msgid "<b>Adjust Levels</b>"
-msgstr "<b>Ajustement des niveaux</b>"
+msgstr "<b>Ajuster les niveaux</b>"
 
 #: src/libaudgui/prefs-window.cc:197 src/libaudqt/prefs-window.cc:200
 msgid "Amplify all files:"
@@ -856,11 +905,11 @@ msgstr "Port du mandataire :"
 
 #: src/libaudgui/prefs-window.cc:215 src/libaudqt/prefs-window.cc:218
 msgid "Proxy username:"
-msgstr "Nom d'utilisateur pour le mandataire :"
+msgstr "Nom d'utilisateur du mandataire :"
 
 #: src/libaudgui/prefs-window.cc:217 src/libaudqt/prefs-window.cc:220
 msgid "Proxy password:"
-msgstr "Mot de passe pour le mandataire :"
+msgstr "Mot de passe du mandataire :"
 
 #: src/libaudgui/prefs-window.cc:223 src/libaudqt/prefs-window.cc:226
 msgid "<b>Network Settings</b>"
@@ -872,7 +921,7 @@ msgstr "KiB"
 
 #: src/libaudgui/prefs-window.cc:227 src/libaudqt/prefs-window.cc:230
 msgid "<b>Proxy Configuration</b>"
-msgstr "<b>Configuration du serveur mandataire</b>"
+msgstr "<b>Configuration du mandataire</b>"
 
 #: src/libaudgui/prefs-window.cc:228 src/libaudqt/prefs-window.cc:231
 msgid "Enable proxy usage"
@@ -880,15 +929,15 @@ msgstr "Activer l'utilisation du mandataire"
 
 #: src/libaudgui/prefs-window.cc:232 src/libaudqt/prefs-window.cc:235
 msgid "Use authentication with proxy"
-msgstr "Le mandataire demande une authentification"
+msgstr "Utiliser l'authentification avec le mandataire"
 
 #: src/libaudgui/prefs-window.cc:240 src/libaudqt/prefs-window.cc:243
 msgid "Auto character encoding detector for:"
-msgstr "Détection automatique de l'encodage pour :"
+msgstr "Détecteur automatique d'encodage des caractères pour :"
 
 #: src/libaudgui/prefs-window.cc:244 src/libaudqt/prefs-window.cc:247
 msgid "Fallback character encodings:"
-msgstr "Encodages des caractères de reprise :"
+msgstr "Encodages de repli de reprise :"
 
 #: src/libaudgui/prefs-window.cc:252 src/libaudqt/prefs-window.cc:256
 msgid "<b>Behavior</b>"
@@ -904,15 +953,15 @@ msgstr "Mettre en pause au lieu de reprendre immédiatement"
 
 #: src/libaudgui/prefs-window.cc:258 src/libaudqt/prefs-window.cc:262
 msgid "Advance when the current song is deleted"
-msgstr "Passer à la piste suivante si la piste courante est supprimée"
+msgstr "Avancer si la piste courante est supprimée"
 
 #: src/libaudgui/prefs-window.cc:260 src/libaudqt/prefs-window.cc:264
 msgid "Clear the playlist when opening files"
-msgstr "Vider la liste de lecture lors de l'ouverture de nouveaux fichiers"
+msgstr "Vider la liste de lecture à l'ouverture de fichiers"
 
 #: src/libaudgui/prefs-window.cc:262 src/libaudqt/prefs-window.cc:266
 msgid "Open files in a temporary playlist"
-msgstr "Ouvrir les nouveaux fichiers dans une liste de lecture provisoire"
+msgstr "Ouvrir les fichiers dans une liste de lecture provisoire"
 
 #: src/libaudgui/prefs-window.cc:264 src/libaudqt/prefs-window.cc:270
 msgid "<b>Compatibility</b>"
@@ -920,7 +969,7 @@ msgstr "<b>Compatibilité</b>"
 
 #: src/libaudgui/prefs-window.cc:265 src/libaudqt/prefs-window.cc:271
 msgid "Interpret \\ (backward slash) as a folder delimiter"
-msgstr "Interpréter le \\ (barre oblique inverse) comme délimiteur de dossier"
+msgstr "Interpréter la \\ (barre oblique inverse) comme délimiteur de dossier"
 
 #: src/libaudgui/prefs-window.cc:268 src/libaudqt/prefs-window.cc:274
 msgid "<b>Song Display</b>"
@@ -928,7 +977,7 @@ msgstr "<b>Affichage du morceau</b>"
 
 #: src/libaudgui/prefs-window.cc:269 src/libaudqt/prefs-window.cc:275
 msgid "Show song numbers"
-msgstr "Afficher le numéro du morceau"
+msgstr "Afficher les numéros des morceaux"
 
 #: src/libaudgui/prefs-window.cc:271 src/libaudqt/prefs-window.cc:277
 msgid "Show leading zeroes (02:00 instead of 2:00)"
@@ -941,7 +990,7 @@ msgstr "<b>Avancé</b>"
 #: src/libaudgui/prefs-window.cc:275 src/libaudqt/prefs-window.cc:268
 #: src/libaudqt/prefs-window.cc:281
 msgid "Do not load metadata for songs until played"
-msgstr "Ne charger les métadonnées qu'à la lecture"
+msgstr "Ne charger les métadonnées des morceaux qu'à la lecture"
 
 #: src/libaudgui/prefs-window.cc:277 src/libaudqt/prefs-window.cc:283
 msgid "Probe content of files with no recognized file name extension"
@@ -962,7 +1011,7 @@ msgstr "Exclure les images contenant ces mots (séparés par des virgules) : "
 
 #: src/libaudgui/prefs-window.cc:287 src/libaudqt/prefs-window.cc:293
 msgid "Search for images matching song file name"
-msgstr "Rechercher des images correspondant au nom au morceau"
+msgstr "Rechercher des images correspondant au nom du morceau"
 
 #: src/libaudgui/prefs-window.cc:289 src/libaudqt/prefs-window.cc:295
 msgid "Search recursively"
@@ -970,7 +1019,7 @@ msgstr "Recherche récursive"
 
 #: src/libaudgui/prefs-window.cc:291 src/libaudqt/prefs-window.cc:297
 msgid "Search depth:"
-msgstr "Profondeur de la recherche"
+msgstr "Profondeur de la recherche :"
 
 #: src/libaudgui/prefs-window.cc:295 src/libaudqt/prefs-window.cc:301
 msgid "<b>Popup Information</b>"
@@ -978,15 +1027,15 @@ msgstr "<b>Fenêtre d'information contextuelle</b>"
 
 #: src/libaudgui/prefs-window.cc:296 src/libaudqt/prefs-window.cc:302
 msgid "Show popup information"
-msgstr "Affiche la fenêtre d'information contextuelle"
+msgstr "Afficher les fenêtres d'information contextuelle"
 
 #: src/libaudgui/prefs-window.cc:298 src/libaudqt/prefs-window.cc:304
 msgid "Popup delay (tenths of a second):"
-msgstr "Délai d'apparition de la fenêtre contextuelle (en 1/10 de seconde) :"
+msgstr "Délai de la fenêtre contextuelle (en dixièmes de seconde) :"
 
 #: src/libaudgui/prefs-window.cc:302 src/libaudqt/prefs-window.cc:308
 msgid "Show time scale for current song"
-msgstr "Affiche l'échelle de temps pour le morceau actuel"
+msgstr "Afficher l'échelle de temps pour le morceau actuel"
 
 #: src/libaudgui/prefs-window.cc:319 src/libaudqt/prefs-window.cc:325
 msgid "TITLE"
@@ -1026,11 +1075,11 @@ msgstr "Format du titre :"
 
 #: src/libaudgui/prefs-window.cc:509 src/libaudqt/prefs-window.cc:349
 msgid "Custom string:"
-msgstr "Format personnalisé :"
+msgstr "Chaîne personnalisée :"
 
-#: src/libaudgui/prefs-window.cc:711 src/libaudqt/prefs-window.cc:713
+#: src/libaudgui/prefs-window.cc:711 src/libaudqt/prefs-window.cc:648
 msgid "Audacious Settings"
-msgstr "Paramêtres d'Audacious"
+msgstr "Paramètres d'Audacious"
 
 #: src/libaudgui/queue-manager.cc:175 src/libaudqt/queue-manager.cc:133
 msgid "Queue Manager"
@@ -1038,7 +1087,7 @@ msgstr "Gestionnaire de la file d'attente"
 
 #: src/libaudgui/queue-manager.cc:193 src/libaudqt/queue-manager.cc:115
 msgid "_Unqueue"
-msgstr "Enlever de la _file d'attente"
+msgstr "Ôter de la _file d'attente"
 
 #: src/libaudgui/status.cc:36
 msgid "Working ..."
@@ -1048,62 +1097,13 @@ msgstr "Je travaille..."
 msgid "Error"
 msgstr "Erreur"
 
-#: src/libaudgui/ui_fileopener.cc:80 src/libaudqt/fileopener.cc:39
-msgid "Open Files"
-msgstr "Ouvrir des fichiers"
-
-#: src/libaudgui/ui_fileopener.cc:81 src/libaudgui/url-opener.cc:50
-msgid "_Open"
-msgstr "_Ouvrir"
-
-#: src/libaudgui/ui_fileopener.cc:83
-msgid "Close _dialog on open"
-msgstr "Fermer la _fenêtre de dialogue à l'ouverture"
-
-#: src/libaudgui/ui_fileopener.cc:88 src/libaudqt/fileopener.cc:39
-msgid "Add Files"
-msgstr "Ajouter des fichiers"
-
-#: src/libaudgui/ui_fileopener.cc:89 src/libaudgui/url-opener.cc:56
-msgid "_Add"
-msgstr "_Ajouter"
-
-#: src/libaudgui/ui_fileopener.cc:91
-msgid "Close _dialog on add"
-msgstr "Fermer la fenê_tre de dialogue lors de l'ajout"
-
-#: src/libaudgui/ui_jumptotrack.cc:95 src/libaudgui/ui_jumptotrack.cc:103
-#: src/libaudgui/ui_jumptotrack.cc:307
-msgid "_Queue"
-msgstr "_Mettre dans la file"
-
-#: src/libaudgui/ui_jumptotrack.cc:101
-msgid "Un_queue"
-msgstr "_Retirer de la file"
-
-#: src/libaudgui/ui_jumptotrack.cc:239
-msgid "Jump to Song"
-msgstr "Sauter au morceau"
-
-#: src/libaudgui/ui_jumptotrack.cc:264
-msgid "Filter: "
-msgstr "Filtre :"
-
-#: src/libaudgui/ui_jumptotrack.cc:265
-msgid "_Filter:"
-msgstr "_Filtre :"
-
-#: src/libaudgui/ui_jumptotrack.cc:289
-msgid "C_lose on jump"
-msgstr "Fe_rmer lors du saut"
-
 #: src/libaudgui/url-opener.cc:49
 msgid "Open URL"
-msgstr "Ouvrir l'URL"
+msgstr "Ouvrir une URL"
 
 #: src/libaudgui/url-opener.cc:55
 msgid "Add URL"
-msgstr "Ajouter l'URL"
+msgstr "Ajouter une URL"
 
 #: src/libaudgui/url-opener.cc:79
 msgid "Enter URL:"
@@ -1116,6 +1116,22 @@ msgid ""
 msgstr ""
 "\n"
 "(Les messages à venir ont été cachés.)"
+
+#: src/libaudqt/fileopener.cc:40
+msgid "Open Folder"
+msgstr "Ouvrir un dossier"
+
+#: src/libaudqt/fileopener.cc:42
+msgid "Add Folder"
+msgstr "Ajouter un dossier"
+
+#: src/libaudqt/fileopener.cc:46 src/libaudqt/fileopener.cc:47
+msgid "Open"
+msgstr "Ouvrir"
+
+#: src/libaudqt/fileopener.cc:48 src/libaudqt/fileopener.cc:49
+msgid "Add"
+msgstr "Ajouter"
 
 #: src/libaudqt/info-widget.cc:37
 msgid "Metadata"
@@ -1152,7 +1168,7 @@ msgstr "Débit binaire"
 #: src/libaudqt/infowin.cc:126
 #, c-format
 msgid "No info available for %s.\n"
-msgstr "Aucune information disponible pour %s.\n"
+msgstr "Aucune info disponible pour %s.\n"
 
 #: src/libaudqt/log-inspector.cc:106
 msgid "Level"
