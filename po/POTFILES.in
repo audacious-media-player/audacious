@@ -12,9 +12,11 @@ src/libaudcore/vfs_local.cc
 src/libaudgui/about.cc
 src/libaudgui/confirm.cc
 src/libaudgui/equalizer.cc
+src/libaudgui/file-opener.cc
 src/libaudgui/infopopup.cc
 src/libaudgui/infowin.cc
 src/libaudgui/jump-to-time.cc
+src/libaudgui/jump-to-track.cc
 src/libaudgui/playlists.cc
 src/libaudgui/plugin-menu.cc
 src/libaudgui/plugin-prefs.cc
@@ -22,8 +24,6 @@ src/libaudgui/plugin-view.cc
 src/libaudgui/prefs-window.cc
 src/libaudgui/queue-manager.cc
 src/libaudgui/status.cc
-src/libaudgui/ui_fileopener.cc
-src/libaudgui/ui_jumptotrack.cc
 src/libaudgui/url-opener.cc
 src/libaudgui/util.cc
 src/libaudqt/about.cc

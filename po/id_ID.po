@@ -7,13 +7,15 @@
 # Rahman Yusri Aftian <aftian@yahoo.com>, 2012
 # Andika Triwidada <andika@gmail.com>, 2012
 # Andika Triwidada <andika@gmail.com>, 2012
-# Ardjuna <Asyura.x@gmail.com>, 2013
+# Ardjuna <Asyura.x@gmail.com>, 2013-2015
 # Arif Syamsudin <buitenzorg812@gmail.com>, 2012
 #  <bu0ncu3@yahoo.com>, 2012,2014
 # Arif Syamsudin <buitenzorg812@gmail.com>, 2012
+# Hasan Al Banna, 2012
 #  <invaleed@gmail.com>, 2012
 # ivanzulfikar <ivan.zulf.ikar@gmail.com>, 2014
 # ivanzulfikar <ivan.zulf.ikar@gmail.com>, 2014
+# Liffindra Angga Zaaldian <findrakecil@gmail.com>, 2015
 # Mohamad Hasan Al Banna, 2012
 # Hasan Al Banna, 2012
 # Rahman Aftian <>, 2012
@@ -23,13 +25,14 @@
 # Hasan Al Banna, 2012
 # Yoza Aprilio <yoza1404@gmail.com>, 2012
 # Yoza Aprilio <yoza1404@gmail.com>, 2012
+# Yoza Aprilio <yoza1404@gmail.com>, 2012
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2014-12-04 18:06+0100\n"
-"PO-Revision-Date: 2014-12-01 19:57+0000\n"
-"Last-Translator: Thomas Lange <thomas-lange2@gmx.de>\n"
+"POT-Creation-Date: 2015-01-24 13:09+0100\n"
+"PO-Revision-Date: 2015-01-21 07:37+0000\n"
+"Last-Translator: Liffindra Angga Zaaldian <findrakecil@gmail.com>\n"
 "Language-Team: Indonesian (Indonesia) (http://www.transifex.com/projects/p/"
 "audacious/language/id_ID/)\n"
 "Language: id_ID\n"
@@ -40,7 +43,7 @@ msgstr ""
 
 #: src/audacious/main.cc:60
 msgid "Show command-line help"
-msgstr "Tampilkan bantuan perintah-garis"
+msgstr "Tampilkan bantuan untuk baris-perintah"
 
 #: src/audacious/main.cc:61
 msgid "Show version"
@@ -48,27 +51,27 @@ msgstr "Tampilkan versi"
 
 #: src/audacious/main.cc:62
 msgid "Start playback"
-msgstr "Mulai Pemutaran"
+msgstr "Mulai pemutaran lagu"
 
 #: src/audacious/main.cc:63
 msgid "Pause playback"
-msgstr "Berhenti sebentar pemutara"
+msgstr "Jeda pemutaran lagu"
 
 #: src/audacious/main.cc:64
 msgid "Pause if playing, play otherwise"
-msgstr "Jeda lagu saat dimainkan, putar lagu jika sedang jeda"
+msgstr "Jeda pemutaran jika sedang memutar, putar jika tidak sedang memutar"
 
 #: src/audacious/main.cc:65
 msgid "Stop playback"
-msgstr "Stop pemutaran"
+msgstr "Hentikan pemutaran lagu"
 
 #: src/audacious/main.cc:66
 msgid "Skip to previous song"
-msgstr "Loncat ke lagu sebelumnya"
+msgstr "Lompat ke lagu sebelumnya"
 
 #: src/audacious/main.cc:67
 msgid "Skip to next song"
-msgstr "Loncat ke lagu berikutnya"
+msgstr "Lompat ke lagu berikutnya"
 
 #: src/audacious/main.cc:68
 msgid "Add files to the playlist"
@@ -84,33 +87,33 @@ msgstr "Tampilkan jendela utama"
 
 #: src/audacious/main.cc:71
 msgid "Display the jump-to-song window"
-msgstr "Display cendela loncat-ke-lagu"
+msgstr "Tampilkan jendela \"Loncat ke Lagu\""
 
 #: src/audacious/main.cc:72
 msgid "Start without a graphical interface"
-msgstr "Mulai tanpa tampilan grafis"
+msgstr "Mulai tanpa tampilan antarmuka secara grafis"
 
 #: src/audacious/main.cc:73
 msgid "Quit on playback stop"
-msgstr "Keluar setelah berhenti memutar"
+msgstr "Keluar ketika berhenti memutar lagu"
 
 #: src/audacious/main.cc:74
 msgid "Print debugging messages (may be used twice)"
-msgstr ""
+msgstr "Cetak pesan debug (dapat digunakan dua kali)"
 
 #: src/audacious/main.cc:76
 msgid "Run in Qt mode"
-msgstr ""
+msgstr "Jalankan dalam mode Qt"
 
 #: src/audacious/main.cc:127
 #, c-format
 msgid "Unknown option: %s\n"
-msgstr "Opsi tidak dikenal: %s\n"
+msgstr "Pilihan tidak dikenal: %s\n"
 
 #: src/audacious/main.cc:150
 #, c-format
 msgid "Unknown option: -%c\n"
-msgstr "Opsi tidak dikenal: -%c\n"
+msgstr "Pilihan tidak dikenal: -%c\n"
 
 #: src/audacious/main.cc:177
 #, c-format
@@ -118,7 +121,7 @@ msgid ""
 "Usage: audacious [OPTION] ... [FILE] ...\n"
 "\n"
 msgstr ""
-"Menggunakan: audacious [OPSI] ... [BERKAS] ...\n"
+"Penggunaan: audacious [PILIHAN] ... [BERKAS] ...\n"
 "\n"
 
 #: src/audacious/main.cc:345
@@ -131,9 +134,9 @@ msgid "%d file found"
 msgid_plural "%d files found"
 msgstr[0] "%d berkas ditemukan"
 
-#: src/libaudcore/adder.cc:317 src/libaudcore/playlist.cc:139
+#: src/libaudcore/adder.cc:317 src/libaudcore/playlist.cc:141
 msgid "New Playlist"
-msgstr "Daftar Main Baru"
+msgstr "Daftar putar baru"
 
 #: src/libaudcore/audstrings.cc:528
 #, c-format
@@ -142,11 +145,11 @@ msgstr "CD Audio, trek %s"
 
 #: src/libaudcore/audstrings.cc:532 src/libaudcore/tuple.cc:481
 msgid "(character encoding error)"
-msgstr ""
+msgstr "(galat pada penyandian karakter)"
 
 #: src/libaudcore/playback.cc:328 src/libaudcore/probe.cc:151
 msgid "Error loading plugin"
-msgstr ""
+msgstr "Gagal memuat pengaya"
 
 #: src/libaudcore/playback.cc:383 src/libaudgui/infowin.cc:496
 #, c-format
@@ -154,48 +157,50 @@ msgid ""
 "Error opening %s:\n"
 "%s"
 msgstr ""
+"Gagal membuka %s:\n"
+"%s"
 
 #: src/libaudcore/playback.cc:385
 msgid "Unknown playback error"
-msgstr ""
+msgstr "Galat yang tidak diketahui pada pemutaran lagu"
 
-#: src/libaudcore/playback.cc:515
+#: src/libaudcore/playback.cc:514
 msgid "Invalid audio format"
-msgstr ""
+msgstr "Format audio tidak sah"
 
-#: src/libaudcore/playlist.cc:140
+#: src/libaudcore/playlist.cc:142
 msgid "Now Playing"
 msgstr "Sedang Diputar"
 
-#: src/libaudcore/playlist.cc:1622
+#: src/libaudcore/playlist.cc:1638
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress "
 "(or has been disabled)."
 msgstr ""
-"Daftar lagu tidak dapat diurutkan karena pemindaian metadata dinonaktifkan "
-"atau sedang berjalan."
+"Daftar lagu tidak dapat diurutkan karena pemindaian metadata sedang berjalan "
+"(atau telah dimatikan)."
 
 #: src/libaudcore/playlist-files.cc:76
 #, c-format
 msgid "Cannot load %s: unsupported file name extension."
-msgstr ""
+msgstr "Tidak dapat memuat %s: ekstensi nama berkas tidak didukung."
 
 #: src/libaudcore/playlist-files.cc:136
 #, c-format
 msgid "Cannot save %s: unsupported file name extension."
-msgstr ""
+msgstr "Tidak dapat menyimpan %s: ekstensi nama berkas tidak didukung."
 
 #: src/libaudcore/probe.cc:119
 msgid "Seek error"
-msgstr ""
+msgstr "Galat pada pencarian"
 
 #: src/libaudcore/probe.cc:127
 msgid "File format not recognized"
-msgstr ""
+msgstr "Format berkas tidak dikenal"
 
 #: src/libaudcore/probe.cc:161
 msgid "Error reading metadata"
-msgstr ""
+msgstr "Galat saat membaca metadata"
 
 #: src/libaudcore/tuple.cc:528
 msgid "Mono"
@@ -214,37 +219,37 @@ msgstr[0] "%d kanal"
 #: src/libaudcore/tuple.cc:699
 #, c-format
 msgid "Track %d"
-msgstr ""
+msgstr "Trek %d"
 
 #: src/libaudcore/tuple.cc:701
 msgid "Audio CD"
-msgstr ""
+msgstr "CD Audio"
 
 #: src/libaudcore/tuple.cc:707
 msgid "(unknown title)"
-msgstr ""
+msgstr "(judul tidak diketahui)"
 
 #: src/libaudcore/vfs.cc:67
 msgid "Invalid URI"
-msgstr ""
+msgstr "URI tidak sah"
 
 #: src/libaudcore/vfs.cc:83
 msgid "Unknown URI scheme"
-msgstr ""
+msgstr "Skema URI tidak diketahui"
 
 #: src/libaudcore/vfs_local.cc:82
 msgid "Invalid file name"
-msgstr ""
+msgstr "Nama berkas tidak sah"
 
-#: src/libaudgui/about.cc:38 src/libaudqt/about.cc:37
+#: src/libaudgui/about.cc:35 src/libaudqt/about.cc:37
 msgid "Credits"
 msgstr "Kredit"
 
-#: src/libaudgui/about.cc:38 src/libaudqt/about.cc:37
+#: src/libaudgui/about.cc:35 src/libaudqt/about.cc:37
 msgid "License"
 msgstr "Lisensi"
 
-#: src/libaudgui/about.cc:72 src/libaudqt/about.cc:89
+#: src/libaudgui/about.cc:69 src/libaudqt/about.cc:88
 msgid "About Audacious"
 msgstr "Tentang Audacious"
 
@@ -335,6 +340,37 @@ msgstr "Ekualiser"
 #: src/libaudgui/equalizer.cc:138 src/libaudqt/equalizer.cc:72
 msgid "Preamp"
 msgstr "Preamp"
+
+#: src/libaudgui/file-opener.cc:80 src/libaudqt/fileopener.cc:39
+msgid "Open Files"
+msgstr "Buka Berkas"
+
+#: src/libaudgui/file-opener.cc:81 src/libaudgui/url-opener.cc:50
+msgid "_Open"
+msgstr "B_uka"
+
+#: src/libaudgui/file-opener.cc:83
+msgid "Close _dialog on open"
+msgstr "Tutup _dialog buka"
+
+#: src/libaudgui/file-opener.cc:88 src/libaudqt/fileopener.cc:41
+msgid "Add Files"
+msgstr "Tambah Berkas"
+
+#: src/libaudgui/file-opener.cc:89 src/libaudgui/url-opener.cc:56
+msgid "_Add"
+msgstr "_Tambah"
+
+#: src/libaudgui/file-opener.cc:91
+msgid "Close _dialog on add"
+msgstr "Tutup _dialog buka"
+
+#: src/libaudgui/file-opener.cc:127 src/libaudgui/infowin.cc:406
+#: src/libaudgui/jump-to-track.cc:307 src/libaudgui/plugin-prefs.cc:166
+#: src/libaudgui/prefs-window.cc:762 src/libaudgui/queue-manager.cc:194
+#: src/libaudgui/util.cc:167 src/libaudqt/queue-manager.cc:116
+msgid "_Close"
+msgstr "_Keluar"
 
 #: src/libaudgui/infopopup.cc:200 src/libaudgui/infowin.cc:360
 #: src/libaudgui/prefs-window.cc:102 src/libaudqt/info-widget.cc:40
@@ -556,7 +592,7 @@ msgstr "Info Lagu"
 
 #: src/libaudgui/infowin.cc:369 src/libaudqt/info-widget.cc:44
 msgid "Album Artist"
-msgstr ""
+msgstr "Album Artis"
 
 #: src/libaudgui/infowin.cc:372 src/libaudgui/prefs-window.cc:109
 #: src/libaudqt/info-widget.cc:43 src/libaudqt/prefs-window.cc:112
@@ -569,22 +605,15 @@ msgstr "Nomor Trek"
 
 #: src/libaudgui/infowin.cc:389
 msgid "Clea_r fields when moving to next song"
-msgstr ""
+msgstr "K_osongkan kolom saat mengganti lagu"
 
 #: src/libaudgui/infowin.cc:403
 msgid "_Save"
 msgstr "_Simpan"
 
-#: src/libaudgui/infowin.cc:406 src/libaudgui/plugin-prefs.cc:166
-#: src/libaudgui/prefs-window.cc:762 src/libaudgui/queue-manager.cc:194
-#: src/libaudgui/ui_fileopener.cc:127 src/libaudgui/ui_jumptotrack.cc:302
-#: src/libaudgui/util.cc:167 src/libaudqt/queue-manager.cc:116
-msgid "_Close"
-msgstr "_Keluar"
-
 #: src/libaudgui/infowin.cc:409
 msgid "_Next"
-msgstr ""
+msgstr "Sela_njutnya"
 
 #: src/libaudgui/infowin.cc:455
 #, c-format
@@ -595,7 +624,7 @@ msgstr "%d Kb/s"
 msgid "N/A"
 msgstr "N/A"
 
-#: src/libaudgui/jump-to-time.cc:47 src/libaudgui/ui_jumptotrack.cc:296
+#: src/libaudgui/jump-to-time.cc:47 src/libaudgui/jump-to-track.cc:312
 msgid "_Jump"
 msgstr "_Lompat"
 
@@ -606,6 +635,31 @@ msgstr "Loncat ke Waktu"
 #: src/libaudgui/jump-to-time.cc:51
 msgid "Enter time (minutes:seconds):"
 msgstr "Masukkan waktu (menit:detik):"
+
+#: src/libaudgui/jump-to-track.cc:95 src/libaudgui/jump-to-track.cc:103
+#: src/libaudgui/jump-to-track.cc:303
+msgid "_Queue"
+msgstr "Masuk _Antrian"
+
+#: src/libaudgui/jump-to-track.cc:101
+msgid "Un_queue"
+msgstr "Keluar Antria_n"
+
+#: src/libaudgui/jump-to-track.cc:238
+msgid "Jump to Song"
+msgstr "Loncat ke Lagu"
+
+#: src/libaudgui/jump-to-track.cc:263
+msgid "Filter: "
+msgstr "Filter:"
+
+#: src/libaudgui/jump-to-track.cc:264
+msgid "_Filter:"
+msgstr "_Filter:"
+
+#: src/libaudgui/jump-to-track.cc:296
+msgid "C_lose on jump"
+msgstr "Ke_luar loncat"
 
 #: src/libaudgui/playlists.cc:89
 msgid "_Overwrite"
@@ -643,24 +697,24 @@ msgstr "_Plugins ..."
 #: src/libaudgui/plugin-prefs.cc:109 src/libaudqt/prefs-plugin.cc:55
 #, c-format
 msgid "About %s"
-msgstr ""
+msgstr "Tentang %s"
 
 #: src/libaudgui/plugin-prefs.cc:155 src/libaudqt/prefs-plugin.cc:107
 #, c-format
 msgid "%s Settings"
-msgstr ""
+msgstr "%s Pengaturan"
 
 #: src/libaudgui/plugin-prefs.cc:159
 msgid "_Set"
 msgstr "_Set"
 
 #: src/libaudgui/plugin-view.cc:235 src/libaudgui/prefs-window.cc:650
-#: src/libaudqt/prefs-window.cc:491 src/libaudqt/prefs-window.cc:637
+#: src/libaudqt/prefs-window.cc:490
 msgid "_Settings"
 msgstr "_Settings"
 
 #: src/libaudgui/plugin-view.cc:242 src/libaudgui/prefs-window.cc:661
-#: src/libaudqt/prefs-window.cc:505 src/libaudqt/prefs-window.cc:634
+#: src/libaudqt/prefs-window.cc:504
 msgid "_About"
 msgstr "Tent_ang"
 
@@ -707,15 +761,15 @@ msgstr "Transpor"
 
 #: src/libaudgui/prefs-window.cc:103 src/libaudqt/prefs-window.cc:106
 msgid "Track number"
-msgstr ""
+msgstr "Nomor trek"
 
 #: src/libaudgui/prefs-window.cc:105 src/libaudqt/prefs-window.cc:108
 msgid "File name"
-msgstr ""
+msgstr "Nama berkas"
 
 #: src/libaudgui/prefs-window.cc:106 src/libaudqt/prefs-window.cc:109
 msgid "File path"
-msgstr ""
+msgstr "Lokasi berkas"
 
 #: src/libaudgui/prefs-window.cc:107 src/libaudqt/prefs-window.cc:110
 msgid "Date"
@@ -871,11 +925,11 @@ msgstr "Sandi proxy:"
 
 #: src/libaudgui/prefs-window.cc:223 src/libaudqt/prefs-window.cc:226
 msgid "<b>Network Settings</b>"
-msgstr ""
+msgstr "<b>Pengaturan Jaringan</b>"
 
 #: src/libaudgui/prefs-window.cc:226 src/libaudqt/prefs-window.cc:229
 msgid "KiB"
-msgstr ""
+msgstr "KiB"
 
 #: src/libaudgui/prefs-window.cc:227 src/libaudqt/prefs-window.cc:230
 msgid "<b>Proxy Configuration</b>"
@@ -903,11 +957,11 @@ msgstr "<b>Perilaku</b>"
 
 #: src/libaudgui/prefs-window.cc:253 src/libaudqt/prefs-window.cc:257
 msgid "Resume playback on startup"
-msgstr ""
+msgstr "Lanjut putar saat aplikasi dimulai"
 
 #: src/libaudgui/prefs-window.cc:255 src/libaudqt/prefs-window.cc:259
 msgid "Pause instead of resuming immediately"
-msgstr ""
+msgstr "Jeda pemutaran daripada langsung lanjutkan segera"
 
 #: src/libaudgui/prefs-window.cc:258 src/libaudqt/prefs-window.cc:262
 msgid "Advance when the current song is deleted"
@@ -943,7 +997,7 @@ msgstr "Tampilkan nol di depan (02:00 bukan 2:00)"
 
 #: src/libaudgui/prefs-window.cc:274 src/libaudqt/prefs-window.cc:280
 msgid "<b>Advanced</b>"
-msgstr ""
+msgstr "<b>Lanjutan</b>"
 
 #: src/libaudgui/prefs-window.cc:275 src/libaudqt/prefs-window.cc:268
 #: src/libaudqt/prefs-window.cc:281
@@ -952,7 +1006,7 @@ msgstr "Jangan muat metadata hingga lagu diputar"
 
 #: src/libaudgui/prefs-window.cc:277 src/libaudqt/prefs-window.cc:283
 msgid "Probe content of files with no recognized file name extension"
-msgstr ""
+msgstr "Jajaki juga isi berkas yang tidak dikenal ekstensinya"
 
 #: src/libaudgui/prefs-window.cc:282 src/libaudqt/prefs-window.cc:288
 msgid "<b>Album Art</b>"
@@ -1037,7 +1091,7 @@ msgstr "Format judul:"
 msgid "Custom string:"
 msgstr "Rangkaian kata gubahan:"
 
-#: src/libaudgui/prefs-window.cc:711 src/libaudqt/prefs-window.cc:713
+#: src/libaudgui/prefs-window.cc:711 src/libaudqt/prefs-window.cc:648
 msgid "Audacious Settings"
 msgstr "Seting Audacious"
 
@@ -1047,64 +1101,15 @@ msgstr "Manajer Antrian"
 
 #: src/libaudgui/queue-manager.cc:193 src/libaudqt/queue-manager.cc:115
 msgid "_Unqueue"
-msgstr "_Unqueue"
+msgstr "_Hapus dari antrian"
 
 #: src/libaudgui/status.cc:36
 msgid "Working ..."
-msgstr ""
+msgstr "Sedang bekerja ..."
 
 #: src/libaudgui/status.cc:85 src/libaudqt/log-inspector.cc:192
 msgid "Error"
 msgstr "Galat"
-
-#: src/libaudgui/ui_fileopener.cc:80 src/libaudqt/fileopener.cc:39
-msgid "Open Files"
-msgstr "Buka Berkas"
-
-#: src/libaudgui/ui_fileopener.cc:81 src/libaudgui/url-opener.cc:50
-msgid "_Open"
-msgstr "B_uka"
-
-#: src/libaudgui/ui_fileopener.cc:83
-msgid "Close _dialog on open"
-msgstr "Tutup _dialog buka"
-
-#: src/libaudgui/ui_fileopener.cc:88 src/libaudqt/fileopener.cc:39
-msgid "Add Files"
-msgstr "Tambah Berkas"
-
-#: src/libaudgui/ui_fileopener.cc:89 src/libaudgui/url-opener.cc:56
-msgid "_Add"
-msgstr "_Tambah"
-
-#: src/libaudgui/ui_fileopener.cc:91
-msgid "Close _dialog on add"
-msgstr "Tutup _dialog buka"
-
-#: src/libaudgui/ui_jumptotrack.cc:95 src/libaudgui/ui_jumptotrack.cc:103
-#: src/libaudgui/ui_jumptotrack.cc:307
-msgid "_Queue"
-msgstr "Masuk _Antrian"
-
-#: src/libaudgui/ui_jumptotrack.cc:101
-msgid "Un_queue"
-msgstr "Keluar Antria_n"
-
-#: src/libaudgui/ui_jumptotrack.cc:239
-msgid "Jump to Song"
-msgstr "Loncat ke Lagu"
-
-#: src/libaudgui/ui_jumptotrack.cc:264
-msgid "Filter: "
-msgstr "Filter:"
-
-#: src/libaudgui/ui_jumptotrack.cc:265
-msgid "_Filter:"
-msgstr "_Filter:"
-
-#: src/libaudgui/ui_jumptotrack.cc:289
-msgid "C_lose on jump"
-msgstr "Ke_luar loncat"
 
 #: src/libaudgui/url-opener.cc:49
 msgid "Open URL"
@@ -1126,37 +1131,53 @@ msgstr ""
 "\n"
 "⏎ (Pesan lebih lanjut telah disembunyikan.)"
 
+#: src/libaudqt/fileopener.cc:40
+msgid "Open Folder"
+msgstr "Buka Folder"
+
+#: src/libaudqt/fileopener.cc:42
+msgid "Add Folder"
+msgstr "Tambah Folder"
+
+#: src/libaudqt/fileopener.cc:46 src/libaudqt/fileopener.cc:47
+msgid "Open"
+msgstr "Buka"
+
+#: src/libaudqt/fileopener.cc:48 src/libaudqt/fileopener.cc:49
+msgid "Add"
+msgstr "Tambah"
+
 #: src/libaudqt/info-widget.cc:37
 msgid "Metadata"
-msgstr ""
+msgstr "Metadata"
 
 #: src/libaudqt/info-widget.cc:45
 msgid "Composer"
-msgstr ""
+msgstr "Komposer"
 
 #: src/libaudqt/info-widget.cc:46
 msgid "Performer"
-msgstr ""
+msgstr "Penyanyi"
 
 #: src/libaudqt/info-widget.cc:47
 msgid "Recording Year"
-msgstr ""
+msgstr "Tahun Rekaman"
 
 #: src/libaudqt/info-widget.cc:48
 msgid "Recording Date"
-msgstr ""
+msgstr "Tanggal Rekaman"
 
 #: src/libaudqt/info-widget.cc:51
 msgid "Technical"
-msgstr ""
+msgstr "Teknis"
 
 #: src/libaudqt/info-widget.cc:53
 msgid "MIME Type"
-msgstr ""
+msgstr "Tipe MIME"
 
 #: src/libaudqt/info-widget.cc:56
 msgid "Bitrate"
-msgstr ""
+msgstr "Bitrate"
 
 #: src/libaudqt/infowin.cc:126
 #, c-format
@@ -1165,7 +1186,7 @@ msgstr "Tidak ada info yang tersedia untuk %s.⏎\n"
 
 #: src/libaudqt/log-inspector.cc:106
 msgid "Level"
-msgstr ""
+msgstr "Tingkat"
 
 #: src/libaudqt/log-inspector.cc:107
 msgid "Filename"
@@ -1173,36 +1194,36 @@ msgstr "Nama Berkas"
 
 #: src/libaudqt/log-inspector.cc:108
 msgid "Line"
-msgstr ""
+msgstr "Baris"
 
 #: src/libaudqt/log-inspector.cc:109
 msgid "Function"
-msgstr ""
+msgstr "Fungsi"
 
 #: src/libaudqt/log-inspector.cc:110
 msgid "Message"
-msgstr ""
+msgstr "Pesan"
 
 #: src/libaudqt/log-inspector.cc:175
 msgid "Log Inspector"
-msgstr ""
+msgstr "Pemantau Log"
 
 #: src/libaudqt/log-inspector.cc:186
 msgid "Log Level:"
-msgstr ""
+msgstr "Tingkat Log:"
 
 #: src/libaudqt/log-inspector.cc:189
 msgid "Debug"
-msgstr ""
+msgstr "Debug"
 
 #: src/libaudqt/log-inspector.cc:190
 msgid "Info"
-msgstr ""
+msgstr "Keterangan"
 
 #: src/libaudqt/log-inspector.cc:191
 msgid "Warning"
-msgstr ""
+msgstr "Peringatan"
 
 #: src/libaudqt/plugin-menu.cc:40
 msgid "Plugins ..."
-msgstr ""
+msgstr "Pengaya ..."

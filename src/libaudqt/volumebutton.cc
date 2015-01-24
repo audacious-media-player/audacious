@@ -55,7 +55,7 @@ EXPORT VolumeButton::VolumeButton (QWidget * parent) :
 void VolumeButton::updateIcon (int val)
 {
     if (val == 0)
-        setIcon (QIcon::fromTheme ("audio-volume-off"));
+        setIcon (QIcon::fromTheme ("audio-volume-muted"));
     else if (val > 0 && val < 35)
         setIcon (QIcon::fromTheme ("audio-volume-low"));
     else if (val >= 35 && val < 70)
