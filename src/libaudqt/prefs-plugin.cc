@@ -19,6 +19,7 @@
 
 #include <QDialog>
 #include <QDialogButtonBox>
+#include <QPushButton>
 #include <QVBoxLayout>
 
 #include <libaudcore/audstrings.h>
@@ -50,9 +51,9 @@ EXPORT void plugin_about (PluginHandle * ph)
         text = dgettext (header->info.domain, text);
     }
 
-    AUDDBG("name = %s\n", name);
+    AUDDBG ("name = %s\n", name);
 
-    simple_message(str_printf (_("About %s"), name), text);
+    simple_message (str_printf (_("About %s"), name), text);
 }
 
 struct ConfigWindow {
@@ -116,6 +117,8 @@ EXPORT void plugin_prefs (PluginHandle * ph)
     if (p->apply)
     {
         bbox->setStandardButtons (QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+        bbox->button (QDialogButtonBox::Ok)->setText (translate_str (N_("_Set")));
+        bbox->button (QDialogButtonBox::Cancel)->setText (translate_str (N_("_Cancel")));
 
         QObject::connect (bbox, &QDialogButtonBox::accepted, [=] () {
             if (p->apply)
@@ -129,6 +132,7 @@ EXPORT void plugin_prefs (PluginHandle * ph)
     else
     {
         bbox->setStandardButtons (QDialogButtonBox::Close);
+        bbox->button (QDialogButtonBox::Close)->setText (translate_str (N_("_Close")));
 
         QObject::connect (bbox, &QDialogButtonBox::rejected, cw->root, &QWidget::hide);
     }

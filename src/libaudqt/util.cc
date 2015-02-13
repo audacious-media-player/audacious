@@ -20,6 +20,7 @@
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QLabel>
+#include <QPushButton>
 #include <QVBoxLayout>
 
 #include <libaudcore/audstrings.h>
@@ -66,6 +67,7 @@ EXPORT void simple_message (const char * title, const char * text)
     label.setTextInteractionFlags (Qt::TextSelectableByMouse);
 
     bbox.setStandardButtons (QDialogButtonBox::Close);
+    bbox.button (QDialogButtonBox::Close)->setText (translate_str (N_("_Close")));
 
     QObject::connect (& bbox, & QDialogButtonBox::rejected, & msgbox, & QDialog::reject);
 
