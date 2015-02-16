@@ -418,7 +418,10 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
                     widget = label;
 
                 if (strstr (w.label, "<b>"))
+                {
+                    pad_left = 0;
                     pad_top = (& w == widgets.data) ? 0 : 12;
+                }
 
                 break;
             }
