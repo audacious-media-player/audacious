@@ -1,7 +1,7 @@
 /*
  * equalizer.c
  * Copyright 2001 Anders Johansson
- * Copyright 2010-2011 John Lindgren
+ * Copyright 2010-2015 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -209,4 +209,28 @@ EXPORT double aud_eq_get_band (int band)
     double values[AUD_EQ_NBANDS];
     aud_eq_get_bands (values);
     return values[band];
+}
+
+EXPORT void aud_eq_apply_preset (const EqualizerPreset & preset)
+{
+    double bands[AUD_EQ_NBANDS];
+
+    /* convert float to double :( */
+    for (int i = 0; i < AUD_EQ_NBANDS; i ++)
+        bands[i] = preset.bands[i];
+
+    aud_eq_set_bands (bands);
+    aud_set_double (nullptr, "equalizer_preamp", preset.preamp);
+}
+
+EXPORT void aud_eq_update_preset (EqualizerPreset & preset)
+{
+    double bands[AUD_EQ_NBANDS];
+    aud_eq_get_bands (bands);
+
+    /* convert double to float :( */
+    for (int i = 0; i < AUD_EQ_NBANDS; i ++)
+        preset.bands[i] = bands[i];
+
+    preset.preamp = aud_get_double (nullptr, "equalizer_preamp");
 }
