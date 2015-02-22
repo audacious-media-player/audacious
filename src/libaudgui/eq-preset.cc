@@ -101,21 +101,15 @@ static void populate_list ()
 
 static void save_list ()
 {
-    if (changes_made)
-    {
-        auto sort_cb = [] (const EqualizerPreset & a, const EqualizerPreset & b, void *)
-            { return strcmp (a.name, b.name); };
+    auto sort_cb = [] (const EqualizerPreset & a, const EqualizerPreset & b, void *)
+        { return strcmp (a.name, b.name); };
 
-        Index<EqualizerPreset> presets;
-        for (const PresetItem & item : preset_list)
-            presets.append (item.preset);
+    Index<EqualizerPreset> presets;
+    for (const PresetItem & item : preset_list)
+        presets.append (item.preset);
 
-        presets.sort (sort_cb, nullptr);
-        aud_eq_write_presets (presets, "eq.preset");
-        changes_made = false;
-    }
-
-    preset_list.clear ();
+    presets.sort (sort_cb, nullptr);
+    aud_eq_write_presets (presets, "eq.preset");
 }
 
 static int find_by_name (const char * name)
@@ -191,6 +185,22 @@ static void revert_changes ()
     gtk_widget_set_sensitive (revert, false);
 }
 
+static void cleanup_eq_preset_window ()
+{
+    if (changes_made)
+    {
+        save_list ();
+        changes_made = false;
+    }
+
+    preset_list.clear ();
+
+    list = nullptr;
+    entry = nullptr;
+    add = nullptr;
+    revert = nullptr;
+}
+
 static GtkWidget * create_eq_preset_window ()
 {
     populate_list ();
@@ -202,7 +212,7 @@ static GtkWidget * create_eq_preset_window ()
     gtk_container_set_border_width ((GtkContainer *) window, 6);
     audgui_destroy_on_escape (window);
 
-    g_signal_connect (window, "destroy", (GCallback) save_list, nullptr);
+    g_signal_connect (window, "destroy", (GCallback) cleanup_eq_preset_window, nullptr);
 
     GtkWidget * vbox = gtk_vbox_new (false, 6);
     gtk_container_add ((GtkContainer *) window, vbox);
@@ -251,4 +261,41 @@ EXPORT void audgui_show_eq_preset_window ()
 {
     if (! audgui_reshow_unique_window (AUDGUI_EQ_PRESET_WINDOW))
         audgui_show_unique_window (AUDGUI_EQ_PRESET_WINDOW, create_eq_preset_window ());
+}
+
+static void merge_presets (const Index<EqualizerPreset> & presets)
+{
+    /* eliminate duplicates (could be optimized) */
+    for (const EqualizerPreset & preset : presets)
+    {
+        auto is_duplicate = [& preset] (const PresetItem & item)
+            { return item.preset.name == preset.name; };
+
+        preset_list.remove_if (is_duplicate);
+    }
+
+    for (const EqualizerPreset & preset : presets)
+        preset_list.append (preset, false);
+}
+
+EXPORT void audgui_import_eq_presets (const Index<EqualizerPreset> & presets)
+{
+    if (list)
+    {
+        /* import via presets window if it exists */
+        audgui_list_delete_rows (list, 0, preset_list.len ());
+        merge_presets (presets);
+        audgui_list_insert_rows (list, 0, preset_list.len ());
+
+        changes_made = true;
+        gtk_widget_set_sensitive (revert, true);
+    }
+    else
+    {
+        /* otherwise import directly to ~/.config/audacious/eq.preset */
+        populate_list ();
+        merge_presets (presets);
+        save_list ();
+        preset_list.clear ();
+    }
 }

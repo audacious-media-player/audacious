@@ -17,6 +17,7 @@
  * the use of this software.
  */
 
+#include "libaudgui.h"
 #include "preset-browser.h"
 
 #include <gtk/gtk.h>
@@ -75,7 +76,7 @@ static void do_load_file (const char * filename)
     aud_eq_apply_preset (preset);
 }
 
-void eq_preset_load_file (void)
+void eq_preset_load_file ()
 {
     show_preset_browser (_("Load Preset File"), FALSE, nullptr, do_load_file);
 }
@@ -92,7 +93,7 @@ static void do_load_eqf (const char * filename)
         aud_eq_apply_preset (presets[0]);
 }
 
-void eq_preset_load_eqf (void)
+void eq_preset_load_eqf ()
 {
     show_preset_browser (_("Load EQF File"), FALSE, nullptr, do_load_eqf);
 }
@@ -107,7 +108,7 @@ static void do_save_file (const char * filename)
         aud_save_preset_file (preset, file);
 }
 
-void eq_preset_save_file (void)
+void eq_preset_save_file ()
 {
     show_preset_browser (_("Save Preset File"), TRUE, _("<name>.preset"), do_save_file);
 }
@@ -125,7 +126,7 @@ static void do_save_eqf (const char * filename)
     aud_export_winamp_preset (preset, file);
 }
 
-void eq_preset_save_eqf (void)
+void eq_preset_save_eqf ()
 {
     show_preset_browser (_("Save EQF File"), TRUE, _("<name>.eqf"), do_save_eqf);
 }
@@ -136,28 +137,15 @@ static void do_import_winamp (const char * filename)
     if (! file)
         return;
 
-    auto current = aud_eq_read_presets ("eq.preset");
-    auto imported = aud_import_winamp_presets (file);
-
-    /* eliminate duplicates (could be optimized) */
-    for (const EqualizerPreset & preset : imported)
-    {
-        auto is_duplicate = [& preset] (const EqualizerPreset & preset2)
-            { return preset.name == preset2.name; };
-
-        current.remove_if (is_duplicate);
-    }
-
-    current.move_from (imported, 0, -1, -1, true, true);
-    aud_eq_write_presets (current, "eq.preset");
+    audgui_import_eq_presets (aud_import_winamp_presets (file));
 }
 
-void eq_preset_import_winamp (void)
+void eq_preset_import_winamp ()
 {
     show_preset_browser (_("Import Winamp Presets"), FALSE, nullptr, do_import_winamp);
 }
 
-void eq_preset_browser_cleanup (void)
+void eq_preset_browser_cleanup ()
 {
     if (preset_browser)
         gtk_widget_destroy (preset_browser);

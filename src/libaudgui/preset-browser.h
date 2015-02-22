@@ -20,12 +20,12 @@
 #ifndef AUDGUI_PRESET_BROWSER_H
 #define AUDGUI_PRESET_BROWSER_H
 
-void eq_preset_load_file (void);
-void eq_preset_load_eqf (void);
-void eq_preset_save_file (void);
-void eq_preset_save_eqf (void);
-void eq_preset_import_winamp (void);
+void eq_preset_load_file ();
+void eq_preset_load_eqf ();
+void eq_preset_save_file ();
+void eq_preset_save_eqf ();
+void eq_preset_import_winamp ();
 
-void eq_preset_browser_cleanup (void);
+void eq_preset_browser_cleanup ();
 
 #endif // AUDGUI_PRESET_BROWSER_H

@@ -26,6 +26,7 @@
 enum class AudMenuID;
 enum class PluginType;
 class PluginHandle;
+struct EqualizerPreset;
 
 /* about.c */
 void audgui_show_about_window ();
@@ -37,6 +38,7 @@ void audgui_show_playlist_rename (int playlist);
 
 /* eq-preset.c */
 void audgui_show_eq_preset_window ();
+void audgui_import_eq_presets (const Index<EqualizerPreset> & presets);
 
 /* equalizer.c */
 void audgui_show_equalizer_window ();
