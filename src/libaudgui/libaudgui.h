@@ -35,6 +35,9 @@ void audgui_hide_about_window ();
 void audgui_confirm_playlist_delete (int playlist);
 void audgui_show_playlist_rename (int playlist);
 
+/* eq-preset.c */
+void audgui_show_eq_preset_window ();
+
 /* equalizer.c */
 void audgui_show_equalizer_window ();
 void audgui_hide_equalizer_window ();

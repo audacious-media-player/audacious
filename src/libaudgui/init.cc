@@ -42,6 +42,7 @@ static const char * const audgui_defaults[] = {
 static const char * const window_names[AUDGUI_NUM_UNIQUE_WINDOWS] = {
     "about_win",
     "equalizer_win",
+    "eq_preset_win",
     "filebrowser_win",
     nullptr, /* infopopup position is not saved */
     "info_win",

@@ -1,6 +1,6 @@
 /*
  * equalizer.c
- * Copyright 2010-2011 John Lindgren
+ * Copyright 2010-2015 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -130,7 +130,14 @@ static GtkWidget * create_window ()
     GtkWidget * vbox = gtk_vbox_new (false, 6);
     gtk_container_add ((GtkContainer *) window, vbox);
 
-    gtk_box_pack_start ((GtkBox *) vbox, create_on_off (), false, false, 0);
+    GtkWidget * top_row = gtk_hbox_new (false, 6);
+    gtk_box_pack_start ((GtkBox *) vbox, top_row, false, false, 0);
+
+    gtk_box_pack_start ((GtkBox *) top_row, create_on_off (), false, false, 0);
+
+    GtkWidget * presets = audgui_button_new (_("Presets ..."), nullptr,
+     (AudguiCallback) audgui_show_eq_preset_window, nullptr);
+    gtk_box_pack_end ((GtkBox *) top_row, presets, false, false, 0);
 
     GtkWidget * hbox = gtk_hbox_new (false, 6);
     gtk_box_pack_start ((GtkBox *) vbox, hbox, false, false, 0);

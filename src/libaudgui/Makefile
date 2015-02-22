@@ -4,6 +4,7 @@ LIB_MINOR = 0
 
 SRCS = about.cc \
        confirm.cc \
+       eq-preset.cc \
        equalizer.cc \
        file-opener.cc \
        infopopup.cc \
