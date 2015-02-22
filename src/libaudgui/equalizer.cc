@@ -50,6 +50,11 @@ static GtkWidget * create_on_off ()
     return on_off;
 }
 
+static void reset_to_zero ()
+{
+    aud_eq_apply_preset (EqualizerPreset ());
+}
+
 static void slider_moved (GtkRange * slider)
 {
     int band = GPOINTER_TO_INT (g_object_get_data ((GObject *) slider, "band"));
@@ -138,6 +143,10 @@ static GtkWidget * create_window ()
     GtkWidget * presets = audgui_button_new (_("Presets ..."), nullptr,
      (AudguiCallback) audgui_show_eq_preset_window, nullptr);
     gtk_box_pack_end ((GtkBox *) top_row, presets, false, false, 0);
+
+    GtkWidget * zero = audgui_button_new (_("Reset to Zero"), nullptr,
+     (AudguiCallback) reset_to_zero, nullptr);
+    gtk_box_pack_end ((GtkBox *) top_row, zero, false, false, 0);
 
     GtkWidget * hbox = gtk_hbox_new (false, 6);
     gtk_box_pack_start ((GtkBox *) vbox, hbox, false, false, 0);
