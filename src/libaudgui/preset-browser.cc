@@ -23,10 +23,9 @@
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/drct.h>
+#include <libaudcore/equalizer.h>
 #include <libaudcore/i18n.h>
 #include <libaudcore/vfs.h>
-
-#include "ui_equalizer.h"
 
 typedef void (* FilebrowserCallback) (const char * filename);
 
@@ -110,11 +109,7 @@ static void do_save_file (const char * filename)
 
 void eq_preset_save_file (void)
 {
-    String title = aud_drct_get_title ();
-    StringBuf name = title ? str_printf ("%s.%s", (const char *) title,
-     EQUALIZER_DEFAULT_PRESET_EXT) : StringBuf ();
-
-    show_preset_browser (_("Save Preset File"), TRUE, name, do_save_file);
+    show_preset_browser (_("Save Preset File"), TRUE, _("<name>.preset"), do_save_file);
 }
 
 static void do_save_eqf (const char * filename)
@@ -132,7 +127,7 @@ static void do_save_eqf (const char * filename)
 
 void eq_preset_save_eqf (void)
 {
-    show_preset_browser (_("Save EQF File"), TRUE, nullptr, do_save_eqf);
+    show_preset_browser (_("Save EQF File"), TRUE, _("<name>.eqf"), do_save_eqf);
 }
 
 static void do_import_winamp (const char * filename)
@@ -141,7 +136,20 @@ static void do_import_winamp (const char * filename)
     if (! file)
         return;
 
-    equalizerwin_import_presets (aud_import_winamp_presets (file));
+    auto current = aud_eq_read_presets ("eq.preset");
+    auto imported = aud_import_winamp_presets (file);
+
+    /* eliminate duplicates (could be optimized) */
+    for (const EqualizerPreset & preset : imported)
+    {
+        auto is_duplicate = [& preset] (const EqualizerPreset & preset2)
+            { return preset.name == preset2.name; };
+
+        current.remove_if (is_duplicate);
+    }
+
+    current.move_from (imported, 0, -1, -1, true, true);
+    aud_eq_write_presets (current, "eq.preset");
 }
 
 void eq_preset_import_winamp (void)

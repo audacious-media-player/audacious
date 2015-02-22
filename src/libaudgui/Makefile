@@ -22,6 +22,7 @@ SRCS = about.cc \
        plugin-view.cc \
        prefs-widget.cc \
        prefs-window.cc \
+       preset-browser.cc \
        queue-manager.cc \
        scaled-image.cc \
        status.cc \
