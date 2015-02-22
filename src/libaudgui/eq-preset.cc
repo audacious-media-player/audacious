@@ -28,6 +28,8 @@
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
 #include "list.h"
+#include "menu.h"
+#include "preset-browser.h"
 
 struct PresetItem {
     EqualizerPreset preset;
@@ -201,6 +203,30 @@ static void cleanup_eq_preset_window ()
     revert = nullptr;
 }
 
+static GtkWidget * create_menu_bar ()
+{
+    static const AudguiMenuItem import_items[] = {
+        MenuCommand (N_("Preset File ..."), nullptr, 0, (GdkModifierType) 0, eq_preset_load_file),
+        MenuCommand (N_("EQF File ..."), nullptr, 0, (GdkModifierType) 0, eq_preset_load_eqf),
+        MenuSep (),
+        MenuCommand (N_("Winamp Presets ..."), nullptr, 0, (GdkModifierType) 0, eq_preset_import_winamp)
+    };
+
+    static const AudguiMenuItem export_items[] = {
+        MenuCommand (N_("Preset File ..."), nullptr, 0, (GdkModifierType) 0, eq_preset_save_file),
+        MenuCommand (N_("EQF File ..."), nullptr, 0, (GdkModifierType) 0, eq_preset_save_eqf)
+    };
+
+    static const AudguiMenuItem menus[] = {
+        MenuSub (N_("Import"), nullptr, {import_items}),
+        MenuSub (N_("Export"), nullptr, {export_items})
+    };
+
+    GtkWidget * bar = gtk_menu_bar_new ();
+    audgui_menu_init (bar, {menus}, nullptr);
+    return bar;
+}
+
 static GtkWidget * create_eq_preset_window ()
 {
     populate_list ();
@@ -209,13 +235,18 @@ static GtkWidget * create_eq_preset_window ()
     gtk_window_set_title ((GtkWindow *) window, _("Equalizer Presets"));
     gtk_window_set_type_hint ((GtkWindow *) window, GDK_WINDOW_TYPE_HINT_DIALOG);
     gtk_window_set_default_size ((GtkWindow *) window, 300, 300);
-    gtk_container_set_border_width ((GtkContainer *) window, 6);
     audgui_destroy_on_escape (window);
 
     g_signal_connect (window, "destroy", (GCallback) cleanup_eq_preset_window, nullptr);
 
+    GtkWidget * outer = gtk_vbox_new (false, 0);
+    gtk_container_add ((GtkContainer *) window, outer);
+
+    gtk_box_pack_start ((GtkBox *) outer, create_menu_bar (), false, false, 0);
+
     GtkWidget * vbox = gtk_vbox_new (false, 6);
-    gtk_container_add ((GtkContainer *) window, vbox);
+    gtk_container_set_border_width ((GtkContainer *) vbox, 6);
+    gtk_box_pack_start ((GtkBox *) outer, vbox, true, true, 0);
 
     GtkWidget * hbox = gtk_hbox_new (false, 6);
     gtk_box_pack_start ((GtkBox *) vbox, hbox, false, false, 0);
