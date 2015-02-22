@@ -1,6 +1,6 @@
 /*
  * preset-browser.c
- * Copyright 2014 John Lindgren
+ * Copyright 2014-2015 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -17,6 +17,7 @@
  * the use of this software.
  */
 
+#include "internal.h"
 #include "libaudgui.h"
 #include "preset-browser.h"
 
@@ -29,8 +30,6 @@
 #include <libaudcore/vfs.h>
 
 typedef void (* FilebrowserCallback) (const char * filename);
-
-static GtkWidget * preset_browser;
 
 static void browser_response (GtkWidget * dialog, int response, void * data)
 {
@@ -47,22 +46,17 @@ static void browser_response (GtkWidget * dialog, int response, void * data)
 static void show_preset_browser (const char * title, gboolean save,
  const char * default_filename, FilebrowserCallback callback)
 {
-    if (preset_browser)
-        gtk_widget_destroy (preset_browser);
-
-    preset_browser = gtk_file_chooser_dialog_new (title, nullptr, save ?
+    GtkWidget * browser = gtk_file_chooser_dialog_new (title, nullptr, save ?
      GTK_FILE_CHOOSER_ACTION_SAVE : GTK_FILE_CHOOSER_ACTION_OPEN, _("Cancel"),
      GTK_RESPONSE_CANCEL, save ? _("Save") : _("Load"), GTK_RESPONSE_ACCEPT,
      nullptr);
 
     if (default_filename)
-        gtk_file_chooser_set_current_name ((GtkFileChooser *) preset_browser, default_filename);
+        gtk_file_chooser_set_current_name ((GtkFileChooser *) browser, default_filename);
 
-    g_signal_connect (preset_browser, "response", (GCallback) browser_response, (void *) callback);
-    g_signal_connect (preset_browser, "destroy", (GCallback)
-     gtk_widget_destroyed, & preset_browser);
+    g_signal_connect (browser, "response", (GCallback) browser_response, (void *) callback);
 
-    gtk_window_present ((GtkWindow *) preset_browser);
+    audgui_show_unique_window (AUDGUI_PRESET_BROWSER_WINDOW, browser);
 }
 
 static void do_load_file (const char * filename)
@@ -143,10 +137,4 @@ static void do_import_winamp (const char * filename)
 void eq_preset_import_winamp ()
 {
     show_preset_browser (_("Import Winamp Presets"), FALSE, nullptr, do_import_winamp);
-}
-
-void eq_preset_browser_cleanup ()
-{
-    if (preset_browser)
-        gtk_widget_destroy (preset_browser);
 }

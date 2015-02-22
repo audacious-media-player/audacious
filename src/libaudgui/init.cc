@@ -50,6 +50,7 @@ static const char * const window_names[AUDGUI_NUM_UNIQUE_WINDOWS] = {
     "jump_to_track_win",
     "playlist_export_win",
     "playlist_import_win",
+    "preset_browser_win",
     "queue_manager_win",
     "url_opener_win"
 };
