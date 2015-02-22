@@ -37,7 +37,7 @@ struct PresetItem {
 static Index<PresetItem> preset_list;
 static bool changes_made;
 
-static GtkWidget * list, * entry;
+static GtkWidget * list, * entry, * add, * revert;
 
 static void get_value (void *, int row, int column, GValue * value)
 {
@@ -129,6 +129,12 @@ static int find_by_name (const char * name)
     return -1;
 }
 
+static void text_changed ()
+{
+    const char * name = gtk_entry_get_text ((GtkEntry *) entry);
+    gtk_widget_set_sensitive (add, (bool) name[0]);
+}
+
 static void add_from_entry ()
 {
     const char * name = gtk_entry_get_text ((GtkEntry *) entry);
@@ -142,13 +148,47 @@ static void add_from_entry ()
     }
 
     aud_eq_update_preset (preset_list[idx].preset);
-    changes_made = true;
 
     select_all (nullptr, false);
     preset_list[idx].selected = true;
 
     audgui_list_update_selection (list, 0, preset_list.len ());
     audgui_list_set_focus (list, idx);
+
+    changes_made = true;
+    gtk_widget_set_sensitive (revert, true);
+}
+
+static void delete_selected ()
+{
+    auto is_selected = [] (const PresetItem & item)
+        { return item.selected; };
+
+    int old_len = preset_list.len ();
+    preset_list.remove_if (is_selected);
+    int new_len = preset_list.len ();
+
+    if (old_len != new_len)
+    {
+        audgui_list_delete_rows (list, 0, old_len);
+        audgui_list_insert_rows (list, 0, new_len);
+
+        changes_made = true;
+        gtk_widget_set_sensitive (revert, true);
+    }
+}
+
+static void revert_changes ()
+{
+    audgui_list_delete_rows (list, 0, preset_list.len ());
+
+    preset_list.clear ();
+    populate_list ();
+
+    audgui_list_insert_rows (list, 0, preset_list.len ());
+
+    changes_made = false;
+    gtk_widget_set_sensitive (revert, false);
 }
 
 static GtkWidget * create_eq_preset_window ()
@@ -173,11 +213,13 @@ static GtkWidget * create_eq_preset_window ()
     entry = gtk_entry_new ();
     gtk_box_pack_start ((GtkBox *) hbox, entry, true, true, 0);
 
-    g_signal_connect (entry, "activate", (GCallback) add_from_entry, nullptr);
-
-    GtkWidget * add = audgui_button_new (_("Save Preset"), "document-save",
+    add = audgui_button_new (_("Save Preset"), "document-save",
      (AudguiCallback) add_from_entry, nullptr);
+    gtk_widget_set_sensitive (add, false);
     gtk_box_pack_start ((GtkBox *) hbox, add, false, false, 0);
+
+    g_signal_connect (entry, "activate", (GCallback) add_from_entry, nullptr);
+    g_signal_connect (entry, "changed", (GCallback) text_changed, nullptr);
 
     GtkWidget * scrolled = gtk_scrolled_window_new (nullptr, nullptr);
     gtk_scrolled_window_set_shadow_type ((GtkScrolledWindow *) scrolled, GTK_SHADOW_IN);
@@ -189,6 +231,18 @@ static GtkWidget * create_eq_preset_window ()
     gtk_tree_view_set_headers_visible ((GtkTreeView *) list, false);
     audgui_list_add_column (list, nullptr, 0, G_TYPE_STRING, -1);
     gtk_container_add ((GtkContainer *) scrolled, list);
+
+    GtkWidget * hbox2 = gtk_hbox_new (false, 6);
+    gtk_box_pack_start ((GtkBox *) vbox, hbox2, false, false, 0);
+
+    GtkWidget * remove = audgui_button_new (_("Delete Selected"), "edit-delete",
+     (AudguiCallback) delete_selected, nullptr);
+    gtk_box_pack_start ((GtkBox *) hbox2, remove, false, false, 0);
+
+    revert = audgui_button_new (_("Revert Changes"), "edit-undo",
+     (AudguiCallback) revert_changes, nullptr);
+    gtk_widget_set_sensitive (revert, false);
+    gtk_box_pack_end ((GtkBox *) hbox2, revert, false, false, 0);
 
     return window;
 }
