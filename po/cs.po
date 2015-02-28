@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2015-01-24 13:09+0100\n"
+"POT-Creation-Date: 2015-02-28 19:15+0100\n"
 "PO-Revision-Date: 2015-01-02 16:00+0000\n"
 "Last-Translator: nd76er <nd76er@gmail.com>\n"
 "Language-Team: Czech (http://www.transifex.com/projects/p/audacious/language/"
@@ -259,6 +259,7 @@ msgstr "_Smazat"
 #: src/libaudgui/jump-to-time.cc:48 src/libaudgui/playlists.cc:90
 #: src/libaudgui/playlists.cc:144 src/libaudgui/plugin-prefs.cc:160
 #: src/libaudgui/url-opener.cc:76 src/libaudqt/playlist-management.cc:47
+#: src/libaudqt/prefs-plugin.cc:121
 msgid "_Cancel"
 msgstr "_Zrušit"
 
@@ -361,7 +362,9 @@ msgstr "Zavřít _dialog při přidání"
 #: src/libaudgui/file-opener.cc:127 src/libaudgui/infowin.cc:406
 #: src/libaudgui/jump-to-track.cc:307 src/libaudgui/plugin-prefs.cc:166
 #: src/libaudgui/prefs-window.cc:762 src/libaudgui/queue-manager.cc:194
-#: src/libaudgui/util.cc:167 src/libaudqt/queue-manager.cc:116
+#: src/libaudgui/util.cc:167 src/libaudqt/infowin.cc:73
+#: src/libaudqt/prefs-plugin.cc:135 src/libaudqt/prefs-window.cc:679
+#: src/libaudqt/queue-manager.cc:116 src/libaudqt/util.cc:70
 msgid "_Close"
 msgstr "_Zavřít"
 
@@ -579,7 +582,7 @@ msgid "Save error"
 msgstr "Chyba při ukládání"
 
 #: src/libaudgui/infowin.cc:316 src/libaudgui/prefs-window.cc:86
-#: src/libaudqt/infowin.cc:61 src/libaudqt/prefs-window.cc:89
+#: src/libaudqt/infowin.cc:62 src/libaudqt/prefs-window.cc:89
 msgid "Song Info"
 msgstr "Informace o skladbě"
 
@@ -600,7 +603,7 @@ msgstr "Číslo stopy"
 msgid "Clea_r fields when moving to next song"
 msgstr "Smaza_t pole při posunu na další skladbu"
 
-#: src/libaudgui/infowin.cc:403
+#: src/libaudgui/infowin.cc:403 src/libaudqt/infowin.cc:72
 msgid "_Save"
 msgstr "_Ulozit"
 
@@ -687,17 +690,17 @@ msgstr "_Importovat"
 msgid "_Plugins ..."
 msgstr "_Doplňky ..."
 
-#: src/libaudgui/plugin-prefs.cc:109 src/libaudqt/prefs-plugin.cc:55
+#: src/libaudgui/plugin-prefs.cc:109 src/libaudqt/prefs-plugin.cc:56
 #, c-format
 msgid "About %s"
 msgstr "O %s"
 
-#: src/libaudgui/plugin-prefs.cc:155 src/libaudqt/prefs-plugin.cc:107
+#: src/libaudgui/plugin-prefs.cc:155 src/libaudqt/prefs-plugin.cc:108
 #, c-format
 msgid "%s Settings"
 msgstr "%s Nastavení"
 
-#: src/libaudgui/plugin-prefs.cc:159
+#: src/libaudgui/plugin-prefs.cc:159 src/libaudqt/prefs-plugin.cc:120
 msgid "_Set"
 msgstr "_Nastavit"
 
@@ -1169,7 +1172,7 @@ msgstr "Typ MIME"
 msgid "Bitrate"
 msgstr "Datový tok"
 
-#: src/libaudqt/infowin.cc:126
+#: src/libaudqt/infowin.cc:129
 #, c-format
 msgid "No info available for %s.\n"
 msgstr "Pro %s nejsou dostupné žádné údaje.\n"

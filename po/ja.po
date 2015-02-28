@@ -8,7 +8,7 @@
 # ABE Tsunehiko, 2013
 # Nastuko Toda <m2330880989@shibuya-center.com>, 2012
 # Mika Kobayashi, 2014
-# Mika Kobayashi, 2014
+# Mika Kobayashi, 2014-2015
 # Nastuko Toda <m2330880989@shibuya-center.com>, 2012
 # natird zoto <dritan86@gmail.com>, 2012
 # natird zoto <dritan86@gmail.com>, 2012
@@ -18,9 +18,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2015-01-24 13:09+0100\n"
-"PO-Revision-Date: 2014-12-22 12:38+0000\n"
-"Last-Translator: Thomas Lange <thomas-lange2@gmx.de>\n"
+"POT-Creation-Date: 2015-02-28 19:15+0100\n"
+"PO-Revision-Date: 2015-02-20 17:09+0000\n"
+"Last-Translator: Mika Kobayashi\n"
 "Language-Team: Japanese (http://www.transifex.com/projects/p/audacious/"
 "language/ja/)\n"
 "Language: ja\n"
@@ -47,7 +47,7 @@ msgstr "一時停止"
 
 #: src/audacious/main.cc:64
 msgid "Pause if playing, play otherwise"
-msgstr "演奏していたら一時停止し, それ以外は演奏する"
+msgstr "再生していたら一時停止し、再生していなければ再生する"
 
 #: src/audacious/main.cc:65
 msgid "Stop playback"
@@ -87,11 +87,11 @@ msgstr "再生完了時に終了する"
 
 #: src/audacious/main.cc:74
 msgid "Print debugging messages (may be used twice)"
-msgstr ""
+msgstr "デバッグ用メッセージを表示 (-VV のように2個続ける用法あり)"
 
 #: src/audacious/main.cc:76
 msgid "Run in Qt mode"
-msgstr ""
+msgstr "Qt モードで実行"
 
 #: src/audacious/main.cc:127
 #, c-format
@@ -133,11 +133,11 @@ msgstr "オーディオ CD、トラック %s"
 
 #: src/libaudcore/audstrings.cc:532 src/libaudcore/tuple.cc:481
 msgid "(character encoding error)"
-msgstr ""
+msgstr "(文字のエンコーディングエラー)"
 
 #: src/libaudcore/playback.cc:328 src/libaudcore/probe.cc:151
 msgid "Error loading plugin"
-msgstr ""
+msgstr "プラグインのロードエラー"
 
 #: src/libaudcore/playback.cc:383 src/libaudgui/infowin.cc:496
 #, c-format
@@ -145,14 +145,16 @@ msgid ""
 "Error opening %s:\n"
 "%s"
 msgstr ""
+"%s を開く際にエラー:\n"
+"%s"
 
 #: src/libaudcore/playback.cc:385
 msgid "Unknown playback error"
-msgstr ""
+msgstr "不明な再生エラー"
 
 #: src/libaudcore/playback.cc:514
 msgid "Invalid audio format"
-msgstr ""
+msgstr "無効なオーディオ形式"
 
 #: src/libaudcore/playlist.cc:142
 msgid "Now Playing"
@@ -169,24 +171,24 @@ msgstr ""
 #: src/libaudcore/playlist-files.cc:76
 #, c-format
 msgid "Cannot load %s: unsupported file name extension."
-msgstr ""
+msgstr "%s を読込めません: 対応していないファイル拡張子です。"
 
 #: src/libaudcore/playlist-files.cc:136
 #, c-format
 msgid "Cannot save %s: unsupported file name extension."
-msgstr ""
+msgstr "%s を保存することができません: 対応していないファイル拡張子です。"
 
 #: src/libaudcore/probe.cc:119
 msgid "Seek error"
-msgstr ""
+msgstr "シークエラー"
 
 #: src/libaudcore/probe.cc:127
 msgid "File format not recognized"
-msgstr ""
+msgstr "ファイル形式を認識することができません"
 
 #: src/libaudcore/probe.cc:161
 msgid "Error reading metadata"
-msgstr ""
+msgstr "メタデータを読込む際にエラー"
 
 #: src/libaudcore/tuple.cc:528
 msgid "Mono"
@@ -205,27 +207,27 @@ msgstr[0] "%d チャンネル"
 #: src/libaudcore/tuple.cc:699
 #, c-format
 msgid "Track %d"
-msgstr ""
+msgstr "トラック %d"
 
 #: src/libaudcore/tuple.cc:701
 msgid "Audio CD"
-msgstr ""
+msgstr "音楽CD"
 
 #: src/libaudcore/tuple.cc:707
 msgid "(unknown title)"
-msgstr ""
+msgstr "(不明なタイトル)"
 
 #: src/libaudcore/vfs.cc:67
 msgid "Invalid URI"
-msgstr ""
+msgstr "無効なURI"
 
 #: src/libaudcore/vfs.cc:83
 msgid "Unknown URI scheme"
-msgstr ""
+msgstr "不明なURIスキーマ"
 
 #: src/libaudcore/vfs_local.cc:82
 msgid "Invalid file name"
-msgstr ""
+msgstr "無効なファイル名"
 
 #: src/libaudgui/about.cc:35 src/libaudqt/about.cc:37
 msgid "Credits"
@@ -252,6 +254,7 @@ msgstr "削除(_R)"
 #: src/libaudgui/jump-to-time.cc:48 src/libaudgui/playlists.cc:90
 #: src/libaudgui/playlists.cc:144 src/libaudgui/plugin-prefs.cc:160
 #: src/libaudgui/url-opener.cc:76 src/libaudqt/playlist-management.cc:47
+#: src/libaudqt/prefs-plugin.cc:121
 msgid "_Cancel"
 msgstr "キャンセル (_C)"
 
@@ -354,7 +357,9 @@ msgstr "追加したらダイアログを閉じる (_D)"
 #: src/libaudgui/file-opener.cc:127 src/libaudgui/infowin.cc:406
 #: src/libaudgui/jump-to-track.cc:307 src/libaudgui/plugin-prefs.cc:166
 #: src/libaudgui/prefs-window.cc:762 src/libaudgui/queue-manager.cc:194
-#: src/libaudgui/util.cc:167 src/libaudqt/queue-manager.cc:116
+#: src/libaudgui/util.cc:167 src/libaudqt/infowin.cc:73
+#: src/libaudqt/prefs-plugin.cc:135 src/libaudqt/prefs-window.cc:679
+#: src/libaudqt/queue-manager.cc:116 src/libaudqt/util.cc:70
 msgid "_Close"
 msgstr "閉じる(_C)"
 
@@ -572,13 +577,13 @@ msgid "Save error"
 msgstr "保存に失敗しました"
 
 #: src/libaudgui/infowin.cc:316 src/libaudgui/prefs-window.cc:86
-#: src/libaudqt/infowin.cc:61 src/libaudqt/prefs-window.cc:89
+#: src/libaudqt/infowin.cc:62 src/libaudqt/prefs-window.cc:89
 msgid "Song Info"
 msgstr "曲の情報"
 
 #: src/libaudgui/infowin.cc:369 src/libaudqt/info-widget.cc:44
 msgid "Album Artist"
-msgstr ""
+msgstr "アルバムアーティスト"
 
 #: src/libaudgui/infowin.cc:372 src/libaudgui/prefs-window.cc:109
 #: src/libaudqt/info-widget.cc:43 src/libaudqt/prefs-window.cc:112
@@ -591,15 +596,15 @@ msgstr "トラック番号"
 
 #: src/libaudgui/infowin.cc:389
 msgid "Clea_r fields when moving to next song"
-msgstr ""
+msgstr "次の曲に移る際にフィールドをクリアする (_R)"
 
-#: src/libaudgui/infowin.cc:403
+#: src/libaudgui/infowin.cc:403 src/libaudqt/infowin.cc:72
 msgid "_Save"
 msgstr "保存 (_S)"
 
 #: src/libaudgui/infowin.cc:409
 msgid "_Next"
-msgstr ""
+msgstr "次の曲へ(_N)"
 
 #: src/libaudgui/infowin.cc:455
 #, c-format
@@ -680,17 +685,17 @@ msgstr "インポート(_I)"
 msgid "_Plugins ..."
 msgstr "プラグイン (_P)"
 
-#: src/libaudgui/plugin-prefs.cc:109 src/libaudqt/prefs-plugin.cc:55
+#: src/libaudgui/plugin-prefs.cc:109 src/libaudqt/prefs-plugin.cc:56
 #, c-format
 msgid "About %s"
-msgstr ""
+msgstr "%s について"
 
-#: src/libaudgui/plugin-prefs.cc:155 src/libaudqt/prefs-plugin.cc:107
+#: src/libaudgui/plugin-prefs.cc:155 src/libaudqt/prefs-plugin.cc:108
 #, c-format
 msgid "%s Settings"
-msgstr ""
+msgstr "%s の設定"
 
-#: src/libaudgui/plugin-prefs.cc:159
+#: src/libaudgui/plugin-prefs.cc:159 src/libaudqt/prefs-plugin.cc:120
 msgid "_Set"
 msgstr "設定 (_S)"
 
@@ -702,7 +707,7 @@ msgstr "設定 (_S)"
 #: src/libaudgui/plugin-view.cc:242 src/libaudgui/prefs-window.cc:661
 #: src/libaudqt/prefs-window.cc:504
 msgid "_About"
-msgstr "Audacious について (_A)"
+msgstr "情報 (_A)"
 
 #: src/libaudgui/prefs-window.cc:82 src/libaudqt/prefs-window.cc:85
 msgid "Appearance"
@@ -747,15 +752,15 @@ msgstr "トランスポート"
 
 #: src/libaudgui/prefs-window.cc:103 src/libaudqt/prefs-window.cc:106
 msgid "Track number"
-msgstr ""
+msgstr "トラック番号"
 
 #: src/libaudgui/prefs-window.cc:105 src/libaudqt/prefs-window.cc:108
 msgid "File name"
-msgstr ""
+msgstr "ファイル名"
 
 #: src/libaudgui/prefs-window.cc:106 src/libaudqt/prefs-window.cc:109
 msgid "File path"
-msgstr ""
+msgstr "ファイルパス"
 
 #: src/libaudgui/prefs-window.cc:107 src/libaudqt/prefs-window.cc:110
 msgid "Date"
@@ -801,7 +806,7 @@ msgstr "日本語"
 
 #: src/libaudgui/prefs-window.cc:123 src/libaudqt/prefs-window.cc:126
 msgid "Korean"
-msgstr "朝鮮語"
+msgstr "韓国語"
 
 #: src/libaudgui/prefs-window.cc:124 src/libaudqt/prefs-window.cc:127
 msgid "Polish"
@@ -911,15 +916,15 @@ msgstr "プロキシのパスワード:"
 
 #: src/libaudgui/prefs-window.cc:223 src/libaudqt/prefs-window.cc:226
 msgid "<b>Network Settings</b>"
-msgstr ""
+msgstr "<b>ネットワークの設定</b>"
 
 #: src/libaudgui/prefs-window.cc:226 src/libaudqt/prefs-window.cc:229
 msgid "KiB"
-msgstr ""
+msgstr "KiB"
 
 #: src/libaudgui/prefs-window.cc:227 src/libaudqt/prefs-window.cc:230
 msgid "<b>Proxy Configuration</b>"
-msgstr "<b>プロキシ設定</b>"
+msgstr "<b>プロキシの設定</b>"
 
 #: src/libaudgui/prefs-window.cc:228 src/libaudqt/prefs-window.cc:231
 msgid "Enable proxy usage"
@@ -931,11 +936,11 @@ msgstr "プロキシの認証を行う"
 
 #: src/libaudgui/prefs-window.cc:240 src/libaudqt/prefs-window.cc:243
 msgid "Auto character encoding detector for:"
-msgstr "自動キャラクタエンコーディング検出:"
+msgstr "文字コードの自動検出対象言語:"
 
 #: src/libaudgui/prefs-window.cc:244 src/libaudqt/prefs-window.cc:247
 msgid "Fallback character encodings:"
-msgstr "代替キャラクタエンコーディング:"
+msgstr "検出失敗時に試行する文字コード:"
 
 #: src/libaudgui/prefs-window.cc:252 src/libaudqt/prefs-window.cc:256
 msgid "<b>Behavior</b>"
@@ -943,11 +948,11 @@ msgstr "<b>動作</b>"
 
 #: src/libaudgui/prefs-window.cc:253 src/libaudqt/prefs-window.cc:257
 msgid "Resume playback on startup"
-msgstr ""
+msgstr "起動時に再生を再開する"
 
 #: src/libaudgui/prefs-window.cc:255 src/libaudqt/prefs-window.cc:259
 msgid "Pause instead of resuming immediately"
-msgstr ""
+msgstr "再生せずに一時停止状態で起動"
 
 #: src/libaudgui/prefs-window.cc:258 src/libaudqt/prefs-window.cc:262
 msgid "Advance when the current song is deleted"
@@ -984,7 +989,7 @@ msgstr "先頭のゼロを表示する (2:00 -> 02:00)"
 
 #: src/libaudgui/prefs-window.cc:274 src/libaudqt/prefs-window.cc:280
 msgid "<b>Advanced</b>"
-msgstr ""
+msgstr "<b>高度な設定</b>"
 
 #: src/libaudgui/prefs-window.cc:275 src/libaudqt/prefs-window.cc:268
 #: src/libaudqt/prefs-window.cc:281
@@ -993,7 +998,7 @@ msgstr "再生が終わるまで曲のメタデータを読み込まない"
 
 #: src/libaudgui/prefs-window.cc:277 src/libaudqt/prefs-window.cc:283
 msgid "Probe content of files with no recognized file name extension"
-msgstr ""
+msgstr "ファイル拡張子が未知のときにはファイル内容を精査"
 
 #: src/libaudgui/prefs-window.cc:282 src/libaudqt/prefs-window.cc:288
 msgid "<b>Album Art</b>"
@@ -1089,7 +1094,7 @@ msgstr "キューからはずす (_U)"
 
 #: src/libaudgui/status.cc:36
 msgid "Working ..."
-msgstr ""
+msgstr "処理中 ..."
 
 #: src/libaudgui/status.cc:85 src/libaudqt/log-inspector.cc:192
 msgid "Error"
@@ -1117,60 +1122,60 @@ msgstr ""
 
 #: src/libaudqt/fileopener.cc:40
 msgid "Open Folder"
-msgstr ""
+msgstr "フォルダを開く"
 
 #: src/libaudqt/fileopener.cc:42
 msgid "Add Folder"
-msgstr ""
+msgstr "フォルダを追加"
 
 #: src/libaudqt/fileopener.cc:46 src/libaudqt/fileopener.cc:47
 msgid "Open"
-msgstr ""
+msgstr "開く"
 
 #: src/libaudqt/fileopener.cc:48 src/libaudqt/fileopener.cc:49
 msgid "Add"
-msgstr ""
+msgstr "追加"
 
 #: src/libaudqt/info-widget.cc:37
 msgid "Metadata"
-msgstr ""
+msgstr "メタデータ"
 
 #: src/libaudqt/info-widget.cc:45
 msgid "Composer"
-msgstr ""
+msgstr "作曲者"
 
 #: src/libaudqt/info-widget.cc:46
 msgid "Performer"
-msgstr ""
+msgstr "演者"
 
 #: src/libaudqt/info-widget.cc:47
 msgid "Recording Year"
-msgstr ""
+msgstr "制作年"
 
 #: src/libaudqt/info-widget.cc:48
 msgid "Recording Date"
-msgstr ""
+msgstr "制作日"
 
 #: src/libaudqt/info-widget.cc:51
 msgid "Technical"
-msgstr ""
+msgstr "技術情報"
 
 #: src/libaudqt/info-widget.cc:53
 msgid "MIME Type"
-msgstr ""
+msgstr "MIMEタイプ"
 
 #: src/libaudqt/info-widget.cc:56
 msgid "Bitrate"
-msgstr ""
+msgstr "ビットレート"
 
-#: src/libaudqt/infowin.cc:126
+#: src/libaudqt/infowin.cc:129
 #, c-format
 msgid "No info available for %s.\n"
-msgstr "%s の情報が取得できません。\n"
+msgstr "%s の情報を取得することができません。\n"
 
 #: src/libaudqt/log-inspector.cc:106
 msgid "Level"
-msgstr ""
+msgstr "レベル:"
 
 #: src/libaudqt/log-inspector.cc:107
 msgid "Filename"
@@ -1178,36 +1183,36 @@ msgstr "ファイル名"
 
 #: src/libaudqt/log-inspector.cc:108
 msgid "Line"
-msgstr ""
+msgstr "ライン"
 
 #: src/libaudqt/log-inspector.cc:109
 msgid "Function"
-msgstr ""
+msgstr "機能"
 
 #: src/libaudqt/log-inspector.cc:110
 msgid "Message"
-msgstr ""
+msgstr "メッセージ"
 
 #: src/libaudqt/log-inspector.cc:175
 msgid "Log Inspector"
-msgstr ""
+msgstr "ログ検査"
 
 #: src/libaudqt/log-inspector.cc:186
 msgid "Log Level:"
-msgstr ""
+msgstr "ログレベル:"
 
 #: src/libaudqt/log-inspector.cc:189
 msgid "Debug"
-msgstr ""
+msgstr "デバッグ"
 
 #: src/libaudqt/log-inspector.cc:190
 msgid "Info"
-msgstr ""
+msgstr "情報"
 
 #: src/libaudqt/log-inspector.cc:191
 msgid "Warning"
-msgstr ""
+msgstr "警告"
 
 #: src/libaudqt/plugin-menu.cc:40
 msgid "Plugins ..."
-msgstr ""
+msgstr "プラグイン ..."
