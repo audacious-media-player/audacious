@@ -8,13 +8,13 @@
 # Oxayotl <jagw40k@free.fr>, 2011-2012
 # Oxayotl <jagw40k@free.fr>, 2011
 # Oxayotl <jagw40k@free.fr>, 2011,2013
-# yahoe.001, 2013-2014
+# yahoe.001, 2013-2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2015-01-24 13:09+0100\n"
-"PO-Revision-Date: 2014-12-22 17:20+0000\n"
+"POT-Creation-Date: 2015-02-28 19:15+0100\n"
+"PO-Revision-Date: 2015-01-29 15:29+0000\n"
 "Last-Translator: yahoe.001\n"
 "Language-Team: French (http://www.transifex.com/projects/p/audacious/"
 "language/fr/)\n"
@@ -254,6 +254,7 @@ msgstr "Enleve_r"
 #: src/libaudgui/jump-to-time.cc:48 src/libaudgui/playlists.cc:90
 #: src/libaudgui/playlists.cc:144 src/libaudgui/plugin-prefs.cc:160
 #: src/libaudgui/url-opener.cc:76 src/libaudqt/playlist-management.cc:47
+#: src/libaudqt/prefs-plugin.cc:121
 msgid "_Cancel"
 msgstr "_Annuler"
 
@@ -356,7 +357,9 @@ msgstr "Fermer la fenêtre de _dialogue lors de l'ajout"
 #: src/libaudgui/file-opener.cc:127 src/libaudgui/infowin.cc:406
 #: src/libaudgui/jump-to-track.cc:307 src/libaudgui/plugin-prefs.cc:166
 #: src/libaudgui/prefs-window.cc:762 src/libaudgui/queue-manager.cc:194
-#: src/libaudgui/util.cc:167 src/libaudqt/queue-manager.cc:116
+#: src/libaudgui/util.cc:167 src/libaudqt/infowin.cc:73
+#: src/libaudqt/prefs-plugin.cc:135 src/libaudqt/prefs-window.cc:679
+#: src/libaudqt/queue-manager.cc:116 src/libaudqt/util.cc:70
 msgid "_Close"
 msgstr "_Fermer"
 
@@ -574,7 +577,7 @@ msgid "Save error"
 msgstr "Erreur d'enregistrement"
 
 #: src/libaudgui/infowin.cc:316 src/libaudgui/prefs-window.cc:86
-#: src/libaudqt/infowin.cc:61 src/libaudqt/prefs-window.cc:89
+#: src/libaudqt/infowin.cc:62 src/libaudqt/prefs-window.cc:89
 msgid "Song Info"
 msgstr "Infos sur le morceau"
 
@@ -595,7 +598,7 @@ msgstr "Numéro de piste"
 msgid "Clea_r fields when moving to next song"
 msgstr "Efface_r les champs en passant au morceau suivant"
 
-#: src/libaudgui/infowin.cc:403
+#: src/libaudgui/infowin.cc:403 src/libaudqt/infowin.cc:72
 msgid "_Save"
 msgstr "_Enregistrer"
 
@@ -682,17 +685,17 @@ msgstr "_Importer"
 msgid "_Plugins ..."
 msgstr "_Greffons..."
 
-#: src/libaudgui/plugin-prefs.cc:109 src/libaudqt/prefs-plugin.cc:55
+#: src/libaudgui/plugin-prefs.cc:109 src/libaudqt/prefs-plugin.cc:56
 #, c-format
 msgid "About %s"
 msgstr "À propos de %s"
 
-#: src/libaudgui/plugin-prefs.cc:155 src/libaudqt/prefs-plugin.cc:107
+#: src/libaudgui/plugin-prefs.cc:155 src/libaudqt/prefs-plugin.cc:108
 #, c-format
 msgid "%s Settings"
 msgstr "Paramètres de %s"
 
-#: src/libaudgui/plugin-prefs.cc:159
+#: src/libaudgui/plugin-prefs.cc:159 src/libaudqt/prefs-plugin.cc:120
 msgid "_Set"
 msgstr "_Définir"
 
@@ -1165,10 +1168,10 @@ msgstr "Type MIME"
 msgid "Bitrate"
 msgstr "Débit binaire"
 
-#: src/libaudqt/infowin.cc:126
+#: src/libaudqt/infowin.cc:129
 #, c-format
 msgid "No info available for %s.\n"
-msgstr "Aucune info disponible pour %s.\n"
+msgstr "Aucune info proposée pour %s.\n"
 
 #: src/libaudqt/log-inspector.cc:106
 msgid "Level"

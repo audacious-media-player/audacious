@@ -10,15 +10,16 @@
 # filipbielik <filip.bielik@gmail.com>, 2014
 # Lukáš Dobránsky <lukas.dobransky@gmail.com>, 2012
 # Lukáš Dobránsky <lukas.dobransky@gmail.com>, 2012-2013
+# RichiSk <richard.mosko@gmail.com>, 2015
 # Tomáš Vadina <kyberdev@gmail.com>, 2012
 # Corduroy <vdcorduroy@gmail.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2015-01-24 13:09+0100\n"
-"PO-Revision-Date: 2014-12-22 12:38+0000\n"
-"Last-Translator: Thomas Lange <thomas-lange2@gmx.de>\n"
+"POT-Creation-Date: 2015-02-28 19:15+0100\n"
+"PO-Revision-Date: 2015-02-13 23:13+0000\n"
+"Last-Translator: RichiSk <richard.mosko@gmail.com>\n"
 "Language-Team: Slovak (http://www.transifex.com/projects/p/audacious/"
 "language/sk/)\n"
 "Language: sk\n"
@@ -150,7 +151,7 @@ msgstr ""
 
 #: src/libaudcore/playback.cc:514
 msgid "Invalid audio format"
-msgstr ""
+msgstr "Neplatný zvukový formát"
 
 #: src/libaudcore/playlist.cc:142
 msgid "Now Playing"
@@ -167,12 +168,12 @@ msgstr ""
 #: src/libaudcore/playlist-files.cc:76
 #, c-format
 msgid "Cannot load %s: unsupported file name extension."
-msgstr ""
+msgstr "Nie je možné načítať %s: nepodporovaná prípona názvu súboru."
 
 #: src/libaudcore/playlist-files.cc:136
 #, c-format
 msgid "Cannot save %s: unsupported file name extension."
-msgstr ""
+msgstr "Nie je možné uložiť %s: nepodporovaná prípona súboru."
 
 #: src/libaudcore/probe.cc:119
 msgid "Seek error"
@@ -180,11 +181,11 @@ msgstr ""
 
 #: src/libaudcore/probe.cc:127
 msgid "File format not recognized"
-msgstr ""
+msgstr "Formát súboru nebol rozpoznaný"
 
 #: src/libaudcore/probe.cc:161
 msgid "Error reading metadata"
-msgstr ""
+msgstr "Chyba načítavania metadát"
 
 #: src/libaudcore/tuple.cc:528
 msgid "Mono"
@@ -205,27 +206,27 @@ msgstr[2] "%d kanály"
 #: src/libaudcore/tuple.cc:699
 #, c-format
 msgid "Track %d"
-msgstr ""
+msgstr "Stopa %d"
 
 #: src/libaudcore/tuple.cc:701
 msgid "Audio CD"
-msgstr ""
+msgstr "Zvukové CD"
 
 #: src/libaudcore/tuple.cc:707
 msgid "(unknown title)"
-msgstr ""
+msgstr "Neznámy názov"
 
 #: src/libaudcore/vfs.cc:67
 msgid "Invalid URI"
-msgstr ""
+msgstr "Neplatná URI"
 
 #: src/libaudcore/vfs.cc:83
 msgid "Unknown URI scheme"
-msgstr ""
+msgstr "Neplatná URI schéma"
 
 #: src/libaudcore/vfs_local.cc:82
 msgid "Invalid file name"
-msgstr ""
+msgstr "Neplatný názov súboru"
 
 #: src/libaudgui/about.cc:35 src/libaudqt/about.cc:37
 msgid "Credits"
@@ -252,6 +253,7 @@ msgstr "_Odstrániť"
 #: src/libaudgui/jump-to-time.cc:48 src/libaudgui/playlists.cc:90
 #: src/libaudgui/playlists.cc:144 src/libaudgui/plugin-prefs.cc:160
 #: src/libaudgui/url-opener.cc:76 src/libaudqt/playlist-management.cc:47
+#: src/libaudqt/prefs-plugin.cc:121
 msgid "_Cancel"
 msgstr "_Zrušiť"
 
@@ -265,7 +267,7 @@ msgstr "_Nepýtať sa nabudúce"
 
 #: src/libaudgui/confirm.cc:87
 msgid "_Rename"
-msgstr ""
+msgstr "_Premenovať"
 
 #: src/libaudgui/confirm.cc:91
 msgid "Rename Playlist"
@@ -354,7 +356,9 @@ msgstr "Zatvoriť okno po pridaní"
 #: src/libaudgui/file-opener.cc:127 src/libaudgui/infowin.cc:406
 #: src/libaudgui/jump-to-track.cc:307 src/libaudgui/plugin-prefs.cc:166
 #: src/libaudgui/prefs-window.cc:762 src/libaudgui/queue-manager.cc:194
-#: src/libaudgui/util.cc:167 src/libaudqt/queue-manager.cc:116
+#: src/libaudgui/util.cc:167 src/libaudqt/infowin.cc:73
+#: src/libaudqt/prefs-plugin.cc:135 src/libaudqt/prefs-window.cc:679
+#: src/libaudqt/queue-manager.cc:116 src/libaudqt/util.cc:70
 msgid "_Close"
 msgstr "_Zatvoriť"
 
@@ -572,13 +576,13 @@ msgid "Save error"
 msgstr "Chyba pri ukladaní"
 
 #: src/libaudgui/infowin.cc:316 src/libaudgui/prefs-window.cc:86
-#: src/libaudqt/infowin.cc:61 src/libaudqt/prefs-window.cc:89
+#: src/libaudqt/infowin.cc:62 src/libaudqt/prefs-window.cc:89
 msgid "Song Info"
 msgstr "Informácie o skladbe"
 
 #: src/libaudgui/infowin.cc:369 src/libaudqt/info-widget.cc:44
 msgid "Album Artist"
-msgstr ""
+msgstr "Interprét albumu"
 
 #: src/libaudgui/infowin.cc:372 src/libaudgui/prefs-window.cc:109
 #: src/libaudqt/info-widget.cc:43 src/libaudqt/prefs-window.cc:112
@@ -593,13 +597,13 @@ msgstr "Číslo stopy"
 msgid "Clea_r fields when moving to next song"
 msgstr ""
 
-#: src/libaudgui/infowin.cc:403
+#: src/libaudgui/infowin.cc:403 src/libaudqt/infowin.cc:72
 msgid "_Save"
 msgstr "Uložiť"
 
 #: src/libaudgui/infowin.cc:409
 msgid "_Next"
-msgstr ""
+msgstr "_Nasledujúca"
 
 #: src/libaudgui/infowin.cc:455
 #, c-format
@@ -649,7 +653,7 @@ msgstr "Zatvoriť po skoku"
 
 #: src/libaudgui/playlists.cc:89
 msgid "_Overwrite"
-msgstr ""
+msgstr "P_repísať"
 
 #: src/libaudgui/playlists.cc:93
 msgid "Confirm Overwrite"
@@ -666,7 +670,7 @@ msgstr "Exportovať zoznam skladieb"
 
 #: src/libaudgui/playlists.cc:124
 msgid "_Export"
-msgstr ""
+msgstr "_Exportovať"
 
 #: src/libaudgui/playlists.cc:130
 msgid "Import Playlist"
@@ -674,23 +678,23 @@ msgstr "Importovať zoznam skladieb"
 
 #: src/libaudgui/playlists.cc:131
 msgid "_Import"
-msgstr ""
+msgstr "_Importovať"
 
 #: src/libaudgui/plugin-menu.cc:40
 msgid "_Plugins ..."
 msgstr "_Doplnky ..."
 
-#: src/libaudgui/plugin-prefs.cc:109 src/libaudqt/prefs-plugin.cc:55
+#: src/libaudgui/plugin-prefs.cc:109 src/libaudqt/prefs-plugin.cc:56
 #, c-format
 msgid "About %s"
-msgstr ""
+msgstr "O %s"
 
-#: src/libaudgui/plugin-prefs.cc:155 src/libaudqt/prefs-plugin.cc:107
+#: src/libaudgui/plugin-prefs.cc:155 src/libaudqt/prefs-plugin.cc:108
 #, c-format
 msgid "%s Settings"
-msgstr ""
+msgstr "%s Nastavenia"
 
-#: src/libaudgui/plugin-prefs.cc:159
+#: src/libaudgui/plugin-prefs.cc:159 src/libaudqt/prefs-plugin.cc:120
 msgid "_Set"
 msgstr "_Nastaviť"
 
@@ -747,15 +751,15 @@ msgstr "Prenos"
 
 #: src/libaudgui/prefs-window.cc:103 src/libaudqt/prefs-window.cc:106
 msgid "Track number"
-msgstr ""
+msgstr "Číslo stopy"
 
 #: src/libaudgui/prefs-window.cc:105 src/libaudqt/prefs-window.cc:108
 msgid "File name"
-msgstr ""
+msgstr "Názov súboru"
 
 #: src/libaudgui/prefs-window.cc:106 src/libaudqt/prefs-window.cc:109
 msgid "File path"
-msgstr ""
+msgstr "Cesta k súboru"
 
 #: src/libaudgui/prefs-window.cc:107 src/libaudqt/prefs-window.cc:110
 msgid "Date"
@@ -825,11 +829,11 @@ msgstr "Plávajúca desatinná čiarka"
 
 #: src/libaudgui/prefs-window.cc:147 src/libaudqt/prefs-window.cc:150
 msgid "<b>Interface Settings</b>"
-msgstr ""
+msgstr "<b>Nastavenia rozhrania</b>"
 
 #: src/libaudgui/prefs-window.cc:148 src/libaudqt/prefs-window.cc:151
 msgid "Interface plugin:"
-msgstr ""
+msgstr "Plugin rozhrania:"
 
 #: src/libaudgui/prefs-window.cc:166 src/libaudqt/prefs-window.cc:169
 msgid "Output plugin:"
@@ -911,7 +915,7 @@ msgstr "Heslo:"
 
 #: src/libaudgui/prefs-window.cc:223 src/libaudqt/prefs-window.cc:226
 msgid "<b>Network Settings</b>"
-msgstr ""
+msgstr "<b>Nastavenia pripojenia</b>"
 
 #: src/libaudgui/prefs-window.cc:226 src/libaudqt/prefs-window.cc:229
 msgid "KiB"
@@ -943,11 +947,11 @@ msgstr "<b>Správanie</b>"
 
 #: src/libaudgui/prefs-window.cc:253 src/libaudqt/prefs-window.cc:257
 msgid "Resume playback on startup"
-msgstr ""
+msgstr "Po spustení pokračovať v prehrávaní"
 
 #: src/libaudgui/prefs-window.cc:255 src/libaudqt/prefs-window.cc:259
 msgid "Pause instead of resuming immediately"
-msgstr ""
+msgstr "Ihneď pozastaviť namiesto pokračovania"
 
 #: src/libaudgui/prefs-window.cc:258 src/libaudqt/prefs-window.cc:262
 msgid "Advance when the current song is deleted"
@@ -983,7 +987,7 @@ msgstr "Zobrazovať úvodné nuly (02:00 namiesto 2:00)"
 
 #: src/libaudgui/prefs-window.cc:274 src/libaudqt/prefs-window.cc:280
 msgid "<b>Advanced</b>"
-msgstr ""
+msgstr "<b>Rozšírené</b>"
 
 #: src/libaudgui/prefs-window.cc:275 src/libaudqt/prefs-window.cc:268
 #: src/libaudqt/prefs-window.cc:281
@@ -1088,7 +1092,7 @@ msgstr "Odstrániť"
 
 #: src/libaudgui/status.cc:36
 msgid "Working ..."
-msgstr ""
+msgstr "Pracujem..."
 
 #: src/libaudgui/status.cc:85 src/libaudqt/log-inspector.cc:192
 msgid "Error"
@@ -1116,23 +1120,23 @@ msgstr ""
 
 #: src/libaudqt/fileopener.cc:40
 msgid "Open Folder"
-msgstr ""
+msgstr "Otvoriť priečinok"
 
 #: src/libaudqt/fileopener.cc:42
 msgid "Add Folder"
-msgstr ""
+msgstr "Pridať priečinok"
 
 #: src/libaudqt/fileopener.cc:46 src/libaudqt/fileopener.cc:47
 msgid "Open"
-msgstr ""
+msgstr "Otvoriť"
 
 #: src/libaudqt/fileopener.cc:48 src/libaudqt/fileopener.cc:49
 msgid "Add"
-msgstr ""
+msgstr "Pridať"
 
 #: src/libaudqt/info-widget.cc:37
 msgid "Metadata"
-msgstr ""
+msgstr "Metadáta"
 
 #: src/libaudqt/info-widget.cc:45
 msgid "Composer"
@@ -1144,11 +1148,11 @@ msgstr ""
 
 #: src/libaudqt/info-widget.cc:47
 msgid "Recording Year"
-msgstr ""
+msgstr "Rok nahrávania"
 
 #: src/libaudqt/info-widget.cc:48
 msgid "Recording Date"
-msgstr ""
+msgstr "Dátum nahrávania"
 
 #: src/libaudqt/info-widget.cc:51
 msgid "Technical"
@@ -1156,13 +1160,13 @@ msgstr ""
 
 #: src/libaudqt/info-widget.cc:53
 msgid "MIME Type"
-msgstr ""
+msgstr "MIME Typ"
 
 #: src/libaudqt/info-widget.cc:56
 msgid "Bitrate"
-msgstr ""
+msgstr "Dátový tok"
 
-#: src/libaudqt/infowin.cc:126
+#: src/libaudqt/infowin.cc:129
 #, c-format
 msgid "No info available for %s.\n"
 msgstr "Pre %s nie sú dostupné žiadne informácie.\n"
@@ -1181,11 +1185,11 @@ msgstr ""
 
 #: src/libaudqt/log-inspector.cc:109
 msgid "Function"
-msgstr ""
+msgstr "Funkcia"
 
 #: src/libaudqt/log-inspector.cc:110
 msgid "Message"
-msgstr ""
+msgstr "Správa"
 
 #: src/libaudqt/log-inspector.cc:175
 msgid "Log Inspector"
@@ -1201,12 +1205,12 @@ msgstr ""
 
 #: src/libaudqt/log-inspector.cc:190
 msgid "Info"
-msgstr ""
+msgstr "Informácie"
 
 #: src/libaudqt/log-inspector.cc:191
 msgid "Warning"
-msgstr ""
+msgstr "Upozornenie"
 
 #: src/libaudqt/plugin-menu.cc:40
 msgid "Plugins ..."
-msgstr ""
+msgstr "Moduly..."

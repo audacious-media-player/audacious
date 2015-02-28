@@ -5,6 +5,7 @@
 # Translators:
 # Adolfo Jayme Barrientos <fito@libreoffice.org>, 2013-2014
 # Adolfo Jayme Barrientos, 2013
+# Adolfo Jayme Barrientos, 2015
 # Adolfo Jayme Barrientos, 2013
 # Adrián Ramirez Escalante <buried.prophet@gmail.com>, 2012
 # Cosme Domínguez Díaz <cosme.ddiaz@gmail.com>, 2010
@@ -27,9 +28,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2015-01-24 13:09+0100\n"
-"PO-Revision-Date: 2015-01-23 20:14+0000\n"
-"Last-Translator: Juan Riquelme González <soulchainer@gmail.com>\n"
+"POT-Creation-Date: 2015-02-28 19:15+0100\n"
+"PO-Revision-Date: 2015-02-13 05:48+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos\n"
 "Language-Team: Spanish (http://www.transifex.com/projects/p/audacious/"
 "language/es/)\n"
 "Language: es\n"
@@ -40,7 +41,7 @@ msgstr ""
 
 #: src/audacious/main.cc:60
 msgid "Show command-line help"
-msgstr "Mostrar ayuda de línea de comandos"
+msgstr "Mostrar ayuda de consola"
 
 #: src/audacious/main.cc:61
 msgid "Show version"
@@ -96,7 +97,7 @@ msgstr "Salir al terminar la reproducción"
 
 #: src/audacious/main.cc:74
 msgid "Print debugging messages (may be used twice)"
-msgstr "Mostrar mensajes de depuración (pueden usarse dos veces)"
+msgstr "Mostrar mensajes de depuración (puede usarse dos veces)"
 
 #: src/audacious/main.cc:76
 msgid "Run in Qt mode"
@@ -181,12 +182,12 @@ msgstr ""
 #: src/libaudcore/playlist-files.cc:76
 #, c-format
 msgid "Cannot load %s: unsupported file name extension."
-msgstr "No se puede cargar %s: extensión de archivo no soportada."
+msgstr "No se puede cargar %s: extensión de archivo no admitida."
 
 #: src/libaudcore/playlist-files.cc:136
 #, c-format
 msgid "Cannot save %s: unsupported file name extension."
-msgstr "No se puede guardar %s: extensión de archivo no soportada."
+msgstr "No se puede guardar %s: extensión de archivo no admitida."
 
 #: src/libaudcore/probe.cc:119
 msgid "Seek error"
@@ -202,7 +203,7 @@ msgstr "Error al leer los metadatos"
 
 #: src/libaudcore/tuple.cc:528
 msgid "Mono"
-msgstr "Mono"
+msgstr "Monoaural"
 
 #: src/libaudcore/tuple.cc:530
 msgid "Stereo"
@@ -265,6 +266,7 @@ msgstr "_Eliminar"
 #: src/libaudgui/jump-to-time.cc:48 src/libaudgui/playlists.cc:90
 #: src/libaudgui/playlists.cc:144 src/libaudgui/plugin-prefs.cc:160
 #: src/libaudgui/url-opener.cc:76 src/libaudqt/playlist-management.cc:47
+#: src/libaudqt/prefs-plugin.cc:121
 msgid "_Cancel"
 msgstr "_Cancelar"
 
@@ -367,7 +369,9 @@ msgstr "Cerrar _diálogo al añadir"
 #: src/libaudgui/file-opener.cc:127 src/libaudgui/infowin.cc:406
 #: src/libaudgui/jump-to-track.cc:307 src/libaudgui/plugin-prefs.cc:166
 #: src/libaudgui/prefs-window.cc:762 src/libaudgui/queue-manager.cc:194
-#: src/libaudgui/util.cc:167 src/libaudqt/queue-manager.cc:116
+#: src/libaudgui/util.cc:167 src/libaudqt/infowin.cc:73
+#: src/libaudqt/prefs-plugin.cc:135 src/libaudqt/prefs-window.cc:679
+#: src/libaudqt/queue-manager.cc:116 src/libaudqt/util.cc:70
 msgid "_Close"
 msgstr "_Cerrar"
 
@@ -422,11 +426,11 @@ msgstr "Tasa de bits:"
 
 #: src/libaudgui/infowin.cc:83
 msgid "Acid Jazz"
-msgstr "Acid Jazz"
+msgstr "Jazz ácido"
 
 #: src/libaudgui/infowin.cc:84
 msgid "Acid Rock"
-msgstr "Acid Rock"
+msgstr "Rock ácido"
 
 #: src/libaudgui/infowin.cc:85
 msgid "Ambient"
@@ -582,10 +586,10 @@ msgstr "Guardado correctamente"
 
 #: src/libaudgui/infowin.cc:231
 msgid "Save error"
-msgstr "Error de guardado"
+msgstr "Error al guardar"
 
 #: src/libaudgui/infowin.cc:316 src/libaudgui/prefs-window.cc:86
-#: src/libaudqt/infowin.cc:61 src/libaudqt/prefs-window.cc:89
+#: src/libaudqt/infowin.cc:62 src/libaudqt/prefs-window.cc:89
 msgid "Song Info"
 msgstr "Información de la canción"
 
@@ -600,13 +604,13 @@ msgstr "Comentario"
 
 #: src/libaudgui/infowin.cc:382 src/libaudqt/info-widget.cc:41
 msgid "Track Number"
-msgstr "Nº de pista"
+msgstr "N.º de pista"
 
 #: src/libaudgui/infowin.cc:389
 msgid "Clea_r fields when moving to next song"
 msgstr "_Vaciar campos al pasar a la siguiente canción"
 
-#: src/libaudgui/infowin.cc:403
+#: src/libaudgui/infowin.cc:403 src/libaudqt/infowin.cc:72
 msgid "_Save"
 msgstr "_Guardar"
 
@@ -693,17 +697,17 @@ msgstr "_Importar"
 msgid "_Plugins ..."
 msgstr "Com_plementos…"
 
-#: src/libaudgui/plugin-prefs.cc:109 src/libaudqt/prefs-plugin.cc:55
+#: src/libaudgui/plugin-prefs.cc:109 src/libaudqt/prefs-plugin.cc:56
 #, c-format
 msgid "About %s"
 msgstr "Acerca de %s"
 
-#: src/libaudgui/plugin-prefs.cc:155 src/libaudqt/prefs-plugin.cc:107
+#: src/libaudgui/plugin-prefs.cc:155 src/libaudqt/prefs-plugin.cc:108
 #, c-format
 msgid "%s Settings"
 msgstr "Configuración de %s"
 
-#: src/libaudgui/plugin-prefs.cc:159
+#: src/libaudgui/plugin-prefs.cc:159 src/libaudqt/prefs-plugin.cc:120
 msgid "_Set"
 msgstr "_Establecer"
 
@@ -1132,11 +1136,11 @@ msgstr ""
 
 #: src/libaudqt/fileopener.cc:40
 msgid "Open Folder"
-msgstr "Abrir Carpeta"
+msgstr "Abrir una carpeta"
 
 #: src/libaudqt/fileopener.cc:42
 msgid "Add Folder"
-msgstr "Añadir Carpeta"
+msgstr "Añadir una carpeta"
 
 #: src/libaudqt/fileopener.cc:46 src/libaudqt/fileopener.cc:47
 msgid "Open"
@@ -1178,7 +1182,7 @@ msgstr "Tipo MIME"
 msgid "Bitrate"
 msgstr "Tasa de bits"
 
-#: src/libaudqt/infowin.cc:126
+#: src/libaudqt/infowin.cc:129
 #, c-format
 msgid "No info available for %s.\n"
 msgstr "No hay información disponible para %s.\n"
@@ -1205,7 +1209,7 @@ msgstr "Mensaje"
 
 #: src/libaudqt/log-inspector.cc:175
 msgid "Log Inspector"
-msgstr "Inspector de Registro"
+msgstr "Inspector de registros"
 
 #: src/libaudqt/log-inspector.cc:186
 msgid "Log Level:"
