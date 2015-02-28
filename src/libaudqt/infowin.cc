@@ -24,6 +24,7 @@
 #include <QImage>
 #include <QLabel>
 #include <QPixmap>
+#include <QPushButton>
 #include <QVBoxLayout>
 
 #include <libaudcore/audstrings.h>
@@ -67,15 +68,17 @@ InfoWindow::InfoWindow (QWidget * parent) : QDialog (parent)
     auto vbox = new QVBoxLayout (this);
     vbox->addLayout (hbox);
 
-    auto buttonbox = new QDialogButtonBox (QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
-    vbox->addWidget (buttonbox);
+    auto bbox = new QDialogButtonBox (QDialogButtonBox::Save | QDialogButtonBox::Close, this);
+    bbox->button (QDialogButtonBox::Save)->setText (translate_str (N_("_Save")));
+    bbox->button (QDialogButtonBox::Close)->setText (translate_str (N_("_Close")));
+    vbox->addWidget (bbox);
 
-    QObject::connect (buttonbox, &QDialogButtonBox::accepted, [this] () {
+    QObject::connect (bbox, & QDialogButtonBox::accepted, [this] () {
         m_infowidget.updateFile ();
         deleteLater ();
     });
 
-    QObject::connect (buttonbox, &QDialogButtonBox::rejected, this, &QObject::deleteLater);
+    QObject::connect (bbox, & QDialogButtonBox::rejected, this, & QObject::deleteLater);
 }
 
 void InfoWindow::fillInfo (int playlist, int entry, const char * filename, const Tuple & tuple,

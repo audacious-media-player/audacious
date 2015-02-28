@@ -676,6 +676,7 @@ static void create_prefs_window ()
     create_plugin_category (s_category_notebook);
 
     QDialogButtonBox * bbox = new QDialogButtonBox (QDialogButtonBox::Close);
+    bbox->button (QDialogButtonBox::Close)->setText (translate_str (N_("_Close")));
     child_vbox->addWidget (bbox);
 
     QObject::connect (bbox, &QDialogButtonBox::rejected, s_prefswin, &QObject::deleteLater);
