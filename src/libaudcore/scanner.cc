@@ -24,30 +24,31 @@
 #include "internal.h"
 #include "probe.h"
 #include "tuple.h"
+#include "vfs.h"
 
 static GThreadPool * pool;
 
 static void scan_worker (void * data, void *)
 {
-    ScanRequest * request = (ScanRequest *) data;
+    auto r = (ScanRequest *) data;
+    VFSFile file;
 
-    if (! request->decoder)
-        request->decoder = aud_file_find_decoder (request->filename, false, & request->error);
+    if (! r->decoder)
+        r->decoder = aud_file_find_decoder (r->filename, false, file, & r->error);
 
-    if (request->decoder && (request->flags & SCAN_TUPLE))
-        request->tuple = aud_file_read_tuple (request->filename, request->decoder, & request->error);
+    if (r->decoder && (r->flags & SCAN_TUPLE))
+        r->tuple = aud_file_read_tuple (r->filename, r->decoder, file, & r->error);
 
-    if (request->decoder && (request->flags & SCAN_IMAGE))
+    if (r->decoder && (r->flags & SCAN_IMAGE))
     {
-        request->image_data = aud_file_read_image (request->filename, request->decoder);
-
-        if (! request->image_data.len ())
-            request->image_file = art_search (request->filename);
+        r->image_data = aud_file_read_image (r->filename, r->decoder, file);
+        if (! r->image_data.len ())
+            r->image_file = art_search (r->filename);
     }
 
-    request->callback (request);
+    r->callback (r);
 
-    delete request;
+    delete r;
 }
 
 void scanner_init ()

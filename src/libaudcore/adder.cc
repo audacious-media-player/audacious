@@ -124,15 +124,21 @@ static void add_file (const char * filename, Tuple && tuple,
     AUDINFO ("Adding file: %s\n", filename);
     status_update (filename, result->items.len ());
 
-    if (! tuple && ! decoder)
+    if (! tuple)
     {
-        decoder = aud_file_find_decoder (filename, ! aud_get_bool (nullptr, "slow_probe"));
-        if (validate && ! decoder)
-            return;
-    }
+        VFSFile file;
 
-    if (! tuple && decoder && input_plugin_has_subtunes (decoder) && ! strchr (filename, '?'))
-        tuple = aud_file_read_tuple (filename, decoder);
+        if (! decoder)
+        {
+            bool fast = ! aud_get_bool (nullptr, "slow_probe");
+            decoder = aud_file_find_decoder (filename, fast, file);
+            if (validate && ! decoder)
+                return;
+        }
+
+        if (decoder && input_plugin_has_subtunes (decoder) && ! strchr (filename, '?'))
+            tuple = aud_file_read_tuple (filename, decoder, file);
+    }
 
     int n_subtunes = tuple.get_n_subtunes ();
 
