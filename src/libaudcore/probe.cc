@@ -67,7 +67,7 @@ EXPORT PluginHandle * aud_file_find_decoder (const char * filename, bool fast, S
 
     AUDDBG ("Opening %s.\n", filename);
 
-    VFSFile file (probe_buffer_new (filename));
+    VFSFile file (filename, "r");
 
     if (! file)
     {
@@ -95,6 +95,8 @@ EXPORT PluginHandle * aud_file_find_decoder (const char * filename, bool fast, S
             }
         }
     }
+
+    file.set_limit_to_buffer (true);
 
     for (PluginHandle * plugin : (ext_matches.len () ? ext_matches : list))
     {

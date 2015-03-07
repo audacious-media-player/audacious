@@ -122,6 +122,8 @@ public:
 
     String get_metadata (const char * field);
 
+    void set_limit_to_buffer (bool limit);  // added in 3.7
+
     /* utility functions */
 
     Index<char> read_all ();

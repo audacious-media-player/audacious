@@ -93,9 +93,6 @@ bool playback_check_serial (int serial);
 bool playback_set_info (int entry, const String & filename,
  PluginHandle * decoder, Tuple && tuple);
 
-/* probe-buffer.cc */
-VFSFile probe_buffer_new (const char * filename);
-
 /* runtime.cc */
 extern size_t misc_bytes_allocated;
 
