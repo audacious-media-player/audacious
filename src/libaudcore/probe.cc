@@ -17,20 +17,20 @@
  * the use of this software.
  */
 
+#include "internal.h"
 #include "probe.h"
 
 #include <string.h>
 
 #include "audstrings.h"
 #include "i18n.h"
-#include "internal.h"
 #include "playlist.h"
 #include "plugin.h"
 #include "plugins-internal.h"
 #include "runtime.h"
 
-static bool open_file (const char * filename, InputPlugin * ip,
- const char * mode, VFSFile & file, String * error = nullptr)
+bool open_input_file (const char * filename, const char * mode,
+ InputPlugin * ip, VFSFile & file, String * error)
 {
     /* no need to open a handle for custom URI schemes */
     if (ip && ip->input_info.keys[InputKey::Scheme])
@@ -86,7 +86,7 @@ static PluginHandle * do_find_decoder (const char * filename, bool fast,
 
     AUDDBG ("Opening %s.\n", filename);
 
-    if (! open_file (filename, nullptr, "r", file, error))
+    if (! open_input_file (filename, "r", nullptr, file, error))
     {
         AUDINFO ("Open failed.\n");
         return nullptr;
@@ -173,7 +173,7 @@ EXPORT Tuple aud_file_read_tuple (const char * filename, PluginHandle * decoder,
     if (! ip)
         return Tuple ();
 
-    if (! open_file (filename, ip, "r", file, error))
+    if (! open_input_file (filename, "r", ip, file, error))
         return Tuple ();
 
     Tuple tuple = ip->read_tuple (filename, file);
@@ -195,7 +195,7 @@ EXPORT Index<char> aud_file_read_image (const char * filename, PluginHandle * de
     if (! ip)
         return Index<char> ();
 
-    if (! open_file (filename, ip, "r", file))
+    if (! open_input_file (filename, "r", ip, file))
         return Index<char> ();
 
     return ip->read_image (filename, file);
@@ -220,7 +220,7 @@ EXPORT bool aud_file_write_tuple (const char * filename,
         return false;
 
     VFSFile file;
-    if (! open_file (filename, ip, "r+", file))
+    if (! open_input_file (filename, "r+", ip, file))
         return false;
 
     bool success = ip->write_tuple (filename, file, tuple);
@@ -241,7 +241,7 @@ EXPORT bool aud_custom_infowin (const char * filename, PluginHandle * decoder)
         return false;
 
     VFSFile file;
-    if (! open_file (filename, ip, "r", file))
+    if (! open_input_file (filename, "r", ip, file))
         return false;
 
     return ip->file_info_box (filename, file);

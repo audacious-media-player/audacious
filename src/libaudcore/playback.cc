@@ -329,11 +329,10 @@ static void run_playback ()
         return;
     }
 
-    // open file (not necessary for custom URI schemes)
-    if (! ip->input_info.keys[InputKey::Scheme] && ! (file = VFSFile (pb_info.filename, "r")))
+    // open input file
+    if (! open_input_file (pb_info.filename, "r", ip, file, & pb_info.error_s))
     {
         pb_info.error = true;
-        pb_info.error_s = String (file.error ());
         return;
     }
 

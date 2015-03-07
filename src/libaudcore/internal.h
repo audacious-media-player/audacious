@@ -26,6 +26,7 @@
 #include "index.h"
 #include "objects.h"
 
+class InputPlugin;
 class Plugin;
 class PluginHandle;
 class VFSFile;
@@ -92,6 +93,10 @@ void playback_stop (bool exiting = false);
 bool playback_check_serial (int serial);
 bool playback_set_info (int entry, const String & filename,
  PluginHandle * decoder, Tuple && tuple);
+
+/* probe.cc */
+bool open_input_file (const char * filename, const char * mode,
+ InputPlugin * ip, VFSFile & file, String * error = nullptr);
 
 /* runtime.cc */
 extern size_t misc_bytes_allocated;
