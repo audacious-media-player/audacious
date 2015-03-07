@@ -524,6 +524,8 @@ EXPORT StringBuf uri_to_filename (const char * uri, bool use_locale)
 
 EXPORT StringBuf uri_to_display (const char * uri)
 {
+    if (! strncmp (uri, "stdin://", 8))
+        return str_copy (_("Standard input"));
     if (! strncmp (uri, "cdda://?", 8))
         return str_printf (_("Audio CD, track %s"), uri + 8);
 

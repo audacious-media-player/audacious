@@ -123,8 +123,15 @@ static void request_callback (ScanRequest * request)
     pthread_mutex_unlock (& mutex);
 }
 
-static ArtItem * art_item_get (const String & file)
+static ArtItem * art_item_get (const String & file, bool * queued)
 {
+    if (queued)
+        * queued = false;
+
+    // blacklist stdin
+    if (! strncmp (file, "stdin://", 8))
+        return nullptr;
+
     ArtItem * item = art_items.lookup (file);
 
     if (item && item->flag)
@@ -140,6 +147,9 @@ static ArtItem * art_item_get (const String & file)
 
         scanner_request (new ScanRequest (file, SCAN_IMAGE, request_callback));
     }
+
+    if (queued)
+        * queued = true;
 
     return nullptr;
 }
@@ -196,10 +206,7 @@ EXPORT const Index<char> * aud_art_request_data (const char * file, bool * queue
     pthread_mutex_lock (& mutex);
 
     String key (file);
-    ArtItem * item = art_item_get (key);
-
-    if (queued)
-        * queued = ! item;
+    ArtItem * item = art_item_get (key, queued);
 
     if (! item)
         goto UNLOCK;
@@ -228,10 +235,7 @@ EXPORT const char * aud_art_request_file (const char * file, bool * queued)
     pthread_mutex_lock (& mutex);
 
     String key (file);
-    ArtItem * item = art_item_get (key);
-
-    if (queued)
-        * queued = ! item;
+    ArtItem * item = art_item_get (key, queued);
 
     if (! item)
         goto UNLOCK;

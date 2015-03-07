@@ -108,6 +108,10 @@ static bool parse_options (int argc, char * * argv)
             if (uri)
                 filenames.append (uri);
         }
+        else if (! arg[1])  /* "-" (standard input) */
+        {
+            filenames.append (String ("stdin://"));
+        }
         else if (arg[1] == '-')  /* long option */
         {
             bool found = false;

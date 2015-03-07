@@ -491,7 +491,9 @@ static bool scan_queue_next_entry ()
             {
                 Entry * entry = playlist->entries[scan_row ++].get ();
 
-                if (! entry->scanned && ! scan_list_find_entry (entry))
+                // blacklist stdin
+                if (! entry->scanned && ! scan_list_find_entry (entry) &&
+                 strncmp (entry->filename, "stdin://", 8))
                 {
                     scan_queue_entry (playlist, entry);
                     return true;
@@ -618,7 +620,8 @@ static Entry * get_entry (int playlist_num, int entry_num,
         PlaylistData * playlist = lookup_playlist (playlist_num);
         Entry * entry = playlist ? lookup_entry (playlist, entry_num) : nullptr;
 
-        if (! entry || entry->failed)
+        // blacklist stdin
+        if (! entry || entry->failed || ! strncmp (entry->filename, "stdin://", 8))
             return entry;
 
         if ((need_decoder && ! entry->decoder) || (need_tuple && ! entry->scanned))

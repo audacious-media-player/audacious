@@ -75,6 +75,8 @@ EXPORT VFSFile::VFSFile (const char * filename, const char * mode)
 
     if (! strcmp (scheme, "file"))
         m_impl.capture (vfs_local_fopen (nosub, mode, m_error));
+    else if (! strcmp (scheme, "stdin"))
+        m_impl.capture (vfs_stdin_fopen (mode, m_error));
     else
     {
         TransportPlugin * tp = lookup_transport (scheme);

@@ -497,12 +497,19 @@ EXPORT void Tuple::set_filename (const char * filename)
 {
     assert (filename);
 
+    data = TupleData::copy_on_write (data);
+
+    // stdin is handled as a special case
+    if (! strncmp (filename, "stdin://", 8))
+    {
+        data->set_str (Basename, _("Standard input"));
+        return;
+    }
+
     const char * base, * ext, * sub;
     int isub;
 
     uri_parse (filename, & base, & ext, & sub, & isub);
-
-    data = TupleData::copy_on_write (data);
 
     if (base > filename)
         data->set_str (Path, uri_to_display (str_copy (filename, base - filename)));

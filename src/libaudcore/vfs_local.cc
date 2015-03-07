@@ -122,9 +122,21 @@ VFSImpl * vfs_local_fopen (const char * uri, const char * mode, String & error)
     return new LocalFile (path, stream);
 }
 
+VFSImpl * vfs_stdin_fopen (const char * mode, String & error)
+{
+    if (mode[0] != 'r' || strchr (mode, '+'))
+    {
+        error = String (_("Invalid access mode"));
+        return nullptr;
+    }
+
+    return new LocalFile ("(stdin)", stdin);
+}
+
 LocalFile::~LocalFile ()
 {
-    if (fclose (m_stream) < 0)
+    // do not close stdin
+    if (m_stream != stdin && fclose (m_stream) < 0)
         perror (m_path);
 }
 
@@ -236,6 +248,10 @@ int LocalFile::fflush ()
 
 int64_t LocalFile::fsize ()
 {
+    // size of stdin is unknown
+    if (m_stream == stdin)
+        return -1;
+
     if (m_cached_size < 0)
     {
         int64_t saved_pos = ftello (m_stream);

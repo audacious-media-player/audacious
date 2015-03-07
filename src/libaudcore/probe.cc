@@ -236,6 +236,10 @@ EXPORT bool aud_file_write_tuple (const char * filename,
 
 EXPORT bool aud_custom_infowin (const char * filename, PluginHandle * decoder)
 {
+    // blacklist stdin
+    if (! strncmp (filename, "stdin://", 8))
+        return false;
+
     auto ip = (InputPlugin *) aud_plugin_get_header (decoder);
     if (! ip)
         return false;
