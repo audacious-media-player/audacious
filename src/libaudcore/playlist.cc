@@ -553,6 +553,10 @@ static void scan_finish (ScanRequest * request)
     if (! entry->decoder || ! entry->scanned)
         entry->set_failed (std::move (request->error));
 
+    // save file handle for playback if possible
+    if (playlist == playing_playlist && entry == playlist->position && request->file)
+        playback_set_file (std::move (request->file));
+
     scan_check_complete (playlist);
     scan_schedule ();
 

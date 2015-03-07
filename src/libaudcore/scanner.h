@@ -22,6 +22,7 @@
 
 #include "index.h"
 #include "tuple.h"
+#include "vfs.h"
 
 #define SCAN_TUPLE (1 << 0)
 #define SCAN_IMAGE (1 << 1)
@@ -44,6 +45,7 @@ struct ScanRequest
     const Callback callback;
 
     PluginHandle * decoder;
+    VFSFile file;
 
     Tuple tuple;
     Index<char> image_data;

@@ -75,6 +75,9 @@ struct PlaybackInfo {
     int entry = -1;
     String title;
 
+    // set by playback_set_file
+    VFSFile file;
+
     // set by playback thread
     int length = -1;
     int time_offset = 0;
@@ -86,6 +89,7 @@ struct PlaybackInfo {
     int samplerate = 0;
     int channels = 0;
 
+    bool file_in_use = false;
     bool ready = false;
     bool ended = false;
     bool error = false;
@@ -173,6 +177,19 @@ bool playback_set_info (int entry, const String & filename, PluginHandle * decod
 
     unlock ();
     return true;
+}
+
+// called from the playlist to allow reuse of this file handle
+void playback_set_file (VFSFile && file)
+{
+    if (! lock_if (in_sync))
+        return;
+
+    // don't touch file handle if playback thread is already using it
+    if (! pb_info.file_in_use)
+        pb_info.file = std::move (file);
+
+    unlock ();
 }
 
 // cleanup common to both playback_play() and playback_stop()
@@ -301,6 +318,9 @@ static void run_playback ()
         return;
     }
 
+    InputPlugin * ip;
+    VFSFile file;
+
     lock ();
 
     // playback_set_info() should always set this info
@@ -316,10 +336,11 @@ static void run_playback ()
     if (pb_info.time_offset > 0 && pb_control.seek < 0)
         pb_control.seek = 0;
 
-    unlock ();
+    // reuse playlist file handle if possible
+    file = std::move (pb_info.file);
+    pb_info.file_in_use = true;
 
-    InputPlugin * ip;
-    VFSFile file;
+    unlock ();
 
     // load input plugin
     if (! (ip = (InputPlugin *) aud_plugin_get_header (pb_info.decoder)))

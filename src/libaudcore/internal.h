@@ -93,6 +93,7 @@ void playback_stop (bool exiting = false);
 bool playback_check_serial (int serial);
 bool playback_set_info (int entry, const String & filename,
  PluginHandle * decoder, Tuple && tuple);
+void playback_set_file (VFSFile && file);
 
 /* probe.cc */
 bool open_input_file (const char * filename, const char * mode,

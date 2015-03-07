@@ -31,17 +31,16 @@ static GThreadPool * pool;
 static void scan_worker (void * data, void *)
 {
     auto r = (ScanRequest *) data;
-    VFSFile file;
 
     if (! r->decoder)
-        r->decoder = aud_file_find_decoder (r->filename, false, file, & r->error);
+        r->decoder = aud_file_find_decoder (r->filename, false, r->file, & r->error);
 
     if (r->decoder && (r->flags & SCAN_TUPLE))
-        r->tuple = aud_file_read_tuple (r->filename, r->decoder, file, & r->error);
+        r->tuple = aud_file_read_tuple (r->filename, r->decoder, r->file, & r->error);
 
     if (r->decoder && (r->flags & SCAN_IMAGE))
     {
-        r->image_data = aud_file_read_image (r->filename, r->decoder, file);
+        r->image_data = aud_file_read_image (r->filename, r->decoder, r->file);
         if (! r->image_data.len ())
             r->image_file = art_search (r->filename);
     }
