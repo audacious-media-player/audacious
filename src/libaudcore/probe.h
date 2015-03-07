@@ -25,6 +25,7 @@
 
 class PluginHandle;
 class Tuple;
+class VFSFile;
 
 /* Gets album art for <file> (the URI of a song file) as JPEG or PNG data.  If
  * the album art is not yet loaded, sets *queued to true, returns nullptr, and
@@ -47,5 +48,12 @@ Index<char> aud_file_read_image (const char * filename, PluginHandle * decoder);
 bool aud_file_can_write_tuple (const char * filename, PluginHandle * decoder);
 bool aud_file_write_tuple (const char * filename, PluginHandle * decoder, const Tuple & tuple);
 bool aud_custom_infowin (const char * filename, PluginHandle * decoder);
+
+/* overloads added in 3.7 to allow reuse of the same file handle during probing */
+PluginHandle * aud_file_find_decoder (const char * filename, bool fast,
+ VFSFile & file, String * error = nullptr);
+Tuple aud_file_read_tuple (const char * filename, PluginHandle * decoder,
+ VFSFile & file, String * error = nullptr);
+Index<char> aud_file_read_image (const char * filename, PluginHandle * decoder, VFSFile & file);
 
 #endif
