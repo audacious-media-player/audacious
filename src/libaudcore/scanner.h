@@ -24,6 +24,9 @@
 #include "tuple.h"
 #include "vfs.h"
 
+class InputPlugin;
+class PluginHandle;
+
 #define SCAN_TUPLE (1 << 0)
 #define SCAN_IMAGE (1 << 1)
 
@@ -38,13 +41,15 @@ struct ScanRequest
         filename (filename),
         flags (flags),
         callback (callback),
-        decoder (decoder) {}
+        decoder (decoder),
+        ip (nullptr) {}
 
     const String filename;
     const int flags;
     const Callback callback;
 
     PluginHandle * decoder;
+    InputPlugin * ip;
     VFSFile file;
 
     Tuple tuple;

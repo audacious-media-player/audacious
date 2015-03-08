@@ -40,6 +40,7 @@ void adder_cleanup ();
 /* art.cc */
 void art_init ();
 void art_cleanup ();
+void art_cache_current (const String & filename, Index<char> && data, String && art_file);
 
 /* art-search.cc */
 String art_search (const char * filename);
@@ -91,9 +92,9 @@ void playback_play (int seek_time, bool pause);
 void playback_stop (bool exiting = false);
 
 bool playback_check_serial (int serial);
-bool playback_set_info (int entry, const String & filename,
- PluginHandle * decoder, Tuple && tuple);
-void playback_set_file (VFSFile && file);
+void playback_set_info (int entry, Tuple && tuple);
+void playback_setup_decode (const String & filename, InputPlugin * ip,
+ VFSFile && file, String && error);
 
 /* probe.cc */
 bool open_input_file (const char * filename, const char * mode,

@@ -297,8 +297,6 @@ EXPORT void aud_init ()
     start_plugins_one ();
 
     scanner_init ();
-    playlist_enable_scan (true);
-
     load_playlists ();
 }
 
@@ -311,6 +309,10 @@ static void do_autosave (void *)
 
 EXPORT void aud_run ()
 {
+    /* playlist_enable_scan() should be after aud_resume(); the intent is to
+     * avoid scanning until the currently playing entry is known, at which time
+     * it can be scanned more efficiently (album art read in the same pass). */
+    playlist_enable_scan (true);
     start_plugins_two ();
 
     static QueuedFunc autosave;
@@ -322,6 +324,7 @@ EXPORT void aud_run ()
     autosave.stop ();
 
     stop_plugins_two ();
+    playlist_enable_scan (false);
 }
 
 EXPORT void aud_cleanup ()
@@ -332,7 +335,6 @@ EXPORT void aud_cleanup ()
     playback_stop (true);
 
     adder_cleanup ();
-    playlist_enable_scan (false);
     scanner_cleanup ();
 
     stop_plugins_one ();

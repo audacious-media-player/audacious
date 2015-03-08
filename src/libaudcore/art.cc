@@ -59,6 +59,10 @@ static SimpleHash<String, ArtItem> art_items;
 static String current_ref;
 static QueuedFunc queued_requests;
 
+static String current_cached;
+static Index<char> current_data;
+static String current_art_file;
+
 static void get_queued_cb (const String & key, ArtItem & item, void * list)
 {
     if (item.flag == FLAG_DONE)
@@ -145,7 +149,17 @@ static ArtItem * art_item_get (const String & file, bool * queued)
         item = art_items.add (file, ArtItem ());
         item->refcount = 1; /* temporary reference */
 
-        scanner_request (new ScanRequest (file, SCAN_IMAGE, request_callback));
+        if (file == current_cached)
+        {
+            item->data = std::move (current_data);
+            item->art_file = std::move (current_art_file);
+            item->flag = FLAG_DONE;
+
+            queued_requests.queue (send_requests, nullptr);
+            current_cached = String ();
+        }
+        else
+            scanner_request (new ScanRequest (file, SCAN_IMAGE, request_callback));
     }
 
     if (queued)
@@ -177,6 +191,14 @@ static void release_current (void)
         aud_art_unref (current_ref);
         current_ref = String ();
     }
+
+    pthread_mutex_lock (& mutex);
+
+    current_cached = String ();
+    current_data.clear ();
+    current_art_file = String ();
+
+    pthread_mutex_unlock (& mutex);
 }
 
 void art_init (void)
@@ -198,6 +220,17 @@ void art_cleanup (void)
 
     if (art_items.n_items ())
         AUDWARN ("Album art reference count not zero at exit!\n");
+}
+
+void art_cache_current (const String & filename, Index<char> && data, String && art_file)
+{
+    pthread_mutex_lock (& mutex);
+
+    current_cached = filename;
+    current_data = std::move (data);
+    current_art_file = std::move (art_file);
+
+    pthread_mutex_unlock (& mutex);
 }
 
 EXPORT const Index<char> * aud_art_request_data (const char * file, bool * queued)

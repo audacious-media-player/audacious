@@ -68,14 +68,13 @@ struct PlaybackControl {
 
 struct PlaybackInfo {
     // set by playback_set_info
-    String filename;
-    PluginHandle * decoder = nullptr;
-    Tuple tuple;
-
     int entry = -1;
+    Tuple tuple;
     String title;
 
-    // set by playback_set_file
+    // set by playback_setup_decode
+    String filename;
+    InputPlugin * ip = nullptr;
     VFSFile file;
 
     // set by playback thread
@@ -89,7 +88,6 @@ struct PlaybackInfo {
     int samplerate = 0;
     int channels = 0;
 
-    bool file_in_use = false;
     bool ready = false;
     bool ended = false;
     bool error = false;
@@ -143,17 +141,12 @@ bool playback_check_serial (int serial)
 }
 
 // called from the playlist to update the tuple for the current song
-bool playback_set_info (int entry, const String & filename, PluginHandle * decoder, Tuple && tuple)
+void playback_set_info (int entry, Tuple && tuple)
 {
     // do nothing if the playback thread is lagging behind;
     // in that case, playback_set_info() will get called again anyway
     if (! lock_if (in_sync))
-        return false;
-
-    if (! pb_info.filename)
-        pb_info.filename = filename;
-    if (! pb_info.decoder)
-        pb_info.decoder = decoder;
+        return;
 
     if (tuple && tuple != pb_info.tuple)
     {
@@ -176,18 +169,19 @@ bool playback_set_info (int entry, const String & filename, PluginHandle * decod
     }
 
     unlock ();
-    return true;
 }
 
-// called from the playlist to allow reuse of this file handle
-void playback_set_file (VFSFile && file)
+// called from the playlist to set up decoding data
+void playback_setup_decode (const String & filename, InputPlugin * ip,
+ VFSFile && file, String && error)
 {
     if (! lock_if (in_sync))
         return;
 
-    // don't touch file handle if playback thread is already using it
-    if (! pb_info.file_in_use)
-        pb_info.file = std::move (file);
+    pb_info.filename = filename;
+    pb_info.ip = ip;
+    pb_info.file = std::move (file);
+    pb_info.error_s = std::move (error);
 
     unlock ();
 }
@@ -312,19 +306,19 @@ static void run_playback ()
 {
     // due to mutex ordering, we cannot call into the playlist while locked;
     // instead, playback_entry_read() calls back into playback_set_info()
-    if (! playback_entry_read (pb_state.playback_serial, pb_info.error_s))
+    playback_entry_read (pb_state.playback_serial);
+
+    if (! lock_if (in_sync))
+        return;
+
+    // check that we have all the necessary data
+    if (! pb_info.filename || ! pb_info.tuple || ! pb_info.ip ||
+     (! pb_info.ip->input_info.keys[InputKey::Scheme] && ! pb_info.file))
     {
         pb_info.error = true;
+        unlock ();
         return;
     }
-
-    InputPlugin * ip;
-    VFSFile file;
-
-    lock ();
-
-    // playback_set_info() should always set this info
-    assert (pb_info.filename && pb_info.decoder && pb_info.tuple);
 
     // get various other bits of info from the tuple
     pb_info.length = pb_info.tuple.get_int (Tuple::Length);
@@ -336,31 +330,12 @@ static void run_playback ()
     if (pb_info.time_offset > 0 && pb_control.seek < 0)
         pb_control.seek = 0;
 
-    // reuse playlist file handle if possible
-    file = std::move (pb_info.file);
-    pb_info.file_in_use = true;
-
     unlock ();
-
-    // load input plugin
-    if (! (ip = (InputPlugin *) aud_plugin_get_header (pb_info.decoder)))
-    {
-        pb_info.error = true;
-        pb_info.error_s = String (_("Error loading plugin"));
-        return;
-    }
-
-    // open input file
-    if (! open_input_file (pb_info.filename, "r", ip, file, & pb_info.error_s))
-    {
-        pb_info.error = true;
-        return;
-    }
 
     while (1)
     {
         // hand off control to input plugin
-        if (! ip->play (pb_info.filename, file))
+        if (! pb_info.ip->play (pb_info.filename, pb_info.file))
             pb_info.error = true;
 
         // close audio (no-op if it wasn't opened)
@@ -385,7 +360,7 @@ static void run_playback ()
             break;
 
         // rewind file pointer before repeating
-        if (file.fseek (0, VFS_SEEK_SET) != 0)
+        if (pb_info.file.fseek (0, VFS_SEEK_SET) != 0)
         {
             pb_info.error = true;
             break;
