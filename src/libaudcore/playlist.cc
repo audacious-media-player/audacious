@@ -474,7 +474,7 @@ static void scan_queue_entry (PlaylistData * playlist, Entry * entry, bool for_p
     if (! entry->scanned)
         flags |= SCAN_TUPLE;
     if (for_playback)
-        flags |= SCAN_IMAGE;
+        flags |= (SCAN_IMAGE | SCAN_FILE);
 
     auto request = new ScanRequest (entry->filename, flags, scan_finish, entry->decoder);
     scanner_request (request);

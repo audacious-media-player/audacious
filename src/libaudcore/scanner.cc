@@ -51,6 +51,10 @@ static void scan_worker (void * data, void *)
 
         if ((r->flags & SCAN_IMAGE) && ! r->image_data.len ())
             r->image_file = art_search (r->filename);
+
+        /* rewind/reopen the input file */
+        if ((r->flags & SCAN_FILE))
+            open_input_file (r->filename, "r", r->ip, r->file, & r->error);
     }
 
 err:

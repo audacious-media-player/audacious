@@ -29,6 +29,7 @@ class PluginHandle;
 
 #define SCAN_TUPLE (1 << 0)
 #define SCAN_IMAGE (1 << 1)
+#define SCAN_FILE  (1 << 2)
 
 #define SCAN_THREADS 2
 
