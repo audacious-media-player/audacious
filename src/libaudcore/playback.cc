@@ -360,7 +360,7 @@ static void run_playback ()
             break;
 
         // rewind file pointer before repeating
-        if (pb_info.file.fseek (0, VFS_SEEK_SET) != 0)
+        if (! open_input_file (pb_info.filename, "r", pb_info.ip, pb_info.file, & pb_info.error_s))
         {
             pb_info.error = true;
             break;
