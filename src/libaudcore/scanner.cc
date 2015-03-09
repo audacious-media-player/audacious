@@ -24,7 +24,6 @@
 #include "i18n.h"
 #include "internal.h"
 #include "plugins.h"
-#include "probe.h"
 #include "tuple.h"
 #include "vfs.h"
 
@@ -35,7 +34,7 @@ static void scan_worker (void * data, void *)
     auto r = (ScanRequest *) data;
 
     if (! r->decoder)
-        r->decoder = aud_file_find_decoder (r->filename, false, r->file, & r->error);
+        r->decoder = file_find_decoder (r->filename, false, r->file, & r->error);
     if (! r->decoder)
         goto err;
 
@@ -52,11 +51,11 @@ static void scan_worker (void * data, void *)
     }
 
     if ((r->flags & SCAN_TUPLE))
-        r->tuple = aud_file_read_tuple (r->filename, r->decoder, r->file, & r->error);
+        r->tuple = file_read_tuple (r->filename, r->decoder, r->file, & r->error);
 
     if ((r->flags & SCAN_IMAGE))
     {
-        r->image_data = aud_file_read_image (r->filename, r->decoder, r->file);
+        r->image_data = file_read_image (r->filename, r->decoder, r->file);
         if (! r->image_data.len ())
             r->image_file = art_search (r->filename);
     }

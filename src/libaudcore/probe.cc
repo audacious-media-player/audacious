@@ -47,8 +47,7 @@ bool open_input_file (const char * filename, const char * mode,
     return (bool) file;
 }
 
-EXPORT PluginHandle * aud_file_find_decoder (const char * filename, bool fast,
- VFSFile & file, String * error)
+PluginHandle * file_find_decoder (const char * filename, bool fast, VFSFile & file, String * error)
 {
     AUDINFO ("%s %s.\n", fast ? "Fast-probing" : "Probing", filename);
 
@@ -150,10 +149,10 @@ EXPORT PluginHandle * aud_file_find_decoder (const char * filename, bool fast,
 EXPORT PluginHandle * aud_file_find_decoder (const char * filename, bool fast, String * error)
 {
     VFSFile file;
-    return aud_file_find_decoder (filename, fast, file, error);
+    return file_find_decoder (filename, fast, file, error);
 }
 
-EXPORT Tuple aud_file_read_tuple (const char * filename, PluginHandle * decoder,
+Tuple file_read_tuple (const char * filename, PluginHandle * decoder,
  VFSFile & file, String * error)
 {
     auto ip = (InputPlugin *) aud_plugin_get_header (decoder);
@@ -175,10 +174,10 @@ EXPORT Tuple aud_file_read_tuple (const char * filename, PluginHandle * decoder,
 EXPORT Tuple aud_file_read_tuple (const char * filename, PluginHandle * decoder, String * error)
 {
     VFSFile file;
-    return aud_file_read_tuple (filename, decoder, file, error);
+    return file_read_tuple (filename, decoder, file, error);
 }
 
-EXPORT Index<char> aud_file_read_image (const char * filename, PluginHandle * decoder, VFSFile & file)
+Index<char> file_read_image (const char * filename, PluginHandle * decoder, VFSFile & file)
 {
     auto ip = (InputPlugin *) aud_plugin_get_header (decoder);
     if (! ip)
@@ -193,7 +192,7 @@ EXPORT Index<char> aud_file_read_image (const char * filename, PluginHandle * de
 EXPORT Index<char> aud_file_read_image (const char * filename, PluginHandle * decoder)
 {
     VFSFile file;
-    return aud_file_read_image (filename, decoder, file);
+    return file_read_image (filename, decoder, file);
 }
 
 EXPORT bool aud_file_can_write_tuple (const char * filename, PluginHandle * decoder)

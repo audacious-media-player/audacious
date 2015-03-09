@@ -29,10 +29,10 @@
 #include "audstrings.h"
 #include "hook.h"
 #include "i18n.h"
+#include "internal.h"
 #include "list.h"
 #include "mainloop.h"
 #include "plugins-internal.h"
-#include "probe.h"
 #include "runtime.h"
 #include "tuple.h"
 #include "vfs.h"
@@ -131,13 +131,13 @@ static void add_file (const char * filename, Tuple && tuple,
         if (! decoder)
         {
             bool fast = ! aud_get_bool (nullptr, "slow_probe");
-            decoder = aud_file_find_decoder (filename, fast, file);
+            decoder = file_find_decoder (filename, fast, file);
             if (validate && ! decoder)
                 return;
         }
 
         if (decoder && input_plugin_has_subtunes (decoder) && ! strchr (filename, '?'))
-            tuple = aud_file_read_tuple (filename, decoder, file);
+            tuple = file_read_tuple (filename, decoder, file);
     }
 
     int n_subtunes = tuple.get_n_subtunes ();
