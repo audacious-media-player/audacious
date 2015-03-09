@@ -95,8 +95,12 @@ static bool combine_string (Tuple & tuple, Tuple::Field field,
     return true;
 }
 
-bool ID3v1TagModule::read_tag (Tuple & tuple, VFSFile & file)
+bool ID3v1TagModule::read_tag (VFSFile & file, Tuple * ptuple, Index<char> * image)
 {
+    if (! ptuple)
+        return true; // nothing to do
+
+    Tuple & tuple = * ptuple;
     ID3v1Tag tag;
     ID3v1Ext ext;
 

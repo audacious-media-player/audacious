@@ -52,6 +52,7 @@ enum
     ID3_RECORDING_TIME,
     ID3_TXXX,
     ID3_RVA2,
+    ID3_APIC,
     ID3_TAGS_NO
 };
 
@@ -72,7 +73,8 @@ static const char * id3_frames[ID3_TAGS_NO] = {
     "TSSE",
     "TDRC",
     "TXXX",
-    "RVA2"
+    "RVA2",
+    "APIC"
 };
 
 /*
@@ -614,7 +616,7 @@ bool ID3v24TagModule::can_handle_file (VFSFile & handle)
      & data_size, & footer_size);
 }
 
-bool ID3v24TagModule::read_tag (Tuple & tuple, VFSFile & handle)
+bool ID3v24TagModule::read_tag (VFSFile & handle, Tuple * ptuple, Index<char> * image)
 {
     int version, header_size, data_size, footer_size;
     bool syncsafe;
@@ -625,6 +627,9 @@ bool ID3v24TagModule::read_tag (Tuple & tuple, VFSFile & handle)
         return false;
 
     Index<char> data = read_tag_data (handle, data_size, syncsafe);
+
+    Tuple trash; // dump data here if caller does not want the tuple
+    Tuple & tuple = ptuple ? * ptuple : trash;
 
     for (const char * pos = data.begin (); pos < data.end (); )
     {
@@ -681,6 +686,10 @@ bool ID3v24TagModule::read_tag (Tuple & tuple, VFSFile & handle)
           case ID3_RVA2:
             id3_decode_rva (tuple, & frame[0], frame.len ());
             break;
+          case ID3_APIC:
+            if (image)
+                * image = id3_decode_picture (& frame[0], frame.len ());
+            break;
           default:
             AUDDBG ("Ignoring unsupported ID3 frame %s.\n", (const char *) frame.key);
             break;
@@ -692,37 +701,7 @@ bool ID3v24TagModule::read_tag (Tuple & tuple, VFSFile & handle)
     return true;
 }
 
-Index<char> ID3v24TagModule::read_image (VFSFile & handle)
-{
-    Index<char> buf;
-    int version, header_size, data_size, footer_size;
-    bool syncsafe;
-    int64_t offset;
-
-    if (! read_header (handle, & version, & syncsafe, & offset, & header_size,
-     & data_size, & footer_size))
-        return buf;
-
-    Index<char> data = read_tag_data (handle, data_size, syncsafe);
-
-    for (const char * pos = data.begin (); pos < data.end (); )
-    {
-        int frame_size;
-        GenericFrame frame;
-
-        if (! read_frame (pos, data.end () - pos, version, & frame_size, frame))
-            break;
-
-        if (! strcmp (frame.key, "APIC"))
-            buf = id3_decode_picture (& frame[0], frame.len ());
-
-        pos += frame_size;
-    }
-
-    return buf;
-}
-
-bool ID3v24TagModule::write_tag (const Tuple & tuple, VFSFile & f)
+bool ID3v24TagModule::write_tag (VFSFile & f, const Tuple & tuple)
 {
     int version = 3;
     int header_size, data_size, footer_size;

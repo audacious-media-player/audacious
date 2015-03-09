@@ -290,8 +290,12 @@ static void set_gain_info (Tuple & tuple, Tuple::Field field,
     tuple.set_int (field, value);
 }
 
-bool APETagModule::read_tag (Tuple & tuple, VFSFile & handle)
+bool APETagModule::read_tag (VFSFile & handle, Tuple * ptuple, Index<char> * image)
 {
+    if (! ptuple)
+        return true; // nothing to do
+
+    Tuple & tuple = * ptuple;
     Index<ValuePair> list = ape_read_items (handle);
 
     for (const ValuePair & pair : list)
@@ -395,7 +399,7 @@ static bool write_header (int data_length, int items, bool is_header,
     return handle.fwrite (& header, 1, sizeof (APEHeader)) == sizeof (APEHeader);
 }
 
-bool APETagModule::write_tag (const Tuple & tuple, VFSFile & handle)
+bool APETagModule::write_tag (VFSFile & handle, const Tuple & tuple)
 {
     Index<ValuePair> list = ape_read_items (handle);
     APEHeader header;
