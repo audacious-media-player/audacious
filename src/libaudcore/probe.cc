@@ -47,7 +47,7 @@ bool open_input_file (const char * filename, const char * mode,
     return (bool) file;
 }
 
-static PluginHandle * do_find_decoder (const char * filename, bool fast,
+EXPORT PluginHandle * aud_file_find_decoder (const char * filename, bool fast,
  VFSFile & file, String * error)
 {
     AUDINFO ("%s %s.\n", fast ? "Fast-probing" : "Probing", filename);
@@ -126,6 +126,7 @@ static PluginHandle * do_find_decoder (const char * filename, bool fast,
         if (ip->is_our_file (filename, file))
         {
             AUDINFO ("Matched %s by content.\n", aud_plugin_get_name (plugin));
+            file.set_limit_to_buffer (false);
             return plugin;
         }
 
@@ -149,19 +150,7 @@ static PluginHandle * do_find_decoder (const char * filename, bool fast,
 EXPORT PluginHandle * aud_file_find_decoder (const char * filename, bool fast, String * error)
 {
     VFSFile file;
-    return do_find_decoder (filename, fast, file, error);
-}
-
-EXPORT PluginHandle * aud_file_find_decoder (const char * filename, bool fast,
- VFSFile & file, String * error)
-{
-    auto plugin = do_find_decoder (filename, fast, file, error);
-
-    /* reset VFSFile state for later reuse */
-    if (file)
-        file.set_limit_to_buffer (false);
-
-    return plugin;
+    return aud_file_find_decoder (filename, fast, file, error);
 }
 
 EXPORT Tuple aud_file_read_tuple (const char * filename, PluginHandle * decoder,
