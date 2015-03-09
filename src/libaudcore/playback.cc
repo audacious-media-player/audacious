@@ -365,7 +365,7 @@ static void run_playback ()
             break;
 
         // rewind file pointer before repeating
-        if (file.fseek (0, VFS_SEEK_SET) != 0)
+        if (file && file.fseek (0, VFS_SEEK_SET) != 0)
         {
             pb_info.error = true;
             break;
