@@ -20,7 +20,7 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include <libaudcore/audstrings.h>
-#include <libaudcore/playlist.h>
+#include <libaudcore/drct.h>
 #include <libaudcore/probe.h>
 #include <libaudcore/runtime.h>
 
@@ -100,13 +100,9 @@ EXPORT GdkPixbuf * audgui_pixbuf_request_current (bool * queued)
 
     if (! current_pixbuf)
     {
-        int list = aud_playlist_get_playing ();
-        int entry = aud_playlist_get_position (list);
-        if (entry < 0)
-            return nullptr;
-
-        String filename = aud_playlist_entry_get_filename (list, entry);
-        current_pixbuf = audgui_pixbuf_request (filename, queued);
+        String filename = aud_drct_get_filename ();
+        if (filename)
+            current_pixbuf = audgui_pixbuf_request (filename, queued);
     }
 
     if (current_pixbuf)
