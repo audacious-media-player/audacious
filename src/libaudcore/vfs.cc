@@ -108,7 +108,7 @@ EXPORT int64_t VFSFile::fread (void * ptr, int64_t size, int64_t nmemb)
     int64_t readed = m_impl->fread (ptr, size, nmemb);
 
     AUDDBG ("<%p> read %" PRId64 " elements of size %" PRId64 " = %" PRId64 "\n",
-     this, nmemb, size, readed);
+     m_impl.get (), nmemb, size, readed);
 
     return readed;
 }
