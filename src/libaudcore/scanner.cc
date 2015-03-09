@@ -40,23 +40,16 @@ static void scan_worker (void * data, void *)
 
     if ((r->flags & (SCAN_TUPLE | SCAN_IMAGE)))
     {
-        if (! (r->ip = (InputPlugin *) aud_plugin_get_header (r->decoder)))
-        {
-            r->error = String (_("Error loading plugin"));
+        if (! (r->ip = load_input_plugin (r->decoder, & r->error)))
             goto err;
-        }
 
-        if (! open_input_file (r->filename, "r", r->ip, r->file, & r->error))
+        Tuple * ptuple = (r->flags & SCAN_TUPLE) ? & r->tuple : nullptr;
+        Index<char> * pimage = (r->flags & SCAN_IMAGE) ? & r->image_data : nullptr;
+
+        if (! file_read_tag (r->filename, r->decoder, r->file, ptuple, pimage, & r->error))
             goto err;
-    }
 
-    if ((r->flags & SCAN_TUPLE))
-        r->tuple = file_read_tuple (r->filename, r->decoder, r->file, & r->error);
-
-    if ((r->flags & SCAN_IMAGE))
-    {
-        r->image_data = file_read_image (r->filename, r->decoder, r->file);
-        if (! r->image_data.len ())
+        if ((r->flags & SCAN_IMAGE) && ! r->image_data.len ())
             r->image_file = art_search (r->filename);
     }
 

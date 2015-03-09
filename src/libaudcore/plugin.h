@@ -47,7 +47,7 @@ struct PluginPreferences;
  * _AUD_PLUGIN_VERSION_MIN to the same value. */
 
 #define _AUD_PLUGIN_VERSION_MIN 46 /* 3.6-devel */
-#define _AUD_PLUGIN_VERSION     46 /* 3.6-devel */
+#define _AUD_PLUGIN_VERSION     47 /* 3.7-devel */
 
 /* A NOTE ON THREADS
  *
@@ -357,8 +357,9 @@ public:
     /* Returns true if the plugin can handle the file. */
     virtual bool is_our_file (const char * filename, VFSFile & file) = 0;
 
-    /* Reads metadata from the file. */
-    virtual Tuple read_tuple (const char * filename, VFSFile & file) = 0;
+    /* Reads metadata from the file.  Optional if the plugin implements read_tag(). */
+    virtual Tuple read_tuple (const char * filename, VFSFile & file)
+        { return Tuple(); }
 
     /* Plays the file.  Returns false on error.  Also see input-api.h. */
     virtual bool play (const char * filename, VFSFile & file) = 0;
@@ -377,6 +378,18 @@ public:
      * info window. */
     virtual bool file_info_box (const char * filename, VFSFile & file)
         { return false; }
+
+    /* Optional.  Reads metadata and/or an album art from the file.
+     * Providing this function is encouraged over providing a separate
+     * read_tuple() and read_image().  The filename fields of the tuple
+     * (if not null) are already set before the function is called. */
+    virtual bool read_tag (const char * filename, VFSFile & file, Tuple * tuple,
+     Index<char> * image)
+        { return default_read_tag (filename, file, tuple, image); }
+
+    /* compatibility (non-virtual) implementation of read_tag(); do not use. */
+    bool default_read_tag (const char * filename, VFSFile & file, Tuple * tuple,
+     Index<char> * image);
 
 protected:
     /* Prepares the output system for playback in the specified format.  Also

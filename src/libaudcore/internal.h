@@ -99,14 +99,14 @@ void playback_setup_decode (const String & filename, InputPlugin * ip,
 /* probe.cc */
 bool open_input_file (const char * filename, const char * mode,
  InputPlugin * ip, VFSFile & file, String * error = nullptr);
+InputPlugin * load_input_plugin (PluginHandle * decoder, String * error = nullptr);
 
 /* internal versions of aud_file_* functions;
  * these allow reuse of the same file handle during probing */
 PluginHandle * file_find_decoder (const char * filename, bool fast,
  VFSFile & file, String * error = nullptr);
-Tuple file_read_tuple (const char * filename, PluginHandle * decoder,
- VFSFile & file, String * error = nullptr);
-Index<char> file_read_image (const char * filename, PluginHandle * decoder, VFSFile & file);
+bool file_read_tag (const char * filename, PluginHandle * decoder,
+ VFSFile & file, Tuple * tuple, Index<char> * image, String * error = nullptr);
 
 /* runtime.cc */
 extern size_t misc_bytes_allocated;

@@ -629,6 +629,25 @@ EXPORT int InputPlugin::check_seek ()
     return seek;
 }
 
+/* compatibility (non-virtual) implementation of InputPlugin::read_tag(). */
+EXPORT bool InputPlugin::default_read_tag (const char * filename,
+ VFSFile & file, Tuple * tuple, Index<char> * image)
+{
+    /* just call read_tuple() and read_image() */
+    if (tuple)
+    {
+        if (! (* tuple = read_tuple (filename, file)))
+            return false;
+        if (image && file.fseek (0, VFS_SEEK_SET) != 0)
+            return true; /* true: tuple was read */
+    }
+
+    if (image)
+        * image = read_image (filename, file);
+
+    return true;
+}
+
 // thread-safe
 EXPORT bool aud_drct_get_playing ()
 {

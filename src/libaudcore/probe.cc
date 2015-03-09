@@ -47,6 +47,15 @@ bool open_input_file (const char * filename, const char * mode,
     return (bool) file;
 }
 
+InputPlugin * load_input_plugin (PluginHandle * decoder, String * error)
+{
+    auto ip = (InputPlugin *) aud_plugin_get_header (decoder);
+    if (! ip && error)
+        * error = String (_("Error loading plugin"));
+
+    return ip;
+}
+
 PluginHandle * file_find_decoder (const char * filename, bool fast, VFSFile & file, String * error)
 {
     AUDINFO ("%s %s.\n", fast ? "Fast-probing" : "Probing", filename);
@@ -152,47 +161,51 @@ EXPORT PluginHandle * aud_file_find_decoder (const char * filename, bool fast, S
     return file_find_decoder (filename, fast, file, error);
 }
 
-Tuple file_read_tuple (const char * filename, PluginHandle * decoder,
- VFSFile & file, String * error)
+bool file_read_tag (const char * filename, PluginHandle * decoder,
+ VFSFile & file, Tuple * tuple, Index<char> * image, String * error)
 {
-    auto ip = (InputPlugin *) aud_plugin_get_header (decoder);
-    if (! ip && error)
-        * error = String (_("Error loading plugin"));
+    auto ip = load_input_plugin (decoder, error);
     if (! ip)
-        return Tuple ();
+        return false;
 
     if (! open_input_file (filename, "r", ip, file, error))
-        return Tuple ();
+        return false;
 
-    Tuple tuple = ip->read_tuple (filename, file);
-    if (! tuple && error)
+    if (tuple)
+        tuple->set_filename (filename);
+
+    bool success;
+
+    /* read_tag() was added in 3.7 */
+    if (ip->version >= 47)
+        success = ip->read_tag (filename, file, tuple, image);
+    else
+        success = ip->default_read_tag (filename, file, tuple, image);
+
+    if (! success && error)
         * error = String (_("Error reading metadata"));
+    if (! success && tuple)
+        * tuple = Tuple ();
 
-    return tuple;
+    return success;
 }
 
 EXPORT Tuple aud_file_read_tuple (const char * filename, PluginHandle * decoder, String * error)
 {
     VFSFile file;
-    return file_read_tuple (filename, decoder, file, error);
-}
+    Tuple tuple;
 
-Index<char> file_read_image (const char * filename, PluginHandle * decoder, VFSFile & file)
-{
-    auto ip = (InputPlugin *) aud_plugin_get_header (decoder);
-    if (! ip)
-        return Index<char> ();
-
-    if (! open_input_file (filename, "r", ip, file))
-        return Index<char> ();
-
-    return ip->read_image (filename, file);
+    file_read_tag (filename, decoder, file, & tuple, nullptr, error);
+    return tuple;
 }
 
 EXPORT Index<char> aud_file_read_image (const char * filename, PluginHandle * decoder)
 {
     VFSFile file;
-    return file_read_image (filename, decoder, file);
+    Index<char> image;
+
+    file_read_tag (filename, decoder, file, nullptr, & image, nullptr);
+    return image;
 }
 
 EXPORT bool aud_file_can_write_tuple (const char * filename, PluginHandle * decoder)

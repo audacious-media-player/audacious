@@ -137,7 +137,7 @@ static void add_file (const char * filename, Tuple && tuple,
         }
 
         if (decoder && input_plugin_has_subtunes (decoder) && ! strchr (filename, '?'))
-            tuple = file_read_tuple (filename, decoder, file);
+            file_read_tag (filename, decoder, file, & tuple, nullptr);
     }
 
     int n_subtunes = tuple.get_n_subtunes ();
