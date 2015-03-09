@@ -123,15 +123,14 @@ int ProbeBuffer::fseek (int64_t offset, VFSSeekType whence)
         }
     }
 
-    /* release buffer and seek within real file */
-    if (m_limited)
-        return -1; /* not allowed */
+    /* seek within real file if allowed */
+    if (m_limited || m_file->fseek (offset, whence) < 0)
+        return -1;
 
+    /* release buffer only if real seek succeeded
+     * (prevents change of file position if seek failed) */
     if (m_at >= 0)
         release_buffer ();
-
-    if (m_file->fseek (offset, whence) < 0)
-        return -1; /* failed */
 
     /* activate buffering again when seeking to beginning of file */
     if (whence == VFS_SEEK_SET && offset == 0)
