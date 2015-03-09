@@ -33,7 +33,6 @@
 #include "hook.h"
 #include "mainloop.h"
 #include "multihash.h"
-#include "playlist.h"
 #include "runtime.h"
 #include "scanner.h"
 #include "vfs.h"
@@ -58,10 +57,6 @@ static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 static SimpleHash<String, ArtItem> art_items;
 static String current_ref;
 static QueuedFunc queued_requests;
-
-static String current_cached;
-static Index<char> current_data;
-static String current_art_file;
 
 static void get_queued_cb (const String & key, ArtItem & item, void * list)
 {
@@ -89,26 +84,29 @@ static void send_requests (void *)
 {
     Index<String> queued = get_queued ();
 
-    String current_wanted;
-    if (! current_ref)
-    {
-        int playlist = aud_playlist_get_playing ();
-        int entry = aud_playlist_get_position (playlist);
-        current_wanted = aud_playlist_entry_get_filename (playlist, entry);
-    }
-
     for (const String & file : queued)
     {
         hook_call ("art ready", (void *) (const char *) file);
 
-        if (file == current_wanted)
-        {
+        /* this hook is deprecated in 3.7 but kept for compatibility */
+        if (file == current_ref)
             hook_call ("current art ready", (void *) (const char *) file);
-            current_ref = file;
-        }
-        else
-            aud_art_unref (file); /* release temporary reference */
+
+        aud_art_unref (file); /* release temporary reference */
     }
+}
+
+static void finish_item (ArtItem * item, Index<char> && data, String && art_file)
+{
+    /* already finished? */
+    if (item->flag)
+        return;
+
+    item->data = std::move (data);
+    item->art_file = std::move (art_file);
+    item->flag = FLAG_DONE;
+
+    queued_requests.queue (send_requests, nullptr);
 }
 
 static void request_callback (ScanRequest * request)
@@ -116,13 +114,9 @@ static void request_callback (ScanRequest * request)
     pthread_mutex_lock (& mutex);
 
     ArtItem * item = art_items.lookup (request->filename);
-    assert (item && ! item->flag);
+    assert (item);
 
-    item->data = std::move (request->image_data);
-    item->art_file = std::move (request->image_file);
-    item->flag = FLAG_DONE;
-
-    queued_requests.queue (send_requests, nullptr);
+    finish_item (item, std::move (request->image_data), std::move (request->image_file));
 
     pthread_mutex_unlock (& mutex);
 }
@@ -149,17 +143,7 @@ static ArtItem * art_item_get (const String & file, bool * queued)
         item = art_items.add (file, ArtItem ());
         item->refcount = 1; /* temporary reference */
 
-        if (file == current_cached)
-        {
-            item->data = std::move (current_data);
-            item->art_file = std::move (current_art_file);
-            item->flag = FLAG_DONE;
-
-            queued_requests.queue (send_requests, nullptr);
-            current_cached = String ();
-        }
-        else
-            scanner_request (new ScanRequest (file, SCAN_IMAGE, request_callback));
+        scanner_request (new ScanRequest (file, SCAN_IMAGE, request_callback));
     }
 
     if (queued)
@@ -184,53 +168,58 @@ static void art_item_unref (const String & file, ArtItem * item)
     }
 }
 
-static void release_current (void)
+static void clear_current_locked ()
 {
     if (current_ref)
     {
-        aud_art_unref (current_ref);
+        ArtItem * item = art_items.lookup (current_ref);
+        assert (item);
+
+        art_item_unref (current_ref, item);
         current_ref = String ();
     }
-
-    pthread_mutex_lock (& mutex);
-
-    current_cached = String ();
-    current_data.clear ();
-    current_art_file = String ();
-
-    pthread_mutex_unlock (& mutex);
-}
-
-void art_init (void)
-{
-    hook_associate ("playlist position", (HookFunction) release_current, nullptr);
-    hook_associate ("playlist set playing", (HookFunction) release_current, nullptr);
-}
-
-void art_cleanup (void)
-{
-    hook_dissociate ("playlist position", (HookFunction) release_current);
-    hook_dissociate ("playlist set playing", (HookFunction) release_current);
-
-    Index<String> queued = get_queued ();
-    for (const String & file : queued)
-        aud_art_unref (file); /* release temporary reference */
-
-    release_current ();
-
-    if (art_items.n_items ())
-        AUDWARN ("Album art reference count not zero at exit!\n");
 }
 
 void art_cache_current (const String & filename, Index<char> && data, String && art_file)
 {
     pthread_mutex_lock (& mutex);
 
-    current_cached = filename;
-    current_data = std::move (data);
-    current_art_file = std::move (art_file);
+    clear_current_locked ();
+
+    ArtItem * item = art_items.lookup (filename);
+
+    if (! item)
+    {
+        item = art_items.add (filename, ArtItem ());
+        item->refcount = 1; /* temporary reference */
+    }
+
+    finish_item (item, std::move (data), std::move (art_file));
+
+    item->refcount ++;
+    current_ref = filename;
 
     pthread_mutex_unlock (& mutex);
+}
+
+void art_clear_current ()
+{
+    pthread_mutex_lock (& mutex);
+    clear_current_locked ();
+    pthread_mutex_unlock (& mutex);
+}
+
+void art_cleanup ()
+{
+    Index<String> queued = get_queued ();
+    for (const String & file : queued)
+        aud_art_unref (file); /* release temporary reference */
+
+    /* playback should already be stopped */
+    assert (! current_ref);
+
+    if (art_items.n_items ())
+        AUDWARN ("Album art reference count not zero at exit!\n");
 }
 
 EXPORT const Index<char> * aud_art_request_data (const char * file, bool * queued)

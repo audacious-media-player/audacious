@@ -289,7 +289,6 @@ EXPORT void aud_init ()
 
     config_load ();
 
-    art_init ();
     chardet_init ();
     eq_init ();
     playlist_init ();

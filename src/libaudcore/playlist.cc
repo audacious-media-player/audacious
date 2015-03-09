@@ -23,6 +23,7 @@
 #include "playlist-internal.h"
 #include "runtime.h"
 
+#include <assert.h>
 #include <pthread.h>
 #include <stdlib.h>
 #include <string.h>
@@ -665,6 +666,7 @@ static Entry * get_entry (int playlist_num, int entry_num,
 
 static void start_playback (int seek_time, bool pause)
 {
+    art_clear_current ();
     playback_data = PlaybackData ();
     playback_play (seek_time, pause);
     scan_queue_entry (playing_playlist, playing_playlist->position, true);
@@ -672,6 +674,7 @@ static void start_playback (int seek_time, bool pause)
 
 static void stop_playback ()
 {
+    art_clear_current ();
     playback_data = PlaybackData ();
     playback_stop ();
 }
@@ -727,10 +730,14 @@ void playlist_end ()
 
     ENTER;
 
+    /* playback should already be stopped */
+    assert (! playing_playlist);
+
     queued_update.stop ();
 
-    active_playlist = playing_playlist = nullptr;
+    active_playlist = nullptr;
     resume_playlist = -1;
+    resume_paused = false;
 
     playlists.clear ();
     unique_id_table.clear ();
@@ -825,7 +832,7 @@ EXPORT void aud_playlist_delete (int playlist_num)
     if (playlist == playing_playlist)
     {
         playing_playlist = nullptr;
-        playback_stop ();
+        stop_playback ();
         was_playing = true;
     }
 

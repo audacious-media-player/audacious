@@ -38,9 +38,9 @@ typedef bool (* DirForeachFunc) (const char * path, const char * basename, void 
 void adder_cleanup ();
 
 /* art.cc */
-void art_init ();
-void art_cleanup ();
 void art_cache_current (const String & filename, Index<char> && data, String && art_file);
+void art_clear_current ();
+void art_cleanup ();
 
 /* art-search.cc */
 String art_search (const char * filename);
