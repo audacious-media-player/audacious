@@ -662,24 +662,6 @@ EXPORT bool aud_drct_get_paused ()
 }
 
 // thread-safe
-EXPORT int aud_drct_get_position ()
-{
-    lock ();
-    int entry = is_ready () ? pb_info.entry : -1;
-    unlock ();
-    return entry;
-}
-
-// thread-safe
-EXPORT String aud_drct_get_filename ()
-{
-    lock ();
-    String filename = is_ready () ? pb_info.filename : String ();
-    unlock ();
-    return filename;
-}
-
-// thread-safe
 EXPORT String aud_drct_get_title ()
 {
     if (! lock_if (is_ready))
