@@ -104,7 +104,7 @@ static GtkWidget * create_about_window ()
     g_strchomp (license);
 
     GtkWidget * notebook = create_credits_notebook (credits, license);
-    gtk_widget_set_size_request (notebook, 570, 250);
+    gtk_widget_set_size_request (notebook, 585, 250);
     gtk_box_pack_start ((GtkBox *) vbox, notebook, true, true, 0);
 
     g_free (credits);
