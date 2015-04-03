@@ -3,16 +3,16 @@
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
-# hairy_latvian <einars8@gmail.com>, 2014
+# hairy_latvian <einars8@gmail.com>, 2014-2015
 # hairy_latvian <einars8@gmail.com>, 2009, 2011, 2012
 # hairy_latvian <einars8@gmail.com>, 2009,2011-2014
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2015-02-28 19:15+0100\n"
-"PO-Revision-Date: 2014-12-22 12:38+0000\n"
-"Last-Translator: Thomas Lange <thomas-lange2@gmx.de>\n"
+"POT-Creation-Date: 2015-04-03 11:51+0200\n"
+"PO-Revision-Date: 2015-03-24 10:24+0000\n"
+"Last-Translator: hairy_latvian <einars8@gmail.com>\n"
 "Language-Team: Latvian (http://www.transifex.com/projects/p/audacious/"
 "language/lv/)\n"
 "Language: lv\n"
@@ -80,11 +80,11 @@ msgstr "Iziet, kad beidzas atskaņošana"
 
 #: src/audacious/main.cc:74
 msgid "Print debugging messages (may be used twice)"
-msgstr ""
+msgstr "Drukāt atkļūdošanas ziņojumus (var tikt izmantots divas reizes)"
 
 #: src/audacious/main.cc:76
 msgid "Run in Qt mode"
-msgstr ""
+msgstr "Palaist Qt režīmā"
 
 #: src/audacious/main.cc:127
 #, c-format
@@ -126,11 +126,11 @@ msgstr "Audio CD, %s. celiņš"
 
 #: src/libaudcore/audstrings.cc:532 src/libaudcore/tuple.cc:481
 msgid "(character encoding error)"
-msgstr ""
+msgstr "(rakstzīmju kodēšanas kļūda)"
 
 #: src/libaudcore/playback.cc:328 src/libaudcore/probe.cc:151
 msgid "Error loading plugin"
-msgstr ""
+msgstr "Kļūda ielādējot spraudni"
 
 #: src/libaudcore/playback.cc:383 src/libaudgui/infowin.cc:496
 #, c-format
@@ -138,14 +138,16 @@ msgid ""
 "Error opening %s:\n"
 "%s"
 msgstr ""
+"Kļūda atverot %s:\n"
+"%s"
 
 #: src/libaudcore/playback.cc:385
 msgid "Unknown playback error"
-msgstr ""
+msgstr "Nezināma atskaņošanas kļūda"
 
 #: src/libaudcore/playback.cc:514
 msgid "Invalid audio format"
-msgstr ""
+msgstr "Nederīgs audio formāts"
 
 #: src/libaudcore/playlist.cc:142
 msgid "Now Playing"
@@ -162,24 +164,24 @@ msgstr ""
 #: src/libaudcore/playlist-files.cc:76
 #, c-format
 msgid "Cannot load %s: unsupported file name extension."
-msgstr ""
+msgstr "Neizdevās ielādēt %s: neatbalstīts faila paplašinājums."
 
 #: src/libaudcore/playlist-files.cc:136
 #, c-format
 msgid "Cannot save %s: unsupported file name extension."
-msgstr ""
+msgstr "Neizdevās saglabāt %s: neatbalstīts faila paplašinājums."
 
 #: src/libaudcore/probe.cc:119
 msgid "Seek error"
-msgstr ""
+msgstr "Meklēšanas kļūda"
 
 #: src/libaudcore/probe.cc:127
 msgid "File format not recognized"
-msgstr ""
+msgstr "Faila formāts nav atpazīts"
 
 #: src/libaudcore/probe.cc:161
 msgid "Error reading metadata"
-msgstr ""
+msgstr "Kļūda lasot metadatus"
 
 #: src/libaudcore/tuple.cc:528
 msgid "Mono"
@@ -200,27 +202,27 @@ msgstr[2] "%d kanālu"
 #: src/libaudcore/tuple.cc:699
 #, c-format
 msgid "Track %d"
-msgstr ""
+msgstr "Celiņš %d"
 
 #: src/libaudcore/tuple.cc:701
 msgid "Audio CD"
-msgstr ""
+msgstr "Audio CD"
 
 #: src/libaudcore/tuple.cc:707
 msgid "(unknown title)"
-msgstr ""
+msgstr "(nezināms nosaukums)"
 
 #: src/libaudcore/vfs.cc:67
 msgid "Invalid URI"
-msgstr ""
+msgstr "Nederīgs URI"
 
 #: src/libaudcore/vfs.cc:83
 msgid "Unknown URI scheme"
-msgstr ""
+msgstr "Nezināma URI shēma"
 
 #: src/libaudcore/vfs_local.cc:82
 msgid "Invalid file name"
-msgstr ""
+msgstr "Nederīgs faila nosaukums"
 
 #: src/libaudgui/about.cc:35 src/libaudqt/about.cc:37
 msgid "Credits"
@@ -576,7 +578,7 @@ msgstr "Dziesmas info"
 
 #: src/libaudgui/infowin.cc:369 src/libaudqt/info-widget.cc:44
 msgid "Album Artist"
-msgstr ""
+msgstr "Albuma izpildītājs"
 
 #: src/libaudgui/infowin.cc:372 src/libaudgui/prefs-window.cc:109
 #: src/libaudqt/info-widget.cc:43 src/libaudqt/prefs-window.cc:112
@@ -589,7 +591,7 @@ msgstr "Celiņa numurs"
 
 #: src/libaudgui/infowin.cc:389
 msgid "Clea_r fields when moving to next song"
-msgstr ""
+msgstr "Notī_rīt laikus, pārvietojoties uz nākamo dziesmu"
 
 #: src/libaudgui/infowin.cc:403 src/libaudqt/infowin.cc:72
 msgid "_Save"
@@ -597,7 +599,7 @@ msgstr "_Saglabāt"
 
 #: src/libaudgui/infowin.cc:409
 msgid "_Next"
-msgstr ""
+msgstr "_Nākamā"
 
 #: src/libaudgui/infowin.cc:455
 #, c-format
@@ -681,12 +683,12 @@ msgstr "S_praudņi ..."
 #: src/libaudgui/plugin-prefs.cc:109 src/libaudqt/prefs-plugin.cc:56
 #, c-format
 msgid "About %s"
-msgstr ""
+msgstr "Par %s"
 
 #: src/libaudgui/plugin-prefs.cc:155 src/libaudqt/prefs-plugin.cc:108
 #, c-format
 msgid "%s Settings"
-msgstr ""
+msgstr "%s iestatījumi"
 
 #: src/libaudgui/plugin-prefs.cc:159 src/libaudqt/prefs-plugin.cc:120
 msgid "_Set"
@@ -745,15 +747,15 @@ msgstr "Transports"
 
 #: src/libaudgui/prefs-window.cc:103 src/libaudqt/prefs-window.cc:106
 msgid "Track number"
-msgstr ""
+msgstr "Celiņa numurs"
 
 #: src/libaudgui/prefs-window.cc:105 src/libaudqt/prefs-window.cc:108
 msgid "File name"
-msgstr ""
+msgstr "Faila nosaukums"
 
 #: src/libaudgui/prefs-window.cc:106 src/libaudqt/prefs-window.cc:109
 msgid "File path"
-msgstr ""
+msgstr "Faila ceļš"
 
 #: src/libaudgui/prefs-window.cc:107 src/libaudqt/prefs-window.cc:110
 msgid "Date"
@@ -909,11 +911,11 @@ msgstr "Starpniekservera parole:"
 
 #: src/libaudgui/prefs-window.cc:223 src/libaudqt/prefs-window.cc:226
 msgid "<b>Network Settings</b>"
-msgstr ""
+msgstr "<b>Tīkla iestatījumi</b>"
 
 #: src/libaudgui/prefs-window.cc:226 src/libaudqt/prefs-window.cc:229
 msgid "KiB"
-msgstr ""
+msgstr "KiB"
 
 #: src/libaudgui/prefs-window.cc:227 src/libaudqt/prefs-window.cc:230
 msgid "<b>Proxy Configuration</b>"
@@ -941,11 +943,11 @@ msgstr "<b>Izturēšanās</b>"
 
 #: src/libaudgui/prefs-window.cc:253 src/libaudqt/prefs-window.cc:257
 msgid "Resume playback on startup"
-msgstr ""
+msgstr "Palaižot turpināt atskaņošanu"
 
 #: src/libaudgui/prefs-window.cc:255 src/libaudqt/prefs-window.cc:259
 msgid "Pause instead of resuming immediately"
-msgstr ""
+msgstr "Pauzēt nevis uzreiz atsākt"
 
 #: src/libaudgui/prefs-window.cc:258 src/libaudqt/prefs-window.cc:262
 msgid "Advance when the current song is deleted"
@@ -981,7 +983,7 @@ msgstr "Rādīt ievadošās nulles (02:00 nevis 2:00)"
 
 #: src/libaudgui/prefs-window.cc:274 src/libaudqt/prefs-window.cc:280
 msgid "<b>Advanced</b>"
-msgstr ""
+msgstr "<b>Paplašināti</b>"
 
 #: src/libaudgui/prefs-window.cc:275 src/libaudqt/prefs-window.cc:268
 #: src/libaudqt/prefs-window.cc:281
@@ -990,7 +992,7 @@ msgstr "Neielādēt metadatus, līdz dziesma tiek atskaņota"
 
 #: src/libaudgui/prefs-window.cc:277 src/libaudqt/prefs-window.cc:283
 msgid "Probe content of files with no recognized file name extension"
-msgstr ""
+msgstr "Testēt failus ar neatpazītiem failu paplašinājumiem"
 
 #: src/libaudgui/prefs-window.cc:282 src/libaudqt/prefs-window.cc:288
 msgid "<b>Album Art</b>"
@@ -1086,7 +1088,7 @@ msgstr "_Izņemt no rindas"
 
 #: src/libaudgui/status.cc:36
 msgid "Working ..."
-msgstr ""
+msgstr "Darbojas ..."
 
 #: src/libaudgui/status.cc:85 src/libaudqt/log-inspector.cc:192
 msgid "Error"
@@ -1114,51 +1116,51 @@ msgstr ""
 
 #: src/libaudqt/fileopener.cc:40
 msgid "Open Folder"
-msgstr ""
+msgstr "Atvērt mapi"
 
 #: src/libaudqt/fileopener.cc:42
 msgid "Add Folder"
-msgstr ""
+msgstr "Pievienot mapi"
 
 #: src/libaudqt/fileopener.cc:46 src/libaudqt/fileopener.cc:47
 msgid "Open"
-msgstr ""
+msgstr "Atvērt"
 
 #: src/libaudqt/fileopener.cc:48 src/libaudqt/fileopener.cc:49
 msgid "Add"
-msgstr ""
+msgstr "Pievienot"
 
 #: src/libaudqt/info-widget.cc:37
 msgid "Metadata"
-msgstr ""
+msgstr "Metadati"
 
 #: src/libaudqt/info-widget.cc:45
 msgid "Composer"
-msgstr ""
+msgstr "Komponists"
 
 #: src/libaudqt/info-widget.cc:46
 msgid "Performer"
-msgstr ""
+msgstr "Izpildītājs"
 
 #: src/libaudqt/info-widget.cc:47
 msgid "Recording Year"
-msgstr ""
+msgstr "Ierakstīšanas gads"
 
 #: src/libaudqt/info-widget.cc:48
 msgid "Recording Date"
-msgstr ""
+msgstr "Ierakstīšanas datums"
 
 #: src/libaudqt/info-widget.cc:51
 msgid "Technical"
-msgstr ""
+msgstr "Tehniskie"
 
 #: src/libaudqt/info-widget.cc:53
 msgid "MIME Type"
-msgstr ""
+msgstr "MIME tips"
 
 #: src/libaudqt/info-widget.cc:56
 msgid "Bitrate"
-msgstr ""
+msgstr "Bitātrums"
 
 #: src/libaudqt/infowin.cc:129
 #, c-format
@@ -1167,7 +1169,7 @@ msgstr "Informācija priekš %s nav pieejama.\n"
 
 #: src/libaudqt/log-inspector.cc:106
 msgid "Level"
-msgstr ""
+msgstr "Līmenis"
 
 #: src/libaudqt/log-inspector.cc:107
 msgid "Filename"
@@ -1175,36 +1177,36 @@ msgstr "Faila nosaukums"
 
 #: src/libaudqt/log-inspector.cc:108
 msgid "Line"
-msgstr ""
+msgstr "Līnija"
 
 #: src/libaudqt/log-inspector.cc:109
 msgid "Function"
-msgstr ""
+msgstr "Funkcija"
 
 #: src/libaudqt/log-inspector.cc:110
 msgid "Message"
-msgstr ""
+msgstr "Ziņojums"
 
 #: src/libaudqt/log-inspector.cc:175
 msgid "Log Inspector"
-msgstr ""
+msgstr "Žurnāla inspektors"
 
 #: src/libaudqt/log-inspector.cc:186
 msgid "Log Level:"
-msgstr ""
+msgstr "Žurnāla līmenis:"
 
 #: src/libaudqt/log-inspector.cc:189
 msgid "Debug"
-msgstr ""
+msgstr "Atkļūdot"
 
 #: src/libaudqt/log-inspector.cc:190
 msgid "Info"
-msgstr ""
+msgstr "Informācija"
 
 #: src/libaudqt/log-inspector.cc:191
 msgid "Warning"
-msgstr ""
+msgstr "Brīdinājums"
 
 #: src/libaudqt/plugin-menu.cc:40
 msgid "Plugins ..."
-msgstr ""
+msgstr "Spraudņi ..."
