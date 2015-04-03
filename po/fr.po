@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2015-02-28 19:15+0100\n"
-"PO-Revision-Date: 2015-01-29 15:29+0000\n"
+"POT-Creation-Date: 2015-04-03 11:51+0200\n"
+"PO-Revision-Date: 2015-03-15 20:31+0000\n"
 "Last-Translator: yahoe.001\n"
 "Language-Team: French (http://www.transifex.com/projects/p/audacious/"
 "language/fr/)\n"
@@ -707,7 +707,7 @@ msgstr "_Paramètres"
 #: src/libaudgui/plugin-view.cc:242 src/libaudgui/prefs-window.cc:661
 #: src/libaudqt/prefs-window.cc:504
 msgid "_About"
-msgstr "À p_ropos de..."
+msgstr "À p_ropos"
 
 #: src/libaudgui/prefs-window.cc:82 src/libaudqt/prefs-window.cc:85
 msgid "Appearance"
