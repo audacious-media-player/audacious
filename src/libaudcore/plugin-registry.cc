@@ -32,7 +32,13 @@
 #include "runtime.h"
 
 #define FILENAME "plugin-registry"
+
+/* Increment this when the format of the plugin-registry file changes.
+ * Add 10 if the format changes in a way that will break parse_plugins_fallback(). */
 #define FORMAT 9
+
+/* Oldest file format supported by parse_plugins_fallback() */
+#define MIN_FORMAT 2  // "enabled" flag was added in Audacious 2.4
 
 struct PluginWatch {
     PluginWatchFunc func;
@@ -296,7 +302,7 @@ static bool plugin_parse (FILE * handle)
     if (! parse_integer ("stamp", & timestamp))
         return false;
 
-    PluginHandle * plugin = new PluginHandle (basename, String (), false, timestamp, type, nullptr);
+    auto plugin = new PluginHandle (basename, String (), false, timestamp, type, nullptr);
     plugins[type].append (plugin);
 
     parse_next (handle);
@@ -328,6 +334,47 @@ static bool plugin_parse (FILE * handle)
     return true;
 }
 
+/* try to migrate enabled status from another version */
+static void parse_plugins_fallback (FILE * handle)
+{
+    for (; parse_value; parse_next (handle))
+    {
+        PluginType type;
+        String path;
+        int enabled;
+
+        for (auto type2 : aud::range<PluginType> ())
+        {
+            type = type2;
+            if ((path = parse_string (plugin_type_names[type2])))
+                break;
+        }
+
+        if (! path)
+            continue;
+
+        StringBuf basename = get_basename (path);
+        if (! basename)
+            continue;
+
+        parse_next (handle);
+
+        for (; parse_value; parse_next (handle))
+        {
+            if (parse_integer ("enabled", & enabled))
+                break;
+        }
+
+        if (! parse_value)
+            return;
+
+        // setting timestamp to zero forces a rescan
+        auto plugin = new PluginHandle (basename, String (), false, 0, type, nullptr);
+        plugins[type].append (plugin);
+        plugin->enabled = enabled;
+    }
+}
+
 void plugin_registry_load ()
 {
     FILE * handle = open_registry_file ("r");
@@ -337,13 +384,18 @@ void plugin_registry_load ()
     parse_next (handle);
 
     int format;
-    if (! parse_integer ("format", & format) || format != FORMAT)
+    if (! parse_integer ("format", & format))
         goto ERR;
 
     parse_next (handle);
 
-    while (plugin_parse (handle))
-        ;
+    if (format == FORMAT)
+    {
+        while (plugin_parse (handle))
+            continue;
+    }
+    else if (format >= MIN_FORMAT && format < FORMAT + 10)
+        parse_plugins_fallback (handle);
 
 ERR:
     fclose (handle);
