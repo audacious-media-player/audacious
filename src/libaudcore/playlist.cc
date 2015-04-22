@@ -557,7 +557,6 @@ static void scan_finish (ScanRequest * request)
     Entry * entry = item->entry;
 
     scan_list.remove (item);
-    delete item;
 
     if (! entry->decoder)
         entry->decoder = request->decoder;
@@ -582,6 +581,8 @@ static void scan_finish (ScanRequest * request)
         art_cache_current (entry->filename, std::move (request->image_data),
          std::move (request->image_file));
     }
+
+    delete item;
 
     scan_check_complete (playlist);
     scan_schedule ();
