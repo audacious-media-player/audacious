@@ -189,6 +189,17 @@ static void test_ringbuf ()
     assert (ring.size () == 7);
     assert (ring.len () == 5);
     assert (ring.linear () == 2);
+    assert (ring.space () == 2);
+
+    ring.alloc (5);
+
+    for (int i = 0; i < 5; i ++)
+        assert (ring[i] == nums[5 + i]);
+
+    assert (ring.size () == 5);
+    assert (ring.len () == 5);
+    assert (ring.linear () == 2);
+    assert (ring.space () == 0);
 
     ring.alloc (10);
 
@@ -198,6 +209,7 @@ static void test_ringbuf ()
     assert (ring.size () == 10);
     assert (ring.len () == 5);
     assert (ring.linear () == 2);
+    assert (ring.space () == 5);
 
     for (int i = 0; i < 5; i ++)
         assert (ring[i] == nums[5 + i]);
@@ -254,15 +266,32 @@ static void test_ringbuf ()
     assert (ring.len () == 5);
     assert (index.len () == 5);
 
+    ring.move_out (index, 0, -1);
+
+    assert (ring.len () == 0);
+    assert (index.len () == 10);
+
+    for (int i = 0; i < 10; i ++)
+        assert (index[i] == String (int_to_str (i)));
+
+    ring.move_in (index, 5, 5);
+
+    assert (ring.len () == 5);
+    assert (index.len () == 5);
+
     ring.move_in (index, 0, -1);
 
     assert (ring.len () == 10);
     assert (index.len () == 0);
 
     for (int i = 0; i < 10; i ++)
-        assert (ring[i] == String (int_to_str (i)));
+        assert (ring[i] == String (int_to_str ((5 + i) % 10)));
+
+    ring.discard (5);
+    assert (ring.len () == 5);
 
     ring.discard ();
+    assert (ring.len () == 0);
 
     string_leak_check ();
 }

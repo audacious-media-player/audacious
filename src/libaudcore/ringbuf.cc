@@ -37,30 +37,43 @@ void RingBufBase::get_areas (int pos, int len, Areas & areas)
     areas.len2 = len - part;
 }
 
+void RingBufBase::do_realloc (int size)
+{
+    void * mem = realloc (m_data, size);
+    if (size && ! mem)
+        throw std::bad_alloc ();  /* nothing changed yet */
+
+    m_data = mem;
+}
+
 EXPORT void RingBufBase::alloc (int size)
 {
     assert (size >= m_len);
 
-    if (size <= m_size)
+    if (size == m_size)
         return;
 
-    void * mem = realloc (m_data, size);
-    if (! mem)
-        throw std::bad_alloc ();  /* nothing changed yet */
+    /* reallocate first when growing */
+    if (size > m_size)
+        do_realloc (size);
 
     __sync_add_and_fetch (& misc_bytes_allocated, size - m_size);
 
+    int old_size = m_size;
     int to_end = m_size - m_offset;
 
-    m_data = mem;
     m_size = size;
 
     if (to_end < m_len)
     {
-        int new_offset = m_size - to_end;
+        int new_offset = size - to_end;
         memmove ((char *) m_data + new_offset, (char *) m_data + m_offset, to_end);
         m_offset = new_offset;
     }
+
+    /* reallocate last when shrinking */
+    if (size < old_size)
+        do_realloc (size);
 }
 
 EXPORT void RingBufBase::destroy (aud::EraseFunc erase_func)
