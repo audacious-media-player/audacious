@@ -291,7 +291,7 @@ static void request_seek_locked (int time)
 {
     // set up "seek" command whether ready or not;
     // if not ready, it will take effect upon open_audio()
-    pb_control.seek = time;
+    pb_control.seek = aud::max (0, time);
 
     // trigger seek immediately if ready
     if (is_ready () && pb_info.length > 0)
@@ -352,7 +352,7 @@ static void run_playback ()
          "repeat") && aud_get_bool (nullptr, "no_playlist_advance")));
 
         if (! pb_info.ended)
-            request_seek_locked (aud::max (pb_control.repeat_a, 0));
+            request_seek_locked (pb_control.repeat_a);
 
         unlock ();
 
@@ -566,7 +566,7 @@ EXPORT void InputPlugin::write_audio (const void * data, int length)
     if (pb_control.seek < 0)
     {
         if (b >= 0)
-            request_seek_locked (aud::max (0, a));
+            request_seek_locked (a);
         else
             pb_info.ended = true;
     }
@@ -620,7 +620,7 @@ EXPORT int InputPlugin::check_seek ()
 
     if (is_ready () && pb_control.seek >= 0 && pb_info.length > 0)
     {
-        seek = pb_info.time_offset + aud::clamp (pb_control.seek, 0, pb_info.length);
+        seek = pb_info.time_offset + aud::min (pb_control.seek, pb_info.length);
         pb_control.seek = -1;
         output_resume ();
     }
@@ -748,7 +748,7 @@ EXPORT void aud_drct_set_ab_repeat (int a, int b)
     pb_control.repeat_b = b;
 
     if (b >= 0 && is_ready () && output_get_time () >= b)
-        request_seek_locked (aud::max (a, 0));
+        request_seek_locked (a);
 
     unlock ();
 }
