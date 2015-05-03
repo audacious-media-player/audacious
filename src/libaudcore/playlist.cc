@@ -105,6 +105,7 @@ struct Entry {
     Entry (PlaylistAddItem && item);
     ~Entry ();
 
+    void format ();
     void set_tuple (Tuple && new_tuple);
     void set_failed (const String & new_error);
 
@@ -204,6 +205,18 @@ static bool next_song_locked (PlaylistData * playlist, bool repeat, int hint);
 static void playlist_reformat_titles ();
 static void playlist_trigger_scan ();
 
+void Entry::format ()
+{
+    tuple.delete_fallbacks ();
+
+    if (metadata_fallbacks)
+        tuple.generate_fallbacks ();
+    else
+        tuple.generate_title ();
+
+    title_formatter.format (tuple);
+}
+
 void Entry::set_tuple (Tuple && new_tuple)
 {
     /* Hack: We cannot refresh segmented entries (since their info is read from
@@ -218,15 +231,10 @@ void Entry::set_tuple (Tuple && new_tuple)
     if (! new_tuple)
         new_tuple.set_filename (filename);
 
-    if (metadata_fallbacks)
-        new_tuple.generate_fallbacks ();
-    else
-        new_tuple.generate_title ();
-
-    title_formatter.format (new_tuple);
-
     length = aud::max (0, new_tuple.get_int (Tuple::Length));
     tuple = std::move (new_tuple);
+
+    format ();
 }
 
 void PlaylistData::set_entry_tuple (Entry * entry, Tuple && tuple)
@@ -1749,7 +1757,7 @@ static void playlist_reformat_titles ()
     for (auto & playlist : playlists)
     {
         for (auto & entry : playlist->entries)
-            title_formatter.format (entry->tuple);
+            entry->format ();
 
         queue_update (Metadata, playlist.get (), 0, playlist->entries.len ());
     }
