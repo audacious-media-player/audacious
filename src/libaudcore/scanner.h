@@ -37,7 +37,7 @@ struct ScanRequest
 {
     typedef void (* Callback) (ScanRequest * request);
 
-    ScanRequest (const char * filename, int flags, Callback callback,
+    ScanRequest (const String & filename, int flags, Callback callback,
      PluginHandle * decoder = nullptr) :
         filename (filename),
         flags (flags),

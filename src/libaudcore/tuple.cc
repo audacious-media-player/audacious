@@ -684,39 +684,29 @@ EXPORT void Tuple::generate_fallbacks ()
     if (! data)
         return;
 
-    ::String title = get_str (Title);
-    ::String artist = get_str (Artist);
-    ::String album = get_str (Album);
+    generate_title ();
 
-    if (title && artist && album)
+    auto artist = get_str (Artist);
+    auto album = get_str (Album);
+
+    if (artist && album)
         return;
-
-    ::String filename = get_str (Basename);
-    ::String filepath = get_str (Path);
-    int subtune = get_int (Subtune);
 
     data = TupleData::copy_on_write (data);
 
-    if (filepath && ! strcmp (filepath, "cdda://"))
-    {
-        // audio CD:
-        // use "Track N" as the title and "Audio CD" as the album
-
-        if (! title && subtune >= 0)
-            data->set_str (FallbackTitle, str_printf (_("Track %d"), subtune));
-        if (! album)
-            data->set_str (FallbackAlbum, _("Audio CD"));
-
-        return;
-    }
-
-    if (! title)
-        data->set_str (FallbackTitle, filename ? (const char *) filename : _("(unknown title)"));
-
+    auto filepath = get_str (Path);
     if (! filepath)
         return;
 
-    if (strstr (filepath, "://"))
+    if (! strcmp (filepath, "cdda://"))
+    {
+        // audio CD:
+        // use "Audio CD" as the album
+
+        if (! album)
+            data->set_str (FallbackAlbum, _("Audio CD"));
+    }
+    else if (strstr (filepath, "://"))
     {
         // URL:
         // use the domain name as the album
@@ -772,6 +762,34 @@ EXPORT void Tuple::generate_fallbacks ()
             else
                 data->set_str (artist ? FallbackAlbum : FallbackArtist, first);
         }
+    }
+}
+
+EXPORT void Tuple::generate_title ()
+{
+    if (! data)
+        return;
+
+    auto title = get_str (Title);
+    if (title)
+        return;
+
+    data = TupleData::copy_on_write (data);
+
+    auto filepath = get_str (Path);
+    if (filepath && ! strcmp (filepath, "cdda://"))
+    {
+        // audio CD:
+        // use "Track N" as the title
+
+        int subtune = get_int (Subtune);
+        if (subtune >= 0)
+            data->set_str (FallbackTitle, str_printf (_("Track %d"), subtune));
+    }
+    else
+    {
+        auto filename = get_str (Basename);
+        data->set_str (FallbackTitle, filename ? (const char *) filename : _("(unknown title)"));
     }
 }
 

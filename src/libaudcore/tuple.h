@@ -192,6 +192,9 @@ public:
      * filename. */
     void generate_fallbacks ();
 
+    /* Guesses only the song title, if not already set, from the filename. */
+    void generate_title ();
+
     /* Removes guesses made by generate_fallbacks().  This function should be
      * called, for example, before writing a song tag from the tuple. */
     void delete_fallbacks ();

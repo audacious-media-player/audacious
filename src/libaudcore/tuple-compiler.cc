@@ -403,6 +403,11 @@ bool TupleCompiler::compile (const char * expr)
     return true;
 }
 
+void TupleCompiler::reset ()
+{
+    root_nodes.clear ();
+}
+
 /* Evaluate tuple in given TupleEval expression in given
  * context and return resulting string. */
 static void eval_expression (const Index<Node> & nodes, const Tuple & tuple, StringBuf & out)

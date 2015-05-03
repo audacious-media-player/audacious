@@ -167,6 +167,10 @@ static PlaylistData * playing_playlist = nullptr;
 static int resume_playlist = -1;
 static bool resume_paused = false;
 
+static bool metadata_on_play = false;
+static bool metadata_fallbacks = false;
+static TupleCompiler title_formatter;
+
 static PlaybackData playback_data;
 
 static QueuedFunc queued_update;
@@ -200,8 +204,6 @@ static bool next_song_locked (PlaylistData * playlist, bool repeat, int hint);
 static void playlist_reformat_titles ();
 static void playlist_trigger_scan ();
 
-static SmartPtr<TupleCompiler> title_formatter;
-
 void Entry::set_tuple (Tuple && new_tuple)
 {
     /* Hack: We cannot refresh segmented entries (since their info is read from
@@ -216,8 +218,12 @@ void Entry::set_tuple (Tuple && new_tuple)
     if (! new_tuple)
         new_tuple.set_filename (filename);
 
-    new_tuple.generate_fallbacks ();
-    title_formatter->format (new_tuple);
+    if (metadata_fallbacks)
+        new_tuple.generate_fallbacks ();
+    else
+        new_tuple.generate_title ();
+
+    title_formatter.format (new_tuple);
 
     length = aud::max (0, new_tuple.get_int (Tuple::Length));
     tuple = std::move (new_tuple);
@@ -494,7 +500,7 @@ static void scan_check_complete (PlaylistData * playlist)
 
 static bool scan_queue_next_entry ()
 {
-    if (! scan_enabled || aud_get_bool (nullptr, "metadata_on_play"))
+    if (! scan_enabled || metadata_on_play)
         return false;
 
     while (scan_playlist < playlists.len ())
@@ -694,8 +700,6 @@ void playlist_init ()
     scan_enabled = false;
     scan_playlist = scan_row = 0;
 
-    title_formatter.capture (new TupleCompiler);
-
     LEAVE;
 
     /* initialize title formatter */
@@ -703,8 +707,9 @@ void playlist_init ()
 
     hook_associate ("set metadata_on_play", (HookFunction) playlist_trigger_scan, nullptr);
     hook_associate ("set generic_title_format", (HookFunction) playlist_reformat_titles, nullptr);
-    hook_associate ("set show_numbers_in_pl", (HookFunction) playlist_reformat_titles, nullptr);
     hook_associate ("set leading_zero", (HookFunction) playlist_reformat_titles, nullptr);
+    hook_associate ("set metadata_fallbacks", (HookFunction) playlist_reformat_titles, nullptr);
+    hook_associate ("set show_numbers_in_pl", (HookFunction) playlist_reformat_titles, nullptr);
 }
 
 void playlist_enable_scan (bool enable)
@@ -726,8 +731,9 @@ void playlist_end ()
 {
     hook_dissociate ("set metadata_on_play", (HookFunction) playlist_trigger_scan);
     hook_dissociate ("set generic_title_format", (HookFunction) playlist_reformat_titles);
-    hook_dissociate ("set show_numbers_in_pl", (HookFunction) playlist_reformat_titles);
     hook_dissociate ("set leading_zero", (HookFunction) playlist_reformat_titles);
+    hook_dissociate ("set metadata_fallbacks", (HookFunction) playlist_reformat_titles);
+    hook_dissociate ("set show_numbers_in_pl", (HookFunction) playlist_reformat_titles);
 
     ENTER;
 
@@ -743,7 +749,7 @@ void playlist_end ()
     playlists.clear ();
     unique_id_table.clear ();
 
-    title_formatter.clear ();
+    title_formatter.reset ();
 
     LEAVE;
 }
@@ -1737,13 +1743,13 @@ static void playlist_reformat_titles ()
 {
     ENTER;
 
-    String format = aud_get_str (nullptr, "generic_title_format");
-    title_formatter->compile (format);
+    metadata_fallbacks = aud_get_bool (nullptr, "metadata_fallbacks");
+    title_formatter.compile (aud_get_str (nullptr, "generic_title_format"));
 
     for (auto & playlist : playlists)
     {
         for (auto & entry : playlist->entries)
-            title_formatter->format (entry->tuple);
+            title_formatter.format (entry->tuple);
 
         queue_update (Metadata, playlist.get (), 0, playlist->entries.len ());
     }
@@ -1754,6 +1760,8 @@ static void playlist_reformat_titles ()
 static void playlist_trigger_scan ()
 {
     ENTER;
+
+    metadata_on_play = aud_get_bool (nullptr, "metadata_on_play");
 
     for (auto & playlist : playlists)
         scan_queue_playlist (playlist.get ());
