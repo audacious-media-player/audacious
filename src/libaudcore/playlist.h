@@ -76,6 +76,12 @@ enum GetMode {
     WaitGuess  // wait for the entry to be scanned; return a best guess on failure
 };
 
+/* Format descriptor returned by playlist_save_formats() */
+struct SaveFormat {
+    String name;         // human-readable format name
+    Index<String> exts;  // supported filename extensions
+};
+
 } // namespace Playlist
 
 typedef bool (* PlaylistFilterFunc) (const char * filename, void * user);
@@ -377,5 +383,10 @@ bool aud_filename_is_playlist (const char * filename);
 /* Saves the entries in a playlist to a playlist file.  The format of the file
  * is determined from the file extension.  Returns true on success. */
 bool aud_playlist_save (int playlist, const char * filename, Playlist::GetMode mode);
+
+/* Generates a list of the currently supported formats for saving playlists.
+ * The list should not be cached since it may change as plugins are enabled or
+ * disabled. */
+Index<Playlist::SaveFormat> aud_playlist_save_formats ();
 
 #endif

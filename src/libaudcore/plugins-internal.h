@@ -21,6 +21,7 @@
 #define LIBAUDCORE_PLUGINS_INTERNAL_H
 
 #include "plugins.h"
+#include "objects.h"
 
 enum class InputKey;
 class Plugin;
@@ -46,6 +47,8 @@ void plugin_set_enabled (PluginHandle * plugin, bool enabled);
 void plugin_set_failed (PluginHandle * plugin);
 
 bool transport_plugin_has_scheme (PluginHandle * plugin, const char * scheme);
+bool playlist_plugin_can_save (PluginHandle * plugin);
+const Index<String> & playlist_plugin_get_exts (PluginHandle * plugin);
 bool playlist_plugin_has_ext (PluginHandle * plugin, const char * ext);
 bool input_plugin_has_key (PluginHandle * plugin, InputKey key, const char * value);
 bool input_plugin_has_subtunes (PluginHandle * plugin);

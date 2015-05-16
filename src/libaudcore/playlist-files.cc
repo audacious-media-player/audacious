@@ -137,3 +137,22 @@ EXPORT bool aud_playlist_save (int list, const char * filename, Playlist::GetMod
 
     return false;
 }
+
+EXPORT Index<Playlist::SaveFormat> aud_playlist_save_formats ()
+{
+    Index<Playlist::SaveFormat> formats;
+
+    for (auto plugin : aud_plugin_list (PluginType::Playlist))
+    {
+        if (! playlist_plugin_can_save (plugin))
+            continue;
+
+        auto & format = formats.append ();
+        format.name = String (aud_plugin_get_name (plugin));
+
+        for (auto & ext : playlist_plugin_get_exts (plugin))
+            format.exts.append (ext);
+    }
+
+    return formats;
+}
