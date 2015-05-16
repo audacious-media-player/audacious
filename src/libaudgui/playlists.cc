@@ -143,7 +143,7 @@ static void set_format_filters (GtkWidget * selector)
     GtkFileFilter * filter;
 
     filter = gtk_file_filter_new ();
-    gtk_file_filter_set_name (filter, ("Select Format by Extension"));
+    gtk_file_filter_set_name (filter, _("Select Format by Extension"));
     gtk_file_filter_add_pattern (filter, "*");
     gtk_file_chooser_add_filter ((GtkFileChooser *) selector, filter);
 
