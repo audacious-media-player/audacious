@@ -57,10 +57,10 @@ static float gv[AUD_MAX_CHANNELS][AUD_EQ_NBANDS]; /* Gain factor for each channe
 static int K; /* Number of used EQ bands */
 
 /* 2nd order band-pass filter design */
-static void bp2 (float *a, float *b, float fc, float q)
+static void bp2 (float *a, float *b, float fc)
 {
     float th = 2 * M_PI * fc;
-    float C = (1 - tanf (th * q / 2)) / (1 + tanf (th * q / 2));
+    float C = (1 - tanf (th * Q / 2)) / (1 + tanf (th * Q / 2));
 
     a[0] = (1 + C) * cosf (th);
     a[1] = -C;
@@ -75,15 +75,16 @@ void eq_set_format (int new_channels, int new_rate)
     channels = new_channels;
     rate = new_rate;
 
-    /* Calculate number of active filters */
+    /* Calculate number of active filters: the center frequency must be less
+     * than rate/2Q to avoid singularities in the tangent used in bp2() */
     K = AUD_EQ_NBANDS;
 
-    while (CF[K - 1] > (float) rate / 2.2)
+    while (K > 0 && CF[K - 1] > (float) rate / (2.005 * Q))
         K --;
 
     /* Generate filter taps */
     for (int k = 0; k < K; k ++)
-        bp2 (a[k], b[k], CF[k] / (float) rate, Q);
+        bp2 (a[k], b[k], CF[k] / (float) rate);
 
     /* Reset state */
     memset (wqv[0][0], 0, sizeof wqv);
