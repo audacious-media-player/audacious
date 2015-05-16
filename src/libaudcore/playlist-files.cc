@@ -144,7 +144,7 @@ EXPORT Index<Playlist::SaveFormat> aud_playlist_save_formats ()
 
     for (auto plugin : aud_plugin_list (PluginType::Playlist))
     {
-        if (! playlist_plugin_can_save (plugin))
+        if (! aud_plugin_get_enabled (plugin) || ! playlist_plugin_can_save (plugin))
             continue;
 
         auto & format = formats.append ();
