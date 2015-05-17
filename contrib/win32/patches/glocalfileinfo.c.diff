@@ -1,0 +1,148 @@
+--- glocalfileinfo.c.0	2015-05-17 01:31:00 -0400
++++ glocalfileinfo.c	2015-05-17 01:54:24 -0400
+@@ -1579,13 +1579,12 @@
+     }
+ }
+ 
+-static const char *
+-get_icon_name (const char *path,
+-               const char *content_type,
+-               gboolean    use_symbolic,
+-               gboolean   *with_fallbacks_out)
++static GIcon *
++get_icon_for_folder (const char *path,
++                     gboolean    use_symbolic)
+ {
+-  const char *name = NULL;
++  GIcon *icon;
++  const char *name;
+   gboolean with_fallbacks = TRUE;
+ 
+   if (strcmp (path, g_get_home_dir ()) == 0)
+@@ -1626,45 +1625,15 @@
+     {
+       name = use_symbolic ? "folder-videos-symbolic" : "folder-videos";
+     }
+-  else if (g_strcmp0 (content_type, "inode/directory") == 0)
+-    {
+-      name = use_symbolic ? "folder-symbolic" : "folder";
+-    }
+   else
+     {
+-      name = NULL;
++      name = use_symbolic ? "folder-symbolic" : "folder";
+     }
+ 
+-  if (with_fallbacks_out != NULL)
+-    *with_fallbacks_out = with_fallbacks;
+-
+-  return name;
+-}
+-
+-static GIcon *
+-get_icon (const char *path,
+-          const char *content_type,
+-          gboolean    use_symbolic)
+-{
+-  GIcon *icon = NULL;
+-  const char *icon_name;
+-  gboolean with_fallbacks;
+-
+-  icon_name = get_icon_name (path, content_type, use_symbolic, &with_fallbacks);
+-  if (icon_name != NULL)
+-    {
+-      if (with_fallbacks)
+-        icon = g_themed_icon_new_with_default_fallbacks (icon_name);
+-      else
+-        icon = g_themed_icon_new (icon_name);
+-    }
++  if (with_fallbacks)
++    icon = g_themed_icon_new_with_default_fallbacks (name);
+   else
+-    {
+-      if (use_symbolic)
+-        icon = g_content_type_get_symbolic_icon (content_type);
+-      else
+-        icon = g_content_type_get_icon (content_type);
+-    }
++    icon = g_themed_icon_new (name);
+ 
+   return icon;
+ }
+@@ -1839,37 +1808,47 @@
+     {
+       char *content_type = get_content_type (basename, path, stat_ok ? &statbuf : NULL, is_symlink, symlink_broken, flags, FALSE);
+ 
+-      if (content_type)
+-	{
+-	  g_file_info_set_content_type (info, content_type);
+-
+-	  if (_g_file_attribute_matcher_matches_id (attribute_matcher,
+-                                                     G_FILE_ATTRIBUTE_ID_STANDARD_ICON)
+-               || _g_file_attribute_matcher_matches_id (attribute_matcher,
+-                                                        G_FILE_ATTRIBUTE_ID_STANDARD_SYMBOLIC_ICON))
+-	    {
+-	      GIcon *icon;
++      if (_g_file_attribute_matcher_matches_id (attribute_matcher,
++                                                G_FILE_ATTRIBUTE_ID_STANDARD_ICON) ||
++          _g_file_attribute_matcher_matches_id (attribute_matcher,
++                                                G_FILE_ATTRIBUTE_ID_STANDARD_SYMBOLIC_ICON))
++        {
++          GIcon *icon;
+ 
+-              /* non symbolic icon */
+-              icon = get_icon (path, content_type, FALSE);
+-              if (icon != NULL)
+-                {
+-                  g_file_info_set_icon (info, icon);
+-                  g_object_unref (icon);
+-                }
+-
+-              /* symbolic icon */
+-              icon = get_icon (path, content_type, TRUE);
+-              if (icon != NULL)
+-                {
+-                  g_file_info_set_symbolic_icon (info, icon);
+-                  g_object_unref (icon);
+-                }
++          /* non symbolic icon */
++          if (stat_ok && S_ISDIR (statbuf.st_mode))
++            icon = get_icon_for_folder (path, FALSE);
++          else if (content_type != NULL)
++            icon = g_content_type_get_icon (content_type);
++          else
++            icon = NULL;
++
++          if (icon != NULL)
++            {
++              g_file_info_set_icon (info, icon);
++              g_object_unref (icon);
++            }
++
++          /* symbolic icon */
++          if (stat_ok && S_ISDIR (statbuf.st_mode))
++            icon = get_icon_for_folder (path, TRUE);
++          else if (content_type != NULL)
++            icon = g_content_type_get_symbolic_icon (content_type);
++          else
++            icon = NULL;
++
++          if (icon != NULL)
++            {
++              g_file_info_set_symbolic_icon (info, icon);
++              g_object_unref (icon);
++            }
++        }
+ 
+-	    }
+-	  
+-	  g_free (content_type);
+-	}
++      if (content_type != NULL)
++        {
++          g_file_info_set_content_type (info, content_type);
++          g_free (content_type);
++        }
+     }
+ 
+   if (_g_file_attribute_matcher_matches_id (attribute_matcher,
