@@ -280,6 +280,9 @@ static bool read_header (VFSFile & handle, int * version, bool *
                 return false;
         }
 
+        if (extended_size > * data_size)
+            return false;
+
         * header_size += extended_size;
         * data_size -= extended_size;
     }
