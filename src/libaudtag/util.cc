@@ -167,7 +167,7 @@ const char *convert_numericgenre_to_text(int numericgenre)
             return pair.genre;
     }
 
-    return "Unknown";
+    return nullptr;
 }
 
 uint32_t unsyncsafe32 (uint32_t x)
