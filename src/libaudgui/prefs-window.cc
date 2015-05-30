@@ -429,9 +429,6 @@ static void fill_category_list (GtkTreeView * treeview, GtkNotebook * notebook)
     gtk_tree_view_column_pack_start (column, renderer, false);
     gtk_tree_view_column_set_attributes (column, renderer, "text", 1, nullptr);
 
-    g_object_set ((GObject *) renderer, "wrap-width", 106, "wrap-mode",
-     PANGO_WRAP_WORD_CHAR, nullptr);
-
     GtkListStore * store = gtk_list_store_new (CATEGORY_VIEW_N_COLS,
      GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_INT);
     gtk_tree_view_set_model (treeview, (GtkTreeModel *) store);
@@ -711,7 +708,6 @@ static void create_prefs_window ()
     gtk_window_set_type_hint ((GtkWindow *) prefswin, GDK_WINDOW_TYPE_HINT_DIALOG);
     gtk_container_set_border_width ((GtkContainer *) prefswin, 12);
     gtk_window_set_title ((GtkWindow *) prefswin, _("Audacious Settings"));
-    gtk_window_set_default_size ((GtkWindow *) prefswin, 680, 400);
 
     GtkWidget * vbox = gtk_vbox_new (false, 0);
     gtk_container_add ((GtkContainer *) prefswin, vbox);
@@ -727,7 +723,7 @@ static void create_prefs_window ()
 
     category_treeview = gtk_tree_view_new ();
     gtk_container_add ((GtkContainer *) scrolledwindow, category_treeview);
-    gtk_widget_set_size_request (scrolledwindow, 168, -1);
+    gtk_widget_set_size_request (scrolledwindow, audgui_get_dpi () * 7 / 4, -1);
     gtk_tree_view_set_headers_visible ((GtkTreeView *) category_treeview, false);
 
     category_notebook = gtk_notebook_new ();

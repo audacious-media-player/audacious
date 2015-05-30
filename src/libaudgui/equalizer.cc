@@ -78,7 +78,7 @@ static GtkWidget * create_slider (const char * name, int band, GtkWidget * hbox)
     gtk_scale_set_draw_value ((GtkScale *) slider, true);
     gtk_scale_set_value_pos ((GtkScale *) slider, GTK_POS_BOTTOM);
     gtk_range_set_inverted ((GtkRange *) slider, true);
-    gtk_widget_set_size_request (slider, -1, 120);
+    gtk_widget_set_size_request (slider, -1, audgui_get_dpi () * 5 / 4);
 
     g_object_set_data ((GObject *) slider, "band", GINT_TO_POINTER (band));
     g_signal_connect (slider, "value-changed", (GCallback) slider_moved, nullptr);

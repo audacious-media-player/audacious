@@ -171,9 +171,11 @@ static gboolean keypress_cb (GtkWidget * widget, GdkEventKey * event)
 
 static GtkWidget * create_queue_manager ()
 {
+    int dpi = audgui_get_dpi ();
+
     GtkWidget * qm_win = gtk_dialog_new ();
     gtk_window_set_title ((GtkWindow *) qm_win, _("Queue Manager"));
-    gtk_window_set_default_size ((GtkWindow *) qm_win, 400, 250);
+    gtk_window_set_default_size ((GtkWindow *) qm_win, 3 * dpi, 2 * dpi);
 
     GtkWidget * vbox = gtk_dialog_get_content_area ((GtkDialog *) qm_win);
 

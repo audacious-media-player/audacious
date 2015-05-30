@@ -304,13 +304,15 @@ static void add_entry (GtkWidget * grid, const char * title, GtkWidget * entry,
     gtk_table_attach ((GtkTable *) grid, label, x, x + span, y, y + 1,
      GTK_FILL, GTK_FILL, 0, 0);
     gtk_table_attach ((GtkTable *) grid, entry, x, x + span, y + 1, y + 2,
-     GTK_FILL, GTK_FILL, 0, 0);
+     GtkAttachOptions (GTK_EXPAND | GTK_FILL), GTK_FILL, 0, 0);
 
     g_signal_connect (entry, "changed", (GCallback) entry_changed, nullptr);
 }
 
 static void create_infowin ()
 {
+    int dpi = audgui_get_dpi ();
+
     infowin = gtk_window_new (GTK_WINDOW_TOPLEVEL);
     gtk_container_set_border_width ((GtkContainer *) infowin, 6);
     gtk_window_set_title ((GtkWindow *) infowin, _("Song Info"));
@@ -326,7 +328,7 @@ static void create_infowin ()
     gtk_table_attach_defaults ((GtkTable *) main_grid, widgets.image, 0, 1, 0, 1);
 
     widgets.location = gtk_label_new ("");
-    gtk_widget_set_size_request (widgets.location, 200, -1);
+    gtk_widget_set_size_request (widgets.location, 2 * dpi, -1);
     gtk_label_set_line_wrap ((GtkLabel *) widgets.location, true);
     gtk_label_set_line_wrap_mode ((GtkLabel *) widgets.location, PANGO_WRAP_WORD_CHAR);
     gtk_label_set_selectable ((GtkLabel *) widgets.location, true);
@@ -357,6 +359,7 @@ static void create_infowin ()
      GTK_FILL, GTK_FILL, 0, 0);
 
     widgets.title = gtk_entry_new ();
+    gtk_widget_set_size_request (widgets.title, 3 * dpi, -1);
     add_entry (grid, _("Title"), widgets.title, 0, 0, 2);
 
     widgets.artist = gtk_entry_new ();
