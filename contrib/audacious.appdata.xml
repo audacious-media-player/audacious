@@ -1,8 +1,7 @@
-<!-- Copyright 2015 Audacious developers -->
-
 <?xml version="1.0" encoding="UTF-8"?>
-<component>
-  <id type="desktop">audacious.desktop</id>
+<!-- Copyright 2015 Audacious developers -->
+<component type="desktop">
+  <id>audacious.desktop</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>BSD-2-Clause</project_license>
   <name>Audacious</name>

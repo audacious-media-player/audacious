@@ -4,6 +4,7 @@
 #
 # Translators:
 # ABE Tsunehiko, 2013
+# ABE Tsunehiko, 2015
 # natird zoto <dritan86@gmail.com>, 2012
 # ABE Tsunehiko, 2013
 # Nastuko Toda <m2330880989@shibuya-center.com>, 2012
@@ -12,15 +13,15 @@
 # Nastuko Toda <m2330880989@shibuya-center.com>, 2012
 # natird zoto <dritan86@gmail.com>, 2012
 # natird zoto <dritan86@gmail.com>, 2012
-# Shuuji Takahashi <shuuji3@gmail.com>, 2012-2014
+# TAKAHASHI Shuuji <shuuji3@gmail.com>, 2012-2014
 # ABE Tsunehiko, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2015-02-28 19:15+0100\n"
-"PO-Revision-Date: 2015-02-20 17:09+0000\n"
-"Last-Translator: Mika Kobayashi\n"
+"POT-Creation-Date: 2015-05-30 15:47+0200\n"
+"PO-Revision-Date: 2015-05-27 14:27+0000\n"
+"Last-Translator: ABE Tsunehiko\n"
 "Language-Team: Japanese (http://www.transifex.com/projects/p/audacious/"
 "language/ja/)\n"
 "Language: ja\n"
@@ -79,7 +80,7 @@ msgstr "ジャンプトゥソングウィンドウを表示する"
 
 #: src/audacious/main.cc:72
 msgid "Start without a graphical interface"
-msgstr "グラフィカルインターフェースなしで開始"
+msgstr "グラフィカルインターフェイスなしで開始"
 
 #: src/audacious/main.cc:73
 msgid "Quit on playback stop"
@@ -211,7 +212,7 @@ msgstr "トラック %d"
 
 #: src/libaudcore/tuple.cc:701
 msgid "Audio CD"
-msgstr "音楽CD"
+msgstr "オーディオ CD"
 
 #: src/libaudcore/tuple.cc:707
 msgid "(unknown title)"
@@ -219,11 +220,11 @@ msgstr "(不明なタイトル)"
 
 #: src/libaudcore/vfs.cc:67
 msgid "Invalid URI"
-msgstr "無効なURI"
+msgstr "無効な URI"
 
 #: src/libaudcore/vfs.cc:83
 msgid "Unknown URI scheme"
-msgstr "不明なURIスキーマ"
+msgstr "不明な URI スキーマ"
 
 #: src/libaudcore/vfs_local.cc:82
 msgid "Invalid file name"
@@ -256,7 +257,7 @@ msgstr "削除(_R)"
 #: src/libaudgui/url-opener.cc:76 src/libaudqt/playlist-management.cc:47
 #: src/libaudqt/prefs-plugin.cc:121
 msgid "_Cancel"
-msgstr "キャンセル (_C)"
+msgstr "キャンセル(_C)"
 
 #: src/libaudgui/confirm.cc:60 src/libaudqt/playlist-management.cc:72
 msgid "Remove Playlist"
@@ -264,7 +265,7 @@ msgstr "プレイリストを削除"
 
 #: src/libaudgui/confirm.cc:62 src/libaudqt/playlist-management.cc:44
 msgid "_Don’t ask again"
-msgstr "再び表示しない (_D)"
+msgstr "再び表示しない(_D)"
 
 #: src/libaudgui/confirm.cc:87
 msgid "_Rename"
@@ -324,7 +325,7 @@ msgstr "16 kHz"
 
 #: src/libaudgui/equalizer.cc:124 src/libaudqt/equalizer.cc:90
 msgid "Equalizer"
-msgstr "イコライザ"
+msgstr "イコライザー"
 
 #: src/libaudgui/equalizer.cc:138 src/libaudqt/equalizer.cc:72
 msgid "Preamp"
@@ -336,7 +337,7 @@ msgstr "ファイルを開く"
 
 #: src/libaudgui/file-opener.cc:81 src/libaudgui/url-opener.cc:50
 msgid "_Open"
-msgstr "開く (_O)"
+msgstr "開く(_O)"
 
 #: src/libaudgui/file-opener.cc:83
 msgid "Close _dialog on open"
@@ -348,7 +349,7 @@ msgstr "ファイルの追加"
 
 #: src/libaudgui/file-opener.cc:89 src/libaudgui/url-opener.cc:56
 msgid "_Add"
-msgstr "追加 (_A)"
+msgstr "追加(_A)"
 
 #: src/libaudgui/file-opener.cc:91
 msgid "Close _dialog on add"
@@ -418,7 +419,7 @@ msgstr "アシッドジャズ"
 
 #: src/libaudgui/infowin.cc:84
 msgid "Acid Rock"
-msgstr "アシッド・ロック"
+msgstr "アシッドロック"
 
 #: src/libaudgui/infowin.cc:85
 msgid "Ambient"
@@ -466,7 +467,7 @@ msgstr "フォーク"
 
 #: src/libaudgui/infowin.cc:96
 msgid "Funk"
-msgstr "ファンキー"
+msgstr "ファンク"
 
 #: src/libaudgui/infowin.cc:97
 msgid "Gangsta Rap"
@@ -566,7 +567,7 @@ msgstr "テクノ"
 
 #: src/libaudgui/infowin.cc:121
 msgid "Trip-hop"
-msgstr "トリップ・ホップ"
+msgstr "トリップホップ"
 
 #: src/libaudgui/infowin.cc:227
 msgid "Save successful"
@@ -596,11 +597,11 @@ msgstr "トラック番号"
 
 #: src/libaudgui/infowin.cc:389
 msgid "Clea_r fields when moving to next song"
-msgstr "次の曲に移る際にフィールドをクリアする (_R)"
+msgstr "次の曲に移る際にフィールドをクリアする(_R)"
 
 #: src/libaudgui/infowin.cc:403 src/libaudqt/infowin.cc:72
 msgid "_Save"
-msgstr "保存 (_S)"
+msgstr "保存(_S)"
 
 #: src/libaudgui/infowin.cc:409
 msgid "_Next"
@@ -617,7 +618,7 @@ msgstr "N/A"
 
 #: src/libaudgui/jump-to-time.cc:47 src/libaudgui/jump-to-track.cc:312
 msgid "_Jump"
-msgstr "ジャンプ (_J)"
+msgstr "ジャンプ(_J)"
 
 #: src/libaudgui/jump-to-time.cc:51
 msgid "Jump to Time"
@@ -646,11 +647,11 @@ msgstr "フィルタ:"
 
 #: src/libaudgui/jump-to-track.cc:264
 msgid "_Filter:"
-msgstr "フィルタ(_F):"
+msgstr "フィルター(_F):"
 
 #: src/libaudgui/jump-to-track.cc:296
 msgid "C_lose on jump"
-msgstr "ジャンプしたらダイアログを閉じる (_L)"
+msgstr "ジャンプしたらダイアログを閉じる(_L)"
 
 #: src/libaudgui/playlists.cc:89
 msgid "_Overwrite"
@@ -683,7 +684,7 @@ msgstr "インポート(_I)"
 
 #: src/libaudgui/plugin-menu.cc:40
 msgid "_Plugins ..."
-msgstr "プラグイン (_P)"
+msgstr "プラグイン(_P)"
 
 #: src/libaudgui/plugin-prefs.cc:109 src/libaudqt/prefs-plugin.cc:56
 #, c-format
@@ -972,8 +973,7 @@ msgstr "<b>互換性</b>"
 
 #: src/libaudgui/prefs-window.cc:265 src/libaudqt/prefs-window.cc:271
 msgid "Interpret \\ (backward slash) as a folder delimiter"
-msgstr ""
-"\\ (バックスラッシュ) をフォルダーのデリミタ（区切り文字）として解釈する"
+msgstr "\\ (バックスラッシュ) をフォルダーの区切り文字として解釈する"
 
 #: src/libaudgui/prefs-window.cc:268 src/libaudqt/prefs-window.cc:274
 msgid "<b>Song Display</b>"
@@ -998,7 +998,7 @@ msgstr "再生が終わるまで曲のメタデータを読み込まない"
 
 #: src/libaudgui/prefs-window.cc:277 src/libaudqt/prefs-window.cc:283
 msgid "Probe content of files with no recognized file name extension"
-msgstr "ファイル拡張子が未知のときにはファイル内容を精査"
+msgstr "ファイル拡張子が未知のときにはファイル内容を精査する"
 
 #: src/libaudgui/prefs-window.cc:282 src/libaudqt/prefs-window.cc:288
 msgid "<b>Album Art</b>"
@@ -1086,7 +1086,7 @@ msgstr "Audacious の設定"
 
 #: src/libaudgui/queue-manager.cc:175 src/libaudqt/queue-manager.cc:133
 msgid "Queue Manager"
-msgstr "キューマネージャ"
+msgstr "キューマネージャー"
 
 #: src/libaudgui/queue-manager.cc:193 src/libaudqt/queue-manager.cc:115
 msgid "_Unqueue"
@@ -1122,11 +1122,11 @@ msgstr ""
 
 #: src/libaudqt/fileopener.cc:40
 msgid "Open Folder"
-msgstr "フォルダを開く"
+msgstr "フォルダーを開く"
 
 #: src/libaudqt/fileopener.cc:42
 msgid "Add Folder"
-msgstr "フォルダを追加"
+msgstr "フォルダーを追加"
 
 #: src/libaudqt/fileopener.cc:46 src/libaudqt/fileopener.cc:47
 msgid "Open"
@@ -1162,7 +1162,7 @@ msgstr "技術情報"
 
 #: src/libaudqt/info-widget.cc:53
 msgid "MIME Type"
-msgstr "MIMEタイプ"
+msgstr "MIME タイプ"
 
 #: src/libaudqt/info-widget.cc:56
 msgid "Bitrate"

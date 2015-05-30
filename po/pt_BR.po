@@ -9,6 +9,7 @@
 # Cleiton Lima <cleitoncfl@yahoo.com.br>, 2011
 # Cleiton Lima <cleitoncfl@yahoo.com.br>, 2011
 # edu engler <eduengler@gmail.com>, 2012
+# F Marcelo O Amarante <marcelo.amarante@hotmail.com>, 2015
 # Habner Costa <habnertc@msn.com>, 2013
 # Habner Costa <habnertc@msn.com>, 2013
 # jimmiemacedo <jimmie.macedo@gmail.com>, 2012
@@ -24,9 +25,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2015-02-28 19:15+0100\n"
-"PO-Revision-Date: 2014-12-26 15:53+0000\n"
-"Last-Translator: Alexandro Casanova <shorterfire@gmail.com>\n"
+"POT-Creation-Date: 2015-05-30 15:47+0200\n"
+"PO-Revision-Date: 2015-05-06 19:43+0000\n"
+"Last-Translator: F Marcelo O Amarante <marcelo.amarante@hotmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/"
 "audacious/language/pt_BR/)\n"
 "Language: pt_BR\n"
@@ -81,7 +82,7 @@ msgstr "Mostrar janela principal"
 
 #: src/audacious/main.cc:71
 msgid "Display the jump-to-song window"
-msgstr "Exibir janela ir-para-o-som"
+msgstr "Exibir a janela ir-para-a-música"
 
 #: src/audacious/main.cc:72
 msgid "Start without a graphical interface"
@@ -647,7 +648,7 @@ msgstr "_Remover da fila"
 
 #: src/libaudgui/jump-to-track.cc:238
 msgid "Jump to Song"
-msgstr "Pular para Música"
+msgstr "Ir para a Música"
 
 #: src/libaudgui/jump-to-track.cc:263
 msgid "Filter: "

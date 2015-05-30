@@ -101,6 +101,7 @@ private:
     };
 
     void get_areas (int pos, int len, Areas & areas);
+    void do_realloc (int size);
 
     void * m_data;
     int m_size, m_offset, m_len;
