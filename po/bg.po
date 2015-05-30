@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2015-02-28 19:15+0100\n"
-"PO-Revision-Date: 2015-02-19 22:30+0000\n"
+"POT-Creation-Date: 2015-05-30 15:47+0200\n"
+"PO-Revision-Date: 2015-04-26 07:27+0000\n"
 "Last-Translator: Радослав Иванов <reckku@gmail.com>\n"
 "Language-Team: Bulgarian (http://www.transifex.com/projects/p/audacious/"
 "language/bg/)\n"
@@ -47,7 +47,7 @@ msgstr "Пауза"
 
 #: src/audacious/main.cc:64
 msgid "Pause if playing, play otherwise"
-msgstr "Временно спиране, ако се изпълнява, в противен случай ― изпълнение"
+msgstr "Временно спиране, ако се възпроизвежда, в противен случай ― изпълнение"
 
 #: src/audacious/main.cc:65
 msgid "Stop playback"
@@ -63,7 +63,7 @@ msgstr "Прескочи до следващата песен"
 
 #: src/audacious/main.cc:68
 msgid "Add files to the playlist"
-msgstr "Добавяне на файлове в списъка за изпълнение"
+msgstr "Добавяне на файлове в списъка за възпроизвеждане"
 
 #: src/audacious/main.cc:69
 msgid "Add files to a temporary playlist"
@@ -125,7 +125,7 @@ msgstr[1] "намерени са %d файла"
 
 #: src/libaudcore/adder.cc:317 src/libaudcore/playlist.cc:141
 msgid "New Playlist"
-msgstr "Нов списък за изпълнение"
+msgstr "Нов списък за възпроизвеждане"
 
 #: src/libaudcore/audstrings.cc:528
 #, c-format
@@ -262,7 +262,7 @@ msgstr "_Отказ"
 
 #: src/libaudgui/confirm.cc:60 src/libaudqt/playlist-management.cc:72
 msgid "Remove Playlist"
-msgstr "Премахни Списъка за изпълнение"
+msgstr "Премахни списъка за възпроизвеждане"
 
 #: src/libaudgui/confirm.cc:62 src/libaudqt/playlist-management.cc:44
 msgid "_Don’t ask again"
@@ -274,11 +274,11 @@ msgstr "_Преименуване"
 
 #: src/libaudgui/confirm.cc:91
 msgid "Rename Playlist"
-msgstr "Преименуване на списъка за изпълнение"
+msgstr "Преименуване на списъка за възпроизвеждане"
 
 #: src/libaudgui/confirm.cc:91
 msgid "What would you like to call this playlist?"
-msgstr "Как искате да именувате този списък за изпълнение?"
+msgstr "Как искате да именувате този списък за възпроизвеждане?"
 
 #: src/libaudgui/equalizer.cc:45 src/libaudqt/equalizer.cc:63
 msgid "_Enable"
@@ -669,7 +669,7 @@ msgstr "Да се презапише ли %s?"
 
 #: src/libaudgui/playlists.cc:123
 msgid "Export Playlist"
-msgstr "Изнасяне на списък за изпълнение"
+msgstr "Изнасяне на списък за възпроизвеждане"
 
 #: src/libaudgui/playlists.cc:124
 msgid "_Export"
@@ -677,7 +677,7 @@ msgstr "_Изнасяне"
 
 #: src/libaudgui/playlists.cc:130
 msgid "Import Playlist"
-msgstr "Внасяне на списък за изпълнение"
+msgstr "Внасяне на списък за възпроизвеждане"
 
 #: src/libaudgui/playlists.cc:131
 msgid "_Import"
@@ -726,7 +726,7 @@ msgstr "Интернет мрежа"
 #: src/libaudgui/prefs-window.cc:85 src/libaudgui/prefs-window.cc:95
 #: src/libaudqt/prefs-window.cc:88 src/libaudqt/prefs-window.cc:98
 msgid "Playlist"
-msgstr "Списък за изпълнение"
+msgstr "Списък за възпроизвеждане"
 
 #: src/libaudgui/prefs-window.cc:87 src/libaudqt/prefs-window.cc:90
 msgid "Plugins"
@@ -951,11 +951,11 @@ msgstr "<b>Поведение</b>"
 
 #: src/libaudgui/prefs-window.cc:253 src/libaudqt/prefs-window.cc:257
 msgid "Resume playback on startup"
-msgstr "Продължи изпълнението при стартиране"
+msgstr "Продължи възпроизвеждането при стартиране"
 
 #: src/libaudgui/prefs-window.cc:255 src/libaudqt/prefs-window.cc:259
 msgid "Pause instead of resuming immediately"
-msgstr "Пауза, вместо незабавно изпълнение"
+msgstr "Пауза, вместо незабавно възпроизвеждане"
 
 #: src/libaudgui/prefs-window.cc:258 src/libaudqt/prefs-window.cc:262
 msgid "Advance when the current song is deleted"
@@ -975,7 +975,7 @@ msgstr "<b>Съвместимост</b>"
 
 #: src/libaudgui/prefs-window.cc:265 src/libaudqt/prefs-window.cc:271
 msgid "Interpret \\ (backward slash) as a folder delimiter"
-msgstr "Знакът „\\“ да се тълкува като раделител на папките в пътя до файла"
+msgstr "Знакът „\\“ да се тълкува като разделител на папките в пътя до файла"
 
 #: src/libaudgui/prefs-window.cc:268 src/libaudqt/prefs-window.cc:274
 msgid "<b>Song Display</b>"
@@ -996,7 +996,7 @@ msgstr "<b>Допълнителни</b>"
 #: src/libaudgui/prefs-window.cc:275 src/libaudqt/prefs-window.cc:268
 #: src/libaudqt/prefs-window.cc:281
 msgid "Do not load metadata for songs until played"
-msgstr "Да не се зареждат метаданни за песните, докато се изпълняват"
+msgstr "Да не се зареждат метаданни за песните, докато се възпроизвеждат"
 
 #: src/libaudgui/prefs-window.cc:277 src/libaudqt/prefs-window.cc:283
 msgid "Probe content of files with no recognized file name extension"
