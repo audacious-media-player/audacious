@@ -3,17 +3,19 @@
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
+# Andreas Rönnquist <gusnan@gusnan.se>, 2015
 # Bo Serrander <bserrander@gmail.com>, 2013
 # Fredrik Ismyren <fredrik@ismyren.se>, 2014
-# Martin Jernberg <bittin@cafe8bitar.se>, 2014
+# Gaius Anderson <gaius.ankh@gmail.com>, 2015
+# Luna Jernberg <bittin@cafe8bitar.se>, 2014
 # Martin Persenius <martin@persenius.net>, 2004
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2015-02-28 19:15+0100\n"
-"PO-Revision-Date: 2014-12-22 12:38+0000\n"
-"Last-Translator: Thomas Lange <thomas-lange2@gmx.de>\n"
+"POT-Creation-Date: 2015-05-30 15:47+0200\n"
+"PO-Revision-Date: 2015-05-21 22:21+0000\n"
+"Last-Translator: Andreas Rönnquist <gusnan@gusnan.se>\n"
 "Language-Team: Swedish (http://www.transifex.com/projects/p/audacious/"
 "language/sv/)\n"
 "Language: sv\n"
@@ -125,7 +127,7 @@ msgstr "Ljud-CD, spår %s"
 
 #: src/libaudcore/audstrings.cc:532 src/libaudcore/tuple.cc:481
 msgid "(character encoding error)"
-msgstr ""
+msgstr "(teckenkodningsfel)"
 
 #: src/libaudcore/playback.cc:328 src/libaudcore/probe.cc:151
 msgid "Error loading plugin"
@@ -146,7 +148,7 @@ msgstr "Okänt uppspelningsfel"
 
 #: src/libaudcore/playback.cc:514
 msgid "Invalid audio format"
-msgstr ""
+msgstr "Felaktigt ljudformat"
 
 #: src/libaudcore/playlist.cc:142
 msgid "Now Playing"
@@ -163,12 +165,12 @@ msgstr ""
 #: src/libaudcore/playlist-files.cc:76
 #, c-format
 msgid "Cannot load %s: unsupported file name extension."
-msgstr ""
+msgstr "Kan inte ladda %s: filändelsen stöds ej"
 
 #: src/libaudcore/playlist-files.cc:136
 #, c-format
 msgid "Cannot save %s: unsupported file name extension."
-msgstr ""
+msgstr "Kan inte spara %s: filändelsen stöds ej"
 
 #: src/libaudcore/probe.cc:119
 msgid "Seek error"
@@ -200,15 +202,15 @@ msgstr[1] "%d kanaler"
 #: src/libaudcore/tuple.cc:699
 #, c-format
 msgid "Track %d"
-msgstr ""
+msgstr "Låt %d"
 
 #: src/libaudcore/tuple.cc:701
 msgid "Audio CD"
-msgstr ""
+msgstr "Ljud CD"
 
 #: src/libaudcore/tuple.cc:707
 msgid "(unknown title)"
-msgstr ""
+msgstr "(okänd titel)"
 
 #: src/libaudcore/vfs.cc:67
 msgid "Invalid URI"
@@ -220,7 +222,7 @@ msgstr "Okänt URI-schema"
 
 #: src/libaudcore/vfs_local.cc:82
 msgid "Invalid file name"
-msgstr ""
+msgstr "Felaktigt filnamn"
 
 #: src/libaudgui/about.cc:35 src/libaudqt/about.cc:37
 msgid "Credits"
@@ -589,7 +591,7 @@ msgstr "Spår Nummer"
 
 #: src/libaudgui/infowin.cc:389
 msgid "Clea_r fields when moving to next song"
-msgstr ""
+msgstr "Töm fält vid hopp till nästa låt"
 
 #: src/libaudgui/infowin.cc:403 src/libaudqt/infowin.cc:72
 msgid "_Save"
@@ -597,7 +599,7 @@ msgstr "_Spara"
 
 #: src/libaudgui/infowin.cc:409
 msgid "_Next"
-msgstr ""
+msgstr "_Nästa"
 
 #: src/libaudgui/infowin.cc:455
 #, c-format
@@ -745,15 +747,15 @@ msgstr "Transport"
 
 #: src/libaudgui/prefs-window.cc:103 src/libaudqt/prefs-window.cc:106
 msgid "Track number"
-msgstr ""
+msgstr "Låtnummer"
 
 #: src/libaudgui/prefs-window.cc:105 src/libaudqt/prefs-window.cc:108
 msgid "File name"
-msgstr ""
+msgstr "Filnamn"
 
 #: src/libaudgui/prefs-window.cc:106 src/libaudqt/prefs-window.cc:109
 msgid "File path"
-msgstr ""
+msgstr "Filens sökväg"
 
 #: src/libaudgui/prefs-window.cc:107 src/libaudqt/prefs-window.cc:110
 msgid "Date"
@@ -990,7 +992,7 @@ msgstr "Ladda inte låtarnas metadata innan de spelas"
 
 #: src/libaudgui/prefs-window.cc:277 src/libaudqt/prefs-window.cc:283
 msgid "Probe content of files with no recognized file name extension"
-msgstr ""
+msgstr "Undersök innehåll i filer med okänd filändelse"
 
 #: src/libaudgui/prefs-window.cc:282 src/libaudqt/prefs-window.cc:288
 msgid "<b>Album Art</b>"
@@ -1034,27 +1036,27 @@ msgstr "Visa tidsskala för aktuell låt"
 
 #: src/libaudgui/prefs-window.cc:319 src/libaudqt/prefs-window.cc:325
 msgid "TITLE"
-msgstr "RUBRIK"
+msgstr "TITEL"
 
 #: src/libaudgui/prefs-window.cc:320 src/libaudqt/prefs-window.cc:326
 msgid "ARTIST - TITLE"
-msgstr "ARTIST - RUBRIK"
+msgstr "ARTIST - TITEL"
 
 #: src/libaudgui/prefs-window.cc:321 src/libaudqt/prefs-window.cc:327
 msgid "ARTIST - ALBUM - TITLE"
-msgstr "ARTIST - ALBUM - RUBRIK"
+msgstr "ARTIST - ALBUM - TITEL"
 
 #: src/libaudgui/prefs-window.cc:322 src/libaudqt/prefs-window.cc:328
 msgid "ARTIST - ALBUM - TRACK. TITLE"
-msgstr "ARTIST - ALBUM - SPÅR. RUBRIK"
+msgstr "ARTIST - ALBUM - SPÅR. TITEL"
 
 #: src/libaudgui/prefs-window.cc:323 src/libaudqt/prefs-window.cc:329
 msgid "ARTIST [ ALBUM ] - TRACK. TITLE"
-msgstr "ARTIST [ ALBUM ] - SPÅR. RUBRIK"
+msgstr "ARTIST [ ALBUM ] - SPÅR. TITEL"
 
 #: src/libaudgui/prefs-window.cc:324 src/libaudqt/prefs-window.cc:330
 msgid "ALBUM - TITLE"
-msgstr "ALBUM - RUBRIK"
+msgstr "ALBUM - TITEL"
 
 #: src/libaudgui/prefs-window.cc:418
 msgid "Category"
@@ -1066,7 +1068,7 @@ msgstr "Anpassad"
 
 #: src/libaudgui/prefs-window.cc:505 src/libaudqt/prefs-window.cc:338
 msgid "Title format:"
-msgstr "Rubrikformat:"
+msgstr "Titelformat:"
 
 #: src/libaudgui/prefs-window.cc:509 src/libaudqt/prefs-window.cc:349
 msgid "Custom string:"
@@ -1114,19 +1116,19 @@ msgstr ""
 
 #: src/libaudqt/fileopener.cc:40
 msgid "Open Folder"
-msgstr ""
+msgstr "Öppna Mapp"
 
 #: src/libaudqt/fileopener.cc:42
 msgid "Add Folder"
-msgstr ""
+msgstr "Lägg till Mapp"
 
 #: src/libaudqt/fileopener.cc:46 src/libaudqt/fileopener.cc:47
 msgid "Open"
-msgstr ""
+msgstr "Öppna"
 
 #: src/libaudqt/fileopener.cc:48 src/libaudqt/fileopener.cc:49
 msgid "Add"
-msgstr ""
+msgstr "Lägg till"
 
 #: src/libaudqt/info-widget.cc:37
 msgid "Metadata"
@@ -1167,7 +1169,7 @@ msgstr "Ingen information om %s.\n"
 
 #: src/libaudqt/log-inspector.cc:106
 msgid "Level"
-msgstr ""
+msgstr "Nivå"
 
 #: src/libaudqt/log-inspector.cc:107
 msgid "Filename"
@@ -1175,19 +1177,19 @@ msgstr "Filnamn"
 
 #: src/libaudqt/log-inspector.cc:108
 msgid "Line"
-msgstr ""
+msgstr "Linje"
 
 #: src/libaudqt/log-inspector.cc:109
 msgid "Function"
-msgstr ""
+msgstr "Funktion"
 
 #: src/libaudqt/log-inspector.cc:110
 msgid "Message"
-msgstr ""
+msgstr "Meddelande"
 
 #: src/libaudqt/log-inspector.cc:175
 msgid "Log Inspector"
-msgstr ""
+msgstr "Loggvisare"
 
 #: src/libaudqt/log-inspector.cc:186
 msgid "Log Level:"
