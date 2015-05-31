@@ -32,7 +32,6 @@ LIBRARY_PATH=/C/GTK/lib:/C/libs/lib</tt></p></blockquote>
 <p>In the MinGW Installation Manager window, install the following packages:</p>
 <ul><li>mingw32-base (bin)</li>
 <li>mingw32-gcc-g++ (bin)</li>
-<li>mingw32-gcc-g++ (bin)</li>
 <li>mingw-developer-toolkit (bin)</li>
 <li>mingw32-pthreads-w32 (dev)</li>
 <li>mingw32-libz (dev)</li></ul>
@@ -377,7 +376,7 @@ make install</tt></p></blockquote>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libflac<br>
-./configure --prefix=/C/libs<br>
+./configure --prefix=/C/libs --disable-sse --disable-ogg<br>
 make<br>
 make install</tt></p></blockquote>
 
