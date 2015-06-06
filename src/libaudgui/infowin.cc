@@ -304,7 +304,7 @@ static void add_entry (GtkWidget * grid, const char * title, GtkWidget * entry,
     gtk_table_attach ((GtkTable *) grid, label, x, x + span, y, y + 1,
      GTK_FILL, GTK_FILL, 0, 0);
     gtk_table_attach ((GtkTable *) grid, entry, x, x + span, y + 1, y + 2,
-     GtkAttachOptions (GTK_EXPAND | GTK_FILL), GTK_FILL, 0, 0);
+     GTK_FILL, GTK_FILL, 0, 0);
 
     g_signal_connect (entry, "changed", (GCallback) entry_changed, nullptr);
 }
