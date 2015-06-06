@@ -73,7 +73,7 @@ static QDialog * buildAboutWindow ()
     auto text = new QLabel (about_text, window);
     text->setAlignment (Qt::AlignHCenter);
 
-    auto anchor = QString (str_printf ("<a href='%s'>%s</a>", website, website));
+    auto anchor = QString ("<a href='%1'>%1</a>").arg (website);
     auto link_label = new QLabel (anchor, window);
     link_label->setAlignment (Qt::AlignHCenter);
     link_label->setContentsMargins (0, 5, 0, 0);

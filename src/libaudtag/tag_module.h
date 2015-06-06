@@ -29,10 +29,9 @@ struct TagModule {
     const char *m_name;
     TagType m_type; /* set to None if the module cannot create new tags */
 
-    virtual bool can_handle_file (VFSFile &fd);
-    virtual bool read_tag (Tuple & tuple, VFSFile & handle);
-    virtual Index<char> read_image (VFSFile & handle);
-    virtual bool write_tag (const Tuple & tuple, VFSFile & handle);
+    virtual bool can_handle_file (VFSFile & file);
+    virtual bool read_tag (VFSFile & file, Tuple * tuple, Index<char> * image);
+    virtual bool write_tag (VFSFile & file, const Tuple & tuple);
 
 protected:
     TagModule(const char *name, TagType type) : m_name(name), m_type(type) { };

@@ -70,26 +70,20 @@ TagModule * find_tag_module (VFSFile & fd, TagType new_type)
 /**************************************************************************************************************
  * tag module object management                                                                               *
  **************************************************************************************************************/
-bool TagModule::can_handle_file (VFSFile & handle)
+bool TagModule::can_handle_file (VFSFile & file)
 {
     AUDDBG("Module %s does not support %s (no probing function implemented).\n", m_name,
-           handle.filename ());
+           file.filename ());
     return false;
 }
 
-Index<char> TagModule::read_image (VFSFile & handle)
-{
-    AUDDBG("Module %s does not support images.\n", m_name);
-    return Index<char> ();
-}
-
-bool TagModule::read_tag (Tuple & tuple, VFSFile & handle)
+bool TagModule::read_tag (VFSFile & file, Tuple * tuple, Index<char> * image)
 {
     AUDDBG ("%s: read_tag() not implemented.\n", m_name);
     return false;
 }
 
-bool TagModule::write_tag (Tuple const & tuple, VFSFile & handle)
+bool TagModule::write_tag (VFSFile & file, Tuple const & tuple)
 {
     AUDDBG ("%s: write_tag() not implemented.\n", m_name);
     return false;

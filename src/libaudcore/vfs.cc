@@ -33,6 +33,7 @@
 #include "i18n.h"
 #include "plugin.h"
 #include "plugins-internal.h"
+#include "probe-buffer.h"
 #include "runtime.h"
 #include "vfs_local.h"
 
@@ -74,6 +75,8 @@ EXPORT VFSFile::VFSFile (const char * filename, const char * mode)
 
     if (! strcmp (scheme, "file"))
         m_impl.capture (vfs_local_fopen (nosub, mode, m_error));
+    else if (! strcmp (scheme, "stdin"))
+        m_impl.capture (vfs_stdin_fopen (mode, m_error));
     else
     {
         TransportPlugin * tp = lookup_transport (scheme);
@@ -89,6 +92,10 @@ EXPORT VFSFile::VFSFile (const char * filename, const char * mode)
 
     if (! m_impl)
         return;
+
+    /* enable buffering for read-only handles */
+    if (mode[0] == 'r' && ! strchr (mode, '+'))
+        m_impl.capture (new ProbeBuffer (filename, std::move (m_impl)));
 
     AUDINFO ("<%p> open (mode %s) %s\n", m_impl.get (), mode, filename);
     m_filename = String (filename);
@@ -108,7 +115,7 @@ EXPORT int64_t VFSFile::fread (void * ptr, int64_t size, int64_t nmemb)
     int64_t readed = m_impl->fread (ptr, size, nmemb);
 
     AUDDBG ("<%p> read %" PRId64 " elements of size %" PRId64 " = %" PRId64 "\n",
-     this, nmemb, size, readed);
+     m_impl.get (), nmemb, size, readed);
 
     return readed;
 }
@@ -245,6 +252,15 @@ EXPORT int64_t VFSFile::fsize ()
 EXPORT String VFSFile::get_metadata (const char * field)
 {
     return m_impl->get_metadata (field);
+}
+
+EXPORT void VFSFile::set_limit_to_buffer (bool limit)
+{
+    auto buffer = dynamic_cast<ProbeBuffer *> (m_impl.get ());
+    if (buffer)
+        buffer->set_limit_to_buffer (limit);
+    else
+        AUDERR ("<%p> buffering not supported!\n", m_impl.get ());
 }
 
 EXPORT Index<char> VFSFile::read_all ()

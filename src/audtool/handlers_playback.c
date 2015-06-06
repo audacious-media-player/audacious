@@ -86,7 +86,7 @@ void playback_seek (int argc, char * * argv)
         exit (1);
     }
 
-    obj_audacious_call_seek_sync (dbus_proxy, atof (argv[1]) * 1000, NULL, NULL);
+    obj_audacious_call_seek_sync (dbus_proxy, MAX (0, atof (argv[1]) * 1000), NULL, NULL);
 }
 
 void playback_seek_relative (int argc, char * * argv)
@@ -99,5 +99,5 @@ void playback_seek_relative (int argc, char * * argv)
 
     unsigned oldtime = 0;
     obj_audacious_call_time_sync (dbus_proxy, & oldtime, NULL, NULL);
-    obj_audacious_call_seek_sync (dbus_proxy, oldtime + atof (argv[1]) * 1000, NULL, NULL);
+    obj_audacious_call_seek_sync (dbus_proxy, MAX (0, oldtime + atof (argv[1]) * 1000), NULL, NULL);
 }

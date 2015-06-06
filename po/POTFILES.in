@@ -37,3 +37,4 @@ src/libaudqt/plugin-menu.cc
 src/libaudqt/prefs-plugin.cc
 src/libaudqt/prefs-window.cc
 src/libaudqt/queue-manager.cc
+src/libaudqt/util.cc

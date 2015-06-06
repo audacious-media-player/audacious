@@ -1,6 +1,6 @@
 /*
- * vfs_local.h
- * Copyright 2013 John Lindgren
+ * preset-browser.h
+ * Copyright 2014 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -17,12 +17,13 @@
  * the use of this software.
  */
 
-#ifndef LIBAUDCORE_VFS_LOCAL_H
-#define LIBAUDCORE_VFS_LOCAL_H
+#ifndef AUDGUI_PRESET_BROWSER_H
+#define AUDGUI_PRESET_BROWSER_H
 
-#include "vfs.h"
+void eq_preset_load_file ();
+void eq_preset_load_eqf ();
+void eq_preset_save_file ();
+void eq_preset_save_eqf ();
+void eq_preset_import_winamp ();
 
-VFSImpl * vfs_local_fopen (const char * uri, const char * mode, String & error);
-VFSImpl * vfs_stdin_fopen (const char * mode, String & error);
-
-#endif /* LIBAUDCORE_VFS_LOCAL_H */
+#endif // AUDGUI_PRESET_BROWSER_H

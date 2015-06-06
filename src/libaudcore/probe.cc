@@ -17,21 +17,48 @@
  * the use of this software.
  */
 
+#include "internal.h"
 #include "probe.h"
 
 #include <string.h>
 
 #include "audstrings.h"
 #include "i18n.h"
-#include "internal.h"
 #include "playlist.h"
 #include "plugin.h"
 #include "plugins-internal.h"
 #include "runtime.h"
 
-EXPORT PluginHandle * aud_file_find_decoder (const char * filename, bool fast, String * error)
+bool open_input_file (const char * filename, const char * mode,
+ InputPlugin * ip, VFSFile & file, String * error)
 {
-    AUDINFO ("Probing %s.\n", filename);
+    /* no need to open a handle for custom URI schemes */
+    if (ip && ip->input_info.keys[InputKey::Scheme])
+        return true;
+
+    /* already open? */
+    if (file && file.fseek (0, VFS_SEEK_SET) == 0)
+        return true;
+
+    file = VFSFile (filename, mode);
+    if (! file && error)
+        * error = String (file.error ());
+
+    return (bool) file;
+}
+
+InputPlugin * load_input_plugin (PluginHandle * decoder, String * error)
+{
+    auto ip = (InputPlugin *) aud_plugin_get_header (decoder);
+    if (! ip && error)
+        * error = String (_("Error loading plugin"));
+
+    return ip;
+}
+
+PluginHandle * file_find_decoder (const char * filename, bool fast, VFSFile & file, String * error)
+{
+    AUDINFO ("%s %s.\n", fast ? "Fast-probing" : "Probing", filename);
 
     auto & list = aud_plugin_list (PluginType::Input);
 
@@ -67,14 +94,9 @@ EXPORT PluginHandle * aud_file_find_decoder (const char * filename, bool fast, S
 
     AUDDBG ("Opening %s.\n", filename);
 
-    VFSFile file (probe_buffer_new (filename));
-
-    if (! file)
+    if (! open_input_file (filename, "r", nullptr, file, error))
     {
-        if (error)
-            * error = String (file.error ());
-
-        AUDINFO ("Open failed: %s.\n", file.error ());
+        AUDINFO ("Open failed.\n");
         return nullptr;
     }
 
@@ -96,6 +118,8 @@ EXPORT PluginHandle * aud_file_find_decoder (const char * filename, bool fast, S
         }
     }
 
+    file.set_limit_to_buffer (true);
+
     for (PluginHandle * plugin : (ext_matches.len () ? ext_matches : list))
     {
         if (! aud_plugin_get_enabled (plugin))
@@ -103,13 +127,14 @@ EXPORT PluginHandle * aud_file_find_decoder (const char * filename, bool fast, S
 
         AUDINFO ("Trying %s.\n", aud_plugin_get_name (plugin));
 
-        InputPlugin * ip = (InputPlugin *) aud_plugin_get_header (plugin);
+        auto ip = (InputPlugin *) aud_plugin_get_header (plugin);
         if (! ip)
             continue;
 
         if (ip->is_our_file (filename, file))
         {
             AUDINFO ("Matched %s by content.\n", aud_plugin_get_name (plugin));
+            file.set_limit_to_buffer (false);
             return plugin;
         }
 
@@ -130,50 +155,57 @@ EXPORT PluginHandle * aud_file_find_decoder (const char * filename, bool fast, S
     return nullptr;
 }
 
-static bool open_file (const char * filename, InputPlugin * ip,
- const char * mode, VFSFile & handle, String * error = nullptr)
+EXPORT PluginHandle * aud_file_find_decoder (const char * filename, bool fast, String * error)
 {
-    /* no need to open a handle for custom URI schemes */
-    if (ip->input_info.keys[InputKey::Scheme])
-        return true;
+    VFSFile file;
+    return file_find_decoder (filename, fast, file, error);
+}
 
-    handle = VFSFile (filename, mode);
-    if (! handle && error)
-        * error = String (handle.error ());
+bool file_read_tag (const char * filename, PluginHandle * decoder,
+ VFSFile & file, Tuple * tuple, Index<char> * image, String * error)
+{
+    auto ip = load_input_plugin (decoder, error);
+    if (! ip)
+        return false;
 
-    return (bool) handle;
+    if (! open_input_file (filename, "r", ip, file, error))
+        return false;
+
+    if (tuple)
+        tuple->set_filename (filename);
+
+    bool success;
+
+    /* read_tag() was added in 3.7 */
+    if (ip->version >= 47)
+        success = ip->read_tag (filename, file, tuple, image);
+    else
+        success = ip->default_read_tag (filename, file, tuple, image);
+
+    if (! success && error)
+        * error = String (_("Error reading metadata"));
+    if (! success && tuple)
+        * tuple = Tuple ();
+
+    return success;
 }
 
 EXPORT Tuple aud_file_read_tuple (const char * filename, PluginHandle * decoder, String * error)
 {
-    InputPlugin * ip = (InputPlugin *) aud_plugin_get_header (decoder);
-    if (! ip && error)
-        * error = String (_("Error loading plugin"));
-    if (! ip)
-        return Tuple ();
+    VFSFile file;
+    Tuple tuple;
 
-    VFSFile handle;
-    if (! open_file (filename, ip, "r", handle, error))
-        return Tuple ();
-
-    Tuple tuple = ip->read_tuple (filename, handle);
-    if (! tuple && error)
-        * error = String (_("Error reading metadata"));
-
+    file_read_tag (filename, decoder, file, & tuple, nullptr, error);
     return tuple;
 }
 
 EXPORT Index<char> aud_file_read_image (const char * filename, PluginHandle * decoder)
 {
-    InputPlugin * ip = (InputPlugin *) aud_plugin_get_header (decoder);
-    if (! ip)
-        return Index<char> ();
+    VFSFile file;
+    Index<char> image;
 
-    VFSFile handle;
-    if (! open_file (filename, ip, "r", handle))
-        return Index<char> ();
-
-    return ip->read_image (filename, handle);
+    file_read_tag (filename, decoder, file, nullptr, & image, nullptr);
+    return image;
 }
 
 EXPORT bool aud_file_can_write_tuple (const char * filename, PluginHandle * decoder)
@@ -184,16 +216,18 @@ EXPORT bool aud_file_can_write_tuple (const char * filename, PluginHandle * deco
 EXPORT bool aud_file_write_tuple (const char * filename,
  PluginHandle * decoder, const Tuple & tuple)
 {
-    InputPlugin * ip = (InputPlugin *) aud_plugin_get_header (decoder);
+    auto ip = (InputPlugin *) aud_plugin_get_header (decoder);
     if (! ip)
         return false;
 
-    VFSFile handle;
-    if (! open_file (filename, ip, "r+", handle))
+    VFSFile file;
+    if (! open_input_file (filename, "r+", ip, file))
         return false;
 
-    bool success = ip->write_tuple (filename, handle, tuple) &&
-     (! handle || handle.fflush () == 0);
+    bool success = ip->write_tuple (filename, file, tuple);
+
+    if (success && file && file.fflush () != 0)
+        success = false;
 
     if (success)
         aud_playlist_rescan_file (filename);
@@ -203,13 +237,17 @@ EXPORT bool aud_file_write_tuple (const char * filename,
 
 EXPORT bool aud_custom_infowin (const char * filename, PluginHandle * decoder)
 {
-    InputPlugin * ip = (InputPlugin *) aud_plugin_get_header (decoder);
+    // blacklist stdin
+    if (! strncmp (filename, "stdin://", 8))
+        return false;
+
+    auto ip = (InputPlugin *) aud_plugin_get_header (decoder);
     if (! ip)
         return false;
 
-    VFSFile handle;
-    if (! open_file (filename, ip, "r", handle))
+    VFSFile file;
+    if (! open_input_file (filename, "r", ip, file))
         return false;
 
-    return ip->file_info_box (filename, handle);
+    return ip->file_info_box (filename, file);
 }

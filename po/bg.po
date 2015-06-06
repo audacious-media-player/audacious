@@ -7,19 +7,20 @@
 # Elusiv_man <breaker9loc@gmail.com>, 2014
 # Ivailo Monev <xakepa10@gmail.com>, 2014
 # Kiril Kirilov (Cybercop) <acybecop_montana@abv.bg>, 2012
-# Kiril Kirilov <cybercop_montana@abv.bg>, 2014
+# Kiril Kirilov <cybercop_montana@abv.bg>, 2014-2015
 # Pandi3a <pandi3a@gmail.com>, 2012
 # Pandi3a <pandi3a@gmail.com>, 2012
 # Георги Пацев <>, 2012
-# Радослав <reckku@gmail.com>, 2013-2014
-# Радослав <reckku@gmail.com>, 2013
+# Радослав Иванов <reckku@gmail.com>, 2013-2015
+# Радослав Иванов <reckku@gmail.com>, 2013
+# Радослав Иванов <reckku@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2015-01-24 13:09+0100\n"
-"PO-Revision-Date: 2014-12-22 12:38+0000\n"
-"Last-Translator: Thomas Lange <thomas-lange2@gmx.de>\n"
+"POT-Creation-Date: 2015-02-28 19:15+0100\n"
+"PO-Revision-Date: 2015-02-19 22:30+0000\n"
+"Last-Translator: Радослав Иванов <reckku@gmail.com>\n"
 "Language-Team: Bulgarian (http://www.transifex.com/projects/p/audacious/"
 "language/bg/)\n"
 "Language: bg\n"
@@ -38,7 +39,7 @@ msgstr "Показване на версията"
 
 #: src/audacious/main.cc:62
 msgid "Start playback"
-msgstr "Стартиране"
+msgstr "Възпроизвеждане"
 
 #: src/audacious/main.cc:63
 msgid "Pause playback"
@@ -90,12 +91,12 @@ msgstr "Печат на съобщения за грешка (може да се
 
 #: src/audacious/main.cc:76
 msgid "Run in Qt mode"
-msgstr "Стартирай в Qt режим"
+msgstr "Стартирай в Qt-режим"
 
 #: src/audacious/main.cc:127
 #, c-format
 msgid "Unknown option: %s\n"
-msgstr "Непозната опция: %s \n"
+msgstr "Неизвестна опция: %s \n"
 
 #: src/audacious/main.cc:150
 #, c-format
@@ -107,18 +108,20 @@ msgstr "Неизвестна опция: -%c\n"
 msgid ""
 "Usage: audacious [OPTION] ... [FILE] ...\n"
 "\n"
-msgstr "Употреба: audacious [ОПЦИЯ] ... [ФАЙЛ] ...\n"
+msgstr ""
+"Употреба: audacious [ОПЦИЯ] ... [ФАЙЛ] ...\n"
+"\n"
 
 #: src/audacious/main.cc:345
 msgid "Audacious"
-msgstr "Аудио плеър - Audacious"
+msgstr "Audacious"
 
 #: src/libaudcore/adder.cc:77
 #, c-format
 msgid "%d file found"
 msgid_plural "%d files found"
 msgstr[0] "Намереният файл е %d"
-msgstr[1] "Намерените файлове са: %d"
+msgstr[1] "намерени са %d файла"
 
 #: src/libaudcore/adder.cc:317 src/libaudcore/playlist.cc:141
 msgid "New Playlist"
@@ -152,11 +155,11 @@ msgstr "Неизвестна грешка при възпроизвеждане"
 
 #: src/libaudcore/playback.cc:514
 msgid "Invalid audio format"
-msgstr "Невалиден аудио формат"
+msgstr "Невалиден звуков формат"
 
 #: src/libaudcore/playlist.cc:142
 msgid "Now Playing"
-msgstr "Изпълнява се"
+msgstr "Възпроизвежда се"
 
 #: src/libaudcore/playlist.cc:1638
 msgid ""
@@ -169,20 +172,20 @@ msgstr ""
 #: src/libaudcore/playlist-files.cc:76
 #, c-format
 msgid "Cannot load %s: unsupported file name extension."
-msgstr "Не може да се зареди %s: неподдържано разширение в името на файл."
+msgstr "%s не може да бъде зареден: неподдържано разширение."
 
 #: src/libaudcore/playlist-files.cc:136
 #, c-format
 msgid "Cannot save %s: unsupported file name extension."
-msgstr "Не може да се запази %s: неподдържано разширение в името на файл."
+msgstr "%s не може да бъде запазен: неподдържано разширение."
 
 #: src/libaudcore/probe.cc:119
 msgid "Seek error"
-msgstr "Грешка при търсене"
+msgstr "Грешка при прескачане"
 
 #: src/libaudcore/probe.cc:127
 msgid "File format not recognized"
-msgstr "Формата на фаилът на е разпознат"
+msgstr "Форматът на фаила на е разпознат"
 
 #: src/libaudcore/probe.cc:161
 msgid "Error reading metadata"
@@ -218,11 +221,11 @@ msgstr "(неизвестно заглавие)"
 
 #: src/libaudcore/vfs.cc:67
 msgid "Invalid URI"
-msgstr "Невалиден URI"
+msgstr "Невалиден Интернет адрес"
 
 #: src/libaudcore/vfs.cc:83
 msgid "Unknown URI scheme"
-msgstr "Непозната URI схема"
+msgstr "Неизвестна схема на Интернет адрес"
 
 #: src/libaudcore/vfs_local.cc:82
 msgid "Invalid file name"
@@ -230,7 +233,7 @@ msgstr "Невалидно име на файл"
 
 #: src/libaudgui/about.cc:35 src/libaudqt/about.cc:37
 msgid "Credits"
-msgstr "Автори"
+msgstr "Заслуги"
 
 #: src/libaudgui/about.cc:35 src/libaudqt/about.cc:37
 msgid "License"
@@ -253,12 +256,13 @@ msgstr "_Премахване"
 #: src/libaudgui/jump-to-time.cc:48 src/libaudgui/playlists.cc:90
 #: src/libaudgui/playlists.cc:144 src/libaudgui/plugin-prefs.cc:160
 #: src/libaudgui/url-opener.cc:76 src/libaudqt/playlist-management.cc:47
+#: src/libaudqt/prefs-plugin.cc:121
 msgid "_Cancel"
 msgstr "_Отказ"
 
 #: src/libaudgui/confirm.cc:60 src/libaudqt/playlist-management.cc:72
 msgid "Remove Playlist"
-msgstr "Премахни Плейлист"
+msgstr "Премахни Списъка за изпълнение"
 
 #: src/libaudgui/confirm.cc:62 src/libaudqt/playlist-management.cc:44
 msgid "_Don’t ask again"
@@ -274,7 +278,7 @@ msgstr "Преименуване на списъка за изпълнение"
 
 #: src/libaudgui/confirm.cc:91
 msgid "What would you like to call this playlist?"
-msgstr "Как искате да наречете този плейлист?"
+msgstr "Как искате да именувате този списък за изпълнение?"
 
 #: src/libaudgui/equalizer.cc:45 src/libaudqt/equalizer.cc:63
 msgid "_Enable"
@@ -355,7 +359,9 @@ msgstr "Затваря_не на прозореца при добавяне"
 #: src/libaudgui/file-opener.cc:127 src/libaudgui/infowin.cc:406
 #: src/libaudgui/jump-to-track.cc:307 src/libaudgui/plugin-prefs.cc:166
 #: src/libaudgui/prefs-window.cc:762 src/libaudgui/queue-manager.cc:194
-#: src/libaudgui/util.cc:167 src/libaudqt/queue-manager.cc:116
+#: src/libaudgui/util.cc:167 src/libaudqt/infowin.cc:73
+#: src/libaudqt/prefs-plugin.cc:135 src/libaudqt/prefs-window.cc:679
+#: src/libaudqt/queue-manager.cc:116 src/libaudqt/util.cc:70
 msgid "_Close"
 msgstr "_Затваряне"
 
@@ -573,7 +579,7 @@ msgid "Save error"
 msgstr "Грешка при съхраняването"
 
 #: src/libaudgui/infowin.cc:316 src/libaudgui/prefs-window.cc:86
-#: src/libaudqt/infowin.cc:61 src/libaudqt/prefs-window.cc:89
+#: src/libaudqt/infowin.cc:62 src/libaudqt/prefs-window.cc:89
 msgid "Song Info"
 msgstr "Информация за песента"
 
@@ -594,7 +600,7 @@ msgstr "Номер на записа"
 msgid "Clea_r fields when moving to next song"
 msgstr "Изчистване на полетата при преминаване към следващата песен"
 
-#: src/libaudgui/infowin.cc:403
+#: src/libaudgui/infowin.cc:403 src/libaudqt/infowin.cc:72
 msgid "_Save"
 msgstr "_Запази"
 
@@ -605,7 +611,7 @@ msgstr "_Следващ"
 #: src/libaudgui/infowin.cc:455
 #, c-format
 msgid "%d kb/s"
-msgstr "%d кбит/с"
+msgstr "%d кб/с"
 
 #: src/libaudgui/infowin.cc:460
 msgid "N/A"
@@ -617,7 +623,7 @@ msgstr "_Прескочи"
 
 #: src/libaudgui/jump-to-time.cc:51
 msgid "Jump to Time"
-msgstr "Прескачане до файл"
+msgstr "Прескачане до времева позиция"
 
 #: src/libaudgui/jump-to-time.cc:51
 msgid "Enter time (minutes:seconds):"
@@ -681,17 +687,17 @@ msgstr "_Внасяне"
 msgid "_Plugins ..."
 msgstr "_Приставки..."
 
-#: src/libaudgui/plugin-prefs.cc:109 src/libaudqt/prefs-plugin.cc:55
+#: src/libaudgui/plugin-prefs.cc:109 src/libaudqt/prefs-plugin.cc:56
 #, c-format
 msgid "About %s"
 msgstr "Относно %s"
 
-#: src/libaudgui/plugin-prefs.cc:155 src/libaudqt/prefs-plugin.cc:107
+#: src/libaudgui/plugin-prefs.cc:155 src/libaudqt/prefs-plugin.cc:108
 #, c-format
 msgid "%s Settings"
 msgstr "%s Настройки"
 
-#: src/libaudgui/plugin-prefs.cc:159
+#: src/libaudgui/plugin-prefs.cc:159 src/libaudqt/prefs-plugin.cc:120
 msgid "_Set"
 msgstr "_Задай"
 
@@ -917,7 +923,7 @@ msgstr "<b>Мрежови настройки</b>"
 
 #: src/libaudgui/prefs-window.cc:226 src/libaudqt/prefs-window.cc:229
 msgid "KiB"
-msgstr "KiB"
+msgstr "КиБ"
 
 #: src/libaudgui/prefs-window.cc:227 src/libaudqt/prefs-window.cc:230
 msgid "<b>Proxy Configuration</b>"
@@ -981,7 +987,7 @@ msgstr "Показване на номера на песента"
 
 #: src/libaudgui/prefs-window.cc:271 src/libaudqt/prefs-window.cc:277
 msgid "Show leading zeroes (02:00 instead of 2:00)"
-msgstr "Показване на нула в началото (02:00 вместо 2:00)"
+msgstr "Показване на водеща нула (02:00 вместо 2:00)"
 
 #: src/libaudgui/prefs-window.cc:274 src/libaudqt/prefs-window.cc:280
 msgid "<b>Advanced</b>"
@@ -994,7 +1000,7 @@ msgstr "Да не се зареждат метаданни за песните, 
 
 #: src/libaudgui/prefs-window.cc:277 src/libaudqt/prefs-window.cc:283
 msgid "Probe content of files with no recognized file name extension"
-msgstr ""
+msgstr "Проверка съдържанието на файловете с непознато разширение"
 
 #: src/libaudgui/prefs-window.cc:282 src/libaudqt/prefs-window.cc:288
 msgid "<b>Album Art</b>"
@@ -1119,15 +1125,15 @@ msgstr ""
 
 #: src/libaudqt/fileopener.cc:40
 msgid "Open Folder"
-msgstr ""
+msgstr "Отваряне на папка"
 
 #: src/libaudqt/fileopener.cc:42
 msgid "Add Folder"
-msgstr ""
+msgstr "Добавяне на папка"
 
 #: src/libaudqt/fileopener.cc:46 src/libaudqt/fileopener.cc:47
 msgid "Open"
-msgstr ""
+msgstr "Отваряне"
 
 #: src/libaudqt/fileopener.cc:48 src/libaudqt/fileopener.cc:49
 msgid "Add"
@@ -1165,7 +1171,7 @@ msgstr "MIME тип"
 msgid "Bitrate"
 msgstr "Честота за бит"
 
-#: src/libaudqt/infowin.cc:126
+#: src/libaudqt/infowin.cc:129
 #, c-format
 msgid "No info available for %s.\n"
 msgstr "Липсва информация за %s.\n"

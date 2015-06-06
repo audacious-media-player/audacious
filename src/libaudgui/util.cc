@@ -17,6 +17,7 @@
  * the use of this software.
  */
 
+#include <math.h>
 #include <string.h>
 
 #include <gdk/gdkkeysyms.h>
@@ -30,6 +31,25 @@
 #include "internal.h"
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
+
+EXPORT int audgui_get_dpi ()
+{
+    static int dpi = 0;
+
+    if (! dpi)
+    {
+        GdkScreen * screen = gdk_screen_get_default ();
+
+        /* force GTK settings to be loaded for the GDK screen */
+        (void) gtk_settings_get_for_screen (screen);
+
+        dpi = round (gdk_screen_get_resolution (screen));
+        if (dpi < 1)
+            dpi = 96;
+    }
+
+    return dpi;
+}
 
 EXPORT int audgui_get_digit_width (GtkWidget * widget)
 {

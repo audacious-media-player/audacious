@@ -42,7 +42,7 @@ static GtkWidget * create_credits_notebook (const char * credits, const char * l
         GtkWidget * label = gtk_label_new (titles[i]);
 
         GtkWidget * scrolled = gtk_scrolled_window_new (nullptr, nullptr);
-        gtk_widget_set_size_request (scrolled, -1, 200);
+        gtk_widget_set_size_request (scrolled, -1, 2 * audgui_get_dpi ());
         gtk_scrolled_window_set_policy ((GtkScrolledWindow *) scrolled,
          GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 
@@ -64,6 +64,8 @@ static GtkWidget * create_credits_notebook (const char * credits, const char * l
 static GtkWidget * create_about_window ()
 {
     const char * data_dir = aud_get_path (AudPath::DataDir);
+
+    int dpi = audgui_get_dpi ();
 
     GtkWidget * about_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title ((GtkWindow *) about_window, _("About Audacious"));
@@ -102,7 +104,7 @@ static GtkWidget * create_about_window ()
     g_strchomp (license);
 
     GtkWidget * notebook = create_credits_notebook (credits, license);
-    gtk_widget_set_size_request (notebook, 570, 250);
+    gtk_widget_set_size_request (notebook, 6 * dpi, 2 * dpi);
     gtk_box_pack_start ((GtkBox *) vbox, notebook, true, true, 0);
 
     g_free (credits);

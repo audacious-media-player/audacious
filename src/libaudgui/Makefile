@@ -4,6 +4,7 @@ LIB_MINOR = 0
 
 SRCS = about.cc \
        confirm.cc \
+       eq-preset.cc \
        equalizer.cc \
        file-opener.cc \
        infopopup.cc \
@@ -21,6 +22,7 @@ SRCS = about.cc \
        plugin-view.cc \
        prefs-widget.cc \
        prefs-window.cc \
+       preset-browser.cc \
        queue-manager.cc \
        scaled-image.cc \
        status.cc \

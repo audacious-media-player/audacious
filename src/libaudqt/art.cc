@@ -22,7 +22,7 @@
 #include <QImage>
 
 #include <libaudcore/audstrings.h>
-#include <libaudcore/playlist.h>
+#include <libaudcore/drct.h>
 #include <libaudcore/probe.h>
 #include <libaudcore/runtime.h>
 
@@ -57,12 +57,10 @@ EXPORT QPixmap art_request (const char * filename, unsigned int w, unsigned int 
 
 EXPORT QPixmap art_request_current (unsigned int w, unsigned int h, bool want_hidpi)
 {
-    int list = aud_playlist_get_playing ();
-    int entry = aud_playlist_get_position (list);
-    if (entry < 0)
+    String filename = aud_drct_get_filename ();
+    if (! filename)
         return QPixmap ();
 
-    String filename = aud_playlist_entry_get_filename (list, entry);
     return art_request (filename, w, h, want_hidpi);
 }
 

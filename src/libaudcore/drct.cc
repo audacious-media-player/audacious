@@ -27,7 +27,7 @@
 
 /* --- PLAYBACK CONTROL --- */
 
-EXPORT void aud_drct_play (void)
+EXPORT void aud_drct_play ()
 {
     if (aud_drct_get_playing ())
     {
@@ -48,7 +48,7 @@ EXPORT void aud_drct_play (void)
     }
 }
 
-EXPORT void aud_drct_play_pause (void)
+EXPORT void aud_drct_play_pause ()
 {
     if (aud_drct_get_playing ())
         aud_drct_pause ();
@@ -56,9 +56,22 @@ EXPORT void aud_drct_play_pause (void)
         aud_drct_play ();
 }
 
-EXPORT void aud_drct_stop (void)
+EXPORT void aud_drct_stop ()
 {
     aud_playlist_play (-1);
+}
+
+EXPORT int aud_drct_get_position ()
+{
+    int playlist = aud_playlist_get_playing ();
+    return aud_playlist_get_position (playlist);
+}
+
+EXPORT String aud_drct_get_filename ()
+{
+    int playlist = aud_playlist_get_playing ();
+    int position = aud_playlist_get_position (playlist);
+    return aud_playlist_entry_get_filename (playlist, position);
 }
 
 /* --- VOLUME CONTROL --- */
@@ -107,7 +120,7 @@ EXPORT void aud_drct_set_volume_balance (int balance)
 
 /* --- PLAYLIST CONTROL --- */
 
-EXPORT void aud_drct_pl_next (void)
+EXPORT void aud_drct_pl_next ()
 {
     int playlist = aud_playlist_get_playing ();
     if (playlist < 0)
@@ -116,7 +129,7 @@ EXPORT void aud_drct_pl_next (void)
     playlist_next_song (playlist, aud_get_bool (nullptr, "repeat"));
 }
 
-EXPORT void aud_drct_pl_prev (void)
+EXPORT void aud_drct_pl_prev ()
 {
     int playlist = aud_playlist_get_playing ();
     if (playlist < 0)

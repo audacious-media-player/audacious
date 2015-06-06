@@ -29,33 +29,31 @@ namespace audtag {
 struct ID3v1TagModule : TagModule {
     ID3v1TagModule() : TagModule("ID3v1", TagType::None) { };
 
-    bool can_handle_file (VFSFile &fd);
-    bool read_tag (Tuple & tuple, VFSFile & file);
+    bool can_handle_file (VFSFile & file);
+    bool read_tag (VFSFile & file, Tuple * tuple, Index<char> * image);
 };
 
 struct ID3v22TagModule : TagModule {
     ID3v22TagModule() : TagModule("ID3v2.2", TagType::None) { };
 
-    bool can_handle_file (VFSFile &fd);
-    bool read_tag (Tuple & tuple, VFSFile & file);
-    Index<char> read_image (VFSFile & handle);
+    bool can_handle_file (VFSFile & file);
+    bool read_tag (VFSFile & file, Tuple * tuple, Index<char> * image);
 };
 
 struct ID3v24TagModule : TagModule {
     ID3v24TagModule() : TagModule("ID3v2.3/v2.4", TagType::ID3v2) { };
 
-    bool can_handle_file (VFSFile &fd);
-    bool read_tag (Tuple & tuple, VFSFile & file);
-    Index<char> read_image (VFSFile & handle);
-    bool write_tag (const Tuple & tuple, VFSFile & f);
+    bool can_handle_file (VFSFile & file);
+    bool read_tag (VFSFile & file, Tuple * tuple, Index<char> * image);
+    bool write_tag (VFSFile & file, const Tuple & tuple);
 };
 
 struct APETagModule : TagModule {
     APETagModule() : TagModule("APE", TagType::APE) { };
 
-    bool can_handle_file (VFSFile &fd);
-    bool read_tag (Tuple & tuple, VFSFile & file);
-    bool write_tag (const Tuple & tuple, VFSFile & f);
+    bool can_handle_file (VFSFile & file);
+    bool read_tag (VFSFile & file, Tuple * tuple, Index<char> * image);
+    bool write_tag (VFSFile & file, const Tuple & tuple);
 };
 
 }

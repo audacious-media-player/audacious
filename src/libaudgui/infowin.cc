@@ -312,6 +312,8 @@ static void add_entry (GtkWidget * grid, const char * title, GtkWidget * entry,
 
 static void create_infowin ()
 {
+    int dpi = audgui_get_dpi ();
+
     infowin = gtk_window_new (GTK_WINDOW_TOPLEVEL);
     gtk_container_set_border_width ((GtkContainer *) infowin, 6);
     gtk_window_set_title ((GtkWindow *) infowin, _("Song Info"));
@@ -355,6 +357,7 @@ static void create_infowin ()
     gtk_grid_attach ((GtkGrid *) main_grid, grid, 1, 0, 1, 3);
 
     widgets.title = gtk_entry_new ();
+    gtk_widget_set_size_request (widgets.title, 3 * dpi, -1);
     add_entry (grid, _("Title"), widgets.title, 0, 0, 2);
 
     widgets.artist = gtk_entry_new ();

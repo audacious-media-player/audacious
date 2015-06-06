@@ -49,6 +49,7 @@ public:
     LocalFile (const char * path, FILE * stream) :
         m_path (path),
         m_stream (stream),
+        m_cached_pos (0),
         m_cached_size (-1),
         m_last_op (OP_NONE) {}
 
@@ -69,6 +70,7 @@ protected:
 private:
     String m_path;
     FILE * m_stream;
+    int64_t m_cached_pos;
     int64_t m_cached_size;
     LocalOp m_last_op;
 };
@@ -122,9 +124,21 @@ VFSImpl * vfs_local_fopen (const char * uri, const char * mode, String & error)
     return new LocalFile (path, stream);
 }
 
+VFSImpl * vfs_stdin_fopen (const char * mode, String & error)
+{
+    if (mode[0] != 'r' || strchr (mode, '+'))
+    {
+        error = String (_("Invalid access mode"));
+        return nullptr;
+    }
+
+    return new LocalFile ("(stdin)", stdin);
+}
+
 LocalFile::~LocalFile ()
 {
-    if (fclose (m_stream) < 0)
+    // do not close stdin
+    if (m_stream != stdin && fclose (m_stream) < 0)
         perror (m_path);
 }
 
@@ -147,6 +161,9 @@ int64_t LocalFile::fread (void * ptr, int64_t size, int64_t nitems)
     if (result < nitems && ferror (m_stream))
         perror (m_path);
 
+    if (m_cached_pos >= 0)
+        m_cached_pos += result;
+
     return result;
 }
 
@@ -162,13 +179,20 @@ int64_t LocalFile::fwrite (const void * ptr, int64_t size, int64_t nitems)
     }
 
     m_last_op = OP_WRITE;
-    m_cached_size = -1;
 
     clearerr (m_stream);
 
     int64_t result = ::fwrite (ptr, size, nitems, m_stream);
     if (result < nitems && ferror (m_stream))
         perror (m_path);
+
+    if (m_cached_pos >= 0)
+        m_cached_pos += result;
+
+    if (m_cached_size >= 0 && m_cached_pos >= 0)
+        m_cached_size = aud::max (m_cached_size, m_cached_pos);
+    else
+        m_cached_size = -1;
 
     return result;
 }
@@ -180,14 +204,26 @@ int LocalFile::fseek (int64_t offset, VFSSeekType whence)
         perror (m_path);
 
     if (result == 0)
+    {
         m_last_op = OP_NONE;
+
+        if (whence == VFS_SEEK_SET)
+            m_cached_pos = offset;
+        else if (whence == VFS_SEEK_CUR && m_cached_pos >= 0)
+            m_cached_pos += offset;
+        else
+            m_cached_pos = -1;
+    }
 
     return result;
 }
 
 int64_t LocalFile::ftell ()
 {
-    return ftello (m_stream);
+    if (m_cached_pos < 0)
+        m_cached_pos = ftello (m_stream);
+
+    return m_cached_pos;
 }
 
 bool LocalFile::feof ()
@@ -236,14 +272,21 @@ int LocalFile::fflush ()
 
 int64_t LocalFile::fsize ()
 {
+    // size of stdin is unknown
+    if (m_stream == stdin)
+        return -1;
+
     if (m_cached_size < 0)
     {
-        int64_t saved_pos = ftello (m_stream);
+        int64_t saved_pos = ftell ();
         if (saved_pos < 0)
             goto ERR;
 
         if (fseek (0, VFS_SEEK_END) < 0)
             goto ERR;
+
+        m_last_op = OP_NONE;
+        m_cached_pos = -1;
 
         int64_t length = ftello (m_stream);
         if (length < 0)
@@ -252,6 +295,7 @@ int64_t LocalFile::fsize ()
         if (fseek (saved_pos, VFS_SEEK_SET) < 0)
             goto ERR;
 
+        m_cached_pos = saved_pos;
         m_cached_size = length;
     }
 

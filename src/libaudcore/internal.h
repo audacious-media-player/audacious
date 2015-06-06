@@ -26,6 +26,7 @@
 #include "index.h"
 #include "objects.h"
 
+class InputPlugin;
 class Plugin;
 class PluginHandle;
 class VFSFile;
@@ -37,7 +38,8 @@ typedef bool (* DirForeachFunc) (const char * path, const char * basename, void 
 void adder_cleanup ();
 
 /* art.cc */
-void art_init ();
+void art_cache_current (const String & filename, Index<char> && data, String && art_file);
+void art_clear_current ();
 void art_cleanup ();
 
 /* art-search.cc */
@@ -90,11 +92,21 @@ void playback_play (int seek_time, bool pause);
 void playback_stop (bool exiting = false);
 
 bool playback_check_serial (int serial);
-bool playback_set_info (int entry, const String & filename,
- PluginHandle * decoder, Tuple && tuple);
+void playback_set_info (int entry, Tuple && tuple);
+void playback_setup_decode (const String & filename, InputPlugin * ip,
+ VFSFile && file, String && error);
 
-/* probe-buffer.cc */
-VFSFile probe_buffer_new (const char * filename);
+/* probe.cc */
+bool open_input_file (const char * filename, const char * mode,
+ InputPlugin * ip, VFSFile & file, String * error = nullptr);
+InputPlugin * load_input_plugin (PluginHandle * decoder, String * error = nullptr);
+
+/* internal versions of aud_file_* functions;
+ * these allow reuse of the same file handle during probing */
+PluginHandle * file_find_decoder (const char * filename, bool fast,
+ VFSFile & file, String * error = nullptr);
+bool file_read_tag (const char * filename, PluginHandle * decoder,
+ VFSFile & file, Tuple * tuple, Index<char> * image, String * error = nullptr);
 
 /* runtime.cc */
 extern size_t misc_bytes_allocated;

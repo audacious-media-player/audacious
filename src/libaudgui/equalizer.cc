@@ -1,6 +1,6 @@
 /*
  * equalizer.c
- * Copyright 2010-2011 John Lindgren
+ * Copyright 2010-2015 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -50,6 +50,11 @@ static GtkWidget * create_on_off ()
     return on_off;
 }
 
+static void reset_to_zero ()
+{
+    aud_eq_apply_preset (EqualizerPreset ());
+}
+
 static void slider_moved (GtkRange * slider)
 {
     int band = GPOINTER_TO_INT (g_object_get_data ((GObject *) slider, "band"));
@@ -74,7 +79,7 @@ static GtkWidget * create_slider (const char * name, int band, GtkWidget * hbox)
     gtk_scale_set_draw_value ((GtkScale *) slider, true);
     gtk_scale_set_value_pos ((GtkScale *) slider, GTK_POS_BOTTOM);
     gtk_range_set_inverted ((GtkRange *) slider, true);
-    gtk_widget_set_size_request (slider, -1, 120);
+    gtk_widget_set_size_request (slider, -1, audgui_get_dpi () * 5 / 4);
 
     g_object_set_data ((GObject *) slider, "band", GINT_TO_POINTER (band));
     g_signal_connect (slider, "value-changed", (GCallback) slider_moved, nullptr);
@@ -131,7 +136,18 @@ static GtkWidget * create_window ()
     GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
     gtk_container_add ((GtkContainer *) window, vbox);
 
-    gtk_box_pack_start ((GtkBox *) vbox, create_on_off (), false, false, 0);
+    GtkWidget * top_row = gtk_hbox_new (false, 6);
+    gtk_box_pack_start ((GtkBox *) vbox, top_row, false, false, 0);
+
+    gtk_box_pack_start ((GtkBox *) top_row, create_on_off (), false, false, 0);
+
+    GtkWidget * presets = audgui_button_new (_("Presets ..."), nullptr,
+     (AudguiCallback) audgui_show_eq_preset_window, nullptr);
+    gtk_box_pack_end ((GtkBox *) top_row, presets, false, false, 0);
+
+    GtkWidget * zero = audgui_button_new (_("Reset to Zero"), nullptr,
+     (AudguiCallback) reset_to_zero, nullptr);
+    gtk_box_pack_end ((GtkBox *) top_row, zero, false, false, 0);
 
     GtkWidget * hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,  6);
     gtk_box_pack_start ((GtkBox *) vbox, hbox, false, false, 0);

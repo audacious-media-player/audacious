@@ -10,7 +10,7 @@
 <h2>Notes for Building Audacious on Windows</h2>
 
 <p><em>John Lindgren<br>
-January 24, 2014</em></p>
+May 16, 2015</em></p>
 
 <p>Several patch files should accompany this document.</p>
 
@@ -31,7 +31,6 @@ LIBRARY_PATH=/C/GTK/lib:/C/libs/lib</tt></p></blockquote>
 
 <p>In the MinGW Installation Manager window, install the following packages:</p>
 <ul><li>mingw32-base (bin)</li>
-<li>mingw32-gcc-g++ (bin)</li>
 <li>mingw32-gcc-g++ (bin)</li>
 <li>mingw-developer-toolkit (bin)</li>
 <li>mingw32-pthreads-w32 (dev)</li>
@@ -58,8 +57,8 @@ mingw-get upgrade mingw32-w32api=3.17-2</tt></p></blockquote>
 <h3>Install libpng</h3>
 
 <p>Download and unzip to <tt>C:\libpng</tt>:<br>
-<a href="http://sourceforge.net/projects/libpng/files/libpng16/1.6.12/libpng-1.6.12.tar.xz/download">
-<tt>http://sourceforge.net/projects/libpng/files/libpng16/1.6.12/libpng-1.6.12.tar.xz/download</tt></a></p>
+<a href="http://sourceforge.net/projects/libpng/files/libpng16/1.6.17/libpng-1.6.17.tar.xz/download">
+<tt>http://sourceforge.net/projects/libpng/files/libpng16/1.6.17/libpng-1.6.17.tar.xz/download</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libpng<br>
@@ -67,23 +66,23 @@ mingw-get upgrade mingw32-w32api=3.17-2</tt></p></blockquote>
 make<br>
 make install</tt></p></blockquote>
 
-<h3>Install libjpeg</h3>
+<h3>Install libjpeg-turbo</h3>
 
 <p>Download and unzip to <tt>C:\libjpeg</tt>:<br>
-<a href="http://www.ijg.org/files/jpegsrc.v9a.tar.gz">
-<tt>http://www.ijg.org/files/jpegsrc.v9a.tar.gz</tt></a></p>
+<a href="http://sourceforge.net/projects/libjpeg-turbo/files/1.4.0/libjpeg-turbo-1.4.0.tar.gz/download">
+<tt>http://sourceforge.net/projects/libjpeg-turbo/files/1.4.0/libjpeg-turbo-1.4.0.tar.gz/download</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libjpeg<br>
-./configure --prefix=/C/GTK<br>
+./configure --prefix=/C/GTK --without-simd --without-turbojpeg<br>
 make<br>
 make install</tt></p></blockquote>
 
 <h3>Install libffi</h3>
 
 <p>Download and unzip to <tt>C:\libffi</tt>:<br>
-<a href="ftp://sourceware.org/pub/libffi/libffi-3.0.13.tar.gz">
-<tt>ftp://sourceware.org/pub/libffi/libffi-3.0.13.tar.gz</tt></a></p>
+<a href="ftp://sourceware.org/pub/libffi/libffi-3.2.1.tar.gz">
+<tt>ftp://sourceware.org/pub/libffi/libffi-3.2.1.tar.gz</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libffi<br>
@@ -94,16 +93,16 @@ make install</tt></p></blockquote>
 <h3>Install GLib</h3>
 
 <p>Download and unzip to <tt>C:\glib</tt>:<br>
-<a href="http://ftp.gnome.org/pub/GNOME/sources/glib/2.40/glib-2.40.0.tar.xz">
-<tt>http://ftp.gnome.org/pub/GNOME/sources/glib/2.40/glib-2.40.0.tar.xz</tt></a></p>
+<a href="http://ftp.gnome.org/pub/GNOME/sources/glib/2.44/glib-2.44.1.tar.xz">
+<tt>http://ftp.gnome.org/pub/GNOME/sources/glib/2.44/glib-2.44.1.tar.xz</tt></a></p>
 
 <p>Apply the patch <tt>ggettext.c.diff</tt> to <tt>C:\glib\glib\ggettext.c</tt>.<br>
-Apply the patch <tt>grand.c.diff</tt> to <tt>C:\glib\glib\grand.c</tt>.<br>
-Apply the patch <tt>glocalfileinfo.c.diff</tt> to <tt>C:\glib\gio\glocalfileinfo.c</tt>.</p>
+Apply the patch <tt>glocalfileinfo.c.diff</tt> to <tt>C:\glib\gio\glocalfileinfo.c.diff</tt>.<br>
+Apply the patch <tt>gwin32networking.h.diff</tt> to <tt>C:\glib\gio\gwin32networking.h</tt>.</p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/glib<br>
-CFLAGS="-march=i686" LIBFFI_CFLAGS="-I/C/GTK/lib/libffi-3.0.13/include" LIBFFI_LIBS="-lffi" ZLIB_CFLAGS="" ZLIB_LIBS="-lz" ./configure --prefix=/C/GTK<br>
+CFLAGS="-O2 -march=i686" LIBFFI_CFLAGS="-I/C/GTK/lib/libffi-3.2.1/include" LIBFFI_LIBS="-lffi" ZLIB_CFLAGS="" ZLIB_LIBS="-lz" ./configure --prefix=/C/GTK<br>
 make<br>
 make install</tt></p></blockquote>
 
@@ -136,20 +135,20 @@ make install</tt></p></blockquote>
 <h3>Install Cairo</h3>
 
 <p>Download and unzip to <tt>C:\cairo</tt>:<br>
-<a href="http://cairographics.org/releases/cairo-1.12.16.tar.xz">
-<tt>http://cairographics.org/releases/cairo-1.12.16.tar.xz</tt></a></p>
+<a href="http://cairographics.org/releases/cairo-1.14.2.tar.xz">
+<tt>http://cairographics.org/releases/cairo-1.14.2.tar.xz</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/cairo<br>
-CFLAGS=-D_SSIZE_T_DEFINED ./configure --prefix=/C/GTK --disable-interpreter<br>
+./configure --prefix=/C/GTK --disable-interpreter<br>
 make<br>
 make install</tt></p></blockquote>
 
 <h3>Install Pango</h3>
 
 <p>Download and unzip to <tt>C:\pango</tt>:<br>
-<a href="http://ftp.gnome.org/pub/GNOME/sources/pango/1.36/pango-1.36.1.tar.xz">
-<tt>http://ftp.gnome.org/pub/GNOME/sources/pango/1.36/pango-1.36.1.tar.xz</tt></a></p>
+<a href="http://ftp.gnome.org/pub/GNOME/sources/pango/1.36/pango-1.36.8.tar.xz">
+<tt>http://ftp.gnome.org/pub/GNOME/sources/pango/1.36/pango-1.36.8.tar.xz</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/pango<br>
@@ -160,10 +159,8 @@ make install</tt></p></blockquote>
 <h3>Install gdk-pixbuf</h3>
 
 <p>Download and unzip to <tt>C:\gdk-pixbuf</tt>:<br>
-<a href="http://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/2.30/gdk-pixbuf-2.30.8.tar.xz">
-<tt>http://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/2.30/gdk-pixbuf-2.30.8.tar.xz</tt></a></p>
-
-<p>Apply the patch <tt>gdk-pixbuf-io.c.diff</tt> to <tt>C:\gdk-pixbuf\gdk-pixbuf\gdk-pixbuf-io.c</tt>.</p>
+<a href="http://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/2.31/gdk-pixbuf-2.31.4.tar.xz">
+<tt>http://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/2.31/gdk-pixbuf-2.31.4.tar.xz</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/gdk-pixbuf<br>
@@ -174,8 +171,8 @@ make install</tt></p></blockquote>
 <h3>Install ATK</h3>
 
 <p>Download and unzip to <tt>C:\atk</tt>:<br>
-<a href="http://ftp.gnome.org/pub/gnome/sources/atk/2.12/atk-2.12.0.tar.xz">
-<tt>http://ftp.gnome.org/pub/gnome/sources/atk/2.12/atk-2.12.0.tar.xz</tt></a></p>
+<a href="http://ftp.gnome.org/pub/gnome/sources/atk/2.16/atk-2.16.0.tar.xz">
+<tt>http://ftp.gnome.org/pub/gnome/sources/atk/2.16/atk-2.16.0.tar.xz</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/atk<br>
@@ -186,15 +183,12 @@ make install</tt></p></blockquote>
 <h3>Install GTK+</h3>
 
 <p>Download and unzip to <tt>C:\gtksrc</tt>:<br>
-<a href="http://ftp.gnome.org/pub/GNOME/sources/gtk+/2.24/gtk+-2.24.24.tar.xz">
-<tt>http://ftp.gnome.org/pub/GNOME/sources/gtk+/2.24/gtk+-2.24.24.tar.xz</tt></a></p>
-
-<p>Apply the patch <tt>gdkwindow.c.diff</tt> to <tt>C:\gtksrc\gdk\gdkwindow.c</tt>.<br>
-Apply the patch <tt>gtk-input-makefile.in.diff</tt> to <tt>C:\gtksrc\modules\input\Makefile.in</tt>.</p>
+<a href="http://ftp.gnome.org/pub/GNOME/sources/gtk+/2.24/gtk+-2.24.28.tar.xz">
+<tt>http://ftp.gnome.org/pub/GNOME/sources/gtk+/2.24/gtk+-2.24.28.tar.xz</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/gtksrc<br>
-./configure --prefix=/C/GTK<br>
+CFLAGS="-O2 -D_WIN32_WINNT=0x0501" ./configure --prefix=/C/GTK<br>
 make<br>
 make install</tt></p></blockquote>
 
@@ -218,14 +212,17 @@ make install</tt></p></blockquote>
 <h3>Install GNOME Icon Theme</h3>
 
 <p>Download and unzip to <tt>C:\gnome-icon-theme</tt>:<br>
-<a href="http://ftp.gnome.org/pub/GNOME/sources/gnome-icon-theme/3.8/gnome-icon-theme-3.8.3.tar.xz">
-<tt>http://ftp.gnome.org/pub/GNOME/sources/gnome-icon-theme/3.8/gnome-icon-theme-3.8.3.tar.xz</tt></a></p>
+<a href="http://ftp.gnome.org/pub/GNOME/sources/gnome-icon-theme/3.12/gnome-icon-theme-3.12.0.tar.xz">
+<tt>http://ftp.gnome.org/pub/GNOME/sources/gnome-icon-theme/3.12/gnome-icon-theme-3.12.0.tar.xz</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/gnome-icon-theme<br>
 ./configure --prefix=/C/GTK --disable-icon-mapping<br>
 make<br>
 make install</tt></p></blockquote>
+
+<p><i>It may be necessary to run the MinGW shell with administrative privileges
+for GNOME Icon Theme to install successfully.</i></p>
 
 <h3>Install SDL</h3>
 
@@ -262,8 +259,8 @@ make install</tt></p></blockquote>
 <h3>Install mpg123</h3>
 
 <p>Download and unzip to <tt>C:\mpg123</tt>:<br>
-<a href="http://mpg123.de/download/mpg123-1.21.0.tar.bz2">
-<tt>http://mpg123.de/download/mpg123-1.21.0.tar.bz2</tt></a></p>
+<a href="http://mpg123.de/download/mpg123-1.22.1.tar.bz2">
+<tt>http://mpg123.de/download/mpg123-1.22.1.tar.bz2</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/mpg123<br>
@@ -379,7 +376,7 @@ make install</tt></p></blockquote>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libflac<br>
-./configure --prefix=/C/libs<br>
+./configure --prefix=/C/libs --disable-sse --disable-ogg<br>
 make<br>
 make install</tt></p></blockquote>
 
@@ -398,8 +395,8 @@ make install</tt></p></blockquote>
 <h3>Install libvorbis</h3>
 
 <p>Download and unzip to <tt>C:\libvorbis</tt>:<br>
-<a href="http://downloads.xiph.org/releases/vorbis/libvorbis-1.3.4.tar.xz">
-<tt>http://downloads.xiph.org/releases/vorbis/libvorbis-1.3.4.tar.xz</tt></a></p>
+<a href="http://downloads.xiph.org/releases/vorbis/libvorbis-1.3.5.tar.xz">
+<tt>http://downloads.xiph.org/releases/vorbis/libvorbis-1.3.5.tar.xz</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libvorbis<br>
@@ -407,6 +404,7 @@ make install</tt></p></blockquote>
 make<br>
 make install</tt></p></blockquote>
 
+<!-- TODO: set up SSL certificates for Scrobbler
 <h3>Install OpenSSL</h3>
 
 <p>Download and unzip to <tt>C:\openssl</tt>:<br>
@@ -418,6 +416,7 @@ make install</tt></p></blockquote>
 ./configure shared mingw --prefix=/C/libs<br>
 make<br>
 make install</tt></p></blockquote>
+-->
 
 <h3>Install libneon</h3>
 
@@ -427,7 +426,7 @@ make install</tt></p></blockquote>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libneon<br>
-./configure --prefix=/C/libs --enable-shared --with-ssl<br>
+./configure --prefix=/C/libs --enable-shared<br> <!-- --with-ssl -->
 make<br>
 make install</tt></p></blockquote>
 
@@ -461,8 +460,8 @@ make install</tt></p></blockquote>
 <h3>Install FFmpeg</h3>
 
 <p>Download and unzip to <tt>C:\ffmpeg</tt>:<br>
-<a href="http://ffmpeg.org/releases/ffmpeg-2.5.2.tar.bz2">
-<tt>http://ffmpeg.org/releases/ffmpeg-2.5.2.tar.bz2</tt></a></p>
+<a href="http://ffmpeg.org/releases/ffmpeg-2.6.3.tar.bz2">
+<tt>http://ffmpeg.org/releases/ffmpeg-2.6.3.tar.bz2</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/ffmpeg<br>
@@ -487,6 +486,7 @@ autoreconf<br>
 make<br>
 make install</tt></p></blockquote>
 
+<!-- TODO: set up SSL certificates for Scrobbler
 <h3>Install libcurl</h3>
 
 <p>Download and unzip to <tt>C:\libcurl</tt>:<br>
@@ -498,6 +498,7 @@ make install</tt></p></blockquote>
 ./configure --prefix=/C/libs<br>
 make<br>
 make install</tt></p></blockquote>
+-->
 
 <h3>Install libmms</h3>
 
@@ -530,13 +531,11 @@ make install</tt></p></blockquote>
 <h3>Install libsidplayfp</h3>
 
 <p>Download and unzip to <tt>C:\libsidplayfp</tt>:<br>
-<a href="http://sourceforge.net/projects/sidplay-residfp/files/libsidplayfp/1.6/libsidplayfp-1.6.2.tar.gz/download">
-<tt>http://sourceforge.net/projects/sidplay-residfp/files/libsidplayfp/1.6/libsidplayfp-1.6.2.tar.gz/download</tt></a></p>
+<a href="http://sourceforge.net/projects/sidplay-residfp/files/libsidplayfp/1.7/libsidplayfp-1.7.2.tar.gz/download">
+<tt>http://sourceforge.net/projects/sidplay-residfp/files/libsidplayfp/1.7/libsidplayfp-1.7.2.tar.gz/download</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libsidplayfp<br>
-touch sidplayfp/psiddrv.o65
-touch sidplayfp/psiddrv.bin
 ./configure --prefix=/C/libs<br>
 make<br>
 make install</tt></p></blockquote>

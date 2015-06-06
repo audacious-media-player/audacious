@@ -21,33 +21,46 @@
 
 #include <glib.h>  /* for GThreadPool */
 
+#include "i18n.h"
 #include "internal.h"
-#include "probe.h"
+#include "plugins.h"
 #include "tuple.h"
+#include "vfs.h"
 
 static GThreadPool * pool;
 
 static void scan_worker (void * data, void *)
 {
-    ScanRequest * request = (ScanRequest *) data;
+    auto r = (ScanRequest *) data;
 
-    if (! request->decoder)
-        request->decoder = aud_file_find_decoder (request->filename, false, & request->error);
+    if (! r->decoder)
+        r->decoder = file_find_decoder (r->filename, false, r->file, & r->error);
+    if (! r->decoder)
+        goto err;
 
-    if (request->decoder && (request->flags & SCAN_TUPLE))
-        request->tuple = aud_file_read_tuple (request->filename, request->decoder, & request->error);
-
-    if (request->decoder && (request->flags & SCAN_IMAGE))
+    if ((r->flags & (SCAN_TUPLE | SCAN_IMAGE)))
     {
-        request->image_data = aud_file_read_image (request->filename, request->decoder);
+        if (! (r->ip = load_input_plugin (r->decoder, & r->error)))
+            goto err;
 
-        if (! request->image_data.len ())
-            request->image_file = art_search (request->filename);
+        Tuple * ptuple = (r->flags & SCAN_TUPLE) ? & r->tuple : nullptr;
+        Index<char> * pimage = (r->flags & SCAN_IMAGE) ? & r->image_data : nullptr;
+
+        if (! file_read_tag (r->filename, r->decoder, r->file, ptuple, pimage, & r->error))
+            goto err;
+
+        if ((r->flags & SCAN_IMAGE) && ! r->image_data.len ())
+            r->image_file = art_search (r->filename);
+
+        /* rewind/reopen the input file */
+        if ((r->flags & SCAN_FILE))
+            open_input_file (r->filename, "r", r->ip, r->file, & r->error);
     }
 
-    request->callback (request);
+err:
+    r->callback (r);
 
-    delete request;
+    delete r;
 }
 
 void scanner_init ()

@@ -33,8 +33,6 @@
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
 
-#define IMAGE_SIZE 96
-
 static void infopopup_move_to_mouse (GtkWidget * infopopup);
 
 static struct {
@@ -61,7 +59,7 @@ static bool infopopup_display_image (const char * filename)
     if (! pb)
         return ! queued;
 
-    audgui_pixbuf_scale_within (& pb, IMAGE_SIZE);
+    audgui_pixbuf_scale_within (& pb, audgui_get_dpi ());
     gtk_image_set_from_pixbuf ((GtkImage *) widgets.image, pb);
     gtk_widget_show (widgets.image);
 
@@ -142,6 +140,8 @@ static void infopopup_destroyed ()
 
 static GtkWidget * infopopup_create ()
 {
+    int dpi = audgui_get_dpi ();
+
     GtkWidget * infopopup = gtk_window_new (GTK_WINDOW_POPUP);
     gtk_window_set_type_hint ((GtkWindow *) infopopup, GDK_WINDOW_TYPE_HINT_TOOLTIP);
     gtk_window_set_decorated ((GtkWindow *) infopopup, false);
@@ -151,7 +151,7 @@ static GtkWidget * infopopup_create ()
     gtk_container_add ((GtkContainer *) infopopup, hbox);
 
     widgets.image = gtk_image_new ();
-    gtk_widget_set_size_request (widgets.image, IMAGE_SIZE, IMAGE_SIZE);
+    gtk_widget_set_size_request (widgets.image, dpi, dpi);
     gtk_box_pack_start ((GtkBox *) hbox, widgets.image, false, false, 0);
     gtk_widget_set_no_show_all (widgets.image, true);
 

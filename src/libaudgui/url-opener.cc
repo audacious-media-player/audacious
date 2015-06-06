@@ -77,7 +77,7 @@ static GtkWidget * create_url_opener (bool open)
 
     GtkWidget * dialog = audgui_dialog_new (GTK_MESSAGE_OTHER, title,
      _("Enter URL:"), button1, button2);
-    gtk_widget_set_size_request (dialog, 400, -1);
+    gtk_widget_set_size_request (dialog, 4 * audgui_get_dpi (), -1);
     audgui_dialog_add_widget (dialog, combo);
 
     return dialog;

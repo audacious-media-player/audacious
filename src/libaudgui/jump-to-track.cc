@@ -236,6 +236,8 @@ static const AudguiListCallbacks callbacks = {
 
 static GtkWidget * create_window ()
 {
+    int dpi = audgui_get_dpi ();
+
     GtkWidget * jump_to_track_win = gtk_window_new (GTK_WINDOW_TOPLEVEL);
     gtk_window_set_type_hint ((GtkWindow *) jump_to_track_win, GDK_WINDOW_TYPE_HINT_DIALOG);
 
@@ -245,7 +247,7 @@ static GtkWidget * create_window ()
     g_signal_connect (jump_to_track_win, "destroy", (GCallback) destroy_cb, nullptr);
 
     gtk_container_set_border_width ((GtkContainer *) jump_to_track_win, 10);
-    gtk_window_set_default_size ((GtkWindow *) jump_to_track_win, 600, 500);
+    gtk_window_set_default_size ((GtkWindow *) jump_to_track_win, 6 * dpi, 5 * dpi);
 
     GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 5);
     gtk_container_add ((GtkContainer *) jump_to_track_win, vbox);

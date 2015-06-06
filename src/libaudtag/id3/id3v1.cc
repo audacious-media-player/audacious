@@ -95,8 +95,12 @@ static bool combine_string (Tuple & tuple, Tuple::Field field,
     return true;
 }
 
-bool ID3v1TagModule::read_tag (Tuple & tuple, VFSFile & file)
+bool ID3v1TagModule::read_tag (VFSFile & file, Tuple * ptuple, Index<char> * image)
 {
+    if (! ptuple)
+        return true; // nothing to do
+
+    Tuple & tuple = * ptuple;
     ID3v1Tag tag;
     ID3v1Ext ext;
 
@@ -119,7 +123,11 @@ bool ID3v1TagModule::read_tag (Tuple & tuple, VFSFile & file)
         tuple.set_int (Tuple::Track, (unsigned char) tag.comment[29]);
 
     if (! combine_string (tuple, Tuple::Genre, ext.genre, sizeof ext.genre, nullptr, 0))
-        tuple.set_str (Tuple::Genre, convert_numericgenre_to_text (tag.genre));
+    {
+        const char * genre = convert_numericgenre_to_text (tag.genre);
+        if (genre)
+            tuple.set_str (Tuple::Genre, genre);
+    }
 
     return true;
 }

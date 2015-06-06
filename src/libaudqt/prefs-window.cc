@@ -276,12 +276,7 @@ static const PreferencesWidget playlist_page_widgets[] = {
         WidgetBool (0, "show_numbers_in_pl", send_title_change)),
     WidgetCheck (N_("Show leading zeroes (02:00 instead of 2:00)"),
         WidgetBool (0, "leading_zero", send_title_change)),
-    WidgetCustomQt (create_titlestring_table),
-    WidgetLabel (N_("<b>Advanced</b>")),
-    WidgetCheck (N_("Do not load metadata for songs until played"),
-        WidgetBool (0, "metadata_on_play")),
-    WidgetCheck (N_("Probe content of files with no recognized file name extension"),
-        WidgetBool (0, "slow_probe"))
+    WidgetCustomQt (create_titlestring_table)
 };
 
 static const PreferencesWidget song_info_page_widgets[] = {
@@ -307,7 +302,14 @@ static const PreferencesWidget song_info_page_widgets[] = {
         WIDGET_CHILD),
     WidgetCheck (N_("Show time scale for current song"),
         WidgetBool (0, "filepopup_showprogressbar"),
-        WIDGET_CHILD)
+        WIDGET_CHILD),
+    WidgetLabel (N_("<b>Advanced</b>")),
+    WidgetCheck (N_("Guess missing metadata from file path"),
+        WidgetBool (0, "metadata_fallbacks")),
+    WidgetCheck (N_("Do not load metadata for songs until played"),
+        WidgetBool (0, "metadata_on_play")),
+    WidgetCheck (N_("Probe content of files with no recognized file name extension"),
+        WidgetBool (0, "slow_probe"))
 };
 
 #define TITLESTRING_NPRESETS 6
@@ -676,6 +678,7 @@ static void create_prefs_window ()
     create_plugin_category (s_category_notebook);
 
     QDialogButtonBox * bbox = new QDialogButtonBox (QDialogButtonBox::Close);
+    bbox->button (QDialogButtonBox::Close)->setText (translate_str (N_("_Close")));
     child_vbox->addWidget (bbox);
 
     QObject::connect (bbox, &QDialogButtonBox::rejected, s_prefswin, &QObject::deleteLater);

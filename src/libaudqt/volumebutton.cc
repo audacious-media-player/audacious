@@ -26,7 +26,6 @@
 #include <QWheelEvent>
 
 #include <libaudcore/drct.h>
-#include <libaudcore/audstrings.h>
 
 namespace audqt {
 
@@ -63,7 +62,7 @@ void VolumeButton::updateIcon (int val)
     else if (val >= 70)
         setIcon (QIcon::fromTheme ("audio-volume-high"));
 
-    setToolTip (QString (str_printf ("%d %%", val)));
+    setToolTip (QString ("%1 %").arg (val));
 }
 
 void VolumeButton::updateVolume ()

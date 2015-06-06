@@ -29,10 +29,10 @@
 #include "audstrings.h"
 #include "hook.h"
 #include "i18n.h"
+#include "internal.h"
 #include "list.h"
 #include "mainloop.h"
 #include "plugins-internal.h"
-#include "probe.h"
 #include "runtime.h"
 #include "tuple.h"
 #include "vfs.h"
@@ -124,15 +124,21 @@ static void add_file (const char * filename, Tuple && tuple,
     AUDINFO ("Adding file: %s\n", filename);
     status_update (filename, result->items.len ());
 
-    if (! tuple && ! decoder)
+    if (! tuple)
     {
-        decoder = aud_file_find_decoder (filename, ! aud_get_bool (nullptr, "slow_probe"));
-        if (validate && ! decoder)
-            return;
-    }
+        VFSFile file;
 
-    if (! tuple && decoder && input_plugin_has_subtunes (decoder) && ! strchr (filename, '?'))
-        tuple = aud_file_read_tuple (filename, decoder);
+        if (! decoder)
+        {
+            bool fast = ! aud_get_bool (nullptr, "slow_probe");
+            decoder = file_find_decoder (filename, fast, file);
+            if (validate && ! decoder)
+                return;
+        }
+
+        if (decoder && input_plugin_has_subtunes (decoder) && ! strchr (filename, '?'))
+            file_read_tag (filename, decoder, file, & tuple, nullptr);
+    }
 
     int n_subtunes = tuple.get_n_subtunes ();
 
@@ -318,6 +324,10 @@ static void add_finish (void * unused)
                 aud_playlist_set_title (playlist, result->title);
         }
 
+        /* temporarily disable scanning this playlist; the intent is to avoid
+         * scanning until the currently playing entry is known, at which time it
+         * can be scanned more efficiently (album art read in the same pass). */
+        playlist_delay_scan (playlist, true);
         playlist_entry_insert_batch_raw (playlist, result->at, std::move (result->items));
 
         if (result->play && aud_playlist_entry_count (playlist) > count)
@@ -327,6 +337,8 @@ static void add_finish (void * unused)
 
             aud_playlist_play (playlist);
         }
+
+        playlist_delay_scan (playlist, false);
 
     FREE:
         delete result;

@@ -52,6 +52,8 @@ public:
     ~TupleCompiler ();
 
     bool compile (const char * expr);
+    void reset ();
+
     void format (Tuple & tuple) const;
 
 private:

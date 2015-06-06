@@ -11,9 +11,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2015-01-24 13:09+0100\n"
-"PO-Revision-Date: 2014-12-22 12:38+0000\n"
-"Last-Translator: Thomas Lange <thomas-lange2@gmx.de>\n"
+"POT-Creation-Date: 2015-04-03 11:51+0200\n"
+"PO-Revision-Date: 2015-02-24 05:42+0000\n"
+"Last-Translator: Ruei-Yuan Lu <rueiyuan.lu@gmail.com>\n"
 "Language-Team: Chinese (Taiwan) (http://www.transifex.com/projects/p/"
 "audacious/language/zh_TW/)\n"
 "Language: zh_TW\n"
@@ -80,11 +80,11 @@ msgstr "播放停止後離開"
 
 #: src/audacious/main.cc:74
 msgid "Print debugging messages (may be used twice)"
-msgstr ""
+msgstr "顯示除錯訊息 (也許需要輸入兩次)"
 
 #: src/audacious/main.cc:76
 msgid "Run in Qt mode"
-msgstr ""
+msgstr "以 Qt 模式啟動"
 
 #: src/audacious/main.cc:127
 #, c-format
@@ -124,11 +124,11 @@ msgstr "音樂 CD，音軌 %s"
 
 #: src/libaudcore/audstrings.cc:532 src/libaudcore/tuple.cc:481
 msgid "(character encoding error)"
-msgstr ""
+msgstr "(字元編碼錯誤)"
 
 #: src/libaudcore/playback.cc:328 src/libaudcore/probe.cc:151
 msgid "Error loading plugin"
-msgstr ""
+msgstr "載入外掛時發生錯誤"
 
 #: src/libaudcore/playback.cc:383 src/libaudgui/infowin.cc:496
 #, c-format
@@ -136,14 +136,16 @@ msgid ""
 "Error opening %s:\n"
 "%s"
 msgstr ""
+"開啟 %s 時發生錯誤：\n"
+"%s"
 
 #: src/libaudcore/playback.cc:385
 msgid "Unknown playback error"
-msgstr ""
+msgstr "播放時發生未知的錯誤"
 
 #: src/libaudcore/playback.cc:514
 msgid "Invalid audio format"
-msgstr ""
+msgstr "無效的音訊格式"
 
 #: src/libaudcore/playlist.cc:142
 msgid "Now Playing"
@@ -158,24 +160,24 @@ msgstr "因為正在進行詮釋資料的掃描，無法對播放清單進行排
 #: src/libaudcore/playlist-files.cc:76
 #, c-format
 msgid "Cannot load %s: unsupported file name extension."
-msgstr ""
+msgstr "無法載入 %s：不支援該副檔名。"
 
 #: src/libaudcore/playlist-files.cc:136
 #, c-format
 msgid "Cannot save %s: unsupported file name extension."
-msgstr ""
+msgstr "無法儲存 %s：不支援該副檔名。"
 
 #: src/libaudcore/probe.cc:119
 msgid "Seek error"
-msgstr ""
+msgstr "搜尋發生錯誤"
 
 #: src/libaudcore/probe.cc:127
 msgid "File format not recognized"
-msgstr ""
+msgstr "無法辨識檔案格式"
 
 #: src/libaudcore/probe.cc:161
 msgid "Error reading metadata"
-msgstr ""
+msgstr "讀取詮釋資料時發生錯誤"
 
 #: src/libaudcore/tuple.cc:528
 msgid "Mono"
@@ -194,27 +196,27 @@ msgstr[0] "%d 聲道"
 #: src/libaudcore/tuple.cc:699
 #, c-format
 msgid "Track %d"
-msgstr ""
+msgstr "音軌 %d"
 
 #: src/libaudcore/tuple.cc:701
 msgid "Audio CD"
-msgstr ""
+msgstr "音訊 CD"
 
 #: src/libaudcore/tuple.cc:707
 msgid "(unknown title)"
-msgstr ""
+msgstr "(未知的標題)"
 
 #: src/libaudcore/vfs.cc:67
 msgid "Invalid URI"
-msgstr ""
+msgstr "無效的連結"
 
 #: src/libaudcore/vfs.cc:83
 msgid "Unknown URI scheme"
-msgstr ""
+msgstr "未知的連結格式"
 
 #: src/libaudcore/vfs_local.cc:82
 msgid "Invalid file name"
-msgstr ""
+msgstr "無效的檔案名稱"
 
 #: src/libaudgui/about.cc:35 src/libaudqt/about.cc:37
 msgid "Credits"
@@ -241,6 +243,7 @@ msgstr "移除(_R)"
 #: src/libaudgui/jump-to-time.cc:48 src/libaudgui/playlists.cc:90
 #: src/libaudgui/playlists.cc:144 src/libaudgui/plugin-prefs.cc:160
 #: src/libaudgui/url-opener.cc:76 src/libaudqt/playlist-management.cc:47
+#: src/libaudqt/prefs-plugin.cc:121
 msgid "_Cancel"
 msgstr "取消(_C)"
 
@@ -343,7 +346,9 @@ msgstr "加入後關閉對話視窗(_D)"
 #: src/libaudgui/file-opener.cc:127 src/libaudgui/infowin.cc:406
 #: src/libaudgui/jump-to-track.cc:307 src/libaudgui/plugin-prefs.cc:166
 #: src/libaudgui/prefs-window.cc:762 src/libaudgui/queue-manager.cc:194
-#: src/libaudgui/util.cc:167 src/libaudqt/queue-manager.cc:116
+#: src/libaudgui/util.cc:167 src/libaudqt/infowin.cc:73
+#: src/libaudqt/prefs-plugin.cc:135 src/libaudqt/prefs-window.cc:679
+#: src/libaudqt/queue-manager.cc:116 src/libaudqt/util.cc:70
 msgid "_Close"
 msgstr "關閉(_C)"
 
@@ -561,13 +566,13 @@ msgid "Save error"
 msgstr "儲存失敗"
 
 #: src/libaudgui/infowin.cc:316 src/libaudgui/prefs-window.cc:86
-#: src/libaudqt/infowin.cc:61 src/libaudqt/prefs-window.cc:89
+#: src/libaudqt/infowin.cc:62 src/libaudqt/prefs-window.cc:89
 msgid "Song Info"
 msgstr "歌曲資訊"
 
 #: src/libaudgui/infowin.cc:369 src/libaudqt/info-widget.cc:44
 msgid "Album Artist"
-msgstr ""
+msgstr "專輯藝人"
 
 #: src/libaudgui/infowin.cc:372 src/libaudgui/prefs-window.cc:109
 #: src/libaudqt/info-widget.cc:43 src/libaudqt/prefs-window.cc:112
@@ -580,15 +585,15 @@ msgstr "音軌編號"
 
 #: src/libaudgui/infowin.cc:389
 msgid "Clea_r fields when moving to next song"
-msgstr ""
+msgstr "移到下一首歌曲時清除欄位(_R)"
 
-#: src/libaudgui/infowin.cc:403
+#: src/libaudgui/infowin.cc:403 src/libaudqt/infowin.cc:72
 msgid "_Save"
 msgstr "儲存(_S)"
 
 #: src/libaudgui/infowin.cc:409
 msgid "_Next"
-msgstr ""
+msgstr "下一個(_N)"
 
 #: src/libaudgui/infowin.cc:455
 #, c-format
@@ -669,17 +674,17 @@ msgstr "匯入(_I)"
 msgid "_Plugins ..."
 msgstr "外掛(_P)"
 
-#: src/libaudgui/plugin-prefs.cc:109 src/libaudqt/prefs-plugin.cc:55
+#: src/libaudgui/plugin-prefs.cc:109 src/libaudqt/prefs-plugin.cc:56
 #, c-format
 msgid "About %s"
-msgstr ""
+msgstr "關於 %s"
 
-#: src/libaudgui/plugin-prefs.cc:155 src/libaudqt/prefs-plugin.cc:107
+#: src/libaudgui/plugin-prefs.cc:155 src/libaudqt/prefs-plugin.cc:108
 #, c-format
 msgid "%s Settings"
-msgstr ""
+msgstr "%s 設定"
 
-#: src/libaudgui/plugin-prefs.cc:159
+#: src/libaudgui/plugin-prefs.cc:159 src/libaudqt/prefs-plugin.cc:120
 msgid "_Set"
 msgstr "套用(_S)"
 
@@ -736,15 +741,15 @@ msgstr "傳輸"
 
 #: src/libaudgui/prefs-window.cc:103 src/libaudqt/prefs-window.cc:106
 msgid "Track number"
-msgstr ""
+msgstr "音軌編號"
 
 #: src/libaudgui/prefs-window.cc:105 src/libaudqt/prefs-window.cc:108
 msgid "File name"
-msgstr ""
+msgstr "檔案名稱"
 
 #: src/libaudgui/prefs-window.cc:106 src/libaudqt/prefs-window.cc:109
 msgid "File path"
-msgstr ""
+msgstr "檔案路徑"
 
 #: src/libaudgui/prefs-window.cc:107 src/libaudqt/prefs-window.cc:110
 msgid "Date"
@@ -900,11 +905,11 @@ msgstr "代理伺服器密碼："
 
 #: src/libaudgui/prefs-window.cc:223 src/libaudqt/prefs-window.cc:226
 msgid "<b>Network Settings</b>"
-msgstr ""
+msgstr "<b>網路設定</b>"
 
 #: src/libaudgui/prefs-window.cc:226 src/libaudqt/prefs-window.cc:229
 msgid "KiB"
-msgstr ""
+msgstr "KiB"
 
 #: src/libaudgui/prefs-window.cc:227 src/libaudqt/prefs-window.cc:230
 msgid "<b>Proxy Configuration</b>"
@@ -932,11 +937,11 @@ msgstr "<b>行為</b>"
 
 #: src/libaudgui/prefs-window.cc:253 src/libaudqt/prefs-window.cc:257
 msgid "Resume playback on startup"
-msgstr ""
+msgstr "啟動時回復之前的播放狀態"
 
 #: src/libaudgui/prefs-window.cc:255 src/libaudqt/prefs-window.cc:259
 msgid "Pause instead of resuming immediately"
-msgstr ""
+msgstr "暫停而非立刻回復播放"
 
 #: src/libaudgui/prefs-window.cc:258 src/libaudqt/prefs-window.cc:262
 msgid "Advance when the current song is deleted"
@@ -972,7 +977,7 @@ msgstr "顯示開頭的數字零 (例：02:00 而不是 2:00)"
 
 #: src/libaudgui/prefs-window.cc:274 src/libaudqt/prefs-window.cc:280
 msgid "<b>Advanced</b>"
-msgstr ""
+msgstr "<b>進階</b>"
 
 #: src/libaudgui/prefs-window.cc:275 src/libaudqt/prefs-window.cc:268
 #: src/libaudqt/prefs-window.cc:281
@@ -981,7 +986,7 @@ msgstr "在歌曲播放以前不要載入詮釋資料"
 
 #: src/libaudgui/prefs-window.cc:277 src/libaudqt/prefs-window.cc:283
 msgid "Probe content of files with no recognized file name extension"
-msgstr ""
+msgstr "偵測帶有不明副檔名的檔案內容"
 
 #: src/libaudgui/prefs-window.cc:282 src/libaudqt/prefs-window.cc:288
 msgid "<b>Album Art</b>"
@@ -1077,7 +1082,7 @@ msgstr "移出佇列(_U)"
 
 #: src/libaudgui/status.cc:36
 msgid "Working ..."
-msgstr ""
+msgstr "處理中 ..."
 
 #: src/libaudgui/status.cc:85 src/libaudqt/log-inspector.cc:192
 msgid "Error"
@@ -1105,60 +1110,60 @@ msgstr ""
 
 #: src/libaudqt/fileopener.cc:40
 msgid "Open Folder"
-msgstr ""
+msgstr "開啟資料夾"
 
 #: src/libaudqt/fileopener.cc:42
 msgid "Add Folder"
-msgstr ""
+msgstr "加入資料夾"
 
 #: src/libaudqt/fileopener.cc:46 src/libaudqt/fileopener.cc:47
 msgid "Open"
-msgstr ""
+msgstr "開啟"
 
 #: src/libaudqt/fileopener.cc:48 src/libaudqt/fileopener.cc:49
 msgid "Add"
-msgstr ""
+msgstr "加入"
 
 #: src/libaudqt/info-widget.cc:37
 msgid "Metadata"
-msgstr ""
+msgstr "詮釋資料"
 
 #: src/libaudqt/info-widget.cc:45
 msgid "Composer"
-msgstr ""
+msgstr "作曲"
 
 #: src/libaudqt/info-widget.cc:46
 msgid "Performer"
-msgstr ""
+msgstr "表演者"
 
 #: src/libaudqt/info-widget.cc:47
 msgid "Recording Year"
-msgstr ""
+msgstr "錄製年份"
 
 #: src/libaudqt/info-widget.cc:48
 msgid "Recording Date"
-msgstr ""
+msgstr "錄製日期"
 
 #: src/libaudqt/info-widget.cc:51
 msgid "Technical"
-msgstr ""
+msgstr "技術性資訊"
 
 #: src/libaudqt/info-widget.cc:53
 msgid "MIME Type"
-msgstr ""
+msgstr "MIME 類型"
 
 #: src/libaudqt/info-widget.cc:56
 msgid "Bitrate"
-msgstr ""
+msgstr "位元率"
 
-#: src/libaudqt/infowin.cc:126
+#: src/libaudqt/infowin.cc:129
 #, c-format
 msgid "No info available for %s.\n"
 msgstr "無關於 %s 的資訊。\n"
 
 #: src/libaudqt/log-inspector.cc:106
 msgid "Level"
-msgstr ""
+msgstr "等級"
 
 #: src/libaudqt/log-inspector.cc:107
 msgid "Filename"
@@ -1166,36 +1171,36 @@ msgstr "檔案名稱"
 
 #: src/libaudqt/log-inspector.cc:108
 msgid "Line"
-msgstr ""
+msgstr "行號"
 
 #: src/libaudqt/log-inspector.cc:109
 msgid "Function"
-msgstr ""
+msgstr "功能"
 
 #: src/libaudqt/log-inspector.cc:110
 msgid "Message"
-msgstr ""
+msgstr "訊息"
 
 #: src/libaudqt/log-inspector.cc:175
 msgid "Log Inspector"
-msgstr ""
+msgstr "記錄監控"
 
 #: src/libaudqt/log-inspector.cc:186
 msgid "Log Level:"
-msgstr ""
+msgstr "記錄等級："
 
 #: src/libaudqt/log-inspector.cc:189
 msgid "Debug"
-msgstr ""
+msgstr "除錯"
 
 #: src/libaudqt/log-inspector.cc:190
 msgid "Info"
-msgstr ""
+msgstr "資訊"
 
 #: src/libaudqt/log-inspector.cc:191
 msgid "Warning"
-msgstr ""
+msgstr "警告"
 
 #: src/libaudqt/plugin-menu.cc:40
 msgid "Plugins ..."
-msgstr ""
+msgstr "外掛 ..."

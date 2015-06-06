@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2015-01-24 13:09+0100\n"
+"POT-Creation-Date: 2015-02-28 19:15+0100\n"
 "PO-Revision-Date: 2014-12-23 20:31+0000\n"
 "Last-Translator: Jorge A. García Sosa <kamesennin555@icloud.com>\n"
 "Language-Team: Spanish (Mexico) (http://www.transifex.com/projects/p/"
@@ -247,6 +247,7 @@ msgstr "_Remover"
 #: src/libaudgui/jump-to-time.cc:48 src/libaudgui/playlists.cc:90
 #: src/libaudgui/playlists.cc:144 src/libaudgui/plugin-prefs.cc:160
 #: src/libaudgui/url-opener.cc:76 src/libaudqt/playlist-management.cc:47
+#: src/libaudqt/prefs-plugin.cc:121
 msgid "_Cancel"
 msgstr "_Cancelar"
 
@@ -349,7 +350,9 @@ msgstr "Cerrar _dialogo al agregar"
 #: src/libaudgui/file-opener.cc:127 src/libaudgui/infowin.cc:406
 #: src/libaudgui/jump-to-track.cc:307 src/libaudgui/plugin-prefs.cc:166
 #: src/libaudgui/prefs-window.cc:762 src/libaudgui/queue-manager.cc:194
-#: src/libaudgui/util.cc:167 src/libaudqt/queue-manager.cc:116
+#: src/libaudgui/util.cc:167 src/libaudqt/infowin.cc:73
+#: src/libaudqt/prefs-plugin.cc:135 src/libaudqt/prefs-window.cc:679
+#: src/libaudqt/queue-manager.cc:116 src/libaudqt/util.cc:70
 msgid "_Close"
 msgstr "_Cerrar"
 
@@ -567,7 +570,7 @@ msgid "Save error"
 msgstr "Error al guardar"
 
 #: src/libaudgui/infowin.cc:316 src/libaudgui/prefs-window.cc:86
-#: src/libaudqt/infowin.cc:61 src/libaudqt/prefs-window.cc:89
+#: src/libaudqt/infowin.cc:62 src/libaudqt/prefs-window.cc:89
 msgid "Song Info"
 msgstr "Información de Pista"
 
@@ -588,7 +591,7 @@ msgstr "Número de Pista"
 msgid "Clea_r fields when moving to next song"
 msgstr "Limpia_r campos al mover a la sig. pista"
 
-#: src/libaudgui/infowin.cc:403
+#: src/libaudgui/infowin.cc:403 src/libaudqt/infowin.cc:72
 msgid "_Save"
 msgstr "_Guardar"
 
@@ -675,17 +678,17 @@ msgstr "_Importar"
 msgid "_Plugins ..."
 msgstr "_Plugins ..."
 
-#: src/libaudgui/plugin-prefs.cc:109 src/libaudqt/prefs-plugin.cc:55
+#: src/libaudgui/plugin-prefs.cc:109 src/libaudqt/prefs-plugin.cc:56
 #, c-format
 msgid "About %s"
 msgstr "Acerca %s"
 
-#: src/libaudgui/plugin-prefs.cc:155 src/libaudqt/prefs-plugin.cc:107
+#: src/libaudgui/plugin-prefs.cc:155 src/libaudqt/prefs-plugin.cc:108
 #, c-format
 msgid "%s Settings"
 msgstr "%s Ajustes"
 
-#: src/libaudgui/plugin-prefs.cc:159
+#: src/libaudgui/plugin-prefs.cc:159 src/libaudqt/prefs-plugin.cc:120
 msgid "_Set"
 msgstr "_Ajuste"
 
@@ -1157,7 +1160,7 @@ msgstr "Tipo MIME"
 msgid "Bitrate"
 msgstr "Tasa de bit"
 
-#: src/libaudqt/infowin.cc:126
+#: src/libaudqt/infowin.cc:129
 #, c-format
 msgid "No info available for %s.\n"
 msgstr "No hay información disponible para  %s.\n"

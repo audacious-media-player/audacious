@@ -46,6 +46,7 @@ enum
     ID3_ENCODER,
     ID3_TXX,
     ID3_RVA,
+    ID3_PIC,
     ID3_TAGS_NO
 };
 
@@ -64,7 +65,8 @@ static const char * id3_frames[ID3_TAGS_NO] = {
     "COM",
     "TSS",
     "TXX",
-    "RVA"
+    "RVA",
+    "PIC"
 };
 
 #pragma pack(push) /* must be byte-aligned */
@@ -207,7 +209,7 @@ bool ID3v22TagModule::can_handle_file (VFSFile & handle)
      & data_size);
 }
 
-bool ID3v22TagModule::read_tag (Tuple & tuple, VFSFile & handle)
+bool ID3v22TagModule::read_tag (VFSFile & handle, Tuple * ptuple, Index<char> * image)
 {
     int version, header_size, data_size;
     bool syncsafe;
@@ -220,6 +222,9 @@ bool ID3v22TagModule::read_tag (Tuple & tuple, VFSFile & handle)
 
     AUDDBG ("Reading tags from %i bytes of ID3 data in %s\n", data_size,
      handle.filename ());
+
+    Tuple trash; // dump data here if caller does not want the tuple
+    Tuple & tuple = ptuple ? * ptuple : trash;
 
     for (pos = 0; pos < data_size; )
     {
@@ -273,6 +278,10 @@ bool ID3v22TagModule::read_tag (Tuple & tuple, VFSFile & handle)
           case ID3_RVA:
             id3_decode_rva (tuple, & frame[0], frame.len ());
             break;
+          case ID3_PIC:
+            if (image)
+                * image = id3_decode_picture (& frame[0], frame.len ());
+            break;
           default:
             AUDDBG ("Ignoring unsupported ID3 frame %s.\n", (const char *) frame.key);
             break;
@@ -282,34 +291,6 @@ bool ID3v22TagModule::read_tag (Tuple & tuple, VFSFile & handle)
     }
 
     return true;
-}
-
-Index<char> ID3v22TagModule::read_image (VFSFile & handle)
-{
-    int version, header_size, data_size, parsed;
-    bool syncsafe;
-    int64_t offset;
-    Index<char> buf;
-
-    if (! read_header (handle, & version, & syncsafe, & offset, & header_size,
-     & data_size))
-        return buf;
-
-    for (parsed = 0; parsed < data_size && ! buf.len (); )
-    {
-        int frame_size;
-        GenericFrame frame;
-
-        if (! read_frame (handle, data_size - parsed, version, syncsafe, & frame_size, frame))
-            break;
-
-        if (! strcmp (frame.key, "PIC"))
-            buf = id3_decode_picture (& frame[0], frame.len ());
-
-        parsed += frame_size;
-    }
-
-    return buf;
 }
 
 }

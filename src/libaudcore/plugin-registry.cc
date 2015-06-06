@@ -32,7 +32,13 @@
 #include "runtime.h"
 
 #define FILENAME "plugin-registry"
-#define FORMAT 9
+
+/* Increment this when the format of the plugin-registry file changes.
+ * Add 10 if the format changes in a way that will break parse_plugins_fallback(). */
+#define FORMAT 10
+
+/* Oldest file format supported by parse_plugins_fallback() */
+#define MIN_FORMAT 2  // "enabled" flag was added in Audacious 2.4
 
 struct PluginWatch {
     PluginWatchFunc func;
@@ -57,6 +63,7 @@ public:
 
     /* for playlist plugins */
     Index<String> exts;
+    int can_save;
 
     /* for input plugins */
     aud::array<InputKey, Index<String>> keys;
@@ -75,6 +82,7 @@ public:
         has_configure (false),
         enabled (type == PluginType::Transport ||
          type == PluginType::Playlist || type == PluginType::Input),
+        can_save (false),
         has_subtunes (false),
         writes_tag (false) {}
 
@@ -134,6 +142,8 @@ static void playlist_plugin_save (PluginHandle * plugin, FILE * handle)
 {
     for (const String & ext : plugin->exts)
         fprintf (handle, "ext %s\n", (const char *) ext);
+
+    fprintf (handle, "saves %d\n", plugin->can_save);
 }
 
 static void input_plugin_save (PluginHandle * plugin, FILE * handle)
@@ -248,6 +258,9 @@ static void playlist_plugin_parse (PluginHandle * plugin, FILE * handle)
         plugin->exts.append (std::move (value));
         parse_next (handle);
     }
+
+    if (parse_integer ("saves", & plugin->can_save))
+        parse_next (handle);
 }
 
 static void input_plugin_parse (PluginHandle * plugin, FILE * handle)
@@ -296,7 +309,7 @@ static bool plugin_parse (FILE * handle)
     if (! parse_integer ("stamp", & timestamp))
         return false;
 
-    PluginHandle * plugin = new PluginHandle (basename, String (), false, timestamp, type, nullptr);
+    auto plugin = new PluginHandle (basename, String (), false, timestamp, type, nullptr);
     plugins[type].append (plugin);
 
     parse_next (handle);
@@ -328,6 +341,47 @@ static bool plugin_parse (FILE * handle)
     return true;
 }
 
+/* try to migrate enabled status from another version */
+static void parse_plugins_fallback (FILE * handle)
+{
+    for (; parse_value; parse_next (handle))
+    {
+        PluginType type;
+        String path;
+        int enabled;
+
+        for (auto type2 : aud::range<PluginType> ())
+        {
+            type = type2;
+            if ((path = parse_string (plugin_type_names[type2])))
+                break;
+        }
+
+        if (! path)
+            continue;
+
+        StringBuf basename = get_basename (path);
+        if (! basename)
+            continue;
+
+        parse_next (handle);
+
+        for (; parse_value; parse_next (handle))
+        {
+            if (parse_integer ("enabled", & enabled))
+                break;
+        }
+
+        if (! parse_value)
+            return;
+
+        // setting timestamp to zero forces a rescan
+        auto plugin = new PluginHandle (basename, String (), false, 0, type, nullptr);
+        plugins[type].append (plugin);
+        plugin->enabled = enabled;
+    }
+}
+
 void plugin_registry_load ()
 {
     FILE * handle = open_registry_file ("r");
@@ -337,13 +391,18 @@ void plugin_registry_load ()
     parse_next (handle);
 
     int format;
-    if (! parse_integer ("format", & format) || format != FORMAT)
+    if (! parse_integer ("format", & format))
         goto ERR;
 
     parse_next (handle);
 
-    while (plugin_parse (handle))
-        ;
+    if (format == FORMAT)
+    {
+        while (plugin_parse (handle))
+            continue;
+    }
+    else if (format >= MIN_FORMAT && format < FORMAT + 10)
+        parse_plugins_fallback (handle);
 
 ERR:
     fclose (handle);
@@ -426,6 +485,8 @@ static void plugin_get_info (PluginHandle * plugin, bool is_new)
         plugin->exts.clear ();
         for (const char * ext : pp->extensions)
             plugin->exts.append (String (ext));
+
+        plugin->can_save = pp->can_save;
     }
     else if (header->type == PluginType::Input)
     {
@@ -603,8 +664,6 @@ EXPORT void aud_plugin_remove_watch (PluginHandle * plugin, PluginWatchFunc func
 
 bool transport_plugin_has_scheme (PluginHandle * plugin, const char * scheme)
 {
-    g_return_val_if_fail (plugin->type == PluginType::Transport, false);
-
     for (String & s : plugin->schemes)
     {
         if (! strcmp (s, scheme))
@@ -614,10 +673,18 @@ bool transport_plugin_has_scheme (PluginHandle * plugin, const char * scheme)
     return false;
 }
 
+bool playlist_plugin_can_save (PluginHandle * plugin)
+{
+    return plugin->can_save;
+}
+
+const Index<String> & playlist_plugin_get_exts (PluginHandle * plugin)
+{
+    return plugin->exts;
+}
+
 bool playlist_plugin_has_ext (PluginHandle * plugin, const char * ext)
 {
-    g_return_val_if_fail (plugin->type == PluginType::Playlist, false);
-
     for (String & e : plugin->exts)
     {
         if (! strcmp_nocase (e, ext))
@@ -629,8 +696,6 @@ bool playlist_plugin_has_ext (PluginHandle * plugin, const char * ext)
 
 bool input_plugin_has_key (PluginHandle * plugin, InputKey key, const char * value)
 {
-    g_return_val_if_fail (plugin->type == PluginType::Input, false);
-
     for (String & s : plugin->keys[key])
     {
         if (! strcmp_nocase (s, value))
@@ -642,12 +707,10 @@ bool input_plugin_has_key (PluginHandle * plugin, InputKey key, const char * val
 
 bool input_plugin_has_subtunes (PluginHandle * plugin)
 {
-    g_return_val_if_fail (plugin->type == PluginType::Input, false);
     return plugin->has_subtunes;
 }
 
 bool input_plugin_can_write_tuple (PluginHandle * plugin)
 {
-    g_return_val_if_fail (plugin->type == PluginType::Input, false);
     return plugin->writes_tag;
 }

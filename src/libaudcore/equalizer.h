@@ -1,6 +1,6 @@
 /*
  * equalizer.h
- * Copyright 2014 John Lindgren
+ * Copyright 2014-2015 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -38,6 +38,9 @@ void aud_eq_set_bands (const double values[AUD_EQ_NBANDS]);
 void aud_eq_get_bands (double values[AUD_EQ_NBANDS]);
 void aud_eq_set_band (int band, double value);
 double aud_eq_get_band (int band);
+
+void aud_eq_apply_preset (const EqualizerPreset & preset);
+void aud_eq_update_preset (EqualizerPreset & preset);
 
 Index<EqualizerPreset> aud_eq_read_presets (const char * basename);
 bool aud_eq_write_presets (const Index<EqualizerPreset> & list, const char * basename);

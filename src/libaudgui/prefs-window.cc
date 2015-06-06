@@ -270,12 +270,7 @@ static const PreferencesWidget playlist_page_widgets[] = {
         WidgetBool (0, "show_numbers_in_pl", send_title_change)),
     WidgetCheck (N_("Show leading zeroes (02:00 instead of 2:00)"),
         WidgetBool (0, "leading_zero", send_title_change)),
-    WidgetCustomGTK (create_titlestring_table),
-    WidgetLabel (N_("<b>Advanced</b>")),
-    WidgetCheck (N_("Do not load metadata for songs until played"),
-        WidgetBool (0, "metadata_on_play")),
-    WidgetCheck (N_("Probe content of files with no recognized file name extension"),
-        WidgetBool (0, "slow_probe"))
+    WidgetCustomGTK (create_titlestring_table)
 };
 
 static const PreferencesWidget song_info_page_widgets[] = {
@@ -301,7 +296,14 @@ static const PreferencesWidget song_info_page_widgets[] = {
         WIDGET_CHILD),
     WidgetCheck (N_("Show time scale for current song"),
         WidgetBool (0, "filepopup_showprogressbar"),
-        WIDGET_CHILD)
+        WIDGET_CHILD),
+    WidgetLabel (N_("<b>Advanced</b>")),
+    WidgetCheck (N_("Guess missing metadata from file path"),
+        WidgetBool (0, "metadata_fallbacks")),
+    WidgetCheck (N_("Do not load metadata for songs until played"),
+        WidgetBool (0, "metadata_on_play")),
+    WidgetCheck (N_("Probe content of files with no recognized file name extension"),
+        WidgetBool (0, "slow_probe"))
 };
 
 #define TITLESTRING_NPRESETS 6
@@ -426,9 +428,6 @@ static void fill_category_list (GtkTreeView * treeview, GtkNotebook * notebook)
     renderer = gtk_cell_renderer_text_new ();
     gtk_tree_view_column_pack_start (column, renderer, false);
     gtk_tree_view_column_set_attributes (column, renderer, "text", 1, nullptr);
-
-    g_object_set ((GObject *) renderer, "wrap-width", 106, "wrap-mode",
-     PANGO_WRAP_WORD_CHAR, nullptr);
 
     GtkListStore * store = gtk_list_store_new (CATEGORY_VIEW_N_COLS,
      GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_INT);
@@ -712,7 +711,6 @@ static void create_prefs_window ()
     gtk_window_set_type_hint ((GtkWindow *) prefswin, GDK_WINDOW_TYPE_HINT_DIALOG);
     gtk_container_set_border_width ((GtkContainer *) prefswin, 12);
     gtk_window_set_title ((GtkWindow *) prefswin, _("Audacious Settings"));
-    gtk_window_set_default_size ((GtkWindow *) prefswin, 680, 400);
 
     GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
     gtk_container_add ((GtkContainer *) prefswin, vbox);
@@ -728,7 +726,7 @@ static void create_prefs_window ()
 
     category_treeview = gtk_tree_view_new ();
     gtk_container_add ((GtkContainer *) scrolledwindow, category_treeview);
-    gtk_widget_set_size_request (scrolledwindow, 168, -1);
+    gtk_widget_set_size_request (scrolledwindow, audgui_get_dpi () * 7 / 4, -1);
     gtk_tree_view_set_headers_visible ((GtkTreeView *) category_treeview, false);
 
     category_notebook = gtk_notebook_new ();
