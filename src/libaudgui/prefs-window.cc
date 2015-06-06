@@ -170,6 +170,17 @@ static const PreferencesWidget output_combo_widgets[] = {
     WidgetCustomGTK (output_create_about_button)
 };
 
+static const PreferencesWidget gain_table[] = {
+    WidgetSpin (N_("Amplify all files:"),
+        WidgetFloat (0, "replay_gain_preamp"),
+        {-15, 15, 0.1, N_("dB")},
+        WIDGET_CHILD),
+    WidgetSpin (N_("Amplify untagged files:"),
+        WidgetFloat (0, "default_gain"),
+        {-15, 15, 0.1, N_("dB")},
+        WIDGET_CHILD)
+};
+
 static const PreferencesWidget audio_page_widgets[] = {
     WidgetLabel (N_("<b>Output Settings</b>")),
     WidgetBox ({{output_combo_widgets}, true}),
@@ -194,13 +205,7 @@ static const PreferencesWidget audio_page_widgets[] = {
         WIDGET_CHILD),
     WidgetLabel (N_("<b>Adjust Levels</b>"),
         WIDGET_CHILD),
-    WidgetSpin (N_("Amplify all files:"),
-        WidgetFloat (0, "replay_gain_preamp"),
-        {-15, 15, 0.1, N_("dB")},
-        WIDGET_CHILD),
-    WidgetSpin (N_("Amplify untagged files:"),
-        WidgetFloat (0, "default_gain"),
-        {-15, 15, 0.1, N_("dB")},
+    WidgetTable ({{gain_table}},
         WIDGET_CHILD)
 };
 
