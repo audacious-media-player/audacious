@@ -114,6 +114,9 @@ extern size_t misc_bytes_allocated;
 /* strpool.cc */
 void string_leak_check ();
 
+/* timer.cc */
+void timer_cleanup ();
+
 /* util.cc */
 const char * get_home_utf8 ();
 bool dir_foreach (const char * path, DirForeachFunc func, void * user_data);

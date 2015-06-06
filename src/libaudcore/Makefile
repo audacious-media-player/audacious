@@ -41,6 +41,7 @@ SRCS = adder.cc \
        stringbuf.cc \
        strpool.cc \
        tinylock.cc \
+       timer.cc \
        tuple.cc \
        tuple-compiler.cc \
        util.cc \
