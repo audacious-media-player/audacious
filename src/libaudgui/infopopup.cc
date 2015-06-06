@@ -52,7 +52,6 @@ static struct {
 
 static String current_file;
 static GtkWidget * infopopup_queued;
-static int progress_source = 0;
 
 /* returns false if album art fetch was queued */
 static bool infopopup_display_image (const char * filename)
@@ -80,7 +79,7 @@ static void infopopup_art_ready (const char * filename)
     infopopup_queued = nullptr;
 }
 
-static gboolean infopopup_progress_cb (void *)
+static void infopopup_progress_cb (void *)
 {
     String filename;
     int length = 0, time = 0;
@@ -101,8 +100,6 @@ static gboolean infopopup_progress_cb (void *)
     }
     else
         gtk_widget_hide (widgets.progress);
-
-    return true;
 }
 
 static void infopopup_realized (GtkWidget * widget)
@@ -164,11 +161,7 @@ static void infopopup_destroyed ()
 {
     hook_dissociate ("art ready", (HookFunction) infopopup_art_ready);
 
-    if (progress_source)
-    {
-        g_source_remove (progress_source);
-        progress_source = 0;
-    }
+    timer_remove (TimerRate::Hz4, infopopup_progress_cb);
 
     memset (& widgets, 0, sizeof widgets);
 
@@ -309,8 +302,7 @@ static void infopopup_show (const char * filename, const Tuple & tuple)
 
     /* start a timer that updates a progress bar if the tooltip
        is shown for the song that is being currently played */
-    if (! progress_source)
-        progress_source = g_timeout_add (500, infopopup_progress_cb, nullptr);
+    timer_add (TimerRate::Hz4, infopopup_progress_cb);
 
     /* immediately run the callback once to update progressbar status */
     infopopup_progress_cb (nullptr);

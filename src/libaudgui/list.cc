@@ -20,6 +20,7 @@
 #include <stddef.h>
 #include <gtk/gtk.h>
 
+#include <libaudcore/hook.h>
 #include <libaudcore/objects.h>
 
 #include "libaudgui-gtk.h"
@@ -48,7 +49,7 @@ struct ListModel {
     bool frozen, blocked;
     bool dragging;
     int clicked_row, receive_row;
-    int scroll_source, scroll_speed;
+    int scroll_speed;
 };
 
 /* ==== MODEL ==== */
@@ -371,54 +372,61 @@ static int calc_drop_row (ListModel * model, GtkWidget * widget, int x, int y)
     return row;
 }
 
-static void stop_autoscroll (ListModel * model)
+static void get_scroll_pos (GtkAdjustment * adj, int & pos, int & end)
 {
-    if (! model->scroll_source)
-        return;
-
-    g_source_remove (model->scroll_source);
-    model->scroll_source = 0;
-    model->scroll_speed = 0;
+    pos = gtk_adjustment_get_value (adj);
+    end = gtk_adjustment_get_upper (adj) - gtk_adjustment_get_page_size (adj);
 }
 
-static gboolean autoscroll (GtkWidget * widget)
+static bool can_scroll (int pos, int end, int speed)
+{
+    if (speed > 0)
+        return pos < end;
+    if (speed < 0)
+        return pos > 0;
+
+    return false;
+}
+
+static void autoscroll (void * widget)
 {
     ListModel * model = (ListModel *) gtk_tree_view_get_model
      ((GtkTreeView *) widget);
 
     GtkAdjustment * adj = gtk_tree_view_get_vadjustment ((GtkTreeView *) widget);
-    if (! adj)
+    g_return_if_fail (adj);
+
+    int pos, end;
+    get_scroll_pos (adj, pos, end);
+    pos = aud::clamp (pos + model->scroll_speed, 0, end);
+    gtk_adjustment_set_value (adj, pos);
+
+    if (! can_scroll (pos, end, model->scroll_speed))
     {
-        stop_autoscroll (model);
-        return false;
+        model->scroll_speed = 0;
+        timer_remove (TimerRate::Hz30, autoscroll, widget);
     }
-
-    int pos = gtk_adjustment_get_value (adj) + model->scroll_speed;
-    int clamped = aud::clamp<int> (pos, 0, gtk_adjustment_get_upper (adj) -
-     gtk_adjustment_get_page_size (adj));
-    gtk_adjustment_set_value (adj, clamped);
-
-    if (clamped != pos) /* reached top or bottom? */
-    {
-        stop_autoscroll (model);
-        return false;
-    }
-
-    if (model->scroll_speed > 0)
-        model->scroll_speed = aud::min (model->scroll_speed + 2, 100);
-    else
-        model->scroll_speed = aud::max (model->scroll_speed - 2, -100);
-
-    return true;
 }
 
 static void start_autoscroll (ListModel * model, GtkWidget * widget, int speed)
 {
-    if (model->scroll_source)
-        return;
+    GtkAdjustment * adj = gtk_tree_view_get_vadjustment ((GtkTreeView *) widget);
+    g_return_if_fail (adj);
 
-    model->scroll_source = g_timeout_add (50, (GSourceFunc) autoscroll, widget);
-    model->scroll_speed = speed;
+    int pos, end;
+    get_scroll_pos (adj, pos, end);
+
+    if (can_scroll (pos, end, speed))
+    {
+        model->scroll_speed = speed;
+        timer_add (TimerRate::Hz30, autoscroll, widget);
+    }
+}
+
+static void stop_autoscroll (ListModel * model, GtkWidget * widget)
+{
+    model->scroll_speed = 0;
+    timer_remove (TimerRate::Hz30, autoscroll, widget);
 }
 
 static gboolean drag_motion (GtkWidget * widget, GdkDragContext * context,
@@ -462,14 +470,14 @@ static gboolean drag_motion (GtkWidget * widget, GdkDragContext * context,
     gtk_tree_view_convert_widget_to_bin_window_coords ((GtkTreeView *) widget,
      x, y, & x, & y);
 
-    int hotspot = aud::min (height / 4, 24);
+    int hotspot = aud::min (height / 4, audgui_get_dpi () / 2);
 
     if (y >= 0 && y < hotspot)
-        start_autoscroll (model, widget, -2);
+        start_autoscroll (model, widget, y - hotspot);
     else if (y >= height - hotspot && y < height)
-        start_autoscroll (model, widget, 2);
+        start_autoscroll (model, widget, y - (height - hotspot));
     else
-        stop_autoscroll (model);
+        stop_autoscroll (model, widget);
 
     return true;
 }
@@ -480,7 +488,7 @@ static void drag_leave (GtkWidget * widget, GdkDragContext * context,
     g_signal_stop_emission_by_name (widget, "drag-leave");
 
     gtk_tree_view_set_drag_dest_row ((GtkTreeView *) widget, nullptr, (GtkTreeViewDropPosition) 0);
-    stop_autoscroll (model);
+    stop_autoscroll (model, widget);
 }
 
 static gboolean drag_drop (GtkWidget * widget, GdkDragContext * context, int x,
@@ -509,7 +517,7 @@ static gboolean drag_drop (GtkWidget * widget, GdkDragContext * context, int x,
 
     gtk_drag_finish (context, success, false, time);
     gtk_tree_view_set_drag_dest_row ((GtkTreeView *) widget, nullptr, (GtkTreeViewDropPosition) 0);
-    stop_autoscroll (model);
+    stop_autoscroll (model, widget);
     return true;
 }
 
@@ -534,7 +542,7 @@ static void drag_data_received (GtkWidget * widget, GdkDragContext * context, in
 
 static void destroy_cb (GtkWidget * list, ListModel * model)
 {
-    stop_autoscroll (model);
+    stop_autoscroll (model, list);
     g_list_free (model->column_types);
     g_object_unref (model);
 }
@@ -576,7 +584,6 @@ EXPORT GtkWidget * audgui_list_new_real (const AudguiListCallbacks * cbs, int cb
     model->dragging = false;
     model->clicked_row = -1;
     model->receive_row = -1;
-    model->scroll_source = 0;
     model->scroll_speed = 0;
 
     GtkWidget * list = gtk_tree_view_new_with_model ((GtkTreeModel *) model);
