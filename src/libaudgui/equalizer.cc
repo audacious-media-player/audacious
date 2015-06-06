@@ -136,7 +136,7 @@ static GtkWidget * create_window ()
     GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
     gtk_container_add ((GtkContainer *) window, vbox);
 
-    GtkWidget * top_row = gtk_hbox_new (false, 6);
+    GtkWidget * top_row = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
     gtk_box_pack_start ((GtkBox *) vbox, top_row, false, false, 0);
 
     gtk_box_pack_start ((GtkBox *) top_row, create_on_off (), false, false, 0);

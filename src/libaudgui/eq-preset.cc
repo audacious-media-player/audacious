@@ -241,16 +241,16 @@ static GtkWidget * create_eq_preset_window ()
 
     g_signal_connect (window, "destroy", (GCallback) cleanup_eq_preset_window, nullptr);
 
-    GtkWidget * outer = gtk_vbox_new (false, 0);
+    GtkWidget * outer = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
     gtk_container_add ((GtkContainer *) window, outer);
 
     gtk_box_pack_start ((GtkBox *) outer, create_menu_bar (), false, false, 0);
 
-    GtkWidget * vbox = gtk_vbox_new (false, 6);
+    GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
     gtk_container_set_border_width ((GtkContainer *) vbox, 6);
     gtk_box_pack_start ((GtkBox *) outer, vbox, true, true, 0);
 
-    GtkWidget * hbox = gtk_hbox_new (false, 6);
+    GtkWidget * hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
     gtk_box_pack_start ((GtkBox *) vbox, hbox, false, false, 0);
 
     entry = gtk_entry_new ();
@@ -275,7 +275,7 @@ static GtkWidget * create_eq_preset_window ()
     audgui_list_add_column (list, nullptr, 0, G_TYPE_STRING, -1);
     gtk_container_add ((GtkContainer *) scrolled, list);
 
-    GtkWidget * hbox2 = gtk_hbox_new (false, 6);
+    GtkWidget * hbox2 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
     gtk_box_pack_start ((GtkBox *) vbox, hbox2, false, false, 0);
 
     GtkWidget * remove = audgui_button_new (_("Delete Selected"), "edit-delete",
