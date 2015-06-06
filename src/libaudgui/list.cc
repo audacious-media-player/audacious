@@ -364,14 +364,6 @@ static void drag_data_get (GtkWidget * widget, GdkDragContext * context,
      8, (const unsigned char *) data.begin (), data.len ());
 }
 
-static int calc_drop_row (ListModel * model, GtkWidget * widget, int x, int y)
-{
-    int row = audgui_list_row_at_point_rounded (widget, x, y);
-    if (row < 0)
-        row = model->rows;
-    return row;
-}
-
 static void get_scroll_pos (GtkAdjustment * adj, int & pos, int & end)
 {
     pos = gtk_adjustment_get_value (adj);
@@ -447,7 +439,7 @@ static gboolean drag_motion (GtkWidget * widget, GdkDragContext * context,
 
     if (model->rows > 0)
     {
-        int row = calc_drop_row (model, widget, x, y);
+        int row = audgui_list_row_at_point_rounded (widget, x, y);
         if (row == model->rows)
         {
             GtkTreePath * path = gtk_tree_path_new_from_indices (row - 1, -1);
@@ -497,7 +489,7 @@ static gboolean drag_drop (GtkWidget * widget, GdkDragContext * context, int x,
     g_signal_stop_emission_by_name (widget, "drag-drop");
 
     gboolean success = true;
-    int row = calc_drop_row (model, widget, x, y);
+    int row = audgui_list_row_at_point_rounded (widget, x, y);
 
     if (model->dragging && MODEL_HAS_CB (model, shift_rows)) /* dragging within same list */
     {
@@ -877,16 +869,23 @@ EXPORT int audgui_list_row_at_point (GtkWidget * list, int x, int y)
     return row;
 }
 
+/* note that this variant always returns a valid row (or row + 1) */
 EXPORT int audgui_list_row_at_point_rounded (GtkWidget * list, int x, int y)
 {
     ListModel * model = (ListModel *) gtk_tree_view_get_model ((GtkTreeView *) list);
 
-    GtkTreePath * path = nullptr;
     gtk_tree_view_convert_widget_to_bin_window_coords ((GtkTreeView *) list, x, y, & x, & y);
+
+    /* bound the mouse cursor within the bin window to get the nearest row */
+    GdkWindow * bin = gtk_tree_view_get_bin_window ((GtkTreeView *) list);
+    x = aud::clamp (x, 0, gdk_window_get_width (bin) - 1);
+    y = aud::clamp (y, 0, gdk_window_get_height (bin) - 1);
+
+    GtkTreePath * path = nullptr;
     gtk_tree_view_get_path_at_pos ((GtkTreeView *) list, x, y, & path, nullptr, nullptr, nullptr);
 
     if (! path)
-        return -1;
+        return model->rows;
 
     int row = gtk_tree_path_get_indices (path)[0];
     g_return_val_if_fail (row >= 0 && row < model->rows, -1);
