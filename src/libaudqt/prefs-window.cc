@@ -267,16 +267,16 @@ static const PreferencesWidget playlist_page_widgets[] = {
         WidgetBool (0, "open_to_temporary")),
     WidgetCheck (N_("Do not load metadata for songs until played"),
         WidgetBool (0, "metadata_on_play")),
-    WidgetLabel (N_("<b>Compatibility</b>")),
-    WidgetCheck (N_("Interpret \\ (backward slash) as a folder delimiter"),
-        WidgetBool (0, "convert_backslash")),
-    WidgetTable ({{chardet_elements}}),
     WidgetLabel (N_("<b>Song Display</b>")),
     WidgetCheck (N_("Show song numbers"),
         WidgetBool (0, "show_numbers_in_pl", send_title_change)),
     WidgetCheck (N_("Show leading zeroes (02:00 instead of 2:00)"),
         WidgetBool (0, "leading_zero", send_title_change)),
-    WidgetCustomQt (create_titlestring_table)
+    WidgetCustomQt (create_titlestring_table),
+    WidgetLabel (N_("<b>Compatibility</b>")),
+    WidgetCheck (N_("Interpret \\ (backward slash) as a folder delimiter"),
+        WidgetBool (0, "convert_backslash")),
+    WidgetTable ({{chardet_elements}})
 };
 
 static const PreferencesWidget song_info_page_widgets[] = {
