@@ -22,6 +22,8 @@
 #include <complex>
 #include <math.h>
 
+#define TWO_PI 6.2831853f
+
 #define N 512                         /* size of the DFT */
 #define LOGN 9                        /* log N (base 2) */
 
@@ -29,7 +31,7 @@ typedef std::complex<float> Complex;
 
 static float hamming[N];              /* hamming window, scaled to sum to 1 */
 static int reversed[N];               /* bit-reversal table */
-static Complex roots[N / 2];    /* N-th roots of unity */
+static Complex roots[N / 2];          /* N-th roots of unity */
 static char generated = 0;            /* set if tables have been generated */
 
 /* Reverse the order of the lowest LOGN bits in an integer. */
@@ -55,11 +57,11 @@ static void generate_tables (void)
         return;
 
     for (int n = 0; n < N; n ++)
-        hamming[n] = 1 - 0.85 * cosf (2 * M_PI * n / N);
+        hamming[n] = 1 - 0.85f * cosf (n * (TWO_PI / N));
     for (int n = 0; n < N; n ++)
         reversed[n] = bit_reverse (n);
     for (int n = 0; n < N / 2; n ++)
-        roots[n] = exp (Complex (0, 2 * M_PI * n / N));
+        roots[n] = exp (Complex (0, n * (TWO_PI / N)));
 
     generated = 1;
 }

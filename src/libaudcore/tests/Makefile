@@ -1,6 +1,7 @@
 all: test test-mainloop
 
-SRCS = ../audstrings.cc \
+SRCS = ../audio.cc \
+       ../audstrings.cc \
        ../charset.cc \
        ../hook.cc \
        ../index.cc \

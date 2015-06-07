@@ -17,6 +17,7 @@
  * the use of this software.
  */
 
+#include "audio.h"
 #include "audstrings.h"
 #include "internal.h"
 #include "ringbuf.h"
@@ -40,6 +41,25 @@ const char * get_home_utf8 ()
     { return "/home/user"; }
 
 size_t misc_bytes_allocated;
+
+static void test_audio_conversion ()
+{
+    /* single precision float should be lossless for 24-bit audio */
+    static const int32_t in[10] =
+     {-0x800000, -0x7fffff, -0x7ffffe, -2, -1, 0, 1, 2, 0x7ffffe, 0x7fffff};
+
+    float f[10];
+    int32_t out[10];
+
+    audio_from_int (in, FMT_S24_NE, f, 10);
+    audio_to_int (f, out, FMT_S24_NE, 10);
+
+    assert (f[0] == -1.0f);
+    assert (f[5] == 0.0f);
+
+    for (int i = 0; i < 10; i ++)
+        assert (in[i] == out[i]);
+}
 
 static void test_tuple_format (const char * format, Tuple & tuple, const char * expected)
 {
@@ -298,6 +318,7 @@ static void test_ringbuf ()
 
 int main ()
 {
+    test_audio_conversion ();
     test_tuple_formats ();
     test_ringbuf ();
 
