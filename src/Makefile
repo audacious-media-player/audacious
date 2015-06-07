@@ -1,6 +1,6 @@
 include ../extra.mk
 
-SUBDIRS := audacious libaudcore libaudtag
+SUBDIRS := audacious libaudcore libaudtag libguess
 
 ifeq ($(USE_GTK),yes)
 SUBDIRS += libaudgui
@@ -17,6 +17,7 @@ endif
 include ../buildsys.mk
 
 audacious: libaudcore
+libaudcore: libguess
 libaudtag: libaudcore
 
 ifeq ($(USE_GTK),yes)

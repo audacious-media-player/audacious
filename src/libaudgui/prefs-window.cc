@@ -33,13 +33,11 @@
 #include <libaudcore/preferences.h>
 #include <libaudcore/runtime.h>
 
+#include "libguess/libguess.h"
+
 #include "internal.h"
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
-
-#ifdef USE_CHARDET
-#include <libguess.h>
-#endif
 
 enum CategoryViewCols {
     CATEGORY_VIEW_COL_ICON,
@@ -111,7 +109,6 @@ static const TitleFieldTag title_field_tags[] = {
     { N_("Quality")    , "${quality}" }
 };
 
-#ifdef USE_CHARDET
 static const ComboItem chardet_detector_presets[] = {
     ComboItem (N_("None"), ""),
     ComboItem (N_("Arabic"), GUESS_REGION_AR),
@@ -126,7 +123,6 @@ static const ComboItem chardet_detector_presets[] = {
     ComboItem (N_("Taiwanese"), GUESS_REGION_TW),
     ComboItem (N_("Turkish"), GUESS_REGION_TR)
 };
-#endif
 
 static const ComboItem bitdepth_elements[] = {
     ComboItem ("16", 16),
@@ -241,11 +237,9 @@ static const PreferencesWidget connectivity_page_widgets[] = {
 };
 
 static const PreferencesWidget chardet_elements[] = {
-#ifdef USE_CHARDET
     WidgetCombo (N_("Auto character encoding detector for:"),
         WidgetString (0, "chardet_detector"),
         {{chardet_detector_presets}}),
-#endif
     WidgetEntry (N_("Fallback character encodings:"),
         WidgetString (0, "chardet_fallback"))
 };

@@ -41,12 +41,6 @@ guess_find_impl(const char *lang)
     return (impl != NULL) ? impl->impl : NULL;
 }
 
-void
-libguess_init(void)
-{
-    /* provided for API compatibility with older versions */
-}
-
 const char *
 libguess_determine_encoding(const char *inbuf, int buflen, const char *lang)
 {

@@ -45,8 +45,7 @@ LD = ${CXX}
 CPPFLAGS := -I.. -I../.. \
             ${CPPFLAGS} \
             ${GLIB_CFLAGS} \
-            ${GTK_CFLAGS} \
-            ${LIBGUESS_CFLAGS}
+            ${GTK_CFLAGS}
 
 CFLAGS += ${LIB_CFLAGS}
 

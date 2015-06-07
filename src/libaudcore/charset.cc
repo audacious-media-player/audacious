@@ -28,11 +28,7 @@
 
 #include <glib.h>
 
-#ifdef USE_CHARDET
-extern "C" {
-#include <libguess/libguess.h>
-}
-#endif
+#include "libguess/libguess.h"
 
 #include "hook.h"
 #include "index.h"
@@ -133,11 +129,6 @@ static void set_charsets (const char * region, const char * fallbacks)
 
     detect_region = String (region);
 
-#ifdef USE_CHARDET
-    if (detect_region)
-        libguess_init ();
-#endif
-
     if (fallbacks)
         fallback_charsets = str_list_to_index (fallbacks, ", ");
     else
@@ -151,7 +142,6 @@ static StringBuf convert_to_utf8_locked (const char * str, int len)
     if (len < 0)
         len = strlen (str);
 
-#ifdef USE_CHARDET
     if (detect_region)
     {
         /* prefer libguess-detected charset */
@@ -163,7 +153,6 @@ static StringBuf convert_to_utf8_locked (const char * str, int len)
                 return utf8;
         }
     }
-#endif
 
     /* try user-configured fallbacks */
     for (const String & fallback : fallback_charsets)
