@@ -47,6 +47,7 @@ bool playlist_load (const char * filename, String & title, Index<PlaylistAddItem
     AUDINFO ("Loading playlist %s.\n", filename);
 
     StringBuf ext = uri_get_extension (filename);
+    bool plugin_found = false;
 
     if (ext)
     {
@@ -56,6 +57,7 @@ bool playlist_load (const char * filename, String & title, Index<PlaylistAddItem
                 continue;
 
             AUDINFO ("Trying playlist plugin %s.\n", aud_plugin_get_name (plugin));
+            plugin_found = true;
 
             PlaylistPlugin * pp = (PlaylistPlugin *) aud_plugin_get_header (plugin);
             if (! pp)
@@ -63,7 +65,11 @@ bool playlist_load (const char * filename, String & title, Index<PlaylistAddItem
 
             VFSFile file (filename, "r");
             if (! file)
+            {
+                aud_ui_show_error (str_printf (_("Error opening %s:\n%s"),
+                 filename, file.error ()));
                 return false;
+            }
 
             if (pp->load (filename, file, title, items))
                 return true;
@@ -73,7 +79,11 @@ bool playlist_load (const char * filename, String & title, Index<PlaylistAddItem
         }
     }
 
-    aud_ui_show_error (str_printf (_("Cannot load %s: unsupported file name extension."), filename));
+    if (plugin_found)
+        aud_ui_show_error (str_printf (_("Error loading %s."), filename));
+    else
+        aud_ui_show_error (str_printf (_("Cannot load %s: unsupported file "
+         "name extension."), filename));
 
     return false;
 }
