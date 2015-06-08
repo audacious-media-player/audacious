@@ -456,12 +456,10 @@ static gboolean drag_motion (GtkWidget * widget, GdkDragContext * context,
         }
     }
 
-    int height;
-    gdk_window_get_geometry (gtk_tree_view_get_bin_window ((GtkTreeView *)
-     widget), nullptr, nullptr, nullptr, & height, nullptr);
     gtk_tree_view_convert_widget_to_bin_window_coords ((GtkTreeView *) widget,
      x, y, & x, & y);
 
+    int height = gdk_window_get_height (gtk_tree_view_get_bin_window ((GtkTreeView *) widget));
     int hotspot = aud::min (height / 4, audgui_get_dpi () / 2);
 
     if (y >= 0 && y < hotspot)
