@@ -590,7 +590,7 @@ EXPORT void InputPlugin::set_playback_tuple (Tuple && tuple)
 {
     // due to mutex ordering, we cannot call into the playlist while locked;
     // instead, playback_entry_set_tuple() calls back into first
-    // playback_check_serial() and then eventually playlist_set_info()
+    // playback_check_serial() and then eventually playback_set_info()
     playback_entry_set_tuple (pb_state.playback_serial, std::move (tuple));
 }
 

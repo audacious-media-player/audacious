@@ -1,6 +1,6 @@
 SHARED_LIB = ${LIB_PREFIX}audcore${LIB_SUFFIX}
 LIB_MAJOR = 3
-LIB_MINOR = 0
+LIB_MINOR = 1
 
 SRCS = adder.cc \
        art.cc \
@@ -41,6 +41,7 @@ SRCS = adder.cc \
        stringbuf.cc \
        strpool.cc \
        tinylock.cc \
+       timer.cc \
        tuple.cc \
        tuple-compiler.cc \
        util.cc \
@@ -88,7 +89,6 @@ CPPFLAGS := -I.. -I../.. \
             ${CPPFLAGS} \
             ${GLIB_CFLAGS} \
             ${GMODULE_CFLAGS} \
-            ${LIBGUESS_CFLAGS} \
             ${QT_CFLAGS} \
             -DHARDCODE_BINDIR=\"${bindir}\" \
             -DHARDCODE_DATADIR=\"${datadir}/audacious\" \
@@ -99,8 +99,8 @@ CPPFLAGS := -I.. -I../.. \
 
 CFLAGS += ${LIB_CFLAGS}
 
-LIBS += -lm \
+LIBS := ../libguess/libguess.a \
+        ${LIBS} -lm \
         ${GLIB_LIBS} \
         ${GMODULE_LIBS} \
-        ${LIBGUESS_LIBS} \
         ${QT_LIBS}

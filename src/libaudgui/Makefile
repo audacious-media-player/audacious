@@ -1,6 +1,6 @@
 SHARED_LIB = ${LIB_PREFIX}audgui${LIB_SUFFIX}
 LIB_MAJOR = 3
-LIB_MINOR = 0
+LIB_MINOR = 1
 
 SRCS = about.cc \
        confirm.cc \
@@ -45,8 +45,7 @@ LD = ${CXX}
 CPPFLAGS := -I.. -I../.. \
             ${CPPFLAGS} \
             ${GLIB_CFLAGS} \
-            ${GTK_CFLAGS} \
-            ${LIBGUESS_CFLAGS}
+            ${GTK_CFLAGS}
 
 CFLAGS += ${LIB_CFLAGS}
 

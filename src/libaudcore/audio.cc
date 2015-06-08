@@ -17,6 +17,7 @@
  * the use of this software.
  */
 
+#include <fenv.h>
 #include <math.h>
 #include <stdint.h>
 
@@ -125,7 +126,7 @@ static void NAME (const TYPE * in, float * out, int samples) \
 { \
     const TYPE * end = in + samples; \
     while (in < end) \
-        * out ++ = (TYPE) (SWAP (* in ++) - OFFSET) * (1.0 / (RANGE + 1.0)); \
+        * out ++ = (TYPE) (SWAP (* in ++) - OFFSET) * (1.0f / (RANGE + 1.0f)); \
 }
 
 #define TO_INT_LOOP(NAME, TYPE, SWAP, OFFSET, RANGE) \
@@ -134,8 +135,8 @@ static void NAME (const float * in, TYPE * out, int samples) \
     const float * end = in + samples; \
     while (in < end) \
     { \
-        double f = (* in ++) * (RANGE + 1.0); \
-        * out ++ = SWAP (OFFSET + (TYPE) round (aud::clamp<double> (f, -RANGE - 1, RANGE))); \
+        float f = (* in ++) * (RANGE + 1.0f); \
+        * out ++ = SWAP (OFFSET + (TYPE) lrintf (aud::clamp<float> (f, -RANGE - 1, RANGE))); \
     } \
 }
 
@@ -209,21 +210,26 @@ EXPORT void audio_from_int (const void * in, int format, float * out, int sample
         if (conv.format == format)
         {
             conv.from (in, out, samples);
-            return;
+            break;
         }
     }
 }
 
 EXPORT void audio_to_int (const float * in, void * out, int format, int samples)
 {
+    int save = fegetround ();
+    fesetround (FE_TONEAREST);
+
     for (auto & conv : convert_table)
     {
         if (conv.format == format)
         {
             conv.to (in, out, samples);
-            return;
+            break;
         }
     }
+
+    fesetround (save);
 }
 
 EXPORT void audio_amplify (float * data, int channels, int frames, const float * factors)

@@ -24,11 +24,12 @@
 #include <stdint.h>
 #include <string.h>
 
+#include "hook.h"
 #include "list.h"
 #include "mainloop.h"
 #include "output.h"
 
-#define INTERVAL 30 /* milliseconds */
+#define INTERVAL 33 /* milliseconds */
 #define FRAMES_PER_NODE 512
 
 struct VisNode : public ListNode
@@ -47,22 +48,21 @@ struct VisNode : public ListNode
 
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 static bool enabled = false;
-static bool playing = false, paused = false, active = false;
+static bool playing = false, paused = false;
 static VisNode * current_node = nullptr;
 static int current_frames;
 static List<VisNode> vis_list;
 static List<VisNode> vis_pool;
 static QueuedFunc queued_clear;
-static QueuedFunc send_timer;
 
-static void send_audio (void * unused)
+static void send_audio (void *)
 {
     /* call before locking mutex to avoid deadlock */
     int outputted = output_get_raw_time ();
 
     pthread_mutex_lock (& mutex);
 
-    if (! send_timer.running ())
+    if (! enabled || ! playing || paused)
     {
         pthread_mutex_unlock (& mutex);
         return;
@@ -99,12 +99,12 @@ static void send_audio (void * unused)
     pthread_mutex_unlock (& mutex);
 }
 
-static void send_clear (void * unused)
+static void send_clear (void *)
 {
     vis_send_clear ();
 }
 
-static void flush_locked (void)
+static void flush_locked ()
 {
     delete current_node;
     current_node = nullptr;
@@ -115,7 +115,7 @@ static void flush_locked (void)
     queued_clear.queue (send_clear, nullptr);
 }
 
-void vis_runner_flush (void)
+void vis_runner_flush ()
 {
     pthread_mutex_lock (& mutex);
     flush_locked ();
@@ -126,15 +126,16 @@ static void start_stop_locked (bool new_playing, bool new_paused)
 {
     playing = new_playing;
     paused = new_paused;
-    active = playing && enabled;
 
-    send_timer.stop ();
     queued_clear.stop ();
 
-    if (! active)
+    if (! enabled || ! playing)
         flush_locked ();
-    else if (! paused)
-        send_timer.start (INTERVAL, send_audio, nullptr);
+
+    if (enabled && playing && ! paused)
+        timer_add (TimerRate::Hz30, send_audio);
+    else
+        timer_remove (TimerRate::Hz30, send_audio);
 }
 
 void vis_runner_start_stop (bool new_playing, bool new_paused)
@@ -148,7 +149,7 @@ void vis_runner_pass_audio (int time, const Index<float> & data, int channels, i
 {
     pthread_mutex_lock (& mutex);
 
-    if (! active)
+    if (! enabled || ! playing)
     {
         pthread_mutex_unlock (& mutex);
         return;

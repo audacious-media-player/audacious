@@ -195,11 +195,16 @@ static void create_spin_button (const PreferencesWidget * widget,
  const char * domain)
 {
     * label_pre = gtk_label_new (dgettext (domain, widget->label));
+    gtk_misc_set_alignment ((GtkMisc *) * label_pre, 1, 0.5);
+
     * spin_btn = gtk_spin_button_new_with_range (widget->data.spin_btn.min,
      widget->data.spin_btn.max, widget->data.spin_btn.step);
 
     if (widget->data.spin_btn.right_label)
+    {
         * label_past = gtk_label_new (dgettext (domain, widget->data.spin_btn.right_label));
+        gtk_misc_set_alignment ((GtkMisc *) * label_past, 0, 0.5);
+    }
 
     widget_init (* spin_btn, widget);
 }
@@ -298,7 +303,10 @@ static void create_cbox (const PreferencesWidget * widget, GtkWidget * * label,
     * combobox = gtk_combo_box_text_new ();
 
     if (widget->label)
+    {
         * label = gtk_label_new (dgettext (domain, widget->label));
+        gtk_misc_set_alignment ((GtkMisc *) * label, 1, 0.5);
+    }
 
     g_object_set_data ((GObject *) * combobox, "combodomain", (void *) domain);
     widget_init (* combobox, widget);

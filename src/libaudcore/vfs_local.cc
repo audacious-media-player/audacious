@@ -162,7 +162,7 @@ int64_t LocalFile::fread (void * ptr, int64_t size, int64_t nitems)
         perror (m_path);
 
     if (m_cached_pos >= 0)
-        m_cached_pos += result;
+        m_cached_pos += size * result;
 
     return result;
 }
@@ -187,7 +187,7 @@ int64_t LocalFile::fwrite (const void * ptr, int64_t size, int64_t nitems)
         perror (m_path);
 
     if (m_cached_pos >= 0)
-        m_cached_pos += result;
+        m_cached_pos += size * result;
 
     if (m_cached_size >= 0 && m_cached_pos >= 0)
         m_cached_size = aud::max (m_cached_size, m_cached_pos);

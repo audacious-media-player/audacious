@@ -1,6 +1,6 @@
 /*
  * hook.h
- * Copyright 2011-2014 John Lindgren
+ * Copyright 2011-2015 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -21,6 +21,31 @@
 #define LIBAUDCORE_HOOK_H
 
 #include <libaudcore/templates.h>
+
+// Timer API.  This API allows functions to be registered to run at a given
+// periodic rate.  The advantage of this API rather than QueuedFunc (see
+// mainloop.h) is that multiple functions can run on the same timer tick,
+// reducing CPU wakeups.
+// ========================================================================
+
+enum class TimerRate {
+    Hz1, Hz4, Hz10, Hz30, count
+};
+
+typedef void (* TimerFunc) (void * data);
+
+/* Adds <func> to the list of functions to be called at the given <rate>,
+ * unless it has already been added with the same <data>. */
+void timer_add (TimerRate rate, TimerFunc func, void * data = nullptr);
+
+/* Removes all instances matching <func> and <data> from the list of functions
+ * to be called at the given <rate>.  If <data> is nullptr, all instances
+ * matching <func> are removed. */
+void timer_remove (TimerRate rate, TimerFunc func, void * data = nullptr);
+
+// Hook API.  This API allows functions to be registered to run when a given
+// named event, or "hook", is called.
+// =========================================================================
 
 typedef void (* HookFunction) (void * data, void * user);
 

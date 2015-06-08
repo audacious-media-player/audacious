@@ -32,8 +32,7 @@ LD = ${CXX}
 
 CPPFLAGS := -I.. -I../.. \
             ${CPPFLAGS} \
-            ${QT_CFLAGS} \
-            ${LIBGUESS_CFLAGS}
+            ${QT_CFLAGS}
 
 CFLAGS += ${LIB_CFLAGS}
 

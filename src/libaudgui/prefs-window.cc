@@ -33,13 +33,11 @@
 #include <libaudcore/preferences.h>
 #include <libaudcore/runtime.h>
 
+#include "libguess/libguess.h"
+
 #include "internal.h"
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
-
-#ifdef USE_CHARDET
-#include <libguess.h>
-#endif
 
 enum CategoryViewCols {
     CATEGORY_VIEW_COL_ICON,
@@ -111,7 +109,6 @@ static const TitleFieldTag title_field_tags[] = {
     { N_("Quality")    , "${quality}" }
 };
 
-#ifdef USE_CHARDET
 static const ComboItem chardet_detector_presets[] = {
     ComboItem (N_("None"), ""),
     ComboItem (N_("Arabic"), GUESS_REGION_AR),
@@ -126,7 +123,6 @@ static const ComboItem chardet_detector_presets[] = {
     ComboItem (N_("Taiwanese"), GUESS_REGION_TW),
     ComboItem (N_("Turkish"), GUESS_REGION_TR)
 };
-#endif
 
 static const ComboItem bitdepth_elements[] = {
     ComboItem ("16", 16),
@@ -170,6 +166,17 @@ static const PreferencesWidget output_combo_widgets[] = {
     WidgetCustomGTK (output_create_about_button)
 };
 
+static const PreferencesWidget gain_table[] = {
+    WidgetSpin (N_("Amplify all files:"),
+        WidgetFloat (0, "replay_gain_preamp"),
+        {-15, 15, 0.1, N_("dB")},
+        WIDGET_CHILD),
+    WidgetSpin (N_("Amplify untagged files:"),
+        WidgetFloat (0, "default_gain"),
+        {-15, 15, 0.1, N_("dB")},
+        WIDGET_CHILD)
+};
+
 static const PreferencesWidget audio_page_widgets[] = {
     WidgetLabel (N_("<b>Output Settings</b>")),
     WidgetBox ({{output_combo_widgets}, true}),
@@ -194,13 +201,7 @@ static const PreferencesWidget audio_page_widgets[] = {
         WIDGET_CHILD),
     WidgetLabel (N_("<b>Adjust Levels</b>"),
         WIDGET_CHILD),
-    WidgetSpin (N_("Amplify all files:"),
-        WidgetFloat (0, "replay_gain_preamp"),
-        {-15, 15, 0.1, N_("dB")},
-        WIDGET_CHILD),
-    WidgetSpin (N_("Amplify untagged files:"),
-        WidgetFloat (0, "default_gain"),
-        {-15, 15, 0.1, N_("dB")},
+    WidgetTable ({{gain_table}},
         WIDGET_CHILD)
 };
 
@@ -236,11 +237,9 @@ static const PreferencesWidget connectivity_page_widgets[] = {
 };
 
 static const PreferencesWidget chardet_elements[] = {
-#ifdef USE_CHARDET
     WidgetCombo (N_("Auto character encoding detector for:"),
         WidgetString (0, "chardet_detector"),
         {{chardet_detector_presets}}),
-#endif
     WidgetEntry (N_("Fallback character encodings:"),
         WidgetString (0, "chardet_fallback"))
 };
@@ -261,16 +260,16 @@ static const PreferencesWidget playlist_page_widgets[] = {
         WidgetBool (0, "clear_playlist")),
     WidgetCheck (N_("Open files in a temporary playlist"),
         WidgetBool (0, "open_to_temporary")),
-    WidgetLabel (N_("<b>Compatibility</b>")),
-    WidgetCheck (N_("Interpret \\ (backward slash) as a folder delimiter"),
-        WidgetBool (0, "convert_backslash")),
-    WidgetTable ({{chardet_elements}}),
     WidgetLabel (N_("<b>Song Display</b>")),
     WidgetCheck (N_("Show song numbers"),
         WidgetBool (0, "show_numbers_in_pl", send_title_change)),
     WidgetCheck (N_("Show leading zeroes (02:00 instead of 2:00)"),
         WidgetBool (0, "leading_zero", send_title_change)),
-    WidgetCustomGTK (create_titlestring_table)
+    WidgetCustomGTK (create_titlestring_table),
+    WidgetLabel (N_("<b>Compatibility</b>")),
+    WidgetCheck (N_("Interpret \\ (backward slash) as a folder delimiter"),
+        WidgetBool (0, "convert_backslash")),
+    WidgetTable ({{chardet_elements}}),
 };
 
 static const PreferencesWidget song_info_page_widgets[] = {

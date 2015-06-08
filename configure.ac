@@ -70,27 +70,6 @@ if test "x$HAVE_MSWINDOWS" = "xyes" && test "x$use_text_console" = "xno" ; then
     LDFLAGS="$LDFLAGS -Wl,-subsystem,windows"
 fi
 
-dnl Character set detection
-dnl =======================
-
-AC_ARG_ENABLE(chardet,
- AS_HELP_STRING(--enable-chardet, [Disable character set detection (default=auto)]),
- USE_CHARDET=$enableval, USE_CHARDET=auto)
-
-if test $USE_CHARDET != no ; then
-    PKG_CHECK_MODULES(LIBGUESS, libguess >= 1.2, have_libguess=yes, have_libguess=no)
-    if test $have_libguess = yes ; then
-        USE_CHARDET=yes
-        AC_DEFINE(USE_CHARDET, 1, [Define if character set detection enabled])
-    elif test $USE_CHARDET = yes ; then
-        AC_MSG_ERROR([Character set detection could not be enabled; check config.log])
-    else
-        USE_CHARDET=no
-    fi
-fi
-
-AC_SUBST(USE_CHARDET)
-
 dnl D-Bus support
 dnl =============
 
@@ -161,7 +140,6 @@ echo "Configuration:"
 echo ""
 echo "  Install path:                           $prefix"
 echo ""
-echo "  Automatic character code detection:     $USE_CHARDET"
 echo "  D-Bus support:                          $USE_DBUS"
 echo "  GTK+ support:                           $USE_GTK"
 echo "  Qt support:                             $USE_QT"
