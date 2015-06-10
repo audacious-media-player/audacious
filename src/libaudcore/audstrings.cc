@@ -415,6 +415,37 @@ EXPORT StringBuf filename_normalize (StringBuf && filename)
     return std::move (filename);
 }
 
+EXPORT StringBuf filename_get_parent (const char * filename)
+{
+    StringBuf buf = filename_normalize (str_copy (filename));
+    const char * base = last_path_element (buf);
+
+    if (! base)
+        return StringBuf ();
+
+#ifdef _WIN32
+    if (base - buf > 3) /* leave "C:\" */
+#else
+    if (base - buf > 1) /* leave leading "/" */
+#endif
+        buf.resize (base - buf - 1);
+    else
+        buf.resize (base - buf);
+
+    return buf;
+}
+
+EXPORT StringBuf filename_get_base (const char * filename)
+{
+    StringBuf buf = filename_normalize (str_copy (filename));
+    const char * base = last_path_element (buf);
+
+    if (base)
+        buf.remove (0, base - buf);
+
+    return buf;
+}
+
 EXPORT StringBuf filename_build (const std::initializer_list<const char *> & elems)
 {
     StringBuf str (-1);

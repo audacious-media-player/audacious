@@ -67,7 +67,8 @@ StringBuf str_to_utf8 (const char * str, int len); // no "len = -1" to avoid amb
 StringBuf str_to_utf8 (StringBuf && str);
 
 StringBuf filename_normalize (StringBuf && filename);
-
+StringBuf filename_get_parent (const char * filename);
+StringBuf filename_get_base (const char * filename);
 StringBuf filename_build (const std::initializer_list<const char *> & elems);
 StringBuf filename_to_uri (const char * filename);
 StringBuf uri_to_filename (const char * uri, bool use_locale = true);

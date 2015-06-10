@@ -40,8 +40,6 @@ String aud_get_str (const char *, const char *)
     { return String (""); }
 String VFSFile::get_metadata (const char *)
     { return String (); }
-const char * get_home_utf8 ()
-    { return "/home/user"; }
 
 size_t misc_bytes_allocated;
 
@@ -62,6 +60,25 @@ static void test_audio_conversion ()
 
     for (int i = 0; i < 10; i ++)
         assert (in[i] == out[i]);
+}
+
+static void test_filename_split ()
+{
+    /* expected results differ slightly from POSIX dirname/basename */
+    static const char * const paths[][3] = {
+        {"/usr/lib/aud", "/usr/lib", "aud"},
+        {"/usr/lib/", "/usr", "lib"},
+        {"/usr/lib", "/usr", "lib"},
+        {"/usr/", "/", "usr"},
+        {"/usr", "/", "usr"},
+        {"/", nullptr, "/"}
+    };
+
+    for (int i = 0; i < aud::n_elems (paths); i ++)
+    {
+        assert (! strcmp_safe (filename_get_parent (paths[i][0]), paths[i][1]));
+        assert (! strcmp_safe (filename_get_base (paths[i][0]), paths[i][2]));
+    }
 }
 
 static void test_tuple_format (const char * format, Tuple & tuple, const char * expected)
@@ -322,6 +339,7 @@ static void test_ringbuf ()
 int main ()
 {
     test_audio_conversion ();
+    test_filename_split ();
     test_tuple_formats ();
     test_ringbuf ();
 
