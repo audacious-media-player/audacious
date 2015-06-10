@@ -609,7 +609,7 @@ EXPORT StringBuf uri_get_extension (const char * uri)
 /* Constructs a full URI given:
  *   1. path: one of the following:
  *     a. a full URI (returned unchanged)
- *     b. an absolute filename (in the system locale)
+ *     b. an absolute filename (in UTF-8 or the system locale)
  *     c. a relative path (character set detected according to user settings)
  *   2. reference: the full URI of the playlist containing <path> */
 
@@ -621,7 +621,7 @@ EXPORT StringBuf uri_construct (const char * path, const char * reference)
 
     /* absolute filename */
 #ifdef _WIN32
-    if (path[0] && path[1] == ':' && path[2] == '\\')
+    if (path[0] && path[1] == ':' && (path[2] == '/' || path[2] == '\\'))
 #else
     if (path[0] == '/')
 #endif
