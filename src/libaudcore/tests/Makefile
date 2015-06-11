@@ -13,6 +13,7 @@ SRCS = ../audio.cc \
        ../tinylock.cc \
        ../tuple.cc \
        ../tuple-compiler.cc \
+       ../util.cc \
        test.cc
 
 FLAGS = -I.. -I../.. -DEXPORT= -DPACKAGE=\"audacious\" -DICONV_CONST= \
