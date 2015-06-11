@@ -52,6 +52,10 @@ struct ArrayRef
 // Smart pointer.  Deletes object pointed to when the pointer goes out of scope.
 
 template<class T>
+void SmartPtrDelete (T * ptr)
+    { delete ptr; }
+
+template<class T, void (* deleter) (T *) = SmartPtrDelete>
 class SmartPtr
 {
 public:
@@ -59,11 +63,11 @@ public:
         ptr (ptr) {}
 
     ~SmartPtr ()
-        { delete ptr; }
+        { if (ptr) deleter (ptr); }
 
     void capture (T * ptr2)
     {
-        delete ptr;
+        if (ptr) deleter (ptr);
         ptr = ptr2;
     }
 
