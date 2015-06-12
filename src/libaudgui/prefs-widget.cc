@@ -195,7 +195,7 @@ static void create_spin_button (const PreferencesWidget * widget,
  const char * domain)
 {
     * label_pre = gtk_label_new (dgettext (domain, widget->label));
-    gtk_misc_set_alignment ((GtkMisc *) * label_pre, 1, 0.5);
+    gtk_widget_set_halign (* label_pre, GTK_ALIGN_END);
 
     * spin_btn = gtk_spin_button_new_with_range (widget->data.spin_btn.min,
      widget->data.spin_btn.max, widget->data.spin_btn.step);
@@ -203,7 +203,7 @@ static void create_spin_button (const PreferencesWidget * widget,
     if (widget->data.spin_btn.right_label)
     {
         * label_past = gtk_label_new (dgettext (domain, widget->data.spin_btn.right_label));
-        gtk_misc_set_alignment ((GtkMisc *) * label_past, 0, 0.5);
+        gtk_widget_set_halign (* label_past, GTK_ALIGN_START);
     }
 
     widget_init (* spin_btn, widget);
@@ -215,7 +215,6 @@ void create_font_btn (const PreferencesWidget * widget, GtkWidget * * label,
  GtkWidget * * font_btn, const char * domain)
 {
     * font_btn = gtk_font_button_new ();
-    gtk_widget_set_hexpand (* font_btn, true);
 
     gtk_font_button_set_use_font ((GtkFontButton *) * font_btn, true);
     gtk_font_button_set_use_size ((GtkFontButton *) * font_btn, true);
@@ -305,7 +304,7 @@ static void create_cbox (const PreferencesWidget * widget, GtkWidget * * label,
     if (widget->label)
     {
         * label = gtk_label_new (dgettext (domain, widget->label));
-        gtk_misc_set_alignment ((GtkMisc *) * label, 1, 0.5);
+        gtk_widget_set_halign (* label, GTK_ALIGN_END);
     }
 
     g_object_set_data ((GObject *) * combobox, "combodomain", (void *) domain);
