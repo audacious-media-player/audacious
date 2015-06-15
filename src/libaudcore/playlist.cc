@@ -1275,6 +1275,10 @@ EXPORT void aud_playlist_set_focus (int playlist_num, int entry_num)
 {
     ENTER_GET_PLAYLIST ();
 
+    Entry * new_focus = lookup_entry (playlist, entry_num);
+    if (new_focus == playlist->focus)
+        RETURN ();
+
     int first = INT_MAX;
     int last = -1;
 
@@ -1284,7 +1288,7 @@ EXPORT void aud_playlist_set_focus (int playlist_num, int entry_num)
         last = aud::max (last, playlist->focus->number);
     }
 
-    playlist->focus = lookup_entry (playlist, entry_num);
+    playlist->focus = new_focus;
 
     if (playlist->focus)
     {
