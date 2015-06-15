@@ -311,10 +311,12 @@ static const PreferencesWidget song_info_page_widgets[] = {
         WidgetBool (0, "slow_probe"))
 };
 
-#define TITLESTRING_NPRESETS 6
+#define TITLESTRING_NPRESETS 8
 
 static const char * const titlestring_presets[TITLESTRING_NPRESETS] = {
     "${title}",
+    "${title}${?artist: - ${artist}}",
+    "${title}${?artist: - ${artist}}${?album: - ${album}}",
     "${?artist:${artist} - }${title}",
     "${?artist:${artist} - }${?album:${album} - }${title}",
     "${?artist:${artist} - }${?album:${album} - }${?track-number:${track-number}. }${title}",
@@ -324,6 +326,8 @@ static const char * const titlestring_presets[TITLESTRING_NPRESETS] = {
 
 static const char * const titlestring_preset_names[TITLESTRING_NPRESETS] = {
     N_("TITLE"),
+    N_("TITLE - ARTIST"),
+    N_("TITLE - ARTIST - ALBUM"),
     N_("ARTIST - TITLE"),
     N_("ARTIST - ALBUM - TITLE"),
     N_("ARTIST - ALBUM - TRACK. TITLE"),
