@@ -2313,10 +2313,23 @@ void playlist_load_state ()
 
     fclose (handle);
 
+    /* set initial focus and selection */
     /* clear updates queued during init sequence */
 
     for (auto & playlist : playlists)
     {
+        Entry * focus = playlist->position;
+        if (! focus && playlist->entries.len ())
+            focus = playlist->entries[0].get ();
+
+        if (focus)
+        {
+            focus->selected = true;
+            playlist->focus = focus;
+            playlist->selected_count = 1;
+            playlist->selected_length = focus->length;
+        }
+
         playlist->next_update = Update ();
         playlist->last_update = Update ();
     }
