@@ -540,7 +540,8 @@ EXPORT StringBuf uri_to_display (const char * uri)
     const char * home = get_home_utf8 ();
     int homelen = home ? strlen (home) : 0;
 
-    if (homelen && ! strncmp (buf, home, homelen) && buf[homelen] == G_DIR_SEPARATOR)
+    if (homelen && ! strncmp (buf, home, homelen) &&
+     (! buf[homelen] || buf[homelen] == G_DIR_SEPARATOR))
     {
         buf[0] = '~';
         buf.remove (1, homelen - 1);
