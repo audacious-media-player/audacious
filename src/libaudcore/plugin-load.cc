@@ -50,6 +50,17 @@ struct LoadedModule {
 
 static Index<LoadedModule> loaded_modules;
 
+bool plugin_check_flags (int version)
+{
+    switch (aud_get_mainloop_type ())
+    {
+        case MainloopType::GLib: version &= ~_AUD_PLUGIN_GLIB_ONLY; break;
+        case MainloopType::Qt: version &= ~_AUD_PLUGIN_QT_ONLY; break;
+    }
+
+    return ! (version & 0xffff0000);
+}
+
 Plugin * plugin_load (const char * filename)
 {
     AUDINFO ("Loading plugin: %s.\n", filename);
@@ -73,18 +84,20 @@ Plugin * plugin_load (const char * filename)
         return nullptr;
     }
 
-    if (header->version < _AUD_PLUGIN_VERSION_MIN ||
-        header->version > _AUD_PLUGIN_VERSION)
+    /* flags are stored in high 16 bits of version field */
+    if ((header->version & 0xffff) < _AUD_PLUGIN_VERSION_MIN ||
+        (header->version & 0xffff) > _AUD_PLUGIN_VERSION)
     {
         AUDERR ("%s is not compatible with this version of Audacious.\n", filename);
         g_module_close (module);
         return nullptr;
     }
 
-    if (header->type == PluginType::Transport ||
-        header->type == PluginType::Playlist ||
-        header->type == PluginType::Input ||
-        header->type == PluginType::Effect)
+    if (plugin_check_flags (header->version) &&
+        (header->type == PluginType::Transport ||
+         header->type == PluginType::Playlist ||
+         header->type == PluginType::Input ||
+         header->type == PluginType::Effect))
     {
         if (! header->init ())
         {
@@ -101,10 +114,11 @@ Plugin * plugin_load (const char * filename)
 
 static void plugin_unload (LoadedModule & loaded)
 {
-    if (loaded.header->type == PluginType::Transport ||
-        loaded.header->type == PluginType::Playlist ||
-        loaded.header->type == PluginType::Input ||
-        loaded.header->type == PluginType::Effect)
+    if (plugin_check_flags (loaded.header->version) &&
+        (loaded.header->type == PluginType::Transport ||
+         loaded.header->type == PluginType::Playlist ||
+         loaded.header->type == PluginType::Input ||
+         loaded.header->type == PluginType::Effect))
     {
         loaded.header->cleanup ();
     }
