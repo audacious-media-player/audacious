@@ -50,7 +50,7 @@ class PluginHandle
 public:
     String basename, path;
     bool loaded;
-    int timestamp;
+    int timestamp, version;
     PluginType type;
     Plugin * header;
     String name, domain;
@@ -70,11 +70,12 @@ public:
     int has_subtunes, writes_tag;
 
     PluginHandle (const char * basename, const char * path, bool loaded,
-     int timestamp, PluginType type, Plugin * header) :
+     int timestamp, int version, PluginType type, Plugin * header) :
         basename (basename),
         path (path),
         loaded (loaded),
         timestamp (timestamp),
+        version (version),
         type (type),
         header (header),
         priority (0),
@@ -111,6 +112,7 @@ static constexpr aud::array<InputKey, const char *> input_key_names = {
 };
 
 static aud::array<PluginType, Index<PluginHandle *>> plugins;
+static aud::array<PluginType, Index<PluginHandle *>> compatible;
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
 static StringBuf get_basename (const char * path)
@@ -162,6 +164,7 @@ static void plugin_save (PluginHandle * plugin, FILE * handle)
 {
     fprintf (handle, "%s %s\n", plugin_type_names[plugin->type], (const char *) plugin->path);
     fprintf (handle, "stamp %d\n", plugin->timestamp);
+    fprintf (handle, "version %d\n", plugin->version);
     fprintf (handle, "name %s\n", (const char *) plugin->name);
 
     if (plugin->domain)
@@ -198,6 +201,9 @@ void plugin_registry_save ()
 
         list.clear ();
     }
+
+    for (auto & list : compatible)
+        list.clear ();
 
     fclose (handle);
 }
@@ -309,10 +315,14 @@ static bool plugin_parse (FILE * handle)
     if (! parse_integer ("stamp", & timestamp))
         return false;
 
-    auto plugin = new PluginHandle (basename, String (), false, timestamp, type, nullptr);
-    plugins[type].append (plugin);
-
     parse_next (handle);
+
+    int version = 0;
+    if (parse_integer ("version", & version))
+        parse_next (handle);
+
+    auto plugin = new PluginHandle (basename, String (), false, timestamp, version, type, nullptr);
+    plugins[type].append (plugin);
 
     plugin->name = parse_string ("name");
     if (plugin->name)
@@ -376,7 +386,7 @@ static void parse_plugins_fallback (FILE * handle)
             return;
 
         // setting timestamp to zero forces a rescan
-        auto plugin = new PluginHandle (basename, String (), false, 0, type, nullptr);
+        auto plugin = new PluginHandle (basename, String (), false, 0, 0, type, nullptr);
         plugins[type].append (plugin);
         plugin->enabled = enabled;
     }
@@ -438,18 +448,29 @@ void plugin_registry_prune ()
         return true;
     };
 
-    for (auto & list : plugins)
+    auto check_incompatible = [] (PluginHandle * plugin)
     {
-        list.remove_if (check_not_found);
-        list.sort (plugin_compare, nullptr);
+        if (plugin_check_flags (plugin->version))
+            return false;
+
+        AUDINFO ("Incompatible plugin flags: %s\n", (const char *) plugin->basename);
+        return true;
+    };
+
+    for (auto type : aud::range<PluginType> ())
+    {
+        plugins[type].remove_if (check_not_found);
+        plugins[type].sort (plugin_compare, nullptr);
+        compatible[type].insert (plugins[type].begin (), 0, plugins[type].len ());
+        compatible[type].remove_if (check_incompatible);
     }
 }
 
 /* Note: If there are multiple plugins with the same basename, this returns only
  * one of them.  Different plugins should be given different basenames. */
-EXPORT PluginHandle * aud_plugin_lookup_basename (const char * basename)
+static PluginHandle * plugin_lookup_basename (const char * basename, bool compat_only)
 {
-    for (auto & list : plugins)
+    for (auto & list : (compat_only ? compatible : plugins))
     {
         for (PluginHandle * plugin : list)
         {
@@ -461,10 +482,16 @@ EXPORT PluginHandle * aud_plugin_lookup_basename (const char * basename)
     return nullptr;
 }
 
+EXPORT PluginHandle * aud_plugin_lookup_basename (const char * basename)
+{
+    return plugin_lookup_basename (basename, true);
+}
+
 static void plugin_get_info (PluginHandle * plugin, bool is_new)
 {
     Plugin * header = plugin->header;
 
+    plugin->version = header->version;
     plugin->name = String (header->info.name);
     plugin->domain = String (header->info.domain);
     plugin->has_about = (bool) header->info.about;
@@ -527,7 +554,7 @@ void plugin_register (const char * path, int timestamp)
     if (! basename)
         return;
 
-    PluginHandle * plugin = aud_plugin_lookup_basename (basename);
+    PluginHandle * plugin = plugin_lookup_basename (basename, false);
 
     if (plugin)
     {
@@ -555,7 +582,8 @@ void plugin_register (const char * path, int timestamp)
         if (! header)
             return;
 
-        plugin = new PluginHandle (basename, path, true, timestamp, header->type, header);
+        plugin = new PluginHandle (basename, path, true, timestamp,
+         header->version, header->type, header);
         plugins[plugin->type].append (plugin);
 
         plugin_get_info (plugin, true);
@@ -593,7 +621,7 @@ DONE:
 
 EXPORT PluginHandle * aud_plugin_by_header (const void * header)
 {
-    for (auto & list : plugins)
+    for (auto & list : compatible)
     {
         for (PluginHandle * plugin : list)
         {
@@ -607,7 +635,7 @@ EXPORT PluginHandle * aud_plugin_by_header (const void * header)
 
 EXPORT const Index<PluginHandle *> & aud_plugin_list (PluginType type)
 {
-    return plugins[type];
+    return compatible[type];
 }
 
 EXPORT const char * aud_plugin_get_name (PluginHandle * plugin)

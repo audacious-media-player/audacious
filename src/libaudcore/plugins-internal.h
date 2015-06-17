@@ -35,6 +35,7 @@ void stop_plugins_one ();
 /* plugin-load.c */
 void plugin_system_init ();
 void plugin_system_cleanup ();
+bool plugin_check_flags (int version);
 Plugin * plugin_load (const char * path);
 
 /* plugin-registry.c */

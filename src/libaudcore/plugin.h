@@ -49,6 +49,10 @@ struct PluginPreferences;
 #define _AUD_PLUGIN_VERSION_MIN 46 /* 3.6-devel */
 #define _AUD_PLUGIN_VERSION     47 /* 3.7-devel */
 
+/* compatibility flags ORed into the version field */
+#define _AUD_PLUGIN_GLIB_ONLY 0x10000 /* plugin requires GLib mainloop */
+#define _AUD_PLUGIN_QT_ONLY   0x20000 /* plugin requires Qt mainloop */
+
 /* A NOTE ON THREADS
  *
  * How thread-safe a plugin must be depends on the type of plugin.  Note that
@@ -110,7 +114,14 @@ public:
         info (info) {}
 
     const int magic = _AUD_PLUGIN_MAGIC;
-    const int version = _AUD_PLUGIN_VERSION;
+    const int version = _AUD_PLUGIN_VERSION
+#ifdef AUD_PLUGIN_GLIB_ONLY
+     | _AUD_PLUGIN_GLIB_ONLY
+#endif
+#ifdef AUD_PLUGIN_QT_ONLY
+     | _AUD_PLUGIN_QT_ONLY
+#endif
+     ;
 
     const PluginType type;
     const PluginInfo info;
