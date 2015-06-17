@@ -53,7 +53,7 @@ struct ArrayRef
 
 template<class T>
 void SmartPtrDelete (T * ptr)
-    { delete ptr; }
+    { (void) sizeof (T); delete ptr; }
 
 template<class T, void (* deleter) (T *) = SmartPtrDelete>
 class SmartPtr
