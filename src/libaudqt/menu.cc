@@ -79,6 +79,9 @@ MenuAction::MenuAction (const MenuItem & item, const char * domain, QWidget * pa
 
     if (item.text.shortcut)
         setShortcut (QString (item.text.shortcut));
+
+    if (parent)
+        parent->addAction (this);
 }
 
 void MenuAction::toggle (bool checked)
@@ -107,7 +110,7 @@ EXPORT QMenu * menu_build (ArrayRef<MenuItem> menu_items, const char * domain, Q
     QMenu * m = new QMenu (parent);
 
     for (auto & it : menu_items)
-        m->addAction (new MenuAction (it, domain, m));
+        m->addAction (new MenuAction (it, domain, parent));
 
     return m;
 }
@@ -117,7 +120,7 @@ EXPORT QMenuBar * menubar_build (ArrayRef<MenuItem> menu_items, const char * dom
     QMenuBar * m = new QMenuBar (parent);
 
     for (auto & it : menu_items)
-        m->addAction (new MenuAction (it, domain, m));
+        m->addAction (new MenuAction (it, domain, parent));
 
     return m;
 }
