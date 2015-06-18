@@ -74,6 +74,19 @@ EXPORT void cleanup ()
     qapp = nullptr;
 }
 
+EXPORT void clear_layout (QLayout * layout)
+{
+    while (QLayoutItem * item = layout->takeAt (0))
+    {
+        if (QLayout * layout2 = item->layout ())
+            clear_layout (layout2);
+        if (QWidget * widget = item->widget ())
+            delete widget;
+
+        delete item;
+    }
+}
+
 /* the goal is to force a window to come to the front on any Qt platform */
 EXPORT void window_bring_to_front (QWidget * window)
 {

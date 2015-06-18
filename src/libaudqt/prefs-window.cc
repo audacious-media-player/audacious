@@ -435,6 +435,7 @@ static void iface_fill_prefs_box (void)
 
 static void iface_combo_changed_finish (void *)
 {
+    iface_fill_prefs_box ();
     restarting = false;
 }
 
@@ -442,6 +443,12 @@ static void iface_combo_changed (void)
 {
     /* prevent audqt from being shut down during the switch */
     restarting = true;
+
+    if (QLayout * layout = iface_prefs_box->layout ())
+    {
+        clear_layout (layout);
+        delete layout;
+    }
 
     aud_plugin_enable (aud_plugin_list (PluginType::Iface)[iface_combo_selected], true);
 
