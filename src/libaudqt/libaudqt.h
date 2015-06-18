@@ -24,6 +24,7 @@
 #include <libaudcore/objects.h>
 
 class QBoxLayout;
+class QLayout;
 class QPixmap;
 class QWidget;
 
@@ -58,7 +59,12 @@ void equalizer_hide ();
 void fileopener_show (FileMode mode);
 
 /* util.cc */
+void init ();
+void run ();
+void quit ();
 void cleanup ();
+
+void clear_layout (QLayout * layout);
 void window_bring_to_front (QWidget * win);
 void simple_message (const char * title, const char * text);
 QString translate_str (const char * str, const char * domain);

@@ -41,6 +41,7 @@
 #include <libaudcore/drct.h>
 #include <libaudcore/hook.h>
 #include <libaudcore/i18n.h>
+#include <libaudcore/mainloop.h>
 #include <libaudcore/playlist.h>
 #include <libaudcore/plugin.h>
 #include <libaudcore/plugins.h>
@@ -53,6 +54,8 @@
 #include "prefs-pluginlist-model.h"
 
 namespace audqt {
+
+extern bool restarting;
 
 struct Category {
     const char * icon_path;
@@ -430,32 +433,28 @@ static void iface_fill_prefs_box (void)
     }
 }
 
-#ifdef XXX_NOTYET
-static int iface_combo_changed_finish (void *)
+static void iface_combo_changed_finish (void *)
 {
     iface_fill_prefs_box ();
-    gtk_widget_show_all (iface_prefs_box);
-
-    audgui_cleanup ();
-
-    return G_SOURCE_REMOVE;
+    restarting = false;
 }
-#endif
 
 static void iface_combo_changed (void)
 {
-#ifdef XXX_NOTYET
-    /* prevent audgui from being shut down during the switch */
-    audgui_init ();
+    /* prevent audqt from being shut down during the switch */
+    restarting = true;
 
-    gtk_container_foreach ((GtkContainer *) iface_prefs_box,
-     (GtkCallback) gtk_widget_destroy, nullptr);
+    if (QLayout * layout = iface_prefs_box->layout ())
+    {
+        clear_layout (layout);
+        delete layout;
+    }
 
-    aud_plugin_enable (aud_plugin_by_index (PluginType::Iface, iface_combo_selected), true);
+    aud_plugin_enable (aud_plugin_list (PluginType::Iface)[iface_combo_selected], true);
 
     /* now wait till we have restarted into the new main loop */
-    g_idle_add_full (G_PRIORITY_HIGH, iface_combo_changed_finish, nullptr, nullptr);
-#endif
+    static QueuedFunc idle;
+    idle.queue (iface_combo_changed_finish, nullptr);
 }
 
 static ArrayRef<ComboItem> iface_combo_fill ()
