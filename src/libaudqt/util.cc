@@ -17,6 +17,7 @@
  * the use of this software.
  */
 
+#include <QApplication>
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QLabel>
@@ -31,14 +32,46 @@
 
 namespace audqt {
 
+bool restarting;
+static QApplication * qapp;
+
+EXPORT void init ()
+{
+    if (restarting)
+        return;
+
+    static char app_name[] = "audacious";
+    static int dummy_argc = 1;
+    static char * dummy_argv[] = {app_name, nullptr};
+
+    qapp = new QApplication (dummy_argc, dummy_argv);
+    qapp->setAttribute (Qt::AA_UseHighDpiPixmaps);
+}
+
+EXPORT void run ()
+{
+    qapp->exec ();
+}
+
+EXPORT void quit ()
+{
+    qapp->quit ();
+}
+
 EXPORT void cleanup ()
 {
+    if (restarting)
+        return;
+
     aboutwindow_hide ();
     equalizer_hide ();
     infowin_hide ();
     log_inspector_hide ();
     prefswin_hide ();
     queue_manager_hide ();
+
+    delete qapp;
+    qapp = nullptr;
 }
 
 /* the goal is to force a window to come to the front on any Qt platform */
