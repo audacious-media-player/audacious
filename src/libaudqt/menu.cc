@@ -55,9 +55,7 @@ MenuAction::MenuAction (const MenuItem & item, const char * domain, QWidget * pa
 
     setText (translate_str (item.text.name, domain));
 
-    if (item.func)
-        QObject::connect (this, & QAction::triggered, item.func);
-    else if (item.cfg.name)
+    if (item.cfg.name)
     {
         setCheckable (true);
         setChecked (aud_get_bool (item.cfg.sect, item.cfg.name));
@@ -67,6 +65,8 @@ MenuAction::MenuAction (const MenuItem & item, const char * domain, QWidget * pa
         if (item.cfg.hook)
             m_hook.capture (new HookReceiver<MenuAction> (item.cfg.hook, this, & MenuAction::update));
     }
+    else if (item.func)
+        QObject::connect (this, & QAction::triggered, item.func);
     else if (item.items.len)
         setMenu (menu_build (item.items, domain, parent));
     else if (item.submenu)
