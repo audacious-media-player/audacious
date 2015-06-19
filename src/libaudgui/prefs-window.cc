@@ -690,6 +690,7 @@ static void create_connectivity_category ()
 static void create_plugin_category ()
 {
     plugin_notebook = gtk_notebook_new ();
+    gtk_notebook_set_scrollable ((GtkNotebook *) plugin_notebook, true);
     gtk_container_add ((GtkContainer *) category_notebook, plugin_notebook);
 
     for (const PluginCategory & category : plugin_categories)
