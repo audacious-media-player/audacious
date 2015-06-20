@@ -236,16 +236,7 @@ static bool enable_single (PluginType type, PluginHandle * p)
     plugin_set_enabled (p, true);
 
     if (table[type].f.s.set_current (p))
-    {
-        // check that the switch was not queued for later
-        if (table[type].f.s.get_current () == old)
-        {
-            plugin_set_enabled (p, false);
-            plugin_set_enabled (old, true);
-        }
-
         return true;
-    }
 
     AUDERR ("%s failed to start; falling back to %s.\n",
      aud_plugin_get_name (p), aud_plugin_get_name (old));

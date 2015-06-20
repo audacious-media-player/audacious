@@ -433,12 +433,6 @@ static void iface_fill_prefs_box (void)
     }
 }
 
-static void iface_combo_changed_finish (void *)
-{
-    iface_fill_prefs_box ();
-    restarting = false;
-}
-
 static void iface_combo_changed (void)
 {
     /* prevent audqt from being shut down during the switch */
@@ -452,9 +446,8 @@ static void iface_combo_changed (void)
 
     aud_plugin_enable (aud_plugin_list (PluginType::Iface)[iface_combo_selected], true);
 
-    /* now wait till we have restarted into the new main loop */
-    static QueuedFunc idle;
-    idle.queue (iface_combo_changed_finish, nullptr);
+    iface_fill_prefs_box ();
+    restarting = false;
 }
 
 static ArrayRef<ComboItem> iface_combo_fill ()
