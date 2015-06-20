@@ -345,7 +345,7 @@ QWidget * NotebookWidget::widget ()
 
         layout->setContentsMargins (0, 0, 0, 0);
         layout->setSpacing (4);
-        prefs_populate (layout, tab.widgets, nullptr);
+        prefs_populate (layout, tab.widgets, m_domain);
 
         tabs->addTab (widget, translate_str (tab.name, m_domain));
     }
