@@ -49,6 +49,7 @@ void aboutwindow_show ();
 void aboutwindow_hide ();
 
 /* playlist-management.cc */
+void playlist_show_rename (int playlist);
 void playlist_confirm_delete (int playlist);
 
 /* equalizer.cc */
