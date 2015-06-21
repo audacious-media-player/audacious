@@ -1017,10 +1017,7 @@ EXPORT int aud_playlist_get_blank ()
     String title = aud_playlist_get_title (list);
 
     if (strcmp (title, _(default_title)) || aud_playlist_entry_count (list) > 0)
-    {
-        list = aud_playlist_count ();
-        aud_playlist_insert (list);
-    }
+        aud_playlist_insert (++ list);
 
     return list;
 }
