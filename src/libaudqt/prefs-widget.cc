@@ -23,15 +23,10 @@
 #include <assert.h>
 
 #include <QButtonGroup>
-#include <QCheckBox>
 #include <QComboBox>
 #include <QHBoxLayout>
-#include <QLabel>
 #include <QLineEdit>
-#include <QPushButton>
-#include <QRadioButton>
 #include <QSpinBox>
-#include <QTabWidget>
 #include <QVBoxLayout>
 
 #include <libaudcore/audstrings.h>
@@ -40,80 +35,68 @@
 namespace audqt {
 
 /* button */
-QWidget * ButtonWidget::widget ()
+ButtonWidget::ButtonWidget (const PreferencesWidget * parent, const char * domain) :
+    QPushButton (translate_str (parent->label, domain))
 {
-    auto button = new QPushButton (translate_str (m_parent->label, m_domain));
-    QObject::connect (button, & QPushButton::clicked, m_parent->data.button.callback);
-    return button;
+    QObject::connect (this, & QPushButton::clicked, parent->data.button.callback);
 }
 
 /* boolean widget (checkbox) */
-QWidget * BooleanWidget::widget ()
+BooleanWidget::BooleanWidget (const PreferencesWidget * parent, const char * domain) :
+    QCheckBox (translate_str (parent->label, domain)),
+    HookableWidget (parent, domain)
 {
-    m_checkbox = new QCheckBox (translate_str (m_parent->label, m_domain));
-
     update ();
 
-    QObject::connect (m_checkbox, & QCheckBox::stateChanged, [this] (int state) {
-        m_parent->cfg.set_bool ((state != Qt::Unchecked));
+    QObject::connect (this, & QCheckBox::stateChanged, [parent] (int state) {
+        parent->cfg.set_bool ((state != Qt::Unchecked));
     });
-
-    return m_checkbox;
 }
 
 void BooleanWidget::update ()
 {
-    m_checkbox->setCheckState (m_parent->cfg.get_bool () ? Qt::Checked : Qt::Unchecked);
-}
-
-/* label */
-QWidget * LabelWidget::widget ()
-{
-    return new QLabel (translate_str (m_parent->label, m_domain));
+    setCheckState (m_parent->cfg.get_bool () ? Qt::Checked : Qt::Unchecked);
 }
 
 /* integer (radio button) */
-QWidget * RadioButtonWidget::widget (QButtonGroup * btn_group)
+RadioButtonWidget::RadioButtonWidget (const PreferencesWidget * parent,
+ const char * domain, QButtonGroup * btn_group) :
+    QRadioButton (translate_str (parent->label, domain)),
+    HookableWidget (parent, domain)
 {
-    m_radio = new QRadioButton (translate_str (m_parent->label, m_domain));
-
     if (btn_group)
-        btn_group->addButton (m_radio, m_parent->data.radio_btn.value);
+        btn_group->addButton (this, parent->data.radio_btn.value);
 
     update ();
 
-    QObject::connect (m_radio, & QAbstractButton::clicked, [this] (bool checked) {
+    QObject::connect (this, & QAbstractButton::clicked, [parent] (bool checked) {
         if (checked)
-            m_parent->cfg.set_int (m_parent->data.radio_btn.value);
+            parent->cfg.set_int (parent->data.radio_btn.value);
     });
-
-    return m_radio;
 }
 
 void RadioButtonWidget::update ()
 {
     if (m_parent->cfg.get_int () == m_parent->data.radio_btn.value)
-        m_radio->setChecked (true);
+        setChecked (true);
 }
 
 /* integer (spinbox) */
-QWidget * IntegerWidget::widget ()
+IntegerWidget::IntegerWidget (const PreferencesWidget * parent, const char * domain) :
+    HookableWidget (parent, domain),
+    m_spinner (new QSpinBox)
 {
-    auto container = new QWidget;
-    auto layout = new QHBoxLayout (container);
-
+    auto layout = new QHBoxLayout (this);
     layout->setContentsMargins (0, 0, 0, 0);
     layout->setSpacing (4);
 
-    if (m_parent->label)
-        layout->addWidget (new QLabel (translate_str (m_parent->label, m_domain)));
+    if (parent->label)
+        layout->addWidget (new QLabel (translate_str (parent->label, domain)));
 
-    m_spinner = new QSpinBox;
     layout->addWidget (m_spinner);
 
-    if (m_parent->data.spin_btn.right_label)
-        layout->addWidget (new QLabel (translate_str
-         (m_parent->data.spin_btn.right_label, m_domain)));
+    if (parent->data.spin_btn.right_label)
+        layout->addWidget (new QLabel (translate_str (parent->data.spin_btn.right_label, domain)));
 
     layout->addStretch (1);
 
@@ -124,11 +107,9 @@ QWidget * IntegerWidget::widget ()
      * cast to the type of the correct valueChanged signal.  --kaniini.
      */
     void (QSpinBox::* signal) (int) = & QSpinBox::valueChanged;
-    QObject::connect (m_spinner, signal, [this] (int value) {
-        m_parent->cfg.set_int (value);
+    QObject::connect (m_spinner, signal, [parent] (int value) {
+        parent->cfg.set_int (value);
     });
-
-    return container;
 }
 
 void IntegerWidget::update ()
@@ -139,34 +120,30 @@ void IntegerWidget::update ()
 }
 
 /* double (spinbox) */
-QWidget * DoubleWidget::widget ()
+DoubleWidget::DoubleWidget (const PreferencesWidget * parent, const char * domain) :
+    HookableWidget (parent, domain),
+    m_spinner (new QDoubleSpinBox)
 {
-    auto container = new QWidget;
-    auto layout = new QHBoxLayout (container);
-
+    auto layout = new QHBoxLayout (this);
     layout->setContentsMargins (0, 0, 0, 0);
     layout->setSpacing (4);
 
-    if (m_parent->label)
-        layout->addWidget (new QLabel (translate_str (m_parent->label, m_domain)));
+    if (parent->label)
+        layout->addWidget (new QLabel (translate_str (parent->label, domain)));
 
-    m_spinner = new QDoubleSpinBox;
     layout->addWidget (m_spinner);
 
-    if (m_parent->data.spin_btn.right_label)
-        layout->addWidget (new QLabel (translate_str
-         (m_parent->data.spin_btn.right_label, m_domain)));
+    if (parent->data.spin_btn.right_label)
+        layout->addWidget (new QLabel (translate_str (parent->data.spin_btn.right_label, domain)));
 
     layout->addStretch (1);
 
     update ();
 
     void (QDoubleSpinBox::* signal) (double) = & QDoubleSpinBox::valueChanged;
-    QObject::connect (m_spinner, signal, [this] (double value) {
-        m_parent->cfg.set_float (value);
+    QObject::connect (m_spinner, signal, [parent] (double value) {
+        parent->cfg.set_float (value);
     });
-
-    return container;
 }
 
 void DoubleWidget::update ()
@@ -177,30 +154,27 @@ void DoubleWidget::update ()
 }
 
 /* string (lineedit) */
-QWidget * StringWidget::widget ()
+StringWidget::StringWidget (const PreferencesWidget * parent, const char * domain) :
+    HookableWidget (parent, domain),
+    m_lineedit (new QLineEdit)
 {
-    auto container = new QWidget;
-    auto layout = new QHBoxLayout (container);
-
+    auto layout = new QHBoxLayout (this);
     layout->setContentsMargins (0, 0, 0, 0);
     layout->setSpacing (4);
 
-    if (m_parent->label)
-        layout->addWidget (new QLabel (translate_str (m_parent->label, m_domain)));
+    if (parent->label)
+        layout->addWidget (new QLabel (translate_str (parent->label, domain)));
 
-    m_lineedit = new QLineEdit;
-    if (m_parent->data.entry.password)
+    if (parent->data.entry.password)
         m_lineedit->setEchoMode (QLineEdit::Password);
 
     layout->addWidget (m_lineedit, 1);
 
     update ();
 
-    QObject::connect (m_lineedit, & QLineEdit::textChanged, [this] (const QString & value) {
-        m_parent->cfg.set_string (value.toUtf8 ());
+    QObject::connect (m_lineedit, & QLineEdit::textChanged, [parent] (const QString & value) {
+        parent->cfg.set_string (value.toUtf8 ());
     });
-
-    return container;
 }
 
 void StringWidget::update ()
@@ -209,18 +183,17 @@ void StringWidget::update ()
 }
 
 /* combo box widget (string or int) */
-QWidget * ComboBoxWidget::widget ()
+ComboBoxWidget::ComboBoxWidget (const PreferencesWidget * parent, const char * domain) :
+    HookableWidget (parent, domain),
+    m_combobox (new QComboBox)
 {
-    auto container = new QWidget;
-    auto layout = new QHBoxLayout (container);
-
+    auto layout = new QHBoxLayout (this);
     layout->setContentsMargins (0, 0, 0, 0);
     layout->setSpacing (4);
 
-    if (m_parent->label)
-        layout->addWidget (new QLabel (translate_str (m_parent->label, m_domain)));
+    if (parent->label)
+        layout->addWidget (new QLabel (translate_str (parent->label, domain)));
 
-    m_combobox = new QComboBox;
     layout->addWidget (m_combobox);
     layout->addStretch (1);
 
@@ -241,8 +214,6 @@ QWidget * ComboBoxWidget::widget ()
             break;
         }
     });
-
-    return container;
 }
 
 void ComboBoxWidget::update ()
@@ -304,53 +275,42 @@ void ComboBoxWidget::update ()
 }
 
 /* layout widgets */
-QWidget * BoxWidget::widget ()
+BoxWidget::BoxWidget (const PreferencesWidget * parent, const char * domain)
 {
-    auto container = new QWidget;
-
     QBoxLayout * layout;
-    if (m_parent->data.box.horizontal)
-        layout = new QHBoxLayout (container);
+    if (parent->data.box.horizontal)
+        layout = new QHBoxLayout (this);
     else
-        layout = new QVBoxLayout (container);
+        layout = new QVBoxLayout (this);
 
     layout->setContentsMargins (0, 0, 0, 0);
     layout->setSpacing (4);
-    prefs_populate (layout, m_parent->data.box.widgets, m_domain);
 
-    return container;
+    prefs_populate (layout, parent->data.box.widgets, domain);
 }
 
-QWidget * TableWidget::widget ()
+TableWidget::TableWidget (const PreferencesWidget * parent, const char * domain)
 {
     // TODO: proper table layout
-    auto container = new QWidget;
-    auto layout = new QVBoxLayout (container);
-
+    auto layout = new QVBoxLayout (this);
     layout->setContentsMargins (0, 0, 0, 0);
     layout->setSpacing (4);
-    prefs_populate (layout, m_parent->data.table.widgets, m_domain);
 
-    return container;
+    prefs_populate (layout, parent->data.table.widgets, domain);
 }
 
-QWidget * NotebookWidget::widget ()
+NotebookWidget::NotebookWidget (const PreferencesWidget * parent, const char * domain)
 {
-    auto tabs = new QTabWidget;
-
-    for (const NotebookTab & tab : m_parent->data.notebook.tabs)
+    for (const NotebookTab & tab : parent->data.notebook.tabs)
     {
-        auto widget = new QWidget (tabs);
+        auto widget = new QWidget (this);
         auto layout = new QVBoxLayout (widget);
-
         layout->setContentsMargins (0, 0, 0, 0);
         layout->setSpacing (4);
-        prefs_populate (layout, tab.widgets, m_domain);
 
-        tabs->addTab (widget, translate_str (tab.name, m_domain));
+        prefs_populate (layout, tab.widgets, domain);
+        addTab (widget, translate_str (tab.name, domain));
     }
-
-    return tabs;
 }
 
 } // namespace audqt
