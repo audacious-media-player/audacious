@@ -592,7 +592,7 @@ static void create_plugin_category_page (PluginType category_id, const char * ca
     QHeaderView * header = view->header ();
 
     view->setIndentation (0);
-    view->setModel (new PluginListModel (nullptr, category_id));
+    view->setModel (new PluginListModel (view, category_id));
     view->setSelectionMode (view->NoSelection);
 
     header->hide ();
@@ -678,7 +678,7 @@ static void create_prefs_window ()
 
     QObject::connect (bbox, &QDialogButtonBox::rejected, s_prefswin, &QObject::deleteLater);
 
-    QSignalMapper * mapper = new QSignalMapper;
+    QSignalMapper * mapper = new QSignalMapper (s_prefswin);
     const char * data_dir = aud_get_path (AudPath::DataDir);
 
     QObject::connect (mapper, static_cast <void (QSignalMapper::*)(int)>(&QSignalMapper::mapped),
@@ -687,7 +687,7 @@ static void create_prefs_window ()
     for (int i = 0; i < CATEGORY_COUNT; i++)
     {
         QIcon ico (QString (filename_build ({data_dir, "images", categories[i].icon_path})));
-        QAction * a = new QAction (ico, translate_str (categories[i].name), nullptr);
+        QAction * a = new QAction (ico, translate_str (categories[i].name), toolbar);
 
         toolbar->addAction (a);
 
