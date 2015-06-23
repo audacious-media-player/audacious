@@ -560,16 +560,6 @@ static void iface_fill_prefs_box ()
          header->info.prefs->widgets, header->info.domain);
 }
 
-static int iface_combo_changed_finish (void *)
-{
-    iface_fill_prefs_box ();
-    gtk_widget_show_all (iface_prefs_box);
-
-    audgui_cleanup ();
-
-    return G_SOURCE_REMOVE;
-}
-
 static void iface_combo_changed ()
 {
     /* prevent audgui from being shut down during the switch */
@@ -580,8 +570,10 @@ static void iface_combo_changed ()
 
     aud_plugin_enable (aud_plugin_list (PluginType::Iface)[iface_combo_selected], true);
 
-    /* now wait till we have restarted into the new main loop */
-    g_idle_add_full (G_PRIORITY_HIGH, iface_combo_changed_finish, nullptr, nullptr);
+    iface_fill_prefs_box ();
+    gtk_widget_show_all (iface_prefs_box);
+
+    audgui_cleanup ();
 }
 
 static ArrayRef<ComboItem> iface_combo_fill ()

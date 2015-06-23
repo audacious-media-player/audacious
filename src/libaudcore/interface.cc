@@ -36,8 +36,6 @@ struct MenuItem {
 };
 
 static PluginHandle * current_plugin;
-static PluginHandle * next_plugin;
-
 static IfacePlugin * current_interface;
 
 static aud::array<AudMenuID, Index<MenuItem>> menu_items;
@@ -85,6 +83,9 @@ static void interface_unload ()
 {
     AUDINFO ("Unloading %s.\n", aud_plugin_get_name (current_plugin));
 
+    // call before unloading interface
+    hook_call ("config save", nullptr);
+
     if (aud_get_bool (0, "show_interface"))
         current_interface->show (false);
 
@@ -131,15 +132,7 @@ PluginHandle * iface_plugin_get_current ()
 bool iface_plugin_set_current (PluginHandle * plugin)
 {
     if (current_interface)
-    {
-        // queue up interface switch
-        next_plugin = plugin;
-
-        // restart main loop
-        aud_quit ();
-
-        return true;
-    }
+        interface_unload ();
 
     if (! interface_load (plugin))
         return false;
@@ -157,26 +150,12 @@ void interface_run ()
         // call before shutting down
         hook_call ("config save", nullptr);
     }
-    else
+    else if (current_interface)
     {
         vis_activate (aud_get_bool (0, "show_interface"));
 
-        while (current_interface)
-        {
-            current_interface->run ();
-
-            // call before unloading interface
-            hook_call ("config save", nullptr);
-
-            interface_unload ();
-
-            if (next_plugin)
-            {
-                // handle queued interface switch
-                aud_plugin_enable (next_plugin, true);
-                next_plugin = nullptr;
-            }
-        }
+        current_interface->run ();
+        interface_unload ();
     }
 }
 

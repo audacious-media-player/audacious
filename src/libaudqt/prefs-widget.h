@@ -23,14 +23,17 @@
 #include <libaudcore/preferences.h>
 #include <libaudcore/hook.h>
 
+#include <QCheckBox>
+#include <QLabel>
+#include <QPushButton>
+#include <QRadioButton>
+#include <QTabWidget>
+
 class QButtonGroup;
-class QCheckBox;
 class QComboBox;
 class QDoubleSpinBox;
 class QLineEdit;
-class QRadioButton;
 class QSpinBox;
-class QWidget;
 
 namespace audqt {
 
@@ -68,43 +71,22 @@ private:
 };
 
 /* button widget */
-class ButtonWidget : HookableWidget {
+class ButtonWidget : public QPushButton {
 public:
-    ButtonWidget (const PreferencesWidget * parent, const char * domain) :
-        HookableWidget (parent, domain) {}
-
-    QWidget * widget ();
+    ButtonWidget (const PreferencesWidget * parent, const char * domain);
 };
 
 /* boolean widget (checkbox) */
-class BooleanWidget : HookableWidget {
+class BooleanWidget : public QCheckBox, HookableWidget {
 public:
-    BooleanWidget (const PreferencesWidget * parent, const char * domain) :
-        HookableWidget (parent, domain) {}
-
-    QWidget * widget ();
+    BooleanWidget (const PreferencesWidget * parent, const char * domain);
     void update ();
-
-private:
-    QCheckBox * m_checkbox;
-};
-
-/* label, no get or set functions needed. */
-class LabelWidget : HookableWidget {
-public:
-    LabelWidget (const PreferencesWidget * parent, const char * domain) :
-        HookableWidget (parent, domain) {}
-
-    QWidget * widget ();
 };
 
 /* integer widget (spinner) */
-class IntegerWidget : HookableWidget {
+class IntegerWidget : public QWidget, HookableWidget {
 public:
-    IntegerWidget (const PreferencesWidget * parent, const char * domain) :
-        HookableWidget (parent, domain) {}
-
-    QWidget * widget ();
+    IntegerWidget (const PreferencesWidget * parent, const char * domain);
     void update ();
 
 private:
@@ -112,25 +94,17 @@ private:
 };
 
 /* integer widget (radio button) */
-class RadioButtonWidget : HookableWidget {
+class RadioButtonWidget : public QRadioButton, HookableWidget {
 public:
-    RadioButtonWidget (const PreferencesWidget * parent, const char * domain) :
-        HookableWidget (parent, domain) {}
-
-    QWidget * widget (QButtonGroup * btn_group = nullptr);
+    RadioButtonWidget (const PreferencesWidget * parent, const char * domain,
+     QButtonGroup * btn_group);
     void update ();
-
-private:
-    QRadioButton * m_radio;
 };
 
 /* double widget (spinner) */
-class DoubleWidget : HookableWidget {
+class DoubleWidget : public QWidget, HookableWidget {
 public:
-    DoubleWidget (const PreferencesWidget * parent, const char * domain = nullptr) :
-        HookableWidget (parent, domain) {}
-
-    QWidget * widget ();
+    DoubleWidget (const PreferencesWidget * parent, const char * domain);
     void update ();
 
 private:
@@ -138,12 +112,9 @@ private:
 };
 
 /* string widget (lineedit) */
-class StringWidget : HookableWidget {
+class StringWidget : public QWidget, HookableWidget {
 public:
-    StringWidget (const PreferencesWidget * parent, const char * domain) :
-        HookableWidget (parent, domain) {}
-
-    QWidget * widget ();
+    StringWidget (const PreferencesWidget * parent, const char * domain);
     void update ();
 
 private:
@@ -151,12 +122,9 @@ private:
 };
 
 /* combo box (string or int) */
-class ComboBoxWidget : HookableWidget {
+class ComboBoxWidget : public QWidget, HookableWidget {
 public:
-    ComboBoxWidget (const PreferencesWidget * parent, const char * domain) :
-        HookableWidget (parent, domain) {}
-
-    QWidget * widget ();
+    ComboBoxWidget (const PreferencesWidget * parent, const char * domain);
     void update ();
 
 private:
@@ -164,30 +132,21 @@ private:
 };
 
 /* box container widget */
-class BoxWidget : HookableWidget {
+class BoxWidget : public QWidget {
 public:
-    BoxWidget (const PreferencesWidget * parent, const char * domain) :
-        HookableWidget (parent, domain) {}
-
-    QWidget * widget ();
+    BoxWidget (const PreferencesWidget * parent, const char * domain);
 };
 
 /* table container widget */
-class TableWidget : HookableWidget {
+class TableWidget : public QWidget {
 public:
-    TableWidget (const PreferencesWidget * parent, const char * domain) :
-        HookableWidget (parent, domain) {}
-
-    QWidget * widget ();
+    TableWidget (const PreferencesWidget * parent, const char * domain);
 };
 
 /* notebook widget */
-class NotebookWidget : HookableWidget {
+class NotebookWidget : public QTabWidget {
 public:
-    NotebookWidget (const PreferencesWidget * parent, const char * domain) :
-        HookableWidget (parent, domain) {}
-
-    QWidget * widget ();
+    NotebookWidget (const PreferencesWidget * parent, const char * domain);
 };
 
 } // namespace audqt

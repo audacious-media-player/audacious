@@ -41,87 +41,70 @@ void prefs_populate (QBoxLayout * layout, ArrayRef<PreferencesWidget> widgets, c
 
         switch (w.type)
         {
-        case PreferencesWidget::Button: {
-            ButtonWidget * bw = new ButtonWidget (& w, domain);
-            layout->addWidget (bw->widget ());
+        case PreferencesWidget::Button:
+            layout->addWidget (new ButtonWidget (& w, domain));
             break;
-        }
-        case PreferencesWidget::CheckButton: {
-            BooleanWidget * bw = new BooleanWidget (& w, domain);
-            layout->addWidget (bw->widget ());
+
+        case PreferencesWidget::CheckButton:
+            layout->addWidget (new BooleanWidget (& w, domain));
             break;
-        }
-        case PreferencesWidget::Label: {
-            LabelWidget * lw = new LabelWidget (& w, domain);
-            layout->addWidget (lw->widget ());
+
+        case PreferencesWidget::Label:
+            layout->addWidget (new QLabel (translate_str (w.label, domain)));
             break;
-        }
-        case PreferencesWidget::SpinButton: {
+
+        case PreferencesWidget::SpinButton:
             switch (w.cfg.type) {
-            case WidgetConfig::Int: {
-                IntegerWidget * iw = new IntegerWidget (& w, domain);
-                layout->addWidget (iw->widget ());
+            case WidgetConfig::Int:
+                layout->addWidget (new IntegerWidget (& w, domain));
                 break;
-            }
-            case WidgetConfig::Float: {
-                DoubleWidget * dw = new DoubleWidget (& w, domain);
-                layout->addWidget (dw->widget ());
+            case WidgetConfig::Float:
+                layout->addWidget (new DoubleWidget (& w, domain));
                 break;
-            }
             default:
                 AUDDBG("encountered unhandled configuration type %d for PreferencesWidget::SpinButton\n", w.cfg.type);
                 break;
             }
             break;
-        }
-        case PreferencesWidget::Entry: {
-            StringWidget * sw = new StringWidget (& w, domain);
-            layout->addWidget (sw->widget ());
+
+        case PreferencesWidget::Entry:
+            layout->addWidget (new StringWidget (& w, domain));
             break;
-        }
-        case PreferencesWidget::RadioButton: {
+
+        case PreferencesWidget::RadioButton:
             if (! radio_btn_group)
                 radio_btn_group = new QButtonGroup;
 
-            RadioButtonWidget * rw = new RadioButtonWidget (& w, domain);
-            layout->addWidget (rw->widget (radio_btn_group));
+            layout->addWidget (new RadioButtonWidget (& w, domain, radio_btn_group));
             break;
-        }
-        case PreferencesWidget::FontButton: {
+
+        case PreferencesWidget::FontButton:
             /* XXX: unimplemented */
             AUDDBG("font buttons are unimplemented\n");
             break;
-        }
-        case PreferencesWidget::ComboBox: {
-            ComboBoxWidget * cw = new ComboBoxWidget (& w, domain);
-            layout->addWidget (cw->widget ());
+
+        case PreferencesWidget::ComboBox:
+            layout->addWidget (new ComboBoxWidget (& w, domain));
             break;
-        }
-        case PreferencesWidget::CustomQt: {
+
+        case PreferencesWidget::CustomQt:
             if (w.data.populate)
-            {
-                QWidget * wid = (QWidget *) w.data.populate ();
-                layout->addWidget (wid);
-            }
+                layout->addWidget ((QWidget *) w.data.populate ());
             break;
-        }
 
         /* layout widgets follow */
-        case PreferencesWidget::Box: {
-            BoxWidget * bw = new BoxWidget (& w, domain);
-            layout->addWidget (bw->widget ());
+        case PreferencesWidget::Box:
+            layout->addWidget (new BoxWidget (& w, domain));
             break;
-        }
-        case PreferencesWidget::Table: {
-            TableWidget * tw = new TableWidget (& w, domain);
-            layout->addWidget (tw->widget ());
+
+        case PreferencesWidget::Table:
+            layout->addWidget (new TableWidget (& w, domain));
             break;
-        }
-        case PreferencesWidget::Notebook: {
-            NotebookWidget * nw = new NotebookWidget (& w, domain);
-            layout->addWidget (nw->widget ());
+
+        case PreferencesWidget::Notebook:
+            layout->addWidget (new NotebookWidget (& w, domain));
             break;
-        }
+
         case PreferencesWidget::Separator: {
             QFrame * f = new QFrame;
             f->setFrameShape (w.data.separator.horizontal ? QFrame::HLine : QFrame::VLine);

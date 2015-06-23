@@ -34,16 +34,16 @@ EXPORT VolumeButton::VolumeButton (QWidget * parent) :
 {
     setFocusPolicy (Qt::NoFocus);
 
-    auto layout = new QVBoxLayout (this);
+    m_container = new QWidget (this);
+    m_container->setWindowFlags (Qt::Popup);
+
+    auto layout = new QVBoxLayout (m_container);
     layout->setContentsMargins (6, 6, 6, 6);
 
     m_slider = new QSlider (Qt::Vertical, this);
     m_slider->setRange (0, 100);
 
     layout->addWidget (m_slider);
-
-    m_container = new QWidget;
-    m_container->setLayout (layout);
 
     updateVolume ();
 
@@ -74,9 +74,7 @@ void VolumeButton::updateVolume ()
 
 void VolumeButton::showSlider ()
 {
-    m_container->setWindowFlags (Qt::Popup);
     m_container->move (mapToGlobal (QPoint (0, 0)));
-
     window_bring_to_front (m_container);
 }
 
