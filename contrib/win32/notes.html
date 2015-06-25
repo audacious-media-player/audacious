@@ -42,9 +42,15 @@ following line, in lowercase:</p>
 
 <p>As of version 4.0.3-1, the MinGW runtime library is missing some mathematical
 functions that are necessary to build Audacious.  Downgrade the library by
-running the following in a command prompt window:<p>
+running the following in a command prompt window:</p>
 <blockquote><p><tt>mingw-get upgrade mingw32-mingwrt-dev=3.20-2<br>
 mingw-get upgrade mingw32-w32api=3.17-2</tt></p></blockquote>
+
+<p>Open the file <tt>C:\MinGW\lib\gcc\mingw32\4.8.1\include\c++\mingw32\bits\c++config.h</tt>
+and locate the following line:</p>
+<blockquote><p><tt>/* #undef _GLIBCXX_HAVE_FENV_H */</tt></p></blockquote>
+<p>Change it to read:</p>
+<blockquote><p><tt>#define _GLIBCXX_HAVE_FENV_H 1</tt></p></blockquote>
 
 <h3>Install Python</h3>
 
@@ -404,20 +410,6 @@ make install</tt></p></blockquote>
 make<br>
 make install</tt></p></blockquote>
 
-<!-- TODO: set up SSL certificates for Scrobbler
-<h3>Install OpenSSL</h3>
-
-<p>Download and unzip to <tt>C:\openssl</tt>:<br>
-<a href="http://www.openssl.org/source/openssl-1.0.1j.tar.gz">
-<tt>http://www.openssl.org/source/openssl-1.0.1j.tar.gz</tt></a></p>
-
-<p>In the MinGW shell:</p>
-<blockquote><p><tt>cd /C/openssl<br>
-./configure shared mingw --prefix=/C/libs<br>
-make<br>
-make install</tt></p></blockquote>
--->
-
 <h3>Install libneon</h3>
 
 <p>Download and unzip to <tt>C:\libneon</tt>:<br>
@@ -426,7 +418,7 @@ make install</tt></p></blockquote>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libneon<br>
-./configure --prefix=/C/libs --enable-shared<br> <!-- --with-ssl -->
+./configure --prefix=/C/libs --enable-shared<br>
 make<br>
 make install</tt></p></blockquote>
 
@@ -485,20 +477,6 @@ autoreconf<br>
 ./configure --prefix=/C/libs<br>
 make<br>
 make install</tt></p></blockquote>
-
-<!-- TODO: set up SSL certificates for Scrobbler
-<h3>Install libcurl</h3>
-
-<p>Download and unzip to <tt>C:\libcurl</tt>:<br>
-<a href="http://curl.haxx.se/download/curl-7.39.0.tar.bz2">
-<tt>http://curl.haxx.se/download/curl-7.39.0.tar.bz2</tt></a></p>
-
-<p>In the MinGW shell:</p>
-<blockquote><p><tt>cd /C/libcurl<br>
-./configure --prefix=/C/libs<br>
-make<br>
-make install</tt></p></blockquote>
--->
 
 <h3>Install libmms</h3>
 
