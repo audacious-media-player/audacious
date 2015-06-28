@@ -205,7 +205,7 @@ EXPORT void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
 
     if (* widget)
     {
-        const char * old = nullptr;
+        char * old = nullptr;
         g_object_get ((GObject *) * widget, "text", & old, nullptr);
         g_return_if_fail (old);
 
@@ -220,6 +220,7 @@ EXPORT void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
             g_object_set_data ((GObject *) * widget, "messages", GINT_TO_POINTER (messages + 1));
         }
 
+        g_free (old);
         gtk_window_present ((GtkWindow *) * widget);
     }
     else
