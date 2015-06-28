@@ -43,8 +43,8 @@ public:
 private:
     Tuple m_tuple;
     String m_filename;
-    PluginHandle * m_plugin;
-    bool m_dirty;
+    PluginHandle * m_plugin = nullptr;
+    bool m_dirty = false;
 };
 
 class InfoWidget : public QTreeView {
