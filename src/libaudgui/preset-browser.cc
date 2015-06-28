@@ -72,7 +72,7 @@ static void do_load_file (const char * filename)
 
 void eq_preset_load_file ()
 {
-    show_preset_browser (_("Load Preset File"), FALSE, nullptr, do_load_file);
+    show_preset_browser (_("Load Preset File"), false, nullptr, do_load_file);
 }
 
 static void do_load_eqf (const char * filename)
@@ -89,7 +89,7 @@ static void do_load_eqf (const char * filename)
 
 void eq_preset_load_eqf ()
 {
-    show_preset_browser (_("Load EQF File"), FALSE, nullptr, do_load_eqf);
+    show_preset_browser (_("Load EQF File"), false, nullptr, do_load_eqf);
 }
 
 static void do_save_file (const char * filename)
@@ -104,7 +104,7 @@ static void do_save_file (const char * filename)
 
 void eq_preset_save_file ()
 {
-    show_preset_browser (_("Save Preset File"), TRUE, _("<name>.preset"), do_save_file);
+    show_preset_browser (_("Save Preset File"), true, _("<name>.preset"), do_save_file);
 }
 
 static void do_save_eqf (const char * filename)
@@ -122,7 +122,7 @@ static void do_save_eqf (const char * filename)
 
 void eq_preset_save_eqf ()
 {
-    show_preset_browser (_("Save EQF File"), TRUE, _("<name>.eqf"), do_save_eqf);
+    show_preset_browser (_("Save EQF File"), true, _("<name>.eqf"), do_save_eqf);
 }
 
 static void do_import_winamp (const char * filename)
@@ -136,5 +136,5 @@ static void do_import_winamp (const char * filename)
 
 void eq_preset_import_winamp ()
 {
-    show_preset_browser (_("Import Winamp Presets"), FALSE, nullptr, do_import_winamp);
+    show_preset_browser (_("Import Winamp Presets"), false, nullptr, do_import_winamp);
 }
