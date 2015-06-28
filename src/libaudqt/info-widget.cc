@@ -33,7 +33,8 @@ struct TupleFieldMap {
     Tuple::Field field;
     bool editable;
 };
-const TupleFieldMap tuple_field_map[] = {
+
+static const TupleFieldMap tuple_field_map[] = {
     {N_("Metadata"), Tuple::Invalid, false},
     {N_("Artist"), Tuple::Artist, true},
     {N_("Album"), Tuple::Album, true},
