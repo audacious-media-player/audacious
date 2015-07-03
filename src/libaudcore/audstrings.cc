@@ -860,35 +860,41 @@ EXPORT StringBuf index_to_str_list (const Index<String> & index, const char * se
  * have an accuracy of 6 decimal places.
  */
 
-EXPORT int str_to_int (const char * string)
+static int str_to_uint (const char * string)
 {
-    bool neg = (string[0] == '-');
-    if (neg)
-        string ++;
-
     int val = 0;
     char c;
 
     while ((c = * string ++) && c >= '0' && c <= '9')
         val = val * 10 + (c - '0');
 
+    return val;
+}
+
+EXPORT int str_to_int (const char * string)
+{
+    bool neg = (string[0] == '-');
+    if (neg || string[0] == '+')
+        string ++;
+
+    int val = str_to_uint (string);
     return neg ? -val : val;
 }
 
 EXPORT double str_to_double (const char * string)
 {
     bool neg = (string[0] == '-');
-    if (neg)
+    if (neg || string[0] == '+')
         string ++;
 
-    double val = str_to_int (string);
+    double val = str_to_uint (string);
     const char * p = strchr (string, '.');
 
     if (p)
     {
         char buf[7] = "000000";
         memcpy (buf, p + 1, strlen_bounded (p + 1, 6));
-        val += (double) str_to_int (buf) / 1000000;
+        val += str_to_uint (buf) / 1000000.0;
     }
 
     return neg ? -val : val;
