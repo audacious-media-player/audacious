@@ -569,6 +569,8 @@ bool ID3v24TagModule::read_tag (VFSFile & handle, Tuple * ptuple, Index<char> * 
     Tuple trash; // dump data here if caller does not want the tuple
     Tuple & tuple = ptuple ? * ptuple : trash;
 
+    FrameList rva_frames;
+
     for (const char * pos = data.begin (); pos < data.end (); )
     {
         int frame_size;
@@ -616,8 +618,11 @@ bool ID3v24TagModule::read_tag (VFSFile & handle, Tuple * ptuple, Index<char> * 
           case ID3_COMMENT:
             id3_decode_comment (tuple, & frame[0], frame.len ());
             break;
+          case ID3_TXXX:
+            id3_decode_txxx (tuple, & frame[0], frame.len ());
+            break;
           case ID3_RVA2:
-            id3_decode_rva (tuple, & frame[0], frame.len ());
+            rva_frames.append (std::move (frame));
             break;
           case ID3_APIC:
             if (image)
@@ -629,6 +634,13 @@ bool ID3v24TagModule::read_tag (VFSFile & handle, Tuple * ptuple, Index<char> * 
         }
 
         pos += frame_size;
+    }
+
+    /* only decode RVA2 frames if Replay Gain was not found in TXXX frames */
+    if (! tuple.is_set (Tuple::GainDivisor) && ! tuple.is_set (Tuple::PeakDivisor))
+    {
+        for (auto & rva : rva_frames)
+            id3_decode_rva (tuple, & rva[0], rva.len ());
     }
 
     return true;
