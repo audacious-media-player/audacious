@@ -181,6 +181,9 @@ public:
     /* Returns the <n>th member of the subtune array. */
     int get_nth_subtune (int n) const;
 
+    /* Sets a Replay Gain field pair from a decimal string. */
+    void set_gain (Field field, Field unit_field, const char * str);
+
     /* Fills ReplayGainInfo struct from various fields. */
     ReplayGainInfo get_replay_gain () const;
 

@@ -19,6 +19,7 @@
  */
 
 #include <assert.h>
+#include <math.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
@@ -569,6 +570,12 @@ EXPORT int Tuple::get_nth_subtune (int n) const
         return -1;
 
     return data->subtunes ? data->subtunes[n] : 1 + n;
+}
+
+EXPORT void Tuple::set_gain (Field field, Field unit_field, const char * str)
+{
+    set_int (field, lround (str_to_double (str) * 1000000));
+    set_int (unit_field, 1000000);
 }
 
 EXPORT ReplayGainInfo Tuple::get_replay_gain () const
