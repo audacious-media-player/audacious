@@ -137,6 +137,10 @@ public:
     /* Returns the value type of a field if set, otherwise Empty. */
     ValueType get_value_type (Field field) const;
 
+    /* Convenience function to determine whether a field is set. */
+    bool is_set (Field field) const
+        { return get_value_type (field) != Empty; }
+
     /* Returns the integer value of a field if set, otherwise -1.  If you need
      * to distinguish between a value of -1 and an unset value, use
      * get_value_type(). */
