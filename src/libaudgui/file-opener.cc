@@ -98,7 +98,6 @@ static GtkWidget * create_filebrowser (gboolean open)
     gtk_window_set_type_hint ((GtkWindow *) window, GDK_WINDOW_TYPE_HINT_DIALOG);
     gtk_window_set_title ((GtkWindow *) window, window_title);
     gtk_window_set_default_size ((GtkWindow *) window, 7 * dpi, 5 * dpi);
-    gtk_container_set_border_width ((GtkContainer *) window, 10);
 
     GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
     gtk_container_add ((GtkContainer *) window, vbox);
@@ -110,10 +109,17 @@ static GtkWidget * create_filebrowser (gboolean open)
     if (path[0])
         gtk_file_chooser_set_current_folder ((GtkFileChooser *) chooser, path);
 
-    gtk_box_pack_start ((GtkBox *) vbox, chooser, true, true, 3);
+    gtk_box_pack_start ((GtkBox *) vbox, chooser, true, true, 0);
 
     GtkWidget * hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-    gtk_box_pack_end ((GtkBox *) vbox, hbox, false, false, 3);
+    gtk_box_pack_end ((GtkBox *) vbox, hbox, false, false, 0);
+
+#if GTK_CHECK_VERSION (3, 14, 0)
+    gtk_container_set_border_width ((GtkContainer *) hbox, 6);
+#else
+    gtk_widget_set_margin_top (hbox, 12);
+    gtk_container_set_border_width ((GtkContainer *) window, 12);
+#endif
 
     GtkWidget * toggle = gtk_check_button_new_with_mnemonic (toggle_text);
     gtk_toggle_button_set_active ((GtkToggleButton *) toggle, aud_get_bool ("audgui", option));
