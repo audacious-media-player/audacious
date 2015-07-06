@@ -5,7 +5,7 @@ audacious \- an advanced audio player.
 
 .SH SYNOPSIS
 .B audacious
-[\fIoption ...\fR] [\fIfile\fR ...]
+[\fIoption\fR ...] [\fIfile\fR ...]
 
 .SH DESCRIPTION
 Audacious is a free advanced audio player for Linux and many other
