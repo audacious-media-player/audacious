@@ -38,8 +38,9 @@ void playqueue_remove (int argc, char * * argv)
 void playqueue_is_queued (int argc, char * * argv)
 {
     int pos = check_args_playlist_pos (argc, argv);
-    find_in_queue (pos - 1); /* exits if not found */
-    audtool_report ("OK");
+    find_in_queue (pos - 1); /* calls exit(1) if not found */
+
+    exit (0);
 }
 
 void playqueue_get_queue_position (int argc, char * * argv)
