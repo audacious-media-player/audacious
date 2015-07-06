@@ -1,294 +1,326 @@
-.TH AUDTOOL "1" "February 2014" "Version @PACKAGE_VERSION@"
+.TH AUDTOOL "1" "July 2015" "Version @PACKAGE_VERSION@"
+
 .SH NAME
 .B audtool
-- a small tool to modify behavior of a running Audacious instance.
+- a small tool to control Audacious from the command line.
+
 .SH SYNOPSIS
 .B audtool
-[\-\-[[handler [parameters]] [...]
+\fIcommand\fR [\fIparameter\fR ...] ...
+
 .SH DESCRIPTION
 .B audtool
-is designed to send commands to a running Audacious.
+sends commands to a running instance of Audacious.
 .PP
-It can handle various things like jumping to the next track in playlist
-or returning the current playing track title, as well as other status
-information.
-.SH OPTIONS
-.B "Now playing information:"
+It can send many common commands, such as to skip to the next song in the
+playlist, and can also print status information, such as the title of the
+current song.
+
+.SH COMMANDS
+.SS Current song information:
+
 .TP
-.I --current-song
-Returns current song title.
+.B --current-song
+Print the formatted title of the current song.  Depending on Audacious
+settings, this may include information such as the artist and album name.  To
+print only the song title, use \fB--current-song-tuple-data title\fR instead.
 .TP
-.I --current-song-filename
-Returns current song filename.
+.B --current-song-filename
+Print the file name (full path or URI) of the current song.
 .TP
-.I --current-song-length
-Returns current song length.
+.B --current-song-length
+Print the length of the current song in M:SS format.
 .TP
-.I --current-song-length-seconds
-Returns current song length in seconds.
+.B --current-song-length-seconds
+Print the length of the current song in seconds.
 .TP
-.I --current-song-length-frames
-Returns current song length in frames.
+.B --current-song-length-frames
+Print the length of the current song in milliseconds.
 .TP
-.I --current-song-output-length
-Returns current song output length.
+.B --current-song-output-length
+Print the playback time counter in M:SS format.
 .TP
-.I --current-song-output-length-seconds
-Returns current song output length in seconds.
+.B --current-song-output-length-seconds
+Print the playback time counter in seconds.
 .TP
-.I --current-song-output-length-frames
-Returns current song output length in frames.
+.B --current-song-output-length-frames
+Print the playback time counter in milliseconds.
 .TP
-.I --current-song-bitrate
-Returns current song bitrate in bits per second.
+.B --current-song-bitrate
+Print the streaming bitrate in bits per second.
 .TP
-.I --current-song-bitrate-kbps
-Returns current song bitrate in kilobits per second.
+.B --current-song-bitrate-kbps
+Print the streaming bitrate in kilobits per second (1 kilobit = 1000 bits).
 .TP
-.I --current-song-frequency
-Returns current song frequency in hertz.
+.B --current-song-frequency
+Print the sampling rate in hertz.
 .TP
-.I --current-song-frequency-khz
-Returns current song frequency in kilohertz.
+.B --current-song-frequency-khz
+Print the sampling rate in kilohertz.
 .TP
-.I --current-song-channels
-Returns current song channels.
+.B --current-song-channels
+Print the number of audio channels.
 .TP
-.I --current-song-tuple-data <fieldname>
-Returns the value of a tuple field for the current song.
+.B --current-song-tuple-data \fIfield\fR
+Print the value of a named field (\fBartist\FR, \fByear\fR, \fBgenre\fR, etc.)
+for the current song.  If the field name is omitted, a list of allowed fields
+will be printed.
 .TP
-.I --current-song-info
-Returns current song bitrate, frequency and channels.
+.B --current-song-info
+Print the streaming bitrate, sampling rate, and number of audio channels.
+
+.SS Playback commands:
+
+.TP
+.B --playback-play
+Start playback.  If paused, playback will resume from the same point.  If
+already active and not paused, it will restart from the beginning of the song.
+.TP
+.B --playback-pause
+Pause playback, or resume if already paused.
+.TP
+.B --playback-playpause
+Equivalent to \fB--playback-pause\fR if playback is active, otherwise
+\fB--playback-play\fR.
+.TP
+.B --playback-stop
+Stop playback.
+.TP
+.B --playback-playing
+Return an exit code of 0 (true) if playback is active.
+.TP
+.B --playback-paused
+Return an exit code of 0 (true) if playback is paused.
+.TP
+.B --playback-stopped
+Return an exit code of 0 (true) if playback is not active.
+.TP
+.B --playback-status
+Print the playback status (``playing'', ``paused'', or ``stopped'').
+.TP
+.B --playback-seek \fItime\fR
+Seek to the given time in seconds, relative to the beginning of the song.
+.TP
+.B --playback-seek-relative \fItime\fR
+Seek to the given time in seconds, relative to the current time counter.
+
+.SS Playlist commands:
+
+.TP
+.B --playlist-advance
+Skip to the next song in the playlist.
+.TP
+.B --playlist-reverse
+Skip to the previous song in the playlist.
+.TP
+.B --playlist-addurl \fIpath\fR
+Add a song to end of the playlist.  Either a URI or a local file path (absolute
+or relative) may be given.
+.TP
+.B --playlist-insurl \fIpath\fR \fIposition\fR
+Insert a song at the given position (one-based) in the playlist.
+.TP
+.B --playlist-addurl-to-new-playlist \fIpath\fR
+Add a song to the ``Now Playing'' playlist, creating the playlist if necessary,
+and begin to play the song.  Depending on Audacious settings, the playlist may
+first be cleared.
+.TP
+.B --playlist-delete \fIposition\fR
+Remove the song at the given position from the playlist.
+.TP
+.B --playlist-length
+Print the number of songs in the playlist.
+.TP
+.B --playlist-song \fIposition\fR
+Print the formatted title of a song in the playlist.
+.TP
+.B --playlist-song-filename \fIposition\fR
+Print the file name (full path or URI) of a song in the playlist.
+.TP
+.B --playlist-song-length \fIposition\fR
+Print the length of a song in the playlist in M:SS format.
+.TP
+.B --playlist-song-length-seconds \fIposition\fR
+Print the length of a song in the playlist in seconds.
+.TP
+.B --playlist-song-length-frames \fIposition\fR
+Print the length of a song in the playlist in milliseconds.
+.TP
+.B --playlist-tuple-data \fIfield\fR \fIposition\fR
+Print the value of a named field for a song in the playlist.
+.TP
+.B --playlist-display
+Print the titles of all the songs in the playlist.
+.TP
+.B --playlist-position
+Print the position of the current song in the playlist.
+.TP
+.B --playlist-jump \fIposition\fR
+Skip to the song at the given position in the playlist.
+.TP
+.B --playlist-clear
+Clear the playlist.
+.TP
+.B --playlist-auto-advance-status
+Print the status of playlist auto-advance (``on'' or ``off'').
+.TP
+.B --playlist-auto-advance-toggle
+Toggle playlist auto-advance.
+.TP
+.B --playlist-repeat-status
+Print the status of playlist repeat (``on'' or ``off'').
+.TP
+.B --playlist-repeat-toggle
+Toggle playlist repeat.
+.TP
+.B --playlist-shuffle-status
+Print the status of playlist shuffle (``on'' or ``off'').
+.TP
+.B --playlist-shuffle-toggle
+Toggle playlist shuffle.
+.TP
+.B --playlist-stop-after-status
+Print the ``stop after current song'' option (``on'' or ``off'').
+.TP
+.B --playlist-stop-after-toggle
+Toggle the ``stop after current song'' option.
+
+.SS More playlist commands:
+
+.TP
+.B --number-of-playlists
+Print the number of open playlists.
+.TP
+.B --current-playlist
+Print the number of the current playlist.  When a song is playing, the current
+playlist is defined as the playlist containing that song.  Otherwise, it is the
+playlist currently displayed in Audacious.
+.TP
+.B --play-current-playlist
+Start playback.  If paused or previously stopped in the middle of a song,
+playback will resume from the last point played.  There is no effect if playback
+is already active and not paused.
+.TP
+.B --set-current-playlist \fIplaylist\fR
+Switch to the given playlist.  If another playlist is playing, playback will
+switch to this one, resuming from the last point played.  If playback is
+currently paused, it will remain so after the switch.
+.TP
+.B --current-playlist-name
+Print the title of the current playlist.
+.TP
+.B --set-current-playlist-name \fItitle\fR
+Set the title of the current playlist.
+.TP
+.B --new-playlist
+Insert a new playlist after the current one and switch to it as if
+\fB--set-current-playlist\fR were used.
+.TP
+.B --delete-current-playlist
+Remove the current playlist.  Playback, if active, will be stopped.
+
+.SS Playlist queue commands:
+
+.TP
+.B --playqueue-add \fIposition\fR
+Add the song at the given playlist position to the queue.
+.TP
+.B --playqueue-remove \fIposition\fR
+Remove the song at the given playlist position from the queue.
+.TP
+.B --playqueue-is-queued \fIposition\fR
+Return an exit code of 0 (true) if the song at the given playlist position is
+in the queue.
+.TP
+.B --playqueue-get-queue-position \fIposition\fR
+Print the queue position of the song at the given playlist position.
+.TP
+.B --playqueue-get-list-position \fIposition\fR
+Print the playlist position of the song at the given queue position.
+.TP
+.B --playqueue-length
+Print the number of songs in the queue.
+.TP
+.B --playqueue-display
+Print the titles of all the songs in the queue.
+.TP
+.B --playqueue-clear
+Clear the queue.
+
+.SS Volume control and equalizer:
+
+.TP
+.B --get-volume
+Print the current volume level in percent.
+.TP
+.B --set-volume \fIlevel\fR
+Set the current volume level in percent.
+.TP
+.B --equalizer-activate [on|off]
+Activate or deactivate the equalizer.
+.TP
+.B --equalizer-get
+Print the equalizer settings (preamp and gain for all bands) in decibels.
+.TP
+.B --equalizer-set \fIpreamp\fR \fIband0\fR \fIband1\fR \fIband2\fR \fIband3\fR \fIband4\fR \fIband5\fR \fIband6\fR \fIband7\fR \fIband8\fR \fIband9\fR
+Set the equalizer settings (preamp and gain for all bands) in decibels.
+.TP
+.B --equalizer-get-preamp
+Print the equalizer pre-amplification in decibels.
+.TP
+.B --equalizer-set-preamp \fIpreamp\fR
+Set the equalizer pre-amplification in decibels.
+.TP
+.B --equalizer-get-band \fIband\fR
+Print the gain of the given equalizer band (0-9) in decibels.
+.TP
+.B --equalizer-set-band \fIband\fR \fIgain\fR
+Set the gain of the given equalizer band (0-9) in decibels.
+
+.SS Miscellaneous:
+
+.TP
+.B --mainwin-show [on|off]
+Show or hide the Audacious window.
+.TP
+.B --filebrowser-show [on|off]
+Show or hide the Add Files window.
+.TP
+.B --jumptofile-show [on|off]
+Show or hide the Jump to Song window.
+.TP
+.B --preferences-show [on|off]
+Show or hide the Settings window.
+.TP
+.B --about-show [on|off]
+Show or hide the About window.
+.TP
+.B --version
+Print version information.
+.TP
+.B --shutdown
+Shut down Audacious.
+.TP
+.B --help
+Print a brief summary of audtool commands.
 .PP
-.B "Playlist manipulation:"
-.TP
-.I --playlist-advance
-Go to the next song in the playlist.
-.TP
-.I --playlist-reverse
-Go to the previous song in the playlist.
-.TP
-.I --playlist-addurl <uri>
-Adds a URI to the playlist.
-.TP
-.I --playlist-insurl <uri> <position>
-Inserts a URL at specified position in the playlist.
-.TP
-.I --playlist-delete <position>
-Deletes the song at <position> from the playlist.
-.TP
-.I --playlist-length
-Returns the total length of the playlist.
-.TP
-.I --playlist-song <position>
-Returns the title of the song at <position> in the playlist.
-.TP
-.I --playlist-song-filename <position>
-Returns the filename of the song at <position> in the playlist.
-.TP
-.I --playlist-song-length <position>
-Returns the length of the song at <position> in the playlist.
-.TP
-.I --playlist-song-length-seconds <position>
-Returns the length of the song at <position> in the playlist in seconds.
-.TP
-.I --playlist-song-length-frames <position>
-Returns the length of the song at <position> in the playlist in frames.
-.TP
-.I --playlist-display
-Returns the entire playlist.
-.TP
-.I --playlist-position
-Returns the current position in the playlist.
-.TP
-.I --playlist-jump <position>
-Jumps to <position> in the playlist.
-.TP
-.I --playlist-clear
-Clears the playlist.
-.TP
-.I --playlist-repeat-status
-Returns the status of playlist repeat.
-.TP
-.I --playlist-repeat-toggle
-Toggles playlist repeat.
-.TP
-.I --playlist-shuffle-status
-Returns the status of playlist shuffle.
-.TP
-.I --playlist-shuffle-toggle
-Toggles playlist shuffle.
-.TP
-.I --playlist-stop-after-status
-Queries whether the "stop after current song" option is set.
-.TP
-.I --playlist-stop-after-toggle
-Toggles the "stop after current song" option.
-.TP
-.I --playlist-tuple-data <fieldname> <position>
-Returns the value of a tuple field for a song in the playlist.
-.PP
-.B More playlist manipulation:
-.TP
-.I --number-of-playlists
-Returns the number of open playlists.
-.TP
-.I --current-playlist
-Returns the number of the active playlist.
-.TP
-.I --set-current-playlist
-Activates the specified playlist.
-.TP
-.I --current-playlist-name
-Returns the title of the active playlist.
-.TP
-.I --set-current-playlist-name
-Sets the title of the active playlist.
-.TP
-.I --new-playlist
-Creates a new playlist.
-.TP
-.I --delete-current-playlist
-Removes the active playlist.
-.TP
-.I --play-current-playlist
-Starts or resumes playing the active playlist.
-.PP
-.B Playqueue manipulation:
-.TP
-.I --playqueue-add <position>
-Adds the song at <position> in the playlist to the playqueue.
-.TP
-.I --playqueue-remove <position>
-Removes the song at <position> in the playlist from the playqueue.
-.TP
-.I --playqueue-is-queued <position>
-Returns OK if the song at <position> in the playlist is queued.
-.TP
-.I --playqueue-get-position <position>
-Returns the playqueue position of the song at <position> in the playlist.
-.TP
-.I --playqueue-get-queue-position <position>
-Returns the playqueue position of a song in the given <position> in the playlist.
-.TP
-.I --playqueue-get-list-position <position>
-Returns the playlist position of a song in the given position in the playqueue.
-.TP
-.I --playqueue-length
-Returns the length of the playqueue.
-.TP
-.I --playqueue-display
-Returns a list of currently\-queued songs.
-.TP
-.I --playqueue-clear
-Clears the playqueue.
-.PP
-.B "Playback manipulation:"
-.TP
-.I --playback-play
-Starts/unpauses song playback.
-.TP
-.I --playback-pause
-(Un)pauses song playback.
-.TP
-.I --playback-playpause
-Plays/(un)pauses song playback.
-.TP
-.I --playback-stop
-Stops song playback.
-.TP
-.I --playback-playing
-Returns OK if Audacious is playing.
-.TP
-.I --playback-paused
-Returns OK if Audacious is paused.
-.TP
-.I --playback-stopped
-Returns OK if Audacious is stopped.
-.TP
-.I --playback-status
-Returns the playback status.
-.TP
-.I --playback-seek
-Performs an absolute seek in seconds.
-.TP
-.I --playback-seek-relative
-Performs a seek relative to the current position in seconds.
-.PP
-.B "Volume control:"
-.TP
-.I --get-volume
-Returns the current volume level in percent.
-.TP
-.I --set-volume <level>
-Sets the current volume level in percent.
-.PP
-.B "Equalizer manipulation:"
-.TP
-.I --equalizer-activate <on/off>
-Activates/deactivates the equalizer.
-.TP
-.I --equalizer-get
-Gets the equalizer settings.
-.TP
-.I --equalizer-set <preamp> <band0> <band1> <band2> <band3> <band4> <band5> <band6> <band7> <band8> <band9>
-Sets the equalizer settings.
-.TP
-.I --equalizer-get-preamp
-Gets the equalizer pre-amplification.
-.TP
-.I --equalizer-set-preamp <preamp>
-Gets the equalizer pre-amplification.
-.TP
-.I --equalizer-get-band <band>
-Gets the equalizer value in specified band.
-.TP
-.I --equalizer-set-band <band> <value>
-Sets the equalizer value in specified band.
-.PP
-.B "Miscellaneous:"
-.TP
-.I --mainwin-show <on/off>
-Shows/hides the main window.
-.TP
-.I --filebrowser-show <on/off>
-Shows/hides the filebrowser.
-.TP
-.I --jumptofile-show <on/off>
-Shows/hides the jump to file window.
-.TP
-.I --preferences-show <on/off>
-Shows/hides the preferences window.
-.TP
-.I --about-show <on/off>
-Shows/hides the about window.
-.TP
-.I --version
-Displays Audacious version.
-.TP
-.I --shutdown
-Shuts down Audacious.
-.PP
-.B "Help system:"
-.TP
-.I --list-handlers
-Shows handlers list.
-.TP
-.I --help
-Shows handlers list.
-.PP
-Handlers may be prefixed with `\-\-' (GNU\-style long\-options) or not, your choice.
+Commands may be prefixed with `--' (GNU-style long options) or not, your choice.
+
 .SH BUGS
-There are no known bugs in audtool at this time; if you find any please
-report them on <www.redmine.audacious-media-player.org> in the Audacious issue tracker.
+
+There are no known bugs in audtool at this time; if you find any please report
+them at \fIhttp://redmine.audacious-media-player.org/projects/audacious\fR.
+
 .SH AUTHORS
+
 .B audtool
 was written by George Averill <nhjm@nhjm.net> and William
 Pitcock <nenolod@atheme.org>.
 .PP
-This manual page was written by Adam Cecile <gandalf@le-vert.net> and
-Kiyoshi Aman <kiyoshi@atheme.org>. Some additional tweaks were done by
-William Pitcock <nenolod@atheme.org> and Tony Vroon <chainsaw@gentoo.org>.
+This manual page was written by Adam Cecile <gandalf@le-vert.net> and Kiyoshi
+Aman <kiyoshi@atheme.org>.  Some additional tweaks were done by William Pitcock
+<nenolod@atheme.org> and Tony Vroon <chainsaw@gentoo.org>.  The manual page was
+updated for Audacious 3.7 by John Lindgren <john.lindgren@aol.com>.
 .PP
 This work is licensed under a Creative Commons Attribution 3.0 Unported License
 <http://creativecommons.org/licenses/by/3.0/>.

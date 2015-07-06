@@ -1,90 +1,78 @@
-.TH AUDACIOUS "1" "November 2014" "Version @PACKAGE_VERSION@" "Audacious"
+.TH AUDACIOUS "1" "July 2015" "Version @PACKAGE_VERSION@" "Audacious"
 
 .SH NAME
 audacious \- an advanced audio player.
 
 .SH SYNOPSIS
 .B audacious
-[OPTION] ... [FILE] ...
+[\fIoption ...\fR] [\fIfile\fR ...]
 
 .SH DESCRIPTION
 Audacious is a free advanced audio player for Linux and many other
-UNIX-compatible systems. It focuses on low resource usage, high audio quality,
-and support for a wide range of audio formats. It was originally based on Beep
+UNIX-compatible systems.  It focuses on low resource usage, high audio quality,
+and support for a wide range of audio formats.  It was originally based on Beep
 Media Player, which was in turn based on XMMS.
 
 .SH OPTIONS
-.B Getting help:
+.SS Getting help:
 
 .TP
-.I -h, --help
+.B -h, --help
 Show a brief list of options.
 
-.PP
-.B Opening files:
+.SS Opening files:
 
 .TP
-.I -e, --enqueue
+.B -e, --enqueue
 Add the files on the command line to the current playlist but do not start
 playback.
+.TP
+.B -E, --enqueue-to-temp
+Add the files on the command line to the ``Now Playing'' playlist and start
+playback.
+
+.SS Controlling playback:
 
 .TP
-.I -E, --enqueue-to-temp
-Add the files on the command line to a temporary playlist and start playback.
+.B -p, --play
+Start playback.  If paused, playback will resume from the same point.  If
+already active and not paused, it will restart from the beginning of the song.
+.TP
+.B -u, --pause
+Pause playback, or resume if already paused.
+.TP
+.B -t, --play-pause
+Equivalent to \fB--pause\fR if playback is active, otherwise \fB--play\fR.
+.TP
+.B -s, --stop
+Stop playback.
+.TP
+.B -r, --rew
+Skip to the previous song in the playlist.
+.TP
+.B -f, --fwd
+Skip to the next song in the playlist.
 
-.PP
-.B Controlling playback:
+.SS Miscellaneous:
 
 .TP
-.I -p, --play
-If currently playing, go to the beginning of the song; otherwise, begin playing.
-
-.TP
-.I -u, --pause
-If currently playing, pause; if paused, resume playing.
-
-.TP
-.I -t, --play-pause
-If currently playing, pause; otherwise, begin playing.
-
-.TP
-.I -s, --stop
-Stop playing and go to the beginning of the song.
-
-.TP
-.I -r, --rew
-Go to the previous song in the playlist.
-
-.TP
-.I -f, --fwd
-Go to the next song in the playlist.
-
-.PP
-.B Miscellaneous:
-
-.TP
-.I -m, --show-main-window
+.B -m, --show-main-window
 Show the Audacious window if it is hidden and bring it to the top.
-
 .TP
-.I -j, --show-jump-box
+.B -j, --show-jump-box
 Show the Jump to Song window.
-
 .TP
-.I -H, --headless
+.B -H, --headless
 Start in command-line mode; i.e., without any graphical user interface.
-
 .TP
-.I -q, --quit-after-play
+.B -q, --quit-after-play
 Exit as soon as playback stops, or immediately if there is nothing to play.
-
 .TP
-.I -v, --version
+.B -v, --version
 Print version information and exit.
-
 .TP
-.I -V, --verbose
-Print debugging output while running (may be used twice).
+.B -V, --verbose
+Print debugging output while running (may be used twice for even more output).
 
 .SH KEYBINDINGS
 .ta 24
@@ -143,16 +131,19 @@ Control + l			Display Open URL dialog
 Shift + Control + l	Display Add URL dialog
 
 .SH FILES
+
 .TP
 ~/.config/audacious/config
 User's Audacious configuration.
 .TP
-~/.config/audacious/playlists/1000.audpl
-Default playlist usually loaded on startup.
+~/.config/audacious/playlists
+Folder in which playlists are stored.
 .TP
 ~/.local/share/audacious/Skins, @datarootdir@/audacious/Skins
-Default location(s) where Audacious should look for skin files.
+Default locations where Audacious should look for skin files.
+
 .SH ENVIRONMENT
+
 .TP 12
 .B SKINSDIR
 Colon separated list of paths where Audacious should look for skin files.
