@@ -397,7 +397,7 @@ static gboolean do_set_active_playlist (Obj * obj, Invoc * invoc, int playlist)
 
     // check that the requested playlist exists before switching playback
     if (aud_playlist_get_active () == playlist && aud_drct_get_playing ())
-        aud_playlist_play (playlist);
+        aud_playlist_play (playlist, aud_drct_get_paused ());
 
     FINISH (set_active_playlist);
     return true;
