@@ -3,7 +3,7 @@
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
-# Andreas Rönnquist <gusnan@gusnan.se>, 2015
+# Andreas Rönnquist <gusnan@openmailbox.org>, 2015
 # Bo Serrander <bserrander@gmail.com>, 2013
 # Fredrik Ismyren <fredrik@ismyren.se>, 2014
 # Gaius Anderson <gaius.ankh@gmail.com>, 2015
@@ -13,11 +13,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2015-05-30 15:47+0200\n"
+"POT-Creation-Date: 2015-07-19 00:10+0200\n"
 "PO-Revision-Date: 2015-05-21 22:21+0000\n"
-"Last-Translator: Andreas Rönnquist <gusnan@gusnan.se>\n"
-"Language-Team: Swedish (http://www.transifex.com/projects/p/audacious/"
-"language/sv/)\n"
+"Last-Translator: Andreas Rönnquist <gusnan@openmailbox.org>\n"
+"Language-Team: Swedish (http://www.transifex.com/p/audacious/language/sv/)\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -133,7 +132,8 @@ msgstr "(teckenkodningsfel)"
 msgid "Error loading plugin"
 msgstr "Fel vid laddning av plugin"
 
-#: src/libaudcore/playback.cc:383 src/libaudgui/infowin.cc:496
+#: src/libaudcore/playback.cc:383 src/libaudcore/playlist-files.cc:69
+#: src/libaudgui/infowin.cc:496
 #, c-format
 msgid ""
 "Error opening %s:\n"
@@ -162,12 +162,17 @@ msgstr ""
 "Spellistan kan inte sorteras eftersom metadata scanning pågår fortfarande "
 "(eller har inaktiverats)."
 
-#: src/libaudcore/playlist-files.cc:76
+#: src/libaudcore/playlist-files.cc:83
+#, fuzzy, c-format
+msgid "Error loading %s."
+msgstr "Fel vid laddning av plugin"
+
+#: src/libaudcore/playlist-files.cc:85
 #, c-format
 msgid "Cannot load %s: unsupported file name extension."
 msgstr "Kan inte ladda %s: filändelsen stöds ej"
 
-#: src/libaudcore/playlist-files.cc:136
+#: src/libaudcore/playlist-files.cc:146
 #, c-format
 msgid "Cannot save %s: unsupported file name extension."
 msgstr "Kan inte spara %s: filändelsen stöds ej"

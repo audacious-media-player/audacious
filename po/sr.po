@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2015-02-28 19:15+0100\n"
+"POT-Creation-Date: 2015-07-19 00:10+0200\n"
 "PO-Revision-Date: 2014-12-23 19:18+0000\n"
 "Last-Translator: Мирослав Николић <miroslavnikolic@rocketmail.com>\n"
 "Language-Team: Serbian (http://www.transifex.com/projects/p/audacious/"
@@ -135,7 +135,8 @@ msgstr "(грешка кодирања знакова)"
 msgid "Error loading plugin"
 msgstr "Грешка учитавања прикључка"
 
-#: src/libaudcore/playback.cc:383 src/libaudgui/infowin.cc:496
+#: src/libaudcore/playback.cc:383 src/libaudcore/playlist-files.cc:69
+#: src/libaudgui/infowin.cc:496
 #, c-format
 msgid ""
 "Error opening %s:\n"
@@ -164,12 +165,17 @@ msgstr ""
 "Списак нумера не може бити поређан зато што је прегледање метаподатака још "
 "увек у току (или је искључено)."
 
-#: src/libaudcore/playlist-files.cc:76
+#: src/libaudcore/playlist-files.cc:83
+#, fuzzy, c-format
+msgid "Error loading %s."
+msgstr "Грешка учитавања прикључка"
+
+#: src/libaudcore/playlist-files.cc:85
 #, c-format
 msgid "Cannot load %s: unsupported file name extension."
 msgstr "Не могу да учитам „%s“: проширење назива датотеке није подржано."
 
-#: src/libaudcore/playlist-files.cc:136
+#: src/libaudcore/playlist-files.cc:146
 #, c-format
 msgid "Cannot save %s: unsupported file name extension."
 msgstr "Не могу да сачувам „%s“: проширење назива датотеке није подржано."

@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2015-02-28 19:15+0100\n"
+"POT-Creation-Date: 2015-07-19 00:10+0200\n"
 "PO-Revision-Date: 2015-02-12 16:54+0000\n"
 "Last-Translator: Péter Polonkai <polesz@nedudu.hu>\n"
 "Language-Team: Hungarian (http://www.transifex.com/projects/p/audacious/"
@@ -136,7 +136,8 @@ msgstr "(karakterkódolási hiba)"
 msgid "Error loading plugin"
 msgstr "Hiba a bővítmény betöltésekor"
 
-#: src/libaudcore/playback.cc:383 src/libaudgui/infowin.cc:496
+#: src/libaudcore/playback.cc:383 src/libaudcore/playlist-files.cc:69
+#: src/libaudgui/infowin.cc:496
 #, c-format
 msgid ""
 "Error opening %s:\n"
@@ -165,12 +166,17 @@ msgstr ""
 "A lejátszási listát nem lehet rendezni, mert a metaadatok keresése még "
 "folyamatban van (vagy le van tiltva)."
 
-#: src/libaudcore/playlist-files.cc:76
+#: src/libaudcore/playlist-files.cc:83
+#, fuzzy, c-format
+msgid "Error loading %s."
+msgstr "Hiba a bővítmény betöltésekor"
+
+#: src/libaudcore/playlist-files.cc:85
 #, c-format
 msgid "Cannot load %s: unsupported file name extension."
 msgstr "%s -t nem lehet betölteni: a fájlkiterjesztés nem támogatott."
 
-#: src/libaudcore/playlist-files.cc:136
+#: src/libaudcore/playlist-files.cc:146
 #, c-format
 msgid "Cannot save %s: unsupported file name extension."
 msgstr "%s -t nem lehet menteni: a fájlkiterjesztés nem támogatott."

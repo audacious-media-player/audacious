@@ -30,7 +30,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2015-02-28 19:15+0100\n"
+"POT-Creation-Date: 2015-07-19 00:10+0200\n"
 "PO-Revision-Date: 2015-02-13 00:58+0000\n"
 "Last-Translator: Volkan Gezer <volkangezer@gmail.com>\n"
 "Language-Team: Turkish (http://www.transifex.com/projects/p/audacious/"
@@ -152,7 +152,8 @@ msgstr "(karakter kodlama hatası)"
 msgid "Error loading plugin"
 msgstr "Eklenti yüklenirken hata"
 
-#: src/libaudcore/playback.cc:383 src/libaudgui/infowin.cc:496
+#: src/libaudcore/playback.cc:383 src/libaudcore/playlist-files.cc:69
+#: src/libaudgui/infowin.cc:496
 #, c-format
 msgid ""
 "Error opening %s:\n"
@@ -181,12 +182,17 @@ msgstr ""
 "Üstveri taraması devam ettiğinden (veya iptal edildiğinden) listede sıralama "
 "yapılamıyor."
 
-#: src/libaudcore/playlist-files.cc:76
+#: src/libaudcore/playlist-files.cc:83
+#, fuzzy, c-format
+msgid "Error loading %s."
+msgstr "Eklenti yüklenirken hata"
+
+#: src/libaudcore/playlist-files.cc:85
 #, c-format
 msgid "Cannot load %s: unsupported file name extension."
 msgstr "%s yüklenemiyor: bilinmeyen dosya uzantısı."
 
-#: src/libaudcore/playlist-files.cc:136
+#: src/libaudcore/playlist-files.cc:146
 #, c-format
 msgid "Cannot save %s: unsupported file name extension."
 msgstr "%s kaydedilemiyor: bilinmeyen dosya uzantısı."

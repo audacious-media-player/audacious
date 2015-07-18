@@ -5,6 +5,7 @@
 # Translators:
 # Catalanoic <catalanoic@gmail.com>, 2014
 # Catalanoic <catalanoic@gmail.com>, 2014
+# David Surroca Estrada <david.tb303@gmail.com>, 2015
 # Ernest Adrogué <eadrogue@gmx.net>, 2007-2008
 # Francesc Gordillo i Cortínez <inactive+frangor@transifex.com>, 2013
 # Francesc Gordillo i Cortínez <inactive+frangor@transifex.com>, 2013
@@ -16,11 +17,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2015-02-28 19:15+0100\n"
-"PO-Revision-Date: 2014-12-22 12:38+0000\n"
-"Last-Translator: Thomas Lange <thomas-lange2@gmx.de>\n"
-"Language-Team: Catalan (http://www.transifex.com/projects/p/audacious/"
-"language/ca/)\n"
+"POT-Creation-Date: 2015-07-19 00:10+0200\n"
+"PO-Revision-Date: 2015-07-04 20:22+0000\n"
+"Last-Translator: David Surroca Estrada <david.tb303@gmail.com>\n"
+"Language-Team: Catalan (http://www.transifex.com/p/audacious/language/ca/)\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -139,7 +139,8 @@ msgstr ""
 msgid "Error loading plugin"
 msgstr ""
 
-#: src/libaudcore/playback.cc:383 src/libaudgui/infowin.cc:496
+#: src/libaudcore/playback.cc:383 src/libaudcore/playlist-files.cc:69
+#: src/libaudgui/infowin.cc:496
 #, c-format
 msgid ""
 "Error opening %s:\n"
@@ -166,12 +167,17 @@ msgstr ""
 "La llista de reproducció no es pot ordenar perquè la detecció de metadades "
 "encara està en marxa (o s'ha desactivat )"
 
-#: src/libaudcore/playlist-files.cc:76
+#: src/libaudcore/playlist-files.cc:83
+#, c-format
+msgid "Error loading %s."
+msgstr ""
+
+#: src/libaudcore/playlist-files.cc:85
 #, c-format
 msgid "Cannot load %s: unsupported file name extension."
 msgstr ""
 
-#: src/libaudcore/playlist-files.cc:136
+#: src/libaudcore/playlist-files.cc:146
 #, c-format
 msgid "Cannot save %s: unsupported file name extension."
 msgstr ""
@@ -918,7 +924,7 @@ msgstr "Contrasenya:"
 
 #: src/libaudgui/prefs-window.cc:223 src/libaudqt/prefs-window.cc:226
 msgid "<b>Network Settings</b>"
-msgstr ""
+msgstr "<b>Configuració de Xarxa</b>"
 
 #: src/libaudgui/prefs-window.cc:226 src/libaudqt/prefs-window.cc:229
 msgid "KiB"

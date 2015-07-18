@@ -30,7 +30,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2015-02-28 19:15+0100\n"
+"POT-Creation-Date: 2015-07-19 00:10+0200\n"
 "PO-Revision-Date: 2015-01-21 07:37+0000\n"
 "Last-Translator: Liffindra Angga Zaaldian <findrakecil@gmail.com>\n"
 "Language-Team: Indonesian (Indonesia) (http://www.transifex.com/projects/p/"
@@ -151,7 +151,8 @@ msgstr "(galat pada penyandian karakter)"
 msgid "Error loading plugin"
 msgstr "Gagal memuat pengaya"
 
-#: src/libaudcore/playback.cc:383 src/libaudgui/infowin.cc:496
+#: src/libaudcore/playback.cc:383 src/libaudcore/playlist-files.cc:69
+#: src/libaudgui/infowin.cc:496
 #, c-format
 msgid ""
 "Error opening %s:\n"
@@ -180,12 +181,17 @@ msgstr ""
 "Daftar lagu tidak dapat diurutkan karena pemindaian metadata sedang berjalan "
 "(atau telah dimatikan)."
 
-#: src/libaudcore/playlist-files.cc:76
+#: src/libaudcore/playlist-files.cc:83
+#, fuzzy, c-format
+msgid "Error loading %s."
+msgstr "Gagal memuat pengaya"
+
+#: src/libaudcore/playlist-files.cc:85
 #, c-format
 msgid "Cannot load %s: unsupported file name extension."
 msgstr "Tidak dapat memuat %s: ekstensi nama berkas tidak didukung."
 
-#: src/libaudcore/playlist-files.cc:136
+#: src/libaudcore/playlist-files.cc:146
 #, c-format
 msgid "Cannot save %s: unsupported file name extension."
 msgstr "Tidak dapat menyimpan %s: ekstensi nama berkas tidak didukung."

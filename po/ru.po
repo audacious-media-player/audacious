@@ -39,7 +39,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2015-02-28 19:15+0100\n"
+"POT-Creation-Date: 2015-07-19 00:10+0200\n"
 "PO-Revision-Date: 2015-01-24 22:32+0000\n"
 "Last-Translator: Lowrider <pams@imail.ru>\n"
 "Language-Team: Russian (http://www.transifex.com/projects/p/audacious/"
@@ -163,7 +163,8 @@ msgstr "(ошибка кодировки)"
 msgid "Error loading plugin"
 msgstr "Ошибка загрузки плагина"
 
-#: src/libaudcore/playback.cc:383 src/libaudgui/infowin.cc:496
+#: src/libaudcore/playback.cc:383 src/libaudcore/playlist-files.cc:69
+#: src/libaudgui/infowin.cc:496
 #, c-format
 msgid ""
 "Error opening %s:\n"
@@ -192,12 +193,17 @@ msgstr ""
 "Список воспроизведения не может быть отсортирован, так как происходит "
 "сканирование метаданных (или было выключено)."
 
-#: src/libaudcore/playlist-files.cc:76
+#: src/libaudcore/playlist-files.cc:83
+#, fuzzy, c-format
+msgid "Error loading %s."
+msgstr "Ошибка загрузки плагина"
+
+#: src/libaudcore/playlist-files.cc:85
 #, c-format
 msgid "Cannot load %s: unsupported file name extension."
 msgstr "Невозможно загрузить %s: расширение файла не поддерживается."
 
-#: src/libaudcore/playlist-files.cc:136
+#: src/libaudcore/playlist-files.cc:146
 #, c-format
 msgid "Cannot save %s: unsupported file name extension."
 msgstr "Невозможно сохранить %s : расширение файла не поддерживается."

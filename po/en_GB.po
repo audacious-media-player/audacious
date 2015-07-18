@@ -3,15 +3,15 @@
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
-# Andi Chandler <andi@gowling.com>, 2013
+# Andi Chandler <andi@gowling.com>, 2013,2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2015-02-28 19:15+0100\n"
-"PO-Revision-Date: 2014-12-22 12:38+0000\n"
-"Last-Translator: Thomas Lange <thomas-lange2@gmx.de>\n"
-"Language-Team: English (United Kingdom) (http://www.transifex.com/projects/p/"
+"POT-Creation-Date: 2015-07-19 00:10+0200\n"
+"PO-Revision-Date: 2015-06-06 12:33+0000\n"
+"Last-Translator: Andi Chandler <andi@gowling.com>\n"
+"Language-Team: English (United Kingdom) (http://www.transifex.com/p/"
 "audacious/language/en_GB/)\n"
 "Language: en_GB\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: src/audacious/main.cc:60
 msgid "Show command-line help"
-msgstr ""
+msgstr "Show command-line help"
 
 #: src/audacious/main.cc:61
 msgid "Show version"
@@ -29,11 +29,11 @@ msgstr "Show version"
 
 #: src/audacious/main.cc:62
 msgid "Start playback"
-msgstr ""
+msgstr "Start playback"
 
 #: src/audacious/main.cc:63
 msgid "Pause playback"
-msgstr ""
+msgstr "Pause playback"
 
 #: src/audacious/main.cc:64
 msgid "Pause if playing, play otherwise"
@@ -41,15 +41,15 @@ msgstr "Pause if playing, play otherwise"
 
 #: src/audacious/main.cc:65
 msgid "Stop playback"
-msgstr ""
+msgstr "Stop playback"
 
 #: src/audacious/main.cc:66
 msgid "Skip to previous song"
-msgstr ""
+msgstr "Skip to previous song"
 
 #: src/audacious/main.cc:67
 msgid "Skip to next song"
-msgstr ""
+msgstr "Skip to next song"
 
 #: src/audacious/main.cc:68
 msgid "Add files to the playlist"
@@ -57,7 +57,7 @@ msgstr "Add files to the playlist"
 
 #: src/audacious/main.cc:69
 msgid "Add files to a temporary playlist"
-msgstr ""
+msgstr "Add files to a temporary playlist"
 
 #: src/audacious/main.cc:70
 msgid "Display the main window"
@@ -65,11 +65,11 @@ msgstr "Display the main window"
 
 #: src/audacious/main.cc:71
 msgid "Display the jump-to-song window"
-msgstr ""
+msgstr "Display the jump-to-song window"
 
 #: src/audacious/main.cc:72
 msgid "Start without a graphical interface"
-msgstr ""
+msgstr "Start without a graphical interface"
 
 #: src/audacious/main.cc:73
 msgid "Quit on playback stop"
@@ -77,7 +77,7 @@ msgstr "Quit on playback stop"
 
 #: src/audacious/main.cc:74
 msgid "Print debugging messages (may be used twice)"
-msgstr ""
+msgstr "Print debugging messages (may be used twice)"
 
 #: src/audacious/main.cc:76
 msgid "Run in Qt mode"
@@ -86,12 +86,12 @@ msgstr ""
 #: src/audacious/main.cc:127
 #, c-format
 msgid "Unknown option: %s\n"
-msgstr ""
+msgstr "Unknown option: %s\n"
 
 #: src/audacious/main.cc:150
 #, c-format
 msgid "Unknown option: -%c\n"
-msgstr ""
+msgstr "Unknown option: -%c\n"
 
 #: src/audacious/main.cc:177
 #, c-format
@@ -122,22 +122,25 @@ msgstr "Audio CD, track %s"
 
 #: src/libaudcore/audstrings.cc:532 src/libaudcore/tuple.cc:481
 msgid "(character encoding error)"
-msgstr ""
+msgstr "(character encoding error)"
 
 #: src/libaudcore/playback.cc:328 src/libaudcore/probe.cc:151
 msgid "Error loading plugin"
-msgstr ""
+msgstr "Error loading plugin"
 
-#: src/libaudcore/playback.cc:383 src/libaudgui/infowin.cc:496
+#: src/libaudcore/playback.cc:383 src/libaudcore/playlist-files.cc:69
+#: src/libaudgui/infowin.cc:496
 #, c-format
 msgid ""
 "Error opening %s:\n"
 "%s"
 msgstr ""
+"Error opening %s:\n"
+"%s"
 
 #: src/libaudcore/playback.cc:385
 msgid "Unknown playback error"
-msgstr ""
+msgstr "Unknown playback error"
 
 #: src/libaudcore/playback.cc:514
 msgid "Invalid audio format"
@@ -155,15 +158,20 @@ msgstr ""
 "The playlist cannot be sorted because metadata scanning is still in progress "
 "(or has been disabled)."
 
-#: src/libaudcore/playlist-files.cc:76
+#: src/libaudcore/playlist-files.cc:83
+#, fuzzy, c-format
+msgid "Error loading %s."
+msgstr "Error loading plugin"
+
+#: src/libaudcore/playlist-files.cc:85
 #, c-format
 msgid "Cannot load %s: unsupported file name extension."
 msgstr ""
 
-#: src/libaudcore/playlist-files.cc:136
+#: src/libaudcore/playlist-files.cc:146
 #, c-format
 msgid "Cannot save %s: unsupported file name extension."
-msgstr ""
+msgstr "Cannot save %s: unsupported file name extension."
 
 #: src/libaudcore/probe.cc:119
 msgid "Seek error"
@@ -171,7 +179,7 @@ msgstr ""
 
 #: src/libaudcore/probe.cc:127
 msgid "File format not recognized"
-msgstr ""
+msgstr "File format not recognised"
 
 #: src/libaudcore/probe.cc:161
 msgid "Error reading metadata"

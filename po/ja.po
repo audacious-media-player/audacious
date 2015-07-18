@@ -19,11 +19,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2015-05-30 15:47+0200\n"
-"PO-Revision-Date: 2015-05-27 14:27+0000\n"
+"POT-Creation-Date: 2015-07-19 00:10+0200\n"
+"PO-Revision-Date: 2015-06-13 08:17+0000\n"
 "Last-Translator: ABE Tsunehiko\n"
-"Language-Team: Japanese (http://www.transifex.com/projects/p/audacious/"
-"language/ja/)\n"
+"Language-Team: Japanese (http://www.transifex.com/p/audacious/language/ja/)\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -140,7 +139,8 @@ msgstr "(文字のエンコーディングエラー)"
 msgid "Error loading plugin"
 msgstr "プラグインのロードエラー"
 
-#: src/libaudcore/playback.cc:383 src/libaudgui/infowin.cc:496
+#: src/libaudcore/playback.cc:383 src/libaudcore/playlist-files.cc:69
+#: src/libaudgui/infowin.cc:496
 #, c-format
 msgid ""
 "Error opening %s:\n"
@@ -169,12 +169,17 @@ msgstr ""
 "メタデータのスキャンが進行中、または無効になっているため、プレイリストをソー"
 "トできません。"
 
-#: src/libaudcore/playlist-files.cc:76
+#: src/libaudcore/playlist-files.cc:83
+#, fuzzy, c-format
+msgid "Error loading %s."
+msgstr "プラグインのロードエラー"
+
+#: src/libaudcore/playlist-files.cc:85
 #, c-format
 msgid "Cannot load %s: unsupported file name extension."
 msgstr "%s を読込めません: 対応していないファイル拡張子です。"
 
-#: src/libaudcore/playlist-files.cc:136
+#: src/libaudcore/playlist-files.cc:146
 #, c-format
 msgid "Cannot save %s: unsupported file name extension."
 msgstr "%s を保存することができません: 対応していないファイル拡張子です。"
@@ -341,7 +346,7 @@ msgstr "開く(_O)"
 
 #: src/libaudgui/file-opener.cc:83
 msgid "Close _dialog on open"
-msgstr "開いたらダイアログを閉じる (_D)"
+msgstr "開いたらダイアログを閉じる(_D)"
 
 #: src/libaudgui/file-opener.cc:88 src/libaudqt/fileopener.cc:41
 msgid "Add Files"
@@ -353,7 +358,7 @@ msgstr "追加(_A)"
 
 #: src/libaudgui/file-opener.cc:91
 msgid "Close _dialog on add"
-msgstr "追加したらダイアログを閉じる (_D)"
+msgstr "追加したらダイアログを閉じる(_D)"
 
 #: src/libaudgui/file-opener.cc:127 src/libaudgui/infowin.cc:406
 #: src/libaudgui/jump-to-track.cc:307 src/libaudgui/plugin-prefs.cc:166
@@ -643,7 +648,7 @@ msgstr "指定した曲にジャンプ"
 
 #: src/libaudgui/jump-to-track.cc:263
 msgid "Filter: "
-msgstr "フィルタ:"
+msgstr "フィルター:"
 
 #: src/libaudgui/jump-to-track.cc:264
 msgid "_Filter:"
@@ -698,17 +703,17 @@ msgstr "%s の設定"
 
 #: src/libaudgui/plugin-prefs.cc:159 src/libaudqt/prefs-plugin.cc:120
 msgid "_Set"
-msgstr "設定 (_S)"
+msgstr "設定(_S)"
 
 #: src/libaudgui/plugin-view.cc:235 src/libaudgui/prefs-window.cc:650
 #: src/libaudqt/prefs-window.cc:490
 msgid "_Settings"
-msgstr "設定 (_S)"
+msgstr "設定(_S)"
 
 #: src/libaudgui/plugin-view.cc:242 src/libaudgui/prefs-window.cc:661
 #: src/libaudqt/prefs-window.cc:504
 msgid "_About"
-msgstr "情報 (_A)"
+msgstr "情報(_A)"
 
 #: src/libaudgui/prefs-window.cc:82 src/libaudqt/prefs-window.cc:85
 msgid "Appearance"
@@ -852,7 +857,7 @@ msgstr "ビット深度:"
 #: src/libaudgui/prefs-window.cc:179 src/libaudgui/prefs-window.cc:224
 #: src/libaudqt/prefs-window.cc:182 src/libaudqt/prefs-window.cc:227
 msgid "Buffer size:"
-msgstr "バッファサイズ:"
+msgstr "バッファーサイズ:"
 
 #: src/libaudgui/prefs-window.cc:181 src/libaudqt/prefs-window.cc:184
 msgid "ms"
@@ -1066,7 +1071,7 @@ msgstr "アルバム - タイトル"
 
 #: src/libaudgui/prefs-window.cc:418
 msgid "Category"
-msgstr "カテゴリ"
+msgstr "カテゴリー"
 
 #: src/libaudgui/prefs-window.cc:487 src/libaudqt/prefs-window.cc:346
 msgid "Custom"
@@ -1090,7 +1095,7 @@ msgstr "キューマネージャー"
 
 #: src/libaudgui/queue-manager.cc:193 src/libaudqt/queue-manager.cc:115
 msgid "_Unqueue"
-msgstr "キューからはずす (_U)"
+msgstr "キューからはずす(_U)"
 
 #: src/libaudgui/status.cc:36
 msgid "Working ..."

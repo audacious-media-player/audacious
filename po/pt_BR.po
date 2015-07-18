@@ -25,7 +25,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2015-05-30 15:47+0200\n"
+"POT-Creation-Date: 2015-07-19 00:10+0200\n"
 "PO-Revision-Date: 2015-05-06 19:43+0000\n"
 "Last-Translator: F Marcelo O Amarante <marcelo.amarante@hotmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/"
@@ -147,7 +147,8 @@ msgstr "(erro de codificação de caracteres)"
 msgid "Error loading plugin"
 msgstr "Erro ao carregar plugin"
 
-#: src/libaudcore/playback.cc:383 src/libaudgui/infowin.cc:496
+#: src/libaudcore/playback.cc:383 src/libaudcore/playlist-files.cc:69
+#: src/libaudgui/infowin.cc:496
 #, c-format
 msgid ""
 "Error opening %s:\n"
@@ -176,13 +177,18 @@ msgstr ""
 "A lista de reprodução não pode ser organizada porque a varredura de "
 "metadados ainda está em progresso (ou foi desabilitada)."
 
-#: src/libaudcore/playlist-files.cc:76
+#: src/libaudcore/playlist-files.cc:83
+#, fuzzy, c-format
+msgid "Error loading %s."
+msgstr "Erro ao carregar plugin"
+
+#: src/libaudcore/playlist-files.cc:85
 #, c-format
 msgid "Cannot load %s: unsupported file name extension."
 msgstr ""
 "Não foi possível carregar  %s: extensão do nome do arquivo não suportado."
 
-#: src/libaudcore/playlist-files.cc:136
+#: src/libaudcore/playlist-files.cc:146
 #, c-format
 msgid "Cannot save %s: unsupported file name extension."
 msgstr "Não foi possível salvar %s: extensão do nome do arquivo não suportado."

@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2015-02-28 19:15+0100\n"
+"POT-Creation-Date: 2015-07-19 00:10+0200\n"
 "PO-Revision-Date: 2015-02-13 23:13+0000\n"
 "Last-Translator: RichiSk <richard.mosko@gmail.com>\n"
 "Language-Team: Slovak (http://www.transifex.com/projects/p/audacious/"
@@ -138,7 +138,8 @@ msgstr ""
 msgid "Error loading plugin"
 msgstr ""
 
-#: src/libaudcore/playback.cc:383 src/libaudgui/infowin.cc:496
+#: src/libaudcore/playback.cc:383 src/libaudcore/playlist-files.cc:69
+#: src/libaudgui/infowin.cc:496
 #, c-format
 msgid ""
 "Error opening %s:\n"
@@ -165,12 +166,17 @@ msgstr ""
 "Zoznam skladieb nie je možné triediť, pretože skenovanie metadát stále "
 "prebieha (alebo boli zakázané)."
 
-#: src/libaudcore/playlist-files.cc:76
+#: src/libaudcore/playlist-files.cc:83
+#, fuzzy, c-format
+msgid "Error loading %s."
+msgstr "Chyba načítavania metadát"
+
+#: src/libaudcore/playlist-files.cc:85
 #, c-format
 msgid "Cannot load %s: unsupported file name extension."
 msgstr "Nie je možné načítať %s: nepodporovaná prípona názvu súboru."
 
-#: src/libaudcore/playlist-files.cc:136
+#: src/libaudcore/playlist-files.cc:146
 #, c-format
 msgid "Cannot save %s: unsupported file name extension."
 msgstr "Nie je možné uložiť %s: nepodporovaná prípona súboru."
