@@ -1,0 +1,35 @@
+--- gwin32appinfo.c.0	2015-02-26 07:57:09 -0500
++++ gwin32appinfo.c	2015-07-18 11:39:10 -0400
+@@ -287,7 +287,11 @@
+ 
+   for (l = locations; l != NULL; l = l->next)
+     {
+-      wchar_t *wloc = g_utf8_to_utf16 (l->data, -1, NULL, NULL, NULL);
++      /* Some Windows apps (at least explorer.exe) don't know how to handle
++       * file:// URIs, so try to convert them to a local filename. */
++      gchar *fname = g_filename_from_uri (l->data, NULL, NULL);
++      wchar_t *wloc = g_utf8_to_utf16 (fname != NULL ? fname : l->data, -1,
++                                       NULL, NULL, NULL);
+       
+       memset (&exec_info, 0, sizeof (exec_info));
+       exec_info.cbSize = sizeof (exec_info);
+@@ -308,6 +312,7 @@
+ 	  return FALSE;
+ 	}
+       
++      g_free (fname);
+       g_free (wloc);
+     }
+   
+@@ -642,6 +647,11 @@
+   wchar_t buffer[1024];
+   DWORD buffer_size;
+ 
++  /* the GIO content type for a directory is "inode/directory";
++   * the corresponding Windows registry entry is "Folder" */
++  if (g_strcmp0 (association, "inode/directory") == 0)
++    association = "Folder";
++
+   wtype = g_utf8_to_utf16 (association, -1, NULL, NULL, NULL);
+ 
+   /* Verify that we have some sort of app registered for this type */
