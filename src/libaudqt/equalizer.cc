@@ -37,7 +37,7 @@
 class VLabel : public QLabel
 {
 public:
-    VLabel (const QString & text, QWidget * parent = 0) :
+    VLabel (const QString & text, QWidget * parent = nullptr) :
         QLabel (text, parent) {}
 
     QSize minimumSizeHint() const
@@ -48,7 +48,7 @@ public:
 
     QSize sizeHint () const
     {
-        QSize s = QLabel::sizeHint();
+        QSize s = QLabel::sizeHint ();
         return QSize (s.height (), s.width ());
     }
 
@@ -128,7 +128,7 @@ EqualizerWindow::EqualizerWindow () :
     line->setFrameShadow (QFrame::Sunken);
     slider_layout->addWidget (line);
 
-    for (int i = 0; i < AUD_EQ_NBANDS; i++)
+    for (int i = 0; i < AUD_EQ_NBANDS; i ++)
     {
         m_sliders[i] = new EqualizerSlider (names[i], this);
         slider_layout->addWidget (m_sliders[i]);
@@ -152,7 +152,7 @@ EqualizerWindow::EqualizerWindow () :
         aud_set_int (nullptr, "equalizer_preamp", value);
     });
 
-    for (int i = 0; i < AUD_EQ_NBANDS; i++)
+    for (int i = 0; i < AUD_EQ_NBANDS; i ++)
     {
         connect (& m_sliders[i]->slider, & QSlider::valueChanged, [i] (int value) {
             aud_eq_set_band (i, value);
@@ -176,7 +176,7 @@ void EqualizerWindow::updateBands ()
     double values[AUD_EQ_NBANDS];
     aud_eq_get_bands (values);
 
-    for (int i = 0; i < AUD_EQ_NBANDS; i++)
+    for (int i = 0; i < AUD_EQ_NBANDS; i ++)
         m_sliders[i]->slider.setValue (values[i]);
 }
 
@@ -184,12 +184,13 @@ static EqualizerWindow * s_equalizer = nullptr;
 
 namespace audqt {
 
-EXPORT void equalizer_show (void)
+EXPORT void equalizer_show ()
 {
     if (! s_equalizer)
     {
         s_equalizer = new EqualizerWindow;
         s_equalizer->setAttribute (Qt::WA_DeleteOnClose);
+        s_equalizer->layout ()->setSizeConstraint (QLayout::SetFixedSize);
 
         QObject::connect (s_equalizer, & QObject::destroyed, [] () {
             s_equalizer = nullptr;
@@ -199,7 +200,7 @@ EXPORT void equalizer_show (void)
     window_bring_to_front (s_equalizer);
 }
 
-EXPORT void equalizer_hide (void)
+EXPORT void equalizer_hide ()
 {
     delete s_equalizer;
 }
