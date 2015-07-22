@@ -55,9 +55,9 @@ public:
     void paintEvent (QPaintEvent *)
     {
         QPainter p (this);
-        p.rotate (90);
+        p.rotate (270);
 
-        QRect box (0, -width (), height (), width ());
+        QRect box (-height (), 0, height (), width ());
         style ()->drawItemText (& p, box, (int) alignment (), palette (),
          isEnabled (), text (), QPalette::Foreground);
     }
@@ -73,9 +73,18 @@ public:
         slider.setRange (-AUD_EQ_MAX_GAIN, AUD_EQ_MAX_GAIN);
 
         auto layout = new QVBoxLayout (this);
+        auto value_label = new QLabel ("0");
+
+        value_label->setAlignment (Qt::AlignCenter);
+
         layout->setContentsMargins (0, 0, 0, 0);
-        layout->addWidget (& slider);
         layout->addWidget (new VLabel (label, this), 1);
+        layout->addWidget (& slider);
+        layout->addWidget (value_label);
+
+        connect (& slider, & QSlider::valueChanged, [value_label] (int value) {
+            value_label->setText (QString::number (value));
+        });
     }
 
     QSlider slider;
