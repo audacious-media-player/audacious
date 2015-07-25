@@ -130,7 +130,7 @@ EqualizerWindow::EqualizerWindow () :
 
     for (int i = 0; i < AUD_EQ_NBANDS; i ++)
     {
-        m_sliders[i] = new EqualizerSlider (names[i], this);
+        m_sliders[i] = new EqualizerSlider (_(names[i]), this);
         slider_layout->addWidget (m_sliders[i]);
     }
 
