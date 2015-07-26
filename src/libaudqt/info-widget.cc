@@ -63,6 +63,7 @@ EXPORT InfoWidget::InfoWidget (QWidget * parent) : QTreeView (parent)
     header ()->hide ();
     setEditTriggers (QAbstractItemView::SelectedClicked);
     setIndentation (0);
+    resizeColumnToContents (0);
 }
 
 EXPORT InfoWidget::~InfoWidget ()
