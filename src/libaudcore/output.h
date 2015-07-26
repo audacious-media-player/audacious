@@ -23,6 +23,7 @@
 #include <libaudcore/audio.h>
 #include <libaudcore/objects.h>
 
+class PluginHandle;
 class Tuple;
 
 bool output_open_audio (const String & filename, const Tuple & tuple,

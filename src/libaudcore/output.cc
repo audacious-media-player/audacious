@@ -17,9 +17,7 @@
  * the use of this software.
  */
 
-#include "drct.h"
 #include "output.h"
-#include "runtime.h"
 
 #include <math.h>
 #include <pthread.h>
@@ -30,6 +28,7 @@
 #include "internal.h"
 #include "plugin.h"
 #include "plugins.h"
+#include "runtime.h"
 
 static pthread_mutex_t mutex_major = PTHREAD_MUTEX_INITIALIZER;
 static pthread_mutex_t mutex_minor = PTHREAD_MUTEX_INITIALIZER;
@@ -72,9 +71,6 @@ static int out_format, out_channels, out_rate;
 static int out_bytes_per_sec, out_bytes_held;
 static int64_t in_frames, out_bytes_written;
 static ReplayGainInfo gain_info;
-
-static bool change_op;
-static OutputPlugin * new_op;
 
 static Index<float> buffer1;
 static Index<char> buffer2;
@@ -493,7 +489,7 @@ void output_drain ()
     UNLOCK_ALL;
 }
 
-EXPORT void aud_output_reset (OutputReset type)
+static void output_reset (OutputReset type, OutputPlugin * op)
 {
     LOCK_MINOR;
 
@@ -513,11 +509,7 @@ EXPORT void aud_output_reset (OutputReset type)
         if (cop)
             cop->cleanup ();
 
-        if (change_op)
-            cop = new_op;
-
-        if (cop && ! cop->init ())
-            cop = nullptr;
+        cop = (op && op->init ()) ? op : nullptr;
     }
 
     if (s_input)
@@ -529,6 +521,11 @@ EXPORT void aud_output_reset (OutputReset type)
         SIGNAL_MINOR;
 
     UNLOCK_ALL;
+}
+
+EXPORT void aud_output_reset (OutputReset type)
+{
+    output_reset (type, cop);
 }
 
 EXPORT StereoVolume aud_drct_get_volume ()
@@ -570,13 +567,7 @@ PluginHandle * output_plugin_get_current ()
 
 bool output_plugin_set_current (PluginHandle * plugin)
 {
-    change_op = true;
-    new_op = plugin ? (OutputPlugin *) aud_plugin_get_header (plugin) : nullptr;
-    aud_output_reset (OutputReset::ResetPlugin);
-
-    bool success = (! plugin || (new_op && cop == new_op));
-    change_op = false;
-    new_op = nullptr;
-
-    return success;
+    output_reset (OutputReset::ResetPlugin, plugin ?
+     (OutputPlugin *) aud_plugin_get_header (plugin) : nullptr);
+    return (! plugin || cop);
 }
