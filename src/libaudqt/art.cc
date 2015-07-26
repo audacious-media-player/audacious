@@ -47,6 +47,12 @@ EXPORT QPixmap art_request (const char * filename, unsigned int w, unsigned int 
         img = QImage (fallback);
     }
 
+    if (w == 0 && h == 0)
+    {
+	w = img.size().width();
+	h = img.size().height();
+    }
+
     if (! want_hidpi)
         return QPixmap::fromImage (img.scaled (w, h, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
