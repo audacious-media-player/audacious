@@ -61,7 +61,6 @@ EXPORT InfoWidget::InfoWidget (QWidget * parent) : QTreeView (parent)
 {
     setModel (& m_model);
     header ()->hide ();
-    setEditTriggers (QAbstractItemView::SelectedClicked);
     setIndentation (0);
     resizeColumnToContents (0);
 }
@@ -75,6 +74,7 @@ EXPORT void InfoWidget::fillInfo (int playlist, int entry, const char * filename
 {
     m_model.setTupleData (tuple, String (filename), decoder);
     reset();
+    setEditTriggers (updating_enabled ? QAbstractItemView::SelectedClicked : QAbstractItemView::NoEditTriggers);
 }
 
 EXPORT bool InfoWidget::updateFile ()
