@@ -166,6 +166,19 @@ static const PreferencesWidget output_combo_widgets[] = {
     WidgetCustomGTK (output_create_about_button)
 };
 
+static GtkWidget * record_checkbox;
+static GtkWidget * record_config_button;
+static GtkWidget * record_about_button;
+
+static void * record_create_checkbox ();
+static void * record_create_config_button ();
+static void * record_create_about_button ();
+
+static const PreferencesWidget record_buttons[] = {
+    WidgetCustomGTK (record_create_config_button),
+    WidgetCustomGTK (record_create_about_button)
+};
+
 static const PreferencesWidget gain_table[] = {
     WidgetSpin (N_("Amplify all files:"),
         WidgetFloat (0, "replay_gain_preamp"),
@@ -186,6 +199,9 @@ static const PreferencesWidget audio_page_widgets[] = {
     WidgetSpin (N_("Buffer size:"),
         WidgetInt (0, "output_buffer_size"),
         {100, 10000, 1000, N_("ms")}),
+    WidgetCustomGTK (record_create_checkbox),
+    WidgetBox ({{record_buttons}, true},
+        WIDGET_CHILD),
     WidgetCheck (N_("Soft clipping"),
         WidgetBool (0, "soft_clipping")),
     WidgetCheck (N_("Use software volume control (not recommended)"),
@@ -627,22 +643,15 @@ static void output_bit_depth_changed ()
     aud_output_reset (OutputReset::ReopenStream);
 }
 
-static void output_do_config (void *)
-{
-    audgui_show_plugin_prefs (aud_plugin_get_current (PluginType::Output));
-}
-
-static void output_do_about (void *)
-{
-    audgui_show_plugin_about (aud_plugin_get_current (PluginType::Output));
-}
-
 static void * output_create_config_button ()
 {
-    gboolean enabled = aud_plugin_has_configure (aud_plugin_get_current (PluginType::Output));
+    auto do_config = [] (void *)
+        { audgui_show_plugin_prefs (aud_plugin_get_current (PluginType::Output)); };
+
+    bool enabled = aud_plugin_has_configure (aud_plugin_get_current (PluginType::Output));
 
     output_config_button = audgui_button_new (_("_Settings"),
-     "preferences-system", output_do_config, nullptr);
+     "preferences-system", do_config, nullptr);
     gtk_widget_set_sensitive (output_config_button, enabled);
 
     return output_config_button;
@@ -650,12 +659,77 @@ static void * output_create_config_button ()
 
 static void * output_create_about_button ()
 {
-    gboolean enabled = aud_plugin_has_about (aud_plugin_get_current (PluginType::Output));
+    auto do_about = [] (void *)
+        { audgui_show_plugin_about (aud_plugin_get_current (PluginType::Output)); };
 
-    output_about_button = audgui_button_new (_("_About"), "help-about", output_do_about, nullptr);
+    bool enabled = aud_plugin_has_about (aud_plugin_get_current (PluginType::Output));
+
+    output_about_button = audgui_button_new (_("_About"), "help-about", do_about, nullptr);
     gtk_widget_set_sensitive (output_about_button, enabled);
 
     return output_about_button;
+}
+
+static void record_toggled (GtkToggleButton * button)
+{
+    aud_drct_enable_record (gtk_toggle_button_get_active (button));
+}
+
+static void * record_create_checkbox ()
+{
+    record_checkbox = gtk_check_button_new ();
+    g_signal_connect (record_checkbox, "toggled", (GCallback) record_toggled, nullptr);
+    return record_checkbox;
+}
+
+static void * record_create_config_button ()
+{
+    auto do_config = [] (void *)
+    {
+        if (aud_drct_get_record_enabled ())
+            audgui_show_plugin_prefs (aud_drct_get_record_plugin ());
+    };
+
+    return (record_config_button = audgui_button_new (_("_Settings"),
+     "preferences-system", do_config, nullptr));
+}
+
+static void * record_create_about_button ()
+{
+    auto do_about = [] (void *)
+    {
+        if (aud_drct_get_record_enabled ())
+            audgui_show_plugin_about (aud_drct_get_record_plugin ());
+    };
+
+    return (record_about_button = audgui_button_new (_("_About"), "help-about",
+     do_about, nullptr));
+}
+
+static void record_update (void * = nullptr, void * = nullptr)
+{
+    auto p = aud_drct_get_record_plugin ();
+
+    if (p)
+    {
+        bool enabled = aud_drct_get_record_enabled ();
+
+        gtk_widget_set_sensitive (record_checkbox, true);
+        gtk_button_set_label ((GtkButton *) record_checkbox,
+         str_printf (_("Record audio stream using %s"), aud_plugin_get_name (p)));
+        gtk_toggle_button_set_active ((GtkToggleButton *) record_checkbox, enabled);
+        gtk_widget_set_sensitive (record_config_button, enabled && aud_plugin_has_configure (p));
+        gtk_widget_set_sensitive (record_about_button, enabled && aud_plugin_has_about (p));
+    }
+    else
+    {
+        gtk_widget_set_sensitive (record_checkbox, false);
+        gtk_button_set_label ((GtkButton *) record_checkbox,
+         str_printf (_("No audio recording plugin available")));
+        gtk_toggle_button_set_active ((GtkToggleButton *) record_checkbox, false);
+        gtk_widget_set_sensitive (record_config_button, false);
+        gtk_widget_set_sensitive (record_about_button, false);
+    }
 }
 
 static void create_audio_category ()
@@ -688,6 +762,8 @@ static void create_plugin_category ()
 
 static void destroy_cb ()
 {
+    hook_dissociate ("enable record", record_update);
+
     prefswin = nullptr;
     category_treeview = nullptr;
     category_notebook = nullptr;
@@ -758,6 +834,9 @@ static void create_prefs_window ()
     gtk_widget_set_can_default (close, true);
 
     fill_category_list ((GtkTreeView *) category_treeview, (GtkNotebook *) category_notebook);
+
+    record_update ();
+    hook_associate ("enable record", record_update, nullptr);
 
     gtk_widget_show_all (vbox);
 

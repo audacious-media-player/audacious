@@ -19,9 +19,11 @@
 
 #include "drct.h"
 
+#include "hook.h"
 #include "i18n.h"
 #include "internal.h"
 #include "playlist-internal.h"
+#include "plugins-internal.h"
 #include "runtime.h"
 #include "tuple.h"
 
@@ -72,6 +74,60 @@ EXPORT String aud_drct_get_filename ()
     int playlist = aud_playlist_get_playing ();
     int position = aud_playlist_get_position (playlist);
     return aud_playlist_entry_get_filename (playlist, position);
+}
+
+/* --- RECORDING CONTROL --- */
+
+/* The recording plugin is currently hard-coded to FileWriter.  Someday
+ * aud_drct_set_record_plugin() may be added. */
+
+static PluginHandle * record_plugin;
+
+static bool record_plugin_watcher (PluginHandle *, void *)
+{
+    hook_call ("enable record", nullptr);
+    return true;
+}
+
+void record_init ()
+{
+    auto plugin = aud_plugin_lookup_basename ("filewriter");
+    if (plugin && aud_plugin_get_type (plugin) == PluginType::Output)
+    {
+        record_plugin = plugin;
+        aud_plugin_add_watch (plugin, record_plugin_watcher, nullptr);
+    }
+}
+
+void record_cleanup ()
+{
+    if (record_plugin)
+    {
+        aud_plugin_remove_watch (record_plugin, record_plugin_watcher, nullptr);
+        record_plugin = nullptr;
+    }
+}
+
+EXPORT PluginHandle * aud_drct_get_record_plugin ()
+{
+    /* recording is disabled when FileWriter is the primary output plugin */
+    if (! record_plugin || plugin_get_enabled (record_plugin) == PluginEnabled::Primary)
+        return nullptr;
+
+    return record_plugin;
+}
+
+EXPORT bool aud_drct_get_record_enabled ()
+{
+    return (record_plugin && plugin_get_enabled (record_plugin) == PluginEnabled::Secondary);
+}
+
+EXPORT bool aud_drct_enable_record (bool enable)
+{
+    if (! record_plugin || plugin_get_enabled (record_plugin) == PluginEnabled::Primary)
+        return false;
+
+    return plugin_enable_secondary (record_plugin, enable);
 }
 
 /* --- VOLUME CONTROL --- */

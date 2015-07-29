@@ -55,7 +55,8 @@ public:
     Plugin * header;
     String name, domain;
     int priority;
-    int has_about, has_configure, enabled;
+    int has_about, has_configure;
+    PluginEnabled enabled;
     Index<PluginWatch> watches;
 
     /* for transport plugins */
@@ -81,8 +82,9 @@ public:
         priority (0),
         has_about (false),
         has_configure (false),
-        enabled (type == PluginType::Transport ||
-         type == PluginType::Playlist || type == PluginType::Input),
+        enabled ((type == PluginType::Transport ||
+         type == PluginType::Playlist || type == PluginType::Input) ?
+         PluginEnabled::Primary : PluginEnabled::Disabled),
         can_save (false),
         has_subtunes (false),
         writes_tag (false) {}
@@ -173,7 +175,7 @@ static void plugin_save (PluginHandle * plugin, FILE * handle)
     fprintf (handle, "priority %d\n", plugin->priority);
     fprintf (handle, "about %d\n", plugin->has_about);
     fprintf (handle, "config %d\n", plugin->has_configure);
-    fprintf (handle, "enabled %d\n", plugin->enabled);
+    fprintf (handle, "enabled %d\n", (int) plugin->enabled);
 
     if (plugin->type == PluginType::Transport)
         transport_plugin_save (plugin, handle);
@@ -338,8 +340,13 @@ static bool plugin_parse (FILE * handle)
         parse_next (handle);
     if (parse_integer ("config", & plugin->has_configure))
         parse_next (handle);
-    if (parse_integer ("enabled", & plugin->enabled))
+
+    int enabled;
+    if (parse_integer ("enabled", & enabled))
+    {
+        plugin->enabled = (PluginEnabled) enabled;
         parse_next (handle);
+    }
 
     if (type == PluginType::Transport)
         transport_plugin_parse (plugin, handle);
@@ -388,7 +395,7 @@ static void parse_plugins_fallback (FILE * handle)
         // setting timestamp to zero forces a rescan
         auto plugin = new PluginHandle (basename, String (), false, 0, 0, type, nullptr);
         plugins[type].append (plugin);
-        plugin->enabled = enabled;
+        plugin->enabled = (PluginEnabled) enabled;
     }
 }
 
@@ -543,8 +550,8 @@ static void plugin_get_info (PluginHandle * plugin, bool is_new)
     else if (header->type == PluginType::General)
     {
         GeneralPlugin * gp = (GeneralPlugin *) header;
-        if (is_new)
-            plugin->enabled = gp->enabled_by_default;
+        if (is_new && gp->enabled_by_default)
+            plugin->enabled = PluginEnabled::Primary;
     }
 }
 
@@ -607,14 +614,12 @@ EXPORT const void * aud_plugin_get_header (PluginHandle * plugin)
     if (! plugin->loaded)
     {
         Plugin * header = plugin_load (plugin->path);
-        if (! header || header->type != plugin->type)
-            goto DONE;
+        if (header && header->type == plugin->type)
+            plugin->header = header;
 
         plugin->loaded = true;
-        plugin->header = header;
     }
 
-DONE:
     pthread_mutex_unlock (& mutex);
     return plugin->header;
 }
@@ -655,7 +660,7 @@ EXPORT bool aud_plugin_has_configure (PluginHandle * plugin)
 
 EXPORT bool aud_plugin_get_enabled (PluginHandle * plugin)
 {
-    return plugin->enabled;
+    return plugin->enabled != PluginEnabled::Disabled;
 }
 
 static void plugin_call_watches (PluginHandle * plugin)
@@ -666,7 +671,12 @@ static void plugin_call_watches (PluginHandle * plugin)
     plugin->watches.remove_if (call_and_check_remove);
 }
 
-void plugin_set_enabled (PluginHandle * plugin, bool enabled)
+PluginEnabled plugin_get_enabled (PluginHandle * plugin)
+{
+    return plugin->enabled;
+}
+
+void plugin_set_enabled (PluginHandle * plugin, PluginEnabled enabled)
 {
     plugin->enabled = enabled;
     plugin_call_watches (plugin);
@@ -675,6 +685,7 @@ void plugin_set_enabled (PluginHandle * plugin, bool enabled)
 void plugin_set_failed (PluginHandle * plugin)
 {
     plugin->header = nullptr;
+    plugin_set_enabled (plugin, PluginEnabled::Disabled);
 }
 
 EXPORT void aud_plugin_add_watch (PluginHandle * plugin, PluginWatchFunc func, void * data)

@@ -26,11 +26,19 @@
 enum class InputKey;
 class Plugin;
 
+enum class PluginEnabled {
+    Disabled = 0,
+    Primary = 1,
+    Secondary = 2
+};
+
 /* plugin-init.c */
 void start_plugins_one ();
 void start_plugins_two ();
 void stop_plugins_two ();
 void stop_plugins_one ();
+
+bool plugin_enable_secondary (PluginHandle * plugin, bool enable);
 
 /* plugin-load.c */
 void plugin_system_init ();
@@ -44,7 +52,8 @@ void plugin_registry_prune ();
 void plugin_registry_save ();
 
 void plugin_register (const char * path, int timestamp);
-void plugin_set_enabled (PluginHandle * plugin, bool enabled);
+PluginEnabled plugin_get_enabled (PluginHandle * plugin);
+void plugin_set_enabled (PluginHandle * plugin, PluginEnabled enabled);
 void plugin_set_failed (PluginHandle * plugin);
 
 bool transport_plugin_has_scheme (PluginHandle * plugin, const char * scheme);

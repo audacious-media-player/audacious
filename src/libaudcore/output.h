@@ -40,6 +40,8 @@ void output_close_audio ();
 void output_drain ();
 
 PluginHandle * output_plugin_get_current ();
+PluginHandle * output_plugin_get_secondary ();
 bool output_plugin_set_current (PluginHandle * plugin);
+bool output_plugin_set_secondary (PluginHandle * plugin);
 
 #endif
