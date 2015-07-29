@@ -86,68 +86,66 @@ static constexpr aud::array<PluginType, PluginParams> table = {
     PluginParams ("interface", SingleFuncs ({iface_plugin_get_current, iface_plugin_set_current}))
 };
 
-static void start_single (PluginType type)
+static bool start_plugin (PluginType type, PluginHandle * p, bool secondary = false)
 {
-    PluginHandle * skip = nullptr;
+    bool success;
 
-    for (PluginHandle * p : aud_plugin_list (type))
+    if (secondary)
+        success = output_plugin_set_secondary (p);
+    else if (table[type].is_single)
+        success = table[type].f.s.set_current (p);
+    else
+        success = table[type].f.m.start (p);
+
+    if (! success)
     {
-        if (! aud_plugin_get_enabled (p))
-            continue;
-
-        AUDINFO ("Starting selected %s plugin %s.\n", table[type].name,
-         aud_plugin_get_name (p));
-
-        if (table[type].f.s.set_current (p))
-            return;
-
         AUDWARN ("%s failed to start.\n", aud_plugin_get_name (p));
         plugin_set_failed (p);
-        plugin_set_enabled (p, false);
-        skip = p;
-        break;
+    }
+
+    return success;
+}
+
+static PluginHandle * find_selected (PluginType type, PluginEnabled enabled)
+{
+    for (PluginHandle * p : aud_plugin_list (type))
+    {
+        if (plugin_get_enabled (p) == enabled)
+            return p;
+    }
+
+    return nullptr;
+}
+
+static void start_required (PluginType type)
+{
+    PluginHandle * sel;
+    if ((sel = find_selected (type, PluginEnabled::Primary)))
+    {
+        AUDINFO ("Starting selected %s plugin %s.\n", table[type].name,
+         aud_plugin_get_name (sel));
+
+        if (start_plugin (type, sel))
+            return;
     }
 
     AUDINFO ("Probing for %s plugin.\n", table[type].name);
 
     for (PluginHandle * p : aud_plugin_list (type))
     {
-        if (p == skip)
+        if (p == sel)
             continue;
 
         AUDINFO ("Trying to start %s.\n", aud_plugin_get_name (p));
+        plugin_set_enabled (p, PluginEnabled::Primary);
 
-        if (! table[type].f.s.set_current (p))
-        {
-            AUDWARN ("%s failed to start.\n", aud_plugin_get_name (p));
-            plugin_set_failed (p);
-            continue;
-        }
-
-        plugin_set_enabled (p, true);
-        return;
+        if (start_plugin (type, p))
+            return;
     }
 
     AUDERR ("No %s plugin found.\n"
      "(Did you forget to install audacious-plugins?)\n", table[type].name);
     abort ();
-}
-
-static void start_multi (PluginType type)
-{
-    for (PluginHandle * p : aud_plugin_list (type))
-    {
-        if (! aud_plugin_get_enabled (p))
-            continue;
-
-        AUDINFO ("Starting %s.\n", aud_plugin_get_name (p));
-
-        if (! table[type].f.m.start (p))
-        {
-            AUDWARN ("%s failed to start.\n", aud_plugin_get_name (p));
-            plugin_set_failed (p);
-        }
-    }
 }
 
 static void start_plugins (PluginType type)
@@ -157,9 +155,30 @@ static void start_plugins (PluginType type)
         return;
 
     if (table[type].is_single)
-        start_single (type);
+    {
+        start_required (type);
+
+        if (type == PluginType::Output)
+        {
+            PluginHandle * sel;
+            if ((sel = find_selected (type, PluginEnabled::Secondary)))
+            {
+                AUDINFO ("Starting secondary output plugin %s.\n", aud_plugin_get_name (sel));
+                start_plugin (type, sel, true);
+            }
+        }
+    }
     else if (table[type].f.m.start)
-        start_multi (type);
+    {
+        for (PluginHandle * p : aud_plugin_list (type))
+        {
+            if (aud_plugin_get_enabled (p))
+            {
+                AUDINFO ("Starting %s.\n", aud_plugin_get_name (p));
+                start_plugin (type, p);
+            }
+        }
+    }
 }
 
 void start_plugins_one ()
@@ -184,9 +203,15 @@ static void stop_plugins (PluginType type)
 {
     if (table[type].is_single)
     {
-        AUDINFO ("Shutting down %s.\n", aud_plugin_get_name
-         (table[type].f.s.get_current ()));
+        PluginHandle * p = table[type].f.s.get_current ();
+        AUDINFO ("Shutting down %s.\n", aud_plugin_get_name (p));
         table[type].f.s.set_current (nullptr);
+
+        if (type == PluginType::Output && (p = output_plugin_get_secondary ()))
+        {
+            AUDINFO ("Shutting down %s.\n", aud_plugin_get_name (p));
+            output_plugin_set_secondary (nullptr);
+        }
     }
     else if (table[type].f.m.stop)
     {
@@ -232,23 +257,18 @@ static bool enable_single (PluginType type, PluginHandle * p)
     AUDINFO ("Switching from %s to %s.\n", aud_plugin_get_name (old),
      aud_plugin_get_name (p));
 
-    plugin_set_enabled (old, false);
-    plugin_set_enabled (p, true);
+    plugin_set_enabled (old, PluginEnabled::Disabled);
+    plugin_set_enabled (p, PluginEnabled::Primary);
 
-    if (table[type].f.s.set_current (p))
+    if (start_plugin (type, p))
         return true;
 
-    AUDERR ("%s failed to start; falling back to %s.\n",
-     aud_plugin_get_name (p), aud_plugin_get_name (old));
+    AUDINFO ("Falling back to %s.\n", aud_plugin_get_name (old));
+    plugin_set_enabled (old, PluginEnabled::Primary);
 
-    plugin_set_failed (p);
-    plugin_set_enabled (p, false);
-    plugin_set_enabled (old, true);
-
-    if (table[type].f.s.set_current (old))
+    if (start_plugin (type, old))
         return false;
 
-    AUDERR ("%s failed to start.\n", aud_plugin_get_name (old));
     abort ();
 }
 
@@ -258,22 +278,17 @@ static bool enable_multi (PluginType type, PluginHandle * p, bool enable)
 
     if (enable)
     {
-        plugin_set_enabled (p, true);
+        plugin_set_enabled (p, PluginEnabled::Primary);
 
-        if (table[type].f.m.start && ! table[type].f.m.start (p))
-        {
-            AUDERR ("%s failed to start.\n", aud_plugin_get_name (p));
-            plugin_set_failed (p);
-            plugin_set_enabled (p, false);
+        if (table[type].f.m.start && ! start_plugin (type, p))
             return false;
-        }
 
         if (type == PluginType::Vis || type == PluginType::General)
             hook_call ("dock plugin enabled", p);
     }
     else
     {
-        plugin_set_enabled (p, false);
+        plugin_set_enabled (p, PluginEnabled::Disabled);
 
         if (type == PluginType::Vis || type == PluginType::General)
             hook_call ("dock plugin disabled", p);
@@ -287,7 +302,8 @@ static bool enable_multi (PluginType type, PluginHandle * p, bool enable)
 
 EXPORT bool aud_plugin_enable (PluginHandle * plugin, bool enable)
 {
-    if (! enable == ! aud_plugin_get_enabled (plugin))
+    PluginEnabled enabled = plugin_get_enabled (plugin);
+    if (enabled == (enable ? PluginEnabled::Primary : PluginEnabled::Disabled))
         return true;
 
     PluginType type = aud_plugin_get_type (plugin);
@@ -299,6 +315,35 @@ EXPORT bool aud_plugin_enable (PluginHandle * plugin, bool enable)
     }
 
     return enable_multi (type, plugin, enable);
+}
+
+bool plugin_enable_secondary (PluginHandle * plugin, bool enable)
+{
+    assert (aud_plugin_get_type (plugin) == PluginType::Output);
+
+    PluginEnabled enabled = plugin_get_enabled (plugin);
+    assert (enabled != PluginEnabled::Primary);
+
+    if (enabled == (enable ? PluginEnabled::Secondary : PluginEnabled::Disabled))
+        return true;
+
+    if (enable)
+    {
+        PluginHandle * old;
+        if ((old = output_plugin_get_secondary ()))
+            plugin_enable_secondary (old, false);
+
+        AUDINFO ("Enabling secondary output plugin %s.\n", aud_plugin_get_name (plugin));
+        plugin_set_enabled (plugin, PluginEnabled::Secondary);
+        return start_plugin (PluginType::Output, plugin, true);
+    }
+    else
+    {
+        AUDINFO ("Disabling secondary output plugin %s.\n", aud_plugin_get_name (plugin));
+        plugin_set_enabled (plugin, PluginEnabled::Disabled);
+        output_plugin_set_secondary (nullptr);
+        return true;
+    }
 }
 
 /* Miscellaneous plugin-related functions ... */

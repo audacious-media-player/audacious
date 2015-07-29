@@ -48,7 +48,7 @@ static const TupleFieldMap tuple_field_map[] = {
     {N_("Recording Year"), Tuple::Year, true},
     {N_("Recording Date"), Tuple::Date, true},
 
-    {"", Tuple::Invalid, false},
+    {nullptr, Tuple::Invalid, false},
     {N_("Technical"), Tuple::Invalid, false},
     {N_("Length"), Tuple::Length, false},
     {N_("MIME Type"), Tuple::MIMEType, false},
@@ -61,8 +61,8 @@ EXPORT InfoWidget::InfoWidget (QWidget * parent) : QTreeView (parent)
 {
     setModel (& m_model);
     header ()->hide ();
-    setEditTriggers (QAbstractItemView::SelectedClicked);
     setIndentation (0);
+    resizeColumnToContents (0);
 }
 
 EXPORT InfoWidget::~InfoWidget ()
@@ -73,6 +73,8 @@ EXPORT void InfoWidget::fillInfo (int playlist, int entry, const char * filename
  PluginHandle * decoder, bool updating_enabled)
 {
     m_model.setTupleData (tuple, String (filename), decoder);
+    reset();
+    setEditTriggers (updating_enabled ? QAbstractItemView::SelectedClicked : QAbstractItemView::NoEditTriggers);
 }
 
 EXPORT bool InfoWidget::updateFile ()

@@ -47,7 +47,6 @@ enum
     ID3_YEAR,
     ID3_GENRE,
     ID3_COMMENT,
-    ID3_PRIVATE,
     ID3_ENCODER,
     ID3_RECORDING_TIME,
     ID3_TXXX,
@@ -69,32 +68,12 @@ static const char * id3_frames[ID3_TAGS_NO] = {
     "TYER",
     "TCON",
     "COMM",
-    "PRIV",
     "TSSE",
     "TDRC",
     "TXXX",
     "RVA2",
     "APIC"
 };
-
-/*
-static const unsigned char PRIMARY_CLASS_MUSIC[16] = {0xBC, 0x7D, 0x60, 0xD1, 0x23,
- 0xE3, 0xE2, 0x4B, 0x86, 0xA1, 0x48, 0xA4, 0x2A, 0x28, 0x44, 0x1E};
-static const unsigned char PRIMARY_CLASS_AUDIO[16] = {0x29, 0x0F, 0xCD, 0x01, 0x4E,
- 0xDA, 0x57, 0x41, 0x89, 0x7B, 0x62, 0x75, 0xD5, 0x0C, 0x4F, 0x11};
-static const unsigned char SECONDARY_CLASS_AUDIOBOOK[16] = {0xEB, 0x6B, 0x23, 0xE0,
- 0x81, 0xC2, 0xDE, 0x4E, 0xA3, 0x6D, 0x7A, 0xF7, 0x6A, 0x3D, 0x45, 0xB5};
-static const unsigned char SECONDARY_CLASS_SPOKENWORD[16] = {0x13, 0x2A, 0x17, 0x3A,
- 0xD9, 0x2B, 0x31, 0x48, 0x83, 0x5B, 0x11, 0x4F, 0x6A, 0x95, 0x94, 0x3F};
-static const unsigned char SECONDARY_CLASS_NEWS[16] = {0x9B, 0xDB, 0x77, 0x66, 0xA0,
- 0xE5, 0x63, 0x40, 0xA1, 0xAD, 0xAC, 0xEB, 0x52, 0x84, 0x0C, 0xF1};
-static const unsigned char SECONDARY_CLASS_TALKSHOW[16] = {0x67, 0x4A, 0x82, 0x1B,
- 0x80, 0x3F, 0x3E, 0x4E, 0x9C, 0xDE, 0xF7, 0x36, 0x1B, 0x0F, 0x5F, 0x1B};
-static const unsigned char SECONDARY_CLASS_GAMES_CLIP[16] = {0x68, 0x33, 0x03, 0x00,
- 0x09, 0x50, 0xC3, 0x4A, 0xA8, 0x20, 0x5D, 0x2D, 0x09, 0xA4, 0xE7, 0xC1};
-static const unsigned char SECONDARY_CLASS_GAMES_SONG[16] = {0x31, 0xF7, 0x4F, 0xF2,
- 0xFC, 0x96, 0x0F, 0x4D, 0xA2, 0xF5, 0x5A, 0x34, 0x83, 0x68, 0x2B, 0x1A};
-*/
 
 #pragma pack(push) /* must be byte-aligned */
 #pragma pack(1)
@@ -479,50 +458,6 @@ static int get_frame_id (const char * key)
     return -1;
 }
 
-#if 0
-static void decode_private_info (Tuple & tuple, const unsigned char * data, int size)
-{
-    char * text = g_strndup ((const char *) data, size);
-
-    if (!strncmp(text, "WM/", 3))
-    {
-        char *separator = strchr(text, 0);
-        if (separator == nullptr)
-            goto DONE;
-
-        char * value = separator + 1;
-        if (!strncmp(text, "WM/MediaClassPrimaryID", 22))
-        {
-            if (!memcmp(value, PRIMARY_CLASS_MUSIC, 16))
-                tuple.set_str (-1, "media-class", "Music");
-            if (!memcmp(value, PRIMARY_CLASS_AUDIO, 16))
-                tuple.set_str (-1, "media-class", "Audio (non-music)");
-        } else if (!strncmp(text, "WM/MediaClassSecondaryID", 24))
-        {
-            if (!memcmp(value, SECONDARY_CLASS_AUDIOBOOK, 16))
-                tuple.set_str (-1, "media-class", "Audio Book");
-            if (!memcmp(value, SECONDARY_CLASS_SPOKENWORD, 16))
-                tuple.set_str (-1, "media-class", "Spoken Word");
-            if (!memcmp(value, SECONDARY_CLASS_NEWS, 16))
-                tuple.set_str (-1, "media-class", "News");
-            if (!memcmp(value, SECONDARY_CLASS_TALKSHOW, 16))
-                tuple.set_str (-1, "media-class", "Talk Show");
-            if (!memcmp(value, SECONDARY_CLASS_GAMES_CLIP, 16))
-                tuple.set_str (-1, "media-class", "Game Audio (clip)");
-            if (!memcmp(value, SECONDARY_CLASS_GAMES_SONG, 16))
-                tuple.set_str (-1, "media-class", "Game Soundtrack");
-        } else {
-            AUDDBG("Unrecognised tag %s (Windows Media) ignored\n", text);
-        }
-    } else {
-        AUDDBG("Unable to decode private data, skipping: %s\n", text);
-    }
-
-DONE:
-    g_free (text);
-}
-#endif
-
 static GenericFrame & add_generic_frame (int id, int size, FrameDict & dict)
 {
     String key (id3_frames[id]);
@@ -634,6 +569,8 @@ bool ID3v24TagModule::read_tag (VFSFile & handle, Tuple * ptuple, Index<char> * 
     Tuple trash; // dump data here if caller does not want the tuple
     Tuple & tuple = ptuple ? * ptuple : trash;
 
+    FrameList rva_frames;
+
     for (const char * pos = data.begin (); pos < data.end (); )
     {
         int frame_size;
@@ -681,13 +618,11 @@ bool ID3v24TagModule::read_tag (VFSFile & handle, Tuple * ptuple, Index<char> * 
           case ID3_COMMENT:
             id3_decode_comment (tuple, & frame[0], frame.len ());
             break;
-#if 0
-          case ID3_PRIVATE:
-            decode_private_info (tuple, & frame[0], frame.len ());
+          case ID3_TXXX:
+            id3_decode_txxx (tuple, & frame[0], frame.len ());
             break;
-#endif
           case ID3_RVA2:
-            id3_decode_rva (tuple, & frame[0], frame.len ());
+            rva_frames.append (std::move (frame));
             break;
           case ID3_APIC:
             if (image)
@@ -699,6 +634,13 @@ bool ID3v24TagModule::read_tag (VFSFile & handle, Tuple * ptuple, Index<char> * 
         }
 
         pos += frame_size;
+    }
+
+    /* only decode RVA2 frames if Replay Gain was not found in TXXX frames */
+    if (! tuple.is_set (Tuple::GainDivisor) && ! tuple.is_set (Tuple::PeakDivisor))
+    {
+        for (auto & rva : rva_frames)
+            id3_decode_rva (tuple, & rva[0], rva.len ());
     }
 
     return true;

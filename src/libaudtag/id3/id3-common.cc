@@ -275,6 +275,32 @@ void id3_decode_rva (Tuple & tuple, const char * data, int size)
     }
 }
 
+void id3_decode_txxx (Tuple & tuple, const char * data, int size)
+{
+    if (size < 1)
+        return;
+
+    int before_nul, after_nul;
+    id3_strnlen (data + 1, size - 1, data[0], & before_nul, & after_nul);
+
+    StringBuf key = id3_convert (data + 1, before_nul, data[0]);
+    StringBuf value = id3_convert (data + 1 + after_nul, size - 1 - after_nul, data[0]);
+
+    AUDDBG ("Key-value: %s = %s.\n", (const char *) key, (const char *) value);
+
+    if (key && value)
+    {
+        if (! strcmp_nocase (key, "REPLAYGAIN_TRACK_GAIN"))
+            tuple.set_gain (Tuple::TrackGain, Tuple::GainDivisor, value);
+        else if (! strcmp_nocase (key, "REPLAYGAIN_TRACK_PEAK"))
+            tuple.set_gain (Tuple::TrackPeak, Tuple::PeakDivisor, value);
+        else if (! strcmp_nocase (key, "REPLAYGAIN_ALBUM_GAIN"))
+            tuple.set_gain (Tuple::AlbumGain, Tuple::GainDivisor, value);
+        else if (! strcmp_nocase (key, "REPLAYGAIN_ALBUM_PEAK"))
+            tuple.set_gain (Tuple::AlbumPeak, Tuple::PeakDivisor, value);
+    }
+}
+
 Index<char> id3_decode_picture (const char * data, int size)
 {
     Index<char> buf;

@@ -17,9 +17,7 @@
  * the use of this software.
  */
 
-#include "drct.h"
 #include "output.h"
-#include "runtime.h"
 
 #include <math.h>
 #include <pthread.h>
@@ -30,6 +28,19 @@
 #include "internal.h"
 #include "plugin.h"
 #include "plugins.h"
+#include "runtime.h"
+
+/* With Audacious 3.7, there is some support for secondary output plugins.
+ * Notes and limitations:
+ *  - Only one secondary output can be in use at a time.
+ *  - A reduced API is used, consisting of only open_audio(), close_audio(), and
+ *    write_audio().
+ *  - The primary and secondary outputs are run from the same thread, with
+ *    timing controlled by the primary's period_wait().  To avoid dropouts in
+ *    the primary output, the secondary's write_audio() must be able to process
+ *    audio faster than realtime.
+ *  - The secondary's write_audio() is called in a tight loop until it has
+ *    caught up to the primary, and should never return a zero byte count. */
 
 static pthread_mutex_t mutex_major = PTHREAD_MUTEX_INITIALIZER;
 static pthread_mutex_t mutex_minor = PTHREAD_MUTEX_INITIALIZER;
@@ -46,7 +57,8 @@ static pthread_mutex_t mutex_minor = PTHREAD_MUTEX_INITIALIZER;
  * s_paused -> true or false, s_flushed -> true, s_resetting -> true */
 
 static bool s_input; /* input plugin connected */
-static bool s_output; /* output plugin connected */
+static bool s_output; /* primary output plugin connected */
+static bool s_secondary; /* secondary output plugin connected */
 static bool s_gain; /* replay gain info set */
 static bool s_paused; /* paused */
 static bool s_flushed; /* flushed, writes ignored until resume */
@@ -63,7 +75,9 @@ static pthread_cond_t cond_minor = PTHREAD_COND_INITIALIZER;
 #define SIGNAL_MINOR pthread_cond_broadcast (& cond_minor)
 #define WAIT_MINOR pthread_cond_wait (& cond_minor, & mutex_minor)
 
-static OutputPlugin * cop;
+static OutputPlugin * cop; /* current (primary) output plugin */
+static OutputPlugin * sop; /* secondary output plugin */
+
 static int seek_time;
 static String in_filename;
 static Tuple in_tuple;
@@ -72,9 +86,6 @@ static int out_format, out_channels, out_rate;
 static int out_bytes_per_sec, out_bytes_held;
 static int64_t in_frames, out_bytes_written;
 static ReplayGainInfo gain_info;
-
-static bool change_op;
-static OutputPlugin * new_op;
 
 static Index<float> buffer1;
 static Index<char> buffer2;
@@ -90,9 +101,12 @@ static inline int get_format ()
     }
 }
 
-/* assumes LOCK_ALL, s_output */
+/* assumes LOCK_ALL */
 static void cleanup_output ()
 {
+    if (! s_output)
+        return;
+
     if (! s_paused && ! s_flushed && ! s_resetting)
     {
         UNLOCK_MINOR;
@@ -110,11 +124,28 @@ static void cleanup_output ()
     vis_runner_start_stop (false, false);
 }
 
+/* assumes LOCK_ALL */
+static void cleanup_secondary ()
+{
+    if (! s_secondary)
+        return;
+
+    s_secondary = false;
+    sop->close_audio ();
+}
+
 /* assumes LOCK_ALL, s_output */
 static void apply_pause ()
 {
     cop->pause (s_paused);
     vis_runner_start_stop (true, s_paused);
+}
+
+/* assumes LOCK_ALL, s_input, valid out_channels/rate */
+static bool setup_plugin (OutputPlugin * op, int format)
+{
+    op->set_info (in_filename, in_tuple);
+    return op->open_audio (format, out_rate, out_channels);
 }
 
 /* assumes LOCK_ALL, s_input */
@@ -127,30 +158,47 @@ static void setup_output ()
     effect_start (channels, rate);
     eq_set_format (channels, rate);
 
-    if (s_output && format == out_format && channels == out_channels && rate ==
-     out_rate && ! cop->force_reopen)
-    {
-        AUDINFO ("Reusing output stream, format %d, %d channels, %d Hz.\n", format, channels, rate);
-        return;
-    }
+    AUDINFO ("Setup output, format %d, %d channels, %d Hz.\n", format, channels, rate);
 
-    if (s_output)
-        cleanup_output ();
+    bool keep_output = (s_output && format == out_format &&
+     channels == out_channels && rate == out_rate && ! cop->force_reopen);
 
-    if (! cop)
-        return;
-
-    cop->set_info (in_filename, in_tuple);
-    if (! cop->open_audio (format, rate, channels))
-        return;
-
-    AUDINFO ("Opened output stream, format %d, %d channels, %d Hz.\n", format, channels, rate);
-
-    s_output = true;
+    /* secondary output always uses FMT_FLOAT */
+    bool keep_secondary = (s_secondary && channels == out_channels &&
+     rate == out_rate && ! sop->force_reopen);
 
     out_format = format;
     out_channels = channels;
     out_rate = rate;
+
+    if (keep_output)
+        AUDINFO ("Reusing primary output stream.\n");
+    else
+    {
+        cleanup_output ();
+
+        if (cop && setup_plugin (cop, out_format))
+            s_output = true;
+        else
+        {
+            cleanup_secondary ();
+            return;
+        }
+    }
+
+    if (keep_secondary)
+        AUDINFO ("Reusing secondary output stream.\n");
+    else
+    {
+        cleanup_secondary ();
+
+        if (sop && setup_plugin (sop, FMT_FLOAT))
+            s_secondary = true;
+    }
+
+    if (keep_output)
+        return;
+
     out_bytes_per_sec = FMT_SIZEOF (format) * channels * rate;
     out_bytes_held = 0;
     out_bytes_written = 0;
@@ -218,6 +266,14 @@ static void write_output_raw (Index<float> & data)
 
     eq_filter (data.begin (), data.len ());
 
+    if (s_secondary)
+    {
+        auto begin = (const char *) data.begin ();
+        auto end = (const char *) data.end ();
+        while (begin < end)
+            begin += sop->write_audio (begin, end - begin);
+    }
+
     if (aud_get_bool (0, "software_volume_control"))
     {
         StereoVolume v = {aud_get_int (0, "sw_volume_left"), aud_get_int (0, "sw_volume_right")};
@@ -242,7 +298,7 @@ static void write_output_raw (Index<float> & data)
     {
         int written = cop->write_audio (out_data, out_bytes_held);
 
-        out_data = (char *) out_data + written;
+        out_data = (const char *) out_data + written;
         out_bytes_held -= written;
         out_bytes_written += written;
 
@@ -328,6 +384,16 @@ bool output_open_audio (const String & filename, const Tuple & tuple,
 
     UNLOCK_ALL;
     return true;
+}
+
+void output_set_tuple (const Tuple & tuple)
+{
+    LOCK_ALL;
+
+    if (s_input)
+        in_tuple = tuple.ref ();
+
+    UNLOCK_ALL;
 }
 
 void output_set_replay_gain (const ReplayGainInfo & info)
@@ -484,16 +550,19 @@ void output_drain ()
 {
     LOCK_ALL;
 
-    if (! s_input && s_output)
+    if (! s_input)
     {
-        finish_effects (true); /* second time for end of playlist */
+        if (s_output)
+            finish_effects (true); /* second time for end of playlist */
+
         cleanup_output ();
+        cleanup_secondary ();
     }
 
     UNLOCK_ALL;
 }
 
-EXPORT void aud_output_reset (OutputReset type)
+static void output_reset (OutputReset type, OutputPlugin * op)
 {
     LOCK_MINOR;
 
@@ -505,19 +574,28 @@ EXPORT void aud_output_reset (OutputReset type)
     UNLOCK_MINOR;
     LOCK_ALL;
 
-    if (s_output && type != OutputReset::EffectsOnly)
+    if (type != OutputReset::EffectsOnly)
+    {
         cleanup_output ();
+        cleanup_secondary ();
+    }
 
+    /* this does not reset the secondary plugin */
     if (type == OutputReset::ResetPlugin)
     {
         if (cop)
             cop->cleanup ();
 
-        if (change_op)
-            cop = new_op;
+        if (op)
+        {
+            /* secondary plugin may become primary */
+            if (op == sop)
+                sop = nullptr;
+            else if (! op->init ())
+                op = nullptr;
+        }
 
-        if (cop && ! cop->init ())
-            cop = nullptr;
+        cop = op;
     }
 
     if (s_input)
@@ -529,6 +607,11 @@ EXPORT void aud_output_reset (OutputReset type)
         SIGNAL_MINOR;
 
     UNLOCK_ALL;
+}
+
+EXPORT void aud_output_reset (OutputReset type)
+{
+    output_reset (type, cop);
 }
 
 EXPORT StereoVolume aud_drct_get_volume ()
@@ -568,15 +651,33 @@ PluginHandle * output_plugin_get_current ()
     return cop ? aud_plugin_by_header (cop) : nullptr;
 }
 
+PluginHandle * output_plugin_get_secondary ()
+{
+    return sop ? aud_plugin_by_header (sop) : nullptr;
+}
+
 bool output_plugin_set_current (PluginHandle * plugin)
 {
-    change_op = true;
-    new_op = plugin ? (OutputPlugin *) aud_plugin_get_header (plugin) : nullptr;
-    aud_output_reset (OutputReset::ResetPlugin);
+    output_reset (OutputReset::ResetPlugin, plugin ?
+     (OutputPlugin *) aud_plugin_get_header (plugin) : nullptr);
+    return (! plugin || cop);
+}
 
-    bool success = (! plugin || (new_op && cop == new_op));
-    change_op = false;
-    new_op = nullptr;
+bool output_plugin_set_secondary (PluginHandle * plugin)
+{
+    LOCK_ALL;
 
-    return success;
+    cleanup_secondary ();
+    if (sop)
+        sop->cleanup ();
+
+    sop = plugin ? (OutputPlugin *) aud_plugin_get_header (plugin) : nullptr;
+    if (sop && ! sop->init ())
+        sop = nullptr;
+
+    if (s_input && s_output && sop && setup_plugin (sop, FMT_FLOAT))
+        s_secondary = true;
+
+    UNLOCK_ALL;
+    return (! plugin || sop);
 }

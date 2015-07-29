@@ -29,6 +29,7 @@ void id3_associate_length (Tuple & tuple, const char * data, int size);
 void id3_decode_genre (Tuple & tuple, const char * data, int size);
 void id3_decode_comment (Tuple & tuple, const char * data, int size);
 void id3_decode_rva (Tuple & tuple, const char * data, int size);
+void id3_decode_txxx (Tuple & tuple, const char * data, int size);
 
 Index<char> id3_decode_picture (const char * data, int size);
 

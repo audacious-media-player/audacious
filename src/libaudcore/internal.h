@@ -54,6 +54,10 @@ void config_load ();
 void config_save ();
 void config_cleanup ();
 
+/* drct.cc */
+void record_init ();
+void record_cleanup ();
+
 /* effect.cc */
 void effect_start (int & channels, int & rate);
 Index<float> & effect_process (Index<float> & data);

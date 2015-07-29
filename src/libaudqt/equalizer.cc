@@ -22,7 +22,9 @@
 #include <QFrame>
 #include <QHBoxLayout>
 #include <QLabel>
+#include <QPainter>
 #include <QSlider>
+#include <QStyle>
 #include <QVBoxLayout>
 
 #include <libaudcore/equalizer.h>
@@ -32,10 +34,59 @@
 
 #include "libaudqt.h"
 
+class VLabel : public QLabel
+{
+public:
+    VLabel (const QString & text, QWidget * parent = nullptr) :
+        QLabel (text, parent) {}
+
+    QSize minimumSizeHint() const
+    {
+        QSize s = QLabel::minimumSizeHint ();
+        return QSize (s.height (), s.width ());
+    }
+
+    QSize sizeHint () const
+    {
+        QSize s = QLabel::sizeHint ();
+        return QSize (s.height (), s.width ());
+    }
+
+    void paintEvent (QPaintEvent *)
+    {
+        QPainter p (this);
+        p.rotate (270);
+
+        QRect box (-height (), 0, height (), width ());
+        style ()->drawItemText (& p, box, (int) alignment (), palette (),
+         isEnabled (), text (), QPalette::Foreground);
+    }
+};
+
 class EqualizerSlider : public QWidget
 {
 public:
-    EqualizerSlider (const char * label, QWidget * parent);
+    EqualizerSlider (const char * label, QWidget * parent) :
+        QWidget (parent),
+        slider (Qt::Vertical)
+    {
+        slider.setRange (-AUD_EQ_MAX_GAIN, AUD_EQ_MAX_GAIN);
+
+        auto layout = new QVBoxLayout (this);
+        auto value_label = new QLabel ("0");
+
+        value_label->setAlignment (Qt::AlignCenter);
+
+        layout->setContentsMargins (0, 0, 0, 0);
+        layout->addWidget (new VLabel (label, this), 1);
+        layout->addWidget (& slider);
+        layout->addWidget (value_label);
+
+        connect (& slider, & QSlider::valueChanged, [value_label] (int value) {
+            value_label->setText (QString::number (value));
+        });
+    }
+
     QSlider slider;
 };
 
@@ -77,9 +128,9 @@ EqualizerWindow::EqualizerWindow () :
     line->setFrameShadow (QFrame::Sunken);
     slider_layout->addWidget (line);
 
-    for (int i = 0; i < AUD_EQ_NBANDS; i++)
+    for (int i = 0; i < AUD_EQ_NBANDS; i ++)
     {
-        m_sliders[i] = new EqualizerSlider (names[i], this);
+        m_sliders[i] = new EqualizerSlider (_(names[i]), this);
         slider_layout->addWidget (m_sliders[i]);
     }
 
@@ -101,7 +152,7 @@ EqualizerWindow::EqualizerWindow () :
         aud_set_int (nullptr, "equalizer_preamp", value);
     });
 
-    for (int i = 0; i < AUD_EQ_NBANDS; i++)
+    for (int i = 0; i < AUD_EQ_NBANDS; i ++)
     {
         connect (& m_sliders[i]->slider, & QSlider::valueChanged, [i] (int value) {
             aud_eq_set_band (i, value);
@@ -125,31 +176,21 @@ void EqualizerWindow::updateBands ()
     double values[AUD_EQ_NBANDS];
     aud_eq_get_bands (values);
 
-    for (int i = 0; i < AUD_EQ_NBANDS; i++)
+    for (int i = 0; i < AUD_EQ_NBANDS; i ++)
         m_sliders[i]->slider.setValue (values[i]);
-}
-
-EqualizerSlider::EqualizerSlider (const char * label, QWidget * parent) :
-    QWidget (parent),
-    slider (Qt::Vertical)
-{
-    slider.setRange (-AUD_EQ_MAX_GAIN, AUD_EQ_MAX_GAIN);
-
-    auto layout = new QVBoxLayout (this);
-    layout->addWidget (& slider);
-    layout->addWidget (new QLabel (label, this));
 }
 
 static EqualizerWindow * s_equalizer = nullptr;
 
 namespace audqt {
 
-EXPORT void equalizer_show (void)
+EXPORT void equalizer_show ()
 {
     if (! s_equalizer)
     {
         s_equalizer = new EqualizerWindow;
         s_equalizer->setAttribute (Qt::WA_DeleteOnClose);
+        s_equalizer->layout ()->setSizeConstraint (QLayout::SetFixedSize);
 
         QObject::connect (s_equalizer, & QObject::destroyed, [] () {
             s_equalizer = nullptr;
@@ -159,7 +200,7 @@ EXPORT void equalizer_show (void)
     window_bring_to_front (s_equalizer);
 }
 
-EXPORT void equalizer_hide (void)
+EXPORT void equalizer_hide ()
 {
     delete s_equalizer;
 }

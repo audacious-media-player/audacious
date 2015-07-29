@@ -295,6 +295,7 @@ EXPORT void aud_init ()
 
     start_plugins_one ();
 
+    record_init ();
     scanner_init ();
     load_playlists ();
 }
@@ -335,6 +336,7 @@ EXPORT void aud_cleanup ()
 
     adder_cleanup ();
     scanner_cleanup ();
+    record_cleanup ();
 
     stop_plugins_one ();
 

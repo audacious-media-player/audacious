@@ -367,6 +367,7 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
  ArrayRef<PreferencesWidget> widgets, const char * domain)
 {
     GtkWidget * widget = nullptr, * child_box = nullptr;
+    bool disable_child = false;
     GSList * radio_btn_group = nullptr;
 
     for (const PreferencesWidget & w : widgets)
@@ -383,15 +384,15 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
                 gtk_widget_set_margin_left (child_box, 12);
                 gtk_box_pack_start ((GtkBox *) box, child_box, false, false, 0);
 
-                if (GTK_IS_TOGGLE_BUTTON (widget))
-                    gtk_widget_set_sensitive (child_box,
-                     gtk_toggle_button_get_active ((GtkToggleButton *) widget));
+                if (disable_child)
+                    gtk_widget_set_sensitive (child_box, false);
             }
         }
         else
             child_box = nullptr;
 
         widget = nullptr;
+        disable_child = false;
 
         if (radio_btn_group && w.type != PreferencesWidget::RadioButton)
             radio_btn_group = nullptr;
@@ -407,6 +408,7 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
 
             case PreferencesWidget::CheckButton:
                 widget = gtk_check_button_new_with_mnemonic (dgettext (domain, w.label));
+                disable_child = ! w.cfg.get_bool ();
                 widget_init (widget, & w);
                 break;
 

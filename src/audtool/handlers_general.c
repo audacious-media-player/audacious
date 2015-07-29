@@ -97,8 +97,8 @@ void get_handlers_list (int argc, char * * argv)
     }
 
     audtool_report ("");
-    audtool_report ("Handlers may be prefixed with `--' (GNU-style long-options) or not, your choice.");
-    audtool_report ("Report bugs to http://redmine.audacious-media-player.org/");
+    audtool_report ("Commands may be prefixed with '--' (GNU-style long options) or not, your choice.");
+    audtool_report ("Report bugs to http://redmine.audacious-media-player.org/projects/audacious");
 }
 
 void get_version (int argc, char * * argv)

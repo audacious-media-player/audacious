@@ -31,18 +31,27 @@ namespace audqt {
 EXPORT QPixmap art_request (const char * filename, unsigned int w, unsigned int h, bool want_hidpi)
 {
     const Index<char> * data = aud_art_request_data (filename);
+    QImage img;
 
-    if (! data)
+    if (data)
+    {
+	img = QImage::fromData ((const uchar *) data->begin (), data->len ());
+
+	aud_art_unref (filename);
+    }
+    else
     {
         QString fallback = QString (filename_build
          ({aud_get_path (AudPath::DataDir), "images", "album.png"}));
 
-        return QPixmap (fallback);
+        img = QImage (fallback);
     }
 
-    QImage img = QImage::fromData ((const uchar *) data->begin (), data->len ());
-
-    aud_art_unref (filename);
+    if (w == 0 && h == 0)
+    {
+	w = img.size().width();
+	h = img.size().height();
+    }
 
     if (! want_hidpi)
         return QPixmap::fromImage (img.scaled (w, h, Qt::KeepAspectRatio, Qt::SmoothTransformation));

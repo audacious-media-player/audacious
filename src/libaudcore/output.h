@@ -23,10 +23,12 @@
 #include <libaudcore/audio.h>
 #include <libaudcore/objects.h>
 
+class PluginHandle;
 class Tuple;
 
 bool output_open_audio (const String & filename, const Tuple & tuple,
  int format, int rate, int channels, int start_time);
+void output_set_tuple (const Tuple & tuple);
 void output_set_replay_gain (const ReplayGainInfo & info);
 bool output_write_audio (const void * data, int size, int stop_time);
 void output_flush (int time, bool force = false);
@@ -39,6 +41,8 @@ void output_close_audio ();
 void output_drain ();
 
 PluginHandle * output_plugin_get_current ();
+PluginHandle * output_plugin_get_secondary ();
 bool output_plugin_set_current (PluginHandle * plugin);
+bool output_plugin_set_secondary (PluginHandle * plugin);
 
 #endif

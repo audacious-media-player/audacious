@@ -24,6 +24,8 @@
 #include <libaudcore/index.h>
 #include <libaudcore/tuple.h>
 
+class PluginHandle;
+
 /* CAUTION: These functions are not thread safe. */
 
 /* --- PLAYBACK CONTROL --- */
@@ -64,6 +66,20 @@ void aud_drct_seek (int time);
  * entirely by setting both A and B to -1. */
 void aud_drct_set_ab_repeat (int a, int b);
 void aud_drct_get_ab_repeat (int & a, int & b);
+
+/* --- RECORDING CONTROL --- */
+
+/* Returns the output plugin that will be used for recording, or null if none is
+ * available.  Connect to the "enable record" hook to monitor changes. */
+PluginHandle * aud_drct_get_record_plugin ();
+
+/* Returns true if output recording is enabled, otherwise false.  Connect to the
+ * "enable record" hook to monitor changes. */
+bool aud_drct_get_record_enabled ();
+
+/* Enables or disables output recording.  If playback is active, recording
+ * begins immediately.  Returns true on success, otherwise false. */
+bool aud_drct_enable_record (bool enable);
 
 /* --- VOLUME CONTROL --- */
 
