@@ -141,11 +141,11 @@ static void apply_pause ()
     vis_runner_start_stop (true, s_paused);
 }
 
-/* assumes LOCK_ALL, s_input, valid out_format/channels/rate */
-static bool setup_plugin (OutputPlugin * op)
+/* assumes LOCK_ALL, s_input, valid out_channels/rate */
+static bool setup_plugin (OutputPlugin * op, int format)
 {
     op->set_info (in_filename, in_tuple);
-    return op->open_audio (out_format, out_rate, out_channels);
+    return op->open_audio (format, out_rate, out_channels);
 }
 
 /* assumes LOCK_ALL, s_input */
@@ -160,19 +160,16 @@ static void setup_output ()
 
     AUDINFO ("Setup output, format %d, %d channels, %d Hz.\n", format, channels, rate);
 
-    bool keep_output = false, keep_secondary = false;
+    bool keep_output = (s_output && format == out_format &&
+     channels == out_channels && rate == out_rate && ! cop->force_reopen);
 
-    if (format == out_format && channels == out_channels && rate == out_rate)
-    {
-        keep_output = s_output && ! cop->force_reopen;
-        keep_secondary = s_secondary && ! sop->force_reopen;
-    }
-    else
-    {
-        out_format = format;
-        out_channels = channels;
-        out_rate = rate;
-    }
+    /* secondary output always uses FMT_FLOAT */
+    bool keep_secondary = (s_secondary && channels == out_channels &&
+     rate == out_rate && ! sop->force_reopen);
+
+    out_format = format;
+    out_channels = channels;
+    out_rate = rate;
 
     if (keep_output)
         AUDINFO ("Reusing primary output stream.\n");
@@ -180,7 +177,7 @@ static void setup_output ()
     {
         cleanup_output ();
 
-        if (cop && setup_plugin (cop))
+        if (cop && setup_plugin (cop, out_format))
             s_output = true;
         else
         {
@@ -195,7 +192,7 @@ static void setup_output ()
     {
         cleanup_secondary ();
 
-        if (sop && setup_plugin (sop))
+        if (sop && setup_plugin (sop, FMT_FLOAT))
             s_secondary = true;
     }
 
@@ -269,6 +266,14 @@ static void write_output_raw (Index<float> & data)
 
     eq_filter (data.begin (), data.len ());
 
+    if (s_secondary)
+    {
+        auto begin = (const char *) data.begin ();
+        auto end = (const char *) data.end ();
+        while (begin < end)
+            begin += sop->write_audio (begin, end - begin);
+    }
+
     if (aud_get_bool (0, "software_volume_control"))
     {
         StereoVolume v = {aud_get_int (0, "sw_volume_left"), aud_get_int (0, "sw_volume_right")};
@@ -293,14 +298,7 @@ static void write_output_raw (Index<float> & data)
     {
         int written = cop->write_audio (out_data, out_bytes_held);
 
-        if (s_secondary)
-        {
-            int written2 = 0;
-            while (written2 < written)
-                written2 += sop->write_audio ((char *) out_data + written2, written - written2);
-        }
-
-        out_data = (char *) out_data + written;
+        out_data = (const char *) out_data + written;
         out_bytes_held -= written;
         out_bytes_written += written;
 
@@ -677,7 +675,7 @@ bool output_plugin_set_secondary (PluginHandle * plugin)
     if (sop && ! sop->init ())
         sop = nullptr;
 
-    if (s_input && s_output && sop && setup_plugin (sop))
+    if (s_input && s_output && sop && setup_plugin (sop, FMT_FLOAT))
         s_secondary = true;
 
     UNLOCK_ALL;
