@@ -154,7 +154,10 @@ void playback_set_info (int entry, Tuple && tuple)
 
         // don't call "tuple change" before "playback ready"
         if (is_ready ())
+        {
             event_queue ("tuple change", nullptr);
+            output_set_tuple (pb_info.tuple);
+        }
     }
 
     String title = pb_info.tuple.get_str (Tuple::FormattedTitle);

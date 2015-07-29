@@ -388,6 +388,16 @@ bool output_open_audio (const String & filename, const Tuple & tuple,
     return true;
 }
 
+void output_set_tuple (const Tuple & tuple)
+{
+    LOCK_ALL;
+
+    if (s_input)
+        in_tuple = tuple.ref ();
+
+    UNLOCK_ALL;
+}
+
 void output_set_replay_gain (const ReplayGainInfo & info)
 {
     LOCK_ALL;
