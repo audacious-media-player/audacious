@@ -347,7 +347,7 @@ EXPORT StringBuf str_decode_percent (const char * str, int len)
     return buf;
 }
 
-/* Percent-encodes <len> bytes of <str>.  If <len> is negative, decodes all of <str>. */
+/* Percent-encodes <len> bytes of <str>.  If <len> is negative, encodes all of <str>. */
 
 EXPORT StringBuf str_encode_percent (const char * str, int len)
 {
