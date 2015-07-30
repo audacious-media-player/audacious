@@ -50,7 +50,8 @@ namespace audqt {
  */
 
 /* base class which provides plumbing for hooks. */
-class HookableWidget {
+class HookableWidget
+{
 protected:
     HookableWidget (const PreferencesWidget * parent, const char * domain) :
         m_parent (parent), m_domain (domain)

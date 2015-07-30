@@ -31,14 +31,14 @@ namespace audqt {
 static aud::array<AudMenuID, Index<SmartPtr<MenuItem>>> items;
 static aud::array<AudMenuID, QMenu *> menus;
 
-static void show_prefs (void)
+static void show_prefs ()
 {
     prefswin_show_plugin_page (PluginType::General);
 }
 
 MenuItem default_menu_items[] = {
     MenuCommand ({N_("Plugins ...")}, show_prefs),
-    MenuSep (),
+    MenuSep ()
 };
 
 EXPORT QMenu * menu_get_by_id (AudMenuID id)

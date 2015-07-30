@@ -50,7 +50,7 @@ QVariant PluginListModel::headerData (int section, Qt::Orientation orientation, 
     return QVariant ();
 }
 
-QVariant PluginListModel::data (const QModelIndex &index, int role) const
+QVariant PluginListModel::data (const QModelIndex & index, int role) const
 {
     int row = index.row ();
     if (row < 0 || row >= m_list.len ())
@@ -80,7 +80,6 @@ QVariant PluginListModel::data (const QModelIndex &index, int role) const
             return QIcon::fromTheme ("preferences-system");
 
         break;
-
     }
 
     return QVariant ();
@@ -94,7 +93,7 @@ bool PluginListModel::setData (const QModelIndex &index, const QVariant &value, 
 
     if (role == Qt::CheckStateRole)
     {
-        aud_plugin_enable (m_list[row], value.toUInt() != Qt::Unchecked);
+        aud_plugin_enable (m_list[row], value.toUInt () != Qt::Unchecked);
     }
 
     emit dataChanged (index, index.sibling (index.row (), NumColumns - 1));

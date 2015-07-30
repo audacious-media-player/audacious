@@ -54,7 +54,8 @@ void prefs_populate (QBoxLayout * layout, ArrayRef<PreferencesWidget> widgets, c
             break;
 
         case PreferencesWidget::SpinButton:
-            switch (w.cfg.type) {
+            switch (w.cfg.type)
+            {
             case WidgetConfig::Int:
                 layout->addWidget (new IntegerWidget (& w, domain));
                 break;
@@ -62,7 +63,7 @@ void prefs_populate (QBoxLayout * layout, ArrayRef<PreferencesWidget> widgets, c
                 layout->addWidget (new DoubleWidget (& w, domain));
                 break;
             default:
-                AUDDBG("encountered unhandled configuration type %d for PreferencesWidget::SpinButton\n", w.cfg.type);
+                AUDDBG ("encountered unhandled configuration type %d for PreferencesWidget::SpinButton\n", w.cfg.type);
                 break;
             }
             break;
@@ -80,7 +81,7 @@ void prefs_populate (QBoxLayout * layout, ArrayRef<PreferencesWidget> widgets, c
 
         case PreferencesWidget::FontButton:
             /* XXX: unimplemented */
-            AUDDBG("font buttons are unimplemented\n");
+            AUDDBG ("font buttons are unimplemented\n");
             break;
 
         case PreferencesWidget::ComboBox:
@@ -105,7 +106,8 @@ void prefs_populate (QBoxLayout * layout, ArrayRef<PreferencesWidget> widgets, c
             layout->addWidget (new NotebookWidget (& w, domain));
             break;
 
-        case PreferencesWidget::Separator: {
+        case PreferencesWidget::Separator:
+        {
             QFrame * f = new QFrame;
             f->setFrameShape (w.data.separator.horizontal ? QFrame::HLine : QFrame::VLine);
             layout->addWidget (f);
@@ -114,7 +116,7 @@ void prefs_populate (QBoxLayout * layout, ArrayRef<PreferencesWidget> widgets, c
 
         /* stub handler */
         default:
-            AUDDBG("invoked stub handler for PreferencesWidget type %d\n", w.type);
+            AUDDBG ("invoked stub handler for PreferencesWidget type %d\n", w.type);
             break;
         }
     }

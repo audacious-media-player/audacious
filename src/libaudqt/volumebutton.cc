@@ -90,9 +90,9 @@ void VolumeButton::wheelEvent (QWheelEvent * event)
     int y = event->angleDelta ().y ();
 
     if (y < 0 && val > 0)
-        val--;
+        val --;
     else if (y > 0 && val < 100)
-        val++;
+        val ++;
 
     setVolume (val);
     m_slider->setValue (val);

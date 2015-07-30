@@ -45,8 +45,7 @@ enum LogEntryColumn {
     Count
 };
 
-struct LogEntry
-{
+struct LogEntry {
     audlog::Level level;
     const char * filename;
     unsigned int line;
@@ -222,7 +221,7 @@ static void log_handler (audlog::Level level, const char * file, int line,
     l->line = line;
     l->function = func;
 
-    l->message = strdup(message);
+    l->message = strdup (message);
     l->message[strlen (l->message) - 1] = 0;
 
     entries.append (SmartPtr<LogEntry> (l));

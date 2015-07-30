@@ -40,7 +40,7 @@ public:
     VLabel (const QString & text, QWidget * parent = nullptr) :
         QLabel (text, parent) {}
 
-    QSize minimumSizeHint() const
+    QSize minimumSizeHint () const
     {
         QSize s = QLabel::minimumSizeHint ();
         return QSize (s.height (), s.width ());

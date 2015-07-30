@@ -39,7 +39,8 @@
 
 namespace audqt {
 
-class InfoWindow : public QDialog {
+class InfoWindow : public QDialog
+{
 public:
     InfoWindow (QWidget * parent = nullptr);
 

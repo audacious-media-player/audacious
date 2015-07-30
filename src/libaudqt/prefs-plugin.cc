@@ -120,21 +120,21 @@ EXPORT void plugin_prefs (PluginHandle * ph)
         bbox->button (QDialogButtonBox::Ok)->setText (translate_str (N_("_Set")));
         bbox->button (QDialogButtonBox::Cancel)->setText (translate_str (N_("_Cancel")));
 
-        QObject::connect (bbox, &QDialogButtonBox::accepted, [=] () {
+        QObject::connect (bbox, & QDialogButtonBox::accepted, [=] () {
             if (p->apply)
                 p->apply ();
 
             cw->root->hide ();
         });
 
-        QObject::connect (bbox, &QDialogButtonBox::rejected, cw->root, &QWidget::hide);
+        QObject::connect (bbox, & QDialogButtonBox::rejected, cw->root, & QWidget::hide);
     }
     else
     {
         bbox->setStandardButtons (QDialogButtonBox::Close);
         bbox->button (QDialogButtonBox::Close)->setText (translate_str (N_("_Close")));
 
-        QObject::connect (bbox, &QDialogButtonBox::rejected, cw->root, &QWidget::hide);
+        QObject::connect (bbox, & QDialogButtonBox::rejected, cw->root, & QWidget::hide);
     }
 
     vbox->addWidget (bbox);
