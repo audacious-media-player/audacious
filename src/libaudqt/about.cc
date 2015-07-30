@@ -34,7 +34,7 @@
 static QTabWidget * buildCreditsNotebook (QWidget * parent)
 {
     const char * data_dir = aud_get_path (AudPath::DataDir);
-    const char * titles[2] = {_("Credits"), _("License")};
+    const char * titles[2] = {N_("Credits"), N_("License")};
     const char * filenames[2] = {"AUTHORS", "COPYING"};
 
     auto tabs = new QTabWidget (parent);
@@ -49,7 +49,7 @@ static QTabWidget * buildCreditsNotebook (QWidget * parent)
 
         auto edit = new QPlainTextEdit (in.readAll ().trimmed (), parent);
         edit->setReadOnly (true);
-        tabs->addTab (edit, titles[i]);
+        tabs->addTab (edit, _(titles[i]));
 
         f.close ();
     }
