@@ -79,6 +79,7 @@ static const char * const core_defaults[] = {
  "sw_volume_right", "100",
 
  /* playback */
+ "album_shuffle", "FALSE",
  "no_playlist_advance", "FALSE",
  "repeat", "FALSE",
  "shuffle", "FALSE",
