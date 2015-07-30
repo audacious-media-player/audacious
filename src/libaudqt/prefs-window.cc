@@ -642,7 +642,7 @@ static QStackedWidget * s_category_notebook = nullptr;
 static void create_prefs_window ()
 {
     s_prefswin = new QDialog;
-    s_prefswin->setWindowTitle (_("Audacious Settings"));
+    s_prefswin->setWindowTitle (_("Settings"));
     s_prefswin->setAttribute (Qt::WA_DeleteOnClose);
 
     QObject::connect (s_prefswin, & QObject::destroyed, [] () {
