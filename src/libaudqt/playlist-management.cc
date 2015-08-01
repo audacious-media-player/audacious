@@ -85,16 +85,16 @@ static QDialog * buildDeleteDialog (int playlist)
     buttonbox->addButton (cancel, QDialogButtonBox::RejectRole);
 
     int id = aud_playlist_get_unique_id (playlist);
-    QObject::connect (buttonbox, &QDialogButtonBox::accepted, [dialog, id] () {
+    QObject::connect (buttonbox, & QDialogButtonBox::accepted, [dialog, id] () {
         int list = aud_playlist_by_unique_id (id);
         if (list >= 0)
             aud_playlist_delete (list);
         dialog->close ();
     });
 
-    QObject::connect (buttonbox, &QDialogButtonBox::rejected, dialog, &QDialog::close);
+    QObject::connect (buttonbox, & QDialogButtonBox::rejected, dialog, & QDialog::close);
 
-    QObject::connect (skip_prompt, &QCheckBox::stateChanged, [] (int state) {
+    QObject::connect (skip_prompt, & QCheckBox::stateChanged, [] (int state) {
         aud_set_bool ("audgui", "no_confirm_playlist_delete", (state == Qt::Checked));
     });
 

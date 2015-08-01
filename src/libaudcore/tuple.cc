@@ -747,7 +747,7 @@ EXPORT void Tuple::generate_fallbacks ()
         char * second = (first && first > buf) ? split_folder (buf) : nullptr;
 
         // skip common strings and avoid duplicates
-        for (auto skip : (const char *[]) {"~", "music", artist, album})
+        for (auto skip : (const char *[]) {"~", "music", artist, album, get_str (Genre)})
         {
             if (first && skip && ! strcmp_nocase (first, skip))
             {

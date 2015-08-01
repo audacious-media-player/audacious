@@ -106,8 +106,8 @@ static const TitleFieldTag title_field_tags[] = {
     { N_("Title")      , "${title}" },
     { N_("Track number"), "${track-number}" },
     { N_("Genre")      , "${genre}" },
-    { N_("File name")   , "${file-name}" },
-    { N_("File path")   , "${file-path}" },
+    { N_("File name")  , "${file-name}" },
+    { N_("File path")  , "${file-path}" },
     { N_("Date")       , "${date}" },
     { N_("Year")       , "${year}" },
     { N_("Comment")    , "${comment}" },
@@ -142,8 +142,8 @@ static int iface_combo_selected;
 static QWidget * iface_prefs_box;
 
 static ArrayRef<ComboItem> iface_combo_fill ();
-static void iface_combo_changed (void);
-static void * iface_create_prefs_box (void);
+static void iface_combo_changed ();
+static void * iface_create_prefs_box ();
 
 static const PreferencesWidget appearance_page_widgets[] = {
     WidgetLabel (N_("<b>Interface Settings</b>")),
@@ -159,10 +159,10 @@ static QPushButton * output_config_button;
 static QPushButton * output_about_button;
 
 static ArrayRef<ComboItem> output_combo_fill ();
-static void output_combo_changed (void);
-static void * output_create_config_button (void);
-static void * output_create_about_button (void);
-static void output_bit_depth_changed (void);
+static void output_combo_changed ();
+static void * output_create_config_button ();
+static void * output_create_about_button ();
+static void output_bit_depth_changed ();
 
 static const PreferencesWidget output_combo_widgets[] = {
     WidgetCombo (N_("Output plugin:"),
@@ -251,8 +251,8 @@ static const PreferencesWidget chardet_elements[] = {
 };
 
 
-static void send_title_change (void);
-static void * create_titlestring_table (void);
+static void send_title_change ();
+static void * create_titlestring_table ();
 
 static const PreferencesWidget playlist_page_widgets[] = {
     WidgetLabel (N_("<b>Behavior</b>")),
@@ -338,7 +338,7 @@ static const char * const titlestring_preset_names[TITLESTRING_NPRESETS] = {
     N_("ALBUM - TITLE")
 };
 
-static void * create_titlestring_table (void)
+static void * create_titlestring_table ()
 {
     QWidget * w = new QWidget;
     QGridLayout * l = new QGridLayout (w);
@@ -349,7 +349,7 @@ static void * create_titlestring_table (void)
     QComboBox * cbox = new QComboBox (w);
     l->addWidget (cbox, 0, 1);
 
-    for (int i = 0; i < TITLESTRING_NPRESETS; i++)
+    for (int i = 0; i < TITLESTRING_NPRESETS; i ++)
         cbox->addItem (translate_str (titlestring_preset_names [i]), i);
     cbox->addItem (_("Custom"), TITLESTRING_NPRESETS);
     cbox->setCurrentIndex (TITLESTRING_NPRESETS);
@@ -362,12 +362,10 @@ static void * create_titlestring_table (void)
 
     String format = aud_get_str (nullptr, "generic_title_format");
     le->setText ((const char *) format);
-    for (int i = 0; i < TITLESTRING_NPRESETS; i++)
+    for (int i = 0; i < TITLESTRING_NPRESETS; i ++)
     {
         if (! strcmp (titlestring_presets [i], format))
-        {
             cbox->setCurrentIndex (i);
-        }
     }
 
     QObject::connect (le, &QLineEdit::textChanged, [=] (const QString & text) {
@@ -391,12 +389,12 @@ static void * create_titlestring_table (void)
     for (auto & t : title_field_tags)
     {
         QAction * a = mnu_fields->addAction (_(t.name));
-        QObject::connect (a, &QAction::triggered, [=] () {
+        QObject::connect (a, & QAction::triggered, [=] () {
             le->insert (t.tag);
         });
     }
 
-    QObject::connect (btn_mnu, &QAbstractButton::clicked, [=] () {
+    QObject::connect (btn_mnu, & QAbstractButton::clicked, [=] () {
         mnu_fields->popup (btn_mnu->mapToGlobal (QPoint (0, 0)));
     });
 
@@ -414,13 +412,13 @@ static Index<ComboItem> fill_plugin_combo (PluginType type)
     return elems;
 }
 
-static void send_title_change (void)
+static void send_title_change ()
 {
     if (aud_drct_get_ready ())
         hook_call ("title change", nullptr);
 }
 
-static void iface_fill_prefs_box (void)
+static void iface_fill_prefs_box ()
 {
     Plugin * header = (Plugin *) aud_plugin_get_header (aud_plugin_get_current (PluginType::Iface));
     if (header && header->info.prefs)
@@ -433,7 +431,7 @@ static void iface_fill_prefs_box (void)
     }
 }
 
-static void iface_combo_changed (void)
+static void iface_combo_changed ()
 {
     /* prevent audqt from being shut down during the switch */
     restarting = true;
@@ -462,14 +460,14 @@ static ArrayRef<ComboItem> iface_combo_fill ()
     return {iface_combo_elements.begin (), iface_combo_elements.len ()};
 }
 
-static void * iface_create_prefs_box (void)
+static void * iface_create_prefs_box ()
 {
     iface_prefs_box = new QWidget;
     iface_fill_prefs_box ();
     return iface_prefs_box;
 }
 
-static void output_combo_changed (void)
+static void output_combo_changed ()
 {
     PluginHandle * plugin = aud_plugin_list (PluginType::Output)[output_combo_selected];
 
@@ -480,21 +478,21 @@ static void output_combo_changed (void)
     }
 }
 
-static void * output_create_config_button (void)
+static void * output_create_config_button ()
 {
     bool enabled = aud_plugin_has_configure (aud_plugin_get_current (PluginType::Output));
 
     output_config_button = new QPushButton (translate_str (N_("_Settings")));
     output_config_button->setEnabled (enabled);
 
-    QObject::connect (output_config_button, &QAbstractButton::clicked, [=] (bool) {
+    QObject::connect (output_config_button, & QAbstractButton::clicked, [=] (bool) {
         plugin_prefs (aud_plugin_get_current (PluginType::Output));
     });
 
     return output_config_button;
 }
 
-static void * output_create_about_button (void)
+static void * output_create_about_button ()
 {
     bool enabled = aud_plugin_has_about (aud_plugin_get_current (PluginType::Output));
 
@@ -520,7 +518,7 @@ static ArrayRef<ComboItem> output_combo_fill ()
     return {output_combo_elements.begin (), output_combo_elements.len ()};
 }
 
-static void output_bit_depth_changed (void)
+static void output_bit_depth_changed ()
 {
     aud_output_reset (OutputReset::ReopenStream);
 }
@@ -612,12 +610,12 @@ static void create_plugin_category_page (PluginType category_id, const char * ca
 
         switch (index.column ())
         {
-            case PluginListModel::AboutColumn:
-                plugin_about (list[row]);
-                break;
-            case PluginListModel::SettingsColumn:
-                plugin_prefs (list[row]);
-                break;
+        case PluginListModel::AboutColumn:
+            plugin_about (list[row]);
+            break;
+        case PluginListModel::SettingsColumn:
+            plugin_prefs (list[row]);
+            break;
         }
     });
 }
@@ -642,7 +640,7 @@ static QStackedWidget * s_category_notebook = nullptr;
 static void create_prefs_window ()
 {
     s_prefswin = new QDialog;
-    s_prefswin->setWindowTitle (_("Audacious Settings"));
+    s_prefswin->setWindowTitle (_("Settings"));
     s_prefswin->setAttribute (Qt::WA_DeleteOnClose);
 
     QObject::connect (s_prefswin, & QObject::destroyed, [] () {
@@ -650,7 +648,6 @@ static void create_prefs_window ()
     });
 
     QVBoxLayout * vbox_parent = new QVBoxLayout (s_prefswin);
-
     vbox_parent->setSpacing (0);
     vbox_parent->setContentsMargins (0, 0, 0, 0);
 
@@ -676,7 +673,7 @@ static void create_prefs_window ()
     bbox->button (QDialogButtonBox::Close)->setText (translate_str (N_("_Close")));
     child_vbox->addWidget (bbox);
 
-    QObject::connect (bbox, &QDialogButtonBox::rejected, s_prefswin, &QObject::deleteLater);
+    QObject::connect (bbox, & QDialogButtonBox::rejected, s_prefswin, & QObject::deleteLater);
 
     QSignalMapper * mapper = new QSignalMapper (s_prefswin);
     const char * data_dir = aud_get_path (AudPath::DataDir);
@@ -684,7 +681,7 @@ static void create_prefs_window ()
     QObject::connect (mapper, static_cast <void (QSignalMapper::*)(int)>(&QSignalMapper::mapped),
                       s_category_notebook, static_cast <void (QStackedWidget::*)(int)>(&QStackedWidget::setCurrentIndex));
 
-    for (int i = 0; i < CATEGORY_COUNT; i++)
+    for (int i = 0; i < CATEGORY_COUNT; i ++)
     {
         QIcon ico (QString (filename_build ({data_dir, "images", categories[i].icon_path})));
         QAction * a = new QAction (ico, translate_str (categories[i].name), toolbar);
@@ -693,7 +690,7 @@ static void create_prefs_window ()
 
         mapper->setMapping (a, i);
 
-        QObject::connect (a, &QAction::triggered, mapper, static_cast <void (QSignalMapper::*)()>(&QSignalMapper::map));
+        QObject::connect (a, & QAction::triggered, mapper, static_cast <void (QSignalMapper::*)()>(& QSignalMapper::map));
     }
 }
 

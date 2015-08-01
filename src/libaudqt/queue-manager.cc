@@ -40,12 +40,13 @@
 
 namespace audqt {
 
-class QueueManagerModel : public QAbstractListModel {
+class QueueManagerModel : public QAbstractListModel
+{
 public:
     QueueManagerModel (QObject * parent = nullptr) : QAbstractListModel (parent) {}
 
-    int rowCount (const QModelIndex & parent = QModelIndex()) const;
-    int columnCount (const QModelIndex & parent = QModelIndex()) const;
+    int rowCount (const QModelIndex & parent = QModelIndex ()) const;
+    int columnCount (const QModelIndex & parent = QModelIndex ()) const;
     QVariant data (const QModelIndex & index, int role = Qt::DisplayRole) const;
 
     void reset ();
@@ -88,7 +89,8 @@ void QueueManagerModel::reset ()
     endResetModel ();
 }
 
-class QueueManagerDialog : public QDialog {
+class QueueManagerDialog : public QDialog
+{
 public:
     QueueManagerDialog (QWidget * parent = nullptr);
 
@@ -115,8 +117,8 @@ QueueManagerDialog::QueueManagerDialog (QWidget * parent) :
     m_btn_unqueue.setText (translate_str (N_("_Unqueue")));
     m_btn_close.setText (translate_str (N_("_Close")));
 
-    connect (& m_btn_close, &QAbstractButton::clicked, this, &QWidget::hide);
-    connect (& m_btn_unqueue, &QAbstractButton::clicked, this, &QueueManagerDialog::removeSelected);
+    connect (& m_btn_close, & QAbstractButton::clicked, this, & QWidget::hide);
+    connect (& m_btn_unqueue, & QAbstractButton::clicked, this, & QueueManagerDialog::removeSelected);
 
     m_buttonbox.addButton (& m_btn_close, QDialogButtonBox::AcceptRole);
     m_buttonbox.addButton (& m_btn_unqueue, QDialogButtonBox::AcceptRole);

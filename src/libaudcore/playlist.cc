@@ -2030,45 +2030,89 @@ bool playlist_prev_song (int playlist_num)
 
 static bool shuffle_next (PlaylistData * playlist)
 {
-    int choice = 0;
-    Entry * found = nullptr;
+    bool by_album = aud_get_bool (nullptr, "album_shuffle");
 
-    for (auto & entry : playlist->entries)
+    // helper #1: determine whether two entries are in the same album
+    auto same_album = [] (const Tuple & a, const Tuple & b)
     {
-        if (! entry->shuffle_num)
-            choice ++;
-        else if (playlist->position &&
-         entry->shuffle_num > playlist->position->shuffle_num &&
-         (! found || entry->shuffle_num < found->shuffle_num))
-            found = entry.get ();
-    }
+        String album = a.get_str (Tuple::Album);
+        return (album && album == b.get_str (Tuple::Album));
+    };
 
-    if (found)
+    // helper #2: determine whether an entry is among the shuffle choices
+    auto is_choice = [&] (Entry * prev, Entry * entry)
     {
-        set_position (playlist, found, false);
-        return true;
-    }
+        return (! entry->shuffle_num) && (! by_album || ! prev ||
+         prev->shuffle_num || ! same_album (prev->tuple, entry->tuple));
+    };
 
-    if (! choice)
-        return false;
-
-    choice = rand () % choice;
-
-    for (auto & entry : playlist->entries)
+    if (playlist->position)
     {
-        if (! entry->shuffle_num)
+        // step #1: check to see if the shuffle order is already established
+        Entry * next = nullptr;
+
+        for (auto & entry : playlist->entries)
         {
-            if (! choice)
-            {
-                set_position (playlist, entry.get (), true);
-                break;
-            }
+            if (entry->shuffle_num > playlist->position->shuffle_num &&
+             (! next || entry->shuffle_num < next->shuffle_num))
+                next = entry.get ();
+        }
 
-            choice --;
+        if (next)
+        {
+            set_position (playlist, next, false);
+            return true;
+        }
+
+        // step #2: check to see if we should advance to the next entry
+        if (by_album && playlist->position->number + 1 < playlist->entries.len ())
+        {
+            next = playlist->entries[playlist->position->number + 1].get ();
+
+            if (! next->shuffle_num && same_album (playlist->position->tuple, next->tuple))
+            {
+                set_position (playlist, next, true);
+                return true;
+            }
         }
     }
 
-    return true;
+    // step #3: count the number of possible shuffle choices
+    int choices = 0;
+    Entry * prev = nullptr;
+
+    for (auto & entry : playlist->entries)
+    {
+        if (is_choice (prev, entry.get ()))
+            choices ++;
+
+        prev = entry.get ();
+    }
+
+    if (! choices)
+        return false;
+
+    // step #4: pick one of those choices by random and find it again
+    choices = rand () % choices;
+    prev = nullptr;
+
+    for (auto & entry : playlist->entries)
+    {
+        if (is_choice (prev, entry.get ()))
+        {
+            if (! choices)
+            {
+                set_position (playlist, entry.get (), true);
+                return true;
+            }
+
+            choices --;
+        }
+
+        prev = entry.get ();
+    }
+
+    return false;  // never reached
 }
 
 static void shuffle_reset (PlaylistData * playlist)

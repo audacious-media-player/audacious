@@ -49,7 +49,7 @@ BooleanWidget::BooleanWidget (const PreferencesWidget * parent, const char * dom
     update ();
 
     QObject::connect (this, & QCheckBox::stateChanged, [parent] (int state) {
-        parent->cfg.set_bool ((state != Qt::Unchecked));
+        parent->cfg.set_bool (state != Qt::Unchecked);
     });
 }
 
@@ -203,7 +203,8 @@ ComboBoxWidget::ComboBoxWidget (const PreferencesWidget * parent, const char * d
     QObject::connect (m_combobox, signal, [this] (int idx) {
         QVariant data = m_combobox->itemData (idx);
 
-        switch (m_parent->cfg.type) {
+        switch (m_parent->cfg.type)
+        {
         case WidgetConfig::Int:
             m_parent->cfg.set_int (data.toInt ());
             break;
@@ -226,7 +227,8 @@ void ComboBoxWidget::update ()
     m_combobox->clear ();
 
     /* add combobox items */
-    switch (m_parent->cfg.type) {
+    switch (m_parent->cfg.type)
+    {
     case WidgetConfig::Int:
         for (const ComboItem & item : items)
             m_combobox->addItem (dgettext (m_domain, item.label), item.num);
@@ -240,11 +242,13 @@ void ComboBoxWidget::update ()
     }
 
     /* set selected index */
-    switch (m_parent->cfg.type) {
-    case WidgetConfig::Int: {
+    switch (m_parent->cfg.type)
+    {
+    case WidgetConfig::Int:
+    {
         int num = m_parent->cfg.get_int ();
 
-        for (int i = 0; i < items.len; i++)
+        for (int i = 0; i < items.len; i ++)
         {
             if (items.data[i].num == num)
             {
@@ -255,10 +259,11 @@ void ComboBoxWidget::update ()
 
         break;
     }
-    case WidgetConfig::String: {
+    case WidgetConfig::String:
+    {
         String str = m_parent->cfg.get_string ();
 
-        for (int i = 0; i < items.len; i++)
+        for (int i = 0; i < items.len; i ++)
         {
             if (! strcmp_safe (items.data[i].str, str))
             {

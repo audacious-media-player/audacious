@@ -73,7 +73,7 @@ EXPORT void InfoWidget::fillInfo (int playlist, int entry, const char * filename
  PluginHandle * decoder, bool updating_enabled)
 {
     m_model.setTupleData (tuple, String (filename), decoder);
-    reset();
+    reset ();
     setEditTriggers (updating_enabled ? QAbstractItemView::SelectedClicked : QAbstractItemView::NoEditTriggers);
 }
 

@@ -32,14 +32,14 @@ static const char website[] = "http://audacious-media-player.org";
 
 static GtkWidget * create_credits_notebook (const char * credits, const char * license)
 {
-    const char * titles[2] = {_("Credits"), _("License")};
+    const char * titles[2] = {N_("Credits"), N_("License")};
     const char * text[2] = {credits, license};
 
     GtkWidget * notebook = gtk_notebook_new ();
 
     for (int i = 0; i < 2; i ++)
     {
-        GtkWidget * label = gtk_label_new (titles[i]);
+        GtkWidget * label = gtk_label_new (_(titles[i]));
 
         GtkWidget * scrolled = gtk_scrolled_window_new (nullptr, nullptr);
         gtk_widget_set_size_request (scrolled, -1, 2 * audgui_get_dpi ());

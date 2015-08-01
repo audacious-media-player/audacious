@@ -35,9 +35,9 @@ EXPORT QPixmap art_request (const char * filename, unsigned int w, unsigned int 
 
     if (data)
     {
-	img = QImage::fromData ((const uchar *) data->begin (), data->len ());
+        img = QImage::fromData ((const uchar *) data->begin (), data->len ());
 
-	aud_art_unref (filename);
+        aud_art_unref (filename);
     }
     else
     {
@@ -49,8 +49,8 @@ EXPORT QPixmap art_request (const char * filename, unsigned int w, unsigned int 
 
     if (w == 0 && h == 0)
     {
-	w = img.size().width();
-	h = img.size().height();
+        w = img.size ().width ();
+        h = img.size ().height ();
     }
 
     if (! want_hidpi)
