@@ -18,7 +18,8 @@ SRCS = about.cc			\
        prefs-window.cc		\
        prefs-pluginlist-model.cc  \
        queue-manager.cc		\
-       util.cc                  \
+       url-opener.cc		\
+       util.cc			\
        volumebutton.cc
 
 INCLUDES = libaudqt.h iface.h volumebutton.h info-widget.h menu.h
