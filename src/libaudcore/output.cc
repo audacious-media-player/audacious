@@ -54,7 +54,8 @@ static pthread_mutex_t mutex_minor = PTHREAD_MUTEX_INITIALIZER;
 
 /* State variables.  State changes that are allowed between LOCK_MINOR and
  * UNLOCK_MINOR (all others must take place between LOCK_ALL and UNLOCK_ALL):
- * s_paused -> true or false, s_flushed -> true, s_resetting -> true */
+ * s_paused -> true or false, s_flushed -> true, s_resetting -> true,
+ * s_secondary -> true or false */
 
 static bool s_input; /* input plugin connected */
 static bool s_output; /* primary output plugin connected */
@@ -124,7 +125,7 @@ static void cleanup_output ()
     vis_runner_start_stop (false, false);
 }
 
-/* assumes LOCK_ALL */
+/* assumes LOCK_MINOR */
 static void cleanup_secondary ()
 {
     if (! s_secondary)
@@ -141,7 +142,8 @@ static void apply_pause ()
     vis_runner_start_stop (true, s_paused);
 }
 
-/* assumes LOCK_ALL, s_input, valid out_channels/rate */
+/* assumes LOCK_ALL (LOCK_MINOR for secondary),
+ * s_input, valid out_channels/rate */
 static bool setup_plugin (OutputPlugin * op, int format)
 {
     op->set_info (in_filename, in_tuple);
@@ -665,7 +667,7 @@ bool output_plugin_set_current (PluginHandle * plugin)
 
 bool output_plugin_set_secondary (PluginHandle * plugin)
 {
-    LOCK_ALL;
+    LOCK_MINOR;
 
     cleanup_secondary ();
     if (sop)
@@ -678,6 +680,6 @@ bool output_plugin_set_secondary (PluginHandle * plugin)
     if (s_input && s_output && sop && setup_plugin (sop, FMT_FLOAT))
         s_secondary = true;
 
-    UNLOCK_ALL;
+    UNLOCK_MINOR;
     return (! plugin || sop);
 }
