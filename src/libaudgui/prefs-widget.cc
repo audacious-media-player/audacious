@@ -370,6 +370,9 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
     bool disable_child = false;
     GSList * radio_btn_group = nullptr;
 
+    int indent = 0;
+    int spacing = 0;
+
     for (const PreferencesWidget & w : widgets)
     {
         GtkWidget * label = nullptr;
@@ -394,7 +397,7 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
             child_box = nullptr;
 
         GtkWidget * alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
-        gtk_alignment_set_padding ((GtkAlignment *) alignment, 6, 0, 12, 0);
+        gtk_alignment_set_padding ((GtkAlignment *) alignment, spacing, 0, indent, 0);
         gtk_box_pack_start ((GtkBox *) (child_box ? child_box : box), alignment, false, false, 0);
 
         widget = nullptr;
@@ -419,8 +422,13 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
             case PreferencesWidget::Label:
             {
                 if (strstr (w.label, "<b>"))
-                    gtk_alignment_set_padding ((GtkAlignment *) alignment,
-                     (& w == widgets.data) ? 0 : 12, 0, 0, 0);
+                {
+                    /* headings get double spacing and no indent */
+                    gtk_alignment_set_padding ((GtkAlignment *) alignment, 2 * spacing, 0, 0, 0);
+
+                    /* set indent for items below the heading */
+                    indent = 12;
+                }
 
                 GtkWidget * icon = nullptr;
                 create_label (& w, & label, & icon, domain);
@@ -566,13 +574,10 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
         }
 
         if (widget)
-        {
-            /* use uniform spacing for horizontal boxes */
-            if (gtk_orientable_get_orientation ((GtkOrientable *) box) ==
-             GTK_ORIENTATION_HORIZONTAL)
-                gtk_alignment_set_padding ((GtkAlignment *) alignment, 0, 0, 0, 0);
-
             gtk_container_add ((GtkContainer *) alignment, widget);
-        }
+
+        /* wait till after first widget to set item spacing */
+        if (gtk_orientable_get_orientation ((GtkOrientable *) box) == GTK_ORIENTATION_VERTICAL)
+            spacing = 6;
     }
 }
