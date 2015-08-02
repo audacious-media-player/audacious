@@ -59,6 +59,9 @@ void equalizer_hide ();
 /* fileopener.cc */
 void fileopener_show (FileMode mode);
 
+/* url-opener.cc */
+void urlopener_show (bool open);
+
 /* util.cc */
 void init ();
 void run ();

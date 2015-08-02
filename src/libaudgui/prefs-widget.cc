@@ -370,6 +370,9 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
     bool disable_child = false;
     GSList * radio_btn_group = nullptr;
 
+    int indent = 0;
+    int spacing = 0;
+
     for (const PreferencesWidget & w : widgets)
     {
         GtkWidget * label = nullptr;
@@ -397,7 +400,8 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
         if (radio_btn_group && w.type != PreferencesWidget::RadioButton)
             radio_btn_group = nullptr;
 
-        int pad_left = 12, pad_top = 6;
+        int pad_left = indent;
+        int pad_top = spacing;
 
         switch (w.type)
         {
@@ -414,6 +418,16 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
 
             case PreferencesWidget::Label:
             {
+                if (strstr (w.label, "<b>"))
+                {
+                    /* headings get double spacing and no indent */
+                    pad_left = 0;
+                    pad_top = 2 * spacing;
+
+                    /* set indent for items below the heading */
+                    indent = 12;
+                }
+
                 GtkWidget * icon = nullptr;
                 create_label (& w, & label, & icon, domain);
 
@@ -425,12 +439,6 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
                 }
                 else
                     widget = label;
-
-                if (strstr (w.label, "<b>"))
-                {
-                    pad_left = 0;
-                    pad_top = (& w == widgets.data) ? 0 : 12;
-                }
 
                 break;
             }
@@ -565,15 +573,13 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
 
         if (widget)
         {
-            /* use uniform spacing for horizontal boxes */
-            if (gtk_orientable_get_orientation ((GtkOrientable *) box) !=
-             GTK_ORIENTATION_HORIZONTAL)
-            {
-                gtk_widget_set_margin_left (widget, pad_left);
-                gtk_widget_set_margin_top (widget, pad_top);
-            }
-
+            gtk_widget_set_margin_left (widget, pad_left);
+            gtk_widget_set_margin_top (widget, pad_top);
             gtk_box_pack_start ((GtkBox *) (child_box ? child_box : box), widget, false, false, 0);
         }
+
+        /* wait till after first widget to set item spacing */
+        if (gtk_orientable_get_orientation ((GtkOrientable *) box) == GTK_ORIENTATION_VERTICAL)
+            spacing = 6;
     }
 }
