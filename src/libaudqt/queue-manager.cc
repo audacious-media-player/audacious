@@ -70,7 +70,7 @@ QVariant QueueManagerModel::data (const QModelIndex & index, int role) const
         int entry = aud_playlist_queue_get_entry (list, index.row ());
 
         if (index.column () == 0)
-            return entry;
+            return entry + 1;
         else
         {
             Tuple tuple = aud_playlist_entry_get_tuple (list, entry, Playlist::Guess);
@@ -129,13 +129,13 @@ QueueManagerDialog::QueueManagerDialog (QWidget * parent) :
     m_treeview.setIndentation (0);
     m_treeview.setModel (& m_model);
     m_treeview.setSelectionMode (QAbstractItemView::ExtendedSelection);
-    m_treeview.header ()->hide ();
+    m_treeview.setHeaderHidden (true);
 
     setLayout (& m_layout);
     setWindowTitle (_("Queue Manager"));
 
     QItemSelectionModel * model = m_treeview.selectionModel ();
-    connect (model, &QItemSelectionModel::selectionChanged, [=] (const QItemSelection & selected, const QItemSelection & deselected) {
+    connect (model, & QItemSelectionModel::selectionChanged, [=] (const QItemSelection & selected, const QItemSelection & deselected) {
         int list = aud_playlist_get_active ();
 
         for (auto & index : selected.indexes ())
