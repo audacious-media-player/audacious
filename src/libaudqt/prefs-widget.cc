@@ -48,14 +48,19 @@ BooleanWidget::BooleanWidget (const PreferencesWidget * parent, const char * dom
 {
     update ();
 
-    QObject::connect (this, & QCheckBox::stateChanged, [parent] (int state) {
-        parent->cfg.set_bool (state != Qt::Unchecked);
+    QObject::connect (this, & QCheckBox::stateChanged, [this] (int state) {
+        m_parent->cfg.set_bool (state != Qt::Unchecked);
+        if (m_child_layout)
+            enable_layout (m_child_layout, state != Qt::Unchecked);
     });
 }
 
 void BooleanWidget::update ()
 {
-    setCheckState (m_parent->cfg.get_bool () ? Qt::Checked : Qt::Unchecked);
+    bool on = m_parent->cfg.get_bool ();
+    setCheckState (on ? Qt::Checked : Qt::Unchecked);
+    if (m_child_layout)
+        enable_layout (m_child_layout, on);
 }
 
 /* integer (radio button) */
@@ -280,7 +285,7 @@ void ComboBoxWidget::update ()
 }
 
 /* layout widgets */
-BoxWidget::BoxWidget (const PreferencesWidget * parent, const char * domain)
+BoxWidget::BoxWidget (const PreferencesWidget * parent, const char * domain, bool horizontal_layout)
 {
     QBoxLayout * layout;
     if (parent->data.box.horizontal)
@@ -292,6 +297,10 @@ BoxWidget::BoxWidget (const PreferencesWidget * parent, const char * domain)
     layout->setSpacing (4);
 
     prefs_populate (layout, parent->data.box.widgets, domain);
+
+    /* only add stretch if the orientation does not match the enclosing layout */
+    if (parent->data.box.horizontal != horizontal_layout)
+        layout->addStretch (1);
 }
 
 TableWidget::TableWidget (const PreferencesWidget * parent, const char * domain)
@@ -314,6 +323,8 @@ NotebookWidget::NotebookWidget (const PreferencesWidget * parent, const char * d
         layout->setSpacing (4);
 
         prefs_populate (layout, tab.widgets, domain);
+        layout->addStretch (1);
+
         addTab (widget, translate_str (tab.name, domain));
     }
 }

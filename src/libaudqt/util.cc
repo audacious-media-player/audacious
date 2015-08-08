@@ -75,6 +75,19 @@ EXPORT void cleanup ()
     qapp = nullptr;
 }
 
+EXPORT void enable_layout (QLayout * layout, bool enabled)
+{
+    int count = layout->count ();
+    for (int i = 0; i < count; i ++)
+    {
+        auto item = layout->itemAt (i);
+        if (QLayout * layout2 = item->layout ())
+            enable_layout (layout2, enabled);
+        if (QWidget * widget = item->widget ())
+            widget->setEnabled (enabled);
+    }
+}
+
 EXPORT void clear_layout (QLayout * layout)
 {
     while (QLayoutItem * item = layout->takeAt (0))

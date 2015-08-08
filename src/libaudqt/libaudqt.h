@@ -68,6 +68,7 @@ void run ();
 void quit ();
 void cleanup ();
 
+void enable_layout (QLayout * layout, bool enabled);
 void clear_layout (QLayout * layout);
 void window_bring_to_front (QWidget * win);
 void simple_message (const char * title, const char * text);

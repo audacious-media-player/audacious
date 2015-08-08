@@ -111,6 +111,7 @@ EXPORT void plugin_prefs (PluginHandle * ph)
 
     vbox->setSpacing (4);
     prefs_populate (vbox, p->widgets, header->info.domain);
+    vbox->addStretch (1);
 
     QDialogButtonBox * bbox = new QDialogButtonBox;
 
