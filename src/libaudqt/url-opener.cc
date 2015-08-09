@@ -87,8 +87,7 @@ static QDialog * buildUrlDialog (bool open)
     QObject::connect (buttonbox, & QDialogButtonBox::rejected, dialog, & QDialog::close);
 
     QObject::connect (buttonbox, & QDialogButtonBox::accepted, [dialog, combobox, open] () {
-        QString text = combobox->currentText ();
-        const char * url = text.toUtf8 ().constData ();
+        QByteArray url = combobox->currentText ().toUtf8 ();
 
         if (open)
             aud_drct_pl_open (url);
