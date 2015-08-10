@@ -118,6 +118,7 @@ EXPORT QMenu * menu_build (ArrayRef<MenuItem> menu_items, const char * domain, Q
 EXPORT QMenuBar * menubar_build (ArrayRef<MenuItem> menu_items, const char * domain, QWidget * parent)
 {
     QMenuBar * m = new QMenuBar (parent);
+    m->setContextMenuPolicy (Qt::PreventContextMenu);
 
     for (auto & it : menu_items)
         m->addAction (new MenuAction (it, domain, parent));
