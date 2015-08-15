@@ -32,12 +32,12 @@
 
 namespace audqt {
 
-bool restarting;
+static int init_count;
 static QApplication * qapp;
 
 EXPORT void init ()
 {
-    if (restarting)
+    if (init_count ++)
         return;
 
     static char app_name[] = "audacious";
@@ -62,7 +62,7 @@ EXPORT void quit ()
 
 EXPORT void cleanup ()
 {
-    if (restarting)
+    if (-- init_count)
         return;
 
     aboutwindow_hide ();

@@ -55,8 +55,6 @@
 
 namespace audqt {
 
-extern bool restarting;
-
 struct Category {
     const char * icon_path;
     const char * name;
@@ -434,7 +432,7 @@ static void iface_fill_prefs_box ()
 static void iface_combo_changed ()
 {
     /* prevent audqt from being shut down during the switch */
-    restarting = true;
+    init ();
 
     if (QLayout * layout = iface_prefs_box->layout ())
     {
@@ -445,7 +443,7 @@ static void iface_combo_changed ()
     aud_plugin_enable (aud_plugin_list (PluginType::Iface)[iface_combo_selected], true);
 
     iface_fill_prefs_box ();
-    restarting = false;
+    cleanup ();
 }
 
 static ArrayRef<ComboItem> iface_combo_fill ()
