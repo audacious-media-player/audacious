@@ -46,7 +46,7 @@ EXPORT void init ()
 
     qapp = new QApplication (dummy_argc, dummy_argv);
     qapp->setAttribute (Qt::AA_UseHighDpiPixmaps);
-    qapp->setApplicationDisplayName ("Audacious");
+    qapp->setApplicationName (_("Audacious"));
     qapp->setWindowIcon (QIcon::fromTheme (app_name));
 }
 
