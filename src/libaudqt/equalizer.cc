@@ -139,6 +139,7 @@ EqualizerWindow::EqualizerWindow () :
     layout->addWidget (slider_container);
 
     setWindowTitle (_("Equalizer"));
+    m_onoff_checkbox.setFocus ();
 
     updateActive ();
     updatePreamp ();
