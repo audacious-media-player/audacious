@@ -160,7 +160,7 @@ uint32_t syncsafe32 (uint32_t x);
 class TempFile
 {
 public:
-    bool open_for (VFSFile & file);
+    bool create ();
     bool copy_from (VFSFile & file, int64_t offset, int64_t size);
     bool replace (VFSFile & file);
 

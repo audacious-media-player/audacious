@@ -676,7 +676,7 @@ bool ID3v24TagModule::write_tag (VFSFile & f, const Tuple & tuple)
     int64_t mp3_size = offset ? offset : -1;
 
     TempFile temp;
-    if (! temp.open_for (f))
+    if (! temp.create ())
         return false;
 
     /* write empty header (will be overwritten later) */

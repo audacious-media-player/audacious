@@ -183,7 +183,7 @@ uint32_t syncsafe32 (uint32_t x)
      0xfe00000) << 3);
 }
 
-bool TempFile::open_for (VFSFile & file)
+bool TempFile::create ()
 {
     StringBuf tempname = filename_build ({g_get_tmp_dir (), "audacious-temp-XXXXXX"});
 
