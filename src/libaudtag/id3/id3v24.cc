@@ -675,26 +675,26 @@ bool ID3v24TagModule::write_tag (VFSFile & f, const Tuple & tuple)
     int64_t mp3_offset = offset ? 0 : header_size + data_size + footer_size;
     int64_t mp3_size = offset ? offset : -1;
 
-    TempFile temp = TempFile ();
-    if (! open_temp_file_for (& temp, f))
+    TempFile temp;
+    if (! temp.open_for (f))
         return false;
 
     /* write empty header (will be overwritten later) */
-    if (! write_header (temp.fd, version, 0))
+    if (! write_header (temp.fd (), version, 0))
         return false;
 
     /* write tag data */
-    data_size = write_all_frames (temp.fd, dict, version);
+    data_size = write_all_frames (temp.fd (), dict, version);
 
     /* copy non-tag data */
-    if (! copy_region_to_temp_file (& temp, f, mp3_offset, mp3_size))
+    if (! temp.copy_from (f, mp3_offset, mp3_size))
         return false;
 
     /* go back to beginning and write real header */
-    if (lseek (temp.fd, 0, SEEK_SET) < 0 || ! write_header (temp.fd, version, data_size))
+    if (lseek (temp.fd (), 0, SEEK_SET) < 0 || ! write_header (temp.fd (), version, data_size))
         return false;
 
-    if (! replace_with_temp_file (& temp, f))
+    if (! temp.replace (f))
         return false;
 
     return true;

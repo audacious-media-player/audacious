@@ -17,6 +17,7 @@
  * the use of this software.
  */
 
+#include <assert.h>
 #include <unistd.h>
 
 #include <glib/gstdio.h>
@@ -182,20 +183,21 @@ uint32_t syncsafe32 (uint32_t x)
      0xfe00000) << 3);
 }
 
-bool open_temp_file_for (TempFile * temp, VFSFile & file)
+bool TempFile::open_for (VFSFile & file)
 {
     StringBuf tempname = filename_build ({g_get_tmp_dir (), "audacious-temp-XXXXXX"});
 
-    temp->fd = g_mkstemp (tempname);
-    if (temp->fd < 0)
+    assert (m_fd < 0);
+    m_fd = g_mkstemp (tempname);
+    if (m_fd < 0)
         return false;
 
-    temp->name = String (tempname);
+    m_name = String (tempname);
 
     return true;
 }
 
-bool copy_region_to_temp_file (TempFile * temp, VFSFile & file, int64_t offset, int64_t size)
+bool TempFile::copy_from (VFSFile & file, int64_t offset, int64_t size)
 {
     if (file.fseek (offset, VFS_SEEK_SET) < 0)
         return false;
@@ -225,7 +227,7 @@ bool copy_region_to_temp_file (TempFile * temp, VFSFile & file, int64_t offset, 
         int64_t written = 0;
         while (written < readsize)
         {
-            int64_t writesize = write (temp->fd, buf + written, readsize - written);
+            int64_t writesize = write (m_fd, buf + written, readsize - written);
             if (writesize <= 0)
                 return false;
 
@@ -236,9 +238,9 @@ bool copy_region_to_temp_file (TempFile * temp, VFSFile & file, int64_t offset, 
     return true;
 }
 
-bool replace_with_temp_file (TempFile * temp, VFSFile & file)
+bool TempFile::replace (VFSFile & file)
 {
-    if (lseek (temp->fd, 0, SEEK_SET) < 0)
+    if (lseek (m_fd, 0, SEEK_SET) < 0)
         return false;
 
     if (file.fseek (0, VFS_SEEK_SET) < 0)
@@ -251,7 +253,7 @@ bool replace_with_temp_file (TempFile * temp, VFSFile & file)
 
     while (1)
     {
-        int64_t readsize = read (temp->fd, buf, sizeof buf);
+        int64_t readsize = read (m_fd, buf, sizeof buf);
         if (readsize < 0)
             return false;
 
@@ -262,8 +264,13 @@ bool replace_with_temp_file (TempFile * temp, VFSFile & file)
             return false;
     }
 
-    close (temp->fd);
-    g_unlink (temp->name);
-
     return true;
+}
+
+TempFile::~TempFile ()
+{
+    if (m_fd >= 0)
+        close (m_fd);
+    if (m_name)
+        g_unlink (m_name);
 }

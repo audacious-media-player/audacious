@@ -157,13 +157,21 @@ const char *convert_numericgenre_to_text(int numericgenre);
 uint32_t unsyncsafe32 (uint32_t x);
 uint32_t syncsafe32 (uint32_t x);
 
-struct TempFile {
-    String name;
-    int fd;
-};
+class TempFile
+{
+public:
+    bool open_for (VFSFile & file);
+    bool copy_from (VFSFile & file, int64_t offset, int64_t size);
+    bool replace (VFSFile & file);
 
-bool open_temp_file_for (TempFile * temp, VFSFile & file);
-bool copy_region_to_temp_file (TempFile * temp, VFSFile & file, int64_t offset, int64_t size);
-bool replace_with_temp_file (TempFile * temp, VFSFile & file);
+    int fd ()
+        { return m_fd; }
+
+    ~TempFile ();
+
+private:
+    String m_name;
+    int m_fd = -1;
+};
 
 #endif /* TAGUTIL_H */
