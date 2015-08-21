@@ -103,15 +103,15 @@ VFSImpl * vfs_local_fopen (const char * uri, const char * mode, String & error)
     {
         int errsave = errno;
 
-#ifndef _WIN32
-        if (errsave == ENOENT && ! g_get_charset (nullptr))
+        /* try converting to UTF-8, this can solve issues such as:
+         * 1) legacy filename used on UTF-8 system
+         * 2) UTF-8 filesystem mounted on legacy system */
+        if (errsave == ENOENT)
         {
-            /* on a legacy system, try opening as UTF-8 */
-            StringBuf path2 = uri_to_filename (uri, false);
+            StringBuf path2 = str_to_utf8 (uri_to_filename (uri, false));
             if (path2 && strcmp (path, path2))
                 stream = g_fopen (path2, mode2);
         }
-#endif
 
         if (! stream)
         {
