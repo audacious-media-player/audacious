@@ -70,6 +70,7 @@ static QDialog * buildUrlDialog (bool open)
     buttonbox->setContentsMargins (0, 10, 0, 0);
 
     auto layout = new QVBoxLayout (dialog);
+    layout->setSizeConstraint (QLayout::SetFixedSize);
     layout->addWidget (label);
     layout->addWidget (combobox);
     layout->addWidget (buttonbox);
