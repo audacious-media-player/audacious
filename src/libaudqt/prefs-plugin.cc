@@ -53,7 +53,7 @@ EXPORT void plugin_about (PluginHandle * ph)
 
     AUDDBG ("name = %s\n", name);
 
-    simple_message (str_printf (_("About %s"), name), text);
+    simple_message (QMessageBox::Information, str_printf (_("About %s"), name), text);
 }
 
 struct ConfigWindow {

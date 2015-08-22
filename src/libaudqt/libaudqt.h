@@ -20,6 +20,7 @@
 #ifndef LIBAUDQT_H
 #define LIBAUDQT_H
 
+#include <QMessageBox>
 #include <QString>
 #include <libaudcore/objects.h>
 
@@ -71,7 +72,7 @@ void cleanup ();
 void enable_layout (QLayout * layout, bool enabled);
 void clear_layout (QLayout * layout);
 void window_bring_to_front (QWidget * win);
-void simple_message (const char * title, const char * text);
+void simple_message (QMessageBox::Icon icon, const char * title, const char * text);
 QString translate_str (const char * str, const char * domain);
 
 #ifdef PACKAGE
