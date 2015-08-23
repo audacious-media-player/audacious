@@ -18,9 +18,6 @@
  */
 
 #include <QApplication>
-#include <QDialog>
-#include <QDialogButtonBox>
-#include <QLabel>
 #include <QPushButton>
 #include <QVBoxLayout>
 
@@ -119,26 +116,15 @@ EXPORT void window_bring_to_front (QWidget * window)
 
 EXPORT void simple_message (const char * title, const char * text)
 {
-    QDialog msgbox;
-    QVBoxLayout vbox;
-    QLabel label;
-    QDialogButtonBox bbox;
+    simple_message (title, text, QMessageBox::NoIcon);
+}
 
-    label.setText (text);
-    label.setTextInteractionFlags (Qt::TextSelectableByMouse);
-
-    bbox.setStandardButtons (QDialogButtonBox::Close);
-    bbox.button (QDialogButtonBox::Close)->setText (translate_str (N_("_Close")));
-
-    QObject::connect (& bbox, & QDialogButtonBox::rejected, & msgbox, & QDialog::reject);
-
-    vbox.setSizeConstraint (QLayout::SetFixedSize);
-    vbox.addWidget (& label);
-    vbox.addWidget (& bbox);
-
-    msgbox.setWindowTitle (title);
-    msgbox.setLayout (& vbox);
-    msgbox.exec ();
+EXPORT void simple_message (const char * title, const char * text, QMessageBox::Icon icon)
+{
+    auto msgbox = new QMessageBox (icon, title, text, QMessageBox::Close);
+    msgbox->button (QMessageBox::Close)->setText (translate_str (N_("_Close")));
+    msgbox->setAttribute (Qt::WA_DeleteOnClose);
+    msgbox->show ();
 }
 
 /* translate GTK+ accelerators and also handle dgettext() */
