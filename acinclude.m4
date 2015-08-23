@@ -193,7 +193,7 @@ AC_ARG_ENABLE(qt,
  USE_QT=$enableval, USE_QT=no)
 
 if test $USE_QT = yes ; then
-    PKG_CHECK_MODULES([QT], [Qt5Core Qt5Gui Qt5Widgets])
+    PKG_CHECK_MODULES([QT], [Qt5Core Qt5Gui Qt5Widgets >= 5.2])
     AC_DEFINE(USE_QT, 1, [Define if Qt support enabled])
 
     # needed if Qt was built with -reduce-relocations
