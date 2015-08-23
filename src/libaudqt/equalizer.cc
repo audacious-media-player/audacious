@@ -71,16 +71,16 @@ public:
         slider (Qt::Vertical)
     {
         slider.setRange (-AUD_EQ_MAX_GAIN, AUD_EQ_MAX_GAIN);
+        slider.setTickInterval (AUD_EQ_MAX_GAIN >> 1);
+        slider.setTickPosition (QSlider::TicksBothSides);
 
         auto layout = new QVBoxLayout (this);
         auto value_label = new QLabel ("0");
 
-        value_label->setAlignment (Qt::AlignCenter);
-
         layout->setContentsMargins (0, 0, 0, 0);
-        layout->addWidget (new VLabel (label, this), 1);
-        layout->addWidget (& slider);
-        layout->addWidget (value_label);
+        layout->addWidget (new VLabel (label, this), 1, Qt::AlignCenter);
+        layout->addWidget (& slider, 0, Qt::AlignCenter);
+        layout->addWidget (value_label, 0, Qt::AlignCenter);
 
         connect (& slider, & QSlider::valueChanged, [value_label] (int value) {
             value_label->setText (QString::number (value));
@@ -139,6 +139,7 @@ EqualizerWindow::EqualizerWindow () :
     layout->addWidget (slider_container);
 
     setWindowTitle (_("Equalizer"));
+    m_onoff_checkbox.setFocus ();
 
     updateActive ();
     updatePreamp ();

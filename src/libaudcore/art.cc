@@ -114,9 +114,9 @@ static void request_callback (ScanRequest * request)
     pthread_mutex_lock (& mutex);
 
     ArtItem * item = art_items.lookup (request->filename);
-    assert (item);
 
-    finish_item (item, std::move (request->image_data), std::move (request->image_file));
+    if (item)
+        finish_item (item, std::move (request->image_data), std::move (request->image_file));
 
     pthread_mutex_unlock (& mutex);
 }

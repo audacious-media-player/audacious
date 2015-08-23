@@ -55,8 +55,6 @@
 
 namespace audqt {
 
-extern bool restarting;
-
 struct Category {
     const char * icon_path;
     const char * name;
@@ -434,7 +432,7 @@ static void iface_fill_prefs_box ()
 static void iface_combo_changed ()
 {
     /* prevent audqt from being shut down during the switch */
-    restarting = true;
+    init ();
 
     if (QLayout * layout = iface_prefs_box->layout ())
     {
@@ -445,7 +443,7 @@ static void iface_combo_changed ()
     aud_plugin_enable (aud_plugin_list (PluginType::Iface)[iface_combo_selected], true);
 
     iface_fill_prefs_box ();
-    restarting = false;
+    cleanup ();
 }
 
 static ArrayRef<ComboItem> iface_combo_fill ()
@@ -523,65 +521,17 @@ static void output_bit_depth_changed ()
     aud_output_reset (OutputReset::ReopenStream);
 }
 
-static void create_appearance_category (QStackedWidget * category_notebook)
+static void create_category (QStackedWidget * notebook, ArrayRef<PreferencesWidget> widgets)
 {
     QWidget * w = new QWidget;
     QVBoxLayout * vbox = new QVBoxLayout (w);
 
     vbox->setContentsMargins (0, 0, 0, 0);
     vbox->setSpacing (4);
-    prefs_populate (vbox, appearance_page_widgets, nullptr);
+    prefs_populate (vbox, widgets, nullptr);
+    vbox->addStretch (1);
 
-    category_notebook->addWidget (w);
-}
-
-static void create_audio_category (QStackedWidget * category_notebook)
-{
-    QWidget * audio_page = new QWidget;
-    QVBoxLayout * audio_page_vbox = new QVBoxLayout;
-
-    audio_page_vbox->setContentsMargins (0, 0, 0, 0);
-    audio_page_vbox->setSpacing (4);
-    prefs_populate (audio_page_vbox, audio_page_widgets, nullptr);
-
-    audio_page->setLayout (audio_page_vbox);
-    category_notebook->addWidget (audio_page);
-}
-
-static void create_connectivity_category (QStackedWidget * category_notebook)
-{
-    QWidget * connectivity_page = new QWidget;
-    QVBoxLayout * connectivity_page_vbox = new QVBoxLayout (connectivity_page);
-
-    connectivity_page_vbox->setContentsMargins (0, 0, 0, 0);
-    connectivity_page_vbox->setSpacing (4);
-    prefs_populate (connectivity_page_vbox, connectivity_page_widgets, nullptr);
-
-    category_notebook->addWidget (connectivity_page);
-}
-
-static void create_playlist_category (QStackedWidget * category_notebook)
-{
-    QWidget * playlist_page = new QWidget;
-    QVBoxLayout * playlist_page_vbox = new QVBoxLayout (playlist_page);
-
-    playlist_page_vbox->setContentsMargins (0, 0, 0, 0);
-    playlist_page_vbox->setSpacing (4);
-    prefs_populate (playlist_page_vbox, playlist_page_widgets, nullptr);
-
-    category_notebook->addWidget (playlist_page);
-}
-
-static void create_song_info_category (QStackedWidget * category_notebook)
-{
-    QWidget * song_info_page = new QWidget;
-    QVBoxLayout * song_info_page_vbox = new QVBoxLayout (song_info_page);
-
-    song_info_page_vbox->setContentsMargins (0, 0, 0, 0);
-    song_info_page_vbox->setSpacing (4);
-    prefs_populate (song_info_page_vbox, song_info_page_widgets, nullptr);
-
-    category_notebook->addWidget (song_info_page);
+    notebook->addWidget (w);
 }
 
 static void create_plugin_category_page (PluginType category_id, const char * category_name, QTabWidget * parent)
@@ -640,7 +590,7 @@ static QStackedWidget * s_category_notebook = nullptr;
 static void create_prefs_window ()
 {
     s_prefswin = new QDialog;
-    s_prefswin->setWindowTitle (_("Settings"));
+    s_prefswin->setWindowTitle (_("Audacious Settings"));
     s_prefswin->setAttribute (Qt::WA_DeleteOnClose);
 
     QObject::connect (s_prefswin, & QObject::destroyed, [] () {
@@ -662,11 +612,11 @@ static void create_prefs_window ()
     s_category_notebook = new QStackedWidget;
     child_vbox->addWidget (s_category_notebook);
 
-    create_appearance_category (s_category_notebook);
-    create_audio_category (s_category_notebook);
-    create_connectivity_category (s_category_notebook);
-    create_playlist_category (s_category_notebook);
-    create_song_info_category (s_category_notebook);
+    create_category (s_category_notebook, appearance_page_widgets);
+    create_category (s_category_notebook, audio_page_widgets);
+    create_category (s_category_notebook, connectivity_page_widgets);
+    create_category (s_category_notebook, playlist_page_widgets);
+    create_category (s_category_notebook, song_info_page_widgets);
     create_plugin_category (s_category_notebook);
 
     QDialogButtonBox * bbox = new QDialogButtonBox (QDialogButtonBox::Close);

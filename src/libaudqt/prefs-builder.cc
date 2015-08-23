@@ -32,10 +32,63 @@ namespace audqt {
 
 void prefs_populate (QBoxLayout * layout, ArrayRef<PreferencesWidget> widgets, const char * domain)
 {
+    /* layout prior to header label */
+    QBoxLayout * orig_layout = layout;
+
+    /* layouts prior to check box */
+    QBoxLayout * parent_layout = nullptr;
+    QBoxLayout * parent_orig_layout = nullptr;
+
+    BooleanWidget * parent_widget = nullptr;
     QButtonGroup * radio_btn_group = nullptr;
 
     for (const PreferencesWidget & w : widgets)
     {
+        if (w.child)
+        {
+            if (! parent_layout)
+            {
+                /* save prior layouts */
+                parent_layout = layout;
+                parent_orig_layout = orig_layout;
+
+                /* create new layout for child widgets */
+                if (dynamic_cast<QHBoxLayout *> (parent_layout))
+                    layout = new QHBoxLayout;
+                else
+                {
+                    layout = new QVBoxLayout;
+                    layout->setContentsMargins (12, 0, 0, 0);
+                }
+
+                layout->setSpacing (parent_layout->spacing ());
+                parent_layout->addLayout (layout);
+
+                orig_layout = layout;
+
+                if (parent_widget)
+                    parent_widget->set_child_layout (layout);
+            }
+        }
+        else
+        {
+            if (parent_layout)
+            {
+                /* restore prior layouts */
+                layout = parent_layout;
+                orig_layout = parent_orig_layout;
+
+                parent_layout = nullptr;
+                parent_orig_layout = nullptr;
+            }
+
+            /* enable/disable child widgets */
+            if (parent_widget)
+                parent_widget->update ();
+
+            parent_widget = nullptr;
+        }
+
         if (radio_btn_group && w.type != PreferencesWidget::RadioButton)
             radio_btn_group = nullptr;
 
@@ -46,12 +99,39 @@ void prefs_populate (QBoxLayout * layout, ArrayRef<PreferencesWidget> widgets, c
             break;
 
         case PreferencesWidget::CheckButton:
-            layout->addWidget (new BooleanWidget (& w, domain));
+        {
+            auto checkbox = new BooleanWidget (& w, domain);
+            layout->addWidget (checkbox);
+
+            if (! w.child)
+                parent_widget = checkbox;
+
             break;
+        }
 
         case PreferencesWidget::Label:
-            layout->addWidget (new QLabel (translate_str (w.label, domain)));
+        {
+            auto label = new QLabel (translate_str (w.label, domain));
+
+            if (strstr (w.label, "<b>"))
+            {
+                /* double spacing above a header */
+                if (orig_layout->itemAt (0))
+                    orig_layout->addSpacing (orig_layout->spacing ());
+
+                orig_layout->addWidget (label);
+
+                /* create indented layout below header */
+                layout = new QVBoxLayout;
+                layout->setContentsMargins (12, 0, 0, 0);
+                layout->setSpacing (orig_layout->spacing ());
+                orig_layout->addLayout (layout);
+            }
+            else
+                layout->addWidget (label);
+
             break;
+        }
 
         case PreferencesWidget::SpinButton:
             switch (w.cfg.type)
@@ -95,7 +175,8 @@ void prefs_populate (QBoxLayout * layout, ArrayRef<PreferencesWidget> widgets, c
 
         /* layout widgets follow */
         case PreferencesWidget::Box:
-            layout->addWidget (new BoxWidget (& w, domain));
+            layout->addWidget (new BoxWidget (& w, domain,
+             (bool) dynamic_cast<QHBoxLayout *> (layout)));
             break;
 
         case PreferencesWidget::Table:
@@ -121,7 +202,9 @@ void prefs_populate (QBoxLayout * layout, ArrayRef<PreferencesWidget> widgets, c
         }
     }
 
-    layout->addStretch (1);
+    /* enable/disable child widgets */
+    if (parent_widget)
+        parent_widget->update ();
 }
 
 } // namespace audqt

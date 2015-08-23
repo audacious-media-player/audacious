@@ -70,6 +70,7 @@ static QDialog * buildUrlDialog (bool open)
     buttonbox->setContentsMargins (0, 10, 0, 0);
 
     auto layout = new QVBoxLayout (dialog);
+    layout->setSizeConstraint (QLayout::SetFixedSize);
     layout->addWidget (label);
     layout->addWidget (combobox);
     layout->addWidget (buttonbox);
@@ -87,8 +88,7 @@ static QDialog * buildUrlDialog (bool open)
     QObject::connect (buttonbox, & QDialogButtonBox::rejected, dialog, & QDialog::close);
 
     QObject::connect (buttonbox, & QDialogButtonBox::accepted, [dialog, combobox, open] () {
-        QString text = combobox->currentText ();
-        const char * url = text.toUtf8 ().constData ();
+        QByteArray url = combobox->currentText ().toUtf8 ();
 
         if (open)
             aud_drct_pl_open (url);

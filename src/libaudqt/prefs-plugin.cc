@@ -53,7 +53,7 @@ EXPORT void plugin_about (PluginHandle * ph)
 
     AUDDBG ("name = %s\n", name);
 
-    simple_message (str_printf (_("About %s"), name), text);
+    simple_message (str_printf (_("About %s"), name), text, QMessageBox::Information);
 }
 
 struct ConfigWindow {
@@ -111,6 +111,7 @@ EXPORT void plugin_prefs (PluginHandle * ph)
 
     vbox->setSpacing (4);
     prefs_populate (vbox, p->widgets, header->info.domain);
+    vbox->addStretch (1);
 
     QDialogButtonBox * bbox = new QDialogButtonBox;
 

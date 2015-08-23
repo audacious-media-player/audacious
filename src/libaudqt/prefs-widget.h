@@ -82,6 +82,12 @@ class BooleanWidget : public QCheckBox, HookableWidget {
 public:
     BooleanWidget (const PreferencesWidget * parent, const char * domain);
     void update ();
+
+    void set_child_layout (QLayout * layout)
+        { m_child_layout = layout; }
+
+private:
+    QLayout * m_child_layout = nullptr;
 };
 
 /* integer widget (spinner) */
@@ -135,7 +141,7 @@ private:
 /* box container widget */
 class BoxWidget : public QWidget {
 public:
-    BoxWidget (const PreferencesWidget * parent, const char * domain);
+    BoxWidget (const PreferencesWidget * parent, const char * domain, bool horizontal_layout);
 };
 
 /* table container widget */

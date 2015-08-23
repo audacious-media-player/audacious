@@ -46,7 +46,7 @@ EXPORT QMenu * menu_get_by_id (AudMenuID id)
     if (menus[id])
         return menus[id];
 
-    menus[id] = new QMenu (translate_str ("Services"));
+    menus[id] = new QMenu (_("Services"));
 
     for (auto & item : default_menu_items)
         menus[id]->addAction (menu_action (item, PACKAGE, menus[id]));

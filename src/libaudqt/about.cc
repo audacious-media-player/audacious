@@ -85,7 +85,7 @@ static QDialog * buildAboutWindow ()
     layout->addWidget (link_label);
     layout->addWidget (buildCreditsNotebook (window));
 
-    window->setWindowTitle (_("About"));
+    window->setWindowTitle (_("About Audacious"));
     window->setFixedSize (590, 450);
 
     return window;

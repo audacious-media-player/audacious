@@ -22,6 +22,7 @@
 
 #include <libaudcore/plugin.h>
 #include <libaudqt/libaudqt.h>
+#include <libaudqt/menu.h>
 
 namespace audqt {
 
@@ -38,8 +39,12 @@ public:
     void hide_jump_to_song () {}
     void show_prefs_window () { prefswin_show (); }
     void hide_prefs_window () { prefswin_hide (); }
-    void plugin_menu_add (AudMenuID id, void func (), const char * name, const char * icon) {}
-    void plugin_menu_remove (AudMenuID id, void func ()) {}
+    void plugin_menu_add (AudMenuID id, void func (), const char * name, const char * icon) {
+        menu_add (id, func, name, icon);
+    }
+    void plugin_menu_remove (AudMenuID id, void func ()) {
+        menu_remove (id, func);
+    }
 };
 
 } // namespace audqt
