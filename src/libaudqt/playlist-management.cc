@@ -69,41 +69,33 @@ static QDialog * buildRenameDialog (int playlist)
 
 static QDialog * buildDeleteDialog (int playlist)
 {
-    auto dialog = new QDialog;
-
-    auto prompt = new QLabel ((const char *) str_printf
-     (_("Do you want to permanently remove “%s”?"),
-     (const char *) aud_playlist_get_title (playlist)), dialog);
-
+    auto dialog = new QMessageBox;
     auto skip_prompt = new QCheckBox (translate_str (N_("_Don’t ask again")), dialog);
-
     auto remove = new QPushButton (translate_str (N_("_Remove")), dialog);
     auto cancel = new QPushButton (translate_str (N_("_Cancel")), dialog);
 
-    auto buttonbox = new QDialogButtonBox (dialog);
-    buttonbox->addButton (remove, QDialogButtonBox::AcceptRole);
-    buttonbox->addButton (cancel, QDialogButtonBox::RejectRole);
+    dialog->setIcon (QMessageBox::Question);
+    dialog->setWindowTitle (_("Remove Playlist"));
+    dialog->setText ((const char *) str_printf (_("Do you want to permanently remove “%s”?"),
+     (const char *) aud_playlist_get_title (playlist)));
+    dialog->setCheckBox (skip_prompt);
+    dialog->addButton (remove, QMessageBox::AcceptRole);
+    dialog->addButton (cancel, QMessageBox::RejectRole);
 
-    int id = aud_playlist_get_unique_id (playlist);
-    QObject::connect (buttonbox, & QDialogButtonBox::accepted, [dialog, id] () {
-        int list = aud_playlist_by_unique_id (id);
-        if (list >= 0)
-            aud_playlist_delete (list);
-        dialog->close ();
-    });
-
-    QObject::connect (buttonbox, & QDialogButtonBox::rejected, dialog, & QDialog::close);
+    remove->setIcon (QIcon::fromTheme ("edit-delete"));
+    cancel->setIcon (QIcon::fromTheme ("process-stop"));
 
     QObject::connect (skip_prompt, & QCheckBox::stateChanged, [] (int state) {
         aud_set_bool ("audgui", "no_confirm_playlist_delete", (state == Qt::Checked));
     });
 
-    auto layout = new QVBoxLayout (dialog);
-    layout->addWidget (prompt);
-    layout->addWidget (skip_prompt);
-    layout->addWidget (buttonbox);
-
-    dialog->setWindowTitle (_("Remove Playlist"));
+    QObject::connect (remove, & QPushButton::clicked, [dialog, playlist] () {
+        int id = aud_playlist_get_unique_id (playlist);
+        int list = aud_playlist_by_unique_id (id);
+        if (list >= 0)
+            aud_playlist_delete (list);
+        dialog->close ();
+    });
 
     return dialog;
 }
