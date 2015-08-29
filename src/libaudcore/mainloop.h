@@ -32,7 +32,11 @@ class QueuedFunc
 public:
     typedef void (* Func) (void * data);
 
+    // one-shot idle callback
+    // (this will stop a running timed callback)
     void queue (Func func, void * data);
+
+    // timed callback
     void start (int interval_ms, Func func, void * data);
     void stop ();
 

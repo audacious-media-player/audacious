@@ -134,11 +134,12 @@ EXPORT void QueuedFunc::queue (Func func, void * data)
 #endif
         g_idle_add_full (G_PRIORITY_HIGH, queued_wrapper,
          new QueuedFuncRunner ({this, func, data, new_serial}), nullptr);
+
+    _running = false;
 }
 
 EXPORT void QueuedFunc::start (int interval_ms, Func func, void * data)
 {
-    _running = true;
     int new_serial = __sync_add_and_fetch (& serial, 1);
 
 #ifdef USE_QT
@@ -148,6 +149,8 @@ EXPORT void QueuedFunc::start (int interval_ms, Func func, void * data)
 #endif
         g_timeout_add (interval_ms, timed_wrapper,
          new QueuedFuncRunner ({this, func, data, new_serial}));
+
+    _running = true;
 }
 
 EXPORT void QueuedFunc::stop ()
