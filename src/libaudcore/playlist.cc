@@ -135,7 +135,7 @@ struct PlaylistData {
     int last_shuffle_num;
     Index<Entry *> queued;
     int64_t total_length, selected_length;
-    bool scanning, scan_ending, scan_delayed;
+    bool scanning, scan_ending;
     Update next_update, last_update;
     int resume_time;
 };
@@ -168,7 +168,6 @@ static PlaylistData * playing_playlist = nullptr;
 static int resume_playlist = -1;
 static bool resume_paused = false;
 
-static bool metadata_on_play = false;
 static bool metadata_fallbacks = false;
 static TupleCompiler title_formatter;
 
@@ -191,7 +190,7 @@ struct ScanItem : public ListNode
     bool for_playback;
 };
 
-static bool scan_enabled;
+static bool scan_enabled_nominal, scan_enabled;
 static int scan_playlist, scan_row;
 static List<ScanItem> scan_list;
 
@@ -300,7 +299,6 @@ PlaylistData::PlaylistData (int id) :
     selected_length (0),
     scanning (false),
     scan_ending (false),
-    scan_delayed (false),
     next_update (),
     last_update (),
     resume_time (0)
@@ -508,7 +506,7 @@ static void scan_check_complete (PlaylistData * playlist)
 
 static bool scan_queue_next_entry ()
 {
-    if (! scan_enabled || metadata_on_play)
+    if (! scan_enabled)
         return false;
 
     while (scan_playlist < playlists.len ())
@@ -618,11 +616,8 @@ static void scan_cancel (Entry * entry)
 
 static void scan_queue_playlist (PlaylistData * playlist)
 {
-    if (! playlist->scan_delayed)
-    {
-        playlist->scanning = true;
-        playlist->scan_ending = false;
-    }
+    playlist->scanning = true;
+    playlist->scan_ending = false;
 }
 
 static void scan_restart ()
@@ -724,15 +719,11 @@ void playlist_enable_scan (bool enable)
 {
     ENTER;
 
-    if (! enable)
-        scan_list.clear ();
-
-    scan_enabled = enable;
+    scan_enabled_nominal = enable;
+    scan_enabled = scan_enabled_nominal && ! aud_get_bool (nullptr, "metadata_on_play");
+    scan_restart ();
 
     LEAVE;
-
-    if (enable)
-        playlist_trigger_scan ();
 }
 
 void playlist_end ()
@@ -1085,23 +1076,6 @@ EXPORT int aud_playlist_entry_count (int playlist_num)
     ENTER_GET_PLAYLIST (0);
     int count = playlist->entries.len ();
     RETURN (count);
-}
-
-/* this is less drastic than playlist_enable_scan() in that
- * it does not interrupt scans that are already in progress */
-void playlist_delay_scan (int playlist_num, bool delay)
-{
-    ENTER_GET_PLAYLIST ();
-
-    playlist->scan_delayed = delay;
-
-    if (! delay)
-    {
-        scan_queue_playlist (playlist);
-        scan_restart ();
-    }
-
-    RETURN ();
 }
 
 void playlist_entry_insert_batch_raw (int playlist_num, int at, Index<PlaylistAddItem> && items)
@@ -1770,11 +1744,7 @@ static void playlist_trigger_scan ()
 {
     ENTER;
 
-    metadata_on_play = aud_get_bool (nullptr, "metadata_on_play");
-
-    for (auto & playlist : playlists)
-        scan_queue_playlist (playlist.get ());
-
+    scan_enabled = scan_enabled_nominal && ! aud_get_bool (nullptr, "metadata_on_play");
     scan_restart ();
 
     LEAVE;
@@ -1793,6 +1763,7 @@ static void playlist_rescan_real (int playlist_num, bool selected)
     queue_update (Metadata, playlist, 0, playlist->entries.len ());
     scan_queue_playlist (playlist);
     scan_restart ();
+
     LEAVE;
 }
 
