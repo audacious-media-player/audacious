@@ -94,7 +94,6 @@ void VolumeButton::wheelEvent (QWheelEvent * event)
     else if (y > 0 && val < 100)
         val ++;
 
-    setVolume (val);
     m_slider->setValue (val);
 }
 
