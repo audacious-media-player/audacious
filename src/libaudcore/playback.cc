@@ -641,7 +641,7 @@ EXPORT bool InputPlugin::default_read_tag (const char * filename,
     {
         if (! (* tuple = read_tuple (filename, file)))
             return false;
-        if (image && file.fseek (0, VFS_SEEK_SET) != 0)
+        if (image && file && file.fseek (0, VFS_SEEK_SET) != 0)
             return true; /* true: tuple was read */
     }
 
