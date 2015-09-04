@@ -257,8 +257,6 @@ public:
 
     // only allowed for top two strings (or when one string is null)
     void steal (StringBuf && other);
-
-    // only allowed for top two strings
     void combine (StringBuf && other);
 
     int len () const
