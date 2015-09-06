@@ -6,6 +6,7 @@ SRCS = ../audio.cc \
        ../hook.cc \
        ../index.cc \
        ../logger.cc \
+       ../mainloop.cc \
        ../multihash.cc \
        ../ringbuf.cc \
        ../stringbuf.cc \
@@ -14,20 +15,18 @@ SRCS = ../audio.cc \
        ../tuple.cc \
        ../tuple-compiler.cc \
        ../util.cc \
-       test.cc
+       stubs.cc
 
 FLAGS = -I.. -I../.. -DEXPORT= -DPACKAGE=\"audacious\" -DICONV_CONST= \
         $(shell pkg-config --cflags --libs glib-2.0) \
         -std=c++11 -Wall -g -O0 -fno-elide-constructors \
         -fprofile-arcs -ftest-coverage -pthread
 
-MAINLOOP_SRCS = ../mainloop.cc test-mainloop.cc
+test: ${SRCS} test.cc
+	g++ ${SRCS} test.cc ${FLAGS} -o test
 
-test: ${SRCS}
-	g++ ${SRCS} ${FLAGS} -o test
-
-test-mainloop: ${MAINLOOP_SRCS}
-	g++ ${MAINLOOP_SRCS} ${FLAGS} -DUSE_QT -fPIC \
+test-mainloop: ${SRCS} test-mainloop.cc
+	g++ ${SRCS} test-mainloop.cc ${FLAGS} -DUSE_QT -fPIC \
 	$(shell pkg-config --cflags --libs Qt5Core) \
 	-o test-mainloop
 
