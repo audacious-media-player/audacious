@@ -232,7 +232,7 @@ static void infowin_next ()
         audgui_infowin_hide ();
 }
 
-static gboolean genre_fill (GtkWidget * combo)
+static void genre_fill (GtkWidget * combo)
 {
     GList * list = nullptr;
     GList * node;
@@ -246,7 +246,6 @@ static gboolean genre_fill (GtkWidget * combo)
         gtk_combo_box_text_append_text ((GtkComboBoxText *) combo, (const char *) node->data);
 
     g_list_free (list);
-    return G_SOURCE_REMOVE;
 }
 
 static void clear_toggled (GtkToggleButton * toggle)
@@ -362,8 +361,8 @@ static void create_infowin ()
     add_entry (grid, _("Comment"), widgets.comment, 0, 8, 2);
 
     widgets.genre = gtk_combo_box_text_new_with_entry ();
+    genre_fill (widgets.genre);
     add_entry (grid, _("Genre"), widgets.genre, 0, 10, 2);
-    g_idle_add ((GSourceFunc) genre_fill, widgets.genre);
 
     widgets.year = gtk_entry_new ();
     add_entry (grid, _("Year"), widgets.year, 0, 12, 1);
