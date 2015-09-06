@@ -327,7 +327,7 @@ static void add_finish (void * unused)
         /* temporarily disable scanning this playlist; the intent is to avoid
          * scanning until the currently playing entry is known, at which time it
          * can be scanned more efficiently (album art read in the same pass). */
-        playlist_delay_scan (playlist, true);
+        playlist_enable_scan (false);
         playlist_entry_insert_batch_raw (playlist, result->at, std::move (result->items));
 
         if (result->play && aud_playlist_entry_count (playlist) > count)
@@ -338,7 +338,7 @@ static void add_finish (void * unused)
             aud_playlist_play (playlist);
         }
 
-        playlist_delay_scan (playlist, false);
+        playlist_enable_scan (true);
 
     FREE:
         delete result;

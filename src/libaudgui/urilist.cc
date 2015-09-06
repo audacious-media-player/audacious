@@ -108,7 +108,7 @@ EXPORT Index<char> audgui_urilist_create_from_selected (int playlist)
         }
     }
 
-    cleanup_timer.start (30000, [] (void *) { urilist_cleanup (); }, nullptr);
+    cleanup_timer.queue (30000, [] (void *) { urilist_cleanup (); }, nullptr);
 
     return buf;
 }

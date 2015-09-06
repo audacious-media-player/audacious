@@ -27,6 +27,7 @@
 #include <libaudcore/hook.h>
 #include <libaudcore/i18n.h>
 #include <libaudcore/interface.h>
+#include <libaudcore/mainloop.h>
 #include <libaudcore/playlist.h>
 #include <libaudcore/probe.h>
 #include <libaudcore/runtime.h>
@@ -73,7 +74,7 @@ static int current_playlist_id, current_entry;
 static String current_file;
 static PluginHandle * current_decoder = nullptr;
 static bool can_write = false;
-static int timeout_source = 0;
+static QueuedFunc ministatus_timer;
 
 /* This is by no means intended to be a complete list.  If it is not short, it
  * is useless: scrolling through ten pages of dropdown list is more work than
@@ -185,26 +186,16 @@ static void entry_changed (GtkEditable * editable)
         gtk_widget_set_sensitive (widgets.apply, true);
 }
 
-static gboolean ministatus_timeout_proc ()
-{
-    gtk_widget_hide (widgets.ministatus);
-    gtk_widget_show (widgets.clear);
-
-    timeout_source = 0;
-    return G_SOURCE_REMOVE;
-}
-
 static void ministatus_display_message (const char * text)
 {
     gtk_label_set_text ((GtkLabel *) widgets.ministatus, text);
     gtk_widget_hide (widgets.clear);
     gtk_widget_show (widgets.ministatus);
 
-    if (timeout_source)
-        g_source_remove (timeout_source);
-
-    timeout_source = g_timeout_add (AUDGUI_STATUS_TIMEOUT, (GSourceFunc)
-     ministatus_timeout_proc, nullptr);
+    ministatus_timer.queue (AUDGUI_STATUS_TIMEOUT, [] (void *) {
+        gtk_widget_hide (widgets.ministatus);
+        gtk_widget_show (widgets.clear);
+    }, nullptr);
 }
 
 static void infowin_update_tuple ()
@@ -283,11 +274,7 @@ static void infowin_destroyed ()
 {
     hook_dissociate ("art ready", (HookFunction) infowin_display_image);
 
-    if (timeout_source)
-    {
-        g_source_remove (timeout_source);
-        timeout_source = 0;
-    }
+    ministatus_timer.stop ();
 
     memset (& widgets, 0, sizeof widgets);
 

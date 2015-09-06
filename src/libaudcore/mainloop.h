@@ -24,24 +24,48 @@
 #ifndef LIBAUDCORE_MAINLOOP_H
 #define LIBAUDCORE_MAINLOOP_H
 
-// all instances must be declared static
+struct QueuedFuncHelper;
+struct QueuedFuncParams;
+
 class QueuedFunc
 {
-    friend struct QueuedFuncRunner;
+    friend struct QueuedFuncHelper;
 
 public:
     typedef void (* Func) (void * data);
 
+    // one-time idle callback
     void queue (Func func, void * data);
+
+    // one-time delayed callback
+    void queue (int delay_ms, Func func, void * data);
+
+    // periodic timer callback
     void start (int interval_ms, Func func, void * data);
+
+    // stops any type of callback
+    // note that queue() and start() also stop any previous callback
     void stop ();
 
+    // true if a periodic timer is running
+    // does not apply to one-time callbacks
     bool running ()
         { return _running; }
 
+    constexpr QueuedFunc () = default;
+    QueuedFunc (const QueuedFunc &) = delete;
+    void operator= (const QueuedFunc &) = delete;
+
+    // added in Audacious 3.7
+    // previously, all instances had to be declared static
+    ~QueuedFunc ()
+        { stop (); }
+
 private:
-    int serial;
-    bool _running;
+    int serial = 0;  // no longer used, kept for ABI compatibility
+    bool _running = false;
+
+    void start (const QueuedFuncParams & params);
 };
 
 void mainloop_run ();

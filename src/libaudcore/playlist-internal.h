@@ -34,7 +34,6 @@ bool playlist_get_modified (int playlist);
 void playlist_load_state ();
 void playlist_save_state ();
 
-void playlist_delay_scan (int playlist, bool delay);
 void playlist_entry_insert_batch_raw (int playlist, int at, Index<PlaylistAddItem> && items);
 
 bool playlist_prev_song (int playlist);

@@ -189,12 +189,25 @@ EXPORT void StringBuf::steal (StringBuf && other)
 
 EXPORT void StringBuf::combine (StringBuf && other)
 {
-    if (m_data + align (m_len) != other.m_data || other.m_data + align (other.m_len) != stack->top)
-        throw std::bad_alloc ();
+    if (! other.m_data)
+        return;
 
-    memmove (m_data + m_len, other.m_data, other.m_len + 1);
-    m_len += other.m_len;
-    stack->top = m_data + align (m_len);
+    if (m_data)
+    {
+        if (m_data + align (m_len) != other.m_data ||
+         other.m_data + align (other.m_len) != stack->top)
+            throw std::bad_alloc ();
+
+        memmove (m_data + m_len, other.m_data, other.m_len + 1);
+        m_len += other.m_len;
+        stack->top = m_data + align (m_len);
+    }
+    else
+    {
+        stack = other.stack;
+        m_data = other.m_data;
+        m_len = other.m_len;
+    }
 
     other.stack = nullptr;
     other.m_data = nullptr;

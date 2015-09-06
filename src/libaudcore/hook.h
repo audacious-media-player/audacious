@@ -43,6 +43,42 @@ void timer_add (TimerRate rate, TimerFunc func, void * data = nullptr);
  * matching <func> are removed. */
 void timer_remove (TimerRate rate, TimerFunc func, void * data = nullptr);
 
+/* Convenience wrapper for C++ classes.  Allows non-static member functions to
+ * be used as timer callbacks.  The Timer should be made a member of the class
+ * in question so that timer_remove() is called automatically from the
+ * destructor.  Note that the timer is not started automatically. */
+template<class T>
+class Timer
+{
+public:
+    Timer (TimerRate rate, T * target, void (T::* func) ()) :
+        rate (rate),
+        target (target),
+        func (func) {}
+
+    void start () const
+        { timer_add (rate, run, (void *) this); }
+    void stop () const
+        { timer_remove (rate, run, (void *) this); }
+
+    ~Timer ()
+        { stop (); }
+
+    Timer (const Timer &) = delete;
+    void operator= (const Timer &) = delete;
+
+private:
+    const TimerRate rate;
+    T * const target;
+    void (T::* const func) ();
+
+    static void run (void * timer_)
+    {
+        auto timer = (const Timer *) timer_;
+        (timer->target->* timer->func) ();
+    }
+};
+
 // Hook API.  This API allows functions to be registered to run when a given
 // named event, or "hook", is called.
 // =========================================================================
@@ -101,7 +137,7 @@ private:
 
     static void run (void * d, void * recv_)
     {
-        auto recv = (HookReceiver *) recv_;
+        auto recv = (const HookReceiver *) recv_;
         (recv->target->* recv->func) (aud::from_ptr<D> (d));
     }
 };
@@ -132,7 +168,7 @@ private:
 
     static void run (void *, void * recv_)
     {
-        auto recv = (HookReceiver *) recv_;
+        auto recv = (const HookReceiver *) recv_;
         (recv->target->* recv->func) ();
     }
 };

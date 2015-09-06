@@ -34,7 +34,7 @@ static QApplication * qapp;
 
 EXPORT void init ()
 {
-    if (init_count ++)
+    if (init_count ++ || qapp)
         return;
 
     static char app_name[] = "audacious";
@@ -68,9 +68,6 @@ EXPORT void cleanup ()
     log_inspector_hide ();
     prefswin_hide ();
     queue_manager_hide ();
-
-    delete qapp;
-    qapp = nullptr;
 }
 
 EXPORT void enable_layout (QLayout * layout, bool enabled)
