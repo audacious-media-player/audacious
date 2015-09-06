@@ -1,6 +1,6 @@
 /*
  * mainloop.cc
- * Copyright 2014 John Lindgren
+ * Copyright 2014-2015 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -22,41 +22,126 @@
 #include <pthread.h>
 #include <glib.h>
 
+#ifdef USE_QT
+#include <QCoreApplication>
+#endif
+
+#include "internal.h"
+#include "multihash.h"
 #include "runtime.h"
 
-struct QueuedFuncRunner
-{
-    QueuedFunc * queued;
+static pthread_once_t once = PTHREAD_ONCE_INIT;
+static MultiHash * func_table = nullptr;
+
+static pthread_mutex_t mainloop_mutex = PTHREAD_MUTEX_INITIALIZER;
+static GMainLoop * glib_mainloop;
+
+#ifdef USE_QT
+static QCoreApplication * qt_mainloop;
+#endif
+
+struct QueuedFuncParams {
     QueuedFunc::Func func;
     void * data;
-    int serial;
-
-    bool run ()
-    {
-        if (__sync_add_and_fetch (& queued->serial, 0) != serial)
-            return false;
-
-        func (data);
-        return true;
-    }
+    int interval_ms;
+    bool repeat;
 };
+
+struct QueuedFuncHelper
+{
+    QueuedFuncParams params;
+    QueuedFunc * queued = nullptr;
+
+    QueuedFuncHelper (const QueuedFuncParams & params) :
+        params (params) {}
+
+    virtual ~QueuedFuncHelper () {}
+
+    void run ();
+    void start_for (QueuedFunc * queued_);
+
+    virtual void start ();
+    virtual void stop ();
+
+private:
+    int glib_source = 0;
+};
+
+struct QueuedFuncNode : public MultiHash::Node {
+    QueuedFunc * queued;
+    QueuedFuncHelper * helper;
+};
+
+void QueuedFuncHelper::run ()
+{
+    struct State {
+        QueuedFuncHelper * helper;
+        bool valid;
+    };
+
+    auto found_cb = [] (MultiHash::Node * node_, void * s_)
+    {
+        auto node = (const QueuedFuncNode *) node_;
+        auto s = (State *) s_;
+
+        s->valid = (node->helper == s->helper);
+
+        if (! s->valid || ! s->helper->params.repeat)
+            s->helper->stop ();
+
+        return s->valid && ! s->helper->params.repeat;
+    };
+
+    State s = {this, false};
+    func_table->lookup (queued, ptr_hash (queued), nullptr, found_cb, & s);
+
+    if (s.valid)
+        params.func (params.data);
+}
+
+void QueuedFuncHelper::start_for (QueuedFunc * queued_)
+{
+    queued = queued_;
+    queued->_running = params.repeat;
+
+    start ();
+}
+
+void QueuedFuncHelper::start ()
+{
+    auto callback = [] (void * me) -> gboolean {
+        ((QueuedFuncHelper *) me)->run ();
+        return G_SOURCE_CONTINUE;
+    };
+
+    auto destroy = [] (void * me) {
+        delete (QueuedFuncHelper *) me;
+    };
+
+    glib_source = g_timeout_add_full (G_PRIORITY_HIGH, params.interval_ms,
+     callback, this, destroy);
+}
+
+void QueuedFuncHelper::stop ()
+{
+    if (glib_source)
+    {
+        g_source_remove (glib_source);
+        glib_source = 0;
+    }
+}
 
 #ifdef USE_QT
 
-#include <QCoreApplication>
-
-class QueuedFuncEvent : public QEvent
+class QueuedFuncEvent : public QueuedFuncHelper, public QEvent
 {
 public:
-    QueuedFuncEvent (const QueuedFuncRunner & runner) :
-        QEvent (User),
-        runner (runner) {}
+    QueuedFuncEvent (const QueuedFuncParams & params) :
+        QueuedFuncHelper (params),
+        QEvent (User) {}
 
-    void run ()
-        { runner.run (); }
-
-private:
-    QueuedFuncRunner runner;
+    void start ();
+    void stop () {}
 };
 
 class QueuedFuncRouter : public QObject
@@ -68,12 +153,18 @@ protected:
 
 static QueuedFuncRouter router;
 
-class QueuedFuncTimer : public QObject
+void QueuedFuncEvent::start ()
+{
+    QCoreApplication::postEvent (& router, this, Qt::HighEventPriority);
+}
+
+class QueuedFuncTimer : public QueuedFuncHelper, public QObject
 {
 public:
-    QueuedFuncTimer (int interval_ms, const QueuedFuncRunner & runner) :
-        interval_ms (interval_ms),
-        runner (runner)
+    QueuedFuncTimer (const QueuedFuncParams & params) :
+        QueuedFuncHelper (params) {}
+
+    void start ()
     {
         moveToThread (router.thread ());  // main thread
 
@@ -82,84 +173,104 @@ public:
         QCoreApplication::postEvent (this, new QEvent (QEvent::User), Qt::HighEventPriority);
     }
 
+    void stop ()
+        { deleteLater (); }
+
 protected:
     void customEvent (QEvent * event)
-        { startTimer (interval_ms); }
-
+        { startTimer (params.interval_ms); }
     void timerEvent (QTimerEvent * event)
-    {
-        if (! runner.run ())
-            deleteLater ();
-    }
-
-private:
-    int interval_ms;
-    QueuedFuncRunner runner;
+        { run (); }
 };
-
-static QCoreApplication * qt_mainloop;
 
 #endif // USE_QT
 
-static int queued_wrapper (void * ptr)
+static void create_func_table ()
 {
-    auto runner = (QueuedFuncRunner *) ptr;
-    runner->run ();
-    delete runner;
-    return false;
+    auto match_cb = [] (const MultiHash::Node * node_, const void * queued_) {
+        auto node = (const QueuedFuncNode *) node_;
+        return node->queued == (QueuedFunc *) queued_;
+    };
+
+    func_table = new MultiHash (match_cb);
 }
 
-static int timed_wrapper (void * ptr)
+static QueuedFuncHelper * create_helper (const QueuedFuncParams & params)
 {
-    auto runner = (QueuedFuncRunner *) ptr;
-    if (runner->run ())
-        return true;
+#ifdef USE_QT
+    if (aud_get_mainloop_type () == MainloopType::Qt)
+    {
+        if (params.interval_ms > 0)
+            return new QueuedFuncTimer (params);
+        else
+            return new QueuedFuncEvent (params);
+    }
+#endif
 
-    delete runner;
-    return false;
+    return new QueuedFuncHelper (params);
 }
 
-static GMainLoop * glib_mainloop;
+void QueuedFunc::start (const QueuedFuncParams & params)
+{
+    auto add_cb = [] (const void * me_, void * helper_) {
+        auto me = (QueuedFunc *) me_;
+        auto helper = (QueuedFuncHelper *) helper_;
+
+        auto node = new QueuedFuncNode;
+        node->queued = me;
+        node->helper = helper;
+
+        helper->start_for (me);
+
+        return (MultiHash::Node *) node;
+    };
+
+    auto replace_cb = [] (MultiHash::Node * node_, void * helper_) {
+        auto node = (QueuedFuncNode *) node_;
+        auto helper = (QueuedFuncHelper *) helper_;
+
+        node->helper->stop ();
+        node->helper = helper;
+
+        helper->start_for (node->queued);
+
+        return false; // do not remove
+    };
+
+    pthread_once (& once, create_func_table);
+    func_table->lookup (this, ptr_hash (this), add_cb, replace_cb, create_helper (params));
+}
 
 EXPORT void QueuedFunc::queue (Func func, void * data)
 {
-    int new_serial = __sync_add_and_fetch (& serial, 1);
+    start ({func, data, 0, false});
+}
 
-#ifdef USE_QT
-    if (aud_get_mainloop_type () == MainloopType::Qt)
-        QCoreApplication::postEvent (& router,
-         new QueuedFuncEvent ({this, func, data, new_serial}),
-         Qt::HighEventPriority);
-    else
-#endif
-        g_idle_add_full (G_PRIORITY_HIGH, queued_wrapper,
-         new QueuedFuncRunner ({this, func, data, new_serial}), nullptr);
-
-    _running = false;
+EXPORT void QueuedFunc::queue (int delay_ms, Func func, void * data)
+{
+    start ({func, data, delay_ms, false});
 }
 
 EXPORT void QueuedFunc::start (int interval_ms, Func func, void * data)
 {
-    int new_serial = __sync_add_and_fetch (& serial, 1);
-
-#ifdef USE_QT
-    if (aud_get_mainloop_type () == MainloopType::Qt)
-        new QueuedFuncTimer (interval_ms, {this, func, data, new_serial});
-    else
-#endif
-        g_timeout_add (interval_ms, timed_wrapper,
-         new QueuedFuncRunner ({this, func, data, new_serial}));
-
-    _running = true;
+    start ({func, data, interval_ms, true});
 }
 
 EXPORT void QueuedFunc::stop ()
 {
-    __sync_add_and_fetch (& serial, 1);
-    _running = false;
-}
+    auto remove_cb = [] (MultiHash::Node * node_, void *) {
+        auto node = (QueuedFuncNode *) node_;
 
-static pthread_mutex_t mainloop_mutex = PTHREAD_MUTEX_INITIALIZER;
+        node->helper->stop ();
+        node->queued->_running = false;
+        delete node;
+
+        return true; // remove
+    };
+
+    pthread_once (& once, create_func_table);
+    func_table->lookup (this, ptr_hash (this), nullptr, remove_cb, nullptr);
+}
 
 EXPORT void mainloop_run ()
 {
