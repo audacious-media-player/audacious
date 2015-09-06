@@ -180,6 +180,7 @@ static PlaybackData playback_data;
 
 static QueuedFunc queued_update;
 static UpdateLevel update_level;
+static bool update_delayed;
 
 struct ScanItem : public ListNode
 {
@@ -342,8 +343,6 @@ static void update (void *)
 {
     ENTER;
 
-    queued_update.stop ();
-
     for (auto & p : playlists)
     {
         p->last_update = p->next_update;
@@ -352,6 +351,7 @@ static void update (void *)
 
     UpdateLevel level = update_level;
     update_level = NoUpdate;
+    update_delayed = false;
 
     LEAVE;
 
@@ -405,13 +405,18 @@ static void queue_update (UpdateLevel level, PlaylistData * p, int at, int count
     if ((flags & DelayedUpdate) && scan_enabled && p && (p->scanning || p->scan_ending))
     {
         if (! update_level)
-            queued_update.start (250, update, nullptr);
+        {
+            queued_update.queue (250, update, nullptr);
+            update_delayed = true;
+        }
     }
     else
     {
-        // this cancels any pending delayed update
-        if (! update_level || queued_update.running ())
+        if (! update_level || update_delayed)
+        {
             queued_update.queue (update, nullptr);
+            update_delayed = false;
+        }
     }
 
     update_level = aud::max (update_level, level);
@@ -517,9 +522,11 @@ static void scan_check_complete (PlaylistData * playlist)
 
     playlist->scan_ending = false;
 
-    // reschedule any pending delayed update to run immediately
-    if (queued_update.running ())
+    if (update_delayed)
+    {
         queued_update.queue (update, nullptr);
+        update_delayed = false;
+    }
 
     event_queue_cancel ("playlist scan complete", nullptr);
     event_queue ("playlist scan complete", nullptr);
@@ -721,6 +728,7 @@ void playlist_init ()
     ENTER;
 
     update_level = NoUpdate;
+    update_delayed = false;
     scan_enabled = false;
     scan_playlist = scan_row = 0;
 
@@ -2375,6 +2383,7 @@ void playlist_load_state ()
 
     queued_update.stop ();
     update_level = NoUpdate;
+    update_delayed = false;
 
     LEAVE;
 }
