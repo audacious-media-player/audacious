@@ -26,6 +26,7 @@
 #include <QWheelEvent>
 
 #include <libaudcore/drct.h>
+#include <libaudcore/hook.h>
 
 namespace audqt {
 
@@ -45,10 +46,17 @@ EXPORT VolumeButton::VolumeButton (QWidget * parent) :
 
     layout->addWidget (m_slider);
 
-    updateVolume ();
+    int val = aud_drct_get_volume_main ();
+    m_slider->setValue (val);
+    updateIcon (val);
 
     connect (this, & QAbstractButton::clicked, this, & VolumeButton::showSlider);
-    connect (m_slider, & QAbstractSlider::valueChanged, this, & VolumeButton::setVolume);
+    connect (m_slider, & QAbstractSlider::sliderMoved, this, & VolumeButton::setVolume);
+
+    auto timer = new Timer<VolumeButton> (TimerRate::Hz4, this, & VolumeButton::updateVolume);
+    connect (this, & QObject::destroyed, [timer] () { delete timer; });
+
+    timer->start ();
 }
 
 void VolumeButton::updateIcon (int val)
@@ -67,9 +75,15 @@ void VolumeButton::updateIcon (int val)
 
 void VolumeButton::updateVolume ()
 {
+    if (m_slider->isSliderDown ())
+        return;
+
     int val = aud_drct_get_volume_main ();
-    updateIcon (val);
-    m_slider->setValue (val);
+    if (val != m_slider->value ())
+    {
+        updateIcon (val);
+        m_slider->setValue (val);
+    }
 }
 
 void VolumeButton::showSlider ()
@@ -95,6 +109,7 @@ void VolumeButton::wheelEvent (QWheelEvent * event)
         val ++;
 
     m_slider->setValue (val);
+    setVolume (val);
 }
 
 } // namespace audqt
