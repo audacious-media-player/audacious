@@ -33,9 +33,10 @@ MainloopType aud_get_mainloop_type ()
 }
 
 static QueuedFunc counters[70];
-static QueuedFunc timer, delayed;
+static QueuedFunc timer, delayed, restart;
 
 static int count;
+static int restart_count;
 static pthread_t main_thread;
 
 static void count_up (void * data)
@@ -51,6 +52,14 @@ static void count_up (void * data)
     count ++;
 
     printf ("%d%c", count, (count % 10) ? ' ' : '\n');
+}
+
+static void count_restart (void * data)
+{
+    assert (pthread_self () == main_thread);
+    assert (data == nullptr);
+
+    restart_count ++;
 }
 
 static void count_down (void * data)
@@ -69,6 +78,9 @@ static void count_down (void * data)
     {
         timer.stop ();
         mainloop_quit ();
+
+        // check queueing an event while main loop is restarting
+        restart.queue (count_restart, nullptr);
     }
 }
 
@@ -137,6 +149,9 @@ int main (int argc, const char * * argv)
         // check that the timer reports being stopped
         assert (! timer.running ());
     }
+
+    // check that events queued during restart are processed
+    assert (restart_count == 1);
 
     return 0;
 }

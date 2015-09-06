@@ -281,34 +281,25 @@ EXPORT void mainloop_run ()
     {
         if (! qt_mainloop)
         {
-            int dummy_argc = 0;
-            qt_mainloop = new QCoreApplication (dummy_argc, nullptr);
-            pthread_mutex_unlock (& mainloop_mutex);
+            static char app_name[] = "audacious";
+            static int dummy_argc = 1;
+            static char * dummy_argv[] = {app_name, nullptr};
 
-            qt_mainloop->exec ();
-
-            pthread_mutex_lock (& mainloop_mutex);
-            delete qt_mainloop;
-            qt_mainloop = nullptr;
+            qt_mainloop = new QCoreApplication (dummy_argc, dummy_argv);
         }
+
+        pthread_mutex_unlock (& mainloop_mutex);
+        qt_mainloop->exec ();
     }
     else
 #endif
     {
         if (! glib_mainloop)
-        {
             glib_mainloop = g_main_loop_new (nullptr, true);
-            pthread_mutex_unlock (& mainloop_mutex);
 
-            g_main_loop_run (glib_mainloop);
-
-            pthread_mutex_lock (& mainloop_mutex);
-            g_main_loop_unref (glib_mainloop);
-            glib_mainloop = nullptr;
-        }
+        pthread_mutex_unlock (& mainloop_mutex);
+        g_main_loop_run (glib_mainloop);
     }
-
-    pthread_mutex_unlock (& mainloop_mutex);
 }
 
 EXPORT void mainloop_quit ()
