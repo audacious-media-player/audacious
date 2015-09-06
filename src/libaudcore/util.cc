@@ -21,6 +21,7 @@
 
 #include <errno.h>
 #include <pthread.h>
+#include <stdint.h>
 #include <string.h>
 #include <unistd.h>
 
@@ -132,4 +133,11 @@ unsigned int32_hash (unsigned val)
     val = val * 2057;
     val = val ^ (val >> 16);
     return val;
+}
+
+unsigned ptr_hash (const void * ptr)
+{
+    unsigned addr_low = (uintptr_t) ptr;
+    unsigned addr_high = (uintptr_t) ptr >> 32;
+    return int32_hash (addr_low + addr_high);
 }

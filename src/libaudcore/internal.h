@@ -131,6 +131,7 @@ const char * last_path_element (const char * path);
 void cut_path_element (char * path, int pos);
 
 unsigned int32_hash (unsigned val);
+unsigned ptr_hash (const void * ptr);
 
 /* vis-runner.cc */
 void vis_runner_start_stop (bool playing, bool paused);
