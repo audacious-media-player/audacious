@@ -248,11 +248,13 @@ EXPORT void QueuedFunc::queue (Func func, void * data)
 
 EXPORT void QueuedFunc::queue (int delay_ms, Func func, void * data)
 {
+    g_return_if_fail (delay_ms >= 0);
     start ({func, data, delay_ms, false});
 }
 
 EXPORT void QueuedFunc::start (int interval_ms, Func func, void * data)
 {
+    g_return_if_fail (interval_ms > 0);
     start ({func, data, interval_ms, true});
 }
 
