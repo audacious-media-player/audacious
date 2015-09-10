@@ -227,6 +227,7 @@ static gboolean do_new_playlist (Obj * obj, Invoc * invoc)
     int playlist = CURRENT + 1;
     aud_playlist_insert (playlist);
     aud_playlist_set_active (playlist);
+    aud_drct_stop ();
     FINISH (new_playlist);
     return true;
 }
