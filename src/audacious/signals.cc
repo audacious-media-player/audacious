@@ -39,7 +39,7 @@ static void * signal_thread (void * data)
 }
 
 /* Must be called before any threads are created. */
-void signals_init_one (void)
+void signals_init_one ()
 {
     sigemptyset (& signal_set);
     sigaddset (& signal_set, SIGHUP);
@@ -50,7 +50,7 @@ void signals_init_one (void)
     sigprocmask (SIG_BLOCK, & signal_set, nullptr);
 }
 
-void signals_init_two (void)
+void signals_init_two ()
 {
     pthread_t thread;
     pthread_create (& thread, nullptr, signal_thread, nullptr);

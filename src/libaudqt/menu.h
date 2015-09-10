@@ -87,8 +87,8 @@ static inline QMenuBar * menubar_build (ArrayRef<MenuItem> menu_items, QWidget *
 
 /* plugin-menu.cc */
 QMenu * menu_get_by_id (AudMenuID id);
-void menu_add (AudMenuID id, void (* func) (void), const char * name, const char * icon);
-void menu_remove (AudMenuID id, void (* func) (void));
+void menu_add (AudMenuID id, void (* func) (), const char * name, const char * icon);
+void menu_remove (AudMenuID id, void (* func) ());
 
 } // namespace audqt
 

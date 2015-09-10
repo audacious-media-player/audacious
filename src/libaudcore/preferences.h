@@ -41,7 +41,7 @@ struct ComboItem {
 };
 
 struct WidgetVButton {
-    void (* callback) (void);
+    void (* callback) ();
     const char * icon;
 };
 
@@ -107,9 +107,9 @@ union WidgetVariant {
     WidgetVSeparator separator;
 
     /* for custom GTK or Qt widgets */
-    /* GtkWidget * (* populate) (void); */
-    /* QWidget * (* populate) (void); */
-    void * (* populate) (void);
+    /* GtkWidget * (* populate) (); */
+    /* QWidget * (* populate) (); */
+    void * (* populate) ();
 
     constexpr WidgetVariant (WidgetVButton button) : button (button) {}
     constexpr WidgetVariant (WidgetVRadio radio) : radio_btn (radio) {}
@@ -123,7 +123,7 @@ union WidgetVariant {
     constexpr WidgetVariant (WidgetVSeparator separator) : separator (separator) {}
 
     /* also serves as default constructor */
-    constexpr WidgetVariant (void * (* populate) (void) = 0) : populate (populate) {}
+    constexpr WidgetVariant (void * (* populate) () = 0) : populate (populate) {}
 };
 
 struct WidgetConfig
@@ -143,7 +143,7 @@ struct WidgetConfig
     /* identifier for configuration value */
     const char * section, * name;
     /* called when value is changed  */
-    void (* callback) (void);
+    void (* callback) ();
     /* widget updates when this hook is called */
     const char * hook;
 
@@ -156,7 +156,7 @@ struct WidgetConfig
         hook (nullptr) {}
 
     constexpr WidgetConfig (Type type, void * value, const char * section,
-     const char * name, void (* callback) (void), const char * hook) :
+     const char * name, void (* callback) (), const char * hook) :
         type (type),
         value (value),
         section (section),
@@ -175,29 +175,29 @@ struct WidgetConfig
 };
 
 constexpr WidgetConfig WidgetBool (bool & value,
- void (* callback) (void) = nullptr, const char * hook = nullptr)
+ void (* callback) () = nullptr, const char * hook = nullptr)
     { return WidgetConfig (WidgetConfig::Bool, (void *) & value, 0, 0, callback, hook); }
 constexpr WidgetConfig WidgetInt (int & value,
- void (* callback) (void) = nullptr, const char * hook = nullptr)
+ void (* callback) () = nullptr, const char * hook = nullptr)
     { return WidgetConfig (WidgetConfig::Int, (void *) & value, 0, 0, callback, hook); }
 constexpr WidgetConfig WidgetFloat (double & value,
- void (* callback) (void) = nullptr, const char * hook = nullptr)
+ void (* callback) () = nullptr, const char * hook = nullptr)
     { return WidgetConfig (WidgetConfig::Float, (void *) & value, 0, 0, callback, hook); }
 constexpr WidgetConfig WidgetString (String & value,
- void (* callback) (void) = nullptr, const char * hook = nullptr)
+ void (* callback) () = nullptr, const char * hook = nullptr)
     { return WidgetConfig (WidgetConfig::String, (void *) & value, 0, 0, callback, hook); }
 
 constexpr WidgetConfig WidgetBool (const char * section, const char * name,
- void (* callback) (void) = nullptr, const char * hook = nullptr)
+ void (* callback) () = nullptr, const char * hook = nullptr)
     { return WidgetConfig (WidgetConfig::Bool, 0, section, name, callback, hook); }
 constexpr WidgetConfig WidgetInt (const char * section, const char * name,
- void (* callback) (void) = nullptr, const char * hook = nullptr)
+ void (* callback) () = nullptr, const char * hook = nullptr)
     { return WidgetConfig (WidgetConfig::Int, 0, section, name, callback, hook); }
 constexpr WidgetConfig WidgetFloat (const char * section, const char * name,
- void (* callback) (void) = nullptr, const char * hook = nullptr)
+ void (* callback) () = nullptr, const char * hook = nullptr)
     { return WidgetConfig (WidgetConfig::Float, 0, section, name, callback, hook); }
 constexpr WidgetConfig WidgetString (const char * section, const char * name,
- void (* callback) (void) = nullptr, const char * hook = nullptr)
+ void (* callback) () = nullptr, const char * hook = nullptr)
     { return WidgetConfig (WidgetConfig::String, 0, section, name, callback, hook); }
 
 struct PreferencesWidget
@@ -284,18 +284,18 @@ constexpr PreferencesWidget WidgetNotebook (WidgetVNotebook notebook)
 constexpr PreferencesWidget WidgetSeparator (WidgetVSeparator separator = WidgetVSeparator ())
     { return {PreferencesWidget::Separator, 0, 0, {}, separator}; }
 
-constexpr PreferencesWidget WidgetCustomGTK (void * (* populate) (void))
+constexpr PreferencesWidget WidgetCustomGTK (void * (* populate) ())
     { return {PreferencesWidget::CustomGTK, 0, 0, {}, populate}; }
 
-constexpr PreferencesWidget WidgetCustomQt (void * (* populate) (void))
+constexpr PreferencesWidget WidgetCustomQt (void * (* populate) ())
     { return {PreferencesWidget::CustomQt, 0, 0, {}, populate}; }
 
 struct PluginPreferences {
     ArrayRef<PreferencesWidget> widgets;
 
-    void (* init) (void);
-    void (* apply) (void);
-    void (* cleanup) (void);
+    void (* init) ();
+    void (* apply) ();
+    void (* cleanup) ();
 };
 
 #endif /* LIBAUDCORE_PREFERENCES_H */

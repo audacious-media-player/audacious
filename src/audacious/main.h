@@ -29,15 +29,15 @@ enum class StartupType {
     Unknown
 };
 
-StartupType dbus_server_init (void);
-void dbus_server_cleanup (void);
+StartupType dbus_server_init ();
+void dbus_server_cleanup ();
 
 #endif
 
 /* signals.c */
 #ifdef HAVE_SIGWAIT
-void signals_init_one (void);
-void signals_init_two (void);
+void signals_init_one ();
+void signals_init_two ();
 #endif
 
 #endif

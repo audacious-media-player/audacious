@@ -67,7 +67,7 @@ EXPORT GtkWidget * audgui_get_plugin_menu (AudMenuID id)
     return menus[id];
 }
 
-EXPORT void audgui_plugin_menu_add (AudMenuID id, void (* func) (void),
+EXPORT void audgui_plugin_menu_add (AudMenuID id, void (* func) (),
  const char * name, const char * icon)
 {
     AudguiMenuItem * item = g_slice_new0 (AudguiMenuItem);
@@ -81,13 +81,13 @@ EXPORT void audgui_plugin_menu_add (AudMenuID id, void (* func) (void),
         add_to_menu (menus[id], item);
 }
 
-static void remove_cb (GtkWidget * widget, void (* func) (void))
+static void remove_cb (GtkWidget * widget, void (* func) ())
 {
     if (g_object_get_data ((GObject *) widget, "func") == (void *) func)
         gtk_widget_destroy (widget);
 }
 
-EXPORT void audgui_plugin_menu_remove (AudMenuID id, void (* func) (void))
+EXPORT void audgui_plugin_menu_remove (AudMenuID id, void (* func) ())
 {
     if (menus[id])
         gtk_container_foreach ((GtkContainer *) menus[id], (GtkCallback)

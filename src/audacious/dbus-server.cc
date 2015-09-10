@@ -764,7 +764,7 @@ static void name_lost (GDBusConnection *, const char *, void *)
     g_main_loop_quit (mainloop);
 }
 
-StartupType dbus_server_init (void)
+StartupType dbus_server_init ()
 {
     GError * error = nullptr;
     GDBusConnection * bus = g_bus_get_sync (G_BUS_TYPE_SESSION, nullptr, & error);
@@ -812,7 +812,7 @@ ERROR:
     return StartupType::Unknown;
 }
 
-void dbus_server_cleanup (void)
+void dbus_server_cleanup ()
 {
     if (owner_id)
     {

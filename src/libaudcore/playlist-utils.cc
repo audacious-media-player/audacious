@@ -266,7 +266,7 @@ static StringBuf make_playlist_path (int playlist)
     return name;
 }
 
-static void load_playlists_real (void)
+static void load_playlists_real ()
 {
     const char * folder = aud_get_path (AudPath::PlaylistDir);
 
@@ -323,7 +323,7 @@ DONE:
     aud_playlist_set_active (0);
 }
 
-static void save_playlists_real (void)
+static void save_playlists_real ()
 {
     int lists = aud_playlist_count ();
     const char * folder = aud_get_path (AudPath::PlaylistDir);
@@ -403,7 +403,7 @@ static void state_cb (void * data, void * user)
     state_changed = true;
 }
 
-void load_playlists (void)
+void load_playlists ()
 {
     load_playlists_real ();
     playlist_load_state ();

@@ -74,8 +74,8 @@ void audgui_import_playlist ();
 void audgui_export_playlist ();
 
 /* plugin-menu.c */
-void audgui_plugin_menu_add (AudMenuID id, void (* func) (void), const char * name, const char * icon);
-void audgui_plugin_menu_remove (AudMenuID id, void (* func) (void));
+void audgui_plugin_menu_add (AudMenuID id, void (* func) (), const char * name, const char * icon);
+void audgui_plugin_menu_remove (AudMenuID id, void (* func) ());
 
 /* plugin-prefs.c */
 void audgui_show_plugin_about (PluginHandle * plugin);
