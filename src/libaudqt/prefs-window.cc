@@ -379,7 +379,9 @@ static void * create_titlestring_table ()
 
     /* build menu */
     QPushButton * btn_mnu = new QPushButton (w);
+    btn_mnu->setFixedWidth (btn_mnu->sizeHint ().height ());
     btn_mnu->setIcon (QIcon::fromTheme ("list-add"));
+    btn_mnu->setIconSize (QSize (16, 16));
     l->addWidget (btn_mnu, 1, 2);
 
     QMenu * mnu_fields = new QMenu (w);
