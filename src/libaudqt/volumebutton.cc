@@ -43,6 +43,8 @@ EXPORT VolumeButton::VolumeButton (QWidget * parent) :
 
     m_slider = new QSlider (Qt::Vertical, this);
     m_slider->setRange (0, 100);
+    m_slider->setSingleStep (2);
+    m_slider->setPageStep (20);
 
     layout->addWidget (m_slider);
 
@@ -51,7 +53,7 @@ EXPORT VolumeButton::VolumeButton (QWidget * parent) :
     updateIcon (val);
 
     connect (this, & QAbstractButton::clicked, this, & VolumeButton::showSlider);
-    connect (m_slider, & QAbstractSlider::sliderMoved, this, & VolumeButton::setVolume);
+    connect (m_slider, & QAbstractSlider::valueChanged, this, & VolumeButton::setVolume);
 
     auto timer = new Timer<VolumeButton> (TimerRate::Hz4, this, & VolumeButton::updateVolume);
     connect (this, & QObject::destroyed, [timer] () { delete timer; });
@@ -80,10 +82,7 @@ void VolumeButton::updateVolume ()
 
     int val = aud_drct_get_volume_main ();
     if (val != m_slider->value ())
-    {
-        updateIcon (val);
         m_slider->setValue (val);
-    }
 }
 
 void VolumeButton::showSlider ()
@@ -98,18 +97,15 @@ void VolumeButton::setVolume (int val)
     updateIcon (val);
 }
 
-void VolumeButton::wheelEvent (QWheelEvent * event)
+void VolumeButton::wheelEvent (QWheelEvent * e)
 {
     int val = m_slider->value ();
-    int y = event->angleDelta ().y ();
+    int y = e->angleDelta ().y ();
 
-    if (y < 0 && val > 0)
-        val --;
-    else if (y > 0 && val < 100)
-        val ++;
-
-    m_slider->setValue (val);
-    setVolume (val);
+    if (y < 0)
+        m_slider->setValue (-- val);
+    else
+        m_slider->setValue (++ val);
 }
 
 } // namespace audqt
