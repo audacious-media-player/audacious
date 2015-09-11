@@ -59,9 +59,6 @@ EXPORT void audgui_confirm_playlist_delete (int playlist)
     GtkWidget * dialog = audgui_dialog_new (GTK_MESSAGE_QUESTION,
      _("Remove Playlist"), message, button1, button2);
 
-    gtk_widget_set_can_default (button2, true);
-    gtk_widget_grab_default (button2);
-
     GtkWidget * check = gtk_check_button_new_with_mnemonic (_("_Don’t ask again"));
     g_signal_connect (check, "toggled", (GCallback) no_confirm_cb, nullptr);
     audgui_dialog_add_widget (dialog, check);
