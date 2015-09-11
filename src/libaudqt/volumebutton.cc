@@ -82,7 +82,12 @@ void VolumeButton::updateVolume ()
 
     int val = aud_drct_get_volume_main ();
     if (val != m_slider->value ())
+    {
+        disconnect (m_slider, nullptr, this, nullptr);
         m_slider->setValue (val);
+        updateIcon (val);
+        connect (m_slider, & QAbstractSlider::valueChanged, this, & VolumeButton::setVolume);
+    }
 }
 
 void VolumeButton::showSlider ()
