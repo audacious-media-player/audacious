@@ -84,6 +84,7 @@ static QDialog * buildDeleteDialog (int playlist)
 
     remove->setIcon (QIcon::fromTheme ("edit-delete"));
     cancel->setIcon (QIcon::fromTheme ("process-stop"));
+    cancel->setDefault (true);
 
     QObject::connect (skip_prompt, & QCheckBox::stateChanged, [] (int state) {
         aud_set_bool ("audgui", "no_confirm_playlist_delete", (state == Qt::Checked));
