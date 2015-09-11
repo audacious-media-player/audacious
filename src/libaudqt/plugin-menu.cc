@@ -57,7 +57,7 @@ EXPORT QMenu * menu_get_by_id (AudMenuID id)
     return menus[id];
 }
 
-EXPORT void menu_add (AudMenuID id, void (* func) (), const char * name, const char * icon)
+EXPORT void menu_add (AudMenuID id, MenuFunc func, const char * name, const char * icon)
 {
     MenuItem * item = new MenuItem (MenuCommand ({name, icon}, func));
     items[id].append (item);
@@ -66,7 +66,7 @@ EXPORT void menu_add (AudMenuID id, void (* func) (), const char * name, const c
         menus[id]->addAction (menu_action (* item, nullptr, menus[id]));
 }
 
-EXPORT void menu_remove (AudMenuID id, void (* func) ())
+EXPORT void menu_remove (AudMenuID id, MenuFunc func)
 {
     // FIXME: remove the QAction
     auto is_match = [func] (SmartPtr<MenuItem> & item)
