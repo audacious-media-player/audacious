@@ -165,7 +165,7 @@ static void eq_update (void *data, void *user)
     pthread_mutex_unlock (& mutex);
 }
 
-void eq_init (void)
+void eq_init ()
 {
     eq_update (nullptr, nullptr);
     hook_associate ("set equalizer_active", eq_update, nullptr);
@@ -173,7 +173,7 @@ void eq_init (void)
     hook_associate ("set equalizer_bands", eq_update, nullptr);
 }
 
-void eq_cleanup (void)
+void eq_cleanup ()
 {
     hook_dissociate ("set equalizer_active", eq_update);
     hook_dissociate ("set equalizer_preamp", eq_update);

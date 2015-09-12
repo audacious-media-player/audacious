@@ -28,7 +28,12 @@
 
 namespace audqt {
 
-static aud::array<AudMenuID, Index<SmartPtr<MenuItem>>> items;
+struct ItemData {
+    MenuItem item;
+    SmartPtr<QAction> action;
+};
+
+static aud::array<AudMenuID, Index<ItemData>> items;
 static aud::array<AudMenuID, QMenu *> menus;
 
 static void show_prefs ()
@@ -52,25 +57,29 @@ EXPORT QMenu * menu_get_by_id (AudMenuID id)
         menus[id]->addAction (menu_action (item, PACKAGE, menus[id]));
 
     for (auto & item : items[id])
-        menus[id]->addAction (menu_action (* item, nullptr, menus[id]));
+    {
+        item.action.capture (menu_action (item.item, nullptr));
+        menus[id]->addAction (item.action.get ());
+    }
 
     return menus[id];
 }
 
-EXPORT void menu_add (AudMenuID id, void (* func) (void), const char * name, const char * icon)
+EXPORT void menu_add (AudMenuID id, MenuFunc func, const char * name, const char * icon)
 {
-    MenuItem * item = new MenuItem (MenuCommand ({name, icon}, func));
-    items[id].append (item);
+    auto & item = items[id].append (MenuCommand ({name, icon}, func));
 
     if (menus[id])
-        menus[id]->addAction (menu_action (* item, nullptr, menus[id]));
+    {
+        item.action.capture (menu_action (item.item, nullptr));
+        menus[id]->addAction (item.action.get ());
+    }
 }
 
-EXPORT void menu_remove (AudMenuID id, void (* func) (void))
+EXPORT void menu_remove (AudMenuID id, MenuFunc func)
 {
-    // FIXME: remove the QAction
-    auto is_match = [func] (SmartPtr<MenuItem> & item)
-        { return item->func == func; };
+    auto is_match = [func] (ItemData & item)
+        { return item.item.func == func; };
 
     items[id].remove_if (is_match, true);
 }

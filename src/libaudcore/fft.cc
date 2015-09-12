@@ -51,7 +51,7 @@ static int bit_reverse (int x)
 
 /* Generate lookup tables. */
 
-static void generate_tables (void)
+static void generate_tables ()
 {
     if (generated)
         return;

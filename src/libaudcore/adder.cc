@@ -104,7 +104,7 @@ static void status_update (const char * filename, int found)
     pthread_mutex_unlock (& mutex);
 }
 
-static void status_done_locked (void)
+static void status_done_locked ()
 {
     status_timer.stop ();
 
@@ -268,7 +268,7 @@ static void add_generic (const char * filename, Tuple && tuple,
         add_file (filename, Tuple (), nullptr, filter, user, result, false);
 }
 
-static void start_thread_locked (void)
+static void start_thread_locked ()
 {
     if (add_thread_exited)
     {
@@ -285,7 +285,7 @@ static void start_thread_locked (void)
     }
 }
 
-static void stop_thread_locked (void)
+static void stop_thread_locked ()
 {
     if (add_thread_started)
     {
@@ -395,7 +395,7 @@ static void * add_worker (void * unused)
     return nullptr;
 }
 
-void adder_cleanup (void)
+void adder_cleanup ()
 {
     pthread_mutex_lock (& mutex);
 

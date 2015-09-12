@@ -32,7 +32,7 @@ struct AudguiMenuItem {
     GdkModifierType mod;
 
     /* for normal items */
-    void (* func) (void);
+    void (* func) ();
 
     /* for toggle items */
     const char * csect;
@@ -43,19 +43,19 @@ struct AudguiMenuItem {
     ArrayRef<AudguiMenuItem> items;
 
     /* for custom submenus */
-    GtkWidget * (* get_sub) (void);
+    GtkWidget * (* get_sub) ();
 
     /* for separators */
     bool sep;
 };
 
 constexpr AudguiMenuItem MenuCommand (const char * name, const char * icon,
- unsigned key, GdkModifierType mod, void (* func) (void))
+ unsigned key, GdkModifierType mod, void (* func) ())
     { return {name, icon, key, mod, func}; }
 
 constexpr AudguiMenuItem MenuToggle (const char * name, const char * icon,
  unsigned key, GdkModifierType mod, const char * csect, const char * cname,
- void (* func) (void) = 0, const char * hook = 0)
+ void (* func) () = 0, const char * hook = 0)
     { return {name, icon, key, mod, func, csect, cname, hook}; }
 
 constexpr AudguiMenuItem MenuSub (const char * name, const char * icon,
@@ -63,7 +63,7 @@ constexpr AudguiMenuItem MenuSub (const char * name, const char * icon,
     { return {name, icon, 0, (GdkModifierType) 0, 0, 0, 0, 0, items}; }
 
 constexpr AudguiMenuItem MenuSub (const char * name, const char * icon,
- GtkWidget * (* get_sub) (void))
+ GtkWidget * (* get_sub) ())
     { return {name, icon, 0, (GdkModifierType) 0, 0, 0, 0, 0, 0, get_sub}; }
 
 constexpr AudguiMenuItem MenuSep ()

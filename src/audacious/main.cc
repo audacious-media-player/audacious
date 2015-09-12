@@ -174,7 +174,7 @@ OUT:
     return success;
 }
 
-static void print_help (void)
+static void print_help ()
 {
     static const char pad[21] = "                    ";
 
@@ -189,7 +189,7 @@ static void print_help (void)
 }
 
 #ifdef USE_DBUS
-static void do_remote (void)
+static void do_remote ()
 {
     GDBusConnection * bus = nullptr;
     ObjAudacious * obj = nullptr;
@@ -265,7 +265,7 @@ ERR:
 }
 #endif
 
-static void do_commands (void)
+static void do_commands ()
 {
     bool resume = aud_get_bool (nullptr, "resume_playback_on_startup");
 
@@ -302,20 +302,20 @@ static void do_commands (void)
         aud_ui_show (true);
 }
 
-static void main_cleanup (void)
+static void main_cleanup ()
 {
     filenames.clear ();
     aud_cleanup_paths ();
     aud_leak_check ();
 }
 
-static bool check_should_quit (void)
+static bool check_should_quit ()
 {
     return options.quit_after_play && ! aud_drct_get_playing () &&
      ! aud_playlist_add_in_progress (-1);
 }
 
-static void maybe_quit (void)
+static void maybe_quit ()
 {
     if (check_should_quit ())
         aud_quit ();

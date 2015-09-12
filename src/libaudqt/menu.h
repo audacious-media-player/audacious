@@ -33,6 +33,8 @@ enum class AudMenuID;
 
 namespace audqt {
 
+typedef void (* MenuFunc) ();
+
 struct MenuItemText {
     const char * name;
     const char * icon;
@@ -62,9 +64,9 @@ struct MenuItem {
     bool sep;
 };
 
-constexpr MenuItem MenuCommand (MenuItemText text, void (* func) ())
+constexpr MenuItem MenuCommand (MenuItemText text, MenuFunc func)
     { return {text, func}; }
-constexpr MenuItem MenuToggle (MenuItemText text, MenuItemConfig cfg, void (* func) () = nullptr)
+constexpr MenuItem MenuToggle (MenuItemText text, MenuItemConfig cfg, MenuFunc func = nullptr)
     { return {text, func, cfg}; }
 constexpr MenuItem MenuSub (MenuItemText text, ArrayRef<MenuItem> items)
     { return {text, nullptr, {}, items}; }
@@ -87,8 +89,8 @@ static inline QMenuBar * menubar_build (ArrayRef<MenuItem> menu_items, QWidget *
 
 /* plugin-menu.cc */
 QMenu * menu_get_by_id (AudMenuID id);
-void menu_add (AudMenuID id, void (* func) (void), const char * name, const char * icon);
-void menu_remove (AudMenuID id, void (* func) (void));
+void menu_add (AudMenuID id, MenuFunc func, const char * name, const char * icon);
+void menu_remove (AudMenuID id, MenuFunc func);
 
 } // namespace audqt
 

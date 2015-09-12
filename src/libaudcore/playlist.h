@@ -139,6 +139,10 @@ void aud_playlist_set_active (int playlist);
 /* Returns the number of the active playlist. */
 int aud_playlist_get_active ();
 
+/* Convenience function which adds a new playlist after the active one and then
+ * sets the new one as active.  Returns the number of the new playlist. */
+int aud_playlist_new ();
+
 /* Starts playback of a playlist, resuming from the position last played if
  * possible.  If <playlist> is -1 or if the requested playlist is empty, stops
  * playback.  If <paused> is true, starts playback in a paused state. */

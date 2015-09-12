@@ -248,7 +248,7 @@ private:
     }
 };
 
-void config_load (void)
+void config_load ()
 {
     StringBuf path = filename_to_uri (aud_get_path (AudPath::UserDir));
     path.insert (-1, "/config");
@@ -275,7 +275,7 @@ static bool add_to_save_list (MultiHash::Node * node0, void * state0)
     return false;
 }
 
-void config_save (void)
+void config_save ()
 {
     if (! modified)
         return;
@@ -334,7 +334,7 @@ EXPORT void aud_config_set_defaults (const char * section, const char * const * 
     }
 }
 
-void config_cleanup (void)
+void config_cleanup ()
 {
     ConfigOp op = {OP_CLEAR_NO_FLAG};
     config.iterate (action_cb, & op);

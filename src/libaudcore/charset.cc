@@ -190,7 +190,7 @@ EXPORT StringBuf str_to_utf8 (StringBuf && str)
     return std::move (str);
 }
 
-static void chardet_update (void)
+static void chardet_update ()
 {
     String region = aud_get_str (nullptr, "chardet_detector");
     String fallbacks = aud_get_str (nullptr, "chardet_fallback");
@@ -198,7 +198,7 @@ static void chardet_update (void)
     set_charsets (region[0] ? (const char *) region : nullptr, fallbacks);
 }
 
-void chardet_init (void)
+void chardet_init ()
 {
     chardet_update ();
 
@@ -206,7 +206,7 @@ void chardet_init (void)
     hook_associate ("set chardet_fallback", (HookFunction) chardet_update, nullptr);
 }
 
-void chardet_cleanup (void)
+void chardet_cleanup ()
 {
     hook_dissociate ("set chardet_detector", (HookFunction) chardet_update);
     hook_dissociate ("set chardet_fallback", (HookFunction) chardet_update);

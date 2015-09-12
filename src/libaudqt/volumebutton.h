@@ -37,7 +37,7 @@ private:
     void showSlider ();
     void setVolume (int val);
 
-    void wheelEvent (QWheelEvent * event);
+    void wheelEvent (QWheelEvent * e);
 
     QSlider * m_slider;
     QWidget * m_container;

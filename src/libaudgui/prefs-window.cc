@@ -548,7 +548,7 @@ static void * create_titlestring_table ()
     g_signal_connect (titlestring_help_button, "clicked",
      (GCallback) on_titlestring_help_button_clicked, titlestring_tag_menu);
 
-    GtkWidget * image = gtk_image_new_from_icon_name ("list-add", GTK_ICON_SIZE_BUTTON);
+    GtkWidget * image = gtk_image_new_from_icon_name ("list-add", GTK_ICON_SIZE_MENU);
     gtk_container_add ((GtkContainer *) titlestring_help_button, image);
 
     return grid;
