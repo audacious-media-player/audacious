@@ -59,7 +59,9 @@ template<class T, void (* deleter) (T *) = SmartPtrDelete>
 class SmartPtr
 {
 public:
-    explicit constexpr SmartPtr (T * ptr = nullptr) :
+    constexpr SmartPtr () :
+        ptr (nullptr) {}
+    explicit constexpr SmartPtr (T * ptr) :
         ptr (ptr) {}
 
     ~SmartPtr ()
