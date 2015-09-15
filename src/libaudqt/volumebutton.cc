@@ -20,8 +20,10 @@
 #include "volumebutton.h"
 #include "libaudqt.h"
 
+#include <QFrame>
 #include <QIcon>
 #include <QSlider>
+#include <QToolButton>
 #include <QVBoxLayout>
 #include <QWheelEvent>
 
@@ -35,18 +37,21 @@ EXPORT VolumeButton::VolumeButton (QWidget * parent) :
 {
     setFocusPolicy (Qt::NoFocus);
 
-    m_container = new QWidget (this);
-    m_container->setWindowFlags (Qt::Popup);
+    m_container = new QFrame (this, Qt::Popup);
+    m_container->setFrameShape (QFrame::StyledPanel);
 
     auto layout = new QVBoxLayout (m_container);
-    layout->setContentsMargins (6, 6, 6, 6);
+    layout->setSpacing (0);
+    layout->setMargin (2);
 
     m_slider = new QSlider (Qt::Vertical, this);
     m_slider->setRange (0, 100);
     m_slider->setSingleStep (2);
     m_slider->setPageStep (20);
 
+    layout->addWidget (newSliderButton (5));
     layout->addWidget (m_slider);
+    layout->addWidget (newSliderButton (-5));
 
     int val = aud_drct_get_volume_main ();
     m_slider->setValue (val);
@@ -92,7 +97,16 @@ void VolumeButton::updateVolume ()
 
 void VolumeButton::showSlider ()
 {
-    m_container->move (mapToGlobal (QPoint (0, 0)));
+    QSize button_size = sizeHint ();
+    QSize container_size = m_container->sizeHint ();
+
+    int dx = container_size.width () / 2 - button_size.width () / 2;
+    int dy = container_size.height () / 2 - button_size.height () / 2;
+
+    QPoint pos = mapToGlobal (QPoint (0, 0));
+    pos += QPoint (-dx, -dy);
+
+    m_container->move (pos);
     window_bring_to_front (m_container);
 }
 
@@ -100,6 +114,21 @@ void VolumeButton::setVolume (int val)
 {
     aud_drct_set_volume_main (val);
     updateIcon (val);
+}
+
+QToolButton * VolumeButton::newSliderButton (int delta)
+{
+    auto button = new QToolButton (this);
+    button->setText (delta < 0 ? "-" : "+");
+    button->setAutoRaise (true);
+    button->setSizePolicy (QSizePolicy::Ignored, QSizePolicy::Preferred);
+
+    connect (button, & QAbstractButton::clicked, [this, delta] () {
+        int val = aud_drct_get_volume_main ();
+        m_slider->setValue (val + delta);
+    });
+
+    return button;
 }
 
 void VolumeButton::wheelEvent (QWheelEvent * e)
