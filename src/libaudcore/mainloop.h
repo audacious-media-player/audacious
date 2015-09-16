@@ -62,7 +62,9 @@ public:
         { stop (); }
 
 private:
-    int serial = 0;  // no longer used, kept for ABI compatibility
+    __attribute__ ((unused))
+     int serial = 0; // for ABI compatibility
+
     bool _running = false;
 
     void start (const QueuedFuncParams & params);
