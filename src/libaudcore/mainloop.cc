@@ -125,10 +125,7 @@ void QueuedFuncHelper::start ()
 void QueuedFuncHelper::stop ()
 {
     if (glib_source)
-    {
-        g_source_remove (glib_source);
-        glib_source = 0;
-    }
+        g_source_remove (glib_source);  // deletes the QueuedFuncHelper
 }
 
 #ifdef USE_QT
