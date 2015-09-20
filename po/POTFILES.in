@@ -11,6 +11,7 @@ src/libaudcore/vfs.cc
 src/libaudcore/vfs_local.cc
 src/libaudgui/about.cc
 src/libaudgui/confirm.cc
+src/libaudgui/eq-preset.cc
 src/libaudgui/equalizer.cc
 src/libaudgui/file-opener.cc
 src/libaudgui/infopopup.cc
@@ -22,6 +23,7 @@ src/libaudgui/plugin-menu.cc
 src/libaudgui/plugin-prefs.cc
 src/libaudgui/plugin-view.cc
 src/libaudgui/prefs-window.cc
+src/libaudgui/preset-browser.cc
 src/libaudgui/queue-manager.cc
 src/libaudgui/status.cc
 src/libaudgui/url-opener.cc
@@ -37,4 +39,5 @@ src/libaudqt/plugin-menu.cc
 src/libaudqt/prefs-plugin.cc
 src/libaudqt/prefs-window.cc
 src/libaudqt/queue-manager.cc
+src/libaudqt/url-opener.cc
 src/libaudqt/util.cc

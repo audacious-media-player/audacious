@@ -22,6 +22,7 @@
 
 #include <QToolButton>
 
+class QFrame;
 class QSlider;
 
 namespace audqt {
@@ -36,11 +37,12 @@ private:
     void updateVolume ();
     void showSlider ();
     void setVolume (int val);
+    QToolButton * newSliderButton (int delta);
 
     void wheelEvent (QWheelEvent * e);
 
     QSlider * m_slider;
-    QWidget * m_container;
+    QFrame * m_container;
 };
 
 } // namespace audqt

@@ -120,7 +120,6 @@ static void cleanup_output ()
     buffer1.clear ();
     buffer2.clear ();
 
-    effect_flush (true);
     cop->close_audio ();
     vis_runner_start_stop (false, false);
 }
@@ -183,6 +182,7 @@ static void setup_output ()
             s_output = true;
         else
         {
+            effect_flush (true);
             cleanup_secondary ();
             return;
         }
