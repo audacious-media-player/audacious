@@ -20,6 +20,8 @@
 #include "mainloop.h"
 
 #include <pthread.h>
+#include <stdlib.h>
+
 #include <glib.h>
 
 #ifdef USE_QT
@@ -60,6 +62,9 @@ struct QueuedFuncHelper
     void run ();
     void start_for (QueuedFunc * queued_);
 
+    virtual bool can_stop ()
+        { return true; }
+
     virtual void start ();
     virtual void stop ();
 
@@ -70,6 +75,7 @@ private:
 struct QueuedFuncNode : public MultiHash::Node {
     QueuedFunc * queued;
     QueuedFuncHelper * helper;
+    bool can_stop;
 };
 
 void QueuedFuncHelper::run ()
@@ -137,8 +143,10 @@ public:
         QueuedFuncHelper (params),
         QEvent (User) {}
 
+    bool can_stop ()
+        { return false; }
+
     void start ();
-    void stop () {}
 };
 
 class QueuedFuncRouter : public QObject
@@ -216,6 +224,7 @@ void QueuedFunc::start (const QueuedFuncParams & params)
         auto node = new QueuedFuncNode;
         node->queued = me;
         node->helper = helper;
+        node->can_stop = helper->can_stop ();
 
         helper->start_for (me);
 
@@ -226,8 +235,11 @@ void QueuedFunc::start (const QueuedFuncParams & params)
         auto node = (QueuedFuncNode *) node_;
         auto helper = (QueuedFuncHelper *) helper_;
 
-        node->helper->stop ();
+        if (node->can_stop)
+            node->helper->stop ();
+
         node->helper = helper;
+        node->can_stop = helper->can_stop ();
 
         helper->start_for (node->queued);
 
@@ -260,7 +272,9 @@ EXPORT void QueuedFunc::stop ()
     auto remove_cb = [] (MultiHash::Node * node_, void *) {
         auto node = (QueuedFuncNode *) node_;
 
-        node->helper->stop ();
+        if (node->can_stop)
+            node->helper->stop ();
+
         node->queued->_running = false;
         delete node;
 
@@ -285,6 +299,7 @@ EXPORT void mainloop_run ()
             static char * dummy_argv[] = {app_name, nullptr};
 
             qt_mainloop = new QCoreApplication (dummy_argc, dummy_argv);
+            atexit ([] () { delete qt_mainloop; });
         }
 
         pthread_mutex_unlock (& mainloop_mutex);
@@ -294,7 +309,10 @@ EXPORT void mainloop_run ()
 #endif
     {
         if (! glib_mainloop)
+        {
             glib_mainloop = g_main_loop_new (nullptr, true);
+            atexit ([] () { g_main_loop_unref (glib_mainloop); });
+        }
 
         pthread_mutex_unlock (& mainloop_mutex);
         g_main_loop_run (glib_mainloop);
