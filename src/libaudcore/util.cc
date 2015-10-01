@@ -137,7 +137,7 @@ unsigned int32_hash (unsigned val)
 
 unsigned ptr_hash (const void * ptr)
 {
-    unsigned addr_low = (uintptr_t) ptr;
-    unsigned addr_high = (uintptr_t) ptr >> 32;
+    unsigned addr_low = (uint64_t) (uintptr_t) ptr;
+    unsigned addr_high = (uint64_t) (uintptr_t) ptr >> 32;
     return int32_hash (addr_low + addr_high);
 }

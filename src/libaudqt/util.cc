@@ -17,6 +17,8 @@
  * the use of this software.
  */
 
+#include <stdlib.h>
+
 #include <QApplication>
 #include <QPushButton>
 #include <QVBoxLayout>
@@ -42,6 +44,8 @@ EXPORT void init ()
     static char * dummy_argv[] = {app_name, nullptr};
 
     qapp = new QApplication (dummy_argc, dummy_argv);
+    atexit ([] () { delete qapp; });
+
     qapp->setAttribute (Qt::AA_UseHighDpiPixmaps);
     qapp->setApplicationName (_("Audacious"));
     qapp->setWindowIcon (QIcon::fromTheme (app_name));
