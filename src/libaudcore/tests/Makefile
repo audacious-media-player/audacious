@@ -38,4 +38,4 @@ cov: all
 	gcov --object-directory . ${SRCS} ${MAINLOOP_SRCS}
 
 clean:
-	rm -f test test-mainloop test-mainloop *.gcno *.gcda *.gcov
+	rm -f test test-mainloop *.gcno *.gcda *.gcov
