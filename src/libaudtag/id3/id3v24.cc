@@ -33,6 +33,8 @@
 
 #include "id3-common.h"
 
+#define MAX_TAG_SIZE 16777216  /* reject tags over 16 MB */
+
 enum
 {
     ID3_ALBUM = 0,
@@ -156,6 +158,8 @@ static bool validate_header (ID3v2Header * header, bool is_footer)
         return false;
 
     header->size = unsyncsafe32 (FROM_BE32 (header->size));
+    if (header->size > MAX_TAG_SIZE)
+        return false;
 
     AUDDBG ("Found ID3v2 %s:\n", is_footer ? "footer" : "header");
     AUDDBG (" magic = %.3s\n", header->magic);
@@ -175,8 +179,7 @@ static bool read_header (VFSFile & handle, int * version, bool *
     if (handle.fseek (0, VFS_SEEK_SET))
         return false;
 
-    if (handle.fread (& header, 1, sizeof (ID3v2Header)) != sizeof
-     (ID3v2Header))
+    if (handle.fread (& header, 1, sizeof (ID3v2Header)) != sizeof (ID3v2Header))
         return false;
 
     if (validate_header (& header, false))
@@ -191,8 +194,7 @@ static bool read_header (VFSFile & handle, int * version, bool *
             if (handle.fseek (header.size, VFS_SEEK_CUR))
                 return false;
 
-            if (handle.fread (& footer, 1, sizeof (ID3v2Header)) != sizeof
-             (ID3v2Header))
+            if (handle.fread (& footer, 1, sizeof (ID3v2Header)) != sizeof (ID3v2Header))
                 return false;
 
             if (! validate_header (& footer, true))
@@ -216,8 +218,7 @@ static bool read_header (VFSFile & handle, int * version, bool *
         if (handle.fseek (end - sizeof (ID3v2Header), VFS_SEEK_SET))
             return false;
 
-        if (handle.fread (& footer, 1, sizeof (ID3v2Header)) != sizeof
-         (ID3v2Header))
+        if (handle.fread (& footer, 1, sizeof (ID3v2Header)) != sizeof (ID3v2Header))
             return false;
 
         if (! validate_header (& footer, true))
@@ -447,9 +448,7 @@ static bool write_header (int fd, int version, int size)
 
 static int get_frame_id (const char * key)
 {
-    int id;
-
-    for (id = 0; id < ID3_TAGS_NO; id ++)
+    for (int id = 0; id < ID3_TAGS_NO; id ++)
     {
         if (! strcmp (key, id3_frames[id]))
             return id;
@@ -535,13 +534,10 @@ static void add_frameFromTupleStr (const Tuple & tuple, Tuple::Field field,
 static void add_frameFromTupleInt (const Tuple & tuple, Tuple::Field field,
  int id3_field, FrameDict & dict)
 {
-    if (tuple.get_value_type (field) != Tuple::Int)
-    {
+    if (tuple.get_value_type (field) == Tuple::Int)
+        add_text_frame (id3_field, int_to_str (tuple.get_int (field)), dict);
+    else
         remove_frame (id3_field, dict);
-        return;
-    }
-
-    add_text_frame (id3_field, int_to_str (tuple.get_int (field)), dict);
 }
 
 bool ID3v24TagModule::can_handle_file (VFSFile & handle)
