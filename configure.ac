@@ -5,7 +5,7 @@ dnl ***
 dnl Initialize
 dnl ==========
 AC_PREREQ([2.59])
-AC_INIT([audacious], [3.7-alpha1])
+AC_INIT([audacious], [3.7-beta1])
 AC_COPYRIGHT([Copyright (C) 2001-2015 Audacious developers and others])
 
 AC_DEFINE_UNQUOTED(PACKAGE, "$PACKAGE_NAME", [Name of package])
@@ -78,10 +78,10 @@ AC_ARG_ENABLE(dbus,
  USE_DBUS=$enableval, USE_DBUS=yes)
 
 if test $USE_DBUS = yes ; then
-	AC_CHECK_PROG(have_dbus, gdbus-codegen, yes, no)
-	if test $have_dbus = no ; then
-		AC_MSG_ERROR([D-Bus support unavailable; use --disable-dbus for a crippled build])
-	fi
+    AC_CHECK_PROG(have_dbus, gdbus-codegen, yes, no)
+    if test $have_dbus = no ; then
+        AC_MSG_ERROR([D-Bus support unavailable; use --disable-dbus for a crippled build])
+    fi
     AC_DEFINE(USE_DBUS, 1, [Define if D-Bus support enabled])
 fi
 
