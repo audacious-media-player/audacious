@@ -78,10 +78,10 @@ AC_ARG_ENABLE(dbus,
  USE_DBUS=$enableval, USE_DBUS=yes)
 
 if test $USE_DBUS = yes ; then
-	AC_CHECK_PROG(have_dbus, gdbus-codegen, yes, no)
-	if test $have_dbus = no ; then
-		AC_MSG_ERROR([D-Bus support unavailable; use --disable-dbus for a crippled build])
-	fi
+    AC_CHECK_PROG(have_dbus, gdbus-codegen, yes, no)
+    if test $have_dbus = no ; then
+        AC_MSG_ERROR([D-Bus support unavailable; use --disable-dbus for a crippled build])
+    fi
     AC_DEFINE(USE_DBUS, 1, [Define if D-Bus support enabled])
 fi
 
