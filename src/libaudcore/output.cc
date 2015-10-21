@@ -66,11 +66,10 @@ static bool s_flushed; /* flushed, writes ignored until resume */
 static bool s_resetting; /* resetting output system */
 
 /* Condition variable linked to LOCK_MINOR.
- * The input thread will wait (holding LOCK_MAJOR) if the following is true:
+ * The input thread will wait if the following is true:
  *   ((! s_output || s_paused || s_resetting) && ! s_flushed)
  * Hence you must signal if you cause the inverse to be true:
- *   ((s_output && ! s_paused && ! s_resetting) || s_flushed)
- * If you hold LOCK_MAJOR, there is no need to signal. */
+ *   ((s_output && ! s_paused && ! s_resetting) || s_flushed) */
 
 static pthread_cond_t cond_minor = PTHREAD_COND_INITIALIZER;
 
@@ -207,6 +206,9 @@ static void setup_output ()
     out_bytes_written = 0;
 
     apply_pause ();
+
+    if (! s_paused && ! s_flushed && ! s_resetting)
+        SIGNAL_MINOR;
 }
 
 /* assumes LOCK_MINOR, s_output */
@@ -608,6 +610,9 @@ static void output_reset (OutputReset type, OutputPlugin * op)
         setup_output ();
 
     s_resetting = false;
+
+    if (s_output && ! s_paused && ! s_flushed)
+        SIGNAL_MINOR;
 
     UNLOCK_ALL;
 }
