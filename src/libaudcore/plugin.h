@@ -212,7 +212,7 @@ public:
     virtual void close_audio () = 0;
 
     /* Waits until write_audio() will return a size greater than zero.
-     * output_time(), pause(), and flush() may be called meanwhile; if flush()
+     * get_delay(), pause(), and flush() may be called meanwhile; if flush()
      * is called, period_wait() should return immediately. */
     virtual void period_wait () = 0;
 
