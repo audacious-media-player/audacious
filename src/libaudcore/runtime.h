@@ -36,7 +36,8 @@ enum class AudPath {
 
 enum class MainloopType {
     GLib,
-    Qt
+    Qt,
+    OSX
 };
 
 enum class OutputReset {

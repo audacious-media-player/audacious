@@ -56,6 +56,7 @@ bool plugin_check_flags (int version)
     {
         case MainloopType::GLib: version &= ~_AUD_PLUGIN_GLIB_ONLY; break;
         case MainloopType::Qt: version &= ~_AUD_PLUGIN_QT_ONLY; break;
+        case MainloopType::OSX: version &= ~_AUD_PLUGIN_OSX_ONLY; break;
     }
 
     return ! (version & 0xffff0000);

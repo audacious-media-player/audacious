@@ -1,6 +1,6 @@
 /*
  * mainloop.cc
- * Copyright 2014-2015 John Lindgren
+ * Copyright 2014-2015 John Lindgren, Michał Lipski
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -23,6 +23,10 @@
 #include <stdlib.h>
 
 #include <glib.h>
+
+#ifdef __APPLE__
+#include <CoreFoundation/CoreFoundation.h>
+#endif
 
 #ifdef USE_QT
 #include <QCoreApplication>
@@ -134,6 +138,47 @@ void QueuedFuncHelper::stop ()
         g_source_remove (glib_source);  // deletes the QueuedFuncHelper
 }
 
+#ifdef __APPLE__
+
+class OSXQueuedFuncTimer : public QueuedFuncHelper
+{
+public:
+    OSXQueuedFuncTimer (const QueuedFuncParams & params) :
+        QueuedFuncHelper (params) {}
+
+    void start ()
+    {
+        CFRunLoopTimerContext context = { 0, this, NULL, NULL, NULL };
+        CFAbsoluteTime fireDate = CFAbsoluteTimeGetCurrent ();
+        float interval = params.interval_ms / (float) 1000;
+
+        mTimer = CFRunLoopTimerCreate (kCFAllocatorDefault,
+            fireDate,
+            interval,
+            0,
+            0,
+            callback,
+            & context);
+        CFRunLoopAddTimer (CFRunLoopGetMain (), mTimer, kCFRunLoopCommonModes);
+    }
+
+    void stop ()
+    {
+        CFRunLoopRemoveTimer (CFRunLoopGetMain (), mTimer, kCFRunLoopCommonModes);
+    }
+
+protected:
+    static void callback (CFRunLoopTimerRef timer, void * me)
+    {
+        ((QueuedFuncHelper *) me)->run ();
+    }
+
+private:
+    CFRunLoopTimerRef mTimer;
+};
+
+#endif // __APPLE__
+
 #ifdef USE_QT
 
 class QueuedFuncEvent : public QueuedFuncHelper, public QEvent
@@ -202,6 +247,11 @@ static void create_func_table ()
 
 static QueuedFuncHelper * create_helper (const QueuedFuncParams & params)
 {
+#ifdef __APPLE__
+    if (aud_get_mainloop_type () == MainloopType::OSX)
+        return new OSXQueuedFuncTimer (params);
+#endif
+
 #ifdef USE_QT
     if (aud_get_mainloop_type () == MainloopType::Qt)
     {
@@ -289,6 +339,15 @@ EXPORT void mainloop_run ()
 {
     pthread_mutex_lock (& mainloop_mutex);
 
+#ifdef __APPLE__
+    if (aud_get_mainloop_type () == MainloopType::OSX)
+    {
+        pthread_mutex_unlock (& mainloop_mutex);
+        CFRunLoopRun ();
+    }
+    else
+#endif
+
 #ifdef USE_QT
     if (aud_get_mainloop_type () == MainloopType::Qt)
     {
@@ -322,6 +381,12 @@ EXPORT void mainloop_run ()
 EXPORT void mainloop_quit ()
 {
     pthread_mutex_lock (& mainloop_mutex);
+
+#ifdef __APPLE__
+    if (aud_get_mainloop_type () == MainloopType::OSX)
+        CFRunLoopStop (CFRunLoopGetMain ());
+    else
+#endif
 
 #ifdef USE_QT
     if (aud_get_mainloop_type () == MainloopType::Qt)

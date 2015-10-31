@@ -46,7 +46,7 @@ static struct {
     int mainwin, show_jump_box;
     int headless, quit_after_play;
     int verbose;
-    int qt;
+    int qt, osx;
 } options;
 
 static Index<PlaylistAddItem> filenames;
@@ -74,6 +74,9 @@ static const struct {
     {"verbose", 'V', & options.verbose, N_("Print debugging messages (may be used twice)")},
 #if defined(USE_QT) && defined(USE_GTK)
     {"qt", 'Q', & options.qt, N_("Run in Qt mode")},
+#endif
+#if defined(__APPLE__) && (defined(USE_QT) || defined(USE_GTK))
+    {"osx", 'O', & options.osx, N_("Run in OS X mode")},
 #endif
 };
 
@@ -168,6 +171,9 @@ static bool parse_options (int argc, char * * argv)
 
     if (options.qt)
         aud_set_mainloop_type (MainloopType::Qt);
+
+    if (options.osx)
+        aud_set_mainloop_type (MainloopType::OSX);
 
 OUT:
     g_free (cur);

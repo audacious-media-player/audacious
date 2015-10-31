@@ -52,6 +52,7 @@ struct PluginPreferences;
 /* compatibility flags ORed into the version field */
 #define _AUD_PLUGIN_GLIB_ONLY 0x10000 /* plugin requires GLib mainloop */
 #define _AUD_PLUGIN_QT_ONLY   0x20000 /* plugin requires Qt mainloop */
+#define _AUD_PLUGIN_OSX_ONLY  0x30000 /* plugin requires OS X mainloop */
 
 /* A NOTE ON THREADS
  *
