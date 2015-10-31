@@ -122,6 +122,9 @@ public:
 #ifdef AUD_PLUGIN_QT_ONLY
      | _AUD_PLUGIN_QT_ONLY
 #endif
+#ifdef AUD_PLUGIN_OSX_ONLY
+     | _AUD_PLUGIN_OSX_ONLY
+#endif
      ;
 
     const PluginType type;
