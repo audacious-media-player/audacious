@@ -149,8 +149,8 @@ public:
     void start ()
     {
         CFRunLoopTimerContext context = { 0, this, NULL, NULL, NULL };
-        CFAbsoluteTime fireDate = CFAbsoluteTimeGetCurrent ();
-        float interval = params.interval_ms / (float) 1000;
+        double fireDate = CFAbsoluteTimeGetCurrent ();
+        double interval = params.interval_ms / (double) 1000;
 
         mTimer = CFRunLoopTimerCreate (kCFAllocatorDefault,
             fireDate,
