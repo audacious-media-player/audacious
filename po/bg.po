@@ -18,9 +18,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2015-09-20 14:59+0200\n"
-"PO-Revision-Date: 2015-08-25 17:15+0000\n"
-"Last-Translator: Thomas Lange <thomas-lange2@gmx.de>\n"
+"POT-Creation-Date: 2015-11-07 18:03+0100\n"
+"PO-Revision-Date: 2015-09-29 08:32+0000\n"
+"Last-Translator: Радослав Иванов <reckku@gmail.com>\n"
 "Language-Team: Bulgarian (http://www.transifex.com/jlindgren/audacious/"
 "language/bg/)\n"
 "Language: bg\n"
@@ -112,7 +112,7 @@ msgstr ""
 "Употреба: audacious [ОПЦИЯ] ... [ФАЙЛ] ...\n"
 "\n"
 
-#: src/audacious/main.cc:349 src/libaudqt/util.cc:46
+#: src/audacious/main.cc:349 src/libaudqt/util.cc:50
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -129,7 +129,7 @@ msgstr "Нов списък за възпроизвеждане"
 
 #: src/libaudcore/audstrings.cc:559 src/libaudcore/tuple.cc:506
 msgid "Standard input"
-msgstr ""
+msgstr "Стандартен вход"
 
 #: src/libaudcore/audstrings.cc:561
 #, c-format
@@ -173,7 +173,7 @@ msgstr ""
 #: src/libaudcore/playlist-files.cc:83
 #, c-format
 msgid "Error loading %s."
-msgstr ""
+msgstr "Грешка при зареждането на %s."
 
 #: src/libaudcore/playlist-files.cc:85
 #, c-format
@@ -243,7 +243,7 @@ msgstr "Невалидно име на файл"
 
 #: src/libaudcore/vfs_local.cc:131
 msgid "Invalid access mode"
-msgstr ""
+msgstr "Невалиден режим на достъп"
 
 #: src/libaudgui/about.cc:35 src/libaudqt/about.cc:37
 msgid "Credits"
@@ -297,39 +297,39 @@ msgstr "Как искате да именувате този списък за �
 
 #: src/libaudgui/eq-preset.cc:209 src/libaudgui/eq-preset.cc:216
 msgid "Preset File ..."
-msgstr ""
+msgstr "Файл със заготовки..."
 
 #: src/libaudgui/eq-preset.cc:210 src/libaudgui/eq-preset.cc:217
 msgid "EQF File ..."
-msgstr ""
+msgstr "EQF файл..."
 
 #: src/libaudgui/eq-preset.cc:212
 msgid "Winamp Presets ..."
-msgstr ""
+msgstr "Заготовки за Winamp..."
 
 #: src/libaudgui/eq-preset.cc:221
 msgid "Import"
-msgstr ""
+msgstr "Внасяне"
 
 #: src/libaudgui/eq-preset.cc:222
 msgid "Export"
-msgstr ""
+msgstr "Изнасяне"
 
 #: src/libaudgui/eq-preset.cc:237
 msgid "Equalizer Presets"
-msgstr ""
+msgstr "Заготовки за тонкоректора"
 
 #: src/libaudgui/eq-preset.cc:259
 msgid "Save Preset"
-msgstr ""
+msgstr "Запазване на заготовка"
 
 #: src/libaudgui/eq-preset.cc:281
 msgid "Delete Selected"
-msgstr ""
+msgstr "Изтриване на избраното"
 
 #: src/libaudgui/eq-preset.cc:285
 msgid "Revert Changes"
-msgstr ""
+msgstr "Връщане на промените"
 
 #: src/libaudgui/equalizer.cc:45 src/libaudqt/equalizer.cc:114
 msgid "_Enable"
@@ -381,11 +381,11 @@ msgstr "Тонкоректор"
 
 #: src/libaudgui/equalizer.cc:143
 msgid "Presets ..."
-msgstr ""
+msgstr "Заготовки..."
 
 #: src/libaudgui/equalizer.cc:147
 msgid "Reset to Zero"
-msgstr ""
+msgstr "Нулиране"
 
 #: src/libaudgui/equalizer.cc:154 src/libaudqt/equalizer.cc:123
 msgid "Preamp"
@@ -422,7 +422,7 @@ msgstr "Затваря_не на прозореца при добавяне"
 #: src/libaudgui/prefs-window.cc:831 src/libaudgui/queue-manager.cc:196
 #: src/libaudgui/util.cc:188 src/libaudqt/infowin.cc:74
 #: src/libaudqt/prefs-plugin.cc:136 src/libaudqt/prefs-window.cc:625
-#: src/libaudqt/queue-manager.cc:118 src/libaudqt/util.cc:122
+#: src/libaudqt/queue-manager.cc:118 src/libaudqt/util.cc:126
 msgid "_Close"
 msgstr "_Затваряне"
 
@@ -732,10 +732,11 @@ msgstr "Да се презапише ли %s?"
 msgid ""
 "Please type a filename extension or select a format from the drop-down list."
 msgstr ""
+"Моля въведете разширението на файла или изберете формат от падащият списък."
 
 #: src/libaudgui/playlists.cc:146
 msgid "Select Format by Extension"
-msgstr ""
+msgstr "Изберете формат според разширението"
 
 #: src/libaudgui/playlists.cc:173
 msgid "Export Playlist"
@@ -1106,7 +1107,7 @@ msgstr "<b>Допълнителни</b>"
 
 #: src/libaudgui/prefs-window.cc:316 src/libaudqt/prefs-window.cc:307
 msgid "Guess missing metadata from file path"
-msgstr ""
+msgstr "Познаване на липсващите метаданни от файловото положение"
 
 #: src/libaudgui/prefs-window.cc:318 src/libaudqt/prefs-window.cc:268
 #: src/libaudqt/prefs-window.cc:309
@@ -1123,11 +1124,11 @@ msgstr "ЗАГЛАВИЕ"
 
 #: src/libaudgui/prefs-window.cc:339 src/libaudqt/prefs-window.cc:330
 msgid "TITLE - ARTIST"
-msgstr ""
+msgstr "Заглавие - Изпълнител"
 
 #: src/libaudgui/prefs-window.cc:340 src/libaudqt/prefs-window.cc:331
 msgid "TITLE - ARTIST - ALBUM"
-msgstr ""
+msgstr "Заглавие - Изпълнител - Албум"
 
 #: src/libaudgui/prefs-window.cc:341 src/libaudqt/prefs-window.cc:332
 msgid "ARTIST - TITLE"
@@ -1168,11 +1169,11 @@ msgstr "Потребителски низ:"
 #: src/libaudgui/prefs-window.cc:719
 #, c-format
 msgid "Record audio stream using %s"
-msgstr ""
+msgstr "Записване на звуков поток чрез %s"
 
 #: src/libaudgui/prefs-window.cc:728
 msgid "No audio recording plugin available"
-msgstr ""
+msgstr "Не е налична записваща звука приставка"
 
 #: src/libaudgui/prefs-window.cc:781 src/libaudqt/prefs-window.cc:595
 msgid "Audacious Settings"
@@ -1180,43 +1181,43 @@ msgstr "Audacious настройки"
 
 #: src/libaudgui/preset-browser.cc:50
 msgid "Cancel"
-msgstr ""
+msgstr "Отказ"
 
 #: src/libaudgui/preset-browser.cc:51
 msgid "Save"
-msgstr ""
+msgstr "Запис"
 
 #: src/libaudgui/preset-browser.cc:51
 msgid "Load"
-msgstr ""
+msgstr "Зареждане"
 
 #: src/libaudgui/preset-browser.cc:75
 msgid "Load Preset File"
-msgstr ""
+msgstr "Зареждане на файл-заготовка"
 
 #: src/libaudgui/preset-browser.cc:92
 msgid "Load EQF File"
-msgstr ""
+msgstr "Зареждане на EQF файл"
 
 #: src/libaudgui/preset-browser.cc:107
 msgid "Save Preset File"
-msgstr ""
+msgstr "Запис на файл-заготовка"
 
 #: src/libaudgui/preset-browser.cc:107
 msgid "<name>.preset"
-msgstr ""
+msgstr "<name>.preset"
 
 #: src/libaudgui/preset-browser.cc:125
 msgid "Save EQF File"
-msgstr ""
+msgstr "Запис на EQF файл"
 
 #: src/libaudgui/preset-browser.cc:125
 msgid "<name>.eqf"
-msgstr ""
+msgstr "<name>.eqf"
 
 #: src/libaudgui/preset-browser.cc:139
 msgid "Import Winamp Presets"
-msgstr ""
+msgstr "Внасяне на заготовки от Winamp"
 
 #: src/libaudgui/queue-manager.cc:177 src/libaudqt/queue-manager.cc:135
 msgid "Queue Manager"
@@ -1353,4 +1354,4 @@ msgstr "Разширения ..."
 
 #: src/libaudqt/plugin-menu.cc:54
 msgid "Services"
-msgstr ""
+msgstr "Услуги"

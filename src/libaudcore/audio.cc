@@ -126,53 +126,54 @@ static void NAME (const TYPE * in, float * out, int samples) \
 { \
     const TYPE * end = in + samples; \
     while (in < end) \
-        * out ++ = (TYPE) (SWAP (* in ++) - OFFSET) * (1.0f / (RANGE + 1.0f)); \
+        * out ++ = (TYPE) (SWAP (* in ++) - OFFSET) * (1.0f / RANGE); \
 }
 
-#define TO_INT_LOOP(NAME, TYPE, SWAP, OFFSET, RANGE) \
+#define TO_INT_LOOP(NAME, TYPE, SWAP, OFFSET, RANGE, RANGE_P) \
 static void NAME (const float * in, TYPE * out, int samples) \
 { \
     const float * end = in + samples; \
     while (in < end) \
     { \
-        float f = (* in ++) * (RANGE + 1.0f); \
-        * out ++ = SWAP (OFFSET + (TYPE) lrintf (aud::clamp<float> (f, -RANGE - 1, RANGE))); \
+        float f = (* in ++) * RANGE; \
+        * out ++ = SWAP (OFFSET + (TYPE) lrintf (aud::clamp (f, -(float) RANGE, (float) RANGE_P))); \
     } \
 }
 
-FROM_INT_LOOP (from_s8, int8_t, , 0x00, 0x7f)
-FROM_INT_LOOP (from_u8, int8_t, , 0x80, 0x7f)
+FROM_INT_LOOP (from_s8, int8_t, , 0,    0x80)
+FROM_INT_LOOP (from_u8, int8_t, , 0x80, 0x80)
 
-TO_INT_LOOP (to_s8, int8_t, , 0x00, 0x7f)
-TO_INT_LOOP (to_u8, int8_t, , 0x80, 0x7f)
+TO_INT_LOOP (to_s8, int8_t, , 0,    0x80, 0x7f)
+TO_INT_LOOP (to_u8, int8_t, , 0x80, 0x80, 0x7f)
 
-FROM_INT_LOOP (from_s16le, int16_t, FROM_LE16, 0x0000, 0x7fff)
-FROM_INT_LOOP (from_u16le, int16_t, FROM_LE16, 0x8000, 0x7fff)
-FROM_INT_LOOP (from_s24le, int32_t, FROM_LE32, 0x000000, 0x7fffff)
-FROM_INT_LOOP (from_u24le, int32_t, FROM_LE32, 0x800000, 0x7fffff)
-FROM_INT_LOOP (from_s32le, int32_t, FROM_LE32, 0x00000000, 0x7fffffff)
-FROM_INT_LOOP (from_u32le, int32_t, FROM_LE32, 0x80000000, 0x7fffffff)
+FROM_INT_LOOP (from_s16le, int16_t, FROM_LE16, 0,      0x8000)
+FROM_INT_LOOP (from_u16le, int16_t, FROM_LE16, 0x8000, 0x8000)
+FROM_INT_LOOP (from_s24le, int32_t, FROM_LE32, 0,        0x800000)
+FROM_INT_LOOP (from_u24le, int32_t, FROM_LE32, 0x800000, 0x800000)
+FROM_INT_LOOP (from_s32le, int32_t, FROM_LE32, 0,          0x80000000)
+FROM_INT_LOOP (from_u32le, int32_t, FROM_LE32, 0x80000000, 0x80000000)
 
-TO_INT_LOOP (to_s16le, int16_t, TO_LE16, 0x0000, 0x7fff)
-TO_INT_LOOP (to_u16le, int16_t, TO_LE16, 0x8000, 0x7fff)
-TO_INT_LOOP (to_s24le, int32_t, TO_LE32, 0x000000, 0x7fffff)
-TO_INT_LOOP (to_u24le, int32_t, TO_LE32, 0x800000, 0x7fffff)
-TO_INT_LOOP (to_s32le, int32_t, TO_LE32, 0x00000000, 0x7fffffff)
-TO_INT_LOOP (to_u32le, int32_t, TO_LE32, 0x80000000, 0x7fffffff)
+TO_INT_LOOP (to_s16le, int16_t, TO_LE16, 0,      0x8000, 0x7fff)
+TO_INT_LOOP (to_u16le, int16_t, TO_LE16, 0x8000, 0x8000, 0x7fff)
+TO_INT_LOOP (to_s24le, int32_t, TO_LE32, 0,        0x800000, 0x7fffff)
+TO_INT_LOOP (to_u24le, int32_t, TO_LE32, 0x800000, 0x800000, 0x7fffff)
+TO_INT_LOOP (to_s32le, int32_t, TO_LE32, 0,          0x80000000, 0x7fffff80)
+TO_INT_LOOP (to_u32le, int32_t, TO_LE32, 0x80000000, 0x80000000, 0x7fffff80)
+// 0x7fffff80 = largest representable floating-point value before 2^31
 
-FROM_INT_LOOP (from_s16be, int16_t, FROM_BE16, 0x0000, 0x7fff)
-FROM_INT_LOOP (from_u16be, int16_t, FROM_BE16, 0x8000, 0x7fff)
-FROM_INT_LOOP (from_s24be, int32_t, FROM_BE32, 0x000000, 0x7fffff)
-FROM_INT_LOOP (from_u24be, int32_t, FROM_BE32, 0x800000, 0x7fffff)
-FROM_INT_LOOP (from_s32be, int32_t, FROM_BE32, 0x00000000, 0x7fffffff)
-FROM_INT_LOOP (from_u32be, int32_t, FROM_BE32, 0x80000000, 0x7fffffff)
+FROM_INT_LOOP (from_s16be, int16_t, FROM_BE16, 0,      0x8000)
+FROM_INT_LOOP (from_u16be, int16_t, FROM_BE16, 0x8000, 0x8000)
+FROM_INT_LOOP (from_s24be, int32_t, FROM_BE32, 0,        0x800000)
+FROM_INT_LOOP (from_u24be, int32_t, FROM_BE32, 0x800000, 0x800000)
+FROM_INT_LOOP (from_s32be, int32_t, FROM_BE32, 0,          0x80000000)
+FROM_INT_LOOP (from_u32be, int32_t, FROM_BE32, 0x80000000, 0x80000000)
 
-TO_INT_LOOP (to_s16be, int16_t, TO_BE16, 0x0000, 0x7fff)
-TO_INT_LOOP (to_u16be, int16_t, TO_BE16, 0x8000, 0x7fff)
-TO_INT_LOOP (to_s24be, int32_t, TO_BE32, 0x000000, 0x7fffff)
-TO_INT_LOOP (to_u24be, int32_t, TO_BE32, 0x800000, 0x7fffff)
-TO_INT_LOOP (to_s32be, int32_t, TO_BE32, 0x00000000, 0x7fffffff)
-TO_INT_LOOP (to_u32be, int32_t, TO_BE32, 0x80000000, 0x7fffffff)
+TO_INT_LOOP (to_s16be, int16_t, TO_BE16, 0,      0x8000, 0x7fff)
+TO_INT_LOOP (to_u16be, int16_t, TO_BE16, 0x8000, 0x8000, 0x7fff)
+TO_INT_LOOP (to_s24be, int32_t, TO_BE32, 0,        0x800000, 0x7fffff)
+TO_INT_LOOP (to_u24be, int32_t, TO_BE32, 0x800000, 0x800000, 0x7fffff)
+TO_INT_LOOP (to_s32be, int32_t, TO_BE32, 0,          0x80000000, 0x7fffff80)
+TO_INT_LOOP (to_u32be, int32_t, TO_BE32, 0x80000000, 0x80000000, 0x7fffff80)
 
 typedef void (* FromFunc) (const void * in, float * out, int samples);
 typedef void (* ToFunc) (const float * in, void * out, int samples);

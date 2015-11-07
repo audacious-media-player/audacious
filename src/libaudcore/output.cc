@@ -67,9 +67,9 @@ static bool s_resetting; /* resetting output system */
 
 /* Condition variable linked to LOCK_MINOR.
  * The input thread will wait if the following is true:
- *   ((! s_output || s_resetting) && ! s_flushed)
+ *   ((! s_output || s_paused || s_resetting) && ! s_flushed)
  * Hence you must signal if you cause the inverse to be true:
- *   ((s_output && ! s_resetting) || s_flushed) */
+ *   ((s_output && ! s_paused && ! s_resetting) || s_flushed) */
 
 static pthread_cond_t cond_minor = PTHREAD_COND_INITIALIZER;
 
@@ -207,7 +207,7 @@ static void setup_output ()
 
     apply_pause ();
 
-    if (! s_flushed && ! s_resetting)
+    if (! s_paused && ! s_flushed && ! s_resetting)
         SIGNAL_MINOR;
 }
 
@@ -296,7 +296,7 @@ static void write_output_raw (Index<float> & data)
 
     out_bytes_held = FMT_SIZEOF (out_format) * data.len ();
 
-    while (! s_flushed && ! s_resetting)
+    while (! s_paused && ! s_flushed && ! s_resetting)
     {
         int written = cop->write_audio (out_data, out_bytes_held);
 
@@ -426,7 +426,7 @@ RETRY:
 
     if (s_input && ! s_flushed)
     {
-        if (! s_output || s_resetting)
+        if (! s_output || s_paused || s_resetting)
         {
             UNLOCK_MAJOR;
             WAIT_MINOR;
@@ -452,6 +452,8 @@ void output_flush (int time, bool force)
             // allow effect plugins to prevent the flush, but
             // always flush if paused to prevent locking up
             s_flushed = flush_output (s_paused || force);
+            if (s_paused)
+                SIGNAL_MINOR;
         }
         else
         {
@@ -483,12 +485,16 @@ void output_pause (bool pause)
 {
     LOCK_MINOR;
 
-    if (s_input)
+    if (s_input && s_paused != pause)
     {
         s_paused = pause;
 
         if (s_output)
+        {
             apply_pause ();
+            if (! s_paused && ! s_flushed && ! s_resetting)
+                SIGNAL_MINOR;
+        }
     }
 
     UNLOCK_MINOR;
@@ -605,7 +611,7 @@ static void output_reset (OutputReset type, OutputPlugin * op)
 
     s_resetting = false;
 
-    if (s_output && ! s_flushed)
+    if (s_output && ! s_paused && ! s_flushed)
         SIGNAL_MINOR;
 
     UNLOCK_ALL;
