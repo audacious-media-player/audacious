@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2015-09-20 14:59+0200\n"
+"POT-Creation-Date: 2015-11-07 18:03+0100\n"
 "PO-Revision-Date: 2015-08-25 17:15+0000\n"
 "Last-Translator: Thomas Lange <thomas-lange2@gmx.de>\n"
 "Language-Team: Kyrgyz (http://www.transifex.com/jlindgren/audacious/language/"
@@ -105,7 +105,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/audacious/main.cc:349 src/libaudqt/util.cc:46
+#: src/audacious/main.cc:349 src/libaudqt/util.cc:50
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -409,7 +409,7 @@ msgstr ""
 #: src/libaudgui/prefs-window.cc:831 src/libaudgui/queue-manager.cc:196
 #: src/libaudgui/util.cc:188 src/libaudqt/infowin.cc:74
 #: src/libaudqt/prefs-plugin.cc:136 src/libaudqt/prefs-window.cc:625
-#: src/libaudqt/queue-manager.cc:118 src/libaudqt/util.cc:122
+#: src/libaudqt/queue-manager.cc:118 src/libaudqt/util.cc:126
 msgid "_Close"
 msgstr ""
 
