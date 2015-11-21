@@ -54,8 +54,11 @@ public:
         size (0),
         used (0) {}
 
-    ~HashBase ()
-        { delete[] buckets; }
+    void clear ()  // use as destructor
+    {
+        delete[] buckets;
+        * this = HashBase ();
+    }
 
     int n_items () const
         { return used; }
@@ -111,6 +114,11 @@ public:
         match (match),
         locks (),
         channels () {}
+
+    /* There is no destructor.  In some instances, such as the string pool, it
+     * is never safe to destroy the hash table, since it can be referenced from
+     * the destructors of other static objects.  It is left to the operating
+     * system to reclaim the memory used by the hash table upon process exit. */
 
     /* All-purpose lookup function.  The caller passes in the data to be looked
      * up along with its hash value.  The two callbacks are optional.  <add> is
@@ -187,7 +195,10 @@ public:
     }
 
     void clear ()
-        { HashBase::iterate (remove_cb, nullptr); }
+    {
+        HashBase::iterate (remove_cb, nullptr);
+        HashBase::clear ();
+    }
 
 private:
     struct Node : public HashBase::Node

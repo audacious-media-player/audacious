@@ -49,6 +49,7 @@ static struct {
     int qt;
 } options;
 
+static bool initted = false;
 static Index<PlaylistAddItem> filenames;
 
 static const struct {
@@ -304,6 +305,17 @@ static void do_commands ()
 
 static void main_cleanup ()
 {
+    if (initted)
+    {
+        /* Somebody was naughty and called exit() instead of aud_quit().
+         * aud_cleanup() has not been called yet, so there's no point in running
+         * leak checks.  Note that it's not safe to call aud_cleanup() from the
+         * exit handler, since we don't know what context we're in (we could be
+         * deep inside the call tree of some plugin, for example). */
+        AUDWARN ("exit() called unexpectedly; skipping normal cleanup.\n");
+        return;
+    }
+
     filenames.clear ();
     aud_cleanup_paths ();
     aud_leak_check ();
@@ -360,6 +372,7 @@ int main (int argc, char * * argv)
     signals_init_two ();
 #endif
 
+    initted = true;
     aud_init ();
 
     do_commands ();
@@ -383,6 +396,7 @@ QUIT:
 #endif
 
     aud_cleanup ();
+    initted = false;
 
     return EXIT_SUCCESS;
 }
