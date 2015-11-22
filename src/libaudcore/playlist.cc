@@ -145,13 +145,6 @@ struct PlaylistData {
     int resume_time;
 };
 
-/* playback data provided by the playlist */
-struct PlaybackData {
-    InputPlugin * ip = nullptr;
-    VFSFile file;
-    String error;
-};
-
 static const char * const default_title = N_("New Playlist");
 static const char * const temp_title = N_("Now Playing");
 
@@ -175,8 +168,6 @@ static bool resume_paused = false;
 
 static bool metadata_fallbacks = false;
 static TupleCompiler title_formatter;
-
-static PlaybackData playback_data;
 
 static QueuedFunc queued_update;
 static UpdateLevel update_level;
@@ -629,20 +620,6 @@ static void scan_finish (ScanRequest * request)
     if (! entry->decoder || ! entry->scanned)
         entry->set_failed (request->error);
 
-    if (item->for_playback)
-    {
-        assert (playlist == playing_playlist && entry == playlist->position);
-
-        // save playback data
-        playback_data.ip = request->ip;
-        playback_data.file = std::move (request->file);
-        playback_data.error = std::move (request->error);
-
-        // cache album art for current entry
-        art_cache_current (entry->filename, std::move (request->image_data),
-         std::move (request->image_file));
-    }
-
     delete item;
 
     scan_check_complete (playlist);
@@ -728,7 +705,6 @@ static void start_playback (int seek_time, bool pause)
     art_clear_current ();
     scan_reset_playback ();
 
-    playback_data = PlaybackData ();
     playback_play (seek_time, pause);
 
     scan_cancel (playing_playlist->position);
@@ -740,7 +716,6 @@ static void stop_playback ()
     art_clear_current ();
     scan_reset_playback ();
 
-    playback_data = PlaybackData ();
     playback_stop ();
 }
 
@@ -2251,9 +2226,13 @@ void playback_entry_read (int serial)
         if ((entry = get_playback_entry (serial)))
         {
             send_playback_info (entry);
-            playback_setup_decode (entry->filename, playback_data.ip,
-             std::move (playback_data.file), std::move (playback_data.error));
+            playback_setup_decode (entry->filename, request->ip,
+             std::move (request->file), std::move (request->error));
+            art_cache_current (entry->filename, std::move (request->image_data),
+             std::move (request->image_file));
         }
+
+        delete request;
     }
 
     LEAVE;

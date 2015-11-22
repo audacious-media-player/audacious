@@ -62,13 +62,17 @@ void scanner_run (ScanRequest * r)
     }
 
     r->callback (r);
+}
 
-    delete r;
+static void scan_worker (void * data, void *)
+{
+    scanner_run ((ScanRequest *) data);
+    delete (ScanRequest *) data;
 }
 
 void scanner_init ()
 {
-    pool = g_thread_pool_new ((GFunc) scanner_run, nullptr, SCAN_THREADS, false, nullptr);
+    pool = g_thread_pool_new (scan_worker, nullptr, SCAN_THREADS, false, nullptr);
 }
 
 void scanner_request (ScanRequest * request)
