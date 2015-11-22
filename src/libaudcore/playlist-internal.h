@@ -21,8 +21,19 @@
 #define LIBAUDCORE_PLAYLIST_INTERNAL_H
 
 #include "playlist.h"
+#include "vfs.h"
 
-/* playlist.c */
+class InputPlugin;
+
+struct DecodeInfo
+{
+    String filename;
+    InputPlugin * ip = nullptr;
+    VFSFile file;
+    String error;
+};
+
+/* playlist.cc */
 void playlist_init ();
 void playlist_enable_scan (bool enable);
 void playlist_end ();
@@ -39,14 +50,14 @@ void playlist_entry_insert_batch_raw (int playlist, int at, Index<PlaylistAddIte
 bool playlist_prev_song (int playlist);
 bool playlist_next_song (int playlist, bool repeat);
 
-void playback_entry_read (int serial);
+void playback_entry_read (int serial, DecodeInfo & dec);
 void playback_entry_set_tuple (int serial, Tuple && tuple);
 
-/* playlist-files.c */
+/* playlist-files.cc */
 bool playlist_load (const char * filename, String & title, Index<PlaylistAddItem> & items);
 bool playlist_insert_playlist_raw (int list, int at, const char * filename);
 
-/* playlist-utils.c */
+/* playlist-utils.cc */
 void load_playlists ();
 void save_playlists (bool exiting);
 

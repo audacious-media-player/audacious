@@ -72,12 +72,8 @@ struct PlaybackInfo {
     Tuple tuple;
     String title;
 
-    // set by playback_setup_decode
-    String filename;
-    InputPlugin * ip = nullptr;
-    VFSFile file;
-
     // set by playback thread
+    String filename;
     int length = -1;
     int time_offset = 0;
     int stop_time = -1;
@@ -170,21 +166,6 @@ void playback_set_info (int entry, Tuple && tuple)
         if (is_ready ())
             event_queue ("title change", nullptr);
     }
-
-    unlock ();
-}
-
-// called from the playlist to set up decoding data
-void playback_setup_decode (const String & filename, InputPlugin * ip,
- VFSFile && file, String && error)
-{
-    if (! lock_if (in_sync))
-        return;
-
-    pb_info.filename = filename;
-    pb_info.ip = ip;
-    pb_info.file = std::move (file);
-    pb_info.error_s = std::move (error);
 
     unlock ();
 }
@@ -307,18 +288,21 @@ static void request_seek_locked (int time)
 // playback thread helper
 static void run_playback ()
 {
-    // due to mutex ordering, we cannot call into the playlist while locked;
-    // instead, playback_entry_read() calls back into playback_set_info()
-    playback_entry_read (pb_state.playback_serial);
+    // due to mutex ordering, we cannot call into the playlist while locked
+    DecodeInfo dec;
+    playback_entry_read (pb_state.playback_serial, dec);
 
     if (! lock_if (in_sync))
         return;
 
+    pb_info.filename = std::move (dec.filename);
+
     // check that we have all the necessary data
-    if (! pb_info.filename || ! pb_info.tuple || ! pb_info.ip ||
-     (! pb_info.ip->input_info.keys[InputKey::Scheme] && ! pb_info.file))
+    if (! pb_info.filename || ! pb_info.tuple || ! dec.ip ||
+     (! dec.ip->input_info.keys[InputKey::Scheme] && ! dec.file))
     {
         pb_info.error = true;
+        pb_info.error_s = std::move (dec.error);
         unlock ();
         return;
     }
@@ -338,7 +322,7 @@ static void run_playback ()
     while (1)
     {
         // hand off control to input plugin
-        if (! pb_info.ip->play (pb_info.filename, pb_info.file))
+        if (! dec.ip->play (pb_info.filename, dec.file))
             pb_info.error = true;
 
         // close audio (no-op if it wasn't opened)
@@ -363,7 +347,7 @@ static void run_playback ()
             break;
 
         // rewind file pointer before repeating
-        if (! open_input_file (pb_info.filename, "r", pb_info.ip, pb_info.file, & pb_info.error_s))
+        if (! open_input_file (pb_info.filename, "r", dec.ip, dec.file, & pb_info.error_s))
         {
             pb_info.error = true;
             break;

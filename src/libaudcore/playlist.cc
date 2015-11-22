@@ -2206,7 +2206,7 @@ static Entry * get_playback_entry (int serial)
 }
 
 // called from playback thread
-void playback_entry_read (int serial)
+void playback_entry_read (int serial, DecodeInfo & dec)
 {
     ENTER;
     Entry * entry;
@@ -2226,10 +2226,13 @@ void playback_entry_read (int serial)
         if ((entry = get_playback_entry (serial)))
         {
             send_playback_info (entry);
-            playback_setup_decode (entry->filename, request->ip,
-             std::move (request->file), std::move (request->error));
             art_cache_current (entry->filename, std::move (request->image_data),
              std::move (request->image_file));
+
+            dec.filename = entry->filename;
+            dec.ip = request->ip;
+            dec.file = std::move (request->file);
+            dec.error = std::move (request->error);
         }
 
         delete request;
