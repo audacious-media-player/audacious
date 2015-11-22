@@ -707,6 +707,7 @@ static void start_playback (int seek_time, bool pause)
     art_clear_current ();
     playback_data = PlaybackData ();
     playback_play (seek_time, pause);
+    scan_cancel (playing_playlist->position);
     scan_queue_entry (playing_playlist, playing_playlist->position, true);
 }
 
