@@ -29,10 +29,8 @@
 
 static GThreadPool * pool;
 
-static void scan_worker (void * data, void *)
+void scanner_run (ScanRequest * r)
 {
-    auto r = (ScanRequest *) data;
-
     if (! r->decoder)
         r->decoder = file_find_decoder (r->filename, false, r->file, & r->error);
     if (! r->decoder)
@@ -70,7 +68,7 @@ static void scan_worker (void * data, void *)
 
 void scanner_init ()
 {
-    pool = g_thread_pool_new (scan_worker, nullptr, SCAN_THREADS, false, nullptr);
+    pool = g_thread_pool_new ((GFunc) scanner_run, nullptr, SCAN_THREADS, false, nullptr);
 }
 
 void scanner_request (ScanRequest * request)

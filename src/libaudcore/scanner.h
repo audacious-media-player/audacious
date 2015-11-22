@@ -61,6 +61,7 @@ struct ScanRequest
 
 void scanner_init ();
 void scanner_request (ScanRequest * request);
+void scanner_run (ScanRequest * request);
 void scanner_cleanup ();
 
 #endif
