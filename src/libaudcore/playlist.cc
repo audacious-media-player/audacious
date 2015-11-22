@@ -2241,10 +2241,11 @@ void playback_entry_read (int serial)
         ScanItem * item = scan_list_find_entry (entry);
         assert (item && item->for_playback);
 
+        ScanRequest * request = item->request;
         item->handled_by_playback = true;
 
         LEAVE;
-        scanner_run (item->request);
+        scanner_run (request);
         ENTER;
 
         if ((entry = get_playback_entry (serial)))
