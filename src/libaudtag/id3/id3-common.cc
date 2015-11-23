@@ -27,6 +27,8 @@
 
 #include "../util.h"
 
+#define MAX_STRING 65536
+
 #define ID3_ENCODING_LATIN1    0
 #define ID3_ENCODING_UTF16     1
 #define ID3_ENCODING_UTF16_BE  2
@@ -71,11 +73,11 @@ static void id3_strnlen (const char * data, int size, int encoding,
 static StringBuf id3_convert (const char * data, int size, int encoding)
 {
     if (encoding == ID3_ENCODING_UTF16)
-        return str_convert (data, size, "UTF-16", "UTF-8");
+        return str_convert (data, aud::min (size, 2 * MAX_STRING), "UTF-16", "UTF-8");
     else if (encoding == ID3_ENCODING_UTF16_BE)
-        return str_convert (data, size, "UTF-16BE", "UTF-8");
+        return str_convert (data, aud::min (size, 2 * MAX_STRING), "UTF-16BE", "UTF-8");
     else
-        return str_to_utf8 (data, size);
+        return str_to_utf8 (data, aud::min (size, MAX_STRING));
 }
 
 static StringBuf id3_decode_text (const char * data, int size)
