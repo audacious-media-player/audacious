@@ -289,8 +289,7 @@ static void request_seek_locked (int time)
 static void run_playback ()
 {
     // due to mutex ordering, we cannot call into the playlist while locked
-    DecodeInfo dec;
-    playback_entry_read (pb_state.playback_serial, dec);
+    DecodeInfo dec = playback_entry_read (pb_state.playback_serial);
 
     if (! lock_if (in_sync))
         return;

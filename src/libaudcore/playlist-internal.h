@@ -50,7 +50,7 @@ void playlist_entry_insert_batch_raw (int playlist, int at, Index<PlaylistAddIte
 bool playlist_prev_song (int playlist);
 bool playlist_next_song (int playlist, bool repeat);
 
-void playback_entry_read (int serial, DecodeInfo & dec);
+DecodeInfo playback_entry_read (int serial);
 void playback_entry_set_tuple (int serial, Tuple && tuple);
 
 /* playlist-files.cc */

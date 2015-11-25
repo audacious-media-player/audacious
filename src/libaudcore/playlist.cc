@@ -2206,9 +2206,10 @@ static Entry * get_playback_entry (int serial)
 }
 
 // called from playback thread
-void playback_entry_read (int serial, DecodeInfo & dec)
+DecodeInfo playback_entry_read (int serial)
 {
     ENTER;
+    DecodeInfo dec;
     Entry * entry;
 
     if ((entry = get_playback_entry (serial)))
@@ -2238,7 +2239,7 @@ void playback_entry_read (int serial, DecodeInfo & dec)
         delete request;
     }
 
-    LEAVE;
+    RETURN (dec);
 }
 
 // called from playback thread
