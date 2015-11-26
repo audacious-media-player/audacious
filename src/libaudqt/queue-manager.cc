@@ -177,6 +177,8 @@ QueueManagerDialog::QueueManagerDialog (QWidget * parent) :
     setLayout (& m_layout);
     setWindowTitle (_("Queue Manager"));
 
+    update ();
+
     connect (m_treeview.selectionModel (),
      & QItemSelectionModel::selectionChanged, & m_model,
      & QueueManagerModel::selectionChanged);
