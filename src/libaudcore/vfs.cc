@@ -101,6 +101,13 @@ EXPORT VFSFile::VFSFile (const char * filename, const char * mode)
     m_filename = String (filename);
 }
 
+EXPORT VFSFile VFSFile::tmpfile ()
+{
+    VFSFile file;
+    file.m_impl.capture (vfs_tmpfile (file.m_error));
+    return file;
+}
+
 /**
  * Reads from a VFS stream.
  *
@@ -301,6 +308,47 @@ EXPORT Index<char> VFSFile::read_all ()
     buf.remove (size, -1);
 
     return buf;
+}
+
+EXPORT bool VFSFile::copy_from (VFSFile & source, int64_t size)
+{
+    constexpr int bufsize = 65536;
+
+    Index<char> buf;
+    buf.resize (bufsize);
+
+    while (size < 0 || size > 0)
+    {
+        int64_t to_read = (size > 0 && size < bufsize) ? size : bufsize;
+        int64_t readsize = source.fread (buf.begin (), 1, to_read);
+
+        if (size > 0)
+            size -= readsize;
+
+        if (fwrite (buf.begin (), 1, readsize) != readsize)
+            return false;
+
+        if (readsize < to_read)
+            break;
+    }
+
+    /* if a fixed size was requested, return true only if all the data was read.
+     * otherwise, return true only if the end of the source file was reached. */
+    return size == 0 || (size < 0 && source.feof ());
+}
+
+EXPORT bool VFSFile::replace_with (VFSFile & source)
+{
+    if (source.fseek (0, VFS_SEEK_SET) < 0)
+        return false;
+
+    if (fseek (0, VFS_SEEK_SET) < 0)
+        return false;
+
+    if (ftruncate (0) < 0)
+        return false;
+
+    return copy_from (source, -1);
 }
 
 /**

@@ -135,6 +135,21 @@ VFSImpl * vfs_stdin_fopen (const char * mode, String & error)
     return new LocalFile ("(stdin)", stdin);
 }
 
+VFSImpl * vfs_tmpfile (String & error)
+{
+    FILE * stream = tmpfile ();
+
+    if (! stream)
+    {
+        int errsave = errno;
+        perror ("(tmpfile)");
+        error = String (strerror (errsave));
+        return nullptr;
+    }
+
+    return new LocalFile ("(tmpfile)", stream);
+}
+
 LocalFile::~LocalFile ()
 {
     // do not close stdin

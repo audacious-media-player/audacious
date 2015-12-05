@@ -100,6 +100,9 @@ public:
 
     VFSFile (const char * filename, const char * mode);
 
+    /* creates a temporary file (deleted when closed) */
+    static VFSFile tmpfile ();
+
     explicit operator bool () const
         { return (bool) m_impl; }
     const char * filename () const
@@ -120,14 +123,26 @@ public:
     int ftruncate (int64_t length) __attribute__ ((warn_unused_result));
     int fflush () __attribute__ ((warn_unused_result));
 
+    /* used to read e.g. ICY metadata */
     String get_metadata (const char * field);
 
-    void set_limit_to_buffer (bool limit);  // added in 3.7
+    /* the VFS layer buffers up to 256 KB of data at the beginning of files
+     * opened in read-only mode; this function disallows reading outside the
+     * buffered region (useful for probing the file type) */
+    void set_limit_to_buffer (bool limit);
 
     /* utility functions */
 
+    /* reads the entire file into memory (limited to 16 MB) */
     Index<char> read_all ();
 
+    /* reads data from another open file and appends it to this one */
+    bool copy_from (VFSFile & source, int64_t size = -1);
+
+    /* overwrites the entire file with the contents of another */
+    bool replace_with (VFSFile & source);
+
+    /* tests certain attributes of a file without opening it */
     static bool test_file (const char * path, VFSFileTest test);
 
 private:

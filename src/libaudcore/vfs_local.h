@@ -24,5 +24,6 @@
 
 VFSImpl * vfs_local_fopen (const char * uri, const char * mode, String & error);
 VFSImpl * vfs_stdin_fopen (const char * mode, String & error);
+VFSImpl * vfs_tmpfile (String & error);
 
 #endif /* LIBAUDCORE_VFS_LOCAL_H */

@@ -22,8 +22,6 @@
 
 #include <stdint.h>
 
-#include <libaudcore/vfs.h>
-
 enum {
     GENRE_BLUES = 0,
     GENRE_CLASSIC_ROCK,
@@ -156,22 +154,5 @@ const char *convert_numericgenre_to_text(int numericgenre);
 
 uint32_t unsyncsafe32 (uint32_t x);
 uint32_t syncsafe32 (uint32_t x);
-
-class TempFile
-{
-public:
-    bool create ();
-    bool copy_from (VFSFile & file, int64_t offset, int64_t size);
-    bool replace (VFSFile & file);
-
-    int fd ()
-        { return m_fd; }
-
-    ~TempFile ();
-
-private:
-    String m_name;
-    int m_fd = -1;
-};
 
 #endif /* TAGUTIL_H */
