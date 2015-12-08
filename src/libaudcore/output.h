@@ -26,6 +26,9 @@
 class PluginHandle;
 class Tuple;
 
+void output_init ();
+void output_cleanup ();
+
 bool output_open_audio (const String & filename, const Tuple & tuple,
  int format, int rate, int channels, int start_time);
 void output_set_tuple (const Tuple & tuple);

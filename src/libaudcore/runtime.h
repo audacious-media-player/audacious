@@ -45,6 +45,13 @@ enum class OutputReset {
     ResetPlugin
 };
 
+enum class OutputStream {
+    AsDecoded,
+    AfterReplayGain,
+    AfterEffects,
+    AfterEqualizer
+};
+
 namespace audlog
 {
     enum Level {

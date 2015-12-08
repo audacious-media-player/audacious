@@ -43,6 +43,7 @@
 #include "hook.h"
 #include "internal.h"
 #include "mainloop.h"
+#include "output.h"
 #include "playlist-internal.h"
 #include "plugins-internal.h"
 #include "scanner.h"
@@ -291,6 +292,7 @@ EXPORT void aud_init ()
 
     chardet_init ();
     eq_init ();
+    output_init ();
     playlist_init ();
 
     start_plugins_one ();
@@ -343,6 +345,7 @@ EXPORT void aud_cleanup ()
     art_cleanup ();
     chardet_cleanup ();
     eq_cleanup ();
+    output_cleanup ();
     playlist_end ();
 
     event_queue_cancel_all ();
