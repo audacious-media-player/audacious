@@ -101,3 +101,16 @@ void playback_seek_relative (int argc, char * * argv)
     obj_audacious_call_time_sync (dbus_proxy, & oldtime, NULL, NULL);
     obj_audacious_call_seek_sync (dbus_proxy, MAX (0, oldtime + atof (argv[1]) * 1000), NULL, NULL);
 }
+
+void playback_record (int argc, char * * argv)
+{
+    obj_audacious_call_record_sync (dbus_proxy, NULL, NULL);
+}
+
+void playback_recording (int argc, char * * argv)
+{
+    gboolean recording = FALSE;
+    obj_audacious_call_recording_sync (dbus_proxy, & recording, NULL, NULL);
+
+    exit (! recording);
+}

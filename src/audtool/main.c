@@ -54,6 +54,8 @@ const struct commandhandler handlers[] =
     {"playback-status", playback_status, "print status (playing/paused/stopped)", 0},
     {"playback-seek", playback_seek, "seek to given time", 1},
     {"playback-seek-relative", playback_seek_relative, "seek to relative time offset", 1},
+    {"playback-record", playback_record, "toggle stream recording", 0},
+    {"playback-recording", playback_recording, "exit code = 0 if recording", 0},
 
     {"<sep>", NULL, "Playlist commands", 0},
     {"playlist-advance", playlist_advance, "skip to next song", 0},

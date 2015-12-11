@@ -372,6 +372,19 @@ static gboolean do_quit (Obj * obj, Invoc * invoc)
     return true;
 }
 
+static gboolean do_record (Obj * obj, Invoc * invoc)
+{
+    aud_drct_enable_record (! aud_drct_get_record_enabled ());
+    FINISH (record);
+    return true;
+}
+
+static gboolean do_recording (Obj * obj, Invoc * invoc)
+{
+    FINISH2 (recording, aud_drct_get_record_enabled ());
+    return true;
+}
+
 static gboolean do_repeat (Obj * obj, Invoc * invoc)
 {
     FINISH2 (repeat, aud_get_bool (nullptr, "repeat"));
@@ -710,6 +723,8 @@ handlers[] =
     {"handle-queue-get-list-pos", (GCallback) do_queue_get_list_pos},
     {"handle-queue-get-queue-pos", (GCallback) do_queue_get_queue_pos},
     {"handle-quit", (GCallback) do_quit},
+    {"handle-recording", (GCallback) do_recording},
+    {"handle-record", (GCallback) do_record},
     {"handle-repeat", (GCallback) do_repeat},
     {"handle-reverse", (GCallback) do_reverse},
     {"handle-seek", (GCallback) do_seek},

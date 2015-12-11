@@ -103,6 +103,12 @@ Seek to the given time in seconds, relative to the beginning of the song.
 .TP
 .B --playback-seek-relative \fItime\fR
 Seek to the given time in seconds, relative to the current time counter.
+.TP
+.B --playback-record
+Toggle recording of the output stream (using FileWriter).
+.TP
+.B --playback-recording
+Return an exit code of 0 (true) if stream recording is enabled.
 
 .SS Playlist commands:
 

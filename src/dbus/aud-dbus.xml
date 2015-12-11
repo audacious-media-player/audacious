@@ -57,6 +57,9 @@
         <!-- Pause playback -->
         <method name="Pause" />
 
+        <!-- Either play or pause -->
+        <method name="PlayPause" />
+
         <!-- Stop playback -->
         <method name="Stop" />
 
@@ -83,6 +86,14 @@
             <!-- Return the status as a string: -->
             <!-- one of {"playing" "paused" "stopped"} -->
             <arg type="s" direction="out" name="status"/>
+        </method>
+
+        <!-- Toggle recording of stream -->
+        <method name="Record" />
+
+        <!-- Is stream recording enabled? -->
+        <method name="Recording">
+            <arg type="b" direction="out" name="is_recording"/>
         </method>
 
         <!-- What is the bitrate, frequency, and number of channels of the -->
@@ -290,9 +301,6 @@
         <method name="ShowFilebrowser">
             <arg type="b" direction="in" name="show"/>
         </method>
-
-        <!-- Either play or pause -->
-        <method name="PlayPause" />
 
         <!-- Playqueue get playlist pos -->
         <method name="QueueGetListPos">
