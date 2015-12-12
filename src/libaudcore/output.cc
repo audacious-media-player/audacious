@@ -1,6 +1,6 @@
 /*
  * output.c
- * Copyright 2009-2013 John Lindgren
+ * Copyright 2009-2015 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -83,6 +83,8 @@ static int seek_time;
 static String in_filename;
 static Tuple in_tuple;
 static int in_format, in_channels, in_rate;
+static int effect_channels, effect_rate;
+static int sec_channels, sec_rate;
 static int out_format, out_channels, out_rate;
 static int out_bytes_per_sec, out_bytes_held;
 static int64_t in_frames, out_bytes_written;
@@ -100,6 +102,16 @@ static inline int get_format ()
         case 32: return FMT_S32_NE;
         default: return FMT_FLOAT;
     }
+}
+
+/* assumes LOCK_ALL, s_input */
+static void setup_effects ()
+{
+    effect_channels = in_channels;
+    effect_rate = in_rate;
+
+    effect_start (effect_channels, effect_rate);
+    eq_set_format (effect_channels, effect_rate);
 }
 
 /* assumes LOCK_ALL */
@@ -134,74 +146,40 @@ static void cleanup_secondary ()
     sop->close_audio ();
 }
 
-/* assumes LOCK_ALL, s_output */
+/* assumes LOCK_MINOR, s_output */
 static void apply_pause ()
 {
     cop->pause (s_paused);
     vis_runner_start_stop (true, s_paused);
 }
 
-/* assumes LOCK_ALL (LOCK_MINOR for secondary),
- * s_input, valid out_channels/rate */
-static bool setup_plugin (OutputPlugin * op, int format)
-{
-    op->set_info (in_filename, in_tuple);
-    return op->open_audio (format, out_rate, out_channels);
-}
-
 /* assumes LOCK_ALL, s_input */
-static void setup_output ()
+static void setup_output (bool new_input)
 {
-    int format = get_format ();
-    int channels = in_channels;
-    int rate = in_rate;
-
-    effect_start (channels, rate);
-    eq_set_format (channels, rate);
-
-    AUDINFO ("Setup output, format %d, %d channels, %d Hz.\n", format, channels, rate);
-
-    bool keep_output = (s_output && format == out_format &&
-     channels == out_channels && rate == out_rate && ! cop->force_reopen);
-
-    /* secondary output always uses FMT_FLOAT */
-    bool keep_secondary = (s_secondary && channels == out_channels &&
-     rate == out_rate && ! sop->force_reopen);
-
-    out_format = format;
-    out_channels = channels;
-    out_rate = rate;
-
-    if (keep_output)
-        AUDINFO ("Reusing primary output stream.\n");
-    else
-    {
-        cleanup_output ();
-
-        if (cop && setup_plugin (cop, out_format))
-            s_output = true;
-        else
-        {
-            effect_flush (true);
-            cleanup_secondary ();
-            return;
-        }
-    }
-
-    if (keep_secondary)
-        AUDINFO ("Reusing secondary output stream.\n");
-    else
-    {
-        cleanup_secondary ();
-
-        if (sop && setup_plugin (sop, FMT_FLOAT))
-            s_secondary = true;
-    }
-
-    if (keep_output)
+    if (! cop)
         return;
 
-    out_bytes_per_sec = FMT_SIZEOF (format) * channels * rate;
+    int format = get_format ();
+
+    AUDINFO ("Setup output, format %d, %d channels, %d Hz.\n", format, effect_channels, effect_rate);
+
+    if (s_output && format == out_format && effect_channels == out_channels &&
+     effect_rate == out_rate && ! (new_input && cop->force_reopen))
+        return;
+
+    cleanup_output ();
+    cop->set_info (in_filename, in_tuple);
+
+    if (! cop->open_audio (format, effect_rate, effect_channels))
+        return;
+
+    s_output = true;
+
+    out_format = format;
+    out_channels = effect_channels;
+    out_rate = effect_rate;
+
+    out_bytes_per_sec = FMT_SIZEOF (format) * out_channels * out_rate;
     out_bytes_held = 0;
     out_bytes_written = 0;
 
@@ -211,18 +189,36 @@ static void setup_output ()
         SIGNAL_MINOR;
 }
 
-/* assumes LOCK_MINOR, s_output */
-static bool flush_output (bool force)
+/* assumes LOCK_MINOR, s_input */
+static void setup_secondary (bool new_input)
 {
-    if (! effect_flush (force))
-        return false;
+    if (! sop)
+        return;
 
+    if (s_secondary && in_channels == sec_channels && in_rate == sec_rate &&
+     ! (new_input && sop->force_reopen))
+        return;
+
+    cleanup_secondary ();
+    sop->set_info (in_filename, in_tuple);
+
+    if (! sop->open_audio (FMT_FLOAT, in_rate, in_channels))
+        return;
+
+    s_secondary = true;
+
+    sec_channels = in_channels;
+    sec_rate = in_rate;
+}
+
+/* assumes LOCK_MINOR, s_output */
+static void flush_output ()
+{
     out_bytes_held = 0;
     out_bytes_written = 0;
 
     cop->flush ();
     vis_runner_flush ();
-    return true;
 }
 
 static void apply_replay_gain (Index<float> & data)
@@ -257,8 +253,18 @@ static void apply_replay_gain (Index<float> & data)
         audio_amplify (data.begin (), 1, data.len (), & factor);
 }
 
+/* assumes LOCK_MINOR, s_secondary */
+static void write_secondary (const Index<float> & data)
+{
+    auto begin = (const char *) data.begin ();
+    auto end = (const char *) data.end ();
+
+    while (begin < end)
+        begin += sop->write_audio (begin, end - begin);
+}
+
 /* assumes LOCK_ALL, s_output */
-static void write_output_raw (Index<float> & data)
+static void write_output (Index<float> & data)
 {
     if (! data.len ())
         return;
@@ -268,13 +274,6 @@ static void write_output_raw (Index<float> & data)
 
     eq_filter (data.begin (), data.len ());
 
-    if (s_secondary)
-    {
-        auto begin = (const char *) data.begin ();
-        auto end = (const char *) data.end ();
-        while (begin < end)
-            begin += sop->write_audio (begin, end - begin);
-    }
 
     if (aud_get_bool (0, "software_volume_control"))
     {
@@ -314,7 +313,7 @@ static void write_output_raw (Index<float> & data)
 }
 
 /* assumes LOCK_ALL, s_input, s_output */
-static bool write_output (const void * data, int size, int stop_time)
+static bool process_audio (const void * data, int size, int stop_time)
 {
     int samples = size / FMT_SIZEOF (in_format);
     bool stopped = false;
@@ -341,7 +340,11 @@ static bool write_output (const void * data, int size, int stop_time)
         audio_from_int (data, in_format, buffer1.begin (), samples);
 
     apply_replay_gain (buffer1);
-    write_output_raw (effect_process (buffer1));
+
+    if (s_secondary)
+        write_secondary (buffer1);
+
+    write_output (effect_process (buffer1));
 
     return ! stopped;
 }
@@ -350,7 +353,7 @@ static bool write_output (const void * data, int size, int stop_time)
 static void finish_effects (bool end_of_playlist)
 {
     buffer1.resize (0);
-    write_output_raw (effect_finish (buffer1, end_of_playlist));
+    write_output (effect_finish (buffer1, end_of_playlist));
 }
 
 bool output_open_audio (const String & filename, const Tuple & tuple,
@@ -364,11 +367,8 @@ bool output_open_audio (const String & filename, const Tuple & tuple,
 
     if (s_output && s_paused)
     {
-        if (! s_flushed && ! s_resetting)
-            flush_output (true);
-
-        s_paused = false;
-        apply_pause ();
+        effect_flush (true);
+        cleanup_output ();
     }
 
     s_input = true;
@@ -382,7 +382,9 @@ bool output_open_audio (const String & filename, const Tuple & tuple,
     in_rate = rate;
     in_frames = 0;
 
-    setup_output ();
+    setup_effects ();
+    setup_output (true);
+    setup_secondary (true);
 
     UNLOCK_ALL;
     return true;
@@ -434,7 +436,7 @@ RETRY:
             goto RETRY;
         }
 
-        good = write_output (data, size, stop_time);
+        good = process_audio (data, size, stop_time);
     }
 
     UNLOCK_ALL;
@@ -451,9 +453,13 @@ void output_flush (int time, bool force)
         {
             // allow effect plugins to prevent the flush, but
             // always flush if paused to prevent locking up
-            s_flushed = flush_output (s_paused || force);
-            if (s_paused)
-                SIGNAL_MINOR;
+            if (effect_flush (s_paused || force))
+            {
+                flush_output ();
+                s_flushed = true;
+                if (s_paused)
+                    SIGNAL_MINOR;
+            }
         }
         else
         {
@@ -577,16 +583,13 @@ static void output_reset (OutputReset type, OutputPlugin * op)
     s_resetting = true;
 
     if (s_output && ! s_flushed)
-        flush_output (true);
+        flush_output ();
 
     UNLOCK_MINOR;
     LOCK_ALL;
 
     if (type != OutputReset::EffectsOnly)
-    {
         cleanup_output ();
-        cleanup_secondary ();
-    }
 
     /* this does not reset the secondary plugin */
     if (type == OutputReset::ResetPlugin)
@@ -598,7 +601,10 @@ static void output_reset (OutputReset type, OutputPlugin * op)
         {
             /* secondary plugin may become primary */
             if (op == sop)
+            {
+                cleanup_secondary ();
                 sop = nullptr;
+            }
             else if (! op->init ())
                 op = nullptr;
         }
@@ -607,7 +613,13 @@ static void output_reset (OutputReset type, OutputPlugin * op)
     }
 
     if (s_input)
-        setup_output ();
+    {
+        if (type == OutputReset::EffectsOnly)
+            setup_effects ();
+
+        setup_output (false);
+        setup_secondary (false);
+    }
 
     s_resetting = false;
 
@@ -683,8 +695,8 @@ bool output_plugin_set_secondary (PluginHandle * plugin)
     if (sop && ! sop->init ())
         sop = nullptr;
 
-    if (s_input && s_output && sop && setup_plugin (sop, FMT_FLOAT))
-        s_secondary = true;
+    if (s_input)
+        setup_secondary (false);
 
     UNLOCK_MINOR;
     return (! plugin || sop);
