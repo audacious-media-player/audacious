@@ -81,12 +81,12 @@ AC_REQUIRE([AC_C_BIGENDIAN])
 AC_REQUIRE([AC_SYS_LARGEFILE])
 
 if test "x$GCC" = "xyes"; then
-    CFLAGS="$CFLAGS -std=gnu99 -ffast-math -Wall -pipe"
+    CFLAGS="$CFLAGS -std=gnu99 -ffast-math -Wall -pipe -Wno-deprecated-declarations"
     if test "x$HAVE_DARWIN" = "xyes"; then
-        CXXFLAGS="$CXXFLAGS -stdlib=libc++ -std=gnu++11 -ffast-math -Wall -pipe"
+        CXXFLAGS="$CXXFLAGS -stdlib=libc++ -std=gnu++11 -ffast-math -Wall -pipe -Wno-deprecated-declarations"
         LDFLAGS="$LDFLAGS -lc++ -stdlib=libc++"
     else
-        CXXFLAGS="$CXXFLAGS -std=gnu++11 -ffast-math -Wall -pipe"
+        CXXFLAGS="$CXXFLAGS -std=gnu++11 -ffast-math -Wall -pipe -Wno-deprecated-declarations"
     fi
     AUD_CHECK_CFLAGS(-Wtype-limits)
     AUD_CHECK_CXXFLAGS(-Woverloaded-virtual)
@@ -107,13 +107,13 @@ fi
 dnl Enable "-Wl,-z,defs" only on Linux
 dnl ==================================
 if test $HAVE_LINUX = yes ; then
-	LDFLAGS="$LDFLAGS -Wl,-z,defs"
+    LDFLAGS="$LDFLAGS -Wl,-z,defs"
 fi
 
 dnl MinGW needs -march=i686 for atomics
 dnl ===================================
 if test $HAVE_MSWINDOWS = yes ; then
-	CFLAGS="$CFLAGS -march=i686"
+    CFLAGS="$CFLAGS -march=i686"
 fi
 
 dnl Byte order
@@ -173,7 +173,7 @@ AC_SUBST(USE_GTK)
 if test $HAVE_MSWINDOWS = yes ; then
     PKG_CHECK_MODULES(GIO, gio-2.0 >= 2.32)
 else
-	PKG_CHECK_MODULES(GIO, gio-2.0 >= 2.32 gio-unix-2.0 >= 2.32)
+    PKG_CHECK_MODULES(GIO, gio-2.0 >= 2.32 gio-unix-2.0 >= 2.32)
 fi
 
 AC_SUBST(GLIB_CFLAGS)
