@@ -34,7 +34,7 @@ static void widget_changed (GtkWidget * widget, const PreferencesWidget * w)
     {
     case PreferencesWidget::CheckButton:
     {
-        gboolean set = gtk_toggle_button_get_active ((GtkToggleButton *) widget);
+        bool set = gtk_toggle_button_get_active ((GtkToggleButton *) widget);
         w->cfg.set_bool (set);
 
         auto child = (GtkWidget *) g_object_get_data ((GObject *) widget, "child");
@@ -45,10 +45,17 @@ static void widget_changed (GtkWidget * widget, const PreferencesWidget * w)
     }
 
     case PreferencesWidget::RadioButton:
-        if (gtk_toggle_button_get_active ((GtkToggleButton *) widget))
+    {
+        bool set = gtk_toggle_button_get_active ((GtkToggleButton *) widget);
+        if (set)
             w->cfg.set_int (w->data.radio_btn.value);
 
+        auto child = (GtkWidget *) g_object_get_data ((GObject *) widget, "child");
+        if (child)
+            gtk_widget_set_sensitive (child, set);
+
         break;
+    }
 
     case PreferencesWidget::SpinButton:
         if (w->cfg.type == WidgetConfig::Int)
@@ -371,7 +378,7 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
 {
     GtkWidget * widget = nullptr, * child_box = nullptr;
     bool disable_child = false;
-    GSList * radio_btn_group = nullptr;
+    GSList * radio_btn_group[2] = {};
 
     int indent = 0;
     int spacing = 0;
@@ -406,8 +413,11 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
         widget = nullptr;
         disable_child = false;
 
-        if (radio_btn_group && w.type != PreferencesWidget::RadioButton)
-            radio_btn_group = nullptr;
+        if (w.type != PreferencesWidget::RadioButton)
+            radio_btn_group[w.child] = nullptr;
+
+        if (! w.child)
+            radio_btn_group[true] = nullptr;
 
         switch (w.type)
         {
@@ -449,9 +459,10 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
             }
 
             case PreferencesWidget::RadioButton:
-                widget = gtk_radio_button_new_with_mnemonic (radio_btn_group,
-                 dgettext (domain, w.label));
-                radio_btn_group = gtk_radio_button_get_group ((GtkRadioButton *) widget);
+                widget = gtk_radio_button_new_with_mnemonic
+                 (radio_btn_group[w.child], dgettext (domain, w.label));
+                radio_btn_group[w.child] = gtk_radio_button_get_group ((GtkRadioButton *) widget);
+                disable_child = (w.cfg.get_int () != w.data.radio_btn.value);
                 widget_init (widget, & w);
                 break;
 
