@@ -190,8 +190,11 @@ static void create_spin_button (const PreferencesWidget * widget,
  GtkWidget * * label_pre, GtkWidget * * spin_btn, GtkWidget * * label_past,
  const char * domain)
 {
-    * label_pre = gtk_label_new (dgettext (domain, widget->label));
-    gtk_misc_set_alignment ((GtkMisc *) * label_pre, 1, 0.5);
+    if (widget->label)
+    {
+        * label_pre = gtk_label_new (dgettext (domain, widget->label));
+        gtk_misc_set_alignment ((GtkMisc *) * label_pre, 1, 0.5);
+    }
 
     * spin_btn = gtk_spin_button_new_with_range (widget->data.spin_btn.min,
      widget->data.spin_btn.max, widget->data.spin_btn.step);
