@@ -1,0 +1,15 @@
+--- gdkwindow-win32.c.0	2014-09-29 16:02:16 -0400
++++ gdkwindow-win32.c	2015-12-24 06:08:41 -0500
+@@ -3202,6 +3202,12 @@
+ 		SWP_FRAMECHANGED | SWP_NOACTIVATE | 
+ 		SWP_NOREPOSITION | SWP_NOZORDER);
+ 
++  /* For reasons not clearly understood, the first call to SetWindowPos will
++   * sometimes ignore/adjust the window size we requested.  The second call
++   * below works around this bug/feature. */
++  SetWindowPos (GDK_WINDOW_HWND (window), NULL,
++		0, 0, rect.right - rect.left, rect.bottom - rect.top,
++		SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOZORDER);
+ }
+ 
+ static void
