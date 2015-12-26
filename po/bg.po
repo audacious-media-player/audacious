@@ -18,7 +18,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2015-11-07 18:03+0100\n"
+"POT-Creation-Date: 2015-12-26 15:15+0100\n"
 "PO-Revision-Date: 2015-09-29 08:32+0000\n"
 "Last-Translator: Радослав Иванов <reckku@gmail.com>\n"
 "Language-Team: Bulgarian (http://www.transifex.com/jlindgren/audacious/"
@@ -29,81 +29,81 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/audacious/main.cc:60
+#: src/audacious/main.cc:61
 msgid "Show command-line help"
 msgstr "Покажи помощ за работа в команден ред"
 
-#: src/audacious/main.cc:61
+#: src/audacious/main.cc:62
 msgid "Show version"
 msgstr "Показване на версията"
 
-#: src/audacious/main.cc:62
+#: src/audacious/main.cc:63
 msgid "Start playback"
 msgstr "Възпроизвеждане"
 
-#: src/audacious/main.cc:63
+#: src/audacious/main.cc:64
 msgid "Pause playback"
 msgstr "Пауза"
 
-#: src/audacious/main.cc:64
+#: src/audacious/main.cc:65
 msgid "Pause if playing, play otherwise"
 msgstr "Временно спиране, ако се възпроизвежда, в противен случай ― изпълнение"
 
-#: src/audacious/main.cc:65
+#: src/audacious/main.cc:66
 msgid "Stop playback"
 msgstr "Спиране"
 
-#: src/audacious/main.cc:66
+#: src/audacious/main.cc:67
 msgid "Skip to previous song"
 msgstr "Прескочи до предишната песен"
 
-#: src/audacious/main.cc:67
+#: src/audacious/main.cc:68
 msgid "Skip to next song"
 msgstr "Прескочи до следващата песен"
 
-#: src/audacious/main.cc:68
+#: src/audacious/main.cc:69
 msgid "Add files to the playlist"
 msgstr "Добавяне на файлове в списъка за възпроизвеждане"
 
-#: src/audacious/main.cc:69
+#: src/audacious/main.cc:70
 msgid "Add files to a temporary playlist"
 msgstr "Добавяне на файлове към временен списък"
 
-#: src/audacious/main.cc:70
+#: src/audacious/main.cc:71
 msgid "Display the main window"
 msgstr "Показване на основния прозорец"
 
-#: src/audacious/main.cc:71
+#: src/audacious/main.cc:72
 msgid "Display the jump-to-song window"
 msgstr "Покажи прозореца Прескочи до песен"
 
-#: src/audacious/main.cc:72
+#: src/audacious/main.cc:73
 msgid "Start without a graphical interface"
 msgstr "Пускане без графичен интерфейс"
 
-#: src/audacious/main.cc:73
+#: src/audacious/main.cc:74
 msgid "Quit on playback stop"
 msgstr "Изход при спиране на възпроизвеждането"
 
-#: src/audacious/main.cc:74
+#: src/audacious/main.cc:75
 msgid "Print debugging messages (may be used twice)"
 msgstr "Печат на съобщения за грешка (може да се използва повторно)"
 
-#: src/audacious/main.cc:76
+#: src/audacious/main.cc:77
 msgid "Run in Qt mode"
 msgstr "Стартирай в Qt-режим"
 
-#: src/audacious/main.cc:131
+#: src/audacious/main.cc:132
 #, c-format
 msgid "Unknown option: %s\n"
 msgstr "Неизвестна опция: %s \n"
 
-#: src/audacious/main.cc:154
+#: src/audacious/main.cc:155
 #, c-format
 msgid "Unknown option: -%c\n"
 msgstr "Неизвестна опция: -%c\n"
 
-#: src/audacious/main.cc:181
+#: src/audacious/main.cc:182
 #, c-format
 msgid ""
 "Usage: audacious [OPTION] ... [FILE] ...\n"
@@ -112,7 +112,7 @@ msgstr ""
 "Употреба: audacious [ОПЦИЯ] ... [ФАЙЛ] ...\n"
 "\n"
 
-#: src/audacious/main.cc:349 src/libaudqt/util.cc:50
+#: src/audacious/main.cc:361 src/libaudqt/util.cc:50
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -123,7 +123,7 @@ msgid_plural "%d files found"
 msgstr[0] "Намереният файл е %d"
 msgstr[1] "намерени са %d файла"
 
-#: src/libaudcore/adder.cc:323 src/libaudcore/playlist.cc:155
+#: src/libaudcore/adder.cc:323 src/libaudcore/playlist.cc:148
 msgid "New Playlist"
 msgstr "Нов списък за възпроизвеждане"
 
@@ -140,7 +140,7 @@ msgstr "Аудио CD, запис %s"
 msgid "(character encoding error)"
 msgstr "(грешка в знаците на кодировката)"
 
-#: src/libaudcore/playback.cc:381 src/libaudcore/playlist-files.cc:69
+#: src/libaudcore/playback.cc:364 src/libaudcore/playlist-files.cc:69
 #: src/libaudgui/infowin.cc:485
 #, c-format
 msgid ""
@@ -150,19 +150,19 @@ msgstr ""
 "Грешка при отваряне на %s:\n"
 "%s"
 
-#: src/libaudcore/playback.cc:383
+#: src/libaudcore/playback.cc:366
 msgid "Unknown playback error"
 msgstr "Неизвестна грешка при възпроизвеждане"
 
-#: src/libaudcore/playback.cc:512
+#: src/libaudcore/playback.cc:495
 msgid "Invalid audio format"
 msgstr "Невалиден звуков формат"
 
-#: src/libaudcore/playlist.cc:156
+#: src/libaudcore/playlist.cc:149
 msgid "Now Playing"
 msgstr "Възпроизвежда се"
 
-#: src/libaudcore/playlist.cc:1711
+#: src/libaudcore/playlist.cc:1713
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress "
 "(or has been disabled)."
@@ -419,10 +419,10 @@ msgstr "Затваря_не на прозореца при добавяне"
 
 #: src/libaudgui/file-opener.cc:129 src/libaudgui/infowin.cc:395
 #: src/libaudgui/jump-to-track.cc:309 src/libaudgui/plugin-prefs.cc:166
-#: src/libaudgui/prefs-window.cc:831 src/libaudgui/queue-manager.cc:196
+#: src/libaudgui/prefs-window.cc:831 src/libaudgui/queue-manager.cc:194
 #: src/libaudgui/util.cc:188 src/libaudqt/infowin.cc:74
 #: src/libaudqt/prefs-plugin.cc:136 src/libaudqt/prefs-window.cc:625
-#: src/libaudqt/queue-manager.cc:118 src/libaudqt/util.cc:126
+#: src/libaudqt/queue-manager.cc:161 src/libaudqt/util.cc:126
 msgid "_Close"
 msgstr "_Затваряне"
 
@@ -1219,11 +1219,11 @@ msgstr "<name>.eqf"
 msgid "Import Winamp Presets"
 msgstr "Внасяне на заготовки от Winamp"
 
-#: src/libaudgui/queue-manager.cc:177 src/libaudqt/queue-manager.cc:135
+#: src/libaudgui/queue-manager.cc:175 src/libaudqt/queue-manager.cc:178
 msgid "Queue Manager"
 msgstr "Мениджър на опашката"
 
-#: src/libaudgui/queue-manager.cc:195 src/libaudqt/queue-manager.cc:117
+#: src/libaudgui/queue-manager.cc:193 src/libaudqt/queue-manager.cc:160
 msgid "_Unqueue"
 msgstr "_Без изчакване"
 
