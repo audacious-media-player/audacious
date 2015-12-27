@@ -24,6 +24,11 @@
 
 struct PreferencesWidget;
 
+enum class FileSelectMode {
+    File,
+    Folder
+};
+
 struct ComboItem {
     const char * label;
     const char * str;
@@ -66,6 +71,10 @@ struct WidgetVEntry {
     bool password;
 };
 
+struct WidgetVFileEntry {
+    FileSelectMode mode;
+};
+
 struct WidgetVCombo {
     /* static init */
     ArrayRef<ComboItem> elems;
@@ -101,6 +110,7 @@ union WidgetVariant {
     WidgetVTable table;
     WidgetVFonts font_btn;
     WidgetVEntry entry;
+    WidgetVFileEntry file_entry;
     WidgetVCombo combo;
     WidgetVBox box;
     WidgetVNotebook notebook;
@@ -117,6 +127,7 @@ union WidgetVariant {
     constexpr WidgetVariant (WidgetVTable table) : table (table) {}
     constexpr WidgetVariant (WidgetVFonts fonts) : font_btn (fonts) {}
     constexpr WidgetVariant (WidgetVEntry entry) : entry (entry) {}
+    constexpr WidgetVariant (WidgetVFileEntry file_entry) : file_entry (file_entry) {}
     constexpr WidgetVariant (WidgetVCombo combo) : combo (combo) {}
     constexpr WidgetVariant (WidgetVBox box) : box (box) {}
     constexpr WidgetVariant (WidgetVNotebook notebook) : notebook (notebook) {}
@@ -216,7 +227,8 @@ struct PreferencesWidget
         Notebook,
         Separator,
         CustomGTK,
-        CustomQt
+        CustomQt,
+        FileEntry  /* added in Audacious 3.8 */
     };
 
     Type type;
@@ -260,6 +272,12 @@ constexpr PreferencesWidget WidgetEntry (const char * label,
  WidgetIsChild child = WIDGET_NOT_CHILD)
     { return {PreferencesWidget::Entry, label,
        (child == WIDGET_CHILD), cfg, entry}; }
+
+constexpr PreferencesWidget WidgetFileEntry (const char * label,
+ WidgetConfig cfg, WidgetVFileEntry file_entry = WidgetVFileEntry(),
+ WidgetIsChild child = WIDGET_NOT_CHILD)
+    { return {PreferencesWidget::FileEntry, label,
+       (child == WIDGET_CHILD), cfg, file_entry}; }
 
 constexpr PreferencesWidget WidgetCombo (const char * label,
  WidgetConfig cfg, WidgetVCombo combo, WidgetIsChild child = WIDGET_NOT_CHILD)

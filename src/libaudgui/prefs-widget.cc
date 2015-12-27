@@ -73,6 +73,10 @@ static void widget_changed (GtkWidget * widget, const PreferencesWidget * w)
         w->cfg.set_string (gtk_entry_get_text ((GtkEntry *) widget));
         break;
 
+    case PreferencesWidget::FileEntry:
+        w->cfg.set_string (audgui_file_entry_get_uri (widget));
+        break;
+
     case PreferencesWidget::ComboBox:
     {
         auto items = (const ComboItem *) g_object_get_data ((GObject *) widget, "comboitems");
@@ -127,6 +131,10 @@ static void widget_update (void *, void * widget)
         gtk_entry_set_text ((GtkEntry *) widget, w->cfg.get_string ());
         break;
 
+    case PreferencesWidget::FileEntry:
+        audgui_file_entry_set_uri ((GtkWidget *) widget, w->cfg.get_string ());
+        break;
+
     case PreferencesWidget::ComboBox:
         combobox_update ((GtkWidget *) widget, w);
         break;
@@ -165,6 +173,7 @@ static void widget_init (GtkWidget * widget, const PreferencesWidget * w)
         break;
 
     case PreferencesWidget::Entry:
+    case PreferencesWidget::FileEntry:
     case PreferencesWidget::ComboBox:
         g_signal_connect (widget, "changed", (GCallback) widget_changed, (void *) w);
         break;
@@ -244,6 +253,31 @@ static void create_entry (const PreferencesWidget * widget, GtkWidget * * label,
 {
     * entry = gtk_entry_new ();
     gtk_entry_set_visibility ((GtkEntry *) * entry, ! widget->data.entry.password);
+
+    if (widget->label)
+    {
+        * label = gtk_label_new (dgettext (domain, widget->label));
+        gtk_misc_set_alignment ((GtkMisc *) * label, 1, 0.5);
+    }
+
+    widget_init (* entry, widget);
+}
+
+/* WIDGET_FILE_ENTRY */
+
+static void create_file_entry (const PreferencesWidget * widget,
+ GtkWidget * * label, GtkWidget * * entry, const char * domain)
+{
+    switch (widget->data.file_entry.mode)
+    {
+    case FileSelectMode::File:
+        * entry = audgui_file_entry_new (GTK_FILE_CHOOSER_ACTION_OPEN, _("Choose File"));
+        break;
+
+    case FileSelectMode::Folder:
+        * entry = audgui_file_entry_new (GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER, _("Choose Folder"));
+        break;
+    }
 
     if (widget->label)
     {
@@ -343,6 +377,11 @@ static void fill_table (GtkWidget * table,
 
             case PreferencesWidget::Entry:
                 create_entry (& w, & widget_left, & widget_middle, domain);
+                middle_policy = (GtkAttachOptions) (GTK_EXPAND | GTK_FILL);
+                break;
+
+            case PreferencesWidget::FileEntry:
+                create_file_entry (& w, & widget_left, & widget_middle, domain);
                 middle_policy = (GtkAttachOptions) (GTK_EXPAND | GTK_FILL);
                 break;
 
@@ -514,11 +553,16 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
                 break;
 
             case PreferencesWidget::Entry:
+            case PreferencesWidget::FileEntry:
             {
                 widget = gtk_hbox_new (false, 6);
 
                 GtkWidget * entry = nullptr;
-                create_entry (& w, & label, & entry, domain);
+
+                if (w.type == PreferencesWidget::FileEntry)
+                    create_file_entry (& w, & label, & entry, domain);
+                else
+                    create_entry (& w, & label, & entry, domain);
 
                 if (label)
                     gtk_box_pack_start ((GtkBox *) widget, label, false, false, 0);
