@@ -353,6 +353,11 @@ EXPORT bool VFSFile::replace_with (VFSFile & source)
 
 EXPORT bool VFSFile::test_file (const char * path, VFSFileTest test)
 {
+    return test_file_full (path, test) == test;
+}
+
+EXPORT VFSFileTest VFSFile::test_file_full (const char * path, VFSFileTest test)
+{
     const char * sub;
     uri_parse (path, nullptr, nullptr, & sub, nullptr);
 
@@ -360,14 +365,15 @@ EXPORT bool VFSFile::test_file (const char * path, VFSFileTest test)
 
     StringBuf path2 = uri_to_filename (no_sub);
     if (! path2)
-        return false; /* only local files are handled */
+        return VFSFileTest (0); /* only local files are handled */
 
     int passed = 0;
+    bool need_stat = true;
+    GStatBuf st;
 
 #ifdef S_ISLNK
     if (test & VFS_IS_SYMLINK)
     {
-        GStatBuf st;
         if (g_lstat (path2, & st) < 0)
         {
             passed |= VFS_NO_ACCESS;
@@ -376,13 +382,14 @@ EXPORT bool VFSFile::test_file (const char * path, VFSFileTest test)
 
         if (S_ISLNK (st.st_mode))
             passed |= VFS_IS_SYMLINK;
+        else
+            need_stat = false;
     }
 #endif
 
     if (test & (VFS_IS_REGULAR | VFS_IS_DIR | VFS_IS_EXECUTABLE | VFS_EXISTS | VFS_NO_ACCESS))
     {
-        GStatBuf st;
-        if (g_stat (path2, & st) < 0)
+        if (need_stat && g_stat (path2, & st) < 0)
         {
             passed |= VFS_NO_ACCESS;
             goto out;
@@ -399,5 +406,5 @@ EXPORT bool VFSFile::test_file (const char * path, VFSFileTest test)
     }
 
 out:
-    return (test & passed) == test;
+    return VFSFileTest (test & passed);
 }

@@ -239,18 +239,20 @@ static void add_folder (const char * filename, PlaylistFilterFunc filter,
         if (! uri)
             continue;
 
-        GStatBuf info;
-        if (g_lstat (filepath, & info) < 0)
+        auto mode = VFSFile::test_file_full (uri,
+         VFSFileTest (VFS_IS_REGULAR | VFS_IS_SYMLINK | VFS_IS_DIR));
+
+        if (mode & VFS_IS_SYMLINK)
             continue;
 
-        if (S_ISREG (info.st_mode))
+        if (mode & VFS_IS_REGULAR)
         {
             if (str_has_suffix_nocase (name, ".cue"))
                 add_playlist (uri, filter, user, result, false);
             else
                 add_file (uri, Tuple (), nullptr, filter, user, result, true);
         }
-        else if (S_ISDIR (info.st_mode))
+        else if (mode & VFS_IS_DIR)
             add_folder (uri, filter, user, result, false);
     }
 }
