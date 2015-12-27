@@ -75,7 +75,7 @@ private:
     LocalOp m_last_op;
 };
 
-VFSImpl * vfs_local_fopen (const char * uri, const char * mode, String & error)
+VFSImpl * LocalTransport::fopen (const char * uri, const char * mode, String & error)
 {
     StringBuf path = uri_to_filename (uri);
 
@@ -97,7 +97,7 @@ VFSImpl * vfs_local_fopen (const char * uri, const char * mode, String & error)
 
     StringBuf mode2 = str_concat ({mode, suffix});
 
-    FILE * stream = g_fopen (path, mode2);
+    FILE * stream = ::g_fopen (path, mode2);
 
     if (! stream)
     {
@@ -110,7 +110,7 @@ VFSImpl * vfs_local_fopen (const char * uri, const char * mode, String & error)
         {
             StringBuf path2 = str_to_utf8 (uri_to_filename (uri, false));
             if (path2 && strcmp (path, path2))
-                stream = g_fopen (path2, mode2);
+                stream = ::g_fopen (path2, mode2);
         }
 
         if (! stream)
@@ -124,7 +124,7 @@ VFSImpl * vfs_local_fopen (const char * uri, const char * mode, String & error)
     return new LocalFile (path, stream);
 }
 
-VFSImpl * vfs_stdin_fopen (const char * mode, String & error)
+VFSImpl * StdinTransport::fopen (const char * uri, const char * mode, String & error)
 {
     if (mode[0] != 'r' || strchr (mode, '+'))
     {
@@ -319,4 +319,80 @@ int64_t LocalFile::fsize ()
 ERR:
     perror (m_path);
     return -1;
+}
+
+VFSFileTest LocalTransport::test_file_full (const char * uri, VFSFileTest test)
+{
+    StringBuf path = uri_to_filename (uri);
+    if (! path)
+        return VFSFileTest (test & VFS_NO_ACCESS);
+
+    int passed = 0;
+    bool need_stat = true;
+    GStatBuf st;
+
+#ifdef S_ISLNK
+    if (test & VFS_IS_SYMLINK)
+    {
+        if (g_lstat (path, & st) < 0)
+        {
+            passed |= VFS_NO_ACCESS;
+            goto out;
+        }
+
+        if (S_ISLNK (st.st_mode))
+            passed |= VFS_IS_SYMLINK;
+        else
+            need_stat = false;
+    }
+#endif
+
+    if (test & (VFS_IS_REGULAR | VFS_IS_DIR | VFS_IS_EXECUTABLE | VFS_EXISTS | VFS_NO_ACCESS))
+    {
+        if (need_stat && g_stat (path, & st) < 0)
+        {
+            passed |= VFS_NO_ACCESS;
+            goto out;
+        }
+
+        if (S_ISREG (st.st_mode))
+            passed |= VFS_IS_REGULAR;
+        if (S_ISDIR (st.st_mode))
+            passed |= VFS_IS_DIR;
+        if (st.st_mode & S_IXUSR)
+            passed |= VFS_IS_EXECUTABLE;
+
+        passed |= VFS_EXISTS;
+    }
+
+out:
+    return VFSFileTest (test & passed);
+}
+
+Index<String> LocalTransport::read_folder (const char * uri, String & error)
+{
+    Index<String> entries;
+
+    StringBuf path = uri_to_filename (uri);
+    if (! path)
+    {
+        error = String (_("Invalid file name"));
+        return entries;
+    }
+
+    GError * gerr = nullptr;
+    GDir * folder = g_dir_open (path, 0, & gerr);
+    if (! folder)
+    {
+        error = String (gerr->message);
+        return entries;
+    }
+
+    const char * name;
+    while ((name = g_dir_read_name (folder)))
+        entries.append (String (filename_to_uri (filename_build ({path, name}))));
+
+    g_dir_close (folder);
+
+    return entries;
 }

@@ -47,7 +47,7 @@ struct PluginPreferences;
  * _AUD_PLUGIN_VERSION_MIN to the same value. */
 
 #define _AUD_PLUGIN_VERSION_MIN 46 /* 3.6-devel */
-#define _AUD_PLUGIN_VERSION     47 /* 3.7-devel */
+#define _AUD_PLUGIN_VERSION     48 /* 3.8-devel */
 
 /* compatibility flags ORed into the version field */
 #define _AUD_PLUGIN_GLIB_ONLY 0x10000 /* plugin requires GLib mainloop */
@@ -143,8 +143,13 @@ public:
     /* supported URI schemes (without "://") */
     const ArrayRef<const char *> schemes;
 
-    /* fopen() implementation */
     virtual VFSImpl * fopen (const char * filename, const char * mode, String & error) = 0;
+
+    virtual VFSFileTest test_file_full (const char * filename, VFSFileTest test)
+        { return VFSFileTest (0); }
+
+    virtual Index<String> read_folder (const char * filename, String & error)
+        { return Index<String> (); }
 };
 
 class PlaylistPlugin : public Plugin

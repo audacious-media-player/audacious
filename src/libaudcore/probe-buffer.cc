@@ -24,9 +24,9 @@
 
 static constexpr int MAXBUF = 256 * 1024;
 
-ProbeBuffer::ProbeBuffer (const char * filename, SmartPtr<VFSImpl> && file) :
+ProbeBuffer::ProbeBuffer (const char * filename, VFSImpl * file) :
     m_filename (filename),
-    m_file (std::move (file))
+    m_file (file)
 {
     AUDINFO ("<%p> buffering enabled for %s\n", this, (const char *) m_filename);
 }
