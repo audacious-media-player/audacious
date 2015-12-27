@@ -37,7 +37,8 @@ enum VFSFileTest {
     VFS_IS_SYMLINK    = (1 << 1),
     VFS_IS_DIR        = (1 << 2),
     VFS_IS_EXECUTABLE = (1 << 3),
-    VFS_EXISTS        = (1 << 4)
+    VFS_EXISTS        = (1 << 4),
+    VFS_NO_ACCESS     = (1 << 5)
 };
 
 enum VFSSeekType {

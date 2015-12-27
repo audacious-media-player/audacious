@@ -209,16 +209,16 @@ EXPORT void aud_playlist_remove_duplicates_by_scheme (int playlist, Playlist::So
 EXPORT void aud_playlist_remove_failed (int playlist)
 {
     int entries = aud_playlist_entry_count (playlist);
-    int count;
 
     aud_playlist_select_all (playlist, false);
 
-    for (count = 0; count < entries; count ++)
+    for (int count = 0; count < entries; count ++)
     {
         String filename = aud_playlist_entry_get_filename (playlist, count);
 
-        /* vfs_file_test() only works for file:// URIs currently */
-        if (! strncmp (filename, "file://", 7) && ! VFSFile::test_file (filename, VFS_EXISTS))
+        /* use VFS_NO_ACCESS since VFS_EXISTS doesn't distinguish between
+         * inaccessible files and URI schemes that don't support file_test() */
+        if (VFSFile::test_file (filename, VFS_NO_ACCESS))
             aud_playlist_entry_set_selected (playlist, count, true);
     }
 

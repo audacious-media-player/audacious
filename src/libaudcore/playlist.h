@@ -371,8 +371,7 @@ void aud_playlist_sort_selected_by_scheme (int playlist, Playlist::SortType sche
 void aud_playlist_remove_duplicates_by_scheme (int playlist, Playlist::SortType scheme);
 
 /* Removes all entries referring to unavailable files in a playlist.  ("Remove
- * failed" is something of a misnomer for the current behavior.)  As currently
- * implemented, only works for file:// URIs. */
+ * failed" is something of a misnomer for the current behavior.) */
 void aud_playlist_remove_failed (int playlist);
 
 /* Selects all the entries in a playlist that match regular expressions stored

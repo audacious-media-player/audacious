@@ -351,18 +351,8 @@ EXPORT bool VFSFile::replace_with (VFSFile & source)
     return copy_from (source, -1);
 }
 
-/**
- * Wrapper for g_file_test().
- *
- * @param path A path to test.
- * @param test A GFileTest to run.
- * @return The result of g_file_test().
- */
 EXPORT bool VFSFile::test_file (const char * path, VFSFileTest test)
 {
-    if (strncmp (path, "file://", 7))
-        return false; /* only local files are handled */
-
     const char * sub;
     uri_parse (path, nullptr, nullptr, & sub, nullptr);
 
@@ -370,35 +360,44 @@ EXPORT bool VFSFile::test_file (const char * path, VFSFileTest test)
 
     StringBuf path2 = uri_to_filename (no_sub);
     if (! path2)
-        return false;
+        return false; /* only local files are handled */
+
+    int passed = 0;
 
 #ifdef S_ISLNK
     if (test & VFS_IS_SYMLINK)
     {
         GStatBuf st;
         if (g_lstat (path2, & st) < 0)
-            return false;
+        {
+            passed |= VFS_NO_ACCESS;
+            goto out;
+        }
 
         if (S_ISLNK (st.st_mode))
-            test = (VFSFileTest) (test & ~VFS_IS_SYMLINK);
+            passed |= VFS_IS_SYMLINK;
     }
 #endif
 
-    if (test & (VFS_IS_REGULAR | VFS_IS_DIR | VFS_IS_EXECUTABLE | VFS_EXISTS))
+    if (test & (VFS_IS_REGULAR | VFS_IS_DIR | VFS_IS_EXECUTABLE | VFS_EXISTS | VFS_NO_ACCESS))
     {
         GStatBuf st;
         if (g_stat (path2, & st) < 0)
-            return false;
+        {
+            passed |= VFS_NO_ACCESS;
+            goto out;
+        }
 
         if (S_ISREG (st.st_mode))
-            test = (VFSFileTest) (test & ~VFS_IS_REGULAR);
+            passed |= VFS_IS_REGULAR;
         if (S_ISDIR (st.st_mode))
-            test = (VFSFileTest) (test & ~VFS_IS_DIR);
+            passed |= VFS_IS_DIR;
         if (st.st_mode & S_IXUSR)
-            test = (VFSFileTest) (test & ~VFS_IS_EXECUTABLE);
+            passed |= VFS_IS_EXECUTABLE;
 
-        test = (VFSFileTest) (test & ~VFS_EXISTS);
+        passed |= VFS_EXISTS;
     }
 
-    return ! test;
+out:
+    return (test & passed) == test;
 }
