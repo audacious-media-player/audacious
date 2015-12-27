@@ -351,20 +351,20 @@ EXPORT bool VFSFile::replace_with (VFSFile & source)
     return copy_from (source, -1);
 }
 
-EXPORT bool VFSFile::test_file (const char * path, VFSFileTest test)
+EXPORT bool VFSFile::test_file (const char * filename, VFSFileTest test)
 {
-    return test_file_full (path, test) == test;
+    return test_file_full (filename, test) == test;
 }
 
-EXPORT VFSFileTest VFSFile::test_file_full (const char * path, VFSFileTest test)
+EXPORT VFSFileTest VFSFile::test_file_full (const char * filename, VFSFileTest test)
 {
     const char * sub;
-    uri_parse (path, nullptr, nullptr, & sub, nullptr);
+    uri_parse (filename, nullptr, nullptr, & sub, nullptr);
 
-    StringBuf no_sub = str_copy (path, sub - path);
+    StringBuf no_sub = str_copy (filename, sub - filename);
+    StringBuf local = uri_to_filename (no_sub);
 
-    StringBuf path2 = uri_to_filename (no_sub);
-    if (! path2)
+    if (! local)
         return VFSFileTest (0); /* only local files are handled */
 
     int passed = 0;
@@ -374,7 +374,7 @@ EXPORT VFSFileTest VFSFile::test_file_full (const char * path, VFSFileTest test)
 #ifdef S_ISLNK
     if (test & VFS_IS_SYMLINK)
     {
-        if (g_lstat (path2, & st) < 0)
+        if (g_lstat (local, & st) < 0)
         {
             passed |= VFS_NO_ACCESS;
             goto out;
@@ -389,7 +389,7 @@ EXPORT VFSFileTest VFSFile::test_file_full (const char * path, VFSFileTest test)
 
     if (test & (VFS_IS_REGULAR | VFS_IS_DIR | VFS_IS_EXECUTABLE | VFS_EXISTS | VFS_NO_ACCESS))
     {
-        if (need_stat && g_stat (path2, & st) < 0)
+        if (need_stat && g_stat (local, & st) < 0)
         {
             passed |= VFS_NO_ACCESS;
             goto out;
@@ -407,4 +407,35 @@ EXPORT VFSFileTest VFSFile::test_file_full (const char * path, VFSFileTest test)
 
 out:
     return VFSFileTest (test & passed);
+}
+
+EXPORT Index<String> VFSFile::read_folder (const char * filename, String & error)
+{
+    Index<String> entries;
+
+    StringBuf local = uri_to_filename (filename);
+    if (! local)
+    {
+        error = String (_("Invalid file name"));
+        return entries;
+    }
+
+    GError * gerr;
+    GDir * folder = g_dir_open (local, 0, & gerr);
+    if (! folder)
+    {
+        error = String (gerr->message);
+        return entries;
+    }
+
+    const char * name;
+    while ((name = g_dir_read_name (folder)))
+        entries.append (String (filename_to_uri (filename_build ({local, name}))));
+
+    g_dir_close (folder);
+
+    entries.sort ([] (const String & a, const String & b, void *)
+        { return str_compare_encoded (a, b); }, nullptr);
+
+    return entries;
 }

@@ -21,10 +21,8 @@
 #include "internal.h"
 
 #include <pthread.h>
+#include <stdio.h>
 #include <string.h>
-#include <sys/stat.h>
-
-#include <glib/gstdio.h>
 
 #include "audstrings.h"
 #include "hook.h"
@@ -35,6 +33,7 @@
 #include "plugins-internal.h"
 #include "runtime.h"
 #include "tuple.h"
+#include "interface.h"
 #include "vfs.h"
 
 struct AddTask : public ListNode
@@ -179,67 +178,49 @@ static void add_playlist (const char * filename, PlaylistFilterFunc filter,
 static void add_folder (const char * filename, PlaylistFilterFunc filter,
  void * user, AddResult * result, bool is_single)
 {
-    Index<String> cuesheets, files;
-    GDir * folder;
-
     if (filter && ! filter (filename, user))
         return;
 
     AUDINFO ("Adding folder: %s\n", filename);
     status_update (filename, result->items.len ());
 
-    StringBuf path = uri_to_filename (filename);
-    if (! path)
-        return;
+    String error;
+    Index<String> files = VFSFile::read_folder (filename, error);
 
-    if (! (folder = g_dir_open (path, 0, nullptr)))
-        return;
-
-    const char * name;
-    while ((name = g_dir_read_name (folder)))
-    {
-        if (str_has_suffix_nocase (name, ".cue"))
-            cuesheets.append (name);
-        else
-            files.append (name);
-    }
-
-    g_dir_close (folder);
-
-    for (const char * cuesheet : cuesheets)
-    {
-        AUDINFO ("Found cuesheet: %s\n", cuesheet);
-
-        auto is_match = [=] (const char * name)
-            { return same_basename (name, cuesheet); };
-
-        files.remove_if (is_match);
-    }
-
-    files.move_from (cuesheets, 0, -1, -1, true, true);
+    if (error)
+        aud_ui_show_error (str_printf (_("Error reading %s:\n%s"), filename, (const char *) error));
 
     if (! files.len ())
         return;
 
-    if (is_single)
+    for (int i = 0; i < files.len (); i ++)
     {
-        const char * last = last_path_element (path);
-        result->title = String (last ? last : path);
+        if (str_has_suffix_nocase (files[i], ".cue"))
+        {
+            AUDINFO ("Found cuesheet: %s\n", files[i]);
+
+            /* read_folder() returns a sorted list, so the associated audio file
+             * should be immediately before or after the .cue file in the list */
+            if (i > 0 && same_basename (files[i], files[i - 1]))
+            {
+                files.remove (i - 1, 1);
+                i --;
+            }
+            else if (i + 1 < files.len () && same_basename (files[i], files[i + 1]))
+                files.remove (i + 1, 1);
+        }
     }
 
-    auto compare_wrapper = [] (const String & a, const String & b, void *)
-        { return str_compare (a, b); };
-
-    files.sort (compare_wrapper, nullptr);
-
-    for (const char * name : files)
+    if (is_single)
     {
-        StringBuf filepath = filename_build ({path, name});
-        StringBuf uri = filename_to_uri (filepath);
-        if (! uri)
-            continue;
+        const char * slash = strrchr (filename, '/');
+        if (slash)
+            result->title = String (str_decode_percent (slash + 1));
+    }
 
-        auto mode = VFSFile::test_file_full (uri,
+    for (const char * file : files)
+    {
+        auto mode = VFSFile::test_file_full (file,
          VFSFileTest (VFS_IS_REGULAR | VFS_IS_SYMLINK | VFS_IS_DIR));
 
         if (mode & VFS_IS_SYMLINK)
@@ -247,13 +228,13 @@ static void add_folder (const char * filename, PlaylistFilterFunc filter,
 
         if (mode & VFS_IS_REGULAR)
         {
-            if (str_has_suffix_nocase (name, ".cue"))
-                add_playlist (uri, filter, user, result, false);
+            if (str_has_suffix_nocase (file, ".cue"))
+                add_playlist (file, filter, user, result, false);
             else
-                add_file (uri, Tuple (), nullptr, filter, user, result, true);
+                add_file (file, Tuple (), nullptr, filter, user, result, true);
         }
         else if (mode & VFS_IS_DIR)
-            add_folder (uri, filter, user, result, false);
+            add_folder (file, filter, user, result, false);
     }
 }
 
