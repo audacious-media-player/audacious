@@ -284,11 +284,13 @@ constexpr PreferencesWidget WidgetNotebook (WidgetVNotebook notebook)
 constexpr PreferencesWidget WidgetSeparator (WidgetVSeparator separator = WidgetVSeparator ())
     { return {PreferencesWidget::Separator, 0, 0, {}, separator}; }
 
-constexpr PreferencesWidget WidgetCustomGTK (void * (* populate) ())
-    { return {PreferencesWidget::CustomGTK, 0, 0, {}, populate}; }
+constexpr PreferencesWidget WidgetCustomGTK (void * (* populate) (),
+ WidgetIsChild child = WIDGET_NOT_CHILD)
+    { return {PreferencesWidget::CustomGTK, 0, (child == WIDGET_CHILD), {}, populate}; }
 
-constexpr PreferencesWidget WidgetCustomQt (void * (* populate) ())
-    { return {PreferencesWidget::CustomQt, 0, 0, {}, populate}; }
+constexpr PreferencesWidget WidgetCustomQt (void * (* populate) (),
+ WidgetIsChild child = WIDGET_NOT_CHILD)
+    { return {PreferencesWidget::CustomQt, 0, (child == WIDGET_CHILD), {}, populate}; }
 
 struct PluginPreferences {
     ArrayRef<PreferencesWidget> widgets;
