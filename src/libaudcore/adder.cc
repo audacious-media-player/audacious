@@ -218,8 +218,12 @@ static void add_folder (const char * filename, PlaylistFilterFunc filter,
         if (filter && ! filter (file, user))
             continue;
 
-        auto mode = VFSFile::test_file_full (file,
-         VFSFileTest (VFS_IS_REGULAR | VFS_IS_SYMLINK | VFS_IS_DIR));
+        String error;
+        VFSFileTest mode = VFSFile::test_file (file,
+         VFSFileTest (VFS_IS_REGULAR | VFS_IS_SYMLINK | VFS_IS_DIR), error);
+
+        if (error)
+            AUDERR ("%s: %s\n", file, (const char *) error);
 
         if (mode & VFS_IS_SYMLINK)
             continue;
@@ -244,12 +248,22 @@ static void add_generic (const char * filename, Tuple && tuple,
 
     if (tuple)
         add_file (filename, std::move (tuple), nullptr, filter, user, result, false);
-    else if (VFSFile::test_file (filename, VFS_IS_DIR))
-        add_folder (filename, filter, user, result, is_single);
-    else if (aud_filename_is_playlist (filename))
-        add_playlist (filename, filter, user, result, is_single);
     else
-        add_file (filename, Tuple (), nullptr, filter, user, result, false);
+    {
+        String error;
+        VFSFileTest mode = VFSFile::test_file (filename,
+         VFSFileTest (VFS_IS_DIR | VFS_NO_ACCESS), error);
+
+        if (mode & VFS_NO_ACCESS)
+            aud_ui_show_error (str_printf (_("Error reading %s:\n%s"),
+             filename, (const char *) error));
+        else if (mode & VFS_IS_DIR)
+            add_folder (filename, filter, user, result, is_single);
+        else if (aud_filename_is_playlist (filename))
+            add_playlist (filename, filter, user, result, is_single);
+        else
+            add_file (filename, Tuple (), nullptr, filter, user, result, false);
+    }
 }
 
 static void start_thread_locked ()

@@ -28,7 +28,7 @@ public:
     constexpr LocalTransport () : TransportPlugin (PluginInfo (), nullptr) {}
 
     VFSImpl * fopen (const char * filename, const char * mode, String & error);
-    VFSFileTest test_file_full (const char * filename, VFSFileTest test);
+    VFSFileTest test_file (const char * filename, VFSFileTest test, String & error);
     Index<String> read_folder (const char * filename, String & error);
 };
 

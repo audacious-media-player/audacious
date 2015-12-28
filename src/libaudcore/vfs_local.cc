@@ -321,11 +321,14 @@ ERR:
     return -1;
 }
 
-VFSFileTest LocalTransport::test_file_full (const char * uri, VFSFileTest test)
+VFSFileTest LocalTransport::test_file (const char * uri, VFSFileTest test, String & error)
 {
     StringBuf path = uri_to_filename (uri);
     if (! path)
+    {
+        error = String (_("Invalid file name"));
         return VFSFileTest (test & VFS_NO_ACCESS);
+    }
 
     int passed = 0;
     bool need_stat = true;
@@ -336,6 +339,7 @@ VFSFileTest LocalTransport::test_file_full (const char * uri, VFSFileTest test)
     {
         if (g_lstat (path, & st) < 0)
         {
+            error = String (strerror (errno));
             passed |= VFS_NO_ACCESS;
             goto out;
         }
@@ -351,6 +355,7 @@ VFSFileTest LocalTransport::test_file_full (const char * uri, VFSFileTest test)
     {
         if (need_stat && g_stat (path, & st) < 0)
         {
+            error = String (strerror (errno));
             passed |= VFS_NO_ACCESS;
             goto out;
         }

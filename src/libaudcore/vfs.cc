@@ -36,7 +36,8 @@
 static LocalTransport local_transport;
 static StdinTransport stdin_transport;
 
-static TransportPlugin * lookup_transport (const char * filename, String & error)
+static TransportPlugin * lookup_transport (const char * filename,
+ String & error, bool * custom_input = nullptr)
 {
     StringBuf scheme = uri_get_scheme (filename);
     if (! scheme)
@@ -61,6 +62,21 @@ static TransportPlugin * lookup_transport (const char * filename, String & error
             auto tp = (TransportPlugin *) aud_plugin_get_header (plugin);
             if (tp)
                 return tp;
+        }
+    }
+
+    if (custom_input)
+    {
+        for (PluginHandle * plugin : aud_plugin_list (PluginType::Input))
+        {
+            if (! aud_plugin_get_enabled (plugin))
+                continue;
+
+            if (input_plugin_has_key (plugin, InputKey::Scheme, scheme))
+            {
+                * custom_input = true;
+                return nullptr;
+            }
         }
     }
 
@@ -355,19 +371,26 @@ EXPORT bool VFSFile::replace_with (VFSFile & source)
 
 EXPORT bool VFSFile::test_file (const char * filename, VFSFileTest test)
 {
-    return test_file_full (filename, test) == test;
+    String error;  /* discarded */
+    return test_file (filename, test, error) == test;
 }
 
-EXPORT VFSFileTest VFSFile::test_file_full (const char * filename, VFSFileTest test)
+EXPORT VFSFileTest VFSFile::test_file (const char * filename, VFSFileTest test, String & error)
 {
-    String error;  /* discarded */
-    auto tp = lookup_transport (filename, error);
+    bool custom_input = false;
+    auto tp = lookup_transport (filename, error, & custom_input);
 
-    /* test_file_full() was added in Audacious 3.8 */
-    if (! tp || (tp->version & 0xffff) < 48)
+    /* for URI schemes handled by input plugins or older transport plugins
+     * (before Audacious 3.8), return 0, indicating that we have no way of
+     * testing file attributes */
+    if (custom_input || (tp && (tp->version & 0xffff) < 48))
         return VFSFileTest (0);
 
-    return tp->test_file_full (strip_subtune (filename), test);
+    /* for unsupported URI schemes, return VFS_NO_ACCESS */
+    if (! tp)
+        return VFSFileTest (test & VFS_NO_ACCESS);
+
+    return tp->test_file (strip_subtune (filename), test, error);
 }
 
 EXPORT Index<String> VFSFile::read_folder (const char * filename, String & error)

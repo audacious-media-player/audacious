@@ -145,7 +145,7 @@ public:
 
     virtual VFSImpl * fopen (const char * filename, const char * mode, String & error) = 0;
 
-    virtual VFSFileTest test_file_full (const char * filename, VFSFileTest test)
+    virtual VFSFileTest test_file (const char * filename, VFSFileTest test, String & error)
         { return VFSFileTest (0); }
 
     virtual Index<String> read_folder (const char * filename, String & error)

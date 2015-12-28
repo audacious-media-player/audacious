@@ -143,11 +143,11 @@ public:
     /* overwrites the entire file with the contents of another */
     bool replace_with (VFSFile & source);
 
-    /* tests certain attributes of a file without opening it .
-     * test_file() returns true if all requested tests passed.
-     * test_file_full() returns a bitmask indicating which tests passed. */
+    /* tests certain attributes of a file without opening it.
+     * the 2-argument version returns true if all requested tests passed.
+     * the 3-argument version returns a bitmask indicating which tests passed. */
     static bool test_file (const char * filename, VFSFileTest test);
-    static VFSFileTest test_file_full (const char * filename, VFSFileTest test);
+    static VFSFileTest test_file (const char * filename, VFSFileTest test, String & error);
 
     /* returns a sorted list of folder entries (as full URIs) */
     static Index<String> read_folder (const char * filename, String & error);
