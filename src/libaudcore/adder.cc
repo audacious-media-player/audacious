@@ -117,9 +117,6 @@ static void add_file (const char * filename, Tuple && tuple,
  PluginHandle * decoder, PlaylistFilterFunc filter, void * user,
  AddResult * result, bool validate)
 {
-    if (filter && ! filter (filename, user))
-        return;
-
     AUDINFO ("Adding file: %s\n", filename);
     status_update (filename, result->items.len ());
 
@@ -146,7 +143,8 @@ static void add_file (const char * filename, Tuple && tuple,
         for (int sub = 0; sub < n_subtunes; sub ++)
         {
             StringBuf subname = str_printf ("%s?%d", filename, tuple.get_nth_subtune (sub));
-            add_file (subname, Tuple (), decoder, filter, user, result, false);
+            if (! filter || filter (subname, user))
+                add_file (subname, Tuple (), decoder, filter, user, result, false);
         }
     }
     else
@@ -156,9 +154,6 @@ static void add_file (const char * filename, Tuple && tuple,
 static void add_playlist (const char * filename, PlaylistFilterFunc filter,
  void * user, AddResult * result, bool is_single)
 {
-    if (filter && ! filter (filename, user))
-        return;
-
     AUDINFO ("Adding playlist: %s\n", filename);
     status_update (filename, result->items.len ());
 
@@ -172,15 +167,15 @@ static void add_playlist (const char * filename, PlaylistFilterFunc filter,
         result->title = title;
 
     for (auto & item : items)
-        add_file (item.filename, std::move (item.tuple), nullptr, filter, user, result, false);
+    {
+        if (! filter || filter (item.filename, user))
+            add_file (item.filename, std::move (item.tuple), nullptr, filter, user, result, false);
+    }
 }
 
 static void add_folder (const char * filename, PlaylistFilterFunc filter,
  void * user, AddResult * result, bool is_single)
 {
-    if (filter && ! filter (filename, user))
-        return;
-
     AUDINFO ("Adding folder: %s\n", filename);
     status_update (filename, result->items.len ());
 
@@ -220,6 +215,9 @@ static void add_folder (const char * filename, PlaylistFilterFunc filter,
 
     for (const char * file : files)
     {
+        if (filter && ! filter (file, user))
+            continue;
+
         auto mode = VFSFile::test_file_full (file,
          VFSFileTest (VFS_IS_REGULAR | VFS_IS_SYMLINK | VFS_IS_DIR));
 
@@ -241,6 +239,9 @@ static void add_folder (const char * filename, PlaylistFilterFunc filter,
 static void add_generic (const char * filename, Tuple && tuple,
  PlaylistFilterFunc filter, void * user, AddResult * result, bool is_single)
 {
+    if (filter && ! filter (filename, user))
+        return;
+
     if (tuple)
         add_file (filename, std::move (tuple), nullptr, filter, user, result, false);
     else if (VFSFile::test_file (filename, VFS_IS_DIR))
