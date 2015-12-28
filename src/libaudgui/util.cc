@@ -190,7 +190,13 @@ EXPORT String audgui_file_entry_get_uri (GtkWidget * entry)
 
 EXPORT void audgui_file_entry_set_uri (GtkWidget * entry, const char * uri)
 {
-    const char * utf8 = str_to_utf8 (uri_to_filename (uri, false));
+    if (! uri || ! uri[0])
+    {
+        gtk_entry_set_text ((GtkEntry *) entry, "");
+        return;
+    }
+
+    StringBuf utf8 = str_to_utf8 (uri_to_filename (uri, false));
     gtk_entry_set_text ((GtkEntry *) entry, utf8 ? utf8 : uri);
 }
 
