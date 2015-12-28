@@ -547,6 +547,14 @@ EXPORT StringBuf uri_to_filename (const char * uri, bool use_locale)
     }
 #endif
 
+    /* if UTF-8 was requested, make sure the result is valid */
+    if (! use_locale)
+    {
+        buf.steal (str_to_utf8 (std::move (buf)));
+        if (! buf)
+            return StringBuf ();
+    }
+
     return filename_normalize (std::move (buf));
 }
 

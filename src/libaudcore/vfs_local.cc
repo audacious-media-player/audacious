@@ -108,7 +108,7 @@ VFSImpl * LocalTransport::fopen (const char * uri, const char * mode, String & e
          * 2) UTF-8 filesystem mounted on legacy system */
         if (errsave == ENOENT)
         {
-            StringBuf path2 = str_to_utf8 (uri_to_filename (uri, false));
+            StringBuf path2 = uri_to_filename (uri, false);
             if (path2 && strcmp (path, path2))
                 stream = ::g_fopen (path2, mode2);
         }

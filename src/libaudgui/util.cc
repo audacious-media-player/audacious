@@ -200,8 +200,8 @@ EXPORT void audgui_file_entry_set_uri (GtkWidget * entry, const char * uri)
         return;
     }
 
-    StringBuf utf8 = str_to_utf8 (uri_to_filename (uri, false));
-    gtk_entry_set_text ((GtkEntry *) entry, utf8 ? utf8 : uri);
+    StringBuf path = uri_to_filename (uri, false);
+    gtk_entry_set_text ((GtkEntry *) entry, path ? path : uri);
 }
 
 EXPORT GtkWidget * audgui_dialog_new (GtkMessageType type, const char * title,
