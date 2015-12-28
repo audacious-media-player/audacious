@@ -33,8 +33,8 @@
 #include "vfs_local.h"
 
 /* embedded plugins */
-static const LocalTransport local_transport;
-static const StdinTransport stdin_transport;
+static LocalTransport local_transport;
+static StdinTransport stdin_transport;
 
 static TransportPlugin * lookup_transport (const char * filename, String & error)
 {
@@ -64,7 +64,7 @@ static TransportPlugin * lookup_transport (const char * filename, String & error
         }
     }
 
-    AUDERR ("Unknown URI scheme: %s://", (const char *) scheme);
+    AUDERR ("Unknown URI scheme: %s://\n", (const char *) scheme);
     error = String (_("Unknown URI scheme"));
     return nullptr;
 }
