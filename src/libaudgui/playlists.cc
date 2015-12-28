@@ -184,6 +184,7 @@ static void create_selector (ImportExportJob * job, const char * filename, const
     }
 
     job->selector = gtk_file_chooser_dialog_new (title, nullptr, action, nullptr, nullptr);
+    gtk_file_chooser_set_local_only ((GtkFileChooser *) job->selector, false);
 
     if (filename)
         gtk_file_chooser_set_uri ((GtkFileChooser *) job->selector, filename);

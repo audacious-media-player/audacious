@@ -152,6 +152,7 @@ static void entry_browse_cb (GtkWidget * entry, GtkEntryIconPosition pos,
      data->action, _("Open"), GTK_RESPONSE_ACCEPT, _("Cancel"),
      GTK_RESPONSE_REJECT, nullptr);
 
+    gtk_file_chooser_set_local_only ((GtkFileChooser *) dialog, false);
     gtk_file_chooser_set_uri ((GtkFileChooser *) dialog, audgui_file_entry_get_uri (entry));
     g_signal_connect (dialog, "response", (GCallback) entry_response_cb, entry);
     g_signal_connect_object (entry, "destroy", (GCallback) gtk_widget_destroy,

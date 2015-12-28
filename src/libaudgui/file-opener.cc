@@ -104,6 +104,7 @@ static GtkWidget * create_filebrowser (gboolean open)
     gtk_container_add ((GtkContainer *) window, vbox);
 
     GtkWidget * chooser = gtk_file_chooser_widget_new (GTK_FILE_CHOOSER_ACTION_OPEN);
+    gtk_file_chooser_set_local_only ((GtkFileChooser *) chooser, false);
     gtk_file_chooser_set_select_multiple ((GtkFileChooser *) chooser, true);
 
     String path = aud_get_str ("audgui", "filesel_path");
