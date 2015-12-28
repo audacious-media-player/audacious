@@ -66,10 +66,13 @@ static Index<PlaylistAddItem> urilist_to_index (const char * list)
         else
             next = end = strchr (list, 0);
 
-        String filename = check_uri (str_copy (list, end - list));
-        const Tuple * tuple = tuple_cache.lookup (filename);
+        if (end > list)
+        {
+            String filename = check_uri (str_copy (list, end - list));
+            const Tuple * tuple = tuple_cache.lookup (filename);
 
-        index.append (filename, tuple ? tuple->ref () : Tuple ());
+            index.append (filename, tuple ? tuple->ref () : Tuple ());
+        }
 
         list = next;
     }
