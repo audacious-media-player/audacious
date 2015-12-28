@@ -192,7 +192,7 @@ static void add_folder (const char * filename, PlaylistFilterFunc filter,
     {
         if (str_has_suffix_nocase (files[i], ".cue"))
         {
-            AUDINFO ("Found cuesheet: %s\n", files[i]);
+            AUDINFO ("Found cuesheet: %s\n", (const char *) files[i]);
 
             /* read_folder() returns a sorted list, so the associated audio file
              * should be immediately before or after the .cue file in the list */
