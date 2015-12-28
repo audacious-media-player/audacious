@@ -153,7 +153,11 @@ static void entry_browse_cb (GtkWidget * entry, GtkEntryIconPosition pos,
      GTK_RESPONSE_REJECT, nullptr);
 
     gtk_file_chooser_set_local_only ((GtkFileChooser *) dialog, false);
-    gtk_file_chooser_set_uri ((GtkFileChooser *) dialog, audgui_file_entry_get_uri (entry));
+
+    String uri = audgui_file_entry_get_uri (entry);
+    if (uri)
+        gtk_file_chooser_set_uri ((GtkFileChooser *) dialog, uri);
+
     g_signal_connect (dialog, "response", (GCallback) entry_response_cb, entry);
     g_signal_connect_object (entry, "destroy", (GCallback) gtk_widget_destroy,
      dialog, G_CONNECT_SWAPPED);

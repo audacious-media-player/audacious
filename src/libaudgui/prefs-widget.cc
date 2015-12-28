@@ -74,8 +74,11 @@ static void widget_changed (GtkWidget * widget, const PreferencesWidget * w)
         break;
 
     case PreferencesWidget::FileEntry:
-        w->cfg.set_string (audgui_file_entry_get_uri (widget));
+    {
+        String uri = audgui_file_entry_get_uri (widget);
+        w->cfg.set_string (uri ? uri : "");
         break;
+    }
 
     case PreferencesWidget::ComboBox:
     {
