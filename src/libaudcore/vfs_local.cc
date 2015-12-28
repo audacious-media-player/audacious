@@ -385,6 +385,7 @@ Index<String> LocalTransport::read_folder (const char * uri, String & error)
     if (! folder)
     {
         error = String (gerr->message);
+        g_error_free (gerr);
         return entries;
     }
 
