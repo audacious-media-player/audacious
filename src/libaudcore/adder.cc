@@ -306,9 +306,20 @@ static void add_finish (void * unused)
 
         int playlist, count;
 
+        if (! result->items.len ()) /* add failed */
+            goto FREE;
+
         playlist = aud_playlist_by_unique_id (result->playlist_id);
         if (playlist < 0) /* playlist deleted */
             goto FREE;
+
+        if (result->play)
+        {
+            if (aud_get_bool (nullptr, "clear_playlist"))
+                aud_playlist_entry_delete (playlist, 0, aud_playlist_entry_count (playlist));
+            else
+                aud_playlist_queue_delete (playlist, 0, aud_playlist_queue_count (playlist));
+        }
 
         count = aud_playlist_entry_count (playlist);
         if (result->at < 0 || result->at > count)
@@ -328,7 +339,7 @@ static void add_finish (void * unused)
         playlist_enable_scan (false);
         playlist_entry_insert_batch_raw (playlist, result->at, std::move (result->items));
 
-        if (result->play && aud_playlist_entry_count (playlist) > count)
+        if (result->play)
         {
             if (! aud_get_bool (0, "shuffle"))
                 aud_playlist_set_position (playlist, result->at);

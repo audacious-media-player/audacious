@@ -199,19 +199,7 @@ static void add_list (Index<PlaylistAddItem> && items, int at, bool to_temp, boo
     if (to_temp)
         aud_playlist_set_active (aud_playlist_get_temporary ());
 
-    int playlist = aud_playlist_get_active ();
-
-    /* queue the new entries before deleting the old ones */
-    /* this is to avoid triggering the --quit-after-play condition */
-    aud_playlist_entry_insert_batch (playlist, at, std::move (items), play);
-
-    if (play)
-    {
-        if (aud_get_bool (nullptr, "clear_playlist"))
-            aud_playlist_entry_delete (playlist, 0, aud_playlist_entry_count (playlist));
-        else
-            aud_playlist_queue_delete (playlist, 0, aud_playlist_queue_count (playlist));
-    }
+    aud_playlist_entry_insert_batch (aud_playlist_get_active (), at, std::move (items), play);
 }
 
 EXPORT void aud_drct_pl_add (const char * filename, int at)
