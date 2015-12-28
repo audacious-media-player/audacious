@@ -148,8 +148,5 @@ String art_search (const char * filename)
     cut_path_element (local, elem - local);
 
     String image_local = fileinfo_recursive_get_image (local, & params, 0);
-    if (! image_local)
-        return String ();
-
-    return String (filename_to_uri (image_local));
+    return image_local ? String (filename_to_uri (image_local)) : String ();
 }

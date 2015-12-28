@@ -106,8 +106,7 @@ static bool parse_options (int argc, char * * argv)
             else
                 uri = String (filename_to_uri (filename_build ({cur, arg})));
 
-            if (uri)
-                filenames.append (uri);
+            filenames.append (uri);
         }
         else if (! arg[1])  /* "-" (standard input) */
         {

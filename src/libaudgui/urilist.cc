@@ -40,14 +40,7 @@ void urilist_cleanup ()
 
 static String check_uri (const char * name)
 {
-    if (! strstr (name, "://"))
-    {
-        StringBuf uri = filename_to_uri (name);
-        if (uri)
-            return String (uri);
-    }
-
-    return String (name);
+    return strstr (name, "://") ? String (name) : String (filename_to_uri (name));
 }
 
 static Index<PlaylistAddItem> urilist_to_index (const char * list)
