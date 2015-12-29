@@ -170,7 +170,7 @@ StringWidget::StringWidget (const PreferencesWidget * parent, const char * domai
     if (parent->label)
         layout->addWidget (new QLabel (translate_str (parent->label, domain)));
 
-    if (parent->data.entry.password)
+    if (parent->type == PreferencesWidget::Entry && parent->data.entry.password)
         m_lineedit->setEchoMode (QLineEdit::Password);
 
     layout->addWidget (m_lineedit, 1);
