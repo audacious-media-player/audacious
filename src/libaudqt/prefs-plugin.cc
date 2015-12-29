@@ -108,8 +108,9 @@ EXPORT void plugin_prefs (PluginHandle * ph)
     cw->root->setWindowTitle ((const char *) str_printf(_("%s Settings"), name));
 
     QVBoxLayout * vbox = new QVBoxLayout (cw->root);
-
+    vbox->setContentsMargins (4, 4, 4, 4);
     vbox->setSpacing (4);
+
     prefs_populate (vbox, p->widgets, header->info.domain);
     vbox->addStretch (1);
 
