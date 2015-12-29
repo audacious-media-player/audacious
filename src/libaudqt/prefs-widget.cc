@@ -44,7 +44,7 @@ ButtonWidget::ButtonWidget (const PreferencesWidget * parent, const char * domai
 /* boolean widget (checkbox) */
 BooleanWidget::BooleanWidget (const PreferencesWidget * parent, const char * domain) :
     QCheckBox (translate_str (parent->label, domain)),
-    HookableWidget (parent, domain)
+    ParentWidget (parent, domain)
 {
     update ();
 
@@ -67,23 +67,28 @@ void BooleanWidget::update ()
 RadioButtonWidget::RadioButtonWidget (const PreferencesWidget * parent,
  const char * domain, QButtonGroup * btn_group) :
     QRadioButton (translate_str (parent->label, domain)),
-    HookableWidget (parent, domain)
+    ParentWidget (parent, domain)
 {
     if (btn_group)
         btn_group->addButton (this, parent->data.radio_btn.value);
 
     update ();
 
-    QObject::connect (this, & QAbstractButton::clicked, [parent] (bool checked) {
+    QObject::connect (this, & QAbstractButton::toggled, [this] (bool checked) {
         if (checked)
-            parent->cfg.set_int (parent->data.radio_btn.value);
+            m_parent->cfg.set_int (m_parent->data.radio_btn.value);
+        if (m_child_layout)
+            enable_layout (m_child_layout, checked);
     });
 }
 
 void RadioButtonWidget::update ()
 {
-    if (m_parent->cfg.get_int () == m_parent->data.radio_btn.value)
+    bool checked = (m_parent->cfg.get_int () == m_parent->data.radio_btn.value);
+    if (checked)
         setChecked (true);
+    if (m_child_layout)
+        enable_layout (m_child_layout, checked);
 }
 
 /* integer (spinbox) */

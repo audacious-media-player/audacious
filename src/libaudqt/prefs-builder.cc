@@ -39,8 +39,8 @@ void prefs_populate (QBoxLayout * layout, ArrayRef<PreferencesWidget> widgets, c
     QBoxLayout * parent_layout = nullptr;
     QBoxLayout * parent_orig_layout = nullptr;
 
-    BooleanWidget * parent_widget = nullptr;
-    QButtonGroup * radio_btn_group = nullptr;
+    ParentWidget * parent_widget = nullptr;
+    QButtonGroup * radio_btn_group[2] = {nullptr, nullptr};
 
     for (const PreferencesWidget & w : widgets)
     {
@@ -89,8 +89,10 @@ void prefs_populate (QBoxLayout * layout, ArrayRef<PreferencesWidget> widgets, c
             parent_widget = nullptr;
         }
 
-        if (radio_btn_group && w.type != PreferencesWidget::RadioButton)
-            radio_btn_group = nullptr;
+        if (w.type != PreferencesWidget::RadioButton)
+            radio_btn_group[w.child] = nullptr;
+        if (! w.child)
+            radio_btn_group[true] = nullptr;
 
         switch (w.type)
         {
@@ -155,11 +157,18 @@ void prefs_populate (QBoxLayout * layout, ArrayRef<PreferencesWidget> widgets, c
             break;
 
         case PreferencesWidget::RadioButton:
-            if (! radio_btn_group)
-                radio_btn_group = new QButtonGroup;
+        {
+            if (! radio_btn_group[w.child])
+                radio_btn_group[w.child] = new QButtonGroup;
 
-            layout->addWidget (new RadioButtonWidget (& w, domain, radio_btn_group));
+            auto radio_btn = new RadioButtonWidget (& w, domain, radio_btn_group[w.child]);
+            layout->addWidget (radio_btn);
+
+            if (! w.child)
+                parent_widget = radio_btn;
+
             break;
+        }
 
         case PreferencesWidget::FontButton:
             /* XXX: unimplemented */

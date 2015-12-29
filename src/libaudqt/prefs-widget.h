@@ -50,8 +50,7 @@ namespace audqt {
  */
 
 /* base class which provides plumbing for hooks. */
-class HookableWidget
-{
+class HookableWidget {
 protected:
     HookableWidget (const PreferencesWidget * parent, const char * domain) :
         m_parent (parent), m_domain (domain)
@@ -71,6 +70,21 @@ private:
     SmartPtr<HookReceiver<HookableWidget>> hook;
 };
 
+/* shared class which allows disabling child widgets */
+class ParentWidget : protected HookableWidget {
+public:
+    void set_child_layout (QLayout * layout)
+        { m_child_layout = layout; }
+
+    virtual void update () = 0;
+
+protected:
+    ParentWidget (const PreferencesWidget * parent, const char * domain) :
+        HookableWidget (parent, domain) {}
+
+    QLayout * m_child_layout = nullptr;
+};
+
 /* button widget */
 class ButtonWidget : public QPushButton {
 public:
@@ -78,16 +92,10 @@ public:
 };
 
 /* boolean widget (checkbox) */
-class BooleanWidget : public QCheckBox, HookableWidget {
+class BooleanWidget : public QCheckBox, public ParentWidget {
 public:
     BooleanWidget (const PreferencesWidget * parent, const char * domain);
     void update ();
-
-    void set_child_layout (QLayout * layout)
-        { m_child_layout = layout; }
-
-private:
-    QLayout * m_child_layout = nullptr;
 };
 
 /* integer widget (spinner) */
@@ -101,7 +109,7 @@ private:
 };
 
 /* integer widget (radio button) */
-class RadioButtonWidget : public QRadioButton, HookableWidget {
+class RadioButtonWidget : public QRadioButton, public ParentWidget {
 public:
     RadioButtonWidget (const PreferencesWidget * parent, const char * domain,
      QButtonGroup * btn_group);
