@@ -191,6 +191,7 @@ void prefs_populate (QBoxLayout * layout, ArrayRef<PreferencesWidget> widgets, c
         {
             QFrame * f = new QFrame;
             f->setFrameShape (w.data.separator.horizontal ? QFrame::HLine : QFrame::VLine);
+            f->setFrameShadow (QFrame::Sunken);
             layout->addWidget (f);
             break;
         }

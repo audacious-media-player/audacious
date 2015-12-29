@@ -319,7 +319,7 @@ NotebookWidget::NotebookWidget (const PreferencesWidget * parent, const char * d
     {
         auto widget = new QWidget (this);
         auto layout = new QVBoxLayout (widget);
-        layout->setContentsMargins (0, 0, 0, 0);
+        layout->setContentsMargins (4, 4, 4, 4);
         layout->setSpacing (4);
 
         prefs_populate (layout, tab.widgets, domain);
