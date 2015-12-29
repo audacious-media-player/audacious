@@ -21,6 +21,7 @@
 #include "libaudqt.h"
 
 #include <assert.h>
+#include <math.h>
 
 #include <QButtonGroup>
 #include <QComboBox>
@@ -122,6 +123,8 @@ IntegerWidget::IntegerWidget (const PreferencesWidget * parent, const char * dom
     if (parent->label)
         layout->addWidget (new QLabel (translate_str (parent->label, domain)));
 
+    m_spinner->setRange ((int) m_parent->data.spin_btn.min, (int) m_parent->data.spin_btn.max);
+    m_spinner->setSingleStep ((int) m_parent->data.spin_btn.step);
     layout->addWidget (m_spinner);
 
     if (parent->data.spin_btn.right_label)
@@ -144,8 +147,6 @@ IntegerWidget::IntegerWidget (const PreferencesWidget * parent, const char * dom
 
 void IntegerWidget::update ()
 {
-    m_spinner->setRange ((int) m_parent->data.spin_btn.min, (int) m_parent->data.spin_btn.max);
-    m_spinner->setSingleStep ((int) m_parent->data.spin_btn.step);
     m_spinner->setValue (m_parent->cfg.get_int ());
 }
 
@@ -161,6 +162,12 @@ DoubleWidget::DoubleWidget (const PreferencesWidget * parent, const char * domai
     if (parent->label)
         layout->addWidget (new QLabel (translate_str (parent->label, domain)));
 
+    auto decimals_for = [] (double step)
+        { return aud::max (0, -(int) floor (log10 (step) + 0.01)); };
+
+    m_spinner->setDecimals (decimals_for (m_parent->data.spin_btn.step));
+    m_spinner->setRange (m_parent->data.spin_btn.min, m_parent->data.spin_btn.max);
+    m_spinner->setSingleStep (m_parent->data.spin_btn.step);
     layout->addWidget (m_spinner);
 
     if (parent->data.spin_btn.right_label)
@@ -179,8 +186,6 @@ DoubleWidget::DoubleWidget (const PreferencesWidget * parent, const char * domai
 
 void DoubleWidget::update ()
 {
-    m_spinner->setRange (m_parent->data.spin_btn.min, m_parent->data.spin_btn.max);
-    m_spinner->setSingleStep (m_parent->data.spin_btn.step);
     m_spinner->setValue (m_parent->cfg.get_float ());
 }
 
