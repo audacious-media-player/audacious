@@ -89,7 +89,7 @@ CPPFLAGS := -I.. -I../.. \
             ${CPPFLAGS} \
             ${GLIB_CFLAGS} \
             ${GMODULE_CFLAGS} \
-            ${QT_CFLAGS} \
+            ${QTCORE_CFLAGS} \
             -DHARDCODE_BINDIR=\"${bindir}\" \
             -DHARDCODE_DATADIR=\"${datadir}/audacious\" \
             -DHARDCODE_PLUGINDIR=\"${plugindir}\" \
@@ -103,4 +103,4 @@ LIBS := ../libguess/libguess.a \
         ${LIBS} -lm \
         ${GLIB_LIBS} \
         ${GMODULE_LIBS} \
-        ${QT_LIBS}
+        ${QTCORE_LIBS}

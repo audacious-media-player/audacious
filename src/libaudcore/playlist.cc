@@ -145,13 +145,6 @@ struct PlaylistData {
     int resume_time;
 };
 
-/* playback data provided by the playlist */
-struct PlaybackData {
-    InputPlugin * ip = nullptr;
-    VFSFile file;
-    String error;
-};
-
 static const char * const default_title = N_("New Playlist");
 static const char * const temp_title = N_("Now Playing");
 
@@ -176,8 +169,6 @@ static bool resume_paused = false;
 static bool metadata_fallbacks = false;
 static TupleCompiler title_formatter;
 
-static PlaybackData playback_data;
-
 static QueuedFunc queued_update;
 static UpdateLevel update_level;
 static bool update_delayed;
@@ -188,12 +179,14 @@ struct ScanItem : public ListNode
         playlist (playlist),
         entry (entry),
         request (request),
-        for_playback (for_playback) {}
+        for_playback (for_playback),
+        handled_by_playback (false) {}
 
     PlaylistData * playlist;
     Entry * entry;
     ScanRequest * request;
     bool for_playback;
+    bool handled_by_playback;
 };
 
 static bool scan_enabled_nominal, scan_enabled;
@@ -510,9 +503,26 @@ static void scan_queue_entry (PlaylistData * playlist, Entry * entry, bool for_p
         flags |= (SCAN_IMAGE | SCAN_FILE);
 
     auto request = new ScanRequest (entry->filename, flags, scan_finish, entry->decoder);
-    scanner_request (request);
-
     scan_list.append (new ScanItem (playlist, entry, request, for_playback));
+
+    /* playback entry will be scanned by the playback thread */
+    if (! for_playback)
+        scanner_request (request);
+}
+
+static void scan_reset_playback ()
+{
+    for (ScanItem * item = scan_list.head (); item; item = scan_list.next (item))
+    {
+        if (item->for_playback)
+        {
+            item->for_playback = false;
+
+            /* if playback was canceled before the entry was scanned, requeue it */
+            if (! item->handled_by_playback)
+                scanner_request (item->request);
+        }
+    }
 }
 
 static void scan_check_complete (PlaylistData * playlist)
@@ -610,18 +620,6 @@ static void scan_finish (ScanRequest * request)
     if (! entry->decoder || ! entry->scanned)
         entry->set_failed (request->error);
 
-    if (item->for_playback && playlist == playing_playlist && entry == playlist->position)
-    {
-        // save playback data
-        playback_data.ip = request->ip;
-        playback_data.file = std::move (request->file);
-        playback_data.error = std::move (request->error);
-
-        // cache album art for current entry
-        art_cache_current (entry->filename, std::move (request->image_data),
-         std::move (request->image_file));
-    }
-
     delete item;
 
     scan_check_complete (playlist);
@@ -705,15 +703,19 @@ static Entry * get_entry (int playlist_num, int entry_num,
 static void start_playback (int seek_time, bool pause)
 {
     art_clear_current ();
-    playback_data = PlaybackData ();
+    scan_reset_playback ();
+
     playback_play (seek_time, pause);
+
+    scan_cancel (playing_playlist->position);
     scan_queue_entry (playing_playlist, playing_playlist->position, true);
 }
 
 static void stop_playback ()
 {
     art_clear_current ();
-    playback_data = PlaybackData ();
+    scan_reset_playback ();
+
     playback_stop ();
 }
 
@@ -2196,30 +2198,48 @@ bool playlist_next_song (int playlist_num, bool repeat)
 
 static Entry * get_playback_entry (int serial)
 {
-    if (! playing_playlist || ! playback_check_serial (serial))
+    if (! playback_check_serial (serial))
         return nullptr;
 
+    assert (playing_playlist && playing_playlist->position);
     return playing_playlist->position;
 }
 
 // called from playback thread
-void playback_entry_read (int serial)
+DecodeInfo playback_entry_read (int serial)
 {
     ENTER;
+    DecodeInfo dec;
     Entry * entry;
 
-    // wait for the playback entry to be scanned (or deleted)
-    while ((entry = get_playback_entry (serial)) && scan_list_find_entry (entry))
-        pthread_cond_wait (& cond, & mutex);
-
-    if (entry)
+    if ((entry = get_playback_entry (serial)))
     {
-        send_playback_info (entry);
-        playback_setup_decode (entry->filename, playback_data.ip,
-         std::move (playback_data.file), std::move (playback_data.error));
+        ScanItem * item = scan_list_find_entry (entry);
+        assert (item && item->for_playback);
+
+        ScanRequest * request = item->request;
+        item->handled_by_playback = true;
+
+        LEAVE;
+        scanner_run (request);
+        ENTER;
+
+        if ((entry = get_playback_entry (serial)))
+        {
+            send_playback_info (entry);
+            art_cache_current (entry->filename, std::move (request->image_data),
+             std::move (request->image_file));
+
+            dec.filename = entry->filename;
+            dec.ip = request->ip;
+            dec.file = std::move (request->file);
+            dec.error = std::move (request->error);
+        }
+
+        delete request;
     }
 
-    LEAVE;
+    RETURN (dec);
 }
 
 // called from playback thread

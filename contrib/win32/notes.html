@@ -193,6 +193,8 @@ make install</tt></p></blockquote>
 <a href="http://ftp.gnome.org/pub/GNOME/sources/gtk+/2.24/gtk+-2.24.28.tar.xz">
 <tt>http://ftp.gnome.org/pub/GNOME/sources/gtk+/2.24/gtk+-2.24.28.tar.xz</tt></a></p>
 
+<p>Apply the patch <tt>gdkwindow-win32.c.diff</tt> to <tt>C:\gtksrc\gdk\win32\gdkwindow-win32.c</tt>.</p>
+
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/gtksrc<br>
 CFLAGS="-O2 -D_WIN32_WINNT=0x0501" ./configure --prefix=/C/GTK<br>
@@ -383,7 +385,7 @@ make install</tt></p></blockquote>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libflac<br>
-./configure --prefix=/C/libs --disable-sse --disable-ogg<br>
+./configure --prefix=/C/libs --disable-asm-optimizations --disable-sse --disable-ogg<br>
 make<br>
 make install</tt></p></blockquote>
 
