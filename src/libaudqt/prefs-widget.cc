@@ -34,6 +34,21 @@
 
 namespace audqt {
 
+HookableWidget::HookableWidget (const PreferencesWidget * parent, const char * domain) :
+    m_parent (parent), m_domain (domain)
+{
+    if (m_parent->cfg.hook)
+        hook.capture (new HookReceiver<HookableWidget>
+         {m_parent->cfg.hook, this, & HookableWidget::update_from_cfg});
+}
+
+void HookableWidget::update_from_cfg ()
+{
+    m_updating = true;
+    update ();
+    m_updating = false;
+}
+
 /* button */
 ButtonWidget::ButtonWidget (const PreferencesWidget * parent, const char * domain) :
     QPushButton (translate_str (parent->label, domain))
@@ -49,6 +64,8 @@ BooleanWidget::BooleanWidget (const PreferencesWidget * parent, const char * dom
     update ();
 
     QObject::connect (this, & QCheckBox::stateChanged, [this] (int state) {
+        if (m_updating)
+            return;
         m_parent->cfg.set_bool (state != Qt::Unchecked);
         if (m_child_layout)
             enable_layout (m_child_layout, state != Qt::Unchecked);
@@ -74,9 +91,11 @@ RadioButtonWidget::RadioButtonWidget (const PreferencesWidget * parent,
 
     update ();
 
-    QObject::connect (this, & QAbstractButton::clicked, [parent] (bool checked) {
+    QObject::connect (this, & QAbstractButton::toggled, [this] (bool checked) {
+        if (m_updating)
+            return;
         if (checked)
-            parent->cfg.set_int (parent->data.radio_btn.value);
+            m_parent->cfg.set_int (m_parent->data.radio_btn.value);
     });
 }
 
@@ -112,8 +131,9 @@ IntegerWidget::IntegerWidget (const PreferencesWidget * parent, const char * dom
      * cast to the type of the correct valueChanged signal.  --kaniini.
      */
     void (QSpinBox::* signal) (int) = & QSpinBox::valueChanged;
-    QObject::connect (m_spinner, signal, [parent] (int value) {
-        parent->cfg.set_int (value);
+    QObject::connect (m_spinner, signal, [this] (int value) {
+        if (! m_updating)
+            m_parent->cfg.set_int (value);
     });
 }
 
@@ -146,8 +166,9 @@ DoubleWidget::DoubleWidget (const PreferencesWidget * parent, const char * domai
     update ();
 
     void (QDoubleSpinBox::* signal) (double) = & QDoubleSpinBox::valueChanged;
-    QObject::connect (m_spinner, signal, [parent] (double value) {
-        parent->cfg.set_float (value);
+    QObject::connect (m_spinner, signal, [this] (double value) {
+        if (! m_updating)
+            m_parent->cfg.set_float (value);
     });
 }
 
@@ -177,8 +198,9 @@ StringWidget::StringWidget (const PreferencesWidget * parent, const char * domai
 
     update ();
 
-    QObject::connect (m_lineedit, & QLineEdit::textChanged, [parent] (const QString & value) {
-        parent->cfg.set_string (value.toUtf8 ());
+    QObject::connect (m_lineedit, & QLineEdit::textChanged, [this] (const QString & value) {
+        if (! m_updating)
+            m_parent->cfg.set_string (value.toUtf8 ());
     });
 }
 
@@ -206,6 +228,9 @@ ComboBoxWidget::ComboBoxWidget (const PreferencesWidget * parent, const char * d
 
     void (QComboBox::* signal) (int) = & QComboBox::currentIndexChanged;
     QObject::connect (m_combobox, signal, [this] (int idx) {
+        if (m_updating)
+            return;
+
         QVariant data = m_combobox->itemData (idx);
 
         switch (m_parent->cfg.type)
