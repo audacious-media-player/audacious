@@ -84,7 +84,7 @@ void prefs_populate (QBoxLayout * layout, ArrayRef<PreferencesWidget> widgets, c
 
             /* enable/disable child widgets */
             if (parent_widget)
-                parent_widget->update ();
+                parent_widget->update_from_cfg ();
 
             parent_widget = nullptr;
         }
@@ -216,7 +216,7 @@ void prefs_populate (QBoxLayout * layout, ArrayRef<PreferencesWidget> widgets, c
 
     /* enable/disable child widgets */
     if (parent_widget)
-        parent_widget->update ();
+        parent_widget->update_from_cfg ();
 }
 
 } // namespace audqt
