@@ -28,6 +28,7 @@
 #include <libaudcore/hook.h>
 #include <libaudcore/i18n.h>
 #include <libaudcore/interface.h>
+#include <libaudcore/mainloop.h>
 #include <libaudcore/playlist.h>
 #include <libaudcore/runtime.h>
 #include <libaudcore/tuple.h>
@@ -296,7 +297,10 @@ static void do_commands ()
         else if (aud_drct_get_paused ())
             aud_drct_pause ();
     }
+}
 
+static void do_commands_at_idle (void *)
+{
     if (options.show_jump_box && ! options.headless)
         aud_ui_show_jump_to_song ();
     if (options.mainwin && ! options.headless)
@@ -377,20 +381,22 @@ int main (int argc, char * * argv)
 
     do_commands ();
 
-    if (check_should_quit ())
-        goto QUIT;
+    if (! check_should_quit ())
+    {
+        QueuedFunc at_idle_func;
+        at_idle_func.queue (do_commands_at_idle, nullptr);
 
-    hook_associate ("playback stop", (HookFunction) maybe_quit, nullptr);
-    hook_associate ("playlist add complete", (HookFunction) maybe_quit, nullptr);
-    hook_associate ("quit", (HookFunction) aud_quit, nullptr);
+        hook_associate ("playback stop", (HookFunction) maybe_quit, nullptr);
+        hook_associate ("playlist add complete", (HookFunction) maybe_quit, nullptr);
+        hook_associate ("quit", (HookFunction) aud_quit, nullptr);
 
-    aud_run ();
+        aud_run ();
 
-    hook_dissociate ("playback stop", (HookFunction) maybe_quit);
-    hook_dissociate ("playlist add complete", (HookFunction) maybe_quit);
-    hook_dissociate ("quit", (HookFunction) aud_quit);
+        hook_dissociate ("playback stop", (HookFunction) maybe_quit);
+        hook_dissociate ("playlist add complete", (HookFunction) maybe_quit);
+        hook_dissociate ("quit", (HookFunction) aud_quit);
+    }
 
-QUIT:
 #ifdef USE_DBUS
     dbus_server_cleanup ();
 #endif
