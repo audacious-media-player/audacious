@@ -497,7 +497,7 @@ static ScanItem * scan_list_find_request (ScanRequest * request)
 static void scan_queue_entry (PlaylistData * playlist, Entry * entry, bool for_playback = false)
 {
     int flags = 0;
-    if (! entry->scanned)
+    if (! entry->scanned || entry->failed)
         flags |= SCAN_TUPLE;
     if (for_playback)
         flags |= (SCAN_IMAGE | SCAN_FILE);
@@ -611,7 +611,7 @@ static void scan_finish (ScanRequest * request)
     if (! entry->decoder)
         entry->decoder = request->decoder;
 
-    if (! entry->scanned && request->tuple)
+    if ((! entry->scanned || entry->failed) && request->tuple)
     {
         playlist->set_entry_tuple (entry, std::move (request->tuple));
         queue_update (Metadata, playlist, entry->number, 1, DelayedUpdate);
@@ -678,25 +678,35 @@ static Entry * get_entry (int playlist_num, int entry_num,
         warn_main_thread_blocked ();
 #endif
 
+    bool scan_started = false;
+
     while (1)
     {
         PlaylistData * playlist = lookup_playlist (playlist_num);
         Entry * entry = playlist ? lookup_entry (playlist, entry_num) : nullptr;
 
-        // blacklist stdin
-        if (! entry || entry->failed || ! strncmp (entry->filename, "stdin://", 8))
+        // check whether entry was deleted; also blacklist stdin
+        if (! entry || ! strncmp (entry->filename, "stdin://", 8))
             return entry;
 
-        if ((need_decoder && ! entry->decoder) || (need_tuple && ! entry->scanned))
-        {
-            if (! scan_list_find_entry (entry))
-                scan_queue_entry (playlist, entry);
+        // check whether requested data (decoder and/or tuple) has been read
+        if ((! need_decoder || entry->decoder) &&
+         (! need_tuple || (entry->scanned && ! entry->failed)))
+            return entry;
 
-            pthread_cond_wait (& cond, & mutex);
-            continue;
+        // start scan if not already running ...
+        if (! scan_list_find_entry (entry))
+        {
+            // ... but only once
+            if (scan_started)
+                return entry;
+
+            scan_queue_entry (playlist, entry);
         }
 
-        return entry;
+        // wait for scan to finish
+        scan_started = true;
+        pthread_cond_wait (& cond, & mutex);
     }
 }
 
