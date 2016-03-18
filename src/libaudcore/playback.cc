@@ -361,9 +361,10 @@ static void finish_playback_locked ()
     if (pb_info.error)
     {
         failed_entries ++;
-        aud_ui_show_error (str_printf (_("Error opening %s:\n%s"),
+        aud_ui_show_error (str_printf (_("Error playing %s:\n%s"),
          (const char *) pb_info.filename, pb_info.error_s ?
-         (const char *) pb_info.error_s : _("Unknown playback error")));
+         (const char *) pb_info.error_s : _("Unknown playback error "
+         "(check the console for detailed error information)")));
     }
     else
         failed_entries = 0;
