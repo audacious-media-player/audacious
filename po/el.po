@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2015-12-26 15:15+0100\n"
+"POT-Creation-Date: 2016-03-26 21:24+0100\n"
 "PO-Revision-Date: 2015-10-30 13:31+0000\n"
 "Last-Translator: Michael Misirlis <mmisirlis@gmail.com>\n"
 "Language-Team: Greek (http://www.transifex.com/jlindgren/audacious/language/"
@@ -28,82 +28,82 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/audacious/main.cc:61
+#: src/audacious/main.cc:62
 msgid "Show command-line help"
 msgstr "Προβολή βοήθειας  για τη γραμμή εντολών"
 
-#: src/audacious/main.cc:62
+#: src/audacious/main.cc:63
 msgid "Show version"
 msgstr "Εμφάνιση έκδοσης"
 
-#: src/audacious/main.cc:63
+#: src/audacious/main.cc:64
 msgid "Start playback"
 msgstr "Έναρξη αναπαραγωγής"
 
-#: src/audacious/main.cc:64
+#: src/audacious/main.cc:65
 msgid "Pause playback"
 msgstr "Παύση αναπαραγωγής"
 
-#: src/audacious/main.cc:65
+#: src/audacious/main.cc:66
 msgid "Pause if playing, play otherwise"
 msgstr "Παύση αν παίζει, αλλιώς αναπαραγωγή"
 
-#: src/audacious/main.cc:66
+#: src/audacious/main.cc:67
 msgid "Stop playback"
 msgstr "Διακοπή αναπαραγωγής"
 
-#: src/audacious/main.cc:67
+#: src/audacious/main.cc:68
 msgid "Skip to previous song"
 msgstr "Μετάβαση στο προηγούμενο κομμάτι"
 
-#: src/audacious/main.cc:68
+#: src/audacious/main.cc:69
 msgid "Skip to next song"
 msgstr "Μετάβαση στο επόμενο κομμάτι"
 
-#: src/audacious/main.cc:69
+#: src/audacious/main.cc:70
 msgid "Add files to the playlist"
 msgstr "Προσθήκη αρχείων στη λίστα τραγουδιών"
 
-#: src/audacious/main.cc:70
+#: src/audacious/main.cc:71
 msgid "Add files to a temporary playlist"
 msgstr "Προσθήκη αρχείων σε μια προσωρινή λίστα αναπαραγωγής"
 
-#: src/audacious/main.cc:71
+#: src/audacious/main.cc:72
 msgid "Display the main window"
 msgstr "Εμφάνιση του κυρίους παραθύρου"
 
-#: src/audacious/main.cc:72
+#: src/audacious/main.cc:73
 msgid "Display the jump-to-song window"
 msgstr "Εμφάνιση του παραθύρου άλμα-σε-τραγούδι"
 
-#: src/audacious/main.cc:73
+#: src/audacious/main.cc:74
 msgid "Start without a graphical interface"
 msgstr "Έναρξη χωρίς γραφικό περιβάλλον"
 
-#: src/audacious/main.cc:74
+#: src/audacious/main.cc:75
 msgid "Quit on playback stop"
 msgstr "Έξοδος στη διακοπή αναπαραγωγής"
 
-#: src/audacious/main.cc:75
+#: src/audacious/main.cc:76
 msgid "Print debugging messages (may be used twice)"
 msgstr ""
 "Προβολή μηνυμάτων εντοπισμού σφαλμάτων (μπορεί να χρησιμοποιηθεί δύο φορές)"
 
-#: src/audacious/main.cc:77
+#: src/audacious/main.cc:78
 msgid "Run in Qt mode"
 msgstr "Εκτέλεση σε λειτουργία Qt"
 
-#: src/audacious/main.cc:132
+#: src/audacious/main.cc:133
 #, c-format
 msgid "Unknown option: %s\n"
 msgstr "Άγνωστη επιλογή: %s\n"
 
-#: src/audacious/main.cc:155
+#: src/audacious/main.cc:156
 #, c-format
 msgid "Unknown option: -%c\n"
 msgstr "Άγνωστη επιλογή: -%c\n"
 
-#: src/audacious/main.cc:182
+#: src/audacious/main.cc:183
 #, c-format
 msgid ""
 "Usage: audacious [OPTION] ... [FILE] ...\n"
@@ -112,7 +112,7 @@ msgstr ""
 "Χρήση: audacious  [ΕΠΙΛΟΓΗ] ... [Αρχείο] ...\n"
 "\n"
 
-#: src/audacious/main.cc:361 src/libaudqt/util.cc:50
+#: src/audacious/main.cc:365 src/libaudqt/util.cc:50
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -140,21 +140,21 @@ msgstr "Μουσικό CD, κομμάτι %s"
 msgid "(character encoding error)"
 msgstr "(χαρακτήρας σφάλμα κωδικοποίησης)"
 
-#: src/libaudcore/playback.cc:364 src/libaudcore/playlist-files.cc:69
-#: src/libaudgui/infowin.cc:485
-#, c-format
+#: src/libaudcore/playback.cc:364
+#, fuzzy, c-format
 msgid ""
-"Error opening %s:\n"
+"Error playing %s:\n"
 "%s"
 msgstr ""
 "Σφάλμα ανοίγματος του %s:\n"
 "%s"
 
 #: src/libaudcore/playback.cc:366
-msgid "Unknown playback error"
-msgstr "Άγνωστο σφάλμα αναπαραγωγής"
+msgid ""
+"Unknown playback error (check the console for detailed error information)"
+msgstr ""
 
-#: src/libaudcore/playback.cc:495
+#: src/libaudcore/playback.cc:496
 msgid "Invalid audio format"
 msgstr "Μη έγκυρη μορφή ήχου"
 
@@ -162,13 +162,22 @@ msgstr "Μη έγκυρη μορφή ήχου"
 msgid "Now Playing"
 msgstr "Αναπαράγεται τώρα"
 
-#: src/libaudcore/playlist.cc:1713
+#: src/libaudcore/playlist.cc:1723
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress "
 "(or has been disabled)."
 msgstr ""
 "Η λίστα αναπαραγωγής δεν μπορεί να ταξινομηθεί επειδή η σάρωση για "
 "μεταδεδομένα είναι ακόμα σε εξέλιξη (ή έχει απενεργοποιηθεί)."
+
+#: src/libaudcore/playlist-files.cc:69 src/libaudgui/infowin.cc:485
+#, c-format
+msgid ""
+"Error opening %s:\n"
+"%s"
+msgstr ""
+"Σφάλμα ανοίγματος του %s:\n"
+"%s"
 
 #: src/libaudcore/playlist-files.cc:83
 #, c-format
