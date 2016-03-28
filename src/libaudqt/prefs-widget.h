@@ -50,22 +50,19 @@ namespace audqt {
  */
 
 /* base class which provides plumbing for hooks. */
-class HookableWidget
-{
+class HookableWidget {
+public:
+    void update_from_cfg ();
+
 protected:
-    HookableWidget (const PreferencesWidget * parent, const char * domain) :
-        m_parent (parent), m_domain (domain)
-    {
-        if (m_parent->cfg.hook)
-            hook.capture (new HookReceiver<HookableWidget>
-             {m_parent->cfg.hook, this, & HookableWidget::update});
-    }
+    HookableWidget (const PreferencesWidget * parent, const char * domain);
 
     virtual ~HookableWidget () {}
     virtual void update () {}
 
     const PreferencesWidget * const m_parent;
     const char * const m_domain;
+    bool m_updating = false;
 
 private:
     SmartPtr<HookReceiver<HookableWidget>> hook;
@@ -78,15 +75,15 @@ public:
 };
 
 /* boolean widget (checkbox) */
-class BooleanWidget : public QCheckBox, HookableWidget {
+class BooleanWidget : public QCheckBox, public HookableWidget {
 public:
     BooleanWidget (const PreferencesWidget * parent, const char * domain);
-    void update ();
 
     void set_child_layout (QLayout * layout)
         { m_child_layout = layout; }
 
 private:
+    void update ();
     QLayout * m_child_layout = nullptr;
 };
 
@@ -94,9 +91,8 @@ private:
 class IntegerWidget : public QWidget, HookableWidget {
 public:
     IntegerWidget (const PreferencesWidget * parent, const char * domain);
-    void update ();
-
 private:
+    void update ();
     QSpinBox * m_spinner;
 };
 
@@ -105,6 +101,7 @@ class RadioButtonWidget : public QRadioButton, HookableWidget {
 public:
     RadioButtonWidget (const PreferencesWidget * parent, const char * domain,
      QButtonGroup * btn_group);
+private:
     void update ();
 };
 
@@ -112,9 +109,8 @@ public:
 class DoubleWidget : public QWidget, HookableWidget {
 public:
     DoubleWidget (const PreferencesWidget * parent, const char * domain);
-    void update ();
-
 private:
+    void update ();
     QDoubleSpinBox * m_spinner;
 };
 
@@ -122,9 +118,8 @@ private:
 class StringWidget : public QWidget, HookableWidget {
 public:
     StringWidget (const PreferencesWidget * parent, const char * domain);
-    void update ();
-
 private:
+    void update ();
     QLineEdit * m_lineedit;
 };
 
@@ -132,9 +127,8 @@ private:
 class ComboBoxWidget : public QWidget, HookableWidget {
 public:
     ComboBoxWidget (const PreferencesWidget * parent, const char * domain);
-    void update ();
-
 private:
+    void update ();
     QComboBox * m_combobox;
 };
 

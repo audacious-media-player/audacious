@@ -78,7 +78,7 @@ EXPORT void plugin_prefs (PluginHandle * ph)
 {
     ConfigWindow * cw = find_config_window (ph);
 
-    if (cw)
+    if (cw && cw->root)
     {
         window_bring_to_front (cw->root);
         return;
@@ -92,14 +92,24 @@ EXPORT void plugin_prefs (PluginHandle * ph)
     if (! p)
         return;
 
-    cw = new ConfigWindow;
-    config_windows.append (cw);
+    if (! cw)
+    {
+        cw = new ConfigWindow {ph};
+        config_windows.append (cw);
+    }
 
-    cw->ph = ph;
     cw->root = new QDialog;
+    cw->root->setAttribute (Qt::WA_DeleteOnClose);
 
     if (p->init)
         p->init ();
+
+    QObject::connect (cw->root, & QObject::destroyed, [p, cw] () {
+        if (p->cleanup)
+            p->cleanup ();
+
+        cw->root = nullptr;
+    });
 
     const char * name = header->info.name;
     if (header->info.domain)
@@ -108,8 +118,9 @@ EXPORT void plugin_prefs (PluginHandle * ph)
     cw->root->setWindowTitle ((const char *) str_printf(_("%s Settings"), name));
 
     QVBoxLayout * vbox = new QVBoxLayout (cw->root);
-
+    vbox->setContentsMargins (4, 4, 4, 4);
     vbox->setSpacing (4);
+
     prefs_populate (vbox, p->widgets, header->info.domain);
     vbox->addStretch (1);
 
@@ -121,22 +132,18 @@ EXPORT void plugin_prefs (PluginHandle * ph)
         bbox->button (QDialogButtonBox::Ok)->setText (translate_str (N_("_Set")));
         bbox->button (QDialogButtonBox::Cancel)->setText (translate_str (N_("_Cancel")));
 
-        QObject::connect (bbox, & QDialogButtonBox::accepted, [=] () {
-            if (p->apply)
-                p->apply ();
-
-            cw->root->hide ();
+        QObject::connect (bbox, & QDialogButtonBox::accepted, [p, cw] () {
+            p->apply ();
+            cw->root->deleteLater ();
         });
-
-        QObject::connect (bbox, & QDialogButtonBox::rejected, cw->root, & QWidget::hide);
     }
     else
     {
         bbox->setStandardButtons (QDialogButtonBox::Close);
         bbox->button (QDialogButtonBox::Close)->setText (translate_str (N_("_Close")));
-
-        QObject::connect (bbox, & QDialogButtonBox::rejected, cw->root, & QWidget::hide);
     }
+
+    QObject::connect (bbox, & QDialogButtonBox::rejected, cw->root, & QObject::deleteLater);
 
     vbox->addWidget (bbox);
 

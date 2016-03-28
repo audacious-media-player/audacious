@@ -21,6 +21,7 @@
 #include "libaudqt.h"
 
 #include <assert.h>
+#include <math.h>
 
 #include <QButtonGroup>
 #include <QComboBox>
@@ -33,6 +34,21 @@
 #include <libaudcore/i18n.h>
 
 namespace audqt {
+
+HookableWidget::HookableWidget (const PreferencesWidget * parent, const char * domain) :
+    m_parent (parent), m_domain (domain)
+{
+    if (m_parent->cfg.hook)
+        hook.capture (new HookReceiver<HookableWidget>
+         {m_parent->cfg.hook, this, & HookableWidget::update_from_cfg});
+}
+
+void HookableWidget::update_from_cfg ()
+{
+    m_updating = true;
+    update ();
+    m_updating = false;
+}
 
 /* button */
 ButtonWidget::ButtonWidget (const PreferencesWidget * parent, const char * domain) :
@@ -49,6 +65,8 @@ BooleanWidget::BooleanWidget (const PreferencesWidget * parent, const char * dom
     update ();
 
     QObject::connect (this, & QCheckBox::stateChanged, [this] (int state) {
+        if (m_updating)
+            return;
         m_parent->cfg.set_bool (state != Qt::Unchecked);
         if (m_child_layout)
             enable_layout (m_child_layout, state != Qt::Unchecked);
@@ -74,9 +92,11 @@ RadioButtonWidget::RadioButtonWidget (const PreferencesWidget * parent,
 
     update ();
 
-    QObject::connect (this, & QAbstractButton::clicked, [parent] (bool checked) {
+    QObject::connect (this, & QAbstractButton::toggled, [this] (bool checked) {
+        if (m_updating)
+            return;
         if (checked)
-            parent->cfg.set_int (parent->data.radio_btn.value);
+            m_parent->cfg.set_int (m_parent->data.radio_btn.value);
     });
 }
 
@@ -98,6 +118,8 @@ IntegerWidget::IntegerWidget (const PreferencesWidget * parent, const char * dom
     if (parent->label)
         layout->addWidget (new QLabel (translate_str (parent->label, domain)));
 
+    m_spinner->setRange ((int) m_parent->data.spin_btn.min, (int) m_parent->data.spin_btn.max);
+    m_spinner->setSingleStep ((int) m_parent->data.spin_btn.step);
     layout->addWidget (m_spinner);
 
     if (parent->data.spin_btn.right_label)
@@ -112,15 +134,14 @@ IntegerWidget::IntegerWidget (const PreferencesWidget * parent, const char * dom
      * cast to the type of the correct valueChanged signal.  --kaniini.
      */
     void (QSpinBox::* signal) (int) = & QSpinBox::valueChanged;
-    QObject::connect (m_spinner, signal, [parent] (int value) {
-        parent->cfg.set_int (value);
+    QObject::connect (m_spinner, signal, [this] (int value) {
+        if (! m_updating)
+            m_parent->cfg.set_int (value);
     });
 }
 
 void IntegerWidget::update ()
 {
-    m_spinner->setRange ((int) m_parent->data.spin_btn.min, (int) m_parent->data.spin_btn.max);
-    m_spinner->setSingleStep ((int) m_parent->data.spin_btn.step);
     m_spinner->setValue (m_parent->cfg.get_int ());
 }
 
@@ -136,6 +157,12 @@ DoubleWidget::DoubleWidget (const PreferencesWidget * parent, const char * domai
     if (parent->label)
         layout->addWidget (new QLabel (translate_str (parent->label, domain)));
 
+    auto decimals_for = [] (double step)
+        { return aud::max (0, -(int) floor (log10 (step) + 0.01)); };
+
+    m_spinner->setDecimals (decimals_for (m_parent->data.spin_btn.step));
+    m_spinner->setRange (m_parent->data.spin_btn.min, m_parent->data.spin_btn.max);
+    m_spinner->setSingleStep (m_parent->data.spin_btn.step);
     layout->addWidget (m_spinner);
 
     if (parent->data.spin_btn.right_label)
@@ -146,15 +173,14 @@ DoubleWidget::DoubleWidget (const PreferencesWidget * parent, const char * domai
     update ();
 
     void (QDoubleSpinBox::* signal) (double) = & QDoubleSpinBox::valueChanged;
-    QObject::connect (m_spinner, signal, [parent] (double value) {
-        parent->cfg.set_float (value);
+    QObject::connect (m_spinner, signal, [this] (double value) {
+        if (! m_updating)
+            m_parent->cfg.set_float (value);
     });
 }
 
 void DoubleWidget::update ()
 {
-    m_spinner->setRange (m_parent->data.spin_btn.min, m_parent->data.spin_btn.max);
-    m_spinner->setSingleStep (m_parent->data.spin_btn.step);
     m_spinner->setValue (m_parent->cfg.get_float ());
 }
 
@@ -177,8 +203,9 @@ StringWidget::StringWidget (const PreferencesWidget * parent, const char * domai
 
     update ();
 
-    QObject::connect (m_lineedit, & QLineEdit::textChanged, [parent] (const QString & value) {
-        parent->cfg.set_string (value.toUtf8 ());
+    QObject::connect (m_lineedit, & QLineEdit::textChanged, [this] (const QString & value) {
+        if (! m_updating)
+            m_parent->cfg.set_string (value.toUtf8 ());
     });
 }
 
@@ -206,6 +233,9 @@ ComboBoxWidget::ComboBoxWidget (const PreferencesWidget * parent, const char * d
 
     void (QComboBox::* signal) (int) = & QComboBox::currentIndexChanged;
     QObject::connect (m_combobox, signal, [this] (int idx) {
+        if (m_updating)
+            return;
+
         QVariant data = m_combobox->itemData (idx);
 
         switch (m_parent->cfg.type)
@@ -319,7 +349,7 @@ NotebookWidget::NotebookWidget (const PreferencesWidget * parent, const char * d
     {
         auto widget = new QWidget (this);
         auto layout = new QVBoxLayout (widget);
-        layout->setContentsMargins (0, 0, 0, 0);
+        layout->setContentsMargins (4, 4, 4, 4);
         layout->setSpacing (4);
 
         prefs_populate (layout, tab.widgets, domain);

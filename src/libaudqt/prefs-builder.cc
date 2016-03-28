@@ -84,7 +84,7 @@ void prefs_populate (QBoxLayout * layout, ArrayRef<PreferencesWidget> widgets, c
 
             /* enable/disable child widgets */
             if (parent_widget)
-                parent_widget->update ();
+                parent_widget->update_from_cfg ();
 
             parent_widget = nullptr;
         }
@@ -191,6 +191,7 @@ void prefs_populate (QBoxLayout * layout, ArrayRef<PreferencesWidget> widgets, c
         {
             QFrame * f = new QFrame;
             f->setFrameShape (w.data.separator.horizontal ? QFrame::HLine : QFrame::VLine);
+            f->setFrameShadow (QFrame::Sunken);
             layout->addWidget (f);
             break;
         }
@@ -204,7 +205,7 @@ void prefs_populate (QBoxLayout * layout, ArrayRef<PreferencesWidget> widgets, c
 
     /* enable/disable child widgets */
     if (parent_widget)
-        parent_widget->update ();
+        parent_widget->update_from_cfg ();
 }
 
 } // namespace audqt
