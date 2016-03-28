@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2015-12-26 15:15+0100\n"
+"POT-Creation-Date: 2016-03-26 21:24+0100\n"
 "PO-Revision-Date: 2015-08-25 17:15+0000\n"
 "Last-Translator: Thomas Lange <thomas-lange2@gmx.de>\n"
 "Language-Team: Korean (http://www.transifex.com/jlindgren/audacious/language/"
@@ -30,81 +30,81 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: src/audacious/main.cc:61
+#: src/audacious/main.cc:62
 msgid "Show command-line help"
 msgstr "명령행 도움말 표시"
 
-#: src/audacious/main.cc:62
+#: src/audacious/main.cc:63
 msgid "Show version"
 msgstr "버전 보기"
 
-#: src/audacious/main.cc:63
+#: src/audacious/main.cc:64
 msgid "Start playback"
 msgstr "재생 시작"
 
-#: src/audacious/main.cc:64
+#: src/audacious/main.cc:65
 msgid "Pause playback"
 msgstr "재생 일시 정지"
 
-#: src/audacious/main.cc:65
+#: src/audacious/main.cc:66
 msgid "Pause if playing, play otherwise"
 msgstr "재생 중이면 일시 정지, 그 외에는 재생"
 
-#: src/audacious/main.cc:66
+#: src/audacious/main.cc:67
 msgid "Stop playback"
 msgstr "재생 정지"
 
-#: src/audacious/main.cc:67
+#: src/audacious/main.cc:68
 msgid "Skip to previous song"
 msgstr "이전 곡으로 건너뛰기"
 
-#: src/audacious/main.cc:68
+#: src/audacious/main.cc:69
 msgid "Skip to next song"
 msgstr "다음 곡으로 건너뛰기"
 
-#: src/audacious/main.cc:69
+#: src/audacious/main.cc:70
 msgid "Add files to the playlist"
 msgstr "재생 목록에 파일 추가"
 
-#: src/audacious/main.cc:70
+#: src/audacious/main.cc:71
 msgid "Add files to a temporary playlist"
 msgstr "임시 재생 목록에 파일 추가"
 
-#: src/audacious/main.cc:71
+#: src/audacious/main.cc:72
 msgid "Display the main window"
 msgstr "기본 창 표시"
 
-#: src/audacious/main.cc:72
+#: src/audacious/main.cc:73
 msgid "Display the jump-to-song window"
 msgstr "곡으로 건너뛰기 창 표시"
 
-#: src/audacious/main.cc:73
+#: src/audacious/main.cc:74
 msgid "Start without a graphical interface"
 msgstr "그래픽 인터페이스를 제외하고 시작"
 
-#: src/audacious/main.cc:74
+#: src/audacious/main.cc:75
 msgid "Quit on playback stop"
 msgstr "재생을 끝나면 종료"
 
-#: src/audacious/main.cc:75
+#: src/audacious/main.cc:76
 msgid "Print debugging messages (may be used twice)"
 msgstr "디버깅 메시지 출력(두번 사용할 수 있음)"
 
-#: src/audacious/main.cc:77
+#: src/audacious/main.cc:78
 msgid "Run in Qt mode"
 msgstr "Qt 모드로 실행"
 
-#: src/audacious/main.cc:132
+#: src/audacious/main.cc:133
 #, c-format
 msgid "Unknown option: %s\n"
 msgstr "알 수 없는 옵션: %s\n"
 
-#: src/audacious/main.cc:155
+#: src/audacious/main.cc:156
 #, c-format
 msgid "Unknown option: -%c\n"
 msgstr "알 수 없는 옵션: -%c\n"
 
-#: src/audacious/main.cc:182
+#: src/audacious/main.cc:183
 #, c-format
 msgid ""
 "Usage: audacious [OPTION] ... [FILE] ...\n"
@@ -113,7 +113,7 @@ msgstr ""
 "사용법: audacious <옵션> ... <파일> ...\n"
 "\n"
 
-#: src/audacious/main.cc:361 src/libaudqt/util.cc:50
+#: src/audacious/main.cc:365 src/libaudqt/util.cc:50
 msgid "Audacious"
 msgstr "오데이셔스 "
 
@@ -140,21 +140,21 @@ msgstr "음악 CD, %s 트랙"
 msgid "(character encoding error)"
 msgstr "(문자 인코딩 오류)"
 
-#: src/libaudcore/playback.cc:364 src/libaudcore/playlist-files.cc:69
-#: src/libaudgui/infowin.cc:485
-#, c-format
+#: src/libaudcore/playback.cc:364
+#, fuzzy, c-format
 msgid ""
-"Error opening %s:\n"
+"Error playing %s:\n"
 "%s"
 msgstr ""
 "%s 열기 오류:\n"
 "%s"
 
 #: src/libaudcore/playback.cc:366
-msgid "Unknown playback error"
-msgstr "알 수 없는 재생 오류"
+msgid ""
+"Unknown playback error (check the console for detailed error information)"
+msgstr ""
 
-#: src/libaudcore/playback.cc:495
+#: src/libaudcore/playback.cc:496
 msgid "Invalid audio format"
 msgstr "잘못된 오디오 형식"
 
@@ -162,13 +162,22 @@ msgstr "잘못된 오디오 형식"
 msgid "Now Playing"
 msgstr "재생 중"
 
-#: src/libaudcore/playlist.cc:1713
+#: src/libaudcore/playlist.cc:1723
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress "
 "(or has been disabled)."
 msgstr ""
 "메타데이터 검색중(또는 비활성화 됨)이기 때문에 재생 목록을 정렬할 수 없습니"
 "다."
+
+#: src/libaudcore/playlist-files.cc:69 src/libaudgui/infowin.cc:485
+#, c-format
+msgid ""
+"Error opening %s:\n"
+"%s"
+msgstr ""
+"%s 열기 오류:\n"
+"%s"
 
 #: src/libaudcore/playlist-files.cc:83
 #, c-format

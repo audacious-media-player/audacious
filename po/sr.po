@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2015-12-26 15:15+0100\n"
+"POT-Creation-Date: 2016-03-26 21:24+0100\n"
 "PO-Revision-Date: 2015-12-22 20:23+0000\n"
 "Last-Translator: Мирослав Николић <miroslavnikolic@rocketmail.com>\n"
 "Language-Team: Serbian (http://www.transifex.com/jlindgren/audacious/"
@@ -23,81 +23,81 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: src/audacious/main.cc:61
+#: src/audacious/main.cc:62
 msgid "Show command-line help"
 msgstr "Приказује помоћ линије наредби"
 
-#: src/audacious/main.cc:62
+#: src/audacious/main.cc:63
 msgid "Show version"
 msgstr "Приказује издање"
 
-#: src/audacious/main.cc:63
+#: src/audacious/main.cc:64
 msgid "Start playback"
 msgstr "Започиње пуштање"
 
-#: src/audacious/main.cc:64
+#: src/audacious/main.cc:65
 msgid "Pause playback"
 msgstr "Паузира пуштање"
 
-#: src/audacious/main.cc:65
+#: src/audacious/main.cc:66
 msgid "Pause if playing, play otherwise"
 msgstr "Паузира ако свира, иначе пушта"
 
-#: src/audacious/main.cc:66
+#: src/audacious/main.cc:67
 msgid "Stop playback"
 msgstr "Зауставља пуштање"
 
-#: src/audacious/main.cc:67
+#: src/audacious/main.cc:68
 msgid "Skip to previous song"
 msgstr "Иде на претходну песму"
 
-#: src/audacious/main.cc:68
+#: src/audacious/main.cc:69
 msgid "Skip to next song"
 msgstr "Иде на следећу песму"
 
-#: src/audacious/main.cc:69
+#: src/audacious/main.cc:70
 msgid "Add files to the playlist"
 msgstr "Додаје датотеке на списак нумера"
 
-#: src/audacious/main.cc:70
+#: src/audacious/main.cc:71
 msgid "Add files to a temporary playlist"
 msgstr "Додаје датотеке на привремени списак нумера"
 
-#: src/audacious/main.cc:71
+#: src/audacious/main.cc:72
 msgid "Display the main window"
 msgstr "Приказује главни прозор"
 
-#: src/audacious/main.cc:72
+#: src/audacious/main.cc:73
 msgid "Display the jump-to-song window"
 msgstr "Приказује прозор за бирање песама"
 
-#: src/audacious/main.cc:73
+#: src/audacious/main.cc:74
 msgid "Start without a graphical interface"
 msgstr "Покреће се без графичког сучеља"
 
-#: src/audacious/main.cc:74
+#: src/audacious/main.cc:75
 msgid "Quit on playback stop"
 msgstr "Излази на заустављање пуштања"
 
-#: src/audacious/main.cc:75
+#: src/audacious/main.cc:76
 msgid "Print debugging messages (may be used twice)"
 msgstr "Исписује поруке прочишћавања (може бити коришћено два пута)"
 
-#: src/audacious/main.cc:77
+#: src/audacious/main.cc:78
 msgid "Run in Qt mode"
 msgstr "Ради у Кут режиму"
 
-#: src/audacious/main.cc:132
+#: src/audacious/main.cc:133
 #, c-format
 msgid "Unknown option: %s\n"
 msgstr "Непозната опција: %s\n"
 
-#: src/audacious/main.cc:155
+#: src/audacious/main.cc:156
 #, c-format
 msgid "Unknown option: -%c\n"
 msgstr "Непозната опција: -%c\n"
 
-#: src/audacious/main.cc:182
+#: src/audacious/main.cc:183
 #, c-format
 msgid ""
 "Usage: audacious [OPTION] ... [FILE] ...\n"
@@ -106,7 +106,7 @@ msgstr ""
 "Употреба: audacious [ОПЦИЈА] ... [ДАТОТЕКА] ...\n"
 "\n"
 
-#: src/audacious/main.cc:361 src/libaudqt/util.cc:50
+#: src/audacious/main.cc:365 src/libaudqt/util.cc:50
 msgid "Audacious"
 msgstr "Безочник"
 
@@ -135,21 +135,21 @@ msgstr "Звучни ЦД, нумера %s"
 msgid "(character encoding error)"
 msgstr "(грешка кодирања знакова)"
 
-#: src/libaudcore/playback.cc:364 src/libaudcore/playlist-files.cc:69
-#: src/libaudgui/infowin.cc:485
-#, c-format
+#: src/libaudcore/playback.cc:364
+#, fuzzy, c-format
 msgid ""
-"Error opening %s:\n"
+"Error playing %s:\n"
 "%s"
 msgstr ""
 "Грешка отварања „%s“:\n"
 "%s"
 
 #: src/libaudcore/playback.cc:366
-msgid "Unknown playback error"
-msgstr "Непозната грешка пуштања"
+msgid ""
+"Unknown playback error (check the console for detailed error information)"
+msgstr ""
 
-#: src/libaudcore/playback.cc:495
+#: src/libaudcore/playback.cc:496
 msgid "Invalid audio format"
 msgstr "Неисправан запис звука"
 
@@ -157,13 +157,22 @@ msgstr "Неисправан запис звука"
 msgid "Now Playing"
 msgstr "Сад пуштам"
 
-#: src/libaudcore/playlist.cc:1713
+#: src/libaudcore/playlist.cc:1723
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress "
 "(or has been disabled)."
 msgstr ""
 "Списак нумера не може бити поређан зато што је прегледање метаподатака још "
 "увек у току (или је искључено)."
+
+#: src/libaudcore/playlist-files.cc:69 src/libaudgui/infowin.cc:485
+#, c-format
+msgid ""
+"Error opening %s:\n"
+"%s"
+msgstr ""
+"Грешка отварања „%s“:\n"
+"%s"
 
 #: src/libaudcore/playlist-files.cc:83
 #, c-format

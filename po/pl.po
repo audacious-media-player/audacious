@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2015-12-26 15:15+0100\n"
+"POT-Creation-Date: 2016-03-26 21:24+0100\n"
 "PO-Revision-Date: 2015-09-09 21:26+0000\n"
 "Last-Translator: Piotr Strębski <strebski@o2.pl>\n"
 "Language-Team: Polish (http://www.transifex.com/jlindgren/audacious/language/"
@@ -35,81 +35,81 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 
-#: src/audacious/main.cc:61
+#: src/audacious/main.cc:62
 msgid "Show command-line help"
 msgstr "Wyświetl pomoc linii poleceń"
 
-#: src/audacious/main.cc:62
+#: src/audacious/main.cc:63
 msgid "Show version"
 msgstr "Pokaż informacje o wersji"
 
-#: src/audacious/main.cc:63
+#: src/audacious/main.cc:64
 msgid "Start playback"
 msgstr "Rozpocznij odtwarzanie"
 
-#: src/audacious/main.cc:64
+#: src/audacious/main.cc:65
 msgid "Pause playback"
 msgstr "Wstrzymaj odtwarzanie"
 
-#: src/audacious/main.cc:65
+#: src/audacious/main.cc:66
 msgid "Pause if playing, play otherwise"
 msgstr "Wstrzymaj i wznów odtwarzanie bieżącej ścieżki"
 
-#: src/audacious/main.cc:66
+#: src/audacious/main.cc:67
 msgid "Stop playback"
 msgstr "Zatrzymaj odtwarzanie"
 
-#: src/audacious/main.cc:67
+#: src/audacious/main.cc:68
 msgid "Skip to previous song"
 msgstr "Przejdź do poprzedniej piosenki"
 
-#: src/audacious/main.cc:68
+#: src/audacious/main.cc:69
 msgid "Skip to next song"
 msgstr "Przejdź do następnej piosenki"
 
-#: src/audacious/main.cc:69
+#: src/audacious/main.cc:70
 msgid "Add files to the playlist"
 msgstr "Dodaj pliki do listy odtwarzania"
 
-#: src/audacious/main.cc:70
+#: src/audacious/main.cc:71
 msgid "Add files to a temporary playlist"
 msgstr "Dodaj pliki do tymczasowej listy odtwarzania"
 
-#: src/audacious/main.cc:71
+#: src/audacious/main.cc:72
 msgid "Display the main window"
 msgstr "Wyświetl główne okno programu"
 
-#: src/audacious/main.cc:72
+#: src/audacious/main.cc:73
 msgid "Display the jump-to-song window"
 msgstr "Wyświetla okno \"Przejdź do ścieżki\""
 
-#: src/audacious/main.cc:73
+#: src/audacious/main.cc:74
 msgid "Start without a graphical interface"
 msgstr "Uruchom bez interfejsu graficznego"
 
-#: src/audacious/main.cc:74
+#: src/audacious/main.cc:75
 msgid "Quit on playback stop"
 msgstr "Zamknij program po zakończeniu odtwarzania"
 
-#: src/audacious/main.cc:75
+#: src/audacious/main.cc:76
 msgid "Print debugging messages (may be used twice)"
 msgstr "Pokaż komunikaty o błędach (może być dwukrotnie użyte)"
 
-#: src/audacious/main.cc:77
+#: src/audacious/main.cc:78
 msgid "Run in Qt mode"
 msgstr "Uruchom w trybie Qt"
 
-#: src/audacious/main.cc:132
+#: src/audacious/main.cc:133
 #, c-format
 msgid "Unknown option: %s\n"
 msgstr "Nieznana opcja: %s\n"
 
-#: src/audacious/main.cc:155
+#: src/audacious/main.cc:156
 #, c-format
 msgid "Unknown option: -%c\n"
 msgstr "Nieznana opcja: -%c\n"
 
-#: src/audacious/main.cc:182
+#: src/audacious/main.cc:183
 #, c-format
 msgid ""
 "Usage: audacious [OPTION] ... [FILE] ...\n"
@@ -118,7 +118,7 @@ msgstr ""
 "Obsługa:  audacious [OPCJE] ... [PLIK] ...\n"
 "\n"
 
-#: src/audacious/main.cc:361 src/libaudqt/util.cc:50
+#: src/audacious/main.cc:365 src/libaudqt/util.cc:50
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -147,21 +147,21 @@ msgstr "Płyta Audio CD, ścieżka %s"
 msgid "(character encoding error)"
 msgstr "(błąd dekodowania znaków)"
 
-#: src/libaudcore/playback.cc:364 src/libaudcore/playlist-files.cc:69
-#: src/libaudgui/infowin.cc:485
-#, c-format
+#: src/libaudcore/playback.cc:364
+#, fuzzy, c-format
 msgid ""
-"Error opening %s:\n"
+"Error playing %s:\n"
 "%s"
 msgstr ""
 "Błąd otwierania %s:\n"
 "%s"
 
 #: src/libaudcore/playback.cc:366
-msgid "Unknown playback error"
-msgstr "Nieznany błąd odtwarzania"
+msgid ""
+"Unknown playback error (check the console for detailed error information)"
+msgstr ""
 
-#: src/libaudcore/playback.cc:495
+#: src/libaudcore/playback.cc:496
 msgid "Invalid audio format"
 msgstr "Nieprawidłowy format dźwięku"
 
@@ -169,13 +169,22 @@ msgstr "Nieprawidłowy format dźwięku"
 msgid "Now Playing"
 msgstr "Teraz odtwarzane"
 
-#: src/libaudcore/playlist.cc:1713
+#: src/libaudcore/playlist.cc:1723
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress "
 "(or has been disabled)."
 msgstr ""
 "Nie można posortować listy odtwarzania, ponieważ odczytywanie metadanych "
 "nadal trwa albo zostało ono wyłączone."
+
+#: src/libaudcore/playlist-files.cc:69 src/libaudgui/infowin.cc:485
+#, c-format
+msgid ""
+"Error opening %s:\n"
+"%s"
+msgstr ""
+"Błąd otwierania %s:\n"
+"%s"
 
 #: src/libaudcore/playlist-files.cc:83
 #, c-format

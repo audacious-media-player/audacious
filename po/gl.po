@@ -3,7 +3,7 @@
 # This file is distributed under the same license as the Audacious package.
 #
 # Translators:
-# antiparvos <marcoslansgarza@gmail.com>, 2013-2015
+# antiparvos <marcoslansgarza@gmail.com>, 2013-2016
 # antiparvos <marcoslansgarza@gmail.com>, 2013
 # Miguel Anxo Bouzada <mbouzada@gmail.com>, 2013
 # Miguel Anxo Bouzada <mbouzada@gmail.com>, 2012
@@ -12,9 +12,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2015-12-26 15:15+0100\n"
-"PO-Revision-Date: 2015-08-25 17:15+0000\n"
-"Last-Translator: Thomas Lange <thomas-lange2@gmx.de>\n"
+"POT-Creation-Date: 2016-03-26 21:24+0100\n"
+"PO-Revision-Date: 2016-03-03 17:29+0000\n"
+"Last-Translator: antiparvos <marcoslansgarza@gmail.com>\n"
 "Language-Team: Galician (http://www.transifex.com/jlindgren/audacious/"
 "language/gl/)\n"
 "Language: gl\n"
@@ -23,81 +23,81 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/audacious/main.cc:61
+#: src/audacious/main.cc:62
 msgid "Show command-line help"
 msgstr "Amosar a axuda da liña de ordes"
 
-#: src/audacious/main.cc:62
+#: src/audacious/main.cc:63
 msgid "Show version"
 msgstr "Amosa a versión"
 
-#: src/audacious/main.cc:63
+#: src/audacious/main.cc:64
 msgid "Start playback"
 msgstr "Iniciar a reprodución"
 
-#: src/audacious/main.cc:64
+#: src/audacious/main.cc:65
 msgid "Pause playback"
 msgstr "Deter a reprodución"
 
-#: src/audacious/main.cc:65
+#: src/audacious/main.cc:66
 msgid "Pause if playing, play otherwise"
 msgstr "Pausa cando reproduce, reproducir noutro caso"
 
-#: src/audacious/main.cc:66
+#: src/audacious/main.cc:67
 msgid "Stop playback"
 msgstr "Parar a reprodución"
 
-#: src/audacious/main.cc:67
+#: src/audacious/main.cc:68
 msgid "Skip to previous song"
 msgstr "Ir á canción anterior"
 
-#: src/audacious/main.cc:68
+#: src/audacious/main.cc:69
 msgid "Skip to next song"
 msgstr "Ir á seguinte canción"
 
-#: src/audacious/main.cc:69
+#: src/audacious/main.cc:70
 msgid "Add files to the playlist"
 msgstr "Engadir ficheiros á lista de reprodución"
 
-#: src/audacious/main.cc:70
+#: src/audacious/main.cc:71
 msgid "Add files to a temporary playlist"
 msgstr "Engadir os ficheiros a unha lista temporal de reprodución"
 
-#: src/audacious/main.cc:71
+#: src/audacious/main.cc:72
 msgid "Display the main window"
 msgstr "Amosar a xanela principal."
 
-#: src/audacious/main.cc:72
+#: src/audacious/main.cc:73
 msgid "Display the jump-to-song window"
 msgstr "Amosar a xanela de salto á canción"
 
-#: src/audacious/main.cc:73
+#: src/audacious/main.cc:74
 msgid "Start without a graphical interface"
 msgstr "Iniciar sen interface gráfica"
 
-#: src/audacious/main.cc:74
+#: src/audacious/main.cc:75
 msgid "Quit on playback stop"
 msgstr "Saír ao parar a reprodución"
 
-#: src/audacious/main.cc:75
+#: src/audacious/main.cc:76
 msgid "Print debugging messages (may be used twice)"
 msgstr "Mostrar mensaxes de depuración (pode usarse dúas veces)"
 
-#: src/audacious/main.cc:77
+#: src/audacious/main.cc:78
 msgid "Run in Qt mode"
 msgstr "Executar en modo QT"
 
-#: src/audacious/main.cc:132
+#: src/audacious/main.cc:133
 #, c-format
 msgid "Unknown option: %s\n"
 msgstr "Opción descoñecida: %s\n"
 
-#: src/audacious/main.cc:155
+#: src/audacious/main.cc:156
 #, c-format
 msgid "Unknown option: -%c\n"
 msgstr "Opción descoñecida: -%c\n"
 
-#: src/audacious/main.cc:182
+#: src/audacious/main.cc:183
 #, c-format
 msgid ""
 "Usage: audacious [OPTION] ... [FILE] ...\n"
@@ -106,7 +106,7 @@ msgstr ""
 "Uso: audacious [OPCIÓN] ... [FICHEIRO] ...\n"
 "\n"
 
-#: src/audacious/main.cc:361 src/libaudqt/util.cc:50
+#: src/audacious/main.cc:365 src/libaudqt/util.cc:50
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -134,21 +134,21 @@ msgstr "CD de son. pista %s"
 msgid "(character encoding error)"
 msgstr "(erro na codificación de caracteres)"
 
-#: src/libaudcore/playback.cc:364 src/libaudcore/playlist-files.cc:69
-#: src/libaudgui/infowin.cc:485
-#, c-format
+#: src/libaudcore/playback.cc:364
+#, fuzzy, c-format
 msgid ""
-"Error opening %s:\n"
+"Error playing %s:\n"
 "%s"
 msgstr ""
 "Erro abrindo %s:\n"
 "%s"
 
 #: src/libaudcore/playback.cc:366
-msgid "Unknown playback error"
-msgstr "Erro de reprodución descoñecido"
+msgid ""
+"Unknown playback error (check the console for detailed error information)"
+msgstr ""
 
-#: src/libaudcore/playback.cc:495
+#: src/libaudcore/playback.cc:496
 msgid "Invalid audio format"
 msgstr "Formato de son incorrecto"
 
@@ -156,13 +156,22 @@ msgstr "Formato de son incorrecto"
 msgid "Now Playing"
 msgstr "Estase a reproducir"
 
-#: src/libaudcore/playlist.cc:1713
+#: src/libaudcore/playlist.cc:1723
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress "
 "(or has been disabled)."
 msgstr ""
 "A lista de reprodución non pode ordenarse xa que a detección de metadatos "
 "aínda está en proceso (ou foi desactivada)."
+
+#: src/libaudcore/playlist-files.cc:69 src/libaudgui/infowin.cc:485
+#, c-format
+msgid ""
+"Error opening %s:\n"
+"%s"
+msgstr ""
+"Erro abrindo %s:\n"
+"%s"
 
 #: src/libaudcore/playlist-files.cc:83
 #, c-format
@@ -956,7 +965,7 @@ msgstr "Activar a normalización do volume"
 
 #: src/libaudgui/prefs-window.cc:212 src/libaudqt/prefs-window.cc:200
 msgid "Album mode"
-msgstr "Modo do álbum"
+msgstr "Modo álbum"
 
 #: src/libaudgui/prefs-window.cc:215 src/libaudqt/prefs-window.cc:203
 msgid "Prevent clipping (recommended)"

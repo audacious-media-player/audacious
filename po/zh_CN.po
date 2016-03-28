@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2015-12-26 15:15+0100\n"
+"POT-Creation-Date: 2016-03-26 21:24+0100\n"
 "PO-Revision-Date: 2015-11-16 17:41+0000\n"
 "Last-Translator: Mingye Wang <arthur200126@gmail.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/jlindgren/audacious/"
@@ -28,88 +28,88 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: src/audacious/main.cc:61
+#: src/audacious/main.cc:62
 msgid "Show command-line help"
 msgstr "显示命令行帮助"
 
-#: src/audacious/main.cc:62
+#: src/audacious/main.cc:63
 msgid "Show version"
 msgstr "显示版本信息"
 
-#: src/audacious/main.cc:63
+#: src/audacious/main.cc:64
 msgid "Start playback"
 msgstr "开始回放"
 
-#: src/audacious/main.cc:64
+#: src/audacious/main.cc:65
 msgid "Pause playback"
 msgstr "暂停回放"
 
-#: src/audacious/main.cc:65
+#: src/audacious/main.cc:66
 msgid "Pause if playing, play otherwise"
 msgstr "暂停/播放"
 
-#: src/audacious/main.cc:66
+#: src/audacious/main.cc:67
 msgid "Stop playback"
 msgstr "停止回放"
 
-#: src/audacious/main.cc:67
+#: src/audacious/main.cc:68
 msgid "Skip to previous song"
 msgstr "跳回上一曲目"
 
-#: src/audacious/main.cc:68
+#: src/audacious/main.cc:69
 msgid "Skip to next song"
 msgstr "跳至下一曲目"
 
-#: src/audacious/main.cc:69
+#: src/audacious/main.cc:70
 msgid "Add files to the playlist"
 msgstr "添加文件到播放列表"
 
-#: src/audacious/main.cc:70
+#: src/audacious/main.cc:71
 msgid "Add files to a temporary playlist"
 msgstr "添加文件到一个临时播放列表"
 
-#: src/audacious/main.cc:71
+#: src/audacious/main.cc:72
 msgid "Display the main window"
 msgstr "显示主界面"
 
-#: src/audacious/main.cc:72
+#: src/audacious/main.cc:73
 msgid "Display the jump-to-song window"
 msgstr "显示曲目选择窗口"
 
-#: src/audacious/main.cc:73
+#: src/audacious/main.cc:74
 msgid "Start without a graphical interface"
 msgstr "不启动图形界面"
 
-#: src/audacious/main.cc:74
+#: src/audacious/main.cc:75
 msgid "Quit on playback stop"
 msgstr "停止播放时退出"
 
-#: src/audacious/main.cc:75
+#: src/audacious/main.cc:76
 msgid "Print debugging messages (may be used twice)"
 msgstr "打印调试信息 （或许需要使用两次）"
 
-#: src/audacious/main.cc:77
+#: src/audacious/main.cc:78
 msgid "Run in Qt mode"
 msgstr "以 Qt 模式运行"
 
-#: src/audacious/main.cc:132
+#: src/audacious/main.cc:133
 #, c-format
 msgid "Unknown option: %s\n"
 msgstr "未知选项: %s\n"
 
-#: src/audacious/main.cc:155
+#: src/audacious/main.cc:156
 #, c-format
 msgid "Unknown option: -%c\n"
 msgstr "未知选项: -%c\n"
 
-#: src/audacious/main.cc:182
+#: src/audacious/main.cc:183
 #, c-format
 msgid ""
 "Usage: audacious [OPTION] ... [FILE] ...\n"
 "\n"
 msgstr "用法: audacious [选项] ... [文件] ...\n"
 
-#: src/audacious/main.cc:361 src/libaudqt/util.cc:50
+#: src/audacious/main.cc:365 src/libaudqt/util.cc:50
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -136,21 +136,21 @@ msgstr "音频CD, 音轨 %s"
 msgid "(character encoding error)"
 msgstr "(字符编码错误)"
 
-#: src/libaudcore/playback.cc:364 src/libaudcore/playlist-files.cc:69
-#: src/libaudgui/infowin.cc:485
-#, c-format
+#: src/libaudcore/playback.cc:364
+#, fuzzy, c-format
 msgid ""
-"Error opening %s:\n"
+"Error playing %s:\n"
 "%s"
 msgstr ""
 "打开 %s 时错误：\n"
 "%s"
 
 #: src/libaudcore/playback.cc:366
-msgid "Unknown playback error"
-msgstr "未知播放错误"
+msgid ""
+"Unknown playback error (check the console for detailed error information)"
+msgstr ""
 
-#: src/libaudcore/playback.cc:495
+#: src/libaudcore/playback.cc:496
 msgid "Invalid audio format"
 msgstr "不可用音频格式"
 
@@ -158,11 +158,20 @@ msgstr "不可用音频格式"
 msgid "Now Playing"
 msgstr "正在播放"
 
-#: src/libaudcore/playlist.cc:1713
+#: src/libaudcore/playlist.cc:1723
 msgid ""
 "The playlist cannot be sorted because metadata scanning is still in progress "
 "(or has been disabled)."
 msgstr "因正在扫描歌曲信息, 播放列表暂时无法保存."
+
+#: src/libaudcore/playlist-files.cc:69 src/libaudgui/infowin.cc:485
+#, c-format
+msgid ""
+"Error opening %s:\n"
+"%s"
+msgstr ""
+"打开 %s 时错误：\n"
+"%s"
 
 #: src/libaudcore/playlist-files.cc:83
 #, c-format
