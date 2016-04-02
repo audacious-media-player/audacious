@@ -44,6 +44,11 @@
             <arg type="b" direction="in" name="show"/>
         </method>
 
+        <!-- Send startup notification -->
+        <method name="StartupNotify">
+            <arg type="s" direction="in" name="id"/>
+        </method>
+
         <!-- Get names of available 'standard' tuple fields -->
         <method name="GetTupleFields">
             <!-- Return array of tuple field names -->

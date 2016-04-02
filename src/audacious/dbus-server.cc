@@ -596,6 +596,13 @@ static gboolean do_song_tuple (Obj * obj, Invoc * invoc, unsigned pos, const cha
     return true;
 }
 
+static gboolean do_startup_notify (Obj * obj, Invoc * invoc, const char * id)
+{
+    aud_ui_startup_notify (id);
+    FINISH (startup_notify);
+    return true;
+}
+
 static gboolean do_status (Obj * obj, Invoc * invoc)
 {
     const char * status = "stopped";
@@ -745,6 +752,7 @@ handlers[] =
     {"handle-song-length", (GCallback) do_song_length},
     {"handle-song-title", (GCallback) do_song_title},
     {"handle-song-tuple", (GCallback) do_song_tuple},
+    {"handle-startup-notify", (GCallback) do_startup_notify},
     {"handle-status", (GCallback) do_status},
     {"handle-stop", (GCallback) do_stop},
     {"handle-stop-after", (GCallback) do_stop_after},

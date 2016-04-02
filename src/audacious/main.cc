@@ -204,12 +204,14 @@ static void do_remote ()
     if (dbus_server_init () != StartupType::Client)
         return;
 
-    if (! (bus = g_bus_get_sync (G_BUS_TYPE_SESSION, nullptr, & error)))
-        goto ERR;
-
-    if (! (obj = obj_audacious_proxy_new_sync (bus, (GDBusProxyFlags) 0,
+    if (! (bus = g_bus_get_sync (G_BUS_TYPE_SESSION, nullptr, & error)) ||
+     ! (obj = obj_audacious_proxy_new_sync (bus, (GDBusProxyFlags) 0,
      "org.atheme.audacious", "/org/atheme/audacious", nullptr, & error)))
-        goto ERR;
+    {
+        AUDERR ("D-Bus error: %s\n", error->message);
+        g_error_free (error);
+        return;
+    }
 
     AUDINFO ("Connected to remote session.\n");
 
@@ -253,16 +255,13 @@ static void do_remote ()
     if (options.mainwin)
         obj_audacious_call_show_main_win_sync (obj, true, nullptr, nullptr);
 
+    const char * startup_id = getenv ("DESKTOP_STARTUP_ID");
+    if (startup_id)
+        obj_audacious_call_startup_notify_sync (obj, startup_id, nullptr, nullptr);
+
     g_object_unref (obj);
 
     exit (EXIT_SUCCESS);
-
-ERR:
-    if (error)
-    {
-        AUDERR ("D-Bus error: %s\n", error->message);
-        g_error_free (error);
-    }
 }
 #endif
 

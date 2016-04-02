@@ -497,6 +497,8 @@ public:
     virtual void hide_prefs_window () = 0;
     virtual void plugin_menu_add (AudMenuID id, void func (), const char * name, const char * icon) = 0;
     virtual void plugin_menu_remove (AudMenuID id, void func ()) = 0;
+
+    virtual void startup_notify (const char * id) {}
 };
 
 #endif
