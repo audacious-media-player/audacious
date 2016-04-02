@@ -1,6 +1,6 @@
 /*
  * index.h
- * Copyright 2014 John Lindgren
+ * Copyright 2014-2016 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -35,6 +35,7 @@ class IndexBase
 {
 public:
     typedef int (* CompareFunc) (const void * a, const void * b, void * userdata);
+    typedef int (* SearchFunc) (const void * key, const void * val);
 
     constexpr IndexBase () :
         m_data (nullptr),
@@ -85,6 +86,7 @@ public:
      bool collapse, aud::FillFunc fill_func, aud::EraseFunc erase_func);
 
     void sort (CompareFunc compare, int elemsize, void * userdata);
+    const void * bsearch (const void * key, SearchFunc search, int elemsize) const;
 
 private:
     void * m_data;
@@ -95,7 +97,8 @@ template<class T>
 class Index : private IndexBase
 {
 public:
-    typedef int (* CompareFunc) (const T & a, const T & b, void * userdata);
+    typedef int (* CompareFunc) (const T * a, const T * b, void * userdata);
+    typedef int (* SearchFunc) (const void * key, const T * val);
 
     constexpr Index () :
         IndexBase () {}
@@ -181,20 +184,12 @@ public:
     }
 
     void sort (CompareFunc compare, void * userdata)
+        { IndexBase::sort ((IndexBase::CompareFunc) compare, sizeof (T), userdata); }
+
+    int bsearch (const void * key, SearchFunc search)
     {
-        struct state_t {
-            CompareFunc compare;
-            void * userdata;
-        };
-
-        auto wrapper = [] (const void * a, const void * b, void * userdata) -> int
-        {
-            auto state = (const state_t *) userdata;
-            return state->compare (* (const T *) a, * (const T *) b, state->userdata);
-        };
-
-        const state_t state = {compare, userdata};
-        IndexBase::sort (wrapper, sizeof (T), (void *) & state);
+        auto ptr = (const T *) IndexBase::bsearch (key, (IndexBase::SearchFunc) search, sizeof (T));
+        return ptr ? ptr - begin () : -1;
     }
 
     // for use of Index as a raw data buffer

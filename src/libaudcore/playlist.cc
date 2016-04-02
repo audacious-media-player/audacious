@@ -1660,22 +1660,22 @@ struct CompareData {
     PlaylistTupleCompareFunc tuple_compare;
 };
 
-static int compare_cb (const SmartPtr<Entry> & a, const SmartPtr<Entry> & b, void * _data)
+static int compare_cb (const SmartPtr<Entry> * a, const SmartPtr<Entry> * b, void * _data)
 {
     CompareData * data = (CompareData *) _data;
 
     int diff = 0;
 
     if (data->filename_compare)
-        diff = data->filename_compare (a->filename, b->filename);
+        diff = data->filename_compare ((* a)->filename, (* b)->filename);
     else if (data->tuple_compare)
-        diff = data->tuple_compare (a->tuple, b->tuple);
+        diff = data->tuple_compare ((* a)->tuple, (* b)->tuple);
 
     if (diff)
         return diff;
 
     /* preserve order of "equal" entries */
-    return a->number - b->number;
+    return (* a)->number - (* b)->number;
 }
 
 static void sort (PlaylistData * playlist, CompareData * data)

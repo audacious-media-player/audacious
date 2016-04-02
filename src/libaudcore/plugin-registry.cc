@@ -425,22 +425,22 @@ ERR:
     fclose (handle);
 }
 
-static int plugin_compare (PluginHandle * const & a, PluginHandle * const & b, void *)
+static int plugin_compare (PluginHandle * const * a, PluginHandle * const * b, void *)
 {
-    if (a->type < b->type)
+    if ((* a)->type < (* b)->type)
         return -1;
-    if (a->type > b->type)
+    if ((* a)->type > (* b)->type)
         return 1;
-    if (a->priority < b->priority)
+    if ((* a)->priority < (* b)->priority)
         return -1;
-    if (a->priority > b->priority)
+    if ((* a)->priority > (* b)->priority)
         return 1;
 
     int diff;
-    if ((diff = str_compare (dgettext (a->domain, a->name), dgettext (b->domain, b->name))))
+    if ((diff = str_compare (dgettext ((* a)->domain, (* a)->name), dgettext ((* b)->domain, (* b)->name))))
         return diff;
 
-    return str_compare (a->path, b->path);
+    return str_compare ((* a)->path, (* b)->path);
 }
 
 void plugin_registry_prune ()

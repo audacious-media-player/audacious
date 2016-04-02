@@ -103,8 +103,8 @@ static void populate_list ()
 
 static void save_list ()
 {
-    auto sort_cb = [] (const EqualizerPreset & a, const EqualizerPreset & b, void *)
-        { return strcmp (a.name, b.name); };
+    auto sort_cb = [] (const EqualizerPreset * a, const EqualizerPreset * b, void *)
+        { return strcmp (a->name, b->name); };
 
     Index<EqualizerPreset> presets;
     for (const PresetItem & item : preset_list)

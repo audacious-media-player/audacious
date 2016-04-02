@@ -1,6 +1,6 @@
 /*
  * adder.c
- * Copyright 2011-2013 John Lindgren
+ * Copyright 2011-2016 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -35,6 +35,12 @@
 #include "tuple.h"
 #include "interface.h"
 #include "vfs.h"
+
+#ifdef _WIN32
+#define filename_compare strcmp_nocase
+#else
+#define filename_compare strcmp
+#endif
 
 struct AddTask : public ListNode
 {
@@ -173,6 +179,65 @@ static void add_playlist (const char * filename, PlaylistFilterFunc filter,
     }
 }
 
+static void add_cuesheets (Index<String> & files, PlaylistFilterFunc filter,
+ void * user, AddResult * result)
+{
+    Index<String> cuesheets;
+
+    for (int i = 0; i < files.len ();)
+    {
+        if (str_has_suffix_nocase (files[i], ".cue"))
+            cuesheets.move_from (files, i, -1, 1, true, true);
+        else
+            i ++;
+    }
+
+    if (! cuesheets.len ())
+        return;
+
+    // sort cuesheet list in natural order
+    cuesheets.sort ([] (const String * a, const String * b, void *)
+        { return str_compare_encoded (* a, * b); }, nullptr);
+
+    // sort file list in system-dependent order for duplicate removal
+    files.sort ([] (const String * a, const String * b, void *)
+        { return filename_compare (* a, * b); }, nullptr);
+
+    for (String & cuesheet : cuesheets)
+    {
+        AUDINFO ("Adding cuesheet: %s\n", (const char *) cuesheet);
+        status_update (cuesheet, result->items.len ());
+
+        String title; // ignored
+        Index<PlaylistAddItem> items;
+
+        if (! playlist_load (cuesheet, title, items))
+            continue;
+
+        StringBuf prev_filename;
+        for (auto & item : items)
+        {
+            if (! filter || filter (item.filename, user))
+                add_file (item.filename, std::move (item.tuple), nullptr,
+                 filter, user, result, false);
+
+            // remove duplicates from file list
+            StringBuf filename = strip_subtune (item.filename);
+            if (prev_filename && ! filename_compare (filename, prev_filename))
+                continue;
+
+            int idx = files.bsearch ((const char *) filename,
+             [] (const void * key, const String * val)
+                { return filename_compare ((const char *) key, * val); });
+
+            if (idx >= 0)
+                files.remove (idx, 1);
+
+            prev_filename.steal (std::move (filename));
+        }
+    }
+}
+
 static void add_folder (const char * filename, PlaylistFilterFunc filter,
  void * user, AddResult * result, bool is_single)
 {
@@ -188,30 +253,18 @@ static void add_folder (const char * filename, PlaylistFilterFunc filter,
     if (! files.len ())
         return;
 
-    for (int i = 0; i < files.len (); i ++)
-    {
-        if (str_has_suffix_nocase (files[i], ".cue"))
-        {
-            AUDINFO ("Found cuesheet: %s\n", (const char *) files[i]);
-
-            /* read_folder() returns a sorted list, so the associated audio file
-             * should be immediately before or after the .cue file in the list */
-            if (i > 0 && same_basename (files[i], files[i - 1]))
-            {
-                files.remove (i - 1, 1);
-                i --;
-            }
-            else if (i + 1 < files.len () && same_basename (files[i], files[i + 1]))
-                files.remove (i + 1, 1);
-        }
-    }
-
     if (is_single)
     {
         const char * slash = strrchr (filename, '/');
         if (slash)
             result->title = String (str_decode_percent (slash + 1));
     }
+
+    add_cuesheets (files, filter, user, result);
+
+    // sort file list in natural order (must come after add_cuesheets)
+    files.sort ([] (const String * a, const String * b, void *)
+        { return str_compare_encoded (* a, * b); }, nullptr);
 
     for (const char * file : files)
     {
@@ -229,12 +282,7 @@ static void add_folder (const char * filename, PlaylistFilterFunc filter,
             continue;
 
         if (mode & VFS_IS_REGULAR)
-        {
-            if (str_has_suffix_nocase (file, ".cue"))
-                add_playlist (file, filter, user, result, false);
-            else
-                add_file (file, Tuple (), nullptr, filter, user, result, true);
-        }
+            add_file (file, Tuple (), nullptr, filter, user, result, true);
         else if (mode & VFS_IS_DIR)
             add_folder (file, filter, user, result, false);
     }

@@ -121,6 +121,13 @@ void cut_path_element (char * path, int pos)
         path[pos] = 0; /* leave [drive letter and] leading slash */
 }
 
+StringBuf strip_subtune (const char * filename)
+{
+    const char * sub;
+    uri_parse (filename, nullptr, nullptr, & sub, nullptr);
+    return str_copy (filename, sub - filename);
+}
+
 /* Thomas Wang's 32-bit mix function.  See:
  * http://web.archive.org/web/20070307172248/http://www.concentric.net/~Ttwang/tech/inthash.htm */
 

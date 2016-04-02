@@ -1,6 +1,6 @@
 /*
  * index.cc
- * Copyright 2014 John Lindgren
+ * Copyright 2014-2016 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -193,4 +193,9 @@ EXPORT void IndexBase::move_from (IndexBase & b, int from, int to, int len,
 EXPORT void IndexBase::sort (CompareFunc compare, int elemsize, void * userdata)
 {
     g_qsort_with_data (m_data, m_len / elemsize, elemsize, compare, userdata);
+}
+
+EXPORT const void * IndexBase::bsearch (const void * key, SearchFunc search, int elemsize) const
+{
+    return ::bsearch (key, m_data, m_len / elemsize, elemsize, search);
 }

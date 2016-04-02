@@ -26,6 +26,7 @@
 
 #include "audstrings.h"
 #include "i18n.h"
+#include "internal.h"
 #include "plugin.h"
 #include "plugins-internal.h"
 #include "probe-buffer.h"
@@ -83,13 +84,6 @@ static TransportPlugin * lookup_transport (const char * filename,
     AUDERR ("Unknown URI scheme: %s://\n", (const char *) scheme);
     error = String (_("Unknown URI scheme"));
     return nullptr;
-}
-
-static StringBuf strip_subtune (const char * filename)
-{
-    const char * sub;
-    uri_parse (filename, nullptr, nullptr, & sub, nullptr);
-    return str_copy (filename, sub - filename);
 }
 
 /**
@@ -401,10 +395,5 @@ EXPORT Index<String> VFSFile::read_folder (const char * filename, String & error
     if (! tp || (tp->version & 0xffff) < 48)
         return Index<String> ();
 
-    Index<String> entries = tp->read_folder (filename, error);
-
-    entries.sort ([] (const String & a, const String & b, void *)
-        { return str_compare_encoded (a, b); }, nullptr);
-
-    return entries;
+    return tp->read_folder (filename, error);
 }
