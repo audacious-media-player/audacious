@@ -103,14 +103,13 @@ static void populate_list ()
 
 static void save_list ()
 {
-    auto sort_cb = [] (const EqualizerPreset * a, const EqualizerPreset * b, void *)
-        { return strcmp (a->name, b->name); };
-
     Index<EqualizerPreset> presets;
     for (const PresetItem & item : preset_list)
         presets.append (item.preset);
 
-    presets.sort (sort_cb, nullptr);
+    presets.sort ([] (const EqualizerPreset & a, const EqualizerPreset & b)
+        { return strcmp (a.name, b.name); });
+
     aud_eq_write_presets (presets, "eq.preset");
 }
 

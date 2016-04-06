@@ -196,12 +196,10 @@ static void add_cuesheets (Index<String> & files, PlaylistFilterFunc filter,
         return;
 
     // sort cuesheet list in natural order
-    cuesheets.sort ([] (const String * a, const String * b, void *)
-        { return str_compare_encoded (* a, * b); }, nullptr);
+    cuesheets.sort (str_compare_encoded);
 
     // sort file list in system-dependent order for duplicate removal
-    files.sort ([] (const String * a, const String * b, void *)
-        { return filename_compare (* a, * b); }, nullptr);
+    files.sort (filename_compare);
 
     for (String & cuesheet : cuesheets)
     {
@@ -226,10 +224,7 @@ static void add_cuesheets (Index<String> & files, PlaylistFilterFunc filter,
             if (prev_filename && ! filename_compare (filename, prev_filename))
                 continue;
 
-            int idx = files.bsearch ((const char *) filename,
-             [] (const void * key, const String * val)
-                { return filename_compare ((const char *) key, * val); });
-
+            int idx = files.bsearch ((const char *) filename, filename_compare);
             if (idx >= 0)
                 files.remove (idx, 1);
 
@@ -263,8 +258,7 @@ static void add_folder (const char * filename, PlaylistFilterFunc filter,
     add_cuesheets (files, filter, user, result);
 
     // sort file list in natural order (must come after add_cuesheets)
-    files.sort ([] (const String * a, const String * b, void *)
-        { return str_compare_encoded (* a, * b); }, nullptr);
+    files.sort (str_compare_encoded);
 
     for (const char * file : files)
     {

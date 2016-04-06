@@ -35,7 +35,6 @@ class IndexBase
 {
 public:
     typedef int (* CompareFunc) (const void * a, const void * b, void * userdata);
-    typedef int (* SearchFunc) (const void * key, const void * val);
 
     constexpr IndexBase () :
         m_data (nullptr),
@@ -86,7 +85,7 @@ public:
      bool collapse, aud::FillFunc fill_func, aud::EraseFunc erase_func);
 
     void sort (CompareFunc compare, int elemsize, void * userdata);
-    const void * bsearch (const void * key, SearchFunc search, int elemsize) const;
+    int bsearch (const void * key, CompareFunc search, int elemsize, void * userdata) const;
 
 private:
     void * m_data;
@@ -96,10 +95,15 @@ private:
 template<class T>
 class Index : private IndexBase
 {
-public:
-    typedef int (* CompareFunc) (const T * a, const T * b, void * userdata);
-    typedef int (* SearchFunc) (const void * key, const T * val);
+private:
+    // provides C-style callback to generic comparison functor
+    template<class Key, class F>
+    struct WrapCompare {
+        static int run (const void * key, const void * val, void * func)
+            { return (* (F *) func) (* (const Key *) key, * (const T *) val); }
+    };
 
+public:
     constexpr Index () :
         IndexBase () {}
 
@@ -167,6 +171,7 @@ public:
         return -1;
     }
 
+    // func(val) returns true to remove val, false to keep it
     template<class F>
     void remove_if (F func, bool clear_if_empty = false)
     {
@@ -183,14 +188,15 @@ public:
             clear ();
     }
 
-    void sort (CompareFunc compare, void * userdata)
-        { IndexBase::sort ((IndexBase::CompareFunc) compare, sizeof (T), userdata); }
+    // compare(a, b) returns <0 if a<b, 0 if a=b, >0 if a>b
+    template<class F>
+    void sort (F compare)
+        { IndexBase::sort (WrapCompare<T, F>::run, sizeof (T), & compare); }
 
-    int bsearch (const void * key, SearchFunc search)
-    {
-        auto ptr = (const T *) IndexBase::bsearch (key, (IndexBase::SearchFunc) search, sizeof (T));
-        return ptr ? ptr - begin () : -1;
-    }
+    // compare(key, val) returns <0 if key<val, 0 if key=val, >0 if key>val
+    template<class Key, class F>
+    int bsearch (const Key & key, F compare)
+        { return IndexBase::bsearch (& key, WrapCompare<Key, F>::run, sizeof (T), & compare); }
 
     // for use of Index as a raw data buffer
     // unlike insert(), does not zero-fill any added space

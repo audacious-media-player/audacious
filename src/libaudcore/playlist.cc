@@ -1660,27 +1660,19 @@ struct CompareData {
     PlaylistTupleCompareFunc tuple_compare;
 };
 
-static int compare_cb (const SmartPtr<Entry> * a, const SmartPtr<Entry> * b, void * _data)
+static void sort_entries (Index<SmartPtr<Entry>> & entries, CompareData * data)
 {
-    CompareData * data = (CompareData *) _data;
-
-    int diff = 0;
-
-    if (data->filename_compare)
-        diff = data->filename_compare ((* a)->filename, (* b)->filename);
-    else if (data->tuple_compare)
-        diff = data->tuple_compare ((* a)->tuple, (* b)->tuple);
-
-    if (diff)
-        return diff;
-
-    /* preserve order of "equal" entries */
-    return (* a)->number - (* b)->number;
+    entries.sort ([data] (const SmartPtr<Entry> & a, const SmartPtr<Entry> & b) {
+        if (data->filename_compare)
+            return data->filename_compare (a->filename, b->filename);
+        else
+            return data->tuple_compare (a->tuple, b->tuple);
+    });
 }
 
 static void sort (PlaylistData * playlist, CompareData * data)
 {
-    playlist->entries.sort (compare_cb, data);
+    sort_entries (playlist->entries, data);
     number_entries (playlist, 0, playlist->entries.len ());
 
     queue_update (Structure, playlist, 0, playlist->entries.len ());
@@ -1698,7 +1690,7 @@ static void sort_selected (PlaylistData * playlist, CompareData * data)
             selected.append (std::move (entry));
     }
 
-    selected.sort (compare_cb, data);
+    sort_entries (selected, data);
 
     int i = 0;
     for (auto & entry : playlist->entries)

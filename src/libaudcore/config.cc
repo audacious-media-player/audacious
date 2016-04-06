@@ -135,12 +135,12 @@ struct SaveState {
     Index<ConfigItem> list;
 };
 
-static int item_compare (const ConfigItem * a, const ConfigItem * b, void *)
+static int item_compare (const ConfigItem & a, const ConfigItem & b)
 {
-    if (a->section == b->section)
-        return strcmp (a->key, b->key);
+    if (a.section == b.section)
+        return strcmp (a.key, b.key);
     else
-        return strcmp (a->section, b->section);
+        return strcmp (a.section, b.section);
 }
 
 static bool config_node_match (const MultiHash::Node * node0, const void * data)
@@ -284,7 +284,7 @@ void config_save ()
     SaveState state = SaveState ();
 
     config.iterate (add_to_save_list, & state);
-    state.list.sort (item_compare, nullptr);
+    state.list.sort (item_compare);
 
     StringBuf path = filename_to_uri (aud_get_path (AudPath::UserDir));
     path.insert (-1, "/config");
