@@ -37,7 +37,10 @@
 #include "vfs.h"
 
 #ifdef _WIN32
-#define filename_compare strcmp_nocase
+// regrettably, strcmp_nocase can't be used directly as a
+// callback for Index::sort due to taking a third argument
+static int filename_compare (const char * a, const char * b)
+	{ return strcmp_nocase (a, b); }
 #else
 #define filename_compare strcmp
 #endif
