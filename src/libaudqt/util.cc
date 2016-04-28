@@ -47,6 +47,10 @@ EXPORT void init ()
     atexit ([] () { delete qapp; });
 
     qapp->setAttribute (Qt::AA_UseHighDpiPixmaps);
+#if QT_VERSION >= QT_VERSION_CHECK(5, 3, 0)
+    qapp->setAttribute (Qt::AA_ForceRasterWidgets);
+#endif
+
     qapp->setApplicationName (_("Audacious"));
     qapp->setWindowIcon (QIcon::fromTheme (app_name));
 }
