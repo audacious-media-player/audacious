@@ -304,6 +304,16 @@ Show or hide the About window.
 .B --version
 Print version information.
 .TP
+.B --plugin-is-enabled \fIplugin\fR
+Return an exit code of 0 (true) if the given plugin is enabled.  The plugin is
+specified using its installed filename minus the folder path and suffix: for
+example, \fBcrossfade\fR for \fI@plugindir@/Effect/crossfade.so\fR.
+.TP
+.B --plugin-enable \fIplugin\fR [on|off]
+Enable or disable the given plugin.  Note that interface and output plugins
+cannot be disabled directly since one of each must always be active.  Enabling
+an interface or output plugin will automatically disable the previous plugin.
+.TP
 .B --shutdown
 Shut down Audacious.
 .TP

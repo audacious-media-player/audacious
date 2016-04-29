@@ -21,6 +21,7 @@
 #include <libaudcore/equalizer.h>
 #include <libaudcore/interface.h>
 #include <libaudcore/playlist.h>
+#include <libaudcore/plugins.h>
 #include <libaudcore/runtime.h>
 #include <libaudcore/tuple.h>
 
@@ -344,6 +345,33 @@ static gboolean do_playqueue_remove (Obj * obj, Invoc * invoc, int pos)
         aud_playlist_queue_delete (playlist, qpos, 1);
 
     FINISH (playqueue_remove);
+    return true;
+}
+
+static gboolean do_plugin_enable (Obj * obj, Invoc * invoc, const char * name, gboolean enable)
+{
+    PluginHandle * plugin = aud_plugin_lookup_basename (name);
+    if (! plugin)
+    {
+        AUDERR ("No such plugin: %s\n", name);
+        return false;
+    }
+
+    aud_plugin_enable (plugin, enable);
+    FINISH (plugin_enable);
+    return true;
+}
+
+static gboolean do_plugin_is_enabled (Obj * obj, Invoc * invoc, const char * name)
+{
+    PluginHandle * plugin = aud_plugin_lookup_basename (name);
+    if (! plugin)
+    {
+        AUDERR ("No such plugin: %s\n", name);
+        return false;
+    }
+
+    FINISH2 (plugin_is_enabled, aud_plugin_get_enabled (plugin));
     return true;
 }
 
@@ -726,6 +754,8 @@ handlers[] =
     {"handle-playqueue-clear", (GCallback) do_playqueue_clear},
     {"handle-playqueue-is-queued", (GCallback) do_playqueue_is_queued},
     {"handle-playqueue-remove", (GCallback) do_playqueue_remove},
+    {"handle-plugin-enable", (GCallback) do_plugin_enable},
+    {"handle-plugin-is-enabled", (GCallback) do_plugin_is_enabled},
     {"handle-position", (GCallback) do_position},
     {"handle-queue-get-list-pos", (GCallback) do_queue_get_list_pos},
     {"handle-queue-get-queue-pos", (GCallback) do_queue_get_queue_pos},

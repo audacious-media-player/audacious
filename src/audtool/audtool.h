@@ -125,6 +125,8 @@ void shutdown_audacious_server (int, char * *);
 void show_about_window (int, char * *);
 
 void get_version (int argc, char * * argv);
+void plugin_is_enabled (int argc, char * * argv);
+void plugin_enable (int argc, char * * argv);
 
 void equalizer_get_eq (int argc, char * * argv);
 void equalizer_get_eq_preamp (int argc, char * * argv);

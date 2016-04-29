@@ -98,6 +98,7 @@ void get_handlers_list (int argc, char * * argv)
 
     audtool_report ("");
     audtool_report ("Commands may be prefixed with '--' (GNU-style long options) or not, your choice.");
+    audtool_report ("Show/hide and enable/disable commands take an optional 'on' or 'off' argument.");
     audtool_report ("Report bugs to http://redmine.audacious-media-player.org/projects/audacious");
 }
 
@@ -111,4 +112,37 @@ void get_version (int argc, char * * argv)
 
     audtool_report ("Audacious %s", version);
     g_free (version);
+}
+
+void plugin_is_enabled (int argc, char * * argv)
+{
+    if (argc != 2)
+    {
+        audtool_whine_args (argv[0], "<plugin>");
+        exit (1);
+    }
+
+    gboolean enabled = FALSE;
+    obj_audacious_call_plugin_is_enabled_sync (dbus_proxy, argv[1], & enabled, NULL, NULL);
+
+    exit (! enabled);
+}
+
+void plugin_enable (int argc, char * * argv)
+{
+    gboolean enable = TRUE;
+
+    if (argc == 2)
+        enable = TRUE;
+    else if (argc == 3 && ! g_ascii_strcasecmp (argv[2], "on"))
+        enable = TRUE;
+    else if (argc == 3 && ! g_ascii_strcasecmp (argv[2], "off"))
+        enable = FALSE;
+    else
+    {
+        audtool_whine_args (argv[0], "<plugin> <on/off>");
+        exit (1);
+    }
+
+    obj_audacious_call_plugin_enable_sync (dbus_proxy, argv[1], enable, NULL, NULL);
 }

@@ -123,6 +123,8 @@ const struct commandhandler handlers[] =
     {"about-show", show_about_window, "show/hide About window", 1},
 
     {"version", get_version, "print Audacious version", 0},
+    {"plugin-is-enabled", plugin_is_enabled, "exit code = 0 if plugin is enabled", 1},
+    {"plugin-enable", plugin_enable, "enable/disable plugin", 2},
     {"shutdown", shutdown_audacious_server, "shut down Audacious", 0},
 
     {"help", get_handlers_list, "print this help", 0},
@@ -195,7 +197,7 @@ int main (int argc, char * * argv)
              ! g_ascii_strcasecmp (g_strconcat ("--", handlers[i].name, NULL),
              argv[j])) && g_ascii_strcasecmp ("<sep>", handlers[i].name))
             {
-                int numargs = handlers[i].args + 1 < argc - j ? handlers[i].args + 1 : argc - j;
+                int numargs = MIN (handlers[i].args + 1, argc - j);
                 handlers[i].handler (numargs, & argv[j]);
                 j += handlers[i].args;
                 k ++;

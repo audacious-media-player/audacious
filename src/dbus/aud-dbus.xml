@@ -2,7 +2,7 @@
 
 <!--
  * aud-dbus.xml
- * Copyright 2007-2014 Ben Tucker, Yoshiki Yazawa, Matti Hämäläinen, and
+ * Copyright 2007-2016 Ben Tucker, Yoshiki Yazawa, Matti Hämäläinen, and
  *                     John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
@@ -26,6 +26,16 @@
         <!-- Audacious version -->
         <method name="Version">
             <arg type="s" direction="out" name="version"/>
+        </method>
+
+        <method name="PluginIsEnabled">
+            <arg type="s" direction="in" name="plugin" />
+            <arg type="b" direction="out" name="enabled" />
+        </method>
+
+        <method name="PluginEnable">
+            <arg type="s" direction="in" name="plugin" />
+            <arg type="b" direction="in" name="enable" />
         </method>
 
         <!-- Quit Audacious -->
