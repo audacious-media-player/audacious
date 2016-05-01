@@ -1,4 +1,4 @@
-.TH AUDTOOL "1" "July 2015" "Version @PACKAGE_VERSION@"
+.TH AUDTOOL "1" "May 2016" "Version @PACKAGE_VERSION@"
 
 .SH NAME
 .B audtool
@@ -6,7 +6,7 @@
 
 .SH SYNOPSIS
 .B audtool
-\fIcommand\fR [\fIparameter\fR ...] ...
+[\fIinstance\fR] \fIcommand\fR [\fIparameter\fR ...] ...
 
 .SH DESCRIPTION
 .B audtool
@@ -15,6 +15,10 @@ sends commands to a running instance of Audacious.
 It can send many common commands, such as to skip to the next song in the
 playlist, and can also print status information, such as the title of the
 current song.
+.PP
+\fIinstance\fR may be given as \fB-1\fR, \fB-2\fR, etc. (up to \fB-9\fR) to
+specify which instance of Audacious to control when multiple instances have been
+started.
 
 .SH COMMANDS
 .SS Current song information:

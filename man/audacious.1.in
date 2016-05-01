@@ -1,4 +1,4 @@
-.TH AUDACIOUS "1" "July 2015" "Version @PACKAGE_VERSION@" "Audacious"
+.TH AUDACIOUS "1" "May 2016" "Version @PACKAGE_VERSION@" "Audacious"
 
 .SH NAME
 audacious \- an advanced audio player.
@@ -73,6 +73,10 @@ Print version information and exit.
 .TP
 .B -V, --verbose
 Print debugging output while running (may be used twice for even more output).
+.TP
+.B -N, --new-instance
+Starts a new instance.  The second instance started may be controlled with
+\fBaudtool -2\fR, the third with \fBaudtool -3\fR, etc. (up to 9 instances).
 
 .SH KEYBINDINGS
 .ta 24
@@ -133,11 +137,11 @@ Shift + Control + l	Display Add URL dialog
 .SH FILES
 
 .TP
-~/.config/audacious/config
-User's Audacious configuration.
+~/.config/audacious/config, ~/.config/audacious-2/config, etc.
+Configuration file for each Audacious instance.
 .TP
-~/.config/audacious/playlists
-Folder in which playlists are stored.
+~/.config/audacious/playlists, ~/.config/audacious-2/playlists, etc.
+Folders in which playlists are stored.
 .TP
 ~/.local/share/audacious/Skins, @datarootdir@/audacious/Skins
 Default locations where Audacious should look for skin files.
