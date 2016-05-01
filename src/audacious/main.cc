@@ -46,6 +46,7 @@ static struct {
     int enqueue, enqueue_to_temp;
     int mainwin, show_jump_box;
     int headless, quit_after_play;
+    int new_instance;
     int verbose;
     int qt;
 } options;
@@ -74,6 +75,9 @@ static const struct {
     {"headless", 'H', & options.headless, N_("Start without a graphical interface")},
     {"quit-after-play", 'q', & options.quit_after_play, N_("Quit on playback stop")},
     {"verbose", 'V', & options.verbose, N_("Print debugging messages (may be used twice)")},
+#if USE_DBUS
+    {"new-instance", 'N', & options.new_instance, N_("Open new instance")},
+#endif
 #if defined(USE_QT) && defined(USE_GTK)
     {"qt", 'Q', & options.qt, N_("Run in Qt mode")},
 #endif
@@ -201,7 +205,7 @@ static void do_remote ()
 #endif
 
     /* check whether this is the first instance */
-    if (dbus_server_init () != StartupType::Client)
+    if (dbus_server_init (options.new_instance) != StartupType::Client)
         return;
 
     if (! (bus = g_bus_get_sync (G_BUS_TYPE_SESSION, nullptr, & error)) ||
