@@ -323,7 +323,6 @@ static void main_cleanup ()
     }
 
     filenames.clear ();
-    aud_cleanup_paths ();
     aud_leak_check ();
 }
 
@@ -347,7 +346,6 @@ int main (int argc, char * * argv)
     signals_init_one ();
 #endif
 
-    aud_init_paths ();
     aud_init_i18n ();
 
     if (! parse_options (argc, argv))

@@ -181,7 +181,7 @@ static void set_default_paths ()
     aud_paths[AudPath::IconFile] = String (HARDCODE_ICONFILE);
 }
 
-static void relocate_all_paths ()
+static void set_install_paths ()
 {
     StringBuf bindir = filename_normalize (str_copy (HARDCODE_BINDIR));
     StringBuf datadir = filename_normalize (str_copy (HARDCODE_DATADIR));
@@ -237,10 +237,8 @@ static void relocate_all_paths ()
     aud_paths[AudPath::IconFile] = relocate_path (iconfile, from, to);
 }
 
-EXPORT void aud_init_paths ()
+static void set_config_paths ()
 {
-    relocate_all_paths ();
-
     const char * xdg_config_home = g_get_user_config_dir ();
 
     aud_paths[AudPath::UserDir] = String (filename_build ({xdg_config_home, "audacious"}));
@@ -261,14 +259,20 @@ EXPORT void aud_init_paths ()
 #endif
 }
 
-EXPORT void aud_cleanup_paths ()
-{
-    for (String & path : aud_paths)
-        path = String ();
-}
+// no longer needed in Audacious 3.8+
+EXPORT void aud_init_paths () {}
+EXPORT void aud_cleanup_paths () {}
 
 EXPORT const char * aud_get_path (AudPath id)
 {
+    if (! aud_paths[id])
+    {
+        if (id <= AudPath::IconFile)
+            set_install_paths ();
+        else
+            set_local_paths ();
+    }
+
     return aud_paths[id];
 }
 
@@ -358,6 +362,9 @@ EXPORT void aud_cleanup ()
 
 EXPORT void aud_leak_check ()
 {
+    for (String & path : aud_paths)
+        path = String ();
+
     string_leak_check ();
 
     if (misc_bytes_allocated)
