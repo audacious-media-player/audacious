@@ -65,6 +65,7 @@
 size_t misc_bytes_allocated;
 
 static bool headless_mode;
+static int instance_number = 1;
 
 #if defined(USE_QT) && ! defined(USE_GTK)
 static MainloopType mainloop_type = MainloopType::Qt;
@@ -75,24 +76,19 @@ static MainloopType mainloop_type = MainloopType::GLib;
 static aud::array<AudPath, String> aud_paths;
 
 EXPORT void aud_set_headless_mode (bool headless)
-{
-    headless_mode = headless;
-}
-
+    { headless_mode = headless; }
 EXPORT bool aud_get_headless_mode ()
-{
-    return headless_mode;
-}
+    { return headless_mode; }
+
+EXPORT void aud_set_instance (int instance)
+    { instance_number = instance; }
+EXPORT int aud_get_instance ()
+    { return instance_number; }
 
 EXPORT void aud_set_mainloop_type (MainloopType type)
-{
-    mainloop_type = type;
-}
-
+    { mainloop_type = type; }
 EXPORT MainloopType aud_get_mainloop_type ()
-{
-    return mainloop_type;
-}
+    { return mainloop_type; }
 
 static StringBuf get_path_to_self ()
 {
@@ -240,12 +236,13 @@ static void set_install_paths ()
 static void set_config_paths ()
 {
     const char * xdg_config_home = g_get_user_config_dir ();
+    StringBuf name = (instance_number == 1) ? str_copy ("audacious") :
+                     str_printf ("audacious-%d", instance_number);
 
-    aud_paths[AudPath::UserDir] = String (filename_build ({xdg_config_home, "audacious"}));
+    aud_paths[AudPath::UserDir] = String (filename_build ({xdg_config_home, name}));
     aud_paths[AudPath::PlaylistDir] = String (filename_build
      ({aud_paths[AudPath::UserDir], "playlists"}));
 
-    /* create ~/.config/audacious/playlists */
     if (g_mkdir_with_parents (aud_paths[AudPath::PlaylistDir], DIRMODE) < 0)
         AUDERR ("Failed to create %s: %s\n",
          (const char *) aud_paths[AudPath::PlaylistDir], strerror (errno));
@@ -270,7 +267,7 @@ EXPORT const char * aud_get_path (AudPath id)
         if (id <= AudPath::IconFile)
             set_install_paths ();
         else
-            set_local_paths ();
+            set_config_paths ();
     }
 
     return aud_paths[id];

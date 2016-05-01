@@ -844,8 +844,7 @@ StartupType dbus_server_init (bool new_instance)
 
     while (1)
     {
-        StringBuf name = (instance == 1) ?
-                         str_copy ("org.atheme.audacious") :
+        StringBuf name = (instance == 1) ? str_copy ("org.atheme.audacious") :
                          str_printf ("org.atheme.audacious-%d", instance);
 
         owner_id = g_bus_own_name (G_BUS_TYPE_SESSION, name,
@@ -861,6 +860,7 @@ StartupType dbus_server_init (bool new_instance)
         if (owner_id)
         {
             startup = StartupType::Server;
+            aud_set_instance (instance);
             break;
         }
 

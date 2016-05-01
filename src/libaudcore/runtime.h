@@ -88,6 +88,12 @@ const char * aud_get_path (AudPath id);
 void aud_set_headless_mode (bool headless);
 bool aud_get_headless_mode ();
 
+// Note that the UserDir and PlaylistDir paths vary depending on the instance
+// number.  Therefore, calling aud_set_instance() after these paths have been
+// referenced, or after aud_init(), is an error.
+void aud_set_instance (int instance);
+int aud_get_instance ();
+
 void aud_set_mainloop_type (MainloopType type);
 MainloopType aud_get_mainloop_type ();
 
