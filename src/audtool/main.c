@@ -20,6 +20,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <locale.h>
 
 #include "audtool.h"
@@ -144,7 +145,7 @@ static void audtool_disconnect (void)
     connection = NULL;
 }
 
-static void audtool_connect (void)
+static void audtool_connect (int instance)
 {
     GError * error = NULL;
 
@@ -157,8 +158,14 @@ static void audtool_connect (void)
         exit (EXIT_FAILURE);
     }
 
-    dbus_proxy = obj_audacious_proxy_new_sync (connection, 0,
-     "org.atheme.audacious", "/org/atheme/audacious", NULL, & error);
+    char name[32];
+    if (instance == 1)
+        strcpy (name, "org.atheme.audacious");
+    else
+        sprintf (name, "org.atheme.audacious-%d", instance);
+
+    dbus_proxy = obj_audacious_proxy_new_sync (connection, 0, name,
+     "/org/atheme/audacious", NULL, & error);
 
     if (! dbus_proxy)
     {
@@ -173,7 +180,8 @@ static void audtool_connect (void)
 
 int main (int argc, char * * argv)
 {
-    int i, j = 0, k = 0;
+    int instance = 1;
+    int i, j, k = 0;
 
     setlocale (LC_CTYPE, "");
 
@@ -181,7 +189,15 @@ int main (int argc, char * * argv)
     g_type_init();
 #endif
 
-    audtool_connect ();
+    // parse instance number (must come first)
+    if (argc >= 2 && argv[1][0] == '-' && argv[1][1] >= '1' && argv[1][1] <= '9' && ! argv[1][2])
+    {
+        instance = argv[1][1] - '0';
+        argc --;
+        argv ++;
+    }
+
+    audtool_connect (instance);
 
     if (argc < 2)
     {

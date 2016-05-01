@@ -88,6 +88,10 @@ void shutdown_audacious_server (int argc, char * * argv)
 
 void get_handlers_list (int argc, char * * argv)
 {
+    audtool_report ("Usage: audtool [-#] COMMAND ...");
+    audtool_report ("       where # (1-9) selects the instance of Audacious to control");
+    audtool_report ("");
+
     for (int i = 0; handlers[i].name; i ++)
     {
         if (! g_ascii_strcasecmp ("<sep>", handlers[i].name))
