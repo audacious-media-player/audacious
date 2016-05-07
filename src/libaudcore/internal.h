@@ -128,6 +128,7 @@ bool same_basename (const char * a, const char * b);
 const char * last_path_element (const char * path);
 void cut_path_element (char * path, int pos);
 
+bool is_cuesheet_entry (const char * filename);
 bool is_subtune (const char * filename);
 StringBuf strip_subtune (const char * filename);
 

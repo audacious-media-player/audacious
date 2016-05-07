@@ -294,7 +294,10 @@ static void run_playback ()
     if (! lock_if (in_sync))
         return;
 
-    pb_info.filename = std::move (dec.filename);
+    // for a cuesheet entry, determine the source filename
+    pb_info.filename = pb_info.tuple.get_str (Tuple::AudioFile);
+    if (! pb_info.filename)
+        pb_info.filename = std::move (dec.filename);
 
     // check that we have all the necessary data
     if (! pb_info.filename || ! pb_info.tuple || ! dec.ip ||

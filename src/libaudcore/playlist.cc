@@ -217,9 +217,12 @@ void Entry::format ()
 
 void Entry::set_tuple (Tuple && new_tuple)
 {
-    /* Hack: We cannot refresh segmented entries (since their info is read from
-     * the cue sheet when it is first loaded), so leave them alone. -jlindgren */
-    if (tuple.get_value_type (Tuple::StartTime) == Tuple::Int)
+    /* Since 3.8, cuesheet entries are handled differently.  The entry filename
+     * points to the .cue file, and the path to the actual audio file is stored
+     * in the Tuple::AudioFile.  If Tuple::AudioFile is not set, then assume
+     * that the playlist was created by an older version of Audacious, and
+     * revert to the former behavior (don't refresh this entry). */
+    if (tuple.is_set (Tuple::StartTime) && ! tuple.is_set (Tuple::AudioFile))
         return;
 
     scanned = (bool) new_tuple;
@@ -503,6 +506,9 @@ static void scan_queue_entry (PlaylistData * playlist, Entry * entry, bool for_p
         flags |= (SCAN_IMAGE | SCAN_FILE);
 
     auto request = new ScanRequest (entry->filename, flags, scan_finish, entry->decoder);
+    if (! (flags & SCAN_TUPLE))
+        request->tuple = entry->tuple.ref (); // scanner needs the Tuple::AudioFile
+
     scan_list.append (new ScanItem (playlist, entry, request, for_playback));
 
     /* playback entry will be scanned by the playback thread */

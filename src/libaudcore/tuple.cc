@@ -143,6 +143,7 @@ static const struct {
     {"gain-peak-unit", Tuple::Int, -1},
 
     {"formatted-title", Tuple::String, -1},
+    {"audio-file", Tuple::String, -1},
 
     /* fallbacks */
     {nullptr, Tuple::String, -1},
@@ -162,6 +163,7 @@ static const FieldDictEntry field_dict[] = {
     {"album", Tuple::Album},
     {"album-artist", Tuple::AlbumArtist},
     {"artist", Tuple::Artist},
+    {"audio-file", Tuple::AudioFile},
     {"bitrate", Tuple::Bitrate},
     {"codec", Tuple::Codec},
     {"comment", Tuple::Comment},

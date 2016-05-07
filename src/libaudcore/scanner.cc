@@ -21,39 +21,74 @@
 
 #include <glib.h>  /* for GThreadPool */
 
+#include "audstrings.h"
 #include "i18n.h"
 #include "internal.h"
+#include "playlist-internal.h"
 #include "plugins.h"
 #include "tuple.h"
 #include "vfs.h"
 
 static GThreadPool * pool;
 
+/* This is currently inefficient since the entire cuesheet is read again for
+ * each entry.  In future, some kind of caching could be implemented. */
+static void read_cuesheet_entry (ScanRequest * r)
+{
+    String title;
+    Index<PlaylistAddItem> items;
+
+    if (! playlist_load (strip_subtune (r->filename), title, items))
+        return;
+
+    for (auto & item : items)
+    {
+        if (item.filename == r->filename)
+        {
+            r->decoder = item.decoder;
+            r->tuple = std::move (item.tuple);
+            break;
+        }
+    }
+}
+
 void scanner_run (ScanRequest * r)
 {
+    /* detect and load cuesheet entry (if not already loaded) */
+    if (! r->tuple && is_cuesheet_entry (r->filename))
+        read_cuesheet_entry (r);
+
+    /* for a cuesheet entry, determine the source filename */
+    String filename = r->tuple.get_str (Tuple::AudioFile);
+    if (! filename)
+        filename = r->filename;
+
+    bool need_tuple = (r->flags & SCAN_TUPLE) && ! r->tuple;
+    bool need_image = (r->flags & SCAN_IMAGE);
+
     if (! r->decoder)
-        r->decoder = file_find_decoder (r->filename, false, r->file, & r->error);
+        r->decoder = file_find_decoder (filename, false, r->file, & r->error);
     if (! r->decoder)
         goto err;
 
-    if ((r->flags & (SCAN_TUPLE | SCAN_IMAGE)))
+    if (need_tuple || need_image)
     {
         if (! (r->ip = load_input_plugin (r->decoder, & r->error)))
             goto err;
 
-        Tuple * ptuple = (r->flags & SCAN_TUPLE) ? & r->tuple : nullptr;
-        Index<char> * pimage = (r->flags & SCAN_IMAGE) ? & r->image_data : nullptr;
+        Tuple * ptuple = need_tuple ? & r->tuple : nullptr;
+        Index<char> * pimage = need_image ? & r->image_data : nullptr;
 
-        if (! file_read_tag (r->filename, r->decoder, r->file, ptuple, pimage, & r->error))
+        if (! file_read_tag (filename, r->decoder, r->file, ptuple, pimage, & r->error))
             goto err;
 
         if ((r->flags & SCAN_IMAGE) && ! r->image_data.len ())
-            r->image_file = art_search (r->filename);
+            r->image_file = art_search (filename);
     }
 
     /* rewind/reopen the input file */
     if ((r->flags & SCAN_FILE))
-        open_input_file (r->filename, "r", r->ip, r->file, & r->error);
+        open_input_file (filename, "r", r->ip, r->file, & r->error);
     else
     {
     err:
