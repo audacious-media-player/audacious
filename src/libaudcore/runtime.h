@@ -62,7 +62,7 @@ namespace audlog
     void unsubscribe (Handler handler);
 
     void log (Level level, const char * file, int line, const char * func,
-     const char * format, ...);
+     const char * format, ...) __attribute__ ((__format__ (__printf__, 5, 6)));
 
     const char * get_level_name (Level level);
 }
