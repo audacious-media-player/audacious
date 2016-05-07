@@ -29,12 +29,12 @@
 
 #include "libaudgui.h"
 
-static SimpleHash<String, Tuple> tuple_cache;
+static SimpleHash<String, PlaylistAddItem> item_cache;
 static QueuedFunc cleanup_timer;
 
 void urilist_cleanup ()
 {
-    tuple_cache.clear ();
+    item_cache.clear ();
     cleanup_timer.stop ();
 }
 
@@ -62,9 +62,12 @@ static Index<PlaylistAddItem> urilist_to_index (const char * list)
         if (end > list)
         {
             String filename = check_uri (str_copy (list, end - list));
-            const Tuple * tuple = tuple_cache.lookup (filename);
+            const PlaylistAddItem * item = item_cache.lookup (filename);
 
-            index.append (filename, tuple ? tuple->ref () : Tuple ());
+            if (item)
+                index.append (item->copy ());
+            else
+                index.append (filename);
         }
 
         list = next;
@@ -96,11 +99,11 @@ EXPORT Index<char> audgui_urilist_create_from_selected (int playlist)
                 buf.append ('\n');
 
             String filename = aud_playlist_entry_get_filename (playlist, count);
-            Tuple tuple = aud_playlist_entry_get_tuple (playlist, count, Playlist::Nothing);
 
             buf.insert (filename, -1, strlen (filename));
-            if (tuple)
-                tuple_cache.add (filename, std::move (tuple));
+            item_cache.add (filename, {filename,
+             aud_playlist_entry_get_tuple (playlist, count, Playlist::Nothing),
+             aud_playlist_entry_get_decoder (playlist, count, Playlist::Nothing)});
         }
     }
 

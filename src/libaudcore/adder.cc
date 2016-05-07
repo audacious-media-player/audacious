@@ -122,42 +122,47 @@ static void status_done_locked ()
         hook_call ("ui hide progress", nullptr);
 }
 
-static void add_file (const char * filename, Tuple && tuple,
- PluginHandle * decoder, PlaylistFilterFunc filter, void * user,
- AddResult * result, bool validate)
+static void add_file (PlaylistAddItem && item, PlaylistFilterFunc filter,
+ void * user, AddResult * result, bool validate)
 {
-    AUDINFO ("Adding file: %s\n", filename);
-    status_update (filename, result->items.len ());
+    AUDINFO ("Adding file: %s\n", item.filename);
+    status_update (item.filename, result->items.len ());
 
-    if (! tuple)
+    /* If the item doesn't already have a valid tuple, and isn't a subtune
+     * itself, then probe it to expand any subtunes.  The "validate" check (used
+     * to skip non-audio files when adding folders) is also nested within this
+     * block; note that "validate" is always false for subtunes. */
+    if (! item.tuple && ! is_subtune (item.filename))
     {
         VFSFile file;
 
-        if (! decoder)
+        if (! item.decoder)
         {
             bool fast = ! aud_get_bool (nullptr, "slow_probe");
-            decoder = file_find_decoder (filename, fast, file);
-            if (validate && ! decoder)
+            item.decoder = file_find_decoder (item.filename, fast, file);
+            if (validate && ! item.decoder)
                 return;
         }
 
-        if (decoder && input_plugin_has_subtunes (decoder) && ! strchr (filename, '?'))
-            file_read_tag (filename, decoder, file, & tuple, nullptr);
+        if (item.decoder && input_plugin_has_subtunes (item.decoder))
+            file_read_tag (item.filename, item.decoder, file, & item.tuple, nullptr);
     }
 
-    int n_subtunes = tuple.get_n_subtunes ();
+    int n_subtunes = item.tuple.get_n_subtunes ();
 
     if (n_subtunes)
     {
         for (int sub = 0; sub < n_subtunes; sub ++)
         {
-            StringBuf subname = str_printf ("%s?%d", filename, tuple.get_nth_subtune (sub));
+            StringBuf subname = str_printf ("%s?%d",
+             (const char *) item.filename, item.tuple.get_nth_subtune (sub));
+
             if (! filter || filter (subname, user))
-                add_file (subname, Tuple (), decoder, filter, user, result, false);
+                add_file ({String (subname), Tuple (), item.decoder}, filter, user, result, false);
         }
     }
     else
-        result->items.append (String (filename), std::move (tuple), decoder);
+        result->items.append (std::move (item));
 }
 
 static void add_playlist (const char * filename, PlaylistFilterFunc filter,
@@ -178,7 +183,7 @@ static void add_playlist (const char * filename, PlaylistFilterFunc filter,
     for (auto & item : items)
     {
         if (! filter || filter (item.filename, user))
-            add_file (item.filename, std::move (item.tuple), nullptr, filter, user, result, false);
+            add_file (std::move (item), filter, user, result, false);
     }
 }
 
@@ -219,8 +224,7 @@ static void add_cuesheets (Index<String> & files, PlaylistFilterFunc filter,
         for (auto & item : items)
         {
             if (! filter || filter (item.filename, user))
-                add_file (item.filename, std::move (item.tuple), nullptr,
-                 filter, user, result, false);
+                add_file (std::move (item), filter, user, result, false);
 
             // remove duplicates from file list
             StringBuf filename = strip_subtune (item.filename);
@@ -279,35 +283,37 @@ static void add_folder (const char * filename, PlaylistFilterFunc filter,
             continue;
 
         if (mode & VFS_IS_REGULAR)
-            add_file (file, Tuple (), nullptr, filter, user, result, true);
+            add_file ({String (file)}, filter, user, result, true);
         else if (mode & VFS_IS_DIR)
             add_folder (file, filter, user, result, false);
     }
 }
 
-static void add_generic (const char * filename, Tuple && tuple,
- PlaylistFilterFunc filter, void * user, AddResult * result, bool is_single)
+static void add_generic (PlaylistAddItem && item, PlaylistFilterFunc filter,
+ void * user, AddResult * result, bool is_single)
 {
-    if (filter && ! filter (filename, user))
+    if (filter && ! filter (item.filename, user))
         return;
 
-    if (tuple)
-        add_file (filename, std::move (tuple), nullptr, filter, user, result, false);
+    /* If the item has a valid tuple or known decoder, or it's a subtune, then
+     * assume it's a playable file and skip some checks. */
+    if (item.tuple || item.decoder || is_subtune (item.filename))
+        add_file (std::move (item), filter, user, result, false);
     else
     {
         String error;
-        VFSFileTest mode = VFSFile::test_file (filename,
+        VFSFileTest mode = VFSFile::test_file (item.filename,
          VFSFileTest (VFS_IS_DIR | VFS_NO_ACCESS), error);
 
         if (mode & VFS_NO_ACCESS)
             aud_ui_show_error (str_printf (_("Error reading %s:\n%s"),
-             filename, (const char *) error));
+             (const char *) item.filename, (const char *) error));
         else if (mode & VFS_IS_DIR)
-            add_folder (filename, filter, user, result, is_single);
-        else if (aud_filename_is_playlist (filename))
-            add_playlist (filename, filter, user, result, is_single);
+            add_folder (item.filename, filter, user, result, is_single);
+        else if (aud_filename_is_playlist (item.filename))
+            add_playlist (item.filename, filter, user, result, is_single);
         else
-            add_file (filename, Tuple (), nullptr, filter, user, result, false);
+            add_file (std::move (item), filter, user, result, false);
     }
 }
 
@@ -430,8 +436,7 @@ static void * add_worker (void * unused)
         bool is_single = (task->items.len () == 1);
 
         for (auto & item : task->items)
-            add_generic (item.filename, std::move (item.tuple), task->filter,
-             task->user, result, is_single);
+            add_generic (std::move (item), task->filter, task->user, result, is_single);
 
         delete task;
 

@@ -127,6 +127,8 @@ String write_temp_file (const void * data, int64_t len);
 bool same_basename (const char * a, const char * b);
 const char * last_path_element (const char * path);
 void cut_path_element (char * path, int pos);
+
+bool is_subtune (const char * filename);
 StringBuf strip_subtune (const char * filename);
 
 unsigned int32_hash (unsigned val);

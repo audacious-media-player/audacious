@@ -121,6 +121,13 @@ void cut_path_element (char * path, int pos)
         path[pos] = 0; /* leave [drive letter and] leading slash */
 }
 
+bool is_subtune (const char * filename)
+{
+    const char * sub;
+    uri_parse (filename, nullptr, nullptr, & sub, nullptr);
+    return sub[0];
+}
+
 StringBuf strip_subtune (const char * filename)
 {
     const char * sub;

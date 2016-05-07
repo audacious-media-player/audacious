@@ -30,6 +30,7 @@
 
 struct ReplayGainInfo;
 struct TupleData;
+class PluginHandle;
 class VFSFile;
 
 class Tuple
@@ -211,11 +212,14 @@ private:
 };
 
 /* somewhat out of place here */
-class PluginHandle;
-struct PlaylistAddItem {
+struct PlaylistAddItem
+{
     String filename;
     Tuple tuple;
     PluginHandle * decoder;
+
+    PlaylistAddItem copy () const
+        { return {filename, tuple.ref (), decoder}; }
 };
 
 #endif /* LIBAUDCORE_TUPLE_H */
