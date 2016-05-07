@@ -125,7 +125,7 @@ static void status_done_locked ()
 static void add_file (PlaylistAddItem && item, PlaylistFilterFunc filter,
  void * user, AddResult * result, bool validate)
 {
-    AUDINFO ("Adding file: %s\n", item.filename);
+    AUDINFO ("Adding file: %s\n", (const char *) item.filename);
     status_update (item.filename, result->items.len ());
 
     /* If the item doesn't already have a valid tuple, and isn't a subtune
