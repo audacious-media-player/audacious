@@ -2256,7 +2256,8 @@ void playback_entry_set_tuple (int serial, Tuple && tuple)
     ENTER;
     Entry * entry = get_playback_entry (serial);
 
-    if (entry)
+    /* don't update cuesheet entries with stream metadata */
+    if (entry && ! entry->tuple.is_set (Tuple::StartTime))
     {
         playing_playlist->set_entry_tuple (entry, std::move (tuple));
         queue_update (Metadata, playing_playlist, entry->number, 1);
