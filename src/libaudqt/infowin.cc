@@ -122,9 +122,12 @@ EXPORT void infowin_show (int playlist, int entry)
 
     if (tuple)
     {
+        /* cuesheet entries cannot be updated */
+        bool can_write = aud_file_can_write_tuple (filename, decoder) &&
+         ! tuple.is_set (Tuple::StartTime);
+
         tuple.delete_fallbacks ();
-        s_infowin->fillInfo (playlist, entry, filename, tuple, decoder,
-            aud_file_can_write_tuple (filename, decoder));
+        s_infowin->fillInfo (playlist, entry, filename, tuple, decoder, can_write);
     }
     else
         aud_ui_show_error (str_printf (_("No info available for %s.\n"),
