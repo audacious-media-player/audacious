@@ -9,6 +9,7 @@ SRCS = adder.cc \
        audstrings.cc \
        charset.cc \
        config.cc \
+       cue-cache.cc \
        drct.cc \
        effect.cc \
        equalizer.cc \

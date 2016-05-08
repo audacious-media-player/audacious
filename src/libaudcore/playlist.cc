@@ -505,9 +505,9 @@ static void scan_queue_entry (PlaylistData * playlist, Entry * entry, bool for_p
     if (for_playback)
         flags |= (SCAN_IMAGE | SCAN_FILE);
 
-    auto request = new ScanRequest (entry->filename, flags, scan_finish, entry->decoder);
-    if (! (flags & SCAN_TUPLE))
-        request->tuple = entry->tuple.ref (); // scanner needs the Tuple::AudioFile
+    /* scanner uses Tuple::AudioFile from existing tuple, if valid */
+    auto request = new ScanRequest (entry->filename, flags, scan_finish,
+     entry->decoder, (flags & SCAN_TUPLE) ? Tuple () : entry->tuple.ref ());
 
     scan_list.append (new ScanItem (playlist, entry, request, for_playback));
 
@@ -2229,7 +2229,7 @@ DecodeInfo playback_entry_read (int serial)
         item->handled_by_playback = true;
 
         LEAVE;
-        scanner_run (request);
+        request->run ();
         ENTER;
 
         if ((entry = get_playback_entry (serial)))
