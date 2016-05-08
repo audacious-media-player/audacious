@@ -781,6 +781,8 @@ void playlist_end ()
     hook_dissociate ("set metadata_fallbacks", (HookFunction) playlist_reformat_titles);
     hook_dissociate ("set show_numbers_in_pl", (HookFunction) playlist_reformat_titles);
 
+    playlist_cache_clear ();
+
     ENTER;
 
     /* playback should already be stopped */

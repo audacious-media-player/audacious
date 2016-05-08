@@ -53,6 +53,10 @@ bool playlist_next_song (int playlist, bool repeat);
 DecodeInfo playback_entry_read (int serial);
 void playback_entry_set_tuple (int serial, Tuple && tuple);
 
+/* playlist-cache.cc */
+void playlist_cache_load (Index<PlaylistAddItem> & items);
+void playlist_cache_clear ();
+
 /* playlist-files.cc */
 bool playlist_load (const char * filename, String & title, Index<PlaylistAddItem> & items);
 bool playlist_insert_playlist_raw (int list, int at, const char * filename);

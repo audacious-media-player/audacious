@@ -427,6 +427,8 @@ static void * add_worker (void * unused)
         current_playlist_id = task->playlist_id;
         pthread_mutex_unlock (& mutex);
 
+        playlist_cache_load (task->items);
+
         AddResult * result = new AddResult ();
 
         result->playlist_id = task->playlist_id;

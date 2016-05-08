@@ -380,6 +380,10 @@ void aud_playlist_remove_failed (int playlist);
  * create a blank tuple and set its title field to "^A". */
 void aud_playlist_select_by_patterns (int playlist, const Tuple & patterns);
 
+/* Saves metadata for the selected entries in a playlist to an internal cache,
+ * which is used to speed up adding these entries to another playlist. */
+void aud_playlist_cache_selected (int playlist);
+
 /* Returns true if <filename> refers to a playlist file. */
 bool aud_filename_is_playlist (const char * filename);
 

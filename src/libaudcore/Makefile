@@ -28,6 +28,7 @@ SRCS = adder.cc \
        output.cc \
        playback.cc \
        playlist.cc \
+       playlist-cache.cc \
        playlist-files.cc \
        playlist-utils.cc \
        plugin-init.cc \
