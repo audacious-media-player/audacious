@@ -139,7 +139,7 @@ EXPORT void StringBuf::resize (int len)
     }
 }
 
-EXPORT StringBuf::~StringBuf ()
+EXPORT StringBuf::~StringBuf () noexcept (false)
 {
     if (m_data)
     {

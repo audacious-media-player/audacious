@@ -250,7 +250,7 @@ public:
     }
 
     // only allowed for top (or null) string
-    ~StringBuf ();
+    ~StringBuf () noexcept (false);
 
     // only allowed for top (or null) string
     void resize (int size);
