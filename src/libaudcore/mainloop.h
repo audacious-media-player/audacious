@@ -62,6 +62,9 @@ public:
         { stop (); }
 
 private:
+#ifdef __clang__
+    __attribute__ ((unused))
+#endif
     int serial = 0;  // no longer used, kept for ABI compatibility
     bool _running = false;
 
