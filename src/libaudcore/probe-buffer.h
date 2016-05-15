@@ -39,7 +39,7 @@
 class ProbeBuffer : public VFSImpl
 {
 public:
-    ProbeBuffer (const char * filename, SmartPtr<VFSImpl> && file);
+    ProbeBuffer (const char * filename, VFSImpl * file);
     ~ProbeBuffer ();
 
     int64_t fread (void * ptr, int64_t size, int64_t nmemb);

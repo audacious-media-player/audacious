@@ -37,7 +37,8 @@ enum VFSFileTest {
     VFS_IS_SYMLINK    = (1 << 1),
     VFS_IS_DIR        = (1 << 2),
     VFS_IS_EXECUTABLE = (1 << 3),
-    VFS_EXISTS        = (1 << 4)
+    VFS_EXISTS        = (1 << 4),
+    VFS_NO_ACCESS     = (1 << 5)
 };
 
 enum VFSSeekType {
@@ -100,6 +101,9 @@ public:
 
     VFSFile (const char * filename, const char * mode);
 
+    /* creates a temporary file (deleted when closed) */
+    static VFSFile tmpfile ();
+
     explicit operator bool () const
         { return (bool) m_impl; }
     const char * filename () const
@@ -120,15 +124,33 @@ public:
     int ftruncate (int64_t length) __attribute__ ((warn_unused_result));
     int fflush () __attribute__ ((warn_unused_result));
 
+    /* used to read e.g. ICY metadata */
     String get_metadata (const char * field);
 
-    void set_limit_to_buffer (bool limit);  // added in 3.7
+    /* the VFS layer buffers up to 256 KB of data at the beginning of files
+     * opened in read-only mode; this function disallows reading outside the
+     * buffered region (useful for probing the file type) */
+    void set_limit_to_buffer (bool limit);
 
     /* utility functions */
 
+    /* reads the entire file into memory (limited to 16 MB) */
     Index<char> read_all ();
 
-    static bool test_file (const char * path, VFSFileTest test);
+    /* reads data from another open file and appends it to this one */
+    bool copy_from (VFSFile & source, int64_t size = -1);
+
+    /* overwrites the entire file with the contents of another */
+    bool replace_with (VFSFile & source);
+
+    /* tests certain attributes of a file without opening it.
+     * the 2-argument version returns true if all requested tests passed.
+     * the 3-argument version returns a bitmask indicating which tests passed. */
+    static bool test_file (const char * filename, VFSFileTest test);
+    static VFSFileTest test_file (const char * filename, VFSFileTest test, String & error);
+
+    /* returns a sorted list of folder entries (as full URIs) */
+    static Index<String> read_folder (const char * filename, String & error);
 
 private:
     String m_filename, m_error;

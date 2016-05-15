@@ -23,31 +23,66 @@
 #define __STDC_FORMAT_MACROS
 #include <inttypes.h>
 #include <string.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <unistd.h>
-
-#include <glib/gstdio.h>
 
 #include "audstrings.h"
 #include "i18n.h"
+#include "internal.h"
 #include "plugin.h"
 #include "plugins-internal.h"
 #include "probe-buffer.h"
 #include "runtime.h"
 #include "vfs_local.h"
 
-static TransportPlugin * lookup_transport (const char * scheme)
+/* embedded plugins */
+static LocalTransport local_transport;
+static StdinTransport stdin_transport;
+
+static TransportPlugin * lookup_transport (const char * filename,
+ String & error, bool * custom_input = nullptr)
 {
+    StringBuf scheme = uri_get_scheme (filename);
+    if (! scheme)
+    {
+        AUDERR ("Invalid URI: %s\n", filename);
+        error = String (_("Invalid URI"));
+        return nullptr;
+    }
+
+    if (! strcmp (scheme, "file"))
+        return & local_transport;
+    if (! strcmp (scheme, "stdin"))
+        return & stdin_transport;
+
     for (PluginHandle * plugin : aud_plugin_list (PluginType::Transport))
     {
         if (! aud_plugin_get_enabled (plugin))
             continue;
 
         if (transport_plugin_has_scheme (plugin, scheme))
-            return (TransportPlugin *) aud_plugin_get_header (plugin);
+        {
+            auto tp = (TransportPlugin *) aud_plugin_get_header (plugin);
+            if (tp)
+                return tp;
+        }
     }
 
+    if (custom_input)
+    {
+        for (PluginHandle * plugin : aud_plugin_list (PluginType::Input))
+        {
+            if (! aud_plugin_get_enabled (plugin))
+                continue;
+
+            if (input_plugin_has_key (plugin, InputKey::Scheme, scheme))
+            {
+                * custom_input = true;
+                return nullptr;
+            }
+        }
+    }
+
+    AUDERR ("Unknown URI scheme: %s://\n", (const char *) scheme);
+    error = String (_("Unknown URI scheme"));
     return nullptr;
 }
 
@@ -61,44 +96,28 @@ static TransportPlugin * lookup_transport (const char * scheme)
  */
 EXPORT VFSFile::VFSFile (const char * filename, const char * mode)
 {
-    StringBuf scheme = uri_get_scheme (filename);
-    if (! scheme)
-    {
-        AUDERR ("Invalid URI: %s\n", filename);
-        m_error = String (_("Invalid URI"));
+    auto tp = lookup_transport (filename, m_error);
+    if (! tp)
         return;
-    }
 
-    const char * sub;
-    uri_parse (filename, nullptr, nullptr, & sub, nullptr);
-    StringBuf nosub = str_copy (filename, sub - filename);
-
-    if (! strcmp (scheme, "file"))
-        m_impl.capture (vfs_local_fopen (nosub, mode, m_error));
-    else if (! strcmp (scheme, "stdin"))
-        m_impl.capture (vfs_stdin_fopen (mode, m_error));
-    else
-    {
-        TransportPlugin * tp = lookup_transport (scheme);
-        if (! tp)
-        {
-            AUDERR ("Unknown URI scheme: %s://", (const char *) scheme);
-            m_error = String (_("Unknown URI scheme"));
-            return;
-        }
-
-        m_impl.capture (tp->fopen (nosub, mode, m_error));
-    }
-
-    if (! m_impl)
+    VFSImpl * impl = tp->fopen (strip_subtune (filename), mode, m_error);
+    if (! impl)
         return;
 
     /* enable buffering for read-only handles */
     if (mode[0] == 'r' && ! strchr (mode, '+'))
-        m_impl.capture (new ProbeBuffer (filename, std::move (m_impl)));
+        impl = new ProbeBuffer (filename, impl);
 
-    AUDINFO ("<%p> open (mode %s) %s\n", m_impl.get (), mode, filename);
+    AUDINFO ("<%p> open (mode %s) %s\n", impl, mode, filename);
     m_filename = String (filename);
+    m_impl.capture (impl);
+}
+
+EXPORT VFSFile VFSFile::tmpfile ()
+{
+    VFSFile file;
+    file.m_impl.capture (vfs_tmpfile (file.m_error));
+    return file;
 }
 
 /**
@@ -155,8 +174,8 @@ EXPORT int64_t VFSFile::fwrite (const void * ptr, int64_t size, int64_t nmemb)
 EXPORT int VFSFile::fseek (int64_t offset, VFSSeekType whence)
 {
     AUDDBG ("<%p> seek to %" PRId64 " from %s\n", m_impl.get (), offset,
-         whence == SEEK_CUR ? "current" : whence == SEEK_SET ? "beginning" :
-         whence == SEEK_END ? "end" : "invalid");
+     whence == VFS_SEEK_CUR ? "current" : whence == VFS_SEEK_SET ? "beginning" :
+     whence == VFS_SEEK_END ? "end" : "invalid");
 
     if (! m_impl->fseek (offset, whence))
         return 0;
@@ -303,54 +322,78 @@ EXPORT Index<char> VFSFile::read_all ()
     return buf;
 }
 
-/**
- * Wrapper for g_file_test().
- *
- * @param path A path to test.
- * @param test A GFileTest to run.
- * @return The result of g_file_test().
- */
-EXPORT bool VFSFile::test_file (const char * path, VFSFileTest test)
+EXPORT bool VFSFile::copy_from (VFSFile & source, int64_t size)
 {
-    if (strncmp (path, "file://", 7))
-        return false; /* only local files are handled */
+    constexpr int bufsize = 65536;
 
-    const char * sub;
-    uri_parse (path, nullptr, nullptr, & sub, nullptr);
+    Index<char> buf;
+    buf.resize (bufsize);
 
-    StringBuf no_sub = str_copy (path, sub - path);
+    while (size < 0 || size > 0)
+    {
+        int64_t to_read = (size > 0 && size < bufsize) ? size : bufsize;
+        int64_t readsize = source.fread (buf.begin (), 1, to_read);
 
-    StringBuf path2 = uri_to_filename (no_sub);
-    if (! path2)
+        if (size > 0)
+            size -= readsize;
+
+        if (fwrite (buf.begin (), 1, readsize) != readsize)
+            return false;
+
+        if (readsize < to_read)
+            break;
+    }
+
+    /* if a fixed size was requested, return true only if all the data was read.
+     * otherwise, return true only if the end of the source file was reached. */
+    return size == 0 || (size < 0 && source.feof ());
+}
+
+EXPORT bool VFSFile::replace_with (VFSFile & source)
+{
+    if (source.fseek (0, VFS_SEEK_SET) < 0)
         return false;
 
-#ifdef S_ISLNK
-    if (test & VFS_IS_SYMLINK)
-    {
-        GStatBuf st;
-        if (g_lstat (path2, & st) < 0)
-            return false;
+    if (fseek (0, VFS_SEEK_SET) < 0)
+        return false;
 
-        if (S_ISLNK (st.st_mode))
-            test = (VFSFileTest) (test & ~VFS_IS_SYMLINK);
-    }
-#endif
+    if (ftruncate (0) < 0)
+        return false;
 
-    if (test & (VFS_IS_REGULAR | VFS_IS_DIR | VFS_IS_EXECUTABLE | VFS_EXISTS))
-    {
-        GStatBuf st;
-        if (g_stat (path2, & st) < 0)
-            return false;
+    return copy_from (source, -1);
+}
 
-        if (S_ISREG (st.st_mode))
-            test = (VFSFileTest) (test & ~VFS_IS_REGULAR);
-        if (S_ISDIR (st.st_mode))
-            test = (VFSFileTest) (test & ~VFS_IS_DIR);
-        if (st.st_mode & S_IXUSR)
-            test = (VFSFileTest) (test & ~VFS_IS_EXECUTABLE);
+EXPORT bool VFSFile::test_file (const char * filename, VFSFileTest test)
+{
+    String error;  /* discarded */
+    return test_file (filename, test, error) == test;
+}
 
-        test = (VFSFileTest) (test & ~VFS_EXISTS);
-    }
+EXPORT VFSFileTest VFSFile::test_file (const char * filename, VFSFileTest test, String & error)
+{
+    bool custom_input = false;
+    auto tp = lookup_transport (filename, error, & custom_input);
 
-    return ! test;
+    /* for URI schemes handled by input plugins or older transport plugins
+     * (before Audacious 3.8), return 0, indicating that we have no way of
+     * testing file attributes */
+    if (custom_input || (tp && (tp->version & 0xffff) < 48))
+        return VFSFileTest (0);
+
+    /* for unsupported URI schemes, return VFS_NO_ACCESS */
+    if (! tp)
+        return VFSFileTest (test & VFS_NO_ACCESS);
+
+    return tp->test_file (strip_subtune (filename), test, error);
+}
+
+EXPORT Index<String> VFSFile::read_folder (const char * filename, String & error)
+{
+    auto tp = lookup_transport (filename, error);
+
+    /* read_folder() was added in Audacious 3.8 */
+    if (! tp || (tp->version & 0xffff) < 48)
+        return Index<String> ();
+
+    return tp->read_folder (filename, error);
 }

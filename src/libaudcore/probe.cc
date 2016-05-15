@@ -177,7 +177,7 @@ bool file_read_tag (const char * filename, PluginHandle * decoder,
     bool success;
 
     /* read_tag() was added in 3.7 */
-    if (ip->version >= 47)
+    if ((ip->version & 0xffff) >= 47)
         success = ip->read_tag (filename, file, tuple, image);
     else
         success = ip->default_read_tag (filename, file, tuple, image);

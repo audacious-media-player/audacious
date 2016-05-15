@@ -29,7 +29,7 @@ enum class StartupType {
     Unknown
 };
 
-StartupType dbus_server_init ();
+StartupType dbus_server_init (bool new_instance);
 void dbus_server_cleanup ();
 
 #endif

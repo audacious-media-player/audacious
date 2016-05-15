@@ -1,6 +1,6 @@
 SHARED_LIB = ${LIB_PREFIX}audcore${LIB_SUFFIX}
 LIB_MAJOR = 3
-LIB_MINOR = 1
+LIB_MINOR = 2
 
 SRCS = adder.cc \
        art.cc \
@@ -9,6 +9,7 @@ SRCS = adder.cc \
        audstrings.cc \
        charset.cc \
        config.cc \
+       cue-cache.cc \
        drct.cc \
        effect.cc \
        equalizer.cc \
@@ -27,6 +28,7 @@ SRCS = adder.cc \
        output.cc \
        playback.cc \
        playlist.cc \
+       playlist-cache.cc \
        playlist-files.cc \
        playlist-utils.cc \
        plugin-init.cc \
@@ -89,7 +91,7 @@ CPPFLAGS := -I.. -I../.. \
             ${CPPFLAGS} \
             ${GLIB_CFLAGS} \
             ${GMODULE_CFLAGS} \
-            ${QT_CFLAGS} \
+            ${QTCORE_CFLAGS} \
             -DHARDCODE_BINDIR=\"${bindir}\" \
             -DHARDCODE_DATADIR=\"${datadir}/audacious\" \
             -DHARDCODE_PLUGINDIR=\"${plugindir}\" \
@@ -103,4 +105,4 @@ LIBS := ../libguess/libguess.a \
         ${LIBS} -lm \
         ${GLIB_LIBS} \
         ${GMODULE_LIBS} \
-        ${QT_LIBS}
+        ${QTCORE_LIBS}

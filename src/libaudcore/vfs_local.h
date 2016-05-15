@@ -20,9 +20,26 @@
 #ifndef LIBAUDCORE_VFS_LOCAL_H
 #define LIBAUDCORE_VFS_LOCAL_H
 
-#include "vfs.h"
+#include "plugin.h"
 
-VFSImpl * vfs_local_fopen (const char * uri, const char * mode, String & error);
-VFSImpl * vfs_stdin_fopen (const char * mode, String & error);
+class LocalTransport : public TransportPlugin
+{
+public:
+    constexpr LocalTransport () : TransportPlugin (PluginInfo (), nullptr) {}
+
+    VFSImpl * fopen (const char * filename, const char * mode, String & error);
+    VFSFileTest test_file (const char * filename, VFSFileTest test, String & error);
+    Index<String> read_folder (const char * filename, String & error);
+};
+
+class StdinTransport : public TransportPlugin
+{
+public:
+    constexpr StdinTransport () : TransportPlugin (PluginInfo (), nullptr) {}
+
+    VFSImpl * fopen (const char * filename, const char * mode, String & error);
+};
+
+VFSImpl * vfs_tmpfile (String & error);
 
 #endif /* LIBAUDCORE_VFS_LOCAL_H */

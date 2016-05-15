@@ -59,7 +59,7 @@ bool playlist_load (const char * filename, String & title, Index<PlaylistAddItem
             AUDINFO ("Trying playlist plugin %s.\n", aud_plugin_get_name (plugin));
             plugin_found = true;
 
-            PlaylistPlugin * pp = (PlaylistPlugin *) aud_plugin_get_header (plugin);
+            auto pp = (PlaylistPlugin *) aud_plugin_get_header (plugin);
             if (! pp)
                 continue;
 

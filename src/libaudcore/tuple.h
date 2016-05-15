@@ -30,6 +30,7 @@
 
 struct ReplayGainInfo;
 struct TupleData;
+class PluginHandle;
 class VFSFile;
 
 class Tuple
@@ -69,8 +70,8 @@ public:
         Subtune,      /* Index number of subtune */
         NumSubtunes,  /* Total number of subtunes in the file */
 
-        StartTime,
-        EndTime,
+        StartTime,    /* Playback start point (used for cuesheets) */
+        EndTime,      /* Playback end point (used for cuesheets) */
 
         /* Preserving replay gain information accurately is a challenge since there
          * are several differents formats around.  We use an integer fraction, with
@@ -88,10 +89,14 @@ public:
         /* Title formatted for display; input plugins do not need to set this field */
         FormattedTitle,
 
+        /* URI of audio file, if different from the primary URI (e.g. for a
+         * cuesheet entry, where the primary URI points to the .cue file) */
+        AudioFile,
+
         n_fields
     };
 
-    typedef aud::range<Field, Title, FormattedTitle> all_fields;
+    typedef aud::range<Field, Field (0), Field (n_fields - 1)> all_fields;
 
     enum ValueType {
         String,
@@ -211,11 +216,14 @@ private:
 };
 
 /* somewhat out of place here */
-class PluginHandle;
-struct PlaylistAddItem {
+struct PlaylistAddItem
+{
     String filename;
     Tuple tuple;
     PluginHandle * decoder;
+
+    PlaylistAddItem copy () const
+        { return {filename, tuple.ref (), decoder}; }
 };
 
 #endif /* LIBAUDCORE_TUPLE_H */

@@ -43,6 +43,7 @@
 #include "hook.h"
 #include "internal.h"
 #include "mainloop.h"
+#include "output.h"
 #include "playlist-internal.h"
 #include "plugins-internal.h"
 #include "scanner.h"
@@ -64,6 +65,7 @@
 size_t misc_bytes_allocated;
 
 static bool headless_mode;
+static int instance_number = 1;
 
 #if defined(USE_QT) && ! defined(USE_GTK)
 static MainloopType mainloop_type = MainloopType::Qt;
@@ -74,24 +76,19 @@ static MainloopType mainloop_type = MainloopType::GLib;
 static aud::array<AudPath, String> aud_paths;
 
 EXPORT void aud_set_headless_mode (bool headless)
-{
-    headless_mode = headless;
-}
-
+    { headless_mode = headless; }
 EXPORT bool aud_get_headless_mode ()
-{
-    return headless_mode;
-}
+    { return headless_mode; }
+
+EXPORT void aud_set_instance (int instance)
+    { instance_number = instance; }
+EXPORT int aud_get_instance ()
+    { return instance_number; }
 
 EXPORT void aud_set_mainloop_type (MainloopType type)
-{
-    mainloop_type = type;
-}
-
+    { mainloop_type = type; }
 EXPORT MainloopType aud_get_mainloop_type ()
-{
-    return mainloop_type;
-}
+    { return mainloop_type; }
 
 static StringBuf get_path_to_self ()
 {
@@ -180,7 +177,7 @@ static void set_default_paths ()
     aud_paths[AudPath::IconFile] = String (HARDCODE_ICONFILE);
 }
 
-static void relocate_all_paths ()
+static void set_install_paths ()
 {
     StringBuf bindir = filename_normalize (str_copy (HARDCODE_BINDIR));
     StringBuf datadir = filename_normalize (str_copy (HARDCODE_DATADIR));
@@ -236,17 +233,16 @@ static void relocate_all_paths ()
     aud_paths[AudPath::IconFile] = relocate_path (iconfile, from, to);
 }
 
-EXPORT void aud_init_paths ()
+static void set_config_paths ()
 {
-    relocate_all_paths ();
-
     const char * xdg_config_home = g_get_user_config_dir ();
+    StringBuf name = (instance_number == 1) ? str_copy ("audacious") :
+                     str_printf ("audacious-%d", instance_number);
 
-    aud_paths[AudPath::UserDir] = String (filename_build ({xdg_config_home, "audacious"}));
+    aud_paths[AudPath::UserDir] = String (filename_build ({xdg_config_home, name}));
     aud_paths[AudPath::PlaylistDir] = String (filename_build
      ({aud_paths[AudPath::UserDir], "playlists"}));
 
-    /* create ~/.config/audacious/playlists */
     if (g_mkdir_with_parents (aud_paths[AudPath::PlaylistDir], DIRMODE) < 0)
         AUDERR ("Failed to create %s: %s\n",
          (const char *) aud_paths[AudPath::PlaylistDir], strerror (errno));
@@ -260,14 +256,20 @@ EXPORT void aud_init_paths ()
 #endif
 }
 
-EXPORT void aud_cleanup_paths ()
-{
-    for (String & path : aud_paths)
-        path = String ();
-}
+// no longer needed in Audacious 3.8+
+EXPORT void aud_init_paths () {}
+EXPORT void aud_cleanup_paths () {}
 
 EXPORT const char * aud_get_path (AudPath id)
 {
+    if (! aud_paths[id])
+    {
+        if (id <= AudPath::IconFile)
+            set_install_paths ();
+        else
+            set_config_paths ();
+    }
+
     return aud_paths[id];
 }
 
@@ -291,6 +293,7 @@ EXPORT void aud_init ()
 
     chardet_init ();
     eq_init ();
+    output_init ();
     playlist_init ();
 
     start_plugins_one ();
@@ -343,6 +346,7 @@ EXPORT void aud_cleanup ()
     art_cleanup ();
     chardet_cleanup ();
     eq_cleanup ();
+    output_cleanup ();
     playlist_end ();
 
     event_queue_cancel_all ();
@@ -355,6 +359,9 @@ EXPORT void aud_cleanup ()
 
 EXPORT void aud_leak_check ()
 {
+    for (String & path : aud_paths)
+        path = String ();
+
     string_leak_check ();
 
     if (misc_bytes_allocated)

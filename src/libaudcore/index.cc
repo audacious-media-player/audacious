@@ -1,6 +1,6 @@
 /*
  * index.cc
- * Copyright 2014 John Lindgren
+ * Copyright 2014-2016 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -192,5 +192,28 @@ EXPORT void IndexBase::move_from (IndexBase & b, int from, int to, int len,
 
 EXPORT void IndexBase::sort (CompareFunc compare, int elemsize, void * userdata)
 {
+    // since we require GLib >= 2.32, g_qsort_with_data performs a stable sort
     g_qsort_with_data (m_data, m_len / elemsize, elemsize, compare, userdata);
+}
+
+EXPORT int IndexBase::bsearch (const void * key, CompareFunc compare,
+ int elemsize, void * userdata) const
+{
+    int top = 0;
+    int bottom = m_len / elemsize;
+
+    while (top < bottom)
+    {
+        int middle = top + (bottom - top) / 2;
+        int match = compare (key, (char *) m_data + middle * elemsize, userdata);
+
+        if (match < 0)
+            bottom = middle;
+        else if (match > 0)
+            top = middle + 1;
+        else
+            return middle;
+    }
+
+    return -1;
 }

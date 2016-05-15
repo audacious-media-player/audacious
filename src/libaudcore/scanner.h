@@ -1,6 +1,6 @@
 /*
  * scanner.h
- * Copyright 2012 John Lindgren
+ * Copyright 2012-2016 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -20,7 +20,9 @@
 #ifndef LIBAUDCORE_SCANNER_H
 #define LIBAUDCORE_SCANNER_H
 
+#include "cue-cache.h"
 #include "index.h"
+#include "objects.h"
 #include "tuple.h"
 #include "vfs.h"
 
@@ -37,26 +39,29 @@ struct ScanRequest
 {
     typedef void (* Callback) (ScanRequest * request);
 
-    ScanRequest (const String & filename, int flags, Callback callback,
-     PluginHandle * decoder = nullptr) :
-        filename (filename),
-        flags (flags),
-        callback (callback),
-        decoder (decoder),
-        ip (nullptr) {}
-
     const String filename;
     const int flags;
     const Callback callback;
 
     PluginHandle * decoder;
+    Tuple tuple;
+
     InputPlugin * ip;
     VFSFile file;
 
-    Tuple tuple;
     Index<char> image_data;
     String image_file;
     String error;
+
+    ScanRequest (const String & filename, int flags, Callback callback,
+     PluginHandle * decoder = nullptr, Tuple && tuple = Tuple ());
+
+    void run ();
+
+private:
+    SmartPtr<CueCacheRef> cue_cache;
+
+    void read_cuesheet_entry ();
 };
 
 void scanner_init ();

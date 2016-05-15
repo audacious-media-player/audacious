@@ -131,6 +131,13 @@ static const ComboItem bitdepth_elements[] = {
     ComboItem (N_("Floating point"), 0)
 };
 
+static const ComboItem record_elements[] = {
+    ComboItem (N_("As decoded"), (int) OutputStream::AsDecoded),
+    ComboItem (N_("After applying Replay Gain"), (int) OutputStream::AfterReplayGain),
+    ComboItem (N_("After applying effects"), (int) OutputStream::AfterEffects),
+    ComboItem (N_("After applying equalization"), (int) OutputStream::AfterEqualizer)
+};
+
 static Index<ComboItem> iface_combo_elements;
 static int iface_combo_selected;
 static GtkWidget * iface_prefs_box;
@@ -199,13 +206,17 @@ static const PreferencesWidget audio_page_widgets[] = {
     WidgetSpin (N_("Buffer size:"),
         WidgetInt (0, "output_buffer_size"),
         {100, 10000, 1000, N_("ms")}),
-    WidgetCustomGTK (record_create_checkbox),
-    WidgetBox ({{record_buttons}, true},
-        WIDGET_CHILD),
     WidgetCheck (N_("Soft clipping"),
         WidgetBool (0, "soft_clipping")),
     WidgetCheck (N_("Use software volume control (not recommended)"),
         WidgetBool (0, "software_volume_control")),
+    WidgetLabel (N_("<b>Recording Settings</b>")),
+    WidgetCustomGTK (record_create_checkbox),
+    WidgetBox ({{record_buttons}, true},
+        WIDGET_CHILD),
+    WidgetCombo (N_("Record stream:"),
+        WidgetInt (0, "record_stream"),
+        {{record_elements}}),
     WidgetLabel (N_("<b>Replay Gain</b>")),
     WidgetCheck (N_("Enable Replay Gain"),
         WidgetBool (0, "enable_replay_gain")),
@@ -214,8 +225,6 @@ static const PreferencesWidget audio_page_widgets[] = {
         WIDGET_CHILD),
     WidgetCheck (N_("Prevent clipping (recommended)"),
         WidgetBool (0, "enable_clipping_prevention"),
-        WIDGET_CHILD),
-    WidgetLabel (N_("<b>Adjust Levels</b>"),
         WIDGET_CHILD),
     WidgetTable ({{gain_table}},
         WIDGET_CHILD)

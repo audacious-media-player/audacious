@@ -71,6 +71,7 @@ static const char * const core_defaults[] = {
  "enable_clipping_prevention", "TRUE",
  "output_bit_depth", "16",
  "output_buffer_size", "500",
+ "record_stream", aud::numeric_string<(int) OutputStream::AfterReplayGain>::str,
  "replay_gain_album", "FALSE",
  "replay_gain_preamp", "0",
  "soft_clipping", "FALSE",
@@ -134,7 +135,7 @@ struct SaveState {
     Index<ConfigItem> list;
 };
 
-static int item_compare (const ConfigItem & a, const ConfigItem & b, void *)
+static int item_compare (const ConfigItem & a, const ConfigItem & b)
 {
     if (a.section == b.section)
         return strcmp (a.key, b.key);
@@ -283,7 +284,7 @@ void config_save ()
     SaveState state = SaveState ();
 
     config.iterate (add_to_save_list, & state);
-    state.list.sort (item_compare, nullptr);
+    state.list.sort (item_compare);
 
     StringBuf path = filename_to_uri (aud_get_path (AudPath::UserDir));
     path.insert (-1, "/config");

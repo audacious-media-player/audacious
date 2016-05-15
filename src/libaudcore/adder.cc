@@ -1,6 +1,6 @@
 /*
  * adder.c
- * Copyright 2011-2013 John Lindgren
+ * Copyright 2011-2016 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -21,10 +21,8 @@
 #include "internal.h"
 
 #include <pthread.h>
+#include <stdio.h>
 #include <string.h>
-#include <sys/stat.h>
-
-#include <glib/gstdio.h>
 
 #include "audstrings.h"
 #include "hook.h"
@@ -35,7 +33,17 @@
 #include "plugins-internal.h"
 #include "runtime.h"
 #include "tuple.h"
+#include "interface.h"
 #include "vfs.h"
+
+#ifdef _WIN32
+// regrettably, strcmp_nocase can't be used directly as a
+// callback for Index::sort due to taking a third argument
+static int filename_compare (const char * a, const char * b)
+	{ return strcmp_nocase (a, b); }
+#else
+#define filename_compare strcmp
+#endif
 
 struct AddTask : public ListNode
 {
@@ -114,52 +122,52 @@ static void status_done_locked ()
         hook_call ("ui hide progress", nullptr);
 }
 
-static void add_file (const char * filename, Tuple && tuple,
- PluginHandle * decoder, PlaylistFilterFunc filter, void * user,
- AddResult * result, bool validate)
+static void add_file (PlaylistAddItem && item, PlaylistFilterFunc filter,
+ void * user, AddResult * result, bool validate)
 {
-    if (filter && ! filter (filename, user))
-        return;
+    AUDINFO ("Adding file: %s\n", (const char *) item.filename);
+    status_update (item.filename, result->items.len ());
 
-    AUDINFO ("Adding file: %s\n", filename);
-    status_update (filename, result->items.len ());
-
-    if (! tuple)
+    /* If the item doesn't already have a valid tuple, and isn't a subtune
+     * itself, then probe it to expand any subtunes.  The "validate" check (used
+     * to skip non-audio files when adding folders) is also nested within this
+     * block; note that "validate" is always false for subtunes. */
+    if (! item.tuple && ! is_subtune (item.filename))
     {
         VFSFile file;
 
-        if (! decoder)
+        if (! item.decoder)
         {
             bool fast = ! aud_get_bool (nullptr, "slow_probe");
-            decoder = file_find_decoder (filename, fast, file);
-            if (validate && ! decoder)
+            item.decoder = file_find_decoder (item.filename, fast, file);
+            if (validate && ! item.decoder)
                 return;
         }
 
-        if (decoder && input_plugin_has_subtunes (decoder) && ! strchr (filename, '?'))
-            file_read_tag (filename, decoder, file, & tuple, nullptr);
+        if (item.decoder && input_plugin_has_subtunes (item.decoder))
+            file_read_tag (item.filename, item.decoder, file, & item.tuple, nullptr);
     }
 
-    int n_subtunes = tuple.get_n_subtunes ();
+    int n_subtunes = item.tuple.get_n_subtunes ();
 
     if (n_subtunes)
     {
         for (int sub = 0; sub < n_subtunes; sub ++)
         {
-            StringBuf subname = str_printf ("%s?%d", filename, tuple.get_nth_subtune (sub));
-            add_file (subname, Tuple (), decoder, filter, user, result, false);
+            StringBuf subname = str_printf ("%s?%d",
+             (const char *) item.filename, item.tuple.get_nth_subtune (sub));
+
+            if (! filter || filter (subname, user))
+                add_file ({String (subname), Tuple (), item.decoder}, filter, user, result, false);
         }
     }
     else
-        result->items.append (String (filename), std::move (tuple), decoder);
+        result->items.append (std::move (item));
 }
 
 static void add_playlist (const char * filename, PlaylistFilterFunc filter,
  void * user, AddResult * result, bool is_single)
 {
-    if (filter && ! filter (filename, user))
-        return;
-
     AUDINFO ("Adding playlist: %s\n", filename);
     status_update (filename, result->items.len ());
 
@@ -173,99 +181,140 @@ static void add_playlist (const char * filename, PlaylistFilterFunc filter,
         result->title = title;
 
     for (auto & item : items)
-        add_file (item.filename, std::move (item.tuple), nullptr, filter, user, result, false);
+    {
+        if (! filter || filter (item.filename, user))
+            add_file (std::move (item), filter, user, result, false);
+    }
+}
+
+static void add_cuesheets (Index<String> & files, PlaylistFilterFunc filter,
+ void * user, AddResult * result)
+{
+    Index<String> cuesheets;
+
+    for (int i = 0; i < files.len ();)
+    {
+        if (str_has_suffix_nocase (files[i], ".cue"))
+            cuesheets.move_from (files, i, -1, 1, true, true);
+        else
+            i ++;
+    }
+
+    if (! cuesheets.len ())
+        return;
+
+    // sort cuesheet list in natural order
+    cuesheets.sort (str_compare_encoded);
+
+    // sort file list in system-dependent order for duplicate removal
+    files.sort (filename_compare);
+
+    for (String & cuesheet : cuesheets)
+    {
+        AUDINFO ("Adding cuesheet: %s\n", (const char *) cuesheet);
+        status_update (cuesheet, result->items.len ());
+
+        String title; // ignored
+        Index<PlaylistAddItem> items;
+
+        if (! playlist_load (cuesheet, title, items))
+            continue;
+
+        StringBuf prev_filename;
+        for (auto & item : items)
+        {
+            if (! filter || filter (item.filename, user))
+                add_file (std::move (item), filter, user, result, false);
+
+            // remove duplicates from file list
+            StringBuf filename = strip_subtune (item.filename);
+            if (prev_filename && ! filename_compare (filename, prev_filename))
+                continue;
+
+            int idx = files.bsearch ((const char *) filename, filename_compare);
+            if (idx >= 0)
+                files.remove (idx, 1);
+
+            prev_filename.steal (std::move (filename));
+        }
+    }
 }
 
 static void add_folder (const char * filename, PlaylistFilterFunc filter,
  void * user, AddResult * result, bool is_single)
 {
-    Index<String> cuesheets, files;
-    GDir * folder;
-
-    if (filter && ! filter (filename, user))
-        return;
-
     AUDINFO ("Adding folder: %s\n", filename);
     status_update (filename, result->items.len ());
 
-    StringBuf path = uri_to_filename (filename);
-    if (! path)
-        return;
+    String error;
+    Index<String> files = VFSFile::read_folder (filename, error);
 
-    if (! (folder = g_dir_open (path, 0, nullptr)))
-        return;
-
-    const char * name;
-    while ((name = g_dir_read_name (folder)))
-    {
-        if (str_has_suffix_nocase (name, ".cue"))
-            cuesheets.append (name);
-        else
-            files.append (name);
-    }
-
-    g_dir_close (folder);
-
-    for (const char * cuesheet : cuesheets)
-    {
-        AUDINFO ("Found cuesheet: %s\n", cuesheet);
-
-        auto is_match = [=] (const char * name)
-            { return same_basename (name, cuesheet); };
-
-        files.remove_if (is_match);
-    }
-
-    files.move_from (cuesheets, 0, -1, -1, true, true);
+    if (error)
+        aud_ui_show_error (str_printf (_("Error reading %s:\n%s"), filename, (const char *) error));
 
     if (! files.len ())
         return;
 
     if (is_single)
     {
-        const char * last = last_path_element (path);
-        result->title = String (last ? last : path);
+        const char * slash = strrchr (filename, '/');
+        if (slash)
+            result->title = String (str_decode_percent (slash + 1));
     }
 
-    auto compare_wrapper = [] (const String & a, const String & b, void *)
-        { return str_compare (a, b); };
+    add_cuesheets (files, filter, user, result);
 
-    files.sort (compare_wrapper, nullptr);
+    // sort file list in natural order (must come after add_cuesheets)
+    files.sort (str_compare_encoded);
 
-    for (const char * name : files)
+    for (const char * file : files)
     {
-        StringBuf filepath = filename_build ({path, name});
-        StringBuf uri = filename_to_uri (filepath);
-        if (! uri)
+        if (filter && ! filter (file, user))
             continue;
 
-        GStatBuf info;
-        if (g_lstat (filepath, & info) < 0)
+        String error;
+        VFSFileTest mode = VFSFile::test_file (file,
+         VFSFileTest (VFS_IS_REGULAR | VFS_IS_SYMLINK | VFS_IS_DIR), error);
+
+        if (error)
+            AUDERR ("%s: %s\n", file, (const char *) error);
+
+        if (mode & VFS_IS_SYMLINK)
             continue;
 
-        if (S_ISREG (info.st_mode))
-        {
-            if (str_has_suffix_nocase (name, ".cue"))
-                add_playlist (uri, filter, user, result, false);
-            else
-                add_file (uri, Tuple (), nullptr, filter, user, result, true);
-        }
-        else if (S_ISDIR (info.st_mode))
-            add_folder (uri, filter, user, result, false);
+        if (mode & VFS_IS_REGULAR)
+            add_file ({String (file)}, filter, user, result, true);
+        else if (mode & VFS_IS_DIR)
+            add_folder (file, filter, user, result, false);
     }
 }
 
-static void add_generic (const char * filename, Tuple && tuple,
- PlaylistFilterFunc filter, void * user, AddResult * result, bool is_single)
+static void add_generic (PlaylistAddItem && item, PlaylistFilterFunc filter,
+ void * user, AddResult * result, bool is_single)
 {
-    if (tuple)
-        add_file (filename, std::move (tuple), nullptr, filter, user, result, false);
-    else if (VFSFile::test_file (filename, VFS_IS_DIR))
-        add_folder (filename, filter, user, result, is_single);
-    else if (aud_filename_is_playlist (filename))
-        add_playlist (filename, filter, user, result, is_single);
+    if (filter && ! filter (item.filename, user))
+        return;
+
+    /* If the item has a valid tuple or known decoder, or it's a subtune, then
+     * assume it's a playable file and skip some checks. */
+    if (item.tuple || item.decoder || is_subtune (item.filename))
+        add_file (std::move (item), filter, user, result, false);
     else
-        add_file (filename, Tuple (), nullptr, filter, user, result, false);
+    {
+        String error;
+        VFSFileTest mode = VFSFile::test_file (item.filename,
+         VFSFileTest (VFS_IS_DIR | VFS_NO_ACCESS), error);
+
+        if (mode & VFS_NO_ACCESS)
+            aud_ui_show_error (str_printf (_("Error reading %s:\n%s"),
+             (const char *) item.filename, (const char *) error));
+        else if (mode & VFS_IS_DIR)
+            add_folder (item.filename, filter, user, result, is_single);
+        else if (aud_filename_is_playlist (item.filename))
+            add_playlist (item.filename, filter, user, result, is_single);
+        else
+            add_file (std::move (item), filter, user, result, false);
+    }
 }
 
 static void start_thread_locked ()
@@ -308,9 +357,20 @@ static void add_finish (void * unused)
 
         int playlist, count;
 
+        if (! result->items.len ()) /* add failed */
+            goto FREE;
+
         playlist = aud_playlist_by_unique_id (result->playlist_id);
         if (playlist < 0) /* playlist deleted */
             goto FREE;
+
+        if (result->play)
+        {
+            if (aud_get_bool (nullptr, "clear_playlist"))
+                aud_playlist_entry_delete (playlist, 0, aud_playlist_entry_count (playlist));
+            else
+                aud_playlist_queue_delete (playlist, 0, aud_playlist_queue_count (playlist));
+        }
 
         count = aud_playlist_entry_count (playlist);
         if (result->at < 0 || result->at > count)
@@ -330,7 +390,7 @@ static void add_finish (void * unused)
         playlist_enable_scan (false);
         playlist_entry_insert_batch_raw (playlist, result->at, std::move (result->items));
 
-        if (result->play && aud_playlist_entry_count (playlist) > count)
+        if (result->play)
         {
             if (! aud_get_bool (0, "shuffle"))
                 aud_playlist_set_position (playlist, result->at);
@@ -367,6 +427,8 @@ static void * add_worker (void * unused)
         current_playlist_id = task->playlist_id;
         pthread_mutex_unlock (& mutex);
 
+        playlist_cache_load (task->items);
+
         AddResult * result = new AddResult ();
 
         result->playlist_id = task->playlist_id;
@@ -376,8 +438,7 @@ static void * add_worker (void * unused)
         bool is_single = (task->items.len () == 1);
 
         for (auto & item : task->items)
-            add_generic (item.filename, std::move (item.tuple), task->filter,
-             task->user, result, is_single);
+            add_generic (std::move (item), task->filter, task->user, result, is_single);
 
         delete task;
 

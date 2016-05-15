@@ -43,24 +43,18 @@ namespace audqt {
 class QueueManagerModel : public QAbstractListModel
 {
 public:
-    QueueManagerModel (QObject * parent = nullptr) : QAbstractListModel (parent) {}
+    void update (QItemSelectionModel * sel);
+    void selectionChanged (const QItemSelection & selected, const QItemSelection & deselected);
 
-    int rowCount (const QModelIndex & parent = QModelIndex ()) const;
-    int columnCount (const QModelIndex & parent = QModelIndex ()) const;
-    QVariant data (const QModelIndex & index, int role = Qt::DisplayRole) const;
+protected:
+    int rowCount (const QModelIndex & parent) const { return m_rows; }
+    int columnCount (const QModelIndex & parent) const { return 2; }
+    QVariant data (const QModelIndex & index, int role) const;
 
-    void reset ();
+private:
+    int m_rows = 0;
+    bool m_in_update = false;
 };
-
-int QueueManagerModel::rowCount (const QModelIndex & parent) const
-{
-    return aud_playlist_queue_count (aud_playlist_get_active ());
-}
-
-int QueueManagerModel::columnCount (const QModelIndex & parent) const
-{
-    return 2;
-}
 
 QVariant QueueManagerModel::data (const QModelIndex & index, int role) const
 {
@@ -83,10 +77,60 @@ QVariant QueueManagerModel::data (const QModelIndex & index, int role) const
     return QVariant ();
 }
 
-void QueueManagerModel::reset ()
+void QueueManagerModel::update (QItemSelectionModel * sel)
 {
-    beginResetModel ();
-    endResetModel ();
+    int list = aud_playlist_get_active ();
+    int rows = aud_playlist_queue_count (list);
+    int keep = aud::min (rows, m_rows);
+
+    m_in_update = true;
+
+    if (rows < m_rows)
+    {
+        beginRemoveRows (QModelIndex (), rows, m_rows - 1);
+        m_rows = rows;
+        endRemoveRows ();
+    }
+    else if (rows > m_rows)
+    {
+        beginInsertRows (QModelIndex (), m_rows, rows - 1);
+        m_rows = rows;
+        endInsertRows ();
+    }
+
+    if (keep > 0)
+    {
+        auto topLeft = createIndex (0, 0);
+        auto bottomRight = createIndex (keep - 1, 0);
+        emit dataChanged (topLeft, bottomRight);
+    }
+
+    for (int i = 0; i < rows; i ++)
+    {
+        if (aud_playlist_entry_get_selected (list, aud_playlist_queue_get_entry (list, i)))
+            sel->select (createIndex (i, 0), sel->Select | sel->Rows);
+        else
+            sel->select (createIndex (i, 0), sel->Deselect | sel->Rows);
+    }
+
+    m_in_update = false;
+}
+
+void QueueManagerModel::selectionChanged (const QItemSelection & selected,
+ const QItemSelection & deselected)
+{
+    if (m_in_update)
+        return;
+
+    int list = aud_playlist_get_active ();
+
+    for (auto & index : selected.indexes ())
+        aud_playlist_entry_set_selected (list,
+         aud_playlist_queue_get_entry (list, index.row ()), true);
+
+    for (auto & index : deselected.indexes ())
+        aud_playlist_entry_set_selected (list,
+         aud_playlist_queue_get_entry (list, index.row ()), false);
 }
 
 class QueueManagerDialog : public QDialog
@@ -102,13 +146,12 @@ private:
     QPushButton m_btn_close;
     QueueManagerModel m_model;
 
-    void update (Playlist::UpdateLevel level);
     void removeSelected ();
+    void update () { m_model.update (m_treeview.selectionModel ()); }
 
-    const HookReceiver<QueueManagerDialog, Playlist::UpdateLevel>
-     update_hook {"playlist update", this, & QueueManagerDialog::update};
-    const HookReceiver<QueueManagerModel>
-     activate_hook {"playlist activate", & m_model, & QueueManagerModel::reset};
+    const HookReceiver<QueueManagerDialog>
+     update_hook {"playlist update", this, & QueueManagerDialog::update},
+     activate_hook {"playlist activate", this, & QueueManagerDialog::update};
 };
 
 QueueManagerDialog::QueueManagerDialog (QWidget * parent) :
@@ -134,25 +177,13 @@ QueueManagerDialog::QueueManagerDialog (QWidget * parent) :
     setLayout (& m_layout);
     setWindowTitle (_("Queue Manager"));
 
-    QItemSelectionModel * model = m_treeview.selectionModel ();
-    connect (model, & QItemSelectionModel::selectionChanged, [=] (const QItemSelection & selected, const QItemSelection & deselected) {
-        int list = aud_playlist_get_active ();
+    update ();
 
-        for (auto & index : selected.indexes ())
-            aud_playlist_entry_set_selected (list, aud_playlist_queue_get_entry (list, index.row ()), true);
-
-        for (auto & index : deselected.indexes ())
-            aud_playlist_entry_set_selected (list, aud_playlist_queue_get_entry (list, index.row ()), false);
-    });
+    connect (m_treeview.selectionModel (),
+     & QItemSelectionModel::selectionChanged, & m_model,
+     & QueueManagerModel::selectionChanged);
 
     resize (500, 250);
-}
-
-void QueueManagerDialog::update (Playlist::UpdateLevel level)
-{
-    /* resetting the model due to selection updates causes breakage, so don't do it. */
-    if (level != Playlist::Selection)
-        m_model.reset ();
 }
 
 void QueueManagerDialog::removeSelected ()

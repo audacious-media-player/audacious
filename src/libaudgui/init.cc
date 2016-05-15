@@ -170,5 +170,4 @@ EXPORT void audgui_cleanup ()
 
     plugin_menu_cleanup ();
     plugin_prefs_cleanup ();
-    urilist_cleanup ();
 }

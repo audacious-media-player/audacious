@@ -381,7 +381,7 @@ static void read_all_frames (const Index<char> & data, int version, FrameDict & 
     }
 }
 
-static bool write_frame (int fd, const GenericFrame & frame, int version, int * frame_size)
+static bool write_frame (VFSFile & file, const GenericFrame & frame, int version, int * frame_size)
 {
     AUDDBG ("Writing frame %s, size %d\n", (const char *) frame.key, frame.len ());
 
@@ -396,10 +396,10 @@ static bool write_frame (int fd, const GenericFrame & frame, int version, int * 
     header.size = TO_BE32 (size);
     header.flags = 0;
 
-    if (write (fd, & header, sizeof (ID3v2FrameHeader)) != sizeof (ID3v2FrameHeader))
+    if (file.fwrite (& header, 1, sizeof (ID3v2FrameHeader)) != sizeof (ID3v2FrameHeader))
         return false;
 
-    if (write (fd, & frame[0], frame.len ()) != frame.len ())
+    if (file.fwrite (& frame[0], 1, frame.len ()) != frame.len ())
         return false;
 
     * frame_size = sizeof (ID3v2FrameHeader) + frame.len ();
@@ -407,7 +407,7 @@ static bool write_frame (int fd, const GenericFrame & frame, int version, int * 
 }
 
 struct WriteState {
-    int fd;
+    VFSFile & file;
     int version;
     int written_size;
 };
@@ -419,21 +419,21 @@ static void write_frame_list (const String & key, FrameList & list, void * user)
     for (const GenericFrame & frame : list)
     {
         int size;
-        if (write_frame (state->fd, frame, state->version, & size))
+        if (write_frame (state->file, frame, state->version, & size))
             state->written_size += size;
     }
 }
 
-static int write_all_frames (int fd, FrameDict & dict, int version)
+static int write_all_frames (VFSFile & file, FrameDict & dict, int version)
 {
-    WriteState state = {fd, version, 0};
+    WriteState state = {file, version, 0};
     dict.iterate (write_frame_list, & state);
 
     AUDDBG ("Total frame bytes written = %d.\n", state.written_size);
     return state.written_size;
 }
 
-static bool write_header (int fd, int version, int size)
+static bool write_header (VFSFile & file, int version, int size)
 {
     ID3v2Header header;
 
@@ -443,7 +443,7 @@ static bool write_header (int fd, int version, int size)
     header.flags = 0;
     header.size = TO_BE32 (syncsafe32 (size));
 
-    return write (fd, & header, sizeof (ID3v2Header)) == sizeof (ID3v2Header);
+    return file.fwrite (& header, 1, sizeof (ID3v2Header)) == sizeof (ID3v2Header);
 }
 
 static int get_frame_id (const char * key)
@@ -671,26 +671,26 @@ bool ID3v24TagModule::write_tag (VFSFile & f, const Tuple & tuple)
     int64_t mp3_offset = offset ? 0 : header_size + data_size + footer_size;
     int64_t mp3_size = offset ? offset : -1;
 
-    TempFile temp;
-    if (! temp.create ())
+    auto temp = VFSFile::tmpfile ();
+    if (! temp)
         return false;
 
     /* write empty header (will be overwritten later) */
-    if (! write_header (temp.fd (), version, 0))
+    if (! write_header (temp, version, 0))
         return false;
 
     /* write tag data */
-    data_size = write_all_frames (temp.fd (), dict, version);
+    data_size = write_all_frames (temp, dict, version);
 
     /* copy non-tag data */
-    if (! temp.copy_from (f, mp3_offset, mp3_size))
+    if (f.fseek (mp3_offset, VFS_SEEK_SET) < 0 || ! temp.copy_from (f, mp3_size))
         return false;
 
     /* go back to beginning and write real header */
-    if (lseek (temp.fd (), 0, SEEK_SET) < 0 || ! write_header (temp.fd (), version, data_size))
+    if (temp.fseek (0, VFS_SEEK_SET) < 0 || ! write_header (temp, version, data_size))
         return false;
 
-    if (! temp.replace (f))
+    if (! f.replace_with (temp))
         return false;
 
     return true;

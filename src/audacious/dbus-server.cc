@@ -17,10 +17,12 @@
  * the use of this software.
  */
 
+#include <libaudcore/audstrings.h>
 #include <libaudcore/drct.h>
 #include <libaudcore/equalizer.h>
 #include <libaudcore/interface.h>
 #include <libaudcore/playlist.h>
+#include <libaudcore/plugins.h>
 #include <libaudcore/runtime.h>
 #include <libaudcore/tuple.h>
 
@@ -347,6 +349,33 @@ static gboolean do_playqueue_remove (Obj * obj, Invoc * invoc, int pos)
     return true;
 }
 
+static gboolean do_plugin_enable (Obj * obj, Invoc * invoc, const char * name, gboolean enable)
+{
+    PluginHandle * plugin = aud_plugin_lookup_basename (name);
+    if (! plugin)
+    {
+        AUDERR ("No such plugin: %s\n", name);
+        return false;
+    }
+
+    aud_plugin_enable (plugin, enable);
+    FINISH (plugin_enable);
+    return true;
+}
+
+static gboolean do_plugin_is_enabled (Obj * obj, Invoc * invoc, const char * name)
+{
+    PluginHandle * plugin = aud_plugin_lookup_basename (name);
+    if (! plugin)
+    {
+        AUDERR ("No such plugin: %s\n", name);
+        return false;
+    }
+
+    FINISH2 (plugin_is_enabled, aud_plugin_get_enabled (plugin));
+    return true;
+}
+
 static gboolean do_position (Obj * obj, Invoc * invoc)
 {
     FINISH2 (position, aud_playlist_get_position (CURRENT));
@@ -369,6 +398,19 @@ static gboolean do_quit (Obj * obj, Invoc * invoc)
 {
     aud_quit ();
     FINISH (quit);
+    return true;
+}
+
+static gboolean do_record (Obj * obj, Invoc * invoc)
+{
+    aud_drct_enable_record (! aud_drct_get_record_enabled ());
+    FINISH (record);
+    return true;
+}
+
+static gboolean do_recording (Obj * obj, Invoc * invoc)
+{
+    FINISH2 (recording, aud_drct_get_record_enabled ());
     return true;
 }
 
@@ -583,6 +625,13 @@ static gboolean do_song_tuple (Obj * obj, Invoc * invoc, unsigned pos, const cha
     return true;
 }
 
+static gboolean do_startup_notify (Obj * obj, Invoc * invoc, const char * id)
+{
+    aud_ui_startup_notify (id);
+    FINISH (startup_notify);
+    return true;
+}
+
 static gboolean do_status (Obj * obj, Invoc * invoc)
 {
     const char * status = "stopped";
@@ -706,10 +755,14 @@ handlers[] =
     {"handle-playqueue-clear", (GCallback) do_playqueue_clear},
     {"handle-playqueue-is-queued", (GCallback) do_playqueue_is_queued},
     {"handle-playqueue-remove", (GCallback) do_playqueue_remove},
+    {"handle-plugin-enable", (GCallback) do_plugin_enable},
+    {"handle-plugin-is-enabled", (GCallback) do_plugin_is_enabled},
     {"handle-position", (GCallback) do_position},
     {"handle-queue-get-list-pos", (GCallback) do_queue_get_list_pos},
     {"handle-queue-get-queue-pos", (GCallback) do_queue_get_queue_pos},
     {"handle-quit", (GCallback) do_quit},
+    {"handle-recording", (GCallback) do_recording},
+    {"handle-record", (GCallback) do_record},
     {"handle-repeat", (GCallback) do_repeat},
     {"handle-reverse", (GCallback) do_reverse},
     {"handle-seek", (GCallback) do_seek},
@@ -730,6 +783,7 @@ handlers[] =
     {"handle-song-length", (GCallback) do_song_length},
     {"handle-song-title", (GCallback) do_song_title},
     {"handle-song-tuple", (GCallback) do_song_tuple},
+    {"handle-startup-notify", (GCallback) do_startup_notify},
     {"handle-status", (GCallback) do_status},
     {"handle-stop", (GCallback) do_stop},
     {"handle-stop-after", (GCallback) do_stop_after},
@@ -748,16 +802,16 @@ static unsigned owner_id = 0;
 
 static GDBusInterfaceSkeleton * skeleton = nullptr;
 
-static void name_acquired (GDBusConnection *, const char *, void *)
+static void name_acquired (GDBusConnection *, const char * name, void *)
 {
-    AUDINFO ("Owned D-Bus name (org.atheme.audacious) on session bus.\n");
+    AUDINFO ("Owned D-Bus name (%s) on session bus.\n", name);
 
     g_main_loop_quit (mainloop);
 }
 
-static void name_lost (GDBusConnection *, const char *, void *)
+static void name_lost (GDBusConnection *, const char * name, void *)
 {
-    AUDINFO ("Owning D-Bus name (org.atheme.audacious) failed, already taken?\n");
+    AUDINFO ("Owning D-Bus name (%s) failed, already taken?\n", name);
 
     g_bus_unown_name (owner_id);
     owner_id = 0;
@@ -765,8 +819,11 @@ static void name_lost (GDBusConnection *, const char *, void *)
     g_main_loop_quit (mainloop);
 }
 
-StartupType dbus_server_init ()
+StartupType dbus_server_init (bool new_instance)
 {
+    auto startup = StartupType::Unknown;
+    int instance = 1;
+
     GError * error = nullptr;
     GDBusConnection * bus = g_bus_get_sync (G_BUS_TYPE_SESSION, nullptr, & error);
     GMainContext * context;
@@ -785,22 +842,46 @@ StartupType dbus_server_init ()
     context = g_main_context_new ();
     g_main_context_push_thread_default (context);
 
-    owner_id = g_bus_own_name (G_BUS_TYPE_SESSION, "org.atheme.audacious",
-     (GBusNameOwnerFlags) 0, nullptr, name_acquired, name_lost, nullptr, nullptr);
+    while (1)
+    {
+        StringBuf name = (instance == 1) ? str_copy ("org.atheme.audacious") :
+                         str_printf ("org.atheme.audacious-%d", instance);
 
-    mainloop = g_main_loop_new (context, true);
-    g_main_loop_run (mainloop);
-    g_main_loop_unref (mainloop);
-    mainloop = nullptr;
+        owner_id = g_bus_own_name (G_BUS_TYPE_SESSION, name,
+         (GBusNameOwnerFlags) 0, nullptr, name_acquired, name_lost, nullptr, nullptr);
+
+        mainloop = g_main_loop_new (context, true);
+        g_main_loop_run (mainloop);
+        g_main_loop_unref (mainloop);
+        mainloop = nullptr;
+
+        // primary instance is not running, or we are starting a new instance
+        // and have found an available bus name
+        if (owner_id)
+        {
+            startup = StartupType::Server;
+            aud_set_instance (instance);
+            break;
+        }
+
+        // primary instance is already running, and we are not starting a new instance
+        if (! new_instance)
+        {
+            startup = StartupType::Client;
+            break;
+        }
+
+        // we are starting a new instance and have not found an available bus
+        // name (we will start up anyway, but without D-Bus support)
+        if (++ instance > 9)
+        {
+            AUDERR ("D-Bus error: No available bus names\n");
+            break;
+        }
+    }
 
     g_main_context_pop_thread_default (context);
     g_main_context_unref (context);
-
-    if (owner_id)
-        return StartupType::Server;
-
-    dbus_server_cleanup ();
-    return StartupType::Client;
 
 ERROR:
     if (error)
@@ -809,8 +890,10 @@ ERROR:
         g_error_free (error);
     }
 
-    dbus_server_cleanup ();
-    return StartupType::Unknown;
+    if (startup != StartupType::Server)
+        dbus_server_cleanup ();
+
+    return startup;
 }
 
 void dbus_server_cleanup ()

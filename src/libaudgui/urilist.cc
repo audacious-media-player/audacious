@@ -21,33 +21,13 @@
 
 #include <libaudcore/audstrings.h>
 #include <libaudcore/drct.h>
-#include <libaudcore/mainloop.h>
-#include <libaudcore/multihash.h>
 #include <libaudcore/playlist.h>
-#include <libaudcore/tuple.h>
-#include <libaudcore/vfs.h>
 
 #include "libaudgui.h"
 
-static SimpleHash<String, Tuple> tuple_cache;
-static QueuedFunc cleanup_timer;
-
-void urilist_cleanup ()
-{
-    tuple_cache.clear ();
-    cleanup_timer.stop ();
-}
-
 static String check_uri (const char * name)
 {
-    if (! strstr (name, "://"))
-    {
-        StringBuf uri = filename_to_uri (name);
-        if (uri)
-            return String (uri);
-    }
-
-    return String (name);
+    return strstr (name, "://") ? String (name) : String (filename_to_uri (name));
 }
 
 static Index<PlaylistAddItem> urilist_to_index (const char * list)
@@ -66,10 +46,8 @@ static Index<PlaylistAddItem> urilist_to_index (const char * list)
         else
             next = end = strchr (list, 0);
 
-        String filename = check_uri (str_copy (list, end - list));
-        const Tuple * tuple = tuple_cache.lookup (filename);
-
-        index.append (filename, tuple ? tuple->ref () : Tuple ());
+        if (end > list)
+            index.append (check_uri (str_copy (list, end - list)));
 
         list = next;
     }
@@ -89,6 +67,8 @@ EXPORT void audgui_urilist_insert (int playlist, int at, const char * list)
 
 EXPORT Index<char> audgui_urilist_create_from_selected (int playlist)
 {
+    aud_playlist_cache_selected (playlist);
+
     Index<char> buf;
     int entries = aud_playlist_entry_count (playlist);
 
@@ -100,15 +80,9 @@ EXPORT Index<char> audgui_urilist_create_from_selected (int playlist)
                 buf.append ('\n');
 
             String filename = aud_playlist_entry_get_filename (playlist, count);
-            Tuple tuple = aud_playlist_entry_get_tuple (playlist, count, Playlist::Nothing);
-
             buf.insert (filename, -1, strlen (filename));
-            if (tuple)
-                tuple_cache.add (filename, std::move (tuple));
         }
     }
-
-    cleanup_timer.queue (30000, [] (void *) { urilist_cleanup (); }, nullptr);
 
     return buf;
 }

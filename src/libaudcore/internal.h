@@ -97,8 +97,6 @@ void playback_stop (bool exiting = false);
 
 bool playback_check_serial (int serial);
 void playback_set_info (int entry, Tuple && tuple);
-void playback_setup_decode (const String & filename, InputPlugin * ip,
- VFSFile && file, String && error);
 
 /* probe.cc */
 bool open_input_file (const char * filename, const char * mode,
@@ -129,6 +127,10 @@ String write_temp_file (const void * data, int64_t len);
 bool same_basename (const char * a, const char * b);
 const char * last_path_element (const char * path);
 void cut_path_element (char * path, int pos);
+
+bool is_cuesheet_entry (const char * filename);
+bool is_subtune (const char * filename);
+StringBuf strip_subtune (const char * filename);
 
 unsigned int32_hash (unsigned val);
 unsigned ptr_hash (const void * ptr);

@@ -50,25 +50,35 @@ namespace audqt {
  */
 
 /* base class which provides plumbing for hooks. */
-class HookableWidget
-{
+class HookableWidget {
+public:
+    void update_from_cfg ();
+
 protected:
-    HookableWidget (const PreferencesWidget * parent, const char * domain) :
-        m_parent (parent), m_domain (domain)
-    {
-        if (m_parent->cfg.hook)
-            hook.capture (new HookReceiver<HookableWidget>
-             {m_parent->cfg.hook, this, & HookableWidget::update});
-    }
+    HookableWidget (const PreferencesWidget * parent, const char * domain);
 
     virtual ~HookableWidget () {}
     virtual void update () {}
 
     const PreferencesWidget * const m_parent;
     const char * const m_domain;
+    bool m_updating = false;
 
 private:
     SmartPtr<HookReceiver<HookableWidget>> hook;
+};
+
+/* shared class which allows disabling child widgets */
+class ParentWidget : public HookableWidget {
+public:
+    void set_child_layout (QLayout * layout)
+        { m_child_layout = layout; }
+
+protected:
+    ParentWidget (const PreferencesWidget * parent, const char * domain) :
+        HookableWidget (parent, domain) {}
+
+    QLayout * m_child_layout = nullptr;
 };
 
 /* button widget */
@@ -78,33 +88,28 @@ public:
 };
 
 /* boolean widget (checkbox) */
-class BooleanWidget : public QCheckBox, HookableWidget {
+class BooleanWidget : public QCheckBox, public ParentWidget {
 public:
     BooleanWidget (const PreferencesWidget * parent, const char * domain);
-    void update ();
-
-    void set_child_layout (QLayout * layout)
-        { m_child_layout = layout; }
-
 private:
-    QLayout * m_child_layout = nullptr;
+    void update ();
 };
 
 /* integer widget (spinner) */
 class IntegerWidget : public QWidget, HookableWidget {
 public:
     IntegerWidget (const PreferencesWidget * parent, const char * domain);
-    void update ();
-
 private:
+    void update ();
     QSpinBox * m_spinner;
 };
 
 /* integer widget (radio button) */
-class RadioButtonWidget : public QRadioButton, HookableWidget {
+class RadioButtonWidget : public QRadioButton, public ParentWidget {
 public:
     RadioButtonWidget (const PreferencesWidget * parent, const char * domain,
      QButtonGroup * btn_group);
+private:
     void update ();
 };
 
@@ -112,9 +117,8 @@ public:
 class DoubleWidget : public QWidget, HookableWidget {
 public:
     DoubleWidget (const PreferencesWidget * parent, const char * domain);
-    void update ();
-
 private:
+    void update ();
     QDoubleSpinBox * m_spinner;
 };
 
@@ -122,9 +126,8 @@ private:
 class StringWidget : public QWidget, HookableWidget {
 public:
     StringWidget (const PreferencesWidget * parent, const char * domain);
-    void update ();
-
 private:
+    void update ();
     QLineEdit * m_lineedit;
 };
 
@@ -132,9 +135,8 @@ private:
 class ComboBoxWidget : public QWidget, HookableWidget {
 public:
     ComboBoxWidget (const PreferencesWidget * parent, const char * domain);
-    void update ();
-
 private:
+    void update ();
     QComboBox * m_combobox;
 };
 

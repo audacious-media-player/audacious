@@ -63,6 +63,10 @@ void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
 GtkWidget * audgui_button_new (const char * text, const char * icon,
  AudguiCallback callback, void * data);
 
+GtkWidget * audgui_file_entry_new (GtkFileChooserAction action, const char * title);
+String audgui_file_entry_get_uri (GtkWidget * entry);
+void audgui_file_entry_set_uri (GtkWidget * entry, const char * uri);
+
 GtkWidget * audgui_dialog_new (GtkMessageType type, const char * title,
  const char * text, GtkWidget * button1, GtkWidget * button2);
 void audgui_dialog_add_widget (GtkWidget * dialog, GtkWidget * widget);

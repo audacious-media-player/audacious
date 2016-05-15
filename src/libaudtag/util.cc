@@ -17,13 +17,6 @@
  * the use of this software.
  */
 
-#include <assert.h>
-#include <unistd.h>
-
-#include <glib/gstdio.h>
-
-#include <libaudcore/audstrings.h>
-
 #include "util.h"
 
 const char *convert_numericgenre_to_text(int numericgenre)
@@ -173,104 +166,10 @@ const char *convert_numericgenre_to_text(int numericgenre)
 
 uint32_t unsyncsafe32 (uint32_t x)
 {
-    return (x & 0x7f) | ((x & 0x7f00) >> 1) | ((x & 0x7f0000) >> 2) | ((x &
-     0x7f000000) >> 3);
+    return (x & 0x7f) | ((x & 0x7f00) >> 1) | ((x & 0x7f0000) >> 2) | ((x & 0x7f000000) >> 3);
 }
 
 uint32_t syncsafe32 (uint32_t x)
 {
-    return (x & 0x7f) | ((x & 0x3f80) << 1) | ((x & 0x1fc000) << 2) | ((x &
-     0xfe00000) << 3);
-}
-
-bool TempFile::create ()
-{
-    StringBuf tempname = filename_build ({g_get_tmp_dir (), "audacious-temp-XXXXXX"});
-
-    assert (m_fd < 0);
-    m_fd = g_mkstemp (tempname);
-    if (m_fd < 0)
-        return false;
-
-    m_name = String (tempname);
-
-    return true;
-}
-
-bool TempFile::copy_from (VFSFile & file, int64_t offset, int64_t size)
-{
-    if (file.fseek (offset, VFS_SEEK_SET) < 0)
-        return false;
-
-    char buf[16384];
-
-    while (size < 0 || size > 0)
-    {
-        int64_t readsize;
-
-        if (size > 0)
-        {
-            readsize = aud::min (size, (int64_t) sizeof buf);
-            if (file.fread (buf, 1, readsize) != readsize)
-                return false;
-
-            size -= readsize;
-        }
-        else
-        {
-            /* negative size means copy to EOF */
-            readsize = file.fread (buf, 1, sizeof buf);
-            if (! readsize)
-                break;
-        }
-
-        int64_t written = 0;
-        while (written < readsize)
-        {
-            int64_t writesize = write (m_fd, buf + written, readsize - written);
-            if (writesize <= 0)
-                return false;
-
-            written += writesize;
-        }
-    }
-
-    return true;
-}
-
-bool TempFile::replace (VFSFile & file)
-{
-    if (lseek (m_fd, 0, SEEK_SET) < 0)
-        return false;
-
-    if (file.fseek (0, VFS_SEEK_SET) < 0)
-        return false;
-
-    if (file.ftruncate (0) < 0)
-        return false;
-
-    char buf[16384];
-
-    while (1)
-    {
-        int64_t readsize = read (m_fd, buf, sizeof buf);
-        if (readsize < 0)
-            return false;
-
-        if (readsize == 0)
-            break;
-
-        if (file.fwrite (buf, 1, readsize) != readsize)
-            return false;
-    }
-
-    return true;
-}
-
-TempFile::~TempFile ()
-{
-    if (m_fd >= 0)
-        close (m_fd);
-    if (m_name)
-        g_unlink (m_name);
+    return (x & 0x7f) | ((x & 0x3f80) << 1) | ((x & 0x1fc000) << 2) | ((x & 0xfe00000) << 3);
 }

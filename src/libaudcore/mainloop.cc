@@ -32,9 +32,6 @@
 #include "multihash.h"
 #include "runtime.h"
 
-static pthread_once_t once = PTHREAD_ONCE_INIT;
-static MultiHash * func_table = nullptr;
-
 static pthread_mutex_t mainloop_mutex = PTHREAD_MUTEX_INITIALIZER;
 static GMainLoop * glib_mainloop;
 
@@ -78,6 +75,14 @@ struct QueuedFuncNode : public MultiHash::Node {
     bool can_stop;
 };
 
+static bool match_cb (const MultiHash::Node * node_, const void * queued_)
+{
+    auto node = (const QueuedFuncNode *) node_;
+    return node->queued == (QueuedFunc *) queued_;
+}
+
+static MultiHash func_table (match_cb);
+
 void QueuedFuncHelper::run ()
 {
     struct State {
@@ -99,7 +104,7 @@ void QueuedFuncHelper::run ()
     };
 
     State s = {this, false};
-    func_table->lookup (queued, ptr_hash (queued), nullptr, found_cb, & s);
+    func_table.lookup (queued, ptr_hash (queued), nullptr, found_cb, & s);
 
     if (s.valid)
         params.func (params.data);
@@ -190,16 +195,6 @@ protected:
 
 #endif // USE_QT
 
-static void create_func_table ()
-{
-    auto match_cb = [] (const MultiHash::Node * node_, const void * queued_) {
-        auto node = (const QueuedFuncNode *) node_;
-        return node->queued == (QueuedFunc *) queued_;
-    };
-
-    func_table = new MultiHash (match_cb);
-}
-
 static QueuedFuncHelper * create_helper (const QueuedFuncParams & params)
 {
 #ifdef USE_QT
@@ -246,8 +241,7 @@ void QueuedFunc::start (const QueuedFuncParams & params)
         return false; // do not remove
     };
 
-    pthread_once (& once, create_func_table);
-    func_table->lookup (this, ptr_hash (this), add_cb, replace_cb, create_helper (params));
+    func_table.lookup (this, ptr_hash (this), add_cb, replace_cb, create_helper (params));
 }
 
 EXPORT void QueuedFunc::queue (Func func, void * data)
@@ -281,8 +275,7 @@ EXPORT void QueuedFunc::stop ()
         return true; // remove
     };
 
-    pthread_once (& once, create_func_table);
-    func_table->lookup (this, ptr_hash (this), nullptr, remove_cb, nullptr);
+    func_table.lookup (this, ptr_hash (this), nullptr, remove_cb, nullptr);
 }
 
 EXPORT void mainloop_run ()

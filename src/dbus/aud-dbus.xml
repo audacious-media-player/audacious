@@ -2,7 +2,7 @@
 
 <!--
  * aud-dbus.xml
- * Copyright 2007-2014 Ben Tucker, Yoshiki Yazawa, Matti Hämäläinen, and
+ * Copyright 2007-2016 Ben Tucker, Yoshiki Yazawa, Matti Hämäläinen, and
  *                     John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,6 +28,16 @@
             <arg type="s" direction="out" name="version"/>
         </method>
 
+        <method name="PluginIsEnabled">
+            <arg type="s" direction="in" name="plugin" />
+            <arg type="b" direction="out" name="enabled" />
+        </method>
+
+        <method name="PluginEnable">
+            <arg type="s" direction="in" name="plugin" />
+            <arg type="b" direction="in" name="enable" />
+        </method>
+
         <!-- Quit Audacious -->
         <method name="Quit" />
 
@@ -44,6 +54,11 @@
             <arg type="b" direction="in" name="show"/>
         </method>
 
+        <!-- Send startup notification -->
+        <method name="StartupNotify">
+            <arg type="s" direction="in" name="id"/>
+        </method>
+
         <!-- Get names of available 'standard' tuple fields -->
         <method name="GetTupleFields">
             <!-- Return array of tuple field names -->
@@ -56,6 +71,9 @@
 
         <!-- Pause playback -->
         <method name="Pause" />
+
+        <!-- Either play or pause -->
+        <method name="PlayPause" />
 
         <!-- Stop playback -->
         <method name="Stop" />
@@ -83,6 +101,14 @@
             <!-- Return the status as a string: -->
             <!-- one of {"playing" "paused" "stopped"} -->
             <arg type="s" direction="out" name="status"/>
+        </method>
+
+        <!-- Toggle recording of stream -->
+        <method name="Record" />
+
+        <!-- Is stream recording enabled? -->
+        <method name="Recording">
+            <arg type="b" direction="out" name="is_recording"/>
         </method>
 
         <!-- What is the bitrate, frequency, and number of channels of the -->
@@ -290,9 +316,6 @@
         <method name="ShowFilebrowser">
             <arg type="b" direction="in" name="show"/>
         </method>
-
-        <!-- Either play or pause -->
-        <method name="PlayPause" />
 
         <!-- Playqueue get playlist pos -->
         <method name="QueueGetListPos">

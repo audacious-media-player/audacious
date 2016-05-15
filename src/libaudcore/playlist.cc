@@ -145,13 +145,6 @@ struct PlaylistData {
     int resume_time;
 };
 
-/* playback data provided by the playlist */
-struct PlaybackData {
-    InputPlugin * ip = nullptr;
-    VFSFile file;
-    String error;
-};
-
 static const char * const default_title = N_("New Playlist");
 static const char * const temp_title = N_("Now Playing");
 
@@ -176,8 +169,6 @@ static bool resume_paused = false;
 static bool metadata_fallbacks = false;
 static TupleCompiler title_formatter;
 
-static PlaybackData playback_data;
-
 static QueuedFunc queued_update;
 static UpdateLevel update_level;
 static bool update_delayed;
@@ -188,12 +179,14 @@ struct ScanItem : public ListNode
         playlist (playlist),
         entry (entry),
         request (request),
-        for_playback (for_playback) {}
+        for_playback (for_playback),
+        handled_by_playback (false) {}
 
     PlaylistData * playlist;
     Entry * entry;
     ScanRequest * request;
     bool for_playback;
+    bool handled_by_playback;
 };
 
 static bool scan_enabled_nominal, scan_enabled;
@@ -224,9 +217,12 @@ void Entry::format ()
 
 void Entry::set_tuple (Tuple && new_tuple)
 {
-    /* Hack: We cannot refresh segmented entries (since their info is read from
-     * the cue sheet when it is first loaded), so leave them alone. -jlindgren */
-    if (tuple.get_value_type (Tuple::StartTime) == Tuple::Int)
+    /* Since 3.8, cuesheet entries are handled differently.  The entry filename
+     * points to the .cue file, and the path to the actual audio file is stored
+     * in the Tuple::AudioFile.  If Tuple::AudioFile is not set, then assume
+     * that the playlist was created by an older version of Audacious, and
+     * revert to the former behavior (don't refresh this entry). */
+    if (tuple.is_set (Tuple::StartTime) && ! tuple.is_set (Tuple::AudioFile))
         return;
 
     scanned = (bool) new_tuple;
@@ -504,15 +500,35 @@ static ScanItem * scan_list_find_request (ScanRequest * request)
 static void scan_queue_entry (PlaylistData * playlist, Entry * entry, bool for_playback = false)
 {
     int flags = 0;
-    if (! entry->scanned)
+    if (! entry->scanned || entry->failed)
         flags |= SCAN_TUPLE;
     if (for_playback)
         flags |= (SCAN_IMAGE | SCAN_FILE);
 
-    auto request = new ScanRequest (entry->filename, flags, scan_finish, entry->decoder);
-    scanner_request (request);
+    /* scanner uses Tuple::AudioFile from existing tuple, if valid */
+    auto request = new ScanRequest (entry->filename, flags, scan_finish,
+     entry->decoder, (flags & SCAN_TUPLE) ? Tuple () : entry->tuple.ref ());
 
     scan_list.append (new ScanItem (playlist, entry, request, for_playback));
+
+    /* playback entry will be scanned by the playback thread */
+    if (! for_playback)
+        scanner_request (request);
+}
+
+static void scan_reset_playback ()
+{
+    for (ScanItem * item = scan_list.head (); item; item = scan_list.next (item))
+    {
+        if (item->for_playback)
+        {
+            item->for_playback = false;
+
+            /* if playback was canceled before the entry was scanned, requeue it */
+            if (! item->handled_by_playback)
+                scanner_request (item->request);
+        }
+    }
 }
 
 static void scan_check_complete (PlaylistData * playlist)
@@ -601,7 +617,7 @@ static void scan_finish (ScanRequest * request)
     if (! entry->decoder)
         entry->decoder = request->decoder;
 
-    if (! entry->scanned && request->tuple)
+    if ((! entry->scanned || entry->failed) && request->tuple)
     {
         playlist->set_entry_tuple (entry, std::move (request->tuple));
         queue_update (Metadata, playlist, entry->number, 1, DelayedUpdate);
@@ -609,18 +625,6 @@ static void scan_finish (ScanRequest * request)
 
     if (! entry->decoder || ! entry->scanned)
         entry->set_failed (request->error);
-
-    if (item->for_playback && playlist == playing_playlist && entry == playlist->position)
-    {
-        // save playback data
-        playback_data.ip = request->ip;
-        playback_data.file = std::move (request->file);
-        playback_data.error = std::move (request->error);
-
-        // cache album art for current entry
-        art_cache_current (entry->filename, std::move (request->image_data),
-         std::move (request->image_file));
-    }
 
     delete item;
 
@@ -680,40 +684,54 @@ static Entry * get_entry (int playlist_num, int entry_num,
         warn_main_thread_blocked ();
 #endif
 
+    bool scan_started = false;
+
     while (1)
     {
         PlaylistData * playlist = lookup_playlist (playlist_num);
         Entry * entry = playlist ? lookup_entry (playlist, entry_num) : nullptr;
 
-        // blacklist stdin
-        if (! entry || entry->failed || ! strncmp (entry->filename, "stdin://", 8))
+        // check whether entry was deleted; also blacklist stdin
+        if (! entry || ! strncmp (entry->filename, "stdin://", 8))
             return entry;
 
-        if ((need_decoder && ! entry->decoder) || (need_tuple && ! entry->scanned))
-        {
-            if (! scan_list_find_entry (entry))
-                scan_queue_entry (playlist, entry);
+        // check whether requested data (decoder and/or tuple) has been read
+        if ((! need_decoder || entry->decoder) &&
+         (! need_tuple || (entry->scanned && ! entry->failed)))
+            return entry;
 
-            pthread_cond_wait (& cond, & mutex);
-            continue;
+        // start scan if not already running ...
+        if (! scan_list_find_entry (entry))
+        {
+            // ... but only once
+            if (scan_started)
+                return entry;
+
+            scan_queue_entry (playlist, entry);
         }
 
-        return entry;
+        // wait for scan to finish
+        scan_started = true;
+        pthread_cond_wait (& cond, & mutex);
     }
 }
 
 static void start_playback (int seek_time, bool pause)
 {
     art_clear_current ();
-    playback_data = PlaybackData ();
+    scan_reset_playback ();
+
     playback_play (seek_time, pause);
+
+    scan_cancel (playing_playlist->position);
     scan_queue_entry (playing_playlist, playing_playlist->position, true);
 }
 
 static void stop_playback ()
 {
     art_clear_current ();
-    playback_data = PlaybackData ();
+    scan_reset_playback ();
+
     playback_stop ();
 }
 
@@ -762,6 +780,8 @@ void playlist_end ()
     hook_dissociate ("set leading_zero", (HookFunction) playlist_reformat_titles);
     hook_dissociate ("set metadata_fallbacks", (HookFunction) playlist_reformat_titles);
     hook_dissociate ("set show_numbers_in_pl", (HookFunction) playlist_reformat_titles);
+
+    playlist_cache_clear ();
 
     ENTER;
 
@@ -1648,27 +1668,19 @@ struct CompareData {
     PlaylistTupleCompareFunc tuple_compare;
 };
 
-static int compare_cb (const SmartPtr<Entry> & a, const SmartPtr<Entry> & b, void * _data)
+static void sort_entries (Index<SmartPtr<Entry>> & entries, CompareData * data)
 {
-    CompareData * data = (CompareData *) _data;
-
-    int diff = 0;
-
-    if (data->filename_compare)
-        diff = data->filename_compare (a->filename, b->filename);
-    else if (data->tuple_compare)
-        diff = data->tuple_compare (a->tuple, b->tuple);
-
-    if (diff)
-        return diff;
-
-    /* preserve order of "equal" entries */
-    return a->number - b->number;
+    entries.sort ([data] (const SmartPtr<Entry> & a, const SmartPtr<Entry> & b) {
+        if (data->filename_compare)
+            return data->filename_compare (a->filename, b->filename);
+        else
+            return data->tuple_compare (a->tuple, b->tuple);
+    });
 }
 
 static void sort (PlaylistData * playlist, CompareData * data)
 {
-    playlist->entries.sort (compare_cb, data);
+    sort_entries (playlist->entries, data);
     number_entries (playlist, 0, playlist->entries.len ());
 
     queue_update (Structure, playlist, 0, playlist->entries.len ());
@@ -1686,7 +1698,7 @@ static void sort_selected (PlaylistData * playlist, CompareData * data)
             selected.append (std::move (entry));
     }
 
-    selected.sort (compare_cb, data);
+    sort_entries (selected, data);
 
     int i = 0;
     for (auto & entry : playlist->entries)
@@ -2196,30 +2208,48 @@ bool playlist_next_song (int playlist_num, bool repeat)
 
 static Entry * get_playback_entry (int serial)
 {
-    if (! playing_playlist || ! playback_check_serial (serial))
+    if (! playback_check_serial (serial))
         return nullptr;
 
+    assert (playing_playlist && playing_playlist->position);
     return playing_playlist->position;
 }
 
 // called from playback thread
-void playback_entry_read (int serial)
+DecodeInfo playback_entry_read (int serial)
 {
     ENTER;
+    DecodeInfo dec;
     Entry * entry;
 
-    // wait for the playback entry to be scanned (or deleted)
-    while ((entry = get_playback_entry (serial)) && scan_list_find_entry (entry))
-        pthread_cond_wait (& cond, & mutex);
-
-    if (entry)
+    if ((entry = get_playback_entry (serial)))
     {
-        send_playback_info (entry);
-        playback_setup_decode (entry->filename, playback_data.ip,
-         std::move (playback_data.file), std::move (playback_data.error));
+        ScanItem * item = scan_list_find_entry (entry);
+        assert (item && item->for_playback);
+
+        ScanRequest * request = item->request;
+        item->handled_by_playback = true;
+
+        LEAVE;
+        request->run ();
+        ENTER;
+
+        if ((entry = get_playback_entry (serial)))
+        {
+            send_playback_info (entry);
+            art_cache_current (entry->filename, std::move (request->image_data),
+             std::move (request->image_file));
+
+            dec.filename = entry->filename;
+            dec.ip = request->ip;
+            dec.file = std::move (request->file);
+            dec.error = std::move (request->error);
+        }
+
+        delete request;
     }
 
-    LEAVE;
+    RETURN (dec);
 }
 
 // called from playback thread
@@ -2228,7 +2258,8 @@ void playback_entry_set_tuple (int serial, Tuple && tuple)
     ENTER;
     Entry * entry = get_playback_entry (serial);
 
-    if (entry)
+    /* don't update cuesheet entries with stream metadata */
+    if (entry && ! entry->tuple.is_set (Tuple::StartTime))
     {
         playing_playlist->set_entry_tuple (entry, std::move (tuple));
         queue_update (Metadata, playing_playlist, entry->number, 1);

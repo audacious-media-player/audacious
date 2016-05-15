@@ -28,6 +28,7 @@
 #include <libaudcore/hook.h>
 #include <libaudcore/i18n.h>
 #include <libaudcore/interface.h>
+#include <libaudcore/mainloop.h>
 #include <libaudcore/playlist.h>
 #include <libaudcore/runtime.h>
 #include <libaudcore/tuple.h>
@@ -45,10 +46,12 @@ static struct {
     int enqueue, enqueue_to_temp;
     int mainwin, show_jump_box;
     int headless, quit_after_play;
+    int new_instance;
     int verbose;
     int qt;
 } options;
 
+static bool initted = false;
 static Index<PlaylistAddItem> filenames;
 
 static const struct {
@@ -72,6 +75,9 @@ static const struct {
     {"headless", 'H', & options.headless, N_("Start without a graphical interface")},
     {"quit-after-play", 'q', & options.quit_after_play, N_("Quit on playback stop")},
     {"verbose", 'V', & options.verbose, N_("Print debugging messages (may be used twice)")},
+#if USE_DBUS
+    {"new-instance", 'N', & options.new_instance, N_("Open new instance")},
+#endif
 #if defined(USE_QT) && defined(USE_GTK)
     {"qt", 'Q', & options.qt, N_("Run in Qt mode")},
 #endif
@@ -105,8 +111,7 @@ static bool parse_options (int argc, char * * argv)
             else
                 uri = String (filename_to_uri (filename_build ({cur, arg})));
 
-            if (uri)
-                filenames.append (uri);
+            filenames.append (uri);
         }
         else if (! arg[1])  /* "-" (standard input) */
         {
@@ -200,15 +205,17 @@ static void do_remote ()
 #endif
 
     /* check whether this is the first instance */
-    if (dbus_server_init () != StartupType::Client)
+    if (dbus_server_init (options.new_instance) != StartupType::Client)
         return;
 
-    if (! (bus = g_bus_get_sync (G_BUS_TYPE_SESSION, nullptr, & error)))
-        goto ERR;
-
-    if (! (obj = obj_audacious_proxy_new_sync (bus, (GDBusProxyFlags) 0,
+    if (! (bus = g_bus_get_sync (G_BUS_TYPE_SESSION, nullptr, & error)) ||
+     ! (obj = obj_audacious_proxy_new_sync (bus, (GDBusProxyFlags) 0,
      "org.atheme.audacious", "/org/atheme/audacious", nullptr, & error)))
-        goto ERR;
+    {
+        AUDERR ("D-Bus error: %s\n", error->message);
+        g_error_free (error);
+        return;
+    }
 
     AUDINFO ("Connected to remote session.\n");
 
@@ -252,16 +259,13 @@ static void do_remote ()
     if (options.mainwin)
         obj_audacious_call_show_main_win_sync (obj, true, nullptr, nullptr);
 
+    const char * startup_id = getenv ("DESKTOP_STARTUP_ID");
+    if (startup_id)
+        obj_audacious_call_startup_notify_sync (obj, startup_id, nullptr, nullptr);
+
     g_object_unref (obj);
 
     exit (EXIT_SUCCESS);
-
-ERR:
-    if (error)
-    {
-        AUDERR ("D-Bus error: %s\n", error->message);
-        g_error_free (error);
-    }
 }
 #endif
 
@@ -295,7 +299,10 @@ static void do_commands ()
         else if (aud_drct_get_paused ())
             aud_drct_pause ();
     }
+}
 
+static void do_commands_at_idle (void *)
+{
     if (options.show_jump_box && ! options.headless)
         aud_ui_show_jump_to_song ();
     if (options.mainwin && ! options.headless)
@@ -304,8 +311,18 @@ static void do_commands ()
 
 static void main_cleanup ()
 {
+    if (initted)
+    {
+        /* Somebody was naughty and called exit() instead of aud_quit().
+         * aud_cleanup() has not been called yet, so there's no point in running
+         * leak checks.  Note that it's not safe to call aud_cleanup() from the
+         * exit handler, since we don't know what context we're in (we could be
+         * deep inside the call tree of some plugin, for example). */
+        AUDWARN ("exit() called unexpectedly; skipping normal cleanup.\n");
+        return;
+    }
+
     filenames.clear ();
-    aud_cleanup_paths ();
     aud_leak_check ();
 }
 
@@ -329,7 +346,6 @@ int main (int argc, char * * argv)
     signals_init_one ();
 #endif
 
-    aud_init_paths ();
     aud_init_i18n ();
 
     if (! parse_options (argc, argv))
@@ -360,29 +376,33 @@ int main (int argc, char * * argv)
     signals_init_two ();
 #endif
 
+    initted = true;
     aud_init ();
 
     do_commands ();
 
-    if (check_should_quit ())
-        goto QUIT;
+    if (! check_should_quit ())
+    {
+        QueuedFunc at_idle_func;
+        at_idle_func.queue (do_commands_at_idle, nullptr);
 
-    hook_associate ("playback stop", (HookFunction) maybe_quit, nullptr);
-    hook_associate ("playlist add complete", (HookFunction) maybe_quit, nullptr);
-    hook_associate ("quit", (HookFunction) aud_quit, nullptr);
+        hook_associate ("playback stop", (HookFunction) maybe_quit, nullptr);
+        hook_associate ("playlist add complete", (HookFunction) maybe_quit, nullptr);
+        hook_associate ("quit", (HookFunction) aud_quit, nullptr);
 
-    aud_run ();
+        aud_run ();
 
-    hook_dissociate ("playback stop", (HookFunction) maybe_quit);
-    hook_dissociate ("playlist add complete", (HookFunction) maybe_quit);
-    hook_dissociate ("quit", (HookFunction) aud_quit);
+        hook_dissociate ("playback stop", (HookFunction) maybe_quit);
+        hook_dissociate ("playlist add complete", (HookFunction) maybe_quit);
+        hook_dissociate ("quit", (HookFunction) aud_quit);
+    }
 
-QUIT:
 #ifdef USE_DBUS
     dbus_server_cleanup ();
 #endif
 
     aud_cleanup ();
+    initted = false;
 
     return EXIT_SUCCESS;
 }

@@ -143,6 +143,7 @@ static const struct {
     {"gain-peak-unit", Tuple::Int, -1},
 
     {"formatted-title", Tuple::String, -1},
+    {"audio-file", Tuple::String, -1},
 
     /* fallbacks */
     {nullptr, Tuple::String, -1},
@@ -162,6 +163,7 @@ static const FieldDictEntry field_dict[] = {
     {"album", Tuple::Album},
     {"album-artist", Tuple::AlbumArtist},
     {"artist", Tuple::Artist},
+    {"audio-file", Tuple::AudioFile},
     {"bitrate", Tuple::Bitrate},
     {"codec", Tuple::Codec},
     {"comment", Tuple::Comment},
@@ -644,10 +646,10 @@ EXPORT bool Tuple::fetch_stream_info (VFSFile & stream)
  * be modified, and the string returned will use the same memory.  May return
  * nullptr. */
 
-static char * split_folder (char * path)
+static char * split_folder (char * path, char sep)
 {
     char * c;
-    while ((c = strrchr (path, G_DIR_SEPARATOR)))
+    while ((c = strrchr (path, sep)))
     {
         * c = 0;
         if (c[1])
@@ -657,31 +659,33 @@ static char * split_folder (char * path)
     return path[0] ? path : nullptr;
 }
 
-/* Separates the domain name from an internet URI.  The string passed will be
- * modified, and the string returned will share the same memory.  May return
- * nullptr.  Examples:
+/* These two functions separate the domain name from an internet URL.  Examples:
  *     "http://some.domain.org/folder/file.mp3" -> "some.domain.org"
  *     "http://some.stream.fm:8000"             -> "some.stream.fm" */
 
-static char * domain_name (char * name)
+static const char * find_domain (const char * name)
 {
     if (! strncmp (name, "http://", 7))
-        name += 7;
-    else if (! strncmp (name, "https://", 8))
-        name += 8;
-    else if (! strncmp (name, "mms://", 6))
-        name += 6;
-    else
-        return nullptr;
+        return name + 7;
+    if (! strncmp (name, "https://", 8))
+        return name + 8;
+    if (! strncmp (name, "mms://", 6))
+        return name + 6;
 
+    return nullptr;
+}
+
+static StringBuf extract_domain (const char * start)
+{
+    StringBuf name = str_copy (start);
     char * c;
 
     if ((c = strchr (name, '/')))
-        * c = 0;
+        name.resize (c - name);
     if ((c = strchr (name, ':')))
-        * c = 0;
+        name.resize (c - name);
     if ((c = strchr (name, '?')))
-        * c = 0;
+        name.resize (c - name);
 
     return name;
 }
@@ -705,6 +709,9 @@ EXPORT void Tuple::generate_fallbacks ()
     if (! filepath)
         return;
 
+    const char * s;
+    char sep;
+
     if (! strcmp (filepath, "cdda://"))
     {
         // audio CD:
@@ -713,38 +720,43 @@ EXPORT void Tuple::generate_fallbacks ()
         if (! album)
             data->set_str (FallbackAlbum, _("Audio CD"));
     }
-    else if (strstr (filepath, "://"))
+    else if ((s = find_domain (filepath)))
     {
-        // URL:
+        // internet URL:
         // use the domain name as the album
 
-        if (album)
-            return;
-
-        StringBuf buf = str_copy (filepath);
-        const char * domain = domain_name (buf);
-
-        if (domain)
-            data->set_str (FallbackAlbum, domain);
+        if (! album)
+            data->set_str (FallbackAlbum, extract_domain (s));
     }
     else
     {
-        // local file:
+        // any other URI:
         // use the top two path elements as the artist and album
 
         if (artist && album)
             return;
 
-        StringBuf buf;
-#ifdef _WIN32
-        if (filepath[0] && filepath[1] == ':' && filepath[2] == '\\')
-            buf.steal (str_copy (filepath + 3));
+        if ((s = strstr (filepath, "://")))
+        {
+            s += 3;
+            sep = '/';
+        }
         else
+        {
+#ifdef _WIN32
+            if (g_ascii_isalpha (filepath[0]) && filepath[1] == ':')
+                s = filepath + 2;
+            else
 #endif
-            buf.steal (str_copy (filepath));
+                s = filepath;
 
-        char * first = split_folder (buf);
-        char * second = (first && first > buf) ? split_folder (buf) : nullptr;
+            sep = G_DIR_SEPARATOR;
+        }
+
+        StringBuf buf = str_copy (s);
+
+        char * first = split_folder (buf, sep);
+        char * second = (first && first > buf) ? split_folder (buf, sep) : nullptr;
 
         // skip common strings and avoid duplicates
         for (auto skip : (const char *[]) {"~", "music", artist, album, get_str (Genre)})

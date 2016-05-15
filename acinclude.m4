@@ -107,13 +107,13 @@ fi
 dnl Enable "-Wl,-z,defs" only on Linux
 dnl ==================================
 if test $HAVE_LINUX = yes ; then
-	LDFLAGS="$LDFLAGS -Wl,-z,defs"
+    LDFLAGS="$LDFLAGS -Wl,-z,defs"
 fi
 
 dnl MinGW needs -march=i686 for atomics
 dnl ===================================
 if test $HAVE_MSWINDOWS = yes ; then
-	CFLAGS="$CFLAGS -march=i686"
+    CFLAGS="$CFLAGS -march=i686"
 fi
 
 dnl Byte order
@@ -173,7 +173,7 @@ AC_SUBST(USE_GTK)
 if test $HAVE_MSWINDOWS = yes ; then
     PKG_CHECK_MODULES(GIO, gio-2.0 >= 2.32)
 else
-	PKG_CHECK_MODULES(GIO, gio-2.0 >= 2.32 gio-unix-2.0 >= 2.32)
+    PKG_CHECK_MODULES(GIO, gio-2.0 >= 2.32 gio-unix-2.0 >= 2.32)
 fi
 
 AC_SUBST(GLIB_CFLAGS)
@@ -193,10 +193,12 @@ AC_ARG_ENABLE(qt,
  USE_QT=$enableval, USE_QT=no)
 
 if test $USE_QT = yes ; then
+    PKG_CHECK_MODULES([QTCORE], [Qt5Core >= 5.2])
     PKG_CHECK_MODULES([QT], [Qt5Core Qt5Gui Qt5Widgets >= 5.2])
     AC_DEFINE(USE_QT, 1, [Define if Qt support enabled])
 
     # needed if Qt was built with -reduce-relocations
+    QTCORE_CFLAGS="$QTCORE_CFLAGS -fPIC"
     QT_CFLAGS="$QT_CFLAGS -fPIC"
 fi
 

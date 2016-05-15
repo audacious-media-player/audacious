@@ -20,6 +20,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <locale.h>
 
 #include "audtool.h"
@@ -54,6 +55,8 @@ const struct commandhandler handlers[] =
     {"playback-status", playback_status, "print status (playing/paused/stopped)", 0},
     {"playback-seek", playback_seek, "seek to given time", 1},
     {"playback-seek-relative", playback_seek_relative, "seek to relative time offset", 1},
+    {"playback-record", playback_record, "toggle stream recording", 0},
+    {"playback-recording", playback_recording, "exit code = 0 if recording", 0},
 
     {"<sep>", NULL, "Playlist commands", 0},
     {"playlist-advance", playlist_advance, "skip to next song", 0},
@@ -121,6 +124,8 @@ const struct commandhandler handlers[] =
     {"about-show", show_about_window, "show/hide About window", 1},
 
     {"version", get_version, "print Audacious version", 0},
+    {"plugin-is-enabled", plugin_is_enabled, "exit code = 0 if plugin is enabled", 1},
+    {"plugin-enable", plugin_enable, "enable/disable plugin", 2},
     {"shutdown", shutdown_audacious_server, "shut down Audacious", 0},
 
     {"help", get_handlers_list, "print this help", 0},
@@ -140,7 +145,7 @@ static void audtool_disconnect (void)
     connection = NULL;
 }
 
-static void audtool_connect (void)
+static void audtool_connect (int instance)
 {
     GError * error = NULL;
 
@@ -153,8 +158,14 @@ static void audtool_connect (void)
         exit (EXIT_FAILURE);
     }
 
-    dbus_proxy = obj_audacious_proxy_new_sync (connection, 0,
-     "org.atheme.audacious", "/org/atheme/audacious", NULL, & error);
+    char name[32];
+    if (instance == 1)
+        strcpy (name, "org.atheme.audacious");
+    else
+        sprintf (name, "org.atheme.audacious-%d", instance);
+
+    dbus_proxy = obj_audacious_proxy_new_sync (connection, 0, name,
+     "/org/atheme/audacious", NULL, & error);
 
     if (! dbus_proxy)
     {
@@ -169,7 +180,8 @@ static void audtool_connect (void)
 
 int main (int argc, char * * argv)
 {
-    int i, j = 0, k = 0;
+    int instance = 1;
+    int i, j, k = 0;
 
     setlocale (LC_CTYPE, "");
 
@@ -177,7 +189,15 @@ int main (int argc, char * * argv)
     g_type_init();
 #endif
 
-    audtool_connect ();
+    // parse instance number (must come first)
+    if (argc >= 2 && argv[1][0] == '-' && argv[1][1] >= '1' && argv[1][1] <= '9' && ! argv[1][2])
+    {
+        instance = argv[1][1] - '0';
+        argc --;
+        argv ++;
+    }
+
+    audtool_connect (instance);
 
     if (argc < 2)
     {
@@ -193,7 +213,7 @@ int main (int argc, char * * argv)
              ! g_ascii_strcasecmp (g_strconcat ("--", handlers[i].name, NULL),
              argv[j])) && g_ascii_strcasecmp ("<sep>", handlers[i].name))
             {
-                int numargs = handlers[i].args + 1 < argc - j ? handlers[i].args + 1 : argc - j;
+                int numargs = MIN (handlers[i].args + 1, argc - j);
                 handlers[i].handler (numargs, & argv[j]);
                 j += handlers[i].args;
                 k ++;

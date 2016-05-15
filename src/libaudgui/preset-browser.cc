@@ -51,6 +51,8 @@ static void show_preset_browser (const char * title, gboolean save,
      GTK_RESPONSE_CANCEL, save ? _("Save") : _("Load"), GTK_RESPONSE_ACCEPT,
      nullptr);
 
+    gtk_file_chooser_set_local_only ((GtkFileChooser *) browser, false);
+
     if (default_filename)
         gtk_file_chooser_set_current_name ((GtkFileChooser *) browser, default_filename);
 

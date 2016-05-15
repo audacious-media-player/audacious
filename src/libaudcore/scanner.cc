@@ -1,6 +1,6 @@
 /*
  * scanner.c
- * Copyright 2012 John Lindgren
+ * Copyright 2012-2016 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -21,6 +21,8 @@
 
 #include <glib.h>  /* for GThreadPool */
 
+#include "audstrings.h"
+#include "cue-cache.h"
 #include "i18n.h"
 #include "internal.h"
 #include "plugins.h"
@@ -29,43 +31,88 @@
 
 static GThreadPool * pool;
 
-static void scan_worker (void * data, void *)
+ScanRequest::ScanRequest (const String & filename, int flags, Callback callback,
+ PluginHandle * decoder, Tuple && tuple) :
+    filename (filename),
+    flags (flags),
+    callback (callback),
+    decoder (decoder),
+    tuple (std::move (tuple)),
+    ip (nullptr)
 {
-    auto r = (ScanRequest *) data;
+    /* If this is a cuesheet entry (and it has not already been loaded), capture
+     * a reference to the cache immediately.  During a playlist scan, requests
+     * have overlapping lifecycles--each new ScanRequest is created by the
+     * callback of the previous request--so the cached cuesheet persists as long
+     * as consecutive playlist entries reference it. */
+    if (! this->tuple && is_cuesheet_entry (filename))
+        cue_cache.capture (new CueCacheRef (strip_subtune (filename)));
+}
 
-    if (! r->decoder)
-        r->decoder = file_find_decoder (r->filename, false, r->file, & r->error);
-    if (! r->decoder)
+void ScanRequest::read_cuesheet_entry ()
+{
+    for (auto & item : cue_cache->load ())
+    {
+        if (item.filename == filename)
+        {
+            decoder = item.decoder;
+            tuple = item.tuple.ref ();
+            break;
+        }
+    }
+}
+
+void ScanRequest::run ()
+{
+    /* load cuesheet entry (possibly cached) */
+    if (cue_cache)
+        read_cuesheet_entry ();
+
+    /* for a cuesheet entry, determine the source filename */
+    String audio_file = tuple.get_str (Tuple::AudioFile);
+    if (! audio_file)
+        audio_file = filename;
+
+    bool need_tuple = (flags & SCAN_TUPLE) && ! tuple;
+    bool need_image = (flags & SCAN_IMAGE);
+
+    if (! decoder)
+        decoder = file_find_decoder (audio_file, false, file, & error);
+    if (! decoder)
         goto err;
 
-    if ((r->flags & (SCAN_TUPLE | SCAN_IMAGE)))
+    if (need_tuple || need_image)
     {
-        if (! (r->ip = load_input_plugin (r->decoder, & r->error)))
+        if (! (ip = load_input_plugin (decoder, & error)))
             goto err;
 
-        Tuple * ptuple = (r->flags & SCAN_TUPLE) ? & r->tuple : nullptr;
-        Index<char> * pimage = (r->flags & SCAN_IMAGE) ? & r->image_data : nullptr;
+        Tuple * ptuple = need_tuple ? & tuple : nullptr;
+        Index<char> * pimage = need_image ? & image_data : nullptr;
 
-        if (! file_read_tag (r->filename, r->decoder, r->file, ptuple, pimage, & r->error))
+        if (! file_read_tag (audio_file, decoder, file, ptuple, pimage, & error))
             goto err;
 
-        if ((r->flags & SCAN_IMAGE) && ! r->image_data.len ())
-            r->image_file = art_search (r->filename);
+        if ((flags & SCAN_IMAGE) && ! image_data.len ())
+            image_file = art_search (audio_file);
     }
 
     /* rewind/reopen the input file */
-    if ((r->flags & SCAN_FILE))
-        open_input_file (r->filename, "r", r->ip, r->file, & r->error);
+    if ((flags & SCAN_FILE))
+        open_input_file (audio_file, "r", ip, file, & error);
     else
     {
     err:
         /* close file if not needed or if an error occurred */
-        r->file = VFSFile ();
+        file = VFSFile ();
     }
 
-    r->callback (r);
+    callback (this);
+}
 
-    delete r;
+static void scan_worker (void * data, void *)
+{
+    ((ScanRequest *) data)->run ();
+    delete (ScanRequest *) data;
 }
 
 void scanner_init ()

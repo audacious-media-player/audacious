@@ -115,6 +115,13 @@ EXPORT bool aud_ui_is_shown ()
     return aud_get_bool (0, "show_interface");
 }
 
+EXPORT void aud_ui_startup_notify (const char * id)
+{
+    /* startup_notify was added in Audacious 3.8 */
+    if (current_interface && (current_interface->version & 0xffff) >= 48)
+        current_interface->startup_notify (id);
+}
+
 EXPORT void aud_ui_show_error (const char * message)
 {
     if (aud_get_headless_mode ())

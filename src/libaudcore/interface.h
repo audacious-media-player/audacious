@@ -33,6 +33,7 @@ enum class AudMenuID {
 void aud_ui_show (bool show);
 bool aud_ui_is_shown ();
 
+void aud_ui_startup_notify (const char * id);
 void aud_ui_show_error (const char * message);  /* thread-safe */
 
 void aud_ui_show_about_window ();

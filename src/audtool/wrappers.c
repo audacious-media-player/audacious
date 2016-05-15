@@ -24,19 +24,18 @@
 
 void generic_on_off (int argc, char * * argv, OnOffFunc func)
 {
-    gboolean show = TRUE;
+    gboolean show;
 
-    if (argc >= 2)
+    if (argc == 1)
+        show = TRUE;
+    else if (argc == 2 && ! g_ascii_strcasecmp (argv[1], "on"))
+        show = TRUE;
+    else if (argc == 2 && ! g_ascii_strcasecmp (argv[1], "off"))
+        show = FALSE;
+    else
     {
-        if (! g_ascii_strcasecmp (argv[1], "on"))
-            show = TRUE;
-        else if (! g_ascii_strcasecmp (argv[1], "off"))
-            show = FALSE;
-        else
-        {
-            audtool_whine_args (argv[0], "<on/off>");
-            exit (1);
-        }
+        audtool_whine_args (argv[0], "<on/off>");
+        exit (1);
     }
 
     func (dbus_proxy, show, NULL, NULL);

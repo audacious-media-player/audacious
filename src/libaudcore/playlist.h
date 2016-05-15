@@ -371,8 +371,7 @@ void aud_playlist_sort_selected_by_scheme (int playlist, Playlist::SortType sche
 void aud_playlist_remove_duplicates_by_scheme (int playlist, Playlist::SortType scheme);
 
 /* Removes all entries referring to unavailable files in a playlist.  ("Remove
- * failed" is something of a misnomer for the current behavior.)  As currently
- * implemented, only works for file:// URIs. */
+ * failed" is something of a misnomer for the current behavior.) */
 void aud_playlist_remove_failed (int playlist);
 
 /* Selects all the entries in a playlist that match regular expressions stored
@@ -380,6 +379,10 @@ void aud_playlist_remove_failed (int playlist);
  * Example: To select all the songs whose title starts with the letter "A",
  * create a blank tuple and set its title field to "^A". */
 void aud_playlist_select_by_patterns (int playlist, const Tuple & patterns);
+
+/* Saves metadata for the selected entries in a playlist to an internal cache,
+ * which is used to speed up adding these entries to another playlist. */
+void aud_playlist_cache_selected (int playlist);
 
 /* Returns true if <filename> refers to a playlist file. */
 bool aud_filename_is_playlist (const char * filename);

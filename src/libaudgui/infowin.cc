@@ -472,9 +472,12 @@ EXPORT void audgui_infowin_show (int playlist, int entry)
         Tuple tuple = aud_playlist_entry_get_tuple (playlist, entry, Playlist::Wait, & error);
         if (tuple)
         {
+            /* cuesheet entries cannot be updated */
+            bool can_write = aud_file_can_write_tuple (filename, decoder) &&
+             ! tuple.is_set (Tuple::StartTime);
+
             tuple.delete_fallbacks ();
-            infowin_show (playlist, entry, filename, tuple, decoder,
-             aud_file_can_write_tuple (filename, decoder));
+            infowin_show (playlist, entry, filename, tuple, decoder, can_write);
         }
     }
 

@@ -1,4 +1,4 @@
-.TH AUDTOOL "1" "July 2015" "Version @PACKAGE_VERSION@"
+.TH AUDTOOL "1" "May 2016" "Version @PACKAGE_VERSION@"
 
 .SH NAME
 .B audtool
@@ -6,7 +6,7 @@
 
 .SH SYNOPSIS
 .B audtool
-\fIcommand\fR [\fIparameter\fR ...] ...
+[\fIinstance\fR] \fIcommand\fR [\fIparameter\fR ...] ...
 
 .SH DESCRIPTION
 .B audtool
@@ -15,6 +15,10 @@ sends commands to a running instance of Audacious.
 It can send many common commands, such as to skip to the next song in the
 playlist, and can also print status information, such as the title of the
 current song.
+.PP
+\fIinstance\fR may be given as \fB-1\fR, \fB-2\fR, etc. (up to \fB-9\fR) to
+specify which instance of Audacious to control when multiple instances have been
+started.
 
 .SH COMMANDS
 .SS Current song information:
@@ -103,6 +107,12 @@ Seek to the given time in seconds, relative to the beginning of the song.
 .TP
 .B --playback-seek-relative \fItime\fR
 Seek to the given time in seconds, relative to the current time counter.
+.TP
+.B --playback-record
+Toggle recording of the output stream (using FileWriter).
+.TP
+.B --playback-recording
+Return an exit code of 0 (true) if stream recording is enabled.
 
 .SS Playlist commands:
 
@@ -297,6 +307,16 @@ Show or hide the About window.
 .TP
 .B --version
 Print version information.
+.TP
+.B --plugin-is-enabled \fIplugin\fR
+Return an exit code of 0 (true) if the given plugin is enabled.  The plugin is
+specified using its installed filename minus the folder path and suffix: for
+example, \fBcrossfade\fR for \fI@plugindir@/Effect/crossfade.so\fR.
+.TP
+.B --plugin-enable \fIplugin\fR [on|off]
+Enable or disable the given plugin.  Note that interface and output plugins
+cannot be disabled directly since one of each must always be active.  Enabling
+an interface or output plugin will automatically disable the previous plugin.
 .TP
 .B --shutdown
 Shut down Audacious.

@@ -193,6 +193,8 @@ make install</tt></p></blockquote>
 <a href="http://ftp.gnome.org/pub/GNOME/sources/gtk+/2.24/gtk+-2.24.28.tar.xz">
 <tt>http://ftp.gnome.org/pub/GNOME/sources/gtk+/2.24/gtk+-2.24.28.tar.xz</tt></a></p>
 
+<p>Apply the patch <tt>gdkwindow-win32.c.diff</tt> to <tt>C:\gtksrc\gdk\win32\gdkwindow-win32.c</tt>.</p>
+
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/gtksrc<br>
 CFLAGS="-O2 -D_WIN32_WINNT=0x0501" ./configure --prefix=/C/GTK<br>
@@ -230,18 +232,6 @@ make install</tt></p></blockquote>
 
 <p><i>It may be necessary to run the MinGW shell with administrative privileges
 for GNOME Icon Theme to install successfully.</i></p>
-
-<h3>Install SDL</h3>
-
-<p>Download and unzip to <tt>C:\libsdl</tt>:<br>
-<a href="http://www.libsdl.org/release/SDL2-2.0.1.tar.gz">
-<tt>http://www.libsdl.org/release/SDL2-2.0.1.tar.gz</tt></a></p>
-
-<p>In the MinGW shell:</p>
-<blockquote><p><tt>cd /C/libsdl<br>
-./configure --prefix=/C/libs<br>
-make<br>
-make install</tt></p></blockquote>
 
 <h3>Install GNU regex</h3>
 
@@ -383,7 +373,7 @@ make install</tt></p></blockquote>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libflac<br>
-./configure --prefix=/C/libs --disable-sse --disable-ogg<br>
+./configure --prefix=/C/libs --disable-asm-optimizations --disable-sse --disable-ogg<br>
 make<br>
 make install</tt></p></blockquote>
 

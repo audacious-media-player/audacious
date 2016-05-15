@@ -425,7 +425,7 @@ ERR:
     fclose (handle);
 }
 
-static int plugin_compare (PluginHandle * const & a, PluginHandle * const & b, void *)
+static int plugin_compare (PluginHandle * const & a, PluginHandle * const & b)
 {
     if (a->type < b->type)
         return -1;
@@ -467,7 +467,7 @@ void plugin_registry_prune ()
     for (auto type : aud::range<PluginType> ())
     {
         plugins[type].remove_if (check_not_found);
-        plugins[type].sort (plugin_compare, nullptr);
+        plugins[type].sort (plugin_compare);
         compatible[type].insert (plugins[type].begin (), 0, plugins[type].len ());
         compatible[type].remove_if (check_incompatible);
     }

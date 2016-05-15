@@ -74,7 +74,7 @@ static void select_all (void * user, bool selected)
 
 static void shift_rows (void * user, int row, int before)
 {
-    GArray * shift = g_array_new (false, false, sizeof (int));
+    Index<int> shift;
     int list = aud_playlist_get_active ();
     int count = aud_playlist_queue_count (list);
 
@@ -84,7 +84,7 @@ static void shift_rows (void * user, int row, int before)
 
         if (aud_playlist_entry_get_selected (list, entry))
         {
-            g_array_append_val (shift, entry);
+            shift.append (entry);
 
             if (i < before)
                 before --;
@@ -93,10 +93,8 @@ static void shift_rows (void * user, int row, int before)
 
     aud_playlist_queue_delete_selected (list);
 
-    for (unsigned i = 0; i < shift->len; i ++)
-        aud_playlist_queue_insert (list, before + i, g_array_index (shift, int, i));
-
-    g_array_free (shift, true);
+    for (int i = 0; i < shift.len (); i ++)
+        aud_playlist_queue_insert (list, before + i, shift[i]);
 }
 
 static const AudguiListCallbacks callbacks = {

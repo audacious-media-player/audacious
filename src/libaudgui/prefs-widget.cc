@@ -38,7 +38,7 @@ static void widget_changed (GtkWidget * widget, const PreferencesWidget * w)
     {
     case PreferencesWidget::CheckButton:
     {
-        gboolean set = gtk_toggle_button_get_active ((GtkToggleButton *) widget);
+        bool set = gtk_toggle_button_get_active ((GtkToggleButton *) widget);
         w->cfg.set_bool (set);
 
         auto child = (GtkWidget *) g_object_get_data ((GObject *) widget, "child");
@@ -49,10 +49,17 @@ static void widget_changed (GtkWidget * widget, const PreferencesWidget * w)
     }
 
     case PreferencesWidget::RadioButton:
-        if (gtk_toggle_button_get_active ((GtkToggleButton *) widget))
+    {
+        bool set = gtk_toggle_button_get_active ((GtkToggleButton *) widget);
+        if (set)
             w->cfg.set_int (w->data.radio_btn.value);
 
+        auto child = (GtkWidget *) g_object_get_data ((GObject *) widget, "child");
+        if (child)
+            gtk_widget_set_sensitive (child, set);
+
         break;
+    }
 
     case PreferencesWidget::SpinButton:
         if (w->cfg.type == WidgetConfig::Int)
@@ -69,6 +76,13 @@ static void widget_changed (GtkWidget * widget, const PreferencesWidget * w)
     case PreferencesWidget::Entry:
         w->cfg.set_string (gtk_entry_get_text ((GtkEntry *) widget));
         break;
+
+    case PreferencesWidget::FileEntry:
+    {
+        String uri = audgui_file_entry_get_uri (widget);
+        w->cfg.set_string (uri ? uri : "");
+        break;
+    }
 
     case PreferencesWidget::ComboBox:
     {
@@ -124,6 +138,10 @@ static void widget_update (void *, void * widget)
         gtk_entry_set_text ((GtkEntry *) widget, w->cfg.get_string ());
         break;
 
+    case PreferencesWidget::FileEntry:
+        audgui_file_entry_set_uri ((GtkWidget *) widget, w->cfg.get_string ());
+        break;
+
     case PreferencesWidget::ComboBox:
         combobox_update ((GtkWidget *) widget, w);
         break;
@@ -162,6 +180,7 @@ static void widget_init (GtkWidget * widget, const PreferencesWidget * w)
         break;
 
     case PreferencesWidget::Entry:
+    case PreferencesWidget::FileEntry:
     case PreferencesWidget::ComboBox:
         g_signal_connect (widget, "changed", (GCallback) widget_changed, (void *) w);
         break;
@@ -194,8 +213,11 @@ static void create_spin_button (const PreferencesWidget * widget,
  GtkWidget * * label_pre, GtkWidget * * spin_btn, GtkWidget * * label_past,
  const char * domain)
 {
-    * label_pre = gtk_label_new (dgettext (domain, widget->label));
-    gtk_widget_set_halign (* label_pre, GTK_ALIGN_END);
+    if (widget->label)
+    {
+        * label_pre = gtk_label_new (dgettext (domain, widget->label));
+        gtk_widget_set_halign (* label_pre, GTK_ALIGN_END);
+    }
 
     * spin_btn = gtk_spin_button_new_with_range (widget->data.spin_btn.min,
      widget->data.spin_btn.max, widget->data.spin_btn.step);
@@ -245,6 +267,31 @@ static void create_entry (const PreferencesWidget * widget, GtkWidget * * label,
     {
         * label = gtk_label_new (dgettext (domain, widget->label));
         gtk_widget_set_halign (* label, GTK_ALIGN_END);
+    }
+
+    widget_init (* entry, widget);
+}
+
+/* WIDGET_FILE_ENTRY */
+
+static void create_file_entry (const PreferencesWidget * widget,
+ GtkWidget * * label, GtkWidget * * entry, const char * domain)
+{
+    switch (widget->data.file_entry.mode)
+    {
+    case FileSelectMode::File:
+        * entry = audgui_file_entry_new (GTK_FILE_CHOOSER_ACTION_OPEN, _("Choose File"));
+        break;
+
+    case FileSelectMode::Folder:
+        * entry = audgui_file_entry_new (GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER, _("Choose Folder"));
+        break;
+    }
+
+    if (widget->label)
+    {
+        * label = gtk_label_new (dgettext (domain, widget->label));
+        gtk_misc_set_alignment ((GtkMisc *) * label, 1, 0.5);
     }
 
     widget_init (* entry, widget);
@@ -339,6 +386,11 @@ static void fill_table (GtkWidget * table,
                 create_entry (& w, & widget_left, & widget_middle, domain);
                 break;
 
+            case PreferencesWidget::FileEntry:
+                create_file_entry (& w, & widget_left, & widget_middle, domain);
+                middle_policy = (GtkAttachOptions) (GTK_EXPAND | GTK_FILL);
+                break;
+
             case PreferencesWidget::ComboBox:
                 create_cbox (& w, & widget_left, & widget_middle, domain);
                 break;
@@ -368,7 +420,7 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
 {
     GtkWidget * widget = nullptr, * child_box = nullptr;
     bool disable_child = false;
-    GSList * radio_btn_group = nullptr;
+    GSList * radio_btn_group[2] = {};
 
     int indent = 0;
     int spacing = 0;
@@ -397,8 +449,11 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
         widget = nullptr;
         disable_child = false;
 
-        if (radio_btn_group && w.type != PreferencesWidget::RadioButton)
-            radio_btn_group = nullptr;
+        if (w.type != PreferencesWidget::RadioButton)
+            radio_btn_group[w.child] = nullptr;
+
+        if (! w.child)
+            radio_btn_group[true] = nullptr;
 
         int pad_left = indent;
         int pad_top = spacing;
@@ -444,9 +499,10 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
             }
 
             case PreferencesWidget::RadioButton:
-                widget = gtk_radio_button_new_with_mnemonic (radio_btn_group,
-                 dgettext (domain, w.label));
-                radio_btn_group = gtk_radio_button_get_group ((GtkRadioButton *) widget);
+                widget = gtk_radio_button_new_with_mnemonic
+                 (radio_btn_group[w.child], dgettext (domain, w.label));
+                radio_btn_group[w.child] = gtk_radio_button_get_group ((GtkRadioButton *) widget);
+                disable_child = (w.cfg.get_int () != w.data.radio_btn.value);
                 widget_init (widget, & w);
                 break;
 
@@ -498,11 +554,16 @@ void audgui_create_widgets_with_domain (GtkWidget * box,
                 break;
 
             case PreferencesWidget::Entry:
+            case PreferencesWidget::FileEntry:
             {
                 widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 
                 GtkWidget * entry = nullptr;
-                create_entry (& w, & label, & entry, domain);
+
+                if (w.type == PreferencesWidget::FileEntry)
+                    create_file_entry (& w, & label, & entry, domain);
+                else
+                    create_entry (& w, & label, & entry, domain);
 
                 if (label)
                     gtk_box_pack_start ((GtkBox *) widget, label, false, false, 0);

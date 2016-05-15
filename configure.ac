@@ -5,12 +5,12 @@ dnl ***
 dnl Initialize
 dnl ==========
 AC_PREREQ([2.59])
-AC_INIT([audacious], [3.7])
-AC_COPYRIGHT([Copyright (C) 2001-2015 Audacious developers and others])
+AC_INIT([audacious], [3.8-devel])
+AC_COPYRIGHT([Copyright (C) 2001-2016 Audacious developers and others])
 
 AC_DEFINE_UNQUOTED(PACKAGE, "$PACKAGE_NAME", [Name of package])
 AC_DEFINE_UNQUOTED(VERSION, "$PACKAGE_VERSION", [Version number of package])
-AC_DEFINE_UNQUOTED(COPYRIGHT, "Copyright © 2001-2015 Audacious developers and others", [Copyright])
+AC_DEFINE_UNQUOTED(COPYRIGHT, "Copyright © 2001-2016 Audacious developers and others", [Copyright])
 
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_HEADERS([config.h])

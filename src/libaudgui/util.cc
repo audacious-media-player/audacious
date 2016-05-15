@@ -140,6 +140,85 @@ EXPORT GtkWidget * audgui_button_new (const char * text, const char * icon,
     return button;
 }
 
+struct FileEntryData {
+    GtkFileChooserAction action;
+    String title;
+};
+
+static void entry_response_cb (GtkWidget * dialog, int response, GtkWidget * entry)
+{
+    if (response == GTK_RESPONSE_ACCEPT)
+    {
+        char * uri = gtk_file_chooser_get_uri ((GtkFileChooser *) dialog);
+        if (uri)
+        {
+            audgui_file_entry_set_uri (entry, uri);
+            g_free (uri);
+        }
+    }
+
+    gtk_widget_destroy (dialog);
+}
+
+static void entry_browse_cb (GtkWidget * entry, GtkEntryIconPosition pos,
+ GdkEvent * event, const FileEntryData * data)
+{
+    GtkWidget * dialog = gtk_file_chooser_dialog_new (data->title, nullptr,
+     data->action, _("Open"), GTK_RESPONSE_ACCEPT, _("Cancel"),
+     GTK_RESPONSE_REJECT, nullptr);
+
+    gtk_file_chooser_set_local_only ((GtkFileChooser *) dialog, false);
+
+    String uri = audgui_file_entry_get_uri (entry);
+    if (uri)
+        gtk_file_chooser_set_uri ((GtkFileChooser *) dialog, uri);
+
+    g_signal_connect (dialog, "response", (GCallback) entry_response_cb, entry);
+    g_signal_connect_object (entry, "destroy", (GCallback) gtk_widget_destroy,
+     dialog, G_CONNECT_SWAPPED);
+
+    gtk_widget_show (dialog);
+}
+
+EXPORT GtkWidget * audgui_file_entry_new (GtkFileChooserAction action, const char * title)
+{
+    GtkWidget * entry = gtk_entry_new ();
+
+    auto data = new FileEntryData {action, String (title)};
+    auto destroy_cb = [] (void * data) { delete (FileEntryData *) data; };
+    g_object_set_data_full ((GObject *) entry, "file-entry-data", data, destroy_cb);
+
+    gtk_entry_set_icon_from_icon_name ((GtkEntry *) entry,
+     GTK_ENTRY_ICON_SECONDARY, "document-open");
+    g_signal_connect (entry, "icon-press", (GCallback) entry_browse_cb, data);
+
+    return entry;
+}
+
+EXPORT String audgui_file_entry_get_uri (GtkWidget * entry)
+{
+    const char * text = gtk_entry_get_text ((GtkEntry *) entry);
+
+    if (! text[0])
+        return String ();
+    else if (strstr (text, "://"))
+        return String (text);
+    else
+        return String (filename_to_uri (text));
+}
+
+EXPORT void audgui_file_entry_set_uri (GtkWidget * entry, const char * uri)
+{
+    if (! uri || ! uri[0])
+    {
+        gtk_entry_set_text ((GtkEntry *) entry, "");
+        return;
+    }
+
+    StringBuf path = uri_to_filename (uri, false);
+    gtk_entry_set_text ((GtkEntry *) entry, path ? path : uri);
+}
+
 static const char * icon_for_message_type (GtkMessageType type)
 {
     switch (type)
