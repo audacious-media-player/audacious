@@ -548,7 +548,6 @@ static void * create_titlestring_table ()
 
     GtkWidget * titlestring_help_button = gtk_button_new ();
     gtk_widget_set_can_focus (titlestring_help_button, false);
-    gtk_button_set_focus_on_click ((GtkButton *) titlestring_help_button, false);
     gtk_button_set_relief ((GtkButton *) titlestring_help_button, GTK_RELIEF_HALF);
     gtk_grid_attach ((GtkGrid *) grid, titlestring_help_button, 2, 1, 1, 1);
 

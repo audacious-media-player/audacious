@@ -288,10 +288,12 @@ static void create_file_entry (const PreferencesWidget * widget,
         break;
     }
 
+    gtk_widget_set_hexpand (* entry, true);
+
     if (widget->label)
     {
         * label = gtk_label_new (dgettext (domain, widget->label));
-        gtk_misc_set_alignment ((GtkMisc *) * label, 1, 0.5);
+        gtk_widget_set_halign (* label, GTK_ALIGN_END);
     }
 
     widget_init (* entry, widget);
@@ -388,7 +390,6 @@ static void fill_table (GtkWidget * table,
 
             case PreferencesWidget::FileEntry:
                 create_file_entry (& w, & widget_left, & widget_middle, domain);
-                middle_policy = (GtkAttachOptions) (GTK_EXPAND | GTK_FILL);
                 break;
 
             case PreferencesWidget::ComboBox:
