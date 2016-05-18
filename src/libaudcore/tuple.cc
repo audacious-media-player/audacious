@@ -705,6 +705,15 @@ EXPORT void Tuple::generate_fallbacks ()
 
     data = TupleData::copy_on_write (data);
 
+    // use album artist, if present
+    if (! artist && (artist = get_str (AlbumArtist)))
+    {
+        data->set_str (FallbackArtist, artist);
+
+        if (album)
+            return; // nothing left to do
+    }
+
     auto filepath = get_str (Path);
     if (! filepath)
         return;
@@ -732,9 +741,6 @@ EXPORT void Tuple::generate_fallbacks ()
     {
         // any other URI:
         // use the top two path elements as the artist and album
-
-        if (artist && album)
-            return;
 
         if ((s = strstr (filepath, "://")))
         {
