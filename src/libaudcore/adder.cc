@@ -220,14 +220,17 @@ static void add_cuesheets (Index<String> & files, PlaylistFilterFunc filter,
         if (! playlist_load (cuesheet, title, items))
             continue;
 
-        StringBuf prev_filename;
+        String prev_filename;
         for (auto & item : items)
         {
+            String filename = item.tuple.get_str (Tuple::AudioFile);
+            if (! filename)  // pre-3.8 cue plugin?
+                filename = String (strip_subtune (item.filename));
+
             if (! filter || filter (item.filename, user))
                 add_file (std::move (item), filter, user, result, false);
 
             // remove duplicates from file list
-            StringBuf filename = strip_subtune (item.filename);
             if (prev_filename && ! filename_compare (filename, prev_filename))
                 continue;
 
@@ -235,7 +238,7 @@ static void add_cuesheets (Index<String> & files, PlaylistFilterFunc filter,
             if (idx >= 0)
                 files.remove (idx, 1);
 
-            prev_filename.steal (std::move (filename));
+            prev_filename = std::move (filename);
         }
     }
 }
