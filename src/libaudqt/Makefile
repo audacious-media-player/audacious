@@ -1,6 +1,6 @@
 SHARED_LIB = ${LIB_PREFIX}audqt${LIB_SUFFIX}
-LIB_MAJOR = 0
-LIB_MINOR = 1
+LIB_MAJOR = 1
+LIB_MINOR = 0
 
 SRCS = about.cc			\
        art.cc                   \
