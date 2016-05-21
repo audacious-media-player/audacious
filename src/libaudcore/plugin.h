@@ -126,7 +126,7 @@ struct PluginInfo
          ) {}
 };
 
-class Plugin
+class EXPORT Plugin
 {
 public:
     constexpr Plugin (PluginType type, PluginInfo info) :
@@ -145,7 +145,7 @@ public:
     virtual int take_message (const char * code, const void * data, int size) { return -1; }
 };
 
-class TransportPlugin : public Plugin
+class EXPORT TransportPlugin : public Plugin
 {
 public:
     constexpr TransportPlugin (const PluginInfo info,
@@ -165,7 +165,7 @@ public:
         { return Index<String> (); }
 };
 
-class PlaylistPlugin : public Plugin
+class EXPORT PlaylistPlugin : public Plugin
 {
 public:
     constexpr PlaylistPlugin (const PluginInfo info,
@@ -195,7 +195,7 @@ public:
      const Index<PlaylistAddItem> & items) { return false; }
 };
 
-class OutputPlugin : public Plugin
+class EXPORT OutputPlugin : public Plugin
 {
 public:
     constexpr OutputPlugin (const PluginInfo info, int priority, bool force_reopen = false) :
@@ -255,7 +255,7 @@ public:
     virtual void flush () = 0;
 };
 
-class EffectPlugin : public Plugin
+class EXPORT EffectPlugin : public Plugin
 {
 public:
     constexpr EffectPlugin (const PluginInfo info, int order, bool preserves_format) :
@@ -312,7 +312,7 @@ enum class InputKey {
     count
 };
 
-class InputPlugin : public Plugin
+class EXPORT InputPlugin : public Plugin
 {
 public:
     enum {
@@ -413,11 +413,6 @@ public:
      * read_tuple() and read_image().  The filename fields of the tuple
      * (if not null) are already set before the function is called. */
     virtual bool read_tag (const char * filename, VFSFile & file, Tuple * tuple,
-     Index<char> * image)
-        { return default_read_tag (filename, file, tuple, image); }
-
-    /* compatibility (non-virtual) implementation of read_tag(); do not use. */
-    bool default_read_tag (const char * filename, VFSFile & file, Tuple * tuple,
      Index<char> * image);
 
 protected:
@@ -459,7 +454,7 @@ protected:
     static int check_seek ();
 };
 
-class DockablePlugin : public Plugin
+class EXPORT DockablePlugin : public Plugin
 {
 public:
     constexpr DockablePlugin (PluginType type, PluginInfo info) :
@@ -472,7 +467,7 @@ public:
     virtual void * get_qt_widget () { return nullptr; }
 };
 
-class GeneralPlugin : public DockablePlugin
+class EXPORT GeneralPlugin : public DockablePlugin
 {
 public:
     constexpr GeneralPlugin (PluginInfo info, bool enabled_by_default) :
@@ -482,7 +477,7 @@ public:
     const bool enabled_by_default;
 };
 
-class VisPlugin : public DockablePlugin, public Visualizer
+class EXPORT VisPlugin : public DockablePlugin, public Visualizer
 {
 public:
     constexpr VisPlugin (PluginInfo info, int type_mask) :
@@ -490,7 +485,7 @@ public:
         Visualizer (type_mask) {}
 };
 
-class IfacePlugin : public Plugin
+class EXPORT IfacePlugin : public Plugin
 {
 public:
     constexpr IfacePlugin (PluginInfo info) :

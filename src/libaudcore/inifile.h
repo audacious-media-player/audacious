@@ -22,7 +22,7 @@
 
 class VFSFile;
 
-class IniParser
+class EXPORT IniParser
 {
 public:
     virtual ~IniParser () {}

@@ -67,7 +67,7 @@ constexpr VFSSeekType to_vfs_seek_type (int whence)
 
 #endif // WANT_VFS_STDIO_COMPAT
 
-class VFSImpl
+class EXPORT VFSImpl
 {
 public:
     VFSImpl () {}

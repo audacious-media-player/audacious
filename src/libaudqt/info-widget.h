@@ -27,7 +27,7 @@ namespace audqt {
 
 class InfoModel;
 
-class InfoWidget : public QTreeView
+class EXPORT InfoWidget : public QTreeView
 {
 public:
     InfoWidget (QWidget * parent = nullptr);

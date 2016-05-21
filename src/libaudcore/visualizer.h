@@ -20,7 +20,7 @@
 #ifndef LIBAUDCORE_VISUALIZER_H
 #define LIBAUDCORE_VISUALIZER_H
 
-class Visualizer
+class EXPORT Visualizer
 {
 public:
     enum {
