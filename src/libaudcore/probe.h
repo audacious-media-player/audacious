@@ -33,9 +33,9 @@ class VFSFile;
  * ready" hook is called, with <file> as a parameter.  If no album art could be
  * loaded, sets *queued to false and returns nullptr.
  *
- * Since Audacious 3.7, album art for the currently playing song is always
- * loaded before the "playback ready" hook is called.  Hence the "current art
- * ready" hook from previous versions is deprecated. */
+ * If you only want to display album art for the currently playing song, you can
+ * call this function from the "playback ready" hook without any need for a
+ * separate "art ready" handler, since the album art is already at that point. */
 const Index<char> * aud_art_request_data (const char * file, bool * queued = nullptr);
 
 /* Similar to art_request_data() but returns the URI of an image file.

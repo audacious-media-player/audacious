@@ -39,18 +39,6 @@ EXPORT bool read_tag (VFSFile & file, Tuple * tuple, Index<char> * image)
     return module->read_tag (file, tuple, image);
 }
 
-EXPORT bool tuple_read (Tuple & tuple, VFSFile & file)
-{
-    return read_tag (file, & tuple, nullptr);
-}
-
-EXPORT Index<char> image_read (VFSFile & file)
-{
-    Index<char> image;
-    read_tag (file, nullptr, & image);
-    return image;
-}
-
 EXPORT bool tuple_write (const Tuple & tuple, VFSFile & file, TagType new_type)
 {
     TagModule * module = find_tag_module (file, new_type);

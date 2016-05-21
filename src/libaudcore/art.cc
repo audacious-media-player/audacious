@@ -87,11 +87,6 @@ static void send_requests (void *)
     for (const String & file : queued)
     {
         hook_call ("art ready", (void *) (const char *) file);
-
-        /* this hook is deprecated in 3.7 but kept for compatibility */
-        if (file == current_ref)
-            hook_call ("current art ready", (void *) (const char *) file);
-
         aud_art_unref (file); /* release temporary reference */
     }
 }

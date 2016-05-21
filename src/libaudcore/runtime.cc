@@ -256,10 +256,6 @@ static void set_config_paths ()
 #endif
 }
 
-// no longer needed in Audacious 3.8+
-EXPORT void aud_init_paths () {}
-EXPORT void aud_cleanup_paths () {}
-
 EXPORT const char * aud_get_path (AudPath id)
 {
     if (! aud_paths[id])
