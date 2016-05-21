@@ -42,6 +42,9 @@ static void do_erase (void * data, int len, aud::EraseFunc erase_func)
 
 EXPORT void IndexBase::clear (aud::EraseFunc erase_func)
 {
+    if (! m_data)
+        return;
+
     __sync_sub_and_fetch (& misc_bytes_allocated, m_size);
 
     do_erase (m_data, m_len, erase_func);
@@ -56,6 +59,9 @@ EXPORT void * IndexBase::insert (int pos, int len)
 {
     assert (pos <= m_len);
     assert (len >= 0);
+
+    if (! len)
+        goto out;
 
     if (pos < 0)
         pos = m_len;  /* insert at end */
@@ -86,12 +92,16 @@ EXPORT void * IndexBase::insert (int pos, int len)
     memmove ((char *) m_data + pos + len, (char *) m_data + pos, m_len - pos);
     m_len += len;
 
+out:
     return (char *) m_data + pos;
 }
 
 EXPORT void IndexBase::insert (int pos, int len, aud::FillFunc fill_func)
 {
     void * to = insert (pos, len);
+
+    if (! len)
+        return;
 
     if (fill_func)
         fill_func (to, len);
@@ -102,6 +112,9 @@ EXPORT void IndexBase::insert (int pos, int len, aud::FillFunc fill_func)
 EXPORT void IndexBase::insert (const void * from, int pos, int len, aud::CopyFunc copy_func)
 {
     void * to = insert (pos, len);
+
+    if (! len)
+        return;
 
     if (copy_func)
         copy_func (from, to, len);
@@ -117,6 +130,9 @@ EXPORT void IndexBase::remove (int pos, int len, aud::EraseFunc erase_func)
     if (len < 0)
         len = m_len - pos;  /* remove all following */
 
+    if (! len)
+        return;
+
     do_erase ((char *) m_data + pos, len, erase_func);
     memmove ((char *) m_data + pos, (char *) m_data + pos + len, m_len - pos - len);
     m_len -= len;
@@ -130,6 +146,9 @@ EXPORT void IndexBase::erase (int pos, int len, aud::FillFunc fill_func, aud::Er
     if (len < 0)
         len = m_len - pos;  /* erase all following */
 
+    if (! len)
+        return;
+
     do_erase ((char *) m_data + pos, len, erase_func);
     do_fill ((char *) m_data + pos, len, fill_func);
 }
@@ -139,6 +158,9 @@ EXPORT void IndexBase::shift (int from, int to, int len, aud::FillFunc fill_func
     assert (len >= 0 && len <= m_len);
     assert (from >= 0 && from + len <= m_len);
     assert (to >= 0 && to + len <= m_len);
+
+    if (! len)
+        return;
 
     int erase_len = aud::min (len, abs (to - from));
 
@@ -164,6 +186,9 @@ EXPORT void IndexBase::move_from (IndexBase & b, int from, int to, int len,
 
     if (len < 0)
         len = b.m_len - from;  /* copy all following */
+
+    if (! len)
+        return;
 
     if (expand)
     {
@@ -192,6 +217,9 @@ EXPORT void IndexBase::move_from (IndexBase & b, int from, int to, int len,
 
 EXPORT void IndexBase::sort (CompareFunc compare, int elemsize, void * userdata)
 {
+    if (! m_len)
+        return;
+
     // since we require GLib >= 2.32, g_qsort_with_data performs a stable sort
     g_qsort_with_data (m_data, m_len / elemsize, elemsize, compare, userdata);
 }
