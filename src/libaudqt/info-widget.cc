@@ -48,7 +48,7 @@ static const TupleFieldMap tuple_field_map[] = {
     {N_("Recording Year"), Tuple::Year, true},
     {N_("Recording Date"), Tuple::Date, true},
 
-    {nullptr, Tuple::Invalid, false},
+    {"", Tuple::Invalid, false},
     {N_("Technical"), Tuple::Invalid, false},
     {N_("Length"), Tuple::Length, false},
     {N_("MIME Type"), Tuple::MIMEType, false},
