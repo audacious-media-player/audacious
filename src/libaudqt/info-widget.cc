@@ -25,6 +25,7 @@
 
 #include <libaudcore/i18n.h>
 #include <libaudcore/probe.h>
+#include <libaudcore/tuple.h>
 
 namespace audqt {
 
@@ -57,9 +58,43 @@ static const TupleFieldMap tuple_field_map[] = {
     {N_("Bitrate"), Tuple::Bitrate, false},
 };
 
-EXPORT InfoWidget::InfoWidget (QWidget * parent) : QTreeView (parent)
+class InfoModel : public QAbstractTableModel
 {
-    setModel (& m_model);
+public:
+    InfoModel (QObject * parent = nullptr) :
+        QAbstractTableModel (parent) {}
+
+    int rowCount (const QModelIndex & parent = QModelIndex ()) const
+        { return aud::n_elems (tuple_field_map); }
+    int columnCount (const QModelIndex & parent = QModelIndex ()) const
+        { return 2; }
+
+    QVariant data (const QModelIndex & index, int role = Qt::DisplayRole) const;
+    bool setData (const QModelIndex & index, const QVariant & value, int role = Qt::EditRole);
+    Qt::ItemFlags flags (const QModelIndex & index) const;
+
+    void setTupleData (const Tuple & tuple, String filename, PluginHandle * plugin)
+    {
+        m_tuple = tuple.ref ();
+        m_filename = filename;
+        m_plugin = plugin;
+        m_dirty = false;
+    }
+
+    bool updateFile () const;
+
+private:
+    Tuple m_tuple;
+    String m_filename;
+    PluginHandle * m_plugin = nullptr;
+    bool m_dirty = false;
+};
+
+EXPORT InfoWidget::InfoWidget (QWidget * parent) :
+    QTreeView (parent),
+    m_model (new InfoModel (this))
+{
+    setModel (m_model);
     header ()->hide ();
     setIndentation (0);
     resizeColumnToContents (0);
@@ -72,29 +107,14 @@ EXPORT InfoWidget::~InfoWidget ()
 EXPORT void InfoWidget::fillInfo (int playlist, int entry, const char * filename, const Tuple & tuple,
  PluginHandle * decoder, bool updating_enabled)
 {
-    m_model.setTupleData (tuple, String (filename), decoder);
+    m_model->setTupleData (tuple, String (filename), decoder);
     reset ();
     setEditTriggers (updating_enabled ? QAbstractItemView::SelectedClicked : QAbstractItemView::NoEditTriggers);
 }
 
 EXPORT bool InfoWidget::updateFile ()
 {
-    return m_model.updateFile ();
-}
-
-InfoModel::InfoModel (QObject * parent) : QAbstractTableModel (parent)
-{
-}
-
-int InfoModel::rowCount (const QModelIndex & parent) const
-{
-    auto r = ArrayRef<TupleFieldMap> (tuple_field_map);
-    return r.len;
-}
-
-int InfoModel::columnCount (const QModelIndex & parent) const
-{
-    return 2;
+    return m_model->updateFile ();
 }
 
 bool InfoModel::updateFile () const
@@ -195,14 +215,6 @@ Qt::ItemFlags InfoModel::flags (const QModelIndex & index) const
     }
 
     return Qt::ItemNeverHasChildren;
-}
-
-void InfoModel::setTupleData (const Tuple & tuple, String filename, PluginHandle * plugin)
-{
-    m_tuple = tuple.ref ();
-    m_filename = filename;
-    m_plugin = plugin;
-    m_dirty = false;
 }
 
 } // namespace audqt
