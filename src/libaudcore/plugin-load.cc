@@ -50,15 +50,15 @@ struct LoadedModule {
 
 static Index<LoadedModule> loaded_modules;
 
-bool plugin_check_flags (int version)
+bool plugin_check_flags (int flags)
 {
     switch (aud_get_mainloop_type ())
     {
-        case MainloopType::GLib: version &= ~_AUD_PLUGIN_GLIB_ONLY; break;
-        case MainloopType::Qt: version &= ~_AUD_PLUGIN_QT_ONLY; break;
+        case MainloopType::GLib: flags &= ~PluginGLibOnly; break;
+        case MainloopType::Qt: flags &= ~PluginQtOnly; break;
     }
 
-    return ! (version & 0xffff0000);
+    return ! flags;
 }
 
 Plugin * plugin_load (const char * filename)
@@ -84,16 +84,15 @@ Plugin * plugin_load (const char * filename)
         return nullptr;
     }
 
-    /* flags are stored in high 16 bits of version field */
-    if ((header->version & 0xffff) < _AUD_PLUGIN_VERSION_MIN ||
-        (header->version & 0xffff) > _AUD_PLUGIN_VERSION)
+    if (header->version < _AUD_PLUGIN_VERSION_MIN ||
+        header->version > _AUD_PLUGIN_VERSION)
     {
         AUDERR ("%s is not compatible with this version of Audacious.\n", filename);
         g_module_close (module);
         return nullptr;
     }
 
-    if (plugin_check_flags (header->version) &&
+    if (plugin_check_flags (header->info.flags) &&
         (header->type == PluginType::Transport ||
          header->type == PluginType::Playlist ||
          header->type == PluginType::Input ||
@@ -114,7 +113,7 @@ Plugin * plugin_load (const char * filename)
 
 static void plugin_unload (LoadedModule & loaded)
 {
-    if (plugin_check_flags (loaded.header->version) &&
+    if (plugin_check_flags (loaded.header->info.flags) &&
         (loaded.header->type == PluginType::Transport ||
          loaded.header->type == PluginType::Playlist ||
          loaded.header->type == PluginType::Input ||

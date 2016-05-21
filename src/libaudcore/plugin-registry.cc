@@ -35,7 +35,7 @@
 
 /* Increment this when the format of the plugin-registry file changes.
  * Add 10 if the format changes in a way that will break parse_plugins_fallback(). */
-#define FORMAT 10
+#define FORMAT 11
 
 /* Oldest file format supported by parse_plugins_fallback() */
 #define MIN_FORMAT 2  // "enabled" flag was added in Audacious 2.4
@@ -50,7 +50,7 @@ class PluginHandle
 public:
     String basename, path;
     bool loaded;
-    int timestamp, version;
+    int timestamp, version, flags;
     PluginType type;
     Plugin * header;
     String name, domain;
@@ -71,12 +71,13 @@ public:
     int has_subtunes, writes_tag;
 
     PluginHandle (const char * basename, const char * path, bool loaded,
-     int timestamp, int version, PluginType type, Plugin * header) :
+     int timestamp, int version, int flags, PluginType type, Plugin * header) :
         basename (basename),
         path (path),
         loaded (loaded),
         timestamp (timestamp),
         version (version),
+        flags (flags),
         type (type),
         header (header),
         priority (0),
@@ -167,6 +168,7 @@ static void plugin_save (PluginHandle * plugin, FILE * handle)
     fprintf (handle, "%s %s\n", plugin_type_names[plugin->type], (const char *) plugin->path);
     fprintf (handle, "stamp %d\n", plugin->timestamp);
     fprintf (handle, "version %d\n", plugin->version);
+    fprintf (handle, "flags %d\n", plugin->flags);
     fprintf (handle, "name %s\n", (const char *) plugin->name);
 
     if (plugin->domain)
@@ -319,11 +321,15 @@ static bool plugin_parse (FILE * handle)
 
     parse_next (handle);
 
-    int version = 0;
+    int version = 0, flags = 0;
     if (parse_integer ("version", & version))
         parse_next (handle);
+    if (parse_integer ("flags", & flags))
+        parse_next (handle);
 
-    auto plugin = new PluginHandle (basename, String (), false, timestamp, version, type, nullptr);
+    auto plugin = new PluginHandle (basename, String (), false, timestamp,
+     version, flags, type, nullptr);
+
     plugins[type].append (plugin);
 
     plugin->name = parse_string ("name");
@@ -393,7 +399,7 @@ static void parse_plugins_fallback (FILE * handle)
             return;
 
         // setting timestamp to zero forces a rescan
-        auto plugin = new PluginHandle (basename, String (), false, 0, 0, type, nullptr);
+        auto plugin = new PluginHandle (basename, String (), false, 0, 0, 0, type, nullptr);
         plugins[type].append (plugin);
         plugin->enabled = (PluginEnabled) enabled;
     }
@@ -457,7 +463,7 @@ void plugin_registry_prune ()
 
     auto check_incompatible = [] (PluginHandle * plugin)
     {
-        if (plugin_check_flags (plugin->version))
+        if (plugin_check_flags (plugin->flags))
             return false;
 
         AUDINFO ("Incompatible plugin flags: %s\n", (const char *) plugin->basename);
@@ -499,6 +505,7 @@ static void plugin_get_info (PluginHandle * plugin, bool is_new)
     Plugin * header = plugin->header;
 
     plugin->version = header->version;
+    plugin->flags = header->info.flags;
     plugin->name = String (header->info.name);
     plugin->domain = String (header->info.domain);
     plugin->has_about = (bool) header->info.about;
@@ -590,7 +597,7 @@ void plugin_register (const char * path, int timestamp)
             return;
 
         plugin = new PluginHandle (basename, path, true, timestamp,
-         header->version, header->type, header);
+         header->version, header->info.flags, header->type, header);
         plugins[plugin->type].append (plugin);
 
         plugin_get_info (plugin, true);

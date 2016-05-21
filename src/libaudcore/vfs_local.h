@@ -25,7 +25,7 @@
 class LocalTransport : public TransportPlugin
 {
 public:
-    constexpr LocalTransport () : TransportPlugin (PluginInfo (), nullptr) {}
+    constexpr LocalTransport () : TransportPlugin (PluginInfo (nullptr, nullptr), nullptr) {}
 
     VFSImpl * fopen (const char * filename, const char * mode, String & error);
     VFSFileTest test_file (const char * filename, VFSFileTest test, String & error);
@@ -35,7 +35,7 @@ public:
 class StdinTransport : public TransportPlugin
 {
 public:
-    constexpr StdinTransport () : TransportPlugin (PluginInfo (), nullptr) {}
+    constexpr StdinTransport () : TransportPlugin (PluginInfo (nullptr, nullptr), nullptr) {}
 
     VFSImpl * fopen (const char * filename, const char * mode, String & error);
 };

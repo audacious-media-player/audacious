@@ -49,10 +49,6 @@ struct PluginPreferences;
 #define _AUD_PLUGIN_VERSION_MIN 48 /* 3.8-devel */
 #define _AUD_PLUGIN_VERSION     48 /* 3.8-devel */
 
-/* compatibility flags ORed into the version field */
-#define _AUD_PLUGIN_GLIB_ONLY 0x10000 /* plugin requires GLib mainloop */
-#define _AUD_PLUGIN_QT_ONLY   0x20000 /* plugin requires Qt mainloop */
-
 /* A NOTE ON THREADS
  *
  * How thread-safe a plugin must be depends on the type of plugin.  Note that
@@ -99,11 +95,35 @@ struct PluginPreferences;
  * For the time being, aud_plugin_send_message() should only be called from the
  * program's main thread. */
 
-struct PluginInfo {
+/* plugin flags */
+enum {
+    PluginGLibOnly = 0x1, // plugin requires GLib main loop
+    PluginQtOnly   = 0x2  // plugin requires Qt main loop
+};
+
+struct PluginInfo
+{
     const char * name;
     const char * domain; // for gettext
     const char * about;
     const PluginPreferences * prefs;
+    int flags;
+
+    constexpr PluginInfo (const char * name, const char * domain,
+     const char * about = nullptr, const PluginPreferences * prefs = nullptr,
+     int flags = 0) :
+        name (name),
+        domain (domain),
+        about (about),
+        prefs (prefs),
+        flags (flags
+#ifdef AUD_PLUGIN_GLIB_ONLY // pre-3.8 flag style
+         | PluginGLibOnly
+#endif
+#ifdef AUD_PLUGIN_QT_ONLY
+         | PluginQtOnly
+#endif
+         ) {}
 };
 
 class Plugin
@@ -114,14 +134,7 @@ public:
         info (info) {}
 
     const int magic = _AUD_PLUGIN_MAGIC;
-    const int version = _AUD_PLUGIN_VERSION
-#ifdef AUD_PLUGIN_GLIB_ONLY
-     | _AUD_PLUGIN_GLIB_ONLY
-#endif
-#ifdef AUD_PLUGIN_QT_ONLY
-     | _AUD_PLUGIN_QT_ONLY
-#endif
-     ;
+    const int version = _AUD_PLUGIN_VERSION;
 
     const PluginType type;
     const PluginInfo info;

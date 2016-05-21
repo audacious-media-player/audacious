@@ -174,13 +174,7 @@ bool file_read_tag (const char * filename, PluginHandle * decoder,
     if (tuple)
         tuple->set_filename (filename);
 
-    bool success;
-
-    /* read_tag() was added in 3.7 */
-    if ((ip->version & 0xffff) >= 47)
-        success = ip->read_tag (filename, file, tuple, image);
-    else
-        success = ip->default_read_tag (filename, file, tuple, image);
+    bool success = ip->read_tag (filename, file, tuple, image);
 
     if (! success && error)
         * error = String (_("Error reading metadata"));
