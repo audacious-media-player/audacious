@@ -135,6 +135,10 @@ EXPORT void simple_message (const char * title, const char * text, QMessageBox::
 /* translate GTK+ accelerators and also handle dgettext() */
 EXPORT QString translate_str (const char * str, const char * domain)
 {
+    /* handle null and empty strings */
+    if (! str || ! str[0])
+        return QString (str);
+
     /* translate the GTK+ accelerator (_) into a Qt accelerator (&) */
     return QString (dgettext (domain, str)).replace ('_', '&');
 }
