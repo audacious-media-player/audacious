@@ -49,7 +49,7 @@ public:
 
     // true if a periodic timer is running
     // does not apply to one-time callbacks
-    bool running ()
+    bool running () const
         { return _running; }
 
     constexpr QueuedFunc () = default;
