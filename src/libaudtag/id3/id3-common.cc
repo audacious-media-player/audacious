@@ -181,8 +181,8 @@ static bool decode_rva_block (const char * * _data, int * _size,
         return false;
 
     * channel = (unsigned char) data[0];
-    * adjustment = (char) data[1]; /* first byte is signed */
-    * adjustment = (* adjustment << 8) | (unsigned char) data[2];
+    /* first byte is signed, but C/C++ allows shifting only unsigned values */
+    * adjustment = (int16_t) ((unsigned char) data[1] << 8) | (unsigned char) data[2];
     * adjustment_unit = 512;
     peak_bits = (unsigned char) data[3];
 
