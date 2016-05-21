@@ -224,8 +224,8 @@ static void add_cuesheets (Index<String> & files, PlaylistFilterFunc filter,
         for (auto & item : items)
         {
             String filename = item.tuple.get_str (Tuple::AudioFile);
-            if (! filename)  // pre-3.8 cue plugin?
-                filename = String (strip_subtune (item.filename));
+            if (! filename)
+                continue; // shouldn't happen
 
             if (! filter || filter (item.filename, user))
                 add_file (std::move (item), filter, user, result, false);

@@ -220,6 +220,7 @@ struct PreferencesWidget
         RadioButton,
         SpinButton,
         Entry,
+        FileEntry,
         ComboBox,
         FontButton,
         Box,
@@ -227,8 +228,7 @@ struct PreferencesWidget
         Notebook,
         Separator,
         CustomGTK,
-        CustomQt,
-        FileEntry  /* added in Audacious 3.8 */
+        CustomQt
     };
 
     Type type;

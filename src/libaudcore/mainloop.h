@@ -56,16 +56,10 @@ public:
     QueuedFunc (const QueuedFunc &) = delete;
     void operator= (const QueuedFunc &) = delete;
 
-    // added in Audacious 3.7
-    // previously, all instances had to be declared static
     ~QueuedFunc ()
         { stop (); }
 
 private:
-#ifdef __clang__
-    __attribute__ ((unused))
-#endif
-    int serial = 0;  // no longer used, kept for ABI compatibility
     bool _running = false;
 
     void start (const QueuedFuncParams & params);
