@@ -361,5 +361,5 @@ EXPORT void aud_leak_check ()
     string_leak_check ();
 
     if (misc_bytes_allocated)
-        AUDWARN ("Bytes allocated at exit: %zd\n", misc_bytes_allocated);
+        AUDWARN ("Bytes allocated at exit: %ld\n", (long) misc_bytes_allocated);
 }
