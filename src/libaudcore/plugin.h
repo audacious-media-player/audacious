@@ -22,6 +22,7 @@
 #define LIBAUDCORE_PLUGIN_H
 
 #include <libaudcore/audio.h>
+#include <libaudcore/export.h>
 #include <libaudcore/plugins.h>
 #include <libaudcore/tuple.h>
 #include <libaudcore/visualizer.h>
@@ -126,7 +127,7 @@ struct PluginInfo
          ) {}
 };
 
-class EXPORT Plugin
+class LIBAUDCORE_PUBLIC Plugin
 {
 public:
     constexpr Plugin (PluginType type, PluginInfo info) :
@@ -145,7 +146,7 @@ public:
     virtual int take_message (const char * code, const void * data, int size) { return -1; }
 };
 
-class EXPORT TransportPlugin : public Plugin
+class LIBAUDCORE_PUBLIC TransportPlugin : public Plugin
 {
 public:
     constexpr TransportPlugin (const PluginInfo info,
@@ -165,7 +166,7 @@ public:
         { return Index<String> (); }
 };
 
-class EXPORT PlaylistPlugin : public Plugin
+class LIBAUDCORE_PUBLIC PlaylistPlugin : public Plugin
 {
 public:
     constexpr PlaylistPlugin (const PluginInfo info,
@@ -195,7 +196,7 @@ public:
      const Index<PlaylistAddItem> & items) { return false; }
 };
 
-class EXPORT OutputPlugin : public Plugin
+class LIBAUDCORE_PUBLIC OutputPlugin : public Plugin
 {
 public:
     constexpr OutputPlugin (const PluginInfo info, int priority, bool force_reopen = false) :
@@ -255,7 +256,7 @@ public:
     virtual void flush () = 0;
 };
 
-class EXPORT EffectPlugin : public Plugin
+class LIBAUDCORE_PUBLIC EffectPlugin : public Plugin
 {
 public:
     constexpr EffectPlugin (const PluginInfo info, int order, bool preserves_format) :
@@ -312,7 +313,7 @@ enum class InputKey {
     count
 };
 
-class EXPORT InputPlugin : public Plugin
+class LIBAUDCORE_PUBLIC InputPlugin : public Plugin
 {
 public:
     enum {
@@ -454,7 +455,7 @@ protected:
     static int check_seek ();
 };
 
-class EXPORT DockablePlugin : public Plugin
+class LIBAUDCORE_PUBLIC DockablePlugin : public Plugin
 {
 public:
     constexpr DockablePlugin (PluginType type, PluginInfo info) :
@@ -467,7 +468,7 @@ public:
     virtual void * get_qt_widget () { return nullptr; }
 };
 
-class EXPORT GeneralPlugin : public DockablePlugin
+class LIBAUDCORE_PUBLIC GeneralPlugin : public DockablePlugin
 {
 public:
     constexpr GeneralPlugin (PluginInfo info, bool enabled_by_default) :
@@ -477,7 +478,7 @@ public:
     const bool enabled_by_default;
 };
 
-class EXPORT VisPlugin : public DockablePlugin, public Visualizer
+class LIBAUDCORE_PUBLIC VisPlugin : public DockablePlugin, public Visualizer
 {
 public:
     constexpr VisPlugin (PluginInfo info, int type_mask) :
@@ -485,7 +486,7 @@ public:
         Visualizer (type_mask) {}
 };
 
-class EXPORT IfacePlugin : public Plugin
+class LIBAUDCORE_PUBLIC IfacePlugin : public Plugin
 {
 public:
     constexpr IfacePlugin (PluginInfo info) :

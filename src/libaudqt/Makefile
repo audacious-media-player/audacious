@@ -22,7 +22,11 @@ SRCS = about.cc			\
        util.cc			\
        volumebutton.cc
 
-INCLUDES = libaudqt.h iface.h info-widget.h menu.h
+INCLUDES = export.h \
+           iface.h \
+           info-widget.h \
+           libaudqt.h \
+           menu.h
 
 include ../../buildsys.mk
 include ../../extra.mk

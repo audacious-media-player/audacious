@@ -19,6 +19,7 @@
  */
 
 #include <QTreeView>
+#include <libaudqt/export.h>
 
 class PluginHandle;
 class Tuple;
@@ -27,7 +28,7 @@ namespace audqt {
 
 class InfoModel;
 
-class EXPORT InfoWidget : public QTreeView
+class LIBAUDQT_PUBLIC InfoWidget : public QTreeView
 {
 public:
     InfoWidget (QWidget * parent = nullptr);

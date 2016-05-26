@@ -1,6 +1,6 @@
 /*
- * inifile.h
- * Copyright 2013 John Lindgren
+ * export.h
+ * Copyright 2016 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -17,28 +17,17 @@
  * the use of this software.
  */
 
-#ifndef LIBAUDCORE_INIFILE_H
-#define LIBAUDCORE_INIFILE_H
+#ifndef LIBAUDQT_EXPORT_H
+#define LIBAUDQT_EXPORT_H
 
-#include <libaudcore/export.h>
+#ifdef _WIN32
+  #ifdef LIBAUDQT_BUILD
+    #define LIBAUDQT_PUBLIC __declspec(dllexport)
+  #else
+    #define LIBAUDQT_PUBLIC __declspec(dllimport)
+  #endif
+#else
+  #define LIBAUDQT_PUBLIC __attribute__ ((visibility ("default")))
+#endif
 
-class VFSFile;
-
-class LIBAUDCORE_PUBLIC IniParser
-{
-public:
-    virtual ~IniParser () {}
-
-    void parse (VFSFile & file);
-
-protected:
-    virtual void handle_heading (const char * heading) = 0;
-    virtual void handle_entry (const char * key, const char * value) = 0;
-};
-
-bool inifile_write_heading (VFSFile & file, const char * heading)
- __attribute__ ((warn_unused_result));
-bool inifile_write_entry (VFSFile & file, const char * key, const char * value)
- __attribute__ ((warn_unused_result));
-
-#endif /* LIBAUDCORE_INIFILE_H */
+#endif // LIBAUDQT_EXPORT_H

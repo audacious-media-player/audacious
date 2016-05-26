@@ -21,12 +21,13 @@
 #define LIBAUDQT_IFACE_H
 
 #include <libaudcore/plugin.h>
+#include <libaudqt/export.h>
 #include <libaudqt/libaudqt.h>
 #include <libaudqt/menu.h>
 
 namespace audqt {
 
-class EXPORT QtIfacePlugin : public IfacePlugin
+class LIBAUDQT_PUBLIC QtIfacePlugin : public IfacePlugin
 {
 public:
     constexpr QtIfacePlugin (PluginInfo info) : IfacePlugin (info) {}
