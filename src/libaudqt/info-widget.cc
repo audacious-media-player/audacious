@@ -122,10 +122,7 @@ bool InfoModel::updateFile () const
     if (! m_dirty)
         return true;
 
-    Tuple t = m_tuple.ref ();
-    t.set_filename (m_filename);
-
-    return aud_file_write_tuple (m_filename, m_plugin, t);
+    return aud_file_write_tuple (m_filename, m_plugin, m_tuple);
 }
 
 bool InfoModel::setData (const QModelIndex & index, const QVariant & value, int role)
@@ -142,7 +139,7 @@ bool InfoModel::setData (const QModelIndex & index, const QVariant & value, int 
     auto t = Tuple::field_get_type (field_id);
     if (t == Tuple::String)
     {
-        m_tuple.set_str (field_id, value.toString ().toLocal8Bit ());
+        m_tuple.set_str (field_id, value.toString ().toUtf8 ());
         emit dataChanged (index, index, {role});
         return true;
     }

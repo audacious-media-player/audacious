@@ -98,7 +98,8 @@ void InfoWindow::displayImage (const char * filename)
 
 static InfoWindow * s_infowin = nullptr;
 
-EXPORT void infowin_show (int playlist, int entry)
+static void show_infowin (int playlist, int entry, const char * filename,
+ const Tuple & tuple, PluginHandle * decoder, bool can_write)
 {
     if (! s_infowin)
     {
@@ -110,32 +111,38 @@ EXPORT void infowin_show (int playlist, int entry)
         });
     }
 
+    s_infowin->fillInfo (playlist, entry, filename, tuple, decoder, can_write);
+    s_infowin->resize (700, 300);
+    window_bring_to_front (s_infowin);
+}
+
+EXPORT void infowin_show (int playlist, int entry)
+{
     String filename = aud_playlist_entry_get_filename (playlist, entry);
     if (! filename)
         return;
 
-    PluginHandle * decoder = aud_playlist_entry_get_decoder (playlist, entry);
-    if (! decoder)
-        return;
+    String error;
+    PluginHandle * decoder = aud_playlist_entry_get_decoder (playlist, entry,
+     Playlist::Wait, & error);
+    Tuple tuple = decoder ? aud_playlist_entry_get_tuple (playlist, entry,
+     Playlist::Wait, & error) : Tuple ();
 
-    Tuple tuple = aud_playlist_entry_get_tuple (playlist, entry);
-
-    if (tuple.valid ())
+    if (decoder && tuple.valid () && ! aud_custom_infowin (filename, decoder))
     {
         /* cuesheet entries cannot be updated */
         bool can_write = aud_file_can_write_tuple (filename, decoder) &&
          ! tuple.is_set (Tuple::StartTime);
 
         tuple.delete_fallbacks ();
-        s_infowin->fillInfo (playlist, entry, filename, tuple, decoder, can_write);
+        show_infowin (playlist, entry, filename, tuple, decoder, can_write);
     }
     else
-        aud_ui_show_error (str_printf (_("No info available for %s.\n"),
-            (const char *) filename));
+        infowin_hide ();
 
-    s_infowin->resize (700, 300);
-
-    window_bring_to_front (s_infowin);
+    if (error)
+        aud_ui_show_error (str_printf (_("Error opening %s:\n%s"),
+         (const char *) filename, (const char *) error));
 }
 
 EXPORT void infowin_show_current ()

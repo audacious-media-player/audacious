@@ -367,7 +367,7 @@ static void * create_titlestring_table ()
     }
 
     QObject::connect (le, &QLineEdit::textChanged, [=] (const QString & text) {
-        aud_set_str (nullptr, "generic_title_format", text.toLocal8Bit ().data ());
+        aud_set_str (nullptr, "generic_title_format", text.toUtf8 ().data ());
     });
 
     QObject::connect (cbox,
