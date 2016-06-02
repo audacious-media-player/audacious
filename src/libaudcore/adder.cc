@@ -132,7 +132,7 @@ static void add_file (PlaylistAddItem && item, PlaylistFilterFunc filter,
      * itself, then probe it to expand any subtunes.  The "validate" check (used
      * to skip non-audio files when adding folders) is also nested within this
      * block; note that "validate" is always false for subtunes. */
-    if (! item.tuple && ! is_subtune (item.filename))
+    if (item.tuple.valid () && ! is_subtune (item.filename))
     {
         VFSFile file;
 
@@ -300,7 +300,7 @@ static void add_generic (PlaylistAddItem && item, PlaylistFilterFunc filter,
 
     /* If the item has a valid tuple or known decoder, or it's a subtune, then
      * assume it's a playable file and skip some checks. */
-    if (item.tuple || item.decoder || is_subtune (item.filename))
+    if (item.tuple.valid () || item.decoder || is_subtune (item.filename))
         add_file (std::move (item), filter, user, result, false);
     else
     {

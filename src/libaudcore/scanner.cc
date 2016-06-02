@@ -45,7 +45,7 @@ ScanRequest::ScanRequest (const String & filename, int flags, Callback callback,
      * have overlapping lifecycles--each new ScanRequest is created by the
      * callback of the previous request--so the cached cuesheet persists as long
      * as consecutive playlist entries reference it. */
-    if (! this->tuple && is_cuesheet_entry (filename))
+    if (! this->tuple.valid () && is_cuesheet_entry (filename))
         cue_cache.capture (new CueCacheRef (strip_subtune (filename)));
 }
 
@@ -73,7 +73,7 @@ void ScanRequest::run ()
     if (! audio_file)
         audio_file = filename;
 
-    bool need_tuple = (flags & SCAN_TUPLE) && ! tuple;
+    bool need_tuple = (flags & SCAN_TUPLE) && ! tuple.valid ();
     bool need_image = (flags & SCAN_IMAGE);
 
     if (! decoder)

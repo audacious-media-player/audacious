@@ -130,7 +130,7 @@ public:
         return * this;
     }
 
-    explicit operator bool () const
+    bool valid () const
         { return (bool) data; }
 
     bool operator== (const Tuple & b) const;

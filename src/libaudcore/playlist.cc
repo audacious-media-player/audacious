@@ -225,11 +225,11 @@ void Entry::set_tuple (Tuple && new_tuple)
     if (tuple.is_set (Tuple::StartTime) && ! tuple.is_set (Tuple::AudioFile))
         return;
 
-    scanned = (bool) new_tuple;
+    scanned = new_tuple.valid ();
     failed = false;
     error = String ();
 
-    if (! new_tuple)
+    if (! scanned)
         new_tuple.set_filename (filename);
 
     length = aud::max (0, new_tuple.get_int (Tuple::Length));
@@ -617,7 +617,7 @@ static void scan_finish (ScanRequest * request)
     if (! entry->decoder)
         entry->decoder = request->decoder;
 
-    if ((! entry->scanned || entry->failed) && request->tuple)
+    if ((! entry->scanned || entry->failed) && request->tuple.valid ())
     {
         playlist->set_entry_tuple (entry, std::move (request->tuple));
         queue_update (Metadata, playlist, entry->number, 1, DelayedUpdate);

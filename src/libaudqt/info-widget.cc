@@ -164,25 +164,19 @@ QVariant InfoModel::data (const QModelIndex & index, int role) const
     {
         if (index.column () == 0)
             return translate_str (tuple_field_map [index.row ()].name);
-        else if (index.column () == 1 && m_tuple)
+        else if (index.column () == 1)
         {
             if (field_id == Tuple::Invalid)
                 return QVariant ();
 
-            auto t = Tuple::field_get_type (field_id);
-
-            if (t == Tuple::String)
+            switch (m_tuple.get_value_type (field_id))
             {
-                const char * res = m_tuple.get_str (field_id);
-                if (res)
-                    return QString (res);
-            }
-            else if (t == Tuple::Int)
-            {
-                int res = m_tuple.get_int (field_id);
-                if (res == -1)
-                    return QVariant ();
-                return res;
+            case Tuple::String:
+                return QString (m_tuple.get_str (field_id));
+            case Tuple::Int:
+                return m_tuple.get_int (field_id);
+            default:
+                return QVariant ();
             }
         }
     }

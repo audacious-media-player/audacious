@@ -120,7 +120,7 @@ EXPORT void infowin_show (int playlist, int entry)
 
     Tuple tuple = aud_playlist_entry_get_tuple (playlist, entry);
 
-    if (tuple)
+    if (tuple.valid ())
     {
         /* cuesheet entries cannot be updated */
         bool can_write = aud_file_can_write_tuple (filename, decoder) &&
