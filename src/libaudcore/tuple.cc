@@ -281,7 +281,7 @@ void TupleData::set_subtunes (int nsubs, const int * subs)
 {
     nsubtunes = nsubs;
 
-    delete subtunes;
+    delete[] subtunes;
     subtunes = nullptr;
 
     if (subs)
