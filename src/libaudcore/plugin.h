@@ -109,22 +109,6 @@ struct PluginInfo
     const char * about;
     const PluginPreferences * prefs;
     int flags;
-
-    constexpr PluginInfo (const char * name, const char * domain,
-     const char * about = nullptr, const PluginPreferences * prefs = nullptr,
-     int flags = 0) :
-        name (name),
-        domain (domain),
-        about (about),
-        prefs (prefs),
-        flags (flags
-#ifdef AUD_PLUGIN_GLIB_ONLY // pre-3.8 flag style
-         | PluginGLibOnly
-#endif
-#ifdef AUD_PLUGIN_QT_ONLY
-         | PluginQtOnly
-#endif
-         ) {}
 };
 
 class LIBAUDCORE_PUBLIC Plugin
