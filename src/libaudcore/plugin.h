@@ -371,9 +371,13 @@ public:
     /* Returns true if the plugin can handle the file. */
     virtual bool is_our_file (const char * filename, VFSFile & file) = 0;
 
-    /* Reads metadata from the file.  Optional if the plugin implements read_tag(). */
-    virtual Tuple read_tuple (const char * filename, VFSFile & file)
-        { return Tuple(); }
+    /* Reads metadata and album art (if requested and available) from the file.
+     * The filename fields of the tuple are already set before the function is
+     * called.  If album art is not needed, <image> will be nullptr.  The return
+     * value should be true if <tuple> was successfully read, regardless of
+     * whether album art was read. */
+    virtual bool read_tag (const char * filename, VFSFile & file, Tuple & tuple,
+     Index<char> * image) = 0;
 
     /* Plays the file.  Returns false on error.  Also see input-api.h. */
     virtual bool play (const char * filename, VFSFile & file) = 0;
@@ -382,25 +386,11 @@ public:
     virtual bool write_tuple (const char * filename, VFSFile & file, const Tuple & tuple)
         { return false; }
 
-    /* Optional.  Reads an album art image (JPEG or PNG data) from the file.
-     * Returns an empty buffer on error. */
-    virtual Index<char> read_image (const char * filename, VFSFile & file)
-        { return Index<char> (); }
-
     /* Optional.  Displays a window showing info about the file.  In general,
      * this function should be avoided since Audacious already provides a file
      * info window. */
     virtual bool file_info_box (const char * filename, VFSFile & file)
         { return false; }
-
-    /* Optional.  Reads metadata and album art (if requested and available) from
-     * the file.  Providing this function is encouraged over providing a
-     * separate read_tuple() and read_image().  The filename fields of the tuple
-     * are already set before the function is called.  If album art is not
-     * needed, <image> will be nullptr.  The return value should be true if
-     * <tuple> was successfully read, regardless of whether album art was read. */
-    virtual bool read_tag (const char * filename, VFSFile & file, Tuple & tuple,
-     Index<char> * image);
 
 protected:
     /* Prepares the output system for playback in the specified format.  Also
