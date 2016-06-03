@@ -30,6 +30,7 @@
 #include <libaudcore/multihash.h>
 #include <libaudcore/runtime.h>
 #include <libaudtag/builtin.h>
+#include <libaudtag/util.h>
 
 #include "id3-common.h"
 
@@ -550,7 +551,7 @@ bool ID3v24TagModule::can_handle_file (VFSFile & handle)
      & data_size, & footer_size);
 }
 
-bool ID3v24TagModule::read_tag (VFSFile & handle, Tuple * ptuple, Index<char> * image)
+bool ID3v24TagModule::read_tag (VFSFile & handle, Tuple & tuple, Index<char> * image)
 {
     int version, header_size, data_size, footer_size;
     bool syncsafe;
@@ -561,10 +562,6 @@ bool ID3v24TagModule::read_tag (VFSFile & handle, Tuple * ptuple, Index<char> * 
         return false;
 
     Index<char> data = read_tag_data (handle, data_size, syncsafe);
-
-    Tuple trash; // dump data here if caller does not want the tuple
-    Tuple & tuple = ptuple ? * ptuple : trash;
-
     FrameList rva_frames;
 
     for (const char * pos = data.begin (); pos < data.end (); )

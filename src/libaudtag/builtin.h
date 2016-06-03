@@ -17,42 +17,44 @@
  * the use of this software.
  */
 
-#include "libaudtag/audtag.h"
-#include "libaudtag/tag_module.h"
-#include "libaudtag/util.h"
+#include "tag_module.h"
 
 #ifndef __LIBAUDTAG_BUILTIN_H__
 #define __LIBAUDTAG_BUILTIN_H__
 
 namespace audtag {
 
-struct ID3v1TagModule : TagModule {
-    ID3v1TagModule() : TagModule("ID3v1", TagType::None) { };
+struct ID3v1TagModule : TagModule
+{
+    constexpr ID3v1TagModule () : TagModule ("ID3v1", TagType::None) {}
 
     bool can_handle_file (VFSFile & file);
-    bool read_tag (VFSFile & file, Tuple * tuple, Index<char> * image);
+    bool read_tag (VFSFile & file, Tuple & tuple, Index<char> * image);
 };
 
-struct ID3v22TagModule : TagModule {
-    ID3v22TagModule() : TagModule("ID3v2.2", TagType::None) { };
+struct ID3v22TagModule : TagModule
+{
+    constexpr ID3v22TagModule () : TagModule ("ID3v2.2", TagType::None) {}
 
     bool can_handle_file (VFSFile & file);
-    bool read_tag (VFSFile & file, Tuple * tuple, Index<char> * image);
+    bool read_tag (VFSFile & file, Tuple & tuple, Index<char> * image);
 };
 
-struct ID3v24TagModule : TagModule {
-    ID3v24TagModule() : TagModule("ID3v2.3/v2.4", TagType::ID3v2) { };
+struct ID3v24TagModule : TagModule
+{
+    constexpr ID3v24TagModule () : TagModule ("ID3v2.3/v2.4", TagType::ID3v2) {}
 
     bool can_handle_file (VFSFile & file);
-    bool read_tag (VFSFile & file, Tuple * tuple, Index<char> * image);
+    bool read_tag (VFSFile & file, Tuple & tuple, Index<char> * image);
     bool write_tag (VFSFile & file, const Tuple & tuple);
 };
 
-struct APETagModule : TagModule {
-    APETagModule() : TagModule("APE", TagType::APE) { };
+struct APETagModule : TagModule
+{
+    constexpr APETagModule () : TagModule ("APE", TagType::APE) {}
 
     bool can_handle_file (VFSFile & file);
-    bool read_tag (VFSFile & file, Tuple * tuple, Index<char> * image);
+    bool read_tag (VFSFile & file, Tuple & tuple, Index<char> * image);
     bool write_tag (VFSFile & file, const Tuple & tuple);
 };
 

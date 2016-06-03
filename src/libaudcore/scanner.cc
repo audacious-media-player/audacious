@@ -26,6 +26,7 @@
 #include "i18n.h"
 #include "internal.h"
 #include "plugins.h"
+#include "probe.h"
 #include "tuple.h"
 #include "vfs.h"
 
@@ -77,7 +78,7 @@ void ScanRequest::run ()
     bool need_image = (flags & SCAN_IMAGE);
 
     if (! decoder)
-        decoder = file_find_decoder (audio_file, false, file, & error);
+        decoder = aud_file_find_decoder (audio_file, false, file, & error);
     if (! decoder)
         goto err;
 
@@ -86,10 +87,8 @@ void ScanRequest::run ()
         if (! (ip = load_input_plugin (decoder, & error)))
             goto err;
 
-        Tuple * ptuple = need_tuple ? & tuple : nullptr;
         Index<char> * pimage = need_image ? & image_data : nullptr;
-
-        if (! file_read_tag (audio_file, decoder, file, ptuple, pimage, & error))
+        if (! aud_file_read_tag (audio_file, decoder, file, tuple, pimage, & error))
             goto err;
 
         if ((flags & SCAN_IMAGE) && ! image_data.len ())

@@ -26,6 +26,7 @@
 #include <libaudcore/audstrings.h>
 #include <libaudcore/runtime.h>
 #include <libaudtag/builtin.h>
+#include <libaudtag/util.h>
 
 #include "id3-common.h"
 
@@ -209,7 +210,7 @@ bool ID3v22TagModule::can_handle_file (VFSFile & handle)
      & data_size);
 }
 
-bool ID3v22TagModule::read_tag (VFSFile & handle, Tuple * ptuple, Index<char> * image)
+bool ID3v22TagModule::read_tag (VFSFile & handle, Tuple & tuple, Index<char> * image)
 {
     int version, header_size, data_size;
     bool syncsafe;
@@ -222,9 +223,6 @@ bool ID3v22TagModule::read_tag (VFSFile & handle, Tuple * ptuple, Index<char> * 
 
     AUDDBG ("Reading tags from %i bytes of ID3 data in %s\n", data_size,
      handle.filename ());
-
-    Tuple trash; // dump data here if caller does not want the tuple
-    Tuple & tuple = ptuple ? * ptuple : trash;
 
     for (pos = 0; pos < data_size; )
     {

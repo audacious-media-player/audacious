@@ -409,11 +409,13 @@ public:
     virtual bool file_info_box (const char * filename, VFSFile & file)
         { return false; }
 
-    /* Optional.  Reads metadata and/or an album art from the file.
-     * Providing this function is encouraged over providing a separate
-     * read_tuple() and read_image().  The filename fields of the tuple
-     * (if not null) are already set before the function is called. */
-    virtual bool read_tag (const char * filename, VFSFile & file, Tuple * tuple,
+    /* Optional.  Reads metadata and album art (if requested and available) from
+     * the file.  Providing this function is encouraged over providing a
+     * separate read_tuple() and read_image().  The filename fields of the tuple
+     * are already set before the function is called.  If album art is not
+     * needed, <image> will be nullptr.  The return value should be true if
+     * <tuple> was successfully read, regardless of whether album art was read. */
+    virtual bool read_tag (const char * filename, VFSFile & file, Tuple & tuple,
      Index<char> * image);
 
 protected:

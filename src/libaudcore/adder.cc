@@ -27,10 +27,10 @@
 #include "audstrings.h"
 #include "hook.h"
 #include "i18n.h"
-#include "internal.h"
 #include "list.h"
 #include "mainloop.h"
 #include "plugins-internal.h"
+#include "probe.h"
 #include "runtime.h"
 #include "tuple.h"
 #include "interface.h"
@@ -139,13 +139,13 @@ static void add_file (PlaylistAddItem && item, PlaylistFilterFunc filter,
         if (! item.decoder)
         {
             bool fast = ! aud_get_bool (nullptr, "slow_probe");
-            item.decoder = file_find_decoder (item.filename, fast, file);
+            item.decoder = aud_file_find_decoder (item.filename, fast, file);
             if (validate && ! item.decoder)
                 return;
         }
 
         if (item.decoder && input_plugin_has_subtunes (item.decoder))
-            file_read_tag (item.filename, item.decoder, file, & item.tuple, nullptr);
+            aud_file_read_tag (item.filename, item.decoder, file, item.tuple);
     }
 
     int n_subtunes = item.tuple.get_n_subtunes ();

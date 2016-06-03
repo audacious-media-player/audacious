@@ -621,21 +621,20 @@ EXPORT int InputPlugin::check_seek ()
 
 /* compatibility implementation of InputPlugin::read_tag(). */
 EXPORT bool InputPlugin::read_tag (const char * filename, VFSFile & file,
- Tuple * tuple, Index<char> * image)
+ Tuple & tuple, Index<char> * image)
 {
     /* just call read_tuple() and read_image() */
-    if (tuple)
-    {
-        * tuple = read_tuple (filename, file);
-
-        if (! tuple->valid ())
-            return false;
-        if (image && file && file.fseek (0, VFS_SEEK_SET) != 0)
-            return true; /* true: tuple was read */
-    }
+    tuple = read_tuple (filename, file);
+    if (! tuple.valid ())
+        return false;
 
     if (image)
+    {
+        if (file && file.fseek (0, VFS_SEEK_SET) != 0)
+            return true; /* true: tuple was read */
+
         * image = read_image (filename, file);
+    }
 
     return true;
 }

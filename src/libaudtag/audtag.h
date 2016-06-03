@@ -32,12 +32,11 @@ enum class TagType
     ID3v2
 };
 
+bool read_tag (VFSFile & file, Tuple & tuple, Index<char> * image);
+
 /* new_type specifies the type of tag (see the TagType enum) that should be
  * written if the file does not have any existing tag. */
-bool tuple_write (const Tuple & tuple, VFSFile & file, TagType new_type);
-
-/* since Audacious 3.7: reads tuple and image in one pass */
-bool read_tag (VFSFile & file, Tuple * tuple, Index<char> * image);
+bool write_tuple (VFSFile & file, const Tuple & tuple, TagType new_type);
 
 }
 

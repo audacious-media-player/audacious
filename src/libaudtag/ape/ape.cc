@@ -240,12 +240,8 @@ static Index<ValuePair> ape_read_items (VFSFile & handle)
     return list;
 }
 
-bool APETagModule::read_tag (VFSFile & handle, Tuple * ptuple, Index<char> * image)
+bool APETagModule::read_tag (VFSFile & handle, Tuple & tuple, Index<char> * image)
 {
-    if (! ptuple)
-        return true; // nothing to do
-
-    Tuple & tuple = * ptuple;
     Index<ValuePair> list = ape_read_items (handle);
 
     for (const ValuePair & pair : list)

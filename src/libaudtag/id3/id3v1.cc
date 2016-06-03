@@ -24,6 +24,7 @@
 
 #include <libaudcore/audstrings.h>
 #include <libaudtag/builtin.h>
+#include <libaudtag/util.h>
 
 #pragma pack(push)
 #pragma pack(1)
@@ -95,12 +96,8 @@ static bool combine_string (Tuple & tuple, Tuple::Field field,
     return true;
 }
 
-bool ID3v1TagModule::read_tag (VFSFile & file, Tuple * ptuple, Index<char> * image)
+bool ID3v1TagModule::read_tag (VFSFile & file, Tuple & tuple, Index<char> * image)
 {
-    if (! ptuple)
-        return true; // nothing to do
-
-    Tuple & tuple = * ptuple;
     ID3v1Tag tag;
     ID3v1Ext ext;
 
