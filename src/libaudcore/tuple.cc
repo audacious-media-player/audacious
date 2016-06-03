@@ -107,27 +107,28 @@ static const struct {
     {"title", Tuple::String, FallbackTitle},
     {"artist", Tuple::String, FallbackArtist},
     {"album", Tuple::String, FallbackAlbum},
+    {"album-artist", Tuple::String, -1},
     {"comment", Tuple::String, -1},
     {"genre", Tuple::String, -1},
+    {"year", Tuple::Int, -1},
+
+    {"composer", Tuple::String, -1},
+    {"performer", Tuple::String, -1},
+    {"copyright", Tuple::String, -1},
+    {"date", Tuple::String, -1},
 
     {"track-number", Tuple::Int, -1},
     {"length", Tuple::Int, -1},
-    {"year", Tuple::Int, -1},
-    {"quality", Tuple::String, -1},
+
+    {"bitrate", Tuple::Int, -1},
     {"codec", Tuple::String, -1},
+    {"quality", Tuple::String, -1},
 
     {"file-name", Tuple::String, -1},
     {"file-path", Tuple::String, -1},
     {"file-ext", Tuple::String, -1},
 
-    {"album-artist", Tuple::String, -1},
-    {"composer", Tuple::String, -1},
-    {"performer", Tuple::String, -1},
-    {"copyright", Tuple::String, -1},
-    {"date", Tuple::String, -1},
-    {"mbid", Tuple::String, -1},
-    {"mime-type", Tuple::String, -1},
-    {"bitrate", Tuple::Int, -1},
+    {"audio-file", Tuple::String, -1},
 
     {"subsong-id", Tuple::Int, -1},
     {"subsong-num", Tuple::Int, -1},
@@ -143,7 +144,6 @@ static const struct {
     {"gain-peak-unit", Tuple::Int, -1},
 
     {"formatted-title", Tuple::String, -1},
-    {"audio-file", Tuple::String, -1},
 
     /* fallbacks */
     {nullptr, Tuple::String, -1},
@@ -182,8 +182,6 @@ static const FieldDictEntry field_dict[] = {
     {"gain-track-peak", Tuple::TrackPeak},
     {"genre", Tuple::Genre},
     {"length", Tuple::Length},
-    {"mbid", Tuple::MusicBrainz},
-    {"mime-type", Tuple::MIMEType},
     {"performer", Tuple::Performer},
     {"quality", Tuple::Quality},
     {"segment-end", Tuple::EndTime},

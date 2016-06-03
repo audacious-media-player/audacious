@@ -45,27 +45,30 @@ public:
         Title = 0,    /* Song title */
         Artist,       /* Song artist */
         Album,        /* Album name */
+        AlbumArtist,  /* Artist for entire album, if different than song artist */
         Comment,      /* Freeform comment */
         Genre,        /* Song's genre */
+        Year,         /* Year of production, performance, etc. */
+
+        Composer,     /* Composer, if different than artist */
+        Performer,    /* Performer, if different than artist */
+        Copyright,    /* Copyright declaration */
+        Date,         /* Date of production, performance, etc. */
 
         Track,        /* Track number */
         Length,       /* Track length in milliseconds */
-        Year,         /* Year of production, performance, etc. */
-        Quality,      /* String representing quality, such as "Stereo, 44 kHz" */
+
+        Bitrate,      /* Bitrate in kilobits (1000 bits)/sec */
         Codec,        /* Codec name, such as "Ogg Vorbis" */
+        Quality,      /* String representing quality, such as "Stereo, 44 kHz" */
 
         Basename,     /* Base filename, not including the folder path */
         Path,         /* Folder path, including the trailing "/" */
         Suffix,       /* Filename extension, not including the "." */
 
-        AlbumArtist,  /* Artist for entire album, if different than song artist */
-        Composer,     /* Composer of song, if different than artist */
-        Performer,
-        Copyright,
-        Date,
-        MusicBrainz,  /* MusicBrainz identifer for the song */
-        MIMEType,
-        Bitrate,      /* Bitrate in kbits/sec */
+        AudioFile,    /* URI of audio file, if different from the nominal URI
+                       * (e.g. for a cuesheet entry, where the nominal URI
+                       * points to the .cue file) */
 
         Subtune,      /* Index number of subtune */
         NumSubtunes,  /* Total number of subtunes in the file */
@@ -88,10 +91,6 @@ public:
 
         /* Title formatted for display; input plugins do not need to set this field */
         FormattedTitle,
-
-        /* URI of audio file, if different from the primary URI (e.g. for a
-         * cuesheet entry, where the primary URI points to the .cue file) */
-        AudioFile,
 
         n_fields
     };

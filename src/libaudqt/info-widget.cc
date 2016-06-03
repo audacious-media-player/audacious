@@ -52,7 +52,6 @@ static const TupleFieldMap tuple_field_map[] = {
     {nullptr, Tuple::Invalid, false},
     {N_("Technical"), Tuple::Invalid, false},
     {N_("Length"), Tuple::Length, false},
-    {N_("MIME Type"), Tuple::MIMEType, false},
     {N_("Codec"), Tuple::Codec, false},
     {N_("Quality"), Tuple::Quality, false},
     {N_("Bitrate"), Tuple::Bitrate, false},
