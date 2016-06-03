@@ -132,7 +132,7 @@ static void add_file (PlaylistAddItem && item, PlaylistFilterFunc filter,
      * itself, then probe it to expand any subtunes.  The "validate" check (used
      * to skip non-audio files when adding folders) is also nested within this
      * block; note that "validate" is always false for subtunes. */
-    if (item.tuple.valid () && ! is_subtune (item.filename))
+    if (! item.tuple.valid () && ! is_subtune (item.filename))
     {
         VFSFile file;
 
