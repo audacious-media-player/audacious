@@ -342,7 +342,7 @@ static void save_playlists_real ()
         if (playlist_get_modified (i))
         {
             StringBuf path = filename_build ({folder, name});
-            aud_playlist_save (i, filename_to_uri (path), Playlist::Nothing);
+            aud_playlist_save (i, filename_to_uri (path), Playlist::NoWait);
             playlist_set_modified (i, false);
         }
 

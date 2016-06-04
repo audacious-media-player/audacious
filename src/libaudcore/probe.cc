@@ -172,6 +172,7 @@ EXPORT bool aud_file_read_tag (const char * filename, PluginHandle * decoder,
     if (ip->read_tag (filename, file, new_tuple, image))
     {
         // cleanly replace existing tuple
+        new_tuple.set_state (Tuple::Valid);
         tuple = std::move (new_tuple);
         return true;
     }

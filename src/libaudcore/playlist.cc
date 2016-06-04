@@ -112,7 +112,6 @@ struct Entry {
 
     void format ();
     void set_tuple (Tuple && new_tuple);
-    void set_failed (const String & new_error);
 
     String filename;
     PluginHandle * decoder;
@@ -225,11 +224,9 @@ void Entry::set_tuple (Tuple && new_tuple)
     if (tuple.is_set (Tuple::StartTime) && ! tuple.is_set (Tuple::AudioFile))
         return;
 
-    scanned = new_tuple.valid ();
-    failed = false;
     error = String ();
 
-    if (! scanned)
+    if (! new_tuple.valid ())
         new_tuple.set_filename (filename);
 
     length = aud::max (0, new_tuple.get_int (Tuple::Length));
@@ -251,21 +248,12 @@ void PlaylistData::set_entry_tuple (Entry * entry, Tuple && tuple)
         selected_length += entry->length;
 }
 
-void Entry::set_failed (const String & new_error)
-{
-    scanned = true;
-    failed = true;
-    error = new_error;
-}
-
 Entry::Entry (PlaylistAddItem && item) :
     filename (item.filename),
     decoder (item.decoder),
     number (-1),
     length (0),
     shuffle_num (0),
-    scanned (false),
-    failed (false),
     selected (false),
     queued (false)
 {
@@ -354,14 +342,6 @@ static void update (void *)
     hook_call ("playlist update", aud::to_ptr (level));
 }
 
-static void send_playback_info (Entry * entry)
-{
-    // if the entry was not scanned or failed to scan, we must still call
-    // playback_set_info() in order to update the entry number
-    Tuple tuple = (entry->scanned && ! entry->failed) ? entry->tuple.ref () : Tuple ();
-    playback_set_info (entry->number, std::move (tuple));
-}
-
 static void queue_update (UpdateLevel level, PlaylistData * p, int at, int count, int flags = 0)
 {
     if (p)
@@ -372,7 +352,7 @@ static void queue_update (UpdateLevel level, PlaylistData * p, int at, int count
         if (level >= Metadata)
         {
             if (p == playing_playlist && p->position)
-                send_playback_info (p->position);
+                playback_set_info (p->position->number, p->position->tuple.ref ());
 
             p->modified = true;
         }
@@ -500,7 +480,7 @@ static ScanItem * scan_list_find_request (ScanRequest * request)
 static void scan_queue_entry (PlaylistData * playlist, Entry * entry, bool for_playback = false)
 {
     int flags = 0;
-    if (! entry->scanned || entry->failed)
+    if (! entry->tuple.valid ())
         flags |= SCAN_TUPLE;
     if (for_playback)
         flags |= (SCAN_IMAGE | SCAN_FILE);
@@ -564,7 +544,8 @@ static bool scan_queue_next_entry ()
                 Entry * entry = playlist->entries[scan_row ++].get ();
 
                 // blacklist stdin
-                if (! entry->scanned && ! scan_list_find_entry (entry) &&
+                if (entry->tuple.state () == Tuple::Initial &&
+                 ! scan_list_find_entry (entry) &&
                  strncmp (entry->filename, "stdin://", 8))
                 {
                     scan_queue_entry (playlist, entry);
@@ -617,14 +598,20 @@ static void scan_finish (ScanRequest * request)
     if (! entry->decoder)
         entry->decoder = request->decoder;
 
-    if ((! entry->scanned || entry->failed) && request->tuple.valid ())
+    if (! entry->tuple.valid () && request->tuple.valid ())
     {
         playlist->set_entry_tuple (entry, std::move (request->tuple));
         queue_update (Metadata, playlist, entry->number, 1, DelayedUpdate);
     }
 
-    if (! entry->decoder || ! entry->scanned)
-        entry->set_failed (request->error);
+    if (! entry->decoder || ! entry->tuple.valid ())
+        entry->error = request->error;
+
+    if (entry->tuple.state () == Tuple::Initial)
+    {
+        entry->tuple.set_state (Tuple::Failed);
+        queue_update (Metadata, playlist, entry->number, 1, DelayedUpdate);
+    }
 
     delete item;
 
@@ -696,8 +683,7 @@ static Entry * get_entry (int playlist_num, int entry_num,
             return entry;
 
         // check whether requested data (decoder and/or tuple) has been read
-        if ((! need_decoder || entry->decoder) &&
-         (! need_tuple || (entry->scanned && ! entry->failed)))
+        if ((! need_decoder || entry->decoder) && (! need_tuple || entry->tuple.valid ()))
             return entry;
 
         // start scan if not already running ...
@@ -723,6 +709,8 @@ static void start_playback (int seek_time, bool pause)
 
     playback_play (seek_time, pause);
 
+    // playback always begins with a rescan of the current entry in order to
+    // open the file, ensure a valid tuple, and read album art
     scan_cancel (playing_playlist->position);
     scan_queue_entry (playing_playlist, playing_playlist->position, true);
 }
@@ -1247,9 +1235,7 @@ EXPORT PluginHandle * aud_playlist_entry_get_decoder (int playlist_num,
 {
     ENTER;
 
-    const bool wait = (mode == Wait || mode == WaitGuess);
-
-    Entry * entry = get_entry (playlist_num, entry_num, wait, false);
+    Entry * entry = get_entry (playlist_num, entry_num, (mode == Wait), false);
     PluginHandle * decoder = entry ? entry->decoder : nullptr;
 
     if (error)
@@ -1263,14 +1249,8 @@ EXPORT Tuple aud_playlist_entry_get_tuple (int playlist_num, int entry_num,
 {
     ENTER;
 
-    const bool wait = (mode == Wait || mode == WaitGuess);
-    const bool guess = (mode == Guess || mode == WaitGuess);
-
-    Entry * entry = get_entry (playlist_num, entry_num, false, wait);
-
-    Tuple tuple;
-    if (entry && ((entry->scanned && ! entry->failed) || guess))
-        tuple = entry->tuple.ref ();
+    Entry * entry = get_entry (playlist_num, entry_num, false, (mode == Wait));
+    Tuple tuple = entry ? entry->tuple.ref () : Tuple ();
 
     if (error)
         * error = entry ? entry->error : String ();
@@ -1718,7 +1698,7 @@ static bool entries_are_scanned (PlaylistData * playlist, bool selected)
         if (selected && ! entry->selected)
             continue;
 
-        if (! entry->scanned)
+        if (entry->tuple.state () == Tuple::Initial)
         {
             aud_ui_show_error (_("The playlist cannot be sorted because "
              "metadata scanning is still in progress (or has been disabled)."));
@@ -2236,7 +2216,7 @@ DecodeInfo playback_entry_read (int serial)
 
         if ((entry = get_playback_entry (serial)))
         {
-            send_playback_info (entry);
+            playback_set_info (entry->number, entry->tuple.ref ());
             art_cache_current (entry->filename, std::move (request->image_data),
              std::move (request->image_file));
 

@@ -39,8 +39,8 @@ EXPORT void aud_playlist_cache_selected (int playlist)
             continue;
 
         String filename = aud_playlist_entry_get_filename (playlist, i);
-        Tuple tuple = aud_playlist_entry_get_tuple (playlist, i, Playlist::Nothing);
-        PluginHandle * decoder = aud_playlist_entry_get_decoder (playlist, i, Playlist::Nothing);
+        Tuple tuple = aud_playlist_entry_get_tuple (playlist, i, Playlist::NoWait);
+        PluginHandle * decoder = aud_playlist_entry_get_decoder (playlist, i, Playlist::NoWait);
 
         if (tuple.valid () || decoder)
             cache.add (filename, {filename, std::move (tuple), decoder});
@@ -67,9 +67,9 @@ void playlist_cache_load (Index<PlaylistAddItem> & items)
         if (! node)
             continue;
 
-        if (! item.tuple.valid ())
+        if (! item.tuple.valid () && node->tuple.valid ())
             item.tuple = node->tuple.ref ();
-        if (! item.decoder)
+        if (! item.decoder && node->decoder)
             item.decoder = node->decoder;
     }
 

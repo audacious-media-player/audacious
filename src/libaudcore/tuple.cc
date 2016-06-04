@@ -62,13 +62,14 @@ struct TupleData
     uint64_t setmask;      // which fields are present
     Index<TupleVal> vals;  // ordered list of field values
 
-    int *subtunes;                 /**< Array of int containing subtune index numbers.
+    short * subtunes;               /**< Array of int containing subtune index numbers.
                                          Can be nullptr if indexing is linear or if
                                          there are no subtunes. */
-    int nsubtunes;                 /**< Number of subtunes, if any. Values greater than 0
+    short nsubtunes;                /**< Number of subtunes, if any. Values greater than 0
                                          mean that there are subtunes and #subtunes array
                                          may be set. */
 
+    short state;
     int refcount;
 
     TupleData ();
@@ -85,7 +86,7 @@ struct TupleData
     TupleVal * lookup (int field, bool add, bool remove);
     void set_int (int field, int x);
     void set_str (int field, const char * str);
-    void set_subtunes (int nsubs, const int * subs);
+    void set_subtunes (short nsubs, const short * subs);
 
     static TupleData * ref (TupleData * tuple);
     static void unref (TupleData * tuple);
@@ -277,17 +278,17 @@ void TupleData::set_str (int field, const char * str)
     new (& val->str) String (str);
 }
 
-void TupleData::set_subtunes (int nsubs, const int * subs)
+void TupleData::set_subtunes (short nsubs, const short * subs)
 {
     nsubtunes = nsubs;
 
     delete[] subtunes;
     subtunes = nullptr;
 
-    if (subs)
+    if (nsubs && subs)
     {
-        subtunes = new int[nsubs];
-        memcpy (subtunes, subs, sizeof (int) * nsubs);
+        subtunes = new short[nsubs];
+        memcpy (subtunes, subs, sizeof subtunes[0] * nsubs);
     }
 }
 
@@ -295,12 +296,14 @@ TupleData::TupleData () :
     setmask (0),
     subtunes (nullptr),
     nsubtunes (0),
+    state (Tuple::Initial),
     refcount (1) {}
 
 TupleData::TupleData (const TupleData & other) :
     setmask (other.setmask),
     subtunes (nullptr),
     nsubtunes (0),
+    state (other.state),
     refcount (1)
 {
     vals.insert (0, other.vals.len ());
@@ -345,8 +348,8 @@ TupleData::~TupleData ()
 
 bool TupleData::is_same (const TupleData & other)
 {
-    if (setmask != other.setmask || nsubtunes != other.nsubtunes ||
-     (! subtunes) != (! other.subtunes))
+    if (state != other.state || setmask != other.setmask ||
+     nsubtunes != other.nsubtunes || (! subtunes) != (! other.subtunes))
         return false;
 
     auto a = vals.begin ();
@@ -371,7 +374,7 @@ bool TupleData::is_same (const TupleData & other)
         }
     }
 
-    if (subtunes && memcmp (subtunes, other.subtunes, sizeof (int) * nsubtunes))
+    if (subtunes && memcmp (subtunes, other.subtunes, sizeof subtunes[0] * nsubtunes))
         return false;
 
     return true;
@@ -425,6 +428,17 @@ EXPORT Tuple Tuple::ref () const
     Tuple tuple;
     tuple.data = TupleData::ref (data);
     return tuple;
+}
+
+EXPORT Tuple::State Tuple::state () const
+{
+    return data ? (Tuple::State) data->state : Initial;
+}
+
+EXPORT void Tuple::set_state (State st)
+{
+    data = TupleData::copy_on_write (data);
+    data->state = st;
 }
 
 EXPORT Tuple::ValueType Tuple::get_value_type (Field field) const
@@ -553,18 +567,18 @@ EXPORT void Tuple::set_format (const char * format, int chans, int rate, int bra
         set_int (Bitrate, brate);
 }
 
-EXPORT void Tuple::set_subtunes (int n_subtunes, const int * subtunes)
+EXPORT void Tuple::set_subtunes (short n_subtunes, const short * subtunes)
 {
     data = TupleData::copy_on_write (data);
     data->set_subtunes (n_subtunes, subtunes);
 }
 
-EXPORT int Tuple::get_n_subtunes () const
+EXPORT short Tuple::get_n_subtunes() const
 {
     return data ? data->nsubtunes : 0;
 }
 
-EXPORT int Tuple::get_nth_subtune (int n) const
+EXPORT short Tuple::get_nth_subtune (short n) const
 {
     if (! data || n < 0 || n >= data->nsubtunes)
         return -1;

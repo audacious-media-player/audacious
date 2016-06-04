@@ -68,7 +68,7 @@ static void finish_job (void * data)
 
     Playlist::GetMode mode = Playlist::Wait;
     if (aud_get_bool (nullptr, "metadata_on_play"))
-        mode = Playlist::Nothing;
+        mode = Playlist::NoWait;
 
     if (list >= 0)
     {
