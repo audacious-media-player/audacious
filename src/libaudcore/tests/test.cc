@@ -49,6 +49,65 @@ static void test_audio_conversion ()
         assert (in[i] == out[i]);
 }
 
+static void test_numeric_conversion ()
+{
+    static const char * in[] = {
+        "",
+        "x1234",
+        "+2147483647",
+        "-2147483648",
+        "999999999.999999",
+        "999999999.9999996",
+        "000000000000000000000000100000.000001000000000000000000000000",
+        "--5",
+        "3.+5",
+        "-6.7 dB"
+    };
+
+    static const char * out_double[] = {
+        "0",
+        "0",
+        "2147483647",
+        "-2147483648",
+        "999999999.999999",
+        "1000000000",
+        "100000.000001",
+        "0",
+        "3",
+        "-6.7"
+    };
+
+    static const char * out_int[] = {
+        "0",
+        "0",
+        "2147483647",
+        "-2147483648",
+        "999999999",
+        "999999999",
+        "100000",
+        "0",
+        "3",
+        "-6"
+    };
+
+    for (int i = 0; i < aud::n_elems (in); i ++)
+    {
+        double d_val = str_to_double (in[i]);
+        int i_val = str_to_int (in[i]);
+        StringBuf via_double = double_to_str (d_val);
+        StringBuf via_int = int_to_str (i_val);
+
+        if (strcmp (via_double, out_double[i]) || strcmp (via_int, out_int[i]))
+        {
+            printf ("Converting [%s]\n", in[i]);
+            printf ("Expected [%s] and [%s]\n", out_double[i], out_int[i]);
+            printf ("Via [%g] and [%d]\n", d_val, i_val);
+            printf ("Got [%s] and [%s]\n", (const char *) via_double, (const char *) via_int);
+            exit (1);
+        }
+    }
+}
+
 static void test_filename_split ()
 {
     /* expected results differ slightly from POSIX dirname/basename */
@@ -326,6 +385,7 @@ static void test_ringbuf ()
 int main ()
 {
     test_audio_conversion ();
+    test_numeric_conversion ();
     test_filename_split ();
     test_tuple_formats ();
     test_ringbuf ();
