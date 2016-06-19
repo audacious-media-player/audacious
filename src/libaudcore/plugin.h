@@ -209,7 +209,7 @@ public:
     /* Begins playback of a PCM stream.  <format> is one of the FMT_*
      * enumeration values defined in libaudcore/audio.h.  Returns true on
      * success. */
-    virtual bool open_audio (int format, int rate, int chans) = 0;
+    virtual bool open_audio (int format, int rate, int chans, String & error) = 0;
 
     /* Ends playback.  Any buffered audio data is discarded. */
     virtual void close_audio () = 0;

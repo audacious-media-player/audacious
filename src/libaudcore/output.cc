@@ -26,6 +26,8 @@
 
 #include "equalizer.h"
 #include "hook.h"
+#include "i18n.h"
+#include "interface.h"
 #include "internal.h"
 #include "plugin.h"
 #include "plugins.h"
@@ -96,13 +98,18 @@ static ReplayGainInfo gain_info;
 static Index<float> buffer1;
 static Index<char> buffer2;
 
-static inline int get_format ()
+static inline int get_format (bool & automatic)
 {
+    automatic = false;
+
     switch (aud_get_int (0, "output_bit_depth"))
     {
         case 16: return FMT_S16_NE;
         case 24: return FMT_S24_NE;
         case 32: return FMT_S32_NE;
+
+        // return FMT_FLOAT for "auto" as well
+        case -1: automatic = true;
         default: return FMT_FLOAT;
     }
 }
@@ -162,7 +169,8 @@ static void setup_output (bool new_input)
     if (! cop)
         return;
 
-    int format = get_format ();
+    bool automatic;
+    int format = get_format (automatic);
 
     AUDINFO ("Setup output, format %d, %d channels, %d Hz.\n", format, effect_channels, effect_rate);
 
@@ -173,8 +181,25 @@ static void setup_output (bool new_input)
     cleanup_output ();
     cop->set_info (in_filename, in_tuple);
 
-    if (! cop->open_audio (format, effect_rate, effect_channels))
-        return;
+    String error, tmp_error;
+    while (! cop->open_audio (format, effect_rate, effect_channels, tmp_error))
+    {
+        /* display only the error from the first attempt */
+        if (! automatic || format == FMT_FLOAT)
+            error = std::move (tmp_error);
+
+        if (automatic && format == FMT_FLOAT)
+            format = FMT_S32_NE;
+        else if (automatic && format == FMT_S32_NE)
+            format = FMT_S16_NE;
+        else
+        {
+            aud_ui_show_error (error ? error : _("Error opening output stream"));
+            return;
+        }
+
+        AUDINFO ("Falling back to format %d.\n", format);
+    }
 
     s_output = true;
 
@@ -219,8 +244,12 @@ static void setup_secondary (bool new_input)
     cleanup_secondary ();
     sop->set_info (in_filename, in_tuple);
 
-    if (! sop->open_audio (FMT_FLOAT, rate, channels))
+    String error;
+    if (! sop->open_audio (FMT_FLOAT, rate, channels, error))
+    {
+        aud_ui_show_error (error ? error : _("Error opening output stream"));
         return;
+    }
 
     s_secondary = true;
 

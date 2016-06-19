@@ -125,6 +125,7 @@ static const ComboItem chardet_detector_presets[] = {
 };
 
 static const ComboItem bitdepth_elements[] = {
+    ComboItem (N_("Automatic"), -1),
     ComboItem ("16", 16),
     ComboItem ("24", 24),
     ComboItem ("32", 32),
@@ -167,7 +168,7 @@ static void output_bit_depth_changed ();
 
 static const PreferencesWidget output_combo_widgets[] = {
     WidgetCombo (N_("Output plugin:"),
-        WidgetInt (output_combo_selected, output_combo_changed),
+        WidgetInt (output_combo_selected, output_combo_changed, "audgui update output combo"),
         {0, output_combo_fill}),
     WidgetCustomGTK (output_create_config_button),
     WidgetCustomGTK (output_create_about_button)
@@ -626,12 +627,19 @@ static void create_appearance_category ()
 
 static void output_combo_changed ()
 {
-    PluginHandle * plugin = aud_plugin_list (PluginType::Output)[output_combo_selected];
+    auto & list = aud_plugin_list (PluginType::Output);
+    PluginHandle * plugin = list[output_combo_selected];
 
     if (aud_plugin_enable (plugin, true))
     {
         gtk_widget_set_sensitive (output_config_button, aud_plugin_has_configure (plugin));
         gtk_widget_set_sensitive (output_about_button, aud_plugin_has_about (plugin));
+    }
+    else
+    {
+        /* set combo box back to current output */
+        output_combo_selected = list.find (aud_plugin_get_current (PluginType::Output));
+        hook_call ("audgui update output combo", nullptr);
     }
 }
 
