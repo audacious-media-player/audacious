@@ -194,7 +194,7 @@ static void setup_output (bool new_input)
             format = FMT_S16_NE;
         else
         {
-            aud_ui_show_error (error ? error : _("Error opening output stream"));
+            aud_ui_show_error (error ? (const char *) error : _("Error opening output stream"));
             return;
         }
 
@@ -247,7 +247,7 @@ static void setup_secondary (bool new_input)
     String error;
     if (! sop->open_audio (FMT_FLOAT, rate, channels, error))
     {
-        aud_ui_show_error (error ? error : _("Error opening output stream"));
+        aud_ui_show_error (error ? (const char *) error : _("Error opening output stream"));
         return;
     }
 
