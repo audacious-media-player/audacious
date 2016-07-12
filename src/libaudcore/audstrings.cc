@@ -1036,11 +1036,11 @@ EXPORT StringBuf double_array_to_str (const double * array, int count)
 EXPORT StringBuf str_format_time (int64_t milliseconds)
 {
     int hours = milliseconds / 3600000;
-    int minutes = (milliseconds / 60000) % 60;
+    int minutes = milliseconds / 60000;
     int seconds = (milliseconds / 1000) % 60;
 
-    if (hours)
-        return str_printf ("%d:%02d:%02d", hours, minutes, seconds);
+    if (hours && aud_get_bool (nullptr, "show_hours"))
+        return str_printf ("%d:%02d:%02d", hours, minutes % 60, seconds);
     else
     {
         bool zero = aud_get_bool (nullptr, "leading_zero");

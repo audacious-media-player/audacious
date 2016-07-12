@@ -95,6 +95,7 @@ static const char * const core_defaults[] = {
 #endif
  "generic_title_format", "${?artist:${artist} - }${?album:${album} - }${title}",
  "leading_zero", "FALSE",
+ "show_hours", "TRUE",
  "metadata_fallbacks", "TRUE",
  "metadata_on_play", "FALSE",
  "show_numbers_in_pl", "FALSE",

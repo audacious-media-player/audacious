@@ -746,6 +746,7 @@ void playlist_init ()
     hook_associate ("set metadata_on_play", (HookFunction) playlist_trigger_scan, nullptr);
     hook_associate ("set generic_title_format", (HookFunction) playlist_reformat_titles, nullptr);
     hook_associate ("set leading_zero", (HookFunction) playlist_reformat_titles, nullptr);
+    hook_associate ("set show_hours", (HookFunction) playlist_reformat_titles, nullptr);
     hook_associate ("set metadata_fallbacks", (HookFunction) playlist_reformat_titles, nullptr);
     hook_associate ("set show_numbers_in_pl", (HookFunction) playlist_reformat_titles, nullptr);
 }
@@ -766,6 +767,7 @@ void playlist_end ()
     hook_dissociate ("set metadata_on_play", (HookFunction) playlist_trigger_scan);
     hook_dissociate ("set generic_title_format", (HookFunction) playlist_reformat_titles);
     hook_dissociate ("set leading_zero", (HookFunction) playlist_reformat_titles);
+    hook_dissociate ("set show_hours", (HookFunction) playlist_reformat_titles);
     hook_dissociate ("set metadata_fallbacks", (HookFunction) playlist_reformat_titles);
     hook_dissociate ("set show_numbers_in_pl", (HookFunction) playlist_reformat_titles);
 
