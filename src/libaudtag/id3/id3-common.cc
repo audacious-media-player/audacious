@@ -34,12 +34,12 @@
 #define ID3_ENCODING_UTF16_BE  2
 #define ID3_ENCODING_UTF8      3
 
-static void * memchr16 (const void * mem, int16_t chr, int len)
+static const void * find_nul_utf16 (const void * mem, int len)
 {
     while (len >= 2)
     {
-        if (* (int16_t *) mem == chr)
-            return (void *) mem;
+        if (! ((const char *) mem)[0] && ! ((const char *) mem)[1])
+            return mem;
 
         mem = (char *) mem + 2;
         len -= 2;
@@ -52,7 +52,7 @@ static void id3_strnlen (const char * data, int size, int encoding,
  int * bytes_without_nul, int * bytes_with_nul)
 {
     bool is16 = (encoding == ID3_ENCODING_UTF16 || encoding == ID3_ENCODING_UTF16_BE);
-    char * nul = is16 ? (char *) memchr16 (data, 0, size) : (char *) memchr (data, 0, size);
+    auto nul = (const char *) (is16 ? find_nul_utf16 (data, size) : memchr (data, 0, size));
 
     if (nul)
     {
@@ -181,8 +181,8 @@ static bool decode_rva_block (const char * * _data, int * _size,
         return false;
 
     * channel = (unsigned char) data[0];
-    * adjustment = (char) data[1]; /* first byte is signed */
-    * adjustment = (* adjustment << 8) | (unsigned char) data[2];
+    /* first byte is signed, but C/C++ allows shifting only unsigned values */
+    * adjustment = (int16_t) ((unsigned char) data[1] << 8) | (unsigned char) data[2];
     * adjustment_unit = 512;
     peak_bits = (unsigned char) data[3];
 

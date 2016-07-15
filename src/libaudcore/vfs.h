@@ -29,6 +29,7 @@
 
 #include <stdint.h>
 
+#include <libaudcore/export.h>
 #include <libaudcore/index.h>
 #include <libaudcore/objects.h>
 
@@ -67,7 +68,7 @@ constexpr VFSSeekType to_vfs_seek_type (int whence)
 
 #endif // WANT_VFS_STDIO_COMPAT
 
-class VFSImpl
+class LIBAUDCORE_PUBLIC VFSImpl
 {
 public:
     VFSImpl () {}

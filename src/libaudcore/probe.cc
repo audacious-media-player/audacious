@@ -56,7 +56,8 @@ InputPlugin * load_input_plugin (PluginHandle * decoder, String * error)
     return ip;
 }
 
-PluginHandle * file_find_decoder (const char * filename, bool fast, VFSFile & file, String * error)
+EXPORT PluginHandle * aud_file_find_decoder (const char * filename, bool fast,
+ VFSFile & file, String * error)
 {
     AUDINFO ("%s %s.\n", fast ? "Fast-probing" : "Probing", filename);
 
@@ -155,14 +156,8 @@ PluginHandle * file_find_decoder (const char * filename, bool fast, VFSFile & fi
     return nullptr;
 }
 
-EXPORT PluginHandle * aud_file_find_decoder (const char * filename, bool fast, String * error)
-{
-    VFSFile file;
-    return file_find_decoder (filename, fast, file, error);
-}
-
-bool file_read_tag (const char * filename, PluginHandle * decoder,
- VFSFile & file, Tuple * tuple, Index<char> * image, String * error)
+EXPORT bool aud_file_read_tag (const char * filename, PluginHandle * decoder,
+ VFSFile & file, Tuple & tuple, Index<char> * image, String * error)
 {
     auto ip = load_input_plugin (decoder, error);
     if (! ip)
@@ -171,41 +166,21 @@ bool file_read_tag (const char * filename, PluginHandle * decoder,
     if (! open_input_file (filename, "r", ip, file, error))
         return false;
 
-    if (tuple)
-        tuple->set_filename (filename);
+    Tuple new_tuple;
+    new_tuple.set_filename (filename);
 
-    bool success;
+    if (ip->read_tag (filename, file, new_tuple, image))
+    {
+        // cleanly replace existing tuple
+        new_tuple.set_state (Tuple::Valid);
+        tuple = std::move (new_tuple);
+        return true;
+    }
 
-    /* read_tag() was added in 3.7 */
-    if ((ip->version & 0xffff) >= 47)
-        success = ip->read_tag (filename, file, tuple, image);
-    else
-        success = ip->default_read_tag (filename, file, tuple, image);
-
-    if (! success && error)
+    if (error)
         * error = String (_("Error reading metadata"));
-    if (! success && tuple)
-        * tuple = Tuple ();
 
-    return success;
-}
-
-EXPORT Tuple aud_file_read_tuple (const char * filename, PluginHandle * decoder, String * error)
-{
-    VFSFile file;
-    Tuple tuple;
-
-    file_read_tag (filename, decoder, file, & tuple, nullptr, error);
-    return tuple;
-}
-
-EXPORT Index<char> aud_file_read_image (const char * filename, PluginHandle * decoder)
-{
-    VFSFile file;
-    Index<char> image;
-
-    file_read_tag (filename, decoder, file, nullptr, & image, nullptr);
-    return image;
+    return false;
 }
 
 EXPORT bool aud_file_can_write_tuple (const char * filename, PluginHandle * decoder)

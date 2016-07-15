@@ -1,6 +1,6 @@
 SHARED_LIB = ${LIB_PREFIX}audcore${LIB_SUFFIX}
-LIB_MAJOR = 3
-LIB_MINOR = 2
+LIB_MAJOR = 4
+LIB_MINOR = 0
 
 SRCS = adder.cc \
        art.cc \
@@ -57,6 +57,7 @@ INCLUDES = audio.h \
            audstrings.h \
            drct.h \
            equalizer.h \
+           export.h \
            hook.h \
            i18n.h \
            index.h \
@@ -97,7 +98,8 @@ CPPFLAGS := -I.. -I../.. \
             -DHARDCODE_PLUGINDIR=\"${plugindir}\" \
             -DHARDCODE_LOCALEDIR=\"${localedir}\" \
             -DHARDCODE_DESKTOPFILE=\"${datarootdir}/applications/audacious.desktop\" \
-            -DHARDCODE_ICONFILE=\"${datarootdir}/icons/hicolor/48x48/apps/audacious.png\"
+            -DHARDCODE_ICONFILE=\"${datarootdir}/icons/hicolor/48x48/apps/audacious.png\" \
+            -DLIBAUDCORE_BUILD
 
 CFLAGS += ${LIB_CFLAGS}
 

@@ -17,7 +17,6 @@
  * the use of this software.
  */
 
-#include "volumebutton.h"
 #include "libaudqt.h"
 
 #include <QFrame>
@@ -32,7 +31,25 @@
 
 namespace audqt {
 
-EXPORT VolumeButton::VolumeButton (QWidget * parent) :
+class VolumeButton : public QToolButton
+{
+public:
+    VolumeButton (QWidget * parent = nullptr);
+
+private:
+    void updateIcon (int val);
+    void updateVolume ();
+    void showSlider ();
+    void setVolume (int val);
+    QToolButton * newSliderButton (int delta);
+
+    void wheelEvent (QWheelEvent * e);
+
+    QSlider * m_slider;
+    QFrame * m_container;
+};
+
+VolumeButton::VolumeButton (QWidget * parent) :
     QToolButton (parent)
 {
     setFocusPolicy (Qt::NoFocus);
@@ -140,6 +157,11 @@ void VolumeButton::wheelEvent (QWheelEvent * e)
         m_slider->setValue (-- val);
     else
         m_slider->setValue (++ val);
+}
+
+EXPORT QToolButton * volume_button_new (QWidget * parent)
+{
+    return new VolumeButton (parent);
 }
 
 } // namespace audqt

@@ -1,6 +1,6 @@
 /*
- * volumebutton.h
- * Copyright 2014 William Pitcock
+ * export.h
+ * Copyright 2016 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -17,34 +17,17 @@
  * the use of this software.
  */
 
-#ifndef LIBAUDQT_VOLUMEBUTTON_H
-#define LIBAUDQT_VOLUMEBUTTON_H
+#ifndef LIBAUDQT_EXPORT_H
+#define LIBAUDQT_EXPORT_H
 
-#include <QToolButton>
-
-class QFrame;
-class QSlider;
-
-namespace audqt {
-
-class VolumeButton : public QToolButton
-{
-public:
-    VolumeButton (QWidget * parent = nullptr);
-
-private:
-    void updateIcon (int val);
-    void updateVolume ();
-    void showSlider ();
-    void setVolume (int val);
-    QToolButton * newSliderButton (int delta);
-
-    void wheelEvent (QWheelEvent * e);
-
-    QSlider * m_slider;
-    QFrame * m_container;
-};
-
-} // namespace audqt
-
+#ifdef _WIN32
+  #ifdef LIBAUDQT_BUILD
+    #define LIBAUDQT_PUBLIC __declspec(dllexport)
+  #else
+    #define LIBAUDQT_PUBLIC __declspec(dllimport)
+  #endif
+#else
+  #define LIBAUDQT_PUBLIC __attribute__ ((visibility ("default")))
 #endif
+
+#endif // LIBAUDQT_EXPORT_H

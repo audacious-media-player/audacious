@@ -35,12 +35,9 @@ struct TimerItem {
 
 struct TimerList
 {
-    QueuedFunc & source;
+    QueuedFunc source;
     Index<TimerItem> items;
     int use_count = 0;
-
-    TimerList (QueuedFunc & source) :
-        source (source) {}
 
     bool contains (TimerFunc func, void * data) const
     {
@@ -69,10 +66,7 @@ struct TimerList
 };
 
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-
-// QueuedFunc cannot be used in aud::array due to lack of a move constructor
-static QueuedFunc qf_1Hz, qf_4Hz, qf_10Hz, qf_30Hz;
-static aud::array<TimerRate, TimerList> lists {qf_1Hz, qf_4Hz, qf_10Hz, qf_30Hz};
+static aud::array<TimerRate, TimerList> lists;
 
 static void timer_run (void * list_)
 {

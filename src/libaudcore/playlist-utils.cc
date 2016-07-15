@@ -196,7 +196,7 @@ EXPORT void aud_playlist_remove_duplicates_by_scheme (int playlist, Playlist::So
         {
             Tuple current = aud_playlist_entry_get_tuple (playlist, count);
 
-            if (last && current && compare (last, current) == 0)
+            if (last.valid () && current.valid () && compare (last, current) == 0)
                 aud_playlist_entry_set_selected (playlist, count, true);
 
             last = std::move (current);
@@ -342,7 +342,7 @@ static void save_playlists_real ()
         if (playlist_get_modified (i))
         {
             StringBuf path = filename_build ({folder, name});
-            aud_playlist_save (i, filename_to_uri (path), Playlist::Nothing);
+            aud_playlist_save (i, filename_to_uri (path), Playlist::NoWait);
             playlist_set_modified (i, false);
         }
 

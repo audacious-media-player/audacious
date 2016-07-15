@@ -27,6 +27,7 @@
 class QBoxLayout;
 class QLayout;
 class QPixmap;
+class QToolButton;
 class QWidget;
 
 enum class PluginType;
@@ -110,6 +111,9 @@ void infowin_hide ();
 /* queue-manager.cc */
 void queue_manager_show ();
 void queue_manager_hide ();
+
+/* volumebutton.cc */
+QToolButton * volume_button_new (QWidget * parent = nullptr);
 
 } // namespace audqt
 

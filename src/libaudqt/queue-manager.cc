@@ -67,7 +67,7 @@ QVariant QueueManagerModel::data (const QModelIndex & index, int role) const
             return entry + 1;
         else
         {
-            Tuple tuple = aud_playlist_entry_get_tuple (list, entry, Playlist::Guess);
+            Tuple tuple = aud_playlist_entry_get_tuple (list, entry, Playlist::NoWait);
             return QString ((const char *) tuple.get_str (Tuple::FormattedTitle));
         }
     }

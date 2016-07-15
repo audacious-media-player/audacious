@@ -1,6 +1,6 @@
 SHARED_LIB = ${LIB_PREFIX}audqt${LIB_SUFFIX}
-LIB_MAJOR = 0
-LIB_MINOR = 1
+LIB_MAJOR = 1
+LIB_MINOR = 0
 
 SRCS = about.cc			\
        art.cc                   \
@@ -22,7 +22,11 @@ SRCS = about.cc			\
        util.cc			\
        volumebutton.cc
 
-INCLUDES = libaudqt.h iface.h volumebutton.h info-widget.h menu.h
+INCLUDES = export.h \
+           iface.h \
+           info-widget.h \
+           libaudqt.h \
+           menu.h
 
 include ../../buildsys.mk
 include ../../extra.mk

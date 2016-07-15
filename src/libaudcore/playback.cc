@@ -144,7 +144,7 @@ void playback_set_info (int entry, Tuple && tuple)
     if (! lock_if (in_sync))
         return;
 
-    if (tuple && tuple != pb_info.tuple)
+    if (tuple.valid () && tuple != pb_info.tuple)
     {
         pb_info.tuple = std::move (tuple);
 
@@ -300,7 +300,7 @@ static void run_playback ()
         pb_info.filename = std::move (dec.filename);
 
     // check that we have all the necessary data
-    if (! pb_info.filename || ! pb_info.tuple || ! dec.ip ||
+    if (! pb_info.filename || ! pb_info.tuple.valid () || ! dec.ip ||
      (! dec.ip->input_info.keys[InputKey::Scheme] && ! dec.file))
     {
         pb_info.error = true;
@@ -617,25 +617,6 @@ EXPORT int InputPlugin::check_seek ()
 
     unlock ();
     return seek;
-}
-
-/* compatibility (non-virtual) implementation of InputPlugin::read_tag(). */
-EXPORT bool InputPlugin::default_read_tag (const char * filename,
- VFSFile & file, Tuple * tuple, Index<char> * image)
-{
-    /* just call read_tuple() and read_image() */
-    if (tuple)
-    {
-        if (! (* tuple = read_tuple (filename, file)))
-            return false;
-        if (image && file && file.fseek (0, VFS_SEEK_SET) != 0)
-            return true; /* true: tuple was read */
-    }
-
-    if (image)
-        * image = read_image (filename, file);
-
-    return true;
 }
 
 // thread-safe

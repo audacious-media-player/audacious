@@ -71,7 +71,7 @@ static void unhook_cb (GtkCheckMenuItem * check, const AudguiMenuItem * item)
 EXPORT GtkWidget * audgui_menu_item_new_with_domain
  (const AudguiMenuItem * item, GtkAccelGroup * accel, const char * domain)
 {
-    const char * name = domain ? dgettext (domain, item->name) : item->name;
+    const char * name = (domain && item->name) ? dgettext (domain, item->name) : item->name;
     GtkWidget * widget = nullptr;
 
     if (name && item->func && ! item->cname) /* normal widget */

@@ -62,13 +62,14 @@ struct TupleData
     uint64_t setmask;      // which fields are present
     Index<TupleVal> vals;  // ordered list of field values
 
-    int *subtunes;                 /**< Array of int containing subtune index numbers.
+    short * subtunes;               /**< Array of int containing subtune index numbers.
                                          Can be nullptr if indexing is linear or if
                                          there are no subtunes. */
-    int nsubtunes;                 /**< Number of subtunes, if any. Values greater than 0
+    short nsubtunes;                /**< Number of subtunes, if any. Values greater than 0
                                          mean that there are subtunes and #subtunes array
                                          may be set. */
 
+    short state;
     int refcount;
 
     TupleData ();
@@ -85,7 +86,7 @@ struct TupleData
     TupleVal * lookup (int field, bool add, bool remove);
     void set_int (int field, int x);
     void set_str (int field, const char * str);
-    void set_subtunes (int nsubs, const int * subs);
+    void set_subtunes (short nsubs, const short * subs);
 
     static TupleData * ref (TupleData * tuple);
     static void unref (TupleData * tuple);
@@ -107,27 +108,28 @@ static const struct {
     {"title", Tuple::String, FallbackTitle},
     {"artist", Tuple::String, FallbackArtist},
     {"album", Tuple::String, FallbackAlbum},
+    {"album-artist", Tuple::String, -1},
     {"comment", Tuple::String, -1},
     {"genre", Tuple::String, -1},
+    {"year", Tuple::Int, -1},
+
+    {"composer", Tuple::String, -1},
+    {"performer", Tuple::String, -1},
+    {"copyright", Tuple::String, -1},
+    {"date", Tuple::String, -1},
 
     {"track-number", Tuple::Int, -1},
     {"length", Tuple::Int, -1},
-    {"year", Tuple::Int, -1},
-    {"quality", Tuple::String, -1},
+
+    {"bitrate", Tuple::Int, -1},
     {"codec", Tuple::String, -1},
+    {"quality", Tuple::String, -1},
 
     {"file-name", Tuple::String, -1},
     {"file-path", Tuple::String, -1},
     {"file-ext", Tuple::String, -1},
 
-    {"album-artist", Tuple::String, -1},
-    {"composer", Tuple::String, -1},
-    {"performer", Tuple::String, -1},
-    {"copyright", Tuple::String, -1},
-    {"date", Tuple::String, -1},
-    {"mbid", Tuple::String, -1},
-    {"mime-type", Tuple::String, -1},
-    {"bitrate", Tuple::Int, -1},
+    {"audio-file", Tuple::String, -1},
 
     {"subsong-id", Tuple::Int, -1},
     {"subsong-num", Tuple::Int, -1},
@@ -143,7 +145,6 @@ static const struct {
     {"gain-peak-unit", Tuple::Int, -1},
 
     {"formatted-title", Tuple::String, -1},
-    {"audio-file", Tuple::String, -1},
 
     /* fallbacks */
     {nullptr, Tuple::String, -1},
@@ -182,8 +183,6 @@ static const FieldDictEntry field_dict[] = {
     {"gain-track-peak", Tuple::TrackPeak},
     {"genre", Tuple::Genre},
     {"length", Tuple::Length},
-    {"mbid", Tuple::MusicBrainz},
-    {"mime-type", Tuple::MIMEType},
     {"performer", Tuple::Performer},
     {"quality", Tuple::Quality},
     {"segment-end", Tuple::EndTime},
@@ -279,17 +278,17 @@ void TupleData::set_str (int field, const char * str)
     new (& val->str) String (str);
 }
 
-void TupleData::set_subtunes (int nsubs, const int * subs)
+void TupleData::set_subtunes (short nsubs, const short * subs)
 {
     nsubtunes = nsubs;
 
-    delete subtunes;
+    delete[] subtunes;
     subtunes = nullptr;
 
-    if (subs)
+    if (nsubs && subs)
     {
-        subtunes = new int[nsubs];
-        memcpy (subtunes, subs, sizeof (int) * nsubs);
+        subtunes = new short[nsubs];
+        memcpy (subtunes, subs, sizeof subtunes[0] * nsubs);
     }
 }
 
@@ -297,12 +296,14 @@ TupleData::TupleData () :
     setmask (0),
     subtunes (nullptr),
     nsubtunes (0),
+    state (Tuple::Initial),
     refcount (1) {}
 
 TupleData::TupleData (const TupleData & other) :
     setmask (other.setmask),
     subtunes (nullptr),
     nsubtunes (0),
+    state (other.state),
     refcount (1)
 {
     vals.insert (0, other.vals.len ());
@@ -347,8 +348,8 @@ TupleData::~TupleData ()
 
 bool TupleData::is_same (const TupleData & other)
 {
-    if (setmask != other.setmask || nsubtunes != other.nsubtunes ||
-     (! subtunes) != (! other.subtunes))
+    if (state != other.state || setmask != other.setmask ||
+     nsubtunes != other.nsubtunes || (! subtunes) != (! other.subtunes))
         return false;
 
     auto a = vals.begin ();
@@ -373,7 +374,7 @@ bool TupleData::is_same (const TupleData & other)
         }
     }
 
-    if (subtunes && memcmp (subtunes, other.subtunes, sizeof (int) * nsubtunes))
+    if (subtunes && memcmp (subtunes, other.subtunes, sizeof subtunes[0] * nsubtunes))
         return false;
 
     return true;
@@ -427,6 +428,17 @@ EXPORT Tuple Tuple::ref () const
     Tuple tuple;
     tuple.data = TupleData::ref (data);
     return tuple;
+}
+
+EXPORT Tuple::State Tuple::state () const
+{
+    return data ? (Tuple::State) data->state : Initial;
+}
+
+EXPORT void Tuple::set_state (State st)
+{
+    data = TupleData::copy_on_write (data);
+    data->state = st;
 }
 
 EXPORT Tuple::ValueType Tuple::get_value_type (Field field) const
@@ -555,18 +567,18 @@ EXPORT void Tuple::set_format (const char * format, int chans, int rate, int bra
         set_int (Bitrate, brate);
 }
 
-EXPORT void Tuple::set_subtunes (int n_subtunes, const int * subtunes)
+EXPORT void Tuple::set_subtunes (short n_subtunes, const short * subtunes)
 {
     data = TupleData::copy_on_write (data);
     data->set_subtunes (n_subtunes, subtunes);
 }
 
-EXPORT int Tuple::get_n_subtunes () const
+EXPORT short Tuple::get_n_subtunes() const
 {
     return data ? data->nsubtunes : 0;
 }
 
-EXPORT int Tuple::get_nth_subtune (int n) const
+EXPORT short Tuple::get_nth_subtune (short n) const
 {
     if (! data || n < 0 || n >= data->nsubtunes)
         return -1;
@@ -705,6 +717,15 @@ EXPORT void Tuple::generate_fallbacks ()
 
     data = TupleData::copy_on_write (data);
 
+    // use album artist, if present
+    if (! artist && (artist = get_str (AlbumArtist)))
+    {
+        data->set_str (FallbackArtist, artist);
+
+        if (album)
+            return; // nothing left to do
+    }
+
     auto filepath = get_str (Path);
     if (! filepath)
         return;
@@ -732,9 +753,6 @@ EXPORT void Tuple::generate_fallbacks ()
     {
         // any other URI:
         // use the top two path elements as the artist and album
-
-        if (artist && album)
-            return;
 
         if ((s = strstr (filepath, "://")))
         {

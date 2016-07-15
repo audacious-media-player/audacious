@@ -110,6 +110,13 @@ struct array
     constexpr array (Args && ... args) :
         vals { static_cast<Args &&> (args) ...} {}
 
+    // Due to GCC bug #63707, the forwarding constructor given above cannot be
+    // used to initialize the array when V is a class with no copy constructor.
+    // As a very limited workaround, provide a second constructor which can be
+    // used to initialize the array to default values in this case.
+    constexpr array () :
+        vals () {}
+
     constexpr const V & operator[] (T t) const
         { return vals[(int) t]; }
     constexpr const V * begin () const

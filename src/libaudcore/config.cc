@@ -69,7 +69,7 @@ static const char * const core_defaults[] = {
  "default_gain", "0",
  "enable_replay_gain", "TRUE",
  "enable_clipping_prevention", "TRUE",
- "output_bit_depth", "16",
+ "output_bit_depth", "-1",
  "output_buffer_size", "500",
  "record_stream", aud::numeric_string<(int) OutputStream::AfterReplayGain>::str,
  "replay_gain_album", "FALSE",
@@ -95,6 +95,7 @@ static const char * const core_defaults[] = {
 #endif
  "generic_title_format", "${?artist:${artist} - }${?album:${album} - }${title}",
  "leading_zero", "FALSE",
+ "show_hours", "TRUE",
  "metadata_fallbacks", "TRUE",
  "metadata_on_play", "FALSE",
  "show_numbers_in_pl", "FALSE",

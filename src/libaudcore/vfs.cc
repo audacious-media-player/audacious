@@ -374,10 +374,9 @@ EXPORT VFSFileTest VFSFile::test_file (const char * filename, VFSFileTest test, 
     bool custom_input = false;
     auto tp = lookup_transport (filename, error, & custom_input);
 
-    /* for URI schemes handled by input plugins or older transport plugins
-     * (before Audacious 3.8), return 0, indicating that we have no way of
-     * testing file attributes */
-    if (custom_input || (tp && (tp->version & 0xffff) < 48))
+    /* for URI schemes handled by input plugins, return 0, indicating that we
+     * have no way of testing file attributes */
+    if (custom_input)
         return VFSFileTest (0);
 
     /* for unsupported URI schemes, return VFS_NO_ACCESS */
@@ -390,10 +389,5 @@ EXPORT VFSFileTest VFSFile::test_file (const char * filename, VFSFileTest test, 
 EXPORT Index<String> VFSFile::read_folder (const char * filename, String & error)
 {
     auto tp = lookup_transport (filename, error);
-
-    /* read_folder() was added in Audacious 3.8 */
-    if (! tp || (tp->version & 0xffff) < 48)
-        return Index<String> ();
-
-    return tp->read_folder (filename, error);
+    return tp ? tp->read_folder (filename, error) : Index<String> ();
 }

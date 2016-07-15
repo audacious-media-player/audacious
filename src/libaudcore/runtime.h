@@ -79,10 +79,6 @@ namespace audlog
 #define AUDINFO(...) do { audlog::log (audlog::Info, __FILE__, __LINE__, __FUNCTION__, __VA_ARGS__); } while (0)
 #define AUDDBG(...) do { audlog::log (audlog::Debug, __FILE__, __LINE__, __FUNCTION__, __VA_ARGS__); } while (0)
 
-// no longer needed in Audacious 3.8+
-void aud_init_paths () __attribute__((deprecated));
-void aud_cleanup_paths () __attribute__((deprecated));
-
 const char * aud_get_path (AudPath id);
 
 void aud_set_headless_mode (bool headless);

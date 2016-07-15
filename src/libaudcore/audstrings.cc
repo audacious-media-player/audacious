@@ -33,6 +33,10 @@
 #include "internal.h"
 #include "runtime.h"
 
+#define MAX_POW10 9
+static const unsigned int_pow10[MAX_POW10 + 1] =
+ {1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000};
+
 static const char ascii_to_hex[256] =
     "\x0\x0\x0\x0\x0\x0\x0\x0\x0\x0\x0\x0\x0\x0\x0\x0"
     "\x0\x0\x0\x0\x0\x0\x0\x0\x0\x0\x0\x0\x0\x0\x0\x0"
@@ -184,13 +188,13 @@ EXPORT unsigned str_calc_hash (const char * s)
     while (len >= 8)
     {
         h = h * 1954312449 +
-            s[0] * 3963737313 +
-            s[1] * 1291467969 +
-            s[2] * 39135393 +
-            s[3] * 1185921 +
-            s[4] * 35937 +
-            s[5] * 1089 +
-            s[6] * 33 +
+            (unsigned) s[0] * 3963737313 +
+            (unsigned) s[1] * 1291467969 +
+            (unsigned) s[2] * 39135393 +
+            (unsigned) s[3] * 1185921 +
+            (unsigned) s[4] * 35937 +
+            (unsigned) s[5] * 1089 +
+            (unsigned) s[6] * 33 +
             s[7];
 
         s += 8;
@@ -200,9 +204,9 @@ EXPORT unsigned str_calc_hash (const char * s)
     if (len >= 4)
     {
         h = h * 1185921 +
-            s[0] * 35937 +
-            s[1] * 1089 +
-            s[2] * 33 +
+            (unsigned) s[0] * 35937 +
+            (unsigned) s[1] * 1089 +
+            (unsigned) s[2] * 33 +
             s[3];
 
         s += 4;
@@ -868,15 +872,35 @@ EXPORT StringBuf index_to_str_list (const Index<String> & index, const char * se
  * have an accuracy of 6 decimal places.
  */
 
-static int str_to_uint (const char * string)
+static unsigned str_to_uint (const char * string, const char * * end = nullptr,
+ const char * stop = nullptr)
 {
-    int val = 0;
-    char c;
-
-    while ((c = * string ++) && c >= '0' && c <= '9')
+    unsigned val = 0;
+    for (char c; string != stop && (c = * string) >= '0' && c <= '9'; string ++)
         val = val * 10 + (c - '0');
 
+    if (end)
+        * end = string;
+
     return val;
+}
+
+static int digits_for (unsigned val)
+{
+    int digits = 1;
+
+    for (; val >= 1000; val /= 1000)
+        digits += 3;
+    for (; val >= 10; val /= 10)
+        digits ++;
+
+    return digits;
+}
+
+static void uint_to_str (unsigned val, char * buf, int digits)
+{
+    for (char * rev = buf + digits; rev > buf; val /= 10)
+        * (-- rev) = '0' + val % 10;
 }
 
 EXPORT int str_to_int (const char * string)
@@ -885,7 +909,7 @@ EXPORT int str_to_int (const char * string)
     if (neg || string[0] == '+')
         string ++;
 
-    int val = str_to_uint (string);
+    unsigned val = str_to_uint (string);
     return neg ? -val : val;
 }
 
@@ -895,14 +919,14 @@ EXPORT double str_to_double (const char * string)
     if (neg || string[0] == '+')
         string ++;
 
-    double val = str_to_uint (string);
-    const char * p = strchr (string, '.');
+    const char * p;
+    double val = str_to_uint (string, & p);
 
-    if (p)
+    if (* (p ++) == '.')
     {
-        char buf[7] = "000000";
-        memcpy (buf, p + 1, strlen_bounded (p + 1, 6));
-        val += str_to_uint (buf) / 1000000.0;
+        const char * end;
+        double decimal = str_to_uint (p, & end, p + MAX_POW10);
+        val += decimal / int_pow10[end - p];
     }
 
     return neg ? -val : val;
@@ -911,26 +935,18 @@ EXPORT double str_to_double (const char * string)
 EXPORT StringBuf int_to_str (int val)
 {
     bool neg = (val < 0);
+    unsigned absval = neg ? -val : val;
+
+    int digits = digits_for (absval);
+    StringBuf buf ((neg ? 1 : 0) + digits);
+
+    char * set = buf;
     if (neg)
-        val = -val;
+        * (set ++) = '-';
 
-    char buf[16];
-    char * rev = buf + sizeof buf;
+    uint_to_str (absval, set, digits);
 
-    while (rev > buf)
-    {
-        * (-- rev) = '0' + val % 10;
-        if (! (val /= 10))
-            break;
-    }
-
-    if (neg && rev > buf)
-        * (-- rev) = '-';
-
-    int len = buf + sizeof buf - rev;
-    StringBuf buf2 (len);
-    memcpy (buf2, rev, len);
-    return buf2;
+    return buf;
 }
 
 EXPORT StringBuf double_to_str (double val)
@@ -939,8 +955,8 @@ EXPORT StringBuf double_to_str (double val)
     if (neg)
         val = -val;
 
-    int i = floor (val);
-    int f = round ((val - i) * 1000000);
+    unsigned i = floor (val);
+    unsigned f = round ((val - i) * 1000000);
 
     if (f == 1000000)
     {
@@ -948,15 +964,26 @@ EXPORT StringBuf double_to_str (double val)
         f = 0;
     }
 
-    StringBuf buf = str_printf ("%s%d.%06d", neg ? "-" : "", i, f);
+    int decimals = f ? 6 : 0;
+    for (; decimals && ! (f % 10); f /= 10)
+        decimals --;
 
-    char * c = buf + buf.len ();
-    while (c[-1] == '0')
-        c --;
-    if (c[-1] == '.')
-        c --;
+    int digits = digits_for (i);
+    StringBuf buf ((neg ? 1 : 0) + digits + (decimals ? 1 : 0) + decimals);
 
-    buf.resize (c - buf);
+    char * set = buf;
+    if (neg)
+        * (set ++) = '-';
+
+    uint_to_str (i, set, digits);
+
+    if (decimals)
+    {
+        set += digits;
+        * (set ++) = '.';
+        uint_to_str (f, set, decimals);
+    }
+
     return buf;
 }
 
@@ -1009,11 +1036,11 @@ EXPORT StringBuf double_array_to_str (const double * array, int count)
 EXPORT StringBuf str_format_time (int64_t milliseconds)
 {
     int hours = milliseconds / 3600000;
-    int minutes = (milliseconds / 60000) % 60;
+    int minutes = milliseconds / 60000;
     int seconds = (milliseconds / 1000) % 60;
 
-    if (hours)
-        return str_printf ("%d:%02d:%02d", hours, minutes, seconds);
+    if (hours && aud_get_bool (nullptr, "show_hours"))
+        return str_printf ("%d:%02d:%02d", hours, minutes % 60, seconds);
     else
     {
         bool zero = aud_get_bool (nullptr, "leading_zero");

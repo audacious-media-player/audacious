@@ -88,6 +88,11 @@ bool playlist_load (const char * filename, String & title, Index<PlaylistAddItem
     return false;
 }
 
+// This procedure is only used when loading playlists from ~/.config/audacious;
+// hence, it is drastically simpler than the full-featured routines in adder.cc.
+// All support for adding folders, cuesheets, subtunes, etc. is omitted here.
+// Additionally, in order to avoid heavy I/O at startup, failed entries are not
+// rescanned; they can be rescanned later by refreshing the playlist. */
 bool playlist_insert_playlist_raw (int list, int at, const char * filename)
 {
     String title;

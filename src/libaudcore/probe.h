@@ -33,9 +33,9 @@ class VFSFile;
  * ready" hook is called, with <file> as a parameter.  If no album art could be
  * loaded, sets *queued to false and returns nullptr.
  *
- * Since Audacious 3.7, album art for the currently playing song is always
- * loaded before the "playback ready" hook is called.  Hence the "current art
- * ready" hook from previous versions is deprecated. */
+ * If you only want to display album art for the currently playing song, you can
+ * call this function from the "playback ready" hook without any need for a
+ * separate "art ready" handler, since the album art is already at that point. */
 const Index<char> * aud_art_request_data (const char * file, bool * queued = nullptr);
 
 /* Similar to art_request_data() but returns the URI of an image file.
@@ -45,9 +45,16 @@ const char * aud_art_request_file (const char * file, bool * queued = nullptr);
 /* Releases album art returned by art_request_data() or art_request_file(). */
 void aud_art_unref (const char * file);
 
-PluginHandle * aud_file_find_decoder (const char * filename, bool fast, String * error = nullptr);
-Tuple aud_file_read_tuple (const char * filename, PluginHandle * decoder, String * error = nullptr);
-Index<char> aud_file_read_image (const char * filename, PluginHandle * decoder);
+/* The following two functions take an additional VFSFile parameter to allow
+ * opening a file, probing for a decoder, and then reading the song metadata
+ * without opening the file a second time.  If you don't already have a file
+ * handle open, then just pass in a null VFSFile and it will be opened for you. */
+PluginHandle * aud_file_find_decoder (const char * filename, bool fast,
+ VFSFile & file, String * error = nullptr);
+bool aud_file_read_tag (const char * filename, PluginHandle * decoder,
+ VFSFile & file, Tuple & tuple, Index<char> * image = nullptr,
+ String * error = nullptr);
+
 bool aud_file_can_write_tuple (const char * filename, PluginHandle * decoder);
 bool aud_file_write_tuple (const char * filename, PluginHandle * decoder, const Tuple & tuple);
 bool aud_custom_infowin (const char * filename, PluginHandle * decoder);

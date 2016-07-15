@@ -70,10 +70,8 @@ enum SortType {
 
 /* Possible behaviors for playlist_entry_get_{decoder, tuple}. */
 enum GetMode {
-    Nothing,   // immediately return nullptr or Tuple() if not yet scanned
-    Guess,     // immediately return a best guess if not yet scanned
-    Wait,      // wait for the entry to be scanned; return nullptr or Tuple() on failure
-    WaitGuess  // wait for the entry to be scanned; return a best guess on failure
+    NoWait,  // non-blocking call; returned tuple will be in Initial state if not yet scanned
+    Wait     // blocking call; returned tuple will be either Valid or Failed
 };
 
 /* Format descriptor returned by playlist_save_formats() */
@@ -205,14 +203,13 @@ String aud_playlist_entry_get_filename (int playlist, int entry);
  * or if the entry has not yet been scanned, returns nullptr according to
  * <mode>.  On error, an error message is optionally returned. */
 PluginHandle * aud_playlist_entry_get_decoder (int playlist, int entry,
- Playlist::GetMode mode = Playlist::WaitGuess, String * error = nullptr);
+ Playlist::GetMode mode = Playlist::Wait, String * error = nullptr);
 
-/* Returns the tuple associated with an entry.  On error, or if the entry has
- * not yet been scanned, returns either a blank tuple or a tuple filled with
- * "best guess" values, according to <mode>.  On error, an error message is
- * optionally returned. */
+/* Returns the tuple associated with an entry.  The state of the returned tuple
+ * may indicate that the entry has not yet been scanned, or an error occurred,
+ * according to <mode>.  On error, an error message is optionally returned. */
 Tuple aud_playlist_entry_get_tuple (int playlist, int entry,
- Playlist::GetMode mode = Playlist::WaitGuess, String * error = nullptr);
+ Playlist::GetMode mode = Playlist::Wait, String * error = nullptr);
 
 /* Moves the playback position to the beginning of the entry at <position>.  If
  * <position> is -1, unsets the playback position.  If <playlist> is the

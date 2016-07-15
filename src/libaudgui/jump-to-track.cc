@@ -224,7 +224,7 @@ static void list_get_value (void * user, int row, int column, GValue * value)
         g_value_set_int (value, 1 + entry);
         break;
     case 1:
-        Tuple tuple = aud_playlist_entry_get_tuple (playlist, entry, Playlist::Guess);
+        Tuple tuple = aud_playlist_entry_get_tuple (playlist, entry, Playlist::NoWait);
         g_value_set_string (value, tuple.get_str (Tuple::FormattedTitle));
         break;
     }

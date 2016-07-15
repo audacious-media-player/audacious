@@ -77,7 +77,7 @@ bool TagModule::can_handle_file (VFSFile & file)
     return false;
 }
 
-bool TagModule::read_tag (VFSFile & file, Tuple * tuple, Index<char> * image)
+bool TagModule::read_tag (VFSFile & file, Tuple & tuple, Index<char> * image)
 {
     AUDDBG ("%s: read_tag() not implemented.\n", m_name);
     return false;

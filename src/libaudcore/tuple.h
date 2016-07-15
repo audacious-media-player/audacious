@@ -39,33 +39,42 @@ public:
     /* Smart pointer to the actual TupleData struct.
      * Uses create-on-write and copy-on-write. */
 
+    enum State {
+        Initial,  /* Song info has not yet been read */
+        Valid,    /* Song info has been successfully read */
+        Failed    /* Song info could not be read */
+    };
+
     enum Field {
         Invalid = -1,
 
         Title = 0,    /* Song title */
         Artist,       /* Song artist */
         Album,        /* Album name */
+        AlbumArtist,  /* Artist for entire album, if different than song artist */
         Comment,      /* Freeform comment */
         Genre,        /* Song's genre */
+        Year,         /* Year of production, performance, etc. */
+
+        Composer,     /* Composer, if different than artist */
+        Performer,    /* Performer, if different than artist */
+        Copyright,    /* Copyright declaration */
+        Date,         /* Date of production, performance, etc. */
 
         Track,        /* Track number */
         Length,       /* Track length in milliseconds */
-        Year,         /* Year of production, performance, etc. */
-        Quality,      /* String representing quality, such as "Stereo, 44 kHz" */
+
+        Bitrate,      /* Bitrate in kilobits (1000 bits)/sec */
         Codec,        /* Codec name, such as "Ogg Vorbis" */
+        Quality,      /* String representing quality, such as "Stereo, 44 kHz" */
 
         Basename,     /* Base filename, not including the folder path */
         Path,         /* Folder path, including the trailing "/" */
         Suffix,       /* Filename extension, not including the "." */
 
-        AlbumArtist,  /* Artist for entire album, if different than song artist */
-        Composer,     /* Composer of song, if different than artist */
-        Performer,
-        Copyright,
-        Date,
-        MusicBrainz,  /* MusicBrainz identifer for the song */
-        MIMEType,
-        Bitrate,      /* Bitrate in kbits/sec */
+        AudioFile,    /* URI of audio file, if different from the nominal URI
+                       * (e.g. for a cuesheet entry, where the nominal URI
+                       * points to the .cue file) */
 
         Subtune,      /* Index number of subtune */
         NumSubtunes,  /* Total number of subtunes in the file */
@@ -88,10 +97,6 @@ public:
 
         /* Title formatted for display; input plugins do not need to set this field */
         FormattedTitle,
-
-        /* URI of audio file, if different from the primary URI (e.g. for a
-         * cuesheet entry, where the primary URI points to the .cue file) */
-        AudioFile,
 
         n_fields
     };
@@ -130,19 +135,23 @@ public:
         return * this;
     }
 
-    explicit operator bool () const
-        { return (bool) data; }
-
     bool operator== (const Tuple & b) const;
     bool operator!= (const Tuple & b) const
         { return ! operator== (b); }
 
     Tuple ref () const;
 
+    /* Gets/sets the state of the song info.  Before setting the state to Valid,
+     * you should ensure that, at a minimum, set_filename() has been called. */
+    State state () const;
+    void set_state (State st);
+
     /* Returns the value type of a field if set, otherwise Empty. */
     ValueType get_value_type (Field field) const;
 
-    /* Convenience function to determine whether a field is set. */
+    /* Convenience functions */
+    bool valid () const
+        { return state () == Valid; }
     bool is_set (Field field) const
         { return get_value_type (field) != Empty; }
 
@@ -179,16 +188,16 @@ public:
     /* In addition to the normal fields, tuples contain an integer array of
      * subtune ID numbers.  This function sets that array.  It also sets
      * NumSubtunes to the value <n_subtunes>. */
-    void set_subtunes (int n_subtunes, const int * subtunes);
+    void set_subtunes (short n_subtunes, const short * subtunes);
 
     /* Returns the length of the subtune array.  If the array has not been set,
      * returns zero.  Note that if NumSubtunes is changed after
      * set_subtunes() is called, this function returns the value <n_subtunes>
      * passed to set_subtunes(), not the value of NumSubtunes. */
-    int get_n_subtunes () const;
+    short get_n_subtunes () const;
 
     /* Returns the <n>th member of the subtune array. */
-    int get_nth_subtune (int n) const;
+    short get_nth_subtune (short n) const;
 
     /* Sets a Replay Gain field pair from a decimal string. */
     void set_gain (Field field, Field unit_field, const char * str);

@@ -272,7 +272,7 @@ EXPORT void audgui_infopopup_show (int playlist, int entry)
     String filename = aud_playlist_entry_get_filename (playlist, entry);
     Tuple tuple = aud_playlist_entry_get_tuple (playlist, entry);
 
-    if (filename && tuple)
+    if (filename && tuple.valid ())
         infopopup_show (filename, tuple);
 }
 

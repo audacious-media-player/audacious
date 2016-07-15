@@ -132,7 +132,7 @@ void JumpToTrackCache::init ()
         item.entry = entry;
         item.path = String (uri_to_display (aud_playlist_entry_get_filename (playlist, entry)));
 
-        Tuple tuple = aud_playlist_entry_get_tuple (playlist, entry, Playlist::Guess);
+        Tuple tuple = aud_playlist_entry_get_tuple (playlist, entry, Playlist::NoWait);
         item.title = tuple.get_str (Tuple::Title);
         item.artist = tuple.get_str (Tuple::Artist);
         item.album = tuple.get_str (Tuple::Album);

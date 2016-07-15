@@ -27,10 +27,10 @@
 #include "audstrings.h"
 #include "hook.h"
 #include "i18n.h"
-#include "internal.h"
 #include "list.h"
 #include "mainloop.h"
 #include "plugins-internal.h"
+#include "probe.h"
 #include "runtime.h"
 #include "tuple.h"
 #include "interface.h"
@@ -132,20 +132,20 @@ static void add_file (PlaylistAddItem && item, PlaylistFilterFunc filter,
      * itself, then probe it to expand any subtunes.  The "validate" check (used
      * to skip non-audio files when adding folders) is also nested within this
      * block; note that "validate" is always false for subtunes. */
-    if (! item.tuple && ! is_subtune (item.filename))
+    if (! item.tuple.valid () && ! is_subtune (item.filename))
     {
         VFSFile file;
 
         if (! item.decoder)
         {
             bool fast = ! aud_get_bool (nullptr, "slow_probe");
-            item.decoder = file_find_decoder (item.filename, fast, file);
+            item.decoder = aud_file_find_decoder (item.filename, fast, file);
             if (validate && ! item.decoder)
                 return;
         }
 
         if (item.decoder && input_plugin_has_subtunes (item.decoder))
-            file_read_tag (item.filename, item.decoder, file, & item.tuple, nullptr);
+            aud_file_read_tag (item.filename, item.decoder, file, item.tuple);
     }
 
     int n_subtunes = item.tuple.get_n_subtunes ();
@@ -220,14 +220,17 @@ static void add_cuesheets (Index<String> & files, PlaylistFilterFunc filter,
         if (! playlist_load (cuesheet, title, items))
             continue;
 
-        StringBuf prev_filename;
+        String prev_filename;
         for (auto & item : items)
         {
+            String filename = item.tuple.get_str (Tuple::AudioFile);
+            if (! filename)
+                continue; // shouldn't happen
+
             if (! filter || filter (item.filename, user))
                 add_file (std::move (item), filter, user, result, false);
 
             // remove duplicates from file list
-            StringBuf filename = strip_subtune (item.filename);
             if (prev_filename && ! filename_compare (filename, prev_filename))
                 continue;
 
@@ -235,7 +238,7 @@ static void add_cuesheets (Index<String> & files, PlaylistFilterFunc filter,
             if (idx >= 0)
                 files.remove (idx, 1);
 
-            prev_filename.steal (std::move (filename));
+            prev_filename = std::move (filename);
         }
     }
 }
@@ -297,7 +300,7 @@ static void add_generic (PlaylistAddItem && item, PlaylistFilterFunc filter,
 
     /* If the item has a valid tuple or known decoder, or it's a subtune, then
      * assume it's a playable file and skip some checks. */
-    if (item.tuple || item.decoder || is_subtune (item.filename))
+    if (item.tuple.valid () || item.decoder || is_subtune (item.filename))
         add_file (std::move (item), filter, user, result, false);
     else
     {

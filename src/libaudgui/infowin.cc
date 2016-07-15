@@ -72,6 +72,7 @@ static struct {
 static GtkWidget * infowin;
 static int current_playlist_id, current_entry;
 static String current_file;
+static Tuple current_tuple;
 static PluginHandle * current_decoder = nullptr;
 static bool can_write = false;
 static QueuedFunc ministatus_timer;
@@ -200,20 +201,17 @@ static void ministatus_display_message (const char * text)
 
 static void infowin_update_tuple ()
 {
-    Tuple tuple;
-    tuple.set_filename (current_file);
+    set_field_str_from_entry (current_tuple, Tuple::Title, widgets.title);
+    set_field_str_from_entry (current_tuple, Tuple::Artist, widgets.artist);
+    set_field_str_from_entry (current_tuple, Tuple::Album, widgets.album);
+    set_field_str_from_entry (current_tuple, Tuple::AlbumArtist, widgets.album_artist);
+    set_field_str_from_entry (current_tuple, Tuple::Comment, widgets.comment);
+    set_field_str_from_entry (current_tuple, Tuple::Genre,
+     gtk_bin_get_child ((GtkBin *) widgets.genre));
+    set_field_int_from_entry (current_tuple, Tuple::Year, widgets.year);
+    set_field_int_from_entry (current_tuple, Tuple::Track, widgets.track);
 
-    set_field_str_from_entry (tuple, Tuple::Title, widgets.title);
-    set_field_str_from_entry (tuple, Tuple::Artist, widgets.artist);
-    set_field_str_from_entry (tuple, Tuple::Album, widgets.album);
-    set_field_str_from_entry (tuple, Tuple::AlbumArtist, widgets.album_artist);
-    set_field_str_from_entry (tuple, Tuple::Comment, widgets.comment);
-    set_field_str_from_entry (tuple, Tuple::Genre, gtk_bin_get_child ((GtkBin *)
-     widgets.genre));
-    set_field_int_from_entry (tuple, Tuple::Year, widgets.year);
-    set_field_int_from_entry (tuple, Tuple::Track, widgets.track);
-
-    if (aud_file_write_tuple (current_file, current_decoder, tuple))
+    if (aud_file_write_tuple (current_file, current_decoder, current_tuple))
     {
         ministatus_display_message (_("Save successful"));
         gtk_widget_set_sensitive (widgets.apply, false);
@@ -279,6 +277,7 @@ static void infowin_destroyed ()
 
     infowin = nullptr;
     current_file = String ();
+    current_tuple = Tuple ();
     current_decoder = nullptr;
 }
 
@@ -405,7 +404,7 @@ static void create_infowin ()
     hook_associate ("art ready", (HookFunction) infowin_display_image, nullptr);
 }
 
-static void infowin_show (int list, int entry, const char * filename,
+static void infowin_show (int list, int entry, const String & filename,
  const Tuple & tuple, PluginHandle * decoder, bool writable)
 {
     if (! infowin)
@@ -413,7 +412,8 @@ static void infowin_show (int list, int entry, const char * filename,
 
     current_playlist_id = aud_playlist_get_unique_id (list);
     current_entry = entry;
-    current_file = String (filename);
+    current_file = filename;
+    current_tuple = tuple.ref ();
     current_decoder = decoder;
     can_write = writable;
 
@@ -466,20 +466,20 @@ EXPORT void audgui_infowin_show (int playlist, int entry)
     String error;
     PluginHandle * decoder = aud_playlist_entry_get_decoder (playlist, entry,
      Playlist::Wait, & error);
+    Tuple tuple = decoder ? aud_playlist_entry_get_tuple (playlist, entry,
+     Playlist::Wait, & error) : Tuple ();
 
-    if (decoder && ! aud_custom_infowin (filename, decoder))
+    if (decoder && tuple.valid () && ! aud_custom_infowin (filename, decoder))
     {
-        Tuple tuple = aud_playlist_entry_get_tuple (playlist, entry, Playlist::Wait, & error);
-        if (tuple)
-        {
-            /* cuesheet entries cannot be updated */
-            bool can_write = aud_file_can_write_tuple (filename, decoder) &&
-             ! tuple.is_set (Tuple::StartTime);
+        /* cuesheet entries cannot be updated */
+        bool can_write = aud_file_can_write_tuple (filename, decoder) &&
+         ! tuple.is_set (Tuple::StartTime);
 
-            tuple.delete_fallbacks ();
-            infowin_show (playlist, entry, filename, tuple, decoder, can_write);
-        }
+        tuple.delete_fallbacks ();
+        infowin_show (playlist, entry, filename, tuple, decoder, can_write);
     }
+    else
+        audgui_infowin_hide ();
 
     if (error)
         aud_ui_show_error (str_printf (_("Error opening %s:\n%s"),

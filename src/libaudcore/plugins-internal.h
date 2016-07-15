@@ -43,7 +43,7 @@ bool plugin_enable_secondary (PluginHandle * plugin, bool enable);
 /* plugin-load.c */
 void plugin_system_init ();
 void plugin_system_cleanup ();
-bool plugin_check_flags (int version);
+bool plugin_check_flags (int flags);
 Plugin * plugin_load (const char * path);
 
 /* plugin-registry.c */

@@ -25,6 +25,7 @@
 
 #include <libaudcore/i18n.h>
 #include <libaudcore/probe.h>
+#include <libaudcore/tuple.h>
 
 namespace audqt {
 
@@ -51,15 +52,48 @@ static const TupleFieldMap tuple_field_map[] = {
     {nullptr, Tuple::Invalid, false},
     {N_("Technical"), Tuple::Invalid, false},
     {N_("Length"), Tuple::Length, false},
-    {N_("MIME Type"), Tuple::MIMEType, false},
     {N_("Codec"), Tuple::Codec, false},
     {N_("Quality"), Tuple::Quality, false},
     {N_("Bitrate"), Tuple::Bitrate, false},
 };
 
-EXPORT InfoWidget::InfoWidget (QWidget * parent) : QTreeView (parent)
+class InfoModel : public QAbstractTableModel
 {
-    setModel (& m_model);
+public:
+    InfoModel (QObject * parent = nullptr) :
+        QAbstractTableModel (parent) {}
+
+    int rowCount (const QModelIndex & parent = QModelIndex ()) const
+        { return aud::n_elems (tuple_field_map); }
+    int columnCount (const QModelIndex & parent = QModelIndex ()) const
+        { return 2; }
+
+    QVariant data (const QModelIndex & index, int role = Qt::DisplayRole) const;
+    bool setData (const QModelIndex & index, const QVariant & value, int role = Qt::EditRole);
+    Qt::ItemFlags flags (const QModelIndex & index) const;
+
+    void setTupleData (const Tuple & tuple, String filename, PluginHandle * plugin)
+    {
+        m_tuple = tuple.ref ();
+        m_filename = filename;
+        m_plugin = plugin;
+        m_dirty = false;
+    }
+
+    bool updateFile () const;
+
+private:
+    Tuple m_tuple;
+    String m_filename;
+    PluginHandle * m_plugin = nullptr;
+    bool m_dirty = false;
+};
+
+EXPORT InfoWidget::InfoWidget (QWidget * parent) :
+    QTreeView (parent),
+    m_model (new InfoModel (this))
+{
+    setModel (m_model);
     header ()->hide ();
     setIndentation (0);
     resizeColumnToContents (0);
@@ -72,29 +106,14 @@ EXPORT InfoWidget::~InfoWidget ()
 EXPORT void InfoWidget::fillInfo (int playlist, int entry, const char * filename, const Tuple & tuple,
  PluginHandle * decoder, bool updating_enabled)
 {
-    m_model.setTupleData (tuple, String (filename), decoder);
+    m_model->setTupleData (tuple, String (filename), decoder);
     reset ();
     setEditTriggers (updating_enabled ? QAbstractItemView::SelectedClicked : QAbstractItemView::NoEditTriggers);
 }
 
 EXPORT bool InfoWidget::updateFile ()
 {
-    return m_model.updateFile ();
-}
-
-InfoModel::InfoModel (QObject * parent) : QAbstractTableModel (parent)
-{
-}
-
-int InfoModel::rowCount (const QModelIndex & parent) const
-{
-    auto r = ArrayRef<TupleFieldMap> (tuple_field_map);
-    return r.len;
-}
-
-int InfoModel::columnCount (const QModelIndex & parent) const
-{
-    return 2;
+    return m_model->updateFile ();
 }
 
 bool InfoModel::updateFile () const
@@ -102,10 +121,7 @@ bool InfoModel::updateFile () const
     if (! m_dirty)
         return true;
 
-    Tuple t = m_tuple.ref ();
-    t.set_filename (m_filename);
-
-    return aud_file_write_tuple (m_filename, m_plugin, t);
+    return aud_file_write_tuple (m_filename, m_plugin, m_tuple);
 }
 
 bool InfoModel::setData (const QModelIndex & index, const QVariant & value, int role)
@@ -122,7 +138,7 @@ bool InfoModel::setData (const QModelIndex & index, const QVariant & value, int 
     auto t = Tuple::field_get_type (field_id);
     if (t == Tuple::String)
     {
-        m_tuple.set_str (field_id, value.toString ().toLocal8Bit ());
+        m_tuple.set_str (field_id, value.toString ().toUtf8 ());
         emit dataChanged (index, index, {role});
         return true;
     }
@@ -144,25 +160,19 @@ QVariant InfoModel::data (const QModelIndex & index, int role) const
     {
         if (index.column () == 0)
             return translate_str (tuple_field_map [index.row ()].name);
-        else if (index.column () == 1 && m_tuple)
+        else if (index.column () == 1)
         {
             if (field_id == Tuple::Invalid)
                 return QVariant ();
 
-            auto t = Tuple::field_get_type (field_id);
-
-            if (t == Tuple::String)
+            switch (m_tuple.get_value_type (field_id))
             {
-                const char * res = m_tuple.get_str (field_id);
-                if (res)
-                    return QString (res);
-            }
-            else if (t == Tuple::Int)
-            {
-                int res = m_tuple.get_int (field_id);
-                if (res == -1)
-                    return QVariant ();
-                return res;
+            case Tuple::String:
+                return QString (m_tuple.get_str (field_id));
+            case Tuple::Int:
+                return m_tuple.get_int (field_id);
+            default:
+                return QVariant ();
             }
         }
     }
@@ -195,14 +205,6 @@ Qt::ItemFlags InfoModel::flags (const QModelIndex & index) const
     }
 
     return Qt::ItemNeverHasChildren;
-}
-
-void InfoModel::setTupleData (const Tuple & tuple, String filename, PluginHandle * plugin)
-{
-    m_tuple = tuple.ref ();
-    m_filename = filename;
-    m_plugin = plugin;
-    m_dirty = false;
 }
 
 } // namespace audqt

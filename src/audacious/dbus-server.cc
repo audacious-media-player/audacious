@@ -596,30 +596,25 @@ static gboolean do_song_tuple (Obj * obj, Invoc * invoc, unsigned pos, const cha
 {
     Tuple::Field field = Tuple::field_by_name (key);
     Tuple tuple;
-    GVariant * var = nullptr;
+    GVariant * var;
 
     if (field >= 0)
         tuple = aud_playlist_entry_get_tuple (CURRENT, pos);
 
-    if (tuple)
+    switch (tuple.get_value_type (field))
     {
-        switch (tuple.get_value_type (field))
-        {
-        case Tuple::String:
-            var = g_variant_new_string (tuple.get_str (field));
-            break;
+    case Tuple::String:
+        var = g_variant_new_string (tuple.get_str (field));
+        break;
 
-        case Tuple::Int:
-            var = g_variant_new_int32 (tuple.get_int (field));
-            break;
+    case Tuple::Int:
+        var = g_variant_new_int32 (tuple.get_int (field));
+        break;
 
-        default:
-            break;
-        }
-    }
-
-    if (! var)
+    default:
         var = g_variant_new_string ("");
+        break;
+    }
 
     FINISH2 (song_tuple, g_variant_new_variant (var));
     return true;

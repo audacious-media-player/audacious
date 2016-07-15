@@ -22,6 +22,7 @@
 #define LIBAUDCORE_PLUGIN_H
 
 #include <libaudcore/audio.h>
+#include <libaudcore/export.h>
 #include <libaudcore/plugins.h>
 #include <libaudcore/tuple.h>
 #include <libaudcore/visualizer.h>
@@ -46,12 +47,8 @@ struct PluginPreferences;
  * the API tables), increment _AUD_PLUGIN_VERSION *and* set
  * _AUD_PLUGIN_VERSION_MIN to the same value. */
 
-#define _AUD_PLUGIN_VERSION_MIN 46 /* 3.6-devel */
+#define _AUD_PLUGIN_VERSION_MIN 48 /* 3.8-devel */
 #define _AUD_PLUGIN_VERSION     48 /* 3.8-devel */
-
-/* compatibility flags ORed into the version field */
-#define _AUD_PLUGIN_GLIB_ONLY 0x10000 /* plugin requires GLib mainloop */
-#define _AUD_PLUGIN_QT_ONLY   0x20000 /* plugin requires Qt mainloop */
 
 /* A NOTE ON THREADS
  *
@@ -99,14 +96,22 @@ struct PluginPreferences;
  * For the time being, aud_plugin_send_message() should only be called from the
  * program's main thread. */
 
-struct PluginInfo {
+/* plugin flags */
+enum {
+    PluginGLibOnly = 0x1, // plugin requires GLib main loop
+    PluginQtOnly   = 0x2  // plugin requires Qt main loop
+};
+
+struct PluginInfo
+{
     const char * name;
     const char * domain; // for gettext
     const char * about;
     const PluginPreferences * prefs;
+    int flags;
 };
 
-class Plugin
+class LIBAUDCORE_PUBLIC Plugin
 {
 public:
     constexpr Plugin (PluginType type, PluginInfo info) :
@@ -114,14 +119,7 @@ public:
         info (info) {}
 
     const int magic = _AUD_PLUGIN_MAGIC;
-    const int version = _AUD_PLUGIN_VERSION
-#ifdef AUD_PLUGIN_GLIB_ONLY
-     | _AUD_PLUGIN_GLIB_ONLY
-#endif
-#ifdef AUD_PLUGIN_QT_ONLY
-     | _AUD_PLUGIN_QT_ONLY
-#endif
-     ;
+    const int version = _AUD_PLUGIN_VERSION;
 
     const PluginType type;
     const PluginInfo info;
@@ -132,7 +130,7 @@ public:
     virtual int take_message (const char * code, const void * data, int size) { return -1; }
 };
 
-class TransportPlugin : public Plugin
+class LIBAUDCORE_PUBLIC TransportPlugin : public Plugin
 {
 public:
     constexpr TransportPlugin (const PluginInfo info,
@@ -152,7 +150,7 @@ public:
         { return Index<String> (); }
 };
 
-class PlaylistPlugin : public Plugin
+class LIBAUDCORE_PUBLIC PlaylistPlugin : public Plugin
 {
 public:
     constexpr PlaylistPlugin (const PluginInfo info,
@@ -182,7 +180,7 @@ public:
      const Index<PlaylistAddItem> & items) { return false; }
 };
 
-class OutputPlugin : public Plugin
+class LIBAUDCORE_PUBLIC OutputPlugin : public Plugin
 {
 public:
     constexpr OutputPlugin (const PluginInfo info, int priority, bool force_reopen = false) :
@@ -211,7 +209,7 @@ public:
     /* Begins playback of a PCM stream.  <format> is one of the FMT_*
      * enumeration values defined in libaudcore/audio.h.  Returns true on
      * success. */
-    virtual bool open_audio (int format, int rate, int chans) = 0;
+    virtual bool open_audio (int format, int rate, int chans, String & error) = 0;
 
     /* Ends playback.  Any buffered audio data is discarded. */
     virtual void close_audio () = 0;
@@ -242,7 +240,7 @@ public:
     virtual void flush () = 0;
 };
 
-class EffectPlugin : public Plugin
+class LIBAUDCORE_PUBLIC EffectPlugin : public Plugin
 {
 public:
     constexpr EffectPlugin (const PluginInfo info, int order, bool preserves_format) :
@@ -299,7 +297,7 @@ enum class InputKey {
     count
 };
 
-class InputPlugin : public Plugin
+class LIBAUDCORE_PUBLIC InputPlugin : public Plugin
 {
 public:
     enum {
@@ -373,9 +371,13 @@ public:
     /* Returns true if the plugin can handle the file. */
     virtual bool is_our_file (const char * filename, VFSFile & file) = 0;
 
-    /* Reads metadata from the file.  Optional if the plugin implements read_tag(). */
-    virtual Tuple read_tuple (const char * filename, VFSFile & file)
-        { return Tuple(); }
+    /* Reads metadata and album art (if requested and available) from the file.
+     * The filename fields of the tuple are already set before the function is
+     * called.  If album art is not needed, <image> will be nullptr.  The return
+     * value should be true if <tuple> was successfully read, regardless of
+     * whether album art was read. */
+    virtual bool read_tag (const char * filename, VFSFile & file, Tuple & tuple,
+     Index<char> * image) = 0;
 
     /* Plays the file.  Returns false on error.  Also see input-api.h. */
     virtual bool play (const char * filename, VFSFile & file) = 0;
@@ -384,28 +386,11 @@ public:
     virtual bool write_tuple (const char * filename, VFSFile & file, const Tuple & tuple)
         { return false; }
 
-    /* Optional.  Reads an album art image (JPEG or PNG data) from the file.
-     * Returns an empty buffer on error. */
-    virtual Index<char> read_image (const char * filename, VFSFile & file)
-        { return Index<char> (); }
-
     /* Optional.  Displays a window showing info about the file.  In general,
      * this function should be avoided since Audacious already provides a file
      * info window. */
     virtual bool file_info_box (const char * filename, VFSFile & file)
         { return false; }
-
-    /* Optional.  Reads metadata and/or an album art from the file.
-     * Providing this function is encouraged over providing a separate
-     * read_tuple() and read_image().  The filename fields of the tuple
-     * (if not null) are already set before the function is called. */
-    virtual bool read_tag (const char * filename, VFSFile & file, Tuple * tuple,
-     Index<char> * image)
-        { return default_read_tag (filename, file, tuple, image); }
-
-    /* compatibility (non-virtual) implementation of read_tag(); do not use. */
-    bool default_read_tag (const char * filename, VFSFile & file, Tuple * tuple,
-     Index<char> * image);
 
 protected:
     /* Prepares the output system for playback in the specified format.  Also
@@ -446,7 +431,7 @@ protected:
     static int check_seek ();
 };
 
-class DockablePlugin : public Plugin
+class LIBAUDCORE_PUBLIC DockablePlugin : public Plugin
 {
 public:
     constexpr DockablePlugin (PluginType type, PluginInfo info) :
@@ -459,7 +444,7 @@ public:
     virtual void * get_qt_widget () { return nullptr; }
 };
 
-class GeneralPlugin : public DockablePlugin
+class LIBAUDCORE_PUBLIC GeneralPlugin : public DockablePlugin
 {
 public:
     constexpr GeneralPlugin (PluginInfo info, bool enabled_by_default) :
@@ -469,7 +454,7 @@ public:
     const bool enabled_by_default;
 };
 
-class VisPlugin : public DockablePlugin, public Visualizer
+class LIBAUDCORE_PUBLIC VisPlugin : public DockablePlugin, public Visualizer
 {
 public:
     constexpr VisPlugin (PluginInfo info, int type_mask) :
@@ -477,7 +462,7 @@ public:
         Visualizer (type_mask) {}
 };
 
-class IfacePlugin : public Plugin
+class LIBAUDCORE_PUBLIC IfacePlugin : public Plugin
 {
 public:
     constexpr IfacePlugin (PluginInfo info) :

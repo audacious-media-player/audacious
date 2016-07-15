@@ -125,6 +125,7 @@ static const ComboItem chardet_detector_presets[] = {
 };
 
 static const ComboItem bitdepth_elements[] = {
+    ComboItem (N_("Automatic"), -1),
     ComboItem ("16", 16),
     ComboItem ("24", 24),
     ComboItem ("32", 32),
@@ -167,7 +168,7 @@ static void output_bit_depth_changed ();
 
 static const PreferencesWidget output_combo_widgets[] = {
     WidgetCombo (N_("Output plugin:"),
-        WidgetInt (output_combo_selected, output_combo_changed),
+        WidgetInt (output_combo_selected, output_combo_changed, "audgui update output combo"),
         {0, output_combo_fill}),
     WidgetCustomGTK (output_create_config_button),
     WidgetCustomGTK (output_create_about_button)
@@ -288,8 +289,10 @@ static const PreferencesWidget playlist_page_widgets[] = {
     WidgetLabel (N_("<b>Song Display</b>")),
     WidgetCheck (N_("Show song numbers"),
         WidgetBool (0, "show_numbers_in_pl", send_title_change)),
-    WidgetCheck (N_("Show leading zeroes (02:00 instead of 2:00)"),
+    WidgetCheck (N_("Show leading zeroes (02:00 vs. 2:00)"),
         WidgetBool (0, "leading_zero", send_title_change)),
+    WidgetCheck (N_("Show hours separately (1:30:00 vs. 90:00)"),
+        WidgetBool (0, "show_hours", send_title_change)),
     WidgetCustomGTK (create_titlestring_table),
     WidgetLabel (N_("<b>Compatibility</b>")),
     WidgetCheck (N_("Interpret \\ (backward slash) as a folder delimiter"),
@@ -628,12 +631,19 @@ static void create_appearance_category ()
 
 static void output_combo_changed ()
 {
-    PluginHandle * plugin = aud_plugin_list (PluginType::Output)[output_combo_selected];
+    auto & list = aud_plugin_list (PluginType::Output);
+    PluginHandle * plugin = list[output_combo_selected];
 
     if (aud_plugin_enable (plugin, true))
     {
         gtk_widget_set_sensitive (output_config_button, aud_plugin_has_configure (plugin));
         gtk_widget_set_sensitive (output_about_button, aud_plugin_has_about (plugin));
+    }
+    else
+    {
+        /* set combo box back to current output */
+        output_combo_selected = list.find (aud_plugin_get_current (PluginType::Output));
+        hook_call ("audgui update output combo", nullptr);
     }
 }
 

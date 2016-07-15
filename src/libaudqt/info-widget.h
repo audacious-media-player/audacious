@@ -18,37 +18,17 @@
  * the use of this software.
  */
 
-#include <QAbstractTableModel>
 #include <QTreeView>
-
-#include <libaudcore/tuple.h>
+#include <libaudqt/export.h>
 
 class PluginHandle;
+class Tuple;
 
 namespace audqt {
 
-class InfoModel : public QAbstractTableModel
-{
-public:
-    InfoModel (QObject * parent = nullptr);
+class InfoModel;
 
-    int rowCount (const QModelIndex & parent = QModelIndex ()) const;
-    int columnCount (const QModelIndex & parent = QModelIndex ()) const;
-    QVariant data (const QModelIndex & index, int role = Qt::DisplayRole) const;
-    bool setData (const QModelIndex & index, const QVariant & value, int role = Qt::EditRole);
-    Qt::ItemFlags flags (const QModelIndex & index) const;
-
-    void setTupleData (const Tuple & tuple, String filename, PluginHandle * plugin);
-    bool updateFile () const;
-
-private:
-    Tuple m_tuple;
-    String m_filename;
-    PluginHandle * m_plugin = nullptr;
-    bool m_dirty = false;
-};
-
-class InfoWidget : public QTreeView
+class LIBAUDQT_PUBLIC InfoWidget : public QTreeView
 {
 public:
     InfoWidget (QWidget * parent = nullptr);
@@ -59,7 +39,7 @@ public:
     bool updateFile ();
 
 private:
-    InfoModel m_model;
+    InfoModel * m_model;
 };
 
 } // namespace audqt
