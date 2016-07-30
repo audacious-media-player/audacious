@@ -28,14 +28,6 @@ dnl ===============================
 
 AC_CHECK_FUNCS([sigwait])
 
-AC_MSG_CHECKING([for /proc/self/exe])
-if test -e "/proc/self/exe" ; then
-    AC_MSG_RESULT(yes)
-    AC_DEFINE([HAVE_PROC_SELF_EXE], [1], [Define if the /proc/self/exe symlink is supported])
-else
-    AC_MSG_RESULT(no)
-fi
-
 dnl iconv
 dnl =====
 
