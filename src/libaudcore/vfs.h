@@ -68,6 +68,16 @@ constexpr VFSSeekType to_vfs_seek_type (int whence)
 
 #endif // WANT_VFS_STDIO_COMPAT
 
+// #undef POSIX functions/macros to avoid name conflicts
+#undef fread
+#undef fseek
+#undef ftell
+#undef fsize
+#undef feof
+#undef fwrite
+#undef ftruncate
+#undef fflush
+
 class LIBAUDCORE_PUBLIC VFSImpl
 {
 public:

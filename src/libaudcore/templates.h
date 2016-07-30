@@ -24,10 +24,10 @@
 #include <type_traits>
 #include <utility>
 
-#ifdef _WIN32
+// #undef POSIX and Windows macros to avoid name conflicts
+#undef abs
 #undef min
 #undef max
-#endif
 
 namespace aud {
 
