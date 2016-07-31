@@ -17,7 +17,7 @@ May 16, 2015</em></p>
 <h3>Set up system paths</h3>
 
 <p>Under <em>My Computer -> Properties -> Advanced -> Environment Variables</em>, set:</p>
-<blockquote><p><tt>PATH=C:\MinGW\bin;C:\MinGW\msys\1.0\bin;C:\Python27;C:\GTK\bin;C:\libs\bin;C:\aud\bin<br>
+<blockquote><p><tt>PATH=C:\MinGW\bin;C:\MinGW\msys\1.0\bin;C:\Python27;C:\CMake\bin;C:\GTK\bin;C:\libs\bin;C:\aud\bin<br>
 PKG_CONFIG_PATH=/C/GTK/lib/pkgconfig:/C/libs/lib/pkgconfig:/C/aud/lib/pkgconfig<br>
 C_INCLUDE_PATH=/C/GTK/include:/C/libs/include<br>
 CPLUS_INCLUDE_PATH=/C/GTK/include:/C/libs/include<br>
@@ -60,11 +60,19 @@ and locate the following line:</p>
 
 <p>Follow the prompts to install with default options to <tt>C:\Python27</tt>.</p>
 
+<h3>Install CMake</h3>
+
+<p>Download and run:<br>
+<a href="https://cmake.org/files/v3.6/cmake-3.6.1-win32-x86.msi">
+<tt>https://cmake.org/files/v3.6/cmake-3.6.1-win32-x86.msi</tt></a></p>
+
+<p>Follow the prompts to install, changing the installation path to <tt>C:\CMake</tt>.</p>
+
 <h3>Install libpng</h3>
 
 <p>Download and unzip to <tt>C:\libpng</tt>:<br>
-<a href="http://sourceforge.net/projects/libpng/files/libpng16/1.6.17/libpng-1.6.17.tar.xz/download">
-<tt>http://sourceforge.net/projects/libpng/files/libpng16/1.6.17/libpng-1.6.17.tar.xz/download</tt></a></p>
+<a href="https://sourceforge.net/projects/libpng/files/libpng16/1.6.23/libpng-1.6.23.tar.xz/download">
+<tt>https://sourceforge.net/projects/libpng/files/libpng16/1.6.23/libpng-1.6.23.tar.xz/download</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libpng<br>
@@ -75,8 +83,8 @@ make install</tt></p></blockquote>
 <h3>Install libjpeg-turbo</h3>
 
 <p>Download and unzip to <tt>C:\libjpeg</tt>:<br>
-<a href="http://sourceforge.net/projects/libjpeg-turbo/files/1.4.0/libjpeg-turbo-1.4.0.tar.gz/download">
-<tt>http://sourceforge.net/projects/libjpeg-turbo/files/1.4.0/libjpeg-turbo-1.4.0.tar.gz/download</tt></a></p>
+<a href="https://sourceforge.net/projects/libjpeg-turbo/files/1.5.0/libjpeg-turbo-1.5.0.tar.gz/download">
+<tt>https://sourceforge.net/projects/libjpeg-turbo/files/1.5.0/libjpeg-turbo-1.5.0.tar.gz/download</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libjpeg<br>
@@ -116,8 +124,8 @@ make install</tt></p></blockquote>
 <h3>Install pkg-config</h3>
 
 <p>Download and unzip to <tt>C:\pkgconfig</tt>:<br>
-<a href="http://pkgconfig.freedesktop.org/releases/pkg-config-0.28.tar.gz">
-<tt>http://pkgconfig.freedesktop.org/releases/pkg-config-0.28.tar.gz</tt></a></p>
+<a href="https://pkg-config.freedesktop.org/releases/pkg-config-0.29.1.tar.gz">
+<tt>https://pkg-config.freedesktop.org/releases/pkg-config-0.29.1.tar.gz</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/pkgconfig<br>
@@ -130,8 +138,8 @@ make install</tt></p></blockquote>
 <h3>Install pixman</h3>
 
 <p>Download and unzip to <tt>C:\pixman</tt>:<br>
-<a href="http://cairographics.org/releases/pixman-0.32.6.tar.gz">
-<tt>http://cairographics.org/releases/pixman-0.32.6.tar.gz</tt></a></p>
+<a href="https://www.cairographics.org/releases/pixman-0.34.0.tar.gz">
+<tt>https://www.cairographics.org/releases/pixman-0.34.0.tar.gz</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/pixman<br>
@@ -142,8 +150,8 @@ make install</tt></p></blockquote>
 <h3>Install Cairo</h3>
 
 <p>Download and unzip to <tt>C:\cairo</tt>:<br>
-<a href="http://cairographics.org/releases/cairo-1.14.2.tar.xz">
-<tt>http://cairographics.org/releases/cairo-1.14.2.tar.xz</tt></a></p>
+<a href="https://www.cairographics.org/releases/cairo-1.14.6.tar.xz">
+<tt>https://www.cairographics.org/releases/cairo-1.14.6.tar.xz</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/cairo<br>
@@ -154,8 +162,8 @@ make install</tt></p></blockquote>
 <h3>Install Pango</h3>
 
 <p>Download and unzip to <tt>C:\pango</tt>:<br>
-<a href="http://ftp.gnome.org/pub/GNOME/sources/pango/1.36/pango-1.36.8.tar.xz">
-<tt>http://ftp.gnome.org/pub/GNOME/sources/pango/1.36/pango-1.36.8.tar.xz</tt></a></p>
+<a href="http://ftp.gnome.org/pub/GNOME/sources/pango/1.40/pango-1.40.1.tar.xz">
+<tt>http://ftp.gnome.org/pub/GNOME/sources/pango/1.40/pango-1.40.1.tar.xz</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/pango<br>
@@ -166,8 +174,8 @@ make install</tt></p></blockquote>
 <h3>Install gdk-pixbuf</h3>
 
 <p>Download and unzip to <tt>C:\gdk-pixbuf</tt>:<br>
-<a href="http://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/2.31/gdk-pixbuf-2.31.4.tar.xz">
-<tt>http://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/2.31/gdk-pixbuf-2.31.4.tar.xz</tt></a></p>
+<a href="http://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/2.35/gdk-pixbuf-2.35.2.tar.xz">
+<tt>http://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/2.35/gdk-pixbuf-2.35.2.tar.xz</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/gdk-pixbuf<br>
@@ -178,8 +186,8 @@ make install</tt></p></blockquote>
 <h3>Install ATK</h3>
 
 <p>Download and unzip to <tt>C:\atk</tt>:<br>
-<a href="http://ftp.gnome.org/pub/gnome/sources/atk/2.16/atk-2.16.0.tar.xz">
-<tt>http://ftp.gnome.org/pub/gnome/sources/atk/2.16/atk-2.16.0.tar.xz</tt></a></p>
+<a href="http://ftp.gnome.org/pub/gnome/sources/atk/2.20/atk-2.20.0.tar.xz">
+<tt>http://ftp.gnome.org/pub/gnome/sources/atk/2.20/atk-2.20.0.tar.xz</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/atk<br>
@@ -190,8 +198,8 @@ make install</tt></p></blockquote>
 <h3>Install GTK+</h3>
 
 <p>Download and unzip to <tt>C:\gtksrc</tt>:<br>
-<a href="http://ftp.gnome.org/pub/GNOME/sources/gtk+/2.24/gtk+-2.24.28.tar.xz">
-<tt>http://ftp.gnome.org/pub/GNOME/sources/gtk+/2.24/gtk+-2.24.28.tar.xz</tt></a></p>
+<a href="http://ftp.gnome.org/pub/GNOME/sources/gtk+/2.24/gtk+-2.24.30.tar.xz">
+<tt>http://ftp.gnome.org/pub/GNOME/sources/gtk+/2.24/gtk+-2.24.30.tar.xz</tt></a></p>
 
 <p>Apply the patch <tt>gdkwindow-win32.c.diff</tt> to <tt>C:\gtksrc\gdk\win32\gdkwindow-win32.c</tt>.</p>
 
@@ -244,8 +252,8 @@ for GNOME Icon Theme to install successfully.</i></p>
 <h3>Install libxml</h3>
 
 <p>Download and unzip to <tt>C:\libxml</tt>:<br>
-<a href="ftp://xmlsoft.org/libxml2/libxml2-2.9.2.tar.gz">
-<tt>ftp://xmlsoft.org/libxml2/libxml2-2.9.2.tar.gz</tt></a></p>
+<a href="ftp://xmlsoft.org/libxml2/libxml2-2.9.4.tar.gz">
+<tt>ftp://xmlsoft.org/libxml2/libxml2-2.9.4.tar.gz</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libxml<br>
@@ -256,8 +264,8 @@ make install</tt></p></blockquote>
 <h3>Install mpg123</h3>
 
 <p>Download and unzip to <tt>C:\mpg123</tt>:<br>
-<a href="http://mpg123.de/download/mpg123-1.22.1.tar.bz2">
-<tt>http://mpg123.de/download/mpg123-1.22.1.tar.bz2</tt></a></p>
+<a href="http://mpg123.de/download/mpg123-1.23.6.tar.bz2">
+<tt>http://mpg123.de/download/mpg123-1.23.6.tar.bz2</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/mpg123<br>
@@ -285,8 +293,8 @@ make install</tt></p></blockquote>
 <h3>Install libsndfile</h3>
 
 <p>Download and unzip to <tt>C:\libsndfile</tt>:<br>
-<a href="http://www.mega-nerd.com/libsndfile/files/libsndfile-1.0.25.tar.gz">
-<tt>http://www.mega-nerd.com/libsndfile/files/libsndfile-1.0.25.tar.gz</tt></a></p>
+<a href="http://www.mega-nerd.com/libsndfile/files/libsndfile-1.0.27.tar.gz">
+<tt>http://www.mega-nerd.com/libsndfile/files/libsndfile-1.0.27.tar.gz</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libsndfile<br>
@@ -339,17 +347,14 @@ make install</tt></p></blockquote>
 <h3>Install libcue</h3>
 
 <p>Download and unzip to <tt>C:\libcue</tt>:<br>
-<a href="http://sourceforge.net/projects/libcue/files/libcue/1.4.0/libcue-1.4.0.tar.bz2/download">
-<tt>http://sourceforge.net/projects/libcue/files/libcue/1.4.0/libcue-1.4.0.tar.bz2/download</tt></a></p>
+<a href="https://github.com/lipnitsk/libcue/archive/v2.1.0.tar.gz">
+<tt>https://github.com/lipnitsk/libcue/archive/v2.1.0.tar.gz</tt></a></p>
 
-<p>Apply the patch <tt>libcue-makefile.am.diff</tt> to <tt>C:\libcue\src\libcue\Makefile.am</tt>.</p>
+<p>Apply the recursive patch <tt>libcue-install-dll.diff</tt>.</p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libcue<br>
-rm -f config/ltmain.sh<br>
-cp /C/MinGW/share/libtool/config/ltmain.sh config<br>
-autoreconf<br>
-./configure --prefix=/C/libs<br>
+cmake -DCMAKE_INSTALL_PREFIX=/C/libs -G"MSYS Makefiles"<br>
 make<br>
 make install</tt></p></blockquote>
 
@@ -428,11 +433,10 @@ make install</tt></p></blockquote>
 <h3>Install libwavpack</h3>
 
 <p>Download and unzip to <tt>C:\libwavpack</tt>:<br>
-<a href="http://www.wavpack.com/wavpack-4.70.0.tar.bz2">
-<tt>http://www.wavpack.com/wavpack-4.70.0.tar.bz2</tt></a></p>
+<a href="http://www.wavpack.com/wavpack-4.80.0.tar.bz2">
+<tt>http://www.wavpack.com/wavpack-4.80.0.tar.bz2</tt></a></p>
 
-<p>Apply the patch <tt>wavpack.pc.in.diff</tt> to <tt>C:\libwavpack\wavpack.pc.in</tt>.<br>
-Apply the patch <tt>libwavpack-utils.c.diff</tt> to <tt>C:\libwavpack\cli\utils.c</tt>.</p>
+<p>Apply the recursive patch <tt>wavpack-4.80.diff</tt>.</p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libwavpack<br>
@@ -443,20 +447,12 @@ make install</tt></p></blockquote>
 <h3>Install FFmpeg</h3>
 
 <p>Download and unzip to <tt>C:\ffmpeg</tt>:<br>
-<a href="http://ffmpeg.org/releases/ffmpeg-2.6.3.tar.bz2">
-<tt>http://ffmpeg.org/releases/ffmpeg-2.6.3.tar.bz2</tt></a></p>
+<a href="http://ffmpeg.org/releases/ffmpeg-3.1.1.tar.xz">
+<tt>http://ffmpeg.org/releases/ffmpeg-3.1.1.tar.xz</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/ffmpeg<br>
 ./configure --prefix=/C/libs --enable-shared --disable-yasm --cpu=i686<br>
-make<br>
-make install</tt></p></blockquote>
-
-<p>In the MinGW shell:</p>
-<blockquote><p><tt>cd /C/libbinio<br>
-cp /C/MinGW/share/libtool/config/ltmain.sh .<br>
-autoreconf<br>
-./configure --prefix=/C/libs<br>
 make<br>
 make install</tt></p></blockquote>
 
@@ -466,7 +462,7 @@ make install</tt></p></blockquote>
 <a href="http://sourceforge.net/projects/libmms/files/libmms/0.6.4/libmms-0.6.4.tar.gz/download">
 <tt>http://sourceforge.net/projects/libmms/files/libmms/0.6.4/libmms-0.6.4.tar.gz/download</tt></a></p>
 
-<p>Apply the patch <tt>libmms-strndup.diff</tt> (it changes multiple files).</p>
+<p>Apply the recursive patch <tt>libmms-strndup.diff</tt>.</p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libmms<br>
@@ -491,8 +487,8 @@ make install</tt></p></blockquote>
 <h3>Install libsidplayfp</h3>
 
 <p>Download and unzip to <tt>C:\libsidplayfp</tt>:<br>
-<a href="http://sourceforge.net/projects/sidplay-residfp/files/libsidplayfp/1.7/libsidplayfp-1.7.2.tar.gz/download">
-<tt>http://sourceforge.net/projects/sidplay-residfp/files/libsidplayfp/1.7/libsidplayfp-1.7.2.tar.gz/download</tt></a></p>
+<a href="https://sourceforge.net/projects/sidplay-residfp/files/libsidplayfp/1.8/libsidplayfp-1.8.6.tar.gz/download">
+<tt>https://sourceforge.net/projects/sidplay-residfp/files/libsidplayfp/1.8/libsidplayfp-1.8.6.tar.gz/download</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/libsidplayfp<br>
@@ -502,11 +498,11 @@ make install</tt></p></blockquote>
 
 <h3>Install FluidSynth</h3>
 
-<p>Download and unzip to <tt>C:\fluidsynth</tt>:<br>
+<p>Download and unzip to <tt>C:\fluidsynth</tt> (ignore "cannot create symlink" errors):<br>
 <a href="http://sourceforge.net/projects/fluidsynth/files/fluidsynth-1.1.6/fluidsynth-1.1.6.tar.bz2/download">
 <tt>http://sourceforge.net/projects/fluidsynth/files/fluidsynth-1.1.6/fluidsynth-1.1.6.tar.bz2/download</tt></a></p>
 
-<p>Apply the patch <tt>fluidsynth.diff</tt> (it changes multiple files).</p>
+<p>Apply the recursive patch <tt>fluidsynth.diff</tt>.</p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/fluidsynth<br>
@@ -518,8 +514,8 @@ make install</tt></p></blockquote>
 <h3>Install Audacious</h3>
 
 <p>Download and unzip to <tt>C:\audacious</tt>:<br>
-<a href="http://distfiles.audacious-media-player.org/audacious-3.6.tar.bz2">
-<tt>http://distfiles.audacious-media-player.org/audacious-3.6.tar.bz2</tt></a></p>
+<a href="http://distfiles.audacious-media-player.org/audacious-3.8.tar.bz2">
+<tt>http://distfiles.audacious-media-player.org/audacious-3.8.tar.bz2</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/audacious<br>
@@ -530,8 +526,8 @@ make install</tt></p></blockquote>
 <h3>Install Audacious Plugins</h3>
 
 <p>Download and unzip to <tt>C:\audacious-plugins</tt>:<br>
-<a href="http://distfiles.audacious-media-player.org/audacious-plugins-3.6.tar.bz2">
-<tt>http://distfiles.audacious-media-player.org/audacious-plugins-3.6.tar.bz2</tt></a></p>
+<a href="http://distfiles.audacious-media-player.org/audacious-plugins-3.8.tar.bz2">
+<tt>http://distfiles.audacious-media-player.org/audacious-plugins-3.8.tar.bz2</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/audacious-plugins<br>

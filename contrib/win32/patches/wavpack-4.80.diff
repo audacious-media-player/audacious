@@ -1,0 +1,137 @@
+diff -ur wavpack-4.80.0-orig/cli/wavpack.c wavpack-4.80.0-mod/cli/wavpack.c
+--- wavpack-4.80.0-orig/cli/wavpack.c	2016-03-11 19:15:55 -0500
++++ wavpack-4.80.0-mod/cli/wavpack.c	2016-07-31 13:27:47 -0400
+@@ -41,9 +41,12 @@
+ #if (defined(__GNUC__) || defined(__sun)) && !defined(_WIN32)
+ #include <unistd.h>
+ #include <glob.h>
+-#include <sys/time.h>
+-#else
++#endif
++
++#ifdef _MSC_VER
+ #include <sys/timeb.h>
++#else
++#include <sys/time.h>
+ #endif
+ 
+ #ifdef _WIN32
+@@ -1441,7 +1444,7 @@
+     FILE *infile;
+     int result;
+ 
+-#if defined(_WIN32)
++#if defined(_MSC_VER)
+     struct __timeb64 time1, time2;
+ #else
+     struct timeval time1, time2;
+@@ -1611,7 +1614,7 @@
+         }
+     }
+ 
+-#if defined(_WIN32)
++#if defined(_MSC_VER)
+     _ftime64 (&time1);
+ #else
+     gettimeofday(&time1,&timez);
+@@ -2189,7 +2192,7 @@
+     // compute and display the time consumed along with some other details of
+     // the packing operation, and then return WAVPACK_NO_ERROR
+ 
+-#if defined(_WIN32)
++#if defined(_MSC_VER)
+     _ftime64 (&time2);
+     dtime = time2.time + time2.millitm / 1000.0;
+     dtime -= time1.time + time1.millitm / 1000.0;
+@@ -2452,7 +2455,7 @@
+     double dtime;
+     int result;
+ 
+-#if defined(_WIN32)
++#if defined(_MSC_VER)
+     struct __timeb64 time1, time2;
+ #else
+     struct timeval time1, time2;
+@@ -2596,7 +2599,7 @@
+         }
+     }
+ 
+-#if defined(_WIN32)
++#if defined(_MSC_VER)
+     _ftime64 (&time1);
+ #else
+     gettimeofday(&time1,&timez);
+@@ -2930,7 +2933,7 @@
+     // compute and display the time consumed along with some other details of
+     // the packing operation, and then return WAVPACK_NO_ERROR
+ 
+-#if defined(_WIN32)
++#if defined(_MSC_VER)
+     _ftime64 (&time2);
+     dtime = time2.time + time2.millitm / 1000.0;
+     dtime -= time1.time + time1.millitm / 1000.0;
+diff -ur wavpack-4.80.0-orig/cli/wvunpack.c wavpack-4.80.0-mod/cli/wvunpack.c
+--- wavpack-4.80.0-orig/cli/wvunpack.c	2016-03-28 17:35:54 -0400
++++ wavpack-4.80.0-mod/cli/wvunpack.c	2016-07-31 13:29:06 -0400
+@@ -31,10 +31,10 @@
+ #endif
+ #endif
+ 
+-#if defined(__GNUC__) && !defined(_WIN32)
+-#include <sys/time.h>
+-#else
++#ifdef _MSC_VER
+ #include <sys/timeb.h>
++#else
++#include <sys/time.h>
+ #endif
+ 
+ #include <math.h>
+@@ -933,7 +933,7 @@
+     char error [80];
+     FILE *outfile;
+ 
+-#if defined(_WIN32)
++#if defined(_MSC_VER)
+     struct __timeb64 time1, time2;
+ #else
+     struct timeval time1, time2;
+@@ -1091,7 +1091,7 @@
+         }
+     }
+ 
+-#if defined(_WIN32)
++#if defined(_MSC_VER)
+     _ftime64 (&time1);
+ #else
+     gettimeofday(&time1,&timez);
+@@ -1325,7 +1325,7 @@
+     // Compute and display the time consumed along with some other details of
+     // the unpacking operation (assuming there was no error).
+ 
+-#if defined(_WIN32)
++#if defined(_MSC_VER)
+     _ftime64 (&time2);
+     dtime = time2.time + time2.millitm / 1000.0;
+     dtime -= time1.time + time1.millitm / 1000.0;
+diff -ur wavpack-4.80.0-orig/src/read_words.c wavpack-4.80.0-mod/src/read_words.c
+--- wavpack-4.80.0-orig/src/read_words.c	2016-02-21 21:42:29 -0500
++++ wavpack-4.80.0-mod/src/read_words.c	2016-07-31 13:23:34 -0400
+@@ -124,7 +124,7 @@
+             wps->wvbits.bc += sizeof (*(wps->wvbits.ptr)) * 8;
+         }
+ 
+-#ifdef _WIN32
++#ifdef _MSC_VER
+         _BitScanForward (&ones_count, ~wps->wvbits.sr);
+ #else
+         ones_count = __builtin_ctz (~wps->wvbits.sr);
+@@ -399,7 +399,7 @@
+             bs->bc += sizeof (*(bs->ptr)) * 8;
+         }
+ 
+-#ifdef _WIN32
++#ifdef _MSC_VER
+         _BitScanForward (&ones_count, ~wps->wvbits.sr);
+ #else
+         ones_count = __builtin_ctz (~wps->wvbits.sr);
