@@ -1,15 +1,15 @@
-Audacious 3.7.2 for Windows
+Audacious @PACKAGE_VERSION@ for Windows
 
     http://audacious-media-player.org
 
 Audacious is free and open source software.  By installing Audacious, you agree
 to be bound by various licenses governing its use and redistribution.
 
-Build date: 28 March 2016
+Build ID: @BUILDSTAMP@
 
 LICENSE
 
-Copyright (C) 2001-2016 Audacious developers and others
+@COPYRIGHT@
 
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:

@@ -19,7 +19,7 @@
 !include "MUI2.nsh"
 
 ; Version
-!define VERSION "3.8-devel"
+!define VERSION "@PACKAGE_VERSION@"
 
 ; Program name
 Name "Audacious ${VERSION}"
