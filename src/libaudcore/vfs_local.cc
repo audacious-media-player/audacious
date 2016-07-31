@@ -17,14 +17,15 @@
  * the use of this software.
  */
 
-#define WANT_VFS_STDIO_COMPAT
-#include "vfs_local.h"
-
 #include <errno.h>
 #include <string.h>
 #include <unistd.h>
 
 #include <glib/gstdio.h>
+
+/* needs to be after system headers for #undef's to take effect */
+#define WANT_VFS_STDIO_COMPAT
+#include "vfs_local.h"
 
 #include "audstrings.h"
 #include "i18n.h"
