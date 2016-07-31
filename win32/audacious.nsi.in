@@ -66,15 +66,19 @@ Section "Audacious" InstallSection
   SetOutPath "$INSTDIR"
   File "${BUILDDIR}\README.txt"
 
+  RMDir /r "$INSTDIR\bin"
   SetOutPath "$INSTDIR\bin"
   File /r "${BUILDDIR}\bin\*.*"
 
+  RMDir /r "$INSTDIR\etc"
   SetOutPath "$INSTDIR\etc"
   File /r "${BUILDDIR}\etc\*.*"
 
+  RMDir /r "$INSTDIR\lib"
   SetOutPath "$INSTDIR\lib"
   File /r "${BUILDDIR}\lib\*.*"
 
+  RMDir /r "$INSTDIR\share"
   SetOutPath "$INSTDIR\share"
   File /r "${BUILDDIR}\share\*.*"
 
