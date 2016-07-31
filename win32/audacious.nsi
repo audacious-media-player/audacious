@@ -19,7 +19,7 @@
 !include "MUI2.nsh"
 
 ; Version
-!define VERSION "3.7.2"
+!define VERSION "3.8-devel"
 
 ; Program name
 Name "Audacious ${VERSION}"
@@ -27,9 +27,12 @@ Name "Audacious ${VERSION}"
 ; Installer file name
 OutFile "audacious-${VERSION}-win32.exe"
 
+; Location of local build
+!define BUILDDIR "C:\aud-win32"
+
 ; Installer icon
-!define MUI_ICON "audacious.ico"
-!define MUI_UNICON "audacious.ico"
+!define MUI_ICON "..\images\audacious.ico"
+!define MUI_UNICON "..\images\audacious.ico"
 
 ; Installer options
 RequestExecutionLevel admin
@@ -45,7 +48,7 @@ InstallDir "$PROGRAMFILES\Audacious"
 !define UNINSTALLER "$INSTDIR\uninstall.exe"
 
 ; Installer pages
-!insertmacro MUI_PAGE_LICENSE README.txt
+!insertmacro MUI_PAGE_LICENSE "${BUILDDIR}\README.txt"
 !insertmacro MUI_PAGE_COMPONENTS
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES
@@ -61,19 +64,19 @@ Section "Audacious" InstallSection
   SectionIn 1 2 RO
 
   SetOutPath "$INSTDIR"
-  File "README.txt"
+  File "${BUILDDIR}\README.txt"
 
   SetOutPath "$INSTDIR\bin"
-  File /r "bin\*.*"
+  File /r "${BUILDDIR}\bin\*.*"
 
   SetOutPath "$INSTDIR\etc"
-  File /r "etc\*.*"
+  File /r "${BUILDDIR}\etc\*.*"
 
   SetOutPath "$INSTDIR\lib"
-  File /r "lib\*.*"
+  File /r "${BUILDDIR}\lib\*.*"
 
   SetOutPath "$INSTDIR\share"
-  File /r "share\*.*"
+  File /r "${BUILDDIR}\share\*.*"
 
   ; create uninstaller
   WriteRegStr HKLM "${UNINST_KEY}" "DisplayName" "Audacious"
