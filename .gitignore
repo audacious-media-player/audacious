@@ -19,6 +19,8 @@ src/libaudcore/audio.h
 src/libaudcore/tinylock.h
 src/libaudcore/tests/test
 src/libaudcore/tests/test-mainloop
+win32/audacious.nsi
+win32/override/README.txt
 .deps
 *.a
 *.diff
