@@ -142,9 +142,9 @@ AC_PROG_LN_S
 AC_PATH_PROG([RM], [rm])
 AC_PATH_PROG([MV], [mv])
 AC_PATH_PROG([CP], [cp])
-AC_PATH_PROG([AR], [ar])
-AC_PATH_PROG([RANLIB], [ranlib])
-AC_PATH_PROG([WINDRES], [windres])
+AC_PATH_TOOL([AR], [ar])
+AC_PATH_TOOL([RANLIB], [ranlib])
+AC_PATH_TOOL([WINDRES], [windres])
 
 dnl Check for POSIX threads
 dnl =======================

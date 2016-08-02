@@ -92,7 +92,7 @@ EXPORT MainloopType aud_get_mainloop_type ()
 
 static StringBuf get_path_to_self ()
 {
-#ifdef HAVE_PROC_SELF_EXE
+#ifdef __linux__
 
     StringBuf buf (-1);
     int len = readlink ("/proc/self/exe", buf, buf.len ());

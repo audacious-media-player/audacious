@@ -4,13 +4,17 @@ dnl ***
 
 dnl Initialize
 dnl ==========
+
 AC_PREREQ([2.59])
 AC_INIT([audacious], [3.8-devel])
 AC_COPYRIGHT([Copyright (C) 2001-2016 Audacious developers and others])
 
 AC_DEFINE_UNQUOTED(PACKAGE, "$PACKAGE_NAME", [Name of package])
 AC_DEFINE_UNQUOTED(VERSION, "$PACKAGE_VERSION", [Version number of package])
-AC_DEFINE_UNQUOTED(COPYRIGHT, "Copyright © 2001-2016 Audacious developers and others", [Copyright])
+
+COPYRIGHT="Copyright (C) 2001-2016 Audacious developers and others"
+AC_DEFINE_UNQUOTED(COPYRIGHT, "$COPYRIGHT", [Copyright])
+AC_SUBST(COPYRIGHT)
 
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_HEADERS([config.h])
@@ -27,14 +31,6 @@ dnl Headers and functions
 dnl ===============================
 
 AC_CHECK_FUNCS([sigwait])
-
-AC_MSG_CHECKING([for /proc/self/exe])
-if test -e "/proc/self/exe" ; then
-    AC_MSG_RESULT(yes)
-    AC_DEFINE([HAVE_PROC_SELF_EXE], [1], [Define if the /proc/self/exe symlink is supported])
-else
-    AC_MSG_RESULT(no)
-fi
 
 dnl iconv
 dnl =====
@@ -55,8 +51,10 @@ dnl Build stamp
 dnl ===========
 AC_ARG_WITH([buildstamp],
  AS_HELP_STRING([--with-buildstamp=XXX], [Set build stamp to XXX]),
- AC_DEFINE_UNQUOTED([BUILDSTAMP], "$withval", [Build stamp]),
- AC_DEFINE_UNQUOTED([BUILDSTAMP], "unknown build", [Build stamp]))
+ BUILDSTAMP="$withval", BUILDSTAMP="unknown build")
+
+AC_DEFINE_UNQUOTED(BUILDSTAMP, "$BUILDSTAMP", [Build stamp])
+AC_SUBST(BUILDSTAMP)
 
 dnl Activation of text console (MS-Windows ONLY)
 dnl ============================================
@@ -128,6 +126,8 @@ AC_CONFIG_FILES([
     man/audacious.1
     src/libaudcore/audio.h
     src/libaudcore/tinylock.h
+    win32/audacious.nsi
+    win32/override/README.txt
 ])
 
 AC_OUTPUT

@@ -1,0 +1,11 @@
+diff -ur libcue-2.1.0-orig/CMakeLists.txt libcue-2.1.0-mod/CMakeLists.txt
+--- libcue-2.1.0-orig/CMakeLists.txt	2016-04-15 01:31:27 -0400
++++ libcue-2.1.0-mod/CMakeLists.txt	2016-07-31 15:28:48 -0400
+@@ -44,6 +44,7 @@
+ 	C_VISIBILITY_PRESET hidden)
+ 
+ INSTALL(TARGETS cue
++	RUNTIME DESTINATION bin
+ 	LIBRARY DESTINATION lib
+ 	ARCHIVE DESTINATION lib)
+ INSTALL(FILES ${CMAKE_SOURCE_DIR}/libcue.h DESTINATION include)

@@ -4,7 +4,9 @@
 
 cd /C/aud-win32
 for i in `find -type f` ; do
-    if test -f /C/MinGW/$i ; then
+    if test -f /C/audacious/win32/override/$i ; then
+        cp /C/audacious/win32/override/$i $i
+    elif test -f /C/MinGW/$i ; then
         cp /C/MinGW/$i $i
     elif test -f /C/GTK/$i ; then
         cp /C/GTK/$i $i
@@ -19,10 +21,6 @@ done
 
 for i in `find -name *.dll` ; do strip -s $i ; done
 for i in `find -name *.exe` ; do strip -s $i ; done
-
-cd /C/misc
-cp loaders.cache /C/aud-win32/lib/gdk-pixbuf-2.0/2.10.0
-cp pango.modules /C/aud-win32/etc/pango
 
 rm -rf /C/aud-win32/share/locale
 
