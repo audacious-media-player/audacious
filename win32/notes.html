@@ -174,12 +174,12 @@ make install</tt></p></blockquote>
 <h3>Install gdk-pixbuf</h3>
 
 <p>Download and unzip to <tt>C:\gdk-pixbuf</tt>:<br>
-<a href="http://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/2.35/gdk-pixbuf-2.35.2.tar.xz">
-<tt>http://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/2.35/gdk-pixbuf-2.35.2.tar.xz</tt></a></p>
+<a href="http://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/2.34/gdk-pixbuf-2.34.0.tar.xz">
+<tt>http://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/2.34/gdk-pixbuf-2.34.0.tar.xz</tt></a></p>
 
 <p>In the MinGW shell:</p>
 <blockquote><p><tt>cd /C/gdk-pixbuf<br>
-./configure --prefix=/C/GTK --without-gdiplus --without-libtiff<br>
+./configure --prefix=/C/GTK --without-gdiplus --without-libtiff --with-included-loaders=jpeg,png<br>
 make<br>
 make install</tt></p></blockquote>
 
