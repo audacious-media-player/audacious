@@ -28,7 +28,8 @@ from the use of this software.
 EXCEPTIONS
 
 Other than the Audacious logo itself, the images included with Audacious are
-based on the Tango Icon Library and are in the public domain.
+either based on the Tango Icon Library (public domain) or the GNOME Icon Theme
+(CC BY-SA 3.0; see https://creativecommons.org/licenses/by-sa/3.0/us/).
 
 Please note that many of the plugins distributed with Audacious are under
 different licenses, whose full text may be found either in the "About" window
@@ -71,14 +72,12 @@ and license of each project can be found on the Internet.
     libflac          http://xiph.org/flac
     libogg           http://xiph.org/ogg
     libvorbis        http://xiph.org/vorbis
-    OpenSSL          http://www.openssl.org
     neon             http://webdav.org/neon
     libsamplerate    http://mega-nerd.com/SRC
     WavPack          http://wavpack.com
     FFmpeg           http://ffmpeg.org
     ModPlug          http://modplug-xmms.sourceforge.net
-    libbinio         http://libbinio.sourceforge.net
-    libcurl          http://curl.haxx.se
+    AdPlug           http://adplug.github.io
     libmms           http://libmms.sourceforge.net
     sidplayfp        http://sidplay-residfp.sourceforge.net
     FluidSynth       http://fluidsynth.org
