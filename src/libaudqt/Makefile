@@ -37,7 +37,8 @@ LD = ${CXX}
 
 CPPFLAGS := -I.. -I../.. \
             ${CPPFLAGS} \
-            ${QT_CFLAGS}
+            ${QT_CFLAGS} \
+            -DLIBAUDQT_BUILD
 
 CFLAGS += ${LIB_CFLAGS}
 
