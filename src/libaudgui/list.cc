@@ -615,17 +615,15 @@ EXPORT GtkWidget * audgui_list_new_real (const AudguiListCallbacks * cbs, int cb
     {
         const GtkTargetEntry target = {(char *) cbs->data_type, 0, 0};
 
-        if (MODEL_HAS_CB (model, get_data))
-        {
-            gtk_drag_source_set (list, GDK_BUTTON1_MASK, & target, 1, GDK_ACTION_COPY);
-            g_signal_connect (list, "drag-data-get", (GCallback) drag_data_get, model);
-        }
+        /* these both need to be called even for the source-only case, else
+         * GTK's default settings prevent dragging multiple items */
+        gtk_drag_source_set (list, GDK_BUTTON1_MASK, & target, 1, GDK_ACTION_COPY);
+        gtk_drag_dest_set (list, (GtkDestDefaults) 0, & target, 1, GDK_ACTION_COPY);
 
+        if (MODEL_HAS_CB (model, get_data))
+            g_signal_connect (list, "drag-data-get", (GCallback) drag_data_get, model);
         if (MODEL_HAS_CB (model, receive_data))
-        {
-            gtk_drag_dest_set (list, (GtkDestDefaults) 0, & target, 1, GDK_ACTION_COPY);
             g_signal_connect (list, "drag-data-received", (GCallback) drag_data_received, model);
-        }
 
         supports_drag = true;
     }
