@@ -343,6 +343,10 @@ static void drag_begin (GtkWidget * widget, GdkDragContext * context,
     g_signal_stop_emission_by_name (widget, "drag-begin");
 
     model->dragging = true;
+
+    /* If button_press_cb preserved a multiple selection, tell button_release_cb
+     * not to clear it. */
+    model->frozen = false;
 }
 
 static void drag_end (GtkWidget * widget, GdkDragContext * context,
@@ -426,14 +430,10 @@ static gboolean drag_motion (GtkWidget * widget, GdkDragContext * context,
 {
     g_signal_stop_emission_by_name (widget, "drag-motion");
 
-    /* If button_press_cb preserved a multiple selection, tell button_release_cb
-     * not to clear it. */
-    model->frozen = false;
-
-    if (model->dragging && MODEL_HAS_CB (model, shift_rows)) /* dragging within same list */
-        gdk_drag_status (context, GDK_ACTION_MOVE, time);
-    else if (MODEL_HAS_CB (model, data_type)) /* cross-widget dragging */
-        gdk_drag_status (context, GDK_ACTION_COPY, time);
+    if (model->dragging && MODEL_HAS_CB (model, shift_rows))
+        gdk_drag_status (context, GDK_ACTION_MOVE, time);  /* dragging within same list */
+    else if (MODEL_HAS_CB (model, data_type) && MODEL_HAS_CB (model, receive_data))
+        gdk_drag_status (context, GDK_ACTION_COPY, time);  /* cross-widget dragging */
     else
         return false;
 
@@ -489,15 +489,17 @@ static gboolean drag_drop (GtkWidget * widget, GdkDragContext * context, int x,
     gboolean success = true;
     int row = audgui_list_row_at_point_rounded (widget, x, y);
 
-    if (model->dragging && MODEL_HAS_CB (model, shift_rows)) /* dragging within same list */
+    if (model->dragging && MODEL_HAS_CB (model, shift_rows))
     {
+        /* dragging within same list */
         if (model->clicked_row >= 0 && model->clicked_row < model->rows)
             model->cbs->shift_rows (model->user, model->clicked_row, row);
         else
             success = false;
     }
-    else if (MODEL_HAS_CB (model, data_type)) /* cross-widget dragging */
+    else if (MODEL_HAS_CB (model, data_type) && MODEL_HAS_CB (model, receive_data))
     {
+        /* cross-widget dragging */
         model->receive_row = row;
         gtk_drag_get_data (widget, context, gdk_atom_intern
          (model->cbs->data_type, false), time);
@@ -612,18 +614,22 @@ EXPORT GtkWidget * audgui_list_new_real (const AudguiListCallbacks * cbs, int cb
 
     gboolean supports_drag = false;
 
-    if (MODEL_HAS_CB (model, data_type) && MODEL_HAS_CB (model, get_data) &&
-     MODEL_HAS_CB (model, receive_data))
+    if (MODEL_HAS_CB (model, data_type) &&
+     (MODEL_HAS_CB (model, get_data) || MODEL_HAS_CB (model, receive_data)))
     {
         const GtkTargetEntry target = {(char *) cbs->data_type, 0, 0};
 
-        gtk_drag_source_set (list, GDK_BUTTON1_MASK, & target, 1,
-         GDK_ACTION_COPY);
-        gtk_drag_dest_set (list, (GtkDestDefaults) 0, & target, 1, GDK_ACTION_COPY);
+        if (MODEL_HAS_CB (model, get_data))
+        {
+            gtk_drag_source_set (list, GDK_BUTTON1_MASK, & target, 1, GDK_ACTION_COPY);
+            g_signal_connect (list, "drag-data-get", (GCallback) drag_data_get, model);
+        }
 
-        g_signal_connect (list, "drag-data-get", (GCallback) drag_data_get, model);
-        g_signal_connect (list, "drag-data-received", (GCallback)
-         drag_data_received, model);
+        if (MODEL_HAS_CB (model, receive_data))
+        {
+            gtk_drag_dest_set (list, (GtkDestDefaults) 0, & target, 1, GDK_ACTION_COPY);
+            g_signal_connect (list, "drag-data-received", (GCallback) drag_data_received, model);
+        }
 
         supports_drag = true;
     }

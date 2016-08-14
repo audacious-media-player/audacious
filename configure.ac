@@ -56,18 +56,6 @@ AC_ARG_WITH([buildstamp],
 AC_DEFINE_UNQUOTED(BUILDSTAMP, "$BUILDSTAMP", [Build stamp])
 AC_SUBST(BUILDSTAMP)
 
-dnl Activation of text console (MS-Windows ONLY)
-dnl ============================================
-AC_ARG_ENABLE([text-console],
-[AS_HELP_STRING([--enable-text-console],[Enable text console for MS-Windows hosts])],
-[use_text_console=$withval],
-[use_text_console=no]
-)
-
-if test "x$HAVE_MSWINDOWS" = "xyes" && test "x$use_text_console" = "xno" ; then
-    LDFLAGS="$LDFLAGS -Wl,-subsystem,windows"
-fi
-
 dnl D-Bus support
 dnl =============
 

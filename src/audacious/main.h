@@ -20,6 +20,8 @@
 #ifndef _AUDACIOUS_MAIN_H
 #define _AUDACIOUS_MAIN_H
 
+#include <libaudcore/objects.h>
+
 /* dbus-server.c */
 #ifdef USE_DBUS
 
@@ -29,7 +31,8 @@ enum class StartupType {
     Unknown
 };
 
-StartupType dbus_server_init (bool new_instance);
+StringBuf dbus_server_name ();
+StartupType dbus_server_init ();
 void dbus_server_cleanup ();
 
 #endif

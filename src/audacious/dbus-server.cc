@@ -814,10 +814,16 @@ static void name_lost (GDBusConnection *, const char * name, void *)
     g_main_loop_quit (mainloop);
 }
 
-StartupType dbus_server_init (bool new_instance)
+StringBuf dbus_server_name ()
+{
+    int instance = aud_get_instance ();
+    return (instance == 1) ? str_copy ("org.atheme.audacious") :
+           str_printf ("org.atheme.audacious-%d", instance);
+}
+
+StartupType dbus_server_init ()
 {
     auto startup = StartupType::Unknown;
-    int instance = 1;
 
     GError * error = nullptr;
     GDBusConnection * bus = g_bus_get_sync (G_BUS_TYPE_SESSION, nullptr, & error);
@@ -837,43 +843,18 @@ StartupType dbus_server_init (bool new_instance)
     context = g_main_context_new ();
     g_main_context_push_thread_default (context);
 
-    while (1)
-    {
-        StringBuf name = (instance == 1) ? str_copy ("org.atheme.audacious") :
-                         str_printf ("org.atheme.audacious-%d", instance);
+    owner_id = g_bus_own_name (G_BUS_TYPE_SESSION, dbus_server_name (),
+     (GBusNameOwnerFlags) 0, nullptr, name_acquired, name_lost, nullptr, nullptr);
 
-        owner_id = g_bus_own_name (G_BUS_TYPE_SESSION, name,
-         (GBusNameOwnerFlags) 0, nullptr, name_acquired, name_lost, nullptr, nullptr);
+    mainloop = g_main_loop_new (context, true);
+    g_main_loop_run (mainloop);
+    g_main_loop_unref (mainloop);
+    mainloop = nullptr;
 
-        mainloop = g_main_loop_new (context, true);
-        g_main_loop_run (mainloop);
-        g_main_loop_unref (mainloop);
-        mainloop = nullptr;
-
-        // primary instance is not running, or we are starting a new instance
-        // and have found an available bus name
-        if (owner_id)
-        {
-            startup = StartupType::Server;
-            aud_set_instance (instance);
-            break;
-        }
-
-        // primary instance is already running, and we are not starting a new instance
-        if (! new_instance)
-        {
-            startup = StartupType::Client;
-            break;
-        }
-
-        // we are starting a new instance and have not found an available bus
-        // name (we will start up anyway, but without D-Bus support)
-        if (++ instance > 9)
-        {
-            AUDERR ("D-Bus error: No available bus names\n");
-            break;
-        }
-    }
+    if (owner_id)
+        startup = StartupType::Server;
+    else
+        startup = StartupType::Client;
 
     g_main_context_pop_thread_default (context);
     g_main_context_unref (context);

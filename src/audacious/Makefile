@@ -28,10 +28,11 @@ CPPFLAGS := -I.. -I../.. \
             ${CPPFLAGS} \
             ${GLIB_CFLAGS}
 
-CPPFLAGS += -D_AUDACIOUS_CORE
-
 LIBS := -L../libaudcore -laudcore \
         ${LIBS} -lm \
         ${LIBINTL} \
         ${GLIB_LIBS}
 
+ifeq ($(HAVE_MSWINDOWS),yes)
+LDFLAGS := ${LDFLAGS} -Wl,-subsystem,windows
+endif
