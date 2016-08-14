@@ -343,6 +343,10 @@ static void drag_begin (GtkWidget * widget, GdkDragContext * context,
     g_signal_stop_emission_by_name (widget, "drag-begin");
 
     model->dragging = true;
+
+    /* If button_press_cb preserved a multiple selection, tell button_release_cb
+     * not to clear it. */
+    model->frozen = false;
 }
 
 static void drag_end (GtkWidget * widget, GdkDragContext * context,
@@ -425,10 +429,6 @@ static gboolean drag_motion (GtkWidget * widget, GdkDragContext * context,
  int x, int y, unsigned time, ListModel * model)
 {
     g_signal_stop_emission_by_name (widget, "drag-motion");
-
-    /* If button_press_cb preserved a multiple selection, tell button_release_cb
-     * not to clear it. */
-    model->frozen = false;
 
     if (model->dragging && MODEL_HAS_CB (model, shift_rows))
         gdk_drag_status (context, GDK_ACTION_MOVE, time);  /* dragging within same list */
@@ -615,15 +615,17 @@ EXPORT GtkWidget * audgui_list_new_real (const AudguiListCallbacks * cbs, int cb
     {
         const GtkTargetEntry target = {(char *) cbs->data_type, 0, 0};
 
-        /* these both need to be called even for the source-only case, else
-         * GTK's default settings prevent dragging multiple items */
-        gtk_drag_source_set (list, GDK_BUTTON1_MASK, & target, 1, GDK_ACTION_COPY);
-        gtk_drag_dest_set (list, (GtkDestDefaults) 0, & target, 1, GDK_ACTION_COPY);
-
         if (MODEL_HAS_CB (model, get_data))
+        {
+            gtk_drag_source_set (list, GDK_BUTTON1_MASK, & target, 1, GDK_ACTION_COPY);
             g_signal_connect (list, "drag-data-get", (GCallback) drag_data_get, model);
+        }
+
         if (MODEL_HAS_CB (model, receive_data))
+        {
+            gtk_drag_dest_set (list, (GtkDestDefaults) 0, & target, 1, GDK_ACTION_COPY);
             g_signal_connect (list, "drag-data-received", (GCallback) drag_data_received, model);
+        }
 
         supports_drag = true;
     }
