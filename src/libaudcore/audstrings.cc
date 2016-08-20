@@ -72,6 +72,12 @@ static const char swap_case[256] =
 #define IS_LEGAL(c)  (uri_legal_table[(unsigned char) (c)])
 #define SWAP_CASE(c) (swap_case[(unsigned char) (c)])
 
+#ifdef _WIN32
+#define IS_SEP(c) ((c) == '/' || (c) == '\\')
+#else
+#define IS_SEP(c) ((c) == '/')
+#endif
+
 /* strcmp() that handles nullptr safely */
 EXPORT int strcmp_safe (const char * a, const char * b, int len)
 {
@@ -419,6 +425,43 @@ EXPORT StringBuf filename_normalize (StringBuf && filename)
     return std::move (filename);
 }
 
+/* note #1: recommended order is filename_contract(filename_normalize(f)) */
+/* note #2: currently assumes filename is UTF-8 (intended for display) */
+EXPORT StringBuf filename_contract (StringBuf && filename)
+{
+    /* replace home folder with '~' */
+    const char * home = get_home_utf8 ();
+    int homelen = home ? strlen (home) : 0;
+
+    if (homelen && ! strncmp (filename, home, homelen) &&
+     (! filename[homelen] || IS_SEP (filename[homelen])))
+    {
+        filename[0] = '~';
+        filename.remove (1, homelen - 1);
+    }
+
+    return std::move (filename);
+}
+
+/* note #1: recommended order is filename_normalize(filename_expand(f)) */
+/* note #2: currently assumes filename is UTF-8 (intended for display) */
+EXPORT StringBuf filename_expand (StringBuf && filename)
+{
+    /* expand leading '~' */
+    if (filename[0] == '~' && (! filename[1] || IS_SEP(filename[1])))
+    {
+        const char * home = get_home_utf8 ();
+
+        if (home && home[0])
+        {
+            filename[0] = home[0];
+            filename.insert (1, home + 1, -1);
+        }
+    }
+
+    return std::move (filename);
+}
+
 EXPORT StringBuf filename_get_parent (const char * filename)
 {
     StringBuf buf = filename_normalize (str_copy (filename));
@@ -458,25 +501,14 @@ EXPORT StringBuf filename_build (const std::initializer_list<const char *> & ele
 
     for (const char * s : elems)
     {
-#ifdef _WIN32
-        if (set > str && set[-1] != '/' && set[-1] != '\\')
+        if (set > str && ! IS_SEP (set[-1]))
         {
             if (! left)
                 throw std::bad_alloc ();
 
-            * set ++ = '\\';
+            * set ++ = G_DIR_SEPARATOR;
             left --;
         }
-#else
-        if (set > str && set[-1] != '/')
-        {
-            if (! left)
-                throw std::bad_alloc ();
-
-            * set ++ = '/';
-            left --;
-        }
-#endif
 
         int len = strlen (s);
         if (len > left)
@@ -576,20 +608,10 @@ EXPORT StringBuf uri_to_display (const char * uri)
     if (! buf)
         return str_copy (_("(character encoding error)"));
 
-    if (strncmp (buf, URI_PREFIX, URI_PREFIX_LEN))
-        return buf;
-
-    buf.remove (0, URI_PREFIX_LEN);
-    buf.steal (filename_normalize (std::move (buf)));
-
-    const char * home = get_home_utf8 ();
-    int homelen = home ? strlen (home) : 0;
-
-    if (homelen && ! strncmp (buf, home, homelen) &&
-     (! buf[homelen] || buf[homelen] == G_DIR_SEPARATOR))
+    if (! strncmp (buf, URI_PREFIX, URI_PREFIX_LEN))
     {
-        buf[0] = '~';
-        buf.remove (1, homelen - 1);
+        buf.remove (0, URI_PREFIX_LEN);
+        return filename_contract (filename_normalize (std::move (buf)));
     }
 
     return buf;
@@ -667,7 +689,7 @@ EXPORT StringBuf uri_construct (const char * path, const char * reference)
 
     /* absolute filename */
 #ifdef _WIN32
-    if (path[0] && path[1] == ':' && (path[2] == '/' || path[2] == '\\'))
+    if (path[0] && path[1] == ':' && IS_SEP (path[2]))
 #else
     if (path[0] == '/')
 #endif

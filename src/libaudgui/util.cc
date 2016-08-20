@@ -217,7 +217,7 @@ EXPORT String audgui_file_entry_get_uri (GtkWidget * entry)
     else if (strstr (text, "://"))
         return String (text);
     else
-        return String (filename_to_uri (text));
+        return String (filename_to_uri (filename_normalize (filename_expand (str_copy (text)))));
 }
 
 EXPORT void audgui_file_entry_set_uri (GtkWidget * entry, const char * uri)
@@ -229,7 +229,8 @@ EXPORT void audgui_file_entry_set_uri (GtkWidget * entry, const char * uri)
     }
 
     StringBuf path = uri_to_filename (uri, false);
-    gtk_entry_set_text ((GtkEntry *) entry, path ? path : uri);
+    gtk_entry_set_text ((GtkEntry *) entry, path ? filename_contract (std::move (path)) : uri);
+    gtk_editable_set_position ((GtkEditable *) entry, -1);
 }
 
 static const char * icon_for_message_type (GtkMessageType type)

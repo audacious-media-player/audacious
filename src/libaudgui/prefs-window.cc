@@ -134,7 +134,7 @@ static const ComboItem bitdepth_elements[] = {
 
 static const ComboItem record_elements[] = {
     ComboItem (N_("As decoded"), (int) OutputStream::AsDecoded),
-    ComboItem (N_("After applying Replay Gain"), (int) OutputStream::AfterReplayGain),
+    ComboItem (N_("After applying ReplayGain"), (int) OutputStream::AfterReplayGain),
     ComboItem (N_("After applying effects"), (int) OutputStream::AfterEffects),
     ComboItem (N_("After applying equalization"), (int) OutputStream::AfterEqualizer)
 };
@@ -218,8 +218,8 @@ static const PreferencesWidget audio_page_widgets[] = {
     WidgetCombo (N_("Record stream:"),
         WidgetInt (0, "record_stream"),
         {{record_elements}}),
-    WidgetLabel (N_("<b>Replay Gain</b>")),
-    WidgetCheck (N_("Enable Replay Gain"),
+    WidgetLabel (N_("<b>ReplayGain</b>")),
+    WidgetCheck (N_("Enable ReplayGain"),
         WidgetBool (0, "enable_replay_gain")),
     WidgetCheck (N_("Album mode"),
         WidgetBool (0, "replay_gain_album"),
