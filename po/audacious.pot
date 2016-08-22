@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2016-08-03 19:23-0400\n"
+"POT-Creation-Date: 2016-08-22 15:06+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,71 +18,67 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: src/audacious/main.cc:63
+#: src/audacious/main.cc:62
 msgid "Show command-line help"
 msgstr ""
 
-#: src/audacious/main.cc:64
+#: src/audacious/main.cc:63
 msgid "Show version"
 msgstr ""
 
-#: src/audacious/main.cc:65
+#: src/audacious/main.cc:64
 msgid "Start playback"
 msgstr ""
 
-#: src/audacious/main.cc:66
+#: src/audacious/main.cc:65
 msgid "Pause playback"
 msgstr ""
 
-#: src/audacious/main.cc:67
+#: src/audacious/main.cc:66
 msgid "Pause if playing, play otherwise"
 msgstr ""
 
-#: src/audacious/main.cc:68
+#: src/audacious/main.cc:67
 msgid "Stop playback"
 msgstr ""
 
-#: src/audacious/main.cc:69
+#: src/audacious/main.cc:68
 msgid "Skip to previous song"
 msgstr ""
 
-#: src/audacious/main.cc:70
+#: src/audacious/main.cc:69
 msgid "Skip to next song"
 msgstr ""
 
-#: src/audacious/main.cc:71
+#: src/audacious/main.cc:70
 msgid "Add files to the playlist"
 msgstr ""
 
-#: src/audacious/main.cc:72
+#: src/audacious/main.cc:71
 msgid "Add files to a temporary playlist"
 msgstr ""
 
-#: src/audacious/main.cc:73
+#: src/audacious/main.cc:72
 msgid "Display the main window"
 msgstr ""
 
-#: src/audacious/main.cc:74
+#: src/audacious/main.cc:73
 msgid "Display the jump-to-song window"
 msgstr ""
 
-#: src/audacious/main.cc:75
+#: src/audacious/main.cc:74
 msgid "Start without a graphical interface"
 msgstr ""
 
-#: src/audacious/main.cc:76
+#: src/audacious/main.cc:75
 msgid "Quit on playback stop"
 msgstr ""
 
-#: src/audacious/main.cc:77
+#: src/audacious/main.cc:76
 msgid "Print debugging messages (may be used twice)"
 msgstr ""
 
-#: src/audacious/main.cc:79
-msgid "Open new instance"
-msgstr ""
-
-#: src/audacious/main.cc:82
+#: src/audacious/main.cc:78
 msgid "Run in Qt mode"
 msgstr ""
 
@@ -103,7 +99,11 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/audacious/main.cc:365 src/libaudqt/util.cc:54
+#: src/audacious/main.cc:187
+msgid "Select instance to run/control"
+msgstr ""
+
+#: src/audacious/main.cc:366 src/libaudqt/util.cc:54
 msgid "Audacious"
 msgstr ""
 
@@ -125,16 +125,16 @@ msgstr ""
 msgid "New Playlist"
 msgstr ""
 
-#: src/libaudcore/audstrings.cc:571 src/libaudcore/tuple.cc:520
+#: src/libaudcore/audstrings.cc:603 src/libaudcore/tuple.cc:520
 msgid "Standard input"
 msgstr ""
 
-#: src/libaudcore/audstrings.cc:573
+#: src/libaudcore/audstrings.cc:605
 #, c-format
 msgid "Audio CD, track %s"
 msgstr ""
 
-#: src/libaudcore/audstrings.cc:577 src/libaudcore/tuple.cc:496
+#: src/libaudcore/audstrings.cc:609 src/libaudcore/tuple.cc:496
 msgid "(character encoding error)"
 msgstr ""
 
@@ -427,7 +427,7 @@ msgstr ""
 #: src/libaudgui/file-opener.cc:130 src/libaudgui/infowin.cc:394
 #: src/libaudgui/jump-to-track.cc:309 src/libaudgui/plugin-prefs.cc:166
 #: src/libaudgui/prefs-window.cc:850 src/libaudgui/queue-manager.cc:194
-#: src/libaudgui/util.cc:267 src/libaudqt/infowin.cc:74
+#: src/libaudgui/util.cc:268 src/libaudqt/infowin.cc:74
 #: src/libaudqt/prefs-plugin.cc:143 src/libaudqt/prefs-window.cc:635
 #: src/libaudqt/queue-manager.cc:161 src/libaudqt/util.cc:130
 msgid "_Close"
@@ -924,7 +924,7 @@ msgid "As decoded"
 msgstr ""
 
 #: src/libaudgui/prefs-window.cc:137
-msgid "After applying Replay Gain"
+msgid "After applying ReplayGain"
 msgstr ""
 
 #: src/libaudgui/prefs-window.cc:138
@@ -994,11 +994,11 @@ msgid "Record stream:"
 msgstr ""
 
 #: src/libaudgui/prefs-window.cc:221 src/libaudqt/prefs-window.cc:198
-msgid "<b>Replay Gain</b>"
+msgid "<b>ReplayGain</b>"
 msgstr ""
 
 #: src/libaudgui/prefs-window.cc:222 src/libaudqt/prefs-window.cc:199
-msgid "Enable Replay Gain"
+msgid "Enable ReplayGain"
 msgstr ""
 
 #: src/libaudgui/prefs-window.cc:224 src/libaudqt/prefs-window.cc:201
@@ -1275,6 +1275,10 @@ msgstr ""
 msgid "Error"
 msgstr ""
 
+#: src/libaudgui/status.cc:90
+msgid "Information"
+msgstr ""
+
 #: src/libaudgui/url-opener.cc:49 src/libaudqt/url-opener.cc:41
 msgid "Open URL"
 msgstr ""
@@ -1292,7 +1296,7 @@ msgstr ""
 msgid "Open"
 msgstr ""
 
-#: src/libaudgui/util.cc:253
+#: src/libaudgui/util.cc:254
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
