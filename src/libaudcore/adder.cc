@@ -60,6 +60,7 @@ struct AddResult : public ListNode
     bool play;
     String title;
     Index<PlaylistAddItem> items;
+    bool saw_folder, filtered;
 };
 
 static void * add_worker (void * unused);
@@ -159,6 +160,8 @@ static void add_file (PlaylistAddItem && item, PlaylistFilterFunc filter,
 
             if (! filter || filter (subname, user))
                 add_file ({String (subname), Tuple (), item.decoder}, filter, user, result, false);
+            else
+                result->filtered = true;
         }
     }
     else
@@ -184,6 +187,8 @@ static void add_playlist (const char * filename, PlaylistFilterFunc filter,
     {
         if (! filter || filter (item.filename, user))
             add_file (std::move (item), filter, user, result, false);
+        else
+            result->filtered = true;
     }
 }
 
@@ -229,6 +234,8 @@ static void add_cuesheets (Index<String> & files, PlaylistFilterFunc filter,
 
             if (! filter || filter (item.filename, user))
                 add_file (std::move (item), filter, user, result, false);
+            else
+                result->filtered = true;
 
             // remove duplicates from file list
             if (prev_filename && ! filename_compare (filename, prev_filename))
@@ -273,7 +280,10 @@ static void add_folder (const char * filename, PlaylistFilterFunc filter,
     for (const char * file : files)
     {
         if (filter && ! filter (file, user))
+        {
+            result->filtered = true;
             continue;
+        }
 
         String error;
         VFSFileTest mode = VFSFile::test_file (file,
@@ -296,7 +306,10 @@ static void add_generic (PlaylistAddItem && item, PlaylistFilterFunc filter,
  void * user, AddResult * result, bool is_single)
 {
     if (filter && ! filter (item.filename, user))
+    {
+        result->filtered = true;
         return;
+    }
 
     /* If the item has a valid tuple or known decoder, or it's a subtune, then
      * assume it's a playable file and skip some checks. */
@@ -312,7 +325,10 @@ static void add_generic (PlaylistAddItem && item, PlaylistFilterFunc filter,
             aud_ui_show_error (str_printf (_("Error reading %s:\n%s"),
              (const char *) item.filename, (const char *) error));
         else if (mode & VFS_IS_DIR)
+        {
             add_folder (item.filename, filter, user, result, is_single);
+            result->saw_folder = true;
+        }
         else if (aud_filename_is_playlist (item.filename))
             add_playlist (item.filename, filter, user, result, is_single);
         else
@@ -360,8 +376,12 @@ static void add_finish (void * unused)
 
         int playlist, count;
 
-        if (! result->items.len ()) /* add failed */
+        if (! result->items.len ())
+        {
+            if (result->saw_folder && ! result->filtered)
+                aud_ui_show_error (_("No files found."));
             goto FREE;
+        }
 
         playlist = aud_playlist_by_unique_id (result->playlist_id);
         if (playlist < 0) /* playlist deleted */
