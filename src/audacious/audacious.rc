@@ -2,6 +2,6 @@
 
 LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 
-#define IDI_ICON_AUDACIOUS 102
+CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST "audacious.manifest"
 
-IDI_ICON_AUDACIOUS ICON "../../images/audacious.ico"
+100 ICON "../../images/audacious.ico"
