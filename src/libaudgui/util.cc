@@ -36,6 +36,8 @@
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
 
+#define PORTABLE_DPI 96
+
 EXPORT int audgui_get_dpi ()
 {
     static int dpi = 0;
@@ -53,12 +55,22 @@ EXPORT int audgui_get_dpi ()
         (void) gtk_settings_get_for_screen (screen);
 
         dpi = round (gdk_screen_get_resolution (screen));
-        if (dpi < 1)
-            dpi = 96;
 #endif
+
+        dpi = aud::max (PORTABLE_DPI, dpi);
     }
 
     return dpi;
+}
+
+EXPORT int audgui_to_native_dpi (int size)
+{
+    return aud::rescale (size, PORTABLE_DPI, audgui_get_dpi ());
+}
+
+EXPORT int audgui_to_portable_dpi (int size)
+{
+    return aud::rescale (size, audgui_get_dpi (), PORTABLE_DPI);
 }
 
 EXPORT int audgui_get_digit_width (GtkWidget * widget)

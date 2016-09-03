@@ -67,6 +67,9 @@ static gboolean configure_cb (GtkWidget * window, GdkEventConfigure * event, con
         gtk_window_get_position ((GtkWindow *) window, & pos[0], & pos[1]);
         gtk_window_get_size ((GtkWindow *) window, & pos[2], & pos[3]);
 
+        pos[2] = audgui_to_portable_dpi (pos[2]);
+        pos[3] = audgui_to_portable_dpi (pos[3]);
+
         aud_set_str ("audgui", name, int_array_to_str (pos, 4));
     }
 
@@ -90,6 +93,9 @@ void audgui_show_unique_window (int id, GtkWidget * widget)
 
         if (str_to_int_array (str, pos, 4))
         {
+            pos[2] = audgui_to_native_dpi (pos[2]);
+            pos[3] = audgui_to_native_dpi (pos[3]);
+
             gtk_window_move ((GtkWindow *) widget, pos[0], pos[1]);
             gtk_window_set_default_size ((GtkWindow *) widget, pos[2], pos[3]);
         }
