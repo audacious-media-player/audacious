@@ -120,7 +120,6 @@ struct Entry {
     int number;
     int length;
     int shuffle_num;
-    bool scanned, failed;
     bool selected, queued;
 };
 
