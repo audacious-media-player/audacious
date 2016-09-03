@@ -20,6 +20,10 @@
 #include <math.h>
 #include <string.h>
 
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
 
@@ -38,6 +42,11 @@ EXPORT int audgui_get_dpi ()
 
     if (! dpi)
     {
+#ifdef _WIN32
+        HDC screen = GetDC (nullptr);
+        dpi = (GetDeviceCaps (screen, LOGPIXELSX) + GetDeviceCaps (screen, LOGPIXELSY)) / 2;
+        ReleaseDC (nullptr, screen);
+#else
         GdkScreen * screen = gdk_screen_get_default ();
 
         /* force GTK settings to be loaded for the GDK screen */
@@ -46,6 +55,7 @@ EXPORT int audgui_get_dpi ()
         dpi = round (gdk_screen_get_resolution (screen));
         if (dpi < 1)
             dpi = 96;
+#endif
     }
 
     return dpi;
@@ -233,10 +243,10 @@ EXPORT void audgui_dialog_add_widget (GtkWidget * dialog, GtkWidget * widget)
     gtk_box_pack_start ((GtkBox *) box, widget, false, false, 0);
 }
 
-#define MAXWORD 100
-
 static StringBuf ellipsize (const char * text)
 {
+    constexpr int maxword = 100;
+
     StringBuf buf = str_copy (text);
     int start = 0;
 
@@ -252,12 +262,12 @@ static StringBuf ellipsize (const char * text)
         while (buf[stop] && ! g_ascii_isspace (buf[stop]))
             stop ++;
 
-        if (stop - start > MAXWORD)
+        if (stop - start > maxword)
         {
-            buf.remove (start + MAXWORD / 2, stop - start - MAXWORD);
-            buf.insert (start + MAXWORD / 2, "…");
+            buf.remove (start + maxword / 2, stop - start - maxword);
+            buf.insert (start + maxword / 2, "…");
 
-            stop = start + MAXWORD + strlen ("…");
+            stop = start + maxword + strlen ("…");
         }
 
         start = stop;
