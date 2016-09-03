@@ -233,6 +233,39 @@ EXPORT void audgui_dialog_add_widget (GtkWidget * dialog, GtkWidget * widget)
     gtk_box_pack_start ((GtkBox *) box, widget, false, false, 0);
 }
 
+#define MAXWORD 100
+
+static StringBuf ellipsize (const char * text)
+{
+    StringBuf buf = str_copy (text);
+    int start = 0;
+
+    while (1)
+    {
+        while (buf[start] && g_ascii_isspace (buf[start]))
+            start ++;
+
+        if (! buf[start])
+            break;
+
+        int stop = start + 1;
+        while (buf[stop] && ! g_ascii_isspace (buf[stop]))
+            stop ++;
+
+        if (stop - start > MAXWORD)
+        {
+            buf.remove (start + MAXWORD / 2, stop - start - MAXWORD);
+            buf.insert (start + MAXWORD / 2, "…");
+
+            stop = start + MAXWORD + strlen ("…");
+        }
+
+        start = stop;
+    }
+
+    return buf;
+}
+
 EXPORT void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
  const char * title, const char * text)
 {
@@ -253,9 +286,10 @@ EXPORT void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
         if (messages > 10)
             text = _("\n(Further messages have been hidden.)");
 
-        if (! strstr (old, text))
+        StringBuf shortened = ellipsize (text);
+        if (! strstr (old, shortened))
         {
-            StringBuf both = str_concat ({old, "\n", text});
+            StringBuf both = str_concat ({old, "\n", shortened});
             g_object_set ((GObject *) * widget, "text", (const char *) both, nullptr);
             g_object_set_data ((GObject *) * widget, "messages", GINT_TO_POINTER (messages + 1));
         }
@@ -266,7 +300,7 @@ EXPORT void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
     else
     {
         GtkWidget * button = audgui_button_new (_("_Close"), "window-close", nullptr, nullptr);
-        * widget = audgui_dialog_new (type, title, text, button, nullptr);
+        * widget = audgui_dialog_new (type, title, ellipsize (text), button, nullptr);
 
         g_object_set_data ((GObject *) * widget, "messages", GINT_TO_POINTER (1));
         g_signal_connect (* widget, "destroy", (GCallback) gtk_widget_destroyed, widget);
