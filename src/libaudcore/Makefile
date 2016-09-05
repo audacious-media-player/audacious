@@ -26,6 +26,7 @@ SRCS = adder.cc \
        mainloop.cc \
        multihash.cc \
        output.cc \
+       parse.cc \
        playback.cc \
        playlist.cc \
        playlist-cache.cc \

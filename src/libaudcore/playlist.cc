@@ -41,6 +41,7 @@
 #include "mainloop.h"
 #include "multihash.h"
 #include "objects.h"
+#include "parse.h"
 #include "plugins.h"
 #include "scanner.h"
 #include "tuple.h"
@@ -2286,38 +2287,6 @@ void playlist_save_state ()
     LEAVE;
 }
 
-static char parse_key[512];
-static char * parse_value;
-
-static void parse_next (FILE * handle)
-{
-    parse_value = nullptr;
-
-    if (! fgets (parse_key, sizeof parse_key, handle))
-        return;
-
-    char * space = strchr (parse_key, ' ');
-    if (! space)
-        return;
-
-    * space = 0;
-    parse_value = space + 1;
-
-    char * newline = strchr (parse_value, '\n');
-    if (newline)
-        * newline = 0;
-}
-
-static bool parse_integer (const char * key, int * value)
-{
-    return (parse_value && ! strcmp (parse_key, key) && sscanf (parse_value, "%d", value) == 1);
-}
-
-static String parse_string (const char * key)
-{
-    return (parse_value && ! strcmp (parse_key, key)) ? String (parse_value) : String ();
-}
-
 void playlist_load_state ()
 {
     ENTER;
@@ -2330,41 +2299,41 @@ void playlist_load_state ()
     if (! handle)
         RETURN ();
 
-    parse_next (handle);
+    TextParser parser (handle);
 
-    if (parse_integer ("active", & playlist_num))
+    if (parser.get_int ("active", playlist_num))
     {
         if (! (active_playlist = lookup_playlist (playlist_num)))
             active_playlist = playlists[0].get ();
-        parse_next (handle);
+        parser.next ();
     }
 
-    if (parse_integer ("playing", & resume_playlist))
-        parse_next (handle);
+    if (parser.get_int ("playing", resume_playlist))
+        parser.next ();
 
-    while (parse_integer ("playlist", & playlist_num) && playlist_num >= 0 &&
+    while (parser.get_int ("playlist", playlist_num) && playlist_num >= 0 &&
      playlist_num < playlists.len ())
     {
         PlaylistData * playlist = playlists[playlist_num].get ();
         int entries = playlist->entries.len ();
 
-        parse_next (handle);
+        parser.next ();
 
-        playlist->filename = parse_string ("filename");
+        playlist->filename = parser.get_str ("filename");
         if (playlist->filename)
-            parse_next (handle);
+            parser.next ();
 
         int position = -1;
-        if (parse_integer ("position", & position))
-            parse_next (handle);
+        if (parser.get_int ("position", position))
+            parser.next ();
 
         if (position >= 0 && position < entries)
             set_position (playlist, playlist->entries [position].get (), true);
 
         /* resume state is stored per-playlist for historical reasons */
         int resume_state = ResumePlay;
-        if (parse_integer ("resume-state", & resume_state))
-            parse_next (handle);
+        if (parser.get_int ("resume-state", resume_state))
+            parser.next ();
 
         if (playlist_num == resume_playlist)
         {
@@ -2374,8 +2343,8 @@ void playlist_load_state ()
                 resume_paused = true;
         }
 
-        if (parse_integer ("resume-time", & playlist->resume_time))
-            parse_next (handle);
+        if (parser.get_int ("resume-time", playlist->resume_time))
+            parser.next ();
     }
 
     fclose (handle);
