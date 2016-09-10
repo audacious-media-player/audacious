@@ -61,7 +61,7 @@ InstallDir "$PROGRAMFILES\Audacious"
 !insertmacro MUI_LANGUAGE "English"
 
 Section "Audacious" InstallSection
-  SectionIn 1 2 RO
+  SectionIn RO
 
   SetOutPath "$INSTDIR"
   File "${BUILDDIR}\README.txt"
@@ -101,7 +101,6 @@ SectionEnd
 
 ; Optional sections
 Section "Add to Start Menu" StartMenuSection
-  SectionIn 1 2
 
   SetShellVarContext all
   SetOutPath "$INSTDIR\bin" ; sets the shortcut's working directory
@@ -110,7 +109,6 @@ Section "Add to Start Menu" StartMenuSection
 SectionEnd
 
 Section "Add to Desktop" DesktopSection
-  SectionIn 1 2
 
   SetShellVarContext all
   SetOutPath "$INSTDIR\bin" ; sets the shortcut's working directory
