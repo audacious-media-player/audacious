@@ -128,6 +128,7 @@ static const ComboItem bitdepth_elements[] = {
     ComboItem (N_("Automatic"), -1),
     ComboItem ("16", 16),
     ComboItem ("24", 24),
+    ComboItem ("24 Packed", 243),
     ComboItem ("32", 32),
     ComboItem (N_("Floating point"), 0)
 };

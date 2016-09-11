@@ -107,6 +107,7 @@ static inline int get_format (bool & automatic)
         case 16: return FMT_S16_NE;
         case 24: return FMT_S24_NE;
         case 32: return FMT_S32_NE;
+        case 243: return FMT_S24_3NE;
 
         // return FMT_FLOAT for "auto" as well
         case -1: automatic = true;
