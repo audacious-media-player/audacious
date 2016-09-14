@@ -121,12 +121,18 @@ EXPORT void audio_deinterlace (const void * in, int format, int channels,
     }
 }
 
+#define FROM_INT(IN, TYPE, SWAP, OFFSET, RANGE) \
+    ((TYPE) (SWAP (IN) - (OFFSET)) * (1.0f / (RANGE)))
+
+#define TO_INT(IN, TYPE, SWAP, OFFSET, RANGE, RANGE_P) \
+    SWAP (OFFSET + (TYPE) lrintf (aud::clamp ((IN) * (RANGE), -(float) (RANGE), (float) (RANGE_P))))
+
 #define FROM_INT_LOOP(NAME, TYPE, SWAP, OFFSET, RANGE) \
 static void NAME (const TYPE * in, float * out, int samples) \
 { \
     const TYPE * end = in + samples; \
     while (in < end) \
-        * out ++ = (TYPE) (SWAP (* in ++) - OFFSET) * (1.0f / RANGE); \
+        * out ++ = FROM_INT(* in ++, TYPE, SWAP, OFFSET, RANGE); \
 }
 
 #define TO_INT_LOOP(NAME, TYPE, SWAP, OFFSET, RANGE, RANGE_P) \
@@ -135,8 +141,33 @@ static void NAME (const float * in, TYPE * out, int samples) \
     const float * end = in + samples; \
     while (in < end) \
     { \
-        float f = (* in ++) * RANGE; \
-        * out ++ = SWAP (OFFSET + (TYPE) lrintf (aud::clamp (f, -(float) RANGE, (float) RANGE_P))); \
+        * out ++ = TO_INT(* in ++, TYPE, SWAP, OFFSET, RANGE, RANGE_P); \
+    } \
+}
+
+#define FROM_PACKED_INT_LOOP(NAME, TYPE, SWAP, OFFSET, RANGE) \
+static void NAME (const char * in, float * out, int samples) \
+{ \
+    const float * end = out + samples; \
+    while (out < end) \
+    { \
+        uint32_t tmp = * in ++; \
+        tmp |= (uint32_t) * in ++ << 8; \
+        tmp |= (uint32_t) * in ++ << 16; \
+        * out ++ = FROM_INT(tmp, TYPE, SWAP, OFFSET, RANGE); \
+    } \
+}
+
+#define TO_PACKED_INT_LOOP(NAME, TYPE, SWAP, OFFSET, RANGE, RANGE_P) \
+static void NAME (const float * in, char * out, int samples) \
+{ \
+    const float * end = in + samples; \
+    while (in < end) \
+    { \
+        TYPE tmp = TO_INT(* in ++, TYPE, SWAP, OFFSET, RANGE, RANGE_P); \
+        *out ++ = (char) tmp; \
+        *out ++ = (char) (tmp >> 8); \
+        *out ++ = (char) (tmp >> 16); \
     } \
 }
 
@@ -175,6 +206,12 @@ TO_INT_LOOP (to_u24be, int32_t, TO_BE32, 0x800000, 0x800000, 0x7fffff)
 TO_INT_LOOP (to_s32be, int32_t, TO_BE32, 0,          0x80000000, 0x7fffff80)
 TO_INT_LOOP (to_u32be, int32_t, TO_BE32, 0x80000000, 0x80000000, 0x7fffff80)
 
+FROM_PACKED_INT_LOOP (from_s24_3le, int32_t, FROM_LE32, 0,        0x800000)
+TO_PACKED_INT_LOOP (to_s24_3le, int32_t, TO_LE32, 0,        0x800000, 0x7fffff)
+
+FROM_PACKED_INT_LOOP (from_s24_3be, int32_t, FROM_BE32, 0,        0x800000)
+TO_PACKED_INT_LOOP (to_s24_3be, int32_t, TO_BE32, 0,        0x800000, 0x7fffff)
+
 typedef void (* FromFunc) (const void * in, float * out, int samples);
 typedef void (* ToFunc) (const float * in, void * out, int samples);
 
@@ -202,6 +239,9 @@ convert_table [] =
     {FMT_U24_BE, (FromFunc) from_u24be, (ToFunc) to_u24be},
     {FMT_S32_BE, (FromFunc) from_s32be, (ToFunc) to_s32be},
     {FMT_U32_BE, (FromFunc) from_u32be, (ToFunc) to_u32be},
+
+    {FMT_S24_3LE, (FromFunc) from_s24_3le, (ToFunc) to_s24_3le},
+    {FMT_S24_3BE, (FromFunc) from_s24_3be, (ToFunc) to_s24_3be}
 };
 
 EXPORT void audio_from_int (const void * in, int format, float * out, int samples)
