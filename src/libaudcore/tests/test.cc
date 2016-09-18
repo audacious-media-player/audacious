@@ -33,8 +33,9 @@
 static void test_audio_conversion ()
 {
     /* single precision float should be lossless for 24-bit audio */
+    /* also test that high byte is correctly ignored/zeroed */
     static const int32_t in[10] =
-     {-0x800000, -0x7fffff, -0x7ffffe, -2, -1, 0, 1, 2, 0x7ffffe, 0x7fffff};
+     {0x800000, 0x800001, 0x800002, -2, -1, 0, 1, 2, 0x7ffffe, 0x7fffff};
 
     float f[10];
     int32_t out[10];
@@ -46,7 +47,7 @@ static void test_audio_conversion ()
     assert (f[5] == 0.0f);
 
     for (int i = 0; i < 10; i ++)
-        assert (in[i] == out[i]);
+        assert (out[i] == (in[i] & 0xffffff));
 }
 
 static void test_numeric_conversion ()
