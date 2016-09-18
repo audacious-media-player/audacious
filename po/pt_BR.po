@@ -18,6 +18,7 @@
 # Karen Eliot <kareneliot@riseup. net>, 2011
 # Rafael Fontenelle <rffontenelle@gmail.com>, 2012
 # Rodrigo de Araujo <araujorodrigo1984@gmail.com>, 2016
+# Rodrigo de Araujo <araujorodrigo1984@gmail.com>, 2016
 # Rodrigo Macedo <rodrigomacedo@rmsolucoeseminformatica.com>, 2012
 # Alexandro Casanova <shorterfire@gmail.com>, 2012-2013
 # Alexandro Casanova <shorterfire@gmail.com>, 2012
@@ -27,9 +28,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2016-08-22 15:06+0200\n"
-"PO-Revision-Date: 2016-08-22 12:05+0000\n"
-"Last-Translator: Thomas Lange <thomas-lange2@gmx.de>\n"
+"POT-Creation-Date: 2016-09-18 19:46+0200\n"
+"PO-Revision-Date: 2016-09-09 16:38+0000\n"
+"Last-Translator: Rodrigo de Araujo <araujorodrigo1984@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/jlindgren/"
 "audacious/language/pt_BR/)\n"
 "Language: pt_BR\n"
@@ -123,20 +124,20 @@ msgstr ""
 
 #: src/audacious/main.cc:187
 msgid "Select instance to run/control"
-msgstr ""
+msgstr "Selecione a instância para executar/controlar"
 
 #: src/audacious/main.cc:366 src/libaudqt/util.cc:54
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/libaudcore/adder.cc:85
+#: src/libaudcore/adder.cc:86
 #, c-format
 msgid "%d file found"
 msgid_plural "%d files found"
 msgstr[0] "%d arquivo encontrado"
 msgstr[1] "%d arquivos encontrados"
 
-#: src/libaudcore/adder.cc:256 src/libaudcore/adder.cc:312
+#: src/libaudcore/adder.cc:263 src/libaudcore/adder.cc:325
 #, c-format
 msgid ""
 "Error reading %s:\n"
@@ -145,7 +146,11 @@ msgstr ""
 "Erro de leitura %s:\n"
 "%s"
 
-#: src/libaudcore/adder.cc:386 src/libaudcore/playlist.cc:147
+#: src/libaudcore/adder.cc:382
+msgid "No files found."
+msgstr "Nenum arquivo encontrado."
+
+#: src/libaudcore/adder.cc:406 src/libaudcore/playlist.cc:147
 msgid "New Playlist"
 msgstr "Nova Lista de Reprodução"
 
@@ -460,7 +465,7 @@ msgstr "Fechar _diálogo ao adicionar"
 #: src/libaudgui/file-opener.cc:130 src/libaudgui/infowin.cc:394
 #: src/libaudgui/jump-to-track.cc:309 src/libaudgui/plugin-prefs.cc:166
 #: src/libaudgui/prefs-window.cc:850 src/libaudgui/queue-manager.cc:194
-#: src/libaudgui/util.cc:268 src/libaudqt/infowin.cc:74
+#: src/libaudgui/util.cc:324 src/libaudqt/infowin.cc:74
 #: src/libaudqt/prefs-plugin.cc:143 src/libaudqt/prefs-window.cc:635
 #: src/libaudqt/queue-manager.cc:161 src/libaudqt/util.cc:130
 msgid "_Close"
@@ -1257,7 +1262,7 @@ msgstr "Nenhum plugin de gravação de áudio diponível"
 msgid "Audacious Settings"
 msgstr "Ajustes do Audacious"
 
-#: src/libaudgui/preset-browser.cc:50 src/libaudgui/util.cc:152
+#: src/libaudgui/preset-browser.cc:50 src/libaudgui/util.cc:174
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -1315,7 +1320,7 @@ msgstr "Erro"
 
 #: src/libaudgui/status.cc:90
 msgid "Information"
-msgstr ""
+msgstr "Informação "
 
 #: src/libaudgui/url-opener.cc:49 src/libaudqt/url-opener.cc:41
 msgid "Open URL"
@@ -1329,12 +1334,12 @@ msgstr "Adicionar URL"
 msgid "Enter URL:"
 msgstr "Digite a URL:"
 
-#: src/libaudgui/util.cc:152 src/libaudqt/fileopener.cc:46
+#: src/libaudgui/util.cc:174 src/libaudqt/fileopener.cc:46
 #: src/libaudqt/fileopener.cc:47
 msgid "Open"
 msgstr "Abrir"
 
-#: src/libaudgui/util.cc:254
+#: src/libaudgui/util.cc:309
 msgid ""
 "\n"
 "(Further messages have been hidden.)"
