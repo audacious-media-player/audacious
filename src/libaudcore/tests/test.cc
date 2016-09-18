@@ -46,9 +46,9 @@ static void test_audio_conversion ()
     for (int format = FMT_S24_3LE; format <= FMT_U24_3BE; format ++)
     {
         memset (packed, 0, sizeof packed);
-        audio_to_int (f, packed, FMT_S24_3BE, 10);
+        audio_to_int (f, packed, format, 10);
         memset (f, 0, sizeof f);
-        audio_from_int (packed, FMT_S24_3BE, f, 10);
+        audio_from_int (packed, format, f, 10);
     }
 
     audio_to_int (f, out, FMT_S24_NE, 10);
