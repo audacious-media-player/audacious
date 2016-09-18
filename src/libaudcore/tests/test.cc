@@ -38,9 +38,19 @@ static void test_audio_conversion ()
      {0x800000, 0x800001, 0x800002, -2, -1, 0, 1, 2, 0x7ffffe, 0x7fffff};
 
     float f[10];
+    char packed[30];
     int32_t out[10];
 
     audio_from_int (in, FMT_S24_NE, f, 10);
+
+    for (int format = FMT_S24_3LE; format <= FMT_U24_3BE; format ++)
+    {
+        memset (packed, 0, sizeof packed);
+        audio_to_int (f, packed, FMT_S24_3BE, 10);
+        memset (f, 0, sizeof f);
+        audio_from_int (packed, FMT_S24_3BE, f, 10);
+    }
+
     audio_to_int (f, out, FMT_S24_NE, 10);
 
     assert (f[0] == -1.0f);

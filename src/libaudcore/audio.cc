@@ -27,17 +27,39 @@
 
 #define SW_VOLUME_RANGE 40 /* decibels */
 
-#define INTERLACE_LOOP(TYPE) \
-for (int c = 0; c < channels; c ++) \
-{ \
-    const TYPE * get = (const TYPE *) in[c]; \
-    const TYPE * end = get + frames; \
-    TYPE * set = (TYPE *) out + c; \
-    while (get < end) \
-    { \
-        * set = * get ++; \
-        set += channels; \
-    } \
+struct packed24_t { uint8_t b[3]; };
+static_assert (sizeof (packed24_t) == 3, "invalid packed 24-bit type");
+
+template<class Word>
+void interlace_loop (const void * const * in, int channels, void * out, int frames)
+{
+    for (int c = 0; c < channels; c ++)
+    {
+        auto get = (const Word *) in[c];
+        auto end = get + frames;
+        auto set = (Word *) out + c;
+        while (get < end)
+        {
+            * set = * get ++;
+            set += channels;
+        }
+    }
+}
+
+template<class Word>
+void deinterlace_loop (const void * in, int channels, void * const * out, int frames)
+{
+    for (int c = 0; c < channels; c ++)
+    {
+        auto get = (const Word *) in + c;
+        auto set = (Word *) out[c];
+        auto end = set + frames;
+        while (set < end)
+        {
+            * set ++ = * get;
+            get += channels;
+        }
+    }
 }
 
 EXPORT void audio_interlace (const void * const * in, int format, int channels,
@@ -46,45 +68,30 @@ EXPORT void audio_interlace (const void * const * in, int format, int channels,
     switch (format)
     {
     case FMT_FLOAT:
-        INTERLACE_LOOP (float);
+        interlace_loop<float> (in, channels, out, frames);
         break;
 
-    case FMT_S8:
-    case FMT_U8:
-        INTERLACE_LOOP (int8_t);
+    case FMT_S8: case FMT_U8:
+        interlace_loop<int8_t> (in, channels, out, frames);
         break;
 
-    case FMT_S16_LE:
-    case FMT_S16_BE:
-    case FMT_U16_LE:
-    case FMT_U16_BE:
-        INTERLACE_LOOP (int16_t);
+    case FMT_S16_LE: case FMT_S16_BE:
+    case FMT_U16_LE: case FMT_U16_BE:
+        interlace_loop<int16_t> (in, channels, out, frames);
         break;
 
-    case FMT_S24_LE:
-    case FMT_S24_BE:
-    case FMT_U24_LE:
-    case FMT_U24_BE:
-    case FMT_S32_LE:
-    case FMT_S32_BE:
-    case FMT_U32_LE:
-    case FMT_U32_BE:
-        INTERLACE_LOOP (int32_t);
+    case FMT_S24_LE: case FMT_S24_BE:
+    case FMT_U24_LE: case FMT_U24_BE:
+    case FMT_S32_LE: case FMT_S32_BE:
+    case FMT_U32_LE: case FMT_U32_BE:
+        interlace_loop<int32_t> (in, channels, out, frames);
+        break;
+
+    case FMT_S24_3LE: case FMT_S24_3BE:
+    case FMT_U24_3LE: case FMT_U24_3BE:
+        interlace_loop<packed24_t> (in, channels, out, frames);
         break;
     }
-}
-
-#define DEINTERLACE_LOOP(TYPE) \
-for (int c = 0; c < channels; c ++) \
-{ \
-    const TYPE * get = (const TYPE *) in + c; \
-    TYPE * set = (TYPE *) out[c]; \
-    TYPE * end = set + frames; \
-    while (set < end) \
-    { \
-        * set ++ = * get; \
-        get += channels; \
-    } \
 }
 
 EXPORT void audio_deinterlace (const void * in, int format, int channels,
@@ -93,131 +100,187 @@ EXPORT void audio_deinterlace (const void * in, int format, int channels,
     switch (format)
     {
     case FMT_FLOAT:
-        DEINTERLACE_LOOP (float);
+        deinterlace_loop<float> (in, channels, out, frames);
         break;
 
-    case FMT_S8:
-    case FMT_U8:
-        DEINTERLACE_LOOP (int8_t);
+    case FMT_S8: case FMT_U8:
+        deinterlace_loop<int8_t> (in, channels, out, frames);
         break;
 
-    case FMT_S16_LE:
-    case FMT_S16_BE:
-    case FMT_U16_LE:
-    case FMT_U16_BE:
-        DEINTERLACE_LOOP (int16_t);
+    case FMT_S16_LE: case FMT_S16_BE:
+    case FMT_U16_LE: case FMT_U16_BE:
+        deinterlace_loop<int16_t> (in, channels, out, frames);
         break;
 
-    case FMT_S24_LE:
-    case FMT_S24_BE:
-    case FMT_U24_LE:
-    case FMT_U24_BE:
-    case FMT_S32_LE:
-    case FMT_S32_BE:
-    case FMT_U32_LE:
-    case FMT_U32_BE:
-        DEINTERLACE_LOOP (int32_t);
+    case FMT_S24_LE: case FMT_S24_BE:
+    case FMT_U24_LE: case FMT_U24_BE:
+    case FMT_S32_LE: case FMT_S32_BE:
+    case FMT_U32_LE: case FMT_U32_BE:
+        deinterlace_loop<int32_t> (in, channels, out, frames);
+        break;
+
+    case FMT_S24_3LE: case FMT_S24_3BE:
+    case FMT_U24_3LE: case FMT_U24_3BE:
+        deinterlace_loop<packed24_t> (in, channels, out, frames);
         break;
     }
 }
 
-#define FROM_INT_LOOP(NAME, TYPE, SWAP, OFFSET, RANGE) \
-static void NAME (const TYPE * in, float * out, int samples) \
-{ \
-    const TYPE * end = in + samples; \
-    while (in < end) { \
-        TYPE value = SWAP (* in ++) + (RANGE - OFFSET); \
-        if (RANGE == 0x800000) value &= 0xffffff; /* ignore high byte */ \
-        * out ++ = (TYPE) (value - RANGE) * (1.0f / RANGE); \
-    } \
+static constexpr bool is_le (int format)
+{
+    return format == FMT_S16_LE || format == FMT_U16_LE ||
+           format == FMT_S24_LE || format == FMT_U24_LE ||
+           format == FMT_S32_LE || format == FMT_U32_LE ||
+           format == FMT_S24_3LE || format == FMT_U24_3LE;
 }
 
-#define TO_INT_LOOP(NAME, TYPE, SWAP, OFFSET, RANGE, RANGE_P) \
-static void NAME (const float * in, TYPE * out, int samples) \
-{ \
-    const float * end = in + samples; \
-    while (in < end) \
-    { \
-        float f = (* in ++) * RANGE; \
-        TYPE value = OFFSET + TYPE (lrintf (aud::clamp (f, -(float) RANGE, (float) RANGE_P))); \
-        if (RANGE == 0x800000) value &= 0xffffff; /* zero high byte */ \
-        * out ++ = SWAP (value); \
-    } \
+static constexpr bool is_signed (int format)
+{
+    return (format == FMT_S8 ||
+            format == FMT_S16_LE || format == FMT_S16_BE ||
+            format == FMT_S24_LE || format == FMT_S24_BE ||
+            format == FMT_S32_LE || format == FMT_S32_BE ||
+            format == FMT_S24_3LE || format == FMT_S24_3BE);
 }
 
-FROM_INT_LOOP (from_s8, int8_t, , 0,    0x80)
-FROM_INT_LOOP (from_u8, int8_t, , 0x80, 0x80)
+static constexpr unsigned neg_range (int format)
+{
+    return (format >= FMT_S32_LE && format < FMT_S24_3LE) ? 0x80000000 :
+           (format >= FMT_S24_LE) ? 0x800000 :
+           (format >= FMT_S16_LE) ? 0x8000 : 0x80;
+}
 
-TO_INT_LOOP (to_s8, int8_t, , 0,    0x80, 0x7f)
-TO_INT_LOOP (to_u8, int8_t, , 0x80, 0x80, 0x7f)
-
-FROM_INT_LOOP (from_s16le, int16_t, FROM_LE16, 0,      0x8000)
-FROM_INT_LOOP (from_u16le, int16_t, FROM_LE16, 0x8000, 0x8000)
-FROM_INT_LOOP (from_s24le, int32_t, FROM_LE32, 0,        0x800000)
-FROM_INT_LOOP (from_u24le, int32_t, FROM_LE32, 0x800000, 0x800000)
-FROM_INT_LOOP (from_s32le, int32_t, FROM_LE32, 0,          0x80000000)
-FROM_INT_LOOP (from_u32le, int32_t, FROM_LE32, 0x80000000, 0x80000000)
-
-TO_INT_LOOP (to_s16le, int16_t, TO_LE16, 0,      0x8000, 0x7fff)
-TO_INT_LOOP (to_u16le, int16_t, TO_LE16, 0x8000, 0x8000, 0x7fff)
-TO_INT_LOOP (to_s24le, int32_t, TO_LE32, 0,        0x800000, 0x7fffff)
-TO_INT_LOOP (to_u24le, int32_t, TO_LE32, 0x800000, 0x800000, 0x7fffff)
-TO_INT_LOOP (to_s32le, int32_t, TO_LE32, 0,          0x80000000, 0x7fffff80)
-TO_INT_LOOP (to_u32le, int32_t, TO_LE32, 0x80000000, 0x80000000, 0x7fffff80)
 // 0x7fffff80 = largest representable floating-point value before 2^31
-
-FROM_INT_LOOP (from_s16be, int16_t, FROM_BE16, 0,      0x8000)
-FROM_INT_LOOP (from_u16be, int16_t, FROM_BE16, 0x8000, 0x8000)
-FROM_INT_LOOP (from_s24be, int32_t, FROM_BE32, 0,        0x800000)
-FROM_INT_LOOP (from_u24be, int32_t, FROM_BE32, 0x800000, 0x800000)
-FROM_INT_LOOP (from_s32be, int32_t, FROM_BE32, 0,          0x80000000)
-FROM_INT_LOOP (from_u32be, int32_t, FROM_BE32, 0x80000000, 0x80000000)
-
-TO_INT_LOOP (to_s16be, int16_t, TO_BE16, 0,      0x8000, 0x7fff)
-TO_INT_LOOP (to_u16be, int16_t, TO_BE16, 0x8000, 0x8000, 0x7fff)
-TO_INT_LOOP (to_s24be, int32_t, TO_BE32, 0,        0x800000, 0x7fffff)
-TO_INT_LOOP (to_u24be, int32_t, TO_BE32, 0x800000, 0x800000, 0x7fffff)
-TO_INT_LOOP (to_s32be, int32_t, TO_BE32, 0,          0x80000000, 0x7fffff80)
-TO_INT_LOOP (to_u32be, int32_t, TO_BE32, 0x80000000, 0x80000000, 0x7fffff80)
-
-typedef void (* FromFunc) (const void * in, float * out, int samples);
-typedef void (* ToFunc) (const float * in, void * out, int samples);
-
-static const struct
+static constexpr unsigned pos_range (int format)
 {
-    int format;
-    FromFunc from;
-    ToFunc to;
+    return (format >= FMT_S32_LE && format < FMT_S24_3LE) ? 0x7fffff80 :
+           (format >= FMT_S24_LE) ? 0x7fffff :
+           (format >= FMT_S16_LE) ? 0x7fff : 0x7f;
 }
-convert_table [] =
+
+template<class T> T do_swap (T value) { return value; }
+template<> int16_t do_swap (int16_t value) { return bswap16 (value); }
+template<> int32_t do_swap (int32_t value) { return bswap32 (value); }
+
+template<int format, class Word, class Int>
+struct Convert
 {
-    {FMT_S8, (FromFunc) from_s8, (ToFunc) to_s8},
-    {FMT_U8, (FromFunc) from_u8, (ToFunc) to_u8},
+#ifdef WORDS_BIGENDIAN
+    static constexpr bool native_le = false;
+#else
+    static constexpr bool native_le = true;
+#endif
 
-    {FMT_S16_LE, (FromFunc) from_s16le, (ToFunc) to_s16le},
-    {FMT_U16_LE, (FromFunc) from_u16le, (ToFunc) to_u16le},
-    {FMT_S24_LE, (FromFunc) from_s24le, (ToFunc) to_s24le},
-    {FMT_U24_LE, (FromFunc) from_u24le, (ToFunc) to_u24le},
-    {FMT_S32_LE, (FromFunc) from_s32le, (ToFunc) to_s32le},
-    {FMT_U32_LE, (FromFunc) from_u32le, (ToFunc) to_u32le},
+    static Int to_int (Word value)
+    {
+        if (is_le (format) ^ native_le)
+            value = do_swap (value);
+        if (is_signed (format))
+            value += neg_range (format);
+        if (format >= FMT_S24_LE && format <= FMT_U24_BE)
+            value &= 0xffffff; /* ignore high byte */
 
-    {FMT_S16_BE, (FromFunc) from_s16be, (ToFunc) to_s16be},
-    {FMT_U16_BE, (FromFunc) from_u16be, (ToFunc) to_u16be},
-    {FMT_S24_BE, (FromFunc) from_s24be, (ToFunc) to_s24be},
-    {FMT_U24_BE, (FromFunc) from_u24be, (ToFunc) to_u24be},
-    {FMT_S32_BE, (FromFunc) from_s32be, (ToFunc) to_s32be},
-    {FMT_U32_BE, (FromFunc) from_u32be, (ToFunc) to_u32be},
+        return value - neg_range (format);
+    }
+
+    static Word to_word (Int value)
+    {
+        if (! is_signed (format))
+            value += neg_range (format);
+        if (format >= FMT_S24_LE && format <= FMT_U24_BE)
+            value &= 0xffffff; /* zero high byte */
+        if (is_le (format) ^ native_le)
+            value = do_swap (value);
+
+        return value;
+    }
 };
+
+template<int format>
+struct Convert<format, packed24_t, int32_t>
+{
+    static int32_t to_int (packed24_t value)
+    {
+        uint8_t hi, mid, lo;
+
+        if (is_le (format))
+            hi = value.b[2], mid = value.b[1], lo = value.b[0];
+        else
+            hi = value.b[0], mid = value.b[1], lo = value.b[2];
+
+        if (! is_signed (format))
+            hi -= 0x80;
+
+        return (int8_t (hi) << 16) | (mid << 8) | lo;
+    }
+
+    static packed24_t to_word (int32_t value)
+    {
+        auto hi = uint8_t (value >> 16),
+             mid = uint8_t (value >> 8),
+             lo = uint8_t (value);
+
+        if (! is_signed (format))
+            hi += 0x80;
+
+        if (is_le (format))
+            return {lo, mid, hi};
+        else
+            return {hi, mid, lo};
+    }
+};
+
+template<int format, class Word, class Int = Word>
+void from_int_loop (const void * in_, float * out, int samples)
+{
+    auto in = (const Word *) in_;
+    auto end = in + samples;
+    while (in < end)
+    {
+        Int value = Convert<format, Word, Int>::to_int (* in ++);
+        * out ++ = value * (1.0f / neg_range (format));
+    }
+}
+
+template<int format, class Word, class Int = Word>
+void to_int_loop (const float * in, void * out_, int samples)
+{
+    auto end = in + samples;
+    auto out = (Word *) out_;
+    while (in < end)
+    {
+        float f = (* in ++) * neg_range (format);
+        f = aud::clamp (f, -(float) neg_range (format), (float) pos_range (format));
+        * out ++ = Convert<format, Word, Int>::to_word (lrintf (f));
+    }
+}
 
 EXPORT void audio_from_int (const void * in, int format, float * out, int samples)
 {
-    for (auto & conv : convert_table)
+    switch (format)
     {
-        if (conv.format == format)
-        {
-            conv.from (in, out, samples);
-            break;
-        }
+        case FMT_S8: from_int_loop<FMT_S8, int8_t> (in, out, samples); break;
+        case FMT_U8: from_int_loop<FMT_U8, int8_t> (in, out, samples); break;
+
+        case FMT_S16_LE: from_int_loop<FMT_S16_LE, int16_t> (in, out, samples); break;
+        case FMT_S16_BE: from_int_loop<FMT_S16_BE, int16_t> (in, out, samples); break;
+        case FMT_U16_LE: from_int_loop<FMT_U16_LE, int16_t> (in, out, samples); break;
+        case FMT_U16_BE: from_int_loop<FMT_U16_BE, int16_t> (in, out, samples); break;
+
+        case FMT_S24_LE: from_int_loop<FMT_S24_LE, int32_t> (in, out, samples); break;
+        case FMT_S24_BE: from_int_loop<FMT_S24_BE, int32_t> (in, out, samples); break;
+        case FMT_U24_LE: from_int_loop<FMT_U24_LE, int32_t> (in, out, samples); break;
+        case FMT_U24_BE: from_int_loop<FMT_U24_BE, int32_t> (in, out, samples); break;
+
+        case FMT_S32_LE: from_int_loop<FMT_S32_LE, int32_t> (in, out, samples); break;
+        case FMT_S32_BE: from_int_loop<FMT_S32_BE, int32_t> (in, out, samples); break;
+        case FMT_U32_LE: from_int_loop<FMT_U32_LE, int32_t> (in, out, samples); break;
+        case FMT_U32_BE: from_int_loop<FMT_U32_BE, int32_t> (in, out, samples); break;
+
+        case FMT_S24_3LE: from_int_loop<FMT_S24_3LE, packed24_t, int32_t> (in, out, samples); break;
+        case FMT_S24_3BE: from_int_loop<FMT_S24_3BE, packed24_t, int32_t> (in, out, samples); break;
+        case FMT_U24_3LE: from_int_loop<FMT_U24_3LE, packed24_t, int32_t> (in, out, samples); break;
+        case FMT_U24_3BE: from_int_loop<FMT_U24_3BE, packed24_t, int32_t> (in, out, samples); break;
     }
 }
 
@@ -226,13 +289,30 @@ EXPORT void audio_to_int (const float * in, void * out, int format, int samples)
     int save = fegetround ();
     fesetround (FE_TONEAREST);
 
-    for (auto & conv : convert_table)
+    switch (format)
     {
-        if (conv.format == format)
-        {
-            conv.to (in, out, samples);
-            break;
-        }
+        case FMT_S8: to_int_loop<FMT_S8, int8_t> (in, out, samples); break;
+        case FMT_U8: to_int_loop<FMT_U8, int8_t> (in, out, samples); break;
+
+        case FMT_S16_LE: to_int_loop<FMT_S16_LE, int16_t> (in, out, samples); break;
+        case FMT_S16_BE: to_int_loop<FMT_S16_BE, int16_t> (in, out, samples); break;
+        case FMT_U16_LE: to_int_loop<FMT_U16_LE, int16_t> (in, out, samples); break;
+        case FMT_U16_BE: to_int_loop<FMT_U16_BE, int16_t> (in, out, samples); break;
+
+        case FMT_S24_LE: to_int_loop<FMT_S24_LE, int32_t> (in, out, samples); break;
+        case FMT_S24_BE: to_int_loop<FMT_S24_BE, int32_t> (in, out, samples); break;
+        case FMT_U24_LE: to_int_loop<FMT_U24_LE, int32_t> (in, out, samples); break;
+        case FMT_U24_BE: to_int_loop<FMT_U24_BE, int32_t> (in, out, samples); break;
+
+        case FMT_S32_LE: to_int_loop<FMT_S32_LE, int32_t> (in, out, samples); break;
+        case FMT_S32_BE: to_int_loop<FMT_S32_BE, int32_t> (in, out, samples); break;
+        case FMT_U32_LE: to_int_loop<FMT_U32_LE, int32_t> (in, out, samples); break;
+        case FMT_U32_BE: to_int_loop<FMT_U32_BE, int32_t> (in, out, samples); break;
+
+        case FMT_S24_3LE: to_int_loop<FMT_S24_3LE, packed24_t, int32_t> (in, out, samples); break;
+        case FMT_S24_3BE: to_int_loop<FMT_S24_3BE, packed24_t, int32_t> (in, out, samples); break;
+        case FMT_U24_3LE: to_int_loop<FMT_U24_3LE, packed24_t, int32_t> (in, out, samples); break;
+        case FMT_U24_3BE: to_int_loop<FMT_U24_3BE, packed24_t, int32_t> (in, out, samples); break;
     }
 
     fesetround (save);
