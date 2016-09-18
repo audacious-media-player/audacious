@@ -181,13 +181,9 @@ static void setup_output (bool new_input)
     cleanup_output ();
     cop->set_info (in_filename, in_tuple);
 
-    String error, tmp_error;
-    while (! cop->open_audio (format, effect_rate, effect_channels, tmp_error))
+    String error;
+    while (! cop->open_audio (format, effect_rate, effect_channels, error))
     {
-        /* display only the error from the first attempt */
-        if (! automatic || format == FMT_FLOAT)
-            error = std::move (tmp_error);
-
         if (automatic && format == FMT_FLOAT)
             format = FMT_S32_NE;
         else if (automatic && format == FMT_S32_NE)
