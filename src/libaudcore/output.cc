@@ -105,7 +105,7 @@ static inline int get_format (bool & automatic)
     switch (aud_get_int (0, "output_bit_depth"))
     {
         case 16: return FMT_S16_NE;
-        case 24: return FMT_S24_NE;
+        case 24: return FMT_S24_3NE;
         case 32: return FMT_S32_NE;
 
         // return FMT_FLOAT for "auto" as well
@@ -188,6 +188,8 @@ static void setup_output (bool new_input)
             format = FMT_S32_NE;
         else if (automatic && format == FMT_S32_NE)
             format = FMT_S16_NE;
+        else if (format == FMT_S24_3NE)
+            format = FMT_S24_NE; /* some output plugins support only padded 24-bit */
         else
         {
             aud_ui_show_error (error ? (const char *) error : _("Error opening output stream"));
