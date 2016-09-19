@@ -52,6 +52,8 @@ void audgui_scaled_image_set (GtkWidget * widget, GdkPixbuf * pixbuf);
 
 /* util.c -- okay to use without audgui_init() */
 int audgui_get_dpi ();
+int audgui_to_native_dpi (int size);
+int audgui_to_portable_dpi (int size);
 int audgui_get_digit_width (GtkWidget * widget);
 void audgui_get_mouse_coords (GtkWidget * widget, int * x, int * y);
 void audgui_get_mouse_coords (GdkScreen * screen, int * x, int * y);

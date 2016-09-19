@@ -12,9 +12,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2016-08-22 15:06+0200\n"
-"PO-Revision-Date: 2016-08-22 12:05+0000\n"
-"Last-Translator: Thomas Lange <thomas-lange2@gmx.de>\n"
+"POT-Creation-Date: 2016-09-18 19:46+0200\n"
+"PO-Revision-Date: 2016-09-15 11:03+0000\n"
+"Last-Translator: 盧瑞元（ryuanlu） <rueiyuan.lu@gmail.com>\n"
 "Language-Team: Chinese (Taiwan) (http://www.transifex.com/jlindgren/"
 "audacious/language/zh_TW/)\n"
 "Language: zh_TW\n"
@@ -106,26 +106,32 @@ msgstr "使用方式：audacious [選項] ... [檔案] ...\n"
 
 #: src/audacious/main.cc:187
 msgid "Select instance to run/control"
-msgstr ""
+msgstr "選擇要執行或控制的播放器"
 
 #: src/audacious/main.cc:366 src/libaudqt/util.cc:54
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/libaudcore/adder.cc:85
+#: src/libaudcore/adder.cc:86
 #, c-format
 msgid "%d file found"
 msgid_plural "%d files found"
 msgstr[0] "找到 %d 個檔案"
 
-#: src/libaudcore/adder.cc:256 src/libaudcore/adder.cc:312
+#: src/libaudcore/adder.cc:263 src/libaudcore/adder.cc:325
 #, c-format
 msgid ""
 "Error reading %s:\n"
 "%s"
 msgstr ""
+"讀取 %s 時發生錯誤：\n"
+"%s"
 
-#: src/libaudcore/adder.cc:386 src/libaudcore/playlist.cc:147
+#: src/libaudcore/adder.cc:382
+msgid "No files found."
+msgstr "找不到檔案。"
+
+#: src/libaudcore/adder.cc:406 src/libaudcore/playlist.cc:147
 msgid "New Playlist"
 msgstr "新播放清單"
 
@@ -434,7 +440,7 @@ msgstr "加入後關閉對話視窗(_D)"
 #: src/libaudgui/file-opener.cc:130 src/libaudgui/infowin.cc:394
 #: src/libaudgui/jump-to-track.cc:309 src/libaudgui/plugin-prefs.cc:166
 #: src/libaudgui/prefs-window.cc:850 src/libaudgui/queue-manager.cc:194
-#: src/libaudgui/util.cc:268 src/libaudqt/infowin.cc:74
+#: src/libaudgui/util.cc:324 src/libaudqt/infowin.cc:74
 #: src/libaudqt/prefs-plugin.cc:143 src/libaudqt/prefs-window.cc:635
 #: src/libaudqt/queue-manager.cc:161 src/libaudqt/util.cc:130
 msgid "_Close"
@@ -920,7 +926,7 @@ msgstr "土耳其語"
 
 #: src/libaudgui/prefs-window.cc:128 src/libaudqt/prefs-window.cc:132
 msgid "Automatic"
-msgstr ""
+msgstr "自動"
 
 #: src/libaudgui/prefs-window.cc:132 src/libaudqt/prefs-window.cc:136
 msgid "Floating point"
@@ -928,19 +934,19 @@ msgstr "浮點數"
 
 #: src/libaudgui/prefs-window.cc:136
 msgid "As decoded"
-msgstr ""
+msgstr "解碼後立即擷取"
 
 #: src/libaudgui/prefs-window.cc:137
 msgid "After applying ReplayGain"
-msgstr ""
+msgstr "套用播放增益後擷取"
 
 #: src/libaudgui/prefs-window.cc:138
 msgid "After applying effects"
-msgstr ""
+msgstr "套用特效後擷取"
 
 #: src/libaudgui/prefs-window.cc:139
 msgid "After applying equalization"
-msgstr ""
+msgstr "套用等化器效果後擷取"
 
 #: src/libaudgui/prefs-window.cc:151 src/libaudqt/prefs-window.cc:148
 msgid "<b>Interface Settings</b>"
@@ -998,15 +1004,15 @@ msgstr "<b>錄音設定</b>"
 
 #: src/libaudgui/prefs-window.cc:218
 msgid "Record stream:"
-msgstr ""
+msgstr "錄音資料流來源："
 
 #: src/libaudgui/prefs-window.cc:221 src/libaudqt/prefs-window.cc:198
 msgid "<b>ReplayGain</b>"
-msgstr ""
+msgstr "<b>播放增益</b>"
 
 #: src/libaudgui/prefs-window.cc:222 src/libaudqt/prefs-window.cc:199
 msgid "Enable ReplayGain"
-msgstr ""
+msgstr "啟用播放增益"
 
 #: src/libaudgui/prefs-window.cc:224 src/libaudqt/prefs-window.cc:201
 msgid "Album mode"
@@ -1226,7 +1232,7 @@ msgstr "找不到可用的錄音外掛"
 msgid "Audacious Settings"
 msgstr "Audacious 設定"
 
-#: src/libaudgui/preset-browser.cc:50 src/libaudgui/util.cc:152
+#: src/libaudgui/preset-browser.cc:50 src/libaudgui/util.cc:174
 msgid "Cancel"
 msgstr "取消"
 
@@ -1284,7 +1290,7 @@ msgstr "錯誤"
 
 #: src/libaudgui/status.cc:90
 msgid "Information"
-msgstr ""
+msgstr "資訊"
 
 #: src/libaudgui/url-opener.cc:49 src/libaudqt/url-opener.cc:41
 msgid "Open URL"
@@ -1298,12 +1304,12 @@ msgstr "加入網址"
 msgid "Enter URL:"
 msgstr "請輸入網址："
 
-#: src/libaudgui/util.cc:152 src/libaudqt/fileopener.cc:46
+#: src/libaudgui/util.cc:174 src/libaudqt/fileopener.cc:46
 #: src/libaudqt/fileopener.cc:47
 msgid "Open"
 msgstr "開啟"
 
-#: src/libaudgui/util.cc:254
+#: src/libaudgui/util.cc:309
 msgid ""
 "\n"
 "(Further messages have been hidden.)"

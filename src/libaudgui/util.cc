@@ -20,6 +20,10 @@
 #include <math.h>
 #include <string.h>
 
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
 
@@ -32,23 +36,41 @@
 #include "libaudgui.h"
 #include "libaudgui-gtk.h"
 
+#define PORTABLE_DPI 96
+
 EXPORT int audgui_get_dpi ()
 {
     static int dpi = 0;
 
     if (! dpi)
     {
+#ifdef _WIN32
+        HDC screen = GetDC (nullptr);
+        dpi = (GetDeviceCaps (screen, LOGPIXELSX) + GetDeviceCaps (screen, LOGPIXELSY)) / 2;
+        ReleaseDC (nullptr, screen);
+#else
         GdkScreen * screen = gdk_screen_get_default ();
 
         /* force GTK settings to be loaded for the GDK screen */
         (void) gtk_settings_get_for_screen (screen);
 
         dpi = round (gdk_screen_get_resolution (screen));
-        if (dpi < 1)
-            dpi = 96;
+#endif
+
+        dpi = aud::max (PORTABLE_DPI, dpi);
     }
 
     return dpi;
+}
+
+EXPORT int audgui_to_native_dpi (int size)
+{
+    return aud::rescale (size, PORTABLE_DPI, audgui_get_dpi ());
+}
+
+EXPORT int audgui_to_portable_dpi (int size)
+{
+    return aud::rescale (size, audgui_get_dpi (), PORTABLE_DPI);
 }
 
 EXPORT int audgui_get_digit_width (GtkWidget * widget)
@@ -286,6 +308,39 @@ EXPORT void audgui_dialog_add_widget (GtkWidget * dialog, GtkWidget * widget)
     gtk_box_pack_start ((GtkBox *) box, widget, false, false, 0);
 }
 
+static StringBuf ellipsize (const char * text)
+{
+    constexpr int maxword = 100;
+
+    StringBuf buf = str_copy (text);
+    int start = 0;
+
+    while (1)
+    {
+        while (buf[start] && g_ascii_isspace (buf[start]))
+            start ++;
+
+        if (! buf[start])
+            break;
+
+        int stop = start + 1;
+        while (buf[stop] && ! g_ascii_isspace (buf[stop]))
+            stop ++;
+
+        if (stop - start > maxword)
+        {
+            buf.remove (start + maxword / 2, stop - start - maxword);
+            buf.insert (start + maxword / 2, "…");
+
+            stop = start + maxword + strlen ("…");
+        }
+
+        start = stop;
+    }
+
+    return buf;
+}
+
 EXPORT void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
  const char * title, const char * text)
 {
@@ -306,9 +361,10 @@ EXPORT void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
         if (messages > 10)
             text = _("\n(Further messages have been hidden.)");
 
-        if (! strstr (old, text))
+        StringBuf shortened = ellipsize (text);
+        if (! strstr (old, shortened))
         {
-            StringBuf both = str_concat ({old, "\n", text});
+            StringBuf both = str_concat ({old, "\n", shortened});
             g_object_set ((GObject *) * widget, "text", (const char *) both, nullptr);
             g_object_set_data ((GObject *) * widget, "messages", GINT_TO_POINTER (messages + 1));
         }
@@ -319,7 +375,7 @@ EXPORT void audgui_simple_message (GtkWidget * * widget, GtkMessageType type,
     else
     {
         GtkWidget * button = audgui_button_new (_("_Close"), "window-close", nullptr, nullptr);
-        * widget = audgui_dialog_new (type, title, text, button, nullptr);
+        * widget = audgui_dialog_new (type, title, ellipsize (text), button, nullptr);
 
         g_object_set_data ((GObject *) * widget, "messages", GINT_TO_POINTER (1));
         g_signal_connect (* widget, "destroy", (GCallback) gtk_widget_destroyed, widget);

@@ -125,8 +125,11 @@ EXPORT void audio_deinterlace (const void * in, int format, int channels,
 static void NAME (const TYPE * in, float * out, int samples) \
 { \
     const TYPE * end = in + samples; \
-    while (in < end) \
-        * out ++ = (TYPE) (SWAP (* in ++) - OFFSET) * (1.0f / RANGE); \
+    while (in < end) { \
+        TYPE value = SWAP (* in ++) + (RANGE - OFFSET); \
+        if (RANGE == 0x800000) value &= 0xffffff; /* ignore high byte */ \
+        * out ++ = (TYPE) (value - RANGE) * (1.0f / RANGE); \
+    } \
 }
 
 #define TO_INT_LOOP(NAME, TYPE, SWAP, OFFSET, RANGE, RANGE_P) \
@@ -136,7 +139,9 @@ static void NAME (const float * in, TYPE * out, int samples) \
     while (in < end) \
     { \
         float f = (* in ++) * RANGE; \
-        * out ++ = SWAP (OFFSET + (TYPE) lrintf (aud::clamp (f, -(float) RANGE, (float) RANGE_P))); \
+        TYPE value = OFFSET + TYPE (lrintf (aud::clamp (f, -(float) RANGE, (float) RANGE_P))); \
+        if (RANGE == 0x800000) value &= 0xffffff; /* zero high byte */ \
+        * out ++ = SWAP (value); \
     } \
 }
 

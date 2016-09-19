@@ -18,7 +18,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2016-08-22 15:06+0200\n"
+"POT-Creation-Date: 2016-09-18 19:46+0200\n"
 "PO-Revision-Date: 2016-08-22 12:05+0000\n"
 "Last-Translator: Thomas Lange <thomas-lange2@gmx.de>\n"
 "Language-Team: Greek (http://www.transifex.com/jlindgren/audacious/language/"
@@ -121,21 +121,26 @@ msgstr ""
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/libaudcore/adder.cc:85
+#: src/libaudcore/adder.cc:86
 #, c-format
 msgid "%d file found"
 msgid_plural "%d files found"
 msgstr[0] "βρέθηκε %d αρχείο"
 msgstr[1] "βρέθηκαν %d αρχεία"
 
-#: src/libaudcore/adder.cc:256 src/libaudcore/adder.cc:312
+#: src/libaudcore/adder.cc:263 src/libaudcore/adder.cc:325
 #, c-format
 msgid ""
 "Error reading %s:\n"
 "%s"
 msgstr ""
 
-#: src/libaudcore/adder.cc:386 src/libaudcore/playlist.cc:147
+#: src/libaudcore/adder.cc:382
+#, fuzzy
+msgid "No files found."
+msgstr "βρέθηκε %d αρχείο"
+
+#: src/libaudcore/adder.cc:406 src/libaudcore/playlist.cc:147
 msgid "New Playlist"
 msgstr "Νέα Λίστα Αναπαραγωγής"
 
@@ -453,7 +458,7 @@ msgstr "Κλείσιμο του διαλόγου κατά την προσθήκ�
 #: src/libaudgui/file-opener.cc:130 src/libaudgui/infowin.cc:394
 #: src/libaudgui/jump-to-track.cc:309 src/libaudgui/plugin-prefs.cc:166
 #: src/libaudgui/prefs-window.cc:850 src/libaudgui/queue-manager.cc:194
-#: src/libaudgui/util.cc:268 src/libaudqt/infowin.cc:74
+#: src/libaudgui/util.cc:324 src/libaudqt/infowin.cc:74
 #: src/libaudqt/prefs-plugin.cc:143 src/libaudqt/prefs-window.cc:635
 #: src/libaudqt/queue-manager.cc:161 src/libaudqt/util.cc:130
 msgid "_Close"
@@ -1253,7 +1258,7 @@ msgstr "Δεν υπάρχει κανένα διαθέσιμο πρόσθετο �
 msgid "Audacious Settings"
 msgstr "Ρυθμίσεις Audacious"
 
-#: src/libaudgui/preset-browser.cc:50 src/libaudgui/util.cc:152
+#: src/libaudgui/preset-browser.cc:50 src/libaudgui/util.cc:174
 msgid "Cancel"
 msgstr "Άκυρο"
 
@@ -1325,12 +1330,12 @@ msgstr "Προσθήκη διεύθυνσης URL"
 msgid "Enter URL:"
 msgstr "Εισαγωγή URL:"
 
-#: src/libaudgui/util.cc:152 src/libaudqt/fileopener.cc:46
+#: src/libaudgui/util.cc:174 src/libaudqt/fileopener.cc:46
 #: src/libaudqt/fileopener.cc:47
 msgid "Open"
 msgstr "Άνοιγμα"
 
-#: src/libaudgui/util.cc:254
+#: src/libaudgui/util.cc:309
 msgid ""
 "\n"
 "(Further messages have been hidden.)"

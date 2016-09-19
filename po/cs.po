@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2016-08-22 15:06+0200\n"
+"POT-Creation-Date: 2016-09-18 19:46+0200\n"
 "PO-Revision-Date: 2016-08-22 12:05+0000\n"
 "Last-Translator: Roman Horník <roman.hornik@debian-linux.cz>\n"
 "Language-Team: Czech (http://www.transifex.com/jlindgren/audacious/language/"
@@ -122,7 +122,7 @@ msgstr "Zvolte instanci pro spuštění/ovládání"
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/libaudcore/adder.cc:85
+#: src/libaudcore/adder.cc:86
 #, c-format
 msgid "%d file found"
 msgid_plural "%d files found"
@@ -130,7 +130,7 @@ msgstr[0] "Nalezen %d soubor"
 msgstr[1] "Nalezeny %d soubory"
 msgstr[2] "Nalezeno %d souborů"
 
-#: src/libaudcore/adder.cc:256 src/libaudcore/adder.cc:312
+#: src/libaudcore/adder.cc:263 src/libaudcore/adder.cc:325
 #, c-format
 msgid ""
 "Error reading %s:\n"
@@ -139,7 +139,12 @@ msgstr ""
 "Chyba při čtení %s:\n"
 "%s"
 
-#: src/libaudcore/adder.cc:386 src/libaudcore/playlist.cc:147
+#: src/libaudcore/adder.cc:382
+#, fuzzy
+msgid "No files found."
+msgstr "Nalezen %d soubor"
+
+#: src/libaudcore/adder.cc:406 src/libaudcore/playlist.cc:147
 msgid "New Playlist"
 msgstr "Nový seznam skladeb"
 
@@ -453,7 +458,7 @@ msgstr "Zavřít _dialog při přidání"
 #: src/libaudgui/file-opener.cc:130 src/libaudgui/infowin.cc:394
 #: src/libaudgui/jump-to-track.cc:309 src/libaudgui/plugin-prefs.cc:166
 #: src/libaudgui/prefs-window.cc:850 src/libaudgui/queue-manager.cc:194
-#: src/libaudgui/util.cc:268 src/libaudqt/infowin.cc:74
+#: src/libaudgui/util.cc:324 src/libaudqt/infowin.cc:74
 #: src/libaudqt/prefs-plugin.cc:143 src/libaudqt/prefs-window.cc:635
 #: src/libaudqt/queue-manager.cc:161 src/libaudqt/util.cc:130
 msgid "_Close"
@@ -1245,7 +1250,7 @@ msgstr "Žádný modul na nahrávání zvuku není dostupný"
 msgid "Audacious Settings"
 msgstr "Nastavení Audacious"
 
-#: src/libaudgui/preset-browser.cc:50 src/libaudgui/util.cc:152
+#: src/libaudgui/preset-browser.cc:50 src/libaudgui/util.cc:174
 msgid "Cancel"
 msgstr "Zruš"
 
@@ -1317,12 +1322,12 @@ msgstr "Přidat URL"
 msgid "Enter URL:"
 msgstr "Zadejte URL:"
 
-#: src/libaudgui/util.cc:152 src/libaudqt/fileopener.cc:46
+#: src/libaudgui/util.cc:174 src/libaudqt/fileopener.cc:46
 #: src/libaudqt/fileopener.cc:47
 msgid "Open"
 msgstr "Otevřít"
 
-#: src/libaudgui/util.cc:254
+#: src/libaudgui/util.cc:309
 msgid ""
 "\n"
 "(Further messages have been hidden.)"

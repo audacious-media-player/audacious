@@ -4,7 +4,7 @@
 #
 # Translators:
 # Dennis <tymbood@gmail.com>, 2014
-# Eugene Paskevich <eugene@raptor.kiev.ua>, 2015
+# Eugene Paskevich <eugene@raptor.kiev.ua>, 2015-2016
 # Kostyantyn Fedenko <fedenko@ukr.net>, 2011
 # Oleg <kvantarium@gmail.com>, 2012
 # NaiLi (aka jamesjames) Rootaerc <theism@mail.ru>, 2012
@@ -21,9 +21,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2016-08-22 15:06+0200\n"
-"PO-Revision-Date: 2016-08-22 12:05+0000\n"
-"Last-Translator: Thomas Lange <thomas-lange2@gmx.de>\n"
+"POT-Creation-Date: 2016-09-18 19:46+0200\n"
+"PO-Revision-Date: 2016-08-24 19:47+0000\n"
+"Last-Translator: Eugene Paskevich <eugene@raptor.kiev.ua>\n"
 "Language-Team: Ukrainian (http://www.transifex.com/jlindgren/audacious/"
 "language/uk/)\n"
 "Language: uk\n"
@@ -118,13 +118,13 @@ msgstr ""
 
 #: src/audacious/main.cc:187
 msgid "Select instance to run/control"
-msgstr ""
+msgstr "Обрати екземпляр для запуску/управління"
 
 #: src/audacious/main.cc:366 src/libaudqt/util.cc:54
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/libaudcore/adder.cc:85
+#: src/libaudcore/adder.cc:86
 #, c-format
 msgid "%d file found"
 msgid_plural "%d files found"
@@ -132,14 +132,20 @@ msgstr[0] "Знайдено %d файл"
 msgstr[1] "Знайдено %d файли"
 msgstr[2] "Знайдено %d файлів"
 
-#: src/libaudcore/adder.cc:256 src/libaudcore/adder.cc:312
+#: src/libaudcore/adder.cc:263 src/libaudcore/adder.cc:325
 #, c-format
 msgid ""
 "Error reading %s:\n"
 "%s"
 msgstr ""
+"Помилка читання %s:\n"
+"%s"
 
-#: src/libaudcore/adder.cc:386 src/libaudcore/playlist.cc:147
+#: src/libaudcore/adder.cc:382
+msgid "No files found."
+msgstr "Файлів не знайдено."
+
+#: src/libaudcore/adder.cc:406 src/libaudcore/playlist.cc:147
 msgid "New Playlist"
 msgstr "Новий список відтворення"
 
@@ -158,7 +164,7 @@ msgstr "(помилка кодування)"
 
 #: src/libaudcore/output.cc:197 src/libaudcore/output.cc:250
 msgid "Error opening output stream"
-msgstr ""
+msgstr "Помилка відкриття потоку виводу"
 
 #: src/libaudcore/playback.cc:367
 #, c-format
@@ -456,7 +462,7 @@ msgstr "Закрити _діалог після додавання"
 #: src/libaudgui/file-opener.cc:130 src/libaudgui/infowin.cc:394
 #: src/libaudgui/jump-to-track.cc:309 src/libaudgui/plugin-prefs.cc:166
 #: src/libaudgui/prefs-window.cc:850 src/libaudgui/queue-manager.cc:194
-#: src/libaudgui/util.cc:268 src/libaudqt/infowin.cc:74
+#: src/libaudgui/util.cc:324 src/libaudqt/infowin.cc:74
 #: src/libaudqt/prefs-plugin.cc:143 src/libaudqt/prefs-window.cc:635
 #: src/libaudqt/queue-manager.cc:161 src/libaudqt/util.cc:130
 msgid "_Close"
@@ -819,11 +825,11 @@ msgstr "_Про"
 
 #: src/libaudgui/prefs-widget.cc:277
 msgid "Choose File"
-msgstr ""
+msgstr "Вибрати файл"
 
 #: src/libaudgui/prefs-widget.cc:281
 msgid "Choose Folder"
-msgstr ""
+msgstr "Вибрати теку"
 
 #: src/libaudgui/prefs-window.cc:80 src/libaudqt/prefs-window.cc:84
 msgid "Appearance"
@@ -942,7 +948,7 @@ msgstr "Турецька"
 
 #: src/libaudgui/prefs-window.cc:128 src/libaudqt/prefs-window.cc:132
 msgid "Automatic"
-msgstr ""
+msgstr "Автоматично"
 
 #: src/libaudgui/prefs-window.cc:132 src/libaudqt/prefs-window.cc:136
 msgid "Floating point"
@@ -950,19 +956,19 @@ msgstr "Рухома кома"
 
 #: src/libaudgui/prefs-window.cc:136
 msgid "As decoded"
-msgstr ""
+msgstr "Після декодування"
 
 #: src/libaudgui/prefs-window.cc:137
 msgid "After applying ReplayGain"
-msgstr ""
+msgstr "Після вирівнювання гучності"
 
 #: src/libaudgui/prefs-window.cc:138
 msgid "After applying effects"
-msgstr ""
+msgstr "Після застосування ефектів"
 
 #: src/libaudgui/prefs-window.cc:139
 msgid "After applying equalization"
-msgstr ""
+msgstr "Після застосування еквалайзера"
 
 #: src/libaudgui/prefs-window.cc:151 src/libaudqt/prefs-window.cc:148
 msgid "<b>Interface Settings</b>"
@@ -1016,19 +1022,19 @@ msgstr "Програмне керування гучністю (не реком�
 
 #: src/libaudgui/prefs-window.cc:214
 msgid "<b>Recording Settings</b>"
-msgstr ""
+msgstr "<b>Параметри запису</b>"
 
 #: src/libaudgui/prefs-window.cc:218
 msgid "Record stream:"
-msgstr ""
+msgstr "Запис потоку:"
 
 #: src/libaudgui/prefs-window.cc:221 src/libaudqt/prefs-window.cc:198
 msgid "<b>ReplayGain</b>"
-msgstr ""
+msgstr "<b>Вирівнювання гучності</b>"
 
 #: src/libaudgui/prefs-window.cc:222 src/libaudqt/prefs-window.cc:199
 msgid "Enable ReplayGain"
-msgstr ""
+msgstr "Увімкнути вирівнювання гучності"
 
 #: src/libaudgui/prefs-window.cc:224 src/libaudqt/prefs-window.cc:201
 msgid "Album mode"
@@ -1116,11 +1122,11 @@ msgstr "Показувати номер пісні"
 
 #: src/libaudgui/prefs-window.cc:292 src/libaudqt/prefs-window.cc:274
 msgid "Show leading zeroes (02:00 vs. 2:00)"
-msgstr ""
+msgstr "Показувати нульові старші розряди (02:00 замість 2:00)"
 
 #: src/libaudgui/prefs-window.cc:294 src/libaudqt/prefs-window.cc:276
 msgid "Show hours separately (1:30:00 vs. 90:00)"
-msgstr ""
+msgstr "Показувати розряд годин (1:30:00 замість 90:00)"
 
 #: src/libaudgui/prefs-window.cc:297 src/libaudqt/prefs-window.cc:279
 msgid "<b>Compatibility</b>"
@@ -1248,7 +1254,7 @@ msgstr "Немає модулів для запису аудіо"
 msgid "Audacious Settings"
 msgstr "Налаштування Audacious"
 
-#: src/libaudgui/preset-browser.cc:50 src/libaudgui/util.cc:152
+#: src/libaudgui/preset-browser.cc:50 src/libaudgui/util.cc:174
 msgid "Cancel"
 msgstr "Скасувати"
 
@@ -1306,7 +1312,7 @@ msgstr "Помилка"
 
 #: src/libaudgui/status.cc:90
 msgid "Information"
-msgstr ""
+msgstr "Інформація"
 
 #: src/libaudgui/url-opener.cc:49 src/libaudqt/url-opener.cc:41
 msgid "Open URL"
@@ -1320,12 +1326,12 @@ msgstr "Додати адресу"
 msgid "Enter URL:"
 msgstr "Введіть адресу:"
 
-#: src/libaudgui/util.cc:152 src/libaudqt/fileopener.cc:46
+#: src/libaudgui/util.cc:174 src/libaudqt/fileopener.cc:46
 #: src/libaudqt/fileopener.cc:47
 msgid "Open"
 msgstr "Відкрити"
 
-#: src/libaudgui/util.cc:254
+#: src/libaudgui/util.cc:309
 msgid ""
 "\n"
 "(Further messages have been hidden.)"

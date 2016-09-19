@@ -16,9 +16,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://redmine.audacious-media-player.org/\n"
-"POT-Creation-Date: 2016-08-22 15:06+0200\n"
-"PO-Revision-Date: 2016-08-22 12:05+0000\n"
-"Last-Translator: Thomas Lange <thomas-lange2@gmx.de>\n"
+"POT-Creation-Date: 2016-09-18 19:46+0200\n"
+"PO-Revision-Date: 2016-08-30 16:40+0000\n"
+"Last-Translator: French language coordinator <yahoe.001@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/jlindgren/audacious/language/"
 "fr/)\n"
 "Language: fr\n"
@@ -112,20 +112,20 @@ msgstr ""
 
 #: src/audacious/main.cc:187
 msgid "Select instance to run/control"
-msgstr ""
+msgstr "Choisir l'instance à exécuter/contrôler"
 
 #: src/audacious/main.cc:366 src/libaudqt/util.cc:54
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/libaudcore/adder.cc:85
+#: src/libaudcore/adder.cc:86
 #, c-format
 msgid "%d file found"
 msgid_plural "%d files found"
 msgstr[0] "%d fichier trouvé"
 msgstr[1] "%d fichiers trouvés"
 
-#: src/libaudcore/adder.cc:256 src/libaudcore/adder.cc:312
+#: src/libaudcore/adder.cc:263 src/libaudcore/adder.cc:325
 #, c-format
 msgid ""
 "Error reading %s:\n"
@@ -134,7 +134,11 @@ msgstr ""
 "Erreur de lecture de %s :\n"
 "%s"
 
-#: src/libaudcore/adder.cc:386 src/libaudcore/playlist.cc:147
+#: src/libaudcore/adder.cc:382
+msgid "No files found."
+msgstr "Aucun fichier trouvé."
+
+#: src/libaudcore/adder.cc:406 src/libaudcore/playlist.cc:147
 msgid "New Playlist"
 msgstr "Nouvelle liste de lecture"
 
@@ -451,7 +455,7 @@ msgstr "Fermer la fenêtre de _dialogue lors de l'ajout"
 #: src/libaudgui/file-opener.cc:130 src/libaudgui/infowin.cc:394
 #: src/libaudgui/jump-to-track.cc:309 src/libaudgui/plugin-prefs.cc:166
 #: src/libaudgui/prefs-window.cc:850 src/libaudgui/queue-manager.cc:194
-#: src/libaudgui/util.cc:268 src/libaudqt/infowin.cc:74
+#: src/libaudgui/util.cc:324 src/libaudqt/infowin.cc:74
 #: src/libaudqt/prefs-plugin.cc:143 src/libaudqt/prefs-window.cc:635
 #: src/libaudqt/queue-manager.cc:161 src/libaudqt/util.cc:130
 msgid "_Close"
@@ -951,7 +955,7 @@ msgstr "Tel que décodé"
 
 #: src/libaudgui/prefs-window.cc:137
 msgid "After applying ReplayGain"
-msgstr ""
+msgstr "Après avoir appliqué ReplayGain"
 
 #: src/libaudgui/prefs-window.cc:138
 msgid "After applying effects"
@@ -1021,11 +1025,11 @@ msgstr "Flux d'enregistrement :"
 
 #: src/libaudgui/prefs-window.cc:221 src/libaudqt/prefs-window.cc:198
 msgid "<b>ReplayGain</b>"
-msgstr ""
+msgstr "<b>ReplayGain</b>"
 
 #: src/libaudgui/prefs-window.cc:222 src/libaudqt/prefs-window.cc:199
 msgid "Enable ReplayGain"
-msgstr ""
+msgstr "Activer « ReplayGain »"
 
 #: src/libaudgui/prefs-window.cc:224 src/libaudqt/prefs-window.cc:201
 msgid "Album mode"
@@ -1246,7 +1250,7 @@ msgstr "Aucun greffon d'enregistrement audio n'est proposé"
 msgid "Audacious Settings"
 msgstr "Paramètres d'Audacious"
 
-#: src/libaudgui/preset-browser.cc:50 src/libaudgui/util.cc:152
+#: src/libaudgui/preset-browser.cc:50 src/libaudgui/util.cc:174
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -1304,7 +1308,7 @@ msgstr "Erreur"
 
 #: src/libaudgui/status.cc:90
 msgid "Information"
-msgstr ""
+msgstr "Informations"
 
 #: src/libaudgui/url-opener.cc:49 src/libaudqt/url-opener.cc:41
 msgid "Open URL"
@@ -1318,12 +1322,12 @@ msgstr "Ajouter une URL"
 msgid "Enter URL:"
 msgstr "Saisir l'URL :"
 
-#: src/libaudgui/util.cc:152 src/libaudqt/fileopener.cc:46
+#: src/libaudgui/util.cc:174 src/libaudqt/fileopener.cc:46
 #: src/libaudqt/fileopener.cc:47
 msgid "Open"
 msgstr "Ouvrir"
 
-#: src/libaudgui/util.cc:254
+#: src/libaudgui/util.cc:309
 msgid ""
 "\n"
 "(Further messages have been hidden.)"

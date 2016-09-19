@@ -28,6 +28,7 @@
 #include "audstrings.h"
 #include "i18n.h"
 #include "interface.h"
+#include "parse.h"
 #include "plugin.h"
 #include "runtime.h"
 
@@ -212,89 +213,57 @@ void plugin_registry_save ()
     fclose (handle);
 }
 
-static char parse_key[512];
-static char * parse_value;
-
-static void parse_next (FILE * handle)
-{
-    parse_value = nullptr;
-
-    if (! fgets (parse_key, sizeof parse_key, handle))
-        return;
-
-    char * space = strchr (parse_key, ' ');
-    if (! space)
-        return;
-
-    * space = 0;
-    parse_value = space + 1;
-
-    char * newline = strchr (parse_value, '\n');
-    if (newline)
-        * newline = 0;
-}
-
-static bool parse_integer (const char * key, int * value)
-{
-    return (parse_value && ! strcmp (parse_key, key) && sscanf (parse_value, "%d", value) == 1);
-}
-
-static String parse_string (const char * key)
-{
-    return (parse_value && ! strcmp (parse_key, key)) ? String (parse_value) : String ();
-}
-
-static void transport_plugin_parse (PluginHandle * plugin, FILE * handle)
+static void transport_plugin_parse (PluginHandle * plugin, TextParser & parser)
 {
     while (1)
     {
-        String value = parse_string ("scheme");
+        String value = parser.get_str ("scheme");
         if (! value)
             break;
 
         plugin->schemes.append (std::move (value));
-        parse_next (handle);
+        parser.next ();
     }
 }
 
-static void playlist_plugin_parse (PluginHandle * plugin, FILE * handle)
+static void playlist_plugin_parse (PluginHandle * plugin, TextParser & parser)
 {
     while (1)
     {
-        String value = parse_string ("ext");
+        String value = parser.get_str ("ext");
         if (! value)
             break;
 
         plugin->exts.append (std::move (value));
-        parse_next (handle);
+        parser.next ();
     }
 
-    if (parse_integer ("saves", & plugin->can_save))
-        parse_next (handle);
+    if (parser.get_int ("saves", plugin->can_save))
+        parser.next ();
 }
 
-static void input_plugin_parse (PluginHandle * plugin, FILE * handle)
+static void input_plugin_parse (PluginHandle * plugin, TextParser & parser)
 {
     for (auto key : aud::range<InputKey> ())
     {
         while (1)
         {
-            String value = parse_string (input_key_names[key]);
+            String value = parser.get_str (input_key_names[key]);
             if (! value)
                 break;
 
             plugin->keys[key].append (std::move (value));
-            parse_next (handle);
+            parser.next ();
         }
     }
 
-    if (parse_integer ("subtunes", & plugin->has_subtunes))
-        parse_next (handle);
-    if (parse_integer ("writes", & plugin->writes_tag))
-        parse_next (handle);
+    if (parser.get_int ("subtunes", plugin->has_subtunes))
+        parser.next ();
+    if (parser.get_int ("writes", plugin->writes_tag))
+        parser.next ();
 }
 
-static bool plugin_parse (FILE * handle)
+static bool plugin_parse (TextParser & parser)
 {
     PluginType type;
     String path;
@@ -302,7 +271,7 @@ static bool plugin_parse (FILE * handle)
     for (auto type2 : aud::range<PluginType> ())
     {
         type = type2;
-        if ((path = parse_string (plugin_type_names[type2])))
+        if ((path = parser.get_str (plugin_type_names[type2])))
             break;
     }
 
@@ -313,61 +282,61 @@ static bool plugin_parse (FILE * handle)
     if (! basename)
         return false;
 
-    parse_next (handle);
+    parser.next ();
 
     int timestamp;
-    if (! parse_integer ("stamp", & timestamp))
+    if (! parser.get_int ("stamp", timestamp))
         return false;
 
-    parse_next (handle);
+    parser.next ();
 
     int version = 0, flags = 0;
-    if (parse_integer ("version", & version))
-        parse_next (handle);
-    if (parse_integer ("flags", & flags))
-        parse_next (handle);
+    if (parser.get_int ("version", version))
+        parser.next ();
+    if (parser.get_int ("flags", flags))
+        parser.next ();
 
     auto plugin = new PluginHandle (basename, String (), false, timestamp,
      version, flags, type, nullptr);
 
     plugins[type].append (plugin);
 
-    plugin->name = parse_string ("name");
+    plugin->name = parser.get_str ("name");
     if (plugin->name)
-        parse_next (handle);
+        parser.next ();
 
-    plugin->domain = parse_string ("domain");
+    plugin->domain = parser.get_str ("domain");
     if (plugin->domain)
-        parse_next (handle);
+        parser.next ();
 
-    if (parse_integer ("priority", & plugin->priority))
-        parse_next (handle);
-    if (parse_integer ("about", & plugin->has_about))
-        parse_next (handle);
-    if (parse_integer ("config", & plugin->has_configure))
-        parse_next (handle);
+    if (parser.get_int ("priority", plugin->priority))
+        parser.next ();
+    if (parser.get_int ("about", plugin->has_about))
+        parser.next ();
+    if (parser.get_int ("config", plugin->has_configure))
+        parser.next ();
 
     int enabled;
-    if (parse_integer ("enabled", & enabled))
+    if (parser.get_int ("enabled", enabled))
     {
         plugin->enabled = (PluginEnabled) enabled;
-        parse_next (handle);
+        parser.next ();
     }
 
     if (type == PluginType::Transport)
-        transport_plugin_parse (plugin, handle);
+        transport_plugin_parse (plugin, parser);
     else if (type == PluginType::Playlist)
-        playlist_plugin_parse (plugin, handle);
+        playlist_plugin_parse (plugin, parser);
     else if (type == PluginType::Input)
-        input_plugin_parse (plugin, handle);
+        input_plugin_parse (plugin, parser);
 
     return true;
 }
 
 /* try to migrate enabled status from another version */
-static void parse_plugins_fallback (FILE * handle)
+static void parse_plugins_fallback (TextParser & parser)
 {
-    for (; parse_value; parse_next (handle))
+    for (; ! parser.eof (); parser.next ())
     {
         PluginType type;
         String path;
@@ -376,7 +345,7 @@ static void parse_plugins_fallback (FILE * handle)
         for (auto type2 : aud::range<PluginType> ())
         {
             type = type2;
-            if ((path = parse_string (plugin_type_names[type2])))
+            if ((path = parser.get_str (plugin_type_names[type2])))
                 break;
         }
 
@@ -387,15 +356,15 @@ static void parse_plugins_fallback (FILE * handle)
         if (! basename)
             continue;
 
-        parse_next (handle);
+        parser.next ();
 
-        for (; parse_value; parse_next (handle))
+        for (; ! parser.eof (); parser.next ())
         {
-            if (parse_integer ("enabled", & enabled))
+            if (parser.get_int ("enabled", enabled))
                 break;
         }
 
-        if (! parse_value)
+        if (parser.eof ())
             return;
 
         // setting timestamp to zero forces a rescan
@@ -411,21 +380,21 @@ void plugin_registry_load ()
     if (! handle)
         return;
 
-    parse_next (handle);
+    TextParser parser (handle);
 
     int format;
-    if (! parse_integer ("format", & format))
+    if (! parser.get_int ("format", format))
         goto ERR;
 
-    parse_next (handle);
+    parser.next ();
 
     if (format == FORMAT)
     {
-        while (plugin_parse (handle))
+        while (plugin_parse (parser))
             continue;
     }
     else if (format >= MIN_FORMAT && format < FORMAT + 10)
-        parse_plugins_fallback (handle);
+        parse_plugins_fallback (parser);
 
 ERR:
     fclose (handle);
