@@ -224,9 +224,9 @@ struct Convert<format, packed24_t, int32_t>
             hi += 0x80;
 
         if (is_le (format))
-            return {lo, mid, hi};
+            return {{lo, mid, hi}};
         else
-            return {hi, mid, lo};
+            return {{hi, mid, lo}};
     }
 };
 
