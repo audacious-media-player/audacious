@@ -72,7 +72,7 @@ static const char * const core_defaults[] = {
  "output_bit_depth", "-1",
  "output_buffer_size", "500",
  "record_stream", aud::numeric_string<(int) OutputStream::AfterReplayGain>::str,
- "replay_gain_album", "FALSE",
+ "replay_gain_mode", aud::numeric_string<(int) ReplayGainMode::Automatic>::str,
  "replay_gain_preamp", "0",
  "soft_clipping", "FALSE",
  "software_volume_control", "FALSE",

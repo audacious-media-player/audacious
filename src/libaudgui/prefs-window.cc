@@ -139,6 +139,12 @@ static const ComboItem record_elements[] = {
     ComboItem (N_("After applying equalization"), (int) OutputStream::AfterEqualizer)
 };
 
+static const ComboItem replaygainmode_elements[] = {
+    ComboItem (N_("Album"), (int) ReplayGainMode::Album),
+    ComboItem (N_("Track"), (int) ReplayGainMode::Track),
+    ComboItem (N_("Based on Shuffle"), (int) ReplayGainMode::Automatic)
+};
+
 static Index<ComboItem> iface_combo_elements;
 static int iface_combo_selected;
 static GtkWidget * iface_prefs_box;
@@ -221,9 +227,9 @@ static const PreferencesWidget audio_page_widgets[] = {
     WidgetLabel (N_("<b>ReplayGain</b>")),
     WidgetCheck (N_("Enable ReplayGain"),
         WidgetBool (0, "enable_replay_gain")),
-    WidgetCheck (N_("Album mode"),
-        WidgetBool (0, "replay_gain_album"),
-        WIDGET_CHILD),
+    WidgetCombo (N_("Mode"),
+        WidgetInt (0, "replay_gain_mode"),
+        {{replaygainmode_elements}}),
     WidgetCheck (N_("Prevent clipping (recommended)"),
         WidgetBool (0, "enable_clipping_prevention"),
         WIDGET_CHILD),

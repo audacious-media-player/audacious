@@ -276,16 +276,22 @@ static void apply_replay_gain (Index<float> & data)
     {
         float peak;
 
-        if (aud_get_bool (0, "replay_gain_album"))
+        bool album = false;
+        switch(aud_get_int (0, "replay_gain_mode"))
         {
-            factor *= powf (10, gain_info.album_gain / 20);
-            peak = gain_info.album_peak;
+            case (int) ReplayGainMode::Album:
+                album = true;
+                break;
+            case (int) ReplayGainMode::Track:
+                album = false;
+                break;
+            case (int) ReplayGainMode::Automatic:
+            default:
+                album = ! (aud_get_bool (0, "shuffle") && ! aud_get_bool (0, "album_shuffle"));
+                break;
         }
-        else
-        {
-            factor *= powf (10, gain_info.track_gain / 20);
-            peak = gain_info.track_peak;
-        }
+        factor *= powf (10, album ? gain_info.album_gain : gain_info.track_gain / 20);
+        peak = album ? gain_info.album_peak : gain_info.track_peak;
 
         if (aud_get_bool (0, "enable_clipping_prevention") && peak * factor > 1)
             factor = 1 / peak;
