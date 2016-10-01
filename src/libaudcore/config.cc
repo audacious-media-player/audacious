@@ -72,7 +72,7 @@ static const char * const core_defaults[] = {
  "output_bit_depth", "-1",
  "output_buffer_size", "500",
  "record_stream", aud::numeric_string<(int) OutputStream::AfterReplayGain>::str,
- "replay_gain_album", "FALSE",
+ "replay_gain_mode", aud::numeric_string<(int) ReplayGainMode::Track>::str,
  "replay_gain_preamp", "0",
  "soft_clipping", "FALSE",
  "software_volume_control", "FALSE",
@@ -263,6 +263,13 @@ void config_load ()
     }
 
     aud_config_set_defaults (nullptr, core_defaults);
+
+    /* migrate from previous versions */
+    if (aud_get_bool (0, "replay_gain_album"))
+    {
+        aud_set_str (0, "replay_gain_album", "");
+        aud_set_int (0, "replay_gain_mode", (int) ReplayGainMode::Album);
+    }
 }
 
 static bool add_to_save_list (MultiHash::Node * node0, void * state0)
