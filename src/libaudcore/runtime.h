@@ -52,6 +52,12 @@ enum class OutputStream {
     AfterEqualizer
 };
 
+enum class ReplayGainMode {
+    Album,
+    Track,
+    Automatic
+};
+
 namespace audlog
 {
     enum Level {
