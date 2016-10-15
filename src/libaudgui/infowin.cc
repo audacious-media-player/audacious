@@ -223,9 +223,15 @@ static void infowin_update_tuple ()
 static void infowin_next ()
 {
     int list = aud_playlist_by_unique_id (current_playlist_id);
+    int entry = current_entry + 1;
 
-    if (list >= 0 && current_entry + 1 < aud_playlist_entry_count (list))
-        audgui_infowin_show (list, current_entry + 1);
+    if (list >= 0 && entry < aud_playlist_entry_count (list))
+    {
+        aud_playlist_select_all (list, false);
+        aud_playlist_entry_set_selected (list, entry, true);
+        aud_playlist_set_focus (list, entry);
+        audgui_infowin_show (list, entry);
+    }
     else
         audgui_infowin_hide ();
 }
