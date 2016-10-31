@@ -276,7 +276,10 @@ static void apply_replay_gain (Index<float> & data)
     {
         float peak;
 
-        if (aud_get_bool (0, "replay_gain_album"))
+        auto mode = (ReplayGainMode) aud_get_int (0, "replay_gain_mode");
+        if ((mode == ReplayGainMode::Album) ||
+            (mode == ReplayGainMode::Automatic &&
+             (! aud_get_bool (0, "shuffle") || aud_get_bool (0, "album_shuffle"))))
         {
             factor *= powf (10, gain_info.album_gain / 20);
             peak = gain_info.album_peak;

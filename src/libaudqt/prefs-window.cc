@@ -99,18 +99,18 @@ static const PluginCategory plugin_categories[] = {
 };
 
 static const TitleFieldTag title_field_tags[] = {
-    { N_("Artist")     , "${artist}" },
-    { N_("Album")      , "${album}" },
-    { N_("Title")      , "${title}" },
+    { N_("Artist")      , "${artist}" },
+    { N_("Album")       , "${album}" },
+    { N_("Title")       , "${title}" },
     { N_("Track number"), "${track-number}" },
-    { N_("Genre")      , "${genre}" },
-    { N_("File name")  , "${file-name}" },
-    { N_("File path")  , "${file-path}" },
-    { N_("Date")       , "${date}" },
-    { N_("Year")       , "${year}" },
-    { N_("Comment")    , "${comment}" },
-    { N_("Codec")      , "${codec}" },
-    { N_("Quality")    , "${quality}" }
+    { N_("Genre")       , "${genre}" },
+    { N_("File name")   , "${file-name}" },
+    { N_("File path")   , "${file-path}" },
+    { N_("Date")        , "${date}" },
+    { N_("Year")        , "${year}" },
+    { N_("Comment")     , "${comment}" },
+    { N_("Codec")       , "${codec}" },
+    { N_("Quality")     , "${quality}" }
 };
 
 static const ComboItem chardet_detector_presets[] = {
@@ -134,6 +134,12 @@ static const ComboItem bitdepth_elements[] = {
     ComboItem ("24", 24),
     ComboItem ("32", 32),
     ComboItem (N_("Floating point"), 0)
+};
+
+static const ComboItem replaygainmode_elements[] = {
+    ComboItem (N_("Track"), (int) ReplayGainMode::Track),
+    ComboItem (N_("Album"), (int) ReplayGainMode::Album),
+    ComboItem (N_("Based on shuffle"), (int) ReplayGainMode::Automatic)
 };
 
 static Index<ComboItem> iface_combo_elements;
@@ -198,13 +204,12 @@ static const PreferencesWidget audio_page_widgets[] = {
     WidgetLabel (N_("<b>ReplayGain</b>")),
     WidgetCheck (N_("Enable ReplayGain"),
         WidgetBool (0, "enable_replay_gain")),
-    WidgetCheck (N_("Album mode"),
-        WidgetBool (0, "replay_gain_album"),
+    WidgetCombo (N_("Mode:"),
+        WidgetInt (0, "replay_gain_mode"),
+        {{replaygainmode_elements}},
         WIDGET_CHILD),
     WidgetCheck (N_("Prevent clipping (recommended)"),
         WidgetBool (0, "enable_clipping_prevention"),
-        WIDGET_CHILD),
-    WidgetLabel (N_("<b>Adjust Levels</b>"),
         WIDGET_CHILD),
     WidgetTable ({{gain_table}},
         WIDGET_CHILD)
@@ -249,7 +254,6 @@ static const PreferencesWidget chardet_elements[] = {
         WidgetString (0, "chardet_fallback"))
 };
 
-
 static void send_title_change ();
 static void * create_titlestring_table ();
 
@@ -266,8 +270,6 @@ static const PreferencesWidget playlist_page_widgets[] = {
         WidgetBool (0, "clear_playlist")),
     WidgetCheck (N_("Open files in a temporary playlist"),
         WidgetBool (0, "open_to_temporary")),
-    WidgetCheck (N_("Do not load metadata for songs until played"),
-        WidgetBool (0, "metadata_on_play")),
     WidgetLabel (N_("<b>Song Display</b>")),
     WidgetCheck (N_("Show song numbers"),
         WidgetBool (0, "show_numbers_in_pl", send_title_change)),
@@ -456,8 +458,8 @@ static ArrayRef<ComboItem> iface_combo_fill ()
     if (! iface_combo_elements.len ())
     {
         iface_combo_elements = fill_plugin_combo (PluginType::Iface);
-        iface_combo_selected = aud_plugin_list (PluginType::Iface)
-         .find (aud_plugin_get_current (PluginType::Iface));
+        iface_combo_selected = aud_plugin_list (PluginType::Iface).
+         find (aud_plugin_get_current (PluginType::Iface));
     }
 
     return {iface_combo_elements.begin (), iface_combo_elements.len ()};

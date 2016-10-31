@@ -1,5 +1,5 @@
 /*
- * prefs-window.c
+ * prefs-window.cc
  * Copyright 2006-2014 William Pitcock, Tomasz Moń, Michael Färber, and
  *                     John Lindgren
  *
@@ -95,18 +95,18 @@ static const PluginCategory plugin_categories[] = {
 };
 
 static const TitleFieldTag title_field_tags[] = {
-    { N_("Artist")     , "${artist}" },
-    { N_("Album")      , "${album}" },
-    { N_("Title")      , "${title}" },
+    { N_("Artist")      , "${artist}" },
+    { N_("Album")       , "${album}" },
+    { N_("Title")       , "${title}" },
     { N_("Track number"), "${track-number}" },
-    { N_("Genre")      , "${genre}" },
+    { N_("Genre")       , "${genre}" },
     { N_("File name")   , "${file-name}" },
     { N_("File path")   , "${file-path}" },
-    { N_("Date")       , "${date}" },
-    { N_("Year")       , "${year}" },
-    { N_("Comment")    , "${comment}" },
-    { N_("Codec")      , "${codec}" },
-    { N_("Quality")    , "${quality}" }
+    { N_("Date")        , "${date}" },
+    { N_("Year")        , "${year}" },
+    { N_("Comment")     , "${comment}" },
+    { N_("Codec")       , "${codec}" },
+    { N_("Quality")     , "${quality}" }
 };
 
 static const ComboItem chardet_detector_presets[] = {
@@ -137,6 +137,12 @@ static const ComboItem record_elements[] = {
     ComboItem (N_("After applying ReplayGain"), (int) OutputStream::AfterReplayGain),
     ComboItem (N_("After applying effects"), (int) OutputStream::AfterEffects),
     ComboItem (N_("After applying equalization"), (int) OutputStream::AfterEqualizer)
+};
+
+static const ComboItem replaygainmode_elements[] = {
+    ComboItem (N_("Track"), (int) ReplayGainMode::Track),
+    ComboItem (N_("Album"), (int) ReplayGainMode::Album),
+    ComboItem (N_("Based on shuffle"), (int) ReplayGainMode::Automatic)
 };
 
 static Index<ComboItem> iface_combo_elements;
@@ -221,8 +227,9 @@ static const PreferencesWidget audio_page_widgets[] = {
     WidgetLabel (N_("<b>ReplayGain</b>")),
     WidgetCheck (N_("Enable ReplayGain"),
         WidgetBool (0, "enable_replay_gain")),
-    WidgetCheck (N_("Album mode"),
-        WidgetBool (0, "replay_gain_album"),
+    WidgetCombo (N_("Mode:"),
+        WidgetInt (0, "replay_gain_mode"),
+        {{replaygainmode_elements}},
         WIDGET_CHILD),
     WidgetCheck (N_("Prevent clipping (recommended)"),
         WidgetBool (0, "enable_clipping_prevention"),
@@ -297,7 +304,7 @@ static const PreferencesWidget playlist_page_widgets[] = {
     WidgetLabel (N_("<b>Compatibility</b>")),
     WidgetCheck (N_("Interpret \\ (backward slash) as a folder delimiter"),
         WidgetBool (0, "convert_backslash")),
-    WidgetTable ({{chardet_elements}}),
+    WidgetTable ({{chardet_elements}})
 };
 
 static const PreferencesWidget song_info_page_widgets[] = {
