@@ -59,7 +59,7 @@ static GdkPixbuf * get_scaled (GtkWidget * widget, int maxwidth, int maxheight)
     return scaled;
 }
 
-static gboolean draw_cb (GtkWidget * widget, GdkEventExpose * event)
+static gboolean draw_cb (GtkWidget * widget, cairo_t * cr)
 {
     GdkRectangle rect;
     gtk_widget_get_allocation (widget, & rect);
@@ -71,10 +71,8 @@ static gboolean draw_cb (GtkWidget * widget, GdkEventExpose * event)
         int x = (rect.width - gdk_pixbuf_get_width (scaled)) / 2;
         int y = (rect.height - gdk_pixbuf_get_height (scaled)) / 2;
 
-        cairo_t * cr = gdk_cairo_create (gtk_widget_get_window (widget));
         gdk_cairo_set_source_pixbuf (cr, scaled, x, y);
         cairo_paint (cr);
-        cairo_destroy (cr);
     }
 
     return true;
