@@ -1332,12 +1332,12 @@ EXPORT void aud_playlist_entry_set_selected (int playlist_num, int entry_num,
 
     if (selected)
     {
-        playlist->selected_count++;
+        playlist->selected_count ++;
         playlist->selected_length += entry->length;
     }
     else
     {
-        playlist->selected_count--;
+        playlist->selected_count --;
         playlist->selected_length -= entry->length;
     }
 
@@ -1356,6 +1356,27 @@ EXPORT int aud_playlist_selected_count (int playlist_num)
 {
     ENTER_GET_PLAYLIST (0);
     int selected_count = playlist->selected_count;
+    RETURN (selected_count);
+}
+
+EXPORT int aud_playlist_selected_count (int playlist_num, int at, int number)
+{
+    ENTER_GET_PLAYLIST (0);
+
+    int entries = playlist->entries.len ();
+
+    if (at < 0 || at > entries)
+        at = entries;
+    if (number < 0 || number > entries - at)
+        number = entries - at;
+
+    int selected_count = 0;
+    for (int i = 0; i < number; i ++)
+    {
+        if (playlist->entries[at + i]->selected)
+            selected_count ++;
+    }
+
     RETURN (selected_count);
 }
 

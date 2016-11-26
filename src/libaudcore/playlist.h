@@ -191,9 +191,10 @@ void aud_playlist_entry_insert_filtered (int playlist, int at,
  Index<PlaylistAddItem> && items, PlaylistFilterFunc filter, void * user,
  bool play);
 
-/* Removes a contiguous block of <number> entries starting from the one numbered
- * <at> from a playlist.  If necessary, the playback position is moved elsewhere
- * in the playlist and playback is restarted (or stopped). */
+/* Removes entries (at) to (at + number - 1) from the playlist.  If <number> is
+ * negative, removes entries up to the end of the playlist.  If necessary, the
+ * playback position is moved elsewhere in the playlist and playback is
+ * restarted (or stopped). */
 void aud_playlist_entry_delete (int playlist, int at, int number);
 
 /* Returns the filename of an entry. */
@@ -234,6 +235,10 @@ bool aud_playlist_entry_get_selected (int playlist, int entry);
 
 /* Returns the number of selected entries in a playlist. */
 int aud_playlist_selected_count (int playlist);
+
+/* Counts selected entries between (at) and (at + number - 1), inclusive.  If
+ * <number> is negative, counts entries up to the end of the playlist. */
+int aud_playlist_selected_count (int playlist, int at, int number);
 
 /* Selects all (or none) of the entries in a playlist. */
 void aud_playlist_select_all (int playlist, bool selected);
