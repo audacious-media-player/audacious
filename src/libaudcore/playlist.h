@@ -65,6 +65,7 @@ enum SortType {
     Track,
     FormattedTitle,
     Length,
+    Comment,
     n_sort_types
 };
 

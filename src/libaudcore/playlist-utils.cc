@@ -67,49 +67,25 @@ static int tuple_compare_int (const Tuple & a, const Tuple & b, Tuple::Field fie
 }
 
 static int tuple_compare_title (const Tuple & a, const Tuple & b)
-{
-    return tuple_compare_string (a, b, Tuple::Title);
-}
-
+    { return tuple_compare_string (a, b, Tuple::Title); }
 static int tuple_compare_album (const Tuple & a, const Tuple & b)
-{
-    return tuple_compare_string (a, b, Tuple::Album);
-}
-
+    { return tuple_compare_string (a, b, Tuple::Album); }
 static int tuple_compare_artist (const Tuple & a, const Tuple & b)
-{
-    return tuple_compare_string (a, b, Tuple::Artist);
-}
-
+    { return tuple_compare_string (a, b, Tuple::Artist); }
 static int tuple_compare_album_artist (const Tuple & a, const Tuple & b)
-{
-    return tuple_compare_string (a, b, Tuple::AlbumArtist);
-}
-
+    { return tuple_compare_string (a, b, Tuple::AlbumArtist); }
 static int tuple_compare_date (const Tuple & a, const Tuple & b)
-{
-    return tuple_compare_int (a, b, Tuple::Year);
-}
-
+    { return tuple_compare_int (a, b, Tuple::Year); }
 static int tuple_compare_genre (const Tuple & a, const Tuple & b)
-{
-    return tuple_compare_string (a, b, Tuple::Genre);
-}
-
+    { return tuple_compare_string (a, b, Tuple::Genre); }
 static int tuple_compare_track (const Tuple & a, const Tuple & b)
-{
-    return tuple_compare_int (a, b, Tuple::Track);
-}
-
+    { return tuple_compare_int (a, b, Tuple::Track); }
 static int tuple_compare_formatted_title (const Tuple & a, const Tuple & b)
-{
-    return tuple_compare_string (a, b, Tuple::FormattedTitle);
-}
-
+    { return tuple_compare_string (a, b, Tuple::FormattedTitle); }
 static int tuple_compare_length (const Tuple & a, const Tuple & b)
-{
-    return tuple_compare_int (a, b, Tuple::Length);
-}
+    { return tuple_compare_int (a, b, Tuple::Length); }
+static int tuple_compare_comment (const Tuple & a, const Tuple & b)
+    { return tuple_compare_string (a, b, Tuple::Comment); }
 
 static const PlaylistStringCompareFunc filename_comparisons[] = {
     str_compare_encoded,  // path
@@ -122,7 +98,8 @@ static const PlaylistStringCompareFunc filename_comparisons[] = {
     nullptr,  // genre
     nullptr,  // track
     nullptr,  // formatted title
-    nullptr   // length
+    nullptr,  // length
+    nullptr   // comment
 };
 
 static const PlaylistTupleCompareFunc tuple_comparisons[] = {
@@ -136,7 +113,8 @@ static const PlaylistTupleCompareFunc tuple_comparisons[] = {
     tuple_compare_genre,
     tuple_compare_track,
     tuple_compare_formatted_title,
-    tuple_compare_length
+    tuple_compare_length,
+    tuple_compare_comment
 };
 
 static_assert (aud::n_elems (filename_comparisons) == Playlist::n_sort_types &&
