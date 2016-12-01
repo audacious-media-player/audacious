@@ -204,8 +204,6 @@ static const PreferencesWidget audio_page_widgets[] = {
     WidgetCheck (N_("Prevent clipping (recommended)"),
         WidgetBool (0, "enable_clipping_prevention"),
         WIDGET_CHILD),
-    WidgetLabel (N_("<b>Adjust Levels</b>"),
-        WIDGET_CHILD),
     WidgetTable ({{gain_table}},
         WIDGET_CHILD)
 };
@@ -249,7 +247,6 @@ static const PreferencesWidget chardet_elements[] = {
         WidgetString (0, "chardet_fallback"))
 };
 
-
 static void send_title_change ();
 static void * create_titlestring_table ();
 
@@ -266,8 +263,6 @@ static const PreferencesWidget playlist_page_widgets[] = {
         WidgetBool (0, "clear_playlist")),
     WidgetCheck (N_("Open files in a temporary playlist"),
         WidgetBool (0, "open_to_temporary")),
-    WidgetCheck (N_("Do not load metadata for songs until played"),
-        WidgetBool (0, "metadata_on_play")),
     WidgetLabel (N_("<b>Song Display</b>")),
     WidgetCheck (N_("Show song numbers"),
         WidgetBool (0, "show_numbers_in_pl", send_title_change)),
