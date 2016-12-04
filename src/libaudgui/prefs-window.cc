@@ -190,12 +190,10 @@ static const PreferencesWidget record_buttons[] = {
 static const PreferencesWidget gain_table[] = {
     WidgetSpin (N_("Amplify all files:"),
         WidgetFloat (0, "replay_gain_preamp"),
-        {-15, 15, 0.1, N_("dB")},
-        WIDGET_CHILD),
+        {-15, 15, 0.1, N_("dB")}),
     WidgetSpin (N_("Amplify untagged files:"),
         WidgetFloat (0, "default_gain"),
-        {-15, 15, 0.1, N_("dB")},
-        WIDGET_CHILD)
+        {-15, 15, 0.1, N_("dB")})
 };
 
 static const PreferencesWidget audio_page_widgets[] = {
