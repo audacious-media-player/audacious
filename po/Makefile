@@ -7,7 +7,8 @@
 #   have been introduced, and then continue with 'make update-po' or
 #   'make update-pot' respectively.
 #
-LOCALES = ast.po \
+LOCALES = ar.po \
+	  ast.po \
 	  be.po \
 	  bg.po \
 	  ca.po \
