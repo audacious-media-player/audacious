@@ -20,6 +20,8 @@
 #include <gtk/gtk.h>
 
 #include <libaudcore/audstrings.h>
+#include <libaudcore/drct.h>
+#include <libaudcore/hook.h>
 #include <libaudcore/i18n.h>
 #include <libaudcore/playlist.h>
 #include <libaudcore/runtime.h>
@@ -94,4 +96,29 @@ EXPORT void audgui_show_playlist_rename (int playlist)
     audgui_dialog_add_widget (dialog, entry);
 
     gtk_widget_show_all (dialog);
+}
+
+static void record_toggled (void *, void *)
+{
+    aud_set_bool ("audgui", "record", aud_drct_get_record_enabled ());
+    hook_call ("audgui set record", nullptr);
+}
+
+void record_init ()
+{
+    aud_set_bool ("audgui", "record", aud_drct_get_record_enabled ());
+    hook_associate ("enable record", record_toggled, nullptr);
+}
+
+void record_cleanup ()
+{
+    hook_dissociate ("enable record", record_toggled);
+}
+
+EXPORT void audgui_toggle_record ()
+{
+    /* On failure, update the emulated config item and call the notification
+     * hook anyway to reset the menu item to its original state. */
+    if (! aud_drct_enable_record (! aud_drct_get_record_enabled ()))
+        record_toggled (nullptr, nullptr);
 }

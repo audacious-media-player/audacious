@@ -36,6 +36,11 @@ void audgui_hide_about_window ();
 void audgui_confirm_playlist_delete (int playlist);
 void audgui_show_playlist_rename (int playlist);
 
+/* This function provides a convenient interface to toggle stream recording.
+ * For integration with menus, audgui also emulates a boolean config item
+ * ("audgui/record") and notification hook ("audgui set record"). */
+void audgui_toggle_record ();
+
 /* eq-preset.c */
 void audgui_show_eq_preset_window ();
 void audgui_import_eq_presets (const Index<EqualizerPreset> & presets);
