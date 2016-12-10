@@ -36,7 +36,8 @@ void audgui_hide_about_window ();
 void audgui_confirm_playlist_delete (int playlist);
 void audgui_show_playlist_rename (int playlist);
 
-/* This function provides a convenient interface to toggle stream recording.
+/* This function provides a convenient interface to toggle stream recording.  It
+ * may prompt for confirmation from the user before actually starting to record.
  * For integration with menus, audgui also emulates a boolean config item
  * ("audgui/record") and notification hook ("audgui set record"). */
 void audgui_toggle_record ();
