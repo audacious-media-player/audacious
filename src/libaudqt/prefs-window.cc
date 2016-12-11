@@ -19,6 +19,7 @@
  */
 
 #include <QAction>
+#include <QCheckBox>
 #include <QComboBox>
 #include <QDialog>
 #include <QDialogButtonBox>
@@ -54,6 +55,42 @@
 #include "prefs-pluginlist-model.h"
 
 namespace audqt {
+
+class PrefsWindow : public QDialog
+{
+public:
+    static PrefsWindow * get_instance () {
+        if (! instance)
+            (void) new PrefsWindow;
+        return instance;
+    }
+
+    static void destroy_instance () {
+        if (instance)
+            delete instance;
+    }
+
+    static void * get_record_checkbox () { return instance->record_checkbox; }
+    static void * get_record_config_button () { return instance->record_config_button; }
+    static void * get_record_about_button () { return instance->record_about_button; }
+
+private:
+    static PrefsWindow * instance;
+
+    PrefsWindow ();
+    ~PrefsWindow () { instance = nullptr; }
+
+    QCheckBox * record_checkbox;
+    QPushButton * record_config_button, * record_about_button;
+
+    void record_setup ();
+    void record_update ();
+
+    const HookReceiver<PrefsWindow>
+     record_hook {"enable record", this, & PrefsWindow::record_update};
+};
+
+PrefsWindow * PrefsWindow::instance = nullptr;
 
 struct Category {
     const char * icon_path;
@@ -136,6 +173,13 @@ static const ComboItem bitdepth_elements[] = {
     ComboItem (N_("Floating point"), 0)
 };
 
+static const ComboItem record_elements[] = {
+    ComboItem (N_("As decoded"), (int) OutputStream::AsDecoded),
+    ComboItem (N_("After applying ReplayGain"), (int) OutputStream::AfterReplayGain),
+    ComboItem (N_("After applying effects"), (int) OutputStream::AfterEffects),
+    ComboItem (N_("After applying equalization"), (int) OutputStream::AfterEqualizer)
+};
+
 static const ComboItem replaygainmode_elements[] = {
     ComboItem (N_("Track"), (int) ReplayGainMode::Track),
     ComboItem (N_("Album"), (int) ReplayGainMode::Album),
@@ -177,6 +221,11 @@ static const PreferencesWidget output_combo_widgets[] = {
     WidgetCustomQt (output_create_about_button)
 };
 
+static const PreferencesWidget record_buttons[] = {
+    WidgetCustomQt (PrefsWindow::get_record_config_button),
+    WidgetCustomQt (PrefsWindow::get_record_about_button)
+};
+
 static const PreferencesWidget gain_table[] = {
     WidgetSpin (N_("Amplify all files:"),
         WidgetFloat (0, "replay_gain_preamp"),
@@ -199,6 +248,13 @@ static const PreferencesWidget audio_page_widgets[] = {
         WidgetBool (0, "soft_clipping")),
     WidgetCheck (N_("Use software volume control (not recommended)"),
         WidgetBool (0, "software_volume_control")),
+    WidgetLabel (N_("<b>Recording Settings</b>")),
+    WidgetCustomQt (PrefsWindow::get_record_checkbox),
+    WidgetBox ({{record_buttons}, true},
+        WIDGET_CHILD),
+    WidgetCombo (N_("Record stream:"),
+        WidgetInt (0, "record_stream"),
+        {{record_elements}}),
     WidgetLabel (N_("<b>ReplayGain</b>")),
     WidgetCheck (N_("Enable ReplayGain"),
         WidgetBool (0, "enable_replay_gain")),
@@ -495,7 +551,7 @@ static void * output_create_config_button ()
     output_config_button = new QPushButton (translate_str (N_("_Settings")));
     output_config_button->setEnabled (enabled);
 
-    QObject::connect (output_config_button, & QAbstractButton::clicked, [=] (bool) {
+    QObject::connect (output_config_button, & QPushButton::clicked, [] (bool) {
         plugin_prefs (aud_plugin_get_current (PluginType::Output));
     });
 
@@ -509,7 +565,7 @@ static void * output_create_about_button ()
     output_about_button = new QPushButton (translate_str (N_("_About")));
     output_about_button->setEnabled (enabled);
 
-    QObject::connect (output_about_button, &QAbstractButton::clicked, [=] (bool) {
+    QObject::connect (output_about_button, & QPushButton::clicked, [] (bool) {
         plugin_about (aud_plugin_get_current (PluginType::Output));
     });
 
@@ -596,20 +652,19 @@ static void create_plugin_category (QStackedWidget * parent)
     parent->addWidget (plugin_tabs);
 }
 
-static QDialog * s_prefswin = nullptr;
 static QStackedWidget * s_category_notebook = nullptr;
 
-static void create_prefs_window ()
+PrefsWindow::PrefsWindow () :
+    record_checkbox (new QCheckBox),
+    record_config_button (new QPushButton (translate_str (N_("_Settings")))),
+    record_about_button (new QPushButton (translate_str (N_("_About"))))
 {
-    s_prefswin = new QDialog;
-    s_prefswin->setWindowTitle (_("Audacious Settings"));
-    s_prefswin->setAttribute (Qt::WA_DeleteOnClose);
+    instance = this;
 
-    QObject::connect (s_prefswin, & QObject::destroyed, [] () {
-        s_prefswin = nullptr;
-    });
+    setWindowTitle (_("Audacious Settings"));
+    setAttribute (Qt::WA_DeleteOnClose);
 
-    QVBoxLayout * vbox_parent = new QVBoxLayout (s_prefswin);
+    QVBoxLayout * vbox_parent = new QVBoxLayout (this);
     vbox_parent->setSpacing (0);
     vbox_parent->setContentsMargins (0, 0, 0, 0);
 
@@ -635,9 +690,9 @@ static void create_prefs_window ()
     bbox->button (QDialogButtonBox::Close)->setText (translate_str (N_("_Close")));
     child_vbox->addWidget (bbox);
 
-    QObject::connect (bbox, & QDialogButtonBox::rejected, s_prefswin, & QObject::deleteLater);
+    QObject::connect (bbox, & QDialogButtonBox::rejected, this, & QObject::deleteLater);
 
-    QSignalMapper * mapper = new QSignalMapper (s_prefswin);
+    QSignalMapper * mapper = new QSignalMapper (this);
     const char * data_dir = aud_get_path (AudPath::DataDir);
 
     QObject::connect (mapper, static_cast <void (QSignalMapper::*)(int)>(&QSignalMapper::mapped),
@@ -654,19 +709,61 @@ static void create_prefs_window ()
 
         QObject::connect (a, & QAction::triggered, mapper, static_cast <void (QSignalMapper::*)()>(& QSignalMapper::map));
     }
+
+    record_setup ();
+    record_update ();
+}
+
+void PrefsWindow::record_setup ()
+{
+    QObject::connect (record_checkbox, & QCheckBox::clicked, [] (bool checked) {
+        aud_drct_enable_record (checked);
+    });
+
+    QObject::connect (record_config_button, & QPushButton::clicked, [] (bool) {
+        if (aud_drct_get_record_enabled ())
+            plugin_prefs (aud_drct_get_record_plugin ());
+    });
+
+    QObject::connect (record_about_button, & QPushButton::clicked, [] (bool) {
+        if (aud_drct_get_record_enabled ())
+            plugin_about (aud_drct_get_record_plugin ());
+    });
+}
+
+void PrefsWindow::record_update ()
+{
+    auto p = aud_drct_get_record_plugin ();
+
+    if (p)
+    {
+        bool enabled = aud_drct_get_record_enabled ();
+        auto text = str_printf (_("Record audio stream using %s"), aud_plugin_get_name (p));
+
+        record_checkbox->setEnabled (true);
+        record_checkbox->setText ((const char *) text);
+        record_checkbox->setChecked (enabled);
+        record_config_button->setEnabled (enabled && aud_plugin_has_configure (p));
+        record_about_button->setEnabled (enabled && aud_plugin_has_about (p));
+    }
+    else
+    {
+        record_checkbox->setEnabled (false);
+        record_checkbox->setText (_("No audio recording plugin available"));
+        record_checkbox->setChecked (false);
+        record_config_button->setEnabled (false);
+        record_about_button->setEnabled (false);
+    }
 }
 
 EXPORT void prefswin_show ()
 {
-    if (! s_prefswin)
-        create_prefs_window ();
-
-    window_bring_to_front (s_prefswin);
+    window_bring_to_front (PrefsWindow::get_instance ());
 }
 
 EXPORT void prefswin_hide ()
 {
-    delete s_prefswin;
+    PrefsWindow::destroy_instance ();
 }
 
 EXPORT void prefswin_show_page (int id, bool show)
@@ -674,24 +771,19 @@ EXPORT void prefswin_show_page (int id, bool show)
     if (id < 0 || id > CATEGORY_COUNT)
         return;
 
-    if (! s_prefswin)
-        create_prefs_window ();
-
+    auto win = PrefsWindow::get_instance ();
     s_category_notebook->setCurrentIndex (id);
 
     if (show)
-        window_bring_to_front (s_prefswin);
+        window_bring_to_front (win);
 }
 
 EXPORT void prefswin_show_plugin_page (PluginType type)
 {
-    if (! s_prefswin)
-        create_prefs_window ();
-
     if (type == PluginType::Iface)
-        return prefswin_show_page (CATEGORY_APPEARANCE);
+        prefswin_show_page (CATEGORY_APPEARANCE);
     else if (type == PluginType::Output)
-        return prefswin_show_page (CATEGORY_AUDIO);
+        prefswin_show_page (CATEGORY_AUDIO);
     else
     {
         prefswin_show_page (CATEGORY_PLUGINS, false);
@@ -702,7 +794,7 @@ EXPORT void prefswin_show_plugin_page (PluginType type)
                 plugin_tabs->setCurrentIndex (& category - plugin_categories);
         }
 
-        window_bring_to_front (s_prefswin);
+        window_bring_to_front (PrefsWindow::get_instance ());
     }
 }
 
