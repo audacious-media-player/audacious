@@ -70,6 +70,17 @@ public:
             delete instance;
     }
 
+    static ArrayRef<ComboItem> get_output_combo () {
+        return {instance->output_combo_elements.begin (),
+                instance->output_combo_elements.len ()};
+    }
+
+    static int output_combo_selected;
+    static void output_combo_changed () { instance->output_change (); }
+
+    static void * get_output_config_button () { return instance->output_config_button; }
+    static void * get_output_about_button () { return instance->output_about_button; }
+
     static void * get_record_checkbox () { return instance->record_checkbox; }
     static void * get_record_config_button () { return instance->record_config_button; }
     static void * get_record_about_button () { return instance->record_about_button; }
@@ -80,8 +91,14 @@ private:
     PrefsWindow ();
     ~PrefsWindow () { instance = nullptr; }
 
+    Index<ComboItem> output_combo_elements;
+    QPushButton * output_config_button, * output_about_button;
+
     QCheckBox * record_checkbox;
     QPushButton * record_config_button, * record_about_button;
+
+    void output_setup ();
+    void output_change ();
 
     void record_setup ();
     void record_update ();
@@ -90,7 +107,9 @@ private:
      record_hook {"enable record", this, & PrefsWindow::record_update};
 };
 
+/* static data */
 PrefsWindow * PrefsWindow::instance = nullptr;
+int PrefsWindow::output_combo_selected;
 
 struct Category {
     const char * icon_path;
@@ -202,23 +221,16 @@ static const PreferencesWidget appearance_page_widgets[] = {
     WidgetCustomQt (iface_create_prefs_box)
 };
 
-static Index<ComboItem> output_combo_elements;
-static int output_combo_selected;
-static QPushButton * output_config_button;
-static QPushButton * output_about_button;
-
-static ArrayRef<ComboItem> output_combo_fill ();
-static void output_combo_changed ();
-static void * output_create_config_button ();
-static void * output_create_about_button ();
 static void output_bit_depth_changed ();
 
 static const PreferencesWidget output_combo_widgets[] = {
     WidgetCombo (N_("Output plugin:"),
-        WidgetInt (output_combo_selected, output_combo_changed, "audqt update output combo"),
-        {0, output_combo_fill}),
-    WidgetCustomQt (output_create_config_button),
-    WidgetCustomQt (output_create_about_button)
+        WidgetInt (PrefsWindow::output_combo_selected,
+                   PrefsWindow::output_combo_changed,
+                   "audqt update output combo"),
+        {0, PrefsWindow::get_output_combo}),
+    WidgetCustomQt (PrefsWindow::get_output_config_button),
+    WidgetCustomQt (PrefsWindow::get_output_about_button)
 };
 
 static const PreferencesWidget record_buttons[] = {
@@ -526,64 +538,6 @@ static void * iface_create_prefs_box ()
     return iface_prefs_box;
 }
 
-static void output_combo_changed ()
-{
-    auto & list = aud_plugin_list (PluginType::Output);
-    PluginHandle * plugin = list[output_combo_selected];
-
-    if (aud_plugin_enable (plugin, true))
-    {
-        output_config_button->setEnabled (aud_plugin_has_configure (plugin));
-        output_about_button->setEnabled (aud_plugin_has_about (plugin));
-    }
-    else
-    {
-        /* set combo box back to current output */
-        output_combo_selected = list.find (aud_plugin_get_current (PluginType::Output));
-        hook_call ("audqt update output combo", nullptr);
-    }
-}
-
-static void * output_create_config_button ()
-{
-    bool enabled = aud_plugin_has_configure (aud_plugin_get_current (PluginType::Output));
-
-    output_config_button = new QPushButton (translate_str (N_("_Settings")));
-    output_config_button->setEnabled (enabled);
-
-    QObject::connect (output_config_button, & QPushButton::clicked, [] (bool) {
-        plugin_prefs (aud_plugin_get_current (PluginType::Output));
-    });
-
-    return output_config_button;
-}
-
-static void * output_create_about_button ()
-{
-    bool enabled = aud_plugin_has_about (aud_plugin_get_current (PluginType::Output));
-
-    output_about_button = new QPushButton (translate_str (N_("_About")));
-    output_about_button->setEnabled (enabled);
-
-    QObject::connect (output_about_button, & QPushButton::clicked, [] (bool) {
-        plugin_about (aud_plugin_get_current (PluginType::Output));
-    });
-
-    return output_about_button;
-}
-
-static ArrayRef<ComboItem> output_combo_fill ()
-{
-    if (! output_combo_elements.len ())
-    {
-        output_combo_elements = fill_plugin_combo (PluginType::Output);
-        output_combo_selected = aud_plugin_list (PluginType::Output)
-         .find (aud_plugin_get_current (PluginType::Output));
-    }
-
-    return {output_combo_elements.begin (), output_combo_elements.len ()};
-}
-
 static void output_bit_depth_changed ()
 {
     aud_output_reset (OutputReset::ReopenStream);
@@ -655,11 +609,17 @@ static void create_plugin_category (QStackedWidget * parent)
 static QStackedWidget * s_category_notebook = nullptr;
 
 PrefsWindow::PrefsWindow () :
+    output_combo_elements (fill_plugin_combo (PluginType::Output)),
+    output_config_button (new QPushButton (translate_str (N_("_Settings")))),
+    output_about_button (new QPushButton (translate_str (N_("_About")))),
     record_checkbox (new QCheckBox),
     record_config_button (new QPushButton (translate_str (N_("_Settings")))),
     record_about_button (new QPushButton (translate_str (N_("_About"))))
 {
+    /* initialize static data */
     instance = this;
+    output_combo_selected = aud_plugin_list (PluginType::Output)
+     .find (aud_plugin_get_current (PluginType::Output));
 
     setWindowTitle (_("Audacious Settings"));
     setAttribute (Qt::WA_DeleteOnClose);
@@ -710,8 +670,43 @@ PrefsWindow::PrefsWindow () :
         QObject::connect (a, & QAction::triggered, mapper, static_cast <void (QSignalMapper::*)()>(& QSignalMapper::map));
     }
 
+    output_setup ();
     record_setup ();
     record_update ();
+}
+
+void PrefsWindow::output_setup ()
+{
+    auto p = aud_plugin_get_current (PluginType::Output);
+
+    output_config_button->setEnabled (aud_plugin_has_configure (p));
+    output_about_button->setEnabled (aud_plugin_has_about (p));
+
+    QObject::connect (output_config_button, & QPushButton::clicked, [] (bool) {
+        plugin_prefs (aud_plugin_get_current (PluginType::Output));
+    });
+
+    QObject::connect (output_about_button, & QPushButton::clicked, [] (bool) {
+        plugin_about (aud_plugin_get_current (PluginType::Output));
+    });
+}
+
+void PrefsWindow::output_change ()
+{
+    auto & list = aud_plugin_list (PluginType::Output);
+    auto p = list[output_combo_selected];
+
+    if (aud_plugin_enable (p, true))
+    {
+        output_config_button->setEnabled (aud_plugin_has_configure (p));
+        output_about_button->setEnabled (aud_plugin_has_about (p));
+    }
+    else
+    {
+        /* set combo box back to current output */
+        output_combo_selected = list.find (aud_plugin_get_current (PluginType::Output));
+        hook_call ("audqt update output combo", nullptr);
+    }
 }
 
 void PrefsWindow::record_setup ()
