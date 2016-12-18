@@ -1,7 +1,6 @@
 /*
- * info-widget.h
- * Copyright 2006-2014 William Pitcock, Tomasz Moń, Eugene Zagidullin,
- *                     John Lindgren, and Thomas Lange
+ * libaudqt-internal.h
+ * Copyright 2016 John Lindgren
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -18,33 +17,15 @@
  * the use of this software.
  */
 
-#ifndef LIBAUDQT_INFO_WIDGET_H
-#define LIBAUDQT_INFO_WIDGET_H
-
-#include <QTreeView>
-#include <libaudqt/export.h>
-
-class PluginHandle;
-class Tuple;
+#ifndef LIBAUDQT_INTERNAL_H
+#define LIBAUDQT_INTERNAL_H
 
 namespace audqt {
 
-class InfoModel;
-
-class LIBAUDQT_PUBLIC InfoWidget : public QTreeView
-{
-public:
-    InfoWidget (QWidget * parent = nullptr);
-    ~InfoWidget ();
-
-    void fillInfo (int playlist, int entry, const char * filename, const Tuple & tuple,
-     PluginHandle * decoder, bool updating_enabled);
-    bool updateFile ();
-
-private:
-    InfoModel * m_model;
-};
+/* log-inspector.cc */
+void log_init ();
+void log_cleanup ();
 
 } // namespace audqt
 
-#endif // LIBAUDQT_INFO_WIDGET_H
+#endif // LIBAUDQT_INTERNAL_H

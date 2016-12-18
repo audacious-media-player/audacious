@@ -17,8 +17,8 @@
  * the use of this software.
  */
 
-#include "log-inspector.h"
 #include "libaudqt.h"
+#include "libaudqt-internal.h"
 
 #include <QComboBox>
 #include <QDialog>
@@ -28,13 +28,14 @@
 #include <QTreeView>
 #include <QWidget>
 
+#include <libaudcore/audstrings.h>
 #include <libaudcore/i18n.h>
 #include <libaudcore/index.h>
 #include <libaudcore/runtime.h>
 
-namespace audqt {
+#define LOGENTRY_MAX 1000
 
-const int LOGENTRY_MAX = 1000;
+namespace audqt {
 
 enum LogEntryColumn {
     Level,
@@ -47,39 +48,51 @@ enum LogEntryColumn {
 
 struct LogEntry {
     audlog::Level level;
-    const char * filename;
+    String filename;
     unsigned int line;
-    const char * function;
-    char * message;
+    String function;
+    String message;
 };
 
-static Index<SmartPtr<LogEntry>> entries;
+class LogEntryModel : public QAbstractListModel
+{
+public:
+    LogEntryModel (QObject * parent = nullptr) :
+        QAbstractListModel (parent) {}
 
-static void log_handler (audlog::Level level, const char * file, int line,
- const char * func, const char * message);
+    void addEntry (SmartPtr<LogEntry> && entry);
+
+protected:
+    int rowCount (const QModelIndex & parent = QModelIndex ()) const
+        { return m_entries.len (); }
+    int columnCount (const QModelIndex & parent = QModelIndex ()) const
+        { return LogEntryColumn::Count; }
+
+    QVariant data (const QModelIndex & index, int role = Qt::DisplayRole) const;
+    QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
+
+private:
+    Index<SmartPtr<LogEntry>> m_entries;
+};
 
 /* log entry model */
-LogEntryModel::LogEntryModel (QObject * parent) : QAbstractListModel (parent)
+void LogEntryModel::addEntry (SmartPtr<LogEntry> && entry)
 {
-}
+    if (m_entries.len () >= LOGENTRY_MAX)
+    {
+        beginRemoveRows (QModelIndex (), 0, 0);
+        m_entries.erase (0, 1);
+        endRemoveRows ();
+    }
 
-LogEntryModel::~LogEntryModel ()
-{
-}
-
-int LogEntryModel::rowCount (const QModelIndex & parent) const
-{
-    return entries.len ();
-}
-
-int LogEntryModel::columnCount (const QModelIndex & parent) const
-{
-    return LogEntryColumn::Count;
+    beginInsertRows (QModelIndex (), m_entries.len (), m_entries.len ());
+    m_entries.append (std::move (entry));
+    endInsertRows ();
 }
 
 QVariant LogEntryModel::data (const QModelIndex & index, int role) const
 {
-    auto & e = entries [index.row ()];
+    auto & e = m_entries [index.row ()];
 
     if (e && role == Qt::DisplayRole)
     {
@@ -113,33 +126,39 @@ QVariant LogEntryModel::headerData (int section, Qt::Orientation orientation, in
     return QVariant ();
 }
 
-bool LogEntryModel::insertRows (int row, int count, const QModelIndex & parent)
+/* static model */
+static SmartPtr<LogEntryModel> s_model;
+static audlog::Level s_level = audlog::Warning;
+
+static void log_handler (audlog::Level level, const char * file, int line,
+ const char * func, const char * message)
 {
-    int last = row + count - 1;
-    beginInsertRows (parent, row, last);
-    endInsertRows ();
-    return true;
+    auto messages = str_list_to_index (message, "\n");
+
+    for (auto & message : messages)
+    {
+        auto entry = SmartNew<LogEntry> ();
+
+        entry->level = level;
+        entry->filename = String (file);
+        entry->line = line;
+        entry->function = String (func);
+        entry->message = std::move (message);
+
+        s_model->addEntry (std::move (entry));
+    }
 }
 
-bool LogEntryModel::removeRows (int row, int count, const QModelIndex & parent)
+void log_init ()
 {
-    int last = row + count - 1;
-    beginRemoveRows (parent, row, last);
-    endRemoveRows ();
-    return true;
+    s_model.capture (new LogEntryModel);
+    audlog::subscribe (log_handler, s_level);
 }
 
-void LogEntryModel::updateRows (int row, int count)
+void log_cleanup ()
 {
-    int bottom = row + count - 1;
-    auto topLeft = createIndex (row, 0);
-    auto bottomRight = createIndex (bottom, columnCount () - 1);
-    emit dataChanged (topLeft, bottomRight);
-}
-
-void LogEntryModel::updateRow (int row)
-{
-    updateRows (row, 1);
+    audlog::unsubscribe (log_handler);
+    s_model.clear ();
 }
 
 /* log entry inspector */
@@ -147,16 +166,9 @@ class LogEntryInspector : public QDialog
 {
 public:
     LogEntryInspector (QWidget * parent = nullptr);
-    ~LogEntryInspector ();
-
-    audlog::Level m_level;
-
-    void pop ();
-    void push ();
 
 private:
     QVBoxLayout m_layout;
-    LogEntryModel * m_model;
     QTreeView * m_view;
 
     QWidget m_bottom_container;
@@ -174,9 +186,8 @@ LogEntryInspector::LogEntryInspector (QWidget * parent) :
     setWindowTitle (_("Log Inspector"));
     setLayout (& m_layout);
 
-    m_model = new LogEntryModel (this);
     m_view = new QTreeView (this);
-    m_view->setModel (m_model);
+    m_view->setModel (s_model.get ());
 
     m_layout.addWidget (m_view);
 
@@ -190,6 +201,8 @@ LogEntryInspector::LogEntryInspector (QWidget * parent) :
     m_level_combobox.addItem (_("Warning"), audlog::Warning);
     m_level_combobox.addItem (_("Error"), audlog::Error);
 
+    m_level_combobox.setCurrentIndex (s_level);
+
     QObject::connect (& m_level_combobox,
                       static_cast <void (QComboBox::*) (int)> (&QComboBox::currentIndexChanged),
                       [this] (int idx) { setLogLevel ((audlog::Level) idx); });
@@ -200,63 +213,18 @@ LogEntryInspector::LogEntryInspector (QWidget * parent) :
     m_layout.addWidget (& m_bottom_container);
 
     resize (800, 350);
-
-    setLogLevel (audlog::Info);
-}
-
-LogEntryInspector::~LogEntryInspector ()
-{
-    audlog::unsubscribe (log_handler);
 }
 
 static LogEntryInspector * s_inspector = nullptr;
 
-static void log_handler (audlog::Level level, const char * file, int line,
- const char * func, const char * message)
-{
-    LogEntry * l = new LogEntry;
-
-    l->level = level;
-    l->filename = file;
-    l->line = line;
-    l->function = func;
-
-    l->message = strdup (message);
-    l->message[strlen (l->message) - 1] = 0;
-
-    entries.append (SmartPtr<LogEntry> (l));
-
-    if (entries.len () > LOGENTRY_MAX)
-    {
-        s_inspector->pop ();
-        entries.erase (0, 1);
-    }
-
-    s_inspector->push ();
-}
-
 void LogEntryInspector::setLogLevel (audlog::Level level)
 {
-    m_level = level;
+    s_level = level;
 
     audlog::unsubscribe (log_handler);
     audlog::subscribe (log_handler, level);
 
-    m_level_combobox.setCurrentIndex (m_level);
-}
-
-void LogEntryInspector::pop ()
-{
-    m_model->removeRows (0, 1);
-}
-
-void LogEntryInspector::push ()
-{
-    m_model->insertRows (entries.len (), 1);
-#ifdef XXX_NOTYET
-    auto index = m_model->index (entries.len () - 1);
-    m_view->scrollTo (index);
-#endif
+    m_level_combobox.setCurrentIndex (level);
 }
 
 EXPORT void log_inspector_show ()
