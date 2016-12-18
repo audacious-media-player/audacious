@@ -80,7 +80,7 @@ void LogEntryModel::addEntry (const LogEntry * entry)
     if (m_entries.len () >= LOGENTRY_MAX)
     {
         beginRemoveRows (QModelIndex (), 0, 0);
-        m_entries.erase (0, 1);
+        m_entries.remove (0, 1);
         endRemoveRows ();
     }
 
