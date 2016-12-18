@@ -39,8 +39,6 @@ namespace audqt {
 
 enum LogEntryColumn {
     Level,
-    File,
-    Line,
     Function,
     Message,
     Count
@@ -48,8 +46,6 @@ enum LogEntryColumn {
 
 struct LogEntry {
     audlog::Level level;
-    String filename;
-    unsigned int line;
     String function;
     String message;
 };
@@ -99,8 +95,6 @@ QVariant LogEntryModel::data (const QModelIndex & index, int role) const
         switch (index.column ())
         {
             case LogEntryColumn::Level: return QString (audlog::get_level_name (e->level));
-            case LogEntryColumn::File: return QString (e->filename);
-            case LogEntryColumn::Line: return e->line;
             case LogEntryColumn::Function: return QString (e->function);
             case LogEntryColumn::Message: return QString (e->message);
         }
@@ -116,8 +110,6 @@ QVariant LogEntryModel::headerData (int section, Qt::Orientation orientation, in
         switch (section)
         {
             case LogEntryColumn::Level: return QString (_("Level"));
-            case LogEntryColumn::File: return QString (_("Filename"));
-            case LogEntryColumn::Line: return QString (_("Line"));
             case LogEntryColumn::Function: return QString (_("Function"));
             case LogEntryColumn::Message: return QString (_("Message"));
         }
@@ -140,9 +132,7 @@ static void log_handler (audlog::Level level, const char * file, int line,
         auto entry = SmartNew<LogEntry> ();
 
         entry->level = level;
-        entry->filename = String (file);
-        entry->line = line;
-        entry->function = String (func);
+        entry->function = String (str_printf ("%s (%s:%d)", func, file, line));
         entry->message = std::move (message);
 
         s_model->addEntry (std::move (entry));
@@ -188,6 +178,10 @@ LogEntryInspector::LogEntryInspector (QWidget * parent) :
 
     m_view = new QTreeView (this);
     m_view->setModel (s_model.get ());
+
+    m_view->setAllColumnsShowFocus (true);
+    m_view->setIndentation (0);
+    m_view->setUniformRowHeights (true);
 
     m_layout.addWidget (m_view);
 
