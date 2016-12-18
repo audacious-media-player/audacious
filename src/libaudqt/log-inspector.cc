@@ -29,6 +29,7 @@
 #include <QWidget>
 
 #include <libaudcore/audstrings.h>
+#include <libaudcore/hook.h>
 #include <libaudcore/i18n.h>
 #include <libaudcore/index.h>
 #include <libaudcore/runtime.h>
@@ -56,8 +57,6 @@ public:
     LogEntryModel (QObject * parent = nullptr) :
         QAbstractListModel (parent) {}
 
-    void addEntry (SmartPtr<LogEntry> && entry);
-
 protected:
     int rowCount (const QModelIndex & parent = QModelIndex ()) const
         { return m_entries.len (); }
@@ -68,11 +67,15 @@ protected:
     QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
 
 private:
-    Index<SmartPtr<LogEntry>> m_entries;
+    Index<LogEntry> m_entries;
+
+    void addEntry (const LogEntry * entry);
+    HookReceiver<LogEntryModel, const LogEntry *>
+     log_hook {"audqt log entry", this, & LogEntryModel::addEntry};
 };
 
 /* log entry model */
-void LogEntryModel::addEntry (SmartPtr<LogEntry> && entry)
+void LogEntryModel::addEntry (const LogEntry * entry)
 {
     if (m_entries.len () >= LOGENTRY_MAX)
     {
@@ -82,21 +85,25 @@ void LogEntryModel::addEntry (SmartPtr<LogEntry> && entry)
     }
 
     beginInsertRows (QModelIndex (), m_entries.len (), m_entries.len ());
-    m_entries.append (std::move (entry));
+    m_entries.append (* entry);
     endInsertRows ();
 }
 
 QVariant LogEntryModel::data (const QModelIndex & index, int role) const
 {
-    auto & e = m_entries [index.row ()];
+    int row = index.row ();
+    if (row < 0 || row >= m_entries.len ())
+        return QVariant ();
 
-    if (e && role == Qt::DisplayRole)
+    auto & e = m_entries[row];
+
+    if (role == Qt::DisplayRole)
     {
         switch (index.column ())
         {
-            case LogEntryColumn::Level: return QString (audlog::get_level_name (e->level));
-            case LogEntryColumn::Function: return QString (e->function);
-            case LogEntryColumn::Message: return QString (e->message);
+            case LogEntryColumn::Level: return QString (audlog::get_level_name (e.level));
+            case LogEntryColumn::Function: return QString (e.function);
+            case LogEntryColumn::Message: return QString (e.message);
         }
     }
 
@@ -122,6 +129,11 @@ QVariant LogEntryModel::headerData (int section, Qt::Orientation orientation, in
 static SmartPtr<LogEntryModel> s_model;
 static audlog::Level s_level = audlog::Warning;
 
+static void log_entry_free (void * entry)
+{
+    delete (LogEntry *) entry;
+}
+
 static void log_handler (audlog::Level level, const char * file, int line,
  const char * func, const char * message)
 {
@@ -129,13 +141,13 @@ static void log_handler (audlog::Level level, const char * file, int line,
 
     for (auto & message : messages)
     {
-        auto entry = SmartNew<LogEntry> ();
+        auto entry = new LogEntry;
 
         entry->level = level;
         entry->function = String (str_printf ("%s (%s:%d)", func, file, line));
         entry->message = std::move (message);
 
-        s_model->addEntry (std::move (entry));
+        event_queue ("audqt log entry", entry, log_entry_free);
     }
 }
 
