@@ -24,6 +24,8 @@
 
 namespace audqt {
 
+struct LogEntry;
+
 class LogEntryModel : public QAbstractListModel
 {
 public:
@@ -35,10 +37,7 @@ public:
     QVariant data (const QModelIndex & index, int role = Qt::DisplayRole) const;
     QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
 
-    bool insertRows (int row, int count, const QModelIndex & parent = QModelIndex ());
-    bool removeRows (int row, int count, const QModelIndex & parent = QModelIndex ());
-    void updateRows (int row, int count);
-    void updateRow (int row);
+    void addEntry (LogEntry * entry);
 };
 
 } // namespace audqt
