@@ -160,6 +160,7 @@ void log_init ()
 void log_cleanup ()
 {
     audlog::unsubscribe (log_handler);
+    event_queue_cancel ("audqt log entry", nullptr);
     s_model.clear ();
 }
 
