@@ -129,11 +129,6 @@ QVariant LogEntryModel::headerData (int section, Qt::Orientation orientation, in
 static SmartPtr<LogEntryModel> s_model;
 static audlog::Level s_level = audlog::Warning;
 
-static void log_entry_free (void * entry)
-{
-    delete (LogEntry *) entry;
-}
-
 static void log_handler (audlog::Level level, const char * file, int line,
  const char * func, const char * message)
 {
@@ -147,7 +142,7 @@ static void log_handler (audlog::Level level, const char * file, int line,
         entry->function = String (str_printf ("%s (%s:%d)", func, file, line));
         entry->message = std::move (message);
 
-        event_queue ("audqt log entry", entry, log_entry_free);
+        event_queue ("audqt log entry", entry, aud::delete_obj<LogEntry>);
     }
 }
 
