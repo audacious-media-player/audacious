@@ -184,13 +184,13 @@ static void playback_cleanup_locked ()
     end_queue.stop ();
     song_finished = false;
 
-    event_queue_cancel ("playback ready", nullptr);
-    event_queue_cancel ("playback pause", nullptr);
-    event_queue_cancel ("playback unpause", nullptr);
-    event_queue_cancel ("playback seek", nullptr);
-    event_queue_cancel ("info change", nullptr);
-    event_queue_cancel ("title change", nullptr);
-    event_queue_cancel ("tuple change", nullptr);
+    event_queue_cancel ("playback ready");
+    event_queue_cancel ("playback pause");
+    event_queue_cancel ("playback unpause");
+    event_queue_cancel ("playback seek");
+    event_queue_cancel ("info change");
+    event_queue_cancel ("title change");
+    event_queue_cancel ("tuple change");
 
     aud_set_bool (nullptr, "stop_after_current_song", false);
 }

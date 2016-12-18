@@ -106,7 +106,7 @@ void event_queue (const char * name, void * data, EventDestroyFunc destroy = nul
 
 /* Cancels pending hook calls matching <name> and <data>.  If <data> is nullptr,
  * all hook calls matching <name> are canceled. */
-void event_queue_cancel (const char * name, void * data);
+void event_queue_cancel (const char * name, void * data = nullptr);
 
 /* Convenience wrapper for C++ classes.  Allows non-static member functions to
  * be used as hook callbacks.  The HookReceiver should be made a member of the
