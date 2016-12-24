@@ -31,10 +31,6 @@
 #include "list.h"
 #include "jump-to-track-cache.h"
 
-#if GTK_CHECK_VERSION (3, 12, 0)
-#define gtk_widget_set_margin_left gtk_widget_set_margin_start
-#endif
-
 static void update_cb (void * data, void *);
 static void activate_cb (void * data, void *);
 

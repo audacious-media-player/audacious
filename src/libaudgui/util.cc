@@ -93,14 +93,8 @@ EXPORT void audgui_get_mouse_coords (GtkWidget * widget, int * x, int * y)
 
     GdkWindow * window = gtk_widget_get_window (widget);
     GdkDisplay * display = gdk_window_get_display (window);
-
-#if GTK_CHECK_VERSION (3, 20, 0)
-    GdkSeat * seat = gdk_display_get_default_seat (display);
-    GdkDevice * device = gdk_seat_get_pointer (seat);
-#else
     GdkDeviceManager * manager = gdk_display_get_device_manager (display);
     GdkDevice * device = gdk_device_manager_get_client_pointer (manager);
-#endif
 
     gdk_window_get_device_position (window, device, & xwin, & ywin, nullptr);
     gtk_widget_get_allocation (widget, & alloc);
@@ -112,14 +106,8 @@ EXPORT void audgui_get_mouse_coords (GtkWidget * widget, int * x, int * y)
 EXPORT void audgui_get_mouse_coords (GdkScreen * screen, int * x, int * y)
 {
     GdkDisplay * display = gdk_screen_get_display (screen);
-
-#if GTK_CHECK_VERSION (3, 20, 0)
-    GdkSeat * seat = gdk_display_get_default_seat (display);
-    GdkDevice * device = gdk_seat_get_pointer (seat);
-#else
     GdkDeviceManager * manager = gdk_display_get_device_manager (display);
     GdkDevice * device = gdk_device_manager_get_client_pointer (manager);
-#endif
 
     gdk_device_get_position (device, nullptr, x, y);
 }
@@ -267,10 +255,6 @@ static const char * icon_for_message_type (GtkMessageType type)
     }
 }
 
-/* style choices should not be enforced by deprecating API functions */
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 EXPORT GtkWidget * audgui_dialog_new (GtkMessageType type, const char * title,
  const char * text, GtkWidget * button1, GtkWidget * button2)
 {
@@ -299,8 +283,6 @@ EXPORT GtkWidget * audgui_dialog_new (GtkMessageType type, const char * title,
 
     return dialog;
 }
-
-#pragma GCC diagnostic pop
 
 EXPORT void audgui_dialog_add_widget (GtkWidget * dialog, GtkWidget * widget)
 {
