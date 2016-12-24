@@ -170,6 +170,8 @@ fi
 
 AC_SUBST(USE_GTK)
 
+AC_DEFINE(GDK_VERSION_MIN_REQUIRED, GDK_VERSION_3_4, [Ignore post 3.4 deprecations])
+
 if test $HAVE_MSWINDOWS = yes ; then
     PKG_CHECK_MODULES(GIO, gio-2.0 >= 2.32)
 else
