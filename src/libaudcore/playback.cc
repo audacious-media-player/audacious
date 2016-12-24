@@ -184,13 +184,13 @@ static void playback_cleanup_locked ()
     end_queue.stop ();
     song_finished = false;
 
-    event_queue_cancel ("playback ready", nullptr);
-    event_queue_cancel ("playback pause", nullptr);
-    event_queue_cancel ("playback unpause", nullptr);
-    event_queue_cancel ("playback seek", nullptr);
-    event_queue_cancel ("info change", nullptr);
-    event_queue_cancel ("title change", nullptr);
-    event_queue_cancel ("tuple change", nullptr);
+    event_queue_cancel ("playback ready");
+    event_queue_cancel ("playback pause");
+    event_queue_cancel ("playback unpause");
+    event_queue_cancel ("playback seek");
+    event_queue_cancel ("info change");
+    event_queue_cancel ("title change");
+    event_queue_cancel ("tuple change");
 
     aud_set_bool (nullptr, "stop_after_current_song", false);
 }
@@ -364,10 +364,12 @@ static void finish_playback_locked ()
     if (pb_info.error)
     {
         failed_entries ++;
-        aud_ui_show_error (str_printf (_("Error playing %s:\n%s"),
-         (const char *) pb_info.filename, pb_info.error_s ?
-         (const char *) pb_info.error_s : _("Unknown playback error "
-         "(check the console for detailed error information)")));
+
+        if (pb_info.error_s)
+            aud_ui_show_error (str_printf (_("Error playing %s:\n%s"),
+             (const char *) pb_info.filename, (const char *) pb_info.error_s));
+        else
+            AUDERR ("Playback finished with error.\n");
     }
     else
         failed_entries = 0;

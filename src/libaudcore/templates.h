@@ -98,6 +98,12 @@ inline T from_ptr (void * v)
     return u.t;
 }
 
+// C-style callback to delete a C++ object
+// =======================================
+template<class T>
+void delete_obj (void * obj)
+    { delete (T *) obj; }
+
 // Wrapper class allowing enumerations to be used as array indexes;
 // the enumeration must begin with zero and have a "count" constant
 // ================================================================

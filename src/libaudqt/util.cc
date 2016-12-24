@@ -27,6 +27,7 @@
 #include <libaudcore/i18n.h>
 #include <libaudcore/runtime.h>
 
+#include "libaudqt-internal.h"
 #include "libaudqt.h"
 
 namespace audqt {
@@ -53,6 +54,8 @@ EXPORT void init ()
 
     qapp->setApplicationName (_("Audacious"));
     qapp->setWindowIcon (QIcon::fromTheme (app_name));
+
+    log_init ();
 }
 
 EXPORT void run ()
@@ -76,6 +79,8 @@ EXPORT void cleanup ()
     log_inspector_hide ();
     prefswin_hide ();
     queue_manager_hide ();
+
+    log_cleanup ();
 }
 
 EXPORT void enable_layout (QLayout * layout, bool enabled)

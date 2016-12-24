@@ -524,7 +524,7 @@ static void scan_check_complete (PlaylistData * playlist)
         update_delayed = false;
     }
 
-    event_queue_cancel ("playlist scan complete", nullptr);
+    event_queue_cancel ("playlist scan complete");
     event_queue ("playlist scan complete", nullptr);
 }
 
