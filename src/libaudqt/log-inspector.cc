@@ -50,7 +50,10 @@ struct LogEntry {
     const char * filename;
     unsigned int line;
     const char * function;
-    char * message;
+    char * message = nullptr;
+    
+    ~LogEntry ()
+        { free (message); }
 };
 
 static Index<SmartPtr<LogEntry>> entries;
@@ -79,9 +82,13 @@ int LogEntryModel::columnCount (const QModelIndex & parent) const
 
 QVariant LogEntryModel::data (const QModelIndex & index, int role) const
 {
-    auto & e = entries [index.row ()];
+    int row = index.row ();
+    if (row < 0 || row >= entries.len ())
+        return QVariant ();
 
-    if (e && role == Qt::DisplayRole)
+    auto & e = entries[row];
+
+    if (role == Qt::DisplayRole)
     {
         switch (index.column ())
         {
@@ -113,33 +120,18 @@ QVariant LogEntryModel::headerData (int section, Qt::Orientation orientation, in
     return QVariant ();
 }
 
-bool LogEntryModel::insertRows (int row, int count, const QModelIndex & parent)
+void LogEntryModel::addEntry (LogEntry * entry)
 {
-    int last = row + count - 1;
-    beginInsertRows (parent, row, last);
+    if (entries.len () >= LOGENTRY_MAX)
+    {
+        beginRemoveRows (QModelIndex (), 0, 0);
+        entries.remove (0, 1);
+        endRemoveRows ();
+    }
+
+    beginInsertRows (QModelIndex (), entries.len (), entries.len ());
+    entries.append (SmartPtr<LogEntry> (entry));
     endInsertRows ();
-    return true;
-}
-
-bool LogEntryModel::removeRows (int row, int count, const QModelIndex & parent)
-{
-    int last = row + count - 1;
-    beginRemoveRows (parent, row, last);
-    endRemoveRows ();
-    return true;
-}
-
-void LogEntryModel::updateRows (int row, int count)
-{
-    int bottom = row + count - 1;
-    auto topLeft = createIndex (row, 0);
-    auto bottomRight = createIndex (bottom, columnCount () - 1);
-    emit dataChanged (topLeft, bottomRight);
-}
-
-void LogEntryModel::updateRow (int row)
-{
-    updateRows (row, 1);
 }
 
 /* log entry inspector */
@@ -151,8 +143,8 @@ public:
 
     audlog::Level m_level;
 
-    void pop ();
-    void push ();
+    void addEntry (LogEntry * entry)
+        { m_model->addEntry (entry); }
 
 private:
     QVBoxLayout m_layout;
@@ -224,15 +216,7 @@ static void log_handler (audlog::Level level, const char * file, int line,
     l->message = strdup (message);
     l->message[strlen (l->message) - 1] = 0;
 
-    entries.append (SmartPtr<LogEntry> (l));
-
-    if (entries.len () > LOGENTRY_MAX)
-    {
-        s_inspector->pop ();
-        entries.erase (0, 1);
-    }
-
-    s_inspector->push ();
+    s_inspector->addEntry (l);
 }
 
 void LogEntryInspector::setLogLevel (audlog::Level level)
@@ -243,20 +227,6 @@ void LogEntryInspector::setLogLevel (audlog::Level level)
     audlog::subscribe (log_handler, level);
 
     m_level_combobox.setCurrentIndex (m_level);
-}
-
-void LogEntryInspector::pop ()
-{
-    m_model->removeRows (0, 1);
-}
-
-void LogEntryInspector::push ()
-{
-    m_model->insertRows (entries.len (), 1);
-#ifdef XXX_NOTYET
-    auto index = m_model->index (entries.len () - 1);
-    m_view->scrollTo (index);
-#endif
 }
 
 EXPORT void log_inspector_show ()
