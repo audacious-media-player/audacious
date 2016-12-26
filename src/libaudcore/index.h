@@ -173,19 +173,25 @@ public:
 
     // func(val) returns true to remove val, false to keep it
     template<class F>
-    void remove_if (F func, bool clear_if_empty = false)
+    bool remove_if (F func, bool clear_if_empty = false)
     {
         T * iter = begin ();
+        bool changed = false;
         while (iter != end ())
         {
             if (func (* iter))
+            {
                 remove (iter - begin (), 1);
+                changed = true;
+            }
             else
                 iter ++;
         }
 
         if (clear_if_empty && ! len ())
             clear ();
+
+        return changed;
     }
 
     // compare(a, b) returns <0 if a<b, 0 if a=b, >0 if a>b
