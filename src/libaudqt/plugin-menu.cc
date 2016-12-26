@@ -42,19 +42,15 @@ static void show_prefs ()
 }
 
 MenuItem default_menu_items[] = {
-    MenuCommand ({N_("Plugins ...")}, show_prefs),
-    MenuSep ()
+    MenuCommand ({N_("Plugins ..."), "preferences-system"}, show_prefs),
 };
 
-EXPORT QMenu * menu_get_by_id (AudMenuID id)
+void menu_rebuild (AudMenuID id)
 {
     if (menus[id])
-        return menus[id];
-
-    menus[id] = new QMenu (_("Services"));
-
-    for (auto & item : default_menu_items)
-        menus[id]->addAction (menu_action (item, PACKAGE, menus[id]));
+        menus[id]->clear ();
+    else
+        menus[id] = new QMenu (_("Services"));
 
     for (auto & item : items[id])
     {
@@ -62,18 +58,26 @@ EXPORT QMenu * menu_get_by_id (AudMenuID id)
         menus[id]->addAction (item.action.get ());
     }
 
+    if (! menus[id]->isEmpty ())
+        menus[id]->addAction (menu_action (MenuSep (), PACKAGE, menus[id]));
+
+    for (auto & item : default_menu_items)
+        menus[id]->addAction (menu_action (item, PACKAGE, menus[id]));
+}
+
+EXPORT QMenu * menu_get_by_id (AudMenuID id)
+{
+    if (! menus[id])
+        menu_rebuild (id);
+
     return menus[id];
 }
 
 EXPORT void menu_add (AudMenuID id, MenuFunc func, const char * name, const char * icon)
 {
-    auto & item = items[id].append (MenuCommand ({name, icon}, func));
+    items[id].append (MenuCommand ({name, icon}, func));
 
-    if (menus[id])
-    {
-        item.action.capture (menu_action (item.item, nullptr));
-        menus[id]->addAction (item.action.get ());
-    }
+    menu_rebuild(id);
 }
 
 EXPORT void menu_remove (AudMenuID id, MenuFunc func)
@@ -81,7 +85,8 @@ EXPORT void menu_remove (AudMenuID id, MenuFunc func)
     auto is_match = [func] (ItemData & item)
         { return item.item.func == func; };
 
-    items[id].remove_if (is_match, true);
+    if (items[id].remove_if (is_match, true))
+        menu_rebuild (id);
 }
 
 } // namespace audqt
