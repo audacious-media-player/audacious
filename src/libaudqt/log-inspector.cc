@@ -22,9 +22,11 @@
 
 #include <QComboBox>
 #include <QDialog>
+#include <QDialogButtonBox>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QVBoxLayout>
+#include <QPushButton>
 #include <QTreeView>
 #include <QWidget>
 
@@ -57,6 +59,7 @@ public:
     LogEntryModel (QObject * parent = nullptr) :
         QAbstractListModel (parent) {}
 
+    void cleanup ();
 protected:
     int rowCount (const QModelIndex & parent = QModelIndex ()) const
         { return m_entries.len (); }
@@ -73,6 +76,16 @@ private:
     HookReceiver<LogEntryModel, const LogEntry *>
      log_hook {"audqt log entry", this, & LogEntryModel::addEntry};
 };
+
+void LogEntryModel::cleanup ()
+{
+    if (m_entries.len () > 0)
+    {
+        beginRemoveRows (QModelIndex (), 0, m_entries.len () - 1);
+        m_entries.remove (0, m_entries.len ());
+        endRemoveRows ();
+    }
+}
 
 /* log entry model */
 void LogEntryModel::addEntry (const LogEntry * entry)
@@ -172,6 +185,7 @@ private:
     QWidget m_bottom_container;
     QHBoxLayout m_bottom_layout;
 
+    QDialogButtonBox m_btnbox;
     QComboBox m_level_combobox;
     QLabel m_level_label;
 
@@ -181,6 +195,8 @@ private:
 LogEntryInspector::LogEntryInspector (QWidget * parent) :
     QDialog (parent)
 {
+    QPushButton * btn;
+
     setWindowTitle (_("Log Inspector"));
     setLayout (& m_layout);
 
@@ -190,6 +206,7 @@ LogEntryInspector::LogEntryInspector (QWidget * parent) :
     m_view->setAllColumnsShowFocus (true);
     m_view->setIndentation (0);
     m_view->setUniformRowHeights (true);
+    m_view->scrollToBottom ();
 
     m_layout.addWidget (m_view);
 
@@ -210,6 +227,18 @@ LogEntryInspector::LogEntryInspector (QWidget * parent) :
                       [this] (int idx) { setLogLevel ((audlog::Level) idx); });
 
     m_bottom_layout.addWidget (& m_level_combobox);
+
+    btn = m_btnbox.addButton (_("Clear"), QDialogButtonBox::ActionRole);
+    btn->setAutoDefault(false);
+    QObject::connect (btn, & QPushButton::clicked, [] () {
+        s_model.get ()->cleanup ();
+    });
+
+    btn = m_btnbox.addButton (QDialogButtonBox::Close);
+    btn->setAutoDefault(false);
+    QObject::connect (btn, & QPushButton::clicked, this, & QDialog::close);
+
+    m_bottom_layout.addWidget (& m_btnbox);
 
     m_bottom_container.setLayout (& m_bottom_layout);
     m_layout.addWidget (& m_bottom_container);
