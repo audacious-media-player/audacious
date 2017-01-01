@@ -664,28 +664,28 @@ static gboolean do_time (Obj * obj, Invoc * invoc)
 
 static gboolean do_toggle_auto_advance (Obj * obj, Invoc * invoc)
 {
-    aud_set_bool (nullptr, "no_playlist_advance", ! aud_get_bool (nullptr, "no_playlist_advance"));
+    aud_toggle_bool (nullptr, "no_playlist_advance");
     FINISH (toggle_auto_advance);
     return true;
 }
 
 static gboolean do_toggle_repeat (Obj * obj, Invoc * invoc)
 {
-    aud_set_bool (nullptr, "repeat", ! aud_get_bool (nullptr, "repeat"));
+    aud_toggle_bool (nullptr, "repeat");
     FINISH (toggle_repeat);
     return true;
 }
 
 static gboolean do_toggle_shuffle (Obj * obj, Invoc * invoc)
 {
-    aud_set_bool (nullptr, "shuffle", ! aud_get_bool (nullptr, "shuffle"));
+    aud_toggle_bool (nullptr, "shuffle");
     FINISH (toggle_shuffle);
     return true;
 }
 
 static gboolean do_toggle_stop_after (Obj * obj, Invoc * invoc)
 {
-    aud_set_bool (nullptr, "stop_after_current_song", ! aud_get_bool (nullptr, "stop_after_current_song"));
+    aud_toggle_bool (nullptr, "stop_after_current_song");
     FINISH (toggle_stop_after);
     return true;
 }

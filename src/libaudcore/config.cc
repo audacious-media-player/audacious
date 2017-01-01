@@ -387,6 +387,11 @@ EXPORT bool aud_get_bool (const char * section, const char * name)
     return ! strcmp (aud_get_str (section, name), "TRUE");
 }
 
+EXPORT void aud_toggle_bool (const char * section, const char * name)
+{
+    aud_set_bool (section, name, ! aud_get_bool (section, name));
+}
+
 EXPORT void aud_set_int (const char * section, const char * name, int value)
 {
     aud_set_str (section, name, int_to_str (value));

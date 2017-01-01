@@ -107,6 +107,7 @@ void aud_set_str (const char * section, const char * name, const char * value);
 String aud_get_str (const char * section, const char * name);
 void aud_set_bool (const char * section, const char * name, bool value);
 bool aud_get_bool (const char * section, const char * name);
+void aud_toggle_bool (const char * section, const char * name);
 void aud_set_int (const char * section, const char * name, int value);
 int aud_get_int (const char * section, const char * name);
 void aud_set_double (const char * section, const char * name, double value);
