@@ -47,11 +47,19 @@ EXPORT QPixmap art_request (const char * filename, unsigned int w, unsigned int 
         img = QImage (fallback);
     }
 
-    if (w == 0 && h == 0)
-    {
-        w = img.size ().width ();
-        h = img.size ().height ();
-    }
+    unsigned w0 = img.size ().width ();
+    unsigned h0 = img.size ().height ();
+
+    // return original image if requested size is zero,
+    // or original size is smaller than requested size
+    if ((w == 0 && h == 0) || (w0 <= w && h0 <= h))
+        return QPixmap::fromImage (img);
+
+    // scale down (maintain aspect ratio)
+    if (w0 * h > h0 * w)
+        h = aud::rescale (h0, w0, w);
+    else
+        w = aud::rescale (w0, h0, h);
 
     if (! want_hidpi)
         return QPixmap::fromImage (img.scaled (w, h, Qt::KeepAspectRatio, Qt::SmoothTransformation));
