@@ -28,23 +28,34 @@
 
 namespace audqt {
 
+static QImage load_fallback ()
+{
+    static QImage fallback;
+    static bool loaded = false;
+
+    if (! loaded)
+        fallback.load ((const char *) filename_build
+         ({aud_get_path (AudPath::DataDir), "images", "album.png"}));
+
+    return fallback; // shallow copy
+}
+
 EXPORT QPixmap art_request (const char * filename, unsigned int w, unsigned int h, bool want_hidpi)
 {
-    const Index<char> * data = aud_art_request_data (filename);
+    auto data = aud_art_request_data (filename);
     QImage img;
 
     if (data)
     {
         img = QImage::fromData ((const uchar *) data->begin (), data->len ());
-
         aud_art_unref (filename);
     }
-    else
-    {
-        QString fallback = QString (filename_build
-         ({aud_get_path (AudPath::DataDir), "images", "album.png"}));
 
-        img = QImage (fallback);
+    if (img.isNull ())
+    {
+        img = load_fallback ();
+        if (img.isNull ())
+            return QPixmap ();
     }
 
     unsigned w0 = img.size ().width ();
