@@ -93,7 +93,7 @@ void InfoWindow::fillInfo (int playlist, int entry, const char * filename, const
 void InfoWindow::displayImage (const char * filename)
 {
     if (! strcmp_safe (filename, m_filename))
-        m_image.setPixmap (art_request (filename));
+        m_image.setPixmap (art_request (filename, 256, 256)); // TODO: DPI scaling
 }
 
 static InfoWindow * s_infowin = nullptr;
@@ -112,7 +112,7 @@ static void show_infowin (int playlist, int entry, const char * filename,
     }
 
     s_infowin->fillInfo (playlist, entry, filename, tuple, decoder, can_write);
-    s_infowin->resize (700, 300);
+    s_infowin->resize (700, 300); // TODO: DPI scaling
     window_bring_to_front (s_infowin);
 }
 

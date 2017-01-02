@@ -100,8 +100,8 @@ void log_inspector_show ();
 void log_inspector_hide ();
 
 /* art.cc */
-QPixmap art_request (const char * filename, unsigned int w = 256, unsigned int h = 256, bool want_hidpi = true);
-QPixmap art_request_current (unsigned int w = 256, unsigned int h = 256, bool want_hidpi = true);
+QPixmap art_request (const char * filename, unsigned int w, unsigned int h, bool want_hidpi = true);
+QPixmap art_request_current (unsigned int w, unsigned int h, bool want_hidpi = true);
 
 /* infowin.cc */
 void infowin_show (int playlist, int entry);
