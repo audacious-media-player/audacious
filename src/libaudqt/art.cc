@@ -66,12 +66,6 @@ EXPORT QPixmap art_request (const char * filename, unsigned int w, unsigned int 
     if ((w == 0 && h == 0) || (w0 <= w && h0 <= h))
         return QPixmap::fromImage (img);
 
-    // scale down (maintain aspect ratio)
-    if (w0 * h > h0 * w)
-        h = aud::rescale (h0, w0, w);
-    else
-        w = aud::rescale (w0, h0, h);
-
     if (! want_hidpi)
         return QPixmap::fromImage (img.scaled (w, h, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
