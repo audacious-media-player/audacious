@@ -58,12 +58,9 @@ EXPORT QPixmap art_request (const char * filename, unsigned int w, unsigned int 
             return QPixmap ();
     }
 
-    unsigned w0 = img.size ().width ();
-    unsigned h0 = img.size ().height ();
-
     // return original image if requested size is zero,
     // or original size is smaller than requested size
-    if ((w == 0 && h == 0) || (w0 <= w && h0 <= h))
+    if ((w == 0 && h == 0) || ((unsigned) img.width () <= w && (unsigned) img.height () <= h))
         return QPixmap::fromImage (img);
 
     if (! want_hidpi)
