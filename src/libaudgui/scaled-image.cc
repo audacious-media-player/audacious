@@ -33,12 +33,12 @@ static GdkPixbuf * get_scaled (GtkWidget * widget, int maxwidth, int maxheight)
     {
         if (width * maxheight > height * maxwidth)
         {
-            height = height * maxwidth / width;
+            height = aud::rescale (height, width, maxwidth);
             width = maxwidth;
         }
         else
         {
-            width = width * maxheight / height;
+            width = aud::rescale (width, height, maxheight);
             height = maxheight;
         }
     }
