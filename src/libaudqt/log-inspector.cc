@@ -228,14 +228,16 @@ LogEntryInspector::LogEntryInspector (QWidget * parent) :
 
     m_bottom_layout.addWidget (& m_level_combobox);
 
-    btn = m_btnbox.addButton (_("Clear"), QDialogButtonBox::ActionRole);
-    btn->setAutoDefault(false);
+    btn = m_btnbox.addButton (translate_str (N_("Cl_ear")), QDialogButtonBox::ActionRole);
+    btn->setIcon (QIcon::fromTheme ("edit-clear-all"));
+    btn->setAutoDefault (false);
     QObject::connect (btn, & QPushButton::clicked, [] () {
         s_model.get ()->cleanup ();
     });
 
     btn = m_btnbox.addButton (QDialogButtonBox::Close);
-    btn->setAutoDefault(false);
+    btn->setText (translate_str (N_("_Close")));
+    btn->setAutoDefault (false);
     QObject::connect (btn, & QPushButton::clicked, this, & QDialog::close);
 
     m_bottom_layout.addWidget (& m_btnbox);
