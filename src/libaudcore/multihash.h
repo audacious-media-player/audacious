@@ -143,6 +143,60 @@ private:
     HashBase channels[Channels];
 };
 
+/* Type-safe version using templates. */
+
+template<class Node_T, class Data_T>
+class MultiHash_T : private MultiHash
+{
+public:
+    // Required interfaces:
+    //
+    // class Node_T : public Node
+    // {
+    //     bool match (const Data_T * data) const;
+    // };
+    //
+    // class Operation
+    // {
+    //     Node_T * add (const Data_T * data);
+    //     bool found (Node_T * node);
+    // };
+
+    MultiHash_T () : MultiHash (match_cb) {}
+
+    template<class Op>
+    int lookup (const Data_T * data, unsigned hash, Op & op)
+        { return MultiHash::lookup (data, hash, WrapAdd<Op>::run, WrapFound<Op>::run, & op); }
+
+    template<class F>
+    void iterate (F func)
+        { MultiHash::iterate (WrapIterate<F>::run, & func); }
+
+private:
+    static bool match_cb (const Node * node, const void * data)
+        { return ((const Node_T *) node)->match ((const Data_T *) data); }
+
+    template<class Op>
+    struct WrapAdd {
+        static Node * run (const void * data, void * op)
+            { return (Node *) ((Op *) op)->add ((const Data_T *) data); }
+    };
+
+    template<class Op>
+    struct WrapFound {
+        static bool run (Node * node, void * op)
+            { return ((Op *) op)->found ((Node_T *) node); }
+    };
+
+    template<class F>
+    struct WrapIterate {
+        static bool run (Node * node, void * func)
+            { return (* (F *) func) ((Node_T *) node); }
+    };
+};
+
+/* Simpler single-thread hash table. */
+
 template<class Key, class Value>
 class SimpleHash : private HashBase
 {

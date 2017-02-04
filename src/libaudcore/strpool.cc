@@ -105,30 +105,42 @@ EXPORT void string_leak_check ()
 
 #else /* ! VALGRIND_FRIENDLY */
 
-struct StrNode {
+struct StrNode
+{
     MultiHash::Node base;
     unsigned refs;
     char magic;
     char str[1];  // variable size
+
+    bool match (const char * data) const
+        { return data == str || ! strcmp (data, str); }
 };
+
+static_assert (offsetof (StrNode, base) == 0, "invalid layout");
 
 #define NODE_SIZE_FOR(s) (offsetof (StrNode, str) + strlen (s) + 1)
 #define NODE_OF(s) ((StrNode *) ((s) - offsetof (StrNode, str)))
 
-static bool match_cb (const MultiHash::Node * node_, const void * data_)
+struct Getter
 {
-    const StrNode * node = (const StrNode *) node_;
-    const char * data = (const char *) data_;
+    char * result;
 
-    return data == node->str || ! strcmp (data, node->str);
-}
+    StrNode * add (const char * data);
+    bool found (StrNode * node);
+};
 
-static MultiHash strpool_table (match_cb);
-
-static MultiHash::Node * add_cb (const void * data_, void * state)
+struct Remover
 {
-    const char * data = (const char *) data_;
+    StrNode * add (const char *)
+        { return nullptr; }
 
+    bool found (StrNode * node);
+};
+
+static MultiHash_T<StrNode, char> strpool_table;
+
+StrNode * Getter::add (const char * data)
+{
     StrNode * node = (StrNode *) malloc (NODE_SIZE_FOR (data));
     if (! node)
         throw std::bad_alloc ();
@@ -137,17 +149,15 @@ static MultiHash::Node * add_cb (const void * data_, void * state)
     node->magic = '@';
     strcpy (node->str, data);
 
-    * ((char * *) state) = node->str;
-    return (MultiHash::Node *) node;
+    result = node->str;
+    return node;
 }
 
-static bool ref_cb (MultiHash::Node * node_, void * state)
+bool Getter::found (StrNode * node)
 {
-    StrNode * node = (StrNode *) node_;
-
     __sync_fetch_and_add (& node->refs, 1);
 
-    * ((char * *) state) = node->str;
+    result = node->str;
     return false;
 }
 
@@ -161,9 +171,10 @@ EXPORT char * String::raw_get (const char * str)
     if (! str)
         return nullptr;
 
-    char * ret = nullptr;
-    strpool_table.lookup (str, str_calc_hash (str), add_cb, ref_cb, & ret);
-    return ret;
+    Getter op;
+    strpool_table.lookup (str, str_calc_hash (str), op);
+
+    return op.result;
 }
 
 /* Increments the reference count of <str>, where <str> is the address of a
@@ -180,13 +191,11 @@ EXPORT char * String::raw_ref (const char * str)
 
     __sync_fetch_and_add (& node->refs, 1);
 
-    return (char *) str;
+    return node->str;
 }
 
-static bool remove_cb (MultiHash::Node * node_, void * state)
+bool Remover::found (StrNode * node)
 {
-    StrNode * node = (StrNode *) node_;
-
     if (! __sync_bool_compare_and_swap (& node->refs, 1, 0))
         return false;
 
@@ -218,8 +227,8 @@ EXPORT void String::raw_unref (char * str)
         }
         else
         {
-            int status = strpool_table.lookup (node->str, node->base.hash, nullptr,
-             remove_cb, nullptr);
+            Remover op;
+            int status = strpool_table.lookup (node->str, node->base.hash, op);
 
             assert (status & MultiHash::Found);
             if (status & MultiHash::Removed)
@@ -228,15 +237,12 @@ EXPORT void String::raw_unref (char * str)
     }
 }
 
-static bool leak_cb (MultiHash::Node * node, void * state)
-{
-    AUDWARN ("String leaked: %s\n", ((StrNode *) node)->str);
-    return false;
-}
-
 void string_leak_check ()
 {
-    strpool_table.iterate (leak_cb, nullptr);
+    strpool_table.iterate ([] (StrNode * node) {
+        AUDWARN ("String leaked: %s\n", node->str);
+        return false;
+    });
 }
 
 /* Returns the cached hash value of a pooled string (or 0 for null). */

@@ -66,47 +66,48 @@ struct QueuedFuncHelper
     virtual void stop ();
 
 private:
+    struct RunCheck;
+
     int glib_source = 0;
 };
 
-struct QueuedFuncNode : public MultiHash::Node {
+struct QueuedFuncNode : public MultiHash::Node
+{
     QueuedFunc * queued;
     QueuedFuncHelper * helper;
     bool can_stop;
+
+    bool match (const QueuedFunc * q) const
+        { return q == queued; }
 };
 
-static bool match_cb (const MultiHash::Node * node_, const void * queued_)
-{
-    auto node = (const QueuedFuncNode *) node_;
-    return node->queued == (QueuedFunc *) queued_;
-}
+static MultiHash_T<QueuedFuncNode, QueuedFunc> func_table;
 
-static MultiHash func_table (match_cb);
+struct QueuedFuncHelper::RunCheck
+{
+    QueuedFuncHelper * helper;
+    bool valid;
+
+    QueuedFuncNode * add (const QueuedFunc *)
+        { return nullptr; }
+
+    bool found (const QueuedFuncNode * node)
+    {
+        valid = (node->helper == helper);
+
+        if (! valid || ! helper->params.repeat)
+            helper->stop ();
+
+        return valid && ! helper->params.repeat;
+    }
+};
 
 void QueuedFuncHelper::run ()
 {
-    struct State {
-        QueuedFuncHelper * helper;
-        bool valid;
-    };
+    RunCheck r = {this, false};
+    func_table.lookup (queued, ptr_hash (queued), r);
 
-    auto found_cb = [] (MultiHash::Node * node_, void * s_)
-    {
-        auto node = (const QueuedFuncNode *) node_;
-        auto s = (State *) s_;
-
-        s->valid = (node->helper == s->helper);
-
-        if (! s->valid || ! s->helper->params.repeat)
-            s->helper->stop ();
-
-        return s->valid && ! s->helper->params.repeat;
-    };
-
-    State s = {this, false};
-    func_table.lookup (queued, ptr_hash (queued), nullptr, found_cb, & s);
-
-    if (s.valid)
+    if (r.valid)
         params.func (params.data);
 }
 
@@ -210,38 +211,41 @@ static QueuedFuncHelper * create_helper (const QueuedFuncParams & params)
     return new QueuedFuncHelper (params);
 }
 
-void QueuedFunc::start (const QueuedFuncParams & params)
+struct QueuedFunc::Starter
 {
-    auto add_cb = [] (const void * me_, void * helper_) {
-        auto me = (QueuedFunc *) me_;
-        auto helper = (QueuedFuncHelper *) helper_;
+    QueuedFunc * queued;
+    QueuedFuncHelper * helper;
 
+    QueuedFuncNode * add (const QueuedFunc *)
+    {
         auto node = new QueuedFuncNode;
-        node->queued = me;
+        node->queued = queued;
         node->helper = helper;
         node->can_stop = helper->can_stop ();
 
-        helper->start_for (me);
+        helper->start_for (queued);
 
-        return (MultiHash::Node *) node;
-    };
+        return node;
+    }
 
-    auto replace_cb = [] (MultiHash::Node * node_, void * helper_) {
-        auto node = (QueuedFuncNode *) node_;
-        auto helper = (QueuedFuncHelper *) helper_;
-
+    bool found (QueuedFuncNode * node)
+    {
         if (node->can_stop)
             node->helper->stop ();
 
         node->helper = helper;
         node->can_stop = helper->can_stop ();
 
-        helper->start_for (node->queued);
+        helper->start_for (queued);
 
         return false; // do not remove
-    };
+    }
+};
 
-    func_table.lookup (this, ptr_hash (this), add_cb, replace_cb, create_helper (params));
+void QueuedFunc::start (const QueuedFuncParams & params)
+{
+    Starter s = {this, create_helper (params)};
+    func_table.lookup (this, ptr_hash (this), s);
 }
 
 EXPORT void QueuedFunc::queue (Func func, void * data)
@@ -261,11 +265,13 @@ EXPORT void QueuedFunc::start (int interval_ms, Func func, void * data)
     start ({func, data, interval_ms, true});
 }
 
-EXPORT void QueuedFunc::stop ()
+struct QueuedFunc::Stopper
 {
-    auto remove_cb = [] (MultiHash::Node * node_, void *) {
-        auto node = (QueuedFuncNode *) node_;
+    QueuedFuncNode * add (const QueuedFunc *)
+        { return nullptr; }
 
+    bool found (QueuedFuncNode * node)
+    {
         if (node->can_stop)
             node->helper->stop ();
 
@@ -273,9 +279,13 @@ EXPORT void QueuedFunc::stop ()
         delete node;
 
         return true; // remove
-    };
+    }
+};
 
-    func_table.lookup (this, ptr_hash (this), nullptr, remove_cb, nullptr);
+EXPORT void QueuedFunc::stop ()
+{
+    Stopper s;
+    func_table.lookup (this, ptr_hash (this), s);
 }
 
 EXPORT void mainloop_run ()

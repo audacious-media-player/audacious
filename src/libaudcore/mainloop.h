@@ -60,6 +60,9 @@ public:
         { stop (); }
 
 private:
+    struct Starter;
+    struct Stopper;
+
     bool _running = false;
 
     void start (const QueuedFuncParams & params);
