@@ -407,31 +407,22 @@ static bool write_frame (VFSFile & file, const GenericFrame & frame, int version
     return true;
 }
 
-struct WriteState {
-    VFSFile & file;
-    int version;
-    int written_size;
-};
-
-static void write_frame_list (const String & key, FrameList & list, void * user)
-{
-    WriteState * state = (WriteState *) user;
-
-    for (const GenericFrame & frame : list)
-    {
-        int size;
-        if (write_frame (state->file, frame, state->version, & size))
-            state->written_size += size;
-    }
-}
-
 static int write_all_frames (VFSFile & file, FrameDict & dict, int version)
 {
-    WriteState state = {file, version, 0};
-    dict.iterate (write_frame_list, & state);
+    int written_size = 0;
 
-    AUDDBG ("Total frame bytes written = %d.\n", state.written_size);
-    return state.written_size;
+    dict.iterate ([&] (const String & key, FrameList & list)
+    {
+        for (const GenericFrame & frame : list)
+        {
+            int size;
+            if (write_frame (file, frame, version, & size))
+                written_size += size;
+        }
+    });
+
+    AUDDBG ("Total frame bytes written = %d.\n", written_size);
+    return written_size;
 }
 
 static bool write_header (VFSFile & file, int version, int size)

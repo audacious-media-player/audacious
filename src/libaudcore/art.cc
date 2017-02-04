@@ -58,21 +58,19 @@ static SimpleHash<String, ArtItem> art_items;
 static String current_ref;
 static QueuedFunc queued_requests;
 
-static void get_queued_cb (const String & key, ArtItem & item, void * list)
-{
-    if (item.flag == FLAG_DONE)
-    {
-        ((Index<String> *) list)->append (key);
-        item.flag = FLAG_SENT;
-    }
-}
-
 static Index<String> get_queued ()
 {
     Index<String> queued;
     pthread_mutex_lock (& mutex);
 
-    art_items.iterate (get_queued_cb, & queued);
+    art_items.iterate ([&] (const String & key, ArtItem & item)
+    {
+        if (item.flag == FLAG_DONE)
+        {
+            queued.append (key);
+            item.flag = FLAG_SENT;
+        }
+    });
 
     queued_requests.stop ();
 

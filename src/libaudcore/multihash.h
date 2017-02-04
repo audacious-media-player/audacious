@@ -188,17 +188,15 @@ public:
         }
     }
 
-    void iterate (IterFunc func, void * state)
-    {
-        IterData data = {func, state};
-        HashBase::iterate (iterate_cb, & data);
-    }
-
     void clear ()
     {
         HashBase::iterate (remove_cb, nullptr);
         HashBase::clear ();
     }
+
+    template<class F>
+    void iterate (F func)
+        { HashBase::iterate (WrapIterate<F>::run, & func); }
 
 private:
     struct Node : public HashBase::Node
@@ -225,13 +223,17 @@ private:
         return true;
     }
 
-    static bool iterate_cb (HashBase::Node * node0, void * data0)
+    // C-style callback wrapping generic iteration functor
+    template<class F>
+    struct WrapIterate
     {
-        Node * node = (Node *) node0;
-        IterData * data = (IterData *) data0;
-        data->func (node->key, node->value, data->state);
-        return false;
-    }
+        static bool run (HashBase::Node * node0, void * func)
+        {
+            Node * node = (Node *) node0;
+            (* (F *) func) (node->key, node->value);
+            return false;
+        }
+    };
 };
 
 #endif /* LIBAUDCORE_MULTIHASH_H */
