@@ -174,30 +174,13 @@ public:
     unsigned hash () const
         { return raw_hash (raw); }
 
-    // raw interface
-    // avoid using where possible
-
-    static String from_raw (char * str)
-    {
-        String s;
-        s.raw = str;
-        return s;
-    }
-
-    char * to_raw ()
-    {
-        char * str = raw;
-        raw = nullptr;
-        return str;
-    }
-
+private:
     static char * raw_get (const char * str);
     static char * raw_ref (const char * str);
     static void raw_unref (char * str);
     static unsigned raw_hash (const char * str);
     static bool raw_equal (const char * str1, const char * str2);
 
-private:
     char * raw;
 };
 
