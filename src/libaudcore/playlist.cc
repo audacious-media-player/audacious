@@ -199,8 +199,8 @@ static void scan_restart ();
 
 static bool next_song_locked (PlaylistData * playlist, bool repeat, int hint);
 
-static void playlist_reformat_titles ();
-static void playlist_trigger_scan ();
+static void playlist_reformat_titles (void * = nullptr, void * = nullptr);
+static void playlist_trigger_scan (void * = nullptr, void * = nullptr);
 
 void Entry::format ()
 {
@@ -743,12 +743,12 @@ void playlist_init ()
     /* initialize title formatter */
     playlist_reformat_titles ();
 
-    hook_associate ("set metadata_on_play", (HookFunction) playlist_trigger_scan, nullptr);
-    hook_associate ("set generic_title_format", (HookFunction) playlist_reformat_titles, nullptr);
-    hook_associate ("set leading_zero", (HookFunction) playlist_reformat_titles, nullptr);
-    hook_associate ("set show_hours", (HookFunction) playlist_reformat_titles, nullptr);
-    hook_associate ("set metadata_fallbacks", (HookFunction) playlist_reformat_titles, nullptr);
-    hook_associate ("set show_numbers_in_pl", (HookFunction) playlist_reformat_titles, nullptr);
+    hook_associate ("set metadata_on_play", playlist_trigger_scan, nullptr);
+    hook_associate ("set generic_title_format", playlist_reformat_titles, nullptr);
+    hook_associate ("set leading_zero", playlist_reformat_titles, nullptr);
+    hook_associate ("set show_hours", playlist_reformat_titles, nullptr);
+    hook_associate ("set metadata_fallbacks", playlist_reformat_titles, nullptr);
+    hook_associate ("set show_numbers_in_pl", playlist_reformat_titles, nullptr);
 }
 
 void playlist_enable_scan (bool enable)
@@ -764,12 +764,12 @@ void playlist_enable_scan (bool enable)
 
 void playlist_end ()
 {
-    hook_dissociate ("set metadata_on_play", (HookFunction) playlist_trigger_scan);
-    hook_dissociate ("set generic_title_format", (HookFunction) playlist_reformat_titles);
-    hook_dissociate ("set leading_zero", (HookFunction) playlist_reformat_titles);
-    hook_dissociate ("set show_hours", (HookFunction) playlist_reformat_titles);
-    hook_dissociate ("set metadata_fallbacks", (HookFunction) playlist_reformat_titles);
-    hook_dissociate ("set show_numbers_in_pl", (HookFunction) playlist_reformat_titles);
+    hook_dissociate ("set metadata_on_play", playlist_trigger_scan);
+    hook_dissociate ("set generic_title_format", playlist_reformat_titles);
+    hook_dissociate ("set leading_zero", playlist_reformat_titles);
+    hook_dissociate ("set show_hours", playlist_reformat_titles);
+    hook_dissociate ("set metadata_fallbacks", playlist_reformat_titles);
+    hook_dissociate ("set show_numbers_in_pl", playlist_reformat_titles);
 
     playlist_cache_clear ();
 
@@ -1776,7 +1776,7 @@ EXPORT void aud_playlist_sort_selected_by_tuple (int playlist_num,
     LEAVE;
 }
 
-static void playlist_reformat_titles ()
+static void playlist_reformat_titles (void *, void *)
 {
     ENTER;
 
@@ -1794,7 +1794,7 @@ static void playlist_reformat_titles ()
     LEAVE;
 }
 
-static void playlist_trigger_scan ()
+static void playlist_trigger_scan (void *, void *)
 {
     ENTER;
 
