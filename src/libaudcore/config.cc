@@ -330,11 +330,8 @@ EXPORT void aud_config_set_defaults (const char * section, const char * const * 
 
 void config_cleanup ()
 {
-    auto remove_cb = [] (ConfigNode * node)
-        { delete node; return true; };
-
-    s_config.iterate (remove_cb);
-    s_defaults.iterate (remove_cb);
+    s_config.clear ();
+    s_defaults.clear ();
 }
 
 EXPORT void aud_set_str (const char * section, const char * name, const char * value)
