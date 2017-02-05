@@ -97,10 +97,12 @@ void QueuedFuncHelper::run ()
 
         s->valid = (node->helper == s->helper);
 
-        if (! s->valid || ! s->helper->params.repeat)
-            s->helper->stop ();
+        bool remove = s->valid && ! s->helper->params.repeat;
 
-        return s->valid && ! s->helper->params.repeat;
+        if (! s->valid || ! s->helper->params.repeat)
+            s->helper->stop ();  // may delete the helper
+
+        return remove;
     };
 
     State s = {this, false};
