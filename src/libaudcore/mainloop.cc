@@ -46,6 +46,10 @@ struct QueuedFuncParams {
     bool repeat;
 };
 
+// Helper class that is created when the QueuedFunc is activated.  The base
+// class contains the GLib implementation.  The Qt implementation, which is more
+// complex, is contained in the QueuedFuncEvent and QueuedFuncTimer subclasses.
+
 struct QueuedFuncHelper
 {
     QueuedFuncParams params;
@@ -71,6 +75,11 @@ private:
     int glib_source = 0;
 };
 
+// The following hash table implements a thread-safe "registry" of active
+// QueuedFuncs.  This allows a callback executing in the main thread to safely
+// look up the information it needs, without accessing the QueuedFunc directly
+// and risking use-after-free.
+
 struct QueuedFuncNode : public MultiHash::Node
 {
     QueuedFunc * queued;
@@ -83,6 +92,9 @@ struct QueuedFuncNode : public MultiHash::Node
 
 static MultiHash_T<QueuedFuncNode, QueuedFunc> func_table;
 
+// Helper logic common between GLib and Qt
+
+// "run" logic executed within the hash table lock
 struct QueuedFuncHelper::RunCheck
 {
     QueuedFuncHelper * helper;
@@ -93,17 +105,30 @@ struct QueuedFuncHelper::RunCheck
 
     bool found (const QueuedFuncNode * node)
     {
+        // Check that the same helper is installed as when the function was
+        // first queued.  If a new helper is installed, then we are processing
+        // a "stale" event and should not run the callback.
         valid = (node->helper == helper);
 
+        // Uninstall the QueuedFunc and helper if this is a one-time (non-
+        // periodic) callback.  Do NOT uninstall the QueuedFunc if has already
+        // been reinstalled with a new helper (see previous comment).
+        bool remove = valid && ! helper->params.repeat;
+
+        // Clean up the helper if this is a one-time (non-periodic) callback OR
+        // a new helper has already been installed.  No fields or methods of the
+        // helper may be accessed after this point.
         if (! valid || ! helper->params.repeat)
             helper->stop ();
 
-        return valid && ! helper->params.repeat;
+        return remove;
     }
 };
 
 void QueuedFuncHelper::run ()
 {
+    // Check whether it's okay to run.  The actual check is performed within
+    // the MultiHash lock to eliminate race conditions.
     RunCheck r = {this, false};
     func_table.lookup (queued, ptr_hash (queued), r);
 
@@ -116,18 +141,20 @@ void QueuedFuncHelper::start_for (QueuedFunc * queued_)
     queued = queued_;
     queued->_running = params.repeat;
 
-    start ();
+    start (); // branch to GLib or Qt implementation
 }
+
+// GLib implementation -- simple wrapper around g_timeout_add_full()
 
 void QueuedFuncHelper::start ()
 {
     auto callback = [] (void * me) -> gboolean {
-        ((QueuedFuncHelper *) me)->run ();
+        (static_cast<QueuedFuncHelper *> (me))->run ();
         return G_SOURCE_CONTINUE;
     };
 
     auto destroy = [] (void * me) {
-        delete (QueuedFuncHelper *) me;
+        delete static_cast<QueuedFuncHelper *> (me);
     };
 
     glib_source = g_timeout_add_full (G_PRIORITY_HIGH, params.interval_ms,
@@ -141,6 +168,16 @@ void QueuedFuncHelper::stop ()
 }
 
 #ifdef USE_QT
+
+// Qt implementation -- rather more complicated
+
+// One-time callbacks are implemented through custom events posted to a "router"
+// object.  In this case, the QueuedFuncHelper class is the QEvent itself.  The
+// router object is created in, and associated with, the main thread, thus
+// events are executed in the main thread regardless of their origin.  Events
+// can be queued even before the QApplication has been created.  Note that
+// QEvents cannot be cancelled once posted; therefore it's necessary to check
+// on our side that the QueuedFunc is still active when the event is received.
 
 class QueuedFuncEvent : public QueuedFuncHelper, public QEvent
 {
@@ -169,6 +206,15 @@ void QueuedFuncEvent::start ()
     QCoreApplication::postEvent (& router, this, Qt::HighEventPriority);
 }
 
+// Periodic callbacks are implemented through QObject's timer capability.  In
+// this case, the QueuedFuncHelper is a QObject that is re-associated with the
+// main thread immediately after creation.  The timer is started in a roundabout
+// fashion due to the fact that QObject::startTimer() does not work until the
+// QApplication has been created.  To work around this, a single QEvent is first
+// posted.  When this initial event is executed (in the main thread), we know
+// that the QApplication is up.  We then start the timer and run our own
+// callback from the QTimerEvents we receive.
+
 class QueuedFuncTimer : public QueuedFuncHelper, public QObject
 {
 public:
@@ -178,9 +224,6 @@ public:
     void start ()
     {
         moveToThread (router.thread ());  // main thread
-
-        // The timer cannot be started until QCoreApplication is instantiated.
-        // Send ourselves an event and wait till it comes back, then start the timer.
         QCoreApplication::postEvent (this, new QEvent (QEvent::User), Qt::HighEventPriority);
     }
 
@@ -188,14 +231,15 @@ public:
         { deleteLater (); }
 
 protected:
-    void customEvent (QEvent * event)
+    void customEvent (QEvent *)
         { startTimer (params.interval_ms); }
-    void timerEvent (QTimerEvent * event)
+    void timerEvent (QTimerEvent *)
         { run (); }
 };
 
 #endif // USE_QT
 
+// creates the appropriate helper subclass
 static QueuedFuncHelper * create_helper (const QueuedFuncParams & params)
 {
 #ifdef USE_QT
@@ -211,11 +255,14 @@ static QueuedFuncHelper * create_helper (const QueuedFuncParams & params)
     return new QueuedFuncHelper (params);
 }
 
+// "start" logic executed within the hash table lock
 struct QueuedFunc::Starter
 {
     QueuedFunc * queued;
     QueuedFuncHelper * helper;
 
+    // QueuedFunc not yet installed
+    // install, then create a helper and start it
     QueuedFuncNode * add (const QueuedFunc *)
     {
         auto node = new QueuedFuncNode;
@@ -228,6 +275,9 @@ struct QueuedFunc::Starter
         return node;
     }
 
+    // QueuedFunc already installed
+    // first clean up the existing helper
+    // then create a new helper and start it
     bool found (QueuedFuncNode * node)
     {
         if (node->can_stop)
@@ -242,6 +292,7 @@ struct QueuedFunc::Starter
     }
 };
 
+// common entry point used by all queue() and start() variants
 void QueuedFunc::start (const QueuedFuncParams & params)
 {
     Starter s = {this, create_helper (params)};
@@ -265,11 +316,14 @@ EXPORT void QueuedFunc::start (int interval_ms, Func func, void * data)
     start ({func, data, interval_ms, true});
 }
 
+// "stop" logic executed within the hash table lock
 struct QueuedFunc::Stopper
 {
+    // not installed, do nothing
     QueuedFuncNode * add (const QueuedFunc *)
         { return nullptr; }
 
+    // installed, clean up the helper and uninstall
     bool found (QueuedFuncNode * node)
     {
         if (node->can_stop)
@@ -287,6 +341,8 @@ EXPORT void QueuedFunc::stop ()
     Stopper s;
     func_table.lookup (this, ptr_hash (this), s);
 }
+
+// main loop implementation follows
 
 EXPORT void mainloop_run ()
 {
