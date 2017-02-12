@@ -60,6 +60,67 @@ static void test_audio_conversion ()
         assert (out[i] == (in[i] & 0xffffff));
 }
 
+static void test_case_conversion ()
+{
+    const char in[]        = "AÄaäEÊeêIÌiìOÕoõUÚuú";
+    const char low_ascii[] = "aÄaäeÊeêiÌiìoÕoõuÚuú";
+    const char low_utf8[]  = "aäaäeêeêiìiìoõoõuúuú";
+    const char hi_ascii[]  = "AÄAäEÊEêIÌIìOÕOõUÚUú";
+    const char hi_utf8[]   = "AÄAÄEÊEÊIÌIÌOÕOÕUÚUÚ";
+
+    assert (! strcmp (low_ascii, str_tolower (in)));
+    assert (! strcmp (low_utf8, str_tolower_utf8 (in)));
+    assert (! strcmp (hi_ascii, str_toupper (in)));
+    assert (! strcmp (hi_utf8, str_toupper_utf8 (in)));
+
+    assert (! strcmp_safe ("abc", "abc"));
+    assert (! strcmp_safe ("abc", "abcdef", 3));
+    assert (strcmp_safe ("abc", "def") < 0);
+    assert (strcmp_safe ("def", "abc") > 0);
+    assert (! strcmp_safe (nullptr, nullptr));
+    assert (strcmp_safe (nullptr, "abc") < 0);
+    assert (strcmp_safe ("abc", nullptr) > 0);
+
+    assert (! strcmp_nocase ("abc", "ABC"));
+    assert (! strcmp_nocase ("ABC", "abcdef", 3));
+    assert (strcmp_nocase ("abc", "DEF") < 0);
+    assert (strcmp_nocase ("ABC", "def") < 0);
+    assert (strcmp_nocase ("def", "ABC") > 0);
+    assert (strcmp_nocase ("DEF", "abc") > 0);
+    assert (! strcmp_nocase (nullptr, nullptr));
+    assert (strcmp_nocase (nullptr, "abc") < 0);
+    assert (strcmp_nocase ("abc", nullptr) > 0);
+
+    assert (! strcmp_nocase (in, low_ascii));
+    assert (strcmp_nocase (in, low_utf8));
+    assert (! strcmp_nocase (in, hi_ascii));
+    assert (strcmp_nocase (in, hi_utf8));
+
+    assert (str_has_prefix_nocase (low_ascii, "AÄaä"));
+    assert (! str_has_prefix_nocase (low_utf8, "AÄaä"));
+    assert (str_has_prefix_nocase (hi_ascii, "AÄaä"));
+    assert (! str_has_prefix_nocase (hi_utf8, "AÄaä"));
+
+    assert (str_has_suffix_nocase (low_ascii, "UÚuú"));
+    assert (! str_has_suffix_nocase (low_utf8, "UÚuú"));
+    assert (str_has_suffix_nocase (hi_ascii, "UÚuú"));
+    assert (! str_has_suffix_nocase (hi_utf8, "UÚuú"));
+
+    assert (! str_has_suffix_nocase ("abc", "abcd"));
+
+    assert (! strcmp (strstr_nocase (low_ascii, "OÕoõ"), "oÕoõuÚuú"));
+    assert (strstr_nocase (low_utf8, "OÕoõ") == nullptr);
+    assert (! strcmp (strstr_nocase (hi_ascii, "OÕoõ"), "OÕOõUÚUú"));
+    assert (strstr_nocase (hi_utf8, "OÕoõ") == nullptr);
+
+    assert (! strcmp (strstr_nocase_utf8 (low_ascii, "OÕoõ"), "oÕoõuÚuú"));
+    assert (! strcmp (strstr_nocase_utf8 (low_utf8, "OÕoõ"), "oõoõuúuú"));
+    assert (strstr_nocase_utf8 (low_utf8, "OOoo") == nullptr);
+    assert (! strcmp (strstr_nocase_utf8 (hi_ascii, "OÕoõ"), "OÕOõUÚUú"));
+    assert (! strcmp (strstr_nocase_utf8 (hi_utf8, "OÕoõ"), "OÕOÕUÚUÚ"));
+    assert (strstr_nocase_utf8 (hi_utf8, "OOoo") == nullptr);
+}
+
 static void test_numeric_conversion ()
 {
     static const char * in[] = {
@@ -396,6 +457,7 @@ static void test_ringbuf ()
 int main ()
 {
     test_audio_conversion ();
+    test_case_conversion ();
     test_numeric_conversion ();
     test_filename_split ();
     test_tuple_formats ();

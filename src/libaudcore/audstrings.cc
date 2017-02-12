@@ -314,6 +314,37 @@ EXPORT StringBuf str_tolower_utf8 (const char * str)
     return buf;
 }
 
+EXPORT StringBuf str_toupper (const char * str)
+{
+    StringBuf buf (strlen (str));
+    char * set = buf;
+
+    while (* str)
+        * set ++ = g_ascii_toupper (* str ++);
+
+    return buf;
+}
+
+EXPORT StringBuf str_toupper_utf8 (const char * str)
+{
+    StringBuf buf (6 * strlen (str));
+    char * set = buf;
+    gunichar c;
+
+    while ((c = g_utf8_get_char (str)))
+    {
+        if (c < 128)
+            * set ++ = g_ascii_toupper (c);
+        else
+            set += g_unichar_to_utf8 (g_unichar_toupper (c), set);
+
+        str = g_utf8_next_char (str);
+    }
+
+    buf.resize (set - buf);
+    return buf;
+}
+
 EXPORT void str_replace_char (char * string, char old_c, char new_c)
 {
     while ((string = strchr (string, old_c)))
