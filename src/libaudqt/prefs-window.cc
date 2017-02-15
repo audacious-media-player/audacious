@@ -116,11 +116,6 @@ struct Category {
     const char * name;
 };
 
-struct PluginCategory {
-    PluginType type;
-    const char * name;
-};
-
 struct TitleFieldTag {
     const char * name;
     const char * tag;
@@ -143,15 +138,6 @@ static const Category categories[] = {
     { "playlist.png", N_("Playlist")} ,
     { "info.png", N_("Song Info") },
     { "plugins.png", N_("Plugins") }
-};
-
-static const PluginCategory plugin_categories[] = {
-    { PluginType::General, N_("General") },
-    { PluginType::Effect, N_("Effect") },
-    { PluginType::Vis, N_("Visualization") },
-    { PluginType::Input, N_("Input") },
-    { PluginType::Playlist, N_("Playlist") },
-    { PluginType::Transport, N_("Transport") }
 };
 
 static const TitleFieldTag title_field_tags[] = {
@@ -556,54 +542,41 @@ static void create_category (QStackedWidget * notebook, ArrayRef<PreferencesWidg
     notebook->addWidget (w);
 }
 
-static void create_plugin_category_page (PluginType category_id, const char * category_name, QTabWidget * parent)
-{
-    QTreeView * view = new QTreeView;
-    QHeaderView * header = view->header ();
+static QTreeView * s_plugin_view;
+static PluginListModel * s_plugin_model;
 
-    view->setIndentation (0);
-    view->setModel (new PluginListModel (view, category_id));
-    view->setSelectionMode (view->NoSelection);
+static void create_plugin_category (QStackedWidget * parent)
+{
+    s_plugin_view = new QTreeView (parent);
+    s_plugin_model = new PluginListModel (s_plugin_view);
+
+    s_plugin_view->setModel (s_plugin_model);
+    s_plugin_view->setSelectionMode (QTreeView::NoSelection);
+
+    auto header = s_plugin_view->header ();
 
     header->hide ();
     header->setSectionResizeMode (header->ResizeToContents);
     header->setStretchLastSection (false);
 
-    parent->addTab (view, category_name);
+    parent->addWidget (s_plugin_view);
 
-    QObject::connect (view, & QAbstractItemView::clicked,
-     [category_id] (const QModelIndex & index)
+    QObject::connect (s_plugin_view, & QAbstractItemView::clicked, [] (const QModelIndex & index)
     {
-        int row = index.row ();
-        auto & list = aud_plugin_list (category_id);
-
-        if (row < 0 || row >= list.len () || ! aud_plugin_get_enabled (list[row]))
+        auto p = s_plugin_model->pluginForIndex (index);
+        if (! p)
             return;
 
         switch (index.column ())
         {
         case PluginListModel::AboutColumn:
-            plugin_about (list[row]);
+            plugin_about (p);
             break;
         case PluginListModel::SettingsColumn:
-            plugin_prefs (list[row]);
+            plugin_prefs (p);
             break;
         }
     });
-}
-
-static QTabWidget * plugin_tabs = nullptr;
-
-static void create_plugin_category (QStackedWidget * parent)
-{
-    plugin_tabs = new QTabWidget;
-
-    for (const PluginCategory & w : plugin_categories)
-    {
-        create_plugin_category_page (w.type, _(w.name), plugin_tabs);
-    }
-
-    parent->addWidget (plugin_tabs);
 }
 
 static QStackedWidget * s_category_notebook = nullptr;
@@ -783,10 +756,14 @@ EXPORT void prefswin_show_plugin_page (PluginType type)
     {
         prefswin_show_page (CATEGORY_PLUGINS, false);
 
-        for (const PluginCategory & category : plugin_categories)
+        s_plugin_view->collapseAll ();
+
+        auto index = s_plugin_model->indexForType (type);
+        if (index.isValid ())
         {
-            if (category.type == type)
-                plugin_tabs->setCurrentIndex (& category - plugin_categories);
+            s_plugin_view->expand (index);
+            s_plugin_view->scrollTo (index, QTreeView::PositionAtTop);
+            s_plugin_view->setCurrentIndex (index);
         }
 
         window_bring_to_front (PrefsWindow::get_instance ());
