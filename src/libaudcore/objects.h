@@ -51,11 +51,7 @@ struct ArrayRef
 
 // Smart pointer.  Deletes object pointed to when the pointer goes out of scope.
 
-template<class T>
-void SmartPtrDelete (T * ptr)
-    { (void) sizeof (T); delete ptr; }
-
-template<class T, void (* deleter) (T *) = SmartPtrDelete>
+template<class T, void (* deleter) (T *) = aud::delete_typed>
 class SmartPtr
 {
 public:
