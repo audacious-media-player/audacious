@@ -27,23 +27,52 @@ class PluginHandle;
 class Tuple;
 class VFSFile;
 
-/* Gets album art for <file> (the URI of a song file) as JPEG or PNG data.  If
- * the album art is not yet loaded, sets *queued to true, returns nullptr, and
- * begins to load the album art in the background.  On completion, the "art
- * ready" hook is called, with <file> as a parameter.  If no album art could be
- * loaded, sets *queued to false and returns nullptr.
+/* ====== ALBUM ART API ====== */
+
+/* request format */
+enum {
+    AUD_ART_DATA = (1 << 0),  /* image data in memory */
+    AUD_ART_FILE = (1 << 1)   /* filename of image data on disk */
+};
+
+/* opaque type storing art data */
+struct AudArtItem;
+
+/* don't use these directly, use AudArtPtr */
+const Index<char> * aud_art_data (const AudArtItem * item);
+const char * aud_art_file (const AudArtItem * item);
+void aud_art_unref (AudArtItem * item);
+
+/* handle for accessing/tracking album art data */
+class AudArtPtr : public SmartPtr<AudArtItem, aud_art_unref>
+{
+public:
+    using SmartPtr::SmartPtr;
+
+    const Index<char> * data () const
+        { return get () ? aud_art_data (get ()) : nullptr; }
+    const char * file () const
+        { return get () ? aud_art_file (get ()) : nullptr; }
+};
+
+/*
+ * Gets album art for <file> (the URI of a song file).  The data will be
+ * returned in the requested <format> (AUD_ART_DATA or AUD_ART_FILE).
  *
- * If you only want to display album art for the currently playing song, you can
- * call this function from the "playback ready" hook without any need for a
- * separate "art ready" handler, since the album art is already at that point. */
-const Index<char> * aud_art_request_data (const char * file, bool * queued = nullptr);
+ * This is a non-blocking call.  If the data is not yet loaded, it sets *queued
+ * to true, returns a null pointer, and begins to load the data in the back-
+ * ground.  On completion, the "art ready" hook is called, with <file> as a
+ * parameter.  The data can then be requested again from within the hook.
+ *
+ * As a special case, album art data for the currently playing song is preloaded
+ * by the time the "playback ready" hook is called, so in that case there is no
+ * need to implement a separate "art ready" handler.
+ *
+ * On error, a null pointer is returned and *queued is set to false.
+ */
+AudArtPtr aud_art_request (const char * file, int format, bool * queued = nullptr);
 
-/* Similar to art_request_data() but returns the URI of an image file.
- * (A temporary file will be created if necessary.) */
-const char * aud_art_request_file (const char * file, bool * queued = nullptr);
-
-/* Releases album art returned by art_request_data() or art_request_file(). */
-void aud_art_unref (const char * file);
+/* ====== GENERAL PROBING API ====== */
 
 /* The following two functions take an additional VFSFile parameter to allow
  * opening a file, probing for a decoder, and then reading the song metadata

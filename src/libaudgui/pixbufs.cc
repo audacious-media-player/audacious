@@ -74,14 +74,10 @@ EXPORT void audgui_pixbuf_scale_within (AudguiPixbuf & pixbuf, int size)
 
 EXPORT AudguiPixbuf audgui_pixbuf_request (const char * filename, bool * queued)
 {
-    const Index<char> * data = aud_art_request_data (filename, queued);
-    if (! data)
-        return AudguiPixbuf ();
+    AudArtPtr art = aud_art_request (filename, AUD_ART_DATA, queued);
 
-    AudguiPixbuf p = audgui_pixbuf_from_data (data->begin (), data->len ());
-
-    aud_art_unref (filename);
-    return p;
+    auto data = art.data ();
+    return data ? audgui_pixbuf_from_data (data->begin (), data->len ()) : AudguiPixbuf ();
 }
 
 EXPORT AudguiPixbuf audgui_pixbuf_request_current (bool * queued)

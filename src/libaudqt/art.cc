@@ -42,14 +42,13 @@ static QImage load_fallback ()
 
 EXPORT QPixmap art_request (const char * filename, unsigned int w, unsigned int h, bool want_hidpi)
 {
-    auto data = aud_art_request_data (filename);
-    QImage img;
+    AudArtPtr art = aud_art_request (filename, AUD_ART_DATA);
 
-    if (data)
-    {
-        img = QImage::fromData ((const uchar *) data->begin (), data->len ());
-        aud_art_unref (filename);
-    }
+    auto data = art.data ();
+    if (! data)
+        return QPixmap ();
+
+    auto img = QImage::fromData ((const uchar *) data->begin (), data->len ());
 
     if (img.isNull ())
     {
