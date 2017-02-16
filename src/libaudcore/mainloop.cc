@@ -153,12 +153,8 @@ void QueuedFuncHelper::start ()
         return G_SOURCE_CONTINUE;
     };
 
-    auto destroy = [] (void * me) {
-        delete static_cast<QueuedFuncHelper *> (me);
-    };
-
     glib_source = g_timeout_add_full (G_PRIORITY_HIGH, params.interval_ms,
-     callback, this, destroy);
+     callback, this, aud::delete_obj<QueuedFuncHelper>);
 }
 
 void QueuedFuncHelper::stop ()
