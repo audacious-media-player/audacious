@@ -262,15 +262,12 @@ static void infowin_display_image (const char * filename)
     if (! current_file || strcmp (filename, current_file))
         return;
 
-    GdkPixbuf * pb = audgui_pixbuf_request (filename);
+    AudguiPixbuf pb = audgui_pixbuf_request (filename);
     if (! pb)
         pb = audgui_pixbuf_fallback ();
 
     if (pb)
-    {
-        audgui_scaled_image_set (widgets.image, pb);
-        g_object_unref (pb);
-    }
+        audgui_scaled_image_set (widgets.image, pb.get ());
 }
 
 static void infowin_destroyed ()

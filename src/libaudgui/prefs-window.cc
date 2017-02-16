@@ -482,13 +482,10 @@ static void fill_category_list (GtkTreeView * treeview, GtkNotebook * notebook)
          gettext (category.name), -1);
 
         StringBuf path = filename_build ({data_dir, "images", category.icon_path});
-        GdkPixbuf * img = gdk_pixbuf_new_from_file (path, nullptr);
+        AudguiPixbuf img (gdk_pixbuf_new_from_file (path, nullptr));
 
         if (img)
-        {
-            gtk_list_store_set (store, & iter, CATEGORY_VIEW_COL_ICON, img, -1);
-            g_object_unref (img);
-        }
+            gtk_list_store_set (store, & iter, CATEGORY_VIEW_COL_ICON, img.get (), -1);
     }
 
     g_object_unref (store);

@@ -69,6 +69,13 @@ public:
         ptr = ptr2;
     }
 
+    T * release ()
+    {
+        T * ptr2 = ptr;
+        ptr = nullptr;
+        return ptr2;
+    }
+
     void clear ()
         { capture (nullptr); }
 

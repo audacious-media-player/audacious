@@ -57,15 +57,14 @@ static GtkWidget * infopopup_queued;
 static bool infopopup_display_image (const char * filename)
 {
     bool queued;
-    GdkPixbuf * pb = audgui_pixbuf_request (filename, & queued);
+    AudguiPixbuf pb = audgui_pixbuf_request (filename, & queued);
     if (! pb)
         return ! queued;
 
-    audgui_pixbuf_scale_within (& pb, audgui_get_dpi ());
-    gtk_image_set_from_pixbuf ((GtkImage *) widgets.image, pb);
+    audgui_pixbuf_scale_within (pb, audgui_get_dpi ());
+    gtk_image_set_from_pixbuf ((GtkImage *) widgets.image, pb.get ());
     gtk_widget_show (widgets.image);
 
-    g_object_unref (pb);
     return true;
 }
 

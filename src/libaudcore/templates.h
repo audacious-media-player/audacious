@@ -109,6 +109,10 @@ template<class T>
 void delete_typed (T * obj)
     { (void) sizeof (T); delete obj; }
 
+template<class T, void (* func) (void *)>
+void typed_func (T * obj)
+    { func (obj); }
+
 // Wrapper class allowing enumerations to be used as array indexes;
 // the enumeration must begin with zero and have a "count" constant
 // ================================================================

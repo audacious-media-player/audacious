@@ -27,35 +27,28 @@
 #include "internal.h"
 #include "libaudgui-gtk.h"
 
-static GdkPixbuf * current_pixbuf;
+static AudguiPixbuf current_pixbuf;
 
-EXPORT GdkPixbuf * audgui_pixbuf_fallback ()
+EXPORT AudguiPixbuf audgui_pixbuf_fallback ()
 {
-    static GdkPixbuf * fallback = nullptr;
+    static AudguiPixbuf fallback;
 
     if (! fallback)
-        fallback = gdk_pixbuf_new_from_file (filename_build
-         ({aud_get_path (AudPath::DataDir), "images", "album.png"}), nullptr);
+        fallback.capture (gdk_pixbuf_new_from_file (filename_build
+         ({aud_get_path (AudPath::DataDir), "images", "album.png"}), nullptr));
 
-    if (fallback)
-        g_object_ref ((GObject *) fallback);
-
-    return fallback;
+    return fallback.ref ();
 }
 
 void audgui_pixbuf_uncache ()
 {
-    if (current_pixbuf)
-    {
-        g_object_unref ((GObject *) current_pixbuf);
-        current_pixbuf = nullptr;
-    }
+    current_pixbuf.clear ();
 }
 
-EXPORT void audgui_pixbuf_scale_within (GdkPixbuf * * pixbuf, int size)
+EXPORT void audgui_pixbuf_scale_within (AudguiPixbuf & pixbuf, int size)
 {
-    int width = gdk_pixbuf_get_width (* pixbuf);
-    int height = gdk_pixbuf_get_height (* pixbuf);
+    int width = pixbuf.width ();
+    int height = pixbuf.height ();
 
     if (width <= size && height <= size)
         return;
@@ -76,24 +69,22 @@ EXPORT void audgui_pixbuf_scale_within (GdkPixbuf * * pixbuf, int size)
     if (height < 1)
         height = 1;
 
-    GdkPixbuf * pixbuf2 = gdk_pixbuf_scale_simple (* pixbuf, width, height, GDK_INTERP_BILINEAR);
-    g_object_unref (* pixbuf);
-    * pixbuf = pixbuf2;
+    pixbuf.capture (gdk_pixbuf_scale_simple (pixbuf.get (), width, height, GDK_INTERP_BILINEAR));
 }
 
-EXPORT GdkPixbuf * audgui_pixbuf_request (const char * filename, bool * queued)
+EXPORT AudguiPixbuf audgui_pixbuf_request (const char * filename, bool * queued)
 {
     const Index<char> * data = aud_art_request_data (filename, queued);
     if (! data)
-        return nullptr;
+        return AudguiPixbuf ();
 
-    GdkPixbuf * p = audgui_pixbuf_from_data (data->begin (), data->len ());
+    AudguiPixbuf p = audgui_pixbuf_from_data (data->begin (), data->len ());
 
     aud_art_unref (filename);
     return p;
 }
 
-EXPORT GdkPixbuf * audgui_pixbuf_request_current (bool * queued)
+EXPORT AudguiPixbuf audgui_pixbuf_request_current (bool * queued)
 {
     if (queued)
         * queued = false;
@@ -105,13 +96,10 @@ EXPORT GdkPixbuf * audgui_pixbuf_request_current (bool * queued)
             current_pixbuf = audgui_pixbuf_request (filename, queued);
     }
 
-    if (current_pixbuf)
-        g_object_ref ((GObject *) current_pixbuf);
-
-    return current_pixbuf;
+    return current_pixbuf.ref ();
 }
 
-EXPORT GdkPixbuf * audgui_pixbuf_from_data (const void * data, int64_t size)
+EXPORT AudguiPixbuf audgui_pixbuf_from_data (const void * data, int64_t size)
 {
     GdkPixbuf * pixbuf = nullptr;
     GdkPixbufLoader * loader = gdk_pixbuf_loader_new ();
@@ -130,5 +118,5 @@ EXPORT GdkPixbuf * audgui_pixbuf_from_data (const void * data, int64_t size)
     }
 
     g_object_unref (loader);
-    return pixbuf;
+    return AudguiPixbuf (pixbuf);
 }
