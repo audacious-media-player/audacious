@@ -656,7 +656,7 @@ EXPORT void * audgui_list_get_user (GtkWidget * list)
 }
 
 EXPORT void audgui_list_add_column (GtkWidget * list, const char * title,
- int column, GType type, int width)
+ int column, GType type, int width, bool use_markup)
 {
     ListModel * model = (ListModel *) gtk_tree_view_get_model
      ((GtkTreeView *) list);
@@ -667,9 +667,13 @@ EXPORT void audgui_list_add_column (GtkWidget * list, const char * title,
      (type));
 
     GtkCellRenderer * renderer = gtk_cell_renderer_text_new ();
-    GtkTreeViewColumn * tree_column = gtk_tree_view_column_new_with_attributes
-     (title, renderer, "text", RESERVED_COLUMNS + column, "weight",
-     HIGHLIGHT_COLUMN, nullptr);
+
+    GtkTreeViewColumn * tree_column = use_markup ?
+        gtk_tree_view_column_new_with_attributes
+         (title, renderer, "markup", RESERVED_COLUMNS + column, nullptr) :
+        gtk_tree_view_column_new_with_attributes
+         (title, renderer, "text", RESERVED_COLUMNS + column, "weight", HIGHLIGHT_COLUMN, nullptr);
+
     gtk_tree_view_column_set_sizing (tree_column, GTK_TREE_VIEW_COLUMN_FIXED);
 
     int pad1, pad2, pad3;
