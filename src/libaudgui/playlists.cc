@@ -20,6 +20,7 @@
 #include <string.h>
 #include <gtk/gtk.h>
 
+#define AUD_GLIB_INTEGRATION
 #include <libaudcore/audstrings.h>
 #include <libaudcore/i18n.h>
 #include <libaudcore/interface.h>
@@ -35,7 +36,7 @@
 struct ImportExportJob {
     bool save;
     int list_id;
-    String filename;
+    CharPtr filename;
     GtkWidget * selector = nullptr;
     GtkWidget * confirm = nullptr;
 
@@ -48,12 +49,9 @@ static void cleanup_job (void * data)
 {
     ImportExportJob * job = (ImportExportJob *) data;
 
-    char * folder = gtk_file_chooser_get_current_folder_uri ((GtkFileChooser *) job->selector);
-
+    CharPtr folder (gtk_file_chooser_get_current_folder_uri ((GtkFileChooser *) job->selector));
     if (folder)
         aud_set_str ("audgui", "playlist_path", folder);
-
-    g_free (folder);
 
     if (job->confirm)
         gtk_widget_destroy (job->confirm);
@@ -107,12 +105,9 @@ static void check_overwrite (void * data)
 {
     ImportExportJob * job = (ImportExportJob *) data;
 
-    char * filename = gtk_file_chooser_get_uri ((GtkFileChooser *) job->selector);
-    if (! filename)
+    job->filename = CharPtr (gtk_file_chooser_get_uri ((GtkFileChooser *) job->selector));
+    if (! job->filename)
         return;
-
-    job->filename = String (filename);
-    g_free (filename);
 
     if (job->save && ! strchr (job->filename, '.'))
     {
@@ -129,7 +124,7 @@ static void check_overwrite (void * data)
             return;
         }
 
-        job->filename = String (str_concat ({job->filename, ".", default_ext}));
+        job->filename.capture (g_strconcat (job->filename, ".", default_ext, nullptr));
     }
 
     if (job->save && VFSFile::test_file (job->filename, VFS_EXISTS))

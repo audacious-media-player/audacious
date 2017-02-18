@@ -20,6 +20,10 @@
 #ifndef LIBAUDCORE_OBJECTS_H
 #define LIBAUDCORE_OBJECTS_H
 
+#ifdef AUD_GLIB_INTEGRATION
+#include <glib.h>
+#endif
+
 #include <libaudcore/templates.h>
 
 // Stores array pointer together with deduced array length.
@@ -121,6 +125,20 @@ SmartPtr<T> SmartNew (Args && ... args)
     return SmartPtr<T> (aud::construct<T>::make (operator new (sizeof (T)),
      std::forward<Args> (args) ...));
 }
+
+// Convenience wrapper for a GLib-style string (char *).
+
+#ifdef AUD_GLIB_INTEGRATION
+class CharPtr : public SmartPtr<char, aud::typed_func<char, g_free>>
+{
+public:
+    using SmartPtr::SmartPtr;
+
+    // non-const operator omitted to prevent "CharPtr s; g_free(s);"
+    operator const char * () const
+        { return get (); }
+};
+#endif
 
 // Wrapper class for a string stored in the string pool.
 

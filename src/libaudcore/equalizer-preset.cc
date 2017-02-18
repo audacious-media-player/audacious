@@ -18,12 +18,11 @@
  * the use of this software.
  */
 
+#define AUD_GLIB_INTEGRATION
 #include "equalizer.h"
 
 #include <math.h>
 #include <string.h>
-
-#include <glib.h>  /* for GKeyFile */
 
 #include "audstrings.h"
 #include "runtime.h"
@@ -49,7 +48,7 @@ EXPORT Index<EqualizerPreset> aud_eq_read_presets (const char * basename)
 
     for (int p = 0;; p ++)
     {
-        char * name = g_key_file_get_string (rcfile, "Presets", str_printf ("Preset%d", p), nullptr);
+        CharPtr name (g_key_file_get_string (rcfile, "Presets", str_printf ("Preset%d", p), nullptr));
         if (! name)
             break;
 
@@ -58,8 +57,6 @@ EXPORT Index<EqualizerPreset> aud_eq_read_presets (const char * basename)
 
         for (int i = 0; i < AUD_EQ_NBANDS; i++)
             preset.bands[i] = g_key_file_get_double (rcfile, name, str_printf ("Band%d", i), nullptr);
-
-        g_free (name);
     }
 
     g_key_file_free (rcfile);
@@ -83,13 +80,12 @@ EXPORT bool aud_eq_write_presets (const Index<EqualizerPreset> & list, const cha
     }
 
     size_t len;
-    char * data = g_key_file_to_data (rcfile, & len, nullptr);
+    CharPtr data (g_key_file_to_data (rcfile, & len, nullptr));
 
     StringBuf filename = filename_build ({aud_get_path (AudPath::UserDir), basename});
     bool success = g_file_set_contents (filename, data, len, nullptr);
 
     g_key_file_free (rcfile);
-    g_free (data);
 
     return success;
 }
@@ -166,12 +162,11 @@ EXPORT bool aud_save_preset_file (const EqualizerPreset & preset, VFSFile & file
          str_printf ("Band%d", i), preset.bands[i]);
 
     size_t len;
-    char * data = g_key_file_to_data (rcfile, & len, nullptr);
+    CharPtr data (g_key_file_to_data (rcfile, & len, nullptr));
 
     bool success = (file.fwrite (data, 1, len) == (int64_t) len);
 
     g_key_file_free (rcfile);
-    g_free (data);
 
     return success;
 }

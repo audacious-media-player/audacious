@@ -27,6 +27,7 @@
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
 
+#define AUD_GLIB_INTEGRATION
 #include <libaudcore/audstrings.h>
 #include <libaudcore/hook.h>
 #include <libaudcore/i18n.h>
@@ -156,12 +157,9 @@ static void entry_response_cb (GtkWidget * dialog, int response, GtkWidget * ent
 {
     if (response == GTK_RESPONSE_ACCEPT)
     {
-        char * uri = gtk_file_chooser_get_uri ((GtkFileChooser *) dialog);
+        CharPtr uri (gtk_file_chooser_get_uri ((GtkFileChooser *) dialog));
         if (uri)
-        {
             audgui_file_entry_set_uri (entry, uri);
-            g_free (uri);
-        }
     }
 
     gtk_widget_destroy (dialog);

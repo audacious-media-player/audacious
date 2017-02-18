@@ -21,6 +21,7 @@
 #include <gtk/gtk.h>
 #include <string.h>
 
+#define AUD_GLIB_INTEGRATION
 #include <libaudcore/audstrings.h>
 #include <libaudcore/drct.h>
 #include <libaudcore/hook.h>
@@ -143,9 +144,8 @@ static void infopopup_add_category (GtkWidget * grid, int position,
     gtk_widget_modify_fg (* header, GTK_STATE_NORMAL, & gray);
     gtk_widget_modify_fg (* label, GTK_STATE_NORMAL, & white);
 
-    char * markup = g_markup_printf_escaped ("<span style=\"italic\">%s</span>", text);
+    CharPtr markup (g_markup_printf_escaped ("<span style=\"italic\">%s</span>", text));
     gtk_label_set_markup ((GtkLabel *) * header, markup);
-    g_free (markup);
 
     gtk_table_attach ((GtkTable *) grid, * header, 0, 1, position, position + 1,
      GTK_FILL, GTK_FILL, 0, 0);

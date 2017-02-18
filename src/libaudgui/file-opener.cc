@@ -19,6 +19,7 @@
 
 #include <gtk/gtk.h>
 
+#define AUD_GLIB_INTEGRATION
 #include <libaudcore/drct.h>
 #include <libaudcore/i18n.h>
 #include <libaudcore/runtime.h>
@@ -58,12 +59,9 @@ static void open_cb (void * data)
 
 static void destroy_cb (GtkWidget * chooser)
 {
-    char * path = gtk_file_chooser_get_current_folder ((GtkFileChooser *) chooser);
+    CharPtr path (gtk_file_chooser_get_current_folder ((GtkFileChooser *) chooser));
     if (path)
-    {
         aud_set_str ("audgui", "filesel_path", path);
-        g_free (path);
-    }
 }
 
 static void toggled_cb (GtkToggleButton * toggle, void * option)
