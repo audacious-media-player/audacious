@@ -45,10 +45,7 @@ EXPORT QPixmap art_request (const char * filename, unsigned int w, unsigned int 
     AudArtPtr art = aud_art_request (filename, AUD_ART_DATA);
 
     auto data = art.data ();
-    if (! data)
-        return QPixmap ();
-
-    auto img = QImage::fromData ((const uchar *) data->begin (), data->len ());
+    auto img = data ? QImage::fromData ((const uchar *) data->begin (), data->len ()) : QImage ();
 
     if (img.isNull ())
     {
