@@ -64,7 +64,7 @@ VolumeButton::VolumeButton (QWidget * parent) :
     m_slider->setPageStep (20);
 
     auto layout = make_vbox (m_container, sizes.TwoPt);
-    layout->setContentsMargins (sizes.TwoPt, sizes.TwoPt, sizes.TwoPt, sizes.TwoPt);
+    layout->setContentsMargins (margins.TwoPt);
 
     layout->addWidget (newSliderButton (5));
     layout->addWidget (m_slider);

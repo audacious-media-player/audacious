@@ -596,7 +596,7 @@ PrefsWindow::PrefsWindow () :
     toolbar->setToolButtonStyle (Qt::ToolButtonTextUnderIcon);
 
     QWidget * child = new QWidget;
-    child->setContentsMargins (sizes.FourPt, sizes.FourPt, sizes.FourPt, sizes.FourPt);
+    child->setContentsMargins (margins.FourPt);
 
     auto vbox_parent = make_vbox (this);
     vbox_parent->addWidget (toolbar);

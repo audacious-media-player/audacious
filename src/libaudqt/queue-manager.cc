@@ -157,7 +157,7 @@ QueueManagerDialog::QueueManagerDialog (QWidget * parent) :
     QDialog (parent)
 {
     setWindowTitle (_("Queue Manager"));
-    setContentsMargins (sizes.TwoPt, sizes.TwoPt, sizes.TwoPt, sizes.TwoPt);
+    setContentsMargins (margins.TwoPt);
 
     m_btn_unqueue.setText (translate_str (N_("_Unqueue")));
     m_btn_close.setText (translate_str (N_("_Close")));

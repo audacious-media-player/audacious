@@ -37,7 +37,10 @@ static int init_count;
 static QApplication * qapp;
 
 static PixelSizes sizes_local;
+static PixelMargins margins_local;
+
 EXPORT const PixelSizes & sizes = sizes_local;
+EXPORT const PixelMargins & margins = margins_local;
 
 EXPORT void init ()
 {
@@ -64,6 +67,10 @@ EXPORT void init ()
     sizes_local.TwoPt = aud::rescale (2, 72, sizes_local.OneInch);
     sizes_local.FourPt = aud::rescale (4, 72, sizes_local.OneInch);
     sizes_local.EightPt = aud::rescale (8, 72, sizes_local.OneInch);
+
+    margins_local.TwoPt = QMargins (sizes.TwoPt, sizes.TwoPt, sizes.TwoPt, sizes.TwoPt);
+    margins_local.FourPt = QMargins (sizes.FourPt, sizes.FourPt, sizes.FourPt, sizes.FourPt);
+    margins_local.EightPt = QMargins (sizes.EightPt, sizes.EightPt, sizes.EightPt, sizes.EightPt);
 
     log_init ();
 }

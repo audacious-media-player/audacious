@@ -20,6 +20,7 @@
 #ifndef LIBAUDQT_H
 #define LIBAUDQT_H
 
+#include <QMargins>
 #include <QMessageBox>
 #include <QString>
 #include <libaudcore/objects.h>
@@ -54,6 +55,12 @@ struct PixelSizes {
     int EightPt;
 };
 
+struct PixelMargins {
+    QMargins TwoPt;
+    QMargins FourPt;
+    QMargins EightPt;
+};
+
 struct MenuItem;
 
 /* about.cc */
@@ -77,6 +84,7 @@ void urlopener_show (bool open);
 /* util.cc */
 
 extern const PixelSizes & sizes;
+extern const PixelMargins & margins;
 
 static inline int to_native_dpi (int x)
     { return aud::rescale (x, 96, sizes.OneInch); }

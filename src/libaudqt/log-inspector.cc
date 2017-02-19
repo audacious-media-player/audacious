@@ -188,7 +188,7 @@ LogEntryInspector::LogEntryInspector (QWidget * parent) :
     QDialog (parent)
 {
     setWindowTitle (_("Log Inspector"));
-    setContentsMargins (sizes.TwoPt, sizes.TwoPt, sizes.TwoPt, sizes.TwoPt);
+    setContentsMargins (margins.TwoPt);
 
     auto view = new QTreeView (this);
     view->setModel (s_model.get ());

@@ -61,7 +61,7 @@ private:
 InfoWindow::InfoWindow (QWidget * parent) : QDialog (parent)
 {
     setWindowTitle (_("Song Info"));
-    setContentsMargins (sizes.TwoPt, sizes.TwoPt, sizes.TwoPt, sizes.TwoPt);
+    setContentsMargins (margins.TwoPt);
 
     auto hbox = make_hbox (nullptr);
     hbox->addWidget (& m_image);

@@ -100,7 +100,7 @@ EXPORT void plugin_prefs (PluginHandle * ph)
 
     cw->root = new QDialog;
     cw->root->setAttribute (Qt::WA_DeleteOnClose);
-    cw->root->setContentsMargins (sizes.FourPt, sizes.FourPt, sizes.FourPt, sizes.FourPt);
+    cw->root->setContentsMargins (margins.FourPt);
 
     if (p->init)
         p->init ();

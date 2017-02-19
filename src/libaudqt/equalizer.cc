@@ -140,8 +140,7 @@ EqualizerWindow::EqualizerWindow () :
     layout->addWidget (slider_container);
 
     setWindowTitle (_("Equalizer"));
-    setContentsMargins (audqt::sizes.EightPt, audqt::sizes.EightPt,
-                        audqt::sizes.EightPt, audqt::sizes.EightPt);
+    setContentsMargins (audqt::margins.EightPt);
 
     m_onoff_checkbox.setFocus ();
 

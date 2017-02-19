@@ -339,7 +339,7 @@ NotebookWidget::NotebookWidget (const PreferencesWidget * parent, const char * d
     for (const NotebookTab & tab : parent->data.notebook.tabs)
     {
         auto widget = new QWidget (this);
-        widget->setContentsMargins (sizes.FourPt, sizes.FourPt, sizes.FourPt, sizes.FourPt);
+        widget->setContentsMargins (margins.FourPt);
 
         auto layout = make_vbox (widget, sizes.TwoPt);
         prefs_populate (layout, tab.widgets, domain);

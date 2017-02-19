@@ -63,7 +63,7 @@ static QDialog * buildRenameDialog (int playlist)
     layout->addWidget (buttonbox);
 
     dialog->setWindowTitle (_("Rename Playlist"));
-    dialog->setContentsMargins (sizes.EightPt, sizes.EightPt, sizes.EightPt, sizes.EightPt);
+    dialog->setContentsMargins (margins.EightPt);
 
     entry->selectAll ();
 
