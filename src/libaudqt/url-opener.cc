@@ -51,12 +51,13 @@ static QDialog * buildUrlDialog (bool open)
 
     auto dialog = new QDialog;
     dialog->setWindowTitle (title);
-    dialog->setMinimumWidth (325);
+    dialog->setContentsMargins (sizes.EightPt, sizes.EightPt, sizes.EightPt, sizes.EightPt);
 
     auto label = new QLabel (_("Enter URL:"), dialog);
 
     auto combobox = new QComboBox (dialog);
     combobox->setEditable (true);
+    combobox->setMinimumContentsLength (50);
 
     auto button1 = new QPushButton (translate_str (verb), dialog);
     button1->setIcon (QIcon::fromTheme (icon));
@@ -67,12 +68,11 @@ static QDialog * buildUrlDialog (bool open)
     auto buttonbox = new QDialogButtonBox (dialog);
     buttonbox->addButton (button1, QDialogButtonBox::AcceptRole);
     buttonbox->addButton (button2, QDialogButtonBox::RejectRole);
-    buttonbox->setContentsMargins (0, 10, 0, 0);
 
-    auto layout = new QVBoxLayout (dialog);
-    layout->setSizeConstraint (QLayout::SetFixedSize);
+    auto layout = make_vbox (dialog);
     layout->addWidget (label);
     layout->addWidget (combobox);
+    layout->addStretch (1);
     layout->addWidget (buttonbox);
 
     for (int i = 0;; i ++)

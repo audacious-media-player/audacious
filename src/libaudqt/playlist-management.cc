@@ -56,12 +56,15 @@ static QDialog * buildRenameDialog (int playlist)
 
     QObject::connect (buttonbox, & QDialogButtonBox::rejected, dialog, & QDialog::close);
 
-    auto layout = new QVBoxLayout (dialog);
+    auto layout = make_vbox (dialog);
     layout->addWidget (prompt);
     layout->addWidget (entry);
+    layout->addStretch (1);
     layout->addWidget (buttonbox);
 
     dialog->setWindowTitle (_("Rename Playlist"));
+    dialog->setContentsMargins (sizes.EightPt, sizes.EightPt, sizes.EightPt, sizes.EightPt);
+
     entry->selectAll ();
 
     return dialog;

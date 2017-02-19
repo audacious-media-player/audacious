@@ -397,6 +397,8 @@ static void * create_titlestring_table ()
 {
     QWidget * w = new QWidget;
     QGridLayout * l = new QGridLayout (w);
+    l->setContentsMargins (0, 0, 0, 0);
+    l->setSpacing (sizes.TwoPt);
 
     QLabel * lbl = new QLabel (_("Title format:"), w);
     l->addWidget (lbl, 0, 0);
@@ -423,13 +425,12 @@ static void * create_titlestring_table ()
             cbox->setCurrentIndex (i);
     }
 
-    QObject::connect (le, &QLineEdit::textChanged, [=] (const QString & text) {
+    QObject::connect (le, & QLineEdit::textChanged, [] (const QString & text) {
         aud_set_str (nullptr, "generic_title_format", text.toUtf8 ().data ());
     });
 
-    QObject::connect (cbox,
-                      static_cast <void (QComboBox::*) (int)> (&QComboBox::currentIndexChanged),
-                      [=] (int idx) {
+    void (QComboBox::* signal) (int) = & QComboBox::currentIndexChanged;
+    QObject::connect (cbox, signal, [le] (int idx) {
         if (idx < TITLESTRING_NPRESETS)
             le->setText (titlestring_presets [idx]);
     });
@@ -438,7 +439,6 @@ static void * create_titlestring_table ()
     QPushButton * btn_mnu = new QPushButton (w);
     btn_mnu->setFixedWidth (btn_mnu->sizeHint ().height ());
     btn_mnu->setIcon (QIcon::fromTheme ("list-add"));
-    btn_mnu->setIconSize (QSize (16, 16));
     l->addWidget (btn_mnu, 1, 2);
 
     QMenu * mnu_fields = new QMenu (w);
@@ -480,10 +480,7 @@ static void iface_fill_prefs_box ()
     Plugin * header = (Plugin *) aud_plugin_get_header (aud_plugin_get_current (PluginType::Iface));
     if (header && header->info.prefs)
     {
-        QVBoxLayout * vbox = new QVBoxLayout (iface_prefs_box);
-
-        vbox->setContentsMargins (0, 0, 0, 0);
-        vbox->setSpacing (4);
+        auto vbox = make_vbox (iface_prefs_box, sizes.TwoPt);
         prefs_populate (vbox, header->info.prefs->widgets, header->info.domain);
     }
 }
@@ -532,10 +529,7 @@ static void output_bit_depth_changed ()
 static void create_category (QStackedWidget * notebook, ArrayRef<PreferencesWidget> widgets)
 {
     QWidget * w = new QWidget;
-    QVBoxLayout * vbox = new QVBoxLayout (w);
-
-    vbox->setContentsMargins (0, 0, 0, 0);
-    vbox->setSpacing (4);
+    auto vbox = make_vbox (w, sizes.TwoPt);
     prefs_populate (vbox, widgets, nullptr);
     vbox->addStretch (1);
 
@@ -594,20 +588,21 @@ PrefsWindow::PrefsWindow () :
     output_combo_selected = aud_plugin_list (PluginType::Output)
      .find (aud_plugin_get_current (PluginType::Output));
 
-    setWindowTitle (_("Audacious Settings"));
     setAttribute (Qt::WA_DeleteOnClose);
-
-    QVBoxLayout * vbox_parent = new QVBoxLayout (this);
-    vbox_parent->setSpacing (0);
-    vbox_parent->setContentsMargins (0, 0, 0, 0);
+    setWindowTitle (_("Audacious Settings"));
+    setContentsMargins (0, 0, 0, 0);
 
     QToolBar * toolbar = new QToolBar;
     toolbar->setToolButtonStyle (Qt::ToolButtonTextUnderIcon);
-    vbox_parent->addWidget (toolbar);
 
     QWidget * child = new QWidget;
-    QVBoxLayout * child_vbox = new QVBoxLayout (child);
+    child->setContentsMargins (sizes.FourPt, sizes.FourPt, sizes.FourPt, sizes.FourPt);
+
+    auto vbox_parent = make_vbox (this);
+    vbox_parent->addWidget (toolbar);
     vbox_parent->addWidget (child);
+
+    auto child_vbox = make_vbox (child);
 
     s_category_notebook = new QStackedWidget;
     child_vbox->addWidget (s_category_notebook);
@@ -637,10 +632,10 @@ PrefsWindow::PrefsWindow () :
         QAction * a = new QAction (ico, translate_str (categories[i].name), toolbar);
 
         toolbar->addAction (a);
-
         mapper->setMapping (a, i);
 
-        QObject::connect (a, & QAction::triggered, mapper, static_cast <void (QSignalMapper::*)()>(& QSignalMapper::map));
+        void (QSignalMapper::* slot) () = & QSignalMapper::map;
+        QObject::connect (a, & QAction::triggered, mapper, slot);
     }
 
     output_setup ();

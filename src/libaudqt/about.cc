@@ -38,6 +38,8 @@ static QTabWidget * buildCreditsNotebook (QWidget * parent)
     const char * filenames[2] = {"AUTHORS", "COPYING"};
 
     auto tabs = new QTabWidget (parent);
+    tabs->setDocumentMode (true);
+    tabs->setMinimumSize (6 * audqt::sizes.OneInch, 2 * audqt::sizes.OneInch);
 
     for (int i = 0; i < 2; i ++)
     {
@@ -49,6 +51,7 @@ static QTabWidget * buildCreditsNotebook (QWidget * parent)
 
         auto edit = new QPlainTextEdit (in.readAll ().trimmed (), parent);
         edit->setReadOnly (true);
+        edit->setFrameStyle (QFrame::NoFrame);
         tabs->addTab (edit, _(titles[i]));
 
         f.close ();
@@ -65,6 +68,7 @@ static QDialog * buildAboutWindow ()
     const char * website = "http://audacious-media-player.org";
 
     auto window = new QDialog;
+    window->setWindowTitle (_("About Audacious"));
 
     auto logo = new QLabel (window);
     logo->setPixmap (QPixmap (logo_path));
@@ -76,17 +80,13 @@ static QDialog * buildAboutWindow ()
     auto anchor = QString ("<a href='%1'>%1</a>").arg (website);
     auto link_label = new QLabel (anchor, window);
     link_label->setAlignment (Qt::AlignHCenter);
-    link_label->setContentsMargins (0, 5, 0, 0);
     link_label->setOpenExternalLinks (true);
 
-    auto layout = new QVBoxLayout (window);
+    auto layout = audqt::make_vbox (window);
     layout->addWidget (logo);
     layout->addWidget (text);
     layout->addWidget (link_label);
     layout->addWidget (buildCreditsNotebook (window));
-
-    window->setWindowTitle (_("About Audacious"));
-    window->setFixedSize (590, 450);
 
     return window;
 }

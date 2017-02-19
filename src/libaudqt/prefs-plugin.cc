@@ -100,6 +100,7 @@ EXPORT void plugin_prefs (PluginHandle * ph)
 
     cw->root = new QDialog;
     cw->root->setAttribute (Qt::WA_DeleteOnClose);
+    cw->root->setContentsMargins (sizes.FourPt, sizes.FourPt, sizes.FourPt, sizes.FourPt);
 
     if (p->init)
         p->init ();
@@ -117,10 +118,7 @@ EXPORT void plugin_prefs (PluginHandle * ph)
 
     cw->root->setWindowTitle ((const char *) str_printf(_("%s Settings"), name));
 
-    QVBoxLayout * vbox = new QVBoxLayout (cw->root);
-    vbox->setContentsMargins (4, 4, 4, 4);
-    vbox->setSpacing (4);
-
+    auto vbox = make_vbox (cw->root, sizes.TwoPt);
     prefs_populate (vbox, p->widgets, header->info.domain);
     vbox->addStretch (1);
 

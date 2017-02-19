@@ -24,8 +24,11 @@
 #include <QString>
 #include <libaudcore/objects.h>
 
-class QBoxLayout;
 class QLayout;
+class QBoxLayout;
+class QHBoxLayout;
+class QVBoxLayout;
+
 class QPixmap;
 class QToolButton;
 class QWidget;
@@ -42,6 +45,13 @@ enum class FileMode {
     Add,
     AddFolder,
     count
+};
+
+struct PixelSizes {
+    int OneInch;
+    int TwoPt;
+    int FourPt;
+    int EightPt;
 };
 
 struct MenuItem;
@@ -65,10 +75,21 @@ void fileopener_show (FileMode mode);
 void urlopener_show (bool open);
 
 /* util.cc */
+
+extern const PixelSizes & sizes;
+
+static inline int to_native_dpi (int x)
+    { return aud::rescale (x, 96, sizes.OneInch); }
+static inline int to_portable_dpi (int x)
+    { return aud::rescale (x, sizes.OneInch, 96); }
+
 void init ();
 void run ();
 void quit ();
 void cleanup ();
+
+QHBoxLayout * make_hbox (QWidget * parent, int spacing = sizes.FourPt);
+QVBoxLayout * make_vbox (QWidget * parent, int spacing = sizes.FourPt);
 
 void enable_layout (QLayout * layout, bool enabled);
 void clear_layout (QLayout * layout);

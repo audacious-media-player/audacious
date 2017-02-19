@@ -139,7 +139,6 @@ public:
     QueueManagerDialog (QWidget * parent = nullptr);
 
 private:
-    QVBoxLayout m_layout;
     QTreeView m_treeview;
     QDialogButtonBox m_buttonbox;
     QPushButton m_btn_unqueue;
@@ -157,6 +156,9 @@ private:
 QueueManagerDialog::QueueManagerDialog (QWidget * parent) :
     QDialog (parent)
 {
+    setWindowTitle (_("Queue Manager"));
+    setContentsMargins (sizes.TwoPt, sizes.TwoPt, sizes.TwoPt, sizes.TwoPt);
+
     m_btn_unqueue.setText (translate_str (N_("_Unqueue")));
     m_btn_close.setText (translate_str (N_("_Close")));
 
@@ -166,16 +168,14 @@ QueueManagerDialog::QueueManagerDialog (QWidget * parent) :
     m_buttonbox.addButton (& m_btn_close, QDialogButtonBox::AcceptRole);
     m_buttonbox.addButton (& m_btn_unqueue, QDialogButtonBox::AcceptRole);
 
-    m_layout.addWidget (& m_treeview);
-    m_layout.addWidget (& m_buttonbox);
+    auto layout = make_vbox (this);
+    layout->addWidget (& m_treeview);
+    layout->addWidget (& m_buttonbox);
 
     m_treeview.setIndentation (0);
     m_treeview.setModel (& m_model);
     m_treeview.setSelectionMode (QAbstractItemView::ExtendedSelection);
     m_treeview.setHeaderHidden (true);
-
-    setLayout (& m_layout);
-    setWindowTitle (_("Queue Manager"));
 
     update ();
 
@@ -183,7 +183,7 @@ QueueManagerDialog::QueueManagerDialog (QWidget * parent) :
      & QItemSelectionModel::selectionChanged, & m_model,
      & QueueManagerModel::selectionChanged);
 
-    resize (500, 250);
+    resize (4 * sizes.OneInch, 3 * sizes.OneInch);
 }
 
 void QueueManagerDialog::removeSelected ()
