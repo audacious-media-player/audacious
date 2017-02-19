@@ -200,10 +200,10 @@ static void iface_combo_changed ();
 static void * iface_create_prefs_box ();
 
 static const PreferencesWidget appearance_page_widgets[] = {
-    WidgetLabel (N_("<b>Interface Settings</b>")),
-    WidgetCombo (N_("Interface plugin:"),
+    WidgetCombo (N_("Interface:"),
         WidgetInt (iface_combo_selected, iface_combo_changed),
         {0, iface_combo_fill}),
+    WidgetSeparator ({true}),
     WidgetCustomQt (iface_create_prefs_box)
 };
 
