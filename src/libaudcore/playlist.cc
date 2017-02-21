@@ -98,7 +98,8 @@ private:
     int val;
 };
 
-struct Entry {
+struct Entry
+{
     Entry (PlaylistAddItem && item);
     ~Entry ();
 
@@ -115,11 +116,18 @@ struct Entry {
     bool selected, queued;
 };
 
-struct PlaylistData {
+struct PlaylistData
+{
     PlaylistData (int id);
     ~PlaylistData ();
 
     void set_entry_tuple (Entry * entry, Tuple && tuple);
+    void number_entries (int at, int length);
+    Entry * lookup_entry (int i);
+
+    void set_position (Entry * entry, bool update_shuffle);
+    PlaybackChange change_playback ();
+    Entry * find_unselected_focus ();
 
     int number, unique_id;
     String filename, title;
@@ -299,15 +307,15 @@ static PlaylistData * lookup_playlist (int i)
     return (i >= 0 && i < playlists.len ()) ? playlists[i].get () : nullptr;
 }
 
-static void number_entries (PlaylistData * p, int at, int length)
+void PlaylistData::number_entries (int at, int length)
 {
     for (int i = at; i < at + length; i ++)
-        p->entries[i]->number = i;
+        entries[i]->number = i;
 }
 
-static Entry * lookup_entry (PlaylistData * p, int i)
+Entry * PlaylistData::lookup_entry (int i)
 {
-    return (i >= 0 && i < p->entries.len ()) ? p->entries[i].get () : nullptr;
+    return (i >= 0 && i < entries.len ()) ? entries[i].get () : nullptr;
 }
 
 static void update (void *)
@@ -1038,23 +1046,23 @@ EXPORT int aud_playlist_get_temporary ()
     return list;
 }
 
-static void set_position (PlaylistData * playlist, Entry * entry, bool update_shuffle)
+void PlaylistData::set_position (Entry * entry, bool update_shuffle)
 {
-    playlist->position = entry;
-    playlist->resume_time = 0;
+    position = entry;
+    resume_time = 0;
 
     /* move entry to top of shuffle list */
     if (entry && update_shuffle)
-        entry->shuffle_num = ++ playlist->last_shuffle_num;
+        entry->shuffle_num = ++ last_shuffle_num;
 }
 
 // updates playback state (while locked) if playlist position was changed
-static PlaybackChange change_playback (PlaylistData * playlist)
+PlaybackChange PlaylistData::change_playback ()
 {
-    if (playlist != playing_playlist)
+    if (this != playing_playlist)
         return NoChange;
 
-    if (playlist->position)
+    if (position)
     {
         start_playback (0, aud_drct_get_paused ());
         return NextSong;
@@ -1445,25 +1453,23 @@ EXPORT int aud_playlist_shift (int playlist_num, int entry_num, int distance)
     RETURN (shift);
 }
 
-static Entry * find_unselected_focus (PlaylistData * playlist)
+Entry * PlaylistData::find_unselected_focus ()
 {
-    if (! playlist->focus || ! playlist->focus->selected)
-        return playlist->focus;
+    if (! focus || ! focus->selected)
+        return focus;
 
-    int entries = playlist->entries.len ();
+    int n_entries = entries.len ();
 
-    for (int search = playlist->focus->number + 1; search < entries; search ++)
+    for (int search = focus->number + 1; search < n_entries; search ++)
     {
-        Entry * entry = playlist->entries[search].get ();
-        if (! entry->selected)
-            return entry;
+        if (! entries[search]->selected)
+            return entries[search].get ();
     }
 
-    for (int search = playlist->focus->number; search --;)
+    for (int search = focus->number; search --;)
     {
-        Entry * entry = playlist->entries[search].get ();
-        if (! entry->selected)
-            return entry;
+        if (! entries[search]->selected)
+            return entries[search].get ();
     }
 
     return nullptr;
