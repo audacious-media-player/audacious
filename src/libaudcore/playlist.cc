@@ -17,9 +17,6 @@
  * the use of this software.
  */
 
-// uncomment to print a backtrace when scanning blocks the main thread
-// #define WARN_BLOCKED
-
 #include "playlist-internal.h"
 #include "runtime.h"
 
@@ -46,12 +43,6 @@
 #include "scanner.h"
 #include "tuple.h"
 #include "tuple-compiler.h"
-
-#ifdef WARN_BLOCKED
-#include <execinfo.h>
-#include <stdio.h>
-#include <stdlib.h>
-#endif
 
 using namespace Playlist;
 
@@ -149,10 +140,6 @@ static const char * const temp_title = N_("Now Playing");
 
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 static pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
-
-#ifdef WARN_BLOCKED
-static pthread_t main_thread;
-#endif
 
 /* The unique ID table contains pointers to PlaylistData for ID's in use and nullptr
  * for "dead" (previously used and therefore unavailable) ID's. */
@@ -646,31 +633,10 @@ static void scan_restart ()
     scan_schedule ();
 }
 
-#ifdef WARN_BLOCKED
-static void warn_main_thread_blocked ()
-{
-    printf ("\nMain thread blocked, backtrace:\n");
-
-    void * syms[100];
-    int n_syms = backtrace (syms, aud::n_elems (syms));
-    char * * names = backtrace_symbols (syms, n_syms);
-
-    for (int i = 0; i < n_syms; i ++)
-        printf ("%d. %s\n", i, names[i]);
-
-    free (names);
-}
-#endif
-
 /* mutex may be unlocked during the call */
 static Entry * get_entry (int playlist_num, int entry_num,
  bool need_decoder, bool need_tuple)
 {
-#ifdef WARN_BLOCKED
-    if ((need_decoder || need_tuple) && pthread_self () == main_thread)
-        warn_main_thread_blocked ();
-#endif
-
     bool scan_started = false;
 
     while (1)
@@ -726,10 +692,6 @@ static void stop_playback ()
 void playlist_init ()
 {
     srand (time (nullptr));
-
-#ifdef WARN_BLOCKED
-    main_thread = pthread_self ();
-#endif
 
     ENTER;
 
