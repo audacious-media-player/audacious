@@ -60,14 +60,14 @@ QVariant QueueManagerModel::data (const QModelIndex & index, int role) const
 {
     if (role == Qt::DisplayRole)
     {
-        int list = aud_playlist_get_active ();
-        int entry = aud_playlist_queue_get_entry (list, index.row ());
+        auto list = Playlist::active_playlist ();
+        int entry = list.queue_get_entry (index.row ());
 
         if (index.column () == 0)
             return entry + 1;
         else
         {
-            Tuple tuple = aud_playlist_entry_get_tuple (list, entry, Playlist::NoWait);
+            Tuple tuple = list.entry_tuple (entry, Playlist::NoWait);
             return QString ((const char *) tuple.get_str (Tuple::FormattedTitle));
         }
     }
@@ -79,8 +79,8 @@ QVariant QueueManagerModel::data (const QModelIndex & index, int role) const
 
 void QueueManagerModel::update (QItemSelectionModel * sel)
 {
-    int list = aud_playlist_get_active ();
-    int rows = aud_playlist_queue_count (list);
+    auto list = Playlist::active_playlist ();
+    int rows = list.n_queued ();
     int keep = aud::min (rows, m_rows);
 
     m_in_update = true;
@@ -107,7 +107,7 @@ void QueueManagerModel::update (QItemSelectionModel * sel)
 
     for (int i = 0; i < rows; i ++)
     {
-        if (aud_playlist_entry_get_selected (list, aud_playlist_queue_get_entry (list, i)))
+        if (list.entry_selected (list.queue_get_entry (i)))
             sel->select (createIndex (i, 0), sel->Select | sel->Rows);
         else
             sel->select (createIndex (i, 0), sel->Deselect | sel->Rows);
@@ -122,15 +122,13 @@ void QueueManagerModel::selectionChanged (const QItemSelection & selected,
     if (m_in_update)
         return;
 
-    int list = aud_playlist_get_active ();
+    auto list = Playlist::active_playlist ();
 
     for (auto & index : selected.indexes ())
-        aud_playlist_entry_set_selected (list,
-         aud_playlist_queue_get_entry (list, index.row ()), true);
+        list.select_entry (list.queue_get_entry (index.row ()), true);
 
     for (auto & index : deselected.indexes ())
-        aud_playlist_entry_set_selected (list,
-         aud_playlist_queue_get_entry (list, index.row ()), false);
+        list.select_entry (list.queue_get_entry (index.row ()), false);
 }
 
 class QueueManagerDialog : public QDialog
@@ -188,17 +186,17 @@ QueueManagerDialog::QueueManagerDialog (QWidget * parent) :
 
 void QueueManagerDialog::removeSelected ()
 {
-    int list = aud_playlist_get_active ();
-    int count = aud_playlist_queue_count (list);
+    auto list = Playlist::active_playlist ();
+    int count = list.n_queued ();
 
     for (int i = 0; i < count; )
     {
-        int entry = aud_playlist_queue_get_entry (list, i);
+        int entry = list.queue_get_entry (i);
 
-        if (aud_playlist_entry_get_selected (list, entry))
+        if (list.entry_selected (entry))
         {
-            aud_playlist_queue_delete (list, i, 1);
-            aud_playlist_entry_set_selected (list, entry, false);
+            list.queue_remove (i);
+            list.select_entry (entry, false);
             count --;
         }
         else

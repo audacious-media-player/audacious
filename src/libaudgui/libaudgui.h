@@ -25,6 +25,7 @@
 
 enum class AudMenuID;
 enum class PluginType;
+class Playlist;
 class PluginHandle;
 struct EqualizerPreset;
 
@@ -33,8 +34,8 @@ void audgui_show_about_window ();
 void audgui_hide_about_window ();
 
 /* confirm.c */
-void audgui_confirm_playlist_delete (int playlist);
-void audgui_show_playlist_rename (int playlist);
+void audgui_confirm_playlist_delete (Playlist playlist);
+void audgui_show_playlist_rename (Playlist playlist);
 
 /* This function provides a convenient interface to toggle stream recording.  It
  * may prompt for confirmation from the user before actually starting to record.
@@ -51,7 +52,7 @@ void audgui_show_equalizer_window ();
 void audgui_hide_equalizer_window ();
 
 /* infopopup.c */
-void audgui_infopopup_show (int playlist, int entry);
+void audgui_infopopup_show (Playlist playlist, int entry);
 void audgui_infopopup_show_current ();
 void audgui_infopopup_hide ();
 
@@ -60,7 +61,7 @@ void audgui_run_filebrowser (bool open);
 void audgui_hide_filebrowser ();
 
 /* infowin.c */
-void audgui_infowin_show (int playlist, int entry);
+void audgui_infowin_show (Playlist playlist, int entry);
 void audgui_infowin_show_current ();
 void audgui_infowin_hide ();
 
@@ -97,8 +98,8 @@ void audgui_queue_manager_show ();
 
 /* urilist.c */
 void audgui_urilist_open (const char * list);
-void audgui_urilist_insert (int playlist, int position, const char * list);
-Index<char> audgui_urilist_create_from_selected (int playlist);
+void audgui_urilist_insert (Playlist playlist, int position, const char * list);
+Index<char> audgui_urilist_create_from_selected (Playlist playlist);
 
 /* url-opener.c */
 void audgui_show_add_url_window (bool open);

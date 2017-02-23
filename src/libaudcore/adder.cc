@@ -47,16 +47,18 @@ static int filename_compare (const char * a, const char * b)
 
 struct AddTask : public ListNode
 {
-    int playlist_id, at;
+    Playlist playlist;
+    int at;
     bool play;
     Index<PlaylistAddItem> items;
-    PlaylistFilterFunc filter;
+    Playlist::FilterFunc filter;
     void * user;
 };
 
 struct AddResult : public ListNode
 {
-    int playlist_id, at;
+    Playlist playlist;
+    int at;
     bool play;
     String title;
     Index<PlaylistAddItem> items;
@@ -67,7 +69,7 @@ static void * add_worker (void * unused);
 
 static List<AddTask> add_tasks;
 static List<AddResult> add_results;
-static int current_playlist_id = -1;
+static Playlist current_playlist;
 
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 static bool add_thread_started = false;
@@ -123,7 +125,7 @@ static void status_done_locked ()
         hook_call ("ui hide progress", nullptr);
 }
 
-static void add_file (PlaylistAddItem && item, PlaylistFilterFunc filter,
+static void add_file (PlaylistAddItem && item, Playlist::FilterFunc filter,
  void * user, AddResult * result, bool validate)
 {
     AUDINFO ("Adding file: %s\n", (const char *) item.filename);
@@ -168,7 +170,7 @@ static void add_file (PlaylistAddItem && item, PlaylistFilterFunc filter,
         result->items.append (std::move (item));
 }
 
-static void add_playlist (const char * filename, PlaylistFilterFunc filter,
+static void add_playlist (const char * filename, Playlist::FilterFunc filter,
  void * user, AddResult * result, bool is_single)
 {
     AUDINFO ("Adding playlist: %s\n", filename);
@@ -192,7 +194,7 @@ static void add_playlist (const char * filename, PlaylistFilterFunc filter,
     }
 }
 
-static void add_cuesheets (Index<String> & files, PlaylistFilterFunc filter,
+static void add_cuesheets (Index<String> & files, Playlist::FilterFunc filter,
  void * user, AddResult * result)
 {
     Index<String> cuesheets;
@@ -250,7 +252,7 @@ static void add_cuesheets (Index<String> & files, PlaylistFilterFunc filter,
     }
 }
 
-static void add_folder (const char * filename, PlaylistFilterFunc filter,
+static void add_folder (const char * filename, Playlist::FilterFunc filter,
  void * user, AddResult * result, bool is_single)
 {
     AUDINFO ("Adding folder: %s\n", filename);
@@ -302,7 +304,7 @@ static void add_folder (const char * filename, PlaylistFilterFunc filter,
     }
 }
 
-static void add_generic (PlaylistAddItem && item, PlaylistFilterFunc filter,
+static void add_generic (PlaylistAddItem && item, Playlist::FilterFunc filter,
  void * user, AddResult * result, bool is_single)
 {
     if (filter && ! filter (item.filename, user))
@@ -329,7 +331,7 @@ static void add_generic (PlaylistAddItem && item, PlaylistFilterFunc filter,
             add_folder (item.filename, filter, user, result, is_single);
             result->saw_folder = true;
         }
-        else if (aud_filename_is_playlist (item.filename))
+        else if (Playlist::filename_is_playlist (item.filename))
             add_playlist (item.filename, filter, user, result, is_single);
         else
             add_file (std::move (item), filter, user, result, false);
@@ -374,7 +376,8 @@ static void add_finish (void * unused)
     {
         add_results.remove (result);
 
-        int playlist, count;
+        PlaylistEx playlist;
+        int count;
 
         if (! result->items.len ())
         {
@@ -383,42 +386,40 @@ static void add_finish (void * unused)
             goto FREE;
         }
 
-        playlist = aud_playlist_by_unique_id (result->playlist_id);
-        if (playlist < 0) /* playlist deleted */
+        playlist = result->playlist;
+        if (! playlist.exists ()) /* playlist deleted */
             goto FREE;
 
         if (result->play)
         {
             if (aud_get_bool (nullptr, "clear_playlist"))
-                aud_playlist_entry_delete (playlist, 0, aud_playlist_entry_count (playlist));
+                playlist.remove_all_entries ();
             else
-                aud_playlist_queue_delete (playlist, 0, aud_playlist_queue_count (playlist));
+                playlist.queue_remove_all ();
         }
 
-        count = aud_playlist_entry_count (playlist);
+        count = playlist.n_entries ();
         if (result->at < 0 || result->at > count)
             result->at = count;
 
         if (result->title && ! count)
         {
-            String old_title = aud_playlist_get_title (playlist);
-
-            if (! strcmp (old_title, N_("New Playlist")))
-                aud_playlist_set_title (playlist, result->title);
+            if (! strcmp (playlist.get_title (), _("New Playlist")))
+                playlist.set_title (result->title);
         }
 
         /* temporarily disable scanning this playlist; the intent is to avoid
          * scanning until the currently playing entry is known, at which time it
          * can be scanned more efficiently (album art read in the same pass). */
         playlist_enable_scan (false);
-        playlist_entry_insert_batch_raw (playlist, result->at, std::move (result->items));
+        playlist.insert_flat_items (result->at, std::move (result->items));
 
         if (result->play)
         {
             if (! aud_get_bool (0, "shuffle"))
-                aud_playlist_set_position (playlist, result->at);
+                playlist.set_position (result->at);
 
-            aud_playlist_play (playlist);
+            playlist.start_playback ();
         }
 
         playlist_enable_scan (true);
@@ -447,14 +448,14 @@ static void * add_worker (void * unused)
     {
         add_tasks.remove (task);
 
-        current_playlist_id = task->playlist_id;
+        current_playlist = task->playlist;
         pthread_mutex_unlock (& mutex);
 
         playlist_cache_load (task->items);
 
         AddResult * result = new AddResult ();
 
-        result->playlist_id = task->playlist_id;
+        result->playlist = task->playlist;
         result->at = task->at;
         result->play = task->play;
 
@@ -466,7 +467,7 @@ static void * add_worker (void * unused)
         delete task;
 
         pthread_mutex_lock (& mutex);
-        current_playlist_id = -1;
+        current_playlist = Playlist ();
 
         if (! add_results.head ())
             queued_add.queue (add_finish, nullptr);
@@ -495,32 +496,30 @@ void adder_cleanup ()
     pthread_mutex_unlock (& mutex);
 }
 
-EXPORT void aud_playlist_entry_insert (int playlist, int at,
- const char * filename, Tuple && tuple, bool play)
+EXPORT void Playlist::insert_entry (int at,
+ const char * filename, Tuple && tuple, bool play) const
 {
     Index<PlaylistAddItem> items;
     items.append (String (filename), std::move (tuple));
 
-    aud_playlist_entry_insert_batch (playlist, at, std::move (items), play);
+    insert_items (at, std::move (items), play);
 }
 
-EXPORT void aud_playlist_entry_insert_batch (int playlist, int at,
- Index<PlaylistAddItem> && items, bool play)
+EXPORT void Playlist::insert_items (int at,
+ Index<PlaylistAddItem> && items, bool play) const
 {
-    aud_playlist_entry_insert_filtered (playlist, at, std::move (items), nullptr, nullptr, play);
+    insert_filtered (at, std::move (items), nullptr, nullptr, play);
 }
 
-EXPORT void aud_playlist_entry_insert_filtered (int playlist, int at,
- Index<PlaylistAddItem> && items, PlaylistFilterFunc filter, void * user,
- bool play)
+EXPORT void Playlist::insert_filtered (int at,
+ Index<PlaylistAddItem> && items, Playlist::FilterFunc filter, void * user,
+ bool play) const
 {
-    int playlist_id = aud_playlist_get_unique_id (playlist);
-
     pthread_mutex_lock (& mutex);
 
     AddTask * task = new AddTask ();
 
-    task->playlist_id = playlist_id;
+    task->playlist = * this;
     task->at = at;
     task->play = play;
     task->items = std::move (items);
@@ -533,32 +532,22 @@ EXPORT void aud_playlist_entry_insert_filtered (int playlist, int at,
     pthread_mutex_unlock (& mutex);
 }
 
-EXPORT bool aud_playlist_add_in_progress (int playlist)
+EXPORT bool Playlist::add_in_progress () const
 {
     pthread_mutex_lock (& mutex);
 
-    if (playlist >= 0)
+    for (AddTask * task = add_tasks.head (); task; task = add_tasks.next (task))
     {
-        int playlist_id = aud_playlist_get_unique_id (playlist);
-
-        for (AddTask * task = add_tasks.head (); task; task = add_tasks.next (task))
-        {
-            if (task->playlist_id == playlist_id)
-                goto YES;
-        }
-
-        if (current_playlist_id == playlist_id)
+        if (task->playlist == * this)
             goto YES;
-
-        for (AddResult * result = add_results.head (); result; result = add_results.next (result))
-        {
-            if (result->playlist_id == playlist_id)
-                goto YES;
-        }
     }
-    else
+
+    if (current_playlist == * this)
+        goto YES;
+
+    for (AddResult * result = add_results.head (); result; result = add_results.next (result))
     {
-        if (add_tasks.head () || current_playlist_id >= 0 || add_results.head ())
+        if (result->playlist == * this)
             goto YES;
     }
 
@@ -568,4 +557,16 @@ EXPORT bool aud_playlist_add_in_progress (int playlist)
 YES:
     pthread_mutex_unlock (& mutex);
     return true;
+}
+
+EXPORT bool Playlist::add_in_progress_any ()
+{
+    pthread_mutex_lock (& mutex);
+
+    bool in_progress = (add_tasks.head () ||
+                        current_playlist != Playlist () ||
+                        add_results.head ());
+
+    pthread_mutex_unlock (& mutex);
+    return in_progress;
 }

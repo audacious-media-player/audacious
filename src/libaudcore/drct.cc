@@ -44,9 +44,9 @@ EXPORT void aud_drct_play ()
     }
     else
     {
-        int playlist = aud_playlist_get_active ();
-        aud_playlist_set_position (playlist, aud_playlist_get_position (playlist));
-        aud_playlist_play (playlist);
+        auto playlist = Playlist::active_playlist ();
+        playlist.set_position (playlist.get_position ());
+        playlist.start_playback ();
     }
 }
 
@@ -58,22 +58,15 @@ EXPORT void aud_drct_play_pause ()
         aud_drct_play ();
 }
 
-EXPORT void aud_drct_stop ()
-{
-    aud_playlist_play (-1);
-}
-
 EXPORT int aud_drct_get_position ()
 {
-    int playlist = aud_playlist_get_playing ();
-    return aud_playlist_get_position (playlist);
+    return Playlist::playing_playlist ().get_position ();
 }
 
 EXPORT String aud_drct_get_filename ()
 {
-    int playlist = aud_playlist_get_playing ();
-    int position = aud_playlist_get_position (playlist);
-    return aud_playlist_entry_get_filename (playlist, position);
+    auto playlist = Playlist::playing_playlist ();
+    return playlist.entry_filename (playlist.get_position ());
 }
 
 /* --- RECORDING CONTROL --- */
@@ -178,28 +171,28 @@ EXPORT void aud_drct_set_volume_balance (int balance)
 
 EXPORT void aud_drct_pl_next ()
 {
-    int playlist = aud_playlist_get_playing ();
-    if (playlist < 0)
-        playlist = aud_playlist_get_active ();
+    PlaylistEx playlist = Playlist::playing_playlist ();
+    if (playlist == Playlist ())
+        playlist = Playlist::active_playlist ();
 
-    playlist_next_song (playlist, aud_get_bool (nullptr, "repeat"));
+    playlist.next_song (aud_get_bool (nullptr, "repeat"));
 }
 
 EXPORT void aud_drct_pl_prev ()
 {
-    int playlist = aud_playlist_get_playing ();
-    if (playlist < 0)
-        playlist = aud_playlist_get_active ();
+    PlaylistEx playlist = Playlist::playing_playlist ();
+    if (playlist == Playlist ())
+        playlist = Playlist::active_playlist ();
 
-    playlist_prev_song (playlist);
+    playlist.prev_song ();
 }
 
 static void add_list (Index<PlaylistAddItem> && items, int at, bool to_temp, bool play)
 {
     if (to_temp)
-        aud_playlist_set_active (aud_playlist_get_temporary ());
+        Playlist::temporary_playlist ().activate ();
 
-    aud_playlist_entry_insert_batch (aud_playlist_get_active (), at, std::move (items), play);
+    Playlist::active_playlist ().insert_items (at, std::move (items), play);
 }
 
 EXPORT void aud_drct_pl_add (const char * filename, int at)

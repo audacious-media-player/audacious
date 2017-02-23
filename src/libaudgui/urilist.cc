@@ -60,26 +60,26 @@ EXPORT void audgui_urilist_open (const char * list)
     aud_drct_pl_open_list (urilist_to_index (list));
 }
 
-EXPORT void audgui_urilist_insert (int playlist, int at, const char * list)
+EXPORT void audgui_urilist_insert (Playlist playlist, int at, const char * list)
 {
-    aud_playlist_entry_insert_batch (playlist, at, urilist_to_index (list), false);
+    playlist.insert_items (at, urilist_to_index (list), false);
 }
 
-EXPORT Index<char> audgui_urilist_create_from_selected (int playlist)
+EXPORT Index<char> audgui_urilist_create_from_selected (Playlist playlist)
 {
-    aud_playlist_cache_selected (playlist);
+    playlist.cache_selected ();
 
     Index<char> buf;
-    int entries = aud_playlist_entry_count (playlist);
+    int entries = playlist.n_entries ();
 
-    for (int count = 0; count < entries; count ++)
+    for (int i = 0; i < entries; i ++)
     {
-        if (aud_playlist_entry_get_selected (playlist, count))
+        if (playlist.entry_selected (i))
         {
             if (buf.len ())
                 buf.append ('\n');
 
-            String filename = aud_playlist_entry_get_filename (playlist, count);
+            String filename = playlist.entry_filename (i);
             buf.insert (filename, -1, strlen (filename));
         }
     }

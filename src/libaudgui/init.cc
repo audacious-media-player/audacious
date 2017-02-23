@@ -134,7 +134,7 @@ static void playlist_set_playing_cb (void *, void *)
 
 static void playlist_position_cb (void * list, void *)
 {
-    if (aud::from_ptr<int> (list) == aud_playlist_get_playing ())
+    if (aud::from_ptr<Playlist> (list) == Playlist::playing_playlist ())
         audgui_pixbuf_uncache ();
 }
 

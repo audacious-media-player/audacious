@@ -35,13 +35,13 @@
 
 struct ImportExportJob {
     bool save;
-    int list_id;
+    Playlist list;
     CharPtr filename;
     GtkWidget * selector = nullptr;
     GtkWidget * confirm = nullptr;
 
-    ImportExportJob (bool save, int list_id) :
-        save (save), list_id (list_id) {}
+    ImportExportJob (bool save, Playlist list) :
+        save (save), list (list) {}
 };
 
 /* "destroy" callback; do not call directly */
@@ -62,22 +62,21 @@ static void cleanup_job (void * data)
 static void finish_job (void * data)
 {
     ImportExportJob * job = (ImportExportJob *) data;
-    int list = aud_playlist_by_unique_id (job->list_id);
 
     Playlist::GetMode mode = Playlist::Wait;
     if (aud_get_bool (nullptr, "metadata_on_play"))
         mode = Playlist::NoWait;
 
-    if (list >= 0)
+    if (job->list.exists ())
     {
-        aud_playlist_set_filename (list, job->filename);
+        job->list.set_filename (job->filename);
 
         if (job->save)
-            aud_playlist_save (list, job->filename, mode);
+            job->list.save_to_file (job->filename, mode);
         else
         {
-            aud_playlist_entry_delete (list, 0, aud_playlist_entry_count (list));
-            aud_playlist_entry_insert (list, 0, job->filename, Tuple (), false);
+            job->list.remove_all_entries ();
+            job->list.insert_entry (0, job->filename, Tuple (), false);
         }
     }
 
@@ -142,7 +141,7 @@ static void set_format_filters (GtkWidget * selector)
     gtk_file_filter_add_pattern (filter, "*");
     gtk_file_chooser_add_filter ((GtkFileChooser *) selector, filter);
 
-    for (auto & format : aud_playlist_save_formats ())
+    for (auto & format : Playlist::save_formats ())
     {
         filter = gtk_file_filter_new ();
         gtk_file_filter_set_name (filter, format.name);
@@ -206,12 +205,12 @@ static void create_selector (ImportExportJob * job, const char * filename, const
 
 static GtkWidget * start_job (bool save)
 {
-    int list = aud_playlist_get_active ();
+    auto list = Playlist::active_playlist ();
 
-    String filename = aud_playlist_get_filename (list);
+    String filename = list.get_filename ();
     String folder = aud_get_str ("audgui", "playlist_path");
 
-    ImportExportJob * job = new ImportExportJob (save, aud_playlist_get_unique_id (list));
+    ImportExportJob * job = new ImportExportJob (save, list);
     create_selector (job, filename, folder[0] ? (const char *) folder : nullptr);
 
     return job->selector;

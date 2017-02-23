@@ -324,7 +324,7 @@ static void main_cleanup ()
 static bool check_should_quit ()
 {
     return options.quit_after_play && ! aud_drct_get_playing () &&
-     ! aud_playlist_add_in_progress (-1);
+     ! Playlist::add_in_progress_any ();
 }
 
 static void maybe_quit ()

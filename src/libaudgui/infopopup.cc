@@ -312,10 +312,10 @@ static void infopopup_show (const char * filename, const Tuple & tuple)
         infopopup_queued = infopopup;
 }
 
-EXPORT void audgui_infopopup_show (int playlist, int entry)
+EXPORT void audgui_infopopup_show (Playlist playlist, int entry)
 {
-    String filename = aud_playlist_entry_get_filename (playlist, entry);
-    Tuple tuple = aud_playlist_entry_get_tuple (playlist, entry);
+    String filename = playlist.entry_filename (entry);
+    Tuple tuple = playlist.entry_tuple (entry);
 
     if (filename && tuple.valid ())
         infopopup_show (filename, tuple);
@@ -323,11 +323,11 @@ EXPORT void audgui_infopopup_show (int playlist, int entry)
 
 EXPORT void audgui_infopopup_show_current ()
 {
-    int playlist = aud_playlist_get_playing ();
-    if (playlist < 0)
-        playlist = aud_playlist_get_active ();
+    auto playlist = Playlist::playing_playlist ();
+    if (playlist == Playlist ())
+        playlist = Playlist::active_playlist ();
 
-    int position = aud_playlist_get_position (playlist);
+    int position = playlist.get_position ();
     if (position < 0)
         return;
 

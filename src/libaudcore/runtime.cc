@@ -330,7 +330,7 @@ EXPORT void aud_cleanup ()
 {
     save_playlists (true);
 
-    aud_playlist_play (-1);
+    aud_drct_stop ();
     playback_stop (true);
 
     adder_cleanup ();

@@ -103,7 +103,7 @@ EXPORT InfoWidget::~InfoWidget ()
 {
 }
 
-EXPORT void InfoWidget::fillInfo (int playlist, int entry, const char * filename, const Tuple & tuple,
+EXPORT void InfoWidget::fillInfo (const char * filename, const Tuple & tuple,
  PluginHandle * decoder, bool updating_enabled)
 {
     m_model->setTupleData (tuple, String (filename), decoder);

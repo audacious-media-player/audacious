@@ -70,7 +70,8 @@ static struct {
 } widgets;
 
 static GtkWidget * infowin;
-static int current_playlist_id, current_entry;
+static Playlist current_playlist;
+static int current_entry;
 static String current_file;
 static Tuple current_tuple;
 static PluginHandle * current_decoder = nullptr;
@@ -222,15 +223,14 @@ static void infowin_update_tuple ()
 
 static void infowin_next ()
 {
-    int list = aud_playlist_by_unique_id (current_playlist_id);
     int entry = current_entry + 1;
 
-    if (list >= 0 && entry < aud_playlist_entry_count (list))
+    if (entry < current_playlist.n_entries ())
     {
-        aud_playlist_select_all (list, false);
-        aud_playlist_entry_set_selected (list, entry, true);
-        aud_playlist_set_focus (list, entry);
-        audgui_infowin_show (list, entry);
+        current_playlist.select_all (false);
+        current_playlist.select_entry (entry, true);
+        current_playlist.set_focus (entry);
+        audgui_infowin_show (current_playlist, entry);
     }
     else
         audgui_infowin_hide ();
@@ -410,13 +410,13 @@ static void create_infowin ()
     hook_associate ("art ready", (HookFunction) infowin_display_image, nullptr);
 }
 
-static void infowin_show (int list, int entry, const String & filename,
+static void infowin_show (Playlist list, int entry, const String & filename,
  const Tuple & tuple, PluginHandle * decoder, bool writable)
 {
     if (! infowin)
         create_infowin ();
 
-    current_playlist_id = aud_playlist_get_unique_id (list);
+    current_playlist = list;
     current_entry = entry;
     current_file = filename;
     current_tuple = tuple.ref ();
@@ -464,16 +464,14 @@ static void infowin_show (int list, int entry, const String & filename,
         audgui_show_unique_window (AUDGUI_INFO_WINDOW, infowin);
 }
 
-EXPORT void audgui_infowin_show (int playlist, int entry)
+EXPORT void audgui_infowin_show (Playlist playlist, int entry)
 {
-    String filename = aud_playlist_entry_get_filename (playlist, entry);
+    String filename = playlist.entry_filename (entry);
     g_return_if_fail (filename != nullptr);
 
     String error;
-    PluginHandle * decoder = aud_playlist_entry_get_decoder (playlist, entry,
-     Playlist::Wait, & error);
-    Tuple tuple = decoder ? aud_playlist_entry_get_tuple (playlist, entry,
-     Playlist::Wait, & error) : Tuple ();
+    PluginHandle * decoder = playlist.entry_decoder (entry, Playlist::Wait, & error);
+    Tuple tuple = decoder ? playlist.entry_tuple (entry, Playlist::Wait, & error) : Tuple ();
 
     if (decoder && tuple.valid () && ! aud_custom_infowin (filename, decoder))
     {
@@ -494,15 +492,12 @@ EXPORT void audgui_infowin_show (int playlist, int entry)
 
 EXPORT void audgui_infowin_show_current ()
 {
-    int playlist = aud_playlist_get_playing ();
-    int position;
+    auto playlist = Playlist::playing_playlist ();
+    if (playlist == Playlist ())
+        playlist = Playlist::active_playlist ();
 
-    if (playlist == -1)
-        playlist = aud_playlist_get_active ();
-
-    position = aud_playlist_get_position (playlist);
-
-    if (position == -1)
+    int position = playlist.get_position ();
+    if (position < 0)
         return;
 
     audgui_infowin_show (playlist, position);

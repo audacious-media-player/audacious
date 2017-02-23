@@ -78,9 +78,9 @@ static void do_jump (void *)
     if (entry < 0)
         return;
 
-    int playlist = aud_playlist_get_active ();
-    aud_playlist_set_position (playlist, entry);
-    aud_playlist_play (playlist);
+    auto playlist = Playlist::active_playlist ();
+    playlist.set_position (entry);
+    playlist.start_playback ();
 
     if (aud_get_bool ("audgui", "close_jtf_dialog"))
         audgui_jump_to_track_hide ();
@@ -97,7 +97,7 @@ static void update_queue_button (int entry)
     }
     else
     {
-        if (aud_playlist_queue_find_entry (aud_playlist_get_active (), entry) != -1)
+        if (Playlist::active_playlist ().queue_find_entry (entry) >= 0)
             gtk_button_set_label ((GtkButton *) queue_button, _("Un_queue"));
         else
             gtk_button_set_label ((GtkButton *) queue_button, _("_Queue"));
@@ -108,16 +108,16 @@ static void update_queue_button (int entry)
 
 static void do_queue (void *)
 {
-    int playlist = aud_playlist_get_active ();
+    auto playlist = Playlist::active_playlist ();
     int entry = get_selected_entry ();
     if (entry < 0)
         return;
 
-    int queued = aud_playlist_queue_find_entry (playlist, entry);
+    int queued = playlist.queue_find_entry (entry);
     if (queued >= 0)
-        aud_playlist_queue_delete (playlist, queued, 1);
+        playlist.queue_remove (queued);
     else
-        aud_playlist_queue_insert (playlist, -1, entry);
+        playlist.queue_insert (-1, entry);
 
     update_queue_button (entry);
 }
@@ -211,7 +211,7 @@ static void list_get_value (void * user, int row, int column, GValue * value)
     g_return_if_fail (column >= 0 && column < 2);
     g_return_if_fail (row >= 0 && row < search_matches->len ());
 
-    int playlist = aud_playlist_get_active ();
+    auto playlist = Playlist::active_playlist ();
     int entry = (* search_matches)[row].entry;
 
     switch (column)
@@ -220,7 +220,7 @@ static void list_get_value (void * user, int row, int column, GValue * value)
         g_value_set_int (value, 1 + entry);
         break;
     case 1:
-        Tuple tuple = aud_playlist_entry_get_tuple (playlist, entry, Playlist::NoWait);
+        Tuple tuple = playlist.entry_tuple (entry, Playlist::NoWait);
         g_value_set_string (value, tuple.get_str (Tuple::FormattedTitle));
         break;
     }

@@ -35,6 +35,7 @@ class QToolButton;
 class QWidget;
 
 enum class PluginType;
+class Playlist;
 class PluginHandle;
 struct PreferencesWidget;
 
@@ -68,8 +69,8 @@ void aboutwindow_show ();
 void aboutwindow_hide ();
 
 /* playlist-management.cc */
-void playlist_show_rename (int playlist);
-void playlist_confirm_delete (int playlist);
+void playlist_show_rename (Playlist playlist);
+void playlist_confirm_delete (Playlist playlist);
 
 /* equalizer.cc */
 void equalizer_show ();
@@ -133,7 +134,7 @@ QPixmap art_request (const char * filename, unsigned int w, unsigned int h, bool
 QPixmap art_request_current (unsigned int w, unsigned int h, bool want_hidpi = true);
 
 /* infowin.cc */
-void infowin_show (int playlist, int entry);
+void infowin_show (Playlist playlist, int entry);
 void infowin_show_current ();
 void infowin_hide ();
 

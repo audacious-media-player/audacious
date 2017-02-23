@@ -27,26 +27,26 @@ static SimpleHash<String, PlaylistAddItem> cache;
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 static QueuedFunc clear_timer;
 
-EXPORT void aud_playlist_cache_selected (int playlist)
+EXPORT void Playlist::cache_selected () const
 {
     pthread_mutex_lock (& mutex);
 
-    int entries = aud_playlist_entry_count (playlist);
+    int entries = n_entries ();
 
     for (int i = 0; i < entries; i ++)
     {
-        if (! aud_playlist_entry_get_selected (playlist, i))
+        if (! entry_selected (i))
             continue;
 
-        String filename = aud_playlist_entry_get_filename (playlist, i);
-        Tuple tuple = aud_playlist_entry_get_tuple (playlist, i, Playlist::NoWait);
-        PluginHandle * decoder = aud_playlist_entry_get_decoder (playlist, i, Playlist::NoWait);
+        String filename = entry_filename (i);
+        Tuple tuple = entry_tuple (i, NoWait);
+        PluginHandle * decoder = entry_decoder (i, NoWait);
 
         if (tuple.valid () || decoder)
             cache.add (filename, {filename, std::move (tuple), decoder});
     }
 
-    clear_timer.queue (30000, (QueuedFunc::Func) playlist_cache_clear, nullptr);
+    clear_timer.queue (30000, playlist_cache_clear, nullptr);
 
     pthread_mutex_unlock (& mutex);
 }
@@ -77,7 +77,7 @@ out:
     pthread_mutex_unlock (& mutex);
 }
 
-void playlist_cache_clear ()
+void playlist_cache_clear (void *)
 {
     pthread_mutex_lock (& mutex);
 
