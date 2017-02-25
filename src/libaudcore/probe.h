@@ -47,7 +47,8 @@ void aud_art_unref (AudArtItem * item);
 class AudArtPtr : public SmartPtr<AudArtItem, aud_art_unref>
 {
 public:
-    using SmartPtr::SmartPtr;
+    AudArtPtr () : SmartPtr () {}
+    explicit AudArtPtr (AudArtItem * ptr) : SmartPtr (ptr) {}
 
     const Index<char> * data () const
         { return get () ? aud_art_data (get ()) : nullptr; }
